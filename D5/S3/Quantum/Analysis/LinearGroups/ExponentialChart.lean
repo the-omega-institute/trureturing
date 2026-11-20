@@ -28,13 +28,16 @@ element with `ρ (ε X) = exp X`.
 * Continuity of `ε` on all of `L`: near `X₁` the path `t ↦ ε (t • X₁)⁻¹ * ε (t • X)` on
   `[0, 1]` has image under `ρ` uniformly close to `1`, hence ends in any compact
   neighbourhood of `1`.
-* Local injectivity of `ε` comes from local injectivity of `exp` at `0`.
 * Neighbourhoods (the main step): with a complement `C` of `L`, the map
   `(Y, B) ↦ exp Y * exp B` on `L × C` has derivative the sum map at `0`, so by the inverse
   function theorem every element of `A` near `1` is `exp Y * exp B` with `Y ∈ L`, `B ∈ C`
   small; if elements outside `ε '' V` accumulated at `1`, their `C`-coordinates `B` would be
   nonzero and, by the escape lemma, their directions would accumulate at a generator of norm
   one lying in `C`, which is impossible since `L ⊓ C = ⊥`.
+* Open embedding: let `S` be a domain near `0` on which `exp` has a continuous local inverse
+  `log`, and `W` the interior of `ε '' (L ∩ S)`, an open neighbourhood of `1` by the previous
+  step. On `U = L ∩ S ∩ ε⁻¹ W` the map `ε` is injective, and for `O ⊆ U` open in `L` the image
+  `ε '' O` is the set of `g ∈ W` with `log (ρ g) ∈ O`, which is open.
 
 The main result is `exists_exp_chart`.
 -/
@@ -292,38 +295,83 @@ private theorem image_mem_nhds_one {ρ : G →* Aˣ} (hc : Continuous ρ)
 
 /-- Exponential chart of a locally compact group `G` with a continuous injective homomorphism
 `ρ` into the units of a finite-dimensional real normed algebra `A`: there is a continuous map
-`ε` from the Lie subalgebra of one-parameter generators to `G` with `ρ (ε X) = exp X`; it is
-injective on a neighbourhood of `0`, and the image of every neighbourhood of `0` is a
-neighbourhood of `1`. -/
+`ε` from the Lie subalgebra of one-parameter generators to `G` with `ρ (ε X) = exp X`, whose
+restriction to some open neighbourhood `U` of `0` is an open embedding. -/
 theorem exists_exp_chart (ρ : G →* Aˣ) (hc : Continuous ρ) (hi : Function.Injective ρ) :
     ∃ ε : generatorSubalgebra ρ hc hi → G, Continuous ε ∧
       (∀ X, ((ρ (ε X) : Aˣ) : A) = NormedSpace.exp (X : A)) ∧
-      ∃ U ∈ 𝓝 (0 : generatorSubalgebra ρ hc hi), Set.InjOn ε U ∧
-        ∀ V ∈ 𝓝 (0 : generatorSubalgebra ρ hc hi), ε '' V ∈ 𝓝 (1 : G) := by
+      ∃ U : Set (generatorSubalgebra ρ hc hi), IsOpen U ∧ (0 : generatorSubalgebra ρ hc hi) ∈ U ∧
+        Topology.IsOpenEmbedding (U.domRestrict ε) := by
   have : T2Space G := T2Space.of_injective_continuous (f := fun g => ((ρ g : Aˣ) : A))
     (fun _ _ h => hi (Units.ext h)) (Units.continuous_val.comp hc)
+  have hρc : Continuous fun g : G => ((ρ g : Aˣ) : A) := Units.continuous_val.comp hc
   choose γ hγc hγ using fun X : generatorSubalgebra ρ hc hi =>
     (X.2 : ∃ γ : ℝ → G, Continuous γ ∧
       ∀ t : ℝ, ((ρ (γ t) : Aˣ) : A) = NormedSpace.exp (t • (X : A)))
-  have hε : Continuous fun X => γ X 1 :=
-    continuous_lift_one hc hi continuous_subtype_val γ hγc hγ
-  have hρε : ∀ X : generatorSubalgebra ρ hc hi,
-      ((ρ (γ X 1) : Aˣ) : A) = NormedSpace.exp (X : A) := fun X => by rw [hγ, one_smul]
+  obtain ⟨ε, hεdef⟩ : ∃ ε : generatorSubalgebra ρ hc hi → G, ε = fun X => γ X 1 := ⟨_, rfl⟩
+  have hε : Continuous ε := hεdef ▸ continuous_lift_one hc hi continuous_subtype_val γ hγc hγ
+  have hρε : ∀ X, ((ρ (ε X) : Aˣ) : A) = NormedSpace.exp (X : A) := fun X => by
+    rw [hεdef, hγ, one_smul]
+  have hε0 : ε 0 = 1 := hi (Units.ext (by
+    rw [hρε, ZeroMemClass.coe_zero, NormedSpace.exp_zero, map_one, Units.val_one]))
+  -- the local inverse of `exp` at `0`
   have hexp : HasStrictFDerivAt (NormedSpace.exp : A → A)
       ((ContinuousLinearEquiv.refl ℝ A : A ≃L[ℝ] A) : A →L[ℝ] A) 0 := by
     convert hasStrictFDerivAt_exp_zero (𝕂 := ℝ) (𝔸 := A) using 1
     ext
     simp
-  have hU : Subtype.val ⁻¹' (hexp.toOpenPartialHomeomorph NormedSpace.exp).source ∈
-      𝓝 (0 : generatorSubalgebra ρ hc hi) :=
-    continuous_subtype_val.continuousAt.preimage_mem_nhds
-      ((hexp.toOpenPartialHomeomorph NormedSpace.exp).open_source.mem_nhds
-        hexp.mem_toOpenPartialHomeomorph_source)
-  refine ⟨fun X => γ X 1, hε, hρε, _, hU, fun X hX Y hY hXY => Subtype.ext ?_,
-    fun V hV => image_mem_nhds_one hc hi hε.continuousAt hρε hV⟩
-  refine (hexp.toOpenPartialHomeomorph NormedSpace.exp).injOn hX hY ?_
-  rw [HasStrictFDerivAt.toOpenPartialHomeomorph_coe, ← hρε, ← hρε]
-  exact congrArg (fun g => ((ρ g : Aˣ) : A)) hXY
+  obtain ⟨e, he⟩ : ∃ e : OpenPartialHomeomorph A A,
+      e = hexp.toOpenPartialHomeomorph NormedSpace.exp := ⟨_, rfl⟩
+  have he0 : (0 : A) ∈ e.source := he ▸ hexp.mem_toOpenPartialHomeomorph_source
+  have heexp : ∀ x, e x = NormedSpace.exp x := fun x => by
+    rw [he, HasStrictFDerivAt.toOpenPartialHomeomorph_coe]
+  have hS : Subtype.val ⁻¹' e.source ∈ 𝓝 (0 : generatorSubalgebra ρ hc hi) :=
+    continuous_subtype_val.continuousAt.preimage_mem_nhds (e.open_source.mem_nhds he0)
+  have hinj : InjOn ε (Subtype.val ⁻¹' e.source) := fun X hX Y hY hXY =>
+    Subtype.ext (e.injOn hX hY (by rw [heexp, heexp, ← hρε, ← hρε, hXY]))
+  -- an open neighbourhood of `1` covered by the images of elements of the chart domain
+  obtain ⟨W, hWdef⟩ : ∃ W : Set G, W = interior (ε '' (Subtype.val ⁻¹' e.source)) := ⟨_, rfl⟩
+  have hW1 : (1 : G) ∈ W :=
+    hWdef ▸ mem_interior_iff_mem_nhds.2 (image_mem_nhds_one hc hi hε.continuousAt hρε hS)
+  have hWS : W ⊆ ε '' (Subtype.val ⁻¹' e.source) := hWdef ▸ interior_subset
+  have hWo : IsOpen W := hWdef ▸ isOpen_interior
+  obtain ⟨U, hUdef⟩ : ∃ U : Set (generatorSubalgebra ρ hc hi),
+      U = Subtype.val ⁻¹' e.source ∩ ε ⁻¹' W := ⟨_, rfl⟩
+  have hUo : IsOpen U := hUdef ▸ (e.open_source.preimage continuous_subtype_val).inter
+    (hWo.preimage hε)
+  -- on `U`, the image of an open set is the set of `g ∈ W` with `log (ρ g)` in it
+  have hopen : ∀ O : Set (generatorSubalgebra ρ hc hi), IsOpen O → O ⊆ U → IsOpen (ε '' O) := by
+    intro O hO hOU
+    obtain ⟨O', hO', rfl⟩ := isOpen_induced_iff.1 hO
+    have heq : ε '' (Subtype.val ⁻¹' O') =
+        W ∩ (fun g : G => ((ρ g : Aˣ) : A)) ⁻¹' (e.target ∩ e.symm ⁻¹' O') := by
+      ext g
+      constructor
+      · rintro ⟨X, hXO, rfl⟩
+        have hXU := hOU hXO
+        rw [hUdef] at hXU
+        refine ⟨hXU.2, ?_, ?_⟩
+        · show ((ρ (ε X) : Aˣ) : A) ∈ e.target
+          rw [hρε, ← heexp]
+          exact e.map_source hXU.1
+        · show e.symm ((ρ (ε X) : Aˣ) : A) ∈ O'
+          rw [hρε, ← heexp, e.left_inv hXU.1]
+          exact hXO
+      · rintro ⟨hgW, -, hgO⟩
+        obtain ⟨Y, hYS, rfl⟩ := hWS hgW
+        refine ⟨Y, ?_, rfl⟩
+        have hgO' : e.symm ((ρ (ε Y) : Aˣ) : A) ∈ O' := hgO
+        rw [hρε, ← heexp, e.left_inv hYS] at hgO'
+        exact hgO'
+    rw [heq]
+    exact hWo.inter ((e.continuousOn_symm.isOpen_inter_preimage e.open_target hO').preimage hρc)
+  refine ⟨ε, hε, hρε, U, hUo, ?_, ?_⟩
+  · rw [hUdef]
+    exact ⟨he0, by rw [mem_preimage, hε0]; exact hW1⟩
+  refine Topology.IsOpenEmbedding.of_continuous_injective_isOpenMap hε.continuousOn.domRestrict
+    (Set.injOn_iff_injective.1 (hinj.mono (hUdef ▸ inter_subset_left))) fun s hs => ?_
+  rw [Set.domRestrict_eq, Set.image_comp]
+  exact hopen _ (hUo.isOpenMap_subtype_val s hs) (Subtype.coe_image_subset U s)
 
 end Chart
 

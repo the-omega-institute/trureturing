@@ -96,7 +96,7 @@ namespace Coefficient
 
 /-- The matrix coefficient `g ↦ φ (ρ g v)` of a representation on a complex normed space. -/
 abbrev signature : Signature where
-  Params := Σ G : Type u, Σ _ : Group G, Σ V : Type v, Σ _ : NormedAddCommGroup V,
+  Params := Σ G : Type u, Σ V : Type v, Σ _ : Group G, Σ _ : NormedAddCommGroup V,
     Σ _ : NormedSpace ℂ V, Σ _ : Representation ℂ G V, Σ _ : Module.Dual ℂ V, V
   State p := p.1
   Role := Unit
@@ -107,12 +107,12 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u, v} :=
-  realize signature (fun _ p g => letI := p.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
+  realize signature (fun _ p g => letI := p.2.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
     p.2.2.2.2.2.2.1 (p.2.2.2.2.2.1 g p.2.2.2.2.2.2.2)) (fun e => nomatch e)
 
 /-- The indicator of the identity element, read in place of every coefficient. -/
 def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ p g => letI := p.2.1; Set.indicator {(1 : p.1)} 1 g)
+  realize signature (fun _ p g => letI := p.2.2.1; Set.indicator {(1 : p.1)} 1 g)
     (fun e => nomatch e)
 
 /-- The coefficient of the sign representation takes the value `1` at the identity and `-1` at
@@ -120,7 +120,7 @@ the other element. -/
 theorem dependence : ObservationalDependence signature.{u, v} actual := by
   intro i
   cases i
-  refine ⟨⟨Two.{u}, inferInstance, Line.{v}, inferInstance, inferInstance, sign.{u, v}, coord,
+  refine ⟨⟨Two.{u}, Line.{v}, inferInstance, inferInstance, inferInstance, sign.{u, v}, coord,
     1⟩, 1, flip, ?_⟩
   change coord (sign.{u, v} 1 1) ≠ coord (sign.{u, v} flip 1)
   rw [sign_flip, map_one sign.{u, v}, Module.End.one_apply]
@@ -139,7 +139,7 @@ abbrev arenaZero : Arena where
     (σ : Representation ℂ G W) [ρ.IsIrreducible] [σ.IsIrreducible],
     IsEmpty (ρ.Equiv σ) → (∀ v, Continuous fun g => ρ g v) →
       ∀ (φ : Module.Dual ℂ V) (ψ : Module.Dual ℂ W), (∀ w, Continuous fun g => ψ (σ g w)) →
-        ∀ (v : V) (w : W), ∫ g, r.readout () ⟨G, iG, V, iV, iS, ρ, φ, v⟩ g * ψ (σ g⁻¹ w) ∂μ = 0
+        ∀ (v : V) (w : W), ∫ g, r.readout () ⟨G, V, iG, iV, iS, ρ, φ, v⟩ g * ψ (σ g⁻¹ w) ∂μ = 0
 
 /-- With the indicator of the identity in place of the coefficient of the sign representation,
 paired with the trivial representation, the integral is the positive mass of the identity. -/
@@ -193,7 +193,7 @@ abbrev arenaSelf : Arena where
     [FiniteDimensional ℂ V] [IsProbabilityMeasure μ] (ρ : Representation ℂ G V)
     [ρ.IsIrreducible], (∀ v, Continuous fun g => ρ g v) →
       ∀ (φ ψ : Module.Dual ℂ V) (v w : V),
-        ∫ g, r.readout () ⟨G, iG, V, iV, iS, ρ, φ, v⟩ g * ψ (ρ g⁻¹ w) ∂μ =
+        ∫ g, r.readout () ⟨G, V, iG, iV, iS, ρ, φ, v⟩ g * ψ (ρ g⁻¹ w) ∂μ =
           φ w * ψ v / Module.finrank ℂ V
 
 /-- With the indicator of the identity in place of the coefficient of the trivial representation
@@ -259,7 +259,7 @@ def integral_dual_mul_dual_inv_eq_zero_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Coefficient.signature.{u, v}
-    (fun _ p g => letI := p.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
+    (fun _ p g => letI := p.2.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
       p.2.2.2.2.2.2.1 (p.2.2.2.2.2.1 g p.2.2.2.2.2.2.2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -298,7 +298,7 @@ def integral_dual_mul_dual_inv_self_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Coefficient.signature.{u, v}
-    (fun _ p g => letI := p.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
+    (fun _ p g => letI := p.2.2.1; letI := p.2.2.2.1; letI := p.2.2.2.2.1;
       p.2.2.2.2.2.2.1 (p.2.2.2.2.2.1 g p.2.2.2.2.2.2.2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
