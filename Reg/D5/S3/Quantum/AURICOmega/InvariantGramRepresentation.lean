@@ -5,9 +5,10 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Source-bound audit of the orthogonal representation of an invariant Gram kernel.
 
-The kernel clause `ρ g = 1 ↔ ∀ x, φ (g * x) = φ x` is audited through the value `ρ g` of the
-homomorphism. The rejected reading `1` fails on the sign family `u ↦ u • e` of the group of
-units `{1, -1}` of the integers in a Euclidean line: there `-1` does not fix the family. -/
+The kernel clause `ρ g = 1 ↔ ∀ x, φ (g * x) = φ x` is audited through the value `φ (g * x)` of
+the family on its stabilizer side. The rejected reading `0` fails on the sign family `u ↦ u • e`
+of the group of units `{1, -1}` of the integers in a Euclidean line: there `ρ 1 = 1`, while the
+family does not vanish at `1`. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.InvariantGramRepresentation
 
@@ -48,8 +49,7 @@ theorem signFamily_mul (g x : Sign.{u}) :
   ring
 
 theorem sign_mul_self (g : Sign.{u}) : (((g.down : ℤˣ) : ℤ) : ℝ) * (((g.down : ℤˣ) : ℤ) : ℝ) = 1 := by
-  have h := congrArg (fun w : ℤˣ => ((w : ℤ) : ℝ)) (Int.units_mul_self g.down)
-  simpa using h
+  rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self, Units.val_one, Int.cast_one]
 
 theorem signFamily_gram (g x y : Sign.{u}) :
     ⟪signFamily.{u, v} (g * x), signFamily.{u, v} (g * y)⟫_ℝ =
@@ -58,7 +58,7 @@ theorem signFamily_gram (g x y : Sign.{u}) :
     sign_mul_self, one_mul]
 
 theorem signFamily_continuous (x : Sign.{u}) :
-    Continuous[⊥, _] fun g : Sign.{u} => signFamily.{u, v} (g * x) :=
+    @Continuous Sign.{u} Line.{v} ⊥ _ fun g : Sign.{u} => signFamily.{u, v} (g * x) :=
   continuous_bot
 
 /-- The element `-1`. -/
@@ -76,13 +76,12 @@ theorem negOne_moves : signFamily.{u, v} (negOne.{u} * 1) ≠ signFamily.{u, v} 
     exact absurd h3 unitVector_ne_zero
   exact unitVector_ne_zero ((smul_eq_zero.mp h2).resolve_left two_ne_zero)
 
-/-! The value `ρ g` of the homomorphism in the kernel clause of `exists_orthogonal_rep_ker_eq`. -/
+/-! The value `φ (g * x)` of the family in the stabilizer side of the kernel clause of
+`exists_orthogonal_rep_ker_eq`, against the translated point `g * x`. -/
 namespace Kernel
 
-/-- The group, the space, the family and the homomorphism. -/
-abbrev Params := Σ G : Type u, Σ _ : Group G, Σ V : Type v, Σ _ : NormedAddCommGroup V,
-  Σ _ : InnerProductSpace ℝ V, Σ φ : G → V,
-    G →* Matrix.orthogonalGroup (Fin (Module.finrank ℝ (Submodule.span ℝ (Set.range φ)))) ℝ
+/-- The group, the space with its norm and the family. -/
+abbrev Params := Σ G : Type u, Σ V : Type v, Σ _ : NormedAddCommGroup V, G → V
 
 abbrev signature : Signature where
   Params := Params.{u, v}
@@ -90,55 +89,43 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := letI := p.2.2.2.1; letI := p.2.2.2.2.1;
-    Matrix.orthogonalGroup (Fin (Module.finrank ℝ (Submodule.span ℝ (Set.range p.2.2.2.2.2.1)))) ℝ
+  Output _ p := p.2.1
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u, v} :=
-  realize signature (fun _ p s => letI := p.2.1; p.2.2.2.2.2.2 s) (fun e => nomatch e)
+  realize signature (fun _ p s => p.2.2.2 s) (fun e => nomatch e)
 
 def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ p _ => letI := p.2.2.1; 0) (fun e => nomatch e)
 
 /-- Retain the complete group, space, family, continuity and invariance telescope of
 `exists_orthogonal_rep_ker_eq`. -/
 abbrev arena : Arena where
   signature := signature.{u, v}
-  Law rd := ∀ {G : Type u} {V : Type v} [TopologicalSpace G] [grp : Group G]
-    [nacg : NormedAddCommGroup V] [ips : InnerProductSpace ℝ V] (φ : G → V)
+  Law rd := ∀ {G : Type u} {V : Type v} [TopologicalSpace G] [Group G]
+    [nacg : NormedAddCommGroup V] [InnerProductSpace ℝ V] (φ : G → V)
     [FiniteDimensional ℝ (Submodule.span ℝ (Set.range φ))],
     (∀ x : G, Continuous fun g => φ (g * x)) →
     (∀ g x y : G, ⟪φ (g * x), φ (g * y)⟫_ℝ = ⟪φ x, φ y⟫_ℝ) →
     ∃ ρ : G →* Matrix.orthogonalGroup
         (Fin (Module.finrank ℝ (Submodule.span ℝ (Set.range φ)))) ℝ,
-      Continuous ρ ∧ ∀ g : G, rd.readout () ⟨G, grp, V, nacg, ips, φ, ρ⟩ g = 1 ↔
-        ∀ x : G, φ (g * x) = φ x
+      Continuous ρ ∧ ∀ g : G, ρ g = 1 ↔ ∀ x : G, rd.readout () ⟨G, V, nacg, φ⟩ (g * x) = φ x
 
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   obtain ⟨ρ, -, hρ⟩ := @h Sign.{u} Line.{v} ⊥ _ _ _ signFamily.{u, v} _
     signFamily_continuous.{u, v} signFamily_gram.{u, v}
-  exact negOne_moves.{u, v} (((hρ negOne).1 rfl) 1)
-
-/-- The homomorphism of the sign family, from the source theorem. -/
-theorem exists_signRep : ∃ ρ : Sign.{u} →* Matrix.orthogonalGroup
-    (Fin (Module.finrank ℝ (Submodule.span ℝ (Set.range signFamily.{u, v})))) ℝ,
-    ∀ g : Sign.{u}, ρ g = 1 ↔ ∀ x : Sign.{u}, signFamily.{u, v} (g * x) = signFamily.{u, v} x := by
-  obtain ⟨ρ, -, hρ⟩ := @exists_orthogonal_rep_ker_eq Sign.{u} Line.{v} ⊥ _ _ _ signFamily.{u, v}
-    _ signFamily_continuous.{u, v} signFamily_gram.{u, v}
-  exact ⟨ρ, hρ⟩
+  have h0 : (0 : Line.{v}) = signFamily.{u, v} 1 := (hρ 1).1 (map_one ρ) 1
+  have h1 : signFamily.{u, v} (1 : Sign.{u}) = unitVector.{v} := by
+    simp [signFamily]
+  exact unitVector_ne_zero.{v} (h1 ▸ h0).symm
 
 theorem dependence : ObservationalDependence signature.{u, v} actual := by
   intro i
   cases i
-  obtain ⟨ρ, hρ⟩ := exists_signRep.{u, v}
-  refine ⟨⟨Sign.{u}, inferInstance, Line.{v}, inferInstance, inferInstance, signFamily.{u, v}, ρ⟩,
-    1, negOne, ?_⟩
-  change ρ 1 ≠ ρ negOne
-  rw [map_one]
-  intro h
-  exact negOne_moves.{u, v} (((hρ negOne).1 h.symm) 1)
+  refine ⟨⟨Sign.{u}, Line.{v}, inferInstance, signFamily.{u, v}⟩, negOne * 1, 1, ?_⟩
+  exact negOne_moves.{u, v}
 
 abbrev sourceStatement : Prop := type_of% @exists_orthogonal_rep_ker_eq.{u, v}
 
@@ -170,9 +157,7 @@ def exists_orthogonal_rep_ker_eq_registration :
   realization := .source Kernel.arena.{u, v} ⟨Kernel.source_registration.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some
-    (realize Kernel.signature.{u, v} (fun _ p s => letI := p.2.1; p.2.2.2.2.2.2 s)
-      (fun e => nomatch e))
+  readout := some (realize Kernel.signature.{u, v} (fun _ p s => p.2.2.2 s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -180,10 +165,10 @@ def exists_orthogonal_rep_ker_eq_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.AURICOmega.InvariantGramRepresentation
     definition := none
-    coordinates := #[0, 1, 3, 4, 5, 6, 10]
+    coordinates := #[0, 1, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "arg", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

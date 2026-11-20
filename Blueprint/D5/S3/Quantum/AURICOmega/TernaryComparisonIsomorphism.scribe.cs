@@ -22,12 +22,6 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
                 "For unit quaternions a and b, the reading of the quaternion comparison model is (1 + <a, b>) / 2, where <a, b> is the real inner product. "
                     + "Since |a - b|^2 = |a|^2 - 2 <a, b> + |b|^2 and both norms are one, <a, b> = 1 - |a - b|^2 / 2, and the reading is 1 - |a - b|^2 / 4. "
                     + "Here dist(a, b) is the distance |a - b| of a and b as quaternions."),
-            Node("normalized-embedding", "exists_normalized_embedding", "A normalized embedding into the unit quaternions",
-                StatementSource.FromAuthor(NormalizedEmbeddingFormula()), DescribeRole.Lemma,
-                "Let C be a ternary comparison structure on M whose transfer is order sensitive and whose reading is chain connected, takes values arbitrarily close to zero and is the Gram kernel of a map into Euclidean 5-space, and let o be a point of M. "
-                    + "Then there is an injective map v from M into the unit quaternions with v(o) = 1 that carries the transfer to v(tri(C, x, y, z)) = v(x) * v(y)^-1 * v(z) and preserves the reading, kappa(C, x, y) = kappa(quaternionModel, v(x), v(y)). "
-                    + "The feature-rank embedding gives an injective map w with the same transfer law and with kappa(C, x, y) = (1 + <w(x), w(y)>) / 2. "
-                    + "The map v(x) = w(o)^-1 * w(x) is injective and sends o to 1; the transfer law follows from the group identity (w(o)^-1 * p) * (w(o)^-1 * q)^-1 * (w(o)^-1 * r) = w(o)^-1 * (p * q^-1 * r), and the reading is preserved because left multiplication by a unit quaternion preserves the real inner product."),
             Node("range-subgroup", "rangeSubgroup", "The image as a subgroup",
                 StatementSource.WithoutFormula(), DescribeRole.Definition,
                 "Let C be a ternary comparison structure on M, o a point of M and v a map from M into the unit quaternions with v(o) = 1 and v(tri(C, x, y, z)) = v(x) * v(y)^-1 * v(z) for all x, y and z. "
@@ -111,8 +105,6 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
     }
 
     private static Formula Div(Formula x, Formula y) => Seq(Frac, Grp(x), Grp(y));
-    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
-    private static Formula Inv(Formula x) => new Formula.Power(x, Seq(Minus, D(1)));
     private static Formula MapsToUnits => new Formula.TypeArrow(M, Units);
 
     private static Formula DistanceFormula()
@@ -128,19 +120,6 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
     {
         Formula x = F.Id("x"), y = F.Id("y");
         return ForAllMany(M, Equal(Call("kappa", C, x, y), Call("kappa", Model, At(v, x), At(v, y))), "x", "y");
-    }
-
-    private static Formula NormalizedEmbeddingFormula()
-    {
-        Formula v = F.Id("v"), o = F.Id("o"), x = F.Id("x"), y = F.Id("y"), z = F.Id("z");
-        Formula transfer = ForAllMany(M,
-            Equal(At(v, Call("tri", C, x, y, z)), Mul(Mul(At(v, x), Inv(At(v, y))), At(v, z))),
-            "x", "y", "z");
-        Formula embedding = Exists("v", MapsToUnits,
-            And(Call("Injective", v), And(Equal(At(v, o), D(1)), And(transfer, ReadingPreserved(v)))));
-        return OverStructure(Implies(Call("Noncommutative", C), Implies(Call("ChainConnected", C),
-            Implies(Call("TouchesZero", C), Implies(Call("HasFeatureRank", C, D(5)),
-                ForAll("o", M, embedding))))));
     }
 
     private static Formula ClosedRangeFormula()

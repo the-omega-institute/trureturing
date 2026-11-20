@@ -159,9 +159,9 @@ def source_registration : Registration arena (type_of% @mem_unitary_of_normSq) w
 
 end NormSq
 
-/-! The sum of the squares of the components of a quaternion, in `sq_add_sq_coe_unitary`.
-The unit quaternion `u` is carried as a coordinate because the observed operand `(u : ℍ[ℝ])` is
-built from it. -/
+/-! The sum of the squares of the components of the unit quaternion `u`, in
+`sq_add_sq_coe_unitary`, observed through the quaternion whose `k` component is squared in the
+last summand; the first three summands are read from the coordinate `u`. -/
 namespace SquareSum
 
 abbrev signature : Signature where
@@ -175,7 +175,8 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ s => s.re ^ 2 + s.imI ^ 2 + s.imJ ^ 2 + s.imK ^ 2)
+  realize signature (fun _ u s => ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).re ^ 2 +
+    ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).imI ^ 2 + ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).imJ ^ 2 + s.imK ^ 2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -192,10 +193,10 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨1, 0, 1, ?_⟩
-  change (0 : ℍ[ℝ]).re ^ 2 + (0 : ℍ[ℝ]).imI ^ 2 + (0 : ℍ[ℝ]).imJ ^ 2 + (0 : ℍ[ℝ]).imK ^ 2 ≠
-    (1 : ℍ[ℝ]).re ^ 2 + (1 : ℍ[ℝ]).imI ^ 2 + (1 : ℍ[ℝ]).imJ ^ 2 + (1 : ℍ[ℝ]).imK ^ 2
-  simp
+  refine ⟨1, 0, ⟨0, 0, 0, 1⟩, ?_⟩
+  change (1 : ℍ[ℝ]).re ^ 2 + (1 : ℍ[ℝ]).imI ^ 2 + (1 : ℍ[ℝ]).imJ ^ 2 + (0 : ℍ[ℝ]).imK ^ 2 ≠
+    (1 : ℍ[ℝ]).re ^ 2 + (1 : ℍ[ℝ]).imI ^ 2 + (1 : ℍ[ℝ]).imJ ^ 2 + (⟨0, 0, 0, 1⟩ : ℍ[ℝ]).imK ^ 2
+  norm_num
 
 def source_registration : Registration arena (type_of% @sq_add_sq_coe_unitary) where
   actual := actual
@@ -259,7 +260,8 @@ def sq_add_sq_coe_unitary_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize SquareSum.signature
-    (fun _ _ s => s.re ^ 2 + s.imI ^ 2 + s.imJ ^ 2 + s.imK ^ 2) (fun e => nomatch e))
+    (fun _ u s => ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).re ^ 2 + ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).imI ^ 2 +
+      ((u : unitary ℍ[ℝ]) : ℍ[ℝ]).imJ ^ 2 + s.imK ^ 2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

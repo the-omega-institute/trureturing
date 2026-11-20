@@ -35,10 +35,10 @@ curve `γ : ℝ → G`.
   `n * ‖Y i‖` is small, and limits of `ρ (g i ^ n)` are values of `ρ` on `V`.
 * The set of generators is closed (`isClosed_setOf_isOneParameterGenerator`) and stable under
   real multiples (`IsOneParameterGenerator.smul`).
-* Sums (`IsOneParameterGenerator.add`): if a curve `c` in `G` through `1` has `ρ ∘ c`
-  differentiable at `0` with velocity `D`, the local logarithms of `ρ (c s)` approach `0` along
-  the direction of `D`, so `D` is a generator; the product of the curves of `X` and `Y` has
-  velocity `X + Y`.
+* Sums (`IsOneParameterGenerator.add`): if a curve `c` in `G` through `1` is continuous at `0`
+  and `ρ ∘ c` is differentiable at `0` with velocity `D`, the local logarithms of `ρ (c s)`
+  approach `0` along the direction of `D`, so `D` is a generator; the product of the curves of
+  `X` and `Y` has velocity `X + Y`.
 * Commutators (`IsOneParameterGenerator.commutator`): conjugating the curve of `Y` by the curve
   of `X` at time `s` lifts `exp (s • X) * Y * exp (s • -X)`, so these elements are generators;
   their difference quotients at `s = 0` are generators and converge to `X * Y - Y * X`.
@@ -122,8 +122,8 @@ private theorem exists_pow_mem [CompleteSpace A] [IsTopologicalGroup G] {ρ : G 
     rw [pow_succ]
     exact hWW _ hgnW _ hg
 
-/-- Cluster points of normalized logarithms give exponentials in the image of a compact
-set, for times in `[0, δ]`. -/
+/-- Limits of normalized logarithms give exponentials in the image of a compact set, for
+times in `[0, δ]`. -/
 private theorem exists_mem_eq_exp_smul [CompleteSpace A] {ρ : G →* Aˣ} (hc : Continuous ρ)
     {V : Set G} (hV : IsCompact V) {δ : ℝ} {U : Set G}
     (hU : ∀ g ∈ U, ∀ Y : A, ((ρ g : Aˣ) : A) = NormedSpace.exp Y →

@@ -5,8 +5,8 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Source-bound audit of the Born form obtained from one reflection.
 The readout is the Born weight `‖⟪φ, ψ⟫‖ ^ 2` on the right of the conclusion, as a function of
-`ψ` at a fixed space and unit vector `φ`; the unit-norm hypothesis, the reading and all five
-hypotheses on it stay in the law verbatim. The Born weight itself satisfies the five
+`ψ` at a fixed space and vector `φ`; the reading and all five hypotheses on it stay in the law
+verbatim. The Born weight itself satisfies the five
 hypotheses on a complex line, which refutes the zero readout. -/
 
 namespace Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm
@@ -87,7 +87,7 @@ def zero : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law r := ∀ {E : Type u} [g : NormedAddCommGroup E] [i : InnerProductSpace ℂ E]
-    (φ : E), ‖φ‖ = 1 → ∀ (f : E → ℝ),
+    (φ : E) (f : E → ℝ),
     (∀ (c : ℂ) (ψ : E), f (c • ψ) = ‖c‖ ^ 2 * f ψ) →
     (∀ (z : ℂ) (w : E), ⟪φ, w⟫_ℂ = 0 →
       f (z • φ + w) + f (z • φ - w) = 2 * f (z • φ) + 2 * f w) →
@@ -98,7 +98,7 @@ abbrev arena : Arena where
 
 theorem rejected_law : ¬ arena.{u}.Law zero := by
   intro h
-  have hh := h (E := Line.{u}) unitVector norm_unitVector
+  have hh := h (E := Line.{u}) unitVector
     (fun ψ => ‖⟪unitVector.{u}, ψ⟫_ℂ‖ ^ 2)
     (fun c ψ => born_smul unitVector c ψ)
     (fun z w _ => born_parallelogram unitVector (z • unitVector) w)
@@ -162,8 +162,8 @@ def eq_norm_inner_sq_of_reflection_invariant_registration :
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg"]
-      stateBinder := 11
+        "body", "arg"]
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

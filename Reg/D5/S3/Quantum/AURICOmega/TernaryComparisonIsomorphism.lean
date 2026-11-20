@@ -5,8 +5,8 @@ import Reg.Support.DependentFamily
 import Mathlib.Topology.Algebra.Star.Unitary
 
 /-! Source-bound audits of the isomorphism between complete rank-five ternary comparison
-structures and the unit quaternions, of the normalized embedding, of the closedness of the image
-of a reading-preserving map and of the distance form of the quaternion reading.
+structures and the unit quaternions, of the closedness of the image of a reading-preserving map
+and of the distance form of the quaternion reading.
 
 The rejected law and the observational dependence use the unit quaternion comparison model
 lifted to an arbitrary universe. It is noncommutative, chain connected, touches zero and has
@@ -124,47 +124,6 @@ def source_registration :
   dependence := dependence
 
 end Transfer
-
-/-! The transfer inside `v (C.tri x y z)` of `exists_normalized_embedding`, against its first two
-arguments. The signature, readouts and dependence are those of `Transfer`. -/
-namespace NormalizedTransfer
-
-/-- Retain the complete carrier, structure, hypothesis and base-point telescope and all four
-conjuncts of `exists_normalized_embedding`. -/
-abbrev arena : Arena where
-  signature := Transfer.signature.{u}
-  Law rd := ∀ {M : Type u} (C : TernaryComparison M), C.Noncommutative → C.ChainConnected →
-    C.TouchesZero → C.HasFeatureRank 5 → ∀ o : M,
-    ∃ v : M → unitary ℍ[ℝ], Function.Injective v ∧ v o = 1 ∧
-      (∀ x y z : M, v (rd.readout () ⟨M, C, x, y⟩ z) = v x * (v y)⁻¹ * v z) ∧
-      (∀ x y : M, C.kappa x y = quaternionModel.kappa (v x) (v y))
-
-theorem rejected_law : ¬ arena.{u}.Law Transfer.rejected := by
-  intro h
-  obtain ⟨w, hinj, -, htri, -⟩ := h liftedModel.{u} liftedModel_noncommutative
-    liftedModel_chainConnected liftedModel_touchesZero liftedModel_hasFeatureRank_five ⟨1⟩
-  have hh : w ⟨1⟩ = w ⟨1⟩ * (w ⟨-1⟩)⁻¹ * w ⟨1⟩ := htri ⟨1⟩ ⟨-1⟩ ⟨1⟩
-  rw [mul_assoc] at hh
-  have h1 : (w ⟨-1⟩)⁻¹ * w ⟨1⟩ = 1 := by
-    have h2 := congrArg (fun a => (w ⟨1⟩)⁻¹ * a) hh
-    simpa only [inv_mul_cancel_left, inv_mul_cancel] using h2.symm
-  have h3 : w ⟨-1⟩ = w ⟨1⟩ := inv_mul_eq_one.mp h1
-  exact one_ne_neg_one (congrArg ULift.down (hinj h3)).symm
-
-def source_registration :
-    Registration arena.{u} (type_of% @exists_normalized_embedding.{u}) where
-  actual := Transfer.actual
-  bridge := Iff.rfl
-  variation := ⟨@exists_normalized_embedding.{u}, Transfer.rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      exact ⟨Transfer.rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
-    · intro e
-      exact nomatch e
-  dependence := Transfer.dependence
-
-end NormalizedTransfer
 
 /-! The image `Set.range v` in `isClosed_range`, as a function of the map `v`. -/
 namespace Image
@@ -316,41 +275,6 @@ def exists_unitQuaternion_equiv_registration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body",
         "arg", "fn", "arg", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-def exists_normalized_embedding_registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@exists_normalized_embedding.{u}) (Realization Transfer.signature.{u}) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonIsomorphism.exists_normalized_embedding_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonIsomorphism.NormalizedTransfer.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨NormalizedTransfer.arena.{u}⟩
-  objectArena := .source ⟨NormalizedTransfer.arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source NormalizedTransfer.arena.{u} ⟨NormalizedTransfer.source_registration.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some
-    (realize Transfer.signature.{u} (fun _ p s => p.2.1.tri p.2.2.1 p.2.2.2 s) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.AURICOmega.TernaryComparisonIsomorphism
-    definition := none
-    coordinates := #[0, 1, 8, 9]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body",
-        "arg", "arg", "fn", "arg", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

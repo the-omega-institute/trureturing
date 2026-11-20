@@ -7,8 +7,8 @@ import Mathlib.Algebra.Module.ULift
 import Mathlib.Algebra.Order.Ring.InjSurj
 
 /-! Source-bound audits of the eigenvalue of an endomorphism of odd dimension over a real closed
-field and of the zero divisors of a bilinear map. The readouts are the eigenvalue and the first
-factor `a` of the zero divisor pair. -/
+field and of the zero divisors of a bilinear map. The readouts are the eigenvalue and the product
+`m a b` of the zero divisor pair. -/
 
 namespace Reg.D5.S3.QuadraticForms.OddDimensionZeroDivisor
 
@@ -60,47 +60,54 @@ theorem finrank_rline.{ua, ub} : finrank (ULift.{ua} ℝ) RLine.{ub} = 1 := by
 /-! ## `exists_hasEigenvalue_of_odd_finrank`: the eigenvalue -/
 namespace Eigenvalue
 
-/-- A field: the eigenvalue is a scalar. -/
+/-- The scalars: the eigenvalue is an element of the field. -/
 abbrev signature.{uu} : Signature where
-  Params := Σ K : Type uu, Field K
-  State p := p.1
+  Params := Type uu
+  State p := p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.1
+  Output _ p := p
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual.{uu} : Realization signature.{uu} :=
   realize signature (fun _ _ μ => μ) (fun e => nomatch e)
 
-/-- The constant reading `0`. -/
+/-- A constant reading: one fixed element of the scalars, chosen once the scalars are known to be
+nonempty. -/
 def rejected.{uu} : Realization signature.{uu} :=
-  realize signature (fun _ p _ => letI := p.2; (0 : p.1)) (fun e => nomatch e)
+  realize signature (fun _ _ μ => Classical.choice ⟨μ⟩) (fun e => nomatch e)
 
 /-- Retain the complete scalar, space, instance, endomorphism and parity telescope of
 `exists_hasEigenvalue_of_odd_finrank`; only the eigenvalue is read out. -/
 abbrev arena.{uu, vv} : Arena where
   signature := signature.{uu}
-  Law r := ∀ {K : Type uu} {U : Type vv} [iK : Field K] [IsRealClosed K] [AddCommGroup U]
+  Law r := ∀ {K : Type uu} {U : Type vv} [Field K] [IsRealClosed K] [AddCommGroup U]
     [Module K U] [FiniteDimensional K U] (f : Module.End K U),
-    Odd (Module.finrank K U) → ∃ μ : K, f.HasEigenvalue (r.readout () ⟨K, iK⟩ μ)
+    Odd (Module.finrank K U) → ∃ μ : K, f.HasEigenvalue (r.readout () K μ)
 
-/-- With the constant reading `0`, the identity of the real line would have the eigenvalue `0`. -/
+/-- With the constant reading `c`, the endomorphism `(c + 1) • id` of the real line would have the
+eigenvalue `c`. -/
 theorem rejected_law.{uu, vv} : ¬ arena.{uu, vv}.Law rejected := by
   intro h
   have := isRealClosed_ulift.{uu}
   have : FiniteDimensional (ULift.{uu} ℝ) RLine.{vv} := rlineFinite.{uu, vv}
-  obtain ⟨μ, hμ⟩ := h (K := ULift.{uu} ℝ) (U := RLine.{vv}) LinearMap.id
+  let c : ULift.{uu} ℝ := Classical.choice ⟨0⟩
+  obtain ⟨μ, hμ⟩ := h (K := ULift.{uu} ℝ) (U := RLine.{vv}) ((c + 1) • LinearMap.id)
     (by rw [finrank_rline.{uu, vv}]; exact odd_one)
   obtain ⟨x, hx⟩ := hμ.exists_hasEigenvector
   have hx0 := Module.End.mem_eigenspace_iff.1 hx.1
-  exact hx.2 (by simpa [rejected, realize] using hx0)
+  change ((c + 1) • LinearMap.id : Module.End (ULift.{uu} ℝ) RLine.{vv}) x = c • x at hx0
+  rw [LinearMap.smul_apply, LinearMap.id_apply, add_smul, one_smul] at hx0
+  exact hx.2 (add_left_cancel (hx0.trans (add_zero _).symm))
 
 theorem dependence.{uu} : ObservationalDependence signature.{uu} actual := by
   intro i
   cases i
-  exact ⟨⟨ULift.{uu} ℝ, inferInstance⟩, (0 : ULift.{uu} ℝ), (1 : ULift.{uu} ℝ), zero_ne_one⟩
+  refine ⟨ULift.{uu} Bool, ⟨true⟩, ⟨false⟩, fun h => ?_⟩
+  change (⟨true⟩ : ULift.{uu} Bool) = ⟨false⟩ at h
+  exact absurd (congrArg ULift.down h) (by decide)
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement.{uu, vv} : Prop := type_of% @exists_hasEigenvalue_of_odd_finrank.{uu, vv}
@@ -155,57 +162,97 @@ theorem finrank_plane.{ua, ub} : finrank Q.{ua} Plane.{ub} = 2 := by
 theorem finrank_qline.{ua, ub} : finrank Q.{ua} QLine.{ub} = 1 := by
   rw [LinearEquiv.finrank_eq qlineCoord.{ua, ub}, Module.finrank_self]
 
+/-- The product `a₀ b₀` of the first coordinates, a nonzero bilinear map `ℚ² × ℚ² → ℚ`. -/
+def firstProduct.{w₁, w₂, w₃, w₄} : Plane.{w₂} →ₗ[Q.{w₁}] Plane.{w₃} →ₗ[Q.{w₁}] QLine.{w₄} :=
+  ((LinearMap.mul Q.{w₁} Q.{w₁}).compl₁₂
+      ((LinearMap.proj 0).comp planeCoord.{w₁, w₂}.toLinearMap)
+      ((LinearMap.proj 0).comp planeCoord.{w₁, w₃}.toLinearMap)).compr₂
+    qlineCoord.{w₁, w₄}.symm.toLinearMap
+
+theorem firstProduct_apply.{w₁, w₂, w₃, w₄} (a : Plane.{w₂}) (b : Plane.{w₃}) :
+    firstProduct.{w₁, w₂, w₃, w₄} a b = ⟨a.down 0 * b.down 0⟩ := by
+  apply ULift.ext
+  simp [firstProduct, planeCoord, qlineCoord]
+
 namespace ZeroDivisor
 
-/-- The first factor of the zero divisor pair, an element of a commutative group. -/
-abbrev signature.{w₂} : Signature where
-  Params := Σ U : Type w₂, AddCommGroup U
-  State p := p.1
+/-- Scalars, the three spaces with their dictionaries, the bilinear map and the first factor. -/
+abbrev Params.{w₁, w₂, w₃, w₄} := Σ K : Type w₁, Σ U : Type w₂, Σ V : Type w₃, Σ W : Type w₄,
+  Σ _ : Field K, Σ _ : AddCommGroup U, Σ _ : Module K U, Σ _ : AddCommGroup V,
+  Σ _ : Module K V, Σ _ : AddCommGroup W, Σ _ : Module K W, Σ _ : U →ₗ[K] V →ₗ[K] W, U
+
+/-- The product `m a b` of the first factor `a` with a second factor `b`. -/
+abbrev signature.{w₁, w₂, w₃, w₄} : Signature where
+  Params := Params.{w₁, w₂, w₃, w₄}
+  State p := p.2.2.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.1
+  Output _ p := p.2.2.2.1
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual.{w₂} : Realization signature.{w₂} :=
-  realize signature (fun _ _ a => a) (fun e => nomatch e)
+/-- The value `m a b`. -/
+def observe.{w₁, w₂, w₃, w₄} (p : Params.{w₁, w₂, w₃, w₄}) (b : p.2.2.1) : p.2.2.2.1 :=
+  letI := p.2.2.2.2.1; letI := p.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.1
+  letI := p.2.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2.2.2.1
+  letI := p.2.2.2.2.2.2.2.2.2.2.1
+  p.2.2.2.2.2.2.2.2.2.2.2.1 p.2.2.2.2.2.2.2.2.2.2.2.2 b
 
-/-- The constant reading `0`. -/
-def rejected.{w₂} : Realization signature.{w₂} :=
-  realize signature (fun _ p _ => letI := p.2; (0 : p.1)) (fun e => nomatch e)
+/-- `0` at the second factor `0`, and a fixed nonzero vector of the target, when there is one,
+at every other second factor. -/
+def rejectedObserve.{w₁, w₂, w₃, w₄} (p : Params.{w₁, w₂, w₃, w₄}) (b : p.2.2.1) : p.2.2.2.1 := by
+  classical
+  letI := p.2.2.2.2.2.2.2.1
+  letI := p.2.2.2.2.2.2.2.2.2.1
+  exact if b = 0 then 0 else if h : ∃ w : p.2.2.2.1, w ≠ 0 then h.choose else 0
+
+def actual.{w₁, w₂, w₃, w₄} : Realization signature.{w₁, w₂, w₃, w₄} :=
+  realize signature (fun _ => observe) (fun e => nomatch e)
+
+def rejected.{w₁, w₂, w₃, w₄} : Realization signature.{w₁, w₂, w₃, w₄} :=
+  realize signature (fun _ => rejectedObserve) (fun e => nomatch e)
 
 /-- Retain the complete scalar, space, instance, bilinear map and hypothesis telescope of
-`exists_zero_divisor`; only the first factor `a` of the zero divisor pair is read out, at its
-nonvanishing condition. -/
+`exists_zero_divisor`; only the product `m a b` is read out. -/
 abbrev arena.{w₁, w₂, w₃, w₄} : Arena where
-  signature := signature.{w₂}
-  Law r := ∀ {K : Type w₁} {U : Type w₂} {V : Type w₃} {W : Type w₄} [Field K]
-    [iU : AddCommGroup U] [Module K U] [AddCommGroup V] [Module K V]
-    [AddCommGroup W] [Module K W] [FiniteDimensional K W]
+  signature := signature.{w₁, w₂, w₃, w₄}
+  Law r := ∀ {K : Type w₁} {U : Type w₂} {V : Type w₃} {W : Type w₄} [iK : Field K]
+    [iU : AddCommGroup U] [mU : Module K U] [iV : AddCommGroup V] [mV : Module K V]
+    [iW : AddCommGroup W] [mW : Module K W] [FiniteDimensional K W]
     (m : U →ₗ[K] V →ₗ[K] W),
     (Module.finrank K W = Module.finrank K U →
       ∀ f : Polynomial K, f.natDegree = Module.finrank K U → ∃ x, f.IsRoot x) →
     Module.finrank K W ≤ Module.finrank K U → 2 ≤ Module.finrank K V →
-    ∃ a b, r.readout () ⟨U, iU⟩ a ≠ 0 ∧ b ≠ 0 ∧ m a b = 0
+    ∃ a b, a ≠ 0 ∧ b ≠ 0 ∧ r.readout () ⟨K, U, V, W, iK, iU, mU, iV, mV, iW, mW, m, a⟩ b = 0
 
-/-- On `ℚ² × ℚ² → ℚ` with the zero map the rejected reading would require `0 ≠ 0`. -/
+/-- On `ℚ² × ℚ² → ℚ` with the zero map the rejected reading would make a nonzero vector of the
+line vanish. -/
 theorem rejected_law.{w₁, w₂, w₃, w₄} : ¬ arena.{w₁, w₂, w₃, w₄}.Law rejected := by
   intro h
   have : FiniteDimensional Q.{w₁} QLine.{w₄} := qlineFinite.{w₁, w₄}
-  obtain ⟨a, b, ha, -, -⟩ := h (K := Q.{w₁}) (U := Plane.{w₂}) (V := Plane.{w₃})
+  obtain ⟨a, b, -, hb, hab⟩ := h (K := Q.{w₁}) (U := Plane.{w₂}) (V := Plane.{w₃})
     (W := QLine.{w₄}) 0
     (fun hd => absurd hd (by rw [finrank_qline.{w₁, w₄}, finrank_plane.{w₁, w₂}]; norm_num))
     (by rw [finrank_qline.{w₁, w₄}, finrank_plane.{w₁, w₂}]; norm_num) (by rw [finrank_plane.{w₁, w₃}])
-  exact ha rfl
+  have hex : ∃ w : QLine.{w₄}, w ≠ 0 := ⟨⟨1⟩, fun h1 => one_ne_zero (congrArg ULift.down h1)⟩
+  simp only [rejected, realize, rejectedObserve, if_neg hb, dif_pos hex] at hab
+  exact hex.choose_spec hab
 
-theorem dependence.{w₂} : ObservationalDependence signature.{w₂} actual := by
+/-- On `ℚ² × ℚ² → ℚ` with the product of the first coordinates, `m e₀ e₀ = 1` and
+`m e₀ 0 = 0`. -/
+theorem dependence.{w₁, w₂, w₃, w₄} : ObservationalDependence signature.{w₁, w₂, w₃, w₄} actual := by
   intro i
   cases i
-  refine ⟨⟨Plane.{w₂}, inferInstance⟩, (⟨![1, 0]⟩ : Plane.{w₂}), (0 : Plane.{w₂}), fun h => ?_⟩
-  change (⟨![1, 0]⟩ : Plane.{w₂}) = 0 at h
-  have h0 : (1 : ℚ) = 0 := congrArg (fun z : Plane.{w₂} => z.down 0) h
-  exact one_ne_zero h0
+  refine ⟨⟨Q.{w₁}, Plane.{w₂}, Plane.{w₃}, QLine.{w₄}, inferInstance, inferInstance,
+    inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
+    firstProduct.{w₁, w₂, w₃, w₄}, (⟨![1, 0]⟩ : Plane.{w₂})⟩, (⟨![1, 0]⟩ : Plane.{w₃}),
+    (0 : Plane.{w₃}), fun h => ?_⟩
+  change firstProduct.{w₁, w₂, w₃, w₄} (⟨![1, 0]⟩ : Plane.{w₂}) (⟨![1, 0]⟩ : Plane.{w₃}) =
+    firstProduct.{w₁, w₂, w₃, w₄} (⟨![1, 0]⟩ : Plane.{w₂}) (0 : Plane.{w₃}) at h
+  rw [map_zero, firstProduct_apply] at h
+  have h1 : (1 : ℚ) * 1 = 0 := congrArg ULift.down h
+  exact absurd h1 (by norm_num)
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement.{w₁, w₂, w₃, w₄} : Prop := type_of% @exists_zero_divisor.{w₁, w₂, w₃, w₄}
@@ -260,7 +307,7 @@ def exists_hasEigenvalue_of_odd_finrank_registration :
 def exists_zero_divisor_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@exists_zero_divisor.{u₁, u₂, u₃, u₄})
-      (Realization ZeroDivisor.signature.{u₂}) Unit Unit := {
+      (Realization ZeroDivisor.signature.{u₁, u₂, u₃, u₄}) Unit Unit := {
   unitName := `Reg.D5.S3.QuadraticForms.OddDimensionZeroDivisor.exists_zero_divisor_unit
   realizationName := `Reg.D5.S3.QuadraticForms.OddDimensionZeroDivisor.ZeroDivisor.source_registration
   realizationSource := none
@@ -273,7 +320,8 @@ def exists_zero_divisor_registration :
     ⟨ZeroDivisor.source_registration.{u₁, u₂, u₃, u₄}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize ZeroDivisor.signature.{u₂} (fun _ _ a => a) (fun e => nomatch e))
+  readout := some (realize ZeroDivisor.signature.{u₁, u₂, u₃, u₄}
+    (fun _ => ZeroDivisor.observe) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -281,16 +329,15 @@ def exists_zero_divisor_registration :
   sourceSelection := some {
     owner := `D5.S3.QuadraticForms.OddDimensionZeroDivisor
     definition := none
-    coordinates := #[1]
+    coordinates := #[0, 1, 2, 3, 12, 16]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 16
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
-
 end
 end Reg.D5.S3.QuadraticForms.OddDimensionZeroDivisor

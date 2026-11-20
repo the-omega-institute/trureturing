@@ -1,0 +1,73 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega;
+
+internal sealed class InvariantGramRepresentationDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/AURICOmega/InvariantGramRepresentation.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A map from a topological group into a real inner product space with left-invariant Gram kernel, finite-dimensional span and continuous orbit maps yields a continuous homomorphism into the orthogonal group of the dimension of the span, whose kernel is the stabilizer of the family.",
+        H("Orthogonal representations from invariant Gram kernels"),
+        Blocks(
+            Node("exists-orthogonal-rep-ker-eq", "exists_orthogonal_rep_ker_eq",
+                "Invariant Gram kernels give orthogonal representations",
+                StatementSource.FromAuthor(RepresentationFormula()), AssessedProvenance.FromRepo(),
+                "Let G be a group with a topology and phi a map from G into a real inner product space V. "
+                    + "Assume that the span W of the image of phi is finite-dimensional, that for each fixed x the orbit map g -> phi (g * x) is continuous, and that the Gram kernel is left invariant: <phi (g * x), phi (g * y)> = <phi x, phi y> for all g, x and y. "
+                    + "Then there is a homomorphism rho from G into the group of orthogonal matrices of size n = dim W, continuous, such that rho g = 1 exactly when phi (g * x) = phi x for every x. "
+                    + "For each g, the permutation x -> g * x of G preserves the Gram kernel of the spanning family phi of W, so it extends to a unique linear isometry U g of W with U g (phi x) = phi (g * x). "
+                    + "Uniqueness gives U (g * h) = U g composed with U h and U 1 = identity. "
+                    + "The vector U g w depends continuously on g: for w = phi x this is the continuity of an orbit map, and it passes to finite linear combinations, which exhaust W. "
+                    + "In an orthonormal basis of W the matrix of U g is orthogonal, and its entries <b i, U g (b j)> are continuous in g; this matrix is rho g. "
+                    + "The matrix rho g is the identity exactly when U g is the identity, that is, when g fixes every phi x; in particular rho is injective whenever only the identity fixes every phi (g * x), for instance when phi is injective. "
+                    + "The construction is the finite-dimensional case of the classical passage from a positive-definite invariant kernel to a representation. "
+                    + "Finite dimension of the span cannot be dropped if the target is to be an orthogonal group of finite size: for the group of permutations of the natural numbers that move only finitely many points, with the discrete topology, the family g -> delta g of point masses in the Hilbert space of square-summable functions on the group has invariant Gram kernel, continuous orbit maps and trivial stabilizer, but its span is infinite-dimensional, and the group admits no injective homomorphism into any orthogonal group of finite size, since it contains every finite symmetric group and the smallest faithful real representation of the symmetric group on k letters has dimension k - 1 for every large k. "
+                    + "The continuity hypothesis is only the continuity of each orbit map g -> phi (g * x), for fixed x; no continuity of phi itself, of the group operations, or of any other composite is assumed.",
+                DescribeRole.Theorem))));
+
+    private static DocumentBlock Node(
+        string id, string selector, string title, StatementSource statement,
+        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("invariant-gram-representation-" + id),
+            DeclarationHandle.Create(Prefix + selector), H(title), statement, provenance,
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Ap(Formula function, Formula argument) => new Formula.Apply(function, [argument]);
+    private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula TypeStar => Seq(Operatorname, Grp(F.Id("Type")), Star);
+    private static Formula Inner(Formula x, Formula y) =>
+        new Formula.Subscript(Seq(Langle, Sp, x, Comma, Sp, y, Sp, Rangle), Reals);
+    private static Formula Mul(Formula x, Formula y) => Seq(x, Sp, Cdot, Sp, y);
+    private static Formula Instance(Formula body) => Seq(OpenBracket, body, CloseBracket);
+
+    private static Formula RepresentationFormula()
+    {
+        Formula g = F.Id("G"), v = F.Id("V"), x = F.Id("x"), y = F.Id("y"), h = F.Id("g"), rho = Rho;
+        Formula span = Call("span", Reals, Call("range", Varphi));
+        Formula orthogonal = Call("orthogonalGroup", Call("Fin", Call("finrank", Reals, span)), Reals);
+        Formula orbit = Seq(h, Sp, Mapsto, Sp, Ap(Varphi, Mul(h, x)));
+        Formula gram = Seq(Inner(Ap(Varphi, Mul(h, x)), Ap(Varphi, Mul(h, y))), Sp, Eq, Sp,
+            Inner(Ap(Varphi, x), Ap(Varphi, y)));
+        Formula kernel = Seq(Ap(rho, h), Sp, Eq, Sp, D(1), Sp, Iff, Sp,
+            Forall, Sp, x, Colon, Sp, g, Comma, Sp, Ap(Varphi, Mul(h, x)), Sp, Eq, Sp, Ap(Varphi, x));
+        return Disp(Seq(
+            Forall, Sp, g, Comma, Sp, v, Colon, Sp, TypeStar, Comma, Sp,
+            Instance(Call("TopologicalSpace", g)), Comma, Sp, Instance(Call("Group", g)), Comma, Sp,
+            Instance(Call("NormedAddCommGroup", v)), Comma, Sp,
+            Instance(Call("InnerProductSpace", Reals, v)), Comma, Sp,
+            Forall, Sp, Varphi, Colon, Sp, g, Sp, To, Sp, v, Comma, Sp,
+            Instance(Call("FiniteDimensional", Reals, span)), Comma, Sp,
+            Open, Forall, Sp, x, Colon, Sp, g, Comma, Sp, Call("Continuous", orbit), Close, Sp,
+            Rightarrow, Sp,
+            Open, Forall, Sp, h, Comma, Sp, x, Comma, Sp, y, Colon, Sp, g, Comma, Sp, gram, Close, Sp,
+            Rightarrow, Sp,
+            Exists, Sp, rho, Colon, Sp, Call("MonoidHom", g, orthogonal), Comma, Sp,
+            Call("Continuous", rho), Sp, Land, Sp,
+            Forall, Sp, h, Colon, Sp, g, Comma, Sp, Open, kernel, Close));
+    }
+}

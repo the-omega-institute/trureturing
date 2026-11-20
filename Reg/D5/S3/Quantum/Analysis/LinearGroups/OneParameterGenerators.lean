@@ -51,10 +51,11 @@ theorem eq_zero_of_trivial {A : Type u} [NormedRing A] [NormedAlgebra ℝ A] [Co
   have := hd.unique (hasDerivAt_const (0 : ℝ) (1 : A))
   simpa using this
 
-/-- The element `0` is lifted by the constant curve at `1`. -/
-theorem zero_generator {A : Type u} [NormedRing A] [NormedAlgebra ℝ A] {G : Type v}
-    [TopologicalSpace G] [Group G] (ρ : G →* Aˣ) : IsOneParameterGenerator ρ (0 : A) :=
-  ⟨fun _ => 1, continuous_const, fun t => by simp⟩
+/-- In the trivial model the element `0` is a generator: it lies in the Lie subalgebra of
+generators. -/
+theorem zero_generator : IsOneParameterGenerator (triv.{u, v} Line.{u}) (0 : Line.{u}) :=
+  letI : LieRing Line.{u} := LieRing.ofAssociativeRing
+  (generatorSubalgebra (triv.{u, v} Line.{u}) (triv_continuous _) (triv_injective _)).zero_mem
 
 /-- In the trivial model the element `1` is not a generator. -/
 theorem not_generator_one : ¬ IsOneParameterGenerator (triv.{u, v} Line.{u}) 1 := fun h =>
@@ -105,7 +106,7 @@ group would make `1` a generator. -/
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   exact not_generator_one.{u, v} (h (A := Line.{u}) (ρ := triv.{u, v} Line.{u})
-    (zero_generator _) 0)
+    zero_generator.{u, v} 0)
 
 /-- At `X = 1` in the real line the scalars `0` and `1` give different multiples. -/
 theorem dependence : ObservationalDependence signature.{u} actual := by
@@ -309,7 +310,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   exact not_generator_one.{u, v} (h (A := Line.{u}) (ρ := triv.{u, v} Line.{u})
-    (triv_continuous _) (triv_injective _) (zero_generator _) (zero_generator _))
+    (triv_continuous _) (triv_injective _) zero_generator.{u, v} zero_generator.{u, v})
 
 /-- With `X = 0` in the real line the elements `0` and `1` give different sums. -/
 theorem dependence : ObservationalDependence signature.{u} actual := by
@@ -405,7 +406,7 @@ would make `1` a generator. -/
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   exact not_generator_one.{u, v} (h (A := Line.{u}) (ρ := triv.{u, v} Line.{u})
-    (triv_continuous _) (triv_injective _) (zero_generator _) (zero_generator _))
+    (triv_continuous _) (triv_injective _) zero_generator.{u, v} zero_generator.{u, v})
 
 /-- With `X = i` in the quaternions the elements `0` and `j` give the commutators `0` and
 `2 k`. -/

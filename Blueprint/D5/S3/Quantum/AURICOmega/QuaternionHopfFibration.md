@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The Hopf map sends the unit quaternions onto the unit imaginary quaternions and identifies their quotient by the phase circle with that two-sphere; along a phase circle the squared reading attains the ray kernel as its maximum and has the ray kernel times pi as its integral over a full turn.
+The Hopf map sends the unit quaternions onto the unit imaginary quaternions and identifies their quotient by the phase circle with that two-sphere; along a phase circle the squared shifted reading attains the ray kernel as its maximum and has the ray kernel times pi as its integral over a full turn.
 
 **Definition 1.1 (The phase circle).**
 
@@ -63,3 +63,4 @@ In the display, kappa and tri are the reading and the transfer of the quaternion
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.range_hopf`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.rayKernel_isGreatest_and_integral`
 - Dependency: [D5/S3/Quantum/AURICOmega/QuaternionRayKernel](QuaternionRayKernel.md)
+- Dependency: [D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup](UnitQuaternionClosedSubgroup.md)

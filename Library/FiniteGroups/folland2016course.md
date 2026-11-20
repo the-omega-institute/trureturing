@@ -7,6 +7,7 @@ doi: 10.1201/b19172
 claim: "Bibliographic record: G. B. Folland, A Course in Abstract Harmonic Analysis, Chapman and Hall/CRC, 2016, a book whose title names abstract harmonic analysis; the interior of the book was not read for this note."
 strata_touched:
   - D5/S3/FiniteGroups/GroupAlgebra/UnitaryCharacterKernel
+  - D5/S3/Quantum/Analysis/CompactGroups/SchurOrthogonality
 license: citation-only
 triage: anchor
 ---

@@ -19,10 +19,6 @@ set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
 noncomputable section
 
-/-- The unit quaternion `j`, off the phase circle of `1` and `i`. -/
-def unitJ : unitary ℍ[ℝ] :=
-  ⟨⟨0, 0, 1, 0⟩, Unitary.mem_iff.mpr ⟨by ext <;> simp, by ext <;> simp⟩⟩
-
 /-- The unit quaternion `1` lies on the phase circle. -/
 theorem one_phase : ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]).imJ = 0 ∧ ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]).imK = 0 := by
   simp only [OneMemClass.coe_one, Quaternion.imJ_one, Quaternion.imK_one, and_self]
