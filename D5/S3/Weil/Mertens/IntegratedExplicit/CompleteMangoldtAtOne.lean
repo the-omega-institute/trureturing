@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The unique continuous fill of the complete Mangoldt transform at one is analytic throughout the nonzero zero-free domain and has an explicit value. -/
+   digest: Removing a zeta pole from the completed Mangoldt transform gives uniform Cauchy bounds for every derivative on an isolated-zero disk, including disks crossing one. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtLaurent
 
@@ -53,7 +53,7 @@ private lemma analytic_at_one : AnalyticAt ℂ completed 1 := by
     ring
 
 /-- Analyticity, value, and uniqueness of the completed function. -/
-theorem completed_analytic_unique :
+private theorem completed_analytic_unique :
     let F := completed
     (∀ s : ℂ, s ≠ 1 → F s = transform s) ∧
     F 1 = 1 + (Real.eulerMascheroniConstant : ℂ) - deriv (logDeriv riemannZeta₁) 1 ∧
@@ -82,5 +82,65 @@ theorem completed_analytic_unique :
       filter_upwards [self_mem_nhdsWithin (α := ℂ) (a := 1) (s := ({1} : Set ℂ)ᶜ)] with z hz
       exact (hEq z hz).trans (hoff z hz).symm
     · exact (hEq s hs).trans (hoff s hs).symm
+
+/-- On a zero-isolating disk, subtracting the full pole leaves an analytic
+function whose Taylor coefficients obey a single geometric bound. -/
+theorem completed_disk_cauchy :
+    let F := completed
+    ((∀ s : ℂ, s ≠ 1 → F s = transform s) ∧
+    F 1 = 1 + (Real.eulerMascheroniConstant : ℂ) - deriv (logDeriv riemannZeta₁) 1 ∧
+    (∀ s : ℂ, s ≠ 0 → riemannZeta s ≠ 0 → AnalyticAt ℂ F s) ∧
+    ∀ G : ℂ → ℂ, ContinuousAt G 1 → (∀ s : ℂ, s ≠ 1 → G s = transform s) → G = F) ∧
+    ∀ (p z : ℂ) (r : ℝ), 0 < r → p ≠ z → riemannZeta z = 0 →
+      (∀ w ∈ Metric.closedBall p r, w ≠ 0 ∧ (riemannZeta w = 0 → w = z)) →
+      let c := (analyticOrderNatAt riemannZeta z : ℂ) / (z * (1-z))
+      ∃ B : ℝ, 0 ≤ B ∧ ∀ n : ℕ,
+        ‖iteratedDeriv n F p - c * ((-1 : ℂ)^n * n.factorial *
+          (p-z)^(-1-(n : ℤ)))‖ ≤ (n.factorial : ℝ) * B / r^n := by
+  let F := completed
+  refine ⟨completed_analytic_unique, ?_⟩
+  intro p z r hr hpz hz hball c
+  have hz1 : z ≠ 1 := by rintro rfl; exact riemannZeta_one_ne_zero hz
+  obtain ⟨_, _, H, hH, hprincipal⟩ :=
+    D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtLaurent.transform_integral_and_zero_germs.2 z hz
+  let P := fun s : ℂ => c / (s-z)
+  let G := Function.update (fun s => F s - P s) z (H z)
+  have hoff (s : ℂ) (hs : s ≠ z) : G s = F s - P s := Function.update_of_ne hs _ _
+  have hgerm : G =ᶠ[𝓝 z] H := by
+    have h := eventually_nhdsWithin_iff.mp hprincipal
+    filter_upwards [h, continuousAt_id.eventually_ne hz1] with s he hs1
+    by_cases hs : s = z
+    · subst s
+      exact Function.update_self ..
+    · rw [hoff s hs]
+      change completed s - c / (s-z) = H s
+      rw [completed_analytic_unique.1 s hs1, he hs]
+      dsimp only [c]
+      ring
+  have haP {s : ℂ} (hs : s ≠ z) : AnalyticAt ℂ P s :=
+    analyticAt_const.div (analyticAt_id.sub analyticAt_const) (sub_ne_zero.mpr hs)
+  have hmodel (s : ℂ) (hs : s ≠ z) : G =ᶠ[𝓝 s] fun w => F w - P w :=
+    (continuousAt_id.eventually_ne hs).mono fun w hw => hoff w hw
+  have haF {s : ℂ} (hs : s ∈ Metric.closedBall p r) (hsz : s ≠ z) : AnalyticAt ℂ F s :=
+    completed_analytic_unique.2.2.1 s (hball s hs).1 (fun h => hsz ((hball s hs).2 h))
+  have ha : AnalyticOnNhd ℂ G (Metric.closedBall p r) := by
+    intro s hs
+    by_cases hsz : s = z
+    · subst s
+      exact hH.congr hgerm.symm
+    · exact ((haF hs hsz).sub (haP hsz)).congr (hmodel s hsz).symm
+  obtain ⟨B, hB⟩ := (isCompact_closedBall p r).exists_bound_of_continuousOn ha.continuousOn
+  refine ⟨max B 0, le_max_right _ _, fun n => ?_⟩
+  have hc := Complex.norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le n hr
+    (ha.differentiableOn.diffContOnCl_ball (Subset.rfl)) (fun w hw =>
+      (hB w (Metric.sphere_subset_closedBall hw)).trans (le_max_left B 0))
+  rw [(hmodel p hpz).iteratedDeriv_eq n, iteratedDeriv_fun_sub
+    (haF (Metric.mem_closedBall_self hr.le) hpz).contDiffAt (haP hpz).contDiffAt] at hc
+  have hP : iteratedDeriv n P p = c * ((-1 : ℂ)^n * n.factorial * (p-z)^(-1-(n : ℤ))) := by
+    dsimp only [P]
+    simp only [div_eq_mul_inv, iteratedDeriv_const_mul_field]
+    rw [iteratedDeriv_comp_sub_const (f := Inv.inv), iteratedDeriv_eq_iterate]
+    exact congrArg (c * ·) (iter_deriv_inv n (p-z))
+  rwa [hP] at hc
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtAtOne
