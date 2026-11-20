@@ -11,8 +11,9 @@ Conjecture 4.1 and Theorems 4.2--4.4. The order bound and low positive
 regimes are literature-attested and carry no novelty claim.
 Admission basis: open-problem-resolution; preregistration #25489.
 The designated endpoint is the full original iff for every positive k,s. The square
-lemma (square_cover, with even_torsor_cover and rectangle_index_le) and the order bound
-hom_order_le are also public; they are consumed on the endpoint's proof path. The
+lemma (square_cover, with even_torsor_cover and rectangle_index_le), the order bound
+hom_order_le, and the lower-range constructions odd_positive and even_positive (with the
+PairCovers predicate) are also public; they are consumed on the endpoint's proof path. The
 remaining helpers are private and consumed by that endpoint.
 Proof shape: content, through exact rectangle representatives and explicit
 integer-cylinder covers; the top strip consumes the existing necessity
@@ -37,7 +38,9 @@ open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-private def PairCovers (k s : ℕ) : Prop :=
+/-- `ZMod 2 × ZMod (2k)` has an `s`-spanning pair: two distinct elements whose signed combinations
+with `|x| + |y| ≤ s` cover the group. -/
+def PairCovers (k s : ℕ) : Prop :=
   ∃ a b : Target k, a ≠ b ∧ ∀ g, ∃ x y : ℤ,
     g = x • a + y • b ∧ |x| + |y| ≤ (s : ℤ)
 
@@ -290,7 +293,9 @@ private theorem consecutive_distinct (k : ℕ) (hk : 0 < k) (t : ℤ) :
   have hle : ((2*k : ℕ) : ℤ) ≤ 1 := Int.le_of_dvd (by norm_num) hd
   omega
 
-private theorem odd_positive (k t : ℕ) (hk : 0 < k)
+/-- Odd lower range: for `s = 2t + 1` and `2k ≤ s² - 1` (that is `k ≤ 2t(t + 1)`), the consecutive
+pair `(1, t), (1, t + 1)` spans. -/
+theorem odd_positive (k t : ℕ) (hk : 0 < k)
     (hkt : (k : ℤ) ≤ 2*(t : ℤ)*((t : ℤ)+1)) : PairCovers k (2*t+1) := by
   refine ⟨(1, ((t : ℤ) : ZMod (2*k))),
     (1, (((t : ℤ)+1 : ℤ) : ZMod (2*k))), consecutive_distinct k hk t, ?_⟩
@@ -298,7 +303,9 @@ private theorem odd_positive (k t : ℕ) (hk : 0 < k)
     (2*(t : ℤ)+1) hkt (odd_integer_cover t (by positivity))
   simpa only [Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one] using hh
 
-private theorem even_positive (k t : ℕ) (hk : 0 < k) (ht : 1 ≤ t)
+/-- Even lower range: for `s = 2t`, `t ≥ 1` and `2k ≤ s² - s` (that is `k ≤ 2t² - t`), the
+consecutive pair `(1, t - 1), (1, t)` spans. -/
+theorem even_positive (k t : ℕ) (hk : 0 < k) (ht : 1 ≤ t)
     (hkt : (k : ℤ) ≤ 2*(t : ℤ)^2-(t : ℤ)) : PairCovers k (2*t) := by
   refine ⟨(1, (((t : ℤ)-1 : ℤ) : ZMod (2*k))),
     (1, ((t : ℤ) : ZMod (2*k))), ?_, ?_⟩
