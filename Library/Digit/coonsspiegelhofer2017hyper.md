@@ -16,6 +16,8 @@ triage: anchor
 
 ## Verified locator
 
+Article page: https://www.combinatorics.org/ojs/index.php/eljc/article/view/v24i1p15
+
 DOI: 10.37236/5441. Electronic Journal of Combinatorics 24(1) (2017), #P1.15, published
 2017-02-03. Source PDF:
 https://www.combinatorics.org/ojs/index.php/eljc/article/download/v24i1p15/pdf
