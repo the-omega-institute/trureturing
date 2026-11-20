@@ -149,6 +149,68 @@ def state(root):
     return Path(root) / '.lake/build/lean-inspector'
 
 
+def prebuilt_workspace(root, *command):
+    """Run the report against Lake's existing configuration oleans inside the cache guard."""
+    host = Path(root).resolve() / 'tools/lean-inspector-reg'
+    args = list(command)
+    directory = args.index('-d') + 1
+    if Path(args[directory]).resolve() != host:
+        raise ValueError('expected the report Lake workspace')
+
+    # Keep the same relative paths to Reg, source packages and their real build outputs.
+    with tempfile.TemporaryDirectory(prefix='.report-workspace-', dir=host.parent) as temp:
+        view = Path(temp)
+        for member in host.iterdir():
+            if member.name != '.lake':
+                (view / member.name).symlink_to(member)
+        cache = view / '.lake'
+        cache.mkdir()
+        original = host / '.lake'
+        if original.is_dir():
+            for member in original.iterdir():
+                if member.name != 'config':
+                    (cache / member.name).symlink_to(member)
+        manifest = json.loads((host / 'lake-manifest.json').read_text())
+        entries = manifest['packages']
+        overrides = original / 'package-overrides.json'
+        if overrides.exists():
+            entries = entries + json.loads(overrides.read_text())['packages']
+        root_config = host / 'lakefile.lean'
+        names = {'lakefile.olean', root_config.resolve().with_suffix('.olean').name}
+        packages = host / manifest.get('packagesDir', '.lake/packages')
+        for entry in entries:
+            package = (host / entry['dir'] if entry['type'] == 'path' and not entry.get('copy')
+                       else packages / entry['name'] / (entry.get('subDir') or ''))
+            source = package / entry.get('configFile', 'lakefile')
+            if not source.suffix:
+                source = source.with_suffix('.lean')
+            if source.suffix == '.lean':
+                names.update((source.with_suffix('.olean').name, source.resolve().with_suffix('.olean').name))
+        # Lake 4.35 loads at most the root and one package per manifest name. On
+        # a cache miss it opens the trace for creation or a lock for writing BEFORE
+        # elaboration. Directories at these paths reject both operations, even as root.
+        for index in range(len(entries) + 1):
+            target = cache / 'config' / str(index)
+            target.mkdir(parents=True)
+            for name in names:
+                saved = original / 'config' / str(index) / name
+                trace = saved.with_suffix('.olean.trace')
+                if trace.is_file():
+                    (target / trace.name).symlink_to(trace)
+                else:
+                    (target / trace.name).mkdir()
+                if saved.is_file():
+                    (target / name).symlink_to(saved)
+                (target / (name + '.lock')).mkdir()
+        args[directory] = str(view)
+        status = subprocess.run(args).returncode
+        if status:
+            print('For missing or stale Lake configurations, run make lean-report-prepare '
+                  'with the same LEAN_TARGETS or FULL_BUILD=1.',
+                  file=sys.stderr)
+            raise SystemExit(status if status >= 0 else 128 - status)
+
+
 def regenerate(root, *command):
     """Explicit report-only rebuild, called inside lean-cache-run's writer guard.
 
@@ -741,7 +803,8 @@ def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,
-               'regenerate': regenerate, 'check-workspace-producer': check_workspace_producer}
+               'regenerate': regenerate, 'prebuilt-workspace': prebuilt_workspace,
+               'check-workspace-producer': check_workspace_producer}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     with phase('native-' + sys.argv[1]):

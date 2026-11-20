@@ -12,8 +12,8 @@ make lean-report FULL_BUILD=1 LEAN_REPORT=.lake/build/stratalint/custom-report.j
 make lean-report FULL_BUILD=1 REBUILD_REPORT_CACHE=1
 ```
 
-本地默认 `reuse-or-build`，其中 build 仅生成报告。缺少或过期的编译产物由
-`make lean-report-prepare LEAN_TARGETS="…"` 或全量 `make lean-report-prepare FULL_BUILD=1` 准备。
+本地默认 `reuse-or-build`，其中 build 仅生成报告。预编译输入包括 Reg inspector 工作区 `tools/lean-inspector-reg/.lake/config/` 中与当前包配置相符的 `lakefile.olean` 及其 trace。
+若只恢复了仓库根目录的 `.lake/build`，且这些配置工件缺失或过期，请先按报告范围准备输入。定向报告运行 `make lean-report-prepare LEAN_TARGETS="…"`，目标与后续报告相同。全量报告运行 `make lean-report-prepare FULL_BUILD=1`。这两个入口也会准备所需的模块和工具。
 默认的 Release 版 `StrataLint.Lean.dll` 通过 MSBuild 的只读查询核对是否需要重新构建。显式指定 `STRATALINT_LEAN_PRODUCER_DLL` 可使用调用方已准备的独立工具包。
 `make check-lean-report FULL_BUILD=1` 按需准备编译产物、取得完整报告并执行适用的 FIB 回归。只有带 `fib-inputs-checked` 的收据可作为回归基线，旧收据与独立分析收据在实际检查后取得该标记。整库检查仅在收据覆盖所有登记的依赖路径时直接重发相符的报告。其余情况由 Lake 检查编译依赖，复用有效的模块和聚合报告。
 

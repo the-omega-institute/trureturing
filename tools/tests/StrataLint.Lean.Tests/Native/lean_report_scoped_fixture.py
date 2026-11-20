@@ -512,6 +512,21 @@ os.execv(os.environ["FIXTURE_LAKE"], [os.environ["FIXTURE_LAKE"], *sys.argv[1:]]
         self.prepare('D5.A')
         self.scoped('D5.A')
         before = (self.root / '.lake/build/lean-inspector/modules/D5.A.zip').read_bytes()
+        config = self.root / 'tools/lean-inspector/lakefile.lean'
+        original = config.read_bytes()
+        # If a reader elaborates this stale config, even in a scratch directory,
+        # the command runs before Lake can validate or build a module facet.
+        config.write_bytes(original + b'\nrun_cmd liftIO <| IO.FS.writeFile '
+                           + json.dumps(str(self.root / 'config-elaborated')).encode() + b' "yes"\n')
+        cached = self.root / 'tools/lean-inspector-reg/.lake/config'
+        prepared = self.inventory(cached)
+        failed = self.scoped('D5.A', success=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn('make lean-report-prepare', failed.stderr)
+        self.assertFalse((self.root / 'config-elaborated').exists())
+        self.assertEqual(self.inventory(cached), prepared)
+        self.assertEqual(list(cached.parents[2].glob('.report-workspace-*')), [])
+        config.write_bytes(original)
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         inspector.write_text(inspector.read_text() + '\n-- compatible producer edit\n')
         self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0)

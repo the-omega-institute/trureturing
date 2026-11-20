@@ -31,7 +31,7 @@ class NativeLocalReportConsumerTests:
                 self.assertEqual(publication.digest(private), publication.digest(material))
                 self.assertFalse(os.path.samestat(material.stat(), private.stat()))
         self.check_cold_project(self)
-        self.prepare_report_modules()
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
         first = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'],
             env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
@@ -424,6 +424,15 @@ package_facet compilerRegistrationContender (pkg : Package) : Unit := do
         self.assertIn('phase=report status=completed', warm.stderr)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', warm.stdout)
         self.assertEqual(expected, report.read_bytes())
+
+        # An older release can contain all compiled modules but no workspace configuration.
+        config = self.root / 'tools/lean-inspector-reg/.lake/config'
+        config.rename(config.with_name('prepared-config'))
+        missing_config = self.inspect(success=False, phase='missing-lake-configuration')
+        self.assertIn('make lean-report-prepare', missing_config.stderr)
+        self.assertFalse(config.exists())
+        self.assertEqual(expected, report.read_bytes())
+        config.with_name('prepared-config').rename(config)
 
         dependency = self.root / '.lake/build/lib/lean/ClaimSupport.olean'
         original = dependency.read_bytes()
