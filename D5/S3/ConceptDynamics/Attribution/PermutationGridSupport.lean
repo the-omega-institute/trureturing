@@ -81,10 +81,8 @@ private theorem block_count_lower {I : Type*} [Fintype I] (s : I → ℕ) (pos :
     rwa [eq] at h
   have tBound : t ≤ k := by omega
   have kPos : 0 < k := by omega
-  have prev : (k - 1)! * k = (k)! := by
-    calc
-      _ = ((k - 1) + 1)! := by rw [Nat.factorial_succ, Nat.sub_add_cancel kPos, Nat.mul_comm]
-      _ = _ := by rw [Nat.sub_add_cancel kPos]
+  have prev : (k - 1)! * k = k ! :=
+    (Nat.mul_comm _ _).trans (Nat.mul_factorial_pred kPos.ne')
   have intermediate : (k - t + 1)! * (t - 1) ≤ (k - 1)! := by
     by_cases ht : t = 2
     · have h1 : k - t + 1 = k - 1 := by omega
@@ -95,10 +93,9 @@ private theorem block_count_lower {I : Type*} [Fintype I] (s : I → ℕ) (pos :
         (k - t + 1)! * (t - 1) ≤ (k - 2)! * (k - 1) :=
           Nat.mul_le_mul (Nat.factorial_le less) (by omega)
         _ = (k - 1)! := by
-          calc
-            _ = ((k - 2) + 1)! := by rw [Nat.factorial_succ, Nat.mul_comm, show k - 2 + 1 = k - 1 by omega]
-            _ = _ := by rw [show k - 2 + 1 = k - 1 by omega]
-  have orderPositive : 0 < ∏ i, (s i)! := Finset.prod_pos fun _ _ => Nat.factorial_pos _
+          simpa only [Nat.mul_comm, show k - 1 - 1 = k - 2 by omega] using
+            (Nat.mul_factorial_pred (n := k - 1) (by omega))
+  have orderPositive : 0 < ∏ i, (s i)! := Nat.prod_factorial_pos Finset.univ s
   rw [Nat.le_div_iff_mul_le orderPositive]
   calc
     k * (Fintype.card I - 1) * (∏ i, (s i)!) = (∏ i, (s i)!) * (t - 1) * k := by dsimp [t]; ac_rfl
@@ -253,11 +250,8 @@ private theorem stabilizer_count_product {I : Type*} [Fintype I] [DecidableEq I]
   rwa [eq] at C
 
 private theorem regular_subgroup_free {I : Type*} (p : I → ℕ) (g : Equiv.Perm I) :
-    MulAction.stabilizer (Preserving p) g = ⊥ := by
-  apply (Subgroup.eq_bot_iff_forall _).mpr
-  intro h fixes
-  have eq : h.val * g = g := MulAction.mem_stabilizer_iff.mp fixes
-  exact Subtype.ext (mul_right_cancel (eq.trans (one_mul g).symm))
+    MulAction.stabilizer (Preserving p) g = ⊥ :=
+  IsCancelSMul.stabilizer_eq_bot g
 
 end ProfileStabilizer
 
@@ -483,13 +477,11 @@ private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty 
     exact ⟨k * q, by dsimp [k]; ac_rfl⟩
   have demand (b : B) : d b * H = D * (ProfileStabilizer.size p b * b.val) :=
     Nat.div_mul_cancel (divide b)
-  have kfact : (k)! = D * k * (k - 1) := by
-    have step (a : ℕ) (apos : 0 < a) : a ! = a * (a - 1)! := by
-      conv_lhs => rw [← Nat.sub_add_cancel apos]
-      rw [Nat.factorial_succ, Nat.sub_add_cancel apos]
-    rw [step k (by omega), step (k - 1) (by omega)]
-    dsimp [D]
-    rw [show k - 1 - 1 = k - 2 by omega]
+  have kfact : k ! = D * k * (k - 1) := by
+    have pred : (k - 1)! = (k - 1) * D := by
+      simpa only [D, show k - 1 - 1 = k - 2 by omega] using
+        (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
+    rw [← Nat.mul_factorial_pred (n := k) (by omega), pred]
     ac_rfl
   have dtotal : ∑ b : B, d b = U * q := by
     apply Nat.eq_of_mul_eq_mul_right Hpos
@@ -706,10 +698,7 @@ private theorem flag_card {I : Type*} [Fintype I] [DecidableEq I] (a : I) :
   let k := Fintype.card I
   have kpos : 0 < k := Fintype.card_pos_iff.mpr ⟨a⟩
   let _ : Fintype (MulAction.orbit (Equiv.Perm I) a) := Fintype.ofFinite _
-  have orbitAll : MulAction.orbit (Equiv.Perm I) a = Set.univ := by
-    ext b
-    simp only [Set.mem_univ, iff_true]
-    exact ⟨Equiv.swap a b, Equiv.swap_apply_left _ _⟩
+  have orbitAll : MulAction.orbit (Equiv.Perm I) a = Set.univ := MulAction.orbit_eq_univ (Equiv.Perm I) a
   have orbitCard : Fintype.card (MulAction.orbit (Equiv.Perm I) a) = k :=
     Fintype.card_congr ((Set.equivOfEq orbitAll).trans (Equiv.Set.univ I))
   have stabCard : Fintype.card (MulAction.stabilizer (Equiv.Perm I) a) = (k - 1)! := by
@@ -717,9 +706,7 @@ private theorem flag_card {I : Type*} [Fintype I] [DecidableEq I] (a : I) :
     have c := MulAction.card_orbit_mul_card_stabilizer_eq_card_group (Equiv.Perm I) a
     rw [orbitCard, Fintype.card_perm] at c
     rw [c]
-    calc
-      (Fintype.card I)! = (k - 1 + 1)! := by rw [Nat.sub_add_cancel kpos]
-      _ = k * (k - 1)! := by rw [Nat.factorial_succ, Nat.sub_add_cancel kpos]
+    exact (Nat.mul_factorial_pred kpos.ne').symm
   let e : ProfileStabilizer.Preserving (flag a) ≃ MulAction.stabilizer (Equiv.Perm I) a :=
     Set.equivOfEq (congrArg (fun H : Subgroup (Equiv.Perm I) => (H : Set (Equiv.Perm I)))
       (flag_stabilizer a))
@@ -791,10 +778,7 @@ private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
     change (Fintype.card (Equiv.Perm I)) / Fintype.card (ProfileStabilizer.Preserving (flag a)) = k
     rw [Fintype.card_perm, flag_card]
     change k ! / (k - 1)! = k
-    have fact : k ! = k * (k - 1)! := by
-      calc
-        _ = (k - 1 + 1)! := by rw [Nat.sub_add_cancel kpos]
-        _ = _ := by rw [Nat.factorial_succ, Nat.sub_add_cancel kpos]
+    have fact : k ! = k * (k - 1)! := (Nat.mul_factorial_pred kpos.ne').symm
     rw [fact, Nat.mul_div_cancel _ (Nat.factorial_pos _)]
   have chooseDigit (l : L) (j : J) :
       ∃ d : Fin (k + 1),
@@ -861,14 +845,11 @@ theorem grid_support_budget_iff {k q : ℕ} (two : 2 ≤ k) (positive : 0 < q)
   have cardI : Fintype.card I = k := Fintype.card_fin k
   have cardP : Fintype.card P = k ! := by rw [Fintype.card_perm, cardI]
   have fact : k ! = D * k * (k - 1) := by
-    have prev : (k - 1)! = (k - 1) * D := by
-      calc
-        _ = (k - 2 + 1)! := by rw [show k - 1 = k - 2 + 1 by omega]
-        _ = _ := by rw [Nat.factorial_succ, show k - 2 + 1 = k - 1 by omega]
-    calc
-      _ = (k - 1 + 1)! := by rw [Nat.sub_add_cancel (show 0 < k by omega)]
-      _ = k * (k - 1)! := by rw [Nat.factorial_succ, Nat.sub_add_cancel (show 0 < k by omega)]
-      _ = _ := by rw [prev]; ac_rfl
+    have pred : (k - 1)! = (k - 1) * D := by
+      simpa only [D, show k - 1 - 1 = k - 2 by omega] using
+        (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
+    rw [← Nat.mul_factorial_pred (n := k) (by omega), pred]
+    ac_rfl
   constructor
   · rintro ⟨S, _, _, w, f, ⟨wp, _, wi, mass, covariance⟩, bound⟩
     have realPos : 0 < (m : ℝ) := by exact_mod_cast mpos
