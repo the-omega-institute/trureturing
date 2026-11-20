@@ -7,6 +7,8 @@
    digest: Sound checking of equality branches for arbitrary order-four arrays. -/
 
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LatinCore
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Tactic.FinCases
 
 namespace MaLatin.OrderFourChecker

@@ -12,7 +12,7 @@ internal sealed class MaOrderThreeDocument : IScribeDocumentDefinition
                 DescribeId.Create("ma-orderthree-orderthree"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderThree.orderThree"),
                 H("orderThree"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/best2017latinarrays")),
                 Blocks(Paragraph(Text("Best et al., Section 4, list no transversal-free arrays of order three. The Lean proof checks the six column permutations and transfers the Boolean equality table to the original labels."))),
                 DescribeRole.Theorem))));

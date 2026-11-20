@@ -12,7 +12,7 @@ internal sealed class MaPart17Document : IScribeDocumentDefinition
                 DescribeId.Create("ma-part17-initial-closed"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part17.initial_closed"),
                 H("initial_closed"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The bootstrap partition with sixteen singleton classes is closed. The order-four disjunction uses this closure for arrays without a transversal."))),
                 DescribeRole.Theorem))));

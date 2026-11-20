@@ -14,7 +14,7 @@ namespace D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour
 
 /-- The order-four classification, at the universe needed by the registered claim. -/
 def OrderFourObstruction : Prop :=
-  ∀ {α : Type} (B : MaLatin.Fin 4 → Fin 4 → α), MaLatin.Latin B →
+  ∀ {α : Type} (B : Fin 4 → Fin 4 → α), MaLatin.Latin B →
     MaLatin.Rainbow B ∨ MaLatin.EqualColumns B ∨ MaLatin.Motif B
 
 section Group

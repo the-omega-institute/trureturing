@@ -17,7 +17,7 @@ import Mathlib.Tactic.NormNum
 open scoped BigOperators
 namespace MaLatin
 
-private theorem productLatin {M : Type*} [Group M] {k : ℕ} (b u : Fin k → M)
+theorem productLatin {M : Type*} [Group M] {k : ℕ} (b u : Fin k → M)
     (hb : Function.Injective b) (hu : Function.Injective u) :
     Latin (fun i j => b i * u j) :=
   ⟨fun _ _ _ h => hu (mul_left_cancel h), fun _ _ _ h => hb (mul_right_cancel h)⟩

@@ -12,7 +12,7 @@ internal sealed class MaPart03Document : IScribeDocumentDefinition
                 DescribeId.Create("ma-part03-boundary03"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part03.boundary03"),
                 H("boundary03"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("These are the closed equality states consumed by later parts. Each local chunk has a kernel decision and passes its checked branches to the soundness theorem."))),
                 DescribeRole.Theorem))));
