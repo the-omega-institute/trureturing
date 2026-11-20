@@ -12,8 +12,9 @@ import D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 (DOI 10.5281/zenodo.24369118, Section 2), which uses the narrow-band principle of O. Dovgoshey and
 O. Rovenska (arXiv:2610.11596, proof of Theorem 3.8, formula (19)). On the vertices of `K_n`,
 `n ≥ 3`, take edge-disjoint spanning edge covers `F_1, …, F_s`, give every edge of `F_i` the length
-`a_i` with the `a_i` distinct, and give every remaining edge its own length, different from all
-`a_i`; all lengths lie in a band `[c, 2c)` with `c > 0` (the source takes `c = 1`). This is a
+`a_i`, and give every remaining edge its own length, different from all `a_i`; all lengths lie in a
+band `[c, 2c]` with `c > 0`. The source takes the half-open band `[1, 2)` and distinct `a_i`; the
+closed band and the absence of a distinctness condition make the statement more general. This is a
 metric with center `{0, a_1, …, a_s}` and central edge set `F_1 ∪ ⋯ ∪ F_s`, for the center and
 central graph of `DovgosheyRovenskaCentralEdges`.
 
@@ -30,9 +31,9 @@ namespace D5.S3.Combinatorics.Geometry.EdgeCoverLengthMetric
 open D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 
 
-/-- Edge-disjoint spanning edge covers `F i` of `K_n`, distinct class lengths `a i`, and lengths
-`len` on the remaining edges, pairwise distinct and different from every `a i`, all in the band
-`[c, 2c)` for some `c > 0`. -/
+/-- Edge-disjoint spanning edge covers `F i` of `K_n`, class lengths `a i`, and lengths `len` on
+the remaining edges, pairwise distinct and different from every `a i`, all in the band `[c, 2c]`
+for some `c > 0`. Values of `len` on the diagonal and on class edges are not used. -/
 structure LengthData (n s : ℕ) where
   c : ℝ
   c_pos : 0 < c
@@ -40,11 +41,10 @@ structure LengthData (n s : ℕ) where
   disjoint : ∀ i j, i ≠ j → Disjoint (F i) (F j)
   cover : ∀ i (x : Fin n), ∃ y, (F i).Adj x y
   a : Fin s → ℝ
-  a_inj : Function.Injective a
-  a_mem : ∀ i, c ≤ a i ∧ a i < 2 * c
+  a_mem : ∀ i, c ≤ a i ∧ a i ≤ 2 * c
   len : Sym2 (Fin n) → ℝ
-  len_mem : ∀ e, c ≤ len e ∧ len e < 2 * c
-  len_ne : ∀ e i, len e ≠ a i
+  len_mem : ∀ x y : Fin n, x ≠ y → (∀ i, ¬ (F i).Adj x y) → c ≤ len s(x, y) ∧ len s(x, y) ≤ 2 * c
+  len_ne : ∀ x y : Fin n, x ≠ y → (∀ i, ¬ (F i).Adj x y) → ∀ i, len s(x, y) ≠ a i
   len_inj : ∀ x y z w : Fin n, x ≠ y → z ≠ w → (∀ i, ¬ (F i).Adj x y) → (∀ i, ¬ (F i).Adj z w) →
     len s(x, y) = len s(z, w) → s(x, y) = s(z, w)
 
@@ -93,18 +93,14 @@ private theorem ldist_comm (x y : Fin n) : ldist D x y = ldist D y x := by
     rw [ldist_other D hxy h, ldist_other D (Ne.symm hxy) fun i hi => h i hi.symm, Sym2.eq_swap]
 
 private theorem ldist_mem {x y : Fin n} (hxy : x ≠ y) :
-    D.c ≤ ldist D x y ∧ ldist D x y < 2 * D.c := by
+    D.c ≤ ldist D x y ∧ ldist D x y ≤ 2 * D.c := by
   by_cases h : ∃ i, (D.F i).Adj x y
   · obtain ⟨i, hi⟩ := h; rw [ldist_class D hi]; exact D.a_mem i
-  · push Not at h; rw [ldist_other D hxy h]; exact D.len_mem _
+  · push Not at h; rw [ldist_other D hxy h]; exact D.len_mem _ _ hxy h
 
 /-- The vertices of `K_n` with the prescribed distances. -/
 @[ext] structure LSpace (_D : LengthData n s) where
   pt : Fin n
-
-private def lequiv : LSpace D ≃ Fin n := ⟨LSpace.pt, LSpace.mk, fun _ => rfl, fun _ => rfl⟩
-
-instance : Fintype (LSpace D) := Fintype.ofEquiv _ (lequiv D).symm
 
 private theorem ldist_tri (x y z : Fin n) : ldist D x z ≤ ldist D x y + ldist D y z := by
   by_cases hxz : x = z
@@ -198,7 +194,7 @@ private theorem central_adj (hn : 3 ≤ n) (x y : LSpace D) :
     · by_contra hcl
       push Not at hcl
       rw [dist_eq, ldist_other D hne hcl] at hi
-      exact D.len_ne _ i hi.symm
+      exact D.len_ne _ _ hne hcl i hi.symm
   · rintro ⟨i, hi⟩
     refine ⟨fun h => hi.ne (congrArg LSpace.pt h), Or.inl ?_⟩
     rw [dist_eq, ldist_class D hi, mem_center D hn]
