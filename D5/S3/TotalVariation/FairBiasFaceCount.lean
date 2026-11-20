@@ -135,16 +135,20 @@ private theorem faceOf_surjective (c : L → A) (k : ℕ) (hk : 0 < k) :
   classical
   intro F
   let S := supportOf c k F
-  have h (i : S.val) : ∃ b : Bool, (i.val, b) ∈ F.val :=
-    (mem_image_fst F.val i.val).mp i.property
-  let e (i : S.val) := (h i).choose
-  refine ⟨⟨S, e⟩, Subtype.ext ?_⟩
-  apply Finset.eq_of_subset_of_card_le
-  · rintro ⟨i, b⟩ hb
-    obtain ⟨hi, he⟩ := (mem_assignSigns S.val e i b).mp hb
-    rw [← he]
-    exact (h ⟨i, hi⟩).choose_spec
-  · exact F.property.2.le.trans (faceOf c k hk S e).property.2.ge
+  obtain ⟨f, hf⟩ := Set.exists_eq_graphOn_image_fst.mpr
+    (fst_injOn F.property.1.2.1)
+  refine ⟨⟨S, fun i => f i.val⟩, Subtype.ext ?_⟩
+  ext z
+  obtain ⟨i, b⟩ := z
+  change (i, b) ∈ assignSigns S.val (fun j => f j.val) ↔ (i, b) ∈ F.val
+  have hgraph : (i, b) ∈ F.val ↔ i ∈ S.val ∧ f i = b := by
+    change (i, b) ∈ (F.val : Set (L × Bool)) ↔ _
+    rw [hf, Set.mem_graphOn]
+    change i ∈ Prod.fst '' (F.val : Set (L × Bool)) ∧ f i = b ↔ _
+    rw [← Finset.coe_image]
+    rfl
+  exact (mem_assignSigns S.val (fun j => f j.val) i b).trans
+    ((show (∃ _ : i ∈ S.val, f i = b) ↔ i ∈ S.val ∧ f i = b from exists_prop).trans hgraph.symm)
 
 /-- Each eligible k-label support gives exactly two to the k signed faces. -/
 theorem card_signed_faces (c : L → A) (k : ℕ) (hk : 0 < k) :
@@ -241,10 +245,9 @@ noncomputable def columnTutte (c : L → A) (x y : ℚ) : ℚ :=
 
 private theorem span_as_closure (s : Set A) :
     (Submodule.span (ZMod 2) s).toAddSubgroup = AddSubgroup.closure s := by
-  apply le_antisymm
-  · change Submodule.span (ZMod 2) s ≤ AddSubgroup.toZModSubmodule 2 (AddSubgroup.closure s)
-    exact Submodule.span_le.mpr AddSubgroup.subset_closure
-  · exact (AddSubgroup.closure_le _).mpr Submodule.subset_span
+  rw [← Submodule.span_int_eq_addSubgroupClosure]
+  exact congrArg Submodule.toAddSubgroup
+    (Submodule.restrictScalars_span ℤ (ZMod 2) ZMod.intCast_surjective s)
 
 private theorem rank_eq_iff_spans (c : L → A) (S : Finset L) :
     Module.finrank (ZMod 2) (columnSpan c S) =
@@ -274,7 +277,7 @@ theorem reducedEuler_eq_tutte (c : L → A) :
   rw [← hrange, euler_eq_support_sum, neg_mul]
   congr 1
   let e : Finset L ≃ Finset L :=
-    ⟨Compl.compl, Compl.compl, compl_compl, compl_compl⟩
+    compl_involutive.toPerm _
   calc
     _ = ∑ B : Finset L with spansComplement c Bᶜ, (-2 : ℚ) ^ (n - B.card) := by
       apply Finset.sum_equiv e
@@ -301,16 +304,11 @@ theorem reducedEuler_eq_tutte (c : L → A) :
           (-2 : ℚ) ^ (n - h) * ((1 - 1) ^ (h - r) * (1 / 2 - 1) ^ (B.card - r))
         rw [he, Nat.sub_self, pow_zero, one_mul]
         have hcard : h ≤ B.card := by
-          let f : B → A := fun i => c i.val
-          have hf : Set.range f = c '' (B : Set L) := by
-            ext a
-            constructor
-            · rintro ⟨i, rfl⟩
-              exact ⟨i.val, i.property, rfl⟩
-            · rintro ⟨i, hi, rfl⟩
-              exact ⟨⟨i, hi⟩, rfl⟩
-          have hh := finrank_range_le_card (R := ZMod 2) f
-          rw [hf, Fintype.card_coe] at hh
+          have hf := Set.range_domRestrict c (B : Set L)
+          have hh := finrank_range_le_card (R := ZMod 2) ((B : Set L).domRestrict c)
+          rw [hf] at hh
+          change Module.finrank (ZMod 2) (columnSpan c B) ≤ Fintype.card ↥B at hh
+          rw [Fintype.card_coe] at hh
           exact he ▸ hh
         have hle := Finset.card_le_univ B
         have hexp : n - B.card = n - h - (B.card - h) := by omega
