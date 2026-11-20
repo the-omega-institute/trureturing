@@ -13,46 +13,46 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℕ)
 
-/-- The decay readout on the integer moment orders. -/
+/-- The integer moment order selected from the real cutoff. -/
 def actual : Realization signature :=
-  realize signature (fun _ _ k => (512 : ℝ)⁻¹ ^ k) (fun e => nomatch e)
+  realize signature (fun _ _ a => ⌊640*a⌋₊) (fun e => nomatch e)
 
-def negativeScale : Realization signature :=
-  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def zeroOrder : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {a : ℝ} (ha : 1 ≤ a) {g : ℝ → ℝ} (hg : Measurable g)
     {M : ℝ} (hM : ∀ u, 0 ≤ u → |g u| ≤ M * exp (2*u)),
-    let k := ⌊640*a⌋₊
+    let k := V.readout () () a
     let f := fun u : ℝ => |g u| * (u ^ k * exp (-(512*u)) / k.factorial)
     let S := Ioi (0:ℝ) \ Icc a (3*a/2)
     a ≤ (k:ℝ) ∧ IntegrableOn f S ∧
-      (∫ u in S, f u) ≤ M * (1/542 + 1/478) * V.readout () () k
+      (∫ u in S, f u) ≤ M * (1/542 + 1/478) * (512:ℝ)⁻¹ ^ k
 
-private theorem negative_fails : ¬ arena.Law negativeScale := by
+private theorem zero_fails : ¬ arena.Law zeroOrder := by
   intro h
   have h0 : ∀ u : ℝ, 0 ≤ u → |(fun _ : ℝ => (0 : ℝ)) u| ≤ 1 * exp (2*u) := by
     intro u _
     simpa only [abs_zero, one_mul] using (Real.exp_pos (2*u)).le
-  have hs := (h (a := 1) le_rfl (g := fun _ : ℝ => (0 : ℝ)) measurable_const (M := 1) h0).2.2
-  change ((∫ u in _, |(0 : ℝ)| * _) : ℝ) ≤ 1 * (1 / 542 + 1 / 478) * (-1) at hs
+  have hs := (h (a := 1) le_rfl (g := fun _ : ℝ => (0 : ℝ)) measurable_const (M := 1) h0).1
+  change (1 : ℝ) ≤ (0 : ℕ) at hs
   norm_num at hs
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨(), (0:ℕ), (1:ℕ), ?_⟩
-  change (512 : ℝ)⁻¹ ^ 0 ≠ (512 : ℝ)⁻¹ ^ 1
+  refine ⟨(), (1:ℝ), (2:ℝ), ?_⟩
+  change ⌊640*(1:ℝ)⌋₊ ≠ ⌊640*(2:ℝ)⌋₊
   norm_num
 
 def family : Registration arena (type_of% @critical_window_off_mass) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@critical_window_off_mass, negativeScale, negative_fails⟩
+  variation := ⟨@critical_window_off_mass, zeroOrder, zero_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual negativeScale negative_fails
+    arena.Law actual zeroOrder zero_fails
   dependence := actual_dependence
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -72,7 +72,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ k => (512 : ℝ)⁻¹ ^ k) (fun e => nomatch e))
+    (fun _ _ a => ⌊640*a⌋₊) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -82,10 +82,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[
-        "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
