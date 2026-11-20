@@ -94,7 +94,19 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 Hardin's shifted integer recurrence.
 
-Each column contributes six free side bits. Scaling the pair-pattern relation multiplies the coefficient at lag j by 64^j. The finite instance supplies width 26; the shifted transfer relation supplies every greater width. The index n+26 expresses exactly the published range index>25. Width one is outside the bridge's scope.
+Each column contributes six free side bits. Scaling the pair-pattern relation multiplies the coefficient at lag j by 64^j. The finite instance supplies width 26; the shifted transfer relation supplies every greater width. The index n+26 expresses exactly the published range index>25.
+
+For every positive width n, a(n) is T(6,n) for the diagonal strip. The row-major bijection sends cell (r,j) to r*n+j and its inverse reconstructs the array. It preserves the first cell, both predecessor conditions and the complementary-pair bond predicate. HardinThinGraphTransport.literalEquiv identifies these same arrays with normalized colourings of the ordered strip graph.
+
+The width-one strip is edgeless. The complete graph formula from HardinGraphNormalization.total_identity then gives 48*T(h,1)=6^h+3*4^h+15*2^h for every positive h, by counting all functions into palettes of sizes three, two and one. At h=6 this gives a(1)=1248. The counting bridge and HardinA233179PairTransfer.initial_values give a(2)=124928, a(3)=127533056 and a(4)=82428559360. HardinColumnPolynomials.sixRow_walk and rowSix supply the separate continuation interpretation and the full vector relation on all 729 actual columns, together with the coefficient sum one.
+
+For the ordinary generating series set a(0)=b(0)=0 in degree zero, take b(1)=936, and use b(n)=L(n)+6 for every n at least two. Then the integer identity 48*a(n)=64^n*b(n) holds coefficientwise. Let c(j) be the lag-j coefficient before scaling, so q(t)=1-sum(c(j)*t^j, j=1..24). In degree n the coefficient of q(t) times the series with coefficients b(n) is b(n)-sum(c(j)*b(n-j), j=1..min(n,24)).
+
+The coefficients of this product in exponents 0 through 25 are (0, 936, -5088, -83304, 263214, 2175108, -5145426, -23138070, 53133882, 111863904, -292206522, -225606702, 823430316, 104406570, -1226356254, 236624820, 1000188192, -361101846, -449345922, 201432990, 107989830, -52135680, -12870528, 6171630, 580770, -267300). The zero constant comes from b(0). The positive-degree entries use the edgeless b(1) and the proved initial values of L. In every degree n at least 26, multiply the convolution by 64^n to obtain 48 times the literal recurrence residual. The result theorem makes it zero including at degree 26, so cancellation gives a polynomial R with exactly the displayed coefficients.
+
+Over the rationals, formal rescaling takes the coefficient in degree n to 64^n times that coefficient and preserves products. The constant coefficient of 48*q(64*z) is 48, so it is a unit. The series with coefficient a(n) in every positive degree and zero constant is therefore R(64*z)/(48*q(64*z)).
+
+In degree 25 all 24 lags occur and the last uses the actual width-one count. The literal residual is 64^25*(-267300)/48 = -22275*2^148, which is nonzero. Thus 26 is the sharp onset for these specified coefficients.
 
 ## References
 
