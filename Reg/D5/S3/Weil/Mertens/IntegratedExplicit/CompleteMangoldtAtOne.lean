@@ -33,9 +33,12 @@ def arena : Arena where
     ∀ (p z : ℂ) (r : ℝ), 0 < r → p ≠ z → riemannZeta z = 0 →
       (∀ w ∈ Metric.closedBall p r, w ≠ 0 ∧ (riemannZeta w = 0 → w = z)) →
       let c := (analyticOrderNatAt riemannZeta z : ℂ) / (z * (1-z))
-      ∃ B : ℝ, 0 ≤ B ∧ ∀ n : ℕ,
+      let J := fun n : ℕ => (p-z)^(n+1) * ((-1 : ℂ)^n / n.factorial) * iteratedDeriv n F p
+      ∃ B : ℝ, 0 ≤ B ∧ (∀ n : ℕ,
         ‖iteratedDeriv n F p - c * ((-1 : ℂ)^n * n.factorial *
-          (p-z)^(-1-(n : ℤ)))‖ ≤ (n.factorial : ℝ) * B / r^n
+          (p-z)^(-1-(n : ℤ)))‖ ≤ (n.factorial : ℝ) * B / r^n) ∧
+        (∀ n : ℕ, ‖J n - c‖ ≤ B * ‖p-z‖ * (‖p-z‖ / r)^n) ∧
+        (‖p-z‖ < r → Tendsto J atTop (𝓝 c) ∧ ∀ᶠ n in atTop, ‖c‖ / 2 ≤ ‖J n‖)
 
 private lemma shifted_fails : ¬ arena.Law shifted := by
   intro h

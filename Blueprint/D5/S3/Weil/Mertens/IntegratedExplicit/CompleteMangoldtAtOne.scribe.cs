@@ -9,7 +9,7 @@ internal sealed class CompleteMangoldtAtOneDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cauchy bounds for the complete Mangoldt transform after subtracting its pole at a zeta zero",
-        H("Cauchy estimates for the completed Mangoldt transform"),
+        H("Recovering a zeta-zero residue from the completed Mangoldt transform"),
         Blocks(
             Describe.Lean(DescribeId.Create("completed"), DeclarationHandle.Create(Module + "completed"),
                 H("The completed transform"), StatementSource.FromAuthor(F.Disp(Definition())),
@@ -19,7 +19,7 @@ internal sealed class CompleteMangoldtAtOneDocument : IScribeDocumentDefinition
                     + "At 1 its value is 1 and its derivative is Euler's constant γ. "
                     + "Thus A(1)=γ. The completed transform is denoted by F."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("uniqueness"), DeclarationHandle.Create(Module + "completed_disk_cauchy"),
-                H("The unique fill and its single-pole Cauchy estimate"), StatementSource.FromAuthor(F.Disp(Claim())),
+                H("The unique fill, derivative estimates and residue limit"), StatementSource.FromAuthor(F.Disp(Claim())),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The original rational expression on the punctured neighborhood of 1 equals "
                         + "[1+γ−(A(s)−A(1))/(s−1)]/s. The term 1/(s−1) in the negative logarithmic "
@@ -37,7 +37,11 @@ internal sealed class CompleteMangoldtAtOneDocument : IScribeDocumentDefinition
                         + "analytic local Laurent remainder. This yields a single function analytic near every "
                         + "point of the disk, including 1. Its supremum on the circle bounds every Taylor "
                         + "coefficient at p by the Cauchy estimate. The derivative of the subtracted pole contributes "
-                        + "the term c(z)(−1)ⁿn!/(p−z)ⁿ⁺¹."))), DescribeRole.Theorem))));
+                        + "the term c(z)(−1)ⁿn!/(p−z)ⁿ⁺¹.")),
+                    Paragraph(Text("Write d=|p−z| and J(n)=(p−z)ⁿ⁺¹(−1)ⁿF⁽ⁿ⁾(p)/n!. The same constant B "
+                        + "bounds |J(n)−c(z)| by Bd(d/r)ⁿ for all n. If d<r, these complex coefficients "
+                        + "converge to the residue c(z). The residue is nonzero, so |J(n)| is at least "
+                        + "|c(z)|/2 for all sufficiently large n."))), DescribeRole.Theorem))));
 
     private static Formula Complex => F.Seq(F.Mathbb, F.Grp(F.Id("C")));
     private static Formula ComplexFunction => F.Seq(F.Open, Complex, F.Sp, F.To, F.Sp, Complex, F.Close);
@@ -101,8 +105,22 @@ internal sealed class CompleteMangoldtAtOneDocument : IScribeDocumentDefinition
         var error = new Formula.Absolute(Subtract(Predicate("iteratedDeriv", n, F.Id("F"), p), correction));
         var bound = new Formula.Relation(error, FormulaRelationOperator.LessThanOrEqual,
             new Formula.Fraction(Multiply(factorial, b), new Formula.Power(r, n)));
+        var d = new Formula.Absolute(Subtract(p, z));
+        var residue = Predicate("c", z);
+        var jet = At("J", n);
+        var geometric = new Formula.Relation(new Formula.Absolute(Subtract(jet, residue)),
+            FormulaRelationOperator.LessThanOrEqual,
+            Multiply(Multiply(b, d), new Formula.Power(new Formula.Fraction(d, r), n)));
+        var threshold = F.Id("N");
+        var lower = new Formula.Relation(new Formula.Fraction(new Formula.Absolute(residue), F.D(2)),
+            FormulaRelationOperator.LessThanOrEqual, new Formula.Absolute(jet));
+        var eventual = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("N"), nat,
+            All("n", nat, If(new Formula.Relation(threshold, FormulaRelationOperator.LessThanOrEqual, n), lower)));
+        var inner = If(new Formula.Relation(d, FormulaRelationOperator.LessThan, r),
+            And(Predicate("Tendsto", F.Id("J"), F.Id("atTop"), Predicate("nhds", residue)), eventual));
         var conclusion = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("B"), real,
-            And(new Formula.Relation(zero, FormulaRelationOperator.LessThanOrEqual, b), All("n", nat, bound)));
+            And(new Formula.Relation(zero, FormulaRelationOperator.LessThanOrEqual, b),
+                And(All("n", nat, bound), And(All("n", nat, geometric), inner))));
         return All("p", Complex, All("z", Complex, All("r", real, If(hypotheses, conclusion))));
     }
 }
