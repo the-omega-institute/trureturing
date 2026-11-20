@@ -123,10 +123,8 @@ abbrev spectrumArena : Arena where
 
 private theorem spectrum_rejected_law : ¬ spectrumArena.Law spectrumRejected := by
   intro h
-  letI : MulAction (Equiv.Perm (Fin 2)) Empty where
-    smul _ s := s
-    one_smul _ := rfl
-    mul_smul _ _ _ := rfl
+  letI : MulAction (Equiv.Perm (Fin 2)) Empty :=
+    { smul := fun _ s => s, one_smul := fun _ => rfl, mul_smul := fun _ _ _ => rfl }
   have calibrated (p : Profile (Fin 2) 0) (i : Fin 2) :
       (∑ s : Empty, if (nomatch s : Fin 2) = i then (nomatch s : ℝ) else 0) =
         (p.val i : ℝ) := by
