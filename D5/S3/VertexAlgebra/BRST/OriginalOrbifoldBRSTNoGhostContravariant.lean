@@ -182,7 +182,8 @@ set_option maxHeartbeats 600000 in
 /-- The original contravariant form restricts on every nonzero on-shell
 physical momentum to the original transverse orbifold form in a light-cone frame. -/
 theorem contravariantBPZ_inFrame (F : Frame) (a : UCharge) (hp : F.pPlus a ≠ 0)
-    (ha : chargeEnergy hyperbolicData a ≤ 1) (u v : orbifoldGrade (massShellCutoff hyperbolicData a)) :
+    (ha : chargeEnergy hyperbolicData a ≤ 1)
+    (u v : orbifoldGrade (massShellCutoff hyperbolicData a)) :
     contravariantBPZ ((physicalMomentumEquivOrbifoldGradeInFrame F a hp ha).symm u)
         ((physicalMomentumEquivOrbifoldGradeInFrame F a hp ha).symm v) =
       orbifoldBPZ (u : Orbifold) (v : Orbifold) := by
