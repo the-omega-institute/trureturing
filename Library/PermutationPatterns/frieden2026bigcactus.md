@@ -37,4 +37,8 @@ obstruction for sufficiency and the direction changes of individual
 wires for necessity. The paper also gives a numerical formulation via
 Meng's identity.
 
-[Pinned source](https://arxiv.org/html/2610.24842v1#S4.Thmtheorem10)
+## Locator
+
+[DOI 10.48550/arXiv.2610.24842](https://doi.org/10.48550/arXiv.2610.24842)
+· [arXiv v1](https://arxiv.org/html/2610.24842v1)
+· [Conjecture 4.10](https://arxiv.org/html/2610.24842v1#S4.Thmtheorem10)
