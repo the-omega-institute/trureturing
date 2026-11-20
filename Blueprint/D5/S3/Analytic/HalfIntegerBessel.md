@@ -454,6 +454,18 @@ Lean statement: `D5/S3/Analytic/HalfIntegerBessel.radial_eta_re_atBot`
 
 On a unit ray, Re eta(r u) tends to negative infinity as r decreases to zero. Its log(r) term diverges and the remaining terms are continuous at zero.
 
+**Theorem 1.37 (Uniform sector bounds for the regular amplitude).**
+
+Lean statement: `D5/S3/Analytic/HalfIntegerBessel.sector_I_estimate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/HalfIntegerBessel.sector_I_estimate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For kappa > 0 and nu at least 4 V_kappa, let delta = 2 V_kappa / nu. At every nonzero w with Re w at least kappa |w|, the norm of F_I(w)/F_K(w) - 1 is at most 10 delta / kappa, and the norm of F_I(w) - 1 is at most (1 + 15 / kappa) delta. Along the inward ray, the Wronskian gives the derivative of the normalized quotient correction as the phase kernel derivative times (F_K^(-2) - 1). Factoring the inverse square error bounds its norm by 10 delta. The sector angle compares the derivative norm to the derivative of the real exponential kernel. Finite interval integration and the zero limit of the correction at the origin give the quotient bound. Multiplying by F_K and using its norm bound of 3/2 gives the regular amplitude bound.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.D`
@@ -489,6 +501,7 @@ On a unit ray, Re eta(r u) tends to negative infinity as r decreases to zero. It
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.sectorMajorant`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.sectorMajorant_mass`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.sectorMass`
+- Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.sector_I_estimate`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.sector_K_estimate`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.wronskian_KI`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBessel.wronskian_KL`
