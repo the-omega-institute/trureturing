@@ -37,6 +37,68 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  inspect-scoped-shard:
+    if: github.event_name == 'pull_request' && github.base_ref == 'integration-ci-lean-cache-shards-post-scope-tests' && github.head_ref == 'lane/governance/cache-shards-index-read-31553'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Read the index used by the Q9 PR
+        uses: actions/cache/restore@v5
+        with:
+          path: build/lean-cache/shards/index.json
+          key: lean-shard-index-v1-3ba64679748ad6b6f019cd5a1ef3b2d539de77b5ec472650acb610eaf51b7d48-snapshot-44744602230-1
+          fail-on-cache-miss: true
+      - name: Read logical owners and required compiler members
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          from pathlib import Path
+          record = json.loads(Path('build/lean-cache/shards/index.json').read_bytes())
+          assert record['state'] == 'complete'
+          assert record['owner'] == dict(commit='dbd8148172f4f95e5f0ba7a8fd0100703dec20ae',
+                                         ref='refs/heads/integration-ci-lean-cache-shards-post-scope-tests',
+                                         run='44744602230', attempt='1')
+          payloads = {
+              'dcc85b79fad87ff611425df59d698fb9032bc4d9c310d3897b704ca1d3134d90',
+              '5570ea2b8d63b587080d646729373de2613a74ed4871fa2217295c843b61e19d',
+              '3e939e0e1b6bc5e98e7a93401dbae9275c7e626714c7acd32a49a5f68aef8809',
+          }
+          found = set()
+          for group, payload in record['entries'].items():
+              if payload in payloads:
+                  found.add(payload)
+                  required = record['required'].get(group, [])
+                  print(json.dumps(dict(group=group, payload=payload, modules=record['layout'].get(group, []),
+                                        required_count=len(required), required_sample=required[:4])))
+          assert found == payloads
+          PYTHON
+      - name: Read the large archive observed on the Q9 PR
+        uses: actions/cache/restore@v5
+        with:
+          path: build/lean-cache/shards/payload/3e939e0e1b6bc5e98e7a93401dbae9275c7e626714c7acd32a49a5f68aef8809.tar.gz
+          key: lean-shard-index-v1-3ba64679748ad6b6f019cd5a1ef3b2d539de77b5ec472650acb610eaf51b7d48-material-3e939e0e1b6bc5e98e7a93401dbae9275c7e626714c7acd32a49a5f68aef8809
+          fail-on-cache-miss: true
+      - name: Measure validated archive members
+        run: |
+          python3 - <<'PYTHON'
+          import hashlib
+          import heapq
+          import json
+          import tarfile
+          from pathlib import Path
+          digest = '3e939e0e1b6bc5e98e7a93401dbae9275c7e626714c7acd32a49a5f68aef8809'
+          path = Path('build/lean-cache/shards/payload') / (digest + '.tar.gz')
+          with path.open('rb') as f:
+              assert hashlib.file_digest(f, 'sha256').hexdigest() == digest
+          with tarfile.open(path, 'r|gz') as tar:
+              members = [(entry.size, entry.name) for entry in tar if entry.isfile()]
+          print(json.dumps(dict(payload_bytes=path.stat().st_size, files=len(members),
+                                member_bytes=sum(size for size, name in members),
+                                largest=heapq.nlargest(12, members))))
+          PYTHON
+
   detect:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
