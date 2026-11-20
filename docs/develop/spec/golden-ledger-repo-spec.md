@@ -460,7 +460,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。仅改动 `docs/develop/theory/` 的候选执行适用源码文件和容量检查。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
+**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
 
