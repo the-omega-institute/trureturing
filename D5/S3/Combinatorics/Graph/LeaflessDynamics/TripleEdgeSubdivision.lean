@@ -106,6 +106,15 @@ private theorem rightFlag_degree (e : E) :
     rcases x with x | (x | x) <;> simp [mem_neighborSet, graph, endpoint, eq_comm]
   rw [heq, Set.ncard_pair (by simp)]
 
+/-- Subdivision retains each original incidence count and inserts vertices of degree two. -/
+theorem neighbor_ncard_le_of_incident_flags_le {D : ℕ} (hD : 2 ≤ D)
+    (hflags : ∀ v, ({f : Flag E | endpoint M f = v} : Set _).ncard ≤ D) (w : V ⊕ Flag E) :
+    ((graph M).neighborSet w).ncard ≤ D := by
+  rcases w with v | (e | e)
+  · simpa only [original_degree] using hflags v
+  · rwa [leftFlag_degree]
+  · rwa [rightFlag_degree]
+
 /-- Every leaf is an original vertex with one incident flag. A loop contributes both flags. -/
 theorem leafless_iff :
     (∀ w, ((graph M).neighborSet w).ncard ≠ 1) ↔

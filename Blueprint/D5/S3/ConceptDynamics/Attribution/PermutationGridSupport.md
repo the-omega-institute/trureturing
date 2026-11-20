@@ -59,5 +59,6 @@ There are r regular orbits. Multiply each representative's weight by the factori
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.weighted_orbit_spectrum`
 - Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/StabilizerFactorialDivisibility](../../Combinatorics/Partitions/StabilizerFactorialDivisibility.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/GridReadoutConstruction](GridReadoutConstruction.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/PrimeCycleSeedFreeness](PrimeCycleSeedFreeness.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ThreeOutcomeGridSupport](ThreeOutcomeGridSupport.md)

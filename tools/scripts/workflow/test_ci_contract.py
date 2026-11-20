@@ -107,11 +107,11 @@ class ContractTests(unittest.TestCase):
     def test_staged_rename_unstaged_deletion_untracked_nul_paths(self):
         self.git("mv", "D5/old name\nsource.lean", "D5/renamed\tfile.lean")
         self.put("D5/renamed\tfile.lean", b"theorem old : True := by trivial\n")
-        self.put("docs/develop/theory/untracked\nname.md", b"# Untracked\n")
+        self.put("docs/untracked\nname.md", b"# Untracked\n")
         (self.root / "tools/scripts/workflow/ci_required.py").unlink()
         paths = contract.changed_paths(self.root, self.base)
         for name in ("D5/old name\nsource.lean", "D5/renamed\tfile.lean",
-                     "docs/develop/theory/untracked\nname.md", "tools/scripts/workflow/ci_required.py"):
+                     "docs/untracked\nname.md", "tools/scripts/workflow/ci_required.py"):
             self.assertIn(name, paths)
         self.parity()
 
@@ -119,7 +119,7 @@ class ContractTests(unittest.TestCase):
         original = self.base
         identical = "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.Source.cs"
         changed = "D5/changed name\nsource.lean"
-        deleted = "docs/develop/theory/deleted name.md"
+        deleted = "docs/deleted name.md"
         for path in (identical, changed, deleted):
             self.put(path, b"comparison base bytes\n")
         self.git("add", ".")
@@ -197,7 +197,7 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(push["delta"])
         self.assertTrue(push["report"])
         self.assertFalse(push["full-report"])
-        for changed, report in (([], False), (["README.md"], False), (["docs/develop/theory/Note.md"], False)):
+        for changed, report in (([], False), (["README.md"], False), (["D5/Changed.lean", "README.md"], True)):
             with self.subTest(changed=changed):
                 push = contract.selection(data, changed, "push")
                 self.assertEqual(push, contract.selection(data, changed, "pull-request"))
@@ -251,7 +251,7 @@ class ContractTests(unittest.TestCase):
 
     def test_make_gate_and_host_unit_execute_same_program_and_preserve_failures(self):
         # Synthetic command unit isolates the adapter from real remote transport.
-        # The real declaration's content/theory/infrastructure mapping is tested above.
+        # The real declaration's content and infrastructure routing is tested above.
         data, _ = contract.load(self.root)
         data["CI_UNITS"] = ["[current]", "unmatched/*", "[probe]", "probes/*"]
         data["units"] = {"probe": {"project": "", "command": 'bash -c \'exit "$PROBE_EXIT"\'',
