@@ -101,7 +101,7 @@
     "!docs/assets/inquiry-cycle.svg",
     "!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
     "!docs/develop/spec/trureturing_engineering_optimization_v1.md",
-    "!docs/develop/theory/*",
+    "!docs/develop/theory/*.md",
     "!docs/reports/*",
     "!tools/TestSupport/StrataLint.RuleTestSupport/*",
     "!tools/lean-inspector/README.md",
@@ -200,9 +200,7 @@
     "tools/scripts/agent/clean-runlocal.sh",
     "tools/scripts/agent/collect_lane.sh",
     "tools/scripts/agent/contribution_queue.py",
-    "tools/scripts/agent/cover-gid-check.py",
     "tools/scripts/agent/deposit-evidence/*",
-    "tools/scripts/agent/digestion/*",
     "tools/scripts/agent/frozen/*",
     "tools/scripts/agent/gen-judge-surface-git-options.py",
     "tools/scripts/agent/germ_jet_certificate.py",
@@ -927,7 +925,6 @@
     "docs/develop/spec/golden-ledger-repo-spec.md",
     "D5/*",
     "skills/codex-formalize/*",
-    "skills/codex-theory-ingest/*",
     "skills/formal-thinking-and-answer/*",
     "tools/TestSupport/StrataLint.TestSupport/*",
     "tools/scripts/agent/batch_pr.sh",
@@ -1690,7 +1687,7 @@
     "tools/Architecture/BannedSymbols.Guid.txt"
   ],
   "current": {
-    "report_paths": "*\n",
+    "report_paths": "*\n!docs/develop/theory/*.md\n!docs/develop/archive/theory/*.md\n!Meta/Digestion/atoms/sha256/????????????????????????????????????????????????????????????????\n!Meta/Digestion/backfill/*.json\n!Meta/Digestion/backfill/*.yaml\n!Meta/Digestion/backfill/*.toml\n",
     "delta_paths": "*\n!Blueprint/*\n!Evidence/*\n!Golden/Projection/*.json\n!Problems/*\n!README.md\n!docs/VISION.md\n!docs/assets/inquiry-cycle.svg\n!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md\n!docs/develop/spec/trureturing_engineering_optimization_v1.md\n!docs/reports/*\n!tools/TestSupport/StrataLint.RuleTestSupport/*\n!tools/lean-inspector/README.md\n!tools/scripts/agent/openproblem/README.md\n!tools/scripts/agent/openproblem/SCREENED-OUT*.md\n!tools/scripts/agent/prime_slabs/CPU.md\n",
     "judge_build_args": [
       "tools/StrataLint.Cli/StrataLint.Cli.csproj",

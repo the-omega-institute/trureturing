@@ -5,7 +5,7 @@ year: 2026
 title: "Extensions of Knuth's coefficient families (1993), with corrected OEIS links: Werner's conjecture in OEIS A208509, Formula, revision 28"
 doi: 10.5281/zenodo.24211281
 url: https://zenodo.org/records/24211281
-claim: "Theorem 1: for the polynomial pair u_1 = v_1 = 1, u_{n+1} = u_n + x v_n, v_{n+1} = u_n + v_n + 1, for every n >= 1 and k >= 0, [x^k] v_n = C(n-1, 2k+1) + C(n, 2k+1) and [x^k] u_n = C(n-1, 2k) + C(n, 2k) - 1_{k=0}; in particular deg v_n = floor((n-1)/2) and deg u_n = floor(n/2). Corollary 2: with P_0 = 1, P_1 = 3 + x, P_m = (x+2) P_{m-1} - P_{m-2}, [x^k] P_m = b_{m+k+1,k} = C(m+k, 2k) + 2 C(m+k, 2k+1) for 0 <= k <= m, where b_{n,k} = [x^k] v_n. Corollary 3: for invertible z, z^(2m+1) - z^(-(2m+1)) = (z - z^-1) P_m((z - z^-1)^2); P_m(1) = L_{2m+1}; F_{(2m+1)n} = sum_{k=0}^{m} [x^k]P_m (-1)^((m+k)n) 5^k F_n^(2k+1) for n >= 0; the values P_m(-1) repeat 1, 2, 1, -1, -2, -1; and P_m(x) = prod_{j=1}^{m} (x + 4 sin^2(j pi/(2m+1))) for m >= 1. Corollary 4: in Z[x][[z]], sum_{n>=1} v_n(x) z^(n-1) = (1+z)/(1-2z+(1-x)z^2); for every k >= 0, sum_{n>=1} ([x^k] v_n) z^(n-1) = z^(2k)(1+z)/(1-z)^(2k+2); for k >= 1, sum_{n>=1} ([x^k] u_n) z^(n-1) = z^(2k-1)(1+z)/(1-z)^(2k+1); the constant column of u_n has generating function 1/(1-z). Corollary 5: for n >= 2, v_n(1) = 3 * 2^(n-2) and u_n(1) = 3 * 2^(n-2) - 1, whereas v_1(1) = u_1(1) = 1; with w_n = v_n(-1), sum_{n>=1} w_n z^(n-1) = (1+z)/(1-2z+2z^2), w_{n+2} = 2 w_{n+1} - 2 w_n, w_1 = 1, w_2 = 3. Corollary 6: for d >= 2 and m >= 0, with h_d(m) = [z^m](1+z)/(1-z)^d, h_d(m) = C(m+d-1, d-1) + C(m+d-2, d-1) = 2 C(m+d-1, d-1) - C(m+d-2, d-2) = (2m+d-1)/(d-1) C(m+d-2, d-2); h_{d+1}(m) = sum_{j=0}^{m} h_d(j); h_d(m) = sum_{j=1}^{d} (-1)^(j+1) C(d,j) h_d(m-j) for m >= d; as a polynomial in m, h_d has degree d-1, leading coefficient 2/(d-1)! and symmetry h_d(-m-d+1) = (-1)^(d-1) h_d(m)."
+claim: "Theorem 1: for the polynomial pair u_1 = v_1 = 1, u_{n+1} = u_n + x v_n, v_{n+1} = u_n + v_n + 1, for every n >= 1 and k >= 0, [x^k] v_n = C(n-1, 2k+1) + C(n, 2k+1) and [x^k] u_n = C(n-1, 2k) + C(n, 2k) - 1_{k=0}; in particular deg v_n = floor((n-1)/2) and deg u_n = floor(n/2). Corollary 2: with P_0 = 1, P_1 = 3 + x, P_m = (x+2) P_{m-1} - P_{m-2}, [x^k] P_m = b_{m+k+1,k} = C(m+k, 2k) + 2 C(m+k, 2k+1) for 0 <= k <= m, where b_{n,k} = [x^k] v_n. Corollary 3: for invertible z, z^(2m+1) - z^(-(2m+1)) = (z - z^-1) P_m((z - z^-1)^2); P_m(1) = L_{2m+1}; F_{(2m+1)n} = sum_{k=0}^{m} [x^k]P_m (-1)^((m+k)n) 5^k F_n^(2k+1) for n >= 0; the values P_m(-1) repeat 1, 2, 1, -1, -2, -1; and P_m(x) = prod_{j=1}^{m} (x + 4 sin^2(j pi/(2m+1))) for m >= 1. Corollary 4: in Z[x][[z]], sum_{n>=1} v_n(x) z^(n-1) = (1+z)/(1-2z+(1-x)z^2); for every k >= 0, sum_{n>=1} ([x^k] v_n) z^(n-1) = z^(2k)(1+z)/(1-z)^(2k+2); for k >= 1, sum_{n>=1} ([x^k] u_n) z^(n-1) = z^(2k-1)(1+z)/(1-z)^(2k+1); the constant column of u_n has generating function 1/(1-z). Corollary 5: for n >= 2, v_n(1) = 3 * 2^(n-2) and u_n(1) = 3 * 2^(n-2) - 1, whereas v_1(1) = u_1(1) = 1; with w_n = v_n(-1), sum_{n>=1} w_n z^(n-1) = (1+z)/(1-2z+2z^2), w_{n+2} = 2 w_{n+1} - 2 w_n, w_1 = 1, w_2 = 3. Corollary 6: for d >= 2 and m >= 0, with h_d(m) = [z^m](1+z)/(1-z)^d, h_d(m) = C(m+d-1, d-1) + C(m+d-2, d-1) = 2 C(m+d-1, d-1) - C(m+d-2, d-2) = (2m+d-1)/(d-1) C(m+d-2, d-2); h_{d+1}(m) = sum_{j=0}^{m} h_d(j); h_d(m) = sum_{j=1}^{d} (-1)^(j+1) C(d,j) h_d(m-j) for m >= d; as a polynomial in m, h_d has degree d-1, leading coefficient 2/(d-1)! and symmetry h_d(-m-d+1) = (-1)^(d-1) h_d(m). Corollary 7: for n >= 1 and d >= 2, sum_{j=0}^{n} (-1)^j h_d(j) n(n-1)...(n-j+1)/((n+d)(n+d+1)...(n+d+j-1)) = 0 (empty products 1); if p > d-1 is prime and e >= 1, then p^e divides h_d(m) whenever p^e divides m+j for some 1 <= j <= d-2, or p^e divides 2m+d-1. Corollary 9: with a_m = v_{m+1}(-1), b_0 = 2, a_0 = 1, a_{m+1} = a_m + b_m, b_{m+1} = b_m - a_m, a_m + i b_m = (1+2i)(1-i)^m, a_{m+4} = -4 a_m, b_{m+4} = -4 b_m; b_0..b_3 = 2, 1, -2, -6 and b_18 = -512; with alpha = arctan 2 and the continuous angle theta_m = alpha - m pi/4, a_m = A B^theta_m cos theta_m and b_m = A B^theta_m sin theta_m, A = sqrt 5 16^(alpha/(2 pi)), B = 16^(-1/(2 pi)); and u_n(-1) = a_n - a_{n-1} - 1 for n >= 1."
 strata_touched:
   - D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients
   - D5/S1/Recurrence/Invariants/AffinePolynomialPairDegrees
@@ -14,6 +14,8 @@ strata_touched:
   - D5/S1/Recurrence/Invariants/AffinePolynomialPairMorganVoyceShear
   - D5/S1/Recurrence/Invariants/AffinePolynomialPairMorganVoyceIdentities
   - D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialColumnFamily
+  - D5/S1/Recurrence/Invariants/AffinePolynomialPairAlternatingPolar
+  - D5/S1/Recurrence/Invariants/AffinePolynomialPairBalaDivisibility
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -28,7 +30,7 @@ DOI: 10.5281/zenodo.24211281 (version 2; Zenodo publication date 2026-11-14, PDF
 November 5, 2026; concept DOI 10.5281/zenodo.24211280). Source PDF:
 https://zenodo.org/api/records/24211281/files/note-v2.pdf/content (text extracted locally with
 layout preserved, 35,862 characters). Theorem 1 and Corollaries 2 and 3 are in Section 1; Corollaries 4 and 5 are in Section 2;
-Corollary 6 is in Section 3.
+Corollaries 6 and 7 are in Section 3; Corollary 9 is in Section 4.
 
 ## Source statement
 
@@ -85,6 +87,18 @@ Corollary 6 is in Section 3.
 > As a polynomial in m, h_d has degree d − 1, leading coefficient 2/(d − 1)!, and symmetry
 > h_d(−m − d + 1) = (−1)^{d−1} h_d(m).
 
+> Corollary 7 (Further column identities). For n ≥ 1 and d ≥ 2,
+> ∑_{j=0}^{n} (−1)^j h_d(j) · n(n − 1) · · · (n − j + 1) / ((n + d)(n + d + 1) · · · (n + d + j − 1)) = 0,
+> where an empty product is 1. This is Bala's terminating identity (2019) in A005585, A040977,
+> A050486 and A053347. If p > d − 1 is prime and e ≥ 1, then p^e | h_d(m) whenever m + j ≡ 0
+> (mod p^e) for some 1 ≤ j ≤ d − 2, or 2m + d − 1 ≡ 0 (mod p^e).
+
+> Corollary 9. Write a_m = v_{m+1}(−1) and define b_0 = 2, a_0 = 1, a_{m+1} = a_m + b_m,
+> b_{m+1} = b_m − a_m. Then a_m + i b_m = (1 + 2i)(1 − i)^m, a_{m+4} = −4a_m, b_{m+4} = −4b_m.
+> In particular, b_0, …, b_3 = 2, 1, −2, −6 and b_18 = −512. If α = arctan 2, the continuous polar
+> angle is θ_m = α − mπ/4, and a_m = A B^{θ_m} cos θ_m, b_m = A B^{θ_m} sin θ_m,
+> A = √5 · 16^{α/(2π)}, B = 16^{−1/(2π)}. Also u_n(−1) = a_n − a_{n−1} − 1 for n ≥ 1.
+
 ## Mathematical scope
 
 The pair is the frozen `pair` of AffinePolynomialPairBinomialCoefficients, where stage n − 1
@@ -98,3 +112,11 @@ up to min(d, m)); the identification of the columns of the pair with h_{2k+2} an
 from the source and not formalized. In Corollaries 2 and 3,
 b_{n,k} = [x^k] v_n is taken from the same pair, and every clause, including the trigonometric
 factorization over the reals, is formalized.
+Corollary 7 is formalized for every d in the terminating identity; for moduli coprime to (d − 1)!
+divisibility of h_d(m) is characterized by the product formula, which gives the source's sufficient
+condition and the prime-power case for every e ≥ 0. The source credits the identity to Bala (2019)
+and notes that the d = 6 prime-power case contains Adamchuk's 2007 assertions in A005585.
+In Corollary 9, a and b are defined by the joint recurrence from (a_0, b_0) = (1, 2), and
+a_m = v_{m+1}(−1) is proved as a theorem from the recurrence of Corollary 5. The A090131
+documentation corrections (the omitted b_18 and the polar branch) are not separate formal
+statements; the values b_0, …, b_3, b_18 and the polar form are.
