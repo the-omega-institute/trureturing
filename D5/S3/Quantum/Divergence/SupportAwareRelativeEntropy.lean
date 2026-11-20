@@ -43,6 +43,19 @@ def SupportContained
     (rho sigma : DensityState n) : Prop :=
   matrixNullspace sigma.1 ⊆ matrixNullspace rho.1
 
+open scoped Matrix in
+/-- A positive definite second state contains the support of every first state. -/
+lemma support_of_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (ρ σ : DensityState ι)
+    (hσ : (CStarMatrix.ofMatrix.symm σ.1).PosDef) : SupportContained ρ σ := by
+  intro v hv
+  change (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v = 0 at hv
+  have hv0 := Matrix.mulVec_injective_of_isUnit hσ.isUnit
+    (show (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v =
+      (CStarMatrix.ofMatrix.symm σ.1) *ᵥ 0 by simpa only [Matrix.mulVec_zero] using hv)
+  change (CStarMatrix.ofMatrix.symm ρ.1) *ᵥ v = 0
+  rw [hv0, Matrix.mulVec_zero]
+
 @[simp]
 theorem supportContained_refl
     {n : Type*} [Fintype n] [DecidableEq n]

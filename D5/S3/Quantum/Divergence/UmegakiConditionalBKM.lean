@@ -176,27 +176,6 @@ private lemma bkm_difference_contraction [Nonempty a] [Nonempty b]
 section Path
 variable {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma logDeriv_reindex (e : ι ≃ κ) (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) :
-    logDeriv (Z.reindex e e) (H.reindex e e) = (logDeriv Z H).reindex e e := by
-  let F := (Matrix.reindexLinearEquiv ℂ ℂ e e).toLinearMap.toContinuousLinearMap
-  let f : ℝ → Matrix ι ι ℂ := fun t => (Z + t • 1)⁻¹ * H * (Z + t • 1)⁻¹
-  have hf : Integrable f (volume.restrict (Set.Ioi 0)) := logDeriv_integrable Z H hZ
-  change _ = F (∫ t in Set.Ioi (0 : ℝ), f t)
-  rw [← F.integral_comp_comm hf]
-  apply integral_congr_ae
-  filter_upwards with t
-  change (Z.reindex e e + t • 1)⁻¹ * H.reindex e e * (Z.reindex e e + t • 1)⁻¹ =
-    (f t).reindex e e
-  have hZt : (Z + t • 1).reindex e e = Z.reindex e e + t • 1 := by
-    let E := Matrix.reindexAlgEquiv ℝ ℂ e
-    change E (Z + t • 1) = E Z + t • 1
-    rw [map_add, map_smul, map_one]
-  rw [← hZt, Matrix.inv_reindex]
-  let E := Matrix.reindexAlgEquiv ℂ ℂ e
-  change E ((Z + t • 1)⁻¹) * E H * E ((Z + t • 1)⁻¹) = E (f t)
-  simp only [f, map_mul]
-
 private def pathIntegrand (A B : Matrix ι ι ℂ) (t : ℝ) : ℝ :=
   (1-t) * (((A-B)ᴴ * logDeriv (B + t • (A-B)) (A-B)).trace.re)
 
@@ -209,19 +188,16 @@ private lemma affine_posDef (A B : Matrix ι ι ℂ) (hA : A.PosDef) (hB : B.Pos
     exact hB
   · exact (hA.smul h).add_posSemidef (hB.posSemidef.smul (sub_nonneg.mpr ht.2))
 
-private lemma path_integrand_reindex (e : ι ≃ κ)
-    (A B : Matrix ι ι ℂ) (hA : A.PosDef) (hB : B.PosDef)
-    (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) 1) :
+private lemma path_integrand_reindex (e : ι ≃ κ) (A B : Matrix ι ι ℂ) (t : ℝ) :
     pathIntegrand (A.reindex e e) (B.reindex e e) t = pathIntegrand A B t := by
-  have hZ := affine_posDef A B hA hB t ht
   unfold pathIntegrand
-  let E := Matrix.reindexAlgEquiv ℝ ℂ e
+  let E := reindexStar e
   change (1-t) * (((E A - E B)ᴴ * logDeriv (E B + t • (E A - E B)) (E A - E B)).trace.re)
     = _
-  rw [← map_sub, ← map_smul, ← map_add]
+  rw [← map_sub, ← map_smul, ← map_add, ← reindex_logDeriv]
   change (1-t) * ((((A-B).reindex e e)ᴴ *
-    logDeriv ((B + t • (A-B)).reindex e e) ((A-B).reindex e e)).trace.re) = _
-  rw [logDeriv_reindex e _ _ hZ, Matrix.conjTranspose_reindex]
+    (logDeriv (B + t • (A-B)) (A-B)).reindex e e).trace.re) = _
+  rw [Matrix.conjTranspose_reindex]
   change (1-t) * ((E (A-B)ᴴ * E (logDeriv (B + t • (A-B)) (A-B))).trace.re) = _
   rw [← map_mul]
   exact congrArg (fun w : ℂ => (1-t) * w.re) (trace_reindex e _)
@@ -237,23 +213,22 @@ private lemma matrix_path (A B : Matrix ι ι ℂ) (hA : A.PosDef) (hB : B.PosDe
   have hAf : Af.PosDef := hA.submatrix e.symm.injective
   have hBf : Bf.PosDef := hB.submatrix e.symm.injective
   have hHerm := hAf.isHermitian.sub hBf.isHermitian
-  have hI (t : ℝ) (ht : t ∈ Set.uIcc (0 : ℝ) 1) :
-      pathIntegrand Af Bf t = pathIntegrand A B t :=
-    path_integrand_reindex e A B hA hB t (by simpa only [Set.uIcc_of_le zero_le_one] using ht)
+  have hI (t : ℝ) : pathIntegrand Af Bf t = pathIntegrand A B t :=
+    path_integrand_reindex e A B t
   constructor
   · have hi : IntervalIntegrable (pathIntegrand Af Bf) volume 0 1 := by
       change IntervalIntegrable (fun t => (1-t) *
         (((Af-Bf)ᴴ * logDeriv (Bf + t • (Af-Bf)) (Af-Bf)).trace.re)) volume 0 1
       simp only [hHerm.eq]
       exact weighted_bkm_integrable Af Bf hAf hBf
-    exact IntervalIntegrable.congr (fun t ht => hI t (Set.uIoc_subset_uIcc ht)) hi
+    exact IntervalIntegrable.congr (fun t _ => hI t) hi
   · have h := relativeEntropy_eq_integral_bkm Af Bf hAf hBf
     rw [show (∫ t in (0 : ℝ)..1,
         (1-t) * ((Af-Bf) * logDeriv (Bf + t • (Af-Bf)) (Af-Bf)).trace.re) =
         ∫ t in (0 : ℝ)..1, pathIntegrand A B t by
       apply intervalIntegral.integral_congr
-      intro t ht
-      simpa only [pathIntegrand, hHerm.eq] using hI t ht] at h
+      intro t _
+      simpa only [pathIntegrand, hHerm.eq] using hI t] at h
     rw [show (Af * (CFC.log Af - CFC.log Bf)).trace.re - (Af-Bf).trace.re =
         (A * (CFC.log A - CFC.log B)).trace.re - (A-B).trace.re by
       simp only [Af, Bf, CFC.log, Matrix.cfc_reindex]
@@ -263,16 +238,6 @@ private lemma matrix_path (A B : Matrix ι ι ℂ) (hA : A.PosDef) (hB : B.PosDe
       rw [← map_sub, ← map_mul, ← map_sub]
       simp only [E, Matrix.coe_reindexAlgEquiv, trace_reindex]] at h
     exact h
-
-private lemma support_of_posDef (ρ σ : DensityState ι)
-    (hσ : (CStarMatrix.ofMatrix.symm σ.1).PosDef) : SupportContained ρ σ := by
-  intro v hv
-  change (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v = 0 at hv
-  have hv0 := Matrix.mulVec_injective_of_isUnit hσ.isUnit
-    (show (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v =
-      (CStarMatrix.ofMatrix.symm σ.1) *ᵥ 0 by simpa only [Matrix.mulVec_zero] using hv)
-  change (CStarMatrix.ofMatrix.symm ρ.1) *ᵥ v = 0
-  rw [hv0, Matrix.mulVec_zero]
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private lemma density_path (ρ σ : DensityState ι)
