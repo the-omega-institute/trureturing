@@ -3,12 +3,18 @@
 `tools/lean-inspector` 统一管理 Lean report 的生成、工件、依赖驱动的增量和发布，
 完整调用复用由登记输入和成功证据校验决定；需要构建时由 Lean/Lake 的原生依赖与工件机制决定增量，没有独立报告缓存层。
 
-在仓库根目录运行规范入口，生成或复用当前 Lean 报告：
+从仓库根目录为选定模块生成报告：
 
 ```sh
-make lean-report
-make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
-make lean-report REBUILD_REPORT_CACHE=1
+make lean-report-scoped LEAN_TARGETS="D5.Example"
+```
+
+显式需要整库报告时，运行以下入口：
+
+```sh
+make lean-report FULL_BUILD=1
+make lean-report FULL_BUILD=1 LEAN_REPORT=.lake/build/stratalint/custom-report.json
+make lean-report FULL_BUILD=1 REBUILD_REPORT_CACHE=1
 ```
 
 本地默认 `fetch-or-fail`：报告种子缺失、不完整或成功收据的 `inputs.report_format`
@@ -25,7 +31,7 @@ linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏�
 相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
 
 ```sh
-make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure FULL_BUILD=1
 ```
 
 ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。
@@ -33,7 +39,7 @@ ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播
 显式取回并替换 Release 快照；无法判定 Git checkout 类型时拒绝取回。
 linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及共同 Git 目录均通过
 核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
-补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
+补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1` 后重新播种，
 并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
 格式相符而输入有差量时，干净的 dev 主 checkout 读取 `.lake/lean-report-seed-base.json` 中的生产提交，
 记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
@@ -250,7 +256,7 @@ entries and seals use Seal entries. The report accepts constructor trees and
 safe constant references from the compiled values; values requiring evaluation
 fail by name and have no fallback.
 
-[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
+[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report FULL_BUILD=1`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
 `STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
@@ -271,7 +277,7 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
 | `inputs/`、`inputs.json`、`report-format` | 当前模块输入、成员及配置坐标、报告格式标识。 |
 
-这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
+这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report FULL_BUILD=1` / `inspect.sh`
 入口完成登记的程序目标、原生报告、必要的 FIB 回归及完整校验，再打包根 buildDir。
 报告与登记的程序目标共用一次原生 Lake 构建；必要的 FIB 回归在 writer 返回后由 canonical 测试入口完成。
 输入、编译、必要的 FIB 回归或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
@@ -280,9 +286,9 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 Lake 编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；
 验证器只查结构与工件完整性。
-正常 Lean-cache 负责依赖物化和既有构建归档；
-[ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
-规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
+定向报告读取 Lake 本机共享缓存，并在当前工作树编译缺失的目标及所需依赖。
+整库报告的 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
+规则播种当前工作树的私有 `.lake`，支持时使用 clonefile。
 `.lake` 不使用 symlink；[writer 入口](../scripts/worktree/lean-cache-run.sh)
 以 `with-cache-writer` 持有当前 `.lake` 的写锁，覆盖 ensure 和原生 `lake build :report`。
 donor 只供播种，后续编译、报告写入和损坏恢复均发生在当前工作树。
@@ -369,7 +375,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 不能互换，commit ID 与工作树名称不参与这些地址。
 
 缺失的原生工件由 Lake 恢复或补建；与 olean 相同，trace 仍有效的工件原样复用，不再检查其内容。
-默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report`，它从 inspector 工件重新发布，
+默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report FULL_BUILD=1`，它从 inspector 工件重新发布，
 必要时先补建；发布核对规范信封与输入坐标。
 
 原生 Lake `--no-build`：
@@ -379,7 +385,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 | 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
 | 工件缺失且无法由 Lake 恢复，或输入/报告格式/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
 
-已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
+已用 `make lean-report FULL_BUILD=1` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
 ```sh
 tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-build build :report
@@ -387,7 +393,7 @@ tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-b
 
 该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
 `--no-build` 限制 Lake 的重建，输入准备及可用原生工件的恢复仍会执行，
-不是整个入口的只读模式。需要修复时重新运行 `make lean-report`。
+不是整个入口的只读模式。需要修复时重新运行 `make lean-report FULL_BUILD=1`。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
 material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
@@ -402,7 +408,7 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_INTERRUPTED phase=… exit=…`、该阶段已有输出及原生阶段观察，保留非零退出码。
 ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
-`make lean-report` 入口重试。
+`make lean-report FULL_BUILD=1` 入口重试。
 
 The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
 entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled

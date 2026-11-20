@@ -12,6 +12,21 @@ if [[ "$1" == --build && $# == 1 && "${FULL_BUILD:-0}" != 1 ]]; then
   echo 'full build requires explicit FULL_BUILD=1; pass nonempty module targets for a scoped build' >&2
   exit 2
 fi
+# A target list always selects a partial build, including inside recursive Make.
+if [[ "$1" == --build && $# -gt 1 ]]; then export FULL_BUILD=0; fi
+if [[ "$1" == --build && $# == 1 && "${STRATALINT_WARM_DONOR:-0}" == 1 ]]; then
+  if [[ "$(git symbolic-ref --quiet --short HEAD)" != dev ||
+        ! "$(git rev-parse --git-dir)" -ef "$(git rev-parse --git-common-dir)" ]]; then
+    echo 'lean-cache-run: only the dev main checkout may publish Lake artifacts' >&2
+    exit 2
+  fi
+  if ! warm_status="$(git status --porcelain --untracked-files=normal)" || [[ -n "$warm_status" ]]; then
+    echo 'lean-cache-run: warm publication requires a clean dev checkout' >&2
+    exit 2
+  fi
+  # Explicit full warming can build the initial seed when no Release exists.
+  export LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true STRATALINT_ACCEPT_COLD_BUILD=1
+fi
 if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.

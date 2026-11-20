@@ -9,7 +9,8 @@ TREE="${1:-$(pwd)}"
 TREE="$(cd "$TREE" && pwd -P)"
 BUDGET="${2:-1200}"
 case "$BUDGET" in ''|*[!0-9]*) fail "timeout-not-a-number" ;; esac
-make -C "$TREE" lean-cache-ensure || fail "ensure-failed"
+[[ "${FULL_BUILD:-0}" == 1 ]] || fail "full-build-requires-FULL_BUILD=1"
+make -C "$TREE" lean-cache-ensure FULL_BUILD=1 || fail "ensure-failed"
 
 lake_runner="$TREE/tools/scripts/worktree/lean-cache-run.sh"
 [ -x "$lake_runner" ] || fail "no-cache-runner"

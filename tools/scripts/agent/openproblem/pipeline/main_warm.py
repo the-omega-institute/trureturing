@@ -64,7 +64,7 @@ def main(argv):
                         op.run('git', 'merge', '--ff-only', '-q', producer)
                         print('MAIN_WARM_ADVANCE', head, producer, tag, flush=True)
                         for label, command in [('RESTORE', ['make', 'lean-cache-from-github-without-mathlib', 'REFRESH_STALE=1']),
-                                               ('LEAN', ['make', 'lean'])]:
+                                               ('LEAN', ['make', 'lean', 'FULL_BUILD=1', 'LEAN_TARGETS=', 'STRATALINT_WARM_DONOR=1'])]:
                             op.ctx.state.mkdir(parents=True, exist_ok=True)
                             with (op.ctx.state / ('main-warm-' + label.lower() + '.log')).open('w') as out:
                                 import subprocess

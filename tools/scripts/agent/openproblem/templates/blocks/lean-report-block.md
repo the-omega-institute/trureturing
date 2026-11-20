@@ -7,9 +7,6 @@ Report each check once, as its final result at the delivered head: `make emit` i
 ## Only this lane's files
 If `make emit` rewrites a Blueprint projection that belongs to another delivery (any file other than this lane's module mirror), restore it to `origin/dev`'s bytes before committing (`git checkout origin/dev -- <path>`) and do not mention it in the PR body; the PR touches only this lane's module, mirror, emitted Markdown, Golden door output, Library note, dossier and (if any) Reg file.
 
-## Report seed recovery (binding; extends the infrastructure retry rule)
-If `make lean-report-scoped LEAN_TARGETS="<the same list>"`, or a door that runs it, fails with `LEAN_REPORT_CACHE_INCOMPATIBLE … reason=linked-worktree`, the report seed in this worktree predates the current reuse receipt. This is not a defect of the lane. Recover once with the canonical reseed from the warm main checkout (the remediation the tool prints):
-1. `rm -rf -- .lake && make lean-cache-ensure && make lean LEAN_TARGETS="<the delivered modules and every frozen module you re-pin, dotted>"` in this worktree;
-2. rerun the failed door, still waiting for the report slot as above.
+## Full report seed recovery
 
-Return `open` only if the same diagnostic recurs after the reseed, and cite both logs. The reseed deletes only this worktree's `.lake`; it does not touch tracked files, commits or other worktrees.
+Scoped report production uses `make lean-report-scoped LEAN_TARGETS="<the same list>"` and reads the local Lake cache. If an explicitly requested full report fails with `LEAN_REPORT_CACHE_INCOMPATIBLE … reason=linked-worktree`, follow the reported recovery command. It rebuilds the report seed on the clean main dev checkout and runs `make lean-cache-ensure FULL_BUILD=1` in the worktree. Rerun the full report after successful recovery.

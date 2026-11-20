@@ -7,7 +7,7 @@
    digest: Relatively prime complex equations have a real common zero set covered in codimension two. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSMonicLevelGraphs
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSProjectionResultant
-import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
+import D5.S3.Quantum.Algebra.CommonPhasePolynomial
 import Mathlib.RingTheory.NoetherNormalization
 import Mathlib.Algebra.MvPolynomial.Nilpotent
 
@@ -20,9 +20,6 @@ namespace D5.S3.Quantum.TensorNetworks.PeriodicMPSRealPolynomialZeros
 
 open Set Polynomial PeriodicMPSMonicLevelGraphs PeriodicMPSProjectionResultant
   PeriodicMPSRegularLevelGraphs OpenBoundaryMPSDensityGenericity
-
-open private coefficient_split
-  from D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
 
 noncomputable section
 

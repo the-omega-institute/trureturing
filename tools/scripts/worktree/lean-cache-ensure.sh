@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+[[ "${FULL_BUILD:-0}" == 1 ]] || { echo 'lean-cache-ensure requires explicit FULL_BUILD=1' >&2; exit 2; }
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 

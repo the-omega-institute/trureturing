@@ -67,7 +67,6 @@ def check(args):
     roots, paths = select(root, base, args.module)
     assets = Path(__file__).resolve().parents[1] / "assets"
     environment = os.environ.copy()
-    environment["STRATALINT_ACCEPT_COLD_BUILD"] = "1"
     dotnet = shutil.which("dotnet")
     if not dotnet:
         raise ValueError("install the .NET SDK selected by the fork's global.json")

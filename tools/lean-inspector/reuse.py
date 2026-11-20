@@ -551,14 +551,14 @@ def recover_and_reuse(repository, report, output):
     remediation = None
     if linked:
         warm_report = ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                       'make warm-donor && make lean-report there '
+                       'make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
                        '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
                        if main_checkout is None else warm_dev_remediation(main_checkout)
-                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report'
+                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report FULL_BUILD=1'
                        + '; then reseed from the warm main checkout: rm -rf -- ')
         remediation = (warm_report
                        + shlex.quote(str(repository / '.lake')) + ' && make -C '
-                       + shlex.quote(str(repository)) + ' lean-cache-ensure')
+                       + shlex.quote(str(repository)) + ' lean-cache-ensure FULL_BUILD=1')
     try:
         with cache_guard(repository):
             checked = seed_format(report)
