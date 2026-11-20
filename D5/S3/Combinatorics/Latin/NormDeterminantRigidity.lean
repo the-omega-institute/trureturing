@@ -14,12 +14,11 @@ escape_witness: norm_det_le_one_and_rigid (if the squared Frobenius norm of a co
   forces every eigenvalue to be 1, so Mᴴ M = 1 by the spectral theorem).
 proof_shape:
   frob, claim: source definitions; consumers: norm_det_le_one_and_rigid, result.
-  trace_gram, det_gram: bind-only helpers (entrywise expansion and z̄ z = ‖z‖²); consumers:
-    eig_sum_prod, norm_det_unitary.
+  trace_gram, det_gram: bind-only helpers (entrywise expansion and z̄ z = ‖z‖²); consumer:
+    eig_sum_prod.
   eig_sum_prod: bind-only helper (trace and determinant as sum and product of eigenvalues);
     consumer: norm_det_le_one_and_rigid.
   norm_det_le_one_and_rigid: content; consumer: result.
-  norm_det_unitary: bind-only helper (det of star U * U = 1); consumer: result.
   list_det: content (induction: a product of norms in [0, 1] equal to 1 has every factor 1);
     consumer: result.
   result: content.
@@ -27,8 +26,10 @@ Direct frozen dependencies: none (Mathlib only).
 Search record (§3.1): Mathlib has the spectral theorem, Matrix.IsHermitian.det_eq_prod_eigenvalues,
   trace_eq_sum_eigenvalues and the weighted AM-GM inequality, and LinearMap.normDet with
   normDet_eq_prod_singularValues, but no bound of ‖det M‖ by the Frobenius norm with its
-  equality case, and no Hadamard-type determinant inequality; D5 has no unitary-factor
-  statement (D5/S3/Combinatorics/Latin/ClassicalPerfectTensorFactorization is classical).
+  equality case, and no Hadamard-type determinant inequality; ‖det U‖ = 1 for unitary U is
+  applied directly from Matrix.det_of_mem_unitary and CStarRing.norm_of_mem_unitary. D5 has no
+  unitary-factor statement (D5/S3/Combinatorics/Latin/ClassicalPerfectTensorFactorization is
+  classical).
 -/
 
 import Mathlib.Analysis.Matrix.Spectrum
@@ -136,13 +137,6 @@ theorem norm_det_le_one_and_rigid {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (hM
     rw [this, diagonal_one, map_one]
   exact mem_unitaryGroup_iff'.mpr hgram
 
-private theorem norm_det_unitary {n : ℕ} {U : Matrix (Fin n) (Fin n) ℂ}
-    (hU : U ∈ unitaryGroup (Fin n) ℂ) : ‖U.det‖ = 1 := by
-  have h := congrArg det (mem_unitaryGroup_iff'.mp hU)
-  rw [det_one, star_eq_conjTranspose, det_gram] at h
-  have h2 : ‖U.det‖ ^ 2 = 1 := by exact_mod_cast h
-  nlinarith [norm_nonneg U.det]
-
 private theorem list_det {n : ℕ} (L : List (Matrix (Fin n) (Fin n) ℂ))
     (hL : ∀ M ∈ L, ‖M.det‖ ≤ 1) :
     ‖L.prod.det‖ ≤ 1 ∧ (‖L.prod.det‖ = 1 → ∀ M ∈ L, ‖M.det‖ = 1) := by
@@ -166,6 +160,6 @@ theorem result : claim := by
   intro n L hfrob hU M hM
   have hle := fun M hM => (norm_det_le_one_and_rigid M (hfrob M hM)).1
   exact (norm_det_le_one_and_rigid M (hfrob M hM)).2
-    ((list_det L hle).2 (norm_det_unitary hU) M hM)
+    ((list_det L hle).2 (CStarRing.norm_of_mem_unitary (det_of_mem_unitary hU)) M hM)
 
 end D5.S3.Combinatorics.Latin.NormDeterminantRigidity
