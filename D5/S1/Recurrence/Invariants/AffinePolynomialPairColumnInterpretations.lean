@@ -155,6 +155,37 @@ private theorem subsets {α : Type*} [DecidableEq α] (d m : ℕ) (X Y Z : Finse
 
 end Subsets
 
+section ChebyshevIff
+open Polynomial Polynomial.Chebyshev
+
+private theorem h_one_zero : h 1 0 = 1 := by
+  rw [AffinePolynomialPairBinomialColumnFamily.result.2.1 0 0]
+  simp [h, PowerSeries.invOneSubPow_zero]
+
+private theorem h_one_succ (m : ℕ) : h 1 (m + 1) = 2 := by
+  rw [h_diff 1 (m + 1) (by omega), show m + 1 + 1 - 2 = m by omega, Nat.choose_one_right,
+    Nat.choose_one_right]
+  push_cast; ring
+
+private theorem cheb_iff (r m : ℕ) :
+    2 * (T ℤ ((r + 2 * m : ℕ) : ℤ)).coeff r = (-1) ^ m * 2 ^ r * h (r + 1) m ↔ 1 ≤ r ∨ 1 ≤ m := by
+  rcases Nat.eq_zero_or_pos r with rfl | hr
+  · rcases Nat.eq_zero_or_pos m with rfl | hm
+    · simp [h_one_zero]
+    · obtain ⟨m', rfl⟩ : ∃ m', m = m' + 1 := ⟨m - 1, by omega⟩
+      rw [T_coeff_zero, h_one_succ]
+      simp only [pow_zero, mul_one]
+      constructor
+      · intro _; omega
+      · intro _; ring
+  · rw [cheb m r hr, show r = (r - 1) + 1 by omega, pow_succ]
+    simp only [show r - 1 + 1 - 1 = r - 1 by omega]
+    constructor
+    · intro _; omega
+    · intro _; ring
+
+end ChebyshevIff
+
 section OrderPolytope
 
 /-- Lattice points of the `m`-th dilation of the order polytope of a chain of `k` elements below
@@ -294,10 +325,14 @@ private theorem card_line_ge (n t : ℕ) (ht : n ≤ t) : (line n t).card = 2 * 
   rw [this, card_image_of_injective _ (fun a b hab => by simp only [Prod.mk.injEq] at hab; exact hab.1),
     card_range]
 
-theorem sum_range_choose' (n k : ℕ) : ∑ t ∈ range n, t.choose k = n.choose (k + 1) := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [sum_range_succ, ih, Nat.choose_succ_succ n k]; ring
+private theorem sum_range_choose' (n k : ℕ) : ∑ t ∈ range n, t.choose k = n.choose (k + 1) := by
+  rcases Nat.lt_or_ge k n with hkn | hkn
+  · obtain ⟨j, rfl⟩ : ∃ j, n = k + (j + 1) := ⟨n - k - 1, by omega⟩
+    rw [sum_range_add, sum_eq_zero fun t ht => Nat.choose_eq_zero_of_lt (by simpa using ht),
+      zero_add, sum_congr rfl fun t _ => by rw [add_comm k t], Nat.sum_range_add_choose]
+    congr 1; ring
+  · rw [sum_eq_zero fun t ht => Nat.choose_eq_zero_of_lt (by simp at ht; omega),
+      Nat.choose_eq_zero_of_lt (by omega)]
 
 private theorem sum_lines (n k : ℕ) (hk : 1 ≤ k) :
     ∑ t ∈ range (2 * n), (line n t).card.choose k = n.choose (k + 1) + (n + 1).choose (k + 1) := by
@@ -480,30 +515,62 @@ private theorem card_queens (n k : ℕ) (hk : 2 ≤ k) :
     card_mainSets n k (by omega)]
   ring
 
+private theorem h_three (m : ℕ) : h 3 m = (m + 1) ^ 2 := by
+  induction m with
+  | zero => rw [h_zero 2 (by omega)]; ring
+  | succ m ih => rw [h_succ_succ 2 m, h_two, ih]; push_cast; ring
+
+private theorem queens_iff (d m : ℕ) :
+    ((queenPlacements (m + d - 2) (d - 2)).card : ℤ) = 2 * h d m ↔ 4 ≤ d := by
+  constructor
+  · intro heq
+    by_contra hlt
+    push Not at hlt
+    rcases Nat.lt_or_ge d 3 with h2 | h3
+    · have hzero : queenPlacements (m + d - 2) (d - 2) = {∅} := by
+        rw [show d - 2 = 0 by omega, queenPlacements, powersetCard_zero]
+        simp
+      rw [hzero, card_singleton] at heq
+      omega
+    · have hd : d = 3 := by omega
+      subst hd
+      have hall : queenPlacements (m + 3 - 2) (3 - 2) = (cells (m + 1)).powersetCard 1 := by
+        rw [show m + 3 - 2 = m + 1 by omega, show 3 - 2 = 1 by omega, queenPlacements]
+        refine filter_true_of_mem fun S hS p hp q hq hpq => absurd ?_ hpq
+        obtain ⟨a, rfl⟩ := card_eq_one.1 (mem_powersetCard.1 hS).2
+        rw [mem_singleton] at hp hq
+        rw [hp, hq]
+      rw [hall, card_powersetCard, Nat.choose_one_right, cells, card_product, card_range,
+        h_three] at heq
+      push_cast at heq
+      nlinarith
+  · intro hd
+    rw [card_queens _ _ (by omega),
+      (AffinePolynomialPairBinomialColumnFamily.result.1 d m (by omega)).1,
+      show m + d - 2 + 1 = m + d - 1 by omega, show d - 2 + 1 = d - 1 by omega]
+    push_cast
+    ring
+
 end Queens
 
 open Polynomial.Chebyshev in
 /-- Corollary 8 of the Ma–Zhang note on A208509, for `h_d(m) = [z^m](1 + z)/(1 - z)^d`:
 in a set `X` of size `m + d` with `Y ⊆ X` of size 2 and `Z ⊆ X`, the number of `d`-subsets of `X`
-meeting both `Y` and `Z` equals `h_d(m)` exactly when `d = 0`, `m < |Z|` or `Y ⊆ Z`; for `d ≥ 4`
-there are `2 h_d(m)` placements of `d - 2` pairwise diagonally attacking queens in distinct rows and
-columns of an `(m + d - 2) × (m + d - 2)` board; `[t^r] T_(r+2m)(t) = (-1)^m 2^(r-1) h_(r+1)(m)` for
-`r ≥ 1`; and the `m`-th dilation of the order polytope of a chain of `k` elements below two
+meeting both `Y` and `Z` equals `h_d(m)` exactly when `d = 0`, `m < |Z|` or `Y ⊆ Z`; there are
+`2 h_d(m)` placements of `d - 2` pairwise diagonally attacking queens in distinct rows and columns of
+an `(m + d - 2) × (m + d - 2)` board exactly when `d ≥ 4`; `2 [t^r] T_(r+2m)(t) = (-1)^m 2^r h_(r+1)(m)`
+exactly when `(r, m) ≠ (0, 0)`; and the `m`-th dilation of the order polytope of a chain of `k` elements below two
 incomparable elements has `h_(k+3)(m)` lattice points. -/
 theorem result :
     (∀ {α : Type u} [DecidableEq α] (d m : ℕ) (X Y Z : Finset α), Y ⊆ X → Z ⊆ X →
       X.card = m + d → Y.card = 2 →
       ((((X.powersetCard d).filter (fun S => (S ∩ Y).Nonempty ∧ (S ∩ Z).Nonempty)).card : ℤ) =
         h d m ↔ d = 0 ∨ m < Z.card ∨ Y ⊆ Z)) ∧
-    (∀ d m : ℕ, 4 ≤ d → ((queenPlacements (m + d - 2) (d - 2)).card : ℤ) = 2 * h d m) ∧
-    (∀ r m : ℕ, 1 ≤ r →
-      (T ℤ ((r + 2 * m : ℕ) : ℤ)).coeff r = (-1) ^ m * 2 ^ (r - 1) * h (r + 1) m) ∧
+    (∀ d m : ℕ, ((queenPlacements (m + d - 2) (d - 2)).card : ℤ) = 2 * h d m ↔ 4 ≤ d) ∧
+    (∀ r m : ℕ,
+      2 * (T ℤ ((r + 2 * m : ℕ) : ℤ)).coeff r = (-1) ^ m * 2 ^ r * h (r + 1) m ↔ 1 ≤ r ∨ 1 ≤ m) ∧
     (∀ k m : ℕ, ((orderPolytopePoints k m).card : ℤ) = h (k + 3) m) := by
-  refine ⟨fun d m X Y Z hY hZ hX hYc => subsets d m X Y Z hY hZ hX hYc, fun d m hd => ?_,
-    fun r m hr => cheb m r hr, fun k m => by rw [card_points, double_sum_eq]⟩
-  rw [card_queens _ _ (by omega), (AffinePolynomialPairBinomialColumnFamily.result.1 d m (by omega)).1]
-  rw [show m + d - 2 + 1 = m + d - 1 by omega, show d - 2 + 1 = d - 1 by omega]
-  push_cast
-  ring
+  exact ⟨fun d m X Y Z hY hZ hX hYc => subsets d m X Y Z hY hZ hX hYc, queens_iff,
+    cheb_iff, fun k m => by rw [card_points, double_sum_eq]⟩
 
 end D5.S1.Recurrence.Invariants.AffinePolynomialPairColumnInterpretations

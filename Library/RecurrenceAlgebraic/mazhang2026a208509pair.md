@@ -130,9 +130,11 @@ and notes that the d = 6 prime-power case contains Adamchuk's 2007 assertions in
 Corollary 8 is formalized with board cells as pairs in [0, n)², Mathlib's Chebyshev T, and the
 lattice points of the mth dilated order polytope as weakly order-preserving labelings by 0, …, m.
 Item 1 is characterized for every d: with Y ⊆ X of size 2 and Z ⊆ X, the count equals h_d(m)
-exactly when d = 0, |Z| > m or Y ⊆ Z, so disjointness is not needed. Item 3 holds for every r ≥ 1,
-and item 4 for chains of every length k ≥ 0 (d ≥ 3). The source attributes item 1 to Janjić's
-Theorem 1 and items 1–4 to Liu–Xin–Zhang (Propositions 4.6–4.8 and Section 4.2).
+exactly when d = 0, |Z| > m or Y ⊆ Z, so disjointness is not needed. Item 2 holds exactly when
+d ≥ 4. Item 3 is stated as 2[t^r]T_{r+2m} = (−1)^m 2^r h_{r+1}(m), which holds exactly when
+(r, m) ≠ (0, 0), and item 4 holds for chains of every length k ≥ 0 (d ≥ 3). The source calls item 1
+a specialization of Janjić's Theorem 1, says items 1–3 reprove Liu–Xin–Zhang's Propositions
+4.6–4.8, and identifies item 4 with their Section 4.2 family.
 In Corollary 9, a and b are defined by the joint recurrence from (a_0, b_0) = (1, 2), and
 a_m = v_{m+1}(−1) is proved as a theorem from the recurrence of Corollary 5. The A090131
 documentation corrections (the omitted b_18 and the polar branch) are not separate formal
