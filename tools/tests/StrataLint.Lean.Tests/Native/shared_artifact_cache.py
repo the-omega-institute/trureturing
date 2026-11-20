@@ -121,6 +121,16 @@ class SharedArtifactCacheTests(unittest.TestCase):
             self.assertNotEqual((main / private_output).read_bytes(), (reader / private_output).read_bytes())
             self.assertEqual(published, snapshot())
 
+            # Bootstrap from only pinned dependency sources, without a project seed or Release.
+            shutil.rmtree(main / '.lake')
+            shutil.rmtree(cache)
+            compile_log.write_text('')
+            cold = call(main, 'make', 'warm-donor', 'FULL_BUILD=1')
+            self.assertIn('"status":"warmed"', cold)
+            self.assertIn('"cold_build_consent":true', cold)
+            self.assertEqual({'Fixture', 'Support'}, set(compile_log.read_text().splitlines()))
+            self.assertTrue(snapshot())
+            published = snapshot()
             call(main, 'git', 'switch', '--detach')
             call(reader, 'git', 'restore', 'Fixture.lean')
             call(reader, 'git', 'switch', 'dev')
