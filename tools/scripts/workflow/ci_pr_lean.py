@@ -57,7 +57,9 @@ def read_scope(paths, manifest):
 def cache_targets(paths):
     with tempfile.TemporaryDirectory(prefix="ci-pr-lean-") as temporary:
         scope = read_scope(paths, Path(temporary) / "paths")
-    print(" ".join(sorted(set(scope["targets"]) | set(scope["programs"]))))
+    targets = sorted(set(scope["targets"]) | set(scope["programs"]))
+    if targets:
+        print(" ".join(targets))
     return 0
 
 

@@ -298,10 +298,10 @@ def verification_identity(root, source_ref, source_commit, deadline):
     run, attempt = (os.environ.get(field, "") for field in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))
     event = os.environ.get("GITHUB_EVENT_NAME")
     verification_workflow = ".github/workflows/ci-publication-verify.yml"
-    continued_dispatch = (event == "workflow_dispatch" and os.environ.get("GITHUB_REF_PROTECTED") == "true"
+    protected_dispatch = (event == "workflow_dispatch" and os.environ.get("GITHUB_REF_PROTECTED") == "true"
                           and re.fullmatch(r"refs/heads/integration-ci-[A-Za-z0-9._/-]+-tests", source_ref)
                           and os.environ.get("GITHUB_WORKFLOW_REF") == f"{REPO}/{verification_workflow}@{source_ref}")
-    if (os.environ.get("GITHUB_ACTIONS") != "true" or (event != "push" and not continued_dispatch)
+    if (os.environ.get("GITHUB_ACTIONS") != "true" or (event != "push" and not protected_dispatch)
             or not source_ref.startswith("refs/heads/integration-")
             or os.environ.get("GITHUB_REF") != source_ref or os.environ.get("GITHUB_SHA") != source_commit
             or os.environ.get("GITHUB_REPOSITORY") != REPO
@@ -318,7 +318,7 @@ def verification_identity(root, source_ref, source_commit, deadline):
     if (not isinstance(record, dict) or type(record.get("id")) is not int or record["id"] != int(run)
             or type(record.get("run_attempt")) is not int or record["run_attempt"] != int(attempt)
             or record.get("event") != event or record.get("head_sha") != source_commit
-            or (continued_dispatch and record.get("path") != verification_workflow)
+            or (protected_dispatch and record.get("path") != verification_workflow)
             or record.get("head_branch") != branch or not isinstance(record.get("repository"), dict)
             or record["repository"].get("full_name") != REPO):
         raise ValueError("verification run does not match the source, event and attempt")

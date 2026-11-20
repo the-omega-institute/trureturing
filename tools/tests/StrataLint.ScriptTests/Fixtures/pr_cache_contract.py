@@ -131,7 +131,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             return dict(workflow_run_id=28)
         self.fail("unexpected API request: " + path)
 
-    def run_with(self, function, *, env=None, api=None, association=None):
+    def run_with(self, function, *, env=None, api=None, association=None, pr_read=None):
         run = subprocess.run
 
         def transport(command, **kwargs):
@@ -139,6 +139,9 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
                 return run(command, **kwargs)
             _, owner, repository, path = command[2].split("/", 3)
             repository = owner + "/" + repository
+            if path == "pulls/12" and pr_read is not None:
+                self.assertIn("--include", command)
+                return pr_read(command)
             if path.startswith("commits/") and association is not None:
                 self.assertNotIn("--method", command)
                 self.assertGreater(kwargs["timeout"], 0)
@@ -339,9 +342,10 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.env.update(GITHUB_EVENT_NAME="push", GITHUB_REF=self.identity["target_ref"], GITHUB_SHA=self.actual_merge)
         self.event_file.write_text(json.dumps(dict(after=self.actual_merge, ref=self.identity["target_ref"])))
 
-    def adopt(self, *, env=None, api=None, association=None, cache_action=None):
+    def adopt(self, *, env=None, api=None, association=None, cache_action=None, require_pr_opt_in=False, pr_read=None):
         with mock.patch.object(producer, "download", side_effect=lambda repo, aid, path: shutil.copyfile(self.zipped, path)) as download:
-            result = self.run_with(lambda: producer.adopt(self.root, cache_action), env=env, api=api, association=association)
+            result = self.run_with(lambda: producer.adopt(self.root, cache_action, require_pr_opt_in=require_pr_opt_in),
+                                   env=env, api=api, association=association, pr_read=pr_read)
         return result, download
 
     def test_association_retries_only_failed_page_before_adoption(self):
@@ -447,7 +451,19 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_source_pr_retrieves_preparation_without_target_seed_and_preserves_native_files(self):
         self.preparation()
-        result, download = self.adopt()
+        labels = self.pr["labels"]
+        self.pr["labels"] = []
+        self.event["pull_request"]["labels"] = []
+        self.event_file.write_text(json.dumps(self.event))
+        self.calls.clear()
+        result, download = self.adopt(require_pr_opt_in=True)
+        self.assertEqual("PR is not opted-in for preparation", result["reason"])
+        self.assertEqual([("pulls/12", None)], self.calls)
+        download.assert_not_called()
+        self.assertFalse((self.root / ".lake/build").exists())
+
+        self.pr["labels"] = labels
+        result, download = self.adopt(require_pr_opt_in=True)
         self.assertEqual("adopted", result["status"])
         self.assertIsNone(result["actual_merge"])
         download.assert_called_once()
@@ -465,6 +481,93 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             actions = producer.actions
             self.assertFalse(actions.adoption_record(self.root)["merged"])
             self.assertEqual("pull-requests-do-not-publish-project-seeds", actions.project_publication(self.root)[1])
+
+    def scripted_pr_read(self, failed_read, status, body, code, *, headers=b"", stderr=b""):
+        reads = 0
+
+        def read(command):
+            nonlocal reads
+            reads += 1
+            if reads != failed_read:
+                return subprocess.CompletedProcess(command, 0,
+                    b"HTTP/2.0 200 OK\r\n\r\n" + json.dumps(self.pr).encode(), b"")
+            if code is None:
+                raise subprocess.TimeoutExpired(command, 60)
+            stdout = b"HTTP/2.0 " + status + b"\r\n" + headers + b"\r\n" + body if status else b""
+            return subprocess.CompletedProcess(command, code, stdout, stderr)
+
+        return mock.Mock(side_effect=read)
+
+    def test_live_opt_in_lookup_interruption_is_an_optional_miss(self):
+        self.preparation()
+        output = self.root / "adoption-outputs"
+        cases = (
+            ("HTTP 503", (b"503 Service Unavailable", b"{}", 1), {}),
+            ("HTTP 429", (b"429 Too Many Requests", b"{}", 1), {}),
+            ("HTTP 403", (b"403 Forbidden", b"{}", 1), {"headers": b"X-Ratelimit-Remaining: 0\r\n"}),
+            ("HTTP 403", (b"403 Forbidden", b"{}", 1), {"headers": b"Retry-After: 60\r\n"}),
+            ("HTTP 403", (b"403 Forbidden", b'{"message":"You have exceeded a secondary rate limit."}', 1), {}),
+            ("no HTTP status", (None, b"", 1), {"stderr": b"Get https://api.github.com: lookup api.github.com: no such host"}),
+            ("no HTTP status", (None, b"", 1), {"stderr": b"dial tcp 192.0.2.1:443: connect: network is unreachable"}),
+            ("HTTP 200", (b"200 OK", b'{"labels":[', 1), {"stderr": b"network connection lost"}),
+            ("truncated JSON", (b"200 OK", b'{"labels":[', 0), {}),
+            ("timed out", (None, b"", None), {}),
+        )
+        for reason, args, kwargs in cases:
+            for failed_read in (1, 2):
+                with self.subTest(args=args, kwargs=kwargs, failed_read=failed_read):
+                    output.unlink(missing_ok=True)
+                    read = self.scripted_pr_read(failed_read, *args, **kwargs)
+                    result, download = self.adopt(env=dict(self.env, GITHUB_OUTPUT=str(output)),
+                                                  require_pr_opt_in=True, pr_read=read)
+                    self.assertEqual("miss", result["status"])
+                    self.assertIn(reason, result["reason"])
+                    self.assertEqual(failed_read, read.call_count)
+                    self.assertEqual(failed_read - 1, download.call_count)
+                    self.assertEqual("adopted=false\n", output.read_text())
+                    self.assertFalse((self.root / ".lake").exists())
+                    self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+
+    def test_live_opt_in_lookup_preserves_auth_permission_and_identity_errors(self):
+        self.preparation()
+        wrong_pr = json.dumps(dict(self.pr, number=13)).encode()
+        cases = (
+            (subprocess.CalledProcessError, "exit status 4", (None, b"", 4), {}),
+            (ValueError, "HTTP 401", (b"401 Unauthorized", b'{"message":"Bad credentials"}', 1), {}),
+            (ValueError, "HTTP 403", (b"403 Forbidden", b'{"message":"Resource not accessible by integration"}', 1),
+             {"headers": b"X-Ratelimit-Remaining: 4999\r\n"}),
+            (ValueError, "source PR identity differs", (b"200 OK", wrong_pr, 0), {}),
+            (ValueError, "invalid JSON", (b"200 OK", b'{"labels":@}', 0), {}),
+        )
+        for error, message, args, kwargs in cases:
+            for failed_read in (1, 2):
+                with self.subTest(message=message, failed_read=failed_read):
+                    read = self.scripted_pr_read(failed_read, *args, **kwargs)
+                    with self.assertRaisesRegex(error, message):
+                        self.adopt(require_pr_opt_in=True, pr_read=read)
+                    self.assertEqual(failed_read, read.call_count)
+                    self.assertFalse((self.root / ".lake").exists())
+                    self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+
+    def test_source_pr_can_revoke_opt_in_during_download(self):
+        self.preparation()
+        self.calls.clear()
+
+        def api(repository, path, body=None):
+            value = self.api(repository, path, body)
+            if path == "pulls/12" and self.calls.count((path, None)) == 2:
+                return dict(value, labels=[])
+            return value
+
+        output = self.root / "adoption-outputs"
+        result, download = self.adopt(env=dict(self.env, GITHUB_OUTPUT=str(output)),
+                                      api=api, require_pr_opt_in=True)
+        self.assertEqual("miss", result["status"])
+        self.assertEqual("PR is no longer opted-in for preparation", result["reason"])
+        download.assert_called_once()
+        self.assertEqual("adopted=false\n", output.read_text())
+        self.assertFalse((self.root / ".lake").exists())
+        self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
 
     def test_adoption_reclaims_download_zip_before_native_unpack(self):
         self.preparation()
@@ -512,6 +615,22 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.zip_preparation()
         shutil.rmtree(self.root / ".lake")
         self.merged()
+
+        existing = self.root / ".lake/build/lib/keep"
+        existing.parent.mkdir(parents=True)
+        existing.write_text("prior build")
+        payload = next((self.bundle / "shards").iterdir())
+        original = payload.read_bytes()
+        payload.write_bytes(b"corrupt bundled material")
+        self.zip_preparation()
+        with self.assertRaisesRegex(ValueError, "bundled preparation shard SHA-256 mismatch"):
+            self.adopt(cache_action=("/missing/node", "/missing/cache-action"))
+        self.assertEqual("prior build", existing.read_text())
+        self.assertFalse((self.root / ".lake/packages").exists())
+        self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+        payload.write_bytes(original)
+        self.zip_preparation()
+
         result, _ = self.adopt(cache_action=("/missing/node", "/missing/cache-action"))
         self.assertEqual("adopted", result["status"])
         self.assertEqual(self.actual_merge, result["actual_merge"])
@@ -561,7 +680,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.assertEqual("restore-preparation", command[2])
             directory = pathlib.Path(command[3])
             record = shards.read_index(directory / "project.json", binding, "complete")
-            result = shards.install(self.root, record, [], require_complete=True, preparation=directory)
+            result = shards.install(self.root, record, require_complete=True, preparation=directory)
             return subprocess.CompletedProcess(command, 0 if result["complete"] else 3)
 
         reference = self.root / shards.transport_payload(material[shards.REPORT])
@@ -575,6 +694,17 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.assertEqual("miss", result["status"])
             self.assertFalse((self.root / ".lake/build").exists())
             self.assertFalse((self.root / ".lake/packages").exists())
+            self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+            payload = packed / local.name
+            original = payload.read_bytes()
+            payload.write_bytes(b"corrupt bundled material")
+            self.zip_preparation()
+            with self.assertRaisesRegex(ValueError, "bundled preparation shard SHA-256 mismatch"):
+                self.adopt(cache_action=runtime)
+            self.assertFalse((self.root / ".lake").exists())
+            self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+            payload.write_bytes(original)
+            self.zip_preparation()
             unavailable.rename(reference)
             result, _ = self.adopt(cache_action=runtime)
         self.assertEqual("adopted", result["status"])
@@ -666,7 +796,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.pr.update(state="open", head=dict(sha=self.identity["head"]), number=99)
         # A same-head PR association is not evidence for source PR 12.
         with self.assertRaisesRegex(ValueError, "source PR identity"):
-            self.adopt()
+            self.adopt(require_pr_opt_in=True)
 
     def test_missing_expired_or_unfinished_preparation_is_not_successful_handoff(self):
         self.preparation()
@@ -771,8 +901,10 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_invalid_payload_or_download_failure_keeps_original_error_and_no_adoption(self):
         self.preparation()
-        self.merged()
         self.zipped.write_bytes(b"broken zip")
+        with self.assertRaises(zipfile.BadZipFile):
+            self.adopt(require_pr_opt_in=True)
+        self.merged()
         with self.assertRaises(zipfile.BadZipFile):
             self.adopt()
         with mock.patch.object(producer, "download", side_effect=subprocess.CalledProcessError(1, "gh", stderr="HTTP 410 expired")), \

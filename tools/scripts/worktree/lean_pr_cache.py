@@ -41,6 +41,51 @@ def api(repository, path, body=None):
     return json.loads(result.stdout)
 
 
+class OptionalPrOptInMiss(Exception):
+    """Live PR opt-in could not be established for optional adoption."""
+
+
+def read_pr(repository, number, *, optional_opt_in=False):
+    path = "pulls/" + str(number)
+    if not optional_opt_in:
+        return api(repository, path)
+    command = ["gh", "api", "repos/" + repository + "/" + path, "--include"]
+    try:
+        result = subprocess.run(command, capture_output=True, timeout=60)
+    except subprocess.TimeoutExpired:
+        raise OptionalPrOptInMiss("live PR opt-in lookup timed out") from None
+    # gh reserves exit 4 for missing authentication and exit 2 for cancellation.
+    if result.returncode not in (0, 1):
+        result.check_returncode()
+    status, headers, body = included_response(result)
+    response = "no HTTP status" if status is None else f"HTTP {status}"
+    if (status == 429 or status is not None and 500 <= status < 600
+            or status == 403 and rate_limited(headers, body)
+            or status in (None, 200) and result.returncode):
+        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {response} (gh exit {result.returncode})")
+    require(status == 200 and body is not None, f"invalid live PR opt-in response: {response}")
+    try:
+        return decode_api_json(body)
+    except InterruptedApiRead as error:
+        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {error}") from None
+
+
+def rate_limited(headers, body):
+    for header in headers.splitlines():
+        name, _, value = header.partition(b":")
+        if name.lower() == b"x-ratelimit-remaining" and value.strip() == b"0":
+            return True
+        if name.lower() == b"retry-after" and value.strip():
+            return True
+    try:
+        value = json.loads(body or b"")
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return False
+    message = value.get("message") if isinstance(value, dict) else None
+    return isinstance(message, str) and re.search(
+        r"\b(?:rate limit exceeded|exceeded a (?:secondary )?rate limit)\b", message, re.IGNORECASE) is not None
+
+
 def validate_identity(value):
     require(isinstance(value, dict) and set(value) == IDENTITY_FIELDS, "invalid source identity fields")
     require(isinstance(value["repository"], str) and
@@ -96,7 +141,7 @@ def require_target_ancestor(repository, ancestor, target, reason):
     require(comparison["merge_base_commit"]["sha"] == ancestor, reason)
 
 
-def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
+def validate_remote(identity, *, allow_merged=False, require_opt_in=False, optional_opt_in=False):
     validate_identity(identity)
     repository = identity["repository"]
     require(repository == os.environ["GITHUB_REPOSITORY"], "foreign source repository")
@@ -108,7 +153,7 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             "protected target has no commit identity")
     require_target_ancestor(repository, identity["base"], target_head, "B is not in the target history")
     # B may be old. M is an unmerged candidate, never claimed to be target history.
-    pr = api(repository, "pulls/" + identity["pr"])
+    pr = read_pr(repository, identity["pr"], optional_opt_in=optional_opt_in)
     require(pr["number"] == int(identity["pr"]), "source PR identity differs")
     require((pr["state"] == "open" or allow_merged and pr.get("merged") is True)
             and pr["head"]["sha"] == identity["head"]
@@ -124,6 +169,8 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             and run["event"] == "pull_request" and run["head_sha"] == identity["head"]
             and run["path"] == ".github/workflows/" + WORKFLOW,
             "source run does not bind the PR head and workflow")
+    if optional_opt_in and not any(label.get("name") == "lean-cache-produce" for label in pr.get("labels", [])):
+        raise OptionalPrOptInMiss("PR is no longer opted-in for preparation")
     return target_head
 
 
@@ -249,18 +296,41 @@ def confirm(root, identity, artifact_id):
     return receipt("prepared", identity, runtime=runtime, artifact=artifact_id)
 
 
-class InterruptedAssociationRead(ValueError):
-    """The association page can be fetched again within its original deadline."""
+class InterruptedApiRead(ValueError):
+    """The API response could not be read to completion."""
+
+
+def included_response(result):
+    # gh prints the status line before the headers and body, including on HTTP errors.
+    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
+    line, _, headers = headers.partition(b"\n")
+    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
+                              line)
+    status = int(status_line[1]) if status_line else None
+    return status, headers, body if separator else None
+
+
+def decode_api_json(body):
+    if not body.strip():
+        raise InterruptedApiRead("HTTP 200 with empty body")
+    try:
+        return json.loads(body.decode("utf-8"))
+    except json.JSONDecodeError as error:
+        tail = error.doc[error.pos:].rstrip()
+        if (not tail or error.msg.startswith("Unterminated string")
+                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
+            raise InterruptedApiRead("HTTP 200 with truncated JSON") from None
+        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
+    except UnicodeDecodeError as error:
+        if error.reason == "unexpected end of data" and error.end == len(body):
+            raise InterruptedApiRead("HTTP 200 with truncated JSON encoding") from None
+        raise ValueError("HTTP 200 with invalid JSON encoding") from None
 
 
 def association_response(result):
-    # gh prints the status line before the headers and body, including on HTTP errors.
-    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
-    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
-                              headers.split(b"\n", 1)[0])
-    status = int(status_line[1]) if status_line else None
+    status, _, body = included_response(result)
     if status in (500, 502, 503, 504):
-        raise InterruptedAssociationRead(f"HTTP {status} (gh exit {result.returncode})")
+        raise InterruptedApiRead(f"HTTP {status} (gh exit {result.returncode})")
     if status is not None and status != 200:
         raise ValueError(f"HTTP {status} (gh exit {result.returncode})")
     if result.returncode and (status == 200 or not result.stdout):
@@ -268,23 +338,10 @@ def association_response(result):
                               result.stderr.strip())
         if transport:
             response = "HTTP 200" if status == 200 else "no HTTP status"
-            raise InterruptedAssociationRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
+            raise InterruptedApiRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
     require(status is not None, f"no HTTP status (gh exit {result.returncode})")
-    require(separator and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
-    if not body.strip():
-        raise InterruptedAssociationRead("HTTP 200 with empty body")
-    try:
-        value = json.loads(body.decode("utf-8"))
-    except json.JSONDecodeError as error:
-        tail = error.doc[error.pos:].rstrip()
-        if (not tail or error.msg.startswith("Unterminated string")
-                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
-            raise InterruptedAssociationRead("HTTP 200 with truncated JSON") from None
-        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
-    except UnicodeDecodeError as error:
-        if error.reason == "unexpected end of data" and error.end == len(body):
-            raise InterruptedAssociationRead("HTTP 200 with truncated JSON encoding") from None
-        raise ValueError("HTTP 200 with invalid JSON encoding") from None
+    require(body is not None and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
+    value = decode_api_json(body)
     require(isinstance(value, list) and all(isinstance(pr, dict) for pr in value),
             "HTTP 200 with invalid API listing")
     return value
@@ -300,7 +357,7 @@ def association_page(repository, path, page):
             if remaining <= 0:
                 raise ValueError("page deadline exceeded")
             return association_response(subprocess.run(command, capture_output=True, timeout=remaining))
-        except (InterruptedAssociationRead, subprocess.TimeoutExpired) as error:
+        except (InterruptedApiRead, subprocess.TimeoutExpired) as error:
             reason = "gh timed out" if isinstance(error, subprocess.TimeoutExpired) else str(error)
             detail = f"commit PR association page {page}, attempt {attempt}: {reason}"
             if attempt == 2 or time.monotonic() + delay >= deadline:
@@ -324,7 +381,7 @@ def paged(repository, path, field=None, *, read_association=False):
         page += 1
 
 
-def consumer_context(root):
+def consumer_context(root, *, require_pr_opt_in=False):
     event = json.loads(pathlib.Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
     repository, kind = os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_EVENT_NAME"]
     checkout, ref = git(root, "rev-parse", "HEAD"), os.environ["GITHUB_REF"]
@@ -334,10 +391,13 @@ def consumer_context(root):
         source = event["pull_request"]
         parents = git(root, "show", "-s", "--format=%P", "HEAD").split()
         require(len(parents) == 2 and parents[1] == source["head"]["sha"], "consumer M parents differ from event H")
-        pr = api(repository, "pulls/" + str(event["number"]))
+        pr = read_pr(repository, event["number"], optional_opt_in=require_pr_opt_in)
         require(pr["number"] == event["number"], "source PR identity differs")
         require(pr["state"] == "open" and pr["head"]["sha"] == source["head"]["sha"]
                 and pr["base"]["ref"] == source["base"]["ref"], "source PR head or target changed, or is closed")
+        if require_pr_opt_in and not any(label.get("name") == "lean-cache-produce"
+                                         for label in pr.get("labels", [])):
+            return None
         merged = False
     elif kind == "push" or kind == "workflow_dispatch" and actions.manual_source_is_valid():
         if kind == "push":
@@ -385,7 +445,7 @@ def download(repository, artifact_id, destination):
             print(f"PR_CACHE_RETRY artifact {artifact_id}: {interrupted[1].decode('ascii')}", file=sys.stderr)
 
 
-def validate_preparation(root, value, context, artifact, *, sharded=False):
+def validate_preparation(root, value, context, artifact, *, sharded=False, require_pr_opt_in=False):
     require(isinstance(value, dict) and set(value) == {"source", "runtime", "partition", "elan_key"},
             "invalid preparation identity fields")
     identity, runtime = validate_identity(value["source"]), value["runtime"]
@@ -416,7 +476,8 @@ def validate_preparation(root, value, context, artifact, *, sharded=False):
             datetime.fromisoformat(artifact["created_at"].replace("Z", "+00:00")) <=
             datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00")),
             "artifact does not belong to producer attempt interval")
-    target_head = validate_remote(identity, allow_merged=context["merged"])
+    target_head = validate_remote(identity, allow_merged=context["merged"],
+                                  optional_opt_in=require_pr_opt_in and not context["merged"])
     commit = api(repository, "git/commits/" + identity["merge"])
     require(commit["sha"] == identity["merge"] and [p["sha"] for p in commit["parents"]] ==
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
@@ -488,7 +549,7 @@ def restore_project(root, directory, cache_action, identity, runtime):
     bundled = {path.name for path in packed.iterdir()} if packed.is_dir() else set()
     require(bundled <= expected, "preparation contains an unreferenced shard")
     if bundled == expected:
-        return shards.install(root, index, [], require_complete=True, preparation=directory,
+        return shards.install(root, index, require_complete=True, preparation=directory,
                               payload_directory=packed)["complete"]
     # Earlier artifacts can still carry references to Actions cache entries.
     result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
@@ -498,13 +559,19 @@ def restore_project(root, directory, cache_action, identity, runtime):
     return True
 
 
-def adopt(root, cache_action=None):
+def adopt(root, cache_action=None, *, require_pr_opt_in=False):
     record = root / "build/lean-cache/pr-adopted.json"
     record.unlink(missing_ok=True)
     actions.output(dict(adopted=False))
-    context = consumer_context(root)
+    try:
+        context = consumer_context(root, require_pr_opt_in=require_pr_opt_in)
+    except OptionalPrOptInMiss as miss:
+        return receipt("miss", None, reason=str(miss))
     if context is None:
-        return receipt("miss", None, reason="no matching merged PR at event checkout")
+        reason = ("PR is not opted-in for preparation" if require_pr_opt_in
+                  and os.environ["GITHUB_EVENT_NAME"] == "pull_request"
+                  else "no matching merged PR at event checkout")
+        return receipt("miss", None, reason=reason)
     repository = context["repository"]
     candidates = []
     variants = (True, False) if cache_action else (False,)
@@ -535,7 +602,11 @@ def adopt(root, cache_action=None):
             # while the native payload is staged and unpacked.
             artifact_zip.unlink()
             value = json.loads((directory / "preparation.json").read_text())
-            validated = validate_preparation(root, value, context, artifact, sharded=sharded)
+            try:
+                validated = validate_preparation(root, value, context, artifact, sharded=sharded,
+                                                 require_pr_opt_in=require_pr_opt_in)
+            except OptionalPrOptInMiss as miss:
+                return receipt("miss", context, reason=str(miss))
             if validated is None:
                 continue
             identity, runtime = validated
@@ -570,13 +641,14 @@ def main():
     parser.add_argument("--anchor")
     parser.add_argument("--previous-index", type=pathlib.Path)
     parser.add_argument("--cache-action", nargs=2)
+    parser.add_argument("--require-pr-opt-in", action="store_true")
     args = parser.parse_args()
     try:
         root = args.repository.resolve()
         if args.command == "dispatch":
             dispatch(root)
         elif args.command == "adopt":
-            adopt(root, args.cache_action)
+            adopt(root, args.cache_action, require_pr_opt_in=args.require_pr_opt_in)
         else:
             identity = validate_identity(json.loads(os.environ["PR_SOURCE"]))
             if args.command == "prepare":

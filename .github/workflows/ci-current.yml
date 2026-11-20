@@ -330,13 +330,14 @@ jobs:
           key: ${{ needs.source.outputs.judge_key }}
       - id: prepared
         name: Adopt a matching PR preparation for this event
-        if: needs.detect.outputs.report == 'true' && env.INDEXED_PROJECT_PR != 'true'
+        if: needs.detect.outputs.report == 'true'
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: adopt-preparation
           sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
+          require-pr-opt-in: ${{ env.INDEXED_PROJECT_PR == 'true' }}
       - id: keys
         if: needs.detect.outputs.report == 'true'
         env:
@@ -369,9 +370,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
-          require-complete: 'true'
       - id: project
-        if: env.INDEXED_PROJECT_PR != 'true' && steps.sharded_project.outputs.complete != 'true' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
+        if: env.INDEXED_PROJECT_PR != 'true' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' && (steps.sharded_project.outputs.available || '0') == '0'
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -387,11 +387,14 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-          SHARDED_PROJECT: ${{ steps.sharded_project.outputs.complete }}
+          SHARDS_INSTALLED: ${{ steps.sharded_project.outputs.available || '0' }}
+          SHARDED_COMPLETE: ${{ steps.sharded_project.outputs.complete }}
         run: |
-          if [[ "$SHARDED_PROJECT" == true ]]; then
+          if [[ "$SHARDS_INSTALLED" != 0 ]]; then
             python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-            echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+            if [[ "$SHARDED_COMPLETE" == true ]]; then
+              echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+            fi
           else
             python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
           fi
@@ -418,25 +421,23 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - id: pr_cache_scope
         name: Select the project cache for affected PR modules
-        if: env.INDEXED_PROJECT_PR == 'true' && steps.lean_seeds.outcome == 'success'
+        if: env.INDEXED_PROJECT_PR == 'true' && steps.prepared.outputs.adopted != 'true' && steps.lean_seeds.outcome == 'success'
         run: |
-          targets="$(python3 tools/scripts/workflow/ci_compute.py run -- \
-            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets)"
-          if [[ -n "$targets" && "${#targets}" -le 60000 ]]; then
-            echo "targets=$targets" >> "$GITHUB_OUTPUT"
-          elif [[ -n "$targets" ]]; then
-            echo 'full=true' >> "$GITHUB_OUTPUT"
+          targets="$RUNNER_TEMP/pr-cache-targets"
+          python3 tools/scripts/workflow/ci_compute.py run -- \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets > "$targets"
+          if [[ -s "$targets" ]]; then
+            echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
           fi
       - name: Restore indexed project artifacts for the PR
-        if: steps.pr_cache_scope.outputs.targets != '' || steps.pr_cache_scope.outputs.full == 'true'
+        if: steps.pr_cache_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
-          targets: ${{ steps.pr_cache_scope.outputs.targets }}
-          require-complete: ${{ steps.pr_cache_scope.outputs.full == 'true' }}
+          targets-file: ${{ steps.pr_cache_scope.outputs.targets-file }}
       - id: pr_lean
         name: Check affected PR modules and Scribe inputs
         if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
@@ -447,6 +448,7 @@ jobs:
         env:
           LEAN_NUM_THREADS: '1'
           GH_TOKEN: ${{ github.token }}
+          PARTIAL_INDEXED_PROJECT: ${{ env.INDEXED_PROJECT_PUSH == 'true' && (steps.sharded_project.outputs.available || '0') != '0' && steps.sharded_project.outputs.complete != 'true' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
       - name: Run selected PR FIB regressions

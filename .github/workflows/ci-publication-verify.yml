@@ -6,14 +6,17 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Cold Release verification seed
+        description: Project seed for Release verification
         type: choice
-        options: [none, partial]
+        options: [complete, partial, none]
         required: true
       checkpoint_run:
-        description: Previous verification run for this commit and mode
+        description: Optional earlier checkpoint run for the same commit and cold mode
         type: string
-        required: true
+      checkpoint_seconds:
+        description: Cold build interval before saving a checkpoint (0 runs the normal build)
+        type: string
+        default: '0'
 
 permissions: {}
 
@@ -34,13 +37,14 @@ jobs:
     env:
       STRATALINT_CACHE_WRITES: 'false'
       SHARD_HANDOFF: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
+      CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
       - name: Fetch the fixed dev history for cold build checkpoints
-        if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+        if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && env.CHECKPOINT_SECONDS != '0' && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
         env:
           ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
         run: |
@@ -114,8 +118,14 @@ jobs:
         env:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
         run: |
-          [[ "$SHARD_HANDOFF" == none || "$SHARD_HANDOFF" == partial ]]
-          [[ "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ]]
+          case "$SHARD_HANDOFF" in
+            complete) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            none|partial)
+              [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
+              [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
+              ;;
+            *) exit 2 ;;
+          esac
           [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
           {
             echo 'STRATALINT_CACHE_SOURCE_VALIDATED=true'
@@ -157,6 +167,7 @@ jobs:
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
+          checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
@@ -206,6 +217,8 @@ jobs:
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
           if [[ "$RESTORE" == full ]]; then
             test -s .lake/build/stratalint/raw-lean-report.json.reuse.json
+          else
+            test ! -e .lake/build/stratalint/raw-lean-report.json
           fi
 
   cache-shards:
