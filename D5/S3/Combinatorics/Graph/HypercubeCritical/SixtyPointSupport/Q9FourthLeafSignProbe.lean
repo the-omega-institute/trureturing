@@ -18,7 +18,8 @@ noncomputable section
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical
 open BalancedCriticalSpectrum (Q flip gamma IsSwitching IsBalanced)
-open private coeff gammaV gammaV_zero gammaV_succ switching_sq from
+open BalancedCriticalSpectrum (switching_sq)
+open private coeff gammaV gammaV_zero gammaV_succ from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open private gamma_three_switching switching_ne_zero from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
@@ -90,7 +91,8 @@ private lemma no_oppositely_ordered_middle {n : ℕ} {C : Finset (Q n)}
 #print axioms no_oppositely_ordered_middle
 
 open D5.S3.Combinatorics.Graph.Hypercube
-open private flip_comm no_selected_reverse_three from
+open BalancedCubeGirth (flip_comm)
+open private no_selected_reverse_three from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private diff from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private agree_of_near_geodesic from
@@ -201,8 +203,8 @@ open private endpoint_eq_of_short_paths from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
   (directions regular_directions)
-open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth open private mem_directions from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open BalancedCubeComponentBoundary (mem_directions)
 open private third_distance distance_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
 open private cubeParity cubeParity_ne_of_adj from

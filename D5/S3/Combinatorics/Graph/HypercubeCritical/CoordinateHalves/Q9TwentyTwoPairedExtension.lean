@@ -20,7 +20,8 @@ open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced)
 open BalancedCubeLowerBound (coordinateSlice)
 open Q9TwentyTwoReconstruction (bit_iff_opposite_mem)
-open private adjacent_exists_flip flip_comm from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
