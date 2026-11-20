@@ -112,7 +112,7 @@ open scoped Nat
 
 namespace ProfileStabilizer
 
-private def Preserving {I : Type*} (p : I → ℕ) : Subgroup (Equiv.Perm I) where
+def Preserving {I : Type*} (p : I → ℕ) : Subgroup (Equiv.Perm I) where
   carrier := {g | p ∘ g = p}
   one_mem' := rfl
   mul_mem' {g h} hg hh := by
@@ -384,10 +384,10 @@ open Finset
 
 namespace PermutationGrid
 
-private abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
+abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
   {p : I → ℕ // ∑ i, p i = m}
 
-private abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
+abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
     Profile I m :=
   ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
 
@@ -528,12 +528,12 @@ private theorem relabel_one {I : Type*} [Fintype I] {m : ℕ} (p : Profile I m) 
   funext i
   simp
 
-private instance profileAction {I : Type*} [Fintype I] {m : ℕ} : MulAction (Equiv.Perm I) (Profile I m) where
+instance profileAction {I : Type*} [Fintype I] {m : ℕ} : MulAction (Equiv.Perm I) (Profile I m) where
   smul := relabel
   one_smul := relabel_one
   mul_smul := relabel_mul
 
-private theorem preserving_of_fix {I : Type*} [Fintype I] {m : ℕ} {p : Profile I m}
+theorem preserving_of_fix {I : Type*} [Fintype I] {m : ℕ} {p : Profile I m}
     {g : Equiv.Perm I} (fixes : relabel g p = p) : g ∈ ProfileStabilizer.Preserving p.val := by
   change p.val ∘ g = p.val
   funext i
