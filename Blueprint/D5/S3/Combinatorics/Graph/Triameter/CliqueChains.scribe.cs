@@ -1,11 +1,14 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Triameter.TriameterNotation;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Triameter;
 
 internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
 {
+    private const string Owner = "D5/S3/Combinatorics/Graph/Triameter/CliqueChains";
+
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Geometry/hakkozerenko2026triameter");
 
@@ -18,9 +21,40 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
                 + "between them. The triameter tr(G) is the maximum of d(x,y)+d(x,z)+d(y,z) over all ordered "
                 + "triples of vertices, with repeats allowed. The independence number α(G) is the "
                 + "largest size of an independent set.")),
+            Definition("clique-chain-block-index", "BlockIndex",
+                Eqn(Call("BlockIndex", Id("q")), Call("Option", LayerIndices(i => Call("q", i)))),
+                "For q : Fin 3 → ℕ, none indexes the central clique. A pair of leg i and index in Fin (q i) "
+                    + "indexes a peripheral clique on that leg."),
+            Definition("clique-chain-block", "block",
+                Eqn(Block(Id("x")), Seq(Qualified("if"), Sp, Eqn(Depth(Id("x")), D(0)),
+                    Sp, Qualified("then"), Sp, Qualified("none"), Sp, Qualified("else"), Sp,
+                    Call("some", Seq(Langle, Leg(Id("x")), Comma, Sp,
+                        Call("Nat.div", Seq(Depth(Id("x")), Minus, D(1)), D(2)),
+                        Rangle)))),
+                "For x : EvenLegTriangle.Vertex q, block x returns a BlockIndex q. At positive depth, "
+                    + "natural division by two after subtracting one gives the index in Fin (q i)."),
+            Definition("clique-chain-interface", "Interface",
+                Seq(Call("Interface", Id("x"), Id("y")), Sp, Leftrightarrow, Sp,
+                    SameLeg, Sp, Land, Sp, Parenthesized(Seq(
+                        Parenthesized(OrientedInterface(Id("x"), Id("y"))), Sp, Lor, Sp,
+                        Parenthesized(OrientedInterface(Id("y"), Id("x")))))),
+                "For x y : EvenLegTriangle.Vertex q, an interface links consecutive depths on the same leg "
+                    + "whose smaller depth is even. The two cases give the two orientations."),
+            Definition("clique-chain-construction", "CliqueChains",
+                Seq(Chains, Sp, Leftrightarrow, Sp, Surjective, Nl, Sp, Land, Sp,
+                    Parenthesized(Seq(Forall, Sp, Id("x"), Sp, Id("y"), Comma, Sp,
+                        Id("x"), Neq, Id("y"), Sp, Longrightarrow, Sp, SameBlock,
+                        Sp, Longrightarrow, Sp, GraphAdj)), Nl, Sp, Land, Sp,
+                    Parenthesized(Seq(Forall, Sp, Id("x"), Sp, Id("y"), Comma, Sp,
+                        GraphAdj, Sp, Longrightarrow, Sp, SameBlock, Sp, Lor, Sp,
+                        Call("Interface", Image(Id("x")), Image(Id("y"))))), Nl, Sp, Land, Sp,
+                    Parenthesized(EdgeLift(Call("Interface", Id("u"), Id("v"))))),
+                "For G : SimpleGraph V, q : Fin 3 → ℕ and f : V → EvenLegTriangle.Vertex q, the four clauses "
+                    + "are layers_nonempty, within_cliques, allowed_edges and interfaces_nonempty. "
+                    + "The last clause requires one edge over each ordered interface."),
             Describe.Lean(
                 DescribeId.Create("triameter-independence-equality"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Triameter/CliqueChains.question1"),
+                DeclarationHandle.Create(Owner + ".question1"),
                 H("Hak–Kozerenko Question 1 at k = 1"),
                 StatementSource.FromAuthor(F.Disp(Statement())),
                 AssessedProvenance.FromRepo(Source),
@@ -32,8 +66,8 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
                     Paragraph(Text("The source assumes at least three vertices. The equivalence uses only "
                         + "finiteness and connectedness and also holds on connected vertex sets of size one "
                         + "or two. Fin(3) indexes the three chains. For each chain i the nonnegative length "
-                        + "is q(i), and Layers(q) is the disjoint union over i of depths 0 through 2q(i). "
-                        + "A surjection f from V to Layers(q) partitions V into nonempty layers. "
+                        + "is q(i), and EvenLegTriangle.Vertex q is the disjoint union over i of depths 0 through 2q(i). "
+                        + "A surjection f from V to EvenLegTriangle.Vertex q partitions V into nonempty layers. "
                         + "The three depth-zero layers form the central clique. For each 1 ≤ t ≤ q(i), "
                         + "depths 2t−1 and 2t are the inward and outward layers of clique t on chain i.")),
                     Paragraph(Text("CliqueChains requires every pair of distinct vertices in the same clique "
@@ -53,22 +87,18 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         []));
 
-    private static Formula Statement() => F.Seq(
-        Forall, Sp, Bound("V", Op("Type")), Sp,
-        OpenBracket, Call("Fintype", F.Id("V")), CloseBracket, Sp,
-        Bound("G", Call("SimpleGraph", F.Id("V"))), Comma, Sp,
-        Call("Connected", F.Id("G")), Sp, Longrightarrow, Sp, Open,
-        Call("tr", F.Id("G")), Sp, Eq, Sp, D(4), Alpha, Sp, Open, F.Id("G"), Close, Sp, Minus, Sp, D(1),
-        Sp, Leftrightarrow, Sp, Exists, Sp,
-        Bound("q", F.Seq(Call("Fin", D(3)), Sp, To, Sp, Mathbb, Grp(F.Id("N")))), Sp,
-        Bound("f", F.Seq(F.Id("V"), Sp, To, Sp, Call("Layers", F.Id("q")))), Comma, Sp,
-        Call("CliqueChains", F.Seq(F.Id("G"), Comma, Sp, F.Id("q"), Comma, Sp, F.Id("f"))), Close);
+    private static DocumentBlock.Describe Definition(string id, string name, Formula statement, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + "." + name), H(name),
+            StatementSource.FromAuthor(F.Disp(statement)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula Bound(string name, Formula type) =>
-        F.Seq(Open, F.Id(name), Sp, Colon, Sp, type, Close);
+    private static Formula Chains => Call("CliqueChains", Id("G"), Id("q"), Id("f"));
+    private static Formula Block(Formula x) => Call("block", x);
+    private static Formula SameBlock => Eqn(Block(Image(Id("x"))), Block(Image(Id("y"))));
+    private static Formula OrientedInterface(Formula x, Formula y) =>
+        Seq(Eqn(Call("Nat.mod", Depth(x), D(2)), D(0)), Sp, Land, Sp, Step(x, y));
 
-    private static Formula Call(string name, Formula argument) =>
-        F.Seq(Op(name), Open, argument, Close);
-
-    private static Formula Op(string name) => F.Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Statement() =>
+        GraphForall(Seq(Connected, Sp, Longrightarrow, Sp, Parenthesized(Seq(
+            Equality, Sp, Leftrightarrow, Sp, Exists, Sp, LegAndMapBinders, Comma, Sp, Chains))));
 }
