@@ -6,7 +6,7 @@ The coefficients recover the full parameter tuple and enforce the two support cu
 
 **Definition 1.1 (Parameter space).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.Params`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] \forall K \in \operatorname{IntermediateField}\left(F, E\right),\; \forall L \in \operatorname{IntermediateField}\left(F, E\right),\; \operatorname{Params}\left(K, L\right) = L \times L \times L \times L \times K$$
 
 *Formalization.* `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.Params` (`✓ std3`).
 
@@ -14,11 +14,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.Params`
 
 *Commentary.*
 
-For intermediate fields K and L of E over F, the parameter space is L⁴ × K. The entries are embedded in E when used as coefficients.
+The product is associated to the right. Each factor is the carrier of the corresponding intermediate field.
 
 **Definition 1.2 (Linear coefficient map).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoefficients`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] \forall K \in \operatorname{IntermediateField}\left(F, E\right),\; \forall L \in \operatorname{IntermediateField}\left(F, E\right),\; \forall b \in E,\; \forall c \in E,\; \forall u \in L,\; \forall v \in L,\; \forall w \in L,\; \forall l \in L,\; \forall k \in K,\; (\left(paramCoefficients_{K,L}\right)\left(b, c\right) : \operatorname{LinearMap}\left(F, \operatorname{Params}\left(K, L\right), \operatorname{Fin}\left(4\right) \to E\right))\left((u, v, w, l, k)\right) = [(u : E) - (b^{\operatorname{card}\left(F\right)^{3}} - b)^{-1} \cdot ((l : E) + c \cdot (k : E) - b \cdot (u : E)), (v : E), (w : E), (b^{\operatorname{card}\left(F\right)^{3}} - b)^{-1} \cdot ((l : E) + c \cdot (k : E) - b \cdot (u : E))]$$
 
 *Formalization.* `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoefficients` (`✓ std3`).
 
@@ -26,11 +26,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoef
 
 *Commentary.*
 
-Over a finite base field F of order q, put δ = b^(q³) − b for b in E. At parameters (u,a₁,a₂,ℓ,k), the map takes a₃ = δ⁻¹(ℓ + ck − bu) and returns (u − a₃,a₁,a₂,a₃). The map is defined for all b and c in E.
+The output vector is indexed in order from zero through three. Field inversion is total, so the map is defined even when the determinant vanishes.
 
 **Theorem 1.3 (Recovery of the five parameters).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoefficients_injective`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] \forall K \in \operatorname{IntermediateField}\left(F, E\right),\; \forall L \in \operatorname{IntermediateField}\left(F, E\right),\; \forall b \in E,\; (b^{\operatorname{card}\left(F\right)^{3}} - b \ne 0) \Rightarrow (\forall B \in \operatorname{Basis}\left(\operatorname{Fin}\left(4\right), K, E\right),\; (K \le L) \Rightarrow ((\operatorname{flag}\left(B, 2\right) = \operatorname{toSubmodule}\left(\operatorname{toSubalgebra}\left(\operatorname{extendScalars}\left(K, L\right)\right)\right)) \Rightarrow (\operatorname{Injective}\left(\left(paramCoefficients_{K,L}\right)\left(b, B\left(2\right)\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoefficients_injective` (`✓ std3`). ∎
 
@@ -38,11 +38,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.paramCoef
 
 *Commentary.*
 
-Let K ≤ L be intermediate fields of E over the finite field F. If β is a four-vector K-basis of E whose first two vectors span L over K, and δ is nonzero, the coefficient map with c = β(2) is injective. The coordinate along β(2) separates ℓ from ck.
+The coordinate along the third basis vector separates the last two parameters when the first two basis vectors span L over K.
 
 **Theorem 1.4 (Evaluation on the first input block).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluation_on_K`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] [\operatorname{Finite}\left(E\right)] \forall K \in \operatorname{IntermediateField}\left(F, E\right),\; \forall L \in \operatorname{IntermediateField}\left(F, E\right),\; (\operatorname{finrank}\left(F, K\right) = 3) \Rightarrow (\forall b \in E,\; \forall c \in E,\; \forall p \in \operatorname{Params}\left(K, L\right),\; \forall x \in K,\; \operatorname{evaluateLinearized}\left(F, E, \left(paramCoefficients_{K,L}\right)\left(b, c\right)\left(p\right)\right)\left((x : E)\right) = (p.1 : E) \cdot (x : E) + (p.2.1 : E) \cdot (x : E)^{\operatorname{card}\left(F\right)} + (p.2.2.1 : E) \cdot (x : E)^{\operatorname{card}\left(F\right)^{2}})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluation_on_K` (`✓ std3`). ∎
 
@@ -50,11 +50,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluatio
 
 *Commentary.*
 
-In a finite extension E of a finite field F of order q, if K has degree three over F, then f(x) = ux + a₁x^q + a₂x^(q²) for every x in K and arbitrary b and c in E.
+The degree-three hypothesis makes the third Frobenius iterate act as the identity on K.
 
 **Theorem 1.5 (Evaluation on the second input block).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluation_on_bK`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] [\operatorname{Finite}\left(E\right)] \forall K \in \operatorname{IntermediateField}\left(F, E\right),\; \forall L \in \operatorname{IntermediateField}\left(F, E\right),\; (\operatorname{finrank}\left(F, K\right) = 3) \Rightarrow (\forall b \in E,\; \forall c \in E,\; (b^{\operatorname{card}\left(F\right)^{3}} - b \ne 0) \Rightarrow (\forall p \in \operatorname{Params}\left(K, L\right),\; \forall x \in K,\; \operatorname{evaluateLinearized}\left(F, E, \left(paramCoefficients_{K,L}\right)\left(b, c\right)\left(p\right)\right)\left(b \cdot (x : E)\right) = ((p.2.2.2.1 : E) + c \cdot (p.2.2.2.2 : E)) \cdot (x : E) + (p.2.1 : E) \cdot (b \cdot (x : E))^{\operatorname{card}\left(F\right)} + (p.2.2.1 : E) \cdot (b \cdot (x : E))^{\operatorname{card}\left(F\right)^{2}}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluation_on_bK` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersCoefficients.evaluatio
 
 *Commentary.*
 
-In a finite extension E of a finite field F of order q, if K has degree three over F and δ is nonzero, then f(bx) = (ℓ + ck)x + a₁(bx)^q + a₂(bx)^(q²) for every x in K and arbitrary c in E.
+Evaluating on b times K uses the nonzero determinant to recover the coefficient of x from the last two parameters.
 
 ## References
 

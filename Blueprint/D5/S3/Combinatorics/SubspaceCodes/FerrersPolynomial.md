@@ -6,7 +6,7 @@ The root bound for a four-term linearized polynomial gives rank at least nine.
 
 **Definition 1.1 (Linearized evaluation map).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLinearized`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] \forall a \in \operatorname{Fin}\left(4\right) \to E,\; (\operatorname{evaluateLinearized}\left(F, E, a\right) : \operatorname{LinearMap}\left(F, E, E\right)) = \sum_{i\in \operatorname{Fin}\left(4\right)} a\left(i\right) \cdot \operatorname{frobenius}\left(F, E\right)^{\operatorname{val}\left(i\right)}$$
 
 *Formalization.* `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLinearized` (`✓ std3`).
 
@@ -14,11 +14,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLin
 
 *Commentary.*
 
-For a finite field F of order q, an extension E of F, and coefficients a indexed by Fin 4, the F-linear map on E is the sum of the first four iterates of the q-Frobenius, scaled by the corresponding coefficients in E.
+Each power of the Frobenius denotes iteration, starting with the identity. The sum uses the scalar action of E on the space of F-linear maps.
 
 **Theorem 1.2 (Evaluation by Frobenius powers).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLinearized_apply`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] \forall a \in \operatorname{Fin}\left(4\right) \to E,\; \forall x \in E,\; \operatorname{evaluateLinearized}\left(F, E, a\right)\left(x\right) = \sum_{i\in \operatorname{Fin}\left(4\right)} a\left(i\right) \cdot x^{\operatorname{card}\left(F\right)^{\operatorname{val}\left(i\right)}}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLinearized_apply` (`✓ std3`). ∎
 
@@ -26,11 +26,11 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.evaluateLin
 
 *Commentary.*
 
-For a finite field F of order q and an extension field E, evaluation of a coefficient tuple a indexed by Fin 4 at x in E is the sum of aᵢ x^(qⁱ).
+Applying the linear map to x gives the scalar polynomial formula.
 
 **Theorem 1.3 (Rank bound in degree twelve).**
 
-Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.finrank_range_evaluateLinearized_ge_nine`
+$$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] \forall E \in Type,\; [\operatorname{Field}\left(E\right)] [\operatorname{Algebra}\left(F, E\right)] [\operatorname{Finite}\left(E\right)] (\operatorname{finrank}\left(F, E\right) = 12) \Rightarrow (\forall a \in \operatorname{Fin}\left(4\right) \to E,\; (a \ne 0) \Rightarrow (9 \le \operatorname{finrank}\left(F, \operatorname{range}\left(\operatorname{evaluateLinearized}\left(F, E, a\right)\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.finrank_range_evaluateLinearized_ge_nine` (`✓ std3`). ∎
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Combinatorics/SubspaceCodes/FerrersPolynomial.finrank_ran
 
 *Commentary.*
 
-In a finite extension of degree twelve, the evaluation map of any nonzero coefficient tuple has F-linear rank at least nine. The polynomial has distinct exponents 1, q, q² and q³ and degree at most q³. Its kernel therefore has at most q³ elements and dimension at most three.
+The nonzero polynomial has distinct exponents 1, q, q² and q³, where q is the order of F. Its degree is at most q³, so its kernel has at most q³ elements and dimension at most three.
 
 ## References
 
