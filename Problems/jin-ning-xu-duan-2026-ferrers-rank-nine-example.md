@@ -82,6 +82,30 @@ the stated field orders and has an attaining dimension and rank. The
 preregistration states the field range and the dimension test.
 [Issue #32088](https://github.com/the-omega-institute/trureturing/issues/32088)
 
+### What the settlement shows
+
+- **Proved.** A degree-$3$, degree-$6$, degree-$12$ field tower gives one
+  ordered basis for both support cuts. The four-term Frobenius polynomial
+  sends $K$ into $L$ and $bK$ into $L+Kc$. Its root bound limits the
+  evaluation kernel to dimension three for each nonzero coefficient tuple.
+  Injective coefficient recovery then gives a dimension-$27$ code from
+  $L^4\times K$ with nonzero rank at least nine.
+- **Proved.** The first three columns retain 18 allowed entries, so their
+  projection has a nonzero kernel on any dimension-$27$ code. A word in
+  that kernel has at most nine nonzero columns, giving rank exactly nine
+  when the code has the rank lower bound. The first four columns retain
+  27 allowed entries. Their projection is injective on every competitor
+  with the rank lower bound because at most eight columns remain in a
+  kernel word. Both bounds are sharp.
+- **Proved for the named example.** Here
+  $k_{r-1}+(t-r+1)=5>4=k_t$. The construction gives optimal codes
+  throughout the stated odd prime-power range, including proper powers
+  of three, beyond the sufficient criterion in Proposition 3.12.
+- **Open in this development.** Problem 1 still asks for a construction
+  for the family with $k_{r-1}+(t-r+1)>k_t$. Extending the method would
+  require support-compatible evaluation constraints and a sharp
+  dimension bound for the other profiles. [Paper, Problem 1](https://arxiv.org/pdf/2611.19070v1#page=18)
+
 ## ASSUMED-UNVERIFIED
 
 The bounded literature comparison leaves priority and indirect
