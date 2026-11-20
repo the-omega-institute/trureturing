@@ -18,9 +18,10 @@ proof_shape:
   triangle: private definition (the recursive solution); consumer: source_exists.
   source_exists: bind-only helper (the recursion holds by unfolding triangle); consumers:
     result and D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns.result.
-  P: private definition (zero padding); consumers: padded_rec, sum_eq_range, row_sum.
+  P: definition (zero padding); consumers: padded_rec, sum_eq_range, row_sum and
+    D5/S1/Recurrence/Algebraic/ChenChenBoundarySteps.
   padded_rec: bind-only helper (case split on k, instantiation of Source, simp and ring);
-    consumer: row_sum.
+    consumers: row_sum and D5/S1/Recurrence/Algebraic/ChenChenBoundarySteps.rowPoly_succ.
   sum_eq_range: bind-only helper (reindexing Icc 1 n to range n); consumer: row_sum.
   row_sum: content; consumer: result.
   reflection: content (T n k = T n (n+1-k) by strong induction on rows; the escape content
@@ -98,11 +99,11 @@ theorem source_exists (m : ℝ) : ∃ T, Source m T := by
     simp [triangle, show k ≠ 1 by omega, show k ≠ n + 1 by omega]
 
 /-- The triangle padded by zero outside `1 ≤ k ≤ n`. -/
-private noncomputable def P (T : ℕ → ℕ → ℝ) (n k : ℕ) : ℝ :=
+noncomputable def P (T : ℕ → ℕ → ℝ) (n k : ℕ) : ℝ :=
   if 1 ≤ k ∧ k ≤ n then T n k else 0
 
 /-- The padded triangle satisfies the recursion at every `k ≥ 1` in rows `n ≥ 2`. -/
-private theorem padded_rec {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source m T) {n k : ℕ} (hn : 2 ≤ n)
+theorem padded_rec {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source m T) {n k : ℕ} (hn : 2 ≤ n)
     (hk : 1 ≤ k) :
     P T n k = (m * ((n : ℝ) - (k : ℝ)) + 1) * P T (n - 1) (k - 1) +
       (m * ((k : ℝ) - 1) + 1) * P T (n - 1) k := by
