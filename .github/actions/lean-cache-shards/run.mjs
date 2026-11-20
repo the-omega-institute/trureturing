@@ -18,6 +18,7 @@ const state = process.env.INPUT_STATE || 'complete';
 const targets = (process.env.INPUT_TARGETS || '').trim().split(/\s+/).filter(Boolean);
 const targetsFile = process.env['INPUT_TARGETS-FILE'];
 const anchor = process.env.INPUT_ANCHOR;
+const resumeAfterAttempt = process.env['INPUT_RESUME-AFTER-ATTEMPT'] || '';
 const requireComplete = process.env['INPUT_REQUIRE-COMPLETE'] === 'true';
 const shardedAdoption = process.env['INPUT_SHARDED-ADOPTION'] === 'true';
 // A nested JavaScript action may inherit the enclosing composite's action path.
@@ -145,8 +146,15 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   for (const candidateRef of refs.filter(value => /^refs\/heads\/(dev|integration-[A-Za-z0-9._/-]+)$/.test(value))) {
     const prefix = identity.prefix + 'snapshot-';
     const rows = optionalInventory(candidateRef, prefix)
-      .filter(row => row.key.startsWith(prefix) && /^[1-9][0-9]*-[1-9][0-9]*$/.test(row.key.slice(prefix.length))
-        && row.version === cacheVersion(indexPath))
+      .filter(row => {
+        if (!row.key.startsWith(prefix) || row.version !== cacheVersion(indexPath)) return false;
+        const match = /^([1-9][0-9]*)-([1-9][0-9]*)$/.exec(row.key.slice(prefix.length));
+        if (!match) return false;
+        if (!resumeAfterAttempt) return true;
+        const [, run, attempt] = match;
+        return run === identity.owner.run && BigInt(attempt) > BigInt(resumeAfterAttempt)
+          && BigInt(attempt) < BigInt(identity.owner.attempt);
+      })
       .sort((left, right) => right.key.localeCompare(left.key, 'en', { numeric: true }));
     retry ||= rows[0];
     for (const row of rows.slice(0, 3)) {
@@ -402,6 +410,9 @@ async function setOutputs(fields) {
 }
 
 async function main() {
+  if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {
+    throw new Error('resume-after-attempt requires a continuation restore and a nonnegative attempt number');
+  }
   if (targetsFile && (targets.length || operation !== 'restore')) {
     throw new Error('a target file requires restore without inline targets');
   }

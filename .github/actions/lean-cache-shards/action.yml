@@ -7,6 +7,9 @@ inputs:
   state:
     description: Complete snapshot or producer continuation
     default: complete
+  resume-after-attempt:
+    description: Restore a continuation from this run after the given attempt and before the current attempt
+    default: ''
   anchor:
     description: Pinned dev commit used to derive a layout and enable sharded PR preparation
   require-complete:
