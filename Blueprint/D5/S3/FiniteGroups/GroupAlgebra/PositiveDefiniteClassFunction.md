@@ -12,6 +12,8 @@ $$\forall G \in \operatorname{Type}*,\; [\operatorname{Group}\left(G\right)], \f
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Roger Godement (1948). *Les fonctions de type positif et la théorie des groupes*. DOI: [10.1090/S0002-9947-1948-0023243-1](https://doi.org/10.1090/S0002-9947-1948-0023243-1).
+
 *Commentary.*
 
 Let G be an arbitrary group and phi a complex-valued function on G. Three hypotheses are made. First, the kernel whose entry at (x, y) is phi(x * y^-1) is positive semidefinite: it is Hermitian and its quadratic form is a nonnegative real number on every finitely supported vector; in the formula, of turns the function of x and y into a matrix indexed by G x G. Second, phi is a class function: phi(g * x * g^-1) = phi(x) for all g and x. Third, the sections of the kernel, the functions x maps to phi(x * y^-1) for y in G, span a finite-dimensional complex subspace of the functions on G.

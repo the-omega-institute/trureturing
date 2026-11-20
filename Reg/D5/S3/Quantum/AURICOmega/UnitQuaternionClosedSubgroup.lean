@@ -159,11 +159,13 @@ def source_registration : Registration arena (type_of% @mem_unitary_of_normSq) w
 
 end NormSq
 
-/-! The sum of the squares of the components of a quaternion, in `sq_add_sq_coe_unitary`. -/
+/-! The sum of the squares of the components of a quaternion, in `sq_add_sq_coe_unitary`.
+The unit quaternion `u` is carried as a coordinate because the observed operand `(u : ℍ[ℝ])` is
+built from it. -/
 namespace SquareSum
 
 abbrev signature : Signature where
-  Params := Unit
+  Params := unitary ℍ[ℝ]
   State _ := ℍ[ℝ]
   Role := Unit
   finiteRole := inferInstance
@@ -182,7 +184,7 @@ def rejected : Realization signature :=
 /-- Retain the complete argument telescope of `sq_add_sq_coe_unitary`. -/
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ u : unitary ℍ[ℝ], r.readout () () (u : ℍ[ℝ]) = 1
+  Law r := ∀ u : unitary ℍ[ℝ], r.readout () u (u : ℍ[ℝ]) = 1
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -190,7 +192,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 1, ?_⟩
+  refine ⟨1, 0, 1, ?_⟩
   change (0 : ℍ[ℝ]).re ^ 2 + (0 : ℍ[ℝ]).imI ^ 2 + (0 : ℍ[ℝ]).imJ ^ 2 + (0 : ℍ[ℝ]).imK ^ 2 ≠
     (1 : ℍ[ℝ]).re ^ 2 + (1 : ℍ[ℝ]).imI ^ 2 + (1 : ℍ[ℝ]).imJ ^ 2 + (1 : ℍ[ℝ]).imK ^ 2
   simp
@@ -265,7 +267,7 @@ def sq_add_sq_coe_unitary_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "fn", "arg"]
       stateBinder := 0

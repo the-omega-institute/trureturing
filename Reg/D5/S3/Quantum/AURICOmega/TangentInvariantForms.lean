@@ -93,7 +93,8 @@ theorem tfae_rejected_law : ¬ tfaeArena.Law rejected := by
   have h13 := (invariant_bilinear_tfae Set.univ).out 1 3
   have h3 := h13.1 fun B hB => conj_invariant_bilinear_eq_smul_inner B
     fun u => hB u (Set.mem_univ u)
-  obtain ⟨c, hc⟩ := ((h Set.univ).out 1 3).2 h3 0 fun u _ x y _ _ => zero_invariant u x y
+  have h13' := (h Set.univ).out 1 3
+  obtain ⟨c, hc⟩ := h13'.2 h3 0 fun u _ x y _ _ => zero_invariant u x y
   exact rejected_zero c hc
 
 /-- The exact statement of the source theorem. -/
