@@ -12,7 +12,7 @@ internal sealed class FriedenAdaptedWordsDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-wire avoidance and source-flip adaptedness in arbitrary rank.",
-        H("Avoidance implies adaptedness"),
+        H("Four-wire avoidance characterizes adaptedness"),
         Blocks(
             Paragraph(Text("An orientation assigns a direction to every edge between two "
                 + "consecutive generators. A generator is legal when all its incident edges "
@@ -21,7 +21,7 @@ internal sealed class FriedenAdaptedWordsDocument : IScribeDocumentDefinition
                 DescribeId.Create("frieden-avoidance-implies-adapted"),
                 DeclarationHandle.Create(Root + "avoidance_implies_adapted"),
                 H("The avoidance-to-adaptedness implication of Conjecture 4.10"),
-                StatementSource.FromAuthor(Disp(Statement())),
+                StatementSource.FromAuthor(Disp(Statement(ImpliedAdapted()))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For each natural n and each word on the n-1 adjacent "
                     + "generators, suppose its length is n(n-1)/2 and its chronological swaps "
@@ -33,18 +33,38 @@ internal sealed class FriedenAdaptedWordsDocument : IScribeDocumentDefinition
                     + "force one of the four restrictions, with reflection exchanging the two "
                     + "ends of the edge. The first letter in each projection determines the "
                     + "edge direction needed for the sequence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("frieden-conjecture-410"),
+                DeclarationHandle.Create(Root + "conjecture410"),
+                H("Conjecture 4.10"),
+                StatementSource.FromAuthor(Disp(Statement(Equivalent()))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("In the converse direction, the last move of a wire at "
+                    + "an interior position leaves an incident arrow blocking a return. Thus "
+                    + "a turn is possible only at an endpoint. Two turns would require crossing "
+                    + "the entire network between moves into and out of its endpoints. This "
+                    + "would exceed the n-1 moves available to a wire, since it crosses each "
+                    + "other label once. Restriction retains a subsequence of the moves of "
+                    + "each selected wire, with their directions preserved. Each word in X "
+                    + "contains a wire whose retained directions alternate twice."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("frieden-2026-four-wire-avoidance-implies-adaptedness"),
+                    ProblemSlugRef.Create("frieden-2026-adapted-reversal-words"),
                     ResolutionKind.Proved)))));
 
-    private static Formula Statement() =>
+    private static Formula Statement(Formula conclusion) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"),
             Seq(Mathbb, Grp(F.Id("N"))),
             new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("w"),
                 Call("Word", F.Id("n")),
-                Seq(Call("ReducedReversal", F.Id("w")), Implies,
-                    Call("AvoidsX", F.Id("w")), Implies, Call("Adapted", F.Id("w")))));
+                Seq(Call("ReducedReversal", F.Id("w")), Sp, Implies, Sp, Open, conclusion, Close)));
+
+    private static Formula ImpliedAdapted() =>
+        Seq(Call("AvoidsX", F.Id("w")), Sp, Implies, Sp, Call("Adapted", F.Id("w")));
+
+    private static Formula Equivalent() =>
+        Seq(Call("AvoidsX", F.Id("w")), Sp, Iff, Sp, Call("Adapted", F.Id("w")));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(F.Id(name), [.. args]);

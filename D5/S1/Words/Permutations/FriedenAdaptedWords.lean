@@ -4,8 +4,10 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Four-wire avoidance implies source-flip adaptedness for reduced reversal words. -/
+   digest: Four-wire avoidance characterizes source-flip adaptedness for reduced reversal words. -/
 
+import Mathlib.Data.Finset.Sort
+import Mathlib.Order.Interval.Finset.Fin
 import D5.S1.Words.Permutations.FriedenSortingNetwork
 
 namespace D5.S1.Words.Permutations.Frieden
@@ -351,5 +353,329 @@ theorem avoidance_implies_adapted (n : Nat) (w : Word n)
   by_contra hbad
   obtain ⟨S, hc, hs⟩ := forcedQuartet w hw e hbad
   exact ha S hc hs
+
+/-- A wire changes direction only at the right boundary after moving right,
+or at the left boundary after moving left. -/
+private inductive Track (bound : Nat) : Nat → Option Bool → List Bool → Prop
+  | nil {p d} : Track bound p d []
+  | right {p d l} : p < bound → (d ≠ some false ∨ p = 0) →
+      Track bound (p + 1) (some true) l → Track bound p d (true :: l)
+  | left {p d l} : 0 < p → (d ≠ some true ∨ p = bound) →
+      Track bound (p - 1) (some false) l → Track bound p d (false :: l)
+
+/-- The most recent movement fixes the arrow between the two generators
+incident to an interior wire position. -/
+private def Separated {n : Nat} (o : Orientation n) (p : Nat) (d : Option Bool) : Prop :=
+  ∀ b, d = some b → ∀ e : Fin (n - 2), e.val + 1 = p → o e = !b
+
+private theorem visit_true {n : Nat} (e : Fin (n - 2)) (i : Fin (n - 1))
+    (h : i.val = e.val) : edgeVisit e i = some true := by simp [edgeVisit, h]
+
+private theorem visit_false {n : Nat} (e : Fin (n - 2)) (i : Fin (n - 1))
+    (h : i.val = e.val + 1) : edgeVisit e i = some false := by
+  simp [edgeVisit, h]
+
+private theorem legal_track {n : Nat} (p : State n) (a : Fin n) (o : Orientation n)
+    (w : Word n) (d : Option Bool) (hlegal : Legal o w)
+    (hsep : Separated o (p.symm a).val d) :
+    Track (n - 1) (p.symm a).val d (wireDirections p a w) := by
+  induction w generalizing p o d with
+  | nil => exact .nil
+  | cons i w ih =>
+    obtain ⟨hsrc, hlegal⟩ := hlegal
+    have hleft : (step p i).symm (p (left i)) = right i := by simp [step]
+    have hright : (step p i).symm (p (right i)) = left i := by simp [step]
+    have hbound := i.isLt
+    rw [wireDirections]
+    by_cases hl : p (left i) = a
+    · rw [ite_eq_left hl, ← hl, Equiv.symm_apply_apply]
+      apply Track.right hbound
+      · by_cases hd : d = some false
+        · right
+          by_contra hn
+          let e : Fin (n - 2) := ⟨i.val - 1, by omega⟩
+          have he : e.val + 1 = i.val := by dsimp [e]; omega
+          have hf := hsrc e false (visit_false e i he.symm)
+          have ht := hsep false hd e (by rwa [← hl, Equiv.symm_apply_apply])
+          rw [hf] at ht
+          contradiction
+        · exact Or.inl hd
+      · have hsep' : Separated (flip o i) ((step p i).symm (p (left i))).val (some true) := by
+          intro b hb e he
+          obtain rfl := Option.some.inj hb
+          rw [hleft] at he
+          have hv := visit_true e i (by exact Nat.add_right_cancel he.symm)
+          unfold flip
+          simp [hv, hsrc e true hv]
+        change Track (n - 1) (right i).val (some true) _
+        rw [← hleft, hl]
+        apply ih _ _ _ hlegal
+        rwa [← hl]
+    · rw [ite_eq_right hl]
+      by_cases hr : p (right i) = a
+      · rw [ite_eq_left hr, ← hr, Equiv.symm_apply_apply]
+        apply Track.left (show 0 < (right i).val by exact Nat.succ_pos _)
+        · by_cases hd : d = some true
+          · right
+            by_contra hn
+            let e : Fin (n - 2) := ⟨i.val, by change i.val + 1 ≠ n - 1 at hn; omega⟩
+            have hf := hsrc e true (visit_true e i rfl)
+            have ht := hsep true hd e (by rw [← hr, Equiv.symm_apply_apply]; rfl)
+            rw [hf] at ht
+            contradiction
+          · exact Or.inl hd
+        · have hsep' : Separated (flip o i) ((step p i).symm (p (right i))).val (some false) := by
+            intro b hb e he
+            obtain rfl := Option.some.inj hb
+            rw [hright] at he
+            have hv := visit_false e i he.symm
+            unfold flip
+            simp [hv, hsrc e false hv]
+          change Track (n - 1) (left i).val (some false) _
+          rw [← hright, hr]
+          apply ih _ _ _ hlegal
+          rwa [← hr]
+      · rw [ite_eq_right hr]
+        have h₁ : p.symm a ≠ left i := fun h => hl ((p.symm_apply_eq.mp h).symm)
+        have h₂ : p.symm a ≠ right i := fun h => hr ((p.symm_apply_eq.mp h).symm)
+        have he : (step p i).symm a = p.symm a := by
+          simp [step, Equiv.swap_apply_of_ne_of_ne h₁ h₂]
+        rw [← he]
+        apply ih _ _ _ hlegal
+        intro b hb e hpos
+        rw [he] at hpos
+        have hm₁ : i.val ≠ e.val := by
+          intro hh
+          apply h₂
+          exact Fin.ext (by change (p.symm a).val = i.val + 1; omega)
+        have hm₂ : i.val ≠ e.val + 1 := by
+          intro hh
+          apply h₁
+          exact Fin.ext (by change (p.symm a).val = i.val; omega)
+        simpa [flip, edgeVisit, hm₁, hm₂] using hsep b hb e hpos
+
+private theorem track_stays_right {B p : Nat} {l : List Bool}
+    (ht : Track B p (some true) l) (hl : p + l.length ≤ B) :
+    l = List.replicate l.length true := by
+  generalize hd : some true = d at ht
+  induction ht with
+  | nil => rfl
+  | right _ _ h ih =>
+    cases hd
+    rw [List.length_cons, List.replicate_succ, List.cons.injEq]
+    exact ⟨rfl, ih (by simp only [List.length_cons] at hl; omega) rfl⟩
+  | left _ h _ _ =>
+    rw [← hd] at h
+    simp only [ne_eq, not_true_eq_false, false_or] at h
+    simp only [List.length_cons] at hl
+    omega
+
+private theorem track_stays_left {B p : Nat} {l : List Bool}
+    (ht : Track B p (some false) l) (hl : l.length ≤ p) :
+    l = List.replicate l.length false := by
+  generalize hd : some false = d at ht
+  induction ht with
+  | nil => rfl
+  | right _ h _ _ =>
+    rw [← hd] at h
+    simp only [ne_eq, not_true_eq_false, false_or] at h
+    simp only [List.length_cons] at hl
+    omega
+  | left _ _ h ih =>
+    cases hd
+    rw [List.length_cons, List.replicate_succ, List.cons.injEq]
+    exact ⟨rfl, ih (by simp only [List.length_cons] at hl; omega) rfl⟩
+
+private theorem track_one_turn {B p : Nat} {d : Bool} {l : List Bool}
+    (ht : Track B p (some d) l) (hl : l.length ≤ B) :
+    ∃ a b, l = List.replicate a d ++ List.replicate b (!d) := by
+  generalize hd : some d = prev at ht
+  induction ht generalizing d with
+  | nil => exact ⟨0, 0, rfl⟩
+  | @right p prev l hp h ht ih =>
+    subst prev
+    have hlen : l.length + 1 ≤ B := hl
+    cases d
+    · simp only [ne_eq, not_true_eq_false, false_or] at h
+      have he := track_stays_right ht (by omega)
+      exact ⟨0, l.length + 1, congrArg (true :: ·) he⟩
+    · obtain ⟨a,b,he⟩ := ih (by omega) rfl
+      exact ⟨a + 1,b,congrArg (true :: ·) he⟩
+  | @left p prev l hp h ht ih =>
+    subst prev
+    have hlen : l.length + 1 ≤ B := hl
+    cases d
+    · obtain ⟨a,b,he⟩ := ih (by omega) rfl
+      exact ⟨a + 1,b,congrArg (false :: ·) he⟩
+    · simp only [ne_eq, not_true_eq_false, false_or] at h
+      have he := track_stays_left ht (by omega)
+      exact ⟨0, l.length + 1, congrArg (false :: ·) he⟩
+
+private theorem track_one_turn_start {B p : Nat} {l : List Bool}
+    (ht : Track B p none l) (hl : l.length ≤ B) :
+    ∃ d a b, l = List.replicate a d ++ List.replicate b (!d) := by
+  cases ht with
+  | nil => exact ⟨true,0,0,rfl⟩
+  | right _ _ h =>
+    obtain ⟨a,b,he⟩ := track_one_turn h (by simp only [List.length_cons] at hl; omega)
+    exact ⟨true,a+1,b,congrArg (true :: ·) he⟩
+  | left _ _ h =>
+    obtain ⟨a,b,he⟩ := track_one_turn h (by simp only [List.length_cons] at hl; omega)
+    exact ⟨false,a+1,b,congrArg (false :: ·) he⟩
+
+
+private theorem nonconstant_triple_not_sublist (d x : Bool) (a b : Nat) :
+    ¬ [x, !x, x].Sublist (List.replicate a d ++ List.replicate b (!d)) := by
+  intro h
+  obtain ⟨l, r, he, hl, hr⟩ := List.sublist_append_iff.mp h
+  have hL : ∀ k ∈ l, k = d := fun k hk => (List.mem_replicate.mp (hl.subset hk)).2
+  have hR : ∀ k ∈ r, k = !d := fun k hk => (List.mem_replicate.mp (hr.subset hk)).2
+  have hn : x ≠ !x := by cases x <;> decide
+  cases l with
+  | nil =>
+    simp only [List.nil_append] at he
+    subst r
+    exact hn ((hR x (by simp)).trans (hR (!x) (by simp)).symm)
+  | cons k l =>
+    simp only [List.cons_append, List.cons.injEq] at he
+    obtain ⟨rfl, he⟩ := he
+    cases l with
+    | nil =>
+      simp only [List.nil_append] at he
+      subst r
+      exact hn ((hR x (by simp)).trans (hR (!x) (by simp)).symm)
+    | cons k l =>
+      simp only [List.cons_append, List.cons.injEq] at he
+      obtain ⟨rfl, he⟩ := he
+      exact hn ((hL x (by simp)).trans (hL (!x) (by simp)).symm)
+
+private theorem adapted_no_double_turn {n : Nat} (w : Word n)
+    (hw : ReducedReversal w) (ha : Adapted w) (a : Fin n) (d : Bool) :
+    ¬ [d, !d, d].Sublist (wireDirections (Equiv.refl _) a w) := by
+  obtain ⟨o, ho⟩ := ha
+  have ht := legal_track (Equiv.refl _) a o w none ho (by simp [Separated])
+  obtain ⟨b,x,y,h⟩ := track_one_turn_start ht (wire_directions_bound w a hw)
+  rw [h]
+  exact nonconstant_triple_not_sublist b d x y
+
+
+/-- Replay the movements of a selected wire from its current zero-based rank
+and a chronological word of one-based restricted generators. -/
+private def restrictedDirections (r : Nat) : List Nat → List Bool
+  | [] => []
+  | k :: ks =>
+    if k = r + 1 then true :: restrictedDirections (r + 1) ks
+    else if k = r then false :: restrictedDirections (r - 1) ks
+    else restrictedDirections r ks
+
+private theorem rank_strict {n : Nat} (S : Finset (Fin n)) (p : State n)
+    (a b : Fin n) (ha : a ∈ S) (h : p.symm a < p.symm b) :
+    rank S p a < rank S p b := by
+  apply Finset.card_lt_card
+  apply Finset.ssubset_iff_subset_ne.mpr
+  constructor
+  · intro c hc
+    exact Finset.mem_filter.mpr ((Finset.mem_filter.mp hc).imp id (fun hc => hc.trans h))
+  · intro he
+    have hc : a ∈ below S p b := Finset.mem_filter.mpr ⟨ha, h⟩
+    rw [← he] at hc
+    exact (lt_irrefl _) (Finset.mem_filter.mp hc).2
+
+private theorem rank_ne {n : Nat} (S : Finset (Fin n)) (p : State n)
+    (a b : Fin n) (ha : a ∈ S) (hb : b ∈ S) (hne : a ≠ b) :
+    rank S p a ≠ rank S p b := by
+  rcases lt_or_gt_of_ne (fun h => hne (p.symm.injective h)) with h | h
+  · exact (rank_strict S p a b ha h).ne
+  · exact (rank_strict S p b a hb h).ne.symm
+
+private theorem restricted_directions_sublist {n : Nat} (S : Finset (Fin n)) (p : State n)
+    (w : Word n) (a : Fin n) (ha : a ∈ S) :
+    (restrictedDirections (rank S p a) (restrictFrom S p w)).Sublist
+      (wireDirections p a w) := by
+  induction w generalizing p with
+  | nil => exact .slnil
+  | cons i w ih =>
+    have ht := ih (step p i)
+    rw [restrict_cons, wireDirections]
+    by_cases hS : p (left i) ∈ S ∧ p (right i) ∈ S
+    · rw [ite_eq_left hS, restrictedDirections]
+      by_cases hl : p (left i) = a
+      · rw [ite_eq_left hl, hl, ite_eq_left rfl]
+        rw [← hl, rank_step_move_right S p i hS.2, hl] at ht
+        exact ht.cons_cons _
+      · rw [ite_eq_right hl]
+        by_cases hr : p (right i) = a
+        · rw [ite_eq_left hr]
+          have h₁ : rank S p a = rank S p (p (left i)) + 1 := hr ▸ rank_right_before S p i hS.1
+          have h₂ : rank S (step p i) a = rank S p a - 1 := by
+            rw [← hr, rank_step_move_left S p i hS.1, rank_right_before S p i hS.1]
+            rfl
+          rw [ite_eq_right (by omega : rank S p (p (left i)) + 1 ≠ rank S p a + 1),
+            ite_eq_left h₁.symm]
+          rw [h₂] at ht
+          exact ht.cons_cons _
+        · rw [ite_eq_right hr]
+          have hn₁ := rank_ne S p _ _ hS.1 ha hl
+          have hn₂ := rank_ne S p _ _ hS.2 ha hr
+          rw [rank_right_before S p i hS.1] at hn₂
+          rw [ite_eq_right (by omega : rank S p (p (left i)) + 1 ≠ rank S p a + 1),
+            ite_eq_right hn₂]
+          rwa [rank_other S p i a hl hr] at ht
+    · rw [ite_eq_right hS]
+      rw [rank_step_stay S p i a ha hS] at ht
+      by_cases hl : p (left i) = a
+      · rw [ite_eq_left hl]
+        exact ht.cons _
+      · rw [ite_eq_right hl]
+        by_cases hr : p (right i) = a
+        · rw [ite_eq_left hr]
+          exact ht.cons _
+        · rwa [ite_eq_right hr]
+
+private theorem rank_at_orderEmb {n k : Nat} (S : Finset (Fin n))
+    (h : S.card = k) (i : Fin k) :
+    rank S (Equiv.refl _) (S.orderEmbOfFin h i) = i.val := by
+  have he : below S (Equiv.refl _) (S.orderEmbOfFin h i) =
+      (Finset.Iio i).map (S.orderEmbOfFin h).toEmbedding := by
+    ext b
+    rw [below, Finset.mem_filter, Finset.mem_map]
+    change (b ∈ S ∧ b < S.orderEmbOfFin h i) ↔
+      ∃ j ∈ Finset.Iio i, S.orderEmbOfFin h j = b
+    simp only [Finset.mem_Iio]
+    constructor
+    · rintro ⟨hb, hbi⟩
+      have hm : b ∈ (Finset.univ : Finset (Fin k)).map (S.orderEmbOfFin h).toEmbedding := by
+        rwa [Finset.map_orderEmbOfFin_univ]
+      obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hm
+      change S.orderEmbOfFin h j < S.orderEmbOfFin h i at hbi
+      exact ⟨j, (S.orderEmbOfFin h).lt_iff_lt.mp hbi, rfl⟩
+    · rintro ⟨j, hj, rfl⟩
+      exact ⟨Finset.orderEmbOfFin_mem _ _ _, (S.orderEmbOfFin h).strictMono hj⟩
+  rw [rank, he, Finset.card_map, Fin.card_Iio]
+
+private theorem forbidden_turn (w : List Nat) (hw : w ∈ forbidden) :
+    ∃ i : Fin 4, ∃ d : Bool, restrictedDirections i.val w = [d, !d, d] := by
+  simp only [forbidden, List.mem_cons, List.not_mem_nil, or_false] at hw
+  rcases hw with rfl | rfl | rfl | rfl
+  · exact ⟨2, false, by decide⟩
+  · exact ⟨1, true, by decide⟩
+  · exact ⟨1, true, by decide⟩
+  · exact ⟨2, false, by decide⟩
+
+private theorem adapted_implies_avoidance (n : Nat) (w : Word n)
+    (hw : ReducedReversal w) (had : Adapted w) : AvoidsX w := by
+  intro S hS hs
+  obtain ⟨i, d, hd⟩ := forbidden_turn (restrict w S) hs
+  let a := S.orderEmbOfFin hS i
+  have ha : a ∈ S := Finset.orderEmbOfFin_mem _ _ _
+  have hr : rank S (Equiv.refl _) a = i.val := rank_at_orderEmb S hS i
+  have hsub := restricted_directions_sublist S (Equiv.refl _) w a ha
+  rw [hr, ← restrict, hd] at hsub
+  exact adapted_no_double_turn w hw had a d hsub
+
+/-- Conjecture 4.10 of Frieden, Pylyavskyy and Rybnikov. -/
+theorem conjecture410 (n : Nat) (w : Word n) (hw : ReducedReversal w) :
+    AvoidsX w ↔ Adapted w :=
+  ⟨avoidance_implies_adapted n w hw, adapted_implies_avoidance n w hw⟩
 
 end D5.S1.Words.Permutations.Frieden

@@ -29,7 +29,8 @@ $X=\{123212,321232,212321,232123\}$.
 
 Theorem 4.9 gives avoidance for knitting words. Conjecture 4.10 asks
 whether a reduced reversal word is $X$-avoiding exactly when it is adapted
-to an orientation of $A_{n-1}$. The avoidance-to-adaptedness implication
-is the result formalized here.
+to an orientation of $A_{n-1}$. The formalized equivalence uses a
+four-wire obstruction for sufficiency and the direction changes of
+individual wires for necessity.
 
 [Pinned source](https://arxiv.org/html/2610.24842v1#S4.SS4)

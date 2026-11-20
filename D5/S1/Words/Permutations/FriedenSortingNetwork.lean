@@ -323,7 +323,7 @@ private theorem pos_unchanged_order {n : Nat} (p : State n) (i : Fin (n - 1))
   · simpa [Equiv.symm_apply_eq] using h₁
   · simpa [Equiv.symm_apply_eq] using h₂
 
-private theorem rank_step_stay {n : Nat} (S : Finset (Fin n)) (p : State n)
+theorem rank_step_stay {n : Nat} (S : Finset (Fin n)) (p : State n)
     (i : Fin (n - 1)) (a : Fin n) (ha : a ∈ S)
     (h : ¬(p (left i) ∈ S ∧ p (right i) ∈ S)) :
     rank S (step p i) a = rank S p a := by
@@ -340,7 +340,7 @@ private theorem rank_step_stay {n : Nat} (S : Finset (Fin n)) (p : State n)
       exact h ⟨he ▸ ha, hb⟩
   · simp [hb]
 
-private theorem rank_step_move_right {n : Nat} (S : Finset (Fin n)) (p : State n)
+theorem rank_step_move_right {n : Nat} (S : Finset (Fin n)) (p : State n)
     (i : Fin (n - 1)) (hr : p (right i) ∈ S) :
     rank S (step p i) (p (left i)) = rank S p (p (left i)) + 1 := by
   have hne : p (right i) ≠ p (left i) := fun h => left_ne_right i (p.injective h.symm)
@@ -381,7 +381,7 @@ theorem rank_right_before {n : Nat} (S : Finset (Fin n)) (p : State n)
   rw [rank, he, Finset.card_insert_of_notMem hm]
   rfl
 
-private theorem rank_step_move_left {n : Nat} (S : Finset (Fin n)) (p : State n)
+theorem rank_step_move_left {n : Nat} (S : Finset (Fin n)) (p : State n)
     (i : Fin (n - 1)) (hl : p (left i) ∈ S) :
     rank S (step p i) (p (right i)) = rank S p (p (left i)) := by
   have hs : step p i (left i) = p (right i) := by simp [step]
@@ -904,5 +904,91 @@ theorem quartet_left {n : Nat} (u m v : Word n) (i : Fin (n - 1))
   rw [hresP.2, hresA, hresM, hresB, hresV.2]
   simpa only [List.append_assoc, List.cons_append, List.nil_append] using
     right_quartet_words (rank S (Equiv.refl _) r) hresP.1
+
+/-- The successive directions of a wire, with true for a move to the right. -/
+def wireDirections {n : Nat} (p : State n) (a : Fin n) : Word n → List Bool
+  | [] => []
+  | i :: w =>
+    let rest := wireDirections (step p i) a w
+    if p (left i) = a then true :: rest
+    else if p (right i) = a then false :: rest
+    else rest
+
+private def wirePartners {n : Nat} (p : State n) (a : Fin n) : Word n → List (Fin n)
+  | [] => []
+  | i :: w =>
+    let rest := wirePartners (step p i) a w
+    if p (left i) = a then p (right i) :: rest
+    else if p (right i) = a then p (left i) :: rest
+    else rest
+
+private theorem wirePartners_spec {n : Nat} (p : State n) (a b : Fin n) (w : Word n)
+    (h : b ∈ wirePartners p a w) : b ≠ a ∧ {a,b} ∈ crossingSetsFrom p w := by
+  induction w generalizing p with
+  | nil => simp [wirePartners] at h
+  | cons i w ih =>
+    rw [wirePartners] at h
+    rw [crossingSetsFrom_cons]
+    by_cases hl : p (left i) = a
+    · rw [ite_eq_left hl] at h
+      rcases List.mem_cons.mp h with rfl | h
+      · exact ⟨fun he => left_ne_right i (p.injective (hl.trans he.symm)),
+          by rw [hl]; exact List.mem_cons_self⟩
+      · exact (ih _ h).imp id (List.mem_cons_of_mem _)
+    · rw [ite_eq_right hl] at h
+      by_cases hr : p (right i) = a
+      · rw [ite_eq_left hr] at h
+        rcases List.mem_cons.mp h with rfl | h
+        · exact ⟨hl, by rw [hr, Finset.pair_comm a (p (left i))]; exact List.mem_cons_self⟩
+        · exact (ih _ h).imp id (List.mem_cons_of_mem _)
+      · exact (ih _ (by rwa [ite_eq_right hr] at h)).imp id (List.mem_cons_of_mem _)
+
+private theorem wirePartners_nodup {n : Nat} (p : State n) (a : Fin n) (w : Word n)
+    (hn : (crossingSetsFrom p w).Nodup) : (wirePartners p a w).Nodup := by
+  induction w generalizing p with
+  | nil => exact List.nodup_nil
+  | cons i w ih =>
+    rw [crossingSetsFrom_cons, List.nodup_cons] at hn
+    rw [wirePartners]
+    by_cases hl : p (left i) = a
+    · rw [ite_eq_left hl, List.nodup_cons]
+      exact ⟨fun h => hn.1 (by rw [hl]; exact (wirePartners_spec _ _ _ _ h).2), ih _ hn.2⟩
+    · rw [ite_eq_right hl]
+      by_cases hr : p (right i) = a
+      · rw [ite_eq_left hr, List.nodup_cons]
+        exact ⟨fun h => hn.1 (by rw [hr, Finset.pair_comm]; exact (wirePartners_spec _ _ _ _ h).2),
+          ih _ hn.2⟩
+      · rw [ite_eq_right hr]
+        exact ih _ hn.2
+
+private theorem wireDirections_length {n : Nat} (p : State n) (a : Fin n) (w : Word n) :
+    (wireDirections p a w).length = (wirePartners p a w).length := by
+  induction w generalizing p with
+  | nil => rfl
+  | cons i w ih =>
+    rw [wireDirections, wirePartners]
+    by_cases hl : p (left i) = a <;> by_cases hr : p (right i) = a <;> simp [hl, hr, ih]
+
+/-- Pair uniqueness bounds the number of moves of each wire. -/
+theorem wire_directions_bound {n : Nat} (w : Word n)
+    (a : Fin n) (hw : ReducedReversal w) :
+    (wireDirections (Equiv.refl _) a w).length ≤ n - 1 := by
+  rw [wireDirections_length, ← List.toFinset_card_of_nodup
+    (wirePartners_nodup _ _ _ (pair_uniqueness w hw))]
+  have hs : (wirePartners (Equiv.refl _) a w).toFinset ⊆ Finset.univ.erase a := by
+    intro b hb
+    exact Finset.mem_erase.mpr ⟨(wirePartners_spec _ _ _ _ (List.mem_toFinset.mp hb)).1,
+      Finset.mem_univ b⟩
+  have h := Finset.card_le_card hs
+  simpa [Finset.card_erase_of_mem (Finset.mem_univ a), Fintype.card_fin] using h
+
+theorem rank_other {n : Nat} (S : Finset (Fin n)) (p : State n)
+    (i : Fin (n - 1)) (a : Fin n) (hl : p (left i) ≠ a) (hr : p (right i) ≠ a) :
+    rank S (step p i) a = rank S p a := by
+  unfold rank
+  congr 1
+  ext b
+  simp only [below, Finset.mem_filter, pos_unchanged_order p i b a
+    (by rintro ⟨_, he⟩; exact hr he.symm) (by rintro ⟨_, he⟩; exact hl he.symm)]
 
 end D5.S1.Words.Permutations.Frieden

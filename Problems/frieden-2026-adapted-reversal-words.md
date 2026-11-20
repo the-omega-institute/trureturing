@@ -1,14 +1,15 @@
 ---
-slug: frieden-2026-four-wire-avoidance-implies-adaptedness
+slug: frieden-2026-adapted-reversal-words
 bibkey: frieden2026bigcactus
 doi: 10.48550/arXiv.2610.24842
 url: https://arxiv.org/html/2610.24842v1#S4.Thmtheorem10
 triage: theorem
 motivation_gids:
+  - D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410
   - D5/S1/Words/Permutations/FriedenAdaptedWords.avoidance_implies_adapted
 ---
 
-# Four-wire avoidance implies adaptedness
+# Four-wire avoidance and adapted reduced reversal words
 
 ## Problem
 
@@ -26,7 +27,7 @@ Theorem 4.9 and Lemma 4.5 give the converse in the source.
 | $X$-avoidance | `AvoidsX w`, requiring every such restriction to lie outside $\{123212,321232,212321,232123\}$ |
 | Adapted to an orientation of $A_{n-1}$ | `Adapted w`, existence of an initial edge orientation for which every letter is a source at its step, followed by the incident-edge flip |
 
-The theorem quantifies over every natural $n$. Below two wires the Lean
+The equivalence and its avoidance-to-adaptedness direction quantify over every natural $n$. Below two wires the Lean
 generator type is empty.
 
 ## Motivation
@@ -53,6 +54,14 @@ participate before this interval only by moving right and after it only
 by moving left. Its initial rank gives the two complete sequences around
 `212`. Reflection gives the other endpoint case.
 
+For the converse, moving a wire into an interior position reverses the
+arrow on the edge between its two possible next generators. The next
+move cannot take that wire back. A wire turning twice would cross the
+whole network between its turns, requiring more than $n-1$ moves.
+The direction list of each restricted wire is a subsequence of the
+full direction list. Each word in $X$ exhibits a selected wire that
+turns twice.
+
 ## Falsifier
 
 An avoiding reduced reversal word with a nonalternating adjacent-generator
@@ -69,7 +78,7 @@ word. The edge orientation is chosen from the first occurrence on each edge.
 
 ## Triage
 
-The avoidance-to-adaptedness implication is proved by
-`Frieden.avoidance_implies_adapted`. The cited paper establishes the
-adaptedness-to-avoidance implication. Literature coverage is bounded by
+The equivalence is proved by `Frieden.conjecture410`.
+The avoidance-to-adaptedness implication also has the separate statement
+`Frieden.avoidance_implies_adapted`. Literature coverage is bounded by
 the primary source and the searches listed in the preregistration.
