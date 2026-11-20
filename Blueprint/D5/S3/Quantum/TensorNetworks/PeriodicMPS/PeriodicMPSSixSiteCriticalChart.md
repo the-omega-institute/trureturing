@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCrit
 
 *Commentary.*
 
-The two weighted homogeneous minors remain relatively prime after dehomogenizing the forward and reverse trace coordinates.
+Two selected minors of the raw complexified adjacent-pair Gram Jacobian remain relatively prime after setting the first forward and reverse trace coordinates to one.
 
 ## References
 

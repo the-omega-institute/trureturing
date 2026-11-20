@@ -10,5 +10,5 @@ internal sealed class PeriodicMPSSixSiteCriticalChartDocument : IScribeDocumentD
         Blocks(Describe.Lean(DescribeId.Create("periodicmpssixsitecriticalchart-relatively-prime-chartminors"),
             DeclarationHandle.Create("D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCriticalChart.relatively_prime_chartMinors"),
             H("Proof"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("The two weighted homogeneous minors remain relatively prime after dehomogenizing the forward and reverse trace coordinates."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("Two selected minors of the raw complexified adjacent-pair Gram Jacobian remain relatively prime after setting the first forward and reverse trace coordinates to one."))), DescribeRole.Theorem))));
 }
