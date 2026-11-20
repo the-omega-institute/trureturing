@@ -6,7 +6,7 @@ internal sealed class CographDistanceCotreeDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/SpectralGraph/CographDistanceCotree.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Cographs/mannamandaltura2026spectralcographs");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mannamandaltura2026cographdistance");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Distance matrices along cotree component cuts.",

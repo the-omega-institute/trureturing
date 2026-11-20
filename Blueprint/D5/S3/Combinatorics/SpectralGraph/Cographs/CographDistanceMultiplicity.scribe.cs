@@ -7,7 +7,7 @@ internal sealed class CographDistanceMultiplicityDocument : IScribeDocumentDefin
     private const string Owner =
         "D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity.result";
     private static readonly LibraryNoteRef Survey =
-        LibraryNoteRef.Create("D5/L/Cographs/mannamandaltura2026spectralcographs");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mannamandaltura2026cographdistance");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The connected cographs attaining the eligible distance multiplicity bound and an explicit infinite family.",

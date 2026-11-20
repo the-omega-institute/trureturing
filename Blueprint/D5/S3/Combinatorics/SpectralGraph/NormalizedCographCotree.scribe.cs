@@ -6,7 +6,7 @@ internal sealed class NormalizedCographCotreeDocument : IScribeDocumentDefinitio
 {
     private const string Owner = "D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Cographs/mannamandaltura2026spectralcographs");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mannamandaltura2026cographdistance");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Normalized cotrees on native graph vertices.",
@@ -22,23 +22,23 @@ internal sealed class NormalizedCographCotreeDocument : IScribeDocumentDefinitio
                 "The complement of a finite connected nontrivial cograph is disconnected."),
             Entry("exists_cotree", "Existence of a normalized cotree",
                 "Recurse on the strict decrease in carrier cardinality along graph and complement component cuts."),
-            Entry("Cotree.Leaves", "Leaf addresses",
+            Entry("Leaves", "Leaf addresses",
                 "At a node use a dependent pair of a component and its child leaf address.", DescribeRole.Definition),
-            Entry("Cotree.leavesEquiv", "Leaf address equivalence",
+            Entry("leavesEquiv", "Leaf address equivalence",
                 "The leaf addresses enumerate the original vertices bijectively.", DescribeRole.Definition),
-            Entry("Cotree.adj_iff_join_of_component_ne", "Cross edges",
+            Entry("adj_iff_join_of_component_ne", "Cross edges",
                 "Distinct components of the cut are completely adjacent at a join and completely nonadjacent at a union."),
-            Entry("Cotree.nontrivial_iff", "Internal support",
+            Entry("nontrivial_iff", "Internal support",
                 "A subtree has a nontrivial carrier exactly when it has an internal root."),
-            Entry("Cotree.adj_leaves_node", "Adjacency on leaf addresses",
+            Entry("adj_leaves_node", "Adjacency on leaf addresses",
                 "Use child adjacency within a component and the parent label across components."),
-            Entry("Cotree.universal_iff_leaf_child", "Universal vertices",
+            Entry("universal_iff_leaf_child", "Universal vertices",
                 "At a join, the universal vertices are precisely those in leaf children."),
-            Entry("Cotree.exists_join_root", "Join root",
+            Entry("exists_join_root", "Join root",
                 "A nontrivial connected cograph has a normalized cotree with join at its root."),
-            Entry("Cotree.width_leaf", "Leaf width",
+            Entry("width_leaf", "Leaf width",
                 "Each singleton subtree has width one."),
-            Entry("Cotree.width_node", "Width at an internal node",
+            Entry("width_node", "Width at an internal node",
                 "Take the maximum of one and the sum of the widths of the nonleaf children."))));
 
     private static DocumentBlock Entry(string name, string title, string prose,

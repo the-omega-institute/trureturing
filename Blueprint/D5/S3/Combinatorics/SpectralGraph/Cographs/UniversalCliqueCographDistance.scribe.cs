@@ -7,7 +7,7 @@ internal sealed class UniversalCliqueCographDistanceDocument : IScribeDocumentDe
     private const string Owner =
         "D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.";
     private static readonly LibraryNoteRef Survey =
-        LibraryNoteRef.Create("D5/L/Cographs/mannamandaltura2026spectralcographs");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mannamandaltura2026cographdistance");
     private static readonly LibraryNoteRef WidthSource =
         LibraryNoteRef.Create("D5/L/Eigenstructure/mandalmanna2026distance");
 

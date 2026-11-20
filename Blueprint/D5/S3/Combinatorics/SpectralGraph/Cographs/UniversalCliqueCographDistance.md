@@ -4,7 +4,7 @@
 
 A native width-two cograph family attains the ordinary distance multiplicity bound at unbounded orders.
 
-Open Problem 14.2(ii) has a characterization clause and an explicit infinite-family clause. The results here give the explicit family and classify its parameters at the fixed shift s − 2. The source question and its bound are in `D5/L/Cographs/mannamandaltura2026spectralcographs`.
+Open Problem 14.2(ii) has a characterization clause and an explicit infinite-family clause. The results here give the explicit family and classify its parameters at the fixed shift s − 2. The source question and its bound are in `D5/L/QuadraticForms/mannamandaltura2026cographdistance`.
 
 **Definition 1.1 (Native vertex carrier).**
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -78,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -94,7 +94,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -126,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -142,7 +142,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -174,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -190,7 +190,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -222,7 +222,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 
@@ -238,7 +238,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Pallabi Manna and Santanu Mandal and Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/abs/2611.06981v1>.
+*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
 

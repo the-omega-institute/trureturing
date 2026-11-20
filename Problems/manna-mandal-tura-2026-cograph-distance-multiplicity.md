@@ -1,6 +1,6 @@
 ---
 slug: manna-mandal-tura-2026-cograph-distance-multiplicity
-bibkey: mannamandaltura2026spectralcographs
+bibkey: mannamandaltura2026cographdistance
 doi: null
 url: https://arxiv.org/pdf/2611.06981v1#page=22
 triage: theorem
@@ -18,9 +18,11 @@ arXiv:2611.06981v1, p. 22
 
 > Characterize the connected cographs for which $m_G(\lambda)=\nabla(G)$ for some $\lambda\ne -1,-2$, and give an explicit infinite family attaining the bound of Theorem 6.4.
 
-The survey is available under CC BY 4.0.
+The pinned arXiv version is available under CC BY 4.0.
 [Published statement](https://arxiv.org/pdf/2611.06981v1#page=22) ·
-[Source and license](../Library/Cographs/mannamandaltura2026spectralcographs.md) ·
+[Bibliographic record](../Library/QuadraticForms/mannamandaltura2026cographdistance.md) ·
+[arXiv rights metadata](https://arxiv.org/abs/2611.06981v1) ·
+[License text](https://creativecommons.org/licenses/by/4.0/) ·
 [Registered statement](https://github.com/the-omega-institute/trureturing/issues/32326)
 
 | Source clause | Lean counterpart |

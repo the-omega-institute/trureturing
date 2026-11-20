@@ -6,7 +6,7 @@ internal sealed class CographDistanceCriterionDocument : IScribeDocumentDefiniti
 {
     private const string Owner = "D5/S3/Combinatorics/SpectralGraph/CographDistanceCriterion.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Cographs/mannamandaltura2026spectralcographs");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mannamandaltura2026cographdistance");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact cotree criteria for multiplicity equality.",
@@ -51,7 +51,8 @@ internal sealed class CographDistanceCriterionDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Entry(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) =>
-        Describe.Lean(DescribeId.Create("cographdistancecriterion-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("cographdistancecriterion-" + (name == "CotreeGuardData" ? "guard-data-structure" :
+                name.Replace('_', '-').ToLowerInvariant())),
             DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }
