@@ -131,6 +131,17 @@ Lemma 3.7. Question 3.2 asks about general continuous selfmaps and does
 not impose topological exactness.
 [Pendant arc obstruction](../../Blueprint/D5/S1/Dynamics/Shadowing/ExactPendantObstruction.md)
 
+For a graph without leaves, the constructive direction uses a reduced
+walk from each dart back to the same dart that covers every undirected
+edge. The cycle case goes once around the cycle and repeats its first
+dart. In the other case each potential reversal can be replaced by a
+detour through a cycle in the appropriate component after deleting its
+underlying edge. The tour supplies the edge traversal for a candidate
+exact map. Charatonik and Miklos use related nonbacktracking edge walks
+in their construction of local expansions, see Lemmas 1–3 and Theorem 1.
+[All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDartTour.md)
+[Charatonik–Miklos 1981](https://doi.org/10.4064/fm-113-3-235-252)
+
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
 positive expansivity order N. It glues N circles along the image of the
