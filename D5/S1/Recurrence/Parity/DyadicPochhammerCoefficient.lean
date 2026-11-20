@@ -322,17 +322,4 @@ theorem source_coordinate (n j : ℕ) :
     rwa [hs] at hcoord
   · simp only [hcoord, support n j (by omega), mul_zero]
 
-/-- The positive-even coefficient relation, cleared before dividing by the column minus one,
-together with the literal rational coordinates of both rows. -/
-theorem positiveEvenCoefficient (n i : ℕ) (hn : 0 < n) (hi : 2 ≤ i) :
-    (((i : ℚ) - 1) * signedCoefficient (2 * n) i + signedCoefficient (2 * n) (i - 1) =
-      (i : ℚ) * ((i : ℚ) - 1) * signedCoefficient n i +
-        ((i : ℚ) - 2) * signedCoefficient n (i - 1)) ∧
-    (∀ j : ℕ,
-      pochhammerBasis.coord j (rowPolynomial (2 * n)) =
-        (-1 : ℚ) ^ (wt (2 * n) + 2 - j) * T (2 * n) j ∧
-      pochhammerBasis.coord j (rowPolynomial n) =
-        (-1 : ℚ) ^ (wt n + 2 - j) * T n j) :=
-  ⟨even_cleared n i hn hi, fun j => ⟨source_coordinate (2 * n) j, source_coordinate n j⟩⟩
-
 end D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient

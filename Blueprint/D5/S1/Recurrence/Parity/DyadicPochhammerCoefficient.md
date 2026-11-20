@@ -144,27 +144,12 @@ $$\forall n, j \in \mathbb{N}, \operatorname{coord}\left(j, \operatorname{rowPol
 
 For every row and column, the coordinate is the literal rational A358612 entry times the sign with natural exponent wt(n)+2−j. Beyond the row edge the literal array is zero. Column zero has the same zero extension.
 
-**Theorem 1.11 (Cleared even coefficient recurrence).**
-
-$$\forall n, i \in \mathbb{N}, 0 < n \implies 2 \le i \implies (((i: \mathbb{Q})-1) \cdot \operatorname{signedCoefficient}\left(2 \cdot n, i\right)+\operatorname{signedCoefficient}\left(2 \cdot n, i-1\right) = (i: \mathbb{Q}) \cdot ((i: \mathbb{Q})-1) \cdot \operatorname{signedCoefficient}\left(n, i\right)+((i: \mathbb{Q})-2) \cdot \operatorname{signedCoefficient}\left(n, i-1\right)) \land (\forall j \in \mathbb{N}, (\operatorname{coord}\left(j, \operatorname{rowPolynomial}\left(2 \cdot n\right)\right) = (-1)^{\operatorname{wt}\left(2 \cdot n\right)+2-j} \cdot \operatorname{T}\left(2 \cdot n, j\right)) \land (\operatorname{coord}\left(j, \operatorname{rowPolynomial}\left(n\right)\right) = (-1)^{\operatorname{wt}\left(n\right)+2-j} \cdot \operatorname{T}\left(n, j\right)))$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.positiveEvenCoefficient` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
-
-*Commentary.*
-
-For n positive and i at least two, comparing Pochhammer coordinates clears the division by i−1 in the A358612 recurrence. The second clause gives the literal signed coordinates of the two rows at every column, including their zero extensions.
-
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.coord_basis`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.difference`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.difference_pochhammer`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.pochhammerBasis`
-- Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.positiveEvenCoefficient`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.rationalRow`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.rationalRow_even`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient.rationalRow_odd`

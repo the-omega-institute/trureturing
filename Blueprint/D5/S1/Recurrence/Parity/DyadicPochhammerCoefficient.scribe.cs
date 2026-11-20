@@ -39,12 +39,7 @@ internal sealed class DyadicPochhammerCoefficientDocument : IScribeDocumentDefin
             Node("source-coordinate", "source_coordinate", "Literal A358612 correspondence", DescribeRole.Lemma,
                 "For every row and column, the coordinate is the literal rational A358612 "
                 + "entry times the sign with natural exponent wt(n)+2−j. Beyond the row "
-                + "edge the literal array is zero. Column zero has the same zero extension."),
-            Node("positive-even-coefficient", "positiveEvenCoefficient", "Cleared even coefficient recurrence",
-                DescribeRole.Theorem, "For n positive and i at least two, comparing Pochhammer "
-                + "coordinates clears the division by i−1 in the A358612 recurrence. The "
-                + "second clause gives the literal signed coordinates of the two rows at "
-                + "every column, including their zero extensions."))));
+                + "edge the literal array is zero. Column zero has the same zero extension."))));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
@@ -58,16 +53,8 @@ internal sealed class DyadicPochhammerCoefficientDocument : IScribeDocumentDefin
         var x = F.Id("X");
         var p = F.Id("P");
         var twoN = Seq(D(2), Sp, Cdot, Sp, n);
-        var previous = Seq(i, Minus, D(1));
         var signed = new Formula.Power(Parens(Seq(Minus, D(1))),
             Seq(Call("wt", n), Plus, i));
-        var cleared = Eqn(
-            Seq(Parens(Seq(Cast(i, Rational), Minus, D(1))), Sp, Cdot, Sp,
-                Call("signedCoefficient", twoN, i), Plus, Call("signedCoefficient", twoN, previous)),
-            Seq(Cast(i, Rational), Sp, Cdot, Sp, Parens(Seq(Cast(i, Rational), Minus, D(1))),
-                Sp, Cdot, Sp, Call("signedCoefficient", n, i), Plus,
-                Parens(Seq(Cast(i, Rational), Minus, D(2))), Sp, Cdot, Sp,
-                Call("signedCoefficient", n, previous)));
         return name switch
         {
             "pochhammerBasis" => Seq(Bind(j), Eqn(Call(name, j), Call("ascPochhammer", Rational, j))),
@@ -90,9 +77,6 @@ internal sealed class DyadicPochhammerCoefficientDocument : IScribeDocumentDefin
                 Eqn(Call(name, n, i), Seq(signed, Sp, Cdot, Sp,
                     Call("coord", i, Call("rowPolynomial", n))))),
             "source_coordinate" => Seq(Bind(n, j), Coordinate(n, j)),
-            "positiveEvenCoefficient" => Seq(Bind(n, i), D(0), Sp, Lt, Sp, n, Sp, Implies, Sp,
-                D(2), Sp, Le, Sp, i, Sp, Implies, Sp, Parens(cleared), Sp, Land, Sp,
-                Parens(Seq(Bind(j), Parens(Coordinate(twoN, j)), Sp, Land, Sp, Parens(Coordinate(n, j))))),
             _ => throw new ArgumentOutOfRangeException(nameof(name))
         };
     }

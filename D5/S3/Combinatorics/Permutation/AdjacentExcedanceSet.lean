@@ -117,16 +117,6 @@ def deleteFixedCase {n : ℕ} (b : Fin (n + 1)) (S : Set (Fin (n + 1)))
       right_inv := fun _ => rfl }
   reorder.trans ((fixedAtEquiv b).subtypeEquiv (exact_delete_iff b S hb))
 
-private theorem adjacent_lt {n : ℕ} (a : Fin (n + 1)) (x : Fin (n + 2)) :
-    a.castSucc < x ↔ a.succ ≤ x := by
-  change a.val < x.val ↔ a.val + 1 ≤ x.val
-  omega
-
-private theorem adjacent_le {n : ℕ} (a : Fin (n + 1)) (x : Fin (n + 2)) :
-    x < a.succ ↔ x ≤ a.castSucc := by
-  change x.val < a.val + 1 ↔ x.val ≤ a.val
-  omega
-
 private theorem exact_swap_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
     (hl : a.castSucc ∈ S) (hr : a.succ ∉ S) (p : Perm (Fin (n + 2))) :
     (HasExactExcedances p S ∧ p a.castSucc ≠ a.succ ∧ p a.succ ≠ a.succ) ↔
@@ -135,10 +125,10 @@ private theorem exact_swap_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)
   constructor
   · rintro ⟨hp, hxne, hyne⟩
     have hx : a.succ < p a.castSucc :=
-      lt_of_le_of_ne ((adjacent_lt a _).mp ((hp _).mpr hl)) hxne.symm
+      lt_of_le_of_ne (Fin.castSucc_lt_iff_succ_le.mp ((hp _).mpr hl)) hxne.symm
     have hynot : ¬ a.succ < p a.succ := fun h => hr ((hp a.succ).mp h)
     have hy : p a.succ ≤ a.castSucc :=
-      (adjacent_le a _).mp (lt_of_le_of_ne (le_of_not_gt hynot) hyne)
+      Fin.le_castSucc_iff.symm.mp (lt_of_le_of_ne (le_of_not_gt hynot) hyne)
     intro j
     change j < p (Equiv.swap a.castSucc a.succ j) ↔ Equiv.swap a.castSucc a.succ j ∈ S
     by_cases hjl : j = a.castSucc
@@ -161,7 +151,7 @@ private theorem exact_swap_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)
       Equiv.swap a.castSucc a.succ a.castSucc ∈ S at hy
     rw [Equiv.swap_apply_left] at hy
     have hx' : a.succ < p a.castSucc := hx.mpr hl
-    have hy' : p a.succ < a.succ := (adjacent_le a _).mpr (le_of_not_gt (hr ∘ hy.mp))
+    have hy' : p a.succ < a.succ := Fin.le_castSucc_iff.symm.mpr (le_of_not_gt (hr ∘ hy.mp))
     refine ⟨?_, ne_of_gt hx', ne_of_lt hy'⟩
     intro j
     by_cases hjl : j = a.castSucc
@@ -188,7 +178,7 @@ theorem exact_swap_fixed_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
     have hyne := adjacent_left_unique a p hx
     have hynot : ¬ a.succ < p a.succ := fun h => hr ((hp a.succ).mp h)
     have hy : p a.succ ≤ a.castSucc :=
-      (adjacent_le a _).mp (lt_of_le_of_ne (le_of_not_gt hynot) hyne)
+      Fin.le_castSucc_iff.symm.mp (lt_of_le_of_ne (le_of_not_gt hynot) hyne)
     constructor
     · intro j
       change j < p (Equiv.swap a.castSucc a.succ j) ↔ j ∈ S \ {a.castSucc}

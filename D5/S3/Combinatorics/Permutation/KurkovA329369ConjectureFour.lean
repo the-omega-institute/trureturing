@@ -33,11 +33,7 @@ private theorem row_expansion (k : ℕ) :
   apply pochhammerBasis.ext_elem
   intro j
   change pochhammerBasis.coord j (rowPolynomial k) = pochhammerBasis.coord j _
-  have hc : pochhammerBasis.coord j (rowPolynomial k) =
-      (-1 : ℚ) ^ (wt k + 2 - j) * T k j := by
-    rcases Nat.eq_zero_or_pos k with rfl | hk
-    · exact source_coordinate 0 j
-    · exact ((positiveEvenCoefficient k 2 hk le_rfl).2 j).2
+  have hc := source_coordinate k j
   simp only [map_sum, map_smul, coord_basis, smul_eq_mul]
   by_cases hj : j ∈ Finset.Icc 1 (wt k + 2)
   · rw [Finset.sum_eq_single_of_mem j hj]
@@ -73,15 +69,6 @@ private theorem dyadic_expansion (m k : ℕ) :
     intro i _
     rw [map_smul, difference_pochhammer, smul_smul, pow_succ, mul_assoc]
 
-private theorem ascPochhammer_eval_one (i : ℕ) :
-    (ascPochhammer ℚ i).eval 1 = (i.factorial : ℚ) := by
-  induction i with
-  | zero => simp
-  | succ i ih =>
-    rw [ascPochhammer_succ_right, eval_mul, ih, Nat.factorial_succ, Nat.cast_mul]
-    simp
-    ring
-
 private theorem source_sign (w i : ℕ) (hi : i ≤ w + 2) :
     (-1 : ℚ) ^ (w + 2 - i) = (-1 : ℚ) ^ ((w : ℤ) - (i : ℤ)) := by
   have he : ((w + 2 - i : ℕ) : ℤ) = (w : ℤ) - (i : ℤ) + 2 := by omega
@@ -98,7 +85,7 @@ private theorem b_factorial_sum (m k : ℕ) :
   rw [← heval, dyadic_expansion, eval_finsetSum]
   apply Finset.sum_congr rfl
   intro i hi
-  rw [eval_smul, ascPochhammer_eval_one, source_sign _ _ (Finset.mem_Icc.mp hi).2]
+  rw [eval_smul, _root_.ascPochhammer_eval_one ℚ i, source_sign _ _ (Finset.mem_Icc.mp hi).2]
   simp only [smul_eq_mul]
   ring
 
