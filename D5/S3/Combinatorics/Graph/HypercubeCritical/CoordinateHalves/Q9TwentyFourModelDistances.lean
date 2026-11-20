@@ -10,9 +10,9 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourModelDistances
 
 open SimpleGraph
-open private adjacent decode from
+open private Graph adjacent decode from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphSearch
-open private graphEdges crosses from
+open private graphEdgesOfOrder crosses from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourColors
 open private Model from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourEmbeddingCheck
@@ -25,18 +25,25 @@ open private models from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourColors in
 private def colorAt (index : Fin 53) : Nat × Nat := models[index.val]!
 
-private def subdivisionPairs (code color : Nat) : List (Nat × Nat) :=
-  (graphEdges (decode code)).filter fun p => !(crosses color p.1 p.2)
+private def subdivisionPairsOfOrder (order : Nat) (graph : Graph) (color : Nat) :
+    List (Nat × Nat) :=
+  (graphEdgesOfOrder order graph).filter fun p => !(crosses color p.1 p.2)
 
-private def expandedAdjacent (code color : Nat) (i j : Nat) : Bool :=
-  if i < 12 then
-    if j < 12 then adjacent (decode code) i j && crosses color i j
-    else let p := (subdivisionPairs code color)[j - 12]!
+private def expandedAdjacentOfOrder (order : Nat) (graph : Graph) (color i j : Nat) : Bool :=
+  if i < order then
+    if j < order then adjacent graph i j && crosses color i j
+    else let p := (subdivisionPairsOfOrder order graph color)[j - order]!
          i == p.1 || i == p.2
-  else if j < 12 then
-    let p := (subdivisionPairs code color)[i - 12]!
+  else if j < order then
+    let p := (subdivisionPairsOfOrder order graph color)[i - order]!
     j == p.1 || j == p.2
   else false
+
+private def subdivisionPairs (code color : Nat) : List (Nat × Nat) :=
+  subdivisionPairsOfOrder 12 (decode code) color
+
+private def expandedAdjacent (code color i j : Nat) : Bool :=
+  expandedAdjacentOfOrder 12 (decode code) color i j
 
 private def distance (model : Model) (i j : Nat) : Nat :=
   if i = j then 0
@@ -100,13 +107,14 @@ set_option maxHeartbeats 120000000 in
 private theorem valid_model (index : Fin 53) : valid index := by
   fin_cases index <;> decide +kernel
 
-private theorem walk_of_distance {V : Type*} {G : SimpleGraph V} (model : Model)
-    (point : Fin 24 → V)
-    (hEdge : ∀ i j : Fin 24, distance model i.val j.val = 1 → G.Adj (point i) (point j))
-    (hStep : ∀ i j : Fin 24, i ≠ j → 0 < distance model i.val j.val ∧
-      ∃ k : Fin 24, distance model i.val k.val = 1 ∧
+private theorem walk_of_distance {order : Nat} {V : Type*} {G : SimpleGraph V} (model : Model)
+    (point : Fin order → V)
+    (hEdge : ∀ i j : Fin order, distance model i.val j.val = 1 → G.Adj (point i) (point j))
+    (hStep : ∀ i j : Fin order, i ≠ j → 0 < distance model i.val j.val ∧
+      ∃ k : Fin order, distance model i.val k.val = 1 ∧
         distance model k.val j.val + 1 = distance model i.val j.val)
-    (i j : Fin 24) : ∃ w : G.Walk (point i) (point j), w.length = distance model i.val j.val := by
+    (i j : Fin order) :
+    ∃ w : G.Walk (point i) (point j), w.length = distance model i.val j.val := by
   generalize he : distance model i.val j.val = d
   induction d using Nat.strong_induction_on generalizing i j with
   | h d ih =>

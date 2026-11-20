@@ -309,16 +309,21 @@ private def vertices : List Nat := List.range 12
 private def cycleEdges (cycle : List Nat) : List (Nat × Nat) :=
   cycle.zip (cycle.drop 1 ++ [cycle.head!])
 
-private def validCycle (graph : Graph) (cycle : List Nat) : Bool :=
+private def validCycleOfOrder (order : Nat) (graph : Graph) (cycle : List Nat) : Bool :=
   4 ≤ cycle.length && cycle.length ≤ 6 &&
     cycle.eraseDups.length == cycle.length &&
-    cycle.all (· < 12) && (cycleEdges cycle).all (fun (u, v) => adjacent graph u v)
+    cycle.all (· < order) && (cycleEdges cycle).all (fun (u, v) => adjacent graph u v)
+
+private def validCycle := validCycleOfOrder 12
 
 private def crosses (group u v : Nat) : Bool := group.testBit u != group.testBit v
 
-private def graphEdges (graph : Graph) : List (Nat × Nat) :=
+private def graphEdgesOfOrder (order : Nat) (graph : Graph) : List (Nat × Nat) :=
+  let vertices := List.range order
   vertices.flatMap fun u =>
     (vertices.filter fun v => u < v && adjacent graph u v).map fun v => (u, v)
+
+private def graphEdges := graphEdgesOfOrder 12
 
 private def admissible (edges : List (Nat × Nat)) (cycles : List (List Nat))
     (group : Nat) : Bool :=

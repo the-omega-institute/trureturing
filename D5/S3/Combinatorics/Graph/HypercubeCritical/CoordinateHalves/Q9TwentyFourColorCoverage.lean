@@ -28,7 +28,8 @@ open private representative_of_graph witnessPerm eraseDups_spec from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphEncoding
 open private High vertex side directCount girth_le_expanded_length circuit_of_vertex_list from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourExpansion
-open private models coloredCases graphEdges admissible validCycle relabelsColor checkCase
+open private models coloredCases graphEdges graphEdgesOfOrder admissible validCycle validCycleOfOrder
+  relabelsColor checkCase
   checked cycleEdges crosses vertices ColorCase.cycles ColorCase.witnesses from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourColors
 
@@ -94,7 +95,7 @@ private theorem colored_representative (index : Fin 22) (group : Nat) (hgroup : 
       = true at hw
   obtain ⟨⟨⟨⟨hindex, hbound⟩, hnodup⟩, hgraph⟩, hcolor⟩ := by
     simpa only [Bool.and_eq_true_iff] using hw
-  let p := witnessPerm word (fun i hi =>
+  let p := witnessPerm (order := 12) word (fun i hi =>
     of_decide_eq_true (List.all_eq_true.mp hbound _ (List.mem_range.mpr hi)))
     (beq_iff_eq.mp hnodup)
   have hsize : models.size = 53 := rfl
@@ -106,24 +107,25 @@ private theorem colored_representative (index : Fin 22) (group : Nat) (hgroup : 
   · intro i
     exact beq_iff_eq.mp (List.all_eq_true.mp hcolor _ (List.mem_range.mpr i.isLt))
 
-private theorem cycle_respects_girth {V : Type*} [Fintype V] {G : SimpleGraph V}
+private theorem cycle_respects_girth {order : Nat} [NeZero order]
+    {V : Type*} [Fintype V] {G : SimpleGraph V}
     {L R : Finset V} (hdisj : Disjoint L R) (hg : (8 : ℕ∞) ≤ G.egirth)
-    (index : Fin 22) (label : Fin 12 ≃ High G L R)
-    (hlabel : ∀ i j : Fin 12, adjacent (decode representatives[index.val]!) i.val j.val = true ↔
+    (graph : Graph) (label : Fin order ≃ High G L R)
+    (hlabel : ∀ i j : Fin order, adjacent graph i.val j.val = true ↔
       (suppress G L R).Adj (label i) (label j))
     (group : Nat) (reverse : Bool)
-    (hcolor : ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse))
-    (cycle : List Nat) (hc : validCycle (decode representatives[index.val]!) cycle = true) :
+    (hcolor : ∀ i : Fin order, group.testBit i.val = (side (label i) ^^ reverse))
+    (cycle : List Nat) (hc : validCycleOfOrder order graph cycle = true) :
     8 ≤ 2 * cycle.length - (cycleEdges cycle).countP (fun (u, v) => crosses group u v) := by
   obtain ⟨⟨⟨⟨hlen, _⟩, hnd⟩, hb⟩, he⟩ := by
-    simpa only [validCycle, Bool.and_eq_true_iff] using hc
+    simpa only [validCycleOfOrder, Bool.and_eq_true_iff] using hc
   cases cycle with
   | nil => simp at hlen
   | cons a xs =>
-    let cast (i : Nat) := label (Fin.ofNat 12 i)
-    have hbound (i : Nat) (hi : i ∈ a :: xs) : i < 12 :=
+    let cast (i : Nat) := label (Fin.ofNat order i)
+    have hbound (i : Nat) (hi : i ∈ a :: xs) : i < order :=
       of_decide_eq_true (List.all_eq_true.mp hb i hi)
-    have hval (i : Nat) (hi : i ∈ a :: xs) : (Fin.ofNat 12 i).val = i :=
+    have hval (i : Nat) (hi : i ∈ a :: xs) : (Fin.ofNat order i).val = i :=
       Nat.mod_eq_of_lt (hbound i hi)
     have hnodup : ((a :: xs).map cast).Nodup := by
       have hs := eraseDups_spec (a :: xs)
@@ -148,8 +150,8 @@ private theorem cycle_respects_girth {V : Type*} [Fintype V] {G : SimpleGraph V}
       obtain ⟨⟨i, j⟩, hm, rfl⟩ := List.mem_map.mp hq
       obtain ⟨hi, hj⟩ := hstep hm
       have ha := List.all_eq_true.mp he (i, j) hm
-      change adjacent (decode representatives[index.val]!) i j = true at ha
-      apply (hlabel (Fin.ofNat 12 i) (Fin.ofNat 12 j)).mp
+      change adjacent graph i j = true at ha
+      apply (hlabel (Fin.ofNat order i) (Fin.ofNat order j)).mp
       rw [hval i hi, hval j hj]
       exact ha
     have hl : 3 ≤ (cast a :: xs.map cast).length := by
@@ -169,8 +171,8 @@ private theorem cycle_respects_girth {V : Type*} [Fintype V] {G : SimpleGraph V}
       apply List.countP_congr
       intro q hq
       obtain ⟨ha, hb⟩ := hstep hq
-      have hca := hcolor (Fin.ofNat 12 q.1)
-      have hcb := hcolor (Fin.ofNat 12 q.2)
+      have hca := hcolor (Fin.ofNat order q.1)
+      have hcb := hcolor (Fin.ofNat order q.2)
       rw [hval q.1 ha] at hca
       rw [hval q.2 hb] at hcb
       change (side (cast q.1) != side (cast q.2)) = true ↔
@@ -181,12 +183,14 @@ private theorem cycle_respects_girth {V : Type*} [Fintype V] {G : SimpleGraph V}
     rw [hlength', hcount] at h
     exact_mod_cast h
 
-private theorem mem_graphEdges (graph : Graph) (i j : Nat) :
-    (i, j) ∈ graphEdges graph ↔ i < 12 ∧ j < 12 ∧ i < j ∧ adjacent graph i j = true := by
-  simp [graphEdges, vertices, List.mem_flatMap, List.mem_filter, List.mem_map, and_assoc]
+private theorem mem_graphEdges (order : Nat) (graph : Graph) (i j : Nat) :
+    (i, j) ∈ graphEdgesOfOrder order graph ↔
+      i < order ∧ j < order ∧ i < j ∧ adjacent graph i j = true := by
+  simp [graphEdgesOfOrder, List.mem_flatMap, List.mem_filter, List.mem_map, and_assoc]
 
-private theorem graphEdges_nodup (graph : Graph) : (graphEdges graph).Nodup := by
-  unfold graphEdges
+private theorem graphEdges_nodup (order : Nat) (graph : Graph) :
+    (graphEdgesOfOrder order graph).Nodup := by
+  unfold graphEdgesOfOrder
   apply List.nodup_flatMap.mpr
   constructor
   · intro u hu
@@ -197,52 +201,52 @@ private theorem graphEdges_nodup (graph : Graph) : (graphEdges graph).Nodup := b
     obtain ⟨b, _, he⟩ := List.mem_map.mp hv
     exact hne (congrArg Prod.fst he.symm)
 
-private theorem count_cross_eq_card (graph : Graph) (group : Nat) :
-    (graphEdges graph).countP (fun (i, j) => crosses group i j) =
-      ((graphEdges graph).toFinset.filter (fun p => crosses group p.1 p.2 = true)).card := by
+private theorem count_cross_eq_card (order : Nat) (graph : Graph) (group : Nat) :
+    (graphEdgesOfOrder order graph).countP (fun (i, j) => crosses group i j) =
+      ((graphEdgesOfOrder order graph).toFinset.filter (fun p => crosses group p.1 p.2 = true)).card := by
   let good (p : Nat × Nat) := crosses group p.1 p.2
-  let edges := graphEdges graph
-  have hcount := List.toFinset_card_of_nodup ((graphEdges_nodup graph).filter good)
+  let edges := graphEdgesOfOrder order graph
+  have hcount := List.toFinset_card_of_nodup ((graphEdges_nodup order graph).filter good)
   change edges.countP good = _
   rw [List.countP_eq_length_filter, ← hcount, List.toFinset_filter]
 
-private theorem cross_of_side {V : Type*} [Fintype V] {G : SimpleGraph V}
-    {L R : Finset V} (label : Fin 12 ≃ High G L R) (group : Nat) (reverse : Bool)
-    (hcolor : ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse))
-    (i j : Fin 12) :
+private theorem cross_of_side {order : Nat} {V : Type*} [Fintype V] {G : SimpleGraph V}
+    {L R : Finset V} (label : Fin order ≃ High G L R) (group : Nat) (reverse : Bool)
+    (hcolor : ∀ i : Fin order, group.testBit i.val = (side (label i) ^^ reverse))
+    (i j : Fin order) :
     crosses group i.val j.val = true ↔ side (label i) ≠ side (label j) := by
   unfold crosses
   rw [hcolor i, hcolor j]
   cases side (label i) <;> cases side (label j) <;> cases reverse <;> simp
 
-private theorem count_direct_edges {V : Type*} [Fintype V] {G : SimpleGraph V}
+private theorem count_direct_edges {order : Nat} {V : Type*} [Fintype V] {G : SimpleGraph V}
     {L R : Finset V} (hbip : G.IsBipartiteWith (L : Set V) (R : Set V)) (graph : Graph)
-    (label : Fin 12 ≃ High G L R)
-    (hlabel : ∀ i j : Fin 12, adjacent graph i.val j.val = true ↔
+    (label : Fin order ≃ High G L R)
+    (hlabel : ∀ i j : Fin order, adjacent graph i.val j.val = true ↔
       (suppress G L R).Adj (label i) (label j))
     (group : Nat) (reverse : Bool)
-    (hcolor : ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse)) :
-    (graphEdges graph).countP (fun (i, j) => crosses group i j) =
+    (hcolor : ∀ i : Fin order, group.testBit i.val = (side (label i) ^^ reverse)) :
+    (graphEdgesOfOrder order graph).countP (fun (i, j) => crosses group i j) =
       ∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card := by
   classical
-  let cross := (graphEdges graph).toFinset.filter (fun p => crosses group p.1 p.2 = true)
+  let cross := (graphEdgesOfOrder order graph).toFinset.filter (fun p => crosses group p.1 p.2 = true)
   let directed := (degreeThree G R).sigma (fun y => degreeThree G (G.neighborFinset y))
   rw [count_cross_eq_card, ← Finset.card_sigma]
   change cross.card = directed.card
   symm
-  let order (i j : Fin 12) : Nat × Nat :=
+  let orderedPair (i j : Fin order) : Nat × Nat :=
     if i.val < j.val then (i.val, j.val) else (j.val, i.val)
-  have horder (i j : Fin 12) (hn : i ≠ j) :
-      order i j = (i.val, j.val) ∧ i.val < j.val ∨
-        order i j = (j.val, i.val) ∧ j.val < i.val := by
+  have horder (i j : Fin order) (hn : i ≠ j) :
+      orderedPair i j = (i.val, j.val) ∧ i.val < j.val ∨
+        orderedPair i j = (j.val, i.val) ∧ j.val < i.val := by
     by_cases h : i.val < j.val
     · exact Or.inl ⟨ite_eq_left h, h⟩
     · exact Or.inr ⟨ite_eq_right h, by
         have := fun he : i.val = j.val => hn (Fin.ext he)
         omega⟩
-  let leftLabel (v : V) (hv : v ∈ L) (hd : G.degree v = 3) : Fin 12 :=
+  let leftLabel (v : V) (hv : v ∈ L) (hd : G.degree v = 3) : Fin order :=
     label.symm (Sum.inl ⟨v, mem_filter.mpr ⟨hv, hd⟩⟩)
-  let rightLabel (v : V) (hv : v ∈ degreeThree G R) : Fin 12 :=
+  let rightLabel (v : V) (hv : v ∈ degreeThree G R) : Fin order :=
     label.symm (Sum.inr ⟨v, hv⟩)
   have left_side (v : V) (hv : v ∈ L) (hd : G.degree v = 3) :
       side (label (leftLabel v hv hd)) = false := by simp [leftLabel, side]
@@ -269,13 +273,13 @@ private theorem count_direct_edges {V : Type*} [Fintype V] {G : SimpleGraph V}
       (suppress G L R).Adj (label (ir q hq)) (label (il q hq)) := by
     simp only [ir, il, rightLabel, leftLabel, Equiv.apply_symm_apply]
     exact (G.mem_neighborFinset _ _).mp (mem_filter.mp (mem_sigma.mp hq).2).1
-  have in_cross (i j : Fin 12) (hij : i.val < j.val)
+  have in_cross (i j : Fin order) (hij : i.val < j.val)
       (ha : (suppress G L R).Adj (label i) (label j))
       (hne : side (label i) ≠ side (label j)) : (i.val, j.val) ∈ cross :=
     mem_filter.mpr ⟨List.mem_toFinset.mpr
-      ((mem_graphEdges graph _ _).mpr ⟨i.isLt, j.isLt, hij, (hlabel i j).mpr ha⟩),
+      ((mem_graphEdges order graph _ _).mpr ⟨i.isLt, j.isLt, hij, (hlabel i j).mpr ha⟩),
       (cross_of_side label group reverse hcolor i j).mpr hne⟩
-  refine Finset.card_bij (fun q hq => order (il q hq) (ir q hq)) ?_ ?_ ?_
+  refine Finset.card_bij (fun q hq => orderedPair (il q hq) (ir q hq)) ?_ ?_ ?_
   · intro q hq
     rcases horder (il q hq) (ir q hq) (hd q hq) with ⟨he, hlt⟩ | ⟨he, hlt⟩
     · rw [he]
@@ -308,9 +312,9 @@ private theorem count_direct_edges {V : Type*} [Fintype V] {G : SimpleGraph V}
       exact Sigma.ext (from_right (Fin.ext he.1)) (heq_of_eq (from_left (Fin.ext he.2)))
   · rintro ⟨i, j⟩ hp
     obtain ⟨hedge, hcross⟩ := mem_filter.mp hp
-    obtain ⟨hi, hj, hij, hadj⟩ := (mem_graphEdges graph i j).mp (List.mem_toFinset.mp hedge)
-    let a : Fin 12 := ⟨i, hi⟩
-    let b : Fin 12 := ⟨j, hj⟩
+    obtain ⟨hi, hj, hij, hadj⟩ := (mem_graphEdges order graph i j).mp (List.mem_toFinset.mp hedge)
+    let a : Fin order := ⟨i, hi⟩
+    let b : Fin order := ⟨j, hj⟩
     have hJ := (hlabel a b).mp hadj
     have hs := (cross_of_side label group reverse hcolor a b).mp hcross
     cases ha : label a with
@@ -337,23 +341,23 @@ private theorem count_direct_edges {V : Type*} [Fintype V] {G : SimpleGraph V}
         have hr : ir q hq = a := label.symm_apply_eq.mpr ha.symm
         exact ⟨q, hq, by rw [hl, hr]; exact ite_eq_right (Nat.not_lt_of_ge hij.le)⟩
 
-private theorem count_color_side {V : Type*} [Fintype V] {G : SimpleGraph V}
-    {L R : Finset V} (label : Fin 12 ≃ High G L R) (group : Nat) (reverse : Bool)
-    (hcolor : ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse)) :
-    vertices.countP group.testBit =
+private theorem count_color_side {order : Nat} {V : Type*} [Fintype V] {G : SimpleGraph V}
+    {L R : Finset V} (label : Fin order ≃ High G L R) (group : Nat) (reverse : Bool)
+    (hcolor : ∀ i : Fin order, group.testBit i.val = (side (label i) ^^ reverse)) :
+    (List.range order).countP group.testBit =
       if reverse then (degreeThree G L).card else (degreeThree G R).card := by
   classical
-  let selected := (Finset.range 12).filter (fun i => group.testBit i = true)
-  have hset : (vertices.filter group.testBit).toFinset = selected := by
+  let selected := (Finset.range order).filter (fun i => group.testBit i = true)
+  have hset : ((List.range order).filter group.testBit).toFinset = selected := by
     ext i
-    simp [vertices, selected]
-  have hcount : vertices.countP group.testBit = selected.card := by
+    simp [selected]
+  have hcount : (List.range order).countP group.testBit = selected.card := by
     rw [List.countP_eq_length_filter, ← hset, List.toFinset_card_of_nodup]
     exact (List.nodup_range).filter _
   let selectedSide := (Finset.univ : Finset (High G L R)).filter
     (fun x => (side x ^^ reverse) = true)
   have hmatch : selected.card = selectedSide.card := by
-    have bound (i : Nat) (hi : i ∈ selected) : i < 12 :=
+    have bound (i : Nat) (hi : i ∈ selected) : i < order :=
       Finset.mem_range.mp (mem_filter.mp hi).1
     refine Finset.card_bij (fun i hi => label ⟨i, bound i hi⟩) ?_ ?_ ?_
     · intro i hi
@@ -382,10 +386,10 @@ private theorem count_color_side {V : Type*} [Fintype V] {G : SimpleGraph V}
       cases x <;> simp [selectedSide, side, f]
     rw [h, card_map, card_univ, Fintype.card_coe]
 
-private theorem color_word {V : Type*} [Fintype V] {G : SimpleGraph V} {L R : Finset V}
-    (label : Fin 12 ≃ High G L R) (reverse : Bool) :
-    ∃ group < 4096, ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse) := by
-  let f (i : Fin 12) := side (label i) ^^ reverse
+private theorem color_word {order : Nat} {V : Type*} [Fintype V] {G : SimpleGraph V} {L R : Finset V}
+    (label : Fin order ≃ High G L R) (reverse : Bool) :
+    ∃ group < 2 ^ order, ∀ i : Fin order, group.testBit i.val = (side (label i) ^^ reverse) := by
+  let f (i : Fin order) := side (label i) ^^ reverse
   let word := BitVec.ofBoolListLE (List.ofFn f)
   refine ⟨word.toNat, ?_, fun i => ?_⟩
   · simpa only [List.length_ofFn] using word.isLt
@@ -458,7 +462,7 @@ private theorem admissible_coloring {V : Type*} [Fintype V] {G : SimpleGraph V}
   simp only [Bool.and_eq_true_iff, Bool.or_eq_true_iff, beq_iff_eq]
   have hsize'' := or_assoc.symm.mp hsize'
   exact ⟨⟨hsize'', he⟩, List.all_eq_true.mpr fun cycle hcycle =>
-    decide_eq_true (cycle_respects_girth hdisj hg index label hlabel group reverse hcolor
+    decide_eq_true (cycle_respects_girth hdisj hg graph label hlabel group reverse hcolor
       cycle (List.all_eq_true.mp hv cycle hcycle))⟩
 
 /-- Every twenty-four-point coordinate half has a compressed graph from the

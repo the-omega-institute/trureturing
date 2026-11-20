@@ -29,7 +29,7 @@ open private hamming_encoded walk_dist liftPoint oppositeSize_lift from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourCubeMetric
 open private respects_prefix embedding_of_order from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourSearchCoverage
-open private hamming embeddings mem_embeddings checked_placement models from
+open private Model hamming embeddings mem_embeddings checked_placement models from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourEmbeddingCheck
 open private cube_action_regular_balanced from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixNormalizeProbe
@@ -93,27 +93,31 @@ private theorem encode_flip (x : Q 9) (a : Fin 8) :
     Nat.mod_eq_of_lt (Nat.pow_lt_pow_right (by decide : 1 < 2) a.isLt),
     Nat.shiftLeft_eq, Nat.one_mul]
 
-private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
-    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 24) :
-    ∃ (index : Fin 53) (g : Q 9 ≃ Q 9) (σ : Equiv.Perm (Fin 9)) (placed : List Nat),
+private theorem normalized_embedding_of_model {steps : Nat} {C : Finset (Q 9)}
+    (b : Bool) (model : Model) (hmodel : model.length = steps)
+    (point : Fin (steps + 1) ≃ (coordinateSlice C b : Set (Q 9)))
+    (hpoint : ∀ i j, distance model i.val j.val = 1 ↔
+      (hypercube 9).Adj (point i).val (point j).val)
+    (hparent : ∀ i : Fin steps, let parent := model[i.val]!.1
+      parent < i.val + 1 ∧ distance model (i.val + 1) parent = 1)
+    (hpath : ∀ i j : Fin (steps + 1), i ≠ j → 0 < distance model i.val j.val ∧
+      ∃ k : Fin (steps + 1), distance model i.val k.val = 1 ∧
+        distance model k.val j.val + 1 = distance model i.val j.val) :
+    ∃ (g : Q 9 ≃ Q 9) (σ : Equiv.Perm (Fin 9)) (placed : List Nat),
+      (∃ center, g = normalize σ.symm center) ∧
       (∀ x i, g (cubeFlip x i) = cubeFlip (g x) (σ i)) ∧
       (∀ x, g x 0 = false ↔ x 0 = b) ∧
-      placed ∈ embeddings (modelAt index) [0] 0 ∧
+      placed ∈ embeddings model [0] 0 ∧
       (∀ p ∈ placed, p < 256) ∧ (placed.map liftPoint).Nodup ∧
       (∀ x : BitVec 9, x ∈ placed.map liftPoint ↔
         cubeBitVec 9 x ∈ coordinateSlice (C.image g) false) := by
   classical
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
-  obtain ⟨index, point, hpoint⟩ := model_of_half hC hr hb b hs
-  let model := modelAt index
-  obtain ⟨hmodel, _, _, _, _, hparent, hpath⟩ := valid_model index
-  change model.length = 23 at hmodel
-  have hplane (i : Fin 24) : (point i).val 0 = b := (mem_filter.mp (point i).property).2
-  let next (i : Fin 23) : Fin 24 := ⟨i.val + 1, by omega⟩
-  let prev (i : Fin 23) : Fin 24 := ⟨model[i.val]!.1, (hparent i).1.trans (next i).isLt⟩
-  have hlink (i : Fin 23) :
+  have hplane (i : Fin (steps + 1)) : (point i).val 0 = b := (mem_filter.mp (point i).property).2
+  let next (i : Fin steps) : Fin (steps + 1) := ⟨i.val + 1, by omega⟩
+  let prev (i : Fin steps) : Fin (steps + 1) := ⟨model[i.val]!.1, (hparent i).1.trans (next i).isLt⟩
+  have hlink (i : Fin steps) :
       ∃ a : Fin 8, (point (next i)).val = cubeFlip (point (prev i)).val a.succ := by
     have he := (hpoint (next i) (prev i)).mp (hparent i).2
     obtain ⟨axis, ha⟩ := adjacent_exists_flip he.symm
@@ -123,7 +127,7 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
       rw [BalancedCriticalSpectrum.flip_apply_same, hplane, hplane] at hh
       cases b <;> cases hh
     | succ i => exact ⟨i, ha⟩
-  let edgeAxis (i : Fin 23) : Fin 8 := (hlink i).choose
+  let edgeAxis (i : Fin steps) : Fin 8 := (hlink i).choose
   let axes := List.ofFn edgeAxis
   obtain ⟨p, hp⟩ := normalize_axis_order axes
   let σ := liftPerm p
@@ -134,10 +138,10 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     change (x 0 != o 0) = false ↔ x 0 = b
     rw [show o 0 = b from hplane 0]
     cases x 0 <;> cases b <;> decide
-  have hfalse (i : Fin 24) : g (point i).val 0 = false := (hcut _).mpr (hplane i)
-  let bits (i : Fin 24) := (cubeBitVec 8).symm (omitCut (g (point i).val))
+  have hfalse (i : Fin (steps + 1)) : g (point i).val 0 = false := (hcut _).mpr (hplane i)
+  let bits (i : Fin (steps + 1)) := (cubeBitVec 8).symm (omitCut (g (point i).val))
   let placed := List.ofFn (fun i => (bits i).toNat)
-  have hencode (i : Fin 24) : cubeBitVec 9 (liftPoint (bits i).toNat) = g (point i).val :=
+  have hencode (i : Fin (steps + 1)) : cubeBitVec 9 (liftPoint (bits i).toNat) = g (point i).val :=
     encodeNormalized (hfalse i)
   have hroot : (bits 0).toNat = 0 := by
     have he : bits 0 = 0 := by
@@ -148,12 +152,12 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
       exact (Nat.zero_testBit i.val).symm
     rw [he]
     rfl
-  have hstep (i : Fin 23) : (bits (next i)).toNat =
+  have hstep (i : Fin steps) : (bits (next i)).toNat =
       (bits (prev i)).toNat ^^^ (1 <<< (p (edgeAxis i)).val) := by
     change ((cubeBitVec 8).symm (omitCut (g (point (next i)).val))).toNat = _
     rw [(hlink i).choose_spec, gflip]
     exact encode_flip _ _
-  have hdist (i j : Fin 24) (hij : i ≠ j) :
+  have hdist (i j : Fin (steps + 1)) (hij : i ≠ j) :
       let d := distance model i.val j.val
       let h := hamming (bits i).toNat (bits j).toNat
       0 < h ∧ h ≤ d ∧ (h = 1 ↔ d = 1) ∧ h % 2 = d % 2 := by
@@ -170,20 +174,20 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     rw [hham]
     exact ⟨hammingDist_pos.mpr (fun he => hij (point.injective (Subtype.ext he))),
       hle, (hpoint i j).symm, hpar⟩
-  have hplacedLen : placed.length = 24 := List.length_ofFn
-  have hposition (i : Fin 24) : placed[i.val]'(hplacedLen.symm ▸ i.isLt) = (bits i).toNat :=
+  have hplacedLen : placed.length = (steps + 1) := List.length_ofFn
+  have hposition (i : Fin (steps + 1)) : placed[i.val]'(hplacedLen.symm ▸ i.isLt) = (bits i).toNat :=
     List.getElem_ofFn _
   let used (k : Nat) := ((axes.take k).map Fin.val).eraseDups.length
   let axis (k : Nat) := (p (axes[k]!)).val
   have hm : placed ∈ embeddings model [0] 0 := by
     apply embedding_of_order model placed axis used (by omega)
     · rw [getElem!_pos placed 0 (by omega)]
-      exact (hposition (0 : Fin 24)).trans hroot
+      exact (hposition (0 : Fin (steps + 1))).trans hroot
     · rfl
     · intro k hk
-      let i : Fin 23 := ⟨k, hmodel ▸ hk⟩
+      let i : Fin steps := ⟨k, hmodel ▸ hk⟩
       have hai : k < axes.length := by
-        rw [show axes.length = 23 from List.length_ofFn]
+        rw [show axes.length = steps from List.length_ofFn]
         exact i.isLt
       have he : axes[k]'hai = edgeAxis i := List.getElem_ofFn _
       have harm := hp k hai
@@ -207,7 +211,7 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
         exact (hposition (next i)).trans ((hstep i).trans (by rw [ha, hp1]))
       · apply respects_prefix
         intro j hj
-        let j' : Fin 24 := ⟨j, by omega⟩
+        let j' : Fin (steps + 1) := ⟨j, by omega⟩
         have hne : next i ≠ j' := fun h => by
           have he := congrArg Fin.val h
           change k + 1 = j at he
@@ -217,7 +221,7 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     intro p hp
     obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hp
     exact (bits i).isLt
-  have hinj : Function.Injective (fun i : Fin 24 => liftPoint (bits i).toNat) := by
+  have hinj : Function.Injective (fun i : Fin (steps + 1) => liftPoint (bits i).toNat) := by
     intro i j he
     apply point.injective
     apply Subtype.ext
@@ -225,7 +229,7 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     exact (hencode i).symm.trans ((congrArg (cubeBitVec 9) he).trans (hencode j))
   have hmap : placed.map liftPoint = List.ofFn (fun i => liftPoint (bits i).toNat) := by
     simp only [placed, List.map_ofFn, Function.comp_def]
-  refine ⟨index, g, σ, placed, gflip, hcut, hm, hall, ?_, ?_⟩
+  refine ⟨g, σ, placed, ⟨o, rfl⟩, gflip, hcut, hm, hall, ?_, ?_⟩
   · rw [hmap, List.ofFn_eq_map]
     exact (List.nodup_finRange _).map hinj
   · intro x
@@ -243,6 +247,22 @@ private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
       refine ⟨i, (cubeBitVec 9).injective ?_⟩
       rw [hencode, point.apply_symm_apply]
       exact hgy
+
+private theorem normalized_half_embedding {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 24) :
+    ∃ (index : Fin 53) (g : Q 9 ≃ Q 9) (σ : Equiv.Perm (Fin 9)) (placed : List Nat),
+      (∀ x i, g (cubeFlip x i) = cubeFlip (g x) (σ i)) ∧
+      (∀ x, g x 0 = false ↔ x 0 = b) ∧
+      placed ∈ embeddings (modelAt index) [0] 0 ∧
+      (∀ p ∈ placed, p < 256) ∧ (placed.map liftPoint).Nodup ∧
+      (∀ x : BitVec 9, x ∈ placed.map liftPoint ↔
+        cubeBitVec 9 x ∈ coordinateSlice (C.image g) false) := by
+  obtain ⟨index, point, hpoint⟩ := model_of_half hC hr hb b hs
+  obtain ⟨hmodel, _, _, _, _, hparent, hpath⟩ := valid_model index
+  obtain ⟨g, σ, placed, _, hflip, hcut, hmem, hbound, hn, hhalf⟩ :=
+    normalized_embedding_of_model b _ hmodel point hpoint hparent hpath
+  exact ⟨index, g, σ, placed, hflip, hcut, hmem, hbound, hn, hhalf⟩
 
 private theorem catalog_member (index : Fin 53) : modelAt index ∈ models := by
   have hsize : models.length = 53 := by decide +kernel
