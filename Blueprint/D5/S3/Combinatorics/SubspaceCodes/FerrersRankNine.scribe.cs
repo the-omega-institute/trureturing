@@ -65,7 +65,9 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
                     Paragraph(Text("The projection onto the first three columns yields a nonzero rank-nine "
                         + "matrix. The projection onto the first four columns gives the dimension bound for "
                         + "competing codes. This is the fixed example from Section 4, Problem 1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jin-ning-xu-duan-2026-ferrers-rank-nine-example"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, DescribeRole role,
         Formula statement, AssessedProvenance provenance, params DocumentBlock[] narrative) =>

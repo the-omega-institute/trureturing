@@ -76,6 +76,10 @@ $$\forall F \in Type,\; [\operatorname{Field}\left(F\right)] [\operatorname{Fint
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/FerrersRankNine.problem1_rank_nine` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jin-ning-xu-duan-2026-ferrers-rank-nine-example` (proved) by `D5/S3/Combinatorics/SubspaceCodes/FerrersRankNine.problem1_rank_nine`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jin-ning-xu-duan-2026-ferrers-rank-nine-example","declaration_gid":"D5/S3/Combinatorics/SubspaceCodes/FerrersRankNine.problem1_rank_nine","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yong Jin, Yuhao Ning, Dengming Xu and Chengming Duan (2026). *New constructions of optimal Ferrers diagram rank-metric codes for quasi-block monotone Ferrers diagrams*. URL: <https://arxiv.org/abs/2611.19070v1>.
