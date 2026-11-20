@@ -31,7 +31,7 @@ internal sealed class ZelinskyDeficientCoreDocument : IScribeDocumentDefinition
                         + "a deficient starting core whose threshold parameter "
                         + "exceeds its prime factors.")),
                     Paragraph(Text("For a large current parameter a, choose a "
-                        + "prime p strictly between 2a and 3a. Adjoining p "
+                        + "prime p in (2a,3a]. Adjoining p "
                         + "keeps the core deficient and replaces a by "
                         + "a*(p+1)/(p-a), which lies between 3a/2 and 3a. "
                         + "All old and new prime factors remain below twice the "
