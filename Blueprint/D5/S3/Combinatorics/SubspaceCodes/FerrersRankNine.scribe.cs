@@ -12,8 +12,8 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/FiniteGeometry/jinningxuduan2026ferrers");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(Gid, "An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram.",
         H("An optimal rank-nine Ferrers code"), Blocks(
             Node("height", "height", "Column heights", DescribeRole.Definition,
                 HeightDefinition(), AssessedProvenance.FromLiterature(Source),
