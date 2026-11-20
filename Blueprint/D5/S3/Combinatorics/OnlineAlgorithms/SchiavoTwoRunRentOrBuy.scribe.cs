@@ -31,10 +31,10 @@ internal sealed class SchiavoTwoRunRentOrBuyDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(FormulaFor("schiavo_section5b_third_question")),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Schiavo asks on page 15, §5.B, “Can a rule lose at most 2K on two runs "
+                    Paragraph(Text("In the third question of §5.B (arXiv:2611.06955v1, PDF page 15), "
+                        + "Schiavo asks, “Can a rule lose at most 2K on two runs "
                         + "and also be c-competitive for some constant c?”")),
-                    Paragraph(Text("Write online(K, rule, xs) for sessionCost(K, xs, rule([]), actions(rule, xs)). "
-                        + "Take c = 3. For every positive real reset price K, choose the guarded "
+                    Paragraph(Text("Take c = 3. For every positive real reset price K, choose the guarded "
                         + "prefix rule once. On every finite list of nonnegative real increments, "
                         + "and against every comparator schedule of the same horizon, its cost is at most "
                         + "three times the comparator cost. If the increment list has at most two runs, "
@@ -59,38 +59,48 @@ internal sealed class SchiavoTwoRunRentOrBuyDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(explanation))),
             DescribeRole.Definition);
 
+    private static Formula Name(string name) => Seq(Mathrm, Grp(F.Id(name)));
+
     private static Formula FormulaFor(string name) => name switch
     {
         "AtMostTwoRuns" => Disp(Seq(
             Forall, Sp, Open, F.Id("xs"), Colon, Sp, F.Id("List"), Open, Seq(Mathbb, Grp(F.Id("R"))), Close,
             Close, Comma, Sp, F.Id("AtMostTwoRuns"), Open, F.Id("xs"), Close, Leftrightarrow, Sp, Exists, Sp, Open,
             F.Id("a"), Sp, F.Id("b"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Open, F.Id("m"), Sp, F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Close, Comma, Sp, F.Id("xs"), Eq,
-            F.Id("append"), Open, F.Id("replicate"), Open, F.Id("m"), Comma, Sp, F.Id("a"), Close, Comma, Sp, F.Id("replicate"), Open, F.Id("n"), Comma, Sp, F.Id("b"), Close, Close)),
+            Name("List"), Dot, Name("replicate"), Open, F.Id("m"), Comma, Sp, F.Id("a"), Close, Sp, Plus, Plus, Sp,
+            Name("List"), Dot, Name("replicate"), Open, F.Id("n"), Comma, Sp, F.Id("b"), Close)),
         "sessionCost" => Disp(Seq(
             Forall, Sp, Open, F.Id("K"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Open, F.Id("xs"),
             Colon, Sp, F.Id("List"), Open, Seq(Mathbb, Grp(F.Id("R"))), Close, Close, Open, F.Id("first"),
             Colon, Sp, F.Id("Bool"), Close, Open, F.Id("rs"), Colon, Sp, F.Id("List"), Open, F.Id("Bool"),
             Close, Close, Comma, Sp, F.Id("sessionCost"), Open, F.Id("K"), Comma, Sp, F.Id("xs"), Comma, Sp, F.Id("first"), Comma, Sp, F.Id("rs"), Close, Eq, F.Id("bill"), Open, F.Id("K"), Comma, Sp, D(0),
             Comma, Sp, D(0), Comma, Sp, F.Id("first"), Close, Plus, F.Id("comparatorCost"), Open, F.Id("K"),
-            Comma, Sp, D(0), Comma, Sp, F.Id("zip"), Open, F.Id("xs"), Comma, Sp, F.Id("rs"), Close, Close)),
+            Comma, Sp, D(0), Comma, Sp, F.Id("xs"), Dot, Name("zip"), Open, F.Id("rs"), Close, Close)),
         "actions" => Disp(Seq(
             Forall, Sp, Open, F.Id("rule"), Colon, Sp, F.Id("List"), Open, Seq(Mathbb, Grp(F.Id("R"))), Close,
             Rightarrow, Sp, F.Id("Bool"), Close, Open, F.Id("xs"), Colon, Sp, F.Id("List"), Open, Seq(Mathbb,
-            Grp(F.Id("R"))), Close, Close, Comma, Sp, F.Id("actions"), Open, F.Id("rule"), Comma, Sp, F.Id("xs"), Close, Eq, F.Id("ofFn"), Open, F.Id("i"), Colon, Sp, F.Id("Fin"), Open,
-            F.Id("length"), Open, F.Id("xs"), Close, Close, Mapsto, Sp, F.Id("rule"), Open, F.Id("take"),
-            Open, F.Id("xs"), Comma, Sp, F.Id("i"), Plus, D(1), Close, Close, Close)),
+            Grp(F.Id("R"))), Close, Close, Comma, Sp, F.Id("actions"), Open, F.Id("rule"), Comma, Sp, F.Id("xs"), Close, Eq,
+            Name("List"), Dot, Name("ofFn"), Open, Open, F.Id("i"), Colon, Sp, Name("Fin"), Open,
+            F.Id("xs"), Dot, Name("length"), Close, Close, Mapsto, Sp,
+            F.Id("rule"), Open, F.Id("xs"), Dot, Name("take"),
+            Open, F.Id("i"), Dot, Name("val"), Plus, D(1), Close, Close, Close)),
         "schiavo_section5b_third_question" => Disp(Seq(
             Exists, Sp, Open, F.Id("c"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Comma, Sp, D(1), Le, Sp, F.Id("c"), Land, Sp, Open, Forall, Sp, Open, F.Id("K"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close,
             Comma, Sp, D(0), Lt, F.Id("K"), Rightarrow, Sp, Exists, Sp, Open, F.Id("rule"), Colon, Sp, F.Id("List"),
             Open, Seq(Mathbb, Grp(F.Id("R"))), Close, Rightarrow, Sp, F.Id("Bool"), Close, Comma, Sp, Forall, Sp, Open, F.Id("xs"), Colon, Sp, F.Id("List"), Open, Seq(Mathbb, Grp(F.Id("R"))), Close, Close,
             Comma, Sp, Open, Forall, Sp, Open, F.Id("a"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Close, Comma, Sp, F.Id("a"), InMacro, Sp, F.Id("xs"), Rightarrow, Sp, D(0), Le, Sp, F.Id("a"), Close, Rightarrow, Sp, Forall, Sp, Open, F.Id("first"), Colon, Sp, F.Id("Bool"), Close, Open, F.Id("rs"), Colon, Sp, F.Id("List"),
-            Open, F.Id("Bool"), Close, Close, Comma, Sp, F.Id("length"), Open, F.Id("rs"), Close, Eq,
-            F.Id("length"), Open, F.Id("xs"), Close, Rightarrow, Sp, Open, F.Id("online"), Open, F.Id("K"),
-            Comma, Sp, F.Id("rule"), Comma, Sp, F.Id("xs"), Close, Le, Sp, F.Id("c"), Cdot, Sp, F.Id("sessionCost"),
-            Open, F.Id("K"), Comma, Sp, F.Id("xs"), Comma, Sp, F.Id("first"), Comma, Sp, F.Id("rs"), Close, Land, Sp, Open, F.Id("AtMostTwoRuns"), Open, F.Id("xs"), Close, Rightarrow, Sp, F.Id("online"), Open,
-            F.Id("K"), Comma, Sp, F.Id("rule"), Comma, Sp, F.Id("xs"), Close, Le, Sp, F.Id("sessionCost"), Open,
-            F.Id("K"), Comma, Sp, F.Id("xs"), Comma, Sp, F.Id("first"), Comma, Sp, F.Id("rs"), Close, Plus, D(2),
-            Cdot, Sp, F.Id("K"), Close, Close, Close)),
+            Open, F.Id("Bool"), Close, Close, Comma, Sp, F.Id("rs"), Dot, Name("length"), Eq,
+            F.Id("xs"), Dot, Name("length"), Rightarrow, Sp,
+            Name("let"), Sp, Name("online"), Sp, Colon, Eq, Sp,
+            Name("sessionCost"), Open, F.Id("K"), Comma, Sp, F.Id("xs"), Comma, Sp,
+            F.Id("rule"), Open, OpenBracket, CloseBracket, Close, Comma, Sp,
+            Name("actions"), Open, F.Id("rule"), Comma, Sp, F.Id("xs"), Close, Close, Semi, Sp,
+            Name("let"), Sp, Name("offline"), Sp, Colon, Eq, Sp,
+            Name("sessionCost"), Open, F.Id("K"), Comma, Sp, F.Id("xs"), Comma, Sp, F.Id("first"),
+            Comma, Sp, F.Id("rs"), Close, Semi, Sp,
+            Open, Name("online"), Le, Sp, F.Id("c"), Cdot, Sp, Name("offline"), Land, Sp,
+            Open, Name("AtMostTwoRuns"), Open, F.Id("xs"), Close, Rightarrow, Sp,
+            Name("online"), Le, Sp, Name("offline"), Plus, D(2), Cdot, Sp, F.Id("K"), Close, Close, Close)),
         _ => throw new ArgumentOutOfRangeException(nameof(name)),
     };
 }

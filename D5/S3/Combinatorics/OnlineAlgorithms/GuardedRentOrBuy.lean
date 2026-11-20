@@ -80,7 +80,7 @@ def scheduled (K : ℝ) (s : State) : List ℝ → List (ℝ × Bool)
   | [] => []
   | a :: rest => (a, reset K s a) :: scheduled K (advance K s a) rest
 
-/-- On call one the guard cannot create an extra reset. -/
+/-- At the first visible increment the guard cannot create an extra reset. -/
 theorem ordinary_initial (K a : ℝ) :
     reset K initial a = decide (crossing K initial a) := by
   have hd : ¬ drop initial a := by simp [drop, initial]
@@ -125,8 +125,8 @@ private theorem reserve_le (K : ℝ) (s : State) (hK : 0 ≤ K) :
   unfold reserve
   split <;> linarith
 
-/-- A comparator's bills account for all newly seen increments, and either include a reset
-price or dominate the rents of the online policy while both schedules retain their carry. -/
+/-- After the new bill, the comparator's total cost either reaches the online carry plus the
+reset price or bounds the online accumulated rent while the comparator carry bounds the online carry. -/
 theorem billed_cycle {K e A o q a : ℝ} {r : Bool}
     (hK : 0 ≤ K) (hEA : e ≤ A) (ho : 0 ≤ o)
     (hcycle : e + K ≤ q ∨ (A ≤ q ∧ e ≤ o)) :

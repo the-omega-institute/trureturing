@@ -6,7 +6,7 @@ A guarded deterministic threshold rule for repeated rent-or-buy.
 
 **Definition 1.1 (State before a new increment is billed).**
 
-$$State=\mathbb{R}\times \mathbb{R}\times Option(\mathbb{R})\times Bool\times Bool$$
+$$\mathrm{structure} \mathrm{State} \mathrm{where} \{\mathrm{carry}: \mathbb{R}, \mathrm{acc}: \mathbb{R}, \mathrm{previous}: \mathrm{Option}(\mathbb{R}), \mathrm{ordinarySeen}: \mathrm{Bool}, \mathrm{dropSeen}: \mathrm{Bool}\}$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.State` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$State=\mathbb{R}\times \mathbb{R}\times Option(\mathbb{R})\times Bool\times Bo
 
 *Commentary.*
 
-The record is presented as an ordered tuple. The real carry is the history left after the previous action. The real accumulator is the rent paid since the last reset. The state also stores the optional previous increment and two flags for whether an ordinary crossing or a strict drop has occurred.
+The real carry is the history left after the previous action. The real accumulator is the rent paid since the last reset. The state also stores the optional previous increment and two flags for whether an ordinary crossing or a strict drop has occurred.
 
 **Definition 1.2 (Initial state).**
 
-$$initial=(0, 0, none, false, false)$$
+$$\mathrm{initial}=\{\mathrm{carry} := 0, \mathrm{acc} := 0, \mathrm{previous} := \mathrm{none}, \mathrm{ordinarySeen} := \mathrm{false}, \mathrm{dropSeen} := \mathrm{false}\}$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.initial` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$initial=(0, 0, none, false, false)$$
 
 *Commentary.*
 
-Both real entries are zero. The previous increment is absent and both flags are false.
+Both real fields are zero. The previous increment is absent and both flags are false.
 
 **Definition 1.3 (Ordinary threshold crossing).**
 
@@ -66,7 +66,7 @@ Reset at a crossing, or at the first strict drop if an ordinary crossing occurre
 
 **Definition 1.6 (State after the billed call).**
 
-$$\forall (K a: \mathbb{R})(s: State), advance(K, s, a)=(choose(reset(K, s, a), 0, carry(s)+a), choose(reset(K, s, a), 0, acc(s)+(carry(s)+a)), some(a), ordinarySeen(s)\lor decide(crossing(K, s, a)), dropSeen(s)\lor decide(drop(s, a)))$$
+$$\forall (K a: \mathbb{R})(s: \mathrm{State}), \mathrm{advance}(K, s, a)= \{\mathrm{carry} := (\mathrm{if} \mathrm{reset}(K, s, a)=\mathrm{true} \mathrm{then} 0 \mathrm{else} s.\mathrm{carry}+a), \mathrm{acc} := (\mathrm{if} \mathrm{reset}(K, s, a)=\mathrm{true} \mathrm{then} 0 \mathrm{else} s.\mathrm{acc}+(s.\mathrm{carry}+a)), \mathrm{previous} := \mathrm{some}(a), \mathrm{ordinarySeen} := s.\mathrm{ordinarySeen} || \mathrm{decide}(\mathrm{crossing}(K, s, a)), \mathrm{dropSeen} := s.\mathrm{dropSeen} || \mathrm{decide}(\mathrm{drop}(s, a))\}$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.advance` (`✓ std3`).
 
@@ -74,11 +74,11 @@ $$\forall (K a: \mathbb{R})(s: State), advance(K, s, a)=(choose(reset(K, s, a), 
 
 *Commentary.*
 
-The function choose selects its second argument when its first argument is true, and otherwise its third. On a reset, clear the carry and accumulator. Otherwise add the new increment to the carry and add that rent to the accumulator. Store the increment and update each flag by disjunction with the corresponding test on this call. A simultaneous drop and crossing counts as an ordinary crossing.
+On a reset, clear the carry and accumulator. Otherwise add the new increment to the carry and add that rent to the accumulator. Store the increment and update each flag by disjunction with the corresponding test on this call. A simultaneous drop and crossing counts as an ordinary crossing.
 
 **Definition 1.7 (Comparator carry after the action).**
 
-$$\forall (o a: \mathbb{R})(r: Bool), nextCarry(o, a, r)=choose(r, 0, o+a)$$
+$$\forall (o a: \mathbb{R})(r: Bool), nextCarry(o, a, r)=(\mathrm{if} r=\mathrm{true} \mathrm{then} 0 \mathrm{else} o+a)$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.nextCarry` (`✓ std3`).
 
@@ -90,7 +90,7 @@ The carry is zero after a reset and is the incoming carry plus the visible incre
 
 **Definition 1.8 (Bill on one call).**
 
-$$\forall (K o a: \mathbb{R})(r: Bool), bill(K, o, a, r)=o+a+choose(r, K, 0)$$
+$$\forall (K o a: \mathbb{R})(r: Bool), bill(K, o, a, r)=o+a+(\mathrm{if} r=\mathrm{true} \mathrm{then} K \mathrm{else} 0)$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.bill` (`✓ std3`).
 
@@ -126,7 +126,7 @@ The empty list has cost zero. For each increment, add the bill for the rule's re
 
 **Definition 1.11 (Horizon-blind decision on a visible prefix).**
 
-$$\forall (K a: \mathbb{R})(xs: List(\mathbb{R})), prefixRule(K, [])=false\land prefixRule(K, append(xs, [a]))=reset(K, foldAdvance(K, initial, xs), a)$$
+$$\forall (K a: \mathbb{R})(xs: List(\mathbb{R})), prefixRule(K, [])=false\land prefixRule(K, xs ++ [a])=reset(K, \mathrm{xs}.\mathrm{foldl}(advance(K), \mathrm{initial}), a)$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.prefixRule` (`✓ std3`).
 
@@ -134,7 +134,7 @@ $$\forall (K a: \mathbb{R})(xs: List(\mathbb{R})), prefixRule(K, [])=false\land 
 
 *Commentary.*
 
-The empty prefix chooses no reset. The foldAdvance operation folds advance K over the list. For a nonempty prefix, replay every increment before its last entry from the initial state. Use the resulting state with the last entry to choose the reset.
+The empty prefix chooses no reset. For a nonempty prefix, replay every increment before its last entry from the initial state. Use the resulting state with the last entry to choose the reset.
 
 **Theorem 1.12 (The first call does not reset).**
 
@@ -186,7 +186,7 @@ Induct on the list. Each recursive bill uses the same decision and carry as the 
 
 **Theorem 1.16 (Each recorded decision uses exactly its visible prefix).**
 
-$$\forall (K a: \mathbb{R})(seen tail: List(\mathbb{R}))(i: \mathbb{N})(r: Bool), getOptional(scheduled(K, foldAdvance(K, initial, seen), tail), i)=some((a, r))\Rightarrow prefixRule(K, append(seen, take(tail, i+1)))=r$$
+$$\forall (K a: \mathbb{R})(seen tail: \mathrm{List}(\mathbb{R}))(i: \mathbb{N})(r: \mathrm{Bool}), \mathrm{let} \mathrm{trace} := \mathrm{scheduled}(K, \mathrm{seen}.\mathrm{foldl}(advance(K), \mathrm{initial}), \mathrm{tail}); (\exists (j: \mathrm{Fin}(\mathrm{trace}.\mathrm{length})), j.\mathrm{val}=i\land \mathrm{trace}.\mathrm{get}(j)=(a, r))\Rightarrow \mathrm{prefixRule}(K, \mathrm{seen} ++ \mathrm{tail}.\mathrm{take}(i+1))=r$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.scheduled_prefix` (`✓ std3`). ∎
 
@@ -194,7 +194,7 @@ $$\forall (K a: \mathbb{R})(seen tail: List(\mathbb{R}))(i: \mathbb{N})(r: Bool)
 
 *Commentary.*
 
-Induct on the unprocessed list. At the first index the decision is the one computed from the seen prefix and the new entry. For a later index, move the head to the seen prefix and advance the fold by that entry.
+The bounded index in the display expresses the successful optional lookup in Lean. Induct on the unprocessed list. At the first index the decision is the one computed from the seen prefix and the new entry. For a later index, move the head to the seen prefix and advance the fold by that entry.
 
 **Theorem 1.17 (Cycle accounting persists through a comparator action).**
 
@@ -206,11 +206,11 @@ $$\forall (K e A o q a: \mathbb{R})(r: Bool), (0\le K\land e\le A\land 0\le o\la
 
 *Commentary.*
 
-Let e be the rule carry, A its accumulated rent, o the comparator carry and q the comparator's billed cost in the unfinished cycle. If the comparator has already paid for the increments and a reset, its next bill covers the next increment as well. A comparator reset also establishes that alternative. Otherwise the comparator's carry and cost continue to dominate the rule's carried rent and accumulated rent.
+Let e be the rule carry, A its accumulated rent, o the comparator carry and q the comparator's billed cost in the unfinished cycle. If q is at least e + K, the next bill extends this cost lower bound to include the new increment. A comparator reset also establishes the updated lower bound. In the other alternative, the updated comparator carry and cost bound the rule's carry and accumulated rent, respectively.
 
 **Theorem 1.18 (Factor three against every comparator trace).**
 
-$$\forall (K: \mathbb{R})(steps: List(\mathbb{R}\times Bool))(first: Bool), (0<K\land (\forall (p: \mathbb{R}\times Bool), p\in steps\Rightarrow fst(p)\ge 0))\Rightarrow comparatorCost(K, 0, scheduled(K, initial, rates(steps)))\le 3\cdot (bill(K, 0, 0, first)+comparatorCost(K, 0, steps))$$
+$$\forall (K: \mathbb{R})(steps: List(\mathbb{R}\times Bool))(first: Bool), (0<K\land (\forall (p: \mathbb{R}\times Bool), p\in steps\Rightarrow 0\le p.1))\Rightarrow comparatorCost(K, 0, scheduled(K, initial, \mathrm{steps}.\mathrm{map}(\mathrm{Prod}.\mathrm{fst})))\le 3\cdot (bill(K, 0, 0, first)+comparatorCost(K, 0, steps))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy.factor_three` (`✓ std3`). ∎
 
@@ -218,7 +218,7 @@ $$\forall (K: \mathbb{R})(steps: List(\mathbb{R}\times Bool))(first: Bool), (0<K
 
 *Commentary.*
 
-The rates operation takes the first component of every step. At an ordinary crossing, the comparator has paid at least one reset price in that cycle. The comparison reserves one reset price after a crossing and spends it at the first later drop if that drop forces a reset. The invariant includes unfinished cycles, so it applies when a session ends after any bill, including when the comparator cost is zero.
+At an ordinary crossing, the comparator's total cost over the cycle is at least K. The comparison reserves one reset price after a crossing and spends it at the first later drop if that drop forces a reset. The invariant includes unfinished cycles, so it applies when a session ends after any bill, including when the comparator cost is zero.
 
 ## References
 

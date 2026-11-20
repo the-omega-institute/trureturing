@@ -6,7 +6,7 @@ One online rule with factor three and a two-run additive bound.
 
 **Definition 1.1 (At most two constant runs).**
 
-$$\forall (xs: List(\mathbb{R})), AtMostTwoRuns(xs)\Leftrightarrow \exists (a b: \mathbb{R})(m n: \mathbb{N}), xs=append(replicate(m, a), replicate(n, b))$$
+$$\forall (xs: List(\mathbb{R})), AtMostTwoRuns(xs)\Leftrightarrow \exists (a b: \mathbb{R})(m n: \mathbb{N}), xs=\mathrm{List}.\mathrm{replicate}(m, a) ++ \mathrm{List}.\mathrm{replicate}(n, b)$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.AtMostTwoRuns` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The increment list is the concatenation of two lists, each a replication of a re
 
 **Definition 1.2 (Cost on the whole session).**
 
-$$\forall (K: \mathbb{R})(xs: List(\mathbb{R}))(first: Bool)(rs: List(Bool)), sessionCost(K, xs, first, rs)=bill(K, 0, 0, first)+comparatorCost(K, 0, zip(xs, rs))$$
+$$\forall (K: \mathbb{R})(xs: List(\mathbb{R}))(first: Bool)(rs: List(Bool)), sessionCost(K, xs, first, rs)=bill(K, 0, 0, first)+comparatorCost(K, 0, xs.\mathrm{zip}(rs))$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.sessionCost` (`✓ std3`).
 
@@ -34,7 +34,7 @@ Add the first-call bill, with zero history and no new increment, to the cost of 
 
 **Definition 1.3 (Actions obtained from visible prefixes).**
 
-$$\forall (rule: List(\mathbb{R})\Rightarrow Bool)(xs: List(\mathbb{R})), actions(rule, xs)=ofFn(i: Fin(length(xs))\mapsto rule(take(xs, i+1)))$$
+$$\forall (rule: List(\mathbb{R})\Rightarrow Bool)(xs: List(\mathbb{R})), actions(rule, xs)=\mathrm{List}.\mathrm{ofFn}((i: \mathrm{Fin}(xs.\mathrm{length}))\mapsto rule(xs.\mathrm{take}(i.\mathrm{val}+1)))$$
 
 *Formalization.* `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.actions` (`✓ std3`).
 
@@ -48,7 +48,7 @@ For each zero-based index i of the increment list, evaluate the rule on its firs
 
 **Theorem 1.4 (One deterministic rule achieves both bounds).**
 
-$$\exists (c: \mathbb{R}), 1\le c\land (\forall (K: \mathbb{R}), 0<K\Rightarrow \exists (rule: List(\mathbb{R})\Rightarrow Bool), \forall (xs: List(\mathbb{R})), (\forall (a: \mathbb{R}), a\in xs\Rightarrow 0\le a)\Rightarrow \forall (first: Bool)(rs: List(Bool)), length(rs)=length(xs)\Rightarrow (online(K, rule, xs)\le c\cdot sessionCost(K, xs, first, rs)\land (AtMostTwoRuns(xs)\Rightarrow online(K, rule, xs)\le sessionCost(K, xs, first, rs)+2\cdot K)))$$
+$$\exists (c: \mathbb{R}), 1\le c\land (\forall (K: \mathbb{R}), 0<K\Rightarrow \exists (rule: List(\mathbb{R})\Rightarrow Bool), \forall (xs: List(\mathbb{R})), (\forall (a: \mathbb{R}), a\in xs\Rightarrow 0\le a)\Rightarrow \forall (first: Bool)(rs: List(Bool)), rs.\mathrm{length}=xs.\mathrm{length}\Rightarrow \mathrm{let} \mathrm{online} := \mathrm{sessionCost}(K, xs, rule([]), \mathrm{actions}(rule, xs)); \mathrm{let} \mathrm{offline} := \mathrm{sessionCost}(K, xs, first, rs); (\mathrm{online}\le c\cdot \mathrm{offline}\land (\mathrm{AtMostTwoRuns}(xs)\Rightarrow \mathrm{online}\le \mathrm{offline}+2\cdot K)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.schiavo_section5b_third_question` (`✓ std3`). ∎
 
@@ -58,9 +58,9 @@ $$\exists (c: \mathbb{R}), 1\le c\land (\forall (K: \mathbb{R}), 0<K\Rightarrow 
 
 *Commentary.*
 
-Schiavo asks on page 15, §5.B, “Can a rule lose at most 2K on two runs and also be c-competitive for some constant c?”
+In the third question of §5.B (arXiv:2611.06955v1, PDF page 15), Schiavo asks, “Can a rule lose at most 2K on two runs and also be c-competitive for some constant c?”
 
-Write online(K, rule, xs) for sessionCost(K, xs, rule([]), actions(rule, xs)). Take c = 3. For every positive real reset price K, choose the guarded prefix rule once. On every finite list of nonnegative real increments, and against every comparator schedule of the same horizon, its cost is at most three times the comparator cost. If the increment list has at most two runs, its cost is also at most the comparator cost plus 2K.
+Take c = 3. For every positive real reset price K, choose the guarded prefix rule once. On every finite list of nonnegative real increments, and against every comparator schedule of the same horizon, its cost is at most three times the comparator cost. If the increment list has at most two runs, its cost is also at most the comparator cost plus 2K.
 
 The list has length T−1. Call t observes the first t−1 entries, and every call, including the final call and each reset call, pays the full incoming history as rent. Both inequalities hold for the same deterministic rule. The arbitrary comparator includes any minimum-cost schedule.
 
