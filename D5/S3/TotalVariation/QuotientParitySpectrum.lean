@@ -26,7 +26,7 @@ open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 universe u v
 variable {A : Type u} {I : Type v} [AddCommGroup A] [Fintype A] [Fintype I]
 
-private theorem moment_from_inputs (two : ∀ a : A, a + a = 0)
+theorem moment_from_inputs (two : ∀ a : A, a + a = 0)
     (c : I → A) (s : A) (q : I → ℝ) (χ : AddChar A ℂ) :
     moment (law c s q) χ = sign χ s * ∏ i, if sign χ (c i) = -1 then q i else 1 := by
   classical
@@ -68,7 +68,7 @@ private theorem sign_phase_and_magnitude (two : ∀ a : A, a + a = 0)
     · simp [hs', hq, abs_of_neg hq]
     · simp [hs', not_lt.mpr hq, abs_of_nonneg hq]
 
-private theorem support_iff_trivial_on_fair_columns (two : ∀ a : A, a + a = 0)
+theorem support_iff_trivial_on_fair_columns (two : ∀ a : A, a + a = 0)
     (c : I → A) (s : A) (q : I → ℝ) (χ : AddChar A ℂ) :
     moment (law c s q) χ ≠ 0 ↔ ∀ i, q i = 0 → χ (c i) = 1 := by
   classical
@@ -97,13 +97,13 @@ private theorem support_iff_trivial_on_fair_columns (two : ∀ a : A, a + a = 0)
     · simp [hi]
 
 omit [Fintype A] in
-private theorem quotient_two (H : AddSubgroup A) (two : ∀ a : A, a + a = 0)
+theorem quotient_two (H : AddSubgroup A) (two : ∀ a : A, a + a = 0)
     (x : A ⧸ H) : x + x = 0 := by
   obtain ⟨a, rfl⟩ := QuotientAddGroup.mk'_surjective H x
   rw [← map_add, two, map_zero]
 
 omit [Fintype A] in
-private theorem trivial_character_descends (H : AddSubgroup A) (χ : AddChar A ℂ)
+theorem trivial_character_descends (H : AddSubgroup A) (χ : AddChar A ℂ)
     (hχ : ∀ a ∈ H, χ a = 1) :
     ∃ φ : AddChar (A ⧸ H) ℂ, φ.compAddMonoidHom (QuotientAddGroup.mk' H) = χ := by
   let hom : A →+ Additive ℂ := AddChar.toAddMonoidHomEquiv χ
@@ -117,7 +117,7 @@ private theorem trivial_character_descends (H : AddSubgroup A) (χ : AddChar A �
   rfl
 
 omit [Fintype A] in
-private theorem trivial_on_closure (χ : AddChar A ℂ) (S : Set A)
+theorem trivial_on_closure (χ : AddChar A ℂ) (S : Set A)
     (hs : ∀ a ∈ S, χ a = 1) :
     ∀ a ∈ AddSubgroup.closure S, χ a = 1 := by
   intro a ha
@@ -127,7 +127,7 @@ private theorem trivial_on_closure (χ : AddChar A ℂ) (S : Set A)
   | add a b ha hb h₁ h₂ => simp [AddChar.map_add_eq_mul, h₁, h₂]
   | neg a ha h => simp [AddChar.map_neg_eq_inv, h]
 
-private theorem moment_pushforward (two : ∀ a : A, a + a = 0)
+theorem moment_pushforward (two : ∀ a : A, a + a = 0)
     (H : AddSubgroup A) [Fintype (A ⧸ H)] (c : I → A) (s : A) (q : I → ℝ)
     (φ : AddChar (A ⧸ H) ℂ) :
     moment (law c s q) (φ.compAddMonoidHom (QuotientAddGroup.mk' H)) =
@@ -209,11 +209,11 @@ private theorem weighted_shiftedQuotient (H : AddSubgroup A) [Fintype (A ⧸ H)]
         simp [πs, h]
     _ = _ := Finset.sum_fiberwise Finset.univ πs _
 
-private theorem sum_shiftedQuotient (H : AddSubgroup A) [Fintype (A ⧸ H)]
+theorem sum_shiftedQuotient (H : AddSubgroup A) [Fintype (A ⧸ H)]
     (s : A) (μ : A → ℝ) : ∑ y, shiftedQuotient H s μ y = ∑ a, μ a := by
   simpa only [mul_one] using weighted_shiftedQuotient H s μ (fun _ => 1)
 
-private theorem moment_shiftedQuotient (two : ∀ a : A, a + a = 0)
+theorem moment_shiftedQuotient (two : ∀ a : A, a + a = 0)
     (H : AddSubgroup A) [Fintype (A ⧸ H)] (s : A) (μ : A → ℝ)
     (φ : AddChar (A ⧸ H) ℂ) :
     let χ := φ.compAddMonoidHom (QuotientAddGroup.mk' H)
@@ -235,7 +235,7 @@ def quotientCriterion (H : AddSubgroup A) (s : A) (μ : A → ℝ) : Prop := by
   exact (∀ χ : AddChar A ℂ, (∃ a ∈ H, χ a ≠ 1) → moment μ χ = 0) ∧
     (∀ φ, 0 < moment (shiftedQuotient H s μ) φ) ∧ orderedMomentProducts (shiftedQuotient H s μ)
 
-private theorem sign_sq_eq_one (two : ∀ a : A, a + a = 0) (χ : AddChar A ℂ) (a : A) :
+theorem sign_sq_eq_one (two : ∀ a : A, a + a = 0) (χ : AddChar A ℂ) (a : A) :
     sign χ a * sign χ a = 1 := by
   rcases value_cases two χ a with h | h <;> norm_num [sign, h]
 

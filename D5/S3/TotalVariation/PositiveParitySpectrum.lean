@@ -179,7 +179,7 @@ private theorem affinity_iff_positive_producttest (two : ∀ x : A, x + x = 0)
   simp_rw [producttest_iff_logtest two m hm]
 
 omit [AddCommGroup A] in
-private theorem singleton_group_bias (q : A → ℝ) (a : A) : groupBias id q a = q a := by
+theorem singleton_group_bias (q : A → ℝ) (a : A) : groupBias id q a = q a := by
   classical
   unfold groupBias
   rw [Finset.prod_filter, Finset.prod_eq_single a]
@@ -188,7 +188,7 @@ private theorem singleton_group_bias (q : A → ℝ) (a : A) : groupBias id q a 
     simp [h]
   · simp
 
-private theorem exists_negative_sign (two : ∀ x : A, x + x = 0) (a : A) (ha : a ≠ 0) :
+theorem exists_negative_sign (two : ∀ x : A, x + x = 0) (a : A) (ha : a ≠ 0) :
     ∃ ψ : AddChar A ℂ, sign ψ a = -1 := by
   classical
   by_contra! hh
