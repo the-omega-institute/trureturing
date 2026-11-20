@@ -126,6 +126,8 @@ theorem betaRelTotal_cycleDescent_skew_adjoint (u v w : relativeCycles)
 
 -- Elaborating homogeneous representatives compares the native cycle and quotient types.
 set_option maxHeartbeats 2000000 in
+-- The cycle lifts match their native quotient classes via `mkQ`, while the ambient form
+-- evaluates the same representatives through their coercions to states.
 /-- Ambient adjunction on degree-one cycle representatives makes their induced
 physical Lie action skew-adjoint for the physical BPZ form. -/
 theorem physicalBPZ_bracket_skew_adjoint
