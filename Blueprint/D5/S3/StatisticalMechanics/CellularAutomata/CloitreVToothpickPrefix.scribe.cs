@@ -14,6 +14,12 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
         "All prefix corrections of the honeycomb V-toothpick kernel vanish.",
         H("Vanishing prefix corrections in the V-toothpick kernel"),
         Blocks(
+            Definition("period-index", "periodIndex", "Euclidean period index", PeriodIndex(),
+                "This is i(j,p,r) in the theorem below. The offset and remainder are "
+                + "computed in the integers, and Int.toNat converts the entire sum."),
+            Definition("column-period", "columnPeriod", "Column period", ColumnPeriod(),
+                "This is p(j) in the theorem below. For j ≥ 1, it is twice the least "
+                + "power of two strictly greater than j."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("The full prefix equality"), StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(Source),
@@ -42,6 +48,37 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
                         + "the negative offset in the Euclidean remainder of equation (43) "
                         + "gives i(j,p(j),c mod p(j))=c+p(j)."))),
                 DescribeRole.Theorem))));
+
+    private static DocumentBlock Definition(string id, string name, string title, Formula formula,
+        string description) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(description))), DescribeRole.Definition);
+
+    private static Formula PeriodIndex()
+    {
+        var j = DefinitionDsl.Id("j");
+        var p = DefinitionDsl.Id("p");
+        var r = DefinitionDsl.Id("r");
+        var one = Num(1);
+        var offset = Add(Subtract(IntCast(r), IntCast(j)), one);
+        var remainder = new Formula.Modulo(Parenthesized(offset), IntCast(p));
+        var index = Add(Subtract(IntCast(j), one), Parenthesized(remainder));
+        var toNat = Seq(Operatorname, Grp(FormulaDsl.Id("Int"), Dot, FormulaDsl.Id("toNat")));
+        return All("j", All("p", All("r", Equal(Call("periodIndex", j, p, r),
+            new Formula.Apply(toNat, [index])))));
+    }
+
+    private static Formula ColumnPeriod()
+    {
+        var j = DefinitionDsl.Id("j");
+        var log = Seq(Operatorname, Grp(FormulaDsl.Id("Nat"), Dot, FormulaDsl.Id("log2")));
+        return All("j", Equal(Call("columnPeriod", j),
+            new Formula.Power(Num(2), Add(new Formula.Apply(log, [j]), Num(2)))));
+    }
+
+    private static Formula IntCast(Formula value) =>
+        Parenthesized(Seq(value, Colon, Sp, Mathbb, Grp(FormulaDsl.Id("Z"))));
 
     private static Formula Statement()
     {
