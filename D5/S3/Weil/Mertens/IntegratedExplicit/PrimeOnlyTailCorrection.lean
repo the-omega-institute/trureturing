@@ -175,4 +175,164 @@ theorem prime_power_window_correction :
         0 ≤ W ∧ W ≤ 2 * C * Real.log (b / a) :=
   ⟨scaled_limit, fun _ hC => ⟨fun _ => pointwise_bound hC, fun _ _ => window_bound hC⟩⟩
 
+private lemma prime_kernel_interval {u v : ℝ} (hu : 1 ≤ u) (huv : u ≤ v) :
+    IntervalIntegrable (fun t : ℝ => (Chebyshev.theta t - t) / t ^ 2) volume u v :=
+  (intervalIntegrable_iff_integrableOn_Ioc_of_le huv).2
+    (prime_integrable.mono_set fun _ ht => hu.trans_lt ht.1)
+
+private lemma frozen_count_kernel_integral (c : ℝ) {u v : ℝ} (hu : 0 < u)
+    (huv : u ≤ v) :
+    ∫ t in u..v, (t - c) / t ^ 2 =
+      Real.log (v / u) + c * (v⁻¹ - u⁻¹) := by
+  have htpos (t : ℝ) (ht : t ∈ uIcc u v) : 0 < t :=
+    hu.trans_le ((uIcc_of_le huv ▸ ht).1)
+  have hi : IntervalIntegrable (fun t : ℝ => (t - c) / t ^ 2) volume u v :=
+    ((continuous_id.sub continuous_const).continuousOn.div
+      (continuous_id.pow 2).continuousOn (fun t ht => (pow_pos (htpos t ht) 2).ne')).intervalIntegrable
+  calc
+    _ = (Real.log v + c * v⁻¹) - (Real.log u + c * u⁻¹) := by
+      apply intervalIntegral.integral_eq_sub_of_hasDerivAt _ hi
+      intro t ht
+      have ht0 := (htpos t ht).ne'
+      convert (Real.hasDerivAt_log ht0).add ((hasDerivAt_inv ht0).const_mul c) using 1
+      field_simp
+      ring
+    _ = _ := by rw [Real.log_div (hu.trans_le huv).ne' hu.ne']; ring
+
+private lemma primeTail_reciprocal_tangent {x z : ℝ} (hx : 1 ≤ x) (hz : 1 ≤ z) :
+    primeTail z - primeTail x ≤
+      Real.log (z / x) + Chebyshev.theta x * (z⁻¹ - x⁻¹) := by
+  have hx0 := zero_lt_one.trans_le hx
+  have hz0 := zero_lt_one.trans_le hz
+  obtain h | h := le_total x z
+  · have hi := (prime_kernel_interval hx h).neg
+    have hc : IntervalIntegrable (fun t : ℝ => (t - Chebyshev.theta x) / t ^ 2) volume x z :=
+      ((continuous_id.sub continuous_const).continuousOn.div
+        (continuous_id.pow 2).continuousOn
+        (fun t ht => (pow_pos (hx0.trans_le ((uIcc_of_le h ▸ ht).1)) 2).ne')).intervalIntegrable
+    calc
+      primeTail z - primeTail x = ∫ t in x..z, -((Chebyshev.theta t - t) / t ^ 2) := by
+        rw [intervalIntegral.integral_neg]
+        rw [← intervalIntegral.integral_Ioi_sub_Ioi
+          (prime_integrable.mono_set (Ioi_subset_Ioi hx)) h, neg_sub]
+        rfl
+      _ ≤ ∫ t in x..z, (t - Chebyshev.theta x) / t ^ 2 := by
+        apply intervalIntegral.integral_mono_on h hi hc
+        intro t ht
+        change -((Chebyshev.theta t - t) / t ^ 2) ≤ _
+        rw [← neg_div]
+        exact div_le_div_of_nonneg_right (by linarith [Chebyshev.theta_mono ht.1]) (sq_nonneg t)
+      _ = _ := frozen_count_kernel_integral _ hx0 h
+  · have hi := prime_kernel_interval hz h
+    have hc : IntervalIntegrable (fun t : ℝ => (t - Chebyshev.theta x) / t ^ 2) volume z x :=
+      ((continuous_id.sub continuous_const).continuousOn.div
+        (continuous_id.pow 2).continuousOn
+        (fun t ht => (pow_pos (hz0.trans_le ((uIcc_of_le h ▸ ht).1)) 2).ne')).intervalIntegrable
+    have hle := intervalIntegral.integral_mono_on h hc hi.neg (fun t ht => by
+      change _ ≤ -((Chebyshev.theta t - t) / t ^ 2)
+      rw [← neg_div]
+      exact div_le_div_of_nonneg_right (by linarith [Chebyshev.theta_mono ht.2]) (sq_nonneg t))
+    change (∫ t in z..x, (t - Chebyshev.theta x) / t ^ 2) ≤
+      ∫ t in z..x, -((Chebyshev.theta t - t) / t ^ 2) at hle
+    rw [intervalIntegral.integral_neg, frozen_count_kernel_integral _ hz0 h] at hle
+    have htail : primeTail z - primeTail x = ∫ t in z..x, (Chebyshev.theta t - t) / t ^ 2 :=
+      intervalIntegral.integral_Ioi_sub_Ioi (prime_integrable.mono_set (Ioi_subset_Ioi hz)) h
+    rw [Real.log_div hx0.ne' hz0.ne'] at hle
+    rw [Real.log_div hz0.ne' hx0.ne', htail]
+    linarith
+
+private lemma primeTail_persists {x z r : ℝ} (hx : 1 ≤ x) (hz : 1 ≤ z)
+    (hr : 0 < r) (hr' : r ≤ 1 / 2) (hlo : (1 - r) * x ≤ z) (hhi : z ≤ (1 + r) * x)
+    (hside : (Chebyshev.theta x - x) * (z⁻¹ - x⁻¹) ≤ 0) :
+    primeTail z ≤ primeTail x + 2 * r ^ 2 := by
+  have hx0 := zero_lt_one.trans_le hx
+  have hz0 := zero_lt_one.trans_le hz
+  have habs : |z - x| ≤ r * x := abs_le.mpr ⟨by linarith, by linarith⟩
+  have hsquare : (z - x) ^ 2 ≤ (r * x) ^ 2 := sq_le_sq' (abs_le.mp habs).1 (abs_le.mp habs).2
+  have hhalf : x / 2 ≤ z := by nlinarith
+  have hquad : (z - x) ^ 2 / (z * x) ≤ 2 * r ^ 2 := by
+    apply (div_le_iff₀ (mul_pos hz0 hx0)).2
+    exact hsquare.trans (by
+      have h := mul_le_mul_of_nonneg_right hhalf (show 0 ≤ 2 * r ^ 2 * x by positivity)
+      linarith only [h, show (r * x) ^ 2 = x / 2 * (2 * r ^ 2 * x) by ring,
+        show 2 * r ^ 2 * (z * x) = z * (2 * r ^ 2 * x) by ring])
+  have hlog := Real.log_le_sub_one_of_pos (div_pos hz0 hx0)
+  have htan := primeTail_reciprocal_tangent hx hz
+  have hid : z / x - 1 + x * (z⁻¹ - x⁻¹) = (z - x) ^ 2 / (z * x) := by
+    field_simp
+    ring
+  linarith
+
+/-- A negative value of the prime-only tail forces mass in any window with room on both sides. -/
+theorem prime_tail_negative_window_lower {a b x r : ℝ}
+    (ha : 1 ≤ a) (hlo : a ≤ (1 - r) * x) (hhi : (1 + r) * x ≤ b)
+    (hr : 0 < r) (hr' : r ≤ 1 / 2) (hdepth : primeTail x ≤ -4 * r ^ 2) :
+    r ^ 3 * Real.sqrt x ≤ ∫ z in a..b, max (-primeTail z) 0 / Real.sqrt z := by
+  have hx0 : 0 < x := by
+    by_contra! h
+    have := mul_nonpos_of_nonneg_of_nonpos (show 0 ≤ 1 - r by linarith) h
+    linarith
+  have hleft : (1 - r) * x ≤ x := by nlinarith
+  have hright : x ≤ (1 + r) * x := by nlinarith
+  have hx : 1 ≤ x := ha.trans (hlo.trans hleft)
+  have hab := hlo.trans (hleft.trans (hright.trans hhi))
+  let f : ℝ → ℝ := fun z => max (-primeTail z) 0 / Real.sqrt z
+  have hcont : ContinuousOn f (uIcc a b) := by
+    apply ((prime_integrable.continuousOn_Ici_primitive_Ioi.mono
+      (fun z hz => ha.trans ((uIcc_of_le hab ▸ hz).1))).neg.sup continuousOn_const).div
+      Real.continuous_sqrt.continuousOn
+    intro z hz
+    exact (Real.sqrt_pos.mpr (zero_lt_one.trans_le (ha.trans ((uIcc_of_le hab ▸ hz).1)))).ne'
+  have hf : IntervalIntegrable f volume a b := hcont.intervalIntegrable
+  have hnonneg : ∀ z, 0 ≤ f z := fun _ =>
+    div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _)
+  have hlower {u v : ℝ} (hau : a ≤ u) (huv : u ≤ v) (hvb : v ≤ b)
+      (hwidth : v - u = r * x)
+      (hpersist : ∀ z ∈ Icc u v, z ≤ (1 + r) * x ∧ primeTail z ≤ -2 * r ^ 2) :
+      r ^ 3 * Real.sqrt x ≤ ∫ z in a..b, f z := by
+    have hsub : uIcc u v ⊆ uIcc a b := by
+      rw [uIcc_of_le huv, uIcc_of_le hab]
+      exact Icc_subset_Icc hau hvb
+    have hsq := Real.sq_sqrt hx0.le
+    have hs := Real.sqrt_pos.mpr hx0
+    calc
+      r ^ 3 * Real.sqrt x = (v - u) * (r ^ 2 / Real.sqrt x) := by
+        rw [hwidth]
+        field_simp
+        exact hsq
+      _ = ∫ _ in u..v, r ^ 2 / Real.sqrt x := by rw [intervalIntegral.integral_const, smul_eq_mul]
+      _ ≤ ∫ z in u..v, f z := by
+        apply intervalIntegral.integral_mono_on huv intervalIntegrable_const
+          (hcont.mono hsub).intervalIntegrable
+        intro z hz
+        obtain ⟨hzhi, hzd⟩ := hpersist z hz
+        have hz0 := zero_lt_one.trans_le (ha.trans (hau.trans hz.1))
+        have hzs : Real.sqrt z ≤ 2 * Real.sqrt x := by
+          rw [← Real.sqrt_sq (show 0 ≤ 2 * Real.sqrt x by positivity)]
+          apply Real.sqrt_le_sqrt
+          nlinarith
+        calc
+          r ^ 2 / Real.sqrt x = (2 * r ^ 2) / (2 * Real.sqrt x) := by ring
+          _ ≤ (2 * r ^ 2) / Real.sqrt z :=
+            div_le_div_of_nonneg_left (by positivity) (Real.sqrt_pos.mpr hz0) hzs
+          _ ≤ f z := div_le_div_of_nonneg_right (by linarith [le_max_left (-primeTail z) 0])
+            (Real.sqrt_nonneg z)
+      _ ≤ ∫ z in a..b, f z := intervalIntegral.integral_mono_interval hau huv hvb
+        (Eventually.of_forall hnonneg) hf
+  rcases le_total (Chebyshev.theta x) x with h | h
+  · apply hlower hlo hleft (hright.trans hhi) (by ring)
+    intro z hz
+    refine ⟨hz.2.trans hright, ?_⟩
+    have hz1 := ha.trans (hlo.trans hz.1)
+    have hsign := mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr h)
+      (sub_nonneg.mpr (inv_anti₀ (zero_lt_one.trans_le hz1) hz.2))
+    linarith [primeTail_persists hx hz1 hr hr' hz.1 (hz.2.trans hright) hsign]
+  · apply hlower (hlo.trans hleft) hright hhi (by ring)
+    intro z hz
+    refine ⟨hz.2, ?_⟩
+    have hz1 := hx.trans hz.1
+    have hsign := mul_nonpos_of_nonneg_of_nonpos (sub_nonneg.mpr h)
+      (sub_nonpos.mpr (inv_anti₀ hx0 hz.1))
+    linarith [primeTail_persists hx hz1 hr hr' (hleft.trans hz.1) hz.2 hsign]
+
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
