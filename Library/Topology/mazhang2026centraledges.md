@@ -5,9 +5,10 @@ year: 2026
 title: "Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)"
 doi: "10.5281/zenodo.24369118"
 url: "https://doi.org/10.5281/zenodo.24369118"
-claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges."
+claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges; Theorem 4: three-central n-point ultrametrics have at least 2n-4+⌈n/2⌉ central edges, sharply."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
+  - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
   - D5/S3/Combinatorics/Geometry/ThreeCentralMinimum
   - D5/S3/Combinatorics/Geometry/CompleteCentralParity
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
@@ -38,6 +39,12 @@ attaining space takes two disjoint covering pair classes (even- and odd-indexed 
 with the chord {0,2} for odd n) at distinct class lengths a_i in [1,2) and all other distances
 distinct in [1,2), following the narrow-band realization of O. Dovgoshey and O. Rovenska
 (Theorem 3.8, formula (19)).
+
+Theorem 4 (Section 3): for n >= 4 the least number of central edges of a three-central
+n-point ultrametric is 2n-4+⌈n/2⌉, with equality exactly when the diametrical graph is complete
+bipartite with parts of sizes 2 and n-2 and the other positive central distance has ⌈n/2⌉ edges.
+The diameter classes are fully joined at the diameter, and merging classes reduces to two parts
+with p(n-p) - 2(n-2) = (p-2)(n-p-2) >= 0; a nested pair/triple ultrametric attains the bound.
 
 Theorem 5 (Section 4): for n >= 1 a metric space of order n with complete n-central graph
 exists if and only if n = 1 or n is even. The source shows that each positive central distance
