@@ -20,3 +20,4 @@ Balance one retained pair while fixing the other endpoint probabilities. Assume 
 
 - Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterPurityDropFirstOrder.orderedMarginal_purity_drop_first_order`
 - Dependency: [D5/S3/Quantum/Fermionic/OrderedSlaterPurityDropEquality](OrderedSlaterPurityDropEquality.md)
+- Dependency: [D5/S3/Quantum/Subentropy/KernelBounds](../Subentropy/KernelBounds.md)
