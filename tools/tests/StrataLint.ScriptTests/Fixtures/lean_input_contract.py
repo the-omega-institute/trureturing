@@ -36,11 +36,11 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
             self.assertEqual(2, result.returncode, result.stdout + result.stderr)
             self.assertEqual("", result.stdout)
 
-    def test_actions_snapshots_share_partition_and_pr_writes_stay_isolated(self):
+    def test_actions_snapshots_share_partition_and_only_protected_pushes_write(self):
         def keys(run, attempt, event, ref, success="true"):
             environment = {"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
                            "GH_TOKEN": "",
-                           "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref,
+                           "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref, "GITHUB_REF_PROTECTED": "true",
                            "GITHUB_SHA": "a" * 40, "CANDIDATE_SHA": "a" * 40,
                            "STRATALINT_CACHE_WRITES": "true",
                            "STRATALINT_CHECK_SUCCEEDED": success}
@@ -72,7 +72,7 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
         self.assertEqual(f"elan-pinned-{system}-{arch}-{pinned}", first["elan_key"])
         self.assertFalse(any(key.startswith("elan_restore") for key in first))
         self.assertNotEqual(first["elan_key"], second["elan_key"])
-        self.assertTrue(second["save_allowed"])
+        self.assertFalse(second["save_allowed"])
         self.assertFalse(keys("14", "1", "push", "refs/heads/dev", "false")["save_allowed"])
         self.assertFalse(keys("16", "1", "pull_request", "refs/pull/42/head")["save_allowed"])
         self.assertFalse(keys("17", "1", "pull_request", "refs/pull/0/merge")["save_allowed"])
