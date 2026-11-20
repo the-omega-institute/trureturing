@@ -31,13 +31,13 @@ theorem value_cases (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
   apply mul_self_eq_one_iff.mp
   rw [← AddChar.map_add_eq_mul, two, AddChar.map_zero_eq_one]
 
-private theorem sign_add (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x y : A) :
+theorem sign_add (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x y : A) :
     sign ψ (x + y) = sign ψ x * sign ψ y := by
   unfold sign
   rw [AddChar.map_add_eq_mul]
   rcases value_cases two ψ x with h | h <;> simp [h]
 
-private theorem sign_sum (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ)
+theorem sign_sum (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ)
     (s : Finset I) (x : I → A) :
     sign ψ (∑ i ∈ s, x i) = ∏ i ∈ s, sign ψ (x i) := by
   classical
