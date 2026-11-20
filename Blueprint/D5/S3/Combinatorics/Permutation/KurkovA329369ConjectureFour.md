@@ -34,6 +34,10 @@ $$\forall m, k, w \in \mathbb{N}, 2^{m} \cdot (2 \cdot k+1) < 2^{w} \implies (\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.conjecture4` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a329369-conjecture-four` (proved) by `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.conjecture4`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a329369-conjecture-four","declaration_gid":"D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.conjecture4","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* OEIS Foundation Inc.; Mikhail Kurkov (2024). *OEIS A329369 sixth conjectured sum over the A373183 rows*. URL: <https://oeis.org/A329369>.

@@ -29,18 +29,19 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
         H("OEIS A329369 Conjecture 4"),
         Blocks(
             Node("binary-excedances", "binaryExcedances", "The prescribed excedance set",
-                ExcedanceFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Excedances),
+                ExcedanceFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Excedances), null,
                 "The width w counts binary positions. There are w+1 permutation positions, "
                 + "numbered from zero. For j below w, bit w−1−j fixes whether j is a strict "
                 + "excedance. In the one-based OEIS wording, M=w+1 and j+1=M−i, "
                 + "so this is bit i−1. The final position cannot be a strict excedance."),
             Node("padded-count", "paddedCount", "The number of actual permutations",
-                CountFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Excedances),
+                CountFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Excedances), null,
                 "The count is the finite cardinality of the permutations whose complete strict "
                 + "excedance set is the prescribed set. The width is admissible when n<2^w."),
             Node("conjecture-four", "conjecture4", "The signed factorial-power identity",
                 IdentityFormula(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Excedances, Coefficients, ExcedancePaper),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a329369-conjecture-four"), ResolutionKind.Proved),
                 "Here wt is the binary popcount and T is the literal rational array A358612, "
                 + "revision 52. Equality is over the rationals and the sign exponent is an integer. "
                 + "The source uses exponent wt(k)−i in A329369 revision 239 and adds two in A358612. "
@@ -64,10 +65,11 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
                 + "iteration covers m=0, and the initial row gives the two terms at k=0."))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, params string[] paragraphs) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution,
+        params string[] paragraphs) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
         StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(paragraphs.Select(p => Paragraph(Text(p))).ToArray()), role);
+        Blocks(paragraphs.Select(p => Paragraph(Text(p))).ToArray()), role, resolution);
 
     private static Formula ExcedanceFormula()
     {
