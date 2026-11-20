@@ -264,7 +264,6 @@ jobs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
       STRATALINT_ACCEPT_COLD_BUILD: '1'
-      LEAN_NUM_THREADS: '1'
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
       SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
@@ -395,6 +394,7 @@ jobs:
         name: Build the complete push Lean report
         if: ${{ !cancelled() && github.event_name == 'push' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
         env:
+          LEAN_NUM_THREADS: '1'
           GH_TOKEN: ${{ github.token }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report

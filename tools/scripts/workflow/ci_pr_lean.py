@@ -64,7 +64,7 @@ def check(paths):
         for targets, selected_paths in report_batches(scope):
             report = directory / "scoped-lean-report.json"
             subprocess.run(["make", "lean-report-scoped", "LEAN_TARGETS=" + " ".join(targets)],
-                           env=dict(environment, LEAN_REPORT=str(report)), check=True)
+                           env=dict(environment, LEAN_REPORT=str(report), LEAN_NUM_THREADS="1"), check=True)
             roots = directory / "roots"
             write_paths(roots, [name.replace(".", "/") + ".lean" for name in targets])
             write_paths(manifest, selected_paths)
