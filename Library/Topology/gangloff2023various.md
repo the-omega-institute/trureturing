@@ -13,6 +13,7 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
   - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
   - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
+  - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
   - D5/S3/Topology/CoveringDimension/GluedCircle
 license: citation-only
 triage: anchor
@@ -113,6 +114,22 @@ relevant locators are §2, pp. 202–203 and Theorem (4.3), pp. 207–208. The
 explicit bouquet traversal above specifies the exact order and proves
 topological exactness.
 [Kato 1991](https://doi.org/10.4064/fm-137-3-201-210)
+
+## Endpoint obstruction under topological exactness
+
+An embedded closed interval whose image away from one endpoint is open
+in the carrier obstructs finite positive expansivity of continuous exact
+selfmaps on compact metric spaces. When the fibers are finite, exactness
+sends an interior point of each open subarc to the free endpoint, and
+both nearby sides cover a common smaller arc. Controlling the finite
+prefix before each such fold produces arbitrarily large, eventually
+coalescing families at each strict forward Bowen scale. An infinite
+fiber supplies such families inside one small ball. This applies to
+any finite graph with a leaf.
+The argument uses the coalescing-witness mechanism of Remark 3.4 and
+Lemma 3.7. Question 3.2 asks about general continuous selfmaps and does
+not impose topological exactness.
+[Pendant arc obstruction](../../Blueprint/D5/S1/Dynamics/Shadowing/ExactPendantObstruction.md)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
