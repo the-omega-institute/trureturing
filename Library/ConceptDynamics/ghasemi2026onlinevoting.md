@@ -36,8 +36,4 @@ depend on voter and alternative labels and all observed history.
 The uniform extension includes the four-option, twelve-voter case, so a
 counterexample for every rule on one order in that case excludes the uniform
 guarantee. A rule may be specialized to that horizon, electorate size and order.
-The preregistered pointwise strengthening concerns every fixed horizon at least
-four. It is part of the same problem and supplies a lower bound, without
-settling the exact higher-horizon distortion or strict increases between
-successive higher horizons.
 [Problem and certificate](https://github.com/the-omega-institute/trureturing/issues/32348)
