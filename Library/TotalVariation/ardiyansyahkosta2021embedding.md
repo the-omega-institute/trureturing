@@ -13,7 +13,9 @@ triage: anchor
 
 # The model-specific Markov embedding problem for symmetric group-based models
 
-See Theorem 4.1 for the product inequalities and §5.1 for the eight-element binary group. [Journal article](https://doi.org/10.1007/s00285-021-01656-5)
+## Verified locator
+
+Theorem 4.1 gives the product inequalities. Section 5.1 lists them for the eight-element binary group. [Journal article](https://doi.org/10.1007/s00285-021-01656-5)
 
 On an elementary abelian two-group, the translation (T_u) by a nonzero element satisfies (T_u^2=I). A nonnegative rate (r_u) gives
 (exp(r_u(T_u-I))=(1-t_u)I+t_uT_u), where (t_u=(1-exp(-2r_u))/2).

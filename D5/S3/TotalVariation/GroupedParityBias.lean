@@ -88,16 +88,16 @@ private noncomputable def bitMass (q : ℝ) (x : Bool) : ℝ :=
   if x then (1 - q) / 2 else (1 + q) / 2
 
 open Classical in
-private noncomputable def law (column : I → A) (offset : A) (q : I → ℝ) : A → ℝ :=
+noncomputable def law (column : I → A) (offset : A) (q : I → ℝ) : A → ℝ :=
   channelOutput (labelKernel (fun x : I → Bool => offset + ∑ i, if x i then column i else 0))
     (fun x => ∏ i, bitMass (q i) (x i))
 
 open Classical in
-private noncomputable def groupBias (column : I → A) (q : I → ℝ) (c : A) : ℝ :=
+noncomputable def groupBias (column : I → A) (q : I → ℝ) (c : A) : ℝ :=
   ∏ i with column i = c, q i
 
 open Classical in
-private theorem moment_factor (two : ∀ x : A, x + x = 0)
+theorem moment_factor (two : ∀ x : A, x + x = 0)
     (column : I → A) (offset : A) (q : I → ℝ) (ψ : AddChar A ℂ) :
     moment (law column offset q) ψ =
       sign ψ offset * ∏ c with sign ψ c = -1, groupBias column q c := by
@@ -150,7 +150,7 @@ private theorem moment_factor (two : ∀ x : A, x + x = 0)
     simp [(Finset.mem_filter.mp hi).2, hc]
 
 open Classical in
-private theorem loginvert (two : ∀ x : A, x + x = 0)
+theorem loginvert (two : ∀ x : A, x + x = 0)
     (column : I → A) (offset : A) (q : I → ℝ) (hq : ∀ i, 0 < q i)
     (a : A) (ha : a ≠ 0) :
     Real.log (groupBias column q a) =
