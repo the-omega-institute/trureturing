@@ -16,6 +16,15 @@ triage: anchor
 
 # Deterministic metric distortion beyond three alternatives
 
+## Verified locator
+
+The versioned source is [arXiv:2611.25709v1](https://arxiv.org/abs/2611.25709v1).
+The DOI is [10.48550/arXiv.2611.25709](https://doi.org/10.48550/arXiv.2611.25709).
+Section 3 specifies the online and metric models. Section 6, second question
+on p. 24, asks about extending the deterministic metric guarantee.
+
+## Question and model
+
 Section 6, second question, immediately after discussing the tight three-alternative
 bound of √13 over all electorate sizes, asks:
 
