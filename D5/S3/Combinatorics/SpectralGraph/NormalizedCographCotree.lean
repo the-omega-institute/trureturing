@@ -40,7 +40,8 @@ theorem not_connected_compl_of_not_induced_pathFour {V : Type} [Finite V] [Nontr
     {G : SimpleGraph V} (hG : G.Connected) (hP : ¬(pathGraph 4).IsIndContained G) :
     ¬Gᶜ.Connected := by
   intro hc
-  exact ((isP4Free_iff_not_pathGraph_four_isIndContained.mpr hP).not_preconnected_or_compl.resolve_left
+  have hp := isP4Free_iff_not_pathGraph_four_isIndContained.mpr hP
+  exact (hp.not_preconnected_or_compl.resolve_left
     (not_not_intro hG.preconnected)) hc.preconnected
 
 private theorem components_nontrivial {V : Type} {H : SimpleGraph V}
@@ -52,7 +53,8 @@ private theorem components_nontrivial {V : Type} {H : SimpleGraph V}
     fun he => huv (ConnectedComponent.exact he)⟩⟩
 
 private theorem card_component_lt {V : Type} [Finite V] {H : SimpleGraph V}
-    [Nontrivial H.ConnectedComponent] (C : H.ConnectedComponent) : Nat.card C.supp < Nat.card V := by
+    [Nontrivial H.ConnectedComponent] (C : H.ConnectedComponent) :
+    Nat.card C.supp < Nat.card V := by
   classical
   let := Fintype.ofFinite V
   let := Fintype.ofFinite C.supp
@@ -84,11 +86,12 @@ private theorem exists_cotree_of_card_le (n : ℕ) :
     intro V _ _ G hcard hp
     by_cases hs : Subsingleton V
     · obtain ⟨v⟩ := ‹Nonempty V›
-      simpa only [rootKind, if_pos hs] using
+      simpa only [rootKind, ite_eq_left hs] using
         (show Nonempty (Cotree G none) from ⟨.leaf v (fun u => hs.elim u v)⟩)
     · let : Nontrivial V := not_subsingleton_iff_nontrivial.mp hs
       have build (join : Bool) (hd : ¬(cutGraph G join).Preconnected)
-          (ha : ∀ C : (cutGraph G join).ConnectedComponent, rootKind (G.induce C.supp) ≠ some join) :
+          (ha : ∀ C : (cutGraph G join).ConnectedComponent,
+            rootKind (G.induce C.supp) ≠ some join) :
           Nonempty (Cotree G (some join)) := by
         let hcomponents := components_nontrivial hd
         let child (C : (cutGraph G join).ConnectedComponent) :
@@ -98,8 +101,11 @@ private theorem exists_cotree_of_card_le (n : ℕ) :
           exact Classical.choice (ih C.supp (G.induce C.supp) (by omega) (hp.induce C.supp))
         exact ⟨.node join hcomponents _ ha child⟩
       by_cases hc : G.Connected
-      · rw [rootKind, if_neg hs, if_pos hc]
-        refine build true (hp.not_preconnected_or_compl.resolve_left (not_not_intro hc.preconnected)) ?_
+      · rw [rootKind, ite_eq_right hs, ite_eq_left hc]
+        have hd : ¬Gᶜ.Preconnected := fun h =>
+          not_connected_compl_of_not_induced_pathFour hc hp.not_pathGraph_four_isIndContained
+            ((connected_iff Gᶜ).mpr ⟨h, ‹Nonempty V›⟩)
+        refine build true hd ?_
         intro C
         by_cases hC : Subsingleton C.supp
         · simp [rootKind, hC]
@@ -109,11 +115,14 @@ private theorem exists_cotree_of_card_le (n : ℕ) :
             have hcompl : (G.induce C.supp)ᶜ.Connected := by
               rw [compl_induce_eq_induce_compl]
               exact C.connected_toSimpleGraph
-            exact ((hp.induce C.supp).not_preconnected_or_compl.resolve_left
-              (not_not_intro h.preconnected)) hcompl.preconnected
+            exact not_connected_compl_of_not_induced_pathFour h
+              (hp.induce C.supp).not_pathGraph_four_isIndContained hcompl
           simp [rootKind, hC, hnot]
-      · rw [rootKind, if_neg hs, if_neg hc]
-        refine build false (fun h => hc ⟨h, ‹Nonempty V›⟩) ?_
+      · rw [rootKind, ite_eq_right hs, ite_eq_right hc]
+        have hd : ¬G.Preconnected := by
+          intro h
+          exact hc ((connected_iff G).mpr ⟨h, ‹Nonempty V›⟩)
+        refine build false hd ?_
         intro C
         by_cases hC : Subsingleton C.supp
         · simp [rootKind, hC]
@@ -138,7 +147,7 @@ noncomputable def leavesEquiv : {V : Type} → {G : SimpleGraph V} → {kind : O
   | _, _, _, .leaf v h =>
     { toFun := fun _ => v
       invFun := fun _ => ()
-      left_inv := fun _ => Subsingleton.elim _ _
+      left_inv := fun x => by cases x; rfl
       right_inv := fun w => (h w).symm }
   | _, _, _, .node _ _ _ _ child =>
     (Equiv.sigmaCongrRight fun C => leavesEquiv (child C)).trans
@@ -171,14 +180,109 @@ theorem nontrivial_iff {V : Type} {G : SimpleGraph V} {kind : Option Bool}
     exact iff_of_true (not_subsingleton_iff_nontrivial.mp
       (not_subsingleton_of_components_nontrivial arity)) (by simp)
 
+/-- Evaluating adjacency on two leaf addresses uses the induced child graph within
+a component and the node's join or union label across components. -/
+theorem adj_leaves_node {V : Type} {G : SimpleGraph V} {join : Bool}
+    {arity : Nontrivial (cutGraph G join).ConnectedComponent}
+    {kind : (cutGraph G join).ConnectedComponent → Option Bool}
+    {alternates : ∀ C, kind C ≠ some join}
+    (child : ∀ C, Cotree (G.induce C.supp) (kind C))
+    (C D : (cutGraph G join).ConnectedComponent)
+    (x : (child C).Leaves) (y : (child D).Leaves) :
+    let t := Cotree.node join arity kind alternates child
+    G.Adj (t.leavesEquiv ⟨C, x⟩) (t.leavesEquiv ⟨D, y⟩) ↔
+      @dite _ (C = D) (Classical.propDecidable _) (fun h =>
+        (G.induce C.supp).Adj ((child C).leavesEquiv x) ((child C).leavesEquiv (h.symm ▸ y)))
+      (fun _ => join = true) := by
+  classical
+  change G.Adj ((child C).leavesEquiv x).val ((child D).leavesEquiv y).val ↔ _
+  by_cases h : C = D
+  · subst D
+    simp [induce_adj]
+  · rw [dite_eq_right h]
+    apply adj_iff_join_of_component_ne join
+    intro he
+    exact h (((child C).leavesEquiv x).property.symm.trans
+      (he.trans ((child D).leavesEquiv y).property))
+
+/-- At a join node a vertex is universal exactly when its child is a leaf. -/
+theorem universal_iff_leaf_child {V : Type} {G : SimpleGraph V}
+    (kind : (cutGraph G true).ConnectedComponent → Option Bool)
+    (child : ∀ C, Cotree (G.induce C.supp) (kind C)) (u : V) :
+    (∀ v, u ≠ v → G.Adj u v) ↔ kind ((cutGraph G true).connectedComponentMk u) = none := by
+  classical
+  let C := (cutGraph G true).connectedComponentMk u
+  constructor
+  · intro hu
+    by_contra hn
+    let := (child C).nontrivial_iff.mpr hn
+    obtain ⟨v, hv⟩ := C.connected_toSimpleGraph.preconnected.exists_adj_of_nontrivial
+      (⟨u, rfl⟩ : C.supp)
+    have hedge : Gᶜ.Adj u v.val := hv
+    exact hedge.2 (hu v.val hedge.1)
+  · intro h v huv
+    apply (adj_iff_join_of_component_ne true ?_).2 rfl
+    intro he
+    have hs : Subsingleton C.supp := not_nontrivial_iff_subsingleton.mp
+      (fun hn => (child C).nontrivial_iff.mp hn h)
+    exact huv (congrArg Subtype.val (hs.elim (⟨u, rfl⟩ : C.supp) ⟨v, he.symm⟩))
+
 /-- A nontrivial connected native P₄-free graph has a normalized join root. -/
 theorem exists_join_root {V : Type} [Finite V] [Nontrivial V] {G : SimpleGraph V}
     (hc : G.Connected) (hP : ¬(pathGraph 4).IsIndContained G) :
     Nonempty (Cotree G (some true)) := by
   classical
   let := hc.nonempty
-  simpa only [rootKind, if_neg (not_subsingleton_iff_nontrivial.mpr ‹Nontrivial V›), if_pos hc]
+  have hs : ¬Subsingleton V := not_subsingleton_iff_nontrivial.mpr ‹Nontrivial V›
+  simpa only [rootKind, ite_eq_right hs, ite_eq_left hc]
     using exists_cotree hP
+
+/-- A leaf contributes width one. -/
+theorem width_leaf {V : Type} [Finite V] {G : SimpleGraph V} (t : Cotree G none) :
+    width G = 1 := by
+  cases t with
+  | leaf v h =>
+    let : Nonempty V := ⟨v⟩
+    let : Subsingleton V := ⟨fun a b => (h a).trans (h b).symm⟩
+    exact width_singleton G
+
+private theorem width_cut {V : Type} [Finite V] [Nonempty V] (G : SimpleGraph V)
+    (join : Bool) [components : Fintype (NontrivialComponent (cutGraph G join))] :
+    width G = max 1
+      (∑ C : NontrivialComponent (cutGraph G join), width (G.induce C.val.supp)) := by
+  cases join with
+  | false => exact @width_components V _ _ G components
+  | true =>
+    have h := @width_components V _ _ Gᶜ components
+    rw [width_compl] at h
+    rw [h]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro C _
+    rw [← compl_induce_eq_induce_compl, width_compl]
+    rfl
+
+/-- The width of an internal node is the sum of the widths of its non-leaf
+children, with a minimum of one for the whole node. -/
+theorem width_node {V : Type} [Finite V] {G : SimpleGraph V}
+    (join : Bool) (kind : (cutGraph G join).ConnectedComponent → Option Bool)
+    (child : ∀ C, Cotree (G.induce C.supp) (kind C))
+    (arity : Nontrivial (cutGraph G join).ConnectedComponent)
+    [Fintype {C : (cutGraph G join).ConnectedComponent // kind C ≠ none}] :
+    width G = max 1
+      (∑ C : {C // kind C ≠ none}, width (G.induce C.val.supp)) := by
+  classical
+  let := arity
+  let : Nonempty V := by
+    obtain ⟨C, _⟩ := arity.exists_pair_ne
+    obtain ⟨v, _⟩ := C.nonempty_supp
+    exact ⟨v⟩
+  let := Fintype.ofFinite (NontrivialComponent (cutGraph G join))
+  let e : NontrivialComponent (cutGraph G join) ≃ {C // kind C ≠ none} :=
+    Equiv.subtypeEquivRight (fun C => (child C).nontrivial_iff)
+  rw [width_cut G join]
+  congr 1
+  exact Fintype.sum_equiv e _ _ (fun _ => rfl)
 
 end Cotree
 
