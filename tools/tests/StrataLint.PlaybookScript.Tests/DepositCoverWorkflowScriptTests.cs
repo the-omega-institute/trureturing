@@ -48,7 +48,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(backfillBefore, fixture.BackfillContents());
         Assert.Equal(
             [
-                "make:lean-report-scoped",
+                "make:lean-report-prepare", "make:lean-report-scoped",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
@@ -154,7 +154,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit"],
+            ["make:lean-report-prepare", "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit"],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }

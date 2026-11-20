@@ -98,17 +98,27 @@ class CheckTests(unittest.TestCase):
 
     def test_admission_reuses_all_batches_and_runs_without_reports_for_source_changes(self):
         import ci_pr_lean
-        cases = [([], 0, 3, 0), (["D5.A", "D5.B"], 1, 0, 1), (["D5.A"], 0, 2, 2)]
-        for targets, current_exit, delta_exit, expected in cases:
-            with self.subTest(targets=targets), tempfile.TemporaryDirectory() as temp:
+        cases = [([], "push", "", "", 0, 3, 0),
+                 (["D5.A", "D5.B"], "push", "", "/judge/producer.dll", 1, 0, 1),
+                 (["D5.A"], "pull_request", "", "", 0, 2, 2),
+                 (["D5.A"], "pull_request", "/caller/producer.dll", "", 0, 0, 0),
+                 (["D5.A"], "", "", "", 0, 0, 0)]
+        for targets, event, supplied, detected, current_exit, delta_exit, expected in cases:
+            with self.subTest(targets=targets, event=event, supplied=supplied), tempfile.TemporaryDirectory() as temp:
                 changed = Path(temp) / "changed"
                 contract.write_paths(changed, ["some-file"])
-                built, consumers = [], []
+                built, consumers, commands = [], [], []
                 def run(command, **options):
-                    if "lean-inputs" in command:
-                        plan = {"programs": [], "targets": targets, "paths": [], "definitions": {}}
-                        return subprocess.CompletedProcess(command, 0, json.dumps(plan))
+                    commands.append(command)
+                    if command[0] == "bash":
+                        self.assertEqual(command, ["bash", "tools/scripts/workflow/judge-lean-producer.sh",
+                                                   "tools/StrataLint.Cli/bin/Release/net10.0"])
+                        return subprocess.CompletedProcess(command, 0, detected + "\n")
+                    if command[0] == "make":
+                        self.assertTrue(options["check"])
+                        self.assertEqual(options["env"]["STRATALINT_LEAN_PRODUCER_DLL"], supplied or detected)
                     if command[:2] == ["make", "lean-report-scoped"]:
+                        self.assertEqual(commands[-2], ["make", "lean-report-prepare", command[2]])
                         report = Path(options["env"]["LEAN_REPORT"])
                         self.assertNotIn(report, built)
                         report.touch()
@@ -125,11 +135,29 @@ class CheckTests(unittest.TestCase):
                 scope_file = Path(temp) / "scope"
                 scope_file.write_text(json.dumps({"programs": [], "targets": targets, "paths": [], "definitions": {}}))
                 with patch.object(ci_pr_lean, "plan_scope", side_effect=AssertionError("scope planned twice")), \
+                        patch.dict(os.environ, GITHUB_EVENT_NAME=event, STRATALINT_LEAN_PRODUCER_DLL=supplied), \
                         patch.object(ci_pr_lean.subprocess, "run", side_effect=run), \
                         patch.object(ci_pr_lean, "report_batches", return_value=[([target], []) for target in targets]):
                     self.assertEqual(ci_pr_lean.check(changed, "a" * 40, scope_file), expected)
                 self.assertEqual(consumers, ["check-current", "check-delta"])
                 self.assertEqual(len(built), len(targets))
+                self.assertEqual(sum(cmd[0] == "bash" for cmd in commands), int(bool(targets and event and not supplied)))
+                self.assertEqual([cmd[2] for cmd in commands if cmd[:2] == ["make", "lean-report-prepare"]],
+                                 ["LEAN_TARGETS=" + target for target in targets])
+
+    def test_failed_report_preparation_stops_analysis_and_admission(self):
+        import ci_pr_lean
+        with tempfile.TemporaryDirectory() as temp:
+            changed, scope_file = Path(temp) / "changed", Path(temp) / "scope"
+            contract.write_paths(changed, ["D5/A.lean"])
+            scope_file.write_text(json.dumps({"programs": [], "targets": ["D5.A"], "paths": [], "definitions": {}}))
+            command = ["make", "lean-report-prepare", "LEAN_TARGETS=D5.A"]
+            with patch.dict(os.environ, STRATALINT_LEAN_PRODUCER_DLL="/caller/producer.dll"), \
+                    patch.object(ci_pr_lean.subprocess, "run", side_effect=subprocess.CalledProcessError(7, command)) as run:
+                with self.assertRaises(subprocess.CalledProcessError) as error:
+                    ci_pr_lean.check(changed, "a" * 40, scope_file)
+                self.assertEqual(error.exception.returncode, 7)
+                self.assertEqual([call.args[0] for call in run.call_args_list], [command])
 
     def test_real_process_exits_are_preserved(self):
         for raw in (0, 1, 2, 3, 124, 143):

@@ -31,6 +31,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_native.NativeReportTests.test_impl_resource_preserves_production_reg_on_warm_report")]
     [InlineData("test_native.NativeReportTests.test_reg_dependency_closure_reassessment")]
     [InlineData("test_native.NativeReportTests.test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
+    [InlineData("test_native.NativeReportTests.test_report_can_restore_from_store_without_materializing_git_packages")]
     public void ReportConsumersStartWithPrivateColdProjects(string suite) =>
         InspectorNativeTestRunner.Run(compiler, suite);
 }

@@ -13,6 +13,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[4]
 INPUT = ROOT / "tools/scripts/worktree/lean-cache-input.sh"
 REV = "0123456789abcdef0123456789abcdef01234567"
 OTHER = "f" * 40
+REPORT_BUILD = "check-lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"
 PUBLISH = ROOT / "tools/scripts/worktree/lean-cache-publish.sh"
 
 
@@ -78,7 +79,9 @@ def write_release_report(root):
     captured = reuse.capture(root)
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     try:
-        reuse.read_receipt(report, captured)
+        receipt = reuse.read_receipt(report, captured)
+        if receipt['completed'] != reuse.CHECKED:
+            reuse.write_receipt(report, captured, checked=True)
         return
     except reuse.INVALID_SEED:
         pass
@@ -98,7 +101,7 @@ def write_release_report(root):
     publication.write_sidecars(report, dict(input=coordinates[0], repository=coordinates[1],
         producer=producer, sources=sources, config=config), origins)
     publication.validate_bundle(report, repository=root)
-    reuse.write_receipt(report, captured)
+    reuse.write_receipt(report, captured, checked=True)
 
 
 if __name__ == "__main__":
