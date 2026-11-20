@@ -5,15 +5,17 @@ year: 2026
 title: "Proof of Chen and Chen's parity-positivity conjectures: OEIS A392664–A392666, COMMENTS, and Conjecture 2 (p. 1)"
 doi: 10.5281/zenodo.23957560
 url: https://zenodo.org/records/23957560
-claim: "Theorem 1: for every real r >= 3, T_{-r}(n,k) > 0 for every positive even n and 1 <= k <= n, and T_{-r}(n,k) < 0 for every odd n >= 3 and 1 < k < n. Lemma 2: for r >= 3, T_{-r}(n,2) > 0 whenever n >= 2 is even. Corollary 4: for every real m, S_n(m) = sum_{k=1}^{n} T_m(n,k) = prod_{j=0}^{n-2} (mj+2) with S_1(m) = 1; for even n, R_{m,n}(-1) = 0 and the odd-position and even-position sums both equal S_n(m)/2."
+claim: "Theorem 1: for every real r >= 3, T_{-r}(n,k) > 0 for every positive even n and 1 <= k <= n, and T_{-r}(n,k) < 0 for every odd n >= 3 and 1 < k < n. Lemma 2: for r >= 3, T_{-r}(n,2) > 0 whenever n >= 2 is even. Corollary 3: for integer m, every positive even row is entrywise nonnegative if and only if m <= -3 or m >= 0, and then strictly positive. Corollary 4: for every real m, S_n(m) = sum_{k=1}^{n} T_m(n,k) = prod_{j=0}^{n-2} (mj+2) with S_1(m) = 1; for even n, R_{m,n}(-1) = 0 and the odd-position and even-position sums both equal S_n(m)/2. Corollary 5: for real m <= -3 and even n >= 2, every root z of R_{m,n} satisfies L_n <= |z| <= U_n, where L_n and U_n are the least and largest of the positive ratios T_m(n,k)/T_m(n,k+1), 1 <= k < n, and L_n U_n = 1."
 strata_touched:
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns
+  - D5/S1/Recurrence/Algebraic/ChenChenIntegerStepCriterion
+  - D5/S1/Recurrence/Algebraic/ChenChenRootAnnulus
 license: CC-BY-4.0
 triage: anchor
 ---
 
-# Signs, row sums and parity sums of the real-step Eulerian triangle
+# Signs, integer-step criterion, row sums and parity sums of the step-m Eulerian triangle
 
 ## Verified locator
 
@@ -22,7 +24,8 @@ Zenodo record: https://zenodo.org/records/23957560
 DOI: 10.5281/zenodo.23957560 (version 2; Zenodo publication date 2026-11-04, PDF dated
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracted locally,
-24,508 characters). Theorem 1 opens the paper; Corollary 4 follows the reflection identity (3).
+24,508 characters). Theorem 1 opens the paper; Corollary 3 follows the proof of Theorem 1, and
+Corollary 4 follows the reflection identity (3), and Corollary 5 follows Corollary 4.
 
 ## Source statement
 
@@ -32,6 +35,14 @@ https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracte
 
 > Lemma 2. For r ≥ 3, T_{−r}(n, 2) > 0 whenever n ≥ 2 is even.
 
+> Corollary 3. For integer m, every positive even row is entrywise nonnegative if and only if
+> m ≤ −3 or m ≥ 0. For exactly these parameters, every positive even row is in fact strictly
+> positive.
+
+> Proof. Theorem 1 covers m ≤ −3. If m ≥ 0, both coefficients in (2) are at least one, so
+> induction gives strict positivity of every row. The two remaining integer parameters fail
+> already at T_m(4, 2) = T_m(4, 3) = 2m² + 6m + 3 = −1 (m = −1, −2).
+
 > Corollary 4. For every real m, S_n(m) := ∑_{k=1}^{n} T_m(n, k) = ∏_{j=0}^{n−2} (mj + 2),
 > S_1(m) = 1. For even n, R_{m,n}(−1) = 0, ∑_{1≤k≤n, k odd} T_m(n, k) =
 > ∑_{1≤k≤n, k even} T_m(n, k) = ½ S_n(m).
@@ -40,6 +51,15 @@ https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracte
 > same formula then gives the boundary value 1. A preceding-row entry at position j has total
 > coefficient (m(n − j − 1) + 1) + (m(j − 1) + 1) = m(n − 2) + 2. …
 
+> Corollary 5. For real m ≤ −3 and even n ≥ 2, every root z of R_{m,n} satisfies
+> L_n ≤ |z| ≤ U_n, L_n = min_{1≤k<n} T_m(n, k)/T_m(n, k + 1),
+> U_n = max_{1≤k<n} T_m(n, k)/T_m(n, k + 1). All these ratios are positive; symmetry also
+> gives L_n U_n = 1.
+
+> Proof. This is the Eneström–Kakeya bound [7]; … Theorem 1 supplies positive coefficients
+> here. Reflection makes the set of consecutive ratios invariant under reciprocation, so
+> L_n = 1/U_n.
+
 ## Mathematical scope
 
 T_m is Chen and Chen's step-m Eulerian triangle (see `chenchen2026stepm`): T_m(n,1) =
@@ -47,4 +67,6 @@ T_m(n,n) = 1 and the interior recursion T_m(n,k) = (m(n−k)+1)T_m(n−1,k−1) 
 (m(k−1)+1)T_m(n−1,k), with R_{m,n}(y) = ∑ T_m(n,k) y^{k−1}. The row sums and even-row
 alternating sums are among the adjacent COMMENTS statements of OEIS A392664–A392666; the
 paper's coverage table lists them as proved by the reflection identity (3) and Corollary 4.
-The parameter m is any real number here, not only the integer steps of the OEIS entries.
+The parameter m is any real number in Theorem 1 and Corollary 4, not only the integer steps of
+the OEIS entries; Corollary 3 restricts to integer m. Corollary 5 is the Eneström–Kakeya bound
+(reference [7] of the paper) applied to the positive even rows given by Theorem 1.
