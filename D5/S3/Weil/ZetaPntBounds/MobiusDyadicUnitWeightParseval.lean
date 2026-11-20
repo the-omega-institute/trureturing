@@ -110,7 +110,7 @@ private theorem norm_mobiusPartialSum_exp_le {u : ℝ} (hu : 0 ≤ u) :
   exact (D5.S3.Arith.MoebiusLogarithmic.abs_reciprocalSum_le_one (Real.exp u)).trans
     (by linarith)
 
-private def unitWeightTilt (δ : ℝ) (g : ℝ → ℝ) : ℝ → ℂ :=
+def unitWeightTilt (δ : ℝ) (g : ℝ → ℝ) : ℝ → ℂ :=
   (Ici 0).indicator (fun u => (Real.exp (-δ * u) : ℂ) * (g (Real.exp u) : ℂ))
 
 theorem measurable_unitWeightTilt (δ : ℝ) {g : ℝ → ℝ} (hg : Measurable g) :
@@ -194,7 +194,7 @@ private theorem exp_smul_unitWeightMellin (g : ℝ → ℝ) (s : ℂ) (u : ℝ) 
     _ = _ := by
       rw [← Complex.exp_add, show (u : ℂ) + (u : ℂ) * -(s + 1) = -s * (u : ℂ) by ring]
 
-private def unitWeightSection (δ ξ : ℝ) : ℂ :=
+def unitWeightSection (δ ξ : ℝ) : ℂ :=
   (δ : ℂ) + ((2 * Real.pi * ξ : ℝ) : ℂ) * I
 
 private theorem unitWeightSection_re (δ ξ : ℝ) : (unitWeightSection δ ξ).re = δ := by
@@ -261,7 +261,7 @@ private theorem mobiusPartialSum_eq_one_of_mem_Ioo {x : ℝ} (hx : x ∈ Ioo 1 2
   rw [mobiusPartialSum, hfloor, Finset.Icc_self]
   simp
 
-private theorem halfLineMellin_dyadic {s : ℂ} (hs : 0 < s.re) :
+theorem halfLineMellin_dyadic {s : ℂ} (hs : 0 < s.re) :
     halfLineMellin (fun x => (D x : ℂ)) s = mobiusDyadicMellinSymbol s := by
   have hn : s ≠ 0 := by intro h; simp [h] at hs
   let k : ℝ → ℂ := fun x => (x : ℂ) ^ (-(s + 1))
