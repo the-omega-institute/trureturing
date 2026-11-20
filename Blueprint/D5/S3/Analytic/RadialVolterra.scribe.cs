@@ -15,7 +15,8 @@ internal sealed class RadialVolterraDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "On the positive half-line, let eta have derivative p with Re p ≥ 0, and let "
+                    "On the positive half-line, assume p and q are continuous. Let eta have "
+                    + "derivative p with Re p ≥ 0, and let "
                     + "F and G solve F′ = p G and G′ = 2ν p G + q F with terminal limits one and zero. "
                     + "If the norm of q is bounded by a continuous nonnegative Q whose integral on "
                     + "each finite positive interval is at most V, with 0 ≤ V < ν, then "
