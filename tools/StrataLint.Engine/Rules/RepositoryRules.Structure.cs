@@ -96,10 +96,12 @@ internal static partial class RepositoryRules
         || module.StartsWith("LeanInformationAuditInterface.", StringComparison.Ordinal)
         || module.StartsWith("Reg.", StringComparison.Ordinal);
 
-    private static ImmutableArray<RuleFinding> Sorry(CurrentRuleContext context)
+    private static ImmutableArray<RuleFinding> Sorry(CurrentRuleContext context) => Sorry(context.Lean.Report);
+
+    internal static ImmutableArray<RuleFinding> Sorry(LeanAxiomReport lean)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, report) in context.Lean.Report.Files)
+        foreach (var (path, report) in lean.Files)
         {
             var declarations = report.Declarations
                 .Where(static item => item.Axioms.Contains("sorryAx", StringComparer.Ordinal))
