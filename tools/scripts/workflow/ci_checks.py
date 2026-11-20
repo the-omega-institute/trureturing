@@ -100,7 +100,16 @@ def unit_run(name, unit, *, current=None):
     return execute(name, command)
 
 
-def current_phase(phase, data, plan, base, paths):
+def prepare_lean_scope(paths, scope_file):
+    code = execute("lean-plan", [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths),
+                                 "--write-plan", str(scope_file)])
+    if code:
+        return code, False
+    scope = json.loads(scope_file.read_text())
+    return 0, bool(scope["targets"] or scope["programs"])
+
+
+def current_phase(phase, data, plan, base, paths, scope_file=None):
     if phase == "source":
         if not plan["hits"]["current"]:
             result(phase, "not-applicable")
@@ -119,12 +128,22 @@ def current_phase(phase, data, plan, base, paths):
         return prepare_current(data, plan)
     if phase == "build-judge":
         return execute(phase, ["dotnet", "build", *data["current"]["judge_build_args"], "--no-restore"])
+    if phase == "lean-plan":
+        if scope_file is None:
+            raise DetectError("Lean planning requires an output file")
+        code, builds = prepare_lean_scope(paths, scope_file)
+        needed = builds or any(plan[key] for _, key in READY_PHASES)
+        if code == 0 and os.environ.get("GITHUB_OUTPUT"):
+            with open(os.environ["GITHUB_OUTPUT"], "a") as stream:
+                stream.write(f"builds_lean={str(builds).lower()}\nneeds_lean={str(needed).lower()}\n")
+        return code
     if phase == "pr-lean":
         if not paths.is_file():
             raise DetectError("incremental Lean checks require the changed paths")
         if plan["delta"] and not base:
             raise DetectError("selected delta requires a readable protected base")
         return execute(phase, [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths),
+                               *(["--read-plan", str(scope_file)] if scope_file is not None else []),
                                *(["--protected-base", base] if plan["delta"] else [])])
     if phase in ("compiled-audit", "source-evidence") and not plan[phase]:
         result(phase, "not-applicable")
@@ -191,19 +210,21 @@ def current_run(data, plan, base, paths, prefix=None):
     failures = [prefix.code]
     if not plan["report"]:
         return prefix.code
-    lean = prepare_local_lean()
     restore = prepare_current(data, plan)
+    scope_file = paths.with_name("current-lean-plan.json")
+    planning, builds_lean = prepare_lean_scope(paths, scope_file)
+    needs_lean = builds_lean or any(plan[key] for _, key in READY_PHASES)
+    lean = prepare_local_lean() if not planning and needs_lean else 0
     judge = 0 if prefix.judge_ready else prefix.code
-    # Judge bootstrap and selected test restore failures do not erase independently
-    # reachable report fallback. Lean preparation alone guards report inputs.
-    report = lean or current_phase("pr-lean", data, plan, base, paths)
-    if lean:
+    # Source-only admission can still run if preparation for a selected Lean test failed.
+    report = planning or (lean if builds_lean else 0) or current_phase("pr-lean", data, plan, base, paths, scope_file)
+    if planning or builds_lean and lean:
         result("pr-lean", "blocked")
     failures += [lean, restore, report]
     for phase, selection_key in READY_PHASES:
         if not plan[selection_key]:
             result(phase, "not-applicable")
-        elif judge or report or phase == "source-evidence" and restore:
+        elif judge or report or lean or phase == "source-evidence" and restore:
             result(phase, "blocked")
         else:
             failures.append(current_phase(phase, data, plan, base, paths))
@@ -302,6 +323,7 @@ def main():
     current.add_argument("phase")
     runner_temp = Path(os.environ.get("RUNNER_TEMP", "/nonexistent"))
     current.add_argument("--changed", type=Path, default=os.environ.get("CI_CHANGED_PATHS_FILE") or runner_temp / "changed-paths")
+    current.add_argument("--scope-file", type=Path)
     current.add_argument("--base", default=os.environ.get("CI_BASE"))
     current.add_argument("--purpose", choices=("pull-request", "push"), default="pull-request" if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else "push")
     args = parser.parse_args()
@@ -342,7 +364,7 @@ def main():
             return code
         paths = read_changed(args.changed)
         plan = selection(data, paths, args.purpose)
-        return current_phase(args.phase, data, plan, args.base, args.changed)
+        return current_phase(args.phase, data, plan, args.base, args.changed, args.scope_file)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print("CI_CHECK_ERROR " + str(error), file=sys.stderr)
         return 2

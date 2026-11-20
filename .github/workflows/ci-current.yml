@@ -300,53 +300,6 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
-      - id: prepared
-        name: Adopt a matching PR preparation for this event
-        if: needs.detect.outputs.report == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
-      - id: keys
-        if: needs.detect.outputs.report == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
-      - id: elan
-        if: steps.keys.outputs.elan_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - id: toolchain
-        if: needs.detect.outputs.report == 'true'
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_restore_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - id: lean_seeds
-        if: needs.detect.outputs.report == 'true'
-        name: Restore optional Lean build seeds
-        env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - id: compute_budget
         name: Resume the cumulative current compute allowance
         env:
@@ -365,6 +318,57 @@ jobs:
         name: Build the judge
         if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - id: lean_plan
+        name: Select affected Lean inputs and test prerequisites
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+      - id: keys
+        if: ${{ !cancelled() && steps.prepared.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - id: toolchain
+        if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_restore_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - id: lean_seeds
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
+        name: Restore optional Lean build seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
@@ -372,20 +376,20 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - id: pr_lean
         name: Check current and delta with affected Lean and Scribe inputs
-        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
         env:
           CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - name: Run selected FIB regressions
-        if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
+        if: steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
         run: python3 tools/scripts/workflow/ci_checks.py current pr-fib
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
         env:
           CI_DOTNET_PREPARED: '1'
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
       - name: Run the compiled audit checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
 
       - id: checked

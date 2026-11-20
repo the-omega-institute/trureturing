@@ -45,14 +45,18 @@ def report_batches(scope, limit=60_000):
         yield sorted(targets), documents
 
 
-def check(manifest, protected_base=None):
+def plan_scope(manifest):
+    planned = subprocess.run([*SCRIBE, "lean-inputs", "--affected", "--paths-from", str(manifest)],
+                             stdout=subprocess.PIPE, text=True, check=True)
+    return json.loads(planned.stdout)
+
+
+def check(manifest, protected_base=None, scope_file=None):
     if read_changed(manifest) is None:
         raise ValueError("missing changed-path manifest")
     with tempfile.TemporaryDirectory(prefix="ci-pr-lean-") as temporary:
         directory = Path(temporary)
-        plan = subprocess.run([*SCRIBE, "lean-inputs", "--affected", "--paths-from", str(manifest)],
-                              stdout=subprocess.PIPE, text=True, check=True)
-        scope = json.loads(plan.stdout)
+        scope = plan_scope(manifest) if scope_file is None else json.loads(scope_file.read_text())
         programs, targets = scope["programs"], scope["targets"]
         if any(not MODULE.fullmatch(module) for module in [*targets, *programs]):
             raise ValueError("invalid Lean module in PR scope")
@@ -91,9 +95,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path)
     parser.add_argument("--protected-base")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--write-plan", type=Path)
+    modes.add_argument("--read-plan", type=Path)
     args = parser.parse_args()
     try:
-        code = check(args.manifest, args.protected_base)
+        if args.write_plan:
+            args.write_plan.write_text(json.dumps(plan_scope(args.manifest)))
+            sys.exit(0)
+        code = check(args.manifest, args.protected_base, args.read_plan)
         sys.exit(code if code >= 0 else 128 - code)
     except subprocess.CalledProcessError as error:
         sys.exit(error.returncode if error.returncode > 0 else 128 - error.returncode)
