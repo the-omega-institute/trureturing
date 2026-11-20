@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
   - D5/S3/Combinatorics/Geometry/CentralSizeEdgeMinima
   - D5/S3/Combinatorics/Geometry/NonemptyCentralMinimum
+  - D5/S3/Combinatorics/Geometry/EdgeCoverLengthMetric
 license: citation-only
 triage: anchor
 ---
@@ -33,6 +34,15 @@ every point has another point, or itself when t = 0, at distance t. The central 
 distinct points whose distance lies in C(X). If |C(X)| = k then the central graph has at least
 (k-1)⌈n/2⌉ edges: for each nonzero central value the edges of that length cover every point,
 and edges of different lengths are distinct.
+
+Equation (1) (Section 2): if F_1, ..., F_s are edge-disjoint spanning edge covers of K_n, n >= 3,
+every edge of F_i gets the length a_i with the a_i distinct in [1, 2), and every remaining edge
+gets its own distinct length in [1, 2) different from all a_i, then this is a metric with
+C(X) = {0, a_1, ..., a_s} and central edge set F_1 ∪ ... ∪ F_s. In a triangle the longest side
+is less than 2 while the other two sum to at least 2; each a_i is central; each remaining length
+occurs on one edge and misses a third vertex. EdgeCoverLengthMetric.result formalizes it for any
+closed band [c, 2c] with c > 0 (the source's band is [1, 2), contained in c = 1) and without
+requiring the a_i to be distinct.
 
 Theorem 3 (Section 2): for every n >= 4 the minimum number of central edges among
 three-central n-point metric spaces is 2⌈n/2⌉; the lower bound is Lemma 2 with k = 3. The
