@@ -7,6 +7,7 @@
    digest: The row bound is attained for every normal subgroup of a finite-kernel action. -/
 
 import D5.S3.ConceptDynamics.Attribution.FixedKernelMass
+import Mathlib.GroupTheory.GroupAction.SubMulAction
 
 /-! Normal subgroups retain their sharp fixed-seed mass upon symmetrizing table laws. -/
 
@@ -39,22 +40,11 @@ private theorem readout_smul (g : G) (t : X → Y) (x : X) :
   change g • t (g⁻¹ • (g • x)) = _
   rw [inv_smul_smul]
 
-private theorem fixed_smul (H : Subgroup G) [normal : H.Normal]
-    (g : G) (t : X → Y) (fixed : ∀ h : H, (h : G) • t = t) :
-    ∀ h : H, (h : G) • (g • t) = g • t := by
-  intro h
-  let conjugate : H := ⟨g⁻¹ * h.val * g, by
-    simpa only [inv_inv] using normal.conj_mem h.val h.property g⁻¹⟩
-  have commute : g * conjugate.val = h.val * g := by
-    change g * (g⁻¹ * h.val * g) = h.val * g
-    rw [← mul_assoc, ← mul_assoc g, mul_inv_cancel, one_mul]
-  rw [← mul_smul, ← commute, mul_smul, fixed conjugate]
-
 private theorem fixed_smul_iff (H : Subgroup G) [H.Normal] (g : G) (t : X → Y) :
-    (∀ h : H, (h : G) • (g • t) = g • t) ↔ (∀ h : H, (h : G) • t = t) := by
-  refine ⟨?_, fixed_smul H g t⟩
+    g • t ∈ MulAction.fixedPoints H (X → Y) ↔ t ∈ MulAction.fixedPoints H (X → Y) := by
+  refine ⟨?_, smul_mem_fixedPoints_of_normal g⟩
   intro fixed
-  simpa only [inv_smul_smul] using fixed_smul H g⁻¹ (g • t) fixed
+  simpa only [inv_smul_smul] using smul_mem_fixedPoints_of_normal g⁻¹ fixed
 
 variable [Fintype X] [Fintype Y] [DecidableEq X] [DecidableEq Y]
 
@@ -213,13 +203,8 @@ theorem maximal_normal_subgroup_fixed_seed_mass [Nonempty X] (H : Subgroup G) [H
   let weight (t : T) := q t.val
   let eval (x : X) (t : T) := t.val x
   have supportSum (a : (X → Y) → ℝ) (zero : ∀ t, q t = 0 → a t = 0) :
-      (∑ t : T, a t.val) = ∑ t, a t := by
-    rw [← Finset.sum_subtype (univ.filter fun t => 0 < q t) (by simp) a, Finset.sum_filter]
-    apply sum_congr rfl
-    intro t _
-    by_cases pos : 0 < q t
-    · simp only [pos, ite_true]
-    · rw [ite_eq_right pos, zero t (le_antisymm (le_of_not_gt pos) (qn t))]
+      (∑ t : T, a t.val) = ∑ t, a t :=
+    FiniteKernelStabilizers.row_sum (fun (_ : Unit) => q) (fun _ => qn) () a zero
   let _ := action
   have newMarginal (x : X) (y : Y) : (∑ t, if eval x t = y then weight t else 0) = P x y :=
     (supportSum (fun t => if t x = y then q t else 0) (fun t z => by simp [z])).trans (qmarginal x y)

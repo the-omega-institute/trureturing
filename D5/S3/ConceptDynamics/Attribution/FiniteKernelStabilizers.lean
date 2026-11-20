@@ -71,7 +71,7 @@ private theorem selector {P : X → Y → ℝ} (H : Subgroup G)
     rw [mul_smul, mul_smul] at holds
     exact (inv_smul_eq_iff.mp holds).symm
 
-private theorem row_sum {X Y : Type*} [Fintype Y] (P : X → Y → ℝ)
+theorem row_sum {X Y : Type*} [Fintype Y] (P : X → Y → ℝ)
     (nn : ∀ x y, 0 ≤ P x y) (x : X) (F : Y → ℝ)
     (zero : ∀ y, P x y = 0 → F y = 0) :
     (∑ y : {y : Y // 0 < P x y}, F y.val) = ∑ y, F y := by
