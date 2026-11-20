@@ -29,8 +29,6 @@ jobs:
   unit:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
-    env:
-      CACHE_WRITES: ${{ github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) }}
     outputs:
       unit: ${{ steps.run.outputs.unit }}
     steps:
@@ -44,6 +42,7 @@ jobs:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: definition
         env:
@@ -59,15 +58,14 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: ${{ env.CACHE_WRITES == 'true' }}
-          cache-dependency-path: ${{ fromJSON(steps.definition.outputs.definition)['cache-dependency-path'] }}
+          cache: false
       - id: nuget
-        if: fromJSON(steps.definition.outputs.definition).dotnet && env.CACHE_WRITES != 'true'
+        if: fromJSON(steps.definition.outputs.definition).dotnet
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
-        if: fromJSON(steps.definition.outputs.definition).dotnet && env.CACHE_WRITES != 'true'
+        if: fromJSON(steps.definition.outputs.definition).dotnet
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}

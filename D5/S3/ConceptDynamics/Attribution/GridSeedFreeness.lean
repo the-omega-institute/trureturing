@@ -20,31 +20,17 @@ open Equiv.Perm
 open D5.S3.ConceptDynamics.Attribution.FiniteKernelStabilizers (stabilizer_possible_iff)
 open D5.S3.ConceptDynamics.Attribution.PermutationGridSupport (CalibratingLaw)
 
-private abbrev Profile (k m : ℕ) := {a : Fin k → ℕ // ∑ i, a i = m}
-
-private abbrev relabel {k m : ℕ} (g : Equiv.Perm (Fin k)) (x : Profile k m) :
-    Profile k m :=
-  ⟨fun i => x.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm (Fin k)) x.val).trans x.property⟩
-
-private instance profileAction {k m : ℕ} : MulAction (Equiv.Perm (Fin k)) (Profile k m) where
-  smul := relabel
-  one_smul p := Subtype.ext (funext fun i => by simp)
-  mul_smul g h p := Subtype.ext (funext fun i => by
-    change p.val ((g * h)⁻¹ i) = p.val (h⁻¹ (g⁻¹ i))
-    rw [mul_inv_rev, Equiv.Perm.mul_apply])
+open D5.S3.ConceptDynamics.Attribution.PermutationGridSupport.PermutationGrid (Profile relabel)
 
 private theorem fixed_positive_of_cycle {k m p : ℕ} {g : Equiv.Perm (Fin k)}
     (cycle : g.IsCycle) (length : g.support.card = p) (missing : ¬ p ∣ m)
-    (x : Profile k m) (fixed : g • x = x) :
+    (x : Profile (Fin k) m) (fixed : g • x = x) :
     ∃ i : Fin k, 0 < x.val i ∧ g i = i := by
   classical
   obtain ⟨i, hi⟩ := cycle
-  have constant (j : Fin k) : x.val (g j) = x.val j := by
-    have eq := congrArg (fun a : Profile k m => a.val (g j)) fixed
-    change x.val (g⁻¹ (g j)) = x.val (g j) at eq
-    change x.val (g.symm (g j)) = x.val (g j) at eq
-    rw [g.symm_apply_apply] at eq
-    exact eq.symm
+  have preserves := PermutationGridSupport.preserving_of_fix
+    (show relabel g x = x from fixed)
+  have constant (j : Fin k) : x.val (g j) = x.val j := congrFun preserves j
   have power (n : ℕ) : ∀ j : Fin k, x.val ((g ^ n) j) = x.val j := by
     induction n with
     | zero => simp
@@ -71,7 +57,7 @@ private theorem fixed_positive_of_cycle {k m p : ℕ} {g : Equiv.Perm (Fin k)}
 private theorem nonfree_of_missing_prime {k m p : ℕ} (positive : 0 < m)
     (prime : p.Prime) (leK : p ≤ k) (missing : ¬ p ∣ m) :
     ∃ (S : Type) (_ : Fintype S) (_ : MulAction (Equiv.Perm (Fin k)) S) (w : S → ℝ)
-      (f : Profile k m → S → Fin k), CalibratingLaw S w f ∧
+      (f : Profile (Fin k) m → S → Fin k), CalibratingLaw S w f ∧
       ∃ s : S, MulAction.stabilizer (Equiv.Perm (Fin k)) s ≠ ⊥ := by
   classical
   let G := Equiv.Perm (Fin k)
@@ -84,17 +70,17 @@ private theorem nonfree_of_missing_prime {k m p : ℕ} (positive : 0 < m)
   let _ : Fact p.Prime := ⟨prime⟩
   have generator (h : H) (ne : h ≠ 1) : ∃ j : ℤ, h ^ j = ⟨g, Subgroup.mem_zpowers g⟩ :=
     mem_zpowers_of_prime_card Hcard ne
-  let P (x : Profile k m) (i : Fin k) : ℝ := (x.val i : ℝ) / m
+  let P (x : Profile (Fin k) m) (i : Fin k) : ℝ := (x.val i : ℝ) / m
   have mpos : (0 : ℝ) < m := by exact_mod_cast positive
-  have normal (x : Profile k m) : ∑ i, P x i = 1 := by
+  have normal (x : Profile (Fin k) m) : ∑ i, P x i = 1 := by
     dsimp [P]
     rw [← Finset.sum_div, ← Nat.cast_sum, x.property, div_self mpos.ne']
-  have equivariant (h : G) (x : Profile k m) (i : Fin k) :
+  have equivariant (h : G) (x : Profile (Fin k) m) (i : Fin k) :
       P (h • x) (h • i) = P x i := by
     change ((x.val (h⁻¹ (h i)) : ℕ) : ℝ) / m = _
     change ((x.val (h.symm (h i)) : ℕ) : ℝ) / m = _
     rw [h.symm_apply_apply]
-  have support (x : Profile k m) :
+  have support (x : Profile (Fin k) m) :
       ∃ i : Fin k, 0 < P x i ∧ ∀ h : H, h • x = x → h • i = i := by
     by_cases fixed : g • x = x
     · obtain ⟨i, ipos, ifix⟩ := fixed_positive_of_cycle cyc length missing x fixed
@@ -119,7 +105,7 @@ private theorem nonfree_of_missing_prime {k m p : ℕ} (positive : 0 < m)
         rw [hj] at fixes
         exact fixed fixes
       rw [eq, one_smul]
-  let encode (x : Profile k m) (i : Fin k) : Fin (m + 1) :=
+  let encode (x : Profile (Fin k) m) (i : Fin k) : Fin (m + 1) :=
     ⟨x.val i, Nat.lt_succ_of_le (by
       calc
         x.val i ≤ ∑ j, x.val j := Finset.single_le_sum
@@ -130,8 +116,8 @@ private theorem nonfree_of_missing_prime {k m p : ℕ} (positive : 0 < m)
     apply Subtype.ext
     funext i
     exact congrArg (fun data : Fin k → Fin (m + 1) => (data i).val) same
-  let _ : Finite (Profile k m) := Finite.of_injective encode encode_injective
-  let _ : Fintype (Profile k m) := Fintype.ofFinite _
+  let _ : Finite (Profile (Fin k) m) := Finite.of_injective encode encode_injective
+  let _ : Fintype (Profile (Fin k) m) := Fintype.ofFinite _
   obtain ⟨S, fS, act, w, f, pos, total, wi, mass, equiv, s, stab⟩ :=
     (stabilizer_possible_iff P (fun x i => div_nonneg (Nat.cast_nonneg _) mpos.le)
       normal equivariant H).mpr support
@@ -145,7 +131,7 @@ private theorem nonfree_of_missing_prime {k m p : ℕ} (positive : 0 < m)
 complete probability grid of positive denominator is free. -/
 theorem every_calibrating_law_free_iff {k m : ℕ} (positive : 0 < m) :
     (∀ (S : Type) [Fintype S] [MulAction (Equiv.Perm (Fin k)) S] (w : S → ℝ)
-      (f : Profile k m → S → Fin k), CalibratingLaw S w f →
+      (f : Profile (Fin k) m → S → Fin k), CalibratingLaw S w f →
       ∀ s : S, MulAction.stabilizer (Equiv.Perm (Fin k)) s = ⊥) ↔
       (∀ p : ℕ, p.Prime → p ≤ k → p ∣ m) := by
   classical
@@ -159,7 +145,7 @@ theorem every_calibrating_law_free_iff {k m : ℕ} (positive : 0 < m) :
     obtain ⟨wpos, _, _, mass, covariant⟩ := law
     have mpos : 0 < (m : ℝ) := by exact_mod_cast positive
     let scaled (s : S) := (m : ℝ) * w s
-    have calibrated (x : Profile k m) (i : Fin k) :
+    have calibrated (x : Profile (Fin k) m) (i : Fin k) :
         (∑ s, if f x s = i then scaled s else 0) = (x.val i : ℝ) := by
       have term (s : S) : (if f x s = i then scaled s else 0) =
           (m : ℝ) * (if f x s = i then w s else 0) := by

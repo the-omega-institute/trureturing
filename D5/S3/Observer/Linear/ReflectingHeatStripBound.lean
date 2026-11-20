@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Observer/Linear/ReflectingHeatStripBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Analytic/Hardy/FiniteStripMomentBound]
+   anchors: [lake/module/D5.S3.Analytic.Hardy.FiniteStripMomentBound]
    utility: none
    digest: The strip estimate gives a lower bound on inverse diagonal entries of the reflecting heat Gramian in physical time. -/
 
