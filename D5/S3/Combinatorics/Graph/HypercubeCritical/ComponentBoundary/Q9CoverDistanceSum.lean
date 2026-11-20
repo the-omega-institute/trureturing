@@ -197,4 +197,68 @@ public theorem mixedAxis_distanceSum_bound (word : Fin 5 → Fin 9 → Bool) (ax
 #print axioms columnBound
 #print axioms mixedAxis_distanceSum_bound
 
+
+set_option maxHeartbeats 2000000 in
+private theorem edgeCount_le_seven_of_degree_le_three :
+    ∀ edges : CoverPair → Bool, (∀ i, (neighbors edges i).card ≤ 3) →
+      edgeCount edges ≤ 7 := by
+  decide +kernel
+
+private theorem sum_parallel_pairs_le_seven (axis : Fin 5 → Fin 9)
+    (hmixed : ∃ i j, axis i ≠ axis j) :
+    (∑ p : CoverPair, if axis p.1.1 = axis p.1.2 then 1 else 0) ≤ 7 := by
+  let edges : CoverPair → Bool := fun p => decide (axis p.1.1 = axis p.1.2)
+  have hadj (i j : Fin 5) : adjacent edges i j = true ↔ i ≠ j ∧ axis i = axis j := by
+    rcases lt_trichotomy i j with hij | rfl | hji
+    · simp [adjacent, edges, hij, ne_of_lt hij]
+    · simp [adjacent]
+    · simp [adjacent, edges, not_lt_of_gt hji, hji, ne_of_gt hji, eq_comm]
+  have hdegree (i : Fin 5) : (neighbors edges i).card ≤ 3 := by
+    obtain ⟨j, k, hjk⟩ := hmixed
+    have hother : ∃ r, axis i ≠ axis r := by
+      by_cases h : axis i = axis j
+      · exact ⟨k, fun he => hjk (h.symm.trans he)⟩
+      · exact ⟨j, h⟩
+    obtain ⟨r, hir⟩ := hother
+    have hne : i ≠ r := fun he => hir (congrArg axis he)
+    have hmem : r ∈ (Finset.univ : Finset (Fin 5)).erase i := by
+      simp [Ne.symm hne]
+    have hsub : neighbors edges i ⊆ ((Finset.univ : Finset (Fin 5)).erase i).erase r := by
+      intro j hj
+      have h : i ≠ j ∧ axis i = axis j := (hadj i j).mp (Finset.mem_filter.mp hj).2
+      have hjr : j ≠ r := fun he => hir (h.2.trans (congrArg axis he))
+      simpa only [Finset.mem_erase, Finset.mem_univ, and_true] using
+        And.intro hjr (Ne.symm h.1)
+    have hcard := Finset.card_le_card hsub
+    rwa [Finset.card_erase_of_mem hmem, Finset.card_erase_of_mem (Finset.mem_univ i)] at hcard
+  have hcount := edgeCount_le_seven_of_degree_le_three edges hdegree
+  simpa [edgeCount, edges, Finset.sum_boole] using hcount
+
+/-- Five covers satisfying the distance-four rigidity constraints must have
+the same axis. The two distance sum bounds conflict for mixed axes. -/
+public theorem same_axis_of_five_covers (word : Fin 5 → Fin 9 → Bool)
+    (axis : Fin 5 → Fin 9) (D : Fin 5 → Fin 5 → ℕ)
+    (hD : ∀ i j s t, D i j ≤ hammingDist (coverEndpoint (word i) (axis i) s)
+      (coverEndpoint (word j) (axis j) t))
+    (hsymm : ∀ i j, D i j = D j i)
+    (hmin : ∀ i j, i ≠ j → 4 ≤ D i j)
+    (hdegree : ∀ i, (Finset.univ.filter fun j => i ≠ j ∧ D i j = 4).card ≤ 2)
+    (htwo : ∀ i j k, i ≠ j → i ≠ k → j ≠ k → D i k = 4 → D j k = 4 → 6 ≤ D i j) :
+    ∀ i j, axis i = axis j := by
+  have hlower := distanceSum_ge_48 D hsymm hmin hdegree htwo
+  have hupper := mixedAxis_distanceSum_bound word axis D hD
+  have hodd : (∑ k : Fin 9, (∑ i : Fin 5, (if k = axis i then 1 else 0)) % 2) ≤ 5 := by
+    calc
+      _ ≤ ∑ k : Fin 9, ∑ i : Fin 5, (if k = axis i then 1 else 0) :=
+        Finset.sum_le_sum fun _ _ => Nat.mod_le _ _
+      _ = 5 := by
+        rw [Finset.sum_comm]
+        simp
+  intro i j
+  by_contra h
+  have hparallel := sum_parallel_pairs_le_seven axis ⟨i, j, h⟩
+  omega
+
+#print axioms same_axis_of_five_covers
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9CoverDistanceSum
