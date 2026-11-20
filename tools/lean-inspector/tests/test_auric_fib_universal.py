@@ -86,8 +86,11 @@ def unobservedFamily : Application (@D5.S0.Diagonal.PigeonholeFiber.finite_readi
     acquisition := .unavailable "no finite presentation requested" }
 end AuricFibUniversalProduction
 ''')
+        subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join([
+            MODULE, PLAIN_MODULE, 'leanInspector/inputDiscovery', 'leanInspector/reportInspector',
+            'LeanInformationAudit.TemplateEnrollment', 'regInspector/auricFibAnalysis'])], cwd=ROOT, check=True)
         subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
-            'tools/lean-inspector-reg', 'build', 'leanInspector/reportInspector',
+            'tools/lean-inspector-reg', 'build',
             MODULE + ':report', PLAIN_MODULE + ':report'],
             cwd=ROOT, env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'), check=True)
         cls.report = cls.directory / 'raw-lean-report.json'
@@ -357,15 +360,19 @@ end AuricFibUniversalProduction
         unrelated = ROOT / (unrelated_name.replace('.', '/') + '.lean')
         self.assertFalse(unrelated.exists(), 'unrelated fixture is already owned')
         extra_targets = []
-        def build():
+        def build(*, success=True):
             activity.write_text('')
             phases.write_text('')
+            subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join(
+                [MODULE, PLAIN_MODULE, *(item.removesuffix(':report') for item in extra_targets)])], cwd=ROOT, check=True)
             result = subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
                 'tools/lean-inspector-reg', 'build', MODULE + ':report', PLAIN_MODULE + ':report',
                 *extra_targets],
                 cwd=ROOT, env=dict(os.environ, STRATALINT_INSPECTOR_ACTIVITY=str(activity),
                     STRATALINT_INSPECTOR_PHASES=str(phases)), capture_output=True, text=True)
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+            if not success:
+                self.assertIn('needs to be rebuilt', result.stdout + result.stderr)
             return [json.loads(line) for line in activity.read_text().splitlines()]
         self.assertEqual(build(), [])
         try:
@@ -396,6 +403,22 @@ end AuricFibUniversalProduction
                 changed_source = changed_source.replace(before, after)
             self.assertNotEqual(changed_source, original)
             self.source.write_bytes(changed_source)
+            analyzer = ROOT / 'tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean'
+            executable = STATE / 'reg/bin/auricFibAnalysis'
+            original_analyzer, stat = analyzer.read_bytes(), analyzer.stat()
+            old_executable = publication.digest(executable)
+            try:
+                analyzer.write_bytes(original_analyzer + b'\n-- exercise a stale precompiled analyzer\n')
+                failed_work = build(success=False)
+                self.assertEqual(publication.digest(executable), old_executable)
+                self.assertFalse(any(row['kind'] == 'fib-analysis-invocations' and row['count']
+                                     for row in failed_work))
+                waits = [row['boundary'] for line in phases.read_text().splitlines()
+                         if (row := json.loads(line))['phase'] == 'lake-analyzer-await']
+                self.assertEqual(waits, ['start'])
+            finally:
+                analyzer.write_bytes(original_analyzer)
+                os.utime(analyzer, ns=(stat.st_atime_ns, stat.st_mtime_ns))
             affected = build()
             self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-generated'), 0)
             self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-analysis-invocations'), 0)

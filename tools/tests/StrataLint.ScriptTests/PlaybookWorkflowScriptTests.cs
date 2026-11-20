@@ -22,7 +22,7 @@ public sealed class PlaybookWorkflowScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:check-lean-report",
                 "make:emit",
                 "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 $"make:gate BASE=synthetic-base",

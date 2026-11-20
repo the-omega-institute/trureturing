@@ -6,7 +6,7 @@ namespace StrataLint.LeanReportScript.Tests;
 public sealed class LeanInspectorScriptTests
 {
     [Fact]
-    public void InspectorRecordsInvocationLocalReportAndProgramBuildWork()
+    public void AnalysisAndCheckedReportRecordInvocationLocalBuildWork()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();

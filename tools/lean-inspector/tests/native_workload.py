@@ -113,6 +113,7 @@ selection = public.selection'''))
     for mode in ('full', 'unchanged', 'single-module'):
         if mode == 'single-module':
             case.write('D5/Alone.lean', 'def alone : String := "changed λ😀"\nopaque concealed : Nat := 7\n')
+            case.prepare_report_modules('D5.Alone')
         case.write('activity.jsonl', '')
         case.write('validation-work.jsonl', '')
         sampler = observer.Sampler(args.observer_library.resolve())
