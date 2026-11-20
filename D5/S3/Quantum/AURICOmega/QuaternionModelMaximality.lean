@@ -4,12 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A copy of the unit-quaternion model in feature rank at most eight is everything. -/
+   digest: A transfer- and reading-preserving quaternion copy in feature rank ≤ 8 is everything. -/
 
 import D5.S3.Quantum.AURICOmega.QuaternionReadingOnePointExtension
 import D5.S3.Quantum.AURICOmega.GramRankFeatureMap
 
 /-! Maximality of the unit-quaternion comparison model in small feature rank.
+
+A transfer- and reading-preserving copy of the unit-quaternion model inside a ternary comparison
+structure of feature rank at most eight is everything; eight is optimal; and in feature rank five
+a reading-preserving copy is everything.
 
 Let `C` be a ternary comparison structure whose reading is the Gram kernel of a map `φ` into
 Euclidean `r`-space, and let `j` be a map from the unit quaternions to `C` preserving the reading.
@@ -32,12 +36,12 @@ modulo two and reading one half between layers, form a structure of feature rank
 first layer is a proper transfer- and reading-preserving copy.
 
 In feature rank five, the transfer need not be preserved. Every translate point
-`tri m (j 1) (j x)` gives a nonnegative one-point extension of feature rank five of the copy `j`,
-so its readings against `j 1` and `j (-1)` sum to at least one. These sums, as functions of `x`,
-form a nonnegative one-point extension of feature rank five of the translated copy, by the unit
-vector `(φ (j 1) + φ (j (-1))) / √2`; hence the sums at `x` and `-x` add up to at most two, and the
-sum at `x = 1`, which is that of `m`, equals one. Then the readings of `m` vanish somewhere and are
-those of a point of the copy. -/
+`tri m (j 1) (j x)` reads `(a + ⟪b, y⟫) / √2` against `j y` with `a ^ 2 + ‖b‖ ^ 2 = 1`, and
+nonnegativity gives `‖b‖ ≤ a`, so its readings against `j 1` and `j (-1)` sum to `√2 * a ≥ 1`.
+These sums, as functions of `x`, form a one-point extension of feature rank five of the translated
+copy, by the unit vector `(φ (j 1) + φ (j (-1))) / √2`; hence the sums at `x` and `-x` add up to at
+most two, and the sum at `x = 1`, which is that of `m`, equals one. For the readings of `m` this
+means `2 * a = √2` and `‖b‖ ^ 2 = 1 / 2`, so `m` has reading one with `j (√2 • b)`. -/
 
 open scoped InnerProductSpace Quaternion
 
@@ -98,11 +102,6 @@ private lemma coe_tri_one (y x : unitary ℍ[ℝ]) :
     ((quaternionModel.tri y x 1 : unitary ℍ[ℝ]) : ℍ[ℝ]) = (y : ℍ[ℝ]) * star (x : ℍ[ℝ]) := by
   change ((y * x⁻¹ * 1 : unitary ℍ[ℝ]) : ℍ[ℝ]) = _
   rw [mul_one, ← Unitary.star_eq_inv, Submonoid.coe_mul, Unitary.coe_star]
-
-/-- A quaternion of norm one is a unit quaternion. -/
-private lemma mem_unitary_of_norm (q : ℍ[ℝ]) (hq : ‖q‖ = 1) : q ∈ unitary ℍ[ℝ] := by
-  rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
-  exact hq
 
 end Quaternion
 
@@ -196,7 +195,7 @@ theorem bijective_of_hasFeatureRank_le_eight {M : Type*} (C : TernaryComparison 
   have hσ0 : 0 < Real.sqrt 2 := by positivity
   obtain ⟨φ, hφ⟩ := hr
   -- the readings of `m` against the copy
-  obtain ⟨a, b, hab, hf⟩ := (onePointExtension_iff (fun z => C.kappa (j z) m) 1).mp
+  obtain ⟨a, b, hab, hf⟩ := ((tfae_onePointExtension (fun z => C.kappa (j z) m) 1).out 1 3).mp
     (form_nonneg_of_copy C j hjk m)
   have hf' : ∀ y, C.kappa (j y) m = (a + ⟪b, (y : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := hf
   obtain ⟨P, hPdef⟩ : ∃ P : unitary ℍ[ℝ] → EuclideanSpace ℝ (Fin r), ∀ y, P y = φ (j y) :=
@@ -312,7 +311,9 @@ theorem bijective_of_hasFeatureRank_le_eight {M : Type*} (C : TernaryComparison 
       rw [norm_smul, mul_pow, Real.norm_eq_abs, sq_abs, hσ, hb2]
       norm_num
     rw [← Real.sqrt_sq (norm_nonneg _), h2, Real.sqrt_one]
-  set x₀ : unitary ℍ[ℝ] := ⟨Real.sqrt 2 • b, mem_unitary_of_norm _ hu⟩
+  set x₀ : unitary ℍ[ℝ] := ⟨Real.sqrt 2 • b, by
+    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
+    exact hu⟩
   have hbx : ⟪b, (x₀ : ℍ[ℝ])⟫_ℝ = Real.sqrt 2 / 2 := by
     change ⟪b, Real.sqrt 2 • b⟫_ℝ = _
     rw [real_inner_smul_right, real_inner_self_eq_norm_sq, hb2]
@@ -360,13 +361,12 @@ theorem bijective_of_hasFeatureRank_five_of_kappa {M : Type*} (C : TernaryCompar
   -- every translate point reads at least one against `j 1` and `j (-1)` together
   have hge : ∀ x, 1 ≤ C.kappa (j 1) (k x) + C.kappa (j (-1)) (k x) := by
     intro x
-    have hf5 := hasOnePointFeatureRank_of_inner (fun y => φ (j y)) hP (φ (k x)) (hnorm _)
-    obtain ⟨a, b, hba, hab, hf⟩ := (hasOnePointFeatureRank_five_iff _).mp
-      ⟨hf5, fun y => by
-        show 0 ≤ ⟪φ (j y), φ (k x)⟫_ℝ
-        rw [← hφ]
-        exact C.kappa_nonneg _ _⟩
+    obtain ⟨a, b, hab, hf⟩ := (hasOnePointFeatureRank_five_iff _).mp
+      (hasOnePointFeatureRank_of_inner (fun y => φ (j y)) hP (φ (k x)) (hnorm _))
     have hf' : ∀ y, ⟪φ (j y), φ (k x)⟫_ℝ = (a + ⟪b, (y : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := hf
+    have hba : ‖b‖ ≤ a := (forall_nonneg_iff_norm_le a b).mp fun y => by
+      rw [← hf', ← hφ]
+      exact C.kappa_nonneg _ _
     rw [hφ, hφ, hf', hf', Unitary.coe_neg, inner_neg_right, ← add_div,
       le_div_iff₀ hσ0, one_mul]
     have ha0 : 0 ≤ a := (norm_nonneg b).trans hba
@@ -385,12 +385,8 @@ theorem bijective_of_hasFeatureRank_five_of_kappa {M : Type*} (C : TernaryCompar
   have hv : ‖v‖ = 1 := by
     rw [hvdef, norm_smul, norm_inv, Real.norm_eq_abs, abs_of_pos hσ0,
       ← Real.sqrt_sq (norm_nonneg (φ (j 1) + φ (j (-1)))), hu2, inv_mul_cancel₀ hσ0.ne']
-  obtain ⟨A, B, -, hAB, hg⟩ := (hasOnePointFeatureRank_five_iff _).mp
-    ⟨hasOnePointFeatureRank_of_inner (fun x => φ (k x)) hk v hv, fun x => by
-      show 0 ≤ ⟪φ (k x), v⟫_ℝ
-      rw [hvdef, real_inner_smul_right, inner_add_right, ← hφ, ← hφ]
-      exact mul_nonneg (inv_nonneg.mpr hσ0.le)
-        (add_nonneg (C.kappa_nonneg _ _) (C.kappa_nonneg _ _))⟩
+  obtain ⟨A, B, hAB, hg⟩ := (hasOnePointFeatureRank_five_iff _).mp
+    (hasOnePointFeatureRank_of_inner (fun x => φ (k x)) hk v hv)
   have hgx : ∀ x, C.kappa (j 1) (k x) + C.kappa (j (-1)) (k x) = A + ⟪B, (x : ℍ[ℝ])⟫_ℝ := by
     intro x
     have h : ⟪φ (k x), v⟫_ℝ = (A + ⟪B, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := hg x
@@ -407,12 +403,9 @@ theorem bijective_of_hasFeatureRank_five_of_kappa {M : Type*} (C : TernaryCompar
     have g2 := hge (-1)
     rw [hk1] at e1 g1
     linarith
-  -- the readings of `m` vanish somewhere, so they are those of a point of the copy
-  have hf5 := hasOnePointFeatureRank_of_inner (fun y => φ (j y)) hP (φ m) (hnorm m)
-  have hf0 : ∀ y, 0 ≤ ⟪φ (j y), φ m⟫_ℝ := fun y => by
-    rw [← hφ]
-    exact C.kappa_nonneg _ _
-  obtain ⟨a, b, -, hab, hf⟩ := (hasOnePointFeatureRank_five_iff _).mp ⟨hf5, hf0⟩
+  -- the readings of `m` then give `2 * a = √2` and `‖b‖ ^ 2 = 1 / 2`
+  obtain ⟨a, b, hab, hf⟩ := (hasOnePointFeatureRank_five_iff _).mp
+    (hasOnePointFeatureRank_of_inner (fun y => φ (j y)) hP (φ m) (hnorm m))
   have hf' : ∀ y, ⟪φ (j y), φ m⟫_ℝ = (a + ⟪b, (y : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := hf
   rw [hφ, hφ, hf', hf', Unitary.coe_neg, inner_neg_right, ← add_div,
     div_eq_one_iff_eq hσ0.ne'] at h1
@@ -425,18 +418,16 @@ theorem bijective_of_hasFeatureRank_five_of_kappa {M : Type*} (C : TernaryCompar
       rw [norm_smul, mul_pow, Real.norm_eq_abs, sq_abs, hσ, hb2]
       norm_num
     rw [← Real.sqrt_sq (norm_nonneg _), h2, Real.sqrt_one]
-  set x₀ : unitary ℍ[ℝ] := ⟨Real.sqrt 2 • b, mem_unitary_of_norm _ hu⟩
+  set x₀ : unitary ℍ[ℝ] := ⟨Real.sqrt 2 • b, by
+    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm]
+    exact hu⟩
   have hbx : ⟪b, (x₀ : ℍ[ℝ])⟫_ℝ = Real.sqrt 2 / 2 := by
     change ⟪b, Real.sqrt 2 • b⟫_ℝ = _
     rw [real_inner_smul_right, real_inner_self_eq_norm_sq, hb2]
     ring
-  have hzero : ∃ x₁, ⟪φ (j x₁), φ m⟫_ℝ = 0 := ⟨-x₀, by
-    rw [hf', Unitary.coe_neg, inner_neg_right, hbx, ← h2a]
-    ring⟩
-  obtain ⟨x₂, hx₂⟩ := ((tfae_eq_kappa_of_hasOnePointFeatureRank_five _ hf5 hf0).out 1 3).mp hzero
-  refine ⟨x₂, (C.kappa_eq_one_iff _ _).mp ?_⟩
-  rw [hφ]
-  exact (hx₂ x₂).trans (quaternionModel.kappa_self x₂)
+  -- so `m` has reading one with the point `√2 • b` of the copy
+  refine ⟨x₀, (C.kappa_eq_one_iff _ _).mp ?_⟩
+  rw [hφ, hf', hbx, show a = Real.sqrt 2 / 2 by linarith, add_halves, div_self hσ0.ne']
 
 section Doubled
 

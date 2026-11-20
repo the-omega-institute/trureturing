@@ -17,19 +17,22 @@ the extended reading are `d * t ^ 2 + 2 * t * ∑ c i * f (x i) + ∑ c i * c j 
 and the Gram form of the old points is half of `(∑ c i) ^ 2 + ‖∑ c i • x i‖ ^ 2`.
 
 If `f x = (a + ⟪b, x⟫) / √2` with `a ^ 2 + ‖b‖ ^ 2 ≤ d`, each extended form is a sum of two
-squares and a nonnegative multiple of `t ^ 2`. Conversely, the combination of `y` with the five
-points `1, -1, i, j, k` that has total weight zero and weighted sum zero has Gram form zero, so
-nonnegativity in `t` forces the readings to be compatible with this linear relation, which makes
-`f` affine in the quaternion coordinates; the combination of the five points with total weight
-`-√2 * a` and weighted sum `-√2 • b` then gives `a ^ 2 + ‖b‖ ^ 2 ≤ d`.
+squares and a nonnegative multiple of `t ^ 2`. Conversely, it suffices that the extended forms
+on six points are nonnegative. The combination of `y` with the five points `1, -1, i, j, k` that
+has total weight zero and weighted sum zero has Gram form zero, so nonnegativity in `t` forces the
+readings to be compatible with this linear relation, which makes `f` affine in the quaternion
+coordinates; the combination of the five points with total weight `-√2 * a` and weighted sum
+`-√2 • b`, padded by a sixth point of weight zero, then gives `a ^ 2 + ‖b‖ ^ 2 ≤ d`.
 
-If the extended reading is realized by unit vectors in Euclidean five-space, the old points
+If the extended reading is realized by a unit vector in Euclidean five-space, the old points
 already span that space, since the reading has feature rank at least five. The new vector is a
 combination of old ones, and the Cauchy-Schwarz inequality for its readings gives
-`a ^ 2 + ‖b‖ ^ 2 ≥ 1`. The readings are nonnegative exactly when `‖b‖ ≤ a`, the minimum of
-`⟪b, x⟫` on unit quaternions being `-‖b‖`. Under both conditions, a reading zero or a reading one
-is an equality case of the Cauchy-Schwarz inequality, which forces `a = ‖b‖ = 1 / √2` and `b` to
-be a multiple of a unit quaternion; the readings are then those of that unit quaternion. -/
+`a ^ 2 + ‖b‖ ^ 2 ≥ 1`. The readings `(a + ⟪b, x⟫) / √2` are nonnegative exactly when `‖b‖ ≤ a`,
+the minimum of `⟪b, x⟫` on unit quaternions being `-‖b‖`.
+
+A reading one, for `d = 1`, and a reading zero, for nonnegative readings of feature rank five, are
+equality cases of the Cauchy-Schwarz inequality: they force `a = ‖b‖ = 1 / √2` and `b` to be a
+multiple of a unit quaternion, and the readings are then those of that unit quaternion. -/
 
 open scoped InnerProductSpace Quaternion
 
@@ -95,17 +98,17 @@ private lemma affine_form_nonneg (a d t s : ℝ) (b q : ℍ[ℝ]) (h : a ^ 2 + �
   rw [e, key]
   exact add_nonneg (by positivity) (mul_nonneg (sq_nonneg t) (sub_nonneg.mpr h))
 
-/-- If every extended Gram form is nonnegative, a combination of old points with total weight
-zero and weighted sum zero has total reading zero against the new point. -/
+/-- If the extended Gram forms on six points are nonnegative, a combination of six old points
+with total weight zero and weighted sum zero has total reading zero against the new point. -/
 private lemma sum_mul_eq_zero (f : unitary ℍ[ℝ] → ℝ) (d : ℝ)
-    (hH : ∀ (n : ℕ) (x : Fin n → unitary ℍ[ℝ]) (c : Fin n → ℝ) (t : ℝ),
+    (hH : ∀ (x : Fin 6 → unitary ℍ[ℝ]) (c : Fin 6 → ℝ) (t : ℝ),
       0 ≤ d * t ^ 2 + 2 * t * ∑ i, c i * f (x i) +
         ∑ i, ∑ j, c i * c j * quaternionModel.kappa (x i) (x j))
-    {n : ℕ} (x : Fin n → unitary ℍ[ℝ]) (c : Fin n → ℝ) (hs : ∑ i, c i = 0)
+    (x : Fin 6 → unitary ℍ[ℝ]) (c : Fin 6 → ℝ) (hs : ∑ i, c i = 0)
     (hq : ∑ i, c i • (x i : ℍ[ℝ]) = 0) : ∑ i, c i * f (x i) = 0 := by
   set L := ∑ i, c i * f (x i)
   have hD : 0 < |d| + 1 := by positivity
-  have h := hH n x c (-L / (|d| + 1))
+  have h := hH x c (-L / (|d| + 1))
   rw [gram_eq, hs, hq, norm_zero] at h
   have e : d * (-L / (|d| + 1)) ^ 2 + 2 * (-L / (|d| + 1)) * L + ((0 : ℝ) ^ 2 + 0 ^ 2) / 2 =
       (d * L ^ 2 - 2 * L ^ 2 * (|d| + 1)) / (|d| + 1) ^ 2 := by
@@ -149,9 +152,9 @@ private lemma exists_unit_smul (b : ℍ[ℝ]) : ∃ u : unitary ℍ[ℝ], b = �
     · change b = ‖b‖ • (‖b‖⁻¹ • b)
       rw [smul_smul, mul_inv_cancel₀ hn, one_smul]
 
-/-- The readings `(a + ⟪b, x⟫) / √2` on the unit quaternions are nonnegative exactly when
-`‖b‖ ≤ a`. -/
-private lemma forall_nonneg_iff (a : ℝ) (b : ℍ[ℝ]) :
+/-- The affine readings `(a + ⟪b, x⟫) / √2` on the unit quaternions are nonnegative exactly when
+`‖b‖ ≤ a`: the minimum of `⟪b, x⟫` over unit quaternions `x` is `-‖b‖`. -/
+theorem forall_nonneg_iff_norm_le (a : ℝ) (b : ℍ[ℝ]) :
     (∀ x : unitary ℍ[ℝ], 0 ≤ (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2) ↔ ‖b‖ ≤ a := by
   have hσ0 : 0 < Real.sqrt 2 := by positivity
   constructor
@@ -169,19 +172,24 @@ private lemma forall_nonneg_iff (a : ℝ) (b : ℍ[ℝ]) :
     rw [CStarRing.norm_coe_unitary, mul_one] at hx
     exact div_nonneg (by linarith [neg_abs_le ⟪b, (x : ℍ[ℝ])⟫_ℝ]) hσ0.le
 
-/-- One-point extensions of the unit-quaternion reading. Extending the reading by one point with
-self-reading `d` keeps every finite Gram form nonnegative exactly when the new readings are
+/-- One-point extensions of the unit-quaternion reading. For a new point with self-reading `d`
+and readings `f` against the old points, the following are equivalent: every finite extended Gram
+form is nonnegative; every extended Gram form on six points is nonnegative; the new readings are
 `(a + ⟪b, x⟫) / √2` with `a ^ 2 + ‖b‖ ^ 2 ≤ d`. -/
-theorem onePointExtension_iff (f : unitary ℍ[ℝ] → ℝ) (d : ℝ) :
-    (∀ (n : ℕ) (x : Fin n → unitary ℍ[ℝ]) (c : Fin n → ℝ) (t : ℝ),
+theorem tfae_onePointExtension (f : unitary ℍ[ℝ] → ℝ) (d : ℝ) :
+    List.TFAE [∀ (n : ℕ) (x : Fin n → unitary ℍ[ℝ]) (c : Fin n → ℝ) (t : ℝ),
         0 ≤ d * t ^ 2 + 2 * t * ∑ i, c i * f (x i) +
-          ∑ i, ∑ j, c i * c j * quaternionModel.kappa (x i) (x j)) ↔
+          ∑ i, ∑ j, c i * c j * quaternionModel.kappa (x i) (x j),
+      ∀ (x : Fin 6 → unitary ℍ[ℝ]) (c : Fin 6 → ℝ) (t : ℝ),
+        0 ≤ d * t ^ 2 + 2 * t * ∑ i, c i * f (x i) +
+          ∑ i, ∑ j, c i * c j * quaternionModel.kappa (x i) (x j),
       ∃ (a : ℝ) (b : ℍ[ℝ]), a ^ 2 + ‖b‖ ^ 2 ≤ d ∧
-        ∀ x : unitary ℍ[ℝ], f x = (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := by
+        ∀ x : unitary ℍ[ℝ], f x = (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2] := by
   have hσ : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hσ0 : 0 < Real.sqrt 2 := by positivity
-  constructor
-  · intro hH
+  tfae_have 1 → 2 := fun hH x c t => hH 6 x c t
+  tfae_have 2 → 3 := by
+    intro hH
     -- the readings satisfy the linear relation of `y` with `1, -1, i, j, k`
     have hrep : ∀ y : unitary ℍ[ℝ], f y = ∑ k, coef 1 (y : ℍ[ℝ]) k * f (pts k) := by
       intro y
@@ -205,10 +213,20 @@ theorem onePointExtension_iff (f : unitary ℍ[ℝ] → ℝ) (d : ℝ) :
       simp [coef]
       ring
     refine ⟨a, b, ?_, hab⟩
-    -- the combination with total weight `-√2 * a` and weighted sum `-√2 • b`
-    have hb := hH 5 pts (coef (-(Real.sqrt 2 * a)) (-(Real.sqrt 2 • b))) 1
+    -- the combination with total weight `-√2 * a` and weighted sum `-√2 • b`, padded by `1`
+    set μ : Fin 5 → ℝ := coef (-(Real.sqrt 2 * a)) (-(Real.sqrt 2 • b)) with hμ
+    have hs : ∑ i, (Fin.cons 0 μ : Fin 6 → ℝ) i = -(Real.sqrt 2 * a) := by
+      rw [Fin.sum_univ_succ]
+      simp only [Fin.cons_zero, Fin.cons_succ, zero_add, hμ]
+      exact sum_coef _ _
+    have hq : ∑ i, (Fin.cons 0 μ : Fin 6 → ℝ) i •
+        ((Fin.cons 1 pts : Fin 6 → unitary ℍ[ℝ]) i : ℍ[ℝ]) = -(Real.sqrt 2 • b) := by
+      rw [Fin.sum_univ_succ]
+      simp only [Fin.cons_zero, Fin.cons_succ, zero_smul, zero_add, hμ]
+      exact sum_coef_smul _ _
+    have hb := hH (Fin.cons 1 pts) (Fin.cons 0 μ) 1
     simp only [hab] at hb
-    rw [sum_mul_affine, gram_eq, sum_coef, sum_coef_smul, inner_neg_right, real_inner_smul_right,
+    rw [sum_mul_affine, gram_eq, hs, hq, inner_neg_right, real_inner_smul_right,
       real_inner_self_eq_norm_sq, norm_neg, norm_smul, mul_pow, Real.norm_eq_abs, sq_abs, hσ]
       at hb
     have e1 : (a * -(Real.sqrt 2 * a) + -(Real.sqrt 2 * ‖b‖ ^ 2)) / Real.sqrt 2 =
@@ -218,11 +236,13 @@ theorem onePointExtension_iff (f : unitary ℍ[ℝ] → ℝ) (d : ℝ) :
     have e2 : (-(Real.sqrt 2 * a)) ^ 2 = 2 * a ^ 2 := by rw [neg_sq, mul_pow, hσ]
     rw [e1, e2] at hb
     linarith
-  · rintro ⟨a, b, hd, hf⟩ n x c t
+  tfae_have 3 → 1 := by
+    rintro ⟨a, b, hd, hf⟩ n x c t
     have hs : ∑ i, c i * f (x i) = ∑ i, c i * ((a + ⟪b, (x i : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2) :=
       Finset.sum_congr rfl fun i _ => by rw [hf]
     rw [hs, sum_mul_affine, gram_eq]
     exact affine_form_nonneg a d t _ b _ hd
+  tfae_finish
 
 /-- A realized one-point extension has nonnegative extended Gram forms with `d = ‖z‖ ^ 2`. -/
 private lemma form_nonneg_of_realization {E : Type*} [NormedAddCommGroup E]
@@ -332,92 +352,103 @@ private lemma norm_vecAB (a : ℝ) (b : ℍ[ℝ]) (h : a ^ 2 + ‖b‖ ^ 2 = 1) 
     rw [e, real_inner_self_eq_norm_sq, h]
   rw [← Real.sqrt_sq (norm_nonneg _), h2, Real.sqrt_one]
 
-/-- The nonnegative one-point extensions of the unit-quaternion reading of feature rank five are
-exactly the readings `(a + ⟪b, x⟫) / √2` with `‖b‖ ≤ a` and `a ^ 2 + ‖b‖ ^ 2 = 1`. -/
+/-- The one-point extensions of the unit-quaternion reading of feature rank five are exactly the
+readings `(a + ⟪b, x⟫) / √2` with `a ^ 2 + ‖b‖ ^ 2 = 1`. -/
 theorem hasOnePointFeatureRank_five_iff (f : unitary ℍ[ℝ] → ℝ) :
-    (HasOnePointFeatureRank f 5 ∧ ∀ x, 0 ≤ f x) ↔
-      ∃ (a : ℝ) (b : ℍ[ℝ]), ‖b‖ ≤ a ∧ a ^ 2 + ‖b‖ ^ 2 = 1 ∧
-        ∀ x : unitary ℍ[ℝ], f x = (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := by
+    HasOnePointFeatureRank f 5 ↔ ∃ (a : ℝ) (b : ℍ[ℝ]), a ^ 2 + ‖b‖ ^ 2 = 1 ∧
+      ∀ x : unitary ℍ[ℝ], f x = (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 := by
   constructor
-  · rintro ⟨⟨φ, hk, hf, hn⟩, h0⟩
-    obtain ⟨a, b, hle, hab⟩ := (onePointExtension_iff f 1).mp fun n x c t => by
+  · rintro ⟨φ, hk, hf, hn⟩
+    obtain ⟨a, b, hle, hab⟩ := ((tfae_onePointExtension f 1).out 1 3).mp fun n x c t => by
       have h := form_nonneg_of_realization (fun x => φ (some x)) (φ none) hk f hf n x c t
       rwa [hn, one_pow] at h
-    refine ⟨a, b, (forall_nonneg_iff a b).mp fun x => hab x ▸ h0 x,
-      le_antisymm hle (one_le_of_five _ _ hk hn a b fun x => (hf x).symm.trans (hab x)), hab⟩
-  · rintro ⟨a, b, hba, hab, hf⟩
-    refine ⟨⟨fun o => o.elim (vecAB a b) fun x => feature x, fun x y => (inner_feature x y).symm,
-      fun x => (hf x).trans (inner_feature_vecAB a b x).symm, norm_vecAB a b hab⟩, fun x => ?_⟩
-    rw [hf x]
-    exact (forall_nonneg_iff a b).mpr hba x
+    exact ⟨a, b, le_antisymm hle (one_le_of_five _ _ hk hn a b fun x => (hf x).symm.trans (hab x)),
+      hab⟩
+  · rintro ⟨a, b, hab, hf⟩
+    exact ⟨fun o => o.elim (vecAB a b) fun x => feature x, fun x y => (inner_feature x y).symm,
+      fun x => (hf x).trans (inner_feature_vecAB a b x).symm, norm_vecAB a b hab⟩
 
-/-- A nonnegative one-point extension of feature rank five reads zero against some old point
-exactly when it reads one against some old point, exactly when it is the reading of an old
+/-- If `a ^ 2 + ‖b‖ ^ 2 = 1` and `a = ‖b‖`, then `2 * a = √2`. -/
+private lemma two_mul_eq_sqrt_two {a : ℝ} {b : ℍ[ℝ]} (hab : a ^ 2 + ‖b‖ ^ 2 = 1) (hba : ‖b‖ = a) :
+    2 * a = Real.sqrt 2 := by
+  have hσ : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have ha0 : 0 ≤ a := hba ▸ norm_nonneg b
+  have h2 : (2 * a) ^ 2 = Real.sqrt 2 ^ 2 := by
+    rw [hba] at hab
+    rw [hσ]
+    linear_combination 2 * hab
+  exact (pow_left_inj₀ (by positivity) (Real.sqrt_nonneg 2) two_ne_zero).mp h2
+
+/-- Equality case of the Cauchy-Schwarz inequality: if `2 * a = √2`, `‖b‖ = a` and
+`⟪b, x₀⟫ = ‖b‖` for a unit quaternion `x₀`, then `b = a • x₀` and the readings
+`(a + ⟪b, x⟫) / √2` are the readings `kappa x x₀` of `x₀`. -/
+private lemma affine_eq_kappa (a : ℝ) (b : ℍ[ℝ]) (x₀ : unitary ℍ[ℝ])
+    (h2a : 2 * a = Real.sqrt 2) (hba : ‖b‖ = a) (hbx : ⟪b, (x₀ : ℍ[ℝ])⟫_ℝ = ‖b‖)
+    (x : unitary ℍ[ℝ]) :
+    (a + ⟪b, (x : ℍ[ℝ])⟫_ℝ) / Real.sqrt 2 = quaternionModel.kappa x x₀ := by
+  have hσ0 : 0 < Real.sqrt 2 := by positivity
+  have hx₀ : ‖(x₀ : ℍ[ℝ])‖ = 1 := CStarRing.norm_coe_unitary x₀
+  have hb : b = a • (x₀ : ℍ[ℝ]) := by
+    have h := (inner_eq_norm_mul_iff_real (x := b) (y := (x₀ : ℍ[ℝ]))).mp
+      (by rw [hbx, hx₀, mul_one])
+    rwa [hx₀, one_smul, hba] at h
+  rw [hb, real_inner_smul_left, real_inner_comm]
+  change _ = (1 + ⟪(x : ℍ[ℝ]), (x₀ : ℍ[ℝ])⟫_ℝ) / 2
+  rw [div_eq_div_iff hσ0.ne' two_ne_zero, ← h2a]
+  ring
+
+/-- A one-point extension of the unit-quaternion reading with self-reading one and nonnegative
+extended Gram forms reads one against some old point exactly when it is the reading of an old
 point. -/
-theorem tfae_eq_kappa_of_hasOnePointFeatureRank_five (f : unitary ℍ[ℝ] → ℝ)
-    (hf : HasOnePointFeatureRank f 5) (h0 : ∀ x, 0 ≤ f x) :
-    List.TFAE [∃ x₁, f x₁ = 0, ∃ x₁, f x₁ = 1,
-      ∃ x₀, ∀ x, f x = quaternionModel.kappa x x₀] := by
-  obtain ⟨a, b, hba, hab, hfab⟩ := (hasOnePointFeatureRank_five_iff f).mp ⟨hf, h0⟩
+theorem exists_eq_one_iff_exists_eq_kappa (f : unitary ℍ[ℝ] → ℝ)
+    (hf : ∀ (n : ℕ) (x : Fin n → unitary ℍ[ℝ]) (c : Fin n → ℝ) (t : ℝ),
+      0 ≤ t ^ 2 + 2 * t * ∑ i, c i * f (x i) +
+        ∑ i, ∑ j, c i * c j * quaternionModel.kappa (x i) (x j)) :
+    (∃ x₁, f x₁ = 1) ↔ ∃ x₀, ∀ x, f x = quaternionModel.kappa x x₀ := by
+  obtain ⟨a, b, hab, hfab⟩ := ((tfae_onePointExtension f 1).out 1 3).mp fun n x c t => by
+    rw [one_mul]
+    exact hf n x c t
   have hσ : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hσ0 : 0 < Real.sqrt 2 := by positivity
-  have hcs : ∀ x : unitary ℍ[ℝ], |⟪b, (x : ℍ[ℝ])⟫_ℝ| ≤ ‖b‖ := fun x => by
-    have h := abs_real_inner_le_norm b (x : ℍ[ℝ])
-    rwa [CStarRing.norm_coe_unitary, mul_one] at h
-  -- in both equality cases `a = ‖b‖ = 1 / √2`, that is `2 * a = √2`
-  have half : ∀ (x₁ : unitary ℍ[ℝ]) (ε : ℝ), ε ^ 2 = 1 → ‖b‖ = a →
-      ⟪b, (x₁ : ℍ[ℝ])⟫_ℝ = ε * ‖b‖ → b = (ε * ‖b‖) • (x₁ : ℍ[ℝ]) ∧ 2 * a = Real.sqrt 2 := by
-    intro x₁ ε hε hba' hbx
-    have ha0 : 0 ≤ a := hba' ▸ norm_nonneg b
-    have h2a : (2 * a) ^ 2 = Real.sqrt 2 ^ 2 := by rw [hσ]; nlinarith [hab, hba']
-    refine ⟨?_, (pow_left_inj₀ (by positivity) hσ0.le two_ne_zero).mp h2a⟩
-    have hz : ‖b - (ε * ‖b‖) • (x₁ : ℍ[ℝ])‖ ^ 2 = 0 := by
-      rw [norm_sub_sq_real, real_inner_smul_right, hbx, norm_smul, mul_pow, Real.norm_eq_abs,
-        sq_abs, CStarRing.norm_coe_unitary]
-      linear_combination (-‖b‖ ^ 2) * hε
-    exact sub_eq_zero.mp (norm_eq_zero.mp (pow_eq_zero_iff two_ne_zero |>.mp hz))
-  have reading : ∀ (x₀ : unitary ℍ[ℝ]), b = a • (x₀ : ℍ[ℝ]) → 2 * a = Real.sqrt 2 →
-      ∀ x, f x = quaternionModel.kappa x x₀ := by
-    intro x₀ hb h2a x
-    rw [hfab, hb, real_inner_smul_left, real_inner_comm]
-    change _ = (1 + ⟪(x : ℍ[ℝ]), (x₀ : ℍ[ℝ])⟫_ℝ) / 2
-    rw [div_eq_div_iff hσ0.ne' two_ne_zero, ← h2a]
-    ring
-  tfae_have 1 → 3 := by
-    rintro ⟨x₁, hx₁⟩
-    rw [hfab, div_eq_zero_iff, or_iff_left hσ0.ne'] at hx₁
-    have hle : a ≤ ‖b‖ := by linarith [neg_abs_le ⟪b, (x₁ : ℍ[ℝ])⟫_ℝ, hcs x₁]
-    have hba' : ‖b‖ = a := le_antisymm hba hle
-    obtain ⟨hb, h2a⟩ := half x₁ (-1) (by norm_num) hba' (by linarith)
-    refine ⟨-x₁, reading (-x₁) ?_ h2a⟩
-    rw [hb, Unitary.coe_neg, hba', smul_neg, neg_one_mul, neg_smul]
-  tfae_have 2 → 3 := by
-    rintro ⟨x₁, hx₁⟩
+  constructor
+  · rintro ⟨x₁, hx₁⟩
     rw [hfab, div_eq_one_iff_eq hσ0.ne'] at hx₁
-    have hle := le_abs_self ⟪b, (x₁ : ℍ[ℝ])⟫_ℝ
-    have hb1 := hcs x₁
-    have hba' : ‖b‖ = a := by
-      have h1 : Real.sqrt 2 ≤ a + ‖b‖ := by linarith
-      have h2 : 2 ≤ (a + ‖b‖) ^ 2 := by
-        rw [← hσ]
-        exact pow_le_pow_left₀ hσ0.le h1 2
-      nlinarith [sq_nonneg (a - ‖b‖)]
-    have h2a : 2 * a = Real.sqrt 2 := by
-      have ha0 : 0 ≤ a := hba' ▸ norm_nonneg b
-      have h2a : (2 * a) ^ 2 = Real.sqrt 2 ^ 2 := by rw [hσ]; nlinarith [hab, hba']
-      exact (pow_left_inj₀ (by positivity) hσ0.le two_ne_zero).mp h2a
-    obtain ⟨hb, -⟩ := half x₁ 1 (by norm_num) hba' (by rw [one_mul]; linarith)
-    exact ⟨x₁, reading x₁ (by rw [hb, one_mul, hba']) h2a⟩
-  tfae_have 3 → 1 := by
-    rintro ⟨x₀, hx₀⟩
+    have hle := real_inner_le_norm b (x₁ : ℍ[ℝ])
+    rw [CStarRing.norm_coe_unitary, mul_one] at hle
+    have h2 : 2 ≤ (a + ‖b‖) ^ 2 := by
+      rw [← hσ]
+      exact pow_le_pow_left₀ hσ0.le (by linarith) 2
+    have hba : ‖b‖ = a := by nlinarith [sq_nonneg (a - ‖b‖)]
+    have hab1 : a ^ 2 + ‖b‖ ^ 2 = 1 := by nlinarith [sq_nonneg (a - ‖b‖)]
+    have h2a := two_mul_eq_sqrt_two hab1 hba
+    exact ⟨x₁, fun x => (hfab x).trans
+      (affine_eq_kappa a b x₁ h2a hba (by linarith) x)⟩
+  · rintro ⟨x₀, hx₀⟩
+    exact ⟨x₀, by rw [hx₀, quaternionModel.kappa_self]⟩
+
+/-- A nonnegative one-point extension of the unit-quaternion reading of feature rank five reads
+zero against some old point exactly when it is the reading of an old point. -/
+theorem exists_eq_zero_iff_exists_eq_kappa (f : unitary ℍ[ℝ] → ℝ)
+    (hf : HasOnePointFeatureRank f 5) (h0 : ∀ x, 0 ≤ f x) :
+    (∃ x₁, f x₁ = 0) ↔ ∃ x₀, ∀ x, f x = quaternionModel.kappa x x₀ := by
+  obtain ⟨a, b, hab, hfab⟩ := (hasOnePointFeatureRank_five_iff f).mp hf
+  have hσ0 : 0 < Real.sqrt 2 := by positivity
+  have hba : ‖b‖ ≤ a := (forall_nonneg_iff_norm_le a b).mp fun x => hfab x ▸ h0 x
+  constructor
+  · rintro ⟨x₁, hx₁⟩
+    rw [hfab, div_eq_zero_iff, or_iff_left hσ0.ne'] at hx₁
+    have hle := abs_real_inner_le_norm b (x₁ : ℍ[ℝ])
+    rw [CStarRing.norm_coe_unitary, mul_one] at hle
+    have hba' : ‖b‖ = a := le_antisymm hba (by linarith [neg_abs_le ⟪b, (x₁ : ℍ[ℝ])⟫_ℝ])
+    refine ⟨-x₁, fun x => (hfab x).trans (affine_eq_kappa a b (-x₁)
+      (two_mul_eq_sqrt_two hab hba') hba' ?_ x)⟩
+    rw [Unitary.coe_neg, inner_neg_right]
+    linarith
+  · rintro ⟨x₀, hx₀⟩
     refine ⟨-x₀, ?_⟩
     rw [hx₀]
     change (1 + ⟪((-x₀ : unitary ℍ[ℝ]) : ℍ[ℝ]), (x₀ : ℍ[ℝ])⟫_ℝ) / 2 = 0
     rw [Unitary.coe_neg, inner_neg_left, real_inner_self_eq_norm_sq, CStarRing.norm_coe_unitary]
     norm_num
-  tfae_have 3 → 2 := by
-    rintro ⟨x₀, hx₀⟩
-    exact ⟨x₀, by rw [hx₀, quaternionModel.kappa_self]⟩
-  tfae_finish
 
 end D5.S3.Quantum.AURICOmega.QuaternionReadingOnePointExtension
