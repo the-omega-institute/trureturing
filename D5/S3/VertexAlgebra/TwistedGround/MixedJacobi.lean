@@ -480,25 +480,17 @@ private theorem weight_two_vacuum_pairing (D : LatticeData) (hu : IsUnit D.G.det
   rw [vacuum_coeff]
   norm_num
 
-/-- A nonzero normalized vacuum channel on the actual Golay Leech lattice,
-at standard mode I_3 and actual twisted weight two. The original ordered
-bilinear form is used; no positive form or symmetry premise is introduced. -/
-theorem actual_leech_vacuum_channel :
-    ∃ (D : LatticeData)
-      (e : Charge D ≃ₗ[ℤ] D5.S3.Arith.Lattices.Golay.RealLeech.lattice)
-      (hu : IsUnit D.G.det),
-      D.rank = 24 ∧ Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)) ∧
-      (∀ a c : Charge D, (bilinear D a c : ℝ) =
-        D5.S3.Arith.Lattices.Golay.RealLeech.pairing (e a) (e c)) ∧
-      ∃ (a : fixedGrade D 0) (u v : paritySpace D hu (-1)),
-        a.val = vacuum D ∧
-        actualTensorL0 D hu u.val = (2 : ℂ) • u.val ∧
-        actualTensorL0 D hu v.val = (2 : ℂ) • v.val ∧
-        normalizedCoefficient D hu 3 u v 0 a = actualForm D hu v.val u.val ∧
-        normalizedCoefficient D hu 3 u v 0 a ≠ 0 := by
+/-- The ordered twisted pairing detects the normalized mode-three vacuum
+coefficient on two negative weight-two vectors in rank 24. -/
+theorem weight_two_normalized_vacuum_witness (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (hpos : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
+    ∃ (a : fixedGrade D 0) (u v : paritySpace D hu (-1)),
+      a.val = vacuum D ∧
+      actualTensorL0 D hu u.val = (2 : ℂ) • u.val ∧
+      actualTensorL0 D hu v.val = (2 : ℂ) • v.val ∧
+      normalizedCoefficient D hu 3 u v 0 a = actualForm D hu v.val u.val ∧
+      normalizedCoefficient D hu 3 u v 0 a ≠ 0 := by
   classical
-  obtain ⟨D,e,h24,hu,hpos,hpair⟩ :=
-    D5.S3.Arith.Lattices.Golay.RealLeech.exists_positive_even_unimodular_gram
   let b := actualAmbientBasis D hu
   let i : OddMonomial D × LatticeTwistedGroundRealization.Half (groundRank D hu) :=
     (Finsupp.single (⟨0, by omega⟩,0) 1, 0)
@@ -552,9 +544,31 @@ theorem actual_leech_vacuum_channel :
   let u : paritySpace D hu (-1) := ⟨b i,iparity⟩
   let v : paritySpace D hu (-1) := ⟨b j,jparity⟩
   have evaluation := weight_two_vacuum_pairing D hu h24 u v ui vj a rfl
-  refine ⟨D,e,hu,h24,hpos,hpair,a,u,v,rfl,ui,vj,evaluation,?_⟩
+  refine ⟨a, u, v, rfl, ui, vj, evaluation, ?_⟩
   rw [evaluation]
   exact hj
+
+/-- A nonzero normalized vacuum channel on the actual Golay Leech lattice,
+at standard mode I_3 and actual twisted weight two. The original ordered
+bilinear form is used; no positive form or symmetry premise is introduced. -/
+theorem actual_leech_vacuum_channel :
+    ∃ (D : LatticeData)
+      (e : Charge D ≃ₗ[ℤ] D5.S3.Arith.Lattices.Golay.RealLeech.lattice)
+      (hu : IsUnit D.G.det),
+      D.rank = 24 ∧ Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)) ∧
+      (∀ a c : Charge D, (bilinear D a c : ℝ) =
+        D5.S3.Arith.Lattices.Golay.RealLeech.pairing (e a) (e c)) ∧
+      ∃ (a : fixedGrade D 0) (u v : paritySpace D hu (-1)),
+        a.val = vacuum D ∧
+        actualTensorL0 D hu u.val = (2 : ℂ) • u.val ∧
+        actualTensorL0 D hu v.val = (2 : ℂ) • v.val ∧
+        normalizedCoefficient D hu 3 u v 0 a = actualForm D hu v.val u.val ∧
+        normalizedCoefficient D hu 3 u v 0 a ≠ 0 := by
+  obtain ⟨D,e,h24,hu,hpos,hpair⟩ :=
+    D5.S3.Arith.Lattices.Golay.RealLeech.exists_positive_even_unimodular_gram
+  obtain ⟨a, u, v, ha, huH, hvK, heval, hne⟩ :=
+    weight_two_normalized_vacuum_witness D hu h24 hpos
+  exact ⟨D, e, hu, h24, hpos, hpair, a, u, v, ha, huH, hvK, heval, hne⟩
 
 
 open private homogeneous_coefficient ambientCoefficient liftGrade kernel oppositePull
