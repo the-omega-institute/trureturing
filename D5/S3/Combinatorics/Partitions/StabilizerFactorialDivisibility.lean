@@ -63,10 +63,19 @@ private theorem removeOne_factorials {I : Type*} [Fintype I] [DecidableEq I]
 /-- The block factorial product divides each scaled block mass when the total mass
 is divisible by one less than the number of labels. -/
 theorem factorial_product_dvd_scaled_coordinate {I : Type*} [Fintype I]
-    {k : ℕ} (hk : 2 ≤ k) (s v : I → ℕ) (total : ∑ i, s i = k)
+    {k : ℕ} (s v : I → ℕ) (total : ∑ i, s i = k)
     (divisible : k-1 ∣ ∑ i, s i * v i) (i : I) :
     (∏ j, (s j)!) ∣ (k-2)! * (s i * v i) := by
   classical
+  by_cases hk : 2 ≤ k
+  swap
+  · have factorialOne : Nat.factorial k = 1 := by
+      have small : k = 0 ∨ k = 1 := by omega
+      rcases small with rfl | rfl <;> decide
+    have h := Nat.prod_factorial_dvd_factorial_sum univ s
+    rw [total, factorialOne] at h
+    rw [Nat.dvd_one.mp h]
+    exact one_dvd _
   by_cases hsi : s i = 0
   · simp [hsi]
   let b := removeOne s i
