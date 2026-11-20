@@ -74,35 +74,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.exist
 
 Recurse on the strict decrease in carrier cardinality along graph and complement component cuts.
 
-**Definition 1.6 (Leaf addresses).**
-
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.Leaves`
-
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.Leaves` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
-
-*Commentary.*
-
-At a node use a dependent pair of a component and its child leaf address.
-
-**Definition 1.7 (Leaf address equivalence).**
-
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.leavesEquiv`
-
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.leavesEquiv` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
-
-*Commentary.*
-
-The leaf addresses enumerate the original vertices bijectively.
-
-**Theorem 1.8 (Cross edges).**
+**Theorem 1.6 (Cross edges).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_iff_join_of_component_ne`
 
@@ -116,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_i
 
 Distinct components of the cut are completely adjacent at a join and completely nonadjacent at a union.
 
-**Theorem 1.9 (Internal support).**
+**Theorem 1.7 (Internal support).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.nontrivial_iff`
 
@@ -130,21 +102,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.nontr
 
 A subtree has a nontrivial carrier exactly when it has an internal root.
 
-**Theorem 1.10 (Adjacency on leaf addresses).**
-
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_leaves_node`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_leaves_node` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
-
-*Commentary.*
-
-Use child adjacency within a component and the parent label across components.
-
-**Theorem 1.11 (Universal vertices).**
+**Theorem 1.8 (Universal vertices).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.universal_iff_leaf_child`
 
@@ -158,7 +116,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.unive
 
 At a join, the universal vertices are precisely those in leaf children.
 
-**Theorem 1.12 (Join root).**
+**Theorem 1.9 (Join root).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.exists_join_root`
 
@@ -172,7 +130,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.exist
 
 A nontrivial connected cograph has a normalized cotree with join at its root.
 
-**Theorem 1.13 (Leaf width).**
+**Theorem 1.10 (Leaf width).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.width_leaf`
 
@@ -186,7 +144,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.width
 
 Each singleton subtree has width one.
 
-**Theorem 1.14 (Width at an internal node).**
+**Theorem 1.11 (Width at an internal node).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.width_node`
 
@@ -203,13 +161,10 @@ Take the maximum of one and the sum of the widths of the nonleaf children.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.Cotree`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.Leaves`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_iff_join_of_component_ne`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.adj_leaves_node`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.cutGraph`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.exists_cotree`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.exists_join_root`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.leavesEquiv`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.nontrivial_iff`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.not_connected_compl_of_not_induced_pathFour`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree.rootKind`

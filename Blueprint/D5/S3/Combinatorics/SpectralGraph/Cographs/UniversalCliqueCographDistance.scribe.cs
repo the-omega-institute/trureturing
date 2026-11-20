@@ -17,7 +17,7 @@ internal sealed class UniversalCliqueCographDistanceDocument : IScribeDocumentDe
         Blocks(
             Paragraph(Text("Open Problem 14.2(ii) has a characterization clause and an explicit infinite-family clause. "
                 + "The results here give the explicit family and classify its parameters at the fixed shift s − 2. "
-                + "The source question and its bound are in "), Ref(Survey.Value), Text(".")),
+                + "The survey states the question on p. 22 and the bound as Theorem 6.4 on p. 14. See "), Ref(Survey.Value), Text(".")),
             Entry("Vertex", "Native vertex carrier",
                 "For natural r, s and b the vertices are Fin r ⊕ ((Fin s ⊕ Fin s) ⊕ Fin b). "
                 + "The four summands are the hub clique, the two bipartite parts and the isolates.",

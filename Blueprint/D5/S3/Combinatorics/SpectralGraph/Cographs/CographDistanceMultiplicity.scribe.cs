@@ -36,5 +36,8 @@ internal sealed class CographDistanceMultiplicityDocument : IScribeDocumentDefin
                     + "s isolated vertices. Its order is 6s−3, its width is two, and its ordinary "
                     + "distance multiplicity is two at the eligible shift s−2. Strictly increasing "
                     + "orders give pairwise nonisomorphic connected cographs."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("manna-mandal-tura-2026-cograph-distance-multiplicity"),
+                ResolutionKind.Proved)))));
 }

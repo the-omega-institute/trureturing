@@ -25,7 +25,7 @@ internal sealed class CographVicinalWidthDocument : IScribeDocumentDefinition
             Entry("width_singleton", "Singleton width",
                 "The unique vertex requires and supplies one chain."),
             Entry("width_components", "Width of a component cut",
-                "Take the maximum of one and the sum of the widths of the nonsingleton components. Isolates can be placed in an existing chain."))));
+                "For a finite nonempty graph, take the maximum of one and the sum of the widths of the nonsingleton components. Isolates can be placed in an existing chain."))));
 
     private static DocumentBlock Entry(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) =>

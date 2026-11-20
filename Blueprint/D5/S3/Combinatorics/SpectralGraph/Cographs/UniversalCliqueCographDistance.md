@@ -4,7 +4,7 @@
 
 A native width-two cograph family attains the ordinary distance multiplicity bound at unbounded orders.
 
-Open Problem 14.2(ii) has a characterization clause and an explicit infinite-family clause. The results here give the explicit family and classify its parameters at the fixed shift s − 2. The source question and its bound are in `D5/L/QuadraticForms/mannamandaltura2026cographdistance`.
+Open Problem 14.2(ii) has a characterization clause and an explicit infinite-family clause. The results here give the explicit family and classify its parameters at the fixed shift s − 2. The survey states the question on p. 22 and the bound as Theorem 6.4 on p. 14. See `D5/L/QuadraticForms/mannamandaltura2026cographdistance`.
 
 **Definition 1.1 (Native vertex carrier).**
 
@@ -230,22 +230,6 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCogra
 
 Choose the divisor s−1, so r=3(s−1) and b=s. The graph has order 6s−3, is connected and induced-P4-free, and has vicinal width two. The real shift s−2 is distinct from −1 and −2, belongs to the ordinary distance spectrum, and has real eigenspace dimension two.
 
-**Theorem 1.15 (Unbounded orders).**
-
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.unbounded_family`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.unbounded_family` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
-
-*Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
-
-*Commentary.*
-
-For every natural threshold n take s=n+2. Then s ≥ 2 and the order exceeds n. This witness is connected and induced-P4-free, has width two, and has s−2 in its ordinary distance spectrum with dimension two and s−2 distinct from −1 and −2. The order 6s−3 strictly increases with s, so the graphs are pairwise nonisomorphic.
-
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.Vertex`
@@ -261,6 +245,5 @@ For every natural threshold n take s=n+2. Then s ≥ 2 and the order exceeds n. 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.shiftedKernel`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.shiftedKernel_finrank`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.two_chain_cover`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.unbounded_family`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance.width`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation](../MandalMannaDQDilworthRefutation.md)

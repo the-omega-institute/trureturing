@@ -32,21 +32,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.hasChainC
 
 The same assignment to chain labels works for a graph and its complement.
 
-**Theorem 1.3 (Complement invariance).**
-
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthNumber_compl`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthNumber_compl` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
-
-*Commentary.*
-
-Complementation preserves the infimum of feasible chain-cover sizes.
-
-**Definition 1.4 (Natural width).**
+**Definition 1.3 (Natural width).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width`
 
@@ -60,7 +46,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width`
 
 On finite graphs choose the least feasible vicinal chain-cover size.
 
-**Theorem 1.5 (Agreement of the two widths).**
+**Theorem 1.4 (Agreement of the two widths).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthNumber_eq_width`
 
@@ -74,7 +60,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthN
 
 The least natural size equals the extended-natural infimum after casting.
 
-**Theorem 1.6 (Natural width under complement).**
+**Theorem 1.5 (Natural width under complement).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_compl`
 
@@ -88,7 +74,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_com
 
 A graph and its complement have the same natural width.
 
-**Theorem 1.7 (Singleton width).**
+**Theorem 1.6 (Singleton width).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_singleton`
 
@@ -102,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_sin
 
 The unique vertex requires and supplies one chain.
 
-**Theorem 1.8 (Width of a component cut).**
+**Theorem 1.7 (Width of a component cut).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_components`
 
@@ -114,11 +100,10 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.width_com
 
 *Commentary.*
 
-Take the maximum of one and the sum of the widths of the nonsingleton components. Isolates can be placed in an existing chain.
+For a finite nonempty graph, take the maximum of one and the sum of the widths of the nonsingleton components. Isolates can be placed in an existing chain.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthNumber_compl`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.dilworthNumber_eq_width`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.hasChainCover_compl_iff`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/CographVicinalWidth.vicinal_compl_iff`
