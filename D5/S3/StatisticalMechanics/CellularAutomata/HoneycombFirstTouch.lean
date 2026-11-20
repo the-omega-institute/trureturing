@@ -7,10 +7,6 @@
    digest: Synchronous first-touch dynamics and strict horizons in clipped honeycomb domains. -/
 
 import D5.S3.StatisticalMechanics.HoneycombCylinderCoordination
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Prod
-import Mathlib.Data.Int.Interval
 import Mathlib.Data.Nat.Bitwise
 import Mathlib.Data.Nat.Choose.Lucas
 

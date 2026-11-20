@@ -26,3 +26,14 @@ correction.
 [Section 9](https://arxiv.org/html/2611.23172v1#S9.p3) poses the all-prefix
 question. Theorem 39 is stated for the eventual range and Appendix B,
 Proposition 43 reports finite checks through degree 63.
+
+## Verified locator
+
+Versioned preprint https://arxiv.org/html/2611.23172v1. Page numbers refer to
+the PDF of the same version.
+
+- §4.5, p. 14, equation (17) defines the signed kernel and its coefficients. [Equation (17)](https://arxiv.org/html/2611.23172v1#S4.E17)
+- §8.3, p. 28, Theorem 39 gives periodicity for the eventual range. [Theorem 39](https://arxiv.org/html/2611.23172v1#Thmtheorem39)
+- §8.4, p. 29, equation (43) defines the period readout and the prefix correction. [Equation (43)](https://arxiv.org/html/2611.23172v1#S8.E43)
+- §9, p. 30, asks whether all prefix corrections vanish. [Third paragraph of §9](https://arxiv.org/html/2611.23172v1#S9.p3)
+- Appendix B, pp. 31–32, Proposition 43 verifies the vanishing through degree 63. [Proposition 43](https://arxiv.org/html/2611.23172v1#Thmtheorem43)

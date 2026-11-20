@@ -7,9 +7,6 @@
    digest: Adjacent-cut birth polynomials and their normalized honeycomb kernels. -/
 
 import D5.S3.StatisticalMechanics.CellularAutomata.HoneycombFirstTouch
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Inductions
-import Mathlib.Tactic.Abel
 
 /-! Signed birth polynomials, dyadic strip transport, and the normalized kernel readout. -/
 
