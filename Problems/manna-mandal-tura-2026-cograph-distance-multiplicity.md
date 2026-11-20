@@ -107,8 +107,8 @@ candidate statement is `distanceMultiplicity_guard_candidates`.
 
 The four-slot Reg audit remains unfinished for 50 native declarations
 and three universal-clique declarations.
-[Native audit targets and missing evidence](https://github.com/the-omega-institute/trureturing/issues/32326) and
-[universal-clique audit targets](https://github.com/the-omega-institute/trureturing/issues/32343).
+[Native audit targets and missing evidence](https://github.com/the-omega-institute/trureturing/issues/32326#issuecomment-7046182901) ·
+[Universal-clique audit targets](https://github.com/the-omega-institute/trureturing/issues/32343)
 
 ## Triage
 
