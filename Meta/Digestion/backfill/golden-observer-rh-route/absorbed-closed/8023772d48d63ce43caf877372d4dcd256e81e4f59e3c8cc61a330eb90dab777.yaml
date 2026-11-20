@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8023772d48d63ce43caf877372d4dcd256e81e4f59e3c8cc61a330eb90dab777
-  normalized_sha256: sha256:8023772d48d63ce43caf877372d4dcd256e81e4f59e3c8cc61a330eb90dab777
-cas_ref: sha256:8023772d48d63ce43caf877372d4dcd256e81e4f59e3c8cc61a330eb90dab777
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/RhImpliesWeilPositivity.riemannHypothesis_implies_o6WeilPositivityStatement
-    target_statement_id: sha256:e404c4220959fdcc223cd27b976778366fe50d498e3d9c5e1a3fd012f10d22e0
-receipts:
-  unresolved_subitems: []

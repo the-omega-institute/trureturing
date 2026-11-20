@@ -1,8 +1,0 @@
-## 29. Finite native command laws generating the complete free Green occupation
-
-Write N for [Probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)
-and K for [Guarded lift limits](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
-The construction below uses N's original commands and K's path contracts.
-Its sampling and coefficient capabilities are additional premises. Neither
-convergence nor a lifetime-tail estimate is a premise.
-

@@ -18,18 +18,16 @@ internal sealed partial class ProductionCliEnvironment
         try
         {
             var options = ParseCheckArguments(arguments);
-            if ((!delta && (options.CandidateLeanReport is null || options.ProtectedBase is not null))
+            if (options.CandidateLeanReport is null || (!delta && options.ProtectedBase is not null)
                 || (delta && options.ProtectedBase is null))
                 throw new InvalidOperationException(delta
-                    ? "check-delta requires --protected-base; non-theory changes also require --candidate-lean-report"
+                    ? "check-delta requires --protected-base and --candidate-lean-report"
                     : "check-current requires --candidate-lean-report and accepts no base");
 
             var raw = timing.Measure("repository-read", () => AdmissionRepositoryInputs.ReadCurrent(repository));
             var prepared = delta ? timing.Measure("repository-prepare", () => repository.Prepare(options.ProtectedBase)) : null;
             var baselineRaw = prepared is null ? null : timing.Measure("repository-read-base",
                 () => AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision));
-            if (prepared is not null)
-                raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
             var observedPlane = ImmutableArray<Diagnostic>.Empty;
             var planeFailure = prepared is null ? null
                 : timing.Measure("admission-plane", () => EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observedPlane));
@@ -38,16 +36,12 @@ internal sealed partial class ProductionCliEnvironment
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
             var current = timing.Measure("snapshot-load", () => Decode(raw));
-            var report = options.CandidateLeanReport is null ? null
-                : timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
+            var report = timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
             {
                 PolicyLoadOutcome.Accepted accepted => accepted.Policy,
                 PolicyLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
             });
-            if (options.CandidateLeanReport is null)
-                return RenderStage(timing.Measure("rule-passes", () => RuleCatalog.Default.ExecuteTheoryDelta(
-                    current, policy, prepared!.Changes, MeasureRule), Blocked), planeObservations);
             var lean = timing.Measure("lean-closure", () => LeanClosureValidator.Validate(current, report!) switch
             {
                 LeanValidationOutcome.Accepted accepted => accepted.Capability,

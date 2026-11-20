@@ -27,7 +27,7 @@ public sealed class AdmissionTests
         AdmissionOutcome Evaluate(string registration)
         {
             var fixture = new RuleFixture();
-            fixture.AddBackfillTargets();
+
             var fileMap = TestFileMap.Canonical.Replace(
                 $"pattern = \"{path}\"", $"pattern = \"{registration}\"", StringComparison.Ordinal);
             var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
@@ -52,7 +52,7 @@ public sealed class AdmissionTests
         AssertRootAndAgentCharterGlobsBlockAdmission("agents/adversary.md", "agents/adversary.*");
 
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintPath]));
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
@@ -111,7 +111,7 @@ public sealed class AdmissionTests
     public void FivePrivateCapabilitiesAreRequiredForAdmission()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
@@ -169,7 +169,7 @@ public sealed class AdmissionTests
     public void NonSl022TrustGateIsAContentViolation()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
@@ -206,7 +206,7 @@ public sealed class AdmissionTests
     public void ProtectedProfileRejectsOtherTrustGateAndPreservesSl022()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
@@ -255,7 +255,7 @@ public sealed class AdmissionTests
     public void ProtectedProfileFailsClosedWhenSl022EvidenceIsMissing()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(

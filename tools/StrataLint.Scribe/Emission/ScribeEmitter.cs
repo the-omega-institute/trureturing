@@ -335,9 +335,9 @@ public static class ScribeEmitter
             attestations.Add(new ScribeEmissionRecord(
                 gid,
                 definitionPath,
-                DigestionFingerprint.Compute(source).RawSha256,
+                ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(source)),
                 definition.RelativePath.Value,
-                DigestionFingerprint.Compute(bytes).RawSha256));
+                ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(bytes))));
             CollectDescribeCapabilities(
                 gid,
                 definitionPath,

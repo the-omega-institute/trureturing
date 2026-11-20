@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c7690b2aa101d58ebe3833b749ee7f9ab253b4465aead279c975067e3ff28fd
-  normalized_sha256: sha256:9c7690b2aa101d58ebe3833b749ee7f9ab253b4465aead279c975067e3ff28fd
-cas_ref: sha256:9c7690b2aa101d58ebe3833b749ee7f9ab253b4465aead279c975067e3ff28fd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
-    target_statement_id: sha256:41def0e5497caf6d67f1a917e6eb9f22b8a1c62657e97cdcf10416e96506d4ce
-receipts:
-  unresolved_subitems: []

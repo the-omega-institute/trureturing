@@ -1,8 +1,0 @@
-Any two reverse linear extensions are connected by adjacent swaps of
-incomparable points: move the first point of the desired extension to the
-front of the other extension, crossing only incomparable points, and proceed
-inductively on the remaining poset. Hence all $R_e$ agree; write their common
-value as $R$. Each toggle is an involution, since a permitted flip is undone
-by the next application and a forbidden flip is the identity. Consequently
-$R$ is a permutation of the whole finite set $\mathcal C_n$.
-

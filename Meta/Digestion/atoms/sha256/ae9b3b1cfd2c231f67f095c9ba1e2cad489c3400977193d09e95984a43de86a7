@@ -1,8 +1,0 @@
-## 第三步：prediction
-
-在更新后的同一外生 posterior 下求值：
-
-\[
-Y_x(U).
-\]
-

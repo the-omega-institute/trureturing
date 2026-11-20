@@ -1,4 +1,0 @@
-### P4. `FiniteIndexLimitStability`
-
-控制采样、窗口、prime-power cutoff 与 operator dimension 增长时的负指标逃逸。
-

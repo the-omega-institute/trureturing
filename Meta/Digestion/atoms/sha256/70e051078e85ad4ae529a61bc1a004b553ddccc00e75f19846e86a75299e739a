@@ -1,7 +1,0 @@
-**Proposition 11.8 (no coarsest sufficient equivalence in a full-tree
-subtask).** In the all-source subtask $D=0$, $P=Q=\varnothing$, both
-$E_\nu(u)=\nu(u)$ and $E_c(u)=c(u)$ are sufficient encoders for recovering
-the unknown lag from the later whole tree. No sufficient equivalence
-relation on first trees is coarser than both their kernel relations.
-Consequently this subtask has no coarsest sufficient equivalence.
-

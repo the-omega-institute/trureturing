@@ -9,7 +9,7 @@ internal sealed class ThetaRepresentationNonconvexDocument : IScribeDocumentDefi
     private const string Prefix =
         "D5/S3/Combinatorics/Orthogonality/ThetaRepresentationNonconvex.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/carlisilva2026kfoldtheta");
+        LibraryNoteRef.Create("D5/L/Convexity/carlisilva2026kfoldtheta");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The five-cycle has a nonconvex trace-two orthonormal representation set.",

@@ -1,6 +1,0 @@
-**Theorem 25.2 (Open complete-child M exclusions).** For each $i=1,2$
-there is an open neighborhood $V_i\subset\{(p,v):p\ne24\}$ of $q_i$ such
-that $m:C(p,v)\to\mathbb R$ is injective for every $(p,v)\in V_i$.
-Neither a numerical radius nor constant singleton cardinality on $V_i$
-is asserted.
-

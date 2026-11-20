@@ -24,23 +24,6 @@ internal sealed partial class ProductionCliEnvironment
         CoverageCommand.Run(repository, leanReportSource, arguments);
 
 
-    public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) =>
-        AtomContextMigrationCommand.Run(repositoryRoot, repository, arguments);
-
-    public CommandResult RetireSources(IReadOnlyList<string> arguments) =>
-        RetireSourcesCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
-
-    public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
-        SourceDispatchCommand.Run(repositoryRoot, repository, arguments);
-
-    public CommandResult SearchAtoms(IReadOnlyList<string> arguments) => SearchAtomsCommand.Run(repository, arguments);
-
-    public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
-        ShowAtomCommand.Run(repository, arguments);
-
-    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
-        AtomContextCommand.Run(repository, arguments);
-
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
@@ -59,34 +42,6 @@ internal sealed partial class ProductionCliEnvironment
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
-
-    public CommandResult Ingest(IReadOnlyList<string> arguments) =>
-        IngestCommand.RunReportFree(
-            repositoryRoot,
-            repository,
-            arguments,
-            reportFreeIngestDependencies);
-
-    public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
-        CoverAtomCommand.Run(
-            repositoryRoot,
-            repository,
-            leanReportSource,
-            timeProvider.GetUtcNow(),
-            arguments);
-
-    public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
-        CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
-            timeProvider.GetUtcNow(), arguments);
-
-    public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
-        SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments, leanReportSource);
-
-    public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
-        SettleAtomCommand.Run(repositoryRoot, repository, arguments, leanReportSource);
-
-    public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
-        DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);
 
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
