@@ -149,18 +149,36 @@ expect_paths() {
   passed=$((passed + 1)); echo "PASS $case_name"
 }
 
-case_name=push-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
-run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/a.txt "$out"
+case_name=push-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"; affected="$WORK/affected-$case_name"
+printf 'stale\0' > "$affected"
+run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out" CI_AFFECTED_PATHS_FILE="$affected"
+expect_paths tools/a.txt "$out"
+[[ ! -e "$affected" ]] || fail "fallback manifest left with a readable base"
 
 case_name=pr-paths; new_repo "$case_name"; at_commit "$MERGE"; out="$WORK/paths-$case_name"
 run_entry pull_request "$MERGE" 'tools/*' CI_PR_HEAD="$PR_HEAD" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/b.txt "$out"
 
-case_name=new-branch-no-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
-printf 'stale\0' > "$out"
-run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE=0000000000000000000000000000000000000000 CI_CHANGED_PATHS_FILE="$out"
-if [[ $RC -ne 0 ]]; then fail "exit $RC, want 0; log: $LOG"
-elif [[ -e "$out" ]]; then fail "changed-paths file left without a base"
-else passed=$((passed + 1)); echo "PASS $case_name"; fi
+for before in 0000000000000000000000000000000000000000 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa; do
+  case_name="baseless-push-${before:0:1}"; new_repo "$case_name"; at_commit "$AFTER"
+  "$REAL_GIT" -C "$REPO" remote set-url origin "$WORK/nonexistent-origin"
+  out="$WORK/paths-$case_name"; affected="$WORK/affected-$case_name"
+  printf 'stale\0' > "$out"
+  printf 'stale\0' > "$affected"
+  run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$before" CI_CHANGED_PATHS_FILE="$out" CI_AFFECTED_PATHS_FILE="$affected"
+  expect_hit true
+  [[ "$OUT" == $'hit=true\nbase=' ]] || fail "unexpected base for baseless push"
+  [[ ! -e "$out" ]] || fail "changed-paths file left without a base"
+  "$REAL_GIT" -C "$REPO" ls-tree -r --name-only -z "$AFTER" > "$WORK/expected"
+  cmp -s "$affected" "$WORK/expected" || fail "fallback manifest differs from the tracked candidate paths"
+done
+
+case_name=base-mismatch; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$BEFORE" CI_EXPECTED_BASE="$AFTER"; expect_error
+
+case_name=detected-no-base; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"; affected="$WORK/affected-$case_name"
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$BEFORE" CI_EXPECTED_BASE="" CI_CHANGED_PATHS_FILE="$out" CI_AFFECTED_PATHS_FILE="$affected"
+expect_hit true
+[[ "$OUT" == $'hit=true\nbase=' && ! -e "$out" && -s "$affected" ]] || fail "detected baseless scope was not preserved"
 
 for step in remote-list remote-remove ref-list ref-delete; do
   for polarity in hit miss; do

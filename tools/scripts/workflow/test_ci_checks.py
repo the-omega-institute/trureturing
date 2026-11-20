@@ -43,16 +43,6 @@ class CheckTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertFalse(output.exists())
 
-    def test_report_selection_overrides_ambient_fib_selection_in_both_directions(self):
-        data, _ = contract.load(ROOT)
-        for path, selected in (("tools/scripts/compiled-fib-test.sh", True), ("Reg/D5/Owner.lean", False)):
-            plan = contract.selection(data, [path], "push")
-            with self.subTest(path=path), patch.dict(os.environ, FULL_BUILD="1", STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
-                    patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
-                    patch.object(checks, "execute", return_value=0) as execute:
-                self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 0)
-                self.assertEqual(execute.call_args.kwargs["env"]["STRATALINT_FIB_REGRESSIONS_SELECTED"], str(selected).lower())
-
     def test_fib_ack_requires_successful_current_identity_and_never_launches_suite(self):
         data, _ = contract.load(ROOT)
         unit = data["units"]["tests-fib"]
@@ -72,43 +62,52 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(record["raw_exit"], 2)
 
-    def test_full_report_rejects_without_confirmation_before_producer_build(self):
-        data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "push")
-        with patch.dict(os.environ, FULL_BUILD="0"), patch.object(checks.subprocess, "run") as run, \
-                patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
-        run.assert_not_called()
-        execute.assert_not_called()
+    def test_pr_and_push_use_the_same_scoped_command_with_ambient_full_build(self):
+        for purpose in ("pull-request", "push"):
+            with self.subTest(purpose=purpose):
+                result, calls, _ = self.local_spies(purpose=purpose)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
+                self.assertFalse(any(call[:2] == ["make", "lean-report"] for call in calls))
+                self.assertFalse(any("check-current" in call or "check-delta" in call for call in calls))
 
-    def test_pr_never_invokes_full_report_even_with_ambient_full_build(self):
-        result, calls, plan = self.local_spies()
-        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertFalse(plan["full-report"])
-        self.assertIn('"check":"pr-lean","status":"success"', result.stdout)
-        self.assertFalse(any(call[:2] == ["make", "lean-report"] for call in calls))
-        self.assertFalse(any("check-current" in call or "check-delta" in call for call in calls))
+    def test_hosted_scope_uses_candidate_manifest_only_when_base_is_unavailable(self):
+        data, revision = contract.load(ROOT)
+        with tempfile.TemporaryDirectory() as directory:
+            affected = Path(directory) / "affected"
+            changed = Path(directory) / "changed"
+            contract.write_paths(affected, ["D5/Tracked.lean"])
+            command = ["ci_checks.py", "current", "scoped-lean", "--purpose", "push",
+                       "--affected", str(affected), "--changed", str(changed)]
+            with patch.object(checks, "load", return_value=(data, revision)), \
+                    patch.object(checks, "execute", return_value=0) as execute, \
+                    patch.dict(os.environ, CI_BASE=""), patch.object(sys, "argv", command):
+                self.assertEqual(checks.main(), 0)
+                self.assertEqual(execute.call_args.args[1][-1], str(affected))
+                execute.reset_mock()
+                with patch.dict(os.environ, CI_BASE="a" * 40), contextlib.redirect_stderr(io.StringIO()):
+                    self.assertEqual(checks.main(), 2)
+                    execute.assert_not_called()
+                    contract.write_paths(changed, ["D5/Changed.lean"])
+                    self.assertEqual(checks.main(), 0)
+                    self.assertEqual(execute.call_args.args[1][-1], str(changed))
+                affected.unlink()
+                changed.unlink()
+                execute.reset_mock()
+                with contextlib.redirect_stderr(io.StringIO()) as error:
+                    self.assertEqual(checks.main(), 2)
+                self.assertIn("missing scoped Lean path manifest", error.getvalue())
+                execute.assert_not_called()
 
-    def test_failed_report_producer_probe_preserves_failure_without_raising(self):
-        data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "push")
-        with patch.dict(os.environ, FULL_BUILD="1"), patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
-                patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()) as output:
-            self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
-        execute.assert_not_called()
-        self.assertIn('"check":"lean-report","status":"failure","raw_exit":2', output.getvalue())
-
-    def test_real_process_exit_three_is_special_only_for_delta(self):
+    def test_real_process_exits_are_preserved(self):
         for raw in (0, 1, 2, 3, 124, 143):
-            for delta in (False, True):
-                with self.subTest(raw=raw, delta=delta), tempfile.TemporaryDirectory() as directory:
-                    with contextlib.redirect_stdout(io.StringIO()) as output:
-                        code = checks.with_budget(Path(directory) / "budget", lambda: checks.execute(
-                            "delta" if delta else "unit", ["bash", "-c", "exit " + str(raw)], delta=delta))
-                    record = json.loads(output.getvalue().split("CI_CHECK ")[-1])
-                    self.assertEqual(record["raw_exit"], raw)
-                    self.assertEqual(code, 0 if delta and raw == 3 else raw)
-                    self.assertEqual(record["status"] == "protected-only", delta and raw == 3)
+            with self.subTest(raw=raw), tempfile.TemporaryDirectory() as directory:
+                with contextlib.redirect_stdout(io.StringIO()) as output:
+                    code = checks.with_budget(Path(directory) / "budget", lambda: checks.execute(
+                        "unit", ["bash", "-c", "exit " + str(raw)]))
+                record = json.loads(output.getvalue().split("CI_CHECK ")[-1])
+                self.assertEqual(record["raw_exit"], raw)
+                self.assertEqual(code, raw)
 
     def test_budget_is_not_reset_by_nested_shared_helpers(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -130,7 +129,7 @@ class CheckTests(unittest.TestCase):
         with patch.object(checks, "execute", return_value=0), patch.object(checks, "prepare_unit", return_value=0), \
                 patch.object(checks, "current_phase", side_effect=phase), contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_run(data, plan, "a" * 40, Path("changed")), 2)
-        self.assertEqual(called, ["build-judge", "lean-report"])
+        self.assertEqual(called, ["build-judge", "scoped-lean"])
         self.assertIn('"status":"blocked"', output.getvalue())
 
     def test_independent_validators_execute_after_a_semantic_rejection(self):
@@ -139,12 +138,12 @@ class CheckTests(unittest.TestCase):
         called = []
         def phase(name, *_):
             called.append(name)
-            return 1 if name == "check-current" else 0
+            return 1 if name == "source-evidence" else 0
         with patch.object(checks, "execute", return_value=0), patch.object(checks, "prepare_local_lean", return_value=0), patch.object(checks, "prepare_unit", return_value=0), \
                 patch.object(checks, "current_phase", side_effect=phase):
             self.assertEqual(checks.current_run(data, plan, "a" * 40, Path("changed")), 1)
-        self.assertIn("scribe", called)
-        self.assertIn("check-delta", called)
+        self.assertIn("source-evidence", called)
+        self.assertIn("compiled-audit", called)
 
     def test_failed_dependency_preparation_blocks_actual_execution(self):
         data, _ = contract.load(ROOT)
@@ -154,7 +153,7 @@ class CheckTests(unittest.TestCase):
                 patch.object(checks, "current_phase") as phase, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_run(data, plan, "a" * 40, Path("changed")), 2)
         phase.assert_not_called()
-        self.assertIn('"check":"lean-report","status":"blocked"', output.getvalue())
+        self.assertIn('"check":"scoped-lean","status":"blocked"', output.getvalue())
 
     def test_selected_evidence_restore_failure_keeps_other_ready_validators_reachable(self):
         data, _ = contract.load(ROOT)
@@ -166,8 +165,7 @@ class CheckTests(unittest.TestCase):
             code = checks.current_run(data, plan, "a" * 40, Path("changed"), checks.Prerequisite(0, "accepted", True))
         self.assertEqual(2, code)
         self.assertNotIn("source-evidence", called)
-        self.assertIn("lean-report", called)
-        self.assertTrue({"scribe", "check-current", "check-delta", "compiled-audit"} <= set(called))
+        self.assertEqual(called, ["scoped-lean", "compiled-audit"])
 
     def test_source_command_uses_original_current_delta_and_theory_scopes(self):
         data, _ = contract.load(ROOT)
@@ -193,43 +191,48 @@ class CheckTests(unittest.TestCase):
             if hit and unit != "current":
                 self.assertIn(f'"check":"{unit}","status":"blocked"', result.stdout)
 
-    def test_unselected_current_theory_fast_path_and_push_do_not_gain_checks(self):
-        result, calls, plan = self.local_spies(paths=("README.md",))
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertFalse(plan["hits"]["current"])
-        self.assertFalse(any("check-source" in call or "check-delta" in call for call in calls))
-        result, calls, plan = self.local_spies(purpose="push")
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertTrue(plan["delta"])
-        self.assertTrue(any("check-delta" in call for call in calls))
-        source = next(call for call in calls if "check-source" in call)
-        self.assertIn("--protected-base", source)
+    def test_readme_skips_current_and_theory_only_keeps_source_diagnostics(self):
+        for purpose in ("pull-request", "push"):
+            with self.subTest(purpose=purpose):
+                result, calls, plan = self.local_spies(paths=("README.md",), purpose=purpose)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse(plan["hits"]["current"])
+                self.assertFalse(any("check-source" in call for call in calls))
+                result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose=purpose)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertTrue(plan["hits"]["current"])
+                self.assertFalse(plan["report"])
+                self.assertTrue(plan["delta"])
+                source = next(call for call in calls if "check-source" in call)
+                self.assertIn("--protected-base", source)
+                self.assertFalse(any(call[0] in ("elan", "scoped-lean") for call in calls))
 
-    def test_success_and_later_rejection_preserve_all_selected_obligations(self):
-        for current in (0, 1):
-            with self.subTest(current=current):
-                result, calls, plan = self.local_spies(source=0, current=current, purpose="push")
-                self.assertEqual(current, result.returncode, result.stdout + result.stderr)
-                records = [json.loads(line.removeprefix("CI_CHECK ")) for line in result.stdout.splitlines() if line.startswith("CI_CHECK ")]
-                successful = {r["check"] for r in records if r["status"] == "success"}
-                self.assertTrue({name for name, hit in plan["hits"].items() if hit and name != "current"} <= successful)
-                self.assertTrue({"source-evidence", "scribe", "check-current", "check-delta", "compiled-audit"}
-                                <= {r["check"] for r in records})
-                self.assertIn("protected-only", {r["status"] for r in records})
-                self.assertTrue(any(call[:2] == ["make", "lean-report"] for call in calls))
+    def test_scoped_failure_is_red_and_blocks_report_consumers_only(self):
+        for scoped in (0, 1):
+            with self.subTest(scoped=scoped):
+                result, calls, plan = self.local_spies(scoped=scoped, purpose="push")
+                self.assertEqual(scoped, result.returncode, result.stdout + result.stderr)
+                records = {record["check"]: record["status"] for record in (
+                    json.loads(line.removeprefix("CI_CHECK ")) for line in result.stdout.splitlines()
+                    if line.startswith("CI_CHECK "))}
+                self.assertTrue(all(records[name] == "success" for name, hit in plan["hits"].items()
+                                    if hit and name != "current"))
+                for phase in ("source-evidence", "compiled-audit"):
+                    self.assertEqual(records[phase], "blocked" if scoped else "success")
+                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
 
     def test_bootstrap_and_source_input_failures_preserve_independent_fallback(self):
         for source, judge in ((2, 0), (0, 1)):
             with self.subTest(source=source, judge=judge):
                 result, calls, _ = self.local_spies(source=source, judge=judge, purpose="push")
                 self.assertNotEqual(0, result.returncode)
-                self.assertTrue(any(call[:2] == ["make", "lean-report"] for call in calls), calls)
+                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
                 if judge:
                     self.assertFalse(any("check-source" in call for call in calls))
-                    self.assertIn('"check":"check-current","status":"blocked"', result.stdout)
+                    self.assertIn('"check":"compiled-audit","status":"blocked"', result.stdout)
                 self.assertTrue(any(call[:4] == ["make", "-C", "tools", "test"] for call in calls))
 
-    def local_spies(self, source=0, current=0, judge=0, paths=("D5/changed.lean",), purpose="pull-request"):
+    def local_spies(self, source=0, scoped=0, judge=0, paths=("D5/changed.lean",), purpose="pull-request"):
         with tempfile.TemporaryDirectory(prefix="ci source with spaces ") as directory:
             root = Path(directory)
             scripts = root / "tools/scripts/workflow"
@@ -237,10 +240,11 @@ class CheckTests(unittest.TestCase):
             for path in Path(__file__).parent.glob("*.py"):
                 if not path.name.startswith("test_"):
                     shutil.copy2(path, scripts / path.name)
-            (scripts / "ci_pr_lean.py").write_text("import sys\nfrom pathlib import Path\nassert Path(sys.argv[1]).is_file()\n")
-            (scripts / "judge-lean-producer.sh").write_text("#!/bin/bash\nexit 0\n")
-            (scripts / "scribe-scope-paths.sh").write_text("#!/bin/bash\ncat \"$1\"\n")
-            (scripts / "scribe-content-checks.sh").write_text("#!/bin/bash\nexit 0\n")
+            (scripts / "ci_pr_lean.py").write_text(
+                "import json, os, sys\nfrom pathlib import Path\nfrom ci_contract import read_changed\n"
+                "with open(os.environ['CALLS'], 'a') as output:\n"
+                "    output.write(json.dumps(['scoped-lean', *read_changed(Path(sys.argv[1]))]) + '\\n')\n"
+                "sys.exit(int(os.environ['SCOPED']))\n")
             (root / "Meta").mkdir()
             shutil.copy2(ROOT / contract.CONTRACT, root / contract.CONTRACT)
             data, _ = contract.load(ROOT)
@@ -261,8 +265,6 @@ class CheckTests(unittest.TestCase):
                     "exitcode=0\n"
                     "if name=='dotnet':\n"
                     "    if 'check-source' in args: exitcode=int(os.environ['SOURCE'])\n"
-                    "    elif 'check-current' in args: exitcode=int(os.environ['CURRENT'])\n"
-                    "    elif 'check-delta' in args: exitcode=3\n"
                     "    elif args and args[0]=='build': exitcode=int(os.environ['JUDGE'])\n"
                     "sys.exit(exitcode)\n")
             for name in ("dotnet", "make", "elan"):
@@ -291,7 +293,7 @@ class CheckTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("candidate\n")
             env = dict(os.environ, FULL_BUILD="1", PATH=str(bindir) + os.pathsep + os.environ["PATH"], CALLS=str(root / "calls"),
-                       SOURCE=str(source), CURRENT=str(current), JUDGE=str(judge), JUDGE_HIT="false",
+                       SOURCE=str(source), SCOPED=str(scoped), JUDGE=str(judge), JUDGE_HIT="false",
                        STRATALINT_CI_COMPUTE_ACTIVE="0", PYTHONDONTWRITEBYTECODE="1")
             result = subprocess.run([sys.executable, str(runner), "local", "--base", "HEAD", "--purpose", purpose],
                                     cwd=root, env=env, capture_output=True, text=True, timeout=30)
@@ -312,7 +314,7 @@ class CheckTests(unittest.TestCase):
             self.assertIn("TEST_FILTER=FullyQualifiedName~FourierBridgeSourceEvidenceTests", execute.call_args.args[1])
 
 
-class PullRequestReportTests(unittest.TestCase):
+class ScopedReportTests(unittest.TestCase):
     def test_empty_scope_has_no_build_and_large_scopes_keep_scribe_inputs_together(self):
         from ci_pr_lean import report_batches
         self.assertEqual(list(report_batches({"targets": []})), [])

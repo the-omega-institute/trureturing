@@ -193,18 +193,22 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(all(contract.selection(data, None, "pull-request")["hits"].values()))
         self.assertTrue(contract.selection(data, None, "push")["report"])
 
-    def test_push_runs_full_current_even_for_docs_and_replays_selected_delta(self):
+    def test_push_and_pull_request_select_the_same_units_and_checks(self):
         self.put("D5/changed.lean", b"-- changed\n")
         data, _ = contract.load(self.root)
         paths = contract.changed_paths(self.root, self.base)
-        self.assertTrue(contract.selection(data, paths, "pull-request")["delta"])
-        self.assertTrue(self.parity("push")["delta"])
-        for changed in ([], ["README.md"], None):
-            push = contract.selection(data, changed, "push")
-            self.assertTrue(push["hits"]["current"])
-            self.assertTrue(push["full-report"])
-            self.assertTrue(push["report"])
-        self.assertFalse(contract.selection(data, ["D5/changed.lean"], "pull-request")["full-report"])
+        push = self.parity("push")
+        self.assertEqual(push, contract.selection(data, paths, "pull-request"))
+        self.assertTrue(push["delta"])
+        self.assertTrue(push["report"])
+        for changed in ([], ["README.md"], ["docs/develop/theory/Note.md"], None):
+            with self.subTest(changed=changed):
+                push = contract.selection(data, changed, "push")
+                self.assertEqual(push, contract.selection(data, changed, "pull-request"))
+                self.assertEqual(push["report"], changed is None)
+                if changed is None:
+                    self.assertTrue(all(push["hits"].values()))
+                    self.assertFalse(push["delta"])
 
     def test_invalid_base_fails_and_local_keeps_remotes(self):
         self.git("remote", "add", "persistent", "https://example.invalid/repository.git")

@@ -1,6 +1,6 @@
 name: CI
 
-# The one CI workflow. `detect` lists the changed paths once and decides from
+# The required CI workflow. `detect` lists the changed paths and decides from
 # the unit patterns in Meta/ci-units.json which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
@@ -19,7 +19,6 @@ permissions:
   pull-requests: read
 
 env:
-  CACHE_WRITES: ${{ github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) }}
   JUDGE_LOCKFILES: |
     tools/StrataLint.Cli/packages.lock.json
     tools/StrataLint.Configuration/packages.lock.json
@@ -43,7 +42,10 @@ jobs:
     outputs:
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
-      delta: ${{ steps.detect.outputs.delta }}
+      base: ${{ steps.entry.outputs.base }}
+      fib_regressions: ${{ steps.detect.outputs['fib-regressions'] }}
+      source_evidence: ${{ steps.detect.outputs['source-evidence'] }}
+      compiled_audit: ${{ steps.detect.outputs['compiled-audit'] }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5
@@ -81,19 +83,19 @@ jobs:
       continuation: ${{ steps.prefix.outputs.continuation }}
       judge_key: ${{ steps.judge_key.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
-    env:
-      CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Verify the candidate and list the changed paths
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
       # The judge cache key binds the resolved SDK, the build recipe and the
@@ -110,15 +112,12 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: ${{ env.CACHE_WRITES == 'true' }}
-          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+          cache: false
       - id: nuget
-        if: env.CACHE_WRITES != 'true'
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
-        if: env.CACHE_WRITES != 'true'
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -237,23 +236,14 @@ jobs:
         name: Check the selected source prerequisite
         env:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
-      # Handoff only to a continuation that still consumes the judge.
-      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.continuation == 'true' && (needs.detect.outputs.report == 'true' || steps.prefix.outputs.source_status != 'accepted') && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ steps.judge_key.outputs.key }}
       - id: remainder
         name: Carry the remaining current compute allowance
         if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
         run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
 
-  # PRs verify affected targets. Pushes share a complete report across the
-  # tree-wide checks and delta rules for the actual push range.
+  # Both events use the same scoped Lean and Scribe checks.
   current:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
@@ -264,23 +254,21 @@ jobs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
       STRATALINT_ACCEPT_COLD_BUILD: '1'
-      REPORT: .lake/build/stratalint/raw-lean-report.json
-      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
-      # The judge build recipe: the build step runs it and the judge cache key hashes it.
-      CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Verify the candidate and list the changed paths
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+          CI_AFFECTED_PATHS_FILE: ${{ runner.temp }}/affected-paths
         run: bash tools/scripts/workflow/ci-entry.sh
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
@@ -296,15 +284,12 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: ${{ env.CACHE_WRITES == 'true' }}
-          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+          cache: false
       - id: nuget
-        if: env.CACHE_WRITES != 'true'
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
-        if: env.CACHE_WRITES != 'true'
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -384,106 +369,25 @@ jobs:
         if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       - name: Theory-only file and capacity checks
-        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
-      - id: pr_lean
-        name: Check affected PR modules and Scribe inputs
-        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
-      - id: lean_report
-        name: Build the complete push Lean report
-        if: ${{ !cancelled() && github.event_name == 'push' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
         env:
-          LEAN_NUM_THREADS: '1'
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
-      - name: Run selected PR FIB regressions
-        if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-fib
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current source
+      - id: scoped_lean
+        name: Check affected Lean modules and Scribe inputs
+        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current scoped-lean
+      - name: Run selected FIB regressions
+        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.fib_regressions == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current fib-regressions
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
-        env:
-          CI_DOTNET_PREPARED: '1'
+        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.source_evidence == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' }}
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
-      - name: Scribe content
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current scribe
-      - name: Current-tree rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-current
-      - name: Delta rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - name: Run the compiled audit checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.compiled_audit == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
-      # A successful judge build can be published after ready diagnostics,
-      # independently of their verdicts or report validity.
-      - if: ${{ !cancelled() && steps.build_judge.outcome == 'success' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
-      - id: project_snapshot_push
-        name: Prepare the project seed
-        if: env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success'
-        env:
-          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
-          STRATALINT_REPORT_SUCCEEDED: 'true'
-          STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
-        run: |
-          python3 tools/lean-inspector/publication.py validate "$REPORT" --repository "$GITHUB_WORKSPACE"
-          python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - id: project_save
-        name: Publish the push project seed
-        if: steps.project_snapshot_push.outputs.project_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-      - name: Confirm the protected push published its project seed
-        if: env.CACHE_WRITES == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
-          READY: ${{ steps.project_snapshot_push.outputs.project_ready }}
-          SKIP_REASON: ${{ steps.project_snapshot_push.outputs.project_skip_reason }}
-        run: |
-          [[ "$READY" == true && -n "$CACHE_KEY" ]] || {
-            echo "CACHE_SEED_ERROR validated push has no project snapshot: ${SKIP_REASON:-unavailable}" >&2
-            exit 1
-          }
-          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
-          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
-            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
-      # Dependency and elan caches follow successful checks.
-      - id: snapshot
-        if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}
-        continue-on-error: true
-        env:
-          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
-      - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-      - name: List toolchains in the elan cache
-        if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' }}
-        continue-on-error: true
-        run: bash tools/scripts/workflow/elan-cache-inventory.sh "$HOME/.elan"
-      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' && steps.elan.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
 
       - id: checked
         name: Confirm selected current checks succeeded

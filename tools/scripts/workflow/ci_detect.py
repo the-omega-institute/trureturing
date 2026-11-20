@@ -105,7 +105,11 @@ def main():
             from ci_contract import git, load, selection
             data, revision = load(Path.cwd())
             purpose = "pull-request" if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else "push"
-            plan = selection(data, read_changed(args.changed), purpose)
+            base = os.environ.get("CI_BASE") or None
+            paths = read_changed(args.changed)
+            if paths is None and (base or purpose == "pull-request"):
+                raise DetectError("missing changed-path manifest for candidate with a base")
+            plan = selection(data, paths, purpose)
             if not output:
                 raise DetectError("GITHUB_OUTPUT is required")
             with open(output, "a", encoding="utf-8") as stream:
@@ -113,7 +117,7 @@ def main():
                     stream.write(key + "=" + json.dumps(value, separators=(",", ":")) + "\n")
                 stream.write("contract_revision=" + revision + "\n")
             print("CI_SELECTION " + json.dumps(dict(plan, contract_revision=revision, purpose=purpose,
-                  base=os.environ.get("CI_BASE") or None,
+                  base=base,
                   candidate=git(Path.cwd(), "rev-parse", "HEAD^{tree}").decode().strip())))
             return 0
         if spec is None:

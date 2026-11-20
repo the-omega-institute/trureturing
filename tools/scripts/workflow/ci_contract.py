@@ -65,12 +65,10 @@ def selection(data, paths, purpose):
     if purpose not in ("pull-request", "push"):
         raise DetectError(f"invalid validation purpose: {purpose}")
     hits = matches(parse("\n".join(data["CI_UNITS"])), paths)
-    full_report = purpose == "push"
-    hits["current"] |= full_report
-    report = full_report or hits["current"] and matches(parse("[scope]\n" + data["current"]["report_paths"]), paths)["scope"]
-    delta = report and paths is not None and matches(
+    report = hits["current"] and matches(parse("[scope]\n" + data["current"]["report_paths"]), paths)["scope"]
+    delta = hits["current"] and paths is not None and matches(
         parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]
-    return {"hits": hits, "report": report, "delta": delta, "full-report": full_report,
+    return {"hits": hits, "report": report, "delta": delta,
             "compiled-audit": report and hits["tests-lean"],
             "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}

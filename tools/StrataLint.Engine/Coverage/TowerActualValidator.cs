@@ -128,9 +128,9 @@ internal static class TowerActualValidator
                 || !workflow.RunsOnBranch("push", "dev")) continue;
             foreach (var job in workflow.Jobs.Values)
             {
-                if (job.Name == CiWorkflowDocument.DeltaJobName
+                if (job.Name == CiWorkflowDocument.CurrentJobName
                     && (file.Path.Value != AdmissionWorkflowPath
-                        || !workflow.HasDeltaGate("dev"))) continue;
+                        || !workflow.HasCurrentGate("dev"))) continue;
                 jobs[job.Name] = file.Path.Value;
             }
         }

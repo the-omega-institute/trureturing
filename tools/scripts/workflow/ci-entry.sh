@@ -6,7 +6,8 @@
 # when it matches an including pattern and no excluding one), GITHUB_EVENT_NAME, GITHUB_SHA,
 # GITHUB_OUTPUT, CI_PR_HEAD (pull_request), CI_PUSH_BEFORE (push), and optionally
 # CI_CHANGED_PATHS_FILE, which receives the NUL-separated changed paths whenever
-# a base commit exists and is removed otherwise.
+# a base commit exists and is removed otherwise. CI_AFFECTED_PATHS_FILE can
+# receive a separate manifest of the tracked candidate paths for a baseless push.
 # Output: hit=true|false in GITHUB_OUTPUT. Pull requests compare the event's
 # merge commit M with its first parent B; pushes compare event.before with the
 # pushed commit. A push range that cannot be read hits. Any other failure
@@ -17,7 +18,17 @@ cd "$(dirname "${BASH_SOURCE[0]}")/../../.."
 ZERO=0000000000000000000000000000000000000000
 fail() { echo "CI_ENTRY_ERROR $*" >&2; exit 2; }
 finish() {
-  local hit="$1" reason="$2" remotes refs remote ref
+  local hit="$1" reason="$2" selected_base="" remotes refs remote ref
+  if [[ "$reason" == matched=* ]]; then
+    selected_base="$base"
+  fi
+  if [[ "${CI_EXPECTED_BASE+x}" == x && "$selected_base" != "$CI_EXPECTED_BASE" ]]; then
+    fail "candidate base differs from detection"
+  fi
+  if [[ -n "${CI_AFFECTED_PATHS_FILE:-}" && ( "$reason" == new-branch || "$reason" == before-unavailable ) ]]; then
+    git ls-tree -r --name-only -z "$head" > "$CI_AFFECTED_PATHS_FILE" ||
+      fail "cannot list tracked inputs at $head"
+  fi
   # Checks use only the checked-out candidate and fixed objects (§9.5). Any
   # cleanup failure is red: the hit result is written only after it succeeds.
   remotes="$(git remote)" || fail "cannot enumerate remotes"
@@ -31,11 +42,7 @@ finish() {
     git update-ref -d "$ref" || fail "cannot delete $ref"
   done <<< "$refs"
   echo "hit=$hit" >> "${GITHUB_OUTPUT:?GITHUB_OUTPUT is required}"
-  if [[ "$reason" == matched=* ]]; then
-    echo "base=$base" >> "$GITHUB_OUTPUT"
-  else
-    echo 'base=' >> "$GITHUB_OUTPUT"
-  fi
+  echo "base=$selected_base" >> "$GITHUB_OUTPUT"
   echo "CI_HIT hit=$hit reason=$reason"
   exit 0
 }
@@ -49,9 +56,9 @@ while IFS= read -r line; do
   if [[ "$line" == !* ]]; then exclude+=("${line#!}"); else include+=("$line"); fi
 done <<< "$CI_HIT_PATHS"
 [[ ${#include[@]} -gt 0 ]] || fail "CI_HIT_PATHS has no including pattern"
-if [[ -n "${CI_CHANGED_PATHS_FILE:-}" ]]; then
-  rm -f -- "$CI_CHANGED_PATHS_FILE" || fail "cannot clear $CI_CHANGED_PATHS_FILE"
-fi
+for manifest in "${CI_CHANGED_PATHS_FILE:-}" "${CI_AFFECTED_PATHS_FILE:-}"; do
+  [[ -z "$manifest" ]] || rm -f -- "$manifest" || fail "cannot clear $manifest"
+done
 [[ "${GITHUB_SHA:-}" =~ ^[0-9a-f]{40}$ ]] || fail "GITHUB_SHA must be a 40-hex commit"
 head="$(git rev-parse --verify HEAD)"
 [[ "$head" == "$GITHUB_SHA" ]] || fail "checkout $head differs from event commit $GITHUB_SHA"
@@ -67,6 +74,8 @@ case "${GITHUB_EVENT_NAME:-}" in
     base="${CI_PUSH_BEFORE:-}"
     [[ "$base" =~ ^[0-9a-f]{40}$ ]] || fail "push event requires a 40-hex before commit"
     [[ "$base" != "$ZERO" ]] || finish true new-branch
+    # Reuse the detector's conservative choice if its initial fetch failed.
+    [[ "${CI_EXPECTED_BASE-unset}" != "" ]] || finish true before-unavailable
     if ! git cat-file -e "$base^{commit}" 2>/dev/null; then
       git fetch --quiet --no-tags --depth=1 origin "$base" 2>/dev/null || finish true before-unavailable
     fi
