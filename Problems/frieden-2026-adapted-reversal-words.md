@@ -2,7 +2,7 @@
 slug: frieden-2026-adapted-reversal-words
 bibkey: frieden2026bigcactus
 doi: 10.48550/arXiv.2610.24842
-url: https://arxiv.org/html/2610.24842v1#S4.Thmtheorem10
+url: https://arxiv.org/html/2610.24842v1
 triage: theorem
 motivation_gids:
   - D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410
