@@ -546,4 +546,75 @@ theorem beta_occupation_mode (S : Finset ℕ) :
 
 #print axioms beta_occupation_mode
 
+private theorem parity_coefficient (u : Fock) (S : Finset ℕ) :
+    (parity u) S = (-1 : ℂ) ^ S.card * u S := by
+  classical
+  induction u using Finsupp.induction_linear with
+  | zero => simp
+  | add f g hf hg =>
+      simp only [map_add, Finsupp.add_apply, hf, hg, mul_add]
+  | single T a =>
+      have hsingle : Finsupp.single T a = a • ket T := by simp [ket]
+      rw [hsingle, map_smul, parity_ket]
+      by_cases hTS : T = S
+      · subst S
+        simp [ket, mul_comm]
+      · simp [ket, Ne.symm hTS]
+
+private theorem parity_pow_eq_of_sign_eq (p q : ℕ)
+    (hsign : (-1 : ℂ) ^ p = (-1 : ℂ) ^ q) : parity ^ p = parity ^ q := by
+  rw [neg_one_pow_eq_pow_mod_two p, neg_one_pow_eq_pow_mod_two q] at hsign
+  have hmod : p % 2 = q % 2 := by
+    rcases Nat.mod_two_eq_zero_or_one p with hp | hp <;>
+      rcases Nat.mod_two_eq_zero_or_one q with hq | hq
+    · exact hp.trans hq.symm
+    · norm_num [hp, hq] at hsign
+    · norm_num [hp, hq] at hsign
+    · exact hp.trans hq.symm
+  have htwo : parity ^ (2 : ℕ) = 1 := by
+    rw [pow_two, CountableOccupationFock.parity_involution]
+  rw [pow_eq_pow_mod p htwo, pow_eq_pow_mod q htwo, hmod]
+
+/-- The signed BPZ mode adjunction on any native ghost state of integral weight
+and definite parity. -/
+theorem beta_homogeneous_mode (u : Fock) (h : ℤ) (p : ℕ)
+    (hu : L 0 u = (h : ℂ) • u) (hpu : parity u = (-1 : ℂ) ^ p • u) :
+    HasBPZAdjunction u h p := by
+  classical
+  intro n x y
+  let A := max 1 (h + 2).toNat
+  let opposite : Module.End ℂ Fock := epsilon h • ∑ a ∈ range A,
+    (LinearMap.applyₗ (R := ℂ) y).comp ((modeMap (2 * h - n - a - 2)).comp (D a))
+  have hopposite (v : Fock) (hv : L 0 v = (h : ℂ) • v) :
+      oppositeMode v h n y = opposite v := by
+    rw [oppositeMode_eq_sum v y h n A (dividedL1_eq_zero v h hv)]
+    simp only [opposite, mode, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.comp_apply,
+      LinearMap.applyₗ_apply_apply] <;> rfl
+  let left : Fock →ₗ[ℂ] ℂ := ((LinearMap.applyₗ (R := ℂ) y).comp beta).comp
+    ((LinearMap.applyₗ (R := ℂ) x).comp (modeMap n))
+  let right : Fock →ₗ[ℂ] ℂ := (beta ((parity ^ p) x)).comp opposite
+  have hket (S : Finset ℕ) (hS : S ∈ u.support) : left (ket S) = right (ket S) := by
+    have hne : u S ≠ 0 := Finsupp.mem_support_iff.mp hS
+    have hweight : energy S = h := by
+      have hc := BcGhostRelativeEnergy.L_zero_coefficient u S
+      rw [hu, Finsupp.smul_apply, smul_eq_mul] at hc
+      exact Int.cast_injective (mul_right_cancel₀ hne hc.symm)
+    have hsign : (-1 : ℂ) ^ S.card = (-1 : ℂ) ^ p := by
+      have hc := parity_coefficient u S
+      rw [hpu, Finsupp.smul_apply, smul_eq_mul] at hc
+      exact mul_right_cancel₀ hne hc.symm
+    have hv : L 0 (ket S) = (h : ℂ) • ket S := by rw [L_zero_ket, hweight]
+    have hadj := beta_occupation_mode S n x y
+    rw [hweight, parity_pow_eq_of_sign_eq S.card p hsign, hopposite (ket S) hv] at hadj
+    exact hadj
+  have hexpand : u = ∑ S ∈ u.support, u S • ket S := by
+    simpa [Finsupp.sum, ket] using (Finsupp.sum_single u).symm
+  rw [hopposite u hu]
+  change left u = right u
+  rw [hexpand]
+  simp only [map_sum, map_smul]
+  exact Finset.sum_congr rfl (fun S hS => congrArg (fun z : ℂ => u S • z) (hket S hS))
+
+#print axioms beta_homogeneous_mode
+
 end D5.S3.Quantum.Fermionic.BcGhostOppositeNormalProduct
