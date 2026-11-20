@@ -24,9 +24,9 @@ attribute [local instance] Classical.propDecidable
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
   (directions regular_directions exterior_even)
-open private mem_directions directions_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeComponentBoundary (mem_directions directions_card)
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
@@ -156,8 +156,7 @@ private lemma distanceSeven_partner_degree {C : Finset (Q 9)}
 #print axioms distanceSeven_partner_degree
 
 open BalancedCriticalSpectrum (IsSwitching switchingVector)
-open private switching_sq from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
+open BalancedCriticalSpectrum (switching_sq)
 open private HuangCubeCovariance.edge edge_sq edge_curvature matrix_row from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
 

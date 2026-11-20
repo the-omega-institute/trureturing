@@ -25,7 +25,8 @@ open D5.S3.Combinatorics.Graph.Hypercube
 
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
   (Q flip gamma IsSwitching IsBalanced)
-open private gammaV coeff switching_sq from
+open BalancedCriticalSpectrum (switching_sq)
+open private gammaV coeff from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open private huangMatrix cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
@@ -72,7 +73,7 @@ theorem gamma_anticommute {n : Nat} {i j : Fin n} (hij : i ≠ j)
   rw [(coeff n).symm_apply_apply, (coeff n).symm_apply_apply,
     gammaV_anticommute n i j hij, map_neg]
 
-private theorem flip_comm {n : Nat} (x : Q n) (i j : Fin n) :
+theorem flip_comm {n : Nat} (x : Q n) (i j : Fin n) :
     flip (flip x i) j = flip (flip x j) i := by
   funext r
   by_cases hri : r = i

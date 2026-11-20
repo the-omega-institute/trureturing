@@ -33,7 +33,8 @@ open private second_distance distance_parity from
 open private word_to_third full_attachment_same_order actual_full_leaf_blocking
   flip_triangle_commute diff_two_flips no_two_steps_to_outside from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9FourthLeafSignProbe
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 
