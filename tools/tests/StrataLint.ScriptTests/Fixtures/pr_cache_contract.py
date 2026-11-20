@@ -15,6 +15,7 @@ from unittest import mock
 from cache_fixture import REPO, CacheFixture
 
 sys.path.insert(0, str(REPO / "tools/scripts/worktree"))
+from lean_artifact_inventory import Module
 import lean_pr_cache as producer
 import lean_actions_shards as shards
 
@@ -22,7 +23,7 @@ import lean_actions_shards as shards
 class PrCacheContracts(CacheFixture, unittest.TestCase):
     def test_slow_artifact_transfer_has_no_whole_artifact_deadline(self):
         destination = self.root / "artifact.zip"
-        def transfer(command, *, stdout, check, timeout=None):
+        def transfer(command, *, stdout, stderr, check, timeout=None):
             if timeout is not None and timeout < 601:
                 raise subprocess.TimeoutExpired(command, timeout)
             self.assertTrue(check)
@@ -33,10 +34,29 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_native_artifact_transfer_failure_propagates(self):
         error = subprocess.CalledProcessError(23, ["gh", "api"])
-        with mock.patch.object(producer.subprocess, "run", side_effect=error):
+        with mock.patch.object(producer.subprocess, "run", side_effect=error) as run:
             with self.assertRaises(subprocess.CalledProcessError) as caught:
                 producer.download("owner/repository", 81, self.root / "artifact.zip")
+        run.assert_called_once()
         self.assertIs(error, caught.exception)
+
+    def test_native_artifact_interruption_retries_same_id_and_discards_partial_bytes(self):
+        destination = self.root / "artifact.zip"
+        timeout = b"read tcp runner:1234->artifact:443: read: connection timed out\n"
+        attempts = []
+
+        def transfer(command, *, stdout, stderr, check):
+            attempts.append(command)
+            if len(attempts) == 1:
+                stdout.write(b"incomplete archive with extra bytes")
+                raise subprocess.CalledProcessError(1, command, stderr=timeout)
+            stdout.write(b"valid archive")
+
+        with mock.patch.object(producer.subprocess, "run", side_effect=transfer):
+            producer.download("owner/repository", 81, destination)
+        self.assertEqual(2, len(attempts))
+        self.assertEqual(attempts[0], attempts[1])
+        self.assertEqual(b"valid archive", destination.read_bytes())
 
     def setUp(self):
         super().setUp()
@@ -441,6 +461,52 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.assertEqual("adopted", result["status"])
         native_archive = unpack.call_args.args[1]
         self.assertFalse(native_archive.with_name("artifact.zip").exists())
+
+    def test_sharded_preparation_packs_and_adopts_without_actions_cache(self):
+        self.dependency_files()
+        name = "D5.Fixture"
+        module = Module("fixture", pathlib.Path("D5/Fixture.lean"), pathlib.Path())
+        source = self.root / module.source
+        source.parent.mkdir()
+        source.write_text("def fixture := 1\n")
+        compiler_paths = shards.required_compiler_paths(name, module)
+        report_paths = {shards.REPORT_PATH + suffix for suffix in shards.report_reuse.publication.SUFFIXES}
+        report_paths.add(str(shards.REPORT_RECEIPT))
+        for relative in compiler_paths | report_paths:
+            path = self.root / shards.PROJECT_BUILD / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(str(relative))
+        env = self.runtime() | {"GITHUB_REF_PROTECTED": "true",
+            "STRATALINT_CACHE_PR_SOURCE_VALIDATED": "true", "STRATALINT_CACHE_SOURCE_REF": "refs/pull/12/merge",
+            "STRATALINT_CACHE_SOURCE_COMMIT": self.identity["merge"],
+            "STRATALINT_CACHE_CHECKED_OUT_SHA": self.identity["merge"],
+            "STRATALINT_CACHE_TARGET_REF": self.identity["target_ref"]}
+        self.build_work(env)
+        self.bundle = self.root / "preparation"
+        with mock.patch.object(shards, "workspace_modules", return_value={name: module}), \
+                mock.patch.object(shards, "project_imports", return_value={name: set()}), \
+                mock.patch.object(shards.report_reuse, "read_receipt"), \
+                mock.patch.object(shards.report_reuse, "capture"), \
+                mock.patch.object(shards.report_reuse.publication.selection, "Selection") as selection:
+            selection.return_value.modules.return_value = {name: {}}
+            result = self.run_with(lambda: producer.pack(self.root, self.identity, self.bundle,
+                                   anchor=self.identity["base"]), env=env)
+        self.assertEqual(0, result["referenced"])
+        index = json.loads((self.bundle / "project.json").read_text())
+        self.assertEqual({digest + ".tar.gz" for digest in index["entries"].values()},
+                         {path.name for path in (self.bundle / "shards").iterdir()})
+        self.artifact["name"] = producer.artifact_name(self.identity, sharded=True)
+        self.zipped = self.root / "preparation.zip"
+        self.zip_preparation()
+        shutil.rmtree(self.root / ".lake")
+        self.merged()
+        result, _ = self.adopt(cache_action=("/missing/node", "/missing/cache-action"))
+        self.assertEqual("adopted", result["status"])
+        self.assertEqual(self.actual_merge, result["actual_merge"])
+        self.assertIn("sharded=true", (self.root / "outputs").read_text())
+        for relative in compiler_paths | report_paths:
+            self.assertEqual(str(relative), (self.root / shards.PROJECT_BUILD / relative).read_text())
+        self.assertTrue((self.root / ".lake/packages/mathlib/scripts/bench/size/run").is_file())
 
     def test_sharded_preparation_installs_bundled_and_referenced_files_together(self):
         self.preparation()

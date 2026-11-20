@@ -12,15 +12,17 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import stat
 import subprocess
+import sys
 import tarfile
 import tempfile
 import time
 
 from lean_actions import (
     actions_keys, dependency_inputs, manual_source_is_valid, native_archive_paths, preparation_source_is_valid,
-    project_publication, project_work, receipt, resume_spec, write_small_record,
+    output, project_publication, project_work, receipt, resume_spec, write_small_record,
 )
 from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
@@ -233,7 +235,8 @@ def resume_verified(root):
         return False
 
 
-def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset(), *, preparation=False):
+def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset(), *,
+            preparation=False, deliver=None):
     if preparation:
         if state != "complete" or not preparation_source_is_valid() or project_work(root) is None:
             raise ValueError("Actions shard preparation requires a validated build at the protected PR runtime")
@@ -282,6 +285,7 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
         fingerprints = {}
         entries = {}
         written = set()
+        written_bytes = 0
         for key, paths in sorted(groups.items()):
             fingerprint = digest([(name, (build / name).stat().st_mode & 0o777, archive_sha(build / name, None))
                                   for name in sorted(paths)])
@@ -290,14 +294,50 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
             if retained in available and previous["fingerprints"][key] == fingerprint:
                 entries[key] = retained
             else:
-                entries[key] = write_payload(root, build, paths)
-                written.add(entries[key])
+                payload = write_payload(root, build, paths)
+                entries[key] = payload
+                size = (root / transport_payload(payload)).stat().st_size
+                if payload not in written:
+                    written.add(payload)
+                    written_bytes += size
+                if deliver is not None:
+                    deliver(payload, size)
     record = {"binding": identity, "owner": current_owner(root), "state": state, "layout": layout,
               "sources": sources, "entries": entries, "fingerprints": fingerprints, "required": required}
     if state == "complete" and REPORT not in entries:
         raise ValueError("cannot publish a complete Actions index without the report bundle")
     receipt("shards", "snapshot", complete=state == "complete", entries=len(entries),
-            packed=len(written), bytes=sum((root / transport_payload(item)).stat().st_size for item in written))
+            packed=len(written), bytes=written_bytes)
+    return record
+
+
+def prepare_stream(root, identity, state, previous, anchor, targets, available):
+    batch = []
+    batch_bytes = 0
+    peak_bytes = 0
+
+    def flush():
+        nonlocal batch_bytes
+        print("SHARD_PAYLOAD_BATCH " + json.dumps(batch), flush=True)
+        if sys.stdin.readline() != "continue\n":
+            raise ValueError("Actions upload stopped before accepting the packed shards")
+        batch.clear()
+        batch_bytes = 0
+
+    def deliver(payload, size):
+        nonlocal batch_bytes, peak_bytes
+        peak_bytes = max(peak_bytes, batch_bytes + size)
+        if batch and batch_bytes + size > 1024 ** 3:
+            flush()
+        batch.append(payload)
+        batch_bytes += size
+        if len(batch) == 32 or batch_bytes >= 1024 ** 3:
+            flush()
+
+    record = prepare(root, identity, state, previous, anchor, targets, available, deliver=deliver)
+    if batch:
+        flush()
+    print("LEAN_ACTIONS_SHARDS " + json.dumps({"operation": "pack", "peak_payload_bytes": peak_bytes}), flush=True)
     return record
 
 
@@ -353,7 +393,7 @@ def install_continuation(target, unpacked, paths, backup):
         raise
 
 
-def install(root, record, targets, *, require_complete=False, preparation=None):
+def install(root, record, targets, *, require_complete=False, preparation=None, payload_directory=None):
     selected = selected_keys(root, record, targets)
     required = record["required"]
     registrations = native_archive_paths(root, ["project"])["project"]
@@ -374,6 +414,8 @@ def install(root, record, targets, *, require_complete=False, preparation=None):
         def unpack(item):
             key, digest_value = item
             payload = root / transport_payload(digest_value)
+            if payload_directory is not None:
+                payload = payload_directory / payload.name
             if preparation:
                 packed = preparation / "shards" / payload.name
                 if packed.is_file():
@@ -417,9 +459,36 @@ def install(root, record, targets, *, require_complete=False, preparation=None):
             "complete": complete}
 
 
+def pack_checkpoint(root, identity, previous, anchor, directory):
+    record = prepare(root, identity, "resume", previous, anchor)
+    entries = set(record["entries"].values())
+    if not entries:
+        raise ValueError("cold Release checkpoint contains no shard material")
+    payloads = directory / "payload"
+    payloads.mkdir(parents=True)
+    for digest_value in sorted(entries):
+        payload = root / transport_payload(digest_value)
+        shutil.move(payload, payloads / payload.name)
+    write_small_record(directory / "index.json", record)
+    output({"available": len(entries)})
+
+
+def restore_checkpoint(root, identity, directory, attempt):
+    record = read_index(directory / "index.json", identity, "resume")
+    owner = current_owner(root)
+    if (record is None or not record["entries"] or not 1 <= attempt < int(owner["attempt"])
+            or record["owner"] != (owner | {"attempt": str(attempt)})):
+        raise ValueError("cold Release checkpoint has a different run or attempt")
+    result = install(root, record, (), require_complete=True, payload_directory=directory / "payload")
+    if result["missing"]:
+        raise ValueError("cold Release checkpoint artifact is missing verified shard material")
+    output({"available": result["available"]})
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=("identity", "prepare", "restore-plan", "install"))
+    parser.add_argument("operation", choices=("identity", "prepare", "restore-plan", "install",
+                                               "checkpoint-pack", "checkpoint-restore"))
     parser.add_argument("--repository", type=Path, default=Path.cwd())
     parser.add_argument("--state", choices=("complete", "resume"), default="complete")
     parser.add_argument("--index", type=Path)
@@ -428,7 +497,12 @@ def main():
     parser.add_argument("--target", action="append", default=[])
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--preparation", type=Path)
+    parser.add_argument("--artifact-directory", type=Path)
+    parser.add_argument("--previous-attempt", type=int)
+    parser.add_argument("--stream-payloads", action="store_true")
     args = parser.parse_args()
+    if args.stream_payloads and args.operation != "prepare":
+        parser.error("payload streaming requires prepare")
     if args.preparation and (args.state != "complete" or args.operation != "install" or args.target):
         parser.error("preparation requires a complete, unscoped install")
     root = args.repository.resolve()
@@ -437,13 +511,26 @@ def main():
         print(json.dumps({"prefix": index_prefix(identity), "owner": current_owner(root)}))
         return
     record = read_index(args.index, identity, args.state) if args.index else None
-    if args.operation == "prepare":
+    if args.operation.startswith("checkpoint-"):
+        scenario = identity.get("verification", {}).get("scenario")
+        if scenario not in {"release-none", "release-partial"} or args.artifact_directory is None:
+            parser.error("checkpoint artifacts require a protected cold Release verification run and a directory")
+        if args.operation == "checkpoint-pack":
+            if not args.anchor or not re.fullmatch(r"[0-9a-f]{40}", args.anchor):
+                parser.error("checkpoint packing requires a fixed dev history anchor")
+            pack_checkpoint(root, identity, record, args.anchor, args.artifact_directory)
+        else:
+            if args.previous_attempt is None:
+                parser.error("checkpoint restore requires the earlier producing attempt")
+            restore_checkpoint(root, identity, args.artifact_directory, args.previous_attempt)
+    elif args.operation == "prepare":
         if args.target and args.state != "resume":
             raise ValueError("scoped save requires an incomplete producer index")
         if record is None and (not args.anchor or not re.fullmatch(r"[0-9a-f]{40}", args.anchor)):
             raise ValueError("a fixed dev history anchor is required to seed the layout")
         available = set(json.loads(args.available.read_text())) if args.available else frozenset()
-        print(json.dumps(prepare(root, identity, args.state, record, args.anchor, args.target, available),
+        pack = prepare_stream if args.stream_payloads else prepare
+        print(json.dumps(pack(root, identity, args.state, record, args.anchor, args.target, available),
                          separators=(",", ":")))
     elif record is None:
         raise ValueError("Actions shard index missing")
