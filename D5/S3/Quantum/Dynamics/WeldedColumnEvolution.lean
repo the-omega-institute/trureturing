@@ -156,4 +156,60 @@ private theorem adjacency_mul_columns {V : Type*} [Fintype V]
   rw [← mul_assoc]
   exact_mod_cast (column_action_scalar d (col v) j)
 
+
+private theorem normalized_columns_isometry {V : Type*} [Fintype V] {d : ℕ}
+    (col : V → Column d)
+    (hsize : ∀ j, (Finset.univ.filter (fun v => col v = j)).card = 2 ^ columnDepth d j) :
+    (normalizedColumns col)ᴴ * normalizedColumns col = 1 := by
+  classical
+  ext i j
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  by_cases hij : i = j
+  · subst j
+    rw [if_pos rfl]
+    have hsum :
+        (∑ v, (normalizedColumns col)ᴴ i v * normalizedColumns col v i) =
+          ∑ v, if col v = i then (columnWeight d i : ℂ) * (columnWeight d i : ℂ) else 0 := by
+      apply Finset.sum_congr rfl
+      intro v _
+      by_cases hv : col v = i <;> simp [Matrix.conjTranspose_apply, normalizedColumns, hv]
+    rw [hsum, ← Finset.sum_filter, Finset.sum_const, hsize, nsmul_eq_mul]
+    have hs : Real.sqrt (2 : ℝ) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+    have hp : 0 < Real.sqrt (2 : ℝ) := by positivity
+    have hpow : (Real.sqrt (2 : ℝ) ^ columnDepth d i) ^ 2 =
+        (2 : ℝ) ^ columnDepth d i := by
+      rw [← pow_mul, Nat.mul_comm, pow_mul, hs]
+    have hweight : (2 : ℝ) ^ columnDepth d i *
+        (columnWeight d i * columnWeight d i) = 1 := by
+      rw [← hpow]
+      simp only [columnWeight, pow_two]
+      field_simp [pow_ne_zero _ hp.ne']
+    exact_mod_cast hweight
+  · rw [if_neg hij]
+    apply Finset.sum_eq_zero
+    intro v _
+    by_cases hv : col v = i
+    · simp [Matrix.conjTranspose_apply, normalizedColumns, hv, hij]
+    · simp [Matrix.conjTranspose_apply, normalizedColumns, hv]
+
+/-- The normalized columns of a two-tree weld with the binary neighbor profile are orthonormal.
+Their actual time evolution intertwines with the central square-root-two defect path. -/
+theorem central_defect_column_evolution {V : Type*} [Fintype V] [DecidableEq V]
+    (d : ℕ) (G : SimpleGraph V) [DecidableRel G.Adj] (col : V → Column d)
+    (hsize : ∀ j, (Finset.univ.filter (fun v => col v = j)).card = 2 ^ columnDepth d j)
+    (hdegree : ∀ v j,
+      ((G.neighborFinset v).filter (fun w => col w = j)).card = columnDegree d (col v) j)
+    (t : ℝ) :
+    let Q := normalizedColumns col
+    let H := (((Real.sqrt 2)⁻¹ : ℝ) : ℂ) • G.adjMatrix ℂ
+    let J := (centralDefect (d + 1) (by omega)).map Complex.ofReal
+    Qᴴ * Q = 1 ∧
+      NormedSpace.exp ((-Complex.I * (t : ℂ)) • H) * Q =
+        Q * NormedSpace.exp ((-Complex.I * (t : ℂ)) • J) := by
+  dsimp only
+  constructor
+  · exact normalized_columns_isometry col hsize
+  · apply exp_intertwines
+    rw [Matrix.smul_mul, Matrix.mul_smul, adjacency_mul_columns d G col hdegree]
+
 end D5.S3.Quantum.Dynamics.WeldedColumnEvolution
