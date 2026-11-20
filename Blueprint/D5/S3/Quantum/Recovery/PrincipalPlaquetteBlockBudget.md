@@ -72,5 +72,5 @@ The flat input gives the lower bound 1/4 for this example. The complete calibrat
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
-- Dependency: [D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond](PrincipalPlaquettePhaseDiamond.md)
+- Dependency: [D5/S3/Quantum/Recovery/PrincipalPlaquetteGaugeBudget](PrincipalPlaquetteGaugeBudget.md)
 - Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)
