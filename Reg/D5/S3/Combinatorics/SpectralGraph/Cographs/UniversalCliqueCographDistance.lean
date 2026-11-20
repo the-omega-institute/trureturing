@@ -130,7 +130,6 @@ private abbrev Attains (s : ℕ) : Prop :=
     ¬ (pathGraph 4).IsIndContained (graph (3 * (s - 1)) s s) ∧
     dilworthNumber (graph (3 * (s - 1)) s s) = 2 ∧
     ((s : ℝ) - 2 ≠ -1 ∧ (s : ℝ) - 2 ≠ -2) ∧
-    (s : ℝ) - 2 ∈ spectrum ℝ (distanceMatrix (3 * (s - 1)) s s) ∧
     Module.finrank ℝ (shiftedKernel (3 * (s - 1)) s s) = 2
 
 abbrev orderSignature := signature Unit (fun _ => ℕ) (fun _ => ℕ)

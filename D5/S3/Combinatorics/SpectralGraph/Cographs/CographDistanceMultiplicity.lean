@@ -65,7 +65,7 @@ theorem result :
         Eligible ((s : ℝ) - 2) ∧ distanceMultiplicity G ((s : ℝ) - 2) = width G) := by
   refine ⟨fun hc hP => distanceMultiplicity_attains_iff hc hP, ?_⟩
   intro s hs
-  obtain ⟨hcard, hc, hP, hwidth, hel, _, hdim⟩ := UniversalCliqueCographDistance.family hs
+  obtain ⟨hcard, hc, hP, hwidth, hel, hdim⟩ := UniversalCliqueCographDistance.family hs
   rw [dilworthNumber_eq_width] at hwidth
   have hw : width (UniversalCliqueCographDistance.graph (3 * (s - 1)) s s) = 2 := by
     exact_mod_cast hwidth

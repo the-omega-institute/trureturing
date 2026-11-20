@@ -437,25 +437,6 @@ theorem parameter_iff_divisor (hs : 2 ≤ s) (hb : 0 < b) :
       ring
     rwa [hdCast, ← hsCast]
 
-private theorem shiftedKernel_eq_eigenspace :
-    shiftedKernel r s b =
-      Module.End.eigenspace (Matrix.toLinAlgEquiv' (distanceMatrix r s b)) ((s : ℝ) - 2) := by
-  rw [Module.End.eigenspace_def, shiftedKernel, shiftedDistance]
-  congr 1
-  change Matrix.toLin' _ = Matrix.toLin' _ - _ • _
-  rw [map_sub, map_smul, Matrix.toLin'_one]
-  rfl
-
-private theorem shift_mem_spectrum (hr : 0 < r) (hs : 2 ≤ s) (hb : 0 < b) :
-    (s : ℝ) - 2 ∈ spectrum ℝ (distanceMatrix r s b) := by
-  rw [← AlgEquiv.spectrum_eq Matrix.toLinAlgEquiv' (distanceMatrix r s b)]
-  apply Module.End.HasEigenvalue.mem_spectrum
-  rw [Module.End.hasEigenvalue_iff, ← shiftedKernel_eq_eigenspace]
-  intro h
-  have hzero := (Submodule.finrank_eq_zero).mpr h
-  rw [shiftedKernel_finrank hr hs hb] at hzero
-  split_ifs at hzero <;> contradiction
-
 /-- The family obtained with clique size `3 * (s - 1)` and `s` isolates has
 strictly increasing orders and attains its width at the eligible shift `s - 2`. -/
 theorem family (hs : 2 ≤ s) :
@@ -464,13 +445,12 @@ theorem family (hs : 2 ≤ s) :
     ¬ (pathGraph 4).IsIndContained (graph (3 * (s - 1)) s s) ∧
     dilworthNumber (graph (3 * (s - 1)) s s) = 2 ∧
     ((s : ℝ) - 2 ≠ -1 ∧ (s : ℝ) - 2 ≠ -2) ∧
-    (s : ℝ) - 2 ∈ spectrum ℝ (distanceMatrix (3 * (s - 1)) s s) ∧
     Module.finrank ℝ (shiftedKernel (3 * (s - 1)) s s) = 2 := by
   have hr : 0 < 3 * (s - 1) := by omega
   have hb : 0 < s := by omega
   have hsReal : (2 : ℝ) ≤ s := by exact_mod_cast hs
   refine ⟨?_, connected hr, induced_path_excluded _ _ _, width hs,
-    ⟨by linarith, by linarith⟩, shift_mem_spectrum hr hs hb, ?_⟩
+    ⟨by linarith, by linarith⟩, ?_⟩
   · simp only [Vertex, Fintype.card_sum, Fintype.card_fin]
     omega
   · rw [shiftedKernel_finrank hr hs hb, ite_eq_left]

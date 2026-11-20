@@ -73,7 +73,7 @@ internal sealed class UniversalCliqueCographDistanceDocument : IScribeDocumentDe
             Entry("family", "An explicit extremal graph at each s ≥ 2",
                 "Choose the divisor s−1, so r=3(s−1) and b=s. The graph has order 6s−3, "
                 + "is connected and induced-P4-free, and has vicinal width two. The real shift "
-                + "s−2 is distinct from −1 and −2, belongs to the ordinary distance spectrum, "
+                + "s−2 is distinct from −1 and −2 "
                 + "and has real eigenspace dimension two."))));
 
     private static DocumentBlock Entry(string name, string title, string text,
