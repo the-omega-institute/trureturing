@@ -40,16 +40,20 @@ lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: exp
 lean-cache-to-github-without-mathlib: export LEAN_CACHE_PUBLISH_ONLY ?= 0
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_TAG ?=
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_PRODUCER ?=
+lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_INDEXED ?= 0
+lean-cache-from-github-without-mathlib: export LEAN_CACHE_TARGETS ?=
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_LOCAL_ASSETS ?=
 
 lean-cache-to-github-without-mathlib: $(if $(filter 1,$(LEAN_CACHE_PUBLISH_ONLY)),,require-full-build)
-	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" $(if $(filter 1,$(LEAN_CACHE_PUBLISH_ONLY)),--no-build)
+	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" $(if $(filter 1,$(LEAN_CACHE_PUBLISH_ONLY)),--no-build) $(if $(filter 1,$(LEAN_CACHE_INDEXED)),--indexed)
 
 lean-cache-from-github-without-mathlib:
 	@args=(); \
 	if [[ -n "$$LEAN_CACHE_APPROVED_TAG" ]]; then args+=(--approved-tag "$$LEAN_CACHE_APPROVED_TAG"); fi; \
 	if [[ -n "$$LEAN_CACHE_APPROVED_PRODUCER" ]]; then args+=(--approved-producer "$$LEAN_CACHE_APPROVED_PRODUCER"); fi; \
 	if [[ -n "$$LEAN_CACHE_LOCAL_ASSETS" ]]; then args+=(--local-assets "$$LEAN_CACHE_LOCAL_ASSETS"); fi; \
+	if [[ "$$LEAN_CACHE_INDEXED" == 1 ]]; then args+=(--indexed); fi; \
+	read -ra targets <<< "$$LEAN_CACHE_TARGETS"; for target in "$${targets[@]}"; do args+=(--target "$$target"); done; \
 	/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" --tag "$$LEAN_CACHE_TAG" $(if $(filter 1,$(REFRESH_STALE)),--refresh-stale) "$${args[@]}"
 
 warm-donor: require-full-build

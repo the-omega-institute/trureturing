@@ -177,40 +177,66 @@ def prepare(root, identity):
     return receipt("validated", identity, runtime=runtime)
 
 
-def artifact_name(identity):
-    return "lean-pr-preparation-" + identity["pr"] + "-" + identity["head"]
+def artifact_name(identity, *, sharded=False):
+    prefix = "lean-pr-preparation-shards-v1-" if sharded else "lean-pr-preparation-"
+    return prefix + identity["pr"] + "-" + identity["head"]
 
 
-def native_paths(root, registration_root=None):
+def native_paths(root, registration_root=None, layers=actions.LAYERS):
     """Expand the same registered paths used by Actions native cache transport."""
     paths = set()
-    for patterns in actions.native_archive_paths(registration_root or root, actions.LAYERS).values():
+    for patterns in actions.native_archive_paths(registration_root or root, layers).values():
         for pattern in patterns:
             for path in root.glob(pattern):
                 paths.add(path.relative_to(root))
     return sorted(path for path in paths if not any(parent in paths for parent in path.parents))
 
 
-def pack(root, identity, directory):
+def pack(root, identity, directory, *, anchor=None, previous_index=None):
     runtime = producer_context(root, identity, allow_merged=True)
     require(actions.project_work(root) is not None, "preparation has no current build-work fact")
-    paths = native_paths(root)
     require((root / ".lake/packages").is_dir() and (root / ".lake/build").is_dir(),
             "preparation native directories are unavailable")
     directory.mkdir(parents=True, exist_ok=True)
+    layers = actions.LAYERS
+    material = {}
+    if anchor is not None:
+        import lean_actions_shards as shards
+
+        require(re.fullmatch(r"[0-9a-f]{40}", anchor), "sharded preparation requires a fixed dev history anchor")
+        binding = shards.binding(root, "complete")
+        previous = None
+        if previous_index is not None:
+            previous = shards.read_index(previous_index, binding, "complete")
+            require(previous is not None and previous["owner"]["ref"] == identity["target_ref"],
+                    "preparation base index belongs to a different target")
+        index = shards.prepare(root, binding, "complete", previous, anchor, preparation=True)
+        needed = set(index["entries"].values())
+        payloads = directory / "shards"
+        payloads.mkdir(exist_ok=True)
+        for digest in sorted(needed):
+            source = root / shards.transport_payload(digest)
+            shutil.move(source, payloads / source.name)
+        (directory / "project.json").write_text(json.dumps(index, separators=(",", ":")) + "\n")
+        material = dict(referenced=0, bundled=len(needed),
+                        bundled_bytes=sum(path.stat().st_size for path in payloads.iterdir()))
+        layers = ("dependency",)
     with tarfile.open(directory / "native.tar.gz", "w:gz", compresslevel=1) as archive:
-        for path in paths:
+        for path in native_paths(root, layers=layers):
             archive.add(root / path, arcname=str(path))
     actions.write_small_record(directory / "preparation.json", dict(source=identity, runtime=runtime,
         partition=actions.partition_path(root), elan_key=actions.elan_key(root)))
-    actions.output(dict(artifact_name=artifact_name(identity), artifact_path=str(directory)))
-    return receipt("packed", identity, runtime=runtime)
+    actions.output(dict(artifact_name=artifact_name(identity, sharded=anchor is not None),
+                        artifact_path=str(directory)))
+    return receipt("packed", identity, runtime=runtime, **material)
 
 
-def artifact_metadata(repository, artifact_id, identity, runtime):
+def artifact_metadata(repository, artifact_id, identity, runtime, *, sharded=None):
     artifact = api(repository, "actions/artifacts/" + str(artifact_id))
+    variants = (False, True) if sharded is None else (sharded,)
     require(type(artifact["id"]) is int and artifact["id"] == artifact_id
-            and artifact["name"] == artifact_name(identity) and artifact["expired"] is False
+            and artifact["name"] in {artifact_name(identity, sharded=variant) for variant in variants}
+            and artifact["expired"] is False
             and str(artifact["workflow_run"]["id"]) == runtime["run"]
             and artifact["workflow_run"]["head_sha"] == runtime["sha"],
             "artifact is expired or does not bind the producer run")
@@ -343,12 +369,23 @@ def consumer_context(root):
 
 
 def download(repository, artifact_id, destination):
-    with destination.open("wb") as stream:
-        subprocess.run(["gh", "api", "repos/" + repository + "/actions/artifacts/" + str(artifact_id) + "/zip"],
-                       stdout=stream, check=True)
+    command = ["gh", "api", "repos/" + repository + "/actions/artifacts/" + str(artifact_id) + "/zip"]
+    for attempt in (1, 2):
+        try:
+            with destination.open("wb") as stream:
+                subprocess.run(command, stdout=stream, stderr=subprocess.PIPE, check=True)
+            return
+        except subprocess.CalledProcessError as error:
+            interrupted = re.search(
+                rb"(?:^|: )(unexpected EOF|connection timed out|connection reset by peer|i/o timeout|TLS handshake timeout)$",
+                (error.stderr or b"").strip(),
+            )
+            if attempt == 2 or interrupted is None:
+                raise
+            print(f"PR_CACHE_RETRY artifact {artifact_id}: {interrupted[1].decode('ascii')}", file=sys.stderr)
 
 
-def validate_preparation(root, value, context, artifact):
+def validate_preparation(root, value, context, artifact, *, sharded=False):
     require(isinstance(value, dict) and set(value) == {"source", "runtime", "partition", "elan_key"},
             "invalid preparation identity fields")
     identity, runtime = validate_identity(value["source"]), value["runtime"]
@@ -371,7 +408,7 @@ def validate_preparation(root, value, context, artifact):
             and run["event"] == "workflow_dispatch" and run["path"] == ".github/workflows/" + WORKFLOW
             and run["head_sha"] == runtime["sha"] and run["head_branch"] == runtime["ref"].removeprefix("refs/heads/"),
             "preparation producer attempt identity differs")
-    artifact_metadata(repository, artifact["id"], identity, runtime)
+    artifact_metadata(repository, artifact["id"], identity, runtime, sharded=sharded)
     if run["status"] != "completed" or run["conclusion"] != "success":
         receipt("not-ready", identity, runtime=runtime, artifact=artifact["id"], reason="producer attempt has not succeeded")
         return None
@@ -393,28 +430,38 @@ def validate_preparation(root, value, context, artifact):
     return identity, runtime
 
 
-def unpack(root, archive_path, directory):
-    with tarfile.open(archive_path, "r:gz") as archive:
-        members = archive.getmembers()
-        names = [member.name for member in members]
-        require(len(names) == len(set(names)), "duplicate native archive member")
-        for member in members:
+def unpack(root, archive_path, directory, *, dependency_only=False):
+    names = set()
+    files = []
+    layers = ("dependency",) if dependency_only else actions.LAYERS
+    directories = ("packages",) if dependency_only else ("packages", "build")
+    allowed_roots = tuple(".lake/" + name for name in directories)
+
+    def checked_members(archive):
+        for member in archive:
             path = pathlib.PurePosixPath(member.name)
-            require(not path.is_absolute() and ".." not in path.parts and
-                    (member.name in (".lake/build", ".lake/packages") or member.name.startswith(".lake/build/")
-                     or member.name.startswith(".lake/packages/")), "native archive member outside cache roots")
-        archive.extractall(directory, filter="data")
-    selected = set(native_paths(directory, root))
+            require(member.name not in names, "duplicate native archive member")
+            require(not path.is_absolute() and ".." not in path.parts and any(
+                member.name == prefix or member.name.startswith(prefix + "/") for prefix in allowed_roots),
+                "native archive member outside cache roots")
+            names.add(member.name)
+            if not member.isdir():
+                files.append(pathlib.Path(member.name))
+            yield member
+
+    with tarfile.open(archive_path, "r:gz") as archive:
+        archive.extractall(directory, members=checked_members(archive), filter="data")
+    selected = set(native_paths(directory, root, layers))
     require(selected, "empty native preparation")
-    for member in members:
-        if member.isdir():
-            continue
-        relative = pathlib.Path(member.name)
+    for relative in files:
         require(relative in selected or any(parent in selected for parent in relative.parents),
                 "native archive member outside registered membership: " + str(relative))
-    for name in ("packages", "build"):
+    for name in directories:
         source = directory / ".lake" / name
         require(source.is_dir() and not source.is_symlink(), "missing native preparation directory: " + name)
+
+
+def install_native(root, directory):
     # Staging finishes before replacing either native directory. Consumer report
     # validation remains in the existing report/Lean entry, with its own errors.
     for name in ("packages", "build"):
@@ -427,7 +474,31 @@ def unpack(root, archive_path, directory):
         shutil.move(str(directory / ".lake" / name), target)
 
 
-def adopt(root):
+def restore_project(root, directory, cache_action, identity, runtime):
+    import lean_actions_shards as shards
+
+    try:
+        index = shards.read_index(directory / "project.json", shards.binding(root, "complete"), "complete")
+    except shards.IncompatibleShardBinding:
+        return False
+    owner = dict(commit=identity["merge"], ref=identity["target_ref"], run=runtime["run"], attempt=runtime["attempt"])
+    require(index is not None and index["owner"] == owner, "preparation index owner differs from validated source")
+    packed = directory / "shards"
+    expected = {digest + ".tar.gz" for digest in index["entries"].values()}
+    bundled = {path.name for path in packed.iterdir()} if packed.is_dir() else set()
+    require(bundled <= expected, "preparation contains an unreferenced shard")
+    if bundled == expected:
+        return shards.install(root, index, [], require_complete=True, preparation=directory,
+                              payload_directory=packed)["complete"]
+    # Earlier artifacts can still carry references to Actions cache entries.
+    result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
+    if result.returncode == 3:
+        return False
+    result.check_returncode()
+    return True
+
+
+def adopt(root, cache_action=None):
     record = root / "build/lean-cache/pr-adopted.json"
     record.unlink(missing_ok=True)
     actions.output(dict(adopted=False))
@@ -435,33 +506,57 @@ def adopt(root):
     if context is None:
         return receipt("miss", None, reason="no matching merged PR at event checkout")
     repository = context["repository"]
-    candidates = paged(repository, "actions/artifacts?" + urlencode(dict(name=artifact_name(context))), "artifacts")
-    candidates = [a for a in candidates if a["name"] == artifact_name(context) and a["expired"] is False]
-    for artifact in sorted(candidates, key=lambda a: a["id"], reverse=True):
+    candidates = []
+    variants = (True, False) if cache_action else (False,)
+    for sharded in variants:
+        name = artifact_name(context, sharded=sharded)
+        rows = paged(repository, "actions/artifacts?" + urlencode(dict(name=name)), "artifacts")
+        candidates.extend((row, sharded) for row in rows if row["name"] == name and row["expired"] is False)
+    for artifact, sharded in sorted(candidates, key=lambda candidate: candidate[0]["id"], reverse=True):
         with tempfile.TemporaryDirectory(prefix="lean-pr-preparation-") as temporary:
             directory = pathlib.Path(temporary)
             artifact_zip = directory / "artifact.zip"
+            download_started = time.monotonic()
             download(repository, artifact["id"], artifact_zip)
+            downloaded_bytes = artifact_zip.stat().st_size
+            download_seconds = time.monotonic() - download_started
+            unpack_started = time.monotonic()
             with zipfile.ZipFile(artifact_zip) as archive:
-                require(sorted(archive.namelist()) == ["native.tar.gz", "preparation.json"], "invalid preparation artifact members")
+                names = archive.namelist()
+                native_members = {"native.tar.gz", "preparation.json"}
+                require(sharded == ("project.json" in names) and len(set(names)) == len(names)
+                    and native_members <= set(names) and all(
+                    name in native_members or sharded and (name == "project.json"
+                        or re.fullmatch(r"shards/[0-9a-f]{64}\.tar\.gz", name))
+                    for name in names), "invalid preparation artifact members")
                 archive.extractall(directory)
             # The native archive is the only input needed after validation.  Keep
             # the downloaded zip from occupying another full cache-sized copy
             # while the native payload is staged and unpacked.
             artifact_zip.unlink()
             value = json.loads((directory / "preparation.json").read_text())
-            validated = validate_preparation(root, value, context, artifact)
+            validated = validate_preparation(root, value, context, artifact, sharded=sharded)
             if validated is None:
                 continue
             identity, runtime = validated
-            unpack(root, directory / "native.tar.gz", directory / "native")
+            if sharded and not restore_project(root, directory, cache_action, identity, runtime):
+                receipt("unavailable", identity, runtime=runtime, artifact=artifact["id"],
+                        reason="preparation project material is incompatible or unavailable")
+                continue
+            unpack(root, directory / "native.tar.gz", directory / "native", dependency_only=sharded)
+            install_native(root, directory / "native")
+            unpack_seconds = time.monotonic() - unpack_started
         actions.stamp_restored_dependency(root, actions.actions_keys(root))
         actions.write_small_record(record, dict(run=os.environ["GITHUB_RUN_ID"], attempt=os.environ["GITHUB_RUN_ATTEMPT"],
             repository=str(root.resolve()), checkout=context["checkout"], ref=os.environ["GITHUB_REF"],
             artifact=artifact["id"], merged=context["merged"]))
         actions.output(dict(adopted=True))
+        if sharded:
+            actions.output(dict(sharded=True))
         actions.output(dict(STRATALINT_ACTIONS_CACHE_SEEDED="0"), "GITHUB_ENV")
         return receipt("adopted", identity, runtime=runtime, artifact=artifact["id"],
+                       downloaded_bytes=downloaded_bytes, download_seconds=round(download_seconds, 3),
+                       unpack_seconds=round(unpack_seconds, 3),
                        checkout=context["checkout"], actual_merge=context["checkout"] if context["merged"] else None)
     return receipt("miss", context, reason="no unexpired preparation from a successful producer")
 
@@ -472,20 +567,25 @@ def main():
     parser.add_argument("--repository", type=pathlib.Path, required=True)
     parser.add_argument("--directory", type=pathlib.Path)
     parser.add_argument("--artifact-id", type=int)
+    parser.add_argument("--anchor")
+    parser.add_argument("--previous-index", type=pathlib.Path)
+    parser.add_argument("--cache-action", nargs=2)
     args = parser.parse_args()
     try:
         root = args.repository.resolve()
         if args.command == "dispatch":
             dispatch(root)
         elif args.command == "adopt":
-            adopt(root)
+            adopt(root, args.cache_action)
         else:
             identity = validate_identity(json.loads(os.environ["PR_SOURCE"]))
             if args.command == "prepare":
                 prepare(root, identity)
             elif args.command == "pack":
                 require(args.directory is not None, "pack requires directory")
-                pack(root, identity, args.directory)
+                require(args.previous_index is None or args.anchor is not None,
+                        "a previous layout requires a sharded preparation")
+                pack(root, identity, args.directory, anchor=args.anchor, previous_index=args.previous_index)
             else:
                 require(args.artifact_id is not None and args.artifact_id > 0, "confirm requires immutable artifact ID")
                 confirm(root, identity, args.artifact_id)
