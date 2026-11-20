@@ -48,6 +48,8 @@ open private mem_distanceTwoPairs from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9MixedCollisionEnergyBound
 open private diff diff_flip diff_of_adj_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
+open private cubeParity cubeParity_ne_of_adj from
+  D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 
 local notation "flip" => BalancedCriticalSpectrum.flip
 
@@ -157,20 +159,21 @@ private theorem sum_exterior_degrees {D P : Finset (Q 9)}
   rw [← Finset.sum_fiberwise_of_maps_to' hmaps f]
   simp [degrees, Finset.sum_insert, add_assoc, Nat.mul_comm]
 
-/-- The degree-eight leaves outside the first boundary are bounded by two per unordered
-eightfold edge and by the degree-dependent capacities of their other mates. -/
-theorem high_leaf_mate_bound {C D : Finset (Q 9)} (hsep : Separated C D)
+private theorem high_leaf_mate_bound_and_saturation {C D : Finset (Q 9)} (hsep : Separated C D)
     (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
     (hbD : IsBalanced D) :
     let P := (Finset.univ \ (C ∪ D)) \ boundary C
     let r := fun k => (P.filter fun x => (directions D x).card = k).card
-    r 8 ≤ 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6 := by
+    let bound := 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6
+    r 8 ≤ bound ∧
+      (r 8 = bound → ∀ x ∈ P, (directions D x).card = 6 → (highLeafDirections D x).Nonempty) := by
   dsimp only
   let P := (Finset.univ \ (C ∪ D)) \ boundary C
   let H := P.filter fun y => (directions D y).card = 8
   let highMate := fun y => (directions D (mate D y)).card = 8
   let capacity := fun k : ℕ => if k = 8 then 0 else if k = 0 then 3 else if k = 2 then 2 else 1
+  let fiber := fun x => H.filter fun y => ¬ highMate y ∧ mate D y = x
   have hP : ∀ x ∈ P, x ∉ D := fun x hx hxD =>
     (Finset.mem_sdiff.mp (Finset.mem_sdiff.mp hx).1).2 (Finset.mem_union_right _ hxD)
   have hhigh : (H.filter highMate).card ≤ 2 * (eightfoldCoverEdges D).card := by
@@ -188,19 +191,19 @@ theorem high_leaf_mate_bound {C D : Finset (Q 9)} (hsep : Separated C D)
         intro e he
         obtain ⟨y, i, _, rfl⟩ := mem_eightfoldCoverEdges.mp he
         exact Finset.card_pair (flip_adj y i).ne
-  have hlow : (H.filter fun y => ¬ highMate y).card ≤
-      ∑ x ∈ P, capacity (directions D x).card := by
+  have hbyMate : (H.filter fun y => ¬ highMate y).card = ∑ x ∈ P, (fiber x).card := by
     have hmaps : ∀ y ∈ H.filter (fun y => ¬ highMate y), mate D y ∈ P := by
       intro y hy
       obtain ⟨hyP, hy8⟩ := Finset.mem_filter.mp (Finset.mem_filter.mp hy).1
       exact mate_mem hsep hrC hyP hy8
     rw [Finset.card_eq_sum_card_fiberwise hmaps]
-    apply Finset.sum_le_sum
+    simp only [fiber, Finset.filter_filter]
+  have hfiber (x : Q 9) : (fiber x).card ≤ (highLeafDirections D x).card :=
+    high_mate_fiber_le (x := x) hP
+  have hcapacity : ∀ x ∈ P, (fiber x).card ≤ capacity (directions D x).card := by
     intro x hx
-    rw [Finset.filter_filter]
     by_cases h8 : (directions D x).card = 8
-    · have hempty :
-          (H.filter fun y => (fun y => ¬ highMate y) y ∧ mate D y = x) = ∅ := by
+    · have hempty : fiber x = ∅ := by
         apply Finset.eq_empty_iff_forall_notMem.mpr
         intro y hy
         obtain ⟨_, hy8, he⟩ := Finset.mem_filter.mp hy
@@ -208,7 +211,7 @@ theorem high_leaf_mate_bound {C D : Finset (Q 9)} (hsep : Separated C D)
       rw [hempty, Finset.card_empty]
       exact Nat.zero_le _
     · obtain ⟨sigma, hs⟩ := hbD
-      exact (high_mate_fiber_le (x := x) hP).trans
+      exact (hfiber x).trans
         (by simpa only [capacity, ite_eq_right h8] using
           card_highLeafDirections_le_by_degree hrD hs (hP x hx))
   have hclasses := sum_exterior_degrees hrD hbD hP capacity
@@ -217,8 +220,152 @@ theorem high_leaf_mate_bound {C D : Finset (Q 9)} (hsep : Separated C D)
   have hsplit := Finset.card_filter_add_card_filter_not (s := H) highMate
   let r := fun k => (P.filter fun x => (directions D x).card = k).card
   change (∑ x ∈ P, capacity ((directions D x).card)) = 3 * r 0 + 2 * r 2 + r 4 + r 6 at hclasses
-  change H.card ≤ 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6
-  omega
+  let bound := 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6
+  change H.card ≤ bound ∧
+    (H.card = bound → ∀ x ∈ P, (directions D x).card = 6 → (highLeafDirections D x).Nonempty)
+  have hlow := Finset.sum_le_sum hcapacity
+  constructor
+  · dsimp only [bound]
+    omega
+  · intro heq x hx hx6
+    by_contra hnone
+    rw [Finset.not_nonempty_iff_eq_empty, Finset.card_eq_zero.symm] at hnone
+    have hstrict : (fiber x).card < capacity (directions D x).card := by
+      have hle := hfiber x
+      rw [hnone] at hle
+      simpa [capacity, hx6] using (show (fiber x).card < 1 by omega)
+    have hsum := Finset.sum_lt_sum hcapacity ⟨x, hx, hstrict⟩
+    dsimp only [bound] at heq
+    omega
+
+/-- The degree-eight leaves outside the first boundary are bounded by two per unordered
+eightfold edge and by the degree-dependent capacities of their other mates. -/
+theorem high_leaf_mate_bound {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbD : IsBalanced D) :
+    let P := (Finset.univ \ (C ∪ D)) \ boundary C
+    let r := fun k => (P.filter fun x => (directions D x).card = k).card
+    r 8 ≤ 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6 :=
+  (high_leaf_mate_bound_and_saturation hsep hrC hrD hbD).1
+
+private theorem other_neighbor_outside_boundary {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) {x : Q 9} (hxC : x ∉ C) (hx6 : (directions D x).card = 6)
+    {i j : Fin 9} (hi : i ∈ highLeafDirections D x) (hji : j ≠ i) (hzD : flip x j ∉ D) :
+    flip x j ∈ (Finset.univ \ (C ∪ D)) \ boundary C := by
+  obtain ⟨hyD, hcover⟩ := mem_highLeafDirections.mp hi
+  have hziD : flip (flip x j) i ∈ D := by
+    rw [flip_comm x j i]
+    exact hcover j hji
+  have hzC : flip x j ∉ C := fun hz =>
+    hsep.2 _ hz _ hziD (flip_adj (flip x j) i)
+  let missing := Finset.univ \ directions D x
+  have hiM : i ∈ missing := Finset.mem_sdiff.mpr
+    ⟨Finset.mem_univ _, fun h => hyD ((mem_directions D x i).mp h)⟩
+  have hjM : j ∈ missing.erase i := Finset.mem_erase.mpr
+    ⟨hji, Finset.mem_sdiff.mpr ⟨Finset.mem_univ _, fun h => hzD ((mem_directions D x j).mp h)⟩⟩
+  have hcard : ((missing.erase i).erase j).card = 1 := by
+    rw [Finset.card_erase_of_mem hjM, Finset.card_erase_of_mem hiM]
+    simp [missing, Finset.card_sdiff_of_subset (Finset.subset_univ (directions D x)), hx6]
+  have hsub : directions C (flip x j) ⊆ (missing.erase i).erase j := by
+    intro k hk
+    have hkC := (mem_directions C (flip x j) k).mp hk
+    have hkj : k ≠ j := by
+      rintro rfl
+      exact hxC (by simpa only [BalancedCriticalSpectrum.flip_flip] using hkC)
+    have hki : k ≠ i := by
+      rintro rfl
+      exact Finset.disjoint_left.mp hsep.1 hkC hziD
+    refine Finset.mem_erase.mpr ⟨hkj, Finset.mem_erase.mpr ⟨hki, Finset.mem_sdiff.mpr
+      ⟨Finset.mem_univ _, ?_⟩⟩⟩
+    intro hkD
+    have hadj := flip_adj (flip x k) j
+    rw [flip_comm x k j] at hadj
+    exact hsep.2 _ hkC _ ((mem_directions D x k).mp hkD) hadj.symm
+  have hle := Finset.card_le_card hsub
+  obtain ⟨m, hm⟩ := exterior_even C hrC hbC (flip x j) hzC
+  have hempty : directions C (flip x j) = ∅ := Finset.card_eq_zero.mp (by omega)
+  simp [boundary, hzC, hzD, hempty]
+
+private theorem degree_six_directions {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D)
+    (hmin : ∀ z ∈ (Finset.univ \ (C ∪ D)) \ boundary C, 6 ≤ (directions D z).card)
+    {x : Q 9} (hxC : x ∉ C) (hxD : x ∉ D) (hx6 : (directions D x).card = 6)
+    {i : Fin 9} (hi : i ∈ highLeafDirections D x) :
+    let R := ((Finset.univ \ (C ∪ D)) \ boundary C).filter fun z => (directions D z).card = 6
+    directions R x = (Finset.univ \ directions D x).erase i := by
+  dsimp only
+  obtain ⟨sigma, hs⟩ := hbD
+  have hcap := card_highLeafDirections_le_by_degree hrD hs hxD
+  have hsingle : highLeafDirections D x = {i} :=
+    (Finset.eq_of_subset_of_card_le (Finset.singleton_subset_iff.mpr hi)
+      (by simpa [hx6] using hcap)).symm
+  have hy8 : (directions D (flip x i)).card = 8 := by
+    have haxes : directions D (flip x i) = Finset.univ.erase i := by
+      ext j
+      simp only [mem_directions, Finset.mem_erase, Finset.mem_univ, and_true]
+      constructor
+      · rintro hj rfl
+        exact hxD (by simpa only [BalancedCriticalSpectrum.flip_flip] using hj)
+      · exact (mem_highLeafDirections.mp hi).2 j
+    rw [haxes, Finset.card_erase_of_mem (Finset.mem_univ i)]
+    simp
+  ext j
+  simp only [mem_directions, Finset.mem_filter, Finset.mem_erase, Finset.mem_sdiff,
+    Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨⟨hout, _⟩, h6⟩
+    refine ⟨fun h => by subst j; omega, ?_⟩
+    intro hj
+    exact hout (Finset.mem_union_right _ hj)
+  · rintro ⟨hji, hzD⟩
+    have hz := other_neighbor_outside_boundary hsep hrC hbC hxC hx6 hi hji hzD
+    have hz8 : (directions D (flip x j)).card ≠ 8 := by
+      intro h8
+      obtain ⟨_, hcover⟩ := mateAxis_spec h8
+      have haxis : j = mateAxis D (flip x j) := by
+        by_contra hne
+        exact hxD (by simpa only [BalancedCriticalSpectrum.flip_flip] using hcover j hne)
+      have hjHigh : j ∈ highLeafDirections D x :=
+        mem_highLeafDirections.mpr ⟨hzD, fun k hk => hcover k (haxis ▸ hk)⟩
+      rw [hsingle] at hjHigh
+      exact hji (Finset.mem_singleton.mp hjHigh)
+    have hzmin := hmin _ hz
+    have hzmax := degree_le_nine D (flip x j)
+    obtain ⟨k, hk⟩ := exterior_even D hrD ⟨sigma, hs⟩ (flip x j) hzD
+    exact ⟨by simpa only [Finset.mem_sdiff, Finset.mem_univ, true_and] using hz, by omega⟩
+
+private theorem even_card_of_two_regular (S : Finset (Q 9))
+    (hdeg : ∀ x ∈ S, (directions S x).card = 2) : Even S.card := by
+  let A := S.filter fun x => cubeParity x = false
+  let B := S.filter fun x => ¬ cubeParity x = false
+  have hpartition : A.card + B.card = S.card := Finset.card_filter_add_card_filter_not _
+  have hA (x : Q 9) (hx : x ∈ A) : directions B x = directions S x := by
+    ext i
+    simp only [mem_directions, B, Finset.mem_filter, and_iff_left_iff_imp]
+    intro _
+    exact fun h => cubeParity_ne_of_adj (flip_adj x i) ((Finset.mem_filter.mp hx).2.trans h.symm)
+  have hB (x : Q 9) (hx : x ∈ B) : directions A x = directions S x := by
+    ext i
+    simp only [mem_directions, A, Finset.mem_filter, and_iff_left_iff_imp]
+    intro _
+    cases h : cubeParity (flip x i)
+    · rfl
+    · have htrue : cubeParity x = true := Bool.eq_true_of_not_eq_false (Finset.mem_filter.mp hx).2
+      exact (cubeParity_ne_of_adj (flip_adj x i) (htrue.trans h.symm)).elim
+  have hAB : (steps A B).card = 2 * A.card := by
+    rw [card_steps, Nat.mul_comm 2]
+    exact Finset.sum_const_nat fun x hx => (congrArg Finset.card (hA x hx)).trans
+      (hdeg x (Finset.mem_filter.mp hx).1)
+  have hBA : (steps B A).card = 2 * B.card := by
+    rw [card_steps, Nat.mul_comm 2]
+    exact Finset.sum_const_nat fun x hx => (congrArg Finset.card (hB x hx)).trans
+      (hdeg x (Finset.mem_filter.mp hx).1)
+  have hsymm := card_steps_symm A B
+  exact ⟨A.card, by omega⟩
 
 private theorem sum_outside_boundary_le {C D : Finset (Q 9)} (hsep : Separated C D)
     (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
@@ -243,24 +390,27 @@ private theorem sum_outside_boundary_le {C D : Finset (Q 9)} (hsep : Separated C
   change P.card = r 0 + r 2 + r 4 + r 6 + r 8 at hcard
   omega
 
-/-- In a saturated pair, the contact sum retains the actual number of neighbors in
-the second support at each common exterior vertex. -/
-theorem saturated_contact_sum_bound {C D : Finset (Q 9)} (hsep : Separated C D)
-    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
-    (hbD : IsBalanced D) (hsize : C.card + D.card = 258) :
-    6 * D.card ≤ (∑ x ∈ boundary C ∩ boundary D, (directions D x).card) +
-      7 * (254 - (boundary C).card) + 2 * (eightfoldCoverEdges D).card := by
+private theorem boundary_subset_exterior {C D : Finset (Q 9)} (hsep : Separated C D) :
+    boundary C ⊆ Finset.univ \ (C ∪ D) := by
+  apply boundary_subset_complement
+  intro c hc d hd
+  exact hsep.2 c hc d ((Finset.mem_union.mp (Finset.mem_sdiff.mp hd).1).resolve_left
+    (Finset.mem_sdiff.mp hd).2)
+
+private theorem card_exterior_outside_boundary {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hsize : C.card + D.card = 258) :
+    (((Finset.univ \ (C ∪ D)) \ boundary C).card : ℕ) = 254 - (boundary C).card := by
+  rw [Finset.card_sdiff_of_subset (boundary_subset_exterior hsep),
+    Finset.card_sdiff_of_subset (Finset.subset_univ _), Finset.card_union_of_disjoint hsep.1,
+    hsize, Finset.card_univ]
+  norm_num [Q, Sensitivity.Q, Fintype.card_fun]
+
+private theorem exterior_contact_sum {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3) :
+    6 * D.card = (∑ x ∈ boundary C ∩ boundary D, (directions D x).card) +
+      (∑ x ∈ (Finset.univ \ (C ∪ D)) \ boundary C, (directions D x).card) := by
   let T : Finset (Q 9) := Finset.univ \ (C ∪ D)
-  have hT : T.card = 254 := by
-    rw [Finset.card_sdiff_of_subset (Finset.subset_univ _),
-      Finset.card_union_of_disjoint hsep.1, hsize, Finset.card_univ]
-    norm_num [Q, Sensitivity.Q, Fintype.card_fun]
-  have hBC : boundary C ⊆ T := by
-    apply boundary_subset_complement
-    intro c hc d hd
-    exact hsep.2 c hc d ((Finset.mem_union.mp (Finset.mem_sdiff.mp hd).1).resolve_left
-      (Finset.mem_sdiff.mp hd).2)
+  have hBC : boundary C ⊆ T := boundary_subset_exterior hsep
   have hD : (steps D (C ∪ D)).card = 3 * D.card := by
     rw [card_steps, Nat.mul_comm, Finset.sum_const_nat]
     intro d hd
@@ -292,10 +442,20 @@ theorem saturated_contact_sum_bound {C D : Finset (Q 9)} (hsep : Separated C D)
     apply hxK
     refine Finset.mem_inter.mpr ⟨hx, ?_⟩
     exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hxD, h⟩
+  rw [hcontact, Nat.add_comm, hsplit, hcut]
+
+/-- In a saturated pair, the contact sum retains the actual number of neighbors in
+the second support at each common exterior vertex. -/
+theorem saturated_contact_sum_bound {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbD : IsBalanced D) (hsize : C.card + D.card = 258) :
+    6 * D.card ≤ (∑ x ∈ boundary C ∩ boundary D, (directions D x).card) +
+      7 * (254 - (boundary C).card) + 2 * (eightfoldCoverEdges D).card := by
+  have hcontact := exterior_contact_sum hsep hrD
   have hout := sum_outside_boundary_le hsep hrC hrD hbD
-  change (∑ x ∈ T \ boundary C, (directions D x).card) ≤
-    7 * (T \ boundary C).card + 2 * (eightfoldCoverEdges D).card at hout
-  rw [Finset.card_sdiff_of_subset hBC, hT] at hout
+  dsimp only at hout
+  rw [card_exterior_outside_boundary hsep hsize] at hout
   omega
 
 private theorem two_le_degree_of_boundary {S : Finset (Q 9)}
@@ -428,11 +588,94 @@ theorem distanceTwoPairs_card_ge_322 {C D : Finset (Q 9)} (hsep : Separated C D)
   have hpairs := sum_contact_le_distanceTwoPairs_card hsep hrC hbC
   omega
 
+private theorem distanceTwoPairs_card_even {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D) : Even (distanceTwoPairs C D).card := by
+  have hdiv : 4 ∣ ∑ x ∈ boundary C ∩ boundary D, (directions C x).card * (directions D x).card := by
+    apply Finset.dvd_sum
+    intro x hx
+    obtain ⟨hxC, hxD⟩ := Finset.mem_inter.mp hx
+    obtain ⟨a, ha⟩ := exterior_even C hrC hbC x (mem_boundary_iff.mp hxC).1
+    obtain ⟨b, hb⟩ := exterior_even D hrD hbD x (mem_boundary_iff.mp hxD).1
+    refine ⟨a * b, ?_⟩
+    rw [ha, hb]
+    ring
+  rw [← two_mul_distanceTwoPairs_card hsep] at hdiv
+  obtain ⟨k, hk⟩ := hdiv
+  exact ⟨k, by omega⟩
+
+private theorem distanceTwoPairs_card_ne_322 {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D)
+    (hc : C.card = 72) (hd : D.card = 186) (hboundary : 142 ≤ (boundary C).card) :
+    (distanceTwoPairs C D).card ≠ 322 := by
+  intro heq
+  let P := (Finset.univ \ (C ∪ D)) \ boundary C
+  let r := fun k => (P.filter fun x => (directions D x).card = k).card
+  let R := P.filter fun x => (directions D x).card = 6
+  have hP : P.card ≤ 112 := by
+    change (((Finset.univ \ (C ∪ D)) \ boundary C).card : ℕ) ≤ 112
+    rw [card_exterior_outside_boundary hsep (by omega)]
+    omega
+  have hxOut (x : Q 9) (hx : x ∈ P) : x ∉ C ∧ x ∉ D := by
+    have hxCD := (Finset.mem_sdiff.mp (Finset.mem_sdiff.mp hx).1).2
+    exact ⟨fun h => hxCD (Finset.mem_union_left _ h), fun h => hxCD (Finset.mem_union_right _ h)⟩
+  have hpack := thirtyTwo_mul_card_eightfoldCoverEdges_le hrD hbD
+  have hpairs := sum_contact_le_distanceTwoPairs_card hsep hrC hbC
+  have htotal := exterior_contact_sum hsep hrD
+  have hsum := sum_exterior_degrees hrD hbD (fun x hx => (hxOut x hx).2) id
+  have hcard := sum_exterior_degrees hrD hbD (fun x hx => (hxOut x hx).2) (fun _ => 1)
+  simp only [id_eq, Nat.mul_zero, zero_add] at hsum
+  simp only [Finset.sum_const, smul_eq_mul, Nat.mul_one] at hcard
+  change (∑ x ∈ P, (directions D x).card) = r 2 * 2 + r 4 * 4 + r 6 * 6 + r 8 * 8 at hsum
+  change P.card = r 0 + r 2 + r 4 + r 6 + r 8 at hcard
+  have hcoverage := high_leaf_mate_bound_and_saturation hsep hrC hrD hbD
+  have hmates : r 8 ≤ 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6 :=
+    hcoverage.1
+  change 6 * D.card = (∑ x ∈ boundary C ∩ boundary D, (directions D x).card) +
+    (∑ x ∈ P, (directions D x).card) at htotal
+  have hsat : r 8 = 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6 := by
+    omega
+  have hRcard : r 6 = 51 := by omega
+  have hsmall : r 0 = 0 ∧ r 2 = 0 ∧ r 4 = 0 := by omega
+  have hmin : ∀ x ∈ P, 6 ≤ (directions D x).card := by
+    intro x hx
+    by_contra! hlt
+    obtain ⟨m, hm⟩ := exterior_even D hrD hbD x (hxOut x hx).2
+    have hrpos : 0 < r (directions D x).card :=
+      Finset.card_pos.mpr ⟨x, Finset.mem_filter.mpr ⟨hx, rfl⟩⟩
+    have hlow : (directions D x).card = 0 ∨ (directions D x).card = 2 ∨
+        (directions D x).card = 4 := by omega
+    rcases hlow with h | h | h <;> rw [h] at hrpos <;> omega
+  have hdeg : ∀ x ∈ R, (directions R x).card = 2 := by
+    intro x hx
+    obtain ⟨hxP, hx6⟩ := Finset.mem_filter.mp hx
+    obtain ⟨i, hi⟩ := hcoverage.2 hsat x hxP hx6
+    have haxes : directions R x = (Finset.univ \ directions D x).erase i :=
+      degree_six_directions hsep hrC hrD hbC hbD hmin (hxOut x hxP).1 (hxOut x hxP).2 hx6 hi
+    have hiM : i ∈ Finset.univ \ directions D x := Finset.mem_sdiff.mpr
+      ⟨Finset.mem_univ _, fun h => (mem_highLeafDirections.mp hi).1 ((mem_directions D x i).mp h)⟩
+    rw [haxes, Finset.card_erase_of_mem hiM,
+      Finset.card_sdiff_of_subset (Finset.subset_univ (directions D x)), hx6]
+    simp
+  obtain ⟨q, hq⟩ := even_card_of_two_regular R hdeg
+  change r 6 = q + q at hq
+  rw [hRcard] at hq
+  omega
+
 #print axioms high_leaf_mate_bound
 #print axioms saturated_contact_sum_bound
 #print axioms saturated_contact_card_bound
 #print axioms two_mul_distanceTwoPairs_card
 #print axioms sum_contact_le_distanceTwoPairs_card
 #print axioms distanceTwoPairs_card_ge_322
+#print axioms high_leaf_mate_bound_and_saturation
+#print axioms other_neighbor_outside_boundary
+#print axioms degree_six_directions
+#print axioms even_card_of_two_regular
+#print axioms distanceTwoPairs_card_even
+#print axioms distanceTwoPairs_card_ne_322
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SaturatedContactBound
