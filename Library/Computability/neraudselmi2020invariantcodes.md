@@ -16,10 +16,13 @@ triage: anchor
 
 # Finite word defect
 
+## Verified locator
+
 Jean Néraud and Carla Selmi, *Embedding a θ-invariant code into a complete one*,
 *Theoretical Computer Science* (2020), DOI
 [10.1016/j.tcs.2018.08.022](https://doi.org/10.1016/j.tcs.2018.08.022).
-The primary preprint is [arXiv:1801.05164v3](https://arxiv.org/pdf/1801.05164v3).
+The primary preprint is [arXiv:1801.05164v3](https://arxiv.org/abs/1801.05164v3)
+(version 3, 3 September 2018; [full text](https://arxiv.org/pdf/1801.05164v3)).
 
 The introduction's Theorem 1 and Section 3's Theorem 3.2 (page 6 of the
 preprint) give a defect bound for invariant sets. Setting the automorphism θ
