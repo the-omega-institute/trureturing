@@ -31,7 +31,7 @@ abbrev ExactPermutations {n : ℕ} (S : Set (Fin n)) :=
 noncomputable def exactCount {n : ℕ} (S : Set (Fin n)) : ℕ :=
   Nat.card (ExactPermutations S)
 
-private def swapPositions {n : ℕ} (a b : Fin n) : Perm (Perm (Fin n)) :=
+def swapPositions {n : ℕ} (a b : Fin n) : Perm (Perm (Fin n)) :=
   (Equiv.swap a b).equivCongr (Equiv.refl (Fin n))
 
 private def extendAt {n : ℕ} (b : Fin (n + 1)) (p : Perm (Fin n)) : Perm (Fin (n + 1)) :=
@@ -106,7 +106,7 @@ private theorem exact_delete_iff {n : ℕ} (b : Fin (n + 1)) (S : Set (Fin (n + 
       rw [← deleteAt_succAbove b p i, Fin.succAbove_lt_succAbove_iff]
       exact hp i
 
-private def deleteFixedCase {n : ℕ} (b : Fin (n + 1)) (S : Set (Fin (n + 1)))
+def deleteFixedCase {n : ℕ} (b : Fin (n + 1)) (S : Set (Fin (n + 1)))
     (hb : b ∉ S) :
     {p : ExactPermutations S // p.val b = b} ≃ ExactPermutations (b.succAbove ⁻¹' S) :=
   let reorder :
@@ -179,7 +179,7 @@ private theorem adjacent_left_unique {n : ℕ} (a : Fin (n + 1)) (p : Perm (Fin 
     (hx : p a.castSucc = a.succ) : p a.succ ≠ a.succ :=
   fun hy => a.castSucc_lt_succ.ne (p.injective (hx.trans hy.symm))
 
-private theorem exact_swap_fixed_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
+theorem exact_swap_fixed_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
     (hl : a.castSucc ∈ S) (hr : a.succ ∉ S) (p : Perm (Fin (n + 2))) :
     (HasExactExcedances p S ∧ p a.castSucc = a.succ) ↔
       (HasExactExcedances (swapPositions a.castSucc a.succ p) (S \ {a.castSucc}) ∧
@@ -227,7 +227,7 @@ private theorem exact_swap_fixed_iff {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (
         rw [Equiv.swap_apply_of_ne_of_ne hjl hjr] at h
         simpa [Set.mem_diff, hjl] using h
 
-private theorem delete_swap_set {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
+theorem delete_swap_set {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
     (hr : a.succ ∉ S) :
     a.succ.succAbove ⁻¹' (S \ {a.castSucc}) = a.castSucc.succAbove ⁻¹' S := by
   ext i
