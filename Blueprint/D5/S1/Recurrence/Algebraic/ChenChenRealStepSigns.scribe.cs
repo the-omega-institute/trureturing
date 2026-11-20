@@ -19,7 +19,8 @@ internal sealed class ChenChenRealStepSignsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For real r ≥ 3 and every solution T of the step −r recursion, T(n,2)>0 "
-                    + "for every even n ≥ 2 (Lemma 2 of the source). Applying the recursion twice at k=2 gives "
+                    + "for every even n ≥ 2 (Lemma 2 of the source). Applying the recursion twice "
+                    + "at k=2 gives "
                     + "T(n+2,2)=(r−1)²T(n,2)+r(r−2)n+2−r². Since T(2,2)=1, the case n=2 "
                     + "gives T(4,2)=2r(r−3)+3>0. For n ≥ 4 the forcing term equals "
                     + "r(r−2)(n−4)+3r(r−3)+r+2>0, and induction over even n finishes."))),
