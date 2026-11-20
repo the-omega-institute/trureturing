@@ -237,32 +237,6 @@ private theorem integral_tilted (R : ℕ) (μ : ProbabilityMeasure ℝ) (f : ℝ
   rw [smul_eq_mul, ENNReal.toReal_ofReal
     ((by norm_num : (0 : ℝ) ≤ 1 / 2).trans (density_bounds R μ x).1)]
 
-/-- An integrable baseline polynomial of degree at most `R` stays integrable
-and has the same expectation under the tilted law. -/
-theorem integral_eval_tilted (R : ℕ) (μ : ProbabilityMeasure ℝ)
-    (p : Polynomial ℝ) (hp : p.natDegree ≤ R)
-    (hint : Integrable (fun x => p.eval x) (μ : Measure ℝ)) :
-    Integrable (fun x => p.eval x) (tilted R μ : Measure ℝ) ∧
-    (∫ x, p.eval x ∂(tilted R μ : Measure ℝ)) = ∫ x, p.eval x ∂(μ : Measure ℝ) := by
-  have he (x : ℝ) : density R μ x * p.eval x =
-      p.eval x + step R μ * (p.eval x * perturbation R μ x) := by
-    unfold density
-    ring
-  have hcorr := (integrable_mul_perturbation R μ p.continuous).const_mul (step R μ)
-  constructor
-  · change Integrable (fun x => p.eval x) ((μ : Measure ℝ).withDensity _)
-    rw [integrable_withDensity_iff_integrable_smul'
-      ((continuous_density R μ).measurable.ennreal_ofReal)
-      (ae_of_all _ fun _ => ENNReal.ofReal_lt_top)]
-    apply (hint.add hcorr).congr
-    exact ae_of_all _ fun x => by
-      simp only [smul_eq_mul, ENNReal.toReal_ofReal
-        ((by norm_num : (0 : ℝ) ≤ 1 / 2).trans (density_bounds R μ x).1), he, Pi.add_apply]
-  · rw [integral_tilted]
-    simp_rw [he]
-    rw [integral_add hint hcorr, integral_const_mul, integral_eval_mul_perturbation R μ p hp,
-      mul_zero, add_zero]
-
 /-- The real Gaussian with mean zero and variance one, as a probability measure. -/
 def standardGaussian : ProbabilityMeasure ℝ :=
   ⟨ProbabilityTheory.gaussianReal 0 1, inferInstance⟩

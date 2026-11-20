@@ -1,10 +1,33 @@
 /- GID: D5/S3/Estimation/ChenFixedOrder/FixedOrderWitness
    generality: I
    mirror-B: D5/B/S3/Estimation/ChenFixedOrder/FixedOrderWitness
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Fixed-order inclusion agreement permits distinct weak limits of a common estimator. -/
+
+/-
+admission_basis: open-problem-resolution (#32021; Proved)
+External source: Jiahua Chen, Low-Order Inclusion Probabilities Do Not Determine
+Asymptotic Normality, arXiv:2610.09168v1, Sections 1 and 6.
+Preregistration: https://github.com/the-omega-institute/trureturing/issues/32021
+
+fixedOrderWitness defines the shared sample spaces, event agreement, and two distinct limits.
+fixedOrderWitness_holds
+  proof_shape: content, expanding the same-delivery inclusion and limit arguments.
+  escape_witness: tiltedSample_spec identifies both the real pushforward and exact
+    stage-wise event agreement, using exists_inclusionPolynomial on the same samples.
+  Live support: sampleSize_pos and populationMean_eq_zero give the growth and centering
+    clauses. uniformSampleLaw_tendsto gives the common Gaussian baseline using
+    map_eraseOrder_cond_uniform. continuous_density, density_bounds, integral_density
+    and integral_eval_mul_density_sub_one supply the lift premises. continuous_tilted
+    gives convergence of the lifted law and tilted_gaussian_separation distinguishes
+    the limit from the baseline using gaussian_gram_posDef.
+  Direct frozen dependencies: none.
+
+Supporting escape audits:
+https://github.com/the-omega-institute/trureturing/issues/32021#issuecomment-7029401222
+-/
 
 import D5.S3.Estimation.ChenFixedOrder.GaussianLimit
 import D5.S3.Analytic.Probability.ChenDensityBridge

@@ -21,15 +21,15 @@ namespace D5.S3.Estimation.ChenFixedOrder.GaussianLimit
 
 noncomputable section
 
-def orderedEstimator (m : ℕ) (x : Draw m) : ℝ :=
+private def orderedEstimator (m : ℕ) (x : Draw m) : ℝ :=
   Real.sqrt (sampleSize m : ℝ) *
     ((∑ i, populationValue m (x i)) / (sampleSize m : ℝ) - populationMean m)
 
 /-- The independent uniform draws of labels, with replacement. -/
-def drawMeasure (m : ℕ) : Measure (Draw m) :=
+private def drawMeasure (m : ℕ) : Measure (Draw m) :=
   uniformOn Set.univ
 
-instance (m : ℕ) : IsProbabilityMeasure (drawMeasure m) := by
+private instance (m : ℕ) : IsProbabilityMeasure (drawMeasure m) := by
   have h : 0 < stratumSize m := by positivity
   let : Nonempty (Fin (stratumSize m)) := ⟨⟨0, h⟩⟩
   unfold drawMeasure
@@ -40,7 +40,7 @@ private theorem drawMeasure_eq_pi (m : ℕ) :
   simpa [drawMeasure] using
     (uniformOn_pi (ι := Fin (sampleSize m)) (f := fun _ => (Set.univ : Set (Population m))))
 
-def withReplacementLaw (m : ℕ) : ProbabilityMeasure ℝ :=
+private def withReplacementLaw (m : ℕ) : ProbabilityMeasure ℝ :=
   ProbabilityMeasure.map ⟨drawMeasure m, inferInstance⟩ (orderedEstimator m)
 
 def standardGaussian : ProbabilityMeasure ℝ :=
@@ -190,7 +190,7 @@ private theorem map_orderedEstimator (m : ℕ) :
 
 /-- The centered estimator from the independent uniform population labels converges weakly
 to the standard Gaussian as the sample size grows through the prescribed squares. -/
-theorem withReplacement_tendsto :
+private theorem withReplacement_tendsto :
     Tendsto withReplacementLaw atTop (𝓝 standardGaussian) := by
   have h := normalizedSum_clt.tendsto.comp sampleSize_tendsto
   rw [show (⟨(gaussianReal 0 1).map id, inferInstance⟩ : ProbabilityMeasure ℝ) =
@@ -238,7 +238,7 @@ private theorem pairCollision_le (m : ℕ) (i j : Fin (sampleSize m)) (hij : i �
     _ = d⁻¹ := ENNReal.mul_inv_cancel_left hd hd'
 
 /-- The union bound over pairs gives a collision probability at most (1/(2n_m)). -/
-theorem collisionMass_le (m : ℕ) :
+private theorem collisionMass_le (m : ℕ) :
     (drawMeasure m).real (distinct m)ᶜ ≤ 1 / (2 * (sampleSize m : ℝ)) := by
   classical
   let n := sampleSize m
@@ -278,7 +278,7 @@ theorem collisionMass_le (m : ℕ) :
       field_simp
 
 /-- The collision mass vanishes along the prescribed sampling sizes. -/
-theorem collisionMass_tendsto :
+private theorem collisionMass_tendsto :
     Tendsto (fun m => (drawMeasure m).real (distinct m)ᶜ) atTop (𝓝 0) := by
   apply squeeze_zero (fun _ => ENNReal.toReal_nonneg) collisionMass_le
   have h : Tendsto (fun m => (sampleSize m : ℝ)) atTop atTop :=
@@ -287,7 +287,7 @@ theorem collisionMass_tendsto :
   change Tendsto ((fun r : ℝ => r⁻¹) ∘ (fun m => 2 * (sampleSize m : ℝ))) atTop (𝓝 0)
   exact tendsto_inv_atTop_zero.comp (h.const_mul_atTop (by norm_num : 0 < (2 : ℝ)))
 
-theorem distinctDraws_measure_ne_zero (m : ℕ) : drawMeasure m (distinct m) ≠ 0 := by
+private theorem distinctDraws_measure_ne_zero (m : ℕ) : drawMeasure m (distinct m) ≠ 0 := by
   intro hz
   have hc := measureReal_add_measureReal_compl (μ := drawMeasure m) (measurableSet_distinct m)
   have hone : (drawMeasure m).real (distinct m)ᶜ = 1 := by
@@ -297,13 +297,13 @@ theorem distinctDraws_measure_ne_zero (m : ℕ) : drawMeasure m (distinct m) ≠
   rw [hone, le_div_iff₀ (by positivity)] at hh
   linarith
 
-def distinctMeasure (m : ℕ) : Measure (Draw m) :=
+private def distinctMeasure (m : ℕ) : Measure (Draw m) :=
   cond (drawMeasure m) (distinct m)
 
-instance (m : ℕ) : IsProbabilityMeasure (distinctMeasure m) :=
+private instance (m : ℕ) : IsProbabilityMeasure (distinctMeasure m) :=
   cond_isProbabilityMeasure (distinctDraws_measure_ne_zero m)
 
-def distinctLaw (m : ℕ) : ProbabilityMeasure ℝ :=
+private def distinctLaw (m : ℕ) : ProbabilityMeasure ℝ :=
   ProbabilityMeasure.map ⟨distinctMeasure m, inferInstance⟩ (orderedEstimator m)
 
 private theorem conditional_bounded {Ω : Type*} [MeasurableSpace Ω]
@@ -341,7 +341,7 @@ private theorem conditional_bounded {Ω : Type*} [MeasurableSpace Ω]
 
 /-- Conditioning on distinct labels changes any bounded measurable test by at most twice its
 uniform bound times the collision probability. -/
-theorem distinctLaw_test_bound (m : ℕ) (f : ℝ → ℝ) (hf : Measurable f)
+private theorem distinctLaw_test_bound (m : ℕ) (f : ℝ → ℝ) (hf : Measurable f)
     (C : ℝ) (hC : ∀ x, ‖f x‖ ≤ C) :
     ‖(∫ x, f x ∂(distinctLaw m : Measure ℝ)) - ∫ x, f x ∂(withReplacementLaw m : Measure ℝ)‖ ≤
       2 * C * (drawMeasure m).real (distinct m)ᶜ := by
@@ -356,7 +356,7 @@ theorem distinctLaw_test_bound (m : ℕ) (f : ℝ → ℝ) (hf : Measurable f)
     _ hfi C (fun x => hC (orderedEstimator m x))
 
 /-- The estimator law conditioned on all labels being distinct has the same Gaussian limit. -/
-theorem distinctLaw_tendsto : Tendsto distinctLaw atTop (𝓝 standardGaussian) := by
+private theorem distinctLaw_tendsto : Tendsto distinctLaw atTop (𝓝 standardGaussian) := by
   rw [ProbabilityMeasure.tendsto_iff_forall_integral_tendsto]
   intro f
   have hwr := ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mp withReplacement_tendsto f

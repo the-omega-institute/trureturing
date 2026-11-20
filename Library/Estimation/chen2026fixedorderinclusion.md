@@ -27,6 +27,6 @@ centered and scaled sample mean.
 ## Verified locator
 
 - URL: https://arxiv.org/abs/2610.09168v1
-- Section 1, [final paragraph](https://arxiv.org/html/2610.09168v1#S1.p11).
+- Section 1, [conjecture paragraph](https://arxiv.org/html/2610.09168v1#S1.p11).
 - Section 6, [concluding remarks](https://arxiv.org/html/2610.09168v1#S6).
 - Versioned PDF at <https://arxiv.org/pdf/2610.09168v1>.

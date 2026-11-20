@@ -10,58 +10,75 @@ internal sealed class FixedOrderWitnessDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Estimation/chen2026fixedorderinclusion");
 
-    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
-    private static Formula AtStage(string family) => Call(family, F.Id("m"));
-    private static Formula Cardinality(Formula value) => Seq(Lvert, Sp, value, Sp, Rvert, Sp);
-    private static Formula TendsTo(Formula limit) =>
-        Seq(To, Sp, limit);
-    private static Formula ForAllStages => Seq(Forall, Sp, F.Id("m"), Colon, Nat, Comma, Sp);
-    private static Formula ImageLaw(string design) =>
-        Seq(new Formula.Subscript(AtStage("X"), Star), Sp, AtStage(design));
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Parenthesized(Formula body) => Seq(Left, Open, body, Right, Close);
+    private static Formula AtStage(string family) => Call(family, V("m"));
+    private static Formula AllStages => Seq(Forall, Sp, V("m"), Colon, Sp, Nat, Comma, Sp);
+    private static Formula Sample => AtStage("Sample");
+    private static Formula Gaussian => Seq(Operatorname, Grp(V("standardGaussian")));
+    private static Formula AtTop => Seq(Operatorname, Grp(V("atTop")));
+    private static Formula StageFunction(Formula value) => Seq(V("m"), Sp, Mapsto, Sp, value);
+    private static Formula AsSampleMeasure(string design) =>
+        Parenthesized(Seq(AtStage(design), Sp, Colon, Sp, Call("Measure", Sample)));
     private static Formula EventMass(string design) =>
-        Seq(AtStage(design), Open, Call("E", F.Id("m"), F.Id("A")), Close);
+        new Formula.Apply(AsSampleMeasure(design), [Call("inclusion", V("m"), V("A"))]);
+    private static Formula LimitLaw(string design, Formula limit) =>
+        Call("Tendsto", StageFunction(Call("map", AtStage(design), AtStage("estimator"))),
+            AtTop, Call("nhds", limit));
 
-    private static Formula[] WitnessLines() =>
-    [
-        Seq(AtStage("n"), Sp, TendsTo(Infty), Sp, Land, Sp,
-            Cardinality(AtStage("U")), TendsTo(Infty), Sp, Land, Sp,
-            Open, ForAllStages, AtStage("mean"), Sp, Eq, Sp, D(0), Close, Sp, Land),
-        Seq(Forall, Sp, F.Id("r"), Colon, Nat, Comma, Sp,
-            D(0), Sp, Lt, Sp, F.Id("r"), Sp, Rightarrow, Sp),
-        Seq(Quad, Exists, Sp, F.Id("P"), Comma, F.Id("Q"), Colon, Sp,
-            new Formula.Subscript(Prod, Seq(F.Id("m"), Colon, Nat)), Sp,
-            Call("Prob", AtStage("S")), Comma, Sp,
-            Nu, Sp, Colon, Sp, Call("Prob", Real), Comma, Sp),
-        Seq(Quad, Open, ForAllStages, AtStage("P"), Sp, Eq, Sp, Call("Uniform", AtStage("S")),
-            Close, Sp, Land),
-        Seq(Quad, Open, ForAllStages, Forall, Sp, F.Id("A"), Colon, Sp,
-            Call("Finset", AtStage("U")), Comma, Sp, Cardinality(F.Id("A")), Leq, Sp, F.Id("r"),
-            Sp, Rightarrow, Sp, EventMass("P"), Sp, Eq, Sp, EventMass("Q"), Close, Sp, Land),
-        Seq(Quad, ImageLaw("P"), Sp, TendsTo(GammaLower), Sp, Land, Sp,
-            ImageLaw("Q"), Sp, TendsTo(Nu), Sp, Land, Sp, Nu, Sp, Neq, Sp, GammaLower)
-    ];
+    private static Formula FixedOrderClause() => Parenthesized(new Formula.Aligned([
+        Seq(Forall, Sp, V("r"), Colon, Sp, Nat, Comma, Sp,
+            D(0), Sp, Lt, Sp, V("r"), Sp, Rightarrow, Sp),
+        Seq(Quad, Exists, Sp, V("P"), Comma, V("Q"), Colon, Sp,
+            new Formula.Subscript(Prod, Seq(V("m"), Colon, Nat)), Sp,
+            Call("ProbabilityMeasure", Sample), Comma, Sp,
+            Nu, Sp, Colon, Sp, Call("ProbabilityMeasure", Real), Comma, Sp,
+            Left, Open, new Formula.Aligned([
+                Seq(Parenthesized(Seq(AllStages, AsSampleMeasure("P"), Sp, Eq, Sp,
+                    Call("uniformOn", Seq(Operatorname, Grp(V("Set"), Dot, V("univ")))))),
+                    Sp, Land),
+                Seq(Parenthesized(new Formula.Aligned([
+                    Seq(AllStages, Forall, Sp, V("A"), Colon, Sp,
+                        Call("Finset", AtStage("Population")), Comma, Sp, Call("card", V("A")),
+                        Sp, Leq, Sp, V("r"), Sp, Rightarrow),
+                    Seq(Quad, EventMass("P"), Sp, Eq, Sp, EventMass("Q"))
+                ])), Sp, Land),
+                Seq(LimitLaw("P", Gaussian), Sp, Land),
+                Seq(LimitLaw("Q", Nu), Sp, Land, Sp, Nu, Sp, Neq, Sp, Gaussian)
+            ]), Right, Close)
+    ]));
+
+    private static Formula Witness() => new Formula.Aligned([
+        Seq(Call("Tendsto", V("sampleSize"), AtTop, AtTop), Sp, Land, Sp,
+            Call("Tendsto", StageFunction(new Formula.Apply(
+                Seq(Operatorname, Grp(V("Fintype"), Dot, V("card"))), [AtStage("Population")])),
+                AtTop, AtTop), Sp, Land),
+        Seq(Parenthesized(Seq(AllStages, AtStage("populationMean"), Sp, Eq, Sp, D(0))), Sp, Land),
+        FixedOrderClause()
+    ]);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fixed-order inclusion agreement permits distinct weak limits of a common estimator.",
         H("Chen's fixed-order inclusion conjecture"),
         Blocks(
             Paragraph(Text(
-                "At stage m, the population U(m) has two equal strata, each of size n(m)^3, "
-                + "with values +1 and -1. The sample size n(m) is (m+1)^2. S(m) is the set of "
-                + "all subsets of U(m) of size n(m). The population mean is mean(m), and X(m) "
-                + "is the sample mean minus mean(m), multiplied by the square root of n(m).")),
+                "At stage m, Population(m) has two equal strata, each of size sampleSize(m) cubed, "
+                + "with values +1 and -1. The sample size is (m+1)^2. Sample(m) is the type of "
+                + "all subsets of Population(m) of that size. The estimator is the sample mean minus "
+                + "the population mean, multiplied by the square root of the sample size.")),
             Paragraph(Text(
-                "Prob denotes probability measures. For a prescribed subset A, E(m,A) is the "
-                + "event that the sample contains A. Uniform assigns equal probability to all "
-                + "members of S(m). The subscript star denotes pushforward, and gamma is the "
-                + "standard Gaussian. Every arrow takes m to infinity. The arrows for probability laws denote weak convergence.")),
+                "The event inclusion(m,A) consists of the samples at stage m that contain A. "
+                + "The uniform measure assigns equal mass to all samples of the prescribed size. "
+                + "The map sends each design through the common estimator, and convergence of "
+                + "probability measures is weak convergence.")),
             Describe.Lean(
                 DescribeId.Create("chen-fixed-order-witness-proposition"),
                 DeclarationHandle.Create(Module + ".fixedOrderWitness"),
                 H("The proposition"),
                 StatementSource.FromAuthor(Disp(new Formula.Aligned(
-                    [Seq(F.Id("fixedOrderWitness"), Sp, Iff), .. WitnessLines()]))),
+                    [Seq(V("fixedOrderWitness"), Sp, Iff), Witness()]))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Chen poses the question for every fixed order in Sections 1 and 6. "
@@ -72,7 +89,7 @@ internal sealed class FixedOrderWitnessDocument : IScribeDocumentDefinition
                 DescribeId.Create("chen-fixed-order-witness"),
                 DeclarationHandle.Create(Module + ".fixedOrderWitness_holds"),
                 H("Existence for every fixed positive order"),
-                StatementSource.FromAuthor(Disp(new Formula.Aligned([.. WitnessLines()]))),
+                StatementSource.FromAuthor(Disp(Witness())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(

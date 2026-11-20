@@ -4,9 +4,33 @@
 
 Real density tilts on fixed-size samples preserve inclusion events up to the matched moment order.
 
-**Theorem 1.1 (Lifting a real density to the same finite sample space).**
+**Definition 1.1 (Underlying measure of the uniform estimator law).**
 
-$$\begin{aligned}\forall m,r:\mathbb{N}, \forall g: \mathbb{R} \to \mathbb{R}, \operatorname{Measurable}\left(g\right) \Rightarrow\\(\forall x: \mathbb{R}, 0 \leq \operatorname{g}\left(x\right)) \Rightarrow\int \operatorname{g}\left(x\right) d\mu=1 \Rightarrow\\(\forall i: \mathbb{N}, 0 < i \leq r \Rightarrow\int x^{i}(\operatorname{g}\left(x\right)-1) d\mu=0) \Rightarrow\\\operatorname{map}\left(X, Q\right)=\operatorname{withDensity}\left(\mu, \operatorname{ofReal} \circ g\right) \land\\(\forall A: \operatorname{Finset}\left(\operatorname{Population}\left(m\right)\right), \operatorname{card}\left(A\right) \leq r \Rightarrow \operatorname{Q}\left(\operatorname{inclusion}\left(A\right)\right)=\operatorname{P}\left(\operatorname{inclusion}\left(A\right)\right))\end{aligned}$$
+$$\forall m : \mathbb{N}, \operatorname{uniformEstimatorLaw}\left(m\right) : \operatorname{Measure}\left(\mathbb{R}\right) = \left(\operatorname{map}\left(\operatorname{uniformSampleMeasure}\left(m\right), \operatorname{estimator}\left(m\right)\right) : \operatorname{Measure}\left(\mathbb{R}\right)\right)$$
+
+*Formalization.* `D5/S3/Analytic/Probability/ChenDensityBridge.uniformEstimatorLaw` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The estimator maps uniform samples of the prescribed size to real observations.
+
+**Definition 1.2 (Tilted probability law on the same samples).**
+
+$$\begin{aligned}\forall m : \mathbb{N}, \forall g : \mathbb{R} \to \mathbb{R}, \forall \left(hg : \operatorname{Measurable}\left(g\right)\right) \left(hn : \left(\forall x : \mathbb{R}, 0 \leq \operatorname{g}\left(x\right)\right)\right) \left(hm : \int \operatorname{g}\left(x\right) d\operatorname{uniformEstimatorLaw}\left(m\right) = 1\right),\\\operatorname{tiltedSample}\left(m, g, hg, hn, hm\right) : \operatorname{ProbabilityMeasure}\left(\operatorname{Sample}\left(m\right)\right),\\\left(\operatorname{tiltedSample}\left(m, g, hg, hn, hm\right) : \operatorname{Measure}\left(\operatorname{Sample}\left(m\right)\right)\right) = \operatorname{withDensity}\left(\left(\operatorname{uniformSampleMeasure}\left(m\right) : \operatorname{Measure}\left(\operatorname{Sample}\left(m\right)\right)\right), S \mapsto \operatorname{ENNReal.ofReal}\left(\operatorname{g}\left(\operatorname{estimator}\left(m, S\right)\right)\right)\right)\end{aligned}$$
+
+*Formalization.* `D5/S3/Analytic/Probability/ChenDensityBridge.tiltedSample` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Normalization against the uniform estimator law makes this lifted measure a probability measure.
+
+**Theorem 1.3 (Lifting a real density to the same finite sample space).**
+
+$$\begin{aligned}\forall m,r : \mathbb{N}, \forall g : \mathbb{R} \to \mathbb{R}, \forall \left(hg : \operatorname{Measurable}\left(g\right)\right) \left(hn : \left(\forall x : \mathbb{R}, 0 \leq \operatorname{g}\left(x\right)\right)\right) \left(hm : \int \operatorname{g}\left(x\right) d\operatorname{uniformEstimatorLaw}\left(m\right) = 1\right),\\\left(\forall i : \mathbb{N}, 0 < i \Rightarrow i \leq r \Rightarrow \int x^{i} \left(\operatorname{g}\left(x\right)-1\right) d\operatorname{uniformEstimatorLaw}\left(m\right) = 0\right) \Rightarrow\\\left(\left(\operatorname{map}\left(\operatorname{tiltedSample}\left(m, g, hg, hn, hm\right), \operatorname{estimator}\left(m\right)\right) : \operatorname{Measure}\left(\mathbb{R}\right)\right) = \operatorname{withDensity}\left(\operatorname{uniformEstimatorLaw}\left(m\right), x \mapsto \operatorname{ENNReal.ofReal}\left(\operatorname{g}\left(x\right)\right)\right)\right) \land\\\left(\forall A : \operatorname{Finset}\left(\operatorname{Population}\left(m\right)\right), \operatorname{card}\left(A\right) \leq r \Rightarrow \left(\operatorname{tiltedSample}\left(m, g, hg, hn, hm\right) : \operatorname{Measure}\left(\operatorname{Sample}\left(m\right)\right)\right)\left(\operatorname{inclusion}\left(m, A\right)\right) = \left(\operatorname{uniformSampleMeasure}\left(m\right) : \operatorname{Measure}\left(\operatorname{Sample}\left(m\right)\right)\right)\left(\operatorname{inclusion}\left(m, A\right)\right)\right)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenDensityBridge.tiltedSample_spec` (`✓ std3`). ∎
 
@@ -14,11 +38,13 @@ $$\begin{aligned}\forall m,r:\mathbb{N}, \forall g: \mathbb{R} \to \mathbb{R}, \
 
 *Commentary.*
 
-For stage m, P is uniform on Sample m, X is the common estimator, and the real law mu is map(X,P). The law Q on Sample m has density ofReal(g(X(S))) at a sample S relative to P. Normalization against mu makes Q a probability measure.
+Integrating on a real event under the pushforward of the tilted sample law gives the same integral as tilting the uniform estimator law by g.
 
-Integrating on a real event under the pushforward of Q gives the same integral as tilting mu by g. For a prescribed subset A, the finite sampling identity converts the restricted integral of g(X)-1 into the integral of the centered density against an inclusion polynomial of degree at most card(A). The constant coefficient is controlled by normalization and the other coefficients by the centered moment equations. The resulting equality of event masses holds in ENNReal.
+For a prescribed subset A, the finite sampling identity converts the restricted integral of the centered density into an integral against an inclusion polynomial of degree at most the cardinality of A. Normalization handles the constant coefficient. The centered moment equations handle every other coefficient. The resulting equality of event masses holds in ENNReal.
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Probability/ChenDensityBridge.tiltedSample`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenDensityBridge.tiltedSample_spec`
+- Truth anchor: `D5/S3/Analytic/Probability/ChenDensityBridge.uniformEstimatorLaw`
 - Dependency: [D5/S3/Analytic/Probability/ChenFixedOrderSampling](ChenFixedOrderSampling.md)

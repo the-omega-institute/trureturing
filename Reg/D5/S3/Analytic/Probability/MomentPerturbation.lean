@@ -238,67 +238,6 @@ def registration :
 
 end Bounds
 
-namespace Moments
-
-abbrev arena : Arena where
-  signature := signature
-  Law r := ∀ (R : ℕ) (μ : ProbabilityMeasure ℝ) (p : Polynomial ℝ), p.natDegree ≤ R →
-    Integrable (fun x => p.eval x) (μ : Measure ℝ) →
-    Integrable (fun x => p.eval x) (tilted R μ : Measure ℝ) ∧
-    r.readout () () (∫ x, p.eval x ∂(tilted R μ : Measure ℝ))
-      (∫ x, p.eval x ∂(μ : Measure ℝ))
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hint : Integrable (fun x : ℝ => (1 : Polynomial ℝ).eval x) (standardGaussian : Measure ℝ) :=
-    by simp
-  exact (h 0 standardGaussian 1 (by simp) hint).2
-    (integral_eval_tilted 0 standardGaussian 1 (by simp) hint).2
-
-def source_registration : Registration arena (type_of% @integral_eval_tilted) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨integral_eval_tilted, rejected, rejected_law⟩
-  sensitivity := unitSensitivity (rejected := rejected) rejected_law
-  dependence := dependence
-
-
-def registration :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@integral_eval_tilted) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Analytic.Probability.MomentPerturbation.Moments.unit
-  realizationName :=
-    `Reg.D5.S3.Analytic.Probability.MomentPerturbation.Moments.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ l r => l = r) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.Probability.MomentPerturbation
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-end Moments
-
 namespace Separation
 
 def actual : Realization signature :=

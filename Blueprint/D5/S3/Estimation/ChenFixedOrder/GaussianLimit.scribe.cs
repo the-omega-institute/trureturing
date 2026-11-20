@@ -1,80 +1,53 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Estimation.ChenFixedOrder;
 
 internal sealed class GaussianLimitDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Estimation/ChenFixedOrder/GaussianLimit.";
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Gaussian => Seq(Operatorname, Grp(V("standardGaussian")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A Gaussian limit for the balanced-sign estimator under uniform fixed-size sampling.",
         H("Gaussian limit for balanced finite populations"),
         Blocks(
-            Paragraph(Text(
-                "At stage m the sample size n is (m+1)^2. The two strata each contain n^3 labels, "
-                    + "with values +1 and -1 respectively. The population mean is zero. For both "
-                    + "ordered draws and subsets of size n, the estimator is the sample mean "
-                    + "minus the population mean, multiplied by the square root of n.")),
             Describe.Lean(
-                DescribeId.Create("chen-with-replacement-gaussian-limit"),
-                DeclarationHandle.Create(Prefix + "withReplacement_tendsto"),
-                H("Independent draws"),
-                StatementSource.WithoutFormula(),
+                DescribeId.Create("chen-baseline-gaussian"),
+                DeclarationHandle.Create(Prefix + "standardGaussian"),
+                H("Standard Gaussian probability law"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Gaussian, Sp, Colon, Sp, Call("ProbabilityMeasure", Real), Comma, Sp,
+                    Open, Gaussian, Sp, Colon, Sp, Call("Measure", Real), Close, Sp, Eq, Sp,
+                    Call("gaussianReal", D(0), D(1))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The uniform label law gives each sign probability 1/2. Its independent "
-                        + "product, mapped coordinatewise to signs, agrees with the corresponding "
-                        + "finite restriction of the infinite Bernoulli product. The centered "
-                        + "estimator is the normalized partial sum in the i.i.d. central limit "
-                        + "theorem, along the subsequence of square sample sizes."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("chen-draw-collision-bound"),
-                DeclarationHandle.Create(Prefix + "collisionMass_le"),
-                H("Collision probability"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Each pair of distinct draw positions has equal labels with probability at "
-                        + "most the inverse population size. The union bound over the ordered "
-                        + "position pairs gives at most n^2/(2n^3), which tends to zero. The event "
-                        + "of distinct labels has positive probability at every stage."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("chen-distinct-draw-test-bound"),
-                DeclarationHandle.Create(Prefix + "distinctLaw_test_bound"),
-                H("Effect of conditioning"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For any measurable real test bounded in absolute value by C, the difference "
-                        + "between its conditional and unconditional estimator expectations has "
-                        + "absolute value at most twice C times the collision probability. This "
-                        + "follows by splitting the unconditional integral over the distinct "
-                        + "event and its complement."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("chen-distinct-draw-gaussian-limit"),
-                DeclarationHandle.Create(Prefix + "distinctLaw_tendsto"),
-                H("Conditioned estimator law"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For each bounded continuous test, the difference from its with-replacement "
-                        + "expectation tends to zero. The estimator law given distinct labels "
-                        + "therefore converges weakly to the standard Gaussian."))),
-                DescribeRole.Theorem),
+                Blocks(Paragraph(Text("This is the Gaussian limit of the balanced-sign estimator."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("chen-uniform-subset-gaussian-limit"),
                 DeclarationHandle.Create(Prefix + "uniformSampleLaw_tendsto"),
                 H("Estimator law on uniform subsets"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Call("Tendsto",
+                    Seq(V("m"), Sp, Mapsto, Sp, Call("map", Call("uniformSampleMeasure", V("m")),
+                        Call("estimator", V("m")))),
+                    Seq(Operatorname, Grp(V("atTop"))), Call("nhds", Gaussian)))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The finite sampling transport theorem maps the conditioned draw law to "
-                        + "the uniform law on subsets of size n by erasing positions. This "
-                        + "preserves the sum of the values when the labels are distinct. The "
-                        + "resulting estimator law, whose underlying measure is the baseline "
-                        + "of the density bridge, converges weakly to the standard Gaussian."))),
+                Blocks(
+                    Paragraph(Text(
+                        "With replacement, the uniform label law gives each sign probability 1/2. "
+                        + "The centered estimator is the normalized partial sum in the independent "
+                        + "central limit theorem along the square sample sizes.")),
+                    Paragraph(Text(
+                        "The union bound over distinct position pairs bounds the probability of "
+                        + "a repeated label by the square of the sample size divided by the population size. "
+                        + "This tends to zero, and conditioning on distinct labels changes each bounded "
+                        + "test expectation by at most twice its bound times the collision probability.")),
+                    Paragraph(Text(
+                        "Erasing order takes the conditioned draw law to the uniform law on fixed-size "
+                        + "subsets and preserves the estimator on distinct draws. Thus the Gaussian limit "
+                        + "passes to the uniform subset law."))),
                 DescribeRole.Theorem))));
 }
