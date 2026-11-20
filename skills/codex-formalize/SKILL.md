@@ -73,9 +73,10 @@ Confirm the isolated lane and pinned tools before editing.
 
 ### 1. Select the primary statement
 
-Use the statement from the assigned issue, external source or source-theories atom. Preserve its hypotheses and exact conclusion. Deposit accepts the declaration GID for every source.
+Use the statement from the assigned issue, external source or source-theories atom. Preserve every hypothesis and conclusion clause except where the strongest-statement rule below removes a hypothesis or strengthens the conclusion; never weaken either. Deposit accepts the declaration GID for every source.
 
-Aim at the strongest correct statement (`CLAUDE.md` §3.10). The formal target must imply the source claim, with the weakest hypotheses and the strongest conclusion the proof supports: an equivalence or a complete classification where one holds, exact constants and scope. When the source claim is false or overstated, formalize its strongest true replacement and record the counterexample or the missing condition; never prove a weaker statement to accommodate the source, and never rewrite a false claim into a vacuously true one. A hypothesis, instance argument or binder that the proof does not use, or that follows from the others, is removed before delivery. A change to a preregistered statement is recorded on its issue first (the new statement, how it relates to the old one, the fallback if it fails) and proved afterwards. Strengthening exempts nothing: a strongest form that only instantiates, projects or normalizes frozen or pinned upstream results is still bind-only (§3.2) and is cited, not added.
+Aim at the strongest correct statement (`CLAUDE.md` §3.10). The formal target must imply the source claim, with the weakest hypotheses and the strongest conclusion provable within this delivery: an equivalence or a complete classification where the converse holds and is in reach, exact constants and scope. A strengthening that needs new machinery or goes beyond the preregistered criteria is a new candidate (§3.6), not part of this target. A hypothesis, instance argument or binder that neither the statement nor the proof uses, or that follows from the others, is removed before delivery. When the source claim is false or overstated, record the counterexample or the missing condition and formalize the nearest true statement, the one that adds the weakest sufficient condition or cuts the conclusion back to exactly what holds; never prove a weaker statement to accommodate the source, and never rewrite a false claim into a vacuously true one. The settlement of an external named problem still states the published claim verbatim (§3.2) or its literal negation (§3.4); its strongest true replacement is a separate candidate. A change to a preregistered statement is recorded on its issue first (the new statement, how it relates to the old one, the fallback if it fails); then continue without waiting for a reply, and redo the registration, utility header and report of the same delivery for the amended statement. Strengthening exempts nothing and creates no target: a strongest form that only instantiates, projects or normalizes frozen or pinned upstream results is still bind-only (§3.2) and is cited, not added, and a source claim that a frozen declaration or pinned upstream result already covers is reused under §3.2, however much it could be strengthened.
+
 Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
 
 - **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.
@@ -93,7 +94,7 @@ Follow `agents/echo-template.md`. Write a clause-level mapping from every quanti
 
 If an ambiguity cannot be resolved without weakening the claim, stop and report the result as `open`.
 
-Postcondition: every source clause has one intended Lean counterpart, or the task has ended as `open` with the ambiguity named.
+Postcondition: every source clause has one intended Lean counterpart or is recorded as removed or strengthened under `CLAUDE.md` §3.10, or the task has ended as `open` with the ambiguity named.
 
 ### 3. Search the library before proving
 
