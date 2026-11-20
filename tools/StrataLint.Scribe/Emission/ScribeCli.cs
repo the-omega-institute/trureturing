@@ -49,6 +49,21 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        try
+        {
+            if (arguments is ["lean-inputs", "--affected", "--paths-from", var changed])
+                return PullRequestLeanChecks.Plan(FindRepositoryRoot(workingDirectory), ReadPaths(changed, input), output);
+            if (arguments is ["content-check", "--scoped", "--report", var artifact, "--targets-from", var targets,
+                "--paths-from", var changedPaths])
+                return PullRequestLeanChecks.Check(FindRepositoryRoot(workingDirectory), artifact,
+                    ReadPaths(targets, input), ReadPaths(changedPaths, input), output, error);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+            or ArgumentException or FormatException or InvalidOperationException or InvalidDataException)
+        {
+            error.WriteLine(exception.Message);
+            return 2;
+        }
         if (command == "lean-inputs")
         {
             if (arguments.Count != 3 || arguments[1] != "--paths-from"
@@ -297,8 +312,9 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe -- "
-        + "emit-values|filemap [--check] | lean-inputs --paths-from <file|-> | emit --paths-from <file|-> [--scoped] [--check] | describe-report --scribe-pack <file> --scribe-pack-digest <hex64> [--json] [--check] "
+        + "emit-values|filemap [--check] | lean-inputs [--affected] --paths-from <file|-> | emit --paths-from <file|-> [--scoped] [--check] | describe-report --scribe-pack <file> --scribe-pack-digest <hex64> [--json] [--check] "
         + "| content-check --report <file> --paths-from <file|-> "
+        + "| content-check --scoped --report <file> --targets-from <file> --paths-from <file> "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> --paths-from <file|-> "
         + "| resources pack --out <file> | resources verify --pack <file> "
