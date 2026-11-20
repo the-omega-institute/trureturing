@@ -5,12 +5,13 @@
    anchors: []
    utility: none
    digest: Nonedge rectangles characterize clique factorization over commutative groups. -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Finset.Update
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Logic.Function.DependsOn
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Finset.Update
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Logic.Function.DependsOn
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-! # Algebraic clique factorization
 
@@ -18,6 +19,7 @@ Anchored restrictions give a triangular family of interactions. Nonedge
 rectangles annihilate precisely the interactions with nonclique support.
 -/
 
+public section
 noncomputable section
 open Finset Function
 open scoped BigOperators
