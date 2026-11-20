@@ -47,7 +47,9 @@ internal sealed class NiuQ15TableauxDocument : IScribeDocumentDefinition
             H("Tableaux, Deletion and Rectangle Rotation"),
             Blocks(
                 Def("RowShape", "Straight shapes",
-                    All("shape", kRows, HasType(rows, new Formula.TypeArrow(finK, NatType()))),
+                    All("k", NatType(), All("shape", kRows, And(
+                        Parenthesized(HasType(rows, new Formula.TypeArrow(finK, NatType()))),
+                        Call("Antitone", rows)))),
                     "A shape carries the row lengths and a proof that they are antitone, allowing trailing zero lengths."),
                 Def("Cell", "Cells of a shape",
                     Equal(cell, Subtype(p, Seq(finK, Sp, Times, Sp, NatType()),
@@ -102,7 +104,9 @@ internal sealed class NiuQ15TableauxDocument : IScribeDocumentDefinition
                             Call("ite", Equal(i, Call("last", k)), Subtract(n, r), n))),
                     "Only the bottom row loses r cells, with natural subtraction defined also for r > n."),
                 Def("secondRowFirst", "First cell of the second row",
-                    ProofBinder("hn", positiveWidth, Equal(Proj(secondRow, 1), Parenthesized(Seq(D(1), Comma, Sp, D(0))))),
+                    RectangleVariables(ProofBinder("hn", positiveWidth, And(
+                        Parenthesized(HasType(secondRow, Call("Cell", rectWithSecondRow))),
+                        Equal(Proj(secondRow, 1), Parenthesized(Seq(D(1), Comma, Sp, D(0))))))),
                     "Positive width ensures that the coordinate pair lies in the cell subtype."),
                 Node("firstDescent", "First descent",
                     ProofBinder("hn", positiveWidth, All("t", rectTableau,

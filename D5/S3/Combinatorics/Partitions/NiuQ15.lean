@@ -62,14 +62,6 @@ noncomputable def rectangleOddEntryProbability (k n : ℕ) : ℝ :=
   eventProbability fun t : StandardTableau (rectangle (k + 1) n) =>
     Odd (rectangleDescent k n t + 1)
 
-/-- The exact natural-number identity for the shortened and full rectangle counts. -/
-def ExactRectangleTailCount (k : ℕ) : Prop :=
-  ∀ n r, 0 < n → r ≤ n →
-    Fintype.card (StandardTableau (rotatedShape (k + 1) n r)) *
-        ((k + 2) * n).descFactorial r =
-      Fintype.card (StandardTableau (rectangle (k + 1) n)) *
-        tailCoefficient (k + 2) r * n.descFactorial r
-
 open _root_.D5.S3.Combinatorics.Partitions.NiuTableauCount
 
 private theorem eraseRowEnd_rows_eq_deleteRow {k : ℕ} (shape : RowShape k)
@@ -178,7 +170,6 @@ theorem exactRectangleTailCount (k : ℕ) :
           ((k + 2) * n).descFactorial r =
         Fintype.card (StandardTableau (rectangle (k + 1) n)) *
           tailCoefficient (k + 2) r * n.descFactorial r := by
-  change ExactRectangleTailCount k
   intro n r _ hr
   have hrn : r ≤ (k + 2) * n :=
     hr.trans (by rw [show k + 2 = (k + 1) + 1 by omega, Nat.succ_mul]; omega)

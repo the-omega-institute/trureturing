@@ -6,7 +6,7 @@ Standard tableaux, removable-row deletion and the rectangle survival event.
 
 **Definition 1.1 (Straight shapes).**
 
-$$\forall shape \in \operatorname{RowShape}\left(k\right),\; shape.rows : \operatorname{Fin}\left(k\right) \to \mathbb{N}$$
+$$\forall k \in \mathbb{N},\; \forall shape \in \operatorname{RowShape}\left(k\right),\; (shape.rows : \operatorname{Fin}\left(k\right) \to \mathbb{N}) \land \operatorname{Antitone}\left(shape.rows\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15Tableaux.RowShape` (`✓ std3`).
 
@@ -198,7 +198,7 @@ Only the bottom row loses r cells, with natural subtraction defined also for r >
 
 **Definition 1.17 (First cell of the second row).**
 
-$$\forall (hn : 0 < n), \operatorname{secondRowFirst}\left(hn\right).1 = (1, 0)$$
+$$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall (hn : 0 < n), (\operatorname{secondRowFirst}\left(hn\right) : \operatorname{Cell}\left(\operatorname{rectangle}\left(k + 1, n\right)\right)) \land \operatorname{secondRowFirst}\left(hn\right).1 = (1, 0)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15Tableaux.secondRowFirst` (`✓ std3`).
 

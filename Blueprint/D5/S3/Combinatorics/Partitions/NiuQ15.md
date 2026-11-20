@@ -76,7 +76,7 @@ At positive width the event is that the one-based entry in row two and column on
 
 **Theorem 1.6 (Straight-shape cardinality).**
 
-$$\forall k \in \mathbb{N},\; \forall shape \in \operatorname{RowShape}\left(k\right),\; 2 \le k \Rightarrow (\operatorname{cast}\left(\operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(shape\right)\right)\right): \mathbb{Q}) = \operatorname{shiftedCount}\left(shape.rows\right)$$
+$$\forall k \in \mathbb{N},\; 2 \le k \Rightarrow (\forall shape \in \operatorname{RowShape}\left(k\right),\; (\operatorname{cast}\left(\operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(shape\right)\right)\right): \mathbb{Q}) = \operatorname{shiftedCount}\left(shape.rows\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_shiftedCount` (`✓ std3`). ∎
 
@@ -88,21 +88,7 @@ $$\forall k \in \mathbb{N},\; \forall shape \in \operatorname{RowShape}\left(k\r
 
 Both counts equal one at size zero. At positive size they sum over the same removable row ends. Strong induction on the number of cells gives equality.
 
-**Definition 1.7 (Rectangle and shortened-shape count identity).**
-
-$$\forall k \in \mathbb{N},\; \operatorname{ExactRectangleTailCount}\left(k\right) \Leftrightarrow (\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; 0 < n \Rightarrow \left(r \le n \Rightarrow \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rotatedShape}\left(k + 1, n, r\right)\right)\right) \cdot \operatorname{descFactorial}\left((k + 2) \cdot n, r\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right)\right) \cdot \operatorname{tailCoefficient}\left(k + 2, r\right) \cdot \operatorname{descFactorial}\left(n, r\right)\right))$$
-
-*Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Tong Niu (2026). *The first descent in a standard Young tableau of shape (n,n,n)*. DOI: [10.48550/arXiv.2610.03038](https://doi.org/10.48550/arXiv.2610.03038). URL: <https://arxiv.org/abs/2610.03038v1>.
-
-*Commentary.*
-
-Both counts and descending factorials are natural numbers.
-
-**Theorem 1.8 (Exact rectangle tail count).**
+**Theorem 1.7 (Exact rectangle tail count).**
 
 $$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; 0 < n \Rightarrow \left(r \le n \Rightarrow \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rotatedShape}\left(k + 1, n, r\right)\right)\right) \cdot \operatorname{descFactorial}\left((k + 2) \cdot n, r\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right)\right) \cdot \operatorname{tailCoefficient}\left(k + 2, r\right) \cdot \operatorname{descFactorial}\left(n, r\right)\right)$$
 
@@ -116,7 +102,7 @@ $$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall r \in \mathbb{
 
 The factors involving the bottom row change from 1 through k + 1 to r + 1 through r + k + 1. Their ratio is the binomial coefficient. The size and bottom-row factorials give the two descending factorials.
 
-**Definition 1.9 (The closed Question 15 proposition).**
+**Definition 1.8 (The closed Question 15 proposition).**
 
 $$Question15 \Leftrightarrow (\forall k \in \mathbb{N},\; (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectangleTailProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitTail}\left(k + 2, r\right)\right)\right)) \land (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectanglePointProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitMass}\left(k + 2, r\right)\right)\right)) \land (\operatorname{HasSum}\left(\operatorname{limitMass}\left(k + 2\right), 1\right)) \land (\operatorname{Tendsto}\left(\operatorname{rectangleOddEntryProbability}\left(k\right), atTop, \operatorname{nhds}\left((\frac{\operatorname{cast}\left(k\right) + 2}{\operatorname{cast}\left(k\right) + 3})^{k + 2}\right)\right)))$$
 
@@ -130,7 +116,7 @@ $$Question15 \Leftrightarrow (\forall k \in \mathbb{N},\; (\forall r \in \mathbb
 
 The two distribution clauses quantify independently over natural thresholds. At r = 0 the limiting point mass is zero, so summing over all natural r gives the same normalization as summing over positive r.
 
-**Theorem 1.10 (First-descent law and odd-entry limit).**
+**Theorem 1.9 (First-descent law and odd-entry limit).**
 
 $$\forall k \in \mathbb{N},\; (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectangleTailProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitTail}\left(k + 2, r\right)\right)\right)) \land (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectanglePointProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitMass}\left(k + 2, r\right)\right)\right)) \land (\operatorname{HasSum}\left(\operatorname{limitMass}\left(k + 2\right), 1\right)) \land (\operatorname{Tendsto}\left(\operatorname{rectangleOddEntryProbability}\left(k\right), atTop, \operatorname{nhds}\left((\frac{\operatorname{cast}\left(k\right) + 2}{\operatorname{cast}\left(k\right) + 3})^{k + 2}\right)\right))$$
 
@@ -146,7 +132,6 @@ For K = k + 2 the survival limit is choose(r + K − 1, K − 1)/K^r, and the po
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.Question15`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_shiftedCount`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.eventProbability`
