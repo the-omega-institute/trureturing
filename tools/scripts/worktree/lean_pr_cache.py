@@ -324,7 +324,7 @@ def paged(repository, path, field=None, *, read_association=False):
         page += 1
 
 
-def consumer_context(root):
+def consumer_context(root, *, require_pr_opt_in=False):
     event = json.loads(pathlib.Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
     repository, kind = os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_EVENT_NAME"]
     checkout, ref = git(root, "rev-parse", "HEAD"), os.environ["GITHUB_REF"]
@@ -338,6 +338,9 @@ def consumer_context(root):
         require(pr["number"] == event["number"], "source PR identity differs")
         require(pr["state"] == "open" and pr["head"]["sha"] == source["head"]["sha"]
                 and pr["base"]["ref"] == source["base"]["ref"], "source PR head or target changed, or is closed")
+        if require_pr_opt_in and not any(label.get("name") == "lean-cache-produce"
+                                         for label in pr.get("labels", [])):
+            return None
         merged = False
     elif kind == "push" or kind == "workflow_dispatch" and actions.manual_source_is_valid():
         if kind == "push":
@@ -488,7 +491,7 @@ def restore_project(root, directory, cache_action, identity, runtime):
     bundled = {path.name for path in packed.iterdir()} if packed.is_dir() else set()
     require(bundled <= expected, "preparation contains an unreferenced shard")
     if bundled == expected:
-        return shards.install(root, index, [], require_complete=True, preparation=directory,
+        return shards.install(root, index, require_complete=True, preparation=directory,
                               payload_directory=packed)["complete"]
     # Earlier artifacts can still carry references to Actions cache entries.
     result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
@@ -498,13 +501,16 @@ def restore_project(root, directory, cache_action, identity, runtime):
     return True
 
 
-def adopt(root, cache_action=None):
+def adopt(root, cache_action=None, *, require_pr_opt_in=False):
     record = root / "build/lean-cache/pr-adopted.json"
     record.unlink(missing_ok=True)
     actions.output(dict(adopted=False))
-    context = consumer_context(root)
+    context = consumer_context(root, require_pr_opt_in=require_pr_opt_in)
     if context is None:
-        return receipt("miss", None, reason="no matching merged PR at event checkout")
+        reason = ("PR is not opted-in for preparation" if require_pr_opt_in
+                  and os.environ["GITHUB_EVENT_NAME"] == "pull_request"
+                  else "no matching merged PR at event checkout")
+        return receipt("miss", None, reason=reason)
     repository = context["repository"]
     candidates = []
     variants = (True, False) if cache_action else (False,)
@@ -570,13 +576,14 @@ def main():
     parser.add_argument("--anchor")
     parser.add_argument("--previous-index", type=pathlib.Path)
     parser.add_argument("--cache-action", nargs=2)
+    parser.add_argument("--require-pr-opt-in", action="store_true")
     args = parser.parse_args()
     try:
         root = args.repository.resolve()
         if args.command == "dispatch":
             dispatch(root)
         elif args.command == "adopt":
-            adopt(root, args.cache_action)
+            adopt(root, args.cache_action, require_pr_opt_in=args.require_pr_opt_in)
         else:
             identity = validate_identity(json.loads(os.environ["PR_SOURCE"]))
             if args.command == "prepare":

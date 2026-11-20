@@ -13,6 +13,9 @@ inputs:
   checkpoint-run:
     description: Earlier verification run of the same source and mode
     default: ''
+  checkpoint-seconds:
+    description: Cold build interval before saving a checkpoint, or zero for a normal build
+    default: '0'
 runs:
   using: composite
   steps:
@@ -26,7 +29,7 @@ runs:
         restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
     - id: previous_checkpoint
       name: Find the last published cold Release checkpoint
-      if: inputs.verification-history-anchor != '' && (fromJSON(github.run_attempt) > 1 || inputs.checkpoint-run != '')
+      if: inputs.verification-history-anchor != '' && (inputs.checkpoint-run != '' || (inputs.checkpoint-seconds != '0' && fromJSON(github.run_attempt) > 1))
       shell: bash
       env:
         MODE: ${{ inputs.mode }}
@@ -141,17 +144,17 @@ runs:
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
     - name: Complete missing project artifacts with Lake
-      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.verification-history-anchor == ''
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.checkpoint-seconds == '0'
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       shell: bash
       run: make lean FULL_BUILD=1
     - id: cold_build
       name: Build and validate a slice of the cold Release
-      if: inputs.verification-history-anchor != ''
+      if: inputs.checkpoint-seconds != '0'
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
-        STRATALINT_BUILD_TIMEOUT_SECONDS: '420'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ inputs.checkpoint-seconds }}
       shell: bash
       run: |
         result=0

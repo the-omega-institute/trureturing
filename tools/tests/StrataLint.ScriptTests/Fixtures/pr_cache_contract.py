@@ -339,9 +339,10 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.env.update(GITHUB_EVENT_NAME="push", GITHUB_REF=self.identity["target_ref"], GITHUB_SHA=self.actual_merge)
         self.event_file.write_text(json.dumps(dict(after=self.actual_merge, ref=self.identity["target_ref"])))
 
-    def adopt(self, *, env=None, api=None, association=None, cache_action=None):
+    def adopt(self, *, env=None, api=None, association=None, cache_action=None, require_pr_opt_in=False):
         with mock.patch.object(producer, "download", side_effect=lambda repo, aid, path: shutil.copyfile(self.zipped, path)) as download:
-            result = self.run_with(lambda: producer.adopt(self.root, cache_action), env=env, api=api, association=association)
+            result = self.run_with(lambda: producer.adopt(self.root, cache_action, require_pr_opt_in=require_pr_opt_in),
+                                   env=env, api=api, association=association)
         return result, download
 
     def test_association_retries_only_failed_page_before_adoption(self):
@@ -447,7 +448,19 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_source_pr_retrieves_preparation_without_target_seed_and_preserves_native_files(self):
         self.preparation()
-        result, download = self.adopt()
+        labels = self.pr["labels"]
+        self.pr["labels"] = []
+        self.event["pull_request"]["labels"] = []
+        self.event_file.write_text(json.dumps(self.event))
+        self.calls.clear()
+        result, download = self.adopt(require_pr_opt_in=True)
+        self.assertEqual("PR is not opted-in for preparation", result["reason"])
+        self.assertEqual([("pulls/12", None)], self.calls)
+        download.assert_not_called()
+        self.assertFalse((self.root / ".lake/build").exists())
+
+        self.pr["labels"] = labels
+        result, download = self.adopt(require_pr_opt_in=True)
         self.assertEqual("adopted", result["status"])
         self.assertIsNone(result["actual_merge"])
         download.assert_called_once()
@@ -561,7 +574,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.assertEqual("restore-preparation", command[2])
             directory = pathlib.Path(command[3])
             record = shards.read_index(directory / "project.json", binding, "complete")
-            result = shards.install(self.root, record, [], require_complete=True, preparation=directory)
+            result = shards.install(self.root, record, require_complete=True, preparation=directory)
             return subprocess.CompletedProcess(command, 0 if result["complete"] else 3)
 
         reference = self.root / shards.transport_payload(material[shards.REPORT])

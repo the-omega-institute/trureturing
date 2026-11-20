@@ -87,6 +87,12 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                     build_output.unlink()
                     with self.assertRaisesRegex(ValueError, "different run or attempt"):
                         shards.restore_checkpoint(self.root, new_identity, artifact, 2, "17")
+                    wrong_mode = {"verification": {"scenario": "release-partial", "run": "18"}}
+                    with self.assertRaisesRegex(ValueError, "incompatible Actions shard index binding"):
+                        shards.restore_checkpoint(self.root, wrong_mode, artifact, 1, "17")
+            with mock.patch.object(shards, "current_owner", return_value={**previous, "commit": "e" * 40}):
+                with self.assertRaisesRegex(ValueError, "different run or attempt"):
+                    shards.restore_checkpoint(self.root, identity, artifact, 1)
             self.assertFalse(build_output.exists())
             (artifact / "payload" / (digest + ".tar.gz")).unlink()
             with self.assertRaisesRegex(ValueError, "missing verified shard material"):
@@ -211,11 +217,11 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         (build / names[1]).write_text("earlier second module")
         with mock.patch.object(shards, "install_scoped", side_effect=OSError("install interrupted")):
             with self.assertRaisesRegex(OSError, "install interrupted"):
-                shards.install(root, decoded, [])
+                shards.install(root, decoded)
         self.assertEqual("earlier first module", (build / names[0]).read_text())
         self.assertEqual("earlier second module", (build / names[1]).read_text())
 
-        result = shards.install(root, decoded, [])
+        result = shards.install(root, decoded)
         self.assertEqual(1, result["available"])
         self.assertEqual([payloads[1]], result["missing"])
         self.assertEqual(names[0], (build / names[0]).read_text())
@@ -258,9 +264,76 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         target.mkdir(parents=True)
         record = {"state": "complete", "required": {}, "entries": {"first": first, "second": second}}
         with self.assertRaises(FileExistsError):
-            shards.install(self.root, record, [], require_complete=True)
+            shards.install(self.root, record, require_complete=True)
         self.assertEqual([], list(target.iterdir()))
         self.assertEqual([], list(target.parent.glob(".shards-*")))
+
+    def test_complete_index_installs_available_shards_without_claiming_complete(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        producer = self.root / "producer"
+        build = self.root / ".lake/build"
+        group = shards.group_identity([["D5.Fixture"]])
+        paths = {group: "lib/lean/D5/Fixture.olean", shards.REPORT: shards.REPORT_PATH}
+        for path in paths.values():
+            source = producer / path
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text(path)
+        compiler = shards.write_payload(self.root, producer, [paths[group]])
+        report = shards.write_payload(self.root, producer, [paths[shards.REPORT]])
+        record = {"state": "complete", "entries": {group: compiler, shards.REPORT: report},
+                  "required": {key: [path] for key, path in paths.items()}}
+        report_file = self.root / shards.transport_payload(report)
+        report_bytes = report_file.read_bytes()
+        report_file.unlink()
+
+        strict = shards.install(self.root, record, require_complete=True)
+        self.assertEqual({"available": 0, "missing": [report], "requested": 2, "complete": False}, strict)
+        self.assertFalse(build.exists())
+        partial = shards.install(self.root, record)
+        self.assertEqual(strict | {"available": 1}, partial)
+        self.assertEqual(paths[group], (build / paths[group]).read_text())
+        self.assertFalse((build / shards.REPORT_PATH).exists())
+        shutil.rmtree(build)
+
+        report_file.write_bytes(report_bytes)
+        complete = shards.install(self.root, record)
+        self.assertEqual({"available": 2, "missing": [], "requested": 2, "complete": True}, complete)
+        self.assertEqual(shards.REPORT_PATH, (build / shards.REPORT_PATH).read_text())
+
+    def test_restore_plan_accepts_large_and_empty_target_files(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        targets = [f"D5.ModuleWithALongEnoughNameForTheArgumentLimit.Number{i}" for i in range(5000)]
+        base, unrelated = "D5.Base", "D5.Unrelated"
+        graph = {name: set() for name in [*targets, base, unrelated]}
+        graph[targets[-1]].add(base)
+        groups = {shards.group_identity([[name]]): [[name]] for name in [targets[-1], base, unrelated]}
+        entries = {key: str(index) * 64 for index, key in enumerate([*groups, shards.REPORT, shards.EXTRAS])}
+        record = {"entries": entries, "layout": groups}
+        index_path = self.root / "index.json"
+        targets_file = self.root / "target file"
+        argv = ["lean_actions_shards.py", "restore-plan", "--repository", str(self.root),
+                "--index", str(index_path), "--targets-file", str(targets_file)]
+
+        for scope in (targets, []):
+            with self.subTest(count=len(scope)):
+                targets_file.write_text("\n".join(scope), encoding="utf-8")
+                if scope:
+                    self.assertGreater(targets_file.stat().st_size, 256 * 1024)
+                with mock.patch.object(sys, "argv", argv), \
+                        mock.patch.object(shards, "binding"), \
+                        mock.patch.object(shards, "read_index", return_value=record), \
+                        mock.patch.object(shards, "workspace_modules", return_value=graph), \
+                        mock.patch.object(shards, "project_imports", return_value=graph), \
+                        contextlib.redirect_stdout(io.StringIO()) as stdout:
+                    shards.main()
+                expected = {shards.group_identity([[name]]) for name in [targets[-1], base]} | {shards.EXTRAS}
+                self.assertEqual(expected if scope else set(), set(json.loads(stdout.getvalue())))
+        self.assertEqual(entries, shards.selected_keys(self.root, record))
+        self.assertEqual({"available": 0, "missing": [], "requested": 0, "complete": False},
+                         shards.install(self.root, record, []))
+        self.assertFalse((self.root / ".lake/build").exists())
 
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()

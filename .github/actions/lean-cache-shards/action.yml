@@ -18,15 +18,20 @@ inputs:
   sharded-adoption:
     description: Search for sharded PR preparation artifacts in addition to native preparations
     default: 'false'
+  require-pr-opt-in:
+    description: Search for PR preparation artifacts only if the open PR currently has the preparation label
+    default: 'false'
   targets:
     description: Space-delimited project Lean modules whose imports are needed
+  targets-file:
+    description: File of whitespace-delimited Lean modules for a scoped restore
 outputs:
   complete:
     description: All project shards installed from a complete index
   key:
     description: Immutable Actions snapshot index key
   available:
-    description: Number of project cache entries verified
+    description: Number of verified project cache entries installed or published
   missing:
     description: Number of requested project cache entries unavailable
   artifact_name:

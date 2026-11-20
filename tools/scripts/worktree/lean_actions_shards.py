@@ -346,16 +346,17 @@ def prepare_stream(root, identity, state, previous, anchor, targets, available):
     return record
 
 
-def selected_keys(root, record, targets):
-    if not targets:
+def selected_keys(root, record, targets=None):
+    if targets is None:
         return record["entries"]
+    if not targets:
+        return {}
     modules = workspace_modules(root)
     graph = project_imports(root, modules)
     names = import_closure(graph, targets)
-    shared = {EXTRAS} if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else {EXTRAS, REPORT}
     return {
         key: value for key, value in record["entries"].items()
-        if key in shared or any(names.intersection(shard) for shard in record["layout"].get(key, ()))
+        if key == EXTRAS or any(names.intersection(shard) for shard in record["layout"].get(key, ()))
     }
 
 
@@ -399,8 +400,10 @@ def install_continuation(target, unpacked, paths, backup):
         raise
 
 
-def install(root, record, targets, *, require_complete=False, preparation=None, payload_directory=None):
+def install(root, record, targets=None, *, require_complete=False, preparation=None, payload_directory=None):
     selected = selected_keys(root, record, targets)
+    if not selected:
+        return {"available": 0, "missing": [], "requested": 0, "complete": False}
     required = record["required"]
     registrations = native_archive_paths(root, ["project"])["project"]
     lake = (preparation / "native" if preparation else root) / ".lake"
@@ -457,7 +460,7 @@ def install(root, record, targets, *, require_complete=False, preparation=None, 
             # The complete and scoped readers both own an empty destination.
             os.replace(unpacked, target)
         install_seconds = time.monotonic() - install_started
-    complete = record["state"] == "complete" and not missing and not targets
+    complete = record["state"] == "complete" and not missing and targets is None
     receipt("shards", "restore", complete=complete,
             restored=len(available), missing=len(missing), requested=len(selected),
             extract_seconds=round(extract_seconds, 3), install_seconds=round(install_seconds, 3))
@@ -496,7 +499,7 @@ def read_checkpoint_index(root, identity, path, attempt, previous_run=None):
 
 def restore_checkpoint(root, identity, directory, attempt, previous_run=None):
     record = read_checkpoint_index(root, identity, directory / "index.json", attempt, previous_run)
-    result = install(root, record, (), require_complete=True, payload_directory=directory / "payload")
+    result = install(root, record, require_complete=True, payload_directory=directory / "payload")
     if result["missing"]:
         raise ValueError("cold Release checkpoint artifact is missing verified shard material")
     output({"available": result["available"]})
@@ -511,7 +514,9 @@ def main():
     parser.add_argument("--index", type=Path)
     parser.add_argument("--anchor")
     parser.add_argument("--available", type=Path)
-    parser.add_argument("--target", action="append", default=[])
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument("--target", action="append")
+    scope.add_argument("--targets-file", type=Path)
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--preparation", type=Path)
     parser.add_argument("--artifact-directory", type=Path)
@@ -521,7 +526,10 @@ def main():
     args = parser.parse_args()
     if args.stream_payloads and args.operation != "prepare":
         parser.error("payload streaming requires prepare")
-    if args.preparation and (args.state != "complete" or args.operation != "install" or args.target):
+    if args.targets_file is not None and args.operation not in {"restore-plan", "install"}:
+        parser.error("a target file requires restore-plan or install")
+    targets = args.targets_file.read_text(encoding="utf-8").split() if args.targets_file else args.target
+    if args.preparation and (args.state != "complete" or args.operation != "install" or targets is not None):
         parser.error("preparation requires a complete, unscoped install")
     root = args.repository.resolve()
     identity = binding(root, args.state)
@@ -554,16 +562,16 @@ def main():
             raise ValueError("a fixed dev history anchor is required to seed the layout")
         available = set(json.loads(args.available.read_text())) if args.available else frozenset()
         pack = prepare_stream if args.stream_payloads else prepare
-        print(json.dumps(pack(root, identity, args.state, record, args.anchor, args.target, available),
+        print(json.dumps(pack(root, identity, args.state, record, args.anchor, targets or (), available),
                          separators=(",", ":")))
     elif record is None:
         raise ValueError("Actions shard index missing")
     elif args.operation == "restore-plan":
-        print(json.dumps(selected_keys(root, record, args.target)))
+        print(json.dumps(selected_keys(root, record, targets)))
     else:
         if args.state == "resume":
             (root / RESUME_RECORD).unlink(missing_ok=True)
-        result = install(root, record, args.target, require_complete=args.require_complete,
+        result = install(root, record, targets, require_complete=args.require_complete,
                          preparation=args.preparation)
         if args.state == "resume" and result["available"]:
             write_small_record(root / RESUME_RECORD, {"binding": identity, "owner": current_owner(root)})

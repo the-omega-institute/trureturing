@@ -16,12 +16,13 @@ const indexPath = join(stage, 'index.json');
 const operation = process.argv[2] || process.env.INPUT_OPERATION;
 const state = process.env.INPUT_STATE || 'complete';
 const targets = (process.env.INPUT_TARGETS || '').trim().split(/\s+/).filter(Boolean);
+const targetsFile = process.env['INPUT_TARGETS-FILE'];
 const anchor = process.env.INPUT_ANCHOR;
 const requireComplete = process.env['INPUT_REQUIRE-COMPLETE'] === 'true';
 const shardedAdoption = process.env['INPUT_SHARDED-ADOPTION'] === 'true';
 // A nested JavaScript action may inherit the enclosing composite's action path.
 const actionPath = dirname(fileURLToPath(import.meta.url));
-const targetArgs = targets.flatMap(target => ['--target', target]);
+const targetArgs = targetsFile ? ['--targets-file', targetsFile] : targets.flatMap(target => ['--target', target]);
 const pythonTool = 'tools/scripts/worktree/lean_actions_shards.py';
 const preparationTool = 'tools/scripts/worktree/lean_pr_cache.py';
 
@@ -401,8 +402,12 @@ async function setOutputs(fields) {
 }
 
 async function main() {
+  if (targetsFile && (targets.length || operation !== 'restore')) {
+    throw new Error('a target file requires restore without inline targets');
+  }
   if (operation === 'adopt-preparation') {
     const args = shardedAdoption ? ['--cache-action', process.execPath, fileURLToPath(import.meta.url)] : [];
+    if (process.env['INPUT_REQUIRE-PR-OPT-IN'] === 'true') args.push('--require-pr-opt-in');
     preparationCommand('adopt', args);
     return;
   }
