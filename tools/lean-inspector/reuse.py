@@ -31,6 +31,7 @@ BASE_SCHEMA = 'stratalint-lean-report-seed-base-v2'
 BASE_RECORD = '.lake/lean-report-seed-base.json'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
+CHECKED = [*COMPLETED, 'fib-inputs-checked']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
                 zipfile.BadZipFile, zlib.error, NotImplementedError, subprocess.CalledProcessError)
 if zipfile.lzma is not None:
@@ -109,15 +110,15 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
-def read_receipt(report, captured):
+def read_receipt(report, captured=None):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
     receipt = publication.read_json(path.read_bytes())
     materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+    if receipt['schema'] != SCHEMA or receipt['completed'] not in (COMPLETED, CHECKED):
         raise ValueError('reuse receipt lacks complete entry success')
-    if receipt['inputs'] != captured:
+    if captured is not None and receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
         raise ValueError('reuse receipt bundle mismatch')
@@ -145,9 +146,9 @@ def probe(repository, report):
     return dict(needs_lake=False, reason='receipt-matched')
 
 
-def write_receipt(report, captured):
+def write_receipt(report, captured, *, checked=False):
     path = publication.member(report, SUFFIX)
-    record = dict(schema=SCHEMA, completed=COMPLETED, inputs=captured, bundle=bundle_hashes(report))
+    record = dict(schema=SCHEMA, completed=CHECKED if checked else COMPLETED, inputs=captured, bundle=bundle_hashes(report))
     # Never write through cache hard links or leave a partially written receipt.
     fd, temporary = tempfile.mkstemp(prefix='.report-reuse.', dir=path.parent)
     try:
@@ -267,7 +268,7 @@ def seal(repository, report, captured, produced_sha256):
         _seal(repository, report, captured, produced_sha256)
 
 
-def _seal(repository, report, captured, produced_sha256):
+def _seal(repository, report, captured, produced_sha256, *, checked=False, reused=False, seed_commit=None):
     """Seal within the canonical writer's existing exclusive section."""
     if produced_sha256 is None or publication.bundle_identity(report) != produced_sha256:
         raise ValueError('published report generation changed before seal')
@@ -279,8 +280,8 @@ def _seal(repository, report, captured, produced_sha256):
         raise ValueError('registered inputs changed during report entry')
     if not captured['eligible']:
         return
-    write_receipt(report, captured)
-    if canonical and not record_seed_base(repository):
+    write_receipt(report, captured, checked=checked)
+    if canonical and (not reused or seed_commit is not None) and not record_seed_base(repository, seed_commit):
         invalidate_seed_base(repository)
 
 
@@ -317,7 +318,7 @@ def _reuse(repository, report, output):
                 raise ValueError('reuse receipt changed during publication')
         if capture(repository) != captured:
             raise ValueError('registered inputs changed during reuse')
-        write_receipt(output, captured)
+        write_receipt(output, captured, checked=receipt['completed'] == CHECKED)
         if canonical and base is not None and not record_seed_base(repository, base):
             invalidate_seed_base(repository)
     except INVALID_SEED as error:
@@ -348,7 +349,7 @@ def seed_format(report):
             raise ValueError('missing reuse receipt')
         receipt = publication.read_json(path.read_bytes())
         materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-        if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+        if receipt['schema'] != SCHEMA or receipt['completed'] not in (COMPLETED, CHECKED):
             raise ValueError('reuse receipt lacks complete entry success')
         inputs = materials.require_keys(receipt['inputs'],
             {'eligible', 'report_format', 'files', 'execution'}, 'reuse inputs')
@@ -600,7 +601,7 @@ def recover_and_reuse(repository, report, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'prepare', 'seal',
+    parser.add_argument('command', choices=('probe', 'reuse', 'require-compatible', 'capture', 'prepare', 'seal',
                                            'refresh-stale-seed'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
@@ -623,6 +624,10 @@ def main():
         parser.error('--bundle-sha256 must be the produced bundle identity')
     if args.command == 'refresh-stale-seed':
         return refresh_stale_seed(args.repository)
+    if args.command == 'require-compatible':
+        with compatible_seed(args.repository, args.report) as seed:
+            print('LEAN_REPORT_SEED path=' + str(seed))
+        return 0
     if args.command == 'capture':
         captured = capture(args.repository)
         args.snapshot.write_bytes(materials.canonical_json(captured))

@@ -51,7 +51,7 @@ BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache
 rm -f -- "$BUILD_WORK_FILE"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 resource_observe lean-inspector-start "$REPOSITORY" || true
-# Keep diagnostics in a temporary directory until the input and reuse checks complete.
+# Keep diagnostics in a temporary directory until input and optional seed checks complete.
 FINAL_LOG_DIR="$LOG_DIR"
 STARTUP_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-inspector-startup.XXXXXXXX")"
 LOG_DIR="$STARTUP_LOG_DIR"
@@ -99,7 +99,7 @@ run_phase() {
     case "$phase" in
       # Native report commands are charged by the cache reader after
       # its own lazy provisioning. These phases must not be charged twice.
-      toolchain|reuse|report) ;;
+      toolchain|report) ;;
       *) budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --) ;;
     esac
   fi
@@ -154,27 +154,10 @@ open_logs() {
   export STRATALINT_INSPECTOR_PHASES="$LOG_DIR/native-phases.jsonl"
   : > "$STRATALINT_INSPECTOR_PHASES"
 }
-reuse_report() {
-  local status=0
-  local budget=()
-  [[ -z "${STRATALINT_CI_COMPUTE_BUDGET:-}" || "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" == 1 ]] || budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --)
-  if [[ "$CACHE_MISS_POLICY" == build ]]; then
-    status=3
-  else
-    ${budget[@]+"${budget[@]}"} python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
-      --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
-      --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
-  fi
-  printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
-  # An optional seed miss is normal. Parser/registration failures still block.
-  if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
-  return "$status"
-}
-run_phase reuse reuse_report
-cat "$LOG_DIR/reuse.stdout.log"
-if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
-  open_logs
-  exit 0
+if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
+  run_phase seed python3 -B "$SCRIPT_DIR/reuse.py" require-compatible --repository "$REPOSITORY" \
+    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}"
+  cat "$LOG_DIR/seed.stdout.log"
 fi
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \

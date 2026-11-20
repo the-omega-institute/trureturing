@@ -81,36 +81,50 @@ def prepare(roots, directory, need_inputs=True):
         result.check_returncode()
 
 
-def checked_report(directory, output, seed, program_logs):
+def checked_report(directory, output, seed, program_logs, *, try_seed):
     captured = reuse.capture(ROOT)
     candidate = directory / publication.RAW
     logs = Path(os.environ.get('STRATALINT_LEAN_REPORT_LOG_DIR', str(output) + '.logs')).resolve()
-    env = dict(os.environ, STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
-    env['STRATALINT_LEAN_REPORT_REUSE'] = str(seed)
-    subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build',
-                    'LEAN_REPORT=' + str(candidate)], cwd=ROOT, env=env, check=True)
+    reused = False
+    seed_commit = None
+    if try_seed:
+        with reuse.publication_guard(ROOT, seed):
+            if seed == reuse.canonical_seed(ROOT):
+                seed_commit = reuse.read_seed_base(ROOT)
+            reused = not reuse._reuse(ROOT, seed, candidate)['needs_lake']
+        if not reused:
+            # Seed bytes changed since resource planning. Prepare the compiler inputs for extraction.
+            prepare('', program_logs)
+    if not reused:
+        env = dict(os.environ, STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build',
+                        'LEAN_REPORT=' + str(candidate)], cwd=ROOT, env=env, check=True)
     # Keep stable comparison data across regressions that build transient Lean fixtures.
     previous = directory / 'previous' / publication.RAW
     previous.parent.mkdir()
+    observed_members = ('', '.provenance.json', reuse.SUFFIX)
     with reuse.publication_guard(ROOT, output):
-        for suffix in ('', '.provenance.json'):
+        try:
+            checked_previous = reuse.read_receipt(output)['completed'] == reuse.CHECKED
+        except reuse.INVALID_SEED:
+            checked_previous = False
+        for suffix in observed_members:
             path = publication.member(output, suffix)
             if path.exists():
                 os.link(path, publication.member(previous, suffix))
     selected = os.environ.get('STRATALINT_FIB_REGRESSIONS_SELECTED', 'false')
     if selected not in ('true', 'false'):
         raise ValueError('invalid FIB regression selection')
-    reused = (logs / 'reuse.status').read_text().strip() == '0'
-    same = (reused and seed == output and previous.exists()
+    same = (checked_previous and reused and seed == output and previous.exists()
             and publication.digest(previous) == publication.digest(candidate))
     if not same or selected == 'true':
         subprocess.run([sys.executable, '-B', 'tools/lean-inspector/fib_analysis.py', str(candidate),
                         '--regressions', str(ROOT), '--previous', str(previous),
-                        '--selected', selected], cwd=ROOT, check=True)
+                        '--selected', selected, *([] if checked_previous else ['--unverified-previous'])], cwd=ROOT, check=True)
     else:
         print('LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=false', flush=True)
     with reuse.publication_guard(ROOT, output):
-        for suffix in ('', '.provenance.json'):
+        for suffix in observed_members:
             observed = publication.member(previous, suffix)
             current = publication.member(output, suffix)
             if observed.exists() != current.exists() or observed.exists() and not observed.samefile(current):
@@ -119,8 +133,9 @@ def checked_report(directory, output, seed, program_logs):
             raise ValueError('inputs changed during report check')
         identity = publication.publish(candidate, output, publication.coordinates(ROOT), ROOT, validate=False)
         publication.member(output, reuse.SUFFIX).unlink(missing_ok=True)
-        reuse._seal(ROOT, output, captured, identity)
+        reuse._seal(ROOT, output, captured, identity, checked=True, reused=reused, seed_commit=seed_commit)
     work_file = Path(os.environ.get('STRATALINT_LEAN_BUILD_WORK_FILE', ROOT / 'build/lean-cache/build-work.json'))
+    logs.mkdir(parents=True, exist_ok=True)
     for path in program_logs.glob('programs.*.log'):
         shutil.copyfile(path, logs / path.name)
     phases = [] if reused else ['report']
@@ -139,12 +154,12 @@ def main():
         raise ValueError('checking the full report requires FULL_BUILD=1')
     output = args.output.resolve()
     seed = Path(os.environ.get('STRATALINT_LEAN_REPORT_REUSE', output)).resolve()
-    if args.action == 'check' and os.environ.get('LEAN_REPORT_CACHE_MISS_POLICY') == 'fetch-or-fail':
+    force = (os.environ.get('REBUILD_REPORT_CACHE') == '1'
+             or os.environ.get('REGENERATE_REPORT_ARTIFACTS') == '1')
+    if args.action == 'check' and not force and os.environ.get('LEAN_REPORT_CACHE_MISS_POLICY') == 'fetch-or-fail':
         with reuse.compatible_seed(ROOT, seed) as compatible:
             seed = compatible
-    need_inputs = (args.action == 'prepare' or os.environ.get('REBUILD_REPORT_CACHE') == '1'
-                   or os.environ.get('REGENERATE_REPORT_ARTIFACTS') == '1'
-                   or reuse.probe(ROOT, seed)['needs_lake'])
+    need_inputs = args.action == 'prepare' or force or reuse.probe(ROOT, seed)['needs_lake']
     with tempfile.TemporaryDirectory(prefix='lean-programs.') as logs:
         program_logs = Path(logs)
         prepare(args.targets, program_logs, need_inputs)
@@ -152,7 +167,7 @@ def main():
             # Stage next to the destination so comparison snapshots can use hard links.
             output.parent.mkdir(parents=True, exist_ok=True)
             with tempfile.TemporaryDirectory(prefix='.lean-report-build.', dir=output.parent) as staging:
-                checked_report(Path(staging), output, seed, program_logs)
+                checked_report(Path(staging), output, seed, program_logs, try_seed=not need_inputs)
 
 
 if __name__ == '__main__':

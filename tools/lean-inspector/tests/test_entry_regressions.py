@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import unittest
@@ -17,7 +18,8 @@ import reuse
 
 class EntryRegressionTests(unittest.TestCase):
     def entry(self, *, cached=False, changed=False, selected=False, failure=0,
-              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False):
+              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False,
+              force_without_seed=None, follow_with_unchecked_report=False, legacy=False):
         fixture = test_reuse.ReuseTests()
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
@@ -55,7 +57,9 @@ class EntryRegressionTests(unittest.TestCase):
 
         bundle('a' * 64)
         report = fixture.report
-        reuse.seal(root, report, reuse.capture(root), publication.bundle_identity(report))
+        reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
+        if legacy:
+            reuse.write_receipt(report, reuse.capture(root))
         if obsolete:
             value = json.loads(report.read_text())
             value['modules'][0]['fib_analysis']['schema_version'] = 1
@@ -80,7 +84,7 @@ class EntryRegressionTests(unittest.TestCase):
                 for suffix in publication.SUFFIXES:
                     member = publication.member(fixture.report, suffix)
                     archive.write(member, member.name)
-        elif not selected:
+        elif not selected and not legacy:
             # Accepted reuse must not decode the complete report for telemetry,
             # invoke the regression consumer, or launch an analyzer.
             with (root / 'tools/lean-inspector/publication.py').open('a') as script:
@@ -126,11 +130,48 @@ exit """ + str(failure) + '\n')
             STRATALINT_FIB_REGRESSIONS_SELECTED=str(selected).lower(),
             STRATALINT_LEAN_REPORT_REUSE=str(report), BASH_ENV=str(shell_environment))
         environment.update(REGENERATE_REPORT_ARTIFACTS=str(int(regenerate)), STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
-        result = subprocess.run([sys.executable, '-B', str(root / 'tools/lean-inspector/build_inputs.py'),
-            'check', '--output', str(report)], cwd=root, env=environment,
+        if force_without_seed:
+            for suffix in (*publication.SUFFIXES, reuse.SUFFIX):
+                publication.member(report, suffix).unlink()
+            command = [shutil.which('make'), '-f', str(test_reuse.ROOT / 'Makefile'), 'check-lean-report',
+                       'FULL_BUILD=1', 'LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail',
+                       force_without_seed + '=1', 'LEAN_REPORT=' + str(report)]
+        else:
+            command = [sys.executable, '-B', str(root / 'tools/lean-inspector/build_inputs.py'),
+                       'check', '--output', str(report)]
+        result = subprocess.run(command, cwd=root, env=environment,
             capture_output=True, text=True, timeout=30)
+        if follow_with_unchecked_report:
+            self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+            analyzed = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build',
+                                       'LEAN_REPORT=' + str(report)], cwd=root, env=environment,
+                                      capture_output=True, text=True, timeout=30)
+            self.assertEqual(analyzed.returncode, 0, analyzed.stdout + analyzed.stderr)
+            self.assertEqual(reuse.read_receipt(report)['completed'], reuse.COMPLETED)
+            result = subprocess.run(command, cwd=root, env=environment,
+                                    capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
+
+    def test_analysis_publication_cannot_clear_failed_regressions(self):
+        result, calls, report, _, _ = self.entry(changed=True, failure=41, follow_with_unchecked_report=True)
+        self.assertEqual(result.returncode, 41, result.stdout + result.stderr)
+        self.assertEqual(calls, ['compile', 'report', 'regressions', 'report', 'regressions'])
+        self.assertEqual(reuse.read_receipt(report)['completed'], reuse.COMPLETED)
+
+    def test_old_reuse_receipt_is_checked_before_becoming_a_regression_baseline(self):
+        result, calls, report, _, _ = self.entry(cached=True, legacy=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['regressions'])
+        self.assertEqual(reuse.read_receipt(report)['completed'], reuse.CHECKED)
+
+    def test_explicit_recovery_without_seed_through_checked_make_entry(self):
+        for option in ('REBUILD_REPORT_CACHE', 'REGENERATE_REPORT_ARTIFACTS'):
+            with self.subTest(option=option):
+                result, calls, report, _, _ = self.entry(force_without_seed=option)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(calls, ['compile', 'report', 'regressions'])
+                self.assertTrue(publication.member(report, reuse.SUFFIX).is_file())
 
     def test_fresh_or_regenerated_inputs_select_the_suite_once(self):
         for regenerate, obsolete, changed, selected in (

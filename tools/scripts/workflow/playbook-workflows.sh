@@ -155,7 +155,7 @@ deposit_module() {
 
 case "$COMMAND" in
   deliver-check)
-    make lean-report
+    make check-lean-report
     make emit
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     align_delivery_ledger
