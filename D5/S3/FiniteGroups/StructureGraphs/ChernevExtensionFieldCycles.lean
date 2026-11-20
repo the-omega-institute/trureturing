@@ -225,139 +225,6 @@ private theorem degree_seed_polynomial (E : Type*) [Field E] :
     change (X + 1 : E[X]).degree < 4
     exact degree_seed_tail E
 
-private theorem seed_root [Fact (Nat.Prime 2)] :
-    ∃ t : GaloisField 2 4, t ^ 4 = t + 1 ∧ minpoly (ZMod 2) t = X ^ 4 + X + 1 := by
-  let E := GaloisField 2 4
-  let q : E[X] := X ^ 4 + X + 1
-  have hcard : Nat.card E = 16 := GaloisField.card 2 4 (by decide)
-  have hsplit : (X ^ 16 - X : E[X]).Splits := by
-    rw [← hcard]
-    exact Polynomial.splits_X_pow_nat_card_sub_X
-  have hdvd : q ∣ (X ^ 16 - X : E[X]) := by
-    refine ⟨q ^ 3 + 1, ?_⟩
-    have hfrob : q ^ 4 = X ^ 16 + X ^ 4 + 1 := by
-      unfold q
-      simp only [show (4 : ℕ) = 2 ^ 2 by decide, add_pow_char_pow, one_pow, ← pow_mul]
-      norm_num
-    calc
-      X ^ 16 - X = q ^ 4 + q := by
-        rw [hfrob, CharTwo.sub_eq_add]
-        unfold q
-        linear_combination -(X ^ 4 + 1) * (CharTwo.two_eq_zero (R := E[X]))
-      _ = q * (q ^ 3 + 1) := by ring
-  have hqsplits := hsplit.of_dvd (FiniteField.X_pow_card_sub_X_ne_zero E (by decide)) hdvd
-  have hqdeg : q.degree = 4 := degree_seed_polynomial E
-  obtain ⟨t, ht⟩ := hqsplits.exists_eval_eq_zero (by rw [hqdeg]; decide)
-  have ht₄ : t ^ 4 = t + 1 := by
-    have ht' : t ^ 4 + (t + 1) = 0 := by simpa [q, add_assoc] using ht
-    exact CharTwo.add_eq_zero.mp ht'
-  refine ⟨t, ht₄, ?_⟩
-  have hint := IsIntegral.of_finite (ZMod 2) t
-  let d := (minpoly (ZMod 2) t).natDegree
-  have hd : d ∣ 4 := by
-    have h := minpoly.degree_dvd hint
-    change d ∣ Module.finrank (ZMod 2) (GaloisField 2 4) at h
-    rwa [GaloisField.finrank 2 (by decide : 4 ≠ 0)] at h
-  have hd₄ : d = 4 := by
-    by_contra hdegree
-    have hd₂ : d ∣ 2 := by
-      obtain ⟨k, hk, hdk⟩ := (Nat.dvd_prime_pow Nat.prime_two (m := 2)).mp hd
-      change k ≤ 2 at hk
-      have hkle : k ≤ 1 := by
-        by_contra! h
-        have heq : k = 2 := by omega
-        exact hdegree (by simpa [heq] using hdk)
-      rw [hdk]
-      exact pow_dvd_pow 2 hkle
-    let S := IntermediateField.adjoin (ZMod 2) ({t} : Set E)
-    have hs : Module.finrank (ZMod 2) S = d := IntermediateField.adjoin.finrank hint
-    obtain ⟨e⟩ := FiniteField.nonempty_algHom_of_finrank_dvd
-      (F := ZMod 2) (K := S) (L := GaloisField 2 2) (by
-        rw [hs, GaloisField.finrank 2 (by decide : 2 ≠ 0)]
-        exact hd₂)
-    let : Fintype (GaloisField 2 2) := Fintype.ofFinite _
-    let tS : S := ⟨t, IntermediateField.mem_adjoin_simple_self _ _⟩
-    have hcard₂ : Fintype.card (GaloisField 2 2) = 4 := by
-      rw [← Nat.card_eq_fintype_card]
-      exact GaloisField.card 2 2 (by decide)
-    have htS : tS ^ 4 = tS := by
-      apply e.injective
-      change e (tS ^ 4) = e tS
-      rw [map_pow]
-      simpa only [hcard₂] using FiniteField.pow_card (e tS)
-    have htfour : t ^ 4 = t := congrArg Subtype.val htS
-    exact one_ne_zero (add_left_cancel ((ht₄.symm.trans htfour).trans (add_zero t).symm))
-  have hmonic : (X ^ 4 + X + 1 : (ZMod 2)[X]).Monic := by
-    rw [add_assoc]
-    exact monic_X_pow_add (degree_seed_tail (ZMod 2))
-  have hroot : aeval t (X ^ 4 + X + 1 : (ZMod 2)[X]) = 0 := by
-    simp only [map_add, map_pow, aeval_X, map_one, ht₄]
-    rw [add_assoc (t + 1)]
-    exact CharTwo.add_self_eq_zero (t + 1)
-  symm
-  apply minpoly.unique_of_degree_le_degree_minpoly _ _ hmonic hroot
-  rw [degree_seed_polynomial, degree_eq_natDegree (minpoly.ne_zero hint)]
-  change (4 : WithBot ℕ) ≤ (d : WithBot ℕ)
-  rw [hd₄]
-  exact le_rfl
-
-/-- Coefficients in increasing powers of the quartic root. -/
-private def seedFirst : Fin 8 → Fin 4 → ZMod 2 :=
-  ![![0, 1, 1, 1], ![1, 0, 1, 0], ![1, 0, 1, 1], ![1, 1, 0, 0],
-    ![1, 0, 0, 1], ![0, 0, 1, 0], ![1, 1, 0, 1], ![0, 1, 0, 0]]
-
-private def seedSecond : Fin 8 → Fin 4 → ZMod 2 :=
-  ![![1, 1, 0, 1], ![0, 0, 0, 1], ![0, 1, 1, 1], ![0, 1, 0, 1],
-    ![1, 0, 1, 1], ![1, 1, 1, 1], ![1, 0, 0, 1], ![0, 0, 1, 1]]
-
-private theorem seed_cycle [Fact (Nat.Prime 2)] :
-    ∃ v : Fin 8 → GaloisField 2 4 × GaloisField 2 4,
-      IsDirectedCycle (structureGraph (GaloisField 2 4)) 8 v := by
-  obtain ⟨t, ht₄, hminpoly⟩ := seed_root
-  have hdegree : (minpoly (ZMod 2) t).natDegree = 4 := by
-    rw [hminpoly]
-    exact (degree_eq_iff_natDegree_eq_of_pos (by decide : 0 < 4)).mp
-      (degree_seed_polynomial (ZMod 2))
-  let value (coeffs : Fin 4 → ZMod 2) : GaloisField 2 4 :=
-    ∑ i : Fin 4, coeffs i • t ^ i.val
-  have hvalue : Injective value := by
-    have hlin := _root_.linearIndependent_pow (K := ZMod 2) t
-    rw [hdegree] at hlin
-    intro f g hfg
-    exact funext (Fintype.linearIndependent_iffₛ.mp hlin f g hfg)
-  let v : Fin 8 → GaloisField 2 4 × GaloisField 2 4 :=
-    fun i => (value (seedFirst i), value (seedSecond i))
-  refine ⟨v, by decide, ?_, ?_⟩
-  · have hcodes : Injective seedFirst := by decide
-    intro i j hij
-    exact hcodes (hvalue (congrArg Prod.fst hij))
-  · have htwo : (2 : GaloisField 2 4) = 0 := CharTwo.two_eq_zero
-    -- The edge differences are multiples of t⁴ − t − 1 and 2 over the integers.
-    have hedge (i : Fin 8) : phi (v i) = v (i + 1) := by
-      fin_cases i <;> apply Prod.ext <;>
-        simp [v, phi, value, seedFirst, seedSecond, Fin.sum_univ_four]
-      case «0».fst => linear_combination (t + t ^ 3) * htwo
-      case «0».snd =>
-        linear_combination (2 + t + t ^ 2) * ht₄ + (1 + 2 * t + 2 * t ^ 2 + t ^ 3) * htwo
-      case «1».snd => linear_combination t * ht₄
-      case «2».fst => linear_combination (t ^ 2 + t ^ 3) * htwo
-      case «2».snd =>
-        linear_combination (2 + 2 * t + t ^ 2) * ht₄ + (1 + 2 * t + 2 * t ^ 2 + t ^ 3) * htwo
-      case «3».fst => linear_combination t * htwo
-      case «3».snd => linear_combination ht₄ + t * htwo
-      case «4».fst => linear_combination (1 + t ^ 3) * htwo
-      case «4».snd => linear_combination (t + t ^ 2) * ht₄ + (t ^ 2 + t ^ 3) * htwo
-      case «5».fst => linear_combination t ^ 2 * htwo
-      case «5».snd => linear_combination (1 + t) * ht₄ + (t + t ^ 2) * htwo
-      case «6».fst => linear_combination (1 + t ^ 3) * htwo
-      case «6».snd => linear_combination (1 + t ^ 2) * ht₄ + (1 + t + t ^ 3) * htwo
-      case «7».fst => ring
-      case «7».snd => linear_combination ht₄
-    intro i j hij
-    exact (hedge i).trans (congrArg v (Fin.ext (by
-      change (i.val + 1) % 8 = j.val
-      exact hij.symm)))
-
 /-- Every finite extension field in Hypothesis 6.1 has a nontrivial directed cycle. -/
 theorem result : claim := by
   intro K _ _ p n hp hn hcard hfour
@@ -380,8 +247,136 @@ theorem result : claim := by
         (F := ZMod 2) (K := GaloisField 2 4) (L := GaloisField 2 n) (by
           rw [GaloisField.finrank 2 (by decide : 4 ≠ 0), GaloisField.finrank 2 hn0]
           exact h4)
-      obtain ⟨v, hv⟩ := seed_cycle
-      exact map_cycle f.toRingHom ⟨8, v, by decide, hv⟩
+      have hseed : HasCycle (GaloisField 2 4) := by
+        obtain ⟨t, ht₄, hminpoly⟩ : ∃ t : GaloisField 2 4,
+            t ^ 4 = t + 1 ∧ minpoly (ZMod 2) t = X ^ 4 + X + 1 := by
+          let E := GaloisField 2 4
+          let q : E[X] := X ^ 4 + X + 1
+          have hcard : Nat.card E = 16 := GaloisField.card 2 4 (by decide)
+          have hsplit : (X ^ 16 - X : E[X]).Splits := by
+            rw [← hcard]
+            exact Polynomial.splits_X_pow_nat_card_sub_X
+          have hdvd : q ∣ (X ^ 16 - X : E[X]) := by
+            refine ⟨q ^ 3 + 1, ?_⟩
+            have hfrob : q ^ 4 = X ^ 16 + X ^ 4 + 1 := by
+              unfold q
+              simp only [show (4 : ℕ) = 2 ^ 2 by decide, add_pow_char_pow, one_pow, ← pow_mul]
+              norm_num
+            calc
+              X ^ 16 - X = q ^ 4 + q := by
+                rw [hfrob, CharTwo.sub_eq_add]
+                unfold q
+                linear_combination -(X ^ 4 + 1) * (CharTwo.two_eq_zero (R := E[X]))
+              _ = q * (q ^ 3 + 1) := by ring
+          have hqsplits := hsplit.of_dvd (FiniteField.X_pow_card_sub_X_ne_zero E (by decide)) hdvd
+          have hqdeg : q.degree = 4 := degree_seed_polynomial E
+          obtain ⟨t, ht⟩ := hqsplits.exists_eval_eq_zero (by rw [hqdeg]; decide)
+          have ht₄ : t ^ 4 = t + 1 := by
+            have ht' : t ^ 4 + (t + 1) = 0 := by simpa [q, add_assoc] using ht
+            exact CharTwo.add_eq_zero.mp ht'
+          refine ⟨t, ht₄, ?_⟩
+          have hint := IsIntegral.of_finite (ZMod 2) t
+          let d := (minpoly (ZMod 2) t).natDegree
+          have hd : d ∣ 4 := by
+            have h := minpoly.degree_dvd hint
+            change d ∣ Module.finrank (ZMod 2) (GaloisField 2 4) at h
+            rwa [GaloisField.finrank 2 (by decide : 4 ≠ 0)] at h
+          have hd₄ : d = 4 := by
+            by_contra hdegree
+            have hd₂ : d ∣ 2 := by
+              obtain ⟨k, hk, hdk⟩ := (Nat.dvd_prime_pow Nat.prime_two (m := 2)).mp hd
+              change k ≤ 2 at hk
+              have hkle : k ≤ 1 := by
+                by_contra! h
+                have heq : k = 2 := by omega
+                exact hdegree (by simpa [heq] using hdk)
+              rw [hdk]
+              exact pow_dvd_pow 2 hkle
+            let S := IntermediateField.adjoin (ZMod 2) ({t} : Set E)
+            have hs : Module.finrank (ZMod 2) S = d := IntermediateField.adjoin.finrank hint
+            obtain ⟨e⟩ := FiniteField.nonempty_algHom_of_finrank_dvd
+              (F := ZMod 2) (K := S) (L := GaloisField 2 2) (by
+                rw [hs, GaloisField.finrank 2 (by decide : 2 ≠ 0)]
+                exact hd₂)
+            let : Fintype (GaloisField 2 2) := Fintype.ofFinite _
+            let tS : S := ⟨t, IntermediateField.mem_adjoin_simple_self _ _⟩
+            have hcard₂ : Fintype.card (GaloisField 2 2) = 4 := by
+              rw [← Nat.card_eq_fintype_card]
+              exact GaloisField.card 2 2 (by decide)
+            have htS : tS ^ 4 = tS := by
+              apply e.injective
+              change e (tS ^ 4) = e tS
+              rw [map_pow]
+              simpa only [hcard₂] using FiniteField.pow_card (e tS)
+            have htfour : t ^ 4 = t := congrArg Subtype.val htS
+            exact one_ne_zero (add_left_cancel ((ht₄.symm.trans htfour).trans (add_zero t).symm))
+          have hmonic : (X ^ 4 + X + 1 : (ZMod 2)[X]).Monic := by
+            rw [add_assoc]
+            exact monic_X_pow_add (degree_seed_tail (ZMod 2))
+          have hroot : aeval t (X ^ 4 + X + 1 : (ZMod 2)[X]) = 0 := by
+            simp only [map_add, map_pow, aeval_X, map_one, ht₄]
+            rw [add_assoc (t + 1)]
+            exact CharTwo.add_self_eq_zero (t + 1)
+          symm
+          apply minpoly.unique_of_degree_le_degree_minpoly _ _ hmonic hroot
+          rw [degree_seed_polynomial, degree_eq_natDegree (minpoly.ne_zero hint)]
+          change (4 : WithBot ℕ) ≤ (d : WithBot ℕ)
+          rw [hd₄]
+          exact le_rfl
+        -- Coefficients in increasing powers of the quartic root.
+        let seedFirst : Fin 8 → Fin 4 → ZMod 2 :=
+          ![![0, 1, 1, 1], ![1, 0, 1, 0], ![1, 0, 1, 1], ![1, 1, 0, 0],
+            ![1, 0, 0, 1], ![0, 0, 1, 0], ![1, 1, 0, 1], ![0, 1, 0, 0]]
+
+        let seedSecond : Fin 8 → Fin 4 → ZMod 2 :=
+          ![![1, 1, 0, 1], ![0, 0, 0, 1], ![0, 1, 1, 1], ![0, 1, 0, 1],
+            ![1, 0, 1, 1], ![1, 1, 1, 1], ![1, 0, 0, 1], ![0, 0, 1, 1]]
+        have hdegree : (minpoly (ZMod 2) t).natDegree = 4 := by
+          rw [hminpoly]
+          exact (degree_eq_iff_natDegree_eq_of_pos (by decide : 0 < 4)).mp
+            (degree_seed_polynomial (ZMod 2))
+        let value (coeffs : Fin 4 → ZMod 2) : GaloisField 2 4 :=
+          ∑ i : Fin 4, coeffs i • t ^ i.val
+        have hvalue : Injective value := by
+          have hlin := _root_.linearIndependent_pow (K := ZMod 2) t
+          rw [hdegree] at hlin
+          intro f g hfg
+          exact funext (Fintype.linearIndependent_iffₛ.mp hlin f g hfg)
+        let v : Fin 8 → GaloisField 2 4 × GaloisField 2 4 :=
+          fun i => (value (seedFirst i), value (seedSecond i))
+        refine ⟨8, v, by decide, by decide, ?_, ?_⟩
+        · have hcodes : Injective seedFirst := of_decide_eq_true rfl
+          intro i j hij
+          exact hcodes (hvalue (congrArg Prod.fst hij))
+        · have htwo : (2 : GaloisField 2 4) = 0 := CharTwo.two_eq_zero
+          -- The edge differences are multiples of t⁴ − t − 1 and 2 over the integers.
+          have hedge (i : Fin 8) : phi (v i) = v (i + 1) := by
+            fin_cases i <;> apply Prod.ext <;>
+              simp [v, phi, value, seedFirst, seedSecond, Fin.sum_univ_four]
+            case «0».fst => linear_combination (t + t ^ 3) * htwo
+            case «0».snd =>
+              linear_combination (2 + t + t ^ 2) * ht₄ +
+                (1 + 2 * t + 2 * t ^ 2 + t ^ 3) * htwo
+            case «1».snd => linear_combination t * ht₄
+            case «2».fst => linear_combination (t ^ 2 + t ^ 3) * htwo
+            case «2».snd =>
+              linear_combination (2 + 2 * t + t ^ 2) * ht₄ +
+                (1 + 2 * t + 2 * t ^ 2 + t ^ 3) * htwo
+            case «3».fst => linear_combination t * htwo
+            case «3».snd => linear_combination ht₄ + t * htwo
+            case «4».fst => linear_combination (1 + t ^ 3) * htwo
+            case «4».snd => linear_combination (t + t ^ 2) * ht₄ + (t ^ 2 + t ^ 3) * htwo
+            case «5».fst => linear_combination t ^ 2 * htwo
+            case «5».snd => linear_combination (1 + t) * ht₄ + (t + t ^ 2) * htwo
+            case «6».fst => linear_combination (1 + t ^ 3) * htwo
+            case «6».snd => linear_combination (1 + t ^ 2) * ht₄ + (1 + t + t ^ 3) * htwo
+            case «7».fst => ring
+            case «7».snd => linear_combination ht₄
+          intro i j hij
+          exact (hedge i).trans (congrArg v (Fin.ext (by
+            change (i.val + 1) % 8 = j.val
+            exact hij.symm)))
+      exact map_cycle f.toRingHom hseed
     · obtain ⟨f⟩ := FiniteField.nonempty_algHom_of_finrank_dvd
         (F := ZMod 2) (K := GaloisField 2 d) (L := GaloisField 2 n) (by
           rw [GaloisField.finrank 2 hd.ne_zero, GaloisField.finrank 2 hn0]
