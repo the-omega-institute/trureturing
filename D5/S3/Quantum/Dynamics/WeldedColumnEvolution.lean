@@ -53,4 +53,107 @@ private theorem exp_intertwines {V Q : Type*}
   rw [show diag = fromBlocks A 0 0 B from rfl, exp_diagonal_blocks] at he
   simpa [upper, fromBlocks_multiply] using congrArg toBlocks₁₂ he
 
+
+open D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence
+open scoped BigOperators
+
+abbrev Column (d : ℕ) := Fin (2 * (d + 1) - 1 + 1)
+
+/-- The depth in the nearer of the two binary trees. -/
+def columnDepth (d : ℕ) (i : Column d) : ℕ :=
+  min i.val (2 * d + 1 - i.val)
+
+/-- Neighbor counts towards the root, children and central weld. -/
+def columnDegree (d : ℕ) (i j : Column d) : ℕ :=
+  if i.val + 1 = j.val then
+    if i.val ≤ d then 2 else 1
+  else if j.val + 1 = i.val then
+    if j.val < d then 1 else 2
+  else 0
+
+private noncomputable def columnWeight (d : ℕ) (i : Column d) : ℝ :=
+  (Real.sqrt 2 ^ columnDepth d i)⁻¹
+
+/-- Each column is supported precisely on the original vertices of that level. -/
+noncomputable def normalizedColumns {V : Type*} {d : ℕ}
+    (column : V → Column d) : Matrix V (Column d) ℂ :=
+  fun v j => if column v = j then (columnWeight d j : ℂ) else 0
+
+private theorem centralDefect_entry (d : ℕ) (i j : Column d) :
+    centralDefect (d + 1) (by omega) i j =
+      if i.val + 1 = j.val then (if i.val = d then Real.sqrt 2 else 1)
+      else if j.val + 1 = i.val then (if j.val = d then Real.sqrt 2 else 1)
+      else 0 := by
+  by_cases hu : i.val + 1 = j.val
+  · have hl : j.val + 1 ≠ i.val := by omega
+    simp [centralDefect, jacobiMatrix, upperBand, centralEdges, hu, hl]
+  · simp [centralDefect, jacobiMatrix, upperBand, centralEdges, hu]
+
+private theorem column_action_scalar (d : ℕ) (i j : Column d) :
+    (Real.sqrt 2)⁻¹ * (columnDegree d i j : ℝ) * columnWeight d j =
+      columnWeight d i * centralDefect (d + 1) (by omega) i j := by
+  have hp : 0 < Real.sqrt (2 : ℝ) := by positivity
+  have hs : Real.sqrt (2 : ℝ) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  rw [centralDefect_entry]
+  by_cases hu : i.val + 1 = j.val
+  · by_cases hlt : i.val < d
+    · have hd : columnDepth d j = columnDepth d i + 1 := by
+        unfold columnDepth
+        omega
+      have hle : i.val ≤ d := by omega
+      have hne : i.val ≠ d := by omega
+      simp [columnWeight, columnDegree, hu, hle, hne, hd, pow_succ] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+    · by_cases heq : i.val = d
+      · have hd : columnDepth d j = columnDepth d i := by
+          unfold columnDepth
+          omega
+        have hcentral : d + 1 = j.val := by omega
+        simp [columnWeight, columnDegree, heq, hcentral, hd] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+      · have hng : ¬ i.val ≤ d := by omega
+        have hd : columnDepth d i = columnDepth d j + 1 := by
+          unfold columnDepth
+          omega
+        simp [columnWeight, columnDegree, hu, heq, hng, hd, pow_succ] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+  · by_cases hl : j.val + 1 = i.val
+    · by_cases hlt : j.val < d
+      · have hd : columnDepth d i = columnDepth d j + 1 := by
+          unfold columnDepth
+          omega
+        have hne : j.val ≠ d := by omega
+        simp [columnWeight, columnDegree, hu, hl, hlt, hne, hd, pow_succ] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+      · by_cases heq : j.val = d
+        · have hd : columnDepth d j = columnDepth d i := by
+            unfold columnDepth
+            omega
+          have hcentral : d + 1 = i.val := by omega
+          have hforward : i.val + 1 ≠ d := by omega
+          simp [columnWeight, columnDegree, heq, hcentral, hforward, hd] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+        · have hd : columnDepth d j = columnDepth d i + 1 := by
+            unfold columnDepth
+            omega
+          simp [columnWeight, columnDegree, hu, hl, hlt, heq, hd, pow_succ] <;> field_simp [hp.ne'] <;> nlinarith [hs]
+    · simp [columnDegree, hu, hl]
+
+private theorem adjacency_mul_columns {V : Type*} [Fintype V]
+    (d : ℕ) (G : SimpleGraph V) [DecidableRel G.Adj] (col : V → Column d)
+    (hdegree : ∀ v j,
+      ((G.neighborFinset v).filter (fun w => col w = j)).card = columnDegree d (col v) j) :
+    (((Real.sqrt 2)⁻¹ : ℝ) : ℂ) • G.adjMatrix ℂ * normalizedColumns col =
+      normalizedColumns col * (centralDefect (d + 1) (by omega)).map Complex.ofReal := by
+  classical
+  ext v j
+  simp only [Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul]
+  simp only [Matrix.mul_apply, SimpleGraph.adjMatrix_apply, ite_mul, one_mul, zero_mul]
+  rw [← Finset.sum_filter, ← G.neighborFinset_eq_filter]
+  simp only [normalizedColumns, Matrix.map_apply]
+  have hsum : (∑ w ∈ G.neighborFinset v,
+      if col w = j then (columnWeight d j : ℂ) else 0) =
+        (columnDegree d (col v) j : ℂ) * (columnWeight d j : ℂ) := by
+    rw [← Finset.sum_filter, Finset.sum_const, hdegree, nsmul_eq_mul]
+  rw [hsum]
+  simp only [ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  rw [← mul_assoc]
+  exact_mod_cast (column_action_scalar d (col v) j)
+
 end D5.S3.Quantum.Dynamics.WeldedColumnEvolution
