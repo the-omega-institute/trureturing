@@ -51,7 +51,7 @@ internal sealed class DigitDiagonalCapacityDocument : IScribeDocumentDefinition
         Formula z = F.Id("z");
         return Disp(Seq(Forall, Sp, k, Sp, n, Sp, b, Sp, c, Sp, a, Sp, z, Comma, Sp,
             D(0), Sp, Lt, Sp, b, Sp, Land, Sp, Call("Coprime", c, b), Sp, Land, Sp,
-            a, Plus, z, Eq, Frac(c, b), Sp, Land, Sp, Call("Coverage", k, n, a, z),
+            a, Plus, z, Eq, new Formula.Fraction(c, b), Sp, Land, Sp, Call("Coverage", k, n, a, z),
             Sp, Rightarrow, Sp, n, Le, Sp, Call("DiagonalCodeCount", k, b)));
     }
 }
