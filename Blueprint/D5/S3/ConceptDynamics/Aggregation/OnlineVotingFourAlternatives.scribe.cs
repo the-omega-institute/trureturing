@@ -21,7 +21,8 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                 DescribeId.Create("four-alternative-distortion-claim"),
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("The four-alternative guarantee"),
-                StatementSource.FromAuthor(Disp(Iff(F.Id("claim"), Guarantee()))),
+                StatementSource.FromAuthor(Disp(new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff,
+                    Seq(Open, Guarantee(), Close)))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -43,6 +44,10 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Paragraph(Text(
+                        "Section 6 asks, “An interesting open question is whether this guarantee "
+                        + "can be extended to elections with more than three alternatives, or whether "
+                        + "additional alternatives necessarily lead to higher distortion.”")),
                     Paragraph(Text(
                         "The certificate uses the order 0, 1, 2, 3. The labeled six-to-six opening is "
                         + "shared by all leaves. Given the second decision, both fourth profiles extend "
@@ -129,4 +134,10 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
 
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula Mul(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 }

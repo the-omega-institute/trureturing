@@ -42,10 +42,9 @@ that the rule can keep the incumbent or switch to the latest arrival.
 A fixed full strict ballot refines the actual metric distances, including a
 consistent order on ties.
 
-For each rule one fixed election realizes its computed decision path. The
-two-to-two-round comparisons share the same labeled six-to-six opening in
-the first two rounds. For each opening decision the round-three comparison is independent
-of which round-four profile is used. Each fourth profile has two compatible
+For each rule one fixed election realizes its computed decision path.
+All leaves share the same labeled six-to-six opening. For each opening
+decision the third-round comparisons agree across both fourth-round profiles. Each fourth profile has two compatible
 metrics, one for each fourth decision. The common metric on all sixteen labels
 uses the corresponding integer graph table scaled by 1000 plus one for
 distinct labels. The proof checks metric laws, ballot compatibility, prefix
@@ -72,8 +71,8 @@ to obtain the strict real inequality after replaying the rule, and `result`
 uses that inequality at the actual optimum.
 
 The Lean theorem `Padding.worst_case` gives the pointwise lower bound
-11753/3253 > √13 for every horizon m = 4 + k and every prescribed order. It uses fresh
-alternatives ranked last by all voters in arrival order. Each fresh label
+11753/3253 > √13 for every horizon m = 4 + k and every prescribed order.
+Fresh alternatives follow the old ones in every ballot, in arrival order. Each fresh label
 lies at distance 10001 from any other label, so it costs 120012 and preserves
 the old minimum. Any incumbent after round four is either the fourth-round
 winner or a fresh alternative. This establishes a worst-case lower bound for
