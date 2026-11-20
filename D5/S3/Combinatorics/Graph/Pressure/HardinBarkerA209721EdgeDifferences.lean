@@ -19,7 +19,8 @@ u_recurrence: proof_shape: content; consumers: a_recurrence.
 compatibility: proof_shape: bind-only; consumers: arrayWalkEquiv.
 source_count: proof_shape: content; consumers: a_recurrence, a_initial.
 a_recurrence: proof_shape: content; consumers: series_formula, result.
-a_initial: proof_shape: bind-only; consumers: series_formula.
+a_initial: proof_shape: bind-only; consumers: series_formula,
+  HardinBarkerA209721BeckPeterson.two_step, HardinBarkerA209721BeckPeterson.closed.
 series_formula: proof_shape: content; consumers: result.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25560
 No helper is an admission escape witness; the settling result supplies the basis.
@@ -251,7 +252,7 @@ private theorem a_recurrence (n : ℕ) :
   push_cast
   linarith
 
-private theorem a_initial : a 1 = 3 ∧ a 2 = 4 ∧ a 3 = 5 := by
+theorem a_initial : a 1 = 3 ∧ a 2 = 4 ∧ a 3 = 5 := by
   simp only [a, source_count]
   norm_num [u, step, Fintype.sum_prod_type, Fin.sum_univ_succ]
 
