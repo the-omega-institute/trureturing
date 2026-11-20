@@ -4,18 +4,17 @@
    mirror-E: none(waiver:universal-finite-graph-theorem)
    anchors: []
    utility: none
-   digest: Equality in the triameter-independence bound characterizes three chains of split cliques at a common central clique. -/
+   digest: Equality in the triameter bound by independence classifies chains of split cliques. -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Metric
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Data.Fintype.Sigma
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
 
 /-!
 # Triameter and chains of split cliques
@@ -24,6 +23,11 @@ A perimeter triple projects to the feet of three legs attached to a point or a t
 The packing bound forces a triangular centre and even leg lengths at equality for independence.
 The preimages of the central triangle and successive pairs of positive depths are cliques.
 -/
+
+@[expose] public section
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Triameter
 
@@ -317,7 +321,8 @@ private def spider (e : ℕ) (L : Fin 3 → ℕ) : SimpleGraph (SpiderVertex e L
   symm := ⟨fun x y h => (spiderDist_comm y x).trans h⟩
   loopless := ⟨fun x h => by simp [spiderDist] at h⟩
 
-private theorem spiderDist_point {e : ℕ} {L : Fin 3 → ℕ} (i j : Fin 3) (d f : ℕ) (hd : d ≤ L i) (hf : f ≤ L j) :
+private theorem spiderDist_point {e : ℕ} {L : Fin 3 → ℕ}
+    (i j : Fin 3) (d f : ℕ) (hd : d ≤ L i) (hf : f ≤ L j) :
     spiderDist (point (e := e) i d hd) (point j f hf) =
       if i = j then (d - f) + (f - d) else d + f + e := by
   unfold spiderDist
@@ -729,8 +734,6 @@ private theorem spider_foot_dist (he : e ≤ 1) {i j : Fin 3} (hij : i ≠ j) :
 
 end ModelMetric
 
-open SimpleGraph
-
 private noncomputable def packingConflict {V : Type*} (G : SimpleGraph V) (k : ℕ) :
     SimpleGraph V where
   Adj x y := x ≠ y ∧ G.dist x y ≤ k
@@ -1006,10 +1009,16 @@ private theorem graph_packing_bound {V : Type*} [Finite V] {G : SimpleGraph V}
           (∀ i j : Fin 3, i ≠ j → L i % (k + 1) + L j % (k + 1) + e = k)) := by
   dsimp only
   have he : perimeter G a % 2 ≤ 1 := by omega
-  obtain ⟨hs, hn, _⟩ := canonical_projection hc a
-  have hm := packingNum_le_of_surjective_nonexpanding k hs hn
+  have hfit := legLength_fits hc a
+  let f := project G a (legLength G a) (perimeter G a % 2)
+  have hn (x y : V) :
+      (spider (perimeter G a % 2) (legLength G a)).dist (f x) (f y) ≤ G.dist x y := by
+    rw [spider_dist_eq he]
+    exact project_nonexpanding hc he hfit x y
+  have hm := packingNum_le_of_surjective_nonexpanding k
+    (project_surjective hc he hfit) hn
   have hb := spider_packing_bound he k (legLength G a) (packingNum G k) hm
-  have h := perimeter_of_fits (legLength_fits hc a)
+  have h := perimeter_of_fits hfit
   dsimp only at hb
   rw [← h] at hb
   exact hb
@@ -1094,7 +1103,6 @@ private theorem k1_equality_projection {V : Type*} [Finite V] {G : SimpleGraph V
     obtain ⟨x, y, hxy, hx, hy⟩ := project_edge_surjective hc le_rfl hfit h'
     exact ⟨x, y, hxy, by simp [f, proj, hx], by simp [f, proj, hy]⟩
 
-open SimpleGraph
 open EvenLegTriangle (H Vertex peripheralBlock)
 
 abbrev BlockIndex (q : Fin 3 → ℕ) := Option (Σ i : Fin 3, Fin (q i))
@@ -1300,7 +1308,7 @@ private theorem clique_of_equal_block {V : Type*} [Finite V] {G : SimpleGraph V}
     hcardB, hA, hα] at hcard
   omega
 
-/-- Fibers are the layers. Block zero is the central clique, and positive blocks split into two layers. -/
+/-- Fibers are layers. The central clique has three layers, and every other clique has two. -/
 structure CliqueChains {V : Type*} (G : SimpleGraph V) (q : Fin 3 → ℕ) (f : V → Vertex q) : Prop where
   layers_nonempty : Function.Surjective f
   within_cliques : ∀ x y, x ≠ y → block (f x) = block (f y) → G.Adj x y
@@ -1360,7 +1368,8 @@ private theorem evenLeg_coord_le_dist {V : Type*} {G : SimpleGraph V} (hc : G.Co
   obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist x y
   exact hp ▸ hwalk p
 
-private theorem clique_chains_triameter_ge {V : Type*} [Fintype V] {G : SimpleGraph V} (hc : G.Connected)
+private theorem clique_chains_triameter_ge {V : Type*} [Fintype V] {G : SimpleGraph V}
+    (hc : G.Connected)
     {q : Fin 3 → ℕ} {f : V → Vertex q} (h : CliqueChains G q f) :
     4 * (q 0 + q 1 + q 2) + 3 ≤ triameter G := by
   let L : Fin 3 → ℕ := fun i => 2 * q i
@@ -1387,7 +1396,8 @@ private theorem clique_chains_triameter_ge {V : Type*} [Fintype V] {G : SimpleGr
   unfold perimeter at ht
   omega
 
-private theorem clique_chains_equality {V : Type*} [Fintype V] {G : SimpleGraph V} (hc : G.Connected)
+private theorem clique_chains_equality {V : Type*} [Fintype V] {G : SimpleGraph V}
+    (hc : G.Connected)
     {q : Fin 3 → ℕ} {f : V → Vertex q} (h : CliqueChains G q f) :
     triameter G = 4 * G.indepNum - 1 ∧ G.indepNum = q 0 + q 1 + q 2 + 1 := by
   have hα := clique_chains_indepNum_le h
@@ -1395,7 +1405,7 @@ private theorem clique_chains_equality {V : Type*} [Fintype V] {G : SimpleGraph 
   have hhi := triameter_le_indepNum hc
   exact ⟨by omega, by omega⟩
 
-/-- Hak–Kozerenko's Question 1. The equivalence also holds on connected graphs of order 1 and 2. -/
+/-- Hak–Kozerenko Question 1 at k = 1, including connected graphs of order one or two. -/
 theorem question1 {V : Type*} [Fintype V] {G : SimpleGraph V} (hc : G.Connected) :
     triameter G = 4 * G.indepNum - 1 ↔
       ∃ (q : Fin 3 → ℕ) (f : V → Vertex q), CliqueChains G q f := by
