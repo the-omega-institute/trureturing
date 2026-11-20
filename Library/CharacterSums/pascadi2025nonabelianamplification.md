@@ -26,6 +26,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
   - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
+  - D5/S3/Arith/CharacterSums/PascadiTransverseCriticalPhase
   - D5/S3/Arith/CharacterSums/PascadiTorusConductor
   - D5/S3/Arith/CharacterSums/PascadiAffineVariance
 license: source-reference
@@ -542,3 +543,13 @@ Lean 4.35 scoped report verifies 45 declarations using
 instance, weighted arithmetic estimate, and enlarged counting ranges
 are ordinary mathematics. Source-bound four-slot registration for the
 three Fourier theorems remains open.
+
+The repository's `PascadiTransverseCriticalPhase` module proves the exact
+signed radical identity for the transverse unit chart over `ZMod(p^2)`.
+For each nonzero root residue it constructs the unique lift in each pair
+of upper digits. Summing the additive character over those two digits
+gives zero unless both stationary equations hold modulo `p`. In the
+stationary case it gives `p^2` times the character at the base root.
+This is an exact local phase identity for the ordinary analysis of
+Conjecture 6.1. Estimating the weighted correlations between distinct
+stationary phases in the short frequency box remains open.
