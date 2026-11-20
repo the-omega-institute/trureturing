@@ -445,6 +445,42 @@ private theorem norm_sum_normalized_exterior_le (m n : ℕ) (hm : Odd m)
       rw [Finset.sum_const, nsmul_eq_mul]
     _ ≤ _ := mul_le_mul_of_nonneg_right (by exact_mod_cast hcard) (Real.exp_pos _).le
 
+private theorem exterior_log_gap {m : ℕ} {c δ ε t₀ r : ℝ} {g : ℂ → ℂ}
+    (hc : 0 < c) (hδ : 0 < δ) (hgre : 0 < (g 0).re)
+    (hrdef : r = 2 * order m * (g 0).re)
+    (hgclose : ‖g 0 - (c : ℂ)‖ ≤ δ / 2)
+    (hlocal : ∀ w ∈ ball (c : ℂ) ε, aeval (2 * (order m : ℂ) * w) (denominator m) = 0 ↔
+      ∃ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ ∧ w = g (polePhaseLattice m j))
+    (hexterior : ∀ w : ℂ, aeval (2 * (order m : ℂ) * w) (denominator m) = 0 →
+      w ∉ ball (c : ℂ) ε → c + δ ≤ ‖w‖)
+    (ζ : ℂ) (hζ : aeval ζ (denominator m) = 0)
+    (hout : ∀ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ → ζ ≠ centralPole m g j) :
+    Real.log ((c + δ) / (c + δ / 2)) ≤ Real.log (‖ζ‖ / r) := by
+  have hν : 0 < order m := by unfold order; positivity
+  let a : ℂ := 2 * (order m : ℂ)
+  have ha : a ≠ 0 := mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr hν.ne')
+  let w := ζ / a
+  have hscale : a * w = ζ := mul_div_cancel₀ ζ ha
+  have hwroot : aeval (2 * (order m : ℂ) * w) (denominator m) = 0 := by
+    rwa [show 2 * (order m : ℂ) * w = ζ from hscale]
+  have hwout : w ∉ ball (c : ℂ) ε := by
+    intro hw
+    obtain ⟨j, hj, he⟩ := (hlocal w hw).mp hwroot
+    apply hout j hj
+    rw [← hscale, he, centralPole]
+  have hrad := hexterior w hwroot hwout
+  have hcenter : (g 0).re ≤ c + δ / 2 := by
+    have h := (Complex.re_le_norm (g 0 - (c : ℂ))).trans hgclose
+    simpa only [Complex.sub_re, Complex.ofReal_re, sub_le_iff_le_add, add_comm c] using h
+  have haNorm : ‖a‖ = 2 * order m := by simp [a, Real.norm_of_nonneg hν.le]
+  have heq : ‖ζ‖ / r = ‖w‖ / (g 0).re := by
+    rw [← hscale, norm_mul, haNorm]
+    rw [hrdef]
+    rw [mul_div_mul_left _ _ (by positivity)]
+  rw [heq]
+  apply Real.log_le_log (by positivity)
+  exact div_le_div₀ (by positivity) hrad hgre hcenter
+
 /-- The full central lattice leaves a uniform logarithmic gap at every exterior pole.
 The sum of their normalized contributions is exponentially small in the diagonal window. -/
 theorem exists_uniform_exterior_pole_gap {c : ℝ} (hc : 0 < c) (hc1 : c < 1)
@@ -500,32 +536,8 @@ theorem exists_uniform_exterior_pole_gap {c : ℝ} (hc : 0 < c) (hc1 : c < 1)
   have hrroot : aeval (r : ℂ) (denominator m) = 0 := by
     rw [← hzeroPole]
     exact hroots 0 (by simp [polePhaseLattice, ht.le])
-  have hgap (ζ : ℂ) (hζ : aeval ζ (denominator m) = 0)
-      (hout : ∀ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ → ζ ≠ centralPole m g j) :
-      Λ ≤ Real.log (‖ζ‖ / r) := by
-    let a : ℂ := 2 * (order m : ℂ)
-    have ha : a ≠ 0 := mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr hν.ne')
-    let w := ζ / a
-    have hscale : a * w = ζ := mul_div_cancel₀ ζ ha
-    have hwroot : aeval (2 * (order m : ℂ) * w) (denominator m) = 0 := by
-      rwa [show 2 * (order m : ℂ) * w = ζ from hscale]
-    have hwout : w ∉ ball (c : ℂ) ε := by
-      intro hw
-      obtain ⟨j, hj, he⟩ := (hlocal w hw).mp hwroot
-      apply hout j hj
-      rw [← hscale, he, centralPole]
-    have hrad := hexterior m hm₂ hmOdd w hwroot hwout
-    have hcenter : (g 0).re ≤ c + δ / 2 := by
-      have h := (Complex.re_le_norm (g 0 - (c : ℂ))).trans (hgclose.trans hδB)
-      simpa only [Complex.sub_re, Complex.ofReal_re, sub_le_iff_le_add, add_comm c] using h
-    have haNorm : ‖a‖ = 2 * order m := by simp [a, Real.norm_of_nonneg hν.le]
-    have heq : ‖ζ‖ / r = ‖w‖ / (g 0).re := by
-      rw [← hscale, norm_mul, haNorm]
-      dsimp [r]
-      rw [mul_div_mul_left _ _ (by positivity)]
-    rw [heq]
-    apply Real.log_le_log (by positivity)
-    exact div_le_div₀ (by positivity) hrad hgre hcenter
+  have hgap := exterior_log_gap hc hδ hgre (r := r) rfl (hgclose.trans hδB)
+    hlocal (hexterior m hm₂ hmOdd)
   obtain ⟨W, hW, hweight⟩ := residueWeight_pos m hmOdd hr hrroot
   refine ⟨g, r, W, hr, hW, hzeroPole, hweight, hgA,
     fun s hs => (hginv s hs).2.1, hroots, hinj, hlocal, hgap, ?_⟩

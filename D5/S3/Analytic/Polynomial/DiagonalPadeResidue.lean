@@ -34,7 +34,7 @@ open Polynomial (aeval)
 open D5.S3.Analytic.HalfIntegerBessel (order S eta F_K F_K_eq_carrier S_re_pos sectorMass
   sector_K_estimate hasDerivAt_S)
 open D5.S3.Analytic.Polynomial.DiagonalPadeExponential (denominator normalization residueWeight
-  residueWeight_eq residueWeight_pos norm_normalized_residueWeight_le eval_denominator_reciprocal)
+  denominator_root_derivative residueWeight_eq residueWeight_pos norm_normalized_residueWeight_le eval_denominator_reciprocal)
 open D5.S3.Analytic.Polynomial.DiagonalPadePhase (polePhase polePhaseLattice
   exists_central_poles norm_polePhaseLattice polePhase_sector polePhase_compact_estimate
   analyticOnNhd_eta closedBall_subset_sector re_ge_half_on_disk
@@ -496,16 +496,17 @@ private theorem norm_exp_gaussianSummandExponent_le_one (c : ℝ) (m n : ℕ) (j
     Complex.I_re, Complex.ofReal_im, Complex.I_im, mul_zero, zero_mul, sub_zero, add_zero]
   exact neg_nonpos.mpr (by positivity)
 
-/-- The central residues have a common branch and a uniform Gaussian exponent comparison.
-Every fixed finite range of indices is eventually included, simultaneously for all
-coefficient indices in the closed window. -/
-theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
+private theorem exists_central_residue_comparison_with_bounds {c : ℝ} (hc : 0 < c)
     (hzero : eta (c : ℂ) = 0) :
-    ∃ t₀ ε A B : ℝ, 0 < t₀ ∧ 0 < ε ∧ 0 < A ∧ 0 < B ∧
+    ∃ t₀ ε A B K : ℝ, 0 < t₀ ∧ 0 < ε ∧ 0 < A ∧ 0 < B ∧ 0 < K ∧
       (∀ J : ℕ, ∃ N : ℕ, ∀ m ≥ N, ∀ j : ℤ, |(j : ℝ)| ≤ J → ‖polePhaseLattice m j‖ ≤ t₀) ∧
       ∃ M : ℕ, ∀ m ≥ M, Odd m →
         ∃ g : ℂ → ℂ, ∃ r W : ℝ, 0 < r ∧ 0 < W ∧
           centralPole m g 0 = (r : ℂ) ∧ residueWeight m (r : ℂ) = (W : ℂ) ∧
+          ‖g 0 - (c : ℂ)‖ ≤ K / order m ^ 2 ∧
+          (∀ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ →
+            Real.pi ^ 2 * c ^ 2 / (4 * (1 + c ^ 2) ^ 2) * ((j : ℝ) / order m) ^ 2 ≤
+              Real.log (‖centralPole m g j‖ / r)) ∧
           InjOn (centralPole m g) {j | ‖polePhaseLattice m j‖ ≤ t₀} ∧
           (∀ w ∈ ball (c : ℂ) ε, aeval (2 * (order m : ℂ) * w) (denominator m) = 0 ↔
             ∃ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ ∧ w = g (polePhaseLattice m j)) ∧
@@ -530,7 +531,7 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
                   ((r : ℂ) / centralPole m g j) ^ n -
                   Complex.exp (gaussianSummandExponent c m n j)‖ ≤
                 B * (|(j : ℝ)| + (j : ℝ) ^ 2 + |(j : ℝ)| ^ 3) / order m := by
-  obtain ⟨δ, ε, ρ, _, t₀, C, hε, hεδ, hδ, hρ, _, ht₀, htρ, hC, hindices, M, hM⟩ :=
+  obtain ⟨δ, ε, ρ, K, t₀, C, hε, hεδ, hδ, hρ, hK, ht₀, htρ, hC, hindices, M, hM⟩ :=
     exists_central_poles hc hzero
   obtain ⟨H, hH, hAmp⟩ := residueAmplitudeLog_uniform hc
   let a : ℂ := ((c / Real.sqrt (1 + c ^ 2) : ℝ) : ℂ)
@@ -542,7 +543,7 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
   have hA : 0 < A := by dsimp [A]; positivity [sectorMass_pos]
   have hB : 0 < B := by dsimp [B]; positivity
   obtain ⟨N, hN⟩ := exists_nat_gt (max 1 (160 * sectorMass (1 / 4)))
-  refine ⟨t₀, ε, A, B, ht₀, hε, hA, hB, hindices, max M N, ?_⟩
+  refine ⟨t₀, ε, A, B, K, ht₀, hε, hA, hB, hK, hindices, max M N, ?_⟩
   intro m hm hodd
   have hmM := (le_max_left M N).trans hm
   have hmN := (le_max_right M N).trans hm
@@ -551,7 +552,7 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
   have hν : 1 ≤ order m := ((le_max_left _ _).trans hN.le).trans horder
   have hmass : 160 * sectorMass (1 / 4) ≤ order m :=
     ((le_max_right _ _).trans hN.le).trans horder
-  obtain ⟨g, hgA, hg, hgr, hgi, _, hroot, hinj, hmod, htaylor, hcover⟩ := hM m hmM hodd
+  obtain ⟨g, hgA, hg, hgr, hgi, hgclose, hroot, hinj, hmod, htaylor, hcover⟩ := hM m hmM hodd
   let r := 2 * order m * (g 0).re
   have hr : 0 < r := by dsimp [r]; positivity [order_pos m]
   have hg0 : g 0 = (((g 0).re : ℝ) : ℂ) := by
@@ -595,7 +596,24 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
     exact residueLog_expansion m hc hν hmass hH.le hC.le ht₀.le (hsmall 0 hz) (hsmall s hmem)
       hnorm hph (hAmp m hν hmass _ (hsmall 0 hz) _ (hsmall s hmem))
       (htaylor s hs).1 (htaylor s hs).2
-  refine ⟨g, r, W, hr, hW, hcent, hW', hinj, hcover, hlog, hV, ?_⟩
+  have hquadratic (j : ℤ) (hj : ‖polePhaseLattice m j‖ ≤ t₀) :
+      Real.pi ^ 2 * c ^ 2 / (4 * (1 + c ^ 2) ^ 2) * ((j : ℝ) / order m) ^ 2 ≤
+        Real.log (‖centralPole m g j‖ / r) := by
+    let t := (j : ℝ) * Real.pi / order m
+    have ht : polePhaseLattice m j = (t : ℂ) * Complex.I := by
+      simp only [t, polePhaseLattice, Complex.ofReal_div, Complex.ofReal_mul,
+        Complex.ofReal_intCast]
+      ring
+    rw [ht, norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs] at hj
+    have hrnorm : ‖(r : ℂ)‖ = r := by simp [Real.norm_of_nonneg hr.le]
+    have hfactor : ‖2 * (order m : ℂ)‖ ≠ 0 :=
+      norm_ne_zero_iff.mpr (mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (order_pos m).ne'))
+    rw [← hrnorm, ← hr0, centralPole, norm_mul (2 * (order m : ℂ)) (g _),
+      norm_mul (2 * (order m : ℂ)) (g 0), mul_div_mul_left _ _ hfactor, ht]
+    convert hmod t hj using 1
+    dsimp [t]
+    ring
+  refine ⟨g, r, W, hr, hW, hcent, hW', hgclose, hquadratic, hinj, hcover, hlog, hV, ?_⟩
   intro j hj
   dsimp only
   let s := polePhaseLattice m j
@@ -613,27 +631,14 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
   have hEstimate := centralSummandExponent_bound c m n j hA.le hC.le hn.2
     (hV s hsc) (htaylor s hsc).2
   refine ⟨hSummand, hEstimate, ?_⟩
-  let t := (j : ℝ) * Real.pi / order m
-  have ht : s = (t : ℂ) * Complex.I := by
-    simp only [s, t, polePhaseLattice, Complex.ofReal_div, Complex.ofReal_mul, Complex.ofReal_intCast]
-    ring
-  have habs : |t| ≤ t₀ := by
-    change ‖s‖ ≤ t₀ at hj
-    rw [ht, norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs] at hj
-    exact hj
-  have hmod' : 0 ≤ Real.log (‖g s‖ / ‖g 0‖) := by
-    rw [ht]
-    exact (by positivity : 0 ≤ c ^ 2 / (4 * (1 + c ^ 2) ^ 2) * t ^ 2).trans (hmod t habs)
-  have hgn (z : ℂ) (hz : z ∈ ball 0 ρ) : 0 < ‖g z‖ :=
-    norm_pos_iff.mpr (ne_zero_of_re_pos (hright z hz))
-  have hle : ‖g 0‖ ≤ ‖g s‖ := by
-    simpa using (le_div_iff₀ (hgn 0 hz)).mp
-      ((Real.log_nonneg_iff (div_pos (hgn s hs) (hgn 0 hz))).mp hmod')
   have hrle : r ≤ ‖centralPole m g j‖ := by
-    have hreal : ‖(r : ℂ)‖ = r := by rw [Complex.norm_real, Real.norm_of_nonneg hr.le]
-    rw [← hreal, ← hr0, centralPole]
-    simpa only [norm_mul] using
-      mul_le_mul_of_nonneg_left hle (norm_nonneg (2 * (order m : ℂ)))
+    have hzn : 0 < ‖centralPole m g j‖ :=
+      norm_pos_iff.mpr (denominator_root_derivative m (hroot j hj)).1
+    have hnonneg : 0 ≤ Real.log (‖centralPole m g j‖ / r) :=
+      (by positivity : 0 ≤ Real.pi ^ 2 * c ^ 2 / (4 * (1 + c ^ 2) ^ 2) *
+        ((j : ℝ) / order m) ^ 2).trans (hquadratic j hj)
+    simpa only [one_mul] using
+      (le_div_iff₀ hr).mp ((Real.log_nonneg_iff (div_pos hzn hr)).mp hnonneg)
   have hunit : ‖Complex.exp (centralSummandExponent m n (g 0) (g s))‖ ≤ 1 := by
     rw [hSummand, ← hW']
     have hb := norm_normalized_residueWeight_le m n hodd hr (by rwa [← hr0])
@@ -642,6 +647,47 @@ theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
   unfold centralPole
   rw [← hSummand]
   exact (norm_exp_sub_exp_le hunit (norm_exp_gaussianSummandExponent_le_one c m n j)).trans hEstimate
+
+/-- The central residues have a common branch and a uniform Gaussian exponent comparison.
+Every fixed finite range of indices is eventually included, simultaneously for all
+coefficient indices in the closed window. -/
+theorem exists_central_residue_comparison {c : ℝ} (hc : 0 < c)
+    (hzero : eta (c : ℂ) = 0) :
+    ∃ t₀ ε A B : ℝ, 0 < t₀ ∧ 0 < ε ∧ 0 < A ∧ 0 < B ∧
+      (∀ J : ℕ, ∃ N : ℕ, ∀ m ≥ N, ∀ j : ℤ, |(j : ℝ)| ≤ J → ‖polePhaseLattice m j‖ ≤ t₀) ∧
+      ∃ M : ℕ, ∀ m ≥ M, Odd m →
+        ∃ g : ℂ → ℂ, ∃ r W : ℝ, 0 < r ∧ 0 < W ∧
+          centralPole m g 0 = (r : ℂ) ∧ residueWeight m (r : ℂ) = (W : ℂ) ∧
+          InjOn (centralPole m g) {j | ‖polePhaseLattice m j‖ ≤ t₀} ∧
+          (∀ w ∈ ball (c : ℂ) ε, aeval (2 * (order m : ℂ) * w) (denominator m) = 0 ↔
+            ∃ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ ∧ w = g (polePhaseLattice m j)) ∧
+          AnalyticOnNhd ℂ (fun s => normalizedResidueLog m (g 0) (g s)) (closedBall 0 t₀) ∧
+          (∀ s ∈ closedBall (0 : ℂ) t₀,
+            let a : ℂ := ((c / Real.sqrt (1 + c ^ 2) : ℝ) : ℂ)
+            let b : ℂ := ((1 / Real.sqrt (1 + c ^ 2) : ℝ) : ℂ)
+            ‖normalizedResidueLog m (g 0) (g s) - (order m : ℂ) * (a - b - 1) * s‖ ≤
+              A * (order m * ‖s‖ ^ 2 + ‖s‖)) ∧
+          ∀ j : ℤ, ‖polePhaseLattice m j‖ ≤ t₀ →
+            let s := polePhaseLattice m j
+            aeval (centralPole m g j) (denominator m) = 0 ∧
+            Complex.exp (normalizedResidueLog m (g 0) (g s)) =
+              residueWeight m (centralPole m g j) / (W : ℂ) ∧
+            ∀ n : ℕ, (n : ℝ) / order m ^ 2 ∈ Icc (1 / 4) (1 / 2) →
+              Complex.exp (centralSummandExponent m n (g 0) (g s)) =
+                (residueWeight m (centralPole m g j) / (W : ℂ)) *
+                  ((r : ℂ) / centralPole m g j) ^ n ∧
+              ‖centralSummandExponent m n (g 0) (g s) - gaussianSummandExponent c m n j‖ ≤
+                B * (|(j : ℝ)| + (j : ℝ) ^ 2 + |(j : ℝ)| ^ 3) / order m ∧
+              ‖(residueWeight m (centralPole m g j) / (W : ℂ)) *
+                  ((r : ℂ) / centralPole m g j) ^ n -
+                  Complex.exp (gaussianSummandExponent c m n j)‖ ≤
+                B * (|(j : ℝ)| + (j : ℝ) ^ 2 + |(j : ℝ)| ^ 3) / order m := by
+  obtain ⟨t₀, ε, A, B, _, ht₀, hε, hA, hB, _, hindices, M, hM⟩ :=
+    exists_central_residue_comparison_with_bounds hc hzero
+  refine ⟨t₀, ε, A, B, ht₀, hε, hA, hB, hindices, M, ?_⟩
+  intro m hm hodd
+  obtain ⟨g, r, W, hr, hW, hzeroPole, hzeroWeight, _, _, hrest⟩ := hM m hm hodd
+  exact ⟨g, r, W, hr, hW, hzeroPole, hzeroWeight, hrest⟩
 
 /-- A fixed finite collection of central summands has a uniform Gaussian error bound
 throughout the closed coefficient window, using one threshold for the whole collection. -/
