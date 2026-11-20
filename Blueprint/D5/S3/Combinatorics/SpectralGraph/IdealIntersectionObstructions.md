@@ -66,7 +66,19 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions
 
 The threshold theorem at m=1 applies for any distinguished unit coordinate and arbitrary positive remaining exponents. Thus the actual ideal graph has an eigenvalue in (V-1,V), and is not Laplacian integral. Taking every exponent equal to one gives the squarefree specialization; its exact application is checked transiently.
 
-**Theorem 1.6 (Reciprocal condition through the threshold).**
+**Theorem 1.6 (A product bound for finite nonnegative families).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.one_sub_sum_mul_prod_le_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.one_sub_sum_mul_prod_le_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite set S and real family x nonnegative on S, (1-sum(x_i))*product(1+x_i)<=1. The estimate retains the common finite family in both factors and does not assume that its sum is at most one.
+
+**Theorem 1.7 (Reciprocal condition through the threshold).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.reciprocal_obstruction`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions
 
 For m=k_d at least two, sum of 1/k_i over the other coordinates at most 1/m squared implies the full threshold. The product inequality converts the reciprocal hypothesis into A at least (m squared minus one)B minus (m-1). The theorem consumes the threshold result and repeats no Rayleigh proof. If every other k_i is at least m squared times (t-1), each reciprocal is at most 1 divided by that common bound; summing t-1 terms proves the hypothesis. This unbounded-coordinate application is checked transiently.
 
-**Theorem 1.7 (Sharp two-prime unit boundary).**
+**Theorem 1.8 (Sharp two-prime unit boundary).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.two_prime_unit_integral`
 
@@ -95,6 +107,7 @@ With precisely two distinct primes and one unit exponent, the complement is a st
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.ActualLaplacianIntegral`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.HasActualEigenvalue`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.actual_eigenvalue_of_support`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.one_sub_sum_mul_prod_le_one`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.reciprocal_obstruction`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.threshold_obstruction`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions.two_prime_unit_integral`
