@@ -22,13 +22,14 @@ internal sealed class NormalSubgroupFixedMassDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A group G acts on a nonempty finite input set X and a finite output set Y. "
+                        "A group G acts on a nonempty finite input type X in universe v and a "
+                        + "finite output type Y in universe w with decidable equality. "
                         + "Let H be a normal subgroup of G. The probability kernel P is covariant "
                         + "under G. The H row mass sums P over outputs fixed by all elements of H "
                         + "that fix that input.")),
                     Paragraph(Text(
                         "The same minimizing row bounds the total weight of H-fixed seeds for "
-                        + "every finite seed type in any universe, given nonnegative weights "
+                        + "every finite seed type in universe s, with s arbitrary, given nonnegative weights "
                         + "and a pointwise G-covariant deterministic readout with marginals P. "
                         + "An attaining finite seed type lives in the maximum of the input "
                         + "and output type universes. Its weights are positive, sum to one, "
@@ -49,16 +50,25 @@ internal sealed class NormalSubgroupFixedMassDocument : IScribeDocumentDefinitio
 
     private static Formula Statement()
     {
+        Formula g = F.Id("G");
         Formula h = F.Id("H");
         Formula p = F.Id("P");
+        Formula inputs = F.Id("X");
+        Formula outputs = F.Id("Y");
+        Formula v = F.Id("v");
+        Formula w = F.Id("w");
+        Formula s = F.Id("s");
         Formula x = F.Id("x");
         Formula y = F.Id("y");
         Formula row = Call("RowFixedMass", h, p, x);
-        return Disp(Seq(Forall, Sp, h, Comma, Sp, p, Comma, Sp, Call("Normal", h),
-            Sp, Land, Sp, Call("CovariantProbabilityKernel", p),
+        return Disp(Seq(Forall, Sp, g, Comma, Sp, h, Comma, Sp, inputs, Comma, Sp, outputs,
+            Comma, Sp, p, Comma, Sp, Call("NormalSubgroup", h, g),
+            Sp, Land, Sp, Call("NonemptyFiniteInput", inputs, v),
+            Sp, Land, Sp, Call("FiniteOutputWithDecidableEquality", outputs, w),
+            Sp, Land, Sp, Call("CovariantProbabilityKernel", g, inputs, outputs, p),
             Sp, Rightarrow, Sp, Exists, Sp, x, Comma, Sp,
             Open, Forall, Sp, y, Comma, Sp, row, Sp, Le, Sp, Call("RowFixedMass", h, p, y), Close,
-            Sp, Land, Sp, Call("UniversalFixedMassBound", h, p, row),
-            Sp, Land, Sp, Call("PositiveInvariantAttainment", h, p, row)));
+            Sp, Land, Sp, Call("UniversalFixedMassBound", h, p, row, s),
+            Sp, Land, Sp, Call("PositiveInvariantAttainment", h, p, row, Call("MaxUniverse", v, w))));
     }
 }
