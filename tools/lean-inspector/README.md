@@ -254,10 +254,13 @@ entries and seals use Seal entries. The report accepts constructor trees and
 safe constant references from the compiled values; values requiring evaluation
 fail by name and have no fallback.
 
-[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report FULL_BUILD=1`
-调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
-`STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
-这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
+CI 选中全量报告时，与本地数学门共用 `make check-lean-report FULL_BUILD=1`。
+该入口按需准备编译产物，取得报告并执行选中的回归检查。后续的 `check-current` 或
+`check-delta` 读取报告。单独运行 `make lean-report FULL_BUILD=1` 时，
+`inspect.sh` 通过预编译的 StrataLint.Lean DLL 取得 utility 输入，可用
+`STRATALINT_LEAN_PRODUCER_DLL` 指定该 DLL 的绝对路径。[CI 工作流](../../.github/workflows/ci-current.yml)
+
+离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
 输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
@@ -301,15 +304,15 @@ Lake 可以从本地原生缓存恢复与当前输入相符的已编译工件。
 大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
 选择，报告模块必须能在 Lake workspace 中解析。`dependency_sources` 与 `report_modules`
 共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
-接口契约源码登记在现有 `config_inputs`，接口变化使整份收据未命中；Lake 只重编并重评受影响的编译闭包。
+接口契约源码登记在现有 `config_inputs`，接口变化使整份收据未命中。编译准备阶段由 Lake 更新受影响的编译产物，报告 facet 根据这些产物的 trace 选择要重评的模块。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-报告复用只依赖编译输入、utility 输入与报告格式标识。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，受影响的 Reg 自动重编并重评，不做历史兼容。需要重判未改动的历史登记时显式生成不带缓存的完整报告。
+报告复用只依赖编译输入、utility 输入与报告格式标识。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，并在准备阶段重编受影响的 Reg 模块，供报告 facet 重评，不做历史兼容。需要重判未改动的历史登记时，运行 `make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1` 从当前编译产物重新提取报告。
 
 报告格式标识由 [读取器](../scripts/report/lean-report-selection.py) 的 `REPORT_FORMAT` 给出，用于 raw report schema、输入坐标、整份报告收据及所有模块 trace。声明、公理闭包、statement identity 等提取语义或工件格式改变时更新该标识；严格读取器拒读旧格式，全部模块重提取。判官实现字节不进入复用条件；当前选中程序仍须编译成功。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与报告格式标识；inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与报告格式标识；报告 facet 核对 inspector 程序的预编译产物，程序 trace 和源码绑定均不参与模块报告的复用判断。
 enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
@@ -352,26 +355,18 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
 
-缺失的原生工件由 Lake 恢复或补建；与 olean 相同，trace 仍有效的工件原样复用，不再检查其内容。
-默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report FULL_BUILD=1`，它从 inspector 工件重新发布，
-必要时先补建；发布核对规范信封与输入坐标。
+默认输出或相邻 sidecar 丢失、损坏时，运行 `make lean-report FULL_BUILD=1`。
+报告 facet 复用有效的报告工件，按需从预编译输入提取模块报告并重新汇总。
+发布阶段核对规范信封与输入坐标。
 
-原生 Lake `--no-build`：
-
-| 工件状态 | `--no-build` 结果 |
-| --- | --- |
-| 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
-| 工件缺失且无法由 Lake 恢复，或输入/报告格式/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
-
-已用 `make lean-report FULL_BUILD=1` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
+调用者备有当前可用的 StrataLint.Lean DLL 时，可在仓库根目录检查原生报告目标能否复用。
 
 ```sh
-tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-build build :report
+tools/scripts/worktree/lean-cache-run.sh --prebuilt lake -d tools/lean-inspector-reg --no-build build :report
 ```
 
-该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
-`--no-build` 限制 Lake 的重建，输入准备及可用原生工件的恢复仍会执行，
-不是整个入口的只读模式。需要修复时重新运行 `make lean-report FULL_BUILD=1`。
+若 Lake 判定需要执行任何构建动作（包括生成 `judgeInputs`、提取模块报告或重新汇总），
+`--no-build` 检查会以非零状态退出。编译输入就绪后，可运行 `make lean-report FULL_BUILD=1` 生成报告。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
 material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
