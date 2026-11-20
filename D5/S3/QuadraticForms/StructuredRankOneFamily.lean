@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Continuous structured downdates on a finitely punctured open simplex have constant pivot sign and a fixed negative index. -/
+   digest: Continuous structured downdates on a connected domain, such as a countably punctured open simplex, have constant pivot sign and a fixed sign pattern. -/
 
 import D5.S3.QuadraticForms.StructuredRankOneInertia
 import Mathlib.Analysis.Normed.Module.Connected
@@ -203,7 +203,7 @@ theorem connected_family {n : ℕ} {Y : Type*} [TopologicalSpace Y] [ConnectedSp
 
 /-- Corollary 7: the continuous-family conclusion on the open simplex minus a countable set. -/
 theorem countable_family {n : ℕ} (hn : 3 ≤ n)
-    {X : Type} [TopologicalSpace X] (e : X ≃ₜ openSimplex (n - 1))
+    {X : Type*} [TopologicalSpace X] (e : X ≃ₜ openSimplex (n - 1))
     (A : Set X) (hA : A.Countable)
     (d x : ↥(Aᶜ : Set X) → (Fin n → ℝ)) (hd : Continuous d) (hx : Continuous x)
     (hdelta : ∀ y, pivot (diagonal (d y)) (x y) ≠ 0)
@@ -213,7 +213,7 @@ theorem countable_family {n : ℕ} (hn : 3 ≤ n)
         ((∀ y, pivot (diagonal (d y)) (x y) < 0) ∧
           ∃! j : Fin n, (∀ y, d y j < 0) ∧ (∀ i, i ≠ j → ∀ y, 0 ≤ d y i))) := by
   have hconn := (countable_punctured_simplex_pathConnected hn e A hA).isConnected
-  letI : ConnectedSpace ↥(Aᶜ : Set X) := isConnected_iff_connectedSpace.mp hconn
+  have : ConnectedSpace ↥(Aᶜ : Set X) := isConnected_iff_connectedSpace.mp hconn
   exact ⟨hconn.nonempty, connected_family d x hd hx hdelta hpsd⟩
 
 /-- The source-domain continuous-family corollary, including a globally unique negative index. -/
@@ -262,5 +262,6 @@ theorem mo513954_revision2 :
 #print axioms continuous_family
 #print axioms connected_family
 #print axioms countable_family
+#print axioms countable_punctured_simplex_pathConnected
 
 end D5.S3.QuadraticForms.StructuredRankOneFamily

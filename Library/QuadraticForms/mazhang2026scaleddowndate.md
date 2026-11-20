@@ -13,7 +13,7 @@ license: CC-BY-4.0
 triage: anchor
 ---
 
-# Coefficient-dependent inertia of the structured downdate
+# Coefficient-dependent inertia and continuous families of structured downdates
 
 ## Verified locator
 
@@ -33,6 +33,19 @@ layout preserved, 21,760 characters). Theorem 1 and Corollary 4 are in Section 1
 > In(M_t) = In(A) − In([∆]) + In([(1 − t)∆]). Thus t < 1 preserves inertia, t = 1 gives (1), and
 > t > 1 replaces one eigenvalue sign by its opposite without changing nullity.
 
+> Theorem 5. Let Y be a nonempty connected topological space, and let d, x : Y → Rⁿ be continuous.
+> For y ∈ Y define D(y) = diag(d₁(y), . . . , dₙ(y)), ∆(y) = x(y)ᵀD(y)x(y),
+> M(y) = D(y) − D(y)x(y)x(y)ᵀD(y)/∆(y). Suppose ∆(y) ≠ 0 and M(y) ⪰ 0 for every y. Then exactly one of
+> the following alternatives holds: 1. ∆(y) > 0 and every dᵢ(y) ≥ 0 for all y; 2. ∆(y) < 0 for all y,
+> and there is a unique index j such that dⱼ(y) < 0 for every y and dᵢ(y) ≥ 0 for every i ≠ j and
+> every y.
+
+> Corollary 6. Let n ≥ 3, let X be homeomorphic to an open (n − 1)-simplex, and let F ⊂ X be finite.
+> With Y = X \ F, all conclusions of Theorem 5 hold under its stated continuity, nonzero-pivot and
+> positive-semidefiniteness hypotheses.
+
+> Corollary 7 (Countably many punctures). Corollary 6 remains true for countable F.
+
 ## Mathematical scope
 
 Theorem 1 is the frozen StructuredRankOneInertia.inertia_downdate. Corollary 4 is formalized for
@@ -42,3 +55,14 @@ n₀(M_t) = n₀(A) + [t = 1]; the three consequences for t < 1, t = 1 (M_1 equa
 downdate) and t > 1 are stated explicitly. The proof uses the congruences of A ⊕ [c] with the
 bordered matrix with corner ∆ + c, and of that bordered matrix with corner d with
 (A − wwᵀ/d) ⊕ [d], for d = ∆/t and c = d − ∆, together with Sylvester's law of inertia.
+
+Theorem 5 is formalized as StructuredRankOneFamily.connected_family for any topological space Y
+with `ConnectedSpace Y` (which includes nonemptiness) and continuous d, x : Y → (Fin n → ℝ); the
+downdate is diag(d) − ∆⁻¹ (Dx)(Dx)ᵀ, the paper's M. "Exactly one" is written as a disjunction; the
+alternatives exclude each other because Y is nonempty and the sign of ∆ at one point decides. Corollary 7
+is StructuredRankOneFamily.countable_family: for n ≥ 3 and any X with a homeomorphism onto the model
+open simplex {u ∈ ℝⁿ⁻¹ : uᵢ > 0, Σuᵢ < 1}, and any countable A ⊆ X, the complement is nonempty and the
+conclusion of Theorem 5 holds on it. Path connectedness of the complement is proved by transporting A
+through the log-ratio chart to ℝⁿ⁻¹ and applying Mathlib's countable-complement theorem, in place of
+the paper's small-circle argument. The existing finite-puncture theorem (Corollary 6) is derived from
+these.

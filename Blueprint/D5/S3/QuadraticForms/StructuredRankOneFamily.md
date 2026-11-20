@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original finite-puncture simplex domain supplies nonemptiness, constant pivot sign and one globally unique negative diagonal coordinate.
+On every nonempty connected domain, in particular the open simplex minus a countable set, the pivot has constant sign and the diagonal has a fixed sign pattern: all entries nonnegative, or one globally unique negative coordinate.
 
 **Definition 1.1 (Independent barycentric coordinates).**
 
@@ -108,7 +108,7 @@ The diagonal entries d and vector x are continuous on exactly Y. Delta(y)=pivot(
 
 In the negative-sign case, the additive inertia identity gives negIndex(D)=negIndex(M)+1. Positive semidefiniteness gives negIndex(M)=0 using the existing positive-index/rank identity and the positive-plus-negative rank partition. The real diagonal sign-count theorem therefore supplies exactly one negative diagonal coordinate at every point. For each coordinate j, the set where d_j is negative is open. Its complement is the union of the other negative-coordinate sets, so it is also closed. Nonemptiness selects one j, and connectedness forces its negative set to be all Y. Every other coordinate is nonnegative everywhere, and a point of Y proves global uniqueness.
 
-Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. The open-simplex definition, explicit domain chart and finite-puncture transport, global fixed-index argument, and complete conjunction here are repository-derived. Lucid's revision supplies the source questions and proposed matrix mechanism, not an attestation of these completed theorems. The matrix argument implements the author's proposed block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made.
+Together with StructuredRankOneInertia.inertia_downdate specialized to Matrix.diagonal d, these statements establish both source clauses of Lucid's MO513954 revision 2. Singular matrices, every finite matrix dimension, both signs and all zero multiplicities are retained. There is no extra invertibility, spectral gap, tolerance, compactness or supplied connectedness assumption. The open-simplex definition, explicit domain chart and finite-puncture transport were derived in this repository. The general connected-domain theorem, with nonnegative diagonal entries in the positive case, is Theorem 5 of H. Ma and W. Zhang (DOI 10.5281/zenodo.23920598), and the countable-puncture extension is their Corollary 7; the finite-puncture statement is now obtained from them. Lucid's revision supplies the source questions and the proposed matrix mechanism. The matrix argument implements that block-congruence mechanism and standard Sylvester inertia; no ordinary novelty or global openness claim is made.
 
 ## References
 
