@@ -16,7 +16,9 @@ $$\begin{gathered}\forall W, [\operatorname{RealInnerProductSpace}\left(W\right)
 
 Let W be a real inner-product space, X(i) any family of real modules, and D(i) : X(i) → W linear. If v belongs to the range of every D(i) with i < k, the squared L² distance on [0,1] from sᵏv to the polynomials with those lower-degree coefficients has an attained minimum of ‖v‖² divided by the product of (2k+1) and the square of the binomial coefficient (2k choose k).
 
-The monic shifted Legendre polynomial p of degree k is orthogonal to every scalar monomial of degree below k. The residual p(s)v is therefore orthogonal to every allowed vector polynomial of lower degree. Its squared norm is the stated minimum. The coefficient of degree i in the projection is −coeff(p,i)v. Each such coefficient has a preimage in X(i), and these preimages attain the minimum.
+The scalar pairing uses PolynomialL2Derivative.moment_legendreC_top and PolynomialL2Derivative.integral_rod directly. The beta integral contributes (k!)²/(2k+1)!, the reciprocal of the product of 2k+1 and the central binomial coefficient. Making the polynomial monic cancels the Rodrigues sign and divides by the central binomial coefficient once more. The pairing with any polynomial of degree at most k is its degree-k coefficient times the stated scalar factor.
+
+The monic shifted Legendre polynomial p of degree k is thus orthogonal to every scalar monomial of degree below k. The residual p(s)v is therefore orthogonal to every allowed vector polynomial of lower degree. Its squared norm is the stated minimum. The coefficient of degree i in the projection is −coeff(p,i)v. Each such coefficient has a preimage in X(i), and these preimages attain the minimum.
 
 At k=0 the family of trial coefficients is empty and the minimum is ‖v‖². If v=0 the minimum is zero. Neither finite dimension nor completeness of W is required.
 

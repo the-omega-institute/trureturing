@@ -183,40 +183,28 @@ private theorem monicShiftedLegendre_coeff_self (k : ℕ) :
   rw [monicShiftedLegendre, Polynomial.coeff_C_mul, htop,
     inv_mul_cancel₀ (legendreLead_ne_zero k)]
 
-/-- Read the top row of the public shifted Legendre expansion. Its only
-contribution to the top monomial coefficient is from the last basis vector. -/
+/-- Normalize the existing Rodrigues top moment by the signed leading coefficient. -/
 private theorem moment_legendreC_of_natDegree_le (k : ℕ) (q : ℂ[X])
     (hq : q.natDegree ≤ k) :
     PolynomialL2Derivative.moment (PolynomialL2Derivative.legendreC k) q =
       (q.coeff k / (legendreLead k : ℂ)) / (2 * (k : ℂ) + 1) := by
-  have hdegree : q.degree < ((k + 1 : ℕ) : WithBot ℕ) :=
-    q.degree_le_natDegree.trans_lt (WithBot.coe_lt_coe.mpr (Nat.lt_succ_of_le hq))
-  obtain ⟨a, ha⟩ := PolynomialL2Derivative.exists_expansion (k + 1) q hdegree
-  have hlow :
-      (∑ i ∈ Finset.range k,
-        Polynomial.C (a i) * PolynomialL2Derivative.legendreC i).coeff k = 0 := by
-    rw [Polynomial.finsetSum_coeff]
-    apply Finset.sum_eq_zero
-    intro i hi
-    have hdeg : (PolynomialL2Derivative.legendreC i).natDegree ≤ i := by
-      calc
-        (PolynomialL2Derivative.legendreC i).natDegree ≤
-            (Polynomial.shiftedLegendre i).natDegree := Polynomial.natDegree_map_le
-        _ = i := Polynomial.natDegree_shiftedLegendre i
-    rw [Polynomial.coeff_C_mul,
-      Polynomial.coeff_eq_zero_of_natDegree_lt (hdeg.trans_lt (Finset.mem_range.mp hi)),
-      mul_zero]
-  have htop : q.coeff k = a k * (legendreLead k : ℂ) := by
-    rw [← ha, PolynomialL2Derivative.expansion, Finset.sum_range_succ,
-      Polynomial.coeff_add, hlow, zero_add, Polynomial.coeff_C_mul, coeff_legendreC_top]
-  have hrow := PolynomialL2Derivative.moment_expansion_row (k + 1) k
-    (fun j => conj (a j)) (Finset.mem_range.mpr (Nat.lt_succ_self k))
-  have hmoment :
-      PolynomialL2Derivative.moment (PolynomialL2Derivative.legendreC k) q =
-        a k / (2 * (k : ℂ) + 1) := by
-    simpa only [Complex.conj_conj, ha] using hrow
-  have hlead : (legendreLead k : ℂ) ≠ 0 := by exact_mod_cast legendreLead_ne_zero k
-  rw [hmoment, htop, mul_div_cancel_right₀ _ hlead]
+  have hchoose : ((2 * k).choose k : ℂ) * (k.factorial : ℂ) * (k.factorial : ℂ) =
+      ((2 * k).factorial : ℂ) := by
+    rw [two_mul]
+    exact_mod_cast Nat.add_choose_mul_factorial_mul_factorial k k
+  have hfactorial : ((2 * k + 1).factorial : ℂ) =
+      (2 * (k : ℂ) + 1) * ((2 * k).choose k : ℂ) *
+        ((k.factorial : ℂ) * (k.factorial : ℂ)) := by
+    rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, ← hchoose]
+    simp only [Nat.cast_mul, Nat.cast_ofNat, mul_assoc]
+  have hfac : (k.factorial : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero k)
+  have hbeta : (k.factorial : ℂ) * (k.factorial : ℂ) / ((2 * k + 1).factorial : ℂ) =
+      1 / ((2 * (k : ℂ) + 1) * ((2 * k).choose k : ℂ)) := by
+    rw [hfactorial]
+    simpa only [one_mul] using mul_div_mul_right (1 : ℂ) _ (mul_ne_zero hfac hfac)
+  rw [PolynomialL2Derivative.moment_legendreC_top k q hq, PolynomialL2Derivative.integral_rod,
+    hbeta]
+  simp [legendreLead, div_eq_mul_inv, mul_inv_rev, ← inv_pow, mul_assoc, mul_left_comm, mul_comm]
 
 private theorem integral_legendreR_mul (k : ℕ) (q : ℝ[X]) (hq : q.natDegree ≤ k) :
     (∫ s : ℝ in 0..1, (legendreR k).eval s * q.eval s) =
