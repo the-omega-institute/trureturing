@@ -37,6 +37,73 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  inspect-q9-compiler-entry:
+    if: github.event_name == 'pull_request' && github.base_ref == 'integration-ci-lean-cache-shards-post-scope-tests' && github.head_ref == 'lane/governance/cache-shards-q9-qualification-31553'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - name: Read the first index containing the Q9 module
+        uses: actions/cache/restore@v5
+        with:
+          path: build/lean-cache/shards/index.json
+          key: lean-shard-index-v1-3ba64679748ad6b6f019cd5a1ef3b2d539de77b5ec472650acb610eaf51b7d48-snapshot-44767610231-1
+          fail-on-cache-miss: true
+      - id: entry
+        name: Identify the required Q9 compiler archive
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          stage = Path('build/lean-cache/shards')
+          idx = json.loads((stage / 'index.json').read_text())
+          assert idx['state'] == 'complete'
+          assert idx['owner'] == dict(commit='3b9812d466284c560834a79f1f473bef04792643',
+                                     ref='refs/heads/integration-ci-lean-cache-shards-post-scope-tests',
+                                     run='44767610231', attempt='1')
+          name = 'D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairProjection'
+          group, = [key for key, shards in idx['layout'].items() if shards == [[name]]]
+          required = 'lib/lean/' + name.replace('.', '/') + '.olean'
+          assert required in idx['required'][group]
+          digest = idx['entries'][group]
+          assert re.fullmatch('[0-9a-f]{64}', digest)
+          path = stage / 'payload' / (digest + '.tar.gz')
+          print(json.dumps(dict(module=name, group=group, payload=digest, required=required)))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              print('path=' + str(path), 'digest=' + digest, 'member=' + required, file=output, sep='\n')
+          PYTHON
+      - name: Read only that compiler archive
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.entry.outputs.path }}
+          key: lean-shard-index-v1-3ba64679748ad6b6f019cd5a1ef3b2d539de77b5ec472650acb610eaf51b7d48-material-${{ steps.entry.outputs.digest }}
+          fail-on-cache-miss: true
+      - name: Verify the content address and compiler member
+        env:
+          ARCHIVE: ${{ steps.entry.outputs.path }}
+          DIGEST: ${{ steps.entry.outputs.digest }}
+          MEMBER: ${{ steps.entry.outputs.member }}
+        run: |
+          python3 - <<'PYTHON'
+          import hashlib
+          import os
+          import tarfile
+          with open(os.environ['ARCHIVE'], 'rb') as data:
+              assert hashlib.file_digest(data, 'sha256').hexdigest() == os.environ['DIGEST']
+          with tarfile.open(os.environ['ARCHIVE'], 'r:gz') as data:
+              assert data.getmember(os.environ['MEMBER']).size > 0
+          PYTHON
+      - uses: actions/upload-artifact@v6
+        with:
+          name: q9-compiler-entry-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ steps.entry.outputs.path }}
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 3
+
   detect:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10

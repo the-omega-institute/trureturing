@@ -2,6 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves;
 
+// Q9 scoped cache qualification.
 internal sealed class Q9PairProjectionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
