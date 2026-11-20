@@ -1,14 +1,20 @@
 /- GID: D5/S3/Analytic/RadialVolterra
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Analytic/RadialVolterra
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Uniform bounds for a complex scalar Volterra system on the positive half-line. -/
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.Complex.Trigonometric
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Normed.Ring.Lemmas
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+
+/-! # Radial Volterra estimate -/
+
+public section
 
 open Filter Set Topology MeasureTheory
 
@@ -18,7 +24,7 @@ namespace D5.S3.Analytic.RadialVolterra
 theorem norm_bounds
     {ν V : ℝ} (hV : 0 ≤ V) (hνV : V < ν)
     {η F G p q : ℝ → ℂ} {Q : ℝ → ℝ}
-    (hp : ContinuousOn p (Ioi 0)) (hq : ContinuousOn q (Ioi 0))
+    (_hp : ContinuousOn p (Ioi 0)) (hq : ContinuousOn q (Ioi 0))
     (hη : ∀ x > 0, HasDerivAt η (p x) x)
     (hF : ∀ x > 0, HasDerivAt F (p x * G x) x)
     (hG : ∀ x > 0, HasDerivAt G (2 * (ν : ℂ) * p x * G x + q x * F x) x)
@@ -32,7 +38,7 @@ theorem norm_bounds
   have hgap : 0 < ν - V := sub_pos.mpr hνV
   have hηre (x : ℝ) (hx : 0 < x) :
       HasDerivAt (fun t => (η t).re) (p x).re x :=
-    Complex.reCLM.hasFDerivAt.comp_hasDerivAt (hη x hx)
+    Complex.reCLM.hasFDerivAt.comp_hasDerivAt x (hη x hx)
   have hmonotone : MonotoneOn (fun t => (η t).re) (Ioi 0) := by
     apply monotoneOn_of_deriv_nonneg (convex_Ioi 0)
     · exact fun x hx => (hηre x hx).continuousAt.continuousWithinAt
@@ -47,6 +53,7 @@ theorem norm_bounds
   intro a ha
   let values := (fun x => ‖F x‖) '' Ici a
   let M := sSup values
+  -- The terminal limit bounds the tail. Continuity bounds the remaining compact interval.
   have hvalues : BddAbove values := by
     have hnorm : Tendsto (fun x => ‖F x‖) atTop (𝓝 (1 : ℝ)) := by
       simpa using hFinfty.norm
@@ -72,52 +79,60 @@ theorem norm_bounds
     have hE (s : ℝ) (hs : 0 < s) :
         HasDerivAt E ((-c * p s) * E s) s := by
       have harg := ((hη s hs).sub_const (η r)).const_mul (-c)
-      exact (Complex.hasDerivAt_exp (-c * (η s - η r))).scomp harg
+      exact (Complex.hasDerivAt_exp (-c * (η s - η r))).scomp s harg
     have hk (s : ℝ) (hs : 0 < s) : HasDerivAt k (p s * E s) s := by
       have hd := ((hE s hs).const_sub 1).div_const c
       convert hd using 1
       field_simp [hc]
+    -- The two terms proportional to p G cancel by k c = 1 - E.
     have hH (s : ℝ) (hs : 0 < s) : HasDerivAt H (-k s * q s * F s) s := by
-      have hd := (hF s hs).sub ((hk s hs).mul (hG s hs))
-      change HasDerivAt G (c * p s * G s + q s * F s) s at *
+      have hG' : HasDerivAt G (c * p s * G s + q s * F s) s := hG s hs
+      have hd := (hF s hs).sub ((hk s hs).mul hG')
       have hcancel : k s * c = 1 - E s := div_mul_cancel₀ _ hc
       convert hd using 1
-      linear_combination -(p s * G s) * hcancel
+      linear_combination (p s * G s) * hcancel
     have hHr : H r = F r := by simp [H, k, E]
     have hknorm (s : ℝ) (hrs : r ≤ s) : ‖k s‖ ≤ 1 / ν := by
       have hphase_le := hmonotone hr (hr.trans_le hrs) hrs
       have hEbound : ‖E s‖ ≤ 1 := by
-        rw [E, Complex.norm_exp, Real.exp_le_one_iff]
+        change ‖Complex.exp (-c * (η s - η r))‖ ≤ 1
+        rw [Complex.norm_exp, Real.exp_le_one_iff]
         have hreal : (-c * (η s - η r)).re = -(2 * ν) * ((η s).re - (η r).re) := by
           simp [c, Complex.mul_re]
         rw [hreal]
         exact mul_nonpos_of_nonpos_of_nonneg (by linarith) (sub_nonneg.mpr hphase_le)
       have hcnorm : ‖c‖ = 2 * ν := by
-        simp [c, norm_mul, Complex.norm_ofReal, abs_of_pos hν]
+        rw [show c = 2 * (ν : ℂ) from rfl, norm_mul, Complex.norm_two,
+          Complex.norm_real, Real.norm_of_nonneg hν.le]
       calc
-        ‖k s‖ = ‖1 - E s‖ / (2 * ν) := by rw [k, norm_div, hcnorm]
+        ‖k s‖ = ‖1 - E s‖ / (2 * ν) := by
+          change ‖(1 - E s) / c‖ = _
+          rw [norm_div, hcnorm]
         _ ≤ 2 / (2 * ν) := by
           apply div_le_div_of_nonneg_right _ (by positivity)
-          exact (norm_sub_le _ _).trans (by simpa using add_le_add_left hEbound (1 : ℝ))
+          calc
+            ‖1 - E s‖ ≤ ‖(1 : ℂ)‖ + ‖E s‖ := norm_sub_le _ _
+            _ ≤ 2 := by rw [norm_one]; linarith only [hEbound]
         _ = 1 / ν := by ring
     have hHlim : Tendsto H atTop (𝓝 1) := by
       have hkbounded : IsBoundedUnder (· ≤ ·) atTop (norm ∘ k) :=
         ⟨1 / ν, (eventually_ge_atTop r).mono fun s hs => hknorm s hs⟩
-      simpa only [sub_zero] using hFinfty.sub (hkbounded.isBoundedUnder_le_mul_tendsto_zero hGinfty)
+      simpa only [sub_zero] using
+        hFinfty.sub (Filter.isBoundedUnder_le_mul_tendsto_zero hkbounded hGinfty)
     have hfinite (R : ℝ) (hrR : r ≤ R) : ‖H R - F r‖ ≤ M * V / ν := by
       let integrand (s : ℝ) := -k s * q s * F s
-      have hpositive : [[r, R]] ⊆ Ioi (0 : ℝ) := by
+      have hpositive : uIcc r R ⊆ Ioi (0 : ℝ) := by
         rw [uIcc_of_le hrR]
         exact fun _ hs => hr.trans_le hs.1
       have hkcont : ContinuousOn k (Ioi 0) :=
         fun x hx => (hk x hx).continuousAt.continuousWithinAt
-      have hcont : ContinuousOn integrand [[r, R]] :=
+      have hcont : ContinuousOn integrand (uIcc r R) :=
         ((hkcont.neg.mul hq).mul hFcont).mono hpositive
       have hFTC : (∫ s in r..R, integrand s) = H R - F r := by
         rw [← hHr]
         exact intervalIntegral.integral_eq_sub_of_hasDerivAt
           (fun s hs => hH s (hpositive hs)) hcont.intervalIntegrable
-      have hmajorant : ContinuousOn (fun s => ((1 / ν) * M) * Q s) [[r, R]] :=
+      have hmajorant : ContinuousOn (fun s => ((1 / ν) * M) * Q s) (uIcc r R) :=
         continuousOn_const.mul (hQ.mono hpositive)
       rw [← hFTC]
       calc
@@ -129,11 +144,12 @@ theorem norm_bounds
           intro s hs
           have hs0 := hr.trans_le hs.1
           calc
-            ‖integrand s‖ = ‖k s‖ * ‖q s‖ * ‖F s‖ := by simp [integrand, norm_mul]
+            ‖integrand s‖ = ‖k s‖ * ‖q s‖ * ‖F s‖ := by simp [integrand]
             _ ≤ (1 / ν) * Q s * M := by
               exact mul_le_mul
                 (mul_le_mul (hknorm s hs.1) (hqQ s hs0) (norm_nonneg _) (by positivity))
-                (hM s (har.trans hs.1)) (norm_nonneg _) (by positivity)
+                (hM s (har.trans hs.1)) (norm_nonneg _)
+                (mul_nonneg (one_div_nonneg.mpr hν.le) (hQ0 s hs0))
             _ = ((1 / ν) * M) * Q s := by ring
         _ = ((1 / ν) * M) * (∫ s in r..R, Q s) := intervalIntegral.integral_const_mul ..
         _ ≤ ((1 / ν) * M) * V :=
@@ -143,12 +159,15 @@ theorem norm_bounds
     exact le_of_tendsto ((hHlim.sub tendsto_const_nhds).norm)
       ((eventually_ge_atTop r).mono fun R hR => hfinite R hR)
   have hMsup : M ≤ 1 + M * V / ν := by
-    apply csSup_le ⟨‖F a‖, mem_image_of_mem _ le_rfl⟩
+    have hnonempty : values.Nonempty := ⟨‖F a‖, ⟨a, le_rfl, rfl⟩⟩
+    apply csSup_le hnonempty
     rintro _ ⟨r, hr, rfl⟩
     calc
       ‖F r‖ = ‖1 + (F r - 1)‖ := by rw [add_comm, sub_add_cancel]
       _ ≤ ‖(1 : ℂ)‖ + ‖F r - 1‖ := norm_add_le _ _
-      _ ≤ 1 + M * V / ν := by rw [norm_one]; exact add_le_add_left (herror r hr) _
+      _ ≤ 1 + M * V / ν := by
+        rw [norm_one]
+        exact add_le_add_right (herror r hr) 1
   have hMbound : M ≤ ν / (ν - V) := by
     apply (le_div_iff₀ hgap).mpr
     have hscaled := mul_le_mul_of_nonneg_right hMsup hν.le
