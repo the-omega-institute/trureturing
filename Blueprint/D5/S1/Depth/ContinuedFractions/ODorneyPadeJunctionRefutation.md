@@ -24,6 +24,10 @@ $$\neg (\forall (a,b:\mathbb{Z}) (k,i:\mathbb{N}), a\neq 0 \longrightarrow b\neq
 
 *Proof.* Machine-checked in Lean as `D5/S1/Depth/ContinuedFractions/ODorneyPadeJunctionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/odorney-pade-conjecture-4-7` (refuted) by `D5/S1/Depth/ContinuedFractions/ODorneyPadeJunctionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"odorney-pade-conjecture-4-7","declaration_gid":"D5/S1/Depth/ContinuedFractions/ODorneyPadeJunctionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Evan M. O'Dorney (2026). *Two-point Padé approximation and patterns in continued fractions for (F_{n+1}/F_n)^k*. DOI: [10.48550/arXiv.2611.01029](https://doi.org/10.48550/arXiv.2611.01029). URL: <https://arxiv.org/pdf/2611.01029v1#page=16>.

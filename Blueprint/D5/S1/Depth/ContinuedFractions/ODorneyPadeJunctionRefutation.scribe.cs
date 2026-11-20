@@ -56,7 +56,9 @@ internal sealed class ODorneyPadeJunctionRefutationDocument : IScribeDocumentDef
                         "This resolves the determinant implication. The existence and "
                         + "classification of invisible junctions in actual continued-fraction "
                         + "decompositions are separate questions."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("odorney-pade-conjecture-4-7"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static Formula ClaimFormula()
