@@ -531,7 +531,7 @@ defaultFacets = ["static"]
                 stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace'))
 
     def ensure(self):
-        result = self.guarded_command(['make', 'lean-cache-ensure'], cwd=self.root, env=self.env,
+        result = self.guarded_command(['make', 'lean-cache-ensure', 'FULL_BUILD=1'], cwd=self.root, env=self.env,
             text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return json.loads(next(line.removeprefix('LEAN_CACHE ') for line in result.stdout.splitlines()

@@ -151,7 +151,7 @@ class InterruptionTests(unittest.TestCase):
         self.root = Path(self.temporary.name).resolve()
         self.home = self.root / "home"
         self.home.mkdir()
-        self.env = {**os.environ, "HOME": str(self.home), "LAKE_BIN": shutil.which("true"),
+        self.env = {**os.environ, "FULL_BUILD": "1", "HOME": str(self.home), "LAKE_BIN": shutil.which("true"),
                     "TRURETURING_MAINTENANCE_SCRIPT": "lean-cache-ensure",
                     "TRURETURING_MAINTENANCE_REPOSITORY": str(self.root),
                     "TRURETURING_MAINTENANCE_LOG_DIR": str(self.root / "maintenance"),

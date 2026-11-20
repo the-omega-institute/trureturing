@@ -24,7 +24,9 @@ def stub(kind, args):
         return
     if kind == 'make':
         if case == 'restore-fail' and 'lean-cache-from-github-without-mathlib' in args: sys.exit(31)
-        if case == 'lean-fail' and args == ['lean']: sys.exit(32)
+        if args[:1] == ['lean']:
+            assert args == ['lean', 'FULL_BUILD=1', 'LEAN_TARGETS=', 'STRATALINT_WARM_DONOR=1'], args
+            if case == 'lean-fail': sys.exit(32)
         return
     if kind == 'git':
         if 'worktree' in args: print('worktree ' + str(root / 'main'))

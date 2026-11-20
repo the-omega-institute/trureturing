@@ -8,6 +8,7 @@ namespace StrataLint.EngineeringScope;
 internal static partial class LeanCacheEnsureCommand
 {
     private const string ColdBuildConsentVariable = "STRATALINT_ACCEPT_COLD_BUILD";
+    private static bool FullBuild => Environment.GetEnvironmentVariable("FULL_BUILD") == "1";
     private const string LinkedArchiveDisabled = "linked worktree: release archive disabled";
 
     private sealed record CacheState(
@@ -97,6 +98,10 @@ internal static partial class LeanCacheEnsureCommand
                 reason: pinReason ?? "Lean pin files are unavailable");
         }
 
+        if (!FullBuild)
+            return new CommandResult(false, string.Empty,
+                "ensure-cache requires explicit FULL_BUILD=1; use make lean LEAN_TARGETS for scoped builds\n", 2);
+
         if (!LeanLakeExecutable.TryResolve(out var lakeExecutable, out var lakeReason))
         {
             return FailureReceipt(
@@ -147,8 +152,7 @@ internal static partial class LeanCacheEnsureCommand
         out CacheState? cacheState,
         string? donorRepository,
         bool refreshWarmArchive = true,
-        bool restoreDependencies = false,
-        Func<bool>? readColdBuildConsent = null)
+        bool restoreDependencies = false)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -163,16 +167,6 @@ internal static partial class LeanCacheEnsureCommand
                 return RestoreLinkedDependencies(root, pins, runner, cloner, writerGuard,
                     stateProbe, removePartial, out cacheState);
             var projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
-
-            if (projectWarmth.State == OleanWarmth.Cold
-                && !File.Exists(lake)
-                && readColdBuildConsent is not null
-                && GitWorktreeInventory.Locate(root, runner).IsLinked
-                && readColdBuildConsent())
-            {
-                return PrepareLinkedColdBuild(root, pins, lakeExecutable, runner,
-                    writerGuard, stateProbe, out cacheState);
-            }
 
             string? missReason = null;
             if (Directory.Exists(lake))
@@ -600,51 +594,6 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
-    private static CommandResult PrepareLinkedColdBuild(
-        string root,
-        LeanPinSet pins,
-        string lakeExecutable,
-        IWorktreeProcessRunner runner,
-        LeanCacheWriterGuard writerGuard,
-        ILeanCacheStateProbe stateProbe,
-        out CacheState? cacheState)
-    {
-        cacheState = null;
-        var lake = Path.Combine(root, ".lake");
-        var stamp = LeanCacheStamp.Inspect(lake, pins);
-        string? warning = null;
-        var status = "present";
-        var method = "none";
-        if (stamp.State != LeanCacheStampState.Match)
-        {
-            if (stamp.State == LeanCacheStampState.Mismatch) RemoveProjection(lake);
-            try
-            {
-                // Keep partial dependency downloads for Lake to complete. No project
-                // archive or donor is involved in an explicitly authorized cold build.
-                var provisioned = LeanCacheProvisioner.ReproduceExisting(
-                    root, pins, lakeExecutable, runner, writerGuard);
-                warning = provisioned.Warning;
-                status = "fetched";
-                method = provisioned.Method;
-            }
-            catch (LeanCacheProvisionException exception)
-            {
-                if (!exception.SafeToContinueToBuild) throw;
-                warning = exception.Message;
-                status = "degraded";
-                method = "cache-get";
-            }
-        }
-        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-        return SuccessWithState(
-            SuccessReceipt(status, root, donor: null, method, pins.Sha256, warning,
-                LeanCacheProvisioner.InspectMathlibOleans(lake),
-                ReceiptStampMiss(stamp.State), archive: LeanArchiveAttempt.Skipped(LinkedArchiveDisabled)),
-            new CacheState(stateProbe.ProbeOleans(MathlibOleanRoot(lake)),
-                stateProbe.ProbeOleans(ProjectOleanRoot(lake))), out cacheState);
-    }
-
     private static CommandResult ProvisionLinkedFromMain(
         string root,
         LeanPinSet pins,
@@ -787,10 +736,8 @@ internal static partial class LeanCacheEnsureCommand
     }
 
     private static string ScopedColdBuildRemediation(string root) =>
-        "if the lane's project layer is cold, explicitly accept a scoped build without donor cloning (also on Linux): "
-        + $"{ColdBuildConsentVariable}=1 make -C {ShellQuote(root)} lean LEAN_TARGETS=\"<nonempty module list>\"; "
-        + "replace the target placeholder; this fetches pinned dependencies only and compiles the selected closure; "
-        + "standalone lean-cache-ensure still requires donor seeding";
+        $"for a scoped build from local Lake artifacts run: make -C {ShellQuote(LeanCacheGuard.PhysicalPath(root))} lean LEAN_TARGETS=\"<nonempty module list>\"; "
+        + "full cache seeding requires make lean-cache-ensure FULL_BUILD=1";
 
     private static CommandResult LinkedLaneReseedFailure(
         string root,
@@ -824,7 +771,7 @@ internal static partial class LeanCacheEnsureCommand
         ClonefileReceipt? clonefile = null)
     {
         var remediation = "sync dev and warm the dev cache: "
-            + $"make -C {ShellQuote(location.MainCheckout)} warm-donor";
+            + $"make -C {ShellQuote(location.MainCheckout)} warm-donor FULL_BUILD=1";
         var completeReason = reason?.Contains(remediation, StringComparison.Ordinal) == true
             ? reason
             : JoinReasons(reason, remediation) ?? remediation;

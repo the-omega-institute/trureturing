@@ -3,12 +3,18 @@
 `tools/lean-inspector` 统一管理 Lean report 的生成、工件、依赖驱动的增量和发布，
 完整调用复用由登记输入和成功证据校验决定；需要构建时由 Lean/Lake 的原生依赖与工件机制决定增量，没有独立报告缓存层。
 
-在仓库根目录运行规范入口，生成或复用当前 Lean 报告：
+从仓库根目录为选定模块生成报告：
 
 ```sh
-make lean-report
-make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
-make lean-report REBUILD_REPORT_CACHE=1
+make lean-report-scoped LEAN_TARGETS="D5.Example"
+```
+
+显式需要整库报告时，运行以下入口：
+
+```sh
+make lean-report FULL_BUILD=1
+make lean-report FULL_BUILD=1 LEAN_REPORT=.lake/build/stratalint/custom-report.json
+make lean-report FULL_BUILD=1 REBUILD_REPORT_CACHE=1
 ```
 
 本地默认 `fetch-or-fail`：报告种子缺失、不完整或成功收据的 `inputs.report_format`
@@ -25,7 +31,7 @@ linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏�
 相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
 
 ```sh
-make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure FULL_BUILD=1
 ```
 
 ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。
@@ -33,7 +39,7 @@ ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播
 显式取回并替换 Release 快照；无法判定 Git checkout 类型时拒绝取回。
 linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及共同 Git 目录均通过
 核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
-补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
+补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1` 后重新播种，
 并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
 格式相符而输入有差量时，干净的 dev 主 checkout 读取 `.lake/lean-report-seed-base.json` 中的生产提交，
 记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
@@ -64,62 +70,24 @@ CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
 仍可复用原生模块报告，不保证重评全部历史登记。主 checkout 的 ensure
 仍可按现有主检出专用路径由归档补齐冷的项目层。
-CI required checks use `fetch-or-fail`; a missing or incompatible native seed exits nonzero with the
-independent `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
-`reuse-or-build`. Environment variables do not select local or CI policy. Direct `inspect.sh` defaults to `reuse-or-build`,
+push 的整库报告使用 `reuse-or-build`。直接执行 `inspect.sh` 默认使用 `reuse-or-build`，
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
 CI/cache 流程以 [SPEC A22](../../docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 为准。
-普通 current 作业限时 30 分钟；需要 Lean/report 时，以 `fetch-or-fail` 消费已有种子并由 Lake
-增量构建，缺失或不兼容种子直接给出长任务补救入口。
-受保护的 `dev` 和 `integration-*` push 在 current 结束且未取消、需要 Lean/report
-而无可用种子时，按实际 push SHA 自动运行 360 分钟缓存 producer，不加入 required 检查集合。
-current 已确认发布增量种子，或已接受有效 Actions 种子、报告成功且工作已知为 `no-build-work` 时，
-不再触发长任务；不需要 Lean/report 的路径也不触发。长任务按分支串行，保留正在执行的任务，
-后续 push 只替换尚未执行的 pending 任务。手动补救按精确提交触发：
+PR 只读恢复缓存，在合并候选上检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` push 在 current 中构建完整报告并执行适用检查，严格验证 bundle 后保存本次 run/attempt 的项目快照，按 ref 和精确 key 确认发布。定时 Release 与手动 producer 各有独立入口。以下命令手动构建受保护分支的固定提交。
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \
   -f operation=build -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 ```
 
-尚未合并的升级 PR 可以手动加 `lean-cache-produce` label：
+手动 `operation=build` 要求 `source_ref` 等于受保护的 dev/integration dispatch ref，且 `source_sha` 是该分支可达的非零 40 位小写十六进制提交。按分支串行的 producer 构建报告、所需原生程序及编译夹具，执行报告生产所需的 FIB 回归并严格验证完整 bundle。
 
-```sh
-gh pr edit <PR> --add-label lean-cache-produce
-```
-
-标签 job 限时 5 分钟，只用 `contents:read/actions:write` dispatch `operation=pr`，
-返回确切目标 producer 的 `workflow_run_id`，不编译、恢复或保存缓存。
-唯一一次长构建使用受保护目标 ref 的固定 workflow 提交 `T` 和缓存上下文，源码检出固定的
-未合并候选 `M`；`pr_source` 绑定真实事件的仓库、PR、head `H`、`M`、base `B`、源 run/attempt 和目标 ref。
-开工和结束均校验当前 PR open/head/target、源事件、目标保护及 `M^1=B,M^2=H`；
-`B` 须在目标历史内，`M` 不必已合入。准备 job 使用只读 token，经 `preparation-only`
-上传原生 Actions artifact 并确认 artifact ID、producer run 与源 PR 身份，不写普通目标 cache。
-源 PR 可显式取回，实际合并匹配后由目标事件直接采用；采用校验材料，不替代当前选中的检查。
-
-目标分支须先经普通安装 PR 获得 `operation=pr` 入口；同一 integration 先安装再用后续未合并 PR 验证，
-dev 同样须正常交付安装。调用者以 `AUTO_MERGE=0` 保持选定长缓存 PR 未合并，等待返回的确切
-producer run 和当前 head 的 required 均成功后，才执行普通 pinned merge；head 改变须重新取得成功。
-dispatch 成功不代表构建、恢复或 required 成功。dispatch、来源、构建、artifact 上传或身份确认失败
-保留原始原因，调用者不得合并；producer 成功后可重试 required，重新触发标签须先移除再添加。
-普通 PR required job 不发布 project 种子。
-PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
-
-手动 `operation=build`（默认）要求 `source_ref` 等于 dispatch ref，且为受保护的 dev/integration 分支；
-`source_sha` 必须是该分支可达的非零 40 位小写十六进制提交。`operation=pr` 使用上述独立来源校验。
-两种 dispatch 与自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
-构建报告及普通检查所需的原生程序和 fixture 产物，并完成下述报告所需的依赖范围 FIB 回归；
-其它测试仍由普通 CI 命中单元执行。PR 仅准备 artifact，手动与自动分支 producer 按既有条件发布缓存。
-发布使用既有格式和 key，验证完整 bundle；正工作保存 run/attempt 快照，已恢复有效种子的
-`no-build-work` 保留实际恢复 key。手动与自动分支 producer 共用分支 concurrency；PR producer
-按源 PR 串行并取消旧运行。定时受保护 `dev` Release publisher 独立保持 120 分钟。
-
-两种 dispatch 可显式设 `regenerate_report_artifacts=true`，默认关闭；本地等价入口为
-`make lean-report REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
+手动 `operation=build` 可显式设 `regenerate_report_artifacts=true`。本地等价入口为
+`make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
 跳过整份收据复用与 Release 恢复，禁止该次 Lake 从 artifact cache 恢复旧报告；
-保留编译产物、依赖和 toolchain，由 Lake 判定其有效性。普通短 CI、自动标签 dispatch、自动 push
+保留编译产物、依赖和 toolchain，由 Lake 判定其有效性。PR、push
 及定时 Release 不隐式启用此选项。
 
 `LEAN_REPORT` 可省略；默认输出为
@@ -150,16 +118,14 @@ when the existing `tests-lean` unit is selected; its source list includes runtim
 D5/Reg inputs, fixtures, compiler, scripts and consumers. `make compiled-fib-test`
 builds the separate FIB library, source-contract executable and finite analyzer,
 then runs the production-consumer and finite-input regressions. Before publishing
-a fresh report, the canonical report entry used by ordinary, manual, PR-preparation
-and automatic producers compares complete custody-bound Application inputs with
+a fresh report, the canonical report entry used by the protected push and manual producer compares complete custody-bound Application inputs with
 the previous published report, including unavailable inputs and additions/removals across supported
 owners. Changed inputs require this canonical suite after the writer returns and
 before new changed-report publication; failure prevents publication and retains
 the previous published inputs for retry. Equal inputs with no explicit selection
 run no FIB regressions. The explicit `tests-fib` whitelist in `CI_UNITS` selects
 compiler, discovery, analyzer, fixture, configuration and consumer coverage;
-`current` forwards that obligation to the same report entry, sharing one suite
-invocation with any changed-input obligation. The `tests-fib` job requires the
+On a PR, `current` runs the selected suite after scoped checks. On a push, `current` forwards the obligation to the report entry, sharing one suite invocation with any changed-input obligation. The `tests-fib` job requires the
 successful `current` consumer and prepares no additional Lean cache. Lake owns
 incremental compilation and report artifact reuse inside selected consumers;
 unrelated owner edits do not force the FIB suite. Ordinary Registration inventory
@@ -195,7 +161,7 @@ reports. Changed detached application inputs are analyzed by the current program
 The filtered declared-template CI unit requests no Lean preparation. Its external
 artifact cases retain their explicit skips. Fourier production artifact tests run
 in `current`, which retains native cache preparation. Other native cache consumers
-continue to request `build`; only those consumers attempt PR preparation adoption.
+continue to request `build`.
 
 Typed contract discovery inspects the five direct compiled Contract heads.
 Entries have safe, closed definition values; the decoder accepts constructor
@@ -290,7 +256,7 @@ entries and seals use Seal entries. The report accepts constructor trees and
 safe constant references from the compiled values; values requiring evaluation
 fail by name and have no fallback.
 
-[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
+[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report FULL_BUILD=1`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
 `STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
@@ -311,7 +277,7 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
 | `inputs/`、`inputs.json`、`report-format` | 当前模块输入、成员及配置坐标、报告格式标识。 |
 
-这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
+这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report FULL_BUILD=1` / `inspect.sh`
 入口完成登记的程序目标、原生报告、必要的 FIB 回归及完整校验，再打包根 buildDir。
 报告与登记的程序目标共用一次原生 Lake 构建；必要的 FIB 回归在 writer 返回后由 canonical 测试入口完成。
 输入、编译、必要的 FIB 回归或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
@@ -320,9 +286,9 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 Lake 编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；
 验证器只查结构与工件完整性。
-正常 Lean-cache 负责依赖物化和既有构建归档；
-[ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
-规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
+定向报告读取 Lake 本机共享缓存，并在当前工作树编译缺失的目标及所需依赖。
+整库报告的 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
+规则播种当前工作树的私有 `.lake`，支持时使用 clonefile。
 `.lake` 不使用 symlink；[writer 入口](../scripts/worktree/lean-cache-run.sh)
 以 `with-cache-writer` 持有当前 `.lake` 的写锁，覆盖 ensure 和原生 `lake build :report`。
 donor 只供播种，后续编译、报告写入和损坏恢复均发生在当前工作树。
@@ -409,7 +375,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 不能互换，commit ID 与工作树名称不参与这些地址。
 
 缺失的原生工件由 Lake 恢复或补建；与 olean 相同，trace 仍有效的工件原样复用，不再检查其内容。
-默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report`，它从 inspector 工件重新发布，
+默认输出或任一相邻 sidecar 丢失、损坏时重新运行 `make lean-report FULL_BUILD=1`，它从 inspector 工件重新发布，
 必要时先补建；发布核对规范信封与输入坐标。
 
 原生 Lake `--no-build`：
@@ -419,7 +385,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 | 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
 | 工件缺失且无法由 Lake 恢复，或输入/报告格式/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
 
-已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
+已用 `make lean-report FULL_BUILD=1` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
 ```sh
 tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-build build :report
@@ -427,7 +393,7 @@ tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-b
 
 该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
 `--no-build` 限制 Lake 的重建，输入准备及可用原生工件的恢复仍会执行，
-不是整个入口的只读模式。需要修复时重新运行 `make lean-report`。
+不是整个入口的只读模式。需要修复时重新运行 `make lean-report FULL_BUILD=1`。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
 material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
@@ -442,7 +408,7 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_INTERRUPTED phase=… exit=…`、该阶段已有输出及原生阶段观察，保留非零退出码。
 ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
-`make lean-report` 入口重试。
+`make lean-report FULL_BUILD=1` 入口重试。
 
 The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
 entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled

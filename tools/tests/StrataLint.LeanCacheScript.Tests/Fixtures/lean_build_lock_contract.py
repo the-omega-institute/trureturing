@@ -97,6 +97,33 @@ class LeanBuildLockTests(unittest.TestCase):
         with self.lock.open("a") as stream:
             fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
+    def test_linked_reader_materializes_pinned_sources_with_offline_origin(self):
+        relative = Path(".lake/packages/dep")
+        donor = self.root / relative
+        reader = self.worktrees[0] / relative
+        for directory in (donor, reader):
+            directory.mkdir(parents=True)
+            self.git(directory, "init", "--quiet")
+        source = donor / "Dep.lean"
+        source.write_text("def dep := 1\n")
+        self.git(donor, "add", "Dep.lean")
+        self.git(donor, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                 "commit", "--quiet", "--no-gpg-sign", "-m", "dep")
+        revision = subprocess.check_output(["git", "-C", str(donor), "rev-parse", "HEAD"], text=True).strip()
+        source.write_text("def dep := 2\n")
+        product = donor / ".lake/build/Dep.olean"
+        product.parent.mkdir(parents=True)
+        product.touch()
+
+        self.git(reader, "remote", "add", "origin", "https://unreachable.invalid/dep")
+        adapter = self.worktrees[0] / "tools/scripts/worktree/lean-git/git"
+        env = dict(self.env, STRATALINT_LEAN_READER_GIT=shutil.which("git"), GIT_ALLOW_PROTOCOL="file")
+        for arguments in (["fetch", "--tags", "--force", "--filter=tree:0", "origin", revision],
+                          ["checkout", "--detach", revision], ["remote", "prune", "origin"]):
+            subprocess.run([str(adapter), *arguments], cwd=reader, env=env, check=True, capture_output=True)
+        self.assertEqual("def dep := 1\n", (reader / "Dep.lean").read_text())
+        self.assertFalse((reader / ".lake").exists())
+
     def test_main_and_linked_worktrees_wait_across_all_build_phases(self):
         first = self.start(self.root, targets="")
         self.expect(first, "producer entered")

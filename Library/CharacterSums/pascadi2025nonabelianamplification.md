@@ -28,6 +28,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
   - D5/S3/Arith/CharacterSums/PascadiTransverseCriticalPhase
   - D5/S3/Arith/CharacterSums/PascadiPrimeSquareHyperbola
+  - D5/S3/Arith/CharacterSums/PascadiPrimeCubePairRigidity
   - D5/S3/Arith/CharacterSums/PascadiTorusConductor
   - D5/S3/Arith/CharacterSums/PascadiAffineVariance
 license: source-reference
@@ -573,3 +574,12 @@ middle-word count also uses the reduced slope lattice and tail bounds.
 The full fixed-coefficient count beyond the endpoint still requires
 control of the remaining singleton carry fibers.
 <https://arxiv.org/html/1007.1526v2#S2>
+
+The repository's `PascadiPrimeCubePairRigidity` module derives a
+difference quartic modulo $p^2$ from the two exact words modulo $p^3$
+and the full slope congruences. For fixed coefficient and displacement
+data, a simple lower root and a specified nonzero slope-step residue
+determine at most one midpoint modulo $p^2$ when the reduced difference
+sum is nonzero. On unit coordinates this determines the literal pair
+in first-coordinate intervals of width less than $p^2$ and
+second-coordinate intervals of width less than $p^3$.

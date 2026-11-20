@@ -338,7 +338,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
 
     private static string MainWarmRemediation(string mainCheckout) =>
-        $"sync dev and warm the dev cache: make -C {ShellQuote(LeanCacheGuard.PhysicalPath(mainCheckout))} warm-donor";
+        $"sync dev and warm the dev cache: make -C {ShellQuote(LeanCacheGuard.PhysicalPath(mainCheckout))} warm-donor FULL_BUILD=1";
 
     private static string Remediation(string mainCheckout) => MainWarmRemediation(mainCheckout);
 
@@ -348,10 +348,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         + "and re-run so ensure seeds it from the main checkout; " + ScopedColdRemediation(lane);
 
     private static string ScopedColdRemediation(string lane) =>
-        "if the lane's project layer is cold, explicitly accept a scoped build without donor cloning (also on Linux): "
-        + $"STRATALINT_ACCEPT_COLD_BUILD=1 make -C {ShellQuote(LeanCacheGuard.PhysicalPath(lane))} lean LEAN_TARGETS=\"<nonempty module list>\"; "
-        + "replace the target placeholder; this fetches pinned dependencies only and compiles the selected closure; "
-        + "standalone lean-cache-ensure still requires donor seeding";
+        $"for a scoped build from local Lake artifacts run: make -C {ShellQuote(LeanCacheGuard.PhysicalPath(lane))} lean LEAN_TARGETS=\"<nonempty module list>\"; "
+        + "full cache seeding requires make lean-cache-ensure FULL_BUILD=1";
 
     private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
 

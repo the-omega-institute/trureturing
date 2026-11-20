@@ -175,7 +175,7 @@ class Entry:
     def __init__(self, repository, temporary, logs):
         self.root = Path(repository).resolve()
         self.temporary, self.logs = Path(temporary), Path(logs)
-        self.environment = dict(os.environ)
+        self.environment = dict(os.environ, FULL_BUILD='0')
         self.lake = self.environment.get('LAKE_BIN') or shutil.which('lake')
         self.producer = self.environment.get('STRATALINT_LEAN_PRODUCER_DLL')
 

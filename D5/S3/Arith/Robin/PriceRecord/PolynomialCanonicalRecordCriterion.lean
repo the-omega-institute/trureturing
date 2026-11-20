@@ -27,7 +27,7 @@ import D5.S3.Weil.Convention
 import D5.S3.Weil.Mertens.ActualThetaTailLaplace
 import D5.S3.Weil.Mertens.CriticalThetaTailPeak
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-/-! Full-layer polynomial sampling and the closed strip of actual zeta zeros. -/
+/-! Full-layer sampling on integer meshes and the closed strip of actual zeta zeros. -/
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -63,13 +63,6 @@ private def W (alpha X : ℝ) : ℝ := Real.rpow X alpha * Real.log X
 
 private lemma W_pos (alpha : ℝ) {X : ℝ} (hX : 1 < X) : 0 < W alpha X :=
   PolynomialMeshBounds.W_pos alpha hX
-
-private lemma W_le_D {alpha X : ℝ} (halpha : alpha ≤ 1 / 2) (hX : 1 < X) :
-    W alpha X ≤ D X := by
-  have hp : Real.rpow X alpha ≤ Real.sqrt X := by
-    rw [Real.sqrt_eq_rpow]
-    exact Real.rpow_le_rpow_of_exponent_le hX.le halpha
-  exact mul_le_mul_of_nonneg_right hp (Real.log_pos hX).le
 
 private lemma strict_record {q : ℝ} (hq : 0 < q) : FullRecord (strictInteger q) q := by
   obtain ⟨hm, _, hopt, hleast⟩ := strictInteger_spec hq
@@ -147,57 +140,6 @@ private lemma specified_data {N : ℕ} (hN : 3 ≤ N) :
   have hs := support_of_active hq N hactive
   exact ⟨hq, size_of_support hq hN hs, strict_record hq, hs, largest_of_support hs⟩
 
-private lemma exact_support {N : ℕ} (hN : 12 < N) (hcomposite : ¬N.Prime) :
-    (strictInteger (price (N : ℝ))).primeFactors = Nat.primesLE N := by
-  have hNr : (12 : ℝ) < N := by exact_mod_cast hN
-  have hq := price_pos (show 1 < (N : ℝ) by linarith)
-  obtain ⟨rho, hrho, hbelow, hhalf, hprice, _⟩ :=
-    ActualBalancedCutoff.half_shift_cutoff hNr
-  apply support_of_active hq N
-  intro p hp
-  rw [golden_layer_marginal_one_eq_log_one_add_inv hp]
-  change price (N : ℝ) < firstLayerPrice (p : ℝ) ↔ p ≤ N
-  rw [← hprice]
-  have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
-  have hrho1 : 1 < rho := by linarith
-  have hcut : firstLayerPrice rho < firstLayerPrice (p : ℝ) ↔ (p : ℝ) < rho := by
-    constructor
-    · intro h
-      by_contra hn
-      have hh := ActualBalancedCutoff.firstLayerPrice_strictAnti.antitoneOn
-        hrho1 hp1 (le_of_not_gt hn)
-      exact (not_lt_of_ge hh) h
-    · exact ActualBalancedCutoff.firstLayerPrice_strictAnti hp1 hrho1
-  rw [hcut]
-  constructor
-  · intro h
-    have hpN : (p : ℝ) < N := by linarith
-    have : p < N := by exact_mod_cast hpN
-    omega
-  · intro hpN
-    have hpne : p ≠ N := by intro he; exact hcomposite (he ▸ hp)
-    have hpNm : p + 1 ≤ N := by omega
-    have hh : (p : ℝ) + 1 ≤ N := by exact_mod_cast hpNm
-    linarith
-
-private lemma same_prime_margin :
-    ∃ T : ℝ, 2 ≤ T ∧ ∀ m n : ℕ, 2 ≤ m → 2 ≤ n →
-      ∀ u v : ℝ, 0 < u → 0 < v → FullRecord m u → FullRecord n v →
-      largestPrime m = largestPrime n → T ≤ (largestPrime m : ℝ) →
-      -(1 / 2 : ℝ) ≤ D (largestPrime m : ℝ) * (robinLogMargin n - robinLogMargin m) := by
-  obtain ⟨T, hT, hlead⟩ := RHSharpOriginalRecordMargin.fullC_leading (1 / 4) (by norm_num)
-  refine ⟨T, hT, ?_⟩
-  intro m n hm hn u v hu hv hmr hnr hsame hlarge
-  have hmC := (hlead m hm u hu hmr hlarge).2.2
-  have hnlarge : T ≤ (largestPrime n : ℝ) := by simpa only [hsame] using hlarge
-  have hnC := (hlead n hn v hv hnr hnlarge).2.2
-  rw [← hsame] at hnC
-  rw [RHSharpOriginalRecordMargin.margin_identity hm hu hmr,
-    RHSharpOriginalRecordMargin.margin_identity hn hv hnr, ← hsame]
-  have hl := (abs_lt.mp hnC).1
-  have hh := (abs_lt.mp hmC).2
-  nlinarith only [hl, hh]
-
 private lemma exact_pressure_ge_margin {X : ℝ} (hX : 1 < X) {n : ℕ}
     (hn : 1 ≤ n) (hlog : 1 < Real.log (n : ℝ))
     (hopt : IsGoldenResourceOptimal (price X) n) : robinLogMargin n ≤ S X := by
@@ -213,6 +155,125 @@ private lemma exact_pressure_ge_margin {X : ℝ} (hX : 1 < X) {n : ℕ}
   rw [S, pressure_eq_of_optimal hn hopt, golden_resource_sigma_identity _ hn]
   unfold robinLogMargin
   nlinarith only [htangent, hpX]
+
+private lemma exists_price_eq_first_layer_price {t : ℝ} (ht : 12 < t) :
+    ∃ x : ℝ, t < x ∧ x < t + 1 / 2 ∧ price x = firstLayerPrice t := by
+  have ht1 : 1 < t := by linarith only [ht]
+  obtain ⟨u, hu, htu, _, hpu, _⟩ := ActualBalancedCutoff.half_shift_cutoff ht
+  obtain ⟨v, hv, _, hshift, hpv, _⟩ := ActualBalancedCutoff.half_shift_cutoff
+    (show 12 < t + 1 / 2 by linarith only [ht])
+  have hleft : firstLayerPrice t < price t := by
+    rw [← hpu]
+    exact ActualBalancedCutoff.firstLayerPrice_strictAnti
+      (show 1 < u by linarith only [hu]) ht1 (sub_pos.mp htu)
+  have hright : price (t + 1 / 2) < firstLayerPrice t := by
+    rw [← hpv]
+    exact ActualBalancedCutoff.firstLayerPrice_strictAnti ht1
+      (show 1 < v by linarith only [hv]) (show t < v by linarith only [hshift])
+  have hcont : ContinuousOn price (Set.Icc t (t + 1 / 2)) := by
+    have ht0 : 0 < t := by linarith only [ht1]
+    have hlog : ContinuousOn Real.log (Set.Icc t (t + 1 / 2)) :=
+      continuousOn_id.log (fun y hy => (ht0.trans_le hy.1).ne')
+    unfold price
+    apply continuousOn_const.div (continuousOn_id.mul hlog)
+    intro y hy
+    exact mul_ne_zero (ht0.trans_le hy.1).ne' (Real.log_pos (ht1.trans_le hy.1)).ne'
+  have hclosed : firstLayerPrice t ∈ Set.Icc (price (t + 1 / 2)) (price t) :=
+    ⟨hright.le, hleft.le⟩
+  obtain ⟨x, hx, hprice⟩ := intermediate_value_Icc'
+    (show t ≤ t + 1 / 2 by linarith) hcont hclosed
+  refine ⟨x, lt_of_le_of_ne hx.1 ?_, lt_of_le_of_ne hx.2 ?_, hprice⟩
+  · intro heq
+    exact (ne_of_lt hleft) (hprice.symm.trans (congrArg price heq.symm))
+  · intro heq
+    exact (ne_of_lt hright) ((congrArg price heq).symm.trans hprice)
+
+private lemma exists_canonical_price_cutoff {N : ℕ} (hN : 12 ≤ N) :
+    ∃ x : ℝ, (N : ℝ) + 1 < x ∧ x < (N : ℝ) + 1 + 1 / 2 ∧ price x = mu N := by
+  have hNr : (12 : ℝ) ≤ N := by exact_mod_cast hN
+  simpa only [mu] using exists_price_eq_first_layer_price (t := (N : ℝ) + 1)
+    (by linarith only [hNr])
+
+/-- The exact-price sample for `N ≥ 12`, extended by the natural cast at small indices. -/
+private def canonicalPriceCutoff (N : ℕ) : ℝ :=
+  if hN : 12 ≤ N then Classical.choose (exists_canonical_price_cutoff hN) else (N : ℝ)
+
+private lemma canonical_price_cutoff_spec {N : ℕ} (hN : 12 ≤ N) :
+    (N : ℝ) + 1 < canonicalPriceCutoff N ∧
+      canonicalPriceCutoff N < (N : ℝ) + 1 + 1 / 2 ∧ price (canonicalPriceCutoff N) = mu N := by
+  simpa only [canonicalPriceCutoff, dif_pos hN] using
+    Classical.choose_spec (exists_canonical_price_cutoff hN)
+
+private lemma le_canonical_price_cutoff (N : ℕ) : (N : ℝ) ≤ canonicalPriceCutoff N := by
+  by_cases hN : 12 ≤ N
+  · have hleft := (canonical_price_cutoff_spec hN).1
+    linarith only [hleft]
+  · simp only [canonicalPriceCutoff, dif_neg hN, le_refl]
+
+private lemma canonical_price_cutoff_strictMono : StrictMono canonicalPriceCutoff := by
+  intro i j hij
+  by_cases hi : 12 ≤ i
+  · have hj : 12 ≤ j := by omega
+    have hijR : (i : ℝ) + 1 ≤ (j : ℝ) := by exact_mod_cast (show i + 1 ≤ j by omega)
+    have hleft := (canonical_price_cutoff_spec hj).1
+    have hright := (canonical_price_cutoff_spec hi).2.1
+    linarith only [hijR, hleft, hright]
+  · have hi' : canonicalPriceCutoff i = (i : ℝ) := by
+      simp only [canonicalPriceCutoff, dif_neg hi]
+    rw [hi']
+    exact (show (i : ℝ) < j by exact_mod_cast hij).trans_le (le_canonical_price_cutoff j)
+
+private lemma canonical_price_cutoff_gap {N : ℕ → ℕ} (hN : StrictMono N)
+    {G eta : ℝ} (hG : 0 ≤ G)
+    (hgap : ∀ᶠ k : ℕ in atTop,
+      (N (k + 1) : ℝ) - (N k : ℝ) ≤ G * Real.rpow (N k : ℝ) (1 - eta)) :
+    ∀ᶠ k : ℕ in atTop, canonicalPriceCutoff (N (k + 1)) - canonicalPriceCutoff (N k) ≤
+      (G + 1 / 2) * Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) := by
+  filter_upwards [hgap, hN.tendsto_atTop.eventually (eventually_ge_atTop (12 : ℕ))]
+    with k hkGap hk
+  have hnext : 12 ≤ N (k + 1) := hk.trans (hN.monotone (Nat.le_succ k))
+  have hleft := (canonical_price_cutoff_spec hk).1
+  have hright := (canonical_price_cutoff_spec hnext).2.1
+  have hN12 : (12 : ℝ) ≤ N k := by exact_mod_cast hk
+  have hbase : 1 ≤ (N k : ℝ) := by linarith only [hN12]
+  have hle := le_canonical_price_cutoff (N k)
+  have hexp : 0 ≤ 1 - min eta 1 := sub_nonneg.mpr (min_le_right _ _)
+  have hp : Real.rpow (N k : ℝ) (1 - eta) ≤
+      Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) :=
+    (Real.rpow_le_rpow_of_exponent_le hbase (sub_le_sub_left (min_le_left eta 1) 1)).trans
+      (Real.rpow_le_rpow (zero_le_one.trans hbase) hle hexp)
+  have hone : 1 ≤ Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) :=
+    Real.one_le_rpow (hbase.trans hle) hexp
+  have hhalf : 1 / 2 ≤ (1 / 2) * Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) := by
+    simpa only [mul_one] using mul_le_mul_of_nonneg_left hone (by norm_num : 0 ≤ (1 / 2 : ℝ))
+  calc
+    _ ≤ (N (k + 1) : ℝ) - (N k : ℝ) + 1 / 2 := by linarith only [hleft, hright]
+    _ ≤ G * Real.rpow (N k : ℝ) (1 - eta) + 1 / 2 := add_le_add_left hkGap _
+    _ ≤ G * Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) +
+        (1 / 2) * Real.rpow (canonicalPriceCutoff (N k)) (1 - min eta 1) :=
+      add_le_add (mul_le_mul_of_nonneg_left hp hG) hhalf
+    _ = _ := by ring
+
+private lemma canonical_price_cutoff_lower {N : ℕ} (hN : 12 ≤ N) {a M : ℝ}
+    (ha : 0 ≤ a) (ha1 : a ≤ 1) (hM : 0 ≤ M)
+    (hbound : -M ≤ W a (N : ℝ) * robinLogMargin (specified N)) :
+    -(4 * M) ≤ W a (canonicalPriceCutoff N) * S (canonicalPriceCutoff N) := by
+  obtain ⟨hleft, hright, hprice⟩ := canonical_price_cutoff_spec hN
+  have hNr : (12 : ℝ) ≤ N := by exact_mod_cast hN
+  have hx : 1 < canonicalPriceCutoff N := by linarith only [hNr, hleft]
+  obtain ⟨hq, hn, _, _, _⟩ := specified_data (show 3 ≤ N by omega)
+  have hstrict := strictInteger_spec hq
+  have hopt : IsGoldenResourceOptimal (price (canonicalPriceCutoff N)) (specified N) := by
+    rw [hprice]
+    exact hstrict.2.2.1
+  have hmargin : robinLogMargin (specified N) ≤ S (canonicalPriceCutoff N) :=
+    exact_pressure_ge_margin hx hstrict.1 (ActualRobinInterval.log_gt_one hn) hopt
+  have hweight : W a (canonicalPriceCutoff N) ≤ 4 * W a (N : ℝ) := by
+    exact PolynomialMeshBounds.record_weight ha ha1 hx
+      (show (2 : ℝ) ≤ N by linarith only [hNr]) (by linarith only [hNr, hright])
+  have hW := (W_pos a hx).le
+  exact (PolynomialMeshBounds.rescale_lower hM (show (0 : ℝ) ≤ 4 by norm_num)
+    hW hweight hbound).trans (mul_le_mul_of_nonneg_left hmargin hW)
 
 private lemma pressure_le_margin_at_clock {n : ℕ} (hn : 1 ≤ n)
     (hlog : 1 < Real.log (n : ℝ)) : S (Real.log (n : ℝ)) ≤ robinLogMargin n := by
@@ -241,79 +302,6 @@ private lemma record_theta_le_log {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
       ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p :=
     sum_nonneg (fun p _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg p))
   linarith only [hsplit, hnonneg]
-
-private lemma exact_data (r : ℕ) (hr : 2 ≤ r) {k : ℕ} (hk : 4 ≤ k) :
-    0 < price ((k ^ r : ℕ) : ℝ) ∧
-    3 ≤ strictInteger (price ((k ^ r : ℕ) : ℝ)) ∧
-    FullRecord (strictInteger (price ((k ^ r : ℕ) : ℝ)))
-      (price ((k ^ r : ℕ) : ℝ)) ∧
-    largestPrime (strictInteger (price ((k ^ r : ℕ) : ℝ))) = Pn ((k ^ r : ℕ) : ℝ) := by
-  have hN := power_large r hr hk
-  have hX : 1 < ((k ^ r : ℕ) : ℝ) := by
-    exact_mod_cast (show 1 < k ^ r by omega)
-  have hq := price_pos hX
-  have hs := exact_support (show 12 < k ^ r by omega)
-    (Nat.Prime.not_prime_pow (x := k) hr)
-  exact ⟨hq, size_of_support hq (by omega) hs, strict_record hq, largest_of_support hs⟩
-
-private lemma sample_margin_transfer (r : ℕ) (hr : 2 ≤ r) :
-    ∀ᶠ k : ℕ in atTop,
-      -1 ≤ D ((k ^ r : ℕ) : ℝ) *
-        (robinLogMargin (strictInteger (price ((k ^ r : ℕ) : ℝ))) -
-          robinLogMargin (specified (k ^ r))) := by
-  obtain ⟨T, _, hT⟩ := same_prime_margin
-  have hlarge := (RHSharpOriginalRecordMargin.Pn_atTop.comp (power_atTop r hr)).eventually
-    (eventually_ge_atTop T)
-  have hratio := (RHSharpOriginalRecordMargin.normalization.comp (power_atTop r hr)).eventually
-    (lt_mem_nhds (by norm_num : (1 / 2 : ℝ) < 1))
-  filter_upwards [eventually_ge_atTop (4 : ℕ), hlarge, hratio] with k hk hP hratio
-  have hN := power_large r hr hk
-  obtain ⟨hu, hm, hmr, _, hmP⟩ := specified_data (show 3 ≤ k ^ r by omega)
-  obtain ⟨hv, hn, hnr, hnP⟩ := exact_data r hr hk
-  have hsame : largestPrime (specified (k ^ r)) =
-      largestPrime (strictInteger (price ((k ^ r : ℕ) : ℝ))) := hmP.trans hnP.symm
-  have hbase := hT _ _ (by omega) (by omega) _ _ hu hv hmr hnr hsame
-    (by simpa only [hmP, Function.comp_def] using hP)
-  rw [hmP] at hbase
-  have hDN : 0 < D ((k ^ r : ℕ) : ℝ) := D_pos (by
-    exact_mod_cast (show 1 < k ^ r by omega))
-  have hid : D (Pn ((k ^ r : ℕ) : ℝ) : ℝ) *
-      (robinLogMargin (strictInteger (price ((k ^ r : ℕ) : ℝ))) -
-        robinLogMargin (specified (k ^ r))) =
-      (D (Pn ((k ^ r : ℕ) : ℝ) : ℝ) / D ((k ^ r : ℕ) : ℝ)) *
-      (D ((k ^ r : ℕ) : ℝ) *
-        (robinLogMargin (strictInteger (price ((k ^ r : ℕ) : ℝ))) -
-          robinLogMargin (specified (k ^ r)))) := by
-    field_simp [hDN.ne'] <;> ring
-  rw [hid] at hbase
-  have hh := fixed_negative_ratio (by norm_num : -(1 / 2 : ℝ) ≤ 0) hratio.le hbase
-  calc
-    -1 = 2 * (-(1 / 2 : ℝ)) := by norm_num
-    _ ≤ _ := hh
-
-private lemma sampled_to_pressure (r : ℕ) (hr : 2 ≤ r)
-    (a : ℝ) (haHalf : a ≤ 1 / 2) {M : ℝ} {k0 : ℕ}
-    (hbound : ∀ k : ℕ, k0 ≤ k →
-      -M ≤ W a ((k ^ r : ℕ) : ℝ) * robinLogMargin (specified (k ^ r))) :
-    ∀ᶠ k : ℕ in atTop,
-      -(M + 1) ≤ W a ((k ^ r : ℕ) : ℝ) * S ((k ^ r : ℕ) : ℝ) := by
-  filter_upwards [sample_margin_transfer r hr, eventually_ge_atTop k0,
-    eventually_ge_atTop (4 : ℕ)] with k htransfer hk0 hk
-  obtain ⟨hq, hn, _, _⟩ := exact_data r hr hk
-  have hN := power_large r hr hk
-  have hX : 1 < ((k ^ r : ℕ) : ℝ) := by exact_mod_cast (show 1 < k ^ r by omega)
-  have htransferW : -1 ≤ W a ((k ^ r : ℕ) : ℝ) *
-      (robinLogMargin (strictInteger (price ((k ^ r : ℕ) : ℝ))) -
-        robinLogMargin (specified (k ^ r))) := by
-    have hh := rescale_lower (by norm_num : (0 : ℝ) ≤ 1)
-      (by norm_num : (0 : ℝ) ≤ 1) (W_pos a hX).le
-      (by simpa only [one_mul] using W_le_D haHalf hX) htransfer
-    simpa only [one_mul] using hh
-  have hS := mul_le_mul_of_nonneg_left
-    (exact_pressure_ge_margin hX (by omega) (ActualRobinInterval.log_gt_one hn)
-      (strictInteger_spec hq).2.2.1) (W_pos a hX).le
-  have hm := hbound k hk0
-  nlinarith only [htransferW, hS, hm]
 
 private lemma clock_power (epsilon : ℝ) (hepsilon : 0 < epsilon)
     (hbeta : (1 / 2 : ℝ) ≤
@@ -682,16 +670,21 @@ private theorem B_lower_envelope_strip : ∀ (alpha : ℝ), 0 < alpha → alpha 
   have hupper := hU u huU
   linarith
 
-theorem result (r : ℕ) (hr : 2 ≤ r) (alpha : ℝ)
-    (halpha : 0 < alpha) (hhalf : alpha ≤ 1 / 2) :
-    (∃ M : ℝ, 0 ≤ M ∧ ∃ k0 : ℕ, 2 ≤ k0 ∧ ∀ k : ℕ, k0 ≤ k →
-      -M ≤ Real.rpow (((k ^ r : ℕ) : ℝ)) alpha * Real.log (((k ^ r : ℕ) : ℝ)) *
-        robinLogMargin
-          (strictInteger (firstLayerPrice ((((k ^ r : ℕ) : ℝ)) + 1)))) ↔
+/-- At weights `0 < alpha ≤ 1 / 2`, the strict record at the literal
+first-layer price of `N k + 1` detects the closed zero strip along any
+strictly increasing natural mesh with a power-saving gap. -/
+theorem result_of_power_saving_gaps {N : ℕ → ℕ} (hN : StrictMono N)
+    {G eta : ℝ} (hG : 0 ≤ G) (heta : 0 < eta)
+    (hgap : ∀ᶠ k : ℕ in atTop,
+      (N (k + 1) : ℝ) - (N k : ℝ) ≤ G * Real.rpow (N k : ℝ) (1 - eta))
+    (alpha : ℝ) (halpha : 0 < alpha) (hhalf : alpha ≤ 1 / 2) :
+    (∃ M : ℝ, 0 ≤ M ∧ ∀ᶠ k : ℕ in atTop,
+      -M ≤ Real.rpow (N k : ℝ) alpha * Real.log (N k : ℝ) *
+        robinLogMargin (strictInteger (firstLayerPrice ((N k : ℝ) + 1)))) ↔
       (∀ rho : ℂ, D5.S3.Weil.ZeroSum.IsNontrivialZero rho → rho.re ≤ 1 - alpha) := by
   classical
   constructor
-  · rintro ⟨M, hM, k0, hk0, hsample⟩
+  · rintro ⟨M, hM, hsample⟩
     by_contra hnotstrip
     push Not at hnotstrip
     obtain ⟨rho, hrho, hbad⟩ := hnotstrip
@@ -704,19 +697,19 @@ theorem result (r : ℕ) (hr : 2 ≤ r) (alpha : ℝ)
       apply csSup_le zero_real_parts_nonempty
       rintro x ⟨z, hz, rfl⟩
       exact hz.2.2.le
-    have hr0 : (0 : ℝ) < r := by exact_mod_cast (show 0 < r by omega)
-    have hmax : max (1 - alpha) (Theta - 1 / (r : ℝ)) < Theta := by
-      apply max_lt_iff.mpr
-      exact ⟨hThetaBad, sub_lt_self _ (one_div_pos.mpr hr0)⟩
+    let eta' : ℝ := min eta 1
+    have heta' : 0 < eta' := lt_min heta (by norm_num)
+    have hmax : max (1 - alpha) (Theta - eta') < Theta :=
+      max_lt_iff.mpr ⟨hThetaBad, sub_lt_self _ heta'⟩
     obtain ⟨sigma, hsigmaLower, hsigmaTheta⟩ := exists_between hmax
     have hsigmaAlpha : 1 - alpha < sigma :=
       (le_max_left _ _).trans_lt hsigmaLower
-    have hsigmaHalf : 1 / 2 < sigma := by linarith only [hsigmaAlpha, hhalf]
-    have hsigmaGap : Theta - 1 / (r : ℝ) < sigma :=
+    have hsigmaGap : Theta - eta' < sigma :=
       (le_max_right _ _).trans_lt hsigmaLower
+    -- This strict inequality also holds when the supremum Theta is 1.
     have hsigmaOne : sigma < 1 := hsigmaTheta.trans_le hThetaOne
     let a : ℝ := 1 - sigma
-    let epsilon : ℝ := (sigma + 1 / (r : ℝ) - Theta) / 2
+    let epsilon : ℝ := (sigma + eta' - Theta) / 2
     let beta : ℝ := Theta + epsilon
     have ha : 0 < a := by dsimp only [a]; linarith only [hsigmaOne]
     have haAlpha : a < alpha := by dsimp only [a]; linarith only [hsigmaAlpha]
@@ -725,29 +718,26 @@ theorem result (r : ℕ) (hr : 2 ≤ r) (alpha : ℝ)
     have hbetaHalf : 1 / 2 < beta := by
       dsimp only [beta]
       linarith only [hThetaHalf, hepsilon]
-    have hmesh : a + beta - 1 - 1 / (r : ℝ) = -epsilon := by
+    have hbalance : a + beta - eta' ≤ 1 := by
       dsimp only [a, beta, epsilon]
-      ring
-    have hgap : beta - 1 / (r : ℝ) < sigma := by
-      dsimp only [a] at hmesh
-      linarith only [hmesh, hepsilon]
-    have hsampleA : ∀ k : ℕ, k0 ≤ k →
-        -M ≤ W a ((k ^ r : ℕ) : ℝ) * robinLogMargin (specified (k ^ r)) := by
-      intro k hk
-      have hk2 : 2 ≤ k := hk0.trans hk
-      have hkr : k ≤ k ^ r := by
-        calc
-          k = k ^ 1 := by simp
-          _ ≤ k ^ r := pow_le_pow_right₀ (by omega : 1 ≤ k) (by omega : 1 ≤ r)
-      have hN : 1 < ((k ^ r : ℕ) : ℝ) := by
-        exact_mod_cast (show 1 < k ^ r by omega)
-      have hb : -M ≤ W alpha ((k ^ r : ℕ) : ℝ) *
-          robinLogMargin (specified (k ^ r)) := hsample k hk
-      exact sample_exponent_lower hM haAlpha.le hN hb
+      linarith only [hsigmaGap]
+    have haOne : a ≤ 1 := by linarith only [haHalf]
+    have hsamplePressure : ∀ᶠ k : ℕ in atTop,
+        -(4 * M) ≤ W a (canonicalPriceCutoff (N k)) * S (canonicalPriceCutoff (N k)) := by
+      have hlarge := hN.tendsto_atTop.eventually (eventually_ge_atTop (12 : ℕ))
+      filter_upwards [hsample, hlarge] with k hb hk
+      have hX : 1 < (N k : ℝ) := by exact_mod_cast (show 1 < N k by omega)
+      exact canonical_price_cutoff_lower hk ha.le haOne hM
+        (sample_exponent_lower hM haAlpha.le hX hb)
+    have hcutoffTop : Tendsto (fun k => canonicalPriceCutoff (N k)) atTop atTop :=
+      tendsto_atTop_mono (fun k => le_canonical_price_cutoff (N k)) (mesh_atTop hN)
     obtain ⟨C, hC, hclock⟩ := clock_power epsilon hepsilon hbetaHalf.le
-    obtain ⟨A, hA, hpressure⟩ := pressure_samples_to_all r hr beta sigma C (M + 1)
-      hC (by linarith) hsigmaHalf hsigmaOne (by linarith only [hbetaHalf]) hgap
-      hclock (sampled_to_pressure r hr a haHalf hsampleA)
+    obtain ⟨A, hA, hpressure⟩ := pressure_mesh_samples_to_all
+      (mesh := fun k => canonicalPriceCutoff (N k))
+      (canonical_price_cutoff_strictMono.comp hN) hcutoffTop
+      (G := G + 1 / 2) (eta := eta') (alpha := a) (beta := beta) (A := 4 * M)
+      (by linarith only [hG]) heta' ha.le haOne (by linarith only [hbetaHalf]) hC
+      (by positivity) hbalance (canonical_price_cutoff_gap hN hG hgap) hclock hsamplePressure
     obtain ⟨T, _hT, hrecords⟩ := all_pressure_to_records a A ha haHalf hA hpressure
     obtain ⟨C0, hC0, hWB⟩ := records_to_eventual_WB a haHalf (4 * A) T hrecords
     obtain ⟨T0, hT0⟩ := eventually_atTop.mp hWB
@@ -775,42 +765,58 @@ theorem result (r : ℕ) (hr : 2 ≤ r) (alpha : ℝ)
       D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope
         alpha halpha hhalf hstrip
     obtain ⟨TC, hTC, hcorr⟩ := RHSharpOriginalRecordMargin.fullC_leading 1 zero_lt_one
-    have hlargeN := (power_atTop r hr).eventually (eventually_ge_atTop TB)
+    have hlargeN := (mesh_atTop hN).eventually (eventually_ge_atTop TB)
     have hlargeP := (RHSharpOriginalRecordMargin.Pn_atTop.comp
-      (power_atTop r hr)).eventually (eventually_ge_atTop TC)
-    have hbound : ∀ᶠ k : ℕ in atTop,
-        -C ≤ W alpha ((k ^ r : ℕ) : ℝ) * robinLogMargin (specified (k ^ r)) := by
-      filter_upwards [hlargeN, hlargeP, eventually_ge_atTop (4 : ℕ)]
-        with k hNlarge hPlarge hk
-      have hN := power_large r hr hk
-      have hX : 1 < ((k ^ r : ℕ) : ℝ) := by exact_mod_cast (show 1 < k ^ r by omega)
-      obtain ⟨hu, hm, hmr, _, hmP⟩ := specified_data (show 3 ≤ k ^ r by omega)
-      have hPC : TC ≤ (largestPrime (specified (k ^ r)) : ℝ) := by
-        simpa only [hmP, Function.comp_def] using hPlarge
-      have hP2 : (2 : ℝ) ≤ largestPrime (specified (k ^ r)) := hTC.trans hPC
-      have hD : 0 < D (largestPrime (specified (k ^ r)) : ℝ) := D_pos (by linarith)
-      have hcorrAbs := (hcorr _ (by omega) _ hu hmr hPC).2.2
-      have hsqrt : (1 : ℝ) ≤ Real.sqrt 2 := by
-        simpa only [Real.sqrt_one] using Real.sqrt_le_sqrt (by norm_num : (1 : ℝ) ≤ 2)
-      have hcorrScaled : 0 ≤ D (largestPrime (specified (k ^ r)) : ℝ) *
-          FullArithmeticCorrectionSecondOrder.correction (specified (k ^ r)) := by
-        have hh := (abs_lt.mp hcorrAbs).1
-        nlinarith only [hh, hsqrt]
-      have hcorr0 : 0 ≤ FullArithmeticCorrectionSecondOrder.correction (specified (k ^ r)) :=
-        (mul_nonneg_iff_of_pos_left hD).mp hcorrScaled
-      have hmargin : B ((k ^ r : ℕ) : ℝ) ≤ robinLogMargin (specified (k ^ r)) := by
-        rw [RHSharpOriginalRecordMargin.margin_identity (by omega) hu hmr,
-          hmP, RHSharpOriginalRecordMargin.B_prefix]
-        exact le_add_of_nonneg_right hcorr0
-      have hWx : 0 < W alpha ((k ^ r : ℕ) : ℝ) := W_pos alpha hX
-      have hb : -C / W alpha ((k ^ r : ℕ) : ℝ) ≤ B ((k ^ r : ℕ) : ℝ) := by
-        simpa only [W, neg_div] using (abs_le.mp (hB _ hNlarge)).1
-      have hBscaled : -C ≤ W alpha ((k ^ r : ℕ) : ℝ) * B ((k ^ r : ℕ) : ℝ) := by
-        have hh := (div_le_iff₀ hWx).mp hb
-        nlinarith only [hh]
-      exact hBscaled.trans (mul_le_mul_of_nonneg_left hmargin hWx.le)
+      (mesh_atTop hN)).eventually (eventually_ge_atTop TC)
+    have hlargeNat := hN.tendsto_atTop.eventually (eventually_ge_atTop (3 : ℕ))
+    refine ⟨C, hC, ?_⟩
+    filter_upwards [hlargeN, hlargeP, hlargeNat] with k hNlarge hPlarge hk
+    have hX : 1 < (N k : ℝ) := by exact_mod_cast (show 1 < N k by omega)
+    obtain ⟨hu, hm, hmr, _, hmP⟩ := specified_data hk
+    have hPC : TC ≤ (largestPrime (specified (N k)) : ℝ) := by
+      simpa only [hmP, Function.comp_def] using hPlarge
+    have hP2 : (2 : ℝ) ≤ largestPrime (specified (N k)) := hTC.trans hPC
+    have hD : 0 < D (largestPrime (specified (N k)) : ℝ) := D_pos (by linarith)
+    have hcorrAbs := (hcorr _ (by omega) _ hu hmr hPC).2.2
+    have hsqrt : (1 : ℝ) ≤ Real.sqrt 2 := by
+      simpa only [Real.sqrt_one] using Real.sqrt_le_sqrt (by norm_num : (1 : ℝ) ≤ 2)
+    have hcorrScaled : 0 ≤ D (largestPrime (specified (N k)) : ℝ) *
+        FullArithmeticCorrectionSecondOrder.correction (specified (N k)) := by
+      have hh := (abs_lt.mp hcorrAbs).1
+      nlinarith only [hh, hsqrt]
+    have hcorr0 : 0 ≤ FullArithmeticCorrectionSecondOrder.correction (specified (N k)) :=
+      (mul_nonneg_iff_of_pos_left hD).mp hcorrScaled
+    have hmargin : B (N k : ℝ) ≤ robinLogMargin (specified (N k)) := by
+      rw [RHSharpOriginalRecordMargin.margin_identity (by omega) hu hmr,
+        hmP, RHSharpOriginalRecordMargin.B_prefix]
+      exact le_add_of_nonneg_right hcorr0
+    have hWx : 0 < W alpha (N k : ℝ) := W_pos alpha hX
+    have hb : -C / W alpha (N k : ℝ) ≤ B (N k : ℝ) := by
+      simpa only [W, neg_div] using (abs_le.mp (hB _ hNlarge)).1
+    have hBscaled : -C ≤ W alpha (N k : ℝ) * B (N k : ℝ) := by
+      have hh := (div_le_iff₀ hWx).mp hb
+      nlinarith only [hh]
+    exact hBscaled.trans (mul_le_mul_of_nonneg_left hmargin hWx.le)
+
+theorem result (r : ℕ) (hr : 2 ≤ r) (alpha : ℝ)
+    (halpha : 0 < alpha) (hhalf : alpha ≤ 1 / 2) :
+    (∃ M : ℝ, 0 ≤ M ∧ ∃ k0 : ℕ, 2 ≤ k0 ∧ ∀ k : ℕ, k0 ≤ k →
+      -M ≤ Real.rpow (((k ^ r : ℕ) : ℝ)) alpha * Real.log (((k ^ r : ℕ) : ℝ)) *
+        robinLogMargin
+          (strictInteger (firstLayerPrice ((((k ^ r : ℕ) : ℝ)) + 1)))) ↔
+      (∀ rho : ℂ, D5.S3.Weil.ZeroSum.IsNontrivialZero rho → rho.re ≤ 1 - alpha) := by
+  have hr0 : (0 : ℝ) < r := by exact_mod_cast (show 0 < r by omega)
+  have hmesh := result_of_power_saving_gaps (power_strictMono r hr)
+    (G := (r : ℝ) * (2 : ℝ) ^ (r - 1)) (eta := 1 / (r : ℝ))
+    (by positivity) (one_div_pos.mpr hr0) (polynomial_gap r hr) alpha halpha hhalf
+  constructor
+  · rintro ⟨M, hM, K, _, hK⟩
+    exact hmesh.mp ⟨M, hM, eventually_atTop.mpr ⟨K, hK⟩⟩
+  · intro hstrip
+    obtain ⟨M, hM, hbound⟩ := hmesh.mpr hstrip
     obtain ⟨K, hK⟩ := eventually_atTop.mp hbound
-    refine ⟨C, hC, max K 2, le_max_right _ _, ?_⟩
+    refine ⟨M, hM, max K 2, le_max_right _ _, ?_⟩
     intro k hk
     exact hK k ((le_max_left K 2).trans hk)
+
 end D5.S3.Arith.Robin.PriceRecord.PolynomialCanonicalRecordCriterion

@@ -17,13 +17,18 @@ internal sealed class QuaternionTwoPointHomogeneityDocument : IScribeDocumentDef
                 "In the quaternion comparison model the transfer is tri a b c = a * b^-1 * c, so with the unit quaternion 1 as middle argument the products p * x and x * q are the transfers tri p 1 x and tri x 1 q. "
                     + "The reading is invariant under a transfer on the left and under a transfer on the right, so it is unchanged when both arguments are first multiplied by p on the left and then by q on the right. "
                     + "Equivalently, z -> p * z * q is a linear isometry of the quaternions, and the reading (1 + <x, y>) / 2 depends only on the real inner product."),
+            Node("exists-unitary-mul-eq", "exists_unitary_mul_eq_mul", "Unit quaternions with equal real part are conjugate",
+                StatementSource.FromAuthor(ConjugateFormula()), DescribeRole.Lemma,
+                "The second unit quaternion, written a' in the source, is written b in the formula. "
+                    + "Two unit quaternions a and b have the same norm one, so when they also have the same real part their imaginary parts have the same length. "
+                    + "A nonzero quaternion w with w * a = b * w then exists: with imaginary parts u of a and v of b, the quaternion |u|^2 - v * u works unless v = -u, and otherwise any nonzero imaginary quaternion orthogonal to u works. "
+                    + "Dividing w by its norm gives a unit quaternion c with c * a = b * c."),
             Node("exists-mul-mul-eq", "exists_mul_mul_eq_of_kappa_eq", "Pairs with equal reading are related by a left-right translation",
                 StatementSource.FromAuthor(TwoPointFormula()), DescribeRole.Theorem,
                 "The second pair is written u and v in the formula. "
                     + "By the invariance above with p = x^-1 and q = 1, the reading of x and y equals the reading of 1 and x^-1 * y, which is (1 + re (x^-1 * y)) / 2. "
                     + "Equal readings therefore give the unit quaternions a = x^-1 * y and a' = u^-1 * v the same real part; they also have the same norm one. "
-                    + "Two quaternions with the same real part and the same norm are intertwined by a nonzero quaternion w, that is w * a = a' * w: with imaginary parts b of a and b' of a', the quaternion |b|^2 - b' * b works unless b' = -b, and otherwise any nonzero imaginary quaternion orthogonal to b works. "
-                    + "Normalizing w gives a unit quaternion c with c * a = a' * c. "
+                    + "By the conjugacy of unit quaternions with equal real part, there is a unit quaternion c with c * a = a' * c. "
                     + "The translation with p = u * c * x^-1 and q = c^-1 then sends x to u, and it sends y to u * c * a * c^-1 = u * a' = v."))));
 
     private static DocumentBlock Node(
@@ -57,6 +62,15 @@ internal sealed class QuaternionTwoPointHomogeneityDocument : IScribeDocumentDef
         Formula x = F.Id("x"), y = F.Id("y");
         return Disp(ForAllMany(Units,
             Equal(Kappa(Translate(x), Translate(y)), Kappa(x, y)), "p", "q", "x", "y"));
+    }
+
+    private static Formula ConjugateFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), c = F.Id("c");
+        return Disp(ForAllMany(Units,
+            Logic(Equal(Call("re", a), Call("re", b)), FormulaLogicOperator.Implies,
+                ExistsMany(Units, Equal(Mul(c, a), Mul(b, c)), "c")),
+            "a", "b"));
     }
 
     private static Formula TwoPointFormula()
