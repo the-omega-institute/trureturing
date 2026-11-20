@@ -49,9 +49,9 @@ internal sealed class FiniteKernelStabilizersDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Use the same kernel assumptions and require that the left coset "
-                        + "space of H in G is finite. HasSeedWithStabilizer strengthens the "
-                        + "existence clause to a seed whose full stabilizer is H.")),
+                        "Use the same kernel assumptions. HasSeedWithStabilizer asks for a seed "
+                        + "whose full stabilizer is H. Its orbit is in bijection with the left "
+                        + "coset space of H, which must therefore be finite.")),
                     Paragraph(Text(
                         "Start with a seed fixed by H. Enlarge the seed space by an independent "
                         + "uniform left coset. Ignore that coordinate when reading the output. "
@@ -72,9 +72,10 @@ internal sealed class FiniteKernelStabilizersDocument : IScribeDocumentDefinitio
     {
         var p = F.Id("P");
         var h = F.Id("H");
-        return Disp(Seq(Call("CovariantKernel", p), Sp, Land, Sp, Call("FiniteIndex", h),
-            Sp, Rightarrow, Sp, Open, Call("HasSeedWithStabilizer", p, h), Sp, Iff, Sp,
-            Call("SupportedFixedOutputs", p, h), Close));
+        return Disp(Seq(Call("CovariantKernel", p), Sp, Rightarrow, Sp,
+            Open, Call("HasSeedWithStabilizer", p, h), Sp, Iff, Sp,
+            Open, Call("FiniteIndex", h), Sp, Land, Sp, Call("SupportedFixedOutputs", p, h),
+            Close, Close));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>

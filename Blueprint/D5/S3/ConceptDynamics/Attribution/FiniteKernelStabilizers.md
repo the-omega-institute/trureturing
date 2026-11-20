@@ -22,7 +22,7 @@ A fixed seed yields a supported output by positivity and covariance. For the con
 
 **Theorem 1.2 (A prescribed subgroup can be the full stabilizer).**
 
-$$\operatorname{CovariantKernel}\left(P\right) \land \operatorname{FiniteIndex}\left(H\right) \Rightarrow (\operatorname{HasSeedWithStabilizer}\left(P, H\right) \iff \operatorname{SupportedFixedOutputs}\left(P, H\right))$$
+$$\operatorname{CovariantKernel}\left(P\right) \Rightarrow (\operatorname{HasSeedWithStabilizer}\left(P, H\right) \iff (\operatorname{FiniteIndex}\left(H\right) \land \operatorname{SupportedFixedOutputs}\left(P, H\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/FiniteKernelStabilizers.exact_stabilizer_possible_iff` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\operatorname{CovariantKernel}\left(P\right) \land \operatorname{FiniteIndex}\
 
 *Commentary.*
 
-Use the same kernel assumptions and require that the left coset space of H in G is finite. HasSeedWithStabilizer strengthens the existence clause to a seed whose full stabilizer is H.
+Use the same kernel assumptions. HasSeedWithStabilizer asks for a seed whose full stabilizer is H. Its orbit is in bijection with the left coset space of H, which must therefore be finite.
 
 Start with a seed fixed by H. Enlarge the seed space by an independent uniform left coset. Ignore that coordinate when reading the output. The product action preserves this law and the marginal masses. At the original seed paired with the identity coset, the stabilizer is the intersection of the original stabilizer with H, hence H.
 

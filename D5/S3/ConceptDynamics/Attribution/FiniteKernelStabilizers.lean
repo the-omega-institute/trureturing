@@ -174,18 +174,21 @@ theorem stabilizer_possible_iff [Fintype X] [Fintype Y] [DecidableEq Y]
 to the prescribed subgroup while preserving the calibration. -/
 theorem exact_stabilizer_possible_iff [Fintype X] [Fintype Y] [DecidableEq Y]
     (P : X → Y → ℝ) (nn : ∀ x y, 0 ≤ P x y) (normalized : ∀ x, ∑ y, P x y = 1)
-    (cov : ∀ g : G, ∀ x y, P (g • x) (g • y) = P x y) (H : Subgroup G)
-    [Finite (G ⧸ H)] :
+    (cov : ∀ g : G, ∀ x y, P (g • x) (g • y) = P x y) (H : Subgroup G) :
     (∃ (S : Type (max u v w)) (_ : Fintype S) (_ : MulAction G S) (w : S → ℝ) (f : X → S → Y),
       (∀ s, 0 < w s) ∧ (∑ s, w s = 1) ∧ (∀ g : G, ∀ s, w (g • s) = w s) ∧
       (∀ x y, (∑ s, if f x s = y then w s else 0) = P x y) ∧
       (∀ g : G, ∀ x s, f (g • x) (g • s) = g • f x s) ∧
       (∃ s : S, MulAction.stabilizer G s = H)) ↔
-    (∀ x : X, ∃ y : Y, 0 < P x y ∧ ∀ h : H, h • x = x → h • y = y) := by
+    Finite (G ⧸ H) ∧
+      (∀ x : X, ∃ y : Y, 0 < P x y ∧ ∀ h : H, h • x = x → h • y = y) := by
   classical
   constructor
-  · rintro ⟨S, _, _, w, f, pos, _, _, mass, equivariant, s, stab⟩ x
-    refine ⟨f x s, ?_, ?_⟩
+  · rintro ⟨S, _, _, w, f, pos, _, _, mass, equivariant, s, stab⟩
+    have index : Finite (G ⧸ H) := by
+      rw [← stab]
+      exact Finite.of_equiv _ (MulAction.orbitEquivQuotientStabilizer G s)
+    refine ⟨index, fun x => ⟨f x s, ?_, ?_⟩⟩
     · rw [← mass]
       apply lt_of_lt_of_le (pos s)
       simpa using Finset.single_le_sum
@@ -196,7 +199,8 @@ theorem exact_stabilizer_possible_iff [Fintype X] [Fintype Y] [DecidableEq Y]
       simpa only [show (h : G) • x = x from hx,
         MulAction.mem_stabilizer_iff.mp (stab.ge h.property)] using
           (equivariant h.val x s).symm
-  · intro fixed
+  · rintro ⟨index, fixed⟩
+    let _ : Finite (G ⧸ H) := index
     obtain ⟨S, _, _, w, f, pos, total, wi, mass, equiv, s, stab⟩ :=
       (stabilizer_possible_iff P nn normalized cov H).mpr fixed
     let Q := G ⧸ H
