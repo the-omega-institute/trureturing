@@ -38,7 +38,7 @@ internal sealed class HermiteSignedModeBlocksDocument : IScribeDocumentDefinitio
                         + "n_{r+1} − n_r ∈ {4, 5} for every r; the gap is five exactly when r = R_j for some j "
                         + "(the first block is R_0 = 0), with n_{R_j} = 4R_j + j, and every block strictly between "
                         + "R_j and R_{j+1} has length four. The number R_{j+1} − R_j − 1 of those blocks satisfies "
-                        + "−3/4 ≤ R_{j+1} − R_j − 1 − j/4 ≤ 1/4, both ends attained (j = 7 and j = 3). Finally "
+                        + "−3/4 ≤ R_{j+1} − R_j − 1 − j/4 ≤ 1/4, and direct computation shows both ends occur (j = 7 and j = 3). Finally "
                         + "α_n ≤ a(n) < α_n + 4, −7/2 < a(n) − √(2n) < 3 and a(n)/√(2n) → 1.")),
                     Paragraph(Text(
                         "By the quadratic threshold, q(n) ≥ r exactly when 4r ≤ n and G(n − 4r) ≥ 8r, that is "

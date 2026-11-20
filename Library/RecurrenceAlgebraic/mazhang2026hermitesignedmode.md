@@ -56,5 +56,5 @@ n_0 = 0), and q(n) ≥ r exactly when n ≥ n_r. The block description is formal
 = −3 exactly when n + 1 is some n_r, the other differences being 1 by the frozen difference result;
 n_1 = 5; n_{r+1} − n_r ∈ {4, 5}; the gap is five exactly when r = R_j for some j ≥ 0 (R_0 = 0 is the
 first block), and n_{R_j} = 4R_j + j; blocks strictly between R_j and R_{j+1} have length four. The
-O(1) terms are made explicit and sharpened: −3/4 ≤ R_{j+1} − R_j − 1 − j/4 ≤ 1/4 with both ends
-attained, and −7/2 < a(n) − √(2n) < 3.
+O(1) terms are made explicit and sharpened: −3/4 ≤ R_{j+1} − R_j − 1 − j/4 ≤ 1/4, both ends occurring by
+direct computation (j = 7 and j = 3), and −7/2 < a(n) − √(2n) < 3.

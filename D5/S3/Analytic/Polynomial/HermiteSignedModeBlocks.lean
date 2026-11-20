@@ -13,7 +13,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 /-! The differences of the signed Hermite mode form blocks `(1,1,1,-3)` and `(1,1,1,1,-3)`.
 
 admission_basis: escape-witness. proof_shape: content for le_mode_iff_start, diff_neg_three_iff,
-offset_step, five_iff, alpha_bounds, ratio_limit and result. -/
+offset_step, offset_R, five_iff, count_nat, alpha_bounds, sqrt_strict, ratio_limit and result. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
