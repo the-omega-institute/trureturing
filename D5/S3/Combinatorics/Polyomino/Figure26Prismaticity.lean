@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Polyomino/Figure26Prismaticity
    mirror-E: none(waiver:symbolic-lattice-minimality)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/Polyomino/Figure26Prismaticity.left_issue_prismatic; instance=D5/S3/Combinatorics/Polyomino/Figure26PanelData.leftPatternTree
    digest: The two displayed Figure 26 binary-colored polyhexes are prismatic. -/
 
 import D5.S3.Combinatorics.Polyomino.Figure26PanelData
