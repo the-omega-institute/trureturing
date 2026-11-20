@@ -3,6 +3,8 @@ import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour
 import Mathlib.Algebra.Group.PUnit
 import Reg.Support.DependentFamily
 
+/-! The cardinality premise of Ma’s distinct-powers theorem is sensitive to the size of the input set. -/
+
 namespace Reg.D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour
 
 open _root_.D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour
@@ -98,5 +100,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+end
 
 end Reg.D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour
