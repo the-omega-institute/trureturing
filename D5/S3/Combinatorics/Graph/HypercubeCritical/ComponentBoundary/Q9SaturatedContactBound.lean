@@ -605,20 +605,22 @@ private theorem distanceTwoPairs_card_even {C D : Finset (Q 9)} (hsep : Separate
   obtain ⟨k, hk⟩ := hdiv
   exact ⟨k, by omega⟩
 
-private theorem distanceTwoPairs_card_ne_322 {C D : Finset (Q 9)} (hsep : Separated C D)
+-- Equality in the contact estimate forces a two-regular degree-six core.
+private theorem distanceTwoPairs_card_ne_saturated {C D : Finset (Q 9)}
+    {coreSize contacts : ℕ} (hsep : Separated C D)
     (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
     (hbC : IsBalanced C) (hbD : IsBalanced D)
-    (hc : C.card = 72) (hd : D.card = 186) (hboundary : 142 ≤ (boundary C).card) :
-    (distanceTwoPairs C D).card ≠ 322 := by
+    (hc : C.card = 72) (hd : D.card = 186)
+    (hboundary : 254 - (boundary C).card ≤ 2 * coreSize + 10)
+    (hexact : contacts + 7 * (2 * coreSize + 10) + 10 = 6 * 186)
+    (hodd : Odd coreSize) : (distanceTwoPairs C D).card ≠ contacts := by
   intro heq
   let P := (Finset.univ \ (C ∪ D)) \ boundary C
   let r := fun k => (P.filter fun x => (directions D x).card = k).card
   let R := P.filter fun x => (directions D x).card = 6
-  have hP : P.card ≤ 112 := by
-    change (((Finset.univ \ (C ∪ D)) \ boundary C).card : ℕ) ≤ 112
-    rw [card_exterior_outside_boundary hsep (by omega)]
-    omega
+  have hP : P.card ≤ 2 * coreSize + 10 :=
+    (card_exterior_outside_boundary hsep (by omega)).trans_le hboundary
   have hxOut (x : Q 9) (hx : x ∈ P) : x ∉ C ∧ x ∉ D := by
     have hxCD := (Finset.mem_sdiff.mp (Finset.mem_sdiff.mp hx).1).2
     exact ⟨fun h => hxCD (Finset.mem_union_left _ h), fun h => hxCD (Finset.mem_union_right _ h)⟩
@@ -638,7 +640,7 @@ private theorem distanceTwoPairs_card_ne_322 {C D : Finset (Q 9)} (hsep : Separa
     (∑ x ∈ P, (directions D x).card) at htotal
   have hsat : r 8 = 2 * (eightfoldCoverEdges D).card + 3 * r 0 + 2 * r 2 + r 4 + r 6 := by
     omega
-  have hRcard : r 6 = 51 := by omega
+  have hRcard : r 6 = coreSize := by omega
   have hsmall : r 0 = 0 ∧ r 2 = 0 ∧ r 4 = 0 := by omega
   have hmin : ∀ x ∈ P, 6 ≤ (directions D x).card := by
     intro x hx
@@ -662,8 +664,17 @@ private theorem distanceTwoPairs_card_ne_322 {C D : Finset (Q 9)} (hsep : Separa
     simp
   obtain ⟨q, hq⟩ := even_card_of_two_regular R hdeg
   change r 6 = q + q at hq
-  rw [hRcard] at hq
+  obtain ⟨k, hk⟩ := hodd
   omega
+
+private theorem distanceTwoPairs_card_ne_322 {C D : Finset (Q 9)} (hsep : Separated C D)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D)
+    (hc : C.card = 72) (hd : D.card = 186) (hboundary : 142 ≤ (boundary C).card) :
+    (distanceTwoPairs C D).card ≠ 322 :=
+  distanceTwoPairs_card_ne_saturated (coreSize := 51) hsep hrC hrD hbC hbD hc hd
+    (by omega) (by decide) (by exact ⟨25, rfl⟩)
 
 #print axioms high_leaf_mate_bound
 #print axioms saturated_contact_sum_bound
