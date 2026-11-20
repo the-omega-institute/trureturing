@@ -68,6 +68,36 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨1, 1, unitJ, rayKernel_one_ne⟩
 
+/-! `rayKernel_eq_inner`. -/
+namespace Inner
+
+/-- Retain the complete argument telescope of `rayKernel_eq_inner`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ x y : unitary ℍ[ℝ], r.readout () x y = ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ ^ 2 +
+    ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ]) * (unitI : ℍ[ℝ])⟫_ℝ ^ 2
+
+theorem rejected_law : ¬ arena.Law shifted := by
+  intro h
+  have hh : rayKernel 1 1 + 1 = ⟪((1 : unitary ℍ[ℝ]) : ℍ[ℝ]), ((1 : unitary ℍ[ℝ]) : ℍ[ℝ])⟫_ℝ ^ 2 +
+      ⟪((1 : unitary ℍ[ℝ]) : ℍ[ℝ]), ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]) * (unitI : ℍ[ℝ])⟫_ℝ ^ 2 := h 1 1
+  have ha := rayKernel_eq_inner 1 1
+  linarith
+
+def source_registration : Registration arena (type_of% @rayKernel_eq_inner) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rayKernel_eq_inner, shifted, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨shifted, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end Inner
+
 /-! `rayKernel_eq_hopf`. -/
 namespace Hopf
 
@@ -221,6 +251,39 @@ def source_registration :
   dependence := dependence
 
 end Spinor
+
+def rayKernel_eq_inner_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rayKernel_eq_inner) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionRayKernel.rayKernel_eq_inner_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionRayKernel.Inner.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Inner.arena⟩
+  objectArena := .source ⟨Inner.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source Inner.arena ⟨Inner.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ x s => rayKernel x s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.QuaternionRayKernel
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 def rayKernel_eq_hopf_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}

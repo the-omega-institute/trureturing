@@ -9,7 +9,7 @@ internal sealed class ProjectiveQuaternionModelDocument : IScribeDocumentDefinit
     private const string Prefix = "D5/S3/Quantum/AURICOmega/ProjectiveQuaternionModel.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The unit quaternions modulo sign, with transfer x * y^-1 * z and reading <x, y>^2, form a noncommutative, chain-connected, reading-complete ternary comparison structure touching zero whose reading has feature rank ten but not nine, and in which every point has two distinct points of reading zero.",
+        "The unit quaternions modulo sign, with transfer x * y^-1 * z and reading <x, y>^2, form a noncommutative, chain-connected, reading-complete ternary comparison structure touching zero whose reading has feature rank r exactly when r >= 10, and in which every point has two distinct points of reading zero.",
         H("The unit quaternions modulo sign as a ternary comparison structure"),
         Blocks(
             Node("sign-subgroup", "signSubgroup", "The sign subgroup",
@@ -42,21 +42,25 @@ internal sealed class ProjectiveQuaternionModelDocument : IScribeDocumentDefinit
                     + "No feature rank nine: suppose the reading is the Gram kernel of a map g into Euclidean nine-space. Take the ten unit quaternions t_1, ..., t_10 given by 1, i, j, k and (3 e_a + 4 e_b) / 5 for the six pairs a < b of the basis e_1, ..., e_4 = 1, i, j, k. If the combination sum_a c_a g(t_a) vanishes, its inner products with the vectors g(t_b) give the ten linear equations sum_a c_a <t_a, t_b>^2 = 0 in the ten unknowns c_a, and solving this system explicitly gives c = 0. "
                     + "Conceptually, the only quadratic form vanishing at all ten points is zero: a form vanishing at 1, i, j and k has zero diagonal coefficients, and its value at (3 e_a + 4 e_b) / 5 is then 12 / 25 times its coefficient of y_a y_b. Hence the ten squared linear forms <t_a, y>^2 form a basis of the ten-dimensional space of quadratic forms in y, and the matrix of the system is invertible. "
                     + "So the ten vectors g(t_a) are linearly independent, which is impossible in a space of dimension nine. "
+                    + "Exact feature ranks: HasFeatureRank(projectiveModel, r) asserts a realization of the reading as the Gram kernel of a map into Euclidean r-space, and it is equivalent to the bound r on the rank of every finite Gram matrix of the reading, by gramRankLE_iff_hasFeatureRank; a rank bound r is a rank bound for every s >= r, so feature rank is monotone in the dimension. "
+                    + "Hence feature rank ten gives feature rank r for every r >= 10, and feature rank r for some r <= 9 would give feature rank nine; so the reading has feature rank r exactly when 10 <= r, and ten is its least feature rank. "
                     + "Two points of reading zero: for every unit quaternion x, left multiplication by x preserves the inner product, so the readings of x with x * i and x * j are <1, i>^2 = 0 and <1, j>^2 = 0, and the classes of x * i and x * j differ because their reading is <i, j>^2 = 0 rather than one. "
-                    + "Since a map into Euclidean five-space followed by the inclusion into nine-space would give feature rank nine, the reading does not have feature rank five either. "
-                    + "Thus the structure is noncommutative, chain connected, touches zero and has complete reading, which are all the qualitative hypotheses under which a structure of feature rank five is isomorphic to the unit-quaternion structure; the comparison with that structure is separated by the minimal feature rank alone, ten here against five there. "
+                    + "In particular the reading does not have feature rank five. "
+                    + "Thus the structure is noncommutative, chain connected, touches zero and has complete reading, which are all the qualitative hypotheses under which a structure of feature rank five is isomorphic to the unit-quaternion structure; the two structures are separated by their least feature ranks, ten here against five there. "
                     + "In the unit-quaternion structure the only point of reading zero with x is -x, while here every point has at least two distinct points of reading zero. "
                     + "The number ten is the dimension of the space of quadratic forms in four variables, the classical dimension of the symmetric square of a four-dimensional space; its decomposition as 1 + 9, the constants together with the matrix coefficients of the three-dimensional rotation representation, is also classical. The theorem is a statement about this one explicit structure; the count is not claimed as new."))));
 
     private static Formula Model => Seq(Operatorname, Grp(F.Id("projectiveModel")));
     private static Formula SignSubgroup => Seq(Operatorname, Grp(F.Id("signSubgroup")));
     private static Formula Carrier => Seq(Operatorname, Grp(F.Id("ProjectiveQuaternion")));
+    private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula Rel(Formula x, FormulaRelationOperator op, Formula y) => new Formula.Relation(x, op, y);
     private static Formula Equal(Formula x, Formula y) => Rel(x, FormulaRelationOperator.Equal, y);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
+    private static Formula Logic(Formula x, FormulaLogicOperator op, Formula y) => new Formula.Logic(x, op, y);
     private static Formula ForAll(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
     private static Formula ExistsMany(Formula domain, Formula body, params string[] names) =>
@@ -74,8 +78,9 @@ internal sealed class ProjectiveQuaternionModelDocument : IScribeDocumentDefinit
             And(Call("ChainConnected", Model),
                 And(Call("TouchesZero", Model),
                     And(Call("ReadingComplete", Model),
-                        And(Call("HasFeatureRank", Model, D(1, 0)),
-                            And(new Formula.Not(Call("HasFeatureRank", Model, D(9))), zeros)))))));
+                        And(ForAll("r", Naturals, Logic(Call("HasFeatureRank", Model, F.Id("r")),
+                                FormulaLogicOperator.Iff, Rel(D(1, 0), FormulaRelationOperator.LessThanOrEqual, F.Id("r")))),
+                            zeros))))));
     }
 
     private static DocumentBlock Node(
