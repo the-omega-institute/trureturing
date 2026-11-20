@@ -60,6 +60,10 @@ $$\forall n: \mathbb{N}, 3 \le n \implies \exists d: \mathbb{N}, \exists k: \mat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alekseyev-a191873` (proved) by `D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alekseyev-a191873","declaration_gid":"D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Max Alekseyev and OEIS contributors (2022). *OEIS A191873: zero-diagonal Zarankiewicz conjecture*. URL: <https://oeis.org/A191873>.
