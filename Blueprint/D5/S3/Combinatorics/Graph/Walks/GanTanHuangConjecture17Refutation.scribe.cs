@@ -45,7 +45,10 @@ internal sealed class GanTanHuangConjecture17RefutationDocument : IScribeDocumen
                         + "so all seven interior vertices must be core vertices. Their distinct core "
                         + "labels would give an injection from Fin 7 into Fin 6. "
                         + "Mathlib's finite-cardinality bound for injections rules this out."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gan-tan-huang-2026-conjecture-1-7"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Named(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);

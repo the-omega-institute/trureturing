@@ -24,6 +24,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/GanTanHuangConjecture17Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gan-tan-huang-2026-conjecture-1-7` (refuted) by `D5/S3/Combinatorics/Graph/Walks/GanTanHuangConjecture17Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gan-tan-huang-2026-conjecture-1-7","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/GanTanHuangConjecture17Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhiyong Gan; Zhiliang Tan; Yi Huang (2026). *An extremal question of Erdős et al. on cycles*. DOI: [10.48550/arXiv.2611.22824](https://doi.org/10.48550/arXiv.2611.22824). URL: <https://arxiv.org/abs/2611.22824v1>.
