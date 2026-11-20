@@ -30,5 +30,19 @@ internal sealed class ProperEdgeColorPosteriorDocument : IScribeDocumentDefiniti
                         "The kernel enumerates assignments on the actual edge sets. " +
                         "The two matching cycle assignments differ in the color of edge 30, " +
                         "which only needs to avoid the common color 0 on its two adjacent edges."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("erased-replies-lose-colour-information"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/Queries/ProperEdgeColorPosterior.erasedRepliesDoNotDetermineColorLikelihood"),
+                H("Erased replies do not determine the colored likelihood"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the four labeled vertices, equality of the complete uncolored replies at " +
+                    "vertices 1 and 2 does not determine the likelihood of the selected colored " +
+                    "record. The path and cycle realize both erased replies and have positive " +
+                    "numbers of proper colorings. Their respective likelihoods are one twelfth " +
+                    "and one ninth."))),
                 DescribeRole.Theorem))));
 }
