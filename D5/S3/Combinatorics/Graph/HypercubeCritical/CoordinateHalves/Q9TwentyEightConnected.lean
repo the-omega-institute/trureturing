@@ -2,7 +2,7 @@ import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwoBalancedComponents
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourExpansion
 
-/-! Connectedness of the 28-point side of a coordinate cut. -/
+/-! Connectedness and compression of the smaller sides of coordinate cuts at order 72. -/
 
 set_option autoImplicit false
 
@@ -31,26 +31,29 @@ open private compressed from D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyP
 
 set_option maxRecDepth 8192 in
 set_option maxHeartbeats 8000000 in
-private theorem small_profile_impossible (a b p r : Fin 15) :
-    0 < a.val + b.val + p.val + r.val →
-    a.val + b.val + p.val + r.val ≤ 14 →
-    3 * a.val + 2 * p.val = 3 * b.val + 2 * r.val →
-    2 * (p.val + r.val) ≤ 3 * (a.val + b.val) →
-    15 * a.val ≤ a.val * (b.val + r.val) + 2 * b.val + 4 * r.val →
-    15 * b.val ≤ b.val * (a.val + p.val) + 2 * a.val + 4 * p.val → False := by
-  revert a b p r
+private theorem small_profile_bounds (a b p : Fin 22) :
+    let r := (3 * a.val + 2 * p.val - 3 * b.val) / 2
+    let n := a.val + b.val + p.val + r
+    0 < n → n ≤ 21 →
+    3 * a.val + 2 * p.val = 3 * b.val + 2 * r →
+    2 * (p.val + r) ≤ 3 * (a.val + b.val) →
+    15 * a.val ≤ a.val * (b.val + r) + 2 * b.val + 4 * r →
+    15 * b.val ≤ b.val * (a.val + p.val) + 2 * a.val + 4 * p.val →
+    15 ≤ n ∧ 9 ≤ p.val + r := by
+  revert a b p
   decide +kernel
 
 attribute [local instance] Classical.propDecidable
 
-private theorem fifteen_le_card {S : Finset (Q 9)} (hS : S.Nonempty) (hb : IsBalanced S)
+private theorem slice_component_bounds {S : Finset (Q 9)} (hS : S.Nonempty) (hb : IsBalanced S)
     (hdeg : ∀ x : (S : Set (Q 9)),
       ((hypercube 9).induce (S : Set (Q 9))).degree x = 2 ∨
       ((hypercube 9).induce (S : Set (Q 9))).degree x = 3)
     (hlow : ∀ {x y : (S : Set (Q 9))}, (hypercube 9).Adj x.val y.val →
       ((hypercube 9).induce (S : Set (Q 9))).degree x = 2 →
       ((hypercube 9).induce (S : Set (Q 9))).degree y = 2 → False) :
-    15 ≤ S.card := by
+    15 ≤ S.card ∧ (S.card ≤ 21 →
+      9 ≤ (degreeTwo ((hypercube 9).induce (S : Set (Q 9))) univ).card) := by
   let G := (hypercube 9).induce (S : Set (Q 9))
   let L := paritySide S false
   let R := paritySide S true
@@ -89,13 +92,61 @@ private theorem fifteen_le_card {S : Finset (Q 9)} (hS : S.Nonempty) (hb : IsBal
   change 15 * a ≤ a * R.card + 2 * b + 4 * r ∧
     15 * b ≤ b * L.card + 2 * a + 4 * p at hpaths
   rw [← hpartsL, ← hpartsR, Nat.add_comm r b, Nat.add_comm p a] at hpaths
-  by_contra! hs
-  have hn := card_pos.mpr hS
-  have hpositive : 0 < a + b + p + r := by omega
-  have hsmall : a + b + p + r ≤ 14 := by omega
-  have hbalanced : 3 * a + 2 * p = 3 * b + 2 * r := by omega
-  exact small_profile_impossible ⟨a, by omega⟩ ⟨b, by omega⟩ ⟨p, by omega⟩ ⟨r, by omega⟩
-    hpositive hsmall hbalanced hcounts hpaths.1 hpaths.2
+  by_cases hs : S.card ≤ 21
+  · have hr : (3 * a + 2 * p - 3 * b) / 2 = r := by omega
+    have hsmall := small_profile_bounds ⟨a, by omega⟩ ⟨b, by omega⟩ ⟨p, by omega⟩
+    change (let r := (3 * a + 2 * p - 3 * b) / 2
+            let n := a + b + p + r
+            0 < n → n ≤ 21 → 3 * a + 2 * p = 3 * b + 2 * r →
+            2 * (p + r) ≤ 3 * (a + b) →
+            15 * a ≤ a * (b + r) + 2 * b + 4 * r →
+            15 * b ≤ b * (a + p) + 2 * a + 4 * p → 15 ≤ n ∧ 9 ≤ p + r) at hsmall
+    dsimp only at hsmall
+    rw [hr] at hsmall
+    have hn := card_pos.mpr hS
+    have h := hsmall (by omega) (by omega) (by omega) hcounts hpaths.1 hpaths.2
+    exact ⟨by omega, fun _ => hlowCount.symm ▸ h.2⟩
+  · exact ⟨by omega, fun h => (hs h).elim⟩
+
+private def componentInclusion (S : Finset (Q 9))
+    (K : ((hypercube 9).induce (S : Set (Q 9))).ConnectedComponent) :
+    (componentFinset S K : Set (Q 9)) ↪ (S : Set (Q 9)) :=
+  ⟨fun x => ⟨x.val, componentFinset_subset S K x.property⟩,
+    fun _ _ h => Subtype.ext (congrArg (fun z : (S : Set (Q 9)) => z.val) h)⟩
+
+private theorem degree_in_component (S : Finset (Q 9))
+    (K : ((hypercube 9).induce (S : Set (Q 9))).ConnectedComponent)
+    (x : (componentFinset S K : Set (Q 9))) :
+    ((hypercube 9).induce (componentFinset S K : Set (Q 9))).degree x =
+      ((hypercube 9).induce (S : Set (Q 9))).degree (componentInclusion S K x) := by
+  rw [induced_degree_eq_neighbor_card (componentFinset S K) x,
+    induced_degree_eq_neighbor_card S (componentInclusion S K x)]
+  congr 1
+  ext y
+  simp only [mem_inter, SimpleGraph.mem_neighborFinset]
+  exact ⟨fun ⟨hxy, hy⟩ => ⟨hxy, componentFinset_subset S K hy⟩,
+    fun ⟨hxy, hy⟩ => ⟨hxy, componentFinset_neighbor_closed S K x.val x.property y hy hxy⟩⟩
+
+private theorem half_component_bounds {C : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool)
+    (K : ((hypercube 9).induce (coordinateSlice C b : Set (Q 9))).ConnectedComponent) :
+    let T := componentFinset (coordinateSlice C b) K
+    15 ≤ T.card ∧ (T.card ≤ 21 →
+      9 ≤ (degreeTwo ((hypercube 9).induce (T : Set (Q 9))) univ).card) := by
+  let S := coordinateSlice C b
+  let T := componentFinset S K
+  let J := (hypercube 9).induce (T : Set (Q 9))
+  let point := componentInclusion S K
+  have hdegree (x : (T : Set (Q 9))) : J.degree x =
+      ((hypercube 9).induce (S : Set (Q 9))).degree (point x) := degree_in_component S K x
+  have hT := componentFinset_subset S K
+  exact slice_component_bounds (componentFinset_nonempty S K)
+    (balanced_subset hb (hT.trans (filter_subset _ _)))
+    (fun x => by rw [hdegree x]; exact coordinate_slice_degree_cases (point x).property hr)
+    (fun {x y} hxy hx hy => coordinate_slice_low_independent hr hb
+      (x := point x) (y := point y) hxy (by rw [← hdegree x]; exact hx)
+      (by rw [← hdegree y]; exact hy))
 
 /-- Every 28-point half of a balanced induced cubic subgraph of the nine-cube
 is connected. -/
@@ -106,27 +157,6 @@ theorem half_connected {C : Finset (Q 9)}
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
   have hScard : S.card = 28 := hs
-  have hsize (K : G.ConnectedComponent) : 15 ≤ (componentFinset S K).card := by
-    let T := componentFinset S K
-    let J := (hypercube 9).induce (T : Set (Q 9))
-    let point (x : (T : Set (Q 9))) : (S : Set (Q 9)) :=
-      ⟨x.val, componentFinset_subset S K x.property⟩
-    have hdegree (x : (T : Set (Q 9))) : J.degree x = G.degree (point x) := by
-      change ((hypercube 9).induce (T : Set (Q 9))).degree x =
-        ((hypercube 9).induce (S : Set (Q 9))).degree (point x)
-      rw [induced_degree_eq_neighbor_card T x, induced_degree_eq_neighbor_card S (point x)]
-      congr 1
-      ext y
-      simp only [mem_inter, SimpleGraph.mem_neighborFinset]
-      exact ⟨fun ⟨hxy, hy⟩ => ⟨hxy, componentFinset_subset S K hy⟩,
-        fun ⟨hxy, hy⟩ => ⟨hxy, componentFinset_neighbor_closed S K x.val x.property y hy hxy⟩⟩
-    have hT := componentFinset_subset S K
-    exact fifteen_le_card (componentFinset_nonempty S K)
-      (balanced_subset hb (hT.trans (filter_subset _ _)))
-      (fun x => by rw [hdegree x]; exact coordinate_slice_degree_cases (point x).property hr)
-      (fun {x y} hxy hx hy => coordinate_slice_low_independent hr hb
-        (x := point x) (y := point y) hxy (by rw [← hdegree x]; exact hx)
-        (by rw [← hdegree y]; exact hy))
   obtain ⟨x, hx⟩ := card_pos.mp (show 0 < S.card by omega)
   refine G.connected_iff_exists_forall_reachable.mpr ⟨⟨x, hx⟩, fun y => ?_⟩
   by_contra hn
@@ -135,11 +165,63 @@ theorem half_connected {C : Finset (Q 9)}
   have hd := componentFinset_disjoint S K L (fun he => hn (ConnectedComponent.exact he))
   have hle := card_le_card (union_subset (componentFinset_subset S K) (componentFinset_subset S L))
   rw [card_union_of_disjoint hd, hScard] at hle
-  have hk := hsize K
-  have hl := hsize L
+  have hk : 15 ≤ (componentFinset S K).card := (half_component_bounds hr hb b K).1
+  have hl : 15 ≤ (componentFinset S L).card := (half_component_bounds hr hb b L).1
   omega
 
 #print axioms half_connected
+
+/-- Every nonempty coordinate half of size at most 36 is connected at order 72.
+Two components would each have at least nine degree-two vertices, while the
+entire half has twelve. -/
+theorem small_half_connected {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hsize : (coordinateSlice C b).card ≤ 36) :
+    ((hypercube 9).induce (coordinateSlice C b : Set (Q 9))).Connected := by
+  let S := coordinateSlice C b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  have hdirections : 6 * directionEdges C 0 = C.card := by
+    simpa using direction_edge_count (d := 3) C hr hb 0
+  have hlo : (degreeTwo G univ).card = 12 := by
+    rw [low_slice_card_eq_q hr]
+    omega
+  obtain ⟨root, _⟩ := card_pos.mp (show 0 < (degreeTwo G univ).card by omega)
+  refine G.connected_iff_exists_forall_reachable.mpr ⟨root, fun y => ?_⟩
+  by_contra hn
+  let K := G.connectedComponentMk root
+  let L := G.connectedComponentMk y
+  have hd := componentFinset_disjoint S K L (fun he => hn (ConnectedComponent.exact he))
+  have hn' := card_le_card (union_subset (componentFinset_subset S K) (componentFinset_subset S L))
+  rw [card_union_of_disjoint hd] at hn'
+  have hS : S.card ≤ 36 := hsize
+  have hk : 15 ≤ (componentFinset S K).card := (half_component_bounds hr hb b K).1
+  have hl : 15 ≤ (componentFinset S L).card := (half_component_bounds hr hb b L).1
+  let low (A : G.ConnectedComponent) :=
+    degreeTwo ((hypercube 9).induce (componentFinset S A : Set (Q 9))) univ
+  let mapped (A : G.ConnectedComponent) := (low A).map (componentInclusion S A)
+  have hk21 : (componentFinset S K).card ≤ 21 := by omega
+  have hl21 : (componentFinset S L).card ≤ 21 := by omega
+  have hklow : 9 ≤ (low K).card := (half_component_bounds hr hb b K).2 hk21
+  have hllow : 9 ≤ (low L).card := (half_component_bounds hr hb b L).2 hl21
+  have hsub (A : G.ConnectedComponent) : mapped A ⊆ degreeTwo G univ := by
+    intro z hz
+    obtain ⟨x, hx, rfl⟩ := Finset.mem_map.mp hz
+    exact mem_filter.mpr ⟨mem_univ _, (degree_in_component S A x).symm.trans (mem_filter.mp hx).2⟩
+  have hdis : Disjoint (mapped K) (mapped L) := by
+    apply Finset.disjoint_left.mpr
+    intro z hz hz'
+    obtain ⟨x, _, he⟩ := Finset.mem_map.mp hz
+    obtain ⟨y', _, he'⟩ := Finset.mem_map.mp hz'
+    have hxe : x.val = z.val := congrArg Subtype.val he
+    have hye : y'.val = z.val := congrArg Subtype.val he'
+    exact Finset.disjoint_left.mp hd (hxe ▸ x.property) (hye ▸ y'.property)
+  have hcounts := card_le_card (union_subset (hsub K) (hsub L))
+  rw [card_union_of_disjoint hdis, hlo] at hcounts
+  dsimp only [mapped] at hcounts
+  rw [card_map, card_map] at hcounts
+  omega
+
+#print axioms small_half_connected
 
 private theorem suppress_connected {V : Type*} [Fintype V] [DecidableEq V]
     {G : SimpleGraph V} {L R : Finset V} (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
@@ -240,22 +322,23 @@ theorem suppressed_half_connected {C : Finset (Q 9)}
 
 #print axioms suppressed_half_connected
 
-/-- A 28-point half at order 72 compresses to a connected triangle-free
-cubic graph on 16 vertices. Exactly 12 edges are direct, and the smaller
-parity class has size 4, 6, or 8. -/
-theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
+/-- At order 72, the compressed smaller half is connected, cubic and
+triangle-free. The half size determines the total number of high vertices
+and direct edges and constrains the smaller high parity class. -/
+theorem small_half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 28) :
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card ≤ 36) :
     let S := coordinateSlice C b
     let G := (hypercube 9).induce (S : Set (Q 9))
     let L := paritySide S false
     let R := paritySide S true
     let J := suppress G L R
-    Fintype.card (High G L R) = 16 ∧ J.IsRegularOfDegree 3 ∧ J.Connected ∧
+    Fintype.card (High G L R) + 12 = S.card ∧ J.IsRegularOfDegree 3 ∧ J.Connected ∧
       (∀ x y z, J.Adj x y → J.Adj y z → J.Adj z x → False) ∧
-      (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 12 ∧
+      2 * (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) + 60 =
+        3 * S.card ∧
       let n := min (degreeThree G L).card (degreeThree G R).card
-      n = 4 ∨ n = 6 ∨ n = 8 := by
+      n + 6 ≤ S.card / 2 ∧ S.card / 2 ≤ n + 10 ∧ n % 2 = (S.card / 2) % 2 := by
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
   let L := paritySide S false
@@ -281,9 +364,9 @@ theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
     have he : degreeTwo G L ∪ degreeTwo G R = degreeTwo G univ := by
       simp only [degreeTwo, ← filter_union, hu]
     rw [← card_union_of_disjoint hdisj, he, hlowCount]
-  have hsize : L.card + R.card = 28 := by
+  have hsize : L.card + R.card = S.card := by
     rw [← card_union_of_disjoint hd, hu, card_univ]
-    exact (Fintype.card_coe S).trans hs
+    exact Fintype.card_coe S
   have hL : (degreeTwo G L).card + (degreeThree G L).card = L.card := parts_card G hdeg L
   have hR : (degreeTwo G R).card + (degreeThree G R).card = R.card := parts_card G hdeg R
   have hbalance : 2 * (degreeTwo G L).card + 3 * (degreeThree G L).card =
@@ -312,21 +395,56 @@ theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
   have hinc := (sum_degree_parts hdeg R
     (fun v => (degreeThree G (G.neighborFinset v)).card)).symm.trans (sum_high_neighbors hp)
   rw [hlowInc] at hinc
-  have h16 : Fintype.card (High G L R) = 16 := by
+  have hhigh : Fintype.card (High G L R) + 12 = S.card := by
     rw [Fintype.card_sum, Fintype.card_coe, Fintype.card_coe]
     omega
-  have hdirect : (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 12 := by
+  have hdirect : 2 * (∑ v ∈ degreeThree G R,
+      (degreeThree G (G.neighborFinset v)).card) + 60 = 3 * S.card := by
     change 2 * (degreeTwo G R).card +
       (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) =
       3 * (degreeThree G L).card at hinc
     omega
   have hparity : let n := min (degreeThree G L).card (degreeThree G R).card
-      n = 4 ∨ n = 6 ∨ n = 8 := by
-    dsimp only
-    omega
-  exact ⟨h16, suppress_regular hp hdeg hlow hg, suppressed_half_connected hr hb b hs,
+      n + 6 ≤ S.card / 2 ∧ S.card / 2 ≤ n + 10 ∧ n % 2 = (S.card / 2) % 2 := by
+    let n := min (degreeThree G L).card (degreeThree G R).card
+    change n + 6 ≤ S.card / 2 ∧ S.card / 2 ≤ n + 10 ∧ n % 2 = (S.card / 2) % 2
+    dsimp only [n]
+    rcases le_total (degreeThree G L).card (degreeThree G R).card with h | h
+    · rw [min_eq_left h]
+      omega
+    · rw [min_eq_right h]
+      omega
+  exact ⟨hhigh, suppress_regular hp hdeg hlow hg,
+    suppress_connected hp hu hdeg hlow (small_half_connected hC hr hb b hs),
     suppress_triangle_free hp hg, hdirect, hparity⟩
 
+/-- A 28-point half at order 72 compresses to a connected triangle-free
+cubic graph on 16 vertices. Exactly 12 edges are direct, and the smaller
+parity class has size 4, 6, or 8. -/
+theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 28) :
+    let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    let L := paritySide S false
+    let R := paritySide S true
+    let J := suppress G L R
+    Fintype.card (High G L R) = 16 ∧ J.IsRegularOfDegree 3 ∧ J.Connected ∧
+      (∀ x y z, J.Adj x y → J.Adj y z → J.Adj z x → False) ∧
+      (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 12 ∧
+      let n := min (degreeThree G L).card (degreeThree G R).card
+      n = 4 ∨ n = 6 ∨ n = 8 := by
+  obtain ⟨horder, hreg, hconn, htri, hdirect, hparity⟩ :=
+    small_half_suppression hC hr hb b (hs.trans_le (by decide))
+  dsimp only at horder hdirect hparity ⊢
+  rw [hs] at horder hdirect hparity
+  have horder' := Nat.add_right_cancel (horder.trans (show 28 = 16 + 12 by decide))
+  have hcount := Nat.add_right_cancel (hdirect.trans (show 3 * 28 = 2 * 12 + 60 by decide))
+  have hdirect' := Nat.eq_of_mul_eq_mul_left (by decide : 0 < 2) hcount
+  refine ⟨horder', hreg, hconn, htri, hdirect', ?_⟩
+  omega
+
+#print axioms small_half_suppression
 #print axioms half_suppression
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyEightConnected
