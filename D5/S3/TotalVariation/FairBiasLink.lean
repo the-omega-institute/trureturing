@@ -85,7 +85,7 @@ private theorem splitWeight_in_realization (c : L → A) (x : link c) :
   let S := Finset.univ.filter (fun z : L × Bool => w z ≠ 0)
   have hw : ∑ z, w z = 1 := by
     rw [Fintype.sum_prod_type]
-    simpa only [Fintype.sum_bool, splitWeight_sum_pair] using x.property.1
+    simpa only [w, Fintype.sum_bool, splitWeight_sum_pair] using x.property.1
   have hnonempty : S.Nonempty := by
     by_contra hn
     have hz : ∀ z, w z = 0 := by
@@ -143,8 +143,8 @@ private theorem signedDifference_in_link (c : L → A) (w : realization (signedC
     · apply AddSubgroup.closure_mono
       rintro a ⟨i, _, rfl⟩
       exact ⟨i, rfl⟩
-    · change unusedSpan c S = AddSubgroup.closure (Set.range c) at hS.2.2
-      rw [← hS.2.2]
+    · have hspan : unusedSpan c S = AddSubgroup.closure (Set.range c) := hS.2.2
+      rw [← hspan]
       apply AddSubgroup.closure_mono
       rintro a ⟨i, hi, rfl⟩
       exact ⟨i, by simp [signedDifference, hz _ (hi true), hz _ (hi false)], rfl⟩
@@ -175,9 +175,10 @@ private theorem continuous_splitWeight : Continuous (splitWeight : (L → ℝ) �
   apply continuous_pi
   rintro ⟨i, b⟩
   cases b
-  · simpa only [splitWeight, Bool.false_eq_true, ite_false] using
-      (continuous_apply i).neg.max continuous_const
-  · simpa only [splitWeight, ite_true] using (continuous_apply i).max continuous_const
+  · change Continuous (fun x : L → ℝ => max (-x i) 0)
+    exact (continuous_apply i).neg.max continuous_const
+  · change Continuous (fun x : L → ℝ => max (x i) 0)
+    exact (continuous_apply i).max continuous_const
 
 private theorem continuous_signedDifference :
     Continuous (signedDifference : (L × Bool → ℝ) → L → ℝ) :=
