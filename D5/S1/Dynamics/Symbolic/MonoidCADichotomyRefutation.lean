@@ -15,10 +15,10 @@ noncomputable section
 
 namespace D5.S1.Dynamics.Symbolic.MonoidCADichotomyRefutation
 
-open _root_.Dynamics Filter Function Set
+open _root_.Dynamics ExpGrowth Filter Function Set
 open LatticeGardenOfEden (localMap)
 open SymbolicDynamics.FullShift (shift shift_apply)
-open scoped Topology Uniformity SetRel
+open scoped ENNReal Topology Uniformity SetRel
 
 private abbrev Lattice (D : ℕ) := Fin D → ℤ
 
@@ -66,6 +66,7 @@ private theorem box_basis (D : ℕ) (A : Type*) [UniformSpace A] [DiscreteUnifor
     exact ⟨r, trivial, fun _ hp z hz => hp z (hr hz)⟩
   · exact fun r _ => ⟨box D r, trivial, Subset.rfl⟩
 
+/-- The source distance uses the least centered-box radius that sees a disagreement. -/
 private def sourceDist {D : ℕ} {A : Type*} (x y : Lattice D → A) : ℝ :=
   open Classical in
   if h : ∃ r, (x, y) ∉ windowRel (box D r) then (1 / 2 : ℝ) ^ Nat.find h else 0
@@ -86,7 +87,7 @@ private theorem sourceDist_lt_iff {D : ℕ} {A : Type*} (x y : Lattice D → A) 
       have hzi := mem_box.mp hz i
       have hcast : (Nat.find h : ℤ) ≤ (r : ℤ) := by exact_mod_cast hmin
       omega
-  · exact iff_of_true (by positivity) (by exact not_exists.mp h r |> not_not.mp)
+  · exact iff_of_true (by positivity) (not_not.mp (not_exists.mp h r))
 
 private theorem sourceDist_basis (D : ℕ) (A : Type*) [UniformSpace A] [DiscreteUniformity A] :
     (𝓤 (Lattice D → A)).HasBasis (fun ε : ℝ => 0 < ε)
@@ -137,6 +138,8 @@ def claim : Prop :=
     letI : UniformSpace A := ⊥
     ∀ F : (Lattice D → A) →* (Lattice D → A),
       (∃ (W : Finset (Lattice D)) (rule : (W → A) → A), (F : _ → _) = localMap W rule) →
+      Continuous (F : _ → _) →
+      (∀ u x, F (shift u x) = shift u (F x)) →
       (UniformEquicontinuous (fun k : ℕ => (F : _ → _)^[k]) ∧ coverEntropy F univ = 0) ∨
       (sensitive F ∧ coverEntropy F univ = ⊤)
 
@@ -241,9 +244,10 @@ private theorem east_propagates (x : Config) (k : ℕ) (z : Lattice 2)
 
 private theorem or_not_equicontinuous :
     ¬ UniformEquicontinuous (fun k : ℕ => (orCA : Config → Config)^[k]) := by
-  rw [(box_basis 2 Bool).uniformEquicontinuous_iff (box_basis 2 Bool)]
+  rw [source_equicontinuous_iff]
   intro h
-  obtain ⟨r, _, hr⟩ := h 0 trivial
+  obtain ⟨δ, hδ, heq⟩ := h 1 zero_lt_one
+  obtain ⟨r, hr⟩ := exists_pow_lt_of_lt_one hδ (by norm_num : (1 / 2 : ℝ) < 1)
   let u : Lattice 2 := (r + 1) • east
   have hu : u ∉ box 2 r := by
     intro hmem
@@ -253,41 +257,179 @@ private theorem or_not_equicontinuous :
     intro z hz
     have hzu : z ≠ u := fun h => hu (h ▸ hz)
     simp [seed, hzu]
+  have hclose := heq _ _ (((sourceDist_lt_iff _ _ r).mpr hagree).trans hr) (r + 1)
+  have hcloseZero : sourceDist ((orCA : Config → Config)^[r + 1] (fun _ => false))
+      ((orCA : Config → Config)^[r + 1] (seed u)) < (1 / 2 : ℝ) ^ 0 := by
+    simpa only [pow_zero] using hclose
   have hzero : (0 : Lattice 2) ∈ box 2 0 := by simp [mem_box]
-  have hbad := hr _ _ hagree (r + 1) 0 hzero
+  have hbad := (sourceDist_lt_iff _ _ 0).mp hcloseZero 0 hzero
   change (orCA : Config → Config)^[r + 1] (fun _ => false) 0 =
     (orCA : Config → Config)^[r + 1] (seed u) 0 at hbad
   rw [or_iterate_constant, east_propagates (seed u) (r + 1) 0 (by simp [u, seed])] at hbad
   exact Bool.false_ne_true hbad
 
 private theorem or_not_sensitive : ¬ sensitive (orCA : Config → Config) := by
-  rw [sensitive_iff_basis (box_basis 2 Bool)]
-  rintro ⟨r, _, h⟩
-  obtain ⟨y, k, hxy, hbad⟩ := h (fun _ => true) r trivial
-  apply hbad
-  intro z hz
-  have hstart : y z = true := (hxy z hz).symm
-  have hp := or_iterate_mono y z (Nat.zero_le k)
-  change y z ≤ (orCA : Config → Config)^[k] y z at hp
-  rw [hstart] at hp
-  change (orCA : Config → Config)^[k] (fun _ => true) z = (orCA : Config → Config)^[k] y z
-  rw [or_iterate_constant]
-  exact le_antisymm hp (by simp)
+  rw [source_sensitive_iff]
+  rintro ⟨ε, hε, h⟩
+  obtain ⟨r, hr⟩ := exists_pow_lt_of_lt_one hε (by norm_num : (1 / 2 : ℝ) < 1)
+  obtain ⟨y, k, hxy, hbad⟩ := h (fun _ => true) ((1 / 2 : ℝ) ^ r) (by positivity)
+  have hstart : ((fun _ : Lattice 2 => true), y) ∈ windowRel (box 2 r) :=
+    (sourceDist_lt_iff _ _ r).mp hxy
+  have hpersist :
+      ((orCA : Config → Config)^[k] (fun _ => true), (orCA : Config → Config)^[k] y) ∈
+        windowRel (box 2 r) := by
+    intro z hz
+    have hy : y z = true := (hstart z hz).symm
+    have hp := or_iterate_mono y z (Nat.zero_le k)
+    change y z ≤ (orCA : Config → Config)^[k] y z at hp
+    rw [hy] at hp
+    change (orCA : Config → Config)^[k] (fun _ => true) z = (orCA : Config → Config)^[k] y z
+    rw [or_iterate_constant]
+    exact (Bool.eq_true_of_true_le hp).symm
+  exact (not_lt_of_ge hbad) (((sourceDist_lt_iff _ _ r).mpr hpersist).trans hr)
 
 /-- The remote seed and the persistent all-true window exclude the two alternatives. -/
 theorem result : ¬ claim := by
   intro h
-  rcases h 2 (by decide) Bool orCA ⟨offsets, orRule, rfl⟩ with hl | hr
+  rcases h 2 (by decide) Bool orCA ⟨offsets, orRule, rfl⟩
+    (localMap_continuous offsets orRule) (localMap_shift offsets orRule) with hl | hr
   · exact or_not_equicontinuous hl.1
   · exact or_not_sensitive hr.1
 
+private def trace {I A : Type*} (F : (I → A) → (I → A))
+    (W : Finset I) (n : ℕ) (x : I → A) : Fin n × W → A :=
+  fun p => F^[p.1.val] x p.2.val
+
+private theorem trace_eq_iff {I A : Type*} (F : (I → A) → (I → A))
+    (W : Finset I) (n : ℕ) (x y : I → A) :
+    trace F W n x = trace F W n y ↔ (x, y) ∈ dynEntourage F (windowRel W) n := by
+  rw [mem_dynEntourage]
+  exact ⟨fun h k hk z hz => congrFun h (⟨k, hk⟩, ⟨z, hz⟩),
+    fun h => funext fun p => h p.1.val p.1.isLt p.2.val p.2.property⟩
+
+/-- Every realized trace supplies a center, and a center covers exactly one trace class. -/
+private theorem coverMincard_eq_traceCount {I A : Type*} [Fintype A] (F : (I → A) → (I → A))
+    (W : Finset I) (n : ℕ) :
+    coverMincard F univ (windowRel W) n = (Nat.card (range (trace F W n)) : ℕ∞) := by
+  classical
+  let T := range (trace F W n)
+  let rep (t : T) : I → A := t.property.choose
+  have hrep (t : T) : trace F W n (rep t) = t.val := t.property.choose_spec
+  let : Fintype T := Fintype.ofFinite T
+  apply le_antisymm
+  · let centers : Finset (I → A) := Finset.univ.image rep
+    have hc : IsDynCoverOf F univ (windowRel W) n centers := by
+      intro x _
+      let t : T := ⟨trace F W n x, mem_range_self x⟩
+      exact ⟨rep t, Finset.mem_image.mpr ⟨t, Finset.mem_univ t, rfl⟩,
+        (trace_eq_iff F W n _ _).mp (hrep t).symm⟩
+    refine hc.coverMincard_le_card.trans ?_
+    exact_mod_cast (show centers.card ≤ Nat.card T from
+      Finset.card_image_le.trans_eq (by rw [Finset.card_univ, Nat.card_eq_fintype_card]))
+  · unfold coverMincard
+    refine le_iInf₂ fun centers hc => ?_
+    have hcenter (t : T) : ∃ c : centers, trace F W n c.val = t.val := by
+      obtain ⟨c, hmem, hclose⟩ := hc (x := rep t) (mem_univ _)
+      exact ⟨⟨c, hmem⟩, ((trace_eq_iff F W n _ _).mpr hclose).symm.trans (hrep t)⟩
+    choose center hcenter using hcenter
+    have hinj : Injective center := by
+      intro t u h
+      apply Subtype.ext
+      rw [← hcenter t, ← hcenter u, h]
+    have hcard := Nat.card_le_card_of_injective center hinj
+    have hcCard : Nat.card ↥centers = centers.card := by
+      rw [Nat.card_eq_fintype_card, Fintype.card_coe]
+    exact_mod_cast hcard.trans_eq hcCard
+
+private theorem exists_cutoff (x : Config) (z : Lattice 2) (n : ℕ) :
+    ∃ t, n ≤ t ∨ (orCA : Config → Config)^[t] x z = true :=
+  ⟨n, Or.inl le_rfl⟩
+
+/-- The first time a coordinate is true, with `n` encoding an all-false trace. -/
+private def cutoff (x : Config) (z : Lattice 2) (n : ℕ) : Fin (n + 1) :=
+  open Classical in
+  ⟨Nat.find (exists_cutoff x z n),
+    Nat.lt_succ_of_le (Nat.find_min' (exists_cutoff x z n) (Or.inl le_rfl))⟩
+
+private theorem cutoff_spec (x : Config) (z : Lattice 2) {n : ℕ} (k : Fin n) :
+    (orCA : Config → Config)^[k.val] x z = true ↔ (cutoff x z n).val ≤ k.val := by
+  classical
+  change _ ↔ Nat.find (exists_cutoff x z n) ≤ k.val
+  refine ⟨fun h => Nat.find_min' (exists_cutoff x z n) (Or.inr h), fun hk => ?_⟩
+  have ht := (Nat.find_spec (exists_cutoff x z n)).resolve_left
+    (not_le_of_gt (hk.trans_lt k.isLt))
+  have hm := or_iterate_mono x z hk
+  change (orCA : Config → Config)^[Nat.find (exists_cutoff x z n)] x z ≤
+    (orCA : Config → Config)^[k.val] x z at hm
+  rw [ht] at hm
+  exact Bool.eq_true_of_true_le hm
+
+private theorem or_traceCount_le (W : Finset (Lattice 2)) (n : ℕ) :
+    Nat.card (range (trace (orCA : Config → Config) W n)) ≤ (n + 1) ^ W.card := by
+  classical
+  let T := range (trace (orCA : Config → Config) W n)
+  let code (t : T) (z : W) : Fin (n + 1) := cutoff t.property.choose z.val n
+  have hinj : Injective code := by
+    intro t u h
+    apply Subtype.ext
+    rw [← t.property.choose_spec, ← u.property.choose_spec]
+    funext p
+    have hp := congrArg Fin.val (congrFun h p.2)
+    change (cutoff t.property.choose p.2.val n).val =
+      (cutoff u.property.choose p.2.val n).val at hp
+    apply Bool.eq_iff_iff.mpr
+    change (orCA : Config → Config)^[p.1.val] t.property.choose p.2.val = true ↔
+      (orCA : Config → Config)^[p.1.val] u.property.choose p.2.val = true
+    rw [cutoff_spec, cutoff_spec, hp]
+  calc
+    _ ≤ Nat.card (W → Fin (n + 1)) := Nat.card_le_card_of_injective code hinj
+    _ = (n + 1) ^ W.card := by simp [Nat.card_eq_fintype_card]
+
+private theorem polynomial_growth_zero (m : ℕ) :
+    expGrowthSup (fun n : ℕ => (((n + 1) ^ m : ℕ) : ℝ≥0∞)) = 0 := by
+  have hlog : Tendsto (fun n : ℕ => Real.log ((n : ℝ) + 1) / n) atTop (𝓝 0) := by
+    have htop : Tendsto (fun n : ℕ => (n : ℝ) + 1) atTop atTop := by
+      simpa only [Function.comp_def, Nat.cast_add, Nat.cast_one] using
+        (tendsto_natCast_atTop_atTop (R := ℝ)).comp (tendsto_add_atTop_nat 1)
+    convert (Real.tendsto_pow_log_div_mul_add_atTop 1 (-1) 1 one_ne_zero).comp htop using 1
+    funext n
+    simp
+  have hlim : Tendsto (fun n : ℕ => Real.log (((n + 1) ^ m : ℕ) : ℝ) / n) atTop (𝓝 0) := by
+    simpa only [Nat.cast_pow, Nat.cast_add, Nat.cast_one, Real.log_pow, mul_div_assoc, mul_zero]
+      using hlog.const_mul (m : ℝ)
+  apply Tendsto.limsup_eq
+  refine (EReal.tendsto_coe.mpr hlim).congr (fun n => ?_)
+  change ((Real.log (((n + 1) ^ m : ℕ) : ℝ) / n : ℝ) : EReal) =
+    ENNReal.log (↑((n + 1) ^ m : ℕ)) / (n : EReal)
+  rw [ENNReal.log_pos_real (by positivity) (by simp), ENNReal.toReal_natCast, EReal.coe_div,
+    EReal.coe_natCast]
+
+private theorem or_entropy_zero : coverEntropy (orCA : Config → Config) univ = 0 := by
+  apply le_antisymm _ (coverEntropy_nonneg _ univ_nonempty)
+  rw [coverEntropy_eq_iSup_basis (box_basis 2 Bool)]
+  refine iSup₂_le fun r _ => ?_
+  unfold coverEntropyEntourage
+  refine (expGrowthSup_monotone (b := fun n : ℕ => ↑((n + 1) ^ (box 2 r).card : ℕ))
+    fun n => ?_).trans_eq (polynomial_growth_zero _)
+  rw [coverMincard_eq_traceCount, ENat.toENNReal_coe]
+  change (Nat.card (range (trace (orCA : Config → Config) (box 2 r) n)) : ℝ≥0∞) ≤
+    (((n + 1) ^ (box 2 r).card : ℕ) : ℝ≥0∞)
+  exact_mod_cast or_traceCount_le (box 2 r) n
+
+#print axioms claim
 #print axioms localMap_continuous
 #print axioms localMap_shift
+#print axioms sourceDist_lt_iff
 #print axioms source_equicontinuous_iff
 #print axioms source_sensitive_iff
+#print axioms orCA
 #print axioms axes_essential
 #print axioms or_not_equicontinuous
 #print axioms or_not_sensitive
 #print axioms result
+#print axioms coverMincard_eq_traceCount
+#print axioms cutoff_spec
+#print axioms or_traceCount_le
+#print axioms or_entropy_zero
 
 end D5.S1.Dynamics.Symbolic.MonoidCADichotomyRefutation
