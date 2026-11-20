@@ -47,6 +47,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   let level (x : Fin 2) : ℤ := x.val
   have distinct : Function.Injective level := by
     intro x y eq
+    change (x.val : ℤ) = (y.val : ℤ) at eq
     apply Fin.ext
     exact_mod_cast eq
   have covers (x : Fin 2) : ∃ d : Fin 1 → Fin 3,
