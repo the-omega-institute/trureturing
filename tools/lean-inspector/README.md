@@ -69,7 +69,7 @@ CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
 CI/cache 流程以 [SPEC A22](../../docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 为准。
-普通 PR 和 push 只读恢复缓存，检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` 非删除 push 与固定提交的手动 build 共用仓库级串行 producer。该作业严格验证整库 bundle，并按 ref 与精确 key 确认新项目快照。定时与手动 Release 走独立作业。以下命令手动构建受保护分支的固定提交。
+普通 PR 和 push 只读恢复缓存，检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` 非删除 push 与固定提交的手动 build 共用仓库级串行 producer。该作业严格验证整库 bundle，并按 ref 与精确 key 确认新项目快照。同一 ref 的自动刷新合并等待中的请求。全量 producer 与集成测试的隔离 Lean Release 验证共用仓库级并发队列。定时与手动 Release 走独立作业。以下命令手动构建受保护分支的固定提交。
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \

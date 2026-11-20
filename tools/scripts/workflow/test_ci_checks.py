@@ -67,37 +67,35 @@ class CheckTests(unittest.TestCase):
             with self.subTest(purpose=purpose):
                 result, calls, _ = self.local_spies(purpose=purpose)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
+                self.assertIn(["pr-lean", "D5/changed.lean"], calls)
                 self.assertFalse(any(call[:2] == ["make", "lean-report"] for call in calls))
                 self.assertFalse(any("check-current" in call or "check-delta" in call for call in calls))
 
-    def test_hosted_scope_uses_candidate_manifest_only_when_base_is_unavailable(self):
+    def test_hosted_scope_rejects_missing_manifest_before_launch(self):
         data, revision = contract.load(ROOT)
         with tempfile.TemporaryDirectory() as directory:
-            affected = Path(directory) / "affected"
             changed = Path(directory) / "changed"
-            contract.write_paths(affected, ["D5/Tracked.lean"])
-            command = ["ci_checks.py", "current", "scoped-lean", "--purpose", "push",
-                       "--affected", str(affected), "--changed", str(changed)]
+            command = ["ci_checks.py", "current", "pr-lean", "--purpose", "push",
+                       "--changed", str(changed)]
             with patch.object(checks, "load", return_value=(data, revision)), \
                     patch.object(checks, "execute", return_value=0) as execute, \
-                    patch.dict(os.environ, CI_BASE=""), patch.object(sys, "argv", command):
-                self.assertEqual(checks.main(), 0)
-                self.assertEqual(execute.call_args.args[1][-1], str(affected))
-                execute.reset_mock()
-                with patch.dict(os.environ, CI_BASE="a" * 40), contextlib.redirect_stderr(io.StringIO()):
-                    self.assertEqual(checks.main(), 2)
-                    execute.assert_not_called()
-                    contract.write_paths(changed, ["D5/Changed.lean"])
-                    self.assertEqual(checks.main(), 0)
-                    self.assertEqual(execute.call_args.args[1][-1], str(changed))
-                affected.unlink()
-                changed.unlink()
-                execute.reset_mock()
-                with contextlib.redirect_stderr(io.StringIO()) as error:
-                    self.assertEqual(checks.main(), 2)
-                self.assertIn("missing scoped Lean path manifest", error.getvalue())
+                    patch.dict(os.environ, CI_BASE=""), patch.object(sys, "argv", command), \
+                    contextlib.redirect_stderr(io.StringIO()) as error:
+                self.assertEqual(checks.main(), 2)
+                self.assertIn("missing changed-path manifest", error.getvalue())
                 execute.assert_not_called()
+                contract.write_paths(changed, ["D5/Changed.lean"])
+                self.assertEqual(checks.main(), 0)
+                self.assertEqual(execute.call_args.args[1][-1], str(changed))
+
+    def test_no_report_delta_diagnostic_keeps_original_command(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["D5/Changed.lean"], "pull-request")
+        base = "a" * 40
+        with patch.object(checks, "execute", return_value=0) as execute:
+            self.assertEqual(checks.current_phase("check-delta", data, dict(plan, report=False), base, Path("changed")), 0)
+            self.assertEqual(execute.call_args.args[1], ["dotnet", checks.CLI, "check-delta", "--protected-base", base])
+            self.assertTrue(execute.call_args.kwargs["delta"])
 
     def test_real_process_exits_are_preserved(self):
         for raw in (0, 1, 2, 3, 124, 143):
@@ -129,7 +127,7 @@ class CheckTests(unittest.TestCase):
         with patch.object(checks, "execute", return_value=0), patch.object(checks, "prepare_unit", return_value=0), \
                 patch.object(checks, "current_phase", side_effect=phase), contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_run(data, plan, "a" * 40, Path("changed")), 2)
-        self.assertEqual(called, ["build-judge", "scoped-lean"])
+        self.assertEqual(called, ["build-judge", "pr-lean"])
         self.assertIn('"status":"blocked"', output.getvalue())
 
     def test_independent_validators_execute_after_a_semantic_rejection(self):
@@ -153,7 +151,7 @@ class CheckTests(unittest.TestCase):
                 patch.object(checks, "current_phase") as phase, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_run(data, plan, "a" * 40, Path("changed")), 2)
         phase.assert_not_called()
-        self.assertIn('"check":"scoped-lean","status":"blocked"', output.getvalue())
+        self.assertIn('"check":"pr-lean","status":"blocked"', output.getvalue())
 
     def test_selected_evidence_restore_failure_keeps_other_ready_validators_reachable(self):
         data, _ = contract.load(ROOT)
@@ -165,7 +163,7 @@ class CheckTests(unittest.TestCase):
             code = checks.current_run(data, plan, "a" * 40, Path("changed"), checks.Prerequisite(0, "accepted", True))
         self.assertEqual(2, code)
         self.assertNotIn("source-evidence", called)
-        self.assertEqual(called, ["scoped-lean", "compiled-audit"])
+        self.assertEqual(called, ["pr-lean", "compiled-audit"])
 
     def test_source_command_uses_original_current_delta_and_theory_scopes(self):
         data, _ = contract.load(ROOT)
@@ -191,7 +189,7 @@ class CheckTests(unittest.TestCase):
             if hit and unit != "current":
                 self.assertIn(f'"check":"{unit}","status":"blocked"', result.stdout)
 
-    def test_readme_skips_current_and_theory_only_keeps_source_diagnostics(self):
+    def test_readme_skips_current_and_theory_path_keeps_pr_selection(self):
         for purpose in ("pull-request", "push"):
             with self.subTest(purpose=purpose):
                 result, calls, plan = self.local_spies(paths=("README.md",), purpose=purpose)
@@ -201,11 +199,11 @@ class CheckTests(unittest.TestCase):
                 result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose=purpose)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 self.assertTrue(plan["hits"]["current"])
-                self.assertFalse(plan["report"])
+                self.assertTrue(plan["report"])
                 self.assertTrue(plan["delta"])
                 source = next(call for call in calls if "check-source" in call)
                 self.assertIn("--protected-base", source)
-                self.assertFalse(any(call[0] in ("elan", "scoped-lean") for call in calls))
+                self.assertIn(["pr-lean", "docs/develop/theory/Note.md"], calls)
 
     def test_scoped_failure_is_red_and_blocks_report_consumers_only(self):
         for scoped in (0, 1):
@@ -219,14 +217,14 @@ class CheckTests(unittest.TestCase):
                                     if hit and name != "current"))
                 for phase in ("source-evidence", "compiled-audit"):
                     self.assertEqual(records[phase], "blocked" if scoped else "success")
-                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
+                self.assertIn(["pr-lean", "D5/changed.lean"], calls)
 
     def test_bootstrap_and_source_input_failures_preserve_independent_fallback(self):
         for source, judge in ((2, 0), (0, 1)):
             with self.subTest(source=source, judge=judge):
                 result, calls, _ = self.local_spies(source=source, judge=judge, purpose="push")
                 self.assertNotEqual(0, result.returncode)
-                self.assertIn(["scoped-lean", "D5/changed.lean"], calls)
+                self.assertIn(["pr-lean", "D5/changed.lean"], calls)
                 if judge:
                     self.assertFalse(any("check-source" in call for call in calls))
                     self.assertIn('"check":"compiled-audit","status":"blocked"', result.stdout)
@@ -243,7 +241,7 @@ class CheckTests(unittest.TestCase):
             (scripts / "ci_pr_lean.py").write_text(
                 "import json, os, sys\nfrom pathlib import Path\nfrom ci_contract import read_changed\n"
                 "with open(os.environ['CALLS'], 'a') as output:\n"
-                "    output.write(json.dumps(['scoped-lean', *read_changed(Path(sys.argv[1]))]) + '\\n')\n"
+                "    output.write(json.dumps(['pr-lean', *read_changed(Path(sys.argv[1]))]) + '\\n')\n"
                 "sys.exit(int(os.environ['SCOPED']))\n")
             (root / "Meta").mkdir()
             shutil.copy2(ROOT / contract.CONTRACT, root / contract.CONTRACT)

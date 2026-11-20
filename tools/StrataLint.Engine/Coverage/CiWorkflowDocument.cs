@@ -11,8 +11,7 @@ internal sealed class CiWorkflowDocument(
     YamlMappingNode root,
     ImmutableDictionary<string, CiWorkflowJob> jobs)
 {
-    internal const string CurrentJobName = "current";
-    private const string ScopedCheckCommand = "python3 tools/scripts/workflow/ci_checks.py current scoped-lean";
+    internal const string DeltaJobName = "current";
     internal ImmutableDictionary<string, CiWorkflowJob> Jobs => jobs;
 
     internal static CiWorkflowDocument? Parse(string text)
@@ -72,17 +71,16 @@ internal sealed class CiWorkflowDocument(
         && Child(trigger, "branches") is YamlSequenceNode branches
         && branches.Children.OfType<YamlScalarNode>().Any(item => item.Value == branch);
 
-    internal bool HasCurrentGate(string branch) =>
+    internal bool HasDeltaGate(string branch) =>
         RunsOnBranch("pull_request", branch)
-        && Jobs.TryGetValue(CurrentJobName, out var job)
-        && job is { Name: CurrentJobName, Uses: null }
+        && Jobs.TryGetValue(DeltaJobName, out var job)
+        && job is { Name: DeltaJobName, Uses: null }
         && Child(root, "jobs") is YamlMappingNode jobs
-        && jobs.Children.TryGetValue(new YamlScalarNode(CurrentJobName), out var rawJob)
+        && jobs.Children.TryGetValue(new YamlScalarNode(DeltaJobName), out var rawJob)
         && rawJob is YamlMappingNode current
         && Child(current, "steps") is YamlSequenceNode steps
         && steps.Children.OfType<YamlMappingNode>().Any(step =>
-            Child(step, "run") is YamlScalarNode { Value: { } command }
-            && (command == ScopedCheckCommand || command.Contains("check-delta", StringComparison.Ordinal)));
+            Child(step, "run") is YamlScalarNode run && run.Value?.Contains("check-delta", StringComparison.Ordinal) == true);
 
     private static YamlNode? Child(YamlMappingNode node, string key) =>
         node.Children.TryGetValue(new YamlScalarNode(key), out var value) ? value : null;

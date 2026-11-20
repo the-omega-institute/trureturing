@@ -1,4 +1,4 @@
-"""Build and check the selected Lean and Scribe inputs of a CI candidate."""
+"""Build and check the explicit Lean inputs of a pull request."""
 
 import argparse
 import json
@@ -54,8 +54,8 @@ def check(paths):
         scope = json.loads(plan.stdout)
         programs, targets = scope["programs"], scope["targets"]
         if any(not MODULE.fullmatch(module) for module in [*targets, *programs]):
-            raise ValueError("invalid Lean module in CI scope")
-        print(f"CI_SCOPED_LEAN report_targets={len(targets)} program_targets={len(programs)}", flush=True)
+            raise ValueError("invalid Lean module in PR scope")
+        print(f"CI_PR_LEAN report_targets={len(targets)} program_targets={len(programs)}", flush=True)
         environment = dict(os.environ, STRATALINT_ACCEPT_COLD_BUILD="1")
         if programs:
             subprocess.run(["bash", "tools/scripts/worktree/lean-cache-run.sh", "lake",
@@ -77,12 +77,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path)
     try:
-        paths = read_changed(parser.parse_args().manifest)
-        if paths is None:
-            raise ValueError("missing scoped Lean path manifest")
-        sys.exit(check(paths))
+        sys.exit(check(read_changed(parser.parse_args().manifest)))
     except subprocess.CalledProcessError as error:
         sys.exit(error.returncode if error.returncode > 0 else 128 - error.returncode)
     except (OSError, ValueError, KeyError) as error:
-        print("CI_SCOPED_LEAN_ERROR " + str(error), file=sys.stderr)
+        print("CI_PR_LEAN_ERROR " + str(error), file=sys.stderr)
         sys.exit(2)

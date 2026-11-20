@@ -412,7 +412,7 @@ Metadata access uses bounded, nonblocking coordination scoped to the private adm
 
 **入口与选工。** 普通检查由 workflow `ci-current.yml` 承担，PR 与 push 各自触发；独立缓存入口见本节缓存契约。每个独立程序或测试项目是其中一个单元作业，互无前置依赖的作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 检出 `tools/scripts/workflow` 和 `Meta/ci-units.json`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明一次判定各单元和 current 子检查是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
 
-PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit；初始 push 的全零 before 或无法取回 before 时，所有单元保守命中，关闭 delta，并以独立的已跟踪候选路径清单选择 Lean 输入。已知 base 时，缺失改动清单使检查失败。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
+PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。普通 push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit。全零 before 时，用固定的 GitHub 事件载荷及其 SHA 比较核验新分支引入的提交范围。只创建 ref 且无引入提交时生成空清单。无法取回非零 before、载荷缺失、截断或不一致、以及缺失改动清单，均在选工阶段失败。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 
 **独立命令。** 各入口验证自己的必需输入与真实结果，不要求其它 workflow 的执行证据：
 
@@ -440,7 +440,7 @@ FILEMAP conformance 使用既有候选快照 reader 的当前路径和模式，�
 
 选中 current 时，共享 executor 的 source 前缀先恢复/构建候选判官，再用既有快照与策略 loader 检查实际候选字节。current 容量保留 materials/excludes、800/1000 行及目录 192 容差；仅原 delta 适用时检查 touched 目录 96 上限和候选/基线成员包含、Library added/modified 3000 行与理论 added/modified 5000 行。源码混面仅运行这个前置子集，不能把完整无报告 check-delta 扩张到混面。FILEMAP、快照、配置及判官 bootstrap 保留原基础设施失败分类；只有完成的确定性源码拒绝阻止受守护后继，bootstrap 或输入失败不冒充这种拒绝，输入仍有效的原报告 fallback 与独立检查保留可达性。
 
-hosted 的 source 作业是 current 的前置 phase，由 detect 的 current 命中触发。其余命中作业按 source continuation 并行运行。纯理论变更的源码检查已接受时，current 直接确认执行身份。需要判官的 continuation 恢复已有种子，未命中时构建自己的判官。required 核对 source 的实际结果、accepted/continuation 输出和各命中单元的执行身份。source 与 current 共用累计 7200s。ci_compute 导出已扣除判官编译和源码执行的剩余秒数，continuation 接受 [0,7200] 范围内的余额并初始化新 job 的本地预算文件。缺失或非法输出导致失败。准备与下载在计算预算外，各 job 的平台上限为 360m。
+hosted 的 source 作业是 current 的前置 phase，由 detect 的 current 命中触发。其余命中作业按 source continuation 并行运行。源码检查已接受且报告阶段未选中时，current 直接确认执行身份。需要判官的 continuation 恢复已有种子，未命中时构建自己的判官。required 核对 source 的实际结果、accepted/continuation 输出和各命中单元的执行身份。source 与 current 共用累计 7200s。ci_compute 导出已扣除判官编译和源码执行的剩余秒数，continuation 接受 [0,7200] 范围内的余额并初始化新 job 的本地预算文件。缺失或非法输出导致失败。准备与下载在计算预算外，各 job 的平台上限为 360m。
 
 current 在定向 Lean 和 Scribe 检查就绪后运行选中的 FIB 回归、Fourier source evidence 和 compiled audit。每项检查按自己的前置条件执行并报告真实退出状态。
 
@@ -477,12 +477,12 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 | --- | --- |
 | PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），`ci-unit.yml` 默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
 | 独立长 Actions producer | 受保护分支的非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，并按上文 Native executable boundary 完成报告所需的依赖范围 FIB 回归；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
-| Actions producer 并发 | 同一仓库内所有受保护分支共用一个并发组。运行中的 producer 继续执行，等待位只保留最新的请求。 |
+| Actions producer 并发 | 全部受保护 ref 的 producer 与集成测试的 Lean Release 验证作业共用仓库级原生 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
 
 ```text
-PR (M, base M^1) or push (event.after, base event.before)
+PR (M, base M^1) or push (event.after, verified event range)
   -> source checks -> selected Lean programs/modules and Scribe inputs
   selected units + current -> required
   Actions Cache -> read-only restore
@@ -507,7 +507,7 @@ protected push or pinned manual build
 
 source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet restore 经共享 executor 的准备路径执行，不扣余额，编译 judge 使用 `--no-restore`。continuation 在所选依赖准备前恢复剩余余额，使独立准备失败仍可保留有效输入上的报告 fallback。报告入口的 fallback producer 先独立 restore，再计费编译；工具链和 `ensure-cache` 是准备阶段。`with-cache-reader` 在原 writer guard 内完成自身嵌套准备后才给实际命令计费，保留冷构建拒绝、原失败与 guard 释放。报告外层 supervisor 在该普通 CI 调用中使用 360m 的准备/计算总上限，实际计算仍扣 120m 余额，其他调用和测试 guard 不改。报告 `reuse` 在 GitHub Actions 下不下载 Release：既有 Release fetch 与 freshness 分支在网络取回前跳过；本地 Release 的既有策略不变。缓存辅助工具的 bootstrap 属于准备；项目与报告编译不能搬到准备阶段。
 
-`ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再由同一预算 owner 初始化 job 本地余额文件，用一次 GNU `timeout` 调用包住所选 test/command；`timeout-minutes` 输入为 1..360 的整数，默认 120；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通 PR 和 push 缺少兼容种子时仍构建选中目标。纯理论 PR 和 push 只做适用文件/容量规则和所需 judge 准备、编译，不触发 Lean/toolchain/artifact 工作。
+`ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再由同一预算 owner 初始化 job 本地余额文件，用一次 GNU `timeout` 调用包住所选 test/command；`timeout-minutes` 输入为 1..360 的整数，默认 120；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通 PR 和 push 缺少兼容种子时仍构建选中目标。报告阶段沿用 PR 的 `current.report_paths`，目前为 `*`。路径未选中 current 时跳过整个 current；命中 current 的纯理论路径沿用同一准备和定向检查，定向清单没有 Lean 目标时不运行 Lean 构建。
 
 平台 360m 上限涵盖准备、计算、上传和清理。长 producer 与定时 Release 各有独立的 360m job 上限。
 
@@ -522,7 +522,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | 入口 / 触发 | 固定源码与读取范围 | 写入范围 | 计算预算 / 平台 job 上限 |
 | --- | --- | --- | --- |
 | PR | 固定 merge candidate，按 `M^1→M` 的路径选取 Lean、Scribe 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
-| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按 before/after 选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
+| 普通 push 至 dev/integration-* | 固定 `HEAD=event.after`，按核验的事件范围选择 Lean、Scribe、源码 delta 与测试输入 | project、dependency、elan、judge 和 NuGet 全部只读 | current 与各 unit 默认累计计算 120m，各 job 平台上限 360m |
 | 受保护 dev/integration-* 非删除 push | 在固定事件提交上生产并验证整库报告和关联原生产物 | 同一保护分支的 Actions cache | 360m |
 | `workflow_dispatch`，`operation=build`（默认） | `source_ref` 必须等于 dispatch ref，且为受保护 `refs/heads/dev` 或 `refs/heads/integration-*`；非零 40 位小写十六进制 `source_sha` 必须可达，检出该 SHA | 同一已校验 branch scope | 360m |
 | `workflow_dispatch`，`operation=release` | 原始 `actor` 与当前 `triggering_actor` 均须为 `loning`；runtime 为受保护 dev/integration ref；`source_ref` 固定为 `refs/heads/dev`，非零完整 `source_sha` 须属于受保护 dev 的固定快照，检出该 SHA | 只读授权 job 先验证；独立发布 job 在任何发布操作前再次检查两个账号，单 job 重跑不复用身份授权；沿既有 Release 发布程序，不写 Actions 种子 | 授权 5m；发布 120m |
@@ -533,11 +533,11 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
-GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 push 和手动 Actions build 共用仓库级串行 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。
+GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 push 和手动 Actions build 共用仓库级串行 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。producer 使用固定候选 SHA，独立于普通 CI 对 push 范围的核验。集成测试的 Release 验证保留独立构建与发布命名空间，改动范围不可读时仍执行验证，并与 Actions producer 互斥。
 
 手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
-源码 delta 使用可读的事件基线执行适用的源码容量检查。理论稿件与消化记录在独立理论仓接受该仓的检查。
+普通 current 复用 `check-source` 的 SL-003 容量检查、SL-015 路径策略以及基线适用时的准入面诊断。整库报告支持的 `check-current`、`check-delta` 和整库 Scribe 入口仍可独立执行。例如整库 Lean 闭包和冻结一致性、delta 测试拓扑与 SL-030/031/032 不属于普通 push 的定向检查。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
 **状态与决策。** 兼容种子须具有规范报告、四个 sidecar 与成功收据，并满足 A14.9 的格式和工件检查；格式相符不表示输入未变。
 

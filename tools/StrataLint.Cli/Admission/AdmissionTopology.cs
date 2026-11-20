@@ -24,7 +24,7 @@ internal static class AdmissionWorkflowTopology
     {
         try
         {
-            return CiWorkflowDocument.Parse(StrictUtf8.GetString(bytes))?.HasCurrentGate(defaultBranch) == true;
+            return CiWorkflowDocument.Parse(StrictUtf8.GetString(bytes))?.HasDeltaGate(defaultBranch) == true;
         }
         catch (DecoderFallbackException)
         {

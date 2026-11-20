@@ -43,9 +43,6 @@ jobs:
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
       base: ${{ steps.entry.outputs.base }}
-      fib_regressions: ${{ steps.detect.outputs['fib-regressions'] }}
-      source_evidence: ${{ steps.detect.outputs['source-evidence'] }}
-      compiled_audit: ${{ steps.detect.outputs['compiled-audit'] }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5
@@ -64,6 +61,7 @@ jobs:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+          GH_TOKEN: ${{ github.event_name == 'push' && github.event.created && github.token || '' }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: detect
         name: Decide which units the change hits
@@ -268,7 +266,6 @@ jobs:
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
-          CI_AFFECTED_PATHS_FILE: ${{ runner.temp }}/affected-paths
         run: bash tools/scripts/workflow/ci-entry.sh
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
@@ -369,24 +366,24 @@ jobs:
         if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       - name: Theory-only file and capacity checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
           CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current source
-      - id: scoped_lean
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: pr_lean
         name: Check affected Lean modules and Scribe inputs
         if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
-        env:
-          CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_checks.py current scoped-lean
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
       - name: Run selected FIB regressions
-        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.fib_regressions == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current fib-regressions
+        if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-fib
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.source_evidence == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        env:
+          CI_DOTNET_PREPARED: '1'
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
       - name: Run the compiled audit checks
-        if: ${{ !cancelled() && steps.scoped_lean.outcome == 'success' && needs.detect.outputs.compiled_audit == 'true' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
 
       - id: checked

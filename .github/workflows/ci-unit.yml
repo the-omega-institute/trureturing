@@ -42,6 +42,7 @@ jobs:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: definition
         env:

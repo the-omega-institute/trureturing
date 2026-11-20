@@ -22,7 +22,7 @@ def result(check, status, raw=None, exit_code=None):
                                     "exit": exit_code}, separators=(",", ":")), flush=True)
 
 
-def execute(check, command, *, compute=True, env=None):
+def execute(check, command, *, compute=True, delta=False, env=None):
     print("CI_COMMAND " + json.dumps({"check": check, "argv": command}), flush=True)
     previous = os.environ.copy()
     try:
@@ -37,10 +37,11 @@ def execute(check, command, *, compute=True, env=None):
         os.environ.clear()
         os.environ.update(previous)
     raw = 128 - raw if raw < 0 else raw
-    status = ("success" if raw == 0 else
+    status = ("protected-only" if delta and raw == 3 else "success" if raw == 0 else
               "timeout" if raw in (124, 137) else "cancelled" if raw in (130, 143) else "failure")
-    result(check, status, raw, raw)
-    return raw
+    code = 0 if delta and raw == 3 else raw
+    result(check, status, raw, code)
+    return code
 
 
 def prepare_unit(unit):
@@ -89,7 +90,7 @@ def prepare_local_lean():
 
 def unit_run(name, unit, *, current=None):
     if unit["command"] == "acknowledge-current":
-        # The canonical report consumer already ran the selected FIB suite.
+        # The current job already ran the selected FIB suite.
         # This unit only acknowledges an identified successful current job.
         code = 0 if current == ("success", "current") else 1
         result(name, "success" if code == 0 else "blocked", code, code)
@@ -118,14 +119,14 @@ def current_phase(phase, data, plan, base, paths):
         return prepare_current(data, plan)
     if phase == "build-judge":
         return execute(phase, ["dotnet", "build", *data["current"]["judge_build_args"], "--no-restore"])
-    if phase == "scoped-lean":
-        if paths is None or not paths.is_file():
-            raise DetectError("missing scoped Lean path manifest")
+    if phase == "pr-lean":
+        if not paths.is_file():
+            raise DetectError("incremental Lean checks require the changed paths")
         return execute(phase, [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths)])
-    if phase in ("fib-regressions", "compiled-audit", "source-evidence") and not plan[phase]:
+    if phase in ("compiled-audit", "source-evidence") and not plan[phase]:
         result(phase, "not-applicable")
         return 0
-    if phase == "fib-regressions":
+    if phase == "pr-fib":
         return execute(phase, ["make", "compiled-fib-test"])
     if phase == "compiled-audit":
         return execute(phase, ["make", "compiled-judge-test"])
@@ -134,10 +135,18 @@ def current_phase(phase, data, plan, base, paths):
                               "TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
                               "TEST_FILTER=FullyQualifiedName~FourierBridgeSourceEvidenceTests"],
                        env={"CI_DOTNET_PREPARED": "1", "FOURIER_BRIDGE_SOURCE_ARTIFACTS": ""})
+    if phase == "check-delta" and not plan["report"]:
+        if not plan["delta"]:
+            result(phase, "not-applicable")
+            return 0
+        if not base:
+            raise DetectError("selected delta requires a readable protected base")
+        return execute(phase, ["dotnet", CLI, "check-delta", "--protected-base", base], delta=True)
     raise DetectError(f"unknown current phase: {phase}")
 
 
-READY_PHASES = ("fib-regressions", "source-evidence", "compiled-audit")
+READY_PHASES = (("source-evidence", "source-evidence"), ("compiled-audit", "compiled-audit"),
+                ("pr-fib", "fib-regressions"))
 
 
 @dataclass(frozen=True)
@@ -171,9 +180,9 @@ def current_prerequisite(data, plan, base, paths):
 def current_run(data, plan, base, paths, prefix=None):
     prefix = prefix or current_prerequisite(data, plan, base, paths)
     if not prefix.allowed:
-        result("scoped-lean", "blocked" if plan["report"] else "not-applicable")
-        for phase in READY_PHASES:
-            result(phase, "blocked" if plan[phase] else "not-applicable")
+        result("pr-lean", "blocked" if plan["report"] else "not-applicable")
+        for phase, selection_key in READY_PHASES:
+            result(phase, "blocked" if plan[selection_key] else "not-applicable")
         return prefix.code
     failures = [prefix.code]
     if not plan["report"]:
@@ -183,12 +192,12 @@ def current_run(data, plan, base, paths, prefix=None):
     judge = 0 if prefix.judge_ready else prefix.code
     # Judge bootstrap and selected test restore failures do not erase independently
     # reachable report fallback. Lean preparation alone guards report inputs.
-    report = lean or current_phase("scoped-lean", data, plan, base, paths)
+    report = lean or current_phase("pr-lean", data, plan, base, paths)
     if lean:
-        result("scoped-lean", "blocked")
+        result("pr-lean", "blocked")
     failures += [lean, restore, report]
-    for phase in READY_PHASES:
-        if not plan[phase]:
+    for phase, selection_key in READY_PHASES:
+        if not plan[selection_key]:
             result(phase, "not-applicable")
         elif judge or report or phase == "source-evidence" and restore:
             result(phase, "blocked")
@@ -289,7 +298,6 @@ def main():
     current.add_argument("phase")
     runner_temp = Path(os.environ.get("RUNNER_TEMP", "/nonexistent"))
     current.add_argument("--changed", type=Path, default=os.environ.get("CI_CHANGED_PATHS_FILE") or runner_temp / "changed-paths")
-    current.add_argument("--affected", type=Path, default=os.environ.get("CI_AFFECTED_PATHS_FILE") or runner_temp / "affected-paths")
     current.add_argument("--base", default=os.environ.get("CI_BASE"))
     current.add_argument("--purpose", choices=("pull-request", "push"), default="pull-request" if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else "push")
     args = parser.parse_args()
@@ -329,14 +337,8 @@ def main():
                     stream.write("unit=" + args.unit + "\n")
             return code
         paths = read_changed(args.changed)
-        if paths is None and (args.base or args.purpose == "pull-request"):
-            raise DetectError("missing changed-path manifest for candidate with a base")
         plan = selection(data, paths, args.purpose)
-        base = args.base
-        if not base and plan["delta"]:
-            base = base_commit(Path.cwd(), "HEAD^1") if args.purpose == "pull-request" else os.environ.get("CI_PUSH_BEFORE", "")
-        affected = args.affected if paths is None else args.changed
-        return current_phase(args.phase, data, plan, base, affected)
+        return current_phase(args.phase, data, plan, args.base, args.changed)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print("CI_CHECK_ERROR " + str(error), file=sys.stderr)
         return 2

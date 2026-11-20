@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 import ci_contract as contract
@@ -187,11 +188,12 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(set(contract.changed_paths(self.root, self.base)), {mode, link, changed_link})
         self.parity()
 
-    def test_empty_changes_differ_from_unavailable_hosted_base(self):
+    def test_empty_changes_differ_from_missing_manifest(self):
         data, _ = contract.load(self.root)
-        self.assertFalse(any(contract.selection(data, [], "pull-request")["hits"].values()))
-        self.assertTrue(all(contract.selection(data, None, "pull-request")["hits"].values()))
-        self.assertTrue(contract.selection(data, None, "push")["report"])
+        for purpose in ("pull-request", "push"):
+            self.assertFalse(any(contract.selection(data, [], purpose)["hits"].values()))
+            with self.assertRaisesRegex(contract.DetectError, "missing changed-path manifest"):
+                contract.selection(data, None, purpose)
 
     def test_push_and_pull_request_select_the_same_units_and_checks(self):
         self.put("D5/changed.lean", b"-- changed\n")
@@ -201,14 +203,50 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(push, contract.selection(data, paths, "pull-request"))
         self.assertTrue(push["delta"])
         self.assertTrue(push["report"])
-        for changed in ([], ["README.md"], ["docs/develop/theory/Note.md"], None):
+        self.assertFalse(push["full-report"])
+        for changed, report in (([], False), (["README.md"], False), (["docs/develop/theory/Note.md"], True)):
             with self.subTest(changed=changed):
                 push = contract.selection(data, changed, "push")
                 self.assertEqual(push, contract.selection(data, changed, "pull-request"))
-                self.assertEqual(push["report"], changed is None)
-                if changed is None:
-                    self.assertTrue(all(push["hits"].values()))
-                    self.assertFalse(push["delta"])
+                self.assertEqual(push["report"], report)
+
+    def test_new_branch_uses_pinned_comparison_and_retains_all_introduced_paths(self):
+        self.put("D5/First.lean", b"-- introduced first\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "first introduced")
+        first = self.git("rev-parse", "HEAD").strip()
+        self.put("Blueprint/Second.scribe.cs", b"// introduced second\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "second introduced")
+        head = self.git("rev-parse", "HEAD").strip()
+        server, repo, ref = "https://github.com", "example/repository", "refs/heads/integration-test"
+        event = self.root / "event.json"
+        data = {"ref": ref, "before": contract.ZERO, "after": head, "created": True, "deleted": False,
+                "compare": f"{server}/{repo}/compare/{self.base}...{head}",
+                "commits": [{"id": first}, {"id": head}], "head_commit": {"id": head}}
+        comparison = {"base": self.base, "total": 2, "commits": [first, head]}
+        event.write_text(json.dumps(data))
+        with patch.object(contract.subprocess, "run", return_value=subprocess.CompletedProcess(
+                [], 0, json.dumps(comparison), "")) as compare:
+            base = contract.new_branch_base(self.root, head, event, ref, server, repo)
+        self.assertIn(f"repos/{repo}/compare/{self.base}...{head}", compare.call_args.args[0])
+        self.assertEqual(set(contract.changed_paths(self.root, base, head)),
+                         {"D5/First.lean", "Blueprint/Second.scribe.cs"})
+
+        for incomplete in ([{"id": head}], [], [{"id": "a" * 40}, {"id": head}]):
+            with self.subTest(commits=incomplete), patch.object(contract.subprocess, "run",
+                    return_value=subprocess.CompletedProcess([], 0, json.dumps(comparison), "")):
+                event.write_text(json.dumps(dict(data, commits=incomplete)))
+                with self.assertRaisesRegex(contract.DetectError, "truncated or inconsistent|differ"):
+                    contract.new_branch_base(self.root, head, event, ref, server, repo)
+        for broken in (dict(data, size=3), dict(data, commits=data["commits"] * 1024),
+                       dict(data, compare=data["compare"].replace(self.base, "dev")),
+                       dict(data, after=first), dict(data, head_commit={"id": first})):
+            with self.subTest(keys=broken.keys()), patch.object(contract.subprocess, "run") as compare:
+                event.write_text(json.dumps(broken))
+                with self.assertRaises(contract.DetectError):
+                    contract.new_branch_base(self.root, head, event, ref, server, repo)
+                compare.assert_not_called()
 
     def test_invalid_base_fails_and_local_keeps_remotes(self):
         self.git("remote", "add", "persistent", "https://example.invalid/repository.git")

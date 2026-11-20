@@ -45,6 +45,12 @@ on:
 
 permissions: {}
 
+# Replace only a pending automatic refresh for the same ref. Manual and
+# scheduled runs each get their own workflow group before job-level locking.
+concurrency:
+  group: lean-cache-publication-${{ github.event_name == 'push' && github.ref || github.run_id }}
+  cancel-in-progress: false
+
 jobs:
   producer:
     name: Produce the protected branch Lean cache
@@ -60,6 +66,7 @@ jobs:
     timeout-minutes: 360
     concurrency:
       group: lean-cache-producer
+      queue: max
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'
@@ -116,6 +123,7 @@ jobs:
         env:
           CI_HIT_PATHS: '*'
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
         run: |
           if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
             export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
