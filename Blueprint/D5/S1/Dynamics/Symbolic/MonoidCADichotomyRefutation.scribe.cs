@@ -14,21 +14,21 @@ internal sealed class MonoidCADichotomyRefutationDocument : IScribeDocumentDefin
         "A Boolean OR automaton refutes the finite-monoid entropy dichotomy.",
         H("The entropy dichotomy fails for finite-monoid cellular automata"),
         Blocks(
-            Paragraph(Text(
-                "Castronuovo, Dennunzio, Kari and Margara ask in arXiv:2611.16746v1, §9, "
-                + "second research direction, printed p. 32. “It would be interesting to understand "
-                + "whether the dichotomy extends to cellular automata over finite monoids, and more "
-                + "generally which algebraic constraints force it.” The settling proposition is the "
-                + "first clause, with both alternatives of Theorem 6 (p. 21) retained.")),
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Owner + "claim"),
                 H("The finite-monoid extension of Theorem 6"),
                 StatementSource.FromAuthor(Disp(new Formula.Aligned([.. ClaimLines()]))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
+                        "Castronuovo, Dennunzio, Kari and Margara ask in arXiv:2611.16746v1, §9, "
+                        + "second research direction, printed p. 32. “It would be interesting to understand "
+                        + "whether the dichotomy extends to cellular automata over finite monoids, and more "
+                        + "generally which algebraic constraints force it.” The proposition formalizes the "
+                        + "first clause and retains both alternatives of Theorem 6 (p. 21).")),
+                    Paragraph(Text(
                         "A ranges over Type with Fintype and Monoid instances. The alphabet carries "
                         + "the discrete uniformity, the bottom UniformSpace instance, and the configuration "
-                        + "space carries its product uniformity. The domain contains every function from "
+                        + "space carries the product uniformity, denoted by 𝒰. The domain contains every function from "
                         + "Fin D → ℤ to A. The bundled MonoidHom preserves pointwise multiplication and "
                         + "the constant-one configuration. A finite set W supplies the offsets, and "
                         + "localMap reads rule on the translated window. Shift uses z ↦ z + u. "
@@ -94,36 +94,51 @@ internal sealed class MonoidCADichotomyRefutationDocument : IScribeDocumentDefin
         return Seq([.. items]);
     }
 
-    private static Formula Group(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value, bool scalable = false) =>
+        scalable ? Seq(Left, Open, value, Right, Close) : Seq(Open, value, Close);
     private static Formula Arrow(Formula from, Formula to) => Seq(from, Sp, To, Sp, to);
     private static Formula For(string variable, Formula type) =>
         Seq(Forall, Sp, V(variable), Colon, Sp, type, Comma);
+    private static Formula Some(string variable, Formula type) =>
+        Seq(Exists, Sp, V(variable), Colon, Sp, type, Comma);
     private static Formula Inst(string name) =>
         Seq(OpenBracket, Apply(name, V("A")), CloseBracket);
     private static Formula Type => V("Type");
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula Lattice => Group(Arrow(Apply("Fin", V("D")), Seq(Mathbb, Grp(V("Z")))));
-    private static Formula FullShift => Group(Arrow(Lattice, V("A")));
+    private static Formula Lattice =>
+        Parenthesized(Arrow(Apply("Fin", V("D")), Seq(Mathbb, Grp(V("Z")))));
+    private static Formula FullShift => Parenthesized(Arrow(Lattice, V("A")));
     private static Formula Entropy => Apply("coverEntropy", V("F"), Seq(Op("Set"), Dot, Op("univ")));
-    private static Formula EqCont => Apply("UniformEquicontinuous", Group(Seq(Op("fun"), Sp,
-        V("k"), Colon, Sp, Nat, Sp, Mapsto, Sp, V("F"), Caret, Grp(OpenBracket, V("k"), CloseBracket))));
+    private static Formula Iterate => Seq(V("F"), Caret, Grp(OpenBracket, V("k"), CloseBracket));
+    private static Formula EqCont => Apply("UniformEquicontinuous", Parenthesized(Seq(Op("fun"), Sp,
+        V("k"), Colon, Sp, Nat, Sp, Mapsto, Sp, Iterate)));
+    private static Formula EntourageBinder(Formula quantifier, string name) =>
+        Seq(quantifier, Sp, V(name), Sp, InMacro, Sp, Mathcal, Grp(V("U")), Sp, FullShift, Comma);
+    private static Formula InEntourage(Formula x, Formula y, string name) =>
+        Seq(Parenthesized(Seq(x, Comma, Sp, y)), Sp, InMacro, Sp, V(name));
+    private static Formula Sensitivity => Parenthesized(Seq(
+        EntourageBinder(Exists, "U"), Sp, For("x", FullShift), Sp, EntourageBinder(Forall, "V"), Sp,
+        Some("y", FullShift), Sp, Some("k", Nat), Sp,
+        InEntourage(V("x"), V("y"), "V"), Sp, Land, Sp, Neg, Sp,
+        Parenthesized(InEntourage(Seq(Iterate, Sp, V("x")), Seq(Iterate, Sp, V("y")), "U"))));
+
     private static Formula[] ClaimLines() =>
     [
         Seq(For("D", Nat), Sp, D(2), Sp, Le, Sp, V("D"), Sp, Rightarrow, Sp,
             For("A", Type), Sp, Inst("Fintype"), Sp, Inst("Monoid"), Comma),
         Seq(Op("letI"), Sp, Colon, Sp, Apply("UniformSpace", V("A")), Sp, Colon, Eq, Sp, Perp, Semi),
         Seq(For("F", Seq(FullShift, Sp, To, Caret, Grp(Star), Sp, FullShift))),
-        Seq(Group(Seq(Exists, Sp, V("W"), Colon, Sp, Apply("Finset", Lattice), Comma, Sp,
-            V("rule"), Colon, Sp, Arrow(Group(Arrow(V("W"), V("A"))), V("A")), Comma, Sp,
+        Seq(Parenthesized(Seq(Some("W", Apply("Finset", Lattice)), Sp,
+            Some("rule", Arrow(Parenthesized(Arrow(V("W"), V("A"))), V("A"))), Sp,
             V("F"), Sp, Eq, Sp, Apply("localMap", V("W"), V("rule")))), Sp, Rightarrow),
         Seq(Apply("Continuous", V("F")), Sp, Rightarrow),
-        Seq(Group(Seq(For("u", Lattice), Sp, For("x", FullShift), Sp,
-            V("F"), Sp, Group(Apply("shift", V("u"), V("x"))), Sp, Eq, Sp,
-            Apply("shift", V("u"), Group(Seq(V("F"), Sp, V("x")))))), Sp, Rightarrow),
-        Seq(Group(Seq(EqCont, Sp, Land, Sp, Entropy, Sp, Eq, Sp, D(0))), Sp, Lor),
-        Group(Seq(Apply("sensitive", V("F")), Sp, Land, Sp, Entropy, Sp, Eq, Sp, Infty))
+        Seq(Parenthesized(Seq(For("u", Lattice), Sp, For("x", FullShift), Sp,
+            V("F"), Sp, Parenthesized(Apply("shift", V("u"), V("x"))), Sp, Eq, Sp,
+            Apply("shift", V("u"), Parenthesized(Seq(V("F"), Sp, V("x")))))), Sp, Rightarrow),
+        Seq(Parenthesized(Seq(EqCont, Sp, Land, Sp, Entropy, Sp, Eq, Sp, D(0))), Sp, Lor),
+        Parenthesized(Seq(Sensitivity, Sp, Land, Sp, Entropy, Sp, Eq, Sp, Infty))
     ];
 
     private static Formula ExpandedNegation() =>
-        Seq(Neg, Sp, Left, Open, new Formula.Aligned([.. ClaimLines()]), Right, Close);
+        Seq(Neg, Sp, Parenthesized(new Formula.Aligned([.. ClaimLines()]), scalable: true));
 }

@@ -7,7 +7,6 @@
    digest: A Boolean OR automaton refutes the finite-monoid entropy dichotomy. -/
 
 import D5.S1.Dynamics.Symbolic.LatticeGardenOfEden
-import Mathlib.Topology.UniformSpace.Equicontinuity
 
 /-! The finite-monoid dichotomy fails on the two-dimensional Boolean OR full shift. -/
 
