@@ -9,6 +9,7 @@
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality
 import D5.S3.Quantum.Algebra.CommonPhasePolynomial
+import D5.S3.Quantum.Algebra.Polynomials.ComplexPolynomialCoefficients
 import Mathlib.Analysis.Analytic.Polynomial
 import Mathlib.Analysis.Analytic.Uniqueness
 import Mathlib.Topology.Algebra.MvPolynomial
@@ -29,32 +30,21 @@ open D5.S3.Quantum.Algebra
 open OpenBoundaryMPSTwoSiteMinimality (originalCore original_chart)
 
 def realCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
-  AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.re (by simp)
-    (AddMonoidAlgebra.coeff p))
+  Polynomials.ComplexPolynomialCoefficients.realCoeff p
 
 def imagCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
-  AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.im (by simp)
-    (AddMonoidAlgebra.coeff p))
+  Polynomials.ComplexPolynomialCoefficients.imagCoeff p
 
+-- The frozen statement inventory includes this private declaration.
 private lemma coefficient_split {σ : Type*} (p : MvPolynomial σ ℂ) :
     map Complex.ofRealHom (realCoeff p) +
-      C Complex.I * map Complex.ofRealHom (imagCoeff p) = p := by
-  ext m
-  simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, coeff_C_mul, coeff_map]
-  change ((p.coeff m).re : ℂ) + Complex.I * (p.coeff m).im = p.coeff m
-  simpa only [mul_comm] using Complex.re_add_im (p.coeff m)
+      C Complex.I * map Complex.ofRealHom (imagCoeff p) = p :=
+  Polynomials.ComplexPolynomialCoefficients.coefficient_split p
 
 lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
     eval x (realCoeff p) = (eval (fun i => (x i : ℂ)) p).re ∧
-    eval x (imagCoeff p) = (eval (fun i => (x i : ℂ)) p).im := by
-  have h := congrArg (eval (fun i => (x i : ℂ))) (coefficient_split p)
-  have hcast (q : MvPolynomial σ ℝ) :
-      eval (fun i => (x i : ℂ)) (map Complex.ofRealHom q) = (eval x q : ℂ) :=
-    (MvPolynomial.map_eval Complex.ofRealHom x q).symm
-  simp only [map_add, map_mul, eval_C, hcast] at h
-  constructor
-  · simpa using congrArg Complex.re h
-  · simpa using congrArg Complex.im h
+    eval x (imagCoeff p) = (eval (fun i => (x i : ℂ)) p).im :=
+  Polynomials.ComplexPolynomialCoefficients.coefficient_eval p x
 
 def normPolynomial {ι : Type*} (p : PhasePolynomial.Poly ι) :
     MvPolynomial (ι ⊕ ι) ℝ :=

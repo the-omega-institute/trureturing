@@ -193,5 +193,6 @@ The existing observable_chart_phase_recovery supplies the final arbitrary-compet
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity.statePolynomial`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity.transferMatrix`
 - Dependency: [D5/S3/Quantum/Algebra/CommonPhasePolynomial](../Algebra/CommonPhasePolynomial.md)
+- Dependency: [D5/S3/Quantum/Algebra/Polynomials/ComplexPolynomialCoefficients](../Algebra/Polynomials/ComplexPolynomialCoefficients.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery](OpenBoundaryMPSDensityRecovery.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality](OpenBoundaryMPSTwoSiteMinimality.md)

@@ -7,6 +7,7 @@
    digest: The common zero set of the physical critical equations has a six-dimensional differentiable cover. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSFiveSiteCriticalChart
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSRealPolynomialZeros
+import D5.S3.Quantum.Algebra.CommonPhasePolynomial
 
 /-! The Cartesian change of variables transfers the relatively prime
 complex equations to the real physical slice. -/

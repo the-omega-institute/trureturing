@@ -7,9 +7,12 @@
    digest: Relatively prime complex equations have a real common zero set covered in codimension two. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSMonicLevelGraphs
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSProjectionResultant
-import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
+import D5.S3.Quantum.Algebra.Polynomials.ComplexPolynomialCoefficients
 import Mathlib.RingTheory.NoetherNormalization
 import Mathlib.Algebra.MvPolynomial.Nilpotent
+import Mathlib.Basic.Complex.BigOperators
+import Mathlib.LinearAlgebra.Complex.Module
+import Mathlib.RingTheory.Polynomial.UniqueFactorization
 
 /-! Polynomial projection, using an invertible real triangular change of
 coordinates, turns relative primality into a countable differentiable cover. -/
@@ -19,10 +22,8 @@ set_option autoImplicit false
 namespace D5.S3.Quantum.TensorNetworks.PeriodicMPSRealPolynomialZeros
 
 open Set Polynomial PeriodicMPSMonicLevelGraphs PeriodicMPSProjectionResultant
-  PeriodicMPSRegularLevelGraphs OpenBoundaryMPSDensityGenericity
-
-open private coefficient_split
-  from D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
+  PeriodicMPSRegularLevelGraphs
+open D5.S3.Quantum.Algebra.Polynomials.ComplexPolynomialCoefficients
 
 noncomputable section
 

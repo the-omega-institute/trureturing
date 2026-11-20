@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSAnalyticBranchSeparation
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSAnalyticBranchSeparation
    mirror-E: none(waiver:static-algebraic-identifiability)
    anchors: [mathlib/module/Mathlib.Analysis.Analytic.Uniqueness]
@@ -9,7 +9,7 @@ import Mathlib.Analysis.Analytic.Uniqueness
 import Mathlib.Topology.Baire.Lemmas
 import Mathlib.Topology.Connected.Clopen
 
-/-! A common chart of a regular observation fiber separates its distinct analytic sheets. -/
+/-! Distinct real-analytic graphs separate on relatively open dense subsets of their common chart. -/
 
 set_option autoImplicit false
 

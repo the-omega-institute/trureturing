@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Generic separation of analytic branches
+Distinct analytic graphs separate on a relatively open dense set.
 
 **Theorem 1.1 (Generic separation of analytic branches).**
 

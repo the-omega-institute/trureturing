@@ -19,5 +19,6 @@ Countably many differentiable images of six real variables cover the physical co
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSFiveSiteCriticalCover.cover_critical_equations`
+- Dependency: [D5/S3/Quantum/Algebra/CommonPhasePolynomial](../../Algebra/CommonPhasePolynomial.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSFiveSiteCriticalChart](PeriodicMPSFiveSiteCriticalChart.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSRealPolynomialZeros](PeriodicMPSRealPolynomialZeros.md)
