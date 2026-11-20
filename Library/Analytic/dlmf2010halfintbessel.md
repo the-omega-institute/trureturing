@@ -12,7 +12,7 @@ license: citation-only
 triage: anchor
 ---
 
-## Verified locators
+## Verified locator
 
 [DLMF 10.17.1](https://dlmf.nist.gov/10.17.E1) gives the product with factors
 $4\nu^2-(2j-1)^2$ for $1\le j\le k$ and denominator $k!8^k$.
