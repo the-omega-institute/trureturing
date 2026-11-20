@@ -37,17 +37,17 @@ noncomputable def pochhammerBasis : Module.Basis ℕ ℚ (Polynomial ℚ) :=
 private theorem basis_apply (j : ℕ) : pochhammerBasis j = ascPochhammer ℚ j :=
   pochhammerSequence.basis_eq_self _ j
 
-private theorem coord_basis (i j : ℕ) :
+theorem coord_basis (i j : ℕ) :
     pochhammerBasis.coord i (ascPochhammer ℚ j) = if j = i then 1 else 0 := by
   rw [← basis_apply, Module.Basis.coord_apply, Module.Basis.repr_self_apply]
 
-private noncomputable def rationalRow (n : ℕ) : Polynomial ℚ :=
+noncomputable def rationalRow (n : ℕ) : Polynomial ℚ :=
   (R n).map (Int.castRingHom ℚ)
 
 /-- The polynomial whose ascending Pochhammer coordinates encode the literal row. -/
 noncomputable def rowPolynomial (n : ℕ) : Polynomial ℚ := X * rationalRow n
 
-private noncomputable def difference : Polynomial ℚ →ₗ[ℚ] Polynomial ℚ where
+noncomputable def difference : Polynomial ℚ →ₗ[ℚ] Polynomial ℚ where
   toFun p := X * (p.comp (X + 1) - p)
   map_add' p q := by
     simp only [add_comp]
@@ -67,10 +67,10 @@ private theorem map_difference (p : Polynomial ℤ) :
 private theorem rationalRow_zero : rationalRow 0 = X := by
   simp only [rationalRow, R_zero, map_X]
 
-private theorem rationalRow_odd (n : ℕ) : rationalRow (2 * n + 1) = X * rationalRow n := by
+theorem rationalRow_odd (n : ℕ) : rationalRow (2 * n + 1) = X * rationalRow n := by
   simp only [rationalRow, R_odd, Polynomial.map_mul, map_X]
 
-private theorem rationalRow_even (n : ℕ) (hn : 0 < n) :
+theorem rationalRow_even (n : ℕ) (hn : 0 < n) :
     rationalRow (2 * n) = difference (rationalRow n) := by
   change (R (2 * n)).map (Int.castRingHom ℚ) = difference (rationalRow n)
   rw [show R (2 * n) = D (R n) from R_even n hn, map_difference] <;> rfl
@@ -97,7 +97,7 @@ private theorem X_mul_pochhammer (j : ℕ) :
   rw [ascPochhammer_succ_right, smul_eq_C_mul, C_eq_natCast]
   ring
 
-private theorem difference_pochhammer (j : ℕ) :
+theorem difference_pochhammer (j : ℕ) :
     difference (ascPochhammer ℚ j) = (j : ℚ) • ascPochhammer ℚ j := by
   rw [difference_apply, mul_sub, ← ascPochhammer_succ_left, X_mul_pochhammer]
   ring
@@ -306,7 +306,7 @@ private theorem signed_eq_array (n i : ℕ) : signedCoefficient n i = T n i := b
               simpa only [Nat.succ_eq_add_one, Nat.add_sub_cancel] using signed_odd k j
             rw [hnk, hc, hk, hprev, T_odd k i hi]
 
-private theorem source_coordinate (n j : ℕ) :
+theorem source_coordinate (n j : ℕ) :
     pochhammerBasis.coord j (rowPolynomial n) = (-1 : ℚ) ^ (wt n + 2 - j) * T n j := by
   have h := signed_eq_array n j
   have hinv : (-1 : ℚ) ^ (wt n + j) * (-1 : ℚ) ^ (wt n + j) = 1 := by
