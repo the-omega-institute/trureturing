@@ -96,35 +96,27 @@ private theorem localOrder_card [Finite N] (r : Option (Set N)) :
     rw [← Fintype.card_congr e, Fintype.card_perm, Fintype.card_fin]
     rfl
 
-private theorem recordedAnswer {Q : Type*} {Y : Q → Type*} {S : Type*}
+private theorem run_with_reply_table {Q : Type*} {Y : Q → Type*} {S : Type*}
     (read : ∀ q, S → Y q) (p : PassiveProtocol Q Y) (s : S) :
-    ∀ e ∈ runPassiveProtocol read p s, e.2 = read e.1 s := by
+    runPassiveProtocol (fun q (answers : ∀ v, Y v) => answers q) p (fun q => read q s) =
+      runPassiveProtocol read p s := by
   induction p with
-  | stop => simp [runPassiveProtocol]
+  | stop => rfl
   | query q next ih =>
-    intro e he
-    rw [runPassiveProtocol, List.mem_cons] at he
-    rcases he with rfl | he
-    · rfl
-    · exact ih (read q s) e he
+    simp only [runPassiveProtocol, List.cons.injEq, true_and]
+    exact ih (read q s)
 
 private theorem sameRecord {Q : Type*} {Y : Q → Type*} {S T : Type*}
     (left : ∀ q, S → Y q) (right : ∀ q, T → Y q)
     (p : PassiveProtocol Q Y) (s : S) (t : T) :
     runPassiveProtocol left p s = runPassiveProtocol right p t ↔
       ∀ e ∈ runPassiveProtocol right p t, left e.1 s = e.2 := by
-  constructor
-  · intro he e hm
-    exact (recordedAnswer left p s e (he.symm ▸ hm)).symm
-  · intro compatible
-    induction p with
-    | stop => rfl
-    | query q next ih =>
-      have h : left q s = right q t := compatible ⟨q, right q t⟩ (by simp [runPassiveProtocol])
-      simp only [runPassiveProtocol, h, List.cons.injEq, true_and]
-      apply ih (right q t)
-      intro e hm
-      exact compatible e (by simpa only [runPassiveProtocol] using List.mem_cons_of_mem _ hm)
+  have replay := same_history_iff (fun q => Y q) (fun _ answer => answer) p
+    (fun q => left q s) (fun q => right q t)
+  change runPassiveProtocol (fun q (answers : ∀ v, Y v) => answers q) p
+      (fun q => left q s) = _ ↔ _ at replay
+  rw [run_with_reply_table left, run_with_reply_table right] at replay
+  exact replay
 
 variable [Fintype N] [DecidableEq N]
 
@@ -150,7 +142,7 @@ theorem orderedRecord_mass
   intro trace seen mass
   have hRead (e : Σ _ : N, Option (List N)) (he : e ∈ trace) :
       e.2 = readOrdered ref e.1 refTable :=
-    recordedAnswer (fun q => readOrdered ref q) p refTable e he
+    ((sameRecord (readOrdered ref) (readOrdered ref) p refTable refTable).mp rfl e he).symm
   by_cases compatible : ∀ q ∈ seen, reply q = ref q
   · rw [ite_eq_left compatible]
     let a (q : seen) : LocalOrder (reply q) := (compatible q q.2).symm ▸ refTable q

@@ -19,8 +19,8 @@ internal sealed class NamedOrderedRecordDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "A reply table on a finite set of names gives either a miss or a set of returned " +
                         "names at each query name. Independently choose a uniform enumeration of each " +
-                        "successful reply set and keep it fixed for every visit to that name. A miss uses " +
-                        "a separate response, including when a successful reply set is empty.")),
+                        "successful reply set and keep it fixed for every visit to that name. A miss and " +
+                        "a successful reply with an empty set produce distinct responses.")),
                     Paragraph(Text(
                         "Fix an adaptive protocol and an ordered transcript realized by one reference " +
                         "reply table and one reference enumeration table. Another reply table gives " +
