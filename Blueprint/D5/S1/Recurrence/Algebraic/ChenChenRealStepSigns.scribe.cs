@@ -19,7 +19,7 @@ internal sealed class ChenChenRealStepSignsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For real r ≥ 3 and every solution T of the step −r recursion, T(n,2)>0 "
-                    + "for every even n ≥ 2. Applying the recursion twice at k=2 gives "
+                    + "for every even n ≥ 2 (Lemma 2 of the source). Applying the recursion twice at k=2 gives "
                     + "T(n+2,2)=(r−1)²T(n,2)+r(r−2)n+2−r². Since T(2,2)=1, the case n=2 "
                     + "gives T(4,2)=2r(r−3)+3>0. For n ≥ 4 the forcing term equals "
                     + "r(r−2)(n−4)+3r(r−3)+r+2>0, and induction over even n finishes."))),
@@ -39,8 +39,8 @@ internal sealed class ChenChenRealStepSignsDocument : IScribeDocumentDefinition
                     + "reflection T(n,k)=T(n,n+1−k), and the two boundary entries equal 1. "
                     + "This is Theorem 1 of H. Ma and W. Zhang's proof of Chen and Chen's "
                     + "parity-positivity conjectures (DOI 10.5281/zenodo.23957560) for all real "
-                    + "r ≥ 3. The integer steps r=3,4,5 are the conjectures of OEIS "
-                    + "A392664–A392666, already formalized over ℤ in "
-                    + "ChenChenParityPositivity."))),
+                    + "r ≥ 3. The even-row positivity for integer r ≥ 3, which includes the "
+                    + "conjectures of OEIS A392664–A392666 at r=3,4,5, is already formalized "
+                    + "over ℤ in ChenChenParityPositivity.even_rows_positive."))),
                 DescribeRole.Theorem))));
 }

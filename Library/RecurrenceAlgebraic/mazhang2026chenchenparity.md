@@ -5,7 +5,7 @@ year: 2026
 title: "Proof of Chen and Chen's parity-positivity conjectures: OEIS A392664–A392666, COMMENTS, and Conjecture 2 (p. 1)"
 doi: 10.5281/zenodo.23957560
 url: https://zenodo.org/records/23957560
-claim: "Theorem 1: for every real r >= 3, T_{-r}(n,k) > 0 for every positive even n and 1 <= k <= n, and T_{-r}(n,k) < 0 for every odd n >= 3 and 1 < k < n. Corollary 4: for every real m, S_n(m) = sum_{k=1}^{n} T_m(n,k) = prod_{j=0}^{n-2} (mj+2) with S_1(m) = 1; for even n, R_{m,n}(-1) = 0 and the odd-position and even-position sums both equal S_n(m)/2."
+claim: "Theorem 1: for every real r >= 3, T_{-r}(n,k) > 0 for every positive even n and 1 <= k <= n, and T_{-r}(n,k) < 0 for every odd n >= 3 and 1 < k < n. Lemma 2: for r >= 3, T_{-r}(n,2) > 0 whenever n >= 2 is even. Corollary 4: for every real m, S_n(m) = sum_{k=1}^{n} T_m(n,k) = prod_{j=0}^{n-2} (mj+2) with S_1(m) = 1; for even n, R_{m,n}(-1) = 0 and the odd-position and even-position sums both equal S_n(m)/2."
 strata_touched:
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns

@@ -16,22 +16,25 @@ escape_witness: second_even_positive (eliminating the odd row gives
   row).
 proof_shape:
   claim: source definition; consumer: result.
-  second_step, second_two_step: bind-only helpers (instantiation of Source, push_cast, ring);
-    consumers: second_two_step, second_even_positive.
+  second_step: bind-only helper (instantiation of Source, push_cast, ring); consumer:
+    second_two_step.
+  second_two_step: bind-only helper (two applications of second_step, ring); consumer:
+    second_even_positive.
   second_even_positive: content; consumer: positive_rows.
   coefficient_negative: bind-only helper (nlinarith); consumers: next_interior_negative,
     positive_rows.
-  next_interior_negative: content (sign propagation from a positive row); consumers:
-    positive_rows, result.
+  next_interior_negative: bind-only helper (instantiation of Source, coefficient_negative and
+    the sign rules for products and sums); consumers: positive_rows, result.
   positive_rows: content; consumer: result.
-  result: content only through positive_rows and next_interior_negative; existence is
+  result: content only through positive_rows, and through second_even_positive and
+    ChenChenRealStepRowSums.reflection inside it; existence is
     ChenChenRealStepRowSums.source_exists.
 Direct frozen dependencies: none frozen yet; D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums
   (Source, reflection, source_exists) is frozen in the same delivery.
 Search record (§3.1): D5/S1/Recurrence/Algebraic/ChenChenParityPositivity.even_rows_positive
   is the integer-step special case over ℤ; its helpers are private and stated for
   Source (m : ℤ) (T : ℕ → ℕ → ℤ), so they cannot be applied at a real step, and the module has
-  no odd-row statement. The sign argument here is the same two-step propagation, carried out
+  no public odd-row statement. The sign argument here is the same two-step propagation, carried out
   over ℝ.
 -/
 
