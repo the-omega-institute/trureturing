@@ -26,12 +26,12 @@ universe u v u₁ u₂ u₃ u₄
 
 /-- The lifted real numbers form a real closed field. -/
 theorem isRealClosed_ulift : IsRealClosed (ULift.{u} ℝ) := by
-  haveI : IsStrictOrderedRing (ULift.{u} ℝ) :=
+  have : IsStrictOrderedRing (ULift.{u} ℝ) :=
     Function.Injective.isStrictOrderedRing ULift.down rfl rfl (fun _ _ => rfl) (fun _ _ => rfl)
       Iff.rfl Iff.rfl
   refine IsRealClosed.of_linearOrderedField (fun {x} hx => ?_) (fun {f} hf => ?_)
   · obtain ⟨r, hr⟩ := (IsRealClosed.nonneg_iff_isSquare (R := ℝ)).1 (show (0 : ℝ) ≤ x.down from hx)
-    exact ⟨⟨r⟩, ULift.ext _ _ hr⟩
+    exact ⟨⟨r⟩, ULift.ext hr⟩
   · let e : ULift.{u} ℝ ≃+* ℝ := ULift.ringEquiv
     obtain ⟨y, hy⟩ := IsRealClosed.exists_isRoot_of_odd_natDegree (f := f.map e.toRingHom)
       (by rwa [Polynomial.natDegree_map_eq_of_injective e.injective])
@@ -52,10 +52,10 @@ def rlineCoord : RLine.{v} ≃ₗ[ULift.{u} ℝ] ULift.{u} ℝ where
   right_inv _ := rfl
 
 instance rlineFinite : FiniteDimensional (ULift.{u} ℝ) RLine.{v} :=
-  Module.Finite.equiv rlineCoord.{v, u}.symm
+  Module.Finite.equiv rlineCoord.symm
 
 theorem finrank_rline : finrank (ULift.{u} ℝ) RLine.{v} = 1 := by
-  rw [rlineCoord.{v, u}.finrank_eq, Module.finrank_self]
+  rw [LinearEquiv.finrank_eq rlineCoord, Module.finrank_self]
 
 /-! ## `exists_hasEigenvalue_of_odd_finrank`: the eigenvalue -/
 namespace Eigenvalue
@@ -89,7 +89,7 @@ abbrev arena : Arena where
 /-- With the constant reading `0`, the identity of the real line would have the eigenvalue `0`. -/
 theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  haveI := isRealClosed_ulift.{u}
+  have := isRealClosed_ulift.{u}
   obtain ⟨μ, hμ⟩ := h (K := ULift.{u} ℝ) (U := RLine.{v}) LinearMap.id
     (by rw [finrank_rline]; exact odd_one)
   obtain ⟨x, hx⟩ := hμ.exists_hasEigenvector
@@ -146,20 +146,20 @@ def qlineCoord : QLine.{v} ≃ₗ[Q.{u}] Q.{u} where
   right_inv _ := rfl
 
 instance qlineFinite : FiniteDimensional Q.{u} QLine.{v} :=
-  Module.Finite.equiv qlineCoord.{v, u}.symm
+  Module.Finite.equiv qlineCoord.symm
 
 theorem finrank_plane : finrank Q.{u} Plane.{v} = 2 := by
-  rw [planeCoord.{v, u}.finrank_eq, Module.finrank_fin_fun]
+  rw [LinearEquiv.finrank_eq planeCoord, Module.finrank_fin_fun]
 
 theorem finrank_qline : finrank Q.{u} QLine.{v} = 1 := by
-  rw [qlineCoord.{v, u}.finrank_eq, Module.finrank_self]
+  rw [LinearEquiv.finrank_eq qlineCoord, Module.finrank_self]
 
 /-- The product `(a₀ b₀)` of the first coordinates, a nonzero bilinear map `ℚ² × ℚ² → ℚ`. -/
-def firstProduct : Plane.{u₂} →ₗ[Q.{u₁}] Plane.{u₃} →ₗ[Q.{u₁}] QLine.{u₄} :=
-  ((LinearMap.mul Q.{u₁} Q.{u₁}).compl₁₂
-      ((LinearMap.proj 0).comp planeCoord.{u₂, u₁}.toLinearMap)
-      ((LinearMap.proj 0).comp planeCoord.{u₃, u₁}.toLinearMap)).compr₂
-    qlineCoord.{u₄, u₁}.symm.toLinearMap
+def firstProduct.{w₁, w₂, w₃, w₄} : Plane.{w₂} →ₗ[Q.{w₁}] Plane.{w₃} →ₗ[Q.{w₁}] QLine.{w₄} :=
+  ((LinearMap.mul Q.{w₁} Q.{w₁}).compl₁₂
+      ((LinearMap.proj 0).comp planeCoord.toLinearMap)
+      ((LinearMap.proj 0).comp planeCoord.toLinearMap)).compr₂
+    qlineCoord.symm.toLinearMap
 
 theorem firstProduct_apply (a : Plane.{u₂}) (b : Plane.{u₃}) :
     firstProduct.{u₁, u₂, u₃, u₄} a b = ⟨a.down 0 * b.down 0⟩ := rfl

@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The Hopf map identifies unit quaternions modulo phases with the unit sphere. -/
+   digest: The Hopf map identifies unit quaternions modulo phases with the unit imaginary sphere. -/
 
 import D5.S3.Quantum.AURICOmega.QuaternionRayKernel
+import D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Homeomorph.Lemmas
@@ -35,6 +36,7 @@ namespace D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open D5.S3.Quantum.AURICOmega.QuaternionRayKernel
+open D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-- The right phase circle: the unit quaternions in the real span of `1` and `i`. -/
 def phaseCircle : Subgroup (unitary ℍ[ℝ]) where
@@ -255,12 +257,10 @@ private lemma isGreatest_phase (A B : ℝ) :
         rw [div_pow, div_pow, neg_sq, ← add_div, ← hr2]
         exact div_self (pow_ne_zero 2 hr0)
       have hmem : (⟨A / r, -B / r, 0, 0⟩ : ℍ[ℝ]) ∈ unitary ℍ[ℝ] := by
-        rw [Unitary.mem_iff]
-        constructor <;> ext <;>
-          simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul,
-            Quaternion.imK_mul, Quaternion.re_star, Quaternion.imI_star, Quaternion.imJ_star,
-            Quaternion.imK_star, Quaternion.re_one, Quaternion.imI_one, Quaternion.imJ_one,
-            Quaternion.imK_one] <;> first | linear_combination hab | ring
+        refine mem_unitary_of_normSq ?_
+        rw [Quaternion.normSq_def']
+        change (A / r) ^ 2 + (-B / r) ^ 2 + 0 ^ 2 + 0 ^ 2 = 1
+        linear_combination hab
       refine ⟨⟨_, hmem⟩, ⟨rfl, rfl⟩, ?_⟩
       change A ^ 2 + B ^ 2 = (A / r * A - -B / r * B) ^ 2
       rw [← hr2]
@@ -268,8 +268,8 @@ private lemma isGreatest_phase (A B : ℝ) :
       rw [show r ^ 4 = (r ^ 2) ^ 2 by ring, hr2]
       ring
   · rintro _ ⟨c, hc, rfl⟩
-    have hn := real_inner_self_eq_norm_sq (c : ℍ[ℝ])
-    rw [CStarRing.norm_coe_unitary, inner_eq_components, hc.1, hc.2] at hn
+    have hn := sq_add_sq_coe_unitary c
+    rw [hc.1, hc.2] at hn
     nlinarith [sq_nonneg ((c : ℍ[ℝ]).re * B + (c : ℍ[ℝ]).imI * A)]
 
 /-- The mean of `⟪p (cos χ + sin χ i), q⟫ ^ 2` over a full turn is half of

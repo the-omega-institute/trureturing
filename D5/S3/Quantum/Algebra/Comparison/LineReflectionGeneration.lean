@@ -6,7 +6,6 @@
    utility: none
    digest: Line reflections generate O(n) for even n and exactly SO(n) for odd n. -/
 
-
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 
 open Module Submodule
@@ -19,26 +18,8 @@ namespace D5.S3.Quantum.Algebra.Comparison.LineReflectionGeneration
 
 variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]
 
-/-- The determinant of a composition of isometries is the product of the determinants. -/
-private lemma det_mul (a b : F ≃ₗᵢ[ℝ] F) :
-    LinearMap.det ((a * b).toLinearEquiv : F →ₗ[ℝ] F) =
-      LinearMap.det (a.toLinearEquiv : F →ₗ[ℝ] F) *
-        LinearMap.det (b.toLinearEquiv : F →ₗ[ℝ] F) :=
-  LinearMap.det_comp _ _
-
-/-- The identity isometry has determinant one. -/
-private lemma det_one :
-    LinearMap.det ((1 : F ≃ₗᵢ[ℝ] F).toLinearEquiv : F →ₗ[ℝ] F) = 1 :=
-  LinearMap.det_id
-
 /-- The isometry `-1` is central. -/
 private lemma neg_commute (a : F ≃ₗᵢ[ℝ] F) : Commute (LinearIsometryEquiv.neg ℝ) a := by
-  ext x
-  simp
-
-/-- The isometry `-1` is an involution. -/
-private lemma neg_mul_neg : LinearIsometryEquiv.neg ℝ * LinearIsometryEquiv.neg ℝ =
-    (1 : F ≃ₗᵢ[ℝ] F) := by
   ext x
   simp
 
@@ -59,7 +40,7 @@ private lemma exists_neg_pow_mul [FiniteDimensional ℝ F] (l : List F) :
   induction l with
   | nil =>
     exact ⟨0, 1, Subgroup.one_mem _, by simp,
-      by rw [List.map_nil, List.prod_nil, det_one, pow_zero]⟩
+      by rw [List.map_nil, List.prod_nil, pow_zero]; exact LinearMap.det_id⟩
   | cons v l ih =>
     obtain ⟨k, h, hh, hprod, hdet⟩ := ih
     rw [List.map_cons, List.prod_cons]
@@ -77,7 +58,7 @@ private lemma exists_neg_pow_mul [FiniteDimensional ℝ F] (l : List F) :
       · rw [hprod, hσ]
         simp only [pow_succ', mul_assoc]
         rw [← mul_assoc (ℝ ∙ v).reflection, ← ((neg_commute _).pow_left k).eq, mul_assoc]
-      · rw [det_mul, det_reflection_span hv, hdet]
+      · erw [LinearMap.det_comp, det_reflection_span hv, hdet]
         ring
 
 /-- In odd dimension every line reflection has determinant one, hence so does every element of
@@ -95,12 +76,16 @@ private lemma det_eq_one_of_mem [FiniteDimensional ℝ F] (hn : ¬ Even (finrank
     have hperp : finrank ℝ (ℝ ∙ v)ᗮ = 2 * m := by omega
     rw [det_reflection, hperp]
     exact (even_two_mul m).neg_one_pow
-  | one => exact det_one
-  | mul x y _ _ hx hy => rw [det_mul, hx, hy, one_mul]
+  | one => exact LinearMap.det_id
+  | mul x y _ _ hx hy => erw [LinearMap.det_comp, hx, hy, one_mul]
   | inv x _ hx =>
-    have h := det_mul x⁻¹ x
+    have h : LinearMap.det ((x⁻¹ * x).toLinearEquiv : F →ₗ[ℝ] F) =
+        LinearMap.det (x⁻¹.toLinearEquiv : F →ₗ[ℝ] F) *
+          LinearMap.det (x.toLinearEquiv : F →ₗ[ℝ] F) :=
+      LinearMap.det_comp _ _
     rw [inv_mul_cancel, hx, mul_one] at h
-    rw [← h, det_one]
+    rw [← h]
+    exact LinearMap.det_id
 
 /-- In a finite-dimensional real inner product space, an isometry is a product of reflections in
 lines `ℝ ∙ v` with `v ≠ 0` if and only if the dimension is even or its determinant is one. -/
@@ -121,7 +106,8 @@ theorem mem_closure_lineReflections_iff {F : Type*} [NormedAddCommGroup F]
     obtain ⟨k, h, hh, rfl, hdet⟩ := key g
     rw [hg] at hdet
     obtain ⟨j, rfl⟩ := (neg_one_pow_eq_one_iff_even (by norm_num : (-1 : ℝ) ≠ 1)).mp hdet.symm
-    rwa [← two_mul, pow_mul, sq, neg_mul_neg, one_pow, one_mul]
+    rwa [← two_mul, pow_mul, sq, show (LinearIsometryEquiv.neg ℝ : F ≃ₗᵢ[ℝ] F) *
+      LinearIsometryEquiv.neg ℝ = 1 from mul_inv_cancel _, one_pow, one_mul]
   constructor
   · intro hg
     by_cases hn : Even (finrank ℝ F)

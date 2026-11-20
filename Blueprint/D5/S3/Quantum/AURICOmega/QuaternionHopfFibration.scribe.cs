@@ -10,7 +10,7 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
     private static LibraryNoteRef Hopf => LibraryNoteRef.Create("D5/L/Topology/hopf1931abbildungen");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The Hopf map sends the unit quaternions onto the unit imaginary quaternions and identifies their quotient by the phase circle with that two-sphere; along a phase circle the squared reading attains the ray kernel as its maximum and has the ray kernel times pi as its integral over a full turn.",
+        "The Hopf map sends the unit quaternions onto the unit imaginary quaternions and identifies their quotient by the phase circle with that two-sphere; along a phase circle the squared shifted reading attains the ray kernel as its maximum and has the ray kernel times pi as its integral over a full turn.",
         H("The Hopf fibration of the unit quaternions and the fibre extremum of the reading"),
         Blocks(
             Node("phase-circle", "phaseCircle", "The phase circle",
