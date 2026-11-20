@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual central-defect evolution has a positive spectral gap and a finite-window endpoint bound.",
+        "The central-defect Hamiltonian has a positive spectral gap. Its evolution satisfies a finite-window endpoint bound.",
         H("Finite-time endpoint average on the central-defect path"),
         Blocks(
             Describe.Lean(
