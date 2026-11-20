@@ -11,7 +11,7 @@ internal sealed class AlgebraicDocument : IScribeDocumentDefinition
         H("Algebraic clique factorization"),
         Blocks(
             Paragraph(Text("Let V be a finite vertex type, Omega a family of arbitrary coordinate state spaces, A a commutative group, G a simple graph on V, and X the dependent product of the spaces Omega(i). Updating a configuration replaces one coordinate by a specified value. Neither the individual spaces nor X need be finite or inhabited.")),
-            Paragraph(Text("In the formula, X = Pi(i : V), Omega(i). DependsOn(h,S) means that h(x) = h(y) whenever x and y agree on every coordinate in S. IsClique(G,S) means that every two distinct vertices of S are adjacent. The product ranges over all finite subsets of V, including the empty set.")),
+            Paragraph(Text("In the formula, X is the dependent product of Omega(k) over k : V. DependsOn(h,S) means that h(x) = h(y) whenever x and y agree on every coordinate in S. IsClique(G,S) means that every two distinct vertices of S are adjacent. The product ranges over all finite subsets of V, including the empty set.")),
             Describe.Lean(
                 DescribeId.Create("algebraic-clique-factorization"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/CliqueFactorization/Algebraic.rectangle_iff_clique_factorization"),
@@ -47,8 +47,8 @@ internal sealed class AlgebraicDocument : IScribeDocumentDefinition
     private static Formula Statement()
     {
         var v = F.Id("V"); var a = F.Id("A");
-        var xspace = P(Seq(Pi, Sp, P(Seq(F.Id("k"), Colon, Sp, v)),
-            Comma, Sp, Call("Omega", F.Id("k"))));
+        var xspace = P(Seq(new Formula.Subscript(Prod, Seq(F.Id("k"), Colon, Sp, v)),
+            Sp, Call("Omega", F.Id("k"))));
         var s = F.Id("S"); var x = F.Id("x"); var i = F.Id("i"); var j = F.Id("j");
         var subsets = Call("Finset", v);
         Formula Fun(Formula z) => Call("f", z);
