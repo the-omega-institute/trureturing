@@ -39,18 +39,15 @@ private lemma analytic_at_one : AnalyticAt ℂ completed 1 := by
     (analyticAt_const.sub hds).div analyticAt_id one_ne_zero
   apply hmodel.congr
   have hne : ∀ᶠ z : ℂ in 𝓝 1, z ≠ 0 := continuousAt_id.eventually_ne one_ne_zero
-  filter_upwards [hne, hD.mem_nhds h1] with s hs0 hsD
+  have hlog := eventually_nhdsWithin_iff.mp log_deriv_riemannZeta_eq_neg_inv_sub_add
+  filter_upwards [hne, hlog] with s hs0 hlogS
   by_cases hs : s = 1
   · subst s
     simp [completed, dslope_same, A]
   · have hd := sub_ne_zero.mpr hs
-    have hlog : deriv riemannZeta s / riemannZeta s = -(s-1)⁻¹ + A s := by
-      rw [riemannZeta_eq_inv_sub_mul hs, deriv_riemannZeta_eq_neg_inv_sub_sq_mul_add hs]
-      change _ = -(s-1)⁻¹ + deriv riemannZeta₁ s / riemannZeta₁ s
-      have hn : riemannZeta₁ s ≠ 0 := hsD
-      field_simp [hd, hn]
+    have hζ : deriv riemannZeta s / riemannZeta s = -(s-1)⁻¹ + A s := hlogS hs
     rw [dslope_of_ne _ hs, slope_def_field, hg, completed, Function.update_of_ne hs, transform,
-      neg_div, hlog]
+      neg_div, hζ]
     push_cast
     field_simp [hs0, hd]
     ring
