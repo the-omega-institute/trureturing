@@ -10,9 +10,11 @@ import D5.S3.Quantum.Fermionic.OrderedSlaterPurityDropEquality
 
 /-! # Existence of a saturating basis for an ordered Slater marginal
 
-A nonbalanced discarded column can belong to a saturating basis precisely when
-deleting it makes the target unattainable. Such columns each add one dimension
-to the span of the balanced discarded columns.
+The deletion test identifies nonbalanced discarded columns whose coordinates
+are forced to be one on the feasible fiber. Each adds one dimension to the
+span of the balanced discarded columns. Attainment also requires the
+retained-row coset condition and that the combined columns span the full
+restricted column space.
 -/
 
 open scoped BigOperators Matrix
