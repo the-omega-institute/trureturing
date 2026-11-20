@@ -8,10 +8,10 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229604Strip.result)
+escape_witness: finite_certificate, result
 a: proof_shape=bind-only; consumers=result
-finite_certificate: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31660)
+finite_certificate: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData

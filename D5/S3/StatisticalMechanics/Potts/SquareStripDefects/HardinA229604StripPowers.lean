@@ -8,14 +8,14 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229604Strip.result)
-old_relation: proof_shape=bind-only; consumers=relation
-new_relation: proof_shape=bind-only; consumers=relation
-leading_steps: proof_shape=bind-only; consumers=steps
+escape_witness: old_relation, new_relation, leading_steps, steps, relation, initial_relation
+old_relation: proof_shape=content; consumers=relation
+new_relation: proof_shape=content; consumers=relation
+leading_steps: proof_shape=content; consumers=steps
 normalize_step: proof_shape=bind-only; consumers=steps
-steps: proof_shape=bind-only; consumers=HardinA229604Strip.result
-relation: proof_shape=bind-only; consumers=HardinA229604Strip.result
-initial_relation: proof_shape=bind-only; consumers=HardinA229604Strip.result
+steps: proof_shape=content; consumers=HardinA229604Strip.result
+relation: proof_shape=content; consumers=HardinA229604Strip.result
+initial_relation: proof_shape=content; consumers=HardinA229604Strip.result
 -/
 
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData

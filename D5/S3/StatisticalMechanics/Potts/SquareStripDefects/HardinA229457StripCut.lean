@@ -8,13 +8,13 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229457Strip.result)
+escape_witness: numeric_cut, class_cut, proper_table, proper_counts, active_counts
 zero_cost: proof_shape=bind-only; consumers=class_cut
-numeric_cut: proof_shape=bind-only; consumers=class_cut
-class_cut: proof_shape=bind-only; consumers=proper_counts
-proper_table: proof_shape=bind-only; consumers=proper_counts
-proper_counts: proof_shape=bind-only; consumers=active_counts, HardinA229457StripClass0.transition_counts through HardinA229457StripClass2.transition_counts
-active_counts: proof_shape=bind-only; consumers=HardinA229457StripClasses.transition_counts
+numeric_cut: proof_shape=content; consumers=class_cut
+class_cut: proof_shape=content; consumers=proper_counts
+proper_table: proof_shape=content; consumers=proper_counts
+proper_counts: proof_shape=content; consumers=active_counts, HardinA229457StripClass0.transition_counts through HardinA229457StripClass2.transition_counts
+active_counts: proof_shape=content; consumers=HardinA229457StripClasses.transition_counts
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
