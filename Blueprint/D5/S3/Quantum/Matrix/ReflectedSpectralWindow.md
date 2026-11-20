@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The actual central-defect evolution has a positive spectral gap and a finite-window endpoint bound.
+The central-defect Hamiltonian has a positive spectral gap. Its evolution satisfies a finite-window endpoint bound.
 
 **Theorem 1.1 (The central-defect endpoint average).**
 
