@@ -35,7 +35,7 @@ noncomputable def augmentedFaces (c : L → A) : Finset (Finset (L × Bool)) := 
   classical
   exact insert ∅ (Finset.univ.filter (· ∈ signedComplex c))
 
-private theorem mem_facets {c : L → A} {B : Finset (L × Bool)} :
+theorem mem_facets {c : L → A} {B : Finset (L × Bool)} :
     B ∈ facets c ↔ IsFacet c B := by
   classical
   simp [facets]
@@ -85,7 +85,7 @@ theorem firstAt_iff_restriction_subset (c : L → A) {B S : Finset (L × Bool)}
       Finset.mem_filter.mpr ⟨hvdiff.1, U, mem_facets.mpr hU, hUB, herase⟩
     exact hvdiff.2 (hinter ⟨hSC (h hvR), hS (h hvR)⟩)
 
-private theorem exists_facet_superset (c : L → A) {S : Finset (L × Bool)}
+theorem exists_facet_superset (c : L → A) {S : Finset (L × Bool)}
     (hS : S ∈ signedComplex c) : ∃ B ∈ facets c, S ⊆ B := by
   classical
   let covers := (Finset.univ : Finset (Finset (L × Bool))).filter
