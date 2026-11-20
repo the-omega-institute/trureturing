@@ -7,7 +7,6 @@
    digest: Coth evaluation of the compensated lower Poisson mode. -/
 
 import D5.S3.Analytic.CothBernoulliDegree.PartialFraction
-import D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecificLimits.Normed
@@ -110,20 +109,37 @@ private theorem laplace_one_sub_cos {a : ℝ} (ha : 0 < a) (ω : ℝ) :
     IntegrableOn (fun s : ℝ => a * (Real.exp (-a * s) * (1 - Real.cos (ω * s)))) (Ioi 0) ∧
       (∫ s : ℝ in Ioi 0, a * (Real.exp (-a * s) * (1 - Real.cos (ω * s)))) =
         ω ^ 2 / (a ^ 2 + ω ^ 2) := by
+  let rate : ℂ := -(a : ℂ) + Complex.I * (ω : ℂ)
+  have hrate : rate.re < 0 := by simpa [rate] using neg_lt_zero.mpr ha
+  have hcomplex := integrableOn_exp_mul_complex_Ioi hrate 0
+  have hreal (s : ℝ) : (Complex.exp (rate * (s : ℂ))).re =
+      Real.exp (-a * s) * Real.cos (ω * s) := by
+    rw [Complex.exp_re]
+    congr 2 <;> simp [rate]
+  have hcosInt : IntegrableOn
+      (fun s : ℝ => Real.exp (-a * s) * Real.cos (ω * s)) (Ioi 0) := by
+    simpa only [RCLike.re_to_complex, hreal] using hcomplex.re
+  have hcos : (∫ s : ℝ in Ioi 0, Real.exp (-a * s) * Real.cos (ω * s)) =
+      a / (a ^ 2 + ω ^ 2) := by
+    calc
+      _ = (∫ s : ℝ in Ioi 0, Complex.exp (rate * (s : ℂ))).re := by
+        simpa only [RCLike.re_to_complex, hreal] using integral_re hcomplex
+      _ = _ := by
+        rw [integral_exp_mul_complex_Ioi hrate]
+        norm_num [rate, Complex.div_re, Complex.normSq_apply] <;> ring
   have hexp := integrableOn_exp_mul_Ioi (neg_lt_zero.mpr ha) 0
+  have hdiff : (fun s : ℝ => Real.exp (-a * s) * (1 - Real.cos (ω * s))) =
+      (fun s => Real.exp (-a * s) - Real.exp (-a * s) * Real.cos (ω * s)) := by
+    funext s
+    rw [mul_sub, mul_one]
   have hcomp : IntegrableOn
       (fun s : ℝ => Real.exp (-a * s) * (1 - Real.cos (ω * s))) (Ioi 0) := by
-    refine hexp.mul_bdd (c := 2) (by fun_prop) ?_
-    filter_upwards with s
-    rw [Real.norm_of_nonneg (sub_nonneg.mpr (Real.cos_le_one _))]
-    linarith only [Real.neg_one_le_cos (ω * s)]
+    rw [hdiff]
+    exact hexp.sub hcosInt
   refine ⟨hcomp.const_mul a, ?_⟩
-  rw [show (fun s : ℝ => a * (Real.exp (-a * s) * (1 - Real.cos (ω * s)))) =
-      (fun s : ℝ => (a / 2) * (2 * Real.exp (-a * s) * (1 - Real.cos (ω * s)))) by
-        funext s
-        ring,
-    integral_const_mul,
-    D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_one_sub_cos ha]
+  rw [integral_const_mul, hdiff, integral_sub hexp hcosInt,
+    integral_exp_mul_Ioi (neg_lt_zero.mpr ha), hcos]
+  simp only [mul_zero, Real.exp_zero, neg_div_neg_eq]
   have hden : a ^ 2 + ω ^ 2 ≠ 0 := by positivity
   field_simp [ha.ne', hden] <;> ring
 
