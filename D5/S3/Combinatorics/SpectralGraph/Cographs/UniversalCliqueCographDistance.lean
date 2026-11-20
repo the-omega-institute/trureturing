@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact distance multiplicity at s minus two and unbounded width-two cographs. -/
 import D5.S3.Combinatorics.SpectralGraph.MandalMannaDQDilworthRefutation
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Sum
