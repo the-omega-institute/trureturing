@@ -27,6 +27,10 @@ escape_witness: residue_rectangle yields the shortest progression bound for the
 actual relation lattice of every covering pair; integer parity sharpens the order.
 admission_basis: escape-witness.
 The private counting and index adapters are consumed on these proof paths.
+proof_shape: kernel_index: bind-only; consumers: arbitrary_pair_upper_bound,
+EvenFirstInvariantFactor.even_factor.
+proof_shape: rectangle_index_bound: content (surjection from the rectangle onto the quotient);
+consumers: lattice_compression_bound, EvenFirstInvariantFactor.even_factor.
 -/
 
 set_option autoImplicit false
@@ -174,7 +178,7 @@ theorem kernel_coordinates_dvd {c k : ℕ} (hc : 0 < c)
   exact ⟨(ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (congrFun he 0),
     (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp (congrFun he 1)⟩
 
-private theorem kernel_index {c k : ℕ} (f : Plane →+ Target c k)
+theorem kernel_index {c k : ℕ} (f : Plane →+ Target c k)
     (hf : Function.Surjective f) : f.ker.index = c^2*k := by
   rw [AddSubgroup.index_ker, f.range_eq_top_of_surjective hf, AddSubgroup.card_top]
   simp [Target, Nat.card_prod, Nat.card_zmod]
@@ -345,7 +349,7 @@ theorem large_index_square_lift (K : Submodule ℤ Plane) {c s : ℤ}
       nlinarith
   omega
 
-private theorem rectangle_index_bound (L : Submodule ℤ Plane) {m : ℤ}
+theorem rectangle_index_bound (L : Submodule ℤ Plane) {m : ℤ}
     (hcover : RectangleCovers L m m) : (L.toAddSubgroup.index : ℤ) ≤ m^2 := by
   classical
   have hm : 0 < m := by
