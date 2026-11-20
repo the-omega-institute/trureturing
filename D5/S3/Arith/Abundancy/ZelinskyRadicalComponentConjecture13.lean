@@ -8,10 +8,7 @@
 
 import D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjecture11
 
-/-!
-admission_basis: open-problem-resolution; preregistration #31919; Refuted.
-The source is Zelinsky's Conjecture 13, with its primitive counting denominator.
--/
+/-! Odd primitive non-deficient integers and their radical-component relative density. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

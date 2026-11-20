@@ -12,11 +12,7 @@ import D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
 import D5.S3.Arith.Divisors.UnitaryProductBridge
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
-/-!
-admission_basis: open-problem-resolution; preregistration #31919; Refuted.
-Zelinsky, Conjecture 11: the relative density inside C is zero.
-All auxiliary declarations are consumed bind-only steps.
--/
+/-! Primitive radical-component exceptions and the relative density inside C. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -30,6 +26,8 @@ namespace D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjecture11
 open ZelinskyZhangDoublePrimitive (PrimitiveNonDeficient)
 open ZelinskyZhangKLPrimitive (Deficient)
 open ZelinskyRadicalComponentDensity (radicalComponentSet count)
+open D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
+  (one_sub_sum_mul_prod_le_one)
 open StrongPseudoperfectEulerDensity (largeSquares largeSquares_card)
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.PrimeFiberPropagation (divisorRatio divisorRatio_pos)
@@ -274,9 +272,14 @@ private lemma subproduct_crossing (S : Finset ℕ) (M : ℕ) (hM : 1 ≤ M)
       log (∏ p ∈ A, (p : ℝ)) = ∑ p ∈ A, log (p : ℝ) :=
     log_prod (fun p hp => by exact_mod_cast (hpos p (hA hp)).ne')
   have hfull : 2 * log (M : ℝ) < ∑ p ∈ S, log (p : ℝ) := by
-    rw [← hlog S Subset.rfl, ← log_pow]
-    apply log_lt_log (by positivity)
-    exact_mod_cast (lt_of_not_ge hupper)
+    calc
+      2 * log (M : ℝ) = log ((M : ℝ) ^ 2) := by rw [log_pow]; norm_num
+      _ < log (∏ p ∈ S, (p : ℝ)) := by
+        apply log_lt_log (by positivity)
+        have hh : ((M ^ 2 : ℕ) : ℝ) < ((∏ p ∈ S, p : ℕ) : ℝ) := by
+          exact_mod_cast (lt_of_not_ge hupper)
+        simpa only [Nat.cast_pow, Nat.cast_prod] using hh
+      _ = _ := hlog S Subset.rfl
   obtain ⟨D, hDS, hDupper, _, hDlower⟩ :=
     D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerBudgetRepair.finite_pack
       S (fun p => log (p : ℝ))
@@ -292,12 +295,16 @@ private lemma subproduct_crossing (S : Finset ℕ) (M : ℕ) (hM : 1 ≤ M)
       apply (log_le_log_iff hMR hDpos).mp
       rw [hlog D hDS]
       linarith
-    exact_mod_cast hh
+    have hh' : (M : ℝ) ≤ ((∏ p ∈ D, p : ℕ) : ℝ) := by
+      simpa only [Nat.cast_prod] using hh
+    exact_mod_cast hh'
   · have hh : (∏ p ∈ D, (p : ℝ)) ≤ (M : ℝ) ^ 2 := by
       apply (log_le_log_iff hDpos (by positivity)).mp
       rw [hlog D hDS, log_pow]
       exact hDupper
-    exact_mod_cast hh
+    have hh' : ((∏ p ∈ D, p : ℕ) : ℝ) ≤ ((M ^ 2 : ℕ) : ℝ) := by
+      simpa only [Nat.cast_prod, Nat.cast_pow] using hh
+    exact_mod_cast hh'
 
 private lemma ratio_prime_product (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
     divisorRatio (∏ p ∈ S, p) = ∏ p ∈ S, (1 + 1 / (p : ℝ)) := by
@@ -448,8 +455,7 @@ private lemma primitive_small_part_large {M n r t : ℕ} (hM : 100 ≤ M)
     dsimp [B, z]
     rw [ratio_prime_product V (fun p hp => Nat.prime_of_mem_primeFactors (hV hp))]
     simpa only [mul_comm] using
-      D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.
-        one_sub_sum_mul_prod_le_one V (fun p => 1 / (p : ℝ))
+      one_sub_sum_mul_prod_le_one V (fun p => 1 / (p : ℝ))
           (fun p _hp => by positivity)
   have hnratio := ZelinskyRadicalComponentConjectures.primitive_ratio_lower hn hC
   have hratio : divisorRatio n = A / U * B := by
@@ -699,13 +705,17 @@ theorem relative_density_one (S : Set ℕ)
     have hsubset : count (S \ radicalComponentSet 2) X ≤
         ((Icc 1 X).filter fun n =>
           PrimitiveNonDeficient n ∧ n ∉ radicalComponentSet 2).card := by
+      unfold count
       apply card_le_card
       intro n hn
-      obtain ⟨hnI, hnS, hnB⟩ := mem_filter.mp hn
-      exact mem_filter.mpr ⟨hnI, hS n hnS, hnB⟩
+      simp only [mem_filter, Set.mem_sdiff] at hn ⊢
+      exact ⟨hn.1, hS n hn.2.1, hn.2.2⟩
+    have hcard : (count (S \ radicalComponentSet 2) X : ℝ) ≤
+        (((Icc 1 X).filter fun n =>
+          PrimitiveNonDeficient n ∧ n ∉ radicalComponentSet 2).card : ℝ) := by
+      exact_mod_cast hsubset
     have he : (count (S \ radicalComponentSet 2) X : ℝ) ≤
-        K * (X : ℝ) ^ (39 / 40 : ℝ) :=
-      (by exact_mod_cast hsubset).trans (hbound X hX₀)
+        K * (X : ℝ) ^ (39 / 40 : ℝ) := hcard.trans (hbound X hX₀)
     calc
       _ ≤ (K * (X : ℝ) ^ (39 / 40 : ℝ)) / count S X :=
         div_le_div_of_nonneg_right he hden.le
@@ -725,7 +735,8 @@ theorem relative_density_one (S : Set ℕ)
     unfold count
     rw [← card_union_of_disjoint (disjoint_left.mpr (by
       intro n hn hs
-      exact (mem_filter.mp hs).2.2 (mem_filter.mp hn).2.1)), ← filter_or]
+      simp only [mem_filter, Set.mem_inter_iff, Set.mem_sdiff] at hn hs
+      exact hs.2.2 hn.2.1)), ← filter_or]
     congr 1
     ext n
     simp only [Set.mem_inter_iff, Set.mem_sdiff, mem_filter]
