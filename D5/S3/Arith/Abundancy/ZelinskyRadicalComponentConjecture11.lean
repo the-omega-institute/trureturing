@@ -456,7 +456,9 @@ private lemma primitive_small_part_large {M n r t : ℕ} (hM : 100 ≤ M)
     rw [ratio_prime_product V (fun p hp => Nat.prime_of_mem_primeFactors (hV hp))]
     have hu := one_sub_sum_mul_prod_le_one V.attach
       (fun p : V => 1 / (p.val : ℝ)) (fun p _hp => by positivity)
-    simpa only [sum_attach, prod_attach, mul_comm] using hu
+    rw [Finset.sum_attach V (fun p : ℕ => 1 / (p : ℝ)),
+      Finset.prod_attach V (fun p : ℕ => 1 + 1 / (p : ℝ))] at hu
+    simpa only [mul_comm] using hu
   have hnratio := ZelinskyRadicalComponentConjectures.primitive_ratio_lower hn hC
   have hratio : divisorRatio n = A / U * B := by
     rw [← hprod]
