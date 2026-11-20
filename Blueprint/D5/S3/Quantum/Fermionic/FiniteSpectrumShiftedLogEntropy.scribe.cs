@@ -12,10 +12,7 @@ internal sealed class FiniteSpectrumShiftedLogEntropyDocument : IScribeDocumentD
             Entry("integral_log_shifted_product_sub_eq", "The logarithmic integral at finite cutoff",
                 "Two nonnegative spectra on the same finite index type and with equal sums have matching constant and linear cutoff terms. The integral of the difference of the logarithms of their shifted products is the entropy difference plus a difference of remainders."),
             Entry("entropy_le_of_shifted_product_le", "Shifted product order implies entropy order",
-                "If one shifted product is larger at every positive shift, its spectrum has greater or equal entropy. The remainder for an entry x is bounded by its square divided by the cutoff. A zero entry contributes zero entropy."),
-            Entry("bravyi_three_mode_entropy_ge_comparator", "Entropy order for the real Bravyi blocks",
-                "The comparator determinant formulas give strict positivity at every positive shift, including at the endpoints of the attenuation interval. "
-                + "The determinant differences also give equal traces on the two sides of each comparison. Applying the shifted-product theorem to the two block spectra counts the complementary block twice."))));
+                "If one shifted product is larger at every positive shift, its spectrum has greater or equal entropy. The remainder for an entry x is bounded by its square divided by the cutoff. A zero entry contributes zero entropy."))));
 
     private static DocumentBlock Entry(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("shifted-log-entropy-" + name.Replace('_', '-')),

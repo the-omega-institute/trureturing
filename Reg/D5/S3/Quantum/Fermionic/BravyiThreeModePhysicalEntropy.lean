@@ -160,6 +160,84 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end BlockSum
 
+namespace BlockComparison
+
+private abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
+    (fun _ => (ℝ → Prop))
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {lam c p q : ℝ} (_h0 : 0 ≤ lam) (_h1 : lam ≤ 1)
+    (_hn : c ^ 2 + p ^ 2 + q ^ 2 = 1),
+    let a := (chiral_isHermitian lam c p q).eigenvalues
+    let b := (chiral_isHermitian lam comparatorAmplitude 0 comparatorAmplitude).eigenvalues
+    let u := (complement_isHermitian lam c q).eigenvalues
+    let v := (complement_isHermitian lam comparatorAmplitude comparatorAmplitude).eigenvalues
+    R.readout () () (-((∑ i, b i * Real.log (b i)) + 2 * (∑ i, v i * Real.log (v i))))
+      (-((∑ i, a i * Real.log (a i)) + 2 * (∑ i, u i * Real.log (u i))))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (lam := 0) (c := 1) (p := 0) (q := 0) (by norm_num) (by norm_num) (by norm_num)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congrFun h 0
+  norm_num [actual, realize] at he
+
+def family : Registration arena (type_of% (@bravyi_three_mode_entropy_ge_comparator)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bravyi_three_mode_entropy_ge_comparator, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@bravyi_three_mode_entropy_ge_comparator) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Quantum.Fermionic.FiniteSpectrumShiftedLogEntropy.bravyi_three_mode_entropy_ge_comparator.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy.BlockComparison.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end BlockComparison
+
 end
 
 end Reg.D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy

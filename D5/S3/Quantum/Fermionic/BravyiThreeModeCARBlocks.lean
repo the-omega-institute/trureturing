@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Fermionic/BravyiThreeModeCARBlocks
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Fermionic/BravyiThreeModeCARBlocks
    mirror-E: none(waiver:symbolic-CAR-certificate)
    anchors: []

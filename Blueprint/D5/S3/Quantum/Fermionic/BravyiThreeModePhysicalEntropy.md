@@ -30,7 +30,19 @@ Lean statement: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.normalOu
 
 Apply the von Neumann spectral entropy formula to the density state. The complementary entropy is counted twice, and every zero eigenvalue contributes zero.
 
-**Theorem 1.3 (The physical comparator has minimum entropy).**
+**Theorem 1.3 (Entropy order for the real Bravyi blocks).**
+
+Lean statement: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.bravyi_three_mode_entropy_ge_comparator`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.bravyi_three_mode_entropy_ge_comparator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The comparator determinant formulas give strict positivity at every positive shift, including at the endpoints of the attenuation interval. The determinant differences also give equal traces on the two sides of each comparison. Applying the shifted-product theorem to the two block spectra counts the complementary block twice.
+
+**Theorem 1.4 (The physical comparator has minimum entropy).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.comparator_entropy_le_normalOutput`
 
@@ -44,6 +56,7 @@ For every real unit normal-form spinor and every attenuation from zero through o
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.bravyi_three_mode_entropy_ge_comparator`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.comparator_entropy_le_normalOutput`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.normalOutput_entropy_eq_blocks`
 - Truth anchor: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.normalOutput_spectrum`
