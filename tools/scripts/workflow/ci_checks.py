@@ -108,10 +108,10 @@ def current_phase(phase, data, plan, base, paths):
         if not plan["hits"]["current"]:
             result(phase, "not-applicable")
             return 0
-        if plan["delta"] and not base:
+        if plan["source-delta"] and not base:
             raise DetectError("selected source delta requires a readable protected base")
         return execute(phase, ["dotnet", CLI, "check-source", "--current",
-                              *(["--protected-base", base] if plan["delta"] else [])])
+                              *(["--protected-base", base] if plan["source-delta"] else [])])
     if phase == "prerequisite":
         prefix = current_prerequisite(data, plan, base, paths)
         if os.environ.get("GITHUB_OUTPUT"):
@@ -379,7 +379,7 @@ def main():
         paths = read_changed(args.changed)
         plan = selection(data, paths, args.purpose)
         base = args.base
-        if not base and plan["delta"]:
+        if not base and plan["source-delta"]:
             base = base_commit(Path.cwd(), "HEAD^1") if args.purpose == "pull-request" else os.environ.get("CI_PUSH_BEFORE", "")
         return current_phase(args.phase, data, plan, base, args.changed)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:

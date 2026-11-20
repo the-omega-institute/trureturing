@@ -175,6 +175,41 @@ class CheckTests(unittest.TestCase):
                 self.assertEqual(delta, "--protected-base" in command)
                 self.assertNotIn("--candidate-lean-report", command)
 
+    def test_merged_theory_data_runs_source_admission_without_a_lean_build(self):
+        residue = (
+            "docs/develop/theory/Note.md",
+            "docs/develop/archive/theory/part/Old.md",
+            "Meta/Digestion/atoms/sha256/" + "a" * 64,
+            "Meta/Digestion/backfill/note/source.toml",
+            "Meta/Digestion/backfill/note/context/entry.json",
+            "Meta/Digestion/backfill/note/outstanding/entry.yaml",
+        )
+        data, _ = contract.load(ROOT)
+        for path in residue:
+            with self.subTest(path=path):
+                plan = contract.selection(data, [path], "pull-request")
+                self.assertTrue(plan["hits"]["current"])
+                self.assertTrue(plan["source-delta"])
+                self.assertFalse(plan["report"])
+                self.assertFalse(plan["delta"])
+        result, calls, _ = self.local_spies(paths=residue)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        source = next(call for call in calls if "check-source" in call)
+        self.assertIn("--protected-base", source)
+        self.assertFalse(any("lean-report" in call or "check-current" in call for call in calls))
+        result, _, _ = self.local_spies(source=1, paths=residue)
+        self.assertEqual(result.returncode, 1)
+
+        for path in ("D5/Changed.lean", "docs/develop/theory/unknown.sh",
+                     "Meta/Digestion/atoms/sha256/invalid", "Meta/Digestion/unknown.json"):
+            with self.subTest(path=path):
+                plan = contract.selection(data, [*residue, path], "pull-request")
+                self.assertTrue(plan["report"])
+                self.assertTrue(plan["delta"])
+                self.assertTrue(plan["hits"]["filemap"])
+                if path.endswith(".lean"):
+                    self.assertTrue(plan["compiled-audit"])
+
     def test_source_rejection_blocks_every_guarded_launch_in_executable_local_adapter(self):
         result, calls, plan = self.local_spies(source=1)
         self.assertEqual(1, result.returncode, result.stdout + result.stderr)
