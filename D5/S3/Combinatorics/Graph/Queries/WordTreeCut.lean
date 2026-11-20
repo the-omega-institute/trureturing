@@ -35,15 +35,15 @@ private theorem crossing_extension {r u : List Bool} (b : Bool)
 private theorem prefix_boundary_edge (p : List Bool) (a : Bool) {u v : List Bool}
     (h : wordTree.Adj u v) (hout : ¬ p ++ [a] <+: u) (hin : p ++ [a] <+: v) :
     s(u, v) = s(p, p ++ [a]) := by
-  rw [wordTree, SimpleGraph.fromRel_adj] at h
-  rcases h.2 with ⟨b, rfl⟩ | ⟨b, rfl⟩
-  · have he := crossing_extension b hout hin
+  cases adj_step h with
+  | append u b =>
+    have he := crossing_extension b hout hin
     have hparent : p = u := by
       simpa only [List.dropLast_append_cons, List.dropLast_singleton, List.append_nil]
         using congrArg List.dropLast he
     subst u
     exact congrArg (fun l => s(p, l)) he.symm
-  · exact False.elim (hout (hin.trans (List.prefix_append _ _)))
+  | pop v b => exact False.elim (hout (hin.trans (List.prefix_append _ _)))
 
 private theorem extension_walk_in_side (p : List Bool) (a : Bool) {u v : List Bool}
     (hPrefix : u <+: v) (hSame : (p ++ [a] <+: u ↔ p ++ [a] <+: v)) :

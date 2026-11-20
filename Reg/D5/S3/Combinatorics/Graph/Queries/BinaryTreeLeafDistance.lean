@@ -173,3 +173,84 @@ noncomputable def childAdjRegistration :
   options := #[]
 
 end Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+
+namespace Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+
+open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+open _root_.D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+private abbrev endpointSignature : Signature where
+  Params := List Bool
+  State _ := List Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def stepTarget : Realization endpointSignature :=
+  realize endpointSignature (fun _ _ endpoint => endpoint) (fun e => nomatch e)
+
+private def stepSource : Realization endpointSignature :=
+  realize endpointSignature (fun _ source _ => source) (fun e => nomatch e)
+
+private abbrev endpointArena : Arena where
+  signature := endpointSignature
+  Law R := ∀ {x y : Word}, wordTree.Adj x y → Step x (R.readout () x y)
+
+private theorem stepSource_invalid : ¬ endpointArena.Law stepSource := by
+  intro h
+  have impossible : Step [] [] := h (child_adj [] false)
+  have differentLengths {x y : Word} (step : Step x y) : x.length ≠ y.length := by
+    cases step <;> simp
+  exact differentLengths impossible rfl
+
+private theorem target_varies :
+    stepTarget.readout () [] [false] ≠ stepTarget.readout () [] [true] := by
+  decide
+
+noncomputable def adjStepEvidence : Registration endpointArena (type_of% (@adj_step)) where
+  actual := stepTarget
+  bridge := Iff.rfl
+  variation := ⟨@adj_step, stepSource, stepSource_invalid⟩
+  sensitivity := ⟨fun i => ⟨stepSource,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, stepSource_invalid⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨[], [false], [true], target_varies⟩
+
+noncomputable def adjStepRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@adj_step) (Realization endpointSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance.adj_step
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance.adjStepEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨endpointArena⟩
+  objectArena := .source ⟨endpointArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source endpointArena ⟨adjStepEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize endpointSignature (fun _ _ endpoint => endpoint) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance

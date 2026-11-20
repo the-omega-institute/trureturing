@@ -39,7 +39,7 @@ private theorem step_adj {x y : Word} (h : Step x y) : wordTree.Adj x y := by
   | append _ b => exact child_adj _ b
   | pop _ b => exact (child_adj _ b).symm
 
-private theorem adj_step {x y : Word} (h : wordTree.Adj x y) : Step x y := by
+theorem adj_step {x y : Word} (h : wordTree.Adj x y) : Step x y := by
   rw [wordTree, fromRel_adj] at h
   rcases h.2 with ⟨b, rfl⟩ | ⟨b, rfl⟩
   · exact .append x b
