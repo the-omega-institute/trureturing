@@ -44,17 +44,29 @@ def report_batches(scope, limit=60_000):
         yield sorted(targets), documents
 
 
+def read_scope(paths, manifest):
+    write_paths(manifest, paths)
+    plan = subprocess.run([*SCRIBE, "lean-inputs", "--affected", "--paths-from", str(manifest)],
+                          stdout=subprocess.PIPE, text=True, check=True)
+    scope = json.loads(plan.stdout)
+    if any(not MODULE.fullmatch(module) for module in [*scope["targets"], *scope["programs"]]):
+        raise ValueError("invalid Lean module in PR scope")
+    return scope
+
+
+def cache_targets(paths):
+    with tempfile.TemporaryDirectory(prefix="ci-pr-lean-") as temporary:
+        scope = read_scope(paths, Path(temporary) / "paths")
+    print(" ".join(sorted(set(scope["targets"]) | set(scope["programs"]))))
+    return 0
+
+
 def check(paths):
     with tempfile.TemporaryDirectory(prefix="ci-pr-lean-") as temporary:
         directory = Path(temporary)
         manifest = directory / "paths"
-        write_paths(manifest, paths)
-        plan = subprocess.run([*SCRIBE, "lean-inputs", "--affected", "--paths-from", str(manifest)],
-                              stdout=subprocess.PIPE, text=True, check=True)
-        scope = json.loads(plan.stdout)
+        scope = read_scope(paths, manifest)
         programs, targets = scope["programs"], scope["targets"]
-        if any(not MODULE.fullmatch(module) for module in [*targets, *programs]):
-            raise ValueError("invalid Lean module in PR scope")
         print(f"CI_PR_LEAN report_targets={len(targets)} program_targets={len(programs)}", flush=True)
         environment = dict(os.environ, STRATALINT_ACCEPT_COLD_BUILD="1")
         if programs:
@@ -76,8 +88,11 @@ def check(paths):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path)
+    parser.add_argument("--cache-targets", action="store_true")
     try:
-        sys.exit(check(read_changed(parser.parse_args().manifest)))
+        args = parser.parse_args()
+        operation = cache_targets if args.cache_targets else check
+        sys.exit(operation(read_changed(args.manifest)))
     except subprocess.CalledProcessError as error:
         sys.exit(error.returncode if error.returncode > 0 else 128 - error.returncode)
     except (OSError, ValueError, KeyError) as error:
