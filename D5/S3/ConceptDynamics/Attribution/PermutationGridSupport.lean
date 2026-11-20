@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Partitions.CommonBlockWeights
 import D5.S3.Combinatorics.Partitions.StabilizerFactorialDivisibility
+import D5.S3.ConceptDynamics.Attribution.PrimeCycleSeedFreeness
 import D5.S3.ConceptDynamics.Attribution.ThreeOutcomeGridSupport
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -398,46 +399,9 @@ private theorem trivial_seed_stabilizers {I S : Type*} [Fintype I] [DecidableEq 
     (f : Profile I m → S → I)
     (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
     (equivariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
-    ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥ := by
-  classical
-  intro s
-  apply (Subgroup.eq_bot_iff_forall _).mpr
-  intro g fixes
-  by_contra notId
-  have fixesSeed := MulAction.mem_stabilizer_iff.mp fixes
-  let moved := g.support
-  have distinct : moved ≠ ∅ := by
-    exact notId ∘ Equiv.Perm.support_eq_empty_iff.mp
-  have countPos : 0 < moved.card := Finset.card_pos.mpr (Finset.nonempty_iff_ne_empty.mpr distinct)
-  have countBound : moved.card ≤ Fintype.card I := Finset.card_le_univ _
-  have countDivides : moved.card ∣ m := divisible moved.card countPos countBound
-  let p : Profile I m :=
-    ⟨fun i => if i ∈ moved then m/moved.card else 0, by
-      rw [← Finset.sum_filter, Finset.filter_mem_eq_inter, Finset.univ_inter, Finset.sum_const,
-        nsmul_eq_mul, Nat.cast_id, Nat.mul_comm, Nat.div_mul_cancel countDivides]⟩
-  have invariant : relabel g p = p := by
-    apply Subtype.ext
-    funext i
-    change (if g⁻¹ i ∈ moved then m/moved.card else 0) = if i ∈ moved then m/moved.card else 0
-    have eq : g⁻¹ i ∈ moved ↔ i ∈ moved := by
-      have h := (Equiv.Perm.apply_mem_support (f := g) (x := g⁻¹ i)).symm
-      rw [show g (g⁻¹ i) = i from g.apply_symm_apply i] at h
-      exact h
-    simp only [eq]
-  let i := f p s
-  have fixedLabel : g i = i := by
-    simpa only [i, invariant, fixesSeed] using (equivariant g p s).symm
-  have outside : i ∉ moved := fun hi => Equiv.Perm.mem_support.mp hi fixedLabel
-  have zero : (∑ t, if f p t = i then w t else 0) = 0 := by
-    have eq := calibrated p i
-    change _ = ((if i ∈ moved then m/moved.card else 0 : ℕ) : ℝ) at eq
-    simpa only [ite_eq_right outside, Nat.cast_zero] using eq
-  have dominated := Finset.single_le_sum (s := Finset.univ)
-    (f := fun t => if f p t = i then w t else 0)
-    (fun t _ => by split <;> first | exact (positive t).le | exact le_rfl)
-    (Finset.mem_univ s)
-  rw [zero, ite_eq_left (show f p s = i from rfl)] at dominated
-  exact (not_lt_of_ge dominated) (positive s)
+    ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥ :=
+  PrimeCycleSeedFreeness.free_of_prime_divisibility
+    (fun p prime le => divisible p prime.pos le) w positive f calibrated equivariant
 
 end PermutationGrid
 
@@ -736,32 +700,37 @@ private def tied {I : Type*} [Fintype I] [DecidableEq I] (a : I) {m : ℕ}
     rw [sum, Finset.sum_const, Finset.card_erase_of_mem (Finset.mem_univ a), Finset.card_univ,
       nsmul_eq_mul, Nat.cast_id, Nat.add_sub_of_le bound]⟩
 
-private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
+/-- Tied profiles require a whole interval of integer masses from one family of bounded orbit digits. -/
+theorem weighted_orbit_spectrum {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
     [MulAction (Equiv.Perm I) S] (two : 2 ≤ Fintype.card I)
-    {m : ℕ} (divisible : ∀ d : ℕ, 0 < d → d ≤ Fintype.card I → d ∣ m)
-    (w : S → ℝ) (positive : ∀ s, 0 < w s)
+    {m : ℕ} (free : ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥)
+    (w : S → ℝ)
     (invariant : ∀ (g : Equiv.Perm I) s, w (g • s) = w s)
     (f : Profile I m → S → I)
     (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
     (covariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
-    ∃ r, Fintype.card S = (Fintype.card I)! * r ∧
-      m / (Fintype.card I - 1) + 1 ≤ (Fintype.card I + 1) ^ r := by
+    ∃ (r : ℕ) (weights : Fin r → ℝ),
+      Fintype.card S = (Fintype.card I)! * r ∧
+      ((Fintype.card I)! : ℝ) * (∑ j, weights j) =
+        ((Fintype.card I-2)! : ℝ) * ∑ s, w s ∧
+      ∀ l : Fin (m/(Fintype.card I-1)+1), ∃ d : Fin r → Fin (Fintype.card I+1),
+        ∑ j, (d j).val * weights j = (l.val : ℝ) := by
   classical
   let k := Fintype.card I
   have kpos : 0 < k := by omega
+  have prevPos : 0 < k-1 := by omega
   let _ : Nontrivial I := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
   obtain ⟨b, a, distinct⟩ := exists_pair_ne I
   let P := Equiv.Perm I
   let H := ProfileStabilizer.Preserving (flag a)
   let J := MulAction.orbitRel.Quotient P S
   let _ : Fintype J := Fintype.ofFinite J
-  let e := (MulAction.selfEquivOrbitsQuotientProd
-    (PermutationGrid.trivial_seed_stabilizers divisible w positive f calibrated covariant)).symm
+  let e := (MulAction.selfEquivOrbitsQuotientProd free).symm
   have cardS : Fintype.card S = k ! * Fintype.card J := by
     simpa only [Fintype.card_prod, Fintype.card_perm, Nat.mul_comm] using Fintype.card_congr e.symm
-  let L := Fin (m/(k - 1) + 1)
+  let L := Fin (m/(k-1)+1)
   let p (l : L) : Profile I m := tied a l.val (Nat.le_trans
-    (Nat.mul_le_mul_left (k - 1) (show l.val ≤ m/(k - 1) from Nat.lt_succ_iff.mp l.isLt))
+    (Nat.mul_le_mul_left (k-1) (show l.val ≤ m/(k-1) from Nat.lt_succ_iff.mp l.isLt))
     (by rw [Nat.mul_comm]; exact Nat.div_mul_le_self _ _))
   have tieVal (l : L) : (p l).val b = l.val := ite_eq_right distinct
   have fixed (l : L) (g : H) : relabel g.val (p l) = p l := by
@@ -772,18 +741,20 @@ private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
       rw [flag_stabilizer] at h
       exact MulAction.mem_stabilizer_iff.mp h
     have eq : g.val.symm i = a ↔ i = a := by rw [Equiv.symm_apply_eq, ga]
-    change (if g.val.symm i = a then m - (k - 1) * l.val else l.val) = if i = a then m - (k - 1) * l.val else l.val
+    change (if g.val.symm i = a then m-(k-1)*l.val else l.val) =
+      if i = a then m-(k-1)*l.val else l.val
     simp only [eq]
   have permQuot : Fintype.card P / Fintype.card H = k := by
     change (Fintype.card (Equiv.Perm I)) / Fintype.card H = k
     change (Fintype.card (Equiv.Perm I)) / Fintype.card (ProfileStabilizer.Preserving (flag a)) = k
     rw [Fintype.card_perm, flag_card]
-    change k ! / (k - 1)! = k
-    have fact : k ! = k * (k - 1)! := (Nat.mul_factorial_pred kpos.ne').symm
+    change k ! / (k-1)! = k
+    have fact : k ! = k * (k-1)! := (Nat.mul_factorial_pred kpos.ne').symm
     rw [fact, Nat.mul_div_cancel _ (Nat.factorial_pos _)]
   have chooseDigit (l : L) (j : J) :
-      ∃ d : Fin (k + 1),
-        (univ.filter fun g : P => f (p l) (g • j.out) = b).card = d.val * (k - 2)! := by
+      ∃ d : Fin (k+1),
+        (univ.filter fun g : P => f (p l) (g • j.out) = b).card =
+          d.val * (k-2)! := by
     let F (g : P) := f (p l) (g • j.out)
     have equivariant (h : H) (g : P) : F (h • g) = h • F g := by
       change f (p l) ((h.val * g) • j.out) = h.val (f (p l) (g • j.out))
@@ -795,24 +766,59 @@ private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
     exact ⟨⟨d, Nat.lt_succ_of_le le⟩, eq⟩
   choose digit count using chooseDigit
   have weighted (l : L) :
-      ∑ j : J, ((digit l j).val : ℝ) * ((k - 2)! : ℝ) * w j.out = (l.val : ℝ) := by
+      ∑ j : J, ((digit l j).val : ℝ) * ((k-2)! : ℝ) * w j.out = (l.val : ℝ) := by
     have eq := calibrated (p l) b
     rw [tieVal] at eq
     rw [← e.sum_comp, Fintype.sum_prod_type] at eq
     rw [← eq]
     apply Finset.sum_congr rfl
     intro j _
-    change ((digit l j).val : ℝ) * ((k - 2)! : ℝ) * w j.out =
+    change ((digit l j).val : ℝ) * ((k-2)! : ℝ) * w j.out =
       ∑ g : P, (if f (p l) (g • j.out) = b then w (g • j.out) else 0)
     simp only [invariant, ← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
     rw [count l j, Nat.cast_mul]
-  have inj : Function.Injective digit := by
-    intro t v h
-    have eq : (t.val : ℝ) = (v.val : ℝ) := by rw [← weighted t, ← weighted v, h]
-    exact Fin.ext (by exact_mod_cast eq)
-  exact ⟨Fintype.card J, cardS, by
-    simpa only [L, Fintype.card_fin, Fintype.card_fun] using
-      (Fintype.card_le_of_injective digit inj)⟩
+  let eJ := Fintype.equivFin J
+  let weight (j : J) := ((k-2)! : ℝ) * w j.out
+  have reindexed : (∑ s, w s) = ((k ! : ℕ) : ℝ) * ∑ j : J, w j.out := by
+    rw [← e.sum_comp, Fintype.sum_prod_type]
+    simp only [show ∀ (j : J) (g : P), e (j,g) = g • j.out from fun _ _ => rfl,
+      invariant, Finset.sum_const, Finset.card_univ, Fintype.card_perm, nsmul_eq_mul,
+      ← Finset.mul_sum]
+    rfl
+  refine ⟨Fintype.card J, weight ∘ eJ.symm, cardS, ?_, ?_⟩
+  · simp only [Function.comp_apply]
+    rw [Equiv.sum_comp eJ.symm weight, reindexed]
+    simp only [weight, ← Finset.mul_sum]
+    ring
+  · intro l
+    refine ⟨digit l ∘ eJ.symm, ?_⟩
+    have h := Equiv.sum_comp eJ.symm (fun j => ((digit l j).val : ℝ) * weight j)
+    calc
+      _ = ∑ j : J, ((digit l j).val : ℝ) * weight j := h
+      _ = _ := by simpa only [weight, mul_assoc] using weighted l
+
+private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
+    [MulAction (Equiv.Perm I) S] (two : 2 ≤ Fintype.card I)
+    {m : ℕ} (divisible : ∀ d : ℕ, 0 < d → d ≤ Fintype.card I → d ∣ m)
+    (w : S → ℝ) (positive : ∀ s, 0 < w s)
+    (invariant : ∀ (g : Equiv.Perm I) s, w (g • s) = w s)
+    (f : Profile I m → S → I)
+    (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
+    (covariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
+    ∃ r, Fintype.card S = (Fintype.card I)! * r ∧
+      m / (Fintype.card I - 1) + 1 ≤ (Fintype.card I + 1) ^ r := by
+  classical
+  have free :=
+    PermutationGrid.trivial_seed_stabilizers divisible w positive f calibrated covariant
+  obtain ⟨r, weights, support, _, cover⟩ := weighted_orbit_spectrum two free w invariant f calibrated covariant
+  choose digits value using cover
+  have inj : Function.Injective digits := by
+    intro x y same
+    have equality : (x.val : ℝ) = (y.val : ℝ) := by
+      rw [← value x, ← value y, same]
+    exact Fin.ext (by exact_mod_cast equality)
+  exact ⟨r, support, by
+    simpa only [Fintype.card_fin, Fintype.card_fun] using Fintype.card_le_of_injective digits inj⟩
 
 
 open Finset
