@@ -189,10 +189,12 @@ theorem rowOne :
   refine ⟨?_, by decide⟩
   have values : ∀ p : Column 0, columnV 1 p = 2 ∧ columnV 2 p = 4 := by
     decide +kernel
+  have step (p : Column 0) : (C 0).mulVec (1 : Column 0 → ℤ) p = (columnV 1 p : ℤ) := by
+    simpa only [pow_one] using column_power 0 1 p
   unfold IsLagRelation
   funext p
   norm_num [Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
-    column_power, HardinColumnContinuations.columnV, (values p).1, (values p).2]
+    column_power, step, (values p).1, (values p).2]
 
 /-- Source degree-3 coefficient list for the proper-word transfer. -/
 def wordFourCoefficients : Fin 3 → ℤ :=
