@@ -14,6 +14,8 @@ triage: anchor
 
 ## Verified locator
 
+[DOI 10.1137/0507028](https://doi.org/10.1137/0507028) · [Corollary 3.1, p. 351](https://math.vanderbilt.edu/saffeb/texts/22.pdf#page=8)
+
 Corollary 3.1 and equations (3.2), (3.4) on page 351 give the
 normalized exponential Padé denominator and its parabolic zero-free region.
 For numerator degree $m$, the excluded region consists of $x+iy$ with

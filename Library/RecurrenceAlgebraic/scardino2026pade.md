@@ -15,6 +15,8 @@ triage: anchor
 
 ## Verified locator
 
+[DOI 10.48550/arXiv.2610.39051](https://doi.org/10.48550/arXiv.2610.39051)
+
 Equation (1.1) on page 1 gives the denominator of the $[k/m]$ approximant
 as the polynomial with coefficient $(-1)^j\binom mj(k+m-j)!/(k+m)!$
 for $0\le j\le m$. The diagonal specialization takes $k=m$.
