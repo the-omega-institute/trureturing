@@ -35,7 +35,7 @@ open private chiralL0_parity from D5.S3.VertexAlgebra.BRST.OriginalOrbifoldClose
 open private chiralL0_b left_right left_twisted bPlus_semirelative_mem class_eq_zero_iff from
   D5.S3.VertexAlgebra.BRST.OriginalOrbifoldClosedSemirelativeComparison
 open private energyWeight_basis from D5.S3.VertexAlgebra.BRST.OriginalOrbifoldBRSTZeroEnergy
-open private cycleMap cohomologyMap cohomologyMap_mk from
+open private cycleMap cohomologyMap from
   D5.S3.HomologicalAlgebra.FinitePerturbationCohomology
 
 noncomputable section
@@ -208,6 +208,18 @@ theorem shellToSemi_chain :
   apply Subtype.ext
   rfl
 
+/-- The Ward homotopy as an endomorphism of the actual semirelative complex. -/
+def semirelativeHomotopy : Module.End ℂ semirelativeStates :=
+  matchedHomotopy.restrict (fun z hz => matchedHomotopy_mem ⟨z, hz⟩)
+
+theorem semirelativeHomotopy_identity :
+    semirelativeDifferential * semirelativeHomotopy +
+      semirelativeHomotopy * semirelativeDifferential = 1 - shellToSemi.comp shellProjection := by
+  apply LinearMap.ext
+  intro z
+  apply Subtype.ext
+  exact matchedHomotopy_identity z
+
 local notation "Bₛ" => Boundaries shellDifferential shellDifferential_square
 local notation "Bₘ" => Boundaries semirelativeDifferential semirelativeDifferential_square
 local notation "includeCycle" =>
@@ -257,6 +269,68 @@ theorem shellCohomologyEquiv_class (z : LinearMap.ker shellDifferential) :
 
 theorem shellCohomologyEquiv_symm_class (z : LinearMap.ker semirelativeDifferential) :
     shellCohomologyEquiv.symm ((Bₘ).mkQ z) = (Bₛ).mkQ (projectCycle z) := rfl
+
+section NativeComparison
+
+open OriginalOrbifoldBRSTDescent (RelativeCohomology)
+
+local notation "K" => RelativeCohomology ⊗[ℂ] RelativeCohomology
+local notation "κ" => OriginalOrbifoldClosedRelativeKunneth.kunnethEquiv
+local notation "ε" => shellCohomologyEquiv
+
+/-- Include a native Künneth class through the first shell coordinate. -/
+def kunnethToSemirelative : K →ₗ[ℂ] SemirelativeCohomology :=
+  (ε).toLinearMap.comp (relativeToShell.comp (κ).toLinearMap)
+
+/-- Project by the original zero-energy operator and take the shifted
+second shell coordinate before applying inverse Künneth. -/
+def semirelativeToKunneth : SemirelativeCohomology →ₗ[ℂ] K :=
+  (κ).symm.toLinearMap.comp (shellToRelative.comp (ε).symm.toLinearMap)
+
+/-- The positive shell connecting map on the native Künneth quotient. -/
+def kunnethConnecting : Module.End ℂ K :=
+  (κ).symm.toLinearMap.comp (connectingHomomorphism.comp (κ).toLinearMap)
+
+private theorem kunnethToSemirelative_ladder :
+    kunnethToSemirelative.comp (κ).symm.toLinearMap = (ε).toLinearMap.comp relativeToShell := by
+  apply LinearMap.ext
+  intro x
+  simp only [kunnethToSemirelative, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.apply_symm_apply]
+
+private theorem semirelativeToKunneth_ladder :
+    semirelativeToKunneth.comp (ε).toLinearMap = (κ).symm.toLinearMap.comp shellToRelative := by
+  apply LinearMap.ext
+  intro x
+  simp only [semirelativeToKunneth, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.symm_apply_apply]
+
+private theorem kunnethConnecting_ladder :
+    kunnethConnecting.comp (κ).symm.toLinearMap = (κ).symm.toLinearMap.comp connectingHomomorphism := by
+  apply LinearMap.ext
+  intro x
+  simp only [kunnethConnecting, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.apply_symm_apply]
+
+theorem exact_kunnethToSemirelative_semirelativeToKunneth :
+    Function.Exact kunnethToSemirelative semirelativeToKunneth :=
+  Function.Exact.of_ladder_linearEquiv_of_exact
+    (e₁ := (κ).symm) (e₂ := ε) (e₃ := (κ).symm) kunnethToSemirelative_ladder
+    semirelativeToKunneth_ladder exact_relativeToShell_shellToRelative
+
+theorem exact_semirelativeToKunneth_kunnethConnecting :
+    Function.Exact semirelativeToKunneth kunnethConnecting :=
+  Function.Exact.of_ladder_linearEquiv_of_exact
+    (e₁ := ε) (e₂ := (κ).symm) (e₃ := (κ).symm) semirelativeToKunneth_ladder
+    kunnethConnecting_ladder exact_shellToRelative_connecting
+
+theorem exact_kunnethConnecting_kunnethToSemirelative :
+    Function.Exact kunnethConnecting kunnethToSemirelative :=
+  Function.Exact.of_ladder_linearEquiv_of_exact
+    (e₁ := (κ).symm) (e₂ := (κ).symm) (e₃ := ε) kunnethConnecting_ladder
+    kunnethToSemirelative_ladder exact_connecting_relativeToShell
+
+end NativeComparison
 
 end
 
