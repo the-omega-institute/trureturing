@@ -671,12 +671,13 @@ private theorem transport_back (σ : Equiv.Perm Point) (q : Mass) :
     transport σ.symm (transport σ q) = q := by
   ext x
   rw [← σ.symm_apply_apply x, transport_relabels σ.symm, transport_relabels σ]
+  rw [σ.symm_apply_apply]
 
 private theorem totalVariation_comp (σ : Equiv.Perm (Fin 4)) (p q : Fin 4 → ℝ) :
     totalVariation (p ∘ σ) (q ∘ σ) = totalVariation p q := by
   unfold totalVariation
   congr 1
-  exact σ.sum_comp (fun i => |p i - q i|)
+  exact Equiv.sum_comp σ (fun i => |p i - q i|)
 
 /-- The candidate distance from the three nontrivial sign moments. The first
 and second selected moment correspond to the first coordinate and the sum of
@@ -700,7 +701,7 @@ theorem affine_projection_exact (p : Fin 4 → ℝ) (hp : ∀ i, 0 ≤ p i)
   let r := normalizedMass p
   let τ := pointPermutation σ
   obtain ⟨ha, hac, hb₀, hb₁⟩ := order_normalizes_moments p
-  have hr : ∑ i, r i = 1 := (σ.sum_comp p).trans hs
+  have hr : ∑ i, r i = 1 := (Equiv.sum_comp σ p).trans hs
   obtain ⟨lower, attainable⟩ :=
     four_point_affine_projection r (fun i => hp (σ i)) hr ha hac hb₀ hb₁
   constructor
@@ -708,7 +709,7 @@ theorem affine_projection_exact (p : Fin 4 → ℝ) (hp : ∀ i, 0 ≤ p i)
     let q := affineBitLaw s c t
     have h := lower (τ.symm s) (fun i => linear_part τ.symm (c i)) t ht
     rw [← transport_affineBitLaw τ.symm s c t] at h
-    change projectionDistance p ≤ totalVariation r (tabulate (transport τ.symm q)) at h
+    change projectionDistance p ≤ totalVariation (p ∘ σ) (tabulate (transport τ.symm q)) at h
     rw [tabulate_transport σ q, totalVariation_comp σ] at h
     exact h
   · obtain ⟨x, hx, y, hy, z, hz, hd⟩ := attainable
