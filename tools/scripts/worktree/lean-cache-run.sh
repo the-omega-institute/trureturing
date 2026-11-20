@@ -3,6 +3,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 [[ $# -gt 0 ]] || { echo 'lean-cache-run: COMMAND is required' >&2; exit 2; }
 cd "$ROOT"
+# Full report preparation names its programs but still owns full cache admission.
+if [[ "$1" == --build-report-programs ]]; then
+  [[ "${FULL_BUILD:-0}" == 1 && $# -gt 1 ]] || { echo 'lean-cache-run: full report programs require FULL_BUILD=1 and named targets' >&2; exit 2; }
+  shift
+  set -- --build "$@"
+elif [[ "$1" == --build-report-scope || ( "$1" == --build && $# -gt 1 ) ]]; then
+  export FULL_BUILD=0
+fi
 if [[ "$1" == --build ]]; then
   for target in "${@:2}"; do
     [[ -n "${target//[[:space:]]/}" ]] || { echo 'lean-cache-run: empty module target is forbidden' >&2; exit 2; }
@@ -12,8 +20,6 @@ if [[ "$1" == --build && $# == 1 && "${FULL_BUILD:-0}" != 1 ]]; then
   echo 'full build requires explicit FULL_BUILD=1; pass nonempty module targets for a scoped build' >&2
   exit 2
 fi
-# A target list always selects a partial build, including inside recursive Make.
-if [[ "$1" == --build && $# -gt 1 ]]; then export FULL_BUILD=0; fi
 if [[ "$1" == --build && $# == 1 && "${STRATALINT_WARM_DONOR:-0}" == 1 ]]; then
   if [[ "$(git symbolic-ref --quiet --short HEAD)" != dev ||
         ! "$(git rev-parse --git-dir)" -ef "$(git rev-parse --git-common-dir)" ]]; then
@@ -27,7 +33,11 @@ if [[ "$1" == --build && $# == 1 && "${STRATALINT_WARM_DONOR:-0}" == 1 ]]; then
   # Explicit full warming can build the initial seed when no Release exists.
   export LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true STRATALINT_ACCEPT_COLD_BUILD=1
 fi
-if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
+if [[ "$1" == --build-report-modules && ( "${FULL_BUILD:-0}" != 1 || $# != 2 || ! -f "$2" ) ]]; then
+  echo 'lean-cache-run: --build-report-modules requires FULL_BUILD=1 and a report module list' >&2
+  exit 2
+fi
+if [[ ( "$1" == --build || "$1" == --build-report-modules || "$1" == --build-report-scope ) && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.
   lean_common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
@@ -72,6 +82,9 @@ fi
 export "GIT_CONFIG_KEY_${git_config_count}=diff.autoRefreshIndex"
 export "GIT_CONFIG_VALUE_${git_config_count}=false"
 export GIT_CONFIG_COUNT="$((git_config_count + 1))"
+if [[ "$1" == --prebuilt ]]; then
+  export STRATALINT_LEAN_PRODUCER_DLL="${STRATALINT_LEAN_PRODUCER_DLL:-$ROOT/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll}"
+fi
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || { echo 'lean-cache-run: candidate producer DLL is absent' >&2; exit 2; }
   cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
@@ -80,15 +93,30 @@ else
   export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
+if [[ "$1" == --prebuilt ]]; then
+  shift
+  [[ $# -gt 0 ]] || { echo 'lean-cache-run: --prebuilt requires a command' >&2; exit 2; }
+  exec "${cli[@]}" with-cache-reader --prebuilt -- "$@"
+fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+if [[ "$1" == --build-report-scope ]]; then
+  [[ $# == 2 && -n "$2" ]] || { echo 'lean-cache-run: scoped preparation requires report roots' >&2; exit 2; }
+  # One writer owns dependency admission, discovery and compilation for this scope.
+  exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- python3 -B \
+    "$ROOT/tools/lean-inspector/build_inputs.py" compile-scope-with-writer --targets "$2"
+fi
+if [[ "$1" == --build-report-modules ]]; then
+  exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error \
+    -d "$ROOT/tools/lean-inspector-reg" script run leanInspector/compileReportModules "$2"
+fi
 if [[ "$1" == --build ]]; then
   shift
   root_targets=() impl_targets=() reg_targets=() downstream_targets=()
   for target in "$@"; do
     case "$target" in
       LeanInformationAuditRegTests*|LeanInformationAuditFibTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
-      Reg|Reg.*|Reg:*|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
+      Reg|Reg.*|Reg:*|+Reg|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
       LeanInformationAudit*|+LeanInformationAudit*|leanInspector/*|leanInspectorInterface/*|@leanInspector|@leanInspector/*|@leanInspector:*|@leanInspectorInterface|@leanInspectorInterface/*|@leanInspectorInterface:*) impl_targets+=("$target") ;;
       *) root_targets+=("$target") ;;
     esac

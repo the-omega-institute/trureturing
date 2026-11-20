@@ -3,12 +3,15 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 import test_reuse
+import build_inputs
 import fib_analysis
 import materials
 import publication
@@ -17,11 +20,14 @@ import reuse
 
 class EntryRegressionTests(unittest.TestCase):
     def entry(self, *, cached=False, changed=False, selected=False, failure=0,
-              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False):
+              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False,
+              force_without_seed=None, follow_with_unchecked_report=False, legacy=False, archive=False):
         fixture = test_reuse.ReuseTests()
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
         root = fixture.root
+        fixture.policy.pop('dependency_sources')
+        fixture.write_policy()
 
         def write(name, text):
             path = root / name
@@ -31,7 +37,7 @@ class EntryRegressionTests(unittest.TestCase):
             return path
 
         for name in ('inspect.sh', 'native.py', 'reuse.py', 'materials.py',
-                     'publication.py', 'fib_analysis.py', 'build_work.py'):
+                     'publication.py', 'fib_analysis.py', 'build_work.py', 'build_inputs.py'):
             relative = 'tools/lean-inspector/' + name
             write(relative, (test_reuse.ROOT / relative).read_text())
 
@@ -53,9 +59,14 @@ class EntryRegressionTests(unittest.TestCase):
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()
             publication.write_sidecars(fixture.report, publication.coordinates(root), origins)
 
+        if archive:
+            fixture.report = root / '.lake/build/stratalint/previous-report.json'
+            fixture.report.parent.mkdir(parents=True, exist_ok=True)
         bundle('a' * 64)
         report = fixture.report
-        reuse.seal(root, report, reuse.capture(root), publication.bundle_identity(report))
+        reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
+        if legacy:
+            reuse.write_receipt(report, reuse.capture(root))
         if obsolete:
             value = json.loads(report.read_text())
             value['modules'][0]['fib_analysis']['schema_version'] = 1
@@ -80,7 +91,7 @@ class EntryRegressionTests(unittest.TestCase):
                 for suffix in publication.SUFFIXES:
                     member = publication.member(fixture.report, suffix)
                     archive.write(member, member.name)
-        elif not selected:
+        elif not selected and not legacy:
             # Accepted reuse must not decode the complete report for telemetry,
             # invoke the regression consumer, or launch an analyzer.
             with (root / 'tools/lean-inspector/publication.py').open('a') as script:
@@ -92,20 +103,23 @@ class EntryRegressionTests(unittest.TestCase):
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
         write('tools/scripts/worktree/lean-cache-ensure.sh',
               '#!/bin/sh\nprintf "ensure\\n" >> "$CALLS"\n')
-        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        write('bin/dotnet', '#!/bin/sh\n[ "$2" = lean-utility-input ] || exit 74\nprintf "[]\\n"\n')
+        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --build-report-programs ] && { [ "$FULL_BUILD" = 1 ] || exit 83; echo compile >> "$CALLS"; exit 0; }\n[ "$1" = --build-report-modules ] && exit 0\n[ "$1" = --prebuilt ] && shift\nexec "$@"\n')
         write('bin/lake', '#!/bin/sh\n'
               'if [ "${1:-}" = --version ]; then printf "fixture lake 1\\n"; exit 0; fi\n'
               'printf "report\\n" >> "$CALLS"\nmkdir -p .lake/build/lean-inspector\n'
               'cp produced.zip .lake/build/lean-inspector/report.zip\n')
-        write('bin/make', '#!/bin/sh\n'
-              '[ "$#" -eq 3 ] && [ "$1" = -C ] && [ "$2" = "$PWD" ] '
-              '&& [ "$3" = compiled-fib-test ] || exit 97\n'
-              'printf "regressions\\n" >> "$CALLS"\n'
-              # The real suite also exercises run_regressions and emits its
-              # own decisions. Only the outer consumer's first line is public.
-              'printf "LEAN_INSPECTOR_FIB_REGRESSIONS changed=true selected=true\\n"\n'
-              'printf "regression stdout detail\\n"\nprintf "regression stderr detail\\n" >&2\n'
-              'exit ' + str(failure) + '\n')
+        write('bin/make', """#!/bin/bash
+case "$1" in
+  lean-report)
+    exec bash "$PWD/tools/lean-inspector/inspect.sh" --repository "$PWD" \
+      --output "${3#LEAN_REPORT=}" --log-dir "$STRATALINT_LEAN_REPORT_LOG_DIR" \
+      --regenerate-report-artifacts "$REGENERATE_REPORT_ARTIFACTS" ;;
+esac
+[[ "$#" == 3 && "$1" == -C && "$2" == "$PWD" && "$3" == compiled-fib-test ]] || exit 97
+echo regressions >> "$CALLS"
+if [[ -n "$FIB_TEST_ARCHIVE" ]]; then tar -cf "$FIB_TEST_ARCHIVE" -C .lake build || exit 98; fi
+exit """ + str(failure) + '\n')
         write('tools/scripts/auric-fib-analysis.sh', '#!/bin/sh\n'
               'printf "unexpected analyzer\\n" >> "$CALLS"\nexit 98\n')
         producer = write('producer.dll', 'fixture producer')
@@ -119,120 +133,140 @@ class EntryRegressionTests(unittest.TestCase):
             STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_FIB_REGRESSIONS_SELECTED=str(selected).lower(),
             STRATALINT_LEAN_REPORT_REUSE=str(report), BASH_ENV=str(shell_environment))
-        result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(root), '--output', str(report), '--log-dir', str(logs), '--regenerate-report-artifacts', str(int(regenerate))],
-            cwd=report.parent, env=environment, capture_output=True, text=True, timeout=30)
+        if archive:
+            environment['FIB_TEST_ARCHIVE'] = str(root / 'during-check.tar')
+        environment.update(REGENERATE_REPORT_ARTIFACTS=str(int(regenerate)), STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        if force_without_seed:
+            for suffix in (*publication.SUFFIXES, reuse.SUFFIX):
+                publication.member(report, suffix).unlink()
+            command = [shutil.which('make'), '-f', str(test_reuse.ROOT / 'Makefile'), 'check-lean-report',
+                       'FULL_BUILD=1', 'LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail',
+                       force_without_seed + '=1', 'LEAN_REPORT=' + str(report)]
+        else:
+            command = [sys.executable, '-B', str(root / 'tools/lean-inspector/build_inputs.py'),
+                       'check', '--output', str(report)]
+        result = subprocess.run(command, cwd=root, env=environment,
+            capture_output=True, text=True, timeout=30)
+        if follow_with_unchecked_report:
+            self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+            analyzed = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build',
+                                       'LEAN_REPORT=' + str(report)], cwd=root, env=environment,
+                                      capture_output=True, text=True, timeout=30)
+            self.assertEqual(analyzed.returncode, 0, analyzed.stdout + analyzed.stderr)
+            self.assertEqual(reuse.read_receipt(report)['completed'], reuse.COMPLETED)
+            result = subprocess.run(command, cwd=root, env=environment,
+                                    capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
 
-    def test_explicit_recovery_rejects_old_comparison_and_runs_exactly_one_suite(self):
-        for failure in (0, 41):
-            with self.subTest(failure=failure):
-                result, calls, report, logs, before = self.entry(regenerate=True, obsolete=True, failure=failure)
-                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
-                self.assertEqual(calls, ['ensure', 'report', 'regressions'])
-                self.assertEqual(publication.member(report, '.reuse.json').exists(), failure == 0)
-                if failure:
-                    self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
-                                              for suffix in publication.SUFFIXES})
-                    self.assertNotIn('phase=publish ', result.stderr)
-                else:
-                    self.assertIn('phase=publish status=completed', result.stderr)
-                    self.assertNotIn('schema_version', report.read_text())
+    def test_release_archive_during_check_contains_only_published_reports(self):
+        import tarfile
+        result, calls, report, _, _ = self.entry(cached=True, selected=True, archive=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['regressions'])
+        with tarfile.open(report.parents[3] / 'during-check.tar') as archive:
+            members = archive.getmembers()
+        self.assertTrue(any(member.name.endswith('/previous-report.json') for member in members))
+        self.assertFalse(any('.lean-report-build.' in member.name or member.islnk() for member in members))
 
-    def test_recovery_does_not_relax_fresh_validation_or_normal_predecessor_errors(self):
-        for regenerate, obsolete, invalid_fresh in ((False, True, False), (True, True, True)):
-            with self.subTest(regenerate=regenerate, invalid_fresh=invalid_fresh):
-                result, calls, report, logs, before = self.entry(regenerate=regenerate,
-                    obsolete=obsolete, invalid_fresh=invalid_fresh)
-                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
-                self.assertIn('fib.invalid_partition', result.stderr)
-                self.assertNotIn('regressions', calls)
-                self.assertFalse(publication.member(report, '.reuse.json').exists())
-                self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
-                                          for suffix in publication.SUFFIXES})
+    def test_analysis_publication_cannot_clear_failed_regressions(self):
+        result, calls, report, _, _ = self.entry(changed=True, failure=41, follow_with_unchecked_report=True)
+        self.assertEqual(result.returncode, 41, result.stdout + result.stderr)
+        self.assertEqual(calls, ['compile', 'report', 'regressions', 'report', 'regressions'])
+        self.assertEqual(reuse.read_receipt(report)['completed'], reuse.COMPLETED)
 
-    def test_valid_recovery_predecessor_keeps_equal_input_and_selection_decisions(self):
-        for changed, selected in ((False, False), (True, False), (False, True)):
-            with self.subTest(changed=changed, selected=selected):
-                result, calls, _, _, _ = self.entry(regenerate=True, changed=changed, selected=selected)
+    def test_old_reuse_receipt_is_checked_before_becoming_a_regression_baseline(self):
+        result, calls, report, _, _ = self.entry(cached=True, legacy=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['regressions'])
+        self.assertEqual(reuse.read_receipt(report)['completed'], reuse.CHECKED)
+
+    def test_checked_reuse_preserves_actual_or_unknown_seed_commit(self):
+        for known in (True, False):
+            with self.subTest(known=known):
+                fixture = test_reuse.ReuseTests()
+                fixture.setUp()
+                self.addCleanup(fixture.doCleanups)
+                fixture.policy.pop('dependency_sources')
+                fixture.write_policy()
+                fixture.dev_repository()
+                root, report = fixture.root, fixture.report
+                reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
+                source = reuse.read_seed_base(root)
+                self.assertIsNotNone(source)
+                if not known:
+                    reuse.invalidate_seed_base(root)
+                subprocess.run(['git', '-C', str(root), '-c', 'user.name=Fixture',
+                                '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                                'commit', '--allow-empty', '-qm', 'reuse at another commit'], check=True)
+                staging = report.parent / 'check'
+                staging.mkdir()
+                with patch.object(build_inputs, 'ROOT', root), patch.dict(os.environ, {
+                        'STRATALINT_FIB_REGRESSIONS_SELECTED': 'false'}):
+                    build_inputs.checked_report(staging, report, report, staging, staging / 'work.json',
+                                                try_seed=True)
+                self.assertEqual(reuse.read_seed_base(root), source if known else None)
+
+    def test_optional_dependency_disappearance_cannot_enable_receipt_shortcut(self):
+        fixture = test_reuse.ReuseTests()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        fixture.policy['dependency_sources']['include'][0]['optional'] = True
+        fixture.write_policy()
+        fixture.receipt()
+        (fixture.root / 'Audit.lean').unlink()
+        self.assertFalse(reuse.probe(fixture.root, fixture.report)['needs_lake'])
+        self.assertTrue(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
+        # Removing the registration itself cannot promote an older incomplete receipt.
+        fixture.policy.pop('dependency_sources')
+        fixture.write_policy()
+        self.assertTrue(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
+        fixture.receipt()
+        self.assertFalse(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
+
+    def test_explicit_recovery_without_seed_through_checked_make_entry(self):
+        for option in ('REBUILD_REPORT_CACHE', 'REGENERATE_REPORT_ARTIFACTS'):
+            with self.subTest(option=option):
+                result, calls, report, _, _ = self.entry(force_without_seed=option)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                self.assertEqual(calls, ['ensure', 'report'] + (['regressions'] if changed or selected else []))
+                self.assertEqual(calls, ['compile', 'report', 'regressions'])
+                self.assertTrue(publication.member(report, reuse.SUFFIX).is_file())
 
-    def test_successful_fresh_decisions_run_or_skip_without_test_log_dump(self):
-        for changed in (False, True):
-            for selected in (False, True):
-                for unavailable_clock in (False, True):
-                    with self.subTest(changed=changed, selected=selected, unavailable_clock=unavailable_clock):
-                        result, calls, report, logs, _ = self.entry(changed=changed,
-                            selected=selected, unavailable_clock=unavailable_clock)
-                        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                        decision = ('LEAN_INSPECTOR_FIB_REGRESSIONS changed=' + str(changed).lower()
-                                    + ' selected=' + str(selected).lower())
-                        self.assertEqual([line for line in result.stderr.splitlines()
-                            if line.startswith('LEAN_INSPECTOR_FIB_REGRESSIONS ')], [decision])
-                        self.assertNotIn(decision, result.stdout)
-                        self.assertEqual(calls, ['ensure', 'report'] +
-                                         (['regressions'] if changed or selected else []))
-                        self.assertNotIn('regression stdout detail', result.stdout + result.stderr)
-                        self.assertNotIn('regression stderr detail', result.stdout + result.stderr)
-                        if changed or selected:
-                            self.assertIn('regression stdout detail', (logs / 'fib-regressions.stdout.log').read_text())
-                            self.assertIn('regression stderr detail', (logs / 'fib-regressions.stderr.log').read_text())
-                        self.assertEqual((logs / 'fib-regressions.exit.log').read_text(), '0\n')
-                        if unavailable_clock:
-                            self.assertIn('elapsed_seconds=unavailable exit=0', result.stderr)
-                        self.assertIn('phase=publish status=completed', result.stderr)
-                        self.assertTrue(publication.member(report, '.reuse.json').is_file())
+    def test_fresh_or_regenerated_inputs_select_the_suite_once(self):
+        for regenerate, obsolete, changed, selected in (
+                (False, False, False, False), (False, False, True, True),
+                (True, False, True, False), (True, False, False, True),
+                (True, True, False, False)):
+            with self.subTest(regenerate=regenerate, changed=changed, selected=selected, obsolete=obsolete):
+                result, calls, report, _, _ = self.entry(regenerate=regenerate, obsolete=obsolete,
+                    changed=changed, selected=selected)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(calls, ['compile', 'report']
+                                 + (['regressions'] if changed or selected or obsolete else []))
+                self.assertTrue(publication.member(report, '.reuse.json').is_file())
 
-    def test_accepted_reuse_reports_decision_without_extra_work_or_row_reads(self):
+    def test_accepted_reuse_skips_analysis_and_unselected_regressions(self):
         for selected in (False, True):
-            for failure in ((0, 41) if selected else (0,)):
-                for unavailable_clock in (False, True):
-                    with self.subTest(selected=selected, failure=failure, unavailable_clock=unavailable_clock):
-                        result, calls, report, logs, before = self.entry(cached=True, selected=selected,
-                            failure=failure, unavailable_clock=unavailable_clock)
-                        self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
-                        decision = ('LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=' + str(selected).lower())
-                        self.assertEqual(result.stderr.splitlines().count(decision), 1)
-                        self.assertNotIn(decision, result.stdout)
-                        self.assertEqual(calls, ['regressions'] if selected else [])
-                        self.assertEqual((logs / 'fib-regressions.exit.log').exists(), selected)
-                        self.assertNotIn('phase=report ', result.stderr)
-                        self.assertEqual(report.read_bytes(), before[''])
-                        # Reuse already published/resealed the accepted generation;
-                        # a later explicit regression failure does not undo that.
-                        self.assertEqual(json.loads(publication.member(report, '.provenance.json').read_text())['mode'], 'cached')
-                        self.assertTrue(publication.member(report, '.reuse.json').is_file())
-                        if failure:
-                            self.assertIn('LEAN_INSPECTOR_FAILED phase=fib-regressions exit=41', result.stderr)
-                            self.assertIn('regression stderr detail', result.stderr)
-                        else:
-                            self.assertEqual([line for line in result.stderr.splitlines()
-                                if line.startswith('LEAN_INSPECTOR_FIB_REGRESSIONS ')], [decision])
-                            self.assertNotIn('regression stderr detail', result.stderr)
+            with self.subTest(selected=selected):
+                result, calls, report, _, before = self.entry(cached=True, selected=selected)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(calls, ['regressions'] if selected else [])
+                self.assertEqual(report.read_bytes(), before[''])
+                self.assertTrue(publication.member(report, '.reuse.json').is_file())
 
-    def test_fresh_failure_preserves_all_public_members_and_exact_exit(self):
-        for changed, selected, missing in ((True, False, False), (False, True, False),
-                                          (True, False, True)):
-            with self.subTest(changed=changed, selected=selected, missing=missing):
-                result, calls, report, logs, before = self.entry(changed=changed, selected=selected,
-                    failure=41, missing_inputs=missing)
-                status = 1 if missing else 41
-                self.assertEqual(result.returncode, status, result.stdout + result.stderr)
-                self.assertIn(f'LEAN_INSPECTOR_FAILED phase=fib-regressions exit={status}', result.stderr)
-                self.assertEqual((logs / 'fib-regressions.exit.log').read_text(), str(status) + '\n')
-                self.assertEqual(calls, ['ensure', 'report'] + ([] if missing else ['regressions']))
+    def test_rejected_comparison_or_regressions_preserve_all_published_members(self):
+        for options, failure in (
+                (dict(changed=True, failure=41), 41),
+                (dict(cached=True, selected=True, failure=41), 41),
+                (dict(changed=True, missing_inputs=True), 1),
+                (dict(obsolete=True), 1),
+                (dict(regenerate=True, obsolete=True, invalid_fresh=True), 1)):
+            with self.subTest(options=options):
+                result, calls, report, _, before = self.entry(**options)
+                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+                self.assertEqual(calls.count('regressions'), int(failure == 41))
                 self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
                                           for suffix in publication.SUFFIXES})
-                self.assertFalse(publication.member(report, '.reuse.json').exists())
-                self.assertNotIn('phase=publish ', result.stderr)
-                if missing:
-                    self.assertIn('fib.missing_required_inputs', result.stderr)
-                    self.assertNotIn('LEAN_INSPECTOR_FIB_REGRESSIONS changed=', result.stderr)
-                else:
-                    self.assertIn('regression stdout detail', result.stderr)
-                    self.assertIn('regression stderr detail', result.stderr)
 
 
 if __name__ == '__main__':

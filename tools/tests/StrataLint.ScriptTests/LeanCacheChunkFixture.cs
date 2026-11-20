@@ -59,7 +59,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         WriteStub("make",
             """
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
-            if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
+            if [ "$1" = "check-lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
                 python3 -B "$FAKE_REPORT_FACTORY" write-release-report "$PWD"
             fi
             exit "$FAKE_BUILD_EXIT"

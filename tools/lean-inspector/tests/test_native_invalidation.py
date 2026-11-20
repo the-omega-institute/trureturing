@@ -52,11 +52,7 @@ inductive Token where
 theorem hidden_self : hidden = hidden := rfl
 ''')
         self.write('D5/A.lean', 'import D5.B\nnoncomputable def value : Nat := D5.hidden\n')
-        self.ensure()
-        result = self.guarded_command(['make', 'lean',
-            'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'],
-            cwd=self.root, env=self.env, timeout=120)
-        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.build()
         rows = self.report()[0]
         for row in rows:
             self.assertEqual(row['information_templates'],
@@ -266,11 +262,7 @@ def producerValue : Nat := 1
 ''')
 
         def build():
-            self.write('activity.jsonl', '')
-            result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'], cwd=self.root,
-                env=self.env, capture_output=True, text=True, timeout=120)
-            self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
+            result = self.build()
             return result.stdout + result.stderr
 
         phases = self.root / 'preparation-phases.jsonl'
@@ -388,7 +380,7 @@ class NativeCompilerOptionsTests:
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         extracted = sum(r['count'] for r in records if r['kind'] == 'extract')
         compiled = [name for name in sorted(stamps) if f'Built {name} (' in rebuilt.stdout + rebuilt.stderr]
-        self.assertEqual(compiled, sorted(stamps))
+        self.assertEqual(compiled, [])
         self.assertEqual(extracted, len(stamps))
         self.assertEqual(publication.digest(executable), producer)
         self.publish()
@@ -528,6 +520,7 @@ class NativeSemanticConsumerTests:
 
         # An unrelated judge is not demanded by a module without own inputs.
         self.write('LeanInformationAudit/TemplateEnrollment.lean', driver + 'unknown_command\n')
+        self.prepare_report_modules('D5.Alone')
         self.run_lake('build', 'D5.Alone:report')
         self.assertEqual(before, self.stamps())
 

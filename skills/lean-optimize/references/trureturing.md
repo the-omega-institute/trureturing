@@ -15,7 +15,7 @@ Python 使用 3.12 或更新版本。长命令使用宿主作业/会话句柄，
 从 `make help` 核对当前入口；局部迭代必须有非空显式目标。例如，把下面点分名称替换为实际被测模块：
 
 ```sh
-make lean LEAN_TARGETS="D5.Subject.Module"
+make lean-report-prepare LEAN_TARGETS="D5.Subject.Module"
 make lean-report-scoped LEAN_TARGETS="D5.Subject.Module"
 ```
 
