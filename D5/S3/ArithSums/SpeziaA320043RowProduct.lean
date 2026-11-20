@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
-   digest: Row n of A320043 multiplies to B(n+1)³, B(N)=∏ k/gcd(k,N), and B(p)=(p-1)! at primes. -
+   digest: Row n of A320043 multiplies to B(n+1)³, B(N)=∏ k/gcd(k,N), and B(p)=(p-1)! at primes. -/
 
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#98)
