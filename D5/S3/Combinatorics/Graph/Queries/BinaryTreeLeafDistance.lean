@@ -27,7 +27,7 @@ namespace D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
 def wordTree : SimpleGraph (List Bool) :=
   SimpleGraph.fromRel (fun p q => ∃ b : Bool, q = p ++ [b])
 
-private theorem child_adj (p : List Bool) (b : Bool) : wordTree.Adj p (p ++ [b]) := by
+theorem child_adj (p : List Bool) (b : Bool) : wordTree.Adj p (p ++ [b]) := by
   rw [wordTree, fromRel_adj]
   refine ⟨?_, Or.inl ⟨b, rfl⟩⟩
   intro h
