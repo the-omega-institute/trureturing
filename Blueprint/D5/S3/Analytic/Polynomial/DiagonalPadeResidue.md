@@ -127,5 +127,7 @@ For each fixed J there is a common order threshold for every n in the closed win
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeResidue.normalizedResidueLog`
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeResidue.residueAmplitudeLog`
 - Dependency: [D5/S3/Analytic/HalfIntegerBessel](../HalfIntegerBessel.md)
+- Dependency: [D5/S3/Analytic/HalfIntegerBesselSector](../HalfIntegerBesselSector.md)
+- Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeCentralPoles](DiagonalPadeCentralPoles.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeExponential](DiagonalPadeExponential.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadePhase](DiagonalPadePhase.md)

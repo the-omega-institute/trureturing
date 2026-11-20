@@ -7,7 +7,7 @@
    digest: The normalized diagonal exponential Padé denominator and its Bessel connection. -/
 module
 
-public import D5.S3.Analytic.HalfIntegerBessel
+public import D5.S3.Analytic.HalfIntegerBesselSector
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.Algebra.Polynomial.Reverse
 public import Mathlib.Algebra.Polynomial.Roots

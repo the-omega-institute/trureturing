@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Analytic/Polynomial/DiagonalPadeWindow.theta_real_lower_b
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Francesco Scardino (2026). *On a positivity conjecture of Fasi and Higham for Padé approximants to the matrix exponential*. DOI: [10.48550/arXiv.2610.39051](https://doi.org/10.48550/arXiv.2610.39051). URL: <https://arxiv.org/pdf/2610.39051v1#page=1>.
+*Acknowledgement.* NIST Digital Library of Mathematical Functions (2010). *DLMF 20.7.32, modular transformation of the third Jacobi theta function*. URL: <https://dlmf.nist.gov/20.7.E32>.
 
 *Commentary.*
 
@@ -37,6 +37,7 @@ There exists a natural threshold M such that for all odd natural m≥M and natur
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeWindow.exists_uniform_reciprocalCoefficient_pos`
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeWindow.theta_real_lower_bound`
 - Dependency: [D5/S3/Analytic/HalfIntegerBessel](../HalfIntegerBessel.md)
+- Dependency: [D5/S3/Analytic/HalfIntegerBesselSector](../HalfIntegerBesselSector.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeExponential](DiagonalPadeExponential.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeExterior](DiagonalPadeExterior.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeResidue](DiagonalPadeResidue.md)

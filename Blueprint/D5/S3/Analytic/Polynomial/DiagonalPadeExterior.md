@@ -69,6 +69,8 @@ At the positive phase zero 0<c<1, a fixed cutoff, inverse disk, localization dis
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeExterior.exists_uniform_scaled_exterior_radius`
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeExterior.exteriorPoles`
 - Dependency: [D5/S3/Analytic/HalfIntegerBessel](../HalfIntegerBessel.md)
+- Dependency: [D5/S3/Analytic/HalfIntegerBesselSector](../HalfIntegerBesselSector.md)
+- Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeCentralPoles](DiagonalPadeCentralPoles.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeExponential](DiagonalPadeExponential.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadePhase](DiagonalPadePhase.md)
 - Dependency: [D5/S3/Analytic/Polynomial/DiagonalPadeResidue](DiagonalPadeResidue.md)

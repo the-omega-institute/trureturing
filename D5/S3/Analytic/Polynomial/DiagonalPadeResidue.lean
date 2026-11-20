@@ -7,10 +7,12 @@
    digest: The reflected residue logarithm and Gaussian comparison for central Padé poles. -/
 module
 
-public import D5.S3.Analytic.Polynomial.DiagonalPadePhase
+public import D5.S3.Analytic.Polynomial.DiagonalPadeCentralPoles
 import all D5.S3.Analytic.Polynomial.DiagonalPadePhase
+import all D5.S3.Analytic.Polynomial.DiagonalPadeCentralPoles
 import all D5.S3.Analytic.Polynomial.DiagonalPadeExponential
 import all D5.S3.Analytic.HalfIntegerBessel
+import all D5.S3.Analytic.HalfIntegerBesselSector
 import Mathlib.Analysis.Analytic.Polynomial
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Complex.Convex

@@ -199,4 +199,4 @@ For every odd m, natural n, positive real root r, and complex root ζ with r ≤
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeExponential.residueWeight`
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeExponential.residueWeight_eq`
 - Truth anchor: `D5/S3/Analytic/Polynomial/DiagonalPadeExponential.residueWeight_pos`
-- Dependency: [D5/S3/Analytic/HalfIntegerBessel](../HalfIntegerBessel.md)
+- Dependency: [D5/S3/Analytic/HalfIntegerBesselSector](../HalfIntegerBesselSector.md)

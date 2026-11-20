@@ -9,6 +9,7 @@ claim: "At order m+1/2 the Bessel expansion coefficients truncate and have the f
 strata_touched:
   - D5/S3/Analytic/HalfIntegerBesselPolynomial
   - D5/S3/Analytic/HalfIntegerBessel
+  - D5/S3/Analytic/HalfIntegerBesselSector
 license: citation-only
 triage: anchor
 ---

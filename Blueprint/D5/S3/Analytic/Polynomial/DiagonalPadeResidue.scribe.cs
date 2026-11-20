@@ -6,7 +6,7 @@ internal sealed class DiagonalPadeResidueDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Polynomial/DiagonalPadeResidue.";
     private static readonly LibraryNoteRef Dlmf =
-        LibraryNoteRef.Create("D5/L/Analytic/dlmf2010halfintbessel");
+        LibraryNoteRef.Create("D5/L/Asymptotics/dlmf2010halfintbessel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The reflected finite carrier determines the normalized residues at central Padé poles.",

@@ -11,6 +11,7 @@ public import D5.S3.Analytic.Polynomial.DiagonalPadeExterior
 import all D5.S3.Analytic.Polynomial.DiagonalPadeExterior
 import all D5.S3.Analytic.Polynomial.DiagonalPadeResidue
 import all D5.S3.Analytic.HalfIntegerBessel
+import all D5.S3.Analytic.HalfIntegerBesselSector
 import all D5.S3.Analytic.Polynomial.DiagonalPadeExponential
 import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Gaussian.PoissonSummation

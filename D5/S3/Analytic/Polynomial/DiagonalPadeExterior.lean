@@ -8,10 +8,12 @@
 module
 
 import all D5.S3.Analytic.HalfIntegerBessel
+import all D5.S3.Analytic.HalfIntegerBesselSector
 public import D5.S3.Analytic.Polynomial.DiagonalPadeExponential
 import all D5.S3.Analytic.Polynomial.DiagonalPadeExponential
-public import D5.S3.Analytic.Polynomial.DiagonalPadePhase
+public import D5.S3.Analytic.Polynomial.DiagonalPadeCentralPoles
 import all D5.S3.Analytic.Polynomial.DiagonalPadePhase
+import all D5.S3.Analytic.Polynomial.DiagonalPadeCentralPoles
 public import D5.S3.Analytic.Polynomial.DiagonalPadeResidue
 import all D5.S3.Analytic.Polynomial.DiagonalPadeResidue
 import Mathlib.Analysis.Calculus.Deriv.MeanValue

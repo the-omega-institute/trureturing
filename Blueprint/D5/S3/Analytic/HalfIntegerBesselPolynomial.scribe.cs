@@ -6,7 +6,7 @@ internal sealed class HalfIntegerBesselPolynomialDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Analytic/HalfIntegerBesselPolynomial.";
     private static readonly LibraryNoteRef Dlmf =
-        LibraryNoteRef.Create("D5/L/Analytic/dlmf2010halfintbessel");
+        LibraryNoteRef.Create("D5/L/Asymptotics/dlmf2010halfintbessel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The normalized half-integer Bessel polynomial and its reflection give an exact Wronskian.",
