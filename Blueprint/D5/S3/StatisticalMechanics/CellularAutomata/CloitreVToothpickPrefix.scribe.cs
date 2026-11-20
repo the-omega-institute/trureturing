@@ -15,10 +15,10 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
         H("Vanishing prefix corrections in the V-toothpick kernel"),
         Blocks(
             Definition("period-index", "periodIndex", "Euclidean period index", PeriodIndex(),
-                "This is i(j,p,r) in the theorem below. The offset and remainder are "
+                "The notation i(j,p,r) denotes this index. The offset and remainder are "
                 + "computed in the integers, and Int.toNat converts the entire sum."),
             Definition("column-period", "columnPeriod", "Column period", ColumnPeriod(),
-                "This is p(j) in the theorem below. For j ≥ 1, it is twice the least "
+                "The notation p(j) denotes this period. For j ≥ 1, it is twice the least "
                 + "power of two strictly greater than j."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("The full prefix equality"), StatementSource.FromAuthor(Disp(Statement())),
@@ -28,7 +28,8 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
                         + "equivalently whether for every dyadic P the coefficients of E_c "
                         + "of degree less than P are determined by c modulo 2P.")),
                     Paragraph(Text("Here e(j,c) is the coefficient of degree j in the integer "
-                        + "polynomial E_c of equation (17). The period p(j) is 2 raised to "
+                        + "polynomial E_c of equation (17) and is computed by birthKernelEntry. "
+                        + "The period p(j) is 2 raised to "
                         + "floor(log₂ j)+2, twice the least dyadic integer P strictly above j. "
                         + "The function i(j,p,r) returns j−1 plus the Euclidean remainder "
                         + "of r−j+1 modulo p, computed over the integers before conversion to a natural. "
@@ -84,11 +85,11 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
     {
         var j = DefinitionDsl.Id("j");
         var c = DefinitionDsl.Id("c");
-        var p = Call("p", j);
-        var index = Call("i", j, p, new Formula.Modulo(c, p));
-        var prefix = Call("e", j, c);
-        var shifted = Call("e", j, Add(c, p));
-        var periodic = Call("e", j, index);
+        var p = Call("columnPeriod", j);
+        var index = Call("periodIndex", j, p, new Formula.Modulo(c, p));
+        var prefix = Call("birthKernelEntry", j, c);
+        var shifted = Call("birthKernelEntry", j, Add(c, p));
+        var periodic = Call("birthKernelEntry", j, index);
         var equalities = new Formula.Logic(Equal(prefix, shifted), FormulaLogicOperator.And,
             new Formula.Logic(Equal(shifted, periodic), FormulaLogicOperator.And,
                 Equal(Subtract(prefix, periodic), Num(0))));

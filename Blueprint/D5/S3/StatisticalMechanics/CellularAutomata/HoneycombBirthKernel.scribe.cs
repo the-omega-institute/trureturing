@@ -20,8 +20,8 @@ internal sealed class HoneycombBirthKernelDocument : IScribeDocumentDefinition
         H("Birth polynomials of adjacent honeycomb cuts"),
         Blocks(
             Paragraph(Text("Here Vertex is Bool × ℤ × ℤ, x(v) and y(v) are its integer "
-                + "coordinate projections, and e is Lean's typeclass argument for "
-                + "decidable adjacency. Subtraction in tick and exponent expressions "
+                + "coordinate projections. Square brackets enclose Lean's anonymous typeclass argument "
+                + "for decidable adjacency. Subtraction in tick and exponent expressions "
                 + "is truncated in ℕ. The symbol X denotes the polynomial indeterminate.")),
             Definition("delta", "delta", "Adjacent-cut birth difference", DeltaDefinition(),
                 "Each birth polynomial counts every retained vertex that is born with a monomial at its birth tick."),
@@ -186,8 +186,8 @@ internal sealed class HoneycombBirthKernelDocument : IScribeDocumentDefinition
     }
 
     private static Formula OnGraph(Formula body) =>
-        All(body, ("G", CallNamed("SimpleGraph", Vertex)),
-            ("e", CallNamed("DecidableRel", Seq(Graph, Dot, Name("Adj")))));
+        All(Seq(OpenBracket, CallNamed("DecidableRel", Seq(Graph, Dot, Name("Adj"))), CloseBracket, Comma, Sp, body),
+            ("G", CallNamed("SimpleGraph", Vertex)));
 
     private static Formula Laws() => CallNamed("NeighborLaws", Graph);
     private static Formula Parity() => CallNamed("EarliestBirthIff", Graph);

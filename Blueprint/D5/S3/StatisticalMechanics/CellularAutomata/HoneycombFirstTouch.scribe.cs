@@ -30,7 +30,7 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
             Paragraph(Text("A stored pair gives the tick and multiplicity of the first touch. "
                 + "A vertex with multiplicity one is born and sends on the next tick. "
                 + "The seed starts with the pair (0, 1). In the formulas, u is the universe "
-                + "of the vertex type. The witnesses e and dec are Lean's typeclass arguments "
+                + "of the vertex type. Square brackets enclose Lean's anonymous typeclass arguments "
                 + "for decidable equality and adjacency. A type after a colon gives "
                 + "the type of a variable or of the displayed value.")),
             Definition("sending-neighbors", "sendingNeighbors", "Sending neighbors", SendingNeighbors(),
@@ -122,8 +122,10 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
                     Imp(Laws(), CallNamed("EarliestBirthIff", Graph)), decidable: true),
                 "The graph-level adjacency laws suffice to derive the Pascal parity criterion for the cut domains."),
             Definition("repository-adjacency", "repositoryAdjacency", "Decidable repository adjacency",
-                Typed(Name("repositoryAdjacency"), DecidableAdj(Name("honeycombGraph"))),
-                "The decision procedure tests the color and the three allowed offsets of the repository graph."),
+                RepositoryAdjacency(),
+                "In HoneycombFirstTouch.repositoryAdjacency, Lean unfolds aToB to synthesize the decision "
+                + "for the displayed disjunction. The reverse direction of graph_adj_iff transfers that "
+                + "decision to adjacency in HoneycombCylinderCoordination.honeycombGraph."),
             Theorem("repository-neighbor-laws", "repositoryNeighborLaws",
                 "Adjacency laws on the repository graph", CallNamed("NeighborLaws", Name("honeycombGraph")),
                 "Here honeycombGraph is the existing graph in HoneycombCylinderCoordination."))));
@@ -294,6 +296,31 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
                 Equal(w, CallNamed(target, x, Shift(y))))), ("x", Integers), ("y", Integers), ("w", Vertex))));
     }
 
+    private static Formula RepositoryAdjacency()
+    {
+        var v = F.Id("v");
+        var w = F.Id("w");
+        var x = F.Id("x");
+        var y = F.Id("y");
+        var a = F.Id("a");
+        var b = F.Id("b");
+        Formula FromA(Formula source, Formula target) =>
+            And(Equal(Color(source), Name("false")), Equal(Color(target), Name("true")),
+                CallNamed("aToB", X(source), Y(source), X(target), Y(target)));
+        var test = Or(FromA(v, w), FromA(w, v));
+        var equivalence = Seq(Par(CallNamed("graph_adj_iff", v, w)), Dot, Name("symm"));
+        var decision = CallNamed("decidable_of_iff", test, equivalence);
+        var offsets = Or(And(Equal(x, a), Equal(y, b)),
+            And(Equal(x, Add(a, Num(1))), Equal(y, b)),
+            And(Equal(x, a), Equal(y, Add(b, Num(1)))));
+        return new Formula.Aligned([
+            Typed(Name("repositoryAdjacency"), DecidableAdj(Name("honeycombGraph"))),
+            All(Equal(CallNamed("repositoryAdjacency", v, w), decision), ("v", Vertex), ("w", Vertex)),
+            All(IffForm(CallNamed("aToB", x, y, a, b), offsets),
+                ("x", Integers), ("y", Integers), ("a", Integers), ("b", Integers))
+        ]);
+    }
+
     private static Formula Horizon()
     {
         var v = F.Id("v");
@@ -410,13 +437,16 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
     private static Formula GenericGraph(Formula body, bool decidableEquality, params (string, Formula)[] parameters)
     {
         var type = F.Id("V");
-        var graph = All(All(body, parameters), ("G", CallNamed("SimpleGraph", type)), ("dec", DecidableAdj(Graph)));
-        return All(decidableEquality ? All(graph, ("e", CallNamed("DecidableEq", type))) : graph,
+        var graph = All(Instance(DecidableAdj(Graph), All(body, parameters)),
+            ("G", CallNamed("SimpleGraph", type)));
+        return All(decidableEquality ? Instance(CallNamed("DecidableEq", type), graph) : graph,
             ("V", Seq(Name("Type"), Sp, F.Id("u"))));
     }
 
     private static Formula OnHoneycombGraph(Formula body, bool decidable = false) =>
-        All(decidable ? All(body, ("dec", DecidableAdj(Graph))) : body, ("G", CallNamed("SimpleGraph", Vertex)));
+        All(decidable ? Instance(DecidableAdj(Graph), body) : body, ("G", CallNamed("SimpleGraph", Vertex)));
+
+    private static Formula Instance(Formula type, Formula body) => Seq(OpenBracket, type, CloseBracket, Comma, Sp, body);
 
     private static Formula VertexReadout(string name, Formula type, Formula right) =>
         All(TypedEquation(CallNamed(name, F.Id("v")), type, right), ("v", Vertex));
