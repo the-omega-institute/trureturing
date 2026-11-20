@@ -10,7 +10,9 @@ Lean statement: `D5/S3/Quantum/Matrix/ReflectedSpectralWindow.central_defect_end
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ReflectedSpectralWindow.central_defect_endpoint_average` (`✓ std3`). ∎
 
-*Citation.* Andrew M. Childs; Richard Cleve; Enrico Deotto; Edward Farhi; Sam Gutmann; Daniel A. Spielman (2003). *Exponential algorithmic speedup by a quantum walk*. DOI: [10.48550/arXiv.quant-ph/0209131](https://doi.org/10.48550/arXiv.quant-ph/0209131). URL: <https://arxiv.org/abs/quant-ph/0209131v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Andrew M. Childs; Richard Cleve; Enrico Deotto; Edward Farhi; Sam Gutmann; Daniel A. Spielman (2003). *Exponential algorithmic speedup by a quantum walk*. DOI: [10.48550/arXiv.quant-ph/0209131](https://doi.org/10.48550/arXiv.quant-ph/0209131). URL: <https://arxiv.org/abs/quant-ph/0209131v2>.
 
 *Commentary.*
 
