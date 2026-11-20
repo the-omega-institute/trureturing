@@ -18,14 +18,21 @@ internal sealed class HardinA233127CertificateZeroDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact square-strip transitions by first boundary label.",
         H("Scanner fibres and boundary certificates"), Blocks(
+            Describe.Lean(DescribeId.Create("class-fibres"), DeclarationHandle.Create(
+                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233127CertificateZero.class_fibres"),
+                H("The boundary-row scanner-fibre sum"),
+                StatementSource.FromAuthor(Disp(ClassFibres())),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                    "The count of compatible scanner rows in a boundary class equals the sum "
+                    + "over proper colour rows, weighted by the size of each scanner fibre."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fibres"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233127CertificateZero.class_fibres_normalized"),
                 H("The six-coordinate scanner-fibre sum"), StatementSource.FromAuthor(Disp(Fibres())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "The theorem D5.S3.Combinatorics.TraceAvoidingArrays."
                     + "HardinA233127SquareStrip.class_fibres_normalized replaces individual "
-                    + "colour rows by their exact scanner fibres. Its public interface is "
-                    + "used by the private boundary proofs in all three certificate modules."))),
+                    + "colour rows by their exact scanner fibres, expanding the sum into six colour coordinates."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rows"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233127CertificateZero.row_counts_zero"),
@@ -33,8 +40,7 @@ internal sealed class HardinA233127CertificateZeroDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "The theorem D5.S3.Combinatorics.TraceAvoidingArrays."
                     + "HardinA233127SquareStrip.row_counts_zero certifies all valid "
-                    + "boundaries with the indicated first label. The final row_counts "
-                    + "interface consumes it when combining the three first-label cases."))),
+                    + "boundaries with the indicated first label."))),
                 DescribeRole.Theorem))));
 
     private static Formula RowCounts()
@@ -44,6 +50,23 @@ internal sealed class HardinA233127CertificateZeroDocument : IScribeDocumentDefi
             Imp(Eq(At(p, Typed(D(0), Fin(6))), Typed(D(0), Fin(3))),
             All("k", Fin(11), Eq(Call(Root + "classCount", s, p, k),
                 Call(Root + "transfer", Call(Root + "boundaryClass", s, p), k)))))));
+    }
+
+    private static Formula ClassFibres()
+    {
+        var s = V("s"); var p = V("p"); var k = V("k"); var q = V("q"); var j = V("j");
+        var adjacent = All("j", Fin(5), Ne(At(q, Call("Fin.castSucc", j)),
+            At(q, Call("Fin.succ", j))));
+        var compatible = All("j", Fin(6), Ne(At(p, j), At(q, j)));
+        var finished = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233255LiteralBridge.rowFinish", s, q);
+        var weight = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233255LiteralBridge.rowWeight", s, q);
+        var sum = SumOver("q", PairRow(), Mul(weight, Conditional(
+            And(adjacent, And(compatible, Eq(Call(Root + "boundaryClass", finished, q), k))),
+            Typed(D(1), Name("Int")), Typed(D(0), Name("Int")))));
+        return All("s", Seen(), All("p", PairRow(), All("k", Fin(11),
+            Eq(Call(Root + "classCount", s, p, k), sum))));
     }
 
     private static Formula Fibres()
