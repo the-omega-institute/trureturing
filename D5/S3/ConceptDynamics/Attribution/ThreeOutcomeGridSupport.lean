@@ -95,24 +95,6 @@ private theorem all_stabilizers_trivial {S : Type*} [Fintype S] [MulAction Symme
   rw [zero, ite_eq_left hread] at bound
   exact (not_lt_of_ge bound) (positive s)
 
-private noncomputable def orbitCoordinates {S : Type*} [MulAction Symmetry S]
-    (free : ∀ s : S, MulAction.stabilizer Symmetry s = ⊥) :
-    (MulAction.orbitRel.Quotient Symmetry S × Symmetry) ≃ S :=
-  Equiv.ofBijective (fun (p : MulAction.orbitRel.Quotient Symmetry S × Symmetry) => p.2 • p.1.out) (by
-    constructor
-    · rintro ⟨i, g⟩ ⟨j, h⟩ eq
-      have hi : i = j := by
-        simpa only [MulAction.orbitRel.Quotient.quotient_smul_eq, Quotient.out_eq'] using
-          congrArg (fun s : S => (Quotient.mk'' s : MulAction.orbitRel.Quotient Symmetry S)) eq
-      subst j
-      have : IsCancelSMul Symmetry S := isCancelSMul_iff_stabilizer_eq_bot.mpr free
-      exact Prod.ext rfl (IsCancelSMul.right_cancel _ _ _ eq)
-    · intro s
-      let i : MulAction.orbitRel.Quotient Symmetry S := Quotient.mk'' s
-      have h : s ∈ MulAction.orbit Symmetry i.out := Quotient.exact' (Quotient.out_eq' i).symm
-      obtain ⟨g, hg⟩ := h
-      exact ⟨(i, g), hg⟩)
-
 private theorem count_at_most_three (f : Symmetry → Label)
     (equivariant : ∀ g, f (swap01*g) = swap01 (f g)) :
     (univ.filter fun g => f g = 0).card ≤ 3 := by
@@ -149,7 +131,8 @@ private theorem triple_grid_lower {S : Type*} [Fintype S] [MulAction Symmetry S]
   classical
   let J := MulAction.orbitRel.Quotient Symmetry S
   let _ : Fintype J := Fintype.ofFinite J
-  let e := orbitCoordinates (all_stabilizers_trivial w positive f calibrated covariant)
+  let e := (MulAction.selfEquivOrbitsQuotientProd
+    (all_stabilizers_trivial w positive f calibrated covariant)).symm
   have hcard : Fintype.card S = 6 * Fintype.card J := by
     simpa only [Fintype.card_prod, symmetry_card, Nat.mul_comm] using Fintype.card_congr e.symm
   let digit (k : Fin (3*q+1)) (j : J) : Fin 4 :=
