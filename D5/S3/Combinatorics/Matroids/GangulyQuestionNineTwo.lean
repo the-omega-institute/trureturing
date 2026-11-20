@@ -17,17 +17,7 @@
    The finite Chow and determinant checks support this refutation. -/
 
 import D5.S3.ConceptDynamics.Coding.EssentialWordRealization
-import Mathlib.Algebra.CharP.Two
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Option
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.ZMod.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
 
 /-!
 The source definitions are Ganguly, *Representability of Graphical Symplectic

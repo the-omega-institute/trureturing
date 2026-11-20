@@ -44,14 +44,23 @@ internal sealed class GangulyQuestionNineTwoDocument : IScribeDocumentDefinition
             Definition("bridge-join", "bridgeJoin", "The bridge-join witness", AssessedProvenance.FromRepo(Source),
                 "Join the same roots of the disjoint factors by a fresh edge. The loop at vertex 3 "
                 + "belongs to the right factor, and the fresh edge is the edge of ID 6."),
-            Definition("claim", "claim", "Affirmative closure assertion",
+            Describe.Lean(
+                DescribeId.Create("ganguly-question-nine-two-claim"),
+                DeclarationHandle.Create(Module + ".claim"),
+                H("Affirmative closure assertion"),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                "There exists a field F in Lean's Type universe of characteristic two with an "
-                + "embedding of Fin 4 into F, over which at least one of the two closure laws "
-                + "holds. A closure law quantifies over all pairs of finite rooted multigraphs, "
-                + "encoded by arbitrary finite vertex and edge cardinalities, and both root "
-                + "choices. If both input graphs are representable over F, the corresponding "
-                + "join must be representable over F."),
+                Blocks(
+                    Paragraph(Text("Question 9.2 (arXiv:2611.01241v2, printed p. 39) asks "
+                        + "“Over fields of characteristic 2 with at least 4 elements, is representability "
+                        + "of 𝒮(G) preserved under 1-sums and under joining two graphs by a bridge?”")),
+                    Paragraph(Text("There exists a field F in Lean's Type universe (level zero) "
+                        + "of characteristic two with an embedding of Fin 4 into F, over which at least "
+                        + "one of the two closure laws holds. A closure law quantifies over all pairs "
+                        + "of finite rooted multigraphs, encoded by arbitrary finite vertex and edge "
+                        + "cardinalities, and both root choices. If both input graphs are representable "
+                        + "over F, the corresponding join must be representable over F."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("ganguly-question-nine-two-witnesses"),
                 DeclarationHandle.Create(Module + ".question_nine_two"),
@@ -59,9 +68,9 @@ internal sealed class GangulyQuestionNineTwoDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(WitnessStatement())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("For every field F of characteristic two with an embedding of "
-                        + "Fin 4 into F, both factors are representable, whereas their 1-sum and "
-                        + "their bridge join are each nonrepresentable. The field universe is arbitrary.")),
+                    Paragraph(Text("For any universe level u and any field F in Type u of "
+                        + "characteristic two with an embedding of Fin 4 into F, both factors "
+                        + "are representable and each of their two joins is nonrepresentable.")),
                     Paragraph(Text("The rank-three matrix uses a parameter distinct from zero and "
                         + "one. Its basis minors depend affinely on that parameter. Finite determinant "
                         + "checks at zero and one recover the full signed basis condition by scalar "
@@ -103,7 +112,8 @@ internal sealed class GangulyQuestionNineTwoDocument : IScribeDocumentDefinition
             new Formula.Logic(hypothesis, FormulaLogicOperator.Implies, conclusion);
         var size = new Formula.Apply(FormulaDsl.Id("Nonempty"),
             [new Formula.Apply(FormulaDsl.Id("Embedding"), [new Formula.Apply(FormulaDsl.Id("Fin"), [D(4)]), field])]);
-        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("F"), FormulaDsl.Id("Type"),
+        var fieldUniverse = Seq(Mathrm, Grp(FormulaDsl.Id("Type")), Thin, FormulaDsl.Id("u"));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("F"), fieldUniverse,
             Implies(new Formula.Apply(FormulaDsl.Id("Field"), [field]),
                 Implies(new Formula.Apply(FormulaDsl.Id("CharP"), [field, D(2)]),
                     Implies(size, And(And(Representable("factorOne"), Representable("factorTwo")),

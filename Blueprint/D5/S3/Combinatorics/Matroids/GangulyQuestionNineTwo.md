@@ -106,11 +106,13 @@ Lean statement: `D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.claim`
 
 *Commentary.*
 
-There exists a field F in Lean's Type universe of characteristic two with an embedding of Fin 4 into F, over which at least one of the two closure laws holds. A closure law quantifies over all pairs of finite rooted multigraphs, encoded by arbitrary finite vertex and edge cardinalities, and both root choices. If both input graphs are representable over F, the corresponding join must be representable over F.
+Question 9.2 (arXiv:2611.01241v2, printed p. 39) asks “Over fields of characteristic 2 with at least 4 elements, is representability of 𝒮(G) preserved under 1-sums and under joining two graphs by a bridge?”
+
+There exists a field F in Lean's Type universe (level zero) of characteristic two with an embedding of Fin 4 into F, over which at least one of the two closure laws holds. A closure law quantifies over all pairs of finite rooted multigraphs, encoded by arbitrary finite vertex and edge cardinalities, and both root choices. If both input graphs are representable over F, the corresponding join must be representable over F.
 
 **Theorem 1.9 (Counterexamples over each qualifying field).**
 
-$$\forall F \in Type,\; Field\left(F\right) \Rightarrow \left(CharP\left(F, 2\right) \Rightarrow \left(Nonempty\left(Embedding\left(Fin\left(4\right), F\right)\right) \Rightarrow \left(\left(Representable\left(F, factorOne\right) \land Representable\left(F, factorTwo\right)\right) \land \left(\left(\neg Representable\left(F, oneSum\right)\right) \land \left(\neg Representable\left(F, bridgeJoin\right)\right)\right)\right)\right)\right)$$
+$$\forall F \in \mathrm{Type}\,u,\; Field\left(F\right) \Rightarrow \left(CharP\left(F, 2\right) \Rightarrow \left(Nonempty\left(Embedding\left(Fin\left(4\right), F\right)\right) \Rightarrow \left(\left(Representable\left(F, factorOne\right) \land Representable\left(F, factorTwo\right)\right) \land \left(\left(\neg Representable\left(F, oneSum\right)\right) \land \left(\neg Representable\left(F, bridgeJoin\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.question_nine_two` (`✓ std3`). ∎
 
@@ -120,7 +122,7 @@ $$\forall F \in Type,\; Field\left(F\right) \Rightarrow \left(CharP\left(F, 2\ri
 
 *Commentary.*
 
-For every field F of characteristic two with an embedding of Fin 4 into F, both factors are representable, whereas their 1-sum and their bridge join are each nonrepresentable. The field universe is arbitrary.
+For any universe level u and any field F in Type u of characteristic two with an embedding of Fin 4 into F, both factors are representable and each of their two joins is nonrepresentable.
 
 The rank-three matrix uses a parameter distinct from zero and one. Its basis minors depend affinely on that parameter. Finite determinant checks at zero and one recover the full signed basis condition by scalar transport and interpolation. The rank-one matrix has unstarred column zero and starred column one.
 
