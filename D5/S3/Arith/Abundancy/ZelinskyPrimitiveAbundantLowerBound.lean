@@ -17,6 +17,8 @@ import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Data.Nat.GCD.BigOperators
 
+/-! Quantitative prime selection produces many primitive non-deficient integers. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -45,7 +47,8 @@ private lemma ratio_product (s : Finset ℕ) (hs : ∀ p ∈ s, p.Prime) :
   intro p hp
   rw [D5.S3.Factorization.ReciprocalSigmaThreshold.sigma_prime (hs p hp)]
   push_cast
-  field_simp
+  have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast (hs p hp).ne_zero
+  field_simp [hp0]
 
 
 private lemma product_squarefree (s : Finset ℕ) (hs : ∀ p ∈ s, p.Prime) :
@@ -272,7 +275,7 @@ private lemma selected_family_count (M S W : Finset ℕ) (k X : ℕ) (a : ℝ)
       rw [hf, Nat.cast_prod, log_prod (fun p hp => by exact_mod_cast (hU p hp).ne_zero)]
       exact sum_union hdis
     have hbound : f T ≤ X := by
-      apply Nat.cast_le.mp
+      suffices (f T : ℝ) ≤ X by exact_mod_cast this
       apply (log_le_log_iff hnR (by exact_mod_cast hX)).mp
       rw [hlog]
       apply le_trans _ hcost
@@ -291,10 +294,10 @@ private lemma selected_family_count (M S W : Finset ℕ) (k X : ℕ) (a : ℝ)
       · have hh := (hW p (hTW hp)).2.1
         have hkR : (3 : ℝ) ≤ k := by exact_mod_cast hk
         obtain ⟨q, hq⟩ := hSne
-        have hqB : (max 2 (M.sup id) : ℝ) < q := by
+        have hqB : ((max 2 (M.sup id) : ℕ) : ℝ) < q := by
           exact_mod_cast (hS q hq).2.1
         have hqA := (hS q hq).2.2
-        exact_mod_cast (show (max 2 (M.sup id) : ℝ) < p by nlinarith)
+        exact_mod_cast (show ((max 2 (M.sup id) : ℕ) : ℝ) < p by nlinarith)
     refine mem_filter.mpr ⟨mem_Icc.mpr ⟨hnpos, hbound⟩, ?_⟩
     rw [hf]
     refine ⟨Nat.not_even_iff_odd.mp ?_, product_squarefree _ hU,
@@ -619,7 +622,7 @@ theorem result (M : Finset ℕ) (hM : ∀ p ∈ M, p.Prime) :
   have ht : Tendsto t atTop atTop := hcut.1.comp tendsto_natCast_atTop_atTop
   have he := tendsto_exp_atTop.comp ht
   have hsq : ∀ᶠ X : ℕ in atTop, D * t X ^ 2 = log (X : ℝ) :=
-    hcut.2.comp_tendsto tendsto_natCast_atTop_atTop
+    tendsto_natCast_atTop_atTop.eventually hcut.2
   have hev : ∀ᶠ X : ℕ in atTop,
       (X : ℝ) ^ (39 / 40 : ℝ) ≤
         (((Icc 1 X).filter fun n => Odd n ∧ Squarefree n ∧
@@ -656,7 +659,7 @@ theorem result (M : Finset ℕ) (hM : ∀ p ∈ M, p.Prime) :
       have hy0 : 0 ≤ ((k : ℝ) - 1) * (α + 1) :=
         mul_nonneg (by linarith) (by linarith)
       exact ⟨hqP, (Nat.floor_lt hy0).mp (mem_Ioc.mp hqI).1,
-        (Nat.le_floor_iff (by dsimp [z]; positivity)).mp (mem_Ioc.mp hqI).2⟩
+        (Nat.le_floor_iff (by positivity)).mp (mem_Ioc.mp hqI).2⟩
     have hthreshold : eulerH S * (1 + 1 / α) = 2 := by
       have hspos := eulerH_pos S
       change eulerH S < 2 at hdef
