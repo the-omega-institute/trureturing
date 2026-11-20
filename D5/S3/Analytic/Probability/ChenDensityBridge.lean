@@ -7,7 +7,8 @@
    digest: Real density tilts on fixed-size samples preserve inclusion events up to the matched moment order. -/
 
 import D5.S3.Analytic.Probability.ChenFixedOrderSampling
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+
+/-! Lifting real estimator densities to uniform fixed-size samples. -/
 
 namespace ChenDensityBridge
 
@@ -16,11 +17,11 @@ open scoped ENNReal
 
 /-- The law of the common estimator under uniform sampling on `Sample m`. -/
 noncomputable def uniformEstimatorLaw (m : ℕ) : Measure ℝ :=
-  Measure.map (estimator m) (uniformOn (Set.univ : Set (Sample m)))
+  (uniformSampleMeasure m).map (estimator m)
 
 private theorem integral_uniformEstimatorLaw (m : ℕ) {f : ℝ → ℝ} (hf : Measurable f) :
     (∫ x, f x ∂uniformEstimatorLaw m) =
-      ∫ S : Sample m, f (estimator m S) ∂(uniformOn (Set.univ : Set (Sample m))) :=
+      ∫ S : Sample m, f (estimator m S) ∂(uniformSampleMeasure m : Measure (Sample m)) :=
   integral_map (measurable_of_finite (estimator m)).aemeasurable hf.aestronglyMeasurable
 
 private theorem integrable_sample {m : ℕ} {μ : Measure (Sample m)} [IsFiniteMeasure μ]
@@ -31,7 +32,7 @@ private theorem integrable_sample {m : ℕ} {μ : Measure (Sample m)} [IsFiniteM
 noncomputable def tiltedSample (m : ℕ) (g : ℝ → ℝ) (hg : Measurable g)
     (hg_nonneg : ∀ x, 0 ≤ g x) (h_mass : ∫ x, g x ∂uniformEstimatorLaw m = 1) :
     ProbabilityMeasure (Sample m) := by
-  let P := uniformOn (Set.univ : Set (Sample m))
+  let P : Measure (Sample m) := uniformSampleMeasure m
   refine ⟨P.withDensity (fun S => ENNReal.ofReal (g (estimator m S))), ⟨?_⟩⟩
   rw [withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ,
     ← ofReal_integral_eq_lintegral_ofReal (integrable_sample (fun S => g (estimator m S)))
@@ -44,8 +45,8 @@ private theorem restricted_perturbation_eq_zero (m r : ℕ) {g : ℝ → ℝ} (h
       ∫ x, x ^ i * (g x - 1) ∂uniformEstimatorLaw m = 0)
     (A : Finset (Population m)) (hA : A.card ≤ r) :
     (∫ S in inclusion m A, (g (estimator m S) - 1)
-      ∂(uniformOn (Set.univ : Set (Sample m)))) = 0 := by
-  let P := uniformOn (Set.univ : Set (Sample m))
+      ∂(uniformSampleMeasure m : Measure (Sample m))) = 0 := by
+  let P : Measure (Sample m) := uniformSampleMeasure m
   let f : ℝ → ℝ := fun x => g x - 1
   obtain ⟨p, hp, h_inclusion⟩ := exists_inclusionPolynomial m A
   have h_monomial (i : ℕ) (hi : i ≤ r) :
@@ -62,6 +63,8 @@ private theorem restricted_perturbation_eq_zero (m r : ℕ) {g : ℝ → ℝ} (h
           (measurable_id.pow_const _).mul (hg.sub measurable_const)
         rw [← integral_uniformEstimatorLaw m h]
         exact h_moments (i + 1) (Nat.succ_pos _) hi
+  change (∫ S in inclusion m A, f (estimator m S)
+    ∂(uniformOn (Set.univ : Set (Sample m)))) = 0
   rw [h_inclusion f]
   change (∫ S : Sample m, p.eval (estimator m S) * f (estimator m S) ∂P) = 0
   simp_rw [Polynomial.eval_eq_sum_range, Finset.sum_mul, mul_assoc]
@@ -82,18 +85,18 @@ theorem tiltedSample_spec (m r : ℕ) (g : ℝ → ℝ) (hg : Measurable g)
       (uniformEstimatorLaw m).withDensity (fun x => ENNReal.ofReal (g x))) ∧
     (∀ A : Finset (Population m), A.card ≤ r →
       (tiltedSample m g hg hg_nonneg h_mass : Measure (Sample m)) (inclusion m A) =
-        uniformOn (Set.univ : Set (Sample m)) (inclusion m A)) := by
+        (uniformSampleMeasure m : Measure (Sample m)) (inclusion m A)) := by
   constructor
   · have h_est := measurable_of_finite (estimator m)
     ext B hB
     rw [ProbabilityMeasure.toMeasure_map, Measure.map_apply h_est hB]
-    change (uniformOn (Set.univ : Set (Sample m))).withDensity
+    change (uniformSampleMeasure m : Measure (Sample m)).withDensity
         (fun S => ENNReal.ofReal (g (estimator m S))) (estimator m ⁻¹' B) =
       (uniformEstimatorLaw m).withDensity (fun x => ENNReal.ofReal (g x)) B
     rw [withDensity_apply _ (h_est hB), withDensity_apply _ hB, uniformEstimatorLaw,
-      setLIntegral_map hB hg.ennreal_ofReal h_est]
+      ProbabilityMeasure.toMeasure_map, setLIntegral_map hB hg.ennreal_ofReal h_est]
   · intro A hA
-    let P := uniformOn (Set.univ : Set (Sample m))
+    let P : Measure (Sample m) := uniformSampleMeasure m
     let E := inclusion m A
     have hE : MeasurableSet E := E.toFinite.measurableSet
     have h_zero := restricted_perturbation_eq_zero m r hg h_mass h_moments A hA

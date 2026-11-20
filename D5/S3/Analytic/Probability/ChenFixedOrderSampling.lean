@@ -7,6 +7,7 @@
    digest: Uniform fixed-size sampling and the stratum inclusion identities for Chen's fixed-order problem. -/
 
 import Mathlib.Probability.UniformOn
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Fintype.BigOperators
@@ -38,7 +39,7 @@ noncomputable def estimator (m : ℕ) (S : Sample m) : ℝ :=
 def inclusion (m : ℕ) (A : Finset (Population m)) : Set (Sample m) :=
   {S | A ⊆ S.val}
 
-private theorem sampleSize_pos (m : ℕ) : 0 < sampleSize m := by
+theorem sampleSize_pos (m : ℕ) : 0 < sampleSize m := by
   positivity
 
 private theorem sampleSize_le_stratumSize (m : ℕ) : sampleSize m ≤ stratumSize m := by
@@ -52,6 +53,10 @@ instance (m : ℕ) : Nonempty (Sample m) := by
     omega
   obtain ⟨S, hS⟩ := Finset.powersetCard_nonempty.mpr h
   exact ⟨⟨S, (Finset.mem_powersetCard.mp hS).2⟩⟩
+
+/-- The uniform probability law on the subsets of the prescribed size. -/
+noncomputable def uniformSampleMeasure (m : ℕ) : ProbabilityMeasure (Sample m) :=
+  ⟨uniformOn Set.univ, inferInstance⟩
 
 theorem populationMean_eq_zero (m : ℕ) : populationMean m = 0 := by
   simp [populationMean, Fintype.sum_prod_type, Fin.sum_univ_two, populationValue]
