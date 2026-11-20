@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -30,7 +30,7 @@ def claim : Prop :=
     (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n ∧ Odd n}) X : ℝ) /
       count {n | PrimitiveNonDeficient n ∧ Odd n} X) atTop (𝓝 0)
 
-/-- Odd primitive non-deficient integers have relative density one in B. -/
+/-- The component condition holds for relative density one of the odd primitive family. -/
 theorem result : ¬ claim := by
   intro hclaim
   have hlower : ∀ᶠ X : ℕ in atTop, (X : ℝ) ^ (79 / 80 : ℝ) ≤

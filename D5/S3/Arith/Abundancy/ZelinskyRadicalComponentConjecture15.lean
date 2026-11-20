@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture15
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture15
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
