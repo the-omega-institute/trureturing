@@ -14,14 +14,15 @@ license: CC-BY-4.0
 triage: anchor
 ---
 
-# Signs, row sums and parity sums of the real-step Eulerian triangle
+# Signs, integer-step criterion, row sums and parity sums of the step-m Eulerian triangle
 
 ## Verified locator
 
 DOI: 10.5281/zenodo.23957560 (version 2; Zenodo publication date 2026-11-04, PDF dated
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracted locally,
-24,508 characters). Theorem 1 opens the paper; Corollary 4 follows the reflection identity (3).
+24,508 characters). Theorem 1 opens the paper; Corollary 3 follows the proof of Theorem 1, and
+Corollary 4 follows the reflection identity (3).
 
 ## Source statement
 
@@ -54,4 +55,5 @@ T_m(n,n) = 1 and the interior recursion T_m(n,k) = (m(n−k)+1)T_m(n−1,k−1) 
 (m(k−1)+1)T_m(n−1,k), with R_{m,n}(y) = ∑ T_m(n,k) y^{k−1}. The row sums and even-row
 alternating sums are among the adjacent COMMENTS statements of OEIS A392664–A392666; the
 paper's coverage table lists them as proved by the reflection identity (3) and Corollary 4.
-The parameter m is any real number here, not only the integer steps of the OEIS entries.
+The parameter m is any real number in Theorem 1 and Corollary 4, not only the integer steps of
+the OEIS entries; Corollary 3 restricts to integer m.
