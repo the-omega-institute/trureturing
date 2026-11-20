@@ -125,10 +125,12 @@ private def coef (s : ℝ) (q : ℍ[ℝ]) : Fin 5 → ℝ :=
   ![(s + q.re - q.imI - q.imJ - q.imK) / 2, (s - q.re - q.imI - q.imJ - q.imK) / 2, q.imI, q.imJ,
     q.imK]
 
+/-- The coefficients `coef s q` have total weight `s`. -/
 private lemma sum_coef (s : ℝ) (q : ℍ[ℝ]) : ∑ k, coef s q k = s := by
   simp [Fin.sum_univ_five, coef]
   ring
 
+/-- The coefficients `coef s q` have weighted sum `q`. -/
 private lemma sum_coef_smul (s : ℝ) (q : ℍ[ℝ]) : ∑ k, coef s q k • (pts k : ℍ[ℝ]) = q := by
   rw [Fin.sum_univ_five]
   ext
@@ -306,6 +308,7 @@ private lemma one_le_of_five (P : unitary ℍ[ℝ] → EuclideanSpace ℝ (Fin 5
 private def vecAB (a : ℝ) (b : ℍ[ℝ]) : EuclideanSpace ℝ (Fin 5) :=
   WithLp.toLp 2 ![a, b.re, b.imI, b.imJ, b.imK]
 
+/-- The feature of `q` reads `(a + ⟪b, q⟫) / √2` against `(a, b)`. -/
 private lemma inner_feature_vecAB (a : ℝ) (b q : ℍ[ℝ]) :
     ⟪feature q, vecAB a b⟫_ℝ = (a + ⟪b, q⟫_ℝ) / Real.sqrt 2 := by
   rw [feature, vecAB, real_inner_smul_left, EuclideanSpace.inner_toLp_toLp, inner_eq_components]
@@ -315,6 +318,7 @@ private lemma inner_feature_vecAB (a : ℝ) (b q : ℍ[ℝ]) :
     Matrix.cons_val_succ, star_trivial]
   ring
 
+/-- The vector `(a, b)` has norm one when `a ^ 2 + ‖b‖ ^ 2 = 1`. -/
 private lemma norm_vecAB (a : ℝ) (b : ℍ[ℝ]) (h : a ^ 2 + ‖b‖ ^ 2 = 1) : ‖vecAB a b‖ = 1 := by
   have h2 : ‖vecAB a b‖ ^ 2 = 1 := by
     have e : ‖vecAB a b‖ ^ 2 = a ^ 2 + ⟪b, b⟫_ℝ := by

@@ -8,8 +8,7 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 /-! # Source registration for the rank of a character kernel
 
 The readout is the dimension of the span of the sections, as a function of the weight family.
-For the span of the operator families `(ρ i g)_i` the readout is the span of a set of families;
-for the nondegeneracy of the weighted trace pairing it is the family in the conclusion.
+For the nondegeneracy of the weighted trace pairing it is the family in the conclusion.
 The two theorems after the registrations show that irreducibility and pairwise inequivalence
 cannot be dropped from the rank formula. -/
 
@@ -213,7 +212,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 
-/-! ## The operator span and the trace pairing -/
+/-! ## The weighted trace pairing -/
 
 set_option linter.checkUnivs false in
 /-- The scalar field, index type, spaces and dictionaries of `eq_zero_of_tracePairing`. -/
@@ -228,128 +227,8 @@ private theorem test_one_ne_zero :
     (f PUnit.unit (⟨1⟩ : ULift.{uW} K0)).down) h
   simp at h1
 
-private theorem test_bot_ne_top :
-    (⊥ : Submodule testK.{uk} (∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i))) ≠ ⊤ := by
-  intro h
-  have hm : (1 : ∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i)) ∈
-      (⊤ : Submodule testK.{uk} (∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i))) :=
-    Submodule.mem_top
-  rw [← h] at hm
-  have h0 : (1 : ∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i)) = 0 :=
-    (Submodule.mem_bot testK.{uk}).mp hm
-  exact test_one_ne_zero.{uk, uι, uW} h0
-
 private abbrev testEndParams : EndParams.{uk, uι, uW} :=
   ⟨testK, inferInstance, testI, testW, inferInstance, inferInstance⟩
-
-/-! ### `span_range_pi_eq_top`: the span of a set of operator families -/
-namespace Span
-
-set_option linter.checkUnivs false in
-/-- Scalar field, group, index type, spaces and their dictionaries. -/
-abbrev Params := Σ k : Type uk, Σ G : Type uG, Σ _ : Field k, Σ _ : Group G, Σ ι : Type uι,
-  Σ W : ι → Type uW, Σ _ : (∀ i, AddCommGroup (W i)), ∀ i, Module k (W i)
-
-set_option linter.checkUnivs false in
-abbrev signature : Signature where
-  Params := Params.{uk, uG, uι, uW}
-  State p := letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
-    Set (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i))
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ p := letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
-    Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i))
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-/-- The span of a set of operator families. -/
-def spanOf (p : Params.{uk, uG, uι, uW}) (s : signature.State p) : signature.Output () p := by
-  obtain ⟨k, G, fk, gG, ι, W, aW, mW⟩ := p
-  exact Submodule.span k s
-
-def actual : Realization signature.{uk, uG, uι, uW} :=
-  realize signature (fun _ => spanOf) (fun e => nomatch e)
-
-def rejected : Realization signature.{uk, uG, uι, uW} :=
-  realize signature (fun _ p _ => letI := p.2.2.1; letI := p.2.2.2.2.2.2.1;
-    letI := p.2.2.2.2.2.2.2
-    (⊥ : Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i)))) (fun e => nomatch e)
-
-set_option linter.checkUnivs false in
-/-- The complete original telescope is retained; only the span of the operator families varies. -/
-abbrev arena : Arena where
-  signature := signature.{uk, uG, uι, uW}
-  Law R := ∀ {k : Type uk} {G : Type uG} [fk : Field k] [IsAlgClosed k] [gG : Group G]
-    {ι : Type uι} [Fintype ι] {W : ι → Type uW} [aW : ∀ i, AddCommGroup (W i)]
-    [mW : ∀ i, Module k (W i)] [∀ i, FiniteDimensional k (W i)]
-    (ρ : ∀ i, Representation k G (W i)) [∀ i, (ρ i).IsIrreducible]
-    (_hne : ∀ i j, i ≠ j → IsEmpty ((ρ i).Equiv (ρ j))),
-    R.readout () ⟨k, G, fk, gG, ι, W, aW, mW⟩
-      (Set.range fun g : G => (fun i => ρ i g : ∀ i, Module.End k (W i))) = ⊤
-
-/-- On the trivial representation of the trivial group on a line the zero submodule is not
-everything. -/
-theorem rejected_law : ¬ arena.{uk, uG, uι, uW}.Law rejected := by
-  intro h
-  exact test_bot_ne_top (h (k := testK.{uk}) (G := testG.{uG}) (W := testW.{uι, uW}) testρ test_hne)
-
-theorem dependence : ObservationalDependence signature.{uk, uG, uι, uW} actual := by
-  intro i
-  refine ⟨⟨testK, testG, inferInstance, inferInstance, testI, testW, inferInstance,
-    inferInstance⟩, ∅, Set.univ,
-    fun h => test_bot_ne_top ?_⟩
-  have h' : Submodule.span testK.{uk}
-      (∅ : Set (∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i))) =
-      Submodule.span testK.{uk} Set.univ := h
-  rwa [Submodule.span_empty, Submodule.span_univ] at h'
-
-/-- The exact statement of the source theorem. -/
-abbrev sourceStatement : Prop := type_of% @span_range_pi_eq_top.{uk, uG, uι, uW}
-
-def source : Registration arena.{uk, uG, uι, uW} sourceStatement.{uk, uG, uι, uW} where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@span_range_pi_eq_top.{uk, uG, uι, uW}, rejected, rejected_law⟩
-  sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
-    rfl, rejected_law⟩, fun e => nomatch e⟩
-  dependence := dependence
-
-end Span
-
-def span_range_pi_eq_top_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@span_range_pi_eq_top.{uk, uG, uι, uW})
-    (Realization Span.signature.{uk, uG, uι, uW}) Unit Unit := {
-  unitName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.span_range_pi_eq_top_unit
-  realizationName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.Span.source
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Span.arena⟩
-  objectArena := .source ⟨Span.arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Span.arena ⟨Span.source⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Span.signature (fun _ => Span.spanOf) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
-    definition := none
-    coordinates := #[0, 1, 5, 7]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
 
 /-! ### `eq_zero_of_tracePairing`: the operator family paired against every family -/
 namespace Pairing
