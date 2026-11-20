@@ -8,7 +8,6 @@
 
 import Mathlib.Data.Finset.Max
 import Mathlib.Dynamics.PeriodicPts.Defs
-import Mathlib.Order.Monotone.Basic
 
 /-! An infinite spaced omission set gives a counterexample to Vasilyev's Question 7.7. -/
 

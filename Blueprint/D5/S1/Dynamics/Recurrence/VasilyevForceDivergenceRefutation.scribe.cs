@@ -15,6 +15,65 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
         H("Vasilyev's force-divergence question"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("vasilyev-positive-vertices"),
+                DeclarationHandle.Create(Module + ".P"),
+                H("Positive vertices"),
+                StatementSource.FromAuthor(Disp(PositiveVertices())),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The positive integers are the vertices of Vasilyev's up-down graph."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("vasilyev-up-step"),
+                DeclarationHandle.Create(Module + ".U"),
+                H("Up step"),
+                StatementSource.FromAuthor(Disp(UpStep())),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "The map takes natural numbers to natural numbers and div denotes Nat.div. "
+                    + "On positive vertices this gives the ceiling of 3x/2 in Definition 1.1."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("vasilyev-down-step"),
+                DeclarationHandle.Create(Module + ".D"),
+                H("Down step"),
+                StatementSource.FromAuthor(Disp(DownStep())),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "The map takes natural numbers to natural numbers and div denotes Nat.div. "
+                    + "On positive vertices this gives the ceiling of x/2 in Definition 1.1."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("vasilyev-set-step"),
+                DeclarationHandle.Create(Module + ".T"),
+                H("Step for a chosen set"),
+                StatementSource.FromAuthor(Disp(SetStep())),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "Definition 1.1 selects the up or down map by membership in the chosen set. "
+                    + "Lean uses classical decidability for this choice and defines the map on all naturals."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("vasilyev-force-divergent"),
+                DeclarationHandle.Create(Module + ".ForceDivergent"),
+                H("Force-divergence"),
+                StatementSource.FromAuthor(Disp(PredicateDefinition("ForceDivergent", ForceBody(F.Id("A"))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "Section 2.3 quantifies over all supersets in the positive integers. "
+                    + "The witness starts in P and its orbit avoids Mathlib's Function.periodicPts "
+                    + "at every natural time. This set consists of the points with a positive period."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("vasilyev-contains-tail"),
+                DeclarationHandle.Create(Module + ".ContainsTail"),
+                H("Contains an all-up tail"),
+                StatementSource.FromAuthor(Disp(PredicateDefinition("ContainsTail", TailBody(F.Id("A"))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "Section 3.2 describes the chain tail starting at a positive vertex. "
+                    + "The forward up orbit includes that vertex at time zero."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("vasilyev-force-divergence-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("Question 7.7"),
@@ -22,6 +81,15 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                     new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, ClaimBody()))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
+                    Paragraph(Text("Vasilyev, Question 7.7 (printed p. 33).")),
+                    Paragraph(
+                        Text("“Does every force-divergent set, that is, every "),
+                        Math(F.Id("A")),
+                        Text(" such that "),
+                        Math(new Formula.Subscript(F.Id("T"), F.Id("S"))),
+                        Text(" is unbounded for all "),
+                        Math(Seq(F.Id("S"), Sp, Supseteq, Sp, F.Id("A"))),
+                        Text(", contain a tail of a chain?”")),
                     Paragraph(Text(
                         "Let P be the positive integers. At x in P the up and down steps are the "
                         + "ceilings of 3x/2 and x/2, respectively. Lean writes them as (3x + 1) div 2 "
@@ -59,26 +127,77 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                         + "values. The same A therefore forces divergence and excludes every all-up tail."))),
                 DescribeRole.Theorem))));
 
-    private static Formula ClaimBody()
+    private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula NaturalSets => Call("Set", Naturals);
+
+    private static Formula PositiveVertices()
     {
-        Formula a = F.Id("A"), s = F.Id("S"), x = F.Id("x"), y = F.Id("y");
-        Formula t = F.Id("t"), k = F.Id("k"), positive = F.Id("P");
-        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
-        Formula subsets = Call("Set", naturals);
+        Formula x = F.Id("x");
+        return Equal(F.Id("P"), Seq(OpenBrace, x, Sp, Colon, Sp, Naturals, Sp, Mid, Sp,
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan, x), CloseBrace));
+    }
+
+    private static Formula UpStep()
+    {
+        Formula x = F.Id("x");
+        return Bind(FormulaQuantifier.ForAll, "x", Naturals,
+            Equal(Call("U", x), DivideByTwo(Add(Multiply(D(3), x), D(1)))));
+    }
+
+    private static Formula DownStep()
+    {
+        Formula x = F.Id("x");
+        return Bind(FormulaQuantifier.ForAll, "x", Naturals,
+            Equal(Call("D", x), DivideByTwo(Add(x, D(1)))));
+    }
+
+    private static Formula DivideByTwo(Formula numerator) =>
+        Call("div", numerator, D(2));
+
+    private static Formula SetStep()
+    {
+        Formula s = F.Id("S"), x = F.Id("x");
+        Formula member = Member(x, s);
+        Formula cases = Seq(Begin, Grp(F.Id("cases")),
+            Call("U", x), Amp, member, RowBreak,
+            Call("D", x), Amp, new Formula.Not(member),
+            End, Grp(F.Id("cases")));
+        return Bind(FormulaQuantifier.ForAll, "S", NaturalSets,
+            Bind(FormulaQuantifier.ForAll, "x", Naturals,
+                Equal(new Formula.Apply(Call("T", s), [x]), cases)));
+    }
+
+    private static Formula PredicateDefinition(string name, Formula body) =>
+        Bind(FormulaQuantifier.ForAll, "A", NaturalSets,
+            new Formula.Logic(Call(name, F.Id("A")), FormulaLogicOperator.Iff, body));
+
+    private static Formula ForceBody(Formula a)
+    {
+        Formula s = F.Id("S"), x = F.Id("x"), t = F.Id("t"), positive = F.Id("P");
         Formula step = Call("T", s);
-        Formula entersCycle = Bind(FormulaQuantifier.Exists, "t", naturals,
+        Formula entersCycle = Bind(FormulaQuantifier.Exists, "t", Naturals,
             Member(Call("iterate", step, t, x), Call("periodicPts", step)));
-        Formula divergentStart = Bind(FormulaQuantifier.Exists, "x", naturals,
+        Formula divergentStart = Bind(FormulaQuantifier.Exists, "x", Naturals,
             new Formula.Logic(Member(x, positive), FormulaLogicOperator.And,
                 new Formula.Not(entersCycle)));
-        Formula force = Bind(FormulaQuantifier.ForAll, "S", subsets,
+        return Bind(FormulaQuantifier.ForAll, "S", NaturalSets,
             Implies(SubsetOf(s, positive), Implies(SubsetOf(a, s), divergentStart)));
-        Formula tail = Bind(FormulaQuantifier.Exists, "y", naturals,
-            new Formula.Logic(Member(y, positive), FormulaLogicOperator.And,
-                Bind(FormulaQuantifier.ForAll, "k", naturals,
+    }
+
+    private static Formula TailBody(Formula a)
+    {
+        Formula y = F.Id("y"), k = F.Id("k");
+        return Bind(FormulaQuantifier.Exists, "y", Naturals,
+            new Formula.Logic(Member(y, F.Id("P")), FormulaLogicOperator.And,
+                Bind(FormulaQuantifier.ForAll, "k", Naturals,
                     Member(Call("iterate", F.Id("U"), k, y), a))));
-        return Bind(FormulaQuantifier.ForAll, "A", subsets,
-            Implies(SubsetOf(a, positive), Implies(force, tail)));
+    }
+
+    private static Formula ClaimBody()
+    {
+        Formula a = F.Id("A");
+        return Bind(FormulaQuantifier.ForAll, "A", NaturalSets,
+            Implies(SubsetOf(a, F.Id("P")), Implies(ForceBody(a), TailBody(a))));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
