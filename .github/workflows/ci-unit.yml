@@ -70,7 +70,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         uses: ./.github/actions/lean-project-restore
         with:
-          project-key: ${{ steps.keys.outputs.project_exact_key }}
+          project-key: ${{ steps.keys.outputs.project_probe_key }}
+          alternate-key: ${{ steps.keys.outputs.project_alternate_key }}
           project-paths: ${{ steps.keys.outputs.project_archive_path }}
       - id: elan
         if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none' && steps.keys.outputs.elan_key != ''

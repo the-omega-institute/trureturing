@@ -198,7 +198,7 @@ def guarded_seed_lookup(lookup):
 
 
 def project_source_trees(root):
-    """Source addresses for the tested checkout and, for PRs, its actual merge base parent."""
+    """Address the checkout and its available first parent on the tested ref."""
     event = os.environ.get("GITHUB_EVENT_NAME")
     expected = os.environ.get("GITHUB_SHA", "")
     if event == "workflow_dispatch":
@@ -213,14 +213,30 @@ def project_source_trees(root):
                             capture_output=True, text=True)
     if result.returncode or result.stdout.strip() != expected:
         return ()
-    revisions = ["HEAD^{tree}"]
-    if event == "pull_request" or preparation_source_is_valid():
-        revisions.append("HEAD^1^{tree}")
-    result = subprocess.run(["git", "rev-parse", *revisions], cwd=root, capture_output=True, text=True)
-    trees = result.stdout.splitlines()
-    if result.returncode or len(trees) != len(revisions) or not all(re.fullmatch(r"[0-9a-f]{40}", t) for t in trees):
-        return ()
+    trees = []
+    for revision in ("HEAD^{tree}", "HEAD^1^{tree}"):
+        result = subprocess.run(["git", "rev-parse", "--verify", revision], cwd=root,
+                                capture_output=True, text=True)
+        tree = result.stdout.strip()
+        if result.returncode or not re.fullmatch(r"[0-9a-f]{40}", tree):
+            break
+        trees.append(tree)
     return tuple(trees)
+
+
+def parent_report_inputs_unchanged(root, trees):
+    """Avoid fetching a second full archive when a parent cannot supply the report."""
+    if len(trees) < 2:
+        return False
+    try:
+        declaration = json.loads((root / "lean-report-inputs.json").read_text())
+        paths = ["lean-report-inputs.json"]
+        for group in ("report_modules", "config_inputs"):
+            paths.extend(":(glob)" + row["pattern"] for row in declaration[group]["include"])
+        return subprocess.run(["git", "diff", "--no-ext-diff", "--quiet", *trees, "--", *paths],
+                              cwd=root, stderr=subprocess.DEVNULL).returncode == 0
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
 
 
 def lookup_project_seed(spec, ref, token, repository, api, trees=(), previous_run=None):
@@ -230,9 +246,10 @@ def lookup_project_seed(spec, ref, token, repository, api, trees=(), previous_ru
     total, seen, page = None, set(), 1
     payloads = {}
     bindings = {}
+    recoveries = set()
     pattern = re.compile(re.escape(spec["restore_prefix"]) + r"([1-9][0-9]*)-([1-9][0-9]*)")
 
-    marker = re.compile(re.escape(spec["restore_prefix"]) + r"source-([0-9a-f]{40})-([1-9][0-9]*)-([1-9][0-9]*)")
+    marker = re.compile(re.escape(spec["restore_prefix"]) + r"(source|recovery)-([0-9a-f]{40})-([1-9][0-9]*)-([1-9][0-9]*)")
 
     def unique(pairs):
         result = {}
@@ -275,8 +292,11 @@ def lookup_project_seed(spec, ref, token, repository, api, trees=(), previous_ru
             match = pattern.fullmatch(row["key"])
             if match:
                 payloads[int(match[1]), int(match[2])] = row["key"]
-            elif (match := marker.fullmatch(row["key"])) and match[1] in trees:
-                bindings[int(match[2]), int(match[3])] = match[1]
+            elif match := marker.fullmatch(row["key"]):
+                version = int(match[3]), int(match[4])
+                bindings.setdefault(version, set()).add(match[2])
+                if match[1] == "recovery":
+                    recoveries.add(version)
         if len(seen) > total or not isinstance(link, str):
             raise SeedLookupUnavailable("lookup-incomplete-listing")
         links = {}
@@ -299,19 +319,19 @@ def lookup_project_seed(spec, ref, token, repository, api, trees=(), previous_ru
         url, page = next_url, page + 1
     if not payloads:
         raise SeedLookupUnavailable("lookup-no-eligible-seed")
+
     def rank(version):
-        tree = bindings.get(version)
-        if trees and (tree == trees[0] or previous_run and version[0] == previous_run):
+        sources = bindings.get(version, ())
+        if trees and (trees[0] in sources or version[0] == previous_run):
+            return 3
+        if len(trees) > 1 and trees[1] in sources:
             return 2
-        if len(trees) > 1 and tree == trees[1]:
-            return 1
-        return 0
+        return 0 if version in recoveries else 1
 
-    version = max(payloads, key=lambda v: (rank(v), v))
-    return payloads[version], rank(version)
+    return [(rank(v), payloads[v]) for v in sorted(payloads, key=lambda v: (rank(v), v), reverse=True)]
 
 
-def project_restore_key(keys, trees=()):
+def project_restore_key(keys, trees=(), parent_compatible=False):
     spec = keys["project"]
     fallback = spec["key"]
     token = os.environ.get("GH_TOKEN", "")
@@ -328,33 +348,38 @@ def project_restore_key(keys, trees=()):
         refs.append(ref)
 
     def preferred_seed():
-        best = None
+        candidates = []
+        previous_run = int(os.environ["GITHUB_RUN_ID"]) if event == "push" and trees else None
         for candidate_ref in refs:
             try:
-                # A rerun of a protected push checks out the same SHA on every attempt.
-                previous_run = int(os.environ["GITHUB_RUN_ID"]) if event == "push" and trees else None
-                key, rank = lookup_project_seed(spec, candidate_ref, token, repository, api, trees, previous_run)
-                if best is None or rank > best[2]:
-                    best = candidate_ref, key, rank
-                if rank == 2 or not trees:
+                ranked = lookup_project_seed(spec, candidate_ref, token, repository, api, trees, previous_run)
+                candidates.extend((rank, candidate_ref, key) for rank, key in ranked)
+                if not trees:
                     break
             except SeedLookupUnavailable as error:
                 if str(error) != "lookup-no-eligible-seed":
                     raise
-        if best is None:
+                continue
+        if not candidates:
             raise SeedLookupUnavailable("lookup-no-eligible-seed")
-        return best
+        # Stable ties preserve ref precedence and descending numeric run/attempt.
+        return sorted(candidates, key=lambda candidate: candidate[0], reverse=True)
 
     reason = "lookup-not-configured"
     try:
         if not token or not repository or not refs:
             raise SeedLookupUnavailable(reason)
         api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-        selected_ref, preferred, rank = guarded_seed_lookup(preferred_seed)
-        if rank == 2:
-            spec["exact_key"] = preferred
+        ranked = guarded_seed_lookup(preferred_seed)
+        rank, selected_ref, preferred = ranked[0]
+        early = [key for priority, _, key in ranked if priority == 3 or priority == 2 and parent_compatible]
+        if not early and parent_compatible and rank == 1:
+            early.append(preferred)  # Old payloads can outlive their optional markers.
+        if early:
+            spec["probe_key"] = early[0]
+            spec["alternate_key"] = next((key for key in early if key != early[0]), "")
         receipt("project", "restore-preference", base_ref=selected_ref, requested_key=preferred,
-                source_match=("checkout" if rank == 2 else "pr-base" if rank == 1 else "unbound"))
+                source_match=("historical-recovery", "unbound", "first-parent", "checkout")[rank])
         return preferred
     except SeedLookupUnavailable as error:
         reason = str(error)
@@ -364,6 +389,16 @@ def project_restore_key(keys, trees=()):
         reason = "lookup-request-failed"
     receipt("project", "restore-preference-fallback", base_ref=refs[-1] if refs else "", requested_key=fallback, reason=reason)
     return fallback
+
+
+def source_marker(root, keys, key):
+    """Bind a published or verified retained payload in this native partition."""
+    trees = project_source_trees(root)
+    prefix = keys["project"]["restore_prefix"]
+    version = key.removeprefix(prefix)
+    if not trees or key == version or not re.fullmatch(r"[1-9][0-9]*-[1-9][0-9]*", version):
+        return ""
+    return f"{prefix}source-{trees[0]}-{version}"
 
 
 def dependency_inputs(root: pathlib.Path):
@@ -675,7 +710,7 @@ def snapshot(root, keys, layers=LAYERS):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "restore", "snapshot", "resume-keys", "resume-restore", "resume-snapshot"))
+    parser.add_argument("command", choices=("keys", "index-key", "restore", "snapshot", "resume-keys", "resume-restore", "resume-snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--layers", choices=LAYERS, nargs="+")
     parser.add_argument("--project-restore-key", default="")
@@ -703,10 +738,7 @@ def main():
             if "project" in args.layers:
                 trees = project_source_trees(root)
                 project = keys["project"]
-                if trees:
-                    version = project["key"].removeprefix(project["restore_prefix"])
-                    project["source_marker"] = f"{project['restore_prefix']}source-{trees[0]}-{version}"
-                project["restore_key"] = project_restore_key(keys, trees)
+                project["restore_key"] = project_restore_key(keys, trees, parent_report_inputs_unchanged(root, trees))
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
             values["elan_key"] = elan_key(root)
             for layer in args.layers:
@@ -714,6 +746,8 @@ def main():
             output(values)
             for layer, paths in archive_paths.items():
                 output_archive_paths(layer, paths)
+        elif args.command == "index-key":
+            output({"marker": source_marker(root, keys, args.project_key)})
         elif args.command == "restore":
             keys["project"]["restore_key"] = args.project_restore_key or keys["project"]["key"]
             restore(root, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers,

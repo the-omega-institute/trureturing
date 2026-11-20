@@ -48,7 +48,8 @@ runs:
         GH_TOKEN: ${{ github.token }}
       uses: ./.github/actions/lean-project-restore
       with:
-        project-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_exact_key || '' }}
+        project-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_probe_key || '' }}
+        alternate-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_alternate_key || '' }}
         project-paths: ${{ steps.keys.outputs.project_archive_path }}
         allow-preparation: ${{ inputs.preparation-only != 'true' }}
     - id: elan
@@ -100,7 +101,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && steps.prepared.outputs.matched != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -117,7 +118,7 @@ runs:
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
     - name: Validate the producer continuation
-      if: steps.prepared.outputs.adopted != 'true' && steps.prepared.outputs.matched != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
@@ -231,13 +232,21 @@ runs:
             echo "CACHE_SEED_ERROR project cache was not published to the producer ref" >&2
             exit 1
           }
-    - name: Index the published project seed by source tree
-      if: steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_source_marker != ''
+    - id: index
+      name: Bind the project payload to the verified checkout
+      if: github.event_name == 'push' && inputs.preparation-only != 'true' && (steps.project_snapshot.outputs.project_ready == 'true' || (steps.project_snapshot.outputs.project_skip_reason == 'no-build-work' && steps.prepared.outputs.matched == 'true'))
+      continue-on-error: true
+      env:
+        PAYLOAD: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.prepared.outputs.project-key }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py index-key --repository "$GITHUB_WORKSPACE" --project-key "$PAYLOAD"
+    - name: Index the published or retained project seed
+      if: steps.index.outputs.marker != ''
       continue-on-error: true
       uses: actions/cache/save@v5
       with:
         path: lean-toolchain
-        key: ${{ steps.keys.outputs.project_source_marker }}
+        key: ${{ steps.index.outputs.marker }}
     - name: Publish the dependency seed
       if: steps.dependency_snapshot.outputs.dependency_ready == 'true'
       uses: actions/cache/save@v5

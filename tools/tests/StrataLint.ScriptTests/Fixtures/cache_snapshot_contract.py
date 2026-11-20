@@ -344,7 +344,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         parent_marker = self.cache_row(f"source-{parent}-100-1")
         for rows, key, source in (
                 ([marker, payload], payload["key"], "checkout"),
-                ([parent_marker, payload], payload["key"], "pr-base"),
+                ([parent_marker, payload], payload["key"], "first-parent"),
                 ([marker], own["key"], "unbound"),
                 ([self.cache_row(f"source-{tree}-300-1")], own["key"], "unbound")):
             with self.subTest(source=source, rows=rows), mock.patch.object(owner, "project_source_trees",
@@ -352,7 +352,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 values, receipt, _ = self.lookup_keys([self.cache_page([own]), self.cache_page(rows)],
                     GITHUB_EVENT_NAME="pull_request", GITHUB_REF=ref, GITHUB_BASE_REF="dev")
                 self.assertEqual(key, values["project_restore_key"])
-                self.assertEqual(key if source == "checkout" else None, values.get("project_exact_key"))
+                self.assertEqual(key if source == "checkout" else None, values.get("project_probe_key"))
                 self.assertEqual(source, receipt["source_match"])
 
     def test_previous_push_attempt_beats_newer_unrelated_run_without_a_marker(self):
@@ -360,11 +360,46 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         with mock.patch.object(self.restore_owner(), "project_source_trees", return_value=(tree,)):
             rows = [self.cache_row("17-1"), self.cache_row("250-3")]
             values, _, _ = self.lookup_keys([self.cache_page(rows)])
-            self.assertEqual(rows[0]["key"], values["project_exact_key"])
+            self.assertEqual(rows[0]["key"], values["project_probe_key"])
             self.assertEqual(rows[0]["key"], values["project_restore_key"])
-            self.assertTrue(values["project_source_marker"].endswith(f"source-{tree}-17-2"))
+            owner = self.restore_owner()
+            with mock.patch.dict(os.environ, self.env):
+                keys = owner.actions_keys(self.root)
+                self.assertEqual(owner.source_marker(self.root, keys, rows[0]["key"]),
+                                 f"{values['project_restore_prefix']}source-{tree}-17-1")
+                self.assertEqual("", owner.source_marker(self.root, keys, "other-prefix-17-1"))
 
-    def test_source_tree_uses_checkout_and_pr_first_parent(self):
+    def test_recovery_prefers_the_current_source_then_parent_then_ordinary_increment(self):
+        owner = self.restore_owner()
+        tree, parent, old = ("b" * 40, "c" * 40, "d" * 40)
+        for recovery_source, first, probe in ((tree, "250-1", True), (parent, "250-1", False),
+                                               (old, "100-1", False)):
+            rows = [self.cache_row("250-1"), self.cache_row(f"recovery-{recovery_source}-250-1"),
+                    self.cache_row("100-1"), self.cache_row(f"source-{parent}-100-1")]
+            with self.subTest(source=recovery_source), mock.patch.object(owner, "project_source_trees",
+                                                                          return_value=(tree, parent)):
+                values, _, _ = self.lookup_keys([self.cache_page(rows)])
+                self.assertTrue(values["project_restore_key"].endswith("-" + first))
+                self.assertEqual(probe, "project_probe_key" in values)
+        with mock.patch.object(owner, "project_source_trees", return_value=(tree, parent)):
+            values, _, _ = self.lookup_keys([self.cache_page(rows[:-1])])
+            self.assertTrue(values["project_restore_key"].endswith("-100-1"))
+
+    def test_report_neutral_parent_and_unindexed_seed_get_early_probe(self):
+        owner = self.restore_owner()
+        tree, parent = "b" * 40, "c" * 40
+        with mock.patch.object(owner, "project_source_trees", return_value=(tree, parent)), \
+                mock.patch.object(owner, "parent_report_inputs_unchanged", return_value=True):
+            primary, secondary = self.cache_row("101-1"), self.cache_row("100-1")
+            bindings = [self.cache_row(f"source-{tree}-101-1"), self.cache_row(f"source-{parent}-100-1")]
+            values, _, _ = self.lookup_keys([self.cache_page([primary, secondary, *bindings])])
+            self.assertEqual(primary["key"], values["project_probe_key"])
+            self.assertEqual(secondary["key"], values["project_alternate_key"])
+            for rows in ([secondary, bindings[1]], [secondary]):
+                values, _, _ = self.lookup_keys([self.cache_page(rows)])
+                self.assertEqual(secondary["key"], values["project_probe_key"])
+
+    def test_source_tree_uses_checkout_and_first_parent(self):
         git = lambda *args: subprocess.check_output(["git", *args], cwd=self.root, text=True).strip()
         git("init", "-q")
         git("add", ".")
@@ -375,9 +410,15 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
             git("add", "module.lean")
         head = git("rev-parse", "HEAD")
         owner = self.restore_owner()
-        with mock.patch.dict(os.environ, dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_SHA=head), clear=True):
-            self.assertEqual((git("rev-parse", "HEAD^{tree}"), git("rev-parse", "HEAD^1^{tree}")),
-                             owner.project_source_trees(self.root))
+        for event in ("pull_request", "push"):
+            with mock.patch.dict(os.environ, dict(self.env, GITHUB_EVENT_NAME=event, GITHUB_SHA=head), clear=True):
+                trees = owner.project_source_trees(self.root)
+                self.assertEqual((git("rev-parse", "HEAD^{tree}"), git("rev-parse", "HEAD^1^{tree}")), trees)
+                manifest = self.root / "lean-report-inputs.json"
+                for pattern, neutral in (("D5/**/*.lean", True), ("**/*.lean", False)):
+                    manifest.write_text(json.dumps({"report_modules": {"include": [{"pattern": pattern}]},
+                                                    "config_inputs": {"include": []}}))
+                    self.assertEqual(neutral, owner.parent_report_inputs_unchanged(self.root, trees))
         with mock.patch.dict(os.environ, dict(self.env, GITHUB_SHA="f" * 40), clear=True):
             self.assertEqual((), owner.project_source_trees(self.root))
 
@@ -797,7 +838,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                                 if selected("name: Validate the producer continuation", values):
                                     owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
                                                          "success" if extracted else "skipped")
-                                expected = adopted == released == matched == "false"
+                                expected = adopted == released == "false"
                                 self.assertEqual(expected, lookup)
                                 self.assertEqual(expected, extracted)
                                 self.assertEqual(expected, owner.resume_verified(self.root))

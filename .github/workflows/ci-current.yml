@@ -319,7 +319,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         uses: ./.github/actions/lean-project-restore
         with:
-          project-key: ${{ steps.keys.outputs.project_exact_key }}
+          project-key: ${{ steps.keys.outputs.project_probe_key }}
+          alternate-key: ${{ steps.keys.outputs.project_alternate_key }}
           project-paths: ${{ steps.keys.outputs.project_archive_path }}
       - id: elan
         if: steps.keys.outputs.elan_key != ''
@@ -450,13 +451,21 @@ jobs:
           saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
           jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
             'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
-      - name: Index the published project seed by source tree
-        if: steps.project_published.outcome == 'success' && steps.keys.outputs.project_source_marker != ''
+      - id: index
+        name: Bind the project payload to the verified checkout
+        if: github.event_name == 'push' && github.ref_protected && (steps.project_published.outcome == 'success' || (steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && steps.prepared.outputs.matched == 'true'))
+        continue-on-error: true
+        env:
+          PAYLOAD: ${{ steps.project_published.outcome == 'success' && steps.keys.outputs.project_key || steps.prepared.outputs.project-key }}
+        shell: bash
+        run: python3 tools/scripts/worktree/lean_actions.py index-key --repository "$GITHUB_WORKSPACE" --project-key "$PAYLOAD"
+      - name: Index the published or retained project seed
+        if: steps.index.outputs.marker != ''
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: lean-toolchain
-          key: ${{ steps.keys.outputs.project_source_marker }}
+          key: ${{ steps.index.outputs.marker }}
       # Dependency and elan caches follow successful checks.
       - id: snapshot
         if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}
