@@ -86,7 +86,7 @@ def simplexOn {V : Type*} (B : Finset V) : PreAbstractSimplicialComplex V where
     intro s hs
     exact ⟨hs.1, fun t hts ht => ⟨ht, hts.trans hs.2⟩⟩
 
-private theorem subface_of_facet (c : E → A) {B s : Finset (E × Bool)}
+theorem subface_of_facet (c : E → A) {B s : Finset (E × Bool)}
     (hB : B ∈ facets c) (hs : s.Nonempty) (hsB : s ⊆ B) : s ∈ signedComplex c :=
   ((signedComplex c).isRelLowerSet_faces (mem_facets.mp hB).1).2 hsB hs
 

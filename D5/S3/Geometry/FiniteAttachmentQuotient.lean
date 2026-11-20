@@ -101,7 +101,7 @@ private theorem rawMap_kernel (f : ∀ i, C(D i, X)) {core : Set X} (p : core)
       · exact Or.inr hcore
 
 /-- The canonical homeomorphism maps each summand using its injection and sends the added
-point to the common core class. The index type and attaching sets may be empty. -/
+point to the common core class. The index type and individual core preimages may be empty. -/
 theorem exists_homeomorph [Finite I] [CompactSpace X] [T2Space X]
     [∀ i, CompactSpace (D i)] (f : ∀ i, C(D i, X)) {core : Set X} (p : core)
     (hc : IsClosed core) (cover : ∀ x, x ∈ core ∨ ∃ i d, f i d = x)
