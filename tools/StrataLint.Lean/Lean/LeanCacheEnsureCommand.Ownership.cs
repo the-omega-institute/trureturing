@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using System.Text;
+using System.Text.Json;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -32,6 +33,8 @@ internal static partial class LeanCacheEnsureCommand
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(readEnvironment);
+        var prebuilt = arguments.FirstOrDefault() == "--prebuilt";
+        if (prebuilt) arguments = arguments.Skip(1).ToArray();
         if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
@@ -64,6 +67,20 @@ internal static partial class LeanCacheEnsureCommand
                 method: "none",
                 pins.Sha256,
                 "canonical cache writer guard is busy");
+        }
+
+        if (prebuilt)
+        {
+            var lake = Path.Combine(root, ".lake");
+            if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+            var stamp = LeanCacheStamp.Inspect(lake, pins);
+            if (stamp.State is LeanCacheStampState.Mismatch or LeanCacheStampState.Corrupt)
+                return new CommandResult(false, string.Empty, $"Incompatible prebuilt Lake artifacts: {stamp.Reason}\n");
+            var packageError = CheckPrebuiltPackages(lake, pins, runner);
+            if (packageError is not null)
+                return new CommandResult(false, string.Empty,
+                    $"{packageError}. Run make lean-report-prepare for the selected scope.\n");
+            return RunGuardedCommand(root, command, runner, localArtifacts: true, string.Empty, standardOutput, standardError);
         }
 
         CacheState? cacheState;
@@ -127,6 +144,37 @@ internal static partial class LeanCacheEnsureCommand
             receipt = RecordColdBuildConsent(receipt);
         }
 
+        return RunGuardedCommand(root, command, runner, localArtifacts: !fullBuild, receipt, standardOutput, standardError);
+    }
+
+    private static string? CheckPrebuiltPackages(string lake, LeanPinSet pins, IWorktreeProcessRunner runner)
+    {
+        // The Reg and report host manifests already agree with these root Git pins.
+        // Lake restores compiler artifacts from its store, but loading a workspace
+        // would materialize a missing checkout or switch it to the requested commit.
+        using var manifest = JsonDocument.Parse(pins.LakeManifest);
+        foreach (var package in manifest.RootElement.GetProperty("packages").EnumerateArray())
+        {
+            if (package.GetProperty("type").GetString() != "git") continue;
+            var name = package.GetProperty("name").GetString();
+            var revision = package.GetProperty("rev").GetString();
+            if (string.IsNullOrWhiteSpace(name) || name is "." or ".." || name.IndexOfAny(['/', '\\']) >= 0
+                || !LeanPinSet.ValidRevision(revision))
+                return "Invalid pinned Git package in lake-manifest.json";
+            var directory = Path.Combine(lake, "packages", name);
+            if (!Path.Exists(Path.Combine(directory, ".git")))
+                return $"Missing prebuilt Git dependency {name} at {revision}";
+            var head = runner.Run("git", ["rev-parse", "--verify", "HEAD"], directory,
+                LeanCacheProvisioner.LeanCommandBudget);
+            if (head.ExitCode != 0 || Encoding.UTF8.GetString(head.StandardOutput).Trim() != revision)
+                return $"Prebuilt Git dependency {name} is not checked out at {revision}";
+        }
+        return null;
+    }
+
+    private static CommandResult RunGuardedCommand(string root, string[] command,
+        IWorktreeProcessRunner runner, bool localArtifacts, string receipt, Stream? standardOutput, Stream? standardError)
+    {
         try
         {
             if (standardOutput is not null)
@@ -141,7 +189,7 @@ internal static partial class LeanCacheEnsureCommand
                 && Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_ACTIVE") != "1")
                 invocation = ["python3", Path.Combine(root, "tools/scripts/workflow/ci_compute.py"),
                     "run", "--", .. command];
-            if (!fullBuild && runner is ProductionWorktreeProcessRunner production)
+            if (localArtifacts && runner is ProductionWorktreeProcessRunner production)
                 runner = production.ForLocalArtifactReader();
             var invoked = runner.Run(
                 invocation[0],

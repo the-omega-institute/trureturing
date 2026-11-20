@@ -275,7 +275,7 @@ defaultFacets = ["static"]
         # Make's cache wrapper and direct fixture calls use the same resolved Lake.
         self.env = dict(os.environ, FULL_BUILD="1", PATH=os.pathsep.join([
             str(self.root / 'bin'), str(Path(self.lake).parent), os.environ['PATH']]), LAKE_BIN=self.lake,
-            STRATALINT_LEAN_BUILD_TARGETS='[]',
+            STRATALINT_LEAN_BUILD_TARGETS='[]', STRATALINT_LEAN_PRODUCER_DLL=str(self.cli),
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
@@ -571,9 +571,33 @@ defaultFacets = ["static"]
         elif success is False:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
+    def prepare_report_modules(self, *modules, workspace=None, targets=(), success=True):
+        """Compile fixture inputs in a separate invocation before inspecting them."""
+        full = not modules
+        if full:
+            modules = sorted(publication.selection.Selection(self.root).modules())
+            utilities = json.loads((self.root / 'utility.json').read_text())
+            modules.extend(sorted({entry['claimModule'] for entry in utilities}))
+        programs = ['leanInspector/reportInspector', 'leanInspector/inputDiscovery']
+        if full and (self.root / 'LeanInformationAudit/TemplateEnrollment.lean').is_file():
+            programs.append('+LeanInformationAudit.TemplateEnrollment')
+        directory = ['-d', workspace] if workspace else []
+        return self.run_lake(*directory, 'build', *programs, *('+' + name for name in modules),
+                             *targets, success=success)
+
     def build(self, success=True, *, targets=()):
         self.write('activity.jsonl', '')
-        return self.run_lake('build', ':report', *targets, success=success)
+        try:
+            prepared = self.prepare_report_modules(targets=targets, success=None)
+        except (OSError, ValueError):
+            # Invalid manifest/utility fixtures exercise the report's own diagnostic.
+            if success:
+                raise
+        else:
+            if prepared.returncode:
+                self.assertFalse(success, prepared.stdout + prepared.stderr)
+                return prepared
+        return self.run_lake('build', ':report', success=success)
     def stamps(self):
         return {p.stem: (p.stat().st_mtime_ns, publication.digest(p)) for p in (self.root / '.lake/build/lean-inspector/modules').glob('*.zip')}
     def report(self):

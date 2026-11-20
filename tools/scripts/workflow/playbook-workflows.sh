@@ -38,6 +38,7 @@ align_delivery_ledger() {
   done <<< "$closed_modules"
   if [[ -n "$targets" ]]; then
     targets="${targets//\//.}"
+    step lean-report-prepare make lean-report-prepare "LEAN_TARGETS=$targets"
     step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
     run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
   fi
@@ -74,6 +75,7 @@ build_scoped_report() {
   [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID deposit report scope is empty' >&2; return 2; }
   REPORT=".lake/build/stratalint/delivery-lean-report.json"
   export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
+  step lean-report-prepare make lean-report-prepare "LEAN_TARGETS=$LEAN_TARGETS"
   step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
 }
 
@@ -153,7 +155,7 @@ deposit_module() {
 
 case "$COMMAND" in
   deliver-check)
-    make lean-report
+    make check-lean-report
     make emit
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     align_delivery_ledger
