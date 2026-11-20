@@ -21,7 +21,7 @@ DOI: 10.4064/aa-88-4-371-396
 
 Source: https://matwbn.icm.edu.pl/ksiazki/aa/aa88/aa8847.pdf
 
-Lemma 6.6 (p. 386), Proposition 6.8 (p. 387) and Proposition 6.9 (pp. 387–388).
+Lemma 6.6 (p. 386) and Proposition 6.8 (p. 387); Proposition 6.9 (pp. 387–388) as cited below.
 
 ## Statement
 
