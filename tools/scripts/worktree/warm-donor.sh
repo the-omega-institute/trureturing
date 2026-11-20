@@ -36,6 +36,13 @@ if [[ "$branch" != "dev" ]]; then
   exit 0
 fi
 
+# Git also uses a .git file for a main checkout with a separate Git directory.
+if [[ -f .git && ! "$(git rev-parse --git-dir)" -ef "$(git rev-parse --git-common-dir)" ]]; then
+  receipt skipped precondition "worktree is not the main checkout"
+  finish_maintenance_log 0
+  exit 0
+fi
+
 tree_status="$(git status --porcelain --untracked-files=normal)"
 status_rc=$?
 if (( status_rc != 0 )); then
@@ -67,7 +74,8 @@ if [[ -f "$ROOT/.lake/build/stratalint/raw-lean-report.json" ]]; then
   fi
 fi
 
-make -C "$ROOT" lean
+# An inherited LEAN_TARGETS would silently turn publication into a partial build.
+STRATALINT_WARM_DONOR=1 make -C "$ROOT" lean FULL_BUILD=1 LEAN_TARGETS=
 lean_rc=$?
 if (( lean_rc != 0 )); then
   receipt failed lean "make lean failed"

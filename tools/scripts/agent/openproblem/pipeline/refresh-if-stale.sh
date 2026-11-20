@@ -4,6 +4,7 @@ set -uo pipefail
 . "$(dirname "$0")/common.sh"
 [ "${1:-}" != --selftest ] || { op_selftest refresh-if-stale; exit $?; }
 [ "$#" -eq 1 ] || op_fail 10 USAGE 'refresh-if-stale.sh TREE'
+if [ "${FULL_BUILD:-0}" != 1 ]; then echo "CACHE_REFRESH skip reason=scoped-build"; exit 0; fi
 op_init; op_main
 [ -d "$1" ] || op_fail 11 INPUT_MISSING "$1"
 T=$(cd "$1" && pwd -P)
@@ -30,6 +31,6 @@ check_idle || exit 0
 state=$(op_data stale "$OP_MAIN" "$T" "$lag") || exit $?
 case "$state" in skip*) echo "CACHE_REFRESH $state tree=$T"; exit 0;; esac
 read -r _ msha mtime <<< "$state"
-rm -rf -- "$T/.lake" && make -C "$T" lean-cache-ensure || op_fail 16 CACHE_REFRESH_FAILED "$T"
+rm -rf -- "$T/.lake" && make -C "$T" lean-cache-ensure FULL_BUILD=1 || op_fail 16 CACHE_REFRESH_FAILED "$T"
 printf '%s %s\n' "$msha" "$mtime" > "$T/.lake/build/.main-cloned-at" || op_fail 16 IO_ERROR stamp
 echo "CACHE_REFRESH done tree=$T main_sha=$msha rc=0"

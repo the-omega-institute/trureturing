@@ -108,10 +108,10 @@ def current_phase(phase, data, plan, base, paths):
         if not plan["hits"]["current"]:
             result(phase, "not-applicable")
             return 0
-        if plan["delta"] and not base:
+        if plan["source-delta"] and not base:
             raise DetectError("selected source delta requires a readable protected base")
         return execute(phase, ["dotnet", CLI, "check-source", "--current",
-                              *(["--protected-base", base] if plan["delta"] else [])])
+                              *(["--protected-base", base] if plan["source-delta"] else [])])
     if phase == "prerequisite":
         prefix = current_prerequisite(data, plan, base, paths)
         if os.environ.get("GITHUB_OUTPUT"):
@@ -123,10 +123,15 @@ def current_phase(phase, data, plan, base, paths):
         return prepare_current(data, plan)
     if phase == "build-judge":
         return execute(phase, ["dotnet", "build", *data["current"]["judge_build_args"], "--no-restore"])
+    if phase == "pr-lean":
+        if plan["full-report"]:
+            raise DetectError("scoped PR phase used for a push")
+        if not paths.is_file():
+            raise DetectError("incremental Lean checks require the PR changed paths")
+        return execute(phase, [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths)])
     if phase == "lean-report":
-        if not plan["report"]:
-            result(phase, "not-applicable")
-            return 0
+        if not plan["full-report"]:
+            raise DetectError("full Lean report is a push phase")
         if os.environ.get("FULL_BUILD") != "1":
             print("full report requires explicit FULL_BUILD=1", file=sys.stderr)
             result(phase, "failure", 2, 2)
@@ -139,7 +144,9 @@ def current_phase(phase, data, plan, base, paths):
             return code
         env = {"STRATALINT_LEAN_PRODUCER_DLL": producer.stdout.strip(), "STRATALINT_BUILD_TIMEOUT_SECONDS": "21600",
                "STRATALINT_FIB_REGRESSIONS_SELECTED": str(plan["fib-regressions"]).lower()}
-        return execute(phase, ["make", "lean-report", "LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail"], compute=False, env=env)
+        return execute(phase, ["make", "lean-report", "FULL_BUILD=1", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], compute=False, env=env)
+    if phase == "pr-fib":
+        return execute(phase, ["make", "compiled-fib-test"])
     if phase == "compiled-audit":
         if not plan[phase]:
             result(phase, "not-applicable")
@@ -152,7 +159,8 @@ def current_phase(phase, data, plan, base, paths):
         return execute(phase, ["make", "-C", "tools", "test",
                               "TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
                               "TEST_FILTER=FullyQualifiedName~FourierBridgeSourceEvidenceTests"],
-                       env={"CI_DOTNET_PREPARED": "1", "FOURIER_BRIDGE_SOURCE_ARTIFACTS": str(Path(".lake/build/lean-inspector/modules").resolve())})
+                       env={"CI_DOTNET_PREPARED": "1", "FOURIER_BRIDGE_SOURCE_ARTIFACTS":
+                            str(Path(".lake/build/lean-inspector/modules").resolve()) if plan["full-report"] else ""})
     if phase == "check-delta":
         if not plan["delta"]:
             result(phase, "not-applicable")
@@ -215,14 +223,23 @@ def current_prerequisite(data, plan, base, paths):
 
 
 def applicable_phase(plan, phase):
-    return (plan[phase] if phase in ("compiled-audit", "source-evidence") else
-            plan["delta"] if phase == "check-delta" else plan["report"])
+    if phase in ("compiled-audit", "source-evidence"):
+        return plan[phase]
+    if phase == "pr-fib":
+        return plan["fib-regressions"] and not plan["full-report"]
+    if phase == "pr-lean":
+        return plan["report"] and not plan["full-report"]
+    if phase == "check-delta":
+        return plan["full-report"] and plan["delta"]
+    return plan["full-report"]
 
 
 def current_run(data, plan, base, paths, prefix=None):
     prefix = prefix or current_prerequisite(data, plan, base, paths)
+    build_phase = "lean-report" if plan["full-report"] else "pr-lean"
+    phases = (*READY_PHASES, "pr-fib")
     if not prefix.allowed:
-        for phase in ("lean-report", *READY_PHASES):
+        for phase in (build_phase, *phases):
             result(phase, "blocked" if applicable_phase(plan, phase) else "not-applicable")
         return prefix.code
     failures = [prefix.code]
@@ -233,11 +250,11 @@ def current_run(data, plan, base, paths, prefix=None):
     judge = 0 if prefix.judge_ready else prefix.code
     # Judge bootstrap and selected test restore failures do not erase independently
     # reachable report fallback. Lean preparation alone guards report inputs.
-    report = lean or current_phase("lean-report", data, plan, base, paths)
+    report = lean or current_phase(build_phase, data, plan, base, paths)
     if lean:
-        result("lean-report", "blocked")
+        result(build_phase, "blocked")
     failures += [lean, restore, report]
-    for phase in READY_PHASES:
+    for phase in phases:
         if not applicable_phase(plan, phase):
             result(phase, "not-applicable")
         elif judge or report or phase == "source-evidence" and restore:
@@ -379,7 +396,7 @@ def main():
         paths = read_changed(args.changed)
         plan = selection(data, paths, args.purpose)
         base = args.base
-        if not base and plan["delta"]:
+        if not base and plan["source-delta"]:
             base = base_commit(Path.cwd(), "HEAD^1") if args.purpose == "pull-request" else os.environ.get("CI_PUSH_BEFORE", "")
         return current_phase(args.phase, data, plan, base, args.changed)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:

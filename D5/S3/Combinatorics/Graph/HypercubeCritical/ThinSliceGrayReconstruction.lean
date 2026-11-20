@@ -31,10 +31,10 @@ open BalancedCubeLowerBound (coordinateSlice)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_row edge from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private switching_sq from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
+open BalancedCriticalSpectrum (switching_sq)
 open private flip_value from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicalSubdivisionRigidity
 

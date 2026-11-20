@@ -183,7 +183,7 @@ namespace D5.S1.Recurrence.Algebraic.HannaA300591RationalModel
 
 open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 
-private theorem valuation_add_bound (p : ℕ) [Fact p.Prime] (b : ℤ) (u v : ℚ)
+theorem valuation_add_bound (p : ℕ) [Fact p.Prime] (b : ℤ) (u v : ℚ)
     (hu : u ≠ 0 → b ≤ padicValRat p u) (hv : v ≠ 0 → b ≤ padicValRat p v) :
     u + v ≠ 0 → b ≤ padicValRat p (u + v) := by
   intro huv
@@ -205,7 +205,7 @@ private theorem valuation_sum_bound (p : ℕ) [Fact p.Prime] (b : ℤ)
     exact valuation_add_bound p b _ _ (h a (mem_insert_self a s))
       (ih (fun j hj => h j (mem_insert_of_mem hj)))
 
-private theorem exp_prefix_bound (p : ℕ) (hp : p.Prime) (t : ℚ) (ht : t ≠ 0)
+theorem exp_prefix_bound (p : ℕ) (hp : p.Prime) (t : ℚ) (ht : t ≠ 0)
     (htv : 1 ≤ padicValRat p t) (P : PowerSeries ℚ)
     (hP0 : constantCoeff P = 0) (hP : IsRIntegralPS p P)
     (d : ℕ) (_hd : 1 ≤ d) (m : ℕ) (hm : m = 1 ∨ m = 2)

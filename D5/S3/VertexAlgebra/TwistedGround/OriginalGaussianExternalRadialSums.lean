@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Radial differentiation of the full literal square-resolvent mode generator. -/
+   digest: Complex radial differentiation of both full literal J/T mode generators. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
 
@@ -47,15 +47,38 @@ private lemma square_differentiable {z : ℂ} (hz : ‖z‖ < 1) :
   filter_upwards [(isOpen_lt continuous_norm continuous_const).mem_nhds hz] with w hw
   exact square_half hw
 
-lemma literal_differentiable (out out' : Bool) (p q : ℕ) {z : ℂ}
-    (hz : ‖z‖ < 1) : DifferentiableAt ℂ (externalT out p out' q) z := by
+private lemma odd_differentiable {z : ℂ} (hz : ‖z‖ < 1) :
+    DifferentiableAt ℂ oddResolvent z := by
+  have h := ((hasDerivAt_resolvent hz).differentiableAt.sub
+    (opposite_differentiable hz)).const_smul (1 / 2 : ℂ)
+  apply h.congr_of_eventuallyEq
+  filter_upwards [(isOpen_lt continuous_norm continuous_const).mem_nhds hz] with w hw
+  exact odd_eq_half_difference hw
+
+private lemma selected_resolvent_differentiable (square : Bool) {z : ℂ}
+    (hz : ‖z‖ < 1) :
+    DifferentiableAt ℂ (fun w => if square then squareResolvent w else oddResolvent w) z := by
+  cases square
+  · exact odd_differentiable hz
+  · exact square_differentiable hz
+
+private lemma literal_mode_differentiable (square out out' : Bool) (p q : ℕ) {z : ℂ}
+    (hz : ‖z‖ < 1) :
+    DifferentiableAt ℂ
+      (fun w => if square then externalT out p out' q w else externalJ out p out' q w) z := by
   have hX := (hasDerivAt_externalVector out p hz).differentiableAt
   have hY := (hasDerivAt_externalVector out' q hz).differentiableAt
-  have hSY := (square_differentiable hz).clm_apply hY
+  have hSY := (selected_resolvent_differentiable square hz).clm_apply hY
   have h := (pairing.hasFDerivAt_of_bilinear hX.hasFDerivAt hSY.hasFDerivAt).differentiableAt
   apply h.congr_of_eventuallyEq
   filter_upwards [(isOpen_lt continuous_norm continuous_const).mem_nhds hz] with w hw
-  exact (external_contractions_explicit out p out' q hw).2.2.2.1.symm
+  cases square
+  · exact (external_contractions_explicit out p out' q hw).2.2.1.symm
+  · exact (external_contractions_explicit out p out' q hw).2.2.2.1.symm
+
+lemma literal_differentiable (out out' : Bool) (p q : ℕ) {z : ℂ}
+    (hz : ‖z‖ < 1) : DifferentiableAt ℂ (externalT out p out' q) z := by
+  simpa only [ite_true] using literal_mode_differentiable true out out' p q hz
 
 private lemma vector_norm_mono (out : Bool) (p : ℕ) {w : ℂ} {R : ℝ}
     (hR : 0 ≤ R) (hR1 : R < 1) (hw : ‖w‖ ≤ R) :
@@ -71,12 +94,13 @@ private lemma vector_norm_mono (out : Bool) (p : ℕ) {w : ℂ} {R : ℝ}
 
 set_option maxHeartbeats 800000 in
 -- The complete complex double mode series is bounded by the two larger-radius vectors.
-private lemma kernel_complex_derivative (out out' : Bool) {u v z : ℂ}
+lemma kernel_complex_derivative (square out out' : Bool) {u v z : ℂ}
     (hu : ‖u‖ + ‖z‖ < 1) (hv : ‖v‖ + ‖z‖ < 1) :
-    HasSum (fun pq : ℕ × ℕ => deriv (externalT out pq.1 out' pq.2) z *
+    HasSum (fun pq : ℕ × ℕ => deriv (fun w => if square then externalT out pq.1 out' pq.2 w
+      else externalJ out pq.1 out' pq.2 w) z *
       u ^ pq.1 * v ^ pq.2)
-      (deriv (fun w => kernelMode true out out' u v w) z) ∧
-    DifferentiableAt ℂ (fun w => kernelMode true out out' u v w) z := by
+      (deriv (fun w => kernelMode square out out' u v w) z) ∧
+    DifferentiableAt ℂ (fun w => kernelMode square out out' u v w) z := by
   obtain ⟨R, hzR, hR⟩ := exists_between
     (show ‖z‖ < min (1 - ‖u‖) (1 - ‖v‖) by
       simp only [lt_min_iff]; constructor <;> linarith)
@@ -91,9 +115,12 @@ private lemma kernel_complex_derivative (out out' : Bool) {u v z : ℂ}
     have := (lt_min_iff.mp hR).2
     linarith
   have hz : ‖z‖ < 1 := by linarith [norm_nonneg u]
-  let C := ‖squareResolvent z‖ + 1
-  have hS : ∀ᶠ w in 𝓝 z, ‖squareResolvent w‖ < C :=
-    (square_differentiable hz).continuousAt.norm.eventually_lt_const (by dsimp [C]; linarith)
+  let A : ℂ → H →L[ℂ] H := fun w =>
+    if square then squareResolvent w else oddResolvent w
+  let C := ‖A z‖ + 1
+  have hS : ∀ᶠ w in 𝓝 z, ‖A w‖ < C :=
+    (selected_resolvent_differentiable square hz).continuousAt.norm.eventually_lt_const
+      (by dsimp [C]; linarith)
   have hball : ∀ᶠ w in 𝓝 z, ‖w‖ < R :=
     (isOpen_lt continuous_norm continuous_const).mem_nhds hzR
   obtain ⟨U, hUsub, hUopen, hzU⟩ := mem_nhds_iff.mp (hball.and hS)
@@ -104,26 +131,35 @@ private lemma kernel_complex_derivative (out out' : Bool) {u v z : ℂ}
       ‖v ^ pq.2 • externalVector out' pq.2 (R : ℂ)‖)
   have hb : Summable b := hs.mul_left C
   have hd (pq : ℕ × ℕ) : DifferentiableOn ℂ
-      (fun w => externalT out pq.1 out' pq.2 w * u ^ pq.1 * v ^ pq.2) U := by
+      (fun w => (if square then externalT out pq.1 out' pq.2 w
+        else externalJ out pq.1 out' pq.2 w) * u ^ pq.1 * v ^ pq.2) U := by
     intro w hw
-    exact (((literal_differentiable out out' pq.1 pq.2
+    exact (((literal_mode_differentiable square out out' pq.1 pq.2
       ((hUsub hw).1.trans hR1)).mul_const _).mul_const _).differentiableWithinAt
   have hbound (pq : ℕ × ℕ) (w : ℂ) (hw : w ∈ U) :
-      ‖externalT out pq.1 out' pq.2 w * u ^ pq.1 * v ^ pq.2‖ ≤ b pq := by
+      ‖(if square then externalT out pq.1 out' pq.2 w
+        else externalJ out pq.1 out' pq.2 w) * u ^ pq.1 * v ^ pq.2‖ ≤ b pq := by
     have hwR := (hUsub hw).1
-    rw [← (external_contractions_explicit out pq.1 out' pq.2 (hwR.trans hR1)).2.2.2.1]
+    have he : (if square then externalT out pq.1 out' pq.2 w
+        else externalJ out pq.1 out' pq.2 w) =
+        sourceBilinearFunctional (externalVector out pq.1 w)
+          (A w (externalVector out' pq.2 w)) := by
+      cases square
+      · exact (external_contractions_explicit out pq.1 out' pq.2 (hwR.trans hR1)).2.2.1.symm
+      · exact (external_contractions_explicit out pq.1 out' pq.2 (hwR.trans hR1)).2.2.2.1.symm
+    rw [he]
     change ‖inner ℂ (star (externalVector out pq.1 w))
-      (squareResolvent w (externalVector out' pq.2 w)) * u ^ pq.1 * v ^ pq.2‖ ≤ _
+      (A w (externalVector out' pq.2 w)) * u ^ pq.1 * v ^ pq.2‖ ≤ _
     simp only [norm_mul, b, norm_smul, norm_pow]
     calc
       _ ≤ (‖externalVector out pq.1 w‖ *
-          (‖squareResolvent w‖ * ‖externalVector out' pq.2 w‖)) *
+          (‖A w‖ * ‖externalVector out' pq.2 w‖)) *
             ‖u‖ ^ pq.1 * ‖v‖ ^ pq.2 := by
         gcongr
         exact (norm_inner_le_norm _ _).trans (by
           rw [norm_star]
           gcongr
-          exact (squareResolvent w).le_opNorm _)
+          exact (A w).le_opNorm _)
       _ ≤ (‖externalVector out pq.1 (R : ℂ)‖ *
           (C * ‖externalVector out' pq.2 (R : ℂ)‖)) * ‖u‖ ^ pq.1 * ‖v‖ ^ pq.2 := by
         gcongr
@@ -133,7 +169,7 @@ private lemma kernel_complex_derivative (out out' : Bool) {u v z : ℂ}
       _ = _ := by ring
   have hderiv := Complex.hasSum_deriv_of_summable_norm hb hd hUopen hbound hzU
   constructor
-  · simpa only [deriv_mul_const_field, kernelMode, ite_true] using hderiv
+  · simpa only [deriv_mul_const_field, kernelMode] using hderiv
   · exact (Complex.differentiableOn_tsum_of_summable_norm hb hd hUopen hbound).differentiableAt
       (hUopen.mem_nhds hzU)
 
@@ -151,7 +187,8 @@ theorem kernelMode_radial_derivative (out out' : Bool) {u v : ℂ} {r : ℝ}
     simpa only [Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _)] using hv
   have hz : ‖(Real.sqrt r : ℂ)‖ < 1 := by linarith [norm_nonneg u]
-  have h := kernel_complex_derivative out out' hu' hv'
+  have h := kernel_complex_derivative true out out' hu' hv'
+  simp only [ite_true] at h
   let a : ℂ := ((1 / (2 * Real.sqrt r) : ℝ) : ℂ)
   have he (f : ℂ → ℂ) (hf : DifferentiableAt ℂ f (Real.sqrt r : ℂ)) :
       deriv (fun t : ℝ => f (Real.sqrt t : ℂ)) r =
