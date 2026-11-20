@@ -263,9 +263,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- The span of a set of operator families. -/
+def spanOf (p : Params.{uk, uG, uι, uW}) (s : signature.State p) : signature.Output () p := by
+  obtain ⟨k, G, fk, gG, ι, W, aW, mW⟩ := p
+  exact Submodule.span k s
+
 def actual : Realization signature.{uk, uG, uι, uW} :=
-  realize signature (fun _ p s => letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
-    Submodule.span p.1 s) (fun e => nomatch e)
+  realize signature (fun _ => spanOf) (fun e => nomatch e)
 
 def rejected : Realization signature.{uk, uG, uι, uW} :=
   realize signature (fun _ p _ => letI := p.2.2.1; letI := p.2.2.2.2.2.2.1;
@@ -327,8 +331,7 @@ def span_range_pi_eq_top_registration : Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source Span.arena ⟨Span.source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Span.signature (fun _ p s => letI := p.2.2.1;
-    letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2; Submodule.span p.1 s) (fun e => nomatch e))
+  readout := some (realize Span.signature (fun _ => Span.spanOf) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
