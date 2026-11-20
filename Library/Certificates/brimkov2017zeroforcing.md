@@ -5,20 +5,21 @@ year: 2017
 title: "Graph Coloring, Zero Forcing, and Related Problems"
 doi: null
 url: "https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-bd83-09121784af53/content"
-claim: "Proposition 7.7: if n >= 2, the connected forcing polynomial of the path is Z_c(P_n; x) = 2x + sum_(i=2)^n (n - i + 1) x^i. Proposition 7.11: the connected forcing polynomial of k pendant paths of b_1, ..., b_k vertices attached to a vertex; with unit arms it gives Z_c(K_(1,n-1); x) = (n - 1) x^(n-1) + x^n for n >= 4."
+claim: "Proposition 7.7: if n >= 2, the connected forcing polynomial of the path is Z_c(P_n; x) = 2x + sum_(i=2)^n (n - i + 1) x^i. Proposition 7.8: if n >= 3, Z_c(C_n; x) = n sum_(i=2)^(n-1) x^i + x^n. Proposition 7.11: the connected forcing polynomial of k pendant paths of b_1, ..., b_k vertices attached to a vertex; with unit arms it gives Z_c(K_(1,n-1); x) = (n - 1) x^(n-1) + x^n for n >= 4."
 strata_touched:
   - D5/S3/Combinatorics/Graph/ZeroForcing/PathConnectedForcing
   - D5/S3/Combinatorics/Graph/ZeroForcing/StarConnectedForcing
+  - D5/S3/Combinatorics/Graph/ZeroForcing/CycleConnectedForcing
 license: citation-only
 triage: anchor
 ---
 
-# Connected forcing polynomials of the path and the star
+# Connected forcing polynomials of the path, the cycle and the star
 
 ## Verified locator
 
-PhD thesis, Rice University, May 2017, Chapter 7, Proposition 7.7, printed pages 165–166, and
-Proposition 7.11, printed pages 168–169. Source
+PhD thesis, Rice University, May 2017, Chapter 7, Proposition 7.7, printed pages 165–166,
+Proposition 7.8, printed page 166, and Proposition 7.11, printed pages 168–169. Source
 PDF: https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-bd83-09121784af53/content .
 
 ## Source statement
@@ -29,6 +30,12 @@ PDF: https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-b
 > polynomial of G is defined as Z_c(G; x) = Σ_{i=Z_c(G)}^n z_c(G; i) x^i.
 
 > Proposition 7.7. If n ≥ 2, Z_c(P_n; x) = 2x + Σ_{i=2}^n (n − i + 1) x^i.
+
+> Proposition 7.8. If n ≥ 3, Z_c(C_n; x) = x^n + Σ_{i=2}^{n−1} n x^i.
+
+The source's proof: Z_c(C_n) = 2; a connected forcing set of size 2 ≤ i ≤ n − 1 is determined by
+its first vertex in the cyclic order, giving n of them, and the whole cycle is the only set of
+size n.
 
 > Proposition 7.11. Let G be a graph composed of k pendant paths attached to a vertex v, where
 > the ith pendant path has b_i vertices, 1 ≤ i ≤ k. Then,
@@ -63,3 +70,9 @@ correct. For n = 2 and n = 3 the formula with unit arms gives x + x^2 and 2x^2 +
 the n − 1 single leaves, which force a star with at most two leaves. For every n ≤ 3 result
 states that the coefficients agree with those of the path.
 StarConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of the star.
+
+CycleConnectedForcing.result states the coefficients of Z_c(C_n; x) for Mathlib's cycleGraph n,
+for n = 1 and every n ≥ 3: z_c(C_n; i) = 1 for i = n, n for 2 ≤ i < n, and 0 otherwise. The
+source states n ≥ 3; the case n = 1 also holds, while n = 0 and n = 2 fail.
+CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n,
+n ≠ 2, as the arcs of at least two vertices.
