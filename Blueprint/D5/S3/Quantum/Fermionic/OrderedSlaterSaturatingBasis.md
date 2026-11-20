@@ -4,7 +4,7 @@
 
 A rank test for attaining the ordered Slater purity-drop bound.
 
-**Theorem 1.1 (An attaining basis exists exactly at full eligible rank).**
+**Theorem 1.1 (Rank criterion for an attaining column basis).**
 
 Lean statement: `D5/S3/Quantum/Fermionic/OrderedSlaterSaturatingBasis.orderedMarginal_exists_saturating_basis_iff`
 
