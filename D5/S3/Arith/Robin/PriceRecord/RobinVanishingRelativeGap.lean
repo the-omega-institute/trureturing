@@ -6,6 +6,7 @@
    utility: none
    digest: An attained maximal zeta zero gives the Robin lower-bound criterion on ratio-one meshes. -/
 
+import Mathlib.MeasureTheory.Function.Floor
 import D5.S3.Analytic.Asymptotics.VanishingGapSignTransfer
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
@@ -521,5 +522,213 @@ theorem actual_canonical_samples_lower_bound_iff {ρ : ℂ} (hρ : IsNontrivialZ
       exact hscaled.trans (mul_le_mul_of_nonneg_left hmargin hW.le)
     obtain ⟨K, hK⟩ := eventually_atTop.mp hevent
     exact ⟨C, hC, K, hK⟩
+
+open MeasureTheory Set
+open D5.S3.Weil.Mertens
+
+private lemma B_eq_nat_floor (x : ℝ) : B x = B (Nat.floor x : ℝ) := by
+  unfold B Mertens.E₃
+  rw [Nat.floor_natCast, Chebyshev.theta_eq_theta_coe_floor x]
+  ring
+
+-- On a bounded log interval only finitely many natural floor values occur.
+private lemma intervalIntegrable_nat_floor_exp (g : ℕ → ℝ) {a b : ℝ} (hab : a ≤ b) :
+    IntervalIntegrable (fun v => g (Nat.floor (Real.exp v))) volume a b := by
+  classical
+  rw [intervalIntegrable_iff_integrableOn_Ioc_of_le hab]
+  let values := (Finset.range (Nat.floor (Real.exp b) + 1)).image (fun n => ‖g n‖)
+  obtain ⟨M, hM⟩ := values.bddAbove
+  have hg : Measurable (fun v => g (Nat.floor (Real.exp v))) :=
+    (measurable_of_countable g).comp Real.continuous_exp.measurable.nat_floor
+  refine Measure.integrableOn_of_bounded (μ := volume) (M := M)
+    (by simp [Real.volume_Ioc]) hg.aestronglyMeasurable ?_
+  filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioc (a := a) (b := b))]
+    with v hv
+  have hvb := Nat.floor_mono (Real.exp_le_exp.mpr hv.2)
+  apply hM
+  exact Finset.mem_image.mpr ⟨_, Finset.mem_range.mpr (Nat.lt_succ_of_le hvb), rfl⟩
+
+private theorem eventually_canonical_log_transport :
+    ∃ K : ℝ, 0 ≤ K ∧ ∀ᶠ v : ℝ in atTop,
+      v * B (Real.exp v) ≤ v * robinLogMargin (canonicalRecord (Nat.floor (Real.exp v))) ∧
+      v * robinLogMargin (canonicalRecord (Nat.floor (Real.exp v))) ≤
+        v * B (Real.exp v) + K * Real.exp (-v / 2) := by
+  let C : ℝ := 2 * (2 * Real.sqrt 2 + 1)
+  refine ⟨4 * C, by dsimp [C]; positivity, ?_⟩
+  have hN : Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop := tendsto_natCast_atTop_atTop
+  have hfloor : Tendsto (fun v : ℝ => Nat.floor (Real.exp v)) atTop atTop :=
+    tendsto_nat_floor_atTop.comp Real.tendsto_exp_atTop
+  filter_upwards [hfloor.eventually (eventually_canonical_root_correction hN),
+    eventually_ge_atTop (2 : ℝ)] with v hcorr hv
+  let n := Nat.floor (Real.exp v)
+  let Δ := robinLogMargin (canonicalRecord n) - B (n : ℝ)
+  change 0 ≤ D (n : ℝ) * Δ ∧ D (n : ℝ) * Δ ≤ C at hcorr
+  have hv₀ : 0 ≤ v := by linarith only [hv]
+  have hhalf : Real.exp v / 2 ≤ (n : ℝ) := by
+    have hfloor' : Real.exp v < (n : ℝ) + 1 := Nat.lt_floor_add_one _
+    linarith only [hfloor', Real.add_one_le_exp v, hv]
+  have hn : 0 < (n : ℝ) := (by positivity : 0 < Real.exp v / 2).trans_le hhalf
+  have hsq : Real.exp (v / 2) ^ 2 = Real.exp v := by
+    rw [pow_two, ← Real.exp_add, show v / 2 + v / 2 = v by ring]
+  have hlog : v / 2 ≤ Real.log (n : ℝ) := by
+    have he : 2 ≤ Real.exp (v / 2) := by
+      linarith only [hv, Real.add_one_le_exp (v / 2)]
+    have h := mul_le_mul_of_nonneg_right he (Real.exp_pos (v / 2)).le
+    rw [← pow_two, hsq] at h
+    exact (Real.le_log_iff_exp_le hn).mpr (by linarith only [h, hhalf])
+  have hsqrt : Real.exp (v / 2) ≤ 2 * Real.sqrt (n : ℝ) := by
+    apply (sq_le_sq₀ (Real.exp_pos _).le (by positivity)).mp
+    rw [hsq, mul_pow, Real.sq_sqrt hn.le]
+    linarith only [hhalf, hn]
+  have hD : 0 < D (n : ℝ) :=
+    mul_pos (Real.sqrt_pos.mpr hn) (by linarith only [hlog, hv])
+  have hΔ : 0 ≤ Δ := (mul_nonneg_iff_of_pos_left hD).mp hcorr.1
+  have hscale : Real.exp (v / 2) * v ≤ 4 * D (n : ℝ) := calc
+    _ ≤ (2 * Real.sqrt (n : ℝ)) * (2 * Real.log (n : ℝ)) :=
+      mul_le_mul hsqrt (by linarith only [hlog]) hv₀ (by positivity)
+    _ = _ := by unfold D; ring
+  have herror : v * Δ ≤ 4 * C * Real.exp (-v / 2) := by
+    rw [show -v / 2 = -(v / 2) by ring, Real.exp_neg, ← div_eq_mul_inv]
+    apply (le_div_iff₀ (Real.exp_pos (v / 2))).mpr
+    calc
+      _ = (Real.exp (v / 2) * v) * Δ := by ring
+      _ ≤ (4 * D (n : ℝ)) * Δ := mul_le_mul_of_nonneg_right hscale hΔ
+      _ = 4 * (D (n : ℝ) * Δ) := by ring
+      _ ≤ _ := mul_le_mul_of_nonneg_left hcorr.2 (by norm_num)
+  have hnonneg := mul_nonneg hv₀ hΔ
+  dsimp only [Δ] at hnonneg herror
+  rw [B_eq_nat_floor (Real.exp v)]
+  change v * B (n : ℝ) ≤ v * robinLogMargin (canonicalRecord n) ∧
+    v * robinLogMargin (canonicalRecord n) ≤ v * B (n : ℝ) + 4 * C * Real.exp (-v / 2)
+  constructor <;> linarith only [hnonneg, herror]
+
+/-- A fixed positive log-window of the literal canonical Robin margins has an
+eventual lower bound at exponent α exactly when every actual nontrivial
+zero has real part at most 1 - α. -/
+theorem actual_canonical_log_window_lower_bound_iff {h α : ℝ} (hh : 0 < h)
+    (hα : 0 < α) (hαhalf : α ≤ 1 / 2) :
+    (∃ C : ℝ, 0 ≤ C ∧ ∃ T : ℝ, ∀ t : ℝ, T ≤ t →
+      -C ≤ Real.exp (α * t) * (∫ u in (0 : ℝ)..h, (t + u) *
+        robinLogMargin (strictInteger (firstLayerPrice ((Nat.floor (Real.exp (t + u)) : ℝ) + 1))))) ↔
+      ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re ≤ 1 - α := by
+  let m (v : ℝ) := v * robinLogMargin (canonicalRecord (Nat.floor (Real.exp v)))
+  change (∃ C : ℝ, 0 ≤ C ∧ ∃ T : ℝ, ∀ t : ℝ, T ≤ t →
+    -C ≤ Real.exp (α * t) * (∫ u in (0 : ℝ)..h, m (t + u))) ↔ _
+  have hend (t : ℝ) : t ≤ t + h := by linarith only [hh]
+  have hm (t : ℝ) : IntervalIntegrable m volume t (t + h) :=
+    (intervalIntegrable_nat_floor_exp (fun n => robinLogMargin (canonicalRecord n))
+      (hend t)).continuousOn_mul continuous_id.continuousOn
+  have hshift (t : ℝ) : (∫ u in (0 : ℝ)..h, m (t + u)) = ∫ v in t..t + h, m v := by
+    simpa only [add_zero] using intervalIntegral.integral_comp_add_left (a := 0) (b := h) m t
+  have hcancel (t : ℝ) : Real.exp (α * t) * Real.exp (-α * t) = 1 := by
+    rw [← Real.exp_add, show α * t + -α * t = 0 by ring, Real.exp_zero]
+  obtain ⟨K, hK, htransport⟩ := eventually_canonical_log_transport
+  constructor
+  · rintro ⟨C, _, T, hbound⟩ ρ hρ
+    by_contra! hbad
+    let θ (v : ℝ) := v * ActualThetaTailLaplace.f v
+    have hpoint : ∀ᶠ v : ℝ in atTop,
+        m v ≤ -θ v + (K + 8) * Real.exp (-v / 2) := by
+      filter_upwards [htransport, Real.tendsto_exp_atTop.eventually eventually_B_le_theta_tail,
+        eventually_ge_atTop (0 : ℝ)] with v hv hB hv₀
+      rw [← ActualThetaTailLaplace.tail_substitution v] at hB
+      have hsmall : 4 * v / Real.exp v ≤ 8 * Real.exp (-v / 2) := calc
+        _ ≤ (8 * Real.exp (v / 2)) / Real.exp v :=
+          div_le_div_of_nonneg_right (by linarith only [Real.add_one_le_exp (v / 2)])
+            (Real.exp_pos _).le
+        _ = _ := by
+          rw [mul_div_assoc, ← Real.exp_sub, show v / 2 - v = -v / 2 by ring]
+      have hupper : v * B (Real.exp v) ≤ -θ v + 8 * Real.exp (-v / 2) := calc
+        _ ≤ v * (-ActualThetaTailLaplace.f v + 4 / Real.exp v) :=
+          mul_le_mul_of_nonneg_left hB hv₀
+        _ = -θ v + 4 * v / Real.exp v := by dsimp [θ]; ring
+        _ ≤ _ := add_le_add le_rfl hsmall
+      calc
+        m v ≤ v * B (Real.exp v) + K * Real.exp (-v / 2) := hv.2
+        _ ≤ (-θ v + 8 * Real.exp (-v / 2)) + K * Real.exp (-v / 2) :=
+          add_le_add hupper le_rfl
+        _ = _ := by ring
+    obtain ⟨U, hU⟩ := eventually_atTop.mp hpoint
+    let L := max (max T U) (max 0 ActualThetaTailLaplace.u₀)
+    let A := h * (K + 8)
+    have hzero : riemannZeta ρ = 0 := by
+      simpa only [D5.S3.Weil.Convention.classicalZeta] using hρ.1
+    obtain ⟨t, ht, hpeak⟩ :=
+      D5.S3.Weil.Mertens.CriticalThetaTailPeak.actual_theta_tail_window_peak
+        (ρ := ρ) (σ := -α) (by linarith only [hbad, hαhalf]) hzero hh
+        (by linarith only [hbad]) (C + A) L
+    have htTU : max T U ≤ t := (le_max_left _ _).trans ht
+    have htT : T ≤ t := (le_max_left T U).trans htTU
+    have htU : U ≤ t := (le_max_right T U).trans htTU
+    have htL : max 0 ActualThetaTailLaplace.u₀ ≤ t := (le_max_right _ _).trans ht
+    have ht₀ : 0 ≤ t := (le_max_left _ _).trans htL
+    have htu : ActualThetaTailLaplace.u₀ ≤ t := (le_max_right _ _).trans htL
+    have hpeak' : (C + A) * Real.exp (-α * t) < ∫ v in t..t + h, θ v := by
+      rw [D5.S3.Analytic.Laplace.ForwardWindowLaplace.forwardWindow_eq_intervalIntegral
+        θ hh.le t, intervalIntegral.integral_comp_add_left, add_zero] at hpeak
+      exact hpeak
+    have hθ : IntervalIntegrable θ volume t (t + h) := by
+      have hf : IntervalIntegrable ActualThetaTailLaplace.f volume t (t + h) := by
+        rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (hend t)]
+        exact (ActualThetaTailLaplace.actual_theta_tail_laplace_ode.2.2.2.2.1).mono_set
+          (fun _ hv => htu.trans_lt hv.1)
+      exact hf.continuousOn_mul continuous_id.continuousOn
+    let E := (K + 8) * Real.exp (-α * t)
+    have hE : IntervalIntegrable (fun _ : ℝ => E) volume t (t + h) := intervalIntegrable_const
+    have hi := intervalIntegral.integral_mono_on (hend t) (hm t) (hθ.neg.add hE)
+      (fun v hv => (hU v (htU.trans hv.1)).trans (by
+        have he : Real.exp (-v / 2) ≤ Real.exp (-α * t) := by
+          apply Real.exp_le_exp.mpr
+          linarith only [hv.1, mul_le_mul_of_nonneg_right hαhalf ht₀]
+        change -θ v + (K + 8) * Real.exp (-v / 2) ≤ -θ v + E
+        exact add_le_add le_rfl
+          (mul_le_mul_of_nonneg_left he (by linarith only [hK]))))
+    rw [intervalIntegral.integral_add hθ.neg hE] at hi
+    change (∫ v in t..t + h, m v) ≤
+      (∫ v in t..t + h, -θ v) + (∫ _ in t..t + h, E) at hi
+    rw [intervalIntegral.integral_neg, intervalIntegral.integral_const, smul_eq_mul,
+      add_sub_cancel_left] at hi
+    have hscaled := mul_le_mul_of_nonneg_left hi (Real.exp_pos (α * t)).le
+    have herror : Real.exp (α * t) * (h * E) = A := calc
+      _ = A * (Real.exp (α * t) * Real.exp (-α * t)) := by dsimp [A, E]; ring
+      _ = _ := by rw [hcancel, mul_one]
+    rw [mul_add, mul_neg, herror] at hscaled
+    have hp := mul_lt_mul_of_pos_left hpeak' (Real.exp_pos (α * t))
+    rw [mul_left_comm (Real.exp (α * t)), hcancel, mul_one] at hp
+    have hlower := hbound t htT
+    rw [hshift] at hlower
+    linarith only [hlower, hscaled, hp]
+  · intro hstrip
+    obtain ⟨C, X, hC, _, hB⟩ := actual_B_critical_strip_envelope α hα hαhalf hstrip
+    have hpoint : ∀ᶠ v : ℝ in atTop, -C * Real.exp (-α * v) ≤ m v := by
+      filter_upwards [Real.tendsto_exp_atTop.eventually_ge_atTop X,
+        eventually_gt_atTop (0 : ℝ), htransport] with v hv hv₀ hc
+      have hraw := (abs_le.mp (hB (Real.exp v) hv)).1
+      rw [← neg_div, Real.rpow_eq_pow, ← Real.exp_mul, mul_comm v α, Real.log_exp] at hraw
+      have hw : 0 < Real.exp (α * v) * v := mul_pos (Real.exp_pos _) hv₀
+      have hscaled := (div_le_iff₀ hw).mp hraw
+      have hBlower : -C * Real.exp (-α * v) ≤ v * B (Real.exp v) := by
+        apply (mul_le_mul_iff_of_pos_left (Real.exp_pos (α * v))).mp
+        rw [mul_left_comm (Real.exp (α * v)), hcancel, mul_one]
+        calc
+          _ ≤ B (Real.exp v) * (Real.exp (α * v) * v) := hscaled
+          _ = _ := by ring
+      exact hBlower.trans hc.1
+    obtain ⟨T, hT⟩ := eventually_atTop.mp hpoint
+    refine ⟨h * C, mul_nonneg hh.le hC, T, fun t ht => ?_⟩
+    have hconst : IntervalIntegrable (fun _ : ℝ => -C * Real.exp (-α * t))
+        volume t (t + h) := intervalIntegrable_const
+    have hi := intervalIntegral.integral_mono_on (hend t) hconst (hm t) (fun v hv => by
+      have he : Real.exp (-α * v) ≤ Real.exp (-α * t) :=
+        Real.exp_le_exp.mpr (mul_le_mul_of_nonpos_left hv.1 (neg_nonpos.mpr hα.le))
+      exact (mul_le_mul_of_nonpos_left he (neg_nonpos.mpr hC)).trans (hT v (ht.trans hv.1)))
+    rw [intervalIntegral.integral_const, smul_eq_mul, add_sub_cancel_left] at hi
+    have hscaled := mul_le_mul_of_nonneg_left hi (Real.exp_pos (α * t)).le
+    have hnormalize : Real.exp (α * t) * (h * (-C * Real.exp (-α * t))) = -(h * C) := calc
+      _ = -(h * C) * (Real.exp (α * t) * Real.exp (-α * t)) := by ring
+      _ = _ := by rw [hcancel, mul_one]
+    rw [hnormalize] at hscaled
+    rw [hshift]
+    exact hscaled
 
 end D5.S3.Arith.Robin.PriceRecord.RobinVanishingRelativeGap
