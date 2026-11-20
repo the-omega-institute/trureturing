@@ -17,7 +17,7 @@ namespace D5.S3.TotalVariation.BooleanDeletionParity
 
 open D5.S3.TotalVariation.Pinsker (totalVariation)
 
-/-- When every one-coordinate marginal agrees, the signed mass difference
+/-- When the mass functions agree after deleting each single coordinate, their difference
 is the full parity character scaled by its sign-moment difference. -/
 theorem boolean_deletion_mass_difference {I : Type*} [Fintype I] [DecidableEq I]
     (μ ν : (I → Bool) → ℝ)
