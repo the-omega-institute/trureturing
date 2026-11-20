@@ -60,7 +60,7 @@ def assert_scoped_builds(text, *, binding=False, all_commands=False):
         r'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
     ):
         text = re.sub(reference, '', text)
-    commands = r'lean(?:-report(?:-scoped)?)?'
+    commands = r'lean(?:-report(?:-scoped|-prepare)?)?'
     if all_commands:
         commands += r'|test|gate'
     for match in re.finditer(r'\bmake\s+(' + commands + r')(?![\w-])', text):
@@ -95,7 +95,7 @@ def build_scope_regressions():
                  *(BUILD_SCOPE + '\n' + command for command in (
                      '`make lean`', '`make lean-report`', '`make test`',
                      '`make gate BASE=abc`', '`make lean LEAN_TARGETS=""`',
-                     '`make lean-report-scoped`',
+                     '`make lean-report-scoped`', '`make lean-report-prepare`',
                      '`make lean-report LEAN_TARGETS="D5.Sample"`'))):
         try:
             assert_scoped_builds(text, binding=True, all_commands=True)
@@ -328,6 +328,13 @@ def case(tool, variant=None):
             assert '#12349 10.1000/xyz.123\n' in compact, 'oracle brief drops a DOI'
             assert 'refute a synthetic conjecture' not in compact, 'oracle brief keeps a full title that names an identifier'
             assert '#12345 Preregister synthetic question' in compact, 'oracle brief drops an issue without an identifier'
+        if tool.stem == 'lane_brief':
+            brief = (root / 'scratch/briefs/impl-op-w1-sample.md').read_text()
+            step = brief.split('\n5. **Deposit**', 1)[1].split('\n6.', 1)[0]
+            recovery = step.split('ancestor`: ', 1)[1].split('late dedupe,', 1)
+            assert 'make lean-report-prepare LEAN_TARGETS="<the same list>"`/`make lean-report-scoped LEAN_TARGETS="<the same list>"' in recovery[0]
+            assert 'repeat this step’s deposit command with a freshly computed `B`' in recovery[1]
+            assert '`B="$(git merge-base HEAD origin/dev)"' in step and 'BASE="$B"' in step
         if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
             path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
                     'rework-sample.md' if tool.stem == 'rework_brief' else
@@ -337,7 +344,8 @@ def case(tool, variant=None):
             assert_dtr_source(text)
             if tool.stem in ('gen_stage_briefs', 'stages'):
                 stage_a = (root / 'scratch/briefs/impl-op-w1-sample.stageA.md').read_text()
-                assert_scoped_builds(stage_a)
+                assert_scoped_builds(stage_a, binding=True)
+                assert stage_a.index('make lean-report-prepare LEAN_TARGETS=') < stage_a.index('## Steps')
             if tool.stem == 'implb_head':
                 from common import BUILD_SCOPE
                 assert BUILD_SCOPE + '\n\n- **SDK host.**' in text

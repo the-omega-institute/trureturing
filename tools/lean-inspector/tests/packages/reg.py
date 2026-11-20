@@ -28,9 +28,13 @@ class NativeRegSupport:
         return result
 
     def build_reg_report(self, success=True):
-        return self.run_lake('-d', str(self.root / 'tools/lean-inspector-reg'), 'build', ':report',
-                             'trureturing/Audit', 'leanInspector/reportInspector',
-                             'regInspector/LeanInformationAuditRegTests', success=success)
+        workspace = 'tools/lean-inspector-reg'
+        prepared = self.prepare_report_modules(workspace=workspace,
+            targets=('trureturing/Audit', 'regInspector/LeanInformationAuditRegTests'), success=None)
+        if prepared.returncode:
+            self.assertFalse(success, prepared.stdout + prepared.stderr)
+            return prepared
+        return self.run_lake('-d', workspace, 'build', ':report', success=success)
 
 
 class NativeRegTests(NativeRegSupport):
@@ -90,6 +94,7 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.assertFalse(any(r['module'].startswith('Reg.') for r in self.report()[0]))
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Contract.Core\n'
                    'def registrationValue := value\n')
+        self.prepare_report_modules('Reg.Support.Entry', workspace='tools/lean-inspector-reg')
         result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=self.root, env=self.env, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         published = json.loads((self.root / '.lake/build/stratalint/raw-lean-report.json').read_text())

@@ -190,16 +190,7 @@ class NativeBatchCompatibilityConsumerTests:
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.ensure()
         self.restore_compiler()
-        if not getattr(self, 'capacity_compiler_prepared', False):
-            # Keep cold compiler preparation separate from the rejection under
-            # test. Both commands retain the fixture's existing 120s guard.
-            prepared = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@leanInspector/reportInspector'],
-                env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1', LEAN_NUM_THREADS='1'))
-            self.record_result('capacity-compiler', dict(exit=prepared.returncode,
-                stdout=prepared.stdout, stderr=prepared.stderr))
-            self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
-            self.capacity_compiler_prepared = True
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
         result = self.guarded_command(['make', 'lean-report',
             'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build', 'REGENERATE_REPORT_ARTIFACTS=1'],
             env=dict(self.env, STRATALINT_NATIVE_BATCH_MODULES=str(size),
@@ -311,6 +302,7 @@ class NativeBatchCapacityConsumerTests:
             self.record_result(label, dict(selected_modules=sorted(names), native_calls=evidence), paths)
             return [len(row['modules']) for row in evidence]
 
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
         entry('default', '100')
         self.assertEqual(captures('default-captures', 100), [4])
         baseline = self.report()
@@ -328,8 +320,16 @@ class NativeBatchCapacityConsumerTests:
         self.assertIn('STRATALINT_NATIVE_BATCH_MODULES requires', invalid.stdout + invalid.stderr)
         self.record_result('direct-warm-invalid', dict(command=runtime, batch_modules='0', exit=invalid.returncode))
 
+        # Remove the local material but retain Lake's valid, precompiled artifact.
+        compiler_input = self.root / '.lake/build/lib/lean/ClaimSupport.olean'
+        original_olean = compiler_input.read_bytes()
+        compiler_input.unlink()
         entry('small', '2', regenerate=True)
         self.assertEqual(captures('small-captures', 2), [2, 2])
+        self.assertEqual(compiler_input.read_bytes(), original_olean)
+        report_logs = ''.join((logs / ('report.' + stream + '.log')).read_text()
+                              for stream in ('stdout', 'stderr'))
+        self.assertNotRegex(report_logs, r'Built (?:trureturing/)?ClaimSupport(?:[ (:]|$)')
         self.assertEqual(self.report(), baseline)
         self.assertEqual(sorted(row['module'] for row in baseline[0]), ['D5.A', 'D5.Alone', 'D5.B', 'Fixture'])
         self.record_result('equivalent', dict(report_sha256=hashlib.sha256(baseline[1]).hexdigest(),
@@ -357,8 +357,8 @@ class NativeBatchCapacityConsumerTests:
         self.assertIn('Audit.lean', result.stdout + result.stderr)
         self.record_result('required-audit-failure', dict(exit=result.returncode))
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
-        result = entry('kernel-failure', '2', success=False)
-        self.assertIn('D5/A.lean', result.stdout + result.stderr)
+        result = entry('kernel-failure', '2', regenerate=True, success=False)
+        self.assertIn('D5.A', result.stdout + result.stderr)
 
 
 class NativeRecoveryConsumerTests:
@@ -425,6 +425,7 @@ class NativeRecoveryConsumerTests:
         changed.write_text(changed.read_text() + '-- changed committed input\n')
         self.run_lake('--no-build', 'build', 'D5.Alone:report', success=False)
         self.write('activity.jsonl', '')
+        self.prepare_report_modules('D5.Alone')
         self.run_lake('build', 'D5.Alone:report')
         activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), 1)
@@ -563,6 +564,7 @@ class NativeModuleFacetTests:
         before = self.stamps()
         source.write_text(source.read_text() + '-- public module facet miss\n')
         self.write('activity.jsonl', '')
+        self.prepare_report_modules('D5.Alone')
         self.run_lake('build', 'D5.Alone:report')
         self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.Alone'})
         self.assertEqual([json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()],
@@ -573,6 +575,7 @@ class NativeModuleFacetTests:
             with self.subTest(targets=targets):
                 source.write_text(source.read_text() + f'-- shared miss {index}\n')
                 self.write('activity.jsonl', '')
+                self.prepare_report_modules('D5.Alone')
                 self.run_lake('build', *targets)
                 records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
                 self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)
@@ -587,6 +590,7 @@ class NativeModuleFacetTests:
             'def produce_batch(requests):',
             'def produce_batch(requests):\n    raise ValueError("required fixture producer failure")'))
         source.write_text(source.read_text() + '-- require module production\n')
+        self.prepare_report_modules('D5.Alone')
         result = self.run_lake('build', 'D5.Alone:report', success=False)
         self.assertIn('required fixture producer failure', result.stdout + result.stderr)
         source.write_text(source.read_text() + '-- require a new native artifact\n')

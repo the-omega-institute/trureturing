@@ -91,6 +91,25 @@ def check_scope(repository, scope, roots=None):
     return selection
 
 
+def preparation_targets(scope):
+    roots = scope['roots']
+    # Lake builds imports transitively. Keep external utility roots even when
+    # they are absent from the requested modules' import closures.
+    dependencies = scope['dependencies']
+    imported = {name for row in dependencies for name in row['imports']}
+    names = {row['module'] for row in dependencies}
+    # A bare Lake target can name an entire library with the same name.
+    targets = {'+' + name for name in (names - imported) | set(roots)}
+    # These tools are possible runtime inputs only for scopes importing
+    # their contract types. The extractor checks the actual compiled types.
+    if 'LeanInformationAuditInterface.Contract.AuricFib' in names:
+        targets.add('regInspector/auricFibAnalysis')
+    if names.intersection({'LeanInformationAuditInterface.Contract.Catalog',
+                           'LeanInformationAuditInterface.Contract.Registration'}):
+        targets.add('+LeanInformationAudit.TemplateEnrollment')
+    return sorted(targets)
+
+
 def selected_utilities(scope, utilities):
     paths = {row['source_path'] for row in scope['modules']}
     return sorted((entry for entry in utilities if entry['modulePath'] in paths),
@@ -193,33 +212,28 @@ class Entry:
         return out
 
     def provision(self):
-        if self.producer:
-            if not Path(self.producer).is_absolute() or not Path(self.producer).is_file():
-                raise ValueError('candidate Lean producer must be an existing absolute path')
-        else:
-            output = self.phase('producer-build', ['dotnet', 'build',
-                str(self.root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'), '--configuration', 'Release',
-                '--nologo', '--verbosity', 'quiet', '-t:Build', '-getProperty:TargetPath'])
-            self.producer = output.read_text().splitlines()[-1]
-            if not Path(self.producer).is_absolute() or not Path(self.producer).is_file():
-                raise ValueError('producer build reported no existing absolute DLL')
+        workspace_producer = self.root / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'
+        self.producer = self.producer or str(workspace_producer)
+        if not Path(self.producer).is_absolute() or not Path(self.producer).is_file():
+            raise ValueError(f'missing prebuilt producer {self.producer}; run make lean-report-prepare '
+                             'with the selected LEAN_TARGETS first')
+        if workspace_producer.exists() and workspace_producer.samefile(self.producer):
+            self.phase('producer-check', [sys.executable, '-B', str(Path(native.__file__)),
+                                          'check-workspace-producer', str(self.root)])
         self.environment['STRATALINT_LEAN_PRODUCER_DLL'] = self.producer
-        if not self.lake:
-            path = self.temporary / 'toolchain-path'
-            self.phase('toolchain', ['/bin/bash', str(self.root / 'tools/scripts/workflow/install-lean-toolchain.sh'),
-                str(self.root / 'lean-toolchain'), '--github-path', str(path)])
-            self.lake = str(Path(path.read_text().strip()) / 'lake')
-        if not Path(self.lake).is_absolute() or not os.access(self.lake, os.X_OK):
-            raise ValueError('an absolute executable lake path is required (LAKE_BIN)')
+        if not self.lake or not Path(self.lake).is_absolute() or not os.access(self.lake, os.X_OK):
+            raise ValueError('an installed Lake toolchain is required (LAKE_BIN)')
         self.environment['LAKE_BIN'] = self.lake
 
-    def guarded(self, *arguments):
-        # Scope discovery and report production each admit/provision their cache
-        # through this guard; standalone ensure also requests archive refresh.
-        return ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'),
-                self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
+    def lake_workspace(self, *arguments):
+        return [self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
 
-    def discover(self, roots):
+    def guarded(self, *arguments):
+        # Use the existing writer lock without provisioning compiler inputs.
+        return ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'), '--prebuilt',
+                *self.lake_workspace(*arguments)]
+
+    def discover(self, roots, *, writer_owned=False):
         inputs = public.selection.Selection(self.root)
         inputs.validate('lean-report')
         if not set(roots) <= inputs.modules().keys():
@@ -248,7 +262,8 @@ class Entry:
         request, output = self.temporary / 'scope-request.json', self.temporary / 'selected-modules.json'
         request.write_bytes(materials.canonical_json(dict(roots=roots, modules=sorted(inputs.modules()),
             utilities=utilities, utility_inputs=utility_inputs)))
-        self.phase('scope', self.guarded('script', 'run', 'leanInspector/reportScope', str(request), str(output)))
+        workspace = self.lake_workspace if writer_owned else self.guarded
+        self.phase('scope', workspace('script', 'run', 'leanInspector/reportScope', str(request), str(output)))
         scope = public.read_json(output.read_bytes())
         check_scope(self.root, scope, roots)
         self.environment['STRATALINT_INSPECTOR_SCOPE_FILE'] = str(output)
@@ -304,16 +319,20 @@ def produce(entry, output, scope, utilities):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('produce', 'verify'))
+    parser.add_argument('command', choices=('targets', 'produce', 'verify'))
     parser.add_argument('--repository', type=Path, required=True)
-    parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--report', type=Path)
     parser.add_argument('--targets', required=True)
     parser.add_argument('--log-dir', type=Path)
     args = parser.parse_args()
     root = args.repository.resolve()
     roots = parse_targets(args.targets)
-    output = args.report if args.report.is_absolute() else root / args.report
-    check_destination(root, output)
+    output = None
+    if args.command != 'targets':
+        if args.report is None:
+            parser.error('--report is required to produce or verify a report')
+        output = root / args.report
+        check_destination(root, output)
     # Input failures precede cache admission, output-directory creation and any report seal.
     inputs = public.selection.Selection(root)
     inputs.validate('lean-report')
@@ -321,7 +340,7 @@ def main():
         raise ValueError('scoped roots must be registered report modules')
     if args.command == 'verify':
         public._require_bundle_files(output)
-    else:
+    elif args.command == 'produce':
         public.member(output, '.input.attestation').unlink(missing_ok=True)
     with tempfile.TemporaryDirectory(prefix='stratalint-scoped-report.') as directory:
         temporary = Path(directory)
@@ -329,10 +348,11 @@ def main():
         startup_logs.mkdir()
         entry = Entry(root, temporary, startup_logs)
         entry.provision()
-        # Cache admission may replace .lake, including the default log directory.
-        # Keep discovery logs outside that projection until admission completes.
+        # Keep scope discovery logs separate from publication and verification.
         scope, utilities = entry.discover(roots)
-        if args.command == 'verify':
+        if args.command == 'targets':
+            print(' '.join(preparation_targets(scope)))
+        elif args.command == 'verify':
             validate_bundle(output, root, scope, utilities=utilities)
             print('SCOPED_LEAN_REPORT_VERIFIED path=' + str(output))
         else:

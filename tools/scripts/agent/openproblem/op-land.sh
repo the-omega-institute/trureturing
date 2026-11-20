@@ -36,8 +36,16 @@ git merge-base --is-ancestor origin/dev HEAD \
   && echo "BASE_IS_ANCESTOR=yes" \
   || { echo "BASE_IS_ANCESTOR=no"; exit 4; }
 
-make lean-report-scoped "LEAN_TARGETS=${MOD//\//.}" > /tmp/op-land-report-$$.log 2>&1
-echo "LEAN_REPORT_EXIT=$?"
+targets="LEAN_TARGETS=${MOD//\//.}"
+report_log="/tmp/op-land-report-$$.log"
+make lean-report-prepare "$targets" > "$report_log" 2>&1 &&
+  make lean-report-scoped "$targets" >> "$report_log" 2>&1
+report_status=$?
+echo "LEAN_REPORT_EXIT=$report_status"
+if [[ "$report_status" != 0 ]]; then
+  tail -20 "$report_log"
+  exit "$report_status"
+fi
 ls -la "$REPORT" | cut -c1-120
 
 dotnet run --project "$PROJECT" --configuration Release -- \

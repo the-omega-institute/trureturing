@@ -10,7 +10,7 @@ complete seed with the current report format before allowing that entry;
 malformed authored registration remains an error.
 """
 import argparse
-from contextlib import nullcontext
+from contextlib import contextmanager, nullcontext
 import json
 import os
 from pathlib import Path
@@ -31,6 +31,7 @@ BASE_SCHEMA = 'stratalint-lean-report-seed-base-v2'
 BASE_RECORD = '.lake/lean-report-seed-base.json'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
+CHECKED = [*COMPLETED, 'fib-inputs-checked']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
                 zipfile.BadZipFile, zlib.error, NotImplementedError, subprocess.CalledProcessError)
 if zipfile.lzma is not None:
@@ -70,6 +71,20 @@ def warn_mismatch(result, stream):
         print('WARNING ' + message, file=stream, flush=True)
 
 
+def receipt_covers_dependencies(selection):
+    dependency_paths = selection.data.get('dependency_sources')
+    if dependency_paths is None:
+        return True
+    # Compare registrations, so deleting the last member of an optional glob
+    # cannot make an old receipt suddenly look sufficient.
+    covered = set()
+    for group in ('report_modules', 'config_inputs'):
+        paths = selection.data[group]
+        if set(paths['exclude']).issubset(dependency_paths['exclude']):
+            covered.update(item['pattern'] for item in paths['include'])
+    return all(item['pattern'] in covered for item in dependency_paths['include'])
+
+
 def capture(repository):
     """Hash only the manifest's complete declared input population."""
     inputs = publication.selection.Selection(repository)
@@ -97,11 +112,14 @@ def capture(repository):
         # differ between checkouts of one commit and do not change report bytes.
         mode = 0o755 if source.stat().st_mode & 0o100 else 0o644
         files[path] = dict(sha256=publication.digest(source), mode=mode)
-    return dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
+    snapshot = dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
         files=files,
         execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
                        platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
+    if receipt_covers_dependencies(inputs):
+        snapshot['covers_compiler_dependencies'] = True
+    return snapshot
 
 
 def bundle_hashes(report):
@@ -109,15 +127,15 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
-def read_receipt(report, captured):
+def read_receipt(report, captured=None):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
     receipt = publication.read_json(path.read_bytes())
     materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-    if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+    if receipt['schema'] != SCHEMA or receipt['completed'] not in (COMPLETED, CHECKED):
         raise ValueError('reuse receipt lacks complete entry success')
-    if receipt['inputs'] != captured:
+    if captured is not None and receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
         raise ValueError('reuse receipt bundle mismatch')
@@ -133,11 +151,13 @@ def miss(reason, error=None):
     return result
 
 
-def probe(repository, report):
+def probe(repository, report, *, require_covered_dependencies=False):
     """Select optional downloads; only the normal entry validates publication."""
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
+    if require_covered_dependencies and not captured.get('covers_compiler_dependencies'):
+        return miss('compiler-dependencies-require-lake')
     try:
         read_receipt(report, captured)
     except INVALID_SEED as error:
@@ -145,9 +165,9 @@ def probe(repository, report):
     return dict(needs_lake=False, reason='receipt-matched')
 
 
-def write_receipt(report, captured):
+def write_receipt(report, captured, *, checked=False):
     path = publication.member(report, SUFFIX)
-    record = dict(schema=SCHEMA, completed=COMPLETED, inputs=captured, bundle=bundle_hashes(report))
+    record = dict(schema=SCHEMA, completed=CHECKED if checked else COMPLETED, inputs=captured, bundle=bundle_hashes(report))
     # Never write through cache hard links or leave a partially written receipt.
     fd, temporary = tempfile.mkstemp(prefix='.report-reuse.', dir=path.parent)
     try:
@@ -267,7 +287,7 @@ def seal(repository, report, captured, produced_sha256):
         _seal(repository, report, captured, produced_sha256)
 
 
-def _seal(repository, report, captured, produced_sha256):
+def _seal(repository, report, captured, produced_sha256, *, checked=False, reused=False, seed_commit=None):
     """Seal within the canonical writer's existing exclusive section."""
     if produced_sha256 is None or publication.bundle_identity(report) != produced_sha256:
         raise ValueError('published report generation changed before seal')
@@ -279,8 +299,8 @@ def _seal(repository, report, captured, produced_sha256):
         raise ValueError('registered inputs changed during report entry')
     if not captured['eligible']:
         return
-    write_receipt(report, captured)
-    if canonical and not record_seed_base(repository):
+    write_receipt(report, captured, checked=checked)
+    if canonical and (not reused or seed_commit is not None) and not record_seed_base(repository, seed_commit):
         invalidate_seed_base(repository)
 
 
@@ -317,7 +337,7 @@ def _reuse(repository, report, output):
                 raise ValueError('reuse receipt changed during publication')
         if capture(repository) != captured:
             raise ValueError('registered inputs changed during reuse')
-        write_receipt(output, captured)
+        write_receipt(output, captured, checked=receipt['completed'] == CHECKED)
         if canonical and base is not None and not record_seed_base(repository, base):
             invalidate_seed_base(repository)
     except INVALID_SEED as error:
@@ -348,10 +368,13 @@ def seed_format(report):
             raise ValueError('missing reuse receipt')
         receipt = publication.read_json(path.read_bytes())
         materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
-        if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+        if receipt['schema'] != SCHEMA or receipt['completed'] not in (COMPLETED, CHECKED):
             raise ValueError('reuse receipt lacks complete entry success')
-        inputs = materials.require_keys(receipt['inputs'],
-            {'eligible', 'report_format', 'files', 'execution'}, 'reuse inputs')
+        inputs = receipt['inputs']
+        fields = {'eligible', 'report_format', 'files', 'execution'}
+        if isinstance(inputs, dict) and inputs.get('covers_compiler_dependencies') is True:
+            fields.add('covers_compiler_dependencies')
+        inputs = materials.require_keys(inputs, fields, 'reuse inputs')
         if (inputs['eligible'] is not True or not isinstance(inputs['files'], dict)
                 or 'lean-toolchain' not in inputs['files']):
             raise ValueError('incomplete reuse inputs')
@@ -536,8 +559,9 @@ def refresh_stale_seed(repository):
     return 0
 
 
-def recover_and_reuse(repository, report, output):
-    """Restore and consume a checked seed under the existing private-cache lock."""
+@contextmanager
+def compatible_seed(repository, report):
+    """Select and check a required seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
     from lean_cache_release import cache_guard, checkout_topology, warm_dev_remediation
     # Authored registration failures must precede optional network recovery.
@@ -551,9 +575,10 @@ def recover_and_reuse(repository, report, output):
     remediation = None
     if linked:
         warm_report = ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                       'make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
+                       'make warm-donor FULL_BUILD=1 && make lean-report-prepare FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
                        '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
                        if main_checkout is None else warm_dev_remediation(main_checkout)
+                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report-prepare FULL_BUILD=1'
                        + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report FULL_BUILD=1'
                        + '; then reseed from the warm main checkout: rm -rf -- ')
         remediation = (warm_report
@@ -587,14 +612,19 @@ def recover_and_reuse(repository, report, output):
                     raise CacheIncompatible(local['report_format'], checked['report_format'],
                                             'seed-unavailable-after-refresh')
             # Input differences select Lake's incremental path, not a new cache key.
-            return _reuse(repository, report, output)
+            yield report
     except BlockingIOError as error:
         raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy', remediation) from error
 
 
+def recover_and_reuse(repository, report, output):
+    with compatible_seed(repository, report) as seed:
+        return _reuse(repository, seed, output)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'prepare', 'seal',
+    parser.add_argument('command', choices=('probe', 'reuse', 'require-compatible', 'capture', 'prepare', 'seal',
                                            'refresh-stale-seed'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
@@ -617,6 +647,10 @@ def main():
         parser.error('--bundle-sha256 must be the produced bundle identity')
     if args.command == 'refresh-stale-seed':
         return refresh_stale_seed(args.repository)
+    if args.command == 'require-compatible':
+        with compatible_seed(args.repository, args.report) as seed:
+            print('LEAN_REPORT_SEED path=' + str(seed))
+        return 0
     if args.command == 'capture':
         captured = capture(args.repository)
         args.snapshot.write_bytes(materials.canonical_json(captured))

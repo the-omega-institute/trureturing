@@ -46,7 +46,7 @@ def observations(logs, phases):
         path = logs / 'native-phases.jsonl'
         if 'report' in phases and not path.is_file():
             raise ValueError('missing native phase activity')
-        for line in path.read_text().splitlines() if path.exists() else ():
+        for line in path.read_text().splitlines() if 'report' in phases else ():
             row = json.loads(line)
             boundary = row['boundary']
             if boundary not in ('duration', 'start', 'finish'):
