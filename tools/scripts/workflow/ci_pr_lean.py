@@ -68,8 +68,13 @@ def check(paths):
             roots = directory / "roots"
             write_paths(roots, [name.replace(".", "/") + ".lean" for name in targets])
             write_paths(manifest, selected_paths)
+            scribe_environment = os.environ.copy()
+            if ("DOTNET_GCConserveMemory" not in scribe_environment
+                    and "COMPlus_GCConserveMemory" not in scribe_environment):
+                scribe_environment["DOTNET_GCConserveMemory"] = "9"
             subprocess.run([*SCRIBE, "content-check", "--scoped", "--report", str(report),
-                            "--targets-from", str(roots), "--paths-from", str(manifest)], check=True)
+                            "--targets-from", str(roots), "--paths-from", str(manifest)],
+                           env=scribe_environment, check=True)
     return 0
 
 
