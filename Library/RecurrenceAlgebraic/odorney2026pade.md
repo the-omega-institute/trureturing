@@ -23,7 +23,7 @@ URL: https://arxiv.org/pdf/2611.01029v1#page=16
 Section 4.2, p. 16, contains Exercise 4.6, equation (4.2), and Conjecture 4.7.
 The SHA-256 of the v1 PDF is
 `2d5c69837f39f5cab35d284f96e463a3f30eb06b12c2bbeb4fbb80b4c221170d`.
-Exercise 4.1 appears on p. 15.
+Lemma 2.1, equation (2.7), appears on p. 6. Exercise 4.1 appears on p. 15.
 
 ## Statement and counterexample
 
@@ -44,7 +44,20 @@ indices to be positive.
 At $a=b=3$, $k=5$, and $i=4$, the determinant is the coefficient of $X^4$ in
 $(X^2-3X-3)^3(X-\alpha)^2$. This coefficient is
 $-54-54\alpha+18\alpha^2=18(\alpha^2-3\alpha-3)=0$ at the specified root.
-The tuple also has $a>0$, $4^2<D=21<5^2$, and $b\mid a^2$ as in Exercise 4.1.
-The determinant calculation leaves the existence of a patch-junction
-decomposition for this tuple, the subdomain $b=\pm1$, and the separate
-$\Delta$ determinant in Conjecture 4.5 open here.
+
+The tuple has $a>0$, positive nonsquare $D=21$, and $b\mid a^2$.
+The Toeplitz determinants from Lemma 2.1 for $k=5$ and $i=0,\ldots,5$
+are $(1,171,1296,1701,-189,1)$ at $(a,b)=(3,3)$. They are all nonzero,
+so Exercise 4.1(b) gives an eventual patch-junction decomposition of the
+fifth powers of consecutive ratios for the recurrence with $u_0=0$,
+$u_1=1$, and $u_{n+2}=3u_{n+1}+3u_n$. Exercise 4.6 then gives
+$J_{4,n}=\varnothing$ and $P_{3,n}=P_{4,n}$ after renormalization for
+all sufficiently large $n$.
+[Lemma 2.1, p. 6](https://arxiv.org/pdf/2611.01029v1#page=6) · [Exercise 4.1(b), p. 15](https://arxiv.org/pdf/2611.01029v1#page=15) · [Exercise 4.6, p. 16](https://arxiv.org/pdf/2611.01029v1#page=16)
+
+Lean certifies the $\Upsilon$ determinant refutation. The cited exercises
+and exact $\Delta$ calculation supply the continued-fraction consequence.
+Explicit patch and junction words and period values for the witness,
+vanishing at other indices with $b=\pm1$, a general classification of
+invisible junctions, and the global $\Delta$ question of Conjecture 4.5
+remain open here.

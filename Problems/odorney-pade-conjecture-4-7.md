@@ -26,8 +26,8 @@ with entry $\beta_{i+c-r}$ at zero-based row $r$ and column $c$.
 
 The determinant detects extra contact at one basepoint in a two-point
 Padé approximation. Exercise 4.6 relates its zero to an empty junction
-and equal adjacent patches when the patch-junction decomposition admits
-the stated renormalization.
+and equal adjacent patches after renormalizing an existing patch-junction
+decomposition.
 
 ## Gap
 
@@ -76,9 +76,34 @@ The paper reports a search for additional invisible junctions through
 $k\le20$. The calculation here covers the specified index pair.
 [Source search and verification criteria](https://github.com/the-omega-institute/trureturing/issues/31986)
 
+For the witness $(a,b,k)=(3,3,5)$, multiply the descending coefficient
+vector of $h^i$ by convolution with $(1,-3,-3)$ to get the vector for
+$h^{i+1}$. With zero extension, Lemma 2.1, equation (2.7), takes
+$\Delta_{5,i}$ to be the $(5-i)$-square determinant with entry
+$c_{i+c-r}$ at zero-based row $r$ and column $c$, where
+$c_j=[X^{2i-j}]h^i$. Exact evaluation gives
+$(\Delta_{5,0},\ldots,\Delta_{5,5})(3,3)=(1,171,1296,1701,-189,1)$.
+[Lemma 2.1, p. 6](https://arxiv.org/pdf/2611.01029v1#page=6)
+
+For $u_0=0$, $u_1=1$, and $u_{n+2}=3u_{n+1}+3u_n$, the conditions
+$a=3>0$, $D=21$ positive and nonsquare, $3\mid9$, and all six
+$\Delta_{5,i}(3,3)\ne0$ give the hypotheses of Exercise 4.1(b).
+The exercise gives a patch-junction decomposition of $(u_{n+1}/u_n)^5$
+for all sufficiently large $n$. Its words depend on residue classes
+of $n$, its patch repetition counts are linear within the stated residue
+classes, and its partial quotients remain bounded as $n$ grows.
+In this decomposition, Exercise 4.6 applies to $\Upsilon_{5,4}(\alpha)=0$
+and gives $J_{4,n}=\varnothing$ and $P_{3,n}=P_{4,n}$ after
+renormalization for all such $n$. Its converse gives determinant zero
+if the empty junction and equal adjacent patches occur for some $n$.
+These continued-fraction conclusions use the paper's exercises and the
+exact computation above. Lean certifies the $\Upsilon$ counterexample.
+[Exercise 4.1(b), p. 15](https://arxiv.org/pdf/2611.01029v1#page=15) · [Exercise 4.6, p. 16](https://arxiv.org/pdf/2611.01029v1#page=16)
+
 ## ASSUMED-UNVERIFIED
 
-Open here are the actual patch-junction decomposition for the witness,
-vanishing at other indices in the $b=\pm1$ subdomain, and the separate
-$\Delta$ problem of Conjecture 4.5. The bounded literature screen recorded
-in the preregistration establishes the scope checked for earlier settlements.
+Open here are explicit patch and junction words and period values for the
+witness, a general classification of invisible junctions, vanishing at other
+indices in the $b=\pm1$ subdomain, and the global $\Delta$ question behind
+Conjecture 4.5. The bounded literature screen recorded in the preregistration
+establishes the scope checked for earlier settlements.

@@ -53,9 +53,15 @@ internal sealed class ODorneyPadeJunctionRefutationDocument : IScribeDocumentDef
                         + "the coefficient of X⁴. The conclusion would force k=4, "
                         + "whereas this determinant has k=5.")),
                     Paragraph(Text(
-                        "This resolves the determinant implication. The existence and "
-                        + "classification of invisible junctions in actual continued-fraction "
-                        + "decompositions are separate questions."))),
+                        "Lean certifies the determinant refutation. For this witness, the six "
+                        + "Toeplitz determinants Δ₅,ᵢ from Lemma 2.1 are 1, 171, 1296, 1701, −189, "
+                        + "and 1 in index order. Since a > 0, D = 21 is nonsquare, 3 divides 9, "
+                        + "and all six determinants are nonzero, Exercise 4.1(b) gives an eventual "
+                        + "patch-junction decomposition of the fifth powers of consecutive ratios "
+                        + "in the recurrence with a = b = 3, u₀ = 0 and u₁ = 1. Exercise 4.6 "
+                        + "gives an empty fourth junction and equal adjacent patches after "
+                        + "renormalization for all sufficiently large n. The words, period values "
+                        + "and general classification remain open here."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("odorney-pade-conjecture-4-7"),
                     ResolutionKind.Refuted))),
