@@ -1,14 +1,14 @@
-/- GID: D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics
+/- GID: D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics
+   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact positively expansive dynamics on the original finite closed-edge realization. -/
 
 import D5.S1.Dynamics.Shadowing.ExactExpansiveConjugacy
-import D5.S1.Dynamics.Shadowing.FiniteGraphExactDynamics
-import D5.S1.Dynamics.Shadowing.TripleEdgeSubdivisionRealization
+import D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteGraphExactDynamics
+import D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivisionRealization
 
 /-! Three-segment subdivision permits the edge-walk construction on graphs with loops
 and parallel edges. The subdivision homeomorphism transports both the edge-walk map
@@ -21,7 +21,9 @@ open Function Set
 open D5.S3.ConceptDynamics.Coding.EssentialWordRealization (DirectedMultigraph)
 open D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivision (Flag endpoint step graph connected leafless_iff)
 
-namespace D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics
+open D5.S1.Dynamics.Shadowing
+
+namespace D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteMultigraphExactDynamics
 
 open TripleEdgeSubdivisionRealization (realization subdivisionHomeomorph)
 
@@ -99,7 +101,7 @@ theorem exists_exact_finitelyPositiveExpansive_iff (M : DirectedMultigraph V E)
     exact (Set.encard_mono hsubset).trans_eq (Set.encard_singleton x)
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics.exists_exact_positivelyExpansive' depends on axioms: [propext,
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteMultigraphExactDynamics.exists_exact_positivelyExpansive' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 -/
@@ -107,7 +109,7 @@ info: 'D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics.exists_exact_posit
 #print axioms exists_exact_positivelyExpansive
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics.not_finitelyPositiveExpansive_of_one_incident_flag' depends on axioms: [propext,
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteMultigraphExactDynamics.not_finitelyPositiveExpansive_of_one_incident_flag' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 -/
@@ -115,11 +117,11 @@ info: 'D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics.not_finitelyPositi
 #print axioms not_finitelyPositiveExpansive_of_one_incident_flag
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics.exists_exact_finitelyPositiveExpansive_iff' depends on axioms: [propext,
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteMultigraphExactDynamics.exists_exact_finitelyPositiveExpansive_iff' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 -/
 #guard_msgs in
 #print axioms exists_exact_finitelyPositiveExpansive_iff
 
-end D5.S1.Dynamics.Shadowing.FiniteMultigraphExactDynamics
+end D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteMultigraphExactDynamics
