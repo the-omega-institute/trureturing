@@ -69,7 +69,7 @@ lemma exists_normalized_embedding {M : Type*} (C : TernaryComparison M)
 
 /-- The image of a map that sends `o` to one and the transfer to `x * y⁻¹ * z` is a subgroup:
 products and inverses of images are images of `tri x o y` and `tri o x o`. -/
-private def rangeSubgroup {M : Type*} (C : TernaryComparison M) (v : M → unitary ℍ[ℝ])
+def rangeSubgroup {M : Type*} (C : TernaryComparison M) (v : M → unitary ℍ[ℝ])
     (o : M) (hvo : v o = 1) (htri : ∀ x y z : M, v (C.tri x y z) = v x * (v y)⁻¹ * v z) :
     Subgroup (unitary ℍ[ℝ]) where
   carrier := Set.range v

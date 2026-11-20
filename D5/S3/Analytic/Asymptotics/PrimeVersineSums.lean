@@ -4,32 +4,30 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Prime versine sums: thresholds 1/2 and 1/4 and the constant on sigma = 1/2. -/
+   digest: Prime versine sums: thresholds 1/2 and 1/4, explicit tail on sigma = 1/2. -/
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.NumberTheory.SumPrimeReciprocals
 import Mathlib.Analysis.PSeries
-import D5.S3.Weil.Mertens.Third
 
 /-! # Versine sums over the primes
 
-For `σ > 0` and a prime `p` put `t = p ^ (-σ)`, so `0 < t ≤ 1`. The versine `1 - cos t` lies
+For `σ ≥ 0` and a prime `p` put `t = p ^ (-σ)`, so `0 < t ≤ 1`. The versine `1 - cos t` lies
 between `t ^ 2 / 2 - 5 t ^ 4 / 96` and `t ^ 2 / 2`, and its fourth-order defect
 `cos t - (1 - t ^ 2 / 2)` lies between `t ^ 4 / 30` and `5 t ^ 4 / 96`. Comparison with
 `∑ p ^ r`, which converges over the primes exactly when `r < -1`, gives the two thresholds:
 `∑ (1 - cos p ^ (-σ))` converges exactly when `σ > 1 / 2`, and
 `∑ (1 - cos p ^ (-σ) - p ^ (-2σ) / 2)` converges exactly when `σ > 1 / 4`; for `σ ≤ 1 / 4` its
-partial sums tend to `-∞`. On the line `σ = 1 / 2` the partial sums equal
-`(log log x) / 2` plus an explicit constant built from Mertens' constant, up to half the error
-of Mertens' second theorem and a tail of size `O (1 / x)`, hence up to `O (1 / log x)`.
+partial sums tend to `-∞`. On the line `σ = 1 / 2` the gap
+`∑_{p ≤ x} 1 / (2 p) - ∑_{p ≤ x} (1 - cos p ^ (-1/2))` lies within `5 / (48 (⌊x⌋ + 1))` below
+its limit `∑_p (1 / (2 p) - (1 - cos p ^ (-1/2)))`, for every real `x`.
 -/
 
-open Real Filter Asymptotics Finset Topology
+open Real Filter Finset Topology
 
 namespace D5.S3.Analytic.Asymptotics.PrimeVersineSums
 
-/-- `∑_{p ≤ x} (1 - cos p ^ (-σ))` over primes `p`, with the summation range of the Mertens
-error `Mertens.E₂p`. -/
+/-- `∑_{p ≤ x} (1 - cos p ^ (-σ))` over primes `p`, summed over `p ∈ (0, ⌊x⌋]`. -/
 noncomputable def primeVersineSum (σ x : ℝ) : ℝ :=
   ∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, (1 - Real.cos ((p : ℝ) ^ (-σ)))
 
@@ -122,13 +120,13 @@ private lemma tendsto_sum_primes_atTop {f : ℕ → ℝ} (hf : ∀ p : ℕ, p.Pr
   rw [sum_primes_eq_sum_range]
 
 /-- If the defect series converges over primes, then `1 / 4 < σ`. -/
-private lemma quarter_lt_of_summable {σ : ℝ} (hσ : 0 < σ)
+private lemma quarter_lt_of_summable {σ : ℝ} (hσ : 0 ≤ σ)
     (h : Summable (fun p : Nat.Primes =>
       Real.cos ((p : ℝ) ^ (-σ)) - (1 - ((p : ℝ) ^ (-σ)) ^ 2 / 2))) : 1 / 4 < σ := by
   have hs : Summable (fun p : Nat.Primes => (p : ℝ) ^ (-(4 * σ))) := by
     refine Summable.of_nonneg_of_le (fun p => Real.rpow_nonneg (Nat.cast_nonneg _) _)
       (fun p => ?_) (h.mul_left 30)
-    have hq := quartic_le_defect (abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ.le)
+    have hq := quartic_le_defect (abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ)
     rw [rpow_neg_pow] at hq
     push_cast at hq
     linarith
@@ -183,24 +181,26 @@ private lemma primeDefect_tail (N : ℕ) :
     nlinarith
   linarith
 
-/-- For `σ > 0`: the versine series over primes converges exactly when `σ > 1 / 2`; the series of
+/-- For `σ ≥ 0`: the versine series over primes converges exactly when `σ > 1 / 2`; the series of
 `1 - cos p ^ (-σ) - p ^ (-2σ) / 2` converges exactly when `σ > 1 / 4`; for `σ ≤ 1 / 4` the partial
-sums of the latter tend to `-∞`; and on `σ = 1 / 2` the partial sums of the versine equal
-`(log log x) / 2 + M / 2 + ∑_p (1 - cos p ^ (-1/2) - 1 / (2 p))` up to `O (1 / log x)`, where `M` is
-Mertens' constant. -/
+sums of the latter tend to `-∞`; and for every real `x` the partial sum over `p ≤ x` of
+`δ p = 1 / (2 p) - (1 - cos p ^ (-1/2))` lies between `∑_p δ p - 5 / (48 (⌊x⌋ + 1))` and
+`∑_p δ p`. -/
 theorem prime_versine_phases :
-    (∀ σ : ℝ, 0 < σ →
+    (∀ σ : ℝ, 0 ≤ σ →
       (Summable (fun p : Nat.Primes => 1 - Real.cos ((p : ℝ) ^ (-σ))) ↔ 1 / 2 < σ)) ∧
-    (∀ σ : ℝ, 0 < σ →
+    (∀ σ : ℝ, 0 ≤ σ →
       (Summable (fun p : Nat.Primes => 1 - Real.cos ((p : ℝ) ^ (-σ)) - (p : ℝ) ^ (-(2 * σ)) / 2) ↔
         1 / 4 < σ)) ∧
-    (∀ σ : ℝ, 0 < σ → σ ≤ 1 / 4 →
+    (∀ σ : ℝ, 0 ≤ σ → σ ≤ 1 / 4 →
       Tendsto (fun x : ℝ => primeVersineSum σ x -
         ∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, (p : ℝ) ^ (-(2 * σ)) / 2) atTop atBot) ∧
-    (fun x : ℝ => primeVersineSum (1 / 2) x - Real.log (Real.log x) / 2 -
-        (Mertens.M / 2 + ∑' p : Nat.Primes,
-          (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - 1 / (2 * (p : ℝ)))))
-      =O[atTop] (fun x : ℝ => 1 / Real.log x) := by
+    ∀ x : ℝ,
+      (∑' p : Nat.Primes, (1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ)))))) -
+          5 / (48 * ((⌊x⌋₊ : ℝ) + 1)) ≤
+        (∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, 1 / (2 * (p : ℝ))) - primeVersineSum (1 / 2) x ∧
+      (∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, 1 / (2 * (p : ℝ))) - primeVersineSum (1 / 2) x ≤
+        ∑' p : Nat.Primes, (1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))))) := by
   -- the summand of the second series is minus the fourth-order defect
   have hterm : ∀ (n : ℕ) (σ : ℝ), 1 - Real.cos ((n : ℝ) ^ (-σ)) - (n : ℝ) ^ (-(2 * σ)) / 2 =
       -(Real.cos ((n : ℝ) ^ (-σ)) - (1 - ((n : ℝ) ^ (-σ)) ^ 2 / 2)) := by
@@ -212,7 +212,7 @@ theorem prime_versine_phases :
     have hs : Summable (fun p : Nat.Primes => (p : ℝ) ^ (-(2 * σ))) := by
       refine Summable.of_nonneg_of_le (fun p => Real.rpow_nonneg (Nat.cast_nonneg _) _)
         (fun p => ?_) (h.mul_left (96 / 43))
-      have ht := abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ.le
+      have ht := abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ
       have hb := Real.cos_bound ht
       have h2 := rpow_neg_pow p 2 σ
       have h4 : ((p : ℝ) ^ (-σ)) ^ 4 ≤ ((p : ℝ) ^ (-σ)) ^ 2 := by
@@ -243,7 +243,7 @@ theorem prime_versine_phases :
     refine Summable.of_norm_bounded
       ((Nat.Primes.summable_rpow.mpr (by linarith : -(4 * σ) < -1)).mul_left (5 / 96))
       (fun p => ?_)
-    have ht := abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ.le
+    have ht := abs_rpow_neg_le_one (n := p) p.prop.one_lt.le hσ
     have hb := Real.cos_bound ht
     rw [hterm, norm_neg, Real.norm_eq_abs]
     have h4 := rpow_neg_pow p 4 σ
@@ -262,49 +262,30 @@ theorem prime_versine_phases :
     rw [← Finset.sum_sub_distrib, ← Finset.sum_neg_distrib]
     exact Finset.sum_congr rfl (fun n _ => (hterm n σ).symm)
   · -- conjunct 4
-    set T : ℝ → ℝ := fun x => ∑' n, primeDefect n - ∑ n ∈ range (⌊x⌋₊ + 1), primeDefect n with hT
+    intro x
     have hsq : ∀ n : ℕ, ((n : ℝ) ^ (-(1 / 2 : ℝ))) ^ 2 = (n : ℝ)⁻¹ := by
       intro n
       have he : -(((2 : ℕ) : ℝ) * (1 / 2)) = -1 := by push_cast; ring
       rw [rpow_neg_pow, he, Real.rpow_neg_one]
     have htsum : ∑' p : Nat.Primes,
-        (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - 1 / (2 * (p : ℝ))) = -∑' n, primeDefect n := by
-      have h1 : ∀ p : Nat.Primes, 1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - 1 / (2 * (p : ℝ)) =
-          -(Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - (1 - ((p : ℝ) ^ (-(1 / 2 : ℝ))) ^ 2 / 2)) := by
+        (1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))))) =
+          ∑' n, primeDefect n := by
+      have h1 : ∀ p : Nat.Primes, 1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ)))) =
+          Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - (1 - ((p : ℝ) ^ (-(1 / 2 : ℝ))) ^ 2 / 2) := by
         intro p; rw [hsq]; ring
       simp_rw [h1]
-      rw [tsum_neg]
-      congr 1
       exact tsum_subtype {p : ℕ | p.Prime} (fun m : ℕ =>
         Real.cos ((m : ℝ) ^ (-(1 / 2 : ℝ))) - (1 - ((m : ℝ) ^ (-(1 / 2 : ℝ))) ^ 2 / 2))
-    have hid : ∀ x : ℝ, primeVersineSum (1 / 2) x - Real.log (Real.log x) / 2 -
-        (Mertens.M / 2 + ∑' p : Nat.Primes,
-          (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ))) - 1 / (2 * (p : ℝ)))) =
-        1 / 2 * Mertens.E₂p x + T x := by
-      intro x
-      have hsplit : primeVersineSum (1 / 2) x =
-          1 / 2 * (∑ p ∈ Ioc 0 ⌊x⌋₊ with p.Prime, (1 : ℝ) / p) -
-            ∑ n ∈ range (⌊x⌋₊ + 1), primeDefect n := by
-        unfold primeVersineSum primeDefect
-        rw [← sum_primes_eq_sum_range, Finset.mul_sum, ← Finset.sum_sub_distrib]
-        refine Finset.sum_congr rfl (fun n _ => ?_)
-        rw [hsq]; ring
-      rw [htsum, hsplit, hT]
-      simp only [Mertens.E₂p]
-      ring
-    have hTO : T =O[atTop] (fun x : ℝ => 1 / Real.log x) := by
-      refine IsBigO.of_bound (5 / 48) ((eventually_ge_atTop (2 : ℝ)).mono (fun x hx => ?_))
-      obtain ⟨h0, h1⟩ := primeDefect_tail ⌊x⌋₊
-      have hlog : 0 < Real.log x := Real.log_pos (by linarith)
-      have hfl : x < (⌊x⌋₊ : ℝ) + 1 := Nat.lt_floor_add_one x
-      have hlx : Real.log x ≤ x - 1 := Real.log_le_sub_one_of_pos (by linarith)
-      have hinv : 1 / ((⌊x⌋₊ : ℝ) + 1) ≤ 1 / Real.log x :=
-        one_div_le_one_div_of_le hlog (by linarith)
-      rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg h0,
-        abs_of_pos (one_div_pos.mpr hlog)]
-      calc T x ≤ 5 / 48 / ((⌊x⌋₊ : ℝ) + 1) := h1
-        _ = 5 / 48 * (1 / ((⌊x⌋₊ : ℝ) + 1)) := by ring
-        _ ≤ 5 / 48 * (1 / Real.log x) := by gcongr
-    exact ((Mertens.E₂p.bound.const_mul_left (1 / 2)).add hTO).congr_left (fun x => (hid x).symm)
+    have hpart : (∑ p ∈ Ioc 0 ⌊x⌋₊ with p.Prime, 1 / (2 * (p : ℝ))) -
+        primeVersineSum (1 / 2) x = ∑ n ∈ range (⌊x⌋₊ + 1), primeDefect n := by
+      unfold primeVersineSum primeDefect
+      rw [← sum_primes_eq_sum_range, ← Finset.sum_sub_distrib]
+      refine Finset.sum_congr rfl (fun n _ => ?_)
+      rw [hsq]; ring
+    obtain ⟨h0, h1⟩ := primeDefect_tail ⌊x⌋₊
+    have hc : (5 : ℝ) / (48 * ((⌊x⌋₊ : ℝ) + 1)) = 5 / 48 / ((⌊x⌋₊ : ℝ) + 1) := by
+      rw [div_div]
+    rw [htsum, hpart, hc]
+    constructor <;> linarith
 
 end D5.S3.Analytic.Asymptotics.PrimeVersineSums

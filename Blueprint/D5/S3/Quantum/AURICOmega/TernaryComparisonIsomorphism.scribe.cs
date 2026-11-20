@@ -28,6 +28,11 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
                     + "Then there is an injective map v from M into the unit quaternions with v(o) = 1 that carries the transfer to v(tri(C, x, y, z)) = v(x) * v(y)^-1 * v(z) and preserves the reading, kappa(C, x, y) = kappa(quaternionModel, v(x), v(y)). "
                     + "The feature-rank embedding gives an injective map w with the same transfer law and with kappa(C, x, y) = (1 + <w(x), w(y)>) / 2. "
                     + "The map v(x) = w(o)^-1 * w(x) is injective and sends o to 1; the transfer law follows from the group identity (w(o)^-1 * p) * (w(o)^-1 * q)^-1 * (w(o)^-1 * r) = w(o)^-1 * (p * q^-1 * r), and the reading is preserved because left multiplication by a unit quaternion preserves the real inner product."),
+            Node("range-subgroup", "rangeSubgroup", "The image as a subgroup",
+                StatementSource.WithoutFormula(), DescribeRole.Definition,
+                "Let C be a ternary comparison structure on M, o a point of M and v a map from M into the unit quaternions with v(o) = 1 and v(tri(C, x, y, z)) = v(x) * v(y)^-1 * v(z) for all x, y and z. "
+                    + "The image of v is then a subgroup of the unit quaternions: it contains v(o) = 1, the product v(x) * v(y) is the image v(tri(C, x, o, y)), and the inverse of v(x) is the image v(tri(C, o, x, o)). "
+                    + "This definition records the image of v with that subgroup structure."),
             Node("closed-range", "isClosed_range", "Under a complete reading the image is closed",
                 StatementSource.FromAuthor(ClosedRangeFormula()), DescribeRole.Lemma,
                 "Let C be a ternary comparison structure on M with complete reading and let v be a map from M into the unit quaternions with kappa(C, x, y) = kappa(quaternionModel, v(x), v(y)) for all x and y. "

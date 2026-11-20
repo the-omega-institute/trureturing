@@ -84,8 +84,8 @@ private theorem trace_mul_adjugate (r s : EuclideanSpace ℝ (Fin 3)) :
       (((1 - ⟪r, s⟫_ℝ) / 2 : ℝ) : ℂ) := by
   rw [real_inner_comm, EuclideanSpace.inner_eq_star_dotProduct]
   apply Complex.ext <;>
-    simp [blochMatrix, Matrix.adjugate_fin_two, Matrix.trace_fin_two, Matrix.mul_apply,
-      Fin.sum_univ_two, dotProduct, Fin.sum_univ_three] <;> ring
+    simp [blochMatrix, Matrix.adjugate_fin_two, Matrix.trace_fin_two, dotProduct,
+      Fin.sum_univ_three] <;> ring
 
 /-- Covariance of the polarized determinant: `tr (X adj Y)` is multiplied by `|det g|²` under
 `X ↦ g X gᴴ`, `Y ↦ g Y gᴴ`. -/
@@ -115,7 +115,7 @@ private theorem blochMatrix_sq (a δ : ℝ) (r : EuclideanSpace ℝ (Fin 3)) (h�
     blochMatrix (a + 2 * δ) r * blochMatrix (a + 2 * δ) r =
       (((a + 2 * δ) : ℝ) : ℂ) • blochMatrix a r := by
   rw [EuclideanSpace.real_norm_sq_eq] at hδ
-  simp only [Fin.sum_univ_three, Real.norm_eq_abs, sq_abs] at hδ
+  simp only [Fin.sum_univ_three] at hδ
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [blochMatrix, Matrix.mul_apply, Fin.sum_univ_two] <;>

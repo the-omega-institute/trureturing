@@ -20,8 +20,10 @@ The fixed point `θ ∈ (0, 1)` of the cosine and its uniqueness among positive 
 solution. Two cosine steps map every real number into `[cos 1, 1]`, the cosine maps this interval
 into itself, and on `[0, 1]` it is Lipschitz with constant `sin 1 < 1` by
 `cos u - cos v = -2 sin ((u + v) / 2) sin ((u - v) / 2)`. This gives the geometric error bound and
-convergence. The derivative of the cosine at `θ` is `-sin θ`, which is the limit of the ratio of
-consecutive errors along an orbit avoiding `θ`. -/
+convergence. Since `θ < 3 / 4` and `cos 1 ≥ 1 / 2`, every point of `[cos 1, 1]` lies within
+`1 - θ` of `θ`, which is the constant of the bound; it is attained at `n = 0` for `x = π / 2`,
+whose second iterate is `1`. The derivative of the cosine at `θ` is `-sin θ`, which is the limit
+of the ratio of consecutive errors along an orbit avoiding `θ`. -/
 
 open Filter Topology
 
@@ -83,13 +85,31 @@ private lemma iterate_mem_and_le {θ y : ℝ} (hθ : θ ∈ Set.Icc (Real.cos 1)
         · exact ih.2
       _ = Real.sin 1 ^ (n + 1) * |y - θ| := by ring
 
+/-- A fixed point `θ ≤ 1` of the cosine satisfies `θ < 3 / 4`. -/
+private lemma fixed_lt {θ : ℝ} (hθ : θ ∈ Set.Icc (Real.cos 1) 1) (hc : Real.cos θ = θ) :
+    θ < 3 / 4 := by
+  by_contra h
+  have hb := Real.cos_bound (x := 3 / 4) (by norm_num [abs_of_pos])
+  have hle : Real.cos θ ≤ Real.cos (3 / 4) :=
+    Real.cos_le_cos_of_nonneg_of_le_pi (by norm_num) (by linarith [hθ.2, Real.pi_gt_three])
+      (not_lt.mp h)
+  rw [abs_le] at hb
+  norm_num [abs_of_pos] at hb
+  linarith [hb.2]
+
+/-- `cos 1 ≥ 1 / 2`. -/
+private lemma half_le_cos_one : (1 / 2 : ℝ) ≤ Real.cos 1 := by
+  have := Real.one_sub_sq_div_two_le_cos (x := 1)
+  norm_num at this
+  linarith
+
 /-- The conclusions of `cos_iterate_tendsto` for any fixed point `θ` of the cosine that is the
 only positive one. -/
 private lemma iterate_of_fixed (θ : ℝ) (hc : Real.cos θ = θ)
     (hu : ∀ t : ℝ, 0 < t → Real.cos t = t → t = θ) :
     (∀ t : ℝ, Real.cos t = t ↔ t = θ) ∧
       ∀ x : ℝ, Tendsto (fun n : ℕ => Real.cos^[n] x) atTop (𝓝 θ) ∧
-        (∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - Real.cos 1)) ∧
+        (∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - θ)) ∧
         ((∀ n : ℕ, Real.cos^[n] x ≠ θ) →
           Tendsto (fun n : ℕ => (Real.cos^[n + 1] x - θ) / (Real.cos^[n] x - θ)) atTop
             (𝓝 (-Real.sin θ))) := by
@@ -107,7 +127,7 @@ private lemma iterate_of_fixed (θ : ℝ) (hc : Real.cos θ = θ)
   have hx2 : Real.cos^[2] x ∈ Set.Icc (Real.cos 1) 1 := by
     rw [Function.iterate_succ_apply', Function.iterate_one]
     exact cos_mem_Icc ⟨Real.neg_one_le_cos x, Real.cos_le_one x⟩
-  have hrate : ∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - Real.cos 1) := by
+  have hrate : ∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - θ) := by
     intro n
     rw [Function.iterate_add_apply]
     refine (iterate_mem_and_le hθ hc hx2 n).2.trans ?_
@@ -115,14 +135,14 @@ private lemma iterate_of_fixed (θ : ℝ) (hc : Real.cos θ = θ)
     · exact pow_nonneg (Real.sin_nonneg_of_nonneg_of_le_pi zero_le_one
         (by linarith [Real.pi_gt_three])) n
     · rw [abs_sub_le_iff]
-      constructor <;> linarith [hx2.1, hx2.2, hθ.1, hθ.2]
+      constructor <;> linarith [hx2.1, hx2.2, hθ.1, hθ.2, fixed_lt hθ hc, half_le_cos_one]
   have hconv : Tendsto (fun n : ℕ => Real.cos^[n] x) atTop (𝓝 θ) := by
     refine (tendsto_add_atTop_iff_nat 2).mp ?_
     rw [tendsto_iff_norm_sub_tendsto_zero]
-    have hs : Tendsto (fun n : ℕ => Real.sin 1 ^ n * (1 - Real.cos 1)) atTop (𝓝 0) := by
+    have hs : Tendsto (fun n : ℕ => Real.sin 1 ^ n * (1 - θ)) atTop (𝓝 0) := by
       have := (tendsto_pow_atTop_nhds_zero_of_lt_one
         (Real.sin_nonneg_of_nonneg_of_le_pi zero_le_one (by linarith [Real.pi_gt_three]))
-        (by simpa using Real.sin_lt one_pos)).mul_const (1 - Real.cos 1)
+        (by simpa using Real.sin_lt one_pos)).mul_const (1 - θ)
       simpa using this
     exact squeeze_zero (fun n => norm_nonneg _) (fun n => by
       rw [Real.norm_eq_abs]; exact hrate n) hs
@@ -135,12 +155,12 @@ private lemma iterate_of_fixed (θ : ℝ) (hc : Real.cos θ = θ)
 
 /-- The equation `cos t = t` has exactly one real solution `θ`, which lies in `(0, 1)`; the cosine
 iteration converges to `θ` from every real starting point, from the second iterate on at the
-uniform geometric rate `sin 1`; and if the orbit never hits `θ`, the ratio of consecutive errors
-tends to `-sin θ`. -/
+uniform geometric rate `sin 1` with constant `1 - θ`; and if the orbit never hits `θ`, the ratio
+of consecutive errors tends to `-sin θ`. -/
 theorem cos_iterate_tendsto :
     ∃ θ : ℝ, 0 < θ ∧ θ < 1 ∧ (∀ t : ℝ, Real.cos t = t ↔ t = θ) ∧
       ∀ x : ℝ, Tendsto (fun n : ℕ => Real.cos^[n] x) atTop (𝓝 θ) ∧
-        (∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - Real.cos 1)) ∧
+        (∀ n : ℕ, |Real.cos^[n + 2] x - θ| ≤ Real.sin 1 ^ n * (1 - θ)) ∧
         ((∀ n : ℕ, Real.cos^[n] x ≠ θ) →
           Tendsto (fun n : ℕ => (Real.cos^[n + 1] x - θ) / (Real.cos^[n] x - θ)) atTop
             (𝓝 (-Real.sin θ))) := by

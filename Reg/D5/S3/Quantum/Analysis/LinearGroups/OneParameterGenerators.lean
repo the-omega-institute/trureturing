@@ -5,7 +5,7 @@ import Mathlib.Analysis.Quaternion
 
 /-! Source-bound audits of the one-parameter generators of a locally compact group injecting
 continuously into the units of a real Banach algebra: real multiples, the escape lemma,
-closedness of the generator set, sums and commutators. -/
+sums and commutators. -/
 
 namespace Reg.D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators
 
@@ -18,7 +18,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
 noncomputable section
-universe u v
+universe u v w
 
 /-! ## Models -/
 
@@ -55,10 +55,6 @@ theorem eq_zero_of_trivial {A : Type u} [NormedRing A] [NormedAlgebra ℝ A] [Co
 theorem zero_generator {A : Type u} [NormedRing A] [NormedAlgebra ℝ A] {G : Type v}
     [TopologicalSpace G] [Group G] (ρ : G →* Aˣ) : IsOneParameterGenerator ρ (0 : A) :=
   ⟨fun _ => 1, continuous_const, fun t => by simp⟩
-
-/-- In the trivial model the generators are exactly `0`. -/
-theorem generator_iff (X : Line.{u}) : IsOneParameterGenerator (triv.{u, v} Line.{u}) X ↔ X = 0 :=
-  ⟨eq_zero_of_trivial, fun h => h ▸ zero_generator _⟩
 
 /-- In the trivial model the element `1` is not a generator. -/
 theorem not_generator_one : ¬ IsOneParameterGenerator (triv.{u, v} Line.{u}) 1 := fun h =>
@@ -175,8 +171,8 @@ def smul_registration :
 namespace Escape
 
 abbrev signature : Signature where
-  Params := Σ A : Type u, Σ _ : NormedRing A, Σ _ : NormedAlgebra ℝ A, ℕ → A
-  State _ := ℕ
+  Params := Σ A : Type u, Σ _ : NormedRing A, Σ _ : NormedAlgebra ℝ A, Σ ι : Type w, ι → A
+  State p := p.2.2.2.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -184,51 +180,53 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u, w} :=
   realize signature
-    (fun _ p k => letI := p.2.1; letI := p.2.2.1; ‖p.2.2.2 k‖⁻¹ • p.2.2.2 k)
+    (fun _ p i => letI := p.2.1; letI := p.2.2.1; ‖p.2.2.2.2 i‖⁻¹ • p.2.2.2.2 i)
     (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u, w} :=
   realize signature (fun _ p _ => letI := p.2.1; 1) (fun e => nomatch e)
 
-/-- Retain the complete algebra, group, homomorphism, sequence, cluster-point and conclusion
-telescope of `isOneParameterGenerator_of_mapClusterPt`. -/
+/-- Retain the complete algebra, group, homomorphism, filter, family, cluster-point and
+conclusion telescope of `isOneParameterGenerator_of_mapClusterPt`. -/
 abbrev arena : Arena where
-  signature := signature.{u}
+  signature := signature.{u, w}
   Law r := ∀ {A : Type u} [iR : NormedRing A] [iA : NormedAlgebra ℝ A] {G : Type v}
     [TopologicalSpace G] [Group G] [CompleteSpace A] [IsTopologicalGroup G]
     [LocallyCompactSpace G] (ρ : G →* Aˣ), Continuous ρ → Function.Injective ρ →
-    ∀ {g : ℕ → G}, Tendsto g atTop (𝓝 1) → ∀ {Y : ℕ → A}, Tendsto Y atTop (𝓝 0) →
-    (∀ k, ((ρ (g k) : Aˣ) : A) = NormedSpace.exp (Y k)) → ∀ {X : A},
-    MapClusterPt X atTop (fun k => r.readout () ⟨A, iR, iA, Y⟩ k) →
+    ∀ {ι : Type w} {l : Filter ι} {g : ι → G}, Tendsto g l (𝓝 1) → ∀ {Y : ι → A},
+    Tendsto Y l (𝓝 0) → (∀ᶠ i in l, ((ρ (g i) : Aˣ) : A) = NormedSpace.exp (Y i)) →
+    ∀ {X : A}, MapClusterPt X l (fun i => r.readout () ⟨A, iR, iA, ι, Y⟩ i) →
     IsOneParameterGenerator ρ X
 
-/-- If every direction were read as `1`, the constant sequences `g = 1`, `Y = 0` of the
-trivial group would make `1` a generator. -/
-theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
+/-- If every direction were read as `1`, the constant families `g = 1`, `Y = 0` along the
+filter at infinity of the trivial group would make `1` a generator. -/
+theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
   refine not_generator_one.{u, v} (h (A := Line.{u}) (triv.{u, v} Line.{u})
-    (triv_continuous _) (triv_injective _) (g := fun _ => 1) tendsto_const_nhds
-    (Y := fun _ => 0) tendsto_const_nhds (fun _ => by simp) (X := 1) ?_)
+    (triv_continuous _) (triv_injective _) (ι := ULift.{w} ℕ) (l := atTop) (g := fun _ => 1)
+    tendsto_const_nhds (Y := fun _ => 0) tendsto_const_nhds
+    (Eventually.of_forall fun _ => by simp) (X := 1) ?_)
   exact (tendsto_const_nhds (x := (1 : Line.{u}))).mapClusterPt
 
-/-- For the sequence `Y k = k` in the real line the directions at `0` and `1` differ. -/
-theorem dependence : ObservationalDependence signature.{u} actual := by
+/-- For the family `Y k = k` in the real line the directions at `0` and `1` differ. -/
+theorem dependence : ObservationalDependence signature.{u, w} actual := by
   intro i
   cases i
-  refine ⟨⟨Line.{u}, inferInstance, inferInstance, fun k => (k : Line.{u})⟩, 0, 1, ?_⟩
+  refine ⟨⟨Line.{u}, inferInstance, inferInstance, ULift.{w} ℕ, fun k => (k.down : Line.{u})⟩,
+    ⟨0⟩, ⟨1⟩, ?_⟩
   change ‖((0 : ℕ) : Line.{u})‖⁻¹ • ((0 : ℕ) : Line.{u}) ≠
     ‖((1 : ℕ) : Line.{u})‖⁻¹ • ((1 : ℕ) : Line.{u})
   simp
 
 /-- The exact statement of the source theorem. -/
-abbrev sourceStatement : Prop := type_of% @isOneParameterGenerator_of_mapClusterPt.{u, v}
+abbrev sourceStatement : Prop := type_of% @isOneParameterGenerator_of_mapClusterPt.{u, v, w}
 
-def source_registration : Registration arena.{u, v} sourceStatement.{u, v} where
+def source_registration : Registration arena.{u, v, w} sourceStatement.{u, v, w} where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@isOneParameterGenerator_of_mapClusterPt.{u, v}, rejected, rejected_law⟩
+  variation := ⟨@isOneParameterGenerator_of_mapClusterPt.{u, v, w}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -241,21 +239,21 @@ end Escape
 
 def isOneParameterGenerator_of_mapClusterPt_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@isOneParameterGenerator_of_mapClusterPt.{u, v}) (Realization Escape.signature.{u})
+      (@isOneParameterGenerator_of_mapClusterPt.{u, v, w}) (Realization Escape.signature.{u, w})
       Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators.isOneParameterGenerator_of_mapClusterPt_unit
   realizationName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators.Escape.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨Escape.arena.{u, v}⟩
-  objectArena := .source ⟨Escape.arena.{u, v}⟩
+  arena := .source ⟨Escape.arena.{u, v, w}⟩
+  objectArena := .source ⟨Escape.arena.{u, v, w}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Escape.arena.{u, v} ⟨Escape.source_registration.{u, v}⟩
+  realization := .source Escape.arena.{u, v, w} ⟨Escape.source_registration.{u, v, w}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Escape.signature.{u}
-    (fun _ p k => letI := p.2.1; letI := p.2.2.1; ‖p.2.2.2 k‖⁻¹ • p.2.2.2 k)
+  readout := some (realize Escape.signature.{u, w}
+    (fun _ p i => letI := p.2.1; letI := p.2.2.1; ‖p.2.2.2.2 i‖⁻¹ • p.2.2.2.2 i)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -264,121 +262,14 @@ def isOneParameterGenerator_of_mapClusterPt_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators
     definition := none
-    coordinates := #[0, 14]
+    coordinates := #[0, 12, 16]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg", "body"]
-      stateBinder := 18
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain",
+        "arg", "body"]
+      stateBinder := 20
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-/-! ## `isClosed_setOf_isOneParameterGenerator`: the generator set read from its predicate -/
-namespace Closed
-
-abbrev signature : Signature where
-  Params := Σ A : Type u, Σ _ : NormedRing A, Σ _ : NormedAlgebra ℝ A, Σ G : Type v,
-    Σ _ : TopologicalSpace G, Σ _ : Group G, G →* Aˣ
-  State p := p.1 → Prop
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ p := Set p.1
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature.{u, v} :=
-  realize signature (fun _ _ s => Set.ofPred s) (fun e => nomatch e)
-
-def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ _ s => (Set.ofPred s)ᶜ) (fun e => nomatch e)
-
-/-- Retain the complete algebra, group and homomorphism telescope of
-`isClosed_setOf_isOneParameterGenerator`. -/
-abbrev arena : Arena where
-  signature := signature.{u, v}
-  Law r := ∀ {A : Type u} [iR : NormedRing A] [iA : NormedAlgebra ℝ A] {G : Type v}
-    [iT : TopologicalSpace G] [iG : Group G] [CompleteSpace A] [IsTopologicalGroup G]
-    [LocallyCompactSpace G] {ρ : G →* Aˣ}, Continuous ρ → Function.Injective ρ →
-    IsClosed (r.readout () ⟨A, iR, iA, G, iT, iG, ρ⟩ (fun X => IsOneParameterGenerator ρ X))
-
-/-- If the set were read as the complement of the generators, the trivial group would make
-the complement of `{0}` closed in the real line, so `{0}` would be open. -/
-theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
-  intro h
-  have hcl := h (A := Line.{u}) (ρ := triv.{u, v} Line.{u}) (triv_continuous _)
-    (triv_injective _)
-  have hset : (Set.ofPred fun X : Line.{u} =>
-      IsOneParameterGenerator (triv.{u, v} Line.{u}) X)ᶜ = ({0}ᶜ : Set Line.{u}) := by
-    ext X
-    simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
-    exact not_congr (generator_iff.{u, v} X)
-  change IsClosed (Set.ofPred fun X : Line.{u} =>
-      IsOneParameterGenerator (triv.{u, v} Line.{u}) X)ᶜ at hcl
-  rw [hset, isClosed_compl_iff] at hcl
-  exact not_isOpen_singleton _ hcl
-
-/-- The always-true and always-false predicates on the real line give different sets. -/
-theorem dependence : ObservationalDependence signature.{u, v} actual := by
-  intro i
-  cases i
-  refine ⟨⟨Line.{u}, inferInstance, inferInstance, Pt.{v}, inferInstance, inferInstance,
-    triv.{u, v} Line.{u}⟩, fun _ => True, fun _ => False, ?_⟩
-  intro h
-  have := congrArg (fun S : Set Line.{u} => (0 : Line.{u}) ∈ S) h
-  simp [actual, realize] at this
-
-/-- The exact statement of the source theorem. -/
-abbrev sourceStatement : Prop := type_of% @isClosed_setOf_isOneParameterGenerator.{u, v}
-
-def source_registration : Registration arena.{u, v} sourceStatement.{u, v} where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@isClosed_setOf_isOneParameterGenerator.{u, v}, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
-    · intro e
-      exact nomatch e
-  dependence := dependence
-
-end Closed
-
-def isClosed_setOf_isOneParameterGenerator_registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@isClosed_setOf_isOneParameterGenerator.{u, v}) (Realization Closed.signature.{u, v})
-      Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators.isClosed_setOf_isOneParameterGenerator_unit
-  realizationName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators.Closed.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Closed.arena.{u, v}⟩
-  objectArena := .source ⟨Closed.arena.{u, v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Closed.arena.{u, v} ⟨Closed.source_registration.{u, v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Closed.signature.{u, v} (fun _ _ s => Set.ofPred s)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators
-    definition := none
-    coordinates := #[0, 3, 9]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

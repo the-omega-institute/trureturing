@@ -16,7 +16,7 @@ internal sealed class OneParameterGeneratorsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(GeneratorFormula()),
                 DescribeRole.Definition,
                 "Let A be a real normed algebra, written NormedRing(A) together with NormedAlgebra(R, A), let G be a group with a topology, and let rho be a group homomorphism from G into the group Units(A) of invertible elements of A. Here val denotes the inclusion of Units(A) into A, exp is the exponential series of A and smul(t, X) is the real multiple t X. An element X of A is a one-parameter generator for rho when the curve t -> exp(t X) of A lifts through rho to a continuous curve: there is a continuous map gamma from the real line to G with val(rho(gamma(t))) = exp(t X) for every real t. No continuity or injectivity of rho is part of the definition.",
-                "When rho is injective a lift is unique when it exists and is a one-parameter subgroup of G. Indeed exp((s + t) X) = exp(s X) exp(t X) because s X and t X commute, so rho(gamma(s + t)) = rho(gamma(s) gamma(t)) and injectivity gives gamma(s + t) = gamma(s) gamma(t). The zero element is always a generator, lifted by the constant curve at the identity."),
+                "When rho is injective a lift is unique when it exists. When moreover A is complete, as in all the theorems below, a lift is a one-parameter subgroup of G. Indeed in a complete normed algebra the exponential series satisfies exp(x + y) = exp(x) exp(y) for commuting elements x and y, so exp((s + t) X) = exp(s X) exp(t X) because s X and t X commute; hence rho(gamma(s + t)) = rho(gamma(s) gamma(t)), and injectivity gives gamma(s + t) = gamma(s) gamma(t). The zero element is always a generator, lifted by the constant curve at the identity."),
             Node("smul", "smul", "Real multiples of a generator",
                 StatementSource.FromAuthor(SmulFormula()),
                 DescribeRole.Theorem,
@@ -25,10 +25,10 @@ internal sealed class OneParameterGeneratorsDocument : IScribeDocumentDefinition
             Node("escape", "isOneParameterGenerator_of_mapClusterPt", "Escape lemma",
                 StatementSource.FromAuthor(EscapeFormula()),
                 DescribeRole.Theorem,
-                "Let A be complete, let G be a locally compact topological group and let rho be continuous and injective. Let g be a sequence in G tending to the identity, and let Y be a sequence in A tending to 0 with val(rho(g(k))) = exp(Y(k)) for every k. Then every cluster point X of the sequence of directions smul(norm(Y(k))^(-1), Y(k)) is a one-parameter generator for rho. Indices with Y(k) = 0 contribute the direction 0, and 0 is a generator, so no nonvanishing hypothesis on Y is needed. No first countability and no separation axiom on G is assumed.",
+                "Let A be complete, let G be a locally compact topological group and let rho be continuous and injective. Let l be a filter on an index type iota, let g be a family in G indexed by iota and tending to the identity along l, and let Y be a family in A tending to 0 along l such that val(rho(g(i))) = exp(Y(i)) holds eventually along l. Then every cluster point X along l of the family of directions smul(norm(Y(i))^(-1), Y(i)) is a one-parameter generator for rho. Indices with Y(i) = 0 contribute the direction 0, and 0 is a generator, so no nonvanishing hypothesis on Y is needed. No countability axiom and no separation axiom is assumed of G; sequences are the case where iota is the natural numbers and l is the filter at infinity.",
                 "The statement is the escape lemma of the closed-subgroup theorem of J. von Neumann for closed subgroups of the general linear group and of E. Cartan for closed subgroups of Lie groups. Here the closedness of a linear group is replaced by local compactness of G together with injectivity of rho, in three places. First, fix a compact neighbourhood V of the identity in G. On V the map rho reflects convergence: if points of V have images tending to rho(a), then they tend to a, because every cluster point of them lies in V and has image rho(a), hence equals a by injectivity. Second, there are a positive delta and a neighbourhood U of the identity such that the powers g^n stay in V whenever g lies in U, rho(g) = exp(Y) and n norm(Y) is at most delta; this follows by induction on n from a neighbourhood W of the identity with W W contained in V and from continuity of exp at 0.",
-                "Third, pass to a subsequence along which the directions converge to X, with X different from 0 (the case X = 0 is the zero generator). For t in [0, delta] the powers of g(k) with exponent the integer part of t / norm(Y(k)) lie in V and their images tend to exp(t X), so a cluster point v of these powers in the compact set V satisfies val(rho(v)) = exp(t X); negative times are handled with the inverses of g(k) and the sequence -Y(k). Such lifts on [-delta, delta] extend to all real t by taking N-th powers of a lift of exp((t / N) X), and the lift is a homomorphism by injectivity. It is continuous at 0 because its values near 0 lie in V, where rho reflects convergence, and hence continuous everywhere.",
-                "Local compactness of G cannot be dropped. Let G be the additive group of rational numbers with its usual topology, A the real numbers and rho(q) = exp(q). Then rho is continuous and injective, g(k) = 1 / (k + 1) tends to the identity 0 and Y(k) = 1 / (k + 1) satisfies the hypotheses, and every direction equals 1. But 1 is not a generator: a continuous curve from the real line into the rationals is constant, while exp(t) is not constant."),
+                "Third, with X different from 0 (the case X = 0 is the zero generator), pass to an ultrafilter finer than l along which the directions converge to X; along it Y(i) is eventually nonzero. For t in [0, delta] the powers of g(i) with exponent the integer part of t / norm(Y(i)) eventually lie in V and their images tend to exp(t X), so a cluster point v of these powers in the compact set V satisfies val(rho(v)) = exp(t X); negative times are handled with the inverses of g(i) and the family -Y(i). Such lifts on [-delta, delta] extend to all real t by taking N-th powers of a lift of exp((t / N) X), and the lift is a homomorphism by injectivity. It is continuous at 0 because its values near 0 lie in V, where rho reflects convergence, and hence continuous everywhere.",
+                "Local compactness of G cannot be dropped. Let G be the additive group of rational numbers with its usual topology, A the real numbers and rho(q) = exp(q). Then rho is continuous and injective. Take iota the natural numbers with the filter at infinity, g(k) = 1 / (k + 1), which tends to the identity 0, and Y(k) = 1 / (k + 1); these satisfy the hypotheses, every direction equals 1, and 1 is a cluster point of the directions. But 1 is not a generator: a continuous curve from the real line into the rationals is constant, while exp(t) is not constant."),
             Node("closed", "isClosed_setOf_isOneParameterGenerator", "The set of generators is closed",
                 StatementSource.FromAuthor(ClosedFormula()),
                 DescribeRole.Theorem,
@@ -75,7 +75,6 @@ internal sealed class OneParameterGeneratorsDocument : IScribeDocumentDefinition
 
     private static Formula TypeStar => Seq(Operatorname, Grp(F.Id("Type")), Star);
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
-    private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Instance(Formula cls) => Seq(OpenBracket, cls, CloseBracket, Comma, Esc);
 
     private static Formula A => F.Id("A");
@@ -126,18 +125,22 @@ internal sealed class OneParameterGeneratorsDocument : IScribeDocumentDefinition
 
     private static Formula EscapeFormula()
     {
-        Formula g = F.Id("g"), y = F.Id("Y"), x = F.Id("X"), k = F.Id("k");
-        Formula direction = Lam("k", Naturals,
-            Smul(new Formula.Power(new Formula.Norm(At(y, k)), new Formula.Negate(D(1))), At(y, k)));
-        Formula body = ForAll("g", Arrow(Naturals, G), Implies(
-            Call("Tendsto", g, Call("atTop"), Call("nhds", D(1))),
-            ForAll("Y", Arrow(Naturals, A), Implies(
-                Call("Tendsto", y, Call("atTop"), Call("nhds", D(0))),
-                Implies(
-                    ForAll("k", Naturals, Equal(Val(At(Rho, At(g, k))), Exp(At(y, k)))),
-                    ForAll("X", A, Implies(
-                        Call("MapClusterPt", x, Call("atTop"), direction),
-                        Gen(x))))))));
+        Formula iota = F.Id("iota"), l = F.Id("l"), g = F.Id("g"), y = F.Id("Y"), x = F.Id("X"),
+            i = F.Id("i");
+        Formula direction = Lam("i", iota,
+            Smul(new Formula.Power(new Formula.Norm(At(y, i)), new Formula.Negate(D(1))), At(y, i)));
+        Formula relation = Call("Eventually",
+            Lam("i", iota, Equal(Val(At(Rho, At(g, i))), Exp(At(y, i)))), l);
+        Formula body = ForAll("iota", TypeStar, ForAll("l", Call("Filter", iota),
+            ForAll("g", Arrow(iota, G), Implies(
+                Call("Tendsto", g, l, Call("nhds", D(1))),
+                ForAll("Y", Arrow(iota, A), Implies(
+                    Call("Tendsto", y, l, Call("nhds", D(0))),
+                    Implies(
+                        relation,
+                        ForAll("X", A, Implies(
+                            Call("MapClusterPt", x, l, direction),
+                            Gen(x))))))))));
         return Context(true, Embedded(body));
     }
 
