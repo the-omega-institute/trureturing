@@ -11,13 +11,15 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.Ring.Nat
+import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Fin.Rev
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
+import Mathlib.Logic.Equiv.Bool
+import Mathlib.Logic.Equiv.Prod
 
 set_option autoImplicit false
 
@@ -25,16 +27,8 @@ namespace D5.S3.ConceptDynamics.Attribution.CovariantGridSupport
 
 open Finset
 
-private def capacity (d : ℕ) : ℕ → ℕ
-  | 0 => 0
-  | n + 1 => (d + 1) * capacity d n + 1
-
-private theorem capacity_mul (d n : ℕ) : d * capacity d n + 1 = (d + 1)^n := by
-  induction n with
-  | zero => simp [capacity]
-  | succ n ih =>
-    rw [pow_succ', ← ih, capacity]
-    ring
+private def capacity (d n : ℕ) : ℕ :=
+  ∑ i ∈ Finset.range n, (d + 1)^i
 
 /-- Adding a weight no larger than one plus the old representable range introduces no gaps. -/
 private theorem split_digit {d old new k : ℕ} (hnew : new ≤ d * old + 1)
@@ -58,7 +52,7 @@ private theorem cover_capacity {d : ℕ} (n : ℕ) {q : ℕ} (hq : q ≤ capacit
       ∀ k ≤ d * q, ∃ x : Fin n → Fin (d + 1), (∑ i, (x i).val * w i) = k := by
   induction n generalizing q with
   | zero =>
-    have hq0 : q = 0 := Nat.eq_zero_of_le_zero hq
+    have hq0 : q = 0 := Nat.eq_zero_of_le_zero (by simpa [capacity] using hq)
     subst q
     refine ⟨fun i => i.elim0, by simp, ?_⟩
     intro k hk
@@ -73,7 +67,9 @@ private theorem cover_capacity {d : ℕ} (n : ℕ) {q : ℕ} (hq : q ≤ capacit
       · simp [new, old, min_eq_left h]
       · change q - min q (capacity d n) ≤ d * min q (capacity d n) + 1
         rw [min_eq_right (le_of_not_ge h)]
-        simp only [capacity, Nat.add_mul, Nat.one_mul] at hq
+        have hq' : q ≤ (d + 1) * capacity d n + 1 := by
+          simpa only [capacity, geom_sum_succ] using hq
+        rw [Nat.add_mul, Nat.one_mul] at hq'
         omega
     obtain ⟨w, hw, cover⟩ := ih old_le
     refine ⟨Fin.snoc w new, ?_, ?_⟩
@@ -87,7 +83,7 @@ private theorem cover_capacity {d : ℕ} (n : ℕ) {q : ℕ} (hq : q ≤ capacit
 private theorem exists_digit_cover {d n q : ℕ} (hd : 0 < d) (hcapacity : d * q + 1 ≤ (d + 1)^n) :
     ∃ w : Fin n → ℕ, ∑ i, w i = q ∧
       ∀ k ≤ d * q, ∃ x : Fin n → Fin (d + 1), (∑ i, (x i).val * w i) = k := by
-  rw [← capacity_mul] at hcapacity
+  rw [← geom_sum_mul_add d n, ← capacity, Nat.mul_comm (capacity d n) d] at hcapacity
   exact cover_capacity n (Nat.le_of_mul_le_mul_left (Nat.le_of_add_le_add_right hcapacity) hd)
 
 private theorem complete_grid {S : Type*} [Fintype S] [DecidableEq S] {m : ℕ}
@@ -201,8 +197,11 @@ private theorem even_grid_achievable {q r : ℕ} (capacity : 2 * q + 1 ≤ 3^r) 
   obtain ⟨a, total, cover⟩ :=
     exists_digit_cover (d := 2) (n := r) (q := q) (by decide) capacity
   let σ : Equiv.Perm (Fin r × Bool) :=
-    ⟨fun s => (s.1, !s.2), fun s => (s.1, !s.2), fun s => by simp, fun s => by simp⟩
-  have inv : Function.Involutive σ := by intro s; simp [σ]
+    Equiv.prodCongr (Equiv.refl _) Equiv.boolNot
+  have inv : Function.Involutive σ := by
+    intro s
+    change (s.1, !(!s.2)) = s
+    simp
   have sumPair : ∑ s : Fin r × Bool, a s.1 = 2 * q := by
     simp [Fintype.sum_prod_type, ← two_mul, ← Finset.mul_sum, total]
   refine ⟨a, total,
@@ -219,7 +218,7 @@ private theorem even_grid_achievable {q r : ℕ} (capacity : 2 * q + 1 ≤ 3^r) 
     refine ⟨pairEvent digits, ?_, ?_⟩
     · rw [pairEvent_mass, middle]
       simpa [digits] using total
-    · rintro ⟨i, _ | _⟩ <;> simp [pairEvent, σ, digits]
+    · rintro ⟨i, _ | _⟩ <;> simp [pairEvent, σ, digits, Equiv.prodCongr]
 
 private theorem event_grid_injective {S : Type*} {m : ℕ}
     (E : Fin (m + 1) → Finset S) (w : S → ℝ) (hm : 0 < m)
@@ -373,8 +372,11 @@ theorem even_support_budget_iff {q : ℕ} (positive : 0 < q) (r : ℕ) :
   · intro h
     obtain ⟨a, total, E, counts, flip⟩ := even_grid_achievable h
     let σ : Equiv.Perm (Fin r × Bool) :=
-      ⟨fun s => (s.1, !s.2), fun s => (s.1, !s.2), fun s => by simp, fun s => by simp⟩
-    have inv : Function.Involutive σ := by intro s; simp [σ]
+      Equiv.prodCongr (Equiv.refl _) Equiv.boolNot
+    have inv : Function.Involutive σ := by
+      intro s
+      change (s.1, !(!s.2)) = s
+      simp
     have sumPair : ∑ s : Fin r × Bool, a s.1 = 2 * q := by
       simp [Fintype.sum_prod_type, ← two_mul, ← Finset.mul_sum, total]
     exact ⟨Fin r × Bool, inferInstance, by simp [Fintype.card_prod, Nat.mul_comm],
