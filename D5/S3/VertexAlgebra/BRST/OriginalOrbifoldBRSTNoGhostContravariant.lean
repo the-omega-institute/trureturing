@@ -178,6 +178,7 @@ private theorem correctedCycle_theta_pair (F : Frame) (a : UCharge)
   · simp [seriesLength]
 
 set_option maxHeartbeats 600000 in
+-- Identifying the ambient quotient representatives unfolds the momentum and grade subtypes.
 /-- The original contravariant form restricts on every nonzero on-shell
 physical momentum to the original transverse orbifold form in a light-cone frame. -/
 theorem contravariantBPZ_inFrame (F : Frame) (a : UCharge) (hp : F.pPlus a ≠ 0)
