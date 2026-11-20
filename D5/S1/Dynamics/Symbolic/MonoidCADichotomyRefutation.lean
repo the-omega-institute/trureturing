@@ -1,7 +1,7 @@
 /- GID: D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation
    generality: I
    mirror-B: D5/B/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.claim; result=D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.result; claim=D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.claim
    digest: A Boolean OR automaton refutes the finite-monoid entropy dichotomy. -/
@@ -102,33 +102,12 @@ private theorem sourceDist_basis (D : ℕ) (A : Type*) [UniformSpace A] [Discret
 private def sensitive {X : Type*} [UniformSpace X] (F : X → X) : Prop :=
   ∃ U ∈ 𝓤 X, ∀ x, ∀ V ∈ 𝓤 X, ∃ y k, (x, y) ∈ V ∧ (F^[k] x, F^[k] y) ∉ U
 
-private theorem sensitive_iff_basis {X I : Type*} [UniformSpace X] {F : X → X}
-    {p : I → Prop} {s : I → SetRel X X} (basis : (𝓤 X).HasBasis p s) :
-    sensitive F ↔ ∃ i, p i ∧ ∀ x j, p j → ∃ y k, (x, y) ∈ s j ∧ (F^[k] x, F^[k] y) ∉ s i := by
-  constructor
-  · rintro ⟨U, hU, h⟩
-    obtain ⟨i, hi, hiU⟩ := basis.mem_iff.mp hU
-    refine ⟨i, hi, fun x j hj => ?_⟩
-    obtain ⟨y, k, hxy, hsep⟩ := h x (s j) (basis.mem_of_mem hj)
-    exact ⟨y, k, hxy, fun hmem => hsep (hiU hmem)⟩
-  · rintro ⟨i, hi, h⟩
-    refine ⟨s i, basis.mem_of_mem hi, fun x V hV => ?_⟩
-    obtain ⟨j, hj, hjV⟩ := basis.mem_iff.mp hV
-    obtain ⟨y, k, hxy, hsep⟩ := h x j hj
-    exact ⟨y, k, hjV hxy, hsep⟩
-
 private theorem source_equicontinuous_iff {D : ℕ} {A : Type*} [UniformSpace A] [DiscreteUniformity A]
     (F : (Lattice D → A) → (Lattice D → A)) :
     UniformEquicontinuous (fun k : ℕ => F^[k]) ↔
       ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∀ x y, sourceDist x y < δ →
         ∀ k : ℕ, sourceDist (F^[k] x) (F^[k] y) < ε :=
   (sourceDist_basis D A).uniformEquicontinuous_iff (sourceDist_basis D A)
-
-private theorem source_sensitive_iff {D : ℕ} {A : Type*} [UniformSpace A] [DiscreteUniformity A]
-    (F : (Lattice D → A) → (Lattice D → A)) :
-    sensitive F ↔ ∃ ε : ℝ, 0 < ε ∧ ∀ (x : Lattice D → A) (δ : ℝ), 0 < δ →
-      ∃ (y : Lattice D → A) (k : ℕ), sourceDist x y < δ ∧ ε ≤ sourceDist (F^[k] x) (F^[k] y) := by
-  simpa only [mem_ofPred_eq, not_lt] using sensitive_iff_basis (F := F) (sourceDist_basis D A)
 
 /-- The finite-monoid extension of the entropy-bearing dichotomy in
 Castronuovo–Dennunzio–Kari–Margara, Theorem 6 and §9. The finite local
@@ -199,17 +178,6 @@ private theorem or_apply (x : Config) (z : Lattice 2) :
 
 private def seed (u : Lattice 2) : Config := fun z => decide (z = u)
 
-private theorem axes_essential :
-    ∀ u ∈ ({east, north} : Finset (Lattice 2)),
-      ∃ x y : Config, (∀ z, z ≠ u → x z = y z) ∧ orCA x 0 ≠ orCA y 0 := by
-  intro u hu
-  refine ⟨fun _ => false, seed u, fun z hz => by simp [seed, hz], ?_⟩
-  rcases Finset.mem_insert.mp hu with rfl | hu
-  · simp [or_apply, seed]
-  · have hu' : u = north := Finset.mem_singleton.mp hu
-    subst u
-    simp [or_apply, seed]
-
 private theorem or_iterate_constant (b : Bool) (k : ℕ) :
     (orCA : Config → Config)^[k] (fun _ => b) = fun _ => b := by
   induction k with
@@ -230,6 +198,14 @@ private theorem or_iterate_mono (x : Config) (z : Lattice 2) :
   intro k
   rw [iterate_succ_apply']
   exact or_step _ z
+
+private theorem or_persists (x : Config) (z : Lattice 2) {t k : ℕ} (htk : t ≤ k)
+    (h : (orCA : Config → Config)^[t] x z = true) :
+    (orCA : Config → Config)^[k] x z = true := by
+  have hm := or_iterate_mono x z htk
+  change (orCA : Config → Config)^[t] x z ≤ (orCA : Config → Config)^[k] x z at hm
+  rw [h] at hm
+  exact Bool.eq_true_of_true_le hm
 
 private theorem east_propagates (x : Config) (k : ℕ) (z : Lattice 2)
     (h : x (z + k • east) = true) :
@@ -267,34 +243,6 @@ private theorem or_not_equicontinuous :
     (orCA : Config → Config)^[r + 1] (seed u) 0 at hbad
   rw [or_iterate_constant, east_propagates (seed u) (r + 1) 0 (by simp [u, seed])] at hbad
   exact Bool.false_ne_true hbad
-
-private theorem or_not_sensitive : ¬ sensitive (orCA : Config → Config) := by
-  rw [source_sensitive_iff]
-  rintro ⟨ε, hε, h⟩
-  obtain ⟨r, hr⟩ := exists_pow_lt_of_lt_one hε (by norm_num : (1 / 2 : ℝ) < 1)
-  obtain ⟨y, k, hxy, hbad⟩ := h (fun _ => true) ((1 / 2 : ℝ) ^ r) (by positivity)
-  have hstart : ((fun _ : Lattice 2 => true), y) ∈ windowRel (box 2 r) :=
-    (sourceDist_lt_iff _ _ r).mp hxy
-  have hpersist :
-      ((orCA : Config → Config)^[k] (fun _ => true), (orCA : Config → Config)^[k] y) ∈
-        windowRel (box 2 r) := by
-    intro z hz
-    have hy : y z = true := (hstart z hz).symm
-    have hp := or_iterate_mono y z (Nat.zero_le k)
-    change y z ≤ (orCA : Config → Config)^[k] y z at hp
-    rw [hy] at hp
-    change (orCA : Config → Config)^[k] (fun _ => true) z = (orCA : Config → Config)^[k] y z
-    rw [or_iterate_constant]
-    exact (Bool.eq_true_of_true_le hp).symm
-  exact (not_lt_of_ge hbad) (((sourceDist_lt_iff _ _ r).mpr hpersist).trans hr)
-
-/-- The remote seed and the persistent all-true window exclude the two alternatives. -/
-theorem result : ¬ claim := by
-  intro h
-  rcases h 2 (by decide) Bool orCA ⟨offsets, orRule, rfl⟩
-    (localMap_continuous offsets orRule) (localMap_shift offsets orRule) with hl | hr
-  · exact or_not_equicontinuous hl.1
-  · exact or_not_sensitive hr.1
 
 private def trace {I A : Type*} (F : (I → A) → (I → A))
     (W : Finset I) (n : ℕ) (x : I → A) : Fin n × W → A :=
@@ -358,11 +306,7 @@ private theorem cutoff_spec (x : Config) (z : Lattice 2) {n : ℕ} (k : Fin n) :
   refine ⟨fun h => Nat.find_min' (exists_cutoff x z n) (Or.inr h), fun hk => ?_⟩
   have ht := (Nat.find_spec (exists_cutoff x z n)).resolve_left
     (not_le_of_gt (hk.trans_lt k.isLt))
-  have hm := or_iterate_mono x z hk
-  change (orCA : Config → Config)^[Nat.find (exists_cutoff x z n)] x z ≤
-    (orCA : Config → Config)^[k.val] x z at hm
-  rw [ht] at hm
-  exact Bool.eq_true_of_true_le hm
+  exact or_persists x z hk ht
 
 private theorem or_traceCount_le (W : Finset (Lattice 2)) (n : ℕ) :
     Nat.card (range (trace (orCA : Config → Config) W n)) ≤ (n + 1) ^ W.card := by
@@ -416,20 +360,13 @@ private theorem or_entropy_zero : coverEntropy (orCA : Config → Config) univ =
     (((n + 1) ^ (box 2 r).card : ℕ) : ℝ≥0∞)
   exact_mod_cast or_traceCount_le (box 2 r) n
 
-#print axioms claim
-#print axioms localMap_continuous
-#print axioms localMap_shift
-#print axioms sourceDist_lt_iff
-#print axioms source_equicontinuous_iff
-#print axioms source_sensitive_iff
-#print axioms orCA
-#print axioms axes_essential
-#print axioms or_not_equicontinuous
-#print axioms or_not_sensitive
-#print axioms result
-#print axioms coverMincard_eq_traceCount
-#print axioms cutoff_spec
-#print axioms or_traceCount_le
-#print axioms or_entropy_zero
+/-- The propagating seed excludes the equicontinuous branch. Zero full-shift
+entropy excludes the infinite-entropy branch. -/
+theorem result : ¬ claim := by
+  intro h
+  rcases h 2 (by decide) Bool orCA ⟨offsets, orRule, rfl⟩
+    (localMap_continuous offsets orRule) (localMap_shift offsets orRule) with hl | hr
+  · exact or_not_equicontinuous hl.1
+  · exact zero_ne_top (or_entropy_zero.symm.trans hr.2)
 
 end D5.S1.Dynamics.Symbolic.MonoidCADichotomyRefutation
