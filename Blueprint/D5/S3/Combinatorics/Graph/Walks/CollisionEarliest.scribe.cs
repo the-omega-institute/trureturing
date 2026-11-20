@@ -6,7 +6,7 @@ internal sealed class CollisionEarliestDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/CollisionEarliest.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/mazhang2026edgecollision");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/mazhang2026edgecollision");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The earliest full-coverage edge collision is counted by n!: T(n,n+1)=n!.",
