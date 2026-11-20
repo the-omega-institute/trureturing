@@ -105,11 +105,15 @@ least one.
   together. The Lean settlement uses $t=2$.
 - **Proved by the witness and a published bound.** Write $\psi(n,d,k)$
   for the least integer degree count that forces a path on $k+1$
-  vertices among connected graphs. The witness gives $\psi(24,8,8)\ge7$.
-  The unrestricted forcing number $\varphi(24,8,8)$ is seven by
-  Li–Ma–Ning Theorem 1.3(ii)(c), using $24=2(8+1)+6$ and $6=8-2$.
-  Connected graphs form a subclass, so $\psi(24,8,8)=7$.
-  [Li–Ma–Ning, Definition 1.1, Theorem 1.3 and §5](https://arxiv.org/abs/2102.04367v3)
+  vertices among connected graphs. The connected witness has six vertices
+  of degree eight and no nine-vertex path, so $\psi(24,8,8)\ge7$.
+  In Li–Ma–Ning Theorem 1.3(ii)(c), $k=8$ is even and
+  $24=2(8+1)+6$ has remainder $r=6$. Since $d-k/2=4<r\le d=8$,
+  the second branch gives the unrestricted forcing number
+  $\phi(24,8,8)=\frac{8-2}{2}\cdot2+2=8$. Its upper bound applies to
+  connected graphs, giving $7\le\psi(24,8,8)\le8$. The exact connected
+  value at this triple remains open here.
+  [Li–Ma–Ning, Theorem 1.3(ii)(c)](https://arxiv.org/html/2102.04367v3#S1.Thmthm3.p4)
 - **Open here.** The exact connected forcing number $\psi(n,d,k)$ in
   general and a sharp replacement for the conjectured threshold remain
   unresolved by this settlement. A minimum degree of two would exclude
