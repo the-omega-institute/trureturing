@@ -19,8 +19,8 @@ triage: anchor
 DOI: 10.37236/5441. Electronic Journal of Combinatorics 24(1) (2017), #P1.15, published
 2017-02-03. Source PDF:
 https://www.combinatorics.org/ojs/index.php/eljc/article/download/v24i1p15/pdf
-(text extracted locally, about 20,400 characters). Definitions and Theorem 1 are on p. 2;
-Lemma 2 is in Section 2.
+(text extracted locally, about 20,400 characters). The hyper-expansion definition is on p. 1,
+the definition of s_b and Theorem 1 on p. 2, and Lemma 2 in Section 2.
 
 ## Source statement
 

@@ -21,7 +21,8 @@ proof_shape:
   win_one, win_two_zero, win_two, count_zero_digit, count_pos_digit, count_one_le, qs_pos,
     win_two_pos: bind-only helpers; consumers: count_le_win, count_eq_parent, upper,
     win_at_one, win_at_zero, qs_rec, qs_lower, ratio_upper, ratio_lower, result.
-  count_le_win, count_eq_parent: content; consumer: upper.
+  count_le_win: content; consumers: upper, count_upper.
+  count_eq_parent: bind-only helper; consumer: upper.
   upper: content; consumer: count_upper.
   env_bound: content; consumer: count_upper.
   count_upper: content; consumer: ratio_upper.
@@ -39,8 +40,9 @@ Direct frozen dependencies: D5/S1/Digit/CoonsAdjacentGrowthRefutation (count, re
   the DigitCapNearSquare delivery).
 Search record (§3.1): D5/S1/Digit has exact exponents on the plateaus
   (q-1)(ell+1) <= k <= q ell - 1 (DigitCapPlateau, q >= 2), at the caps ell^r - 1 and at
-  ell^2 - 2 (DigitCapNearSquare); the cap ell lies between ell - 1 (exponent 0) and the
-  plateau q = 2 starting at ell + 1. Mathlib supplies goldenRatio, goldenRatio_sq and
+  ell^2 - 2 (DigitCapNearSquare, which at ell = 2 is the cap 2 with the same value
+  log_2 φ); for ell >= 3 the cap ell lies between ell - 1 (exponent 0) and the plateau q = 2
+  starting at ell + 1. Mathlib supplies goldenRatio, goldenRatio_sq and
   one_lt_goldenRatio; it has no Stern sequence growth result.
 -/
 
@@ -193,11 +195,6 @@ private lemma pred_mod (ell q : ℕ) (hell : 2 ≤ ell) (h : q % ell = 0) (hq : 
 private def env (c : ℕ) : ℕ → ℕ × ℕ
   | 0 => (c, c)
   | m + 1 => ((env c m).1 + (env c m).2, (env c m).1)
-
-private lemma env_le (c m : ℕ) : (env c m).2 ≤ (env c m).1 := by
-  cases m with
-  | zero => simp [env]
-  | succ m => simp only [env]; omega
 
 private lemma upper (ell m : ℕ) (hell : 2 ≤ ell) : ∀ q < ell ^ m,
     win ell 2 q ≤ (env (count ell ell 0) m).1 ∧
@@ -493,12 +490,6 @@ def claim : Prop :=
 
 theorem result : claim := by
   intro ell hell
-  have he : (2 : ℝ) ≤ ell := by exact_mod_cast hell
-  have hlogell : 0 < Real.log (ell : ℝ) := Real.log_pos (by linarith)
-  have hα0 : 0 ≤ Real.log Real.goldenRatio / Real.log ell :=
-    div_nonneg (Real.log_nonneg Real.one_lt_goldenRatio.le) hlogell.le
-  have hc1 : (1 : ℝ) ≤ count ell ell 0 := by exact_mod_cast count_one_le ell 0 hell
-  have hB : 0 ≤ Real.log (2 * count ell ell 0) := Real.log_nonneg (by nlinarith)
   have hsN : ∀ k, k ≤ ell * qs ell k := fun k => by
     have h1 := (qs_bounds ell k hell).1
     have h2 : k < ell ^ k := Nat.lt_pow_self (by omega)
