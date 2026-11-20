@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Noncommutative finite-rank ternary comparisons locally injecting into R^d: d >= 3. -/
+   digest: Noncommutative rank-r ternary comparisons locally injecting into R^d: d >= 3, r >= 5. -/
 
 import D5.S3.Topology.LowDimensionalBorsukUlam
 import D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart
