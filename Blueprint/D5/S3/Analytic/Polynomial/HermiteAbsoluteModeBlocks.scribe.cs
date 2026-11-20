@@ -35,7 +35,7 @@ internal sealed class HermiteAbsoluteModeBlocksDocument : IScribeDocumentDefinit
                         + "H_n and t(n) = (n − b(n))/2. Then b(n) ≡ n (mod 2), and for j ≡ n (mod 2), b(n) ≤ j "
                         + "exactly when j² + 5j + 2 ≥ 2n. Every degree has a unique absolute maximum or exactly two, "
                         + "and the maximum is unique exactly off the tie degrees N_m. Moreover "
-                        + "t(n) = ⌊(2n + 5 − √(8n + 17))/4⌋, b(n)² ≤ 2n (equality only at n = 0, 2) and −5/2 < b(n) − √(2n). The difference "
+                        + "t(n) = ⌊(2n + 5 − √(8n + 17))/4⌋, b(n)² ≤ 2n and −5/2 < b(n) − √(2n). The difference "
                         + "b(n + 1) − b(n) is −1 exactly when n + 1 = m_k; m_0 = 0, m_1 = 3 and m_{k+1} − m_k "
                         + "∈ {2, 3}, with gap three exactly when k = L_j, m_{L_j} = 2L_j + j, and gap two strictly "
                         + "between consecutive L_j. At a tie degree the maximizing exponents are b(n) and b(n) + 2, "

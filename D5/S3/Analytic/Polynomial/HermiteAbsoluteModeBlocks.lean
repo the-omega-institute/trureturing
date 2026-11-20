@@ -269,7 +269,7 @@ private theorem b_sq_le (n : ℕ) : b n ^ 2 ≤ 2 * n := by
     · omega
     · nlinarith
 
-private theorem b_growth (n : ℕ) : -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) ∧ (b n : ℝ) - √(2 * n) < 2 := by
+private theorem b_growth (n : ℕ) : -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) := by
   obtain ⟨hl, hu⟩ := b_window n
   set s := √(8 * (n : ℝ) + 17)
   set t := √(2 * (n : ℝ))
@@ -278,8 +278,7 @@ private theorem b_growth (n : ℕ) : -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) �
   have hsq : s ^ 2 = 8 * n + 17 := Real.sq_sqrt (by positivity)
   have htq : t ^ 2 = 2 * n := Real.sq_sqrt (by positivity)
   have hlow : 2 * t < s := by by_contra h; push Not at h; nlinarith
-  have hup : s ≤ 2 * t + 5 := by by_contra h; push Not at h; nlinarith
-  constructor <;> linarith
+  linarith
 
 private theorem exists_h (k : ℕ) : ∃ j, 4 * k ≤ second j := ⟨4 * k, by unfold second; nlinarith⟩
 
@@ -457,7 +456,7 @@ theorem result :
     (∀ n : ℕ, (HermiteSignedMode.a n : ℤ) - b n = -2 ∨ (HermiteSignedMode.a n : ℤ) - b n = 0 ∨
       (HermiteSignedMode.a n : ℤ) - b n = 2) := by
   refine ⟨fun n => ⟨by have := (mode_rises n).1; unfold b; omega, threshold_iff n⟩, unique_or_two,
-    unique_iff, t_floor, fun n => ⟨b_sq_le n, (b_growth n).1, by
+    unique_iff, t_floor, fun n => ⟨b_sq_le n, b_growth n, by
       rw [Real.le_sqrt (by positivity) (by positivity)]; exact_mod_cast b_sq_le n⟩, le_t_iff, abs_diff_iff, abs_start_zero, abs_start_one,
     abs_start_step, three_iff, abs_start_L, two_between,
     fun n hT => ⟨(tie_structure n hT).1, (tie_structure n hT).2, by

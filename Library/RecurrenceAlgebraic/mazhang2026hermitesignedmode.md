@@ -79,8 +79,7 @@ differences ±1, and the frozen HermiteAbsoluteTieOrders result enumerates the d
 two maxima as N_m. The remaining clauses are formalized together with Corollary 4: among j ≡ n (mod 2),
 b(n) ≤ j exactly when j² + 5j + 2 ≥ 2n; every degree has a unique absolute maximum or exactly two;
 and the maximum is unique exactly at the degrees that are not of the form N_m. For Corollary 4, the
-O(1) term is made explicit and sharp as −5/2 < b(n) − √(2n) and b(n)² ≤ 2n (equality only at
-n = 0, 2); the blocks are described through
+O(1) term is made explicit as −5/2 < b(n) − √(2n) and b(n)² ≤ 2n; the blocks are described through
 m_k = 2k + h_k (m_0 = 0, m_1 = 3), with b(n + 1) − b(n) = −1 exactly when n + 1 is some m_k, gaps
 m_{k+1} − m_k ∈ {2, 3}, gap three exactly when k = L_j for some j ≥ 0 (L_0 = 0 is the initial
 block), m_{L_j} = 2L_j + j, and gap two strictly between consecutive L_j.
