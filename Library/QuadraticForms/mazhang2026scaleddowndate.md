@@ -91,7 +91,8 @@ statements (StructuredRankOneBlockRemoval.kernel_split) hold for any square matr
 without symmetry. The proof uses the congruences of A ⊕ 0 with the
 matrix bordered by AX and corner G, and of that matrix with N ⊕ G, rather than an adapted basis.
 
-Theorem 11 is formalized as CubicSphereInfimum.result, with R_h(x) = Σᵢ xᵢ h(xᵢ) / (Σᵢ h(xᵢ)²)^{1/2}
+Theorem 11 answers Lucid's sphere question, Mathematics Stack Exchange 5146381, linked from
+MathOverflow 513954, revision 2. It is formalized as CubicSphereInfimum.result, with R_h(x) = Σᵢ xᵢ h(xᵢ) / (Σᵢ h(xᵢ)²)^{1/2}
 (h(0) = 0, so summing over all coordinates agrees with the active-coordinate convention). Three
 statements are stronger than the source: h is strictly increasing on [−1, 1]; h(t)/t is strictly
 decreasing for every t > 0; and the strict bound 16(17 − 9√3)/23 < R_h(x)² and the two-coordinate
@@ -101,4 +102,5 @@ CubicSphereInfimum.moment. The lower bound uses s₃ ≤ a s₂ = a³ for a = �
 23(3 − a²)² − 16(17 − 9√3)(9 − 6a² + a³) = (a − a*)²(23a² + (4 + 6√3)a + 12√3 − 15), whose second
 factor is positive for a ≥ 0, in place of the paper's sign analysis of f′; equality would force
 every positive pᵢ to equal a, hence a = 1 ≠ a*. On supports of at most two points 2s₃ = 3s₂ − 1
-and R_h(x)² − 80/81 = (9s₂ − 7)²/(81(9 − 6s₂ + s₃)), attained for squared coordinates (3 ± √5)/6.
+and R_h(x)² − 80/81 = (9s₂ − 7)²/(81(9 − 6s₂ + s₃)), so equality holds exactly when 9s₂ = 7,
+for instance for squared coordinates (3 ± √5)/6.

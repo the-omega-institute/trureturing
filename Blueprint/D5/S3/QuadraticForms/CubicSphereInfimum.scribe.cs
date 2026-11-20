@@ -64,8 +64,8 @@ internal sealed class CubicSphereInfimumDocument : IScribeDocumentDefinition
                         + "vectors, so the infimum c = 16(17 − 9√3)/23 is never attained. The sequence with "
                         + "one squared coordinate a* = 6 − 3√3 and m equal squared tail coordinates consists of "
                         + "nonnegative unit vectors whose values R_h² tend to c. Every unit vector with at "
-                        + "most two nonzero coordinates satisfies 80/81 ≤ R_h(x)², with equality for a "
-                        + "nonnegative vector in dimension two. The vector with squared coordinates "
+                        + "most two nonzero coordinates satisfies 80/81 ≤ R_h(x)², with equality exactly "
+                        + "when 9s₂ = 7, and equality holds for a nonnegative vector in dimension two. The vector with squared coordinates "
                         + "(4/5, 1/10, 1/10) has R_h(x)² = 13689/13885 < 80/81.")),
                     Paragraph(Text(
                         "Put a = √s₂ ∈ (0, 1]. Each pᵢ ≤ a, so s₃ ≤ a s₂ = a³ and the moment identity gives "
@@ -76,7 +76,8 @@ internal sealed class CubicSphereInfimumDocument : IScribeDocumentDefinition
                         + "a = 1 ≠ a*, a contradiction. Along the sequence s₂ → a*² and s₃ → a*³, so R_h² → c. "
                         + "On a support of at most two points 2s₃ = 3s₂ − 1, and then R_h(x)² − 80/81 = "
                         + "(9s₂ − 7)²/(81(9 − 6s₂ + s₃)); squared coordinates (3 ± √5)/6 give s₂ = 7/9. "
-                        + "This is Theorem 11 of H. Ma and W. Zhang (DOI 10.5281/zenodo.23920598) on "
-                        + "MathOverflow 513954, revision 2, asked by Lucid."))),
+                        + "This is Theorem 11 of H. Ma and W. Zhang (DOI 10.5281/zenodo.23920598), answering "
+                        + "Lucid's sphere question (Mathematics Stack Exchange 5146381) linked from "
+                        + "MathOverflow 513954, revision 2."))),
                 DescribeRole.Theorem))));
 }

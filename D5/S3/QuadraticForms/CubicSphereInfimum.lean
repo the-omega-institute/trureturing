@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Basic]
    utility: none
-   digest: For h(t) = (3t - t³)/2 the infimum of R_h(x)² over unit vectors is 16(17 - 9√3)/23, never attained; two coordinates give 80/81. -/
+   digest: For h(t) = (3t - t³)/2, inf R_h(x)² over unit vectors is 16(17 - 9√3)/23, unattained. -/
 
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.SpecificLimits.Basic
@@ -17,14 +17,19 @@ vectors of every finite dimension: `h` is strictly increasing on `[-1, 1]` with 
 `R_h(x)²` over nonnegative unit vectors, with `16(17 - 9√3)/23 < R_h(x)²` for every unit
 vector of any signs, approached by one squared coordinate `6 - 3√3` and `m` equal tail
 coordinates; the bound `80/81 ≤ R_h(x)²` for unit vectors with at most two nonzero
-coordinates, attained by a nonnegative vector in dimension two; and the squared-coordinate example `(4/5, 1/10, 1/10)` with value `13689/13885 < 80/81`.
+coordinates, with equality exactly when `9 s₂ = 7`, attained by a nonnegative vector in dimension
+two; and the squared-coordinate example `(4/5, 1/10, 1/10)` with value `13689/13885 < 80/81`.
+The sphere question is Lucid's Mathematics Stack Exchange question 5146381, linked from
+MathOverflow 513954, revision 2.
 
-admission_basis: escape-witness. Escape witnesses: moment (the moment identity on the sphere),
-key_poly with lower_strict (the factorization `23(3 - a²)² - 16(17 - 9√3)(9 - 6a² + a³) =
-(a - a*)² q(a)` with `q > 0` on `a ≥ 0`, the bound `s₃ ≤ √s₂ · s₂`, and the equality analysis forcing
-every positive squared coordinate to equal `√s₂ = 1`), two_gap with two_lower (the identity
-`R² - 80/81 = (9 s₂ - 7)²/(81(9 - 6 s₂ + s₃))` when `2 s₃ = 3 s₂ - 1`, which holds on two-point
-supports), approach_tendsto (the limit of the diffuse-tail sequence). -/
+admission_basis: escape-witness. Escape witnesses: key_poly with lower_strict (the factorization
+`23(3 - a²)² - 16(17 - 9√3)(9 - 6a² + a³) = (a - a*)² q(a)` with `q > 0` on `a ≥ 0`, the bound
+`s₃ ≤ √s₂ · s₂`, and the equality analysis forcing every positive squared coordinate to equal
+`√s₂ = 1`), two_gap with two_lower (the
+identity `R² - 80/81 = (9 s₂ - 7)²/(81(9 - 6 s₂ + s₃))` when `2 s₃ = 3 s₂ - 1`, which holds on
+two-point supports), approach_tendsto (the limit of the diffuse-tail sequence). Consumed
+bind-only helper: moment (consumed by lower_strict, two_lower, two_attained, example_value and
+approach_tendsto). -/
 
 set_option autoImplicit false
 noncomputable section
@@ -53,7 +58,8 @@ private theorem sqrt3_bounds : 1.73 < Real.sqrt 3 ∧ Real.sqrt 3 < 1.7321 := by
 
 private theorem moment_num {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 = 1) :
     ∑ i, x i * cubic (x i) = (3 - ∑ i, (x i ^ 2) ^ 2) / 2 := by
-  have : ∀ i, x i * cubic (x i) = (3 * x i ^ 2 - (x i ^ 2) ^ 2) / 2 := fun i => by unfold cubic; ring
+  have : ∀ i, x i * cubic (x i) = (3 * x i ^ 2 - (x i ^ 2) ^ 2) / 2 := fun i => by
+    unfold cubic; ring
   simp only [this, ← Finset.sum_div, Finset.sum_sub_distrib, ← Finset.mul_sum, hs]
   ring
 
@@ -95,7 +101,8 @@ private theorem q_pos (a : ℝ) (ha : 0 ≤ a) :
 private theorem largeMass_lt_one : largeMass < 1 := by unfold largeMass; linarith [sqrt3_bounds.1]
 private theorem largeMass_pos : 0 < largeMass := by unfold largeMass; linarith [sqrt3_bounds.2]
 
-private theorem infimumValue_pos : 0 < infimumValue := by unfold infimumValue; linarith [sqrt3_bounds.2]
+private theorem infimumValue_pos : 0 < infimumValue := by
+  unfold infimumValue; linarith [sqrt3_bounds.2]
 
 /-- Strict lower bound: `infimumValue < R_h(x)²` for every unit vector, of any signs. -/
 private theorem lower_strict {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 = 1) :
@@ -113,7 +120,8 @@ private theorem lower_strict {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 
     obtain ⟨i, -, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero (by rw [hpsum]; norm_num :
       ∑ i, p i ≠ 0)
     have : 0 < p i ^ 2 := by positivity
-    exact lt_of_lt_of_le this (Finset.single_le_sum (fun j _ => sq_nonneg (p j)) (Finset.mem_univ i))
+    exact lt_of_lt_of_le this
+      (Finset.single_le_sum (fun j _ => sq_nonneg (p j)) (Finset.mem_univ i))
   set a := Real.sqrt s2 with ha
   have ha0 : 0 < a := Real.sqrt_pos.mpr hs2pos
   have ha2 : a ^ 2 = s2 := Real.sq_sqrt hs2pos.le
@@ -151,7 +159,8 @@ private theorem lower_strict {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 
           exact Finset.sum_congr rfl fun i _ => by ring
         rw [this, heq]; ring
       exact (Finset.sum_eq_zero_iff_of_nonneg fun i _ =>
-        mul_nonneg (sq_nonneg _) (sub_nonneg.mpr (hpa i))).mp hsum0 |> fun h i => h i (Finset.mem_univ i)
+        mul_nonneg (sq_nonneg _) (sub_nonneg.mpr (hpa i))).mp hsum0 |>
+          fun h i => h i (Finset.mem_univ i)
     have hlin : ∀ i, p i * (a - p i) = 0 := fun i => by
       rcases mul_eq_zero.mp (hterm i) with h | h
       · rw [pow_eq_zero_iff (by norm_num)] at h; rw [h]; ring
@@ -172,7 +181,7 @@ private theorem lower_strict {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 
     nlinarith
 
 
-/-- Moment form with an `s₃ = (3 s₂ - 1)/2` relation gives `80/81 ≤ R²` with the exact gap. -/
+/-- When `2 s₃ = 3 s₂ - 1`, the moment form exceeds `80/81` by `(9 s₂ - 7)²/(81 D)`. -/
 private theorem two_gap (s2 s3 : ℝ) (hrel : 2 * s3 = 3 * s2 - 1) (hs2 : s2 ≤ 1) :
     (3 - s2) ^ 2 / (9 - 6 * s2 + s3) - 80 / 81 = (9 * s2 - 7) ^ 2 / (81 * (9 - 6 * s2 + s3)) := by
   have hD : 0 < 9 - 6 * s2 + s3 := by linarith
@@ -192,7 +201,7 @@ private theorem sum_support_pair {d : ℕ} (x : Fin d → ℝ) (j k : Fin d)
 /-- With at most two nonzero coordinates, `80/81 ≤ R_h(x)²`. -/
 private theorem two_lower {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 = 1)
     (j k : Fin d) (hjk : ∀ i, x i ≠ 0 → i = j ∨ i = k) :
-    80 / 81 ≤ rayleigh x ^ 2 := by
+    80 / 81 ≤ rayleigh x ^ 2 ∧ (rayleigh x ^ 2 = 80 / 81 ↔ 9 * ∑ i, (x i ^ 2) ^ 2 = 7) := by
   set p : Fin d → ℝ := fun i => x i ^ 2
   have hp0 : ∀ i, 0 ≤ p i := fun i => sq_nonneg _
   have e1 := sum_support_pair x j k hjk (fun t => t ^ 2) (by norm_num)
@@ -217,12 +226,24 @@ private theorem two_lower {d : ℕ} (x : Fin d → ℝ) (hs : ∑ i, x i ^ 2 = 1
   have hD : 0 < 9 - 6 * ∑ i, p i ^ 2 + ∑ i, p i ^ 3 := by linarith
   have hg := two_gap _ _ hrel hs2
   rw [moment x hs]
-  have : 0 ≤ (9 * ∑ i, p i ^ 2 - 7) ^ 2 / (81 * (9 - 6 * ∑ i, p i ^ 2 + ∑ i, p i ^ 3)) :=
-    div_nonneg (sq_nonneg _) (by positivity)
-  linarith
+  constructor
+  · have : 0 ≤ (9 * ∑ i, p i ^ 2 - 7) ^ 2 / (81 * (9 - 6 * ∑ i, p i ^ 2 + ∑ i, p i ^ 3)) :=
+      div_nonneg (sq_nonneg _) (by positivity)
+    linarith
+  · have h81 : (0:ℝ) < 81 * (9 - 6 * ∑ i, p i ^ 2 + ∑ i, p i ^ 3) := by positivity
+    constructor
+    · intro he
+      rw [he, sub_self, eq_comm, div_eq_zero_iff, or_iff_left h81.ne'] at hg
+      exact sub_eq_zero.mp (pow_eq_zero_iff (by norm_num) |>.mp hg)
+    · intro he
+      have he' : 9 * ∑ i, p i ^ 2 - 7 = 0 := sub_eq_zero.mpr he
+      rw [he'] at hg
+      simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, zero_div] at hg
+      exact sub_eq_zero.mp hg
 
 /-- The two-coordinate minimum `80/81` is attained. -/
-private theorem two_attained : ∃ x : Fin 2 → ℝ, (∀ i, 0 ≤ x i) ∧ ∑ i, x i ^ 2 = 1 ∧ rayleigh x ^ 2 = 80 / 81 := by
+private theorem two_attained :
+    ∃ x : Fin 2 → ℝ, (∀ i, 0 ≤ x i) ∧ ∑ i, x i ^ 2 = 1 ∧ rayleigh x ^ 2 = 80 / 81 := by
   set p : ℝ := (3 + Real.sqrt 5) / 6
   have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   have h5a : Real.sqrt 5 < 3 := by
@@ -245,8 +266,10 @@ private theorem two_attained : ∃ x : Fin 2 → ℝ, (∀ i, 0 ≤ x i) ∧ ∑
 
 /-- The squared-coordinate example `(4/5, 1/10, 1/10)`. -/
 private theorem example_value :
-    rayleigh (![Real.sqrt (4/5), Real.sqrt (1/10), Real.sqrt (1/10)] : Fin 3 → ℝ) ^ 2 = 13689 / 13885 := by
-  have hs : ∑ i, (![Real.sqrt (4/5), Real.sqrt (1/10), Real.sqrt (1/10)] : Fin 3 → ℝ) i ^ 2 = 1 := by
+    rayleigh (![Real.sqrt (4/5), Real.sqrt (1/10), Real.sqrt (1/10)] : Fin 3 → ℝ) ^ 2 =
+      13689 / 13885 := by
+  have hs :
+      ∑ i, (![Real.sqrt (4/5), Real.sqrt (1/10), Real.sqrt (1/10)] : Fin 3 → ℝ) i ^ 2 = 1 := by
     simp only [Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.head_cons, Matrix.tail_cons, Real.sq_sqrt (show (0:ℝ) ≤ 4/5 by norm_num),
       Real.sq_sqrt (show (0:ℝ) ≤ 1/10 by norm_num)]
@@ -266,7 +289,8 @@ private theorem h_strictMonoOn : StrictMonoOn cubic (Set.Icc (-1) 1) := by
   simp only [Set.mem_Icc] at ha hb
   have hq : (0:ℝ) < 3 - (a ^ 2 + a * b + b ^ 2) := by
     nlinarith [mul_pos (sub_pos.mpr hab) (sub_pos.mpr hab), mul_nonneg (sub_nonneg.mpr ha.2)
-      (neg_le_iff_add_nonneg.mp ha.1), mul_nonneg (sub_nonneg.mpr hb.2) (neg_le_iff_add_nonneg.mp hb.1)]
+      (neg_le_iff_add_nonneg.mp ha.1),
+      mul_nonneg (sub_nonneg.mpr hb.2) (neg_le_iff_add_nonneg.mp hb.1)]
   unfold cubic
   nlinarith [mul_pos (sub_pos.mpr hab) hq]
 
@@ -302,7 +326,8 @@ private theorem approach_unit (m : ℕ) (hm : 1 ≤ m) : ∑ i, approach m i ^ 2
   rw [this]; have : (m : ℝ) ≠ 0 := by exact_mod_cast (by omega : m ≠ 0)
   field_simp; ring
 
-private theorem fstar : (3 - largeMass ^ 2) ^ 2 / (9 - 6 * largeMass ^ 2 + largeMass ^ 3) = infimumValue := by
+private theorem fstar :
+    (3 - largeMass ^ 2) ^ 2 / (9 - 6 * largeMass ^ 2 + largeMass ^ 3) = infimumValue := by
   have hD : 0 < 9 - 6 * largeMass ^ 2 + largeMass ^ 3 := by
     have := largeMass_pos; have := largeMass_lt_one; nlinarith
   have hk : 23 * (3 - largeMass ^ 2) ^ 2 - 16 * (17 - 9 * Real.sqrt 3) *
@@ -359,8 +384,10 @@ theorem result :
       Filter.Tendsto (fun m => rayleigh (approach (m + 1)) ^ 2) Filter.atTop
         (nhds infimumValue) ∧
       (∀ (d : ℕ) (x : Fin d → ℝ), ∑ i, x i ^ 2 = 1 →
-        (∃ j k : Fin d, ∀ i, x i ≠ 0 → i = j ∨ i = k) → 80 / 81 ≤ rayleigh x ^ 2) ∧
-      (∃ x : Fin 2 → ℝ, (∀ i, 0 ≤ x i) ∧ ∑ i, x i ^ 2 = 1 ∧ rayleigh x ^ 2 = 80 / 81) ∧
+        (∃ j k : Fin d, ∀ i, x i ≠ 0 → i = j ∨ i = k) →
+          80 / 81 ≤ rayleigh x ^ 2 ∧ (rayleigh x ^ 2 = 80 / 81 ↔ 9 * ∑ i, (x i ^ 2) ^ 2 = 7)) ∧
+      (∃ x : Fin 2 → ℝ, (∀ i, 0 ≤ x i) ∧ ∑ i, x i ^ 2 = 1 ∧
+        rayleigh x ^ 2 = 80 / 81) ∧
       rayleigh (![Real.sqrt (4/5), Real.sqrt (1/10), Real.sqrt (1/10)] : Fin 3 → ℝ) ^ 2 =
         13689 / 13885 ∧ (13689 : ℝ) / 13885 < 80 / 81 :=
   ⟨h_strictMonoOn, h_one, ratio_strictAntiOn, fun _ x hs => lower_strict x hs, infimum,
