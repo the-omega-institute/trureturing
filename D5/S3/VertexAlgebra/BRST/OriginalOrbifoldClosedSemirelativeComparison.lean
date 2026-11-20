@@ -29,7 +29,7 @@ open scoped TensorProduct
 namespace D5.S3.VertexAlgebra.OriginalOrbifoldClosedSemirelativeComparison
 
 open D5.S3.Quantum.Fermionic
-open D5.S3.HomologicalAlgebra.FinitePerturbation (Cohomology)
+open D5.S3.HomologicalAlgebra.FinitePerturbation (boundaryMap Boundaries Cohomology)
 open OriginalOrbifoldCriticalMatter (Matter State Q b matterDatum)
 open OriginalOrbifoldBRSTSignedLocality (parity)
 open OriginalOrbifoldBRSTDescent (relativeStates)
@@ -39,6 +39,9 @@ open private parity_square Q_parity b_zero_parity b_square from
   D5.S3.VertexAlgebra.BRST.OriginalOrbifoldBRSTDescent
 open private c_zero_parity chiralMixed chiralL0_c chiralL0_parity chiralWard from
   D5.S3.VertexAlgebra.BRST.OriginalOrbifoldClosedSemirelative
+
+open private cycleMap cohomologyMap cohomologyMap_mk from
+  D5.S3.HomologicalAlgebra.FinitePerturbationCohomology
 
 noncomputable section
 
@@ -537,6 +540,278 @@ theorem shellCoordinates_differential (u v : R) :
   simp only [map_add, map_neg, connectingOperator_apply, includeRelative_chain,
     sumConnection, LinearMap.add_apply, Module.End.mul_apply]
   abel
+
+section Exactness
+
+set_option backward.isDefEq.respectTransparency false
+
+local notation "D" => shellDifferential
+local notation "C" => connectingOperator
+local notation "S" => shellCoordinates
+local notation "d²" =>
+  D5.S3.HomologicalAlgebra.ParityOddKunneth.closedDifferential_square
+    OriginalOrbifoldClosedRelativeKunneth.chiralComplex
+    OriginalOrbifoldClosedRelativeKunneth.chiralComplex
+local notation "D²" => shellDifferential_square
+local notation "Bᵣ" => Boundaries d d²
+local notation "Bₛ" => Boundaries D D²
+
+private lemma connection_d (v : R) : C (d v) = d (C v) :=
+  LinearMap.congr_fun connectingOperator_chain v
+
+private lemma shellInclusion_chain : shellInclusion.comp d = (D).comp shellInclusion := by
+  apply LinearMap.ext
+  intro u
+  exact Subtype.ext (includeRelative_chain u)
+
+private lemma shellInclusion_eq (u : R) : shellInclusion u = S (u, 0) := by
+  apply Subtype.ext
+  change includeRelative u = (S (u, 0) : ClosedState)
+  rw [shellCoordinates_apply, map_zero, map_zero, add_zero]
+
+private lemma coordinates_cycle_iff (u v : R) :
+    D (S (u, v)) = 0 ↔ d u + C v = 0 ∧ d v = 0 := by
+  rw [shellCoordinates_differential, ← (S).map_zero, (S).injective.eq_iff]
+  constructor
+  · intro h
+    exact ⟨congrArg Prod.fst h, neg_eq_zero.mp (congrArg Prod.snd h)⟩
+  · rintro ⟨hu, hv⟩
+    exact Prod.ext hu (by simp [hv])
+
+/-- Primitive in the shell of an included cycle, expressed in its native
+double-relative coordinates. The second coordinate is a cycle. -/
+theorem shellInclusion_boundary_iff (u : R) :
+    (∃ z : jointZeroShell, D z = shellInclusion u) ↔
+      ∃ a v : R, d v = 0 ∧ d a + C v = u := by
+  constructor
+  · rintro ⟨z, hz⟩
+    obtain ⟨⟨a, v⟩, rfl⟩ := (S).surjective z
+    rw [shellCoordinates_differential, shellInclusion_eq] at hz
+    have h := (S).injective hz
+    exact ⟨a, v, neg_eq_zero.mp (congrArg Prod.snd h), congrArg Prod.fst h⟩
+  · rintro ⟨a, v, hv, hu⟩
+    refine ⟨S (a, v), ?_⟩
+    rw [shellCoordinates_differential, shellInclusion_eq, hu, hv, neg_zero]
+
+/-- If the second coordinate has primitive `w`, subtract the boundary of
+`(0,-w)`. The residual cycle is included from the first coordinate. -/
+theorem shell_cycle_first_coordinate (u v w : R) (h : D (S (u, v)) = 0)
+    (hw : d w = v) :
+    d (u + C w) = 0 ∧
+      S (u, v) = shellInclusion (u + C w) + D (S (0, -w)) := by
+  refine ⟨?_, ?_⟩
+  · rw [map_add, ← connection_d, hw]
+    exact ((coordinates_cycle_iff u v).mp h).1
+  · have h : D (S (0, -w)) = S (-C w, v) := by
+      simp only [shellCoordinates_differential, map_zero, zero_add, map_neg, neg_neg, hw]
+    rw [shellInclusion_eq, h, ← (S).map_add]
+    exact congrArg S (Prod.ext (add_neg_cancel_right u (C w)).symm (zero_add v).symm)
+
+/-- For a cycle `v`, its shifted class lifts precisely when `C v` has a
+double-relative primitive. The lift from a primitive `a` is `(-a,v)`. -/
+theorem second_coordinate_lifts_iff (v : R) (hv : d v = 0) :
+    (∃ u : R, D (S (u, v)) = 0) ↔ ∃ a : R, d a = C v := by
+  constructor
+  · rintro ⟨u, hu⟩
+    refine ⟨-u, ?_⟩
+    rw [map_neg]
+    have hsum := ((coordinates_cycle_iff u v).mp hu).1
+    exact (eq_neg_of_add_eq_zero_right hsum).symm
+  · rintro ⟨a, ha⟩
+    exact ⟨-a, (coordinates_cycle_iff _ _).mpr
+      ⟨by rw [map_neg, ha, neg_add_cancel], hv⟩⟩
+
+/-- The native quotient map on cycle classes is `[v] ↦ [C v]`. In graded
+notation an input in the shifted copy at degree n has relative degree n-1
+and is sent to degree n+1. -/
+def connectingHomomorphism : DoubleRelativeCohomology →ₗ[ℂ] DoubleRelativeCohomology :=
+  cohomologyMap d d d² d² C connectingOperator_chain
+
+theorem connectingHomomorphism_class (v : LinearMap.ker d) :
+    connectingHomomorphism ((Bᵣ).mkQ v) =
+      (Bᵣ).mkQ (cycleMap d d C connectingOperator_chain v) :=
+  cohomologyMap_mk d d d² d² C connectingOperator_chain v
+
+def relativeToShell : DoubleRelativeCohomology →ₗ[ℂ] ShellCohomology :=
+  cohomologyMap d D d² D² shellInclusion shellInclusion_chain
+
+private def shellSecond : jointZeroShell →ₗ[ℂ] R :=
+  (LinearMap.snd ℂ R R).comp (S).symm.toLinearMap
+
+private lemma shellSecond_coord (u v : R) : shellSecond (S (u, v)) = v := by
+  simp only [shellSecond, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.symm_apply_apply, LinearMap.snd_apply]
+
+private def shellSecondCycle : LinearMap.ker D →ₗ[ℂ] LinearMap.ker d :=
+  (shellSecond.comp (LinearMap.ker D).subtype).codRestrict _ (by
+    intro z
+    have hz : D (z : jointZeroShell) = 0 := z.property
+    obtain ⟨⟨u, v⟩, he⟩ := (S).surjective (z : jointZeroShell)
+    change d (shellSecond (z : jointZeroShell)) = 0
+    rw [← he, shellSecond_coord]
+    rw [← he] at hz
+    exact ((coordinates_cycle_iff u v).mp hz).2)
+
+set_option maxHeartbeats 650000 in
+-- Elaborate the quotient map through the native tensor-state subtypes.
+def shellToRelative : ShellCohomology →ₗ[ℂ] DoubleRelativeCohomology :=
+  Submodule.mapQ Bₛ Bᵣ shellSecondCycle (by
+    intro z hz
+    obtain ⟨w, hw⟩ := LinearMap.mem_range.mp hz
+    obtain ⟨⟨a, v⟩, rfl⟩ := (S).surjective w
+    refine LinearMap.mem_range.mpr ⟨-v, Subtype.ext ?_⟩
+    have he : D (S (a, v)) = (z : jointZeroShell) :=
+      congrArg (fun y : LinearMap.ker D => (y : jointZeroShell)) hw
+    change d (-v) = shellSecond (z : jointZeroShell)
+    rw [← he, shellCoordinates_differential, shellSecond_coord, map_neg])
+
+theorem shellToRelative_class (z : LinearMap.ker D) :
+    shellToRelative ((Bₛ).mkQ z) = (Bᵣ).mkQ (shellSecondCycle z) := rfl
+
+private lemma class_eq_zero_iff {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A : Module.End ℂ V) (square : A * A = 0) (z : LinearMap.ker A) :
+    (Boundaries A square).mkQ z = 0 ↔ ∃ w : V, A w = (z : V) := by
+  rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+  change (∃ w : V, boundaryMap A square w = z) ↔ _
+  exact ⟨fun ⟨w, h⟩ => ⟨w, congrArg Subtype.val h⟩,
+    fun ⟨w, h⟩ => ⟨w, Subtype.ext h⟩⟩
+
+private lemma class_add_boundary_left {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A : Module.End ℂ V) (square : A * A = 0) (w : V) (z : LinearMap.ker A) :
+    (Boundaries A square).mkQ (boundaryMap A square w + z) =
+      (Boundaries A square).mkQ z := by
+  have hzero := (class_eq_zero_iff A square (boundaryMap A square w)).mpr ⟨w, rfl⟩
+  exact ((Boundaries A square).mkQ.map_add _ _).trans
+    ((congrArg (· + (Boundaries A square).mkQ z) hzero).trans (zero_add _))
+
+private lemma class_sub_eq_zero {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (A : Module.End ℂ V) (square : A * A = 0) (x y : LinearMap.ker A)
+    (h : (Boundaries A square).mkQ x = (Boundaries A square).mkQ y) :
+    (Boundaries A square).mkQ (x - y) = 0 :=
+  ((Boundaries A square).mkQ.map_sub x y).trans
+    ((congrArg ((Boundaries A square).mkQ x - ·) h.symm).trans (sub_self _))
+
+private lemma shell_cycle_coordinates (z : LinearMap.ker D) :
+    ∃ u v : R, S (u, v) = (z : jointZeroShell) := by
+  obtain ⟨⟨u, v⟩, he⟩ := (S).surjective (z : jointZeroShell)
+  exact ⟨u, v, he⟩
+
+set_option maxHeartbeats 2000000 in
+-- Elaborate equalities between representatives of the native quotient.
+theorem exact_connecting_relativeToShell :
+    Function.Exact connectingHomomorphism relativeToShell := by
+  intro q
+  obtain ⟨u, rfl⟩ := Submodule.mkQ_surjective Bᵣ q
+  have hclass :
+      relativeToShell ((Bᵣ).mkQ u) =
+        (Bₛ).mkQ (cycleMap d D shellInclusion shellInclusion_chain u) := rfl
+  change relativeToShell ((Bᵣ).mkQ u) = 0 ↔
+    ∃ w, connectingHomomorphism w = (Bᵣ).mkQ u
+  refine (Iff.of_eq (congrArg (fun q : ShellCohomology => q = 0) hclass)).trans ?_
+  refine (class_eq_zero_iff D D² (cycleMap d D shellInclusion shellInclusion_chain u)).trans ?_
+  change (∃ z, D z = shellInclusion (u : R)) ↔ _
+  refine (shellInclusion_boundary_iff (u : R)).trans ?_
+  constructor
+  · rintro ⟨a, v, hv, h⟩
+    let vCycle : LinearMap.ker d := ⟨v, hv⟩
+    refine ⟨(Bᵣ).mkQ vCycle, ?_⟩
+    change (Bᵣ).mkQ (cycleMap d d C connectingOperator_chain vCycle) = (Bᵣ).mkQ u
+    have he : u = boundaryMap d d² a + cycleMap d d C connectingOperator_chain vCycle :=
+      Subtype.ext h.symm
+    exact (class_add_boundary_left d d² a
+      (cycleMap d d C connectingOperator_chain vCycle)).symm.trans (congrArg (Bᵣ).mkQ he.symm)
+  · rintro ⟨p, hp⟩
+    obtain ⟨v, rfl⟩ := Submodule.mkQ_surjective Bᵣ p
+    have hpc := (connectingHomomorphism_class v).symm.trans hp
+    obtain ⟨a, ha⟩ := (class_eq_zero_iff d d² _).mp
+      (class_sub_eq_zero d d² u (cycleMap d d C connectingOperator_chain v) hpc.symm)
+    change d a = (u : R) - C (v : R) at ha
+    exact ⟨a, v, v.property, eq_sub_iff_add_eq.mp ha⟩
+
+set_option maxHeartbeats 2000000 in
+-- Elaborate equalities between representatives of the native quotient.
+theorem exact_relativeToShell_shellToRelative :
+    Function.Exact relativeToShell shellToRelative := by
+  intro q
+  obtain ⟨z, rfl⟩ := Submodule.mkQ_surjective Bₛ q
+  change shellToRelative ((Bₛ).mkQ z) = 0 ↔ ∃ w, relativeToShell w = (Bₛ).mkQ z
+  refine (Iff.of_eq (congrArg (fun q : DoubleRelativeCohomology => q = 0)
+    (shellToRelative_class z))).trans ?_
+  refine (class_eq_zero_iff d d² (shellSecondCycle z)).trans ?_
+  have hz : D (z : jointZeroShell) = 0 := z.property
+  obtain ⟨u, v, he⟩ := shell_cycle_coordinates z
+  rw [← he] at hz
+  have hs : (shellSecondCycle z : R) = v := by
+    change shellSecond (z : jointZeroShell) = v
+    rw [← he, shellSecond_coord]
+  rw [hs]
+  constructor
+  · rintro ⟨w, hw⟩
+    obtain ⟨h, hsum⟩ := shell_cycle_first_coordinate _ _ _ hz hw
+    let x : LinearMap.ker d := ⟨u + C w, h⟩
+    let xShell := cycleMap d D shellInclusion shellInclusion_chain x
+    refine ⟨(Bᵣ).mkQ x, ?_⟩
+    change (Bₛ).mkQ xShell = (Bₛ).mkQ z
+    have heq : z = xShell + boundaryMap D D² (S (0, -w)) :=
+      Subtype.ext (he.symm.trans hsum)
+    have heq' : z = boundaryMap D D² (S (0, -w)) + xShell :=
+      heq.trans (add_comm _ _)
+    exact (class_add_boundary_left D D² (S (0, -w)) xShell).symm.trans
+      (congrArg (Bₛ).mkQ heq'.symm)
+  · rintro ⟨p, hp⟩
+    obtain ⟨x, rfl⟩ := Submodule.mkQ_surjective Bᵣ p
+    let xShell := cycleMap d D shellInclusion shellInclusion_chain x
+    change (Bₛ).mkQ xShell = (Bₛ).mkQ z at hp
+    obtain ⟨w, hw⟩ := (class_eq_zero_iff D D² _).mp
+      (class_sub_eq_zero D D² xShell z hp)
+    obtain ⟨⟨a, t⟩, rfl⟩ := (S).surjective w
+    have ht := congrArg shellSecond hw
+    change shellSecond (D (S (a, t))) =
+      shellSecond (shellInclusion (x : R) - (z : jointZeroShell)) at ht
+    rw [shellCoordinates_differential, shellSecond_coord, map_sub, shellInclusion_eq,
+      shellSecond_coord, ← he, shellSecond_coord, zero_sub] at ht
+    exact ⟨t, neg_injective ht⟩
+
+set_option maxHeartbeats 2000000 in
+-- Elaborate equalities between representatives of the native quotient.
+theorem exact_shellToRelative_connecting :
+    Function.Exact shellToRelative connectingHomomorphism := by
+  intro q
+  obtain ⟨v, rfl⟩ := Submodule.mkQ_surjective Bᵣ q
+  change connectingHomomorphism ((Bᵣ).mkQ v) = 0 ↔ ∃ w, shellToRelative w = (Bᵣ).mkQ v
+  refine (Iff.of_eq (congrArg (fun q : DoubleRelativeCohomology => q = 0)
+    (connectingHomomorphism_class v))).trans ?_
+  refine (class_eq_zero_iff d d² (cycleMap d d C connectingOperator_chain v)).trans ?_
+  change (∃ a, d a = C (v : R)) ↔ _
+  refine (second_coordinate_lifts_iff (v : R) v.property).symm.trans ?_
+  constructor
+  · rintro ⟨u, hu⟩
+    let z : LinearMap.ker D := ⟨S (u, v), hu⟩
+    refine ⟨(Bₛ).mkQ z, ?_⟩
+    exact (shellToRelative_class z).trans
+      (congrArg (Bᵣ).mkQ (Subtype.ext (shellSecond_coord u v)))
+  · rintro ⟨p, hp⟩
+    obtain ⟨z, rfl⟩ := Submodule.mkQ_surjective Bₛ p
+    have hpc := (shellToRelative_class z).symm.trans hp
+    obtain ⟨u, t, he⟩ := shell_cycle_coordinates z
+    have hs : (shellSecondCycle z : R) = t := by
+      change shellSecond (z : jointZeroShell) = t
+      rw [← he, shellSecond_coord]
+    obtain ⟨w, hw⟩ := (class_eq_zero_iff d d² _).mp
+      (class_sub_eq_zero d d² v (shellSecondCycle z) hpc.symm)
+    change d w = (v : R) - (shellSecondCycle z : R) at hw
+    rw [hs] at hw
+    have hcycle : D (S (u, t)) = 0 := by
+      rw [he]
+      exact z.property
+    have hu := ((coordinates_cycle_iff _ _).mp hcycle).1
+    refine ⟨u - C w, (coordinates_cycle_iff _ _).mpr ⟨?_, v.property⟩⟩
+    rw [map_sub, ← connection_d, hw, map_sub]
+    calc
+      _ = d u + C t := by abel
+      _ = 0 := hu
+
+end Exactness
 
 end
 
