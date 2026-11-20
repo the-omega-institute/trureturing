@@ -6,6 +6,7 @@
    utility: none
    digest: One clipped weight family allocates all compatible grouped demands. -/
 
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Ring.GeomSum
