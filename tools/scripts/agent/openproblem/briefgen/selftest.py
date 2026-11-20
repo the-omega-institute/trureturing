@@ -328,6 +328,11 @@ def case(tool, variant=None):
             assert '#12349 10.1000/xyz.123\n' in compact, 'oracle brief drops a DOI'
             assert 'refute a synthetic conjecture' not in compact, 'oracle brief keeps a full title that names an identifier'
             assert '#12345 Preregister synthetic question' in compact, 'oracle brief drops an issue without an identifier'
+        if tool.stem == 'lane_brief':
+            brief = (root / 'scratch/briefs/impl-op-w1-sample.md').read_text()
+            assert 'ancestor`: follow the ancestry recovery in step 5′' in brief
+            recovery = brief.split('\n5′. ', 1)[1].split('\n6.', 1)[0]
+            assert recovery.index('make lean-report-prepare LEAN_TARGETS=') < recovery.index('make lean-report-scoped LEAN_TARGETS=')
         if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
             path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
                     'rework-sample.md' if tool.stem == 'rework_brief' else
