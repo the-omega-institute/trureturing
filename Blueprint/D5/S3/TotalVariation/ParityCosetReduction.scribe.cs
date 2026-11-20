@@ -44,7 +44,14 @@ internal sealed class ParityCosetReductionDocument : IScribeDocumentDefinition
                     + "fair coefficient. Flipping that fair bit exchanges the two values of "
                     + "the row while preserving input mass, giving a fair marginal. Thus the "
                     + "product of all output marginals is uniform on A times r, where r is "
-                    + "the product of the marginal masses of the outputs in B."))),
+                    + "the product of the marginal masses of the outputs in B.")),
+                Paragraph(Text(
+                    "For the outputs Y1, Y2, Y1+Y2+V, and V, the two fair inputs generate "
+                    + "the even-parity plane in the first three coordinates. The quotient "
+                    + "class is the sum of those coordinates. With m the law of V, the reduced "
+                    + "joint mass at (c,v) is m(v) when c=v and zero otherwise. The reduced "
+                    + "reference mass is m(v)/2 at both values of c. Summing the two absolute "
+                    + "differences gives m(v), and the total variation is one half."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()

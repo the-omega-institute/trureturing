@@ -20,6 +20,8 @@ Write Q for the quotient of A by the image of f, and project the first coordinat
 
 For the affine binary parity outputs of section 35.6.8 in Quantum Geometry, take F to be the binary vector space of fair input assignments and Z to be the assignments of the biased bits with their product mass w. Let A and B be the binary vector spaces on the output indices that meet a fair input and those that use biased inputs only, respectively. The fair-input coefficient map is f. The shifts a and the outputs b include the biased contributions and the affine offsets. Each row in A has a nonzero fair coefficient. Flipping that fair bit exchanges the two values of the row while preserving input mass, giving a fair marginal. Thus the product of all output marginals is uniform on A times r, where r is the product of the marginal masses of the outputs in B.
 
+For the outputs Y1, Y2, Y1+Y2+V, and V, the two fair inputs generate the even-parity plane in the first three coordinates. The quotient class is the sum of those coordinates. With m the law of V, the reduced joint mass at (c,v) is m(v) when c=v and zero otherwise. The reduced reference mass is m(v)/2 at both values of c. Summing the two absolute differences gives m(v), and the total variation is one half.
+
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParityCosetReduction.total_variation_noise_image_quotient`
