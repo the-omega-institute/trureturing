@@ -47,7 +47,10 @@ internal sealed class SchiavoTwoRunRentOrBuyDocument : IScribeDocumentDefinition
                         + "prefixes. The competitive inequality follows from cycle accounting, and the "
                         + "additive inequality follows from the two constant-block comparison. The "
                         + "empty increment list represents a one-call session."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("schiavo-2026-two-run-rent-or-buy"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Model(string name, string title, string explanation) =>
         Describe.Lean(

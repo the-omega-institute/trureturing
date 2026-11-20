@@ -52,6 +52,10 @@ $$\exists (c: \mathbb{R}), 1\le c\land (\forall (K: \mathbb{R}), 0<K\Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.schiavo_section5b_third_question` (`✓ std3`). ∎
 
+*Resolves.* `Problems/schiavo-2026-two-run-rent-or-buy` (proved) by `D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.schiavo_section5b_third_question`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"schiavo-2026-two-run-rent-or-buy","declaration_gid":"D5/S3/Combinatorics/OnlineAlgorithms/SchiavoTwoRunRentOrBuy.schiavo_section5b_third_question","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vasco Schiavo (2026). *A Sharp Additive Bound for the Threshold Rule in Repeated Rent-or-Buy*. URL: <https://arxiv.org/abs/2611.06955v1>.
