@@ -14,7 +14,7 @@ triage: anchor
 
 # Residual prime finiteness of free groups
 
-## Exact source attestation
+## Verified locator
 
 The immutable source revision is
 `d91980bdc255e6e50506be147ad9bcb88eb9fcc0` in
