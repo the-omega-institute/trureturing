@@ -320,7 +320,35 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\forall (C
 
 The map acts on colourings by the geometric symmetry and carries the selected defective bond along with it. Applying the symmetry twice gives the inverse.
 
-**Theorem 1.24 (Twenty-four labelled colourings per canonical colouring).**
+**Definition 1.24 (Three occurring colours).**
+
+$$\forall (X: \operatorname{Type}), (\forall (f: (X) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{KingGrid}.\operatorname{UsesThree}\left(f\right)) \Leftrightarrow (\exists (a: X), (\exists (b: X), (\exists (c: X), ((f\left(a\right) \ne f\left(b\right)) \land ((f\left(a\right) \ne f\left(c\right)) \land (f\left(b\right) \ne f\left(c\right)))))))))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.UsesThree` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin (2013). *T(n,k) = number of defective 4-colorings of an n X k 0..3 array connected horizontally, vertically, diagonally and antidiagonally with exactly one mistake, and colors introduced in row-major 0..3 order.*. URL: <https://oeis.org/A229578>.
+
+*Commentary.*
+
+Three domain points have pairwise distinct colours.
+
+**Theorem 1.25 (Free colour orbits for an invariant family).**
+
+$$\forall (X: \operatorname{Type}), ([\operatorname{Finite}\left(X\right)], [\operatorname{LinearOrder}\left(X\right)], \forall (S: ((X) \to (\operatorname{Fin}\left(4\right))) \to (\operatorname{Prop})), ((\forall (p: \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(4\right)\right)), (\forall (f: (X) \to (\operatorname{Fin}\left(4\right))), ((S\left(\operatorname{Function}.\operatorname{comp}\left(p, f\right)\right)) \Leftrightarrow (S\left(f\right))))) \Rightarrow ((\forall (f: (X) \to (\operatorname{Fin}\left(4\right))), ((S\left(f\right)) \Rightarrow (\operatorname{KingGrid}.\operatorname{UsesThree}\left(f\right)))) \Rightarrow (\operatorname{Nat}.\operatorname{card}\left(\{f: (X) \to (\operatorname{Fin}\left(4\right)) // (S\left(f\right))\}\right) = (24) \cdot (\operatorname{Nat}.\operatorname{card}\left(\{f: (X) \to (\operatorname{Fin}\left(4\right)) // ((S\left(f\right)) \land (\operatorname{HardinA233177Canonical}.\operatorname{Canonical}\left(f\right)))\}\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.canonical_count_three` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin (2013). *T(n,k) = number of defective 4-colorings of an n X k 0..3 array connected horizontally, vertically, diagonally and antidiagonally with exactly one mistake, and colors introduced in row-major 0..3 order.*. URL: <https://oeis.org/A229578>.
+
+*Commentary.*
+
+For a finite linearly ordered domain, any family invariant under all colour permutations and using at least three colours has twenty-four labelled members per canonical representative. This is the original general orbit-counting theorem used by the one-defect and two-defect normalizations.
+
+**Theorem 1.26 (Twenty-four labelled colourings per canonical colouring).**
 
 $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), ((2 \le n) \Rightarrow ((2 \le k) \Rightarrow (\operatorname{KingGrid}.\operatorname{L}\left(n, k\right) = (24) \cdot (\operatorname{KingGrid}.\operatorname{T}\left(n, k\right))))))$$
 
@@ -342,6 +370,8 @@ For both side lengths at least two, each one-defect array uses at least three co
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.L`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.OneDefect`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.T`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.UsesThree`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.canonical_count_three`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.count_by_edge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.end0`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.end1`
@@ -361,4 +391,5 @@ For both side lengths at least two, each one-defect array uses at least three co
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transposeEdge`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/KingDefects/KingGrid.transpose_mono`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip](../../../Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/Topology/QuandleMarkovColoring](../../../Topology/QuandleMarkovColoring.md)
