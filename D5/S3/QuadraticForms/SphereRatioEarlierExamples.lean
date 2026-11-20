@@ -288,10 +288,12 @@ theorem result :
         ∀ d, ∀ r ∈ values (fun _ => 1) d, 0 < r) ∧
       (∀ d : ℕ, 1 ≤ d → IsGLB {r | ∃ e ≤ d, r ∈ values (fun _ => 1) e} (1 / Real.sqrt d) ∧
         (2 ≤ d → ∀ e ≤ d, ∀ r ∈ values (fun _ => 1) e, 1 / Real.sqrt d < r)) ∧
-      (1 : ℝ) ∈ values (fun _ => 1) 1 ∧
+      values (fun _ => 1) 1 = {1} ∧
       (∀ d : ℕ, 2 ≤ d → IsGLB (values (fun t => 1 / t) d) 0 ∧
         ∀ r ∈ values (fun t => 1 / t) d, 0 < r) := by
-  refine ⟨fun d hd => ?_, one_all, one_upto, one_mem_one, fun d hd => ?_⟩
+  refine ⟨fun d hd => ?_, one_all, one_upto,
+    Set.eq_singleton_iff_unique_mem.mpr ⟨one_mem_one, fun r hr => values_one_one hr⟩,
+    fun d hd => ?_⟩
   · obtain ⟨k, rfl⟩ : ∃ k, d = k + 1 := ⟨d - 1, by omega⟩
     have := one_fixed k
     push_cast
