@@ -28,12 +28,9 @@ private theorem fixed_positive_of_cycle {k m p : ℕ} {g : Equiv.Perm (Fin k)}
     ∃ i : Fin k, 0 < x.val i ∧ g i = i := by
   classical
   obtain ⟨i, hi⟩ := cycle
-  have constant (j : Fin k) : x.val (g j) = x.val j := by
-    have eq := congrArg (fun a : Profile (Fin k) m => a.val (g j)) fixed
-    change x.val (g⁻¹ (g j)) = x.val (g j) at eq
-    change x.val (g.symm (g j)) = x.val (g j) at eq
-    rw [g.symm_apply_apply] at eq
-    exact eq.symm
+  have preserves := PermutationGridSupport.preserving_of_fix
+    (show relabel g x = x from fixed)
+  have constant (j : Fin k) : x.val (g j) = x.val j := congrFun preserves j
   have power (n : ℕ) : ∀ j : Fin k, x.val ((g ^ n) j) = x.val j := by
     induction n with
     | zero => simp
