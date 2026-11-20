@@ -73,3 +73,4 @@ The finite sampling transport theorem maps the conditioned draw law to the unifo
 - Truth anchor: `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.distinctLaw_test_bound`
 - Truth anchor: `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.uniformSampleLaw_tendsto`
 - Truth anchor: `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.withReplacement_tendsto`
+- Dependency: [D5/S3/Analytic/Probability/ChenFixedOrderSampling](../../Analytic/Probability/ChenFixedOrderSampling.md)

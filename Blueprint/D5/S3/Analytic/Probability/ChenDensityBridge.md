@@ -21,3 +21,4 @@ Integrating on a real event under the pushforward of Q gives the same integral a
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Probability/ChenDensityBridge.tiltedSample_spec`
+- Dependency: [D5/S3/Analytic/Probability/ChenFixedOrderSampling](ChenFixedOrderSampling.md)
