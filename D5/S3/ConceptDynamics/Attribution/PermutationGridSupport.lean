@@ -1,7 +1,7 @@
 /- GID: D5/S3/ConceptDynamics/Attribution/PermutationGridSupport
    generality: G
-   mirror - B: D5/B/S3/ConceptDynamics/Attribution/PermutationGridSupport
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/ConceptDynamics/Attribution/PermutationGridSupport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Sharp finite seed budgets for exact calibration under all outcome permutations. -/
@@ -67,7 +67,7 @@ private theorem select_bounded_counts {I : Type*} [DecidableEq I]
       exact Nat.add_sub_of_le (min_le_left N (capacity j))
 
 /-- If the old total covers the maximal combined loss from rounding down capacities, then
-all requested new equal - weight blocks fit within the target counts. -/
+all requested new equal-weight blocks fit within the target counts. -/
 private theorem extend_block_allocation {I : Type*} [Fintype I] [Nonempty I]
     (x : I → ℕ) {d M old : ℕ} (positive : 0 < d)
     (threshold : (Fintype.card I - 1) * (d - 1) ≤ old)
