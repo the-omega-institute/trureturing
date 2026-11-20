@@ -17,14 +17,14 @@ internal sealed class PrimeOnlyTailCorrectionDocument : IScribeDocumentDefinitio
             Blocks(
                 Paragraph(Text(
                     "For α equal to the prime-power function ψ or the prime-only function ϑ, let "
-                    + "Qα(x) be the integral of (α(t)−t)/t² from x to infinity. "
-                    + "Write D(x)=Qψ(x)−Qϑ(x), and let W(a,b) be the integral from a to b of "
+                    + "Qα(x) be the absolutely convergent integral of (α(t)−t)/t² from x ≥ 1 to infinity. "
+                    + "Write D(x)=Qψ(x)−Qϑ(x). For 1 ≤ a ≤ b, let W(a,b) be the integral from a to b of "
                     + "[max(−Qϑ(x),0)−max(−Qψ(x),0)]/√x. All variables are real.")),
                 Paragraph(Text(
-                    "Subtracting the two absolutely convergent tails expresses D as the integral "
+                    "For every x ≥ 1, subtracting the two tails expresses D(x) as the integral "
                     + "of the nonnegative kernel (ψ(t)−ϑ(t))/t². The prime number theorem gives "
-                    + "(ψ(t)−ϑ(t))/√t → 1. Beyond a fixed cutoff the ratio lies within ε of one, "
-                    + "so the entire tail is trapped between (1−ε) and (1+ε) times the integral "
+                    + "(ψ(t)−ϑ(t))/√t → 1. For any ε > 0 the ratio lies within ε of one at every sufficiently large t, "
+                    + "so for every sufficiently large x the entire tail lies between (1−ε) and (1+ε) times the integral "
                     + "of t to the power −3/2. That integral equals 2/√x.")),
                 Paragraph(Text(
                     "A Chebyshev bound ψ(t)−ϑ(t) ≤ C√t exists unconditionally. Negative parts "
