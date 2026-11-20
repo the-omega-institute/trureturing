@@ -213,13 +213,10 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 
-/-! ## The operator span and the trace pairing
-
-Scalar field, index type, spaces and their dictionaries, shared by the registrations of
-`span_range_pi_eq_top` and `eq_zero_of_tracePairing`. -/
+/-! ## The operator span and the trace pairing -/
 
 set_option linter.checkUnivs false in
-/-- The scalar field, index type, spaces and dictionaries. -/
+/-- The scalar field, index type, spaces and dictionaries of `eq_zero_of_tracePairing`. -/
 abbrev EndParams := Σ k : Type uk, Σ _ : Field k, Σ ι : Type uι, Σ W : ι → Type uW,
   Σ _ : (∀ i, AddCommGroup (W i)), ∀ i, Module k (W i)
 
@@ -249,36 +246,42 @@ private abbrev testEndParams : EndParams.{uk, uι, uW} :=
 namespace Span
 
 set_option linter.checkUnivs false in
+/-- Scalar field, group, index type, spaces and their dictionaries. -/
+abbrev Params := Σ k : Type uk, Σ G : Type uG, Σ _ : Field k, Σ _ : Group G, Σ ι : Type uι,
+  Σ W : ι → Type uW, Σ _ : (∀ i, AddCommGroup (W i)), ∀ i, Module k (W i)
+
+set_option linter.checkUnivs false in
 abbrev signature : Signature where
-  Params := EndParams.{uk, uι, uW}
-  State p := letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
-    Set (∀ i, Module.End p.1 (p.2.2.2.1 i))
+  Params := Params.{uk, uG, uι, uW}
+  State p := letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
+    Set (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i))
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
-    Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.1 i))
+  Output _ p := letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
+    Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i))
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{uk, uι, uW} :=
-  realize signature (fun _ p s => letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
+def actual : Realization signature.{uk, uG, uι, uW} :=
+  realize signature (fun _ p s => letI := p.2.2.1; letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2
     Submodule.span p.1 s) (fun e => nomatch e)
 
-def rejected : Realization signature.{uk, uι, uW} :=
-  realize signature (fun _ p _ => letI := p.2.1; letI := p.2.2.2.2.1; letI := p.2.2.2.2.2
-    (⊥ : Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.1 i)))) (fun e => nomatch e)
+def rejected : Realization signature.{uk, uG, uι, uW} :=
+  realize signature (fun _ p _ => letI := p.2.2.1; letI := p.2.2.2.2.2.2.1;
+    letI := p.2.2.2.2.2.2.2
+    (⊥ : Submodule p.1 (∀ i, Module.End p.1 (p.2.2.2.2.2.1 i)))) (fun e => nomatch e)
 
 set_option linter.checkUnivs false in
 /-- The complete original telescope is retained; only the span of the operator families varies. -/
 abbrev arena : Arena where
-  signature := signature.{uk, uι, uW}
-  Law R := ∀ {k : Type uk} {G : Type uG} [fk : Field k] [IsAlgClosed k] [Group G]
+  signature := signature.{uk, uG, uι, uW}
+  Law R := ∀ {k : Type uk} {G : Type uG} [fk : Field k] [IsAlgClosed k] [gG : Group G]
     {ι : Type uι} [Fintype ι] {W : ι → Type uW} [aW : ∀ i, AddCommGroup (W i)]
     [mW : ∀ i, Module k (W i)] [∀ i, FiniteDimensional k (W i)]
     (ρ : ∀ i, Representation k G (W i)) [∀ i, (ρ i).IsIrreducible]
     (_hne : ∀ i j, i ≠ j → IsEmpty ((ρ i).Equiv (ρ j))),
-    R.readout () ⟨k, fk, ι, W, aW, mW⟩
+    R.readout () ⟨k, G, fk, gG, ι, W, aW, mW⟩
       (Set.range fun g : G => (fun i => ρ i g : ∀ i, Module.End k (W i))) = ⊤
 
 /-- On the trivial representation of the trivial group on a line the zero submodule is not
@@ -287,9 +290,11 @@ theorem rejected_law : ¬ arena.{uk, uG, uι, uW}.Law rejected := by
   intro h
   exact test_bot_ne_top (h (k := testK.{uk}) (G := testG.{uG}) (W := testW.{uι, uW}) testρ test_hne)
 
-theorem dependence : ObservationalDependence signature.{uk, uι, uW} actual := by
+theorem dependence : ObservationalDependence signature.{uk, uG, uι, uW} actual := by
   intro i
-  refine ⟨testEndParams, ∅, Set.univ, fun h => test_bot_ne_top ?_⟩
+  refine ⟨⟨testK, testG, inferInstance, inferInstance, testI, testW, inferInstance,
+    inferInstance⟩, ∅, Set.univ,
+    fun h => test_bot_ne_top ?_⟩
   have h' : Submodule.span testK.{uk}
       (∅ : Set (∀ i : testI.{uι}, Module.End testK.{uk} (testW.{uι, uW} i))) =
       Submodule.span testK.{uk} Set.univ := h
@@ -310,7 +315,7 @@ end Span
 
 def span_range_pi_eq_top_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@span_range_pi_eq_top.{uk, uG, uι, uW})
-    (Realization Span.signature.{uk, uι, uW}) Unit Unit := {
+    (Realization Span.signature.{uk, uG, uι, uW}) Unit Unit := {
   unitName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.span_range_pi_eq_top_unit
   realizationName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank.Span.source
   realizationSource := none
@@ -322,8 +327,8 @@ def span_range_pi_eq_top_registration : Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source Span.arena ⟨Span.source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Span.signature (fun _ p s => letI := p.2.1; letI := p.2.2.2.2.1;
-    letI := p.2.2.2.2.2; Submodule.span p.1 s) (fun e => nomatch e))
+  readout := some (realize Span.signature (fun _ p s => letI := p.2.2.1;
+    letI := p.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2; Submodule.span p.1 s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -331,7 +336,7 @@ def span_range_pi_eq_top_registration : Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
     definition := none
-    coordinates := #[0, 5, 7]
+    coordinates := #[0, 1, 5, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "fn", "arg"]
