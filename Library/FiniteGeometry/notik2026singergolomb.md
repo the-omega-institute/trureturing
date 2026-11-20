@@ -9,6 +9,9 @@ claim: "The paper defines real order chambers, conjectures chamber uniqueness fo
 strata_touched:
   - D5/S3/Geometry/FiniteGeometry/NotikSingerChamber
   - D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber
+  - D5/S3/Combinatorics/Golomb/Replay
+  - D5/S3/Combinatorics/Golomb/EqualityReplay
+  - D5/S3/Combinatorics/Golomb/NotikMinimizers
 license: citation-only
 triage: anchor
 ---
@@ -47,3 +50,9 @@ The last bullet of §10, page 8, asks
 Notik cites R. C. Bose, “An affine analogue of Singer's theorem”, J. Indian Math.
 Soc. (N.S.) 6 (1942), 1–15, and I. Z. Ruzsa, “Solving a linear equation in a set of
 integers I”, Acta Arith. 65 (1993), 259–282. [Ruzsa, Theorem 4.4](https://doi.org/10.4064/aa-65-3-259-282)
+
+## Real minimizers with eight to ten marks
+
+Esther Notik defines normalized real rulers by strict increase from zero, pair distances of at least one, and distances of distinct pairs separated by at least one. Theorem 1 gives minima (34,44,55) for eight, nine, and ten marks. Section 10, p. 8, third bullet, asks whether the shortest real rulers at these sizes are exactly the optimal integer rulers. [Paper, arXiv:2611.22656v1](https://arxiv.org/pdf/2611.22656v1#page=8)
+
+The companion archive contains exact branch trees for the lower bounds from five through ten marks. The archived trees and static rows represented in Lean are adapted from Esther Notik's v3 data under CC BY 4.0. The tied-leaf certificates extend the replay to the equality question. [Zenodo archive v3](https://doi.org/10.5281/zenodo.24309145) · [Data attribution and license](../../docs/reports/licenses/notik-golomb-archive.md)
