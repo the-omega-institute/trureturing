@@ -37,13 +37,16 @@ internal sealed class MannaMandalTuraCographDistanceGapRefutationDocument : IScr
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation of the uniform gap", new Formula.Not(Par(ClaimBody())),
                 "For every proposed ε, the joined matching family supplies a finite connected cograph and a real distance eigenvalue strictly inside the proposed interval. Open Problem 14.2(ii) asks separately about attaining the multiplicity bound.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("manna-mandal-tura-2026-cograph-distance-left-gap"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mmt-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
