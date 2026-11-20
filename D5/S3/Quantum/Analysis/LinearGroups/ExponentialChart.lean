@@ -4,14 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exponential chart of a locally compact group injecting into a real unit group. -/
+   digest: Exponential chart of a locally compact group injecting into units of a real algebra. -/
 
 import D5.S3.Quantum.Analysis.LinearGroups.OneParameterGenerators
 import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Compactness.LocallyCompact
-import Mathlib.Topology.Connected.Basic
 
 /-!
 # Exponential chart of a locally compact group in a finite-dimensional algebra
