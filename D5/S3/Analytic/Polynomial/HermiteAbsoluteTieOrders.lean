@@ -59,7 +59,7 @@ theorem max_iff_weight (k j : ℕ) :
     · rw [hz]; exact hp.le
     · rw [hw]; exact weight_le_mode k s hs
 
-private theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
+theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
     weight k r < weight k (r + 1) := by
   have hm := mode_rises k
   have hmd := hm.1
@@ -102,7 +102,7 @@ theorem adjacent_equal (k r : ℕ) (hr : 2 * (r + 1) ≤ k) :
     rw [this] at he
     nlinarith
 
-private theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
+theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
     (he : second (k - 2 * r) = 4 * r) : r = mode k := by
   have hle : r ≤ mode k := le_mode ⟨hk, he.ge⟩
   have hm := mode_rises k
