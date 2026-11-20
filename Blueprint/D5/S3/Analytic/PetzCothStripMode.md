@@ -22,4 +22,3 @@ Yang's width-one-half strip Poisson formula supplies the weight. On the positive
 
 - Truth anchor: `D5/S3/Analytic/PetzCothStripMode.integral_lowerMode`
 - Dependency: [D5/S3/Analytic/CothBernoulliDegree/PartialFraction](CothBernoulliDegree/PartialFraction.md)
-- Dependency: [D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition](../Weil/ZetaGamma/ArchimedeanJumpDecomposition.md)
