@@ -1,6 +1,7 @@
 using StrataLint.Runtime;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
@@ -148,15 +149,38 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     private (string Path, RawChangeKind Kind)[] ReadRawChanges(string revision)
     {
         var changes = ParseChanges(ReadNameStatus(revision))
-            .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
-                .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
             .GroupBy(static change => change.Path, StringComparer.Ordinal)
-            .Select(static group => group
-                .OrderBy(static change => ChangeKindPriority(change.Kind))
-                .First())
-            .OrderBy(static change => change.Path, StringComparer.Ordinal)
-            .ToArray();
-        return changes;
+            .ToDictionary(static group => group.Key,
+                static group => group.MinBy(change => ChangeKindPriority(change.Kind)).Kind, StringComparer.Ordinal);
+        var retained = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var path in ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z")))
+        {
+            if (!changes.TryAdd(path, RawChangeKind.Added) && changes[path] == RawChangeKind.Deleted)
+                retained.Add(path);
+        }
+        if (retained.Count > 0) ReconcileRetainedFiles(revision, retained, changes);
+        return changes.OrderBy(static item => item.Key, StringComparer.Ordinal)
+            .Select(static item => (item.Key, item.Value)).ToArray();
+    }
+
+    // An index deletion can have a nonignored working-tree file at the same path.
+    // Compare the candidate snapshot's effective mode and raw bytes with the base tree.
+    private void ReconcileRetainedFiles(string revision, HashSet<string> retained, Dictionary<string, RawChangeKind> changes)
+    {
+        var baseline = GitRepositoryTreeStream.Read(revision, (args, limit, input, read) => GitStreaming(args, limit, read, input))
+            .Where(entry => retained.Contains(entry.Path)).ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+        var current = ReadCurrent([.. retained.Select(path => ":(literal)" + path)]);
+        var modes = current.PathInventory.ToDictionary(entry => entry.Path, entry => entry.EffectiveMode, StringComparer.Ordinal);
+        foreach (var entry in current.Entries.Where(entry => retained.Contains(entry.Path)))
+        {
+            var original = baseline[entry.Path];
+            var sha1 = original.ObjectId.Length == 40;
+            var oid = FrozenContentAddress.ComputeGitBlobOid(entry.Bytes.AsSpan(), sha1 ? HashAlgorithmName.SHA1 : HashAlgorithmName.SHA256);
+            if (modes[entry.Path] == original.Mode && oid == (sha1 ? "git-sha1:" : "git-sha256:") + original.ObjectId)
+                changes.Remove(entry.Path);
+            else
+                changes[entry.Path] = RawChangeKind.Modified;
+        }
     }
 
     private byte[] ReadNameStatus(string revision)

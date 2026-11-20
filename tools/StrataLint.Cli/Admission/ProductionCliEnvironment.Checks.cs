@@ -17,12 +17,11 @@ internal sealed partial class ProductionCliEnvironment
         ImmutableArray<Diagnostic> planeObservations = [];
         try
         {
-            var options = ParseCheckArguments(arguments);
-            if (options.CandidateLeanReport is null || (!delta && options.ProtectedBase is not null)
-                || (delta && options.ProtectedBase is null))
-                throw new InvalidOperationException(delta
-                    ? "check-delta requires --protected-base and --candidate-lean-report"
-                    : "check-current requires --candidate-lean-report and accepts no base");
+            var options = ParseCheckArguments(arguments, stage: true);
+            var scoped = options.ChangedPaths is not null;
+            if (delta != (options.ProtectedBase is not null) || scoped == (options.CandidateLeanReport is not null)
+                || scoped && options.ScribePaths is not null || !scoped && options.ScopedReports is not null)
+                throw CheckUsage(stage: true);
 
             var raw = timing.Measure("repository-read", () => AdmissionRepositoryInputs.ReadCurrent(repository));
             var prepared = delta ? timing.Measure("repository-prepare", () => repository.Prepare(options.ProtectedBase)) : null;
@@ -36,7 +35,12 @@ internal sealed partial class ProductionCliEnvironment
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
             var current = timing.Measure("snapshot-load", () => Decode(raw));
-            var report = timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
+            var changes = !scoped ? null : ScopedAdmissionReports.ChangedPaths(options.ChangedPaths!, prepared);
+            var plan = changes is null ? null : timing.Measure("lean-scope", () => PullRequestLeanChecks.CreatePlan(
+                repositoryRoot, current, [.. changes.Paths.Select(path => path.Value)]));
+            var report = timing.Measure("lean-report-load", () => plan is null
+                ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true)
+                : ScopedAdmissionReports.Read(repositoryRoot, current, plan.Targets, options.ScopedReports));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
             {
                 PolicyLoadOutcome.Accepted accepted => accepted.Policy,
@@ -66,8 +70,10 @@ internal sealed partial class ProductionCliEnvironment
             }
             else
             {
-                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report!,
-                    options.ScribePaths is null ? null : RawChangeSet.Create(MarkdownFormulaScope.ParsePaths(File.ReadAllText(options.ScribePaths)))));
+                var verified = timing.Measure("scribe-verify", () => plan is not null
+                    ? scribeEmissionVerifier?.VerifyScoped(current, report, changes!, plan.Paths)
+                    : VerifyScribeForAdmission(scribeEmissionVerifier, current, report,
+                        options.ScribePaths is null ? null : RawChangeSet.Create(MarkdownFormulaScope.ParsePaths(File.ReadAllText(options.ScribePaths)))));
                 result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckCurrent(
                     CurrentRuleContext.Create(current, policy, lean, verified), MeasureRule), Blocked);
                 if (timing.Measure("canonicalization", () => RepositoryCanonicalizer.Validate(current, policy),

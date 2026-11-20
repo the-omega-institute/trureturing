@@ -5,12 +5,11 @@ namespace StrataLint.Scribe;
 internal static class ScribeLeanInputs
 {
     internal static ImmutableArray<string> Select(string root, IEnumerable<string> paths) =>
-        ByDefinition(root, paths).Values.SelectMany(static targets => targets)
+        ByDefinition(root, ScribeDefinitionSelector.Select(root, paths)).Values.SelectMany(static targets => targets)
             .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
 
-    internal static ImmutableDictionary<string, string[]> ByDefinition(string root, IEnumerable<string> paths)
+    internal static ImmutableDictionary<string, string[]> ByDefinition(string root, ScribeDefinitionSelection selection)
     {
-        var selection = ScribeDefinitionSelector.Select(root, paths);
         if (!selection.IsSuccess) throw new InvalidOperationException(selection.Failure);
         if (selection.Paths.IsEmpty)
             throw new InvalidOperationException("Scribe Lean input scope is empty.");

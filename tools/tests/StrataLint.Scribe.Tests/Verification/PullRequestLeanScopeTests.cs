@@ -5,17 +5,53 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class PullRequestLeanScopeTests
 {
-    [Fact]
-    public void DeletedScribeSourceRejectsItsOrphanMarkdownBeforeLeanSelection()
+    [Theory]
+    [InlineData(false, false, 2)]
+    [InlineData(false, true, 2)]
+    [InlineData(true, false, 0)]
+    [InlineData(true, true, 0)]
+    public void DeletedBlueprintPairUsesOnlyCandidateFiles(bool ignoreMarkdown, bool leaveIgnoredScript, int expected)
     {
         using var temporary = new TemporaryRoot();
-        TemporaryFileSystem.File.WriteAllText(temporary.Resolve("global.json"), "{}");
-        TemporaryFileSystem.File.WriteAllText(temporary.Resolve("Blueprint/D5/Missing.md"), "# Orphan");
+        void Write(string path, string contents) => TemporaryFileSystem.File.WriteAllText(temporary.Resolve(path), contents);
+        const string markdown = "Blueprint/D5/Missing.md";
+        const string script = "Blueprint/D5/Missing.scribe.cs";
+        TemporaryFileSystem.Directory.CreateDirectory(temporary.Resolve(".git/objects"));
+        TemporaryFileSystem.Directory.CreateDirectory(temporary.Resolve(".git/refs/heads"));
+        Write(".git/HEAD", "ref: refs/heads/fixture\n");
+        Write("global.json", "{}");
+        Write(".gitignore", script + "\n" + (ignoreMarkdown ? markdown + "\n" : ""));
+        Write(markdown, "# Orphan");
+        if (leaveIgnoredScript) Write(script, "invalid script outside candidate");
+        Write("Meta/ReportProducers/scribe-content.json", """
+            {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json","scope":"scribe-content","projects":[]}
+            """);
+        Write("lean-report-inputs.json", """
+            {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+             "lean-report":{"include":[],"exclude":[]},"scribe-content":{"include":[],"exclude":[]}}}
+            """);
+        Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest());
+        using var output = new StringWriter();
         using var error = new StringWriter();
         var code = ScribeCli.Run(["lean-inputs", "--affected", "--paths-from", "-"], temporary.Path,
-            TextWriter.Null, error, new StringReader("Blueprint/D5/Missing.scribe.cs\0"));
-        Assert.Equal(2, code);
-        Assert.Contains("no matching .scribe.cs source", error.ToString(), StringComparison.Ordinal);
+            output, error, new StringReader(markdown + "\0" + script + "\0"));
+        Assert.True(code == expected, error.ToString());
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            GitRepositorySnapshotReader.ReadCurrent(temporary.Path))).Snapshot;
+        if (expected == 2)
+        {
+            Assert.Contains("no matching .scribe.cs source", error.ToString(), StringComparison.Ordinal);
+            Assert.Throws<InvalidDataException>(() => PullRequestLeanChecks.CreatePlan(temporary.Path, snapshot, [markdown, script]));
+        }
+        else
+        {
+            using var plan = System.Text.Json.JsonDocument.Parse(output.ToString());
+            Assert.Empty(plan.RootElement.GetProperty("paths").EnumerateArray());
+            Assert.Empty(plan.RootElement.GetProperty("targets").EnumerateArray());
+            var admission = PullRequestLeanChecks.CreatePlan(temporary.Path, snapshot, [markdown, script]);
+            Assert.Empty(admission.Paths);
+            Assert.Empty(admission.Targets);
+        }
     }
 
     [Fact]
@@ -29,6 +65,29 @@ public sealed class PullRequestLeanScopeTests
         var finding = Assert.Single(PullRequestLeanChecks.ProofFindings(report));
         Assert.Equal("D5/Incomplete.lean", finding.Path);
         Assert.Contains("sorryAx", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SourceOnlyChangesDoNotSelectValuesOrAxiomsButChangedBindingsRequireBoth()
+    {
+        const string owner = "D5/S3/Constants/Values.lean";
+        var sources = RawRepositorySnapshot.Create([
+            RawRepositoryEntry.FromText(owner, "def ah := 1"),
+            RawRepositoryEntry.FromText(RepositoryRules.AxiomDebtPath, ""),
+            RawRepositoryEntry.FromText(ValuesKernelBindingValidator.RelativePath, """
+                schema_version = 1
+                [[constants]]
+                id = "ah"
+                lean_gid = "D5/S3/Constants/Values.ah"
+                lean_statement_sha256 = "abc"
+                """),
+        ]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(sources)).Snapshot;
+        var targets = new HashSet<string>(StringComparer.Ordinal);
+        PullRequestLeanChecks.AddRuleEvidence(snapshot, ["README.md", "tools/scripts/workflow/ci-entry.sh"], targets);
+        Assert.Empty(targets);
+        PullRequestLeanChecks.AddRuleEvidence(snapshot, [ValuesKernelBindingValidator.RelativePath], targets);
+        Assert.Equal(["D5.S3.Constants.Values", "D5.X_Assumptions.AxiomDebt"], targets.Order(StringComparer.Ordinal));
     }
 
     [Fact]
