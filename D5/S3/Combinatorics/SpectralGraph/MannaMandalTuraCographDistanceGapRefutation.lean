@@ -6,6 +6,15 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.claim; result=D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.result; claim=D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.claim
    digest: Connected cographs have distance eigenvalues arbitrarily close to −2 from below. -/
 
+/-
+admission_basis: open-problem-resolution, Manna–Mandal–Tura Open Problem 14.2(i), #32278.
+Direct frozen dependencies: none. The proof imports pinned Mathlib.
+registered_family_counters_gap — proof_shape: content. Its live strict quotient root, for
+every positive natural q with r = q, follows from the exact determinant sign change.
+result — proof_shape: content. The same root is used through registered_family_counters_gap
+to produce a nonzero eigenvector of the native distance matrix inside the forbidden interval.
+-/
+
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.LinearAlgebra.Eigenspace.Basic
@@ -112,6 +121,9 @@ def family (r : ℕ) : SimpleGraph (Vertex r) where
     · exact fun h => ⟨h.1.symm, h.2.symm⟩⟩
   loopless := ⟨by
     rintro (a | ⟨i, a⟩) <;> simp [familyAdj]⟩
+
+@[local simp] private theorem family_adj (r : ℕ) (a b : Vertex r) :
+    (family r).Adj a b ↔ familyAdj a b := Iff.rfl
 
 private theorem center_adj {r : ℕ} {v : Vertex r} (h : v ≠ center) :
     (family r).Adj center v := by
@@ -242,7 +254,7 @@ private theorem distance_mulVec_orbitLift (r : ℕ) (x : Fin 3 → ℝ) :
 
 private theorem lift_quotient_eigenvalue {r : ℕ} (hr : 0 < r) {lam : ℝ}
     (hdet : ((lam • (1 : Matrix (Fin 3) (Fin 3) ℝ)) - quotient r).det = 0) :
-    (distanceMatrix (family r)).mulVecLin.HasEigenvalue lam := by
+    Module.End.HasEigenvalue (distanceMatrix (family r)).mulVecLin lam := by
   obtain ⟨x, hx, heig⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hdet
   rw [Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, sub_eq_zero] at heig
   apply Module.End.hasEigenvalue_of_hasEigenvector (x := orbitLift x)
@@ -256,7 +268,7 @@ private theorem lift_quotient_eigenvalue {r : ℕ} (hr : 0 < r) {lam : ℝ}
 theorem registered_family_counters_gap (ε : ℝ) (hε : 0 < ε) :
     ∃ (r : ℕ), 0 < r ∧ ∃ lam : ℝ, -2 - ε < lam ∧ lam < -2 ∧
       (family r).Connected ∧ P4Free (family r) ∧
-      (distanceMatrix (family r)).mulVecLin.HasEigenvalue lam := by
+      Module.End.HasEigenvalue (distanceMatrix (family r)).mulVecLin lam := by
   obtain ⟨r, hr, lam, hlo, hhi, hdet⟩ := arbitrarily_close_quotient_root ε hε
   exact ⟨r, hr, lam, hlo, hhi, family_connected r, family_p4_free r, lift_quotient_eigenvalue hr hdet⟩
 
@@ -264,7 +276,7 @@ theorem registered_family_counters_gap (ε : ℝ) (hε : 0 < ε) :
 def claim : Prop :=
   ∃ ε : ℝ, 0 < ε ∧
     ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.Connected → P4Free G →
-      ∀ lam : ℝ, (distanceMatrix G).mulVecLin.HasEigenvalue lam → ¬ (-2 - ε < lam ∧ lam < -2)
+      ∀ lam : ℝ, Module.End.HasEigenvalue (distanceMatrix G).mulVecLin lam → ¬ (-2 - ε < lam ∧ lam < -2)
 
 /-- There is no uniform open left gap at −2 for distance eigenvalues of connected cographs. -/
 theorem result : ¬ claim := by
