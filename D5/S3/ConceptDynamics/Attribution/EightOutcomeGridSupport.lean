@@ -23,6 +23,11 @@ open D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
 
 private abbrev Coarse := {p : Fin 8 → ℕ // ∑ i, p i = 210}
 
+set_option maxRecDepth 4096 in
+private theorem two_digit_code_count :
+    (Finset.univ.image (DigitDiagonalCapacity.code (k := 8) 4)).card = 27 := by
+  decide
+
 private theorem divides_primes (p : ℕ) (prime : p.Prime) (le : p ≤ Fintype.card (Fin 8)) :
     p ∣ 210 := by
   rw [Fintype.card_fin] at le
@@ -79,8 +84,7 @@ private theorem lower {S : Type} [Fintype S] [MulAction (Equiv.Perm (Fin 8)) S]
     rwa [Fin.sum_univ_two] at eq
   have bound := DigitDiagonalCapacity.integral_range_le_diagonal_codes (b := 4) (c := 15)
     (k := 8) (by decide) (by decide) (weight 0) (weight 1) (by simpa using weights) pairs
-  have codeCount : (Finset.univ.image (DigitDiagonalCapacity.code (k := 8) 4)).card = 27 := by
-    decide
+  rw [two_digit_code_count] at bound
   omega
 
 
