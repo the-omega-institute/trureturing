@@ -233,8 +233,8 @@ private theorem deform_groupBias (p q : BiasFiber c s q₀) (t : unitInterval)
     |groupBias (π ∘ c) (deform c q₀ p.val q.val t) a| = |groupBias (π ∘ c) q₀ a| := by
   classical
   intro π
-  let F := @Finset.filter L (fun i => (π ∘ c) i = a)
-    (fun _ => Classical.propDecidable _) Finset.univ
+  letI : DecidableEq (A ⧸ fairSpan c q₀) := fun x y => Classical.propDecidable (x = y)
+  let F := Finset.univ.filter (fun i : L => (π ∘ c) i = a)
   have hnot (i : L) (hi : i ∈ F) : c i ∉ fairSpan c q₀ := by
     intro hm
     have he := (Finset.mem_filter.mp hi).2
@@ -305,7 +305,8 @@ private theorem continuous_contract (p : BiasFiber c s q₀) :
       exact ContinuousAt.comp' (f := fun y : unitInterval × signSector c s q₀ p =>
         |y.2.val.val i|) (x := x) h hq.abs.continuousAt
     have he :=
-      ((continuous_const.sub ht).mul hlog).add (ht.mul (continuous_const (y := Real.log |p.val i|)))
+      (((continuous_const (y := (1 : ℝ))).sub ht).mul hlog).add
+        (ht.mul (continuous_const (y := Real.log |p.val i|)))
     rw [show (fun x : unitInterval × signSector c s q₀ p => deform c q₀ p.val x.2.val.val x.1 i)
           = fun x => (if p.val i < 0 then (-1 : ℝ) else 1) *
             Real.exp ((1 - x.1.val) * Real.log |x.2.val.val i| +
@@ -409,7 +410,8 @@ private theorem signLinearMap_signs (H : AddSubgroup A) [Fintype (External H c)]
     _ = _ := by
       apply Finset.sum_filter_of_ne
       intro i _ hn hi
-      exact hn (by simp [term, quotient_zero.mpr hi])
+      have hz : QuotientAddGroup.mk' H (c i) = 0 := quotient_zero.mpr hi
+      exact hn (by simp only [term, hz, ite_self])
 
 private noncomputable def withSigns (H : AddSubgroup A)
     (q : L → ℝ) (e : External H c → ZMod 2) (i : L) : ℝ := by
