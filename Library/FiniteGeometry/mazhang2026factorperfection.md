@@ -17,6 +17,8 @@ triage: anchor
 
 ## Verified locator
 
+Zenodo record: https://zenodo.org/records/23903313
+
 DOI: 10.5281/zenodo.23903313 (version 2; PDF dated 2 November 2026). Source PDF:
 https://zenodo.org/api/records/23903313/files/note-v2.pdf/content (text extracted locally,
 about 25,860 characters). Lemma 2 is in Section 2, before the definition of the binary
