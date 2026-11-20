@@ -102,8 +102,6 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 end
 end Reg.D5.S3.TotalVariation.ParityLogStability.Sharpness
 
-open private sign moment logCoefficient from D5.S3.TotalVariation.ParityLogStability
-
 namespace Reg.D5.S3.TotalVariation.ParityLogStability.Stability
 
 noncomputable section

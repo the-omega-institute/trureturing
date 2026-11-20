@@ -57,7 +57,7 @@ private theorem log_abs_slope {e x y : ℝ} (he : 0 < e) (hx : e ≤ |x|) (hy : 
       simpa [div_eq_mul_inv, mul_comm] using habs
     · exact (div_mul_cancel₀ _ hsub).symm
 
-private theorem abs_expectation_le_oscillation {A : Type*} [Fintype A] [Nonempty A]
+theorem abs_expectation_le_oscillation {A : Type*} [Fintype A] [Nonempty A]
     (p q k : A → ℝ) (hmass : ∑ x, p x = ∑ x, q x)
     (bound : ℝ) (hbound : ∀ x y, |k x - k y| ≤ bound) :
     |∑ x, (p x - q x) * k x| ≤ bound * totalVariation p q := by
@@ -88,21 +88,21 @@ private theorem abs_expectation_le_oscillation {A : Type*} [Fintype A] [Nonempty
 
 variable {A : Type*} [AddCommGroup A]
 
-private def sign (ψ : AddChar A ℂ) (x : A) : ℝ := (ψ x).re
+def sign (ψ : AddChar A ℂ) (x : A) : ℝ := (ψ x).re
 
 private theorem value_cases (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
     ψ x = 1 ∨ ψ x = -1 := by
   apply mul_self_eq_one_iff.mp
   rw [← AddChar.map_add_eq_mul, two, AddChar.map_zero_eq_one]
 
-private theorem abs_sign (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
+theorem abs_sign (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
     |sign ψ x| = 1 := by
   rcases value_cases two ψ x with h | h <;> simp [sign, h]
 
 variable [Fintype A]
 
 open Classical in
-private theorem sign_difference_sum (two : ∀ x : A, x + x = 0) (x y : A) :
+theorem sign_difference_sum (two : ∀ x : A, x + x = 0) (x y : A) :
     (∑ ψ : AddChar A ℂ, |sign ψ x - sign ψ y|) ≤ (Fintype.card A : ℝ) := by
   by_cases hxy : x = y
   · subst y
@@ -120,10 +120,10 @@ private theorem sign_difference_sum (two : ∀ x : A, x + x = 0) (x y : A) :
   rw [Finset.sum_sub_distrib, hsum, sub_zero]
   simp [AddChar.card_eq]
 
-private noncomputable def moment (p : A → ℝ) (ψ : AddChar A ℂ) : ℝ :=
+noncomputable def moment (p : A → ℝ) (ψ : AddChar A ℂ) : ℝ :=
   ∑ x, p x * sign ψ x
 
-private noncomputable def logCoefficient (a : A) (p : A → ℝ) : ℝ :=
+noncomputable def logCoefficient (a : A) (p : A → ℝ) : ℝ :=
   (-2 / (Fintype.card A : ℝ)) * ∑ ψ : AddChar A ℂ, sign ψ a * Real.log |moment p ψ|
 
 /-- The logarithmic parity coefficient is Lipschitz in total variation on pairs
