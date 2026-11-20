@@ -16,7 +16,11 @@ internal sealed class QuaternionHeapRecurrenceDocument : IScribeDocumentDefiniti
             H("The cubic recurrence and the Chebyshev formulas"),
             StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
-                "Write c(a,b) for the real inner product and bar for quaternion conjugation. "
+                "The manuscript states the forward formula in F4 and Theorem recur, part (ii). "
+                + "It credits Ottmar Loos, Symmetric Spaces I, for the geodesic recurrence and "
+                + "J. C. Mason and D. C. Handscomb, Chebyshev Polynomials, for the polynomial formulas. "
+                + "The forward formula and the recurrence equivalence give the characterization. "
+                + "Write c(a,b) for the real inner product and bar for quaternion conjugation. "
                 + "The squared norm is multiplicative, so the cubic recurrence preserves unit norm. "
                 + "For a unit center, reflection has the form twice the projection onto the center "
                 + "minus the original vector. Pairing the reflection with its center preserves the "
@@ -31,8 +35,8 @@ internal sealed class QuaternionHeapRecurrenceDocument : IScribeDocumentDefiniti
                 + "The sequences (0,1,0,0,...) and (1,0,0,0,...) obey the cubic recurrence "
                 + "and show that each initial unit assumption is necessary. The sequence "
                 + "(1,1,0,0,...) has two unit initial samples and fails the unit conclusion at "
-                + "index two when the recurrence is omitted. These examples follow by direct "
-                + "substitution into the recurrence and squared norm."))),
+                + "index two when the recurrence is omitted. These examples were checked by direct "
+                + "substitution and were not compiled in Lean."))),
             DescribeRole.Theorem))));
 
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
