@@ -26,7 +26,8 @@ open D5.S3.Analytic.Hardy.FiniteStripMomentBound
 /-- The positive frequencies omit the constant cell mode. -/
 abbrev Mode (n : ℕ) := Fin (n - 1)
 
-private def angle (n : ℕ) (j : Mode n) : ℝ :=
+/-- Spectral angle of a positive reflecting mode. -/
+def angle (n : ℕ) (j : Mode n) : ℝ :=
   ((j.val + 1 : ℕ) : ℝ) * Real.pi / (n : ℝ)
 
 /-- Dimensionless rate of the cell-centered mode with frequency `j + 1`. -/
@@ -38,7 +39,8 @@ def weight (n : ℕ) (j : Mode n) : ℝ := Real.sqrt (2 - rate n j / 2)
 /-- Decay per unit of physical time. -/
 def physicalRate (n : ℕ) (j : Mode n) : ℝ := (n : ℝ) ^ 2 * rate n j
 
-private theorem angle_mem (n : ℕ) (j : Mode n) : angle n j ∈ Ioo 0 Real.pi := by
+/-- Positive reflecting modes have angles strictly between zero and pi. -/
+theorem angle_mem (n : ℕ) (j : Mode n) : angle n j ∈ Ioo 0 Real.pi := by
   have hn : 0 < (n : ℝ) := by
     have := j.isLt
     exact_mod_cast (show 0 < n by omega)
@@ -49,21 +51,24 @@ private theorem angle_mem (n : ℕ) (j : Mode n) : angle n j ∈ Ioo 0 Real.pi :
   exact ⟨by positivity, (div_lt_iff₀ hn).2
     (by simpa [mul_comm] using mul_lt_mul_of_pos_right hj Real.pi_pos)⟩
 
-private theorem rate_pos (n : ℕ) (j : Mode n) : 0 < rate n j := by
+/-- The positive reflecting modes have strictly positive rates. -/
+theorem rate_pos (n : ℕ) (j : Mode n) : 0 < rate n j := by
   have hj := angle_mem n j
   have ht := Real.cos_lt_cos_of_nonneg_of_le_pi le_rfl hj.2.le hj.1
   rw [Real.cos_zero] at ht
   unfold rate
   linarith
 
-private theorem weight_pos (n : ℕ) (j : Mode n) : 0 < weight n j := by
+/-- The first-cell observation weight of each positive mode is strictly positive. -/
+theorem weight_pos (n : ℕ) (j : Mode n) : 0 < weight n j := by
   have hj := angle_mem n j
   have ht := Real.cos_lt_cos_of_nonneg_of_le_pi hj.1.le le_rfl hj.2
   rw [Real.cos_pi] at ht
   unfold weight rate
   exact Real.sqrt_pos.2 (by linarith)
 
-private theorem rate_injective {n : ℕ} (hn : 0 < n) : Function.Injective (rate n) := by
+/-- Distinct mode indices give distinct reflecting rates. -/
+theorem rate_injective {n : ℕ} (hn : 0 < n) : Function.Injective (rate n) := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   intro j k hjk
   have hcos : Real.cos (angle n j) = Real.cos (angle n k) := by
@@ -94,7 +99,8 @@ adjacent endpoint values. -/
 def reflectingGenerator (n : ℕ) (x : Fin n → ℝ) (i : Fin n) : ℝ :=
   (n : ℝ) ^ 2 * (x (leftCell i) + x (rightCell i) - 2 * x i)
 
-private theorem angle_mul_cells (n : ℕ) (j : Mode n) :
+/-- Scaling the spectral angle by the cell count recovers the frequency times pi. -/
+theorem angle_mul_cells (n : ℕ) (j : Mode n) :
     (n : ℝ) * angle n j = ((j.val + 1 : ℕ) : ℝ) * Real.pi := by
   have hn : (n : ℝ) ≠ 0 := by
     have := j.isLt

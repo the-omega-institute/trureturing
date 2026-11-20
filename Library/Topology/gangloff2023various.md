@@ -154,7 +154,33 @@ and gives a homeomorphism of the closed-edge quotient with the affine simple
 graph realization. This includes loops, which contribute two incidences, and
 parallel edges. The reverse implication transports the pendant arc obstruction
 through the same homeomorphism.
-[Finite graph classification](../../Blueprint/D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.md)
+[Finite graph classification](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics.md)
+
+For each integer m at least two, a graph with two vertices and m plus one
+parallel edges admits a topologically exact map of least forward Bowen
+order m. The map is a factor of the bouquet traversal obtained by
+identifying the sheets over one semicircle. Multiplication by m on the
+projected circle gives the upper bound, and m points on distinct arms
+coalesce in one step arbitrarily close to a branching vertex. The
+construction relates the exact order to the local valence m plus one.
+[Parallel-edge graph construction](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.md)
+
+For any continuous transitive finitely positively expansive self-map on a
+finite connected graph of maximum valence D at least two, the least forward
+Bowen order is at most D minus one. Orienting the graph edges for the quotient
+construction does not restrict the map, and each loop contributes two to the
+valence. The parallel-edge examples realize equality for D at least three.
+[Sharp bound for transitive finite graphs](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphTransitiveValence.md)
+
+Yokoi's *Strong Transitivity and Graph Maps*, Theorem 4.1, derives strong
+transitivity from transitivity and finitely many fixed points for every
+positive iterate. Harańczyk, Kwietniak and Oprocha give the finite-cover
+conclusion in Theorem 7.5 of *Topological structure and entropy of mixing
+graph maps*. Corollary 2.10(4) in Gangloff, Guillon and Oprocha supplies
+periodic point finiteness. The Lean proof derives pointwise hitting by
+excluding the finite set missed by the forward images of a free subarc.
+[Yokoi](https://doi.org/10.4064/ba53-4-3)
+[Harańczyk, Kwietniak and Oprocha](https://arxiv.org/html/1111.0566#S7.Thmtheorem5)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least

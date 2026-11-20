@@ -84,7 +84,6 @@
     "!docs/assets/inquiry-cycle.svg",
     "!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
     "!docs/develop/spec/trureturing_engineering_optimization_v1.md",
-    "!docs/develop/theory/*.md",
     "!docs/reports/*",
     "!tools/TestSupport/StrataLint.RuleTestSupport/*",
     "!tools/lean-inspector/README.md",
@@ -929,7 +928,6 @@
     "!Evidence/*",
     "!Golden/Frozen/*",
     "!Library/*",
-    "!Meta/Digestion/*",
     "!Problems/*",
     "!Reg/D5/*",
     "!docs/*",
@@ -1194,7 +1192,7 @@
     "tools/Architecture/BannedSymbols.Guid.txt"
   ],
   "current": {
-    "report_paths": "*\n!docs/develop/theory/*.md\n!docs/develop/archive/theory/*.md\n!Meta/Digestion/atoms/sha256/????????????????????????????????????????????????????????????????\n!Meta/Digestion/backfill/*.json\n!Meta/Digestion/backfill/*.yaml\n!Meta/Digestion/backfill/*.toml\n",
+    "report_paths": "*\n",
     "delta_paths": "*\n!Blueprint/*.md\n!Evidence/*\n!Golden/Projection/*.json\n!Problems/*\n!README.md\n!docs/VISION.md\n!docs/assets/inquiry-cycle.svg\n!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md\n!docs/develop/spec/trureturing_engineering_optimization_v1.md\n!docs/reports/*\n!tools/TestSupport/StrataLint.RuleTestSupport/*\n!tools/lean-inspector/README.md\n!tools/scripts/agent/openproblem/README.md\n!tools/scripts/agent/openproblem/SCREENED-OUT*.md\n!tools/scripts/agent/prime_slabs/CPU.md\n",
     "judge_build_args": [
       "tools/StrataLint.Cli/StrataLint.Cli.csproj",
