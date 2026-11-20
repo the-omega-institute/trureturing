@@ -60,7 +60,7 @@ def assert_scoped_builds(text, *, binding=False, all_commands=False):
         r'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
     ):
         text = re.sub(reference, '', text)
-    commands = r'lean(?:-report(?:-scoped)?)?'
+    commands = r'lean(?:-report(?:-scoped|-prepare)?)?'
     if all_commands:
         commands += r'|test|gate'
     for match in re.finditer(r'\bmake\s+(' + commands + r')(?![\w-])', text):
@@ -95,7 +95,7 @@ def build_scope_regressions():
                  *(BUILD_SCOPE + '\n' + command for command in (
                      '`make lean`', '`make lean-report`', '`make test`',
                      '`make gate BASE=abc`', '`make lean LEAN_TARGETS=""`',
-                     '`make lean-report-scoped`',
+                     '`make lean-report-scoped`', '`make lean-report-prepare`',
                      '`make lean-report LEAN_TARGETS="D5.Sample"`'))):
         try:
             assert_scoped_builds(text, binding=True, all_commands=True)
@@ -337,7 +337,8 @@ def case(tool, variant=None):
             assert_dtr_source(text)
             if tool.stem in ('gen_stage_briefs', 'stages'):
                 stage_a = (root / 'scratch/briefs/impl-op-w1-sample.stageA.md').read_text()
-                assert_scoped_builds(stage_a)
+                assert_scoped_builds(stage_a, binding=True)
+                assert stage_a.index('make lean-report-prepare LEAN_TARGETS=') < stage_a.index('## Steps')
             if tool.stem == 'implb_head':
                 from common import BUILD_SCOPE
                 assert BUILD_SCOPE + '\n\n- **SDK host.**' in text
