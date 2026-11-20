@@ -26,9 +26,9 @@ Lean statement: `D5/S3/Combinatorics/Graph/Queries/BranchingPathPosterior.graph_
 
 *Commentary.*
 
-Each world supplies a simple graph on a common vertex set, with one common initial edge. Fix a schedule of requests at finitely many positions. At each position, an independent uniform permutation of two slots selects among two distinct candidates for the incoming pair. The pair can refer to an earlier edge, selected by the position and the current length of the disclosure. Prepend each returned edge to the history.
+Draw a world from the prior probability mass function. Each world supplies a simple graph on a common vertex set with a common initial edge. Fix a request schedule on a finite set of positions. Independently of the world, sample an independent uniform permutation of two slots at each position. Each visit to a position uses its same permutation to select among two distinct candidates for the incoming pair. The pair can refer to an earlier edge, selected by the position and the current length of the disclosure. Prepend each returned edge to the history.
 
-For the given reference run, each position uses the same incoming pair whenever it is visited. Each recorded vertex differs from its predecessor. The observed slot table records exactly the reference rows, and the seen set records exactly the observed positions. For any world containing a reference row's incoming edge, its reported vertex is available exactly when it is an adjacent forward vertex.
+For the given reference run, each position uses the same incoming pair whenever it is visited. In each reference row with incoming pair (u, v), the returned vertex y differs from u. The observed table records exactly the positions, slots, and returned values in the reference rows, and the seen set consists of the observed positions. In any world containing the edge from u to v in a reference row, y is a candidate exactly when y is adjacent to v and differs from u.
 
 If the reference disclosure has positive mass, the posterior of a world event is its prior mass restricted to worlds containing every recorded edge and divided by the prior mass of that restriction.
 
