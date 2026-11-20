@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/Linear/ReflectingHeatDirectionalBound
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/Linear/ReflectingHeatDirectionalBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [lake/module/D5.S3.Analytic.Entire.DirectionalExponentialType, lake/module/D5.S3.Observer.Linear.ReflectingHeatInterpolation]
