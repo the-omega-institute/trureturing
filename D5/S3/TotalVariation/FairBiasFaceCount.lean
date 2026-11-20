@@ -193,6 +193,7 @@ private theorem sum_by_card {V : Type*} [Fintype V]
       exact Finset.sum_congr rfl (fun S hS => congrArg (z ^ ·) (Finset.mem_filter.mp hS).2)
     _ = _ := by simp [nsmul_eq_mul, mul_comm]
 
+open Classical in
 private theorem euler_eq_support_sum (c : L → A) :
     reducedEuler c = -∑ S : Finset L with spansComplement c S, (-2 : ℚ) ^ S.card := by
   classical
@@ -270,7 +271,7 @@ theorem reducedEuler_eq_tutte (c : L → A) :
     simp [columnSpan, Set.image_univ]
   change reducedEuler c = -(-2 : ℚ) ^ (n - Module.finrank (ZMod 2)
     (Submodule.span (ZMod 2) (Set.range c))) * columnTutte c 1 (1 / 2)
-  rw [← hrange, euler_eq_support_sum, neg_mul, ← Finset.mul_sum]
+  rw [← hrange, euler_eq_support_sum, neg_mul]
   congr 1
   let e : Finset L ≃ Finset L :=
     ⟨Compl.compl, Compl.compl, compl_compl, compl_compl⟩
@@ -319,7 +320,7 @@ theorem reducedEuler_eq_tutte (c : L → A) :
         rw [ite_eq_right hB]
         change 0 = (-2 : ℚ) ^ (n - h) * ((1 - 1) ^ (h - r) * (1 / 2 - 1) ^ (B.card - r))
         simp [zero_pow (show h - r ≠ 0 by omega)]
-    _ = _ := rfl
+    _ = _ := by simp only [columnTutte, Finset.mul_sum, h]
 
 end Rank
 
