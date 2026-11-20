@@ -5,12 +5,13 @@ year: 2026
 title: "Curtz's denominator conjecture: OEIS A189733, revision 12, COMMENTS, May 23, 2011"
 doi: 10.5281/zenodo.23957584
 url: https://zenodo.org/records/23957584
-claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0."
+claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0. Corollary 7: with C(m,n) = 2B(m,n+1) - B(m,n), d_m = den(C(m,m+3)) and g_m = gcd(3,m+2), for every m >= 0, C(m,m+3) = (-1)^{m+1}(2m+1)/((m+1)(m+2)) and d_m = (m+1)(m+2)/g_m; (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k+1)(3k+2), (k+1)(3k+2), 3(k+1)(3k+4)) for k >= 0; sum_{m>=0} d_m z^m = 2(1+z+6z^2+7z^3+2z^4+3z^5+z^6)/(1-z^3)^3; d_m = (m+1)A051176(m+2) and d_{m+2} = 2A306368(m) for m >= 0; C(m,m+3) = (-1)^{m+1}A146535(m+1)/d_m, not (-1)^{m+1}A146535(m)/d_m."
 strata_touched:
   - D5/S1/Recurrence/Residue/OEISA189733NumeratorsAndSeries
   - D5/S1/Recurrence/Residue/OEISA267068Quotients
   - D5/S1/Recurrence/Residue/OEISA189733FiniteSums
   - D5/S1/Recurrence/Residue/OEISA189733Reflection
+  - D5/S1/Recurrence/Residue/OEISA194767SecondKindDiagonal
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -24,7 +25,8 @@ Zenodo record: https://zenodo.org/records/23957584
 DOI: 10.5281/zenodo.23957584 (version 2; Zenodo publication date 2026-11-04, PDF dated
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957584/files/note-v2.pdf/content (text extracted locally with
-layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3.
+layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3;
+Corollary 7 is in Section 4.
 
 ## Source statement
 
@@ -75,6 +77,24 @@ layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; C
 > Proof. Equation (14) follows by dividing n + 1 by (3). Its six affine subsequences have
 > intercepts (1, 2, 3, 2, 5, 1) and slopes (6, 0, 0, 0, 6, 0). …
 
+> For the full difference array put C(m, n) = 2B(m, n + 1) − B(m, n). …
+> Corollary 7. Let d_m = den(C(m, m + 3)) and g_m = gcd(3, m + 2). For every m ≥ 0,
+> C(m, m + 3) = (−1)^{m+1}(2m + 1)/((m + 1)(m + 2)), d_m = (m + 1)(m + 2)/g_m.
+> Consequently, for k ≥ 0,
+> (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k + 1)(3k + 2), (k + 1)(3k + 2), 3(k + 1)(3k + 4)),
+> ∑_{m≥0} d_m z^m = 2(1 + z + 6z² + 7z³ + 2z⁴ + 3z⁵ + z⁶)/(1 − z³)³.
+> The two shifted-sequence formulas in A194767 also hold:
+> d_m = (m + 1)A051176(m + 2), d_{m+2} = 2A306368(m) (m ≥ 0).
+> Its fourth-diagonal numerator formula requires a shift:
+> C(m, m + 3) = (−1)^{m+1}A146535(m + 1)/d_m, not (−1)^{m+1}A146535(m)/d_m.
+
+> Proof. … Since gcd(2m + 1, m + 1) = 1 and gcd(2m + 1, m + 2) = gcd(3, m + 2), reduction gives
+> d_m. … The cited definitions [8] are A051176(r) = r/gcd(r, 3) and A306368(r) equal to the
+> reduced numerator of (r + 3)(r + 4)/((r + 1)(r + 2)). … A146535(r), indexed from r = 1, is the
+> reduced numerator of (2r − 1)/3. Thus A146535(m + 1) = (2m + 1)/g_m, proving (20). The
+> unshifted formula is already false at m = 2: its unsigned numerator is A146535(2) = 1, whereas
+> C(2, 5) = −5/12.
+
 ## Mathematical scope
 
 b_n = B(0,n) is the zeroth row of Curtz's rational array (see `curtz2011a189733`); a_n is the
@@ -95,3 +115,9 @@ The full square array B uses the upper branch B(m, m) = 0, B(m, m + 1) = (−1)^
 B(m, n) = B(m, n − 1) + B(m + 1, n − 1) for n ≥ m + 2, and the lower branch
 B(m, n) = B(m − 1, n + 1) − B(m − 1, n) for m > n, as in the A189733 Maple and Mathematica
 programs.
+
+For Corollary 7, C(m, n) = 2B(m, n + 1) − B(m, n) is the second-kind companion array of A194767,
+so its fourth diagonal C(m, m + 3) is 2B(m, m + 4) − B(m, m + 3), written in terms of the frozen
+upper-triangle entries. The cited sequences follow the paper's definitions: A051176(r) =
+r/gcd(r, 3) from offset 0, A306368(r) the reduced numerator of (r + 3)(r + 4)/((r + 1)(r + 2))
+from offset 0, and A146535(r) the reduced numerator of (2r − 1)/3 from offset 1.
