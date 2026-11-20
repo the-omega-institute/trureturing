@@ -39,7 +39,8 @@ private theorem moment_eq_zero_of_nontrivial_on_fair_columns
   rintro _ ⟨i, hi, rfl⟩
   exact (support_iff_trivial_on_fair_columns two c s q χ).1 hn i hi
 
-private theorem law_eq_of_matching_quotient_data
+/-- Equal grouped magnitudes and a common adjusted offset coset determine the law. -/
+theorem law_eq_of_matching_quotient_data
     (two : ∀ a : A, a + a = 0)
     (c : I → A) (s : A) (q : I → ℝ) (d : J → A) (t : A) (r : J → ℝ)
     (hspan : fairSpan d r = fairSpan c q) :
@@ -428,7 +429,8 @@ private theorem decode_law {J : Type*} [Fintype J] (two : ∀ a : A, a + a = 0)
     rw [habs, groupBias, Finset.abs_prod]
     apply Finset.prod_le_one₀ (fun i _ => abs_nonneg _) (fun i _ => hq i)
 
-private theorem corrected_offset_positive {J : Type*} [Fintype J] (two : ∀ a : A, a + a = 0)
+/-- The corrected offset makes every surviving character moment positive. -/
+theorem corrected_offset_positive {J : Type*} [Fintype J] (two : ∀ a : A, a + a = 0)
     (c : J → A) (s : A) (q : J → ℝ) (χ : AddChar A ℂ)
     (hχ : moment (law c s q) χ ≠ 0) :
     0 < sign χ (s + ∑ j with q j < 0, c j) * moment (law c s q) χ := by
