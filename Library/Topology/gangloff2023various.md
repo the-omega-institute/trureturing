@@ -12,6 +12,8 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/DendriteObstruction
   - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
   - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
+  - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
+  - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
   - D5/S3/Topology/CoveringDimension/GluedCircle
 license: citation-only
 triage: anchor
@@ -91,6 +93,68 @@ system.
 Remark 3.10 of the arXiv version realizes each exact finite order on a
 finite bouquet of circles. At order N at least two on the bouquet of N
 circles, the displayed map has image equal to its last circle.
+
+The repository also constructs a topologically exact continuous surjection
+of exact positive expansivity order N on the bouquet of N circles for every
+N at least two. On each circle the map runs through all N circles in order.
+The projection forgetting the circle label semiconjugates the map to
+multiplication by N on the circle. Each nonempty open set projects to a
+set containing an arc, whose image under sufficiently many iterates
+covers the circle. The next application of the traversal covers the
+whole bouquet. Distinct points with the same phase close to the common
+vertex coalesce in one step and witness all N points in a forward Bowen ball.
+[Finite bouquet construction](../../Blueprint/D5/S1/Dynamics/Shadowing/BouquetExactExpansivity.md)
+
+Hisao Kato constructs a surjective positively pseudo-expansive map on every
+finite connected graph containing a simple closed curve. His condition (P1)
+gives a finite closed cover with a positive separation scale on each member.
+A forward Bowen ball at less than half the minimum of those scales meets each
+member in at most one point, giving a uniform finite cardinal bound. The
+relevant locators are §2, pp. 202–203 and Theorem (4.3), pp. 207–208. The
+explicit bouquet traversal above specifies the exact order and proves
+topological exactness.
+[Kato 1991](https://doi.org/10.4064/fm-137-3-201-210)
+
+## Endpoint obstruction under topological exactness
+
+An embedded closed interval whose image away from one endpoint is open
+in the carrier obstructs finite positive expansivity of continuous exact
+selfmaps on compact metric spaces. When the fibers are finite, exactness
+sends an interior point of each open subarc to the free endpoint, and
+both nearby sides cover a common smaller arc. Controlling the finite
+prefix before each such fold produces arbitrarily large, eventually
+coalescing families at each strict forward Bowen scale. An infinite
+fiber supplies such families inside one small ball. This applies to
+any finite graph with a leaf.
+The argument uses the coalescing-witness mechanism of Remark 3.4 and
+Lemma 3.7. Question 3.2 asks about general continuous selfmaps and does
+not impose topological exactness.
+[Pendant arc obstruction](../../Blueprint/D5/S1/Dynamics/Shadowing/ExactPendantObstruction.md)
+
+For a graph without leaves, the constructive direction uses a reduced
+walk from each dart back to the same dart that covers every undirected
+edge. The cycle case goes once around the cycle and repeats its first
+dart. In the other case each potential reversal can be replaced by a
+detour through a cycle in the appropriate component after deleting its
+underlying edge. The tour supplies the edge traversal for a candidate
+exact map. Charatonik and Miklos use related nonbacktracking edge walks
+in their construction of local expansions, see Lemmas 1–3 and Theorem 1.
+[All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.md)
+[Charatonik–Miklos 1981](https://doi.org/10.4064/fm-113-3-235-252)
+
+For a finite connected graph with at least one edge, continuous topologically
+exact finitely positively expansive dynamics exist precisely when the graph has
+no vertex of degree one. The constructive direction gives positive expansivity.
+The map traverses the chosen tour of each edge at constant speed. Adjacent
+closed cells meet with distinct image germs, giving a uniform expansion scale.
+Shrinking inverse branches through a point of any open set eventually fit inside
+that set and map onto a whole edge, which covers the graph in one further step.
+Subdivision into three segments per edge preserves the degree-one condition
+and gives a homeomorphism of the closed-edge quotient with the affine simple
+graph realization. This includes loops, which contribute two incidences, and
+parallel edges. The reverse implication transports the pendant arc obstruction
+through the same homeomorphism.
+[Finite graph classification](../../Blueprint/D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.md)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
