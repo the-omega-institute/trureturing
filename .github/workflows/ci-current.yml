@@ -40,20 +40,24 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     outputs:
+      base: ${{ steps.entry.outputs.base }}
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
-      base: ${{ steps.entry.outputs.base }}
     steps:
-      # Commits and trees only, and only the entry scripts in the working tree.
+      # Check out only the release bootstrap and CI selection contract.
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           filter: blob:none
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Verify the candidate and list the changed paths
         env:
@@ -87,6 +91,8 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Verify the candidate and list the changed paths
         env:
@@ -96,12 +102,10 @@ jobs:
           CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      # The judge cache key binds the resolved SDK, the build recipe and the
-      # paths and blob ids of the tracked judge compile inputs listed in
-      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
-      # and its references, explicit copied/embedded runtime inputs, analyzer
-      # files and inherited build configuration). It is taken before anything is
-      # built; an exact hit skips the build.
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         run: |
@@ -123,6 +127,7 @@ jobs:
       - id: judge_key
         env:
           JUDGE_INPUTS: |
+            Meta/tools-release.json
             .editorconfig
             .globalconfig
             Directory.Build.*
@@ -131,80 +136,6 @@ jobs:
             NuGet.config
             nuget.config
             global.json
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
-            tools/scripts/worktree/worktree_*.py
-            tools/StrataLint.Cli/**/*.cs
-            tools/StrataLint.Cli/*.csproj
-            tools/StrataLint.Cli/packages.lock.json
-            tools/StrataLint.Cli/.editorconfig
-            tools/StrataLint.Cli/.globalconfig
-            tools/StrataLint.Cli/Directory.Build.*
-            tools/StrataLint.Cli/Directory.Packages.props
-            tools/StrataLint.Configuration/**/*.cs
-            tools/StrataLint.Configuration/*.csproj
-            tools/StrataLint.Configuration/packages.lock.json
-            tools/StrataLint.Configuration/.editorconfig
-            tools/StrataLint.Configuration/.globalconfig
-            tools/StrataLint.Configuration/Directory.Build.*
-            tools/StrataLint.Configuration/Directory.Packages.props
-            tools/StrataLint.Engineering/**/*.cs
-            tools/StrataLint.Engineering/*.csproj
-            tools/StrataLint.Engineering/packages.lock.json
-            tools/StrataLint.Engineering/.editorconfig
-            tools/StrataLint.Engineering/.globalconfig
-            tools/StrataLint.Engineering/Directory.Build.*
-            tools/StrataLint.Engineering/Directory.Packages.props
-            tools/StrataLint.Runtime/**/*.cs
-            tools/StrataLint.Runtime/*.csproj
-            tools/StrataLint.Runtime/packages.lock.json
-            tools/StrataLint.Runtime/.editorconfig
-            tools/StrataLint.Runtime/.globalconfig
-            tools/StrataLint.Runtime/Directory.Build.*
-            tools/StrataLint.Runtime/Directory.Packages.props
-            tools/StrataLint.Engine/**/*.cs
-            tools/StrataLint.Engine/*.csproj
-            tools/StrataLint.Engine/packages.lock.json
-            tools/StrataLint.Engine/.editorconfig
-            tools/StrataLint.Engine/.globalconfig
-            tools/StrataLint.Engine/Directory.Build.*
-            tools/StrataLint.Engine/Directory.Packages.props
-            tools/StrataLint.FileMap/**/*.cs
-            tools/StrataLint.FileMap/*.csproj
-            tools/StrataLint.FileMap/packages.lock.json
-            tools/StrataLint.FileMap/.editorconfig
-            tools/StrataLint.FileMap/.globalconfig
-            tools/StrataLint.FileMap/Directory.Build.*
-            tools/StrataLint.FileMap/Directory.Packages.props
-            tools/StrataLint.Lean/**/*.cs
-            tools/StrataLint.Lean/*.csproj
-            tools/StrataLint.Lean/packages.lock.json
-            tools/StrataLint.Lean/.editorconfig
-            tools/StrataLint.Lean/.globalconfig
-            tools/StrataLint.Lean/Directory.Build.*
-            tools/StrataLint.Lean/Directory.Packages.props
-            tools/StrataLint.Scribe/**/*.cs
-            tools/StrataLint.Scribe/*.csproj
-            tools/StrataLint.Scribe/packages.lock.json
-            tools/StrataLint.Scribe/.editorconfig
-            tools/StrataLint.Scribe/.globalconfig
-            tools/StrataLint.Scribe/Directory.Build.*
-            tools/StrataLint.Scribe/Directory.Packages.props
-            tools/StrataLint.TestEvidence/**/*.cs
-            tools/StrataLint.TestEvidence/*.csproj
-            tools/StrataLint.TestEvidence/packages.lock.json
-            tools/StrataLint.TestEvidence/.editorconfig
-            tools/StrataLint.TestEvidence/.globalconfig
-            tools/StrataLint.TestEvidence/Directory.Build.*
-            tools/StrataLint.TestEvidence/Directory.Packages.props
-            tools/Trureturing.Truth/**/*.cs
-            tools/Trureturing.Truth/*.csproj
-            tools/Trureturing.Truth/packages.lock.json
-            tools/Trureturing.Truth/.editorconfig
-            tools/Trureturing.Truth/.globalconfig
-            tools/Trureturing.Truth/Directory.Build.*
-            tools/Trureturing.Truth/Directory.Packages.props
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
@@ -258,6 +189,8 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Verify the candidate and list the changed paths
         env:
@@ -267,12 +200,10 @@ jobs:
           CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      # The judge cache key binds the resolved SDK, the build recipe and the
-      # paths and blob ids of the tracked judge compile inputs listed in
-      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
-      # and its references, explicit copied/embedded runtime inputs, analyzer
-      # files and inherited build configuration). It is taken before anything is
-      # built; an exact hit skips the build.
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         run: |
@@ -321,6 +252,8 @@ jobs:
       - id: lean_plan
         name: Select affected Lean inputs and test prerequisites
         if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: prepared
         name: Adopt a matching PR preparation for this event
@@ -393,19 +326,6 @@ jobs:
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
 
-  banned-api-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: banned-api-proof
-
-  capability-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: capability-proof
 
   filemap:
     needs: [detect, source]
@@ -463,21 +383,6 @@ jobs:
     with:
       unit: tests-cli
 
-  tests-cli-integration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-cli-integration
-
-  tests-configuration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-configuration
-
-
   tests-declared-template:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
@@ -500,26 +405,12 @@ jobs:
     with:
       unit: tests-filemap
 
-  tests-header-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-header-script
-
   tests-instruction-contract:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-instruction-contract
-
-  tests-integration-mirror:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-integration-mirror
 
   tests-lean:
     needs: [detect, source]
@@ -535,13 +426,6 @@ jobs:
     with:
       unit: tests-lean-cache-script
 
-  tests-lean-report-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-lean-report-script
-
   tests-playbook-script:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
@@ -555,13 +439,6 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-pr-script
-
-  tests-report-supervisor:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-report-supervisor
 
   tests-repository-configuration:
     needs: [detect, source]
@@ -591,20 +468,6 @@ jobs:
     with:
       unit: tests-repository-topology
 
-  tests-resource-observation:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-resource-observation
-
-  tests-rules:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-rules
-
   tests-scribe:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
@@ -619,34 +482,6 @@ jobs:
     with:
       unit: tests-script
 
-
-  tests-engineering:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-engineering
-
-  tests-runtime:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-runtime
-
-  tests-test-evidence:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-test-evidence
-
-  tests-truth:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-truth
 
   tests-truth-release:
     needs: [detect, source]
@@ -673,7 +508,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-declared-template, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-declared-template, tests-engine, tests-filemap, tests-instruction-contract, tests-lean, tests-lean-cache-script, tests-playbook-script, tests-pr-script, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-scribe, tests-script, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
@@ -682,10 +517,14 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 1
           filter: blob:none
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - env:
           NEEDS: ${{ toJSON(needs) }}
           HITS: ${{ needs.detect.outputs.hits }}
