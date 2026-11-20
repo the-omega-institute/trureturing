@@ -38,23 +38,7 @@ Use clipped powers of k plus one, summing to q, as common orbit weights. The rou
 
 A block assigned to a group has an equivariant map to that label orbit, giving each of its labels H divided by s seeds. Extend the readout from one profile representative per orbit and normalize the weights on positive support.
 
-**Theorem 1.3 (Sharp support budget when the scaled weights may be fractional).**
-
-$$\forall k q n, 2 \le k \land 0 < q \land \operatorname{PrimeDivisibility}\left(k, (k-1)\cdot q\right) \Rightarrow (\operatorname{SeedBudget}\left(k, (k-1)\cdot q, \operatorname{factorial}\left(k\right)\cdot(n+1)\right) \iff q+1 \le (\operatorname{gcd}\left(k, q\right)+1)\cdot(k+1)^n)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.fractional_grid_budget_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Take at least two labels and a positive natural number q. The denominator m is (k minus one) times q. PrimeDivisibility means every prime at most k divides m. The budget is k factorial times n plus one, with n plus one as the orbit count. SeedBudget uses the same shared calibrating law.
-
-The prime-cycle test forces regular seed orbits. Profiles with k minus one tied labels require all q plus one integer levels. The weights of the orbit digits sum to q divided by k. Its reduced denominator is k divided by the greatest common divisor of k and q. Apply the integer-level capacity bound to these weights and the tied profiles.
-
-For attainment, write q divided by k as A divided by b in lowest terms. Use the common fractional allocation construction with numerator total A and denominator b. For every profile, the integer group demands and the number of blocks satisfy the allocation balance. The stabilizer readout and transport along profile orbits then give one equivariant law. With eight labels and q equal to 210 or 270, the greatest common divisor is two. The first feasible budgets use three and four regular orbits, respectively, giving support sizes 120960 and 161280.
-
-**Theorem 1.4 (Tied profiles determine a weighted digit covering).**
+**Theorem 1.3 (Tied profiles determine a weighted digit covering).**
 
 $$\forall I S m w f, 2 \le \operatorname{Card}\left(I\right) \land \operatorname{FreeAction}\left(I, S\right) \land \operatorname{Invariant}\left(w\right) \land \operatorname{Calibrated}\left(m, w, f\right) \land \operatorname{Equivariant}\left(f\right) \Rightarrow \operatorname{OrbitDigitSpectrum}\left(\operatorname{Card}\left(I\right), S, m, w\right)$$
 
@@ -71,11 +55,9 @@ There are r regular orbits. Multiply each representative's weight by the factori
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.CalibratingLaw`
-- Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.fractional_grid_budget_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.grid_support_budget_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.weighted_orbit_spectrum`
-- Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/StabilizerFactorialDivisibility](../../Combinatorics/Partitions/StabilizerFactorialDivisibility.md)
-- Dependency: [D5/S3/Combinatorics/SubsetSpectrum/AdditiveDigitCapacity](../../Combinatorics/SubsetSpectrum/AdditiveDigitCapacity.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/GridReadoutConstruction](GridReadoutConstruction.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/PrimeCycleSeedFreeness](PrimeCycleSeedFreeness.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ThreeOutcomeGridSupport](ThreeOutcomeGridSupport.md)
