@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Geometry/UltrametricCenterMinimumOrder
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Geometry/UltrametricCenterMinimumOrder
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Topology.MetricSpace.Ultra.Basic]
