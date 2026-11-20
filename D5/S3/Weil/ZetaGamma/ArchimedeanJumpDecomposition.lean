@@ -101,7 +101,7 @@ theorem integral_exp_neg_mul_cos {c t : ℝ} (hc : 0 < c) :
       norm_num [Complex.div_re, Complex.normSq_apply]
       ring
 
-private theorem integral_exp_neg_mul_one_sub_cos {c t : ℝ} (hc : 0 < c) :
+theorem integral_exp_neg_mul_one_sub_cos {c t : ℝ} (hc : 0 < c) :
     (∫ x : ℝ in Ioi 0,
       2 * Real.exp (-c * x) * (1 - Real.cos (t * x))) =
         2 * (1 / c - c / (c ^ 2 + t ^ 2)) := by

@@ -34,13 +34,13 @@ open ExponentialGramWeightedEvaluation
 /-- The upper-boundary weight in the strip of width one half. -/
 def petzWeight (s : ℝ) : ℝ := Real.pi / (Real.cosh (2 * Real.pi * s) + 1)
 
-private theorem petzWeight_pos (s : ℝ) : 0 < petzWeight s :=
+theorem petzWeight_pos (s : ℝ) : 0 < petzWeight s :=
   div_pos Real.pi_pos (add_pos (Real.cosh_pos _) zero_lt_one)
 
-private theorem petzWeight_neg (s : ℝ) : petzWeight (-s) = petzWeight s := by
+theorem petzWeight_neg (s : ℝ) : petzWeight (-s) = petzWeight s := by
   simp only [petzWeight, mul_neg, Real.cosh_neg]
 
-private theorem continuous_petzWeight : Continuous petzWeight := by
+theorem continuous_petzWeight : Continuous petzWeight := by
   unfold petzWeight
   exact continuous_const.div
     ((Real.continuous_cosh.comp (continuous_const.mul continuous_id)).add continuous_const)
