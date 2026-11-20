@@ -4,18 +4,21 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> FrozenStates(CurrentRuleContext context)
+    private static ImmutableArray<RuleFinding> FrozenStates(CurrentRuleContext context) =>
+        FrozenStates(context.Current, context.Lean, context.Current.Files.Values
+            .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value)));
+
+    internal static ImmutableArray<RuleFinding> FrozenStates(RepositorySnapshot current, AcceptedLeanClosure lean,
+        IEnumerable<RepositoryFile> files)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var affected = context.Current.Files.Values
-            .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToImmutableArray();
+        var affected = files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToImmutableArray();
         if (affected.IsEmpty)
         {
             return findings.ToImmutable();
         }
 
-        var states = LeanTruthStates.Resolve(context.Current, context.Lean);
+        var states = LeanTruthStates.Resolve(current, lean);
         foreach (var file in affected)
         {
             var displayPath = "frozen state " + file.Path.Value;
@@ -40,7 +43,7 @@ internal static partial class RepositoryRules
                 continue;
             }
 
-            if (!context.Current.Files.ContainsKey(modulePath))
+            if (!current.Files.ContainsKey(modulePath))
             {
                 findings.Add(new RuleFinding(
                     displayPath,
@@ -56,7 +59,7 @@ internal static partial class RepositoryRules
                 continue;
             }
 
-            if (!context.Lean.Report.Files.TryGetValue(modulePath, out var report))
+            if (!lean.Report.Files.TryGetValue(modulePath, out var report))
             {
                 findings.Add(new RuleFinding(
                     displayPath,
