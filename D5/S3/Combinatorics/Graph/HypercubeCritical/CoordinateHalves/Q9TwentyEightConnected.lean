@@ -10,17 +10,20 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyE
 
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
-open BalancedCriticalSpectrum (Q IsBalanced)
+open BalancedCriticalSpectrum (Q IsBalanced directionEdges direction_edge_count)
 open BalancedCubeLowerBound (coordinateSlice)
 open GirthSliceCounting (degreeTwo degreeThree cubic_slice_counting)
 open TwoBalancedComponents (componentFinset)
 open private paritySide parity_bipartite parity_union parts_card sum_degrees_parts
   twice_low_le_three_high coordinate_slice_degree_cases coordinate_slice_low_independent
-  balanced_subset from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+  low_slice_card_eq_q balanced_subset from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+open private sum_degree_parts sum_high_neighbors neighbor_parts_card from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
 open private componentFinset_nonempty componentFinset_subset componentFinset_neighbor_closed
   componentFinset_disjoint induced_degree_eq_neighbor_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwoBalancedComponents
-open private suppress from
+open private suppress suppress_regular suppress_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourCompression
 open private High vertex vertex_degree vertex_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourExpansion
@@ -236,5 +239,94 @@ theorem suppressed_half_connected {C : Finset (Q 9)}
     (fun hxy hx hy => coordinate_slice_low_independent hr hb hxy hx hy) (half_connected hr hb b hs)
 
 #print axioms suppressed_half_connected
+
+/-- A 28-point half at order 72 compresses to a connected triangle-free
+cubic graph on 16 vertices. Exactly 12 edges are direct, and the smaller
+parity class has size 4, 6, or 8. -/
+theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 28) :
+    let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    let L := paritySide S false
+    let R := paritySide S true
+    let J := suppress G L R
+    Fintype.card (High G L R) = 16 ∧ J.IsRegularOfDegree 3 ∧ J.Connected ∧
+      (∀ x y z, J.Adj x y → J.Adj y z → J.Adj z x → False) ∧
+      (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 12 ∧
+      let n := min (degreeThree G L).card (degreeThree G R).card
+      n = 4 ∨ n = 6 ∨ n = 8 := by
+  let S := coordinateSlice C b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  let L := paritySide S false
+  let R := paritySide S true
+  have hp : G.IsBipartiteWith (L : Set _) (R : Set _) := parity_bipartite S
+  have hu : L ∪ R = univ := parity_union S
+  have hd : Disjoint L R := Finset.disjoint_coe.mp hp.disjoint
+  have hdeg (v : (S : Set (Q 9))) : G.degree v = 2 ∨ G.degree v = 3 :=
+    coordinate_slice_degree_cases v.property hr
+  have hlow {x y : (S : Set (Q 9))} (hxy : G.Adj x y)
+      (hx : G.degree x = 2) (hy : G.degree y = 2) : False :=
+    coordinate_slice_low_independent hr hb hxy hx hy
+  have hg : (8 : ℕ∞) ≤ G.egirth :=
+    BalancedCubeGirth.eight_le_egirth S (balanced_subset hb (filter_subset _ _))
+  have hdivide : 6 * directionEdges C 0 = C.card := by
+    simpa using direction_edge_count (d := 3) C hr hb 0
+  have hlowCount : (degreeTwo G univ).card = 12 := by
+    rw [low_slice_card_eq_q hr]
+    omega
+  have hlows : (degreeTwo G L).card + (degreeTwo G R).card = 12 := by
+    have hdisj : Disjoint (degreeTwo G L) (degreeTwo G R) :=
+      hd.mono (filter_subset _ _) (filter_subset _ _)
+    have he : degreeTwo G L ∪ degreeTwo G R = degreeTwo G univ := by
+      simp only [degreeTwo, ← filter_union, hu]
+    rw [← card_union_of_disjoint hdisj, he, hlowCount]
+  have hsize : L.card + R.card = 28 := by
+    rw [← card_union_of_disjoint hd, hu, card_univ]
+    exact (Fintype.card_coe S).trans hs
+  have hL : (degreeTwo G L).card + (degreeThree G L).card = L.card := parts_card G hdeg L
+  have hR : (degreeTwo G R).card + (degreeThree G R).card = R.card := parts_card G hdeg R
+  have hbalance : 2 * (degreeTwo G L).card + 3 * (degreeThree G L).card =
+      2 * (degreeTwo G R).card + 3 * (degreeThree G R).card :=
+    (sum_degrees_parts G hdeg L).symm.trans
+      ((SimpleGraph.isBipartiteWith_sum_degrees_eq hp).trans (sum_degrees_parts G hdeg R))
+  have hnoLow (v : (S : Set (Q 9))) (hv : G.degree v = 2) :
+      degreeTwo G (G.neighborFinset v) = ∅ := by
+    apply eq_empty_iff_forall_notMem.mpr
+    intro w hw
+    obtain ⟨hvw, hw₂⟩ := mem_filter.mp hw
+    exact hlow ((G.mem_neighborFinset v w).mp hvw) hv hw₂
+  have hlowInc : (∑ v ∈ degreeTwo G R, (degreeThree G (G.neighborFinset v)).card) =
+      2 * (degreeTwo G R).card := by
+    calc
+      _ = ∑ _v ∈ degreeTwo G R, 2 := by
+        apply sum_congr rfl
+        intro v hv
+        have hv₂ := (mem_filter.mp hv).2
+        have h : (degreeTwo G (G.neighborFinset v)).card +
+            (degreeThree G (G.neighborFinset v)).card = G.degree v :=
+          neighbor_parts_card hdeg v
+        rw [hnoLow v hv₂, card_empty, zero_add] at h
+        exact h.trans hv₂
+      _ = _ := by simp [Nat.mul_comm]
+  have hinc := (sum_degree_parts hdeg R
+    (fun v => (degreeThree G (G.neighborFinset v)).card)).symm.trans (sum_high_neighbors hp)
+  rw [hlowInc] at hinc
+  have h16 : Fintype.card (High G L R) = 16 := by
+    rw [Fintype.card_sum, Fintype.card_coe, Fintype.card_coe]
+    omega
+  have hdirect : (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 12 := by
+    change 2 * (degreeTwo G R).card +
+      (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) =
+      3 * (degreeThree G L).card at hinc
+    omega
+  have hparity : let n := min (degreeThree G L).card (degreeThree G R).card
+      n = 4 ∨ n = 6 ∨ n = 8 := by
+    dsimp only
+    omega
+  exact ⟨h16, suppress_regular hp hdeg hlow hg, suppressed_half_connected hr hb b hs,
+    suppress_triangle_free hp hg, hdirect, hparity⟩
+
+#print axioms half_suppression
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyEightConnected
