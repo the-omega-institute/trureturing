@@ -289,11 +289,12 @@ private theorem decode_nonfair_iff {H : AddSubgroup A} {μ : A → ℝ} {s : A}
   obtain ⟨b | j, rfl⟩ := (slots ch.placement).surjective i
   · rw [slots_active, decode_bias_active]
     have hpos := (visible_bias_positive H μ b.val).ne'
-    cases h : ch.negative b <;> simp [h, hpos]
+    cases ch.negative b <;> simp [hpos]
   · rw [slots_fair, decode_bias_fair]
     simp [j.property]
 
 set_option maxHeartbeats 650000 in
+-- Transport the spanning family through the subgroup inclusion and the complement subtype.
 private theorem decode_fair_span {H : AddSubgroup A} {μ : A → ℝ} {s : A}
     (ch : Choices I H μ s)
     (hcard : Fintype.card I =
@@ -343,7 +344,7 @@ private theorem decode_bias_abs {H : AddSubgroup A} {μ : A → ℝ} {s : A}
     |decodeBias ch (ch.placement a)| = visibleBias H μ a.val := by
   rw [decode_bias_active]
   have h := (visible_bias_positive H μ a.val).le
-  cases hh : ch.negative a <;> simp [hh, abs_of_nonneg h]
+  cases ch.negative a <;> simp [abs_of_nonneg h]
 
 private theorem min_repr_bias_bound {H : AddSubgroup A} {μ : A → ℝ} {s : A}
     (ch : Choices I H μ s) (i : I) : |decodeBias ch i| ≤ 1 := by
@@ -451,6 +452,7 @@ private theorem corrected_offset_positive {J : Type*} [Fintype J] (two : ∀ a :
   exact Finset.prod_nonneg (fun i _ => by split <;> positivity)
 
 set_option maxHeartbeats 650000 in
+-- Elaborate the dependent placement, basis and quotient fibers of the encoded presentation.
 private theorem decode_surjective {J : Type*} [Fintype J] (two : ∀ a : A, a + a = 0)
     (c : J → A) (s : A) (q : J → ℝ)
     (hcard : Fintype.card I = minimumInputCount (law c s q))
@@ -532,6 +534,7 @@ private theorem decode_surjective {J : Type*} [Fintype J] (two : ∀ a : A, a + 
   rw [hc, hb, add_sub_cancel_right]
 
 set_option maxHeartbeats 650000 in
+-- Compare basis functions after transporting them along equality of the label placements.
 private theorem decode_injective (H : AddSubgroup A) (μ : A → ℝ) (s : A) :
     Function.Injective (decode : Choices I H μ s → Parameters I A) := by
   classical
@@ -562,8 +565,8 @@ private theorem decode_injective (H : AddSubgroup A) (μ : A → ℝ) (s : A) :
         funext i
         apply Subtype.ext
         have hi := congrFun hc i.val
-        rw [decode_column_fair _ i, decode_column_fair _ i] at hi
-        exact hi
+        exact (decode_column_fair ⟨ex, bx, hx, rx, nx, tx⟩ i).symm.trans
+          (hi.trans (decode_column_fair ⟨ex, byy, hy, ry, ny, ty⟩ i))
       have hRep : rx = ry := by
         funext a
         apply Subtype.ext
@@ -577,17 +580,25 @@ private theorem decode_injective (H : AddSubgroup A) (μ : A → ℝ) (s : A) :
         change (if nx a then -visibleBias H μ a.val else visibleBias H μ a.val) =
           (if ny a then -visibleBias H μ a.val else visibleBias H μ a.val) at hi
         have hp := visible_bias_positive H μ a.val
-        cases ha : nx a <;> cases hby : ny a <;> simp_all <;> linarith
+        cases ha : nx a <;> cases hn : ny a
+        · rfl
+        · simp [ha, hn] at hi
+          exfalso
+          linarith only [hp, hi]
+        · simp [ha, hn] at hi
+          exfalso
+          linarith only [hp, hi]
+        · rfl
       cases hBasis
       cases hRep
       cases hNeg
-      cases hoffset
+      change tx = ty at hoffset
+      subst ty
       rfl
 
 /-- At a minimum-size set of labels, the parameters of a realization are equivalent to
 the choices of a fair basis, placement and lifts of the active columns, signs, and offset. -/
 noncomputable def minimumPresentationsEquiv {J : Type*} [Fintype J]
-    (two : ∀ a : A, a + a = 0)
     (c : J → A) (s : A) (q : J → ℝ) (hq : ∀ j, |q j| ≤ 1)
     (hcard : Fintype.card I = minimumInputCount (law c s q)) :
     Choices I (fairSpan c q) (law c s q) (s + ∑ j with q j < 0, c j) ≃
@@ -595,13 +606,13 @@ noncomputable def minimumPresentationsEquiv {J : Type*} [Fintype J]
   classical
   let f (ch : Choices I (fairSpan c q) (law c s q) (s + ∑ j with q j < 0, c j)) :
       Presentations I (law c s q) :=
-    ⟨decode ch, min_repr_bias_bound ch, decode_law two c s q hq ch hcard⟩
+    ⟨decode ch, min_repr_bias_bound ch, decode_law ZModModule.add_self c s q hq ch hcard⟩
   apply Equiv.ofBijective f
   constructor
   · intro x y h
     exact decode_injective _ _ _ (congrArg Subtype.val h)
   · intro p
-    obtain ⟨ch, hch⟩ := decode_surjective two c s q hcard p.val p.property.2
+    obtain ⟨ch, hch⟩ := decode_surjective ZModModule.add_self c s q hcard p.val p.property.2
     exact ⟨ch, Subtype.ext hch⟩
 
 private noncomputable def quotientFiberEquiv (H : AddSubgroup A) (a : A ⧸ H) :
@@ -682,7 +693,6 @@ private theorem card_choices (H : AddSubgroup A) (μ : A → ℝ) (s : A)
 number of inputs. Here the active columns are the nonzero quotient columns with absolute
 bias below one, and the fair rank is the dimension of the fair subgroup. -/
 theorem minimum_presentations_card {J : Type*} [Fintype J]
-    (two : ∀ a : A, a + a = 0)
     (c : J → A) (s : A) (q : J → ℝ) (hq : ∀ j, |q j| ≤ 1)
     (hcard : Fintype.card I = minimumInputCount (law c s q)) :
     let H := fairSpan c q
@@ -691,9 +701,9 @@ theorem minimum_presentations_card {J : Type*} [Fintype J]
     Nat.card (Presentations I (law c s q)) = (Fintype.card I).factorial / h.factorial *
       (∏ j : Fin h, (2 ^ h - 2 ^ j.val)) * Nat.card H ^ (b + 1) * 2 ^ b := by
   classical
-  have he := minimumPresentationsEquiv (I := I) two c s q hq hcard
+  have he := minimumPresentationsEquiv (I := I) c s q hq hcard
   have hc := Nat.card_congr he
-  rw [minimumInputCount, ← fairSpan_eq_spectralAnnihilator two] at hcard
+  rw [minimumInputCount, ← fairSpan_eq_spectralAnnihilator ZModModule.add_self] at hcard
   exact hc.symm.trans (card_choices (fairSpan c q) (law c s q) _ hcard)
 
 end
