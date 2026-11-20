@@ -4,6 +4,9 @@ import contextlib
 import hashlib
 import time
 
+INDEXED_SCHEMA = "lean-release-seed-v5"
+INDEXED_ASSET = "lean-members"
+
 
 class OperationBudget:
     """A computation deadline whose clock can exclude an owned asset transfer."""

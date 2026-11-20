@@ -1,0 +1,206 @@
+name: Restore Lean Release build seeds
+description: Restore optional Actions material for a Release producer
+inputs:
+  mode:
+    description: Automatic selection, legacy project cache, or a complete, partial, or absent verification seed
+    required: true
+  cache-keys:
+    description: JSON outputs from the Actions cache key selector
+    required: true
+  verification-history-anchor:
+    description: Pinned dev history anchor for resumable cold verification
+    default: ''
+  checkpoint-run:
+    description: Earlier verification run of the same source and mode
+    default: ''
+  checkpoint-seconds:
+    description: Cold build interval before saving a checkpoint, or zero for a normal build
+    default: '0'
+runs:
+  using: composite
+  steps:
+    - id: dependency
+      if: fromJSON(inputs.cache-keys).dependency_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+    - id: previous_checkpoint
+      name: Find the last published cold Release checkpoint
+      if: inputs.verification-history-anchor != '' && (inputs.checkpoint-run != '' || (inputs.checkpoint-seconds != '0' && fromJSON(github.run_attempt) > 1))
+      shell: bash
+      env:
+        MODE: ${{ inputs.mode }}
+        CHECKPOINT_RUN: ${{ inputs.checkpoint-run }}
+      run: |
+        find_checkpoint() {
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$1/artifacts?per_page=100" \
+          | jq -rs --arg prefix "lean-release-checkpoint-$MODE-$1-" --argjson before "$2" '
+              [.[].artifacts[] | select(.expired == false and (.name | startswith($prefix)))
+               | select((.digest // "") | test("^sha256:[0-9a-f]{64}$"))
+               | .attempt = (.name | ltrimstr($prefix))
+               | select(.attempt | test("^[1-9][0-9]*$")) | .attempt |= tonumber
+               | select(.attempt < $before)] | max_by(.attempt) // empty | [.id, .attempt] | @tsv'
+        }
+        run="$GITHUB_RUN_ID"
+        checkpoint=$(find_checkpoint "$run" "$GITHUB_RUN_ATTEMPT")
+        if [[ -z "$checkpoint" && -n "$CHECKPOINT_RUN" ]]; then
+          [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$GITHUB_REF_PROTECTED" == true ]]
+          [[ "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$run" ]]
+          run="$CHECKPOINT_RUN"
+          prior_attempt="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run" | jq -er \
+            --argjson run "$run" --arg sha "$GITHUB_SHA" --arg branch "$GITHUB_REF_NAME" --arg repository "$GITHUB_REPOSITORY" '
+            select(.id == $run and .head_sha == $sha and .head_branch == $branch and .status == "completed"
+              and .repository.full_name == $repository
+              and .path == ".github/workflows/ci-publication-verify.yml"
+              and (.event == "push" or .event == "workflow_dispatch")) | .run_attempt
+            | select(type == "number" and . >= 1 and . == floor)')"
+          checkpoint=$(find_checkpoint "$run" "$((prior_attempt + 1))")
+          [[ -n "$checkpoint" ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR previous run has no matching checkpoint' >&2; exit 2; }
+        fi
+        if [[ -n "$checkpoint" ]]; then
+          read -r artifact attempt <<< "$checkpoint"
+          [[ "$artifact" =~ ^[1-9][0-9]*$ && "$attempt" =~ ^[1-9][0-9]*$ ]]
+          echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
+          echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+        fi
+    - name: Download the selected verification checkpoint
+      if: steps.previous_checkpoint.outputs.artifact != ''
+      uses: actions/download-artifact@v8
+      with:
+        artifact-ids: ${{ steps.previous_checkpoint.outputs.artifact }}
+        path: ${{ runner.temp }}/lean-release-checkpoint-in
+        github-token: ${{ github.token }}
+        run-id: ${{ steps.previous_checkpoint.outputs.run }}
+        digest-mismatch: error
+    - id: resumed
+      name: Verify and restore the selected build progress
+      if: steps.previous_checkpoint.outputs.artifact != ''
+      shell: bash
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
+        PREVIOUS_ATTEMPT: ${{ steps.previous_checkpoint.outputs.attempt }}
+        PREVIOUS_RUN: ${{ steps.previous_checkpoint.outputs.run }}
+      run: |
+        python3 tools/scripts/worktree/lean_actions_shards.py checkpoint-restore --state resume \
+          --artifact-directory "$RUNNER_TEMP/lean-release-checkpoint-in" \
+          --previous-run "$PREVIOUS_RUN" --previous-attempt "$PREVIOUS_ATTEMPT"
+        rm -rf -- "$RUNNER_TEMP/lean-release-checkpoint-in/payload"
+    - id: sharded
+      if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode) && (steps.resumed.outputs.available == '' || steps.resumed.outputs.available == '0')
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      with:
+        operation: restore
+        require-complete: ${{ inputs.mode == 'complete' }}
+        targets: ${{ inputs.mode == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
+    - id: project
+      if: fromJSON(inputs.cache-keys).project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ fromJSON(inputs.cache-keys).project_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys).project_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys).project_restore_prefix }}
+    - name: Validate and install the selected seeds
+      shell: bash
+      env:
+        HANDOFF: ${{ inputs.mode }}
+        AVAILABLE: ${{ steps.sharded.outputs.available || '0' }}
+        COMPLETE: ${{ steps.sharded.outputs.complete || 'false' }}
+        RESUMED: ${{ steps.resumed.outputs.available || '0' }}
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+        PROJECT_OUTCOME: ${{ steps.project.outcome }}
+      run: |
+        if [[ "$RESUMED" == 0 ]]; then
+          case "$HANDOFF" in
+            auto|legacy) ;;
+            complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
+            partial)
+              [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
+              test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+              ;;
+            none) [[ ! -e .lake/build ]] ;;
+            *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
+          esac
+        else
+          [[ "$RESUMED" =~ ^[1-9][0-9]*$ && ( "$HANDOFF" == none || "$HANDOFF" == partial ) ]]
+        fi
+        echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE resumed=$RESUMED"
+        args=(--dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME")
+        if [[ "$AVAILABLE" == 0 && "$RESUMED" == 0 ]]; then
+          args+=(--project-key "$PROJECT_KEY" --project-outcome "$PROJECT_OUTCOME")
+        else
+          args+=(--layers dependency)
+        fi
+        python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" "${args[@]}"
+        if [[ "$COMPLETE" == true ]]; then
+          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+        fi
+    - name: Complete missing project artifacts with Lake
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.checkpoint-seconds == '0'
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+      shell: bash
+      run: make lean FULL_BUILD=1
+    - id: cold_build
+      name: Build and validate a slice of the cold Release
+      if: inputs.checkpoint-seconds != '0'
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ inputs.checkpoint-seconds }}
+      shell: bash
+      run: |
+        result=0
+        bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- bash -e -c '
+          make lean FULL_BUILD=1
+          make lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        ' || result=$?
+        if [[ "$result" == 124 ]]; then
+          echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
+        else
+          exit "$result"
+        fi
+    - id: checkpoint
+      name: Package this verification run's build progress
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      shell: bash
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
+        ANCHOR: ${{ inputs.verification-history-anchor }}
+        RESUMED: ${{ steps.resumed.outputs.available || '0' }}
+        PREVIOUS_RUN: ${{ steps.previous_checkpoint.outputs.run }}
+        PREVIOUS_ATTEMPT: ${{ steps.previous_checkpoint.outputs.attempt }}
+      run: |
+        args=()
+        if [[ "$RESUMED" != 0 ]]; then
+          args+=(--index "$RUNNER_TEMP/lean-release-checkpoint-in/index.json"
+                 --previous-run "$PREVIOUS_RUN" --previous-attempt "$PREVIOUS_ATTEMPT")
+        fi
+        python3 tools/scripts/worktree/lean_actions_shards.py checkpoint-pack --state resume \
+          --artifact-directory "$RUNNER_TEMP/lean-release-checkpoint-out" --anchor "$ANCHOR" "${args[@]}"
+    - name: Publish the checkpoint artifact for the next attempt
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      uses: actions/upload-artifact@v6
+      with:
+        name: lean-release-checkpoint-${{ inputs.mode }}-${{ github.run_id }}-${{ github.run_attempt }}
+        path: ${{ runner.temp }}/lean-release-checkpoint-out/
+        compression-level: 0
+        if-no-files-found: error
+        retention-days: 3
+    - name: Require the cold verification build to be ready for publication
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      env:
+        SAVED: ${{ steps.checkpoint.outputs.available }}
+      shell: bash
+      run: |
+        [[ "$SAVED" =~ ^[1-9][0-9]*$ ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR cold checkpoint is empty' >&2; exit 2; }
+        echo "LEAN_RELEASE_HANDOFF checkpoint=$SAVED; rerun this verification run to continue" >&2
+        exit 1

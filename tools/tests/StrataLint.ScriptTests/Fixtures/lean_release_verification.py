@@ -13,7 +13,7 @@ from lean_seed_support import ROOT, digest, write
 
 
 class ReleaseVerificationCases:
-    def verification_fixture(self, chunk_bytes=None):
+    def verification_fixture(self, chunk_bytes=None, *, branch="integration-cache-fixture"):
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
         helper = "tools/scripts/worktree/lean_cache_release.py"
         (self.root / helper).parent.mkdir(parents=True, exist_ok=True)
@@ -29,7 +29,6 @@ class ReleaseVerificationCases:
             subprocess.run(["git", *args], check=True, capture_output=True)
         commit = subprocess.run(["git", "-C", str(self.root), "rev-parse", "HEAD"],
                                 check=True, capture_output=True, text=True).stdout.strip()
-        branch = "integration-cache-fixture"
         repo = "the-omega-institute/trureturing"
         self.verification_commit = commit
         self.verification_ref = "refs/heads/" + branch
@@ -161,6 +160,32 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn(tag, fetched.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+
+    def test_fresh_verification_dispatch_binds_the_protected_workflow_and_commit(self):
+        self.verification_fixture(branch="integration-ci-cache-tests")
+        workflow = ".github/workflows/ci-publication-verify.yml"
+        repo = self.verification_environment["GITHUB_REPOSITORY"]
+        run = self.verification_api[f"repos/{repo}/actions/runs/123/attempts/1"]
+        run.update(event="workflow_dispatch", path=workflow)
+        self.save_verification_api()
+        env = dict(GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF_PROTECTED="true",
+                   GITHUB_WORKFLOW_REF=f"{repo}/{workflow}@{self.verification_ref}")
+        for changes in ({"GITHUB_REF_PROTECTED": "false"}, {"GITHUB_SHA": "f" * 40},
+                        {"GITHUB_WORKFLOW_REF": f"{repo}/{workflow}@refs/heads/dev"}):
+            with self.subTest(changes=changes):
+                result = self.verification("publish", **(env | changes))
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse((self.root / "build-runs").exists())
+        run["path"] = ".github/workflows/other.yml"
+        self.save_verification_api()
+        wrong_workflow = self.verification("publish", **env)
+        self.assertNotEqual(0, wrong_workflow.returncode)
+        self.assertFalse((self.root / "build-runs").exists())
+        run["path"] = workflow
+        self.save_verification_api()
+        published = self.verification("publish", **env)
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        self.assertIn('"status":"published"', published.stdout)
 
     def verification_restore_budget_probe(self, extraction_seconds):
         environment = self.deadline_probe(10)
@@ -681,6 +706,25 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         self.assertIn('"status":"unpacked"', result.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertFalse((self.root / "build-runs").exists())
+
+    def test_candidate_exact_restore_can_seed_from_published_legacy_verification(self):
+        self.verification_fixture()
+        published = self.verification("publish")
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        tag = next(self.remote.iterdir()).name
+        self.assertTrue(tag.startswith("lean-cache-verify-v1-"))
+        self.assertTrue(tag.endswith("-ci-123-1"))
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.candidate_transport("fetch", tag, **self.candidate_consumer())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        write(self.root / ".lake/build/keep.txt", "keep current material")
+        result = self.transport("fetch", arguments=("--mode", "candidate", "--source-commit", "f" * 40,
+                                                     "--tag", tag),
+            **{**self.verification_environment, **self.candidate_consumer()})
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("snapshot does not match this exact publication", result.stdout)
+        self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
 
     def test_candidate_restore_rejects_ordinary_ci_and_wrong_source_without_replacing_build(self):
         self.candidate_fixture()
