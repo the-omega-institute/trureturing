@@ -359,25 +359,14 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 报告 facet 复用有效的报告工件，按需从预编译输入提取模块报告并重新汇总。
 发布阶段核对规范信封与输入坐标。
 
-在仓库根目录执行以下命令，可检查已有的原生报告目标能否复用。
+调用者备有当前可用的 StrataLint.Lean DLL 时，可在仓库根目录检查原生报告目标能否复用。
 
 ```sh
 tools/scripts/worktree/lean-cache-run.sh --prebuilt lake -d tools/lean-inspector-reg --no-build build :report
 ```
 
-调用者须提供当前可用的 StrataLint.Lean DLL。此命令默认使用工作树的 Release DLL，也可通过
-`STRATALINT_LEAN_PRODUCER_DLL` 指定绝对路径。低层入口只检查所选 DLL 文件是否存在。
-通过 `make lean-report` 或 `make lean-report-scoped` 使用工作树 DLL 时，报告入口会查询 MSBuild，核对它是否仍与当前构建输入匹配。
-
-`--prebuilt` 使用已有的工具和编译输入。`--no-build` 也禁止新提取和汇总报告，
-允许生成派生输入记录及恢复匹配的本地缓存工件。此命令的输出是原生目标检查结果。
-
-| 检查结果 | 后续操作 |
-| --- | --- |
-| 所需的编译输入和报告工件均可复用或恢复 | 检查成功。要发布到 `LEAN_REPORT`，运行 `make lean-report FULL_BUILD=1`。 |
-| 编译输入有效，报告工件需要提取或汇总 | 检查非零退出。运行 `make lean-report FULL_BUILD=1` 生成并发布报告。 |
-| 显式指定的 DLL 不可用 | 将 `STRATALINT_LEAN_PRODUCER_DLL` 指向可用 DLL 的绝对路径并重试。若改用工作树 DLL，在当前 shell 执行 `unset STRATALINT_LEAN_PRODUCER_DLL`，再运行 `make lean-report-prepare FULL_BUILD=1`。 |
-| 默认的工作树 DLL 缺失，或 Lake 跟踪的工具或模块需要重建且没有匹配的缓存副本 | 运行 `make lean-report-prepare FULL_BUILD=1` 准备缺失的输入，再运行报告命令。 |
+若 Lake 判定需要执行任何构建动作（包括生成 `judgeInputs`、提取模块报告或重新汇总），
+`--no-build` 检查会以非零状态退出。编译输入就绪后，可运行 `make lean-report FULL_BUILD=1` 生成报告。
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
 material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
