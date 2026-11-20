@@ -5,10 +5,13 @@ year: 2026
 title: "Must a Primitive Non-Deficient Number Always Have a Small Component?"
 doi: 10.48550/arXiv.2005.12115
 url: https://arxiv.org/abs/2005.12115v5
-claim: "Section 3, pp. 9–10 defines B and states its zero density and Conjectures 10, 12, 14."
+claim: "Section 3, pp. 9–10 defines B and states its zero density and Conjectures 10–15."
 strata_touched:
   - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity
   - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
+  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11
+  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13
+  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture15
 license: citation-only
 triage: anchor
 ---
@@ -34,3 +37,9 @@ where C is the set of primitive non-deficient numbers.
 Conjecture 12 states the same limit for the odd members C_O of C.
 Conjecture 14 quantifies over every nonempty finite set M of primes
 and states the same limit for the members C_M of C with no prime divisor in M.
+
+Conjecture 11 replaces the denominator B(x) by C(x) and asserts limit zero.
+Conjecture 13 uses denominator C_O(x), and Conjecture 15 uses denominator
+C_M(x) for every nonempty finite prime set M; both assert limit zero.
+The component condition and the families are identical in all six
+conjectures; the denominators distinguish the two groups of limits.
