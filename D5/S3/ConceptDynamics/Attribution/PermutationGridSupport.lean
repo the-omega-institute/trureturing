@@ -720,7 +720,8 @@ private theorem flag_inner_card {I : Type*} [Fintype I] [DecidableEq I]
   have eq := ProfileStabilizer.stabilizer_count_product (flag a) b
   rw [flag_size a b ne, flag_card] at eq
   rw [eq]
-  rw [show k - 1 = k - 2 + 1 by omega, Nat.factorial_succ]
+  simpa only [show k - 1 - 1 = k - 2 by omega] using
+    (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
 
 private def tied {I : Type*} [Fintype I] [DecidableEq I] (a : I) {m : ℕ}
     (level : ℕ) (bound : (Fintype.card I - 1) * level ≤ m) : Profile I m :=
