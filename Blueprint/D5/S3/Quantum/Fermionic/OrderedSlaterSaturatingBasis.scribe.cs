@@ -12,7 +12,7 @@ internal sealed class OrderedSlaterSaturatingBasisDocument : IScribeDocumentDefi
                 DescribeId.Create("ordered-marginal-exists-saturating-basis"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Fermionic/OrderedSlaterSaturatingBasis.orderedMarginal_exists_saturating_basis_iff"),
-                H("An attaining basis exists exactly at full eligible rank"),
+                H("Rank criterion for an attaining column basis"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
