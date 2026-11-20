@@ -45,8 +45,10 @@ runs:
     - id: prepared
       env:
         GH_TOKEN: ${{ github.token }}
-      shell: bash
-      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+      uses: ./.github/actions/lean-cache-shards
+      with:
+        operation: adopt-preparation
+        sharded-adoption: ${{ inputs.shard-history-anchor != '' }}
     - id: keys
       env:
         GH_TOKEN: ${{ github.token }}
@@ -70,7 +72,7 @@ runs:
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
     - id: sharded_seed
-      name: Restore a complete sharded project seed
+      name: Restore available project shards
       if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
@@ -78,9 +80,8 @@ runs:
         GH_TOKEN: ${{ github.token }}
       with:
         operation: restore
-        require-complete: 'true'
     - id: project
-      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && steps.sharded_seed.outputs.complete != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && (steps.sharded_seed.outputs.available || '0') == '0'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -94,12 +95,15 @@ runs:
         PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        SHARDS_INSTALLED: ${{ steps.sharded_seed.outputs.available || '0' }}
         SHARDED_SEED: ${{ steps.sharded_seed.outputs.complete }}
       shell: bash
       run: |
-        if [[ "$SHARDED_SEED" == true ]]; then
+        if [[ "$SHARDS_INSTALLED" != 0 ]]; then
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+          if [[ "$SHARDED_SEED" == true ]]; then
+            echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+          fi
         else
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
         fi
@@ -144,19 +148,28 @@ runs:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
-    - name: Validate the producer continuation
+    - id: native_resume
+      name: Validate the producer continuation
       if: steps.resume_lookup.outcome == 'success'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
       shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+      run: |
+        python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+        if [[ -f "$GITHUB_WORKSPACE/build/lean-cache/producer-resume-restored.json" ]]; then
+          echo 'restored=true' >> "$GITHUB_OUTPUT"
+        fi
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
+        PARTIAL_INDEXED_PROJECT: >-
+          ${{ ((steps.sharded_seed.outputs.available || '0') != '0' && steps.sharded_seed.outputs.complete != 'true')
+              || (steps.sharded_resume.outputs.available || '0') != '0'
+              || (inputs.shard-history-anchor != '' && steps.native_resume.outputs.restored == 'true') }}
         REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
@@ -254,6 +267,7 @@ runs:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
         INDEXED: ${{ inputs.shard-history-anchor != '' }}
+        SHARDS_INSTALLED: ${{ steps.sharded_seed.outputs.available || '0' }}
         SHARDED_SEED: ${{ steps.sharded_seed.outputs.complete }}
       shell: bash
       run: |

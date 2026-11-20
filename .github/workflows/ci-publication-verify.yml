@@ -34,6 +34,10 @@ jobs:
     permissions:
       contents: write
       actions: read
+    concurrency:
+      group: lean-cache-publication-verification
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
       SHARD_HANDOFF: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
@@ -43,6 +47,8 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - name: Fetch the fixed dev history for cold build checkpoints
         if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && env.CHECKPOINT_SECONDS != '0' && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
         env:
@@ -58,11 +64,14 @@ jobs:
           CI_HIT_PATHS: |
             .editorconfig
             .globalconfig
+            .github/scripts/install-tools.py
+            Meta/tools-release.json
             .github/workflows/ci-publication-verify.yml
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/action.yml
+            .github/actions/lean-cache-shards/*
             .gitignore
             D5/*.lean
             Directory.Build.*
@@ -82,32 +91,8 @@ jobs:
             lean-report-inputs.json
             lean-toolchain
             nuget.config
-            tools/.editorconfig
-            tools/.globalconfig
-            tools/Architecture/*
-            tools/Directory.Build.*
-            tools/Directory.Packages.props
-            tools/Makefile
-            tools/NuGet.Config
-            tools/NuGet.config
-            tools/StrataLint.Engine/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Runtime/*
-            tools/Trureturing.Truth/*
-            tools/global.json
-            tools/lean-inspector/*
-            tools/lean-inspector-interface/*
-            tools/lean-inspector-reg/*
-            tools/nuget.config
-            tools/scripts/dotnet-build.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/report/*
-            tools/scripts/workflow/ci-entry.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/worktree/*
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result
         env:
@@ -205,6 +190,8 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Restore from Release assets
         run: |
@@ -239,15 +226,18 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2002
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Validate source and select cache transport changes
         env:
           CI_HIT_PATHS: |
             .github/actions/lean-cache-shards/*
             .github/workflows/ci-publication-verify.yml
-            tools/scripts/worktree/lean_actions_shards.py
-            tools/scripts/worktree/lean_cache_shards.py
+            .github/scripts/install-tools.py
+            Meta/tools-release.json
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
       - if: steps.entry.outputs.hit == 'true'
         id: keys
@@ -360,12 +350,16 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Validate candidate, check the input patterns and strip checkout remote
         env:
           CI_HIT_PATHS: |
             .editorconfig
             .globalconfig
+            .github/scripts/install-tools.py
+            Meta/tools-release.json
             .github/workflows/ci-publication-verify.yml
             .github/workflows/scribe-release-publish.yml
             .gitignore
@@ -379,22 +373,8 @@ jobs:
             NuGet.config
             global.json
             nuget.config
-            tools/.editorconfig
-            tools/.globalconfig
-            tools/Architecture/*
-            tools/Directory.Build.*
-            tools/Directory.Packages.props
-            tools/NuGet.Config
-            tools/NuGet.config
-            tools/StrataLint.Engine/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Scribe/*
-            tools/Trureturing.Truth/*
-            tools/nuget.config
-            tools/scripts/scribe-release.sh
-            tools/scripts/workflow/ci-entry.sh
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result
         env:
