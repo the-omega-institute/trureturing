@@ -128,7 +128,7 @@ def rejected : Realization signature := realize signature (fun _ pd s => T (cl p
 /- arena: proof_shape=bind-only; consumers=typed registration evidence -/
 abbrev arena : Arena where
   signature := signature
-  Law ρ := 
+  Law ρ :=
     (∀ p (d : Fin 3), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
     (∀ p (d : Fin 3), Valid p d.val → ∀ r : Row,
