@@ -134,7 +134,7 @@ private theorem O_step (n : ℕ) : O (n + 2) = 4 * O n + 8 * Q n +
     split_ifs
     · push_cast; ring
     · ring
-  · rw [show n + 2 - (n + 1) = 1 by omega]; split_ifs <;> push_cast <;> ring
+  · rw [show n + 2 - (n + 1) = 1 by omega]; split_ifs <;> ring
   · rw [show n + 2 - (n + 1 + 1) = 0 by omega]; push_cast; ring
 
 private theorem Ev_step (n : ℕ) : Ev (n + 2) =
