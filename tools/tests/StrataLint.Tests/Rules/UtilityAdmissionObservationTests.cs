@@ -106,6 +106,48 @@ public sealed class UtilityAdmissionObservationTests
             StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("none", "none", false)]
+    [InlineData("kind=checker; basis=terminal=task:D5-T0001", "none", true)]
+    [InlineData("none", null, true)]
+    [InlineData(null, "none", true)]
+    [InlineData(null, null, false)]
+    public void RepairingWrappedFrozenAnchorsComparesUtility(string? oldUtility, string? newUtility, bool blocks)
+    {
+        const string wrapped = "   anchors: [lake/module/D5.S0.A,\n     lake/module/D5.S0.B,\n     lake/module/D5.S0.C]";
+        const string canonical = "   anchors: [lake/module/D5.S0.A, lake/module/D5.S0.B, lake/module/D5.S0.C]";
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        var source = fixture.Files[RuleFixture.RingPath];
+        fixture.Baseline[RuleFixture.RingPath] = (oldUtility is null ? source : WithUtility(source, oldUtility))
+            .Replace("   anchors: []", wrapped, StringComparison.Ordinal);
+        fixture.Files[RuleFixture.RingPath] = (newUtility is null ? source : WithUtility(source, newUtility))
+            .Replace("   anchors: []", canonical, StringComparison.Ordinal);
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        var findings = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics;
+        Assert.Equal(blocks, findings.Any(item => item.Message.StartsWith("UTILITY-RATCHET ", StringComparison.Ordinal)
+            && item.AdmissionEffect == AdmissionEffect.Block));
+    }
+
+    [Theory]
+    [InlineData(true, "lake/module/D5.S0.B")]
+    [InlineData(false, "not-an-anchor")]
+    public void FrozenUtilityRatchetRequiresCanonicalCandidateAndRecognizableBaseline(bool wrapCandidate, string anchor)
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        var source = WithUtility(fixture.Files[RuleFixture.RingPath], "none");
+        var wrapped = source.Replace("anchors: []", $"anchors: [lake/module/D5.S0.A,\n     {anchor}]", StringComparison.Ordinal);
+        fixture.Baseline[RuleFixture.RingPath] = wrapCandidate ? source : wrapped;
+        fixture.Files[RuleFixture.RingPath] = wrapCandidate ? wrapped : source;
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        Assert.Contains(RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics,
+            item => item.Message.StartsWith("UTILITY-RATCHET ", StringComparison.Ordinal)
+                && item.AdmissionEffect == AdmissionEffect.Block);
+    }
+
     [Fact]
     public void SurvivingFrozenModuleWithRemovedUtilityStillBlocksRatchet()
     {

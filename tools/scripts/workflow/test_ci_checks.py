@@ -37,7 +37,7 @@ class CheckTests(unittest.TestCase):
 
     def test_hosted_setup_uses_actual_targets_programs_and_selected_lean_suites(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["docs/develop/theory/Note.md"], "push")
+        plan = contract.selection(data, ["README.md"], "push")
         for targets, programs, suite, needs in (([], [], None, False), (["D5.A"], [], None, True),
                 ([], ["Audit"], None, True), ([], [], "source-evidence", True),
                 ([], [], "compiled-audit", True)):
@@ -203,12 +203,12 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn("source-evidence", called)
         self.assertEqual(called, ["pr-lean", "compiled-audit"])
 
-    def test_source_command_uses_original_current_delta_and_theory_scopes(self):
+    def test_source_command_uses_original_current_delta_for_mixed_changes(self):
         data, _ = contract.load(ROOT)
         for paths, purpose, verb, delta in (
                 (["D5/changed.lean"], "pull-request", "check-source", True),
                 (["D5/changed.lean"], "push", "check-source", True),
-                (["D5/changed.lean", "docs/develop/theory/Note.md"], "pull-request", "check-source", True)):
+                (["D5/changed.lean", "README.md"], "pull-request", "check-source", True)):
             plan = contract.selection(data, paths, purpose)
             with self.subTest(paths=paths, purpose=purpose), patch.object(checks, "execute", return_value=0) as execute:
                 checks.current_phase("source", data, plan, "a" * 40, Path("changed"))
@@ -217,39 +217,33 @@ class CheckTests(unittest.TestCase):
                 self.assertEqual(delta, "--protected-base" in command)
                 self.assertNotIn("--candidate-lean-report", command)
 
-    def test_merged_theory_data_runs_source_admission_without_a_lean_build(self):
-        residue = (
-            "docs/develop/theory/Note.md",
-            "docs/develop/archive/theory/part/Old.md",
-            "Meta/Digestion/atoms/sha256/" + "a" * 64,
-            "Meta/Digestion/backfill/note/source.toml",
-            "Meta/Digestion/backfill/note/context/entry.json",
-            "Meta/Digestion/backfill/note/outstanding/entry.yaml",
-        )
-        data, _ = contract.load(ROOT)
-        for path in residue:
-            with self.subTest(path=path):
-                plan = contract.selection(data, [path], "pull-request")
+    def test_source_only_changes_follow_the_consumer_report_filter(self):
+        path = "docs/fixture/input.json"
+        report_paths = "*\n!docs/fixture/*.json\n"
+        for purpose in ("pull-request", "push"):
+            with self.subTest(purpose=purpose):
+                result, calls, plan = self.local_spies(paths=(path,), purpose=purpose, report_paths=report_paths)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertTrue(plan["hits"]["current"])
                 self.assertTrue(plan["source-delta"])
                 self.assertFalse(plan["report"])
                 self.assertFalse(plan["delta"])
-        result, calls, _ = self.local_spies(paths=residue)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        source = next(call for call in calls if "check-source" in call)
-        self.assertIn("--protected-base", source)
-        self.assertFalse(any("lean-report" in call or "check-current" in call for call in calls))
-        result, _, _ = self.local_spies(source=1, paths=residue)
-        self.assertEqual(result.returncode, 1)
+                source = next(call for call in calls if "check-source" in call)
+                self.assertIn("--protected-base", source)
+                self.assertFalse(any(call[0] in ("lean-plan", "pr-lean", "elan") for call in calls))
+                self.assertFalse(any("check-current" in call for call in calls))
 
-        for path in ("D5/Changed.lean", "docs/develop/theory/unknown.sh",
-                     "Meta/Digestion/atoms/sha256/invalid", "Meta/Digestion/unknown.json"):
-            with self.subTest(path=path):
-                plan = contract.selection(data, [*residue, path], "pull-request")
+        result, _, _ = self.local_spies(paths=(path,), source=1, report_paths=report_paths)
+        self.assertEqual(result.returncode, 1)
+        data, _ = contract.load(ROOT)
+        data["current"]["report_paths"] = report_paths
+        for included in ("D5/Changed.lean", "docs/fixture/input.sh"):
+            with self.subTest(included=included):
+                plan = contract.selection(data, [path, included], "pull-request")
                 self.assertTrue(plan["report"])
                 self.assertTrue(plan["delta"])
                 self.assertTrue(plan["hits"]["filemap"])
-                if path.endswith(".lean"):
+                if included.endswith(".lean"):
                     self.assertTrue(plan["compiled-audit"])
 
     def test_source_rejection_blocks_every_guarded_launch_in_executable_local_adapter(self):
@@ -262,24 +256,13 @@ class CheckTests(unittest.TestCase):
             if hit and unit != "current":
                 self.assertIn(f'"check":"{unit}","status":"blocked"', result.stdout)
 
-    def test_readme_skips_current_and_theory_path_keeps_pr_selection(self):
+    def test_readme_skips_current_on_push_and_pull_request(self):
         for purpose in ("pull-request", "push"):
             with self.subTest(purpose=purpose):
                 result, calls, plan = self.local_spies(paths=("README.md",), purpose=purpose)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 self.assertFalse(plan["hits"]["current"])
                 self.assertFalse(any("check-source" in call for call in calls))
-                result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose=purpose)
-                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-                self.assertTrue(plan["hits"]["current"])
-                self.assertFalse(plan["report"])
-                self.assertTrue(plan["source-delta"])
-                self.assertFalse(plan["delta"])
-                source = next(call for call in calls if "check-source" in call)
-                self.assertIn("--protected-base", source)
-                self.assertFalse(any(call[0] == "pr-lean" for call in calls))
-                self.assertFalse(any(call[0] == "elan" for call in calls))
-                self.assertEqual(sum(call[0] == "lean-plan" for call in calls), 0)
 
     def test_scoped_failure_is_red_and_blocks_report_consumers_only(self):
         for scoped in (0, 1):
@@ -306,7 +289,8 @@ class CheckTests(unittest.TestCase):
                     self.assertIn('"check":"compiled-audit","status":"blocked"', result.stdout)
                 self.assertTrue(any(call[:4] == ["make", "-C", "tools", "test"] for call in calls))
 
-    def local_spies(self, source=0, scoped=0, judge=0, paths=("D5/changed.lean",), purpose="pull-request"):
+    def local_spies(self, source=0, scoped=0, judge=0, paths=("D5/changed.lean",), purpose="pull-request",
+                    report_paths=None):
         with tempfile.TemporaryDirectory(prefix="ci source with spaces ") as directory:
             root = Path(directory)
             scripts = root / "tools/scripts/workflow"
@@ -325,8 +309,10 @@ class CheckTests(unittest.TestCase):
                 "    sys.exit(0)\n"
                 "sys.exit(int(os.environ['SCOPED']))\n")
             (root / "Meta").mkdir()
-            shutil.copy2(ROOT / contract.CONTRACT, root / contract.CONTRACT)
             data, _ = contract.load(ROOT)
+            if report_paths is not None:
+                data["current"]["report_paths"] = report_paths
+            (root / contract.CONTRACT).write_text(json.dumps(data))
             for unit in data["units"].values():
                 for lock in unit["cache-dependency-path"].splitlines():
                     if not lock or "*" in lock:
