@@ -38,6 +38,10 @@ $$\forall j \in \mathbb{N},\; \forall c \in \mathbb{N},\; 1 \le j \Rightarrow (c
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/CloitreVToothpickPrefix.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cloitre-2026-v-toothpick-prefix` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/CloitreVToothpickPrefix.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cloitre-2026-v-toothpick-prefix","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/CloitreVToothpickPrefix.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benoît Cloitre (2026). *On the V-toothpick sequence*. URL: <https://arxiv.org/html/2611.23172v1>.

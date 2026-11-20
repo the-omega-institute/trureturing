@@ -48,7 +48,8 @@ internal sealed class CloitreVToothpickPrefixDocument : IScribeDocumentDefinitio
                         + "dyadic enclosure gives e(j,c)=e(j,c+2P). For the least eligible P, "
                         + "the negative offset in the Euclidean remainder of equation (43) "
                         + "gives i(j,p(j),c mod p(j))=c+p(j)."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cloitre-2026-v-toothpick-prefix"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula,
         string description) =>
