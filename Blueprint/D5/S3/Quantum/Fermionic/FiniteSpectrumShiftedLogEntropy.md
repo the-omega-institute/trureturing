@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/FiniteSpectrumShiftedLogEntropy.bravyi_
 
 *Commentary.*
 
-Apply the finite-spectrum comparison to the chiral and complementary matrices using the orders of their shifted determinants. The complementary block contributes twice to the resulting inequality.
+The comparator determinant formulas give strict positivity at every positive shift, including at the endpoints of the attenuation interval. The determinant differences also give equal traces on the two sides of each comparison. Applying the shifted-product theorem to the two block spectra counts the complementary block twice.
 
 ## References
 

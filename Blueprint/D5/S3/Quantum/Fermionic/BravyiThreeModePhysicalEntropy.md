@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/BravyiThreeModePhysicalEntropy.comparat
 
 *Commentary.*
 
-For every real unit normal-form spinor and every attenuation from zero through one, the output entropy is at least the output entropy at the comparator spinor. Its first and third amplitudes are the positive square root of one half and its second amplitude is zero.
+For every real unit normal-form spinor and every attenuation from zero through one, the output entropy is at least the output entropy at the comparator spinor. Its first and third amplitudes are the positive square root of one half and its second amplitude is zero. The shifted determinant ordering bounds the chiral and complementary entropy contributions separately. The spectrum formula then adds the complementary contribution twice.
 
 ## References
 

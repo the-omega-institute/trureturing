@@ -14,7 +14,8 @@ internal sealed class FiniteSpectrumShiftedLogEntropyDocument : IScribeDocumentD
             Entry("entropy_le_of_shifted_product_le", "Shifted product order implies entropy order",
                 "If one shifted product is larger at every positive shift, its spectrum has greater or equal entropy. The remainder for an entry x is bounded by its square divided by the cutoff. A zero entry contributes zero entropy."),
             Entry("bravyi_three_mode_entropy_ge_comparator", "Entropy order for the real Bravyi blocks",
-                "Apply the finite-spectrum comparison to the chiral and complementary matrices using the orders of their shifted determinants. The complementary block contributes twice to the resulting inequality."))));
+                "The comparator determinant formulas give strict positivity at every positive shift, including at the endpoints of the attenuation interval. "
+                + "The determinant differences also give equal traces on the two sides of each comparison. Applying the shifted-product theorem to the two block spectra counts the complementary block twice."))));
 
     private static DocumentBlock Entry(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create("shifted-log-entropy-" + name.Replace('_', '-')),
