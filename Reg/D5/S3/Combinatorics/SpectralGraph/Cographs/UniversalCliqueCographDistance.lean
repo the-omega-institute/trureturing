@@ -138,10 +138,6 @@ abbrev orderArena : Arena where
   signature := orderSignature
   Law R := ∀ {s : ℕ}, 2 ≤ s → R.readout () () s = 6 * s - 3 ∧ Attains s
 
-abbrev unboundedArena : Arena where
-  signature := orderSignature
-  Law R := ∀ n : ℕ, ∃ s : ℕ, 2 ≤ s ∧ n < R.readout () () s ∧ Attains s
-
 private theorem orderDependence :
     ObservationalDependence orderSignature
       (realize orderSignature (fun _ _ s => Fintype.card (OrderVertex s))
@@ -168,19 +164,6 @@ def orderFamily : Registration orderArena (type_of% @family) where
   bridge := Iff.rfl
   variation := ⟨@family, orderRejected, orderRejectedLaw⟩
   sensitivity := sensitivity orderArena.Law orderActual orderRejected orderRejectedLaw
-  dependence := orderDependence
-
-private theorem unboundedRejectedLaw : ¬ unboundedArena.Law orderRejected := by
-  intro h
-  obtain ⟨_, _, hn, _⟩ := h 0
-  exact (Nat.lt_irrefl 0) hn
-
-def unboundedFamily : Registration unboundedArena (type_of% @unbounded_family) where
-  actual := orderActual
-  bridge := Iff.rfl
-  variation := ⟨unbounded_family, orderRejected, unboundedRejectedLaw⟩
-  sensitivity := sensitivity unboundedArena.Law orderActual
-    orderRejected unboundedRejectedLaw
   dependence := orderDependence
 
 abbrev distanceSignature := signature (Σ r : ℕ, Σ s : ℕ, Σ b : ℕ, Vertex r s b)
@@ -391,42 +374,6 @@ def orderRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
     readouts := #[{
       path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-def unboundedRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@unbounded_family) (Realization orderSignature) Unit Unit where
-  unitName :=
-    `Reg.D5.S3.Combinatorics.SpectralGraph.Cographs.UniversalCliqueCographDistance.unboundedUnit
-  realizationName :=
-    `Reg.D5.S3.Combinatorics.SpectralGraph.Cographs.UniversalCliqueCographDistance.unboundedFamily
-  realizationSource := none
-  generated := false
-  arena := .source ⟨unboundedArena⟩
-  objectArena := .source ⟨unboundedArena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source unboundedArena ⟨unboundedFamily⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize orderSignature
-    (fun _ _ s => Fintype.card (OrderVertex s))
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Combinatorics.SpectralGraph.Cographs.UniversalCliqueCographDistance
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "arg", "body", "arg", "fn", "arg", "arg"]
-      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

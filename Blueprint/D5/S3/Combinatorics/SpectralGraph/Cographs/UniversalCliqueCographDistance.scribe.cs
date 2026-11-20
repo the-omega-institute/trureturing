@@ -74,12 +74,7 @@ internal sealed class UniversalCliqueCographDistanceDocument : IScribeDocumentDe
                 "Choose the divisor s−1, so r=3(s−1) and b=s. The graph has order 6s−3, "
                 + "is connected and induced-P4-free, and has vicinal width two. The real shift "
                 + "s−2 is distinct from −1 and −2, belongs to the ordinary distance spectrum, "
-                + "and has real eigenspace dimension two."),
-            Entry("unbounded_family", "Unbounded orders",
-                "For every natural threshold n take s=n+2. Then s ≥ 2 and the order exceeds n. "
-                + "This witness is connected and induced-P4-free, has width two, and has s−2 in its "
-                + "ordinary distance spectrum with dimension two and s−2 distinct from −1 and −2. "
-                + "The order 6s−3 strictly increases with s, so the graphs are pairwise nonisomorphic."))));
+                + "and has real eigenspace dimension two."))));
 
     private static DocumentBlock Entry(string name, string title, string text,
         DescribeRole role = DescribeRole.Theorem) =>

@@ -137,23 +137,6 @@ theorem exists_cotree {V : Type} [Finite V] [Nonempty V] {G : SimpleGraph V}
 
 namespace Cotree
 
-/-- Leaf addresses form a singleton at a leaf and a dependent union of child addresses at a node. -/
-def Leaves : {V : Type} → {G : SimpleGraph V} → {kind : Option Bool} → Cotree G kind → Type
-  | _, _, _, .leaf _ _ => Unit
-  | _, _, _, .node _ _ _ _ child => Σ C, Leaves (child C)
-
-/-- The leaf addresses enumerate the actual vertices, each exactly once. -/
-noncomputable def leavesEquiv : {V : Type} → {G : SimpleGraph V} → {kind : Option Bool} →
-    (t : Cotree G kind) → t.Leaves ≃ V
-  | _, _, _, .leaf v h =>
-    { toFun := fun _ => v
-      invFun := fun _ => ()
-      left_inv := fun x => by cases x; rfl
-      right_inv := fun w => (h w).symm }
-  | _, _, _, .node _ _ _ _ child =>
-    (Equiv.sigmaCongrRight fun C => leavesEquiv (child C)).trans
-      (Equiv.sigmaFiberEquiv _)
-
 /-- Cross edges at an internal node are exactly the edges of a join. -/
 theorem adj_iff_join_of_component_ne {V : Type} {G : SimpleGraph V} (join : Bool)
     {u v : V} (h : (cutGraph G join).connectedComponentMk u ≠
@@ -180,31 +163,6 @@ theorem nontrivial_iff {V : Type} {G : SimpleGraph V} {kind : Option Bool}
   | node _ arity _ _ _ =>
     exact iff_of_true (not_subsingleton_iff_nontrivial.mp
       (not_subsingleton_of_components_nontrivial arity)) (by simp)
-
-/-- Evaluating adjacency on two leaf addresses uses the induced child graph within
-a component and the node's join or union label across components. -/
-theorem adj_leaves_node {V : Type} {G : SimpleGraph V} {join : Bool}
-    {arity : Nontrivial (cutGraph G join).ConnectedComponent}
-    {kind : (cutGraph G join).ConnectedComponent → Option Bool}
-    {alternates : ∀ C, kind C ≠ some join}
-    (child : ∀ C, Cotree (G.induce C.supp) (kind C))
-    (C D : (cutGraph G join).ConnectedComponent)
-    (x : (child C).Leaves) (y : (child D).Leaves) :
-    let t := Cotree.node join arity kind alternates child
-    G.Adj (t.leavesEquiv ⟨C, x⟩) (t.leavesEquiv ⟨D, y⟩) ↔
-      @dite _ (C = D) (Classical.propDecidable _) (fun h =>
-        (G.induce C.supp).Adj ((child C).leavesEquiv x) ((child C).leavesEquiv (h.symm ▸ y)))
-      (fun _ => join = true) := by
-  classical
-  change G.Adj ((child C).leavesEquiv x).val ((child D).leavesEquiv y).val ↔ _
-  by_cases h : C = D
-  · subst D
-    simp [induce_adj]
-  · rw [dite_eq_right h]
-    apply adj_iff_join_of_component_ne join
-    intro he
-    exact h (((child C).leavesEquiv x).property.symm.trans
-      (he.trans ((child D).leavesEquiv y).property))
 
 /-- At a join node a vertex is universal exactly when its child is a leaf. -/
 theorem universal_iff_leaf_child {V : Type} {G : SimpleGraph V}

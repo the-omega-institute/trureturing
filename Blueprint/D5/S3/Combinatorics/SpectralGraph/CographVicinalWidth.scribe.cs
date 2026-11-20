@@ -16,8 +16,6 @@ internal sealed class CographVicinalWidthDocument : IScribeDocumentDefinition
                 "Complementation exchanges the two vertices in the vicinal comparison."),
             Entry("hasChainCover_compl_iff", "Chain covers of complements",
                 "The same assignment to chain labels works for a graph and its complement."),
-            Entry("dilworthNumber_compl", "Complement invariance",
-                "Complementation preserves the infimum of feasible chain-cover sizes."),
             Entry("width", "Natural width",
                 "On finite graphs choose the least feasible vicinal chain-cover size.", DescribeRole.Definition),
             Entry("dilworthNumber_eq_width", "Agreement of the two widths",

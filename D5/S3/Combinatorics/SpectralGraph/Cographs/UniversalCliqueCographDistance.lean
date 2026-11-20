@@ -478,17 +478,4 @@ theorem family (hs : 2 ≤ s) :
     refine ⟨s - 1, by omega, ⟨s, Nat.mul_comm _ _⟩, by omega, ?_⟩
     rw [Nat.mul_div_cancel _ (by omega)]
 
-/-- Every order threshold is exceeded by an eligible width-two witness. -/
-theorem unbounded_family (n : ℕ) :
-    ∃ s : ℕ, 2 ≤ s ∧ n < Fintype.card (Vertex (3 * (s - 1)) s s) ∧
-      (graph (3 * (s - 1)) s s).Connected ∧
-      ¬ (pathGraph 4).IsIndContained (graph (3 * (s - 1)) s s) ∧
-      dilworthNumber (graph (3 * (s - 1)) s s) = 2 ∧
-      ((s : ℝ) - 2 ≠ -1 ∧ (s : ℝ) - 2 ≠ -2) ∧
-      (s : ℝ) - 2 ∈ spectrum ℝ (distanceMatrix (3 * (s - 1)) s s) ∧
-      Module.finrank ℝ (shiftedKernel (3 * (s - 1)) s s) = 2 := by
-  have hs : 2 ≤ n + 2 := by omega
-  obtain ⟨hcard, hfamily⟩ := family hs
-  exact ⟨n + 2, hs, by rw [hcard]; omega, hfamily⟩
-
 end D5.S3.Combinatorics.SpectralGraph.UniversalCliqueCographDistance

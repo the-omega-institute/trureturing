@@ -82,13 +82,6 @@ theorem IsP4Free.compl (h : G.IsP4Free) : Gᶜ.IsP4Free := by
   exact h c a d b hac'.symm had' hbd'.symm
     (fun he => hcd.2 he) (fun he => hbc.2 he.symm) hab.2
 
-/-- Four-vertex path exclusion is invariant under complementation. -/
-@[simp] theorem isP4Free_compl : Gᶜ.IsP4Free ↔ G.IsP4Free := by
-  constructor
-  · intro h
-    simpa only [compl_compl] using h.compl
-  · exact IsP4Free.compl
-
 end SimpleGraph
 
 

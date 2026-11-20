@@ -45,11 +45,6 @@ theorem hasChainCover_compl_iff {V : Type} (G : SimpleGraph V) (k : ℕ) :
   unfold HasChainCover
   simp only [vicinal_compl_iff, or_comm]
 
-/-- Complementation preserves the infimum of feasible chain-cover sizes. -/
-theorem dilworthNumber_compl {V : Type} (G : SimpleGraph V) :
-    dilworthNumber Gᶜ = dilworthNumber G := by
-  simp only [dilworthNumber, hasChainCover_compl_iff]
-
 private theorem exists_chainCover {V : Type} [Finite V] (G : SimpleGraph V) :
     ∃ k, HasChainCover G k := by
   classical
