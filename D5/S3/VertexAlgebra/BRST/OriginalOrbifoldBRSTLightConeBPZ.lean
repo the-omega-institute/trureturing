@@ -245,12 +245,11 @@ private theorem frameBasis_inserted_degree (F : Frame) (i j : FrameLabel)
 def Homogeneous (F : Frame) (n : ℤ) (x : State) : Prop :=
   ∀ i : FrameLabel, (frameBasis F).repr x i ≠ 0 → degree i.2 = n
 
-/-- On opposite relative mass shells, native BPZ is zero unless the two
-light-cone degrees sum to zero. The frame on both shells is the same. -/
-theorem shellBPZ_degree_selection (F : Frame) (a : UCharge)
-    (x : relativeMassShell a) (y : relativeMassShell (-a)) (n m : ℤ)
-    (hx : Homogeneous F n (x : State)) (hy : Homogeneous F m (y : State))
-    (h : n + m ≠ 0) : shellBPZ a x y = 0 := by
+private theorem shellBPZ_degree_selection_of_support (F : Frame) (a : UCharge)
+    (x : relativeMassShell a) (y : relativeMassShell (-a))
+    (h : ∀ i j : FrameLabel, (frameBasis F).repr (x : State) i ≠ 0 →
+      (frameBasis F).repr (y : State) j ≠ 0 → degree i.2 + degree j.2 ≠ 0) :
+    shellBPZ a x y = 0 := by
   classical
   change betaTotal (x : State) (c0 (y : State)) = 0
   rw [← (frameBasis F).linearCombination_repr (x : State),
@@ -264,7 +263,7 @@ theorem shellBPZ_degree_selection (F : Frame) (a : UCharge)
   intro i hi
   have hxi := Finsupp.mem_support_iff.mp hi
   have hyj := Finsupp.mem_support_iff.mp hj
-  have hdeg : degree i.2 + degree j.2 ≠ 0 := by rw [hx i hxi, hy j hyj]; exact h
+  have hdeg := h i j hxi hyj
   have hrel (p : UCharge) (z : relativeMassShell p) (k : FrameLabel)
       (hk : (frameBasis F).repr (z : State) k ≠ 0) : 3 ∉ k.2.2 := by
     rcases k with ⟨u, l⟩
@@ -272,6 +271,16 @@ theorem shellBPZ_degree_selection (F : Frame) (a : UCharge)
     exact (slice_frame_support F p z z.property u l hk).2.1
   rw [frameBasis_inserted_degree F i j (hrel a x i hxi) (hrel (-a) y j hyj) hdeg]
   simp
+
+/-- On opposite relative mass shells, native BPZ is zero unless the two
+light-cone degrees sum to zero. The frame on both shells is the same. -/
+theorem shellBPZ_degree_selection (F : Frame) (a : UCharge)
+    (x : relativeMassShell a) (y : relativeMassShell (-a)) (n m : ℤ)
+    (hx : Homogeneous F n (x : State)) (hy : Homogeneous F m (y : State))
+    (h : n + m ≠ 0) : shellBPZ a x y = 0 :=
+  shellBPZ_degree_selection_of_support F a x y fun i j hi hj => by
+    rw [hx i hi, hy j hj]
+    exact h
 
 private def groundGhost : Relative := relativeKet {1} (by decide)
 
