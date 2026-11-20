@@ -181,9 +181,11 @@ are unverified.
   B(X) in Conjectures 10, 12 and 14 tend to zero.
 - **Computed:** 1−log2 is approximately 0.3068528194; this decimal is
   explanatory and is not an input to any proof.
-- **Open:** Conjectures 11, 13 and 15 have denominator C(X). The present
-  arguments do not settle these relative-density statements; they are tracked
-  separately in #31919 and are outside this settlement.
+- **Proved separately:** the ratios in Conjectures 11, 13 and 15 have
+  denominators C(X), C_O(X) and C_M(X), respectively, and tend to one.
+  Their refutations are given in the
+  [separate dossier](zelinsky-2026-conjectures-11-13-15.md); they do not
+  change the three limits with denominator B(X).
 
 ## ASSUMED-UNVERIFIED
 

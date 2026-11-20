@@ -23,6 +23,7 @@ open LatticeGeneratingFieldLocality LatticeHalfFock
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockCorrectedField
 open LatticeHalfFockGradedTrace LatticePositiveEnergy LatticeAllStateField LatticeInvolution
 open HalfFock.LatticeHalfFockParityField ActualChargedAdjoint MixedIntertwiner
+open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open private sourceGradePairingEquiv from
   D5.S3.VertexAlgebra.TwistedGround.OriginalFourMContraction
 open private ambientCoefficient homogeneous_coefficient liftGrade from
@@ -82,6 +83,28 @@ theorem originalI_homogeneous (D : LatticeData) (hu : IsUnit D.G.det)
   change DirectSum.toModule ℂ ℤ (FixedCarrier D) _ (normalizedCoefficient D hu k u v) = _
   conv_lhs => rw [normalized_single D hu h24 H K k u v huH hvK, DirectSum.toModule_lof]
   rfl
+
+/-- The literal mode three on two weight-two inputs is the normalized
+grade-zero coefficient evaluated at the original vacuum, times that vacuum. -/
+theorem originalI_three_eq_vacuum_smul (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (u v : paritySpace D hu (-1))
+    (huH : actualTensorL0 D hu u.val = (2 : ℂ) • u.val)
+    (hvK : actualTensorL0 D hu v.val = (2 : ℂ) • v.val)
+    (a : fixedGrade D 0) (ha : a.val = vacuum D) :
+    originalI D hu hD 3 u v = normalizedCoefficient D hu 3 u v 0 a • fixedVacuum D := by
+  let f := normalizedCoefficient D hu 3 u v 0
+  let z := (sourceGradePairingEquiv D hu hD 0).symm f
+  have hz : z.val ∈ Submodule.span ℂ {vacuum D} := grade_zero D hD ▸ z.property.1
+  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hz
+  have hpair := sourceGradePairingEquiv_evaluation D hu hD 0 f a
+  change sourcePairing D z.val a.val = f a at hpair
+  rw [← hc, ha, map_smul, LinearMap.smul_apply, sourcePairing_vacuum, smul_eq_mul, mul_one]
+    at hpair
+  rw [originalI_homogeneous D hu hD h24 2 2 3 u v huH hvK]
+  apply Subtype.ext
+  change z.val = f a • vacuum D
+  rw [← hpair, hc]
 
 /-- The current original cutoff, for every actual input, survives the SAME
 finite graded inverse. This is consumed to bound the all-state j-sums below. -/

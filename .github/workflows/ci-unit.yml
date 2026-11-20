@@ -29,6 +29,8 @@ jobs:
   unit:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
+    env:
+      CACHE_WRITES: ${{ github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) }}
     outputs:
       unit: ${{ steps.run.outputs.unit }}
     steps:
@@ -59,8 +61,19 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: true
+          cache: ${{ env.CACHE_WRITES == 'true' }}
           cache-dependency-path: ${{ fromJSON(steps.definition.outputs.definition)['cache-dependency-path'] }}
+      - id: nuget
+        if: fromJSON(steps.definition.outputs.definition).dotnet && env.CACHE_WRITES != 'true'
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        if: fromJSON(steps.definition.outputs.definition).dotnet && env.CACHE_WRITES != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(fromJSON(steps.definition.outputs.definition)['cache-dependency-path']) }}
       - id: prepared
         name: Adopt a matching PR preparation for this event
         if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'

@@ -9,6 +9,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 open Filter Real LeanInformationAudit
+open _root_.D5.S3.Arith.Robin.PrimeFiberPropagation (divisorRatio)
 open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
@@ -211,5 +212,227 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Conjectures
+
+namespace PrimitiveLower
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, 0 < n → PrimitiveNonDeficient n →
+    R.readout () () 2 (divisorRatio n)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨n, _, hn, hC, _⟩ :=
+    _root_.D5.S3.Arith.Abundancy.ZelinskyZhangDoublePrimitive.result 0
+  exact h hn hC
+
+def family : Registration arena
+    (type_of% @primitive_ratio_lower) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@primitive_ratio_lower, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    intro he
+    have hh := congrFun he (0 : ℝ)
+    change ((0 : ℝ) ≤ 0) = ((1 : ℝ) ≤ 0) at hh
+    have hbad : (1 : ℝ) ≤ 0 := Eq.mp hh le_rfl
+    norm_num at hbad
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@primitive_ratio_lower)
+    (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.primitiveLowerAudit
+  realizationName :=
+    `Reg.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.PrimitiveLower.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PrimitiveLower
+
+namespace RatioLower
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, 0 < n → R.readout () () 1 (divisorRatio n)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) (by decide)
+
+def family : Registration arena
+    (type_of% @ratio_one_le) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@ratio_one_le, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    intro he
+    have hh := congrFun he (0 : ℝ)
+    change ((0 : ℝ) ≤ 0) = ((1 : ℝ) ≤ 0) at hh
+    have hbad : (1 : ℝ) ≤ 0 := Eq.mp hh le_rfl
+    norm_num at hbad
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@ratio_one_le)
+    (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.ratioLowerAudit
+  realizationName :=
+    `Reg.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.RatioLower.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RatioLower
+
+namespace PrimeStep
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x < y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m p : ℕ}, 0 < m → p.Prime → PrimitiveNonDeficient (m * p) →
+    R.readout () () (divisorRatio (m * p))
+      (2 + 2 / (p : ℝ) ^ (m * p).factorization p)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨n, hn, hn0, hC, _⟩ :=
+    _root_.D5.S3.Arith.Abundancy.ZelinskyZhangDoublePrimitive.result 1
+  obtain ⟨p, hp, hpn⟩ := Nat.exists_prime_and_dvd (by omega : n ≠ 1)
+  have hm : 0 < n / p := Nat.div_pos (Nat.le_of_dvd hn0 hpn) hp.pos
+  have he : n / p * p = n := Nat.div_mul_cancel hpn
+  exact h hm hp (he.symm ▸ hC)
+
+def family : Registration arena
+    (type_of% @primitive_prime_step) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@primitive_prime_step, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro role
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    intro he
+    have hh := congrFun he (1 : ℝ)
+    change ((0 : ℝ) < 1) = ((1 : ℝ) < 1) at hh
+    have hbad : (1 : ℝ) < 1 := Eq.mp hh (by norm_num)
+    exact (lt_irrefl 1) hbad
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@primitive_prime_step)
+    (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.primeStepAudit
+  realizationName := `Reg.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.PrimeStep.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PrimeStep
 
 end Reg.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
