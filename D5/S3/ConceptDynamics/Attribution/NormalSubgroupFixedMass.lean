@@ -35,7 +35,7 @@ local instance (priority := 2000) tableAction : MulAction G (X → Y) where
     change (g * h) • t ((g * h)⁻¹ • x) = g • (h • t (h⁻¹ • (g⁻¹ • x)))
     rw [mul_inv_rev, mul_smul h⁻¹, mul_smul g]
 
-private theorem readout_smul (g : G) (t : X → Y) (x : X) :
+theorem readout_smul (g : G) (t : X → Y) (x : X) :
     (g • t) (g • x) = g • t x := by
   change g • t (g⁻¹ • (g • x)) = _
   rw [inv_smul_smul]
