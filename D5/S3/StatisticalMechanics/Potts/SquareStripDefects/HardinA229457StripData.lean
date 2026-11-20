@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229457Strip.result)
 Valid: proof_shape=bind-only; consumers=HardinA229457Strip.result
 decidableValid: proof_shape=bind-only; consumers=HardinA229457Strip.finite_certificate._proof_1
-equalityPatternCode: proof_shape=bind-only; consumers=cl, HardinA229604StripData.cl
+equalityPatternCode: proof_shape=bind-only; consumers=HardinA229457StripData.cl, HardinA229604StripData.cl, HardinA229457StripClasses.class_relabel, HardinA229604StripClasses.transition_counts
 cl: proof_shape=bind-only; consumers=HardinA229457Strip.result
 crossing: proof_shape=bind-only; consumers=T
 lastRows: proof_shape=bind-only; consumers=T

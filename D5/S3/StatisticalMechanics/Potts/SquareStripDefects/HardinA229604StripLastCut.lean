@@ -12,7 +12,7 @@ escape_witness: zero_crossing, zero_table, transition_counts
 last_class: proof_shape=bind-only; consumers=transition_counts
 zero_crossing: proof_shape=content; consumers=zero_table
 zero_table: proof_shape=content; consumers=transition_counts
-transition_counts: proof_shape=content; consumers=TwoDefects.Last.HardinA229604StripClass16 through HardinA229604StripClass26
+transition_counts: proof_shape=content; consumers=TwoDefects.Last.HardinA229604StripClass16.transition_counts, TwoDefects.Last.HardinA229604StripClass17.transition_counts, TwoDefects.Last.HardinA229604StripClass18.transition_counts, TwoDefects.Last.HardinA229604StripClass19.transition_counts, TwoDefects.Last.HardinA229604StripClass20.transition_counts, TwoDefects.Last.HardinA229604StripClass21.transition_counts, TwoDefects.Last.HardinA229604StripClass22.transition_counts, TwoDefects.Last.HardinA229604StripClass23.transition_counts, TwoDefects.Last.HardinA229604StripClass24.transition_counts, TwoDefects.Last.HardinA229604StripClass25.transition_counts, TwoDefects.Last.HardinA229604StripClass26.transition_counts
 -/
 
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripCut

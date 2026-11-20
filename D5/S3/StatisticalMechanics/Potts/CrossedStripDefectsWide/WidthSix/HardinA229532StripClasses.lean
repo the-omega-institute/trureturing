@@ -63,7 +63,9 @@ theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
 theorem bond_relabel (e : Equiv.Perm (Fin 3))
     (E : Finset (Fin 6 × Fin 6)) (p r : Row) :
     bondDefects E (e ∘ p) (e ∘ r) = bondDefects E p r := by
-  simp only [bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
+  simpa only [List.map_cons, List.map_nil, DefectTransfer.defects, DefectTransfer.tailDefects,
+    bondDefects, Finset.filter_empty, Finset.card_empty, Nat.zero_add, Nat.add_zero] using
+    DefectTransfer.relabel_defects ∅ E e [p, r]
 
 theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 31,
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧

@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: transition_counts
-class_relabel: proof_shape=bind-only; consumers=transition_counts, HardinA229604StripClasses.transition_counts
+class_relabel: proof_shape=bind-only; consumers=HardinA229457StripClasses.transition_counts, HardinA229604StripClasses.transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229457Strip.finite_certificate
 -/
 
