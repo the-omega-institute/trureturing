@@ -13,7 +13,7 @@ escape_witness: pair_sum (two consecutive admissible digits have at most Q^2 - Q
 proof_shape:
   tail, cons, low: definitions; consumers: the lemmas below.
   fiberEquiv: content (the shift bijection); consumer: count_rec.
-  count_rec: content; consumers: count_le.
+  count_rec: content; consumers: count_le, DigitCapNearSquare.count_digit.
   class_card: content; consumer: low_card.
   pair_sum: content; consumer: count_le.
   count_le: content; consumer: subcritical.

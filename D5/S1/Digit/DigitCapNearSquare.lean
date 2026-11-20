@@ -16,25 +16,30 @@ escape_witness: win_split (among the ell window terms at most one has last digit
 proof_shape:
   win, lifts, env, qs: private definitions; consumers: the lemmas below.
   lam, claim: source definitions; consumers: result.
-  cap_iff: content (digit range of a residue class under the cap); consumer: count_digit.
+  cap_iff: bind-only helper (nlinarith arithmetic); consumer: count_digit.
   count_digit: content (lowest-digit recursion specialised to ell ^ 2 - 2 via count_rec);
     consumers: count_le_win, count_eq_short, count_low_digit, full_at_top, full_at_low.
   lifts_of_ne, lifts_top, win_len_le, win_eq_range, win_zero, count_low_digit: bind-only
     helpers; consumers: count_le_win, count_eq_short, upper, the window identities.
   count_le_win, count_eq_short: content; consumer: upper.
-  pos_of_res, res_of_pos: content (residue arithmetic); consumer: win_split.
+  pos_of_res, res_of_pos: bind-only helpers (residue arithmetic); consumer: win_split.
   win_split, upper: content; consumer: count_upper.
-  lam_sq, one_le_lam, lam_lt: content (root facts); consumers: env_bound, qs_lower, result.
-  env_bound, count_upper: content; consumer: readout_upper.
+  lam_sq, one_le_lam, lam_lt: bind-only helpers (sqrt facts); consumers: env_bound,
+    qs_lower, readout_upper, readout_lower, result.
+  env_bound: content; consumer: count_upper.
+  count_upper: content; consumer: readout_upper.
   short_at_low, full_at_top, full_at_low: content (exact window identities); consumer: qs_rec.
-  qs_bounds, qs_pos, qs_rec, win_pos, qs_lower: content; consumer: readout_lower.
+  qs_bounds, qs_rec, qs_lower: content; consumer: readout_lower.
+  qs_pos, win_pos: bind-only helpers; consumers: qs_rec, full_at_low, qs_lower,
+    readout_lower.
   count_zero_pos: bind-only helper (count_positive at 0); consumers: readout_upper, result.
   readout_upper, readout_lower: content; consumer: result.
   result: content.
 Direct frozen dependencies: D5/S1/Digit/CoonsAdjacentGrowthRefutation (count, readout,
   exponent, count_positive; statement_id
   sha256:adc04d4c318958807e0c995604326199d16ca889d5bd0f774bec45e46b1859ac),
-  D5/S1/Digit/DigitCapSubcritical (low, count_rec; made public in this delivery and re-pinned).
+  D5/S1/Digit/DigitCapSubcritical (low, count_rec; made public in this delivery and re-pinned,
+  statement_id sha256:e524f68bf6834f7515db762f20a2777e9a5631b8b13a55b9baecaee54427d524).
 Search record (§3.1): D5/S1/Digit has exact exponents only on the plateaus
   (q-1)(ell+1) <= k <= q ell - 1 (DigitCapPlateau.exponent_plateau) and for caps
   ell^r - 1 (DigitCapPowerGF); the cap ell^2 - 2 lies between the plateaus q = ell - 1 and
