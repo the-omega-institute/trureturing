@@ -36,7 +36,7 @@ private def peripheralBlock (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ) (ht : t �
     Finset (Vertex q) :=
   {⟨i, ⟨2 * t - 1, by omega⟩⟩, ⟨i, ⟨2 * t, by omega⟩⟩}
 
-private abbrev BlockIndex (q : Fin 3 → ℕ) := Σ i : Fin 3, Fin (q i)
+private abbrev PeripheralIndex (q : Fin 3 → ℕ) := Σ i : Fin 3, Fin (q i)
 
 private theorem sigma_fin_ext {n : Fin 3 → ℕ} {x y : Σ i : Fin 3, Fin (n i)}
     (hleg : x.1 = y.1) (hval : x.2.val = y.2.val) : x = y := by
@@ -71,20 +71,20 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
       (H q).IsIndepSet (↑A : Set (Vertex q)) ∧
       ∀ x ∈ A, ∀ y ∈ peripheralBlock q i t ht, x ≠ y ∧ ¬ (H q).Adj x y := by
   obtain ⟨j, hji⟩ := exists_ne i
-  let mark : BlockIndex q := ⟨i, ⟨t - 1, by omega⟩⟩
+  let mark : PeripheralIndex q := ⟨i, ⟨t - 1, by omega⟩⟩
   let root : Vertex q := ⟨j, ⟨0, by omega⟩⟩
   -- Use odd depths before the mark and even depths after it or on other legs.
-  let depth (b : BlockIndex q) : ℕ :=
+  let depth (b : PeripheralIndex q) : ℕ :=
     if b.1 = i ∧ b.2.val + 1 < t then 2 * b.2.val + 1 else 2 * b.2.val + 2
-  let regular (b : BlockIndex q) : Vertex q :=
+  let regular (b : PeripheralIndex q) : Vertex q :=
     ⟨b.1, ⟨depth b, by
       have hb := b.2.isLt
       dsimp only [depth]
       split <;> omega⟩⟩
-  have depth_pos (b : BlockIndex q) : 0 < depth b := by
+  have depth_pos (b : PeripheralIndex q) : 0 < depth b := by
     dsimp only [depth]
     split <;> omega
-  have depth_gap {a b : BlockIndex q} (hleg : a.1 = b.1)
+  have depth_gap {a b : PeripheralIndex q} (hleg : a.1 = b.1)
       (hlt : a.2.val < b.2.val) : depth a + 2 ≤ depth b := by
     dsimp only [depth]
     by_cases ha : a.1 = i ∧ a.2.val + 1 < t
@@ -95,7 +95,7 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
         exact ha ⟨hleg.trans hbi, by omega⟩
       rw [ite_eq_right ha, ite_eq_right hb]
       omega
-  have regular_apart {a b : BlockIndex q} (hab : a ≠ b) :
+  have regular_apart {a b : PeripheralIndex q} (hab : a ≠ b) :
       regular a ≠ regular b ∧ ¬ (H q).Adj (regular a) (regular b) := by
     by_cases hleg : a.1 = b.1
     · have hval : a.2.val ≠ b.2.val := fun h => hab (sigma_fin_ext hleg h)
@@ -106,7 +106,7 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
             (depth_gap hleg.symm hgt)
         exact ⟨Ne.symm hne, fun h => hna h.symm⟩
     · exact apart_of_different_legs hleg (Or.inl (depth_pos a))
-  have root_apart (b : BlockIndex q) :
+  have root_apart (b : PeripheralIndex q) :
       root ≠ regular b ∧ ¬ (H q).Adj root (regular b) := by
     by_cases hleg : j = b.1
     · have hbi : b.1 ≠ i := hleg ▸ hji
@@ -115,9 +115,9 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
       simp [depth, hbi]
     · exact apart_of_different_legs hleg (Or.inr (depth_pos b))
   -- The marked block's index instead supplies the root on the other leg.
-  let select (b : BlockIndex q) : Vertex q :=
+  let select (b : PeripheralIndex q) : Vertex q :=
     if b = mark then root else regular b
-  have select_apart {a b : BlockIndex q} (hab : a ≠ b) :
+  have select_apart {a b : PeripheralIndex q} (hab : a ≠ b) :
       select a ≠ select b ∧ ¬ (H q).Adj (select a) (select b) := by
     by_cases ha : a = mark
     · have hb : b ≠ mark := fun hb => hab (ha.trans hb.symm)
@@ -128,7 +128,7 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
           show regular a ≠ root ∧ ¬ (H q).Adj (regular a) root from
             ⟨Ne.symm hne, fun h => hna h.symm⟩
       · simpa [select, ha, hb] using regular_apart hab
-  have select_remote (b : BlockIndex q) (y : Vertex q)
+  have select_remote (b : PeripheralIndex q) (y : Vertex q)
       (hy : y ∈ peripheralBlock q i t ht) :
       select b ≠ y ∧ ¬ (H q).Adj (select b) y := by
     have hy_coords : y.1 = i ∧ (y.2.val = 2 * t - 1 ∨ y.2.val = 2 * t) := by
@@ -162,7 +162,7 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
           exact ⟨Ne.symm hne, fun h => hna h.symm⟩
       · exact apart_of_different_legs (fun h => hbi (h.trans hy_leg))
           (Or.inl (depth_pos b))
-  let embedding : BlockIndex q ↪ Vertex q :=
+  let embedding : PeripheralIndex q ↪ Vertex q :=
     ⟨select, fun _ _ h => by
       by_contra hne
       exact (select_apart hne).1 h⟩
@@ -182,7 +182,7 @@ private theorem peripheral_companions (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ)
 
 end EvenLegTriangle
 
-open EvenLegTriangle (H Vertex peripheralBlock)
+open EvenLegTriangle (H Vertex peripheralBlock sigma_fin_ext)
 
 abbrev BlockIndex (q : Fin 3 → ℕ) := Option (Σ i : Fin 3, Fin (q i))
 
@@ -196,14 +196,6 @@ def Interface {q : Fin 3 → ℕ} (x y : Vertex q) : Prop :=
   x.1 = y.1 ∧
     ((x.2.val % 2 = 0 ∧ x.2.val + 1 = y.2.val) ∨
       (y.2.val % 2 = 0 ∧ y.2.val + 1 = x.2.val))
-
-private theorem coords_eq {L : Fin 3 → ℕ} {x y : Σ i : Fin 3, Fin (L i)}
-    (hi : x.1 = y.1) (hd : x.2.val = y.2.val) : x = y := by
-  obtain ⟨i, x⟩ := x
-  obtain ⟨j, y⟩ := y
-  change i = j at hi
-  subst j
-  exact congrArg (Sigma.mk i) (Fin.ext hd)
 
 private theorem block_eq_iff {q : Fin 3 → ℕ} (x y : Vertex q) :
     block x = block y ↔
@@ -221,7 +213,7 @@ private theorem block_eq_iff {q : Fin 3 → ℕ} (x y : Vertex q) :
         congrArg (fun b : Σ i : Fin 3, Fin (q i) => b.2.val) h⟩
     · rintro (⟨h, _⟩ | ⟨_, _, hi, hd⟩)
       · exact (hx h).elim
-      · exact coords_eq hi hd
+      · exact sigma_fin_ext hi hd
 
 private theorem model_adj_iff {q : Fin 3 → ℕ} {x y : Vertex q} :
     (H q).Adj x y ↔ x ≠ y ∧ (block x = block y ∨ Interface x y) := by
@@ -240,8 +232,8 @@ private theorem model_adj_iff {q : Fin 3 → ℕ} {x y : Vertex q} :
     · exact Or.inl ((block_eq_iff x y).mpr (Or.inl ⟨hx, hy⟩))
   · rintro ⟨hne, h | h⟩
     · rcases (block_eq_iff x y).mp h with ⟨hx, hy⟩ | ⟨hx, hy, hi, hd⟩
-      · exact Or.inr ⟨fun hi => hne (coords_eq hi (hx.trans hy.symm)), hx, hy⟩
-      · have hdepth : x.2.val ≠ y.2.val := fun h => hne (coords_eq hi h)
+      · exact Or.inr ⟨fun hi => hne (sigma_fin_ext hi (hx.trans hy.symm)), hx, hy⟩
+      · have hdepth : x.2.val ≠ y.2.val := fun h => hne (sigma_fin_ext hi h)
         exact Or.inl ⟨hi, by omega⟩
     · rcases h with ⟨hi, ⟨_, hs⟩ | ⟨_, hs⟩⟩
       · exact Or.inl ⟨hi, Or.inl hs⟩
@@ -257,8 +249,8 @@ private theorem peripheral_mem {q : Fin 3 → ℕ} {x : Vertex q} (i : Fin 3) (t
     x ∈ peripheralBlock q i t ht := by
   simp only [peripheralBlock, Finset.mem_insert, Finset.mem_singleton]
   rcases hd with h | h
-  · exact Or.inl (coords_eq hi h)
-  · exact Or.inr (coords_eq hi h)
+  · exact Or.inl (sigma_fin_ext hi h)
+  · exact Or.inr (sigma_fin_ext hi h)
 
 private theorem roots_companions (q : Fin 3 → ℕ) :
     ∃ A : Finset (Vertex q), A.card = q 0 + q 1 + q 2 ∧ (H q).IsIndepSet (A : Set (Vertex q)) ∧
@@ -270,7 +262,7 @@ private theorem roots_companions (q : Fin 3 → ℕ) :
   let emb : (Σ i : Fin 3, Fin (q i)) ↪ Vertex q :=
     ⟨positiveEven, fun x y h => by
       have hleg : x.1 = y.1 := congrArg (fun z : Vertex q => z.1) h
-      apply coords_eq hleg
+      apply sigma_fin_ext hleg
       have hd := congrArg (fun z : Vertex q => z.2.val) h
       change (positiveEven x).2.val = (positiveEven y).2.val at hd
       rw [evenCoords, evenCoords] at hd
