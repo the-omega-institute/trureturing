@@ -183,6 +183,7 @@ jobs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
       STRATALINT_ACCEPT_COLD_BUILD: '1'
+      INDEXED_PROJECT: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) && (github.event_name == 'pull_request' || github.ref_protected) }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -260,7 +261,11 @@ jobs:
         if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ env.INDEXED_PROJECT }}
+          require-pr-opt-in: ${{ env.INDEXED_PROJECT == 'true' && github.event_name == 'pull_request' }}
       - id: keys
         if: ${{ !cancelled() && steps.prepared.outcome == 'success' }}
         env:
@@ -284,8 +289,24 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: cache_scope
+        name: Select cached modules from the Lean build plan
+        if: env.INDEXED_PROJECT == 'true' && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.lean_plan.outputs.builds_lean == 'true'
+        run: |
+          targets="$RUNNER_TEMP/lean-cache-targets"
+          python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" > "$targets"
+          echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
+      - name: Restore project shards for the selected modules
+        if: steps.cache_scope.outputs.targets-file != ''
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          targets-file: ${{ steps.cache_scope.outputs.targets-file }}
       - id: project
-        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' }}
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && env.INDEXED_PROJECT != 'true' && steps.keys.outputs.project_key != '' }}
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -301,7 +322,12 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+        run: |
+          if [[ "$INDEXED_PROJECT" == true ]]; then
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          else
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          fi
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         env:
