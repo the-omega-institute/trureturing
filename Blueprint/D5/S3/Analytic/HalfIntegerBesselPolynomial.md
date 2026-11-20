@@ -54,7 +54,31 @@ Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_ode`
 
 For every natural m, its carrier P satisfies the rational polynomial identity X^2 P'' + (2X+2) P' = m(m+1) P. Each coefficient of this identity reduces to the factorial recurrence.
 
-**Theorem 1.5 (Reflected polynomial Wronskian).**
+**Theorem 1.5 (Degree of the finite carrier).**
+
+Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.natDegree_carrier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/HalfIntegerBesselPolynomial.natDegree_carrier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The carrier P_m has natural degree m. Its coefficient at m is nonzero and all coefficients at larger indices vanish.
+
+**Theorem 1.6 (Carrier constant coefficient).**
+
+Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_coeff_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_coeff_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The constant coefficient of the finite reciprocal carrier is one for every order.
+
+**Theorem 1.7 (Reflected polynomial Wronskian).**
 
 Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.reflected_wronskian`
 
@@ -69,7 +93,9 @@ For every natural m, let P be its carrier and Q(X) = P(-X). Then 2 P Q - X^2 (P 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier`
+- Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_coeff_zero`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_ode`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coefficient`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coefficient_succ`
+- Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.natDegree_carrier`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.reflected_wronskian`

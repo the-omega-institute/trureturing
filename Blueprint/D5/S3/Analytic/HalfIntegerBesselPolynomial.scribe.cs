@@ -47,7 +47,7 @@ internal sealed class HalfIntegerBesselPolynomialDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("half-integer-bessel-polynomial-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("half-integer-bessel-polynomial-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             provenance, Blocks(Paragraph(Text(prose))), role);
 }
