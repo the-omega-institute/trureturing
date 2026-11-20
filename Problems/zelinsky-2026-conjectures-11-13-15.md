@@ -181,7 +181,7 @@ the separate radical-component-density dossier treats Conjectures 10,
   source conjectures.
 - **Computed:** exact integer divisor-sum sieves give the following
   inclusive counts and ratios. The computation uses Python 3.12
-  (`python3.12`): sieve sigma(n), test sigma(n)≥2n and
+  (`python3.12 -`): sieve sigma(n), test sigma(n)≥2n and
   sigma(n/p)<2n/p for every prime p dividing n, then test each strict
   inequality p^(v_p(n)+1)<2rad(n). A second divisor-sum and
   proper-multiple sieve independently verifies the odd count at 10^6.

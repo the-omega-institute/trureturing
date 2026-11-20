@@ -79,7 +79,7 @@ internal sealed class ZelinskyRadicalComponentConjecture11Document : IScribeDocu
                 Blocks(Paragraph(Text("In section 3, Conjecture 11 asserts "
                     + "lim (B intersect C)(X)/C(X)=0, where C is the set of "
                     + "primitive non-deficient integers and B consists of the "
-                    + "positive integers n with p^(v_p(n)+1)<2*rad(n) for every "
+                    + "integers n>=2 with p^(v_p(n)+1)<2*rad(n) for every "
                     + "prime divisor p. Counts use inclusive positive bounds."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"),

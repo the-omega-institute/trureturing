@@ -43,3 +43,9 @@ Conjecture 13 uses denominator C_O(x), and Conjecture 15 uses denominator
 C_M(x) for every nonempty finite prime set M; both assert limit zero.
 The component condition and the families are identical in all six
 conjectures; the denominators distinguish the two groups of limits.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2005.12115
+
+Preprint: https://arxiv.org/abs/2005.12115v5, section 3, pages 9–10.
