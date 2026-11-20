@@ -15,7 +15,9 @@ triage: anchor
 
 # Triameter equality at k = 1
 
-ArXiv:2611.17259v1, §7, Question 1, printed p. 19.
+## Verified locator
+
+ArXiv:2611.17259v1, DOI 10.48550/arXiv.2611.17259. [§7, Question 1, p. 19](https://arxiv.org/html/2611.17259v1#S7.p2.1)
 
 > Question 1. Theorem 1.1 determines the distances between the vertices of a triametral triple in graphs attaining the equality in (1), but not the whole graph. Characterize the graphs attaining this equality, at least for k = 1, that is, the graphs G with tr(G) = 4α(G) − 1.
 
