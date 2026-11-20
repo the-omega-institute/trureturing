@@ -91,7 +91,10 @@ internal sealed class FriedenAdaptedWordsDocument : IScribeDocumentDefinition
                     + "other label once. Restriction retains a subsequence of the moves of "
                     + "each selected wire, with their directions preserved. Each word in X "
                     + "contains a wire whose retained directions alternate twice."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("frieden-2026-adapted-reversal-words"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("frieden-" + name.ToLowerInvariant()),
