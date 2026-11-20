@@ -385,7 +385,7 @@ theorem central_defect_endpoint_average (n : ℕ)
     (τ ε : ℝ) (hε : 0 < ε) :
     letI : Nontrivial (Fin (2 * (n + 1) - 1 + 1)) := Fin.nontrivial_iff_two_le.mpr (by omega)
     let δ := actualGap freq
-    0 < δ ∧ (4 * (n + 1 : ℝ) / (ε * δ) ≤ τ →
+    0 < δ ∧ (2 * (n + 1 : ℝ) / (ε * δ) ≤ τ →
       (1 - ε) / (2 * (n + 1 : ℝ)) <
         (∫ t in (0 : ℝ)..τ,
           ‖evolution (centralDefect (n + 1) (by omega)) t (Fin.last _) 0‖ ^ 2) / τ) := by
@@ -430,9 +430,7 @@ theorem central_defect_endpoint_average (n : ℕ)
     push_cast
     ring
   have htime : (Fintype.card (Fin (2 * (n + 1) - 1 + 1)) : ℝ) / (ε * δ) ≤ τ := by
-    rw [hcard]
-    exact (div_le_div_of_nonneg_right (by nlinarith [Nat.cast_nonneg (α := ℝ) n] : 2 * (n + 1 : ℝ) ≤ 4 * (n + 1 : ℝ))
-      (mul_nonneg hε.le hδ.le)).trans ht
+    simpa only [hcard] using ht
   have result := reflected_transition_average hA Fin.revPerm Fin.rev_rev
     (central_reflection n) 0 τ δ ε hδ hε hgap htime
   rwa [hcard, show Fin.revPerm (0 : Fin (2 * (n + 1) - 1 + 1)) = Fin.last _ from by

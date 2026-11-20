@@ -25,15 +25,16 @@ internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinitio
                         "This gap is strictly positive.")),
                     Paragraph(Text(
                         "For any positive error parameter, let the time window start at zero and " +
-                        "have length at least twice the vertex count divided by the error parameter " +
+                        "have length at least the vertex count divided by the error parameter " +
                         "and the actual gap. The real time average of the squared norm of the " +
                         "entry from vertex zero to vertex 2n minus one of the matrix exponential " +
                         "of the entrywise complexified path matrix multiplied by minus i times the " +
                         "evolution time strictly exceeds " +
                         "the ratio of one minus the error parameter to the vertex count.")),
                     Paragraph(Text(
-                        "The estimate formalizes the weighted-path part of Childs et al., " +
-                        "Section III.D, Lemma 1. The existing spectral gap theorem gives " +
+                        "For the weighted path in Childs et al., Section III.D, Lemma 1, the " +
+                        "real cosine integral gives half of the source sufficient time. " +
+                        "The existing spectral gap theorem gives " +
                         "simple eigenvalues. Coordinate " +
                         "reversal preserves the matrix and each eigenline, so the eigenvectors have " +
                         "equal absolute weights at the endpoints. The exponential acts on these " +

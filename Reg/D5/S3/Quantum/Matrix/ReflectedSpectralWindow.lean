@@ -41,7 +41,7 @@ private abbrev arena : Arena where
     Finset.univ.val.map freq = (centralDefect (n + 1) (by omega)).charpoly.roots →
     ∀ (τ ε : ℝ), 0 < ε →
     let δ := R.readout () n freq
-    0 < δ ∧ (4 * (n + 1 : ℝ) / (ε * δ) ≤ τ →
+    0 < δ ∧ (2 * (n + 1 : ℝ) / (ε * δ) ≤ τ →
       (1 - ε) / (2 * (n + 1 : ℝ)) <
         (∫ t in (0 : ℝ)..τ,
           ‖evolution (centralDefect (n + 1) (by omega)) t (Fin.last _) 0‖ ^ 2) / τ)
