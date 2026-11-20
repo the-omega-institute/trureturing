@@ -15,6 +15,12 @@ internal sealed class StructuredRankOneFamilyDocument : IScribeDocumentDefinitio
                 Equal(Call("openSimplex", V("m")), Call("setOf", Seq(Typed(V("u"), Arrow(Call("Fin",V("m")),Real)),Sp,Mapsto,Sp,
                     And(All(V("i"),Call("Fin",V("m")),Lt(D(0),Call("u",V("i")))),
                         Lt(SumOver(V("i"),Call("Fin",V("m")),Call("u",V("i"))),D(1))))))), DescribeRole.Definition),
+            Prose("countable_punctured_simplex_pathConnected", "Countable punctures preserve path connectedness",
+                "For n at least three and any space X homeomorphic to the open (n − 1)-simplex, the complement of every countable subset of X is path connected (and nonempty). The transported chart maps the countable set into real space of dimension n − 1 > 1, where Mathlib's countable-complement theorem applies."),
+            Prose("connected_family", "The family theorem on an arbitrary connected domain",
+                "Let Y be a nonempty connected topological space and d, x : Y → ℝⁿ continuous. If Δ(y) = pivot(diag d(y), x(y)) never vanishes and every downdate M(y) is positive semidefinite, then either Δ > 0 everywhere and every d_i ≥ 0 everywhere, or Δ < 0 everywhere and a unique index j has d_j < 0 everywhere while every other d_i ≥ 0 everywhere. In the positive case the inertia theorem gives n₋(diag d) = n₋(M) = 0; in the negative case n₋(diag d) = 1 at every point, and the open-and-closed set where a fixed coordinate is negative is everything."),
+            Prose("countable_family", "The simplex family with countable punctures",
+                "On the open simplex minus any countable set, with n at least three, the complement is nonempty and the conclusion of the connected-domain theorem holds, including nonnegativity of every diagonal entry in the positive case."),
             Entry("punctured_simplex_pathConnected", "Finite punctures preserve path connectedness", Domain(
                 Implies(Call("Finite",V("A")),Call("IsPathConnected",Complement))), DescribeRole.Theorem),
             Entry("continuous_family", "Constant sign and the globally unique negative index", Family(), DescribeRole.Theorem),
@@ -38,6 +44,11 @@ internal sealed class StructuredRankOneFamilyDocument : IScribeDocumentDefinitio
             "continuous_family" => "Nonemptiness, the strict sign dichotomy and uniqueness of one global coordinate are all included.",
             _ => "Both universal source clauses hold together, with the matrix clause quantified over every finite dimension."
         }))), role, openProblemResolutionClaim: resolutionClaim);
+    private static DocumentBlock Prose(string name, string title, string text) => Describe.Lean(
+        DescribeId.Create("structured-rank-one-family-"+name.Replace('_','-').ToLowerInvariant()), DeclarationHandle.Create(Owner+name), H(title),
+        StatementSource.WithoutFormula(),
+        AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mazhang2026scaleddowndate")),
+        Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     private static Formula V(string s) => F.Id(s);
     private static Formula Real => Seq(Mathbb,Grp(V("R")));
     private static Formula Nat => Seq(Mathbb,Grp(V("N")));
