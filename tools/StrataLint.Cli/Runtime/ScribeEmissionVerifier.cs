@@ -59,6 +59,9 @@ internal sealed class ScribeVerificationException(int exitCode, string message) 
 
 internal interface IScribeEmissionVerifier
 {
+    VerifiedScribeEmissions VerifyScoped(RepositorySnapshot snapshot, LeanAxiomReport report,
+        RawChangeSet changes, IReadOnlyList<string> selectedPaths) => Verify(snapshot, report, changes);
+
     VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
@@ -100,11 +103,20 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         LeanAxiomReport report,
         RawChangeSet? changes,
         FrozenStateCatalog? frozenState = null,
-        FrozenStatementIndex? frozenStatements = null)
+        FrozenStatementIndex? frozenStatements = null) =>
+        VerifyChanges(snapshot, report, changes, changes?.Paths.Select(path => path.Value), frozenState, frozenStatements);
+
+    public VerifiedScribeEmissions VerifyScoped(RepositorySnapshot snapshot, LeanAxiomReport report,
+        RawChangeSet changes, IReadOnlyList<string> selectedPaths) =>
+        VerifyChanges(snapshot, report, changes, selectedPaths, null, null);
+
+    private VerifiedScribeEmissions VerifyChanges(RepositorySnapshot snapshot, LeanAxiomReport report,
+        RawChangeSet? changes, IEnumerable<string>? selectedPaths,
+        FrozenStateCatalog? frozenState, FrozenStatementIndex? frozenStatements)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
-        if (changes is null)
+        if (changes is null || selectedPaths is null)
             throw new InvalidOperationException("SCRIBE_SCOPE_REQUIRED: supply an explicit definition scope.");
         var reconcile = StatementProjectionReconciliation.IsAffectedBy(snapshot, changes);
         if (verifyMaterialized is not null)
@@ -116,7 +128,7 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         }
         var selection = ScribeDefinitionSelector.Select(
             path => snapshot.TryGetFile(path, out var file) ? file.RawBytes.ToArray() : null,
-            changes.Paths.Select(path => path.Value));
+            selectedPaths);
         if (!selection.IsSuccess)
             throw new InvalidOperationException("SCRIBE_SCOPE_INVALID: " + selection.Failure);
         if (!reconcile && selection.Paths.IsEmpty)

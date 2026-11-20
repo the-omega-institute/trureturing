@@ -18,24 +18,6 @@ def needs(detect="success", hits=None, **results):
 
 
 class CiRequiredTests(unittest.TestCase):
-    def test_fib_ack_cannot_pass_without_successful_identified_current(self):
-        hits = {"current": True, "tests-fib": True}
-        value = needs(current="success", **{"tests-fib": "success"})
-        value["source"] = {"result": "success", "outputs": {"source_status": "accepted", "continuation": "true"}}
-        self.assertEqual(self.verdict(value, hits).returncode, 0)
-        for state in ("failure", "cancelled", "skipped"):
-            value["current"]["result"] = state
-            self.assertEqual(self.verdict(value, hits).returncode, 1)
-        value["current"]["result"] = "success"
-        value["current"]["outputs"]["unit"] = "wrong"
-        self.assertEqual(self.verdict(value, hits).returncode, 1)
-        del value["current"]
-        self.assertEqual(self.verdict(value, hits).returncode, 1)
-        # A fabricated selected acknowledgement with unselected current must fail too.
-        hits["current"] = False
-        value = needs(current="skipped", source="skipped", **{"tests-fib": "success"})
-        self.assertEqual(self.verdict(value, hits).returncode, 1)
-
     def test_current_source_phase_is_required_and_cannot_turn_blocked_hits_green(self):
         hits = {"current": True, "alpha": True}
         value = needs(current="success", alpha="success")

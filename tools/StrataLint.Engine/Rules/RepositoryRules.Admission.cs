@@ -8,13 +8,21 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> Axioms(CurrentRuleContext context) => Axioms(context.Lean.Report);
+    internal const string AxiomDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
+
+    private static ImmutableArray<RuleFinding> Axioms(CurrentRuleContext context)
+    {
+        var report = context.Lean.Report;
+        if (report.IsScoped && report.Files.Count > 0 && context.Current.TryGetFile(AxiomDebtPath, out var debt)
+            && !report.Files.ContainsKey(debt.Path))
+            throw new InvalidDataException("scoped Lean evidence is missing the registered axiom owner " + AxiomDebtPath);
+        return Axioms(report);
+    }
 
     internal static ImmutableArray<RuleFinding> Axioms(LeanAxiomReport lean)
     {
-        const string debtPath = "D5/X_Assumptions/AxiomDebt.lean";
         var registered = ImmutableHashSet<string>.Empty;
-        if (RepoPath.TryCreate(debtPath, out var debtRepoPath)
+        if (RepoPath.TryCreate(AxiomDebtPath, out var debtRepoPath)
             && lean.Files.TryGetValue(debtRepoPath, out var debt))
         {
             registered = debt.Declarations
@@ -36,7 +44,7 @@ internal static partial class RepositoryRules
                 .Where(static declaration => declaration.Kind == "axiom")
                 .Select(static declaration => declaration.Name)
                 .ToImmutableHashSet(StringComparer.Ordinal);
-            if (path.Value != debtPath && direct.Count > 0)
+            if (path.Value != AxiomDebtPath && direct.Count > 0)
             {
                 findings.Add(new RuleFinding(
                     path.Value,

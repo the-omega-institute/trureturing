@@ -77,6 +77,27 @@ public sealed class RegistrationImportDirectionTests
     }
 
     [Fact]
+    public void ScopedEvidencePreservesUnchangedDebtAndRemovesDeletedDebt()
+    {
+        var baseline = Files((Other, Imports(Judge)), (Source, Imports(Analysis)));
+        var candidate = Files((Other, Imports(Judge)));
+        var scoped = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>());
+        var diagnostics = Evaluate(baseline, candidate, scoped);
+        Assert.Contains(diagnostics, d => d.Path == Source && d.Message == "registration import debt: base=1, candidate=0");
+        Assert.Contains(diagnostics, d => d.Path == Other && d.Message == "registration import debt: base=1, candidate=1");
+    }
+
+    [Fact]
+    public void MissingChangedCandidateModuleCannotUseUnchangedDebt()
+    {
+        var baseline = Files((Source, Imports(Judge)));
+        var candidate = Files((Source, Imports(Analysis)));
+        var scoped = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>());
+        Assert.Contains(Source, Assert.Throws<InvalidDataException>(
+            () => Context(baseline, candidate, scoped)).Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ByteIdenticalDebtPassesEvenWithChangedPathSignal()
     {
         var files = Files((Source, Imports(Judge)));
@@ -148,6 +169,24 @@ public sealed class RegistrationImportDirectionTests
         AssertNoBlock(Evaluate(Files((Source, "-- math\n")),
             Files((Source, "-- math\n"), (registration, Imports("D5.S0.Carrier.Source", Judge))),
             Reports((Source, []), (registration, ["D5.S0.Carrier.Source", Judge]))));
+    }
+
+    [Fact]
+    public void ScopedInterfaceDependencyIsOutsideStratumOwners()
+    {
+        const string helper = "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Analysis/Finite.lean";
+        const string higher = "D5/S1/Phase/Higher.lean";
+        var files = Files((Source, Imports("D5.S1.Phase.Higher")), (higher, "-- math\n"),
+            (helper, Imports("D5.S1.Phase.Higher")));
+        var report = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>
+        {
+            [Source] = new(["D5.S1.Phase.Higher"], []),
+            [higher] = new([], []),
+            [helper] = new(["D5.S1.Phase.Higher"], []),
+        });
+        var findings = Evaluate(files, new(files), report);
+        Assert.Contains(findings, finding => finding.Path == Source && finding.AdmissionEffect == AdmissionEffect.Block);
+        Assert.DoesNotContain(findings, finding => finding.Path == helper);
     }
 
     [Fact]

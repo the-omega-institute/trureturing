@@ -10,8 +10,11 @@
 Conjecture 4.1 and Theorems 4.2--4.4. The order bound and low positive
 regimes are literature-attested and carry no novelty claim.
 Admission basis: open-problem-resolution; preregistration #25489.
-The single public endpoint is the full original iff for every positive k,s.
-All intermediate helpers are private and consumed by that endpoint.
+The designated endpoint is the full original iff for every positive k,s. The square
+lemma (square_cover, with even_torsor_cover and rectangle_index_le), the order bound
+hom_order_le, and the lower-range constructions odd_positive and even_positive (with the
+PairCovers predicate) are also public; they are consumed on the endpoint's proof path. The
+remaining helpers are private and consumed by that endpoint.
 Proof shape: content, through exact rectangle representatives and explicit
 integer-cylinder covers; the top strip consumes the existing necessity
 and sufficiency constructions. No new determinant result is claimed.
@@ -35,14 +38,16 @@ open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-private def PairCovers (k s : ℕ) : Prop :=
+/-- `ZMod 2 × ZMod (2k)` has an `s`-spanning pair: two distinct elements whose signed combinations
+with `|x| + |y| ≤ s` cover the group. -/
+def PairCovers (k s : ℕ) : Prop :=
   ∃ a b : Target k, a ≠ b ∧ ∀ g, ∃ x y : ℤ,
     g = x • a + y • b ∧ |x| + |y| ≤ (s : ℤ)
 
-/- Actual finite quotient count. There is no assumed finite-index/counting
+/-- Actual finite quotient count. There is no assumed finite-index/counting
 hypothesis: Fin n × Fin n explicitly surjects onto the additive quotient.
 Nat.card_le_card_of_surjective requires only that the SOURCE is finite. -/
-private theorem rectangle_index_le (L : Submodule ℤ Plane) (n : ℕ)
+theorem rectangle_index_le (L : Submodule ℤ Plane) (n : ℕ)
     (hc : RectangleCovers L (n : ℤ) (n : ℤ)) :
     L.toAddSubgroup.index ≤ n * n := by
   classical
@@ -62,9 +67,9 @@ private theorem rectangle_index_le (L : Submodule ℤ Plane) (n : ℕ)
   change Nat.card (Plane ⧸ L.toAddSubgroup) ≤ n * n
   simpa only [Nat.card_prod, Nat.card_fin] using Nat.card_le_card_of_surjective π hπ
 
-/- Complement to the existing even-radius oddLattice_cover. At radius 2t+1
+/-- Complement to the existing even-radius oddLattice_cover. At radius 2t+1
 use the even coefficient-sum torsor, which becomes [-t,t]^2. -/
-private theorem even_torsor_cover {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
+theorem even_torsor_cover {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
     (hcover : LeeCovers f (2*t+1)) :
     RectangleCovers (oddLattice f) (2*t+1) (2*t+1) := by
   have hf : Function.Surjective f := fun g => by
@@ -100,23 +105,28 @@ private theorem even_torsor_cover {k : ℕ} (f : Plane →+ Target k) {t : ℤ}
       omega
   rw [he, map_sub, hfw, sub_self]
 
-private theorem hom_order_le {k s : ℕ} (hk : 0 < k)
+/-- The square lemma for every positive radius: if the coefficient map covers `Target k` from the
+diamond `|x| + |y| ≤ s`, every coset of `M = T⁻¹ ker f` has a representative in `{0, …, s-1}²`. -/
+theorem square_cover {k s : ℕ} (f : Plane →+ Target k) (hc : LeeCovers f (s : ℤ)) :
+    RectangleCovers (oddLattice f) (s : ℤ) (s : ℤ) := by
+  rcases Nat.even_or_odd s with he | ho
+  · obtain ⟨t, ht⟩ := he
+    have hs : (s : ℤ) = 2*(t : ℤ) := by exact_mod_cast (show s = 2*t by omega)
+    have hc' : LeeCovers f (2*(t : ℤ)) := by simpa only [hs] using hc
+    simpa only [hs] using oddLattice_cover f hc'
+  · obtain ⟨t, ht⟩ := ho
+    have hs : (s : ℤ) = 2*(t : ℤ)+1 := by
+      exact_mod_cast (show s = 2*t+1 by omega)
+    have hc' : LeeCovers f (2*(t : ℤ)+1) := by simpa only [hs] using hc
+    simpa only [hs] using even_torsor_cover f hc'
+
+/-- In particular `2k ≤ s²`. -/
+theorem hom_order_le {k s : ℕ} (hk : 0 < k)
     (f : Plane →+ Target k) (hc : LeeCovers f (s : ℤ)) : 2*k ≤ s^2 := by
   have hf : Function.Surjective f := fun g => by
     obtain ⟨z, _, hz⟩ := hc g
     exact ⟨z, hz⟩
-  have hrect : RectangleCovers (oddLattice f) (s : ℤ) (s : ℤ) := by
-    rcases Nat.even_or_odd s with he | ho
-    · obtain ⟨t, ht⟩ := he
-      have hs : (s : ℤ) = 2*(t : ℤ) := by exact_mod_cast (show s = 2*t by omega)
-      have hc' : LeeCovers f (2*(t : ℤ)) := by simpa only [hs] using hc
-      simpa only [hs] using oddLattice_cover f hc'
-    · obtain ⟨t, ht⟩ := ho
-      have hs : (s : ℤ) = 2*(t : ℤ)+1 := by
-        exact_mod_cast (show s = 2*t+1 by omega)
-      have hc' : LeeCovers f (2*(t : ℤ)+1) := by simpa only [hs] using hc
-      simpa only [hs] using even_torsor_cover f hc'
-  have hi := rectangle_index_le (oddLattice f) s hrect
+  have hi := rectangle_index_le (oddLattice f) s (square_cover f hc)
   rw [oddLattice_index hk f hf] at hi
   simpa only [pow_two] using hi
 
@@ -283,7 +293,9 @@ private theorem consecutive_distinct (k : ℕ) (hk : 0 < k) (t : ℤ) :
   have hle : ((2*k : ℕ) : ℤ) ≤ 1 := Int.le_of_dvd (by norm_num) hd
   omega
 
-private theorem odd_positive (k t : ℕ) (hk : 0 < k)
+/-- Odd lower range: for `s = 2t + 1` and `2k ≤ s² - 1` (that is `k ≤ 2t(t + 1)`), the consecutive
+pair `(1, t), (1, t + 1)` spans. -/
+theorem odd_positive (k t : ℕ) (hk : 0 < k)
     (hkt : (k : ℤ) ≤ 2*(t : ℤ)*((t : ℤ)+1)) : PairCovers k (2*t+1) := by
   refine ⟨(1, ((t : ℤ) : ZMod (2*k))),
     (1, (((t : ℤ)+1 : ℤ) : ZMod (2*k))), consecutive_distinct k hk t, ?_⟩
@@ -291,7 +303,9 @@ private theorem odd_positive (k t : ℕ) (hk : 0 < k)
     (2*(t : ℤ)+1) hkt (odd_integer_cover t (by positivity))
   simpa only [Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one] using hh
 
-private theorem even_positive (k t : ℕ) (hk : 0 < k) (ht : 1 ≤ t)
+/-- Even lower range: for `s = 2t`, `t ≥ 1` and `2k ≤ s² - s` (that is `k ≤ 2t² - t`), the
+consecutive pair `(1, t - 1), (1, t)` spans. -/
+theorem even_positive (k t : ℕ) (hk : 0 < k) (ht : 1 ≤ t)
     (hkt : (k : ℤ) ≤ 2*(t : ℤ)^2-(t : ℤ)) : PairCovers k (2*t) := by
   refine ⟨(1, (((t : ℤ)-1 : ℤ) : ZMod (2*k))),
     (1, ((t : ℤ) : ZMod (2*k))), ?_, ?_⟩
