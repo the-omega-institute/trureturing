@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Partitions.CommonBlockWeights
 import D5.S3.Combinatorics.Partitions.StabilizerFactorialDivisibility
+import D5.S3.Combinatorics.SubsetSpectrum.AdditiveDigitCapacity
 import D5.S3.ConceptDynamics.Attribution.PrimeCycleSeedFreeness
 import D5.S3.ConceptDynamics.Attribution.ThreeOutcomeGridSupport
 import Mathlib.Algebra.BigOperators.Field
@@ -24,6 +25,7 @@ import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.GroupTheory.Perm.DomMulAct
 import Mathlib.GroupTheory.Perm.Support
 import Mathlib.Tactic.Group
+import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 
@@ -408,13 +410,18 @@ end PermutationGrid
 open Finset
 open scoped Nat
 
-private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty I]
-    {n q : ℕ} {w : Fin n → ℕ} (cover : D5.S3.Combinatorics.Partitions.CommonBlockWeights.CoversAllocations (Fintype.card I) q w)
-    (p : I → ℕ) (total : ∑ i, p i = Fintype.card I * (Fintype.card I - 1) * q)
+private theorem local_scaled_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty I]
+    {n m c : ℕ} {w : Fin n → ℕ}
+    (cover : ∀ t U : ℕ, 0 < t → Fintype.card I * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
+      Fintype.card I * (Fintype.card I - 1) * (∑ i, x i) = U * m →
+      ∃ a : Fin n → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
+        (∀ i, ∑ j, a j i * w j = c * x i))
+    (p : I → ℕ) (total : ∑ i, p i = m) (divisible : Fintype.card I - 1 ∣ m)
     (atLeastTwo : 2 ≤ Fintype.card I) :
     ∃ f : Fin n → Equiv.Perm I → I,
       (∀ (h : ProfileStabilizer.Preserving p) j g, f j (h • g) = h • f j g) ∧
-      ∀ i, ∑ j, (∑ g, if f j g = i then w j else 0) = (Fintype.card I - 2)! * p i := by
+      ∀ i, ∑ j, (∑ g, if f j g = i then w j else 0) =
+        (c * (Fintype.card I - 2)!) * p i := by
   classical
   open ProfileStabilizer in
   let G := Preserving p
@@ -437,28 +444,29 @@ private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty 
     rw [Hfact]
     apply D5.S3.Combinatorics.Partitions.StabilizerFactorialDivisibility.factorial_product_dvd_scaled_coordinate
       (ProfileStabilizer.size p) Subtype.val (ProfileStabilizer.size_sum p)
-    rw [ProfileStabilizer.group_mass, total]
-    exact ⟨k * q, by dsimp [k]; ac_rfl⟩
+    simpa only [ProfileStabilizer.group_mass, total] using divisible
   have demand (b : B) : d b * H = D * (ProfileStabilizer.size p b * b.val) :=
     Nat.div_mul_cancel (divide b)
-  have kfact : k ! = D * k * (k - 1) := by
-    have pred : (k - 1)! = (k - 1) * D := by
-      simpa only [D, show k - 1 - 1 = k - 2 by omega] using
-        (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
-    rw [← Nat.mul_factorial_pred (n := k) (by omega), pred]
+  have kfact : (k)! = D * k * (k - 1) := by
+    have step (a : ℕ) (apos : 0 < a) : a ! = a * (a - 1)! := by
+      conv_lhs => rw [← Nat.sub_add_cancel apos]
+      rw [Nat.factorial_succ, Nat.sub_add_cancel apos]
+    rw [step k (by omega), step (k - 1) (by omega)]
+    dsimp [D]
+    rw [show k - 1 - 1 = k - 2 by omega]
     ac_rfl
-  have dtotal : ∑ b : B, d b = U * q := by
-    apply Nat.eq_of_mul_eq_mul_right Hpos
+  have dtotal : k * (k - 1) * (∑ b : B, d b) = U * m := by
+    have sumDemand : (∑ b : B, d b) * H = D * m := by
+      rw [Finset.sum_mul]
+      calc
+        ∑ b : B, d b * H = ∑ b : B, D * (ProfileStabilizer.size p b * b.val) :=
+          Finset.sum_congr rfl fun b _ => demand b
+        _ = _ := by rw [← Finset.mul_sum, ProfileStabilizer.group_mass, total]
+    apply Nat.eq_of_mul_eq_mul_left (Nat.factorial_pos (k - 2))
     calc
-      (∑ b : B, d b) * H =
-          ∑ b : B, D * (ProfileStabilizer.size p b * b.val) := by
-            rw [Finset.sum_mul]
-            exact Finset.sum_congr rfl fun b _ => demand b
-      _ = (k)! * q := by
-        rw [← Finset.mul_sum, ProfileStabilizer.group_mass, total, kfact]
-        dsimp [k]
-        ac_rfl
-      _ = (U * q) * H := by rw [Nat.mul_right_comm, HU]
+      D * (k * (k - 1) * (∑ b : B, d b)) = (k)! * (∑ b : B, d b) := by rw [kfact]; ac_rfl
+      _ = U * ((∑ b : B, d b) * H) := by rw [← HU]; ac_rfl
+      _ = D * (U * m) := by rw [sumDemand]; ac_rfl
   let t := Fintype.card B
   let e := Fintype.equivFin B
   have tpos : 0 < t := Fintype.card_pos_iff.mpr
@@ -471,7 +479,7 @@ private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty 
     · have eq : t - 1 = 0 := by omega
       simp [eq]
   obtain ⟨a, acount, amass⟩ := cover t U tpos Ubound (d ∘ e.symm)
-    ((e.symm.sum_comp d).trans dtotal)
+    (by simpa only [Function.comp_apply, Equiv.sum_comp] using dtotal)
   let Q := MulAction.orbitRel.Quotient G I
   let _ : Fintype Q := Fintype.ofFinite Q
   let eQ : Q ≃ Fin t := (ProfileStabilizer.orbitEquivGroups p).trans e
@@ -490,7 +498,7 @@ private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty 
   let h := Fintype.card (MulAction.stabilizer G i)
   have spos : 0 < s := ProfileStabilizer.size_positive p b
   have hs : s * h = H := ProfileStabilizer.stabilizer_count_product p i
-  have hw : ∑ j, aQ j (Quotient.mk'' i) * w j = d b := by
+  have hw : ∑ j, aQ j (Quotient.mk'' i) * w j = c * d b := by
     show ∑ j, a j (e (ProfileStabilizer.orbitEquivGroups p (Quotient.mk'' i))) * w j = _
     rw [ProfileStabilizer.orbitEquivGroups_mk]
     simpa [b, Function.comp_apply] using amass (e b)
@@ -511,7 +519,34 @@ private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty 
     _ = (∑ j, aQ j (Quotient.mk'' i) * w j) * h := by
       rw [Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => Nat.mul_right_comm _ _ _
-    _ = D * p i := by rw [hw, combined]
+    _ = (c * D) * p i := by rw [hw, Nat.mul_assoc, combined, Nat.mul_assoc]
+
+private theorem local_readout {I : Type*} [Fintype I] [DecidableEq I] [Nonempty I]
+    {n q : ℕ} {w : Fin n → ℕ} (cover : D5.S3.Combinatorics.Partitions.CommonBlockWeights.CoversAllocations (Fintype.card I) q w)
+    (p : I → ℕ) (total : ∑ i, p i = Fintype.card I * (Fintype.card I - 1) * q)
+    (atLeastTwo : 2 ≤ Fintype.card I) :
+    ∃ f : Fin n → Equiv.Perm I → I,
+      (∀ (h : ProfileStabilizer.Preserving p) j g, f j (h • g) = h • f j g) ∧
+      ∀ i, ∑ j, (∑ g, if f j g = i then w j else 0) = (Fintype.card I - 2)! * p i := by
+  have positive : 0 < Fintype.card I - 1 := by omega
+  have countPositive : 0 < Fintype.card I := by omega
+  have scalePositive : 0 < Fintype.card I * (Fintype.card I - 1) :=
+    Nat.mul_pos countPositive positive
+  have divisible : (Fintype.card I - 1) ∣ Fintype.card I * (Fintype.card I - 1) * q :=
+    ⟨Fintype.card I * q, by ac_rfl⟩
+  have allocate (t U : ℕ) (tPos : 0 < t) (enough : Fintype.card I * (t - 1) ≤ U)
+      (x : Fin t → ℕ)
+      (balance : Fintype.card I * (Fintype.card I - 1) * (∑ i, x i) =
+        U * (Fintype.card I * (Fintype.card I - 1) * q)) :
+      ∃ a : Fin n → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
+        (∀ i, ∑ j, a j i * w j = 1 * x i) := by
+    have sum : (∑ i, x i) = U * q := by
+      apply Nat.eq_of_mul_eq_mul_left scalePositive
+      rw [balance]
+      ac_rfl
+    simpa only [Nat.one_mul] using cover t U tPos enough x sum
+  simpa only [Nat.one_mul] using
+    local_scaled_readout (c := 1) allocate p total divisible atLeastTwo
 
 open Finset
 open scoped Nat
@@ -941,5 +976,241 @@ theorem grid_support_budget_iff {k q : ℕ} (two : 2 ≤ k) (positive : 0 < q)
       exact covariance g (lift p) s.val.1 s.val.2
     · have h := Fintype.card_le_of_injective Subtype.val (Subtype.val_injective (p := fun s : R => 0 < w s.1))
       simpa only [R, Fintype.card_prod, Fintype.card_fin, cardP, Nat.mul_comm] using h
+
+private theorem law_of_scaled_block_allocations {k m n c : ℕ} (two : 2 ≤ k) (positive : 0 < m)
+    (scalePositive : 0 < c) (divide : k - 1 ∣ m) (w : Fin n → ℕ)
+    (weights : k * (k - 1) * (∑ j, w j) = c * m)
+    (cover : ∀ t U : ℕ, 0 < t → k * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
+      k * (k - 1) * (∑ i, x i) = U * m →
+        ∃ a : Fin n → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
+          (∀ i, ∑ j, a j i * w j = c * x i)) :
+    ∃ (S : Type) (_ : Fintype S) (_ : MulAction (Equiv.Perm (Fin k)) S)
+      (v : S → ℝ) (f : Profile (Fin k) m → S → Fin k),
+      CalibratingLaw S v f ∧ Fintype.card S ≤ k ! * n := by
+  classical
+  let I := Fin k
+  let P := Equiv.Perm I
+  let D := c * (k - 2)!
+  letI : Nonempty I := ⟨⟨0, by omega⟩⟩
+  have cardI : Fintype.card I = k := Fintype.card_fin k
+  have available : ∀ t U : ℕ, 0 < t → Fintype.card I * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
+      Fintype.card I * (Fintype.card I - 1) * (∑ i, x i) = U * m →
+      ∃ a : Fin n → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
+        (∀ i, ∑ j, a j i * w j = c * x i) := by
+    simpa only [cardI] using cover
+  have locals (p : Profile I m) : Nonempty (LocalReadout (D := D) w p) := by
+    obtain ⟨f, eq, mass⟩ := local_scaled_readout (c := c) available p.val p.property
+      (by simpa only [cardI] using divide) (by simpa only [cardI] using two)
+    refine ⟨⟨f, ?_, fun g fix j h => eq ⟨g, preserving_of_fix fix⟩ j h⟩⟩
+    simpa only [cardI] using mass
+  obtain ⟨f, mass, covariance⟩ := global_readout w locals
+  let R := Fin n × P
+  let S := {s : R // 0 < w s.1}
+  let _ : MulAction P R :=
+    { smul := fun g s => (s.1, g * s.2)
+      one_smul := fun s => Prod.ext rfl (one_mul s.2)
+      mul_smul := fun g h s => Prod.ext rfl (mul_assoc g h s.2) }
+  let _ : MulAction P S :=
+    { smul := fun g s => ⟨g • s.val, s.property⟩
+      one_smul := fun s => Subtype.ext (one_smul _ _)
+      mul_smul := fun g h s => Subtype.ext (mul_smul g h s.val) }
+  let F (p : Profile I m) (s : S) := f p s.val.1 s.val.2
+  have cardP : Fintype.card P = k ! := by rw [Fintype.card_perm, Fintype.card_fin]
+  have factorial : k ! = (k - 2)! * (k * (k - 1)) := by
+    have pred : (k - 1)! = (k - 1) * (k - 2)! := by
+      simpa only [show k - 1 - 1 = k - 2 by omega] using
+        (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
+    rw [← Nat.mul_factorial_pred (n := k) (by omega), pred]
+    ac_rfl
+  have denominator : (∑ s : S, w s.val.1) = D * m := by
+    rw [ThreeOutcomeGridSupport.sum_positive_support (fun (a : R) => w a.1) _ (fun _ h => h),
+      Fintype.sum_prod_type]
+    simp only [Finset.sum_const, Finset.card_univ, cardP, nsmul_eq_mul, Nat.cast_id,
+      ← Finset.mul_sum]
+    rw [factorial, Nat.mul_assoc, weights]
+    dsimp only [D]
+    ac_rfl
+  have supportedMass (p : Profile I m) (i : I) :
+      (∑ s : S, if F p s = i then w s.val.1 else 0) = D * p.val i := by
+    rw [ThreeOutcomeGridSupport.sum_positive_support (fun (a : R) => w a.1)
+      (fun s => if f p s.1 s.2 = i then w s.1 else 0)
+      (fun s z => by simp [z]), Fintype.sum_prod_type]
+    exact mass p i
+  let M : ℝ := (D * m : ℕ)
+  have dpositive : 0 < D := Nat.mul_pos scalePositive (Nat.factorial_pos _)
+  have MP : 0 < M := by
+    change 0 < ((D * m : ℕ) : ℝ)
+    exact_mod_cast Nat.mul_pos dpositive positive
+  let v (s : S) : ℝ := (w s.val.1 : ℝ) / M
+  refine ⟨S, inferInstance, inferInstance, v, F, ⟨?_, ?_, ?_, ?_, ?_⟩, ?_⟩
+  · intro s
+    exact div_pos (by exact_mod_cast s.property) MP
+  · simp only [v, ← Finset.sum_div, ← Nat.cast_sum, denominator]
+    exact div_self MP.ne'
+  · intro g s
+    rfl
+  · intro p i
+    have castMass := congrArg (fun x : ℕ => (x : ℝ)) (supportedMass p i)
+    push_cast at castMass
+    calc
+      _ = ∑ s : S, (if F p s = i then (w s.val.1 : ℝ) else 0) / M := by
+        exact Finset.sum_congr rfl fun s _ => by by_cases h : F p s = i <;> simp [v, h]
+      _ = ((D : ℝ) * (p.val i : ℝ)) / M := by rw [← Finset.sum_div, castMass]
+      _ = _ := by
+        change ((D : ℝ) * (p.val i : ℝ)) / ((D * m : ℕ) : ℝ) = (p.val i : ℝ) / m
+        have denomCast : ((D * m : ℕ) : ℝ) = (D : ℝ) * (m : ℝ) := Nat.cast_mul D m
+        rw [denomCast, mul_comm (D : ℝ) (p.val i : ℝ), mul_comm (D : ℝ) (m : ℝ),
+          mul_div_mul_right _ _ (by exact_mod_cast dpositive.ne')]
+  · intro g p s
+    exact covariance g p s.val.1 s.val.2
+  · have h := Fintype.card_le_of_injective Subtype.val
+      (Subtype.val_injective (p := fun s : R => 0 < w s.1))
+    simpa only [R, Fintype.card_prod, Fintype.card_fin, cardP, Nat.mul_comm] using h
+
+private theorem reduced_grid_budget_iff {k K b A : ℕ} (two : 2 ≤ k)
+    (factor : K * b = k) (apos : 0 < A)
+    (coprime : Nat.Coprime b A)
+    (divisible : ∀ p : ℕ, p.Prime → p ≤ k → p ∣ (k - 1) * (K * A))
+    (n : ℕ) :
+    let m := (k - 1) * (K * A)
+    (∃ (S : Type) (_ : Fintype S) (_ : MulAction (Equiv.Perm (Fin k)) S) (w : S → ℝ)
+      (f : Profile (Fin k) m → S → Fin k), CalibratingLaw S w f ∧ Fintype.card S ≤ k ! * (n + 1)) ↔
+      K * A + 1 ≤ (K + 1) * (k + 1)^n := by
+  classical
+  let m := (k - 1) * (K * A)
+  let I := Fin k
+  let D := (k - 2)!
+  have productPositive : 0 < K * b := factor ▸ (show 0 < k by omega)
+  have KPositive : 0 < K := Nat.pos_of_ne_zero (fun h => by simp [h] at productPositive)
+  have bPositive : 0 < b := Nat.pos_of_ne_zero (fun h => by simp [h] at productPositive)
+  have positive : 0 < m := Nat.mul_pos (by omega) (Nat.mul_pos KPositive apos)
+  have cardI : Fintype.card I = k := Fintype.card_fin k
+  have fact : k ! = D * (k * (k - 1)) := by
+    have pred : (k - 1)! = (k - 1) * D := by
+      simpa only [D, show k - 1 - 1 = k - 2 by omega] using
+        (Nat.mul_factorial_pred (n := k - 1) (by omega)).symm
+    rw [← Nat.mul_factorial_pred (n := k) (by omega), pred]
+    ac_rfl
+  have scaleEq : b * m = k * (k - 1) * A := by
+    dsimp [m]
+    rw [← factor]
+    ac_rfl
+  constructor
+  · rintro ⟨S, _, _, w, f, ⟨wp, total, wi, mass, covariance⟩, bound⟩
+    have realPos : 0 < (m : ℝ) := by exact_mod_cast positive
+    let v (s : S) := (m : ℝ) * w s
+    have calibrated (p : Profile I m) (i : I) :
+        (∑ s, if f p s = i then v s else 0) = (p.val i : ℝ) := by
+      have term (s : S) :
+          (if f p s = i then v s else 0) = (m : ℝ) * (if f p s = i then w s else 0) := by
+        by_cases h : f p s = i <;> simp [h, v]
+      rw [Finset.sum_congr rfl (fun s _ => term s), ← Finset.mul_sum, mass, mul_comm]
+      exact div_mul_cancel₀ _ realPos.ne'
+    have free := PrimeCycleSeedFreeness.free_of_prime_divisibility
+      (fun p hp hpI => divisible p hp (by simpa only [Fintype.card_fin] using hpI)) v
+      (fun s => mul_pos realPos (wp s)) f calibrated covariance
+    obtain ⟨r, weights, support, norm, rawCover⟩ := weighted_orbit_spectrum (I := I)
+      (by simpa only [cardI] using two) free v
+      (fun g s => congrArg ((m : ℝ) * ·) (wi g s)) f calibrated covariance
+    simp only [I, Fintype.card_fin] at support norm
+    have levels : m / (Fintype.card I - 1) + 1 = K * A + 1 := by
+      rw [cardI]
+      dsimp [m]
+      rw [Nat.mul_comm (k - 1), Nat.mul_div_cancel _ (show 0 < k - 1 by omega)]
+    have digitCount : Fintype.card I + 1 = k + 1 := congrArg (· + 1) cardI
+    have cover (l : Fin (K * A + 1)) : ∃ d : Fin r → Fin (k + 1),
+        ∑ j, ((d j).val : ℝ) * weights j = (l.val : ℝ) := by
+      obtain ⟨d, eq⟩ := rawCover (Fin.cast levels.symm l)
+      exact ⟨fun j => Fin.cast digitCount (d j), eq⟩
+    have rPos : 0 < r := by
+      by_contra! hz
+      have zero : r = 0 := by omega
+      subst r
+      let level : Fin (K * A + 1) := ⟨1, by
+        exact Nat.lt_succ_of_le (Nat.succ_le_of_lt (Nat.mul_pos KPositive (by omega)))⟩
+      obtain ⟨d, h⟩ := cover level
+      have rhs : (level.val : ℝ) = 1 := by norm_num [level]
+      simp [rhs] at h
+    obtain ⟨r', rEq⟩ := Nat.exists_eq_succ_of_ne_zero rPos.ne'
+    subst r
+    have hcard : r' ≤ n := by
+      rw [support] at bound
+      have le := Nat.le_of_mul_le_mul_left bound (Nat.factorial_pos k)
+      omega
+    have vTotal : (∑ s, v s) = m := by simp [v, ← Finset.mul_sum, total]
+    rw [vTotal] at norm
+    have board : (∑ j, weights j) = (A : ℝ) / b := by
+      have realFact : ((k ! : ℕ) : ℝ) = (D : ℝ) * ((k : ℝ) * ((k - 1 : ℕ) : ℝ)) := by
+        exact_mod_cast fact
+      have scaled : (b : ℝ) * (m : ℝ) = (k : ℝ) * ((k - 1 : ℕ) : ℝ) * (A : ℝ) := by
+        exact_mod_cast scaleEq
+      rw [realFact] at norm
+      have dNe : (D : ℝ) ≠ 0 := by exact_mod_cast (Nat.factorial_pos (k - 2)).ne'
+      have kNe : (k : ℝ) ≠ 0 := by exact_mod_cast (show k ≠ 0 by omega)
+      have prevNe : ((k - 1 : ℕ) : ℝ) ≠ 0 := by exact_mod_cast (show k - 1 ≠ 0 by omega)
+      have bNe : (b : ℝ) ≠ 0 := by exact_mod_cast bPositive.ne'
+      apply (eq_div_iff bNe).mpr
+      have eq1 : ((k : ℝ) * ((k - 1 : ℕ) : ℝ)) * (∑ j, weights j) = (m : ℝ) := by
+        apply mul_left_cancel₀ dNe
+        linear_combination norm
+      apply mul_left_cancel₀ (mul_ne_zero kNe prevNe)
+      linear_combination (b : ℝ) * eq1 + scaled
+    let level (l : Fin (K * A + 1)) : ℤ := l.val
+    have distinct : Function.Injective level := by
+      intro x y neq
+      change (x.val : ℤ) = (y.val : ℤ) at neq
+      exact Fin.ext (by exact_mod_cast neq)
+    have all (l : Fin (K * A + 1)) : ∃ d : Fin (r' + 1) → Fin (k + 1),
+        ∑ j, ((d j).val : ℝ) * weights j = (level l : ℝ) := by
+      simpa only [level, Int.cast_natCast] using cover l
+    have signedCoprime : (A : ℤ).natAbs.Coprime b := by simpa using coprime.symm
+    have signedTotal : (∑ j, weights j) = ((A : ℤ) : ℝ) / b := by simpa using board
+    have levelBound := D5.S3.Combinatorics.SubsetSpectrum.AdditiveDigitCapacity.integral_levels_capacity
+      bPositive signedCoprime weights signedTotal level distinct all
+    have coeff : b + k = (K + 1) * b := by rw [Nat.add_mul, Nat.one_mul, factor]; omega
+    rw [coeff, Nat.mul_right_comm (K + 1) b, Nat.mul_comm b] at levelBound
+    have capacity := Nat.le_of_mul_le_mul_right levelBound bPositive
+    exact capacity.trans (Nat.mul_le_mul_left _ (Nat.pow_le_pow_right (by omega) hcard))
+  · intro cap
+    have reducedCap : K * A + 1 ≤ (K * b.gcd A + 1) * (k + 1)^n := by
+      simpa only [show b.gcd A = 1 from coprime, Nat.mul_one] using cap
+    obtain ⟨w, total, cover⟩ := D5.S3.Combinatorics.Partitions.CommonBlockWeights.common_fractional_allocations
+      (show 0 < k by omega) factor reducedCap
+    have weights : k * (k - 1) * (∑ j, w j) = b * m := by rw [total, scaleEq]
+    apply law_of_scaled_block_allocations two positive bPositive (dvd_mul_right _ _) w weights
+    intro t U tpos blocks x balance
+    have leftCoeff : k * (k - 1) = ((k - 1) * K) * b := by
+      rw [← factor]
+      ac_rfl
+    have mass : b * (∑ i, x i) = U * A := by
+      apply Nat.eq_of_mul_eq_mul_left (Nat.mul_pos (show 0 < k - 1 by omega) KPositive)
+      rw [← Nat.mul_assoc, ← leftCoeff, balance]
+      dsimp [m]
+      ac_rfl
+    exact cover t U (Or.inl tpos) blocks x mass
+
+/-- The exact budget on the complete grid of denominator `(k - 1) * q` is
+controlled by the gcd of the tied-level range parameter and the label count. -/
+theorem fractional_grid_budget_iff {k q : ℕ} (two : 2 ≤ k) (positive : 0 < q)
+    (divisible : ∀ p : ℕ, p.Prime → p ≤ k → p ∣ (k - 1) * q)
+    (n : ℕ) :
+    (∃ (S : Type) (_ : Fintype S) (_ : MulAction (Equiv.Perm (Fin k)) S) (w : S → ℝ)
+      (f : Profile (Fin k) ((k - 1) * q) → S → Fin k),
+      CalibratingLaw S w f ∧ Fintype.card S ≤ k ! * (n + 1)) ↔
+      q + 1 ≤ (k.gcd q + 1) * (k + 1)^n := by
+  obtain ⟨b, A, coprime, k_eq, q_eq⟩ := Nat.exists_coprime k q
+  have factor : k.gcd q * b = k := (Nat.mul_comm _ _).trans k_eq.symm
+  have numer : k.gcd q * A = q := (Nat.mul_comm _ _).trans q_eq.symm
+  have apos : 0 < A := Nat.pos_of_ne_zero fun zero => by
+    rw [zero, Nat.mul_zero] at numer
+    exact positive.ne' numer.symm
+  let feasible (t : ℕ) : Prop :=
+    (∃ (S : Type) (_ : Fintype S) (_ : MulAction (Equiv.Perm (Fin k)) S) (w : S → ℝ)
+      (f : Profile (Fin k) ((k - 1) * t) → S → Fin k),
+      CalibratingLaw S w f ∧ Fintype.card S ≤ k ! * (n + 1)) ↔
+      t + 1 ≤ (k.gcd q + 1) * (k + 1)^n
+  have reduced : feasible (k.gcd q * A) :=
+    reduced_grid_budget_iff two factor apos coprime (by simpa only [numer] using divisible) n
+  exact Eq.mp (congrArg feasible numer) reduced
 
 end D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
