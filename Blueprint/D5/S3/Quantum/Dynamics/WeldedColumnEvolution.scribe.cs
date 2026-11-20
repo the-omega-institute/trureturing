@@ -34,7 +34,8 @@ internal sealed class WeldedColumnEvolutionDocument : IScribeDocumentDefinition
                         "exponential entry from the first singleton column to the last equals " +
                         "the endpoint entry of the path exponential.")),
                     Paragraph(Text(
-                        "The neighbor counts act on the normalized indicators with the factor " +
+                        "Childs et al., Section III.C, equations (25)–(27), give the column " +
+                        "model. The neighbor counts act on the normalized indicators with the factor " +
                         "given by the ratio of adjacent square-root sizes. The resulting " +
                         "rectangular matrix identity lifts to the exponential using a block " +
                         "diagonal matrix and its commuting off-diagonal block."))),
