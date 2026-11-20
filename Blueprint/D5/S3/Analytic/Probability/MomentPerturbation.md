@@ -102,7 +102,7 @@ Each windowed monomial has absolute value at most one. The scale bounds the resu
 
 **Theorem 1.9 (Exact cancellation of the signed change).**
 
-$$\forall R : \mathbb{N}, \forall \mu : \operatorname{ProbabilityMeasure}\left(\mathbb{R}\right), \forall p : \operatorname{Polynomial}\left(\mathbb{R}\right), \operatorname{natDegree}\left(p\right) \leq R \Rightarrow \int \operatorname{eval}\left(p, x\right) (\operatorname{density}\left(R, \mu, x\right) - 1) d\left(\mu : \operatorname{Measure}\left(\mathbb{R}\right)\right) = 0$$
+$$\forall R : \mathbb{N}, \forall \mu : \operatorname{ProbabilityMeasure}\left(\mathbb{R}\right), \forall p : \operatorname{Polynomial}\left(\mathbb{R}\right), \operatorname{natDegree}\left(p\right) \leq R \Rightarrow \int \operatorname{Polynomial.eval}\left(x, p\right) (\operatorname{density}\left(R, \mu, x\right) - 1) d\left(\mu : \operatorname{Measure}\left(\mathbb{R}\right)\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/MomentPerturbation.integral_eval_mul_density_sub_one` (`✓ std3`). ∎
 

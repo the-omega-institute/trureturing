@@ -138,7 +138,7 @@ Conditioning on injectivity gives draws without replacement.
 
 **Definition 1.12 (Erasing order).**
 
-$$\begin{aligned}\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), \operatorname{eraseOrder}\left(m, d\right) : \operatorname{Sample}\left(m\right),\\d \in \operatorname{distinct}\left(m\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right) = \langle\operatorname{image}\left(\operatorname{Finset.univ}, d\right), h : \operatorname{card}\left(\operatorname{image}\left(\operatorname{Finset.univ}, d\right)\right) = \operatorname{sampleSize}\left(m\right)\rangle,\\\neg\left(d \in \operatorname{distinct}\left(m\right)\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right) = \operatorname{Classical.choice}\left(inferInstance : \operatorname{Nonempty}\left(\operatorname{Sample}\left(m\right)\right)\right)\end{aligned}$$
+$$\begin{aligned}\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), \operatorname{eraseOrder}\left(m, d\right) : \operatorname{Sample}\left(m\right),\\d \in \operatorname{distinct}\left(m\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right) = \langle\operatorname{Finset.image}\left(d, \operatorname{Finset.univ}\right), h : \operatorname{card}\left(\operatorname{Finset.image}\left(d, \operatorname{Finset.univ}\right)\right) = \operatorname{sampleSize}\left(m\right)\rangle,\\\neg\left(d \in \operatorname{distinct}\left(m\right)\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right) = \operatorname{Classical.choice}\left(inferInstance : \operatorname{Nonempty}\left(\operatorname{Sample}\left(m\right)\right)\right)\end{aligned}$$
 
 *Formalization.* `D5/S3/Analytic/Probability/ChenFixedOrderSampling.eraseOrder` (`✓ std3`).
 
@@ -174,7 +174,7 @@ The two strata have equal size and opposite values, so the population mean is ze
 
 **Theorem 1.15 (Finite image of a distinct draw).**
 
-$$\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), d \in \operatorname{distinct}\left(m\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right).val = \operatorname{image}\left(\operatorname{Finset.univ}, d\right)$$
+$$\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), d \in \operatorname{distinct}\left(m\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right).val = \operatorname{Finset.image}\left(d, \operatorname{Finset.univ}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenFixedOrderSampling.eraseOrder_val` (`✓ std3`). ∎
 
@@ -186,7 +186,7 @@ For each injective ordered draw, its unordered sample is exactly the finite imag
 
 **Theorem 1.16 (Uniform law on fixed-size subsets).**
 
-$$\forall m : \mathbb{N}, \operatorname{map}\left(\operatorname{cond}\left(\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Draw}\left(m\right)\right)\right)\right), \operatorname{distinct}\left(m\right)\right), \operatorname{eraseOrder}\left(m\right)\right) = \operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)$$
+$$\forall m : \mathbb{N}, \operatorname{Measure.map}\left(\operatorname{eraseOrder}\left(m\right), \operatorname{ProbabilityTheory.cond}\left(\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Draw}\left(m\right)\right)\right)\right), \operatorname{distinct}\left(m\right)\right)\right) = \operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenFixedOrderSampling.map_eraseOrder_cond_uniform` (`✓ std3`). ∎
 
@@ -198,7 +198,7 @@ Condition the uniform law of ordered draws on having distinct labels, then erase
 
 **Theorem 1.17 (Inclusion polynomial).**
 
-$$\begin{aligned}\forall m : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Population}\left(m\right)\right), \exists p : \operatorname{Polynomial}\left(\mathbb{R}\right), \operatorname{natDegree}\left(p\right) \leq \operatorname{card}\left(A\right) \land\\\left(\begin{aligned}\forall f : \mathbb{R} \to \mathbb{R}, \int S \in \operatorname{inclusion}\left(m, A\right), \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right) =\\\quad\int S : \operatorname{Sample}\left(m\right), \operatorname{eval}\left(p, \operatorname{estimator}\left(m, S\right)\right) \cdot \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)\end{aligned}\right)\end{aligned}$$
+$$\begin{aligned}\forall m : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Population}\left(m\right)\right), \exists p : \operatorname{Polynomial}\left(\mathbb{R}\right), \operatorname{natDegree}\left(p\right) \leq \operatorname{card}\left(A\right) \land\\\left(\begin{aligned}\forall f : \mathbb{R} \to \mathbb{R}, \int S \in \operatorname{inclusion}\left(m, A\right), \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right) =\\\quad\int S : \operatorname{Sample}\left(m\right), \operatorname{Polynomial.eval}\left(\operatorname{estimator}\left(m, S\right), p\right) \cdot \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)\end{aligned}\right)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenFixedOrderSampling.exists_inclusionPolynomial` (`✓ std3`). ∎
 

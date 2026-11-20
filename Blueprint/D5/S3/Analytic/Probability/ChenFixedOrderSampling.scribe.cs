@@ -36,7 +36,8 @@ internal sealed class ChenFixedOrderSamplingDocument : IScribeDocumentDefinition
         Call("uniformOn", Parenthesized(Typed(Qualified("Set", "univ"), Call("Set", carrier))));
     private static Formula DistinctDraw => Seq(V("d"), Sp, InMacro, Sp, AtStage("distinct"));
     private static Formula ErasedDraw => Call("eraseOrder", M, V("d"));
-    private static Formula DrawImage => Call("image", Qualified("Finset", "univ"), V("d"));
+    private static Formula DrawImage =>
+        new Formula.Apply(Qualified("Finset", "image"), [V("d"), Qualified("Finset", "univ")]);
     private static Formula Integral(Formula binder, Formula integrand) =>
         Seq(Int, Sp, binder, Comma, Sp, integrand, Sp, V("d"), Uniform(Sample));
 
@@ -122,8 +123,10 @@ internal sealed class ChenFixedOrderSamplingDocument : IScribeDocumentDefinition
                 "For each injective ordered draw, its unordered sample is exactly the finite image of the draw."),
             Result("chen-condition-and-erase-order", "map_eraseOrder_cond_uniform",
                 "Uniform law on fixed-size subsets",
-                Seq(AllStages, Call("map", Call("cond", Uniform(Draw), AtStage("distinct")), AtStage("eraseOrder")),
-                    Sp, Eq, Sp, Uniform(Sample)),
+                Seq(AllStages, new Formula.Apply(Qualified("Measure", "map"), [
+                    AtStage("eraseOrder"),
+                    new Formula.Apply(Qualified("ProbabilityTheory", "cond"), [Uniform(Draw), AtStage("distinct")])
+                ]), Sp, Eq, Sp, Uniform(Sample)),
                 "Condition the uniform law of ordered draws on having distinct labels, "
                     + "then erase order. Every subset of the required size has the same "
                     + "number of orderings, giving the uniform subset law."),
@@ -136,7 +139,8 @@ internal sealed class ChenFixedOrderSamplingDocument : IScribeDocumentDefinition
                         Seq(All(V("f"), new Formula.TypeArrow(Real, Real)),
                             Integral(Seq(S, Sp, InMacro, Sp, Call("inclusion", M, A)), Call("f", Estimator)), Sp, Eq),
                         Seq(Quad, Integral(Typed(S, Sample),
-                            Seq(Call("eval", V("p"), Estimator), Sp, Cdot, Sp, Call("f", Estimator))))
+                            Seq(new Formula.Apply(Qualified("Polynomial", "eval"), [Estimator, V("p")]),
+                                Sp, Cdot, Sp, Call("f", Estimator))))
                     ]))
                 ]),
                 "On each cell of fixed positive-stratum count, the inclusion fraction is the product "

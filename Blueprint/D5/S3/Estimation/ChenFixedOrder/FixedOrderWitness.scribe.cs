@@ -25,7 +25,9 @@ internal sealed class FixedOrderWitnessDocument : IScribeDocumentDefinition
     private static Formula EventMass(string design) =>
         new Formula.Apply(AsSampleMeasure(design), [Call("inclusion", V("m"), V("A"))]);
     private static Formula LimitLaw(string design, Formula limit) =>
-        Call("Tendsto", StageFunction(Call("map", AtStage(design), AtStage("estimator"))),
+        Call("Tendsto", StageFunction(new Formula.Apply(
+            Seq(Operatorname, Grp(V("ProbabilityMeasure"), Dot, V("map"))),
+            [AtStage(design), AtStage("estimator")])),
             AtTop, Call("nhds", limit));
 
     private static Formula FixedOrderClause() => Parenthesized(new Formula.Aligned([

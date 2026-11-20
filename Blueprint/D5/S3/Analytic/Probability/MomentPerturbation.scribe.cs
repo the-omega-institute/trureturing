@@ -17,7 +17,8 @@ internal sealed class MomentPerturbationDocument : IScribeDocumentDefinition
     private static Formula Baseline => Seq(Order, All(Mu, Law));
     private static Formula Density(Formula law) => Call("density", R, law, X);
     private static Formula Tilt(Formula law) => Call("tilted", R, law);
-    private static Formula Eval => Call("eval", P, X);
+    private static Formula Eval => new Formula.Apply(
+        Seq(Operatorname, Grp(F.Id("Polynomial"), Dot, F.Id("eval"))), [X, P]);
     private static Formula All(Formula name, Formula type) =>
         Seq(Forall, Sp, name, Sp, Colon, Sp, type, Comma, Sp);
     private static Formula ImpliesDegree =>

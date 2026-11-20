@@ -31,8 +31,9 @@ internal sealed class GaussianLimitDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "uniformSampleLaw_tendsto"),
                 H("Estimator law on uniform subsets"),
                 StatementSource.FromAuthor(Disp(Call("Tendsto",
-                    Seq(V("m"), Sp, Mapsto, Sp, Call("map", Call("uniformSampleMeasure", V("m")),
-                        Call("estimator", V("m")))),
+                    Seq(V("m"), Sp, Mapsto, Sp, new Formula.Apply(
+                        Seq(Operatorname, Grp(V("ProbabilityMeasure"), Dot, V("map"))),
+                        [Call("uniformSampleMeasure", V("m")), Call("estimator", V("m"))])),
                     Seq(Operatorname, Grp(V("atTop"))), Call("nhds", Gaussian)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(

@@ -18,7 +18,7 @@ This is the Gaussian limit of the balanced-sign estimator.
 
 **Theorem 1.2 (Estimator law on uniform subsets).**
 
-$$\operatorname{Tendsto}\left(m \mapsto \operatorname{map}\left(\operatorname{uniformSampleMeasure}\left(m\right), \operatorname{estimator}\left(m\right)\right), \operatorname{atTop}, \operatorname{nhds}\left(\operatorname{standardGaussian}\right)\right)$$
+$$\operatorname{Tendsto}\left(m \mapsto \operatorname{ProbabilityMeasure.map}\left(\operatorname{uniformSampleMeasure}\left(m\right), \operatorname{estimator}\left(m\right)\right), \operatorname{atTop}, \operatorname{nhds}\left(\operatorname{standardGaussian}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.uniformSampleLaw_tendsto` (`✓ std3`). ∎
 

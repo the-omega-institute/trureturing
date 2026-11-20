@@ -38,7 +38,8 @@ internal sealed class ChenDensityBridgeDocument : IScribeDocumentDefinition
     private static Formula Event => Call("inclusion", M, A);
     private static Formula OfReal(Formula value) => new Formula.Apply(
         Seq(Operatorname, Grp(V("ENNReal"), Dot, V("ofReal"))), [value]);
-    private static Formula Map(Formula law) => Call("map", law, Estimator);
+    private static Formula Map(Formula law) => new Formula.Apply(
+        Seq(Operatorname, Grp(V("ProbabilityMeasure"), Dot, V("map"))), [law, Estimator]);
 
     private static Formula Specification() => new Formula.Aligned([
         Seq(All(Seq(M, Comma, V("r")), Nat), All(G, new Formula.TypeArrow(Real, Real)),
