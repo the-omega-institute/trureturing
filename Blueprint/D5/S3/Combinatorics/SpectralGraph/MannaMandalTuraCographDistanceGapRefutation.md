@@ -32,7 +32,7 @@ The graph is K₁ joined to the disjoint union of one singleton and r independen
 
 **Definition 1.3 (No induced four-vertex path).**
 
-$$\forall V \in \operatorname{Type},\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \operatorname{P}4\operatorname{Free}\left(G\right) \iff \operatorname{IsEmpty}\left(\operatorname{SimpleGraph}.\operatorname{Embedding}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(4\right), G\right)\right)$$
+$$\forall V \in \operatorname{Type},\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \operatorname{P4Free}\left(G\right) \iff \operatorname{IsEmpty}\left(\operatorname{SimpleGraph}.\operatorname{Embedding}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(4\right), G\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.P4Free` (`✓ std3`).
 
@@ -52,11 +52,11 @@ $$\forall V \in \operatorname{Type},\; \forall G \in \operatorname{SimpleGraph}\
 
 *Commentary.*
 
-The real matrix casts the native shortest-path edge count, including the diagonal zero. The source uses this distance in Proposition 2.6, printed p. 5.
+The real matrix casts the native shortest-path edge count, including the diagonal zero. For a connected cograph on at least two vertices, Proposition 2.6 (printed p. 5 of arXiv:2611.06981v1) gives diameter at most two. Section 6 (printed p. 14) states the identity D = 2J − 2I − A.
 
 **Theorem 1.5 (An eigenvalue in every open left neighborhood).**
 
-$$\forall epsilon \in \mathbb{R},\; (0 < epsilon) \Rightarrow (\exists r \in \mathbb{N},\; (0 < r) \land (\exists lambda \in \mathbb{R},\; (-2 - epsilon < lambda) \land ((lambda < -2) \land ((\operatorname{SimpleGraph}.\operatorname{Connected}\left(\operatorname{family}\left(r\right)\right)) \land ((\operatorname{P}4\operatorname{Free}\left(\operatorname{family}\left(r\right)\right)) \land (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(\operatorname{family}\left(r\right)\right)\right), lambda\right)))))))$$
+$$\forall epsilon \in \mathbb{R},\; (0 < epsilon) \Rightarrow (\exists r \in \mathbb{N},\; (0 < r) \land (\exists lambda \in \mathbb{R},\; (-2 - epsilon < lambda) \land ((lambda < -2) \land ((\operatorname{SimpleGraph}.\operatorname{Connected}\left(\operatorname{family}\left(r\right)\right)) \land ((\operatorname{P4Free}\left(\operatorname{family}\left(r\right)\right)) \land (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(\operatorname{family}\left(r\right)\right)\right), lambda\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.registered_family_counters_gap` (`✓ std3`). ∎
 
@@ -70,7 +70,7 @@ The universal vertex gives connectedness and a walk of length two between distin
 
 **Definition 1.6 (The proposed uniform gap).**
 
-$$\operatorname{claim} = (\exists epsilon \in \mathbb{R},\; (0 < epsilon) \land (\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((\operatorname{P}4\operatorname{Free}\left(G\right)) \Rightarrow (\forall lambda \in \mathbb{R},\; (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(G\right)\right), lambda\right)) \Rightarrow (\neg ((-2 - epsilon < lambda) \land (lambda < -2)))))))$$
+$$\operatorname{claim} = (\exists epsilon \in \mathbb{R},\; (0 < epsilon) \land (\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((\operatorname{P4Free}\left(G\right)) \Rightarrow (\forall lambda \in \mathbb{R},\; (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(G\right)\right), lambda\right)) \Rightarrow (\neg ((-2 - epsilon < lambda) \land (lambda < -2)))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.claim` (`✓ std3`).
 
@@ -82,7 +82,7 @@ Open Problem 14.2(i), printed p. 22, asks “Is there ε > 0 such that (−2 −
 
 **Theorem 1.7 (Refutation of the uniform gap).**
 
-$$\neg (\exists epsilon \in \mathbb{R},\; (0 < epsilon) \land (\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((\operatorname{P}4\operatorname{Free}\left(G\right)) \Rightarrow (\forall lambda \in \mathbb{R},\; (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(G\right)\right), lambda\right)) \Rightarrow (\neg ((-2 - epsilon < lambda) \land (lambda < -2)))))))$$
+$$\neg (\exists epsilon \in \mathbb{R},\; (0 < epsilon) \land (\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\right)], \forall G \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((\operatorname{P4Free}\left(G\right)) \Rightarrow (\forall lambda \in \mathbb{R},\; (\operatorname{Module}.\operatorname{End}.\operatorname{HasEigenvalue}\left(\operatorname{Matrix}.\operatorname{mulVecLin}\left(\operatorname{distanceMatrix}\left(G\right)\right), lambda\right)) \Rightarrow (\neg ((-2 - epsilon < lambda) \land (lambda < -2)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.result` (`✓ std3`). ∎
 
