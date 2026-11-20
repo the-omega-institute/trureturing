@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/CellularAutomata/HoneycombFirstTouch
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/CellularAutomata/HoneycombFirstTouch
    mirror-E: none(waiver:pure)
    anchors: []

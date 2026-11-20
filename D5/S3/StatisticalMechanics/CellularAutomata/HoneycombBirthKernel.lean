@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/CellularAutomata/HoneycombBirthKernel
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/CellularAutomata/HoneycombBirthKernel
    mirror-E: none(waiver:pure)
    anchors: []
