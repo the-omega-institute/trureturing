@@ -16,10 +16,14 @@ proof_shape:
   X, B, claim: source definitions; consumers: the theorems below.
   X_split: content (gcd(N - k, k) = gcd(N - k, N) = gcd(k, N) and exact division); consumer:
     row_product.
-  reflect: content (reflection bijection on {1, …, n}); consumer: row_product.
+  reflect: bind-only helper (reindexing by the involution k ↦ N - k through Finset.prod_nbij');
+    consumer: row_product.
   row_product: content; consumer: result.
-  result: content (the cube-root form by Real.finsetProd_rpow, the diagonal X(2m - 1, m) = 1,
-    and B(p) = (p - 1)! from gcd(k, p) = 1 for k < p).
+  result: content only through row_product; its remaining steps are bind-only normalization
+    (the cube-root form by Real.finsetProd_rpow and rpow_mul, the diagonal X(2m - 1, m) = 1 by
+    gcd_self, and B(p) = (p - 1)! by Nat.coprime_of_lt_prime and prod_Ico_id_eq_factorial).
+Exactness: on 1 ≤ k ≤ n the subtraction n + 1 - k ≥ 1 is exact, and g = gcd(n + 1 - k, k)
+  divides both factors, so g³ divides (n + 1 - k)² k and every ℕ quotient here is exact.
 Direct frozen dependencies: none (Mathlib-only imports).
 Search record (§3.1): D5/S3/ArithSums/SpeziaA320043SquareValuesRefutation and
   SpeziaA320043PrimeRowCriterion treat the row sums a(n), not the row product; no D5
@@ -124,4 +128,5 @@ theorem result : claim := by
       rw [Nat.gcd_comm]
       exact (Nat.coprime_of_lt_prime (by omega) (by omega) hp)
     rw [hcop, Nat.div_one]
+
 end D5.S3.ArithSums.SpeziaA320043RowProduct
