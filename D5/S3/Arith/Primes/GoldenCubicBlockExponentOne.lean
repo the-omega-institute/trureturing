@@ -188,14 +188,19 @@ def checkedCertificates : List Certificate :=
     ⟨22, 10438595668337761, 4992103250652003, 13, List.replicate 5 2 ++ List.replicate 25 3 ++ [5] ++ [7] ++ [11]⟩,
     ⟨25, 21458431322753419, 3649563001603057, 3, [2] ++ List.replicate 28 3 ++ [7] ++ [67]⟩,
     ⟨26, 411782264189299, 57385319878658, 3, [2] ++ List.replicate 30 3⟩,
-    ⟨28, 8235645283785961, 7162072334163849, 13, List.replicate 3 2 ++ List.replicate 30 3 ++ [5]⟩
+    ⟨28, 8235645283785961, 7162072334163849, 13, List.replicate 3 2 ++ List.replicate 30 3 ++ [5]⟩,
+    ⟨35, 11707381553165931439, 11577599392359611404, 3, [2] ++ List.replicate 37 3 ++ [13]⟩,
+    ⟨36, 16210220612075905069, 15509995271268856400, 10, List.replicate 2 2 ++ List.replicate 39 3⟩,
+    ⟨47, 11964966461530876479504151, 319726430097439153432670, 3, [2] ++ List.replicate 49 3 ++ List.replicate 2 5⟩,
+    ⟨52, 116299474006080119380780339, 35936208001633579556596118, 3, [2] ++ List.replicate 54 3⟩,
+    ⟨58, 1695646331008648140571777328041, 365402973643130941583530350929, 11, List.replicate 3 2 ++ List.replicate 60 3 ++ [5]⟩
   ]
 
 set_option maxRecDepth 4096 in
 /-- The table entries independently pass the checked Lucas and order tests. -/
 theorem checkedCertificates_valid (c : Certificate) (hc : c ∈ checkedCertificates) : c.Valid := by
   simp only [checkedCertificates, List.mem_cons, List.not_mem_nil, or_false] at hc
-  rcases hc with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  rcases hc with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
   all_goals
     unfold Certificate.Valid
     refine ⟨by decide, ?_, by decide, ?_, by decide, by decide, by decide⟩
@@ -247,6 +252,36 @@ theorem checkedCertificates_valid (c : Certificate) (hc : c ∈ checkedCertifica
   · intro q hq
     simp at hq
     rcases hq with rfl | rfl | rfl | rfl <;> decide
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl <;> norm_num
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl <;> decide
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> norm_num
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> decide
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> norm_num
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> decide
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl <;> norm_num
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl <;> decide
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> norm_num
+  · intro q hq
+    simp at hq
+    rcases hq with rfl | rfl | rfl <;> decide
   · intro q hq
     simp at hq
     rcases hq with rfl | rfl <;> norm_num
@@ -343,7 +378,7 @@ theorem fib_depth_one_of_residue (p q : ℕ)
   · rw [Nat.dvd_iff_mod_eq_zero, h]
     exact Nat.ne_of_gt (Nat.mul_pos (Nat.zero_lt_of_lt hqp) hq0)
 
-/-- The ten certified primes give non-powerful blocks, exact Fibonacci
+/-- The fifteen certified primes give non-powerful blocks, exact Fibonacci
 entry ranks, and exponent one at their respective first zero. -/
 theorem checked_block_and_rank (c : Certificate) (hc : c ∈ checkedCertificates) :
     ¬ Powerful (goldenLucas (3^(c.level+1))^2+3).natAbs ∧
@@ -351,7 +386,7 @@ theorem checked_block_and_rank (c : Certificate) (hc : c ∈ checkedCertificates
     padicValNat c.prime (Nat.fib (fibonacciRank c.prime)) = 1 :=
   c.block_and_rank (checkedCertificates_valid c hc)
 
-set_option maxRecDepth 2048 in
+set_option maxRecDepth 4096 in
 /-- Independently of the Lucas recurrence, direct fast doubling computes
 a nonzero multiple of p modulo p squared at F_(p-1) for every listed
 prime, which is split in the golden quadratic field. -/
@@ -360,7 +395,7 @@ theorem checked_fib_depth_one (c : Certificate) (hc : c ∈ checkedCertificates)
     c.prime ∣ Nat.fib (c.prime - 1) ∧
     ¬ c.prime^2 ∣ Nat.fib (c.prime - 1) := by
   simp only [checkedCertificates, List.mem_cons, List.not_mem_nil, or_false] at hc
-  rcases hc with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  rcases hc with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
   all_goals refine ⟨by decide, ?_⟩
   · apply fib_depth_one_of_residue _ 370140 (by decide) (by decide)
     exact fib_residue_of_check _ _ _ 60 (by decide) (by decide) (by decide)
@@ -382,6 +417,16 @@ theorem checked_fib_depth_one (c : Certificate) (hc : c ∈ checkedCertificates)
     exact fib_residue_of_check _ _ _ 60 (by decide) (by decide) (by decide)
   · apply fib_depth_one_of_residue _ 1098271795568800 (by decide) (by decide)
     exact fib_residue_of_check _ _ _ 60 (by decide) (by decide) (by decide)
+  · apply fib_depth_one_of_residue _ 11668859670806791068 (by decide) (by decide)
+    exact fib_residue_of_check _ _ _ 112 (by decide) (by decide) (by decide)
+  · apply fib_depth_one_of_residue _ 7766181804890571490 (by decide) (by decide)
+    exact fib_residue_of_check _ _ _ 112 (by decide) (by decide) (by decide)
+  · apply fib_depth_one_of_residue _ 9683365435205014450059340 (by decide) (by decide)
+    exact fib_residue_of_check _ _ _ 112 (by decide) (by decide) (by decide)
+  · apply fib_depth_one_of_residue _ 13240592223204804733431947 (by decide) (by decide)
+    exact fib_residue_of_check _ _ _ 112 (by decide) (by decide) (by decide)
+  · apply fib_depth_one_of_residue _ 619091887780393287073556119154 (by decide) (by decide)
+    exact fib_residue_of_check _ _ _ 112 (by decide) (by decide) (by decide)
 
 /-- The classical split-prime Wall–Sun–Sun test fails on each certified p.
 The split condition here is the actual Legendre symbol, and the nonzero
