@@ -291,7 +291,8 @@ abbrev signature : Signature :=
 
 def actual : Realization signature :=
   realize signature
-    (fun _ N d => decide (d ∈ N.divisors.filter (fun e => Nat.Coprime e (N / e))))
+    (fun _ N d => @decide
+      (d ∈ N.divisors.filter (fun e => Nat.Coprime e (N / e))) (Classical.propDecidable _))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -319,9 +320,7 @@ def family : Registration arena
   dependence := by
     intro role
     refine ⟨1, 0, 1, ?_⟩
-    change decide (0 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e))) ≠
-      decide (1 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e)))
-    norm_num
+    norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.Divisors.UnitaryProductBridge.prime_power_product_unitary)

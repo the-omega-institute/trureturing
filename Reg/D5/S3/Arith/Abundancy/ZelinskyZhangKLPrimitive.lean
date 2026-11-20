@@ -466,7 +466,8 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ d => decide (Deficient d)) (fun e => nomatch e)
+  realize signature (fun _ _ d => @decide (Deficient d) (Classical.propDecidable _))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
@@ -495,8 +496,7 @@ def family : Registration arena
   dependence := by
     intro role
     refine ⟨(), 0, 1, ?_⟩
-    change decide (Deficient 0) ≠ decide (Deficient 1)
-    norm_num [Deficient]
+    norm_num [actual, realize, Deficient]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd)
