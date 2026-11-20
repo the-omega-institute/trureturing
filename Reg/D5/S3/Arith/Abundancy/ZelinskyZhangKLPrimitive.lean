@@ -463,40 +463,39 @@ end TailMass
 namespace DeficientOfDvd
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ d => @decide (Deficient d) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ _ d => d) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {d n : ℕ}, 0 < n → 0 < d → d ∣ n → Deficient n →
-    R.readout () () d = true
+    Deficient (R.readout () () d)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have bad := h (d := 1) (n := 1) (by decide) (by decide) (by decide)
     (by norm_num [Deficient])
-  exact Bool.false_ne_true bad
+  change Deficient 0 at bad
+  norm_num [Deficient] at bad
 
 def family : Registration arena
     (type_of% @_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := by
-    refine ⟨?_, rejected, rejected_law⟩
-    simpa only [arena, actual, realize, decide_eq_true_eq] using
-      (@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd)
+  bridge := Iff.rfl
+  variation :=
+    ⟨@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd,
+      rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro role
     refine ⟨(), 0, 1, ?_⟩
-    norm_num [actual, realize, Deficient]
+    exact Nat.zero_ne_one
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd)
@@ -522,11 +521,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

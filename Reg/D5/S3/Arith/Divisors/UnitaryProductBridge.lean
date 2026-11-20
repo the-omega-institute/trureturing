@@ -287,39 +287,36 @@ noncomputable section
 namespace PrimePowerUnitary
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => Finset ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ N d => @decide
-      (d ∈ N.divisors.filter (fun e => Nat.Coprime e (N / e))) (Classical.propDecidable _))
+  realize signature (fun _ N F => ∏ p ∈ F, p ^ N.factorization p)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (N : ℕ), N ≠ 0 → ∀ (F : Finset ℕ), F ⊆ N.primeFactors →
-    R.readout () N (∏ p ∈ F, p ^ N.factorization p) = true
+    R.readout () N F ∈ N.divisors.filter (fun d => Nat.Coprime d (N / d))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact Bool.false_ne_true (h 1 (by decide) ∅ (by simp))
+  have bad := h 1 (by decide) ∅ (by simp)
+  change 0 ∈ (1 : ℕ).divisors.filter (fun d => Nat.Coprime d (1 / d)) at bad
+  norm_num at bad
 
 def family : Registration arena
     (type_of% @_root_.D5.S3.Arith.Divisors.UnitaryProductBridge.prime_power_product_unitary) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := by
-    refine ⟨?_, rejected, rejected_law⟩
-    simpa only [arena, actual, realize, decide_eq_true_eq] using
-      (@prime_power_product_unitary)
+  bridge := Iff.rfl
+  variation := ⟨@prime_power_product_unitary, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro role
-    refine ⟨1, 0, 1, ?_⟩
+    refine ⟨2, ∅, {2}, ?_⟩
     norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -346,11 +343,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
