@@ -516,17 +516,21 @@ os.execv(os.environ["FIXTURE_LAKE"], [os.environ["FIXTURE_LAKE"], *sys.argv[1:]]
         original = config.read_bytes()
         # If a reader elaborates this stale config, even in a scratch directory,
         # the command runs before Lake can validate or build a module facet.
-        config.write_bytes(original + b'\nrun_cmd liftIO <| IO.FS.writeFile '
-                           + json.dumps(str(self.root / 'config-elaborated')).encode() + b' "yes"\n')
+        marker = self.root / 'config-elaborated'
+        config.write_bytes(original + b'\nrun_cmd IO.FS.writeFile '
+                           + json.dumps(str(marker)).encode() + b' "yes"\n')
         cached = self.root / 'tools/lean-inspector-reg/.lake/config'
         prepared = self.inventory(cached)
         failed = self.scoped('D5.A', success=False)
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn('make lean-report-prepare', failed.stderr)
-        self.assertFalse((self.root / 'config-elaborated').exists())
+        self.assertFalse(marker.exists())
         self.assertEqual(self.inventory(cached), prepared)
         self.assertEqual(list(cached.parents[2].glob('.report-workspace-*')), [])
+        self.run_lake('-d', 'tools/lean-inspector-reg', 'script', 'list')
+        self.assertEqual(marker.read_text(), 'yes')
         config.write_bytes(original)
+        self.run_lake('-d', 'tools/lean-inspector-reg', 'script', 'list')
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         inspector.write_text(inspector.read_text() + '\n-- compatible producer edit\n')
         self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0)
