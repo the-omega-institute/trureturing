@@ -204,12 +204,17 @@ theorem polePhase_sector (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hκ' : κ ≤ 1)
         (hb.trans (mul_le_mul_of_nonneg_left hclose.1 (by norm_num))) (by positivity)
     _ = _ := by ring
 
+/-- The phase value corresponding to the integer pole index. -/
+noncomputable def polePhaseLattice (m : ℕ) (j : ℤ) : ℂ :=
+  (j : ℂ) * (Real.pi : ℂ) * Complex.I / (order m : ℂ)
+
 /-- On the branch-controlled sector the odd-order zeros are exactly the phase lattice. -/
 theorem denominator_zero_iff_polePhase (m : ℕ) (hmOdd : Odd m) {κ : ℝ}
     (hκ : 0 < κ) (hκ' : κ ≤ 1) (hm : 40 * sectorMass κ / κ ≤ order m)
     {w : ℂ} (hw : κ * ‖w‖ < w.re) :
     aeval (2 * (order m : ℂ) * w) (denominator m) = 0 ↔
-      ∃ j : ℤ, polePhase m w = (j : ℂ) * (Real.pi : ℂ) * Complex.I / (order m : ℂ) := by
+      ∃ j : ℤ, polePhase m w = polePhaseLattice m j := by
+  simp only [polePhaseLattice]
   have hwre := sector_re_pos hκ hw
   have hK := (sector_K_nonzero hκ hκ' hm hw).2
   have hre := (polePhase_sector m hκ hκ' hm hw).2.2.1
@@ -521,5 +526,168 @@ theorem exists_uniform_polePhase_inverse {c : ℝ} (hc : 0 < c) (hzero : eta (c 
   apply (le_div_iff₀ ha).2
   linarith only [hh, show (‖gm z - g z‖ * order m ^ 2) * a =
     2 * (a / 2 * ‖gm z - g z‖ * order m ^ 2) by ring]
+
+open ComplexConjugate
+
+private theorem conj_two : conj (2 : ℂ) = 2 := map_natCast (starRingEnd ℂ) 2
+
+private theorem slitPlane_arg_ne_pi_of_re_pos {w : ℂ} (hw : 0 < w.re) :
+    w.arg ≠ Real.pi :=
+  Complex.slitPlane_arg_ne_pi (Complex.mem_slitPlane_iff.mpr (Or.inl hw))
+
+private theorem sqrt_conj {w : ℂ} (hw : w.arg ≠ Real.pi) :
+    Complex.sqrt (conj w) = conj (Complex.sqrt w) := by
+  simpa [Complex.sqrt, conj_two] using
+    Complex.conj_cpow w (2⁻¹ : ℂ) hw
+
+private theorem eta_conj {w : ℂ} (hw : 0 < w.re) :
+    eta (conj w) = conj (eta w) := by
+  have hs : S (conj w) = conj (S w) := by
+    rw [S, S, show 1 + conj w ^ 2 = conj (1 + w ^ 2) by simp]
+    exact sqrt_conj (Complex.slitPlane_arg_ne_pi
+      (HalfIntegerBessel.one_add_sq_mem_slitPlane hw))
+  have hsum : 0 < (1 + S w).re := by
+    simp only [Complex.add_re, Complex.one_re]
+    linarith [S_re_pos hw]
+  rw [eta, eta, hs, Complex.log_conj w (slitPlane_arg_ne_pi_of_re_pos hw),
+    show 1 + conj (S w) = conj (1 + S w) by simp,
+    Complex.log_conj _ (slitPlane_arg_ne_pi_of_re_pos hsum)]
+  simp
+
+private theorem carrier_aeval_conj (p : Polynomial ℚ) (w : ℂ) :
+    aeval (conj w) p = conj (aeval w p) :=
+  Polynomial.aeval_algHom_apply (Complex.conjAe.restrictScalars ℚ) w p
+
+private theorem bessel_conj (m : ℕ) {z : ℂ} (hz : 0 < z.re) :
+    K m (conj z) = conj (K m z) ∧ I m (conj z) = conj (I m z) := by
+  have hp : HalfIntegerBessel.prefactor (conj z) = conj (HalfIntegerBessel.prefactor z) := by
+    rw [HalfIntegerBessel.prefactor, HalfIntegerBessel.prefactor,
+      sqrt_conj (slitPlane_arg_ne_pi_of_re_pos hz)]
+    simp
+  have hK : K m (conj z) = conj (K m z) := by
+    rw [K, K, hp, ← map_neg, Complex.exp_conj, ← map_inv₀, carrier_aeval_conj]
+    simp
+  have hL : HalfIntegerBessel.L m (conj z) = conj (HalfIntegerBessel.L m z) := by
+    rw [HalfIntegerBessel.L, HalfIntegerBessel.L, hp, Complex.exp_conj, ← map_inv₀,
+      carrier_aeval_conj]
+    simp
+  refine ⟨hK, ?_⟩
+  rw [I, I, hK, hL]
+  simp
+
+private theorem polePhase_conj (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hκ' : κ ≤ 1)
+    (hm : 40 * sectorMass κ / κ ≤ order m) {w : ℂ} (hw : κ * ‖w‖ < w.re) :
+    polePhase m (conj w) = conj (polePhase m w) := by
+  have hcw : κ * ‖conj w‖ < (conj w).re := by simpa [Complex.norm_conj] using hw
+  have hre := sector_re_pos hκ hw
+  have hratio (v : ℂ) (hv : κ * ‖v‖ < v.re) :=
+    F_I_div_F_K m (sector_re_pos hκ hv) (sector_K_nonzero hκ hκ' hm hv).2
+  have harg : (order m : ℂ) * conj w = conj ((order m : ℂ) * w) := by simp
+  obtain ⟨hK, hI⟩ := bessel_conj m (scale_re_pos (m := m) hre)
+  have hA : F_I m (conj w) / F_K m (conj w) = conj (F_I m w / F_K m w) := by
+    rw [hratio _ hcw, hratio _ hw, harg, hK, hI, eta_conj hre]
+    simp only [map_mul, map_div₀, Complex.conj_ofReal]
+    rw [← Complex.exp_conj]
+    simp [conj_two]
+  have hAre := (polePhase_sector m hκ hκ' hm hw).2.2.1
+  rw [polePhase, polePhase, eta_conj hre, hA,
+    Complex.log_conj _ (slitPlane_arg_ne_pi_of_re_pos hAre)]
+  simp [conj_two]
+
+private theorem closedBall_conj {c r : ℝ} {w : ℂ} (hw : w ∈ closedBall (c : ℂ) r) :
+    conj w ∈ closedBall (c : ℂ) r := by
+  rw [mem_closedBall_iff_norm] at hw ⊢
+  simpa only [map_sub, Complex.conj_ofReal, Complex.norm_conj] using
+    (show ‖conj (w - (c : ℂ))‖ ≤ r by simpa only [Complex.norm_conj] using hw)
+
+private theorem ball_zero_conj {r : ℝ} {z : ℂ} (hz : z ∈ ball 0 r) :
+    conj z ∈ ball 0 r := by
+  simpa [mem_ball_iff_norm, Complex.norm_conj] using hz
+
+/-- For large odd orders a fixed inverse disk gives the central poles and their conjugation.
+Every root in a smaller fixed disk about the limiting positive zero is represented. -/
+theorem exists_central_poles {c : ℝ} (hc : 0 < c) (hzero : eta (c : ℂ) = 0) :
+    ∃ r ε ρ B : ℝ, 0 < ε ∧ ε ≤ r ∧ r ≤ c / 4 ∧ 0 < ρ ∧ 0 < B ∧
+      ∃ M : ℕ, ∀ m ≥ M, Odd m →
+        ∃ g : ℂ → ℂ, AnalyticOnNhd ℂ g (ball 0 ρ) ∧
+          (∀ z ∈ ball 0 ρ, g z ∈ ball (c : ℂ) r ∧ polePhase m (g z) = z ∧
+            g (conj z) = conj (g z)) ∧
+          0 < (g 0).re ∧ (g 0).im = 0 ∧ ‖g 0 - (c : ℂ)‖ ≤ B / order m ^ 2 ∧
+          (∀ j : ℤ, polePhaseLattice m j ∈ ball 0 ρ →
+            aeval (2 * (order m : ℂ) * g (polePhaseLattice m j)) (denominator m) = 0) ∧
+          ∀ w ∈ ball (c : ℂ) ε, aeval (2 * (order m : ℂ) * w) (denominator m) = 0 ↔
+            ∃ j : ℤ, polePhaseLattice m j ∈ ball 0 ρ ∧ w = g (polePhaseLattice m j) := by
+  obtain ⟨r, ρ, B, hr, hrc, hρ, hB, M, hM, g, _, hg, hm⟩ :=
+    exists_uniform_polePhase_inverse hc hzero
+  have hcη := (analyticOnNhd_eta (c : ℂ) (by simpa using hc)).continuousAt
+  have hηc : eta ⁻¹' ball 0 (ρ / 2) ∈ 𝓝 (c : ℂ) :=
+    hcη (hzero.symm ▸ ball_mem_nhds 0 (by positivity))
+  obtain ⟨δ, hδ, hδ'⟩ := Metric.mem_nhds_iff.mp hηc
+  let ε := min r δ
+  have hε : 0 < ε := lt_min hr hδ
+  have hεr : ε ≤ r := min_le_left _ _
+  let V := sectorMass (1 / 4)
+  obtain ⟨N, hN⟩ := exists_nat_gt (max 1 (60 * V / (ρ / 2)))
+  refine ⟨r, ε, ρ, B, hε, hεr, hrc, hρ, hB, max M N, ?_⟩
+  intro m hmN hodd
+  have hmM : M ≤ m := (le_max_left _ _).trans hmN
+  have hmN' : (N : ℝ) ≤ order m := by
+    have hcast : (N : ℝ) ≤ (m : ℝ) := by exact_mod_cast (le_max_right M N).trans hmN
+    rw [order]
+    linarith
+  have hν : 1 ≤ order m := ((le_max_left _ _).trans hN.le).trans hmN'
+  have hν' : order m ≤ order m ^ 2 := by nlinarith
+  have hvalue : 60 * V / order m ^ 2 ≤ ρ / 2 := by
+    rw [div_le_iff₀ (by positivity)]
+    exact mul_comm (order m ^ 2) (ρ / 2) ▸ (div_le_iff₀ (by positivity : 0 < ρ / 2)).mp
+      ((((le_max_right _ _).trans hN.le).trans hmN').trans hν')
+  have hM' : 160 * V ≤ order m := by
+    have hmcast : (M : ℝ) ≤ (m : ℝ) := by exact_mod_cast hmM
+    exact hM.trans (by simpa only [order, add_le_add_iff_right] using hmcast)
+  have hsector : 40 * V / (1 / 4) ≤ order m := by convert hM' using 1; ring
+  have hV (w : ℂ) (hw : w ∈ closedBall (c : ℂ) r) :
+      (1 / 4 : ℝ) * ‖w‖ < w.re :=
+    closedBall_subset_sector hc (closedBall_subset_closedBall (by linarith) hw)
+  have hzeros (w : ℂ) (hw : w ∈ closedBall (c : ℂ) r) :=
+    denominator_zero_iff_polePhase m hodd (by norm_num) (by norm_num) hsector (hV w hw)
+  obtain ⟨gm, hgmA, hgm⟩ := hm m hmM
+  have hsymm (z : ℂ) (hz : z ∈ ball 0 ρ) : gm (conj z) = conj (gm z) := by
+    have hw := ball_subset_closedBall (hgm z hz).1
+    have hph := polePhase_conj m (by norm_num) (by norm_num) hsector (hV (gm z) hw)
+    rw [(hgm z hz).2.1] at hph
+    exact ((hgm (conj z) (ball_zero_conj hz)).2.2.1 _ (closedBall_conj hw) hph).symm
+  have hz : (0 : ℂ) ∈ ball 0 ρ := mem_ball_self hρ
+  have hgc : g 0 = (c : ℂ) := ((hg 0 hz).2.2 _ (mem_closedBall_self hr.le) hzero).symm
+  have hcenter := (hgm 0 hz).2.2.2
+  rw [hgc] at hcenter
+  refine ⟨gm, hgmA, fun z hz' => ⟨(hgm z hz').1, (hgm z hz').2.1, hsymm z hz'⟩,
+    sector_re_pos (by norm_num) (hV (gm 0) (ball_subset_closedBall (hgm 0 hz).1)),
+    ?_, hcenter, ?_, ?_⟩
+  · have he := hsymm 0 hz
+    rw [map_zero] at he
+    have hi := congrArg Complex.im he
+    rw [Complex.conj_im] at hi
+    linarith
+  · intro j hj
+    exact (hzeros _ (ball_subset_closedBall (hgm _ hj).1)).mpr ⟨j, (hgm _ hj).2.1⟩
+  · intro w hw
+    have hwr : w ∈ closedBall (c : ℂ) r :=
+      closedBall_subset_closedBall hεr (ball_subset_closedBall hw)
+    have hwδ : w ∈ ball (c : ℂ) δ := ball_subset_ball (min_le_right _ _) hw
+    have hη : ‖eta w‖ < ρ / 2 := by simpa [mem_ball_iff_norm] using hδ' hwδ
+    have hpert := (polePhase_compact_estimate m hc hM').1 w
+      (closedBall_subset_closedBall (show r ≤ c / 2 by linarith) hwr)
+    have hp : polePhase m w ∈ ball 0 ρ := by
+      rw [mem_ball_iff_norm, sub_zero]
+      have ht := norm_sub_le (polePhase m w - eta w) (-eta w)
+      rw [norm_neg, sub_neg_eq_add, sub_add_cancel] at ht
+      linarith [hpert.trans hvalue]
+    rw [hzeros w hwr]
+    constructor
+    · rintro ⟨j, hj⟩
+      have hjmem := hj ▸ hp
+      exact ⟨j, hjmem, (hgm _ hjmem).2.2.1 w hwr hj⟩
+    · rintro ⟨j, hjmem, rfl⟩
+      exact ⟨j, (hgm _ hjmem).2.1⟩
 
 end D5.S3.Analytic.Polynomial.DiagonalPadeExponential

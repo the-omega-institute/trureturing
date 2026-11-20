@@ -26,6 +26,9 @@ internal sealed class DiagonalPadePhaseDocument : IScribeDocumentDefinition
                 + "κ |w| < Re w. The ratio has strictly positive real part and the phase is "
                 + "analytic there. The phase differs from η by at most 15 V_κ/(κν²).",
                 DescribeRole.Theorem),
+            Node("polePhaseLattice", "Integer phase value",
+                "The phase value of index j is j π i/ν.",
+                DescribeRole.Definition),
             Node("denominator_zero_iff_polePhase", "Exact odd-order phase lattice",
                 "For odd m with the same sector and order conditions, q_m(2ν w) vanishes exactly "
                 + "when Φ_m(w) = j π i/ν for an integer j. Exponentiating the corrected phase "
@@ -47,6 +50,15 @@ internal sealed class DiagonalPadePhaseDocument : IScribeDocumentDefinition
                 + "Throughout the inverse disk, |g_m-g| ≤ B/ν². A uniform affine derivative "
                 + "estimate gives a contraction on the closed disk and the local inverse "
                 + "theorem establishes analyticity.",
+                DescribeRole.Theorem),
+            Node("exists_central_poles", "Central poles from the analytic inverse",
+                "About every positive zero c of η there are fixed radii 0 < ε ≤ r ≤ c/4 and ρ > 0, "
+                + "a constant B > 0 and an order threshold. Above it, the corrected phase at odd "
+                + "orders has an analytic inverse g_m on the disk of radius ρ, with values in "
+                + "the open disk of radius r about c. The inverse commutes with conjugation. "
+                + "Its value at zero is positive real and within B/ν² of c. Every lattice value "
+                + "in the inverse disk yields a pole at 2ν g_m(j π i/ν). All roots whose scaled "
+                + "argument lies in the disk of radius ε about c have this form.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
