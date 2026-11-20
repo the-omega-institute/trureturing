@@ -18,21 +18,10 @@ Let h doubled weights be odd integers and let t other weights be integers. Every
 
 An integer mass forces the sum of the first h digits to be even. Ternary coding preserves parity because the base is odd. The even code values run from zero through the largest even number below three to the power h. Calibration makes the map of levels to the two occupancy words injective.
 
-**Theorem 1.2 (Attainment and normalization for even h).**
+To attain the bound for even h, take doubled half-integer weights equal to the first h powers of three. Let W be the number of even ternary codes. Take the remaining t integer weights to be W times the first t powers of three. One plus the total pair mass is W times three to the power t. The total is even.
 
-$$\forall h t, \operatorname{Even}\left(h\right) \Rightarrow \operatorname{Total}\left(h, t\right) + 1 = \frac{3^h + 1}{2} \cdot 3^t \land \operatorname{Even}\left(\operatorname{Total}\left(h, t\right)\right) \land \operatorname{IntegerCoverage}\left(h, t, \operatorname{Total}\left(h, t\right) + 1\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubsetSpectrum/HalfIntegerOccupancy.mixed_half_weights_sharp` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For even h, choose doubled half-integer weights equal to the first h powers of three. Put W equal to the number of even codes. The other t weights are W times the first t powers of three. The total pair mass is even, and one plus that total equals W times three to the power t.
-
-For a level k, divide by W. The remainder is encoded by the even word of value twice the remainder, and the quotient by an unrestricted word multiplied by W. The combined mass is k. This supplies every level up to the total.
+The quotient and remainder on division by W give the two occupancy words, with the remainder encoded at twice its value. For a positive total, divide the weights by that total. At the midpoint select one seed per pair. Extend the lower events by swapping pairs and taking complements.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/HalfIntegerOccupancy.mixed_half_weights_bound`
-- Truth anchor: `D5/S3/Combinatorics/SubsetSpectrum/HalfIntegerOccupancy.mixed_half_weights_sharp`
