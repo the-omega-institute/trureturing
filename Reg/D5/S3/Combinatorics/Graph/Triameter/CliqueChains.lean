@@ -106,22 +106,21 @@ def familyEvidence : DependentFamily.Registration arena.{u} sourceScope.{u} wher
 
 def contract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
     (@question1.{u})
-    (type_of% (DependentFamily.realize signature
-      (fun _ p G => @triameter p.1 p.2 G) (fun e => nomatch e))) Type Unit where
+    (DependentFamily.Realization signature.{u}) Unit Unit where
   unitName := Lean.Name.str (Lean.Name.str
     `D5.S3.Combinatorics.Graph.Triameter.question1
     "Reg.D5.S3.Combinatorics.Graph.Triameter.CliqueChains/Reg.D5.S3.Combinatorics.Graph.Triameter.CliqueChains.arena/[anonymous]") "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Triameter.CliqueChains.familyEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨familyEvidence⟩
+  realization := .source arena.{u} ⟨familyEvidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (DependentFamily.realize signature
+  readout := some (DependentFamily.realize signature.{u}
     (fun _ p G => @triameter p.1 p.2 G) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -130,7 +129,7 @@ def contract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Triameter.CliqueChains
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 2
