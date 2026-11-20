@@ -6,6 +6,8 @@
    utility: none
    digest: Completing a naming after adaptive replies preserves the joint transcript and full-state law. -/
 
+/- Information escape registration remains open. https://github.com/the-omega-institute/trureturing/issues/32103 -/
+
 import D5.S3.Combinatorics.Probability.JointNamingReplyCompletion
 import D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
 
