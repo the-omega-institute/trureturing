@@ -2,16 +2,43 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/NiuQ15Tableaux
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Fintype.EquivFin]
+   anchors: [mathlib/module/Mathlib.SetTheory.Cardinal.Finite]
    utility: none
    digest: Largest-label deletion and prefix rotation for standard tableaux. -/
 
+/- admission_basis: escape-witness (preregistration #32036)
+   Direct frozen dependencies: none.
+   size_eraseRowEnd | proof_shape: bind-only | escape_witness: none
+     Consumers: standardTableauDeleteLast and card_standardTableau_eq_shiftedCount.
+   card_standardTableau_eq_sum | proof_shape: content
+     escape_witness: standardTableauDeleteLast constructs the bijection by removing the maximal
+     label and reinserting it at the chosen corner.
+     Consumer: card_standardTableau_eq_shiftedCount.
+   card_standardTableau_of_size_zero | proof_shape: content
+     escape_witness: a Unique instance is constructed for strictly increasing bijections
+     between the two empty carriers.
+     Consumer: card_standardTableau_eq_shiftedCount.
+   size_rectangle | proof_shape: bind-only | escape_witness: none
+     Consumers: rectangleRowMajor and zeroShapeReadout_fails.
+   firstDescent_le_width | proof_shape: content
+     escape_witness: firstDescent_ge_iff_prefix identifies every label before the descent.
+     Consumers: card_rectangle_tail_of_width_lt and rectangleOddEntryProbability_eq_sum.
+   card_rectangle_tail | proof_shape: content
+     escape_witness: rectangleTailRotation constructs the bijection for the actual survival event.
+     Consumer: rectangleTailProbability_eq.
+   card_rectangle_tail_of_width_lt | proof_shape: content
+     escape_witness: firstDescent_le_width rules out a tableau in the above-width event.
+     Consumer: rectangleTailProbability_eq.
+   rectangle_card_pos | proof_shape: content
+     escape_witness: rectangleRowMajor constructs an actual tableau for every width.
+     Consumers: rectangleTailProbability_eq and zeroCoefficientReadout_fails.
+   card_rectangle_tail_eq_point_add_next | proof_shape: content
+     escape_witness: explicit bijections identify the two parts of the split survival subtype.
+     Consumer: rectangleTailPartition. -/
+
 module
 
-public import Mathlib.Data.Fintype.BigOperators
-public import Mathlib.Data.Fintype.EquivFin
 public import Mathlib.Logic.Equiv.Fin.Basic
-public import Mathlib.Order.Fin.Basic
 public import Mathlib.SetTheory.Cardinal.Finite
 
 /-! Standard tableaux of straight shapes, maximum-cell deletion and rectangle rotation. -/
@@ -35,25 +62,25 @@ structure RowShape (k : ℕ) where
 @[expose] def Cell {k : ℕ} (shape : RowShape k) :=
   {p : Fin k × ℕ // p.2 < shape.rows p.1}
 
-instance {k : ℕ} (shape : RowShape k) : PartialOrder (Cell shape) :=
+instance instPartialOrderCell {k : ℕ} (shape : RowShape k) : PartialOrder (Cell shape) :=
   inferInstanceAs (PartialOrder {p : Fin k × ℕ // p.2 < shape.rows p.1})
 
-instance {k : ℕ} (shape : RowShape k) : DecidableEq (Cell shape) :=
+private local instance {k : ℕ} (shape : RowShape k) : DecidableEq (Cell shape) :=
   inferInstanceAs (DecidableEq {p : Fin k × ℕ // p.2 < shape.rows p.1})
 
-def cellsEquivSigma {k : ℕ} (shape : RowShape k) :
+private def cellsEquivSigma {k : ℕ} (shape : RowShape k) :
     Cell shape ≃ Σ i : Fin k, Fin (shape.rows i) where
   toFun x := ⟨x.1.1, ⟨x.1.2, x.2⟩⟩
   invFun x := ⟨(x.1, x.2.val), x.2.isLt⟩
   left_inv _ := rfl
   right_inv _ := rfl
 
-instance {k : ℕ} (shape : RowShape k) : Fintype (Cell shape) :=
+private local instance {k : ℕ} (shape : RowShape k) : Fintype (Cell shape) :=
   Fintype.ofEquiv _ (cellsEquivSigma shape).symm
 
 @[expose] def size {k : ℕ} (shape : RowShape k) : ℕ := ∑ i, shape.rows i
 
-theorem card_cells {k : ℕ} (shape : RowShape k) :
+private theorem card_cells {k : ℕ} (shape : RowShape k) :
     Fintype.card (Cell shape) = size shape := by
   rw [Fintype.card_congr (cellsEquivSigma shape), Fintype.card_sigma]
   simp [size]
@@ -62,54 +89,29 @@ theorem card_cells {k : ℕ} (shape : RowShape k) :
 abbrev Labeling (P : Type*) [Preorder P] (m : ℕ) :=
   {e : P ≃ Fin m // StrictMono e}
 
-instance {P : Type*} [Preorder P] [Finite P] {m : ℕ} : Finite (Labeling P m) := by
+private local instance {P : Type*} [Preorder P] [Finite P] {m : ℕ} : Finite (Labeling P m) := by
   infer_instance
 
-noncomputable instance {P : Type*} [Preorder P] [Finite P] {m : ℕ} :
+private noncomputable local instance {P : Type*} [Preorder P] [Finite P] {m : ℕ} :
     Fintype (Labeling P m) := Fintype.ofFinite _
 
 @[expose] def StandardTableau {k : ℕ} (shape : RowShape k) :=
   Labeling (Cell shape) (size shape)
 
-noncomputable instance {k : ℕ} (shape : RowShape k) : Fintype (StandardTableau shape) :=
-  inferInstanceAs (Fintype (Labeling (Cell shape) (size shape)))
-
-/-- On a lower set, strict increase along rows and columns is equivalent
-to strict increase for the inherited partial order. -/
-theorem strictMono_iff_rows_columns {k m : ℕ} (shape : RowShape k)
-    (f : Cell shape → Fin m) :
-    StrictMono f ↔
-      (∀ x y : Cell shape, x.1.1 = y.1.1 → x.1.2 < y.1.2 → f x < f y) ∧
-      (∀ x y : Cell shape, x.1.2 = y.1.2 → x.1.1 < y.1.1 → f x < f y) := by
-  constructor
-  · intro hf
-    constructor
-    · intro x y hr hc
-      exact hf (lt_of_le_not_ge ⟨hr.le, hc.le⟩ (fun h => hc.not_ge h.2))
-    · intro x y hc hr
-      exact hf (lt_of_le_not_ge ⟨hr.le, hc.le⟩ (fun h => hr.not_ge h.1))
-  · rintro ⟨hrow, hcol⟩ x y hxy
-    have hr : x.1.1 ≤ y.1.1 := hxy.le.1
-    have hc : x.1.2 ≤ y.1.2 := hxy.le.2
-    rcases hr.eq_or_lt with heq | hlt
-    · exact hrow x y heq (lt_of_le_of_ne hc (fun heq' =>
-        hxy.ne (Subtype.ext (Prod.ext heq heq'))))
-    · rcases hc.eq_or_lt with heq | hlt'
-      · exact hcol x y heq hlt
-      · let z : Cell shape :=
-          ⟨(x.1.1, y.1.2), lt_of_lt_of_le y.2 (shape.antitone_rows hr)⟩
-        exact (hrow x z rfl hlt').trans (hcol z y rfl hlt)
+@[no_expose] noncomputable instance instFintypeStandardTableau {k : ℕ} (shape : RowShape k) :
+    Fintype (StandardTableau shape) := by
+  exact (inferInstance : Fintype (Labeling (Cell shape) (size shape)))
 
 section LastLabel
 
 variable {P : Type*} [PartialOrder P] {m : ℕ}
 
 /-- The carrier obtained by removing a specified element. -/
-abbrev Without (a : P) := {x : P // x ≠ a}
+private abbrev Without (a : P) := {x : P // x ≠ a}
 
-def lastCell (t : Labeling P (m + 1)) : P := t.1.symm (Fin.last m)
+private def lastCell (t : Labeling P (m + 1)) : P := t.1.symm (Fin.last m)
 
-theorem lastCell_maximal (t : Labeling P (m + 1)) : ∀ x, ¬lastCell t < x := by
+private theorem lastCell_maximal (t : Labeling P (m + 1)) : ∀ x, ¬lastCell t < x := by
   intro x hx
   have h := t.2 hx
   change t.1 (t.1.symm (Fin.last m)) < t.1 x at h
@@ -158,7 +160,7 @@ private theorem insertLast_label [DecidableEq P] (a : P) (ha : ∀ x, ¬a < x)
   simp [insertLast, Equiv.optionSubtypeNe_symm_of_ne x.2]
 
 /-- Restrict to all cells except the cell carrying the largest label, with insertion inverse. -/
-def deleteFixedLast [DecidableEq P] (a : P) (ha : ∀ x, ¬a < x) :
+private def deleteFixedLast [DecidableEq P] (a : P) (ha : ∀ x, ¬a < x) :
     {t : Labeling P (m + 1) // lastCell t = a} ≃ Labeling (Without a) m where
   toFun := restrictLast a
   invFun := insertLast a ha
@@ -182,7 +184,7 @@ def deleteFixedLast [DecidableEq P] (a : P) (ha : ∀ x, ¬a < x) :
     exact (restrictLast_label a (insertLast a ha t) x).trans (insertLast_label a ha t x)
 
 /-- The largest label selects a maximal cell and gives a labeling with that cell removed. -/
-def deleteLast [DecidableEq P] :
+private def deleteLast [DecidableEq P] :
     Labeling P (m + 1) ≃ Σ a : {a : P // ∀ x, ¬a < x}, Labeling (Without a.1) m :=
   (Equiv.sigmaFiberEquiv (fun t : Labeling P (m + 1) =>
     (⟨lastCell t, lastCell_maximal t⟩ : {a : P // ∀ x, ¬a < x}))).symm.trans
@@ -200,27 +202,14 @@ variable {k : ℕ} (shape : RowShape k)
 @[expose] def RemovableRow :=
   {i : Fin k // 0 < shape.rows i ∧ ∀ j, i < j → shape.rows j < shape.rows i}
 
-noncomputable instance : Fintype (RemovableRow shape) := by
+noncomputable instance instFintypeRemovableRow : Fintype (RemovableRow shape) := by
   unfold RemovableRow
   exact Fintype.ofFinite _
 
-theorem removable_iff_next (i : Fin k) :
-    (0 < shape.rows i ∧ ∀ j, i < j → shape.rows j < shape.rows i) ↔
-      (0 < shape.rows i ∧ ∀ j : Fin k, j.val = i.val + 1 → shape.rows j < shape.rows i) := by
-  constructor
-  · rintro ⟨hp, h⟩
-    exact ⟨hp, fun j hj => h j (show i.val < j.val by omega)⟩
-  · rintro ⟨hp, h⟩
-    refine ⟨hp, fun j hj => ?_⟩
-    have hij : i.val < j.val := hj
-    let next : Fin k := ⟨i.val + 1, by omega⟩
-    exact (shape.antitone_rows (show next.val ≤ j.val by dsimp [next]; omega)).trans_lt
-      (h next rfl)
-
-def endCell (i : RemovableRow shape) : Cell shape :=
+private def endCell (i : RemovableRow shape) : Cell shape :=
   ⟨(i.1, shape.rows i.1 - 1), Nat.sub_lt i.2.1 Nat.one_pos⟩
 
-theorem endCell_maximal (i : RemovableRow shape) (x : Cell shape) :
+private theorem endCell_maximal (i : RemovableRow shape) (x : Cell shape) :
     ¬endCell shape i < x := by
   intro h
   have hr : i.1 ≤ x.1.1 := h.le.1
@@ -252,7 +241,7 @@ private theorem maximal_row_removable (a : Cell shape) (ha : ∀ x, ¬a < x) :
   exact ha below (lt_of_le_not_ge ⟨hj.le, le_rfl⟩ (fun hx => hj.not_ge hx.1))
 
 /-- The maximal cells of the product order are exactly the removable row ends. -/
-def maximalCellsEquivRemovable : {a : Cell shape // ∀ x, ¬a < x} ≃ RemovableRow shape where
+private def maximalCellsEquivRemovable : {a : Cell shape // ∀ x, ¬a < x} ≃ RemovableRow shape where
   toFun a := ⟨a.1.1.1, maximal_row_removable shape a.1 a.2⟩
   invFun i := ⟨endCell shape i, endCell_maximal shape i⟩
   left_inv a := Subtype.ext (Subtype.ext (Prod.ext rfl (maximal_is_rowEnd shape a.1 a.2).symm))
@@ -288,7 +277,7 @@ private theorem eraseRowEnd_mem_iff (i : RemovableRow shape) (x : Fin k × ℕ) 
   · simp [eraseRowEnd, endCell, h]
 
 /-- Deleting a maximal cell in the ambient order gives the shortened row shape. -/
-def eraseCellsOrderIso (i : RemovableRow shape) :
+private def eraseCellsOrderIso (i : RemovableRow shape) :
     Without (endCell shape i) ≃o Cell (eraseRowEnd shape i) where
   toFun x := ⟨x.1.1, (eraseRowEnd_mem_iff shape i x.1.1).mpr
     ⟨x.1.2, fun h => x.2 (Subtype.ext h)⟩⟩
@@ -314,7 +303,7 @@ private def relabel {α β : Type*} [Preorder α] [Preorder β] {m n : ℕ}
 
 /-- A nonempty standard tableau is uniquely a removable row and a tableau of the
 shortened shape. The forward map removes the cell carrying the largest label. -/
-noncomputable def standardTableauDeleteLast (h : 0 < size shape) :
+private noncomputable def standardTableauDeleteLast (h : 0 < size shape) :
     StandardTableau shape ≃ Σ i : RemovableRow shape, StandardTableau (eraseRowEnd shape i) := by
   let m := size shape - 1
   have hm : size shape = m + 1 := by dsimp [m]; omega
@@ -332,13 +321,6 @@ theorem card_standardTableau_eq_sum (h : 0 < size shape) :
 
 end RemovableRows
 
-theorem standardTableauDeleteLast_row {k : ℕ} (shape : RowShape k)
-    (h : 0 < size shape) (t : StandardTableau shape) :
-    (standardTableauDeleteLast shape h t).1.1 =
-      (t.1.symm ⟨size shape - 1, Nat.sub_lt h Nat.one_pos⟩).1.1 := by
-  change (t.1.symm _).1.1 = (t.1.symm _).1.1
-  congr
-
 theorem card_standardTableau_of_size_zero {k : ℕ} (shape : RowShape k) (h : size shape = 0) :
     Fintype.card (StandardTableau shape) = 1 := by
   classical
@@ -350,13 +332,12 @@ theorem card_standardTableau_of_size_zero {k : ℕ} (shape : RowShape k) (h : si
     ⟨⟨empty⟩, fun t => Subtype.ext (Equiv.ext fun x => isEmptyElim x)⟩
   exact Fintype.card_unique
 
-
 section Prefix
 
 variable {P : Type*} [PartialOrder P] {r m : ℕ} {initial : P → Prop}
 
 /-- The prescribed prefix runs through the cells in their prescribed order. -/
-abbrev WithPrefix (e : Fin r ≃o {x : P // initial x}) (m : ℕ) :=
+private abbrev WithPrefix (e : Fin r ≃o {x : P // initial x}) (m : ℕ) :=
   {t : Labeling P (r + m) // ∀ j, t.1 (e j).1 = j.castAdd m}
 
 private def suffixLabels (r m : ℕ) : Fin m ≃ {i : Fin (r + m) // r ≤ i.val} where
@@ -432,7 +413,7 @@ private def insertPrefix [DecidablePred initial] (e : Fin r ≃o {x : P // initi
     exact congrArg (Fin.castAdd m) (e.symm_apply_apply j)
 
 /-- A fixed initial segment on a lower set can be deleted and reinserted. -/
-def deletePrefix [DecidablePred initial] (e : Fin r ≃o {x : P // initial x})
+private def deletePrefix [DecidablePred initial] (e : Fin r ≃o {x : P // initial x})
     (lower : ∀ ⦃x y⦄, x ≤ y → initial y → initial x) :
     WithPrefix e m ≃ Labeling {x : P // ¬initial x} m where
   toFun := restrictPrefix e
@@ -467,10 +448,10 @@ section Rectangle
 theorem size_rectangle (k n : ℕ) : size (rectangle k n) = (k + 1) * n := by
   simp [size, rectangle, Nat.mul_comm]
 
-def topPrefix {k n : ℕ} (r : ℕ) (x : Cell (rectangle k n)) : Prop :=
+private def topPrefix {k n : ℕ} (r : ℕ) (x : Cell (rectangle k n)) : Prop :=
   x.1.1 = 0 ∧ x.1.2 < r
 
-instance {k n : ℕ} (r : ℕ) : DecidablePred (@topPrefix k n r) :=
+private local instance {k n : ℕ} (r : ℕ) : DecidablePred (@topPrefix k n r) :=
   fun x => inferInstanceAs (Decidable (x.1.1 = 0 ∧ x.1.2 < r))
 
 private theorem topPrefix_lower {k n r : ℕ} {x y : Cell (rectangle k n)}
@@ -479,7 +460,7 @@ private theorem topPrefix_lower {k n r : ℕ} {x y : Cell (rectangle k n)}
   have hcol : x.1.2 ≤ y.1.2 := h.2
   exact ⟨Fin.le_zero_iff.mp (hy.1 ▸ hrow), hcol.trans_lt hy.2⟩
 
-def topPrefixOrder {k n r : ℕ} (hr : r ≤ n) :
+private def topPrefixOrder {k n r : ℕ} (hr : r ≤ n) :
     Fin r ≃o {x : Cell (rectangle k n) // topPrefix r x} where
   toFun j := ⟨⟨(0, j.val), j.isLt.trans_le hr⟩, rfl, j.isLt⟩
   invFun x := ⟨x.1.1.2, x.2.2⟩
@@ -524,7 +505,7 @@ private theorem rotated_mem_lt {k n r : ℕ} (x : Cell (rotatedShape k n r)) : x
   · exact le_rfl
 
 /-- The coordinate reflection reverses the partial order on all surviving cells. -/
-def rotateCells {k n r : ℕ} :
+private def rotateCells {k n r : ℕ} :
     ({x : Cell (rectangle k n) // ¬topPrefix r x})ᵒᵈ ≃o Cell (rotatedShape k n r) where
   toFun x := ⟨(x.1.1.1.rev, n - 1 - x.1.1.2), rotate_mem x.1.2 x.2⟩
   invFun x := ⟨⟨(x.1.1.rev, n - 1 - x.1.2), by
@@ -574,10 +555,9 @@ private def reverseLabeling {P : Type*} [Preorder P] (m : ℕ) :
     (fun _ => ⟨fun hf _ _ h => Fin.rev_lt_rev.mpr (hf h),
       fun hf _ _ h => Fin.rev_lt_rev.mp (hf (show _ < _ from h))⟩)
 
-
 /-- A rectangle with its first r labels in the top-row prefix is equivalent to
 the straight shape obtained by rotating the complement. -/
-def rectanglePrefixRotation {k n r : ℕ} (hr : r ≤ n) :
+private def rectanglePrefixRotation {k n r : ℕ} (hr : r ≤ n) :
     {t : StandardTableau (rectangle k n) //
       ∀ j : Fin r, (t.1 ((topPrefixOrder hr) j).1).val = j.val} ≃
       StandardTableau (rotatedShape k n r) := by
@@ -608,7 +588,7 @@ private theorem above_secondRowFirst {k n : ℕ} (hn : 0 < n)
     omega
   exact (t.2.monotone hx).not_gt h
 
-theorem firstDescent_ge_iff_prefix {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n)
+private theorem firstDescent_ge_iff_prefix {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n)
     (t : StandardTableau (rectangle (k + 1) n)) :
     r ≤ firstDescent hn t ↔
       ∀ j : Fin r, (t.1 ((topPrefixOrder hr) j).1).val = j.val := by
@@ -653,7 +633,7 @@ theorem firstDescent_ge_iff_prefix {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n)
 
 /-- The event D ≥ r has the same cardinality as the straight shape with r
 cells removed from the end of its bottom row. -/
-def rectangleTailRotation {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n) :
+private def rectangleTailRotation {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n) :
     {t : StandardTableau (rectangle (k + 1) n) // r ≤ firstDescent hn t} ≃
     StandardTableau (rotatedShape (k + 1) n r) :=
   (Equiv.subtypeEquivRight (firstDescent_ge_iff_prefix hn hr)).trans (rectanglePrefixRotation hr)
@@ -666,7 +646,7 @@ private def rectangleCellsEquivProd (k n : ℕ) :
   right_inv _ := rfl
 
 /-- The row-major labeling is a standard tableau, even for the empty rectangle. -/
-def rectangleRowMajor (k n : ℕ) : StandardTableau (rectangle k n) := by
+private def rectangleRowMajor (k n : ℕ) : StandardTableau (rectangle k n) := by
   refine ⟨((rectangleCellsEquivProd k n).trans finProdFinEquiv).trans
     (finCongr (size_rectangle k n).symm), ?_⟩
   intro x y hxy
@@ -679,15 +659,6 @@ def rectangleRowMajor (k n : ℕ) : StandardTableau (rectangle k n) := by
       hxy.ne (Subtype.ext (Prod.ext heq h)))) _
   · have hn : 0 < n := Nat.zero_lt_of_lt x.2
     exact Nat.add_lt_add_of_le_of_lt hc (Nat.mul_lt_mul_of_pos_left hlt hn)
-
-
-theorem firstDescent_pos {k n : ℕ} (hn : 0 < n)
-    (t : StandardTableau (rectangle (k + 1) n)) : 0 < firstDescent hn t := by
-  let a : Cell (rectangle (k + 1) n) := ⟨(0, 0), hn⟩
-  have h : a < secondRowFirst (k := k) hn :=
-    lt_of_le_not_ge ⟨Fin.zero_le _, le_rfl⟩ fun h =>
-      Fin.zero_lt_one.not_ge (show (1 : Fin (k + 2)) ≤ 0 from h.1)
-  exact Nat.zero_lt_of_lt (t.2 h)
 
 theorem firstDescent_le_width {k n : ℕ} (hn : 0 < n)
     (t : StandardTableau (rectangle (k + 1) n)) : firstDescent hn t ≤ n := by
@@ -702,36 +673,6 @@ theorem firstDescent_le_width {k n : ℕ} (hn : 0 < n)
   exact (ne_of_lt x.2)
     (hprefix.symm.trans ((congrArg (fun c => (t.1 c).val) heq).trans hx))
 
-/-- The label t (in one-based paper notation) is a descent if t+1 lies lower. -/
-def Descents {k n : ℕ} (t : StandardTableau (rectangle (k + 1) n)) : Set ℕ :=
-  {r | ∃ a b : Fin (size (rectangle (k + 1) n)), a.val + 1 = r ∧ b.val = r ∧
-    (t.1.symm a).1.1 < (t.1.symm b).1.1}
-
-theorem firstDescent_isLeast {k n : ℕ} (hn : 0 < n)
-    (t : StandardTableau (rectangle (k + 1) n)) : IsLeast (Descents t) (firstDescent hn t) := by
-  have hpos := firstDescent_pos hn t
-  constructor
-  · let b := t.1 (secondRowFirst hn)
-    let a : Fin (size (rectangle (k + 1) n)) := ⟨b.val - 1, by
-      exact (Nat.sub_le _ _).trans_lt b.isLt⟩
-    have ha : a.val < firstDescent hn t := Nat.sub_lt hpos Nat.one_pos
-    have hrow : (t.1.symm a).1.1 = 0 :=
-      above_secondRowFirst hn t _ (by simpa only [Equiv.apply_symm_apply] using ha)
-    refine ⟨a, b, Nat.sub_add_cancel hpos, rfl, ?_⟩
-    change (t.1.symm a).1.1 < (t.1.symm (t.1 (secondRowFirst hn))).1.1
-    rw [Equiv.symm_apply_apply, hrow]
-    exact Fin.zero_lt_one
-  · rintro r ⟨a, b, ha, hb', hab⟩
-    by_contra! h
-    have ha' : a.val < firstDescent hn t := by omega
-    have hb'' : b.val < firstDescent hn t := by omega
-    have hrowa := above_secondRowFirst hn t (t.1.symm a)
-      (by simpa only [Equiv.apply_symm_apply] using ha')
-    have hrowb := above_secondRowFirst hn t (t.1.symm b)
-      (by simpa only [Equiv.apply_symm_apply] using hb'')
-    rw [hrowa, hrowb] at hab
-    exact (lt_irrefl _) hab
-
 theorem card_rectangle_tail {k n r : ℕ} (hn : 0 < n) (hr : r ≤ n) :
     Nat.card {t : StandardTableau (rectangle (k + 1) n) // r ≤ firstDescent hn t} =
       Fintype.card (StandardTableau (rotatedShape (k + 1) n r)) := by
@@ -745,7 +686,6 @@ theorem card_rectangle_tail_of_width_lt {k n r : ℕ} (hn : 0 < n) (hr : n < r) 
 
 theorem rectangle_card_pos (k n : ℕ) : 0 < Fintype.card (StandardTableau (rectangle k n)) :=
   Fintype.card_pos_iff.mpr ⟨rectangleRowMajor k n⟩
-
 
 /-- The two consecutive tail events differ by exactly the point event. -/
 theorem card_rectangle_tail_eq_point_add_next {k n : ℕ} (hn : 0 < n) (r : ℕ) :

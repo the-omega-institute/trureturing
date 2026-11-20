@@ -6,7 +6,7 @@ Exact uniform first-descent probabilities and the limiting law for every rectang
 
 **Definition 1.1 (Uniform event probability).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.eventProbability`
+$$\operatorname{eventProbability}\left(event\right) = \frac{\operatorname{cast}\left(\operatorname{Nat}.\operatorname{card}\left(\left\{t:\alpha \mid event\left(t\right)\right\}\right)\right)}{\operatorname{cast}\left(\operatorname{Fintype}.\operatorname{card}\left(\alpha\right)\right)}$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.eventProbability` (`✓ std3`).
 
@@ -16,11 +16,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.eventProbability`
 
 *Commentary.*
 
-The probability of an event on the finite sample is the number of tableaux in the event divided by the number of tableaux in the sample.
+Here α is any finite type and event is a predicate on α. The casts take the two cardinalities to the real numbers.
 
 **Definition 1.2 (Rectangle descent).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleDescent`
+$$\operatorname{rectangleDescent}\left(k, n, t\right) = if hn: 0 < n then \operatorname{firstDescent}\left(hn, t\right) else 0$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleDescent` (`✓ std3`).
 
@@ -30,11 +30,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleDescent`
 
 *Commentary.*
 
-The rectangle has K = k + 2 rows. For positive width the descent is the one-based second-row first entry minus one. At width zero the descent is extended by zero.
+The shape has k + 2 rows and n columns. The positive-width branch supplies the proof hn of 0 < n. Its value is the one-based second-row first entry minus one.
 
 **Definition 1.3 (Survival probability).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability`
+$$\operatorname{rectangleTailProbability}\left(k, n, r\right) = \operatorname{eventProbability}\left((t: \operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right) \mapsto r \le \operatorname{rectangleDescent}\left(k, n, t\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability` (`✓ std3`).
 
@@ -44,11 +44,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability`
 
 *Commentary.*
 
-At k, n and r, the uniform event is that the rectangle descent is at least r.
+The event is taken in the uniform sample of tableaux of the rectangle.
 
 **Definition 1.4 (Point probability).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability`
+$$\operatorname{rectanglePointProbability}\left(k, n, r\right) = \operatorname{eventProbability}\left((t: \operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right) \mapsto \operatorname{rectangleDescent}\left(k, n, t\right) = r)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability` (`✓ std3`).
 
@@ -58,11 +58,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability
 
 *Commentary.*
 
-At k, n and r, the uniform event is that the rectangle descent equals r.
+The event fixes the descent at r.
 
 **Definition 1.5 (Odd-entry probability).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleOddEntryProbability`
+$$\operatorname{rectangleOddEntryProbability}\left(k, n\right) = \operatorname{eventProbability}\left((t: \operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right) \mapsto \operatorname{Odd}\left(\operatorname{rectangleDescent}\left(k, n, t\right) + 1\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleOddEntryProbability` (`✓ std3`).
 
@@ -72,11 +72,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleOddEntryProbabil
 
 *Commentary.*
 
-At positive width, the event is that the one-based entry in row two and column one is odd, equivalently that the descent is even.
+At positive width the event is that the one-based entry in row two and column one is odd.
 
 **Theorem 1.6 (Straight-shape cardinality).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_shiftedCount`
+$$\forall k \in \mathbb{N},\; \forall shape \in \operatorname{RowShape}\left(k\right),\; 2 \le k \Rightarrow (\operatorname{cast}\left(\operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(shape\right)\right)\right): \mathbb{Q}) = \operatorname{shiftedCount}\left(shape.rows\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_shiftedCount` (`✓ std3`). ∎
 
@@ -86,11 +86,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_s
 
 *Commentary.*
 
-For any weakly decreasing profile with at least two row slots, the rational cast of the tableau count equals the shifted Vandermonde formula. Both counts equal one at size zero. At positive size, they sum over the same removable row ends with the same shortened profiles. Strong induction on the number of cells gives equality.
+Both counts equal one at size zero. At positive size they sum over the same removable row ends. Strong induction on the number of cells gives equality.
 
 **Definition 1.7 (Rectangle and shortened-shape count identity).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount`
+$$\forall k \in \mathbb{N},\; \operatorname{ExactRectangleTailCount}\left(k\right) \Leftrightarrow (\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; 0 < n \Rightarrow \left(r \le n \Rightarrow \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rotatedShape}\left(k + 1, n, r\right)\right)\right) \cdot \operatorname{descFactorial}\left((k + 2) \cdot n, r\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right)\right) \cdot \operatorname{tailCoefficient}\left(k + 2, r\right) \cdot \operatorname{descFactorial}\left(n, r\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount` (`✓ std3`).
 
@@ -100,11 +100,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount`
 
 *Commentary.*
 
-For K = k + 2, positive width n and r at most n, the shortened-shape count times the descending factorial of K n of length r equals the rectangle count times choose(r + K - 1, K - 1) times the descending factorial of n of length r.
+Both counts and descending factorials are natural numbers.
 
 **Theorem 1.8 (Exact rectangle tail count).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.exactRectangleTailCount`
+$$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; 0 < n \Rightarrow \left(r \le n \Rightarrow \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rotatedShape}\left(k + 1, n, r\right)\right)\right) \cdot \operatorname{descFactorial}\left((k + 2) \cdot n, r\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{StandardTableau}\left(\operatorname{rectangle}\left(k + 1, n\right)\right)\right) \cdot \operatorname{tailCoefficient}\left(k + 2, r\right) \cdot \operatorname{descFactorial}\left(n, r\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.exactRectangleTailCount` (`✓ std3`). ∎
 
@@ -114,27 +114,13 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.exactRectangleTailCount`
 
 *Commentary.*
 
-The identity holds for every k. In the shifted Vandermonde product the upper-row factors are common. The factors involving the last row change from the integers 1 through K - 1 to the integers r + 1 through r + K - 1. Their ratio is the binomial coefficient. The size and last-row factorials give the two descending factorials.
+The factors involving the bottom row change from 1 through k + 1 to r + 1 through r + k + 1. Their ratio is the binomial coefficient. The size and bottom-row factorials give the two descending factorials.
 
-**Theorem 1.9 (Exact survival probability).**
+**Definition 1.9 (The closed Question 15 proposition).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability_eq`
+$$Question15 \Leftrightarrow (\forall k \in \mathbb{N},\; (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectangleTailProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitTail}\left(k + 2, r\right)\right)\right)) \land (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectanglePointProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitMass}\left(k + 2, r\right)\right)\right)) \land (\operatorname{HasSum}\left(\operatorname{limitMass}\left(k + 2\right), 1\right)) \land (\operatorname{Tendsto}\left(\operatorname{rectangleOddEntryProbability}\left(k\right), atTop, \operatorname{nhds}\left((\frac{\operatorname{cast}\left(k\right) + 2}{\operatorname{cast}\left(k\right) + 3})^{k + 2}\right)\right)))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability_eq` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Tong Niu (2026). *The first descent in a standard Young tableau of shape (n,n,n)*. DOI: [10.48550/arXiv.2610.03038](https://doi.org/10.48550/arXiv.2610.03038). URL: <https://arxiv.org/abs/2610.03038v1>.
-
-*Commentary.*
-
-At every positive width, the survival probability equals the finite survival function. For r at most n this follows from the count ratio and the prefix rotation. For r above n the event is empty.
-
-**Theorem 1.10 (Exact point probability).**
-
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability_eq`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability_eq` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Combinatorics/Partitions/NiuQ15.Question15` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -142,11 +128,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability
 
 *Commentary.*
 
-At positive width, the point probability for r at most n is the survival probability times (K - 1) r (n + 1) / ((r + 1)(K n - r)). Above the width the point probability is zero.
+The two distribution clauses quantify independently over natural thresholds. At r = 0 the limiting point mass is zero, so summing over all natural r gives the same normalization as summing over positive r.
 
-**Theorem 1.11 (First-descent law and odd-entry limit).**
+**Theorem 1.10 (First-descent law and odd-entry limit).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15`
+$$\forall k \in \mathbb{N},\; (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectangleTailProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitTail}\left(k + 2, r\right)\right)\right)) \land (\forall r \in \mathbb{N},\; \operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \operatorname{rectanglePointProbability}\left(k, n, r\right)), atTop, \operatorname{nhds}\left(\operatorname{limitMass}\left(k + 2, r\right)\right)\right)) \land (\operatorname{HasSum}\left(\operatorname{limitMass}\left(k + 2\right), 1\right)) \land (\operatorname{Tendsto}\left(\operatorname{rectangleOddEntryProbability}\left(k\right), atTop, \operatorname{nhds}\left((\frac{\operatorname{cast}\left(k\right) + 2}{\operatorname{cast}\left(k\right) + 3})^{k + 2}\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15` (`✓ std3`). ∎
 
@@ -156,21 +142,20 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15`
 
 *Commentary.*
 
-For every K = k + 2 and each natural r, the survival probability tends to choose(r + K - 1, K - 1)/K^r and the point probability tends to r choose(r + K - 1, K - 2)/K^(r + 1). The limiting point masses sum to one. The probability of an odd second-row first entry tends to (K/(K + 1))^K. Prefix rotation and the count identity give the finite tails, and subtraction of adjacent tails gives the masses. Pairing adjacent tails and applying the common summable bound gives the parity limit.
+For K = k + 2 the survival limit is choose(r + K − 1, K − 1)/K^r, and the point limit is r choose(r + K − 1, K − 2)/K^(r + 1). The masses sum to one. Prefix rotation and the count identity give the finite tails. Their adjacent differences give the masses. A common summable bound permits the limit in the alternating parity sum.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.ExactRectangleTailCount`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.Question15`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.card_standardTableau_eq_shiftedCount`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.eventProbability`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.exactRectangleTailCount`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleDescent`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleOddEntryProbability`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability`
-- Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectanglePointProbability_eq`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability`
-- Truth anchor: `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleTailProbability_eq`
 - Dependency: [D5/S3/Combinatorics/Partitions/NiuQ15Analytic](NiuQ15Analytic.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/NiuQ15Tableaux](NiuQ15Tableaux.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/NiuTableauCount](NiuTableauCount.md)

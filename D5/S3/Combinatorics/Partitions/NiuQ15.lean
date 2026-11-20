@@ -2,9 +2,23 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/NiuQ15
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/niu2026firstdescent]
+   anchors: []
    utility: none
    digest: The normalized first-descent law and odd-entry limit in rectangular tableaux. -/
+
+/- admission_basis: open-problem-resolution (preregistration #32036, Question 15)
+   Phase A settlement of Question15 by rectangleQuestion15.
+   Direct frozen dependencies: none.
+   card_standardTableau_eq_shiftedCount | proof_shape: content
+     escape_witness: agreement is preserved by one-cell deletion, using strict size decrease.
+     Consumer: exactRectangleTailCount.
+   exactRectangleTailCount | proof_shape: content
+     escape_witness: rotatedShiftedCount evaluates the shifted count of the shortened shape.
+     Consumer: rectangleTailProbability_eq.
+   rectangleQuestion15 | proof_shape: content
+     escape_witness: rectangleTailProbability_eq identifies the source survival law at each
+     positive width using the exact shortened-shape count and the tableau survival bijection.
+     Consumer: limitFamily supplies the actual law for its source-equivalence registration. -/
 
 module
 
@@ -48,12 +62,6 @@ noncomputable def rectangleOddEntryProbability (k n : ℕ) : ℝ :=
   eventProbability fun t : StandardTableau (rectangle (k + 1) n) =>
     Odd (rectangleDescent k n t + 1)
 
-theorem rectangleOddEntryProbability_eq {k n : ℕ} (hn : 0 < n) :
-    rectangleOddEntryProbability k n =
-      eventProbability (fun t : StandardTableau (rectangle (k + 1) n) =>
-        Odd ((t.1 (secondRowFirst hn)).val + 1)) := by
-  simp only [rectangleOddEntryProbability, rectangleDescent, dite_eq_left hn, firstDescent]
-
 /-- The exact natural-number identity for the shortened and full rectangle counts. -/
 def ExactRectangleTailCount (k : ℕ) : Prop :=
   ∀ n r, 0 < n → r ≤ n →
@@ -61,7 +69,6 @@ def ExactRectangleTailCount (k : ℕ) : Prop :=
         ((k + 2) * n).descFactorial r =
       Fintype.card (StandardTableau (rectangle (k + 1) n)) *
         tailCoefficient (k + 2) r * n.descFactorial r
-
 
 open _root_.D5.S3.Combinatorics.Partitions.NiuTableauCount
 
@@ -193,7 +200,7 @@ theorem exactRectangleTailCount (k : ℕ) :
     exact_mod_cast (Nat.descFactorial_pos.mpr hr).ne'
   field_simp [hfac, hd, Finset.prod_ne_zero_iff]
 
-theorem rectangleTailProbability_eq {k : ℕ}
+private theorem rectangleTailProbability_eq {k : ℕ}
     {n : ℕ} (hn : 0 < n) (r : ℕ) :
     rectangleTailProbability k n r = finiteTail (k + 2) n r := by
   unfold rectangleTailProbability eventProbability
@@ -214,7 +221,7 @@ theorem rectangleTailProbability_eq {k : ℕ}
   · rw [card_rectangle_tail_of_width_lt hn (by omega), finiteTail_above (by omega),
       Nat.cast_zero, zero_div]
 
-theorem rectangleTailPartition {k : ℕ}
+private theorem rectangleTailPartition {k : ℕ}
     (n : ℕ) (hn : 0 < n) (r : ℕ) :
     finiteTail (k + 2) n r =
       rectanglePointProbability k n r + finiteTail (k + 2) n (r + 1) := by
@@ -224,7 +231,7 @@ theorem rectangleTailPartition {k : ℕ}
   simp only [rectangleDescent, dite_eq_left hn, card_rectangle_tail_eq_point_add_next hn r,
     Nat.cast_add, add_div]
 
-theorem rectangleOddEntryProbability_eq_sum {k n : ℕ} (hn : 0 < n) :
+private theorem rectangleOddEntryProbability_eq_sum {k n : ℕ} (hn : 0 < n) :
     rectangleOddEntryProbability k n =
       ∑ r ∈ Finset.range (n + 1), if Even r then rectanglePointProbability k n r else 0 := by
   classical
@@ -249,41 +256,27 @@ theorem rectangleOddEntryProbability_eq_sum {k n : ℕ} (hn : 0 < n) :
   simp only [div_eq_mul_inv]
   rw [← Finset.sum_mul, ← Nat.cast_sum, hcard]
 
-/-- The finite point law includes the zero extension beyond the width. -/
-theorem rectanglePointProbability_eq {k : ℕ}
-    {n : ℕ} (hn : 0 < n) (r : ℕ) :
-    rectanglePointProbability k n r =
-      if r ≤ n then rectangleTailProbability k n r *
-        (((k : ℝ) + 1) * r * ((n : ℝ) + 1) /
-          (((r : ℝ) + 1) * (((k : ℝ) + 2) * n - r)))
-      else 0 := by
-  split
-  · rename_i hr
-    rw [rectangleTailProbability_eq hn r]
-    have h := point_eq (by omega : 2 ≤ k + 2) (rectangleTailPartition (k := k)) hn hr
-    have hrows : (↑(k + 2) : ℝ) = (k : ℝ) + 2 := by push_cast; rfl
-    have hrows' : (k : ℝ) + 2 - 1 = (k : ℝ) + 1 := by ring
-    simpa only [hrows, hrows'] using h
-  · rename_i hr
-    exact point_above (rectangleTailPartition (k := k)) hn (by omega)
-
-theorem rectangleOddEntryProbability_eq_alternating {k : ℕ}
+private theorem rectangleOddEntryProbability_eq_alternating {k : ℕ}
     {n : ℕ} (hn : 0 < n) :
     rectangleOddEntryProbability k n =
       ∑' r, (-1 : ℝ) ^ r * finiteTail (k + 2) n r :=
   (rectangleOddEntryProbability_eq_sum hn).trans
     (sum_even_point_eq_alternating (rectangleTailPartition (k := k)) hn)
 
-/-- The first-descent distribution and the odd-entry limit on the actual
-rectangle tableaux, from the exact count of the shortened shapes. -/
-theorem rectangleQuestion15 (k : ℕ) :
+/-- Niu's Question 15 for every fixed row count k + 2. -/
+def Question15 : Prop :=
+  ∀ k : ℕ,
     (∀ r, Tendsto (fun n => rectangleTailProbability k n r) atTop
       (𝓝 (limitTail (k + 2) r))) ∧
     (∀ r, Tendsto (fun n => rectanglePointProbability k n r) atTop
       (𝓝 (limitMass (k + 2) r))) ∧
     HasSum (limitMass (k + 2)) 1 ∧
     Tendsto (rectangleOddEntryProbability k) atTop
-      (𝓝 ((((k : ℝ) + 2) / ((k : ℝ) + 3)) ^ (k + 2))) := by
+      (𝓝 ((((k : ℝ) + 2) / ((k : ℝ) + 3)) ^ (k + 2)))
+
+/-- The first-descent distribution and the odd-entry limit on rectangle tableaux. -/
+theorem rectangleQuestion15 : Question15 := by
+  intro k
   refine ⟨?_, tendsto_point (by omega) (rectangleTailPartition (k := k)),
     hasSum_limitMass (by omega), ?_⟩
   · intro r

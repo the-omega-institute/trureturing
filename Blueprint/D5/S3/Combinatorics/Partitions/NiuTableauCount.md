@@ -6,7 +6,7 @@ The rational shifted-node formula obeys the same deletion recurrence as the numb
 
 **Definition 1.1 (Delete a cell).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.deleteRow`
+$$\operatorname{deleteRow}\left(rows, i\right) = \operatorname{update}\left(rows, i, rows\left(i\right) - 1\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.deleteRow` (`✓ std3`).
 
@@ -14,11 +14,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.deleteRow`
 
 *Commentary.*
 
-Subtract one, with natural-number truncation, from the selected row length and retain all k row slots.
+Subtract one in the naturals from the selected row length and retain all k row slots.
 
 **Definition 1.2 (Removable rows).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.RemovableRow`
+$$\operatorname{RemovableRow}\left(rows, i\right) \Leftrightarrow (0 < rows\left(i\right) \land (\forall j \in \operatorname{Fin}\left(k\right),\; i < j \Rightarrow rows\left(j\right) < rows\left(i\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.RemovableRow` (`✓ std3`).
 
@@ -26,11 +26,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.RemovableRow`
 
 *Commentary.*
 
-A row is removable when its length is positive and strictly greater than the length of every later row.
+A removable row is positive and strictly longer than every row below it.
 
 **Definition 1.3 (Shifted row length).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedNode`
+$$\operatorname{shiftedNode}\left(rows, i\right) = rows\left(i\right) + \operatorname{val}\left(\operatorname{rev}\left(i\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedNode` (`✓ std3`).
 
@@ -38,11 +38,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedNode`
 
 *Commentary.*
 
-Add the number of row slots below a row to its length.
+The value of the reversed finite index is the number of row slots below i.
 
 **Definition 1.4 (Vandermonde product).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.vandermonde`
+$$\forall b \in \operatorname{Fin}\left(k\right) \to \mathbb{Q},\; \operatorname{vandermonde}\left(b\right) = \prod_{i \in \operatorname{Fin}\left(k\right)} \prod_{j \in \operatorname{Ioi}\left(i\right)} (b\left(i\right) - b\left(j\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.vandermonde` (`✓ std3`).
 
@@ -50,11 +50,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.vandermonde`
 
 *Commentary.*
 
-Multiply the differences b_i - b_j for all pairs of row indices i < j.
+The inner product ranges over j greater than i.
 
 **Definition 1.5 (Shifted-node formula).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount`
+$$\forall rows \in \operatorname{Fin}\left(k\right) \to \mathbb{N},\; \operatorname{shiftedCount}\left(rows\right) = \frac{\operatorname{cast}\left(\operatorname{factorial}\left(\sum_{j \in \operatorname{Fin}\left(k\right)} rows\left(j\right)\right)\right) \cdot \operatorname{vandermonde}\left((i: \operatorname{Fin}\left(k\right) \mapsto \operatorname{cast}\left(\operatorname{shiftedNode}\left(rows, i\right)\right))\right)}{\prod_{i \in \operatorname{Fin}\left(k\right)} \operatorname{cast}\left(\operatorname{factorial}\left(\operatorname{shiftedNode}\left(rows, i\right)\right)\right)}$$
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount` (`✓ std3`).
 
@@ -62,11 +62,23 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount`
 
 *Commentary.*
 
-For row lengths lambda indexed from zero, set b_i = lambda_i + k - 1 - i and let N be the sum of the row lengths. The formula is N! times the product of b_i - b_j over i < j, divided by the product of b_i! over all rows, in the rational numbers.
+All factorials are formed in the naturals. The displayed product and division are in the rationals.
 
-**Theorem 1.6 (Empty diagram).**
+**Definition 1.6 (Decidability of a removable row).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_empty`
+$$\forall k \in \mathbb{N},\; \forall rows \in \operatorname{Fin}\left(k\right) \to \mathbb{N},\; \forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{Decidable}\left(\operatorname{RemovableRow}\left(rows, i\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Partitions/NiuTableauCount.instDecidableRemovableRow` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each comparison and the quantifier over the finite row indices are decidable.
+
+**Theorem 1.7 (Empty diagram).**
+
+$$\forall k \in \mathbb{N},\; \operatorname{shiftedCount}\left((i: \operatorname{Fin}\left(k\right) \mapsto 0)\right) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_empty` (`✓ std3`). ∎
 
@@ -74,11 +86,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_emp
 
 *Commentary.*
 
-For every k, the empty profile has value one. For fixed i the differences b_i - b_j with j > i run through 1 up to b_i, so their product cancels b_i!.
+For fixed i the differences with later rows run through 1 up to its shifted node and cancel its factorial.
 
-**Theorem 1.7 (One-cell deletion recurrence).**
+**Theorem 1.8 (One-cell deletion recurrence).**
 
-Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_recurrence`
+$$\forall k \in \mathbb{N},\; 2 \le k \Rightarrow \left(\forall rows \in \operatorname{Fin}\left(k\right) \to \mathbb{N},\; \operatorname{Antitone}\left(rows\right) \Rightarrow \left(0 < \sum_{j \in \operatorname{Fin}\left(k\right)} rows\left(j\right) \Rightarrow \operatorname{shiftedCount}\left(rows\right) = \sum_{i \in \operatorname{filter}\left(\operatorname{RemovableRow}\left(rows\right), univ\right)} \operatorname{shiftedCount}\left(\operatorname{deleteRow}\left(rows, i\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_recurrence` (`✓ std3`). ∎
 
@@ -86,12 +98,13 @@ Lean statement: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_rec
 
 *Commentary.*
 
-For k at least two and weakly decreasing row lengths of positive total size, the formula is the sum of its values after deleting one cell from each removable row. The factors of the Vandermonde product involving that row give its deletion weight. A nonremovable row has weight zero. Polynomial interpolation shows that the sum of all weights is N, which cancels the ratio N! / (N - 1)!.
+The Vandermonde factors involving each row give its deletion weight. Nonremovable rows have weight zero. Polynomial interpolation shows that the sum of all weights is the total size.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.RemovableRow`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.deleteRow`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.instDecidableRemovableRow`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_empty`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/NiuTableauCount.shiftedCount_recurrence`

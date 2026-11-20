@@ -6,16 +6,23 @@
    utility: none
    digest: The shifted Vandermonde formula satisfies the one-cell deletion recurrence. -/
 
+/- admission_basis: escape-witness (preregistration #32036)
+   Direct frozen dependencies: none.
+   shiftedCount_empty | proof_shape: content
+     escape_witness: empty_vandermonde_row evaluates the upper factors of the empty profile
+     row by row as the corresponding factorial.
+     Consumers: card_standardTableau_eq_shiftedCount and emptyFamily.
+   shiftedCount_recurrence | proof_shape: content
+     escape_witness: weighted_shifted_vandermonde constructs a polynomial of bounded degree
+     and compares its coefficient with its interpolation at the shifted row nodes.
+     Consumers: card_standardTableau_eq_shiftedCount and recurrenceFamily. -/
+
 module
 
 public import Mathlib.Data.Nat.Factorial.BigOperators
-public import Mathlib.Data.Fin.Rev
 public import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Algebra.Polynomial.Taylor
 import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.Tactic.Ring
 
 /-! The shifted Vandermonde formula for straight shapes, including zero-length rows. -/
 

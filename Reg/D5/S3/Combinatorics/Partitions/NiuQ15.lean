@@ -219,7 +219,10 @@ noncomputable def limitRegistration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.NiuQ15
-    definition := none
+    definition := some {
+      owner := `D5.S3.Combinatorics.Partitions.NiuQ15
+      name := `NiuQ15.Question15
+      path := #[] }
     coordinates := #[]
     readouts := #[{
       path := #["body", "arg", "arg", "arg", "fn", "fn", "arg"]
