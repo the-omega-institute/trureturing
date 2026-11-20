@@ -7,6 +7,7 @@
    digest: First-order correction and its equality criterion for a strict Slater purity drop. -/
 
 import D5.S3.Quantum.Fermionic.OrderedSlaterPurityDropEquality
+import D5.S3.Quantum.Subentropy.KernelBounds
 
 /-! # First-order correction to the Slater purity-drop bound
 
@@ -19,14 +20,14 @@ open D5.S3.Quantum.Fermionic OrderedSlaterCut SlaterPairCutRank
 open D5.S3.Quantum.Fermionic.WeightedSlaterPurityDropBound
 open D5.S3.Quantum.Fermionic.WeightedSlaterPurityDropEquality
 open D5.S3.Quantum.Fermionic.OrderedSlaterPurityDropEquality
+open D5.S3.Quantum.Subentropy.KernelBounds (one_add_sum_le_product)
 
 namespace D5.S3.Quantum.Fermionic.OrderedSlaterPurityDropFirstOrder
 
-private theorem product_excess_first_order {I : Type*} (s : Finset I) (g : I → ℝ)
+private theorem product_excess_eq_first_order_iff {I : Type*} (s : Finset I) (g : I → ℝ)
     (hn : ∀ i, 0 ≤ g i) :
-    1 + ∑ i ∈ s, g i ≤ ∏ i ∈ s, (1 + g i) ∧
-      ((∏ i ∈ s, (1 + g i)) = 1 + ∑ i ∈ s, g i ↔
-        ∀ i ∈ s, ∀ j ∈ s, i ≠ j → g i = 0 ∨ g j = 0) := by
+    (∏ i ∈ s, (1 + g i)) = 1 + ∑ i ∈ s, g i ↔
+      ∀ i ∈ s, ∀ j ∈ s, i ≠ j → g i = 0 ∨ g j = 0 := by
   classical
   induction s using Finset.induction_on with
   | empty => simp
@@ -35,13 +36,14 @@ private theorem product_excess_first_order {I : Type*} (s : Finset I) (g : I →
       have hpos : 0 < 1 + g a := by linarith [hn a]
       have hsum : 0 ≤ ∑ i ∈ s, g i := Finset.sum_nonneg fun i _ => hn i
       have hcross := mul_nonneg (hn a) hsum
-      have hmul := mul_le_mul_of_nonneg_left ih.1 hpos.le
-      refine ⟨by nlinarith, ?_, ?_⟩
+      have hmul := mul_le_mul_of_nonneg_left
+        (one_add_sum_le_product s g fun i _ => hn i) hpos.le
+      constructor
       · intro heq
         have hz : g a * (∑ i ∈ s, g i) = 0 := by nlinarith
         have heq' : (1 + g a) * (∏ i ∈ s, (1 + g i)) =
             (1 + g a) * (1 + ∑ i ∈ s, g i) := by nlinarith
-        have hold := ih.2.mp (mul_left_cancel₀ hpos.ne' heq')
+        have hold := ih.mp (mul_left_cancel₀ hpos.ne' heq')
         have hnew (j : I) (hj : j ∈ s) : g a = 0 ∨ g j = 0 := by
           rcases mul_eq_zero.mp hz with h | h
           · exact Or.inl h
@@ -56,7 +58,7 @@ private theorem product_excess_first_order {I : Type*} (s : Finset I) (g : I →
             exact (hnew i hi').symm
           · exact hold i hi' j ((Finset.mem_insert.mp hj).resolve_left hja) hij
       · intro h
-        have heq := ih.2.mpr (fun i hi j hj =>
+        have heq := ih.mpr (fun i hi j hj =>
           h i (Finset.mem_insert_of_mem hi) j (Finset.mem_insert_of_mem hj))
         rw [heq]
         have hz : g a * (∑ i ∈ s, g i) = 0 := by
@@ -80,11 +82,13 @@ private theorem weighted_normalized_first_order_le {Y I : Type*} [Fintype Y] [Fi
   have hsum : (∑ y, w y * (1 + ∑ i, g y i)) = firstOrder := by
     simp_rw [mul_add, mul_one, Finset.mul_sum]
     rw [Finset.sum_add_distrib, hnorm, Finset.sum_comm]
+  have hprod (y : Y) : 1 + ∑ i, g y i ≤ ∏ i, (1 + g y i) :=
+    one_add_sum_le_product Finset.univ (g y) fun i _ => hgn y i
   have hrel (y : Y) : w y * (1 + ∑ i, g y i) ≤ w y * ∏ i, (1 + g y i) :=
-    mul_le_mul_of_nonneg_left (product_excess_first_order Finset.univ (g y) (hgn y)).1 (hw y).le
+    mul_le_mul_of_nonneg_left (hprod y) (hw y).le
   have hpoint (y : Y) : (∏ i, (1 + g y i)) = 1 + ∑ i, g y i ↔
       ∀ i j, i ≠ j → g y i = 0 ∨ g y j = 0 := by
-    simpa using (product_excess_first_order Finset.univ (g y) (hgn y)).2
+    simpa using product_excess_eq_first_order_iff Finset.univ (g y) (hgn y)
   refine ⟨?_, ?_⟩
   · rw [← hsum]
     exact Finset.sum_le_sum (fun y _ => hrel y)
@@ -93,7 +97,7 @@ private theorem weighted_normalized_first_order_le {Y I : Type*} [Fintype Y] [Fi
       apply (hpoint y).mp
       by_contra hne
       have hlt : 1 + ∑ i, g y i < ∏ i, (1 + g y i) :=
-        lt_of_le_of_ne (product_excess_first_order Finset.univ (g y) (hgn y)).1 (Ne.symm hne)
+        lt_of_le_of_ne (hprod y) (Ne.symm hne)
       have hstrict : firstOrder < weightedProduct := by
         rw [← hsum]
         exact Finset.sum_lt_sum (fun y' _ => hrel y')
