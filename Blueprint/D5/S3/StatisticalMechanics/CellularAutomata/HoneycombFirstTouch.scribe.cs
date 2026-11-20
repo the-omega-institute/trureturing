@@ -123,9 +123,10 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
                 "The graph-level adjacency laws suffice to derive the Pascal parity criterion for the cut domains."),
             Definition("repository-adjacency", "repositoryAdjacency", "Decidable repository adjacency",
                 RepositoryAdjacency(),
-                "In HoneycombFirstTouch.repositoryAdjacency, Lean unfolds aToB to synthesize the decision "
-                + "for the displayed disjunction. The reverse direction of graph_adj_iff transfers that "
-                + "decision to adjacency in HoneycombCylinderCoordination.honeycombGraph."),
+                "For v and w, HoneycombFirstTouch.repositoryAdjacency runs "
+                + "`decidable_of_iff _ (graph_adj_iff v w).symm` on the displayed disjunction. "
+                + "Lean unfolds aToB and synthesizes the disjunction's decision with infer_instance. "
+                + "The equivalence graph_adj_iff is definitional for HoneycombCylinderCoordination.honeycombGraph."),
             Theorem("repository-neighbor-laws", "repositoryNeighborLaws",
                 "Adjacency laws on the repository graph", CallNamed("NeighborLaws", Name("honeycombGraph")),
                 "Here honeycombGraph is the existing graph in HoneycombCylinderCoordination."))));
@@ -308,14 +309,13 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
             And(Equal(Color(source), Name("false")), Equal(Color(target), Name("true")),
                 CallNamed("aToB", X(source), Y(source), X(target), Y(target)));
         var test = Or(FromA(v, w), FromA(w, v));
-        var equivalence = Seq(Par(CallNamed("graph_adj_iff", v, w)), Dot, Name("symm"));
-        var decision = CallNamed("decidable_of_iff", test, equivalence);
+        var adjacency = App(Adjacency(Name("honeycombGraph")), v, w);
         var offsets = Or(And(Equal(x, a), Equal(y, b)),
             And(Equal(x, Add(a, Num(1))), Equal(y, b)),
             And(Equal(x, a), Equal(y, Add(b, Num(1)))));
         return new Formula.Aligned([
             Typed(Name("repositoryAdjacency"), DecidableAdj(Name("honeycombGraph"))),
-            All(Equal(CallNamed("repositoryAdjacency", v, w), decision), ("v", Vertex), ("w", Vertex)),
+            All(IffForm(adjacency, test), ("v", Vertex), ("w", Vertex)),
             All(IffForm(CallNamed("aToB", x, y, a, b), offsets),
                 ("x", Integers), ("y", Integers), ("a", Integers), ("b", Integers))
         ]);
