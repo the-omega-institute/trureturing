@@ -74,6 +74,8 @@ internal sealed class TwoWordCodeDocument : IScribeDocumentDefinition
             b, Sp, Plus, Plus, Sp, a, Dot));
     }
 
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
 }
