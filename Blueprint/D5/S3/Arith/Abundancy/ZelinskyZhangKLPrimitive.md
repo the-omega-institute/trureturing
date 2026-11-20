@@ -40,7 +40,69 @@ Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.Deficient`
 
 An integer n is deficient when its sum of positive divisors is strictly smaller than 2n.
 
-**Theorem 1.4 (Infinitely many deficient KL-primitive integers).**
+**Theorem 1.4 (Bounds for the logarithmic prime increment).**
+
+Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.f_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.f_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Joshua Zelinsky; Kyle Zhang (2025). *Kullback-Leibler divergence and primitive non-deficient numbers*. DOI: [10.48550/arXiv.2501.04209](https://doi.org/10.48550/arXiv.2501.04209). URL: <https://arxiv.org/abs/2501.04209v2>.
+
+*Commentary.*
+
+For every natural p at least two, f(p)=p/(p+1)*log(p/(p-1)) satisfies 2/(3p)<=f(p)<=2/p and 0<f(p)<log(2). These estimates compare finite prime-tail sums with reciprocal-prime sums.
+
+**Theorem 1.5 (Arbitrarily large finite prime-tail mass).**
+
+Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.tail_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.tail_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Joshua Zelinsky; Kyle Zhang (2025). *Kullback-Leibler divergence and primitive non-deficient numbers*. DOI: [10.48550/arXiv.2501.04209](https://doi.org/10.48550/arXiv.2501.04209). URL: <https://arxiv.org/abs/2501.04209v2>.
+
+*Commentary.*
+
+For every pair of natural numbers Q and k, there is a finite set of primes exceeding Q whose f sum is at least k/3. In particular the increment upper bound converts the choice k=6 into reciprocal mass at least one.
+
+**Theorem 1.6 (Positive divisors preserve deficiency).**
+
+Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.deficient_of_dvd`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.deficient_of_dvd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Joshua Zelinsky; Kyle Zhang (2025). *Kullback-Leibler divergence and primitive non-deficient numbers*. DOI: [10.48550/arXiv.2501.04209](https://doi.org/10.48550/arXiv.2501.04209). URL: <https://arxiv.org/abs/2501.04209v2>.
+
+*Commentary.*
+
+If d and n are positive natural numbers, d divides n, and n is deficient, then d is deficient. This follows from monotonicity of sigma(n)/n under divisibility and transfers the bounds on products with one prime removed to all proper divisors.
+
+**Theorem 1.7 (Exponential threshold control at quadratic logarithmic cost).**
+
+Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.rough_deficient_core`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.rough_deficient_core` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Joshua Zelinsky; Kyle Zhang (2025). *Kullback-Leibler divergence and primitive non-deficient numbers*. DOI: [10.48550/arXiv.2501.04209](https://doi.org/10.48550/arXiv.2501.04209). URL: <https://arxiv.org/abs/2501.04209v2>.
+
+*Commentary.*
+
+Fix any natural cutoff B. There are constants K>0 and T such that for every real t at least T there is a finite set S of primes exceeding B. Put h=product over p in S of (1+1/p) and a=h/(2-h). Then h<2, exp(t)<=a<=3*exp(t), every p in S is less than 2a, and the sum of log(p) over S is at most K*t^2. Distinctness of the prime factors makes their product squarefree, and its abundancy ratio is h.
+
+Divergence of the reciprocal-prime sum supplies a finite prime product with h at least 2. A minimal crossing set, with its largest prime removed, gives a deficient starting core whose threshold parameter exceeds its prime factors.
+
+For a large current parameter a, choose a prime p in (2a,3a]. Adjoining p keeps the core deficient and replaces a by a*(p+1)/(p-a), which lies between 3a/2 and 3a. All old and new prime factors remain below twice the new parameter. The first iteration to reach exp(t) therefore has parameter at most 3*exp(t). The number of iterations is linear in t, and each added prime has logarithm bounded linearly in that iteration's index, giving the quadratic total cost.
+
+These deficient cores supply the initial factors for the lower bound on primitive non-deficient integers.
+
+**Theorem 1.8 (Infinitely many deficient KL-primitive integers).**
 
 Lean statement: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.result`
 
@@ -69,8 +131,13 @@ The odd squarefree strengthening follows from the same construction on paper. Th
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.Deficient`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.KL`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.KLPrimitive`
+- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.deficient_of_dvd`
+- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.f_bounds`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.result`
+- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.rough_deficient_core`
+- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive.tail_mass`
 - Dependency: [D5/S3/Arith/Robin/FibonacciRankEulerTail](../Robin/FibonacciRankEulerTail.md)
 - Dependency: [D5/S3/Arith/Robin/GA2ForcedPrimeSource](../Robin/GA2ForcedPrimeSource.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity](../Robin/PriceRecord/FixedLayerRigidity.md)
 - Dependency: [D5/S3/Divergence/StrictGibbs](../../Divergence/StrictGibbs.md)
 - Dependency: [D5/S3/Factorization/ReciprocalSigmaThreshold](../../Factorization/ReciprocalSigmaThreshold.md)
