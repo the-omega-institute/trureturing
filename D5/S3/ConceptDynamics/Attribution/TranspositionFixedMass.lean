@@ -15,6 +15,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Fintype.Perm
+import Mathlib.Logic.Equiv.Fintype
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -121,17 +122,16 @@ private theorem invariant_table_transposition_mass
     transpositionMass w 0 1 = 1 / 6 := by
   apply sharp_mass_from_transposition_symmetry w normalize support
   intro a b hab
-  let first : Equiv.Perm (Fin 4) := Equiv.swap 0 a
-  have first0 : first 0 = a := Equiv.swap_apply_left _ _
-  have distinct : first 1 ≠ a := by
-    rw [← first0]
-    exact first.injective.ne (by decide)
-  let last : Equiv.Perm (Fin 4) := Equiv.swap (first 1) b
-  have lastA : last a = a := Equiv.swap_apply_of_ne_of_ne distinct.symm hab
-  have lastB : last (first 1) = b := Equiv.swap_apply_left _ _
-  let g := first.trans last
-  have h0 : g 0 = a := by unfold g; rw [Equiv.trans_apply, first0, lastA]
-  have h1 : g 1 = b := lastB
+  let source (i : Bool) : Fin 4 := if i then 1 else 0
+  let target (i : Bool) : Fin 4 := if i then b else a
+  have source_injective : Function.Injective source := by decide
+  have target_injective : Function.Injective target := by
+    intro i j hij
+    cases i <;> cases j <;> simp_all [target, hab.symm]
+  obtain ⟨g, maps_pair⟩ := Equiv.Perm.exists_extending_pair source target
+    source_injective target_injective
+  have h0 : g 0 = a := maps_pair false
+  have h1 : g 1 = b := maps_pair true
   simpa only [h0, h1] using transposition_mass_transport w invariant g 0 1
 
 
