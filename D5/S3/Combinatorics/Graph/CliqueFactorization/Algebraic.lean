@@ -7,7 +7,8 @@
    digest: Nonedge rectangles characterize clique factorization over commutative groups. -/
 module
 
-public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Set.Pairwise.Basic
 public import Mathlib.Data.Finset.Update
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Logic.Function.DependsOn
@@ -86,10 +87,14 @@ private theorem nonclique_vanish (G : SimpleGraph V) (f : (∀ i, Ω i) → A)
     (rect : ∀ i j, i ≠ j → ¬ G.Adj i j → ∀ x a b,
       f x * f (Function.update (Function.update x i a) j b) =
         f (Function.update x i a) * f (Function.update x j b))
-    (s : Finset V) (hs : ¬ G.IsClique (s : Set V)) (x : ∀ i, Ω i) : κ s x = 1 := by
+    (s : Finset V) (hs : ¬ (s : Set V).Pairwise G.Adj) (x : ∀ i, Ω i) : κ s x = 1 := by
   induction s using Finset.strongInductionOn with
   | _ s ih =>
-    obtain ⟨i, j, hij, hnon⟩ := G.not_isClique_iff.mp hs
+    obtain ⟨i, j, hij, hnon⟩ :
+        ∃ (i j : (s : Set V)), i ≠ j ∧ ¬ G.Adj i j := by
+      simpa only [← pairwise_subtype_iff_pairwise_set, Pairwise, not_forall, not_imp,
+        exists_prop]
+        using hs
     have hi : (i : V) ∈ s := i.2
     have hj : (j : V) ∈ s := j.2
     have hne : (i : V) ≠ j := fun h => hij (Subtype.ext h)
@@ -177,7 +182,7 @@ theorem rectangle_iff_clique_factorization [Fintype V] (G : SimpleGraph V)
         f (Function.update x i a) * f (Function.update x j b)) ↔
     ∃ Φ : Finset V → (∀ i, Ω i) → A,
       (∀ s : Finset V, DependsOn (Φ s) (s : Set V)) ∧
-      (∀ s : Finset V, ¬ G.IsClique (s : Set V) → ∀ x, Φ s x = 1) ∧
+      (∀ s : Finset V, ¬ (s : Set V).Pairwise G.Adj → ∀ x, Φ s x = 1) ∧
       (∀ x, f x = ∏ s : Finset V, Φ s x) := by
   classical
   constructor
@@ -198,7 +203,7 @@ theorem rectangle_iff_clique_factorization [Fintype V] (G : SimpleGraph V)
     rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
     apply Finset.prod_congr rfl
     intro s _
-    by_cases hc : G.IsClique (s : Set V)
+    by_cases hc : (s : Set V).Pairwise G.Adj
     · have homit : i ∉ s ∨ j ∉ s := by
         by_contra h
         push Not at h

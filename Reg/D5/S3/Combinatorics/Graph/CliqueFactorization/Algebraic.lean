@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.CliqueFactorization.Algebraic
+import Mathlib.Combinatorics.SimpleGraph.Clique
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Group.ULift
