@@ -147,7 +147,6 @@ private theorem paddedCount_zero (w : ℕ) : paddedCount w 0 = 1 := by
         invFun := fun _ => ⟨Equiv.refl _, by simp [HasExactExcedances, binaryExcedances]⟩
         left_inv := fun _ => Subtype.ext (Equiv.ext fun i => by
           apply Fin.ext
-          change (_ : Fin (0 + 1)).val = _
           have (x : Fin (0 + 1)) : x.val = 0 := by have := x.isLt; omega
           simp only [this])
         right_inv := fun _ => Subsingleton.elim _ _ }
@@ -211,6 +210,139 @@ private theorem paddedCount_odd (w n : ℕ) :
     subst j
     rw [Fin.succAbove_castSucc_self]
     exact iff_of_false hr (by change ¬ (w < w ∧ _); simp)
+
+
+private theorem mem_binaryExcedances_suffix {w q h b : ℕ} (hq : q ≤ w)
+    (hb : b < 2 ^ q) (j : Fin (w + 1)) :
+    j ∈ binaryExcedances w (2 ^ q * h + b) ↔
+      (j.val < w - q ∧ h.testBit (w - q - 1 - j.val) = true) ∨
+        (w - q ≤ j.val ∧ j.val < w ∧ b.testBit (w - 1 - j.val) = true) := by
+  change (j.val < w ∧ (2 ^ q * h + b).testBit (w - 1 - j.val) = true) ↔ _
+  rw [Nat.testBit_two_pow_mul_add h hb]
+  by_cases hj : j.val < w - q
+  · rw [ite_eq_right (by omega), show w - 1 - j.val - q = w - q - 1 - j.val by omega]
+    simp [hj, show j.val < w by omega, show ¬w - q ≤ j.val by omega]
+  · by_cases hlast : j.val < w
+    · rw [ite_eq_left (by omega)]
+      simp [hj, hlast, show w - q ≤ j.val by omega]
+    · simp [hj, hlast]
+
+private theorem mem_binaryExcedances_single_bit {w q h t : ℕ} (hq : q ≤ w)
+    (ht : t < q) (j : Fin (w + 1)) :
+    j ∈ binaryExcedances w (2 ^ q * h + 2 ^ t) ↔
+      (j.val < w - q ∧ h.testBit (w - q - 1 - j.val) = true) ∨
+        j.val = w - 1 - t := by
+  rw [mem_binaryExcedances_suffix hq ((Nat.pow_lt_pow_iff_right (by decide)).mpr ht)]
+  simp only [Nat.testBit_two_pow, decide_eq_true_eq]
+  exact or_congr Iff.rfl ⟨fun h => by omega, fun h => by omega⟩
+
+private theorem paddedCount_even {w n : ℕ} (hn : 0 < n) (hw : 2 * n < 2 ^ (w + 1)) :
+    paddedCount (w + 1) (2 * n) =
+      paddedCount (w + 1) (2 * n - 2 ^ padicValNat 2 n) +
+        paddedCount w n + paddedCount w (n - 2 ^ padicValNat 2 n) := by
+  let r := padicValNat 2 n
+  let h := D5.S1.Recurrence.Parity.DyadicExtendedStirlingBlock.h n
+  have index : n = 2 ^ r * (2 * h + 1) :=
+    D5.S1.Recurrence.Parity.DyadicExtendedStirlingBlock.dyadic_index n hn
+  have lower : 2 ^ r ≤ n := by
+    rw [index]
+    exact Nat.le_mul_of_pos_right _ (by omega)
+  have lowerDouble : 2 ^ (r + 1) ≤ 2 * n := by
+    rw [pow_succ, Nat.mul_comm]
+    omega
+  have hrw : r + 1 < w + 1 :=
+    (Nat.pow_lt_pow_iff_right (by decide)).mp (lowerDouble.trans_lt hw)
+  let a : Fin (w + 1) := ⟨w - (r + 1), by omega⟩
+  let fromPrefix (j : ℕ) : Prop := j < a.val ∧ h.testBit (a.val - 1 - j) = true
+  have hn' : n = 2 ^ (r + 1) * h + 2 ^ r := by
+    calc
+      n = 2 ^ r * (2 * h + 1) := index
+      _ = _ := by rw [pow_succ]; ring
+  have he : 2 * n = 2 ^ (r + 2) * h + 2 ^ (r + 1) := by
+    rw [hn', show r + 2 = (r + 1) + 1 by omega, pow_succ]
+    ring
+  have hs : 2 * n - 2 ^ r = 2 ^ (r + 2) * h + 2 ^ r := by
+    rw [he, pow_succ (2 : ℕ) r]
+    omega
+  have hd : n - 2 ^ r = 2 ^ (r + 1) * h := by omega
+  have evenMem (j : Fin (w + 2)) :
+      j ∈ binaryExcedances (w + 1) (2 * n) ↔ fromPrefix j.val ∨ j = a.castSucc := by
+    rw [he, mem_binaryExcedances_single_bit (by omega) (by omega)]
+    change (_ ∨ j.val = w + 1 - 1 - (r + 1)) ↔ fromPrefix j.val ∨ j = a.castSucc
+    rw [Fin.ext_iff]
+    have e : w + 1 - (r + 2) = a.val := by dsimp [a]; omega
+    simp only [e, Nat.add_sub_cancel, fromPrefix, Fin.val_castSucc, a]
+  have swappedMem (j : Fin (w + 2)) :
+      j ∈ binaryExcedances (w + 1) (2 * n - 2 ^ r) ↔ fromPrefix j.val ∨ j = a.succ := by
+    rw [hs, mem_binaryExcedances_single_bit (by omega) (by omega)]
+    rw [Fin.ext_iff]
+    change (_ ∨ j.val = w + 1 - 1 - r) ↔ fromPrefix j.val ∨ j.val = a.val + 1
+    have e₁ : w + 1 - (r + 2) = a.val := by dsimp [a]; omega
+    have e₂ : w + 1 - 1 - r = a.val + 1 := by dsimp [a]; omega
+    simp only [e₁, e₂, fromPrefix]
+  have halfMem (j : Fin (w + 1)) :
+      j ∈ binaryExcedances w n ↔ fromPrefix j.val ∨ j = a := by
+    rw [hn', mem_binaryExcedances_single_bit (by omega) (by omega), Fin.ext_iff]
+    have e : w - 1 - r = a.val := by dsimp [a]; omega
+    simp only [fromPrefix, show w - (r + 1) = a.val by rfl, e]
+  have removedMem (j : Fin (w + 1)) :
+      j ∈ binaryExcedances w (n - 2 ^ r) ↔ fromPrefix j.val := by
+    rw [hd, ← Nat.add_zero (2 ^ (r + 1) * h),
+      mem_binaryExcedances_suffix (by omega) (by positivity)]
+    simp [fromPrefix, a]
+  let S := binaryExcedances (w + 1) (2 * n)
+  have left : a.castSucc ∈ S := (evenMem _).mpr (Or.inr rfl)
+  have right : a.succ ∉ S := by
+    rw [show S = binaryExcedances (w + 1) (2 * n) by rfl, evenMem]
+    exact fun h => h.elim (fun hp => (Nat.not_lt_of_ge (Nat.le_succ _) hp.1))
+      (Ne.symm a.castSucc_lt_succ.ne)
+  have swapped : Equiv.swap a.castSucc a.succ ⁻¹' S =
+      binaryExcedances (w + 1) (2 * n - 2 ^ r) := by
+    ext j
+    change Equiv.swap a.castSucc a.succ j ∈ S ↔ _
+    rw [show S = binaryExcedances (w + 1) (2 * n) by rfl, swappedMem]
+    by_cases hl : j = a.castSucc
+    · subst j
+      rw [Equiv.swap_apply_left]
+      exact iff_of_false right (fun h => h.elim (fun hp => (lt_irrefl _ hp.1))
+        a.castSucc_lt_succ.ne)
+    · by_cases hr : j = a.succ
+      · subst j
+        rw [Equiv.swap_apply_right]
+        exact iff_of_true left (Or.inr rfl)
+      · rw [Equiv.swap_apply_of_ne_of_ne hl hr, evenMem]
+        simp [hl, hr]
+  have deleteRight : a.succ.succAbove ⁻¹' S = binaryExcedances w n := by
+    ext j
+    change a.succ.succAbove j ∈ binaryExcedances (w + 1) (2 * n) ↔ _
+    rw [halfMem]
+    rcases lt_trichotomy j a with hj | rfl | hj
+    · rw [Fin.succAbove_succ_of_le _ _ hj.le, evenMem]
+      have hne : j.castSucc ≠ a.castSucc := (Fin.castSucc_lt_castSucc_iff.mpr hj).ne
+      simp [hne, hj.ne]
+    · rw [Fin.succAbove_succ_self, evenMem]
+      simp
+    · rw [Fin.succAbove_succ_of_lt _ _ hj, evenMem]
+      have hne : j.succ ≠ a.castSucc := (Fin.castSucc_lt_succ_iff.mpr hj.le).ne.symm
+      have hval : a.val < j.val := hj
+      simp [hne, hj.ne.symm, fromPrefix, show ¬j.val + 1 < a.val by omega,
+        show ¬j.val < a.val by omega]
+  have deleteLeft : a.castSucc.succAbove ⁻¹' S = binaryExcedances w (n - 2 ^ r) := by
+    ext j
+    change a.castSucc.succAbove j ∈ binaryExcedances (w + 1) (2 * n) ↔ _
+    rw [removedMem]
+    by_cases hj : j < a
+    · rw [Fin.succAbove_castSucc_of_lt _ _ hj, evenMem]
+      have hne : j.castSucc ≠ a.castSucc := (Fin.castSucc_lt_castSucc_iff.mpr hj).ne
+      simp [hne]
+    · rw [Fin.succAbove_castSucc_of_le _ _ (le_of_not_gt hj), evenMem]
+      have hval : a.val ≤ j.val := le_of_not_gt hj
+      have hne : j.succ ≠ a.castSucc :=
+        (Fin.castSucc_lt_succ_iff.mpr (le_of_not_gt hj)).ne.symm
+      simp [hne, fromPrefix, show ¬j.val + 1 < a.val by omega, show ¬j.val < a.val by omega]
+  unfold paddedCount
+  change exactCount S = _
+  rw [adjacentBA a S left right, swapped, deleteRight, deleteLeft]
 
 end
 end D5.S3.Combinatorics.Permutation.KurkovA329369ConjectureFour
