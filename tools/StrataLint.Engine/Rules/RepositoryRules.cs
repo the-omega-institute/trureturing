@@ -8,12 +8,15 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static readonly Regex HeaderPattern = new(
+    private static readonly Regex HeaderPattern = CreateHeaderPattern(@"[^\n]*");
+    private static readonly Regex WrappedAnchorsHeaderPattern = CreateHeaderPattern(@"[^\]\n]*(?:,\n[ \t]+[^\]\n]*)+");
+
+    private static Regex CreateHeaderPattern(string anchors) => new(
         "\\A/- GID: (?<gid>[^\\n]+)\\n"
         + "   generality: (?<generality>[GIE])\\n"
         + "   mirror-B: (?<mirrorB>[^\\n]+)\\n"
         + "   mirror-E: (?<mirrorE>[^\\n]+)\\n"
-        + "   anchors: \\[(?<anchors>[^\\n]*)\\]\\n"
+        + $"   anchors: \\[(?<anchors>{anchors})\\]\\n"
         + "(?:   utility: (?<utility>[^\\n]*)\\n)?"
         + "   digest: (?<digest>[^\\n]+) -/\\n?",
         RegexOptions.CultureInvariant);
