@@ -5,13 +5,14 @@ year: 2026
 title: "Curtz's denominator conjecture: OEIS A189733, revision 12, COMMENTS, May 23, 2011"
 doi: 10.5281/zenodo.23957584
 url: https://zenodo.org/records/23957584
-claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0. Corollary 7: with C(m,n) = 2B(m,n+1) - B(m,n), d_m = den(C(m,m+3)) and g_m = gcd(3,m+2), for every m >= 0, C(m,m+3) = (-1)^{m+1}(2m+1)/((m+1)(m+2)) and d_m = (m+1)(m+2)/g_m; (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k+1)(3k+2), (k+1)(3k+2), 3(k+1)(3k+4)) for k >= 0; sum_{m>=0} d_m z^m = 2(1+z+6z^2+7z^3+2z^4+3z^5+z^6)/(1-z^3)^3; d_m = (m+1)A051176(m+2) and d_{m+2} = 2A306368(m) for m >= 0; C(m,m+3) = (-1)^{m+1}A146535(m+1)/d_m, not (-1)^{m+1}A146535(m)/d_m."
+claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0. Corollary 7: with C(m,n) = 2B(m,n+1) - B(m,n), d_m = den(C(m,m+3)) and g_m = gcd(3,m+2), for every m >= 0, C(m,m+3) = (-1)^{m+1}(2m+1)/((m+1)(m+2)) and d_m = (m+1)(m+2)/g_m; (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k+1)(3k+2), (k+1)(3k+2), 3(k+1)(3k+4)) for k >= 0; sum_{m>=0} d_m z^m = 2(1+z+6z^2+7z^3+2z^4+3z^5+z^6)/(1-z^3)^3; d_m = (m+1)A051176(m+2) and d_{m+2} = 2A306368(m) for m >= 0; C(m,m+3) = (-1)^{m+1}A146535(m+1)/d_m, not (-1)^{m+1}A146535(m)/d_m. Corollary 8: sum_{m>=0} 1/d_m = 1 + log 3 - pi/(3 sqrt 3)."
 strata_touched:
   - D5/S1/Recurrence/Residue/OEISA189733NumeratorsAndSeries
   - D5/S1/Recurrence/Residue/OEISA267068Quotients
   - D5/S1/Recurrence/Residue/OEISA189733FiniteSums
   - D5/S1/Recurrence/Residue/OEISA189733Reflection
   - D5/S1/Recurrence/Residue/OEISA194767SecondKindDiagonal
+  - D5/S1/Recurrence/Residue/OEISA194767ReciprocalSum
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -26,7 +27,7 @@ DOI: 10.5281/zenodo.23957584 (version 2; Zenodo publication date 2026-11-04, PDF
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957584/files/note-v2.pdf/content (text extracted locally with
 layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3;
-Corollary 7 is in Section 4.
+Corollaries 7 and 8 are in Section 4.
 
 ## Source statement
 
@@ -94,6 +95,13 @@ Corollary 7 is in Section 4.
 > reduced numerator of (2r − 1)/3. Thus A146535(m + 1) = (2m + 1)/g_m, proving (20). The
 > unshifted formula is already false at m = 2: its unsigned numerator is A146535(2) = 1, whereas
 > C(2, 5) = −5/12.
+
+> Corollary 8. The reciprocal sum stated in A194767 is ∑_{m≥0} 1/d_m = 1 + log 3 − π/(3√3).
+
+> Proof. Because g_m = 1 + 2·1_{m≡1 (mod 3)}, telescoping gives
+> ∑_{m≥0} 1/d_m = 1 + 2 ∑_{k≥0} (1/(3k + 2) − 1/(3k + 3)) = 1 + 2 ∫_0^1 x/(1 + x + x²) dx
+> = 1 + log 3 − π/(3√3). The summands represented by x^{3k+1}(1 − x) are nonnegative, justifying
+> termwise integration. An antiderivative is ½ log(x² + x + 1) − (1/√3) arctan((2x + 1)/√3).
 
 ## Mathematical scope
 
