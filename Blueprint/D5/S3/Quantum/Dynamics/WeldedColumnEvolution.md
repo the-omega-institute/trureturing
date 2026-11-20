@@ -20,7 +20,7 @@ Let a finite simple graph have columns numbered from zero to 2d+1. Column j has 
 
 Take the graph adjacency divided by the square root of two as the graph Hamiltonian. Put the normalized column indicators in the columns of Q. The resulting weighted path has unit nearest-neighbor weights and a central edge of weight square root of two. For every real time t, the indicators are orthonormal, and the actual matrix exponentials of minus i times t times the two Hamiltonians intertwine through Q. The graph exponential entry from the first singleton column to the last equals the endpoint entry of the path exponential.
 
-The neighbor counts act on the normalized indicators with the factor given by the ratio of adjacent square-root sizes. The resulting rectangular matrix identity lifts to the exponential using a block diagonal matrix and its commuting off-diagonal block.
+Childs et al., Section III.C, equations (25)–(27), give the column model. The neighbor counts act on the normalized indicators with the factor given by the ratio of adjacent square-root sizes. The resulting rectangular matrix identity lifts to the exponential using a block diagonal matrix and its commuting off-diagonal block.
 
 ## References
 
