@@ -307,6 +307,107 @@ private theorem sharp_zero_phase_gauge (r y e : Fin 4 → ℝ) (δ : ℝ)
       (by norm_num; exact hcs.trans hprod)
   exact sharp_zero_phase_of_square_and_sum e δ hδ he hcoherent hF hsum
 
+private theorem phase_necessary_of_square_and_sum (e : Fin 4 → ℝ) (p q δ : ℝ)
+    (hp : 0 < p) (hδ' : δ ≤ p/2)
+    (hentry : ∀ i, e i ≤ δ)
+    (hcoherent : (∑ i, e i) ≤ 2*(p+q)*δ)
+    (hF : (∑ i, (e i)^2) ≤ 2 * δ^2)
+    (hsqrt : (∑ i, Real.sqrt (p/2 - e i)) ≤ 2 / Real.sqrt p) :
+    p+(1-p-q)*δ+Real.sqrt (p^2-2*p*δ) ≤ Real.sqrt 2 := by
+  let s := Real.sqrt (p/2)
+  let b := Real.sqrt (p/2 - δ)
+  let x (i : Fin 4) := Real.sqrt (p/2 - e i)
+  have hs : 0 < s := Real.sqrt_pos.2 (by linarith)
+  have hss : s^2 = p/2 := Real.sq_sqrt (by linarith)
+  have hb : 0 ≤ b := Real.sqrt_nonneg _
+  have hbb : b^2 = p/2 - δ := Real.sq_sqrt (by linarith)
+  have hxx (i : Fin 4) : (x i)^2 = p/2 - e i :=
+    Real.sq_sqrt (by linarith [hentry i])
+  have hbx (i : Fin 4) : b ≤ x i := Real.sqrt_le_sqrt (by linarith [hentry i])
+  have hsb : 0 < s + b := by positivity
+  have hM : 0 < (s+b)^2 := pow_pos hsb 2
+  have hentry' (i : Fin 4) : (s+b)^2 * (s-x i)^2 ≤ (e i)^2 := by
+    have hle : (s+b)^2 ≤ (s+x i)^2 :=
+      pow_le_pow_left₀ hsb.le (add_le_add le_rfl (hbx i)) 2
+    apply (mul_le_mul_of_nonneg_right hle (sq_nonneg (s-x i))).trans
+    rw [← mul_pow]
+    have hprod : (s+x i)*(s-x i) = e i := by
+      linear_combination hss - hxx i
+    rw [hprod]
+  have hdiff : (∑ i, (s-x i)^2) ≤ 2*(s-b)^2 := by
+    apply (mul_le_mul_iff_of_pos_left hM).mp
+    rw [Finset.mul_sum]
+    calc
+      (∑ i, (s+b)^2 * (s-x i)^2) ≤ ∑ i, (e i)^2 :=
+        Finset.sum_le_sum fun i _ => hentry' i
+      _ ≤ 2*δ^2 := hF
+      _ = (s+b)^2 * (2*(s-b)^2) := by
+        have hprod : (s+b)*(s-b) = δ := by linear_combination hss - hbb
+        rw [← hprod]
+        ring
+  have hexpand (i : Fin 4) : e i + (s-x i)^2 = 2*s*(s-x i) := by
+    linear_combination hxx i - hss
+  have hsum : (∑ i : Fin 4, (e i + (s-x i)^2)) = ∑ i : Fin 4, 2*s*(s-x i) :=
+    Finset.sum_congr rfl (fun i _ => hexpand i)
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hsum
+  change (∑ i, x i) ≤ 2 / Real.sqrt p at hsqrt
+  have hsp : Real.sqrt p = Real.sqrt 2*s := by
+    apply (sq_eq_sq₀ (Real.sqrt_nonneg _) (by positivity)).mp
+    rw [mul_pow, Real.sq_sqrt hp.le, Real.sq_sqrt (by norm_num), hss]
+    ring
+  have hroot := (le_div_iff₀ (Real.sqrt_pos.2 hp)).1 hsqrt
+  rw [hsp] at hroot
+  have hm := mul_le_mul_of_nonneg_right hroot (Real.sqrt_nonneg 2)
+  have hmul : (∑ i, x i) * (Real.sqrt 2*s) * Real.sqrt 2 = 2*s*(∑ i, x i) := by
+    calc
+      _ = (Real.sqrt 2)^2*s*(∑ i, x i) := by ring
+      _ = _ := by rw [Real.sq_sqrt (by norm_num)]
+  rw [hmul] at hm
+  have hsqrt' : Real.sqrt (p^2-2*p*δ) = 2*s*b := by
+    rw [show p^2-2*p*δ = (2*s*b)^2 by
+      rw [mul_pow, mul_pow, hss, hbb]
+      ring]
+    rw [Real.sqrt_sq (by positivity)]
+  rw [hsqrt']
+  norm_num at hsum
+  nlinarith only [hss,hbb,hsum,hcoherent,hdiff,hm]
+
+/-- A rational phase threshold for exclusion of the closed quarter sublevel. -/
+theorem quarter_cutoff_tight_rational (e : Fin 4 → ℝ) (p q δ : ℝ)
+    (hp : 899228/1000000 ≤ p) (hp' : p ≤ 1)
+    (hq : 0 ≤ q) (hcircle : q^2 = 1-p^2)
+    (hδ : δ ≤ 1/4)
+    (hentry : ∀ i, e i ≤ δ)
+    (hcoherent : (∑ i, e i) ≤ 2*(p+q)*δ)
+    (hF : (∑ i, (e i)^2) ≤ 2 * δ^2)
+    (hsqrt : (∑ i, Real.sqrt (p/2 - e i)) ≤ 2 / Real.sqrt p) : False := by
+  have hp0 : 0 < p := by linarith
+  have h := phase_necessary_of_square_and_sum e p q δ hp0 (by linarith)
+    hentry hcoherent hF hsqrt
+  have hpp : (899228/1000000:ℝ)^2 ≤ p^2 := pow_le_pow_left₀ (by norm_num) hp 2
+  have hqmax : q ≤ 43748029/100000000 := by
+    apply (sq_le_sq₀ hq (by norm_num)).mp
+    nlinarith only [hcircle,hpp]
+  have hpsum : 1 ≤ p+q := by
+    have hsq : (1-p)^2 ≤ q^2 := by
+      nlinarith only [hcircle, mul_nonneg hp0.le (sub_nonneg.mpr hp')]
+    have := (sq_le_sq₀ (sub_nonneg.mpr hp') hq).mp hsq
+    linarith
+  have hrad : (29958179/50000000:ℝ)^2 ≤ p^2-2*p*δ := by
+    have hh : (399228/1000000:ℝ) ≤ p-2*δ := by linarith
+    have hm := mul_le_mul hp hh (by norm_num : (0:ℝ) ≤ 399228/1000000) hp0.le
+    nlinarith only [hm]
+  have hsr : 29958179/50000000 ≤ Real.sqrt (p^2-2*p*δ) := by
+    apply (sq_le_sq₀ (by norm_num) (Real.sqrt_nonneg _)).mp
+    rw [Real.sq_sqrt (by linarith)]
+    exact hrad
+  have hl := mul_le_mul_of_nonpos_left hδ (show 1-p-q ≤ 0 by linarith)
+  have hb : (565685803/400000000:ℝ) ≤ Real.sqrt 2 := by linarith only [h,hp,hqmax,hsr,hl]
+  have hh := pow_le_pow_left₀ (by norm_num : (0:ℝ) ≤ 565685803/400000000) hb 2
+  rw [Real.sq_sqrt (by norm_num)] at hh
+  norm_num at hh
+
 /-- The reciprocal variance budget gives a strict improvement over the
 interval-only weight bound. The four denominators have arithmetic mean at most
 one after normalization; their reciprocals then have a controlled second moment. -/
@@ -498,6 +599,36 @@ private theorem opposite_gauge_exact {x y s u : ℂ} {p : ℝ}
       exact (div_le_iff₀ hp0).2 (by simpa only [mul_comm] using hh)
     exact (sq_le_sq₀ (abs_nonneg _) (norm_nonneg _)).2 hq |>.trans_eq' (sq_abs _)
 
+open D5.S3.Quantum.Recovery.PrincipalTrianglePhase.RTPhaseBarrier
+
+private theorem projectedError_of_phase {x y l m : ℂ} {α : ℝ}
+    (hx : x ≠ 0) (h : l * x * m = (‖x‖ : ℂ) * cis α) :
+    projectedError x y l m = Real.cos α * ((1 / 2 : ℂ) - x * y).re +
+      Real.sin α * ((1 / 2 : ℂ) - x * y).im := by
+  have sIm : (cis α).im = Real.sin α := by
+    unfold cis
+    simp [Complex.exp_mul_I, Complex.sin_ofReal_re]
+  unfold projectedError
+  rw [h, star_mul, Complex.star_def, Complex.conj_ofReal]
+  have hreal (r : ℝ) (z : ℂ) : ((r : ℂ) * z).re = r * z.re := by
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  rw [mul_comm (starRingEnd ℂ (cis α)) (↑‖x‖ : ℂ), mul_assoc, hreal, mul_div_cancel_left₀ _ (norm_ne_zero_iff.mpr hx)]
+  rw [Complex.mul_re, Complex.conj_re, Complex.conj_im, cis_re, sIm]
+  ring
+
+private theorem signed_projection_sum_le {a b c d : ℂ} {p s δ : ℝ}
+    (hp : 0 ≤ p) (h0 : ‖a+b+(c+d)‖ ≤ 2*δ) (h1 : ‖a-b-c+d‖ ≤ 2*δ) :
+    (p*a.re+s*a.im) + (p*b.re-s*b.im) +
+      ((p*c.re-s*c.im) + (p*d.re+s*d.im)) ≤ 2*(p+|s|)*δ := by
+  have hr := mul_le_mul_of_nonneg_left ((Complex.re_le_norm _).trans h0) hp
+  have hp' : s * (a-b-c+d).im ≤ |s| * (2*δ) := by
+    calc
+      _ ≤ |s * (a-b-c+d).im| := le_abs_self _
+      _ = |s| * |(a-b-c+d).im| := abs_mul _ _
+      _ ≤ _ := mul_le_mul_of_nonneg_left ((Complex.abs_im_le_norm _).trans h1) (abs_nonneg _)
+  simp only [Complex.add_re, Complex.add_im, Complex.sub_im] at hr hp'
+  linarith only [hr, hp']
+
 private theorem projectedError_of_zero_gauge {x y s u : ℂ}
     (h : x ≠ 0) (hs : ‖s‖ = 1) (hu : ‖u‖ = 1)
     (hre : (s * x * u).re = ‖x‖) :
@@ -670,6 +801,118 @@ theorem sharp_zero_plaquette_of_coherent {a b c d A B C D : ℂ} {δ : ℝ}
       norm_num
     linarith
 
+/-- A signed flat probe, used together with the squared row budget, excludes
+diamond distance at or below a quarter on a sector of first-side phases. -/
+theorem quarter_plaquette_of_signed_coherent
+    {a b c d A B C D : ℂ} {δ : ℝ}
+    (hX : IsTwoContraction a b c d) (hY : IsTwoContraction A B C D)
+    (hcos : 899228/1000000 ≤ Real.cos (plaquetteArg a b c d / 4))
+    (h0 : ‖(1/2 : ℂ)-a*A‖ ≤ δ) (h1 : ‖(1/2 : ℂ)-b*B‖ ≤ δ)
+    (h2 : ‖(1/2 : ℂ)-c*C‖ ≤ δ) (h3 : ‖(1/2 : ℂ)-d*D‖ ≤ δ)
+    (hF : ‖(1/2 : ℂ)-a*A‖^2 + ‖(1/2 : ℂ)-b*B‖^2 +
+        (‖(1/2 : ℂ)-c*C‖^2 + ‖(1/2 : ℂ)-d*D‖^2) ≤ 2*δ^2)
+    (hsum : ‖((1/2 : ℂ)-a*A) + ((1/2 : ℂ)-b*B) +
+        (((1/2 : ℂ)-c*C) + ((1/2 : ℂ)-d*D))‖ ≤ 2*δ)
+    (hsigned : ‖((1/2 : ℂ)-a*A) - ((1/2 : ℂ)-b*B) -
+        ((1/2 : ℂ)-c*C) + ((1/2 : ℂ)-d*D)‖ ≤ 2*δ) :
+    1/4 < δ := by
+  by_contra! hsmall
+  let θ := plaquetteArg a b c d
+  let p := Real.cos (θ/4)
+  let q := Real.sin (θ/4)
+  have hl : 899228/1000000 ≤ p := hcos
+  have hp0 : 0 < p := by linarith
+  have hp1 : p ≤ 1 := Real.cos_le_one _
+  have hunit : |q|^2 = 1-p^2 := by
+    rw [sq_abs]
+    have h := Real.sin_sq_add_cos_sq (θ/4)
+    linarith
+  have nz {x y : ℂ} (h : ‖(1/2 : ℂ)-x*y‖ ≤ δ) : x ≠ 0 := by
+    intro hz
+    have hfloor := matrix_unit_product_floor h
+    rw [hz, norm_zero, zero_mul] at hfloor
+    linarith
+  obtain ⟨l,k,m,n,hl',hk,hm,hn,ha,hb,hc,hd⟩ :=
+    shared_checkerboard_gauge_complex a b c d θ
+      (plaquette_arg_angle (nz h0) (nz h1) (nz h2) (nz h3))
+  have re_phase {x u v : ℂ} {α : ℝ} (h : u*x*v = (‖x‖ : ℂ)*cis α) :
+      (u*x*v).re = Real.cos α * ‖x‖ := by
+    rw [h, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, cis_re]
+    ring
+  have hA : (l*a*m).re = p*‖a‖ := re_phase ha
+  have hB : (l*b*n).re = p*‖b‖ := by simpa only [Real.cos_neg] using re_phase hb
+  have hC : (k*c*m).re = p*‖c‖ := by simpa only [Real.cos_neg] using re_phase hc
+  have hD : (k*d*n).re = p*‖d‖ := re_phase hd
+  obtain ⟨aa,aa2⟩ := opposite_gauge_exact (nz h0) hl' hm hA
+  obtain ⟨ab,ab2⟩ := opposite_gauge_exact (nz h1) hl' hn hB
+  obtain ⟨ac,ac2⟩ := opposite_gauge_exact (nz h2) hk hm hC
+  obtain ⟨ad,ad2⟩ := opposite_gauge_exact (nz h3) hk hn hD
+  let r : Fin 4 → ℝ := ![‖a‖,‖b‖,‖c‖,‖d‖]
+  let y : Fin 4 → ℝ := ![(star l*A*star m).re, (star l*B*star n).re,
+    (star k*C*star m).re, (star k*D*star n).re]
+  let e : Fin 4 → ℝ := ![projectedError a A l m, projectedError b B l n,
+    projectedError c C k m, projectedError d D k n]
+  let S : Fin 4 → ℝ := ![‖(1/2 : ℂ)-a*A‖, ‖(1/2 : ℂ)-b*B‖,
+    ‖(1/2 : ℂ)-c*C‖, ‖(1/2 : ℂ)-d*D‖]
+  have hrsum : (∑ i, r i) ≤ 2/p := by
+    apply (le_div_iff₀ hp0).2
+    have h := contraction_modulus_budget hX l k m n hl' hk hm hn hA hB hC hD
+    simp only [r, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Fin.sum_univ_zero, add_zero]
+    linarith only [h]
+  have hysum : (∑ i, y i) ≤ 2 := by
+    have h := (Complex.re_le_norm _).trans
+      (contraction_flat_test hY (star l) (star k) (star m) (star n)
+        (by simpa using hl') (by simpa using hk) (by simpa using hm) (by simpa using hn))
+    rw [show star l*(A*star m+B*star n)+star k*(C*star m+D*star n) =
+      ((star l*A*star m+star l*B*star n)+star k*C*star m)+star k*D*star n by ring] at h
+    simp only [Complex.add_re] at h
+    simpa [y, Fin.sum_univ_succ, add_assoc] using h
+  have hg (i : Fin 4) : r i * y i = p/2-e i := by
+    fin_cases i <;> first | exact aa | exact ab | exact ac | exact ad
+  have hr (i : Fin 4) : 0 ≤ r i := by
+    fin_cases i <;> exact norm_nonneg _
+  have hE (i : Fin 4) : (e i)^2 ≤ (S i)^2 := by
+    fin_cases i <;> first | exact aa2 | exact ab2 | exact ac2 | exact ad2
+  have hδ : 0 ≤ δ := (norm_nonneg _).trans h0
+  have hentry (i : Fin 4) : e i ≤ δ := by
+    have hS : S i ≤ δ := by
+      fin_cases i <;> first | exact h0 | exact h1 | exact h2 | exact h3
+    have hnon : 0 ≤ S i := by fin_cases i <;> exact norm_nonneg _
+    have hsq := (hE i).trans ((sq_le_sq₀ hnon hδ).mpr hS)
+    exact (le_abs_self _).trans ((sq_le_sq₀ (abs_nonneg _) hδ).mp (by rwa [sq_abs]))
+  have hF' : (∑ i, (e i)^2) ≤ 2*δ^2 := by
+    simp only [e, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Fin.sum_univ_zero, add_zero]
+    linarith only [aa2,ab2,ac2,ad2,hF]
+  have hcoherent : (∑ i, e i) ≤ 2*(p+|q|)*δ := by
+    simp only [e, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Fin.sum_univ_zero, add_zero, projectedError_of_phase (nz h0) ha,
+      projectedError_of_phase (nz h1) hb, projectedError_of_phase (nz h2) hc,
+      projectedError_of_phase (nz h3) hd, Real.cos_neg, Real.sin_neg]
+    have h := signed_projection_sum_le hp0.le hsum hsigned (s := q)
+    dsimp [p, q] at h ⊢
+    linarith only [h]
+  have hy (i : Fin 4) : 0 ≤ y i := by
+    have hprod : 0 < r i * y i := by rw [hg i]; linarith [hentry i]
+    exact (pos_of_mul_pos_right hprod (hr i)).le
+  let x (i : Fin 4) := Real.sqrt (p/2-e i)
+  have hx (i : Fin 4) : (x i)^2 ≤ r i*y i := by
+    rw [hg i]
+    exact (Real.sq_sqrt (by linarith [hentry i])).le
+  have hcauchy := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+    (fun i _ => hr i) (fun i _ => hy i) (fun i _ => hx i)
+  have hprod : (∑ i, r i)*(∑ i, y i) ≤ (2 / Real.sqrt p)^2 := by
+    calc
+      _ ≤ (2/p)*2 := mul_le_mul hrsum hysum
+        (Finset.sum_nonneg fun i _ => hy i) (by positivity)
+      _ = _ := by rw [div_pow, Real.sq_sqrt hp0.le]; ring
+  have hroot : (∑ i, x i) ≤ 2/Real.sqrt p :=
+    (sq_le_sq₀ (Finset.sum_nonneg fun _ _ => Real.sqrt_nonneg _) (by positivity)).mp
+      (hcauchy.trans hprod)
+  exact RTWeightBudget.quarter_cutoff_tight_rational e p |q| δ hl hp1
+    (abs_nonneg _) hunit hsmall hentry hcoherent hF' hroot
+
 end RTMultiFibre
 
 end
@@ -698,29 +941,134 @@ private theorem flatAmp_mul : flatAmp * flatAmp = 1/2 := by
   rw [hh]
   norm_num
 
-private def flatTwo {a : Type*} [DecidableEq a] (i j : a) : a → ℂ :=
-  Pi.single i flatAmp + Pi.single j flatAmp
+/-- A two-coordinate phase with first coefficient fixed to one. -/
+def phase (s : ℂ) (i : Fin 2) : ℂ := if i = 0 then 1 else s
 
-private theorem flatTwo_norm {a : Type*} [Fintype a] [DecidableEq a] {i j : a} (h : i ≠ j) :
-    star (flatTwo i j) ⬝ᵥ flatTwo i j = 1 := by
+private theorem phase_one (i : Fin 2) : phase 1 i = 1 := by simp [phase]
+
+private def flatTwo {a : Type*} [DecidableEq a] (i j : a) (s : ℂ) : a → ℂ :=
+  Pi.single i flatAmp + Pi.single j (flatAmp*s)
+
+private theorem flatTwo_norm {a : Type*} [Fintype a] [DecidableEq a]
+    {i j : a} (h : i ≠ j) (s : ℂ) (hs : star s*s = 1) :
+    star (flatTwo i j s) ⬝ᵥ flatTwo i j s = 1 := by
   simp only [flatTwo, dotProduct_add, dotProduct_single, Pi.star_apply, Pi.add_apply,
     Pi.single_apply, eq_self, ite_true, h, h.symm, ite_false, zero_add, add_zero,
-    flatAmp_star, flatAmp_mul]
+    flatAmp_star, flatAmp_mul, star_mul]
+  rw [show star s*flatAmp*(flatAmp*s) = (flatAmp*flatAmp)*(star s*s) by ring,
+    flatAmp_mul, hs]
   norm_num
 
-private theorem flatTwo_matrix {a : Type*} [DecidableEq a] (i j : Fin 2 → a) :
-    Matrix.vecMulVec (flatTwo (i 0) (i 1)) (star (flatTwo (j 0) (j 1))) =
-      (1/2 : ℂ) • (∑ u : Fin 2, ∑ v : Fin 2, Matrix.single (i u) (j v) (1:ℂ)) := by
-  have hcell (x y : a) :
-      Matrix.vecMulVec (Pi.single x flatAmp) (Pi.single y flatAmp) =
-        (1/2 : ℂ) • Matrix.single x y (1:ℂ) := by
+private theorem flatTwo_matrix {a : Type*} [DecidableEq a]
+    (i j : Fin 2 → a) (s t : ℂ) :
+    Matrix.vecMulVec (flatTwo (i 0) (i 1) s) (star (flatTwo (j 0) (j 1) t)) =
+      (1/2 : ℂ) • (∑ u : Fin 2, ∑ v : Fin 2,
+        (phase s u * star (phase t v)) • Matrix.single (i u) (j v) (1:ℂ)) := by
+  have hcell (x y : a) (r q : ℂ) :
+      Matrix.vecMulVec (Pi.single x (flatAmp*r)) (Pi.single y (flatAmp*q)) =
+        (1/2 : ℂ) • ((r*q) • Matrix.single x y (1:ℂ)) := by
     ext k l
-    by_cases hk : k = x <;> by_cases hl : l = y <;>
-      simp [Matrix.vecMulVec_apply, Matrix.smul_apply, Matrix.single_apply,
-        hk, hl, flatAmp_mul] <;> aesop
-  simp only [flatTwo, Fin.sum_univ_two, star_add, Pi.star_single, flatAmp_star,
-    Matrix.add_vecMulVec, Matrix.vecMulVec_add, hcell, smul_add]
+    by_cases hk : k = x
+    · subst k
+      by_cases hl : l = y
+      · subst l
+        simp [Matrix.vecMulVec_apply, Matrix.smul_apply, smul_eq_mul]
+        rw [show flatAmp*r*(flatAmp*q) = (flatAmp*flatAmp)*(r*q) by ring, flatAmp_mul]
+        ring
+      · have hl' : y ≠ l := Ne.symm hl
+        simp [Matrix.vecMulVec_apply, Matrix.smul_apply, hl, hl']
+    · have hk' : x ≠ k := Ne.symm hk
+      simp [Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.single_apply, hk, hk']
+  have hcell0 (x y : a) (r : ℂ) :
+      Matrix.vecMulVec (Pi.single x (flatAmp*r)) (Pi.single y ((1:ℂ)*flatAmp)) =
+        (1/2 : ℂ) • ((r*1) • Matrix.single x y (1:ℂ)) := by
+    simpa only [one_mul, mul_one] using hcell x y r 1
+  have h (x : a) : (Pi.single x flatAmp : a → ℂ) = Pi.single x (flatAmp*(1:ℂ)) := by simp
+  simp only [flatTwo, h, Fin.sum_univ_two, star_add, Pi.star_single, flatAmp_star,
+    Matrix.add_vecMulVec, Matrix.vecMulVec_add, smul_add, star_mul, star_one]
+  simp only [show ∀ z : ℂ, star z*flatAmp = flatAmp*star z by intro; ring]
+  simp only [hcell, hcell0, phase, ite_true, show (1:Fin 2) ≠ 0 by decide, ite_false, star_one]
   abel
+
+/-- Four signed (or unit-phase-weighted) native matrix-unit coefficients
+consume one full rank-one diamond test, with the explicit factor two. -/
+theorem flat_phase_coeff_sum_norm
+    {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    (first second : QuantumChannel a b) (i j : Fin 2 ↪ a)
+    (s t : ℂ) (hs : star s*s = 1) (ht : star t*t = 1) (p q : b) :
+    ‖∑ u : Fin 2, ∑ v : Fin 2, (phase s u * star (phase t v)) *
+      ((matrixAction first - matrixAction second) (Matrix.single (i u) (j v) 1)) p q‖ ≤
+      2 * diamondDistance first second := by
+  have hi : i 0 ≠ i 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (i.injective h)
+  have hj : j 0 ≠ j 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (j.injective h)
+  have h := vectorCoefficient_le_diamondDistance first second
+    (flatTwo (i 0) (i 1) s) (flatTwo (j 0) (j 1) t)
+    (flatTwo_norm hi s hs) (flatTwo_norm hj t ht) p q
+  rw [flatTwo_matrix i j, map_smul, map_sum] at h
+  simp only [map_sum, Matrix.sum_apply, map_smul, Matrix.smul_apply, smul_eq_mul, Complex.norm_mul] at h
+  have hhalf : ‖(1/2 : ℂ)‖ = 1/2 := by norm_num [norm_div]
+  rw [hhalf] at h
+  linarith only [h]
+
+private theorem phase_star (s : ℂ) (u : Fin 2) : phase (star s) u = star (phase s u) := by
+  by_cases hu : u=0 <;> simp [phase, hu]
+
+/-- The same signed/phase witness directly on the actual paired forward
+Grams. The conjugate input weights account for the original coefficient
+orientation. No calibration or Gram completion is used. -/
+theorem native_flat_phase_error_norm
+    {a b F e₁ e₂ : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype e₁] [Fintype e₂]
+    (first second : QuantumChannel a (b × b))
+    (V : Matrix (b × e₁) a ℂ) (W : Matrix (b × e₂) a ℂ)
+    (pair : ∀ X, matrixAction first X =
+      RTDiamond.dilationAction (RTDiamond.pairedDilation V W) X)
+    (f : a → b) (pick : F × Fin 2 ↪ a) (label : F → b)
+    (byFibre : ∀ p : F × Fin 2, f (pick p) = label p.1)
+    (i j : F) (s t : ℂ) (hs : star s*s = 1) (ht : star t*t = 1)
+    (target : ∀ u v : Fin 2, matrixAction second
+      (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+      (label i,label i) (label j,label j) = 1/2) :
+    let G := (RTDiamond.forwardGram f V).submatrix pick pick
+    let H := (RTDiamond.forwardGram f W).submatrix pick pick
+    ‖∑ u : Fin 2, ∑ v : Fin 2, (phase s u * star (phase t v)) *
+        ((1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v))‖ ≤
+      2 * diamondDistance first second := by
+  let G := (RTDiamond.forwardGram f V).submatrix pick pick
+  let H := (RTDiamond.forwardGram f W).submatrix pick pick
+  let emb (k : F) : Fin 2 ↪ a := ⟨fun t => pick (k,t), fun _ _ h =>
+    congrArg Prod.snd (pick.injective h)⟩
+  let E (u v : Fin 2) : ℂ := (1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)
+  have hs' : star (star s)*star s = 1 := by simpa [mul_comm] using hs
+  have ht' : star (star t)*star t = 1 := by simpa [mul_comm] using ht
+  have h := flat_phase_coeff_sum_norm first second (emb i) (emb j)
+    (star s) (star t) hs' ht' (label i,label i) (label j,label j)
+  have entry (u v : Fin 2) :
+      ((matrixAction first - matrixAction second) (Matrix.single (emb i u) (emb j v) 1))
+        (label i,label i) (label j,label j) = -star (E u v) := by
+    change matrixAction first (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j) -
+      matrixAction second (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j) = _
+    have actual : matrixAction first (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j) = star (G (i,u) (j,v)*H (i,u) (j,v)) := by
+      rw [pair]
+      simpa only [byFibre, G, H, Matrix.submatrix_apply] using
+        RTDiamond.paired_channel_coefficient f V W (pick (i,u)) (pick (j,v))
+    rw [actual,target]
+    have hh : star ((1/2 : ℂ)) = (1/2 : ℂ) := by norm_num
+    simp only [E, star_sub, hh, neg_sub]
+  simp_rw [entry, phase_star, star_star, mul_neg] at h
+  have hh : (∑ u : Fin 2, ∑ v : Fin 2,
+      star (phase s u) * phase t v * star (E u v)) =
+      star (∑ u : Fin 2, ∑ v : Fin 2, (phase s u * star (phase t v)) * E u v) := by
+    simp only [star_sum, star_mul, star_star]
+    apply Finset.sum_congr rfl
+    intro u _
+    apply Finset.sum_congr rfl
+    intro v _
+    ring
+  simpa only [Finset.sum_neg_distrib, hh, norm_neg, norm_star] using h
 
 /-- A coherent rank-one test with both inputs flat on their own
 two-coordinate supports bounds the complete block sum, not just a row. -/
@@ -730,15 +1078,8 @@ theorem flat_coeff_sum_norm
     ‖∑ u : Fin 2, ∑ v : Fin 2,
       ((matrixAction first - matrixAction second) (Matrix.single (i u) (j v) 1)) p q‖ ≤
       2 * diamondDistance first second := by
-  have hi : i 0 ≠ i 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (i.injective h)
-  have hj : j 0 ≠ j 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (j.injective h)
-  have h := vectorCoefficient_le_diamondDistance first second
-    (flatTwo (i 0) (i 1)) (flatTwo (j 0) (j 1)) (flatTwo_norm hi) (flatTwo_norm hj) p q
-  rw [flatTwo_matrix i j, map_smul, map_sum] at h
-  simp only [map_sum, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, Complex.norm_mul] at h
-  have hhalf : ‖(1/2 : ℂ)‖ = 1/2 := by norm_num [norm_div]
-  rw [hhalf] at h
-  linarith only [h]
+  simpa only [phase_one, star_one, one_mul] using
+    flat_phase_coeff_sum_norm first second i j 1 1 (by norm_num) (by norm_num) p q
 
 /-- Actual paired-dilation flat coherent sum witness on one selected
 fibre pair, in the original unhalved diamond-distance convention. -/
@@ -958,6 +1299,63 @@ theorem paired_sharp_zero_plaquette_native_diamond
     (native_cross_contraction H hH dH hij) zeroPhase
     (witness 0 0) (witness 0 1) (witness 1 0) (witness 1 1)
     (by simpa only [add_assoc] using hv) hs
+
+/-- One first-party phase in the specified sector forces a strict
+quarter gap in the native paired-channel distance. -/
+theorem paired_quarter_plaquette_native_diamond
+    {a b F e₁ e₂ : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype F] [DecidableEq F] [Fintype e₁] [Fintype e₂]
+    (first second : QuantumChannel a (b × b))
+    (V : Matrix (b × e₁) a ℂ) (W : Matrix (b × e₂) a ℂ)
+    (hV : Vᴴ * V = 1) (hW : Wᴴ * W = 1)
+    (pair : ∀ X, NativeDiamond.matrixAction first X =
+      RTDiamond.dilationAction (RTDiamond.pairedDilation V W) X)
+    (f : a → b) (pick : F × Fin 2 ↪ a) (label : F → b)
+    (byFibre : ∀ p : F × Fin 2, f (pick p) = label p.1)
+    (i j : F) (hij : i ≠ j)
+    (phaseCutoff : let G := (RTDiamond.forwardGram f V).submatrix pick pick
+      899228/1000000 ≤ Real.cos (plaquetteArg (G (i,0) (j,0)) (G (i,0) (j,1))
+        (G (i,1) (j,0)) (G (i,1) (j,1)) / 4))
+    (target : ∀ u v : Fin 2, NativeDiamond.matrixAction second
+      (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+      (label i,label i) (label j,label j) = 1/2) :
+    1/4 < diamondDistance first second := by
+  let G := (RTDiamond.forwardGram f V).submatrix pick pick
+  let H := (RTDiamond.forwardGram f W).submatrix pick pick
+  have hG : G.PosSemidef := (RTDiamond.forwardGram_psd f V).submatrix pick
+  have hH : H.PosSemidef := (RTDiamond.forwardGram_psd f W).submatrix pick
+  let emb (k : F) : Fin 2 ↪ a := ⟨fun t => pick (k,t), fun _ _ h =>
+    congrArg Prod.snd (pick.injective h)⟩
+  have dG (k : F) : ((1 : Matrix (Fin 2) (Fin 2) ℂ) - RTPhaseCube.fibreBlock G k).PosSemidef :=
+    RTDiamond.forward_fibre_defect f V hV (emb k) (label k) (fun t => byFibre (k,t))
+  have dH (k : F) : ((1 : Matrix (Fin 2) (Fin 2) ℂ) - RTPhaseCube.fibreBlock H k).PosSemidef :=
+    RTDiamond.forward_fibre_defect f W hW (emb k) (label k) (fun t => byFibre (k,t))
+  have witness (u v : Fin 2) :
+      ‖(1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)‖ ≤ diamondDistance first second := by
+    apply native_witness first second (pick (i,u)) (pick (j,v))
+      (label i,label i) (label j,label j) _ _ _ (target u v)
+    rw [pair]
+    simpa only [byFibre, G, H, Matrix.submatrix_apply] using
+      RTDiamond.paired_channel_coefficient f V W (pick (i,u)) (pick (j,v))
+  have hv := native_frobenius_budget first second V W pair f pick label byFibre i j target
+  change (∑ u : Fin 2, ∑ v : Fin 2, ‖(1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)‖^2) ≤ _ at hv
+  simp only [Fin.sum_univ_two, add_assoc] at hv
+  let E (u v : Fin 2) : ℂ := (1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)
+  have hs : ‖E 0 0 + E 0 1 + (E 1 0 + E 1 1)‖ ≤ 2 * diamondDistance first second := by
+    have h := native_flat_phase_error_norm first second V W pair f pick label byFibre i j
+      1 1 (by norm_num) (by norm_num) target
+    simpa only [Fin.sum_univ_two, phase_one, star_one, one_mul] using h
+  have hsign : ‖E 0 0 - E 0 1 - E 1 0 + E 1 1‖ ≤ 2 * diamondDistance first second := by
+    have h := native_flat_phase_error_norm first second V W pair f pick label byFibre i j
+      (-1) (-1) (by simp) (by simp) target
+    have hh : ‖E 0 0 + -E 0 1 + (-E 1 0 + E 1 1)‖ ≤ 2 * diamondDistance first second := by
+      simpa only [Fin.sum_univ_two, phase, ite_true, show (1 : Fin 2) ≠ 0 by decide,
+        ite_false, star_one, star_neg, one_mul, mul_one, neg_mul, neg_neg] using h
+    convert hh using 2 <;> ring
+  exact quarter_plaquette_of_signed_coherent (native_cross_contraction G hG dG hij)
+    (native_cross_contraction H hH dH hij) phaseCutoff
+    (witness 0 0) (witness 0 1) (witness 1 0) (witness 1 1)
+    (by simpa only [add_assoc] using hv) hs hsign
 
 
 end RTMultiFibre

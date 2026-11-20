@@ -48,10 +48,29 @@ For comparison, a paper-level calibrated four-fibre example attains the bound. S
 
 In the per-fibre symmetric and antisymmetric bases, the Hermitian coefficient error is k times the direct sum of the four-cycle adjacency and a two-edge matching adjacency. Its absolute value has every original diagonal fibre block equal to k times the two-dimensional identity. The uniform input gives the normalized trace norm k, and the absolute-value dual majorant gives the matching upper bound in the calibrated trace-norm formula. The exact fixture and its semantics are not Lean claims here.
 
+**Theorem 1.4 (A strict quarter obstruction on a first-party phase sector).**
+
+Lean statement: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When the first-party quarter-angle cosine is at least 0.899228, the unhalved native diamond error is strictly greater than a quarter. A pair of flat rank-one inputs with equal and alternating signs controls the real and imaginary parts of the gauge-projected error sum. The row-square budget and the two contraction sums then rule out the entire closed quarter sublevel.
+
+The bound applies to the selected fibre pair, with the same paired dilation, labels and target as before. It neither establishes that one of the pairs must have this phase nor settles recovery for unrestricted channels.
+
+The isolated two-fibre estimate cannot simply be continued to all phases. A calibrated example has cosine p = 2/sqrt(5) and diamond error exactly 1/4. In the following paper construction, J is the all-ones matrix, S is the alternating-sign matrix, and q is the square root of 1 minus p squared. The first cross block is (p J + i q S)/(2p), and the error block is (J + i S)/8. The second cross block is obtained by entrywise dividing the target minus this error by the first block. In the symmetric and antisymmetric bases the cross blocks have eigenvalues (1, i/2) and (1, -i). Adjoining identity diagonal blocks realizes them as calibrated Grams.
+
+The flat input gives the lower bound 1/4 for this example. The complete calibrated Hermitian error has operator norm 1/4, so the identity times 1/4 is a matching trace-norm dual majorant. These matrix identities were checked exactly; the example is not a formalized counterexample for the four-fibre model.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.matrixUnit_row_square_le`
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_improved_one_party_native_diamond`
+- Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_quarter_plaquette_native_diamond`
 - Truth anchor: `D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget.paired_sharp_zero_plaquette_native_diamond`
 - Dependency: [D5/S3/Quantum/Recovery/PrincipalPlaquettePhaseDiamond](PrincipalPlaquettePhaseDiamond.md)
 - Dependency: [D5/S3/Quantum/Recovery/PrincipalTrianglePhaseDiamond](PrincipalTrianglePhaseDiamond.md)

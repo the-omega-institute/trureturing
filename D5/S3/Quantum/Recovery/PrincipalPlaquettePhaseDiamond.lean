@@ -233,13 +233,15 @@ theorem one_party_of_gauge {a b c d A B C D : ℂ} {p δ : ℝ}
 
 open D5.S3.Quantum.Recovery.PrincipalTrianglePhase.RTPhaseBarrier
 
-/-- Expose the unit phases behind the pre-existing single-block
-checkerboard gauge, so that their inverses can be used on the other block. -/
-theorem shared_checkerboard_gauge (a b c d : ℂ) (θ : ℝ)
+/-- The checkerboard normalization exposes both signs of the exact
+entry phases. Its conjugate row and column gauges preserve entry products. -/
+theorem shared_checkerboard_gauge_complex (a b c d : ℂ) (θ : ℝ)
     (hphase : (a.arg : Real.Angle) - b.arg - c.arg + d.arg = (θ : Real.Angle)) :
     ∃ s t u v : ℂ, ‖s‖ = 1 ∧ ‖t‖ = 1 ∧ ‖u‖ = 1 ∧ ‖v‖ = 1 ∧
-      (s*a*u).re = Real.cos (θ/4)*‖a‖ ∧ (s*b*v).re = Real.cos (θ/4)*‖b‖ ∧
-      (t*c*u).re = Real.cos (θ/4)*‖c‖ ∧ (t*d*v).re = Real.cos (θ/4)*‖d‖ := by
+      s * a * u = (‖a‖ : ℂ) * cis (θ / 4) ∧
+      s * b * v = (‖b‖ : ℂ) * cis (-(θ / 4)) ∧
+      t * c * u = (‖c‖ : ℂ) * cis (-(θ / 4)) ∧
+      t * d * v = (‖d‖ : ℂ) * cis (θ / 4) := by
   let p := θ/4
   let r := a.arg-c.arg-2*p
   let s := p-a.arg
@@ -266,13 +268,22 @@ theorem shared_checkerboard_gauge (a b c d : ℂ) (θ : ℝ)
     ring
   refine ⟨cis 0, cis r, cis s, cis t, norm_cis _, norm_cis _, norm_cis _, norm_cis _, ?_, ?_, ?_, ?_⟩
   · rw [valid, h₁]
-    simp [Complex.mul_re, cis_re, p, mul_comm]
   · rw [valid, h₂]
-    simp [Complex.mul_re, cis_re, p, mul_comm]
   · rw [valid, h₃]
-    simp [Complex.mul_re, cis_re, p, mul_comm]
   · rw [valid, h₅]
-    simp [Complex.mul_re, cis_re, p, mul_comm]
+
+/-- The real-part projection of the checkerboard normalization. -/
+theorem shared_checkerboard_gauge (a b c d : ℂ) (θ : ℝ)
+    (hphase : (a.arg : Real.Angle) - b.arg - c.arg + d.arg = (θ : Real.Angle)) :
+    ∃ s t u v : ℂ, ‖s‖ = 1 ∧ ‖t‖ = 1 ∧ ‖u‖ = 1 ∧ ‖v‖ = 1 ∧
+      (s*a*u).re = Real.cos (θ/4)*‖a‖ ∧ (s*b*v).re = Real.cos (θ/4)*‖b‖ ∧
+      (t*c*u).re = Real.cos (θ/4)*‖c‖ ∧ (t*d*v).re = Real.cos (θ/4)*‖d‖ := by
+  obtain ⟨s,t,u,v,hs,ht,hu,hv,ha,hb,hc,hd⟩ :=
+    shared_checkerboard_gauge_complex a b c d θ hphase
+  refine ⟨s,t,u,v,hs,ht,hu,hv,?_,?_,?_,?_⟩ <;>
+    (first | rw [ha] | rw [hb] | rw [hc] | rw [hd]) <;>
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, sub_zero, cis_re, Real.cos_neg, mul_comm]
 
 /-- For arbitrary original block contractions, a small plaquette phase
 of only one party is enough; the other party's phase is unrestricted. -/

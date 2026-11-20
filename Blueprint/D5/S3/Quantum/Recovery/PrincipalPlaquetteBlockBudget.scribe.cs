@@ -78,5 +78,46 @@ internal sealed class PrincipalPlaquetteBlockBudgetDocument : IScribeDocumentDef
                         + "trace norm k, and the absolute-value dual majorant gives the "
                         + "matching upper bound in the calibrated trace-norm formula. "
                         + "The exact fixture and its semantics are not Lean claims here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rt-native-signed-plaquette-quarter-sector"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Recovery/PrincipalPlaquetteBlockBudget."
+                    + "paired_quarter_plaquette_native_diamond"),
+                H("A strict quarter obstruction on a first-party phase sector"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "When the first-party quarter-angle cosine is at least 0.899228, "
+                        + "the unhalved native diamond error is strictly greater than a "
+                        + "quarter. A pair of flat rank-one inputs with equal and alternating "
+                        + "signs controls the real and imaginary parts of the gauge-projected "
+                        + "error sum. The row-square budget and the two contraction sums "
+                        + "then rule out the entire closed quarter sublevel.")),
+                    Paragraph(Text(
+                        "The bound applies to the selected fibre pair, with the same paired "
+                        + "dilation, labels and target as before. It neither establishes that "
+                        + "one of the pairs must have this phase nor settles recovery for "
+                        + "unrestricted channels.")),
+                    Paragraph(Text(
+                        "The isolated two-fibre estimate cannot simply be continued to all "
+                        + "phases. A calibrated example has cosine p = 2/sqrt(5) and diamond "
+                        + "error exactly 1/4. In the following paper construction, J is the "
+                        + "all-ones matrix, S is the alternating-sign matrix, and q is "
+                        + "the square root of 1 minus p squared. The first cross block is "
+                        + "(p J + i q S)/(2p), and the error block is "
+                        + "(J + i S)/8. The second cross block is obtained "
+                        + "by entrywise dividing the target minus this error by the first "
+                        + "block. In the symmetric and antisymmetric bases the cross blocks "
+                        + "have eigenvalues (1, i/2) and (1, -i). Adjoining identity diagonal "
+                        + "blocks realizes "
+                        + "them as calibrated Grams.")),
+                    Paragraph(Text(
+                        "The flat input gives the lower bound 1/4 for this example. The "
+                        + "complete calibrated Hermitian error has operator norm 1/4, so "
+                        + "the identity times 1/4 is a matching trace-norm dual majorant. "
+                        + "These matrix identities were checked exactly; the example "
+                        + "is not a formalized counterexample for the four-fibre model."))),
                 DescribeRole.Theorem))));
 }
