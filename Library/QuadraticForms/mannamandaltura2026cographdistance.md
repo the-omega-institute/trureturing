@@ -12,9 +12,13 @@ license: citation-only
 triage: anchor
 ---
 
-## Open Problem 14.2(i)
+## Verified locator
 
-The pinned source is arXiv:2611.06981v1, printed p. 22.
+Source: https://arxiv.org/pdf/2611.06981v1#page=22
+
+arXiv:2611.06981v1, Open Problem 14.2(i), printed p. 22.
+
+## Open Problem 14.2(i)
 
 > Is there ε > 0 such that (−2 − ε, −2) contains no distance eigenvalue of any connected cograph?
 
