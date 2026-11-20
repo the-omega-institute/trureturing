@@ -7,10 +7,7 @@
    digest: The coefficients recover the full parameter tuple and enforce the two support cuts. -/
 
 import D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
-import Mathlib.FieldTheory.IntermediateField.Algebraic
 import Mathlib.LinearAlgebra.Basis.Flag
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
 
 /-! # The linear coefficient map -/
 

@@ -9,12 +9,6 @@
 import D5.S3.Combinatorics.SubspaceCodes.FerrersCoefficients
 import D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnReduction
 import Mathlib.FieldTheory.Finite.Extension
-import Mathlib.FieldTheory.IntermediateField.Algebraic
-import Mathlib.LinearAlgebra.Basis.Flag
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.RingTheory.AlgebraTower
-import Mathlib.Tactic.ByContra
-import Mathlib.Tactic.FinCases
 
 /-! # An optimal rank-nine Ferrers code -/
 
@@ -23,12 +17,6 @@ namespace D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
 open D5.S3.Combinatorics.SubspaceCodes.FerrersCoefficients
 open D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 open Module
-
-/-- Matrices with the fixed row and column index sets.
-
-Used by
-- `FerrersRankNine.codeMap` -/
-abbrev Mat (F : Type*) := Matrix (Fin 12) (Fin 12) F
 
 /-- The number of allowed entries in a column.
 
@@ -40,7 +28,7 @@ def height (j : Fin 12) : ℕ := if j.val < 3 then 6 else if j.val < 6 then 9 el
 
 Used by
 - `FerrersRankNine.codeMap_supported` -/
-def Supported {F : Type*} [Field F] (C : Submodule F (Mat F)) : Prop :=
+def Supported {F : Type*} [Field F] (C : Submodule F (Matrix (Fin 12) (Fin 12) F)) : Prop :=
   ∀ M ∈ C, ∀ i j : Fin 12, height j ≤ i.val → M i j = 0
 
 /-- The exact example for every finite field in the source’s requested range.
@@ -50,9 +38,9 @@ Used by
 def Problem1RankNine : Prop :=
   ∀ (F : Type) [Field F] [Fintype F],
     Odd (Fintype.card F) → 3 < Fintype.card F →
-      (∃ C : Submodule F (Mat F), Supported C ∧ Module.finrank F C = 27 ∧
+      (∃ C : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported C ∧ Module.finrank F C = 27 ∧
         MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C ∧ ∃ M ∈ C, M ≠ 0 ∧ M.rank = 9) ∧
-      (∀ D : Submodule F (Mat F), Supported D →
+      (∀ D : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported D →
         MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 D → Module.finrank F D ≤ 27)
 
 private abbrev PrefixEntries (k : ℕ) :=
@@ -68,7 +56,7 @@ private def prefixProjection {F : Type*} [Field F] (k : ℕ) :
   map_smul' _ _ := rfl
 
 private theorem rank_le_of_prefixProjection_eq_zero {F : Type*} [Field F]
-    {C : Submodule F (Mat F)} (hC : Supported C) (M : C) (k : ℕ)
+    {C : Submodule F (Matrix (Fin 12) (Fin 12) F)} (hC : Supported C) (M : C) (k : ℕ)
     (h : prefixProjection k M.val = 0) :
     M.val.rank ≤ (Finset.univ.filter (fun j : Fin 12 => k ≤ j.val)).card := by
   rw [← Matrix.rank_transpose]
@@ -84,7 +72,7 @@ private theorem rank_le_of_prefixProjection_eq_zero {F : Type*} [Field F]
   · exact hC M.val M.property i j (Nat.le_of_not_gt hi)
 
 private theorem finrank_le_27_of_supported_of_rank {F : Type*} [Field F] [Fintype F]
-    (C : Submodule F (Mat F)) (hC : Supported C)
+    (C : Submodule F (Matrix (Fin 12) (Fin 12) F)) (hC : Supported C)
     (hr : MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C) :
     Module.finrank F C ≤ 27 := by
   let p := (prefixProjection (F := F) 4).comp C.subtype
@@ -105,7 +93,7 @@ private theorem finrank_le_27_of_supported_of_rank {F : Type*} [Field F] [Fintyp
   exact hle.trans (le_of_eq (by decide))
 
 private theorem exists_rank_eq_nine_of_finrank_eq_27 {F : Type*} [Field F] [Fintype F]
-    (C : Submodule F (Mat F)) (hC : Supported C)
+    (C : Submodule F (Matrix (Fin 12) (Fin 12) F)) (hC : Supported C)
     (hd : Module.finrank F C = 27) (hr : MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C) :
     ∃ M ∈ C, M ≠ 0 ∧ M.rank = 9 := by
   let p := (prefixProjection (F := F) 3).comp C.subtype
@@ -131,7 +119,7 @@ Used by
 def SupportedDimension27WithRankLowerBound : Prop :=
   ∀ (F : Type) [Field F] [Fintype F],
     Odd (Fintype.card F) → 3 < Fintype.card F →
-      ∃ C : Submodule F (Mat F), Supported C ∧ Module.finrank F C = 27 ∧
+      ∃ C : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported C ∧ Module.finrank F C = 27 ∧
         MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C
 
 /-- The two projections upgrade existence to exact minimum rank and optimality.
@@ -275,14 +263,8 @@ private theorem finrank_extendScalars_toSubmodule (hKL : K ≤ L) (hK : finrank 
     (hL : finrank F L = 6) (hE : finrank F E = 12) :
     finrank K (IntermediateField.extendScalars hKL).toSubalgebra.toSubmodule = 2 := by
   let : Algebra K L := (IntermediateField.inclusion hKL).toAlgebra
-  let e : L ≃ₗ[K] (IntermediateField.extendScalars hKL).toSubalgebra.toSubmodule :=
-    { toFun := fun x => ⟨x.val, x.property⟩
-      invFun := fun x => ⟨x.val, x.property⟩
-      left_inv := fun _ => rfl
-      right_inv := fun _ => rfl
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
-  exact e.finrank_eq.symm.trans (nested_relative_finranks hKL hK hL hE).1
+  rw [Subalgebra.finrank_toSubmodule, IntermediateField.finrank_eq_finrank_subalgebra]
+  exact (nested_relative_finranks hKL hK hL hE).1
 
 /-- The first two basis vectors span the larger intermediate field.
 
@@ -377,7 +359,7 @@ private noncomputable def evaluationMap : (Fin 4 → E) →ₗ[F] (E →ₗ[F] E
     simp [evaluateLinearized_apply, Algebra.smul_def, mul_assoc]
 
 private noncomputable def codeMap (b : E) (κ : Basis (Fin 3) F K) (β : Basis (Fin 4) K E) :
-    Params K L →ₗ[F] Mat F :=
+    Params K L →ₗ[F] Matrix (Fin 12) (Fin 12) F :=
   let B := orderedTowerBasis κ β
   (LinearMap.toMatrix B B).toLinearMap.comp ((evaluationMap (F := F)).comp
     (paramCoefficients b (β 2)))
@@ -469,7 +451,7 @@ private theorem codeMap_supported {b : L} (κ : Basis (Fin 3) F K) (β : Basis (
       omega
 
 private theorem exists_supported_dim27_with_rank (F : Type) [Field F] [Fintype F] :
-    ∃ C : Submodule F (Mat F), Supported C ∧ finrank F C = 27 ∧
+    ∃ C : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported C ∧ finrank F C = 27 ∧
       MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C := by
   obtain ⟨E, instField, instFinite, instAlg, K, L, hKL, hK, hL, hE⟩ := exists_field_tower F
   obtain ⟨b, hbK, hb⟩ := exists_b_in_flag_with_nonzero_determinant hKL hK hL hE

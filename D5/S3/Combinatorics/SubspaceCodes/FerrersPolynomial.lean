@@ -6,9 +6,8 @@
    utility: none
    digest: The root bound for a four-term linearized polynomial gives rank at least nine. -/
 
+import Mathlib.Algebra.Polynomial.Basis
 import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Algebra.Polynomial.Roots
 
 /-! # Rank of four-term linearized polynomials -/
 
@@ -63,17 +62,13 @@ private theorem linearizedPolynomial_ne_zero (a : Fin 4 → E) (ha : a ≠ 0) :
     linearizedPolynomial F E a ≠ 0 := by
   intro hp
   apply ha
-  funext i
-  have hc := congrArg (fun p : E[X] => p.coeff (Fintype.card F ^ i.val)) hp
-  simp only [linearizedPolynomial, finsetSum_coeff, coeff_monomial, coeff_zero] at hc
-  rw [Finset.sum_eq_single i] at hc
-  · simpa using hc
-  · intro j _ hji
-    rw [ite_eq_right]
-    intro heq
-    apply hji
-    exact Fin.ext (Nat.pow_right_injective Fintype.one_lt_card heq)
-  · simp
+  have hli := (Polynomial.basisMonomials E).linearIndependent.comp
+    (fun i : Fin 4 => Fintype.card F ^ i.val)
+    (fun _ _ h => Fin.ext (Nat.pow_right_injective Fintype.one_lt_card h))
+  have hcoeff := (Fintype.linearIndependent_iff.mp hli) a (by
+    simpa only [linearizedPolynomial, Function.comp_apply, Polynomial.coe_basisMonomials,
+      Polynomial.smul_monomial, smul_eq_mul, mul_one] using hp)
+  exact funext hcoeff
 
 omit [Algebra F E] in
 private theorem natDegree_linearizedPolynomial_le (a : Fin 4 → E) :

@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
 import Reg.Support.DependentFamily
-import Mathlib.Algebra.Field.ZMod
 
 /-! # Source readout for the attained rank in the Ferrers example -/
 
@@ -15,7 +14,7 @@ noncomputable section
 
 private abbrev signature : Signature where
   Params := Sigma fun F : Type => Field F
-  State p := Mat p.1
+  State p := Matrix (Fin 12) (Fin 12) p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -23,7 +22,7 @@ private abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def attainedRank (_ : Unit) (p : signature.Params) (M : Mat p.1) : ℕ :=
+private def attainedRank (_ : Unit) (p : signature.Params) (M : Matrix (Fin 12) (Fin 12) p.1) : ℕ :=
   letI := p.2
   M.rank
 
@@ -37,10 +36,10 @@ abbrev arena : Arena where
   signature := signature
   Law r := ∀ (F : Type) [f : Field F] [Fintype F],
     Odd (Fintype.card F) → 3 < Fintype.card F →
-      (∃ C : Submodule F (Mat F), Supported C ∧ Module.finrank F C = 27 ∧
+      (∃ C : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported C ∧ Module.finrank F C = 27 ∧
         MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 C ∧
         ∃ M ∈ C, M ≠ 0 ∧ r.readout () ⟨F, f⟩ M = 9) ∧
-      (∀ D : Submodule F (Mat F), Supported D →
+      (∀ D : Submodule F (Matrix (Fin 12) (Fin 12) F), Supported D →
         MRDDensityColumnReduction.MinDistanceAtLeast F 12 12 9 D → Module.finrank F D ≤ 27)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -67,8 +66,8 @@ def source_registration : Registration arena Problem1RankNine where
     let : Fact (Nat.Prime 5) := ⟨by decide⟩
     intro i
     cases i
-    refine ⟨⟨ZMod 5, inferInstance⟩, (0 : Mat (ZMod 5)), (1 : Mat (ZMod 5)), ?_⟩
-    change (0 : Mat (ZMod 5)).rank ≠ (1 : Mat (ZMod 5)).rank
+    refine ⟨⟨ZMod 5, inferInstance⟩, (0 : Matrix (Fin 12) (Fin 12) (ZMod 5)), (1 : Matrix (Fin 12) (Fin 12) (ZMod 5)), ?_⟩
+    change (0 : Matrix (Fin 12) (Fin 12) (ZMod 5)).rank ≠ (1 : Matrix (Fin 12) (Fin 12) (ZMod 5)).rank
     rw [Matrix.rank_zero, Matrix.rank_one]
     decide
 
