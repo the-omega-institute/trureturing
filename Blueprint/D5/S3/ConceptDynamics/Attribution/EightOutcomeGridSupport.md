@@ -23,4 +23,5 @@ The complete-grid theorem gives three orbits at denominator 1680. Multiplying ea
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/EightOutcomeGridSupport.grid_support_budget_iff`
+- Dependency: [D5/S3/Combinatorics/SubsetSpectrum/DigitDiagonalCapacity](../../Combinatorics/SubsetSpectrum/DigitDiagonalCapacity.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/PermutationGridSupport](PermutationGridSupport.md)
