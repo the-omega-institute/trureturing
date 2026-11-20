@@ -40,8 +40,10 @@ theorem integral_range_le_diagonal_codes {k n b c : ℕ} (positive : 0 < b)
       (eq : (d.1.val : ℝ) * a + (d.2.val : ℝ) * z = t.val) :
       (d.1.val - d.2.val : ℕ) * a + (d.2.val - d.1.val : ℕ) * z +
         (min d.1.val d.2.val : ℕ) * ((c : ℝ) / b) = t.val := by
-    have x : d.1.val = d.1.val - d.2.val + min d.1.val d.2.val := by omega
-    have y : d.2.val = d.2.val - d.1.val + min d.1.val d.2.val := by omega
+    have x : d.1.val = d.1.val - d.2.val + min d.1.val d.2.val :=
+      (Nat.sub_add_min_cancel d.1.val d.2.val).symm
+    have y : d.2.val = d.2.val - d.1.val + min d.1.val d.2.val := by
+      simpa only [min_comm] using (Nat.sub_add_min_cancel d.2.val d.1.val).symm
     conv at eq =>
       lhs
       congr
@@ -88,11 +90,7 @@ theorem integral_range_le_diagonal_codes {k n b c : ℕ} (positive : 0 < b)
         have h := congrArg (· % b) integerEq
         simpa only [Nat.add_mod, Nat.mul_mod_right, Nat.add_zero, Nat.mod_mod] using h
       exact (Nat.ModEq.cancel_left_of_coprime coprime.symm modMul)
-    have same : x = y := by
-      calc
-        x = x % b + b * (x / b) := (Nat.mod_add_div x b).symm
-        _ = y % b + b * (y / b) := by rw [show x % b = y % b from modEq, nd]
-        _ = y := Nat.mod_add_div y b
+    have same : x = y := Nat.ext_div_modEq nd modEq
     rw [same] at integerEq
     have totals := Nat.add_left_cancel integerEq
     exact Fin.ext (Nat.eq_of_mul_eq_mul_left positive totals).symm
