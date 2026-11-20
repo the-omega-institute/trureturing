@@ -16,7 +16,7 @@ namespace D5.S3.Analytic.Dilation.DuplicationCircleRigidity
 
 open Set
 
-private theorem le_zero_of_bounded_doubling {s : Set ℝ} (f : ℝ → ℝ) {C : ℝ}
+theorem le_zero_of_bounded_doubling {s : Set ℝ} (f : ℝ → ℝ) {C : ℝ}
     (hbound : ∀ x ∈ s, f x ≤ C)
     (hstep : ∀ x ∈ s, ∃ y ∈ s, 2 * f x ≤ f y) {x : ℝ} (hx : x ∈ s) :
     f x ≤ 0 := by
