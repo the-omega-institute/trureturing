@@ -104,8 +104,8 @@ private theorem augmented_of_subset_facet (c : L → A) {B S : Finset (L × Bool
   by_cases he : S = ∅
   · exact mem_augmented.mpr (Or.inl he)
   · exact mem_augmented.mpr (Or.inr
-      ((signedComplex c).isRelLowerSet_faces (mem_facets.mp hB).1).2 hSB
-        (Finset.nonempty_iff_ne_empty.mpr he))
+      (((signedComplex c).isRelLowerSet_faces (mem_facets.mp hB).1).2 hSB
+        (Finset.nonempty_iff_ne_empty.mpr he)))
 
 private theorem exists_first_facet (c : L → A) (h : (facets c).Nonempty)
     {S : Finset (L × Bool)} (hS : S ∈ augmentedFaces c) :
@@ -150,6 +150,7 @@ private theorem sum_interval {V R : Type*} [DecidableEq V] [CommSemiring R]
     simpa [Finset.prod_const, add_comm] using
       (Finset.prod_add (fun _ : V => t) (fun _ => (1 : R)) (B \ U)).symm
   · intro S hS T hT he
+    change U ∪ S = U ∪ T at he
     apply Finset.Subset.antisymm
     · intro v hv
       have hu := (Finset.mem_sdiff.mp (Finset.mem_powerset.mp hS hv)).2
@@ -199,8 +200,8 @@ theorem faceEnumerator_eq_sum (c : L → A) {R : Type*} [CommSemiring R] (t : R)
   rw [← hpartition, Finset.sum_biUnion hd]
   apply Finset.sum_congr rfl
   intro B hB
-  rw [show B.card = d from facet_card_eq_nullity c B (mem_facets.mp hB)]
-  exact sum_interval _ _ (Finset.filter_subset _ _) t
+  have hsum := sum_interval (restrictionFace c B) B (Finset.filter_subset _ _) t
+  rwa [show B.card = d from facet_card_eq_nullity c B (mem_facets.mp hB)] at hsum
 
 /-- With no nonempty facets the only augmented face is empty. -/
 theorem faceEnumerator_eq_one (c : L → A) {R : Type*} [CommSemiring R] (t : R)
