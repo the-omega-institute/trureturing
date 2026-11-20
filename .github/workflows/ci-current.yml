@@ -322,15 +322,6 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
-      - id: prepared
-        name: Adopt a matching PR preparation for this event
-        if: needs.detect.outputs.report == 'true'
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: adopt-preparation
-          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
       - id: keys
         if: needs.detect.outputs.report == 'true'
         env:
@@ -346,6 +337,15 @@ jobs:
       - id: toolchain
         if: needs.detect.outputs.report == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: needs.detect.outputs.report == 'true'
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
       - id: dependency
         if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true

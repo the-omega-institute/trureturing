@@ -500,13 +500,111 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.zip_preparation()
         shutil.rmtree(self.root / ".lake")
         self.merged()
-        result, _ = self.adopt(cache_action=("/missing/node", "/missing/cache-action"))
+        with mock.patch.object(shards, "workspace_modules", return_value={name: module}), \
+                mock.patch.object(producer.subprocess, "run", wraps=subprocess.run) as process:
+            result, _ = self.adopt(cache_action=("/missing/node", "/missing/cache-action"))
+        self.assertFalse(any(call.args[0][0] == "/missing/node" for call in process.call_args_list))
         self.assertEqual("adopted", result["status"])
         self.assertEqual(self.actual_merge, result["actual_merge"])
         self.assertIn("sharded=true", (self.root / "outputs").read_text())
         for relative in compiler_paths | report_paths:
             self.assertEqual(str(relative), (self.root / shards.PROJECT_BUILD / relative).read_text())
         self.assertTrue((self.root / ".lake/packages/mathlib/scripts/bench/size/run").is_file())
+
+    def test_stale_sharded_preparation_supplements_only_current_compiler_outputs(self):
+        self.preparation()
+        packages, _ = self.dependency_files()
+        with tarfile.open(self.bundle / "native.tar.gz", "w:gz") as archive:
+            archive.add(packages, arcname=".lake/packages")
+        shutil.rmtree(self.root / ".lake")
+        self.artifact["name"] = producer.artifact_name(self.identity, sharded=True)
+        packed = self.bundle / "shards"
+        packed.mkdir()
+        graph = {"Left": set(), "Right": set(), "Bridge": {"Left"}, "Final": {"Right", "Bridge"}}
+        modules = {name: Module("fixture", pathlib.Path(name + ".lean"), pathlib.Path()) for name in graph}
+        for name, module in modules.items():
+            (self.root / module.source).write_text(name)
+        sources = shards.tracked_sources(self.root, modules)
+        target = self.identity["target_ref"]
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            binding = shards.binding(self.root, "complete")
+        group = [list(graph)]
+        group_key = shards.group_identity(group)
+        compiler = {name: shards.required_compiler_paths(name, module) for name, module in modules.items()}
+        compiler_paths = set().union(*compiler.values())
+        report_paths = {pathlib.PurePosixPath(shards.REPORT_PATH), shards.REPORT_RECEIPT}
+
+        def snapshot(side, stale, run):
+            build = self.root / side
+            for path in compiler_paths | report_paths:
+                file = build / path
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text(json.dumps({"outputs": {"o": [side], "i": side, "c": side}})
+                                if path.suffix == ".trace" else side)
+            entries = {key: shards.write_payload(self.root, build, list(map(str, paths)))
+                       for key, paths in ((group_key, compiler_paths), (shards.REPORT, report_paths))}
+            return dict(binding=binding, state="complete", layout={group_key: group},
+                        owner=dict(commit=self.identity["merge"], ref=target, run=run, attempt="1"),
+                        entries=entries, sources=sources | {stale: "f" * 64},
+                        fingerprints={key: "1" * 64 for key in entries},
+                        required={group_key: sorted(map(str, compiler_paths)),
+                                  shards.REPORT: sorted(map(str, report_paths))})
+
+        primary = snapshot("primary", "Right", "28")
+        donor = snapshot("protected", "Left", "29")
+        for address in primary["entries"].values():
+            payload = self.root / shards.transport_payload(address)
+            payload.rename(packed / payload.name)
+        (self.bundle / "project.json").write_text(json.dumps(primary))
+        self.zip_preparation()
+        donor_index = self.root / "protected.json"
+        donor_payload = self.root / shards.transport_payload(donor["entries"][group_key])
+        donor_bytes = donor_payload.read_bytes()
+        runtime = ("/fixture/node", "/fixture/cache-action")
+        run = subprocess.run
+
+        def supplement(command, *args, **kwargs):
+            if tuple(command[:2]) != runtime:
+                return run(command, *args, **kwargs)
+            self.assertEqual("supplement-preparation", command[2])
+            self.assertEqual(target, command[4])
+            directory = pathlib.Path(command[3])
+            argv = ["shards", "supplement-plan", "--repository", str(self.root), "--preparation", str(directory),
+                    "--index", str(donor_index), "--donor-ref", target]
+            with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()) as output:
+                try:
+                    shards.main()
+                except shards.IncompatibleShardBinding as error:
+                    self.assertEqual("invalid-binding", scenario)
+                    raise subprocess.CalledProcessError(1, command) from error
+            plan = json.loads(output.getvalue())
+            self.assertEqual({donor["entries"][group_key]: ["Right"]}, plan)
+            self.assertEqual(int(scenario == "valid"), shards.install_supplement(self.root, directory, plan))
+            return subprocess.CompletedProcess(command, 0)
+
+        for scenario, merged in (("valid", False), ("valid", True), ("corrupt", True),
+                                 ("missing", True), ("invalid-binding", True)):
+            if merged:
+                self.merged()
+            with self.subTest(scenario=scenario, merged=merged), \
+                    mock.patch.object(shards, "workspace_modules", return_value=modules), \
+                    mock.patch.object(shards, "project_imports", return_value=graph), \
+                    mock.patch.object(producer.subprocess, "run", side_effect=supplement):
+                donor_index.write_text(json.dumps(donor | ({"binding": {}} if scenario == "invalid-binding" else {})))
+                donor_payload.unlink(missing_ok=True)
+                if scenario != "missing":
+                    donor_payload.write_bytes(b"corrupt" if scenario == "corrupt" else donor_bytes)
+                result, download = self.adopt(cache_action=runtime)
+                download.assert_called_once()
+                self.assertEqual("adopted", result["status"])
+                self.assertEqual(self.env["GITHUB_SHA"], result["checkout"])
+                build = self.root / shards.PROJECT_BUILD
+                expected = "protected" if scenario == "valid" else "primary"
+                self.assertEqual(expected, (build / "lib/lean/Right.olean").read_text())
+                for name in ("Left", "Bridge", "Final"):
+                    self.assertEqual("primary", (build / f"lib/lean/{name}.olean").read_text())
+                self.assertEqual("primary", (build / shards.REPORT_PATH).read_text())
+                self.assertEqual(scenario != "valid", (build / shards.REPORT_RECEIPT).is_file())
 
     def test_sharded_preparation_installs_bundled_and_referenced_files_together(self):
         self.preparation()

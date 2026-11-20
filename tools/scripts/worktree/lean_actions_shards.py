@@ -7,6 +7,7 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 import fnmatch
 import gzip
+from graphlib import TopologicalSorter
 import hashlib
 import json
 import os
@@ -25,13 +26,13 @@ from lean_actions import (
     output, project_publication, project_work, receipt, resume_spec, write_small_record,
 )
 from lean_artifact_inventory import (
-    PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
+    PROJECT_BUILD, build_inventory, import_closure, lake_configuration, lean_artifact_paths, project_imports,
     required_compiler_paths, workspace_modules,
 )
 from lean_cache_release import cache_guard, has_unsafe_parent, install_scoped, report_reuse
 from lean_cache_release_io import archive_sha, copy_chunks
 from lean_cache_shards import group_identity, make_layout
-from lean_release_index import safe_path, valid_digest
+from lean_release_index import check_compiler_outputs, safe_path, valid_digest
 
 STAGE = Path("build/lean-cache/shards")
 SCHEMA = "lean-actions-shards-v1"
@@ -353,15 +354,17 @@ def selected_keys(root, record, targets):
     }
 
 
-def extract_payload(path, destination, registrations, restored):
+def extract_payload(path, destination, registrations, restored, *, only=None):
     with tarfile.open(path, "r|gz") as archive:
         for entry in archive:
             relative = safe_path(entry.name)
             if (not entry.isfile() or relative in restored or
                     not _tracked(relative, registrations)):
                 raise ValueError("invalid archived Actions shard path: " + entry.name)
-            target = destination / relative
             restored.add(relative)
+            if only is not None and relative not in only:
+                continue
+            target = destination / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             with archive.extractfile(entry) as source, target.open("xb") as output:
                 if copy_chunks(source, output, None) != entry.size:
@@ -369,9 +372,9 @@ def extract_payload(path, destination, registrations, restored):
             target.chmod(entry.mode & 0o777)
 
 
-def install_continuation(target, unpacked, paths, backup):
+def install_continuation(target, unpacked, paths, backup, *, remove=()):
     replacements = []
-    for path in sorted(paths):
+    for path in sorted(paths.union(remove)):
         destination = target / path
         if has_unsafe_parent(target, path):
             raise ValueError("Actions continuation has an unsafe parent: " + str(path))
@@ -391,6 +394,73 @@ def install_continuation(target, unpacked, paths, backup):
             if saved.is_file():
                 os.replace(saved, target / path)
         raise
+
+
+def supplement_plan(root, preparation, primary, donor):
+    modules = workspace_modules(root)
+    sources = tracked_sources(root, modules)
+    graph = project_imports(root, modules, previous_modules=primary["sources"].keys() | donor["sources"].keys())
+    order = [name for name in TopologicalSorter(graph).static_order() if name in modules]
+
+    def compatible(record):
+        recorded = record["sources"]
+        local = sources.keys() | recorded.keys()
+        matches = set()
+        for name in order:
+            if sources[name] == recorded.get(name) and (graph[name] & local).issubset(matches):
+                matches.add(name)
+        return matches
+
+    target = preparation / "native" / PROJECT_BUILD
+    reusable = {name for name in compatible(primary)
+                if all((target / path).is_file() for path in required_compiler_paths(name, modules[name]))}
+    needed = compatible(donor) - reusable
+    bundled = set(primary["entries"].values())
+    plan = defaultdict(list)
+    for group, shards in donor["layout"].items():
+        address = donor["entries"].get(group)
+        if address is not None and address not in bundled:
+            plan[address].extend(name for shard in shards for name in shard if name in needed)
+    return {address: names for address, names in plan.items() if names}
+
+
+def install_supplement(root, preparation, plan):
+    modules = workspace_modules(root)
+    registrations = native_archive_paths(root, ["project"])["project"]
+    target = preparation / "native" / PROJECT_BUILD
+    installed = 0
+    for address, names in plan.items():
+        try:
+            if not valid_digest(address):
+                raise ValueError("invalid protected shard address")
+            payload = root / transport_payload(address)
+            if archive_sha(payload, None) != address:
+                raise ValueError("protected shard checksum mismatch")
+            allowed = {name: lean_artifact_paths(name, modules[name]) for name in names}
+            with tempfile.TemporaryDirectory(prefix=".supplement-", dir=target.parent) as temporary:
+                stage = Path(temporary)
+                unpacked = stage / "unpacked"
+                eligible = set().union(*allowed.values())
+                entries = set()
+                extract_payload(payload, unpacked, registrations, entries, only=eligible)
+                paths, remove = set(), {REPORT_RECEIPT}
+                count = 0
+                for name, module_paths in allowed.items():
+                    present = module_paths & entries
+                    if not required_compiler_paths(name, modules[name]).issubset(present):
+                        continue
+                    check_compiler_outputs(unpacked, {"module": name, "paths": present})
+                    paths.update(present)
+                    remove.update(module_paths - present)
+                    count += 1
+                if paths:
+                    # Keep the preparation's other modules and report inputs. A
+                    # mixed build must pass the ordinary Lake and report path.
+                    install_continuation(target, unpacked, paths, stage / "base", remove=remove)
+                    installed += count
+        except (OSError, ValueError, KeyError, TypeError, tarfile.TarError) as error:
+            receipt("shards", "supplement-unavailable", digest=address, reason=str(error))
+    return installed
 
 
 def install(root, record, targets, *, require_complete=False, preparation=None, payload_directory=None):
@@ -488,7 +558,8 @@ def restore_checkpoint(root, identity, directory, attempt):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=("identity", "prepare", "restore-plan", "install",
-                                               "checkpoint-pack", "checkpoint-restore"))
+                                               "checkpoint-pack", "checkpoint-restore",
+                                               "supplement-plan", "supplement-install"))
     parser.add_argument("--repository", type=Path, default=Path.cwd())
     parser.add_argument("--state", choices=("complete", "resume"), default="complete")
     parser.add_argument("--index", type=Path)
@@ -497,13 +568,16 @@ def main():
     parser.add_argument("--target", action="append", default=[])
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--preparation", type=Path)
+    parser.add_argument("--donor-ref")
+    parser.add_argument("--plan", type=Path)
     parser.add_argument("--artifact-directory", type=Path)
     parser.add_argument("--previous-attempt", type=int)
     parser.add_argument("--stream-payloads", action="store_true")
     args = parser.parse_args()
     if args.stream_payloads and args.operation != "prepare":
         parser.error("payload streaming requires prepare")
-    if args.preparation and (args.state != "complete" or args.operation != "install" or args.target):
+    if args.preparation and (args.state != "complete" or args.target or
+                             args.operation not in ("install", "supplement-plan", "supplement-install")):
         parser.error("preparation requires a complete, unscoped install")
     root = args.repository.resolve()
     identity = binding(root, args.state)
@@ -511,7 +585,19 @@ def main():
         print(json.dumps({"prefix": index_prefix(identity), "owner": current_owner(root)}))
         return
     record = read_index(args.index, identity, args.state) if args.index else None
-    if args.operation.startswith("checkpoint-"):
+    if args.operation == "supplement-plan":
+        if record is None or record["owner"]["ref"] != args.donor_ref or args.preparation is None:
+            raise ValueError("supplement requires an index from the preparation's protected target")
+        primary = read_index(args.preparation / "project.json", identity, args.state)
+        if primary is None or primary["owner"]["ref"] != args.donor_ref:
+            raise ValueError("supplement requires the verified preparation index")
+        print(json.dumps(supplement_plan(root, args.preparation, primary, record)))
+    elif args.operation == "supplement-install":
+        if args.preparation is None or args.plan is None:
+            parser.error("supplement installation requires a preparation and plan")
+        installed = install_supplement(root, args.preparation, json.loads(args.plan.read_text()))
+        print(json.dumps({"modules": installed}))
+    elif args.operation.startswith("checkpoint-"):
         scenario = identity.get("verification", {}).get("scenario")
         if scenario not in {"release-none", "release-partial"} or args.artifact_directory is None:
             parser.error("checkpoint artifacts require a protected cold Release verification run and a directory")

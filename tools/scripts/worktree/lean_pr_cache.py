@@ -475,8 +475,19 @@ def restore_project(root, directory, cache_action, identity, runtime):
     bundled = {path.name for path in packed.iterdir()} if packed.is_dir() else set()
     require(bundled <= expected, "preparation contains an unreferenced shard")
     if bundled == expected:
-        return shards.install(root, index, [], require_complete=True, preparation=directory,
-                              payload_directory=packed)["complete"]
+        result = shards.install(root, index, [], require_complete=True, preparation=directory,
+                                payload_directory=packed)
+        if not result["complete"]:
+            return False
+        try:
+            sources = shards.tracked_sources(root, shards.workspace_modules(root))
+            if sources != index["sources"]:
+                shutil.rmtree(packed)
+                subprocess.run([*cache_action, "supplement-preparation", str(directory), identity["target_ref"]],
+                               cwd=root, check=True)
+        except (OSError, ValueError, subprocess.SubprocessError) as error:
+            receipt("supplement-unavailable", identity, reason=str(error))
+        return True
     # Earlier artifacts can still carry references to Actions cache entries.
     result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
     if result.returncode == 3:

@@ -128,9 +128,9 @@ function waitForCacheQuota() {
   return delay(60000 + Math.floor(Math.random() * 10000));
 }
 
-async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) {
-  const ref = process.env.GITHUB_BASE_REF ? 'refs/heads/' + process.env.GITHUB_BASE_REF : identity.owner.ref;
-  const refs = state === 'resume' || protectedOnly ? [ref] : [...new Set([ref, 'refs/heads/dev'])];
+async function fetchIndex(cache, cacheVersion, identity, protectedRef) {
+  const ref = protectedRef || (process.env.GITHUB_BASE_REF ? 'refs/heads/' + process.env.GITHUB_BASE_REF : identity.owner.ref);
+  const refs = state === 'resume' || protectedRef ? [ref] : [...new Set([ref, 'refs/heads/dev'])];
   await rm(indexPath, { force: true });
   let retry;
   const restoreExactIndex = async row => {
@@ -159,18 +159,8 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   }
 }
 
-async function restorePayloads(cache, cacheVersion, identity, index, preparation) {
-  const started = performance.now();
-  const needed = python('restore-plan', ['--index', index, ...targetArgs]);
-  const digests = [...new Set(Object.values(needed))];
-  const bundled = new Set(preparation
-    ? await readdir(join(preparation, 'shards')).catch(error => {
-      if (error.code === 'ENOENT') return [];
-      throw error;
-    })
-    : []);
+async function downloadPayloads(cache, cacheVersion, identity, index, remote) {
   let transferred = 0;
-  const remote = digests.filter(digest => !bundled.has(digest + '.tar.gz'));
   const downloaded = new Set();
   const download = async digest => {
     const path = payloadPath(digest);
@@ -207,17 +197,62 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
     }
     retries += 1;
   }
+  return { downloaded: downloaded.size, bytes: transferred };
+}
+
+function removePayloads(digests) {
+  return Promise.all(digests.map(digest => rm(payloadPath(digest), { force: true })));
+}
+
+async function restorePayloads(cache, cacheVersion, identity, index, preparation) {
+  const started = performance.now();
+  const needed = python('restore-plan', ['--index', index, ...targetArgs]);
+  const digests = [...new Set(Object.values(needed))];
+  const bundled = new Set(preparation
+    ? await readdir(join(preparation, 'shards')).catch(error => {
+      if (error.code === 'ENOENT') return [];
+      throw error;
+    })
+    : []);
+  const remote = digests.filter(digest => !bundled.has(digest + '.tar.gz'));
+  const transfer = await downloadPayloads(cache, cacheVersion, identity, index, remote);
   const installArgs = ['--index', index, ...targetArgs];
   if (preparation) installArgs.push('--preparation', preparation);
   if (requireComplete || preparation) installArgs.push('--require-complete');
   const result = python('install', installArgs);
-  await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
+  await removePayloads(remote);
   console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-    operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
+    operation, requested: digests.length, remote: remote.length, ...transfer,
     restored: result.available, missing: result.missing.length,
-    bytes: transferred, seconds: (performance.now() - started) / 1000,
+    seconds: (performance.now() - started) / 1000,
   }));
   return result;
+}
+
+async function supplementPreparation(directory, targetRef) {
+  const started = performance.now();
+  const identity = python('identity');
+  const { cache, cacheVersion } = await loadCacheClient();
+  if (!await fetchIndex(cache, cacheVersion, identity, targetRef)) {
+    console.log('LEAN_ACTIONS_SHARDS no protected index for preparation supplement');
+    return;
+  }
+  const preparation = ['--preparation', directory];
+  const plan = python('supplement-plan', [...preparation, '--index', indexPath, '--donor-ref', targetRef]);
+  const remote = Object.keys(plan);
+  if (remote.length === 0) return;
+  const planPath = join(directory, 'supplement.json');
+  await writeFile(planPath, JSON.stringify(plan));
+  try {
+    const transfer = await downloadPayloads(cache, cacheVersion, identity, indexPath, remote);
+    const result = python('supplement-install', [...preparation, '--plan', planPath]);
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+      operation, requested: remote.length, ...transfer, modules: result.modules,
+      seconds: (performance.now() - started) / 1000,
+    }));
+  } finally {
+    await removePayloads(remote);
+  }
 }
 
 async function restore(cache, cacheVersion, identity) {
@@ -259,7 +294,8 @@ async function packPreparation(directory) {
   const args = ['--directory', directory, '--anchor', anchor];
   try {
     const { cache, cacheVersion } = await loadCacheClient();
-    if (await fetchIndex(cache, cacheVersion, python('identity'), true)) {
+    const identity = python('identity');
+    if (await fetchIndex(cache, cacheVersion, identity, identity.owner.ref)) {
       args.push('--previous-index', indexPath);
     }
   } catch (error) {
@@ -422,6 +458,10 @@ async function main() {
     const { cache, cacheVersion } = await loadCacheClient();
     const result = await restorePayloads(cache, cacheVersion, python('identity'), join(directory, 'project.json'), directory);
     if (!result.complete) process.exitCode = 3;
+    return;
+  }
+  if (operation === 'supplement-preparation') {
+    await supplementPreparation(process.argv[3], process.argv[4]);
     return;
   }
   if (!['save', 'restore'].includes(operation) || !['complete', 'resume'].includes(state)) {

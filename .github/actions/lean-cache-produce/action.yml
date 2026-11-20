@@ -45,14 +45,6 @@ runs:
     - name: Build the Lean producer for the cache seed
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
-    - id: prepared
-      if: inputs.preparation-only != 'true'
-      uses: ./.github/actions/lean-cache-shards
-      env:
-        GH_TOKEN: ${{ github.token }}
-      with:
-        operation: adopt-preparation
-        sharded-adoption: ${{ inputs.shard-history-anchor != '' }}
     - id: keys
       env:
         GH_TOKEN: ${{ github.token }}
@@ -67,6 +59,14 @@ runs:
         key: ${{ steps.keys.outputs.elan_key }}
     - shell: bash
       run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+    - id: prepared
+      if: inputs.preparation-only != 'true'
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: adopt-preparation
+        sharded-adoption: ${{ inputs.shard-history-anchor != '' }}
     - id: dependency
       if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
       continue-on-error: true
