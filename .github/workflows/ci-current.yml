@@ -1,6 +1,6 @@
 name: CI
 
-# The one CI workflow. `detect` lists the changed paths once and decides from
+# The required CI workflow. `detect` lists the changed paths and decides from
 # the unit patterns in Meta/ci-units.json which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
@@ -19,7 +19,6 @@ permissions:
   pull-requests: read
 
 env:
-  CACHE_WRITES: ${{ github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) }}
   JUDGE_LOCKFILES: |
     tools/StrataLint.Cli/packages.lock.json
     tools/StrataLint.Configuration/packages.lock.json
@@ -41,20 +40,24 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     outputs:
+      base: ${{ steps.entry.outputs.base }}
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
-      delta: ${{ steps.detect.outputs.delta }}
     steps:
-      # Commits and trees only, and only the entry scripts in the working tree.
+      # Check out only the release bootstrap and CI selection contract.
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           filter: blob:none
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: entry
         name: Verify the candidate and list the changed paths
         env:
@@ -62,6 +65,7 @@ jobs:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+          GH_TOKEN: ${{ github.event_name == 'push' && github.event.created && github.token || '' }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: detect
         name: Decide which units the change hits
@@ -81,27 +85,27 @@ jobs:
       continuation: ${{ steps.prefix.outputs.continuation }}
       judge_key: ${{ steps.judge_key.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
-    env:
-      CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Verify the candidate and list the changed paths
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      # The judge cache key binds the resolved SDK, the build recipe and the
-      # paths and blob ids of the tracked judge compile inputs listed in
-      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
-      # and its references, explicit copied/embedded runtime inputs, analyzer
-      # files and inherited build configuration). It is taken before anything is
-      # built; an exact hit skips the build.
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         run: |
@@ -110,15 +114,12 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: ${{ env.CACHE_WRITES == 'true' }}
-          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+          cache: false
       - id: nuget
-        if: env.CACHE_WRITES != 'true'
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
-        if: env.CACHE_WRITES != 'true'
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -126,6 +127,7 @@ jobs:
       - id: judge_key
         env:
           JUDGE_INPUTS: |
+            Meta/tools-release.json
             .editorconfig
             .globalconfig
             Directory.Build.*
@@ -134,80 +136,6 @@ jobs:
             NuGet.config
             nuget.config
             global.json
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
-            tools/scripts/worktree/worktree_*.py
-            tools/StrataLint.Cli/**/*.cs
-            tools/StrataLint.Cli/*.csproj
-            tools/StrataLint.Cli/packages.lock.json
-            tools/StrataLint.Cli/.editorconfig
-            tools/StrataLint.Cli/.globalconfig
-            tools/StrataLint.Cli/Directory.Build.*
-            tools/StrataLint.Cli/Directory.Packages.props
-            tools/StrataLint.Configuration/**/*.cs
-            tools/StrataLint.Configuration/*.csproj
-            tools/StrataLint.Configuration/packages.lock.json
-            tools/StrataLint.Configuration/.editorconfig
-            tools/StrataLint.Configuration/.globalconfig
-            tools/StrataLint.Configuration/Directory.Build.*
-            tools/StrataLint.Configuration/Directory.Packages.props
-            tools/StrataLint.Engineering/**/*.cs
-            tools/StrataLint.Engineering/*.csproj
-            tools/StrataLint.Engineering/packages.lock.json
-            tools/StrataLint.Engineering/.editorconfig
-            tools/StrataLint.Engineering/.globalconfig
-            tools/StrataLint.Engineering/Directory.Build.*
-            tools/StrataLint.Engineering/Directory.Packages.props
-            tools/StrataLint.Runtime/**/*.cs
-            tools/StrataLint.Runtime/*.csproj
-            tools/StrataLint.Runtime/packages.lock.json
-            tools/StrataLint.Runtime/.editorconfig
-            tools/StrataLint.Runtime/.globalconfig
-            tools/StrataLint.Runtime/Directory.Build.*
-            tools/StrataLint.Runtime/Directory.Packages.props
-            tools/StrataLint.Engine/**/*.cs
-            tools/StrataLint.Engine/*.csproj
-            tools/StrataLint.Engine/packages.lock.json
-            tools/StrataLint.Engine/.editorconfig
-            tools/StrataLint.Engine/.globalconfig
-            tools/StrataLint.Engine/Directory.Build.*
-            tools/StrataLint.Engine/Directory.Packages.props
-            tools/StrataLint.FileMap/**/*.cs
-            tools/StrataLint.FileMap/*.csproj
-            tools/StrataLint.FileMap/packages.lock.json
-            tools/StrataLint.FileMap/.editorconfig
-            tools/StrataLint.FileMap/.globalconfig
-            tools/StrataLint.FileMap/Directory.Build.*
-            tools/StrataLint.FileMap/Directory.Packages.props
-            tools/StrataLint.Lean/**/*.cs
-            tools/StrataLint.Lean/*.csproj
-            tools/StrataLint.Lean/packages.lock.json
-            tools/StrataLint.Lean/.editorconfig
-            tools/StrataLint.Lean/.globalconfig
-            tools/StrataLint.Lean/Directory.Build.*
-            tools/StrataLint.Lean/Directory.Packages.props
-            tools/StrataLint.Scribe/**/*.cs
-            tools/StrataLint.Scribe/*.csproj
-            tools/StrataLint.Scribe/packages.lock.json
-            tools/StrataLint.Scribe/.editorconfig
-            tools/StrataLint.Scribe/.globalconfig
-            tools/StrataLint.Scribe/Directory.Build.*
-            tools/StrataLint.Scribe/Directory.Packages.props
-            tools/StrataLint.TestEvidence/**/*.cs
-            tools/StrataLint.TestEvidence/*.csproj
-            tools/StrataLint.TestEvidence/packages.lock.json
-            tools/StrataLint.TestEvidence/.editorconfig
-            tools/StrataLint.TestEvidence/.globalconfig
-            tools/StrataLint.TestEvidence/Directory.Build.*
-            tools/StrataLint.TestEvidence/Directory.Packages.props
-            tools/Trureturing.Truth/**/*.cs
-            tools/Trureturing.Truth/*.csproj
-            tools/Trureturing.Truth/packages.lock.json
-            tools/Trureturing.Truth/.editorconfig
-            tools/Trureturing.Truth/.globalconfig
-            tools/Trureturing.Truth/Directory.Build.*
-            tools/Trureturing.Truth/Directory.Packages.props
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
@@ -237,23 +165,14 @@ jobs:
         name: Check the selected source prerequisite
         env:
           JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
-      # Handoff only to a continuation that still consumes the judge.
-      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.continuation == 'true' && (needs.detect.outputs.report == 'true' || steps.prefix.outputs.source_status != 'accepted') && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ steps.judge_key.outputs.key }}
       - id: remainder
         name: Carry the remaining current compute allowance
         if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
         run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
 
-  # PRs verify affected targets. Pushes share a complete report across the
-  # tree-wide checks and delta rules for the actual push range.
+  # Both events use the same scoped Lean and Scribe checks.
   current:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
@@ -263,41 +182,29 @@ jobs:
     outputs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
-      INDEXED_PROJECT_PUSH: ${{ github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' }}
-      INDEXED_PROJECT_PR: ${{ github.event_name == 'pull_request' && vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == github.base_ref }}
       STRATALINT_ACCEPT_COLD_BUILD: '1'
-      REPORT: .lake/build/stratalint/raw-lean-report.json
-      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
-      # The judge build recipe: the build step runs it and the judge cache key hashes it.
-      CI_PUSH_BEFORE: ${{ github.event.before }}
+      INDEXED_PROJECT: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) && (github.event_name == 'pull_request' || github.ref_protected) }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - name: Fetch the fixed dev history for the shard layout
-        if: env.INDEXED_PROJECT_PUSH == 'true'
-        env:
-          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
-        run: |
-          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
-          git fetch --no-tags --depth=2002 origin "$ANCHOR"
-          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
-      - name: Verify the candidate and list the changed paths
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      # The judge cache key binds the resolved SDK, the build recipe and the
-      # paths and blob ids of the tracked judge compile inputs listed in
-      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
-      # and its references, explicit copied/embedded runtime inputs, analyzer
-      # files and inherited build configuration). It is taken before anything is
-      # built; an exact hit skips the build.
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         run: |
@@ -306,15 +213,12 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: ${{ env.CACHE_WRITES == 'true' }}
-          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+          cache: false
       - id: nuget
-        if: env.CACHE_WRITES != 'true'
         run: |
           packages="$(dotnet nuget locals global-packages --list --force-english-output)"
           echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
       - name: Restore the NuGet packages read-only
-        if: env.CACHE_WRITES != 'true'
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.nuget.outputs.path }}
@@ -328,76 +232,6 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
-      - id: prepared
-        name: Adopt a matching PR preparation for this event
-        if: needs.detect.outputs.report == 'true'
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: adopt-preparation
-          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
-          require-pr-opt-in: ${{ env.INDEXED_PROJECT_PR == 'true' }}
-      - id: keys
-        if: needs.detect.outputs.report == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
-      - id: elan
-        if: steps.keys.outputs.elan_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - id: toolchain
-        if: needs.detect.outputs.report == 'true'
-        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: sharded_project
-        name: Restore the indexed Lean project seed
-        if: needs.detect.outputs.report == 'true' && steps.prepared.outputs.adopted != 'true' && env.INDEXED_PROJECT_PUSH == 'true'
-        continue-on-error: true
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          operation: restore
-      - id: project
-        if: env.INDEXED_PROJECT_PR != 'true' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' && (steps.sharded_project.outputs.available || '0') == '0'
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_restore_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - id: lean_seeds
-        if: needs.detect.outputs.report == 'true'
-        name: Restore optional Lean build seeds
-        env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-          SHARDS_INSTALLED: ${{ steps.sharded_project.outputs.available || '0' }}
-          SHARDED_COMPLETE: ${{ steps.sharded_project.outputs.complete }}
-        run: |
-          if [[ "$SHARDS_INSTALLED" != 0 ]]; then
-            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-            if [[ "$SHARDED_COMPLETE" == true ]]; then
-              echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
-            fi
-          else
-            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-          fi
       - id: compute_budget
         name: Resume the cumulative current compute allowance
         env:
@@ -416,165 +250,113 @@ jobs:
         name: Build the judge
         if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
-      - name: Theory-only file and capacity checks
-        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
-      - id: pr_cache_scope
-        name: Select the project cache for affected PR modules
-        if: env.INDEXED_PROJECT_PR == 'true' && steps.prepared.outputs.adopted != 'true' && steps.lean_seeds.outcome == 'success'
+      - id: lean_plan
+        name: Select affected Lean inputs and test prerequisites
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ env.INDEXED_PROJECT }}
+          require-pr-opt-in: ${{ env.INDEXED_PROJECT == 'true' && github.event_name == 'pull_request' }}
+      - id: keys
+        if: ${{ !cancelled() && steps.prepared.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - id: toolchain
+        if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: cache_scope
+        name: Select cached modules from the Lean build plan
+        if: env.INDEXED_PROJECT == 'true' && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
         run: |
-          targets="$RUNNER_TEMP/pr-cache-targets"
-          python3 tools/scripts/workflow/ci_compute.py run -- \
-            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets > "$targets"
+          targets="$RUNNER_TEMP/lean-cache-targets"
+          python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" > "$targets"
           if [[ -s "$targets" ]]; then
             echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
           fi
-      - name: Restore indexed project artifacts for the PR
-        if: steps.pr_cache_scope.outputs.targets-file != ''
+      - name: Restore project shards for the selected modules
+        if: steps.cache_scope.outputs.targets-file != ''
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
-          targets-file: ${{ steps.pr_cache_scope.outputs.targets-file }}
-      - id: pr_lean
-        name: Check affected PR modules and Scribe inputs
-        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
-        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
-      - id: lean_report
-        name: Build the complete push Lean report
-        if: ${{ !cancelled() && github.event_name == 'push' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+          targets-file: ${{ steps.cache_scope.outputs.targets-file }}
+      - id: project
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && env.INDEXED_PROJECT != 'true' && steps.keys.outputs.project_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_restore_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - id: lean_seeds
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
+        name: Restore optional Lean build seeds
         env:
-          LEAN_NUM_THREADS: '1'
-          GH_TOKEN: ${{ github.token }}
-          PARTIAL_INDEXED_PROJECT: ${{ env.INDEXED_PROJECT_PUSH == 'true' && (steps.sharded_project.outputs.available || '0') != '0' && steps.sharded_project.outputs.complete != 'true' }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
-      - name: Run selected PR FIB regressions
-        if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: |
+          if [[ "$INDEXED_PROJECT" == true ]]; then
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          else
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          fi
+      - name: Theory-only file and capacity checks
+        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: pr_lean
+        name: Check current and delta with affected Lean and Scribe inputs
+        if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - name: Run selected FIB regressions
+        if: steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
         run: python3 tools/scripts/workflow/ci_checks.py current pr-fib
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
         env:
           CI_DOTNET_PREPARED: '1'
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
-      - name: Scribe content
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current scribe
-      - name: Current-tree rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-current
-      - name: Delta rules
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
-        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - name: Run the compiled audit checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.pr_lean.outcome == 'success' && steps.lean_seeds.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
-      # A successful judge build can be published after ready diagnostics,
-      # independently of their verdicts or report validity.
-      - if: ${{ !cancelled() && steps.build_judge.outcome == 'success' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ needs.source.outputs.judge_key }}
-      - name: Validate the complete push report before indexed publication
-        if: env.INDEXED_PROJECT_PUSH == 'true' && steps.lean_report.outcome == 'success'
-        run: python3 tools/lean-inspector/publication.py validate "$REPORT" --repository "$GITHUB_WORKSPACE"
-      - id: sharded_project_push
-        name: Publish and confirm the indexed push project seed
-        if: env.INDEXED_PROJECT_PUSH == 'true' && steps.lean_report.outcome == 'success'
-        uses: ./.github/actions/lean-cache-shards
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
-          STRATALINT_REPORT_SUCCEEDED: 'true'
-          STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
-        with:
-          operation: save
-          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
-      - name: Require the indexed push seed
-        if: env.INDEXED_PROJECT_PUSH == 'true'
-        env:
-          COMPLETE: ${{ steps.sharded_project_push.outputs.complete }}
-        run: test "$COMPLETE" = true
-      - id: project_snapshot_push
-        name: Prepare the project seed
-        if: env.CACHE_WRITES == 'true' && env.INDEXED_PROJECT_PUSH != 'true' && steps.lean_report.outcome == 'success'
-        env:
-          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
-          STRATALINT_REPORT_SUCCEEDED: 'true'
-          STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
-        run: |
-          python3 tools/lean-inspector/publication.py validate "$REPORT" --repository "$GITHUB_WORKSPACE"
-          python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - id: project_save
-        name: Publish the push project seed
-        if: steps.project_snapshot_push.outputs.project_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-      - name: Confirm the protected push published its project seed
-        if: env.CACHE_WRITES == 'true' && env.INDEXED_PROJECT_PUSH != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
-          READY: ${{ steps.project_snapshot_push.outputs.project_ready }}
-          SKIP_REASON: ${{ steps.project_snapshot_push.outputs.project_skip_reason }}
-        run: |
-          [[ "$READY" == true && -n "$CACHE_KEY" ]] || {
-            echo "CACHE_SEED_ERROR validated push has no project snapshot: ${SKIP_REASON:-unavailable}" >&2
-            exit 1
-          }
-          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
-          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
-            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
-      # Dependency and elan caches follow successful checks.
-      - id: snapshot
-        if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}
-        continue-on-error: true
-        env:
-          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
-      - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-      - name: List toolchains in the elan cache
-        if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' }}
-        continue-on-error: true
-        run: bash tools/scripts/workflow/elan-cache-inventory.sh "$HOME/.elan"
-      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' && steps.elan.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
 
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
 
-  banned-api-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: banned-api-proof
-
-  capability-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: capability-proof
 
   filemap:
     needs: [detect, source]
@@ -632,21 +414,6 @@ jobs:
     with:
       unit: tests-cli
 
-  tests-cli-integration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-cli-integration
-
-  tests-configuration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-configuration
-
-
   tests-declared-template:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
@@ -669,26 +436,12 @@ jobs:
     with:
       unit: tests-filemap
 
-  tests-header-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-header-script
-
   tests-instruction-contract:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-instruction-contract
-
-  tests-integration-mirror:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-integration-mirror
 
   tests-fib:
     needs: [detect, source, current]
@@ -702,10 +455,14 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 1
           filter: blob:none
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - id: ack
         name: Require the selected report consumer's FIB regressions
         env:
@@ -727,13 +484,6 @@ jobs:
     with:
       unit: tests-lean-cache-script
 
-  tests-lean-report-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-lean-report-script
-
   tests-playbook-script:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
@@ -747,13 +497,6 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-pr-script
-
-  tests-report-supervisor:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-report-supervisor
 
   tests-repository-configuration:
     needs: [detect, source]
@@ -783,20 +526,6 @@ jobs:
     with:
       unit: tests-repository-topology
 
-  tests-resource-observation:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-resource-observation
-
-  tests-rules:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-rules
-
   tests-scribe:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
@@ -811,34 +540,6 @@ jobs:
     with:
       unit: tests-script
 
-
-  tests-engineering:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-engineering
-
-  tests-runtime:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-runtime
-
-  tests-test-evidence:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-test-evidence
-
-  tests-truth:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-truth
 
   tests-truth-release:
     needs: [detect, source]
@@ -865,7 +566,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-declared-template, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-declared-template, tests-engine, tests-fib, tests-filemap, tests-instruction-contract, tests-lean, tests-lean-cache-script, tests-playbook-script, tests-pr-script, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-scribe, tests-script, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
@@ -874,10 +575,14 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 1
           filter: blob:none
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools/scripts/workflow
-            Meta/ci-units.json
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - env:
           NEEDS: ${{ toJSON(needs) }}
           HITS: ${{ needs.detect.outputs.hits }}
