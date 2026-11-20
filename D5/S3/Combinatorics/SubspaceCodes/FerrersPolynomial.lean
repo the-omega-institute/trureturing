@@ -12,7 +12,7 @@ import Mathlib.Algebra.Polynomial.Roots
 
 /-! # Rank of four-term linearized polynomials -/
 
-namespace D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
+namespace D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 
 open Polynomial
 
@@ -117,4 +117,4 @@ theorem finrank_range_evaluateLinearized_ge_nine [Finite E]
 
 end
 
-end D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
+end D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial

@@ -7,7 +7,7 @@ import Mathlib.Algebra.Field.ULift
 
 namespace Reg.D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 
-open _root_.D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
+open _root_.D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 

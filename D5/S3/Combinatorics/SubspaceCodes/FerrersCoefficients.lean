@@ -14,8 +14,9 @@ import Mathlib.Tactic.Ring
 
 /-! # The linear coefficient map -/
 
-namespace D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
+namespace D5.S3.Combinatorics.SubspaceCodes.FerrersCoefficients
 
+open D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 open Module
 
 section
@@ -158,4 +159,4 @@ theorem evaluation_on_bK (hK : finrank F K = 3) (b c : E)
 
 end
 
-end D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
+end D5.S3.Combinatorics.SubspaceCodes.FerrersCoefficients

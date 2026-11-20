@@ -20,6 +20,8 @@ import Mathlib.Tactic.FinCases
 
 namespace D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine
 
+open D5.S3.Combinatorics.SubspaceCodes.FerrersCoefficients
+open D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial
 open Module
 
 /-- Matrices with the fixed row and column index sets.
