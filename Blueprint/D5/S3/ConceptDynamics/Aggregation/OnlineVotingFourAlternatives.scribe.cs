@@ -83,8 +83,8 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                         + "additional alternatives necessarily lead to higher distortion.”")),
                     Paragraph(Text(
                         "The certificate uses the order 0, 1, 2, 3. The labeled six-to-six opening is "
-                        + "shared by all leaves. Given the second decision, both fourth profiles extend "
-                        + "the same third-round comparisons. Each fourth profile has two compatible "
+                        + "shared by all leaves. Given the decision at the second arrival, both fourth "
+                        + "profiles extend the same third-round comparisons. Each fourth profile has two compatible "
                         + "metrics with the same full ballots, one for each fourth-round action. "
                         + "Computing the decisions selects one full election, whose run reproduces "
                         + "those decisions even when the rule uses all history and labels.")),
@@ -96,7 +96,10 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                         + "The paper's §3 allows the canonical arrival order. A uniform extension "
                         + "to all horizons greater than three would have to cover this four-option, "
                         + "twelve-voter case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ghasemi-seddighin-seddighin-2026-deterministic-metric-extension"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Model(string name, string title, Formula formula, string description) =>
         Describe.Lean(DescribeId.Create("four-alternative-" + name.ToLowerInvariant()),

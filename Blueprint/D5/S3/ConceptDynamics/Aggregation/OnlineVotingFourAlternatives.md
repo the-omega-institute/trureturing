@@ -166,6 +166,10 @@ $$\neg (\exists r \in \operatorname{Rule}\left(12\right),\; \forall e \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Aggregation/OnlineVotingFourAlternatives.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ghasemi-seddighin-seddighin-2026-deterministic-metric-extension` (refuted) by `D5/S3/ConceptDynamics/Aggregation/OnlineVotingFourAlternatives.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ghasemi-seddighin-seddighin-2026-deterministic-metric-extension","declaration_gid":"D5/S3/ConceptDynamics/Aggregation/OnlineVotingFourAlternatives.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* MohammadHossein Ghasemi; Masoud Seddighin; Saeed Seddighin (2026). *Distortion in Online Voting*. DOI: [10.48550/arXiv.2611.25709](https://doi.org/10.48550/arXiv.2611.25709). URL: <https://arxiv.org/abs/2611.25709v1>.
@@ -174,7 +178,7 @@ $$\neg (\exists r \in \operatorname{Rule}\left(12\right),\; \forall e \in \opera
 
 Section 6 asks, “An interesting open question is whether this guarantee can be extended to elections with more than three alternatives, or whether additional alternatives necessarily lead to higher distortion.”
 
-The certificate uses the order 0, 1, 2, 3. The labeled six-to-six opening is shared by all leaves. Given the second decision, both fourth profiles extend the same third-round comparisons. Each fourth profile has two compatible metrics with the same full ballots, one for each fourth-round action. Computing the decisions selects one full election, whose run reproduces those decisions even when the rule uses all history and labels.
+The certificate uses the order 0, 1, 2, 3. The labeled six-to-six opening is shared by all leaves. Given the decision at the second arrival, both fourth profiles extend the same third-round comparisons. Each fourth profile has two compatible metrics with the same full ballots, one for each fourth-round action. Computing the decisions selects one full election, whose run reproduces those decisions even when the rule uses all history and labels.
 
 The finite tables give metric inequalities, compatible rankings and exact social costs. Each leaf has a positive offline minimum, and its squared winner cost is strictly greater than thirteen times the squared minimum. The four ratios are 5503/1503, 6503/1503, 11753/3253 and 7503/2003. The paper's §3 allows the canonical arrival order. A uniform extension to all horizons greater than three would have to cover this four-option, twelve-voter case.
 
