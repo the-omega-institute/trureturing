@@ -28,6 +28,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/PeriodicMPSFiveSiteSpecialFiber
   - D5/S3/Quantum/TensorNetworks/PeriodicMPSFiveSiteGenericRecovery
   - D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCriticalChart
+  - D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCompactSpecialFiber
 license: citation-only
 triage: anchor
 ---
@@ -672,3 +673,5 @@ At length five, `PeriodicMPSFiveSiteCoordinates` computes the eight cyclic ampli
 `PeriodicMPSFiveSiteGenericRecovery.generic_rawTwo_unitPhase_recovery` proves phase recovery at length five. Its relatively Euclidean-open dense locus is a subset of the literal unit-mass trace-word amplitude image. One adjacent two-site density determines each target in this locus against every actual periodic binary bond-two competitor. Equality of the two-site matrices gives the competitor unit mass by taking the trace. The proof constructs a compact extension of the trace chart, classifies the four lifts of the special observation, and distinguishes their normalized analytic germs by the certified raw cubic coefficients. It then applies analytic continuation after excluding the boundary and critical observations. Together with the one-site ambiguity theorem, this gives the real-generic minimum of two at length five. The global real-generic two-site question at lengths at least six remains open in this development. The length-five proof supplies zero additional solved-open-problem credit for Conjecture 10, whose four-site minimality clause already has the three-site counterargument above.
 
 At length six, `PeriodicMPSSixSiteCriticalChart.relatively_prime_chartMinors` proves that two selected $9×9$ minors of the raw complexified adjacent-pair Gram Jacobian have no common nonunit divisor over any characteristic-zero field after setting the first forward and reverse trace coordinates to one. The proof starts with a nonzero Sylvester determinant for two integral line restrictions of degree 93 and transfers relative primality through the two weighted dehomogenizations. The resulting critical-set certificate is an input to the six-site recovery argument.
+
+`PeriodicMPSSixSiteCompactSpecialFiber.observation_eq_target_iff` classifies one six-site observation in the compact closure of the trace-coordinate graph. Its adjacent-pair probability of two successive ones is zero. Positivity reduces ordinary lifts to the nilpotent chart, and the exceptional charts cannot have the selected observation. Exactly two lifts remain, both realized by actual cores. Their six-site states are distinct modulo phase.
