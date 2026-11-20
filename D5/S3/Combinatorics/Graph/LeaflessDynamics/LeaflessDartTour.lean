@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/LeaflessDartTour
+/- GID: D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDartTour
+   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -19,7 +19,7 @@ set_option relaxedAutoImplicit false
 
 open scoped BigOperators
 
-namespace D5.S3.Combinatorics.Graph.LeaflessDartTour
+namespace D5.S3.Combinatorics.Graph.LeaflessDynamics.LeaflessDartTour
 
 open SimpleGraph
 
@@ -401,11 +401,11 @@ public theorem exists_nonbacktracking_all_edge_tour [Finite V] (hconn : G.Connec
   · exact (w.edgeSet_copy _ _).trans hcover
 
 /--
-info: 'D5.S3.Combinatorics.Graph.LeaflessDartTour.exists_nonbacktracking_all_edge_tour' depends on axioms: [propext,
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.LeaflessDartTour.exists_nonbacktracking_all_edge_tour' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 -/
 #guard_msgs in
 #print axioms exists_nonbacktracking_all_edge_tour
 
-end D5.S3.Combinatorics.Graph.LeaflessDartTour
+end D5.S3.Combinatorics.Graph.LeaflessDynamics.LeaflessDartTour

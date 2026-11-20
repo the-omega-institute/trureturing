@@ -139,7 +139,7 @@ detour through a cycle in the appropriate component after deleting its
 underlying edge. The tour supplies the edge traversal for a candidate
 exact map. Charatonik and Miklos use related nonbacktracking edge walks
 in their construction of local expansions, see Lemmas 1–3 and Theorem 1.
-[All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDartTour.md)
+[All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.md)
 [Charatonik–Miklos 1981](https://doi.org/10.4064/fm-113-3-235-252)
 
 For each integer N at least two, the repository constructs a compact connected

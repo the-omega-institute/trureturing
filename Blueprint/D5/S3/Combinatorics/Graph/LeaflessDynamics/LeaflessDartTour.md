@@ -6,9 +6,9 @@ Nonbacktracking all-edge tours in finite graphs without leaves
 
 **Theorem 1.1 (Each prescribed dart begins and ends an all-edge walk).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/LeaflessDartTour.exists_nonbacktracking_all_edge_tour`
+Lean statement: `D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.exists_nonbacktracking_all_edge_tour`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LeaflessDartTour.exists_nonbacktracking_all_edge_tour` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.exists_nonbacktracking_all_edge_tour` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,4 +22,4 @@ Charatonik and Miklos used nonbacktracking edge walks to construct local expansi
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/LeaflessDartTour.exists_nonbacktracking_all_edge_tour`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.exists_nonbacktracking_all_edge_tour`

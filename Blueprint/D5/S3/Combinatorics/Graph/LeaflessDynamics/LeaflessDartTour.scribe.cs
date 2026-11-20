@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LeaflessDynamics;
 
 internal sealed class LeaflessDartTourDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class LeaflessDartTourDocument : IScribeDocumentDefinition
         H("Nonbacktracking all-edge tours in finite graphs without leaves"),
         Blocks(Describe.Lean(
             DescribeId.Create("leafless-dart-all-edge-tour"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LeaflessDartTour.exists_nonbacktracking_all_edge_tour"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.exists_nonbacktracking_all_edge_tour"),
             H("Each prescribed dart begins and ends an all-edge walk"),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
