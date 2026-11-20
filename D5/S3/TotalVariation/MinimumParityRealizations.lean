@@ -39,11 +39,6 @@ private theorem moment_eq_zero_of_nontrivial_on_fair_columns
   rintro _ ⟨i, hi, rfl⟩
   exact (support_iff_trivial_on_fair_columns two c s q χ).1 hn i hi
 
-omit [Fintype A] in
-private theorem absolute_group_product {B : Type*} (c : I → B) (q : I → ℝ) (b : B) :
-    groupBias c (fun i => |q i|) b = |groupBias c q b| := by
-  rw [groupBias, groupBias, Finset.abs_prod]
-
 private theorem law_eq_of_matching_quotient_data
     (two : ∀ a : A, a + a = 0)
     (c : I → A) (s : A) (q : I → ℝ) (d : J → A) (t : A) (r : J → ℝ)
@@ -77,11 +72,11 @@ private theorem law_eq_of_matching_quotient_data
     congr 1
     apply Finset.prod_congr rfl
     intro a ha
-    rw [absolute_group_product, absolute_group_product]
-    apply hgroup a
-    intro hz
-    have hsign := (Finset.mem_filter.mp ha).2
-    norm_num [hz, sign] at hsign
+    have hne : a ≠ 0 := by
+      intro hz
+      have hsign := (Finset.mem_filter.mp ha).2
+      norm_num [hz, sign] at hsign
+    simpa only [groupBias, Finset.abs_prod] using hgroup a hne
   · have hd : ¬ ∀ a ∈ fairSpan d r, χ a = 1 := by
       rw [hspan]
       exact hχ
