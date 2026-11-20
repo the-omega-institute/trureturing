@@ -1,9 +1,10 @@
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { dirname, join, resolve } from 'node:path';
+import { createInterface } from 'node:readline';
 import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -74,20 +75,53 @@ function matchIndex(identity, matched, record) {
   if (matched !== expected) throw new Error('Actions index did not match the producing run');
 }
 
-async function paced(items, parallelism, perMinute, invoke) {
+async function paced(items, parallelism, perMinute, invoke, schedule = { next: performance.now() }) {
   const interval = 60000 / perMinute;
-  let nextPermit = performance.now();
   let position = 0;
   await Promise.all(Array.from({ length: Math.min(items.length, parallelism) }, async () => {
     while (position < items.length) {
       const item = items[position++];
       const now = performance.now();
-      const scheduled = Math.max(now, nextPermit);
-      nextPermit = scheduled + interval;
+      const scheduled = Math.max(now, schedule.next);
+      schedule.next = scheduled + interval;
       if (scheduled > now) await delay(scheduled - now);
       await invoke(item);
     }
   }));
+}
+
+async function prepareBatches(args, consume) {
+  const child = spawn('python3', ['-B', pythonTool, 'prepare', '--state', state, '--stream-payloads', ...args], {
+    stdio: ['pipe', 'pipe', 'inherit'],
+  });
+  const finished = new Promise(resolve => {
+    child.once('error', error => resolve(error));
+    child.once('close', code => resolve(code === 0 ? null : new Error('shard preparation exited with ' + code)));
+  });
+  child.stdin.on('error', () => {});
+  let record;
+  try {
+    for await (const line of createInterface({ input: child.stdout, crlfDelay: Infinity })) {
+      const batchPrefix = 'SHARD_PAYLOAD_BATCH ';
+      if (line.startsWith(batchPrefix)) {
+        const batch = JSON.parse(line.slice(batchPrefix.length));
+        await consume(batch);
+        child.stdin.write('continue\n');
+      } else if (line.startsWith('{')) {
+        record = JSON.parse(line);
+      } else {
+        console.log(line);
+      }
+    }
+    const error = await finished;
+    if (error) throw error;
+    if (!record) throw new Error('shard preparation returned no index');
+    return record;
+  } finally {
+    child.stdin.end();
+    if (child.exitCode === null) child.kill();
+    await finished;
+  }
 }
 
 function waitForCacheQuota() {
@@ -221,20 +255,15 @@ function matches(entries, key, version) {
 }
 
 async function packPreparation(directory) {
-  const args = ['--directory', directory];
-  if (anchor) {
+  if (!anchor) throw new Error('sharded preparation requires a pinned history anchor');
+  const args = ['--directory', directory, '--anchor', anchor];
+  try {
     const { cache, cacheVersion } = await loadCacheClient();
-    const identity = python('identity');
-    if (await fetchIndex(cache, cacheVersion, identity, true)) {
-      const record = JSON.parse(await readFile(indexPath, 'utf8'));
-      const material = optionalInventory(identity.owner.ref, identity.prefix + 'material-');
-      const visible = new Set(material.map(row => row.key + '/' + row.version));
-      const digests = [...new Set(Object.values(record.entries))].filter(digest =>
-        visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
-      const available = join(stage, 'visible-material.json');
-      await writeFile(available, JSON.stringify(digests));
-      args.push('--previous-index', indexPath, '--available', available);
+    if (await fetchIndex(cache, cacheVersion, python('identity'), true)) {
+      args.push('--previous-index', indexPath);
     }
+  } catch (error) {
+    console.log('LEAN_ACTIONS_SHARDS prior layout unavailable: ' + error.message);
   }
   preparationCommand('pack', args);
 }
@@ -273,17 +302,7 @@ async function save(cache, cacheVersion, identity) {
   if (!previous && process.env['INPUT_REQUIRE-EXISTING-INDEX'] === 'true') {
     throw new Error('indexed publication requires the previous layout; the long producer can bootstrap');
   }
-  const record = python('prepare', extra);
-  const digests = [...new Set(Object.values(record.entries))];
-  const confirmed = new Set(digests.filter(digest => known.has(digest)));
-  const pending = digests.filter(digest => !confirmed.has(digest));
-  if (state === 'complete' && previous && pending.length === 0
-      && Object.keys(previous.entries).length === Object.keys(record.entries).length
-      && Object.entries(record.entries).every(([key, digest]) => previous.entries[key] === digest)) {
-    console.log('LEAN_ACTIONS_SHARDS reuse current verified material');
-    await setOutputs({ key: savedIndex.key, available: confirmed.size, missing: 0, complete: true });
-    return;
-  }
+  const confirmed = new Set(known);
   const upload = async (digest, inventory) => {
     const path = payloadPath(digest);
     const key = payloadKey(identity, digest);
@@ -315,21 +334,49 @@ async function save(cache, cacheVersion, identity) {
     }
     return rows;
   };
-  // GitHub allows 200 uploads per repository per minute. Leave room for
-  // another producer and the repository's ordinary cache writes.
-  await paced(pending, 8, 85, digest => upload(digest, before));
+  const prepareAndUpload = (args, perMinute, inventory) => {
+    const schedule = { next: performance.now() };
+    return prepareBatches(args, batch => paced(batch, 8, perMinute, async digest => {
+      try {
+        await upload(digest, inventory);
+      } finally {
+        await rm(payloadPath(digest), { force: true });
+      }
+    }, schedule));
+  };
+  // Leave headroom in GitHub's 200 uploads per repository per minute.
+  const record = await prepareAndUpload(extra, 85, before);
+  const digests = [...new Set(Object.values(record.entries))];
+  const expected = new Set(digests);
+  for (const digest of confirmed) {
+    if (!expected.has(digest)) confirmed.delete(digest);
+  }
+  const previousCount = digests.filter(digest => known.has(digest)).length;
   reconcile();
-  if (pending.some(digest => !confirmed.has(digest))) {
+  if (confirmed.size !== digests.length) {
     await waitForCacheQuota();
     const inventory = reconcile();
-    const retry = pending.filter(digest => !confirmed.has(digest));
+    const available = join(stage, 'visible-material.json');
+    await writeFile(available, JSON.stringify([...confirmed]));
+    await writeFile(indexPath, JSON.stringify(record));
     console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-      operation: 'retry-upload', requested: retry.length, perMinute: 50,
+      operation: 'retry-upload', requested: digests.length - confirmed.size, perMinute: 50,
     }));
-    await paced(retry, 8, 50, digest => upload(digest, inventory));
+    const retry = await prepareAndUpload(['--anchor', anchor, ...targetArgs,
+      '--index', indexPath, '--available', available], 50, inventory);
+    if (JSON.stringify(retry.entries) !== JSON.stringify(record.entries)) {
+      throw new Error('shard material changed while retrying publication');
+    }
     reconcile();
   }
   const missing = digests.length - confirmed.size;
+  if (state === 'complete' && previous && missing === 0 && previousCount === digests.length
+      && Object.keys(previous.entries).length === Object.keys(record.entries).length
+      && Object.entries(record.entries).every(([key, digest]) => previous.entries[key] === digest)) {
+    console.log('LEAN_ACTIONS_SHARDS reuse current verified material');
+    await setOutputs({ key: savedIndex.key, available: confirmed.size, missing: 0, complete: true });
+    return;
+  }
   if (state === 'complete' && missing) throw new Error('complete cache index is missing ' + missing + ' shards');
   if (!confirmed.size) throw new Error('no shard was confirmed on its producer ref');
   record.entries = Object.fromEntries(Object.entries(record.entries).filter(([, digest]) => confirmed.has(digest)));
@@ -349,7 +396,7 @@ async function save(cache, cacheVersion, identity) {
     throw new Error('Actions index is not visible on its producer ref');
   }
   console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-    operation: 'save', requested: digests.length, previous: digests.length - pending.length,
+    operation: 'save', requested: digests.length, previous: previousCount,
     confirmed: confirmed.size, seconds: (performance.now() - started) / 1000,
   }));
   await setOutputs({ key, available: confirmed.size, missing, complete: state === 'complete' });

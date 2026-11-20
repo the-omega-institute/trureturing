@@ -23,6 +23,63 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
+    def test_stream_packs_bounded_batches_and_requires_upload_acknowledgement(self):
+        shards = importlib.import_module("lean_actions_shards")
+        first, large, last = ("a" * 64, "b" * 64, "c" * 64)
+        record = {"entries": {"first": first, "large": large, "last": last}}
+
+        def pack(*args, deliver):
+            deliver(first, 1)
+            deliver(large, 2 * 1024 ** 3)
+            deliver(last, 1)
+            return record
+
+        args = (self.root, {}, "complete", None, REV, (), set())
+        with mock.patch.object(shards, "prepare", side_effect=pack), \
+                mock.patch.object(sys, "stdin", io.StringIO("continue\n" * 3)), \
+                contextlib.redirect_stdout(io.StringIO()) as stdout:
+            self.assertEqual(record, shards.prepare_stream(*args))
+        frames = [json.loads(line.removeprefix("SHARD_PAYLOAD_BATCH "))
+                  for line in stdout.getvalue().splitlines() if line.startswith("SHARD_PAYLOAD_BATCH ")]
+        self.assertEqual([[first], [large], [last]], frames)
+        with mock.patch.object(shards, "prepare", side_effect=pack), \
+                mock.patch.object(sys, "stdin", io.StringIO("")), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, "stopped before accepting"):
+                shards.prepare_stream(*args)
+
+    def test_release_checkpoint_artifact_survives_empty_cache_and_checks_attempt(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        producer = self.root / "producer"
+        source = pathlib.Path("lib/lean/D5/Fixture.olean")
+        payload_file = producer / source
+        payload_file.parent.mkdir(parents=True)
+        payload_file.write_bytes(b"compiler output")
+        digest = shards.write_payload(self.root, producer, [source.as_posix()])
+        group = [["D5.Fixture"]]
+        key = shards.group_identity(group)
+        identity = {"verification": {"scenario": "release-none", "run": "17"}}
+        owner = {"commit": "a" * 40, "ref": "refs/heads/integration-ci-cache-tests", "run": "17", "attempt": "1"}
+        record = {"binding": identity, "owner": owner, "state": "resume", "layout": {key: group},
+                  "sources": {"D5.Fixture": "b" * 64}, "entries": {key: digest},
+                  "fingerprints": {key: "c" * 64}, "required": {}}
+        artifact = self.root / "checkpoint"
+        with mock.patch.object(shards, "prepare", return_value=record), contextlib.redirect_stdout(io.StringIO()):
+            shards.pack_checkpoint(self.root, identity, None, owner["commit"], artifact)
+        self.assertFalse((self.root / shards.transport_payload(digest)).exists())
+        previous = {**owner, "attempt": "2"}
+        with mock.patch.object(shards, "current_owner", return_value=previous), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, "different run or attempt"):
+                shards.restore_checkpoint(self.root, identity, artifact, 2)
+            shards.restore_checkpoint(self.root, identity, artifact, 1)
+            build_output = self.root / ".lake/build" / source
+            self.assertEqual(b"compiler output", build_output.read_bytes())
+            build_output.unlink()
+            (artifact / "payload" / (digest + ".tar.gz")).unlink()
+            with self.assertRaisesRegex(ValueError, "missing verified shard material"):
+                shards.restore_checkpoint(self.root, identity, artifact, 1)
+            self.assertFalse(build_output.exists())
+
     def test_resume_separates_producer_and_verification_runs(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")

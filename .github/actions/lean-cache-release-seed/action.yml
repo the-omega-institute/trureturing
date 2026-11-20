@@ -21,16 +21,46 @@ runs:
         path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
         key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
         restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+    - id: previous_checkpoint
+      name: Find the last published checkpoint in this verification run
+      if: inputs.verification-history-anchor != '' && fromJSON(github.run_attempt) > 1
+      shell: bash
+      env:
+        PREFIX: lean-release-checkpoint-${{ inputs.mode }}-${{ github.run_id }}-
+      run: |
+        checkpoint=$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" \
+          | jq -rs --arg prefix "$PREFIX" --argjson current "$GITHUB_RUN_ATTEMPT" '
+              [.[].artifacts[] | select(.expired == false and (.name | startswith($prefix)))
+               | .attempt = (.name | ltrimstr($prefix))
+               | select(.attempt | test("^[1-9][0-9]*$")) | .attempt |= tonumber
+               | select(.attempt < $current)] | max_by(.attempt) // empty | [.id, .attempt] | @tsv')
+        if [[ -n "$checkpoint" ]]; then
+          read -r artifact attempt <<< "$checkpoint"
+          [[ "$artifact" =~ ^[1-9][0-9]*$ && "$attempt" =~ ^[1-9][0-9]*$ ]]
+          echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
+          echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
+        fi
+    - name: Download this verification run's checkpoint artifact
+      if: steps.previous_checkpoint.outputs.artifact != ''
+      uses: actions/download-artifact@v8
+      with:
+        artifact-ids: ${{ steps.previous_checkpoint.outputs.artifact }}
+        path: ${{ runner.temp }}/lean-release-checkpoint-in
+        github-token: ${{ github.token }}
+        run-id: ${{ github.run_id }}
+        digest-mismatch: error
     - id: resumed
-      name: Restore this verification run's build progress
-      if: inputs.verification-history-anchor != ''
-      uses: ./.github/actions/lean-cache-shards
+      name: Verify and restore this verification run's build progress
+      if: steps.previous_checkpoint.outputs.artifact != ''
+      shell: bash
       env:
         STRATALINT_CACHE_WRITES: 'true'
         STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
-      with:
-        operation: restore
-        state: resume
+        PREVIOUS_ATTEMPT: ${{ steps.previous_checkpoint.outputs.attempt }}
+      run: |
+        python3 tools/scripts/worktree/lean_actions_shards.py checkpoint-restore --state resume \
+          --artifact-directory "$RUNNER_TEMP/lean-release-checkpoint-in" --previous-attempt "$PREVIOUS_ATTEMPT"
+        rm -rf -- "$RUNNER_TEMP/lean-release-checkpoint-in/payload"
     - id: sharded
       if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode) && (steps.resumed.outputs.available == '' || steps.resumed.outputs.available == '0')
       continue-on-error: true
@@ -95,7 +125,7 @@ runs:
       if: inputs.verification-history-anchor != ''
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
-        STRATALINT_BUILD_TIMEOUT_SECONDS: '2700'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '900'
       shell: bash
       run: |
         result=0
@@ -109,16 +139,30 @@ runs:
           exit "$result"
         fi
     - id: checkpoint
-      name: Save this verification run's build progress
+      name: Package this verification run's build progress
       if: steps.cold_build.outputs.checkpoint == 'true'
-      uses: ./.github/actions/lean-cache-shards
+      shell: bash
       env:
         STRATALINT_CACHE_WRITES: 'true'
         STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
+        ANCHOR: ${{ inputs.verification-history-anchor }}
+        RESUMED: ${{ steps.resumed.outputs.available || '0' }}
+      run: |
+        args=()
+        if [[ "$RESUMED" != 0 ]]; then
+          args+=(--index "$RUNNER_TEMP/lean-release-checkpoint-in/index.json")
+        fi
+        python3 tools/scripts/worktree/lean_actions_shards.py checkpoint-pack --state resume \
+          --artifact-directory "$RUNNER_TEMP/lean-release-checkpoint-out" --anchor "$ANCHOR" "${args[@]}"
+    - name: Publish the checkpoint artifact for the next attempt
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      uses: actions/upload-artifact@v6
       with:
-        operation: save
-        state: resume
-        anchor: ${{ inputs.verification-history-anchor }}
+        name: lean-release-checkpoint-${{ inputs.mode }}-${{ github.run_id }}-${{ github.run_attempt }}
+        path: ${{ runner.temp }}/lean-release-checkpoint-out/
+        compression-level: 0
+        if-no-files-found: error
+        retention-days: 3
     - name: Require the cold verification build to be ready for publication
       if: steps.cold_build.outputs.checkpoint == 'true'
       env:
