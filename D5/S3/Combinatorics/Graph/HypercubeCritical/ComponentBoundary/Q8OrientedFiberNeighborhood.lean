@@ -6,8 +6,9 @@
    utility: none
    digest: Actual projections and coordinate flips give the four-axis Q8 neighborhood bounds. -/
 
+import Mathlib.Data.Fin.Tuple.Sort
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.CubeFiberNeighborhoodBound
-import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q8FourFiberCapacityCertificate
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q8OrderedFiberCapacityCertificate
 
 /-! The list in the certificate counts vertices by their bits on the selected axes,
 in least-significant-axis-first order. Dropping an axis merges the two fibres that
@@ -22,6 +23,7 @@ open Finset
 open BalancedCriticalSpectrum (flip)
 open CubeClosedNeighborhoodRecurrence (closedNeighborhood h)
 open Q8FourFiberCapacityCertificate (dropAxis neighborhoodCost ProjectionConstraints)
+open Q8OrderedFiberCapacityCertificate (OrderedProjections)
 open scoped BigOperators
 
 open private costWith from
@@ -45,14 +47,19 @@ private def insertBit {d : ℕ} (i : Fin (d + 1)) (b : Bool) (p : Fin (2 ^ d)) :
   let place := 2 ^ (i : ℕ)
   (BitVec.ofNat (d + 1) (p.val % place + b.toNat * place + (p.val / place) * (2 * place))).toFin
 
-private theorem bits_insertBit {d : ℕ} (hd : d ≤ 3) (i : Fin (d + 1)) (b : Bool)
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 4000000 in
+-- Check each insertion axis separately through dimension seven.
+private theorem bits_insertBit {d : ℕ} (hd : d ≤ 6) (i : Fin (d + 1)) (b : Bool)
     (p : Fin (2 ^ d)) :
     bits (insertBit i b p) = i.insertNth (α := fun _ => Bool) b (bits p) := by
   ext j
-  revert i b p j
-  interval_cases d <;> decide +kernel
+  interval_cases d <;> fin_cases i <;> revert b p j <;> decide +kernel
 
-private theorem dropAxis_ofFn {d : ℕ} (hd : d ≤ 3) (i : Fin (d + 1))
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 3000000 in
+-- The last cases reduce lists of 128 symbolic entries.
+private theorem dropAxis_ofFn {d : ℕ} (hd : d ≤ 6) (i : Fin (d + 1))
     (f : Fin (2 ^ (d + 1)) → ℕ) :
     dropAxis d i (List.ofFn f) =
       List.ofFn (fun p => f (insertBit i false p) + f (insertBit i true p)) := by
@@ -61,22 +68,30 @@ private theorem dropAxis_ofFn {d : ℕ} (hd : d ≤ 3) (i : Fin (d + 1))
 private def neighbor {k : ℕ} (p : Fin (2 ^ k)) (i : Fin k) : Fin (2 ^ k) :=
   (BitVec.ofFin p ^^^ BitVec.ofNat k (2 ^ (i : ℕ))).toFin
 
-private theorem neighbor_val {k : ℕ} (hk : k ≤ 4) (p : Fin (2 ^ k)) (i : Fin k) :
+private theorem neighbor_val {k : ℕ} (p : Fin (2 ^ k)) (i : Fin k) :
     (neighbor p i : ℕ) = p.val ^^^ (2 ^ (i : ℕ)) := by
-  revert p i
-  interval_cases k <;> decide +kernel
+  change (BitVec.ofFin p ^^^ BitVec.ofNat k (2 ^ (i : ℕ))).toNat = _
+  rw [BitVec.toNat_xor, BitVec.toNat_ofNat, Nat.mod_eq_of_lt
+    (Nat.pow_lt_pow_right (by decide : 1 < 2) i.isLt)]
+  rfl
 
-private theorem bits_neighbor {k : ℕ} (hk : k ≤ 4) (p : Fin (2 ^ k)) (i : Fin k) :
+private theorem bits_neighbor {k : ℕ} (p : Fin (2 ^ k)) (i : Fin k) :
     bits (neighbor p i) = flip (bits p) i := by
-  ext j
-  revert p i j
-  interval_cases k <;> decide +kernel
+  funext j
+  change (neighbor p i).val.testBit j = _
+  rw [neighbor_val, Nat.testBit_xor, Nat.testBit_two_pow]
+  change (bits p j ^^ decide (i.val = j.val)) = flip (bits p) i j
+  by_cases hij : j = i
+  · subst j
+    simp [BalancedCriticalSpectrum.flip]
+  · have hne : i.val ≠ j.val := fun he => hij (Fin.ext he.symm)
+    simp [BalancedCriticalSpectrum.flip, hij, hne]
 
 /-- The count table in binary order for the restriction to the given axes. -/
 def fiberCounts {k : ℕ} (S : Finset Vertex) (axes : Fin k ↪ Fin 8) : List ℕ :=
   List.ofFn fun p : Fin (2 ^ k) => (S.filter fun x => (fun i => x (axes i)) = bits p).card
 
-private theorem dropAxis_fiberCounts {d : ℕ} (hd : d ≤ 3) (S : Finset Vertex)
+private theorem dropAxis_fiberCounts {d : ℕ} (hd : d ≤ 6) (S : Finset Vertex)
     (axes : Fin (d + 1) ↪ Fin 8) (i : Fin (d + 1)) :
     dropAxis d i (fiberCounts S axes) = fiberCounts S (i.succAboveEmb.trans axes) := by
   unfold fiberCounts
@@ -194,7 +209,7 @@ private theorem foldl_max_le {α : Type*} (l : List α) (f : α → ℕ) (start 
   | cons i l ih =>
       exact ih _ (max_le hstart (hvals i (by simp))) (fun j hj => hvals j (by simp [hj]))
 
-private theorem cost_le_pattern_sum {k : ℕ} (hk : k ≤ 4) (F : (Fin k → Bool) → ℕ) :
+private theorem cost_le_pattern_sum {k : ℕ} (F : (Fin k → Bool) → ℕ) :
     neighborhoodCost k (List.ofFn fun p : Fin (2 ^ k) => F (bits p)) ≤
       ∑ p : Fin k → Bool, max (h (8 - k) (F p)) (univ.sup fun i : Fin k => F (flip p i)) := by
   let bound := fun (p : Fin k → Bool) =>
@@ -227,16 +242,16 @@ private theorem cost_le_pattern_sum {k : ℕ} (hk : k ≤ 4) (F : (Fin k → Boo
   apply foldl_max_le _ _ _ _ (le_max_left _ _)
   intro i hi
   let axis : Fin k := ⟨i, List.mem_range.mp hi⟩
-  rw [show p.val ^^^ (2 ^ i) = (neighbor p axis).val from (neighbor_val hk p axis).symm,
-    hget, bits_neighbor hk]
+  rw [show p.val ^^^ (2 ^ i) = (neighbor p axis).val from (neighbor_val p axis).symm,
+    hget, bits_neighbor]
   exact (Finset.le_sup (f := fun i : Fin k => F (flip (bits p) i)) (mem_univ axis)).trans
     (le_max_right _ _)
 
 set_option maxHeartbeats 600000 in
 -- Elaborating the product-coordinate counts compares dependent finite-set instances.
-/-- Every table of actual fibres on at most four axes has cost bounded by the
-closed neighborhood in the original eight-cube. -/
-theorem neighborhoodCost_fiberCounts_le {k : ℕ} (hk : k ≤ 4) (S : Finset Vertex)
+/-- Every table of actual fibres has cost bounded by the closed neighborhood
+in the original eight-cube. -/
+theorem neighborhoodCost_fiberCounts_le {k : ℕ} (hk : k ≤ 8) (S : Finset Vertex)
     (axes : Fin k ↪ Fin 8) :
     neighborhoodCost k (fiberCounts S axes) ≤ (closedNeighborhood S).card := by
   obtain ⟨e, he⟩ := extend_axes (by omega) axes
@@ -258,7 +273,7 @@ theorem neighborhoodCost_fiberCounts_le {k : ℕ} (hk : k ≤ 4) (S : Finset Ver
     rfl
   calc
     _ ≤ ∑ p : Fin k → Bool, max (h (8 - k) (F p))
-        (univ.sup fun i : Fin k => F (flip p i)) := cost_le_pattern_sum hk F
+        (univ.sup fun i : Fin k => F (flip p i)) := cost_le_pattern_sum F
     _ ≤ (closedNeighborhood (U.map A.toEmbedding)).card := by
       rw [hf]
       exact CubeFiberNeighborhoodBound.sum_max_le_closedNeighborhood_card U
@@ -293,7 +308,7 @@ private theorem fiberCounts_one (S : Finset Vertex) (axes : Fin 1 ↪ Fin 8) :
 
 /-- A neighborhood cap and the oriented one-side counts give the certificate
 constraints on every nonempty subprojection of the selected axes. -/
-theorem projectionConstraints_fiberCounts {k cap : ℕ} (hk : k ≤ 4) (S : Finset Vertex)
+theorem projectionConstraints_fiberCounts {k cap : ℕ} (hk : k ≤ 7) (S : Finset Vertex)
     (axes : Fin k ↪ Fin 8) (hcap : (closedNeighborhood S).card ≤ cap)
     (hm : ∀ i, 11 ≤ sideCount S (axes i) true ∧ sideCount S (axes i) true ≤ S.card / 2) :
     ProjectionConstraints S.card cap k (fiberCounts S axes) := by
@@ -301,7 +316,7 @@ theorem projectionConstraints_fiberCounts {k cap : ℕ} (hk : k ≤ 4) (S : Fins
   | zero => trivial
   | succ d ih =>
     rw [ProjectionConstraints]
-    refine ⟨(neighborhoodCost_fiberCounts_le hk S axes).trans hcap, ?_, ?_⟩
+    refine ⟨(neighborhoodCost_fiberCounts_le (by omega) S axes).trans hcap, ?_, ?_⟩
     · cases d with
       | zero => simpa only [ite_true, fiberCounts_one] using hm 0
       | succ d => trivial
@@ -393,6 +408,75 @@ theorem closedNeighborhood_lower_bounds (S : Finset Vertex)
     · simp only [mask, hi, hlt, and_false, decide_false, Bool.not_false]
       omega
   simpa only [heq, hhood] using closedNeighborhood_lower_bounds_of_oriented T horiented
+
+private theorem orderedProjections_fiberCounts {k : ℕ} (hk : k ≤ 7) (S : Finset Vertex)
+    (axes : Fin k ↪ Fin 8) (hm : Monotone (fun i => sideCount S (axes i) true)) :
+    OrderedProjections k (fiberCounts S axes) := by
+  induction k with
+  | zero => trivial
+  | succ k ih =>
+    cases k with
+    | zero => trivial
+    | succ k =>
+      cases k with
+      | zero =>
+        have hs : sideCount S (axes 0) true ≤ sideCount S (axes 1) true :=
+          hm (show (0 : Fin 2) ≤ 1 by decide)
+        have h0 := congrArg (fun t : List ℕ => t[1]!) (dropAxis_fiberCounts (by decide) S axes 1)
+        have h1 := congrArg (fun t : List ℕ => t[1]!) (dropAxis_fiberCounts (by decide) S axes 0)
+        rw [fiberCounts_one] at h0 h1
+        change (fiberCounts S axes)[1]! + (fiberCounts S axes)[3]! =
+          sideCount S (axes 0) true at h0
+        change (fiberCounts S axes)[2]! + (fiberCounts S axes)[3]! =
+          sideCount S (axes 1) true at h1
+        change (fiberCounts S axes)[1]! ≤ (fiberCounts S axes)[2]!
+        omega
+      | succ k =>
+        intro i
+        rw [dropAxis_fiberCounts (by omega)]
+        exact ih (by omega) (i.succAboveEmb.trans axes)
+          (hm.comp (Fin.strictMono_succAbove i).monotone)
+
+private theorem exists_oriented_ordered (S : Finset Vertex)
+    (hm : ∀ (i : Fin 8) (b : Bool), 11 ≤ sideCount S i b) :
+    ∃ (T : Finset Vertex) (e : Equiv.Perm (Fin 8)),
+      T.card = S.card ∧ (closedNeighborhood T).card = (closedNeighborhood S).card ∧
+      (∀ i, 11 ≤ sideCount T i true ∧ sideCount T i true ≤ T.card / 2) ∧
+      Monotone (fun i => sideCount T (e i) true) := by
+  let mask (i : Fin 8) : Bool := decide (sideCount S i false < sideCount S i true)
+  let T := S.map (flipAxes mask).toEmbedding
+  have heq : T.card = S.card := Finset.card_map _
+  let margin (i : Fin 8) := sideCount T i true
+  refine ⟨T, Tuple.sort margin, heq, ?_, ?_, Tuple.monotone_sort margin⟩
+  · rw [show T = S.map (flipAxes mask).toEmbedding from rfl,
+      map_closedNeighborhood _ (flipAxes_hamming mask), Finset.card_map]
+  · intro i
+    change 11 ≤ sideCount (S.map (flipAxes mask).toEmbedding) i true ∧ _
+    rw [sideCount_flipAxes, heq]
+    refine ⟨hm i _, ?_⟩
+    have hsides := sideCount_add S i
+    by_cases hlt : sideCount S i false < sideCount S i true <;> simp [mask, hlt] <;> omega
+
+/-- A 36-vertex support with at least eleven vertices in every coordinate half
+has at least 108 vertices in its closed neighborhood. -/
+theorem closedNeighborhood_card_ge_108 (S : Finset Vertex) (hS : S.card = 36)
+    (hm : ∀ (i : Fin 8) (b : Bool), 11 ≤ sideCount S i b) :
+    108 ≤ (closedNeighborhood S).card := by
+  obtain ⟨T, e, hT, hhood, horiented, hsorted⟩ := exists_oriented_ordered S hm
+  have hT36 := hT.trans hS
+  by_contra! hsmall
+  have hcap : (closedNeighborhood T).card ≤ 107 := by rw [hhood]; omega
+  let axes : Fin 6 ↪ Fin 8 := (Fin.castAddEmb 2).trans e.toEmbedding
+  have htest := projectionConstraints_fiberCounts (by decide) T axes hcap
+    (fun i => horiented (axes i))
+  rw [hT36] at htest
+  exact Q8OrderedFiberCapacityCertificate.excludeOrdered36 _
+    (by simp [fiberCounts]) ((fiberCounts_sum T axes).trans hT36)
+    (fun _ hx => fiberCounts_capacity (by decide) T axes hx) htest
+    (orderedProjections_fiberCounts (by decide) T axes (hsorted.comp
+      (show Monotone (Fin.castAdd 2 : Fin 6 → Fin 8) from fun _ _ h => h)))
+
+#print axioms closedNeighborhood_card_ge_108
 
 #print axioms neighborhoodCost_fiberCounts_le
 #print axioms projectionConstraints_fiberCounts

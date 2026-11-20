@@ -83,26 +83,28 @@ private theorem card_openNeighborhood_parity {C : Finset (Q 9)} (p : Bool) :
   rw [hammingDist_comm y x, ← hammingDist_eq_zero]
   exact and_congr_right fun _ => by omega
 
-private theorem exterior_parity_lower_bound {C : Finset (Q 9)} {m : ℕ}
-    (hm : m = 12 ∨ m = 13) (hC : C.card = 6 * m)
-    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hmargins : ∀ (j : Fin 9) (b p : Bool),
-      11 ≤ (parityPart (C.filter fun x => x j = b) p).card) (p : Bool) :
-    71 ≤ (openNeighborhood (parityPart C p) \ C).card := by
-  let S := (parityPart C p).image (dropCoordinate (Fin.last 8))
-  have hS : S.card = 3 * m :=
-    (card_image_dropCoordinate (Fin.last 8) p _ (fun _ hx => (mem_filter.mp hx).2)).trans
-      (cubic_parityPart_card hC hr p)
-  have hmargins' (k : Fin 4) (b : Bool) : 11 ≤ sideCount S (Fin.castAddEmb 4 k) b := by
-    unfold sideCount
-    rw [card_projected_parity_half]
-    exact hmargins _ b p
-  have hneighbors : 3 * m + 71 ≤ (openNeighborhood (parityPart C p)).card := by
+private abbrev foldedPart (C : Finset (Q 9)) (p : Bool) : Finset (Q 8) :=
+  (parityPart C p).image (dropCoordinate (Fin.last 8))
+
+private theorem foldedPart_card {C : Finset (Q 9)} {m : ℕ} (hC : C.card = 6 * m)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (p : Bool) :
+    (foldedPart C p).card = 3 * m :=
+  (card_image_dropCoordinate (Fin.last 8) p _ (fun _ hx => (mem_filter.mp hx).2)).trans
+    (cubic_parityPart_card hC hr p)
+
+private theorem foldedPart_sideCount {C : Finset (Q 9)} (p : Bool) (k : Fin 8) (b : Bool) :
+    sideCount (foldedPart C p) k b =
+      (parityPart (C.filter fun x => x ((Fin.last 8).succAbove k) = b) p).card :=
+  card_projected_parity_half (Fin.last 8) k C b p
+
+private theorem exterior_parity_lower_bound {C : Finset (Q 9)} {m k : ℕ}
+    (hC : C.card = 6 * m)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (p : Bool)
+    (hfold : 3 * m + k ≤ (closedNeighborhood (foldedPart C p)).card) :
+    k ≤ (openNeighborhood (parityPart C p) \ C).card := by
+  have hneighbors : 3 * m + k ≤ (openNeighborhood (parityPart C p)).card := by
     rw [card_openNeighborhood_parity]
-    change 3 * m + 71 ≤ (closedNeighborhood S).card
-    rcases hm with rfl | rfl
-    · exact (closedNeighborhood_lower_bounds S hmargins').1 hS
-    · exact (closedNeighborhood_lower_bounds S hmargins').2 hS
+    exact hfold
   have hdiff : openNeighborhood (parityPart C p) \ C =
       openNeighborhood (parityPart C p) \ parityPart C (!p) := by
     ext y
@@ -112,12 +114,11 @@ private theorem exterior_parity_lower_bound {C : Finset (Q 9)} {m : ℕ}
     cubic_parityPart_card hC hr (!p)]
   omega
 
-private theorem exteriorBoundary_card_ge {C : Finset (Q 9)} {m : ℕ}
-    (hm : m = 12 ∨ m = 13) (hC : C.card = 6 * m)
+private theorem exteriorBoundary_card_ge_of_folds {C : Finset (Q 9)} {m k : ℕ}
+    (hC : C.card = 6 * m)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hmargins : ∀ (j : Fin 9) (b p : Bool),
-      11 ≤ (parityPart (C.filter fun x => x j = b) p).card) :
-    142 ≤ (exteriorBoundary C).card := by
+    (hfold : ∀ p, 3 * m + k ≤ (closedNeighborhood (foldedPart C p)).card) :
+    2 * k ≤ (exteriorBoundary C).card := by
   let L := openNeighborhood (parityPart C false) \ C
   let R := openNeighborhood (parityPart C true) \ C
   have hsplit : exteriorBoundary C = L ∪ R := by
@@ -136,10 +137,27 @@ private theorem exteriorBoundary_card_ge {C : Finset (Q 9)} {m : ℕ}
     have hL := parity_of_mem_neighborhood (mem_sdiff.mp hyL).1
     have hR := parity_of_mem_neighborhood (mem_sdiff.mp hyR).1
     exact Bool.noConfusion (hL.symm.trans hR)
-  have hL : 71 ≤ L.card := exterior_parity_lower_bound hm hC hr hmargins false
-  have hR : 71 ≤ R.card := exterior_parity_lower_bound hm hC hr hmargins true
+  have hL : k ≤ L.card := exterior_parity_lower_bound hC hr false (hfold false)
+  have hR : k ≤ R.card := exterior_parity_lower_bound hC hr true (hfold true)
   rw [hsplit, card_union_of_disjoint hdisjoint]
   omega
+
+private theorem exteriorBoundary_card_ge {C : Finset (Q 9)} {m : ℕ}
+    (hm : m = 12 ∨ m = 13) (hC : C.card = 6 * m)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hmargins : ∀ (j : Fin 9) (b p : Bool),
+      11 ≤ (parityPart (C.filter fun x => x j = b) p).card) :
+    142 ≤ (exteriorBoundary C).card := by
+  apply exteriorBoundary_card_ge_of_folds (k := 71) hC hr
+  intro p
+  have hS := foldedPart_card hC hr p
+  have hmargins' (i : Fin 4) (b : Bool) :
+      11 ≤ sideCount (foldedPart C p) (Fin.castAddEmb 4 i) b := by
+    rw [foldedPart_sideCount]
+    exact hmargins _ b p
+  rcases hm with rfl | rfl
+  · exact (closedNeighborhood_lower_bounds _ hmargins').1 hS
+  · exact (closedNeighborhood_lower_bounds _ hmargins').2 hS
 
 /-- An order-72 balanced induced cubic support with at least 26 vertices in
 every coordinate half has at least 142 distinct exterior neighbors. -/
@@ -154,14 +172,11 @@ theorem exteriorBoundary_card_ge_142_of_card_eq_72 {C : Finset (Q 9)} (hC : C.ca
   have hsize := hhalf j b
   omega
 
-/-- For order 72, excluding 20-vertex halves suffices because the 22- and
-24-vertex halves are already ruled out. -/
-theorem exteriorBoundary_card_ge_142_of_card_eq_72_of_no_twenty_half {C : Finset (Q 9)}
+private theorem half_card_ge_26_of_no_twenty_half {C : Finset (Q 9)}
     (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
     (h20 : ∀ (j : Fin 9) (b : Bool), (C.filter fun x => x j = b).card ≠ 20) :
-    142 ≤ (exteriorBoundary C).card := by
-  apply exteriorBoundary_card_ge_142_of_card_eq_72 hC hr hb
+    ∀ (j : Fin 9) (b : Bool), 26 ≤ (C.filter fun x => x j = b).card := by
   intro j b
   let e := Equiv.swap j (0 : Fin 9)
   let T := C.image (reindex e)
@@ -180,6 +195,38 @@ theorem exteriorBoundary_card_ge_142_of_card_eq_72_of_no_twenty_half {C : Finset
   have size_bound (n : ℕ) (hmin : 60 ≤ 3 * n) (heven : n % 2 = 0)
       (h20 : n ≠ 20) (h22 : n ≠ 22) (h24 : n ≠ 24) : 26 ≤ n := by omega
   exact size_bound _ hmin hmod (h20 j b) h22 h24
+
+/-- For order 72, excluding 20-vertex halves suffices because the 22- and
+24-vertex halves are already ruled out. -/
+theorem exteriorBoundary_card_ge_142_of_card_eq_72_of_no_twenty_half {C : Finset (Q 9)}
+    (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (h20 : ∀ (j : Fin 9) (b : Bool), (C.filter fun x => x j = b).card ≠ 20) :
+    142 ≤ (exteriorBoundary C).card :=
+  exteriorBoundary_card_ge_142_of_card_eq_72 hC hr hb
+    (half_card_ge_26_of_no_twenty_half hC hr hb h20)
+
+/-- Excluding 20-vertex halves in an order-72 balanced induced cubic support
+forces at least 144 distinct exterior neighbors. -/
+theorem exteriorBoundary_card_ge_144_of_card_eq_72_of_no_twenty_half {C : Finset (Q 9)}
+    (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (h20 : ∀ (j : Fin 9) (b : Bool), (C.filter fun x => x j = b).card ≠ 20) :
+    144 ≤ (exteriorBoundary C).card := by
+  have h72 : C.card = 6 * 12 := hC
+  have hmargins (j : Fin 9) (b p : Bool) :
+      11 ≤ (parityPart (C.filter fun x => x j = b) p).card := by
+    have ⟨_, hbalance, _⟩ := coordinate_half_parity_bounds h72 hr hb j b p
+    have hsize := half_card_ge_26_of_no_twenty_half hC hr hb h20 j b
+    omega
+  apply exteriorBoundary_card_ge_of_folds (k := 72) h72 hr
+  intro p
+  apply Q8OrientedFiberNeighborhood.closedNeighborhood_card_ge_108 _ (foldedPart_card h72 hr p)
+  intro i b
+  rw [foldedPart_sideCount]
+  exact hmargins _ b p
+
+#print axioms exteriorBoundary_card_ge_144_of_card_eq_72_of_no_twenty_half
 
 /-- Every order-78 balanced induced cubic support has at least 142 distinct
 exterior neighbors. -/
