@@ -8,12 +8,14 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> Axioms(CurrentRuleContext context)
+    private static ImmutableArray<RuleFinding> Axioms(CurrentRuleContext context) => Axioms(context.Lean.Report);
+
+    internal static ImmutableArray<RuleFinding> Axioms(LeanAxiomReport lean)
     {
         const string debtPath = "D5/X_Assumptions/AxiomDebt.lean";
         var registered = ImmutableHashSet<string>.Empty;
         if (RepoPath.TryCreate(debtPath, out var debtRepoPath)
-            && context.Lean.Report.Files.TryGetValue(debtRepoPath, out var debt))
+            && lean.Files.TryGetValue(debtRepoPath, out var debt))
         {
             registered = debt.Declarations
                 .Where(static declaration => declaration.Kind == "axiom")
@@ -22,7 +24,7 @@ internal static partial class RepositoryRules
         }
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, report) in context.Lean.Report.Files)
+        foreach (var (path, report) in lean.Files)
         {
             if (!string.IsNullOrEmpty(report.Error))
             {
