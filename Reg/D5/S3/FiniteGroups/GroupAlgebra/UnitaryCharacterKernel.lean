@@ -8,8 +8,9 @@ import Mathlib.Analysis.InnerProductSpace.ProdL2
 
 For semisimplicity the readout is the representation in the conclusion; a representation that
 is not semisimple, the unipotent action of the integers on the plane, refutes the varied law.
-For the positivity criterion the readout is the character kernel as a function of the weights;
-the empty family and the constant matrix `-1` refute the varied law. -/
+For the positivity criterion and for positivity under nonnegative weights the readout is the
+character kernel as a function of the weights; the empty family and the constant matrix `-1`
+refute the varied laws. -/
 
 namespace Reg.D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel
 open _root_.D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel
@@ -138,8 +139,8 @@ theorem unipotent_not_isSemisimple : ¬ unipotent.{u1, u2, u3}.IsSemisimpleRepre
 namespace Semisimple
 
 set_option linter.checkUnivs false in
-/-- Scalar field, group, space and their dictionaries. -/
-abbrev Params := Σ 𝕜 : Type u1, Σ G : Type u2, Σ E : Type u3, Σ _ : RCLike 𝕜, Σ _ : Group G,
+/-- Scalar field, monoid, space and their dictionaries. -/
+abbrev Params := Σ 𝕜 : Type u1, Σ G : Type u2, Σ E : Type u3, Σ _ : RCLike 𝕜, Σ _ : Monoid G,
   Σ _ : NormedAddCommGroup E, InnerProductSpace 𝕜 E
 
 set_option linter.checkUnivs false in
@@ -170,12 +171,12 @@ set_option linter.checkUnivs false in
 varies. -/
 abbrev arena : Arena where
   signature := signature.{u1, u2, u3}
-  Law R := ∀ {𝕜 : Type u1} {G : Type u2} {E : Type u3} [i𝕜 : RCLike 𝕜] [iG : Group G]
+  Law R := ∀ {𝕜 : Type u1} {G : Type u2} {E : Type u3} [i𝕜 : RCLike 𝕜] [iG : Monoid G]
     [iE : NormedAddCommGroup E] [iI : InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E]
     (ρ : Representation 𝕜 G E) (_hρ : ∀ g v, ‖ρ g v‖ = ‖v‖),
     (R.readout () ⟨𝕜, G, E, i𝕜, iG, iE, iI⟩ ρ).IsSemisimpleRepresentation
 
-/-- The model: the integers acting on the Euclidean plane over the real numbers. -/
+/-- The model: the integers, as a monoid, acting on the Euclidean plane over the real numbers. -/
 abbrev testParams : Params.{u1, u2, u3} :=
   ⟨K, Ints, Plane, inferInstance, inferInstance, inferInstance, inferInstance⟩
 
@@ -373,6 +374,77 @@ def posSemidef_sum_character_kernel_iff_registration :
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 12
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-! ## `posSemidef_sum_character_kernel_of_nonneg`: the kernel as a function of the weights -/
+namespace Nonneg
+
+set_option linter.checkUnivs false in
+/-- The complete original telescope is retained; only the kernel in the conclusion varies.
+The signature, the actual readout and the observation are those of the equivalence. -/
+abbrev arena : Arena where
+  signature := Kernel.signature.{u1, u2, u3}
+  Law R := ∀ {G : Type u1} [gG : Group G] {ι : Type u2} [fι : Fintype ι] {W : ι → Type u3}
+    [nW : ∀ i, NormedAddCommGroup (W i)] [iW : ∀ i, InnerProductSpace ℂ (W i)]
+    [∀ i, FiniteDimensional ℂ (W i)] (ρ : ∀ i, Representation ℂ G (W i))
+    (_hunit : ∀ i g v, ‖ρ i g v‖ = ‖v‖) (c : ι → ℂ) (_hc : ∀ i, 0 ≤ c i),
+    (R.readout () ⟨G, gG, ι, fι, W, nW, iW, ρ⟩ c).PosSemidef
+
+/-- On the empty family the weight condition holds, but `-1` is not positive semidefinite. -/
+theorem rejected_law : ¬ arena.{u1, u2, u3}.Law Kernel.rejected := by
+  intro h
+  have hh := @h PUnit.{u1 + 1} _ PEmpty.{u2 + 1} _ (fun i => i.elim) (fun i => i.elim)
+    (fun i => i.elim) (fun i => i.elim) (fun i => i.elim) (fun i => i.elim) (fun _ => 0)
+    (fun i => i.elim)
+  exact Kernel.const_not_posSemidef PUnit.unit hh
+
+/-- The exact statement of the source theorem. -/
+abbrev sourceStatement : Prop := type_of% @posSemidef_sum_character_kernel_of_nonneg.{u1, u2, u3}
+
+def source : Registration arena.{u1, u2, u3} sourceStatement.{u1, u2, u3} where
+  actual := Kernel.actual
+  bridge := Iff.rfl
+  variation := ⟨@posSemidef_sum_character_kernel_of_nonneg.{u1, u2, u3}, Kernel.rejected,
+    rejected_law⟩
+  sensitivity := ⟨fun i => ⟨Kernel.rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩, fun e => nomatch e⟩
+  dependence := Kernel.dependence
+
+end Nonneg
+
+def posSemidef_sum_character_kernel_of_nonneg_registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@posSemidef_sum_character_kernel_of_nonneg.{u1, u2, u3})
+      (Realization Kernel.signature.{u1, u2, u3}) Unit Unit := {
+  unitName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel.posSemidef_sum_character_kernel_of_nonneg_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel.Nonneg.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Nonneg.arena⟩
+  objectArena := .source ⟨Nonneg.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source Nonneg.arena ⟨Nonneg.source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Kernel.signature (fun _ => Kernel.observe) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel
+    definition := none
+    coordinates := #[0, 2, 4, 8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "arg"]
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
