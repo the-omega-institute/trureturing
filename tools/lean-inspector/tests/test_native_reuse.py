@@ -4,6 +4,98 @@ from test_reuse import EXECUTION
 
 
 class NativeLocalReportConsumerTests:
+    def test_indexed_push_repairs_evicted_compiler_shard_with_current_report(self):
+        for name in ('ci_checks.py', 'ci_compute.py', 'ci_contract.py', 'ci_detect.py', 'judge-lean-producer.sh'):
+            self.copy('tools/scripts/workflow/' + name)
+        for name in ('lean_actions.py', 'lean_actions_shards.py', 'lean_artifact_inventory.py',
+                     'lean_cache_shards.py', 'lean_release_index.py'):
+            self.copy('tools/scripts/worktree/' + name)
+        for name in ('ci-units.json', 'ci-cache-paths.json', 'FILEMAP.toml'):
+            self.copy('Meta/' + name)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        policy['report_modules']['include'] = [
+            dict(pattern='D5/**/*.lean', optional=False), dict(pattern='Reg/**/*.lean', optional=False)]
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.write('utility.json', '[]')
+        self.write('Reg/Required.lean', 'def regRequired : Nat := 1\n')
+        self.write('tools/lean-inspector/LeanInformationAuditRegTests/Required.lean',
+                   'def requiredCheck : Bool := true\n')
+        dotnet = self.root / 'bin/dotnet'
+        dotnet.write_text(dotnet.read_text().replace('if sys.argv[1] == "build":',
+            'if sys.argv[1] == "restore": raise SystemExit(0)\nif sys.argv[1] == "build":'))
+        self.write('.gitignore', '.lake/\nbuild/\n__pycache__/\nfixture-mathlib/\n')
+        self.write('changed-paths', '')
+        self.write('current-budget', '7200\n')
+        self.env.update(GITHUB_ACTIONS='true', GITHUB_EVENT_NAME='push',
+            GITHUB_REF='refs/heads/integration-ci-cache-tests', GITHUB_REF_PROTECTED='true',
+            GITHUB_RUN_ID='12', GITHUB_RUN_ATTEMPT='1', STRATALINT_CACHE_WRITES='true',
+            STRATALINT_REPORT_SUCCEEDED='true', STRATALINT_CACHE_PRODUCER_COMPLETE='true',
+            STRATALINT_ACCEPT_COLD_BUILD='1', STRATALINT_LEAN_BUILD_TARGETS='["leanInspector/reportInspector"]',
+            STRATALINT_CI_COMPUTE_BUDGET=str(self.root / 'current-budget'))
+
+        def run(*args, **env):
+            return self.guarded_command(args, env=dict(self.env, **env), timeout=120)
+
+        for args in (('add', '.'), ('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                                   '-c', 'commit.gpgsign=false', 'commit', '-qm', 'native shard fixture')):
+            git = run('git', *args)
+            self.assertEqual(0, git.returncode, git.stdout + git.stderr)
+        anchor = run('git', 'rev-parse', 'HEAD').stdout.strip()
+        self.restore_compiler()
+        report = (sys.executable, 'tools/scripts/workflow/ci_checks.py', 'current', 'lean-report',
+                  '--changed', 'changed-paths')
+        full = run(*report, PARTIAL_INDEXED_PROJECT='false')
+        self.assertEqual(0, full.returncode, full.stdout + full.stderr)
+
+        shards = (sys.executable, 'tools/scripts/worktree/lean_actions_shards.py')
+        snapshot = run(*shards, 'prepare', '--anchor', anchor)
+        self.assertEqual(0, snapshot.returncode, snapshot.stdout + snapshot.stderr)
+        index = self.root / 'project-index.json'
+        index.write_text(snapshot.stdout.splitlines()[-1] + '\n')
+        record = json.loads(index.read_text())
+        key = next(key for key, group in record['layout'].items() if any('D5.Alone' in shard for shard in group))
+        evicted = record['entries'][key]
+        (self.root / 'build/lean-cache/shards/payload' / (evicted + '.tar.gz')).unlink()
+        shutil.rmtree(self.root / '.lake/build')
+        restored = run(*shards, 'install', '--index', str(index))
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        installed = json.loads(restored.stdout.splitlines()[-1])
+        self.assertFalse(installed['complete'])
+        self.assertEqual([evicted], installed['missing'])
+        self.assertGreater(installed['available'], 0)
+        build = self.root / '.lake/build'
+        compiler = build / 'lib/lean/D5/Alone.olean'
+        retained = build / 'reg/lib/lean/Reg/Required.olean'
+        retained_mtime = retained.stat().st_mtime_ns
+        receipt = build / 'stratalint/raw-lean-report.json.reuse.json'
+        self.assertTrue(receipt.is_file())
+        self.assertFalse(compiler.exists())
+
+        reused = run(*report, PARTIAL_INDEXED_PROJECT='false')
+        self.assertEqual(0, reused.returncode, reused.stdout + reused.stderr)
+        self.assertIn('complete-entry-reused', reused.stdout)
+        rejected = run(*shards, 'prepare', '--anchor', anchor)
+        self.assertIn('project snapshot is missing compiler or report outputs', rejected.stderr)
+        self.assertNotEqual(0, rejected.returncode)
+
+        repaired = run(*report, PARTIAL_INDEXED_PROJECT='true')
+        self.assertEqual(0, repaired.returncode, repaired.stdout + repaired.stderr)
+        self.assertIn('complete-entry-reused', repaired.stdout)
+        self.assertTrue(compiler.is_file())
+        self.assertEqual(retained_mtime, retained.stat().st_mtime_ns)
+        self.write('available-shards.json', json.dumps(sorted(set(record['entries'].values()) - {evicted})))
+        published = run(*shards, 'prepare', '--index', str(index), '--available', 'available-shards.json')
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        self.assertIn('"complete": true', published.stdout)
+        index.write_text(published.stdout.splitlines()[-1] + '\n')
+        shutil.rmtree(build)
+        complete = run(*shards, 'install', '--index', str(index), '--require-complete')
+        self.assertEqual(0, complete.returncode, complete.stdout + complete.stderr)
+        self.assertTrue(json.loads(complete.stdout.splitlines()[-1])['complete'])
+        self.assertTrue(compiler.is_file())
+        self.assertTrue(receipt.is_file())
+
     def test_canonical_reader_runs_executable_git_adapter(self):
         result = self.guarded_command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
             'bash', '-c', 'command -v git && git --version'],

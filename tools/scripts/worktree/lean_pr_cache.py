@@ -41,6 +41,28 @@ def api(repository, path, body=None):
     return json.loads(result.stdout)
 
 
+class OptionalPrOptInMiss(Exception):
+    """Live PR opt-in could not be established for optional adoption."""
+
+
+def read_pr(repository, number, *, optional_opt_in=False):
+    try:
+        return api(repository, "pulls/" + str(number))
+    except subprocess.TimeoutExpired:
+        if not optional_opt_in:
+            raise
+        raise OptionalPrOptInMiss("live PR opt-in lookup timed out") from None
+    except subprocess.CalledProcessError as error:
+        stderr = (error.stderr or "").strip()
+        transient = re.search(r"\bHTTP (500|502|503|504)\b|"
+                              r"(?:^|: )(unexpected EOF|connection reset by peer|i/o timeout|TLS handshake timeout)$",
+                              stderr)
+        if not optional_opt_in or transient is None:
+            raise
+        reason = f"HTTP {transient[1]}" if transient[1] else transient[2]
+        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {reason}") from None
+
+
 def validate_identity(value):
     require(isinstance(value, dict) and set(value) == IDENTITY_FIELDS, "invalid source identity fields")
     require(isinstance(value["repository"], str) and
@@ -96,7 +118,7 @@ def require_target_ancestor(repository, ancestor, target, reason):
     require(comparison["merge_base_commit"]["sha"] == ancestor, reason)
 
 
-def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
+def validate_remote(identity, *, allow_merged=False, require_opt_in=False, optional_opt_in=False):
     validate_identity(identity)
     repository = identity["repository"]
     require(repository == os.environ["GITHUB_REPOSITORY"], "foreign source repository")
@@ -108,7 +130,7 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             "protected target has no commit identity")
     require_target_ancestor(repository, identity["base"], target_head, "B is not in the target history")
     # B may be old. M is an unmerged candidate, never claimed to be target history.
-    pr = api(repository, "pulls/" + identity["pr"])
+    pr = read_pr(repository, identity["pr"], optional_opt_in=optional_opt_in)
     require(pr["number"] == int(identity["pr"]), "source PR identity differs")
     require((pr["state"] == "open" or allow_merged and pr.get("merged") is True)
             and pr["head"]["sha"] == identity["head"]
@@ -124,6 +146,8 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             and run["event"] == "pull_request" and run["head_sha"] == identity["head"]
             and run["path"] == ".github/workflows/" + WORKFLOW,
             "source run does not bind the PR head and workflow")
+    if optional_opt_in and not any(label.get("name") == "lean-cache-produce" for label in pr.get("labels", [])):
+        raise OptionalPrOptInMiss("PR is no longer opted-in for preparation")
     return target_head
 
 
@@ -334,7 +358,7 @@ def consumer_context(root, *, require_pr_opt_in=False):
         source = event["pull_request"]
         parents = git(root, "show", "-s", "--format=%P", "HEAD").split()
         require(len(parents) == 2 and parents[1] == source["head"]["sha"], "consumer M parents differ from event H")
-        pr = api(repository, "pulls/" + str(event["number"]))
+        pr = read_pr(repository, event["number"], optional_opt_in=require_pr_opt_in)
         require(pr["number"] == event["number"], "source PR identity differs")
         require(pr["state"] == "open" and pr["head"]["sha"] == source["head"]["sha"]
                 and pr["base"]["ref"] == source["base"]["ref"], "source PR head or target changed, or is closed")
@@ -388,7 +412,7 @@ def download(repository, artifact_id, destination):
             print(f"PR_CACHE_RETRY artifact {artifact_id}: {interrupted[1].decode('ascii')}", file=sys.stderr)
 
 
-def validate_preparation(root, value, context, artifact, *, sharded=False):
+def validate_preparation(root, value, context, artifact, *, sharded=False, require_pr_opt_in=False):
     require(isinstance(value, dict) and set(value) == {"source", "runtime", "partition", "elan_key"},
             "invalid preparation identity fields")
     identity, runtime = validate_identity(value["source"]), value["runtime"]
@@ -419,7 +443,8 @@ def validate_preparation(root, value, context, artifact, *, sharded=False):
             datetime.fromisoformat(artifact["created_at"].replace("Z", "+00:00")) <=
             datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00")),
             "artifact does not belong to producer attempt interval")
-    target_head = validate_remote(identity, allow_merged=context["merged"])
+    target_head = validate_remote(identity, allow_merged=context["merged"],
+                                  optional_opt_in=require_pr_opt_in and not context["merged"])
     commit = api(repository, "git/commits/" + identity["merge"])
     require(commit["sha"] == identity["merge"] and [p["sha"] for p in commit["parents"]] ==
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
@@ -505,7 +530,10 @@ def adopt(root, cache_action=None, *, require_pr_opt_in=False):
     record = root / "build/lean-cache/pr-adopted.json"
     record.unlink(missing_ok=True)
     actions.output(dict(adopted=False))
-    context = consumer_context(root, require_pr_opt_in=require_pr_opt_in)
+    try:
+        context = consumer_context(root, require_pr_opt_in=require_pr_opt_in)
+    except OptionalPrOptInMiss as miss:
+        return receipt("miss", None, reason=str(miss))
     if context is None:
         reason = ("PR is not opted-in for preparation" if require_pr_opt_in
                   and os.environ["GITHUB_EVENT_NAME"] == "pull_request"
@@ -541,7 +569,11 @@ def adopt(root, cache_action=None, *, require_pr_opt_in=False):
             # while the native payload is staged and unpacked.
             artifact_zip.unlink()
             value = json.loads((directory / "preparation.json").read_text())
-            validated = validate_preparation(root, value, context, artifact, sharded=sharded)
+            try:
+                validated = validate_preparation(root, value, context, artifact, sharded=sharded,
+                                                 require_pr_opt_in=require_pr_opt_in)
+            except OptionalPrOptInMiss as miss:
+                return receipt("miss", context, reason=str(miss))
             if validated is None:
                 continue
             identity, runtime = validated

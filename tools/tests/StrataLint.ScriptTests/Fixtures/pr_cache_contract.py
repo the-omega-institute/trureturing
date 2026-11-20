@@ -479,6 +479,54 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.assertFalse(actions.adoption_record(self.root)["merged"])
             self.assertEqual("pull-requests-do-not-publish-project-seeds", actions.project_publication(self.root)[1])
 
+    def test_live_opt_in_lookup_interruption_is_an_optional_miss(self):
+        self.preparation()
+        command = ["gh", "api", "repos/owner/repository/pulls/12"]
+        failures = (
+            (subprocess.CalledProcessError(1, command, stderr="gh: Service Unavailable (HTTP 503)"), "HTTP 503"),
+            (subprocess.TimeoutExpired(command, 60), "timed out"),
+        )
+        for failure, reason in failures:
+            for failed_read in (1, 2):
+                reads = 0
+
+                def api(repository, path, body=None):
+                    nonlocal reads
+                    if path == "pulls/12":
+                        reads += 1
+                        if reads == failed_read:
+                            raise failure
+                    return self.api(repository, path, body)
+
+                with self.subTest(reason=reason, failed_read=failed_read):
+                    result, download = self.adopt(api=api, require_pr_opt_in=True)
+                    self.assertEqual("miss", result["status"])
+                    self.assertIn(reason, result["reason"])
+                    self.assertEqual(failed_read, reads)
+                    self.assertEqual(failed_read - 1, download.call_count)
+                    self.assertFalse((self.root / ".lake/build").exists())
+                    self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+
+    def test_source_pr_can_revoke_opt_in_during_download(self):
+        self.preparation()
+        self.calls.clear()
+
+        def api(repository, path, body=None):
+            value = self.api(repository, path, body)
+            if path == "pulls/12" and self.calls.count((path, None)) == 2:
+                return dict(value, labels=[])
+            return value
+
+        output = self.root / "adoption-outputs"
+        result, download = self.adopt(env=dict(self.env, GITHUB_OUTPUT=str(output)),
+                                      api=api, require_pr_opt_in=True)
+        self.assertEqual("miss", result["status"])
+        self.assertEqual("PR is no longer opted-in for preparation", result["reason"])
+        download.assert_called_once()
+        self.assertEqual("adopted=false\n", output.read_text())
+        self.assertFalse((self.root / ".lake").exists())
+        self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+
     def test_adoption_reclaims_download_zip_before_native_unpack(self):
         self.preparation()
         with mock.patch.object(producer, "unpack", wraps=producer.unpack) as unpack:
@@ -679,7 +727,7 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.pr.update(state="open", head=dict(sha=self.identity["head"]), number=99)
         # A same-head PR association is not evidence for source PR 12.
         with self.assertRaisesRegex(ValueError, "source PR identity"):
-            self.adopt()
+            self.adopt(require_pr_opt_in=True)
 
     def test_missing_expired_or_unfinished_preparation_is_not_successful_handoff(self):
         self.preparation()
@@ -784,8 +832,10 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_invalid_payload_or_download_failure_keeps_original_error_and_no_adoption(self):
         self.preparation()
-        self.merged()
         self.zipped.write_bytes(b"broken zip")
+        with self.assertRaises(zipfile.BadZipFile):
+            self.adopt(require_pr_opt_in=True)
+        self.merged()
         with self.assertRaises(zipfile.BadZipFile):
             self.adopt()
         with mock.patch.object(producer, "download", side_effect=subprocess.CalledProcessError(1, "gh", stderr="HTTP 410 expired")), \

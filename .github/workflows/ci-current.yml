@@ -448,6 +448,7 @@ jobs:
         env:
           LEAN_NUM_THREADS: '1'
           GH_TOKEN: ${{ github.token }}
+          PARTIAL_INDEXED_PROJECT: ${{ env.INDEXED_PROJECT_PUSH == 'true' && (steps.sharded_project.outputs.available || '0') != '0' && steps.sharded_project.outputs.complete != 'true' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
       - name: Run selected PR FIB regressions
