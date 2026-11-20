@@ -31,8 +31,9 @@ element with `ρ (ε X) = exp X`.
 * Neighbourhoods (the main step): with a complement `C` of `L`, the map
   `(Y, B) ↦ exp Y * exp B` on `L × C` has derivative the sum map at `0`, so by the inverse
   function theorem every element of `A` near `1` is `exp Y * exp B` with `Y ∈ L`, `B ∈ C`
-  small; if elements outside `ε '' V` accumulated at `1`, their `C`-coordinates `B` would be
-  nonzero and, by the escape lemma, their directions would accumulate at a generator of norm
+  small; if `ε '' V` were not a neighbourhood of `1`, then along the neighbourhood filter of `1`
+  restricted to its complement the `C`-coordinates `B` would be nonzero and, by the escape
+  lemma applied along that filter, their directions would accumulate at a generator of norm
   one lying in `C`, which is impossible since `L ⊓ C = ⊥`.
 * Open embedding: let `S` be a domain near `0` on which `exp` has a continuous local inverse
   `log`, and `W` the interior of `ε '' (L ∩ S)`, an open neighbourhood of `1` by the previous
@@ -184,29 +185,6 @@ private theorem exists_exp_mul_exp_eq [FiniteDimensional ℝ A] {L C : Submodule
     filter_upwards [h'] with a ha
     exact (hΨa _).symm.trans ha
 
-omit [NormedAlgebra ℝ A] [CompleteSpace A] in
-/-- The neighbourhood filter of `1` in a locally compact `G` is countably generated: on a
-compact neighbourhood `V₀` of `1` it is the trace of the preimage under `ρ` of the
-neighbourhood filter of `1` in `A`. -/
-private theorem isCountablyGenerated_nhds_one [LocallyCompactSpace G] {ρ : G →* Aˣ}
-    (hc : Continuous ρ) (hi : Function.Injective ρ) : (𝓝 (1 : G)).IsCountablyGenerated := by
-  obtain ⟨V₀, hV₀, hV₀1⟩ := exists_compact_mem_nhds (1 : G)
-  have heq : 𝓝 (1 : G) = comap (fun g => ((ρ g : Aˣ) : A)) (𝓝 1) ⊓ 𝓟 V₀ := by
-    refine le_antisymm (le_inf ?_ (le_principal_iff.2 hV₀1)) fun N hN => ?_
-    · have hρc : Continuous fun g : G => ((ρ g : Aˣ) : A) := Units.continuous_val.comp hc
-      have h1 : Tendsto (fun g : G => ((ρ g : Aˣ) : A)) (𝓝 1) (𝓝 1) := by
-        simpa using hρc.tendsto (1 : G)
-      exact h1.le_comap
-    · obtain ⟨V, hV1, hVN, -⟩ := local_compact_nhds hN
-      obtain ⟨O, hO, hKO⟩ := exists_nhds_one_forall_notMem hc hi (hV₀.diff isOpen_interior)
-        (fun h => h.2 (mem_interior_iff_mem_nhds.2 hV1))
-      refine mem_inf_of_inter (preimage_mem_comap hO) (mem_principal_self V₀)
-        fun g hg => hVN (interior_subset ?_)
-      by_contra hint
-      exact hKO g ⟨hg.2, hint⟩ hg.1
-  rw [heq]
-  infer_instance
-
 end Paths
 
 section Chart
@@ -219,67 +197,57 @@ variable [NormedAlgebra ℝ A] [FiniteDimensional ℝ A] [IsTopologicalGroup G]
 /-- The image under a time-one map `ε` of a neighbourhood of `0` in the generator subalgebra
 `L` is a neighbourhood of `1`. Write `A = L ⊕ C`; an element `g` near `1` has
 `ρ g = exp Y * exp B` with `Y ∈ L`, `B ∈ C` small, and `h = (ε Y)⁻¹ * g` has `ρ h = exp B`.
-If elements `g` outside the image accumulated at `1`, then `B ≠ 0` for them and, by the escape
-lemma, the directions `‖B‖⁻¹ • B` would accumulate at a generator in `C` of norm one,
+If the image were not a neighbourhood of `1`, then along the neighbourhood filter of `1`
+restricted to the complement of the image `B ≠ 0` eventually and, by the escape lemma along
+that filter, the directions `‖B‖⁻¹ • B` would accumulate at a generator in `C` of norm one,
 contradicting `L ⊓ C = ⊥`. -/
 private theorem image_mem_nhds_one {ρ : G →* Aˣ} (hc : Continuous ρ)
     (hi : Function.Injective ρ) {ε : generatorSubalgebra ρ hc hi → G} (hε : ContinuousAt ε 0)
     (hρε : ∀ X, ((ρ (ε X) : Aˣ) : A) = NormedSpace.exp (X : A))
     {V : Set (generatorSubalgebra ρ hc hi)} (hV : V ∈ 𝓝 0) : ε '' V ∈ 𝓝 (1 : G) := by
   let _ : NormedAlgebra ℚ A := NormedAlgebra.restrictScalars ℚ ℝ A
-  have hρc : Continuous fun g : G => ((ρ g : Aˣ) : A) := Units.continuous_val.comp hc
   have hρ1 : Tendsto (fun g : G => ((ρ g : Aˣ) : A)) (𝓝 1) (𝓝 1) := by
+    have hρc : Continuous fun g : G => ((ρ g : Aˣ) : A) := Units.continuous_val.comp hc
     simpa using hρc.tendsto (1 : G)
   have hε0 : ε 0 = 1 := hi (Units.ext (by
     rw [hρε, ZeroMemClass.coe_zero, NormedSpace.exp_zero, map_one, Units.val_one]))
   obtain ⟨C, hLC⟩ := Submodule.exists_isCompl (generatorSubalgebra ρ hc hi).toSubmodule
   obtain ⟨Yf, Bf, hY0, hB0, hYL, hBC, hfac⟩ := exists_exp_mul_exp_eq hLC
   by_contra hnot
-  have hW : ∀ N ∈ 𝓝 (1 : G), ∃ g ∈ N, g ∉ ε '' V ∧
-      NormedSpace.exp (Yf ((ρ g : Aˣ) : A)) * NormedSpace.exp (Bf ((ρ g : Aˣ) : A)) =
-        ((ρ g : Aˣ) : A) := by
-    intro N hN
-    by_contra hne
-    apply hnot
-    filter_upwards [hN, hρ1.eventually hfac] with g hgN hgT
-    by_contra hgV
-    exact hne ⟨g, hgN, hgV, hgT⟩
-  have := isCountablyGenerated_nhds_one hc hi
-  obtain ⟨s, hs⟩ := (𝓝 (1 : G)).exists_antitone_basis
-  choose g hgs hgV hgf using fun k => hW (s k) (hs.mem k)
-  have hg : Tendsto g atTop (𝓝 1) := hs.tendsto hgs
-  have ha : Tendsto (fun k => ((ρ (g k) : Aˣ) : A)) atTop (𝓝 1) := hρ1.comp hg
-  obtain ⟨y, hyv⟩ : ∃ y : ℕ → generatorSubalgebra ρ hc hi,
-      ∀ k, (y k : A) = Yf ((ρ (g k) : Aˣ) : A) := ⟨fun k => ⟨_, hYL _⟩, fun _ => rfl⟩
-  have hy : Tendsto y atTop (𝓝 0) := by
-    refine tendsto_subtype_rng.2 ?_
-    simp_rw [hyv]
-    exact hY0.comp ha
-  have hh : Tendsto (fun k => (ε (y k))⁻¹ * g k) atTop (𝓝 1) := by
+  set l : Filter G := 𝓝 1 ⊓ 𝓟 (ε '' V)ᶜ
+  have hl : l.NeBot := by
+    exact ⟨fun h => hnot (mem_iff_inf_principal_compl.2 h)⟩
+  have hg : Tendsto (fun g : G => g) l (𝓝 1) := inf_le_left
+  have ha : Tendsto (fun g : G => ((ρ g : Aˣ) : A)) l (𝓝 1) := hρ1.mono_left inf_le_left
+  set y : G → generatorSubalgebra ρ hc hi := fun g => ⟨_, hYL ((ρ g : Aˣ) : A)⟩
+  have hy : Tendsto y l (𝓝 0) := tendsto_subtype_rng.2 (hY0.comp ha)
+  have hh : Tendsto (fun g => (ε (y g))⁻¹ * g) l (𝓝 1) := by
     have h' := ((hε.tendsto.comp hy).inv).mul hg
     rwa [hε0, inv_one, one_mul] at h'
-  have hρh : ∀ k, ((ρ ((ε (y k))⁻¹ * g k) : Aˣ) : A) =
-      NormedSpace.exp (Bf ((ρ (g k) : Aˣ) : A)) := by
-    intro k
-    calc ((ρ ((ε (y k))⁻¹ * g k) : Aˣ) : A)
-        = NormedSpace.exp (-Yf ((ρ (g k) : Aˣ) : A)) * ((ρ (g k) : Aˣ) : A) := by
-          rw [map_mul, map_inv, Units.val_mul, ← Ring.inverse_unit, hρε, Ring.inverse_exp, hyv]
-      _ = NormedSpace.exp (-Yf ((ρ (g k) : Aˣ) : A)) *
-          (NormedSpace.exp (Yf ((ρ (g k) : Aˣ) : A)) *
-            NormedSpace.exp (Bf ((ρ (g k) : Aˣ) : A))) := by rw [hgf k]
-      _ = NormedSpace.exp (Bf ((ρ (g k) : Aˣ) : A)) := by
+  have hfacl : ∀ᶠ g in l, NormedSpace.exp (Yf ((ρ g : Aˣ) : A)) *
+      NormedSpace.exp (Bf ((ρ g : Aˣ) : A)) = ((ρ g : Aˣ) : A) := ha.eventually hfac
+  have hρh : ∀ᶠ g in l, ((ρ ((ε (y g))⁻¹ * g) : Aˣ) : A) =
+      NormedSpace.exp (Bf ((ρ g : Aˣ) : A)) := by
+    filter_upwards [hfacl] with g hgf
+    calc ((ρ ((ε (y g))⁻¹ * g) : Aˣ) : A)
+        = NormedSpace.exp (-Yf ((ρ g : Aˣ) : A)) * ((ρ g : Aˣ) : A) := by
+          rw [map_mul, map_inv, Units.val_mul, ← Ring.inverse_unit, hρε, Ring.inverse_exp]
+      _ = NormedSpace.exp (-Yf ((ρ g : Aˣ) : A)) *
+          (NormedSpace.exp (Yf ((ρ g : Aˣ) : A)) *
+            NormedSpace.exp (Bf ((ρ g : Aˣ) : A))) := by rw [hgf]
+      _ = NormedSpace.exp (Bf ((ρ g : Aˣ) : A)) := by
           rw [← mul_assoc, ← NormedSpace.exp_add_of_commute (Commute.refl _).neg_left,
             neg_add_cancel, NormedSpace.exp_zero, one_mul]
-  have hBne : ∀ᶠ k in atTop, Bf ((ρ (g k) : Aˣ) : A) ≠ 0 := by
-    filter_upwards [hy hV] with k hk hBk
-    refine hgV k ⟨y k, hk, hi (Units.ext ?_)⟩
-    have h2 := hgf k
-    rw [hBk, NormedSpace.exp_zero, mul_one] at h2
-    rw [hρε, hyv]
-    exact h2
+  have hBne : ∀ᶠ g in l, Bf ((ρ g : Aˣ) : A) ≠ 0 := by
+    filter_upwards [hy hV, hfacl, (inf_le_right : l ≤ _) (mem_principal_self _)]
+      with g hk hgf hgV hBk
+    refine hgV ⟨y g, hk, hi (Units.ext ?_)⟩
+    rw [hBk, NormedSpace.exp_zero, mul_one] at hgf
+    rw [hρε]
+    exact hgf
   have hS : IsCompact ((C : Set A) ∩ Metric.sphere 0 1) :=
     (isCompact_sphere (0 : A) 1).inter_left C.closed_of_finiteDimensional
-  have hDev : ∀ᶠ k in atTop, ‖Bf ((ρ (g k) : Aˣ) : A)‖⁻¹ • Bf ((ρ (g k) : Aˣ) : A) ∈
+  have hDev : ∀ᶠ g in l, ‖Bf ((ρ g : Aˣ) : A)‖⁻¹ • Bf ((ρ g : Aˣ) : A) ∈
       (C : Set A) ∩ Metric.sphere 0 1 := by
     filter_upwards [hBne] with k hk
     refine ⟨C.smul_mem _ (hBC _), ?_⟩
@@ -287,7 +255,7 @@ private theorem image_mem_nhds_one {ρ : G →* Aˣ} (hc : Continuous ρ)
       inv_mul_cancel₀ (norm_ne_zero_iff.2 hk)]
   obtain ⟨D, hDS, hD⟩ := hS.exists_mapClusterPt_of_frequently hDev.frequently
   have hDgen : IsOneParameterGenerator ρ D :=
-    isOneParameterGenerator_of_mapClusterPt ρ hc hi hh (hB0.comp ha) (.of_forall hρh) hD
+    isOneParameterGenerator_of_mapClusterPt ρ hc hi hh (hB0.comp ha) hρh hD
   have hD0 : D = 0 := Submodule.disjoint_def.1 hLC.disjoint D hDgen hDS.1
   have hD1 := hDS.2
   rw [hD0, mem_sphere_zero_iff_norm, norm_zero] at hD1
