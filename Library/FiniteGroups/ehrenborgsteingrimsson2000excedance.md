@@ -16,9 +16,10 @@ triage: anchor
 # The Excedance Set of a Permutation
 
 Richard Ehrenborg and Einar Steingrímsson, *Advances in Applied Mathematics* 24,
-284–299 (2000). Proposition 2.1 counts permutations with a prescribed strict
+284–299 (2000). Proposition 2.1 on pages 286–287 counts permutations with a prescribed strict
 excedance set by separating the two deletion cases from the swap case. Lemma
-2.3 proves that a leading nonexcedance or trailing excedance can be removed.
+2.3 on page 287 proves that a leading nonexcedance or trailing excedance can
+be removed. [Author copy](https://www.ms.uky.edu/~jrge/Papers/excedance.pdf).
 
 The Lean counts use permutations of a finite ordinal with positions numbered
 from zero. In the bracket notation, a word of length $d$ specifies the first

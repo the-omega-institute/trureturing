@@ -11,7 +11,6 @@ import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Order.Fin.Basic
 import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

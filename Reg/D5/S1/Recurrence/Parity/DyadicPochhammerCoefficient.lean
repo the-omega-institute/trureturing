@@ -386,5 +386,85 @@ def coordinate_registration :
   familyRecord := none
   options := #[] }
 
+abbrev cleared_signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => ℚ)
+
+def cleared_actual : Realization cleared_signature :=
+  realize cleared_signature (fun _ n i => signedCoefficient (2 * n) i) (fun e => nomatch e)
+
+def cleared_rejected : Realization cleared_signature :=
+  realize cleared_signature (fun _ n i => signedCoefficient (2 * n) i + 1)
+    (fun e => nomatch e)
+
+abbrev cleared_arena : Arena where
+  signature := cleared_signature
+  Law R := ∀ n i : ℕ, 0 < n → 2 ≤ i →
+    (((i : ℚ) - 1) * R.readout () n i + signedCoefficient (2 * n) (i - 1) =
+      (i : ℚ) * ((i : ℚ) - 1) * signedCoefficient n i +
+        ((i : ℚ) - 2) * signedCoefficient n (i - 1)) ∧
+    (∀ j : ℕ,
+      pochhammerBasis.coord j (rowPolynomial (2 * n)) =
+        (-1 : ℚ) ^ (wt (2 * n) + 2 - j) * T (2 * n) j ∧
+      pochhammerBasis.coord j (rowPolynomial n) =
+        (-1 : ℚ) ^ (wt n + 2 - j) * T n j)
+
+private theorem cleared_rejected_law : ¬ cleared_arena.Law cleared_rejected := by
+  intro law
+  have h := (law 1 2 (by decide) (by decide)).1
+  have hactual := (positiveEvenCoefficient 1 2 (by decide) (by decide)).1
+  simp only [cleared_rejected, realize] at h
+  rw [← hactual] at h
+  norm_num at h
+
+private theorem cleared_dependence : ObservationalDependence cleared_signature cleared_actual := by
+  intro role
+  refine ⟨0, 0, 1, ?_⟩
+  change signedCoefficient 0 0 ≠ signedCoefficient 0 1
+  have h0 : T 0 0 = 0 := by rw [T]; simp
+  rw [signedCoefficient, signedCoefficient, source_coordinate, source_coordinate]
+  norm_num [wt_zero, h0, T_one]
+
+def cleared_source : Registration cleared_arena (type_of% (@positiveEvenCoefficient)) where
+  actual := cleared_actual
+  bridge := Iff.rfl
+  variation := ⟨@positiveEvenCoefficient, cleared_rejected, cleared_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity cleared_arena.Law
+    cleared_actual cleared_rejected cleared_rejected_law
+  dependence := cleared_dependence
+
+def cleared_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@positiveEvenCoefficient) (Realization cleared_signature) Unit Unit := {
+  unitName := `D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient.positiveEvenCoefficient.__information_unit
+  realizationName := `Reg.D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient.cleared_source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨cleared_arena⟩
+  objectArena := .source ⟨cleared_arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source cleared_arena ⟨cleared_source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize cleared_signature
+    (fun _ n i => signedCoefficient (2 * n) i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient

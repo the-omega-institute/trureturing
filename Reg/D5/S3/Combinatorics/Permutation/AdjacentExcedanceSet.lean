@@ -190,5 +190,87 @@ def deletion_registration :
   familyRecord := none
   options := #[] }
 
+abbrev bracket_signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun n => Set (Fin (n + 2))) (fun _ => ℕ)
+
+def bracket_actual : Realization bracket_signature :=
+  realize bracket_signature (fun _ _ S => exactCount S) (fun e => nomatch e)
+
+def bracket_rejected : Realization bracket_signature :=
+  realize bracket_signature (fun _ _ S => exactCount S + 1) (fun e => nomatch e)
+
+abbrev bracket_arena : Arena where
+  signature := bracket_signature
+  Law R := ∀ {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2))),
+    a.castSucc ∈ S → a.succ ∉ S →
+    R.readout () n S =
+      exactCount ((Equiv.swap a.castSucc a.succ) ⁻¹' S) +
+        exactCount (a.succ.succAbove ⁻¹' S) + exactCount (a.castSucc.succAbove ⁻¹' S)
+
+private theorem bracket_rejected_law : ¬ bracket_arena.Law bracket_rejected := by
+  intro law
+  let a : Fin (0 + 1) := 0
+  let S : Set (Fin (0 + 2)) := {a.castSucc}
+  have hl : a.castSucc ∈ S := by simp [S]
+  have hr : a.succ ∉ S := by simpa [S] using a.castSucc_lt_succ.ne.symm
+  have h := law a S hl hr
+  change exactCount S + 1 = _ at h
+  rw [← adjacentBA a S hl hr] at h
+  exact (Nat.succ_ne_self _) h
+
+private theorem bracket_dependence : ObservationalDependence bracket_signature bracket_actual := by
+  intro role
+  refine ⟨0, ∅, Set.univ, ?_⟩
+  change exactCount (∅ : Set (Fin 2)) ≠ exactCount (Set.univ : Set (Fin 2))
+  haveI : Nonempty (ExactPermutations (∅ : Set (Fin 2))) := ⟨⟨Equiv.refl _, by
+    intro j
+    simp
+  ⟩⟩
+  haveI : IsEmpty (ExactPermutations (Set.univ : Set (Fin 2))) := ⟨fun p =>
+    (not_lt_of_ge (Fin.le_last (p.val (Fin.last 1)))) ((p.property (Fin.last 1)).mpr (by simp))⟩
+  exact Nat.ne_of_gt (by simpa [exactCount] using
+    (Nat.card_pos : 0 < Nat.card (ExactPermutations (∅ : Set (Fin 2)))))
+
+def bracket_source : Registration bracket_arena (type_of% (@adjacentBA)) where
+  actual := bracket_actual
+  bridge := Iff.rfl
+  variation := ⟨@adjacentBA, bracket_rejected, bracket_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity bracket_arena.Law
+    bracket_actual bracket_rejected bracket_rejected_law
+  dependence := bracket_dependence
+
+def bracket_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@adjacentBA) (Realization bracket_signature) Unit Unit := {
+  unitName := `D5.S3.Combinatorics.Permutation.AdjacentExcedanceSet.adjacentBA.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Permutation.AdjacentExcedanceSet.bracket_source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨bracket_arena⟩
+  objectArena := .source ⟨bracket_arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source bracket_arena ⟨bracket_source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize bracket_signature (fun _ _ S => exactCount S) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.AdjacentExcedanceSet
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.Combinatorics.Permutation.AdjacentExcedanceSet
