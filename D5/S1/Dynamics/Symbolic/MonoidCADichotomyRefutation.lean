@@ -9,6 +9,8 @@
 import D5.S1.Dynamics.Symbolic.LatticeGardenOfEden
 import Mathlib.Topology.UniformSpace.Equicontinuity
 
+/-! The finite-monoid dichotomy fails on the two-dimensional Boolean OR full shift. -/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -102,7 +104,8 @@ private theorem sourceDist_basis (D : ℕ) (A : Type*) [UniformSpace A] [Discret
 private def sensitive {X : Type*} [UniformSpace X] (F : X → X) : Prop :=
   ∃ U ∈ 𝓤 X, ∀ x, ∀ V ∈ 𝓤 X, ∃ y k, (x, y) ∈ V ∧ (F^[k] x, F^[k] y) ∉ U
 
-private theorem source_equicontinuous_iff {D : ℕ} {A : Type*} [UniformSpace A] [DiscreteUniformity A]
+private theorem source_equicontinuous_iff {D : ℕ} {A : Type*}
+    [UniformSpace A] [DiscreteUniformity A]
     (F : (Lattice D → A) → (Lattice D → A)) :
     UniformEquicontinuous (fun k : ℕ => F^[k]) ↔
       ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∀ x y, sourceDist x y < δ →
@@ -256,7 +259,7 @@ private theorem trace_eq_iff {I A : Type*} (F : (I → A) → (I → A))
     fun h => funext fun p => h p.1.val p.1.isLt p.2.val p.2.property⟩
 
 /-- Every realized trace supplies a center, and a center covers exactly one trace class. -/
-private theorem coverMincard_eq_traceCount {I A : Type*} [Fintype A] (F : (I → A) → (I → A))
+private theorem coverMincard_eq_traceCount {I A : Type*} [Finite A] (F : (I → A) → (I → A))
     (W : Finset I) (n : ℕ) :
     coverMincard F univ (windowRel W) n = (Nat.card (range (trace F W n)) : ℕ∞) := by
   classical
@@ -367,6 +370,6 @@ theorem result : ¬ claim := by
   rcases h 2 (by decide) Bool orCA ⟨offsets, orRule, rfl⟩
     (localMap_continuous offsets orRule) (localMap_shift offsets orRule) with hl | hr
   · exact or_not_equicontinuous hl.1
-  · exact zero_ne_top (or_entropy_zero.symm.trans hr.2)
+  · exact EReal.zero_ne_top (or_entropy_zero.symm.trans hr.2)
 
 end D5.S1.Dynamics.Symbolic.MonoidCADichotomyRefutation
