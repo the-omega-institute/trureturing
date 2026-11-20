@@ -123,7 +123,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hlow : ∀ᶠ X : ℕ in atTop,
       (X : ℝ) ^ (79 / 80 : ℝ) ≤ (count S X : ℝ) := by
     filter_upwards [eventually_ge_atTop X₀] with X hX
-    exact hX₀ X hX
+    simpa only [count, S, Set.mem_setOf_eq] using hX₀ X hX
   have bad := h S hS hlow
   exact Filter.atTop_neBot.ne (Filter.tendsto_bot_right_iff.mp bad)
 
