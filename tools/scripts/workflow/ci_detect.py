@@ -12,9 +12,9 @@ including `/`, `?` matches one character, and a leading `!` excludes. A path
 hits a unit when it matches an including pattern of the unit or of the shared
 section and no excluding pattern of the unit.
 
---changed names the NUL-terminated changed-path list. When it does not exist
-the change has no base commit and every unit hits. Every supplied changed path
-is validated and available for matching, with no path-count cutoff. Any error exits 2.
+--changed names the NUL-terminated changed-path list. Hosted detection requires
+the list. The standalone pattern interface treats an absent list as all units
+hit. Supplied paths are validated with no cutoff. Any error exits 2.
 """
 import argparse
 import json
@@ -105,7 +105,9 @@ def main():
             from ci_contract import git, load, selection
             data, revision = load(Path.cwd())
             purpose = "pull-request" if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else "push"
-            plan = selection(data, read_changed(args.changed), purpose)
+            base = os.environ.get("CI_BASE") or None
+            paths = read_changed(args.changed)
+            plan = selection(data, paths, purpose)
             if not output:
                 raise DetectError("GITHUB_OUTPUT is required")
             with open(output, "a", encoding="utf-8") as stream:
@@ -113,7 +115,7 @@ def main():
                     stream.write(key + "=" + json.dumps(value, separators=(",", ":")) + "\n")
                 stream.write("contract_revision=" + revision + "\n")
             print("CI_SELECTION " + json.dumps(dict(plan, contract_revision=revision, purpose=purpose,
-                  base=os.environ.get("CI_BASE") or None,
+                  base=base,
                   candidate=git(Path.cwd(), "rev-parse", "HEAD^{tree}").decode().strip())))
             return 0
         if spec is None:

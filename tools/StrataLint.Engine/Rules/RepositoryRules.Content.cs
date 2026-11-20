@@ -315,7 +315,8 @@ internal static partial class RepositoryRules
             findings.AddRange(ValuesKernelBindingValidator.Validate(
                 values.Text,
                 context.Lean.Report,
-                changes: null));
+                changes: null,
+                current: context.Current));
         }
 
         return findings.ToImmutable();
