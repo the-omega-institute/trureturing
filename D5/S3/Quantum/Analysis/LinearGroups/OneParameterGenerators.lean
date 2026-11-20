@@ -27,12 +27,12 @@ continuous injective homomorphism. An element `X : A` is a one-parameter generat
 (`IsOneParameterGenerator`) if the curve `t ↦ exp (t • X)` lifts through `ρ` to a continuous
 curve `γ : ℝ → G`.
 
-* Escape lemma (`isOneParameterGenerator_of_mapClusterPt`): if `g k → 1` in `G` and
-  `ρ (g k) = exp (Y k)` with `Y k → 0`, then every cluster point of the directions
-  `‖Y k‖⁻¹ • Y k` is a generator. Local compactness of `G` and injectivity of `ρ` replace the
+* Escape lemma (`isOneParameterGenerator_of_mapClusterPt`): if `g i → 1` in `G` along a filter
+  and eventually `ρ (g i) = exp (Y i)` with `Y i → 0`, then every cluster point of the directions
+  `‖Y i‖⁻¹ • Y i` is a generator. Local compactness of `G` and injectivity of `ρ` replace the
   closedness of a linear group used in the closed-subgroup theorem: on a compact neighbourhood
-  `V` of `1` the map `ρ` reflects convergence, the powers `g k ^ n` stay in `V` as long as
-  `n * ‖Y k‖` is small, and limits of `ρ (g k ^ n)` are values of `ρ` on `V`.
+  `V` of `1` the map `ρ` reflects convergence, the powers `g i ^ n` stay in `V` as long as
+  `n * ‖Y i‖` is small, and limits of `ρ (g i ^ n)` are values of `ρ` on `V`.
 * The set of generators is closed (`isClosed_setOf_isOneParameterGenerator`) and stable under
   real multiples (`IsOneParameterGenerator.smul`).
 * Sums (`IsOneParameterGenerator.add`): if a curve `c` in `G` through `1` has `ρ ∘ c`
@@ -246,23 +246,23 @@ private theorem isOneParameterGenerator_of_tendsto [CompleteSpace A] [IsTopologi
 
 variable [CompleteSpace A] [IsTopologicalGroup G] [LocallyCompactSpace G]
 
-/-- Escape lemma: if `g k → 1` and `ρ (g k) = exp (Y k)` with `Y k → 0`, then every cluster
-point of the directions `‖Y k‖⁻¹ • Y k` is a one-parameter generator. Indices with `Y k = 0`
-contribute the direction `0`, which is a generator. -/
+/-- Escape lemma: if `g i → 1` along a filter and eventually `ρ (g i) = exp (Y i)` with
+`Y i → 0`, then every cluster point of the directions `‖Y i‖⁻¹ • Y i` along that filter is a
+one-parameter generator. Indices with `Y i = 0` contribute the direction `0`, which is a
+generator. -/
 theorem isOneParameterGenerator_of_mapClusterPt (ρ : G →* Aˣ) (hc : Continuous ρ)
-    (hi : Function.Injective ρ) {g : ℕ → G} (hg : Tendsto g atTop (𝓝 1)) {Y : ℕ → A}
-    (hY0 : Tendsto Y atTop (𝓝 0)) (hY : ∀ k, ((ρ (g k) : Aˣ) : A) = NormedSpace.exp (Y k))
-    {X : A} (hX : MapClusterPt X atTop (fun k => ‖Y k‖⁻¹ • Y k)) :
+    (hi : Function.Injective ρ) {ι : Type*} {l : Filter ι} {g : ι → G}
+    (hg : Tendsto g l (𝓝 1)) {Y : ι → A} (hY0 : Tendsto Y l (𝓝 0))
+    (hY : ∀ᶠ i in l, ((ρ (g i) : Aˣ) : A) = NormedSpace.exp (Y i))
+    {X : A} (hX : MapClusterPt X l (fun i => ‖Y i‖⁻¹ • Y i)) :
     IsOneParameterGenerator ρ X := by
   by_cases hX0 : X = 0
   · rw [hX0]
     exact isOneParameterGenerator_zero ρ
-  obtain ⟨ψ, hψ, hψX⟩ := hX.tendsto_subseq
-  refine isOneParameterGenerator_of_tendsto hc hi (hg.comp hψ.tendsto_atTop)
-    (hY0.comp hψ.tendsto_atTop) ?_ hψX
-  filter_upwards [hψX.eventually_ne hX0] with k hk
-  refine ⟨hY (ψ k), fun h0 => hk ?_⟩
-  simp only [Function.comp_apply] at h0 ⊢
+  obtain ⟨U, hUl, hUX⟩ := mapClusterPt_iff_ultrafilter.1 hX
+  refine isOneParameterGenerator_of_tendsto hc hi (hg.mono_left hUl) (hY0.mono_left hUl) ?_ hUX
+  filter_upwards [hUl hY, hUX.eventually_ne hX0] with i hi1 hi2
+  refine ⟨hi1, fun h0 => hi2 ?_⟩
   rw [h0, smul_zero]
 
 /-- The set of one-parameter generators is closed. -/

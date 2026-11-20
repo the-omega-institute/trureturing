@@ -287,7 +287,7 @@ private theorem image_mem_nhds_one {ρ : G →* Aˣ} (hc : Continuous ρ)
       inv_mul_cancel₀ (norm_ne_zero_iff.2 hk)]
   obtain ⟨D, hDS, hD⟩ := hS.exists_mapClusterPt_of_frequently hDev.frequently
   have hDgen : IsOneParameterGenerator ρ D :=
-    isOneParameterGenerator_of_mapClusterPt ρ hc hi hh (hB0.comp ha) hρh hD
+    isOneParameterGenerator_of_mapClusterPt ρ hc hi hh (hB0.comp ha) (.of_forall hρh) hD
   have hD0 : D = 0 := Submodule.disjoint_def.1 hLC.disjoint D hDgen hDS.1
   have hD1 := hDS.2
   rw [hD0, mem_sphere_zero_iff_norm, norm_zero] at hD1

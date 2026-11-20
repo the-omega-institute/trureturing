@@ -125,7 +125,7 @@ theorem dependence : ObservationalDependence signature actual := by
   cases i
   refine ⟨(), 1, unitJ, ?_⟩
   intro h
-  have h' := congrArg Quaternion.imI h
+  have h' := congrArg (fun q : ℍ[ℝ] => q.imI) h
   change (((1 : unitary ℍ[ℝ]) : ℍ[ℝ]) * (unitI : ℍ[ℝ]) * star ((1 : unitary ℍ[ℝ]) : ℍ[ℝ])).imI =
     ((unitJ : ℍ[ℝ]) * (unitI : ℍ[ℝ]) * star (unitJ : ℍ[ℝ])).imI at h'
   have hI : ((unitI : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 1, 0, 0⟩ := rfl
