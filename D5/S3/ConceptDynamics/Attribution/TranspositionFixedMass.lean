@@ -231,7 +231,7 @@ private theorem invariant_uniform_table_attains
 /-- A common invariant table law with these marginals attains the transposition bound. -/
 theorem uniform_label_pair_attains :
     ∃ w : Fin 4 → Finset (Fin 4) → ℝ,
-      (∀ i B, B.card = 2 → 0 < w i B) ∧
+      (∀ i B, B.card = 2 → w i B = 1 / 24) ∧
       (∀ i B, B.card ≠ 2 → w i B = 0) ∧
       (∀ (g : Equiv.Perm (Fin 4)) i B, w (g i) (g.finsetCongr B) = w i B) ∧
       (∀ i : Fin 4, (∑ B : Finset (Fin 4), w i B) = 1 / 4) ∧

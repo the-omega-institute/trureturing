@@ -20,7 +20,7 @@ For every label and two-element subset exactly one of the six transpositions fix
 
 **Theorem 1.2 (The uniform label-and-pair law attains the bound).**
 
-$$\exists w, \operatorname{PositiveExactlyOnLabelAndPair}\left(w\right) \land \operatorname{Invariant}\left(w\right) \land \operatorname{UniformLabelMarginal}\left(w, \frac{1}{4}\right) \land \operatorname{UniformPairMarginal}\left(w, \frac{1}{6}\right) \land \operatorname{TotalMass}\left(w\right) = 1 \land \operatorname{FixedMass}\left(w, \operatorname{Swap}\left(0, 1\right)\right) = \frac{1}{6}$$
+$$\exists w, \operatorname{UniformOnLabelAndPair}\left(w, \frac{1}{24}\right) \land \operatorname{Invariant}\left(w\right) \land \operatorname{UniformLabelMarginal}\left(w, \frac{1}{4}\right) \land \operatorname{UniformPairMarginal}\left(w, \frac{1}{6}\right) \land \operatorname{TotalMass}\left(w\right) = 1 \land \operatorname{FixedMass}\left(w, \operatorname{Swap}\left(0, 1\right)\right) = \frac{1}{6}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/TranspositionFixedMass.uniform_label_pair_attains` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\exists w, \operatorname{PositiveExactlyOnLabelAndPair}\left(w\right) \land \o
 
 *Commentary.*
 
-The invariant law assigns positive mass to every label and two-element subset pair and zero elsewhere. The label marginal has mass one quarter per label and the subset marginal has mass one sixth per two-element subset. The total mass is one. The fixed mass is one sixth.
+The invariant law assigns mass one twenty-fourth to every label and two-element subset pair and zero elsewhere. The label marginal has mass one quarter per label and the subset marginal has mass one sixth per two-element subset. The total mass is one. The fixed mass is one sixth.
 
 ## References
 

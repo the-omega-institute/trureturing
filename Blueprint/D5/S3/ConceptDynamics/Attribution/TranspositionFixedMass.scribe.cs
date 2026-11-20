@@ -35,7 +35,7 @@ internal sealed class TranspositionFixedMassDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Attainment()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The invariant law assigns positive mass to every label and two-element subset "
+                    Paragraph(Text("The invariant law assigns mass one twenty-fourth to every label and two-element subset "
                         + "pair and zero elsewhere. The label marginal has mass one quarter per label and the subset "
                         + "marginal has mass one sixth per two-element subset. The total mass is one. The fixed "
                         + "mass is one sixth."))),
@@ -59,7 +59,8 @@ internal sealed class TranspositionFixedMassDocument : IScribeDocumentDefinition
     private static Formula Attainment()
     {
         Formula w = F.Id("w");
-        return Disp(Seq(Exists, Sp, w, Comma, Sp, Call("PositiveExactlyOnLabelAndPair", w),
+        return Disp(Seq(Exists, Sp, w, Comma, Sp,
+            Call("UniformOnLabelAndPair", w, Seq(Frac, Grp(D(1)), Grp(D(2, 4)))),
             Sp, Land, Sp, Call("Invariant", w), Sp, Land, Sp,
             Call("UniformLabelMarginal", w, Seq(Frac, Grp(D(1)), Grp(D(4)))), Sp, Land, Sp,
             Call("UniformPairMarginal", w, Seq(Frac, Grp(D(1)), Grp(D(6)))), Sp, Land, Sp,

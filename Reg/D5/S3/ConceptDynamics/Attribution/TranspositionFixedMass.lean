@@ -27,7 +27,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∃ w : Table,
-    (∀ i B, B.card = 2 → 0 < w i B) ∧
+    (∀ i B, B.card = 2 → w i B = 1 / 24) ∧
     (∀ i B, B.card ≠ 2 → w i B = 0) ∧
     (∀ (g : Equiv.Perm (Fin 4)) i B, w (g i) (g.finsetCongr B) = w i B) ∧
     (∀ i : Fin 4, (∑ B : Finset (Fin 4), w i B) = 1 / 4) ∧
