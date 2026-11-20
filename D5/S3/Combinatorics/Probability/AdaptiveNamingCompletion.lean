@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-probability-estimate)
    anchors: []
    utility: none
-   digest: Completing a naming after adaptive replies preserves the joint transcript and full-state law. -/
+   digest: Adaptive naming completion preserves the joint stopped record and state. -/
 
 /- Information escape registration remains open. https://github.com/the-omega-institute/trureturing/issues/32103 -/
 
@@ -13,6 +13,8 @@ import D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+/-! Uniformly completing a partial naming commutes with a stopped adaptive protocol. -/
 
 open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
 open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
@@ -50,7 +52,8 @@ private theorem run_then_complete (lazyStep : ∀ q, S → PMF (R q × S))
     (hStep : ∀ q s, completeAfter complete (lazyStep q s) =
       (complete s).bind (eagerStep q))
     (p : PassiveProtocol Q R) (s : S) :
-    completeAfter complete (runQueries lazyStep p s) = (complete s).bind (runQueries eagerStep p) := by
+    completeAfter complete (runQueries lazyStep p s) =
+      (complete s).bind (runQueries eagerStep p) := by
   induction p generalizing s with
   | stop =>
     simp only [runQueries, completeAfter, PMF.pure_bind]
@@ -68,7 +71,8 @@ private theorem run_then_complete (lazyStep : ∀ q, S → PMF (R q × S))
         change completeAfter complete ((runQueries lazyStep (next x.1) x.2).map _) = _
         rw [completeAfter_prepend, ih]
       _ = (completeAfter complete (lazyStep q s)).bind rest := by
-        simp only [completeAfter, PMF.bind_bind, PMF.bind_map, PMF.map_bind, Function.comp_def, rest]
+        simp only [completeAfter, PMF.bind_bind, PMF.bind_map, PMF.map_bind,
+          Function.comp_def, rest]
       _ = _ := by
         rw [hStep, PMF.bind_bind]
         rfl
@@ -95,9 +99,18 @@ noncomputable def sample (s : NameState V N) : PMF (V ↪ N) :=
 noncomputable def answer {I : Type*} (read : I → V) (s : NameState V N) : PMF (I → N) :=
   (sample s).map (fun f i => f (read i))
 
+/-- A supported reply retains all old names, fixes the requested names and
+removes the names used by the expanded assignment from availability. -/
+def IsUpdate {I : Type*} (read : I → V) (s : NameState V N)
+    (reply : I → N) (next : NameState V N) : Prop :=
+  next.knownVertices = namedAfter s.knownVertices read ∧
+  (∀ v : s.knownVertices, ∃ hv : v.1 ∈ next.knownVertices, next.names ⟨v.1, hv⟩ = s.names v) ∧
+  (∀ i, ∃ hi : read i ∈ next.knownVertices, next.names ⟨read i, hi⟩ = reply i) ∧
+  next.available = unused s.available next.knownVertices next.names
+
 private theorem exists_next {I : Type*} (read : I → V) (s : NameState V N) :
     ∃ next : ∀ a ∈ (answer read s).support, NameState V N,
-      (∀ a ha, (next a ha).knownVertices = namedAfter s.knownVertices read) ∧
+      (∀ a ha, IsUpdate read s a (next a ha)) ∧
       ((answer read s).bindOnSupport fun a ha => (sample (next a ha)).map (Prod.mk a)) =
         (sample s).map (fun f => ((fun i => f (read i)), f)) := by
   classical
@@ -125,11 +138,33 @@ private theorem exists_next {I : Type*} (read : I → V) (s : NameState V N) :
     exact fun hn => hn.2 ⟨v, Finset.mem_attach _ _, rfl⟩
   have hKernel (a : I → N) (ha : a ∈ q.support) :
       sample (readState a ha) = kernel a ha := (hAvailable a ha).choose_spec.2.choose_spec.symm
+  have hExact (a : I → N) (ha : a ∈ q.support) : IsUpdate read s a (readState a ha) := by
+    refine ⟨rfl, ?_, ?_, rfl⟩
+    · intro v
+      have hv : v.1 ∈ L := Finset.mem_union_left _ v.2
+      refine ⟨hv, ?_⟩
+      obtain ⟨f, hf⟩ := (kernel a ha).support_nonempty
+      have hPairSupport : (a, f) ∈ (q.bindOnSupport fun b hb => (kernel b hb).map (Prod.mk b)).support :=
+        (PMF.mem_support_bindOnSupport_iff _ _).2
+          ⟨a, ha, (PMF.mem_support_map_iff _ _ _).2 ⟨f, hf, rfl⟩⟩
+      rw [hJoint] at hPairSupport
+      obtain ⟨original, _, hOriginal⟩ := (PMF.mem_support_map_iff _ _ _).1 hPairSupport
+      have hF : original.1 = f := congrArg Prod.snd hOriginal
+      rw [← hKernel a ha] at hf
+      simp only [sample, PMF.mem_support_map_iff] at hf
+      obtain ⟨extended, _, hExtended⟩ := hf
+      exact (extended.2.1 ⟨v.1, hv⟩).symm.trans
+        ((congrArg (fun g : V ↪ N => g v.1) (hExtended.trans hF.symm)).trans (original.2.1 v))
+    · intro i
+      have hi : read i ∈ L := by
+        apply Finset.mem_union_right
+        exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, ⟨i, rfl⟩⟩
+      exact ⟨hi, (hAvailable a ha).choose_spec.1 i hi⟩
   revert hAns
   generalize answer read s = ans
   intro hAns
   subst ans
-  refine ⟨readState, fun _ _ => rfl, ?_⟩
+  refine ⟨readState, hExact, ?_⟩
   exact (congrArg (fun k => q.bindOnSupport k)
     (funext fun a => funext fun ha => congrArg (fun p => p.map (Prod.mk a)) (hKernel a ha))).trans
     (hJoint.trans hPair.symm)
@@ -169,13 +204,7 @@ private theorem step_preserves_completion {I : Type*} (read : NameState V N → 
   change (q.bindOnSupport fun r h => (sample (update (read s) s r h)).map (Prod.mk r)) =
     (sample s).map observe at hLaw
   have hJoin := congrArg (fun p : PMF ((I → N) × (V ↪ N)) => p.map place) hLaw
-  have hCompose :
-      ((q.bindOnSupport fun r h => (sample (update (read s) s r h)).map (Prod.mk r))).map place =
-        q.bindOnSupport (fun r h => ((sample (update (read s) s r h)).map (Prod.mk r)).map place) := by
-    change (q.bindOnSupport _).bind (PMF.pure ∘ place) = _
-    rw [← PMF.bindOnSupport_eq_bind, PMF.bindOnSupport_bindOnSupport]
-    simp only [PMF.bindOnSupport_eq_bind, PMF.bind_pure_comp]
-  rw [hCompose, PMF.map_comp] at hJoin
+  rw [postcompose_support_bind, PMF.map_comp] at hJoin
   have hEager : (complete s).bind (eager read) = (sample s).map (place ∘ observe) := by
     simp only [complete, PMF.bind_map]
     rfl
@@ -194,10 +223,13 @@ theorem adaptive_name_completion {Q : Type*} {I : Q → Type*}
     (read : (q : Q) → NameState V N → I q → V)
     (p : PassiveProtocol Q (fun q => I q → N)) (s : NameState V N) :
     let initial := complete s
-    completeAfter complete
-      (runQueries (fun q s => lazy (read q s) s) p s) =
-    initial.bind (runQueries (fun q => eager (read q)) p) := by
+    (∀ q (state : NameState V N) reply (h : reply ∈ (answer (read q state) state).support),
+      IsUpdate (read q state) state reply (update (read q state) state reply h)) ∧
+      completeAfter complete
+        (runQueries (fun q s => lazy (read q s) s) p s) =
+      initial.bind (runQueries (fun q => eager (read q)) p) := by
   intro initial
+  refine ⟨fun q state reply h => (exists_next (read q state) state).choose_spec.1 reply h, ?_⟩
   exact run_then_complete _ _ _ (fun q => step_preserves_completion (read q)) p s
 
 end NamedProtocol
