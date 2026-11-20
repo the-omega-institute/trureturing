@@ -47,7 +47,8 @@ private def sourceGradePairingEquiv (D : LatticeData) (hu : IsUnit D.G.det)
     (fun m n x y hx hy hmn => sourcePairing_grade D m n hmn x y hx hy) hD h)).trans
       e.symm.dualMap
 
-private theorem sourceGradePairingEquiv_evaluation (D : LatticeData)
+/-- Evaluating the inverse source pairing against a fixed-grade vector recovers its functional. -/
+theorem sourceGradePairingEquiv_evaluation (D : LatticeData)
     (hu : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ)
     (f : Module.Dual ℂ (fixedGrade D h)) (y : fixedGrade D h) :
