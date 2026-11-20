@@ -112,7 +112,7 @@ open scoped Nat
 
 namespace ProfileStabilizer
 
-private def Preserving {I : Type*} (p : I → ℕ) : Subgroup (Equiv.Perm I) where
+def Preserving {I : Type*} (p : I → ℕ) : Subgroup (Equiv.Perm I) where
   carrier := {g | p ∘ g = p}
   one_mem' := rfl
   mul_mem' {g h} hg hh := by
@@ -533,7 +533,7 @@ instance profileAction {I : Type*} [Fintype I] {m : ℕ} : MulAction (Equiv.Perm
   one_smul := relabel_one
   mul_smul := relabel_mul
 
-private theorem preserving_of_fix {I : Type*} [Fintype I] {m : ℕ} {p : Profile I m}
+theorem preserving_of_fix {I : Type*} [Fintype I] {m : ℕ} {p : Profile I m}
     {g : Equiv.Perm I} (fixes : relabel g p = p) : g ∈ ProfileStabilizer.Preserving p.val := by
   change p.val ∘ g = p.val
   funext i
