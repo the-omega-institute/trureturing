@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.SpectralGraph.CographDistanceCotree
 import D5.S3.QuadraticForms.SymmetricRankOneWidth
+import D5.S3.QuadraticForms.SymmetricRankOneGuards
 import Mathlib.Analysis.Matrix.Spectrum
 
 /-! # Equality in the cograph distance multiplicity bound
@@ -122,7 +123,8 @@ theorem cotree_kernelCount_le_and_saturation {V : Type} {G : SimpleGraph V}
       have hk : kinds C = none := not_not.mp (fun hn => hC ((mem_nonleaves _ _).mpr hn))
       have leaf : Cotree (G.induce C.supp) none := by rw [← hk]; exact child C
       exact (proper_leaf_states leaf hx join).1
-    have hchild (C : (cutGraph G join).ConnectedComponent) := ih C (label join) (label_ne (alternates C))
+    have hchild (C : (cutGraph G join).ConnectedComponent) :=
+      ih C (label join) (label_ne (alternates C))
     have hb := update_block_width (F := fun C => EuclideanSpace ℝ C.supp) A
       (fun C => localOperator_symmetric (G.induce C.supp) (label join) x)
       u (nonleaves kinds) (fun C => width (G.induce C.supp))
@@ -305,5 +307,220 @@ theorem width_one_attains {V : Type} [Finite V] {G : SimpleGraph V}
     obtain ⟨x, y, hx, hne, he⟩ := exists_positive_distance_eigenvector hc
     have hel : Eligible x := ⟨by linarith, by linarith⟩
     exact ⟨x, hel, (distanceMultiplicity_eq_width_iff_width_one hc hP hw hel).mpr ⟨y, hne, he⟩⟩
+
+
+open Polynomial
+
+private def integralLabel (join : Bool) : ℤ := if join then 1 else 2
+
+private theorem cast_integralLabel (join : Bool) : (integralLabel join : ℝ) = label join := by
+  cases join <;> norm_num [integralLabel, label]
+
+/-- The uncancelled response pair at a node and the distinct guard polynomials
+from that node and every descendant. -/
+structure CotreeGuardData where
+  numerator : ℤ[X]
+  guard : ℤ[X]
+  subtreeGuards : Finset ℤ[X]
+
+/-- Leaf guards are `X+q`. Internal guards use the product of child guards
+plus the integer coupling times the response numerator. -/
+def cotreeGuardData {V : Type} {G : SimpleGraph V} {kind : Option Bool}
+    (tree : Cotree G kind) : ∀ [Finite V], ℤ → CotreeGuardData := by
+  classical
+  induction tree with
+  | leaf _ _ =>
+    intro _ q
+    exact ⟨-1, X + C q, {X + C q}⟩
+  | @node V G join _ _ _ _ ih =>
+    intro _ q
+    let d (i : (cutGraph G join).ConnectedComponent) := ih i (integralLabel join)
+    let P := fun i => (d i).numerator
+    let Q := fun i => (d i).guard
+    let guard := responseGuard P Q (integralLabel join - q)
+    exact ⟨responseNumerator P Q, guard,
+      insert guard (Finset.univ.biUnion fun i => (d i).subtreeGuards)⟩
+
+/-- Each guard is monic of degree equal to the size of its subtree. In
+particular, all guards that contribute candidate shifts are nonzero. -/
+theorem cotreeGuardData_degrees {V : Type} {G : SimpleGraph V} {kind : Option Bool}
+    (tree : Cotree G kind) :
+    ∀ [Finite V] (q : ℤ),
+      let d := cotreeGuardData tree q
+      d.numerator.natDegree = Fintype.card V - 1 ∧
+      d.numerator.leadingCoeff = -(Fintype.card V : ℤ) ∧
+      d.guard.Monic ∧ d.guard.natDegree = Fintype.card V ∧
+      d.guard ∈ d.subtreeGuards ∧ (∀ p ∈ d.subtreeGuards, p.Monic) := by
+  classical
+  induction tree with
+  | @leaf V G v unique =>
+    intro _ q
+    let : Unique V := ⟨⟨v⟩, unique⟩
+    change (-1 : ℤ[X]).natDegree = Fintype.card V - 1 ∧
+      (-1 : ℤ[X]).leadingCoeff = -(Fintype.card V : ℤ) ∧
+      (X + C q).Monic ∧ (X + C q).natDegree = Fintype.card V ∧
+      X + C q ∈ ({X + C q} : Finset ℤ[X]) ∧
+        (∀ p ∈ ({X + C q} : Finset ℤ[X]), (p : ℤ[X]).Monic)
+    rw [Fintype.card_unique]
+    refine ⟨by simp, by simp, monic_X_add_C q, natDegree_X_add_C q,
+      Finset.mem_singleton_self _, ?_⟩
+    intro p hp
+    rw [Finset.mem_singleton.mp hp]
+    exact monic_X_add_C q
+  | @node V G join arity kind alternates child ih =>
+    intro _ q
+    let I := (cutGraph G join).ConnectedComponent
+    let : Nontrivial I := arity
+    let d (i : I) := cotreeGuardData (child i) (integralLabel join)
+    let P (i : I) := (d i).numerator
+    let Q (i : I) := (d i).guard
+    let R := responseGuard P Q (integralLabel join - q)
+    let n (i : I) := Fintype.card i.supp
+    have hcard : ∑ i, n i = Fintype.card V := by
+      exact Fintype.card_sigma.symm.trans
+        (@Fintype.card_congr _ _ Sigma.instFintype (finiteFintype V) (componentEquiv G join))
+    have hpos (i : I) : 0 < n i := by
+      let : Nonempty i.supp := i.nonempty_supp.to_subtype
+      exact Fintype.card_pos
+    have hchild (i : I) := ih i (integralLabel join)
+    have hd := responseGuard_degrees P Q (integralLabel join - q) n hpos
+      (fun i => ⟨(hchild i).2.2.1, (hchild i).2.2.2.1⟩)
+      (fun i => ⟨(hchild i).1, (hchild i).2.1⟩)
+    dsimp only at hd
+    rw [hcard] at hd
+    change (responseNumerator P Q).natDegree = Fintype.card V - 1 ∧
+      (responseNumerator P Q).leadingCoeff = -(Fintype.card V : ℤ) ∧
+      R.Monic ∧ R.natDegree = Fintype.card V ∧
+      R ∈ insert R (Finset.univ.biUnion fun i : I => (d i).subtreeGuards) ∧
+        (∀ p ∈ insert R (Finset.univ.biUnion fun i : I => (d i).subtreeGuards), p.Monic)
+    refine ⟨hd.1, hd.2.1, hd.2.2.1, hd.2.2.2, Finset.mem_insert_self _ _, ?_⟩
+    intro p hp
+    rcases Finset.mem_insert.mp hp with rfl | hp
+    · exact hd.2.2.1
+    · obtain ⟨i, _, hi⟩ := Finset.mem_biUnion.mp hp
+      exact (hchild i).2.2.2.2.2 p hi
+
+/-- Away from all descendant guards, the native nullity is zero and the scalar
+response is exactly the uncancelled ratio. -/
+theorem cotreeGuardData_off_roots {V : Type} {G : SimpleGraph V} {kind : Option Bool}
+    (tree : Cotree G kind) (x : ℝ) :
+    ∀ [Finite V] (q : ℤ),
+      let d := cotreeGuardData tree q
+      (∀ p ∈ d.subtreeGuards, p.eval₂ (Int.castRingHom ℝ) x ≠ 0) →
+      kernelCount G (q : ℝ) x = 0 ∧
+      ScalarResponse (localOperator G (q : ℝ) x) (oneVector V)
+        (d.numerator.eval₂ (Int.castRingHom ℝ) x / d.guard.eval₂ (Int.castRingHom ℝ) x) := by
+  classical
+  induction tree with
+  | @leaf V G v unique =>
+    intro _ q
+    dsimp only
+    intro hoff
+    have hz : x + (q : ℝ) ≠ 0 := by
+      simpa only [eval₂_add, eval₂_X, eval₂_C, Int.coe_castRingHom] using
+        hoff (X + C q) (Finset.mem_singleton_self _)
+    have hl := leaf_states (Cotree.leaf (G := G) v unique) (q : ℝ) x
+    rw [ite_eq_right hz] at hl
+    change kernelCount G (q : ℝ) x = 0 ∧
+      ScalarResponse (localOperator G (q : ℝ) x) (oneVector V)
+        ((-1 : ℤ[X]).eval₂ (Int.castRingHom ℝ) x / (X + C q).eval₂ (Int.castRingHom ℝ) x)
+    simpa only [eval₂_neg, eval₂_one, eval₂_add, eval₂_X, eval₂_C, Int.coe_castRingHom] using hl
+  | @node V G join arity kind alternates child ih =>
+    intro _ q
+    dsimp only
+    intro hoff
+    let I := (cutGraph G join).ConnectedComponent
+    let d (i : I) := cotreeGuardData (child i) (integralLabel join)
+    let P (i : I) := (d i).numerator
+    let Q (i : I) := (d i).guard
+    let R := responseGuard P Q (integralLabel join - q)
+    change ∀ p ∈ insert R (Finset.univ.biUnion (fun i : I => (d i).subtreeGuards)),
+      p.eval₂ (Int.castRingHom ℝ) x ≠ 0 at hoff
+    have hchild (i : I) (p : ℤ[X]) (hp : p ∈ (d i).subtreeGuards) :
+        p.eval₂ (Int.castRingHom ℝ) x ≠ 0 :=
+      hoff p (Finset.mem_insert_of_mem (Finset.mem_biUnion.mpr ⟨i, Finset.mem_univ _, hp⟩))
+    have hqi (i : I) : (Q i).eval₂ (Int.castRingHom ℝ) x ≠ 0 :=
+      hchild i _ (cotreeGuardData_degrees (child i) (integralLabel join)).2.2.2.2.1
+    have hr : R.eval₂ (Int.castRingHom ℝ) x ≠ 0 :=
+      hoff R (Finset.mem_insert_self _ _)
+    let A (i : I) := localOperator (G.induce i.supp) (label join) x
+    let u : PiLp 2 (fun i : I => EuclideanSpace ℝ i.supp) :=
+      WithLp.toLp 2 (fun i => oneVector i.supp)
+    have hstates (i : I) :
+        Module.finrank ℝ (LinearMap.ker (A i)) = 0 ∧
+        ScalarResponse (A i) (u i)
+          ((P i).eval₂ (Int.castRingHom ℝ) x / (Q i).eval₂ (Int.castRingHom ℝ) x) := by
+      have h := ih i (integralLabel join) (hchild i)
+      rw [cast_integralLabel] at h
+      exact h
+    have hb := update_block_of_guard_ne_zero (F := fun i : I => EuclideanSpace ℝ i.supp)
+      A (fun i => localOperator_symmetric (G.induce i.supp) (label join) x)
+      u P Q (integralLabel join - q) x hqi hr hstates
+    rw [Int.cast_sub, cast_integralLabel] at hb
+    have hn := localOperator_node_states G join (q : ℝ) x
+    dsimp only at hn
+    rw [componentCoordinates_oneVector] at hn
+    exact ⟨hn.1.trans hb.1, (hn.2.2 _).mpr hb.2⟩
+
+/-- All attained eligible shifts occur among the distinct real roots of the
+uncancelled guards. The degree sum bounds the number of candidates. -/
+theorem distanceMultiplicity_guard_candidates {V : Type} [Finite V]
+    {G : SimpleGraph V} {kind : Option Bool} (tree : Cotree G kind)
+    (hc : G.Connected) (hP : ¬(pathGraph 4).IsIndContained G) :
+    let s := (cotreeGuardData tree 0).subtreeGuards
+    let candidates := realGuardCandidates s id
+    candidates.card ≤ ∑ p ∈ s, p.natDegree ∧
+      ((∃ x, Eligible x ∧ distanceMultiplicity G x = width G) ↔
+        ∃ x ∈ candidates, Eligible x ∧ distanceMultiplicity G x = width G) := by
+  classical
+  have hwidth : 0 < width G := by
+    cases tree with
+    | leaf v unique => rw [(Cotree.leaf (G := G) v unique).width_leaf]; decide
+    | node join arity kind _ child => rw [width_eq_max join kind child arity]; omega
+  apply realGuardCandidates_spec _ id
+    (fun p hp => ((cotreeGuardData_degrees tree 0).2.2.2.2.2 p hp).ne_zero)
+  intro x hoff hx
+  have hz := (cotreeGuardData_off_roots tree x 0 hoff).1
+  rw [Int.cast_zero] at hz
+  rw [distanceMultiplicity_eq hc hP, hz] at hx
+  exact hwidth.ne hx.2
+
+/-- A connected cograph attains at an eligible shift exactly when its width is
+one, or an eligible candidate shift satisfies the native join-root formula. -/
+theorem distanceMultiplicity_attains_iff {V : Type} [Finite V] {G : SimpleGraph V}
+    (hc : G.Connected) (hP : ¬(pathGraph 4).IsIndContained G) :
+    (∃ x, Eligible x ∧ distanceMultiplicity G x = width G) ↔
+      width G = 1 ∨
+      (1 < width G ∧ ∃ (arity : Nontrivial (cutGraph G true).ConnectedComponent)
+        (kind : (cutGraph G true).ConnectedComponent → Option Bool)
+        (alternates : ∀ C, kind C ≠ some true)
+        (child : ∀ C, Cotree (G.induce C.supp) (kind C)),
+        let tree := Cotree.node true arity kind alternates child
+        ∃ x ∈ realGuardCandidates (cotreeGuardData tree 0).subtreeGuards id,
+          Eligible x ∧ JoinRootCriterion G kind x) := by
+  classical
+  let := hc.nonempty
+  rcases eq_or_ne (width G) 1 with hw | hw
+  · exact iff_of_true (width_one_attains hc hP hw) (Or.inl hw)
+  have hn : Nontrivial V := not_subsingleton_iff_nontrivial.mp (fun hs => hw (width_singleton G))
+  let : Nontrivial V := hn
+  obtain ⟨tree⟩ := Cotree.exists_join_root hc hP
+  cases tree with
+  | node _ arity kind alternates child =>
+    have hwide : 1 < width G := by rw [width_eq_max true kind child arity] at hw ⊢; omega
+    constructor
+    · intro h
+      have hfinite :=
+        (distanceMultiplicity_guard_candidates (.node true arity kind alternates child) hc hP).2
+      obtain ⟨x, hxc, hx, he⟩ := hfinite.mp h
+      have hroot :=
+        distanceMultiplicity_eq_width_iff_joinRoot hc hP hwide arity kind alternates child hx
+      exact Or.inr ⟨hwide, arity, kind, alternates, child, x, hxc, hx,
+        hroot.mp he⟩
+    · rintro (h | ⟨hwide, arity', kind', alternates', child', x, _, hx, hr⟩)
+      · exact (hw h).elim
+      · have hroot := distanceMultiplicity_eq_width_iff_joinRoot
+          hc hP hwide arity' kind' alternates' child' hx
+        exact ⟨x, hx, hroot.mpr hr⟩
 
 end D5.S3.Combinatorics.SpectralGraph.CographDistanceCotree
