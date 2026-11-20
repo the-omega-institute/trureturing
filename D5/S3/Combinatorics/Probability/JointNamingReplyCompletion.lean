@@ -183,7 +183,7 @@ section JointLaw
 
 variable {V N I : Type*} [DecidableEq V] [Fintype V] [Finite N]
 
-private theorem postcompose_support_bind {α β γ : Type*}
+theorem postcompose_support_bind {α β γ : Type*}
     (q : PMF α) (K : ∀ a ∈ q.support, PMF β) (f : β → γ) :
     (q.bindOnSupport K).map f =
       q.bindOnSupport (fun a ha => (K a ha).map f) := by

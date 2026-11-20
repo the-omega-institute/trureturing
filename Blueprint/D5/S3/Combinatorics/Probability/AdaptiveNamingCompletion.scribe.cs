@@ -24,7 +24,10 @@ internal sealed class AdaptiveNamingCompletionDocument : IScribeDocumentDefiniti
                         "A finite deterministic protocol either stops or selects its next query from the " +
                         "previous replies. Each query's ordered vertex request may depend on the current " +
                         "partial naming. In the deferred experiment, the reply is drawn from the current " +
-                        "reply law, and the partial state is updated before continuing. At a stop the remaining " +
+                        "reply law. The update preserves the old names, assigns the reply at each requested " +
+                        "vertex, and removes exactly the names used by the expanded assignment from the " +
+                        "available set. The expanded domain is the union of the old and requested vertices. " +
+                        "At a stop the remaining " +
                         "names are completed uniformly. In the other experiment, a uniform completion is " +
                         "drawn initially and held fixed. The same query reads its reply from that injection " +
                         "and uses the same update to the partial state.")),
