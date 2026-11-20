@@ -113,7 +113,8 @@ def HasLanguageColoring (X : Subshift A ℤ) (N : ℕ) : Prop :=
     ∀ w : IntervalWord A (-(m : ℤ)) ((n : ℤ) + m),
       LocallyAdmissible X m n w → AnchoredColoring X N k m n hkm w
 
-private def Agrees (k : ℕ) (x y : ℤ → A) : Prop :=
+/-- Two configurations agree on every coordinate of the centered radius-`k` window. -/
+def Agrees (k : ℕ) (x y : ℤ → A) : Prop :=
   ∀ j ∈ Set.Icc (-(k : ℤ)) (k : ℤ), x j = y j
 
 private def WindowShadowing (X : Subshift A ℤ) (N : ℕ) : Prop :=
@@ -279,7 +280,9 @@ private theorem agrees_entourage_basis [UniformSpace A] [DiscreteUniformity A]
 
 variable [TopologicalSpace A]
 
-private theorem metric_window_controls [DiscreteTopology A] [Finite A]
+/-- Centered coordinate agreement gives a uniform basis for any compatible metric on
+a two-sided subshift over a finite discrete alphabet. -/
+theorem metric_window_controls [DiscreteTopology A] [Finite A]
     (X : Subshift A ℤ) (d : MetricSpace X.carrier)
     (hd : d.toUniformSpace.toTopologicalSpace = (inferInstance : TopologicalSpace X.carrier)) :
     let := d

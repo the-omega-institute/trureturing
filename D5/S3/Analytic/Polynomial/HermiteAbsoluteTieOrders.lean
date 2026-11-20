@@ -12,7 +12,9 @@ import D5.S3.Analytic.Polynomial.HermiteAbsoluteMode
 
 namespace D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders
 
-open HermiteSignedMode HermiteAbsoluteMode
+open HermiteSignedMode hiding fourth divisor rises mode mode_rises le_mode rises_lower weight
+  weight_pos adjacent weight_lt_mode positive_coefficient coefficient_cases
+open HermiteAbsoluteMode
 
 /-- Absolute maximality over every exponent from zero through the order. -/
 def IsAbsMax (k j : ℕ) : Prop :=
