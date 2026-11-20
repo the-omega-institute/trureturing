@@ -167,6 +167,28 @@ public sealed class RuleEngineTests
     }
 
     [Theory]
+    [InlineData(10, "generality")]
+    [InlineData(15, "formula")]
+    [InlineData(17, "query")]
+    [InlineData(18, "values")]
+    public void SourceFindingsSurviveAnEmptyScopedReport(int number, string mutation)
+    {
+        var fixture = new RuleFixture();
+        fixture.Apply(mutation);
+        if (number == 10)
+        {
+            fixture.Files[RuleFixture.RingPath] = RuleFixture.HeaderFor("D5/S0/Carrier/Ring", "G")
+                + "import D5.S0.Conventions.Notation\n";
+        }
+        var full = fixture.Build(RawChangeSet.Create([number == 17 ? "Library/queries.yaml" : "tools/scripts/workflow/ci-entry.sh"]));
+        var scoped = DeltaRuleContext.Create(full.Current, full.Baseline, full.Policy,
+            AcceptedLeanClosure.Create(LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>())),
+            full.Changes, full.MetaEvaluation);
+        var result = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), scoped);
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
+    }
+
+    [Theory]
     [MemberData(nameof(AffectedInputs))]
     public void ActiveRuleExecutesWhenItsInputClosureChanges(int number, string path)
     {

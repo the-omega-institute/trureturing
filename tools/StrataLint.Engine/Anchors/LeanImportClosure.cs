@@ -48,39 +48,55 @@ internal static class LeanImportClosure
     internal static bool ImportsExternalModule(
         LeanAxiomReport report,
         string startModule,
+        string targetModule) =>
+        ImportsExternalModule(ImportGraph(report), startModule, targetModule);
+
+    internal static Dictionary<string, ImmutableArray<string>> ImportGraph(LeanAxiomReport report) =>
+        report.Files.ToDictionary(static item => ModuleName(item.Key),
+            static item => item.Value.Imports, StringComparer.Ordinal);
+
+    internal static IEnumerable<(RepoPath Path, ImmutableArray<string> Imports)> CandidateImports(
+        RepositorySnapshot current, LeanAxiomReport report, bool includeDependencySources = false)
+    {
+        foreach (var (path, module) in report.Files) yield return (path, module.Imports);
+        if (!report.IsScoped) yield break;
+        var dependencies = includeDependencySources ? LeanReportDependencySources.Select(current).ToHashSet() : [];
+        foreach (var (path, file) in current.Files)
+        {
+            if (report.Files.ContainsKey(path)
+                || !LeanClosureValidator.IsReportLean(path.Value) && !dependencies.Contains(path)) continue;
+            if (!file.ContentWasRead)
+                throw new InvalidDataException("missing source for candidate import graph: " + path.Value);
+            yield return (path, LeanSourceCatalog.ParseFileImports(file, includeImplicitInit: true));
+        }
+    }
+
+    internal static bool ImportsExternalModule(
+        IReadOnlyDictionary<string, ImmutableArray<string>> imports,
+        string startModule,
         string targetModule)
     {
-        ArgumentNullException.ThrowIfNull(report);
         ArgumentException.ThrowIfNullOrWhiteSpace(startModule);
         ArgumentException.ThrowIfNullOrWhiteSpace(targetModule);
-
-        var reportsByModule = report.Files.ToDictionary(
-            static item => ModuleName(item.Key),
-            static item => item.Value,
-            StringComparer.Ordinal);
-        if (!reportsByModule.ContainsKey(startModule))
-        {
-            return false;
-        }
 
         var pending = new Stack<string>();
         var visited = new HashSet<string>(StringComparer.Ordinal);
         pending.Push(startModule);
         while (pending.TryPop(out var module))
         {
-            if (!visited.Add(module) || !reportsByModule.TryGetValue(module, out var file))
+            if (!visited.Add(module) || !imports.TryGetValue(module, out var dependencies))
             {
                 continue;
             }
 
-            foreach (var import in file.Imports)
+            foreach (var import in dependencies)
             {
                 if (string.Equals(import, targetModule, StringComparison.Ordinal))
                 {
                     return true;
                 }
 
-                if (reportsByModule.ContainsKey(import) && !visited.Contains(import))
+                if (imports.ContainsKey(import) && !visited.Contains(import))
                 {
                     pending.Push(import);
                 }
