@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/Shadowing/TripleEdgeSubdivisionRealization
+/- GID: D5/S3/Combinatorics/Graph/LeaflessDynamics/TripleEdgeSubdivisionRealization
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Shadowing/TripleEdgeSubdivisionRealization
+   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDynamics/TripleEdgeSubdivisionRealization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -20,7 +20,9 @@ open Function Set SimpleGraph
 open D5.S3.ConceptDynamics.Coding.EssentialWordRealization (DirectedMultigraph)
 open D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivision (graph Flag)
 
-namespace D5.S1.Dynamics.Shadowing.TripleEdgeSubdivisionRealization
+open D5.S1.Dynamics.Shadowing
+
+namespace D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivisionRealization
 
 open FiniteGraphAffineRealization
 
@@ -400,4 +402,4 @@ def subdivisionHomeomorph [Fintype V] [Fintype E] :
 
 end
 
-end D5.S1.Dynamics.Shadowing.TripleEdgeSubdivisionRealization
+end D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivisionRealization

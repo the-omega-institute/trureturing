@@ -154,7 +154,7 @@ and gives a homeomorphism of the closed-edge quotient with the affine simple
 graph realization. This includes loops, which contribute two incidences, and
 parallel edges. The reverse implication transports the pendant arc obstruction
 through the same homeomorphism.
-[Finite graph classification](../../Blueprint/D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.md)
+[Finite graph classification](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics.md)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
