@@ -39,6 +39,8 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - name: Verify the candidate
         env:
           CI_HIT_PATHS: '*'
