@@ -330,9 +330,11 @@ def case(tool, variant=None):
             assert '#12345 Preregister synthetic question' in compact, 'oracle brief drops an issue without an identifier'
         if tool.stem == 'lane_brief':
             brief = (root / 'scratch/briefs/impl-op-w1-sample.md').read_text()
-            assert 'ancestor`: follow the ancestry recovery in step 5′' in brief
-            recovery = brief.split('\n5′. ', 1)[1].split('\n6.', 1)[0]
-            assert recovery.index('make lean-report-prepare LEAN_TARGETS=') < recovery.index('make lean-report-scoped LEAN_TARGETS=')
+            step = brief.split('\n5. **Deposit**', 1)[1].split('\n6.', 1)[0]
+            recovery = step.split('ancestor`: ', 1)[1].split('late dedupe,', 1)
+            assert 'make lean-report-prepare LEAN_TARGETS="<the same list>"`/`make lean-report-scoped LEAN_TARGETS="<the same list>"' in recovery[0]
+            assert 'repeat this step’s deposit command with a freshly computed `B`' in recovery[1]
+            assert '`B="$(git merge-base HEAD origin/dev)"' in step and 'BASE="$B"' in step
         if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
             path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
                     'rework-sample.md' if tool.stem == 'rework_brief' else
