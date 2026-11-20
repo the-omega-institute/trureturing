@@ -107,7 +107,7 @@ private lemma weight_cons (ell d : ℕ) (b : ℕ →₀ ℕ) :
   ring
 
 /-- The admissible lowest digits of `n`. -/
-private def low (k ell n : ℕ) : Finset ℕ :=
+def low (k ell n : ℕ) : Finset ℕ :=
   (range (k + 1)).filter fun d => d ≤ n ∧ d % ell = n % ell
 
 private lemma mem_low_of (k ell n : ℕ) (a : Partitions k ell n) : a.1 0 ∈ low k ell n := by
@@ -162,7 +162,7 @@ private def fiberEquiv (k ell n : ℕ) (hell : 2 ≤ ell) (d : low k ell n) :
 
 /-- The digit recursion `b(k, ell, n) = ∑_{d} b(k, ell, (n - d) / ell)` over the admissible
 lowest digits `d`. -/
-private lemma count_rec (k ell n : ℕ) (hell : 2 ≤ ell) :
+theorem count_rec (k ell n : ℕ) (hell : 2 ≤ ell) :
     count k ell n = ∑ d ∈ low k ell n, count k ell ((n - d) / ell) := by
   have : Finite (Partitions k ell n) := partitions_finite k ell n hell
   let f : Partitions k ell n → low k ell n := fun a => ⟨a.1 0, mem_low_of k ell n a⟩
