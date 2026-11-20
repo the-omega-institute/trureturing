@@ -43,7 +43,7 @@ section Syllables
 
 /-- The product `x₁ ^ e₁ ⋯ x_k ^ e_k` of a list of syllables. -/
 private def syllableProd (s : List (X × ℤ)) : FreeGroup X :=
-  (s.map fun a ↦ of a.1 ^ a.2).prod
+  (s.map fun a ↦ FreeGroup.of a.1 ^ a.2).prod
 
 /-- The empty syllable list represents the identity. -/
 @[simp]
@@ -53,7 +53,7 @@ private theorem syllableProd_nil : syllableProd ([] : List (X × ℤ)) = 1 := by
 /-- The product of a nonempty syllable list factors at its head. -/
 @[simp]
 private theorem syllableProd_cons (a : X × ℤ) (s : List (X × ℤ)) :
-    syllableProd (a :: s) = of a.1 ^ a.2 * syllableProd s := by
+    syllableProd (a :: s) = FreeGroup.of a.1 ^ a.2 * syllableProd s := by
   simp [syllableProd]
 
 /-- A syllable list is normal when its exponents are nonzero and consecutive generators are
@@ -71,7 +71,7 @@ private theorem isSyllableNormal_iff {s : List (X × ℤ)} :
 product of another normal syllable list. -/
 private theorem exists_isSyllableNormal_zpow_mul (x : X) (e : ℤ) (s : List (X × ℤ))
     (hs : IsSyllableNormal s) :
-    ∃ t, IsSyllableNormal t ∧ syllableProd t = of x ^ e * syllableProd s := by
+    ∃ t, IsSyllableNormal t ∧ syllableProd t = FreeGroup.of x ^ e * syllableProd s := by
   obtain ⟨hs0, hsc⟩ := hs
   rcases eq_or_ne e 0 with rfl | he
   · exact ⟨s, ⟨hs0, hsc⟩, by simp⟩
@@ -371,7 +371,7 @@ private theorem RowInv.mul_rep (s : List (X × ℤ)) (hs : IsSyllableNormal s) (
     have hLt : L + weight p e ≤ D := hL'.le
     have hrunx : ℓ (L + weight p e) = some x :=
       (spelled_iff ℓ).1 hrun _ (by have := one_le_weight (p := p) e; omega) le_rfl
-    rw [syllableProd_cons, map_mul, map_mul, ← mul_assoc]
+    rw [syllableProd_cons, _root_.map_mul, _root_.map_mul, ← mul_assoc]
     -- Apply the one-syllable step to `x ^ e`, then continue with the remaining syllables.
     refine ih (isSyllableNormal_iff.2 ⟨fun a ha ↦ hs0 a (List.mem_cons_of_mem _ ha), hsc.tail⟩)
       _ hL' _ (RowInv.mul ℓ D hR hLt (hprev (x, e) rfl) ?_ ?_ ?_) ?_
@@ -449,7 +449,7 @@ theorem exists_normal_is_p_group_quotient_not_mem {w : FreeGroup X} (hw : w ≠ 
     (fun _ _ ↦ Or.inl rfl)).2 ⟨D, by omega⟩ rfl
   have hrep : rep (p := p) (letters p s) D (syllableProd s) = 1 :=
     MonoidHom.mem_ker.mp hmem
-  rw [hrep, map_one, one_mul] at hterminal
+  rw [hrep, _root_.map_one, one_mul] at hterminal
   exact hterminal (Matrix.one_apply_ne fun h ↦ by
     simp [Fin.ext_iff] at h
     omega)
