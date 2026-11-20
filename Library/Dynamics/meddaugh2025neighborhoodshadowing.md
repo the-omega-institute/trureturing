@@ -5,11 +5,12 @@ year: 2025
 title: Shadowing with small diameter sets of bounded cardinality
 doi: null
 url: https://arxiv.org/abs/2509.04312v1
-claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels; Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type; Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
+claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels. Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type. Question 5.5 asks for a language characterization of neighborhood two-shadowing. Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
 strata_touched:
   - D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances
   - D5/S1/Dynamics/Shadowing/ProgressionExample
   - D5/S1/Dynamics/Shadowing/LacunaryShadowingHierarchy
+  - D5/S1/Dynamics/Shadowing/LanguageCharacterization
 license: citation-only
 triage: anchor
 ---
@@ -107,6 +108,31 @@ for Ellie Stephens, *Local Variations of Shadowing*, advised by Jonathan
 Meddaugh. The announcement discusses neighborhood shadowing but states no
 hierarchy theorem, and the full dissertation was inaccessible. Priority
 relative to that dissertation remains unverified.
+
+## Finite-language characterization
+
+Question 5.5 asks whether neighborhood two-shadowing in subshifts can be
+characterized by the language. For any positive integer $N$ on a two-sided
+finite-alphabet subshift, the criterion uses finite words and colorings.
+For each tracing window radius $k$, one local radius $m\geq k$ must work
+for every $n$ and every word on $[-m,n+m]$ whose radius-$m$ blocks at
+times $0,\ldots,n$ occur in the language. The times $1,\ldots,n$ must
+admit an $N$-coloring. Each color class must have an extension in the
+language that simultaneously matches the initial radius-$k$ block and
+the radius-$k$ block at each time of that color.
+
+The theorem `LanguageCharacterization.neighborhoodFiniteShadowing_iff_languageColoring`
+proves the equivalence for every compatible metric on the subshift.
+Finite requirements yield one fixed tracing tuple by compactness. The
+initial block is included in every color class's extension requirement
+because the initial tracer diameter is small and the set traces time zero.
+
+The comparison included the mixing-sofic and quasi-finite-type sufficient
+conditions in the primary version and the usual $N=1$ equivalence with
+finite type. The authors' later [arXiv:2608.28845v2](https://arxiv.org/abs/2608.28845v2)
+addresses ordinary shadowing and inverse shadowing. The search found
+no prior equivalent for $N=2$ among the inspected sources. The full text
+of Stephens's dissertation remains unavailable for comparison.
 
 ## Literature boundary
 
