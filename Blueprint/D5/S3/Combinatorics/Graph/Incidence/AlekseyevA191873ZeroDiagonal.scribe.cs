@@ -35,10 +35,7 @@ internal sealed class AlekseyevA191873ZeroDiagonalDocument : IScribeDocumentDefi
     private static DocumentBlock Node(string id, string name, string heading, Formula formula,
         AssessedProvenance provenance, DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(heading),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
-            name == "result"
-                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("alekseyev-a191873"), ResolutionKind.Proved)
-                : null);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
     private static Formula X(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
