@@ -156,6 +156,15 @@ parallel edges. The reverse implication transports the pendant arc obstruction
 through the same homeomorphism.
 [Finite graph classification](../../Blueprint/D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.md)
 
+For each integer m at least two, a graph with two vertices and m plus one
+parallel edges admits a topologically exact map of least forward Bowen
+order m. The map is a factor of the bouquet traversal obtained by
+identifying the sheets over one semicircle. Multiplication by m on the
+projected circle gives the upper bound, and m points on distinct arms
+coalesce in one step arbitrarily close to a branching vertex. The
+construction relates the exact order to the local valence m plus one.
+[Parallel-edge graph construction](../../Blueprint/D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.md)
+
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
 positive expansivity order N. It glues N circles along the image of the
