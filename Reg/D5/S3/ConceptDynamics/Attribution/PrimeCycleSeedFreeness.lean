@@ -47,8 +47,10 @@ private theorem one_hot {I : Type*} [Fintype I] (p : Profile I 1) :
   have nonzero : (∑ i, p.val i) ≠ 0 := by rw [p.property]; decide
   obtain ⟨i, hi, hz⟩ := Finset.exists_ne_zero_of_sum_ne_zero nonzero
   have atMost (j : I) : p.val j ≤ 1 := by
-    rw [← p.property]
-    exact Finset.single_le_sum (fun j _ => Nat.zero_le (p.val j)) (Finset.mem_univ j)
+    calc
+      p.val j ≤ ∑ a, p.val a :=
+        Finset.single_le_sum (fun a _ => Nat.zero_le (p.val a)) (Finset.mem_univ j)
+      _ = 1 := p.property
   have one : p.val i = 1 := by
     have := atMost i
     omega

@@ -147,7 +147,7 @@ private theorem spectrum_rejected_law : ¬ spectrumArena.{u,v}.Law spectrumRejec
     norm_num [cardI, cardS, Nat.factorial] at support
     omega
   subst r
-  have level : Fin (spectrumRejected.readout () () 0 / (Fintype.card I - 1) + 1) :=
+  let level : Fin (spectrumRejected.readout () () 0 / (Fintype.card I - 1) + 1) :=
     ⟨1, by rw [cardI]; decide⟩
   obtain ⟨digits, eq⟩ := cover level
   norm_num [level] at eq
