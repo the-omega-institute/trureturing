@@ -8,7 +8,8 @@ url: https://arxiv.org/abs/2611.06981v1
 claim: "Open Problem 14.2(ii) asks for a characterization of connected cographs attaining the distance-multiplicity bound and an explicit infinite family attaining it."
 strata_touched:
   - D5/S3/Combinatorics/SpectralGraph/Cographs/UniversalCliqueCographDistance
-license: citation-only
+  - D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity
+license: CC-BY-4.0
 triage: anchor
 ---
 
@@ -19,6 +20,7 @@ triage: anchor
 - [arXiv:2611.06981v1](https://arxiv.org/abs/2611.06981v1)
 - [Theorem 6.4, page 14](https://arxiv.org/pdf/2611.06981v1#page=14)
 - [Open Problem 14.2(ii), page 22](https://arxiv.org/pdf/2611.06981v1#page=22)
+- [CC BY 4.0 license for this version](https://creativecommons.org/licenses/by/4.0/)
 
 ## Source statement
 
@@ -40,8 +42,8 @@ uses ordinary native graph distances, the minimum vicinal chain cover
 and the real dimension of the eigenspace at $s-2$. For the real symmetric
 distance matrix, this dimension is the spectral multiplicity. The
 specialization $r=3(s-1)$, $b=s$, $s\ge2$ has unbounded order and
-attains the bound at width two. The general cotree characterization is
-the other clause of 14.2(ii).
+attains the bound at width two. The cotree characterization treats width
+one directly and uses an exact real guard-root criterion at larger widths.
 
 The construction and proof are given in the [analytic result for issue
 #32326](https://github.com/the-omega-institute/trureturing/issues/32326#issuecomment-7043985785).

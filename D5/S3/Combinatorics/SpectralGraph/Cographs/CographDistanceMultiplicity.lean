@@ -8,13 +8,15 @@
 import D5.S3.Combinatorics.SpectralGraph.CographDistanceCriterion
 import D5.S3.Combinatorics.SpectralGraph.Cographs.UniversalCliqueCographDistance
 
+/-! # The distance multiplicity characterization and explicit attaining family -/
+
 set_option autoImplicit false
 
 noncomputable section
 
 namespace D5.S3.Combinatorics.SpectralGraph.CographDistanceMultiplicity
 
-open SimpleGraph CographDistanceCotree CographVicinalWidth NormalizedCographCotree
+open SimpleGraph Matrix CographDistanceCotree CographVicinalWidth NormalizedCographCotree
 open D5.S3.QuadraticForms.SymmetricRankOneKernel (realGuardCandidates)
 
 private theorem finrank_ker_toEuclideanLin {V : Type} [Fintype V] [DecidableEq V]
@@ -34,13 +36,12 @@ private theorem shiftedKernel_finrank_eq_distanceMultiplicity (r s b : ℕ) :
   classical
   unfold UniversalCliqueCographDistance.shiftedKernel distanceMultiplicity
   rw [finrank_ker_toEuclideanLin]
-  have hF : (inferInstance : Fintype (UniversalCliqueCographDistance.Vertex r s b)) =
-      Fintype.ofFinite _ := Subsingleton.elim _ _
-  have hD : (inferInstance : DecidableEq (UniversalCliqueCographDistance.Vertex r s b)) =
-      Classical.decEq _ := Subsingleton.elim _ _
-  unfold UniversalCliqueCographDistance.shiftedDistance
-  rw [← hF, ← hD]
-  rfl
+  let V := UniversalCliqueCographDistance.Vertex r s b
+  let D := distanceMatrix (UniversalCliqueCographDistance.graph r s b)
+  let dim (inst : Fintype V) (dec : DecidableEq V) : ℕ :=
+    Module.finrank ℝ (LinearMap.ker ((D - ((s : ℝ) - 2) • (1 : Matrix V V ℝ)).toEuclideanLin))
+  change dim _ _ = dim _ _
+  exact congrArg₂ dim (Subsingleton.elim _ _) (Subsingleton.elim _ _)
 
 /-- The finite cotree characterization and one explicit attaining cograph
 at each integer parameter at least two. The orders are strictly increasing. -/
