@@ -106,7 +106,7 @@ def manual_source_is_valid() -> bool:
 
 
 def preparation_source_is_valid() -> bool:
-    """Bind isolated continuation writes to a validated PR at its protected runtime."""
+    """Identify validated PR preparations when reading candidate releases."""
     source_ref = os.environ.get("STRATALINT_CACHE_SOURCE_REF", "")
     target_ref = os.environ.get("STRATALINT_CACHE_TARGET_REF", "")
     source_commit = os.environ.get("STRATALINT_CACHE_SOURCE_COMMIT", "")
@@ -129,19 +129,15 @@ def actions_keys(root: pathlib.Path) -> dict:
     if not re.fullmatch(r"[0-9]+", run) or not re.fullmatch(r"[0-9]+", attempt):
         raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
-    push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
-    pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
-    dispatch_writer = manual_source_is_valid()
-    writer_allowed = (push_writer or pr_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+    push_writer = (event == "push" and os.environ.get("GITHUB_REF_PROTECTED") == "true"
+                   and re.fullmatch(r"refs/heads/(?:dev|integration-[A-Za-z0-9._/-]+)", ref) is not None)
+    writer_allowed = (push_writer or manual_source_is_valid()) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
-        "producer_save_allowed": os.environ.get("STRATALINT_CACHE_WRITES") == "true"
-        and (((push_writer or dispatch_writer) and os.environ.get("GITHUB_REF_PROTECTED") == "true")
-             or preparation_source_is_valid()),
-        "project_save_allowed": (push_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
-        and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
+        "producer_save_allowed": writer_allowed and os.environ.get("GITHUB_REF_PROTECTED") == "true",
+        "project_save_allowed": writer_allowed and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }
     for layer in LAYERS:
@@ -455,18 +451,15 @@ def read_resume_record(path):
 def resume_spec(root):
     keys = actions_keys(root)
     if not keys["producer_save_allowed"]:
-        raise ValueError("producer resume requires an authorized protected branch or isolated preparation")
+        raise ValueError("producer resume requires an authorized protected branch")
     repository = os.environ.get("GITHUB_REPOSITORY", "")
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
         raise ValueError("producer repository is unavailable")
     binding = {
-        "repository": repository, "ref": (os.environ["STRATALINT_CACHE_SOURCE_REF"]
-            if preparation_source_is_valid() else os.environ["GITHUB_REF"]),
+        "repository": repository, "ref": os.environ["GITHUB_REF"],
         "inputs": dependency_inputs(root), "mathlib": keys["mathlib_revision"],
         "os": keys["os"], "arch": keys["arch"],
     }
-    if preparation_source_is_valid():
-        binding["target_ref"] = os.environ["STRATALINT_CACHE_TARGET_REF"]
     identity = hashlib.sha256(json.dumps(binding, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     prefix = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-{identity}-"
     paths = native_archive_paths(root, LAYERS)
@@ -574,8 +567,11 @@ def project_publication(root):
     if work == 0:
         if os.environ.get("STRATALINT_RELEASE_CACHE_SEEDED") == "1" and manual_source_is_valid():
             return True, "accepted-explicit-release-seed", work
-        if os.environ.get("STRATALINT_CACHE_PRODUCER_COMPLETE") == "true" and resume_verified(root):
-            return True, "validated-producer-resume", work
+        if os.environ.get("STRATALINT_CACHE_PRODUCER_COMPLETE") == "true":
+            if os.environ.get("GITHUB_EVENT_NAME") == "push" and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true":
+                return True, "validated-push", work
+            if resume_verified(root):
+                return True, "validated-producer-resume", work
         return False, "no-build-work", work
     return True, "built-project-artifacts", work
 

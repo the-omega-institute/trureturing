@@ -64,62 +64,24 @@ CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
 仍可复用原生模块报告，不保证重评全部历史登记。主 checkout 的 ensure
 仍可按现有主检出专用路径由归档补齐冷的项目层。
-CI required checks use `fetch-or-fail`; a missing or incompatible native seed exits nonzero with the
-independent `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
-`reuse-or-build`. Environment variables do not select local or CI policy. Direct `inspect.sh` defaults to `reuse-or-build`,
+push 的整库报告使用 `reuse-or-build`。直接执行 `inspect.sh` 默认使用 `reuse-or-build`，
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
 CI/cache 流程以 [SPEC A22](../../docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 为准。
-普通 current 作业限时 30 分钟；需要 Lean/report 时，以 `fetch-or-fail` 消费已有种子并由 Lake
-增量构建，缺失或不兼容种子直接给出长任务补救入口。
-受保护的 `dev` 和 `integration-*` push 在 current 结束且未取消、需要 Lean/report
-而无可用种子时，按实际 push SHA 自动运行 360 分钟缓存 producer，不加入 required 检查集合。
-current 已确认发布增量种子，或已接受有效 Actions 种子、报告成功且工作已知为 `no-build-work` 时，
-不再触发长任务；不需要 Lean/report 的路径也不触发。长任务按分支串行，保留正在执行的任务，
-后续 push 只替换尚未执行的 pending 任务。手动补救按精确提交触发：
+PR 只读恢复缓存，在合并候选上检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` push 在 current 中构建完整报告并执行适用检查，严格验证 bundle 后保存本次 run/attempt 的项目快照，按 ref 和精确 key 确认发布。定时 Release 与手动 producer 各有独立入口。以下命令手动构建受保护分支的固定提交。
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \
   -f operation=build -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 ```
 
-尚未合并的升级 PR 可以手动加 `lean-cache-produce` label：
+手动 `operation=build` 要求 `source_ref` 等于受保护的 dev/integration dispatch ref，且 `source_sha` 是该分支可达的非零 40 位小写十六进制提交。按分支串行的 producer 构建报告、所需原生程序及编译夹具，执行报告生产所需的 FIB 回归并严格验证完整 bundle。
 
-```sh
-gh pr edit <PR> --add-label lean-cache-produce
-```
-
-标签 job 限时 5 分钟，只用 `contents:read/actions:write` dispatch `operation=pr`，
-返回确切目标 producer 的 `workflow_run_id`，不编译、恢复或保存缓存。
-唯一一次长构建使用受保护目标 ref 的固定 workflow 提交 `T` 和缓存上下文，源码检出固定的
-未合并候选 `M`；`pr_source` 绑定真实事件的仓库、PR、head `H`、`M`、base `B`、源 run/attempt 和目标 ref。
-开工和结束均校验当前 PR open/head/target、源事件、目标保护及 `M^1=B,M^2=H`；
-`B` 须在目标历史内，`M` 不必已合入。准备 job 使用只读 token，经 `preparation-only`
-上传原生 Actions artifact 并确认 artifact ID、producer run 与源 PR 身份，不写普通目标 cache。
-源 PR 可显式取回，实际合并匹配后由目标事件直接采用；采用校验材料，不替代当前选中的检查。
-
-目标分支须先经普通安装 PR 获得 `operation=pr` 入口；同一 integration 先安装再用后续未合并 PR 验证，
-dev 同样须正常交付安装。调用者以 `AUTO_MERGE=0` 保持选定长缓存 PR 未合并，等待返回的确切
-producer run 和当前 head 的 required 均成功后，才执行普通 pinned merge；head 改变须重新取得成功。
-dispatch 成功不代表构建、恢复或 required 成功。dispatch、来源、构建、artifact 上传或身份确认失败
-保留原始原因，调用者不得合并；producer 成功后可重试 required，重新触发标签须先移除再添加。
-普通 PR required job 不发布 project 种子。
-PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
-
-手动 `operation=build`（默认）要求 `source_ref` 等于 dispatch ref，且为受保护的 dev/integration 分支；
-`source_sha` 必须是该分支可达的非零 40 位小写十六进制提交。`operation=pr` 使用上述独立来源校验。
-两种 dispatch 与自动 push producer 共用 `lean-cache-produce` action，均为 360 分钟，
-构建报告及普通检查所需的原生程序和 fixture 产物，并完成下述报告所需的依赖范围 FIB 回归；
-其它测试仍由普通 CI 命中单元执行。PR 仅准备 artifact，手动与自动分支 producer 按既有条件发布缓存。
-发布使用既有格式和 key，验证完整 bundle；正工作保存 run/attempt 快照，已恢复有效种子的
-`no-build-work` 保留实际恢复 key。手动与自动分支 producer 共用分支 concurrency；PR producer
-按源 PR 串行并取消旧运行。定时受保护 `dev` Release publisher 独立保持 120 分钟。
-
-两种 dispatch 可显式设 `regenerate_report_artifacts=true`，默认关闭；本地等价入口为
-`make lean-report REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
+手动 `operation=build` 可显式设 `regenerate_report_artifacts=true`。本地等价入口为
+`make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
 跳过整份收据复用与 Release 恢复，禁止该次 Lake 从 artifact cache 恢复旧报告；
-保留编译产物、依赖和 toolchain，由 Lake 判定其有效性。普通短 CI、自动标签 dispatch、自动 push
+保留编译产物、依赖和 toolchain，由 Lake 判定其有效性。PR、push
 及定时 Release 不隐式启用此选项。
 
 `LEAN_REPORT` 可省略；默认输出为
@@ -150,16 +112,14 @@ when the existing `tests-lean` unit is selected; its source list includes runtim
 D5/Reg inputs, fixtures, compiler, scripts and consumers. `make compiled-fib-test`
 builds the separate FIB library, source-contract executable and finite analyzer,
 then runs the production-consumer and finite-input regressions. Before publishing
-a fresh report, the canonical report entry used by ordinary, manual, PR-preparation
-and automatic producers compares complete custody-bound Application inputs with
+a fresh report, the canonical report entry used by the protected push and manual producer compares complete custody-bound Application inputs with
 the previous published report, including unavailable inputs and additions/removals across supported
 owners. Changed inputs require this canonical suite after the writer returns and
 before new changed-report publication; failure prevents publication and retains
 the previous published inputs for retry. Equal inputs with no explicit selection
 run no FIB regressions. The explicit `tests-fib` whitelist in `CI_UNITS` selects
 compiler, discovery, analyzer, fixture, configuration and consumer coverage;
-`current` forwards that obligation to the same report entry, sharing one suite
-invocation with any changed-input obligation. The `tests-fib` job requires the
+On a PR, `current` runs the selected suite after scoped checks. On a push, `current` forwards the obligation to the report entry, sharing one suite invocation with any changed-input obligation. The `tests-fib` job requires the
 successful `current` consumer and prepares no additional Lean cache. Lake owns
 incremental compilation and report artifact reuse inside selected consumers;
 unrelated owner edits do not force the FIB suite. Ordinary Registration inventory
@@ -195,7 +155,7 @@ reports. Changed detached application inputs are analyzed by the current program
 The filtered declared-template CI unit requests no Lean preparation. Its external
 artifact cases retain their explicit skips. Fourier production artifact tests run
 in `current`, which retains native cache preparation. Other native cache consumers
-continue to request `build`; only those consumers attempt PR preparation adoption.
+continue to request `build`.
 
 Typed contract discovery inspects the five direct compiled Contract heads.
 Entries have safe, closed definition values; the decoder accepts constructor
