@@ -30,7 +30,7 @@ internal sealed class HeawoodCoverDensityDocument : IScribeDocumentDefinition
                 "are (0,0,0) for S and (0,1,0) for J. Both beta and SF equal sixteen in each of the two actual lifts. " +
                 "The uniform-cover inequalities therefore hold above either original lift, in its original labeling.")),
             Paragraph(Text(
-                "The following eight selections are from HEAWOOD_DOUBLE_COVER_GAIN in subquorum-colorings, " +
+                "The two sixteen-vertex selections are from HeawoodCertificates.lean and HEAWOOD_HIGHER_COVER_BOUNDS. The six fifteen-vertex selections are from HEAWOOD_DOUBLE_COVER_GAIN. All are from subquorum-colorings, " +
                 "revision 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0. A code 10p+s means Fano " +
                 "label p on sheet s. Points and lines are listed separately. The first two selections have " +
                 "sixteen vertices each, and the six selections that follow have fifteen vertices each.")),
@@ -45,5 +45,11 @@ internal sealed class HeawoodCoverDensityDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "The nonzero flags for N1 are (1,2), for N2 are (1,2) and (2,4), for C are (1,4), (2,1) and (4,2), " +
                 "and for K are (1,4), (2,1), (4,2) and (2,4). The fifteen-vertex S and J selections use the same " +
-                "signing as their respective sixteen-vertex selections.")))));
+                "signing as their respective sixteen-vertex selections.")),
+            Paragraph(Text(
+                "Original sixteen-vertex selections and cover consequences. " +
+                "https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_HIGHER_COVER_BOUNDS.md#L68")),
+            Paragraph(Text(
+                "Original fifteen-vertex selections. " +
+                "https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L110-L151")))));
 }

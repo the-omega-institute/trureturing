@@ -6,6 +6,8 @@ Exact canonical Heawood invariants
 
 The original Fano graph and supplier minimal eight-set are reused. The exact finite dissociation cap ranges over every subset of this fixed fourteen-vertex graph, and an actual bipartition side attains seven. The general degree-capacity theorem bounds every minimal selection by eight. Thus beta two is seven and SF two is eight for this cubic bipartite graph, refuting the universal cubic bipartite identification. This does not prove the all-r interface, cover or graph-structure assertions.
 
+The cyclic-label graph used here also has sub-quorum parameter psiSq and representative maximum Omega both equal to seven. Its sides are the first and last seven labels. The incidence geometry has no four-cycle. Applying threshold_parameters with degree three and seven vertices per side makes beta(H,2), psiSq(H) and Omega(H) all equal to seven, alongside SF(H,2)=8.
+
 **Definition 1.1 (fanoNeighbors).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.fanoNeighbors`
