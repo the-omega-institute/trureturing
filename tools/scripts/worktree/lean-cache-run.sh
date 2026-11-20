@@ -26,9 +26,6 @@ if [[ "$1" == --build && $# == 1 && "${STRATALINT_WARM_DONOR:-0}" == 1 ]]; then
   fi
   # Explicit full warming can build the initial seed when no Release exists.
   export LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true STRATALINT_ACCEPT_COLD_BUILD=1
-elif [[ "${FULL_BUILD:-0}" == 1 ]]; then
-  # Only warm-donor opts full builds into the local artifact publisher.
-  unset LAKE_ARTIFACT_CACHE
 fi
 if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
