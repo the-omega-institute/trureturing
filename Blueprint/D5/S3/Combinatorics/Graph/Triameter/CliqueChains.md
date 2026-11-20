@@ -71,6 +71,10 @@ $$\forall (V: \operatorname{Type}) [\operatorname{Fintype}(V)] (G: \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Triameter/CliqueChains.question1` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hak-kozerenko-2026-triameter-question-one` (proved) by `D5/S3/Combinatorics/Graph/Triameter/CliqueChains.question1`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hak-kozerenko-2026-triameter-question-one","declaration_gid":"D5/S3/Combinatorics/Graph/Triameter/CliqueChains.question1","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Artem Hak and Sergiy Kozerenko (2026). *Triameter, distance packings, and vertex connectivity*. DOI: [10.48550/arXiv.2611.17259](https://doi.org/10.48550/arXiv.2611.17259). URL: <https://arxiv.org/html/2611.17259v1#S7.p2.1>.
