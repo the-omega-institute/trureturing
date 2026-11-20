@@ -17,10 +17,14 @@ proof_shape:
     consumers: repeat_index, build_succ, build_collision, build_agree, walkEquiv.
   repeat_index: bind-only helper (projection of Collision); consumers: pre_surjective,
     build_pre.
-  pre_surjective, pre_bijective: content; consumers: build_agree, build_pre, walkEquiv.
-  build_succ, build_collision, build_agree, build_pre: content; consumer: walkEquiv.
+  pre_surjective: content; consumer: pre_bijective.
+  pre_bijective: bind-only helper (finite injective iff surjective); consumers: build_agree,
+    build_pre, walkEquiv.
+  build_succ, build_agree: bind-only helpers (unfolding and case split); consumers:
+    build_collision, build_pre.
+  build_collision, build_pre: content; consumer: walkEquiv.
   walkEquiv: content; consumer: earliest_count.
-  startEquiv: content (fixing the first value via Equiv.Perm.decomposeFin); consumer:
+  startEquiv: bind-only helper (fiber of Equiv.Perm.decomposeFin over v); consumer:
     earliest_count.
   earliest_count: content.
 Direct frozen dependencies: D5/S3/Combinatorics/Graph/Walks/CollisionPrefix (Walk, edge,

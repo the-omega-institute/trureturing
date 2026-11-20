@@ -16,7 +16,8 @@ triage: anchor
 
 ## Verified locator
 
-DOI: 10.5281/zenodo.23885975 (version 4, published 2026-11-02). Source PDF:
+DOI: 10.5281/zenodo.23885975 (version 4; Zenodo record dated 2026-11-02, PDF dated
+1 November 2026). Source PDF:
 https://zenodo.org/api/records/23885975/files/note-v4.pdf/content (text extracted locally,
 about 12,800 characters). Theorem 1 is on p. 1; the T(n, n + 1) argument closes Section 5.
 
