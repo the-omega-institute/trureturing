@@ -6,7 +6,6 @@
    utility: none
    digest: Finite critical Möbius energy excludes narrow selected clusters at the unattained zeta zero abscissa. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Arith.Robin.ForwardKernel.KappaGap
 import D5.S3.Weil.Mertens.LittlewoodUpstream.ZetaReciprocalSubpolynomial
 import D5.S3.Weil.ZetaPntBounds.MobiusDyadicBoundary
@@ -373,9 +372,6 @@ private theorem norm_le_interp_of_mem_annulus {f : ℂ → ℂ} {c z : ℂ} {r R
   exact h
 
 
-open private exists_logZeta_ball_bounds_of_zero_free sublinear_rpow_le_linear from
-  D5.S3.Weil.Mertens.LittlewoodUpstream.ZetaReciprocalSubpolynomial
-
 /-- The logarithmic Littlewood estimate gives subpower growth of zeta throughout
 fixed disks whose left edge lies strictly to the right of the zero abscissa. -/
 private theorem norm_riemannZeta_le_rpow_on_right_disks
@@ -472,9 +468,6 @@ private theorem norm_riemannZeta_le_rpow_on_right_disks
     _ = Real.exp D * |t| ^ eps := by
       rw [Real.rpow_def_of_pos htpos, Real.exp_add, mul_comm, mul_comm eps]
 
-
-open private norm_riemannZeta_le_three_mul_norm from
-  D5.S3.Weil.Mertens.LittlewoodUpstream.ZetaReciprocalSubpolynomial
 
 /-- Zeta has subpower growth on fixed small disks crossing a zero-free edge
 strictly between the critical line and the pole. -/
