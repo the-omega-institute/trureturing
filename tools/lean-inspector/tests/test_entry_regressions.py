@@ -21,7 +21,7 @@ import reuse
 class EntryRegressionTests(unittest.TestCase):
     def entry(self, *, cached=False, changed=False, selected=False, failure=0,
               unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False,
-              force_without_seed=None, follow_with_unchecked_report=False, legacy=False):
+              force_without_seed=None, follow_with_unchecked_report=False, legacy=False, archive=False):
         fixture = test_reuse.ReuseTests()
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
@@ -59,6 +59,9 @@ class EntryRegressionTests(unittest.TestCase):
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()
             publication.write_sidecars(fixture.report, publication.coordinates(root), origins)
 
+        if archive:
+            fixture.report = root / '.lake/build/stratalint/previous-report.json'
+            fixture.report.parent.mkdir(parents=True, exist_ok=True)
         bundle('a' * 64)
         report = fixture.report
         reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
@@ -119,6 +122,7 @@ case "$1" in
 esac
 [[ "$#" == 3 && "$1" == -C && "$2" == "$PWD" && "$3" == compiled-fib-test ]] || exit 97
 echo regressions >> "$CALLS"
+if [[ -n "$FIB_TEST_ARCHIVE" ]]; then tar -cf "$FIB_TEST_ARCHIVE" -C .lake build || exit 98; fi
 exit """ + str(failure) + '\n')
         write('tools/scripts/auric-fib-analysis.sh', '#!/bin/sh\n'
               'printf "unexpected analyzer\\n" >> "$CALLS"\nexit 98\n')
@@ -133,6 +137,8 @@ exit """ + str(failure) + '\n')
             STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_FIB_REGRESSIONS_SELECTED=str(selected).lower(),
             STRATALINT_LEAN_REPORT_REUSE=str(report), BASH_ENV=str(shell_environment))
+        if archive:
+            environment['FIB_TEST_ARCHIVE'] = str(root / 'during-check.tar')
         environment.update(REGENERATE_REPORT_ARTIFACTS=str(int(regenerate)), STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
         if force_without_seed:
             for suffix in (*publication.SUFFIXES, reuse.SUFFIX):
@@ -156,6 +162,16 @@ exit """ + str(failure) + '\n')
                                     capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
+
+    def test_release_archive_during_check_contains_only_published_reports(self):
+        import tarfile
+        result, calls, report, _, _ = self.entry(cached=True, selected=True, archive=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(calls, ['regressions'])
+        with tarfile.open(report.parents[3] / 'during-check.tar') as archive:
+            members = archive.getmembers()
+        self.assertTrue(any(member.name.endswith('/previous-report.json') for member in members))
+        self.assertFalse(any('.lean-report-build.' in member.name or member.islnk() for member in members))
 
     def test_analysis_publication_cannot_clear_failed_regressions(self):
         result, calls, report, _, _ = self.entry(changed=True, failure=41, follow_with_unchecked_report=True)

@@ -89,7 +89,7 @@ if [[ "$1" == --build ]]; then
   for target in "$@"; do
     case "$target" in
       LeanInformationAuditRegTests*|LeanInformationAuditFibTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
-      Reg|Reg.*|Reg:*|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
+      Reg|Reg.*|Reg:*|+Reg|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
       LeanInformationAudit*|+LeanInformationAudit*|leanInspector/*|leanInspectorInterface/*|@leanInspector|@leanInspector/*|@leanInspector:*|@leanInspectorInterface|@leanInspectorInterface/*|@leanInspectorInterface:*) impl_targets+=("$target") ;;
       *) root_targets+=("$target") ;;
     esac

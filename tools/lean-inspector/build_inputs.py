@@ -105,6 +105,7 @@ def checked_report(directory, output, seed, program_logs, work_file, *, try_seed
     previous = directory / 'previous' / publication.RAW
     previous.parent.mkdir()
     observed_members = ('', '.provenance.json', reuse.SUFFIX)
+    copied_members = set()
     with reuse.publication_guard(ROOT, output):
         try:
             checked_previous = reuse.read_receipt(output)['completed'] == reuse.CHECKED
@@ -113,7 +114,12 @@ def checked_report(directory, output, seed, program_logs, work_file, *, try_seed
         for suffix in observed_members:
             path = publication.member(output, suffix)
             if path.exists():
-                os.link(path, publication.member(previous, suffix))
+                snapshot = publication.member(previous, suffix)
+                if path.stat().st_dev == directory.stat().st_dev:
+                    os.link(path, snapshot)
+                else:
+                    shutil.copyfile(path, snapshot)
+                    copied_members.add(suffix)
     selected = os.environ.get('STRATALINT_FIB_REGRESSIONS_SELECTED', 'false')
     if selected not in ('true', 'false'):
         raise ValueError('invalid FIB regression selection')
@@ -129,7 +135,12 @@ def checked_report(directory, output, seed, program_logs, work_file, *, try_seed
         for suffix in observed_members:
             observed = publication.member(previous, suffix)
             current = publication.member(output, suffix)
-            if observed.exists() != current.exists() or observed.exists() and not observed.samefile(current):
+            if not current.exists() and not observed.exists():
+                continue
+            unchanged = current.exists() and observed.exists() and (
+                publication.digest(current) == publication.digest(observed) if suffix in copied_members
+                else current.samefile(observed))
+            if not unchanged:
                 raise ValueError('published report changed during regression check')
         if reuse.capture(ROOT) != captured:
             raise ValueError('inputs changed during report check')
@@ -172,9 +183,11 @@ def main():
         program_logs = Path(logs)
         prepare(args.targets, program_logs, need_inputs)
         if args.action == 'check':
-            # Stage next to the destination so comparison snapshots can use hard links.
-            output.parent.mkdir(parents=True, exist_ok=True)
-            with tempfile.TemporaryDirectory(prefix='.lean-report-build.', dir=output.parent) as staging:
+            # Release publishers may archive the build directory while FIB checks run.
+            # Keep all candidate bytes and prior-generation links outside that archive.
+            staging_parent = ROOT / '.lake' if output.is_relative_to(ROOT / '.lake/build') else output.parent
+            staging_parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.TemporaryDirectory(prefix='.lean-report-build.', dir=staging_parent) as staging:
                 checked_report(Path(staging), output, seed, program_logs, work_file, try_seed=not need_inputs)
 
 

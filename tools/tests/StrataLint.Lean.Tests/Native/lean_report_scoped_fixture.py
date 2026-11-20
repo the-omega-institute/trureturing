@@ -62,9 +62,9 @@ class ScopedContracts(unittest.TestCase):
         rows = [dict(module='D5.A', imports=['D5.B']), dict(module='D5.B', imports=[]),
                 dict(module='D5.Utility', imports=['D5.B'])]
         scope = dict(roots=['D5.A'], dependencies=rows)
-        self.assertEqual(producer.preparation_targets(scope), ['D5.A', 'D5.Utility'])
+        self.assertEqual(producer.preparation_targets(scope), ['+D5.A', '+D5.Utility'])
         for contract, tool in [('AuricFib', 'regInspector/auricFibAnalysis'),
-                               ('Catalog', 'LeanInformationAudit.TemplateEnrollment')]:
+                               ('Catalog', '+LeanInformationAudit.TemplateEnrollment')]:
             name = 'LeanInformationAuditInterface.Contract.' + contract
             scope['dependencies'] = [*rows, dict(module=name, imports=[])]
             self.assertIn(tool, producer.preparation_targets(scope))
@@ -306,6 +306,21 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn('D5/S0/Carrier/Missing.lean', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(self.output, '.input.attestation').exists())
+
+    def test_native_prepare_same_named_library_keeps_module_scope(self):
+        self.copy('tools/lean-inspector/build_inputs.py')
+        self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
+        self.ensure()
+        self.restore_compiler()
+        result = self.guarded_command(['make', 'lean-report-prepare', 'LEAN_TARGETS=Fixture'],
+                                      cwd=self.root, env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        directory = self.root / '.lake/build/lib/lean'
+        for module in ('Fixture', 'D5/A', 'D5/B', 'External', 'ClaimSupport'):
+            self.assertTrue((directory / (module + '.olean')).is_file(), module)
+        self.assertFalse((directory / 'D5/Alone.olean').exists())
+        self.scoped('Fixture')
+        self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
 
     def test_native_explicit_module_preparation(self):
         request = self.root / 'requested modules.json'
