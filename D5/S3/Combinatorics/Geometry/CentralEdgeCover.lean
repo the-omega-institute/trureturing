@@ -11,8 +11,9 @@ admission_basis: escape-witness (the-omega-institute/trureturing-requests#318)
 escape_witness: lengthEdges_card (each nonzero central length class covers every point, hence
   has at least ⌈n/2⌉ edges)
 proof_shape:
-  len, lengthEdges: private definitions; consumers: lengthEdges_card, edge_cover_bound.
-  lengthEdges_card: content; consumer: edge_cover_bound.
+  len, lengthEdges: definitions; consumers: lengthEdges_card, edge_cover_bound,
+    UltrametricThreeCentralMinimum.
+  lengthEdges_card: content; consumers: edge_cover_bound, UltrametricThreeCentralMinimum.
   edge_cover_bound: content via lengthEdges_card.
 Direct frozen dependency: D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges
   (center, centralGraph).
@@ -37,17 +38,17 @@ open D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 noncomputable section
 
 /-- The length of an unordered pair. -/
-private def len {X : Type} [MetricSpace X] : Sym2 X → ℝ :=
+def len {X : Type} [MetricSpace X] : Sym2 X → ℝ :=
   Sym2.lift ⟨fun a b => dist a b, fun a b => dist_comm a b⟩
 
 open Classical in
 /-- The central edges of length `t`. -/
-private def lengthEdges (X : Type) [Fintype X] [MetricSpace X] (t : ℝ) : Finset (Sym2 X) :=
+def lengthEdges (X : Type) [Fintype X] [MetricSpace X] (t : ℝ) : Finset (Sym2 X) :=
   (centralGraph X).edgeFinset.filter fun e => len e = t
 
 open Classical in
 /-- A nonzero central value has at least `⌈n / 2⌉` central edges of that length. -/
-private lemma lengthEdges_card (X : Type) [Fintype X] [MetricSpace X] {t : ℝ}
+lemma lengthEdges_card (X : Type) [Fintype X] [MetricSpace X] {t : ℝ}
     (ht : t ∈ center X) (ht0 : t ≠ 0) :
     (Fintype.card X + 1) / 2 ≤ (lengthEdges X t).card := by
   have hy : ∀ x : X, ∃ y : X, dist y x = t := ht.2

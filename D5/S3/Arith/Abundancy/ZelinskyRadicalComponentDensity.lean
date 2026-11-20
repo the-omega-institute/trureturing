@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity
    mirror-E: none(waiver:symbolic-asymptotic-theorem)
    anchors: [mathlib/module/Mathlib.NumberTheory.Chebyshev]

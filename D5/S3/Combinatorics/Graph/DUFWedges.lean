@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.DUFStructure
 import Mathlib.Data.Finset.Sigma
+import Mathlib.Data.Fintype.Powerset
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 
 set_option autoImplicit false

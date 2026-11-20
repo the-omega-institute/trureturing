@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
    mirror-E: none(waiver:symbolic-asymptotic-density)
    anchors: []

@@ -37,10 +37,10 @@ instance : DecidableRel base.Adj := fun _ _ => inferInstanceAs (Decidable (∃ e
 def edgeIndex (v w : Vertex) : Fin 21 :=
   ((List.finRange 21).find? (fun e => decide (incident e v w))).getD 0
 
-private theorem index_endpoints : ∀ v w : Vertex, base.Adj v w →
+theorem index_endpoints : ∀ v w : Vertex, base.Adj v w →
     incident (edgeIndex v w) v w := by decide +kernel
-private theorem index_flag : ∀ e : Fin 21, edgeIndex (point e) (line e)=e := by decide +kernel
-private theorem index_symm : ∀ v w : Vertex, edgeIndex v w=edgeIndex w v := by decide +kernel
+theorem index_flag : ∀ e : Fin 21, edgeIndex (point e) (line e)=e := by decide +kernel
+theorem index_symm : ∀ v w : Vertex, edgeIndex v w=edgeIndex w v := by decide +kernel
 
 /-- The fixed flag graph is connected, using actual paths of length at most three. -/
 theorem base_preconnected : base.Preconnected := by
