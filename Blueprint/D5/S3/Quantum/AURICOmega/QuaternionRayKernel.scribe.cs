@@ -24,6 +24,11 @@ internal sealed class QuaternionRayKernelDocument : IScribeDocumentDefinition
                 "The reading of the quaternion comparison model is kappa x y = (1 + <x, y>) / 2, so 2 * kappa x y - 1 is the real inner product <x, y>. "
                     + "The ray kernel adds its square to the square of the same expression after the second argument is multiplied on the right by i; "
                     + "thus rayKernel x y = <x, y>^2 + <x, y * i>^2."),
+            Node("ray-kernel-eq-inner", "rayKernel_eq_inner", "The ray kernel through inner products",
+                StatementSource.FromAuthor(RayKernelInnerFormula()), AssessedProvenance.FromRepo(), DescribeRole.Lemma,
+                "Since kappa x y = (1 + <x, y>) / 2, the expression 2 * kappa x y - 1 equals <x, y>, and likewise 2 * kappa x (y * i) - 1 equals <x, y * i>, "
+                    + "where the unit quaternion y * i, regarded as a quaternion, is the product of y and i. "
+                    + "Substituting both into the definition gives the stated formula."),
             Node("ray-kernel-eq-hopf", "rayKernel_eq_hopf", "The ray kernel through the Hopf images",
                 StatementSource.FromAuthor(RayKernelHopfFormula()), AssessedProvenance.FromRepo(), DescribeRole.Theorem,
                 "For all quaternions p and q the polynomial identity <p, q>^2 + <p, q * i>^2 = (|p|^2 * |q|^2 + <p * i * star p, q * i * star q>) / 2 holds, as one checks by expanding both sides in the sixteen products of components. "
@@ -111,6 +116,13 @@ internal sealed class QuaternionRayKernelDocument : IScribeDocumentDefinition
         return Disp(ForAllMany(Units, Equal(RayKernel(x, y),
             Add(Square(Sub(Mul(D(2), Kappa(x, y)), D(1))),
                 Square(Sub(Mul(D(2), Kappa(x, Mul(y, UnitI))), D(1))))), "x", "y"));
+    }
+
+    private static Formula RayKernelInnerFormula()
+    {
+        Formula x = F.Id("x"), y = F.Id("y");
+        return Disp(ForAllMany(Units, Equal(RayKernel(x, y),
+            Add(Square(Inner(x, y)), Square(Inner(x, Mul(y, UnitI))))), "x", "y"));
     }
 
     private static Formula RayKernelHopfFormula()

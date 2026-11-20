@@ -272,6 +272,19 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **现役报告读取边界**：生产报告的所有模块均由 `RawArtifacts.Store` 读取编译部件，不建 Environment、不初始化扩展、不调用 elaborator、Meta、类型检查器或内核。判官只对编译产物中的声明、常量引用和契约构造器树做有界计算；需要求值的契约值、缺件、未知格式和读失败按具名 `contract.decode_failed` 或原始读取错误失败，不回退旧路径。契约中的数学义务在 Reg 编译期由内核检查，报告期不新造或复核证明。seal 保留非退化、bundle 非空、逐登记 lowering/triviality 与 closure membership、catalog 冗余性和 kernel collision 的数学义务，由 Reg 编译期内核检查；判官核对 seal 的 arena、catalog 与完整有序 unit vector 恰好对应导入闭包内的登记，不输出计数、状态划分、primitive 或角色桶统计。utility 关系逐字核对 claim 类型为 `Prop`、result 类型为 `Not claim`，不展开定义、化简或使用 Reg 证书。
 *成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、数学真值冻结与独立声明包(第 1.3 条)。〔守护:**硬(告警)**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记与新增公开定理,四个判词均为 Observe、不阻断准入,效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
 
+### 3.10 陈述取最强的正确形式
+
+**陈述的取舍只看逻辑正确与强度：在正确的陈述里取数学上最强的一个；准入仍按第 3.1–3.3、3.7、3.9 条。**（τ=0 owner 原话「只要是正确的逻辑就可以」「用数学上最“强”的表达」）表述的取舍不提交人裁决，按本条由证明与评审决定。
+
+- **最强的含义**：假设取最弱，结论取最强；逆向或完全分类成立且在本交付内可证时，陈述等价或分类，不停在单向蕴含或存在性；常数、界与定义域取证明所及的精确范围（域、维数、完备性、紧性、连续性、分离性、有限性逐项核对）。强弱按蕴含判断：来源陈述为真时，新陈述须推出原陈述；更长、更抽象的措辞不等于更强。目标是来源陈述加上本交付内可证的加强——删去多余或可推出的假设、已在手的逆向、精确的常数与范围；需要新机器或超出预登记判据的加强另作新候选（第 3.6 条）。两个可证形式互不蕴含时都陈述；只证得其一时在 Scribe 正文记下另一方向。
+- **多余的假设要删**：陈述与证明都不使用的假设、实例参数或绑定变量，以及可由其余假设推出的假设，交付前删去。保留的假设在 Scribe 正文说明必要性，给出去掉它就失败的例子或理由；未经编译核对的例子照实标注（第 2.4 条）。
+- **来源有误时取最接近的真命题**：来源陈述为假或言过其实时，给出反例或缺失的条件，陈述并证明补上最弱的充分条件、或把结论改到恰好成立之处的真命题；不为迁就来源证明更弱的命题，也不把假命题改写成空洞为真的形式。外部具名问题的结算仍按第 3.2 条逐字结算或按第 3.4 条 `Not claim` 反驳，其最强的正确替代按第 3.6 条作为新候选另行立项。来源正文的更正由其所属仓库按自己的规则落地。
+- **修正先登记，再继续**：预登记之后改变陈述——包括实施中发现可加强——先在该预登记 issue 上记修正（新陈述、与原陈述的蕴含关系、失败时的回退），然后继续证明，不等待答复；更强形式被证伪，或按预登记的停止判据证不下来时，交付已证的形式并记下障碍。陈述修正后重做同一交付的第 3.9 条登记、utility 头与报告；已冻结的较弱陈述保留（第 1.3 条），其加强按第 3.6 条作为新候选、以新声明交付。
+- **不豁免既有条款，也不制造新靶**：最强形式若只是既有冻结或钉版上游结果的实例化、投影或规范化，仍是 bind-only（第 3.2 条），直接引用而不新增声明；来源已被既有冻结声明或钉版上游覆盖时按第 3.2 条复用，不因可加强而转为新靶，更强的形式只能作为第 3.6 条的新候选；原陈述成为更强定理的特殊情形时，不另立无消费者的推论声明。为一般性引入证明路径上没有消费的抽象层不算加强（第 4.8 条）。
+- **评审逐条查强度**：冻结前评审与三席评审对每条公开陈述回答「哪个假设可去、哪个结论可加强」，能便宜验证的在探针里验证，并记下检查过哪些加强、判为本交付不可及的理由；本交付内可证的加强没有做，按缺陷打回。
+
+*成熟锚*：最弱前置条件与最强后置条件、充要条件优于充分条件、精确常数、反例定边界。〔守护：**软**·强度与必要性由实施与评审核对；Lean 的未用变量检查只报部分未用的具名绑定，不构成「已最强」的机器保证；本条不新增判官。〕
+
 ## 4. 结构、递归归属、投影与消化
 
 ### 4.1 程序与数据的递归归属
@@ -454,7 +467,7 @@ Initialization uses ordinary Git registration and native errors. Creation uses `
 
 **清理维护独占且异步**：每个 Git common directory 只运行一个维护执行者，由宿主 launchd 或 systemd user service 管理，事件触发并定期补扫。使用 `make -C tools worktree-maintenance-install` 安装，`worktree-maintenance-notify` 发事件，`worktree-maintenance-status` 读取状态，`worktree-maintenance-run` 同步执行一轮，`worktree-maintenance-uninstall` 注销。服务只清理本克隆的过期注册树；显式删除和手动 sweep 使用同一独占锁。分配事务使用该锁的非阻塞独占模式，忙时回退新目录。新目录初始化由独立的目标路径事务锁保护；维护器跳过尚在初始化的目标，不等待它，初始化结束或进程退出即解除。创建入口只写入持久事件，不启动脱离宿主的进程，也不等待清理；维护失败保留事件和失败结果，不阻断其他新目录的创建。低磁盘仍拒绝新目录分配，通知维护后重新测量，不绕过磁盘门。宿主服务运行时使用 common directory 内的源码安装投影，不依赖可回收 worktree。
 
-**只用主克隆的 linked worktree**：lane、席位、交付与研究树都由主检出所在的克隆经 `make worktree` 建立，不另建 git 克隆（含浅克隆、本地路径克隆与“独立 dev 根”）。缓存的自动 donor 只在本克隆内寻找（linked worktree 克隆其所在克隆主检出的 `.lake`）；未用 `STRATALINT_LEAN_CACHE_DONOR_REPOSITORY` 显式指定 donor 时，额外克隆的主检出会另取一份独立的 `.lake`（Release 恢复或重新构建），与主克隆不共享 clonefile 块；`clean-lanes` 与 `clean-all` 只回收本克隆登记的 worktree，额外克隆及其 worktree 不在回收范围内。需要隔离时，在主克隆上另开 linked worktree，并用 `StrataLint worktree with` 校验注册身份后运行命令。
+**只用主克隆的 linked worktree**：lane、席位、交付与研究树都由主检出所在的克隆经 `make worktree` 建立，不另建 git 克隆（含浅克隆、本地路径克隆与“独立 dev 根”）。缓存的自动 donor 只在本克隆内寻找（linked worktree 显式全量播种时克隆其所在克隆主检出的 `.lake`）；未用 `STRATALINT_LEAN_CACHE_DONOR_REPOSITORY` 显式指定 donor 时，额外克隆的主检出会另取一份独立的 `.lake`（Release 恢复或重新构建），与主克隆不共享 clonefile 块；`clean-lanes` 与 `clean-all` 只回收本克隆登记的 worktree，额外克隆及其 worktree 不在回收范围内。需要隔离时，在主克隆上另开 linked worktree，并用 `StrataLint worktree with` 校验注册身份后运行命令。
 
 Normal lifecycle retention and eviction use one policy. A registered linked tree is reusable when its current HEAD committer age is `>14400` seconds or its branch stale marker equals that full HEAD OID. A tree is excluded from allocation and eligible for background removal when age is `>21600` seconds; exactly 14400 and 21600 seconds remain ineligible for the respective rule. Dirty or unfinished bytes may be discarded by forced native removal, including an expired same-task tree, and committed branch refs remain. No idle branch namespace, capacity quota, allocation ledger, reflog age, activity scan, process check, OS scope, intentional-lock veto or snapshot commit participates. Future HEAD timestamps never qualify by age alone; unreadable timestamps are retained. Main protection and native failures remain. Disk shortage queues maintenance and leaves the creation disk gate closed until sufficient space is measured.
 
@@ -643,7 +656,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **PR 增量检查与受保护分支缓存。** PR 按合并候选的实际变更编译选定 Lean 目标与依赖，并执行对应 Scribe 和测试检查。PR 作业只读取可用缓存。用 `make pr-watch PR=<编号> HEAD_SHA=<完整提交 SHA>` 等待固定提交的 required 检查，同一 PR 的同一提交只启动一个等待任务。失败时读取对应 job 的诊断。受保护的 `dev` 或 `integration-*` push 构建整库报告，执行适用检查，并验证、发布和确认本次运行的项目缓存。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
 
-**全量项目缓存与整库报告的本地恢复**：production Release 恢复（`make lean-cache-from-github-without-mathlib`）与 `fetch-or-fail` 报告恢复只在 dev 主检出运行；显式选择的 verification-mode fetch 不变。linked worktree 的生产缓存只由 `make lean-cache-ensure` 从热的主检出 clonefile 播种。报告恢复的补救前提是主检出为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和 `skipped` 收据返回，不代表 donor 已预热；主检出不干净时，按第 6.1 条「主检出不承载修改」丢弃其本地修改后再预热。补救全程用条件链：`make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure`；主检出也可在 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 后执行 `make lean-report FULL_BUILD=1`。无法判定检出类型时同样拒绝生产取回与报告恢复。linked worktree 的主检出候选取 Git worktree 列表首条，须核验其物理顶层路径及共同 Git 目录；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，并给出不含主检出路径的补救，不将 Git store 目录当作主检出。
+**全量项目缓存与整库报告的本地恢复**：production Release 恢复（`make lean-cache-from-github-without-mathlib`）与 `fetch-or-fail` 报告恢复只在 dev 主检出运行；显式选择的 verification-mode fetch 不变。linked worktree 的生产缓存只由 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出 clonefile 播种。报告恢复的补救前提是主检出为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和 `skipped` 收据返回，不代表 donor 已预热；主检出不干净时，按第 6.1 条「主检出不承载修改」丢弃其本地修改后再预热。补救全程用条件链：`make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure FULL_BUILD=1`；主检出也可在 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 后执行 `make lean-report FULL_BUILD=1`。无法判定检出类型时同样拒绝生产取回与报告恢复。linked worktree 的主检出候选取 Git worktree 列表首条，须核验其物理顶层路径及共同 Git 目录；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，并给出不含主检出路径的补救，不将 Git store 目录当作主检出。
 
 本地形式化用 `make lean-report-scoped LEAN_TARGETS="<非空点分模块列表>"`，逐模块构建和检查目标、其 utility 输入及各自 import 闭包；不读取整库报告种子，不构建整库报告。整库核验的 `make lean-report FULL_BUILD=1` 显式选择 `fetch-or-fail`。主检出中报告种子缺失、不完整、损坏或收据中的报告格式标识不符时，先在私有缓存写锁内取回 dev 同分区、缓存 key 一致的 Release 快照，重新检查后仍不可用即以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 非零退出，不进入 Lake 报告提取；linked worktree 在所选种子不可用时先检查工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`，相符时从它复用并发布到所请求的输出，只有该种子也不可用时才以 `reason=linked-worktree` 退出，全程不取回。
 
@@ -669,9 +682,9 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 **Start with compatible reuse** according to section 6.1. In particular, observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first. Use `make worktree` with explicit `DEST` when isolation is needed.
 
-**普通任务按需准备 Lean 缓存。** 工作树创建与纯文档、指令、技能任务无需 Lean 缓存准备。定向核验直接从 `make lean LEAN_TARGETS="<非空模块列表>"` 或 `make lean-report-scoped LEAN_TARGETS="<非空模块列表>"` 进入缓存守卫，可复用已有兼容缓存。linked worktree 的项目层为冷时，在该次定向命令前加 `STRATALINT_ACCEPT_COLD_BUILD=1`。此入口支持 Linux。守卫准备钉版 mathlib 依赖，Lake 编译所选目标及必要依赖。此路径无需预热 donor、运行独立的 `make lean-cache-ensure` 或下载项目 Release 缓存。钉版核对、写锁与缓存探针拒绝规则继续由现有入口执行。SPEC A22 说明冷构建入口的准入条件。
+**普通任务按目标使用本机 Lake 缓存。** 创建 worktree 和编辑文档无需准备 Lean 缓存。在干净的主 `dev` 上运行 `make warm-donor FULL_BUILD=1`，会将支持原生缓存的构建产物及输入映射写入当前工具链的本机 Lake 缓存，同时保留主检出的构建输出。定向核验使用 `make lean LEAN_TARGETS="<非空模块列表>"` 或 `make lean-report-scoped LEAN_TARGETS="<非空模块列表>"`。Lake 复用当前工作树的有效产物，从本机共享缓存读取命中项，在工作树内编译目标及其缺失依赖。Git 依赖源码按 manifest 固定的提交取得。
 
-独立的 `make lean-cache-ensure` 用于明确需要项目缓存的场景，按现有策略检查 stamp、从兼容 donor 播种或按检出类型提供补救。整库报告种子准入遵循本节规定。项目缓存缺失时仍走上述受保护入口，禁止冷态直接运行 `lake build` 或 `lake env lean`（#2762）。核对实际调用及 `LEAN_CACHE` 收据中的 `cold_build_consent:true` 与 `clonefile_attempts:0`，据此识别经守卫的定向冷构建。
+独立播种使用 `make lean-cache-ensure FULL_BUILD=1`，在命令行显式传入参数。仅全量路径可从兼容 donor 以 clonefile 播种。定向命令的 `LEAN_CACHE` 收据包含 `method:"lake-local"` 和 `clonefile_attempts:0`。整库报告的种子要求见本节及 SPEC A22。
 
 ### 8.4 诊断信号与产生处的质量
 

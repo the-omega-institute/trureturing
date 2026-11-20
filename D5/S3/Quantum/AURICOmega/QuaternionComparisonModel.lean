@@ -52,11 +52,11 @@ private lemma inner_mul_unit (a : unitary ℍ[ℝ]) (p q : ℍ[ℝ]) :
         rw [LinearMap.mulRight_apply, norm_mul, CStarRing.norm_coe_unitary, mul_one] } p q
 
 /-- The feature map `q ↦ (1 / √2) • (1, re q, imI q, imJ q, imK q)`. -/
-private def feature (q : ℍ[ℝ]) : EuclideanSpace ℝ (Fin 5) :=
+def feature (q : ℍ[ℝ]) : EuclideanSpace ℝ (Fin 5) :=
   (1 / Real.sqrt 2) • WithLp.toLp 2 ![1, q.re, q.imI, q.imJ, q.imK]
 
 /-- The feature map turns the reading `(1 + ⟪p, q⟫) / 2` into a Euclidean inner product. -/
-private lemma inner_feature (p q : ℍ[ℝ]) :
+lemma inner_feature (p q : ℍ[ℝ]) :
     ⟪feature p, feature q⟫_ℝ = (1 + ⟪p, q⟫_ℝ) / 2 := by
   have h2 : 1 / Real.sqrt 2 * (1 / Real.sqrt 2) = 1 / 2 := by
     rw [div_mul_div_comm, one_mul, Real.mul_self_sqrt (by norm_num)]
@@ -105,7 +105,7 @@ def unitI : unitary ℍ[ℝ] :=
   ⟨⟨0, 1, 0, 0⟩, Unitary.mem_iff.mpr ⟨by ext <;> simp, by ext <;> simp⟩⟩
 
 /-- The unit quaternion `j`. -/
-private def unitJ : unitary ℍ[ℝ] :=
+def unitJ : unitary ℍ[ℝ] :=
   ⟨⟨0, 0, 1, 0⟩, Unitary.mem_iff.mpr ⟨by ext <;> simp, by ext <;> simp⟩⟩
 
 /-- The transfer is order sensitive: `i * 1⁻¹ * j = k` while `j * 1⁻¹ * i = -k`. -/
@@ -126,7 +126,7 @@ theorem quaternionModel_touchesZero : quaternionModel.TouchesZero := by
   norm_num [hε]
 
 /-- The unit quaternions are exactly the quaternions of norm one. -/
-private lemma coe_unitary_eq_sphere : (unitary ℍ[ℝ] : Set ℍ[ℝ]) = Metric.sphere 0 1 := by
+lemma coe_unitary_eq_sphere : (unitary ℍ[ℝ] : Set ℍ[ℝ]) = Metric.sphere 0 1 := by
   ext q
   rw [SetLike.mem_coe, mem_sphere_zero_iff_norm]
   refine ⟨CStarRing.norm_of_mem_unitary, fun hq => ?_⟩
