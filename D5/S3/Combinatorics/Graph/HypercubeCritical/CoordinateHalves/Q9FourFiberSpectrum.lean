@@ -20,10 +20,13 @@ open scoped BigOperators
 open Finset
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced flip)
-open BalancedCubeComponentBoundary (directions)
-open Q9SignedProjection (join fiber signedRow q9_signed_row_eq_zero_outside_projection)
+open BalancedCubeComponentBoundary (directions regular_directions)
+open Q9SignedProjection (join fiber signedRow leftParitySign q9_signed_row_split
+  q9_signed_row_eq_zero_outside_projection)
 open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open private flip_join_left flip_join_right from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SignedProjection
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private coeff matrix_coeff from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
@@ -93,13 +96,18 @@ coordinate flips. -/
 def signedRowOn (P : Finset (Q 4)) (f : Q 4 → ℤ) (x : Q 4) : ℤ :=
   ∑ i ∈ directions P x, truePrefixSign x i * f (flip x i)
 
-private theorem signedRow_eq_on (P : Finset (Q 4)) {f : Q 4 → ℤ}
-    (hf : ∀ x ∉ P, f x = 0) (x : Q 4) : signedRow f x = signedRowOn P f x := by
-  unfold signedRow signedRowOn
+private theorem signedRow_eq_sum_directions {n : ℕ} (P : Finset (Q n)) {f : Q n → ℤ}
+    (hf : ∀ x ∉ P, f x = 0) (x : Q n) :
+    signedRow f x = ∑ i ∈ directions P x, truePrefixSign x i * f (flip x i) := by
+  unfold signedRow
   symm
   apply sum_subset (subset_univ _)
   intro i _ hi
   rw [hf _ (fun h => hi ((mem_directions P x i).mpr h)), mul_zero]
+
+private theorem signedRow_eq_on (P : Finset (Q 4)) {f : Q 4 → ℤ}
+    (hf : ∀ x ∉ P, f x = 0) (x : Q 4) : signedRow f x = signedRowOn P f x :=
+  signedRow_eq_sum_directions P hf x
 
 /-- If both a vector and its Huang signed image vanish outside `P`, applying
 the signed rows restricted to `P` twice recovers four times the vector. -/
@@ -108,13 +116,12 @@ theorem signedRowOn_square {P : Finset (Q 4)} {f : Q 4 → ℤ}
     signedRowOn P (signedRowOn P f) x = 4 * f x := by
   rw [← funext (signedRow_eq_on P hf), ← signedRow_eq_on P hrow, signedRow_square]
 
-private theorem abs_prefixSign (x : Q 4) (i : Fin 4) : |truePrefixSign x i| = 1 := by
+private theorem abs_prefixSign {n : ℕ} (x : Q n) (i : Fin n) : |truePrefixSign x i| = 1 := by
   simp [truePrefixSign, abs_pow]
 
-private theorem abs_signedRowOn_le (P : Finset (Q 4)) {f : Q 4 → ℤ}
-    (hunit : ∀ x, |f x| ≤ 1) (x : Q 4) :
-    |signedRowOn P f x| ≤ (directions P x).card := by
-  unfold signedRowOn
+private theorem abs_signedRow_sum_directions_le {n : ℕ} (P : Finset (Q n)) {f : Q n → ℤ}
+    (hunit : ∀ x, |f x| ≤ 1) (x : Q n) :
+    |∑ i ∈ directions P x, truePrefixSign x i * f (flip x i)| ≤ (directions P x).card := by
   calc
     _ ≤ ∑ i ∈ directions P x, |truePrefixSign x i * f (flip x i)| :=
       abs_sum_le_sum_abs _ _
@@ -123,6 +130,11 @@ private theorem abs_signedRowOn_le (P : Finset (Q 4)) {f : Q 4 → ℤ}
       intro i _
       simpa only [abs_mul, abs_prefixSign, one_mul] using hunit (flip x i)
     _ = _ := by simp
+
+private theorem abs_signedRowOn_le (P : Finset (Q 4)) {f : Q 4 → ℤ}
+    (hunit : ∀ x, |f x| ≤ 1) (x : Q 4) :
+    |signedRowOn P f x| ≤ (directions P x).card :=
+  abs_signedRow_sum_directions_le P hunit x
 
 private theorem directions_nonempty_and_leaf_full {P : Finset (Q 4)} {f : Q 4 → ℤ}
     (hf : ∀ x ∉ P, f x = 0) (hrow : ∀ x ∉ P, signedRow f x = 0)
@@ -174,6 +186,99 @@ theorem balanced_projection_no_isolated_and_leaf_full {C : Finset (Q 9)}
   have hxunit : |fiber z y x| = 1 := by rw [abs_fiber hunit hzero, ite_eq_left hy]
   exact directions_nonempty_and_leaf_full
     (fun p hp => (hsupport p hp).1) (fun p hp => (hsupport p hp).2) hbound hxunit
+
+open Classical in
+/-- Every realized four-coordinate pattern of a balanced cubic support has at least two
+projected neighbors. -/
+theorem balanced_projection_min_degree_two {C : Finset (Q 9)}
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) {x : Q 4} (hx : x ∈ leftProjection C) :
+    2 ≤ (directions (leftProjection C) x).card := by
+  have hpos := card_pos.mpr (balanced_projection_no_isolated_and_leaf_full hreg hb hx).1
+  by_contra hdegree
+  obtain ⟨i, hi⟩ := card_eq_one.mp (show (directions (leftProjection C) x).card = 1 by omega)
+  let q := flip x i
+  obtain ⟨z, hunit, hzero, _, hrow⟩ := q9_integral_true_prefix_switching hreg hb
+  obtain ⟨y, hy⟩ := mem_leftProjection.mp hx
+  let prefixSupport (v : Q 5) : Finset (Q 4) := univ.filter fun p => join p v ∈ C
+  let suffixSupport (p : Q 4) : Finset (Q 5) := univ.filter fun v => join p v ∈ C
+  have hprefix (v : Q 5) (p : Q 4) : p ∈ prefixSupport v ↔ join p v ∈ C := by
+    simp [prefixSupport]
+  have hsuffix (p : Q 4) (v : Q 5) : v ∈ suffixSupport p ↔ join p v ∈ C := by
+    simp [suffixSupport]
+  have degree_split (p : Q 4) (v : Q 5) : (directions C (join p v)).card =
+      (directions (prefixSupport v) p).card + (directions (suffixSupport p) v).card := by
+    simp only [directions, card_filter]
+    rw [Fin.sum_univ_add (a := 4) (b := 5)]
+    refine congrArg₂ (· + ·) ?_ ?_
+    · apply sum_congr rfl
+      intro j _
+      exact if_congr (by rw [flip_join_left, hprefix]) rfl rfl
+    · apply sum_congr rfl
+      intro j _
+      exact if_congr (by rw [flip_join_right, hsuffix]) rfl rfl
+  have hbound (v : Q 5) (p : Q 4) : |fiber z v p| ≤ 1 := by
+    rw [abs_fiber hunit hzero]
+    split <;> decide
+  -- The square forces four occupied prefix directions at q in each fiber containing x.
+  have hleaf (v : Q 5) (hv : join x v ∈ C) :
+      |signedRow (fiber z v) q| = 4 ∧ join q v ∉ C := by
+    have hs (p : Q 4) (hp : p ∉ leftProjection C) :=
+      fiber_and_signedRow_supported hzero hrow v hp
+    have hxunit : |fiber z v x| = 1 := by rw [abs_fiber hunit hzero, ite_eq_left hv]
+    have hsquare :
+        |signedRowOn (leftProjection C) (signedRowOn (leftProjection C) (fiber z v)) x| = 4 := by
+      rw [signedRowOn_square (fun p hp => (hs p hp).1) (fun p hp => (hs p hp).2),
+        abs_mul, hxunit, mul_one]
+      decide
+    have hfour : |signedRow (fiber z v) q| = 4 := by
+      rw [signedRow_eq_on (leftProjection C) (fun p hp => (hs p hp).1) q]
+      simpa only [signedRowOn, hi, sum_singleton, abs_mul, abs_prefixSign, one_mul, q] using hsquare
+    refine ⟨hfour, fun hq => ?_⟩
+    have hpzero (p : Q 4) (hp : p ∉ prefixSupport v) : fiber z v p = 0 :=
+      hzero _ (fun h => hp ((hprefix v p).mpr h))
+    have hcount := abs_signedRowOn_le (prefixSupport v) (hbound v) q
+    rw [← signedRow_eq_on (prefixSupport v) hpzero q, hfour] at hcount
+    have hcard := regular_directions C hreg hq
+    rw [degree_split] at hcard
+    omega
+  obtain ⟨hfour, hqy⟩ := hleaf y hy
+  have hxprefix : directions (prefixSupport y) x = ∅ := by
+    apply eq_empty_iff_forall_notMem.mpr
+    intro j hj
+    have hmem := (hprefix y _).mp ((mem_directions _ _ j).mp hj)
+    have hjproj : j ∈ directions (leftProjection C) x :=
+      (mem_directions _ _ j).mpr (mem_leftProjection.mpr ⟨y, hmem⟩)
+    rw [hi, mem_singleton] at hjproj
+    subst j
+    exact hqy hmem
+  have hxsuffix : (directions (suffixSupport x) y).card = 3 := by
+    simpa only [degree_split, hxprefix, card_empty, zero_add] using regular_directions C hreg hy
+  -- The three occupied suffix directions at x are forbidden at q.
+  have hsub : directions (suffixSupport q) y ⊆ univ \ directions (suffixSupport x) y := by
+    intro j hj
+    refine mem_sdiff.mpr ⟨mem_univ j, fun hxj => ?_⟩
+    have hxj' := (hsuffix x _).mp ((mem_directions _ _ j).mp hxj)
+    have hqj' := (hsuffix q _).mp ((mem_directions _ _ j).mp hj)
+    exact (hleaf (flip y j) hxj').2 hqj'
+  have hcard := card_le_card hsub
+  rw [card_sdiff_of_subset (subset_univ _), card_univ, Fintype.card_fin, hxsuffix] at hcard
+  have hqzero (v : Q 5) (hv : v ∉ suffixSupport q) : fiber z v q = 0 :=
+    hzero _ (fun h => hv ((hsuffix q v).mpr h))
+  have hright := abs_signedRow_sum_directions_le (suffixSupport q)
+    (f := fun v => fiber z v q) (fun v => hbound v q) y
+  rw [← signedRow_eq_sum_directions (suffixSupport q) (f := fun v => fiber z v q) hqzero y]
+    at hright
+  have hsplit := q9_signed_row_split hrow q y
+  have hzqy : fiber z y q = 0 := hzero _ hqy
+  rw [hzqy, mul_zero] at hsplit
+  change 0 = signedRow (fiber z y) q + leftParitySign q * signedRow (fun v => fiber z v q) y
+    at hsplit
+  have hparity : |leftParitySign q| = 1 := by simp [leftParitySign, abs_pow]
+  have hleft : signedRow (fiber z y) q =
+      -(leftParitySign q * signedRow (fun v => fiber z v q) y) := by omega
+  rw [hleft, abs_neg, abs_mul, hparity, one_mul] at hfour
+  omega
 
 /-- At a unit entry whose projected degree and neighbors' degrees are all two,
 every projected two-step walk transports the entry with its path sign. -/
@@ -261,6 +366,7 @@ theorem balanced_projection_two_step_mem_iff {C : Finset (Q 9)}
 #print axioms signedRow_square
 #print axioms signedRowOn_square
 #print axioms balanced_projection_no_isolated_and_leaf_full
+#print axioms balanced_projection_min_degree_two
 #print axioms two_step_signed_value
 #print axioms balanced_projection_two_step_mem_iff
 
