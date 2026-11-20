@@ -80,8 +80,6 @@ def main():
             print("CI_REQUIRED prerequisite=source status=not-applicable")
     elif prerequisite is not None:
         problems.append("source prerequisite has no current unit in HITS")
-    if hits.get("tests-fib") and not hits.get("current"):
-        problems.append("selected tests-fib requires selected current")
     for name in sorted(set(results) - set(hits)):
         problems.append(f"job {name} has no unit section in the detection specification")
     for name in sorted(set(hits) - set(results)):

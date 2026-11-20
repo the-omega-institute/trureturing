@@ -263,6 +263,19 @@ public sealed class DeltaRuleContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        if (lean.Report.IsScoped)
+        {
+            foreach (var change in changes.Entries)
+            {
+                if (change.Kind == RawChangeKind.Copied) continue;
+                var path = change.Path;
+                var owner = FrozenStatePath.TryToModulePath(path.Value, out var module) ? module : path;
+                if (LeanClosureValidator.IsReportLean(owner.Value) && current.Files.ContainsKey(owner)
+                    && (path == owner || current.Files.ContainsKey(path))
+                    && !lean.Report.Files.ContainsKey(owner))
+                    throw new InvalidDataException("scoped Lean evidence is missing for changed input " + path.Value);
+            }
+        }
         RegisteredRuleBuildInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(current);
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, RegisteredRuleBuildInputs);
         MetaEvaluation = metaEvaluation;
