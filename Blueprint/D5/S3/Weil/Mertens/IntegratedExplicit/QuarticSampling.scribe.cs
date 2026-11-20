@@ -38,7 +38,7 @@ internal sealed class QuarticSamplingDocument : IScribeDocumentDefinition
         var natural = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
         var n = F.Id("n");
         var threshold = F.Id("N");
-        Formula Power(int d) => F.Seq(n, F.Caret, F.Grp(F.D(d)));
+        Formula Power(byte d) => F.Seq(n, F.Caret, F.Grp(F.D(d)));
         var sample = new Formula.Relation(new Formula.Apply(F.Id("U"), [Power(4)]),
             FormulaRelationOperator.LessThan, Power(2));
         var tail = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"), natural,
