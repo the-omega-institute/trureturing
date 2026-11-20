@@ -4,7 +4,63 @@
 
 The original four-clause classification holds for every positive k and s.
 
-**Theorem 1.1 (Two-generator signed radius: all regimes).**
+**Theorem 1.1 (Counting through a square).**
+
+Lean statement: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.rectangle_index_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.rectangle_index_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* B. Bajnok and W. K. Beatty (2024). *On the Diameter of Undirected Cayley Graphs of Finite Abelian Groups*. URL: <https://arxiv.org/abs/2406.04045v1>.
+
+*Commentary.*
+
+If every element of the integer plane is congruent modulo a sublattice L to a point of {0, …, n − 1}², then the index of L is at most n².
+
+**Theorem 1.2 (The square lemma at odd radius).**
+
+Lean statement: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.even_torsor_cover`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.even_torsor_cover` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* B. Bajnok and W. K. Beatty (2024). *On the Diameter of Undirected Cayley Graphs of Finite Abelian Groups*. URL: <https://arxiv.org/abs/2406.04045v1>.
+
+*Commentary.*
+
+If the coefficient map f covers ZMod 2 × ZMod (2k) from the diamond |x| + |y| ≤ 2t + 1, then every coset of M = T⁻¹ ker f, with T(u, v) = (u + v, u − v), has a representative in {0, …, 2t}². The difference from the chosen diamond point has even coordinate sum and difference, so halving gives a point of [−t, t]², shifted by t.
+
+**Theorem 1.3 (The square lemma at every positive radius).**
+
+Lean statement: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.square_cover`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.square_cover` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* B. Bajnok and W. K. Beatty (2024). *On the Diameter of Undirected Cayley Graphs of Finite Abelian Groups*. URL: <https://arxiv.org/abs/2406.04045v1>.
+
+*Commentary.*
+
+If f maps the diamond |x| + |y| ≤ s onto ZMod 2 × ZMod (2k), then every coset of M has a representative in {0, …, s − 1}². Even radii use the existing even-radius cover and odd radii the odd-radius cover above.
+
+**Theorem 1.4 (The order bound).**
+
+Lean statement: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.hom_order_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.hom_order_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* B. Bajnok and W. K. Beatty (2024). *On the Diameter of Undirected Cayley Graphs of Finite Abelian Groups*. URL: <https://arxiv.org/abs/2406.04045v1>.
+
+*Commentary.*
+
+Under the covering hypothesis, 2k ≤ s²: the index of M is 2k and the square has s² points.
+
+**Theorem 1.5 (Two-generator signed radius: all regimes).**
 
 Lean statement: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.result`
 
@@ -30,4 +86,10 @@ This is a formal result for the literal original arXiv v1 conjecture. No claim a
 
 ## References
 
+- Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.even_torsor_cover`
+- Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.hom_order_le`
+- Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.rectangle_index_le`
 - Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.result`
+- Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyAllRegimes.square_cover`
+- Dependency: [D5/S3/FiniteGroups/BajnokBeattyCayleyNecessity](BajnokBeattyCayleyNecessity.md)
+- Dependency: [D5/S3/FiniteGroups/BajnokBeattyCayleySufficiency](BajnokBeattyCayleySufficiency.md)
