@@ -1,5 +1,5 @@
 /- GID: D5/S3/ArithSums/SpeziaA320043AllRowDivisorFormula
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ArithSums/SpeziaA320043AllRowDivisorFormula
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: [mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc]

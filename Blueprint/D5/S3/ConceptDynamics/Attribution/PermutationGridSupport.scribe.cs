@@ -73,10 +73,46 @@ internal sealed class PermutationGridSupportDocument : IScribeDocumentDefinition
                         "A block assigned to a group has an equivariant map to that label orbit, giving "
                         + "each of its labels H divided by s seeds. Extend the readout from one profile "
                         + "representative per orbit and normalize the weights on positive support."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-orbit-spectrum"),
+                DeclarationHandle.Create(Prefix + "weighted_orbit_spectrum"),
+                H("Tied profiles determine a weighted digit covering"),
+                StatementSource.FromAuthor(SpectrumStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let k be the cardinality of the finite label type I, with k at least two. "
+                        + "The full permutation group acts freely on the finite seed type S. Its real "
+                        + "weights are invariant, and the readout is equivariant and calibrated in "
+                        + "denominator units on every natural profile of total m.")),
+                    Paragraph(Text(
+                        "There are r regular orbits. Multiply each representative's weight by "
+                        + "the factorial of k minus two to get its digit weight. The seed cardinality "
+                        + "is k factorial times r. Multiplying the sum of the digit weights by "
+                        + "k factorial gives the sum of seed weights times the factorial of k minus two. "
+                        + "For every integer from zero through the floor of m divided by k minus one, "
+                        + "with k minus one as the denominator, that integer is a weighted sum of "
+                        + "digits from zero through k using this same family of weights."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+
+    private static Formula SpectrumStatement()
+    {
+        Formula i = F.Id("I");
+        Formula s = F.Id("S");
+        Formula k = F.Id("k");
+        Formula m = F.Id("m");
+        Formula w = F.Id("w");
+        Formula f = F.Id("f");
+        return Disp(Seq(Forall, Sp, i, Sp, s, Sp, m, Sp, w, Sp, f, Comma, Sp,
+            D(2), Sp, Le, Sp, Call("Card", i), Sp, Land, Sp, Call("FreeAction", i, s),
+            Sp, Land, Sp, Call("Invariant", w), Sp, Land, Sp, Call("Calibrated", m, w, f),
+            Sp, Land, Sp, Call("Equivariant", f), Sp, Rightarrow, Sp,
+            Call("OrbitDigitSpectrum", Call("Card", i), s, m, w)));
+    }
 
     private static Formula BudgetStatement()
     {
