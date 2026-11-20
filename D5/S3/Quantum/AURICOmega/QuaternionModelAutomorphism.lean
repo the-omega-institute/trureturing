@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/AURICOmega/QuaternionModelAutomorphism
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/AURICOmega/QuaternionModelAutomorphism
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,7 @@
    digest: Maps into unit quaternions preserving transfer and reading are unique up to p * x * q. -/
 
 import D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
+import D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-! Rigidity of the unit-quaternion comparison model.
 
@@ -30,6 +31,7 @@ namespace D5.S3.Quantum.AURICOmega.QuaternionModelAutomorphism
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
+open D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-- The reading of the model is `(1 + ⟪x, y⟫) / 2`, so preserving it is preserving the inner
 product. -/
@@ -38,13 +40,6 @@ private lemma inner_eq_of_kappa_eq {x y x' y' : unitary ℍ[ℝ]}
     ⟪(x' : ℍ[ℝ]), (y' : ℍ[ℝ])⟫_ℝ = ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ := by
   change (1 + ⟪(x' : ℍ[ℝ]), (y' : ℍ[ℝ])⟫_ℝ) / 2 = (1 + ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ) / 2 at h
   linarith
-
-/-- The coordinates of a unit quaternion lie on the unit sphere. -/
-private lemma sum_sq_eq_one (w : unitary ℍ[ℝ]) :
-    (w : ℍ[ℝ]).re ^ 2 + (w : ℍ[ℝ]).imI ^ 2 + (w : ℍ[ℝ]).imJ ^ 2 + (w : ℍ[ℝ]).imK ^ 2 = 1 := by
-  have h := Quaternion.normSq_eq_norm_mul_self (w : ℍ[ℝ])
-  rw [CStarRing.norm_coe_unitary, mul_one, Quaternion.normSq_def'] at h
-  exact h
 
 /-- The real part is the inner product with `1`. -/
 private lemma re_eq_inner_one (x : ℍ[ℝ]) : x.re = ⟪x, 1⟫_ℝ := by
@@ -103,7 +98,7 @@ private lemma eq_of_inner_frame (P Q H G : ℍ[ℝ]) (hre : P.re = Q.re) (hI : P
 vanishes. -/
 private lemma im_eq_zero_of_re_sq (w : unitary ℍ[ℝ]) (h : (w : ℍ[ℝ]).re ^ 2 = 1) :
     (w : ℍ[ℝ]).imI = 0 ∧ (w : ℍ[ℝ]).imJ = 0 ∧ (w : ℍ[ℝ]).imK = 0 := by
-  have n := sum_sq_eq_one w
+  have n := sq_add_sq_coe_unitary w
   have hI : (w : ℍ[ℝ]).imI ^ 2 = 0 := by
     nlinarith [sq_nonneg (w : ℍ[ℝ]).imI, sq_nonneg (w : ℍ[ℝ]).imJ, sq_nonneg (w : ℍ[ℝ]).imK]
   have hJ : (w : ℍ[ℝ]).imJ ^ 2 = 0 := by
@@ -116,17 +111,13 @@ private lemma im_eq_zero_of_re_sq (w : unitary ℍ[ℝ]) (h : (w : ℍ[ℝ]).re 
 /-- The unit quaternion `α + √(1 - α ^ 2) i`. -/
 private lemma exists_unitary_eq_re_imI (α : ℝ) (hα : α ^ 2 ≤ 1) :
     ∃ H : unitary ℍ[ℝ], (H : ℍ[ℝ]) = ⟨α, Real.sqrt (1 - α ^ 2), 0, 0⟩ := by
-  set q : ℍ[ℝ] := ⟨α, Real.sqrt (1 - α ^ 2), 0, 0⟩
-  have hsq : ((Quaternion.normSq q : ℝ) : ℍ[ℝ]) = 1 := by
-    rw [Quaternion.normSq_def']
-    change ((α ^ 2 + Real.sqrt (1 - α ^ 2) ^ 2 + 0 ^ 2 + 0 ^ 2 : ℝ) : ℍ[ℝ]) = 1
-    rw [Real.sq_sqrt (by linarith)]
-    norm_num
-  exact ⟨⟨q, Unitary.mem_iff.mpr ⟨(Quaternion.star_mul_self q).trans hsq,
-    (Quaternion.self_mul_star q).trans hsq⟩⟩, rfl⟩
+  refine ⟨⟨_, mem_unitary_of_normSq ?_⟩, rfl⟩
+  rw [Quaternion.normSq_def']
+  change α ^ 2 + Real.sqrt (1 - α ^ 2) ^ 2 + 0 ^ 2 + 0 ^ 2 = 1
+  rw [Real.sq_sqrt (by linarith)]
+  ring
 
-/-- A nonzero quaternion intertwining `a` with `a'` normalizes to a unit quaternion doing the
-same. -/
+/-- A nonzero quaternion `r` normalizes to the unit quaternion `‖r‖⁻¹ • r`. -/
 private lemma exists_unitary_smul (r : ℍ[ℝ]) (hr : r ≠ 0) :
     ∃ c : unitary ℍ[ℝ], (c : ℍ[ℝ]) = ‖r‖⁻¹ • r := by
   have hcn : ‖‖r‖⁻¹ • r‖ = 1 := by
@@ -289,8 +280,8 @@ private lemma Compatible.exists_conj_of_plane {ι : Type*} {a b : ι → unitary
     · positivity
   have hnorm : (b x₁ : ℍ[ℝ]).imJ ^ 2 + (b x₁ : ℍ[ℝ]).imK ^ 2 =
       (a x₁ : ℍ[ℝ]).imJ ^ 2 + (a x₁ : ℍ[ℝ]).imK ^ 2 := by
-    have na := sum_sq_eq_one (a x₁)
-    have nb := sum_sq_eq_one (b x₁)
+    have na := sq_add_sq_coe_unitary (a x₁)
+    have nb := sq_add_sq_coe_unitary (b x₁)
     rw [h.2.2 x₁, h.imI_eq x₀ h₀ hHj hHk hHi x₁] at nb
     linarith
   obtain ⟨d₁, hd₁j, hd₁k, hd₁⟩ := exists_plane_conj (a x₁)
@@ -329,7 +320,7 @@ private lemma Compatible.exists_conj {ι : Type*} {a b : ι → unitary ℍ[ℝ]
   obtain ⟨x₀, hx₀⟩ := hreal
   set α := (a x₀ : ℍ[ℝ]).re
   have hα : α ^ 2 < 1 := by
-    have n := sum_sq_eq_one (a x₀)
+    have n := sq_add_sq_coe_unitary (a x₀)
     have hle : α ^ 2 ≤ 1 := by
       nlinarith [sq_nonneg (a x₀ : ℍ[ℝ]).imI, sq_nonneg (a x₀ : ℍ[ℝ]).imJ,
         sq_nonneg (a x₀ : ℍ[ℝ]).imK]
@@ -349,6 +340,7 @@ private lemma Compatible.exists_conj {ι : Type*} {a b : ι → unitary ℍ[ℝ]
 /-- A unit quaternion commuting with `i` and `j` is `1` or `-1`. -/
 private lemma eq_one_or_eq_neg_one (s : unitary ℍ[ℝ]) (hi : s * unitI = unitI * s)
     (hj : s * unitJ = unitJ * s) : s = 1 ∨ s = -1 := by
+  have h := sq_add_sq_coe_unitary s
   obtain ⟨⟨a, b, c, d⟩, hs⟩ := s
   have hi' := congrArg Subtype.val hi
   have hj' := congrArg Subtype.val hj
@@ -360,8 +352,6 @@ private lemma eq_one_or_eq_neg_one (s : unitary ℍ[ℝ]) (hi : s * unitI = unit
   have hc : c = 0 := by linarith [hi'.2]
   have hd : d = 0 := by linarith [hi'.1]
   subst hb hc hd
-  have h := Quaternion.normSq_eq_norm_mul_self (⟨a, 0, 0, 0⟩ : ℍ[ℝ])
-  rw [CStarRing.norm_of_mem_unitary hs, mul_one, Quaternion.normSq_def'] at h
   change a ^ 2 + 0 ^ 2 + 0 ^ 2 + 0 ^ 2 = 1 at h
   rcases mul_self_eq_one_iff.mp (by linarith : a * a = 1) with ha | ha
   · left
@@ -379,10 +369,10 @@ reading if and only if `v x = p * u x * q` for some unit quaternions `p` and `q`
 theorem preserves_iff_exists_mul_mul {M : Type*} (C : TernaryComparison M)
     (u : M → unitary ℍ[ℝ])
     (hut : ∀ x y z, u (C.tri x y z) = quaternionModel.tri (u x) (u y) (u z))
-    (huk : ∀ x y, quaternionModel.kappa (u x) (u y) = C.kappa x y)
+    (huk : ∀ x y, C.kappa x y = quaternionModel.kappa (u x) (u y))
     (v : M → unitary ℍ[ℝ]) :
     ((∀ x y z, v (C.tri x y z) = quaternionModel.tri (v x) (v y) (v z)) ∧
-        ∀ x y, quaternionModel.kappa (v x) (v y) = C.kappa x y) ↔
+        ∀ x y, C.kappa x y = quaternionModel.kappa (v x) (v y)) ↔
       ∃ p q : unitary ℍ[ℝ], ∀ x, v x = p * u x * q := by
   constructor
   · rintro ⟨hvt, hvk⟩
@@ -393,7 +383,7 @@ theorem preserves_iff_exists_mul_mul {M : Type*} (C : TernaryComparison M)
       have h1 := kappa_mul_mul (u o)⁻¹ 1 (u x) (u y)
       have h2 := kappa_mul_mul (v o)⁻¹ 1 (v x) (v y)
       simp only [mul_one] at h1 h2
-      rw [h1, h2, hvk, huk]
+      rw [h1, h2, ← hvk, huk]
     have hcomp : Compatible (fun x => (u o)⁻¹ * u x) (fun x => (v o)⁻¹ * v x) := by
       refine ⟨fun x y => ⟨C.tri x o y, ?_, ?_⟩, fun x y => inner_eq_of_kappa_eq (hk x y),
         fun x => ?_⟩
@@ -420,8 +410,12 @@ theorem preserves_iff_exists_mul_mul {M : Type*} (C : TernaryComparison M)
     · rw [hpq, hpq, hpq, hpq, hut]
       change p * (u x * (u y)⁻¹ * u z) * q = p * u x * q * (p * u y * q)⁻¹ * (p * u z * q)
       group
-    · rw [hpq, hpq, kappa_mul_mul, huk]
+    · rw [hpq, hpq, kappa_mul_mul]
+      exact huk x y
 
+/-- The translation `x ↦ p * x * q` of the unit quaternions determines `(p, q)` up to a common
+sign: it agrees with `x ↦ p' * x * q'` exactly when `(p', q') = (p, q)` or
+`(p', q') = (-p, -q)`. -/
 theorem mul_mul_eq_mul_mul_iff (p q p' q' : unitary ℍ[ℝ]) :
     (∀ x : unitary ℍ[ℝ], p * x * q = p' * x * q') ↔
       (p' = p ∧ q' = q) ∨ (p' = -p ∧ q' = -q) := by

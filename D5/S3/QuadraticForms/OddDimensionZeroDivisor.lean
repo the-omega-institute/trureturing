@@ -13,10 +13,10 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 /-!
 # Zero divisors of bilinear maps
 
-Let `m : U × V → W` be bilinear over a field `K`. If every polynomial over `K` whose degree is
-`dim U` has a root, `dim W ≤ dim U` and `dim V ≥ 2`, then `m a b = 0` for some nonzero `a`, `b`.
-Over the real numbers this covers every odd dimension of `U`; over an algebraically closed field
-every dimension.
+Let `m : U × V → W` be bilinear over a field `K` with `dim W ≤ dim U` and `dim V ≥ 2`. If
+`dim W < dim U`, or if `dim W = dim U` and every polynomial over `K` whose degree is `dim U` has
+a root, then `m a b = 0` for some nonzero `a`, `b`. Over the real numbers the root condition
+holds in every odd dimension of `U`; over an algebraically closed field in every dimension.
 
 The argument: choose linearly independent `b`, `c`. If `m(·, b)` is not injective it has a
 nonzero kernel vector. Otherwise it is an isomorphism `U ≃ W`, and an eigenvector `a` of
@@ -36,20 +36,22 @@ theorem exists_hasEigenvalue_of_odd_finrank {K U : Type*} [Field K] [IsRealClose
       (by rwa [LinearMap.charpoly_natDegree])).imp
     fun μ hμ => (Module.End.hasEigenvalue_iff_isRoot_charpoly f μ).2 hμ
 
-/-- A bilinear map `m : U × V → W` has a zero divisor when every polynomial of degree `dim U`
-has a root, `dim W ≤ dim U` and `dim V ≥ 2`. -/
+/-- A bilinear map `m : U × V → W` with `dim W ≤ dim U` and `dim V ≥ 2` has a zero divisor when
+`dim W < dim U`, or when `dim W = dim U` and every polynomial of degree `dim U` has a root. -/
 theorem exists_zero_divisor {K U V W : Type*} [Field K]
     [AddCommGroup U] [Module K U] [AddCommGroup V] [Module K V]
     [AddCommGroup W] [Module K W] [FiniteDimensional K W]
     (m : U →ₗ[K] V →ₗ[K] W)
-    (hroot : ∀ f : Polynomial K, f.natDegree = Module.finrank K U → ∃ x, f.IsRoot x)
+    (hroot : Module.finrank K W = Module.finrank K U →
+      ∀ f : Polynomial K, f.natDegree = Module.finrank K U → ∃ x, f.IsRoot x)
     (hW : Module.finrank K W ≤ Module.finrank K U) (hV : 2 ≤ Module.finrank K V) :
     ∃ a b, a ≠ 0 ∧ b ≠ 0 ∧ m a b = 0 := by
   classical
-  -- `dim U = 0` (in particular `U` infinite-dimensional) is excluded by the constant `1`.
+  -- `dim U = 0` (in particular `U` infinite-dimensional) forces `dim W = 0 = dim U`, and then
+  -- the root condition is refuted by the constant `1`.
   have hUpos : 0 < finrank K U := by
     rcases Nat.eq_zero_or_pos (finrank K U) with h0 | hpos
-    · obtain ⟨x, hx⟩ := hroot 1 (by simp [h0])
+    · obtain ⟨x, hx⟩ := hroot (by omega) 1 (by simp [h0])
       simp at hx
     · exact hpos
   have : FiniteDimensional K U := Module.finite_of_finrank_pos hUpos
@@ -61,7 +63,7 @@ theorem exists_zero_divisor {K U V W : Type*} [Field K]
       le_antisymm (LinearMap.finrank_le_finrank_of_injective hinj) hW
     set e : U ≃ₗ[K] W := (m.flip b).linearEquivOfInjective hinj hdim
     set f : Module.End K U := e.symm.toLinearMap ∘ₗ m.flip c
-    obtain ⟨μ, hμ⟩ := hroot f.charpoly (LinearMap.charpoly_natDegree f)
+    obtain ⟨μ, hμ⟩ := hroot hdim.symm f.charpoly (LinearMap.charpoly_natDegree f)
     obtain ⟨a, ha⟩ :=
       ((Module.End.hasEigenvalue_iff_isRoot_charpoly f μ).2 hμ).exists_hasEigenvector
     have hfa : f a = μ • a := Module.End.mem_eigenspace_iff.1 ha.1

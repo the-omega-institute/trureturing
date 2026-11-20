@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The tensor square of SU(2) on two qubits has exactly four invariant subspaces. -/
+   digest: Two explicit SU(2) elements already fix the four invariant subspaces of C2 tensor C2. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -17,6 +17,17 @@ noncomputable section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+/-!
+# Invariant subspaces of the tensor square of two qubits
+
+For any set `S` of `2 × 2` complex matrices containing the two special unitary matrices
+`phaseMatrix` and `rotationMatrix`, the subspaces of `ℂ² ⊗ ℂ²` invariant under every `g ⊗ g`,
+`g ∈ S`, are exactly `0`, the singlet line `ℂ ω`, its orthogonal complement (the symmetric
+tensors, of dimension three) and the whole space. Taking `S` to be the special unitary group
+gives the classification under `SU(2)`; taking `S = {phaseMatrix, rotationMatrix}` shows that
+two explicit elements suffice. Moreover `(g ⊗ g) ω = det g • ω` for every `2 × 2` matrix `g`.
+-/
 
 namespace D5.S3.Quantum.Algebra.Unitary.TensorSquareSinglet
 
@@ -117,54 +128,55 @@ private lemma extract (T : V →ₗ[ℂ] V) (α β : ℂ) (hα : α ≠ 1) (hβ 
     refine ⟨?_, ?_, ?_, ?_⟩ <;> field_simp <;> ring
 
 
-/-- A diagonal special unitary matrix whose square has three distinct eigenvalues on `V`. -/
-private def dMat : Matrix (Fin 2) (Fin 2) ℂ :=
+/-- The diagonal phase matrix with diagonal entries `(3 + 4i)/5` and `(3 - 4i)/5`. -/
+def phaseMatrix : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(3 + 4 * Complex.I) / 5, 0; 0, (3 - 4 * Complex.I) / 5]
 
-/-- A real rotation mixing the weight spaces. -/
-private def rMat : Matrix (Fin 2) (Fin 2) ℂ := !![3 / 5, -4 / 5; 4 / 5, 3 / 5]
+/-- The real rotation matrix with cosine `3/5` and sine `4/5`. -/
+def rotationMatrix : Matrix (Fin 2) (Fin 2) ℂ := !![3 / 5, -4 / 5; 4 / 5, 3 / 5]
 
-/-- `dMat ⊗ dMat` is diagonal with eigenvalues `α, 1, 1, β`, `α ≠ β`, `α, β ≠ 1`. -/
-private lemma tensor_dMat (p q r s : ℂ) :
-    (dMat ⊗ₖ dMat).toEuclideanLin (vec p q r s) =
+/-- `phaseMatrix ⊗ phaseMatrix` is diagonal with eigenvalues `α, 1, 1, β`, `α ≠ β`, `α, β ≠ 1`. -/
+private lemma tensor_phase (p q r s : ℂ) :
+    (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin (vec p q r s) =
       vec ((-7 + 24 * Complex.I) / 25 * p) q r ((-7 - 24 * Complex.I) / 25 * s) := by
   rw [tensor_vec, vec_eq_vec]
-  simp only [dMat, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.empty_val', Matrix.cons_val_fin_one]
+  simp only [phaseMatrix, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
   refine ⟨?_, ?_, ?_, ?_⟩
   · linear_combination (16 / 25 * p) * Complex.I_sq
   · linear_combination (-16 / 25 * q) * Complex.I_sq
   · linear_combination (-16 / 25 * r) * Complex.I_sq
   · linear_combination (16 / 25 * s) * Complex.I_sq
 
-private lemma tensor_rMat (p q r s : ℂ) :
-    (rMat ⊗ₖ rMat).toEuclideanLin (vec p q r s) =
+private lemma tensor_rotation (p q r s : ℂ) :
+    (rotationMatrix ⊗ₖ rotationMatrix).toEuclideanLin (vec p q r s) =
       vec ((9 * p - 12 * q - 12 * r + 16 * s) / 25) ((12 * p + 9 * q - 16 * r - 12 * s) / 25)
         ((12 * p - 16 * q + 9 * r - 12 * s) / 25) ((16 * p + 12 * q + 12 * r + 9 * s) / 25) := by
   rw [tensor_vec, vec_eq_vec]
-  simp only [rMat, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.empty_val', Matrix.cons_val_fin_one]
+  simp only [rotationMatrix, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
   refine ⟨?_, ?_, ?_, ?_⟩ <;> ring
 
-private lemma dMat_mem : dMat ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ := by
+private lemma phase_mem : phaseMatrix ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_specialUnitaryGroup_iff]
   refine ⟨?_, ?_⟩
   · rw [Matrix.mem_unitaryGroup_iff]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [dMat, Matrix.mul_apply, Fin.sum_univ_two, Complex.ext_iff, Complex.conj_ofNat] <;>
+      simp [phaseMatrix, Matrix.mul_apply, Fin.sum_univ_two, Complex.ext_iff,
+        Complex.conj_ofNat] <;>
       norm_num
-  · rw [dMat, Matrix.det_fin_two_of]
+  · rw [phaseMatrix, Matrix.det_fin_two_of]
     linear_combination (-16 / 25 : ℂ) * Complex.I_sq
 
-private lemma rMat_mem : rMat ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ := by
+private lemma rotation_mem : rotationMatrix ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_specialUnitaryGroup_iff]
   refine ⟨?_, ?_⟩
   · rw [Matrix.mem_unitaryGroup_iff]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [rMat, Matrix.mul_apply, Fin.sum_univ_two, Complex.conj_ofNat] <;> norm_num
-  · rw [rMat, Matrix.det_fin_two_of]
+      simp [rotationMatrix, Matrix.mul_apply, Fin.sum_univ_two, Complex.conj_ofNat] <;> norm_num
+  · rw [rotationMatrix, Matrix.det_fin_two_of]
     norm_num
 
 
@@ -199,22 +211,23 @@ private lemma alpha_ne_beta : (-7 + 24 * Complex.I) / 25 ≠ (-7 - 24 * Complex.
   have := congrArg Complex.im h
   norm_num at this
 
-/-- A subspace invariant under `dMat ⊗ dMat` and `rMat ⊗ rMat` containing `|00⟩` or `|11⟩`
+/-- A subspace invariant under `phaseMatrix ⊗ phaseMatrix` and
+`rotationMatrix ⊗ rotationMatrix` containing `|00⟩` or `|11⟩`
 contains every symmetric vector. -/
 private lemma symmetric_le {W : Submodule ℂ V}
-    (hd : ∀ x ∈ W, (dMat ⊗ₖ dMat).toEuclideanLin x ∈ W)
-    (hR : ∀ x ∈ W, (rMat ⊗ₖ rMat).toEuclideanLin x ∈ W)
+    (hd : ∀ x ∈ W, (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin x ∈ W)
+    (hR : ∀ x ∈ W, (rotationMatrix ⊗ₖ rotationMatrix).toEuclideanLin x ∈ W)
     (h : vec 1 0 0 0 ∈ W ∨ vec 0 0 0 1 ∈ W) (z : V) (hz : z (0, 1) = z (1, 0)) : z ∈ W := by
   have hE := fun {p q r s : ℂ} (hx : vec p q r s ∈ W) =>
-    extract _ _ _ alpha_ne_one beta_ne_one alpha_ne_beta tensor_dMat W hd hx
+    extract _ _ _ alpha_ne_one beta_ne_one alpha_ne_beta tensor_phase W hd hx
   have h00 : vec 1 0 0 0 ∈ W := by
     rcases h with h | h
     · exact h
     · have hy := hR _ h
-      rw [tensor_rMat] at hy
+      rw [tensor_rotation] at hy
       exact (hE hy).1 (by norm_num)
   have hy := hR _ h00
-  rw [tensor_rMat] at hy
+  rw [tensor_rotation] at hy
   have h11 := (hE hy).2.1 (by norm_num)
   have hmid := (hE hy).2.2
   have hz' : z = z (0, 0) • vec 1 0 0 0 +
@@ -226,13 +239,14 @@ private lemma symmetric_le {W : Submodule ℂ V}
   rw [hz']
   exact W.add_mem (W.add_mem (W.smul_mem _ h00) (W.smul_mem _ hmid)) (W.smul_mem _ h11)
 
-/-- The four subspaces are the only ones invariant under `dMat ⊗ dMat` and `rMat ⊗ rMat`. -/
+/-- The four subspaces are the only ones invariant under `phaseMatrix ⊗ phaseMatrix` and
+`rotationMatrix ⊗ rotationMatrix`. -/
 private lemma classify {W : Submodule ℂ V}
-    (hd : ∀ x ∈ W, (dMat ⊗ₖ dMat).toEuclideanLin x ∈ W)
-    (hR : ∀ x ∈ W, (rMat ⊗ₖ rMat).toEuclideanLin x ∈ W) :
+    (hd : ∀ x ∈ W, (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin x ∈ W)
+    (hR : ∀ x ∈ W, (rotationMatrix ⊗ₖ rotationMatrix).toEuclideanLin x ∈ W) :
     W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤ := by
   have hE := fun {p q r s : ℂ} (hx : vec p q r s ∈ W) =>
-    extract _ _ _ alpha_ne_one beta_ne_one alpha_ne_beta tensor_dMat W hd hx
+    extract _ _ _ alpha_ne_one beta_ne_one alpha_ne_beta tensor_phase W hd hx
   by_cases hle : W ≤ ℂ ∙ singlet
   · by_cases hb : W = ⊥
     · exact Or.inl hb
@@ -261,7 +275,7 @@ private lemma classify {W : Submodule ℂ V}
           rw [singlet_eq, smul_vec, vec_eq_vec]
           exact ⟨by ring, by ring, by linear_combination (-1 : ℂ) * hqr, by ring⟩
         have hy := hR _ hmid
-        rw [tensor_rMat] at hy
+        rw [tensor_rotation] at hy
         refine Or.inl ((hE hy).1 ?_)
         intro h0
         apply hqr
@@ -293,18 +307,25 @@ private lemma classify {W : Submodule ℂ V}
   have := W.add_mem (key z _ rfl) (W.smul_mem ((z (0, 1) - z (1, 0)) / 2) hs)
   rwa [sub_add_cancel] at this
 
-/-- The subspaces of `ℂ² ⊗ ℂ²` invariant under `g ⊗ g` for every `g ∈ SU(2)` are exactly `0`,
-the line of the singlet `ω = |01⟩ - |10⟩`, its orthogonal complement and the whole space; the
-orthogonal complement of `ω` consists of the vectors with equal `|01⟩` and `|10⟩` coordinates
-and has dimension three. -/
+/-- For every set `S` of `2 × 2` complex matrices containing `phaseMatrix` and
+`rotationMatrix` (both special unitary), the subspaces of `ℂ² ⊗ ℂ²` invariant under `g ⊗ g` for
+all `g ∈ S` are exactly `0`, the line of the singlet `ω = |01⟩ - |10⟩`, its orthogonal
+complement and the whole space. Every `g ⊗ g` maps `ω` to `det g • ω`; the orthogonal
+complement of `ω` consists of the vectors with equal `|01⟩` and `|10⟩` coordinates and has
+dimension three. -/
 theorem singlet_invariant_subspaces :
-    (∀ W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2)),
-      (∀ g ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ, ∀ x ∈ W, (g ⊗ₖ g).toEuclideanLin x ∈ W) ↔
-        W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤) ∧
+    phaseMatrix ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ ∧
+    rotationMatrix ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ ∧
+    (∀ S : Set (Matrix (Fin 2) (Fin 2) ℂ), phaseMatrix ∈ S → rotationMatrix ∈ S →
+      ∀ W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2)),
+        (∀ g ∈ S, ∀ x ∈ W, (g ⊗ₖ g).toEuclideanLin x ∈ W) ↔
+          W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤) ∧
+    (∀ g : Matrix (Fin 2) (Fin 2) ℂ, (g ⊗ₖ g).toEuclideanLin singlet = g.det • singlet) ∧
     (∀ x : EuclideanSpace ℂ (Fin 2 × Fin 2), x ∈ (ℂ ∙ singlet)ᗮ ↔ x (0, 1) = x (1, 0)) ∧
     Module.finrank ℂ (ℂ ∙ singlet)ᗮ = 3 := by
-  refine ⟨fun W => ⟨fun h => classify (h dMat dMat_mem) (h rMat rMat_mem),
-    fun hW g _ x hx => tensor_mem g hW hx⟩, mem_orthogonal_iff, ?_⟩
+  refine ⟨phase_mem, rotation_mem, fun S hd hr W =>
+    ⟨fun h => classify (h phaseMatrix hd) (h rotationMatrix hr),
+      fun hW g _ x hx => tensor_mem g hW hx⟩, tensor_singlet, mem_orthogonal_iff, ?_⟩
   have : Fact (Module.finrank ℂ V = 3 + 1) := ⟨by simp⟩
   refine Submodule.finrank_orthogonal_span_singleton ?_
   intro h
