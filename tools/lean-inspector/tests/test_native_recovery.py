@@ -320,8 +320,16 @@ class NativeBatchCapacityConsumerTests:
         self.assertIn('STRATALINT_NATIVE_BATCH_MODULES requires', invalid.stdout + invalid.stderr)
         self.record_result('direct-warm-invalid', dict(command=runtime, batch_modules='0', exit=invalid.returncode))
 
+        # Remove the local material but retain Lake's valid, precompiled artifact.
+        compiler_input = self.root / '.lake/build/lib/lean/ClaimSupport.olean'
+        original_olean = compiler_input.read_bytes()
+        compiler_input.unlink()
         entry('small', '2', regenerate=True)
         self.assertEqual(captures('small-captures', 2), [2, 2])
+        self.assertEqual(compiler_input.read_bytes(), original_olean)
+        report_logs = ''.join((logs / ('report.' + stream + '.log')).read_text()
+                              for stream in ('stdout', 'stderr'))
+        self.assertNotRegex(report_logs, r'Built (?:trureturing/)?ClaimSupport(?:[ (:]|$)')
         self.assertEqual(self.report(), baseline)
         self.assertEqual(sorted(row['module'] for row in baseline[0]), ['D5.A', 'D5.Alone', 'D5.B', 'Fixture'])
         self.record_result('equivalent', dict(report_sha256=hashlib.sha256(baseline[1]).hexdigest(),
@@ -349,7 +357,7 @@ class NativeBatchCapacityConsumerTests:
         self.assertIn('Audit.lean', result.stdout + result.stderr)
         self.record_result('required-audit-failure', dict(exit=result.returncode))
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
-        result = entry('kernel-failure', '2', success=False)
+        result = entry('kernel-failure', '2', regenerate=True, success=False)
         self.assertIn('D5.A', result.stdout + result.stderr)
 
 

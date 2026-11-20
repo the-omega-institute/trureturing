@@ -133,6 +133,7 @@ class ReuseTests(unittest.TestCase):
         receipt = publication.member(self.report, '.reuse.json')
         original = json.loads(receipt.read_text())
         invalid = [
+            ('covers_compiler_dependencies', False), ('covers_compiler_dependencies', 1),
             ('eligible', False), ('files', None), ('files', []), ('execution', None),
             ('files:D5/A.lean:sha256', 'invalid'), ('files:D5/A.lean:sha256', None),
             ('files:D5/A.lean:mode', None), ('files:D5/A.lean:mode', True),
@@ -153,6 +154,19 @@ class ReuseTests(unittest.TestCase):
                 receipt.write_text(json.dumps(record))
                 self.assertFalse(api.seed_format(self.report)['compatible'],
                                  '[FAIL] seed_format_requires_complete_sealed_inputs')
+
+    def test_seed_format_accepts_current_and_prior_compiler_dependency_receipts(self):
+        self.policy['dependency_sources'] = self.policy['report_modules']
+        self.write_policy()
+        api = self.receipt()
+        receipt_path = publication.member(self.report, api.SUFFIX)
+        receipt = json.loads(receipt_path.read_bytes())
+        self.assertIs(receipt['inputs'].pop('covers_compiler_dependencies'), True)
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+        self.assertFalse(api.probe(self.root, self.report, require_covered_dependencies=True)['needs_lake'])
+        receipt_path.write_text(json.dumps(receipt))
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+        self.assertTrue(api.probe(self.root, self.report, require_covered_dependencies=True)['needs_lake'])
 
     def test_seed_format_requires_intact_bundle(self):
         api = self.receipt()

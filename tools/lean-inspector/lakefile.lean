@@ -232,7 +232,13 @@ private structure ReportArtifact where
   outputTrace : BuildTrace
 
 private def buildArtifact (file : FilePath) (build : JobM PUnit) : JobM ReportArtifact := do
-  let art ← buildArtifactUnlessUpToDate file build (ext := "zip") (restore := true)
+  let owner ← getCurrPackage?
+  let regen := (← IO.getEnv "STRATALINT_INSPECTOR_REGENERATE_REPORTS") == some "1"
+  -- Regeneration removes the report files and traces. Without a package
+  -- for this ZIP lookup, Lake uses the local file and trace exclusively.
+  -- The extraction callback retains the compiler's normal package context.
+  let art ← withCurrPackage? (if regen then none else owner) <|
+    buildArtifactUnlessUpToDate file (withCurrPackage? owner build) (ext := "zip") (restore := true)
   return ⟨art.path, ← getTrace⟩
 
 /-- Ask Lake itself whether a native artifact can be reused/restored. A native

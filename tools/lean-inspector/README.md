@@ -29,7 +29,7 @@ linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏�
 相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
 
 ```sh
-make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report-prepare FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
 ```
 
 ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。
@@ -37,7 +37,7 @@ ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播
 显式取回并替换 Release 快照；无法判定 Git checkout 类型时拒绝取回。
 linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及共同 Git 目录均通过
 核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
-补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1` 后重新播种，
+补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor FULL_BUILD=1 && make lean-report-prepare FULL_BUILD=1 && make lean-report FULL_BUILD=1` 后重新播种，
 并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
 格式相符而输入有差量时，干净的 dev 主 checkout 读取 `.lake/lean-report-seed-base.json` 中的生产提交，
 记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。

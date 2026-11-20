@@ -532,7 +532,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 | schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 360m，内部报告构建上限 21600s |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
-本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式要求干净且已存在于本仓 GitHub 的固定提交，并验证当前完整报告与资产；`LEAN_CACHE_PUBLISH_ONLY=1` 禁止调用报告构建，缺失或陈旧报告直接失败。候选使用隔离的 verification Release 名称，不进入普通 production 查找或裁剪。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
+本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式要求干净且已存在于本仓 GitHub 的固定提交，并验证当前完整报告与资产；`LEAN_CACHE_PUBLISH_ONLY=1` 禁止调用报告构建，归档时须持有当前报告的 `fib-inputs-checked` 收据。报告缺失、过期或仅经独立分析时，先运行 `make check-lean-report FULL_BUILD=1`。候选使用隔离的 verification Release 名称，不进入普通 production 查找或裁剪。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
 
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
@@ -573,11 +573,7 @@ Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、�
 
 报告、种子、收据等数据产物不得把 producer/judge 程序字节哈希作为复用条件；模块 trace、utility、格式与整份收据的输入边界依 A14.9。judge 编译缓存缓存的是程序自身，可哈希其实际构建输入与配方。显式历史登记无缓存重评是独立请求；`REBUILD_REPORT_CACHE=1` 只绕过整份 receipt，仍可复用原生模块产物，不保证重评全部历史登记或 full clean，也不承诺旧 same-v3 载荷自动迁移。
 
-<<<<<<< HEAD
-**显式报告工件重产。** 独立长 producer 的 `operation=build` 可显式选 `regenerate_report_artifacts=true`，默认关闭；采用对应操作的固定来源校验及同一 Actions 构建发布核心。等价本地入口为 `make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。此选项强制跳过整份 receipt 复用与 Release 恢复，完成既有 ensure/worktree 参与后，在 `lean-cache-run` 的缓存写锁内删除 `.lake/build/lean-inspector` 的生成状态（模块 ZIP、trace、pending/previous、聚合 ZIP 及派生报告输入），并在同一写锁内执行报告/选定程序的 Lake 构建。该次 Lake 进程设置 `LAKE_ARTIFACT_CACHE=false` 和 `LAKE_RESTORE_ARTIFACTS=false`，阻止内容寻址仓库按旧 trace 恢复已删除的报告。保留原生状态中的 `producer`、`interface`、`reg` 编译程序目录及 `judge-inputs` 编译输入投影，以及 `.lake/build/lib`、IR、依赖及 toolchain，由 Lake 继续判定其编译有效性；不清空共享 artifact store，不修改 cache key 或报告格式。
-=======
-**显式报告工件重产。** 独立长 producer 的 `operation=build` 或 `operation=pr` 可显式选 `regenerate_report_artifacts=true`，默认关闭；采用对应操作的固定来源校验及同一 Actions 构建发布核心。等价本地入口为 `make lean-report REGENERATE_REPORT_ARTIFACTS=1`。此选项强制跳过整份 receipt 复用与 Release 恢复，完成既有 ensure/worktree 参与后，在 `lean-cache-run` 的缓存写锁内删除 `.lake/build/lean-inspector` 的生成状态（模块 ZIP、trace、pending/previous、聚合 ZIP 及派生报告输入），并在同一写锁内从现有编译产物重新提取报告。该次 Lake 进程设置 `LAKE_ARTIFACT_CACHE=false` 和 `LAKE_RESTORE_ARTIFACTS=false`，阻止内容寻址仓库按旧 trace 恢复已删除的报告。保留原生状态中的 `producer`、`interface`、`reg` 编译程序目录及 `judge-inputs` 编译输入投影，以及 `.lake/build/lib`、IR、依赖及 toolchain，由 Lake 继续判定其编译有效性；不清空共享 artifact store，不修改 cache key 或报告格式。
->>>>>>> 6933a4c8f94 (Separate Lean compilation from full and scoped report extraction)
+**显式报告工件重产。** 独立长 producer 的 `operation=build` 可显式选 `regenerate_report_artifacts=true`，默认关闭；采用对应操作的固定来源校验及同一 Actions 构建发布核心。等价本地入口为 `make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。此选项强制跳过整份 receipt 复用与 Release 恢复，在 `lean-cache-run` 的缓存写锁内删除 `.lake/build/lean-inspector` 的生成状态（模块 ZIP、trace、pending/previous、聚合 ZIP 及派生报告输入），并在同一写锁内从现有编译产物重新提取报告。模块与聚合报告的 ZIP facet 在该次重产中仅按本地文件和 trace 判定复用。编译输入和工具沿用调用方的 Lake 缓存设置，可以恢复匹配的预编译产物。保留原生状态中的 `producer`、`interface`、`reg` 编译程序目录及 `judge-inputs` 编译输入投影，以及 `.lake/build/lib`、IR、依赖及 toolchain，由 Lake 继续判定其编译有效性；不清空共享 artifact store，不修改 cache key 或报告格式。
 
 canonical report 入口对 fresh Application 输入仍先严格验证；仅此显式恢复路径中，旧发布报告的 `fib.invalid_partition` 不可作相等输入证据，必须成功完成一次 canonical FIB 回归才可发布与封存。普通路径仍拒绝该旧分区；有效 predecessor 保留原有完整输入比较及显式选择语义。报告或回归失败保持先前物理发布成员，不写成功收据，传播原退出码；不新增 schema、缓存版本、扫描器或测试收据。
 

@@ -370,8 +370,11 @@ def seed_format(report):
         materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
         if receipt['schema'] != SCHEMA or receipt['completed'] not in (COMPLETED, CHECKED):
             raise ValueError('reuse receipt lacks complete entry success')
-        inputs = materials.require_keys(receipt['inputs'],
-            {'eligible', 'report_format', 'files', 'execution'}, 'reuse inputs')
+        inputs = receipt['inputs']
+        fields = {'eligible', 'report_format', 'files', 'execution'}
+        if isinstance(inputs, dict) and inputs.get('covers_compiler_dependencies') is True:
+            fields.add('covers_compiler_dependencies')
+        inputs = materials.require_keys(inputs, fields, 'reuse inputs')
         if (inputs['eligible'] is not True or not isinstance(inputs['files'], dict)
                 or 'lean-toolchain' not in inputs['files']):
             raise ValueError('incomplete reuse inputs')
@@ -572,10 +575,11 @@ def compatible_seed(repository, report):
     remediation = None
     if linked:
         warm_report = ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                       'make warm-donor && make lean-report there '
+                       'make warm-donor FULL_BUILD=1 && make lean-report-prepare FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
                        '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
                        if main_checkout is None else warm_dev_remediation(main_checkout)
-                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report'
+                       + ' FULL_BUILD=1 && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report-prepare FULL_BUILD=1'
+                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report FULL_BUILD=1'
                        + '; then reseed from the warm main checkout: rm -rf -- ')
         remediation = (warm_report
                        + shlex.quote(str(repository / '.lake')) + ' && make -C '

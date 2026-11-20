@@ -12,7 +12,7 @@ import sys
 import tarfile
 import unittest
 
-from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
+from lean_seed_support import REPORT_BUILD, INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
 from lean_release_verification import ReleaseVerificationCases
 from lean_release_legacy import ReleaseLegacyCases
@@ -683,7 +683,7 @@ ctypes.CDLL = cdll
     def test_publication_requires_current_report_before_transport(self):
         result = self.transport("publish")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual([REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_widen_partition_compatibility(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -764,6 +764,9 @@ ctypes.CDLL = cdll
                 self.assertIn(f'"resolved":"{tag}"', restored.stdout)
                 self.assertIn(f'"partition":"{REV}/{own}"', restored.stdout)
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+                receipt = self.root / ".lake/build/stratalint/raw-lean-report.json.reuse.json"
+                self.assertEqual(dict(system=publisher[0], machine=publisher[1]),
+                                 json.loads(receipt.read_bytes())["inputs"]["execution"]["platform"])
 
 
 def _all_test_cases():

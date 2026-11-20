@@ -568,7 +568,10 @@ def publish(root, partition, verification=None, *, build_report=True):
                 if (root / ".lake").is_symlink() or not (root / ".lake/build").is_dir():
                     raise ValueError("no private project build to publish")
                 captured = report_reuse.capture(root)
-                report_reuse.read_receipt(report, captured)
+                report_receipt = report_reuse.read_receipt(report, captured)
+                if report_receipt['completed'] != report_reuse.CHECKED:
+                    raise ValueError("Release publication requires a FIB-checked report. "
+                                     "Run make check-lean-report FULL_BUILD=1 before publishing.")
                 report_reuse.publication.validate_bundle(report, repository=root)
                 if partition != partition_path(root):
                     raise ValueError("publication partition differs from the local tree")
@@ -1078,7 +1081,7 @@ def _main():
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
     parser.add_argument("--tag", default="", help="exact local candidate Release to restore")
-    parser.add_argument("--no-build", action="store_true", help="publish only an already valid complete report/build")
+    parser.add_argument("--no-build", action="store_true", help="publish an existing FIB-checked report/build")
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--approved-tag", help=argparse.SUPPRESS)

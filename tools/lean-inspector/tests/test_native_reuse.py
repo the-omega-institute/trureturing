@@ -350,6 +350,50 @@ package_facet compilerRegistrationContender (pkg : Package) : Unit := do
             self.assertNotEqual(result.returncode, 0, '[FAIL] default_failure_blocks_reuse\n' + result.stdout + result.stderr)
         return result
 
+    def test_report_can_restore_from_store_without_materializing_git_packages(self):
+        self.reg_package()
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
+        output = self.root / 'reports' / publication.RAW
+        command = ['make', 'lean-report', 'FULL_BUILD=1', 'LEAN_REPORT=' + str(output),
+                   'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build']
+        lake_wrapper = self.root / 'bin' / 'observed-lake'
+        lake_wrapper.write_text('#!/bin/sh\ntest -d .lake/build && echo build >> lake-started || '
+                                'echo empty >> lake-started\nexec "$REAL_LAKE" "$@"\n')
+        lake_wrapper.chmod(0o755)
+        environment = dict(self.env, REAL_LAKE=self.lake, LAKE_BIN=str(lake_wrapper))
+        started = self.root / 'lake-started'
+        build = self.root / '.lake/build'
+        shutil.rmtree(build)
+        restored = self.guarded_command(command, env=environment)
+        self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+        self.assertEqual(started.read_text().splitlines(), ['empty'])
+        self.assertTrue((build / 'lib/lean/ClaimSupport.olean').is_file())
+        publication.validate_bundle(output, publication.coordinates(self.root), self.root)
+        expected = output.read_bytes()
+        started.unlink()
+
+        mathlib = self.root / '.lake/packages/mathlib'
+        mathlib.rename(self.root / 'saved-mathlib')
+        missing = self.guarded_command(command, env=environment)
+        self.assertNotEqual(missing.returncode, 0)
+        self.assertIn('Missing prebuilt Git dependency mathlib', missing.stderr)
+        self.assertFalse(started.exists())
+        self.assertFalse(mathlib.exists())
+        self.assertEqual(output.read_bytes(), expected)
+
+        explicit = self.guarded_command(['make', 'lean', 'LEAN_TARGETS=+D5.Alone'], env=self.env)
+        self.assertEqual(explicit.returncode, 0, explicit.stdout + explicit.stderr)
+        subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                        '-c', 'commit.gpgsign=false', 'commit', '--allow-empty', '-qm', 'different revision'],
+                       cwd=mathlib, check=True)
+        revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=mathlib)
+        stale = self.guarded_command(command, env=environment)
+        self.assertNotEqual(stale.returncode, 0)
+        self.assertIn('Prebuilt Git dependency mathlib is not checked out at', stale.stderr)
+        self.assertFalse(started.exists())
+        self.assertEqual(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=mathlib), revision)
+        self.assertEqual(output.read_bytes(), expected)
+
     def test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs(self):
         self.reg_package()
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())

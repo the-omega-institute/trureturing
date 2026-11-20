@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using System.Text;
+using System.Text.Json;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -67,12 +68,13 @@ internal static partial class LeanCacheEnsureCommand
         {
             var lake = Path.Combine(root, ".lake");
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-            if (!Directory.Exists(Path.Combine(lake, "build")))
-                return new CommandResult(false, string.Empty,
-                    "Prebuilt Lake artifacts are missing. Run make lean-report-prepare for the selected scope.\n");
             var stamp = LeanCacheStamp.Inspect(lake, pins);
             if (stamp.State is LeanCacheStampState.Mismatch or LeanCacheStampState.Corrupt)
                 return new CommandResult(false, string.Empty, $"Incompatible prebuilt Lake artifacts: {stamp.Reason}\n");
+            var packageError = CheckPrebuiltPackages(lake, pins, runner);
+            if (packageError is not null)
+                return new CommandResult(false, string.Empty,
+                    $"{packageError}. Run make lean-report-prepare for the selected scope.\n");
             return RunGuardedCommand(root, command, runner, string.Empty, standardOutput, standardError);
         }
 
@@ -148,6 +150,31 @@ internal static partial class LeanCacheEnsureCommand
         }
 
         return RunGuardedCommand(root, command, runner, receipt, standardOutput, standardError);
+    }
+
+    private static string? CheckPrebuiltPackages(string lake, LeanPinSet pins, IWorktreeProcessRunner runner)
+    {
+        // The Reg and report host manifests already agree with these root Git pins.
+        // Lake restores compiler artifacts from its store, but loading a workspace
+        // would materialize a missing checkout or switch it to the requested commit.
+        using var manifest = JsonDocument.Parse(pins.LakeManifest);
+        foreach (var package in manifest.RootElement.GetProperty("packages").EnumerateArray())
+        {
+            if (package.GetProperty("type").GetString() != "git") continue;
+            var name = package.GetProperty("name").GetString();
+            var revision = package.GetProperty("rev").GetString();
+            if (string.IsNullOrWhiteSpace(name) || name is "." or ".." || name.IndexOfAny(['/', '\\']) >= 0
+                || !LeanPinSet.ValidRevision(revision))
+                return "Invalid pinned Git package in lake-manifest.json";
+            var directory = Path.Combine(lake, "packages", name);
+            if (!Path.Exists(Path.Combine(directory, ".git")))
+                return $"Missing prebuilt Git dependency {name} at {revision}";
+            var head = runner.Run("git", ["rev-parse", "--verify", "HEAD"], directory,
+                LeanCacheProvisioner.LeanCommandBudget);
+            if (head.ExitCode != 0 || Encoding.UTF8.GetString(head.StandardOutput).Trim() != revision)
+                return $"Prebuilt Git dependency {name} is not checked out at {revision}";
+        }
+        return null;
     }
 
     private static CommandResult RunGuardedCommand(string root, string[] command,

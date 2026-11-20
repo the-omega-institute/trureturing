@@ -277,10 +277,11 @@ import publication
 root = Path.cwd()
 state = root / '.lake/build/lean-inspector'
 seen = dict(files=sorted(str(p.relative_to(state)) for p in state.rglob('*') if p.is_file()),
+            regenerate=os.environ.get('STRATALINT_INSPECTOR_REGENERATE_REPORTS'),
             artifact_cache=os.environ.get('LAKE_ARTIFACT_CACHE'),
             restore_artifacts=os.environ.get('LAKE_RESTORE_ARTIFACTS'))
 (root / 'regeneration.json').write_text(json.dumps(seen))
-if seen['artifact_cache'] != 'false' or seen['restore_artifacts'] != 'false':
+if seen['regenerate'] != '1':
     raise SystemExit(29)  # A retained content-store artifact would otherwise restore.
 state.mkdir(parents=True, exist_ok=True)
 (state / 'modules').mkdir()
@@ -297,13 +298,14 @@ PY
     def test_explicit_report_regeneration_discards_native_leaves_and_restoration(self):
         generated, compiled = self.report_regeneration_fixture()
         stamp = compiled.stat().st_mtime_ns
+        self.environment.update(LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true')
         result = self.run_entry('REGENERATE_REPORT_ARTIFACTS=1')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotIn('complete-entry-reused', result.stdout)
         self.assertEqual(json.loads((self.root / 'regeneration.json').read_text()),
                          dict(files=['interface/lib/lean/Tool.olean', 'judge-inputs/A.json',
                                      'producer/lib/lean/Tool.olean', 'reg/lib/lean/Tool.olean'],
-                              artifact_cache='false', restore_artifacts='false'))
+                              regenerate='1', artifact_cache='true', restore_artifacts='true'))
         self.assertEqual((generated / 'modules/A.zip').read_text(), 'fresh generic report leaf')
         self.assertFalse((generated / 'modules/A.zip.fib-previous').exists())
         self.assertEqual((compiled.read_text(), compiled.stat().st_mtime_ns), ('compiled Lean input', stamp))

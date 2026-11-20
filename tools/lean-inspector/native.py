@@ -154,9 +154,8 @@ def regenerate(root, *command):
 
     Remove generated report leaves, traces and the aggregate, retaining native
     program directories and compiler input projections. Mathematical Lean and
-    dependency build directories lie outside this report state. Disable Lake's
-    content-store restoration for this invocation so
-    identical input traces cannot resurrect the discarded report artifacts.
+    dependency build directories lie outside this report state. Only report ZIP
+    facets bypass content-store lookup during regeneration.
     """
     if not command:
         raise ValueError('report regeneration requires a build command')
@@ -172,7 +171,7 @@ def regenerate(root, *command):
             else:
                 path.unlink()
     subprocess.run(command, cwd=root, check=True,
-                   env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
+                   env=dict(os.environ, STRATALINT_INSPECTOR_REGENERATE_REPORTS='1'))
 
 
 def write_if_changed(path, data):

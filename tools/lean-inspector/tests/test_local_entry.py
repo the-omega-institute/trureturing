@@ -159,13 +159,14 @@ class LocalEntryFixture:
         diagnostic = result.stdout + result.stderr
         self.assertIn('reason=linked-worktree', diagnostic, '[FAIL] linked_miss_names_policy')
         remediation = ('sync dev and warm the dev cache in this repository\'s dev main checkout: '
-                       'make warm-donor && make lean-report there '
+                       'make warm-donor FULL_BUILD=1 && make lean-report-prepare FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
                        '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
                        + shlex.quote(str(self.root / '.lake')) + ' && make -C '
                        + shlex.quote(str(self.root)) + ' lean-cache-ensure'
                        if unknown_main else 'sync dev and warm the dev cache: make -C '
-                      + shlex.quote(str(self.main_checkout)) + ' warm-donor && make -C '
-                      + shlex.quote(str(self.main_checkout)) + ' lean-report'
+                      + shlex.quote(str(self.main_checkout)) + ' warm-donor FULL_BUILD=1 && make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' lean-report-prepare FULL_BUILD=1 && make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' lean-report FULL_BUILD=1'
                       + '; then reseed from the warm main checkout: rm -rf -- '
                       + shlex.quote(str(self.root / '.lake')) + ' && make -C '
                       + shlex.quote(str(self.root)) + ' lean-cache-ensure')
