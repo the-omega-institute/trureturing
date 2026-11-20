@@ -101,9 +101,11 @@ without symmetry. The proof uses the congruences of A ⊕ 0 with the
 matrix bordered by AX and corner G, and of that matrix with N ⊕ G, rather than an adapted basis.
 
 Corollary 8 is StructuredRankOneDimensionTwoRefutation.result, the negation of
-StructuredRankOneDimensionTwoRefutation.claim: the conclusion of Corollary 6 for n = 2 on the model
-open 1-simplex (0, 1) with one arbitrary point deleted. The refutation deletes 1/2 and uses the
-source's data on the two components, so the conclusion already fails for one-point deleted sets.
+StructuredRankOneDimensionTwoRefutation.claim: for some point c of the model open 1-simplex
+(0, 1), continuous data on (0, 1) \ {c} with nonzero pivot and positive semidefinite downdate have
+pivot positive everywhere or a fixed diagonal entry negative everywhere. Both alternatives of
+Corollary 6 imply this weak form. The refutation uses the source's data on the two components of
+(0, 1) \ {c} for every c, so the conclusion fails after deleting any one point.
 
 Theorem 11 answers Lucid's sphere question, Mathematics Stack Exchange 5146381, linked from
 MathOverflow 513954, revision 2. It is formalized as CubicSphereInfimum.result, with R_h(x) = Σᵢ xᵢ h(xᵢ) / (Σᵢ h(xᵢ)²)^{1/2}
