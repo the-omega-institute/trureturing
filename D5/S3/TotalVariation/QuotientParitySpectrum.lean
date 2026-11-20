@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The annihilator of the fair columns and the shifted quotient spectrum characterize affine independent-bit laws. -/
+   digest: The fair subgroup and the shifted quotient spectrum characterize affine parity laws. -/
 
 import D5.S3.TotalVariation.PositiveParitySpectrum
 import D5.S3.Entropy.Forgetting.CapacityMonotone
@@ -19,7 +19,8 @@ open scoped BigOperators
 namespace D5.S3.TotalVariation.QuotientParitySpectrum
 
 open D5.S3.TotalVariation.GroupedParityBias
-open D5.S3.TotalVariation.PositiveParitySpectrum (orderedMomentProducts positive_moment_realizability)
+open D5.S3.TotalVariation.PositiveParitySpectrum
+  (orderedMomentProducts positive_moment_realizability)
 open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 
 universe u v
@@ -193,16 +194,19 @@ private theorem weighted_shiftedQuotient (H : AddSubgroup A) [Fintype (A ⧸ H)]
     ∑ y, shiftedQuotient H s μ y * f y =
       ∑ a, μ a * f (QuotientAddGroup.mk' H (a + s)) := by
   classical
-  unfold shiftedQuotient pushforward
-  simp_rw [← Finset.sum_filter, Finset.sum_mul]
   let πs : A → A ⧸ H := fun a => QuotientAddGroup.mk' H (a + s)
   calc
-    _ = ∑ y, ∑ a ∈ Finset.univ.filter (fun a => πs a = y), μ a * f (πs a) := by
+    _ = ∑ y, ∑ a with πs a = y, μ a * f (πs a) := by
+      simp only [shiftedQuotient, pushforward, Finset.sum_mul, ite_mul, zero_mul, Finset.sum_filter]
       apply Finset.sum_congr rfl
       intro y _
       apply Finset.sum_congr rfl
-      intro a ha
-      rw [(Finset.mem_filter.mp ha).2]
+      intro a _
+      by_cases h : πs a = y
+      · simp [πs] at h
+        simp [πs, h]
+      · simp [πs] at h
+        simp [πs, h]
     _ = _ := Finset.sum_fiberwise Finset.univ πs _
 
 private theorem sum_shiftedQuotient (H : AddSubgroup A) [Fintype (A ⧸ H)]
@@ -294,7 +298,10 @@ private theorem law_quotient_criterion (two : ∀ a : A, a + a = 0)
       exact h i hi
     obtain ⟨a, ha, hbad⟩ := hχ
     exact hbad (trivial_on_closure χ _ hs a ha)
-  · simpa only [heq] using hPos
+  · intro φ
+    change 0 < moment (shiftedQuotient H s' μ) φ
+    rw [hNorm]
+    exact hPos φ
   · rwa [heq]
 
 private theorem realise_from_quotient_criterion (two : ∀ a : A, a + a = 0)
@@ -308,7 +315,7 @@ private theorem realise_from_quotient_criterion (two : ∀ a : A, a + a = 0)
   letI : Fintype (A ⧸ H) := Fintype.ofFinite _
   obtain ⟨hVanish, hPos, hTest⟩ := h
   have hNorm : ∑ y, shiftedQuotient H s μ y = 1 := (sum_shiftedQuotient H s μ).trans hm
-  obtain ⟨q, hq, hLaw⟩ := (positive_moment_realizability (quotient_two H two)
+  obtain ⟨q, hq, hLaw⟩ := (positive_moment_realizability.{u,u} (quotient_two H two)
     (shiftedQuotient H s μ) hNorm hPos).2 hTest
   obtain ⟨k, r, hBounds, hIn, hOut⟩ := affine_quotient_lift two H id s q
   refine ⟨H ⊕ (A ⧸ H), inferInstance, k, r, ?_, law_from_moments two _ _ ?_⟩
@@ -324,7 +331,7 @@ private theorem realise_from_quotient_criterion (two : ∀ a : A, a + a = 0)
   by_cases hc : ∀ a ∈ H, χ a = 1
   · obtain ⟨φ, rfl⟩ := trivial_character_descends H χ hc
     rw [hIn, hLaw, moment_shiftedQuotient two, ← mul_assoc, sign_sq_eq_one two, one_mul]
-  · push_neg at hc
+  · push Not at hc
     rw [hOut _ hc, hVanish _ hc]
 
 /-- A normalized finite binary law comes from finitely many independent bits exactly when
