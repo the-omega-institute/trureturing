@@ -31,7 +31,7 @@ class EntryRegressionTests(unittest.TestCase):
             return path
 
         for name in ('inspect.sh', 'native.py', 'reuse.py', 'materials.py',
-                     'publication.py', 'fib_analysis.py', 'build_work.py'):
+                     'publication.py', 'fib_analysis.py', 'build_work.py', 'build_inputs.py'):
             relative = 'tools/lean-inspector/' + name
             write(relative, (test_reuse.ROOT / relative).read_text())
 
@@ -92,20 +92,26 @@ class EntryRegressionTests(unittest.TestCase):
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
         write('tools/scripts/worktree/lean-cache-ensure.sh',
               '#!/bin/sh\nprintf "ensure\\n" >> "$CALLS"\n')
-        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        write('bin/dotnet', '#!/bin/sh\n[ "$2" = lean-utility-input ] || exit 74\nprintf "[]\\n"\n')
+        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --build-report-modules ] && exit 0\n[ "$1" = --prebuilt ] && shift\nexec "$@"\n')
         write('bin/lake', '#!/bin/sh\n'
               'if [ "${1:-}" = --version ]; then printf "fixture lake 1\\n"; exit 0; fi\n'
               'printf "report\\n" >> "$CALLS"\nmkdir -p .lake/build/lean-inspector\n'
               'cp produced.zip .lake/build/lean-inspector/report.zip\n')
-        write('bin/make', '#!/bin/sh\n'
-              '[ "$#" -eq 3 ] && [ "$1" = -C ] && [ "$2" = "$PWD" ] '
-              '&& [ "$3" = compiled-fib-test ] || exit 97\n'
-              'printf "regressions\\n" >> "$CALLS"\n'
-              # The real suite also exercises run_regressions and emits its
-              # own decisions. Only the outer consumer's first line is public.
-              'printf "LEAN_INSPECTOR_FIB_REGRESSIONS changed=true selected=true\\n"\n'
-              'printf "regression stdout detail\\n"\nprintf "regression stderr detail\\n" >&2\n'
-              'exit ' + str(failure) + '\n')
+        write('bin/make', """#!/bin/bash
+case "$1" in
+  lean)
+    echo compile >> "$CALLS"
+    echo "Build completed successfully (1 job)."
+    exit 0 ;;
+  lean-report)
+    exec bash "$PWD/tools/lean-inspector/inspect.sh" --repository "$PWD" \
+      --output "${3#LEAN_REPORT=}" --log-dir "$STRATALINT_LEAN_REPORT_LOG_DIR" \
+      --regenerate-report-artifacts "$REGENERATE_REPORT_ARTIFACTS" ;;
+esac
+[[ "$#" == 3 && "$1" == -C && "$2" == "$PWD" && "$3" == compiled-fib-test ]] || exit 97
+echo regressions >> "$CALLS"
+exit """ + str(failure) + '\n')
         write('tools/scripts/auric-fib-analysis.sh', '#!/bin/sh\n'
               'printf "unexpected analyzer\\n" >> "$CALLS"\nexit 98\n')
         producer = write('producer.dll', 'fixture producer')
@@ -119,120 +125,48 @@ class EntryRegressionTests(unittest.TestCase):
             STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_FIB_REGRESSIONS_SELECTED=str(selected).lower(),
             STRATALINT_LEAN_REPORT_REUSE=str(report), BASH_ENV=str(shell_environment))
-        result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(root), '--output', str(report), '--log-dir', str(logs), '--regenerate-report-artifacts', str(int(regenerate))],
-            cwd=report.parent, env=environment, capture_output=True, text=True, timeout=30)
+        environment.update(REGENERATE_REPORT_ARTIFACTS=str(int(regenerate)), STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        result = subprocess.run([sys.executable, '-B', str(root / 'tools/lean-inspector/build_inputs.py'),
+            'check', '--output', str(report)], cwd=root, env=environment,
+            capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
 
-    def test_explicit_recovery_rejects_old_comparison_and_runs_exactly_one_suite(self):
-        for failure in (0, 41):
-            with self.subTest(failure=failure):
-                result, calls, report, logs, before = self.entry(regenerate=True, obsolete=True, failure=failure)
-                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
-                self.assertEqual(calls, ['ensure', 'report', 'regressions'])
-                self.assertEqual(publication.member(report, '.reuse.json').exists(), failure == 0)
-                if failure:
-                    self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
-                                              for suffix in publication.SUFFIXES})
-                    self.assertNotIn('phase=publish ', result.stderr)
-                else:
-                    self.assertIn('phase=publish status=completed', result.stderr)
-                    self.assertNotIn('schema_version', report.read_text())
-
-    def test_recovery_does_not_relax_fresh_validation_or_normal_predecessor_errors(self):
-        for regenerate, obsolete, invalid_fresh in ((False, True, False), (True, True, True)):
-            with self.subTest(regenerate=regenerate, invalid_fresh=invalid_fresh):
-                result, calls, report, logs, before = self.entry(regenerate=regenerate,
-                    obsolete=obsolete, invalid_fresh=invalid_fresh)
-                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
-                self.assertIn('fib.invalid_partition', result.stderr)
-                self.assertNotIn('regressions', calls)
-                self.assertFalse(publication.member(report, '.reuse.json').exists())
-                self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
-                                          for suffix in publication.SUFFIXES})
-
-    def test_valid_recovery_predecessor_keeps_equal_input_and_selection_decisions(self):
-        for changed, selected in ((False, False), (True, False), (False, True)):
-            with self.subTest(changed=changed, selected=selected):
-                result, calls, _, _, _ = self.entry(regenerate=True, changed=changed, selected=selected)
+    def test_fresh_or_regenerated_inputs_select_the_suite_once(self):
+        for regenerate, obsolete, changed, selected in (
+                (False, False, False, False), (False, False, True, True),
+                (True, False, True, False), (True, False, False, True),
+                (True, True, False, False)):
+            with self.subTest(regenerate=regenerate, changed=changed, selected=selected, obsolete=obsolete):
+                result, calls, report, _, _ = self.entry(regenerate=regenerate, obsolete=obsolete,
+                    changed=changed, selected=selected)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                self.assertEqual(calls, ['ensure', 'report'] + (['regressions'] if changed or selected else []))
+                self.assertEqual(calls, ['compile', 'report']
+                                 + (['regressions'] if changed or selected or obsolete else []))
+                self.assertTrue(publication.member(report, '.reuse.json').is_file())
 
-    def test_successful_fresh_decisions_run_or_skip_without_test_log_dump(self):
-        for changed in (False, True):
-            for selected in (False, True):
-                for unavailable_clock in (False, True):
-                    with self.subTest(changed=changed, selected=selected, unavailable_clock=unavailable_clock):
-                        result, calls, report, logs, _ = self.entry(changed=changed,
-                            selected=selected, unavailable_clock=unavailable_clock)
-                        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-                        decision = ('LEAN_INSPECTOR_FIB_REGRESSIONS changed=' + str(changed).lower()
-                                    + ' selected=' + str(selected).lower())
-                        self.assertEqual([line for line in result.stderr.splitlines()
-                            if line.startswith('LEAN_INSPECTOR_FIB_REGRESSIONS ')], [decision])
-                        self.assertNotIn(decision, result.stdout)
-                        self.assertEqual(calls, ['ensure', 'report'] +
-                                         (['regressions'] if changed or selected else []))
-                        self.assertNotIn('regression stdout detail', result.stdout + result.stderr)
-                        self.assertNotIn('regression stderr detail', result.stdout + result.stderr)
-                        if changed or selected:
-                            self.assertIn('regression stdout detail', (logs / 'fib-regressions.stdout.log').read_text())
-                            self.assertIn('regression stderr detail', (logs / 'fib-regressions.stderr.log').read_text())
-                        self.assertEqual((logs / 'fib-regressions.exit.log').read_text(), '0\n')
-                        if unavailable_clock:
-                            self.assertIn('elapsed_seconds=unavailable exit=0', result.stderr)
-                        self.assertIn('phase=publish status=completed', result.stderr)
-                        self.assertTrue(publication.member(report, '.reuse.json').is_file())
-
-    def test_accepted_reuse_reports_decision_without_extra_work_or_row_reads(self):
+    def test_accepted_reuse_skips_analysis_and_unselected_regressions(self):
         for selected in (False, True):
-            for failure in ((0, 41) if selected else (0,)):
-                for unavailable_clock in (False, True):
-                    with self.subTest(selected=selected, failure=failure, unavailable_clock=unavailable_clock):
-                        result, calls, report, logs, before = self.entry(cached=True, selected=selected,
-                            failure=failure, unavailable_clock=unavailable_clock)
-                        self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
-                        decision = ('LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=' + str(selected).lower())
-                        self.assertEqual(result.stderr.splitlines().count(decision), 1)
-                        self.assertNotIn(decision, result.stdout)
-                        self.assertEqual(calls, ['regressions'] if selected else [])
-                        self.assertEqual((logs / 'fib-regressions.exit.log').exists(), selected)
-                        self.assertNotIn('phase=report ', result.stderr)
-                        self.assertEqual(report.read_bytes(), before[''])
-                        # Reuse already published/resealed the accepted generation;
-                        # a later explicit regression failure does not undo that.
-                        self.assertEqual(json.loads(publication.member(report, '.provenance.json').read_text())['mode'], 'cached')
-                        self.assertTrue(publication.member(report, '.reuse.json').is_file())
-                        if failure:
-                            self.assertIn('LEAN_INSPECTOR_FAILED phase=fib-regressions exit=41', result.stderr)
-                            self.assertIn('regression stderr detail', result.stderr)
-                        else:
-                            self.assertEqual([line for line in result.stderr.splitlines()
-                                if line.startswith('LEAN_INSPECTOR_FIB_REGRESSIONS ')], [decision])
-                            self.assertNotIn('regression stderr detail', result.stderr)
+            with self.subTest(selected=selected):
+                result, calls, report, _, before = self.entry(cached=True, selected=selected)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(calls, ['regressions'] if selected else [])
+                self.assertEqual(report.read_bytes(), before[''])
+                self.assertTrue(publication.member(report, '.reuse.json').is_file())
 
-    def test_fresh_failure_preserves_all_public_members_and_exact_exit(self):
-        for changed, selected, missing in ((True, False, False), (False, True, False),
-                                          (True, False, True)):
-            with self.subTest(changed=changed, selected=selected, missing=missing):
-                result, calls, report, logs, before = self.entry(changed=changed, selected=selected,
-                    failure=41, missing_inputs=missing)
-                status = 1 if missing else 41
-                self.assertEqual(result.returncode, status, result.stdout + result.stderr)
-                self.assertIn(f'LEAN_INSPECTOR_FAILED phase=fib-regressions exit={status}', result.stderr)
-                self.assertEqual((logs / 'fib-regressions.exit.log').read_text(), str(status) + '\n')
-                self.assertEqual(calls, ['ensure', 'report'] + ([] if missing else ['regressions']))
+    def test_rejected_comparison_or_regressions_preserve_all_published_members(self):
+        for options, failure in (
+                (dict(changed=True, failure=41), 41),
+                (dict(cached=True, selected=True, failure=41), 41),
+                (dict(changed=True, missing_inputs=True), 1),
+                (dict(obsolete=True), 1),
+                (dict(regenerate=True, obsolete=True, invalid_fresh=True), 1)):
+            with self.subTest(options=options):
+                result, calls, report, _, before = self.entry(**options)
+                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+                self.assertEqual(calls.count('regressions'), int(failure == 41))
                 self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
                                           for suffix in publication.SUFFIXES})
-                self.assertFalse(publication.member(report, '.reuse.json').exists())
-                self.assertNotIn('phase=publish ', result.stderr)
-                if missing:
-                    self.assertIn('fib.missing_required_inputs', result.stderr)
-                    self.assertNotIn('LEAN_INSPECTOR_FIB_REGRESSIONS changed=', result.stderr)
-                else:
-                    self.assertIn('regression stdout detail', result.stderr)
-                    self.assertIn('regression stderr detail', result.stderr)
 
 
 if __name__ == '__main__':

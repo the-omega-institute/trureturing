@@ -12,7 +12,11 @@ if [[ "$1" == --build && $# == 1 && "${FULL_BUILD:-0}" != 1 ]]; then
   echo 'full build requires explicit FULL_BUILD=1; pass nonempty module targets for a scoped build' >&2
   exit 2
 fi
-if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
+if [[ "$1" == --build-report-modules && ( "${FULL_BUILD:-0}" != 1 || $# != 2 || ! -f "$2" ) ]]; then
+  echo 'lean-cache-run: --build-report-modules requires FULL_BUILD=1 and a report module list' >&2
+  exit 2
+fi
+if [[ ( "$1" == --build || "$1" == --build-report-modules ) && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.
   lean_common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
@@ -57,6 +61,9 @@ fi
 export "GIT_CONFIG_KEY_${git_config_count}=diff.autoRefreshIndex"
 export "GIT_CONFIG_VALUE_${git_config_count}=false"
 export GIT_CONFIG_COUNT="$((git_config_count + 1))"
+if [[ "$1" == --prebuilt ]]; then
+  export STRATALINT_LEAN_PRODUCER_DLL="${STRATALINT_LEAN_PRODUCER_DLL:-$ROOT/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll}"
+fi
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || { echo 'lean-cache-run: candidate producer DLL is absent' >&2; exit 2; }
   cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
@@ -65,8 +72,17 @@ else
   export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
+if [[ "$1" == --prebuilt ]]; then
+  shift
+  [[ $# -gt 0 ]] || { echo 'lean-cache-run: --prebuilt requires a command' >&2; exit 2; }
+  exec "${cli[@]}" with-cache-reader --prebuilt -- "$@"
+fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+if [[ "$1" == --build-report-modules ]]; then
+  exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error \
+    -d "$ROOT/tools/lean-inspector-reg" script run leanInspector/compileReportModules "$2"
+fi
 if [[ "$1" == --build ]]; then
   shift
   root_targets=() impl_targets=() reg_targets=() downstream_targets=()

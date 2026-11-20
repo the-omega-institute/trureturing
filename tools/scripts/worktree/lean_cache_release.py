@@ -548,7 +548,7 @@ def publish(root, partition, verification=None, *, build_report=True):
         if os.environ.get("FULL_BUILD") != "1":
             print("cache production requires explicit FULL_BUILD=1", file=sys.stderr)
             return 2
-        build = subprocess.run(["make", "lean-report",
+        build = subprocess.run(["make", "check-lean-report",
             "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
             "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
         if build.returncode:

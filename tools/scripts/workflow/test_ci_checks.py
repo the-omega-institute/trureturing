@@ -216,14 +216,14 @@ class CheckTests(unittest.TestCase):
                 self.assertTrue({"source-evidence", "scribe", "check-current", "check-delta", "compiled-audit"}
                                 <= {r["check"] for r in records})
                 self.assertIn("protected-only", {r["status"] for r in records})
-                self.assertTrue(any(call[:2] == ["make", "lean-report"] for call in calls))
+                self.assertTrue(any(call[:2] == ["make", "check-lean-report"] for call in calls))
 
     def test_bootstrap_and_source_input_failures_preserve_independent_fallback(self):
         for source, judge in ((2, 0), (0, 1)):
             with self.subTest(source=source, judge=judge):
                 result, calls, _ = self.local_spies(source=source, judge=judge, purpose="push")
                 self.assertNotEqual(0, result.returncode)
-                self.assertTrue(any(call[:2] == ["make", "lean-report"] for call in calls), calls)
+                self.assertTrue(any(call[:2] == ["make", "check-lean-report"] for call in calls), calls)
                 if judge:
                     self.assertFalse(any("check-source" in call for call in calls))
                     self.assertIn('"check":"check-current","status":"blocked"', result.stdout)

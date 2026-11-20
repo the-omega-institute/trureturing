@@ -44,6 +44,7 @@ else
   LEAN_TARGETS="$(dotnet "$SCRIBE_DLL" lean-inputs --paths-from "$PATHS_FILE")"
   [[ -n "$LEAN_TARGETS" ]] || { echo 'scribe: Lean input scope is empty' >&2; exit 2; }
   LEAN_TARGETS="${LEAN_TARGETS//$'\n'/ }"
+  make lean-report-prepare "LEAN_TARGETS=$LEAN_TARGETS"
   make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
   consumer_args+=(--report "$LEAN_REPORT" --targets "$LEAN_TARGETS")
   emit_args+=(--scoped)

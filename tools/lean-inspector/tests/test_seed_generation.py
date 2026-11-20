@@ -6,7 +6,6 @@ from pathlib import Path
 import select
 import shlex
 import shutil
-import signal
 import subprocess
 import sys
 import tarfile
@@ -144,7 +143,7 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
         self.assertEqual(before_base, base.read_bytes())
         self.assertFalse((self.root / 'calls').exists(), '[FAIL] competing_preparation_never_enters_lake')
 
-    def test_reuse_failure_keeps_its_existing_receipt_and_base(self):
+    def test_reuse_keeps_its_existing_receipt_and_base(self):
         self.canonical_release_fixture()
         self.fixture.write('D5/A.lean', 'def a := 1\n')
         self.script('tools/scripts/worktree/lean-cache-run.sh',
@@ -161,8 +160,8 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
                        for suffix in publication.SUFFIXES}
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
-        self.assertEqual(23, result.returncode, '[FAIL] reuse_program_failure_propagates_exit')
-        self.assertIn('phase=programs exit=23', result.stderr)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertNotIn('phase=programs', result.stderr)
         self.assert_entry_seed_decision(result, 'keep', 'seed-current')
         self.assertTrue(receipt.is_file(), '[FAIL] reuse_program_failure_keeps_receipt')
         self.assertEqual(before_receipt, receipt.read_bytes())
@@ -170,11 +169,11 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
         for suffix, content in before_seed.items():
             self.assertEqual(content, publication.member(self.output, suffix).read_bytes())
         self.assertTrue(self.api.seed_format(self.output)['compatible'])
-        self.assert_successful_program_reuse()
+        self.assert_successful_reuse()
         self.assertEqual(before_receipt, receipt.read_bytes())
         self.assertEqual(before_base, base.read_bytes())
 
-    def test_refreshed_reuse_failure_keeps_its_installed_receipt_and_base(self):
+    def test_refreshed_reuse_keeps_its_installed_receipt_and_base(self):
         local, producer, tag = self.canonical_release_fixture()
         # The local generation has changed inputs; the approved archive matches HEAD.
         self.fixture.bundle()
@@ -193,8 +192,8 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
                          for suffix in (*publication.SUFFIXES, self.api.SUFFIX)}
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
-        self.assertEqual(23, result.returncode, '[FAIL] refreshed_program_failure_propagates_exit')
-        self.assertIn('phase=programs exit=23', result.stderr)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertNotIn('phase=programs', result.stderr)
         decision = self.assert_entry_seed_decision(result, 'fetch', 'newer-release')
         self.assertEqual((local, producer, tag), (decision['local'], decision['release'], decision['tag']))
         self.assertEqual(1, len(self.archive_downloads()), '[FAIL] refreshed_program_failure_fetches_once')
@@ -206,7 +205,7 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
         self.assertTrue(self.api.seed_format(self.output)['compatible'])
         base = self.root / self.api.BASE_RECORD
         before_base = base.read_bytes()
-        self.assert_successful_program_reuse()
+        self.assert_successful_reuse()
         self.assertEqual(1, len(self.archive_downloads()), '[FAIL] successful_reuse_does_not_refetch')
         self.assertEqual(before_base, base.read_bytes())
         for suffix, content in expected_seed.items():
@@ -223,134 +222,14 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
                          '[FAIL] entry_prints_completed_seed_decision')
         return decision
 
-    def assert_successful_program_reuse(self):
+    def assert_successful_reuse(self):
         self.environment['FIXTURE_PROGRAM_EXIT'] = '0'
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
                                 '--log-dir', str(self.root / 'logs/success'), direct=True)
         self.assertEqual(0, result.returncode, '[FAIL] successful_program_reuse_completes: ' + result.stderr)
-        self.assertIn('phase=programs', result.stderr)
+        self.assertNotIn('phase=programs', result.stderr)
         self.assertIn('complete-entry-reused', result.stdout)
         self.assert_entry_seed_decision(result, 'keep', 'seed-current')
-
-    def test_reuse_failure_keeps_identical_competing_production(self):
-        self.assert_reuse_failure_keeps_competing_generation('production', identical=True)
-
-    def test_reuse_failure_keeps_different_competing_production(self):
-        self.assert_reuse_failure_keeps_competing_generation('production', identical=False)
-
-    def test_cancelled_entry_keeps_identical_competing_restore(self):
-        self.assert_reuse_failure_keeps_competing_generation('restore', identical=True)
-
-    def test_cancelled_entry_keeps_different_competing_restore(self):
-        self.assert_reuse_failure_keeps_competing_generation('restore', identical=False)
-
-    def assert_reuse_failure_keeps_competing_generation(self, replacement, *, identical):
-        """Reuse hit, writer guard released, B commits, then A fails or is cancelled."""
-        _, release, tag = self.canonical_release_fixture()
-        self.fixture.write('D5/A.lean', 'def a := 1\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
-        self.git_commit('matching report inputs', empty=True)
-        self.prepare_production_entry()
-        self.api.reuse(self.root, self.output, self.output)
-        receipt = publication.member(self.output, self.api.SUFFIX)
-        observed = receipt.read_bytes()
-        gates = self.root / '.lake/cleanup-gates'
-        gates.mkdir()
-        notice, resume = gates / 'notice', gates / 'resume'
-        os.mkfifo(notice)
-        os.mkfifo(resume)
-        helper = self.root / 'bin/guarded-programs.py'
-        helper.write_text("""import os
-from pathlib import Path
-import sys
-sys.path.insert(0, str(Path.cwd() / 'tools/scripts/worktree'))
-from lean_cache_release import cache_guard
-with cache_guard(Path.cwd()):
-    pass
-if os.environ.get('FIXTURE_DELAY_FAILURE') == '1':
-    with open(os.environ['FIXTURE_NOTICE'], 'w') as channel:
-        channel.write('guard released\\n')
-    with open(os.environ['FIXTURE_RESUME']) as channel:
-        channel.read()
-    raise SystemExit(23)
-""")
-        self.script('tools/scripts/worktree/lean-cache-run.sh',
-                    'exec ' + shlex.quote(sys.executable) + ' -B ' + shlex.quote(str(helper)) + '\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/scripts/worktree/lean-cache-run.sh'],
-                       check=True, capture_output=True)
-        head = self.git_commit('guarded program fixture', empty=True)
-        environment = dict(self.environment, FIXTURE_DELAY_FAILURE='1',
-            FIXTURE_NOTICE=str(notice), FIXTURE_RESUME=str(resume),
-            STRATALINT_LEAN_BUILD_TARGETS='["leanInspector/reportInspector"]')
-        read_notice = os.open(notice, os.O_RDONLY | os.O_NONBLOCK)
-        first = subprocess.Popen(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(self.root), '--output', str(self.output),
-            '--log-dir', str(self.root / 'logs/first'), '--cache-miss-policy', 'fetch-or-fail'],
-            cwd=self.root, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        try:
-            ready, _, _ = select.select([read_notice], [], [], 30)
-            self.assertTrue(ready, '[FAIL] reuse_entry_reaches_program_guard_boundary')
-            self.assertEqual(b'guard released\n', os.read(read_notice, 1024))
-            self.assertEqual(observed, receipt.read_bytes(), '[FAIL] first_entry_reused_existing_receipt')
-            if replacement == 'restore':
-                # The tests-seat probes distinguish equal and unequal valid receipt bytes.
-                self.set_release_publication_mode(tag, 'cached', different=not identical)
-                second = subprocess.run(['/bin/bash',
-                    str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
-                    'fetch', '--repository', str(self.root), '--refresh-stale',
-                    '--approved-tag', tag, '--approved-producer', release],
-                    cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
-                producer = release
-            else:
-                if not identical:
-                    artifact = self.root / '.lake/build/lean-inspector/report.zip'
-                    with zipfile.ZipFile(artifact) as archive:
-                        members = {name: archive.read(name) for name in archive.namelist()}
-                    name = publication.RAW + '.provenance.json'
-                    provenance = json.loads(members[name])
-                    for origin in provenance['module_origins'].values():
-                        origin['producer_sources_sha256'] = 'c' * 64
-                    members[name] = json.dumps(provenance).encode()
-                    with zipfile.ZipFile(artifact, 'w') as archive:
-                        for name, content in members.items():
-                            archive.writestr(name, content)
-                second = self.run_entry('--cache-miss-policy', 'build',
-                                        '--log-dir', str(self.root / 'logs/second'), direct=True)
-                producer = head
-            self.assertEqual(0, second.returncode,
-                             '[FAIL] competing_generation_completes: ' + second.stdout + second.stderr)
-            self.assertEqual(producer, self.api.read_seed_base(self.root))
-            before_receipt = receipt.read_bytes()
-            self.assertEqual(identical, observed == before_receipt,
-                             '[FAIL] requested_receipt_identity_control')
-            base = self.root / self.api.BASE_RECORD
-            before_base, before_seed = base.read_bytes(), self.seed_bytes()
-            if replacement == 'restore':
-                os.kill(first.pid, signal.SIGTERM)
-            with resume.open('w') as channel:
-                channel.write('resume failure\n')
-            stdout, stderr = first.communicate(timeout=30)
-            self.assertEqual(143 if replacement == 'restore' else 23, first.returncode,
-                             '[FAIL] failed_entry_preserves_exit: ' + stdout + stderr)
-            self.assertTrue(receipt.is_file(), '[FAIL] delayed_failure_keeps_competing_receipt')
-            self.assertEqual(before_receipt, receipt.read_bytes())
-            self.assertEqual(before_base, base.read_bytes(), '[FAIL] delayed_failure_keeps_competing_base')
-            self.assertEqual(producer, self.api.read_seed_base(self.root))
-            self.assertTrue(self.api.seed_format(self.output)['compatible'])
-            downloads = self.archive_downloads()
-            next_entry = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
-                                        '--log-dir', str(self.root / 'logs/next'), direct=True)
-            self.assertEqual(0, next_entry.returncode, '[FAIL] next_entry_succeeds: ' + next_entry.stderr)
-            self.assertIn('complete-entry-reused', next_entry.stdout)
-            self.assertEqual(downloads, self.archive_downloads(), '[FAIL] next_entry_keeps_competing_seed')
-            self.assertEqual(before_seed, self.seed_bytes())
-            self.assertEqual(before_base, base.read_bytes())
-            self.assertEqual(producer, self.api.read_seed_base(self.root))
-        finally:
-            os.close(read_notice)
-            if first.poll() is None:
-                first.kill()
-            first.communicate()
 
     def set_release_publication_mode(self, tag, mode, *, different=False):
         assets = self.root / 'releases' / tag
@@ -756,8 +635,7 @@ else:
         self.assertIn('"action":"keep"', result.stdout, '[FAIL] ineligible_capture_prints_keep')
         self.assertIn('"reason":"' + reason + '"', result.stdout)
         self.assertEqual(23, result.returncode, '[FAIL] ineligible_capture_reaches_lake: ' + result.stderr)
-        self.assertEqual('ensure', self.calls[0])
-        self.assertTrue(self.calls[1].startswith('lake '), '[FAIL] ineligible_capture_uses_lake_path')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '), '[FAIL] ineligible_capture_uses_lake_path')
         self.assertFalse((self.root / 'releases/calls.jsonl').exists(), '[FAIL] ineligible_capture_never_lists')
         # Guarded preparation clears the receipt before producing a new report.
         for path, data in before.items():
@@ -806,8 +684,7 @@ else:
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
         self.assertEqual(23, result.returncode, '[FAIL] manifest_failure_reaches_lake')
-        self.assertEqual('ensure', self.calls[0])
-        self.assertTrue(self.calls[1].startswith('lake '))
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '))
         self.assertIn('"reason":"release-manifest-unavailable"', result.stdout)
 
     def test_shallow_unprovable_release_ancestry_keeps_seed(self):
