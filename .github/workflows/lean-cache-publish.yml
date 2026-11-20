@@ -1,6 +1,6 @@
 name: Lean build cache publication
 
-# Protected pushes and pinned manual builds refresh the Actions cache.
+# Dev pushes and pinned manual builds refresh the Actions cache.
 # Scheduled runs publish the protected-dev Release.
 # Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
 # allow up to the GitHub-hosted 360-minute job limit.  Example:
@@ -8,7 +8,7 @@ name: Lean build cache publication
 #   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
   push:
-    branches: [dev, 'integration-**']
+    branches: [dev]
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -63,7 +63,7 @@ jobs:
       pull-requests: read
     if: >-
       (github.event_name == 'push' && github.event.deleted == false && github.ref_protected &&
-        (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) ||
+        github.ref == 'refs/heads/dev') ||
       (github.event_name == 'workflow_dispatch' && inputs.operation == 'build')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360

@@ -35,7 +35,7 @@ jobs:
       contents: write
       actions: read
     concurrency:
-      group: lean-cache-producer
+      group: lean-cache-publication-verification
       queue: max
       cancel-in-progress: false
     env:
