@@ -21,21 +21,22 @@ internal sealed class MinimumParityInputsDocument : IScribeDocumentDefinition
                     "take any finite family of input columns, an affine offset, and real bias factors. " +
                     "The subgroup spanned by the columns with zero bias equals the subgroup of elements " +
                     "on which every character with a nonzero output moment takes value one. " +
-                    "The characters trivial on the fair subgroup descend to the quotient. There is a " +
-                    "quotient character distinguishing every nonzero quotient element from zero."))),
+                    "The characters trivial on the fair subgroup descend to the quotient. For each nonzero " +
+                    "quotient element, some quotient character distinguishes that element from zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("signed-offsets-agree-modulo-annihilator"),
-                DeclarationHandle.Create(Module + ".signed_offsets_agree_modulo_annihilator"),
+                DescribeId.Create("adjusted-offset-coset-exact"),
+                DeclarationHandle.Create(Module + ".adjusted_offset_coset_exact"),
                 H("The signs determine the adjusted offset on the quotient"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Fix a real mass function on a finite additive commutative group in which every " +
-                    "element added to itself is zero. Suppose each of two offsets makes all nonzero " +
-                    "moments positive when multiplied by the character value at that offset. Their " +
-                    "difference belongs to the subgroup on which all characters with nonzero moments " +
-                    "take value one. Indeed, each such character must give the same sign at both offsets."))),
+                    "On a finite additive commutative group in which every element added to itself is " +
+                    "zero, let a real mass function satisfy the quotient criterion for subgroup H and " +
+                    "offset s. An offset t makes every nonzero moment positive after multiplication by " +
+                    "the corresponding character value at t exactly when t minus s belongs to H. " +
+                    "Every surviving character descends to the quotient, where the criterion makes " +
+                    "its adjusted moment positive. Its sign is constant on the offset coset."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("visible-bias-recovered"),

@@ -192,8 +192,7 @@ theorem visibleBias_recovered (two : ∀ a : A, a + a = 0)
   have hgroup : 0 < groupBias f r u := Finset.prod_pos (fun i _ => hpos i)
   rw [← hEq, Real.exp_log hgroup, hg]
 
-/-- The moment signs determine the adjusted offset modulo the fair subgroup. -/
-theorem signed_offsets_agree_modulo_annihilator (two : ∀ a : A, a + a = 0)
+private theorem signed_offsets_agree_modulo_annihilator (two : ∀ a : A, a + a = 0)
     (μ : A → ℝ) (s t : A)
     (hs : ∀ χ : AddChar A ℂ, moment μ χ ≠ 0 → 0 < sign χ s * moment μ χ)
     (ht : ∀ χ : AddChar A ℂ, moment μ χ ≠ 0 → 0 < sign χ t * moment μ χ) :
@@ -245,6 +244,31 @@ private theorem criterion_subgroup_eq_annihilator (two : ∀ a : A, a + a = 0)
   have hone : χ a = 1 := ha χ hnz
   change φ (π a) = 1 at hone
   norm_num [sign, hone] at hφ
+
+/-- The offsets that make all surviving moments positive form exactly the coset specified by
+the quotient criterion. -/
+theorem adjusted_offset_coset_exact (two : ∀ a : A, a + a = 0)
+    (μ : A → ℝ) (H : AddSubgroup A) (s t : A) (h : quotientCriterion H s μ) :
+    (∀ χ : AddChar A ℂ, moment μ χ ≠ 0 → 0 < sign χ t * moment μ χ) ↔ t - s ∈ H := by
+  classical
+  have htrivial (χ : AddChar A ℂ) (hχ : moment μ χ ≠ 0) : ∀ a ∈ H, χ a = 1 := by
+    intro a ha
+    by_contra hne
+    exact hχ (h.1 χ ⟨a, ha, hne⟩)
+  have hs (χ : AddChar A ℂ) (hχ : moment μ χ ≠ 0) : 0 < sign χ s * moment μ χ := by
+    obtain ⟨φ, rfl⟩ := trivial_character_descends H χ (htrivial χ hχ)
+    have hp := h.2.1 φ
+    rwa [moment_shiftedQuotient two] at hp
+  constructor
+  · intro ht
+    rw [criterion_subgroup_eq_annihilator two μ H s h]
+    exact signed_offsets_agree_modulo_annihilator two μ t s ht hs
+  · intro hmem χ hχ
+    have hphase : χ t = χ s := by
+      calc
+        χ t = χ ((t - s) + s) := by rw [sub_add_cancel]
+        _ = χ s := by rw [AddChar.map_add_eq_mul, htrivial χ hχ _ hmem, one_mul]
+    simpa only [sign, hphase] using hs χ hχ
 
 private abbrev activeClasses (H : AddSubgroup A) (μ : A → ℝ) : Type _ :=
   {u : A ⧸ H // u ≠ 0 ∧ visibleBias H μ u < 1}
