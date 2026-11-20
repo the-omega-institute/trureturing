@@ -86,6 +86,10 @@ $$\neg (\exists epsilon \in \mathbb{R},\; (0 < epsilon) \land (\forall V \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/manna-mandal-tura-2026-cograph-distance-left-gap` (refuted) by `D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manna-mandal-tura-2026-cograph-distance-left-gap","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/MannaMandalTuraCographDistanceGapRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
