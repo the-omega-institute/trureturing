@@ -39,7 +39,7 @@ private lemma weight_smul (ell c : ℕ) (x : ℕ →₀ ℕ) : weight ell (c •
 
 /-- Every natural number has exactly one radix expansion with digits below the radix: at most
 one by the quotient-digit bound with `q = 1`, at least one by `count_positive`. -/
-private lemma count_standard (ell R : ℕ) (hell : 2 ≤ ell) : count (ell - 1) ell R = 1 := by
+lemma count_standard (ell R : ℕ) (hell : 2 ≤ ell) : count (ell - 1) ell R = 1 := by
   have hR : R < ell ^ (R + 1) :=
     (Nat.lt_pow_self (by omega)).trans_le (Nat.pow_le_pow_right (by omega) (by omega))
   have hle := DigitCapQuotientBound.count_le_pow ell 1 R (ell - 1) R hell le_rfl (by omega) hR
