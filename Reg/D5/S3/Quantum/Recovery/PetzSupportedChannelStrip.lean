@@ -504,13 +504,13 @@ end Distance
 namespace LowerDeficit
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -519,7 +519,7 @@ abbrev arena : Arena where
     [Fintype b] [DecidableEq b] [Nonempty b]
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
     (M : SupportedRelativeModularModel Φ ρ σ) (s : ℝ),
-    R.readout () () (deficit M.data 0 s)
+    R.readout () () 0 (deficit M.data 0 s)
 
 private theorem rejectedLaw : ¬ arena.{u,v}.Law rejected := by
   intro law
@@ -533,8 +533,10 @@ def family : Registration arena.{u,v} (type_of% @lower_deficit_nonneg.{u,v}) whe
     arena.Law actual rejected rejectedLaw
   dependence := by
     intro role
-    refine ⟨(), -1, 0, ?_⟩
-    norm_num [actual, realize]
+    refine ⟨(), 0, 1, ?_⟩
+    intro heq
+    have h := congrFun heq 0
+    norm_num [actual, realize] at h
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@lower_deficit_nonneg.{u,v}) (Realization signature) Unit Unit where
@@ -549,7 +551,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -560,7 +562,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "fn"]
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -574,13 +576,13 @@ end LowerDeficit
 namespace UpperDeficit
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -589,7 +591,7 @@ abbrev arena : Arena where
     [Fintype b] [DecidableEq b] [Nonempty b]
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
     (M : SupportedRelativeModularModel Φ ρ σ) (s : ℝ),
-    R.readout () () (deficit M.data (1 / 2) s)
+    R.readout () () 0 (deficit M.data (1 / 2) s)
 
 private theorem rejectedLaw : ¬ arena.{u,v}.Law rejected := by
   intro law
@@ -603,8 +605,10 @@ def family : Registration arena.{u,v} (type_of% @upper_deficit_nonneg.{u,v}) whe
     arena.Law actual rejected rejectedLaw
   dependence := by
     intro role
-    refine ⟨(), -1, 0, ?_⟩
-    norm_num [actual, realize]
+    refine ⟨(), 0, 1, ?_⟩
+    intro heq
+    have h := congrFun heq 0
+    norm_num [actual, realize] at h
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@upper_deficit_nonneg.{u,v}) (Realization signature) Unit Unit where
@@ -619,7 +623,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -630,7 +634,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "fn"]
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -719,5 +723,81 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end BoundaryIntegral
+
+namespace ComplexDerivative
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => (x : ℂ)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ x => ((x + 1 : ℝ) : ℂ)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a : Type u} {b : Type v}
+    [Fintype a] [DecidableEq a] [Nonempty a]
+    [Fintype b] [DecidableEq b] [Nonempty b]
+    {Φ : QuantumChannel a b} {ρ σ : DensityState a}
+    (M : SupportedRelativeModularModel Φ ρ σ),
+    HasDerivAt (overlap M.data)
+      (R.readout () () (-(finiteTraceLogRelativeEntropy ρ σ -
+        finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)))) 0
+
+private theorem rejectedLaw : ¬ arena.{u,v}.Law rejected := by
+  intro law
+  have h := congrArg Complex.re
+    ((hasDerivAt_overlap_zero unitModel.{u,v}).unique (law unitModel.{u,v}))
+  simp only [rejected, realize, Complex.ofReal_re] at h
+  linarith
+
+def family : Registration arena.{u,v} (type_of% @hasDerivAt_overlap_zero.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hasDerivAt_overlap_zero.{u,v}, rejected, rejectedLaw.{u,v}⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejectedLaw
+  dependence := by
+    intro role
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    simpa [actual, realize] using congrArg Complex.re h
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@hasDerivAt_overlap_zero.{u,v}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Recovery.PetzSupportedChannelStrip.hasDerivAt_overlap_zero.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.PetzSupportedChannelStrip.ComplexDerivative.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => (x : ℂ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ComplexDerivative
 
 end Reg.D5.S3.Quantum.Recovery.PetzSupportedChannelStrip

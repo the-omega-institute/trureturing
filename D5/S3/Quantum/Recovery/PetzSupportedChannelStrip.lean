@@ -14,9 +14,9 @@ import D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 /-!
 # The supported-channel Petz strip identity
 
-The finite overlap in Yang §V.3, arXiv:2609.33815v2, is evaluated in the
-mixed reference/source eigenvector coordinates of the canonical channel
-model. The two deficits account for the norm lost by the channel
+The strip identity of Yang, arXiv:2609.33815v2, Theorem II.1, is realized
+for finite supported states as proposed in §V.3. The overlap uses the
+mixed reference/source eigenvector coordinates of the canonical channel model. The two deficits account for the norm lost by the channel
 contractions on the two strip boundaries.
 -/
 
