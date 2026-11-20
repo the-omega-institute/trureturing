@@ -17,8 +17,10 @@ internal sealed class WeightedSlaterPurityDropEqualityDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Use a strictly positive probability law on the finite set of assignments. " +
-                    "The lower bound uses the mass of bit one at each pivot and the smaller " +
-                    "factor at each row. Strict increase at any one factor gives strict increase " +
+                    "The mass of pivot bit one is positive and at most the mass of bit zero. " +
+                    "Each row factor uses a positive bias at most one for bit one, and one " +
+                    "for bit zero. The bound takes the smaller factor at every position. " +
+                    "Strict increase at any one factor gives strict increase " +
                     "in the product at that assignment and then in the weighted sum. Equality " +
                     "requires bit one throughout the assignment space at each untied pivot " +
                     "and at each row whose factor at one is strictly below one."))),
@@ -31,6 +33,7 @@ internal sealed class WeightedSlaterPurityDropEqualityDocument : IScribeDocument
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
+                    "Use the same normalized positive assignment weights and positive lower factors. " +
                     "The selected linear form takes value one on the fiber. The forms in the " +
                     "homogeneous constraint space take value zero there. A pivot or row form " +
                     "takes value one throughout the fiber exactly when its difference from " +
@@ -44,6 +47,7 @@ internal sealed class WeightedSlaterPurityDropEqualityDocument : IScribeDocument
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
+                    "Use the same normalized positive assignment weights and positive lower factors. " +
                     "The pivot columns are linearly independent and span the column space. " +
                     "For a feasible right-hand side, each free assignment has exactly one " +
                     "pivot completion. With a one at the selected equation and zero at the " +

@@ -351,7 +351,7 @@ theorem orderedMarginal_purity_drop_eq_iff {ι P F : Type*} [LinearOrder ι] [Fi
     (hl : ∀ k, (left (k, false) : ι) < left (k, true))
     (hr : ∀ j, (right (j, false) : ι) < right (j, true))
     (before after : Fin (m + n) → Bool → ℂ) (p : Fin m → ℝ) (q : Fin n → ℝ) (i : Fin m)
-    (hp0 : ∀ k, 0 ≤ p k) (hp1 : ∀ k, p k ≤ 1) (hpi : p i ≠ 1 / 2)
+    (hp0 : ∀ k, 0 ≤ p k) (hp1 : ∀ k, p k ≤ 1)
     (hq0 : ∀ j, 0 ≤ q j) (hq1 : ∀ j, q j ≤ 1)
     (hp : ∀ k e, before (Fin.castAdd n k) e * star (before (Fin.castAdd n k) e) =
       endpointMass (p k) e)
@@ -390,6 +390,11 @@ theorem orderedMarginal_purity_drop_eq_iff {ι P F : Type*} [LinearOrder ι] [Fi
   have hvalue : drop = puritySum A p q - puritySum A (Function.update p i (1 / 2)) q := by
     change purity before - purity after = _
     rw [hbefore, hafter]
+  have hpi : p i ≠ 1 / 2 := by
+    intro hi
+    have unchanged : Function.update p i (1 / 2) = p := by
+      rw [← hi, Function.update_eq_self]
+    exact (lt_irrefl (0 : ℝ)) (by simpa only [hvalue, unchanged, sub_self] using hdrop)
   rw [hvalue] at hdrop ⊢
   have h := balancing_eq_iff A p q i hp0 hp1 hpi hq0 hq1 split hlin hspan hdrop
   have hinst :
