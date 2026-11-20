@@ -20,7 +20,7 @@ internal sealed class SymmetricRankOneKernelDocument : IScribeDocumentDefinition
                 Seq(Call("Response", V("B"), V("e"), V("g")), Sp, Iff, Sp, Open, Exists, Sp, V("y"), Comma, Sp, Call("B", V("y")), Eq, V("e"), Close, Sp, Land, Sp, Open, Forall, Sp, V("y"), Comma, Sp, Call("B", V("y")), Eq, V("e"), Sp, Rightarrow, Sp, Pair("y"), Eq, V("g"), Close), DescribeRole.Definition,
                 "The existence clause prevents a vacuous response for an inconsistent right-hand side."),
             Entry("update", "Symmetric rank-one update",
-                Eq(Call("U", V("x")), Seq(Call("B", V("x")), Plus, V("t"), Pair("x"), V("e"))), DescribeRole.Definition,
+                Seq(Call("U", V("x")), Eq, Call("B", V("x")), Plus, V("t"), Pair("x"), Sp, V("e")), DescribeRole.Definition,
                 "The update direction appears in both the linear functional and the displaced vector."),
             Entry("update_symmetric", "Symmetry of the update",
                 Seq(Call("Symmetric", V("B")), Sp, Rightarrow, Sp, Call("Symmetric", V("U"))), DescribeRole.Theorem,
@@ -29,7 +29,7 @@ internal sealed class SymmetricRankOneKernelDocument : IScribeDocumentDefinition
                 Seq(Open, Exists, Sp, V("y"), Comma, Sp, Call("B", V("y")), Eq, V("e"), Close, Sp, Iff, Sp, Neg, Call("Flag", V("B"), V("e"))), DescribeRole.Theorem,
                 "For finite-dimensional E, the range of B is the orthogonal complement of its kernel."),
             Entry("nonzero_pairing_or_unique_scalar", "The exhaustive kernel and response states",
-                Seq(Call("Flag", V("B"), V("e")), Sp, Lor, Sp, Open, Exists, D(1), Sp, V("g"), Comma, Sp, Call("Response", V("B"), V("e"), V("g")), Close), DescribeRole.Theorem,
+                Seq(Call("Flag", V("B"), V("e")), Sp, Lor, Sp, Open, Exists, Bang, Sp, V("g"), Comma, Sp, Call("Response", V("B"), V("e"), V("g")), Close), DescribeRole.Theorem,
                 "In finite dimension, solvability supplies a response whenever the flag is absent. Two solutions differ by a kernel vector and have the same pairing."),
             Entry("update_of_nonzero_pairing", "Nullity loss from a flagged kernel",
                 Seq(Call("k", V("U")), Plus, D(1), Eq, Call("k", V("B")), Sp, Land, Sp, Call("Response", V("U"), V("e"), Seq(Frac, Grp(D(1)), Grp(V("t"))))), DescribeRole.Theorem,
@@ -41,10 +41,17 @@ internal sealed class SymmetricRankOneKernelDocument : IScribeDocumentDefinition
                 Seq(Call("ker", V("U")), Eq, Call("ker", V("B")), Sp, Land, Sp, Call("Response", V("U"), V("e"), Seq(Frac, Grp(V("g")), Grp(D(1), Plus, V("t"), V("g"))))), DescribeRole.Theorem,
                 "Assume response g for B and 1 + tg ≠ 0. The kernel equation forces zero pairing, and scaling a solution of By = e by the reciprocal of the resonance factor gives the new response."),
             Entry("blockDiagonal", "Block-diagonal linear map",
-                Eq(Call("D", V("x"), V("i")), Call("A", V("i"), Call("x", V("i")))), DescribeRole.Definition,
+                Seq(Call("D", V("x"), V("i")), Eq, Call("A", V("i"), Call("x", V("i")))), DescribeRole.Definition,
                 "On the Euclidean product, the map acts on each coordinate by that coordinate's block."),
             Entry("blockDiagonal_states", "Kernel and response states of a block sum",
-                Seq(Call("k", V("D")), Eq, Sum, Sp, Call("k", Call("A", V("i"))), Sp, Land, Sp, Open, Call("Flag", V("D"), V("u")), Sp, Iff, Sp, Exists, Sp, V("i"), Comma, Sp, Call("Flag", Call("A", V("i")), Call("u", V("i"))), Close), DescribeRole.Theorem,
+                Seq(Call("Symmetric", V("D")), Sp, Land, Sp,
+                    Call("k", V("D")), Eq, Sum, Sp, Call("k", Call("A", V("i"))), Sp, Land, Sp,
+                    Open, Call("Flag", V("D"), V("u")), Sp, Iff, Sp, Exists, Sp, V("i"), Comma, Sp,
+                    Call("Flag", Call("A", V("i")), Call("u", V("i"))), Close, Sp, Land, Sp,
+                    Open, Forall, Sp, V("g"), Comma, Sp, Open, Forall, Sp, V("i"), Comma, Sp,
+                    Call("Response", Call("A", V("i")), Call("u", V("i")), Call("g", V("i"))), Close,
+                    Sp, Rightarrow, Sp, Call("Response", V("D"), V("u"), Seq(Sum, Sp, Call("g", V("i")))),
+                    Close), DescribeRole.Theorem,
                 "For a finite family of finite-dimensional symmetric blocks A with direction u in the Euclidean product, D is symmetric, its nullity is the sum of the child nullities, and its flag is equivalent to the existence of a child flag. If every child has scalar response g(i) at direction u(i), then D has response equal to their sum. The kernel is a product and the inner product is a sum of coordinate pairings."))));
 
     private static DocumentBlock Entry(string name, string title, Formula statement,
@@ -54,5 +61,5 @@ internal sealed class SymmetricRankOneKernelDocument : IScribeDocumentDefinition
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(explanation))), role);
 
     private static Formula V(string name) => F.Id(name);
-    private static Formula Pair(string x) => Seq(Langle, V("e"), Comma, V(x), Rangle);
+    private static Formula Pair(string x) => Seq(Langle, Sp, V("e"), Comma, V(x), Rangle);
 }
