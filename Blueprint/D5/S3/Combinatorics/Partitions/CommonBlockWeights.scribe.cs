@@ -44,18 +44,31 @@ internal sealed class CommonBlockWeightsDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "All scalar parameters are natural numbers. FractionalWeights(k,n,A,b) "
                         + "means there exist n plus one natural weights, of total A, with the following "
-                        + "simultaneous allocation property. For every positive number t of groups, "
-                        + "every U divisible by b and at least k times the predecessor of t, and every "
+                        + "simultaneous allocation property. For every number t of groups and U "
+                        + "copies per weight, with U at least k times the predecessor of t, and every "
                         + "natural demand vector x with b times its total equal to U times A, there is "
                         + "an allocation of U copies of every weight. The mass assigned to each group "
-                        + "is b times its demand.")),
+                        + "is b times its demand. When there are zero groups, U must also be zero.")),
                     Paragraph(Text(
-                        "Take T to be the smaller of the integer part of A divided by b and the sum "
-                        + "of the first n powers of k plus one, starting with power zero. The capacity "
-                        + "inequality makes the remaining weight A minus b times T small enough to "
-                        + "allocate its U copies in bundles of b. Each bundle pays an integer demand "
-                        + "in units of b. The remainder is covered by the common integer weight family "
-                        + "of total T, scaled by b. The weights are chosen before the group demands."))),
+                        "Reduce A over b by their greatest common divisor. Compatibility then "
+                        + "forces the reduced denominator to divide U. In the reduced parameters, "
+                        + "take T to be the smaller of the integer part of A divided by b and the "
+                        + "sum of the first n powers of k plus one. In the first branch the remaining "
+                        + "weight is less than b. In the second branch the capacity inequality bounds "
+                        + "the remaining weight by k times T plus one. Allocate its copies in bundles "
+                        + "of b and use the common integer family of total T for the residual demands. "
+                        + "For A less than b, the integer family can pay the whole scaled demand.")),
+                    Paragraph(Text(
+                        "The demand vector one, two with k and b equal to two, "
+                        + "K equal to one, U equal to two, and A equal to three cannot use a single "
+                        + "weight. This shows the capacity hypothesis is needed. With k and K zero, "
+                        + "b and U one, A two, and a single weight, the demands one, one also fail. "
+                        + "With k four, K two, b two, A six, n one and U one, two weights cannot "
+                        + "supply positive demands to three groups. This shows the role of the lower "
+                        + "bound on U. If the factorization is omitted, k two, K zero, b one, "
+                        + "A two, n zero, U two and demands one, three would require an odd mass "
+                        + "from a weight of two. An empty group set has no place for a positive "
+                        + "number of copies. The balance equation follows by adding the allocated masses."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -77,10 +90,7 @@ internal sealed class CommonBlockWeightsDocument : IScribeDocumentDefinition
         Formula b = F.Id("b");
         Formula factor = F.Id("K");
         return Disp(Seq(Forall, Sp, k, Sp, n, Sp, a, Sp, b, Sp, factor, Comma, Sp,
-            D(0), Sp, Lt, Sp, k, Sp, Land, Sp, D(0), Sp, Lt, Sp, b, Sp, Land, Sp,
-            D(0), Sp, Lt, Sp, factor, Sp, Land, Sp, factor, Cdot, Sp, b, Sp, Eq, Sp, k, Sp,
-            Land, Sp, b, Sp, Le, Sp, a, Sp, Land, Sp,
-            new Formula.FunctionCall(FormulaIdentifier.Create("DoesNotDivide"), [b, a]), Sp, Land, Sp,
+            D(0), Sp, Lt, Sp, k, Sp, Land, Sp, factor, Cdot, Sp, b, Sp, Eq, Sp, k, Sp, Land, Sp,
             factor, Cdot, Sp, a, Plus, D(1), Sp, Le, Sp,
             Open, factor, Plus, D(1), Close, Cdot, Open, k, Plus, D(1), Close, Caret, n, Sp,
             Rightarrow, Sp, new Formula.FunctionCall(FormulaIdentifier.Create("FractionalWeights"), [k, n, a, b])));

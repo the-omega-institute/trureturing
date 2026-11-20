@@ -83,10 +83,10 @@ def fractionalRejected : Realization fractionalSignature :=
 
 abbrev fractionalArena : Arena where
   signature := fractionalSignature
-  Law R := ∀ {k n A b K : ℕ}, 0 < k → 0 < b → 0 < K → K * b = k → b ≤ A →
-    (¬ b ∣ A) → K * A + 1 ≤ (R.readout () () K + 1) * (k + 1)^n →
+  Law R := ∀ {k n A b K : ℕ}, 0 < k → K * b = k →
+    K * A + 1 ≤ (R.readout () () K + 1) * (k + 1)^n →
     ∃ w : Fin (n + 1) → ℕ, (∑ j, w j = A) ∧
-      ∀ t U : ℕ, 0 < t → k * (t - 1) ≤ U → b ∣ U → ∀ x : Fin t → ℕ,
+      ∀ t U : ℕ, (0 < t ∨ U = 0) → k * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
         b * (∑ i, x i) = U * A →
         ∃ a : Fin (n + 1) → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
           (∀ i, ∑ j, a j i * w j = b * x i)
@@ -94,9 +94,9 @@ abbrev fractionalArena : Arena where
 private theorem fractional_rejected_law : ¬ fractionalArena.Law fractionalRejected := by
   intro h
   obtain ⟨w, total, cover⟩ := h (k := 2) (n := 0) (A := 3) (b := 2) (K := 1)
-    (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide)
+    (by decide) (by decide) (by decide)
   let demand (i : Fin 2) : ℕ := i.val + 1
-  obtain ⟨a, _, mass⟩ := cover 2 2 (by decide) (by decide) (by decide) demand (by decide)
+  obtain ⟨a, _, mass⟩ := cover 2 2 (by decide) (by decide) demand (by decide)
   change (∑ j : Fin 1, w j) = 3 at total
   have w0 : w 0 = 3 := by simpa only [Fin.sum_univ_one] using total
   have impossible := mass 0
@@ -138,8 +138,8 @@ def fractionalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "domain", "arg", "fn", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "domain", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
