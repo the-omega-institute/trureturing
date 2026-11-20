@@ -63,20 +63,16 @@ private theorem splitWeight_nonneg (x : L → ℝ) (z : L × Bool) :
   split <;> exact le_max_right _ _
 
 private theorem splitWeight_sum_pair (x : L → ℝ) (i : L) :
-    splitWeight x (i, true) + splitWeight x (i, false) = |x i| := by
-  rcases le_total 0 (x i) with h | h
-  · simp [splitWeight, max_eq_left h, max_eq_right (neg_nonpos.mpr h), abs_of_nonneg h]
-  · simp [splitWeight, max_eq_right h, max_eq_left (neg_nonneg.mpr h), abs_of_nonpos h]
+    splitWeight x (i, true) + splitWeight x (i, false) = |x i| :=
+  max_zero_add_max_neg_zero_eq_abs_self (x i)
 
 private theorem splitWeight_signs (x : L → ℝ) (i : L) :
     (splitWeight x (i, true) ≠ 0 ↔ 0 < x i) ∧
     (splitWeight x (i, false) ≠ 0 ↔ x i < 0) := by
-  rcases lt_trichotomy (x i) 0 with h | h | h
-  · simp [splitWeight, max_eq_right h.le, max_eq_left (neg_nonneg.mpr h.le),
-      h, h.ne, not_lt_of_ge h.le]
-  · simp [splitWeight, h]
-  · simp [splitWeight, max_eq_left h.le, max_eq_right (neg_nonpos.mpr h.le),
-      h, h.ne', not_lt_of_ge h.le]
+  change ((x i)⁺ ≠ 0 ↔ 0 < x i) ∧ ((x i)⁻ ≠ 0 ↔ x i < 0)
+  rw [← posPart_pos_iff, ← negPart_pos_iff]
+  exact ⟨ne_iff_lt_or_gt.trans (or_iff_right (not_lt_of_ge (posPart_nonneg _))),
+    ne_iff_lt_or_gt.trans (or_iff_right (not_lt_of_ge (negPart_nonneg _)))⟩
 
 private theorem splitWeight_in_realization (c : L → A) (x : link c) :
     splitWeight x.val ∈ realization (signedComplex c) := by
@@ -87,12 +83,8 @@ private theorem splitWeight_in_realization (c : L → A) (x : link c) :
     rw [Fintype.sum_prod_type]
     simpa only [w, Fintype.sum_bool, splitWeight_sum_pair] using x.property.1
   have hnonempty : S.Nonempty := by
-    by_contra hn
-    have hz : ∀ z, w z = 0 := by
-      intro z
-      by_contra hnz
-      exact hn ⟨z, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hnz⟩⟩
-    simp [hz] at hw
+    obtain ⟨z, hz, hwz⟩ := Finset.exists_ne_zero_of_sum_ne_zero (f := w) (by rw [hw]; norm_num)
+    exact ⟨z, Finset.mem_filter.mpr ⟨hz, hwz⟩⟩
   have hComplement : {i : L | ∀ b : Bool, (i, b) ∉ S} = {i | x.val i = 0} := by
     ext i
     change (∀ b, (i, b) ∉ S) ↔ x.val i = 0
@@ -113,16 +105,15 @@ private theorem splitWeight_in_realization (c : L → A) (x : link c) :
     have hp' := (splitWeight_signs x.val i).1.mp (Finset.mem_filter.mp hp).2
     have hn' := (splitWeight_signs x.val i).2.mp (Finset.mem_filter.mp hn).2
     exact (not_lt_of_ge hp'.le) hn'
+  apply (realization_mem_iff _ _).mpr
   refine ⟨S, hface, ?_⟩
-  rw [← faceSimplex_eq_convexHull]
   exact ⟨splitWeight_nonneg x.val, hw,
     fun z hz => not_ne_iff.mp (fun hn => hz (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hn⟩))⟩
 
 private theorem realization_pair_data (c : L → A) (w : realization (signedComplex c)) :
     (∀ z, 0 ≤ w.val z) ∧ (∑ z, w.val z) = 1 ∧
       ∃ S ∈ signedComplex c, (∀ z ∉ S, w.val z = 0) := by
-  obtain ⟨S, hS, hw⟩ := w.property
-  rw [← faceSimplex_eq_convexHull] at hw
+  obtain ⟨S, hS, hw⟩ := (realization_mem_iff _ _).mp w.property
   exact ⟨hw.1, hw.2.1, S, hS, hw.2.2⟩
 
 private theorem signedDifference_in_link (c : L → A) (w : realization (signedComplex c)) :
@@ -152,9 +143,7 @@ private theorem signedDifference_in_link (c : L → A) (w : realization (signedC
 private theorem signedDifference_splitWeight (x : L → ℝ) :
     signedDifference (splitWeight x) = x := by
   funext i
-  rcases le_total 0 (x i) with h | h
-  · simp [signedDifference, splitWeight, max_eq_left h, max_eq_right (neg_nonpos.mpr h)]
-  · simp [signedDifference, splitWeight, max_eq_right h, max_eq_left (neg_nonneg.mpr h)]
+  exact posPart_sub_negPart (x i)
 
 private theorem splitWeight_signedDifference (c : L → A) (w : realization (signedComplex c)) :
     splitWeight (signedDifference w.val) = w.val := by
