@@ -383,6 +383,8 @@ jobs:
         if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          # Bound Lake's concurrent compilers on the hosted ARM runner.
+          LEAN_NUM_THREADS: '1'
           # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
           STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
