@@ -14,10 +14,6 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
             H("An explicit moment order controls both tails"),
             StatementSource.FromAuthor(Claim()), AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("For a real cutoff a ≥ 1 set k = floor(640a). Let S be the part of the "
-                    + "positive half-line outside the closed interval [a,3a/2], and write "
-                    + "f(u) = |g(u)| uᵏ exp(−512u)/k!. The same k works for every real measurable "
-                    + "function g bounded in absolute value by M exp(2u) for u ≥ 0.")),
                 Paragraph(Text("After the growth bound, the remaining damping rate is 510. On the "
                     + "left tail use rate 542 with multiplier exp(32a). On the right use rate 478 "
                     + "with multiplier exp(−48a). Extending each positive majorant to the whole "
@@ -44,12 +40,26 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
         var constant = Add(new Formula.Fraction(F.D(1), F.D(5,4,2)),
             new Formula.Fraction(F.D(1), F.D(4,7,8)));
         var bound = Multiply(Multiply(m, constant), new Formula.Power(F.D(5,1,2), new Formula.Negate(k)));
+        var order = new Formula.Floor(Multiply(F.D(6,4,0), a));
+        var rightEndpoint = new Formula.Fraction(Multiply(F.D(3), a), F.D(2));
+        var outside = F.Seq(F.Open, F.D(0), F.Comma, F.Infty, F.Close, F.Sp, F.Setminus, F.Sp,
+            F.OpenBracket, a, F.Comma, rightEndpoint, F.CloseBracket);
+        var density = Multiply(new Formula.Absolute(new Formula.Apply(g, [u])),
+            new Formula.Fraction(Multiply(new Formula.Power(u, k),
+                Call("exp", new Formula.Negate(Multiply(F.D(5,1,2), u)))), F.Seq(k, F.Bang)));
+        var conclusion = new Formula.Aligned([
+            Let(k, order),
+            Let(f, F.Seq(F.Open, u, F.Sp, F.Mapsto, F.Sp, density, F.Close)),
+            Let(s, outside),
+            And(Le(a, k), And(Call("IntegrableOn", f, s), Le(mass, bound))),
+        ]);
         return F.Disp(All("a", real, Implies(Le(F.D(1), a),
             All("g", new Formula.TypeArrow(real, real), Implies(Call("Measurable", g),
-                All("M", real, Implies(hypothesis,
-                    And(Le(a, k), And(Call("IntegrableOn", f, s), Le(mass, bound))))))))));
+                All("M", real, Implies(hypothesis, conclusion)))))));
     }
 
+    private static Formula Let(Formula name, Formula value) =>
+        F.Seq(F.Operatorname, F.Grp(F.Id("let")), F.Sp, name, F.Sp, F.Colon, F.Eq, F.Sp, value, F.Comma);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) =>
