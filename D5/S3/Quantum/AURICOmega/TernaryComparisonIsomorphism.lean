@@ -41,7 +41,7 @@ def ReadingComplete {M : Type*} (C : TernaryComparison M) : Prop :=
     ∃ a : M, ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n → 1 - ε < C.kappa (x n) a
 
 /-- The quaternion reading is one minus a quarter of the squared distance. -/
-private lemma kappa_eq_one_sub_dist_sq (a b : unitary ℍ[ℝ]) :
+lemma kappa_eq_one_sub_dist_sq (a b : unitary ℍ[ℝ]) :
     quaternionModel.kappa a b = 1 - dist a b ^ 2 / 4 := by
   change (1 + ⟪(a : ℍ[ℝ]), (b : ℍ[ℝ])⟫_ℝ) / 2 = _
   rw [Subtype.dist_eq, dist_eq_norm, norm_sub_sq_real, CStarRing.norm_coe_unitary,
@@ -51,7 +51,7 @@ private lemma kappa_eq_one_sub_dist_sq (a b : unitary ℍ[ℝ]) :
 /-- A noncommutative, chain-connected ternary comparison structure of feature rank five whose
 reading touches zero embeds into the unit quaternions with a prescribed point `o` sent to one,
 the transfer sent to `x * y⁻¹ * z` and the reading preserved. -/
-private lemma exists_normalized_embedding {M : Type*} (C : TernaryComparison M)
+lemma exists_normalized_embedding {M : Type*} (C : TernaryComparison M)
     (hnc : C.Noncommutative) (hconn : C.ChainConnected) (hzero : C.TouchesZero)
     (hr : C.HasFeatureRank 5) (o : M) :
     ∃ v : M → unitary ℍ[ℝ], Function.Injective v ∧ v o = 1 ∧
@@ -82,7 +82,7 @@ private def rangeSubgroup {M : Type*} (C : TernaryComparison M) (v : M → unita
     exact ⟨C.tri o x o, by rw [htri, hvo, one_mul, mul_one]⟩
 
 /-- Under a complete reading, the image of a reading-preserving map is closed. -/
-private lemma isClosed_range {M : Type*} (C : TernaryComparison M) (v : M → unitary ℍ[ℝ])
+lemma isClosed_range {M : Type*} (C : TernaryComparison M) (v : M → unitary ℍ[ℝ])
     (hk : ∀ x y : M, C.kappa x y = quaternionModel.kappa (v x) (v y))
     (hcomplete : ReadingComplete C) : IsClosed (Set.range v) := by
   refine IsSeqClosed.isClosed fun w p hw hwp => ?_

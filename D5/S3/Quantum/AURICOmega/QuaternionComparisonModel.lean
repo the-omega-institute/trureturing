@@ -105,7 +105,7 @@ def unitI : unitary ℍ[ℝ] :=
   ⟨⟨0, 1, 0, 0⟩, Unitary.mem_iff.mpr ⟨by ext <;> simp, by ext <;> simp⟩⟩
 
 /-- The unit quaternion `j`. -/
-private def unitJ : unitary ℍ[ℝ] :=
+def unitJ : unitary ℍ[ℝ] :=
   ⟨⟨0, 0, 1, 0⟩, Unitary.mem_iff.mpr ⟨by ext <;> simp, by ext <;> simp⟩⟩
 
 /-- The transfer is order sensitive: `i * 1⁻¹ * j = k` while `j * 1⁻¹ * i = -k`. -/
@@ -126,7 +126,7 @@ theorem quaternionModel_touchesZero : quaternionModel.TouchesZero := by
   norm_num [hε]
 
 /-- The unit quaternions are exactly the quaternions of norm one. -/
-private lemma coe_unitary_eq_sphere : (unitary ℍ[ℝ] : Set ℍ[ℝ]) = Metric.sphere 0 1 := by
+lemma coe_unitary_eq_sphere : (unitary ℍ[ℝ] : Set ℍ[ℝ]) = Metric.sphere 0 1 := by
   ext q
   rw [SetLike.mem_coe, mem_sphere_zero_iff_norm]
   refine ⟨CStarRing.norm_of_mem_unitary, fun hq => ?_⟩
