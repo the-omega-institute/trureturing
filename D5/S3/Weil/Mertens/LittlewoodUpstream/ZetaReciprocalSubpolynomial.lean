@@ -130,7 +130,7 @@ private lemma norm_integral_Ioc_recipFract_le {s : ℂ} (hs : 0 < s.re) :
 
 /-- **Stage 1 Strip Bound (Unconditional):**
 For `1/2 ≤ s.re` and `1 ≤ |s.im|`, `‖ζ(s)‖ ≤ 3 * ‖s‖`. -/
-private theorem norm_riemannZeta_le_three_mul_norm {s : ℂ}
+theorem norm_riemannZeta_le_three_mul_norm {s : ℂ}
     (hs_re : 1 / 2 ≤ s.re) (hs_im : 1 ≤ |s.im|) :
     ‖riemannZeta s‖ ≤ 3 * ‖s‖ := by
   have hs_pos : 0 < s.re := by linarith
@@ -268,7 +268,7 @@ private lemma norm_log_le_of_bounds {w : ℂ} (hlo : 1 / 4 ≤ ‖w‖) (hhi : �
 1. `exp (logZ z) = riemannZeta z` on `B`;
 2. `‖logZ z‖ ≤ M₁` uniformly in `t` on `closedBall (2 + t * I) (1 - η)`;
 3. `‖logZ z‖ ≤ M₃ * Real.log |t|` uniformly on `closedBall (2 + t * I) (2 - θ - η)`. -/
-private theorem exists_logZeta_ball_bounds_of_zero_free {θ : ℝ}
+theorem exists_logZeta_ball_bounds_of_zero_free {θ : ℝ}
     (hθ_half : 1 / 2 ≤ θ) (hθ_lt_one : θ < 1)
     (hzero : ∀ z : ℂ, θ < z.re → z ≠ 1 → riemannZeta z ≠ 0)
     {η : ℝ} (hη0 : 0 < η) (hη1 : η < 1 / 4) :
@@ -514,7 +514,7 @@ private theorem exists_logZeta_ball_bounds_of_zero_free {θ : ℝ}
 
 /-- Elementary sublinear-vs-linear bound: if `0 < θ < 1`, `0 ≤ A`, and `0 < δ`,
 then `∃ B ≥ 0, ∀ x ≥ 0, A * x ^ θ ≤ δ * x + B`. -/
-private lemma sublinear_rpow_le_linear {θ A eps : ℝ} (hθ0 : 0 < θ) (hθ1 : θ < 1)
+lemma sublinear_rpow_le_linear {θ A eps : ℝ} (hθ0 : 0 < θ) (hθ1 : θ < 1)
     (hA : 0 ≤ A) (heps : 0 < eps) :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ x : ℝ, 0 ≤ x → A * x ^ θ ≤ eps * x + B := by
   set X₀ : ℝ := (A / eps) ^ (1 / (1 - θ)) + 1

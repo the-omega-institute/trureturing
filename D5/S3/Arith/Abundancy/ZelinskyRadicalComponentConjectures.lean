@@ -42,16 +42,16 @@ private lemma deficient_iff_ratio {n : ℕ} (hn : 0 < n) :
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn
   simp only [Deficient, divisorRatio, div_lt_iff₀ hnR]
 
-private lemma primitive_ratio_lower {n : ℕ} (hn : 0 < n)
+lemma primitive_ratio_lower {n : ℕ} (hn : 0 < n)
     (hC : PrimitiveNonDeficient n) : 2 ≤ divisorRatio n := by
   exact le_of_not_gt (fun h => hC.1 ((deficient_iff_ratio hn).mpr h))
 
-private lemma ratio_one_le {n : ℕ} (hn : 0 < n) : 1 ≤ divisorRatio n := by
+lemma ratio_one_le {n : ℕ} (hn : 0 < n) : 1 ≤ divisorRatio n := by
   simpa [divisorRatio] using
     (D5.S3.Arith.Robin.GA2ForcedPrimeSource.abundancy_mono
       (n := 1) (L := n) (by omega) hn (one_dvd n))
 
-private lemma primitive_prime_step {m p : ℕ} (hm : 0 < m) (hp : p.Prime)
+lemma primitive_prime_step {m p : ℕ} (hm : 0 < m) (hp : p.Prime)
     (hC : PrimitiveNonDeficient (m * p)) :
     divisorRatio (m * p) < 2 + 2 / (p : ℝ) ^ (m * p).factorization p := by
   have hmR : (0 : ℝ) < m := by exact_mod_cast hm
