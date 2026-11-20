@@ -44,8 +44,29 @@ runs:
                | select(.attempt | test("^[1-9][0-9]*$")) | .attempt |= tonumber
                | select(.attempt < $before)] | max_by(.attempt) // empty | [.id, .attempt] | @tsv'
         }
+        select_checkpoint() {
+          local source_run=$1 last_attempt=$2 selected=0 prior job artifact_name
+          checkpoint=$(find_checkpoint "$source_run" "$((last_attempt + 1))")
+          if [[ -n "$checkpoint" ]]; then
+            read -r artifact selected <<< "$checkpoint"
+          fi
+          for ((prior=last_attempt; prior>selected; prior--)); do
+            job=$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$source_run/attempts/$prior/jobs?per_page=100" \
+              --jq '.jobs[] | select(.name == "verify cache publication and restore")
+                | select(any(.steps[]; .name == "Restore the selected Release build seeds" and (.conclusion == "failure" or .conclusion == "cancelled"))) | .id')
+            [[ -n "$job" ]] || continue
+            gh run view --repo "$GITHUB_REPOSITORY" "$source_run" --attempt "$prior" --job "$job" --log > "$RUNNER_TEMP/lean-release-prior.log"
+            artifact_name="lean-release-checkpoint-$MODE-$source_run-$prior"
+            if grep -Eq "Z Artifact $artifact_name has been successfully uploaded!|Z LEAN_RELEASE_HANDOFF checkpoint=[1-9][0-9]*(;|$)" "$RUNNER_TEMP/lean-release-prior.log"; then
+              missing="$source_run/$prior"
+              echo "::warning::Published $MODE checkpoint from $missing is unavailable"
+              break
+            fi
+          done
+        }
+        missing=""
         run="$GITHUB_RUN_ID"
-        checkpoint=$(find_checkpoint "$run" "$GITHUB_RUN_ATTEMPT")
+        select_checkpoint "$run" "$((GITHUB_RUN_ATTEMPT - 1))"
         if [[ -z "$checkpoint" && -n "$CHECKPOINT_RUN" ]]; then
           [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$GITHUB_REF_PROTECTED" == true ]]
           [[ "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$run" ]]
@@ -57,31 +78,19 @@ runs:
               and .path == ".github/workflows/ci-publication-verify.yml"
               and (.event == "push" or .event == "workflow_dispatch")) | .run_attempt
             | select(type == "number" and . >= 1 and . == floor)')"
-          checkpoint=$(find_checkpoint "$run" "$((prior_attempt + 1))")
+          select_checkpoint "$run" "$prior_attempt"
         fi
-        if [[ -z "$checkpoint" && -z "$CHECKPOINT_RUN" ]]; then
-          # A retry after a setup failure can start cold. Refuse to lose a checkpoint
-          # that an earlier attempt actually published.
-          for ((prior=GITHUB_RUN_ATTEMPT-1; prior>0; prior--)); do
-            job=$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$run/attempts/$prior/jobs?per_page=100" \
-              --jq '.jobs[] | select(.name == "verify cache publication and restore")
-                | select(any(.steps[]; .name == "Restore the selected Release build seeds" and (.conclusion == "failure" or .conclusion == "cancelled"))) | .id')
-            [[ -n "$job" ]] || continue
-            gh run view --repo "$GITHUB_REPOSITORY" "$run" --attempt "$prior" --job "$job" --log > "$RUNNER_TEMP/lean-release-prior.log"
-            if grep -Eq 'Z LEAN_RELEASE_HANDOFF checkpoint=[1-9][0-9]*(;|$)' "$RUNNER_TEMP/lean-release-prior.log"; then
-              echo "LEAN_RELEASE_HANDOFF_ERROR published $MODE checkpoint from run $run attempt $prior is unavailable" >&2
-              exit 2
-            fi
-          done
+        if [[ -z "$checkpoint" ]]; then
+          if [[ -n "$missing" || -n "$CHECKPOINT_RUN" ]]; then
+            echo "LEAN_RELEASE_HANDOFF_ERROR no recoverable $MODE checkpoint for run $run" >&2
+            exit 2
+          fi
           echo "LEAN_RELEASE_HANDOFF no published checkpoint in prior attempts, retrying the initial seed"
           exit 0
         fi
-        if [[ -z "$checkpoint" ]]; then
-          echo "LEAN_RELEASE_HANDOFF_ERROR no saved checkpoint for $MODE in run $run. Dispatch with a run that holds a checkpoint, or start a fresh build without checkpoint_run." >&2
-          exit 2
-        fi
         read -r artifact attempt <<< "$checkpoint"
         [[ "$artifact" =~ ^[1-9][0-9]*$ && "$attempt" =~ ^[1-9][0-9]*$ ]]
+        echo "LEAN_RELEASE_HANDOFF selected checkpoint run=$run attempt=$attempt artifact=$artifact"
         echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
         echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
         echo "run=$run" >> "$GITHUB_OUTPUT"
@@ -223,6 +232,8 @@ runs:
       run: |
         [[ "$SAVED" =~ ^[1-9][0-9]*$ ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR cold checkpoint is empty' >&2; exit 2; }
         echo "LEAN_RELEASE_HANDOFF checkpoint=$SAVED" >&2
-        printf 'Continue at %s with gh workflow run ci-publication-verify.yml --repo %q --ref %q -f mode=%q -f checkpoint_run=%q -f checkpoint_seconds=%q\n' \
-          "$GITHUB_SHA" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$MODE" "$GITHUB_RUN_ID" "$INTERVAL" >&2
+        printf 'Continue commit %s with gh run rerun %q --repo %q --failed\n' \
+          "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_REPOSITORY" >&2
+        printf 'While %s points to %s, continue in a new run with gh workflow run ci-publication-verify.yml --repo %q --ref %q -f mode=%q -f checkpoint_run=%q -f checkpoint_seconds=%q\n' \
+          "$GITHUB_REF_NAME" "$GITHUB_SHA" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$MODE" "$GITHUB_RUN_ID" "$INTERVAL" >&2
         exit 1
