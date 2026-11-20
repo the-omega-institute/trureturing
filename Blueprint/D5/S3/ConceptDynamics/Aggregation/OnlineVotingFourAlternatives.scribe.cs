@@ -58,7 +58,26 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                         + "to all horizons greater than three would have to cover this four-option, "
                         + "twelve-voter case."))),
                 DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(Problem, ResolutionKind.Refuted)))));
+                new OpenProblemResolutionClaim(Problem, ResolutionKind.Refuted)),
+            Describe.Lean(
+                DescribeId.Create("prescribed-horizon-distortion-lower-bound"),
+                DeclarationHandle.Create(Prefix + "worst_case"),
+                H("The lower bound holds at every prescribed horizon"),
+                StatementSource.FromAuthor(Disp(PaddedBound())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "An order is an equivalence from the first four positions and k later "
+                        + "positions to the candidate labels. For every such order and every "
+                        + "deterministic rule on those labels, one compatible election has that "
+                        + "order, a positive offline minimum and the displayed winner-cost bounds.")),
+                    Paragraph(Text(
+                        "The proof transports the same four metric leaves to the prescribed labels. "
+                        + "Each fresh alternative is ranked after the old ones and costs 120012. "
+                        + "Any later switch chooses a fresh alternative, and neither retaining the "
+                        + "fourth-round winner nor switching to a fresh alternative decreases the "
+                        + "cost. The benchmark still includes the entire extended election."))),
+                DescribeRole.Theorem))));
 
     private static Formula Guarantee()
     {
@@ -76,4 +95,38 @@ internal sealed class OnlineVotingFourAlternativesDocument : IScribeDocumentDefi
                 new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("a"),
                     F.Id("Alternative"), bound)));
     }
+
+    private static Formula PaddedBound()
+    {
+        Formula k = F.Id("k");
+        Formula labels = F.Id("L");
+        Formula order = F.Id("o");
+        Formula rule = F.Id("r");
+        Formula election = F.Id("e");
+        Formula best = F.Id("b");
+        Formula alternative = F.Id("a");
+        Formula minimum = Call("cost", election, best);
+        Formula winnerCost = Call("cost", election, Call("winner", rule, election));
+        Formula ratio = new Formula.Fraction(Num(11753), Num(3253));
+        Formula optimal = Bind(FormulaQuantifier.ForAll, "a", labels,
+            Le(minimum, Call("cost", election, alternative)));
+        Formula bounds = And(Le(Mul(ratio, minimum), winnerCost),
+            new Formula.Relation(Mul(Seq(Sqrt, Grp(Num(13))), minimum),
+                FormulaRelationOperator.LessThan, winnerCost));
+        Formula positive = new Formula.Relation(Num(0), FormulaRelationOperator.LessThan, minimum);
+        Formula conditions = And(Equal(Call("order", election), order),
+            And(optimal, And(positive, bounds)));
+        Formula witnesses = Bind(FormulaQuantifier.Exists, "e", Call("Election", k, labels),
+            Bind(FormulaQuantifier.Exists, "b", labels, conditions));
+        return Bind(FormulaQuantifier.ForAll, "k", F.Id("Nat"),
+            Bind(FormulaQuantifier.ForAll, "L", F.Id("Type"),
+                Bind(FormulaQuantifier.ForAll, "o", Call("Order", k, labels),
+                    Bind(FormulaQuantifier.ForAll, "r", Call("Rule", labels), witnesses))));
+    }
+
+    private static Formula Bind(FormulaQuantifier quantifier, string name, Formula type,
+        Formula body) => new Formula.Bind(quantifier, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
 }

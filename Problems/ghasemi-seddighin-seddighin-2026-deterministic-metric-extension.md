@@ -71,7 +71,8 @@ compatible metric witnesses. The proof of `counterexample` uses that fact
 to obtain the strict real inequality after replaying the rule, and `result`
 uses that inequality at the actual optimum.
 
-The pointwise lower bound at every prescribed horizon m ≥ 4 uses fresh
+The Lean theorem `Padding.worst_case` gives the pointwise lower bound
+11753/3253 > √13 for every horizon m = 4 + k and every prescribed order. It uses fresh
 alternatives ranked last by all voters in arrival order. Each fresh label
 lies at distance 10001 from any other label, so it costs 120012 and preserves
 the old minimum. Any incumbent after round four is either the fourth-round
