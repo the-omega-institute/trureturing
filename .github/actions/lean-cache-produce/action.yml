@@ -148,7 +148,7 @@ runs:
           *) echo "CACHE_SEED_ERROR invalid report regeneration input" >&2; exit 2 ;;
         esac
         export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
-        export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}"
+        export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-1}"
         status=0
         python3 tools/scripts/report/runner-diagnostics.py -- \
           bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
