@@ -9,7 +9,7 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Quantum/AURICOmega/TangentInvariantForms.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Bilinear forms on the pure quaternions that are invariant under conjugation by unit quaternions: uniqueness up to a factor is equivalent to irreducibility, all conjugations together act irreducibly, and a single rotation through an angle outside the multiples of pi leaves exactly a three-parameter family invariant.",
+        "Bilinear forms on the pure quaternions that are invariant under conjugation by unit quaternions: uniqueness up to a factor is equivalent to irreducibility, all conjugations together act irreducibly, and a single rotation through an angle outside the multiples of pi leaves exactly a three-parameter family invariant, with uniquely determined parameters.",
         H("Invariant bilinear forms on the pure quaternions"),
         Blocks(
             Node("tfae", "invariant_bilinear_tfae",
@@ -24,13 +24,13 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(AllConjugationsFormula()),
                 "A real bilinear form B on the quaternions that is invariant on the pure quaternions under the conjugation by every unit quaternion is, on the pure quaternions, a real multiple c <x, y> of the inner product.",
                 DescribeRole.Theorem,
-                "This is condition (1) of the preceding equivalence for the set of all unit quaternions, and condition (3) holds for that set: a nonzero invariant subspace W contains a nonzero pure quaternion w, any two unit quaternions with the same real part are conjugate, so w / |w| is conjugate to x / |x| for every nonzero pure quaternion x, and x is then a real multiple of a conjugate of w, which lies in W. The full conjugation group is the rotation group of the three-dimensional space of pure quaternions."),
+                "This is condition (1) of the preceding equivalence for the set of all unit quaternions, and condition (3) holds for that set: a nonzero invariant subspace W contains a nonzero pure quaternion w, any two unit quaternions with the same real part are conjugate, so w / |w| is conjugate to x / |x| for every nonzero pure quaternion x, and x is then a real multiple of a conjugate of w, which lies in W. The full conjugation group is the rotation group of the three-dimensional space of pure quaternions; this classical fact is not stated as a theorem here."),
             Node("one-rotation", "conj_invariant_bilinear_iff",
                 "Forms invariant under one rotation",
                 StatementSource.FromAuthor(OneRotationFormula()),
-                "Let u be a unit quaternion with re(u) nonzero and im(u) nonzero, and write n = im(u). A real bilinear form B on the quaternions is invariant on the pure quaternions under the conjugation by u if and only if there are real numbers a, b, c with B(x, y) = a <x, y> + b <n, x> <n, y> + c <n, x y> for all pure x, y. The coefficients alpha, beta, gamma of the Lean statement are written a, b, c in the display. For pure x and y one has x y = -<x, y> + x cross y, so <n, x y> = <n, x cross y>; the third form is the triple product with n and is antisymmetric, and the invariant symmetric forms are exactly those with c = 0, a two-dimensional family.",
+                "Let u be a unit quaternion with re(u) nonzero and im(u) nonzero, and write n = im(u). A real bilinear form B on the quaternions is invariant on the pure quaternions under the conjugation by u if and only if there is exactly one triple c = (c.1, c.2.1, c.2.2) of real numbers with B(x, y) = c.1 <x, y> + c.2.1 <n, x> <n, y> + c.2.2 <n, x y> for all pure x, y; in the display the triple ranges over R x R x R and c.1, c.2.1, c.2.2 are its three coordinates. For pure x and y one has x y = -<x, y> + x cross y, so <n, x y> = <n, x cross y>; the third form is the triple product with n and is antisymmetric. The invariant symmetric forms are exactly those with c.2.2 = 0, a two-dimensional family; this consequence is not stated as a theorem here.",
                 DescribeRole.Theorem,
-                "The conjugation by u = cos t + sin t m, with m a unit pure quaternion, is the rotation about the axis m through the angle 2t, and the hypotheses say that 2t is not a multiple of pi. Each of the three forms is invariant because u commutes with n. Conversely, a unit quaternion q carrying i to n / |n| reduces the problem to the axis i, where the invariance equations on the basis i, j, k force the matrix of the form on the pure quaternions to commute with a rotation through an angle outside the multiples of pi about i; such matrices are spanned by the identity, the projection onto i and the cross product with i, because the rotation has the distinct eigenvalues 1, e^(2it) and e^(-2it). "
+                "The conjugation by u = cos t + sin t m, with m a unit pure quaternion, is the rotation about the axis m through the angle 2t, and the hypotheses say that 2t is not a multiple of pi. Each of the three forms is invariant because u commutes with n. Conversely, a unit quaternion q carrying i to n / |n| reduces the problem to the axis i, where the invariance equations on the basis i, j, k force the matrix of the form on the pure quaternions to commute with a rotation through an angle outside the multiples of pi about i; such matrices are spanned by the identity, the projection onto i and the cross product with i, because the rotation has the distinct eigenvalues 1, e^(2it) and e^(-2it). The triple is unique because the three forms are linearly independent on the pure quaternions when n is nonzero: in the same frame, with j and k orthogonal to n, the pair (j, j) gives the first coordinate, the pair (i, i) then gives the second, and the pair (j, k) gives |n| times the third. "
                     + "Both hypotheses are needed; the following counts were obtained numerically and are not formalized. When re(u) = 0 the conjugation is a half-turn, and its invariant bilinear forms on the pure quaternions form a five-dimensional space. When im(u) = 0, that is u = 1 or u = -1, the conjugation is the identity and all bilinear forms, a nine-dimensional space, are invariant. The classification is an instance of the classical description of the commutant of a rotation in three dimensions."))));
 
     private static DocumentBlock Node(
@@ -54,9 +54,6 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula ForAllMany(Formula domain, Formula body, params string[] names) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
-            [.. names.Select(n => new Formula.BoundVariable(FormulaIdentifier.Create(n), domain))], body);
-    private static Formula ExistsMany(Formula domain, Formula body, params string[] names) =>
-        new Formula.BindMany(FormulaQuantifier.Exists,
             [.. names.Select(n => new Formula.BoundVariable(FormulaIdentifier.Create(n), domain))], body);
 
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
@@ -108,12 +105,14 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
     private static Formula OneRotationFormula()
     {
         Formula b = F.Id("B"), u = F.Id("u"), x = F.Id("x"), y = F.Id("y");
-        Formula n = Call("im", u);
+        Formula n = Call("im", u), c = F.Id("c");
         Formula family = Add(Add(
-                Mul(F.Id("a"), Inner(x, y)),
-                Mul(Mul(F.Id("b"), Inner(n, x)), Inner(n, y))),
-            Mul(F.Id("c"), Inner(n, Mul(x, y))));
-        Formula right = ExistsMany(Reals, ForAllPure(Equal(Call("B", x, y), family)), "a", "b", "c");
+                Mul(Seq(c, Dot, D(1)), Inner(x, y)),
+                Mul(Mul(Seq(c, Dot, D(2), Dot, D(1)), Inner(n, x)), Inner(n, y))),
+            Mul(Seq(c, Dot, D(2), Dot, D(2)), Inner(n, Mul(x, y))));
+        Formula triple = Seq(Reals, Sp, Times, Sp, Reals, Sp, Times, Sp, Reals);
+        Formula right = Seq(F.Exists, Bang, Sp, c, Sp, InMacro, Sp, triple, Comma, Sp,
+            ForAllPure(Equal(Call("B", x, y), family)));
         return Disp(ForAll("u", Units,
             Implies(Rel(Call("re", u), FormulaRelationOperator.NotEqual, D(0)),
                 Implies(Rel(n, FormulaRelationOperator.NotEqual, D(0)),
