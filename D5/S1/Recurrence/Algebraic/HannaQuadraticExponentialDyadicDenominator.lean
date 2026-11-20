@@ -246,8 +246,9 @@ private lemma source_coeff_val : ∀ n : ℕ,
             rw [hleft] at hright
             linarith
 
-open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality (IsRIntegralRat)
-open private IsRIntegralPS localRat_iff_val_nonneg local_exp_of_log_difference from
+open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
+  (IsRIntegralRat IsRIntegralPS localRat_iff_val_nonneg)
+open private local_exp_of_log_difference from
   D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 
 private lemma odd_prime_not_dvd_two (p : ℕ) (hp : p.Prime) (hodd : Odd p) : ¬ p ∣ 2 := by
