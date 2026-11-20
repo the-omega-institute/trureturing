@@ -5,10 +5,11 @@ year: 2026
 title: "Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings"
 doi: 10.5281/zenodo.24369110
 url: https://zenodo.org/records/24369110
-claim: "Corollary 7: with u_0 = u_1 = u_2 = 0, u_3 = 1 and u_n = u_{n-1} + u_{n-2} + u_{n-3} - u_{n-4}, the unique extension of u_n to all integer indices satisfies u_n = -u_{2-n}, the identity recorded by Michael Somos (July 25, 2025) in A116732, revision 33, FORMULA. Corollary 8: the coefficients v_n of (1+z)^2(1-z+z^2-z^3+z^4-z^5+z^6)/((1-z+z^2)Q(z)), Q(z) = z^4-z^3-z^2-z+1, are strictly increasing for n >= 0, proving the conjecture in Kimberling's A289916, revision 11, COMMENTS; moreover v_n = D r^n + O(1) for some D > 0."
+claim: "Corollary 6: for the A400645 source sequence a_n and every fixed integer h >= 0, a_{n+h}/a_n -> lambda^h, and log(a_n)/n -> log lambda. Corollary 7: with u_0 = u_1 = u_2 = 0, u_3 = 1 and u_n = u_{n-1} + u_{n-2} + u_{n-3} - u_{n-4}, the unique extension of u_n to all integer indices satisfies u_n = -u_{2-n}, the identity recorded by Michael Somos (July 25, 2025) in A116732, revision 33, FORMULA. Corollary 8: the coefficients v_n of (1+z)^2(1-z+z^2-z^3+z^4-z^5+z^6)/((1-z+z^2)Q(z)), Q(z) = z^4-z^3-z^2-z+1, are strictly increasing for n >= 0, proving the conjecture in Kimberling's A289916, revision 11, COMMENTS; moreover v_n = D r^n + O(1) for some D > 0."
 strata_touched:
   - D5/S1/Recurrence/Algebraic/OEISA116732BilateralReversal
   - D5/S1/Recurrence/Algebraic/OEISA289916StrictIncrease
+  - D5/S1/Recurrence/OEISA400645FixedLagGrowth
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -22,9 +23,14 @@ Zenodo record: https://zenodo.org/records/24369110
 DOI: 10.5281/zenodo.24369110 (version 2; Zenodo publication date 2026-11-19, PDF dated
 9 November 2026). Concept DOI 10.5281/zenodo.24369109 is distinct. Source PDF:
 https://zenodo.org/api/records/24369110/files/note-v2.pdf/content (text extracted locally with
-pdftotext -layout, 25,795 characters). Corollaries 7 and 8 are in Section 5.
+pdftotext -layout, 25,795 characters). Corollaries 6, 7 and 8 are in Section 5.
 
 ## Source statement
+
+> Corollary 6. For every fixed integer h ≥ 0, an+h/an → λh, and log(an)/n → log λ.
+
+> Proof. Both statements follow directly from an ∼ cλn with c > 0; the logarithm is defined for
+> n ≥ 4.
 
 > The unrounded companion in A116732 [3] has u0 = u1 = u2 = 0, u3 = 1, and
 > un = un−1 + un−2 + un−3 − un−4 for n ≥ 4.
@@ -62,3 +68,6 @@ function z³/Q(z) with Q(z) = z⁴ − z³ − z² − z + 1.
 For Corollary 8, Q is the same quartic, and the conjecture's exact wording in A289916, revision
 11, COMMENTS, is "Conjecture: the sequence is strictly increasing." The generating function is
 credited to Colin Barker (July 19, 2017) in A289916, FORMULA.
+
+For Corollary 6, a_n is the A400645 source sequence and λ = √r its limiting ratio, as in the
+frozen module `D5/S1/Recurrence/OEISA400645` (see `oeis2026a400645`).
