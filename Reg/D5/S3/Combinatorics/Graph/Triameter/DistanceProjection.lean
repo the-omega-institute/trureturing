@@ -123,28 +123,25 @@ private theorem lower_rejects_constant : ¬ lowerArena.{u}.Law (constant.{u} 0) 
   have h := @law (ULift.{u} (Vertex q)) _ ⊤ SimpleGraph.connected_top q f hs hmap
   exact (by decide : ¬ (3 : ℕ) ≤ 0) h
 
-private def register (L : DependentFamily.Realization signature.{u} → Prop) (source : Prop)
-    (bridge : source ↔ L actual.{u}) (positive : L actual.{u}) (n : ℕ)
-    (rejects : ¬ L (constant.{u} n)) :
-    DependentFamily.Registration (⟨signature.{u}, L⟩ : DependentFamily.Arena) source where
-  actual := actual
-  bridge := bridge
-  variation := ⟨positive, constant n, rejects⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨constant n, ?_, rfl, rejects⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
-    · intro i
-      exact nomatch i
-  dependence := actual_dependence
+private theorem constant_sensitivity
+    (L : DependentFamily.Realization signature.{u} → Prop) (n : ℕ) (rejects : ¬ L (constant.{u} n)) :
+    DependentFamily.Sensitivity (⟨signature.{u}, L⟩ : DependentFamily.Arena) actual.{u} := by
+  constructor
+  · intro i
+    refine ⟨constant n, ?_, rfl, rejects⟩
+    intro j hji
+    exact (hji (Subsingleton.elim _ _)).elim
+  · intro i
+    exact nomatch i
 
 abbrev upperScope := type_of% (@triameter_le_indepNum.{u})
 
-def upperEvidence : DependentFamily.Registration upperArena.{u} upperScope.{u} :=
-  register upperArena.{u}.Law upperScope.{u} Iff.rfl
-    (@triameter_le_indepNum.{u}) 4 upper_rejects_constant
+def upperEvidence : DependentFamily.Registration upperArena.{u} upperScope.{u} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@triameter_le_indepNum.{u}, constant 4, upper_rejects_constant⟩
+  sensitivity := constant_sensitivity upperArena.{u}.Law 4 upper_rejects_constant
+  dependence := actual_dependence
 
 def upperContract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
     (@triameter_le_indepNum.{u})
@@ -184,9 +181,12 @@ def upperContract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
 
 abbrev projectionScope := type_of% (@k1_equality_projection.{u})
 
-def projectionEvidence : DependentFamily.Registration projectionArena.{u} projectionScope.{u} :=
-  register projectionArena.{u}.Law projectionScope.{u} Iff.rfl
-    (@k1_equality_projection.{u}) 3 projection_rejects_constant
+def projectionEvidence : DependentFamily.Registration projectionArena.{u} projectionScope.{u} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@k1_equality_projection.{u}, constant 3, projection_rejects_constant⟩
+  sensitivity := constant_sensitivity projectionArena.{u}.Law 3 projection_rejects_constant
+  dependence := actual_dependence
 
 def projectionContract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
     (@k1_equality_projection.{u})
@@ -226,9 +226,12 @@ def projectionContract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 
 
 abbrev lowerScope := type_of% (@triameter_ge_of_evenLegTriangle.{u})
 
-def lowerEvidence : DependentFamily.Registration lowerArena.{u} lowerScope.{u} :=
-  register lowerArena.{u}.Law lowerScope.{u} Iff.rfl
-    (@triameter_ge_of_evenLegTriangle.{u}) 0 lower_rejects_constant
+def lowerEvidence : DependentFamily.Registration lowerArena.{u} lowerScope.{u} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@triameter_ge_of_evenLegTriangle.{u}, constant 0, lower_rejects_constant⟩
+  sensitivity := constant_sensitivity lowerArena.{u}.Law 0 lower_rejects_constant
+  dependence := actual_dependence
 
 def lowerContract : Contract.Registration.{_, _, _, 0, 0, 0, u+1, u, 0, 0, 0, 0}
     (@triameter_ge_of_evenLegTriangle.{u})
