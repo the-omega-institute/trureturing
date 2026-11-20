@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Cauchy bounds after removing a zeta pole from the complete Mangoldt transform
+Cauchy bounds for the complete Mangoldt transform after subtracting its pole at a zeta zero
 
 **Definition 1.1 (The completed transform).**
 

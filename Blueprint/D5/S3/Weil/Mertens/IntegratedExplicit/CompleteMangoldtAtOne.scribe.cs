@@ -8,7 +8,7 @@ internal sealed class CompleteMangoldtAtOneDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtAtOne.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Cauchy bounds after removing a zeta pole from the complete Mangoldt transform",
+        "Cauchy bounds for the complete Mangoldt transform after subtracting its pole at a zeta zero",
         H("Cauchy estimates for the completed Mangoldt transform"),
         Blocks(
             Describe.Lean(DescribeId.Create("completed"), DeclarationHandle.Create(Module + "completed"),
