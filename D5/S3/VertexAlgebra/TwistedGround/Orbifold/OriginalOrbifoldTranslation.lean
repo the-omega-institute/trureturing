@@ -38,13 +38,6 @@ def T (D : LatticeData) (hu : IsUnit D.G.det) :
     (a : OriginalOrbifoldField.Carrier D hu) :
     T D hu a = (fixedTranslation D a.1, MixedIntertwiner.translation D hu a.2) := rfl
 
-theorem T_vacuum (D : LatticeData) (hu : IsUnit D.G.det) :
-    T D hu (vacuumState D hu) = 0 := by
-  rw [T_apply, vacuumState]
-  exact Prod.ext (by
-    apply Subtype.ext
-    exact LatticeAllStateField.translation_kills_vacuum D) (map_zero _)
-
 private def stress (D : LatticeData) : FixedCarrier D :=
   ⟨LatticeActualConformalState.omega D (HalfFockSpectralFiberSource.actualInverse D),
     (mem_fixedSpace D _).mpr
@@ -302,7 +295,6 @@ theorem Y_covariance (D : LatticeData) (hu : IsUnit D.G.det)
 
 #print axioms T
 #print axioms T_apply
-#print axioms T_vacuum
 #print axioms vv_covariance
 #print axioms vv_translation
 #print axioms vm_translation

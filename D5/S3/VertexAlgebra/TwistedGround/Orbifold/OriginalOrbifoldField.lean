@@ -287,16 +287,6 @@ theorem Y_borcherds_vvm (D : LatticeData) (hu : IsUnit D.G.det)
   · simpa only [on_fixed, on_twisted, sum_map, smul_twisted, sub_twisted, incl_apply]
       using congrArg incl h
 
-/-- A negative twisted source exchanges the two sectors by the original coefficients. -/
-theorem Y_twisted_ncoeff_apply (D : LatticeData) (hu : IsUnit D.G.det)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ)
-    (u : paritySpace D hu (-1)) (b : Carrier D hu) :
-    ((Y D hu hD (0, u))[[n]]) b =
-      (originalI D hu hD n u b.2, originalRightCoefficient D hu n u b.1) := by
-  rw [Y_ncoeff, mode_apply]
-  have hzero : fixedMode D 0 n = 0 := by rw [← fixedModeInSource_apply, map_zero]
-  simp only [hzero, map_zero, LinearMap.zero_apply, zero_add]
-
 private theorem mixed_vacuum (D : LatticeData) (hu : IsUnit D.G.det)
     (n : ℤ) (v : paritySpace D hu (-1)) :
     mixedMode D hu n (fixedVacuum D) v = if n = -1 then v else 0 := by
@@ -357,7 +347,6 @@ theorem creation_ncoeff (D : LatticeData) (hu : IsUnit D.G.det)
 #print axioms Y_fixed_ncoeff_apply
 #print axioms fixedParitySlice_borcherds
 #print axioms Y_borcherds_vvm
-#print axioms Y_twisted_ncoeff_apply
 #print axioms mode_tail
 #print axioms vacuum_ncoeff
 #print axioms creation_ncoeff

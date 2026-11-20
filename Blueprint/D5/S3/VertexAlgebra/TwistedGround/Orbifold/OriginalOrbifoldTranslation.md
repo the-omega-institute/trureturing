@@ -28,19 +28,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 Apply each sector translation to its component of the state.
 
-**Theorem 1.3 (Translation annihilates the vacuum).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.T_vacuum`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.T_vacuum` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The fixed translation annihilates the lattice vacuum and the twisted component is zero.
-
-**Theorem 1.4 (Fixed-to-fixed covariance).**
+**Theorem 1.3 (Fixed-to-fixed covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.vv_covariance`
 
@@ -52,7 +40,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 The fixed lattice commutator gives the normalized derivative coefficient.
 
-**Theorem 1.5 (Fixed-to-fixed source translation).**
+**Theorem 1.4 (Fixed-to-fixed source translation).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.vv_translation`
 
@@ -64,7 +52,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 Specialize the fixed Borcherds identity to the zeroth stress mode to translate the source.
 
-**Theorem 1.6 (Fixed action on the negative sector).**
+**Theorem 1.5 (Fixed action on the negative sector).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.vm_translation`
 
@@ -76,7 +64,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 Convert the physical derivative of the corrected field to the integer modes of the negative parity slice.
 
-**Theorem 1.7 (Fixed action covariance on the negative sector).**
+**Theorem 1.6 (Fixed action covariance on the negative sector).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.vm_covariance`
 
@@ -88,7 +76,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 The commutator of the actual twisted translation with the corrected field restricts to the negative parity slice.
 
-**Theorem 1.8 (Twisted-to-fixed source translation).**
+**Theorem 1.7 (Twisted-to-fixed source translation).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.mm_translation`
 
@@ -100,7 +88,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 In rank 24 the grade-wise inverse pairing carries the derivative of the normalized coefficient to the original twisted-to-fixed mode.
 
-**Theorem 1.9 (Twisted-to-fixed covariance).**
+**Theorem 1.8 (Twisted-to-fixed covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.mm_covariance`
 
@@ -112,7 +100,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 In rank 24, specialize the original mixed Jacobi identity to the zeroth stress mode.
 
-**Theorem 1.10 (Right-field covariance).**
+**Theorem 1.9 (Right-field covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.mv_covariance`
 
@@ -124,7 +112,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 Reindex the finite original right sum and cancel the terms weighted by the summation index.
 
-**Theorem 1.11 (Right-field source translation).**
+**Theorem 1.10 (Right-field source translation).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.mv_translation`
 
@@ -136,7 +124,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 Move the twisted translation through the finite original right sum using the fixed-action commutator and derivative.
 
-**Theorem 1.12 (Derivative of the assembled field).**
+**Theorem 1.11 (Derivative of the assembled field).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.Y_translation`
 
@@ -148,7 +136,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTran
 
 For the positive definite rank-24 lattice, the mode of the translated source is the mode at index n minus one multiplied by minus n.
 
-**Theorem 1.13 (Covariance of the assembled field).**
+**Theorem 1.12 (Covariance of the assembled field).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.Y_covariance`
 
@@ -164,7 +152,6 @@ For the positive definite rank-24 lattice, the commutator with diagonal translat
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.T`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.T_apply`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.T_vacuum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.Y_covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.Y_translation`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldTranslation.mm_covariance`

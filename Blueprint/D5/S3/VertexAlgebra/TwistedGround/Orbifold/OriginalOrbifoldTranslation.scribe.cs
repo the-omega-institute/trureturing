@@ -16,8 +16,6 @@ internal sealed class OriginalOrbifoldTranslationDocument : IScribeDocumentDefin
                 + "and the actual negative twisted translation.", DescribeRole.Definition),
             Entry("translation-on-states", "T_apply", "Translation on states",
                 "Apply each sector translation to its component of the state."),
-            Entry("translation-on-vacuum", "T_vacuum", "Translation annihilates the vacuum",
-                "The fixed translation annihilates the lattice vacuum and the twisted component is zero."),
             Entry("vv-covariance", "vv_covariance", "Fixed-to-fixed covariance",
                 "The fixed lattice commutator gives the normalized derivative coefficient."),
             Entry("vv-translation", "vv_translation", "Fixed-to-fixed source translation",

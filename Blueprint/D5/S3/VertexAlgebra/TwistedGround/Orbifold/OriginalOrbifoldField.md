@@ -124,19 +124,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldFiel
 
 For two fixed states and one negative twisted state, the parity inclusion carries the three finite coefficient families and their signed Borcherds equality into the assembled carrier.
 
-**Theorem 1.11 (Negative twisted source).**
-
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_twisted_ncoeff_apply`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_twisted_ncoeff_apply` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A twisted source exchanges sectors through the inverse-pairing coefficient and the original right coefficient.
-
-**Theorem 1.12 (Vacuum modes).**
+**Theorem 1.11 (Vacuum modes).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.vacuum_ncoeff`
 
@@ -148,7 +136,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldFiel
 
 The vacuum field acts as the identity at mode minus one and vanishes at every other integer mode.
 
-**Theorem 1.13 (Creation and regularity).**
+**Theorem 1.12 (Creation and regularity).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.creation_ncoeff`
 
@@ -168,7 +156,6 @@ Acting on the vacuum, mode minus one returns the source state and every higher m
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_fixed_ncoeff_apply`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_ncoeff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_ncoeff_apply`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.Y_twisted_ncoeff_apply`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.creation_ncoeff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.fixedParitySlice_borcherds`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalOrbifoldField.mode`

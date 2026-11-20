@@ -38,8 +38,6 @@ internal sealed class OriginalOrbifoldFieldDocument : IScribeDocumentDefinition
             Entry("assembled-vvm-borcherds", "Y_borcherds_vvm", "Borcherds identity for the assembled field",
                 "For two fixed states and one negative twisted state, the parity inclusion carries the three "
                 + "finite coefficient families and their signed Borcherds equality into the assembled carrier."),
-            Entry("twisted-modes", "Y_twisted_ncoeff_apply", "Negative twisted source",
-                "A twisted source exchanges sectors through the inverse-pairing coefficient and the original right coefficient."),
             Entry("vacuum-modes", "vacuum_ncoeff", "Vacuum modes",
                 "The vacuum field acts as the identity at mode minus one and vanishes at every other integer mode."),
             Entry("creation-modes", "creation_ncoeff", "Creation and regularity",
