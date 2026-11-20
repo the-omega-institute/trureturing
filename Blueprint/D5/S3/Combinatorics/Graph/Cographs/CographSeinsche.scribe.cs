@@ -22,6 +22,8 @@ internal sealed class CographSeinscheDocument : IScribeDocumentDefinition
                 "An isomorphism preserves and reflects the four-vertex path condition."),
             Entry("compl", "Complementation",
                 "The four-vertex path is self-complementary, so its absence is preserved by complementation."),
+            Entry("isP4Free_compl", "Complement equivalence",
+                "A graph and its complement satisfy the same induced four-vertex path exclusion."),
             Entry("not_pathGraph_four_isIndContained", "Path exclusion",
                 "The four-vertex condition excludes the native induced path graph."),
             Entry("pathGraph_four_isIndContained_of_adj", "Induced path construction",
