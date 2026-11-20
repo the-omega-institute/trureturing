@@ -45,7 +45,7 @@ private theorem complete_of_cycle {V : Type*} [Finite V] (E : V → V → Prop)
   obtain ⟨i, rfl⟩ := (full.2 (Set.mem_univ v) (Set.mem_univ a)).exists_nat_pow_eq
   exact (step _ (loop i)).1
 
-private theorem partial_cycle_acyclic {V : Type*} [Finite V] (E : V → V → Prop)
+theorem partial_cycle_acyclic {V : Type*} [Finite V] (E : V → V → Prop)
     (σ : Perm V) (full : σ.IsCycleOn Set.univ)
     (hedge : ∀ a b, E a b → σ a = b)
     (hsparse : Nat.card {p : V × V // E p.1 p.2} < Nat.card V) :
@@ -56,7 +56,7 @@ private theorem partial_cycle_acyclic {V : Type*} [Finite V] (E : V → V → Pr
   have hinj : Function.Injective f := fun _ _ h => congrArg (fun p => p.val.1) h
   exact (not_le_of_gt hsparse) (Nat.card_le_card_of_injective f hinj)
 
-private theorem heads_card_ge (E : V → V → Prop) (k : V → Bool) (b : Bool) :
+theorem heads_card_ge (E : V → V → Prop) (k : V → Bool) (b : Bool) :
     Nat.card (Side k b) - Nat.card {p : V × V // E p.1 p.2} ≤
       Nat.card {x : Head E // k x = b} := by
   classical
