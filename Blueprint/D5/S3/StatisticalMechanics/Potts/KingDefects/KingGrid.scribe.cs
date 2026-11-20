@@ -104,6 +104,12 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),
                 "The map acts on colourings by the geometric symmetry and carries the selected defective bond along with it. Applying the symmetry twice gives the inverse."),
+            Node("UsesThree", "Three occurring colours", UsesThreeFormula(), DescribeRole.Definition,
+                AssessedProvenance.FromRepo(Source),
+                "Three domain points have pairwise distinct colours."),
+            Node("canonical_count_three", "Free colour orbits for an invariant family", CanonicalCountFormula(), DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(Source),
+                "For a finite linearly ordered domain, any family invariant under all colour permutations and using at least three colours has twenty-four labelled members per canonical representative. This is the original general orbit-counting theorem used by the one-defect and two-defect normalizations."),
             Node("labelled_eq_twentyFour", "Twenty-four labelled colourings per canonical colouring", Formula21(),
                 DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
@@ -753,6 +759,29 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
                         Eq(
                             Call("KingGrid.L", V("n"), V("k")),
                             Mul(Num("24"), Call("KingGrid.T", V("n"), V("k"))))))));
+
+    private static Formula UsesThreeFormula() =>
+        All("X", Q("Type"), All("f", Arrow(V("X"), Call("Fin", Num("4"))),
+            Iff(Call("KingGrid.UsesThree",V("f")),
+                Some("a",V("X"),Some("b",V("X"),Some("c",V("X"),
+                    And(Ne(App(V("f"),V("a")),App(V("f"),V("b"))),
+                        And(Ne(App(V("f"),V("a")),App(V("f"),V("c"))),
+                            Ne(App(V("f"),V("b")),App(V("f"),V("c")))))))))));
+    private static Formula CanonicalCountFormula()
+    {
+        var words = Arrow(V("X"),Call("Fin",Num("4")));
+        var inv = All("p",Call("Equiv.Perm",Call("Fin",Num("4"))),
+            All("f",words,Iff(App(V("S"),Call("Function.comp",V("p"),V("f"))),App(V("S"),V("f")))));
+        var three = All("f",words,Imp(App(V("S"),V("f")),Call("KingGrid.UsesThree",V("f"))));
+        var count = Eq(Call("Nat.card",Subtype("f",words,App(V("S"),V("f")))),
+            Mul(Num("24"),Call("Nat.card",Subtype("f",words,
+                And(App(V("S"),V("f")),Call("HardinA233177Canonical.Canonical",V("f")))))));
+        return All("X",Q("Type"),Instance(Call("Finite",V("X")),
+            Instance(Call("LinearOrder",V("X")),All("S",Arrow(words,Q("Prop")),Imp(inv,Imp(three,count))))));
+    }
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Some(string x, Formula t, Formula b) =>
+        Seq(Exists, Sp, Typed(V(x),t), Comma, Sp, Parenthesized(b));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
