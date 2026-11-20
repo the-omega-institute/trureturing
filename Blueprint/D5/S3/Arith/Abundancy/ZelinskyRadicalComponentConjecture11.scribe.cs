@@ -44,7 +44,7 @@ internal sealed class ZelinskyRadicalComponentConjecture11Document : IScribeDocu
                         + "Writing z as the sum of 1/p over the primes of v gives "
                         + "z<=40/M^8 and h(v)*(1-z)<=1. Non-deficiency of n then "
                         + "forces 1<=2u*z, contradicting 80u<M^8. Thus s>=M, "
-                        + "and a minimal subproduct supplies M<=d<=M^2.")),
+                        + "and finite logarithmic packing supplies M<=d<=M^2.")),
                     Paragraph(Text("The compression mapping n to n/d follows the "
                         + "rational-gap method of Lichtman's Lemma 2.2, with d "
                         + "chosen unitary as well as squarefree. Primitivity and "
