@@ -167,7 +167,6 @@ public sealed class RuleEngineTests
     }
 
     [Theory]
-    [InlineData(10, "generality")]
     [InlineData(15, "formula")]
     [InlineData(17, "query")]
     [InlineData(18, "values")]
@@ -175,17 +174,53 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         fixture.Apply(mutation);
-        if (number == 10)
-        {
-            fixture.Files[RuleFixture.RingPath] = RuleFixture.HeaderFor("D5/S0/Carrier/Ring", "G")
-                + "import D5.S0.Conventions.Notation\n";
-        }
         var full = fixture.Build(RawChangeSet.Create([number == 17 ? "Library/queries.yaml" : "tools/scripts/workflow/ci-entry.sh"]));
         var scoped = DeltaRuleContext.Create(full.Current, full.Baseline, full.Policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>())),
             full.Changes, full.MetaEvaluation);
         var result = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), scoped);
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(10)]
+    [InlineData(17)]
+    public void ScopedImportRulesCheckReportedOwnersAndDependenciesAcrossCandidateChanges(int number)
+    {
+        const string owner = "D5/S0/Carrier/Owner";
+        const string dependency = "D5/S0/Carrier/Dependency";
+        const string unrelated = "D5/S0/Carrier/Unrelated";
+        const string higher = "D5/S1/Phase/Higher";
+        var fixture = new RuleFixture();
+        var rows = new Dictionary<string, LeanFileReport>();
+        foreach (var gid in new[] { owner, dependency, unrelated, higher })
+        {
+            var path = gid + ".lean";
+            var header = RuleFixture.HeaderFor(gid, gid == higher ? "I" : "G");
+            if (gid != higher)
+                header = header.Replace("anchors: []", "anchors: [mathlib/module/Mathlib.Data.Nat.Basic]", StringComparison.Ordinal);
+            string[] imports = gid == higher ? [] : gid == owner
+                ? [dependency.Replace('/', '.'), higher.Replace('/', '.')] : [higher.Replace('/', '.')];
+            fixture.Files[path] = header + "\n" + string.Concat(imports.Select(module => "import " + module + "\n"));
+            fixture.Baseline[path] = fixture.Files[path];
+            rows[path] = fixture.Reports[path] = new([.. imports], []);
+        }
+        foreach (var change in new[] { owner + ".lean", RuleFixture.StageScriptPath })
+        {
+            var full = fixture.Build(RawChangeSet.Create([change]));
+            var covered = rows.Where(row => row.Key != unrelated + ".lean").ToDictionary();
+            var scoped = DeltaRuleContext.Create(full.Current, full.Baseline, full.Policy,
+                AcceptedLeanClosure.Create(LeanAxiomReport.CreateScoped(covered)), full.Changes, full.MetaEvaluation);
+            var rule = RuleId.CreateKnown(number);
+            var diagnostics = RuleCatalog.Default.EvaluateSingle(rule, scoped).Diagnostics;
+            Assert.Contains(diagnostics, finding => finding.Path == owner + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
+            Assert.Contains(diagnostics, finding => finding.Path == dependency + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
+            Assert.DoesNotContain(diagnostics, finding => finding.Path == unrelated + ".lean" || finding.Path == higher + ".lean");
+            if (change == RuleFixture.StageScriptPath)
+                Assert.Contains(RuleCatalog.Default.EvaluateSingle(rule, full).Diagnostics,
+                    finding => finding.Path == unrelated + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
+        }
     }
 
     [Theory]

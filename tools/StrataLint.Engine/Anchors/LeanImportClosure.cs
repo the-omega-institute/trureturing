@@ -55,22 +55,6 @@ internal static class LeanImportClosure
         report.Files.ToDictionary(static item => ModuleName(item.Key),
             static item => item.Value.Imports, StringComparer.Ordinal);
 
-    internal static IEnumerable<(RepoPath Path, ImmutableArray<string> Imports)> CandidateImports(
-        RepositorySnapshot current, LeanAxiomReport report, bool includeDependencySources = false)
-    {
-        foreach (var (path, module) in report.Files) yield return (path, module.Imports);
-        if (!report.IsScoped) yield break;
-        var dependencies = includeDependencySources ? LeanReportDependencySources.Select(current).ToHashSet() : [];
-        foreach (var (path, file) in current.Files)
-        {
-            if (report.Files.ContainsKey(path)
-                || !LeanClosureValidator.IsReportLean(path.Value) && !dependencies.Contains(path)) continue;
-            if (!file.ContentWasRead)
-                throw new InvalidDataException("missing source for candidate import graph: " + path.Value);
-            yield return (path, LeanSourceCatalog.ParseFileImports(file, includeImplicitInit: true));
-        }
-    }
-
     internal static bool ImportsExternalModule(
         IReadOnlyDictionary<string, ImmutableArray<string>> imports,
         string startModule,

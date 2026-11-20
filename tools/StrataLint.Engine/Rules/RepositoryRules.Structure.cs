@@ -14,11 +14,10 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Imports(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, imports) in LeanImportClosure.CandidateImports(context.Current, context.Lean.Report)
-                     .OrderBy(item => item.Path.Value, StringComparer.Ordinal))
+        foreach (var (path, moduleReport) in context.Lean.Report.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
             if (!LeanClosureValidator.IsManagedLean(path.Value)) continue;
-            foreach (var module in imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
+            foreach (var module in moduleReport.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
                 if (!context.Current.TryGetFile(target, out _))
@@ -354,12 +353,13 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Generality(CurrentRuleContext context)
     {
-        var headers = FormalFiles(context.Current)
-            .Select(item => (item.Path, Header: TryHeader(item.File.Text, out var header) ? header : null))
+        var report = context.Lean.Report;
+        var headers = FormalFiles(context.Current, report)
+            .Select(item => (item.Path, Header: TryHeader(item.File, out var header) ? header : null))
             .Where(static item => item.Header is not null)
             .ToDictionary(static item => item.Path.Value, static item => item.Header, StringComparer.Ordinal);
-        var imports = LeanImportClosure.CandidateImports(context.Current, context.Lean.Report)
-            .ToDictionary(item => item.Path.Value, item => D5ImportPaths(item.Imports), StringComparer.Ordinal);
+        var imports = report.Files.ToDictionary(item => item.Key.Value,
+            item => D5ImportPaths(item.Value.Imports), StringComparer.Ordinal);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (source, header) in headers)
         {

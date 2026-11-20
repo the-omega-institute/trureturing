@@ -7,18 +7,15 @@ internal static class AnchorReferenceRule
     internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var checkAll = context.RuleImplementationChanged || context.Changes.Paths.Any(
+        var report = context.Lean.Report;
+        var checkAll = report.IsScoped || context.RuleImplementationChanged || context.Changes.Paths.Any(
             path => RepositoryRules.IsLeanReportProducerInput(path.Value, context.RegisteredRuleBuildInputs));
-        var imports = checkAll && context.Lean.Report.IsScoped
-            ? LeanImportClosure.CandidateImports(context.Current, context.Lean.Report, includeDependencySources: true)
-                .ToDictionary(item => LeanImportClosure.ModuleName(item.Path), item => item.Imports, StringComparer.Ordinal)
-            : LeanImportClosure.ImportGraph(context.Lean.Report);
-        foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current)
+        var imports = LeanImportClosure.ImportGraph(report);
+        foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current, report)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            if (!RepositoryRules.TryHeader(file.Text, out var header) || header.Anchors.Length == 0
-                || !checkAll && (!context.Lean.Report.Files.ContainsKey(path)
-                    || !RepositoryRules.IsLeanClosureFactAffected(context, path)))
+            if (!RepositoryRules.TryHeader(file, out var header) || header.Anchors.Length == 0
+                || !checkAll && !RepositoryRules.IsLeanClosureFactAffected(context, path))
             {
                 continue;
             }
