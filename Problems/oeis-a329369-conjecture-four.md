@@ -1,8 +1,8 @@
 ---
 slug: oeis-a329369-conjecture-four
-bibkey: oeis2024a329369
+bibkey: kurkov2023a329369
 doi: null
-url: https://oeis.org/A329369
+url: https://github.com/oeis/oeisdata/blob/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq#L32
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.conjecture4
@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 Mikhail Kurkov’s January 23, 2023 FORMULA block in A329369 revision 239
-prints the conjecture below. [Immutable source](https://raw.githubusercontent.com/oeis/oeisdata/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq)
+prints the conjecture below. [Conjecture 4, FORMULA line 32](https://github.com/oeis/oeisdata/blob/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq#L32)
 
 > Conjecture 4: a(2^m*(2k+1)) = Sum_{i=1..wt(k) + 2} i!*i^m*A358612(k, i)*(-1)^(wt(k) - i) for m >= 0, k >= 0 where wt(n) = A000120(n).
 
@@ -28,7 +28,7 @@ The second printing reverses the equality and uses the exponent
 `wt(k)−i+2`. [A358612 revision 52](https://raw.githubusercontent.com/oeis/oeisdata/d8ad22d9b98d2c427be8c6cd9f2672c600b8e3ae/seq/A358/A358612.seq)
 
 The source notes give the immutable revisions, transcripts and scalar
-recursion. [A329369 note](../Library/Arith/oeis2024a329369.md) · [A358612 note](../Library/Digit/kurkov2024a358612.md)
+recursion. [A329369 Conjecture 4 note](../Library/PermutationPatterns/kurkov2023a329369.md) · [A358612 note](../Library/Digit/kurkov2024a358612.md)
 
 | Source clause | Lean counterpart |
 | --- | --- |
@@ -90,7 +90,7 @@ the one-based statement applied to the frozen theorem. The theorem uses
   along each fixed odd index followed by any number of doublings.
 - The formula and the row-edge identity address distinct questions about
   the same rational array.
-- The exact identity is proved. Post-freeze review and required CI are pending.
+- The exact identity is proved.
 
 ## ASSUMED-UNVERIFIED
 

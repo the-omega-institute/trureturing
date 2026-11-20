@@ -10,7 +10,7 @@ $$\forall w, n \in \mathbb{N}, \operatorname{binaryExcedances}\left(w, n\right) 
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.binaryExcedances` (`✓ std3`).
 
-*Citation.* OEIS Foundation Inc.; Mikhail Kurkov (2024). *OEIS A329369 sixth conjectured sum over the A373183 rows*. URL: <https://oeis.org/A329369>.
+*Citation.* Mikhail Kurkov (2023). *OEIS A329369 revision 239, Conjecture 4 in the January 23, 2023 FORMULA block*. URL: <https://github.com/oeis/oeisdata/blob/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq#L32>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall w, n \in \mathbb{N}, \operatorname{paddedCount}\left(w, n\right) = \le
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.paddedCount` (`✓ std3`).
 
-*Citation.* OEIS Foundation Inc.; Mikhail Kurkov (2024). *OEIS A329369 sixth conjectured sum over the A373183 rows*. URL: <https://oeis.org/A329369>.
+*Citation.* Mikhail Kurkov (2023). *OEIS A329369 revision 239, Conjecture 4 in the January 23, 2023 FORMULA block*. URL: <https://github.com/oeis/oeisdata/blob/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq#L32>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ $$\forall m, k, w \in \mathbb{N}, 2^{m} \cdot (2 \cdot k+1) < 2^{w} \implies (\o
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* OEIS Foundation Inc.; Mikhail Kurkov (2024). *OEIS A329369 sixth conjectured sum over the A373183 rows*. URL: <https://oeis.org/A329369>.
+*Acknowledgement.* Mikhail Kurkov (2023). *OEIS A329369 revision 239, Conjecture 4 in the January 23, 2023 FORMULA block*. URL: <https://github.com/oeis/oeisdata/blob/e04da2424e051c6a20f500f80ae1c3d04e4b181f/seq/A329/A329369.seq#L32>.
 
 *Acknowledgement.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
 

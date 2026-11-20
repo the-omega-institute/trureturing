@@ -8,7 +8,7 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
 {
     private const string Module = "D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour";
     private static readonly LibraryNoteRef Excedances =
-        LibraryNoteRef.Create("D5/L/Arith/oeis2024a329369");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/kurkov2023a329369");
     private static readonly LibraryNoteRef Coefficients =
         LibraryNoteRef.Create("D5/L/Digit/kurkov2024a358612");
     private static readonly LibraryNoteRef ExcedancePaper =
