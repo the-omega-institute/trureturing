@@ -69,15 +69,18 @@ internal sealed class NiuQ15Document : IScribeDocumentDefinition
                 Node("niuq15-rectanglequestion15", "First-descent law and odd-entry limit", "rectangleQuestion15",
                     statement,
                     "For K = k + 2 the survival limit is choose(r + K − 1, K − 1)/K^r, and the point limit is r choose(r + K − 1, K − 2)/K^(r + 1). The masses sum to one. Prefix rotation and the count identity give the finite tails. Their adjacent differences give the masses. A common summable bound permits the limit in the alternating parity sum.",
-                    DescribeRole.Theorem)
+                    DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("niu-2026-rectangular-tableaux-question-15"),
+                        ResolutionKind.Proved))
             ), []));
     }
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role) =>
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Settlement(Formula k, Formula n, Formula r)
     {

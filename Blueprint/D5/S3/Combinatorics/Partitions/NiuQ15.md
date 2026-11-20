@@ -122,6 +122,10 @@ $$\forall k \in \mathbb{N},\; (\forall r \in \mathbb{N},\; \operatorname{Tendsto
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15` (`✓ std3`). ∎
 
+*Resolves.* `Problems/niu-2026-rectangular-tableaux-question-15` (proved) by `D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"niu-2026-rectangular-tableaux-question-15","declaration_gid":"D5/S3/Combinatorics/Partitions/NiuQ15.rectangleQuestion15","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tong Niu (2026). *The first descent in a standard Young tableau of shape (n,n,n)*. DOI: [10.48550/arXiv.2610.03038](https://doi.org/10.48550/arXiv.2610.03038). URL: <https://arxiv.org/abs/2610.03038v1>.
