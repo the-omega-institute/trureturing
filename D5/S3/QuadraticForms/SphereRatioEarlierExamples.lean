@@ -14,14 +14,16 @@ import Mathlib.Tactic
 `R_h(x) = Σ xᵢ h(xᵢ) / (Σ h(xᵢ)²)^{1/2}` of Lucid's sphere question (Mathematics Stack Exchange
 5146381, linked from MathOverflow 513954, revision 2), under the active-coordinate convention:
 unit vectors with all coordinates positive, their number `d` being the dimension. For `h = 1`
-(suggested by daw) the infimum in fixed dimension `d ≥ 1` is `1/√d`, unattained for `d ≥ 2`; over
-all dimensions it is `0`, unattained; over dimensions at most two it is `1/√2`, unattained. For
+(suggested by daw) the infimum in fixed dimension `d ≥ 1` is `1/√d`, attained (value `1`) for
+`d = 1` and unattained for `d ≥ 2`; over all dimensions it is `0`, unattained; over dimensions at
+most `d` it is again `1/√d`, unattained for `d ≥ 2`, which for `d = 2` is the source's `1/√2`. For
 `h(t) = 1/t` (used by Exodd) the infimum is `0`, unattained, already in dimension two and in
 every dimension `d ≥ 2`.
 
 admission_basis: escape-witness. Escape witnesses: sum_ge_one (`1 ≤ Σ xᵢ` for positive unit
 vectors, strict in dimension at least two), near_tendsto (the near-axis sequence with `R → 1/√d`),
-one_all (the choice of dimension driving the infimum to `0`), and ratio_inv with inv_all
+one_all (the choice of dimension driving the infimum to `0`), one_upto (the comparison across
+dimensions at most `d`), and ratio_inv with inv_all
 (`R_{1/t}(x) = d / (Σ xᵢ⁻²)^{1/2} ≤ d √p` when one squared coordinate is `p`). -/
 
 set_option autoImplicit false
@@ -167,26 +169,49 @@ private theorem one_all :
     obtain ⟨r, hr, -, hrb⟩ := (one_fixed k).1.exists_between (lt_trans h2 (by linarith : b / 2 < b))
     exact absurd (hb ⟨k + 1, hr⟩) (not_le.mpr hrb)
 
-/-- `h = 1` with at most two coordinates: the infimum is `1/√2`, unattained. -/
-private theorem one_two :
-    IsGLB {r | ∃ d ≤ 2, r ∈ values (fun _ => 1) d} (1 / Real.sqrt 2) ∧
-      ∀ d ≤ 2, ∀ r ∈ values (fun _ => 1) d, 1 / Real.sqrt 2 < r := by
-  have hlt : ∀ d ≤ 2, ∀ r ∈ values (fun _ => 1) d, 1 / Real.sqrt 2 < r := by
-    intro d hd r hr
-    interval_cases d
+/-- `h = 1` in dimension one: the only value is `1`. -/
+private theorem values_one_one {r : ℝ} (hr : r ∈ values (fun _ => 1) 1) : r = 1 := by
+  obtain ⟨x, hx, hs, rfl⟩ := hr
+  rw [ratio_one]
+  have : ∑ i, x i = 1 := by
+    simp only [Fin.sum_univ_one] at hs ⊢
+    nlinarith [hx 0, sq_nonneg (x 0 - 1)]
+  rw [this]; simp
+
+private theorem one_mem_one : (1 : ℝ) ∈ values (fun _ => 1) 1 :=
+  ⟨fun _ => 1, fun _ => one_pos, by simp, by simp [ratio]⟩
+
+/-- `h = 1` with at most `d` coordinates: the infimum is `1/√d`, unattained when `d ≥ 2`. -/
+private theorem one_upto (d : ℕ) (hd : 1 ≤ d) :
+    IsGLB {r | ∃ e ≤ d, r ∈ values (fun _ => 1) e} (1 / Real.sqrt d) ∧
+      (2 ≤ d → ∀ e ≤ d, ∀ r ∈ values (fun _ => 1) e, 1 / Real.sqrt d < r) := by
+  have hsqd : 0 < Real.sqrt (d : ℝ) := Real.sqrt_pos.mpr (by exact_mod_cast hd)
+  have hmono : ∀ e : ℕ, 1 ≤ e → e ≤ d → 1 / Real.sqrt d ≤ 1 / Real.sqrt e := fun e he hed =>
+    one_div_le_one_div_of_le (Real.sqrt_pos.mpr (by exact_mod_cast he))
+      (Real.sqrt_le_sqrt (by exact_mod_cast hed))
+  have hle : ∀ e ≤ d, ∀ r ∈ values (fun _ => 1) e, 1 / Real.sqrt d ≤ r := by
+    intro e hed r hr
+    rcases Nat.eq_zero_or_pos e with rfl | he
     · obtain ⟨x, -, hs, -⟩ := hr; simp at hs
-    · obtain ⟨x, hx, hs, rfl⟩ := hr
-      rw [ratio_one]
-      have : ∑ i, x i = 1 := by
-        simp only [Fin.sum_univ_one] at hs ⊢
-        nlinarith [hx 0, sq_nonneg (x 0 - 1)]
-      rw [this]; simp only [Nat.cast_one, Real.sqrt_one]
-      exact one_div_lt_one_div_of_lt zero_lt_one ((Real.lt_sqrt zero_le_one).2 (by norm_num))
-    · have := (one_fixed 1).2 le_rfl r (by norm_num at hr ⊢; exact hr)
-      norm_num at this; rw [one_div]; exact this
-  refine ⟨⟨fun r ⟨d, hd, hr⟩ => (hlt d hd r hr).le, fun b hb => ?_⟩, hlt⟩
-  have := (one_fixed 1).1.2 (fun r hr => hb ⟨2, le_rfl, by norm_num at hr ⊢; exact hr⟩)
-  norm_num at this ⊢; exact this
+    obtain ⟨k, rfl⟩ : ∃ k, e = k + 1 := ⟨e - 1, by omega⟩
+    have := (one_fixed k).1.1 hr
+    exact le_trans (by simpa using hmono (k + 1) (by omega) hed) this
+  refine ⟨⟨fun r ⟨e, hed, hr⟩ => hle e hed r hr, fun b hb => ?_⟩, fun hd2 e hed r hr => ?_⟩
+  · obtain ⟨k, rfl⟩ : ∃ k, d = k + 1 := ⟨d - 1, by omega⟩
+    have := (one_fixed k).1.2 (fun r hr => hb ⟨k + 1, le_rfl, hr⟩)
+    push_cast; exact this
+  · rcases Nat.lt_or_ge e 2 with he | he
+    · rcases Nat.eq_zero_or_pos e with rfl | he0
+      · obtain ⟨x, -, hs, -⟩ := hr; simp at hs
+      obtain rfl : e = 1 := by omega
+      rw [values_one_one hr]
+      rw [div_lt_one hsqd, Real.lt_sqrt zero_le_one]
+      exact_mod_cast (by omega : 1 < d)
+    · obtain ⟨k, rfl⟩ : ∃ k, e = k + 1 := ⟨e - 1, by omega⟩
+      have hstrict := (one_fixed k).2 (by omega) r hr
+      have := hmono (k + 1) (by omega) hed
+      push_cast at this
+      linarith
 
 /-- For positive coordinates, `R_{1/t}(x) = d / (Σ xᵢ⁻²)^{1/2}`. -/
 private theorem ratio_inv {d : ℕ} (x : Fin d → ℝ) (hx : ∀ i, 0 < x i) :
@@ -261,11 +286,12 @@ theorem result :
       (2 ≤ d → ∀ r ∈ values (fun _ => 1) d, 1 / Real.sqrt d < r)) ∧
       (IsGLB {r | ∃ d, r ∈ values (fun _ => 1) d} 0 ∧
         ∀ d, ∀ r ∈ values (fun _ => 1) d, 0 < r) ∧
-      (IsGLB {r | ∃ d ≤ 2, r ∈ values (fun _ => 1) d} (1 / Real.sqrt 2) ∧
-        ∀ d ≤ 2, ∀ r ∈ values (fun _ => 1) d, 1 / Real.sqrt 2 < r) ∧
+      (∀ d : ℕ, 1 ≤ d → IsGLB {r | ∃ e ≤ d, r ∈ values (fun _ => 1) e} (1 / Real.sqrt d) ∧
+        (2 ≤ d → ∀ e ≤ d, ∀ r ∈ values (fun _ => 1) e, 1 / Real.sqrt d < r)) ∧
+      (1 : ℝ) ∈ values (fun _ => 1) 1 ∧
       (∀ d : ℕ, 2 ≤ d → IsGLB (values (fun t => 1 / t) d) 0 ∧
         ∀ r ∈ values (fun t => 1 / t) d, 0 < r) := by
-  refine ⟨fun d hd => ?_, one_all, one_two, fun d hd => ?_⟩
+  refine ⟨fun d hd => ?_, one_all, one_upto, one_mem_one, fun d hd => ?_⟩
   · obtain ⟨k, rfl⟩ : ∃ k, d = k + 1 := ⟨d - 1, by omega⟩
     have := one_fixed k
     push_cast

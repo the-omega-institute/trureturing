@@ -31,16 +31,19 @@ internal sealed class SphereRatioEarlierExamplesDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
-                        "For h = 1: in every fixed dimension d ≥ 1 the infimum of R_h is 1/√d, and it is not "
-                        + "attained when d ≥ 2; over all dimensions the infimum is 0 and every value is "
-                        + "positive; over dimensions at most two the infimum is 1/√2 and every value exceeds it. "
+                        "For h = 1: in every fixed dimension d ≥ 1 the infimum of R_h is 1/√d; in dimension one "
+                        + "the only value is 1, and for d ≥ 2 the infimum is not attained. Over all dimensions "
+                        + "the infimum is 0 and every value is positive. Over dimensions at most d ≥ 1 the "
+                        + "infimum is again 1/√d, and for d ≥ 2 every value exceeds it; for d = 2 this is the "
+                        + "infimum 1/√2 over at most two coordinates. "
                         + "For h(t) = 1/t: in every dimension d ≥ 2, in particular already in dimension two, the "
                         + "infimum is 0 and every value is positive.")),
                     Paragraph(Text(
                         "For h = 1, R_h(x) = (Σᵢ xᵢ)/√d. Each 0 < xᵢ ≤ 1 gives xᵢ² ≤ xᵢ, so Σᵢ xᵢ ≥ 1, strictly "
                         + "when d ≥ 2 because then some xᵢ < 1. Vectors with one coordinate (1 − (d − 1)ε²)^{1/2} "
                         + "and d − 1 coordinates ε give R_h → 1/√d as ε → 0; choosing d large then gives the "
-                        + "all-dimension infimum 0, and dimension one gives the value 1 > 1/√2. For h(t) = 1/t, "
+                        + "all-dimension infimum 0. Over dimensions e ≤ d the bound 1/√e ≥ 1/√d applies, and "
+                        + "dimension one gives the value 1 > 1/√d when d ≥ 2. For h(t) = 1/t, "
                         + "R_h(x) = d/(Σᵢ xᵢ⁻²)^{1/2} ≤ d√p when one squared coordinate is p, and p → 0 drives "
                         + "the ratio to 0. This is Corollary 10 of H. Ma and W. Zhang "
                         + "(DOI 10.5281/zenodo.23920598). The example h = 1 was suggested by daw (comment "

@@ -113,8 +113,9 @@ Corollary 6 imply this weak form. The refutation uses the source's data on the t
 (0, 1) \ {c} for every c, so the conclusion fails after deleting any one point.
 
 Corollary 10 is SphereRatioEarlierExamples.result, over unit vectors with all d coordinates
-positive. For h = 1 it gives the infimum 1/√d in each dimension d ≥ 1 (unattained for d ≥ 2), the
-all-dimension infimum 0 and the infimum 1/√2 over dimensions at most two, all unattained. For
+positive. For h = 1 it gives the infimum 1/√d in each dimension d ≥ 1 (attained by the value 1
+for d = 1, unattained for d ≥ 2), the unattained all-dimension infimum 0, and the infimum 1/√d
+over dimensions at most d, unattained for d ≥ 2; d = 2 is the source's 1/√2. For
 h(t) = 1/t it gives the infimum 0, unattained, in every dimension d ≥ 2, which is stronger than
 the source's dimension two. The example h = 1 is due to daw (comment 11110291) and h(t) = 1/t to
 Exodd (answer 5146715) on Mathematics Stack Exchange 5146381.
