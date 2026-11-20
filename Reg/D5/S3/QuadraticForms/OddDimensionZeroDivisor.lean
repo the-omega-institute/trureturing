@@ -43,7 +43,7 @@ theorem isRealClosed_ulift : IsRealClosed (ULift.{u} ℝ) := by
 abbrev RLine := ULift.{v} ℝ
 
 /-- The coordinate of the line. -/
-def rlineCoord : RLine.{v} ≃ₗ[ULift.{u} ℝ] ULift.{u} ℝ where
+def rlineCoord.{ua, ub} : RLine.{ub} ≃ₗ[ULift.{ua} ℝ] ULift.{ua} ℝ where
   toFun x := ⟨x.down⟩
   invFun y := ⟨y.down⟩
   map_add' _ _ := rfl
@@ -51,11 +51,11 @@ def rlineCoord : RLine.{v} ≃ₗ[ULift.{u} ℝ] ULift.{u} ℝ where
   left_inv _ := rfl
   right_inv _ := rfl
 
-theorem rlineFinite : FiniteDimensional (ULift.{u} ℝ) RLine.{v} :=
-  Module.Finite.equiv rlineCoord.symm
+theorem rlineFinite.{ua, ub} : FiniteDimensional (ULift.{ua} ℝ) RLine.{ub} :=
+  Module.Finite.equiv rlineCoord.{ua, ub}.symm
 
-theorem finrank_rline : finrank (ULift.{u} ℝ) RLine.{v} = 1 := by
-  rw [LinearEquiv.finrank_eq rlineCoord, Module.finrank_self]
+theorem finrank_rline.{ua, ub} : finrank (ULift.{ua} ℝ) RLine.{ub} = 1 := by
+  rw [LinearEquiv.finrank_eq rlineCoord.{ua, ub}, Module.finrank_self]
 
 /-! ## `exists_hasEigenvalue_of_odd_finrank`: the eigenvalue -/
 namespace Eigenvalue
@@ -90,9 +90,9 @@ abbrev arena.{uu, vv} : Arena where
 theorem rejected_law.{uu, vv} : ¬ arena.{uu, vv}.Law rejected := by
   intro h
   have := isRealClosed_ulift.{uu}
-  have : FiniteDimensional (ULift.{uu} ℝ) RLine.{vv} := rlineFinite
+  have : FiniteDimensional (ULift.{uu} ℝ) RLine.{vv} := rlineFinite.{uu, vv}
   obtain ⟨μ, hμ⟩ := h (K := ULift.{uu} ℝ) (U := RLine.{vv}) LinearMap.id
-    (by rw [finrank_rline]; exact odd_one)
+    (by rw [finrank_rline.{uu, vv}]; exact odd_one)
   obtain ⟨x, hx⟩ := hμ.exists_hasEigenvector
   have hx0 := Module.End.mem_eigenspace_iff.1 hx.1
   exact hx.2 (by simpa [rejected, realize] using hx0)
@@ -130,7 +130,7 @@ abbrev Plane := ULift.{v} (Fin 2 → ℚ)
 /-- The line `ℚ` in universe `v`. -/
 abbrev QLine := ULift.{v} ℚ
 
-def planeCoord : Plane.{v} ≃ₗ[Q.{u}] (Fin 2 → Q.{u}) where
+def planeCoord.{ua, ub} : Plane.{ub} ≃ₗ[Q.{ua}] (Fin 2 → Q.{ua}) where
   toFun x i := ⟨x.down i⟩
   invFun f := ⟨fun i => (f i).down⟩
   map_add' _ _ := rfl
@@ -138,7 +138,7 @@ def planeCoord : Plane.{v} ≃ₗ[Q.{u}] (Fin 2 → Q.{u}) where
   left_inv _ := rfl
   right_inv _ := rfl
 
-def qlineCoord : QLine.{v} ≃ₗ[Q.{u}] Q.{u} where
+def qlineCoord.{ua, ub} : QLine.{ub} ≃ₗ[Q.{ua}] Q.{ua} where
   toFun x := ⟨x.down⟩
   invFun y := ⟨y.down⟩
   map_add' _ _ := rfl
@@ -146,21 +146,21 @@ def qlineCoord : QLine.{v} ≃ₗ[Q.{u}] Q.{u} where
   left_inv _ := rfl
   right_inv _ := rfl
 
-theorem qlineFinite : FiniteDimensional Q.{u} QLine.{v} :=
-  Module.Finite.equiv qlineCoord.symm
+theorem qlineFinite.{ua, ub} : FiniteDimensional Q.{ua} QLine.{ub} :=
+  Module.Finite.equiv qlineCoord.{ua, ub}.symm
 
-theorem finrank_plane : finrank Q.{u} Plane.{v} = 2 := by
-  rw [LinearEquiv.finrank_eq planeCoord, Module.finrank_fin_fun]
+theorem finrank_plane.{ua, ub} : finrank Q.{ua} Plane.{ub} = 2 := by
+  rw [LinearEquiv.finrank_eq planeCoord.{ua, ub}, Module.finrank_fin_fun]
 
-theorem finrank_qline : finrank Q.{u} QLine.{v} = 1 := by
-  rw [LinearEquiv.finrank_eq qlineCoord, Module.finrank_self]
+theorem finrank_qline.{ua, ub} : finrank Q.{ua} QLine.{ub} = 1 := by
+  rw [LinearEquiv.finrank_eq qlineCoord.{ua, ub}, Module.finrank_self]
 
 /-- The product `(a₀ b₀)` of the first coordinates, a nonzero bilinear map `ℚ² × ℚ² → ℚ`. -/
 def firstProduct.{w₁, w₂, w₃, w₄} : Plane.{w₂} →ₗ[Q.{w₁}] Plane.{w₃} →ₗ[Q.{w₁}] QLine.{w₄} :=
   ((LinearMap.mul Q.{w₁} Q.{w₁}).compl₁₂
-      ((LinearMap.proj 0).comp planeCoord.toLinearMap)
-      ((LinearMap.proj 0).comp planeCoord.toLinearMap)).compr₂
-    qlineCoord.symm.toLinearMap
+      ((LinearMap.proj 0).comp planeCoord.{w₁, w₂}.toLinearMap)
+      ((LinearMap.proj 0).comp planeCoord.{w₁, w₃}.toLinearMap)).compr₂
+    qlineCoord.{w₁, w₄}.symm.toLinearMap
 
 theorem firstProduct_apply (a : Plane.{u₂}) (b : Plane.{u₃}) :
     firstProduct.{u₁, u₂, u₃, u₄} a b = ⟨a.down 0 * b.down 0⟩ := rfl
@@ -221,11 +221,11 @@ abbrev arena.{w₁, w₂, w₃, w₄} : Arena where
 line vanish. -/
 theorem rejected_law.{w₁, w₂, w₃, w₄} : ¬ arena.{w₁, w₂, w₃, w₄}.Law rejected := by
   intro h
-  have : FiniteDimensional Q.{w₁} QLine.{w₄} := qlineFinite
+  have : FiniteDimensional Q.{w₁} QLine.{w₄} := qlineFinite.{w₁, w₄}
   obtain ⟨a, b, -, hb, hab⟩ := h (K := Q.{w₁}) (U := Plane.{w₂}) (V := Plane.{w₃})
     (W := QLine.{w₄}) 0
-    (fun hd => absurd hd (by rw [finrank_qline, finrank_plane]; norm_num))
-    (by rw [finrank_qline, finrank_plane]; norm_num) (by rw [finrank_plane])
+    (fun hd => absurd hd (by rw [finrank_qline.{w₁, w₄}, finrank_plane.{w₁, w₂}]; norm_num))
+    (by rw [finrank_qline.{w₁, w₄}, finrank_plane.{w₁, w₂}]; norm_num) (by rw [finrank_plane.{w₁, w₃}])
   have hex : ∃ w : QLine.{w₄}, w ≠ 0 := ⟨⟨1⟩, fun h1 => one_ne_zero (congrArg ULift.down h1)⟩
   simp only [rejected, realize, rejectedObserve, if_neg hb, dif_pos hex] at hab
   exact hex.choose_spec hab
@@ -235,8 +235,9 @@ theorem dependence.{w₁, w₂, w₃, w₄} : ObservationalDependence signature.
   cases i
   refine ⟨⟨Q.{w₁}, Plane.{w₂}, Plane.{w₃}, QLine.{w₄}, inferInstance, inferInstance,
     inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
-    firstProduct.{w₁, w₂, w₃, w₄}, ⟨![1, 0]⟩⟩, (⟨![1, 0]⟩ : Plane.{w₃}), 0, ?_⟩
-  change firstProduct.{w₁, w₂, w₃, w₄} ⟨![1, 0]⟩ ⟨![1, 0]⟩ ≠ firstProduct ⟨![1, 0]⟩ 0
+    firstProduct.{w₁, w₂, w₃, w₄}, (⟨![1, 0]⟩ : Plane.{w₂})⟩, (⟨![1, 0]⟩ : Plane.{w₃}), (0 : Plane.{w₃}), ?_⟩
+  change firstProduct.{w₁, w₂, w₃, w₄} (⟨![1, 0]⟩ : Plane.{w₂}) (⟨![1, 0]⟩ : Plane.{w₃}) ≠
+    firstProduct.{w₁, w₂, w₃, w₄} (⟨![1, 0]⟩ : Plane.{w₂}) (0 : Plane.{w₃})
   rw [map_zero, firstProduct_apply]
   intro h1
   have := congrArg ULift.down h1

@@ -65,8 +65,10 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, EuclideanSpace.single 0 1, ?_⟩
   change ‖(0 : EuclideanSpace ℝ (Fin 3))‖ ≠ ‖EuclideanSpace.single (0 : Fin 3) (1 : ℝ)‖
-  rw [norm_zero, EuclideanSpace.norm_single, norm_one]
-  norm_num
+  rw [norm_zero]
+  refine (norm_pos_iff.2 fun h => ?_).ne
+  have h0 := congrArg (fun v : EuclideanSpace ℝ (Fin 3) => v 0) h
+  simp at h0
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement : Prop := type_of% @bloch_ball_hyperbolic
