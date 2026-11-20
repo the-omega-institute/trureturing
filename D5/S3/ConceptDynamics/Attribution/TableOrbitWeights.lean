@@ -11,13 +11,13 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 import Mathlib.Basic.Real.Basic
 import Mathlib.GroupTheory.GroupAction.Quotient
+import Mathlib.Topology.Instances.Real.Lemmas
 
 /-! Orbit variables for probability laws of finite deterministic readouts. -/
 
 set_option autoImplicit false
 
 open Finset
-open scoped Classical
 
 namespace D5.S3.ConceptDynamics.Attribution.TableOrbitWeights
 
@@ -34,6 +34,7 @@ noncomputable def orbitFrequency (A : Finset T) (o : MulAction.orbitRel.Quotient
   exact ((A.filter fun t => orbitOf t = o).card : ℝ) /
     ((univ.filter fun t : T => orbitOf t = o).card : ℝ)
 
+open Classical in
 private theorem weighted_event_by_orbit (A : Finset T) (p : T → ℝ)
     (invariant : ∀ (g : G) t, p (g • t) = p t) :
     (∑ t ∈ A, p t) =
@@ -110,5 +111,81 @@ theorem invariant_event_masses_iff (event : I → Finset T) (mass : I → ℝ) :
       rw [weighted_event_by_orbit (event i) p invariant]
       simp_rw [orbitTotal]
       exact prescribed i
+
+private theorem max_linear_event_mass {O : Type*} [Fintype O] (coefficient : I → O → ℝ)
+    (mass : I → ℝ) (score : O → ℝ)
+    (feasible : ∃ z : O → ℝ, (∀ o, 0 ≤ z o) ∧ (∑ o, z o) = 1 ∧
+      ∀ i, (∑ o, z o * coefficient i o) = mass i) :
+    ∃ z : O → ℝ, (∀ o, 0 ≤ z o) ∧ (∑ o, z o) = 1 ∧
+      (∀ i, (∑ o, z o * coefficient i o) = mass i) ∧
+      ∀ w : O → ℝ, (∀ o, 0 ≤ w o) → (∑ o, w o) = 1 →
+        (∀ i, (∑ o, w o * coefficient i o) = mass i) →
+        (∑ o, w o * score o) ≤ ∑ o, z o * score o := by
+  let constraints : Set (O → ℝ) :=
+    {z | (∑ o, z o) = 1} ∩ ⋂ i, {z | (∑ o, z o * coefficient i o) = mass i}
+  let box : Set (O → ℝ) := Set.Icc 0 1
+  have closed : IsClosed constraints := by
+    apply IsClosed.inter
+    · exact isClosed_eq (continuous_finsetSum univ fun o _ => continuous_apply o) continuous_const
+    · exact isClosed_iInter fun i =>
+        isClosed_eq
+          (continuous_finsetSum univ fun o _ => (continuous_apply o).mul continuous_const)
+          continuous_const
+  have compact : IsCompact (box ∩ constraints) := isCompact_Icc.inter_right closed
+  have in_constraints (z : O → ℝ) (nn : ∀ o, 0 ≤ z o) (total : (∑ o, z o) = 1)
+      (satisfies : ∀ i, (∑ o, z o * coefficient i o) = mass i) : z ∈ box ∩ constraints := by
+    refine ⟨⟨nn, fun o => ?_⟩, total, Set.mem_iInter.mpr satisfies⟩
+    change z o ≤ (1 : ℝ)
+    rw [← total]
+    exact single_le_sum (fun j _ => nn j) (mem_univ o)
+  obtain ⟨initial, nn, total, satisfies⟩ := feasible
+  let objective (z : O → ℝ) : ℝ := ∑ o, z o * score o
+  have continuous : Continuous objective :=
+    continuous_finsetSum univ fun o _ => (continuous_apply o).mul continuous_const
+  obtain ⟨z, ⟨inBox, htotal, matched⟩, optimal⟩ :=
+    compact.exists_isMaxOn ⟨initial, in_constraints initial nn total satisfies⟩
+      continuous.continuousOn
+  refine ⟨z, inBox.1, htotal, Set.mem_iInter.mp matched, ?_⟩
+  intro w wn wt wm
+  exact optimal (in_constraints w wn wt wm)
+
+/-- The maximum invariant mass of a distinguished event is attained whenever the
+prescribed event masses are feasible. The same value is the optimum of the
+linear program with variables given by masses of whole orbits. -/
+theorem maximal_invariant_event_mass (event : I → Finset T) (mass : I → ℝ) (target : Finset T)
+    (feasible : ∃ p : T → ℝ, (∀ t, 0 ≤ p t) ∧ (∑ t, p t) = 1 ∧
+      (∀ (g : G) t, p (g • t) = p t) ∧ ∀ i, (∑ t ∈ event i, p t) = mass i) :
+    ∃ z : MulAction.orbitRel.Quotient G T → ℝ,
+      (∀ o, 0 ≤ z o) ∧ (∑ o, z o) = 1 ∧
+      (∀ i, (∑ o, z o * orbitFrequency (event i) o) = mass i) ∧
+      (∀ w : MulAction.orbitRel.Quotient G T → ℝ, (∀ o, 0 ≤ w o) → (∑ o, w o) = 1 →
+        (∀ i, (∑ o, w o * orbitFrequency (event i) o) = mass i) →
+        (∑ o, w o * orbitFrequency target o) ≤ ∑ o, z o * orbitFrequency target o) ∧
+      (∀ a : ℝ,
+        (∃ p : T → ℝ, (∀ t, 0 ≤ p t) ∧ (∑ t, p t) = 1 ∧
+          (∀ (g : G) t, p (g • t) = p t) ∧ (∀ i, (∑ t ∈ event i, p t) = mass i) ∧
+          (∑ t ∈ target, p t) = a) ↔
+        (∃ w : MulAction.orbitRel.Quotient G T → ℝ, (∀ o, 0 ≤ w o) ∧ (∑ o, w o) = 1 ∧
+          (∀ i, (∑ o, w o * orbitFrequency (event i) o) = mass i) ∧
+          (∑ o, w o * orbitFrequency target o) = a)) := by
+  obtain ⟨z, nn, total, satisfies, optimal⟩ := max_linear_event_mass
+    (fun i => orbitFrequency (G := G) (event i)) mass (orbitFrequency target)
+    ((invariant_event_masses_iff event mass).mp feasible)
+  refine ⟨z, nn, total, satisfies, optimal, fun a => ?_⟩
+  let events : Option I → Finset T := fun i => i.elim target event
+  let values : Option I → ℝ := fun i => i.elim a mass
+  constructor
+  · rintro ⟨p, hp, htotal, invariant, coupling, goalMass⟩
+    obtain ⟨w, hw, wtotal, constraints⟩ := (invariant_event_masses_iff events values).mp
+      ⟨p, hp, htotal, invariant, fun i => by cases i with
+        | none => exact goalMass
+        | some i => exact coupling i⟩
+    exact ⟨w, hw, wtotal, fun i => constraints (some i), constraints none⟩
+  · rintro ⟨w, hw, wtotal, coupling, goalMass⟩
+    obtain ⟨p, hp, htotal, invariant, constraints⟩ := (invariant_event_masses_iff events values).mpr
+      ⟨w, hw, wtotal, fun i => by cases i with
+        | none => exact goalMass
+        | some i => exact coupling i⟩
+    exact ⟨p, hp, htotal, invariant, fun i => constraints (some i), constraints none⟩
 
 end D5.S3.ConceptDynamics.Attribution.TableOrbitWeights
