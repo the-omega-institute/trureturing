@@ -7,6 +7,7 @@ doi: 10.1007/BF01457962
 claim: "The quadratic map of the unit three-sphere of R^4 onto the unit two-sphere of R^3 given in Section 5 has as preimage of every point a great circle of the three-sphere."
 strata_touched:
   - D5/S3/Quantum/AURICOmega/QuaternionRayKernel
+  - D5/S3/Quantum/AURICOmega/QuaternionHopfFibration
 license: citation-only
 triage: anchor
 ---
