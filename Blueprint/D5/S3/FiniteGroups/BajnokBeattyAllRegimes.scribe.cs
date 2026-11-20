@@ -10,7 +10,16 @@ internal sealed class BajnokBeattyAllRegimesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original four-clause classification holds for every positive k and s.",
         H("The original Bajnok–Beatty Conjecture 4.1"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Lemma("bajnok-beatty-rectangle-index", "rectangle_index_le", "Counting through a square",
+                "If every element of the integer plane is congruent modulo a sublattice L to a point of {0, …, n − 1}², then the index of L is at most n²."),
+            Lemma("bajnok-beatty-odd-square", "even_torsor_cover", "The square lemma at odd radius",
+                "If the coefficient map f covers ZMod 2 × ZMod (2k) from the diamond |x| + |y| ≤ 2t + 1, then every coset of M = T⁻¹ ker f, with T(u, v) = (u + v, u − v), has a representative in {0, …, 2t}². The difference from the chosen diamond point has even coordinate sum and difference, so halving gives a point of [−t, t]², shifted by t."),
+            Lemma("bajnok-beatty-square-cover", "square_cover", "The square lemma at every positive radius",
+                "If f maps the diamond |x| + |y| ≤ s onto ZMod 2 × ZMod (2k), then every coset of M has a representative in {0, …, s − 1}². Even radii use the existing even-radius cover and odd radii the odd-radius cover above."),
+            Lemma("bajnok-beatty-order-bound", "hom_order_le", "The order bound",
+                "Under the covering hypothesis, 2k ≤ s²: the index of M is 2k and the square has s² points."),
+            Describe.Lean(
             DescribeId.Create("bajnok-beatty-original-full-iff"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/BajnokBeattyAllRegimes.result"),
             H("Two-generator signed radius: all regimes"),
@@ -29,4 +38,10 @@ internal sealed class BajnokBeattyAllRegimesDocument : IScribeDocumentDefinition
             openProblemResolutionClaim: new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("bajnok-beatty-original-conjecture-4-1"),
                 ResolutionKind.Proved)))));
+
+    private static DocumentBlock Lemma(string id, string name, string title, string text) =>
+        Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/BajnokBeattyAllRegimes." + name), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }

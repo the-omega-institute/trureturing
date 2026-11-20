@@ -384,10 +384,10 @@ open Finset
 
 namespace PermutationGrid
 
-private abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
+abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
   {p : I → ℕ // ∑ i, p i = m}
 
-private abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
+abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
     Profile I m :=
   ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
 
@@ -528,7 +528,7 @@ private theorem relabel_one {I : Type*} [Fintype I] {m : ℕ} (p : Profile I m) 
   funext i
   simp
 
-private instance profileAction {I : Type*} [Fintype I] {m : ℕ} : MulAction (Equiv.Perm I) (Profile I m) where
+instance profileAction {I : Type*} [Fintype I] {m : ℕ} : MulAction (Equiv.Perm I) (Profile I m) where
   smul := relabel
   one_smul := relabel_one
   mul_smul := relabel_mul
