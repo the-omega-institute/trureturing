@@ -81,7 +81,10 @@ internal sealed class MonoidCADichotomyRefutationDocument : IScribeDocumentDefin
                         + "contradict the zero-entropy entry of Table 2 (p. 31). The possible finite "
                         + "positive entropy values and the classification of algebraic constraints "
                         + "remain open here."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("castronuovo-dennunzio-kari-margara-2026-finite-monoid-ca-dichotomy"),
+                    ResolutionKind.Refuted))
         )));
 
     private static Formula V(string name) => F.Id(name);

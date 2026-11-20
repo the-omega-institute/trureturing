@@ -30,6 +30,10 @@ $$\neg \left(\begin{aligned}\forall D: \mathbb{N}, 2 \le D \Rightarrow \forall A
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/castronuovo-dennunzio-kari-margara-2026-finite-monoid-ca-dichotomy` (refuted) by `D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"castronuovo-dennunzio-kari-margara-2026-finite-monoid-ca-dichotomy","declaration_gid":"D5/S1/Dynamics/Symbolic/MonoidCADichotomyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Niccolò Castronuovo and Alberto Dennunzio and Jarkko Kari and Luciano Margara (2026). *Topological Entropy of Group Cellular Automata is Effectively Computable*. URL: <https://arxiv.org/abs/2611.16746v1>.
