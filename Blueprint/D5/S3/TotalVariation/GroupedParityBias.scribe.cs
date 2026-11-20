@@ -25,7 +25,11 @@ internal sealed class GroupedParityBiasDocument : IScribeDocumentDefinition
                     + "The product G(q,a) collects the bias factors of columns equal to a. "
                     + "Two laws agree exactly when these products agree for every nonzero a. "
                     + "The explicit recovery formula takes logarithms of absolute sign "
-                    + "moments, so the recovered products do not depend on the offset sign."))),
+                    + "moments, so the recovered products do not depend on the offset sign. "
+                    + "For section 35.6.8 in Quantum Geometry, take A to be the quotient by "
+                    + "the fair-input image. Each c(i) is the projected column of a biased "
+                    + "input and s is the projected offset. In Y, the contribution of c(i) "
+                    + "is zero when x(i) is false and c(i) when x(i) is true."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("affine-bias-identifiable"),
