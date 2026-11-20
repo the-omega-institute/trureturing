@@ -43,7 +43,7 @@ def family : Registration arena (type_of% grid_support_budget_iff) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro role
-    exact ⟨(), 0, 1, by decide⟩
+    exact ⟨(), 0, 1, (by decide : (0 : ℕ) ≠ 1)⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     grid_support_budget_iff (Realization signature) Type Unit where
