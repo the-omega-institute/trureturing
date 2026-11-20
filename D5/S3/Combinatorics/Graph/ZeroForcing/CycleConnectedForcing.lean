@@ -416,15 +416,17 @@ theorem connected_forcing_iff (S : Finset (Fin n)) :
     · rintro ⟨a, i, -, hi, rfl⟩; exact ⟨a, i, by omega, rfl⟩
 
 /-- The connected forcing polynomial of the cycle `C_n` for every `n`, and Proposition 7.8 of
-Brimkov: `Z_c(C_n; x) = n Σ_{i=2}^{n-1} x^i + x^n` for `n ≥ 3`. -/
+Brimkov: `Z_c(C_n; x) = n Σ_{i=2}^{n-1} x^i + x^n` for `n ≥ 3`, which also holds for `n = 1`. -/
 theorem result :
     (∀ i, coefficient (cycleGraph n) i =
       if i = n ∧ n ≠ 0 then 1 else if 1 ≤ i ∧ i < n ∧ (2 ≤ i ∨ n = 2) then n else 0) ∧
-    (3 ≤ n → ∀ i, coefficient (cycleGraph n) i =
+    (n ≠ 0 → n ≠ 2 → ∀ i, coefficient (cycleGraph n) i =
       if i = n then 1 else if 2 ≤ i ∧ i < n then n else 0) := by
   classical
-  refine ⟨fun i => ?_, fun h3 i => ?_⟩
-  · rcases Nat.lt_or_ge n 3 with h3 | h3
+  have general : ∀ i, coefficient (cycleGraph n) i =
+      if i = n ∧ n ≠ 0 then 1 else if 1 ≤ i ∧ i < n ∧ (2 ≤ i ∨ n = 2) then n else 0 := by
+    intro i
+    rcases Nat.lt_or_ge n 3 with h3 | h3
     · rcases Nat.lt_or_ge n 1 with h1 | h1
       · obtain rfl : n = 0 := by omega
         unfold coefficient
@@ -468,7 +470,8 @@ theorem result :
     · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
       rw [coeff_formula]
       split_ifs <;> omega
-  · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
-    exact coeff_formula i
+  refine ⟨general, fun h0 h2 i => ?_⟩
+  rw [general i]
+  split_ifs <;> omega
 
 end D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing

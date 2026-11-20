@@ -73,8 +73,8 @@ StarConnectedForcing.connected_forcing_iff characterizes the connected forcing s
 
 CycleConnectedForcing.result states the coefficients of Z_c(C_n; x) for Mathlib's cycleGraph n
 and every n: z_c(C_n; i) = 1 for i = n ≠ 0, n for 1 ≤ i < n when i ≥ 2 or n = 2, and 0
-otherwise. For n ≥ 3 this is the source's formula, which it states as a second clause. The
-source's form also holds for n = 1, while for n = 0 no set is connected and for n = 2 each single
-vertex is a connected forcing set, giving Z_c(C_2; x) = 2x + x^2.
+otherwise. For n ≥ 3 this is the source's formula. A second clause states the source's form for
+every n other than 0 and 2, so it also holds for n = 1; for n = 0 no set is connected, and for
+n = 2 each single vertex is a connected forcing set, giving Z_c(C_2; x) = 2x + x^2.
 CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n as
 the arcs of at least two vertices, together with the single vertices when n = 2.
