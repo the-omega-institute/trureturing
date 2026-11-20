@@ -17,6 +17,8 @@ triage: anchor
 
 ## Verified locator
 
+Zenodo record: https://zenodo.org/records/23957560
+
 DOI: 10.5281/zenodo.23957560 (version 2; Zenodo publication date 2026-11-04, PDF dated
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracted locally,
