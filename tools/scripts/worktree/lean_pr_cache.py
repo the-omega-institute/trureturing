@@ -46,21 +46,44 @@ class OptionalPrOptInMiss(Exception):
 
 
 def read_pr(repository, number, *, optional_opt_in=False):
+    path = "pulls/" + str(number)
+    if not optional_opt_in:
+        return api(repository, path)
+    command = ["gh", "api", "repos/" + repository + "/" + path, "--include"]
     try:
-        return api(repository, "pulls/" + str(number))
+        result = subprocess.run(command, capture_output=True, timeout=60)
     except subprocess.TimeoutExpired:
-        if not optional_opt_in:
-            raise
         raise OptionalPrOptInMiss("live PR opt-in lookup timed out") from None
-    except subprocess.CalledProcessError as error:
-        stderr = (error.stderr or "").strip()
-        transient = re.search(r"\bHTTP (500|502|503|504)\b|"
-                              r"(?:^|: )(unexpected EOF|connection reset by peer|i/o timeout|TLS handshake timeout)$",
-                              stderr)
-        if not optional_opt_in or transient is None:
-            raise
-        reason = f"HTTP {transient[1]}" if transient[1] else transient[2]
-        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {reason}") from None
+    # gh reserves exit 4 for missing authentication and exit 2 for cancellation.
+    if result.returncode not in (0, 1):
+        result.check_returncode()
+    status, headers, body = included_response(result)
+    response = "no HTTP status" if status is None else f"HTTP {status}"
+    if (status == 429 or status is not None and 500 <= status < 600
+            or status == 403 and rate_limited(headers, body)
+            or status in (None, 200) and result.returncode):
+        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {response} (gh exit {result.returncode})")
+    require(status == 200 and body is not None, f"invalid live PR opt-in response: {response}")
+    try:
+        return decode_api_json(body)
+    except InterruptedApiRead as error:
+        raise OptionalPrOptInMiss(f"live PR opt-in lookup unavailable: {error}") from None
+
+
+def rate_limited(headers, body):
+    for header in headers.splitlines():
+        name, _, value = header.partition(b":")
+        if name.lower() == b"x-ratelimit-remaining" and value.strip() == b"0":
+            return True
+        if name.lower() == b"retry-after" and value.strip():
+            return True
+    try:
+        value = json.loads(body or b"")
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return False
+    message = value.get("message") if isinstance(value, dict) else None
+    return isinstance(message, str) and re.search(
+        r"\b(?:rate limit exceeded|exceeded a (?:secondary )?rate limit)\b", message, re.IGNORECASE) is not None
 
 
 def validate_identity(value):
@@ -273,18 +296,41 @@ def confirm(root, identity, artifact_id):
     return receipt("prepared", identity, runtime=runtime, artifact=artifact_id)
 
 
-class InterruptedAssociationRead(ValueError):
-    """The association page can be fetched again within its original deadline."""
+class InterruptedApiRead(ValueError):
+    """The API response could not be read to completion."""
+
+
+def included_response(result):
+    # gh prints the status line before the headers and body, including on HTTP errors.
+    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
+    line, _, headers = headers.partition(b"\n")
+    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
+                              line)
+    status = int(status_line[1]) if status_line else None
+    return status, headers, body if separator else None
+
+
+def decode_api_json(body):
+    if not body.strip():
+        raise InterruptedApiRead("HTTP 200 with empty body")
+    try:
+        return json.loads(body.decode("utf-8"))
+    except json.JSONDecodeError as error:
+        tail = error.doc[error.pos:].rstrip()
+        if (not tail or error.msg.startswith("Unterminated string")
+                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
+            raise InterruptedApiRead("HTTP 200 with truncated JSON") from None
+        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
+    except UnicodeDecodeError as error:
+        if error.reason == "unexpected end of data" and error.end == len(body):
+            raise InterruptedApiRead("HTTP 200 with truncated JSON encoding") from None
+        raise ValueError("HTTP 200 with invalid JSON encoding") from None
 
 
 def association_response(result):
-    # gh prints the status line before the headers and body, including on HTTP errors.
-    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
-    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
-                              headers.split(b"\n", 1)[0])
-    status = int(status_line[1]) if status_line else None
+    status, _, body = included_response(result)
     if status in (500, 502, 503, 504):
-        raise InterruptedAssociationRead(f"HTTP {status} (gh exit {result.returncode})")
+        raise InterruptedApiRead(f"HTTP {status} (gh exit {result.returncode})")
     if status is not None and status != 200:
         raise ValueError(f"HTTP {status} (gh exit {result.returncode})")
     if result.returncode and (status == 200 or not result.stdout):
@@ -292,23 +338,10 @@ def association_response(result):
                               result.stderr.strip())
         if transport:
             response = "HTTP 200" if status == 200 else "no HTTP status"
-            raise InterruptedAssociationRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
+            raise InterruptedApiRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
     require(status is not None, f"no HTTP status (gh exit {result.returncode})")
-    require(separator and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
-    if not body.strip():
-        raise InterruptedAssociationRead("HTTP 200 with empty body")
-    try:
-        value = json.loads(body.decode("utf-8"))
-    except json.JSONDecodeError as error:
-        tail = error.doc[error.pos:].rstrip()
-        if (not tail or error.msg.startswith("Unterminated string")
-                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
-            raise InterruptedAssociationRead("HTTP 200 with truncated JSON") from None
-        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
-    except UnicodeDecodeError as error:
-        if error.reason == "unexpected end of data" and error.end == len(body):
-            raise InterruptedAssociationRead("HTTP 200 with truncated JSON encoding") from None
-        raise ValueError("HTTP 200 with invalid JSON encoding") from None
+    require(body is not None and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
+    value = decode_api_json(body)
     require(isinstance(value, list) and all(isinstance(pr, dict) for pr in value),
             "HTTP 200 with invalid API listing")
     return value
@@ -324,7 +357,7 @@ def association_page(repository, path, page):
             if remaining <= 0:
                 raise ValueError("page deadline exceeded")
             return association_response(subprocess.run(command, capture_output=True, timeout=remaining))
-        except (InterruptedAssociationRead, subprocess.TimeoutExpired) as error:
+        except (InterruptedApiRead, subprocess.TimeoutExpired) as error:
             reason = "gh timed out" if isinstance(error, subprocess.TimeoutExpired) else str(error)
             detail = f"commit PR association page {page}, attempt {attempt}: {reason}"
             if attempt == 2 or time.monotonic() + delay >= deadline:

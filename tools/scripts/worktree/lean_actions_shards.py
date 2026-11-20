@@ -425,11 +425,17 @@ def install(root, record, targets=None, *, require_complete=False, preparation=N
             payload = root / transport_payload(digest_value)
             if payload_directory is not None:
                 payload = payload_directory / payload.name
+            bundled = False
             if preparation:
                 packed = preparation / "shards" / payload.name
                 if packed.is_file():
                     payload = packed
-            if not payload.is_file() or archive_sha(payload, None) != digest_value:
+                    bundled = True
+            if not payload.is_file():
+                return digest_value, None
+            if archive_sha(payload, None) != digest_value:
+                if bundled:
+                    raise ValueError(f"bundled preparation shard SHA-256 mismatch: {payload.name}")
                 return digest_value, None
             entries = set()
             extract_payload(payload, unpacked, registrations, entries)
