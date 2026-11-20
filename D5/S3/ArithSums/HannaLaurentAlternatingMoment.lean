@@ -15,13 +15,13 @@ proof_shape:
   d, O, Q, Ev: private definitions; consumers: the lemmas below.
   A, claim: source definitions; consumer: result.
   d_eq: bind-only helper (derivative rules); consumers: d_odd, d_even.
-  d_odd, d_even: content (values at -1); consumer: deriv_split.
-  Q_step, O_step, Ev_step: content (two-step recursions); consumer: closed.
-  closed: content; consumer: deriv_closed.
-  deriv_split: content; consumer: deriv_closed.
-  deriv_closed: content; consumer: A_closed.
+  d_odd, d_even: bind-only helpers (parity rewriting of d_eq); consumer: deriv_split.
+  Q_step, O_step, Ev_step: bind-only helpers (sum splitting and ring); consumer: closed.
+  deriv_split: bind-only helper (termwise sum); consumer: deriv_closed.
+  closed: content (two-step parity induction to closed forms); consumer: deriv_closed.
+  deriv_closed: content via closed; consumer: A_closed.
   A_eq: bind-only helper (derivative_eval over the row bound); consumers: A_closed, result.
-  A_closed: bind-only helper; consumer: gf.
+  A_closed: content via deriv_closed; consumer: gf.
   gf: content (the order-four recurrence and initial values); consumer: result.
   result: content via gf and A_eq.
 Direct frozen dependencies: D5/S3/ArithSums/HannaLaurentRowSums (series, rowPolynomial,
