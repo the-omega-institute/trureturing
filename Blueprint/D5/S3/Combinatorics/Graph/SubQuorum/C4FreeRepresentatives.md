@@ -6,7 +6,7 @@ Pappus half-order refutation
 
 The certified Pappus graph is cubic, bipartite and C4-free, with dissociation maximum ten. It refutes the half-order bound at order eighteen. The parity labeling also supplies the common input to the representative proofs.
 
-In the Pappus graph the parity classes have nine vertices each. Applying objective_general_bound with degree three and side size nine gives T.card + M.card at most ten for every feasible singleton and matching pair. The supremum defining Omega is therefore at most ten. By parameter_comparison, beta(H,2) is at most psiSq(H), which is at most Omega(H). The equality beta(H,2)=10 forces psiSq(H)=Omega(H)=10.
+The certified Pappus graph is cubic and has no four-cycle, and its even and odd classes have nine vertices each. C4RepresentativeBounds.objective_general_bound at degree three and side size nine gives T.card + M.card at most ten for every feasible singleton and matching pair. Finset.sup_le then bounds the representative maximum Omega(H) by ten. C4RepresentativeBounds.parameter_comparison gives beta(H,2) ≤ psiSq(H) ≤ Omega(H), and beta_pappus gives beta(H,2)=10. These bounds yield the three equalities for the parity-labeled Pappus graph in the pinned C4-free packing note. https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md#L128-L157
 
 **Definition 1.1 (pappusNeighbors).**
 

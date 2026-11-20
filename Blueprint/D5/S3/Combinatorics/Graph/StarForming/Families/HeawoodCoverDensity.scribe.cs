@@ -5,16 +5,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Fami
 internal sealed class HeawoodCoverDensityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Certificates/omega2026starformingfamily");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both optional matching lines give the stronger density and gap bounds for uniform covers.",
         H("Uniform covers above the S and J Heawood lifts"),
         Blocks(
             Describe.Lean(DescribeId.Create("both-lines-cover-bound"),
                 DeclarationHandle.Create(Prefix + "both_lines_cover_bound"), H("The bound with both optional lines"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Let Q be any graph isomorphic to a binary Heawood lift whose gain, up to conjugacy, " +
                     "has u=0 and v=1 in HeawoodMatching.gain. In any finite uniform neighborhood cover H of Q, " +
@@ -30,25 +27,42 @@ internal sealed class HeawoodCoverDensityDocument : IScribeDocumentDefinition
                 "are (0,0,0) for S and (0,1,0) for J. Both beta and SF equal sixteen in each of the two actual lifts. " +
                 "The uniform-cover inequalities therefore hold above either original lift, in its original labeling.")),
             Paragraph(Text(
-                "The two sixteen-vertex selections are from HeawoodCertificates.lean and HEAWOOD_HIGHER_COVER_BOUNDS. The six fifteen-vertex selections are from HEAWOOD_DOUBLE_COVER_GAIN. All are from subquorum-colorings, " +
-                "revision 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0. A code 10p+s means Fano " +
-                "label p on sheet s. Points and lines are listed separately. The first two selections have " +
-                "sixteen vertices each, and the six selections that follow have fifteen vertices each.")),
-            Paragraph(Text("S (sixteen). Points [10, 20, 30, 50, 60, 70]. Lines [10, 11, 20, 21, 30, 31, 41, 51, 61, 71].")),
-            Paragraph(Text("J (sixteen). Points [20, 31, 40, 41, 50, 51, 61, 70]. Lines [10, 31, 40, 41, 51, 60, 61, 70].")),
-            Paragraph(Text("N1. Points [10, 20, 21, 30, 40, 41, 51]. Lines [60, 50, 41, 70, 20, 31, 71, 61].")),
-            Paragraph(Text("N2. Points [10, 11, 20, 31, 40, 41, 60]. Lines [40, 61, 50, 71, 30, 11, 70, 51].")),
-            Paragraph(Text("S. Points [60, 20, 50, 10, 70, 30]. Lines [10, 11, 20, 21, 30, 31, 41, 51, 61].")),
-            Paragraph(Text("J. Points [60, 20, 70, 30, 10, 50]. Lines [10, 11, 30, 31, 21, 41, 51, 61, 71].")),
-            Paragraph(Text("C. Points [10, 20, 41, 60, 70, 50]. Lines [41, 40, 31, 10, 30, 21, 51, 61, 71].")),
-            Paragraph(Text("K. Points [20, 30, 31, 40, 50, 51, 70]. Lines [11, 40, 31, 10, 20, 51, 60, 61].")),
+                "The two sixteen-vertex certificates come from HEAWOOD_HIGHER_COVER_BOUNDS.md, with their point and line " +
+                "selection lists as in HeawoodCertificates.lean. The six fifteen-vertex certificates come from " +
+                "HEAWOOD_DOUBLE_COVER_GAIN.md. All are from the subquorum-colorings contributors, revision " +
+                "48728b42d39ab3de5de251c61da5a404ec418a69, under Apache-2.0. The entries of U and Q are matched " +
+                "point and line endpoints in corresponding order. W and Z give isolated points and lines. " +
+                "The Points and Lines lists give the full selections in their Lean list order.")),
+            Paragraph(Text(
+                "A code 10p+s means Fano label p on sheet s in the indicated part. The base vertex index is p−1 " +
+                "for a point and 7+(p−1) for a line. HeawoodCoverParameters.pack sends a base vertex of index i " +
+                "on sheet s to 2i+s in Fin 28. In these coordinates a point and line are adjacent when their " +
+                "binary dot product is zero and their sheet sum in F2 equals the signing on their flag. Thus " +
+                "pack identifies the signed lift with the graph in the certificate coordinates for the same twists.")),
+            Paragraph(Text("S (sixteen). U=[60, 20, 50, 10, 70, 30], Q=[10, 11, 20, 21, 30, 31], W=[], Z=[41, 51, 61, 71]. " +
+                "Points [10, 20, 30, 50, 60, 70]. Lines [10, 11, 20, 21, 30, 31, 41, 51, 61, 71].")),
+            Paragraph(Text("J (sixteen). U=[40, 41, 20, 31, 51, 70, 61, 50], Q=[10, 31, 40, 41, 51, 60, 61, 70], W=[], Z=[]. " +
+                "Points [20, 31, 40, 41, 50, 51, 61, 70]. Lines [10, 31, 40, 41, 51, 60, 61, 70].")),
+            Paragraph(Text("N1. U=[10, 20, 21, 30, 40, 41, 51], Q=[60, 50, 41, 70, 20, 31, 71], W=[], Z=[61]. " +
+                "Points [10, 20, 21, 30, 40, 41, 51]. Lines [60, 50, 41, 70, 20, 31, 71, 61].")),
+            Paragraph(Text("N2. U=[10, 11, 20, 31, 40, 41, 60], Q=[40, 61, 50, 71, 30, 11, 70], W=[], Z=[51]. " +
+                "Points [10, 11, 20, 31, 40, 41, 60]. Lines [40, 61, 50, 71, 30, 11, 70, 51].")),
+            Paragraph(Text("S (fifteen). U=[60, 20, 50, 10, 70, 30], Q=[10, 11, 20, 21, 30, 31], W=[], Z=[41, 51, 61]. " +
+                "Points [60, 20, 50, 10, 70, 30]. Lines [10, 11, 20, 21, 30, 31, 41, 51, 61].")),
+            Paragraph(Text("J (fifteen). U=[60, 20, 70, 30], Q=[10, 11, 30, 31], W=[10, 50], Z=[21, 41, 51, 61, 71]. " +
+                "Points [60, 20, 70, 30, 10, 50]. Lines [10, 11, 30, 31, 21, 41, 51, 61, 71].")),
+            Paragraph(Text("C. U=[10, 20, 41, 60, 70], Q=[41, 40, 31, 10, 30], W=[50], Z=[21, 51, 61, 71]. " +
+                "Points [10, 20, 41, 60, 70, 50]. Lines [41, 40, 31, 10, 30, 21, 51, 61, 71].")),
+            Paragraph(Text("K. U=[20, 30, 31, 40, 50, 51, 70], Q=[11, 40, 31, 10, 20, 51, 60], W=[], Z=[61]. " +
+                "Points [20, 30, 31, 40, 50, 51, 70]. Lines [11, 40, 31, 10, 20, 51, 60, 61].")),
             Paragraph(Text(
                 "The nonzero flags for N1 are (1,2), for N2 are (1,2) and (2,4), for C are (1,4), (2,1) and (4,2), " +
                 "and for K are (1,4), (2,1), (4,2) and (2,4). The fifteen-vertex S and J selections use the same " +
                 "signing as their respective sixteen-vertex selections.")),
             Paragraph(Text(
-                "Original sixteen-vertex selections and cover consequences. " +
-                "https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_HIGHER_COVER_BOUNDS.md#L68")),
+                "The published S and J certificates establish the respective sixteen-vertex selections and give " +
+                "the same density and gap bounds for covers above those two types. " +
+                "https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_HIGHER_COVER_BOUNDS.md#L68-L101")),
             Paragraph(Text(
                 "Original fifteen-vertex selections. " +
                 "https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L110-L151")))));

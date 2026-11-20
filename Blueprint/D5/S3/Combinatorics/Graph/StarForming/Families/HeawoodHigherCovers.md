@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCov
 
 *Commentary.*
 
-Exact declaration: theorem connected_double_quotient (p : V → Fin 14) (double : CoverPullback.NeighborhoodCover HeawoodLift.base.Adj Q.Adj p) (two : ∀ v, (Finset.univ.filter (fun x => p x=v)).card=2) (connected : Q.Preconnected) (q : W → V) (higher : CoverPullback.NeighborhoodCover Q.Adj H.Adj q) (k : ℕ) (fibers : ∀ v, (Finset.univ.filter (fun x => q x=v)).card=k) : 15*Fintype.card W ≤ 28*beta H 2 ∧ 196*(SF H 2-beta H 2) ≤ 9*Fintype.card W.
+Exact declaration: theorem connected_double_quotient {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] (Q : SimpleGraph V) (H : SimpleGraph W) [DecidableRel Q.Adj] [DecidableRel H.Adj] (p : V → Fin 14) (double : CoverPullback.NeighborhoodCover HeawoodLift.base.Adj Q.Adj p) (two : ∀ v, (Finset.univ.filter (fun x => p x=v)).card=2) (connected : Q.Preconnected) (q : W → V) (higher : CoverPullback.NeighborhoodCover Q.Adj H.Adj q) (k : ℕ) (fibers : ∀ v, (Finset.univ.filter (fun x => q x=v)).card=k) : 15*Fintype.card W ≤ 28*beta H 2 ∧ 196*(SF H 2-beta H 2) ≤ 9*Fintype.card W.
 
 ## References
 
