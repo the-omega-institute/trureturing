@@ -317,7 +317,11 @@ def family : Registration arena
   dependence := by
     intro role
     refine ⟨2, ∅, {2}, ?_⟩
-    norm_num [actual, realize]
+    change (∏ p ∈ (∅ : Finset ℕ), p ^ (2 : ℕ).factorization p) ≠
+      ∏ p ∈ ({2} : Finset ℕ), p ^ (2 : ℕ).factorization p
+    simp only [Finset.prod_empty, Finset.prod_singleton,
+      Nat.prime_two.factorization, Finsupp.single_eq_same, pow_one]
+    norm_num
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.Divisors.UnitaryProductBridge.prime_power_product_unitary)
