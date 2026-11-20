@@ -23,6 +23,30 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
+    def test_stream_packs_bounded_batches_and_requires_upload_acknowledgement(self):
+        shards = importlib.import_module("lean_actions_shards")
+        first, large, last = ("a" * 64, "b" * 64, "c" * 64)
+        record = {"entries": {"first": first, "large": large, "last": last}}
+
+        def pack(*args, deliver):
+            deliver(first, 1)
+            deliver(large, 2 * 1024 ** 3)
+            deliver(last, 1)
+            return record
+
+        args = (self.root, {}, "complete", None, REV, (), set())
+        with mock.patch.object(shards, "prepare", side_effect=pack), \
+                mock.patch.object(sys, "stdin", io.StringIO("continue\n" * 3)), \
+                contextlib.redirect_stdout(io.StringIO()) as stdout:
+            self.assertEqual(record, shards.prepare_stream(*args))
+        frames = [json.loads(line.removeprefix("SHARD_PAYLOAD_BATCH "))
+                  for line in stdout.getvalue().splitlines() if line.startswith("SHARD_PAYLOAD_BATCH ")]
+        self.assertEqual([[first], [large], [last]], frames)
+        with mock.patch.object(shards, "prepare", side_effect=pack), \
+                mock.patch.object(sys, "stdin", io.StringIO("")), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, "stopped before accepting"):
+                shards.prepare_stream(*args)
+
     def test_release_checkpoint_artifact_survives_empty_cache_and_checks_attempt(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")

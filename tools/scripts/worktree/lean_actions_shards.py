@@ -15,6 +15,7 @@ import re
 import shutil
 import stat
 import subprocess
+import sys
 import tarfile
 import tempfile
 import time
@@ -234,7 +235,8 @@ def resume_verified(root):
         return False
 
 
-def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset(), *, preparation=False):
+def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset(), *,
+            preparation=False, deliver=None):
     if preparation:
         if state != "complete" or not preparation_source_is_valid() or project_work(root) is None:
             raise ValueError("Actions shard preparation requires a validated build at the protected PR runtime")
@@ -283,6 +285,7 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
         fingerprints = {}
         entries = {}
         written = set()
+        written_bytes = 0
         for key, paths in sorted(groups.items()):
             fingerprint = digest([(name, (build / name).stat().st_mode & 0o777, archive_sha(build / name, None))
                                   for name in sorted(paths)])
@@ -291,14 +294,50 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
             if retained in available and previous["fingerprints"][key] == fingerprint:
                 entries[key] = retained
             else:
-                entries[key] = write_payload(root, build, paths)
-                written.add(entries[key])
+                payload = write_payload(root, build, paths)
+                entries[key] = payload
+                size = (root / transport_payload(payload)).stat().st_size
+                if payload not in written:
+                    written.add(payload)
+                    written_bytes += size
+                if deliver is not None:
+                    deliver(payload, size)
     record = {"binding": identity, "owner": current_owner(root), "state": state, "layout": layout,
               "sources": sources, "entries": entries, "fingerprints": fingerprints, "required": required}
     if state == "complete" and REPORT not in entries:
         raise ValueError("cannot publish a complete Actions index without the report bundle")
     receipt("shards", "snapshot", complete=state == "complete", entries=len(entries),
-            packed=len(written), bytes=sum((root / transport_payload(item)).stat().st_size for item in written))
+            packed=len(written), bytes=written_bytes)
+    return record
+
+
+def prepare_stream(root, identity, state, previous, anchor, targets, available):
+    batch = []
+    batch_bytes = 0
+    peak_bytes = 0
+
+    def flush():
+        nonlocal batch_bytes
+        print("SHARD_PAYLOAD_BATCH " + json.dumps(batch), flush=True)
+        if sys.stdin.readline() != "continue\n":
+            raise ValueError("Actions upload stopped before accepting the packed shards")
+        batch.clear()
+        batch_bytes = 0
+
+    def deliver(payload, size):
+        nonlocal batch_bytes, peak_bytes
+        peak_bytes = max(peak_bytes, batch_bytes + size)
+        if batch and batch_bytes + size > 1024 ** 3:
+            flush()
+        batch.append(payload)
+        batch_bytes += size
+        if len(batch) == 32 or batch_bytes >= 1024 ** 3:
+            flush()
+
+    record = prepare(root, identity, state, previous, anchor, targets, available, deliver=deliver)
+    if batch:
+        flush()
+    print("LEAN_ACTIONS_SHARDS " + json.dumps({"operation": "pack", "peak_payload_bytes": peak_bytes}), flush=True)
     return record
 
 
@@ -460,7 +499,10 @@ def main():
     parser.add_argument("--preparation", type=Path)
     parser.add_argument("--artifact-directory", type=Path)
     parser.add_argument("--previous-attempt", type=int)
+    parser.add_argument("--stream-payloads", action="store_true")
     args = parser.parse_args()
+    if args.stream_payloads and args.operation != "prepare":
+        parser.error("payload streaming requires prepare")
     if args.preparation and (args.state != "complete" or args.operation != "install" or args.target):
         parser.error("preparation requires a complete, unscoped install")
     root = args.repository.resolve()
@@ -487,7 +529,8 @@ def main():
         if record is None and (not args.anchor or not re.fullmatch(r"[0-9a-f]{40}", args.anchor)):
             raise ValueError("a fixed dev history anchor is required to seed the layout")
         available = set(json.loads(args.available.read_text())) if args.available else frozenset()
-        print(json.dumps(prepare(root, identity, args.state, record, args.anchor, args.target, available),
+        pack = prepare_stream if args.stream_payloads else prepare
+        print(json.dumps(pack(root, identity, args.state, record, args.anchor, args.target, available),
                          separators=(",", ":")))
     elif record is None:
         raise ValueError("Actions shard index missing")
