@@ -70,7 +70,7 @@ jobs:
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
-            .github/actions/lean-cache-release-seed/action.yml
+            .github/actions/lean-cache-release-seed/*
             .github/actions/lean-cache-shards/*
             .gitignore
             D5/*.lean
