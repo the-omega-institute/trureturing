@@ -12,7 +12,24 @@ internal sealed class CharacterKernelRankDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Over an algebraically closed field, a sum with nonzero weights of the characters of finitely many pairwise inequivalent finite-dimensional irreducible representations of a group gives a kernel whose rank is the sum of the squared dimensions.",
         H("Rank of a character kernel"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Node("span-range-pi-eq-top", "span_range_pi_eq_top", "The operators of a family of irreducible representations span",
+                StatementSource.FromAuthor(SpanFormula()), AssessedProvenance.FromRepo(Burnside), DescribeRole.Theorem,
+                "Let k be an algebraically closed field, G a group and iota a finite index type, and for each i let rho(i) be an irreducible representation of G on a finite-dimensional k-vector space W(i), with rho(i) and rho(j) admitting no equivalence of representations when i and j are distinct. "
+                    + "Then the families (rho(i)(g))_i, as g ranges over G, span the whole product over i of the endomorphism algebras End(W(i)). "
+                    + "This is Burnside's theorem for a finite family. The product of the W(i) is a semisimple module over the group algebra k[G]; by Schur's lemma, with algebraic closedness and pairwise inequivalence, every k[G]-endomorphism of it acts on each factor W(i) by a scalar. "
+                    + "The Jacobson density theorem for this semisimple module then shows that every family of endomorphisms is the action of an element of k[G], that is, a linear combination of the families (rho(i)(g))_i."),
+            Node("trace-pairing", "tracePairing", "The weighted trace pairing",
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), DescribeRole.Definition,
+                "For a field k, a finite index type iota, finite-dimensional k-vector spaces W(i) and weights c(i) in k, the weighted trace pairing is the bilinear form on the product over i of End(W(i)) that pairs the families B and A to the sum over i of c(i) times the trace of the composite B(i) A(i). "
+                    + "It is linear in each argument because the trace and composition are."),
+            Node("eq-zero-of-trace-pairing", "eq_zero_of_tracePairing", "The weighted trace pairing is nondegenerate",
+                StatementSource.FromAuthor(PairingFormula()), AssessedProvenance.FromRepo(), DescribeRole.Lemma,
+                "Let every weight c(i) be nonzero. If a family A of endomorphisms pairs to zero with every family B under the weighted trace pairing, then A is zero. "
+                    + "No algebraic closedness is needed. Suppose A(j) is nonzero for some j; choose a vector v of W(j) and a linear functional f on W(j) with f(A(j) v) nonzero. "
+                    + "Let B be the family that is the rank-one map w maps to f(w) v in position j and zero elsewhere. "
+                    + "The pairing of B with A is c(j) times the trace of w maps to f(A(j) w) v, which is c(j) f(A(j) v), and it is nonzero."),
+            Describe.Lean(
             DescribeId.Create("character-kernel-rank-finrank-span-sum-character-kernel"),
             DeclarationHandle.Create(Prefix + "finrank_span_sum_character_kernel"),
             H("The rank of a weighted character kernel"),
@@ -45,6 +62,66 @@ internal sealed class CharacterKernelRankDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "For one representation the statement is Burnside's theorem read through the nondegenerate trace pairing; for several it is the same reading for a semisimple module with pairwise non-isomorphic simple summands."))),
             DescribeRole.Theorem))));
+
+    private static DocumentBlock Node(
+        string id, string selector, string title, StatementSource statement,
+        AssessedProvenance provenance, DescribeRole role, string prose) =>
+        Describe.Lean(DescribeId.Create("character-kernel-rank-" + id),
+            DeclarationHandle.Create(Prefix + selector), H(title), statement, provenance,
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula ProdOverIndex(Formula body) =>
+        Seq(new Formula.Subscript(Prod, Seq(F.Id("i"), Sp, InMacro, Sp, IndexType)), Sp, body);
+
+    /// <summary>The product over i of the endomorphism algebras End(W(i)).</summary>
+    private static Formula Endomorphisms(Formula k) => ProdOverIndex(OpApp("End", k, App(F.Id("W"), F.Id("i"))));
+
+    /// <summary>The instance hypotheses on the spaces W(i), followed by the body.</summary>
+    private static Formula OverSpaces(Formula k, Formula body)
+    {
+        Formula Wi = App(F.Id("W"), F.Id("i"));
+        return ForAll("W", new Formula.TypeArrow(IndexType, TypeStar), Seq(
+            Inst(ForAll("i", IndexType, OpApp("AddCommGroup", Wi))),
+            Inst(ForAll("i", IndexType, OpApp("Module", k, Wi))),
+            Inst(ForAll("i", IndexType, OpApp("FiniteDimensional", k, Wi))),
+            body));
+    }
+
+    private static Formula SpanFormula()
+    {
+        Formula k = F.Id("k"), G = F.Id("G"), W = F.Id("W"), i = F.Id("i"), j = F.Id("j"), g = F.Id("g");
+        Formula rhoOf(Formula index) => App(Rho, index);
+        Formula families = Seq(g, Sp, Mapsto, Sp, Parenthesized(Seq(i, Sp, Mapsto, Sp, App(rhoOf(i), g))));
+        Formula conclusion = new Formula.Relation(OpApp("span", k, OpApp("range", families)),
+            FormulaRelationOperator.Equal, Endomorphisms(k));
+        Formula inequivalent = Parenthesized(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("i"), IndexType),
+                new Formula.BoundVariable(FormulaIdentifier.Create("j"), IndexType)],
+            Implies(new Formula.Relation(i, FormulaRelationOperator.NotEqual, j),
+                OpApp("IsEmpty", OpApp("Equiv", rhoOf(i), rhoOf(j))))));
+        Formula afterRho = Seq(
+            Inst(ForAll("i", IndexType, OpApp("IsIrreducible", rhoOf(i)))),
+            Implies(inequivalent, conclusion));
+        Formula body = All(Rho, Parenthesized(ForAll("i", IndexType, OpApp("Representation", k, G, App(W, i)))), afterRho);
+        return Disp(ForAll("k", TypeStar, ForAll("G", TypeStar, Seq(
+            Inst(OpApp("Field", k)), Inst(OpApp("IsAlgClosed", k)), Inst(OpApp("Group", G)),
+            All(IndexType, TypeStar, Seq(Inst(OpApp("Fintype", IndexType)), OverSpaces(k, body)))))));
+    }
+
+    private static Formula PairingFormula()
+    {
+        Formula k = F.Id("k"), c = F.Id("c"), i = F.Id("i"), A = F.Id("A"), B = F.Id("B");
+        Formula nonzero = Parenthesized(ForAll("i", IndexType,
+            new Formula.Relation(App(c, i), FormulaRelationOperator.NotEqual, D(0))));
+        Formula orthogonal = Parenthesized(ForAll("B", Endomorphisms(k),
+            new Formula.Relation(OpApp("tracePairing", c, B, A), FormulaRelationOperator.Equal, D(0))));
+        Formula body = ForAll("c", new Formula.TypeArrow(IndexType, k), Implies(nonzero,
+            ForAll("A", Endomorphisms(k), Implies(orthogonal,
+                new Formula.Relation(A, FormulaRelationOperator.Equal, D(0))))));
+        return Disp(ForAll("k", TypeStar, Seq(
+            Inst(OpApp("Field", k)),
+            All(IndexType, TypeStar, Seq(Inst(OpApp("Fintype", IndexType)), OverSpaces(k, body))))));
+    }
 
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula App(Formula function, params Formula[] arguments) =>
