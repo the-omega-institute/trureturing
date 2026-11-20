@@ -137,7 +137,7 @@ esac
                 self.setUp()
                 self.damage('inputs-without:' + field)
                 self.restore_seed()
-                result = self.run_entry()
+                result = self.republish()
                 self.assertEqual(result.returncode, 0,
                                  '[FAIL] incomplete_local_seed_recovery_must_succeed: '
                                  + result.stdout + result.stderr)
@@ -162,7 +162,7 @@ esac
                 self.setUp()
                 self.damage(kind)
                 self.restore_seed()
-                result = self.run_entry()
+                result = self.republish()
                 self.assertEqual(result.returncode, 0,
                                  '[FAIL] damaged_local_bundle_recovery_must_succeed: '
                                  + result.stdout + result.stderr)
@@ -184,7 +184,7 @@ esac
     def test_fetched_matching_seed_reuses_complete_report(self):
         self.damage('missing')
         self.restore_seed()
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(len(self.calls), 1, '[FAIL] fetched_matching_seed_must_skip_report_build')
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', result.stdout)
@@ -198,23 +198,20 @@ esac
         self.assertNotEqual(result.returncode, 0)  # Native build stub preserves failure.
         self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
                          '[FAIL] matching_restored_format_must_allow_incremental_build')
-        self.assertEqual(len(self.calls), 3)
-        self.assertEqual(self.calls[1], 'ensure')
-        self.assertIn('build :report', self.calls[2], '[FAIL] compatible_fetch_keeps_lake_incremental_path')
-        self.assertIn('changed_inputs=1', result.stdout)
+        self.assertEqual(len(self.calls), 2)
+        self.assertIn('build :report', self.calls[1], '[FAIL] compatible_fetch_keeps_lake_incremental_path')
 
     def test_matching_local_seed_with_changed_inputs_does_not_fetch(self):
         self.fixture.write('D5/A.lean', 'def a := 2\n')
         result = self.run_entry()
         self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
                          '[FAIL] matching_local_format_must_allow_incremental_build')
-        self.assertEqual(len(self.calls), 2)
-        self.assertEqual(self.calls[0], 'ensure')
-        self.assertIn('build :report', self.calls[1])
+        self.assertEqual(len(self.calls), 1)
+        self.assertIn('build :report', self.calls[0])
 
     def test_same_format_program_changes_preserve_complete_reuse(self):
         self.fixture.write('producer.py', '# changed producer\n')
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.calls, [])
         self.assertIn('extracted_modules=0 aggregates=0', result.stdout)
@@ -243,9 +240,8 @@ esac
     def test_rebuild_opt_in_enters_full_path_without_fetch_or_receipt_reuse(self):
         result = self.run_entry('REBUILD_REPORT_CACHE=1')
         self.assertNotEqual(result.returncode, 0, '[FAIL] explicit_build_propagates_lake_failure')
-        self.assertEqual(len(self.calls), 2, '[FAIL] explicit_build_must_enter_report_path')
-        self.assertEqual(self.calls[0], 'ensure')
-        self.assertIn('build :report', self.calls[1])
+        self.assertEqual(len(self.calls), 1, '[FAIL] explicit_build_must_enter_report_path')
+        self.assertIn('build :report', self.calls[0])
         self.assertNotIn('complete-entry-reused', result.stdout)
 
     def report_regeneration_fixture(self):
@@ -262,7 +258,9 @@ esac
         compiled = self.root / '.lake/build/lib/lean/D5/A.olean'
         self.fixture.write(str(compiled.relative_to(self.root)), 'compiled Lean input')
         self.fixture.write('.lake/packages/dependency/.lake/build/lib/Dep.olean', 'dependency input')
-        self.script('tools/scripts/worktree/lean-cache-run.sh', '''exec python3 - "$@" <<'PY'
+        self.script('tools/scripts/worktree/lean-cache-run.sh', '''[ "$1" = --prebuilt ] || exit 98
+shift
+exec python3 - "$@" <<'PY'
 import subprocess, sys
 from pathlib import Path
 sys.path.insert(0, 'tools/scripts/worktree')
@@ -279,10 +277,11 @@ import publication
 root = Path.cwd()
 state = root / '.lake/build/lean-inspector'
 seen = dict(files=sorted(str(p.relative_to(state)) for p in state.rglob('*') if p.is_file()),
+            regenerate=os.environ.get('STRATALINT_INSPECTOR_REGENERATE_REPORTS'),
             artifact_cache=os.environ.get('LAKE_ARTIFACT_CACHE'),
             restore_artifacts=os.environ.get('LAKE_RESTORE_ARTIFACTS'))
 (root / 'regeneration.json').write_text(json.dumps(seen))
-if seen['artifact_cache'] != 'false' or seen['restore_artifacts'] != 'false':
+if seen['regenerate'] != '1':
     raise SystemExit(29)  # A retained content-store artifact would otherwise restore.
 state.mkdir(parents=True, exist_ok=True)
 (state / 'modules').mkdir()
@@ -299,13 +298,14 @@ PY
     def test_explicit_report_regeneration_discards_native_leaves_and_restoration(self):
         generated, compiled = self.report_regeneration_fixture()
         stamp = compiled.stat().st_mtime_ns
+        self.environment.update(LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true')
         result = self.run_entry('REGENERATE_REPORT_ARTIFACTS=1')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotIn('complete-entry-reused', result.stdout)
         self.assertEqual(json.loads((self.root / 'regeneration.json').read_text()),
                          dict(files=['interface/lib/lean/Tool.olean', 'judge-inputs/A.json',
                                      'producer/lib/lean/Tool.olean', 'reg/lib/lean/Tool.olean'],
-                              artifact_cache='false', restore_artifacts='false'))
+                              regenerate='1', artifact_cache='true', restore_artifacts='true'))
         self.assertEqual((generated / 'modules/A.zip').read_text(), 'fresh generic report leaf')
         self.assertFalse((generated / 'modules/A.zip.fib-previous').exists())
         self.assertEqual((compiled.read_text(), compiled.stat().st_mtime_ns), ('compiled Lean input', stamp))
@@ -318,7 +318,7 @@ PY
     def test_normal_entry_reuses_and_aggregate_rebuild_retains_native_leaves(self):
         generated, _ = self.report_regeneration_fixture()
         original = {p: p.read_bytes() for p in generated.rglob('*') if p.is_file()}
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertFalse((self.root / 'regeneration.json').exists())
         self.assertEqual({p: p.read_bytes() for p in original}, original)
@@ -346,9 +346,8 @@ PY
         result = self.run_entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build')
         self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
                          '[FAIL] explicit_reuse_or_build_must_allow_full_path')
-        self.assertEqual(len(self.calls), 2)
-        self.assertEqual(self.calls[0], 'ensure')
-        self.assertIn('build :report', self.calls[1])
+        self.assertEqual(len(self.calls), 1)
+        self.assertIn('build :report', self.calls[0])
 
     def test_ci_environment_does_not_change_local_policy(self):
         self.damage('missing')
@@ -373,7 +372,7 @@ PY
         self.damage('missing')
         self.restore_seed()
         destination = self.root / 'custom/report.json'
-        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        result = self.republish(destination)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertTrue(destination.is_file(), '[FAIL] fetched_seed_publishes_requested_output')
 
@@ -382,7 +381,6 @@ PY
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(self.calls[0].split()[0], 'fetch', '[FAIL] newer_release_fetches_before_incremental_build')
-        self.assertIn('ensure', self.calls)
         self.assertTrue(any(call.startswith('lake ') for call in self.calls))
         self.assertIn('"action":"fetch"', result.stdout)
         self.assertIn(release, result.stdout)
@@ -400,7 +398,7 @@ PY
         self.git_commit('clean changed inputs', empty=True)
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure', '[FAIL] older_release_keeps_local_seed')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '), '[FAIL] older_release_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"reason":"release-not-newer"', result.stdout)
 
@@ -408,7 +406,7 @@ PY
         self.stale_release_fixture(producer='f' * 40)
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure', '[FAIL] foreign_release_keeps_local_seed')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '), '[FAIL] foreign_release_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"reason":"release-head-ancestry-unprovable"', result.stdout)
 
@@ -417,7 +415,7 @@ PY
         (self.root / '.lake/lean-report-seed-base.json').unlink()
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure', '[FAIL] unknown_base_keeps_local_seed')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '), '[FAIL] unknown_base_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"local-base-unknown"', result.stdout)
@@ -428,7 +426,7 @@ PY
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
         self.assertTrue(self.calls, '[FAIL] listing_failure_continues_incrementally')
-        self.assertEqual(self.calls[0], 'ensure')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '))
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('listing failed', result.stdout)
@@ -441,7 +439,7 @@ PY
                          + result.stdout + result.stderr)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=23', result.stderr,
                       '[FAIL] download_failure_returns_lake_exit')
-        self.assertEqual(self.calls[0], 'ensure')
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '))
         self.assertTrue(any(call.startswith('lake ') for call in self.calls),
                         '[FAIL] download_failure_reaches_lake')
         self.assertNotIn('fetch ', '\n'.join(self.calls))

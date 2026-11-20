@@ -144,7 +144,7 @@ def current_phase(phase, data, plan, base, paths):
             return code
         env = {"STRATALINT_LEAN_PRODUCER_DLL": producer.stdout.strip(), "STRATALINT_BUILD_TIMEOUT_SECONDS": "21600",
                "STRATALINT_FIB_REGRESSIONS_SELECTED": str(plan["fib-regressions"]).lower()}
-        return execute(phase, ["make", "lean-report", "FULL_BUILD=1", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], compute=False, env=env)
+        return execute(phase, ["make", "check-lean-report", "FULL_BUILD=1", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], compute=False, env=env)
     if phase == "pr-fib":
         return execute(phase, ["make", "compiled-fib-test"])
     if phase == "compiled-audit":

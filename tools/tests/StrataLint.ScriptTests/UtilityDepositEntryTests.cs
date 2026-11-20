@@ -67,6 +67,7 @@ public sealed class UtilityDepositEntryTests
         WriteExecutable(root, "make", """
             #!/usr/bin/env bash
             case "$1" in
+              lean-report-prepare) test -s .lake/build/lib/lean/D5/S0/Carrier/Probe.olean ;;
               lean-report-scoped) test -s .lake/build/stratalint/delivery-lean-report.json ;;
               emit) echo REACHED_EMISSION; exit 77 ;;
               *) exit 96 ;;

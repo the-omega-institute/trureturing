@@ -851,7 +851,7 @@ raise SystemExit(37)
             write(path, (repository / path).read_text())
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
         write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\nexit 0\n')
-        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --prebuilt ] || exit 67\nshift\nexec "$@"\n')
         request = write('batch.json', json.dumps([['produce', row] for row in self.requests]))
         # Lake is the boundary stub; the shell entry, Python batch producer and
         # failing executable are real, including all their failure cleanup.
@@ -936,21 +936,12 @@ class EntryPointTests(unittest.TestCase):
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
         from test_reuse import ReuseTests
-        # A built producer serves every later step, exactly as a prebuilt one does.
-        ensure = 'ensure candidate producer.dll'
-        cases = [('inputs', 2, [], False), ('producer-build', 37, ['build'], False),
-                 ('ensure', 38, ['build', ensure], False),
-                 ('report', 39, ['build', ensure, 'report'], False),
-                 ('fib-regressions', 41, ['build', ensure, 'report', 'fib-regressions'], False),
-                 ('publish', 40, ['build', ensure, 'report', 'publish'], False),
-                 ('report', 39, [ensure, 'report'], True),
-                 ('fib-regressions', 41, [ensure, 'report', 'fib-regressions'], True),
-                 ('publish', 40, [ensure, 'report', 'publish'], True)]
-        for phase, status, calls, prebuilt in cases:
+        cases = [('inputs', 2, []), ('report', 39, ['report']), ('publish', 40, ['report', 'publish'])]
+        for phase, status, calls in cases:
             fixture = ReuseTests()
             fixture.setUp()
             self.addCleanup(fixture.doCleanups)
-            with self.subTest(phase=phase, prebuilt=prebuilt):
+            with self.subTest(phase=phase):
                 root = fixture.root
                 def write(name, text):
                     path = root / name
@@ -964,8 +955,7 @@ class EntryPointTests(unittest.TestCase):
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
                 # Use the shared no-Application bundle fixture for both generations.
-                # No success receipt is installed; the actual regression consumer
-                # reads the produced archive before the failing publication boundary.
+                # No success receipt is installed for the previous bundle.
                 fixture.bundle()
                 report = fixture.report
                 before = {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES}
@@ -978,9 +968,6 @@ class EntryPointTests(unittest.TestCase):
                     for suffix in publication.SUFFIXES:
                         member = publication.member(fixture.report, suffix)
                         archive.write(member, member.name)
-                write('bin/dotnet', '#!/bin/sh\nprintf "%s\\n" build >> "$CALLS"\n'
-                    + 'printf "%s\\n" "$PWD/candidate producer.dll"\nexit '
-                    + str(37 if phase == 'producer-build' else 0) + '\n')
                 write('candidate producer.dll', 'fixture candidate producer')
                 write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\n'
                     + 'printf "ensure %s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> "$CALLS"\nexit '
@@ -991,12 +978,7 @@ class EntryPointTests(unittest.TestCase):
                     + ('exit 39\n' if phase == 'report' else
                        'mkdir -p .lake/build/lean-inspector\n'
                        + 'cp produced-report.zip .lake/build/lean-inspector/report.zip\n'))
-                write('bin/make', '#!/bin/sh\n'
-                    + '[ "$#" -eq 3 ] && [ "$1" = -C ] && [ "$2" = "$PWD" ] '
-                    + '&& [ "$3" = compiled-fib-test ] || exit 97\n'
-                    + 'printf "%s\\n" fib-regressions >> "$CALLS"\nexit 41\n')
-
-                write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+                write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --prebuilt ] || exit 67\nshift\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
                     'import os, sys\nfrom pathlib import Path\n'
@@ -1007,17 +989,13 @@ class EntryPointTests(unittest.TestCase):
                 record = root / 'calls'
                 env = dict(os.environ, FULL_BUILD="1", PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
                     CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1',
-                    STRATALINT_LEAN_BUILD_TARGETS='[]',
-                    STRATALINT_FIB_REGRESSIONS_SELECTED='true' if phase == 'fib-regressions' else 'false',
-                    STRATALINT_LEAN_PRODUCER_DLL=str(root / 'candidate producer.dll') if prebuilt else '')
+                    STRATALINT_LEAN_PRODUCER_DLL=str(root / 'candidate producer.dll'))
                 result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
                 self.assertEqual(result.returncode, status, result.stdout + result.stderr)
                 self.assertIn(f'LEAN_INSPECTOR_FAILED phase={phase} exit={status}', result.stderr)
                 self.assertEqual(record.read_text().splitlines() if record.exists() else [], calls)
                 self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES})
-                if phase == 'fib-regressions':
-                    self.assertIn('LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=true', result.stderr)
 
 
 if __name__ == '__main__':

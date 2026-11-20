@@ -46,6 +46,8 @@ public sealed partial class MakeWorkflowTests
         "lean",
         "lean-report",
         "lean-report-scoped",
+        "lean-report-prepare",
+        "check-lean-report",
         "build",
         "emit",
         "dag",

@@ -31,6 +31,15 @@ UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'cla
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
 
+def check_workspace_producer(root):
+    project = Path(root) / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'
+    result = subprocess.run(['dotnet', 'msbuild', str(project), '-question',
+                             '-p:Configuration=Release', '-nologo', '-v:quiet'])
+    if result.returncode:
+        raise ValueError('prebuilt utility reader needs a build; run make lean-report-prepare '
+                         'with the same LEAN_TARGETS or FULL_BUILD=1')
+
+
 def batch_modules():
     """Runtime capacity only: keep report identities and reusable rows unchanged."""
     value = os.environ.get('STRATALINT_NATIVE_BATCH_MODULES', str(NATIVE_BATCH_MODULES))
@@ -145,9 +154,8 @@ def regenerate(root, *command):
 
     Remove generated report leaves, traces and the aggregate, retaining native
     program directories and compiler input projections. Mathematical Lean and
-    dependency build directories lie outside this report state. Disable Lake's
-    content-store restoration for this invocation so
-    identical input traces cannot resurrect the discarded report artifacts.
+    dependency build directories lie outside this report state. Only report ZIP
+    facets bypass content-store lookup during regeneration.
     """
     if not command:
         raise ValueError('report regeneration requires a build command')
@@ -163,7 +171,7 @@ def regenerate(root, *command):
             else:
                 path.unlink()
     subprocess.run(command, cwd=root, check=True,
-                   env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
+                   env=dict(os.environ, STRATALINT_INSPECTOR_REGENERATE_REPORTS='1'))
 
 
 def write_if_changed(path, data):
@@ -732,7 +740,7 @@ def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,
-               'regenerate': regenerate}
+               'regenerate': regenerate, 'check-workspace-producer': check_workspace_producer}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     with phase('native-' + sys.argv[1]):

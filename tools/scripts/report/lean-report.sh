@@ -2,7 +2,7 @@
 set -euo pipefail
 [[ "${FULL_BUILD:-0}" == 1 ]] || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-POLICY=fetch-or-fail
+POLICY=reuse-or-build
 REBUILD=0
 REGENERATE=0
 while [[ $# -gt 0 ]]; do
