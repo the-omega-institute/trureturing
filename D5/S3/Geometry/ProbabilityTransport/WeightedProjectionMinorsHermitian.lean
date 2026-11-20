@@ -16,8 +16,8 @@ weights `∑ min{a} |q|² ≤ ‖z‖² ∑ a |p|² ≤ ∑ max{a} |q|²`.
 admission_basis: escape-witness. Escape witnesses: adjoint and energy (the Hermitian energy identity
 `∑|lift z v|² + 6∑|contract z v|² = 3‖z‖²∑|v|²`), contraction (Hermitian Cauchy–Schwarz contraction
 bound), recover_minors with mass_identity, family_domination, weighted_all_tuples, and the ordered
-identity, and general (removal of the normalization of `z` by homogeneity and of the symmetry of
-weights and relations). Consumed bind-only helpers: sum_rotate, sum_swap, lift_alt, lower_skew,
+identity. Consumed bind-only helpers: general (normalization of `z` by homogeneity and
+symmetrization of weights and relations), sum_rotate, sum_swap, lift_alt, lower_skew,
 lower_lift, conj_mul_norm, pair_skew, triple_lift, contract_pair, unit_conj, projection_alt,
 projection_locality, pair_projection_le, triple_alt, triple_zero, triple_norm_sym, triple_smul,
 sum_pull, ordered_weighted, signed_upper, signed_lower, ordered_family. -/
@@ -673,7 +673,7 @@ theorem result {n : ℕ} (x y z : EuclideanSpace 𝕜 (Fin n))
   have hzy' : ∑ k, conj (z k) * y k = 0 := by
     simpa [PiLp.inner_apply, RCLike.inner_apply, mul_comm] using hzy
   have h := general (fun i => x i) (fun i => y i) (fun i => z i) hzx' hzy'
-  simp only [pairMinor, tripleMinor, Matrix.det_fin_two_of, one_mul, ← hz] at h
+  simp only [pairMinor, tripleMinor, one_mul, ← hz] at h
   simp only [Matrix.det_fin_two_of]
   exact h
 
