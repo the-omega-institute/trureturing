@@ -148,14 +148,6 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
                 Blocks(Paragraph(Text("The first natural index with theta above x has an overshoot of at "
                     + "most log of the index. The ratio of the index to x tends to one, and the "
                     + "difference of the logarithms tends to zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-theta-tail-local-modulus"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_theta_tail_local_modulus"),
-                H("Local displacement of the actual theta tail"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For all sufficiently large u and every v≥u, the absolute "
-                    + "change of the signed weighted tail is at most 2(v−u)/(u log(u))."))),
                 DescribeRole.Theorem)
         )));
 }

@@ -134,22 +134,9 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder
 
 The first natural index with theta above x has an overshoot of at most log of the index. The ratio of the index to x tends to one, and the difference of the logarithms tends to zero.
 
-**Theorem 1.11 (Local displacement of the actual theta tail).**
-
-Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_theta_tail_local_modulus`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_theta_tail_local_modulus` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For all sufficiently large u and every v≥u, the absolute change of the signed weighted tail is at most 2(v−u)/(u log(u)).
-
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_record_all_real_log_residual`
-- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.actual_theta_tail_local_modulus`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.canonical_budget_eventually`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.exists_actual_theta_crossing_sampler`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.higher_core_log`
@@ -164,4 +151,3 @@ For all sufficiently large u and every v≥u, the absolute change of the signed 
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualRecordCriticalResidual](ActualRecordCriticalResidual.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel](QuantitativePrimeAbel.md)
 - Dependency: [D5/S3/Arith/Robin/PrimeValuation5040Bridge](../PrimeValuation5040Bridge.md)
-- Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](../ThetaTailRobinWitness.md)

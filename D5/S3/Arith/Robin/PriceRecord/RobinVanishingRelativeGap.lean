@@ -736,9 +736,9 @@ theorem actual_canonical_log_window_lower_bound_iff {h α : ℝ} (hh : 0 < h)
 
 open CanonicalThresholdWindowTransfer (tailScale)
 open D5.S3.Weil.Mertens.ActualThetaTailLaplace (F)
-open D5.S3.Arith.Robin.Analytic.ThetaReparametrizedSandwich (actual_theta_reparametrized_sandwich)
-open ActualRecordAllLogBudgetRemainder
-  (exists_actual_theta_crossing_sampler actual_theta_tail_local_modulus)
+open D5.S3.Arith.Robin.Analytic.ThetaReparametrizedSandwich
+  (actual_theta_reparametrized_sandwich actual_theta_tail_local_modulus)
+open ActualRecordAllLogBudgetRemainder (exists_actual_theta_crossing_sampler)
 
 private abbrev canonicalMargin (n : ℕ) := robinLogMargin (canonicalRecord n)
 
