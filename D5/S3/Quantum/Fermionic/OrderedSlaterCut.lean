@@ -305,7 +305,7 @@ theorem distinct_padded_spectra (n m : ℕ) :
 def embedMatrix {ι κ : Type*} [DecidableEq ι] (e : κ ↪ ι) : Matrix ι κ ℂ :=
   fun i j => if i = e j then 1 else 0
 
-private theorem embed_adjoint_mul {ι κ : Type*} [Fintype ι] [DecidableEq ι]
+theorem embed_adjoint_mul {ι κ : Type*} [Fintype ι] [DecidableEq ι]
     [DecidableEq κ] (e : κ ↪ ι) :
     (embedMatrix e).conjTranspose * embedMatrix e = 1 := by
   classical

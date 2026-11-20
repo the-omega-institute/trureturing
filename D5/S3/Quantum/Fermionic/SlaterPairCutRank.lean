@@ -134,7 +134,7 @@ private theorem inversionSum_append {α : Type*} [LinearOrder α] {m n : ℕ}
     not_lt_of_gt (hcross _ _), ite_false, Finset.sum_const_zero, add_zero, Finset.sum_add_distrib]
   ac_rfl
 
-private def binarySign : AddChar (ZMod 2) ℂ :=
+def binarySign : AddChar (ZMod 2) ℂ :=
   AddChar.zmodChar 2 (ζ := (-1 : ℂ)) (by simp)
 
 private def dotHom {ι : Type*} [Fintype ι] (d : ι → ZMod 2) :
@@ -221,7 +221,7 @@ private theorem binary_fiber_card {ι κ : Type*} [Fintype ι] [Fintype κ]
   congr 1
   omega
 
-private theorem binarySign_star (z : ZMod 2) : star (binarySign z) = binarySign z := by
+theorem binarySign_star (z : ZMod 2) : star (binarySign z) = binarySign z := by
   rcases (show ∀ z : ZMod 2, z = 0 ∨ z = 1 by decide) z with rfl | rfl
   · simp
   · have hval : (1 : ZMod 2).val = 1 := rfl
@@ -475,7 +475,7 @@ private theorem selected_minor_phase {k : ℕ} (sites : (Fin k × Bool) ↪ ι)
   simp [inversionCount]
 
 
-private def pickEndpoint (z : ZMod 2) : Bool := decide (z = 1)
+def pickEndpoint (z : ZMod 2) : Bool := decide (z = 1)
 
 private theorem bit_pickEndpoint (z : ZMod 2) : bit (pickEndpoint z) = z := by
   exact (show ∀ z : ZMod 2, bit (pickEndpoint z) = z by decide) z
@@ -633,7 +633,7 @@ private theorem cutPairSites_pick {m n : ℕ} {I : Set ι}
   | right j => simp only [Fin.addCases_right, cutPairSites_right]
 
 
-private theorem orderedCut_pairs_zero {m n : ℕ} {I : Set ι}
+theorem orderedCut_pairs_zero {m n : ℕ} {I : Set ι}
     (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
     (weight : Fin (m + n) → Bool → ℂ)
     (a : Occupation I) (b : Occupation Iᶜ)
@@ -657,7 +657,7 @@ private theorem orderedCut_pairs_zero {m n : ℕ} {I : Set ι}
     union_occupation_injective hpick
   exact h.elim (fun hx => hx ⟨x, heq.1⟩) (fun hy => hy ⟨y, heq.2⟩)
 
-private theorem orderedCut_pairs_selected {m n : ℕ} {I : Set ι}
+theorem orderedCut_pairs_selected {m n : ℕ} {I : Set ι}
     (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
     (weight : Fin (m + n) → Bool → ℂ) (x : Fin m → Bool) (y : Fin n → Bool) :
     orderedCut I (pairedEntries (cutPairSites p q) weight) (pairOccupation p x) (pairOccupation q y) =
@@ -670,7 +670,7 @@ private theorem orderedCut_pairs_selected {m n : ℕ} {I : Set ι}
     cutPairSites_pick]
 
 
-private theorem orderedCut_pairs_character {m n : ℕ} {I : Set ι}
+theorem orderedCut_pairs_character {m n : ℕ} {I : Set ι}
     (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (w : ℂ)
     (hp : ∀ i, (p (i, false) : ι) < p (i, true))
     (hq : ∀ j, (q (j, false) : ι) < q (j, true)) :
@@ -734,7 +734,7 @@ noncomputable local instance [Fintype ι] (I : Set ι) : Fintype (Occupation I) 
 private theorem pickEndpoint_bit (b : Bool) : pickEndpoint (bit b) = b := by
   cases b <;> decide
 
-private def pairBitOccupation {m : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I) :
+def pairBitOccupation {m : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I) :
     (Fin m → ZMod 2) ↪ Occupation I where
   toFun x := pairOccupation p fun i => pickEndpoint (x i)
   inj' := by
@@ -754,7 +754,7 @@ def cutPairOrbitals {m n : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I)
     Matrix ι (Fin (m + n)) ℂ := pairedEntries (cutPairSites p q) weight
 
 
-private theorem not_pairOccupation_of_not_bit {m : ℕ} {I : Set ι}
+theorem not_pairOccupation_of_not_bit {m : ℕ} {I : Set ι}
     (p : (Fin m × Bool) ↪ I) {a : Occupation I} (h : ¬ ∃ x, pairBitOccupation p x = a) :
     ¬ ∃ x, pairOccupation p x = a := by
   rintro ⟨x, hx⟩
@@ -884,7 +884,7 @@ private theorem replacement_compression [Fintype ι] {m n : ℕ} {I : Set ι}
     have hne (e : Bool) : (u : ι) ≠ q (j, e) := fun h => (q (j, e)).property (h ▸ u.property)
     simp [retainedRows, cutPairOrbitals, pairedEntries, cutPairSites_right, hne]
 
-private theorem binarySign_sq (z : ZMod 2) : binarySign z * binarySign z = 1 := by
+theorem binarySign_sq (z : ZMod 2) : binarySign z * binarySign z = 1 := by
   rw [← AddChar.map_add_eq_mul]
   have hz : z + z = 0 := calc
     z + z = -z + z := congrArg (fun a => a + z) (ZMod.neg_eq_self_mod_two z).symm
