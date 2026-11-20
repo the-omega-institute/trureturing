@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q4SmallProjectionOrbits
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9EightCycleProjection
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9NineProjection
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairProjectionRefinement
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangBalancedSymmetry
 import Mathlib.Logic.Equiv.Fintype
 
@@ -203,26 +204,62 @@ theorem balanced_projection_no_isolated_and_leaf_full {S : Finset (Q 9)}
   rwa [← hflip x i, hdirs (flipBit x i)] at hfull
 
 open Classical in
-/-- An order-72 Huang-balanced induced cubic support whose coordinate halves
-all contain at least 30 vertices cannot realize exactly nine patterns
-on any ordered choice of four distinct coordinates. -/
-theorem four_projection_card_ne_nine {S : Finset (Q 9)} (hsize : S.card = 72)
+private theorem four_projection_card_ge_ten_of_pair_coverage {S : Finset (Q 9)}
+    (hsize : S.card = 72)
     (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced S)
-    (hhalf : ∀ (j : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x j = b)).card)
-    (axes : Fin 4 ↪ Fin 9) :
-    (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card ≠ 9 := by
+    (hhalf : ∀ (j : Fin 9) (b : Bool), 24 < (S.filter (fun x => x j = b)).card)
+    (axes : Fin 4 ↪ Fin 9)
+    (hpair : ∀ ⦃i j : Fin 4⦄, i ≠ j → ∀ b c : Bool,
+      ∃ x ∈ S, x (axes i) = b ∧ x (axes j) = c) :
+    10 ≤ (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card := by
   let P := S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))
-  change P.card ≠ 9
-  intro hcard
-  have hanti := Q9FourProjection.four_projection_antipodal_complement_edges hsize hreg hb hhalf axes
+  change 10 ≤ P.card
+  have hanti := Q9FourProjection.four_projection_antipodal_complement_edges_of_pair_coverage
+    hsize hreg hb axes hpair (fun i => hhalf (axes i))
+  have hge : 8 ≤ P.card :=
+    Q9FourProjection.four_projection_card_ge_eight_of_antipodal_complement_edges
+      hsize hreg hb axes hanti
+  by_contra hlt
+  have hsmall : P.card = 8 ∨ P.card = 9 := by omega
   have hdegree := balanced_projection_no_isolated_and_leaf_full hreg hb axes
-  obtain ⟨t, σ, horbit⟩ := Q4SmallProjectionOrbits.small_projection_orbit P (Or.inr hcard)
+  obtain ⟨t, σ, horbit⟩ := Q4SmallProjectionOrbits.small_projection_orbit P hsmall
     hanti (fun x hx => (hdegree x hx).1) (fun x hx => (hdegree x hx).2)
-  apply balanced_projection_ne_nineProjection_orbit hreg hb axes σ t
-  simpa only [hcard, beq_self_eq_true] using horbit
+  rcases hsmall with hcard | hcard
+  · have hP : P = (representative false).image (fun k => permute σ k ^^^ t) := by
+      simpa [hcard] using horbit
+    obtain ⟨C, hreg', hb', hrep, hcard', p, m, hhalves⟩ :=
+      exists_normalized_projection_orbit hreg hb axes false σ t hP
+    obtain ⟨i, b, htwenty⟩ :=
+      Q9EightCycleProjection.normalized_exists_half_card_twenty hreg' hb' hrep (hcard'.trans hsize)
+    have hlower := hhalf (p.symm (i.natAdd 4)) (b ^^ m (i.natAdd 4))
+    rw [hhalves (i.natAdd 4) b] at htwenty
+    omega
+  · apply balanced_projection_ne_nineProjection_orbit hreg hb axes σ t
+    simpa only [hcard, beq_self_eq_true] using horbit
 
-#print axioms four_projection_card_ne_nine
+open Classical in
+/-- At order 72, a four-axis projection has at least ten patterns if all coordinate
+halves have size at least 28 and all half-size sums on distinct selected axes exceed 56.
+Under the half bound, this sum condition is equivalent to at most one selected
+axis having a 28-point half. -/
+theorem four_projection_card_ge_ten_of_half_sum_gt_fifty_six {S : Finset (Q 9)}
+    (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced S)
+    (hhalf : ∀ (j : Fin 9) (b : Bool), 28 ≤ (S.filter (fun x => x j = b)).card)
+    (axes : Fin 4 ↪ Fin 9)
+    (hsum : ∀ ⦃i j : Fin 4⦄, i ≠ j → ∀ b c : Bool,
+      56 < (S.filter (fun x => x (axes i) = b)).card +
+        (S.filter (fun x => x (axes j) = c)).card) :
+    10 ≤ (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card := by
+  apply four_projection_card_ge_ten_of_pair_coverage hsize hreg hb
+    (fun j b => (by decide : 24 < 28).trans_le (hhalf j b)) axes
+  intro i j hij b c
+  by_contra hmissing
+  have hle := Q9PairProjectionRefinement.missing_pair_half_sum_le hsize hreg hb
+    (axes.injective.ne hij) hmissing
+  exact (not_lt_of_ge hle) (hsum hij b c)
 
 open Classical in
 /-- Each four-axis projection of an order-72 Huang-balanced induced cubic
@@ -234,28 +271,27 @@ theorem four_projection_card_ge_ten {S : Finset (Q 9)} (hsize : S.card = 72)
     (hhalf : ∀ (j : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x j = b)).card)
     (axes : Fin 4 ↪ Fin 9) :
     10 ≤ (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card := by
-  let P := S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))
-  change 10 ≤ P.card
-  have hge : 8 ≤ P.card := Q9FourProjection.four_projection_card_ge_eight hsize hreg hb hhalf axes
-  have hneNine : P.card ≠ 9 := four_projection_card_ne_nine hsize hreg hb hhalf axes
-  have hneEight : P.card ≠ 8 := by
-    intro hcard
-    have hanti :=
-      Q9FourProjection.four_projection_antipodal_complement_edges hsize hreg hb hhalf axes
-    have hdegree := balanced_projection_no_isolated_and_leaf_full hreg hb axes
-    obtain ⟨t, σ, horbit⟩ := Q4SmallProjectionOrbits.small_projection_orbit P (Or.inl hcard)
-      hanti (fun x hx => (hdegree x hx).1) (fun x hx => (hdegree x hx).2)
-    have hP : P = (representative false).image (fun k => permute σ k ^^^ t) := by
-      simpa [hcard] using horbit
-    obtain ⟨C, hreg', hb', hrep, hcard', p, m, hhalves⟩ :=
-      exists_normalized_projection_orbit hreg hb axes false σ t hP
-    obtain ⟨i, b, htwenty⟩ :=
-      Q9EightCycleProjection.normalized_exists_half_card_twenty hreg' hb' hrep (hcard'.trans hsize)
-    have hlower := hhalf (p.symm (i.natAdd 4)) (b ^^ m (i.natAdd 4))
-    rw [hhalves (i.natAdd 4) b] at htwenty
-    omega
+  apply four_projection_card_ge_ten_of_half_sum_gt_fifty_six hsize hreg hb
+    (fun j b => (by decide : 28 ≤ 30).trans (hhalf j b)) axes
+  intro i j _ b c
+  have hi := hhalf (axes i) b
+  have hj := hhalf (axes j) c
   omega
 
+open Classical in
+/-- An order-72 Huang-balanced induced cubic support whose coordinate halves
+all contain at least 30 vertices cannot realize exactly nine patterns
+on any ordered choice of four distinct coordinates. -/
+theorem four_projection_card_ne_nine {S : Finset (Q 9)} (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced S)
+    (hhalf : ∀ (j : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x j = b)).card)
+    (axes : Fin 4 ↪ Fin 9) :
+    (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card ≠ 9 := by
+  exact Nat.ne_of_gt (four_projection_card_ge_ten hsize hreg hb hhalf axes)
+
+#print axioms four_projection_card_ge_ten_of_half_sum_gt_fifty_six
 #print axioms four_projection_card_ge_ten
+#print axioms four_projection_card_ne_nine
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9NineProjectionOrbit

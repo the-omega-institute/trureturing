@@ -262,12 +262,14 @@ private theorem remaining_axes (i : Fin 4) (m : BitVec 4)
 
 open Classical in
 /-- Distinct complement edges in the same direction of a four-coordinate projection
-of an order-72 balanced induced cubic nine-cube support are antipodal, provided
-each coordinate half contains at least 30 selected vertices. -/
-theorem four_projection_antipodal_complement_edges {S : Finset (Q 9)} (hsize : S.card = 72)
+are antipodal when all bit pairs occur on the chosen axes and their halves exceed 24. -/
+theorem four_projection_antipodal_complement_edges_of_pair_coverage
+    {S : Finset (Q 9)} (hsize : S.card = 72)
     (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced S)
-    (hhalf : ∀ (k : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x k = b)).card)
-    (axes : Fin 4 ↪ Fin 9) :
+    (axes : Fin 4 ↪ Fin 9)
+    (hpair : ∀ ⦃j k : Fin 4⦄, j ≠ k → ∀ a b : Bool,
+      ∃ v ∈ S, v (axes j) = a ∧ v (axes k) = b)
+    (hhalf : ∀ (k : Fin 4) (b : Bool), 24 < (S.filter (fun x => x (axes k) = b)).card) :
     let project (v : Q 9) : BitVec 4 := (cubeBitVec 4).symm (fun i => v (axes i))
     let P := S.image project
     ∀ (i : Fin 4) (x y : BitVec 4),
@@ -326,8 +328,7 @@ theorem four_projection_antipodal_complement_edges {S : Finset (Q 9)} (hsize : S
   cases hj : (x ^^^ y).getLsbD j.val
   · have hyj : y.getLsbD j.val = x.getLsbD j.val := by
       simpa only [hj, Bool.xor_false] using bit_from_mask j
-    obtain ⟨v, hv, hvj, hvl⟩ := pair_projection_surjective hsize hreg hb hhalf
-      (axes.injective.ne hjl) (x.getLsbD j.val) (x.getLsbD l.val)
+    obtain ⟨v, hv, hvj, hvl⟩ := hpair hjl (x.getLsbD j.val) (x.getLsbD l.val)
     by_cases hvk : v (axes k) = x.getLsbD k.val
     · exact absent x hxi hx hfx v hv hvj hvk hvl
     · have hvk' : v (axes k) = !(x.getLsbD k.val) := by
@@ -347,17 +348,41 @@ theorem four_projection_antipodal_complement_edges {S : Finset (Q 9)} (hsize : S
         · simp only [Prod.mk.injEq] at hp
           exact absent y hyi hy hfy v hv (hp.1.trans hyj.symm)
             (hp.2.1.trans hyk.symm) (hp.2.2.trans hyl.symm))
-    have hlarge := hhalf (axes l) (x.getLsbD l.val)
-    omega
+    exact (not_lt_of_ge hbound) (hhalf l (x.getLsbD l.val))
 
 open Classical in
-/-- Every ordered choice of four distinct coordinates of an order-72 balanced
-induced cubic nine-cube support has at least eight realized patterns, provided
+/-- Distinct complement edges in the same direction of a four-coordinate projection
+of an order-72 balanced induced cubic nine-cube support are antipodal, provided
 each coordinate half contains at least 30 selected vertices. -/
-theorem four_projection_card_ge_eight {S : Finset (Q 9)} (hsize : S.card = 72)
+theorem four_projection_antipodal_complement_edges {S : Finset (Q 9)} (hsize : S.card = 72)
     (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced S)
     (hhalf : ∀ (k : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x k = b)).card)
     (axes : Fin 4 ↪ Fin 9) :
+    let project (v : Q 9) : BitVec 4 := (cubeBitVec 4).symm (fun i => v (axes i))
+    let P := S.image project
+    ∀ (i : Fin 4) (x y : BitVec 4),
+      x.getLsbD i.val = false → y.getLsbD i.val = false →
+      x ∉ P → flipBit x i ∉ P → y ∉ P → flipBit y i ∉ P →
+      x ≠ y → y = flipBit (x ^^^ 15) i := by
+  apply four_projection_antipodal_complement_edges_of_pair_coverage hsize hreg hb axes
+  · intro j k hjk a b
+    exact pair_projection_surjective hsize hreg hb hhalf (axes.injective.ne hjk) a b
+  · intro k b
+    exact (by decide : 24 < 30).trans_le (hhalf (axes k) b)
+
+open Classical in
+/-- The order and balance provide an occupied edge in each direction, so antipodality
+of parallel complement edges forces at least eight realized patterns. -/
+theorem four_projection_card_ge_eight_of_antipodal_complement_edges
+    {S : Finset (Q 9)} (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced S)
+    (axes : Fin 4 ↪ Fin 9)
+    (hanti :
+      let P := S.image (fun v => (cubeBitVec 4).symm (fun i => v (axes i)))
+      ∀ (i : Fin 4) (x y : BitVec 4),
+        x.getLsbD i.val = false → y.getLsbD i.val = false →
+        x ∉ P → flipBit x i ∉ P → y ∉ P → flipBit y i ∉ P →
+        x ≠ y → y = flipBit (x ^^^ 15) i) :
     8 ≤ (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card := by
   classical
   let project (v : Q 9) : BitVec 4 := (cubeBitVec 4).symm (fun i => v (axes i))
@@ -385,10 +410,24 @@ theorem four_projection_card_ge_eight {S : Finset (Q 9)} (hsize : S.card = 72)
     refine ⟨project v, mem_image.mpr ⟨v, hvS, rfl⟩, (project_bit v i).trans hvi, ?_⟩
     rw [hf]
     exact mem_image.mpr ⟨flip v (axes i), hfS, rfl⟩
-  · exact four_projection_antipodal_complement_edges hsize hreg hb hhalf axes
+  · exact hanti
+
+open Classical in
+/-- Every ordered choice of four distinct coordinates of an order-72 balanced
+induced cubic nine-cube support has at least eight realized patterns, provided
+each coordinate half contains at least 30 selected vertices. -/
+theorem four_projection_card_ge_eight {S : Finset (Q 9)} (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced S)
+    (hhalf : ∀ (k : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x k = b)).card)
+    (axes : Fin 4 ↪ Fin 9) :
+    8 ≤ (S.image (fun x => (cubeBitVec 4).symm (fun i => x (axes i)))).card := by
+  exact four_projection_card_ge_eight_of_antipodal_complement_edges hsize hreg hb axes
+    (four_projection_antipodal_complement_edges hsize hreg hb hhalf axes)
 
 #print axioms card_ge_eight_of_antipodal_complement_edges
+#print axioms four_projection_antipodal_complement_edges_of_pair_coverage
 #print axioms four_projection_antipodal_complement_edges
+#print axioms four_projection_card_ge_eight_of_antipodal_complement_edges
 #print axioms four_projection_card_ge_eight
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9FourProjection
