@@ -9,30 +9,35 @@
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#9, all clauses except
   real-rootedness for m > 0)
-escape_witness: rowPoly_succ, the polynomial form R_{n+1} = (1 + (m(n-1)+1)X) R_n +
-  m X (1 - X) R_n' of the step-m recursion (coefficient comparison against padded_rec), and the
-  inductions step_minus_one, step_minus_two and step_zero that close the factorizations
-  R_{-1,2q} = R_{-2,2q} = (1-y)^(2q-2)(1+y), R_{-1,2q+1} = (1-y)^(2q-2)(1+y^2),
-  R_{-2,2q+1} = (1-y)^(2q), R_{0,n} = (1+y)^(n-1) through that recursion; at m = -3 the
-  factorization R_{-3,6} = (1+y)(y^4+16y^3+246y^2+16y+1) and positivity of the quartic on the
-  real line force a nonreal root.
+escape_witness: the inductions step_minus_one, step_minus_two and step_zero, which prove the
+  closed-form factorizations R_{-1,2q} = R_{-2,2q} = (1-y)^(2q-2)(1+y),
+  R_{-1,2q+1} = (1-y)^(2q-2)(1+y^2), R_{-2,2q+1} = (1-y)^(2q) and R_{0,n} = (1+y)^(n-1) for all
+  q and n through the polynomial form of the recursion, and quartic_pos, the positivity on the
+  real line of the quartic factor of R_{-3,6} = (1+y)(y^4+16y^3+246y^2+16y+1), which forces a
+  nonreal root.
 proof_shape:
   rowPoly, R, claim: definitions; consumers: the theorems below.
-  coeff_rowPoly, eval_rowPoly: bind-only helpers (finite-sum coefficient and evaluation
-    bookkeeping); consumers: rowPoly_succ, rowPoly_one, rowPoly_two and result.
-  rowPoly_succ: content; consumers: the step theorems.
+  coeff_rowPoly: bind-only helper (finite-sum coefficient bookkeeping); consumers:
+    rowPoly_succ, rowPoly_one, rowPoly_two.
+  eval_rowPoly: bind-only helper (evaluation as the row sum); consumer: result.
+  rowPoly_succ: bind-only helper (coefficient comparison with padded_rec, simp and ring);
+    consumers: the step theorems.
   der_one_sub_pow: bind-only helper (derivative_pow and ring); consumers: step_minus_one,
     step_minus_two.
   rowPoly_one, rowPoly_two: bind-only helpers (boundary values of Source); consumers: the step
     theorems.
-  step_minus_one, step_minus_two, step_zero, step_minus_three_six: content; consumer: result.
+  step_minus_one, step_minus_two, step_zero: content (induction over all rows); consumer:
+    result.
+  step_minus_three_six: bind-only helper (four unrolled uses of rowPoly_succ and ring);
+    consumer: result.
   norm_of_root_one_sub, norm_of_root_plus, norm_of_root_sq: bind-only helpers (roots of the
     factors lie on the unit circle); consumer: result.
   quartic_pos: content (sum-of-squares bound); consumer: result.
-  result: content only through the step theorems; the nonreal root uses Complex.exists_root.
+  result: content through the step inductions and quartic_pos; the nonreal root uses
+    Complex.exists_root.
 Direct frozen dependencies:
   D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums (Source, P, padded_rec)
-    sha256:babe59678caa4efa35d42893011defa557b4e926070bb618982cee210a4d67c0
+    sha256:fde75bfb8d2b7bfc317975eb38085bb690254dbf83381913d713ceef50488835
 Not covered: the clause that every root of R_{m,n} is simple and negative for real m > 0
   (an interlacing argument) is not part of this module.
 Search record (§3.1): no D5 declaration states row-polynomial factorizations of the step-m
@@ -186,15 +191,15 @@ private theorem step_minus_three_six {T : ℕ → ℕ → ℝ} (h : Source (-3) 
   have r2 := rowPoly_two h
   have r3 : rowPoly T 3 = 1 - 4 * X + X ^ 2 := by
     rw [rowPoly_succ h (n := 2) (by norm_num), r2]
-    simp [derivative_pow]; push_cast; simp only [map_ofNat]; ring
+    simp [derivative_pow]; simp only [map_ofNat]; ring
   have r4 : rowPoly T 4 = (1 + X) ^ 3 := by
     rw [rowPoly_succ h (n := 3) (by norm_num), r3]
-    simp [derivative_pow]; push_cast; simp only [map_ofNat]; ring
+    simp [derivative_pow]; simp only [map_ofNat]; ring
   have r5 : rowPoly T 5 = (1 + X) ^ 2 * (X ^ 2 - 16 * X + 1) := by
     rw [rowPoly_succ h (n := 4) (by norm_num), r4]
-    simp [derivative_pow]; push_cast; simp only [map_ofNat]; ring
+    simp [derivative_pow]; simp only [map_ofNat]; ring
   rw [rowPoly_succ h (n := 5) (by norm_num), r5]
-  simp [derivative_pow]; push_cast; simp only [map_ofNat]; ring
+  simp [derivative_pow]; simp only [map_ofNat]; ring
 
 
 /-- The row polynomial `R_{m,n}(y) = ∑_{k=1}^{n} T(n,k) y^(k-1)`. -/

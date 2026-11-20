@@ -31,15 +31,15 @@ internal sealed class ChenChenBoundaryStepsDocument : IScribeDocumentDefinition
                 H("Factorizations at boundary steps"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
-                    "For q ≥ 1 and every complex y, R_{−1,2q}(y) = R_{−2,2q}(y) = "
-                    + "(1 − y)^(2q−2)(1 + y), R_{−1,2q+1}(y) = (1 − y)^(2q−2)(1 + y²) and "
+                    "For q ≥ 1 and every complex y, R_{−1,2q}(y) = R_{−2,2q}(y) = (1 − "
+                    + "y)^(2q−2)(1 + y), R_{−1,2q+1}(y) = (1 − y)^(2q−2)(1 + y²) and "
                     + "R_{−2,2q+1}(y) = (1 − y)^(2q). Hence for n ≥ 2 every root of R_{−1,n} and "
-                    + "R_{−2,n} has modulus 1, and some root does, so the largest root modulus is 1. "
-                    + "Also R_{0,n}(y) = (1 + y)^(n−1), and R_{−3,6}(y) = (1 + y)(y⁴ + 16y³ + "
-                    + "246y² + 16y + 1) has a nonreal root, since the quartic is positive on the "
-                    + "real line. The factorizations follow from the polynomial recursion in "
-                    + "even–odd pairs. These are the clauses of Corollary 8 of H. Ma and W. "
-                    + "Zhang's proof of Chen and Chen's parity-positivity conjectures (DOI "
+                    + "R_{−2,n} has modulus 1, and some root does, so the largest root modulus is "
+                    + "1. Also R_{0,n}(y) = (1 + y)^(n−1) for n ≥ 1, and R_{−3,6}(y) = (1 + y)(y⁴ "
+                    + "+ 16y³ + 246y² + 16y + 1) has a nonreal root, since the quartic is "
+                    + "positive on the real line. The factorizations follow from the polynomial "
+                    + "recursion in even–odd pairs. These are the clauses of Corollary 8 of H. Ma "
+                    + "and W. Zhang's proof of Chen and Chen's parity-positivity conjectures (DOI "
                     + "10.5281/zenodo.23957560) other than real-rootedness for m > 0, which is "
                     + "not formalized here."))),
                 DescribeRole.Theorem))));
