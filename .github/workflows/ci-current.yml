@@ -291,11 +291,13 @@ jobs:
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: cache_scope
         name: Select cached modules from the Lean build plan
-        if: env.INDEXED_PROJECT == 'true' && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.lean_plan.outputs.builds_lean == 'true'
+        if: env.INDEXED_PROJECT == 'true' && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.lean_plan.outputs.needs_lean == 'true'
         run: |
           targets="$RUNNER_TEMP/lean-cache-targets"
           python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --read-plan "$RUNNER_TEMP/current-lean-plan.json" > "$targets"
-          echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
+          if [[ -s "$targets" ]]; then
+            echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
+          fi
       - name: Restore project shards for the selected modules
         if: steps.cache_scope.outputs.targets-file != ''
         continue-on-error: true

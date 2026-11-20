@@ -71,6 +71,7 @@ jobs:
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/action.yml
+            .github/actions/lean-cache-shards/*
             .gitignore
             D5/*.lean
             Directory.Build.*

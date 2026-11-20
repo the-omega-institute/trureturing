@@ -132,7 +132,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true' && (steps.sharded_seed.outputs.available || '0') == '0' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
