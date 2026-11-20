@@ -29,7 +29,7 @@ noncomputable section
 
 private def roughPrimes : List ℕ := [13, 17, 19, 23, 29]
 
-private def eulerFactor (p : ℕ) : ℝ := (p : ℝ) / ((p : ℝ) - 1)
+def eulerFactor (p : ℕ) : ℝ := (p : ℝ) / ((p : ℝ) - 1)
 
 private theorem rough_nat_step (k : ℕ) (hk : k < 5) :
     (roughPrimes.take (k + 1)).prod =

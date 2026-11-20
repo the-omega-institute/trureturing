@@ -62,5 +62,36 @@ internal sealed class RobinVanishingRelativeGapDocument : IScribeDocumentDefinit
                 + "is 2√2−2 at Θ=1/2 and zero above 1/2. At equality the bound implies RH. "
                 + "The signed arithmetic term contributes −2 and the scaled record correction "
                 + "contributes 2√2. For Θ>1/2 the critical-strip signed arithmetic asymptotic "
-                + "applies and the scaled record correction vanishes."))));
+                + "applies and the scaled record correction vanishes."),
+            Describe.Lean(
+                DescribeId.Create("actual-canonical-log-window-lower-bound-iff"),
+                DeclarationHandle.Create(Module + "actual_canonical_log_window_lower_bound_iff"),
+                H("Exact strip criterion on fixed logarithmic windows"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Fix real h>0 and 0<α≤1/2. Set "
+                        + "n(v)=strictInteger(firstLayerPrice(⌊exp(v)⌋+1)), using the natural floor "
+                        + "and casting it to ℝ in the price. The condition Re(ρ)≤1−α for every "
+                        + "actual nontrivial Riemann zeta zero ρ is equivalent to the existence "
+                        + "of real C≥0 and T such that every real t≥T satisfies "
+                        + "−C≤exp(αt) ∫₀ʰ (t+u) robinLogMargin(n(t+u)) du.")),
+                    Paragraph(Text("Write m(v)=v robinLogMargin(n(v)). The floor identity for B and the "
+                        + "canonical record correction give an eventual bound "
+                        + "0≤m(v)−v B(exp(v))≤K exp(−v/2) for some K≥0. The strip envelope for B "
+                        + "and the nonnegative correction give the lower bound after integration. "
+                        + "In the other direction, eventually m(v)≤−v f(v)+(K+8) exp(−v/2) for "
+                        + "the actual signed theta tail f. Any zero with Re(ρ)>1−α supplies arbitrarily "
+                        + "late positive first-moment window peaks at exponent σ=−α. These force "
+                        + "arbitrarily negative scaled Robin window values because the integrated "
+                        + "error stays bounded after multiplication by exp(αt), including at α=1/2.")),
+                    Paragraph(Text("The quantifiers use one fixed width h and all sufficiently large "
+                        + "real starts t. The integral samples the literal canonical records at the "
+                        + "floor of each exp(t+u) throughout the interval. When the supremum of zero "
+                        + "real parts is unattained, the implication from an eventual pointwise lower "
+                        + "bound to the closed strip bound remains open for general ratio-one meshes, "
+                        + "with power-saving gaps covered by PolynomialCanonicalRecordCriterion.result_of_power_saving_gaps. "
+                        + "At α=1/2 the zero-side condition in the "
+                        + "equivalence is Re(ρ)≤1/2 for every actual nontrivial zero."))),
+                DescribeRole.Theorem))));
 }
