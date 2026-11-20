@@ -509,7 +509,7 @@ private lemma repeated_prime_bound {n a b p : ℕ}
     _ = (p ^ b.factorization p) ^ 4 := pow_mul _ _ _
     _ ≤ b ^ 4 := Nat.pow_le_pow_left hpow 4
 
-private lemma square_decomposition_small {n X T : ℕ}
+lemma square_decomposition_small {n X T : ℕ}
     (hn : 0 < n) (hnX : n ≤ X) (hnot : n ∉ largeSquares X T) :
     ∃ a b : ℕ, Squarefree a ∧ 0 < b ∧ b ≤ T ∧ b ^ 2 * a = n := by
   obtain ⟨b, a, he, ha⟩ := exists_sq_mul_squarefree n
@@ -532,7 +532,7 @@ private lemma square_decomposition_small {n X T : ℕ}
     nlinarith
   · simpa [mul_comm] using he
 
-private lemma radical_sandwich {lam : ℝ} {n X T : ℕ}
+lemma radical_sandwich {lam : ℝ} {n X T : ℕ}
     (hlam : 0 < lam) (hn : 2 ≤ n) (hnX : n ≤ X)
     (hnot : n ∉ largeSquares X T)
     (hlarge : (T : ℝ) ^ 6 < lam * n)
