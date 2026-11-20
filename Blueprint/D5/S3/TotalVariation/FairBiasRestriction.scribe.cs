@@ -7,7 +7,7 @@ internal sealed class FairBiasRestrictionDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/TotalVariation/FairBiasRestriction";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The lexicographic shelling partitions the augmented signed fair-bias complex into intervals.",
+        "When nonempty facets exist, the lexicographic shelling partitions the augmented signed fair-bias complex into intervals.",
         H("Restriction faces of the fair-bias link"),
         Blocks(
             Describe.Lean(
@@ -30,20 +30,11 @@ internal sealed class FairBiasRestrictionDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For the same ordered family, assume at least one nonempty facet exists. Let d be the " +
+                    "For the same ordered family, let d be the " +
                     "number of labels minus the rank of the columns. For every t in a commutative semiring, " +
-                    "weight each face S by t to the power of its size, with the empty face included. The sum " +
-                    "over all faces equals the sum over facets B of t to the size of the restriction face " +
-                    "times one plus t to the power of d minus that size."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("face-enumerator-eq-one"),
-                DeclarationHandle.Create(Module + ".faceEnumerator_eq_one"),
-                H("The augmented enumerator is one when no nonempty facet exists"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "If the nonempty facet set is empty, no nonempty face can occur, since any such face " +
-                    "would extend to a maximal one. The empty face contributes one for every choice of t."))),
+                    "weight each face S by t to the power of its size, with the empty face included. " +
+                    "When nonempty facets exist, sum over them the product of t raised to the size of the " +
+                    "restriction face and (1 + t) raised to d minus that size. " +
+                    "Otherwise the only face is empty and the sum is one."))),
                 DescribeRole.Theorem))));
 }

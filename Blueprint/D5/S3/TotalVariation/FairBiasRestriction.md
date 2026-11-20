@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The lexicographic shelling partitions the augmented signed fair-bias complex into intervals.
+When nonempty facets exist, the lexicographic shelling partitions the augmented signed fair-bias complex into intervals.
 
 **Theorem 1.1 (The restriction face identifies the new subfaces).**
 
@@ -26,23 +26,10 @@ Lean statement: `D5/S3/TotalVariation/FairBiasRestriction.faceEnumerator_eq_sum`
 
 *Commentary.*
 
-For the same ordered family, assume at least one nonempty facet exists. Let d be the number of labels minus the rank of the columns. For every t in a commutative semiring, weight each face S by t to the power of its size, with the empty face included. The sum over all faces equals the sum over facets B of t to the size of the restriction face times one plus t to the power of d minus that size.
-
-**Theorem 1.3 (The augmented enumerator is one when no nonempty facet exists).**
-
-Lean statement: `D5/S3/TotalVariation/FairBiasRestriction.faceEnumerator_eq_one`
-
-*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/FairBiasRestriction.faceEnumerator_eq_one` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If the nonempty facet set is empty, no nonempty face can occur, since any such face would extend to a maximal one. The empty face contributes one for every choice of t.
+For the same ordered family, let d be the number of labels minus the rank of the columns. For every t in a commutative semiring, weight each face S by t to the power of its size, with the empty face included. When nonempty facets exist, sum over them the product of t raised to the size of the restriction face and (1 + t) raised to d minus that size. Otherwise the only face is empty and the sum is one.
 
 ## References
 
-- Truth anchor: `D5/S3/TotalVariation/FairBiasRestriction.faceEnumerator_eq_one`
 - Truth anchor: `D5/S3/TotalVariation/FairBiasRestriction.faceEnumerator_eq_sum`
 - Truth anchor: `D5/S3/TotalVariation/FairBiasRestriction.firstAt_iff_restriction_subset`
 - Dependency: [D5/S3/TotalVariation/FairBiasShelling](FairBiasShelling.md)

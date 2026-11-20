@@ -147,26 +147,20 @@ private theorem sum_interval {V R : Type*} [DecidableEq V] [CommSemiring R]
       ← Finset.mul_sum]
     congr 1
     rw [← Finset.card_sdiff_of_subset h]
-    simpa [Finset.prod_const, add_comm] using
-      (Finset.prod_add (fun _ : V => t) (fun _ => (1 : R)) (B \ U)).symm
+    simpa [Finset.prod_const] using
+      (Finset.prod_one_add (f := fun _ : V => t) (B \ U)).symm
   · intro S hS T hT he
     change U ∪ S = U ∪ T at he
-    apply Finset.Subset.antisymm
-    · intro v hv
-      have hu := (Finset.mem_sdiff.mp (Finset.mem_powerset.mp hS hv)).2
-      have ht : v ∈ U ∪ T := he ▸ Finset.mem_union_right _ hv
-      exact (Finset.mem_union.mp ht).resolve_left hu
-    · intro v hv
-      have hu := (Finset.mem_sdiff.mp (Finset.mem_powerset.mp hT hv)).2
-      have ht : v ∈ U ∪ S := he.symm ▸ Finset.mem_union_right _ hv
-      exact (Finset.mem_union.mp ht).resolve_left hu
+    have hdisj {W : Finset V} (hW : W ∈ (B \ U).powerset) : Disjoint U W :=
+      (disjoint_sdiff_self_left.mono_left (Finset.mem_powerset.mp hW)).symm
+    simpa only [Finset.union_sdiff_cancel_left (hdisj hS),
+      Finset.union_sdiff_cancel_left (hdisj hT)] using congrArg (· \ U) he
 
 /-- The face enumerator evaluated at t, with the empty face contributing one. -/
 noncomputable def faceEnumerator (c : L → A) {R : Type*} [CommSemiring R] (t : R) : R :=
   ∑ S ∈ augmentedFaces c, t ^ S.card
 
-/-- The shelling contributes one Boolean interval per facet. -/
-theorem faceEnumerator_eq_sum (c : L → A) {R : Type*} [CommSemiring R] (t : R)
+private theorem faceEnumerator_of_facets (c : L → A) {R : Type*} [CommSemiring R] (t : R)
     (h : (facets c).Nonempty) :
     let d := Fintype.card L - Module.finrank (ZMod 2)
       (Submodule.span (ZMod 2) (Set.range c))
@@ -203,8 +197,7 @@ theorem faceEnumerator_eq_sum (c : L → A) {R : Type*} [CommSemiring R] (t : R)
   have hsum := sum_interval (restrictionFace c B) B (Finset.filter_subset _ _) t
   rwa [show B.card = d from facet_card_eq_nullity c B (mem_facets.mp hB)] at hsum
 
-/-- With no nonempty facets the only augmented face is empty. -/
-theorem faceEnumerator_eq_one (c : L → A) {R : Type*} [CommSemiring R] (t : R)
+private theorem faceEnumerator_eq_one (c : L → A) {R : Type*} [CommSemiring R] (t : R)
     (h : facets c = ∅) : faceEnumerator c t = 1 := by
   classical
   have he : augmentedFaces c = {∅} := by
@@ -214,5 +207,21 @@ theorem faceEnumerator_eq_one (c : L → A) {R : Type*} [CommSemiring R] (t : R)
       obtain ⟨B, hB, _⟩ := exists_facet_superset c hf
       simp [h] at hB), Or.inl⟩
   simp [faceEnumerator, he]
+
+open Classical in
+/-- Each nonempty facet contributes its interval. With no nonempty facets, only the empty face
+contributes. -/
+theorem faceEnumerator_eq_sum (c : L → A) {R : Type*} [CommSemiring R] (t : R) :
+    let d := Fintype.card L - Module.finrank (ZMod 2)
+      (Submodule.span (ZMod 2) (Set.range c))
+    faceEnumerator c t =
+      if (facets c).Nonempty then
+        ∑ B ∈ facets c, t ^ (restrictionFace c B).card *
+          (1 + t) ^ (d - (restrictionFace c B).card)
+      else 1 := by
+  dsimp only
+  split_ifs with h
+  · exact faceEnumerator_of_facets c t h
+  · exact faceEnumerator_eq_one c t (Finset.not_nonempty_iff_eq_empty.mp h)
 
 end D5.S3.TotalVariation.FairBiasRestriction
