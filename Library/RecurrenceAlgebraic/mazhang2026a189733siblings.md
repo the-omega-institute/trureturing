@@ -5,11 +5,12 @@ year: 2026
 title: "Curtz's denominator conjecture: OEIS A189733, revision 12, COMMENTS, May 23, 2011"
 doi: 10.5281/zenodo.23957584
 url: https://zenodo.org/records/23957584
-claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0."
+claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0."
 strata_touched:
   - D5/S1/Recurrence/Residue/OEISA189733NumeratorsAndSeries
   - D5/S1/Recurrence/Residue/OEISA267068Quotients
   - D5/S1/Recurrence/Residue/OEISA189733FiniteSums
+  - D5/S1/Recurrence/Residue/OEISA189733Reflection
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -23,7 +24,7 @@ Zenodo record: https://zenodo.org/records/23957584
 DOI: 10.5281/zenodo.23957584 (version 2; Zenodo publication date 2026-11-04, PDF dated
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957584/files/note-v2.pdf/content (text extracted locally with
-layout preserved, 33,249 characters). Corollaries 2 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3.
+layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3.
 
 ## Source statement
 
@@ -35,6 +36,14 @@ layout preserved, 33,249 characters). Corollaries 2 and 4 are in Section 2; Coro
 > Proof. The numerator statement follows from (2); the value −1 occurs exactly at indices
 > congruent to 5 modulo 6, so every positive period is a multiple of six. Each of the six
 > subsequences in (3) is affine in k, which proves (7) for its stated range. …
+
+> Corollary 3. For every n ≥ 0, B(n, 0) = ∑_{j=0}^{n} (−1)^{n−j} C(n, j) bj = (−1)^{n+1} bn.
+
+> Proof. First, B(m, n) = (−1)^{m+n+1} B(n, m). To prove this when m > n, define the lower entries
+> by the expression on the right, retaining the upper triangle. … The difference identity
+> B(m + 1, n) = B(m, n + 1) − B(m, n) holds for all m, n ≥ 0. … Iterating this difference identity,
+> or using induction and Pascal's identity, gives B(m, n) = ∑_{j=0}^{m} (−1)^{m−j} C(m, j)
+> B(0, n + j). Set n = 0 and use reflection to obtain (9).
 
 > Corollary 4. For m ≥ 0 and d ≥ 1,
 > B(m, m + d) = (−1)^m ∑_{j=0}^{⌊(d−1)/2⌋} (−1)^j C(d−1−j, j)/(m + j + 1).
@@ -81,3 +90,8 @@ recurrence and generating function as conjectures from Colin Barker (January 10,
 cited sequences are taken with their OEIS offsets: A130196 (period 3, repeat [1, 2, 2], offset 0),
 A047245 (numbers congruent to 1, 2 or 3 mod 6, offset 1), A052901 (period 3 with a(3n) = 3 and
 a(3n+1) = a(3n+2) = 2, offset 0) and A047238 (numbers congruent to 0 or 2 mod 6, offset 1).
+
+The full square array B uses the upper branch B(m, m) = 0, B(m, m + 1) = (−1)^m/(m + 1),
+B(m, n) = B(m, n − 1) + B(m + 1, n − 1) for n ≥ m + 2, and the lower branch
+B(m, n) = B(m − 1, n + 1) − B(m − 1, n) for m > n, as in the A189733 Maple and Mathematica
+programs.
