@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/Linear/DerivativeLayerExactPivot
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Analytic/PolynomialL2Derivative]
+   anchors: [lake/module/D5.S3.Analytic.PolynomialL2Derivative]
    utility: none
    digest: Attain the exact Schur pivot for factorially normalized derivative layers. -/
 

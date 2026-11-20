@@ -57,6 +57,13 @@ internal static partial class RepositoryRules
                 && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
             .Select(static item => (item.Key, item.Value));
 
+    internal static IEnumerable<(RepoPath Path, RepositoryFile File)> FormalFiles(
+        RepositorySnapshot snapshot, LeanAxiomReport report) =>
+        report.IsScoped ? report.Files.Keys
+            .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                && path.Value.EndsWith(".lean", StringComparison.Ordinal))
+            .Select(path => (path, snapshot.Files[path])) : FormalFiles(snapshot);
+
     private static readonly UTF8Encoding HeaderUtf8 = new(false, true);
 
     internal static bool TryHeader(RepositoryFile file, out HeaderData header)
