@@ -523,12 +523,12 @@ private theorem eight_le_slice {C : Finset (Q 9)} {z : Q 9 → ℤ} {k : BitVec 
     card_carrier] at bound
 
 open Classical in
-/-- A balanced induced cubic support of order 72 with at least 30 vertices
+/-- A balanced induced cubic support of order 72 with at least 28 vertices
 on the TRUE half of the first coordinate cannot have this exact projection. -/
-theorem tenShadow_excluded {C : Finset (Q 9)}
+theorem tenShadow_excluded_of_twenty_eight {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (hsize : C.card = 72)
-    (htrue : 30 ≤ (C.filter fun u => u 0 = true).card) :
+    (htrue : 28 ≤ (C.filter fun u => u 0 = true).card) :
     C.image leftCode ≠ tenShadow := by
   intro heq
   have hshadow (u : Q 9) (hu : u ∈ C) : leftCode u ∈ tenShadow :=
@@ -550,7 +550,18 @@ theorem tenShadow_excluded {C : Finset (Q 9)}
   have bound := tenShadow_global_inequality hr hb hshadow
   omega
 
+open Classical in
+/-- A balanced induced cubic support of order 72 with at least 30 vertices
+on the TRUE half of the first coordinate cannot have this exact projection. -/
+theorem tenShadow_excluded {C : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (hsize : C.card = 72)
+    (htrue : 30 ≤ (C.filter fun u => u 0 = true).card) :
+    C.image leftCode ≠ tenShadow :=
+  tenShadow_excluded_of_twenty_eight hr hb hsize ((by decide : 28 ≤ 30).trans htrue)
+
 #check tenShadow_excluded
+#print axioms tenShadow_excluded_of_twenty_eight
 #print axioms tenShadow_excluded
 
 
