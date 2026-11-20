@@ -11,10 +11,14 @@ import D5.S3.QuadraticForms.StructuredRankOneInertia
 /-! The coefficient-dependent inertia of `M_t = A - t w wᵀ / Δ`, `w = A x`, `Δ = xᵀ A x ≠ 0`, for a
 real symmetric `A` and every real `t`: `In(M_t) = In(A) - In([Δ]) + In([(1 - t) Δ])`.
 
+The block congruences adapt the hyperplane and block-congruence mechanism proposed by Lucid in
+MathOverflow question 513954, revision 2 (CC BY-SA 4.0): https://mathoverflow.net/revisions/513954/2 ,
+from the corners `0` and `Δ` to arbitrary corners.
+
 admission_basis: escape-witness. Escape witnesses: upper_general and lower_general (block
 congruences with an arbitrary corner `c` and pivot corner `d`), corner_inertia (inertia transfer
-through the corner `d`), index_sum, and scaled_inertia (the sign analysis in `t`). Consumed
-bind-only helpers: shifted_hermitian, index_congr. -/
+through the corner `d`), and scaled_inertia (the sign analysis in `t`). Consumed bind-only helpers:
+shifted_hermitian, index_sum, index_congr. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -67,15 +71,16 @@ private theorem lower_general (A : Matrix ι ι ℝ) (x : ι → ℝ) (d : ℝ) 
   ext i j
   rcases i with i | i <;> rcases j with j | j
   · simp [fromBlocks, mul_apply, Finset.mul_sum, Finset.sum_mul, vecMulVec, h, mul_assoc]
-    <;> field_simp [h] <;> ring
+    field_simp
+    ring
   · simp [fromBlocks, mul_apply, h, mul_assoc]
     field_simp
     ring
   · simp [fromBlocks, mul_apply, h, mul_assoc]
-    <;> field_simp <;> ring
   · simp [fromBlocks, mul_apply, h]
 
 
+omit [DecidableEq ι] in
 private theorem shifted_hermitian (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (x : ι → ℝ) (d : ℝ) :
     (A - d • vecMulVec (A *ᵥ x) (A *ᵥ x)).IsHermitian := by
   apply hA.sub
@@ -128,23 +133,13 @@ private theorem corner_inertia (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (x : 
 
 private theorem index_sum {A : Matrix ι ι ℝ} (hA : A.IsHermitian) :
     zeroIndex hA + posIndex hA + negIndex hA = Fintype.card ι := by
-  classical
-  unfold zeroIndex posIndex negIndex
-  have h1 := Finset.card_filter_add_card_filter_not (s := Finset.univ)
+  have h1 := D5.S3.SpectralTopology.PointGapExactInertia.posIndex_add_negIndex_eq_rank hA
+  have hr := hA.rank_eq_card_non_zero_eigs
+  rw [Fintype.card_subtype] at hr; simp only [ne_eq] at hr
+  have h2 := Finset.card_filter_add_card_filter_not (s := Finset.univ)
     (fun i => hA.eigenvalues i = 0)
-  have h2 := Finset.card_filter_add_card_filter_not
-    (s := Finset.univ.filter fun i => ¬ hA.eigenvalues i = 0) (fun i => 0 < hA.eigenvalues i)
-  rw [Finset.filter_filter, Finset.filter_filter] at h2
-  have e1 : (Finset.univ.filter fun i => ¬hA.eigenvalues i = 0 ∧ 0 < hA.eigenvalues i) =
-      Finset.univ.filter fun i => 0 < hA.eigenvalues i :=
-    Finset.filter_congr fun i _ => ⟨fun h => h.2, fun h => ⟨h.ne', h⟩⟩
-  have e2 : (Finset.univ.filter fun i => ¬hA.eigenvalues i = 0 ∧ ¬0 < hA.eigenvalues i) =
-      Finset.univ.filter fun i => hA.eigenvalues i < 0 :=
-    Finset.filter_congr fun i _ => ⟨fun h => lt_of_le_of_ne (not_lt.mp h.2) h.1,
-      fun h => ⟨h.ne, not_lt.mpr h.le⟩⟩
-  rw [e1, e2] at h2
-  simp only [Finset.card_univ] at h1
-  omega
+  simp only [Finset.card_univ] at h2
+  unfold zeroIndex; omega
 
 private theorem index_congr {A B : Matrix ι ι ℝ} (hAB : A = B) (hA : A.IsHermitian)
     (hB : B.IsHermitian) : posIndex hA = posIndex hB ∧ negIndex hA = negIndex hB := by
@@ -221,9 +216,9 @@ private theorem scaled_inertia (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (x : 
 
 /-- Corollary 4 of Ma and Zhang on MathOverflow 513954: for a real symmetric `A`, a vector `x` with
 `Δ = xᵀ A x ≠ 0`, `w = A x` and every real `t`, the matrix `M_t = A - t w wᵀ / Δ` is symmetric and
-`In(M_t) = In(A) - In([Δ]) + In([(1 - t) Δ])` componentwise (stated additively); hence `t < 1`
-preserves the inertia, `t = 1` is the structured downdate, and `t > 1` moves one eigenvalue from the
-sign of `Δ` to the opposite sign without changing the nullity. -/
+`In(M_t) = In(A) - In([Δ]) + In([(1 - t) Δ])` componentwise (stated additively); the inertia is
+preserved exactly when `t < 1`, the nullity is preserved exactly when `t ≠ 1`, `t = 1` is the
+structured downdate, and `t > 1` moves one eigenvalue from the sign of `Δ` to the opposite sign. -/
 theorem result (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (x : ι → ℝ) (h : pivot A x ≠ 0) (t : ℝ) :
     ∃ hM : (scaledDowndate A x t).IsHermitian,
       (posIndex hM + (if 0 < pivot A x then 1 else 0) =
@@ -231,30 +226,54 @@ theorem result (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (x : ι → ℝ) (h :
         negIndex hM + (if pivot A x < 0 then 1 else 0) =
           negIndex hA + (if (1 - t) * pivot A x < 0 then 1 else 0) ∧
         zeroIndex hM = zeroIndex hA + (if t = 1 then 1 else 0)) ∧
-      (t < 1 → posIndex hM = posIndex hA ∧ negIndex hM = negIndex hA ∧
-        zeroIndex hM = zeroIndex hA) ∧
+      ((posIndex hM = posIndex hA ∧ negIndex hM = negIndex hA ∧ zeroIndex hM = zeroIndex hA) ↔
+        t < 1) ∧
+      (zeroIndex hM = zeroIndex hA ↔ t ≠ 1) ∧
       (1 < t → zeroIndex hM = zeroIndex hA ∧
         (0 < pivot A x → posIndex hM + 1 = posIndex hA ∧ negIndex hM = negIndex hA + 1) ∧
         (pivot A x < 0 → posIndex hM = posIndex hA + 1 ∧ negIndex hM + 1 = negIndex hA)) ∧
       scaledDowndate A x 1 = downdate A x := by
   obtain ⟨hM, hp, hn, hz⟩ := scaled_inertia A hA x h t
-  refine ⟨hM, ⟨hp, hn, hz⟩, fun ht => ?_, fun ht => ?_, by simp [scaledDowndate, downdate]⟩
-  · have h1 : 0 < 1 - t := by linarith
+  have hgt : 1 < t → zeroIndex hM = zeroIndex hA ∧
+      (0 < pivot A x → posIndex hM + 1 = posIndex hA ∧ negIndex hM = negIndex hA + 1) ∧
+      (pivot A x < 0 → posIndex hM = posIndex hA + 1 ∧ negIndex hM + 1 = negIndex hA) := by
+    intro ht
+    have h1 : 1 - t < 0 := by linarith
+    have hz' := hz
+    simp only [ht.ne', if_false, add_zero] at hz'
+    refine ⟨hz', fun hd => ?_, fun hd => ?_⟩
+    · have a : ¬ (0 < (1 - t) * pivot A x) := (mul_neg_of_neg_of_pos h1 hd).not_gt
+      have b : (1 - t) * pivot A x < 0 := mul_neg_of_neg_of_pos h1 hd
+      have hp' := hp; have hn' := hn
+      simp only [hd, hd.not_gt, a, b, if_true, if_false] at hp' hn'
+      exact ⟨by omega, by omega⟩
+    · have a : 0 < (1 - t) * pivot A x := mul_pos_of_neg_of_neg h1 hd
+      have hp' := hp; have hn' := hn
+      simp only [hd, hd.not_gt, a, a.not_gt, if_true, if_false] at hp' hn'
+      exact ⟨by omega, by omega⟩
+  have hlt : t < 1 → posIndex hM = posIndex hA ∧ negIndex hM = negIndex hA ∧
+      zeroIndex hM = zeroIndex hA := by
+    intro ht
+    have h1 : 0 < 1 - t := by linarith
     have e1 : (0 < (1 - t) * pivot A x ↔ 0 < pivot A x) :=
       ⟨fun hh => pos_of_mul_pos_right hh h1.le, fun hh => mul_pos h1 hh⟩
     have e2 : ((1 - t) * pivot A x < 0 ↔ pivot A x < 0) :=
       ⟨fun hh => neg_of_mul_neg_right hh h1.le, fun hh => mul_neg_of_pos_of_neg h1 hh⟩
-    simp only [e1, e2, ht.ne, if_false, add_zero] at hp hn hz
-    exact ⟨by omega, by omega, hz⟩
-  · have h1 : 1 - t < 0 := by linarith
-    simp only [ht.ne', if_false, add_zero] at hz
-    refine ⟨hz, fun hd => ?_, fun hd => ?_⟩
-    · have a : ¬ (0 < (1 - t) * pivot A x) := (mul_neg_of_neg_of_pos h1 hd).not_gt
-      have b : (1 - t) * pivot A x < 0 := mul_neg_of_neg_of_pos h1 hd
-      simp only [hd, hd.not_gt, a, b, if_true, if_false] at hp hn
-      exact ⟨by omega, by omega⟩
-    · have a : 0 < (1 - t) * pivot A x := mul_pos_of_neg_of_neg h1 hd
-      simp only [hd, hd.not_gt, a, a.not_gt, if_true, if_false] at hp hn
-      exact ⟨by omega, by omega⟩
+    have hp' := hp; have hn' := hn; have hz' := hz
+    simp only [e1, e2, ht.ne, if_false, add_zero] at hp' hn' hz'
+    exact ⟨by omega, by omega, hz'⟩
+  refine ⟨hM, ⟨hp, hn, hz⟩, ⟨fun ⟨ep, en, ez⟩ => ?_, hlt⟩, ⟨fun ez => ?_, fun ht => ?_⟩, hgt,
+    by simp [scaledDowndate, downdate]⟩
+  · by_contra hge
+    rcases (not_lt.mp hge).eq_or_lt with h1 | h1
+    · subst h1; simp at hz; omega
+    · obtain ⟨-, hpos, hneg⟩ := hgt h1
+      rcases lt_or_gt_of_ne h with hd | hd
+      · have := (hneg hd).1; omega
+      · have := (hpos hd).1; omega
+  · intro h1; subst h1; simp at hz; omega
+  · rcases lt_or_gt_of_ne ht with h1 | h1
+    · exact (hlt h1).2.2
+    · exact (hgt h1).1
 
 end D5.S3.QuadraticForms.StructuredRankOneScaledInertia

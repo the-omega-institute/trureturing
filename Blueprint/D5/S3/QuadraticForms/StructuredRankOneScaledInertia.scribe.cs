@@ -27,9 +27,9 @@ internal sealed class StructuredRankOneScaledInertiaDocument : IScribeDocumentDe
                         + "every real t the matrix M_t = A − t w wᵀ/Δ is symmetric, and with [P] equal to 1 "
                         + "when P holds and 0 otherwise: n₊(M_t) + [Δ > 0] = n₊(A) + [(1 − t)Δ > 0], "
                         + "n₋(M_t) + [Δ < 0] = n₋(A) + [(1 − t)Δ < 0], and n₀(M_t) = n₀(A) + [t = 1]. "
-                        + "Hence for t < 1 the inertia of M_t equals that of A; M_1 is the structured "
-                        + "downdate; and for t > 1 the nullity is unchanged while one eigenvalue moves from "
-                        + "the sign of Δ to the opposite sign.")),
+                        + "Hence the inertia of M_t equals that of A exactly when t < 1, the nullity is "
+                        + "unchanged exactly when t ≠ 1, M_1 is the structured downdate, and for t > 1 one "
+                        + "eigenvalue moves from the sign of Δ to the opposite sign.")),
                     Paragraph(Text(
                         "For t = 0 nothing changes. For t ≠ 0 put d = Δ/t and c = d − Δ. The block matrix "
                         + "A ⊕ [c] is congruent, by the unipotent matrix with x in its corner column, to the "
@@ -38,7 +38,9 @@ internal sealed class StructuredRankOneScaledInertiaDocument : IScribeDocumentDe
                         + "A − w wᵀ/d = M_t. Sylvester's law of inertia and additivity over blocks give "
                         + "n₊(A) + [c > 0] = n₊(M_t) + [d > 0] and the same for n₋. Since c = (1 − t)Δ/t, "
                         + "the sign cases t > 0 and t < 0 both give the stated identities, and the nullity "
-                        + "follows because the three counts add to n. This is Corollary 4 of H. Ma and "
+                        + "follows because the three counts add to n. The congruences adapt the block-congruence "
+                        + "mechanism proposed by Lucid in MathOverflow 513954, revision 2 (CC BY-SA 4.0), to "
+                        + "arbitrary corners. This is Corollary 4 of H. Ma and "
                         + "W. Zhang (DOI 10.5281/zenodo.23920598) on MathOverflow 513954, revision 2, "
                         + "asked by Lucid."))),
                 DescribeRole.Theorem))));
