@@ -53,8 +53,8 @@ smaller coefficient; among j ≡ n (mod 4), a(n) ≤ j exactly when F(j) ≥ 2n,
 such j; and a(n) = n − 4q(n) with the
 radical floor formula over the reals. For Corollary 2, n_r = 4r + j_r for every r (j_0 = 0 gives
 n_0 = 0), and q(n) ≥ r exactly when n ≥ n_r. The block description is formalized as: a(n + 1) − a(n)
-= −3 exactly when n + 1 = n_r for some r ≥ 1; n_1 = 5; n_{r+1} − n_r ∈ {4, 5} for r ≥ 1; for r ≥ 1
-the gap is five exactly when r = R_j for some j ≥ 1, and n_{R_j} = 4R_j + j; blocks strictly between
-R_j and R_{j+1} have length four. The O(1) terms are made explicit: R_{j+1} − R_j − 1 differs from
-j/4 by at most 9/8, and |a(n) − √(2n)| ≤ 7/2. The source credits Mike Sheppard (OEIS A381423, revision 8)
-for the questions and DLMF 18.5.13 for the coefficient formula.
+= −3 exactly when n + 1 is some n_r, the other differences being 1 by the frozen difference result;
+n_1 = 5; n_{r+1} − n_r ∈ {4, 5}; the gap is five exactly when r = R_j for some j ≥ 0 (R_0 = 0 is the
+first block), and n_{R_j} = 4R_j + j; blocks strictly between R_j and R_{j+1} have length four. The
+O(1) terms are made explicit and sharpened: −3/4 ≤ R_{j+1} − R_j − 1 − j/4 ≤ 1/4 with both ends
+attained, and −7/2 < a(n) − √(2n) < 3.

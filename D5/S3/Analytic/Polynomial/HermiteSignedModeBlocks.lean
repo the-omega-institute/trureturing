@@ -183,19 +183,6 @@ private theorem five_iff (r : ℕ) (hr : 1 ≤ r) :
 private theorem start_R (j : ℕ) (hj : 1 ≤ j) : blockStart (R j) = 4 * R j + j := by
   unfold blockStart; rw [offset_R j hj]
 
-private theorem count_bound (j : ℕ) : |((R (j + 1) : ℝ) - R j - 1) - j / 4| ≤ 9 / 8 := by
-  have h1 : 8 * R j ≤ G j := Nat.mul_div_le _ _
-  have h2 : G j < 8 * R j + 8 := by unfold R; omega
-  have h3 : 8 * R (j + 1) ≤ G (j + 1) := Nat.mul_div_le _ _
-  have h4 : G (j + 1) < 8 * R (j + 1) + 8 := by unfold R; omega
-  have hG : G (j + 1) = G j + 2 * j + 6 := by unfold G; ring
-  have e1 : (8 : ℝ) * R j ≤ G j := by exact_mod_cast h1
-  have e2 : (G j : ℝ) + 1 ≤ 8 * R j + 8 := by exact_mod_cast h2
-  have e3 : (8 : ℝ) * R (j + 1) ≤ G (j + 1) := by exact_mod_cast h3
-  have e4 : (G (j + 1) : ℝ) + 1 ≤ 8 * R (j + 1) + 8 := by exact_mod_cast h4
-  have e5 : (G (j + 1) : ℝ) = G j + 2 * j + 6 := by exact_mod_cast hG
-  rw [abs_le]; constructor <;> linarith
-
 /-- `α_n = (√(8n + 21) - 7)/2`. -/
 noncomputable def alpha (n : ℕ) : ℝ := (√(8 * n + 21) - 7) / 2
 
@@ -229,7 +216,59 @@ private theorem alpha_bounds (n : ℕ) : alpha n ≤ a n ∧ (a n : ℝ) < alpha
         by_contra h; push Not at h; nlinarith
     linarith
 
-private theorem sqrt_bound (n : ℕ) : |(a n : ℝ) - √(2 * n)| ≤ 7 / 2 := by
+private theorem R_mono {i j : ℕ} (h : i ≤ j) : R i ≤ R j := Nat.div_le_div_right (G_mono h)
+
+private theorem bs1 : blockStart 1 = 5 := by unfold blockStart; rw [offset_one]
+private theorem bs0 : blockStart 0 = 0 := by simp [blockStart, blockOffset, G]
+
+private theorem start_step' (r : ℕ) :
+    blockStart (r + 1) = blockStart r + 4 ∨ blockStart (r + 1) = blockStart r + 5 := by
+  rcases Nat.eq_zero_or_pos r with rfl | hr
+  · right; show blockStart 1 = blockStart 0 + 5; rw [bs1, bs0]
+  · exact start_step r hr
+
+private theorem five_iff' (r : ℕ) : blockStart (r + 1) = blockStart r + 5 ↔ ∃ j, r = R j := by
+  rcases Nat.eq_zero_or_pos r with rfl | hr
+  · show blockStart 1 = blockStart 0 + 5 ↔ _
+    rw [bs1, bs0]; exact ⟨fun _ => ⟨0, by simp [R, G]⟩, fun _ => rfl⟩
+  · rw [five_iff r hr]
+    constructor
+    · rintro ⟨j, -, h⟩; exact ⟨j, h⟩
+    · rintro ⟨j, h⟩
+      rcases Nat.eq_zero_or_pos j with rfl | hj
+      · simp [R, G] at h; omega
+      · exact ⟨j, hj, h⟩
+
+private theorem start_R' (j : ℕ) : blockStart (R j) = 4 * R j + j := by
+  rcases Nat.eq_zero_or_pos j with rfl | hj
+  · simp [R, G, bs0]
+  · exact start_R j hj
+
+private theorem count_nat (j : ℕ) :
+    8 * R j + 8 + 2 * j ≤ 8 * R (j + 1) + 6 ∧ 8 * R (j + 1) ≤ 8 * R j + 8 + 2 * j + 2 := by
+  obtain ⟨q, s, hs, rfl⟩ : ∃ q s, s < 8 ∧ j = 8 * q + s :=
+    ⟨j / 8, j % 8, Nat.mod_lt _ (by norm_num), (Nat.div_add_mod j 8).symm⟩
+  have key : ∀ t, G (8 * q + t) = 8 * (8 * q ^ 2 + 2 * q * t + 5 * q) + G t := by
+    intro t; unfold G; ring
+  have k1 := key s
+  have k2 := key (s + 1)
+  rw [show 8 * q + s + 1 = 8 * q + (s + 1) by ring]
+  unfold R
+  rw [k1, k2]
+  have hu : 8 * q ^ 2 + 2 * q * (s + 1) + 5 * q = (8 * q ^ 2 + 2 * q * s + 5 * q) + 2 * q := by ring
+  rw [hu]
+  generalize 8 * q ^ 2 + 2 * q * s + 5 * q = u
+  have : s = 0 ∨ s = 1 ∨ s = 2 ∨ s = 3 ∨ s = 4 ∨ s = 5 ∨ s = 6 ∨ s = 7 := by omega
+  rcases this with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> simp only [G] <;> omega
+
+private theorem count_exact (j : ℕ) :
+    -3 / 4 ≤ ((R (j + 1) : ℝ) - R j - 1) - j / 4 ∧ ((R (j + 1) : ℝ) - R j - 1) - j / 4 ≤ 1 / 4 := by
+  obtain ⟨h1, h2⟩ := count_nat j
+  have e1 : (8 * R j + 8 + 2 * j : ℝ) ≤ 8 * R (j + 1) + 6 := by exact_mod_cast h1
+  have e2 : (8 * R (j + 1) : ℝ) ≤ 8 * R j + 8 + 2 * j + 2 := by exact_mod_cast h2
+  constructor <;> linarith
+
+private theorem sqrt_strict (n : ℕ) : -(7 / 2 : ℝ) < (a n : ℝ) - √(2 * n) ∧ (a n : ℝ) - √(2 * n) < 3 := by
   obtain ⟨hl, hu⟩ := alpha_bounds n
   unfold alpha at hl hu
   set s := √(8 * (n : ℝ) + 21)
@@ -238,11 +277,11 @@ private theorem sqrt_bound (n : ℕ) : |(a n : ℝ) - √(2 * n)| ≤ 7 / 2 := b
   have ht0 : 0 ≤ t := Real.sqrt_nonneg _
   have hsq : s ^ 2 = 8 * n + 21 := Real.sq_sqrt (by positivity)
   have htq : t ^ 2 = 2 * n := Real.sq_sqrt (by positivity)
-  have hlow : 2 * t ≤ s := by
+  have hlow : 2 * t < s := by
     by_contra h; push Not at h; nlinarith
   have hup : s ≤ 2 * t + 5 := by
     by_contra h; push Not at h; nlinarith
-  rw [abs_le]; constructor <;> linarith
+  constructor <;> linarith
 
 private theorem ratio_limit :
     Filter.Tendsto (fun n : ℕ => (a n : ℝ) / √(2 * n)) Filter.atTop (nhds 1) := by
@@ -257,45 +296,48 @@ private theorem ratio_limit :
   have hpos : 0 < √(2 * (n : ℝ)) := Real.sqrt_pos.2 (by positivity)
   rw [Real.norm_eq_abs, show (a n : ℝ) / √(2 * n) - 1 = ((a n : ℝ) - √(2 * n)) / √(2 * n) by
     field_simp, abs_div, abs_of_pos hpos]
-  exact div_le_div_of_nonneg_right (sqrt_bound n) hpos.le
+  have hb := sqrt_strict n
+  exact div_le_div_of_nonneg_right (abs_le.2 ⟨by linarith [hb.1], by linarith [hb.2]⟩) hpos.le
 
-private theorem R_mono {i j : ℕ} (h : i ≤ j) : R i ≤ R j := Nat.div_le_div_right (G_mono h)
-
-private theorem R_succ (j : ℕ) (hj : 1 ≤ j) : R j + 1 ≤ R (j + 1) := by
-  have hG : G j + 8 ≤ G (j + 1) := by unfold G; nlinarith
-  unfold R; omega
-
-private theorem four_between (j r : ℕ) (hj : 1 ≤ j) (h1 : R j < r) (h2 : r < R (j + 1)) :
+private theorem four_between (j r : ℕ) (h1 : R j < r) (h2 : r < R (j + 1)) :
     blockStart (r + 1) = blockStart r + 4 := by
-  have hr : 1 ≤ r := by have := R_pos j hj; omega
-  rcases start_step r hr with h | h
+  rcases start_step' r with h | h
   · exact h
-  · obtain ⟨i, hi, rfl⟩ := (five_iff r hr).1 h
+  · obtain ⟨i, rfl⟩ := (five_iff' r).1 h
     rcases Nat.lt_or_ge j i with hji | hji
     · have := R_mono (show j + 1 ≤ i by omega); omega
     · have := R_mono hji; omega
 
+private theorem diff_neg_three_iff' (n : ℕ) :
+    (a (n + 1) : ℤ) - a n = -3 ↔ ∃ r, blockStart r = n + 1 := by
+  rw [diff_neg_three_iff]
+  constructor
+  · rintro ⟨r, -, h⟩; exact ⟨r, h⟩
+  · rintro ⟨r, h⟩
+    rcases Nat.eq_zero_or_pos r with rfl | hr
+    · rw [bs0] at h; omega
+    · exact ⟨r, hr, h⟩
+
 /-- Corollary 2 of Ma and Zhang on OEIS A381423, with `q(n) = mode n = (n - a n)/4`: `q(n) ≥ r`
-exactly when `n ≥ n_r`; `a(n+1) - a(n) = -3` exactly at the block starts `n_r`, `r ≥ 1`; the first
-block has length five and every later one length four or five; the length-five blocks after the
-first are exactly those indexed by `R_j = ⌊(j² + 5j + 7)/8⌋`, `j ≥ 1`, starting at `4R_j + j`, and
-the blocks strictly between them have length four, their number differing from `j/4` by at most
-`9/8`; finally `α_n ≤ a(n) < α_n + 4`, `|a(n) - √(2n)| ≤ 7/2` and `a(n)/√(2n) → 1`. -/
+exactly when `n ≥ n_r`; `a(n+1) - a(n) = -3` exactly when `n + 1` is a block start `n_r`; the block
+starts satisfy `n_0 = 0`, `n_1 = 5` and `n_{r+1} - n_r ∈ {4, 5}`, with gap five exactly at
+`r = R_j = ⌊(j² + 5j + 7)/8⌋` (the first block is `R_0 = 0`), `n_{R_j} = 4R_j + j`, and gap four
+strictly between consecutive `R_j`; `R_{j+1} - R_j - 1 - j/4 ∈ [-3/4, 1/4]`; finally
+`α_n ≤ a(n) < α_n + 4`, `-7/2 < a(n) - √(2n) < 3` and `a(n)/√(2n) → 1`. -/
 theorem result :
     (∀ n r : ℕ, r ≤ mode n ↔ blockStart r ≤ n) ∧
-    (∀ n : ℕ, (a (n + 1) : ℤ) - a n = -3 ↔ ∃ r, 1 ≤ r ∧ blockStart r = n + 1) ∧
+    (∀ n : ℕ, (a (n + 1) : ℤ) - a n = -3 ↔ ∃ r, blockStart r = n + 1) ∧
     blockStart 0 = 0 ∧ blockStart 1 = 5 ∧
-    (∀ r : ℕ, 1 ≤ r →
-      blockStart (r + 1) = blockStart r + 4 ∨ blockStart (r + 1) = blockStart r + 5) ∧
-    (∀ r : ℕ, 1 ≤ r → (blockStart (r + 1) = blockStart r + 5 ↔ ∃ j, 1 ≤ j ∧ r = R j)) ∧
-    (∀ j : ℕ, 1 ≤ j → blockStart (R j) = 4 * R j + j) ∧
-    (∀ j r : ℕ, 1 ≤ j → R j < r → r < R (j + 1) → blockStart (r + 1) = blockStart r + 4) ∧
-    (∀ j : ℕ, |((R (j + 1) : ℝ) - R j - 1) - j / 4| ≤ 9 / 8) ∧
+    (∀ r : ℕ, blockStart (r + 1) = blockStart r + 4 ∨ blockStart (r + 1) = blockStart r + 5) ∧
+    (∀ r : ℕ, blockStart (r + 1) = blockStart r + 5 ↔ ∃ j, r = R j) ∧
+    (∀ j : ℕ, blockStart (R j) = 4 * R j + j) ∧
+    (∀ j r : ℕ, R j < r → r < R (j + 1) → blockStart (r + 1) = blockStart r + 4) ∧
+    (∀ j : ℕ, -3 / 4 ≤ ((R (j + 1) : ℝ) - R j - 1) - j / 4 ∧
+      ((R (j + 1) : ℝ) - R j - 1) - j / 4 ≤ 1 / 4) ∧
     (∀ n : ℕ, alpha n ≤ a n ∧ (a n : ℝ) < alpha n + 4) ∧
-    (∀ n : ℕ, |(a n : ℝ) - √(2 * n)| ≤ 7 / 2) ∧
-    Filter.Tendsto (fun n : ℕ => (a n : ℝ) / √(2 * n)) Filter.atTop (nhds 1) := by
-  refine ⟨le_mode_iff_start, diff_neg_three_iff, by simp [blockStart, blockOffset, G], ?_,
-    start_step, five_iff, start_R, four_between, count_bound, alpha_bounds, sqrt_bound, ratio_limit⟩
-  unfold blockStart; rw [offset_one]
+    (∀ n : ℕ, -(7 / 2 : ℝ) < (a n : ℝ) - √(2 * n) ∧ (a n : ℝ) - √(2 * n) < 3) ∧
+    Filter.Tendsto (fun n : ℕ => (a n : ℝ) / √(2 * n)) Filter.atTop (nhds 1) :=
+  ⟨le_mode_iff_start, diff_neg_three_iff', bs0, bs1, start_step', five_iff', start_R', four_between,
+    count_exact, alpha_bounds, sqrt_strict, ratio_limit⟩
 
 end D5.S3.Analytic.Polynomial.HermiteSignedModeBlocks
