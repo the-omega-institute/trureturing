@@ -391,6 +391,18 @@ private abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p :
     Profile I m :=
   ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
 
+/-- A shared positive seed law exactly calibrated on all profiles of a sufficiently divisible
+denominator has trivial seed stabilizers. -/
+private theorem trivial_seed_stabilizers {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S] [MulAction (Equiv.Perm I) S]
+    {m : ℕ} (divisible : ∀ d : ℕ, 0 < d → d ≤ Fintype.card I → d ∣ m)
+    (w : S → ℝ) (positive : ∀ s, 0 < w s)
+    (f : Profile I m → S → I)
+    (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
+    (equivariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
+    ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥ :=
+  PrimeCycleSeedFreeness.free_of_prime_divisibility
+    (fun p prime le => divisible p prime.pos le) w positive f calibrated equivariant
+
 end PermutationGrid
 
 open Finset
@@ -796,8 +808,8 @@ private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
     ∃ r, Fintype.card S = (Fintype.card I)! * r ∧
       m / (Fintype.card I - 1) + 1 ≤ (Fintype.card I + 1) ^ r := by
   classical
-  have free := PrimeCycleSeedFreeness.free_of_prime_divisibility
-    (fun p hp le => divisible p hp.pos le) w positive f calibrated covariant
+  have free :=
+    PermutationGrid.trivial_seed_stabilizers divisible w positive f calibrated covariant
   obtain ⟨r, weights, support, _, cover⟩ := weighted_orbit_spectrum two free w invariant f calibrated covariant
   choose digits value using cover
   have inj : Function.Injective digits := by

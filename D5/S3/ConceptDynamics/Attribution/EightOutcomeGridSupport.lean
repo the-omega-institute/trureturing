@@ -23,11 +23,6 @@ open D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
 
 private abbrev Coarse := {p : Fin 8 → ℕ // ∑ i, p i = 210}
 
-set_option maxRecDepth 4096 in
-private theorem two_digit_code_count :
-    (Finset.univ.image (DigitDiagonalCapacity.code (k := 8) 4)).card = 27 := by
-  decide
-
 private theorem divides_primes (p : ℕ) (prime : p.Prime) (le : p ≤ Fintype.card (Fin 8)) :
     p ∣ 210 := by
   rw [Fintype.card_fin] at le
@@ -35,6 +30,7 @@ private theorem divides_primes (p : ℕ) (prime : p.Prime) (le : p ≤ Fintype.c
   have cases : p = 2 ∨ p = 3 ∨ p = 4 ∨ p = 5 ∨ p = 6 ∨ p = 7 ∨ p = 8 := by omega
   rcases cases with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;> first | decide | exact False.elim ((by decide : ¬ Nat.Prime _) prime)
 
+set_option maxRecDepth 4096 in
 private theorem lower {S : Type} [Fintype S] [MulAction (Equiv.Perm (Fin 8)) S]
     (w : S → ℝ) (f : Coarse → S → Fin 8) (law : CalibratingLaw S w f) :
     120960 ≤ Fintype.card S := by
@@ -84,8 +80,8 @@ private theorem lower {S : Type} [Fintype S] [MulAction (Equiv.Perm (Fin 8)) S]
     rwa [Fin.sum_univ_two] at eq
   have bound := DigitDiagonalCapacity.integral_range_le_diagonal_codes (b := 4) (c := 15)
     (k := 8) (by decide) (by decide) (weight 0) (weight 1) (by simpa using weights) pairs
-  rw [two_digit_code_count] at bound
-  omega
+  exact (by decide : ¬ 31 ≤ (Finset.univ.image (DigitDiagonalCapacity.code (k := 8) 4)).card)
+    bound
 
 
 private abbrev Fine := {p : Fin 8 → ℕ // ∑ i, p i = 8 * (8 - 1) * 30}

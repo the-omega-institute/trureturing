@@ -62,9 +62,7 @@ theorem free_of_prime_divisibility {I S : Type*} [Fintype I] [DecidableEq I] [Fi
     rw [uOrd] at d
     have h := (Nat.dvd_prime prime).mp d
     refine h.resolve_left fun one => moved ?_
-    have isOne : cycle = 1 := orderOf_eq_one_iff.mp one
-    simpa only [← cycleOf_apply_self u i, show u.cycleOf i = 1 from isOne] using
-      (show (1 : Equiv.Perm I) i = i from rfl)
+    exact (cycleOf_eq_one_iff u).mp (orderOf_eq_one_iff.mp one)
   let block := cycle.support
   have bCard : block.card = p := (isCycle_cycleOf u moved).orderOf.symm.trans cycleOrd
   have bDiv : block.card ∣ m := by
@@ -75,8 +73,7 @@ theorem free_of_prime_divisibility {I S : Type*} [Fintype I] [DecidableEq I] [Fi
       nsmul_eq_mul, Nat.cast_id, Nat.mul_comm, Nat.div_mul_cancel bDiv]⟩
   have preserved (j : I) : u j ∈ block ↔ j ∈ block := by
     rw [mem_support_cycleOf_iff' moved, mem_support_cycleOf_iff' moved]
-    exact ⟨fun h => h.trans (u.sameCycle_apply_right.1 (SameCycle.refl _ _)),
-      fun h => h.trans (u.sameCycle_apply_right.2 (SameCycle.refl _ _))⟩
+    exact sameCycle_apply_right
   have invariant : relabel u prob = prob := by
     apply Subtype.ext
     funext j
