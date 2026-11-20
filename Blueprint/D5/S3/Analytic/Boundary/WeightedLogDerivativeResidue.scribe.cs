@@ -24,10 +24,10 @@ internal sealed class WeightedLogDerivativeResidueDocument : IScribeDocumentDefi
                     + "The germ has a simple pole exactly when that coefficient is nonzero. It admits "
                     + "an analytic extension exactly when the coefficient is zero. Each local factorization "
                     + "contributes the signed order of its power factor and the analytic logarithmic "
-                    + "derivative of its nonvanishing factor. For analytic members of finite order, "
-                    + "the orders are nonnegative and the order of a member vanishing at the "
-                    + "center is positive. When the weights are positive real numbers, any such "
-                    + "member makes the real weighted sum strictly positive. The residue is the "
-                    + "image of that sum in the complex numbers, so the germ has a simple pole."))),
+                    + "derivative of its nonvanishing factor. If every member is analytic at the "
+                    + "center, all orders are nonnegative, and a vanishing member has positive order. "
+                    + "With positive real weights, one positive summand and nonnegative remaining "
+                    + "summands give a strictly positive real weighted sum. Its image in the complex "
+                    + "numbers is the residue, so the germ has a simple pole."))),
                 DescribeRole.Theorem))));
 }
