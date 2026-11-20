@@ -6,11 +6,16 @@
    utility: none
    digest: A half-size bound from two omitted triple patterns at distance two. -/
 
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangBalancedSymmetry
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SignedProjection
 import Batteries.Tactic.OpenPrivate
 
 /-! Exterior signed rows for the omitted patterns `001` and `111`
-give two disjoint translations of the TRUE half into the FALSE half. -/
+give two disjoint translations of the TRUE half into the FALSE half.
+Permuting the axes and translating by a fixed bit mask sends any pair of
+omitted patterns that differ only in the first two bits to `001` and `111`.
+The symmetry preserves induced degree and transports the Huang switching signs.
+It also sends the half with the shared third bit bijectively to the TRUE half. -/
 
 set_option autoImplicit false
 
@@ -217,5 +222,75 @@ theorem true_half_card_le_of_missing_001_111 {S : Finset (Q 9)} (hsize : S.card 
   omega
 
 #print axioms true_half_card_le_of_missing_001_111
+
+open Classical in
+/-- If the omitted patterns on three distinct axes differ in the first two bits,
+the half with their shared third bit contains at most 24 selected vertices. -/
+theorem half_card_le_of_missing_triple_patterns {S : Finset (Q 9)} (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced S) (i j k : Fin 9) (a b c : Bool)
+    (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k)
+    (homit : ∀ x ∈ S, ¬ ((x i, x j, x k) = (a, b, c) ∨
+      (x i, x j, x k) = (!a, !b, c))) :
+    (S.filter (fun x => x k = c)).card ≤ 24 := by
+  classical
+  let axes : Fin 3 → Fin 9 := ![i, j, k]
+  have hinj : Function.Injective axes := by
+    intro u v huv
+    fin_cases u <;> fin_cases v <;> simp_all [axes, Ne.symm]
+  obtain ⟨p, hp⟩ := Equiv.Perm.exists_extending_pair axes
+    (Fin.castLE (by decide : 3 ≤ 9)) hinj (Fin.castLE_injective _)
+  have hp0 : p.symm 0 = i := p.symm_apply_eq.mpr (hp 0).symm
+  have hp1 : p.symm 1 = j := p.symm_apply_eq.mpr (hp 1).symm
+  have hp2 : p.symm 2 = k := p.symm_apply_eq.mpr (hp 2).symm
+  let m (q : Fin 9) : Bool := if q = 0 then a else if q = 1 then b else if q = 2 then !c else false
+  let g : Q 9 ≃ Q 9 :=
+    { toFun := fun x q => x (p.symm q) ^^ m q
+      invFun := fun y q => y (p q) ^^ m (p q)
+      left_inv := fun x => by
+        funext q
+        change ((x (p.symm (p q)) ^^ m (p q)) ^^ m (p q)) = x q
+        simp
+      right_inv := fun y => by
+        funext q
+        change ((y (p (p.symm q)) ^^ m (p (p.symm q))) ^^ m q) = y q
+        simp }
+  have hflip (x : Q 9) (r : Fin 9) : g (flip x r) = flip (g x) (p r) := by
+    funext q
+    by_cases hq : q = p r
+    · subst q
+      simp only [flip_apply_same]
+      change (flip x r (p.symm (p r)) ^^ m (p r)) = !(x (p.symm (p r)) ^^ m (p r))
+      rw [p.symm_apply_apply, flip_apply_same]
+      cases x r <;> cases m (p r) <;> simp
+    · have hne : p.symm q ≠ r := fun h => hq (p.symm_apply_eq.mp h)
+      rw [flip_apply_of_ne (g x) hq]
+      change (flip x r (p.symm q) ^^ m q) = (x (p.symm q) ^^ m q)
+      rw [flip_apply_of_ne x hne]
+  obtain ⟨hreg', hb'⟩ := HuangBalancedSymmetry.cube_action_regular_balanced g p hflip hreg hb
+  have xor_eq (u v t : Bool) : (u ^^ v) = t ↔ u = (t ^^ v) := by
+    cases u <;> cases v <;> cases t <;> decide
+  have h0 (x : Q 9) (t : Bool) : g x 0 = t ↔ x i = (t ^^ a) := by
+    simpa [g, m, hp0] using xor_eq (x i) a t
+  have h1 (x : Q 9) (t : Bool) : g x 1 = t ↔ x j = (t ^^ b) := by
+    simpa [g, m, hp1] using xor_eq (x j) b t
+  have h2 (x : Q 9) : g x 2 = true ↔ x k = c := by
+    simp [g, m, hp2]
+  have omitted (t : Bool) (y : Q 9) (hy0 : y 0 = t) (hy1 : y 1 = t) (hy2 : y 2 = true) :
+      y ∉ S.image g := by
+    intro hy
+    obtain ⟨x, hx, rfl⟩ := Finset.mem_image.mp hy
+    have hbits := And.intro ((h0 x t).mp hy0) (And.intro ((h1 x t).mp hy1) ((h2 x).mp hy2))
+    apply homit x hx
+    cases t
+    · exact Or.inl (by simpa using hbits)
+    · exact Or.inr (by simpa using hbits)
+  have hsize' := (Finset.card_image_of_injective S g.injective).trans hsize
+  have hbound :=
+    true_half_card_le_of_missing_001_111 hsize' hreg' hb' (omitted false) (omitted true)
+  rwa [Finset.filter_image, Finset.card_image_of_injective _ g.injective,
+    Finset.filter_congr (fun x _ => h2 x)] at hbound
+
+#print axioms half_card_le_of_missing_triple_patterns
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TripleProjection
