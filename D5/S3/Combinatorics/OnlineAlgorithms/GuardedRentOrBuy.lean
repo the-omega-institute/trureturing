@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/GuardedRentOrBuy
+/- GID: D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/GuardedRentOrBuy
+   mirror-B: D5/B/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuy
    mirror-E: none(waiver:analytic-competitive-bound)
    anchors: []
    utility: none
@@ -72,13 +72,19 @@ def prefixRule (K : ℝ) (seen : List ℝ) : Bool :=
 
 @[simp] theorem prefixRule_nil (K : ℝ) : prefixRule K [] = false := rfl
 
-@[simp] theorem prefixRule_snoc (K : ℝ) (xs : List ℝ) (a : ℝ) :
+@[local simp] private theorem prefixRule_snoc (K : ℝ) (xs : List ℝ) (a : ℝ) :
     prefixRule K (xs ++ [a]) = reset K (xs.foldl (advance K) initial) a := by
   simp [prefixRule]
 
 def scheduled (K : ℝ) (s : State) : List ℝ → List (ℝ × Bool)
   | [] => []
   | a :: rest => (a, reset K s a) :: scheduled K (advance K s a) rest
+
+/-- On call one the guard cannot create an extra reset. -/
+theorem ordinary_initial (K a : ℝ) :
+    reset K initial a = decide (crossing K initial a) := by
+  have hd : ¬ drop initial a := by simp [drop, initial]
+  by_cases hc : crossing K initial a <;> simp [reset, hd, hc]
 
 /-- Computing bills from the recorded decisions gives the policy cost. -/
 theorem scheduled_cost (K : ℝ) (s : State) (xs : List ℝ) :

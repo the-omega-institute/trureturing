@@ -1,12 +1,13 @@
-/- GID: D5/S3/Combinatorics/GuardedRentOrBuyAdditive
+/- GID: D5/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuyAdditive
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/GuardedRentOrBuyAdditive
+   mirror-B: D5/B/S3/Combinatorics/OnlineAlgorithms/GuardedRentOrBuyAdditive
    mirror-E: none(waiver:analytic-additive-bound)
    anchors: []
    utility: none
-   digest: Fair-cost comparison for the guarded repeated rent-or-buy rule. -/
+   digest: Constant-block cost comparison for the guarded rule. -/
 
-import D5.S3.Combinatorics.GuardedRentOrBuy
+import D5.S3.Combinatorics.OnlineAlgorithms.GuardedRentOrBuy
+import D5.S3.Analytic.Polynomial.OrderedCrossingGap
 import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.LinearCombination
@@ -174,7 +175,6 @@ private theorem value_ge {K a : ℝ} (hK : 0 < K) (ha : 0 < a) (e : ℝ) (n : �
   rw [heq]
   suffices hv : 0 ≤ value K a ha 0 n by linarith
   let L := cycleLength K a ha
-  have hbase : value K a ha 0 L = 0 := by simp [L, value_length ha]
   have hbounds := fair_bounds hK ha
   have hid : value K a ha 0 n =
       ((n : ℝ) - L) * (a * ((n : ℝ) + L + 1) / 2 - fair K a ha) := by
@@ -412,15 +412,11 @@ private theorem ordinary_if {K a : ℝ} {s : State}
     reset K s a = decide (crossing K s a) := by
   rcases h with h | h | h <;> simp [reset, h]
 
-private theorem ordinary_initial (K a : ℝ) :
-    reset K initial a = decide (crossing K initial a) :=
-  ordinary_if (Or.inl (by simp [drop, initial]))
-
 private theorem ordinary_same (K a : ℝ) (s : State) :
     reset K (advance K s a) a = decide (crossing K (advance K s a) a) :=
   ordinary_if (Or.inl (by simp [drop, advance]))
 
-private def block (a : ℝ) (rs : List Bool) : List (ℝ × Bool) := rs.map (fun r => (a, r))
+def block (a : ℝ) (rs : List Bool) : List (ℝ × Bool) := rs.map (fun r => (a, r))
 
 private theorem block_rates (a : ℝ) (rs : List Bool) :
     (block a rs).map Prod.fst = List.replicate rs.length a := by
@@ -511,7 +507,7 @@ private theorem zero_comparator_finish (rs : List Bool) :
   | nil => rfl
   | cons r rs ih => cases r <;> simpa [comparatorFinish, block, nextCarry] using ih
 
-private theorem single_block_bound {K a o : ℝ} (hK : 0 < K) (ha : 0 ≤ a) (ho : 0 ≤ o)
+theorem single_block_bound {K a o : ℝ} (hK : 0 < K) (ha : 0 ≤ a) (ho : 0 ≤ o)
     (s : State) (hcarry : s.carry = 0) (hacc : s.acc = 0)
     (hord : reset K s a = decide (crossing K s a)) (rs : List Bool) :
     policyCost K s (List.replicate rs.length a) ≤ comparatorCost K o (block a rs) + K := by
@@ -562,98 +558,6 @@ private theorem cut_old_rate {K a : ℝ} (ha : 0 < a) (m : ℕ)
   rw [show m + k = L by omega] at hsum
   linarith only [hf, hsum, show ((m : ℝ) + k) * fair K a ha =
        (m : ℝ) * fair K a ha + (k : ℝ) * fair K a ha by ring]
-
-/-- The scaled polynomial inequality from Schiavo's positive-increase comparison. -/
-private theorem increase_arithmetic {a b K L B N k : ℝ} (ha : 0 ≤ a) (hab : a ≤ b)
-    (hk : 0 < k) (hkB : k ≤ B) (hBN : B ≤ N) (hNL : N ≤ L)
-    (hgapB : B < L → B + 1 ≤ L) (hgapk : k < B → k + 1 ≤ B)
-    (hgapN : N < L → N + 1 ≤ L)
-    (hK : a * L * (L - 1) / 2 ≤ K)
-    (hcross : K ≤ a * N * (N + 1) / 2 + (b - a) * k * (k + 1) / 2) :
-    let σ := k * (N - B) - (B - k) * (L - N)
-    0 ≤ (K - a * L * B / 2) * σ +
-      a * L * B * (L - N) * (N - B) / 2 + L * B * k * (b - a) * (B - k) / 2 := by
-  dsimp only
-  let σ := k * (N - B) - (B - k) * (L - N)
-  let X := a * L * B * (L - N) * (N - B) / 2
-  let Y := L * B * k * (b - a) * (B - k) / 2
-  change 0 ≤ (K - a * L * B / 2) * σ + X + Y
-  have hB : 0 ≤ B := by linarith
-  have hL : 0 ≤ L := by linarith
-  have hN : 0 ≤ N := by linarith
-  have hd₁ : 0 ≤ L - N := sub_nonneg.mpr hNL
-  have hd₂ : 0 ≤ N - B := sub_nonneg.mpr hBN
-  have hd₃ : 0 ≤ B - k := sub_nonneg.mpr hkB
-  have hd₄ : 0 ≤ b - a := sub_nonneg.mpr hab
-  have hX : 0 ≤ X := by dsimp [X]; positivity
-  have hY : 0 ≤ Y := by dsimp [Y]; positivity
-  rcases (show B ≤ L by linarith).eq_or_lt with hBL | hBL
-  · have hN' : N = L := by linarith
-    have hσ : σ = 0 := by simp [σ, hBL, hN']
-    rw [hσ, mul_zero, zero_add]
-    exact add_nonneg hX hY
-  have hKL : 0 ≤ K - a * L * B / 2 := by
-    have hpos := mul_nonneg (mul_nonneg ha hL) (show 0 ≤ L - 1 - B by linarith [hgapB hBL])
-    nlinarith only [hK, hpos]
-  by_cases hσ : 0 ≤ σ
-  · exact add_nonneg (add_nonneg (mul_nonneg hKL hσ) hX) hY
-  have hprod : 0 < (B - k) * (L - N) := by
-    have ht := mul_nonneg hk.le hd₂
-    dsimp [σ] at hσ
-    linarith
-  have hk' : k < B := by
-    by_contra! h
-    have heq : B - k = 0 := by linarith
-    simp [heq] at hprod
-  have hN' : N < L := by
-    by_contra! h
-    have heq : L - N = 0 := by linarith
-    simp [heq] at hprod
-  let x₀ := a * L * (L - 1) / 2
-  let M := L * B * (B - k)
-  let A (x : ℝ) := (k + 1) * (x - a * L * B / 2) * σ +
-    (k + 1) * X + M * (x - a * N * (N + 1) / 2)
-  have hM : 0 ≤ M := by dsimp [M]; positivity
-  have hY' : M * (K - a * N * (N + 1) / 2) ≤ (k + 1) * Y := by
-    have h := mul_le_mul_of_nonneg_left
-      (show K - a * N * (N + 1) / 2 ≤ (b - a) * k * (k + 1) / 2 by linarith) hM
-    dsimp only [M, Y] at h ⊢
-    nlinarith only [h]
-  have htop : A K ≤ (k + 1) * ((K - a * L * B / 2) * σ + X + Y) := by
-    dsimp only [A]
-    nlinarith only [hY']
-  have hgap := hgapk hk'
-  have hgap' := hgapN hN'
-  have hfactor : 0 ≤ L * B - (k + 1) * (L - N) := by
-    have h := mul_nonneg hL (show 0 ≤ B - (k + 1) by linarith)
-    have h' := mul_nonneg (show 0 ≤ k + 1 by linarith) hN
-    nlinarith only [h, h']
-  have hslope : 0 ≤ (k + 1) * σ + M := by
-    have hid : (k + 1) * σ + M =
-        (k + 1) * k * (N - B) + (B - k) * (L * B - (k + 1) * (L - N)) := by
-      dsimp only [σ, M]
-      ring
-    rw [hid]
-    positivity
-  have hmono : A x₀ ≤ A K := by
-    have h := mul_nonneg (sub_nonneg.mpr hK) hslope
-    change 0 ≤ (K - x₀) * ((k + 1) * σ + M) at h
-    dsimp only [A]
-    nlinarith only [h]
-  have hbase : 0 ≤ A x₀ := by
-    have hid : A x₀ = a * L / 2 *
-        ((k + 1) * k * (N - B) * (2 * L - 1 - B - N) +
-         (B - k) * (L - N - 1) * (B * (L + N) - (k + 1) * (L - N))) := by
-      dsimp only [A, x₀, σ, X, M]
-      ring
-    have h₁ : 0 ≤ 2 * L - 1 - B - N := by linarith
-    have h₂ : 0 ≤ L - N - 1 := by linarith
-    have h₃ : 0 ≤ B * (L + N) - (k + 1) * (L - N) := by
-      have h := mul_nonneg hB hN
-      nlinarith only [hfactor, h]
-    rw [hid]
-    positivity
-  exact nonneg_of_mul_nonneg_right (hbase.trans (hmono.trans htop)) (by linarith)
 
 private theorem increase_potential {K a b : ℝ} (hK : 0 < K) (ha : 0 < a)
     (hb : 0 < b) (hab : a ≤ b) (m : ℕ) (hm : g a m < K) :
@@ -717,7 +621,7 @@ private theorem increase_potential {K a b : ℝ} (hK : 0 < K) (ha : 0 < a)
     dsimp only [e] at hcross
     rw [hNr]
     nlinarith only [hcross]
-  have hr := increase_arithmetic ha.le hab hkr hkBr hBNr hNLr
+  have hr := OrderedCrossingGap.gap_nonneg ha.le hab hkr hkBr hBNr hNLr
     (fun h => by exact_mod_cast (Nat.succ_le_of_lt (by exact_mod_cast h : B < L)))
     (fun h => by exact_mod_cast (Nat.succ_le_of_lt (by exact_mod_cast h : k < B)))
     (fun h => by exact_mod_cast (Nat.succ_le_of_lt (by exact_mod_cast h : N < L)))
@@ -764,11 +668,6 @@ private theorem finish_snoc (K : ℝ) (s : State) (xs : List ℝ) (a : ℝ) :
     finish K s (xs ++ [a]) = advance K (finish K s xs) a := by
   simp [finish]
 
-private theorem replicate_snoc (n : ℕ) (a : ℝ) :
-    List.replicate (n + 1) a = List.replicate n a ++ [a] := by
-  rw [List.replicate_add]
-  rfl
-
 private theorem finish_first_block {K a : ℝ} (hK : 0 < K) (n : ℕ) :
     let s := finish K initial (List.replicate n a)
     s.dropSeen = false ∧ (s.previous = if n = 0 then none else some a) ∧
@@ -783,7 +682,7 @@ private theorem finish_first_block {K a : ℝ} (hK : 0 < K) (n : ℕ) :
     change s.previous = _ at hp
     change s.carry = _ at he
     change s.acc = _ at hA
-    rw [replicate_snoc, finish_snoc]
+    rw [List.replicate_add n 1 a, show List.replicate 1 a = [a] from rfl, finish_snoc]
     change (advance K s a).dropSeen = false ∧
       (advance K s a).previous = (if n + 1 = 0 then none else some a) ∧
       ∃ m : ℕ, (advance K s a).carry = (m : ℝ) * a ∧
@@ -1059,7 +958,7 @@ private theorem first_reset_suffix {K b : ℝ} (hK : 0 < K) (hb : 0 ≤ b)
       dsimp only [Q] at h
       linarith only [h]
 
-private theorem two_block_bound {K a b : ℝ} (hK : 0 < K)
+theorem two_block_bound {K a b : ℝ} (hK : 0 < K)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (rs ss : List Bool) :
     policyCost K initial (List.replicate rs.length a ++ List.replicate ss.length b) ≤
       comparatorCost K 0 (block a rs ++ block b ss) + 2 * K := by
@@ -1095,129 +994,6 @@ private theorem two_block_bound {K a b : ℝ} (hK : 0 < K)
       exact hc
     · have hd : drop s b := by simp [drop, hprev, hz, hba]
       exact guarded_drop_bound hK (hb.trans_lt hba) hb rs r ss ⟨hd, hflag, hd₀⟩
-
-/-- At most two maximal constant consecutive runs, with empty blocks allowed. -/
-def AtMostTwoRuns (xs : List ℝ) : Prop :=
-  ∃ (a b : ℝ) (m n : ℕ), xs = List.replicate m a ++ List.replicate n b
-
-/-- One first-call decision plus one decision on each visible increment. -/
-def sessionCost (K : ℝ) (xs : List ℝ) (first : Bool) (rs : List Bool) : ℝ :=
-  bill K 0 0 first + comparatorCost K 0 (xs.zip rs)
-
-/-- Evaluate the deterministic prefix rule at each nonempty visible prefix. -/
-def actions (rule : List ℝ → Bool) (xs : List ℝ) : List Bool :=
-  List.ofFn fun i : Fin xs.length => rule (xs.take (i.val + 1))
-
-private theorem scheduled_rates (K : ℝ) (s : State) (xs : List ℝ) :
-    (scheduled K s xs).map Prod.fst = xs := by
-  induction xs generalizing s with
-  | nil => rfl
-  | cons a xs ih => simp [scheduled, ih]
-
-private theorem zip_actions (K : ℝ) (xs : List ℝ) :
-    xs.zip (actions (prefixRule K) xs) = scheduled K initial xs := by
-  let sc := scheduled K initial xs
-  have hfst : sc.map Prod.fst = xs := scheduled_rates K initial xs
-  have hlen : sc.length = xs.length := by simpa using congrArg List.length hfst
-  have hacts : sc.map Prod.snd = actions (prefixRule K) xs := by
-    apply List.ext_getElem
-    · simp [actions, hlen]
-    intro i h₁ h₂
-    have h₃ : i < sc.length := by simpa using h₁
-    have hg : sc[i]? = some sc[i] := List.getElem?_eq_getElem h₃
-    have h₄ : (scheduled K ([].foldl (advance K) initial) xs)[i]? =
-        some (sc[i].1, sc[i].2) := by
-      change sc[i]? = some sc[i]
-      exact hg
-    have hr := scheduled_prefix K [] xs i sc[i].1 sc[i].2 h₄
-    simpa [actions] using hr.symm
-  exact (List.zip_of_prod hfst hacts).symm
-
-private theorem zip_replicate (a : ℝ) (rs : List Bool) :
-    (List.replicate rs.length a).zip rs = block a rs := by
-  induction rs with
-  | nil => rfl
-  | cons r rs ih =>
-    change (a, r) :: (List.replicate rs.length a).zip rs = (a, r) :: block a rs
-    rw [ih]
-
-private theorem rates_nonneg_zip {xs : List ℝ} {rs : List Bool}
-    (ha : ∀ a ∈ xs, 0 ≤ a) (h : rs.length = xs.length) :
-    ∀ p ∈ xs.zip rs, 0 ≤ p.1 := by
-  intro p hp
-  apply ha
-  rw [← List.map_fst_zip (l₁ := xs) (l₂ := rs) h.ge]
-  exact List.mem_map_of_mem hp
-
-/-- The additive guarantee on every session with at most two runs. -/
-theorem additive_two_runs (K : ℝ) (hK : 0 < K) (xs : List ℝ) (ha : ∀ a ∈ xs, 0 ≤ a)
-    (runs : AtMostTwoRuns xs) (first : Bool) (rs : List Bool) (hlen : rs.length = xs.length) :
-    sessionCost K xs (prefixRule K []) (actions (prefixRule K) xs) ≤
-      sessionCost K xs first rs + 2 * K := by
-  obtain ⟨a, b, m, n, rfl⟩ := runs
-  simp only [List.length_append, List.length_replicate] at hlen
-  let left := rs.take m
-  let right := rs.drop m
-  have hl : left.length = m := by simp [left, List.length_take, hlen]
-  have hr : right.length = n := by simp [right, List.length_drop, hlen]
-  have hzip : (List.replicate m a ++ List.replicate n b).zip rs = block a left ++ block b right := by
-    have happ : left ++ right = rs := List.take_append_drop m rs
-    rw [← happ, List.zip_append (by simp [hl]), ← hl, ← hr, zip_replicate, zip_replicate]
-  have hbound : policyCost K initial (List.replicate m a ++ List.replicate n b) ≤
-        comparatorCost K 0 (block a left ++ block b right) + 2 * K := by
-    by_cases hm : m = 0
-    · have hzero : left = [] := List.length_eq_zero_iff.mp (hl.trans hm)
-      rw [hm, hzero]
-      change policyCost K initial (List.replicate n b) ≤ comparatorCost K 0 (block b right) + 2 * K
-      by_cases hn : n = 0
-      · have hrzero : right = [] := List.length_eq_zero_iff.mp (hr.trans hn)
-        rw [hn, hrzero]
-        simp [policyCost, block, comparatorCost, hK.le]
-      · have hb : 0 ≤ b := ha b (by simp [List.mem_replicate, hn])
-        have hcore := single_block_bound hK hb (o := 0) le_rfl initial rfl rfl
-          (ordinary_initial K b) right
-        rw [hr] at hcore
-        linarith only [hcore, hK]
-    · have hpa : 0 ≤ a := ha a (by simp [List.mem_replicate, hm])
-      by_cases hn : n = 0
-      · have hzero : right = [] := List.length_eq_zero_iff.mp (hr.trans hn)
-        rw [hn, hzero]
-        change policyCost K initial (List.replicate m a ++ []) ≤
-          comparatorCost K 0 (block a left ++ []) + 2 * K
-        rw [List.append_nil, List.append_nil]
-        have hcore := single_block_bound hK hpa (o := 0) le_rfl initial rfl rfl
-          (ordinary_initial K a) left
-        rw [hl] at hcore
-        linarith only [hcore, hK]
-      · have hpb : 0 ≤ b := ha b (by simp [List.mem_replicate, hn])
-        simpa only [hl, hr] using two_block_bound hK hpa hpb left right
-  have he : comparatorCost K 0 (scheduled K initial (List.replicate m a ++ List.replicate n b)) =
-      policyCost K initial (List.replicate m a ++ List.replicate n b) := scheduled_cost K initial _
-  rw [sessionCost, zip_actions, he, sessionCost, hzip, prefixRule_nil]
-  cases first <;> simp [bill] <;> linarith only [hbound, hK]
-
-/-- The fixed prefix rule simultaneously has universal factor three and two-run loss at most (2K). -/
-theorem guarded_prefix_guarantees (K : ℝ) (hK : 0 < K) (xs : List ℝ)
-    (ha : ∀ a ∈ xs, 0 ≤ a) (first : Bool) (rs : List Bool) (hlen : rs.length = xs.length) :
-    let online := sessionCost K xs (prefixRule K []) (actions (prefixRule K) xs)
-    let offline := sessionCost K xs first rs
-    online ≤ 3 * offline ∧ (AtMostTwoRuns xs → online ≤ offline + 2 * K) := by
-  refine ⟨?_, fun h => additive_two_runs K hK xs ha h first rs hlen⟩
-  have h := factor_three K hK (xs.zip rs) (rates_nonneg_zip ha hlen) first
-  rw [List.map_fst_zip hlen.ge] at h
-  have hzero : bill K 0 0 false = 0 := by simp [bill]
-  simpa [sessionCost, zip_actions, hzero, prefixRule_nil] using h
-
-/-- Schiavo's third question in §5.B, with a universal factor of three. -/
-theorem schiavo_section5b_third_question :
-    ∃ c : ℝ, 1 ≤ c ∧ ∀ K : ℝ, 0 < K →
-      ∃ rule : List ℝ → Bool,
-        ∀ (xs : List ℝ), (∀ a ∈ xs, 0 ≤ a) →
-        ∀ (first : Bool) (rs : List Bool), rs.length = xs.length →
-          let online := sessionCost K xs (rule []) (actions rule xs)
-          let offline := sessionCost K xs first rs
-          online ≤ c * offline ∧ (AtMostTwoRuns xs → online ≤ offline + 2 * K) := by
-  exact ⟨3, by norm_num, fun K hK => ⟨prefixRule K, guarded_prefix_guarantees K hK⟩⟩
 
 end
 
