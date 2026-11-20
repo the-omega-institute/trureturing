@@ -44,11 +44,17 @@ internal sealed class ThreeOutcomeGridSupportDocument : IScribeDocumentDefinitio
                         + "A transposition at a profile with two equal coordinates gives equal label counts within "
                         + "each orbit, limiting either count to the four values from zero through three.")),
                     Paragraph(Text(
-                        "The construction grows integer orbit weights with the bounded-digit constraint from "
-                        + "complete partitions. Adding six seeds of a new weight preserves all ordered triple "
-                        + "allocations, because the three integer capacities after division by the new weight "
-                        + "have sum at least six. The same weights represent all tied-coordinate masses with "
-                        + "four occupancy digits. The uniform profile uses the same count for all three labels "
+                        "The scalar weight recurrence uses the complete-partition criterion and minimum length "
+                        + "in Øystein J. Rødseth, Minimal r-Complete Partitions, Journal of Integer Sequences 10 "
+                        + "(2007), Article 07.8.3, Lemmas 3.1–3.2. Lemma 3.1 credits Seung Kyung Park. "
+                        + "With digits from zero through three and total orbit weight q, the threshold is three "
+                        + "times q plus one at most four to the power n.")),
+                    Paragraph(Text(
+                        "For the additional three-bin construction, let N be the old total over all atoms and d a "
+                        + "positive new atom weight. If N is at least twice d minus two, adding six seeds of "
+                        + "weight d preserves all ordered triple allocations. The three rounded-down capacities "
+                        + "after division by d have sum at least six. The same weights represent all tied-coordinate "
+                        + "masses with four occupancy digits. The uniform profile uses the same count for all three labels "
                         + "in each orbit. Stabilizer-compatible readouts at representative profiles extend by "
                         + "permuting both inputs. Normalize the positive weights by the denominator.")),
                     Paragraph(Text(
