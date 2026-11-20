@@ -178,7 +178,7 @@ def native_paths(root, registration_root=None, layers=actions.LAYERS):
     return sorted(path for path in paths if not any(parent in paths for parent in path.parents))
 
 
-def pack(root, identity, directory, *, previous_index=None, available=None):
+def pack(root, identity, directory, *, anchor=None, previous_index=None):
     runtime = producer_context(root, identity, allow_merged=True)
     require(actions.project_work(root) is not None, "preparation has no current build-work fact")
     require((root / ".lake/packages").is_dir() and (root / ".lake/build").is_dir(),
@@ -186,23 +186,25 @@ def pack(root, identity, directory, *, previous_index=None, available=None):
     directory.mkdir(parents=True, exist_ok=True)
     layers = actions.LAYERS
     material = {}
-    if previous_index is not None:
+    if anchor is not None:
         import lean_actions_shards as shards
 
+        require(re.fullmatch(r"[0-9a-f]{40}", anchor), "sharded preparation requires a fixed dev history anchor")
         binding = shards.binding(root, "complete")
-        previous = shards.read_index(previous_index, binding, "complete")
-        require(previous is not None and previous["owner"]["ref"] == identity["target_ref"],
-                "preparation base index belongs to a different target")
-        retained = set(json.loads(available.read_text()))
-        index = shards.prepare(root, binding, "complete", previous, None, available=retained, preparation=True)
+        previous = None
+        if previous_index is not None:
+            previous = shards.read_index(previous_index, binding, "complete")
+            require(previous is not None and previous["owner"]["ref"] == identity["target_ref"],
+                    "preparation base index belongs to a different target")
+        index = shards.prepare(root, binding, "complete", previous, anchor, preparation=True)
         needed = set(index["entries"].values())
         payloads = directory / "shards"
         payloads.mkdir(exist_ok=True)
-        for digest in sorted(needed - retained):
+        for digest in sorted(needed):
             source = root / shards.transport_payload(digest)
             shutil.move(source, payloads / source.name)
         (directory / "project.json").write_text(json.dumps(index, separators=(",", ":")) + "\n")
-        material = dict(referenced=len(needed & retained), bundled=len(needed - retained),
+        material = dict(referenced=0, bundled=len(needed),
                         bundled_bytes=sum(path.stat().st_size for path in payloads.iterdir()))
         layers = ("dependency",)
     with tarfile.open(directory / "native.tar.gz", "w:gz", compresslevel=1) as archive:
@@ -210,7 +212,7 @@ def pack(root, identity, directory, *, previous_index=None, available=None):
             archive.add(root / path, arcname=str(path))
     actions.write_small_record(directory / "preparation.json", dict(source=identity, runtime=runtime,
         partition=actions.partition_path(root), elan_key=actions.elan_key(root)))
-    actions.output(dict(artifact_name=artifact_name(identity, sharded=previous_index is not None),
+    actions.output(dict(artifact_name=artifact_name(identity, sharded=anchor is not None),
                         artifact_path=str(directory)))
     return receipt("packed", identity, runtime=runtime, **material)
 
@@ -469,10 +471,13 @@ def restore_project(root, directory, cache_action, identity, runtime):
     owner = dict(commit=identity["merge"], ref=identity["target_ref"], run=runtime["run"], attempt=runtime["attempt"])
     require(index is not None and index["owner"] == owner, "preparation index owner differs from validated source")
     packed = directory / "shards"
-    if packed.is_dir():
-        expected = {digest + ".tar.gz" for digest in index["entries"].values()}
-        require(all(path.name in expected for path in packed.iterdir()),
-                "preparation contains an unreferenced shard")
+    expected = {digest + ".tar.gz" for digest in index["entries"].values()}
+    bundled = {path.name for path in packed.iterdir()} if packed.is_dir() else set()
+    require(bundled <= expected, "preparation contains an unreferenced shard")
+    if bundled == expected:
+        return shards.install(root, index, [], require_complete=True, preparation=directory,
+                              payload_directory=packed)["complete"]
+    # Earlier artifacts can still carry references to Actions cache entries.
     result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
     if result.returncode == 3:
         return False
@@ -549,8 +554,8 @@ def main():
     parser.add_argument("--repository", type=pathlib.Path, required=True)
     parser.add_argument("--directory", type=pathlib.Path)
     parser.add_argument("--artifact-id", type=int)
+    parser.add_argument("--anchor")
     parser.add_argument("--previous-index", type=pathlib.Path)
-    parser.add_argument("--available", type=pathlib.Path)
     parser.add_argument("--cache-action", nargs=2)
     args = parser.parse_args()
     try:
@@ -565,9 +570,9 @@ def main():
                 prepare(root, identity)
             elif args.command == "pack":
                 require(args.directory is not None, "pack requires directory")
-                require((args.previous_index is None) == (args.available is None),
-                        "sharded pack requires an index and the visible material inventory")
-                pack(root, identity, args.directory, previous_index=args.previous_index, available=args.available)
+                require(args.previous_index is None or args.anchor is not None,
+                        "a previous layout requires a sharded preparation")
+                pack(root, identity, args.directory, anchor=args.anchor, previous_index=args.previous_index)
             else:
                 require(args.artifact_id is not None and args.artifact_id > 0, "confirm requires immutable artifact ID")
                 confirm(root, identity, args.artifact_id)

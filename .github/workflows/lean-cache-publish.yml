@@ -237,7 +237,7 @@ jobs:
           fi
           echo "sharded=$supported" >> "$GITHUB_OUTPUT"
       - id: pack_sharded
-        name: Package preparation with project shard references
+        name: Package the project shards for PR preparation
         if: steps.pack_transport.outputs.sharded == 'true'
         uses: ./.github/actions/lean-cache-shards
         env:
