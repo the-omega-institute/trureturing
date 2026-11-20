@@ -34,6 +34,7 @@ open private cube_action_regular_balanced from
 
 attribute [local instance] Classical.propDecidable
 
+set_option maxRecDepth 8192 in
 private theorem model_of_half {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 26) :
@@ -55,6 +56,7 @@ private theorem listed_halves_nodup :
     listedHalves.all (fun half => decide half.Nodup) = true := by
   decide +kernel
 
+set_option maxRecDepth 8192 in
 /-- A 26/46 coordinate cut forces a 20/52 cut of the same support. -/
 theorem exists_twenty_cut_of_twenty_six {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)

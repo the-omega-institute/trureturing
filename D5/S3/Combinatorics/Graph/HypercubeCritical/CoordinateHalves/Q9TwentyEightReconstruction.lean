@@ -27,6 +27,7 @@ private theorem listedCuts : listedHalves.all (fun half =>
       ((reconstructedSupport half).filter fun x => x.getLsbD 2 = true).card == 20) = true := by
   decide +kernel
 
+open Classical in
 private theorem twenty_cut_of_listed_half {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) {half : List (BitVec 9)} (hlisted : half ∈ listedHalves)
