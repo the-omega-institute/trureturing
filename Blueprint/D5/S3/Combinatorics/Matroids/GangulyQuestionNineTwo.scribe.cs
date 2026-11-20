@@ -95,7 +95,10 @@ internal sealed class GangulyQuestionNineTwoDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Apply the asserted closure law to the two representable "
                     + "factors at the specified roots. The field-uniform witness contradicts "
                     + "representability of the selected output in either case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ganguly-2026-graphical-symplectic-joins"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string name, string title,
         AssessedProvenance provenance, string prose) => Describe.Lean(

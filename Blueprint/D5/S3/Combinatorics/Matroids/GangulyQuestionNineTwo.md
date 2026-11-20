@@ -136,6 +136,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ganguly-2026-graphical-symplectic-joins` (refuted) by `D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ganguly-2026-graphical-symplectic-joins","declaration_gid":"D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sayantan Ganguly (2026). *Representability of Graphical Symplectic Matroids*. DOI: [10.48550/arXiv.2611.01241](https://doi.org/10.48550/arXiv.2611.01241). URL: <https://arxiv.org/abs/2611.01241v2>.
