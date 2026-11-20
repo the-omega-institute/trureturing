@@ -51,20 +51,31 @@ runs:
             read -r artifact selected <<< "$checkpoint"
           fi
           for ((prior=last_attempt; prior>selected; prior--)); do
-            job=$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$source_run/attempts/$prior/jobs?per_page=100" \
+            if ! job=$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$source_run/attempts/$prior/jobs?per_page=100" \
               --jq '.jobs[] | select(.name == "verify cache publication and restore")
-                | select(any(.steps[]; .name == "Restore the selected Release build seeds" and (.conclusion == "failure" or .conclusion == "cancelled"))) | .id')
+                | select(any(.steps[]; .name == "Restore the selected Release build seeds" and (.conclusion == "failure" or .conclusion == "cancelled"))) | .id'); then
+              history_unavailable="$source_run/$prior"
+              echo "::warning::Cannot inspect checkpoint jobs from $history_unavailable"
+              continue
+            fi
             [[ -n "$job" ]] || continue
-            gh run view --repo "$GITHUB_REPOSITORY" "$source_run" --attempt "$prior" --job "$job" --log > "$RUNNER_TEMP/lean-release-prior.log"
+            if ! gh run view --repo "$GITHUB_REPOSITORY" "$source_run" --attempt "$prior" --job "$job" --log > "$RUNNER_TEMP/lean-release-prior.log"; then
+              history_unavailable="$source_run/$prior"
+              echo "::warning::Cannot inspect checkpoint log from $history_unavailable"
+              continue
+            fi
             artifact_name="lean-release-checkpoint-$MODE-$source_run-$prior"
-            if grep -Eq "Z Artifact $artifact_name has been successfully uploaded!|Z LEAN_RELEASE_HANDOFF checkpoint=[1-9][0-9]*(;|$)" "$RUNNER_TEMP/lean-release-prior.log"; then
+            if grep -Fq "Z Artifact $artifact_name has been successfully uploaded!" "$RUNNER_TEMP/lean-release-prior.log" || {
+              grep -Fq "Z LEAN_RELEASE_HANDOFF seed=$MODE " "$RUNNER_TEMP/lean-release-prior.log" &&
+              grep -Eq 'Z LEAN_RELEASE_HANDOFF checkpoint=[1-9][0-9]*(;|$)' "$RUNNER_TEMP/lean-release-prior.log"
+            }; then
               missing="$source_run/$prior"
               echo "::warning::Published $MODE checkpoint from $missing is unavailable"
-              break
             fi
           done
         }
         missing=""
+        history_unavailable=""
         run="$GITHUB_RUN_ID"
         select_checkpoint "$run" "$((GITHUB_RUN_ATTEMPT - 1))"
         if [[ -z "$checkpoint" && -n "$CHECKPOINT_RUN" ]]; then
@@ -81,7 +92,7 @@ runs:
           select_checkpoint "$run" "$prior_attempt"
         fi
         if [[ -z "$checkpoint" ]]; then
-          if [[ -n "$missing" || -n "$CHECKPOINT_RUN" ]]; then
+          if [[ -n "$missing" || -n "$CHECKPOINT_RUN" || -n "$history_unavailable" ]]; then
             echo "LEAN_RELEASE_HANDOFF_ERROR no recoverable $MODE checkpoint for run $run" >&2
             exit 2
           fi
