@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/Probability/NamingRestrictionLaw.uniform_re
 
 *Commentary.*
 
-Fix distinct names on a subset of a finite vertex set. The available names are disjoint from the fixed names. Assume at least one injective completion exists whose remaining names are all available. Sample such a completion uniformly and restrict to a fixed injectively indexed selection of the remaining vertices.
+Fix distinct names from a finite name set on a subset of a finite vertex set. Choose an available subset of names disjoint from the fixed names. Assume at least one injective completion exists whose remaining names are all available. Sample such a completion uniformly and restrict to a fixed injectively indexed selection of the remaining vertices.
 
 Every injection from the selection into the available name set has mass equal to the reciprocal of the total number of such injections.
 
