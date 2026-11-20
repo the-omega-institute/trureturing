@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/CographSeinsche
+/- GID: D5/S3/Combinatorics/Graph/Cographs/CographSeinsche
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/CographSeinsche
+   mirror-B: D5/B/S3/Combinatorics/Graph/Cographs/CographSeinsche
    mirror-E: none
    anchors: []
    digest: Native induced path exclusion and Seinsche's component cut. -/

@@ -5,7 +5,7 @@
    anchors: []
    digest: Native component cotrees and their vicinal width recurrence. -/
 
-import D5.S3.Combinatorics.Graph.CographSeinsche
+import D5.S3.Combinatorics.Graph.Cographs.CographSeinsche
 import D5.S3.Combinatorics.SpectralGraph.CographVicinalWidth
 
 /-! # Normalized cotrees on native graph vertices -/
