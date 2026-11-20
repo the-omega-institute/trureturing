@@ -327,12 +327,24 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         request.write_text(json.dumps(['D5.A', 'External']))
         command = ('-d', 'tools/lean-inspector-reg', 'script', 'run',
                    'leanInspector/compileReportModules', str(request))
-        self.run_lake(*command)
+        dependency = self.root / 'ClaimSupport.lean'
+        info = 'preparedModuleInfoMarker'
+        original = dependency.read_text()
+        dependency.write_text(original + f'def {info} := 1\n#check {info}\n')
+        cold = self.run_lake(*command)
+        self.assertNotIn(info, cold.stdout + cold.stderr)
+        visible = self.run_lake('build', '+ClaimSupport')
+        self.assertIn(info, visible.stdout + visible.stderr)
+        warm = self.run_lake(*command)
+        self.assertNotIn(info, warm.stdout + warm.stderr)
         directory = self.root / '.lake/build/lib/lean'
         for name in ('D5/A', 'D5/B', 'External', 'ClaimSupport'):
             self.assertTrue((directory / (name + '.olean')).is_file())
         self.assertFalse((directory / 'D5/Alone.olean').exists())
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
+        dependency.write_text(original + 'def broken : Nat := missingCompilationInput\n')
+        broken = self.run_lake(*command, success=False)
+        self.assertIn('missingCompilationInput', broken.stdout + broken.stderr)
         request.write_text(json.dumps(['D5.Alone', 'Undeclared.Missing']))
         error = self.run_lake(*command, success=False)
         self.assertIn('unknown Lean module Undeclared.Missing', error.stdout + error.stderr)

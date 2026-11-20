@@ -132,7 +132,7 @@ script reportScope args do
   let utilities ← IO.ofExcept (request.getObjValAs? (Array Json) "utilities")
   let utilityInputs ← IO.ofExcept (request.getObjValAs? (Array Json) "utility_inputs")
   let root ← repositoryDir (← getWorkspace).root
-  let graph ← runBuild do
+  let graph ← runBuild (cfg := {outLv := .error, verbosity := .quiet}) do
     let mut queue := roots
     let mut visited : Lean.NameSet := {}
     let mut dependencies : Array Json := #[]
@@ -512,7 +512,7 @@ script compileReportModules args do
     let some mod := ws.findModule? name.toName
       | throw <| IO.userError s!"prepare: unknown Lean module {name}"
     return mod
-  runBuild do
+  runBuild (cfg := {outLv := .error, verbosity := .quiet}) do
     return mixModuleJobs (← modules.mapM (·.leanArts.fetch))
   return 0
 
