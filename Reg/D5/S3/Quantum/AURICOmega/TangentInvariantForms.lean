@@ -4,7 +4,7 @@ import Reg.Support.DependentFamily
 
 /-! Source-bound audits of the invariant bilinear forms on the pure quaternions. The readouts are
 the invariant form `c ⟪x, y⟫` as a function of its scalar `c`, and the three-parameter form
-`α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` as a function of the triple `(α, β, γ)`. -/
+`α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` as a function of its first coefficient `α`. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.TangentInvariantForms
 
@@ -148,13 +148,13 @@ end Scalar
 /-! ## The three-parameter family of one conjugation -/
 namespace Family
 
-/-- A unit quaternion `u` and two quaternions `x`, `y`; the state is the coefficient triple
-`(α, β, γ)`. -/
-abbrev Params := Σ _ : unitary ℍ[ℝ], Σ _ : ℍ[ℝ], ℍ[ℝ]
+/-- A unit quaternion `u`, a coefficient triple `c = (α, β, γ)` and two quaternions `x`, `y`;
+the state is the first coefficient `α`. -/
+abbrev Params := Σ _ : unitary ℍ[ℝ], Σ _ : ℝ × ℝ × ℝ, Σ _ : ℍ[ℝ], ℍ[ℝ]
 
 abbrev signature : Signature where
   Params := Params
-  State _ := ℝ × ℝ × ℝ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -162,10 +162,12 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-/-- The value `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` with `n = u.im`. -/
-def observe (p : Params) (c : ℝ × ℝ × ℝ) : ℝ :=
-  c.1 * ⟪p.2.1, p.2.2⟫_ℝ + c.2.1 * ⟪(p.1 : ℍ[ℝ]).im, p.2.1⟫_ℝ * ⟪(p.1 : ℍ[ℝ]).im, p.2.2⟫_ℝ +
-    c.2.2 * ⟪(p.1 : ℍ[ℝ]).im, p.2.1 * p.2.2⟫_ℝ
+/-- The value `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` with `n = u.im`, where `β`, `γ`
+are the last two coefficients of the triple. -/
+def observe (p : Params) (α : ℝ) : ℝ :=
+  α * ⟪p.2.2.1, p.2.2.2⟫_ℝ +
+    p.2.1.2.1 * ⟪(p.1 : ℍ[ℝ]).im, p.2.2.1⟫_ℝ * ⟪(p.1 : ℍ[ℝ]).im, p.2.2.2⟫_ℝ +
+    p.2.1.2.2 * ⟪(p.1 : ℍ[ℝ]).im, p.2.2.1 * p.2.2.2⟫_ℝ
 
 def actual : Realization signature :=
   realize signature (fun _ => observe) (fun e => nomatch e)
@@ -175,8 +177,8 @@ def rejected : Realization signature :=
   realize signature (fun _ p c => observe p c + 1) (fun e => nomatch e)
 
 /-- Retain the complete unit quaternion, hypothesis, form and unique-coefficient telescope of
-`conj_invariant_bilinear_iff`; only the three-parameter form, as a function of the coefficient
-triple, is read out. -/
+`conj_invariant_bilinear_iff`; only the three-parameter form, as a function of its first
+coefficient, is read out. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (u : unitary ℍ[ℝ]), (u : ℍ[ℝ]).re ≠ 0 → (u : ℍ[ℝ]).im ≠ 0 →
@@ -184,7 +186,7 @@ abbrev arena : Arena where
     (∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
         B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) ((u : ℍ[ℝ]) * y * star (u : ℍ[ℝ])) = B x y) ↔
       ∃! c : ℝ × ℝ × ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
-        B x y = r.readout () ⟨u, x, y⟩ c
+        B x y = r.readout () ⟨u, c, x, y⟩ c.1
 
 /-- The unit quaternion `3/5 + (4/5) i`. -/
 def rotor : unitary ℍ[ℝ] :=
@@ -209,10 +211,9 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨1, 1, 1⟩, (0, 0, 0), (1, 0, 0), ?_⟩
-  change observe ⟨1, 1, 1⟩ (0, 0, 0) ≠ observe ⟨1, 1, 1⟩ (1, 0, 0)
-  simp only [observe, zero_mul, add_zero, one_mul, inner_one_one]
-  norm_num
+  refine ⟨⟨1, (0, 0, 0), 1, 1⟩, 0, 1, ?_⟩
+  change observe ⟨1, (0, 0, 0), 1, 1⟩ 0 ≠ observe ⟨1, (0, 0, 0), 1, 1⟩ 1
+  simp [observe]
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement : Prop := type_of% @conj_invariant_bilinear_iff
@@ -319,12 +320,12 @@ def conj_invariant_bilinear_iff_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.AURICOmega.TangentInvariantForms
     definition := none
-    coordinates := #[0, 5, 6]
+    coordinates := #[0, 4, 5, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "arg", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
