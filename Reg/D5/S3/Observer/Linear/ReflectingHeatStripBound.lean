@@ -413,6 +413,333 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[] }
 
 end InverseDiagonal
+
+private theorem three_cell_modes_ne : (0 : Mode 3) ≠ 1 := by decide
+
+private theorem three_cell_rates_ne : rate 3 (0 : Mode 3) ≠ rate 3 (1 : Mode 3) :=
+  fun h => three_cell_modes_ne (rate_injective (by decide) h)
+
+private theorem three_cell_angles_ne : angle 3 (0 : Mode 3) ≠ angle 3 (1 : Mode 3) := by
+  intro h
+  apply three_cell_rates_ne
+  simp only [rate, h]
+namespace AngleRange
+
+abbrev signature := SingleDependentReadout.signature (ℕ) (Mode) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ n j => angle n j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (j : Mode n), R.readout () n j ∈ Ioo 0 Real.pi
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (lt_irrefl (0 : ℝ)) (h 3 0).1
+
+def family : Registration arena (type_of% @angle_mem) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨angle_mem, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    exact ⟨(3 : ℕ), (0 : Mode 3), (1 : Mode 3), three_cell_angles_ne⟩
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@angle_mem) (Realization signature) Type Unit where
+  unitName := `D5.S3.Observer.Linear.ReflectingHeatStripBound.angle_mem.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound.AngleRange.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ n j => angle n j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ReflectingHeatStripBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end AngleRange
+namespace AngleScale
+
+abbrev signature := SingleDependentReadout.signature (ℕ) (Mode) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ n j => angle n j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (j : Mode n), (n : ℝ) * R.readout () n j = ((j.val + 1 : ℕ) : ℝ) * Real.pi
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h 3 (0 : Mode 3)
+  change (3 : ℝ) * 0 = (↑(0 + 1 : ℕ) : ℝ) * Real.pi at he
+  norm_num at he
+  exact Real.pi_ne_zero he.symm
+
+def family : Registration arena (type_of% @angle_mul_cells) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨angle_mul_cells, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    exact ⟨(3 : ℕ), (0 : Mode 3), (1 : Mode 3), three_cell_angles_ne⟩
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@angle_mul_cells) (Realization signature) Type Unit where
+  unitName := `D5.S3.Observer.Linear.ReflectingHeatStripBound.angle_mul_cells.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound.AngleScale.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ n j => angle n j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ReflectingHeatStripBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end AngleScale
+namespace RatePos
+
+abbrev signature := SingleDependentReadout.signature (ℕ) (Mode) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ n j => rate n j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (j : Mode n), 0 < R.readout () n j
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (lt_irrefl (0 : ℝ)) (h 3 0)
+
+def family : Registration arena (type_of% @rate_pos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rate_pos, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    exact ⟨(3 : ℕ), (0 : Mode 3), (1 : Mode 3), three_cell_rates_ne⟩
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@rate_pos) (Realization signature) Type Unit where
+  unitName := `D5.S3.Observer.Linear.ReflectingHeatStripBound.rate_pos.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound.RatePos.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ n j => rate n j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ReflectingHeatStripBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RatePos
+namespace RateInjective
+
+abbrev signature := SingleDependentReadout.signature (ℕ) (Mode) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ n j => rate n j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (_hn : 0 < n), Function.Injective (R.readout () n)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact three_cell_modes_ne (h (n := 3) (by decide) rfl)
+
+def family : Registration arena (type_of% @rate_injective) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rate_injective, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    exact ⟨(3 : ℕ), (0 : Mode 3), (1 : Mode 3), three_cell_rates_ne⟩
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@rate_injective) (Realization signature) Type Unit where
+  unitName := `D5.S3.Observer.Linear.ReflectingHeatStripBound.rate_injective.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound.RateInjective.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ n j => rate n j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ReflectingHeatStripBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RateInjective
+namespace WeightPos
+
+abbrev signature := SingleDependentReadout.signature (ℕ) (Mode) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ n j => weight n j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (j : Mode n), 0 < R.readout () n j
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (lt_irrefl (0 : ℝ)) (h 3 0)
+
+def family : Registration arena (type_of% @weight_pos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨weight_pos, rejected, rejected_law⟩
+  sensitivity := SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro _
+    refine ⟨(3 : ℕ), (0 : Mode 3), (1 : Mode 3), ?_⟩
+    change weight 3 0 ≠ weight 3 1
+    intro h
+    apply three_cell_rates_ne
+    have hs (j : Mode 3) : weight 3 j ^ 2 = 2 - rate 3 j / 2 := by
+      apply Real.sq_sqrt
+      have hj := (angle_mem 3 j).2
+      have hc := Real.cos_lt_cos_of_nonneg_of_le_pi (angle_mem 3 j).1.le le_rfl hj
+      rw [Real.cos_pi] at hc
+      unfold rate
+      linarith
+    have hsq := congrArg (fun x : ℝ => x ^ 2) h
+    rw [hs, hs] at hsq
+    linarith
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@weight_pos) (Realization signature) Type Unit where
+  unitName := `D5.S3.Observer.Linear.ReflectingHeatStripBound.weight_pos.__information_unit
+  realizationName := `Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound.WeightPos.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ n j => weight n j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.Linear.ReflectingHeatStripBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end WeightPos
+
 end
 
 end Reg.D5.S3.Observer.Linear.ReflectingHeatStripBound
