@@ -4,13 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Parity limits and attains integer grid coverage by ternary occupancies of half-integer weights. -/
+   digest: Parity bounds integer levels realized by ternary occupancies of half-integer and integer weights. -/
 
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Fintype.Card
-import Mathlib.Logic.Equiv.Fin.Basic
 
 set_option autoImplicit false
 

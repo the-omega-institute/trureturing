@@ -20,10 +20,10 @@ internal sealed class HalfIntegerOccupancyDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let h doubled weights be odd integers and let t other weights be integers. "
-                        + "Every weight has a ternary occupancy. If the dot products realize every integer "
-                        + "level from zero to L minus one, the count of these levels is bounded by the "
-                        + "number of even ternary words on h coordinates times three to the power t.")),
+                        "Let a_i be odd integers for the first h weights a_i/2, and let b_j be integers for the other t weights. "
+                        + "IntegerCoverage means that each level k admits ternary digits x_i and y_j with "
+                        + "Σ_i x_i a_i + 2 Σ_j y_j b_j = 2k. If this holds for all integers k from zero to L minus one, "
+                        + "the number of levels is bounded by the number of even ternary words on h coordinates times three to the power t.")),
                     Paragraph(Text(
                         "An integer mass forces the sum of the first h digits to be even. Ternary coding "
                         + "preserves parity because the base is odd. The even code values run from zero "
@@ -31,15 +31,15 @@ internal sealed class HalfIntegerOccupancyDocument : IScribeDocumentDefinition
                         + "the map of levels to the two occupancy words injective."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "To attain the bound for even h, take doubled half-integer weights equal to the first "
+                "The following construction gives grid attainment. Take doubled half-integer weights equal to the first "
                 + "h powers of three. Let W be the number of even ternary codes. Take the remaining "
                 + "t integer weights to be W times the first t powers of three. One plus the total "
-                + "pair mass is W times three to the power t. The total is even.")),
+                + "mass of the paired seeds is W times three to the power t. The total is even when h is even.")),
             Paragraph(Text(
                 "The quotient and remainder on division by W give the two occupancy words, with "
-                + "the remainder encoded at twice its value. For a positive total, divide the weights "
+                + "the remainder encoded at twice its value. For an even positive total, divide the weights "
                 + "by that total. At the midpoint select one seed per pair. Extend the lower events "
-                + "by swapping pairs and taking complements.")))));
+                + "by swapping the two seeds within each pair and taking complements at reflected levels.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
