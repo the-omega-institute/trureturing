@@ -64,8 +64,8 @@ theorem upper_mul_diag {g h : SpecialLinearGroup (Fin n) F}
       simp [hh j i hij]
   · simp
 
+set_option backward.proofsInPublic true in
 /-- The actual full upper-unitriangular subgroup, in every rank and field. -/
-@[no_expose]
 def Uplus (n : ℕ) (F : Type u) [Field F] :
     Subgroup (SpecialLinearGroup (Fin n) F) where
   carrier := {g | Upper g ∧ ∀ i : Fin n, g.val i i = 1}
