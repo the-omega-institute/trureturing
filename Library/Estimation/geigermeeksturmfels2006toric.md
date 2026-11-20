@@ -6,7 +6,8 @@ title: On the Toric Algebra of Graphical Models
 doi: 10.1214/009053606000000263
 url: https://arxiv.org/pdf/math/0608054
 claim: "Theorem 4.1 characterizes factorization of strictly positive finite discrete probability distributions by pairwise graphical identities."
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Combinatorics/Graph/CliqueFactorization/Algebraic
 license: citation-only
 triage: anchor
 ---
