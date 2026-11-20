@@ -22,9 +22,11 @@ proof_shape:
   result: content (scaling to the monotone case, the reciprocal root from reflection, and
     L = 1/U from the reciprocal ratio pairing); positivity of even rows is
     ChenChenRealStepSigns.result.
-Direct frozen dependencies: none frozen yet; D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums
-  (Source, reflection) and ChenChenRealStepSigns (result) are frozen in the same chain of
-  deliveries.
+Direct frozen dependencies:
+  D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums (Source, reflection)
+    sha256:babe59678caa4efa35d42893011defa557b4e926070bb618982cee210a4d67c0
+  D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns (result)
+    sha256:c78f33a81b52b954c31e8cf7b15c8712256186bd64e332743f86a1ce590edce4
 Search record (§3.1): Mathlib has no Eneström–Kakeya theorem (no hit for Enestrom or Kakeya
   under Mathlib/); Polynomial root bounds there (Cauchy-type bounds) do not give the ratio
   annulus. No D5 declaration bounds roots by coefficient ratios.
