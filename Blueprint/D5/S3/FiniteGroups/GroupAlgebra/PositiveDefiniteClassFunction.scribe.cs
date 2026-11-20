@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.GroupAlgebra;
 internal sealed class PositiveDefiniteClassFunctionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/FiniteGroups/GroupAlgebra/PositiveDefiniteClassFunction.";
+    private static LibraryNoteRef Godement => LibraryNoteRef.Create("D5/L/FiniteGroups/godement1948fonctions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "On an arbitrary group, a class function whose kernel is positive semidefinite and whose translates span a finite-dimensional space is a combination with positive weights of the characters of finitely many pairwise inequivalent irreducible unitary representations, and the dimension of that span is the sum of the squared degrees.",
@@ -17,7 +18,7 @@ internal sealed class PositiveDefiniteClassFunctionDocument : IScribeDocumentDef
                 DeclarationHandle.Create(Prefix + "exists_sum_character_of_finiteDimensional"),
                 H("Character expansion of a positive semidefinite class function of finite rank"),
                 StatementSource.FromAuthor(ExpansionFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Godement),
                 Blocks(
                     Paragraph(Text(
                         "Let G be an arbitrary group and phi a complex-valued function on G. Three hypotheses are made. "

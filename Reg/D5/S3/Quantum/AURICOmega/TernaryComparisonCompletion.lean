@@ -3,16 +3,15 @@ import D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
 import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import Reg.Support.DependentFamily
 
-/-! Source-bound audits of the reading-completion theorems for rank-five ternary comparison
-structures.
+/-! Source-bound audits of the reading-completion theorems for ternary comparison structures.
 
-The dense-range theorem is read at the embedding inside `DenseRange u`; the unit quaternion
-comparison model lifted to an arbitrary universe satisfies all of its hypotheses, and a constant
-map into the unit quaternions does not have dense range. The two subgroup statements are read at
-the underlying set of the subgroup, in `IsClosed` and in the density hypothesis: the set of unit
-quaternions other than one is not closed, the whole group is closed, and the trivial subgroup
-carries a one-point structure, which is commutative. The independence statement is read at the
-subgroup inside its last clause: the whole group of unit quaternions has complete reading. -/
+The density criterion is read at the map `v` inside `DenseRange v`; the unit quaternion
+comparison model lifted to an arbitrary universe, with `v = ULift.down`, satisfies both
+hypotheses and both sides, and a constant map into the unit quaternions does not have dense
+range. The closedness criterion is read at the underlying set of the subgroup in `IsClosed`: the
+whole group is closed and the set of unit quaternions other than one is not. The independence
+statement is read at the subgroup inside its last clause: the whole group of unit quaternions has
+complete reading. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
 
@@ -22,8 +21,7 @@ open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonIsomorphism
 open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
-  (liftedModel liftedModel_noncommutative liftedModel_chainConnected liftedModel_touchesZero
-    liftedModel_hasFeatureRank_five one_ne_neg_one)
+  (liftedModel liftedModel_noncommutative liftedModel_chainConnected one_ne_neg_one)
 
 open scoped Quaternion
 
@@ -73,17 +71,8 @@ theorem bot_ne_top_unitary : (⊥ : Subgroup (unitary ℍ[ℝ])) ≠ ⊤ := by
   have hm : (-1 : unitary ℍ[ℝ]) ∈ (⊥ : Subgroup (unitary ℍ[ℝ])) := h ▸ Subgroup.mem_top _
   exact one_ne_neg_one (Subgroup.mem_bot.mp hm).symm
 
-/-- The structure induced on the trivial subgroup is not noncommutative: it has one point. -/
-theorem bot_not_noncommutative :
-    ¬ (subgroupModel (⊥ : Subgroup (unitary ℍ[ℝ]))).Noncommutative := by
-  rintro ⟨x, y, z, h⟩
-  refine h (Subtype.ext ?_)
-  exact (Subgroup.mem_bot.mp (subgroupModel ⊥ |>.tri x y z).2).trans
-    (Subgroup.mem_bot.mp (subgroupModel ⊥ |>.tri z y x).2).symm
-
-/-! The embedding `u` inside `DenseRange u` of `exists_unitQuaternion_embedding_denseRange`,
-read from its existential binder. -/
-namespace DenseImage
+/-! The map `v` inside `DenseRange v` of `denseRange_iff`, read from its binder. -/
+namespace DenseCriterion
 
 abbrev signature : Signature where
   Params := Type u
@@ -101,20 +90,21 @@ def actual : Realization signature.{u} :=
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => fun _ => 1) (fun e => nomatch e)
 
-/-- Retain the complete carrier, structure, hypothesis and base-point telescope and all five
-conjuncts of `exists_unitQuaternion_embedding_denseRange`. -/
+/-- Retain the complete carrier, structure, map and hypothesis telescope and both sides of the
+equivalence of `denseRange_iff`. -/
 abbrev arena : Arena where
   signature := signature.{u}
-  Law rd := ∀ {M : Type u} (C : TernaryComparison M), C.Noncommutative → C.ChainConnected →
-    C.TouchesZero → C.HasFeatureRank 5 → ∀ o : M,
-    ∃ u : M → unitary ℍ[ℝ], Function.Injective u ∧ u o = 1 ∧ DenseRange (rd.readout () M u) ∧
-      (∀ x y z, u (C.tri x y z) = quaternionModel.tri (u x) (u y) (u z)) ∧
-      (∀ x y, C.kappa x y = quaternionModel.kappa (u x) (u y))
+  Law rd := ∀ {M : Type u} (C : TernaryComparison M) (v : M → unitary ℍ[ℝ]),
+    (∀ x y z, v (C.tri x y z) = quaternionModel.tri (v x) (v y) (v z)) →
+    (∀ x y, C.kappa x y = quaternionModel.kappa (v x) (v y)) →
+    (DenseRange (rd.readout () M v) ↔ C.Noncommutative ∧ C.ChainConnected)
 
+/-- On the lifted unit quaternion model with `v = ULift.down` the right side holds, while a
+constant map does not have dense range. -/
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨w, -, -, hd, -⟩ := h liftedModel.{u} liftedModel_noncommutative
-    liftedModel_chainConnected liftedModel_touchesZero liftedModel_hasFeatureRank_five ⟨1⟩
+  have hd := (h liftedModel.{u} ULift.down (fun _ _ _ => rfl) (fun _ _ => rfl)).mpr
+    ⟨liftedModel_noncommutative, liftedModel_chainConnected⟩
   change DenseRange (fun _ : ULift.{u} (unitary ℍ[ℝ]) => (1 : unitary ℍ[ℝ])) at hd
   exact not_denseRange_const hd
 
@@ -126,12 +116,12 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
   exact one_ne_neg_one (congrFun h PUnit.unit)
 
 /-- The exact statement of the source theorem. -/
-abbrev sourceStatement : Prop := type_of% @exists_unitQuaternion_embedding_denseRange.{u}
+abbrev sourceStatement : Prop := type_of% @denseRange_iff.{u}
 
 def source_registration : Registration arena.{u} sourceStatement.{u} where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@exists_unitQuaternion_embedding_denseRange.{u}, rejected, rejected_law⟩
+  variation := ⟨@denseRange_iff.{u}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -140,7 +130,7 @@ def source_registration : Registration arena.{u} sourceStatement.{u} where
       exact nomatch e
   dependence := dependence
 
-end DenseImage
+end DenseCriterion
 
 /-! The underlying set `(H : Set (unitary ℍ[ℝ]))` of a subgroup `H`, as a function of `H`. -/
 namespace Carrier
@@ -201,40 +191,6 @@ def source_registration : Registration arena sourceStatement where
 
 end Closedness
 
-/-! The underlying set of `H` inside the density hypothesis of `subgroupModel_of_dense`. -/
-namespace Density
-
-def rejected : Realization Carrier.signature :=
-  realize Carrier.signature (fun _ _ _ => (Set.univ : Set (unitary ℍ[ℝ]))) (fun e => nomatch e)
-
-/-- Retain the complete subgroup and density telescope and all four conjuncts of
-`subgroupModel_of_dense`. -/
-abbrev arena : Arena where
-  signature := Carrier.signature
-  Law r := ∀ H : Subgroup (unitary ℍ[ℝ]), Dense (r.readout () () H) →
-    (subgroupModel H).Noncommutative ∧ (subgroupModel H).ChainConnected ∧
-      (subgroupModel H).TouchesZero ∧ (subgroupModel H).HasFeatureRank 5
-
-theorem rejected_law : ¬ arena.Law rejected := fun h =>
-  bot_not_noncommutative (h ⊥ dense_univ).1
-
-/-- The exact statement of the source theorem. -/
-abbrev sourceStatement : Prop := type_of% @subgroupModel_of_dense
-
-def source_registration : Registration arena sourceStatement where
-  actual := Carrier.actual
-  bridge := Iff.rfl
-  variation := ⟨@subgroupModel_of_dense, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
-    · intro e
-      exact nomatch e
-  dependence := Carrier.dependence
-
-end Density
-
 /-! The subgroup `H` inside `¬ ReadingComplete (subgroupModel H)` in
 `exists_subgroupModel_not_readingComplete`, read from its existential binder. -/
 namespace Incomplete
@@ -290,22 +246,21 @@ def source_registration : Registration arena sourceStatement where
 
 end Incomplete
 
-def exists_unitQuaternion_embedding_denseRange_registration :
+def denseRange_iff_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@exists_unitQuaternion_embedding_denseRange.{u}) (Realization DenseImage.signature.{u})
-      Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.exists_unitQuaternion_embedding_denseRange_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.DenseImage.source_registration
+      (@denseRange_iff.{u}) (Realization DenseCriterion.signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.denseRange_iff_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.DenseCriterion.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨DenseImage.arena.{u}⟩
-  objectArena := .source ⟨DenseImage.arena.{u}⟩
+  arena := .source ⟨DenseCriterion.arena.{u}⟩
+  objectArena := .source ⟨DenseCriterion.arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source DenseImage.arena.{u} ⟨DenseImage.source_registration.{u}⟩
+  realization := .source DenseCriterion.arena.{u} ⟨DenseCriterion.source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize DenseImage.signature.{u} (fun _ _ s => s) (fun e => nomatch e))
+  readout := some (realize DenseCriterion.signature.{u} (fun _ _ s => s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -315,9 +270,8 @@ def exists_unitQuaternion_embedding_denseRange_registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg",
-        "arg", "fn", "arg", "arg"]
-      stateBinder := 7
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -351,40 +305,6 @@ def subgroupModel_readingComplete_iff_registration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-def subgroupModel_of_dense_registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@subgroupModel_of_dense) (Realization Carrier.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.subgroupModel_of_dense_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion.Density.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Density.arena⟩
-  objectArena := .source ⟨Density.arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Density.arena ⟨Density.source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Carrier.signature
-    (fun _ _ s => (s : Set (unitary ℍ[ℝ]))) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "domain", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

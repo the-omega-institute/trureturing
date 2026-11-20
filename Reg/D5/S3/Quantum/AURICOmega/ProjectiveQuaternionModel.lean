@@ -3,8 +3,9 @@ import D5.S3.Quantum.AURICOmega.ProjectiveQuaternionModel
 import Reg.D5.S3.Quantum.AURICOmega.QuaternionProductRank
 import Reg.Support.DependentFamily
 
-/-! Source-bound audit of the projective quaternion comparison model: the reading of the
-structure at a point and its first point of reading zero, as a function of the structure. -/
+/-! Source-bound audits of the projective quaternion comparison model: the reading of the
+structure at a point and its first point of reading zero, as a function of the structure; and the
+feature rank compared with the threshold ten, as a function of the rank. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.ProjectiveQuaternionModel
 
@@ -95,19 +96,19 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
-/-- Retain all seven conjuncts of `projectiveModel_featureRank_ten`; the reading at the first
+/-- Retain all six conjuncts of `projectiveModel_featureRank_ten`; the reading at the first
 point of reading zero is observed as a function of the structure. -/
 abbrev arena : Arena where
   signature := signature
   Law r := projectiveModel.Noncommutative ∧ projectiveModel.ChainConnected ∧
     projectiveModel.TouchesZero ∧ ReadingComplete projectiveModel ∧
-    projectiveModel.HasFeatureRank 10 ∧ ¬ projectiveModel.HasFeatureRank 9 ∧
+    (∀ r : ℕ, projectiveModel.HasFeatureRank r ↔ 10 ≤ r) ∧
     ∀ p : ProjectiveQuaternion, ∃ a b : ProjectiveQuaternion, a ≠ b ∧
       r.readout () ⟨p, a⟩ projectiveModel = 0 ∧ projectiveModel.kappa p b = 0
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨a, b, -, ha, -⟩ := h.2.2.2.2.2.2 pointOne
+  obtain ⟨a, b, -, ha, -⟩ := h.2.2.2.2.2 pointOne
   change (1 : ℝ) = 0 at ha
   exact one_ne_zero ha
 
@@ -136,6 +137,70 @@ def source_registration : Registration arena sourceStatement where
 
 end ZeroReading
 
+/-! The rank `r` compared with the threshold in `10 ≤ r` inside
+`∀ r : ℕ, projectiveModel.HasFeatureRank r ↔ 10 ≤ r`, read from its binder. -/
+namespace RankThreshold
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ s => s) (fun e => nomatch e)
+
+/-- Shifting the compared rank by one would move the least feature rank from ten to nine. -/
+def rejected : Realization signature :=
+  realize signature (fun _ _ s => s + 1) (fun e => nomatch e)
+
+/-- Retain all six conjuncts of `projectiveModel_featureRank_ten`; the rank compared with ten is
+observed as a function of the rank. -/
+abbrev arena : Arena where
+  signature := signature
+  Law rd := projectiveModel.Noncommutative ∧ projectiveModel.ChainConnected ∧
+    projectiveModel.TouchesZero ∧ ReadingComplete projectiveModel ∧
+    (∀ r : ℕ, projectiveModel.HasFeatureRank r ↔ 10 ≤ rd.readout () () r) ∧
+    ∀ p : ProjectiveQuaternion, ∃ a b : ProjectiveQuaternion, a ≠ b ∧
+      projectiveModel.kappa p a = 0 ∧ projectiveModel.kappa p b = 0
+
+/-- With the shifted readout the structure would have feature rank nine, which it has not. -/
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h9 : projectiveModel.HasFeatureRank 9 := (h.2.2.2.2.1 9).mpr (by
+    change 10 ≤ 9 + 1
+    norm_num)
+  have h10 := (projectiveModel_featureRank_ten.2.2.2.2.1 9).mp h9
+  norm_num at h10
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨(), 0, 1, fun h => ?_⟩
+  change (0 : ℕ) = 1 at h
+  exact absurd h (by norm_num)
+
+/-- The exact statement of the source theorem. -/
+abbrev sourceStatement : Prop := type_of% @projectiveModel_featureRank_ten
+
+def source_registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@projectiveModel_featureRank_ten, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end RankThreshold
+
 def projectiveModel_featureRank_ten_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@projectiveModel_featureRank_ten) (Realization ZeroReading.signature) Unit Unit := {
@@ -161,11 +226,44 @@ def projectiveModel_featureRank_ten_registration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "arg", "body",
+      path := #["arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "arg", "body",
         "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+def projectiveModel_featureRank_ten_rank_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@projectiveModel_featureRank_ten) (Realization RankThreshold.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.ProjectiveQuaternionModel.projectiveModel_featureRank_ten_rank_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.ProjectiveQuaternionModel.RankThreshold.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨RankThreshold.arena⟩
+  objectArena := .source ⟨RankThreshold.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source RankThreshold.arena ⟨RankThreshold.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize RankThreshold.signature (fun _ _ s => s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.ProjectiveQuaternionModel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "arg", "arg", "arg", "fn", "arg", "body", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

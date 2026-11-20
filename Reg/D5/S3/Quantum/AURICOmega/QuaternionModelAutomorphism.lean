@@ -39,10 +39,10 @@ abbrev arena : Arena where
   signature := Reg.D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity.Translation.signature
   Law r := ∀ {M : Type u} (C : TernaryComparison M) (u : M → unitary ℍ[ℝ]),
     (∀ x y z : M, u (C.tri x y z) = quaternionModel.tri (u x) (u y) (u z)) →
-    (∀ x y : M, quaternionModel.kappa (u x) (u y) = C.kappa x y) →
+    (∀ x y : M, C.kappa x y = quaternionModel.kappa (u x) (u y)) →
     ∀ v : M → unitary ℍ[ℝ],
       ((∀ x y z : M, v (C.tri x y z) = quaternionModel.tri (v x) (v y) (v z)) ∧
-          ∀ x y : M, quaternionModel.kappa (v x) (v y) = C.kappa x y) ↔
+          ∀ x y : M, C.kappa x y = quaternionModel.kappa (v x) (v y)) ↔
         ∃ p q : unitary ℍ[ℝ], ∀ x : M, v x = r.readout () ⟨p, q⟩ (u x)
 
 /-- The identity readout would force `v = u` for every transfer- and reading-preserving `v`. -/

@@ -5,9 +5,9 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Source-bound audit of the Born form obtained from one reflection.
 The readout is the Born weight `‖⟪φ, ψ⟫‖ ^ 2` on the right of the conclusion, as a function of
-`ψ` at a fixed space and unit vector `φ`; the reading `f` and all five hypotheses stay in the
-law verbatim. The Born weight itself satisfies the five hypotheses on a complex line, which
-refutes the zero readout. -/
+`ψ` at a fixed space and unit vector `φ`; the unit-norm hypothesis, the reading and all five
+hypotheses on it stay in the law verbatim. The Born weight itself satisfies the five
+hypotheses on a complex line, which refutes the zero readout. -/
 
 namespace Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm
 
@@ -18,7 +18,6 @@ open scoped InnerProductSpace
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option linter.style.longLine false
 noncomputable section
 universe u
 
@@ -88,24 +87,25 @@ def zero : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law r := ∀ {E : Type u} [g : NormedAddCommGroup E] [i : InnerProductSpace ℂ E]
-    (f : E → E → ℝ),
-    (∀ φ : E, ‖φ‖ = 1 → ∀ (c : ℂ) (ψ : E), f (c • ψ) φ = ‖c‖ ^ 2 * f ψ φ) →
-    (∀ φ : E, ‖φ‖ = 1 → ∀ ψ χ : E,
-      f (ψ + χ) φ + f (ψ - χ) φ = 2 * f ψ φ + 2 * f χ φ) →
-    (∀ φ ψ : E, ‖φ‖ = 1 → f ((2 * ⟪φ, ψ⟫_ℂ) • φ - ψ) φ = f ψ φ) →
-    (∀ φ : E, ‖φ‖ = 1 → f φ φ = 1) →
-    (∀ φ ψ : E, ‖φ‖ = 1 → ‖ψ‖ = 1 → ⟪φ, ψ⟫_ℂ = 0 → f ψ φ = 0) →
-    ∀ φ ψ : E, ‖φ‖ = 1 → f ψ φ = r.readout () ⟨E, g, i, φ⟩ ψ
+    (φ : E), ‖φ‖ = 1 → ∀ (f : E → ℝ),
+    (∀ (c : ℂ) (ψ : E), f (c • ψ) = ‖c‖ ^ 2 * f ψ) →
+    (∀ (z : ℂ) (w : E), ⟪φ, w⟫_ℂ = 0 →
+      f (z • φ + w) + f (z • φ - w) = 2 * f (z • φ) + 2 * f w) →
+    (∀ ψ : E, ‖ψ‖ = 1 → f ((2 * ⟪φ, ψ⟫_ℂ) • φ - ψ) = f ψ) →
+    f φ = 1 →
+    (∀ ψ : E, ‖ψ‖ = 1 → ⟪φ, ψ⟫_ℂ = 0 → f ψ = 0) →
+    ∀ ψ : E, f ψ = r.readout () ⟨E, g, i, φ⟩ ψ
 
 theorem rejected_law : ¬ arena.{u}.Law zero := by
   intro h
-  have hh := h (E := Line.{u}) (fun ψ φ => ‖⟪φ, ψ⟫_ℂ‖ ^ 2)
-    (fun φ _ c ψ => born_smul φ c ψ)
-    (fun φ _ ψ χ => born_parallelogram φ ψ χ)
-    (fun φ ψ hφ => born_reflection φ ψ hφ)
-    (fun φ hφ => born_self φ hφ)
-    (fun φ ψ _ _ h0 => by simp only [h0, norm_zero]; norm_num)
-    unitVector unitVector norm_unitVector
+  have hh := h (E := Line.{u}) unitVector norm_unitVector
+    (fun ψ => ‖⟪unitVector.{u}, ψ⟫_ℂ‖ ^ 2)
+    (fun c ψ => born_smul unitVector c ψ)
+    (fun z w _ => born_parallelogram unitVector (z • unitVector) w)
+    (fun ψ _ => born_reflection unitVector ψ norm_unitVector)
+    (born_self unitVector norm_unitVector)
+    (fun ψ _ h0 => by simp only [h0, norm_zero]; norm_num)
+    unitVector
   rw [born_self _ norm_unitVector] at hh
   exact one_ne_zero hh
 
@@ -137,8 +137,9 @@ def eq_norm_inner_sq_of_reflection_invariant_registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@eq_norm_inner_sq_of_reflection_invariant.{u})
       (Realization BornWeight.signature.{u}) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm.eq_norm_inner_sq_of_reflection_invariant_unit
-  realizationName := `Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm.BornWeight.source_registration
+  unitName := `Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm.BornWeight.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.PureState.ReflectionInvariantBornForm.BornWeight.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨BornWeight.arena.{u}⟩
@@ -158,11 +159,11 @@ def eq_norm_inner_sq_of_reflection_invariant_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.PureState.ReflectionInvariantBornForm
     definition := none
-    coordinates := #[0, 9]
+    coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "arg"]
-      stateBinder := 10
+      stateBinder := 11
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

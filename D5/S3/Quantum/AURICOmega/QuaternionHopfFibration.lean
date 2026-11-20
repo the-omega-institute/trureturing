@@ -327,11 +327,7 @@ theorem rayKernel_isGreatest_and_integral (x y : unitary ℍ[ℝ]) :
   have hG := isGreatest_phase (2 * quaternionModel.kappa x y - 1)
     (2 * quaternionModel.kappa x (y * unitI) - 1)
   refine ⟨h1 ▸ h2 ▸ hG, h2 ▸ hG, ?_⟩
-  rw [integral_inner_mul_phase_sq]
-  change Real.pi * _ = Real.pi * ((2 * ((1 + ⟪(x : ℍ[ℝ]), (y : ℍ[ℝ])⟫_ℝ) / 2) - 1) ^ 2 +
-    (2 * ((1 + ⟪(x : ℍ[ℝ]), ((y * unitI : unitary ℍ[ℝ]) : ℍ[ℝ])⟫_ℝ) / 2) - 1) ^ 2)
-  rw [Submonoid.coe_mul]
-  ring
+  rw [integral_inner_mul_phase_sq, rayKernel_eq_inner]
 
 end D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
 

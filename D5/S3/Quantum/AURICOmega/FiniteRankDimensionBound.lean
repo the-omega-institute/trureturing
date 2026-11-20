@@ -4,16 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Noncommutative finite-rank ternary comparisons, locally Euclidean of dim d: d >= 3. -/
+   digest: Noncommutative finite-rank ternary comparisons locally injecting into R^d: d >= 3. -/
 
 import D5.S3.Topology.LowDimensionalBorsukUlam
 import D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart
 import D5.S3.Quantum.AURICOmega.InvariantGramRepresentation
 import D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
+import D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import D5.S3.Quantum.Algebra.InvariantMetric.LowDimensionInvariantMetric
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Geometry.Manifold.ChartedSpace
 import Mathlib.GroupTheory.Subgroup.Centralizer
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Topology.Algebra.OpenSubgroup
@@ -21,11 +21,14 @@ import Mathlib.Topology.Algebra.OpenSubgroup
 /-!
 # Dimension bound for finite-rank ternary comparison structures
 
-Let `G` be a connected topological group that is locally homeomorphic to `ℝ^d`, with a continuous
-injective homomorphism `ρ` into the orthogonal group `O(n)`. If `G` is noncommutative, then
-`3 ≤ d` (`three_le_of_orthogonal`). The matrix algebra is normed by the `L∞` operator norm
-(`Matrix.linftyOpNormedRing`, a local instance), whose topology is the product topology, and `ρ`
-is read as a homomorphism into the units of this normed algebra.
+Let `G` be a preconnected, locally compact topological group with a continuous injective
+homomorphism `ρ` into the orthogonal group `O(n)`, and suppose that some neighbourhood `V` of `1`
+admits a map `f : G → ℝ^d` that is continuous and injective on `V`. If `G` is noncommutative,
+then `3 ≤ d` (`three_le_of_orthogonal`). A group locally homeomorphic to `ℝ^d` is an instance:
+its charts give local compactness, and the chart at `1` is such a map on its source. The matrix
+algebra is normed by the `L∞` operator norm (`Matrix.linftyOpNormedRing`, a local instance),
+whose topology is the product topology, and `ρ` is read as a homomorphism into the units of this
+normed algebra.
 
 * The one-parameter generators of `ρ` are skew-adjoint: `star (exp (t • X)) * exp (t • X) = 1`
   for all real `t`, and the derivative at `t = 0` gives `star X + X = 0`.
@@ -35,19 +38,24 @@ is read as a homomorphism into the units of this normed algebra.
   algebra of dimension at most two is abelian.
 * If the generator algebra is abelian, the exponential chart maps an open neighbourhood of `0`
   onto an open neighbourhood of `1` of pairwise commuting elements. The subgroup it generates is
-  open, hence closed, hence all of the connected group `G`, so `G` is commutative.
+  open, hence closed, hence all of the preconnected group `G`, so `G` is commutative.
 * Hence the generator algebra has dimension `m ≥ 3`. The exponential chart is injective on an
-  open neighbourhood of `0` and the chart of `G` at `1` is injective on its source, so their
-  composition is a continuous injection of a nonempty open subset of `ℝ^m` into `ℝ^d`, which the
-  low-dimensional Borsuk--Ulam theorem excludes when `d ≤ 2 < m`.
+  open neighbourhood of `0`, so its composition with `f` is a continuous injection of a nonempty
+  open subset of `ℝ^m` into `ℝ^d`, which the low-dimensional Borsuk--Ulam theorem excludes when
+  `d ≤ 2 < m`.
 
-For a ternary comparison structure on a connected space locally homeomorphic to `ℝ^d`, with
-continuous transfer and a reading continuous in each variable, fix a base point `o`. The group
-`groupAt o` is a topological group. A feature map `φ` of rank `r`, `kappa x y = ⟪φ x, φ y⟫`,
-satisfies `‖φ x - φ y‖ ^ 2 = 2 - 2 * kappa y x`, so it is continuous and injective, and its Gram
-kernel is left invariant. The orthogonal representation of the invariant Gram kernel has the
-stabilizer of the family `φ` as its kernel, which is trivial since `φ` is injective. A
-noncommutative structure therefore lives in dimension `3 ≤ d`
+A ternary comparison structure on a preconnected space whose reading is continuous in each
+variable is chain-connected (`chainConnected_of_connected`): a reading close to one is an open
+condition near the diagonal.
+
+Let the structure live on a preconnected, locally compact space, with continuous transfer and a
+reading continuous in each variable, and let a neighbourhood `V` of a point `o` admit a map into
+`ℝ^d` that is continuous and injective on `V`. The group `groupAt o`, whose identity is `o`, is a
+topological group. A feature map `φ` of rank `r`, `kappa x y = ⟪φ x, φ y⟫`, satisfies
+`‖φ x - φ y‖ ^ 2 = 2 - 2 * kappa y x`, so it is continuous and injective, and its Gram kernel is
+left invariant. The orthogonal representation of the invariant Gram kernel has the stabilizer of
+the family `φ` as its kernel, which is trivial since `φ` is injective. A noncommutative structure
+therefore has `3 ≤ d`, and, being chain-connected, feature rank `5 ≤ r`
 (`three_le_dim_of_hasFeatureRank`).
 -/
 
@@ -141,11 +149,12 @@ private theorem mul_comm_of_isLieAbelian [PreconnectedSpace G] (ρ : G →* Aˣ)
     trivial
   exact Set.centralizer_centralizer_comm_of_comm hpair a (hle ha) b (hle hb)
 
-/-- If `G` is locally homeomorphic to `ℝ^d` with `d ≤ 2`, the Lie algebra of one-parameter
-generators of `ρ` has dimension at most `d`: otherwise the chart of `G` at `1`, composed with the
-exponential chart and a linear identification of the generator algebra with `ℝ^m`, would be a
-continuous injection of a nonempty open subset of `ℝ^m` into `ℝ^d` with `d < m`. -/
-private theorem finrank_le_of_le_two {d : ℕ} [ChartedSpace (EuclideanSpace ℝ (Fin d)) G]
+/-- If `f : G → ℝ^d` is continuous and injective on a neighbourhood `V` of `1` and `d ≤ 2`, the
+Lie algebra of one-parameter generators of `ρ` has dimension at most `d`: otherwise `f`, composed
+with the exponential chart and a linear identification of the generator algebra with `ℝ^m`,
+would be a continuous injection of a nonempty open subset of `ℝ^m` into `ℝ^d` with `d < m`. -/
+private theorem finrank_le_of_le_two {d : ℕ} {V : Set G} (hV : V ∈ 𝓝 (1 : G))
+    (f : G → EuclideanSpace ℝ (Fin d)) (hf : ContinuousOn f V) (hfi : Set.InjOn f V)
     (hd : d ≤ 2) (ρ : G →* Aˣ) (hc : Continuous ρ) (hi : Function.Injective ρ) :
     Module.finrank ℝ (generatorSubalgebra ρ hc hi) ≤ d := by
   by_contra hlt
@@ -159,20 +168,19 @@ private theorem finrank_le_of_le_two {d : ℕ} [ChartedSpace (EuclideanSpace ℝ
     continuous_induced_rng.2
       ((generatorSubalgebra ρ hc hi).incl.toLinearMap.comp
         e.toLinearMap).continuous_of_finiteDimensional
-  let c := chartAt (EuclideanSpace ℝ (Fin d)) (1 : G)
-  have hO : IsOpen ((fun y => e y) ⁻¹' (U ∩ ε ⁻¹' c.source)) :=
-    (hUo.inter (c.open_source.preimage hε)).preimage hψ
-  have hne : ((fun y => e y) ⁻¹' (U ∩ ε ⁻¹' c.source)).Nonempty := by
+  have hO : IsOpen ((fun y => e y) ⁻¹' (U ∩ ε ⁻¹' interior V)) :=
+    (hUo.inter (isOpen_interior.preimage hε)).preimage hψ
+  have hne : ((fun y => e y) ⁻¹' (U ∩ ε ⁻¹' interior V)).Nonempty := by
     refine ⟨0, ?_, ?_⟩
     · simpa using hU0
     · simp only [Set.mem_preimage, map_zero, hε0]
-      exact mem_chart_source _ _
+      exact mem_interior_iff_mem_nhds.2 hV
   have hinj : Set.InjOn ε U := Set.injOn_iff_injective.2 hU.injective
   refine D5.S3.Topology.LowDimensionalBorsukUlam.not_injOn_of_lt hd hlt hO hne
-    (fun y => c (ε (e y))) ?_ ?_
-  · exact c.continuousOn.comp (hε.comp hψ).continuousOn fun y hy => hy.2
+    (fun y => f (ε (e y))) ?_ ?_
+  · exact hf.comp (hε.comp hψ).continuousOn fun y hy => interior_subset hy.2
   · intro y hy z hz h
-    exact e.injective (hinj hy.1 hz.1 (c.injOn hy.2 hz.2 h))
+    exact e.injective (hinj hy.1 hz.1 (hfi (interior_subset hy.2) (interior_subset hz.2) h))
 
 end Generators
 
@@ -243,27 +251,44 @@ private theorem three_le_finrank [PreconnectedSpace G]
         star_eq_neg_of_isOneParameterGenerator (Unitary.toUnits.comp ρ) (fun g => (ρ g).2.1) hX)
       (by omega)) a b)
 
-/-- The dimension bound for a locally compact group locally homeomorphic to `ℝ^d`: the
-generator algebra has dimension at least three, and at most `d` if `d ≤ 2`. -/
-private theorem three_le_of_orthogonal_aux {d : ℕ} [ChartedSpace (EuclideanSpace ℝ (Fin d)) G]
-    [PreconnectedSpace G] (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ)
+/-- The dimension bound: the generator algebra has dimension at least three, and at most `d`
+if `d ≤ 2`. -/
+private theorem three_le_of_orthogonal_aux {d : ℕ} [PreconnectedSpace G] {V : Set G}
+    (hV : V ∈ 𝓝 (1 : G)) (f : G → EuclideanSpace ℝ (Fin d)) (hf : ContinuousOn f V)
+    (hfi : Set.InjOn f V) (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ)
     (hi : Function.Injective ρ) (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d := by
   by_contra hd
   have h3 := three_le_finrank ρ hc hi hnc
-  have h2 := finrank_le_of_le_two (by omega : d ≤ 2) (Unitary.toUnits.comp ρ)
+  have h2 := finrank_le_of_le_two hV f hf hfi (by omega : d ≤ 2) (Unitary.toUnits.comp ρ)
     (continuous_toUnits_comp ρ hc) (Unitary.toUnits_injective.comp hi)
   omega
 
 end Orthogonal
 
-/-- A noncommutative connected topological group locally homeomorphic to `ℝ^d` that admits a
-continuous injective homomorphism into an orthogonal group has dimension `d ≥ 3`. -/
+/-- A noncommutative preconnected, locally compact topological group with a continuous injective
+homomorphism into an orthogonal group, some neighbourhood of `1` of which admits a map into
+`ℝ^d` that is continuous and injective on it, has `d ≥ 3`. -/
 theorem three_le_of_orthogonal {d n : ℕ} {G : Type*} [TopologicalSpace G] [Group G]
-    [IsTopologicalGroup G] [ChartedSpace (EuclideanSpace ℝ (Fin d)) G] [ConnectedSpace G]
-    (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ) (hi : Function.Injective ρ)
-    (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d :=
-  have : LocallyCompactSpace G := ChartedSpace.locallyCompactSpace (EuclideanSpace ℝ (Fin d)) G
-  three_le_of_orthogonal_aux ρ hc hi hnc
+    [IsTopologicalGroup G] [LocallyCompactSpace G] [PreconnectedSpace G] {V : Set G}
+    (hV : V ∈ 𝓝 (1 : G)) (f : G → EuclideanSpace ℝ (Fin d)) (hf : ContinuousOn f V)
+    (hfi : Set.InjOn f V) (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ)
+    (hi : Function.Injective ρ) (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d :=
+  three_le_of_orthogonal_aux hV f hf hfi ρ hc hi hnc
+
+/-- On a preconnected space, a ternary comparison structure whose reading is continuous in each
+variable is chain-connected: for every `a`, the points `b` with `1 - ε < kappa a b` form a
+neighbourhood of `a`, since `kappa a a = 1`. -/
+theorem chainConnected_of_connected {M : Type*} [TopologicalSpace M] [PreconnectedSpace M]
+    (C : TernaryComparison M) (hkappa : ∀ x, Continuous (C.kappa x)) : C.ChainConnected := by
+  intro ε hε x y
+  refine PreconnectedSpace.induction₂' _ (fun a => ?_)
+    ⟨fun _ _ _ => Relation.ReflTransGen.trans⟩ x y
+  have hlt : 1 - ε < C.kappa a a := by
+    rw [C.kappa_self]
+    linarith
+  filter_upwards [((hkappa a).tendsto a).eventually (lt_mem_nhds hlt)] with b hb
+  exact ⟨Relation.ReflTransGen.single hb,
+    Relation.ReflTransGen.single (by rwa [C.kappa_symm])⟩
 
 /-- With a continuous transfer, the group at a base point is a topological group: its product
 is `tri x o y` and its inverse is `tri o x o`. -/
@@ -297,15 +322,19 @@ private theorem continuous_feature {M : Type*} [TopologicalSpace M] (C : Ternary
   rw [Real.sqrt_zero] at h'
   exact h'
 
-/-- A noncommutative ternary comparison structure of finite feature rank on a connected space
-locally homeomorphic to `ℝ^d`, with continuous transfer and a reading continuous in each
-variable, has dimension `d ≥ 3`. -/
+/-- A noncommutative ternary comparison structure of finite feature rank `r` on a preconnected,
+locally compact space, with continuous transfer and a reading continuous in each variable, one
+neighbourhood of which admits a map into `ℝ^d` that is continuous and injective on it, has
+`d ≥ 3` and `r ≥ 5`. -/
 theorem three_le_dim_of_hasFeatureRank {d : ℕ} {M : Type*} [TopologicalSpace M]
-    [ChartedSpace (EuclideanSpace ℝ (Fin d)) M] [ConnectedSpace M] (C : TernaryComparison M)
+    [LocallyCompactSpace M] [PreconnectedSpace M] (C : TernaryComparison M)
     (htri : Continuous fun p : M × M × M => C.tri p.1 p.2.1 p.2.2)
     (hkappa : ∀ x, Continuous (C.kappa x))
-    (hnc : C.Noncommutative) {r : ℕ} (hr : C.HasFeatureRank r) : 3 ≤ d := by
-  obtain ⟨o⟩ : Nonempty M := inferInstance
+    (hnc : C.Noncommutative) {r : ℕ} (hr : C.HasFeatureRank r)
+    {o : M} {V : Set M} (hV : V ∈ 𝓝 o) (f : M → EuclideanSpace ℝ (Fin d))
+    (hf : ContinuousOn f V) (hfi : Set.InjOn f V) : 3 ≤ d ∧ 5 ≤ r := by
+  refine ⟨?_, D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive.five_le_of_hasFeatureRank C hnc
+    (chainConnected_of_connected C hkappa) r hr⟩
   obtain ⟨φ, hφ⟩ := hr
   let _ : Group M := C.groupAt o
   have : IsTopologicalGroup M := isTopologicalGroup_groupAt C htri o
@@ -321,6 +350,6 @@ theorem three_le_dim_of_hasFeatureRank {d : ℕ} {M : Type*} [TopologicalSpace M
     rw [mul_one] at h
     exact (C.kappa_eq_one_iff g 1).1 (by rw [hφ, h, ← hφ, C.kappa_self])
   obtain ⟨x, y, hxy⟩ := (C.noncommutative_iff o).1 hnc
-  exact three_le_of_orthogonal ρ hρc hρi ⟨x, y, hxy⟩
+  exact three_le_of_orthogonal hV f hf hfi ρ hρc hρi ⟨x, y, hxy⟩
 
 end D5.S3.Quantum.AURICOmega.FiniteRankDimensionBound

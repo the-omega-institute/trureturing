@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega;
 internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/AURICOmega/QuaternionModelAutomorphism.";
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/LieTheory/cayley1855determinants");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Maps from a ternary comparison structure into the unit quaternions that carry its transfer and reading to those of the quaternion comparison model are unique up to a left-right translation x -> p * x * q, and two such translations agree exactly when their pairs (p, q) agree up to a common sign.",
@@ -14,9 +15,9 @@ internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefin
         Blocks(
             Node("preserves-iff-exists-mul-mul", "preserves_iff_exists_mul_mul",
                 "Transfer- and reading-preserving maps differ by a left-right translation",
-                StatementSource.FromAuthor(RigidityFormula()), DescribeRole.Theorem,
-                "Let C be a ternary comparison structure on M and u a map from M to the unit quaternions with u(tri(C, x, y, z)) = u(x) * u(y)^-1 * u(z) and kappa(quaternionModel, u(x), u(y)) = kappa(C, x, y), where the reading of the model is kappa(quaternionModel, p, q) = (1 + <p, q>) / 2 for the real inner product <p, q> of quaternions. "
-                    + "The map u need not be injective or onto, and no further hypothesis is placed on C. "
+                StatementSource.FromAuthor(RigidityFormula()), AssessedProvenance.FromRepo(), DescribeRole.Theorem,
+                "Let C be a ternary comparison structure on M and u a map from M to the unit quaternions with u(tri(C, x, y, z)) = u(x) * u(y)^-1 * u(z) and kappa(C, x, y) = kappa(quaternionModel, u(x), u(y)), where the reading of the model is kappa(quaternionModel, p, q) = (1 + <p, q>) / 2 for the real inner product <p, q> of quaternions. "
+                    + "The map u is injective, because a reading equal to one means equality both in C and in the unit quaternions, but it need not be onto, and no further hypothesis is placed on C. "
                     + "A second map v from M to the unit quaternions satisfies the same two identities if and only if there are unit quaternions p and q with v(x) = p * u(x) * q for every x. "
                     + "If v(x) = p * u(x) * q, the transfer is carried along because (p * a * q) * (p * b * q)^-1 * (p * c * q) = p * a * b^-1 * c * q, and the reading is carried along because a left-right translation preserves the reading of the model. "
                     + "Conversely, suppose that v carries the transfer and the reading. If M is empty there is nothing to prove; otherwise fix a point o of M and put a(x) = u(o)^-1 * u(x) and b(x) = v(o)^-1 * v(x). "
@@ -33,23 +34,25 @@ internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefin
                     + "The constant map with value 1 preserves the transfer but not the reading, since kappa(quaternionModel, 1, -1) = 0. "
                     + "By the theorem neither map has the form x -> p * x * q. "
                     + "With the same choice of M, C and u, the theorem says that the self-maps of the unit quaternions preserving the transfer and the reading of the model are exactly the maps x -> p * x * q. "
-                    + "For a noncommutative, chain-connected structure of feature rank five whose reading touches zero and is complete, any two bijections onto the unit quaternions that carry the transfer and the reading therefore differ by such a map; if both send a point o to 1, then p * q = 1, and they differ by the conjugation x -> p * x * p^-1. "
+                    + "For a noncommutative, chain-connected structure of feature rank five whose reading touches zero and is complete, any two bijections onto the unit quaternions that carry the transfer and the reading therefore differ by such a map; if both send a point o to 1, then p * q = 1, and they differ by the conjugation x -> p * x * p^-1. This consequence, the theorem applied with p * q = 1, is not among the formal statements of the module. "
                     + "Every rotation of four-dimensional Euclidean space has the form x -> p * x * q with unit quaternions p and q, a classical description going back to Cayley; the theorem characterizes these maps on the unit sphere through the transfer and the reading alone, without assuming continuity or bijectivity."),
             Node("mul-mul-eq-mul-mul-iff", "mul_mul_eq_mul_mul_iff",
                 "Two left-right translations agree exactly up to a common sign",
-                StatementSource.FromAuthor(ParametrizationFormula()), DescribeRole.Theorem,
+                StatementSource.FromAuthor(ParametrizationFormula()), AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
                 "In the formula the second pair (p', q') is written (r, s). "
                     + "For unit quaternions p, q, p' and q', the maps x -> p * x * q and x -> p' * x * q' of the unit quaternions agree if and only if (p', q') = (p, q) or (p', q') = (-p, -q). "
                     + "If the maps agree, x = 1 gives p * q = p' * q', so p' = p * t with t = q * q'^-1, and then p * x * q = p * t * x * q' for every unit quaternion x gives t * x = x * t. "
                     + "Commuting with i forces the j and k coordinates of t to vanish, and commuting with j forces its i coordinate to vanish, so t is a real unit quaternion, t = 1 or t = -1; this gives (p', q') = (p, q) or (p', q') = (-p, -q). "
                     + "Conversely (-p) * x * (-q) = p * x * q. "
                     + "Thus the map x -> p * x * q determines its pair (p, q) up to a common sign, and the parametrization of left-right translations by pairs of unit quaternions is two-to-one. "
-                    + "This is the classical fact that the rotation group of four-dimensional Euclidean space is the quotient of the product of two copies of the unit quaternions by the subgroup {(1, 1), (-1, -1)}."))));
+                    + "This is the classical description of the kernel of the two-sided multiplication map (p, q) -> (x -> p * x * q) from pairs of unit quaternions onto the rotations of four-dimensional Euclidean space: the kernel is the subgroup {(1, 1), (-1, -1)}. "
+                    + "The description of the rotations of four-dimensional space by pairs of quaternions is classically attributed to Cayley; the surjectivity onto the rotations is not among the formal statements of the module."))));
 
     private static DocumentBlock Node(
-        string id, string selector, string title, StatementSource statement, DescribeRole role, string prose) =>
+        string id, string selector, string title, StatementSource statement,
+        AssessedProvenance provenance, DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create("quaternion-model-automorphism-" + id),
-            DeclarationHandle.Create(Prefix + selector), H(title), statement, AssessedProvenance.FromRepo(),
+            DeclarationHandle.Create(Prefix + selector), H(title), statement, provenance,
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] arguments) =>
@@ -90,12 +93,12 @@ internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefin
             "x", "y", "z");
     }
 
-    /// <summary>The reading of the model on the images under f equals the reading of C.</summary>
+    /// <summary>The reading of C equals the reading of the model on the images under f.</summary>
     private static Formula Reading(Formula f)
     {
         Formula x = F.Id("x"), y = F.Id("y");
         return ForAllMany(M,
-            Equal(Call("kappa", Model, At(f, x), At(f, y)), Call("kappa", C, x, y)), "x", "y");
+            Equal(Call("kappa", C, x, y), Call("kappa", Model, At(f, x), At(f, y))), "x", "y");
     }
 
     private static Formula RigidityFormula()

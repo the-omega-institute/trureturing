@@ -44,7 +44,7 @@ internal sealed class ReadingExponentDocument : IScribeDocumentDefinition
                         + "3(a² + b²) − 2(a³ + b³) = 3(1 − 2ab) − 2(1 − 3ab) = 1, but it is not "
                         + "multiplicative: its value at 1/4 is 46/4096, while the square of its "
                         + "value at 1/2 is 100/4096. The power s ↦ sᵖ is multiplicative for every "
-                        + "p, but for p ≠ 2 the normalization fails at t = π/4, where the sum is "
+                        + "p ≥ 0, but for p ≠ 2 the normalization fails at t = π/4, where the sum is "
                         + "2^(1 − p/2) ≠ 1.")),
                     Paragraph(Text(
                         "The result is an elementary functional-equation argument; no published "
