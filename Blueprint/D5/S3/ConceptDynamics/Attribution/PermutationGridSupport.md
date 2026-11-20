@@ -28,6 +28,8 @@ $$\forall k q n, 2 \le k \land 0 < q \land \operatorname{DivisibleThrough}\left(
 
 Let k be at least two, let q be a positive natural number and set m to k times k minus one times q, with parentheses around k minus one. Suppose every positive integer through k divides m. SeedBudget(k,m,B) means there is a calibrating law with at most B seeds. For any natural n the budget k factorial times n is feasible exactly when k times q plus one is at most k plus one to the power n, with parentheses around the base.
 
+At denominator zero the all-zero profile requires total mass zero across all labels. The seed law has total mass one. The bounds on k and q guarantee a positive denominator. For the lower bound, the full divisibility premise guarantees the integer profile supported on the moved labels of each permutation.
+
 For any nonidentity permutation, the profile constant on its moved labels and zero elsewhere has integer coordinates. A fixed seed would return a fixed label at that profile, which has zero mass. Each seed orbit is therefore regular. At a profile tying k minus one labels, the subgroup fixing the distinguished label divides each regular orbit into k blocks. For a tied label the number of seeds selected in each block is either zero or the factorial of k minus two. The possible per-orbit block counts are the k plus one digits from zero through k.
 
 For attainment, group the labels by their coordinate values. Let H be the product of the group-size factorials and let D be the factorial of k minus two. Each regular seed orbit has k factorial divided by H blocks for the profile stabilizer action. The desired block mass for a group of size s and coordinate value v is D times s times v divided by H. The frozen factorial divisibility theorem gives integer demands. If there are t groups, each orbit has at least k times t minus one blocks, with parentheses around t minus one.
@@ -40,4 +42,6 @@ A block assigned to a group has an equivariant map to that label orbit, giving e
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.CalibratingLaw`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.grid_support_budget_iff`
+- Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/StabilizerFactorialDivisibility](../../Combinatorics/Partitions/StabilizerFactorialDivisibility.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/ThreeOutcomeGridSupport](ThreeOutcomeGridSupport.md)
