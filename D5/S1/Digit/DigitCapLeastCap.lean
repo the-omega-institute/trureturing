@@ -20,8 +20,7 @@ proof_shape:
   least_linear_min: content (linear growth against the subcritical O-bound with e < 1).
 Direct frozen dependencies: D5/S1/Digit/CoonsAdjacentGrowthRefutation (count, readout,
   exponent), D5/S1/Digit/DigitCapPowerGF (count_isTheta), D5/S1/Digit/DigitCapMultipleCount
-  (count_square_sub_one), D5/S1/Digit/DigitCapSubcritical (subcritical; frozen by
-  the-omega-institute/trureturing#31963).
+  (count_square_sub_one), D5/S1/Digit/DigitCapSubcritical (subcritical).
 Search record (§3.1): DigitCapPlateau.exponent_plateau computes the exponent log_ell q for caps
   up to q ell - 1 with q ≤ ell, which covers ell^2 - 1 but not ell^r - 1 for r ≥ 3 and no
   exclusion below the critical cap; DigitCapExponentOrder gives finiteness and monotonicity
