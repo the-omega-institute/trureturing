@@ -66,5 +66,5 @@ def checkout_topology(root):
 def warm_dev_remediation(main_checkout):
     if main_checkout is None:
         return ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                "make warm-donor there (its location cannot be determined from this worktree)")
-    return "sync dev and warm the dev cache: make -C " + shlex.quote(str(main_checkout)) + " warm-donor"
+                "make warm-donor FULL_BUILD=1 there (its location cannot be determined from this worktree)")
+    return "sync dev and warm the dev cache: make -C " + shlex.quote(str(main_checkout)) + " warm-donor FULL_BUILD=1"

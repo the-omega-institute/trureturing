@@ -23,7 +23,7 @@ class CheckTests(unittest.TestCase):
         for current in (0, 1):
             with self.subTest(current=current), patch.dict(os.environ,
                     CI_CURRENT_RESULT="success", CI_CURRENT_UNIT="current"):
-                result, calls, plan = self.local_spies(current=current,
+                result, calls, plan = self.local_spies(source=current,
                     paths=("tools/scripts/compiled-fib-test.sh",))
                 self.assertEqual(result.returncode, current)
                 self.assertTrue(plan["fib-regressions"])
@@ -31,7 +31,7 @@ class CheckTests(unittest.TestCase):
                 ack = [r for r in records if r["check"] == "tests-fib"]
                 self.assertEqual(len(ack), 1)
                 self.assertEqual(ack[0]["status"], "success" if current == 0 else "blocked")
-                self.assertFalse(any(call[:2] == ["make", "compiled-fib-test"] for call in calls))
+                self.assertEqual(sum(call[:2] == ["make", "compiled-fib-test"] for call in calls), int(current == 0))
 
     def test_standalone_fib_ack_has_no_current_success_and_emits_no_identity(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -46,7 +46,7 @@ class CheckTests(unittest.TestCase):
     def test_report_selection_overrides_ambient_fib_selection_in_both_directions(self):
         data, _ = contract.load(ROOT)
         for path, selected in (("tools/scripts/compiled-fib-test.sh", True), ("Reg/D5/Owner.lean", False)):
-            plan = contract.selection(data, [path], "pull-request")
+            plan = contract.selection(data, [path], "push")
             with self.subTest(path=path), patch.dict(os.environ, FULL_BUILD="1", STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
                     patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
                     patch.object(checks, "execute", return_value=0) as execute:
@@ -74,16 +74,24 @@ class CheckTests(unittest.TestCase):
 
     def test_full_report_rejects_without_confirmation_before_producer_build(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        plan = contract.selection(data, ["D5/changed.lean"], "push")
         with patch.dict(os.environ, FULL_BUILD="0"), patch.object(checks.subprocess, "run") as run, \
                 patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
         run.assert_not_called()
         execute.assert_not_called()
 
+    def test_pr_never_invokes_full_report_even_with_ambient_full_build(self):
+        result, calls, plan = self.local_spies()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse(plan["full-report"])
+        self.assertIn('"check":"pr-lean","status":"success"', result.stdout)
+        self.assertFalse(any(call[:2] == ["make", "lean-report"] for call in calls))
+        self.assertFalse(any("check-current" in call or "check-delta" in call for call in calls))
+
     def test_failed_report_producer_probe_preserves_failure_without_raising(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        plan = contract.selection(data, ["D5/changed.lean"], "push")
         with patch.dict(os.environ, FULL_BUILD="1"), patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
                 patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
@@ -114,7 +122,7 @@ class CheckTests(unittest.TestCase):
 
     def test_failed_judge_does_not_claim_dependent_checks_executed(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["tools/StrataLint.Lean/Changed.cs"], "pull-request")
+        plan = contract.selection(data, ["tools/StrataLint.Lean/Changed.cs"], "push")
         called = []
         def phase(name, *_):
             called.append(name)
@@ -127,7 +135,7 @@ class CheckTests(unittest.TestCase):
 
     def test_independent_validators_execute_after_a_semantic_rejection(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        plan = contract.selection(data, ["D5/changed.lean"], "push")
         called = []
         def phase(name, *_):
             called.append(name)
@@ -140,7 +148,7 @@ class CheckTests(unittest.TestCase):
 
     def test_failed_dependency_preparation_blocks_actual_execution(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        plan = contract.selection(data, ["D5/changed.lean"], "push")
         with patch.object(checks, "prepare_judge", return_value=2), \
                 patch.object(checks, "prepare_current", return_value=2), patch.object(checks, "prepare_local_lean", return_value=2), \
                 patch.object(checks, "current_phase") as phase, contextlib.redirect_stdout(io.StringIO()) as output:
@@ -150,7 +158,7 @@ class CheckTests(unittest.TestCase):
 
     def test_selected_evidence_restore_failure_keeps_other_ready_validators_reachable(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        plan = contract.selection(data, ["D5/changed.lean"], "push")
         called = []
         with patch.object(checks, "prepare_current", return_value=2), \
                 patch.object(checks, "prepare_local_lean", return_value=0), \
@@ -165,7 +173,7 @@ class CheckTests(unittest.TestCase):
         data, _ = contract.load(ROOT)
         for paths, purpose, verb, delta in (
                 (["D5/changed.lean"], "pull-request", "check-source", True),
-                (["D5/changed.lean"], "push", "check-source", False),
+                (["D5/changed.lean"], "push", "check-source", True),
                 (["D5/changed.lean", "docs/develop/theory/Note.md"], "pull-request", "check-source", True)):
             plan = contract.selection(data, paths, purpose)
             with self.subTest(paths=paths, purpose=purpose), patch.object(checks, "execute", return_value=0) as execute:
@@ -227,15 +235,15 @@ class CheckTests(unittest.TestCase):
         self.assertFalse(any("check-source" in call or "check-delta" in call for call in calls))
         result, calls, plan = self.local_spies(purpose="push")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertFalse(plan["delta"])
-        self.assertFalse(any("check-delta" in call for call in calls))
+        self.assertTrue(plan["delta"])
+        self.assertTrue(any("check-delta" in call for call in calls))
         source = next(call for call in calls if "check-source" in call)
-        self.assertNotIn("--protected-base", source)
+        self.assertIn("--protected-base", source)
 
     def test_success_and_later_rejection_preserve_all_selected_obligations(self):
         for current in (0, 1):
             with self.subTest(current=current):
-                result, calls, plan = self.local_spies(source=0, current=current)
+                result, calls, plan = self.local_spies(source=0, current=current, purpose="push")
                 self.assertEqual(current, result.returncode, result.stdout + result.stderr)
                 records = [json.loads(line.removeprefix("CI_CHECK ")) for line in result.stdout.splitlines() if line.startswith("CI_CHECK ")]
                 successful = {r["check"] for r in records if r["status"] == "success"}
@@ -248,7 +256,7 @@ class CheckTests(unittest.TestCase):
     def test_bootstrap_and_source_input_failures_preserve_independent_fallback(self):
         for source, judge in ((2, 0), (0, 1)):
             with self.subTest(source=source, judge=judge):
-                result, calls, _ = self.local_spies(source=source, judge=judge)
+                result, calls, _ = self.local_spies(source=source, judge=judge, purpose="push")
                 self.assertNotEqual(0, result.returncode)
                 self.assertTrue(any(call[:2] == ["make", "lean-report"] for call in calls), calls)
                 if judge:
@@ -264,6 +272,7 @@ class CheckTests(unittest.TestCase):
             for path in Path(__file__).parent.glob("*.py"):
                 if not path.name.startswith("test_"):
                     shutil.copy2(path, scripts / path.name)
+            (scripts / "ci_pr_lean.py").write_text("import sys\nfrom pathlib import Path\nassert Path(sys.argv[1]).is_file()\n")
             (scripts / "judge-lean-producer.sh").write_text("#!/bin/bash\nexit 0\n")
             (scripts / "scribe-scope-paths.sh").write_text("#!/bin/bash\ncat \"$1\"\n")
             (scripts / "scribe-content-checks.sh").write_text("#!/bin/bash\nexit 0\n")
@@ -336,6 +345,16 @@ class CheckTests(unittest.TestCase):
             plan = contract.selection(data, ["tools/StrataLint.Lean/Changed.cs"], "pull-request")
             checks.current_phase("source-evidence", data, plan, "a" * 40, Path("changed"))
             self.assertIn("TEST_FILTER=FullyQualifiedName~FourierBridgeSourceEvidenceTests", execute.call_args.args[1])
+
+
+class PullRequestReportTests(unittest.TestCase):
+    def test_empty_scope_has_no_build_and_large_scopes_keep_scribe_inputs_together(self):
+        from ci_pr_lean import report_batches
+        self.assertEqual(list(report_batches({"targets": []})), [])
+        scope = {"targets": ["D5.A", "D5.B", "Reg.Z"], "paths": ["Blueprint/doc.scribe.cs"],
+                 "definitions": {"Blueprint/doc.scribe.cs": ["D5.A", "D5.B"]}}
+        self.assertEqual(list(report_batches(scope, limit=10)),
+                         [(["D5.A", "D5.B"], ["Blueprint/doc.scribe.cs"]), (["Reg.Z"], [])])
 
 
 if __name__ == "__main__":

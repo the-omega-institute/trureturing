@@ -78,7 +78,7 @@ private theorem exists_scalar_of_end (ρ : ∀ i, Representation k G (W i))
 
 /-- Burnside's theorem for several pairwise inequivalent irreducible representations: the
 operators `(ρ i g)_i` span the whole product of the endomorphism algebras. -/
-private theorem span_range_pi_eq_top (ρ : ∀ i, Representation k G (W i))
+theorem span_range_pi_eq_top (ρ : ∀ i, Representation k G (W i))
     [∀ i, (ρ i).IsIrreducible] (hne : ∀ i j, i ≠ j → IsEmpty ((ρ i).Equiv (ρ j))) :
     Submodule.span k (Set.range fun g : G => (fun i => ρ i g : ∀ i, Module.End k (W i))) = ⊤ := by
   classical
@@ -131,7 +131,7 @@ private theorem span_range_pi_eq_top (ρ : ∀ i, Representation k G (W i))
 
 /-- The weighted trace pairing `(B, A) ↦ ∑ i, c i * tr (B i ∘ A i)` on a finite product of
 endomorphism algebras. -/
-private noncomputable def tracePairing (c : ι → k) :
+noncomputable def tracePairing (c : ι → k) :
     (∀ i, Module.End k (W i)) →ₗ[k] (∀ i, Module.End k (W i)) →ₗ[k] k :=
   LinearMap.mk₂ k (fun B A => ∑ i, c i * LinearMap.trace k (W i) (B i * A i))
     (fun B₁ B₂ A => by
@@ -147,7 +147,7 @@ private noncomputable def tracePairing (c : ι → k) :
 
 omit [IsAlgClosed k] in
 /-- With nonzero weights the trace pairing is nondegenerate in its second argument. -/
-private theorem eq_zero_of_tracePairing (c : ι → k) (hc : ∀ i, c i ≠ 0)
+theorem eq_zero_of_tracePairing (c : ι → k) (hc : ∀ i, c i ≠ 0)
     (A : ∀ i, Module.End k (W i)) (h : ∀ B, tracePairing c B A = 0) : A = 0 := by
   classical
   funext j

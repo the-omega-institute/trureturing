@@ -186,6 +186,7 @@ case "$tool" in
     check 'unstarted flight retained' test "$(grep -c '^three $' "$OP_SCRATCH/flights.txt")" -eq 0
     : > "$t/ps-fail"; run; rc=$?; check 'failed ps cannot tombstone' test "$rc" -eq 16;;
   refresh-if-stale)
+    export FULL_BUILD=1
     run "$t/tree with space"; rc=$?; check 'unstamped main skipped' test "$rc" -eq 0
     check 'unstamped reason' contains main-not-stamped
     check 'unstamped main does not ensure cache' test ! -e "$t/make-calls"
@@ -195,8 +196,11 @@ case "$tool" in
     touch "$t/tree with space/.lake/build/old" "$t/tree with space/.lake/packages/old"
     refresh_tree=$(cd "$t/tree with space" && pwd -P)
     export OP_TEST_CACHE_REFRESH=1
+    FULL_BUILD=0 run "$t/tree with space"; rc=$?; check 'scoped refresh skipped' test "$rc" -eq 0
+    check 'scoped refresh preserves outputs' test -f "$t/tree with space/.lake/build/old"
+    check 'scoped refresh does not seed' test ! -e "$t/make-calls"
     run "$t/tree with space"; rc=$?; check 'stale clean tree refreshed' test "$rc" -eq 0
-    check 'cache ensure called for lane' grep -Fxq -- "-C $refresh_tree lean-cache-ensure" "$t/make-calls"
+    check 'cache ensure called for lane' grep -Fxq -- "-C $refresh_tree lean-cache-ensure FULL_BUILD=1" "$t/make-calls"
     check 'cache reseeded by make stub' grep -qx seeded "$t/tree with space/.lake/build/content"
     check 'old build removed' test ! -e "$t/tree with space/.lake/build/old"
     check 'old packages removed' test ! -e "$t/tree with space/.lake/packages/old"
@@ -217,8 +221,11 @@ case "$tool" in
     mkdir "$OP_STATE/main-lean.lock"
     run "$t/tree with space"; rc=$?; check 'held refresh lock fails closed' test "$rc" -eq 15;;
   prep-lane-tree)
-    run "$t/tree with space"; rc=$?; check 'prep uses canonical cache entry' test "$rc" -eq 0
-    check 'cache ensure called' grep -q lean-cache-ensure "$t/make-calls"
+    FULL_BUILD=0 run "$t/tree with space"; rc=$?; check 'scoped prep succeeds' test "$rc" -eq 0
+    check 'scoped prep defers cache' test ! -e "$t/make-calls"
+    export FULL_BUILD=1
+    run "$t/tree with space"; rc=$?; check 'full prep uses canonical cache entry' test "$rc" -eq 0
+    check 'full cache ensure called' grep -Fxq 'lean-cache-ensure FULL_BUILD=1' "$t/make-calls"
     OP_TEST_ANCESTOR_RC=1 run "$t/tree with space"; rc=$?; check 'fast-forward lane succeeds' test "$rc" -eq 0
     check 'fast-forward flag' grep -q -- --ff-only "$t/merge-calls"
     : > "$t/dirty"

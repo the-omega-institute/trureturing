@@ -37,6 +37,11 @@ internal static partial class LeanCacheEnsureCommand
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
         }
 
+        var fullBuild = FullBuild;
+        if (!fullBuild && RequestsDefaultLakeBuild(command))
+            return new CommandResult(false, string.Empty,
+                "full build requires explicit FULL_BUILD=1; pass nonempty module targets for a scoped build\n", 2);
+
         var pins = LeanPinSet.TryReadWorktree(root, out var pinReason);
         if (pins is null)
         {
@@ -61,19 +66,11 @@ internal static partial class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        var ensured = EnsureLocked(
-            root,
-            pins,
-            command[0],
-            runner,
-            cloner,
-            guard,
-            removePartial: null,
-            continueOnCacheGetFailure: true,
-            stateProbe,
-            out var cacheState, donorRepository, refreshWarmArchive: false,
-            readColdBuildConsent: () => string.Equals(
-                readEnvironment(ColdBuildConsentVariable), "1", StringComparison.Ordinal));
+        CacheState? cacheState;
+        var ensured = fullBuild
+            ? EnsureLocked(root, pins, command[0], runner, cloner, guard, removePartial: null,
+                continueOnCacheGetFailure: true, stateProbe, out cacheState, donorRepository, refreshWarmArchive: false)
+            : InspectScopedCache(root, pins, stateProbe, out cacheState);
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;
@@ -109,9 +106,9 @@ internal static partial class LeanCacheEnsureCommand
                 receipt,
                 "COLD_BUILD_REFUSED cache warmth probe failed (fail-closed): "
                 + cacheState.ProbeFailureDescription + "\n"
-                + $"Fetch caches with: make -C {ShellQuote(root)} lean-cache-ensure\n");
+                + $"Fetch caches with: make -C {ShellQuote(root)} lean-cache-ensure FULL_BUILD=1\n");
         }
-        if (cacheState.Project.State == OleanWarmth.Cold)
+        if (fullBuild && cacheState.Project.State == OleanWarmth.Cold)
         {
             var consent = string.Equals(
                 readEnvironment(ColdBuildConsentVariable),
@@ -124,10 +121,8 @@ internal static partial class LeanCacheEnsureCommand
                     false,
                     receipt,
                     "COLD_BUILD_REFUSED project olean cache is cold.\n"
-                    + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
-                    + "To accept this cold build once, run: "
-                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean LEAN_TARGETS=\"<nonempty module list>\"\n"
-                    + "Replace the target placeholder; a full build still requires FULL_BUILD=1.\n");
+                    + $"Fetch caches with: make -C {target} lean-cache-ensure FULL_BUILD=1\n"
+                    + ScopedColdBuildRemediation(root) + "\n");
             }
             receipt = RecordColdBuildConsent(receipt);
         }
@@ -146,6 +141,8 @@ internal static partial class LeanCacheEnsureCommand
                 && Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_ACTIVE") != "1")
                 invocation = ["python3", Path.Combine(root, "tools/scripts/workflow/ci_compute.py"),
                     "run", "--", .. command];
+            if (!fullBuild && runner is ProductionWorktreeProcessRunner production)
+                runner = production.ForLocalArtifactReader();
             var invoked = runner.Run(
                 invocation[0],
                 invocation.Skip(1).ToArray(),
@@ -161,6 +158,39 @@ internal static partial class LeanCacheEnsureCommand
         {
             return new CommandResult(false, standardOutput is null ? receipt : string.Empty, exception.Message + "\n");
         }
+    }
+
+    private static bool RequestsDefaultLakeBuild(string[] command)
+    {
+        if (Path.GetFileNameWithoutExtension(command[0]) != "lake") return false;
+        // Lake options may occur on either side of the verb. Ignore their values
+        // when deciding whether an actual positional build target was supplied.
+        var build = false;
+        for (var index = 1; index < command.Length; index++)
+        {
+            var argument = command[index];
+            if (argument is "-d" or "--dir" or "-f" or "--file" or "-K" or "--packages"
+                or "--log-level" or "--fail-level") { index++; continue; }
+            if (argument.StartsWith('-') || string.IsNullOrWhiteSpace(argument)) continue;
+            if (build || argument != "build") return false;
+            build = true;
+        }
+        return build;
+    }
+
+    // Lake validates each target's native trace. Scoped work may start with an empty
+    // build directory and never provisions a donor, downloads an archive or writes a donor stamp.
+    private static CommandResult InspectScopedCache(
+        string root, LeanPinSet pins, ILeanCacheStateProbe stateProbe, out CacheState? cacheState)
+    {
+        cacheState = null;
+        var lake = Path.Combine(root, ".lake");
+        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+        var observed = new CacheState(stateProbe.ProbeOleans(MathlibOleanRoot(lake)),
+            stateProbe.ProbeOleans(ProjectOleanRoot(lake)));
+        return SuccessWithState(SuccessReceipt("ready", root, null, "lake-local", pins.Sha256,
+            null, MathlibOleanInventory.Unknown, archive: LeanArchiveAttempt.Skipped("scoped build")),
+            observed, out cacheState);
     }
 
     // These two libraries moved from trureturing to leanInspector. Their former

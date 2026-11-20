@@ -159,23 +159,23 @@ class LocalEntryFixture:
         diagnostic = result.stdout + result.stderr
         self.assertIn('reason=linked-worktree', diagnostic, '[FAIL] linked_miss_names_policy')
         remediation = ('sync dev and warm the dev cache in this repository\'s dev main checkout: '
-                       'make warm-donor && make lean-report there '
+                       'make warm-donor FULL_BUILD=1 && make lean-report FULL_BUILD=1 there '
                        '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
                        + shlex.quote(str(self.root / '.lake')) + ' && make -C '
-                       + shlex.quote(str(self.root)) + ' lean-cache-ensure'
+                       + shlex.quote(str(self.root)) + ' lean-cache-ensure FULL_BUILD=1'
                        if unknown_main else 'sync dev and warm the dev cache: make -C '
-                      + shlex.quote(str(self.main_checkout)) + ' warm-donor && make -C '
-                      + shlex.quote(str(self.main_checkout)) + ' lean-report'
+                      + shlex.quote(str(self.main_checkout)) + ' warm-donor FULL_BUILD=1 && make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' lean-report FULL_BUILD=1'
                       + '; then reseed from the warm main checkout: rm -rf -- '
                       + shlex.quote(str(self.root / '.lake')) + ' && make -C '
-                      + shlex.quote(str(self.root)) + ' lean-cache-ensure')
+                      + shlex.quote(str(self.root)) + ' lean-cache-ensure FULL_BUILD=1')
         self.assertIn(remediation, diagnostic,
                       '[FAIL] linked_remediation_builds_main_report_before_reseed')
         if unknown_main:
             self.assertNotIn(str(self.git_store), diagnostic,
                              '[FAIL] linked_remediation_never_names_git_store')
         self.assertIn('rm -rf -- ' + shlex.quote(str(self.root / '.lake'))
-                      + ' && make -C ' + shlex.quote(str(self.root)) + ' lean-cache-ensure', diagnostic)
+                      + ' && make -C ' + shlex.quote(str(self.root)) + ' lean-cache-ensure FULL_BUILD=1', diagnostic)
         self.assertNotIn('lean-cache-from-github-without-mathlib', diagnostic)
         self.assertEqual(self.calls, [], '[FAIL] linked_miss_never_fetches_or_builds')
         self.assertFalse((self.root / '.lake').exists())
@@ -456,7 +456,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
-        for name in ('Makefile', 'tools/scripts/worktree/lean-cache-run.sh',
+        for name in ('Makefile', 'tools/scripts/worktree/lean-cache-run.sh', 'tools/scripts/worktree/lean-cache-ensure.sh',
                      'tools/scripts/worktree/warm-donor.sh', 'tools/scripts/report/lean-report.sh',
                      'tools/lean-inspector/inspect.sh'):
             destination = self.root / name
@@ -483,7 +483,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
         destination.chmod(0o755)
 
     def test_make_full_entries_reject_missing_and_invalid_confirmation_before_dispatch(self):
-        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor',
+        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor', 'lean-cache-ensure',
                        'lean-cache-to-github-without-mathlib'):
             for value in (None, '0', 'yes', '2'):
                 with self.subTest(target=target, value=value):
@@ -494,15 +494,22 @@ class FullBuildConfirmationTests(unittest.TestCase):
                     self.assertFalse(self.marker.exists())
                     self.assertFalse((self.root / '.lake').exists())
 
+    def test_make_ensure_requires_a_command_line_confirmation(self):
+        self.stub('tools/scripts/worktree/lean-cache-ensure.sh')
+        result = self.run_command('make', '--no-print-directory', 'lean-cache-ensure', confirmed=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('FULL_BUILD=1', result.stderr)
+        self.assertFalse(self.marker.exists())
+
     def test_make_confirmed_full_entries_dispatch(self):
-        for path in ('tools/scripts/worktree/lean-cache-run.sh',
+        for path in ('tools/scripts/worktree/lean-cache-run.sh', 'tools/scripts/worktree/lean-cache-ensure.sh',
                      'tools/scripts/worktree/warm-donor.sh', 'tools/scripts/report/lean-report.sh',
                      'tools/scripts/worktree/lean-cache-publish.sh'):
             self.stub(path)
         self.stub('bin/git')
         self.stub('bin/dotnet')
         self.env['PATH'] = str(self.root / 'bin') + os.pathsep + os.environ['PATH']
-        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor',
+        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor', 'lean-cache-ensure',
                        'lean-cache-to-github-without-mathlib'):
             with self.subTest(target=target):
                 result = self.run_command('make', '--no-print-directory', target, 'FULL_BUILD=1')
@@ -528,6 +535,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
     def test_direct_full_scripts_reject_before_side_effects(self):
         for path, arguments in (
             ('tools/scripts/worktree/lean-cache-run.sh', ['--build']),
+            ('tools/scripts/worktree/lean-cache-ensure.sh', []),
             ('tools/scripts/worktree/warm-donor.sh', []),
             ('tools/scripts/report/lean-report.sh', []),
             ('tools/lean-inspector/inspect.sh', []),
