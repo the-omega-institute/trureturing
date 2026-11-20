@@ -24,7 +24,7 @@ open D5.S3.TotalVariation.FairBiasFaceCount
 
 universe u v
 
-variable {A : Type u} {L : Type v} [AddCommGroup A] [Module (ZMod 2) A] [Fintype L]
+variable {A : Type u} {L : Type v} [AddCommGroup A] [Module (ZMod 2) A] [Finite A] [Fintype L]
 
 private theorem span_rank_of_indep (c : L → A) (S : Set L)
     (hS : LinearIndepOn (ZMod 2) c S) :
@@ -46,6 +46,7 @@ private noncomputable def columnMatroid (c : L → A) : Matroid L :=
         · exact Submodule.subset_span ⟨i, h, rfl⟩
         · by_contra hnmem
           exact hn ⟨i, hi, h, (linearIndepOn_insert h).mpr ⟨hI, hnmem⟩⟩
+      let _ : Module.Finite (ZMod 2) (Submodule.span (ZMod 2) (c '' I)) := Module.Finite.of_finite
       have hle := Submodule.finrank_mono hsub
       rw [span_rank_of_indep c J hJ, span_rank_of_indep c I hI] at hle
       exact (not_le_of_gt hcard) hle)
@@ -87,7 +88,7 @@ private theorem column_spanning_iff (c : L → A) (S : Set L) :
     exact Submodule.span_mono (Set.image_mono hBS)
   · intro hS
     obtain ⟨B, hBS, _, hspan, hB⟩ :=
-      (linearIndepOn_empty (ZMod 2) c).exists_linearIndepOn_extension (Set.empty_subset S)
+      exists_linearIndepOn_extension (linearIndepOn_empty (ZMod 2) c) (Set.empty_subset S)
     refine ⟨B, (column_isBase_iff c B).mpr ⟨hB, ?_⟩, hBS⟩
     rw [← hS]
     exact le_antisymm (Submodule.span_mono (Set.image_mono hBS)) (Submodule.span_le.mpr hspan)
@@ -98,6 +99,7 @@ noncomputable def signedMatroid (c : L → A) : Matroid (L × Bool) :=
 
 private theorem face_iff_indep (c : L → A) (S : Finset (L × Bool)) :
     S ∈ signedComplex c ↔ S.Nonempty ∧ (signedMatroid c).Indep (S : Set (L × Bool)) := by
+  classical
   change (S.Nonempty ∧ (∀ i, (i, true) ∈ S → (i, false) ∉ S) ∧
     AddSubgroup.closure (c '' {i | ∀ b : Bool, (i, b) ∉ S}) = AddSubgroup.closure (Set.range c)) ↔ _
   have hcomplement : {i | ∀ b : Bool, (i, b) ∉ S} =
@@ -118,7 +120,7 @@ private theorem face_iff_indep (c : L → A) (S : Finset (L × Bool)) :
     Matroid.coindep_iff_compl_spanning (by exact Set.subset_univ _)]
   rw [show (columnMatroid c).E = Set.univ from rfl, ← Set.compl_eq_univ_sdiff,
     column_spanning_iff, ← span_as_closure, ← span_as_closure]
-  rw [(AddSubgroup.toZModSubmodule 2).symm.injective.eq_iff]
+  rw [Submodule.toAddSubgroup_injective.eq_iff]
   exact and_congr_right (fun _ => and_comm)
 
 /-- A maximal nonempty face in the signed simplicial complex. -/
@@ -150,7 +152,6 @@ theorem facet_card_eq_nullity (c : L → A) (S : Finset (L × Bool)) (hS : IsFac
   classical
   let B := Prod.fst '' (S : Set (L × Bool))
   have hbase := ((facet_iff_base c S).mp hS).2
-  have hm : ((columnMatroid c)✶).E = Set.univ := rfl
   have hpre : Prod.fst '' (Prod.fst ⁻¹' ((columnMatroid c)✶).E : Set (L × Bool)) =
       ((columnMatroid c)✶).E := by
     exact Set.image_preimage_eq _ (fun i => ⟨(i, false), rfl⟩)
@@ -166,8 +167,8 @@ theorem facet_card_eq_nullity (c : L → A) (S : Finset (L × Bool)) (hS : IsFac
   have hcard : B.ncard = S.card := hproj.2.1.ncard_image.trans (Set.ncard_coe_finset S)
   rw [hcard, Nat.card_eq_fintype_card] at hr
   have hle : S.card ≤ Fintype.card L := by
-    rw [← hcard, ← Set.ncard_univ, ← Nat.card_eq_fintype_card]
-    exact Set.ncard_le_ncard (Set.subset_univ _)
+    simpa only [Set.ncard_univ, Nat.card_eq_fintype_card, hcard] using
+      (Set.ncard_le_ncard (Set.subset_univ B))
   omega
 
 /-- Lexicographic precedence of equal-size faces, using the first differing signed vertex. -/
@@ -198,24 +199,28 @@ theorem lexicographic_facet_shelling (c : L → A) [LinearOrder (L × Bool)]
     · exact Set.mem_insert_of_mem _ hz
   have hn : ¬ (T : Set (L × Bool)) ⊆ V := by
     intro hs
-    exact hxT ((hBT.eq_of_subset_isBase hV hs).symm ▸ hxV)
+    apply hxT
+    change x ∈ (T : Set (L × Bool))
+    rwa [hBT.eq_of_subset_isBase hV hs]
   obtain ⟨y, hyT, hyV⟩ := Set.not_subset.mp hn
   have hyS : y ∉ S := fun hy => hyV (hIV (Set.mem_insert_of_mem _ ⟨hy, hyT⟩))
   have hVeq : V = insert x ((T : Set (L × Bool)) \ {y}) := by
-    apply Set.eq_of_subset_of_ncard_le
+    refine Set.eq_of_subset_of_ncard_le ?_ ?_ (Set.toFinite _)
     · intro z hz
       rcases hVT hz with rfl | ht
       · exact Set.mem_insert _ _
       · exact Set.mem_insert_of_mem _ ⟨ht, fun hzy => hyV (hzy ▸ hz)⟩
-    · rw [Set.ncard_insert_of_not_mem (fun hz => hxT hz.1),
-        Set.ncard_sdiff_singleton_add_one hyT, hBT.ncard_eq_ncard_of_isBase hV]
+    · rw [Set.ncard_insert_of_notMem (fun hz => hxT hz.1) (Set.toFinite _),
+        Set.ncard_sdiff_singleton_add_one hyT (Set.toFinite _), hBT.ncard_eq_ncard_of_isBase hV]
   let U := (Set.toFinite V).toFinset
   have hU : (U : Set (L × Bool)) = V := Set.Finite.coe_toFinset _
   have hxU : x ∈ U := by change x ∈ (U : Set (L × Bool)); rwa [hU]
   refine ⟨U, (facet_iff_base c U).mpr ⟨⟨x, hxU⟩, hU.symm ▸ hV⟩, ?_, ?_, y, ?_⟩
   · refine ⟨x, hxU, hxT, ?_⟩
     intro z hzT hzU
-    have hzV : z ∉ V := by simpa only [← hU] using hzU
+    have hzV : z ∉ V := by
+      rw [← hU]
+      exact hzU
     have hzy : z = y := by
       by_contra hne
       exact hzV (hVeq.symm ▸ Set.mem_insert_of_mem x ⟨hzT, hne⟩)
