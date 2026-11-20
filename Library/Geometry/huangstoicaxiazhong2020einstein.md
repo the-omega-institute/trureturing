@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2006.06716v1"
 claim: "The paper defines Ricci curvature and an action for weighted graphs, derives the equations of motion on regular trees, proves uniqueness of the constant solution under constant boundary conditions, constructs solutions on the line and on trees of even degree, and conjectures that the tree equations of motion on the 3-regular tree have no positive non-constant solution."
 strata_touched:
   - D5/S3/Geometry/DiscreteGravity/TreeEquationsNonconstantRefutation
+  - D5/S3/Geometry/DiscreteGravity/GeometricSpineSolutions
 license: citation-only
 triage: anchor
 ---
