@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/NormalizedCographCotree
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/NormalizedCographCotree
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Native component cotrees and their vicinal width recurrence. -/

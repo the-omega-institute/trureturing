@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/CographDistanceCotree
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CographDistanceCotree
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Ordinary cograph distance and its rank-one decomposition on native component cotrees. -/

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Both clauses of the cograph distance multiplicity problem. -/

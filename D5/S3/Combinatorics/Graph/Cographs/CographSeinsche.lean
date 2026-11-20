@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Graph/Cographs/CographSeinsche
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Cographs/CographSeinsche
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Native induced path exclusion and Seinsche's component cut. -/

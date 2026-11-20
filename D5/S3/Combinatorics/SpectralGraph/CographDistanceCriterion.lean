@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/CographDistanceCriterion
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CographDistanceCriterion
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A native cotree criterion for equality in the cograph distance multiplicity bound. -/
