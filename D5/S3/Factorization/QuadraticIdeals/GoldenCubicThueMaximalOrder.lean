@@ -366,18 +366,24 @@ theorem split_cubic_root (f : ℚ[X]) (hirr : Irreducible f)
 
 /-- Bind the marked cubic field to the square role of the original
 two-prime Lucas block, keeping the original oriented ideal witness. -/
-theorem actual_factorization_marked_thue_field
+theorem actual_factorization_marked_thue_pair
     (j P Q : ℕ) (hj : 1 ≤ j) (hP : P.Prime) (hQ : Q.Prime) (hPQ : P ≠ Q)
     (hfact : blockNorm ((goldenLucas (3^j)-1).toNat) = P^2 * Q^3) :
-    ∃ pi : EisensteinOrder,
+    ∃ pi gamma : EisensteinOrder,
       Ideal.span {pi} = orientedIdeal ((goldenLucas (3^j)-1).toNat) ⊔
         Ideal.span {(P:EisensteinOrder)} ∧
       QuadraticAlgebra.norm pi = (P:ℤ) ∧
       (3:EisensteinOrder) ∣ pi-1 ∧
+      Ideal.span {gamma} = orientedIdeal ((goldenLucas (3^j)-1).toNat) ⊔
+        Ideal.span {(Q:EisensteinOrder)} ∧
+      QuadraticAlgebra.norm gamma = (Q:ℤ) ∧
+      (3:EisensteinOrder) ∣ gamma-1 ∧
+      orientedFactor ((goldenLucas (3^j)-1).toNat) = pi^2*gamma^3 ∧
       let A := pi.re^2-pi.im^2
       let D := 2*pi.re*pi.im-pi.im^2
       let f := (⟨(A:ℚ),(-3*D:ℤ),(3*(D-A):ℤ),(A:ℚ)⟩ : Cubic ℚ).toPoly
       let L := f.SplittingField
+      A*gamma.re^3-3*D*gamma.re^2*gamma.im+3*(D-A)*gamma.re*gamma.im^2+A*gamma.im^3 = -2 ∧
       Prime (P:ℤ) ∧ ¬ (P:ℤ) ∣ A ∧ ¬ (P:ℤ) ∣ A-2*D ∧
       (3:ℤ) ∣ A-1 ∧ ¬ (3:ℤ) ∣ A-2*D ∧ (3:ℤ) ∣ (P:ℤ)-1 ∧
       A^2-A*D+D^2=(P:ℤ)^2 ∧ Irreducible f ∧ Module.finrank ℚ L=3 ∧
@@ -385,7 +391,7 @@ theorem actual_factorization_marked_thue_field
         (A:L)*x^3-3*(D:L)*x^2+3*((D:L)-(A:L))*x+(A:L)=0 ∧
         IntermediateField.adjoin ℚ ({x} : Set L)=⊤ ∧
         b 0=1 ∧ b 1=(A:L)*x ∧ b 2=(A:L)*x^2-3*(D:L)*x := by
-  obtain ⟨pi, gamma, hnorm, _, _, _, hi, _, hp, _, _, _, _, hpacket⟩ :=
+  obtain ⟨pi, gamma, hnorm, hnormg, _, _, hi, hig, hp, hpg, _, _, hprod, hpacket⟩ :=
     (golden_cubic_exact_thue_descent j P Q hj hP hQ hPQ).1 hfact
   let a := pi.re
   let b := pi.im
@@ -458,13 +464,9 @@ theorem actual_factorization_marked_thue_field
     linear_combination hrootL
   obtain ⟨v,hv0,hv1,hv2⟩ := native_scaled_basis (A:ℚ) (D:ℚ) x
     haQ (Algebra.IsIntegral.isIntegral x) hxgen hdim
-  refine ⟨pi,hi,hnorm,hp,hnp,hAn,hEn,hA3,hE3,hP3,hn,hirr,hdim,x,v,hxform,hxgen,hv0,?_,?_⟩
+  refine ⟨pi,gamma,hi,hnorm,hp,hig,hnormg,hpg,hprod,hpacket.1,hnp,hAn,hEn,hA3,hE3,hP3,hn,hirr,hdim,x,v,hxform,hxgen,hv0,?_,?_⟩
   · simpa only [Algebra.smul_def,map_intCast] using hv1
   · simpa only [Algebra.smul_def,map_intCast] using hv2
-
-
-open D5.S1.Scale
-open EisensteinOddQuotient GoldenCubicThueDescent GoldenCubicThueEisenstein
 
 local instance splittingFieldNumberField (f : ℚ[X]) : NumberField f.SplittingField :=
   NumberField.of_module_finite ℚ f.SplittingField
@@ -496,8 +498,9 @@ theorem actual_factorization_field_discriminant
           Submodule.span ℤ (Set.range (![1,α,ω] : Fin 3 → L)) =
             (integralClosure ℤ L).toSubmodule := by
   classical
-  obtain ⟨pi,hi,hnorm,hprim,hp,hPA,hPE,h3A,h3E,h3P,hn,_,_,x,b,hx,hgen,hb0,hb1,hb2⟩ :=
-    actual_factorization_marked_thue_field j P Q hj hP hQ hPQ hfact
+  obtain ⟨pi,_,hi,hnorm,hprim,_,_,_,_,_,hp,hPA,hPE,h3A,h3E,h3P,
+      hn,_,_,x,b,hx,hgen,hb0,hb1,hb2⟩ :=
+    actual_factorization_marked_thue_pair j P Q hj hP hQ hPQ hfact
   let A := pi.re^2-pi.im^2
   let D := 2*pi.re*pi.im-pi.im^2
   have hPA' : ¬ (P:ℤ) ∣ A := hPA
