@@ -22,7 +22,7 @@ The scalar growth condition comes from Rødseth, Minimal r-Complete Partitions, 
 
 **Theorem 1.2 (A fractional weight can be allocated in bundles).**
 
-$$\forall k n A b K, 0 < k \land K\cdot b = k \land K\cdot A+1 \le (K+1)\cdot(k+1)^n \Rightarrow \operatorname{FractionalWeights}\left(k, n, A, b\right)$$
+$$\forall k n A b K, 0 < k \land K\cdot b = k \land K\cdot A+1 \le (K\cdot\operatorname{gcd}\left(b, A\right)+1)\cdot(k+1)^n \Rightarrow \operatorname{FractionalWeights}\left(k, n, A, b\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/CommonBlockWeights.common_fractional_allocations` (`✓ std3`). ∎
 

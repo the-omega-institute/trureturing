@@ -84,7 +84,7 @@ def fractionalRejected : Realization fractionalSignature :=
 abbrev fractionalArena : Arena where
   signature := fractionalSignature
   Law R := ∀ {k n A b K : ℕ}, 0 < k → K * b = k →
-    K * A + 1 ≤ (R.readout () () K + 1) * (k + 1)^n →
+    K * A + 1 ≤ (R.readout () () K * b.gcd A + 1) * (k + 1)^n →
     ∃ w : Fin (n + 1) → ℕ, (∑ j, w j = A) ∧
       ∀ t U : ℕ, (0 < t ∨ U = 0) → k * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
         b * (∑ i, x i) = U * A →
@@ -139,7 +139,7 @@ def fractionalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "domain", "arg", "fn", "arg", "fn", "arg"]
+        "domain", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none

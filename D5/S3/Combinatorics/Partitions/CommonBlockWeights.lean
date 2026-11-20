@@ -328,7 +328,7 @@ private theorem common_bundled_weights_all_totals {k n A b K : ℕ}
 demands. The demand sum supplies the bundle divisibility after reduction. -/
 theorem common_fractional_allocations {k n A b K : ℕ}
     (hk : 0 < k) (factor : K * b = k)
-    (cap : K * A + 1 ≤ (K + 1) * (k + 1)^n) :
+    (cap : K * A + 1 ≤ (K * b.gcd A + 1) * (k + 1)^n) :
     ∃ w : Fin (n + 1) → ℕ, (∑ j, w j = A) ∧
       ∀ t U : ℕ, (0 < t ∨ U = 0) → k * (t - 1) ≤ U → ∀ x : Fin t → ℕ,
         b * (∑ i, x i) = U * A →
@@ -346,14 +346,12 @@ theorem common_fractional_allocations {k n A b K : ℕ}
   have ascaled : g * A' = A := by rw [ea, Nat.mul_comm]
   have hb' : 0 < b' := Nat.pos_of_ne_zero fun zero => by simp [zero] at eb; omega
   let K' := K * g
-  have hKK' : K ≤ K' := by simpa [K'] using Nat.mul_le_mul_left K hg
   have factor' : K' * b' = k := by rw [show K' * b' = K * (g * b') by simp [K', Nat.mul_assoc], bscaled, factor]
   have cap' : K' * A' + 1 ≤ (K' + 1) * (k + 1)^n := by
     calc
       K' * A' + 1 = K * A + 1 := by simp [K', Nat.mul_assoc, ascaled]
       _ ≤ _ := cap
-      _ ≤ _ := Nat.mul_le_mul_right _ (Nat.add_le_add_right hKK' 1)
-  obtain ⟨w, hw, cover⟩ := common_bundled_weights_all_totals hb' (lt_of_lt_of_le hK hKK') factor' cap'
+  obtain ⟨w, hw, cover⟩ := common_bundled_weights_all_totals hb' (Nat.mul_pos hK hg) factor' cap'
   refine ⟨fun j => g * w j, by rw [← Finset.mul_sum, hw, ascaled], ?_⟩
   intro t U feasible blocks x total
   by_cases ht : 0 < t

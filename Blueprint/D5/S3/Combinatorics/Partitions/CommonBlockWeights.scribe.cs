@@ -92,7 +92,8 @@ internal sealed class CommonBlockWeightsDocument : IScribeDocumentDefinition
         return Disp(Seq(Forall, Sp, k, Sp, n, Sp, a, Sp, b, Sp, factor, Comma, Sp,
             D(0), Sp, Lt, Sp, k, Sp, Land, Sp, factor, Cdot, Sp, b, Sp, Eq, Sp, k, Sp, Land, Sp,
             factor, Cdot, Sp, a, Plus, D(1), Sp, Le, Sp,
-            Open, factor, Plus, D(1), Close, Cdot, Open, k, Plus, D(1), Close, Caret, n, Sp,
+            Open, factor, Cdot, new Formula.FunctionCall(FormulaIdentifier.Create("gcd"), [b, a]),
+            Plus, D(1), Close, Cdot, Open, k, Plus, D(1), Close, Caret, n, Sp,
             Rightarrow, Sp, new Formula.FunctionCall(FormulaIdentifier.Create("FractionalWeights"), [k, n, a, b])));
     }
 }
