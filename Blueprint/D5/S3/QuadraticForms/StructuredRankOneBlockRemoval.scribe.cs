@@ -11,6 +11,17 @@ internal sealed class StructuredRankOneBlockRemovalDocument : IScribeDocumentDef
         "Removing a nondegenerate block A X G⁻¹ Xᵀ A subtracts the inertia of G, raises the nullity by k, and splits the kernel as ker A ⊕ im X.",
         H("Nondegenerate block removal"),
         Blocks(
+            Describe.Lean(DescribeId.Create("block-removal-kernel-split"),
+                DeclarationHandle.Create("D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.kernel_split"),
+                H("Kernel and rank after block removal, over any field"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "Let A be any square matrix over a field and X a matrix with G = Xᵀ A X invertible, "
+                    + "and put N = A − A X G⁻¹ Xᵀ A. Then X is injective, ker A and im X intersect "
+                    + "trivially, ker N = ker A + im X, dim ker N = dim ker A + k and rank N + k = rank A. "
+                    + "No symmetry is needed: N v = A(v − X c) with c = G⁻¹ Xᵀ A v, N vanishes on ker A and "
+                    + "on im X, and X c ∈ ker A forces G c = 0."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("block-removal-result"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.result"),
                 H("Inertia, kernel and rank after block removal"),

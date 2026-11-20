@@ -5,7 +5,7 @@ year: 2026
 title: "MathOverflow 513954, revision 2: singular signed downdates, fixed coordinates, and a sharp polynomial sphere bound (version 2)"
 doi: 10.5281/zenodo.23920598
 url: https://zenodo.org/records/23920598
-claim: "Theorem 1: for a real symmetric A and x with Delta = x^T A x != 0, w = Ax and M = A - w w^T / Delta, In(M) = (n_+(A) - 1, n_-(A), n_0(A) + 1) if Delta > 0 and (n_+(A), n_-(A) - 1, n_0(A) + 1) if Delta < 0. Corollary 4: under Theorem 1, for M_t = A - t w w^T / Delta, componentwise In(M_t) = In(A) - In([Delta]) + In([(1 - t) Delta]); thus t < 1 preserves inertia, t = 1 gives Theorem 1, and t > 1 replaces one eigenvalue sign by its opposite without changing nullity. Corollary 3: for a real symmetric A, X in R^(n x k) and invertible G = X^T A X, N = A - A X G^(-1) X^T A has In(N) = (n_+(A) - n_+(G), n_-(A) - n_-(G), n_0(A) + k), ker N = ker A (+) im X and rank N = rank A - k. Theorem 5: for a nonempty connected topological space Y and continuous d, x : Y -> R^n with D = diag(d_i), Delta = x^T D x and M = D - D x x^T D / Delta, if Delta != 0 and M is positive semidefinite everywhere, then either Delta > 0 everywhere and all d_i >= 0, or Delta < 0 everywhere and a unique index j satisfies d_j < 0 everywhere while all other d_i >= 0 everywhere. Corollary 7: the finite-puncture simplex conclusion of Corollary 6 remains true when the deleted set is countable."
+claim: "Theorem 1: for a real symmetric A and x with Delta = x^T A x != 0, w = Ax and M = A - w w^T / Delta, In(M) = (n_+(A) - 1, n_-(A), n_0(A) + 1) if Delta > 0 and (n_+(A), n_-(A) - 1, n_0(A) + 1) if Delta < 0. Corollary 3: for a real symmetric A, X in R^(n x k) and invertible G = X^T A X, N = A - A X G^(-1) X^T A has In(N) = (n_+(A) - n_+(G), n_-(A) - n_-(G), n_0(A) + k), ker N = ker A (+) im X and rank N = rank A - k. Corollary 4: under Theorem 1, for M_t = A - t w w^T / Delta, componentwise In(M_t) = In(A) - In([Delta]) + In([(1 - t) Delta]); thus t < 1 preserves inertia, t = 1 gives Theorem 1, and t > 1 replaces one eigenvalue sign by its opposite without changing nullity. Theorem 5: for a nonempty connected topological space Y and continuous d, x : Y -> R^n with D = diag(d_i), Delta = x^T D x and M = D - D x x^T D / Delta, if Delta != 0 and M is positive semidefinite everywhere, then either Delta > 0 everywhere and all d_i >= 0, or Delta < 0 everywhere and a unique index j satisfies d_j < 0 everywhere while all other d_i >= 0 everywhere. Corollary 7: the finite-puncture simplex conclusion of Corollary 6 remains true when the deleted set is countable."
 strata_touched:
   - D5/S3/QuadraticForms/StructuredRankOneScaledInertia
   - D5/S3/QuadraticForms/StructuredRankOneFamily
@@ -75,5 +75,7 @@ these.
 Corollary 3 is formalized as StructuredRankOneBlockRemoval.result for X : Matrix ι κ ℝ (k = |κ|) with
 det G a unit: N and G are symmetric, n₊(A) = n₊(N) + n₊(G) and n₋(A) = n₋(N) + n₋(G) (the
 subtractions stated additively), n₀(N) = n₀(A) + k, ker N = ker A ⊔ im X with ker A and im X
-disjoint and X injective, and rank N + k = rank A. The proof uses the congruences of A ⊕ 0 with the
+disjoint and X injective, and rank N + k = rank A. The kernel, injectivity, nullity and rank
+statements (StructuredRankOneBlockRemoval.kernel_split) hold for any square matrix over any field,
+without symmetry. The proof uses the congruences of A ⊕ 0 with the
 matrix bordered by AX and corner G, and of that matrix with N ⊕ G, rather than an adapted basis.

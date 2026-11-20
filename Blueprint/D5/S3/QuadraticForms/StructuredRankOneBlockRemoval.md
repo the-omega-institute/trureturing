@@ -4,7 +4,19 @@
 
 Removing a nondegenerate block A X G⁻¹ Xᵀ A subtracts the inertia of G, raises the nullity by k, and splits the kernel as ker A ⊕ im X.
 
-**Theorem 1.1 (Inertia, kernel and rank after block removal).**
+**Theorem 1.1 (Kernel and rank after block removal, over any field).**
+
+Lean statement: `D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.kernel_split`
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.kernel_split` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *MathOverflow 513954, revision 2: singular signed downdates, fixed coordinates, and a sharp polynomial sphere bound (version 2)*. DOI: [10.5281/zenodo.23920598](https://doi.org/10.5281/zenodo.23920598). URL: <https://zenodo.org/records/23920598>.
+
+*Commentary.*
+
+Let A be any square matrix over a field and X a matrix with G = Xᵀ A X invertible, and put N = A − A X G⁻¹ Xᵀ A. Then X is injective, ker A and im X intersect trivially, ker N = ker A + im X, dim ker N = dim ker A + k and rank N + k = rank A. No symmetry is needed: N v = A(v − X c) with c = G⁻¹ Xᵀ A v, N vanishes on ker A and on im X, and X c ∈ ker A forces G c = 0.
+
+**Theorem 1.2 (Inertia, kernel and rank after block removal).**
 
 Lean statement: `D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.result`
 
@@ -20,5 +32,6 @@ The block matrix A ⊕ 0 is congruent, by the unipotent matrix with X in its cor
 
 ## References
 
+- Truth anchor: `D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.kernel_split`
 - Truth anchor: `D5/S3/QuadraticForms/StructuredRankOneBlockRemoval.result`
 - Dependency: [D5/S3/QuadraticForms/StructuredRankOneInertia](StructuredRankOneInertia.md)

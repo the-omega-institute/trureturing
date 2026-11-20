@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/QuadraticForms/StructuredRankOneBlockRemoval
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.SchurComplement]
+   anchors: []
    utility: none
    digest: Removing a nondegenerate block A X G⁻¹ Xᵀ A subtracts the inertia of G, adds k to the nullity and splits the kernel. -/
 
@@ -17,9 +17,9 @@ MathOverflow question 513954, revision 2 (CC BY-SA 4.0): https://mathoverflow.ne
 from one vector to a block.
 
 admission_basis: escape-witness. Escape witnesses: upper_block and lower_block (block
-congruences of `A ⊕ 0` and of the bordered matrix with corner `G`), removal_inertia, removal_kernel
-(the kernel direct sum and injectivity of `X`) and removal_nullity. Consumed bind-only helpers:
-removal_hermitian, rank_add_nullity. -/
+congruences of `A ⊕ 0` and of the bordered matrix with corner `G`), removal_inertia, and the public
+kernel_split (kernel direct sum, injectivity of `X`, nullity and rank over any field). Consumed
+bind-only helper: removal_hermitian. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -103,14 +103,25 @@ private theorem removal_inertia (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (X :
   constructor <;> omega
 
 
-private theorem removal_kernel (A : Matrix ι ι ℝ) (X : Matrix ι κ ℝ) (hG : IsUnit (Xᵀ * A * X).det) :
+section General
+
+variable {K : Type*} [Field K]
+
+/-- The kernel, injectivity, nullity and rank parts of block removal hold for any square matrix over
+any field, with no symmetry: if `G = Xᵀ A X` is invertible and `N = A - A X G⁻¹ Xᵀ A`, then `X` is
+injective, `ker N = ker A ⊕ im X`, `dim ker N = dim ker A + k` and `rank N + k = rank A`. -/
+theorem kernel_split (A : Matrix ι ι K) (X : Matrix ι κ K) (hG : IsUnit (Xᵀ * A * X).det) :
     LinearMap.ker (A - A * X * (Xᵀ * A * X)⁻¹ * (Xᵀ * A)).mulVecLin =
       LinearMap.ker A.mulVecLin ⊔ LinearMap.range X.mulVecLin ∧
     Disjoint (LinearMap.ker A.mulVecLin) (LinearMap.range X.mulVecLin) ∧
-    Function.Injective X.mulVecLin := by
+    Function.Injective X.mulVecLin ∧
+    Module.finrank K (LinearMap.ker (A - A * X * (Xᵀ * A * X)⁻¹ * (Xᵀ * A)).mulVecLin) =
+      Module.finrank K (LinearMap.ker A.mulVecLin) + Fintype.card κ ∧
+    (A - A * X * (Xᵀ * A * X)⁻¹ * (Xᵀ * A)).rank + Fintype.card κ = A.rank := by
   set G := Xᵀ * A * X with hGdef
   have hinv' : G⁻¹ * G = 1 := Matrix.nonsing_inv_mul G hG
-  have hN : ∀ v, (A - A * X * G⁻¹ * (Xᵀ * A)) *ᵥ v = A *ᵥ (v - X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v)))) := by
+  have hN : ∀ v, (A - A * X * G⁻¹ * (Xᵀ * A)) *ᵥ v =
+      A *ᵥ (v - X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v)))) := by
     intro v
     simp only [sub_mulVec, mulVec_sub, mulVec_mulVec, Matrix.mul_assoc]
   have hXc : ∀ c, G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ (X *ᵥ c))) = c := by
@@ -121,44 +132,43 @@ private theorem removal_kernel (A : Matrix ι ι ℝ) (X : Matrix ι κ ℝ) (hG
     intro c c' h
     have h' : X *ᵥ c = X *ᵥ c' := h
     rw [← hXc c, ← hXc c', h']
-  refine ⟨le_antisymm ?_ ?_, ?_, hinj⟩
-  · intro v hv
-    rw [LinearMap.mem_ker, mulVecLin_apply, hN] at hv
-    refine Submodule.mem_sup.mpr ⟨v - X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v))), hv,
-      X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v))), ⟨_, rfl⟩, by abel⟩
-  · refine sup_le (fun u hu => ?_) ?_
-    · rw [LinearMap.mem_ker, mulVecLin_apply] at hu ⊢
-      rw [hN]
-      simp only [mulVec_sub, hu, mulVec_mulVec]
-      simp only [← mulVec_mulVec, hu, mulVec_zero, sub_zero]
-    · rintro _ ⟨c, rfl⟩
-      rw [LinearMap.mem_ker, mulVecLin_apply, mulVecLin_apply, hN, hXc, sub_self, mulVec_zero]
-  · rw [Submodule.disjoint_def]
+  have hk : LinearMap.ker (A - A * X * G⁻¹ * (Xᵀ * A)).mulVecLin =
+      LinearMap.ker A.mulVecLin ⊔ LinearMap.range X.mulVecLin := by
+    refine le_antisymm ?_ ?_
+    · intro v hv
+      rw [LinearMap.mem_ker, mulVecLin_apply, hN] at hv
+      refine Submodule.mem_sup.mpr ⟨v - X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v))), hv,
+        X *ᵥ (G⁻¹ *ᵥ (Xᵀ *ᵥ (A *ᵥ v))), ⟨_, rfl⟩, by abel⟩
+    · refine sup_le (fun u hu => ?_) ?_
+      · rw [LinearMap.mem_ker, mulVecLin_apply] at hu ⊢
+        rw [hN]
+        simp only [mulVec_sub, hu, mulVec_mulVec]
+        simp only [← mulVec_mulVec, hu, mulVec_zero, sub_zero]
+      · rintro _ ⟨c, rfl⟩
+        rw [LinearMap.mem_ker, mulVecLin_apply, mulVecLin_apply, hN, hXc, sub_self, mulVec_zero]
+  have hd : Disjoint (LinearMap.ker A.mulVecLin) (LinearMap.range X.mulVecLin) := by
+    rw [Submodule.disjoint_def]
     rintro v hv ⟨c, rfl⟩
     rw [LinearMap.mem_ker, mulVecLin_apply, mulVecLin_apply] at hv
     have : c = 0 := by
       rw [← hXc c, hv, mulVec_zero, mulVec_zero]
     simp [this]
+  have hnul : Module.finrank K (LinearMap.ker (A - A * X * G⁻¹ * (Xᵀ * A)).mulVecLin) =
+      Module.finrank K (LinearMap.ker A.mulVecLin) + Fintype.card κ := by
+    have h := Submodule.finrank_sup_add_finrank_inf_eq (LinearMap.ker A.mulVecLin)
+      (LinearMap.range X.mulVecLin)
+    rw [disjoint_iff.mp hd, finrank_bot, add_zero, LinearMap.finrank_range_of_inj hinj] at h
+    rw [hk, h]
+    simp
+  refine ⟨hk, hd, hinj, hnul, ?_⟩
+  have h1 := (A - A * X * G⁻¹ * (Xᵀ * A)).mulVecLin.finrank_range_add_finrank_ker
+  have h2 := A.mulVecLin.finrank_range_add_finrank_ker
+  simp only [Module.finrank_fintype_fun_eq_card] at h1 h2
+  change Matrix.rank _ + _ = _ at h1
+  change Matrix.rank _ + _ = _ at h2
+  omega
 
-
-private theorem removal_nullity (A : Matrix ι ι ℝ) (X : Matrix ι κ ℝ) (hG : IsUnit (Xᵀ * A * X).det) :
-    Module.finrank ℝ (LinearMap.ker (A - A * X * (Xᵀ * A * X)⁻¹ * (Xᵀ * A)).mulVecLin) =
-      Module.finrank ℝ (LinearMap.ker A.mulVecLin) + Fintype.card κ := by
-  obtain ⟨hk, hd, hinj⟩ := removal_kernel A X hG
-  rw [hk]
-  have h := Submodule.finrank_sup_add_finrank_inf_eq (LinearMap.ker A.mulVecLin)
-    (LinearMap.range X.mulVecLin)
-  rw [disjoint_iff.mp hd, finrank_bot, add_zero] at h
-  rw [h, LinearMap.finrank_range_of_inj hinj]
-  simp
-
-private theorem rank_add_nullity (M : Matrix ι ι ℝ) :
-    M.rank + Module.finrank ℝ (LinearMap.ker M.mulVecLin) = Fintype.card ι := by
-  have hn := M.mulVecLin.finrank_range_add_finrank_ker
-  simp only [Module.finrank_pi, Module.finrank_self, Finset.sum_const,
-    Finset.card_univ, smul_eq_mul, mul_one] at hn
-  exact hn
-
+end General
 
 /-- Corollary 3 of Ma and Zhang on MathOverflow 513954 (nondegenerate block removal): for a real
 symmetric `A`, a real matrix `X : ι × κ` with `G = Xᵀ A X` invertible, and `N = A - A X G⁻¹ Xᵀ A`,
@@ -183,11 +193,8 @@ theorem result (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (X : Matrix ι κ ℝ
     simp only [Matrix.transpose_mul, Matrix.transpose_transpose, hs, Matrix.mul_assoc]
   have hN := removal_hermitian A hA X
   obtain ⟨hp, hn⟩ := removal_inertia A hA X hG hGh
-  obtain ⟨hk, hd, hinj⟩ := removal_kernel A X hG
-  have hnul := removal_nullity A X hG
-  have hrN := rank_add_nullity (A - A * X * (Xᵀ * A * X)⁻¹ * (Xᵀ * A))
-  have hrA := rank_add_nullity A
-  refine ⟨hN, hGh, hp, hn, ?_, hk, hd, hinj, by omega⟩
+  obtain ⟨hk, hd, hinj, hnul, hrank⟩ := kernel_split A X hG
+  refine ⟨hN, hGh, hp, hn, ?_, hk, hd, hinj, hrank⟩
   rw [zeroIndex_eq_nullity, zeroIndex_eq_nullity, hnul]
 
 end D5.S3.QuadraticForms.StructuredRankOneBlockRemoval
