@@ -6,7 +6,7 @@ Kurkov's signed factorial-power formula for the exact strict-excedance count.
 
 **Definition 1.1 (The prescribed excedance set).**
 
-$$\forall w, n \in \mathbb{N}, \operatorname{binaryExcedances}\left(w, n\right) = \{ j: \operatorname{Fin}\left(w+1\right) \mid j < w \land \operatorname{testBit}\left(n, w-1-j\right) = \mathrm{true} \}$$
+$$\forall w, n \in \mathbb{N}, \operatorname{binaryExcedances}\left(w, n\right) = \{ j: \operatorname{Fin}\left(w+1\right) \mid \operatorname{val}\left(j\right) < w \land \operatorname{testBit}\left(n, w-1-\operatorname{val}\left(j\right)\right) = \mathrm{true} \}$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.binaryExcedances` (`✓ std3`).
 

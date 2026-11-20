@@ -26,3 +26,11 @@ from zero. In the bracket notation, a word of length $d$ specifies the first
 $d$ positions of a permutation of size $d+1$. The last position is always a
 nonexcedance. This gives the correspondence between the word identities and
 the strict-excedance sets used in the formalization.
+
+## Verified locator
+
+DOI `10.1006/aama.1999.0671`, https://doi.org/10.1006/aama.1999.0671.
+Ehrenborg and Steingrímsson give all three case bijections in Proposition 2.1
+(pp. 286–287), using two deletions and one adjacent swap. In Lemma 2.3 (p. 287)
+they prove the boundary deletion identities $[aw] = [wb] = [w]$ by deleting a
+trailing excedance and using duality for the leading nonexcedance.

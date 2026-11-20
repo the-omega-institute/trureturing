@@ -69,12 +69,16 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
         StatementSource.FromAuthor(Disp(formula)), provenance,
         Blocks(paragraphs.Select(p => Paragraph(Text(p))).ToArray()), role);
 
-    private static Formula ExcedanceFormula() => Seq(NatBind(W, N),
-        Call("binaryExcedances", W, N), Sp, Eq, Sp, OpenBrace, Sp,
-        J, Colon, Sp, FinSize(), Sp, Mid, Sp,
-        J, Sp, Lt, Sp, W, Sp, Land, Sp,
-        Call("testBit", N, Seq(W, Minus, D(1), Minus, J)), Sp, Eq, Sp,
-        Mathrm, Grp(F.Id("true")), Sp, CloseBrace);
+    private static Formula ExcedanceFormula()
+    {
+        var valJ = Call("val", J);
+        return Seq(NatBind(W, N),
+            Call("binaryExcedances", W, N), Sp, Eq, Sp, OpenBrace, Sp,
+            J, Colon, Sp, FinSize(), Sp, Mid, Sp,
+            valJ, Sp, Lt, Sp, W, Sp, Land, Sp,
+            Call("testBit", N, Seq(W, Minus, D(1), Minus, valJ)), Sp, Eq, Sp,
+            Mathrm, Grp(F.Id("true")), Sp, CloseBrace);
+    }
 
     private static Formula CountFormula() => Seq(NatBind(W, N),
         Call("paddedCount", W, N), Sp, Eq, Sp, Left, Lvert, OpenBrace, Sp,
