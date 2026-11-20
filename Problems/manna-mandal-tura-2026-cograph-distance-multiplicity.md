@@ -105,6 +105,11 @@ The family kernel and the classifier's Euclidean kernel have equal real
 dimension via the coordinate linear equivalence. The per-shift finite
 candidate statement is `distanceMultiplicity_guard_candidates`.
 
+The four-slot Reg audit remains unfinished for 50 native declarations
+and three universal-clique declarations.
+[Native audit targets and missing evidence](https://github.com/the-omega-institute/trureturing/issues/32326) and
+[universal-clique audit targets](https://github.com/the-omega-institute/trureturing/issues/32343).
+
 ## Triage
 
 The formal result covers both clauses of Open Problem 14.2(ii) on every

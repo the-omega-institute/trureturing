@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CographVicinalWidth
    mirror-E: none
    anchors: []
+   utility: none
    digest: Vicinal chains under complementation and component cuts. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected

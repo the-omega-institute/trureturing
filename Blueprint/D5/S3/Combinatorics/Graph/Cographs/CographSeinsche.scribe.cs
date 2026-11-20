@@ -18,8 +18,6 @@ internal sealed class CographSeinscheDocument : IScribeDocumentDefinition
                 "Pulling back the graph along a map preserves induced four-vertex path exclusion."),
             Entry("induce", "Induced subgraphs",
                 "Restricting to a vertex subset preserves induced four-vertex path exclusion."),
-            Entry("isP4Free_iff", "Graph isomorphisms",
-                "An isomorphism preserves and reflects the four-vertex path condition."),
             Entry("compl", "Complementation",
                 "The four-vertex path is self-complementary, so its absence is preserved by complementation."),
             Entry("isP4Free_compl", "Complement equivalence",

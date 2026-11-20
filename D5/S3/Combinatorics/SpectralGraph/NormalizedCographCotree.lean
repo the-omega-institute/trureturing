@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/NormalizedCographCotree
    mirror-E: none
    anchors: []
+   utility: none
    digest: Native component cotrees and their vicinal width recurrence. -/
 
 import D5.S3.Combinatorics.Graph.Cographs.CographSeinsche

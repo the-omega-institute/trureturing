@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity
    mirror-E: none
    anchors: []
+   utility: none
    digest: Both clauses of the cograph distance multiplicity problem. -/
 
 import D5.S3.Combinatorics.SpectralGraph.CographDistanceCriterion

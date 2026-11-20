@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CographDistanceCriterion
    mirror-E: none
    anchors: []
+   utility: none
    digest: A native cotree criterion for equality in the cograph distance multiplicity bound. -/
 
 

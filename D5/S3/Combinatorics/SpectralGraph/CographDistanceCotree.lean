@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CographDistanceCotree
    mirror-E: none
    anchors: []
+   utility: none
    digest: Ordinary cograph distance and its rank-one decomposition on native component cotrees. -/
 
 import D5.S3.Combinatorics.SpectralGraph.NormalizedCographCotree

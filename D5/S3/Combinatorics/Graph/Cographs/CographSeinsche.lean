@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Cographs/CographSeinsche
    mirror-E: none
    anchors: []
+   utility: none
    digest: Native induced path exclusion and Seinsche's component cut. -/
 
 /-
@@ -52,16 +53,6 @@ theorem IsP4Free.comap (h : G.IsP4Free) (f : W → V) : (G.comap f).IsP4Free := 
 /-- Every induced subgraph of a graph excluding `P₄` also excludes `P₄`. -/
 theorem IsP4Free.induce (h : G.IsP4Free) (s : Set V) : (G.induce s).IsP4Free :=
   h.comap Subtype.val
-
-/-- Graph isomorphisms preserve induced four-vertex path exclusion. -/
-theorem Iso.isP4Free_iff {H : SimpleGraph W} (f : G ≃g H) : G.IsP4Free ↔ H.IsP4Free := by
-  constructor
-  · intro h
-    have h' := h.comap f.symm.toEmbedding
-    rwa [f.symm.toEmbedding.comap_eq] at h'
-  · intro h
-    have h' := h.comap f.toEmbedding
-    rwa [f.toEmbedding.comap_eq] at h'
 
 /-- The complement of an induced `P₄` is another induced `P₄`. -/
 theorem IsP4Free.compl (h : G.IsP4Free) : Gᶜ.IsP4Free := by
