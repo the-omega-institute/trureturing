@@ -261,6 +261,96 @@ private theorem remaining_axes (i : Fin 4) (m : BitVec 4)
   decide +revert +kernel
 
 open Classical in
+/-- Distinct complement edges in the same direction of a four-coordinate projection
+of an order-72 balanced induced cubic nine-cube support are antipodal, provided
+each coordinate half contains at least 30 selected vertices. -/
+theorem four_projection_antipodal_complement_edges {S : Finset (Q 9)} (hsize : S.card = 72)
+    (hreg : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced S)
+    (hhalf : ∀ (k : Fin 9) (b : Bool), 30 ≤ (S.filter (fun x => x k = b)).card)
+    (axes : Fin 4 ↪ Fin 9) :
+    let project (v : Q 9) : BitVec 4 := (cubeBitVec 4).symm (fun i => v (axes i))
+    let P := S.image project
+    ∀ (i : Fin 4) (x y : BitVec 4),
+      x.getLsbD i.val = false → y.getLsbD i.val = false →
+      x ∉ P → flipBit x i ∉ P → y ∉ P → flipBit y i ∉ P →
+      x ≠ y → y = flipBit (x ^^^ 15) i := by
+  classical
+  intro project P
+  have project_bit (v : Q 9) (i : Fin 4) : (project v).getLsbD i.val = v (axes i) :=
+    congrFun ((cubeBitVec 4).apply_symm_apply (fun j => v (axes j))) i
+  intro i x y hxi hyi hx hfx hy hfy hxy
+  by_contra hnot
+  have hmask : (x ^^^ y).getLsbD i.val = false := by
+    simp only [BitVec.getLsbD_xor, hxi, hyi, Bool.xor_false]
+  have hmask_ne : x ^^^ y ≠ flipBit 15 i := by
+    intro he
+    apply hnot
+    apply (BitVec.xor_right_inj x).mp
+    calc
+      x ^^^ y = flipBit 15 i := he
+      _ = x ^^^ flipBit (x ^^^ 15) i := by
+        simp only [flipBit, ← BitVec.xor_assoc, BitVec.xor_self, BitVec.zero_xor]
+  obtain ⟨j, k, l, hji, hki, hli, hjk, hjl, hkl, hk, hl, cover⟩ :=
+    remaining_axes i (x ^^^ y) hmask (fun h => hxy (BitVec.xor_eq_zero_iff.mp h)) hmask_ne
+  have bit_from_mask (r : Fin 4) :
+      y.getLsbD r.val = (x.getLsbD r.val ^^ (x ^^^ y).getLsbD r.val) := by
+    rw [BitVec.getLsbD_xor]
+    cases x.getLsbD r.val <;> cases y.getLsbD r.val <;> rfl
+  have hyk : y.getLsbD k.val = !x.getLsbD k.val := by
+    simpa only [hk, Bool.xor_true] using bit_from_mask k
+  have hyl : y.getLsbD l.val = x.getLsbD l.val := by
+    simpa only [hl, Bool.xor_false] using bit_from_mask l
+  -- If the three other bits are fixed, the only extensions are the two endpoints.
+  have absent (u : BitVec 4) (hui : u.getLsbD i.val = false)
+      (hu : u ∉ P) (hfu : flipBit u i ∉ P) (v : Q 9) (hv : v ∈ S)
+      (hvj : v (axes j) = u.getLsbD j.val) (hvk : v (axes k) = u.getLsbD k.val)
+      (hvl : v (axes l) = u.getLsbD l.val) : False := by
+    have hproj : project v ∈ P := mem_image.mpr ⟨v, hv, rfl⟩
+    have extend (w : BitVec 4) (hw : w.getLsbD i.val = v (axes i))
+        (hother : ∀ r : Fin 4, r ≠ i → w.getLsbD r.val = u.getLsbD r.val) :
+        project v = w := by
+      apply (cubeBitVec 4).injective
+      funext r
+      change (project v).getLsbD r.val = w.getLsbD r.val
+      rw [project_bit]
+      by_cases hri : r = i
+      · subst r
+        exact hw.symm
+      · rw [hother r hri]
+        rcases cover r hri with h | h | h <;> subst r <;> assumption
+    cases hvi : v (axes i)
+    · exact hu (extend u (hui.trans hvi.symm) (fun _ _ => rfl) ▸ hproj)
+    · have hwi : (flipBit u i).getLsbD i.val = v (axes i) := by
+        simp only [bit_flip_same, hui, hvi, Bool.not_false]
+      exact hfu (extend _ hwi (fun _ hr => bit_flip_other u hr) ▸ hproj)
+  cases hj : (x ^^^ y).getLsbD j.val
+  · have hyj : y.getLsbD j.val = x.getLsbD j.val := by
+      simpa only [hj, Bool.xor_false] using bit_from_mask j
+    obtain ⟨v, hv, hvj, hvl⟩ := pair_projection_surjective hsize hreg hb hhalf
+      (axes.injective.ne hjl) (x.getLsbD j.val) (x.getLsbD l.val)
+    by_cases hvk : v (axes k) = x.getLsbD k.val
+    · exact absent x hxi hx hfx v hv hvj hvk hvl
+    · have hvk' : v (axes k) = !(x.getLsbD k.val) := by
+        cases ha : v (axes k) <;> cases hb : x.getLsbD k.val <;> simp_all
+      exact absent y hyi hy hfy v hv (hvj.trans hyj.symm)
+        (hvk'.trans hyk.symm) (hvl.trans hyl.symm)
+  · have hyj : y.getLsbD j.val = !x.getLsbD j.val := by
+      simpa only [hj, Bool.xor_true] using bit_from_mask j
+    have hbound := half_card_le_of_missing_triple_patterns hsize hreg hb
+      (axes j) (axes k) (axes l)
+      (x.getLsbD j.val) (x.getLsbD k.val) (x.getLsbD l.val)
+      (axes.injective.ne hjk) (axes.injective.ne hjl) (axes.injective.ne hkl) (by
+        intro v hv hp
+        rcases hp with hp | hp
+        · simp only [Prod.mk.injEq] at hp
+          exact absent x hxi hx hfx v hv hp.1 hp.2.1 hp.2.2
+        · simp only [Prod.mk.injEq] at hp
+          exact absent y hyi hy hfy v hv (hp.1.trans hyj.symm)
+            (hp.2.1.trans hyk.symm) (hp.2.2.trans hyl.symm))
+    have hlarge := hhalf (axes l) (x.getLsbD l.val)
+    omega
+
+open Classical in
 /-- Every ordered choice of four distinct coordinates of an order-72 balanced
 induced cubic nine-cube support has at least eight realized patterns, provided
 each coordinate half contains at least 30 selected vertices. -/
@@ -295,79 +385,10 @@ theorem four_projection_card_ge_eight {S : Finset (Q 9)} (hsize : S.card = 72)
     refine ⟨project v, mem_image.mpr ⟨v, hvS, rfl⟩, (project_bit v i).trans hvi, ?_⟩
     rw [hf]
     exact mem_image.mpr ⟨flip v (axes i), hfS, rfl⟩
-  · intro i x y hxi hyi hx hfx hy hfy hxy
-    by_contra hnot
-    have hmask : (x ^^^ y).getLsbD i.val = false := by
-      simp only [BitVec.getLsbD_xor, hxi, hyi, Bool.xor_false]
-    have hmask_ne : x ^^^ y ≠ flipBit 15 i := by
-      intro he
-      apply hnot
-      apply (BitVec.xor_right_inj x).mp
-      calc
-        x ^^^ y = flipBit 15 i := he
-        _ = x ^^^ flipBit (x ^^^ 15) i := by
-          simp only [flipBit, ← BitVec.xor_assoc, BitVec.xor_self, BitVec.zero_xor]
-    obtain ⟨j, k, l, hji, hki, hli, hjk, hjl, hkl, hk, hl, cover⟩ :=
-      remaining_axes i (x ^^^ y) hmask (fun h => hxy (BitVec.xor_eq_zero_iff.mp h)) hmask_ne
-    have bit_from_mask (r : Fin 4) :
-        y.getLsbD r.val = (x.getLsbD r.val ^^ (x ^^^ y).getLsbD r.val) := by
-      rw [BitVec.getLsbD_xor]
-      cases x.getLsbD r.val <;> cases y.getLsbD r.val <;> rfl
-    have hyk : y.getLsbD k.val = !x.getLsbD k.val := by
-      simpa only [hk, Bool.xor_true] using bit_from_mask k
-    have hyl : y.getLsbD l.val = x.getLsbD l.val := by
-      simpa only [hl, Bool.xor_false] using bit_from_mask l
-    -- If the three other bits are fixed, the only extensions are the two endpoints.
-    have absent (u : BitVec 4) (hui : u.getLsbD i.val = false)
-        (hu : u ∉ P) (hfu : flipBit u i ∉ P) (v : Q 9) (hv : v ∈ S)
-        (hvj : v (axes j) = u.getLsbD j.val) (hvk : v (axes k) = u.getLsbD k.val)
-        (hvl : v (axes l) = u.getLsbD l.val) : False := by
-      have hproj : project v ∈ P := mem_image.mpr ⟨v, hv, rfl⟩
-      have extend (w : BitVec 4) (hw : w.getLsbD i.val = v (axes i))
-          (hother : ∀ r : Fin 4, r ≠ i → w.getLsbD r.val = u.getLsbD r.val) :
-          project v = w := by
-        apply (cubeBitVec 4).injective
-        funext r
-        change (project v).getLsbD r.val = w.getLsbD r.val
-        rw [project_bit]
-        by_cases hri : r = i
-        · subst r
-          exact hw.symm
-        · rw [hother r hri]
-          rcases cover r hri with h | h | h <;> subst r <;> assumption
-      cases hvi : v (axes i)
-      · exact hu (extend u (hui.trans hvi.symm) (fun _ _ => rfl) ▸ hproj)
-      · have hwi : (flipBit u i).getLsbD i.val = v (axes i) := by
-          simp only [bit_flip_same, hui, hvi, Bool.not_false]
-        exact hfu (extend _ hwi (fun _ hr => bit_flip_other u hr) ▸ hproj)
-    cases hj : (x ^^^ y).getLsbD j.val
-    · have hyj : y.getLsbD j.val = x.getLsbD j.val := by
-        simpa only [hj, Bool.xor_false] using bit_from_mask j
-      obtain ⟨v, hv, hvj, hvl⟩ := pair_projection_surjective hsize hreg hb hhalf
-        (axes.injective.ne hjl) (x.getLsbD j.val) (x.getLsbD l.val)
-      by_cases hvk : v (axes k) = x.getLsbD k.val
-      · exact absent x hxi hx hfx v hv hvj hvk hvl
-      · have hvk' : v (axes k) = !(x.getLsbD k.val) := by
-          cases ha : v (axes k) <;> cases hb : x.getLsbD k.val <;> simp_all
-        exact absent y hyi hy hfy v hv (hvj.trans hyj.symm)
-          (hvk'.trans hyk.symm) (hvl.trans hyl.symm)
-    · have hyj : y.getLsbD j.val = !x.getLsbD j.val := by
-        simpa only [hj, Bool.xor_true] using bit_from_mask j
-      have hbound := half_card_le_of_missing_triple_patterns hsize hreg hb
-        (axes j) (axes k) (axes l)
-        (x.getLsbD j.val) (x.getLsbD k.val) (x.getLsbD l.val)
-        (axes.injective.ne hjk) (axes.injective.ne hjl) (axes.injective.ne hkl) (by
-          intro v hv hp
-          rcases hp with hp | hp
-          · simp only [Prod.mk.injEq] at hp
-            exact absent x hxi hx hfx v hv hp.1 hp.2.1 hp.2.2
-          · simp only [Prod.mk.injEq] at hp
-            exact absent y hyi hy hfy v hv (hp.1.trans hyj.symm)
-              (hp.2.1.trans hyk.symm) (hp.2.2.trans hyl.symm))
-      have hlarge := hhalf (axes l) (x.getLsbD l.val)
-      omega
+  · exact four_projection_antipodal_complement_edges hsize hreg hb hhalf axes
 
 #print axioms card_ge_eight_of_antipodal_complement_edges
+#print axioms four_projection_antipodal_complement_edges
 #print axioms four_projection_card_ge_eight
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9FourProjection
