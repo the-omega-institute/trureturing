@@ -485,7 +485,7 @@ private lemma core_sum_le (s : Finset ℕ) :
   rw [coreH, prod_one_add_ordered]
   gcongr with p hp
   have hprod : (1 : ℝ) ≤ ∏ q ∈ s with q < p, (1 + 1 / (q : ℝ)) :=
-    Finset.one_le_prod₀ (fun q _ => by positivity)
+    Finset.one_le_prod₀ (fun q _ => le_add_of_nonneg_right (by positivity))
   simpa only [mul_one] using
     mul_le_mul_of_nonneg_left hprod (show (0 : ℝ) ≤ 1 / p by positivity)
 
