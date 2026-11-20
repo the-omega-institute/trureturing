@@ -11,6 +11,7 @@ import unittest
 from unittest.mock import patch
 import weakref
 import zipfile
+import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
@@ -325,6 +326,53 @@ class StreamingTests(unittest.TestCase):
             self.assertEqual(gzip.decompress((spool / '0.statement.gz').read_bytes()), values[0])
             self.assertEqual(gzip.decompress((spool / '2.statement.gz').read_bytes()), values[2])
             self.assertEqual(list(root.glob('.lean-materials.*')), [])
+
+    def test_aggregate_preserves_huge_declared_member_size(self):
+        payload = b'x'
+        data = zlib.compress(payload, wbits=-15)
+        info = zipfile.ZipInfo('material', materials.ARCHIVE_TIMESTAMP)
+        info.compress_type = zipfile.ZIP_DEFLATED
+        info.CRC = zlib.crc32(payload)
+        info.file_size = 5_386_374_029
+        output = io.BytesIO()
+        with zipfile.ZipFile(output, 'w', allowZip64=True) as archive:
+            native.append_compressed(archive, info, data)
+        self.assertEqual(output.getvalue()[18:26], b'\xff' * 8)
+        with zipfile.ZipFile(output) as archive:
+            entry = archive.getinfo(info.filename)
+            # Only the declared size is large in this fixture.
+            self.assertEqual(entry.file_size, 5_386_374_029)
+            self.assertEqual(native.compressed_member(archive, entry), data)
+
+    def test_aggregate_compressed_members_round_trip(self):
+        cases = [('decoded', b'x' * 65, 64), ('compressed', b'x', 1),
+                 ('small', b'statement-v1(small)', zipfile.ZIP64_LIMIT)]
+        for size, payload, limit in cases:
+            with self.subTest(size=size):
+                name = 'sha256/' + materials.statement_address(payload)[7:]
+                info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.external_attr = 0o100644 << 16
+                reference, output = io.BytesIO(), io.BytesIO()
+                with zipfile.ZipFile(reference, 'w') as archive:
+                    archive.writestr(info, payload, compresslevel=6)
+                with zipfile.ZipFile(reference) as archive:
+                    data = native.compressed_member(archive, archive.getinfo(name))
+
+                with patch.object(zipfile, 'ZIP64_LIMIT', limit):
+                    with zipfile.ZipFile(output, 'w', allowZip64=True) as archive:
+                        native.append_compressed(archive, info, data)
+
+                if size == 'small':
+                    self.assertEqual(output.getvalue(), reference.getvalue())
+                else:
+                    self.assertEqual(output.getvalue()[18:26], b'\xff' * 8)
+                with zipfile.ZipFile(output) as archive:
+                    entry = archive.getinfo(name)
+                    self.assertEqual(entry.file_size, len(payload))
+                    self.assertEqual(entry.compress_size, len(data))
+                    self.assertEqual(native.compressed_member(archive, entry), data)
+                    self.assertEqual(archive.read(entry), payload)
 
     def test_compiler_digest_frames_preserve_material_sequence(self):
         payload = bytes(range(256)) * 513
