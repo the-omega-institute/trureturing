@@ -15,6 +15,12 @@ internal sealed class C4FreeRepresentativesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Pappus half-order refutation", H("Pappus half-order refutation"),
         Blocks(Paragraph(Text("The certified Pappus graph is cubic, bipartite and C4-free, with dissociation maximum ten. It refutes the half-order bound at order eighteen. The parity labeling also supplies the common input to the representative proofs.")),
+            Paragraph(Text(
+                "In the Pappus graph the parity classes have nine vertices each. Applying objective_general_bound " +
+                "with degree three and side size nine gives T.card + M.card at most ten for every feasible " +
+                "singleton and matching pair. The supremum defining Omega is therefore at most ten. By " +
+                "parameter_comparison, beta(H,2) is at most psiSq(H), which is at most Omega(H). The equality " +
+                "beta(H,2)=10 forces psiSq(H)=Omega(H)=10.")),
             Node("pappusNeighbors", "pappusNeighbors", "Exact declaration: def pappusNeighbors (vertex : Fin 18) : List Nat.", DescribeRole.Definition),
             Node("pappusSelected", "pappusSelected", "Exact declaration: def pappusSelected : List Nat.", DescribeRole.Definition),
             Node("pappus_regular_bipartite_certificate", "pappus regular bipartite certificate", "Exact declaration: theorem pappus_regular_bipartite_certificate : (∀ vertex : Fin 18, (pappusNeighbors vertex).length = 3 ∧ (pappusNeighbors vertex).Nodup ∧ ∀ neighbor, neighbor ∈ pappusNeighbors vertex → neighbor < 18 ∧ neighbor % 2 ≠ vertex.val % 2) ∧ (∀ first second : Fin 18, second.val ∈ pappusNeighbors first ↔ first.val ∈ pappusNeighbors second).", DescribeRole.Theorem),
