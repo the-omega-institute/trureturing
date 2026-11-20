@@ -102,7 +102,6 @@ internal sealed class TensorSquareSingletDocument : IScribeDocumentDefinition
     private static Formula ForAll(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
     private static Formula Ap(Formula f, Formula x) => new Formula.Apply(f, [x]);
-    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
     private static Formula Word(string name) => Seq(Operatorname, Grp(F.Id(name)));
 

@@ -55,10 +55,11 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
                 + "5/(96 n^2) with 2/(N + 1) bounds the tail of the defect series beyond N = floor(x) "
                 + "by 5/(48 (N + 1)), which is the fourth conjunct.",
                 "The hypothesis sigma >= 0 is used to keep t in [0, 1]; at sigma = 0 every term of the "
-                + "first two series is a positive constant, in agreement with both equivalences. For "
-                + "sigma < 0 the terms do not tend to 0 in any obvious way and the behaviour depends "
-                + "on the distribution of p^(-sigma) modulo 2 pi; no claim is made for sigma < 0. Each "
-                + "threshold is sharp because it is stated as an equivalence.",
+                + "first series is the positive constant 1 - cos 1 and every term of the second is the "
+                + "nonzero constant 1/2 - cos 1, so both series diverge, in agreement with both "
+                + "equivalences. For sigma < 0 the arguments p^(-sigma) are unbounded and the "
+                + "behaviour depends on the distribution of p^(-sigma) modulo 2 pi; no claim is made "
+                + "for sigma < 0. Each threshold is sharp because it is stated as an equivalence.",
                 "Combined with the Mertens estimate Mertens.E₂p.bound, which states that the sum of "
                 + "1/p over the primes up to x equals log log x + M + O(1/log x) with the Mertens "
                 + "constant M, the fourth conjunct gives, as x tends to infinity, that the sum of "
@@ -104,7 +105,7 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
     private static Formula Sigma => SigmaLower;
     private static Formula Half => Frac(D(1), D(2));
     private static Formula Quarter => Frac(D(1), D(4));
-    private static Formula NatFloor => new Formula.Floor(X);
+    private static Formula NatFloor => Seq(Lfloor, Sp, X, Sp, Rfloor);
 
     private static Formula Versine(Formula exponent) =>
         Sub(D(1), Call("cos", Pow(P, exponent)));
@@ -115,7 +116,7 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
 
     private static Formula SumUpTo(Formula body) => Seq(
         Sum, Underscore, Grp(P, Sp, InMacro, Sp, Open, D(0), Comma, Sp, NatFloor, CloseBracket,
-            Comma, Sp, P, Sp, F.Text, Grp(F.Id("prime"))),
+            Comma, Sp, P, Esc, F.Text, Grp(F.Id("prime"))),
         Sp, Open, body, Close);
     private static Formula SumOverPrimes(Formula body) => Seq(
         Sum, Underscore, Grp(P, Sp, InMacro, Sp, Primes), Sp, body);

@@ -12,7 +12,7 @@ internal sealed class QuaternionModelMaximalityDocument : IScribeDocumentDefinit
         "A ternary comparison structure of feature rank at most eight that contains a transfer- and reading-preserving copy of the unit quaternion comparison model is that copy, eight is the largest rank with this property, and in feature rank five a reading-preserving copy alone already exhausts the structure.",
         H("Maximality of the unit quaternion comparison model in small feature rank"),
         Blocks(
-            Node("le-eight", "bijective_of_hasFeatureRank_le_eight", "A copy of the model in feature rank at most eight is everything",
+            Node("le-eight", "bijective_of_hasFeatureRank_le_eight", "A transfer- and reading-preserving copy of the model in feature rank at most eight is everything",
                 StatementSource.FromAuthor(LeEightFormula()),
                 "Let C be a ternary comparison structure on M whose reading is the Gram kernel of a map into Euclidean r-space with r <= 8, and let j be a map from the unit quaternions into M that carries the transfer x * y^-1 * z of the model to the transfer of C and preserves the reading. Then j is a bijection. "
                     + "A preserved reading makes j injective, since reading one characterizes equality. "

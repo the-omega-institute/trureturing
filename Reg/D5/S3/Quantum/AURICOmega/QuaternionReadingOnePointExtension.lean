@@ -268,7 +268,7 @@ def forall_nonneg_iff_norm_le_registration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["fn", "arg", "body", "arg"]
+      path := #["body", "body", "fn", "arg", "body", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

@@ -35,7 +35,7 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
                     + "The six-point family of the five points with total weight -sqrt 2 * a and weighted sum -sqrt 2 * b, padded by the point 1 with weight zero, together with t = 1, has Gram form d - a^2 - |b|^2, which gives the bound. "
                     + "So nonnegativity needs to be tested on families of six points only; whether fewer points suffice is not decided here. "
                     + "No sign condition on d is assumed; for negative d the first and third conditions fail. "
-                    + "In the language of reproducing kernels, the equivalence of the first and third conditions is the finite-dimensional case of the classical description of the functions of the reproducing kernel Hilbert space of a positive semidefinite kernel and their norms, applied to the quaternion reading, whose space consists of the affine functions a + <b, x>.",
+                    + "The equivalence of the first and third conditions is related to the theory of reproducing kernels: for a positive semidefinite kernel, the functions whose one-point extension stays positive semidefinite are those of the associated Hilbert space of functions, with the bound on d read as a bound on the squared norm; for the quaternion reading that space consists of the affine functions a + <b, x>. Only this relation is recorded here; the statement and its proof above do not rest on that theory.",
                 DescribeRole.Theorem),
             Node("rank-five", "hasOnePointFeatureRank_five_iff", "One-point extensions of feature rank five",
                 StatementSource.FromAuthor(RankFiveFormula()), AssessedProvenance.FromRepo(),
