@@ -35,7 +35,7 @@ def claim : Prop :=
   (∀ n m : ℕ, 1 ≤ n → n < m → a n < a m) ∧
   ∀ k : ℕ, HasExactlyTwo k ↔ ∃! n : ℕ, 1 ≤ n ∧ (k : ℤ) = a n
 
-private theorem max_iff_weight (k j : ℕ) :
+theorem max_iff_weight (k j : ℕ) :
     IsAbsMax k j ↔ ∃ r : ℕ, 2 * r ≤ k ∧ j = k - 2 * r ∧
       weight k r = weight k (mode k) := by
   have hm := (mode_rises k).1
@@ -59,7 +59,7 @@ private theorem max_iff_weight (k j : ℕ) :
     · rw [hz]; exact hp.le
     · rw [hw]; exact weight_le_mode k s hs
 
-private theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
+theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
     weight k r < weight k (r + 1) := by
   have hm := mode_rises k
   have hmd := hm.1
@@ -73,7 +73,7 @@ private theorem strict_before (k r : ℕ) (hr : r + 1 < mode k) :
   have hd : (0 : ℚ) < 4 * (r + 1) := by positivity
   nlinarith
 
-private theorem equal_mode_indices (k r : ℕ) (hr : 2 * r ≤ k)
+theorem equal_mode_indices (k r : ℕ) (hr : 2 * r ≤ k)
     (he : weight k r = weight k (mode k)) :
     r = mode k ∨ r + 1 = mode k := by
   have hle : r ≤ mode k := by
@@ -86,7 +86,7 @@ private theorem equal_mode_indices (k r : ℕ) (hr : 2 * r ≤ k)
     linarith
   · omega
 
-private theorem adjacent_equal (k r : ℕ) (hr : 2 * (r + 1) ≤ k) :
+theorem adjacent_equal (k r : ℕ) (hr : 2 * (r + 1) ≤ k) :
     weight k r = weight k (r + 1) ↔
       second (k - 2 * (r + 1)) = 4 * (r + 1) := by
   have he := adjacent k r hr
@@ -102,7 +102,7 @@ private theorem adjacent_equal (k r : ℕ) (hr : 2 * (r + 1) ≤ k) :
     rw [this] at he
     nlinarith
 
-private theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
+theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
     (he : second (k - 2 * r) = 4 * r) : r = mode k := by
   have hle : r ≤ mode k := le_mode ⟨hk, he.ge⟩
   have hm := mode_rises k
@@ -111,7 +111,7 @@ private theorem tie_is_mode (k r : ℕ) (hk : 2 * r ≤ k)
   have hc := second_mono (show k - 2 * mode k ≤ k - 2 * r by omega)
   omega
 
-private theorem tie_characterization (k : ℕ) :
+theorem tie_characterization (k : ℕ) :
     HasExactlyTwo k ↔ ∃ r : ℕ, 1 ≤ r ∧ 2 * r ≤ k ∧
       second (k - 2 * r) = 4 * r := by
   constructor
