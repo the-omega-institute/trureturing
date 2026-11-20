@@ -8,7 +8,7 @@ internal sealed class FriedenAdaptedWordsDocument : IScribeDocumentDefinition
 {
     private const string Root = "D5/S1/Words/Permutations/FriedenAdaptedWords.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/frieden2026bigcactus");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/frieden2026bigcactus");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-wire avoidance and source-flip adaptedness in arbitrary rank.",
