@@ -13,7 +13,8 @@ make lean-report FULL_BUILD=1 LEAN_REPORT=.lake/build/stratalint/custom-report.j
 
 本地默认 `reuse-or-build`，其中 build 仅生成报告。缺少或过期的编译产物由
 `make lean-report-prepare LEAN_TARGETS="…"` 或全量 `make lean-report-prepare FULL_BUILD=1` 准备。
-`make check-lean-report FULL_BUILD=1` 负责需要先编译并执行 FIB 回归的完整检查。
+默认的 Release 版 `StrataLint.Lean.dll` 通过 MSBuild 的只读查询核对是否需要重新构建。显式指定 `STRATALINT_LEAN_PRODUCER_DLL` 可使用调用方已准备的独立工具包。
+`make check-lean-report FULL_BUILD=1` 负责需要先编译并执行 FIB 回归的完整检查。只有带 `fib-inputs-checked` 的收据可作为回归基线，旧收据与独立分析收据在实际检查后取得该标记。整库检查仅在收据覆盖所有登记的依赖路径时直接重发相符的报告。其余情况由 Lake 检查编译依赖，复用有效的模块和聚合报告。
 
 显式选用 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail` 时，报告种子缺失、不完整或成功收据的 `inputs.report_format`
 不符时，主 checkout 先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
@@ -47,7 +48,7 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 或不在当前历史上时保留本地种子。缺失对象或浅历史无法证明祖先关系时打印 ancestry-unprovable 原因，
 与完整历史上已证的非祖先区分。列举、清单读取或取回失败且回滚成功时打印 keep 收据并继续 Lake 增量路径；
 输入也相符时打印 `action=keep`、`reason=seed-current`，校验后的 bundle 可由重发入口复用。
-复用阶段完成后，入口打印一次决策收据。需要重新提取时，检查既有编译产物并生成报告。
+整库分析每次通过 Lake 核对当前输入。工作区缺少的文件可由 Lake 从有效的工件缓存恢复；需要编译时报告失败。
 可选取回只恢复已批准的 tag，并核验清单生产提交与批准值一致，
 不重新列举或向较旧快照回退。替换前检查 staged 报告的格式和完整性；build 与 base 在同一安装中
 提交，提交前的失败恢复原 build 和 base，提交后的备份清理失败保留备份并报告已安装。

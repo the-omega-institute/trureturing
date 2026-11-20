@@ -23,6 +23,7 @@ sys.path.insert(0, str(HERE))
 import publication
 import materials
 import native
+import reuse
 
 
 
@@ -30,9 +31,10 @@ from test_native_support import *
 
 class NativeReleaseSupport:
     def release_fixture(self):
-        """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
+        """Real publisher/Inspector/Lake with fixture transport and FIB regression target."""
         self.reg_package()
         self.copy('tools/lean-inspector/build_inputs.py')
+        self.write('tools/scripts/compiled-fib-test.sh', 'echo regressions >> .lake/fib-regressions\n')
         self.write('tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean',
                    'def main : IO Unit := pure ()\n')
 
@@ -578,6 +580,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual(restored_stamps, self.stamps())
         self.assertEqual({k: v[1] for k, v in stamps.items()}, {k: v[1] for k, v in self.stamps().items()})
         self.assertEqual(origins, self.origins())
+        self.assertEqual((self.root / '.lake/fib-regressions').read_text().splitlines(), ['regressions'])
         for suffix in publication.SUFFIXES:
             actual = publication.member(output, suffix).read_bytes()
             if suffix == '.provenance.json':
@@ -587,6 +590,22 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             else:
                 self.assertEqual(expected[suffix], actual)
         releases = {p.name for p in (self.root / 'releases').iterdir()}
+        # Only the external claim imports this dependency. The five sealed report
+        # members still match while the changed compiler input is invalid.
+        before_dependency_failure = {suffix: publication.member(output, suffix).read_bytes()
+            for suffix in (*publication.SUFFIXES, reuse.SUFFIX)}
+        support = self.root / 'ClaimSupport.lean'
+        saved_support = support.read_bytes()
+        self.write('ClaimSupport.lean', 'def claimSupport : Prop := missingClaimSupport\n')
+        with patch.dict(os.environ, self.env):
+            self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
+        checked = self.guarded_command(['make', 'check-lean-report', 'FULL_BUILD=1',
+            'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build', 'LEAN_REPORT=' + str(output)], env=self.env)
+        self.assertNotEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+        self.assertIn('missingClaimSupport', checked.stdout + checked.stderr)
+        self.assertEqual(before_dependency_failure, {suffix: publication.member(output, suffix).read_bytes()
+            for suffix in before_dependency_failure})
+        support.write_bytes(saved_support)
         # Even an already published run cannot bypass registered program builds.
         receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('Audit.lean', 'this is not valid Lean\n')

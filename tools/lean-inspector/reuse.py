@@ -71,6 +71,20 @@ def warn_mismatch(result, stream):
         print('WARNING ' + message, file=stream, flush=True)
 
 
+def receipt_covers_dependencies(selection):
+    dependency_paths = selection.data.get('dependency_sources')
+    if dependency_paths is None:
+        return True
+    # Compare registrations, so deleting the last member of an optional glob
+    # cannot make an old receipt suddenly look sufficient.
+    covered = set()
+    for group in ('report_modules', 'config_inputs'):
+        paths = selection.data[group]
+        if set(paths['exclude']).issubset(dependency_paths['exclude']):
+            covered.update(item['pattern'] for item in paths['include'])
+    return all(item['pattern'] in covered for item in dependency_paths['include'])
+
+
 def capture(repository):
     """Hash only the manifest's complete declared input population."""
     inputs = publication.selection.Selection(repository)
@@ -98,11 +112,14 @@ def capture(repository):
         # differ between checkouts of one commit and do not change report bytes.
         mode = 0o755 if source.stat().st_mode & 0o100 else 0o644
         files[path] = dict(sha256=publication.digest(source), mode=mode)
-    return dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
+    snapshot = dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
         files=files,
         execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
                        platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))
+    if receipt_covers_dependencies(inputs):
+        snapshot['covers_compiler_dependencies'] = True
+    return snapshot
 
 
 def bundle_hashes(report):
@@ -134,11 +151,13 @@ def miss(reason, error=None):
     return result
 
 
-def probe(repository, report):
+def probe(repository, report, *, require_covered_dependencies=False):
     """Select optional downloads; only the normal entry validates publication."""
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
+    if require_covered_dependencies and not captured.get('covers_compiler_dependencies'):
+        return miss('compiler-dependencies-require-lake')
     try:
         read_receipt(report, captured)
     except INVALID_SEED as error:

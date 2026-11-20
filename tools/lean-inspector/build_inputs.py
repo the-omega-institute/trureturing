@@ -81,7 +81,7 @@ def prepare(roots, directory, need_inputs=True):
         result.check_returncode()
 
 
-def checked_report(directory, output, seed, program_logs, *, try_seed):
+def checked_report(directory, output, seed, program_logs, work_file, *, try_seed):
     captured = reuse.capture(ROOT)
     candidate = directory / publication.RAW
     logs = Path(os.environ.get('STRATALINT_LEAN_REPORT_LOG_DIR', str(output) + '.logs')).resolve()
@@ -91,12 +91,14 @@ def checked_report(directory, output, seed, program_logs, *, try_seed):
         with reuse.publication_guard(ROOT, seed):
             if seed == reuse.canonical_seed(ROOT):
                 seed_commit = reuse.read_seed_base(ROOT)
-            reused = not reuse._reuse(ROOT, seed, candidate)['needs_lake']
+            reused = (captured.get('covers_compiler_dependencies', False)
+                      and not reuse._reuse(ROOT, seed, candidate)['needs_lake'])
         if not reused:
             # Seed bytes changed since resource planning. Prepare the compiler inputs for extraction.
             prepare('', program_logs)
     if not reused:
-        env = dict(os.environ, STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        env = dict(os.environ, STRATALINT_LEAN_REPORT_LOG_DIR=str(logs),
+                   STRATALINT_LEAN_BUILD_WORK_FILE=str(directory / 'analysis-work.json'))
         subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build',
                         'LEAN_REPORT=' + str(candidate)], cwd=ROOT, env=env, check=True)
     # Keep stable comparison data across regressions that build transient Lean fixtures.
@@ -134,14 +136,16 @@ def checked_report(directory, output, seed, program_logs, *, try_seed):
         identity = publication.publish(candidate, output, publication.coordinates(ROOT), ROOT, validate=False)
         publication.member(output, reuse.SUFFIX).unlink(missing_ok=True)
         reuse._seal(ROOT, output, captured, identity, checked=True, reused=reused, seed_commit=seed_commit)
-    work_file = Path(os.environ.get('STRATALINT_LEAN_BUILD_WORK_FILE', ROOT / 'build/lean-cache/build-work.json'))
-    logs.mkdir(parents=True, exist_ok=True)
-    for path in program_logs.glob('programs.*.log'):
-        shutil.copyfile(path, logs / path.name)
-    phases = [] if reused else ['report']
-    if (program_logs / 'programs.exit.log').exists():
-        phases.append('programs')
-    build_work.record(ROOT, logs, work_file, *phases)
+    try:
+        logs.mkdir(parents=True, exist_ok=True)
+        for path in program_logs.glob('programs.*.log'):
+            shutil.copyfile(path, logs / path.name)
+        phases = [] if reused else ['report']
+        if (program_logs / 'programs.exit.log').exists():
+            phases.append('programs')
+        build_work.record(ROOT, logs, work_file, *phases)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        print('LEAN_BUILD_WORK_UNKNOWN ' + str(error), file=sys.stderr)
 
 
 def main():
@@ -152,6 +156,9 @@ def main():
     args = parser.parse_args()
     if args.action == 'check' and (args.targets or os.environ.get('FULL_BUILD') != '1'):
         raise ValueError('checking the full report requires FULL_BUILD=1')
+    work_file = Path(os.environ.get('STRATALINT_LEAN_BUILD_WORK_FILE', ROOT / 'build/lean-cache/build-work.json'))
+    if args.action == 'check':
+        work_file.unlink(missing_ok=True)
     output = args.output.resolve()
     seed = Path(os.environ.get('STRATALINT_LEAN_REPORT_REUSE', output)).resolve()
     force = (os.environ.get('REBUILD_REPORT_CACHE') == '1'
@@ -159,7 +166,8 @@ def main():
     if args.action == 'check' and not force and os.environ.get('LEAN_REPORT_CACHE_MISS_POLICY') == 'fetch-or-fail':
         with reuse.compatible_seed(ROOT, seed) as compatible:
             seed = compatible
-    need_inputs = args.action == 'prepare' or force or reuse.probe(ROOT, seed)['needs_lake']
+    need_inputs = (args.action == 'prepare' or force
+                   or reuse.probe(ROOT, seed, require_covered_dependencies=True)['needs_lake'])
     with tempfile.TemporaryDirectory(prefix='lean-programs.') as logs:
         program_logs = Path(logs)
         prepare(args.targets, program_logs, need_inputs)
@@ -167,7 +175,7 @@ def main():
             # Stage next to the destination so comparison snapshots can use hard links.
             output.parent.mkdir(parents=True, exist_ok=True)
             with tempfile.TemporaryDirectory(prefix='.lean-report-build.', dir=output.parent) as staging:
-                checked_report(Path(staging), output, seed, program_logs, try_seed=not need_inputs)
+                checked_report(Path(staging), output, seed, program_logs, work_file, try_seed=not need_inputs)
 
 
 if __name__ == '__main__':

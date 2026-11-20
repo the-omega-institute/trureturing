@@ -26,6 +26,8 @@ class EntryRegressionTests(unittest.TestCase):
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
         root = fixture.root
+        fixture.policy.pop('dependency_sources')
+        fixture.write_policy()
 
         def write(name, text):
             path = root / name
@@ -173,6 +175,8 @@ exit """ + str(failure) + '\n')
                 fixture = test_reuse.ReuseTests()
                 fixture.setUp()
                 self.addCleanup(fixture.doCleanups)
+                fixture.policy.pop('dependency_sources')
+                fixture.write_policy()
                 fixture.dev_repository()
                 root, report = fixture.root, fixture.report
                 reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
@@ -186,10 +190,27 @@ exit """ + str(failure) + '\n')
                 staging = report.parent / 'check'
                 staging.mkdir()
                 with patch.object(build_inputs, 'ROOT', root), patch.dict(os.environ, {
-                        'STRATALINT_FIB_REGRESSIONS_SELECTED': 'false',
-                        'STRATALINT_LEAN_BUILD_WORK_FILE': str(staging / 'work.json')}):
-                    build_inputs.checked_report(staging, report, report, staging, try_seed=True)
+                        'STRATALINT_FIB_REGRESSIONS_SELECTED': 'false'}):
+                    build_inputs.checked_report(staging, report, report, staging, staging / 'work.json',
+                                                try_seed=True)
                 self.assertEqual(reuse.read_seed_base(root), source if known else None)
+
+    def test_optional_dependency_disappearance_cannot_enable_receipt_shortcut(self):
+        fixture = test_reuse.ReuseTests()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        fixture.policy['dependency_sources']['include'][0]['optional'] = True
+        fixture.write_policy()
+        fixture.receipt()
+        (fixture.root / 'Audit.lean').unlink()
+        self.assertFalse(reuse.probe(fixture.root, fixture.report)['needs_lake'])
+        self.assertTrue(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
+        # Removing the registration itself cannot promote an older incomplete receipt.
+        fixture.policy.pop('dependency_sources')
+        fixture.write_policy()
+        self.assertTrue(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
+        fixture.receipt()
+        self.assertFalse(reuse.probe(fixture.root, fixture.report, require_covered_dependencies=True)['needs_lake'])
 
     def test_explicit_recovery_without_seed_through_checked_make_entry(self):
         for option in ('REBUILD_REPORT_CACHE', 'REGENERATE_REPORT_ARTIFACTS'):

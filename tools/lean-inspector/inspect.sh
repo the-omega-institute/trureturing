@@ -164,11 +164,15 @@ run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOS
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
-export STRATALINT_LEAN_PRODUCER_DLL="${STRATALINT_LEAN_PRODUCER_DLL:-$REPOSITORY/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll}"
+workspace_producer="$REPOSITORY/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll"
+export STRATALINT_LEAN_PRODUCER_DLL="${STRATALINT_LEAN_PRODUCER_DLL:-$workspace_producer}"
 [[ -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || {
   echo "inspect.sh: missing prebuilt producer $STRATALINT_LEAN_PRODUCER_DLL; run dotnet build tools/StrataLint.Lean -c Release" >&2
   exit 2
 }
+if [[ "$STRATALINT_LEAN_PRODUCER_DLL" -ef "$workspace_producer" ]]; then
+  run_phase producer-check python3 -B "$SCRIPT_DIR/native.py" check-workspace-producer "$REPOSITORY"
+fi
 open_logs
 # Lake schedules report extraction and reuse from existing compiler artifacts.
 REPORT_COMMAND=()

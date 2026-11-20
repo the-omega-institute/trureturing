@@ -313,6 +313,31 @@ class CheckTests(unittest.TestCase):
 
 
 class PullRequestReportTests(unittest.TestCase):
+    def test_scoped_analysis_requires_successful_preparation_of_the_same_roots(self):
+        import ci_pr_lean
+        scope = {"programs": [], "targets": ["D5.A", "Reg.B"], "paths": [], "definitions": {}}
+        targets = "LEAN_TARGETS=D5.A Reg.B"
+        for prepare_status in (0, 7):
+            calls = []
+
+            def run(command, *, check, **kwargs):
+                self.assertTrue(check)
+                calls.append(command)
+                if command[:2] == ["make", "lean-report-prepare"] and prepare_status:
+                    raise subprocess.CalledProcessError(prepare_status, command)
+                return subprocess.CompletedProcess(command, 0, json.dumps(scope))
+
+            with self.subTest(prepare_status=prepare_status), patch.object(ci_pr_lean.subprocess, "run", run):
+                if prepare_status:
+                    with self.assertRaises(subprocess.CalledProcessError):
+                        ci_pr_lean.check([])
+                    self.assertEqual(calls[1:], [["make", "lean-report-prepare", targets]])
+                else:
+                    self.assertEqual(ci_pr_lean.check([]), 0)
+                    self.assertEqual(calls[1:3], [["make", "lean-report-prepare", targets],
+                                                  ["make", "lean-report-scoped", targets]])
+                    self.assertIn("content-check", calls[3])
+
     def test_empty_scope_has_no_build_and_large_scopes_keep_scribe_inputs_together(self):
         from ci_pr_lean import report_batches
         self.assertEqual(list(report_batches({"targets": []})), [])

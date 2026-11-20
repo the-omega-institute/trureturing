@@ -31,6 +31,15 @@ UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'cla
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
 
+def check_workspace_producer(root):
+    project = Path(root) / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'
+    result = subprocess.run(['dotnet', 'msbuild', str(project), '-question',
+                             '-p:Configuration=Release', '-nologo', '-v:quiet'])
+    if result.returncode:
+        raise ValueError('prebuilt utility reader needs a build; run make lean-report-prepare '
+                         'with the same LEAN_TARGETS or FULL_BUILD=1')
+
+
 def batch_modules():
     """Runtime capacity only: keep report identities and reusable rows unchanged."""
     value = os.environ.get('STRATALINT_NATIVE_BATCH_MODULES', str(NATIVE_BATCH_MODULES))
@@ -732,7 +741,7 @@ def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,
-               'regenerate': regenerate}
+               'regenerate': regenerate, 'check-workspace-producer': check_workspace_producer}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     with phase('native-' + sys.argv[1]):

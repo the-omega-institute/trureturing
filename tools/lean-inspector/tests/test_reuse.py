@@ -481,6 +481,31 @@ class ReuseTests(unittest.TestCase):
         self.assertIn('missing prebuilt producer', process.stderr)
         self.assertEqual(calls, [])
 
+    def test_stale_workspace_utility_reader_fails_both_entries_without_rebuilding(self):
+        import scoped
+        project = self.root / 'tools/StrataLint.Lean'
+        project.mkdir(parents=True)
+        (project / 'StrataLint.Lean.csproj').write_text(
+            '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>'
+            '</PropertyGroup></Project>')
+        source = project / 'Reader.cs'
+        source.write_text('public class Reader {}')
+        subprocess.run(['dotnet', 'build', '-c', 'Release', '--nologo'], cwd=project,
+                       capture_output=True, check=True)
+        binary = project / 'bin/Release/net10.0/StrataLint.Lean.dll'
+        built = binary.read_bytes(), binary.stat().st_mtime_ns
+        with patch.dict(os.environ, {'STRATALINT_LEAN_PRODUCER_DLL': '', 'LAKE_BIN': str(self.lake)}):
+            entry = scoped.Entry(self.root, self.root, self.root)
+            entry.provision()
+            source.write_text('public class ChangedReader {}')
+            with self.assertRaises(subprocess.CalledProcessError):
+                entry.provision()
+        result, calls = self.entry_with_program_build([], workspace_producer=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('run make lean-report-prepare', result.stderr)
+        self.assertEqual(calls, [])
+        self.assertEqual((binary.read_bytes(), binary.stat().st_mtime_ns), built)
+
     def test_report_miss_requires_prebuilt_producer(self):
         process, calls = self.entry_with_program_build([], seed=False, prebuilt=False)
         self.assertEqual(process.returncode, 2, process.stdout + process.stderr)
@@ -753,7 +778,7 @@ class ReuseTests(unittest.TestCase):
             api.reuse(self.root, self.report, self.output)
 
     def entry_with_program_build(self, targets, *, seed=True, build_exit=0,
-                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True):
+                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True, workspace_producer=False):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/native.py',
@@ -793,6 +818,8 @@ class ReuseTests(unittest.TestCase):
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
+        if workspace_producer:
+            environment.pop('STRATALINT_LEAN_PRODUCER_DLL')
         if not prebuilt:
             dotnet = self.root / 'dotnet-bin/dotnet'
             dotnet.parent.mkdir()

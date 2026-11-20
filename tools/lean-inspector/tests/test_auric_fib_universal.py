@@ -360,7 +360,7 @@ end AuricFibUniversalProduction
         unrelated = ROOT / (unrelated_name.replace('.', '/') + '.lean')
         self.assertFalse(unrelated.exists(), 'unrelated fixture is already owned')
         extra_targets = []
-        def build():
+        def build(*, success=True):
             activity.write_text('')
             phases.write_text('')
             subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join(
@@ -370,7 +370,9 @@ end AuricFibUniversalProduction
                 *extra_targets],
                 cwd=ROOT, env=dict(os.environ, STRATALINT_INSPECTOR_ACTIVITY=str(activity),
                     STRATALINT_INSPECTOR_PHASES=str(phases)), capture_output=True, text=True)
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+            if not success:
+                self.assertIn('needs to be rebuilt', result.stdout + result.stderr)
             return [json.loads(line) for line in activity.read_text().splitlines()]
         self.assertEqual(build(), [])
         try:
@@ -401,6 +403,22 @@ end AuricFibUniversalProduction
                 changed_source = changed_source.replace(before, after)
             self.assertNotEqual(changed_source, original)
             self.source.write_bytes(changed_source)
+            analyzer = ROOT / 'tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean'
+            executable = STATE / 'reg/bin/auricFibAnalysis'
+            original_analyzer, stat = analyzer.read_bytes(), analyzer.stat()
+            old_executable = publication.digest(executable)
+            try:
+                analyzer.write_bytes(original_analyzer + b'\n-- exercise a stale precompiled analyzer\n')
+                failed_work = build(success=False)
+                self.assertEqual(publication.digest(executable), old_executable)
+                self.assertFalse(any(row['kind'] == 'fib-analysis-invocations' and row['count']
+                                     for row in failed_work))
+                waits = [row['boundary'] for line in phases.read_text().splitlines()
+                         if (row := json.loads(line))['phase'] == 'lake-analyzer-await']
+                self.assertEqual(waits, ['start'])
+            finally:
+                analyzer.write_bytes(original_analyzer)
+                os.utime(analyzer, ns=(stat.st_atime_ns, stat.st_mtime_ns))
             affected = build()
             self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-generated'), 0)
             self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-analysis-invocations'), 0)

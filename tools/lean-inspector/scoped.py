@@ -211,11 +211,14 @@ class Entry:
         return out
 
     def provision(self):
-        self.producer = self.producer or str(
-            self.root / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll')
+        workspace_producer = self.root / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'
+        self.producer = self.producer or str(workspace_producer)
         if not Path(self.producer).is_absolute() or not Path(self.producer).is_file():
             raise ValueError(f'missing prebuilt producer {self.producer}; run make lean-report-prepare '
                              'with the selected LEAN_TARGETS first')
+        if workspace_producer.exists() and workspace_producer.samefile(self.producer):
+            self.phase('producer-check', [sys.executable, '-B', str(Path(native.__file__)),
+                                          'check-workspace-producer', str(self.root)])
         self.environment['STRATALINT_LEAN_PRODUCER_DLL'] = self.producer
         if not self.lake or not Path(self.lake).is_absolute() or not os.access(self.lake, os.X_OK):
             raise ValueError('an installed Lake toolchain is required (LAKE_BIN)')
