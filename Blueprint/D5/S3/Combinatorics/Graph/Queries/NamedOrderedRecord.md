@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Queries/NamedOrderedRecord.orderedRec
 
 *Commentary.*
 
-A reply table on a finite set of names gives either a miss or a set of returned names at each query name. Independently choose a uniform enumeration of each successful reply set and keep it fixed for every visit to that name. A miss uses a separate response, including when a successful reply set is empty.
+A reply table on a finite set of names gives either a miss or a set of returned names at each query name. Independently choose a uniform enumeration of each successful reply set and keep it fixed for every visit to that name. A miss and a successful reply with an empty set produce distinct responses.
 
 Fix an adaptive protocol and an ordered transcript realized by one reference reply table and one reference enumeration table. Another reply table gives the transcript positive probability precisely when it agrees with the reference on the unordered replies at every name queried in the transcript. In that case the ordered transcript has probability equal to the reciprocal of the product of the factorials of the successful reply sizes, counting each queried name once.
 
