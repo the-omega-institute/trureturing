@@ -24,7 +24,7 @@ internal sealed class CantorCircleExpansivityDocument : IScribeDocumentDefinitio
                 H("The least expansion order is the number of circles"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("At a small scale a strict forward Bowen ball projects to one point of the circle. Its fiber contains at most N points. At every positive scale there is a fiber of N distinct points with arbitrarily small diameter whose points all agree after one iterate.")),
+                    Paragraph(Text("Take N at least two. At a small scale a strict forward Bowen ball projects to one point of the circle. Its fiber contains at most N points. At every positive scale there is a fiber of N distinct points with arbitrarily small diameter whose points all agree after one iterate.")),
                     Paragraph(Text("The carrier is compact and connected because it is a finite union of compact connected circles sharing the image of the Cantor set."))),
                 DescribeRole.Theorem))));
 }

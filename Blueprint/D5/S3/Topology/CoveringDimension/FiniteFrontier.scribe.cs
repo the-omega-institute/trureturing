@@ -15,7 +15,7 @@ internal sealed class FiniteFrontierDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "atMost_one_of_finiteFrontier"),
                 H("Finite frontiers give refinements of multiplicity two"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Choose a finite subcover of open neighborhoods with finite frontiers. Off the union of the frontiers, the membership patterns in the chosen neighborhoods give disjoint open cells. Pairwise disjoint neighborhoods of the frontier points complete the refinement."))),
+                Blocks(Paragraph(Text("Let a compact Hausdorff space have a basis of open neighborhoods with finite frontiers. Choose a finite subcover from these neighborhoods. Off the union of the frontiers, the membership patterns in the chosen neighborhoods give disjoint open cells. Pairwise disjoint neighborhoods of the frontier points complete the refinement."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("preconnected-space-covering-dimension-lower-bound"),
@@ -29,6 +29,6 @@ internal sealed class FiniteFrontierDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "atMost_of_closedMap_finiteFibers"),
                 H("Closed finite-to-one maps pull covering-dimension bounds back"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Separate each finite fiber by disjoint open sets subordinate to the original cover. Closedness gives a base neighborhood whose entire preimage lies in those sets. Refine in the base, then split each pullback into the corresponding disjoint pieces."))),
+                Blocks(Paragraph(Text("Let a continuous closed map from a Hausdorff space to a compact space have finite fibers. Separate each fiber by disjoint open sets subordinate to the original cover. Closedness gives a base neighborhood whose entire preimage lies in those sets. Refine in the base, then split each pullback into the corresponding disjoint pieces."))),
                 DescribeRole.Theorem))));
 }

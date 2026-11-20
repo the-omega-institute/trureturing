@@ -88,6 +88,10 @@ one fiber that stay pairwise closer than that radius under every
 forward iterate. This gives the exact expansion order of the glued
 system.
 
+Remark 3.10 of the arXiv version realizes each exact finite order on a
+finite bouquet of circles. At order N at least two on the bouquet of N
+circles, the displayed map has image equal to its last circle.
+
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
 positive expansivity order N. It glues N circles along the image of the
@@ -96,8 +100,8 @@ points x tending to zero, (1 + x)/3 lies in the open middle third and enters
 the Cantor image in one step. These points give fibers that witness failure
 of every scale of order N − 1. The closed finite-to-one projection onto the
 circle gives the upper covering-dimension bound, and connectedness gives the
-lower bound. This constructs a family in the scope of Question 3.2. The
-classification of all one-dimensional continua remains open.
+lower bound. The result combines surjectivity with exact order on a
+one-dimensional continuum. The classification in Question 3.2 remains open.
 [Construction and covering dimension](../../Blueprint/D5/S3/Topology/CoveringDimension/GluedCircle.md)
 
 The GGO journal DOI
@@ -115,3 +119,4 @@ claim follows from this repository result.
 - Question 3.1, Section 3, page 7.
 - Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
+- Remark 3.10, Section 3.2, page 9.
