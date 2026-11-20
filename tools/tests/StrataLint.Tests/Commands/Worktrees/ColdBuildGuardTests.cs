@@ -6,77 +6,41 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Theory]
-    [InlineData("with-cache-reader")]
-    [InlineData("with-cache-writer")]
-    public void LinkedScopedColdBuildEntryPreservesTargetsWithoutClonefile(string entry)
+    [InlineData("with-cache-reader", null)]
+    [InlineData("with-cache-writer", "0")]
+    public void ScopedBuildUsesOnlyLocalArtifactsAndPreservesTargets(string entry, string? fullBuild)
     {
         using var repository = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
-        var target = AddColdGuardWorktree(repository.Path, "linux-scoped-cold");
+        var target = AddColdGuardWorktree(repository.Path, "scoped-artifacts");
         var runner = new RecordingWorktreeProcessRunner();
-        var cloner = new RecordingDirectoryCloner
-        {
-            FailureReason = "clonefile(2) requires macOS",
-        };
-        string[] build = ["--log-level=error", "build", "D5.First", "D5.Second"];
-
-        var result = WithColdBuildConsent("1", () => WorktreeCommand.Run(target,
-            [entry, "--", "lake", .. build], runner, cloner));
-
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(cloner.Invocations);
-        Assert.Equal(0, runner.ArchiveInvocations);
-        Assert.Single(runner.Invocations, call =>
-            call.FileName == "lake" && call.Arguments.SequenceEqual(build));
-        Assert.Single(runner.Invocations, static call =>
-            call.FileName == "lake" && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
-        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
-        using var receipt = ParseReceipt(result.Output);
-        Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("donor").ValueKind);
-        Assert.Equal(0, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
-    }
-
-    [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    public void ConsentedLinkedColdBuildFetchesOnlyDependenciesWithoutDonorOrArchive(
-        bool matchingStamp, bool cacheGetFails)
-    {
-        using var repository = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
-        InitializeRepository(repository.Path);
-        var target = AddColdGuardWorktree(repository.Path, "independent-cold-lane");
-        if (matchingStamp) StampCache(target);
-        var retained = Path.Combine(target, ".lake", "packages", "retained-source");
-        Directory.CreateDirectory(Path.GetDirectoryName(retained)!);
-        File.WriteAllText(retained, "preserved");
-        var runner = new RecordingWorktreeProcessRunner { FailLake = cacheGetFails };
         var cloner = new RecordingDirectoryCloner();
+        string[] build = ["--log-level=error", "build", "D5.First", "D5.Second"];
+        var previous = Environment.GetEnvironmentVariable("FULL_BUILD");
+        try
+        {
+            Environment.SetEnvironmentVariable("FULL_BUILD", fullBuild);
+            var result = WorktreeCommand.Run(target, [entry, "--", "lake", .. build], runner, cloner);
+            Assert.True(result.Success, result.Error);
+            Assert.Empty(cloner.Invocations);
+            Assert.Equal(0, runner.ArchiveInvocations);
+            var call = Assert.Single(runner.Invocations, call => call.FileName == "lake");
+            Assert.Equal(build, call.Arguments);
+            using var receipt = ParseReceipt(result.Output);
+            Assert.Equal("lake-local", receipt.RootElement.GetProperty("method").GetString());
+            Assert.Equal(0, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
 
-        var result = LeanCacheEnsureCommand.RunWithWriter(target,
-            ["--", "lake", "build", "D5.Target"], runner, cloner,
-            FileSystemLeanCacheStateProbe.Instance, _ => "1");
+            var bareBuild = WorktreeCommand.Run(target,
+                [entry, "--", "lake", "-d", "Reg", "build", "--log-level", "error"], runner, cloner);
+            Assert.False(bareBuild.Success);
+            Assert.Contains("FULL_BUILD=1", bareBuild.Error);
 
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(cloner.Invocations);
-        Assert.Equal(0, runner.ArchiveInvocations);
-        Assert.Equal("preserved", File.ReadAllText(retained));
-        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
-        Assert.Single(runner.Invocations, static call =>
-            call.FileName == "lake" && call.Arguments.SequenceEqual(["build", "D5.Target"]));
-        Assert.Equal(matchingStamp ? 0 : 1, runner.Invocations.Count(static call =>
-            call.FileName == "lake" && call.Arguments.SequenceEqual(["exe", "cache", "get"])));
-        using var receipt = ParseReceipt(result.Output);
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("donor").ValueKind);
-        Assert.Equal("cold", receipt.RootElement.GetProperty("project_olean_state").GetString());
-        Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
-        Assert.Equal(cacheGetFails ? "degraded" : matchingStamp ? "present" : "fetched",
-            receipt.RootElement.GetProperty("status").GetString());
-        using var released = LeanCacheWriterGuard.TryAcquire(Path.Combine(target, ".lake"));
-        Assert.NotNull(released);
+            var ensure = WorktreeCommand.Run(target, ["ensure-cache"], runner, cloner);
+            Assert.False(ensure.Success);
+            Assert.Contains("FULL_BUILD=1", ensure.Error);
+            Assert.Empty(cloner.Invocations);
+        }
+        finally { Environment.SetEnvironmentVariable("FULL_BUILD", previous); }
     }
 
     [Theory]

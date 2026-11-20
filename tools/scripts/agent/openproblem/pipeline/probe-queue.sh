@@ -45,11 +45,13 @@ for lane in $ordered; do
     (cd "$OP_MAIN" && make worktree KIND=math NAME="op-$key" DEST="$tree") >> "$OP_SCRATCH/logs/pq-worktree-$key.log" 2>&1 || op_fail 16 WORKTREE_FAILED "$key"
   fi
   [ -d "$tree" ] || op_fail 11 INPUT_MISSING "$tree"
-  op_snapshot || op_fail 16 PROCESS_LIST_FAILED ps
-  if op_process busy "$tree"; then
-    echo "PREP_SKIP worktree-busy $tree"
-  else
-    make -C "$tree" lean-cache-ensure >> "$OP_SCRATCH/logs/pq-ensure-$key.log" 2>&1 || op_fail 16 CACHE_ENSURE_FAILED "$key"
+  if [ "${FULL_BUILD:-0}" = 1 ]; then
+    op_snapshot || op_fail 16 PROCESS_LIST_FAILED ps
+    if op_process busy "$tree"; then
+      echo "PREP_SKIP worktree-busy $tree"
+    else
+      make -C "$tree" lean-cache-ensure FULL_BUILD=1 >> "$OP_SCRATCH/logs/pq-ensure-$key.log" 2>&1 || op_fail 16 CACHE_ENSURE_FAILED "$key"
+    fi
   fi
   while [ "$(jobs -rp | wc -l | tr -d ' ')" -ge "$K" ]; do sleep "$OP_POLL_SECONDS"; done
   bash "$OP_PIPELINE_DIR/seat-wait.sh" "${OP_NAME_PREFIX}probe-$key-r1" "$brief" "$tree" thinking 0 > "$OP_SCRATCH/logs/probe-$key-r1.log" 2>&1 &

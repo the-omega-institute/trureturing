@@ -93,6 +93,28 @@ internal sealed class ZeroFreeStripMertensEnvelopeDocument : IScribeDocumentDefi
                         + "No literature-priority claim is made."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("actual-b-critical-strip-signed-asymptotic"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_signed_asymptotic"),
+                H("Signed arithmetic asymptotic at the critical strip exponent"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let 0<α<1/2 and assume every actual nontrivial zero ρ has Re(ρ)≤1−α. "
+                        + "As real y tends to +∞, exp(αy) y B(exp(y)) + exp(−(1−α)y) Re(actualH(y)) "
+                        + "tends to zero. Here actualH is the complete integrated zero series over "
+                        + "actual occurrences, with analytic multiplicities. The leading term for "
+                        + "the normalized B has the negative sign.")),
+                    Paragraph(Text(
+                        "The transport identity with R(y)=1/y+1/y² and the decreasing W kernel "
+                        + "bounds Jpsi(exp(y))−Q(exp(y))/y in absolute value by "
+                        + "(C+3C/α) exp(−αy)/y² for large y. The primitive-tail identity "
+                        + "Q(exp(y))=−U(exp(y))/exp(y) and the integrated explicit formula replace "
+                        + "U(exp(y)) by Re(actualH(y)) up to a bounded error. "
+                        + "The prime-power tail S and the finite cancellation vanish after scaling "
+                        + "because α<1/2. For the nonlinear remainder, the Chebyshev rate with "
+                        + "δ=3α/4 gives a bound with decay exponent 2δ>α."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("theta-power-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound"),
                 H("Transfer a power estimate from psi to theta"),

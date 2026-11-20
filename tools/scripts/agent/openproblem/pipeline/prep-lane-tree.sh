@@ -1,5 +1,5 @@
 #!/bin/bash
-# Merge origin/dev without rebasing, preserve dirty lanes, and ensure the Lean cache.
+# Merge origin/dev without rebasing, preserve dirty lanes, and optionally prepare the full Lean cache.
 set -uo pipefail
 . "$(dirname "$0")/common.sh"
 [ "${1:-}" != --selftest ] || { op_selftest prep-lane-tree; exit $?; }
@@ -18,6 +18,7 @@ elif [ "$ahead" = 0 ]; then
 elif [ -z "$dirty" ]; then
   git merge --no-edit -q origin/dev || { git merge --abort; echo "PREP=5 conflict $1"; exit 5; }
 else echo "PREP=6 dirty-with-commits $1"; exit 6; fi
-make lean-cache-ensure; rc=$?
+rc=0
+if [ "${FULL_BUILD:-0}" = 1 ]; then make lean-cache-ensure FULL_BUILD=1 || rc=$?; fi
 echo "PREP=$rc $1"
 exit "$rc"

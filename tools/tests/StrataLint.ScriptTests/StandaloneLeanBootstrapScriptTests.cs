@@ -157,7 +157,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
 
         internal void BreakSource() => Write(projectDirectory + "/Program.cs", "return MissingBootstrapSymbol;\n");
 
-        internal ProcessOutput Make(string target) => Run(false, 0, "make", "-C", root, target);
+        internal ProcessOutput Make(string target) => Run(false, 0, "make", "-C", root, target, "FULL_BUILD=1");
 
         internal ProcessOutput Wrapper(string target, bool prebuilt, int producerExit = 0) => Run(prebuilt, producerExit,
             new[] { "/bin/bash", Path.Combine(root, WrapperPath(target)) }

@@ -5,13 +5,16 @@ year: 2026
 title: "Curtz's denominator conjecture: OEIS A189733, revision 12, COMMENTS, May 23, 2011"
 doi: 10.5281/zenodo.23957584
 url: https://zenodo.org/records/23957584
-claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0. Corollary 7: with C(m,n) = 2B(m,n+1) - B(m,n), d_m = den(C(m,m+3)) and g_m = gcd(3,m+2), for every m >= 0, C(m,m+3) = (-1)^{m+1}(2m+1)/((m+1)(m+2)) and d_m = (m+1)(m+2)/g_m; (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k+1)(3k+2), (k+1)(3k+2), 3(k+1)(3k+4)) for k >= 0; sum_{m>=0} d_m z^m = 2(1+z+6z^2+7z^3+2z^4+3z^5+z^6)/(1-z^3)^3; d_m = (m+1)A051176(m+2) and d_{m+2} = 2A306368(m) for m >= 0; C(m,m+3) = (-1)^{m+1}A146535(m+1)/d_m, not (-1)^{m+1}A146535(m)/d_m."
+claim: "Corollary 2: the reduced numerators of b_n repeat the block (0, 1, 1, 1, 0, -1) with least period six; a_n = 2a_{n-6} - a_{n-12} for n >= 12; sum_{n>=0} a_n z^n = (1+z+z^2+2z^3+z^4+6z^5-z^6+2z^7+z^8+z^9-z^10)/(1-z^6)^2. Corollary 3: for every n >= 0, B(n,0) = sum_{j=0}^{n} (-1)^{n-j} C(n,j) b_j = (-1)^{n+1} b_n; its proof shows the reflection B(m,n) = (-1)^{m+n+1} B(n,m) and the difference identity B(m+1,n) = B(m,n+1) - B(m,n) for all m, n >= 0. Corollary 4: for m >= 0 and d >= 1, B(m,m+d) = (-1)^m sum_{j=0}^{floor((d-1)/2)} (-1)^j C(d-1-j, j)/(m+j+1); together with B(m,m) = 0 and B(m,n) = (-1)^{m+n+1} B(n,m), this determines the whole square array. Corollary 5: with p_n = num(b_n), sum_{n>=0} p_n z^n = (z+z^2+z^3-z^5)/(1-z^6) = z(1+z^2-z^3)/((1-z)(1-z+z^2)(1+z+z^2)); p_n = (1+(-1)^floor((n-1)/3))/2 - floor((n+1)/6) + floor(n/6) for n >= 0; p_n = p_{n-1} - p_{n-2} + p_{n-3} - p_{n-4} + p_{n-5} for n >= 5. Corollary 6: with c_n = (n+1)/a_n, (c_{6k}, ..., c_{6k+5}) = (6k+1, 2, 3, 2, 6k+5, 1) for every k >= 0; c_n = 2c_{n-6} - c_{n-12} for n >= 12; sum_{n>=0} c_n z^n = (1+2z+3z^2+2z^3+5z^4+z^5+5z^6-2z^7-3z^8-2z^9+z^10-z^11)/(1-z^6)^2; and c_{2n+1} = A130196(n+1), c_{A047245(n+1)} = A052901(n+2), c_{3n} + c_{3n+1} + c_{3n+2} = A047238(n+3) for n >= 0. Corollary 7: with C(m,n) = 2B(m,n+1) - B(m,n), d_m = den(C(m,m+3)) and g_m = gcd(3,m+2), for every m >= 0, C(m,m+3) = (-1)^{m+1}(2m+1)/((m+1)(m+2)) and d_m = (m+1)(m+2)/g_m; (d_{3k}, d_{3k+1}, d_{3k+2}) = ((3k+1)(3k+2), (k+1)(3k+2), 3(k+1)(3k+4)) for k >= 0; sum_{m>=0} d_m z^m = 2(1+z+6z^2+7z^3+2z^4+3z^5+z^6)/(1-z^3)^3; d_m = (m+1)A051176(m+2) and d_{m+2} = 2A306368(m) for m >= 0; C(m,m+3) = (-1)^{m+1}A146535(m+1)/d_m, not (-1)^{m+1}A146535(m)/d_m. Corollary 8: sum_{m>=0} 1/d_m = 1 + log 3 - pi/(3 sqrt 3). Corollary 9: for the unsigned array U with zero diagonal, U(m,m+1) = 1/(m+1) and the same recurrence, u_n = U(0,n) = (L_{n+1} - 1)/(n+1) for n >= 0 with Lucas numbers L_0 = 2, L_1 = 1; for r >= 0 the reduced numerator and denominator of u_{2r+1} are A175385(r+1) and A175386(r+1), so A242926's formula with A175386(r) requires this shift; sum_{j=0}^{n} (-1)^{n-j} C(n,j) u_j = (-1)^{n+1} u_n; and sum_{m=0}^{r} U(m, 2r+1-m) = u_{2r+2} for r >= 0. Corollary 11: for either zero-diagonal array V = B or V = U, lcm_{0 <= m < s-m} den(V(m, s-m)) = lcm(1, ..., floor((s+1)/2)) = A139550(s+1) for s >= 0, with the empty lcm equal to one."
 strata_touched:
   - D5/S1/Recurrence/Residue/OEISA189733NumeratorsAndSeries
   - D5/S1/Recurrence/Residue/OEISA267068Quotients
   - D5/S1/Recurrence/Residue/OEISA189733FiniteSums
   - D5/S1/Recurrence/Residue/OEISA189733Reflection
   - D5/S1/Recurrence/Residue/OEISA194767SecondKindDiagonal
+  - D5/S1/Recurrence/Residue/OEISA194767ReciprocalSum
+  - D5/S1/Recurrence/Residue/OEISA242926UnsignedLucasRow
+  - D5/S1/Recurrence/Residue/OEISA242926AntidiagonalLcm
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -26,7 +29,8 @@ DOI: 10.5281/zenodo.23957584 (version 2; Zenodo publication date 2026-11-04, PDF
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957584/files/note-v2.pdf/content (text extracted locally with
 layout preserved, 33,249 characters). Corollaries 2, 3 and 4 are in Section 2; Corollaries 5 and 6 are in Section 3;
-Corollary 7 is in Section 4.
+Corollaries 7 and 8 are in Section 4;
+Corollaries 9 and 11 are in Section 5.
 
 ## Source statement
 
@@ -95,6 +99,46 @@ Corollary 7 is in Section 4.
 > unshifted formula is already false at m = 2: its unsigned numerator is A146535(2) = 1, whereas
 > C(2, 5) = −5/12.
 
+> Corollary 8. The reciprocal sum stated in A194767 is ∑_{m≥0} 1/d_m = 1 + log 3 − π/(3√3).
+
+> Proof. Because g_m = 1 + 2·1_{m≡1 (mod 3)}, telescoping gives
+> ∑_{m≥0} 1/d_m = 1 + 2 ∑_{k≥0} (1/(3k + 2) − 1/(3k + 3)) = 1 + 2 ∫_0^1 x/(1 + x + x²) dx
+> = 1 + log 3 − π/(3√3). The summands represented by x^{3k+1}(1 − x) are nonnegative, justifying
+> termwise integration. An antiderivative is ½ log(x² + x + 1) − (1/√3) arctan((2x + 1)/√3).
+
+> The related entries A189731 and A242926 [9] use the same array recurrence with the unsigned
+> boundary U(m, m + 1) = 1/(m + 1) and zero diagonal. Write u_n = U(0, n) and let L_0 = 2, L_1 = 1,
+> L_{n+2} = L_{n+1} + L_n be the Lucas numbers.
+> Corollary 9. For n ≥ 0, u_n = (L_{n+1} − 1)/(n + 1). For r ≥ 0, the odd-index reduced numerator
+> is A175385(r + 1) and the reduced denominator is A175386(r + 1) [10]. In particular, A242926's
+> formula with A175386(r) requires this shift. The inverse-binomial identity is
+> ∑_{j=0}^{n} (−1)^{n−j} C(n, j) u_j = (−1)^{n+1} u_n.
+> The upper antidiagonal assertion in A242926 is ∑_{m=0}^{r} U(m, 2r + 1 − m) = u_{2r+2} (r ≥ 0).
+
+> Proof. … The same unsigned moment argument gives
+> u_{2r+1} = ∑_{j=0}^{r} C(2r − j, j)/(j + 1) = ∑_{i=1}^{r+1} C(2(r + 1) − i − 1, i − 1)/i,
+> which is the defining fraction for A175385 and A175386 at r + 1. At r = 1, A242926(3) = 2 but
+> A175386(1) = 1, verifying the unshifted identity's failure. The reflection and difference proof
+> of Corollary 3 applies unchanged to any first-superdiagonal seed, yielding the inverse-binomial
+> identity. Finally, iterating the upper recurrence along the antidiagonal telescopes u_{2r+2} into
+> the displayed sum; its last remainder is U(r + 1, r + 1) = 0.
+
+> Corollary 11. For either zero-diagonal array V = B or V = U, the least common multiple of the
+> reduced denominators on the strict upper antidiagonal m + n = s is
+> lcm_{0≤m<s−m} den(V(m, s − m)) = lcm(1, . . . , ⌊(s + 1)/2⌋) = A139550(s + 1), s ≥ 0,
+> with the lcm of an empty family defined as one. This proves the antidiagonal-lcm assertion in
+> A242926, with its antidiagonals counted from one.
+
+> Proof. More generally, let the first-superdiagonal seeds be arbitrary rationals w_m = V(m, m + 1),
+> and keep the diagonal zero. The recurrence and Pascal's identity give
+> V(m, m + d) = ∑_{j=0}^{⌊(d−1)/2⌋} C(d − 1 − j, j) w_{m+j} (d ≥ 1).
+> For a fixed s ≥ 1, put h = ⌊(s + 1)/2⌋. The h antidiagonal entries are therefore an
+> upper-triangular integer linear transformation of w_0, . . . , w_{h−1} with diagonal entries one.
+> The inverse matrix also has integer entries. Thus an integer clears the denominators of the
+> antidiagonal exactly when it clears all w_m. For B and U the seed denominators are 1, 2, . . . , h.
+> The final identification is the definition A139550(r) = lcm(1, . . . , ⌊r/2⌋) [12]. The empty
+> antidiagonal s = 0 gives one on both sides.
+
 ## Mathematical scope
 
 b_n = B(0,n) is the zeroth row of Curtz's rational array (see `curtz2011a189733`); a_n is the
@@ -121,3 +165,12 @@ so its fourth diagonal C(m, m + 3) is 2B(m, m + 4) − B(m, m + 3), written in t
 upper-triangle entries. The cited sequences follow the paper's definitions: A051176(r) =
 r/gcd(r, 3) from offset 0, A306368(r) the reduced numerator of (r + 3)(r + 4)/((r + 1)(r + 2))
 from offset 0, and A146535(r) the reduced numerator of (2r − 1)/3 from offset 1.
+
+For Corollary 9, the unsigned array U has the same zero diagonal, upper recurrence and lower
+branch as B, with seed U(m, m + 1) = 1/(m + 1). The Lucas numbers are the repository's
+`goldenLucas`, the trace of the golden powers, with L_0 = 2 and L_1 = 1. A175385 and A175386 are
+the reduced numerator and denominator of ∑_{i=1}^{n} C(2n − i − 1, i − 1)/i, from offset 1;
+A242926(n) is the reduced denominator of u_n from offset 0.
+
+For Corollary 11, A139550(r) is lcm(1, …, ⌊r/2⌋), with the empty lcm equal to one; the strict
+upper antidiagonal m + n = s consists of the entries V(m, s − m) with m < s − m.

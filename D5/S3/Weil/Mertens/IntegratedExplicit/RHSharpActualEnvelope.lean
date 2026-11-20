@@ -144,6 +144,17 @@ private lemma residual_zero : Tendsto residual atTop (𝓝 0) := by
       gcongr
       exact (trivialT_le_mass hy).trans (le_abs_self _)
 
+/-- The normalized integrated prime term differs from the complete real zero
+series by a vanishing explicit-formula residual. -/
+lemma G_sub_normalized_actualH_tendsto_zero :
+    Tendsto (fun y : ℝ => G y - Real.exp (-y / 2) * (actualH y).re) atTop (𝓝 0) := by
+  apply residual_zero.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with y hy
+  have hsplit := G_split hy
+  simp only [normalizedH, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+    zero_mul, sub_zero] at hsplit
+  simp only [hsplit, add_sub_cancel_left]
+
 /-- Full-axis eventual control and recurrence of the complete actual occurrence series. -/
 theorem actual_G_control (hRH : RiemannHypothesis) :
     (∀ epsilon : ℝ, 0 < epsilon →

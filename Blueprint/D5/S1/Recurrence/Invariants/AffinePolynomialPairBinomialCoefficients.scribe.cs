@@ -8,6 +8,8 @@ internal sealed class AffinePolynomialPairBinomialCoefficientsDocument : IScribe
 {
     private const string Prefix = "D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/werner2022a208509");
+    private static readonly LibraryNoteRef PairSource =
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mazhang2026a208509pair");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The affine polynomial pair has Werner's all-column binomial formula.",
@@ -24,6 +26,19 @@ internal sealed class AffinePolynomialPairBinomialCoefficientsDocument : IScribe
                 + "the source laws are u(n,X)=u(n-1,X)+X*v(n-1,X) and "
                 + "v(n,X)=u(n-1,X)+v(n-1,X)+1. These are the laws in A208509 revision 28 "
                 + "and its companion A208508 revision 10.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("a208509-pair-coeff"),
+                DeclarationHandle.Create(Prefix + "pair_coeff"),
+                H("Both coefficient families of the pair"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(PairSource),
+                Blocks(Paragraph(Text(
+                    "For every stage m and every k, the coefficient of X^k in first(pair(m)) is "
+                    + "C(m, 2k) + C(m + 1, 2k) minus one exactly when k = 0, and the coefficient of "
+                    + "X^k in second(pair(m)) is C(m, 2k + 1) + C(m + 1, 2k + 1). Simultaneous "
+                    + "induction on m with Pascal's identity proves both; the constant-term "
+                    + "corrections cancel in the second recurrence. This is Theorem 1 of H. Ma and "
+                    + "W. Zhang's note on A208509 (DOI 10.5281/zenodo.24211281), written at stage "
+                    + "m = n − 1."))),
+                DescribeRole.Theorem),
             Node("werner_a208509", "Werner's binomial coefficient formula", ResultFormula(),
                 "The coefficient of X^k in the actual second polynomial equals the two "
                 + "displayed integer binomial coefficients for every n>=1 and every k>=0. "

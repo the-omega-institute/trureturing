@@ -41,6 +41,21 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
     internal ProductionWorktreeProcessRunner WithEnvironment(IReadOnlyDictionary<string, string> variables) =>
         new(cancellationToken, observation, variables);
 
+    internal ProductionWorktreeProcessRunner ForLocalArtifactReader()
+    {
+        var child = environment is null
+            ? Environment.GetEnvironmentVariables().Cast<System.Collections.DictionaryEntry>()
+                .ToDictionary(entry => (string)entry.Key, entry => (string)entry.Value!)
+            : new Dictionary<string, string>(environment);
+        // Lake 4.35 defaults to read-only when unset. False would disable hits too.
+        child.Remove("LAKE_ARTIFACT_CACHE");
+        child["LAKE_NO_CACHE"] = "true";
+        child["MATHLIB_NO_CACHE_ON_UPDATE"] = "1";
+        // A remote-backed output mapping may otherwise lazily download a missing blob.
+        child["CURL"] = "false";
+        return WithEnvironment(child);
+    }
+
     public ProcessOutput Run(
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
         Stream? standardOutput, Stream? standardError)

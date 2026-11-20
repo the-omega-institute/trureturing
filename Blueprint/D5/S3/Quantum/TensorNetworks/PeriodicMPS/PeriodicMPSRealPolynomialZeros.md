@@ -19,6 +19,6 @@ Relatively prime complex polynomials give a differentiable cover of their real c
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSRealPolynomialZeros.cover_real_common_zeros`
-- Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity](../OpenBoundaryMPSDensityGenericity.md)
+- Dependency: [D5/S3/Quantum/Algebra/CommonPhasePolynomial](../../Algebra/CommonPhasePolynomial.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSMonicLevelGraphs](PeriodicMPSMonicLevelGraphs.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSProjectionResultant](PeriodicMPSProjectionResultant.md)

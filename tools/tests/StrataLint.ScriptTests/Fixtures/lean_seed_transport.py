@@ -208,9 +208,9 @@ pathlib.Path.open = open_path
                     self.assertEqual("refused", receipt["status"], '[FAIL] linked_fetch_must_refuse')
                     self.assertEqual("linked worktree: release archive disabled", receipt["reason"])
                     remediation = ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                                   "make warm-donor there (its location cannot be determined from this worktree)"
+                                   "make warm-donor FULL_BUILD=1 there (its location cannot be determined from this worktree)"
                                    if unknown_main else "sync dev and warm the dev cache: make -C "
-                                   + shlex.quote(str(self.main_checkout)) + " warm-donor")
+                                   + shlex.quote(str(self.main_checkout)) + " warm-donor FULL_BUILD=1")
                     self.assertEqual(remediation, receipt["remediation"],
                                      '[FAIL] linked_fetch_names_real_main_checkout')
                     if unknown_main:
