@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Noncommutative finite-rank ternary comparison structures on d-manifolds have d >= 3. -/
+   digest: Noncommutative finite-rank ternary comparisons, locally Euclidean of dim d: d >= 3. -/
 
 import D5.S3.Topology.LowDimensionalBorsukUlam
 import D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart
