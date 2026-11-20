@@ -10,6 +10,7 @@ import queue
 import shutil
 import sys
 import subprocess
+import tarfile
 import tempfile
 import threading
 import unittest
@@ -123,7 +124,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "known scenario"):
                     shards.binding(self.root, "resume")
 
-    def test_shard_writer_and_reader_round_trip_required_outputs(self):
+    def test_warm_repack_keeps_full_aggregate_out_of_scoped_restore(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")
         inventory = importlib.import_module("lean_artifact_inventory")
@@ -136,13 +137,20 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         source.parent.mkdir()
         source.write_text("def fixture := 1\n")
         build = self.root / shards.PROJECT_BUILD
-        compiler_paths = inventory.required_compiler_paths(name, module)
+        compiler_paths = set(map(str, inventory.required_compiler_paths(name, module)))
+        module_paths = compiler_paths | {"lean-inspector/modules/D5.Fixture.zip"}
         report_paths = {shards.REPORT_PATH + suffix for suffix in shards.report_reuse.publication.SUFFIXES}
         report_paths.add(str(shards.REPORT_RECEIPT))
-        for relative in compiler_paths | report_paths:
+        aggregate_paths = {"lean-inspector/report.zip", "lean-inspector/report.zip.trace",
+                           "lean-inspector/report.zip.hash"}
+        inspector = "lean-inspector/producer/bin/reportInspector"
+        extras_paths = {inspector, "lean-inspector/report.zip.trace.nobuild"}
+        all_paths = module_paths | report_paths | aggregate_paths | extras_paths
+        for relative in all_paths:
             file = build / relative
             file.parent.mkdir(parents=True, exist_ok=True)
-            file.write_text(str(relative))
+            file.write_text(relative)
+        (build / inspector).chmod(0o755)
         with mock.patch.dict(os.environ, self.env | {"GITHUB_REF_PROTECTED": "true"}, clear=True), \
                 mock.patch.object(shards, "workspace_modules", return_value={name: module}), \
                 mock.patch.object(shards, "project_imports", return_value={name: set()}), \
@@ -157,13 +165,61 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             selection.return_value.modules.return_value = {name: {}}
             index = self.root / "shards.json"
-            for state in ("complete", "resume"):
-                with self.subTest(state=state):
-                    record = shards.prepare(self.root, {}, state, None, owner["commit"])
-                    index.write_text(json.dumps(record))
-                    decoded = shards.read_index(index, {}, state)
-                    required = {key: sorted(map(str, compiler_paths)), "report": sorted(report_paths)}
-                    self.assertEqual(required if state == "complete" else {}, decoded["required"])
+            required = {key: sorted(compiler_paths), shards.REPORT: sorted(report_paths)}
+            old_groups = {key: module_paths, shards.REPORT: report_paths, shards.EXTRAS: extras_paths | aggregate_paths}
+            previous = {
+                "binding": {}, "state": "complete", "owner": owner, "layout": {key: group}, "required": required,
+                "sources": shards.tracked_sources(self.root, {name: module}),
+                "entries": {group_key: shards.write_payload(self.root, build, paths)
+                            for group_key, paths in old_groups.items()},
+                "fingerprints": {
+                    group_key: shards.digest([(path, (build / path).stat().st_mode & 0o777,
+                                               shards.archive_sha(build / path, None)) for path in sorted(paths)])
+                    for group_key, paths in old_groups.items()
+                },
+            }
+            index.write_text(json.dumps(previous))
+            previous = shards.read_index(index, {}, "complete")
+            shutil.rmtree(build)
+            self.assertTrue(shards.install(self.root, previous, require_complete=True)["complete"])
+            self.assertEqual(all_paths, {path.relative_to(build).as_posix()
+                                         for path in build.rglob("*") if path.is_file()})
+
+            packed = []
+            record = shards.prepare(self.root, {}, "complete", previous, owner["commit"],
+                                    available=set(previous["entries"].values()),
+                                    deliver=lambda payload, size: packed.append(payload))
+            index.write_text(json.dumps(record))
+            record = shards.read_index(index, {}, "complete")
+            self.assertEqual(required, record["required"])
+            self.assertEqual(previous["layout"], record["layout"])
+            self.assertEqual(previous["entries"][key], record["entries"][key])
+            self.assertEqual(previous["fingerprints"][key], record["fingerprints"][key])
+            self.assertCountEqual(packed, [record["entries"][shards.EXTRAS], record["entries"][shards.REPORT]])
+
+            expected_groups = {key: module_paths, shards.EXTRAS: extras_paths,
+                               shards.REPORT: report_paths | aggregate_paths}
+            for group_key, paths in expected_groups.items():
+                payload = self.root / shards.transport_payload(record["entries"][group_key])
+                with tarfile.open(payload, "r:gz") as archive:
+                    self.assertCountEqual(paths, archive.getnames())
+
+            scoped = {key: record["entries"][key], shards.EXTRAS: record["entries"][shards.EXTRAS]}
+            self.assertEqual(scoped, shards.selected_keys(self.root, record, [name]))
+            for targets, expected in (([name], module_paths | extras_paths), (None, all_paths)):
+                with self.subTest(targets=targets):
+                    shutil.rmtree(build)
+                    restored = shards.install(self.root, record, targets, require_complete=True)
+                    count = len(record["entries"] if targets is None else scoped)
+                    self.assertEqual({"available": count, "missing": [], "requested": count,
+                                      "complete": targets is None}, restored)
+                    self.assertEqual(expected, {path.relative_to(build).as_posix()
+                                                for path in build.rglob("*") if path.is_file()})
+                    self.assertEqual(0o755, (build / inspector).stat().st_mode & 0o777)
+
+            resume = shards.prepare(self.root, {}, "resume", None, owner["commit"])
+            index.write_text(json.dumps(resume))
+            self.assertEqual({}, shards.read_index(index, {}, "resume")["required"])
 
     def test_zero_work_index_bootstrap_requires_an_accepted_native_seed(self):
         self.restore_owner()
