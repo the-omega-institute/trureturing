@@ -142,6 +142,20 @@ in their construction of local expansions, see Lemmas 1–3 and Theorem 1.
 [All-edge tour](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/LeaflessDartTour.md)
 [Charatonik–Miklos 1981](https://doi.org/10.4064/fm-113-3-235-252)
 
+For a finite connected graph with at least one edge, continuous topologically
+exact finitely positively expansive dynamics exist precisely when the graph has
+no vertex of degree one. The constructive direction gives positive expansivity.
+The map traverses the chosen tour of each edge at constant speed. Adjacent
+closed cells meet with distinct image germs, giving a uniform expansion scale.
+Shrinking inverse branches through a point of any open set eventually fit inside
+that set and map onto a whole edge, which covers the graph in one further step.
+Subdivision into three segments per edge preserves the degree-one condition
+and gives a homeomorphism of the closed-edge quotient with the affine simple
+graph realization. This includes loops, which contribute two incidences, and
+parallel edges. The reverse implication transports the pendant arc obstruction
+through the same homeomorphism.
+[Finite graph classification](../../Blueprint/D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.md)
+
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
 positive expansivity order N. It glues N circles along the image of the
