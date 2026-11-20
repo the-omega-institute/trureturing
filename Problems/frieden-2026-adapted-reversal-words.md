@@ -105,10 +105,11 @@ sensitivity, and observational dependence.
   is `D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410`. The
   avoidance-to-adaptedness implication is separately available at
   `D5/S1/Words/Permutations/FriedenAdaptedWords.avoidance_implies_adapted`.
-- **Open in Lean.** The paper states a numerical reformulation using Meng's
-  counting formula. A formal derivation of that formula and of its bridge to
-  avoidance is outside the two Lean outputs. An enumeration formula for the
-  common class also remains open here.
+- **Open in Lean.** For a reduced reversal word with paper indices
+  $i_1,\ldots,i_N$ and $N=\binom{n}{2}$, the source uses Meng's formula to
+  identify avoidance with $\sum_{r=1}^N(i_r-1)(n-i_r-1)=2\binom{n}{4}$.
+  The counting formula and its bridge to avoidance remain open in Lean,
+  as does an enumeration formula for the common class.
 - **Literature scope.** The bounded source and literature search is recorded
   in [#32071](https://github.com/the-omega-institute/trureturing/issues/32071).
   The full forward bibliography is unverified.
@@ -136,3 +137,9 @@ sensitivity, and observational dependence.
 - **Open here.** The argument uses reducedness and reversal to control every
   pair of labels. A characterization with either hypothesis relaxed lies
   outside the proved scope.
+
+## ASSUMED-UNVERIFIED
+
+The numerical reformulation via Meng's formula and the identification with
+linear extensions of Auslander–Reiten quivers are cited literature results
+outside the two Lean outputs. The full forward bibliography remains unverified.

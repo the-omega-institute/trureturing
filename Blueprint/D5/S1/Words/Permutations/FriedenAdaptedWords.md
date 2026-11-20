@@ -98,6 +98,10 @@ $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Word}\left(n\right),\;
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410` (`✓ std3`). ∎
 
+*Resolves.* `Problems/frieden-2026-adapted-reversal-words` (proved) by `D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"frieden-2026-adapted-reversal-words","declaration_gid":"D5/S1/Words/Permutations/FriedenAdaptedWords.conjecture410","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gabriel Frieden, Pavlo Pylyavskyy, Leonid Rybnikov (2026). *The big cactus group, invariant tensors, and rectangular tableaux*. DOI: [10.48550/arXiv.2610.24842](https://doi.org/10.48550/arXiv.2610.24842). URL: <https://arxiv.org/html/2610.24842v1>.
