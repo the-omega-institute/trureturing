@@ -17,16 +17,16 @@ namespace D5.S3.Quantum.Fermionic.WeightedSlaterPurityDropBound
 private def realSign : AddChar (ZMod 2) ℝ :=
   AddChar.zmodChar 2 (ζ := (-1 : ℝ)) (by simp)
 
-private def diffMass (p : ℝ) (b : ZMod 2) : ℝ :=
+def diffMass (p : ℝ) (b : ZMod 2) : ℝ :=
   if b = 0 then (1 - p) ^ 2 + p ^ 2 else 2 * p * (1 - p)
 
-private def squaredBias (p : ℝ) : ℝ := (1 - 2 * p) ^ 2
+def squaredBias (p : ℝ) : ℝ := (1 - 2 * p) ^ 2
 
-private def parityFactor (p : ℝ) (a : ZMod 2) : ℝ :=
+def parityFactor (p : ℝ) (a : ZMod 2) : ℝ :=
   if a = 0 then 1 else squaredBias p
 
 open Classical in
-private noncomputable def puritySum {U V : Type*} [Fintype U] [Fintype V]
+noncomputable def puritySum {U V : Type*} [Fintype U] [Fintype V]
     (A : Matrix U V (ZMod 2)) (p : U → ℝ) (q : V → ℝ) : ℝ :=
   ∑ z : U → ZMod 2, (∏ k, diffMass (p k) (z k)) *
     ∏ j, parityFactor (q j) ((Aᵀ *ᵥ z) j)
@@ -77,7 +77,7 @@ private theorem diffMass_nonneg {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) (w : ZMo
     exact mul_nonneg (mul_nonneg (by norm_num) h0) (sub_nonneg.mpr h1)
 
 open Classical in
-private theorem difference_from_balancing {U V : Type*}
+theorem difference_from_balancing {U V : Type*}
     [Fintype U] [DecidableEq U] [Fintype V]
     (A : Matrix U V (ZMod 2)) (p : U → ℝ) (q : V → ℝ) (i : U) :
     puritySum A p q - puritySum A (Function.update p i (1 / 2)) q =
@@ -105,7 +105,7 @@ private theorem difference_from_balancing {U V : Type*}
 
 open OrderedSlaterCut SlaterPairCutRank
 
-private def endpointMass (p : ℝ) (e : Bool) : ℂ := if e then (p : ℂ) else ↑(1 - p)
+def endpointMass (p : ℝ) (e : Bool) : ℂ := if e then (p : ℂ) else ↑(1 - p)
 
 private theorem endpointMass_difference (p : ℝ) (z : ZMod 2) :
     ∑ v : ZMod 2, endpointMass p (pickEndpoint v) * endpointMass p (pickEndpoint (v + z)) =
@@ -128,7 +128,7 @@ private theorem endpointMass_parity (p : ℝ) (a : ZMod 2) :
     ring
 
 open Classical in
-private theorem marginal_eq_real {ι : Type*} [LinearOrder ι] [Fintype ι]
+theorem marginal_eq_real {ι : Type*} [LinearOrder ι] [Fintype ι]
     {m n : ℕ} {I : Set ι} (left : (Fin m × Bool) ↪ I) (right : (Fin n × Bool) ↪ ↥(Iᶜ))
     (hl : ∀ k, (left (k, false) : ι) < left (k, true))
     (hr : ∀ j, (right (j, false) : ι) < right (j, true))
@@ -192,19 +192,19 @@ private theorem pivot_fiber_mass_ge {P F W : Type*} [Fintype P] [Fintype F] [Add
           have hsingle : term x ≤ ∑ z, term z :=
             Finset.single_le_sum (fun z _ => hterm z) (Finset.mem_univ x)
           simpa only [term, hx, ite_true] using hsingle
-private theorem diffMass_sum (q : ℝ) : ∑ b : ZMod 2, diffMass q b = 1 := by
+theorem diffMass_sum (q : ℝ) : ∑ b : ZMod 2, diffMass q b = 1 := by
   have huniv : (Finset.univ : Finset (ZMod 2)) = {0, 1} := by decide
   simp [huniv, diffMass]
   ring
 
-private theorem diffMass_lower (q : ℝ) (b : ZMod 2) :
+theorem diffMass_lower (q : ℝ) (b : ZMod 2) :
     2 * q * (1 - q) ≤ diffMass q b := by
   by_cases hb : b = 0
   · simp only [diffMass, hb, ite_true]
     nlinarith [sq_nonneg (1 - 2 * q)]
   · simp [diffMass, hb]
 
-private theorem squaredBias_le_one {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) :
+theorem squaredBias_le_one {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) :
     squaredBias p ≤ 1 := by
   unfold squaredBias
   nlinarith [mul_nonneg h0 (sub_nonneg.mpr h1)]
@@ -214,7 +214,7 @@ private theorem parityFactor_nonneg (p : ℝ) (a : ZMod 2) : 0 ≤ parityFactor 
   · simp [parityFactor, ha]
   · simpa only [parityFactor, ha, ite_false, squaredBias] using sq_nonneg (1 - 2 * p)
 
-private theorem deterministic_probability {q : ℝ} (h0 : 0 ≤ q) (h1 : q ≤ 1)
+theorem deterministic_probability {q : ℝ} (h0 : 0 ≤ q) (h1 : q ≤ 1)
     (h : ¬ (0 < q ∧ q < 1)) : q = 0 ∨ q = 1 := by
   by_cases hz : q = 0
   · exact Or.inl hz
@@ -222,7 +222,7 @@ private theorem deterministic_probability {q : ℝ} (h0 : 0 ≤ q) (h1 : q ≤ 1
     exact Or.inr (le_antisymm h1 (le_of_not_gt fun hlt => h ⟨hpos, hlt⟩))
 
 open Classical in
-private theorem mulVec_restrict_active {U V : Type*} [Fintype V]
+theorem mulVec_restrict_active {U V : Type*} [Fintype V]
     (A : Matrix U V (ZMod 2)) (q : V → ℝ) (w : V → ZMod 2)
     (hsupport : ∀ j, ¬ (0 < q j ∧ q j < 1) → w j = 0) (k : U) :
     (A *ᵥ w) k = ∑ j : {j : V // 0 < q j ∧ q j < 1}, A k j * w j := by
@@ -292,7 +292,7 @@ private theorem split_fiber_mass_ge {R L P F : Type*}
     (fun j b => diffMass_nonneg (hq0 _) (hq1 _) b) (fun j => diffMass_sum _)
 
 open Classical in
-private theorem balancing_difference_ge_fiber {U V : Type*}
+theorem balancing_difference_ge_fiber {U V : Type*}
     [Fintype U] [DecidableEq U] [Fintype V]
     (A : Matrix U V (ZMod 2)) (p : U → ℝ) (q : V → ℝ) (i : U)
     (hp0 : ∀ k, 0 ≤ p k) (hp1 : ∀ k, p k ≤ 1)
