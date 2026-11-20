@@ -46,7 +46,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       ∃ a : Fin 1 → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
         (∀ i, ∑ j, a j i * unitWeights j = 1 * x i) := by
     refine ⟨fun _ => x, fun _ => ?_, fun i => ?_⟩
-    · omega
+    · change (∑ i, x i) = U
+      omega
     · simp [unitWeights]
   obtain ⟨S, _, _, w, _, _, total, _, _, _, budget⟩ :=
     alternate (k := 2) (m := 2) (n := 1) (c := 1)
@@ -83,7 +84,18 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.GridReadoutConstruction
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "body", "arg", "arg", "arg", "arg", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
