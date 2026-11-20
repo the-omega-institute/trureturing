@@ -553,7 +553,7 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
-GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。手动补产按分支和固定 SHA 串行，自动 producer 按分支串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
 
 手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
@@ -594,11 +594,11 @@ GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时�
 
 Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地址，不是新 cache key 或格式代际。artifact 内仅 `preparation.json` 与 `native.tar.gz`：前者绑定源身份、producer runtime、现有 native partition 与 elan pin key，不含 schema/version；后者从 `lean_actions.native_archive_paths` 和 `Meta/ci-cache-paths.json` 展开原生 project/dependency 成员，保留隐藏文件与可执行权限。toolchain 仍由普通 elan restore/install 负责。artifact ID 是不可变取回地址；同一 run 重试上传替换名称对应的旧 artifact 时取得新 ID。消费者核对该 ID 的 workflow run/SHA、记录的精确 producer attempt 成功以及 artifact 创建时点落在该 attempt 区间；latest run 状态与可变 PR 关联不替代精确 attempt。源身份、M 父提交与 protected runtime history 继续校验。
 
-`current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心先按源码和报告输入选择 project 种子。有同源码种子时先恢复；当前提交相对第一父提交未改报告模块或配置输入时也可提前试父树种子，缺索引时可试普通增量种子。首选传输未命中或失败时可试另一份合格种子。报告输入与 bundle 通过 probe 时保留该种子。探针失败或拒绝时仍可采用 PR 准备。其余情形在普通 dependency/project restore 前尝试显式采用 PR 准备；`lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
+`current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心先按源码和报告输入选择 project 种子。有同源码种子时先恢复；当前提交相对第一父提交未改报告模块或配置输入时也可提前试父树种子，缺索引时可试普通增量种子。传输失败或报告格式不兼容时可试另一份合格种子。报告输入与 bundle 通过 probe 时保留该种子。探针失败或拒绝时仍可采用 PR 准备。其余情形在普通 dependency/project restore 前尝试显式采用 PR 准备；`lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
 
 采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 120m 计算预算；下载和准备不扣该预算，外层平台上限独立。
 
-合并本身使匹配准备对该目标事件具备采用资格；不需第二个异步 publisher 完成，不强制重复完整冷编译。调度、API 可见性和下载仍有延迟。target 报告成功且工作量已知时，已验证采用可保存现有普通 project key，真实零工作也保留 `build_work=0`；无采用的普通零工作仍抑制上传。`project_seed_available` 只认可确认的普通发布，或普通缓存已接受且报告零工作；artifact 存在、已采用或 upload 成功均不单独抑制长 fallback。若短保存失败，长核心使用同一恢复顺序。显式固定提交的 protected build 按目标 ref 与 source SHA 排队，自动 push 补产沿用分支并发组。
+合并本身使匹配准备对该目标事件具备采用资格；不需第二个异步 publisher 完成，不强制重复完整冷编译。调度、API 可见性和下载仍有延迟。target 报告成功且工作量已知时，已验证采用可保存现有普通 project key，真实零工作也保留 `build_work=0`；无采用的普通零工作仍抑制上传。`project_seed_available` 只认可确认的普通发布，或普通缓存已接受且报告零工作；artifact 存在、已采用或 upload 成功均不单独抑制长 fallback。若短保存失败，长核心使用同一恢复顺序。显式固定提交的 protected build 按目标 ref 与 source SHA 排队，自动 push 补产沿用分支并发组。已验证当前报告的长构建只覆盖同一运行的续跑进度；手动旧 SHA 有独立的续跑地址。
 
 调用者沿现有生命周期持有 `AUTO_MERGE=0`，等待具体 producer run 成功及当前 head required 成功，再 pinned merge；源 required 可在准备完成后重跑以取得材料，无目标 cache 时也适用。准备成功不代表 required 成功；head 改变须重新准备。此顺序不新增 required check、保护规则、调度器或全局合并门。先在同一 integration 安装入口，再以未合入源 PR 验证隔离、当前 required、实际合并首次消费、零工作普通发布和长 fallback。实际 artifact 大小、权限、API、传输成本与首次事件仍需真实集成核验，本地 helper 测试不替代；dev 安装须经普通交付，不直推解锁。
 

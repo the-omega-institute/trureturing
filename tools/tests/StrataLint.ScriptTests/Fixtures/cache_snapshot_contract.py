@@ -392,7 +392,9 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 mock.patch.object(owner, "parent_report_inputs_unchanged", return_value=True):
             primary, secondary = self.cache_row("101-1"), self.cache_row("100-1")
             bindings = [self.cache_row(f"source-{tree}-101-1"), self.cache_row(f"source-{parent}-100-1")]
-            values, _, _ = self.lookup_keys([self.cache_page([primary, secondary, *bindings])])
+            ordinary = self.cache_row("250-1")
+            values, _, _ = self.lookup_keys([self.cache_page([primary, secondary, ordinary, *bindings])])
+            self.assertEqual(ordinary["key"], values["project_fallback_key"])
             self.assertEqual(primary["key"], values["project_probe_key"])
             self.assertEqual(secondary["key"], values["project_alternate_key"])
             for rows in ([secondary, bindings[1]], [secondary]):
@@ -783,6 +785,20 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                    STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)
         with mock.patch.dict(os.environ, env, clear=True):
             self.assertTrue(owner.resume_spec(self.root)["key"].endswith("17-2"))
+
+    def test_historical_recovery_checkpoint_cannot_shadow_protected_push(self):
+        owner = self.resume_setup()
+        pin = "b" * 40
+        env = dict(self.env, GITHUB_SHA="a" * 40)
+        with mock.patch.dict(os.environ, env, clear=True):
+            automatic = owner.resume_spec(self.root)
+            with mock.patch.dict(os.environ, {"GITHUB_EVENT_NAME": "workflow_dispatch",
+                    "STRATALINT_CACHE_SOURCE_VALIDATED": "true", "STRATALINT_CACHE_SOURCE_REF": env["GITHUB_REF"],
+                    "STRATALINT_CACHE_SOURCE_COMMIT": pin, "STRATALINT_CACHE_CHECKED_OUT_SHA": pin}):
+                recovery = owner.resume_spec(self.root)
+                self.assertFalse(owner.resume_key_matches(automatic, recovery["key"]))
+                with mock.patch.dict(os.environ, {"GITHUB_RUN_ATTEMPT": "3"}):
+                    self.assertTrue(owner.resume_key_matches(owner.resume_spec(self.root), recovery["key"]))
 
     def test_resume_restore_preserves_partial_native_work_without_certifying_a_report(self):
         owner = self.resume_setup()

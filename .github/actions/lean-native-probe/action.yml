@@ -1,0 +1,41 @@
+name: Restore and probe a native Lean seed
+description: Keep an exact or format-compatible project transfer for the normal Lean entry
+inputs:
+  key:
+    description: Exact native payload key
+    required: true
+  paths:
+    description: Registered project archive paths
+    required: true
+outputs:
+  matched:
+    description: Whether the report matches the current checkout
+    value: ${{ steps.probe.outputs.matched }}
+  key:
+    description: Payload retained as a verified report or incremental seed
+    value: ${{ steps.probe.outputs.key }}
+runs:
+  using: composite
+  steps:
+    - id: transfer
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ inputs.paths }}
+        key: ${{ inputs.key }}
+    - id: probe
+      if: steps.transfer.outcome == 'success' && steps.transfer.outputs.cache-hit == 'true'
+      continue-on-error: true
+      shell: bash
+      env:
+        PAYLOAD: ${{ steps.transfer.outputs.cache-matched-key }}
+      run: |
+        decision="$(python3 tools/lean-inspector/reuse.py probe --check-seed-format --repository "$GITHUB_WORKSPACE" --report .lake/build/stratalint/raw-lean-report.json)"
+        echo "LEAN_SOURCE_SEED $decision"
+        if jq -e '.compatible == true' <<< "$decision" >/dev/null; then
+          jq -er --arg key "$PAYLOAD" 'if .needs_lake == false then "matched=true" else "matched=false" end, "key=" + $key' <<< "$decision" >> "$GITHUB_OUTPUT"
+        fi
+    - name: Discard incomplete or incompatible project material
+      if: steps.probe.outputs.key == ''
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers project --project-outcome failure

@@ -378,6 +378,8 @@ def project_restore_key(keys, trees=(), parent_compatible=False):
         if early:
             spec["probe_key"] = early[0]
             spec["alternate_key"] = next((key for key in early if key != early[0]), "")
+            attempted = {spec["probe_key"], spec["alternate_key"]}
+            spec["fallback_key"] = next((key for _, _, key in ranked if key not in attempted), fallback)
         receipt("project", "restore-preference", base_ref=selected_ref, requested_key=preferred,
                 source_match=("historical-recovery", "unbound", "first-parent", "checkout")[rank])
         return preferred
@@ -555,6 +557,8 @@ def resume_spec(root):
     }
     if preparation_source_is_valid():
         binding["target_ref"] = os.environ["STRATALINT_CACHE_TARGET_REF"]
+    elif manual_source_is_valid() and os.environ["STRATALINT_CACHE_SOURCE_COMMIT"] != os.environ.get("GITHUB_SHA"):
+        binding["source_commit"] = os.environ["STRATALINT_CACHE_SOURCE_COMMIT"]
     identity = hashlib.sha256(json.dumps(binding, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     prefix = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-{identity}-"
     paths = native_archive_paths(root, LAYERS)
@@ -727,7 +731,8 @@ def main():
         if args.command.startswith("resume-"):
             spec = resume_spec(root)
             if args.command == "resume-keys":
-                output({"resume_key": spec["key"], "resume_restore_prefix": spec["restore_prefix"]})
+                output({"resume_key": spec["key"], "resume_restore_prefix": spec["restore_prefix"],
+                        "resume_run_prefix": spec["restore_prefix"] + os.environ["GITHUB_RUN_ID"] + "-"})
                 output_archive_paths("resume", spec["paths"])
             elif args.command == "resume-restore":
                 resume_restore(root, spec, args.resume_key, args.resume_outcome)

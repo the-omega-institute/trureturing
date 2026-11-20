@@ -129,6 +129,24 @@ class ReuseTests(unittest.TestCase):
         self.assertFalse(api.reuse(self.root, self.output, self.output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists())
 
+    def test_native_probe_distinguishes_incremental_and_incompatible_payloads(self):
+        self.receipt()
+        command = [sys.executable, '-B', str(HERE / 'reuse.py'), 'probe', '--check-seed-format',
+                   '--repository', str(self.root), '--report', str(self.report)]
+
+        def decision():
+            result = json.loads(subprocess.check_output(command, text=True))
+            return result['needs_lake'], result['compatible']
+
+        self.assertEqual((False, True), decision())
+        (self.root / 'D5/A.lean').write_text('def a := 2\n')
+        self.assertEqual((True, True), decision())
+        receipt = publication.member(self.report, '.reuse.json')
+        data = json.loads(receipt.read_text())
+        data['inputs']['report_format'] = 'obsolete'
+        receipt.write_text(json.dumps(data))
+        self.assertEqual((True, False), decision())
+
     def test_seed_format_requires_complete_sealed_inputs(self):
         api = self.receipt()
         receipt = publication.member(self.report, '.reuse.json')

@@ -603,6 +603,8 @@ def main():
     parser.add_argument('--bundle-sha256', help='complete bundle identity returned by publication')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build')
+    parser.add_argument('--check-seed-format', action='store_true',
+                        help='also check whether a mismatched seed can be used for incremental report work')
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
@@ -629,6 +631,8 @@ def main():
              args.bundle_sha256)
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
+        if args.check_seed_format:
+            result['compatible'] = not result['needs_lake'] or seed_format(args.report)['compatible']
         print(json.dumps(result, separators=(',', ':')))
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)

@@ -75,13 +75,13 @@ runs:
       uses: actions/cache/restore@v5
       with:
         path: ${{ steps.keys.outputs.project_archive_path }}
-        key: ${{ steps.keys.outputs.project_restore_key }}
+        key: ${{ steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
         restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
     - name: Restore optional validated seeds
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
         PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
-        PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+        PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
       shell: bash
@@ -107,7 +107,7 @@ runs:
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
-        restore-keys: ${{ steps.resume_keys.outputs.resume_restore_prefix }}
+        restore-keys: ${{ steps.prepared.outputs.matched == 'true' && steps.resume_keys.outputs.resume_run_prefix || steps.resume_keys.outputs.resume_restore_prefix }}
         lookup-only: true
     - id: resume
       if: steps.resume_lookup.outputs.cache-matched-key != ''

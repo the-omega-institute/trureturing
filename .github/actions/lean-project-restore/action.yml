@@ -2,10 +2,10 @@ name: Restore a source-matched Lean project or PR preparation
 description: Check the restored report before giving it precedence over the PR preparation
 inputs:
   project-key:
-    description: Project cache key bound to the checked-out source
+    description: Preferred native seed to probe
     required: false
   alternate-key:
-    description: Second compatible source when the preferred transfer misses
+    description: Another eligible native seed for this checkout
     required: false
   project-paths:
     description: Registered project archive paths
@@ -19,49 +19,26 @@ outputs:
     value: ${{ steps.artifact.outputs.adopted }}
   matched:
     description: Whether the checked-out report inputs and bundle matched
-    value: ${{ steps.probe.outputs.matched }}
+    value: ${{ steps.primary.outputs.matched == 'true' || steps.alternate.outputs.matched == 'true' }}
   project-key:
-    description: Successfully transferred project key
-    value: ${{ steps.artifact.outputs.adopted != 'true' && steps.transferred.outputs.key || '' }}
+    description: Key of the retained native material
+    value: ${{ steps.artifact.outputs.adopted != 'true' && (steps.primary.outputs.key || steps.alternate.outputs.key) || '' }}
 runs:
   using: composite
   steps:
-    - id: exact
+    - id: primary
       if: inputs.project-key != ''
-      continue-on-error: true
-      uses: actions/cache/restore@v5
+      uses: ./.github/actions/lean-native-probe
       with:
-        path: ${{ inputs.project-paths }}
         key: ${{ inputs.project-key }}
-    - name: Discard an incomplete project transfer
-      if: inputs.project-key != '' && (steps.exact.outcome != 'success' || steps.exact.outputs.cache-hit != 'true')
-      shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers project --project-outcome failure
+        paths: ${{ inputs.project-paths }}
     - id: alternate
-      if: inputs.alternate-key != '' && (steps.exact.outcome != 'success' || steps.exact.outputs.cache-hit != 'true')
-      continue-on-error: true
-      uses: actions/cache/restore@v5
+      if: inputs.alternate-key != '' && steps.primary.outputs.key == ''
+      uses: ./.github/actions/lean-native-probe
       with:
-        path: ${{ inputs.project-paths }}
         key: ${{ inputs.alternate-key }}
-    - name: Discard an incomplete alternate transfer
-      if: steps.alternate.outcome != 'skipped' && (steps.alternate.outcome != 'success' || steps.alternate.outputs.cache-hit != 'true')
-      shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers project --project-outcome failure
-    - id: transferred
-      shell: bash
-      env:
-        KEY: ${{ steps.exact.outcome == 'success' && steps.exact.outputs.cache-hit == 'true' && steps.exact.outputs.cache-matched-key || steps.alternate.outcome == 'success' && steps.alternate.outputs.cache-hit == 'true' && steps.alternate.outputs.cache-matched-key || '' }}
-      run: echo "key=$KEY" >> "$GITHUB_OUTPUT"
-    - id: probe
-      if: steps.transferred.outputs.key != ''
-      continue-on-error: true
-      shell: bash
-      run: |
-        decision="$(python3 tools/lean-inspector/reuse.py probe --repository "$GITHUB_WORKSPACE" --report .lake/build/stratalint/raw-lean-report.json)"
-        echo "LEAN_SOURCE_SEED $decision"
-        jq -er 'if .needs_lake == false then "matched=true" else "matched=false" end' <<< "$decision" >> "$GITHUB_OUTPUT"
+        paths: ${{ inputs.project-paths }}
     - id: artifact
-      if: inputs.allow-preparation == 'true' && steps.probe.outputs.matched != 'true'
+      if: inputs.allow-preparation == 'true' && steps.primary.outputs.matched != 'true' && steps.alternate.outputs.matched != 'true'
       shell: bash
       run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"

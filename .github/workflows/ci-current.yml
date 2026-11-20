@@ -346,7 +346,7 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_restore_key }}
+          key: ${{ steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - id: lean_seeds
         if: needs.detect.outputs.report == 'true'
@@ -354,7 +354,7 @@ jobs:
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
-          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+          PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
@@ -453,14 +453,14 @@ jobs:
             'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
       - id: index
         name: Bind the project payload to the verified checkout
-        if: github.event_name == 'push' && github.ref_protected && (steps.project_published.outcome == 'success' || (steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && steps.prepared.outputs.matched == 'true'))
+        if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && (steps.project_published.outcome == 'success' || (steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && steps.prepared.outputs.matched == 'true')) }}
         continue-on-error: true
         env:
           PAYLOAD: ${{ steps.project_published.outcome == 'success' && steps.keys.outputs.project_key || steps.prepared.outputs.project-key }}
         shell: bash
         run: python3 tools/scripts/worktree/lean_actions.py index-key --repository "$GITHUB_WORKSPACE" --project-key "$PAYLOAD"
       - name: Index the published or retained project seed
-        if: steps.index.outputs.marker != ''
+        if: ${{ !cancelled() && steps.index.outputs.marker != '' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:

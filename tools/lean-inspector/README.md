@@ -105,7 +105,7 @@ producer run 和当前 head 的 required 均成功后，才执行普通 pinned m
 dispatch 成功不代表构建、恢复或 required 成功。dispatch、来源、构建、artifact 上传或身份确认失败
 保留原始原因，调用者不得合并；producer 成功后可重试 required，重新触发标签须先移除再添加。
 普通 PR required job 不发布 project 种子。
-PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
+PR 在自身 merge ref 和 base 分支的可见载荷中，依次选择当前树、第一父树、普通增量和其他历史补产。同级优先自身 ref。当前报告探针通过时可跳过 PR 准备。
 
 手动 `operation=build`（默认）要求 `source_ref` 等于 dispatch ref，且为受保护的 dev/integration 分支；
 `source_sha` 必须是该分支可达的非零 40 位小写十六进制提交。`operation=pr` 使用上述独立来源校验。
@@ -113,7 +113,7 @@ PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支�
 构建报告及普通检查所需的原生程序和 fixture 产物，并完成下述报告所需的依赖范围 FIB 回归；
 其它测试仍由普通 CI 命中单元执行。PR 仅准备 artifact，手动与自动分支 producer 按既有条件发布缓存。
 发布使用既有格式和 key，验证完整 bundle；正工作保存 run/attempt 快照，已恢复有效种子的
-`no-build-work` 保留实际恢复 key。手动与自动分支 producer 共用分支 concurrency；PR producer
+`no-build-work` 保留实际恢复 key。手动补产按分支和固定提交排队，自动补产按分支排队。PR producer
 按源 PR 串行并取消旧运行。定时受保护 `dev` Release publisher 独立保持 120 分钟。
 
 两种 dispatch 可显式设 `regenerate_report_artifacts=true`，默认关闭；本地等价入口为
