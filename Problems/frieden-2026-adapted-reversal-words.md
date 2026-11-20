@@ -76,6 +76,18 @@ restriction counts selected positions before each retained swap. Comparing
 ranks before and after each retained crossing gives the complete restricted
 word. The edge orientation is chosen from the first occurrence on each edge.
 
+The source-bound registration for the two named results uses the actual
+avoidance observation on words of every rank. For each theorem, the
+Boolean readout decides its original avoidance predicate. The word
+`123212` witnesses failure of the law for the constant-true readout.
+
+Section 3.9 registration remains open for the public helpers in
+`FriedenSortingNetwork`. Their readouts require source bindings for
+the state, selected set, position or letter operands in the exact
+transition and crossing statements. The two avoidance bindings do
+not supply the realization and sensitivity evidence for those helpers.
+[#32071](https://github.com/the-omega-institute/trureturing/issues/32071)
+
 ## Triage
 
 The equivalence is proved by `Frieden.conjecture410`.
