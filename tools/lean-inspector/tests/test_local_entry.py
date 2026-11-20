@@ -483,7 +483,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
         destination.chmod(0o755)
 
     def test_make_full_entries_reject_missing_and_invalid_confirmation_before_dispatch(self):
-        for target in ('lean', 'build', 'lean-report', 'test', 'warm-donor',
+        for target in ('lean', 'build', 'lean-report', 'warm-donor',
                        'lean-cache-to-github-without-mathlib'):
             for value in (None, '0', 'yes', '2'):
                 with self.subTest(target=target, value=value):
@@ -493,6 +493,28 @@ class FullBuildConfirmationTests(unittest.TestCase):
                     self.assertIn('FULL_BUILD=1', result.stderr)
                     self.assertFalse(self.marker.exists())
                     self.assertFalse((self.root / '.lake').exists())
+
+    def test_make_test_passes_the_change_manifest_to_scoped_admission(self):
+        self.env['PYTHONDONTWRITEBYTECODE'] = '1'
+        (self.root / 'tools/Makefile').write_text('dotnet:\n\t@:\n')
+        workflow = self.root / 'tools/scripts/workflow'
+        workflow.mkdir()
+        for filename in ('ci_contract.py', 'ci_detect.py'):
+            shutil.copy2(ROOT / 'tools/scripts/workflow' / filename, workflow / filename)
+        (workflow / 'ci_pr_lean.py').write_text(
+            "from pathlib import Path\nimport sys\nPath('calls').write_bytes(Path(sys.argv[1]).read_bytes())\n")
+        self.run_command('git', 'init', '-q').check_returncode()
+        self.run_command('git', 'add', '.').check_returncode()
+        self.run_command('git', '-c', 'user.name=fixture', '-c', 'user.email=fixture@example.invalid',
+                         '-c', 'commit.gpgSign=false', 'commit', '-qm', 'base').check_returncode()
+        (self.root / 'change.md').write_text('changed\n')
+        for value in (None, '0', 'yes', '2'):
+            with self.subTest(value=value):
+                self.marker.unlink(missing_ok=True)
+                arguments = [] if value is None else ['FULL_BUILD=' + value]
+                result = self.run_command('make', '--no-print-directory', 'test', 'BASE=HEAD', *arguments)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(self.marker.read_bytes(), b'change.md\0')
 
     def test_make_confirmed_full_entries_dispatch(self):
         for path in ('tools/scripts/worktree/lean-cache-run.sh',

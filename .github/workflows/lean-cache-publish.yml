@@ -1,12 +1,14 @@
 name: Lean build cache publication
 
-# Scheduled runs publish the protected-dev Release. Manual builds may seed
-# the Actions cache from a validated protected commit.
+# Protected pushes and pinned manual builds refresh the Actions cache.
+# Scheduled runs publish the protected-dev Release.
 # Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
 # allow up to the GitHub-hosted 360-minute job limit.  Example:
 # gh workflow run lean-cache-publish.yml --ref dev \
 #   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
+  push:
+    branches: [dev, 'integration-**']
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -43,18 +45,28 @@ on:
 
 permissions: {}
 
+# Replace only a pending automatic refresh for the same ref. Manual and
+# scheduled runs each get their own workflow group before job-level locking.
+concurrency:
+  group: lean-cache-publication-${{ github.event_name == 'push' && github.ref || github.run_id }}
+  cancel-in-progress: false
+
 jobs:
-  manual-producer:
+  producer:
     name: Produce the protected branch Lean cache
     permissions:
       contents: write
       actions: write
       pull-requests: read
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'build'
+    if: >-
+      (github.event_name == 'push' && github.event.deleted == false && github.ref_protected &&
+        (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) ||
+      (github.event_name == 'workflow_dispatch' && inputs.operation == 'build')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-branch-${{ github.ref }}
+      group: lean-cache-producer
+      queue: max
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'
@@ -111,6 +123,7 @@ jobs:
         env:
           CI_HIT_PATHS: '*'
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
         run: |
           if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
             export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
@@ -119,8 +132,8 @@ jobs:
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
         with:
-          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
-          native-report-batch-modules: ${{ inputs.native_report_batch_modules }}
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts && 'true' || 'false' }}
+          native-report-batch-modules: ${{ inputs.native_report_batch_modules || '100' }}
           release-seed-tag: ${{ inputs.release_seed_tag }}
           release-seed-producer: ${{ inputs.release_seed_producer }}
 
@@ -132,6 +145,10 @@ jobs:
       actions: write
     runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 360
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
     steps:
@@ -248,6 +265,10 @@ jobs:
       actions: write
     runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
     steps:
