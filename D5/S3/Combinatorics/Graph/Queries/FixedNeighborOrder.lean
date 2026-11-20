@@ -66,7 +66,7 @@ theorem uniform_coordinate_cylinder (s : Finset V) (a : ∀ v : s, F v) :
 variable {Y : V → Type*}
 
 omit [Fintype V] [DecidableEq V] [∀ v, Fintype (F v)] [∀ v, Nonempty (F v)] in
-private theorem same_history_iff (read : ∀ v, F v → Y v)
+theorem same_history_iff (read : ∀ v, F v → Y v)
     (p : PassiveProtocol V Y) (f g : ∀ v, F v) :
     runPassiveProtocol (fun v h => read v (h v)) p f =
       runPassiveProtocol (fun v h => read v (h v)) p g ↔
