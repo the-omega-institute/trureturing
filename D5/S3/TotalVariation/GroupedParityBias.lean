@@ -24,9 +24,9 @@ open D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift (labelKernel)
 
 variable {A I : Type*} [AddCommGroup A] [Fintype A] [Fintype I]
 
-private def sign (ψ : AddChar A ℂ) (x : A) : ℝ := (ψ x).re
+def sign (ψ : AddChar A ℂ) (x : A) : ℝ := (ψ x).re
 
-private theorem value_cases (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
+theorem value_cases (two : ∀ x : A, x + x = 0) (ψ : AddChar A ℂ) (x : A) :
     ψ x = 1 ∨ ψ x = -1 := by
   apply mul_self_eq_one_iff.mp
   rw [← AddChar.map_add_eq_mul, two, AddChar.map_zero_eq_one]
@@ -61,10 +61,10 @@ private theorem orthogonality (two : ∀ x : A, x + x = 0) (x y : A) :
       _ ↔ x = y := by rw [← eq_neg_iff_add_eq_zero.mpr (two y)]
   simp_rw [← sign_add two, sum_sign, hz]
 
-private noncomputable def moment (μ : A → ℝ) (ψ : AddChar A ℂ) : ℝ :=
+noncomputable def moment (μ : A → ℝ) (ψ : AddChar A ℂ) : ℝ :=
   ∑ x, μ x * sign ψ x
 
-private theorem law_from_moments (two : ∀ x : A, x + x = 0)
+theorem law_from_moments (two : ∀ x : A, x + x = 0)
     (μ ν : A → ℝ) (h : ∀ ψ, moment μ ψ = moment ν ψ) : μ = ν := by
   classical
   have hproject (m : A → ℝ) (a : A) :
