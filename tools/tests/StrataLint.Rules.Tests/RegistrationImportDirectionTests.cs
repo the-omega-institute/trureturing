@@ -172,6 +172,24 @@ public sealed class RegistrationImportDirectionTests
     }
 
     [Fact]
+    public void ScopedInterfaceDependencyIsOutsideStratumOwners()
+    {
+        const string helper = "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Analysis/Finite.lean";
+        const string higher = "D5/S1/Phase/Higher.lean";
+        var files = Files((Source, Imports("D5.S1.Phase.Higher")), (higher, "-- math\n"),
+            (helper, Imports("D5.S1.Phase.Higher")));
+        var report = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>
+        {
+            [Source] = new(["D5.S1.Phase.Higher"], []),
+            [higher] = new([], []),
+            [helper] = new(["D5.S1.Phase.Higher"], []),
+        });
+        var findings = Evaluate(files, new(files), report);
+        Assert.Contains(findings, finding => finding.Path == Source && finding.AdmissionEffect == AdmissionEffect.Block);
+        Assert.DoesNotContain(findings, finding => finding.Path == helper);
+    }
+
+    [Fact]
     public void ExistingD5StratumViolationIsStillReported()
     {
         const string higher = "D5/S1/Phase/Higher.lean";

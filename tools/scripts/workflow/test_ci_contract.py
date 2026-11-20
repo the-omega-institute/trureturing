@@ -101,7 +101,10 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(plan["hits"]["tests-architecture"])
         self.assertFalse(plan["hits"]["tests-worktree-contract"])
         self.assertTrue(plan["report"])
-        self.assertFalse(plan["delta"])
+        self.assertTrue(plan["delta"])
+        data, _ = contract.load(self.root)
+        path = ["Blueprint/D5/S3/Content.scribe.cs"]
+        self.assertEqual(plan, contract.selection(data, path, "push"))
 
     def test_real_infrastructure_keeps_behavioral_tests(self):
         self.put("tools/scripts/worktree/worktree_protocol.py", b"# infrastructure\n")

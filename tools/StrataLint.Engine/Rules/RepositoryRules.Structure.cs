@@ -17,8 +17,7 @@ internal static partial class RepositoryRules
         foreach (var (path, imports) in LeanImportClosure.CandidateImports(context.Current, context.Lean.Report)
                      .OrderBy(item => item.Path.Value, StringComparer.Ordinal))
         {
-            // Reg is a downstream registration package, not a mathematical stratum.
-            if (path.Value == "Reg.lean" || path.Value.StartsWith("Reg/", StringComparison.Ordinal)) continue;
+            if (!LeanClosureValidator.IsManagedLean(path.Value)) continue;
             foreach (var module in imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
