@@ -10,7 +10,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.Word` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.Weight` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.H` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.V` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.FaceSupport` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.Supported` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.occ` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -94,7 +94,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.blocked` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.EqAt` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObst
 
 *Formalization.* `D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction.HasFamily` (`✓ std3`).
 
-*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Citation.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 
@@ -136,7 +136,7 @@ $$\forall k : \mathbb{N}, 3 \leq k \implies \forall A,B,C,D : \mathbb{C}^{\times
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. URL: <https://arxiv.org/abs/2611.06780v1>.
+*Acknowledgement.* Gabriel Ortega; Eliecer Peña-Ancavil (2026). *A local Yang–Baxter obstruction for the hard-square model*. DOI: [10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780). URL: <https://arxiv.org/abs/2611.06780v1>.
 
 *Commentary.*
 

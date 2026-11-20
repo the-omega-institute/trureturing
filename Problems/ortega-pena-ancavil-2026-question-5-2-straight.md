@@ -1,7 +1,7 @@
 ---
 slug: ortega-pena-ancavil-2026-question-5-2-straight
 bibkey: ortegapenaancavil2026hardsquare
-doi: null
+doi: 10.48550/arXiv.2611.06780
 url: https://arxiv.org/abs/2611.06780v1
 triage: theorem
 motivation_gids:

@@ -9,7 +9,7 @@ internal sealed class HardSquareStraightBlockObstructionDocument : IScribeDocume
     private const string Module = "D5/S3/StatisticalMechanics/HardCore/HardSquareStraightBlockObstruction";
     private const string Slug = "ortega-pena-ancavil-2026-question-5-2-straight";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/ortegapenaancavil2026hardsquare");
+        LibraryNoteRef.Create("D5/L/SpinModels/ortegapenaancavil2026hardsquare");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The straight horizontal clause of Ortega and Peña-Ancavil's Question 5.2.",

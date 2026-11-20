@@ -3,7 +3,7 @@ bibkey: ortegapenaancavil2026hardsquare
 authors: Gabriel Ortega; Eliecer Peña-Ancavil
 year: 2026
 title: "A local Yang–Baxter obstruction for the hard-square model"
-doi: null
+doi: 10.48550/arXiv.2611.06780
 url: https://arxiv.org/abs/2611.06780v1
 claim: "Corollary 4.2 rules out an analytic Yang–Baxter family for two horizontal sites. Question 5.2 asks about larger blocks and arbitrary shapes."
 strata_touched:
@@ -11,6 +11,12 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
+
+## Verified locator
+
+[arXiv:2611.06780v1](https://arxiv.org/abs/2611.06780v1) · [DOI 10.48550/arXiv.2611.06780](https://doi.org/10.48550/arXiv.2611.06780)
+
+## Source anchors
 
 [Equation (2.2)](https://arxiv.org/html/2611.06780v1#S2.E2) uses the three
 weights in the order $W_{pq},W_{pr},W_{qr}$ with one nonzero scalar
