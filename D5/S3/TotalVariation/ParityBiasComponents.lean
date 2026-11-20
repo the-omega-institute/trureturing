@@ -39,15 +39,6 @@ private noncomputable def negativeProjection (H : AddSubgroup A) (c : L → A) (
   classical
   exact ∑ i with q i < 0, QuotientAddGroup.mk' H (c i)
 
-private theorem quotient_zero {H : AddSubgroup A} {a : A} :
-    QuotientAddGroup.mk' H a = 0 ↔ a ∈ H := by
-  change a ∈ (QuotientAddGroup.mk' H).ker ↔ a ∈ H
-  rw [QuotientAddGroup.ker_mk']
-
-private theorem fair_mem (c : L → A) (q : L → ℝ) (i : L) (hi : q i = 0) :
-    c i ∈ fairSpan c q :=
-  AddSubgroup.subset_closure ⟨i, hi, rfl⟩
-
 private theorem law_iff_quotient_coordinates (c : L → A) (s : A) (q₀ q : L → ℝ) :
     let H := fairSpan c q₀
     let π := QuotientAddGroup.mk' H
@@ -73,7 +64,7 @@ private theorem law_iff_quotient_coordinates (c : L → A) (s : A) (q₀ q : L �
         corrected_offset_positive two c s q₀ χ hn
       have hm := signed_offsets_agree_modulo_annihilator two (law c s q₀) a b ha hb
       rw [← fairSpan_eq_spectralAnnihilator two c s q₀] at hm
-      have hz : π (a - b) = 0 := quotient_zero.mpr hm
+      have hz : π (a - b) = 0 := (QuotientAddGroup.eq_zero_iff _).mpr hm
       dsimp only [a, b] at hz
       rw [map_sub, sub_eq_zero, map_add, map_add, add_right_inj, map_sum, map_sum] at hz
       exact hz
@@ -84,7 +75,7 @@ private theorem law_iff_quotient_coordinates (c : L → A) (s : A) (q₀ q : L �
   · rintro ⟨hH, hneg, hb⟩
     symm
     apply law_eq_of_matching_quotient_data two c s q₀ c s q hH
-    · apply quotient_zero.mp
+    · apply (QuotientAddGroup.eq_zero_iff _).mp
       change π ((s + ∑ i with q₀ i < 0, c i) - (s + ∑ i with q i < 0, c i)) = 0
       simp only [map_sub, map_add, map_sum, sub_eq_zero, add_right_inj]
       exact hneg.symm
@@ -101,7 +92,7 @@ private theorem nonzero_external (q : BiasFiber c s q₀) (i : L)
   intro hz
   apply hi
   rw [← fiber_fairSpan c s q₀ q]
-  exact fair_mem c q.val i hz
+  exact AddSubgroup.subset_closure ⟨i, hz, rfl⟩
 
 /-- The part of the fiber fixing the signs at all labels with nonzero quotient columns. -/
 def signSector (p : BiasFiber c s q₀) : Set (BiasFiber c s q₀) :=
@@ -164,7 +155,7 @@ private theorem projected_sign_agreement {H : AddSubgroup A} {q p : L → ℝ}
   apply Finset.sum_congr rfl
   intro i _
   by_cases hi : c i ∈ H
-  · have hzero := quotient_zero.mpr hi
+  · have hzero := (QuotientAddGroup.eq_zero_iff _).mpr hi
     simp [hzero]
   · by_cases hp : p i < 0
     · simp [hp, (h i hi).mpr hp]
@@ -207,10 +198,11 @@ private theorem deform_fairSpan (p q : BiasFiber c s q₀) (t : unitInterval) :
   · rw [← fiber_fairSpan c s q₀ q]
     apply (AddSubgroup.closure_le _).mpr
     rintro _ ⟨i, hz, rfl⟩
-    apply fair_mem c (deform c q₀ p.val q.val t) i
+    apply AddSubgroup.subset_closure
+    refine ⟨i, ?_, rfl⟩
     have hi : c i ∈ fairSpan c q₀ := by
       rw [← fiber_fairSpan c s q₀ q]
-      exact fair_mem c q.val i hz
+      exact AddSubgroup.subset_closure ⟨i, hz, rfl⟩
     simp [deform, hi, hz]
 
 private theorem deform_abs_le_one (p q : BiasFiber c s q₀) (t : unitInterval) (i : L) :
@@ -238,7 +230,7 @@ private theorem deform_groupBias (p q : BiasFiber c s q₀) (t : unitInterval)
   have hnot (i : L) (hi : i ∈ F) : c i ∉ fairSpan c q₀ := by
     intro hm
     have he := (Finset.mem_filter.mp hi).2
-    exact ha (he.symm.trans (quotient_zero.mpr hm))
+    exact ha (he.symm.trans ((QuotientAddGroup.eq_zero_iff _).mpr hm))
   have hp := ((law_iff_quotient_coordinates c s q₀ p.val).mp p.property.2).2.2 a ha
   have hq := ((law_iff_quotient_coordinates c s q₀ q.val).mp q.property.2).2.2 a ha
   unfold groupBias at hp hq ⊢
@@ -256,7 +248,7 @@ private theorem deform_groupBias (p q : BiasFiber c s q₀) (t : unitInterval)
   intro i hi
   apply abs_pos.mpr
   intro hz
-  exact hnot i hi (fair_mem c q₀ i hz)
+  exact hnot i hi (AddSubgroup.subset_closure ⟨i, hz, rfl⟩)
 
 private theorem deform_in_sector (p : BiasFiber c s q₀) (q : signSector c s q₀ p)
     (t : unitInterval) :
@@ -356,33 +348,12 @@ theorem connectedComponent_eq_signSector (p : BiasFiber c s q₀) :
   exact le_antisymm ((signSector_clopen c s q₀ p).connectedComponent_subset hp)
     ((isConnected_iff_connectedSpace.mpr inferInstance).subset_connectedComponent hp)
 
-local instance quotientModule (H : AddSubgroup A) : Module (ZMod 2) (A ⧸ H) :=
+private local instance quotientModule (H : AddSubgroup A) : Module (ZMod 2) (A ⧸ H) :=
   QuotientAddGroup.zmodModule (fun a => (ZModModule.char_nsmul_eq_zero 2 a) ▸ H.zero_mem)
 
-private noncomputable def signLinearMap (H : AddSubgroup A) [Fintype (External H c)] :
-    (External H c → ZMod 2) →ₗ[ZMod 2] A ⧸ H where
-  toFun e := ∑ i : External H c, e i • QuotientAddGroup.mk' H (c i.val)
-  map_add' x y := by simp [add_smul, Finset.sum_add_distrib]
-  map_smul' k x := by simp [smul_smul, Finset.smul_sum]
-
-private theorem signLinearMap_range (H : AddSubgroup A) [Fintype (External H c)] :
-    LinearMap.range (signLinearMap c H) =
-      Submodule.span (ZMod 2) (Set.range (fun i : External H c => QuotientAddGroup.mk' H (c i.val))) := by
-  classical
-  apply le_antisymm
-  · rintro _ ⟨e, rfl⟩
-    apply Submodule.sum_mem
-    intro i _
-    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
-  · apply Submodule.span_le.mpr
-    rintro _ ⟨i, rfl⟩
-    refine ⟨fun j => if j = i then 1 else 0, ?_⟩
-    change (∑ j : External H c, (if j = i then (1 : ZMod 2) else 0) •
-      QuotientAddGroup.mk' H (c j.val)) = QuotientAddGroup.mk' H (c i.val)
-    rw [Finset.sum_eq_single_of_mem i (Finset.mem_univ i)]
-    · simp
-    · intro j _ hji
-      simp [hji]
+private noncomputable abbrev signLinearMap (H : AddSubgroup A) [Fintype (External H c)] :
+    (External H c → ZMod 2) →ₗ[ZMod 2] A ⧸ H :=
+  Fintype.linearCombination (ZMod 2) (fun i => QuotientAddGroup.mk' H (c i.val))
 
 private noncomputable def signs (H : AddSubgroup A) (q : L → ℝ) : External H c → ZMod 2 :=
   fun i => if q i.val < 0 then 1 else 0
@@ -410,7 +381,7 @@ private theorem signLinearMap_signs (H : AddSubgroup A) [Fintype (External H c)]
     _ = _ := by
       apply Finset.sum_filter_of_ne
       intro i _ hn hi
-      have hz : QuotientAddGroup.mk' H (c i) = 0 := quotient_zero.mpr hi
+      have hz : QuotientAddGroup.mk' H (c i) = 0 := (QuotientAddGroup.eq_zero_iff _).mpr hi
       exact hn (by simp only [term, hz, ite_self])
 
 private noncomputable def withSigns (H : AddSubgroup A)
@@ -466,7 +437,7 @@ private theorem sign_assignment_realizable [Fintype (External (fairSpan c q₀) 
   have hqzero (i : L) : q i = 0 ↔ q₀ i = 0 := by
     rw [← abs_eq_zero, hqmag, abs_eq_zero]
   have hH : fairSpan c q = H := by simp only [fairSpan, hqzero, H]
-  have hqsign : signs c H q = e := withSigns_signs c H q₀ (fun i hi hz => hi (fair_mem c q₀ i hz)) e
+  have hqsign : signs c H q = e := withSigns_signs c H q₀ (fun i hi hz => hi (AddSubgroup.subset_closure ⟨i, hz, rfl⟩)) e
   refine ⟨⟨q, fun i => (hqmag i).trans_le (h₀ i), ?_⟩, hqsign⟩
   apply (law_iff_quotient_coordinates c s q₀ q).mpr
   refine ⟨hH, ?_, ?_⟩
@@ -513,7 +484,7 @@ theorem card_biasFiber_components (h₀ : ∀ i, |q₀ i| ≤ 1) :
   have hk : Nat.card S = Nat.card f.ker :=
     Nat.card_congr (f.toAddMonoidHom.fiberEquivKer p₀)
   have hdim := f.finrank_range_add_finrank_ker
-  rw [Module.finrank_pi, signLinearMap_range] at hdim
+  rw [Module.finrank_pi, Fintype.range_linearCombination] at hdim
   have hker : Module.finrank (ZMod 2) f.ker = Nat.card J - r := by
     rw [Nat.card_eq_fintype_card]
     change r + Module.finrank (ZMod 2) f.ker = Fintype.card J at hdim
