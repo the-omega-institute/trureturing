@@ -117,9 +117,6 @@ run_entry push "$AFTER" __unset__ CI_PUSH_BEFORE="$BEFORE"; expect_error
 case_name=new-branch-empty-paths; new_repo "$case_name"; at_commit "$AFTER"
 run_entry push "$AFTER" '' CI_PUSH_BEFORE=0000000000000000000000000000000000000000; expect_error
 
-case_name=push-new-branch; new_repo "$case_name"; at_commit "$AFTER"
-run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE=0000000000000000000000000000000000000000; expect_hit true
-
 case_name=pr-hit; new_repo "$case_name"; at_commit "$MERGE"
 run_entry pull_request "$MERGE" 'tools/b.txt' CI_PR_HEAD="$PR_HEAD"; expect_hit true
 
@@ -150,17 +147,69 @@ expect_paths() {
 }
 
 case_name=push-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
-run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/a.txt "$out"
+run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"
+expect_paths tools/a.txt "$out"
 
 case_name=pr-paths; new_repo "$case_name"; at_commit "$MERGE"; out="$WORK/paths-$case_name"
 run_entry pull_request "$MERGE" 'tools/*' CI_PR_HEAD="$PR_HEAD" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/b.txt "$out"
 
-case_name=new-branch-no-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+zero=0000000000000000000000000000000000000000
+unavailable=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+case_name=push-unavailable-before; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+"$REAL_GIT" -C "$REPO" remote set-url origin "$WORK/nonexistent-origin"
 printf 'stale\0' > "$out"
-run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE=0000000000000000000000000000000000000000 CI_CHANGED_PATHS_FILE="$out"
-if [[ $RC -ne 0 ]]; then fail "exit $RC, want 0; log: $LOG"
-elif [[ -e "$out" ]]; then fail "changed-paths file left without a base"
-else passed=$((passed + 1)); echo "PASS $case_name"; fi
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$unavailable" CI_CHANGED_PATHS_FILE="$out"
+expect_error
+[[ ! -e "$out" && "$LOG" == *"cannot fetch push base $unavailable"* ]] || fail "missing range was not diagnosed"
+
+case_name=push-fetch-before; new_repo "$case_name"
+"$REAL_GIT" clone -q --depth 1 "file://$REPO" "$WORK/shallow"
+REPO="$WORK/shallow"; out="$WORK/paths-$case_name"
+cp -R "$WORK/$case_name/tools/scripts" "$REPO/tools/"
+run_entry push "$PR_HEAD" '*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"
+expect_paths tools/b.txt "$out"
+
+# Only a real, pinned reference-only creation produces an empty manifest.
+event="$WORK/push-event.json"
+event_env=(GITHUB_EVENT_PATH="$event" GITHUB_REF=refs/heads/integration-test
+  GITHUB_SERVER_URL=https://github.com GITHUB_REPOSITORY=example/repository CI_PUSH_BEFORE="$zero")
+write_event() {
+  local comparison="$1" entries="$2"
+  printf '{"ref":"refs/heads/integration-test","created":true,"deleted":false,"before":"%s","after":"%s","compare":"https://github.com/example/repository/%s","commits":%s}\n' \
+    "$zero" "$AFTER" "$comparison" "$entries" > "$event"
+}
+
+case_name=new-branch-one-commit; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+write_event "commit/$AFTER" "[{\"id\":\"$AFTER\"}]"
+run_entry push "$AFTER" '*' "${event_env[@]}" CI_CHANGED_PATHS_FILE="$out"
+expect_paths tools/a.txt "$out"
+[[ "$OUT" == $'hit=true\nbase='"$BEFORE" ]] || fail "wrong introduced range"
+
+case_name=new-branch-reference-only; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+write_event "compare/$AFTER...$AFTER" '[]'
+run_entry push "$AFTER" '*' "${event_env[@]}" CI_CHANGED_PATHS_FILE="$out"
+expect_hit false
+[[ -f "$out" && ! -s "$out" && "$OUT" == $'hit=false\nbase='"$AFTER" ]] || fail "reference creation must have an empty range"
+
+case_name=new-branch-missing-payload; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$zero"; expect_error
+
+case_name=new-branch-inconsistent-payload; new_repo "$case_name"; at_commit "$AFTER"
+write_event "commit/$AFTER" "[{\"id\":\"$BEFORE\"}]"
+run_entry push "$AFTER" '*' "${event_env[@]}"; expect_error
+
+for mode in candidate optional; do
+  case_name="independent-range-$mode"; new_repo "$case_name"; at_commit "$AFTER"
+  run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$zero" CI_PUSH_RANGE="$mode"
+  expect_hit true
+done
+
+case_name=base-mismatch; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$BEFORE" CI_EXPECTED_BASE="$AFTER"; expect_error
+
+case_name=new-branch-base-handoff; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+run_entry push "$AFTER" '*' CI_PUSH_BEFORE="$zero" CI_EXPECTED_BASE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"
+expect_paths tools/a.txt "$out"
 
 for step in remote-list remote-remove ref-list ref-delete; do
   for polarity in hit miss; do

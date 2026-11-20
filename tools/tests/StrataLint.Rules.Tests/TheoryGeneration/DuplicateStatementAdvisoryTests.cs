@@ -73,6 +73,26 @@ public sealed class DuplicateStatementAdvisoryTests
         Assert.Equal(DisplaySeverity.Warning, diagnostic.DisplaySeverity);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedComparisonDisclosesUnknownPeersAndReportsOnlyWitnessedCollisions(bool includePeer)
+    {
+        var complete = CollidingCandidate().Build();
+        var included = complete.Lean.Report.Files.Where(item =>
+            item.Key.Value == RuleFixture.DuplicateRightGid + ".lean"
+            || includePeer && item.Key.Value == RuleFixture.DuplicateLeftGid + ".lean")
+            .ToDictionary(item => item.Key.Value, item => item.Value);
+        var context = DeltaRuleContext.Create(complete.Current, complete.Baseline, complete.Policy,
+            AcceptedLeanClosure.Create(LeanAxiomReport.CreateScoped(included)),
+            RawChangeSet.Create([RuleFixture.DuplicateRightGid + ".lean"]), complete.MetaEvaluation);
+        var findings = DuplicateStatementAdvisory.Evaluate(context);
+        Assert.Contains(findings, finding => finding.Effect == AdmissionEffect.Observe
+            && finding.Message.Contains("outside the scoped evidence", StringComparison.Ordinal));
+        Assert.Equal(includePeer, findings.Any(finding =>
+            finding.Message.Contains("duplicate-statement", StringComparison.Ordinal)));
+    }
+
     [Fact]
     public void CollidingCandidateIsStillAdmittedUnderTheFullActiveCatalog()
     {

@@ -16,6 +16,10 @@ jobs:
     permissions:
       contents: write
       actions: read
+    concurrency:
+      group: lean-cache-publication-verification
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
     steps:
@@ -79,6 +83,7 @@ jobs:
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/*
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result
         env:
@@ -187,6 +192,7 @@ jobs:
             tools/scripts/scribe-release.sh
             tools/scripts/workflow/ci-entry.sh
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result
         env:

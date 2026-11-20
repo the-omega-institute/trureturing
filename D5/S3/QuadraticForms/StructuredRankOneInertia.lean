@@ -46,11 +46,11 @@ private theorem count_roots (A : Matrix ι ι ℝ) (hA : A.IsHermitian)
   simp only [Function.comp_apply, RCLike.ofReal_real_eq_id, id_eq]
   rfl
 
-private theorem blockHermitian {κ : Type} {A : Matrix ι ι ℝ} {B : Matrix κ κ ℝ}
+theorem blockHermitian {κ : Type} {A : Matrix ι ι ℝ} {B : Matrix κ κ ℝ}
     (hA : A.IsHermitian) (hB : B.IsHermitian) : (fromBlocks A 0 0 B).IsHermitian :=
   hA.fromBlocks (by simp) hB
 
-private theorem block_counts {κ : Type} [Fintype κ] [DecidableEq κ]
+theorem block_counts {κ : Type} [Fintype κ] [DecidableEq κ]
     (A : Matrix ι ι ℝ) (B : Matrix κ κ ℝ) (hA : A.IsHermitian) (hB : B.IsHermitian) :
     posIndex (blockHermitian hA hB) = posIndex hA + posIndex hB ∧
     negIndex (blockHermitian hA hB) = negIndex hA + negIndex hB := by
@@ -218,7 +218,7 @@ private theorem zeroIndex_eq_nullity {A : Matrix ι ι ℝ} (hA : A.IsHermitian)
   change A.rank + Module.finrank ℝ (LinearMap.ker A.mulVecLin) = Fintype.card ι at hn
   omega
 
-private theorem congruence_counts {κ : Type} [Fintype κ] [DecidableEq κ]
+theorem congruence_counts {κ : Type} [Fintype κ] [DecidableEq κ]
     {A B : Matrix κ κ ℝ} (hA : A.IsHermitian) (hB : B.IsHermitian)
     (P : Matrix κ κ ℝ) (hP : IsUnit P.det) (hp : Pᴴ * A * P = B) :
     posIndex hB = posIndex hA ∧ negIndex hB = negIndex hA := by

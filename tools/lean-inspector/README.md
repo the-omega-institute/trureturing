@@ -70,19 +70,19 @@ CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
 仍可复用原生模块报告，不保证重评全部历史登记。主 checkout 的 ensure
 仍可按现有主检出专用路径由归档补齐冷的项目层。
-push 的整库报告使用 `reuse-or-build`。直接执行 `inspect.sh` 默认使用 `reuse-or-build`，
+独立 Actions producer 的整库报告使用 `reuse-or-build`。直接执行 `inspect.sh` 默认使用 `reuse-or-build`，
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
 CI/cache 流程以 [SPEC A22](../../docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 为准。
-PR 只读恢复缓存，在合并候选上检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` push 在 current 中构建完整报告并执行适用检查，严格验证 bundle 后保存本次 run/attempt 的项目快照，按 ref 和精确 key 确认发布。定时 Release 与手动 producer 各有独立入口。以下命令手动构建受保护分支的固定提交。
+普通 PR 和 push 只读恢复缓存，检查变更涉及的目标和依赖。受保护的 `dev` 或 `integration-*` 非删除 push 与固定提交的手动 build 共用仓库级串行 producer。该作业严格验证整库 bundle，并按 ref 与精确 key 确认新项目快照。同一 ref 的自动刷新合并等待中的请求。全量 producer 与集成测试的隔离 Lean Release 验证共用仓库级并发队列。定时与手动 Release 走独立作业。以下命令手动构建受保护分支的固定提交。
 
 ```sh
 gh workflow run lean-cache-publish.yml --ref dev \
   -f operation=build -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 ```
 
-手动 `operation=build` 要求 `source_ref` 等于受保护的 dev/integration dispatch ref，且 `source_sha` 是该分支可达的非零 40 位小写十六进制提交。按分支串行的 producer 构建报告、所需原生程序及编译夹具，执行报告生产所需的 FIB 回归并严格验证完整 bundle。
+手动 `operation=build` 要求 `source_ref` 等于受保护的 dev/integration dispatch ref，且 `source_sha` 是该分支可达的非零 40 位小写十六进制提交。仓库级串行 producer 构建报告、所需原生程序及编译夹具，执行报告生产所需的 FIB 回归并严格验证完整 bundle。
 
 手动 `operation=build` 可显式设 `regenerate_report_artifacts=true`。本地等价入口为
 `make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1`。它在缓存写锁内清除生成的报告状态并重产，
@@ -118,15 +118,12 @@ when the existing `tests-lean` unit is selected; its source list includes runtim
 D5/Reg inputs, fixtures, compiler, scripts and consumers. `make compiled-fib-test`
 builds the separate FIB library, source-contract executable and finite analyzer,
 then runs the production-consumer and finite-input regressions. Before publishing
-a fresh report, the canonical report entry used by the protected push and manual producer compares complete custody-bound Application inputs with
+a fresh report, the canonical report entry used by the full cache producer compares complete custody-bound Application inputs with
 the previous published report, including unavailable inputs and additions/removals across supported
 owners. Changed inputs require this canonical suite after the writer returns and
 before new changed-report publication; failure prevents publication and retains
 the previous published inputs for retry. Equal inputs with no explicit selection
-run no FIB regressions. The explicit `tests-fib` whitelist in `CI_UNITS` selects
-compiler, discovery, analyzer, fixture, configuration and consumer coverage;
-On a PR, `current` runs the selected suite after scoped checks. On a push, `current` forwards the obligation to the report entry, sharing one suite invocation with any changed-input obligation. The `tests-fib` job requires the
-successful `current` consumer and prepares no additional Lean cache. Lake owns
+run no FIB regressions. Lake owns
 incremental compilation and report artifact reuse inside selected consumers;
 unrelated owner edits do not force the FIB suite. Ordinary Registration inventory
 and source metadata remain covered by `tests-lean`, independently of Application
@@ -256,10 +253,10 @@ entries and seals use Seal entries. The report accepts constructor trees and
 safe constant references from the compiled values; values requiring evaluation
 fail by name and have no fallback.
 
-[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report FULL_BUILD=1`
-调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
-`STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
-这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
+普通 PR 和 push 按需运行 `make lean-report-scoped LEAN_TARGETS=…`，
+将局部报告交给 `check-current` 和适用的 `check-delta`。全量缓存作业运行
+`make lean-report FULL_BUILD=1`。报告入口可构建 utility 输入工具，也可接收显式的
+`STRATALINT_LEAN_PRODUCER_DLL`。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
 输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
