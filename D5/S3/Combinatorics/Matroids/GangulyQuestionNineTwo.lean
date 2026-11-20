@@ -1,10 +1,20 @@
-/- GID: D5/S3/Combinatorics/Graph/GangulyQuestionNineTwo
+/- GID: D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/GangulyQuestionNineTwo
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-B: D5/B/S3/Combinatorics/Matroids/GangulyQuestionNineTwo
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: none
-   digest: Looped multigraph witnesses for Ganguly's Question 9.2. -/
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.claim; result=D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.result; claim=D5/S3/Combinatorics/Matroids/GangulyQuestionNineTwo.claim
+   digest: Representability fails under both 1-sums and bridge joins in characteristic two. -/
+
+/- admission_basis: open-problem-resolution (#32367; Refuted)
+   question_nine_two: proof_shape: content. The two field-independent determinant
+   samples certify the factor basis tests by interpolation. The endpoint gains
+   contradict triangle parity, and the unstarred bridge transfers the obstruction.
+   result: proof_shape: content after inlining the same-module proof. Each branch
+   uses the corresponding obstruction and both factor representations.
+   Direct frozen dependencies of these two proof terms are empty. The graph
+   definitions use the repository's DirectedMultigraph from EssentialWordRealization.
+   The finite Chow and determinant checks support this refutation. -/
 
 import D5.S3.ConceptDynamics.Coding.EssentialWordRealization
 import Mathlib.Algebra.CharP.Two
@@ -30,85 +40,57 @@ nonempty connected 2-regular edge sets, with both incidences counted at a loop.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.GangulyQuestionNineTwo
+namespace D5.S3.Combinatorics.Matroids.GangulyQuestionNineTwo
 
 open D5.S3.ConceptDynamics.Coding.EssentialWordRealization (DirectedMultigraph)
 open scoped BigOperators
 
-abbrev Marking (E : Type*) := E → Option Bool
+private abbrev Marking (E : Type*) := E → Option Bool
 
 section Graph
 
 variable {V E : Type*} [Fintype V] [DecidableEq V] [Fintype E] [DecidableEq E]
 
 /-- The spanning subgraph forgets the signs and retains each selected edge ID. -/
-def selected (s : Marking E) : Finset E :=
+private def selected (s : Marking E) : Finset E :=
   Finset.univ.filter fun e => (s e).isSome
 
-/-- Adjacency in the selected spanning multigraph, ignoring endpoint order. -/
-def Adj (G : DirectedMultigraph V E) (S : Finset E) (v w : V) : Prop :=
-  ∃ e ∈ S, (G.source e = v ∧ G.target e = w) ∨ (G.source e = w ∧ G.target e = v)
-
 /-- Two vertices are in the same component exactly if no cut separates them. -/
-def Joined (G : DirectedMultigraph V E) (S : Finset E) (v w : V) : Prop :=
+private def Joined (G : DirectedMultigraph V E) (S : Finset E) (v w : V) : Prop :=
   ∀ side : V → Bool,
     (∀ e ∈ S, side (G.source e) = side (G.target e)) → side v = side w
 
-instance (G : DirectedMultigraph V E) (S : Finset E) (v w : V) :
+private instance joinedDecidable (G : DirectedMultigraph V E) (S : Finset E) (v w : V) :
     Decidable (Joined G S v w) := by
   unfold Joined
   infer_instance
 
-omit [Fintype V] [DecidableEq V] [Fintype E] [DecidableEq E] in
-private theorem joined_iff_reach (G : DirectedMultigraph V E) (S : Finset E) (v w : V) :
-    Joined G S v w ↔ Relation.ReflTransGen (Adj G S) v w := by
-  classical
-  constructor
-  · intro hc
-    let side := fun x => decide (Relation.ReflTransGen (Adj G S) v x)
-    have stable (e : E) (he : e ∈ S) : side (G.source e) = side (G.target e) := by
-      have hreach : Relation.ReflTransGen (Adj G S) v (G.source e) ↔
-          Relation.ReflTransGen (Adj G S) v (G.target e) :=
-        ⟨fun h => h.tail ⟨e, he, Or.inl ⟨rfl, rfl⟩⟩,
-         fun h => h.tail ⟨e, he, Or.inr ⟨rfl, rfl⟩⟩⟩
-      change decide _ = decide _
-      exact decide_eq_decide.mpr hreach
-    have hv : side v = true := decide_eq_true Relation.ReflTransGen.refl
-    exact of_decide_eq_true ((hc side stable).symm.trans hv)
-  · intro hw side stable
-    induction hw with
-    | refl => rfl
-    | tail _ hadj ih =>
-      obtain ⟨e, he, h | h⟩ := hadj
-      · exact ih.trans (by simpa only [h.1, h.2] using stable e he)
-      · exact ih.trans (by simpa only [h.1, h.2] using (stable e he).symm)
-
-def componentVertices (G : DirectedMultigraph V E) (S : Finset E) (v : V) : Finset V :=
+private def componentVertices (G : DirectedMultigraph V E) (S : Finset E) (v : V) : Finset V :=
   Finset.univ.filter (Joined G S v)
 
-def componentEdges (G : DirectedMultigraph V E) (S : Finset E) (v : V) : Finset E :=
+private def componentEdges (G : DirectedMultigraph V E) (S : Finset E) (v : V) : Finset E :=
   S.filter fun e => Joined G S v (G.source e)
 
-def incidentVertices (G : DirectedMultigraph V E) (S : Finset E) : Finset V :=
+private def incidentVertices (G : DirectedMultigraph V E) (S : Finset E) : Finset V :=
   Finset.univ.filter fun v => ∃ e ∈ S, G.source e = v ∨ G.target e = v
 
-def degree (G : DirectedMultigraph V E) (S : Finset E) (v : V) : ℕ :=
+private def degree (G : DirectedMultigraph V E) (S : Finset E) (v : V) : ℕ :=
   (S.filter fun e => G.source e = v).card + (S.filter fun e => G.target e = v).card
 
-def IsCycle (G : DirectedMultigraph V E) (S : Finset E) : Prop :=
+private def IsCycle (G : DirectedMultigraph V E) (S : Finset E) : Prop :=
   S.Nonempty ∧
     (∀ v ∈ incidentVertices G S, degree G S v = 2) ∧
     (∀ v ∈ incidentVertices G S, ∀ w ∈ incidentVertices G S, Joined G S v w)
 
-instance (G : DirectedMultigraph V E) (S : Finset E) : Decidable (IsCycle G S) := by
+private instance cycleDecidable (G : DirectedMultigraph V E) (S : Finset E) : Decidable (IsCycle G S) := by
   unfold IsCycle
   infer_instance
 
-def componentCycles (G : DirectedMultigraph V E) (S : Finset E) (v : V) :
+private def componentCycles (G : DirectedMultigraph V E) (S : Finset E) (v : V) :
     Finset (Finset E) :=
   (componentEdges G S v).powerset.filter (IsCycle G)
 
-def Good (G : DirectedMultigraph V E) (s : Marking E) (v : V) : Prop :=
+private def Good (G : DirectedMultigraph V E) (s : Marking E) (v : V) : Prop :=
   let S := selected s
   let C := componentCycles G S v
   let nv := (componentVertices G S v).card
@@ -116,25 +98,25 @@ def Good (G : DirectedMultigraph V E) (s : Marking E) (v : V) : Prop :=
   (ne + 1 = nv ∧ C = ∅) ∨
     (ne = nv ∧ C.card = 1 ∧ ∀ cycle ∈ C, (cycle.filter fun e => s e = some true).card % 2 = 1)
 
-instance (G : DirectedMultigraph V E) (s : Marking E) (v : V) :
+private instance goodDecidable (G : DirectedMultigraph V E) (s : Marking E) (v : V) :
     Decidable (Good G s v) := by
   unfold Good
   infer_instance
 
-def Chow (G : DirectedMultigraph V E) (s : Marking E) : Prop :=
+private def Chow (G : DirectedMultigraph V E) (s : Marking E) : Prop :=
   ∀ v, Good G s v
 
-instance (G : DirectedMultigraph V E) (s : Marking E) : Decidable (Chow G s) := by
+private instance chowDecidable (G : DirectedMultigraph V E) (s : Marking E) : Decidable (Chow G s) := by
   unfold Chow
   infer_instance
 
 /-- The rank of the graphical symplectic matroid is the largest good size. -/
-def ChowRank (G : DirectedMultigraph V E) (k : ℕ) : Prop :=
+private def ChowRank (G : DirectedMultigraph V E) (k : ℕ) : Prop :=
   (∃ s : Marking E, Chow G s ∧ (selected s).card = k) ∧
     ∀ s : Marking E, Chow G s → (selected s).card ≤ k
 
 /-- Assemble the signed subset from distinct edge IDs and their chosen marks. -/
-def fromColumns {k : ℕ} (e : Fin k → E) (m : Fin k → Bool) : Marking E :=
+private def fromColumns {k : ℕ} (e : Fin k → E) (m : Fin k → Bool) : Marking E :=
   fun a =>
     if ∃ i, e i = a ∧ m i = true then some true
     else if ∃ i, e i = a then some false
@@ -209,18 +191,18 @@ section Representation
 variable {V E : Type*} [Fintype V] [DecidableEq V] [Fintype E] [DecidableEq E]
 variable (F : Type*) [Field F]
 
-abbrev PairedMatrix (k : ℕ) := Matrix (Fin k) (E × Bool) F
+private abbrev PairedMatrix (k : ℕ) := Matrix (Fin k) (E × Bool) F
 
-def selectedMatrix {k : ℕ} (H : PairedMatrix (E := E) F k)
+private def selectedMatrix {k : ℕ} (H : PairedMatrix (E := E) F k)
     (e : Fin k → E) (m : Fin k → Bool) : Matrix (Fin k) (Fin k) F :=
   fun r i => H r (e i, m i)
 
 /-- The entries of `XZᵀ - ZXᵀ` vanish. -/
-def Isotropic {k : ℕ} (H : PairedMatrix (E := E) F k) : Prop :=
+private def Isotropic {k : ℕ} (H : PairedMatrix (E := E) F k) : Prop :=
   ∀ i j, ∑ e : E, (H i (e, false) * H j (e, true) - H i (e, true) * H j (e, false)) = 0
 
 /-- Definition 2.9, with admissible column sets listed in an arbitrary order. -/
-structure Represents (G : DirectedMultigraph V E) (k : ℕ)
+private structure Represents (G : DirectedMultigraph V E) (k : ℕ)
     (H : PairedMatrix (E := E) F k) : Prop where
   rowRank : LinearIndependent F H
   isotropic : Isotropic F H
@@ -233,35 +215,52 @@ def Representable (G : DirectedMultigraph V E) : Prop :=
 end Representation
 
 /-- The triangle edge IDs are 0, 1, 2, followed by the loops at vertices 0 and 1. -/
-def factor₁ : DirectedMultigraph (Fin 3) (Fin 5) :=
+def factorOne : DirectedMultigraph (Fin 3) (Fin 5) :=
   ⟨![0, 1, 2, 0, 1], ![1, 2, 0, 0, 1]⟩
 
-def factor₂ : DirectedMultigraph (Fin 1) (Fin 1) :=
+def factorTwo : DirectedMultigraph (Fin 1) (Fin 1) :=
   ⟨![0], ![0]⟩
 
-/-- Identify the sole vertex of the right factor with the chosen left vertex. -/
-def oneSumAt {n l r : ℕ} (G : DirectedMultigraph (Fin n) (Fin l))
-    (K : DirectedMultigraph (Fin 1) (Fin r)) (v : Fin n) :
-    DirectedMultigraph (Fin n) (Fin (l + r)) :=
-  ⟨Fin.append G.source (fun e => (fun _ : Fin 1 => v) (K.source e)),
-   Fin.append G.target (fun e => (fun _ : Fin 1 => v) (K.target e))⟩
+/-- Identify the two chosen vertices, preserving all edge IDs.
+The right vertex `w` is exchanged with the last label before gluing. -/
+def oneSumAt {n m l r : ℕ} (G : DirectedMultigraph (Fin n) (Fin l))
+    (K : DirectedMultigraph (Fin (m + 1)) (Fin r)) (v : Fin n) (w : Fin (m + 1)) :
+    DirectedMultigraph (Fin (n + m)) (Fin (l + r)) :=
+  let rightVertex (j : Fin (m + 1)) : Fin (n + m) :=
+    Fin.lastCases (Fin.castAdd m v) (Fin.natAdd n) (Equiv.swap w (Fin.last m) j)
+  ⟨Fin.append (Fin.castAdd m ∘ G.source) (rightVertex ∘ K.source),
+   Fin.append (Fin.castAdd m ∘ G.target) (rightVertex ∘ K.target)⟩
 
-/-- Retain the disjoint factors and append a fresh edge to the right vertex. -/
-def bridgeAt {n l r : ℕ} (G : DirectedMultigraph (Fin n) (Fin l))
-    (K : DirectedMultigraph (Fin 1) (Fin r)) (v : Fin n) :
-    DirectedMultigraph (Fin (n + 1)) (Fin (l + r + 1)) :=
+/-- Retain the disjoint rooted factors and append a fresh edge between their roots. -/
+def bridgeAt {n m l r : ℕ} (G : DirectedMultigraph (Fin n) (Fin l))
+    (K : DirectedMultigraph (Fin (m + 1)) (Fin r)) (v : Fin n) (w : Fin (m + 1)) :
+    DirectedMultigraph (Fin (n + (m + 1))) (Fin (l + r + 1)) :=
   ⟨Fin.append
-      (Fin.append (Fin.castSucc ∘ G.source) ((Fin.natAdd n) ∘ K.source))
-      ![Fin.castSucc v],
+      (Fin.append (Fin.castAdd (m + 1) ∘ G.source) (Fin.natAdd n ∘ K.source))
+      ![Fin.castAdd (m + 1) v],
    Fin.append
-      (Fin.append (Fin.castSucc ∘ G.target) ((Fin.natAdd n) ∘ K.target))
-      ![Fin.last n]⟩
+      (Fin.append (Fin.castAdd (m + 1) ∘ G.target) (Fin.natAdd n ∘ K.target))
+      ![Fin.natAdd n w]⟩
 
 def oneSum : DirectedMultigraph (Fin 3) (Fin 6) :=
-  oneSumAt factor₁ factor₂ 2
+  oneSumAt factorOne factorTwo 2 0
 
 def bridgeJoin : DirectedMultigraph (Fin 4) (Fin 7) :=
-  bridgeAt factor₁ factor₂ 2
+  bridgeAt factorOne factorTwo 2 0
+
+/-- Preservation by an operation on all pairs of finite rooted multigraphs. -/
+private def Preserves (F : Type*) [Field F] (extra : ℕ)
+    (join : ∀ {n m l r : ℕ}, DirectedMultigraph (Fin n) (Fin l) →
+      DirectedMultigraph (Fin (m + 1)) (Fin r) → Fin n → Fin (m + 1) →
+      DirectedMultigraph (Fin (n + m + extra)) (Fin (l + r + extra))) : Prop :=
+  ∀ {n m l r : ℕ} (G : DirectedMultigraph (Fin n) (Fin l))
+    (K : DirectedMultigraph (Fin (m + 1)) (Fin r)) (v : Fin n) (w : Fin (m + 1)),
+    Representable F G → Representable F K → Representable F (join G K v w)
+
+/-- An affirmative answer to either closure question over some qualifying field. -/
+def claim : Prop :=
+  ∃ (F : Type) (_ : Field F) (_ : CharP F 2),
+    Nonempty (Fin 4 ↪ F) ∧ (Preserves F 0 @oneSumAt ∨ Preserves F 1 @bridgeAt)
 
 
 section Factors
@@ -269,7 +268,7 @@ section Factors
 variable {R : Type*} [Zero R] [One R]
 
 /-- The supplied rank-three matrix, with paired column indices. -/
-def factorMatrix₁ (a : R) : Matrix (Fin 3) (Fin 5 × Bool) R :=
+private def factorMatrix₁ (a : R) : Matrix (Fin 3) (Fin 5 × Bool) R :=
   fun i p =>
     if p.2 then
       if p.1 = 4 ∧ i = 0 then a
@@ -277,18 +276,18 @@ def factorMatrix₁ (a : R) : Matrix (Fin 3) (Fin 5 × Bool) R :=
     else (![![1, 0, 1, 0, 0], ![0, 1, 1, 0, 0], ![0, 0, 0, 0, 0]]) i p.1
 
 /-- The supplied rank-one matrix `[0 | 1]`. -/
-def factorMatrix₂ : Matrix (Fin 1) (Fin 1 × Bool) R :=
+private def factorMatrix₂ : Matrix (Fin 1) (Fin 1 × Bool) R :=
   fun _ p => if p.2 then 1 else 0
 
 variable (F : Type*) [Field F] [CharP F 2]
 
-private theorem factor₁_isotropic (a : F) : Isotropic F (factorMatrix₁ a) := by
+private theorem factorOne_isotropic (a : F) : Isotropic F (factorMatrix₁ a) := by
   intro i j
   fin_cases i <;> fin_cases j <;>
     simp [factorMatrix₁, Fin.sum_univ_succ, CharTwo.add_self_eq_zero]
 
 omit [CharP F 2] in
-private theorem factor₂_isotropic : Isotropic F (factorMatrix₂ (R := F)) := by
+private theorem factorTwo_isotropic : Isotropic F (factorMatrix₂ (R := F)) := by
   intro i j
   simp [factorMatrix₂]
 
@@ -305,27 +304,27 @@ private theorem rowRank_of_det {E : Type*} {k : ℕ} {H : PairedMatrix (E := E) 
   exact LinearIndependent.of_comp project hr
 
 omit [CharP F 2] in
-private theorem factor₁_nonzero_minor (a : F) :
+private theorem factorOne_nonzero_minor (a : F) :
     (selectedMatrix F (factorMatrix₁ a) ![0, 1, 3] ![false, false, true]).det = 1 := by
   simp [Matrix.det_fin_three, selectedMatrix, factorMatrix₁]
 
 omit [CharP F 2] in
-private theorem factor₂_nonzero_minor :
+private theorem factorTwo_nonzero_minor :
     (selectedMatrix F factorMatrix₂ ![0] ![true]).det = 1 := by
   simp [selectedMatrix, factorMatrix₂]
 
-private theorem factor₁_rank : ChowRank factor₁ 3 := by
+private theorem factorOne_rank : ChowRank factorOne 3 := by
   apply chow_rank_of_basis
   refine ⟨fromColumns ![0, 1, 3] ![false, false, true], ?_⟩
   decide +kernel
-private theorem factor₂_rank : ChowRank factor₂ 1 := by
+private theorem factorTwo_rank : ChowRank factorTwo 1 := by
   apply chow_rank_of_basis
   refine ⟨fromColumns ![0] ![true], ?_⟩
   decide +kernel
 
 omit [CharP F 2] in
-private theorem factor₂_bases (e : Fin 1 → Fin 1) (m : Fin 1 → Bool) :
-    (selectedMatrix F factorMatrix₂ e m).det ≠ 0 ↔ Chow factor₂ (fromColumns e m) := by
+private theorem factorTwo_bases (e : Fin 1 → Fin 1) (m : Fin 1 → Bool) :
+    (selectedMatrix F factorMatrix₂ e m).det ≠ 0 ↔ Chow factorTwo (fromColumns e m) := by
   have he : e = ![0] := Subsingleton.elim _ _
   subst e
   have hm : m = ![m 0] := by
@@ -335,13 +334,13 @@ private theorem factor₂_bases (e : Fin 1 → Fin 1) (m : Fin 1 → Bool) :
     rfl
   rw [hm]
   cases m 0
-  · have hg : ¬ Chow factor₂ (fromColumns ![0] ![false]) := by decide +kernel
+  · have hg : ¬ Chow factorTwo (fromColumns ![0] ![false]) := by decide +kernel
     simp [selectedMatrix, factorMatrix₂, hg]
-  · have hg : Chow factor₂ (fromColumns ![0] ![true]) := by decide +kernel
+  · have hg : Chow factorTwo (fromColumns ![0] ![true]) := by decide +kernel
     simp [selectedMatrix, factorMatrix₂, hg]
 
 omit [CharP F 2] in
-private theorem factor₁_det_affine (a : F) (e : Fin 3 → Fin 5) (m : Fin 3 → Bool)
+private theorem factorOne_det_affine (a : F) (e : Fin 3 → Fin 5) (m : Fin 3 → Bool)
     (he : Function.Injective e) :
     (selectedMatrix F (factorMatrix₁ a) e m).det =
       (selectedMatrix F (factorMatrix₁ 0) e m).det +
@@ -382,13 +381,13 @@ private def detThree {K : Type*} [CommRing K] (A : Matrix (Fin 3) (Fin 3) K) : K
   - A 0 1 * A 1 0 * A 2 2 + A 0 1 * A 1 2 * A 2 0
   + A 0 2 * A 1 0 * A 2 1 - A 0 2 * A 1 1 * A 2 0
 
-private theorem factor₁_det_samples :
+private theorem factorOne_det_samples :
     ∀ (e : Fin 3 → Fin 5) (m : Fin 3 → Bool), Function.Injective e →
       ((detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 0) e m) ≠ 0 ∨
         detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 1) e m) ≠ 0) ↔
-        Chow factor₁ (fromColumns e m)) := by decide +kernel
+        Chow factorOne (fromColumns e m)) := by decide +kernel
 
-private theorem factor₁_det_cast (b : ZMod 2) (e : Fin 3 → Fin 5) (m : Fin 3 → Bool) :
+private theorem factorOne_det_cast (b : ZMod 2) (e : Fin 3 → Fin 5) (m : Fin 3 → Bool) :
     let cast : ZMod 2 →+* F := ZMod.castHom (dvd_refl 2) F
     (selectedMatrix F (factorMatrix₁ (cast b)) e m).det =
       cast (selectedMatrix (ZMod 2) (factorMatrix₁ b) e m).det := by
@@ -401,19 +400,19 @@ private theorem factor₁_det_cast (b : ZMod 2) (e : Fin 3 → Fin 5) (m : Fin 3
   fin_cases i <;> fin_cases a <;> cases hm : m j <;>
     simp [selectedMatrix, factorMatrix₁, he, hm, cast]
 
-private theorem factor₁_bases (a : F) (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+private theorem factorOne_bases (a : F) (ha0 : a ≠ 0) (ha1 : a ≠ 1)
     (e : Fin 3 → Fin 5) (m : Fin 3 → Bool) (he : Function.Injective e) :
-    (selectedMatrix F (factorMatrix₁ a) e m).det ≠ 0 ↔ Chow factor₁ (fromColumns e m) := by
+    (selectedMatrix F (factorMatrix₁ a) e m).det ≠ 0 ↔ Chow factorOne (fromColumns e m) := by
   let cast : ZMod 2 →+* F := ZMod.castHom (dvd_refl 2) F
   let d₀ := (selectedMatrix (ZMod 2) (factorMatrix₁ 0) e m).det
   let d₁ := (selectedMatrix (ZMod 2) (factorMatrix₁ 1) e m).det
   have h₀ : (selectedMatrix F (factorMatrix₁ 0) e m).det = cast d₀ := by
-    simpa [cast, d₀] using factor₁_det_cast F 0 e m
+    simpa [cast, d₀] using factorOne_det_cast F 0 e m
   have h₁ : (selectedMatrix F (factorMatrix₁ 1) e m).det = cast d₁ := by
-    simpa [cast, d₁] using factor₁_det_cast F 1 e m
-  have hsample : (d₀ ≠ 0 ∨ d₁ ≠ 0) ↔ Chow factor₁ (fromColumns e m) := by
-    simpa only [d₀, d₁, Matrix.det_fin_three, detThree] using factor₁_det_samples e m he
-  rw [factor₁_det_affine F a e m he, h₀, h₁, ← hsample]
+    simpa [cast, d₁] using factorOne_det_cast F 1 e m
+  have hsample : (d₀ ≠ 0 ∨ d₁ ≠ 0) ↔ Chow factorOne (fromColumns e m) := by
+    simpa only [d₀, d₁, Matrix.det_fin_three, detThree] using factorOne_det_samples e m he
+  rw [factorOne_det_affine F a e m he, h₀, h₁, ← hsample]
   have hz : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
   rcases hz d₀ with h | h <;> rcases hz d₁ with h' | h' <;> rw [h, h']
   · simp
@@ -422,17 +421,17 @@ private theorem factor₁_bases (a : F) (ha0 : a ≠ 0) (ha1 : a ≠ 1)
     simpa [sub_eq_add_neg] using hn
   · simp
 
-private theorem factor₁_represents (a : F) (ha0 : a ≠ 0) (ha1 : a ≠ 1) :
-    Represents F factor₁ 3 (factorMatrix₁ a) :=
+private theorem factorOne_represents (a : F) (ha0 : a ≠ 0) (ha1 : a ≠ 1) :
+    Represents F factorOne 3 (factorMatrix₁ a) :=
   ⟨rowRank_of_det F (e := ![0, 1, 3]) (m := ![false, false, true])
-      (by rw [factor₁_nonzero_minor F a]; exact one_ne_zero),
-    factor₁_isotropic F a, factor₁_bases F a ha0 ha1⟩
+      (by rw [factorOne_nonzero_minor F a]; exact one_ne_zero),
+    factorOne_isotropic F a, factorOne_bases F a ha0 ha1⟩
 
 omit [CharP F 2] in
-private theorem factor₂_represents : Represents F factor₂ 1 factorMatrix₂ :=
+private theorem factorTwo_represents : Represents F factorTwo 1 factorMatrix₂ :=
   ⟨rowRank_of_det F (e := ![0]) (m := ![true])
-      (by rw [factor₂_nonzero_minor F]; exact one_ne_zero),
-    factor₂_isotropic F, fun e m _ => factor₂_bases F e m⟩
+      (by rw [factorTwo_nonzero_minor F]; exact one_ne_zero),
+    factorTwo_isotropic F, fun e m _ => factorTwo_bases F e m⟩
 
 omit [CharP F 2] in
 /-- Four distinct field elements guarantee a choice outside `{0, 1}`. -/
@@ -452,11 +451,11 @@ private theorem exists_alpha (size : Nonempty (Fin 4 ↪ F)) : ∃ a : F, a ≠ 
     | exact (by decide : (0 : Fin 4) ≠ 2) (f.injective (h0.trans h2.symm))
     | exact (by decide : (1 : Fin 4) ≠ 2) (f.injective (h1.trans h2.symm))
 
-theorem factors_representable (size : Nonempty (Fin 4 ↪ F)) :
-    Representable F factor₁ ∧ Representable F factor₂ := by
+private theorem factors_representable (size : Nonempty (Fin 4 ↪ F)) :
+    Representable F factorOne ∧ Representable F factorTwo := by
   obtain ⟨a, ha0, ha1⟩ := exists_alpha F size
-  exact ⟨⟨3, factor₁_rank, factorMatrix₁ a, factor₁_represents F a ha0 ha1⟩,
-    ⟨1, factor₂_rank, factorMatrix₂, factor₂_represents F⟩⟩
+  exact ⟨⟨3, factorOne_rank, factorMatrix₁ a, factorOne_represents F a ha0 ha1⟩,
+    ⟨1, factorTwo_rank, factorMatrix₂, factorTwo_represents F⟩⟩
 
 end Factors
 
@@ -491,7 +490,7 @@ private theorem endpoint_bases :
 private def OddMarks (m : Fin 3 → Bool) : Prop :=
   ((Finset.univ : Finset (Fin 3)).filter fun i => m i = true).card % 2 = 1
 
-instance (m : Fin 3 → Bool) : Decidable (OddMarks m) := by
+private instance oddMarksDecidable (m : Fin 3 → Bool) : Decidable (OddMarks m) := by
   unfold OddMarks
   infer_instance
 
@@ -688,7 +687,7 @@ end Obstruction
 section Bridge
 
 /-- Add the unstarred bridge and retain the marks and IDs of surviving edges. -/
-def bridgeMarking (s : Marking (Fin 6)) : Marking (Fin 7) :=
+private def bridgeMarking (s : Marking (Fin 6)) : Marking (Fin 7) :=
   Fin.snoc s (some false)
 
 private theorem chow_bridge :
@@ -782,8 +781,16 @@ end Bridge
 
 /-- Counterexamples to both preservation claims of Question 9.2 over each specified field. -/
 theorem question_nine_two (F : Type*) [Field F] [CharP F 2] (size : Nonempty (Fin 4 ↪ F)) :
-    (Representable F factor₁ ∧ Representable F factor₂) ∧
+    (Representable F factorOne ∧ Representable F factorTwo) ∧
       (¬ Representable F oneSum ∧ ¬ Representable F bridgeJoin) :=
   ⟨factors_representable F size, one_sum_nonrepresentable, bridge_nonrepresentable⟩
 
-end D5.S3.Combinatorics.Graph.GangulyQuestionNineTwo
+/-- Neither operation preserves representability over any field in the question. -/
+theorem result : ¬ claim := by
+  rintro ⟨F, field, charTwo, size, closure⟩
+  obtain ⟨⟨h₁, h₂⟩, hSum, hBridge⟩ := question_nine_two F size
+  rcases closure with sumClosed | bridgeClosed
+  · exact hSum (sumClosed factorOne factorTwo 2 0 h₁ h₂)
+  · exact hBridge (bridgeClosed factorOne factorTwo 2 0 h₁ h₂)
+
+end D5.S3.Combinatorics.Matroids.GangulyQuestionNineTwo
