@@ -256,10 +256,10 @@ entries and seals use Seal entries. The report accepts constructor trees and
 safe constant references from the compiled values; values requiring evaluation
 fail by name and have no fallback.
 
-[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report FULL_BUILD=1`
-调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
-`STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
-这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
+普通 PR 和 push 按需运行 `make lean-report-scoped LEAN_TARGETS=…`，
+将局部报告交给 `check-current` 和适用的 `check-delta`。全量缓存作业运行
+`make lean-report FULL_BUILD=1`。报告入口可构建 utility 输入工具，也可接收显式的
+`STRATALINT_LEAN_PRODUCER_DLL`。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
 输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
