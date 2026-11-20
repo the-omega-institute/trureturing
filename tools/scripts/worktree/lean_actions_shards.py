@@ -39,6 +39,7 @@ EXTRAS = "extras"
 REPORT = "report"
 REPORT_PATH = "stratalint/raw-lean-report.json"
 REPORT_RECEIPT = PurePosixPath(REPORT_PATH + ".reuse.json")
+INSPECTOR_AGGREGATE_PATHS = frozenset("lean-inspector/report.zip" + suffix for suffix in ("", ".trace", ".hash"))
 RESUME_RECORD = STAGE / "resumed.json"
 
 
@@ -272,14 +273,16 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
         for artifact in inventory.artifacts:
             if _tracked(artifact.path, registrations):
                 path = artifact.path.as_posix()
-                if artifact.path.parent == REPORT_RECEIPT.parent and path.startswith(REPORT_PATH):
+                # Scoped readers aggregate their own ZIP from module reports.
+                if (path in INSPECTOR_AGGREGATE_PATHS
+                        or (artifact.path.parent == REPORT_RECEIPT.parent and path.startswith(REPORT_PATH))):
                     if state == "resume" and artifact.path == REPORT_RECEIPT:
                         continue
                     group = REPORT
                 else:
                     group = owners.get(artifact.module, EXTRAS)
                 if scoped_keys is None or group in scoped_keys:
-                    groups[group].append(artifact.path.as_posix())
+                    groups[group].append(path)
 
         required = required_outputs(root, modules, graph, owners) if state == "complete" else {}
         for key, paths in required.items():
