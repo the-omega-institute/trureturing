@@ -70,9 +70,7 @@ internal sealed class PrefixHullDocument : IScribeDocumentDefinition
                             + "words and duplicate labels are included. Nonempty means that "
                             + "each generator word is nonempty; the generator family may be "
                             + "empty. The theorem asserts m <= n and does not assert minimum "
-                            + "cardinality, a complexity bound or a converse characterization. "
-                            + "The source provenance describes this construction in the "
-                            + "repository; it makes no claim of literature novelty."))),
+                            + "cardinality, a complexity bound or a converse characterization."))),
                 DescribeRole.Theorem)),
         []));
 
