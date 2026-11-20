@@ -32,7 +32,7 @@ open MeasureTheory
 private noncomputable def phase (freq t : ℝ) : ℂ := Complex.exp ((freq * t : ℝ) * Complex.I)
 
 /-- The signed spectral amplitude at time t. -/
-noncomputable def amplitude {ι : Type*} [Fintype ι] (freq c : ι → ℝ) (t : ℝ) : ℂ :=
+private noncomputable def amplitude {ι : Type*} [Fintype ι] (freq c : ι → ℝ) (t : ℝ) : ℂ :=
   ∑ j, (c j : ℂ) * phase (freq j) t
 
 private theorem pair_re (a b x y t : ℝ) :
@@ -68,7 +68,7 @@ private theorem cosine_window (τ ω : ℝ) (hω : ω ≠ 0) :
   exact mul_le_of_le_one_right (inv_nonneg.mpr (abs_nonneg _)) (Real.abs_sin_le_one _)
 
 /-- Bound the integrated spectral interference by the actual off-diagonal weight. -/
-theorem interference_bound {ι : Type*} [Fintype ι] (freq c : ι → ℝ)
+private theorem interference_bound {ι : Type*} [Fintype ι] (freq c : ι → ℝ)
     (τ δ : ℝ) (hδ : 0 < δ) (hgap : ∀ i j, i ≠ j → δ ≤ |freq i - freq j|) :
     |(∫ t in (0 : ℝ)..τ, ‖amplitude freq c t‖ ^ 2) - τ * ∑ i, (c i) ^ 2| ≤
       δ⁻¹ * ((∑ i, |c i|) ^ 2 - ∑ i, (c i) ^ 2) := by
@@ -145,7 +145,7 @@ theorem interference_bound {ι : Type*} [Fintype ι] (freq c : ι → ℝ)
     _ = _ := by simp only [← Finset.mul_sum, cross_weight]
 
 /-- With unit absolute weight, the averaged transition exceeds the stated threshold. -/
-theorem average_lower_bound {ι : Type*} [Fintype ι] [Nonempty ι] (freq c : ι → ℝ)
+private theorem average_lower_bound {ι : Type*} [Fintype ι] [Nonempty ι] (freq c : ι → ℝ)
     (hc : (∑ i, |c i|) = 1) (τ δ ε : ℝ) (hδ : 0 < δ) (hε : 0 < ε)
     (hgap : ∀ i j, i ≠ j → δ ≤ |freq i - freq j|)
     (hτ : (Fintype.card ι : ℝ) / (ε * δ) ≤ τ) :
@@ -215,7 +215,7 @@ private theorem simple_eigenvector_span {ι : Type*} [Fintype ι] [DecidableEq �
       (by simp)
 
 /-- Reflection of coordinates preserves the absolute value of each eigenvector entry. -/
-theorem reflected_entry_abs {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem reflected_entry_abs {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : _root_.Matrix ι ι ℝ} (hA : A.IsHermitian) (hinj : Function.Injective hA.eigenvalues)
     (ρ : ι ≃ ι) (hinv : Function.Involutive ρ)
     (hρ : ∀ x y, A (ρ x) (ρ y) = A x y) (i x : ι) :
@@ -299,7 +299,7 @@ private theorem evolution_entry {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- A real reflection preserves endpoint weights, giving a lower bound for
 the actual averaged matrix-exponential transition. -/
-theorem reflected_transition_average {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem reflected_transition_average {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : _root_.Matrix ι ι ℝ} (hA : A.IsHermitian)
     (ρ : ι ≃ ι) (hinv : Function.Involutive ρ)
     (hρ : ∀ x y, A (ρ x) (ρ y) = A x y) (x : ι)
