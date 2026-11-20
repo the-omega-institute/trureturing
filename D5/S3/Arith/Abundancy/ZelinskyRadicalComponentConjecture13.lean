@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13.claim; result=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13.result; claim=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture13.claim
+   utility: none
    digest: The primitive relative density contradicts Conjecture 13. -/
 
 import D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjecture11

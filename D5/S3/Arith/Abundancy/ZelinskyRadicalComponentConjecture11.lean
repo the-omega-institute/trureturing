@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11
    mirror-E: none(waiver:symbolic-counting-theorem)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11.claim; result=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11.result; claim=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11.claim
+   utility: none
    digest: Primitive radical-component exceptions satisfy a power-saving counting bound. -/
 
 import D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
