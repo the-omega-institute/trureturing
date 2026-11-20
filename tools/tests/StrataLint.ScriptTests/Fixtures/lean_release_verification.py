@@ -9,7 +9,7 @@ import subprocess
 import tarfile
 import tempfile
 
-from lean_seed_support import ROOT, digest, write
+from lean_seed_support import REPORT_BUILD, ROOT, digest, write
 
 
 class ReleaseVerificationCases:
@@ -160,7 +160,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn('"status":"unpacked"', fetched.stdout)
         self.assertIn(tag, fetched.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual([REPORT_BUILD, REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
 
     def verification_restore_budget_probe(self, extraction_seconds):
         environment = self.deadline_probe(10)
@@ -527,7 +527,7 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         self.assertNotEqual(0, result.returncode)
         self.assertIn('"status":"failed"', result.stdout)
         self.assertNotIn('"status":"published"', result.stdout)
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual([REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
 
     def test_verification_truncated_gzip_normalizes_fetch_and_publish_failures(self):
         self.verification_fixture()
@@ -650,6 +650,27 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         self.assertNotEqual(0, result.returncode)
         self.assertFalse((self.root / "build-runs").exists())
         self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_candidate_publish_only_requires_a_check_after_standalone_analysis(self):
+        from lean_cache_release import report_reuse
+        self.candidate_fixture()
+        failed = self.transport("publish", FAKE_BUILD_EXIT="41")
+        self.assertEqual(41, failed.returncode, failed.stdout + failed.stderr)
+        report = report_reuse.canonical_seed(self.root)
+        # Standalone analysis seals its produced bundle without checking FIB inputs.
+        report_reuse.seal(self.root, report, report_reuse.capture(self.root),
+                          report_reuse.publication.bundle_identity(report))
+        self.assertTrue(report_reuse.seed_format(report)["compatible"])
+        rejected = self.candidate_transport("publish")
+        self.assertEqual(1, rejected.returncode, rejected.stdout + rejected.stderr)
+        self.assertIn("make check-lean-report FULL_BUILD=1", rejected.stdout)
+        self.assertEqual([REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual([], list(self.remote.iterdir()))
+        checked = self.transport("publish")
+        self.assertEqual(0, checked.returncode, checked.stdout + checked.stderr)
+        accepted = self.candidate_transport("publish")
+        self.assertEqual(0, accepted.returncode, accepted.stdout + accepted.stderr)
+        self.assertEqual([REPORT_BUILD, REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
 
     def test_candidate_publication_rejects_dirty_missing_source_and_ci_callers(self):
         self.candidate_fixture()

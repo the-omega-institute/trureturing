@@ -54,13 +54,14 @@ public sealed partial class MakeWorkflowTests
              "/bin/bash", script, "emit"], temporary.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         var invocations = File.ReadAllLines(calls);
-        Assert.Equal(5, invocations.Length);
+        Assert.Equal(6, invocations.Length);
         Assert.Contains("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", invocations[0], StringComparison.Ordinal);
         Assert.Contains("lean-inputs --paths-from", invocations[1], StringComparison.Ordinal);
-        Assert.Equal("make:lean-report-scoped LEAN_TARGETS=D5.Changed", invocations[2]);
-        Assert.Contains("emit --paths-from", invocations[3], StringComparison.Ordinal);
-        Assert.Contains("--scoped", invocations[3], StringComparison.Ordinal);
-        Assert.EndsWith("emit-values", invocations[4], StringComparison.Ordinal);
+        Assert.Equal("make:lean-report-prepare LEAN_TARGETS=D5.Changed", invocations[2]);
+        Assert.Equal("make:lean-report-scoped LEAN_TARGETS=D5.Changed", invocations[3]);
+        Assert.Contains("emit --paths-from", invocations[4], StringComparison.Ordinal);
+        Assert.Contains("--scoped", invocations[4], StringComparison.Ordinal);
+        Assert.EndsWith("emit-values", invocations[5], StringComparison.Ordinal);
         Assert.Equal(explicitPaths ? new[] { "Blueprint/D5/Explicit.scribe.cs" }
             : new[] { "Blueprint/D5/Changed.scribe.cs", "Blueprint/D5/New file.scribe.cs" },
             File.ReadAllText(selected).Split('\0', StringSplitOptions.RemoveEmptyEntries));

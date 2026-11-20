@@ -285,7 +285,7 @@ def application_inputs(report):
         return result
 
 
-def run_regressions(repository, previous, current, selected=False):
+def run_regressions(repository, previous, current, selected=False, *, unverified_previous=False):
     """An already selected report consumer discharges one regression obligation.
 
     This runs after its canonical writer returns and before publication. The
@@ -304,14 +304,17 @@ def run_regressions(repository, previous, current, selected=False):
     changed = current_inputs != previous_inputs
     print(f'LEAN_INSPECTOR_FIB_REGRESSIONS changed={str(changed).lower()} selected={str(selected).lower()}',
           flush=True)
-    if changed or selected:
+    required = changed or selected or unverified_previous
+    if unverified_previous:
+        print('LEAN_INSPECTOR_FIB_BASELINE unverified', flush=True)
+    if required:
         environment = dict(os.environ)
         for name in ('STRATALINT_INSPECTOR_ACTIVITY', 'STRATALINT_INSPECTOR_PHASES',
                      'STRATALINT_INSPECTOR_MODULE_WORK'):
             environment.pop(name, None)
         subprocess.run(['make', '-C', str(repository), 'compiled-fib-test'],
                        env=environment, check=True)
-    return changed or selected
+    return required
 
 
 def consume(report, targets=()):
@@ -352,6 +355,7 @@ if __name__ == '__main__':
     parser.add_argument('--target', action='append', default=[])
     parser.add_argument('--regressions', type=Path)
     parser.add_argument('--previous', type=Path)
+    parser.add_argument('--unverified-previous', action='store_true')
     parser.add_argument('--selected', choices=('true', 'false'), default='false')
     args = parser.parse_args()
     if args.report is None:
@@ -360,7 +364,8 @@ if __name__ == '__main__':
         if args.regressions:
             if args.previous is None:
                 parser.error('regressions require --previous')
-            run_regressions(args.regressions, args.previous, args.report, args.selected == 'true')
+            run_regressions(args.regressions, args.previous, args.report, args.selected == 'true',
+                            unverified_previous=args.unverified_previous)
         else:
             print(json.dumps(consume(args.report, args.target), sort_keys=True))
     except subprocess.CalledProcessError as error:

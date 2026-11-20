@@ -56,7 +56,7 @@ public sealed partial class MakeWorkflowTests
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
-        Assert.Contains("make lean-report", mathematicalTestRecipe, StringComparison.Ordinal);
+        Assert.Contains("make check-lean-report", mathematicalTestRecipe, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -98,7 +98,7 @@ public sealed partial class MakeWorkflowTests
             inspector.Split('\n'),
             static line => line.StartsWith("run_phase report ", StringComparison.Ordinal));
         Assert.Equal(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" --log-level=error \"${{workspace[@]}}\" build :report \\",
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" --prebuilt ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" --log-level=error \"${{workspace[@]}}\" build :report",
             reportPhase);
 
         int EnsureDependency(string target)

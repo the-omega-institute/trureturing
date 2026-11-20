@@ -42,11 +42,11 @@
   },
   "gen_stage_briefs.py": {
     "scratch/briefs/mirror-check-sample.md": "79b13c12c24e75cdea877a86630dd9165e4c85ae9b7cce8df785b1f965e6f71f",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "cde0289947c1602c1705384b6f87c99200f1e80b8170c71970e803376543b9eb",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "132e78144edfdde385d4b8750a046f61d888085c3d51b4117e2c662c3d4d0db8",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "26ec01ebca09b8a142ca96dd2f0fe45f0f7ee065b1c85cba6d1ba9627e9e0e2f"
   },
   "implb_head.py": {
-    "scratch/briefs/implb-sample-r1.head.md": "30ade6ad05dda62935f999a48fe72ca484e2adafa9324fe905b7125c3ecf88d8"
+    "scratch/briefs/implb-sample-r1.head.md": "7f37d8cf2ca62265748887bf6d85a8f1a150b4be0edbaf36f6628732c5bc9a02"
   },
   "lane_brief.py": {
     "scratch/briefs/impl-op-w1-sample.md": "c12620b2712f2badbde123656f42ba87b6ae82b4e369aa3248a18f4ba98f13d5"
@@ -73,14 +73,14 @@
     "scratch/briefs/review-sample-tests.md": "b87ed82b35af5a7773c48c9b8d8b616dfbb3aaf47969b9ca71c7d7ecc7d5fc44"
   },
   "rework_brief.py": {
-    "scratch/briefs/rework-sample.md": "da079073627197e995ac94c45614e59ccd02ad677400c6e2bcf1886bcee39fd2"
+    "scratch/briefs/rework-sample.md": "929d1a4fd22101378962feaa382e9e08f3fd112155d4817dec15fa90a644cc48"
   },
   "stageb_prep.sh": {
     "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "1bfc0265dcd9dbbb84327e34c01299442366fb101b738f8482c29397ce3931b4"
   },
   "stages.sh": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "18d83fccecab10cb9ce266a3bc43205de762fd95ee806f6d98fbd231a14c98dc",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "edfaee34f5ebe78dbb356296222c7b7ad659807c4a3d6a363da197a0b990daa1",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "7f1e3955227f4442d78fe7cb5892563f8680e3c8b6888bfd4576e42b64634abc",
     "scratch/briefs/impl-op-w1-sample.md": "c12620b2712f2badbde123656f42ba87b6ae82b4e369aa3248a18f4ba98f13d5"
   },
@@ -89,18 +89,18 @@
   },
   "gen_stage_briefs.py:defaults": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "4a1b1f80c04a6efe7782a188889801ab7e438cdf117ece768c448c8814e8edec",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "b17d008c7214d78ad007c4ea76385bf2733faa6429e6497cc49e64c985a2e7d5",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "43a9f7aa878b13f6289c99cba9ae6c5e5d6bed15f9d9180c64612a0ab40f9319",
     "scratch/briefs/impl-op-w1-sample.md": "1b6719be9ad0bc27cb024d41e63c4b87c49a553305f1a96c099e664dc18b0ece"
   },
   "fill_mirror_fixes.py:defaults": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "4a1b1f80c04a6efe7782a188889801ab7e438cdf117ece768c448c8814e8edec",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "b17d008c7214d78ad007c4ea76385bf2733faa6429e6497cc49e64c985a2e7d5",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "43a9f7aa878b13f6289c99cba9ae6c5e5d6bed15f9d9180c64612a0ab40f9319",
     "scratch/briefs/impl-op-w1-sample.md": "1b6719be9ad0bc27cb024d41e63c4b87c49a553305f1a96c099e664dc18b0ece",
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "2e65de9d4cc498bced6c71555f6d5e7d74b277b3e285b7135ea8639987e729e6"
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "97c3df898bd734b419010eb27d3005da1709a451bd898e2662e2fffb42aeb750"
   },
   "rework_brief.py:defaults": {
-    "scratch/briefs/rework-sample.md": "da079073627197e995ac94c45614e59ccd02ad677400c6e2bcf1886bcee39fd2"
+    "scratch/briefs/rework-sample.md": "929d1a4fd22101378962feaa382e9e08f3fd112155d4817dec15fa90a644cc48"
   }
 }
