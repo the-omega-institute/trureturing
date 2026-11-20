@@ -7,9 +7,11 @@ import shutil
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 import test_reuse
+import build_inputs
 import fib_analysis
 import materials
 import publication
@@ -164,6 +166,30 @@ exit """ + str(failure) + '\n')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(calls, ['regressions'])
         self.assertEqual(reuse.read_receipt(report)['completed'], reuse.CHECKED)
+
+    def test_checked_reuse_preserves_actual_or_unknown_seed_commit(self):
+        for known in (True, False):
+            with self.subTest(known=known):
+                fixture = test_reuse.ReuseTests()
+                fixture.setUp()
+                self.addCleanup(fixture.doCleanups)
+                fixture.dev_repository()
+                root, report = fixture.root, fixture.report
+                reuse._seal(root, report, reuse.capture(root), publication.bundle_identity(report), checked=True)
+                source = reuse.read_seed_base(root)
+                self.assertIsNotNone(source)
+                if not known:
+                    reuse.invalidate_seed_base(root)
+                subprocess.run(['git', '-C', str(root), '-c', 'user.name=Fixture',
+                                '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                                'commit', '--allow-empty', '-qm', 'reuse at another commit'], check=True)
+                staging = report.parent / 'check'
+                staging.mkdir()
+                with patch.object(build_inputs, 'ROOT', root), patch.dict(os.environ, {
+                        'STRATALINT_FIB_REGRESSIONS_SELECTED': 'false',
+                        'STRATALINT_LEAN_BUILD_WORK_FILE': str(staging / 'work.json')}):
+                    build_inputs.checked_report(staging, report, report, staging, try_seed=True)
+                self.assertEqual(reuse.read_seed_base(root), source if known else None)
 
     def test_explicit_recovery_without_seed_through_checked_make_entry(self):
         for option in ('REBUILD_REPORT_CACHE', 'REGENERATE_REPORT_ARTIFACTS'):

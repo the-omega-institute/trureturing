@@ -7,11 +7,11 @@ namespace StrataLint.Lean.Tests;
 public sealed class LeanReportProgramTargetsTests
 {
     [Theory]
-    [InlineData("valid", 0, true, false)]
-    [InlineData("valid", 0, true, true)]
+    [InlineData("valid", 42, false, false)]
+    [InlineData("valid", 42, false, true)]
     [InlineData("missing", 42, false, false)]
     [InlineData("corrupt", 42, false, true)]
-    public void FullReportOnlyRequestsReportExtractionOnMiss(
+    public void FullReportChecksCompilerInputsForEverySeed(
         string seed, int expectedExit, bool receiptExists, bool existingOutput)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -48,11 +48,11 @@ public sealed class LeanReportProgramTargetsTests
             value.GetProperty("stdout").GetString() + value.GetProperty("stderr").GetString());
         var lake = value.GetProperty("lake").GetString();
         var workspace = value.GetProperty("workspace").GetString();
-        string[] calls = seed == "valid" ? [] : ["--prebuilt " + lake + " --log-level=error -d " + workspace + " build :report"];
+        string[] calls = ["--prebuilt " + lake + " --log-level=error -d " + workspace + " build :report"];
         Assert.Equal(calls, value.GetProperty("calls").EnumerateArray().Select(call => call.GetString()));
         Assert.True(value.GetProperty("seed_unchanged").GetBoolean(), text);
         Assert.True(receiptExists == value.GetProperty("receipt_exists").GetBoolean(),
             "[FAIL] canonical_receipt_state: " + text);
-        if (seed == "valid") Assert.True(value.GetProperty("identical_reports").GetBoolean());
+        if (existingOutput) Assert.True(value.GetProperty("identical_reports").GetBoolean());
     }
 }

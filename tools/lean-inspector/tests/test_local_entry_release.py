@@ -137,7 +137,7 @@ esac
                 self.setUp()
                 self.damage('inputs-without:' + field)
                 self.restore_seed()
-                result = self.run_entry()
+                result = self.republish()
                 self.assertEqual(result.returncode, 0,
                                  '[FAIL] incomplete_local_seed_recovery_must_succeed: '
                                  + result.stdout + result.stderr)
@@ -162,7 +162,7 @@ esac
                 self.setUp()
                 self.damage(kind)
                 self.restore_seed()
-                result = self.run_entry()
+                result = self.republish()
                 self.assertEqual(result.returncode, 0,
                                  '[FAIL] damaged_local_bundle_recovery_must_succeed: '
                                  + result.stdout + result.stderr)
@@ -184,7 +184,7 @@ esac
     def test_fetched_matching_seed_reuses_complete_report(self):
         self.damage('missing')
         self.restore_seed()
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(len(self.calls), 1, '[FAIL] fetched_matching_seed_must_skip_report_build')
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', result.stdout)
@@ -200,7 +200,6 @@ esac
                          '[FAIL] matching_restored_format_must_allow_incremental_build')
         self.assertEqual(len(self.calls), 2)
         self.assertIn('build :report', self.calls[1], '[FAIL] compatible_fetch_keeps_lake_incremental_path')
-        self.assertIn('changed_inputs=1', result.stdout)
 
     def test_matching_local_seed_with_changed_inputs_does_not_fetch(self):
         self.fixture.write('D5/A.lean', 'def a := 2\n')
@@ -212,7 +211,7 @@ esac
 
     def test_same_format_program_changes_preserve_complete_reuse(self):
         self.fixture.write('producer.py', '# changed producer\n')
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.calls, [])
         self.assertIn('extracted_modules=0 aggregates=0', result.stdout)
@@ -317,7 +316,7 @@ PY
     def test_normal_entry_reuses_and_aggregate_rebuild_retains_native_leaves(self):
         generated, _ = self.report_regeneration_fixture()
         original = {p: p.read_bytes() for p in generated.rglob('*') if p.is_file()}
-        result = self.run_entry()
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertFalse((self.root / 'regeneration.json').exists())
         self.assertEqual({p: p.read_bytes() for p in original}, original)
@@ -371,7 +370,7 @@ PY
         self.damage('missing')
         self.restore_seed()
         destination = self.root / 'custom/report.json'
-        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        result = self.republish(destination)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertTrue(destination.is_file(), '[FAIL] fetched_seed_publishes_requested_output')
 

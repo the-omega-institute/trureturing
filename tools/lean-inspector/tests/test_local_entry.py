@@ -199,6 +199,15 @@ class LocalEntryFixture:
         target.write_text('#!/bin/bash\nset -euo pipefail\n' + body)
         target.chmod(0o755)
 
+    def republish(self, output=None):
+        command = [sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'), 'reuse',
+                   '--repository', str(self.root), '--report', self.environment.get('STRATALINT_LEAN_REPORT_REUSE', str(self.output)),
+                   '--output', str(output or self.output), '--cache-miss-policy', 'fetch-or-fail']
+        result = subprocess.run(command, cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
+        calls = self.root / 'calls'
+        self.calls = calls.read_text().splitlines() if calls.exists() else []
+        return result
+
     def run_entry(self, *options, direct=False):
         command = (['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(self.root), '--output', str(self.output), *options]
@@ -342,7 +351,7 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
         self.separate_git_directory()
         self.damage('missing')
         self.restore_seed()
-        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(len(self.calls), 1, '[FAIL] separate_git_dir_main_fetches_report')
         self.assertTrue(self.calls[0].startswith('fetch fetch --mode production'))
@@ -368,7 +377,7 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
 
     def test_linked_matching_seed_reuses_without_fetch_or_lake(self):
         self.linked_checkout()
-        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        result = self.republish()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('complete-entry-reused', result.stdout)
         self.assertEqual(self.calls, [])
@@ -379,7 +388,7 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
         self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
         destination = self.root / 'custom output/report.json'
         self.assertFalse(destination.exists())
-        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        result = self.republish(destination)
         self.assert_canonical_seed_published(destination, result)
 
     def test_linked_unusable_selected_seed_reuses_canonical_without_fetch_or_lake(self):
@@ -390,7 +399,7 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
                 shutil.copytree(self.seed.parent, self.output.parent)
                 self.damage(kind)
                 destination = self.root / 'custom output/report.json'
-                result = self.run_entry('LEAN_REPORT=' + str(destination))
+                result = self.republish(destination)
                 self.assert_canonical_seed_published(destination, result)
 
     def test_linked_custom_output_refuses_unusable_canonical_without_fetch_or_lake(self):

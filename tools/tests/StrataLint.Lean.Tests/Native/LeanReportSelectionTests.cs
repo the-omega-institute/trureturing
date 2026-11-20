@@ -89,7 +89,7 @@ public sealed class LeanReportSelectionTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ReportEntryReusesValidatedReportWithoutInstalledToolchain(bool existingOutput)
+    public void ExplicitBundleReuseWorksWithoutInstalledToolchain(bool existingOutput)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -99,20 +99,16 @@ public sealed class LeanReportSelectionTests
             from test_reuse import ReuseTests
             fixture = ReuseTests()
             fixture.setUp()
-            original = fixture.receipt
-            def prepare():
-                api = original()
+            try:
+                import subprocess
+                fixture.receipt()
                 fixture.lake.unlink()
                 fixture.lake.with_name('lean').unlink()
-                return api
-            fixture.receipt = prepare
-            try:
-                result, calls = fixture.entry_with_program_build([], seed='valid',
-                    existing_output=sys.argv[2] == 'True')
-                print(result.stdout, end='')
-                print(result.stderr, end='', file=sys.stderr)
-                if calls: print('UNEXPECTED_BUILD ' + repr(calls))
-                raise SystemExit(result.returncode)
+                output = fixture.report if sys.argv[2] == 'True' else fixture.root / 'copy' / fixture.report.name
+                command = [sys.executable, '-B', str(pathlib.Path(sys.argv[1]) / 'tools/lean-inspector/reuse.py'),
+                           'reuse', '--repository', str(fixture.root), '--report', str(fixture.report),
+                           '--output', str(output)]
+                raise SystemExit(subprocess.run(command).returncode)
             finally:
                 fixture.doCleanups()
             """, root, existingOutput.ToString()], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
@@ -136,7 +132,8 @@ public sealed class LeanReportSelectionTests
             fixture.setUp()
             try:
                 first, calls = fixture.entry_with_program_build([], build_exit=37)
-                if first.returncode: raise RuntimeError(first.stdout + first.stderr)
+                if first.returncode != 37: raise RuntimeError(first.stdout + first.stderr)
+                (fixture.root / 'build-calls').unlink()
                 probe = reuse.probe(fixture.root, fixture.report)
                 # The receipt matches, but the sealed envelope is invalid.
                 sidecar = publication.member(fixture.report, '.sha256')
@@ -188,7 +185,7 @@ public sealed class LeanReportSelectionTests
     public static IEnumerable<object[]> InspectorPhaseCases()
     {
         foreach (var unavailableClock in new[] { false, true })
-        foreach (var failedPhase in new[] { "", "inputs", "reuse", "capture", "prepare", "report", "publish" })
+        foreach (var failedPhase in new[] { "", "inputs", "capture", "prepare", "report", "publish" })
             yield return [failedPhase, unavailableClock];
     }
 
@@ -265,7 +262,7 @@ public sealed class LeanReportSelectionTests
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}\nstdout:\n{standardOutput}\nstderr:\n{error}");
-        var allPhases = new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "report", "publish" };
+        var allPhases = new[] { "inputs", "batch-size", "capture", "prepare", "report", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0, File.Exists(report));

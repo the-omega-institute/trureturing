@@ -475,9 +475,10 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
         self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
 
-    def test_report_hit_reuses_without_preparing_a_producer(self):
+    def test_report_hit_requires_an_existing_producer(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
-        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        self.assertEqual(process.returncode, 2, process.stdout + process.stderr)
+        self.assertIn('missing prebuilt producer', process.stderr)
         self.assertEqual(calls, [])
 
     def test_report_miss_requires_prebuilt_producer(self):

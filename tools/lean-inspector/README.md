@@ -1,7 +1,7 @@
 # Lean inspector
 
 `tools/lean-inspector` 统一管理 Lean report 的生成、工件、依赖驱动的增量和发布，
-报告从已编译的 Lean 工件提取声明和依赖。输入相符时可直接复用完整报告。
+报告从已编译的 Lean 工件提取声明和依赖。全量与定向入口每次都由 Lake 核对编译输入，并复用与这些输入相符的原生报告工件。
 
 已有编译产物时，在仓库根目录运行：
 
@@ -21,8 +21,7 @@ make lean-report FULL_BUILD=1 LEAN_REPORT=.lake/build/stratalint/custom-report.j
 production Release 恢复（`make lean-cache-from-github-without-mathlib`）和
 `fetch-or-fail` 报告恢复只在主 checkout 运行；显式选择的 verification-mode fetch 不变。
 linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏或格式不符时，先检查
-工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`；相符时从它复用，
-发布到 `LEAN_REPORT` 指定的输出，不取回 Release。canonical 种子也不可用时，以
+工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`。格式相符时，分析入口继续核对原生工件并写入 `LEAN_REPORT` 指定的输出。canonical 种子也不可用时，以
 `reason=linked-worktree` 和退出码 4 拒绝。
 补救前提是主 checkout 为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和
 `skipped` 收据返回，这不代表 donor 已预热。先在该主 checkout 同步、预热并成功生成
@@ -47,7 +46,7 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 且本地记录是它的严格祖先时才在现有缓存锁内用 `--refresh-stale` 取回；本地记录未知、快照较旧
 或不在当前历史上时保留本地种子。缺失对象或浅历史无法证明祖先关系时打印 ancestry-unprovable 原因，
 与完整历史上已证的非祖先区分。列举、清单读取或取回失败且回滚成功时打印 keep 收据并继续 Lake 增量路径；
-输入也相符时打印 `action=keep`、`reason=seed-current`，整份收据仍可直接复用。
+输入也相符时打印 `action=keep`、`reason=seed-current`，校验后的 bundle 可由重发入口复用。
 复用阶段完成后，入口打印一次决策收据。需要重新提取时，检查既有编译产物并生成报告。
 可选取回只恢复已批准的 tag，并核验清单生产提交与批准值一致，
 不重新列举或向较旧快照回退。替换前检查 staged 报告的格式和完整性；build 与 base 在同一安装中
@@ -289,10 +288,10 @@ Lake 编译依赖 trace、utility 输入与报告格式标识决定还原后的�
 `inspect.sh` 使用既有的 Inspector 工具和模块编译产物。报告、materials 和编译产物随项目的
 `.lake/build` 缓存运输。
 
-正常入口校验可选的 `.reuse.json`。报告格式、登记模块、配置输入的内容与 Git 可执行位、
-执行环境、五件报告 bundle 的字节与收据相符时，入口复用并发布已有报告。
-未命中时，Lake 核对编译依赖的 trace，仅为失效的模块提取或汇总报告。
-缺失或陈旧的编译输入会使提取失败。生产程序字节不进入完整报告收据。
+普通分析每次执行 Lake 报告 facet，按编译依赖 trace 复用或提取模块报告。
+Lake 可以从本地原生缓存恢复与当前输入相符的已编译工件。如果文件及其有效缓存副本均缺失，
+或依赖已经改变且缺少当前版本的编译工件，分析会失败。完整报告收据供显式重发已生成 bundle 时校验；
+生产程序字节不进入该收据。
 `LEAN_INSPECTOR_WORK extracted_modules=… aggregates=…` 记录实际提取的模块数与汇总次数。
 
 [lean-report-inputs.json](../../lean-report-inputs.json) 是 FILEMAP 登记的唯一输入

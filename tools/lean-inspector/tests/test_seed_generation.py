@@ -159,7 +159,7 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
         before_seed = {suffix: publication.member(self.output, suffix).read_bytes()
                        for suffix in publication.SUFFIXES}
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
-        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        result = self.republish()
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertNotIn('phase=programs', result.stderr)
         self.assert_entry_seed_decision(result, 'keep', 'seed-current')
@@ -191,7 +191,7 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
         expected_seed = {suffix: publication.member(restored, suffix).read_bytes()
                          for suffix in (*publication.SUFFIXES, self.api.SUFFIX)}
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
-        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        result = self.republish()
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertNotIn('phase=programs', result.stderr)
         decision = self.assert_entry_seed_decision(result, 'fetch', 'newer-release')
@@ -224,8 +224,7 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
 
     def assert_successful_reuse(self):
         self.environment['FIXTURE_PROGRAM_EXIT'] = '0'
-        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
-                                '--log-dir', str(self.root / 'logs/success'), direct=True)
+        result = self.republish()
         self.assertEqual(0, result.returncode, '[FAIL] successful_program_reuse_completes: ' + result.stderr)
         self.assertNotIn('phase=programs', result.stderr)
         self.assertIn('complete-entry-reused', result.stdout)
