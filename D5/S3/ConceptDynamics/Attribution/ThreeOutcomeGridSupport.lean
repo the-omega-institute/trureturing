@@ -563,7 +563,7 @@ private theorem triple_and_pair_weights {q n : ℕ} (budget : 3*q+1 ≤ 4^n) :
   one_smul s := Prod.ext rfl (one_mul s.2)
   mul_smul g h s := Prod.ext rfl (mul_assoc g h s.2)
 
-private lemma sum_positive_support {A : Type*} [Fintype A] (w f : A → ℕ)
+lemma sum_positive_support {A : Type*} [Fintype A] (w f : A → ℕ)
     (zero : ∀ a, w a = 0 → f a = 0) :
     (∑ s : {a : A // 0 < w a}, f s.val) = ∑ a : A, f a := by
   have vanish : (∑ s : {a : A // ¬ 0 < w a}, f s.val) = 0 :=

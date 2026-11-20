@@ -1,5 +1,5 @@
 /- GID: D5/S1/Recurrence/Invariants/AffinePolynomialPairMorganVoyceIdentities
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Recurrence/Invariants/AffinePolynomialPairMorganVoyceIdentities
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.NumberTheory.Real.GoldenRatio]
