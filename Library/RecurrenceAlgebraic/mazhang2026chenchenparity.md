@@ -10,6 +10,7 @@ strata_touched:
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums
   - D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns
   - D5/S1/Recurrence/Algebraic/ChenChenIntegerStepCriterion
+  - D5/S1/Recurrence/Algebraic/ChenChenRootAnnulus
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -22,7 +23,7 @@ DOI: 10.5281/zenodo.23957560 (version 2; Zenodo publication date 2026-11-04, PDF
 3 November 2026). Source PDF:
 https://zenodo.org/api/records/23957560/files/note-v2.pdf/content (text extracted locally,
 24,508 characters). Theorem 1 opens the paper; Corollary 3 follows the proof of Theorem 1, and
-Corollary 4 follows the reflection identity (3).
+Corollary 4 follows the reflection identity (3), and Corollary 5 follows Corollary 4.
 
 ## Source statement
 
@@ -48,6 +49,15 @@ Corollary 4 follows the reflection identity (3).
 > same formula then gives the boundary value 1. A preceding-row entry at position j has total
 > coefficient (m(n − j − 1) + 1) + (m(j − 1) + 1) = m(n − 2) + 2. …
 
+> Corollary 5. For real m ≤ −3 and even n ≥ 2, every root z of R_{m,n} satisfies
+> L_n ≤ |z| ≤ U_n, L_n = min_{1≤k<n} T_m(n, k)/T_m(n, k + 1),
+> U_n = max_{1≤k<n} T_m(n, k)/T_m(n, k + 1). All these ratios are positive; symmetry also
+> gives L_n U_n = 1.
+
+> Proof. This is the Eneström–Kakeya bound [7]; … Theorem 1 supplies positive coefficients
+> here. Reflection makes the set of consecutive ratios invariant under reciprocation, so
+> L_n = 1/U_n.
+
 ## Mathematical scope
 
 T_m is Chen and Chen's step-m Eulerian triangle (see `chenchen2026stepm`): T_m(n,1) =
@@ -56,4 +66,5 @@ T_m(n,n) = 1 and the interior recursion T_m(n,k) = (m(n−k)+1)T_m(n−1,k−1) 
 alternating sums are among the adjacent COMMENTS statements of OEIS A392664–A392666; the
 paper's coverage table lists them as proved by the reflection identity (3) and Corollary 4.
 The parameter m is any real number in Theorem 1 and Corollary 4, not only the integer steps of
-the OEIS entries; Corollary 3 restricts to integer m.
+the OEIS entries; Corollary 3 restricts to integer m. Corollary 5 is the Eneström–Kakeya bound
+(reference [7] of the paper) applied to the positive even rows given by Theorem 1.
