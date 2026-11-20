@@ -19,11 +19,12 @@ internal sealed class MixedDigitDenominatorsDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Fix real weights on a finite index set J. Every integer level from zero through L minus one "
-                    + "is represented by a weighted sum with digits in zero through three. "
-                    + "If L exceeds four to the power card J minus one, two distinct coordinates cannot have "
-                    + "weights a divided by two and b divided by three with odd integer a and integer b "
-                    + "indivisible by three.")),
+                    "Let J be a finite index set, w a real weight family on J, and L a natural number. "
+                    + "FourDigitIntegerCoverage means every integer level from zero through L minus one "
+                    + "is represented by a sum with weights w and digits in zero through three. "
+                    + "NoMixedHalfAndThirdWeights means that no two distinct coordinates of w have weights "
+                    + "a divided by two and b divided by three with odd integer a and integer b indivisible "
+                    + "by three. The threshold for this exclusion is L greater than four to the power card J minus one.")),
                 Paragraph(Text(
                     "For two representations that agree off those coordinates, subtract the level equations "
                     + "and clear denominators. Reduction modulo two recovers equality of the first digits' "
@@ -37,11 +38,12 @@ internal sealed class MixedDigitDenominatorsDocument : IScribeDocumentDefinition
     {
         Formula j = F.Id("J");
         Formula levels = F.Id("L");
-        return Disp(Seq(
-            new Formula.FunctionCall(FormulaIdentifier.Create("FourDigitIntegerCoverage"), [j, levels]),
+        Formula w = F.Id("w");
+        return Disp(Seq(Forall, Sp, j, Sp, w, Sp, levels, Comma, Sp,
+            new Formula.FunctionCall(FormulaIdentifier.Create("FourDigitIntegerCoverage"), [j, w, levels]),
             Sp, Land, Sp, D(4), Caret,
             Grp(new Formula.FunctionCall(FormulaIdentifier.Create("card"), [j]), Sp, Minus, Sp, D(1)),
             Sp, Lt, Sp, levels, Sp, Rightarrow, Sp,
-            new Formula.FunctionCall(FormulaIdentifier.Create("NoMixedHalfAndThirdWeights"), [j])));
+            new Formula.FunctionCall(FormulaIdentifier.Create("NoMixedHalfAndThirdWeights"), [j, w])));
     }
 }
