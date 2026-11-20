@@ -649,6 +649,13 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         (self.root / ".lake/build/lib/lean/Module.olean").write_bytes(b"completed module")
         return owner
 
+    def manual_resume_setup(self):
+        owner = self.resume_setup()
+        self.env.update(GITHUB_EVENT_NAME="workflow_dispatch", STRATALINT_CACHE_SOURCE_VALIDATED="true",
+                        STRATALINT_CACHE_SOURCE_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_COMMIT="b" * 40,
+                        STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)
+        return owner
+
     def test_producer_resume_is_separate_and_requires_the_same_ref_and_inputs(self):
         owner = self.resume_setup()
         with mock.patch.dict(os.environ, self.env, clear=True):
@@ -779,7 +786,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 self.assertFalse((self.root / ".lake/packages").exists())
 
     def test_empty_matched_key_after_resume_attempt_discards_extracted_material(self):
-        owner = self.resume_setup()
+        owner = self.manual_resume_setup()
         self.work(0, 0)
         env = dict(self.env, STRATALINT_CACHE_PRODUCER_COMPLETE="true")
         with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
@@ -797,7 +804,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertIn("resume transport failed or identity is incompatible", receipts.getvalue())
 
     def test_no_resume_extraction_preserves_valid_dependency_seed_without_promoting(self):
-        owner = self.resume_setup()
+        owner = self.manual_resume_setup()
         self.work(0, 0)
         dependency = self.root / ".lake/packages/mathlib/keep"
         dependency.write_bytes(b"valid dependency seed")
@@ -828,8 +835,8 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
             for layer in ("project", "dependency"):
                 self.assertFalse(owner.restore_native(self.root, owner.actions_keys(self.root), layer, spec["key"], "success"))
 
-    def test_successful_final_slice_can_promote_verified_resume_with_zero_new_work(self):
-        owner = self.resume_setup()
+    def test_manual_final_slice_can_promote_verified_resume_with_zero_new_work(self):
+        owner = self.manual_resume_setup()
         self.work(0, 0)
         with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
             os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
@@ -865,7 +872,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertFalse((self.root / "environment").exists())
         result = self.run_tool(CACHE, "resume-keys", env=dict(self.env, STRATALINT_CACHE_WRITES="false"))
         self.assertEqual(2, result.returncode)
-        self.assertIn("authorized protected branch or isolated preparation", result.stderr)
+        self.assertIn("authorized protected branch", result.stderr)
 
     def preparation_resume_environment(self):
         return dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch",
@@ -874,32 +881,14 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
             STRATALINT_CACHE_TARGET_REF="refs/heads/integration-upgrade",
             STRATALINT_CACHE_SOURCE_COMMIT="b" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)
 
-    def test_preparation_resume_is_isolated_from_target_branch_and_other_prs(self):
+    def test_pr_preparation_cannot_write_any_cache_even_on_protected_runtime(self):
         owner = self.resume_setup()
-        env = self.preparation_resume_environment()
-        with mock.patch.dict(os.environ, env, clear=True):
-            spec = owner.resume_spec(self.root)
+        with mock.patch.dict(os.environ, self.preparation_resume_environment(), clear=True):
             keys = owner.actions_keys(self.root)
-            self.assertFalse(keys["project_save_allowed"])
-            for changes in ({"STRATALINT_CACHE_SOURCE_REF": "refs/pull/22/merge"},
-                    {"GITHUB_REF": "refs/heads/integration-other", "STRATALINT_CACHE_TARGET_REF": "refs/heads/integration-other"}):
-                with mock.patch.dict(os.environ, changes):
-                    self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
-            with mock.patch.dict(os.environ, {"STRATALINT_CACHE_SOURCE_COMMIT": "c" * 40,
-                    "STRATALINT_CACHE_CHECKED_OUT_SHA": "c" * 40}):
-                self.assertEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
-        with mock.patch.dict(os.environ, dict(self.env, GITHUB_REF=env["GITHUB_REF"]), clear=True):
-            self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
-
-    def test_preparation_resume_refuses_invalid_source_target_and_writer_bindings(self):
-        owner = self.resume_setup()
-        env = self.preparation_resume_environment()
-        for changes in ({"STRATALINT_CACHE_PR_SOURCE_VALIDATED": "false"}, {"STRATALINT_CACHE_SOURCE_REF": "refs/heads/dev"},
-                {"STRATALINT_CACHE_TARGET_REF": "refs/heads/integration-other"}, {"STRATALINT_CACHE_CHECKED_OUT_SHA": "c" * 40},
-                {"GITHUB_REF_PROTECTED": "false"}, {"STRATALINT_CACHE_WRITES": "false"}):
-            with self.subTest(changes=changes), mock.patch.dict(os.environ, dict(env, **changes), clear=True):
-                with self.assertRaises(ValueError):
-                    owner.resume_spec(self.root)
+            for key in ("project_save_allowed", "save_allowed", "producer_save_allowed"):
+                self.assertFalse(keys[key])
+            with self.assertRaisesRegex(ValueError, "authorized protected branch"):
+                owner.resume_spec(self.root)
 
     def test_ordinary_pr_cannot_become_a_producer_by_setting_the_legacy_marker(self):
         owner = self.resume_setup()
