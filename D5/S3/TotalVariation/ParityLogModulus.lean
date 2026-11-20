@@ -19,7 +19,7 @@ namespace D5.S3.TotalVariation.ParityLogModulus
 
 open D5.S3.TotalVariation.ParityLogStability
 
-private theorem log_abs_difference_le {e x y : ℝ}
+theorem log_abs_difference_le {e x y : ℝ}
     (he : 0 < e) (hx : e ≤ |x|) (hy : e ≤ |y|) :
     |Real.log (|x|) - Real.log (|y|)| ≤ Real.log (1 + |x - y| / e) := by
   have ordered {u v : ℝ} (hu : e ≤ |u|) (huv : |u| ≤ |v|) :
@@ -41,7 +41,7 @@ private theorem log_abs_difference_le {e x y : ℝ}
       (he.trans_le hy) (he.trans_le hx) h))]
     exact ordered hy h
 
-private theorem moment_distance_sum_le {A : Type*} [AddCommGroup A] [Fintype A]
+theorem moment_distance_sum_le {A : Type*} [AddCommGroup A] [Fintype A]
     (two : ∀ x : A, x + x = 0) (p q : A → ℝ) (hmass : ∑ x, p x = ∑ x, q x) :
     (∑ ψ : AddChar A ℂ, |moment p ψ - moment q ψ|) ≤
       (Fintype.card A : ℝ) * totalVariation p q := by
