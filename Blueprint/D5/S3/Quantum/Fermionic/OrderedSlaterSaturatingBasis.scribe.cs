@@ -16,12 +16,19 @@ internal sealed class OrderedSlaterSaturatingBasisDocument : IScribeDocumentDefi
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Balance one retained pair while holding the discarded weights fixed, and assume " +
-                    "the ordinary marginal purity strictly decreases. Restrict the alternation matrix " +
+                    "Balance one retained pair while holding every other endpoint probability fixed. " +
+                    "At each of the two amplitude assignments, form the ordered occupation cut " +
+                    "matrix. Its purity is the real trace of the square of its Gram matrix. " +
+                    "Assume the before purity minus the after purity is positive. A column basis " +
+                    "attains the bound when this difference equals the selected squared bias times " +
+                    "the product of the other biased retained squared biases and the basis-column " +
+                    "one-bit difference masses. Restrict the alternation matrix " +
                     "to the selected and other balanced retained rows and the nondeterministic " +
                     "discarded columns. The target has a one on the selected row and zero on all " +
-                    "other rows. An attaining basis exists exactly when the retained-row coset " +
-                    "condition holds and the rank of the balanced discarded columns, plus the number " +
+                    "other rows. For an attaining basis to exist, every other nondeterministic " +
+                    "biased retained row must lie in the selected row plus the span of the other " +
+                    "balanced retained rows. The remaining requirement is that the rank of the " +
+                    "balanced discarded columns, plus the number " +
                     "of nonbalanced discarded columns whose deletion excludes the target from the " +
                     "span, equals the full column rank. The deletion test detects precisely the " +
                     "coordinates forced to be one on the feasible fiber. Every such nonbalanced " +
