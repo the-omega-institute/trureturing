@@ -210,6 +210,525 @@ end EvenLegTriangle
 
 open SimpleGraph
 
+/-- With offset zero, only leg zero represents the shared root. Offset one keeps all roots. -/
+private abbrev SpiderVertex (e : ℕ) (L : Fin 3 → ℕ) :=
+  { x : Σ i : Fin 3, Fin (L i + 1) // e ≠ 0 ∨ x.1 = 0 ∨ 0 < x.2.val }
+
+private def leg {e : ℕ} {L : Fin 3 → ℕ} (x : SpiderVertex e L) : Fin 3 := x.val.1
+private def depth {e : ℕ} {L : Fin 3 → ℕ} (x : SpiderVertex e L) : ℕ := x.val.2.val
+
+private theorem vertex_ext {e : ℕ} {L : Fin 3 → ℕ} {x y : SpiderVertex e L}
+    (hi : leg x = leg y) (hd : depth x = depth y) : x = y := by
+  apply Subtype.ext
+  rcases x with ⟨⟨i, x⟩, _⟩
+  rcases y with ⟨⟨j, y⟩, _⟩
+  change i = j at hi
+  subst j
+  exact congrArg (Sigma.mk i) (Fin.ext hd)
+
+private def rootZero (e : ℕ) (L : Fin 3 → ℕ) : SpiderVertex e L :=
+  ⟨⟨0, ⟨0, Nat.zero_lt_succ _⟩⟩, Or.inr (Or.inl rfl)⟩
+
+private def point {e : ℕ} {L : Fin 3 → ℕ} (i : Fin 3) (d : ℕ) (hd : d ≤ L i) :
+    SpiderVertex e L :=
+  if h : e = 0 ∧ d = 0 then rootZero e L
+  else ⟨⟨i, ⟨d, Nat.lt_succ_of_le hd⟩⟩, by
+    by_cases he : e = 0
+    · exact Or.inr (Or.inr (Nat.pos_of_ne_zero fun hz => h ⟨he, hz⟩))
+    · exact Or.inl he⟩
+
+private theorem point_congr {e : ℕ} {L : Fin 3 → ℕ} {i j : Fin 3} {d f : ℕ}
+    {hd : d ≤ L i} {hf : f ≤ L j} (hi : i = j) (hdf : d = f) :
+    point (e := e) i d hd = point j f hf := by
+  subst j
+  subst f
+  rfl
+
+@[simp] theorem depth_point {e : ℕ} {L : Fin 3 → ℕ} (i : Fin 3) (d : ℕ) (hd : d ≤ L i) :
+    depth (point (e := e) i d hd) = d := by
+  unfold point
+  split
+  · next h => exact h.2.symm
+  · rfl
+
+private theorem leg_point {e : ℕ} {L : Fin 3 → ℕ} (i : Fin 3) (d : ℕ) (hd : d ≤ L i)
+    (h : e ≠ 0 ∨ 0 < d) : leg (point (e := e) i d hd) = i := by
+  unfold point
+  split
+  · rename_i hzero
+    rcases h with he | hd
+    · exact False.elim (he hzero.1)
+    · omega
+  · rfl
+
+private theorem point_coords {e : ℕ} {L : Fin 3 → ℕ} (x : SpiderVertex e L) :
+    point (leg x) (depth x) (Nat.le_of_lt_succ x.val.2.isLt) = x := by
+  apply vertex_ext _ (depth_point _ _ _)
+  rcases x.property with he | hi | hd
+  · exact leg_point _ _ _ (Or.inl he)
+  · change leg x = 0 at hi
+    unfold point
+    split
+    · exact hi.symm
+    · rfl
+  · exact leg_point _ _ _ (Or.inr hd)
+
+private def spiderDist {e : ℕ} {L : Fin 3 → ℕ} (x y : SpiderVertex e L) : ℕ :=
+  if leg x = leg y then (depth x - depth y) + (depth y - depth x)
+  else depth x + depth y + e
+
+private theorem spiderDist_comm {e : ℕ} {L : Fin 3 → ℕ} (x y : SpiderVertex e L) :
+    spiderDist x y = spiderDist y x := by
+  unfold spiderDist
+  by_cases h : leg x = leg y
+  · simp only [ite_eq_left h, ite_eq_left h.symm]
+    omega
+  · simp only [ite_eq_right h, ite_eq_right (Ne.symm h)]
+    omega
+
+private theorem spiderDist_zero_iff {e : ℕ} {L : Fin 3 → ℕ} (x y : SpiderVertex e L) :
+    spiderDist x y = 0 ↔ x = y := by
+  constructor
+  · unfold spiderDist
+    split
+    · next h => exact fun hz => vertex_ext h (by omega)
+    · next h =>
+      intro hz
+      have he : e = 0 := by omega
+      have hx : depth x = 0 := by omega
+      have hy : depth y = 0 := by omega
+      have root_leg (z : SpiderVertex e L) (hd : depth z = 0) : leg z = 0 := by
+        rcases z.property with he' | hi | hp
+        · exact False.elim (he' he)
+        · exact hi
+        · change 0 < depth z at hp
+          omega
+      exact False.elim (h ((root_leg x hx).trans (root_leg y hy).symm))
+  · rintro rfl
+    simp [spiderDist]
+
+private theorem spiderDist_triangle {e : ℕ} {L : Fin 3 → ℕ} (x y z : SpiderVertex e L) :
+    spiderDist x z ≤ spiderDist x y + spiderDist y z := by
+  unfold spiderDist
+  split <;> split <;> split <;> omega
+
+private def spider (e : ℕ) (L : Fin 3 → ℕ) : SimpleGraph (SpiderVertex e L) where
+  Adj x y := spiderDist x y = 1
+  symm := ⟨fun x y h => (spiderDist_comm y x).trans h⟩
+  loopless := ⟨fun x h => by simp [spiderDist] at h⟩
+
+private theorem spiderDist_point {e : ℕ} {L : Fin 3 → ℕ} (i j : Fin 3) (d f : ℕ) (hd : d ≤ L i) (hf : f ≤ L j) :
+    spiderDist (point (e := e) i d hd) (point j f hf) =
+      if i = j then (d - f) + (f - d) else d + f + e := by
+  unfold spiderDist
+  simp only [depth_point]
+  by_cases hx : e = 0 ∧ d = 0 <;> by_cases hy : e = 0 ∧ f = 0
+  · simp [hx.1, hx.2, hy.2]
+  · simp only [hx.1, hx.2]
+    split <;> split <;> simp
+  · simp only [hy.1, hy.2]
+    split <;> split <;> simp
+  · rw [leg_point i d hd (by omega), leg_point j f hf (by omega)]
+
+private theorem spider_adj_iff {L : Fin 3 → ℕ} {x y : SpiderVertex 1 L} :
+    (spider 1 L).Adj x y ↔
+      (leg x = leg y ∧ (depth x + 1 = depth y ∨ depth y + 1 = depth x)) ∨
+      (leg x ≠ leg y ∧ depth x = 0 ∧ depth y = 0) := by
+  change spiderDist x y = 1 ↔ _
+  by_cases h : leg x = leg y
+  · simp [spiderDist, h]
+    omega
+  · simp [spiderDist, h]
+
+private def evenLegIso (q : Fin 3 → ℕ) :
+    spider 1 (fun i => 2 * q i) ≃g EvenLegTriangle.H q where
+  toEquiv :=
+    { toFun := Subtype.val
+      invFun := fun x => ⟨x, Or.inl (by decide)⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  map_rel_iff' := by
+    intro x y
+    exact spider_adj_iff.symm
+
+section Projection
+variable {V : Type*} {G : SimpleGraph V} {a : Fin 3 → V} {L : Fin 3 → ℕ} {e : ℕ}
+
+/-- The open tree balls and the closed triangle balls have this common threshold. -/
+private def Active (G : SimpleGraph V) (a : Fin 3 → V) (L : Fin 3 → ℕ) (e : ℕ)
+    (x : V) (i : Fin 3) : Prop :=
+  G.dist (a i) x + (1 - e) ≤ L i
+
+private def Fits (G : SimpleGraph V) (a : Fin 3 → V) (L : Fin 3 → ℕ) (e : ℕ) : Prop :=
+  ∀ i j, i ≠ j → G.dist (a i) (a j) = L i + L j + e
+
+private theorem active_unique (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    {x : V} {i j : Fin 3} (hi : Active G a L e x i) (hj : Active G a L e x j) : i = j := by
+  by_contra h
+  have ht := hc.dist_triangle (u := a i) (v := x) (w := a j)
+  rw [hfit i j h, dist_comm (u := x) (v := a j)] at ht
+  unfold Active at hi hj
+  omega
+
+private noncomputable def project (G : SimpleGraph V) (a : Fin 3 → V) (L : Fin 3 → ℕ) (e : ℕ)
+    (x : V) : SpiderVertex e L := by
+  classical
+  exact if h : ∃ i, Active G a L e x i then
+    point h.choose (L h.choose - G.dist (a h.choose) x) (Nat.sub_le ..)
+  else rootZero e L
+
+private theorem project_active (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    {x : V} {i : Fin 3} (hi : Active G a L e x i) :
+    project G a L e x = point i (L i - G.dist (a i) x) (Nat.sub_le ..) := by
+  classical
+  have h : ∃ j, Active G a L e x j := ⟨i, hi⟩
+  unfold project
+  rw [dite_eq_left h]
+  exact congrArg (fun j => point j (L j - G.dist (a j) x) (Nat.sub_le ..))
+    (active_unique hc he hfit h.choose_spec hi)
+
+private theorem project_inactive {x : V} (h : ¬ ∃ i, Active G a L e x i) :
+    project G a L e x = rootZero e L := by
+  classical
+  simp [project, h]
+
+private theorem project_nonexpanding (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    (x y : V) : spiderDist (project G a L e x) (project G a L e y) ≤ G.dist x y := by
+  have reverse_dist (i : Fin 3) : G.dist (a i) x ≤ G.dist (a i) y + G.dist x y := by
+    rw [dist_comm (u := x) (v := y)]
+    exact hc.dist_triangle
+  have forward_dist (i : Fin 3) : G.dist (a i) y ≤ G.dist (a i) x + G.dist x y :=
+    hc.dist_triangle
+  have cross_dist (i j : Fin 3) (hij : i ≠ j) :
+      L i + L j + e ≤ G.dist (a i) x + G.dist x y + G.dist (a j) y := by
+    have h₁ := hc.dist_triangle (u := a i) (v := y) (w := a j)
+    have h₂ := hc.dist_triangle (u := a i) (v := x) (w := y)
+    rw [hfit i j hij, dist_comm (u := y) (v := a j)] at h₁
+    omega
+  have hroot : rootZero e L = point 0 0 (Nat.zero_le _) := by
+    by_cases hh : e = 0 <;> simp [point, hh, rootZero]
+  by_cases hx : ∃ i, Active G a L e x i
+  · obtain ⟨i, hi⟩ := hx
+    rw [project_active hc he hfit hi]
+    by_cases hy : ∃ j, Active G a L e y j
+    · obtain ⟨j, hj⟩ := hy
+      rw [project_active hc he hfit hj, spiderDist_point]
+      by_cases hij : i = j
+      · subst j
+        rw [ite_eq_left (show i = i from rfl)]
+        have := reverse_dist i
+        have := forward_dist i
+        omega
+      · have := cross_dist i j hij
+        simp only [ite_eq_right hij]
+        unfold Active at hi hj
+        omega
+    · rw [project_inactive hy, hroot, spiderDist_point]
+      have hin : ¬ Active G a L e y i := fun h => hy ⟨i, h⟩
+      unfold Active at hi hin
+      have := forward_dist i
+      split <;> omega
+  · rw [project_inactive hx]
+    by_cases hy : ∃ j, Active G a L e y j
+    · obtain ⟨j, hj⟩ := hy
+      rw [project_active hc he hfit hj, hroot, spiderDist_point]
+      have hin : ¬ Active G a L e x j := fun h => hx ⟨j, h⟩
+      unfold Active at hj hin
+      have := reverse_dist j
+      split <;> omega
+    · rw [project_inactive hy]
+      simp [spiderDist]
+
+private theorem project_edges (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    {x y : V} (hxy : G.Adj x y) :
+    project G a L e x = project G a L e y ∨
+      (spider e L).Adj (project G a L e x) (project G a L e y) := by
+  have h := project_nonexpanding hc he hfit x y
+  rw [dist_eq_one_iff_adj.mpr hxy] at h
+  by_cases hz : spiderDist (project G a L e x) (project G a L e y) = 0
+  · exact Or.inl ((spiderDist_zero_iff ..).mp hz)
+  · exact Or.inr (show spiderDist (project G a L e x) (project G a L e y) = 1 by omega)
+
+private theorem project_of_dist_le (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    {x : V} {i : Fin 3} (hi : G.dist (a i) x ≤ L i) :
+    project G a L e x = point i (L i - G.dist (a i) x) (Nat.sub_le ..) := by
+  by_cases h : Active G a L e x i
+  · exact project_active hc he hfit h
+  · unfold Active at h
+    have he₀ : e = 0 := by omega
+    have hi' : G.dist (a i) x = L i := by omega
+    have hn : ¬ ∃ j, Active G a L e x j := by
+      rintro ⟨j, hj⟩
+      by_cases hij : i = j
+      · exact h (hij ▸ hj)
+      · have ht := hc.dist_triangle (u := a i) (v := x) (w := a j)
+        rw [hfit i j hij, dist_comm (u := x) (v := a j), hi'] at ht
+        unfold Active at hj
+        omega
+    rw [project_inactive hn]
+    simp [point, he₀, hi']
+
+private def foot (e : ℕ) (L : Fin 3 → ℕ) (i : Fin 3) : SpiderVertex e L :=
+  point i (L i) le_rfl
+
+private theorem geodesic_coordinates (hc : G.Connected) {x y : V} (p : G.Walk x y)
+    (hp : p.length = G.dist x y) {n : ℕ} (hn : n ≤ p.length) :
+    G.dist x (p.getVert n) = n ∧ G.dist y (p.getVert n) = p.length - n := by
+  have hl := dist_le (p.take n)
+  have hr := dist_le (p.drop n)
+  simp only [Walk.take_length, inf_eq_left.mpr hn] at hl
+  simp only [Walk.drop_length] at hr
+  have ht := hc.dist_triangle (u := x) (v := p.getVert n) (w := y)
+  rw [← hp] at ht
+  rw [dist_comm (u := y) (v := p.getVert n)]
+  omega
+
+private theorem project_surjective (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e) :
+    Function.Surjective (project G a L e) := by
+  intro x
+  let i := leg x
+  let d := depth x
+  have hd : d ≤ L i := Nat.le_of_lt_succ x.val.2.isLt
+  obtain ⟨j, hji⟩ := exists_ne i
+  obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist (a i) (a j)
+  have hlen : p.length = L i + L j + e := hp.trans (hfit i j (Ne.symm hji))
+  let n := L i - d
+  have hcoord := (geodesic_coordinates hc p hp (n := n) (by dsimp [n]; omega)).1
+  refine ⟨p.getVert n, ?_⟩
+  rw [project_of_dist_le hc he hfit (i := i) (x := p.getVert n)
+    (by rw [hcoord]; exact Nat.sub_le ..)]
+  have hdepth : L i - G.dist (a i) (p.getVert n) = d := by
+    rw [hcoord]
+    dsimp [n]
+    omega
+  exact (point_congr rfl hdepth).trans (point_coords x)
+
+private theorem geodesic_project_left (hc : G.Connected) (he : e ≤ 1)
+    (hfit : Fits G a L e) {i j : Fin 3} (p : G.Walk (a i) (a j))
+    (hp : p.length = G.dist (a i) (a j)) {n : ℕ} (hn : n ≤ p.length)
+    (hi : n ≤ L i) :
+    project G a L e (p.getVert n) = point i (L i - n) (Nat.sub_le ..) := by
+  have hdist := (geodesic_coordinates hc p hp hn).1
+  have hpj := project_of_dist_le hc he hfit (x := p.getVert n) (i := i) (hdist.symm ▸ hi)
+  exact hpj.trans (congrArg (fun m => point i (L i - m) (Nat.sub_le ..)) hdist)
+
+private theorem lift_leg_edge (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    (i : Fin 3) (d : ℕ) (hd : d + 1 ≤ L i) :
+    ∃ x y, G.Adj x y ∧
+      project G a L e x = point i (d + 1) hd ∧
+      project G a L e y = point i d (by omega) := by
+  obtain ⟨j, hji⟩ := exists_ne i
+  obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist (a i) (a j)
+  have hlen : p.length = L i + L j + e := hp.trans (hfit i j (Ne.symm hji))
+  let n := L i - (d + 1)
+  have hn : n < p.length := by dsimp [n]; omega
+  have hd₁ : L i - n = d + 1 := by dsimp [n]; omega
+  have hd₂ : L i - (n + 1) = d := by dsimp [n]; omega
+  refine ⟨p.getVert n, p.getVert (n + 1), p.adj_getVert_succ hn, ?_, ?_⟩
+  · exact (geodesic_project_left hc he hfit p hp (by omega) (Nat.sub_le ..)).trans
+      (point_congr rfl hd₁)
+  · exact (geodesic_project_left hc he hfit p hp (by omega) (by dsimp [n]; omega)).trans
+      (point_congr rfl hd₂)
+
+private theorem lift_triangle_edge (hc : G.Connected) (hfit : Fits G a L 1)
+    {i j : Fin 3} (hij : i ≠ j) :
+    ∃ x y, G.Adj x y ∧
+      project G a L 1 x = point i 0 (Nat.zero_le _) ∧
+      project G a L 1 y = point j 0 (Nat.zero_le _) := by
+  obtain ⟨p, hp⟩ := hc.exists_walk_length_eq_dist (a i) (a j)
+  have hlen := hp.trans (hfit i j hij)
+  have hn : L i < p.length := by omega
+  have hj := (geodesic_coordinates hc p hp (n := L i + 1) (by omega)).2
+  have hj' : G.dist (a j) (p.getVert (L i + 1)) = L j := by omega
+  refine ⟨p.getVert (L i), p.getVert (L i + 1), p.adj_getVert_succ hn, ?_, ?_⟩
+  · simpa only [Nat.sub_self] using geodesic_project_left hc le_rfl hfit p hp (by omega) le_rfl
+  · have h := project_of_dist_le hc le_rfl hfit (x := p.getVert (L i + 1)) (i := j) hj'.le
+    exact h.trans (by simp only [hj', Nat.sub_self])
+
+private theorem project_edge_surjective (hc : G.Connected) (he : e ≤ 1) (hfit : Fits G a L e)
+    {u v : SpiderVertex e L} (huv : (spider e L).Adj u v) :
+    ∃ x y, G.Adj x y ∧ project G a L e x = u ∧ project G a L e y = v := by
+  let i := leg u
+  let j := leg v
+  let d := depth u
+  let f := depth v
+  have hd : d ≤ L i := Nat.le_of_lt_succ u.val.2.isLt
+  have hf : f ≤ L j := Nat.le_of_lt_succ v.val.2.isLt
+  have hu : point (e := e) i d hd = u := point_coords u
+  have hv : point (e := e) j f hf = v := point_coords v
+  change (if i = j then (d - f) + (f - d) else d + f + e) = 1 at huv
+  have same_leg (hij : i = j) (hstep : d + 1 = f ∨ f + 1 = d) :
+      ∃ x y, G.Adj x y ∧ project G a L e x = u ∧ project G a L e y = v := by
+    rcases hstep with h | h
+    · have hh : d + 1 ≤ L i := by simpa only [hij, h] using hf
+      obtain ⟨x, y, hxy, hx, hy⟩ := lift_leg_edge hc he hfit i d hh
+      refine ⟨y, x, hxy.symm, hy.trans hu, hx.trans ?_⟩
+      calc
+        point i (d + 1) hh = point j f hf := point_congr hij h
+        _ = v := hv
+    · have hh : f + 1 ≤ L j := by simpa only [← hij, h] using hd
+      obtain ⟨x, y, hxy, hx, hy⟩ := lift_leg_edge hc he hfit j f hh
+      refine ⟨x, y, hxy, hx.trans ?_, hy.trans hv⟩
+      calc
+        point j (f + 1) hh = point i d hd := point_congr hij.symm h
+        _ = u := hu
+  by_cases hij : i = j
+  · rw [ite_eq_left hij] at huv
+    exact same_leg hij (by omega)
+  · rw [ite_eq_right hij] at huv
+    rcases (show e = 1 ∨ (e = 0 ∧ d = 0 ∧ f = 1) ∨ (e = 0 ∧ d = 1 ∧ f = 0) by omega)
+      with h | ⟨h, hz, hs⟩ | ⟨h, hs, hz⟩
+    · subst e
+      have hd' : d = 0 := by omega
+      have hf' : f = 0 := by omega
+      obtain ⟨x, y, hxy, hx, hy⟩ := lift_triangle_edge hc hfit hij
+      exact ⟨x, y, hxy, hx.trans (by simpa only [hd'] using hu),
+        hy.trans (by simpa only [hf'] using hv)⟩
+    · subst e
+      obtain ⟨x, y, hxy, hx, hy⟩ := lift_leg_edge hc (by decide) hfit j 0 (by omega)
+      have hu' : rootZero 0 L = u := by simpa [hz, point] using hu
+      refine ⟨y, x, hxy.symm, ?_, hx.trans ?_⟩
+      · exact hy.trans (by simpa [point] using hu')
+      · simpa only [hs] using hv
+    · subst e
+      obtain ⟨x, y, hxy, hx, hy⟩ := lift_leg_edge hc (by decide) hfit i 0 (by omega)
+      have hv' : rootZero 0 L = v := by simpa [hz, point] using hv
+      refine ⟨x, y, hxy, hx.trans ?_, ?_⟩
+      · simpa only [hs] using hu
+      · exact hy.trans (by simpa [point] using hv')
+
+end Projection
+
+noncomputable def perimeter {V : Type*} (G : SimpleGraph V) (a : Fin 3 → V) : ℕ :=
+  G.dist (a 0) (a 1) + G.dist (a 0) (a 2) + G.dist (a 1) (a 2)
+
+private noncomputable def legLength {V : Type*} (G : SimpleGraph V) (a : Fin 3 → V) (i : Fin 3) : ℕ :=
+  let x := G.dist (a 0) (a 1)
+  let y := G.dist (a 0) (a 2)
+  let z := G.dist (a 1) (a 2)
+  if i = 0 then (x + y - z) / 2 else if i = 1 then (x + z - y) / 2 else (y + z - x) / 2
+
+private theorem legLength_fits {V : Type*} {G : SimpleGraph V} (hc : G.Connected) (a : Fin 3 → V) :
+    Fits G a (legLength G a) (perimeter G a % 2) := by
+  have h₀ := hc.dist_triangle (u := a 1) (v := a 0) (w := a 2)
+  have h₁ := hc.dist_triangle (u := a 0) (v := a 1) (w := a 2)
+  have h₂ := hc.dist_triangle (u := a 0) (v := a 2) (w := a 1)
+  rw [dist_comm (u := a 1) (v := a 0)] at h₀
+  rw [dist_comm (u := a 2) (v := a 1)] at h₂
+  let L := legLength G a
+  let e := perimeter G a % 2
+  have h01 : G.dist (a 0) (a 1) = L 0 + L 1 + e := by
+    simp [L, e, legLength, perimeter]
+    omega
+  have h02 : G.dist (a 0) (a 2) = L 0 + L 2 + e := by
+    simp [L, e, legLength, perimeter]
+    omega
+  have h12 : G.dist (a 1) (a 2) = L 1 + L 2 + e := by
+    simp [L, e, legLength, perimeter]
+    omega
+  have h10 : G.dist (a 1) (a 0) = L 1 + L 0 + e := by
+    rw [dist_comm, h01, Nat.add_comm (L 0)]
+  have h20 : G.dist (a 2) (a 0) = L 2 + L 0 + e := by
+    rw [dist_comm, h02, Nat.add_comm (L 0)]
+  have h21 : G.dist (a 2) (a 1) = L 2 + L 1 + e := by
+    rw [dist_comm, h12, Nat.add_comm (L 1)]
+  intro i j hij
+  fin_cases i <;> fin_cases j <;> first
+    | exact False.elim (hij rfl)
+    | exact h01
+    | exact h02
+    | exact h12
+    | exact h10
+    | exact h20
+    | exact h21
+
+private theorem perimeter_of_fits {V : Type*} {G : SimpleGraph V} {a : Fin 3 → V}
+    {L : Fin 3 → ℕ} {e : ℕ} (h : Fits G a L e) :
+    perimeter G a = 2 * (L 0 + L 1 + L 2) + 3 * e := by
+  unfold perimeter
+  rw [h 0 1 (by decide), h 0 2 (by decide), h 1 2 (by decide)]
+  omega
+
+section ModelMetric
+variable {e : ℕ} {L : Fin 3 → ℕ}
+
+private theorem leg_walk (i : Fin 3) (d f : ℕ) (hd : d ≤ f) (hf : f ≤ L i) :
+    ∃ p : (spider e L).Walk (point i d (hd.trans hf)) (point i f hf), p.length = f - d := by
+  induction f, hd using Nat.le_induction with
+  | base => exact ⟨.nil, by simp⟩
+  | succ n hdn ih =>
+    have hn : n ≤ L i := by omega
+    obtain ⟨p, hp⟩ := ih hn
+    have hedge : (spider e L).Adj (point i n hn) (point i (n + 1) hf) := by
+      change spiderDist _ _ = 1
+      rw [spiderDist_point, ite_eq_left (show i = i from rfl)]
+      omega
+    refine ⟨p.append hedge.toWalk, ?_⟩
+    rw [Walk.length_append, hp]
+    change n - d + 1 = n + 1 - d
+    omega
+
+private theorem root_walk (he : e ≤ 1) {i j : Fin 3} (hij : i ≠ j) :
+    ∃ p : (spider e L).Walk (point i 0 (Nat.zero_le _)) (point j 0 (Nat.zero_le _)),
+      p.length = e := by
+  by_cases h : e = 0
+  · subst e
+    exact ⟨.nil, rfl⟩
+  · have h' : e = 1 := by omega
+    have hedge : (spider e L).Adj (point i 0 (Nat.zero_le _)) (point j 0 (Nat.zero_le _)) := by
+      change spiderDist _ _ = 1
+      rw [spiderDist_point, ite_eq_right hij]
+      omega
+    exact ⟨hedge.toWalk, h'.symm⟩
+
+private theorem walk_between_points (he : e ≤ 1) (i j : Fin 3) (d f : ℕ)
+    (hd : d ≤ L i) (hf : f ≤ L j) :
+    ∃ p : (spider e L).Walk (point i d hd) (point j f hf), p.length = spiderDist (point (e := e) i d hd) (point j f hf) := by
+  rw [spiderDist_point]
+  by_cases hij : i = j
+  · subst j
+    rw [ite_eq_left (show i = i from rfl)]
+    rcases le_total d f with h | h
+    · obtain ⟨p, hp⟩ := leg_walk (e := e) i d f h hf
+      exact ⟨p, by omega⟩
+    · obtain ⟨p, hp⟩ := leg_walk (e := e) i f d h hd
+      refine ⟨p.reverse, ?_⟩
+      rw [Walk.length_reverse]
+      omega
+  · rw [ite_eq_right hij]
+    obtain ⟨p, hp⟩ := leg_walk (e := e) i 0 d (Nat.zero_le _) hd
+    obtain ⟨q, hq⟩ := root_walk he hij
+    obtain ⟨r, hr⟩ := leg_walk (e := e) j 0 f (Nat.zero_le _) hf
+    refine ⟨(p.reverse.append q).append r, ?_⟩
+    simp only [Walk.length_append, Walk.length_reverse, hp, hq, hr]
+    omega
+
+private theorem spider_walk (he : e ≤ 1) (x y : SpiderVertex e L) :
+    ∃ p : (spider e L).Walk x y, p.length = spiderDist x y := by
+  rw [← point_coords x, ← point_coords y]
+  exact walk_between_points he (leg x) (leg y) (depth x) (depth y) _ _
+
+private theorem spider_dist_eq (he : e ≤ 1) (x y : SpiderVertex e L) :
+    (spider e L).dist x y = spiderDist x y := by
+  have lower {u v : SpiderVertex e L} (p : (spider e L).Walk u v) :
+      spiderDist u v ≤ p.length := by
+    induction p with
+    | nil => simp [spiderDist]
+    | @cons u v w h p ih =>
+      have ht := spiderDist_triangle u v w
+      change spiderDist u v = 1 at h
+      change spiderDist u w ≤ p.length + 1
+      omega
+  obtain ⟨p, hp⟩ := spider_walk he x y
+  obtain ⟨q, hq⟩ := (show (spider e L).Reachable x y from ⟨p⟩).exists_walk_length_eq_dist
+  exact le_antisymm (hp ▸ dist_le p) (hq ▸ lower q)
+
+private theorem spider_foot_dist (he : e ≤ 1) {i j : Fin 3} (hij : i ≠ j) :
+    (spider e L).dist (foot e L i) (foot e L j) = L i + L j + e := by
+  rw [spider_dist_eq he, foot, foot, spiderDist_point, ite_eq_right hij]
+
+end ModelMetric
+
 open SimpleGraph
 
 private noncomputable def packingConflict {V : Type*} (G : SimpleGraph V) (k : ℕ) :
