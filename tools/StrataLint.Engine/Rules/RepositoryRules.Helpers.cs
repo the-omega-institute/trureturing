@@ -98,8 +98,15 @@ internal static partial class RepositoryRules
     }
 
     internal static bool TryHeader(string text, out HeaderData header)
+        => TryHeader(HeaderPattern.Match(text), out header);
+
+    // Only the protected baseline may contain a wrapped list of canonical anchors.
+    internal static bool TryHeaderWithWrappedAnchors(string text, out HeaderData header) =>
+        TryHeader(WrappedAnchorsHeaderPattern.Match(text), out header)
+        && header.Anchors.All(anchor => Anchor.TryParseCanonical(anchor) is AnchorParseResult.Parsed);
+
+    private static bool TryHeader(Match match, out HeaderData header)
     {
-        var match = HeaderPattern.Match(text);
         if (!match.Success || string.IsNullOrWhiteSpace(match.Groups["digest"].Value))
         {
             header = HeaderData.Empty;

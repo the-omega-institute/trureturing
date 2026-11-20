@@ -197,8 +197,8 @@ internal static class UtilityAdmissionRule
             return false;
         }
 
-        var baselineValid = TryGetUtility(context.Baseline, path, out var baselineUtility);
         var currentValid = TryGetUtility(context.Current, path, out var currentUtility);
+        var baselineValid = TryGetUtility(context.Baseline, path, out var baselineUtility, allowWrappedAnchors: currentValid);
         if (!baselineValid || !currentValid)
         {
             return baselineValid != currentValid;
@@ -213,17 +213,16 @@ internal static class UtilityAdmissionRule
     private static bool TryGetUtility(
         RepositorySnapshot snapshot,
         RepoPath path,
-        out string? utility)
+        out string? utility,
+        bool allowWrappedAnchors = false)
     {
         utility = null;
-        if (!snapshot.TryGetFile(path.Value, out var file)
-            || !RepositoryRules.TryHeader(file.Text, out var header))
-        {
-            return false;
-        }
+        if (!snapshot.TryGetFile(path.Value, out var file)) return false;
 
+        var valid = RepositoryRules.TryHeader(file, out var header)
+            || (allowWrappedAnchors && RepositoryRules.TryHeaderWithWrappedAnchors(file.Text, out header));
         utility = header.Utility;
-        return true;
+        return valid;
     }
 
     private static bool IsD5Lean(string path) =>
