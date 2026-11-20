@@ -463,36 +463,39 @@ end TailMass
 namespace DeficientOfDvd
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ d => Deficient d) (fun e => nomatch e)
+  realize signature (fun _ _ d => decide (Deficient d)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {d n : ℕ}, 0 < n → 0 < d → d ∣ n → Deficient n →
-    R.readout () () d
+    R.readout () () d = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (d := 1) (n := 1) (by decide) (by decide) (by decide)
+  have bad := h (d := 1) (n := 1) (by decide) (by decide) (by decide)
     (by norm_num [Deficient])
+  exact Bool.false_ne_true bad
 
 def family : Registration arena
     (type_of% @_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd,
-      rejected, rejected_law⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := by
+    refine ⟨?_, rejected, rejected_law⟩
+    simpa only [arena, actual, realize, decide_eq_true_eq] using
+      (@_root_.D5.S3.Arith.Abundancy.ZelinskyZhangKLPrimitive.deficient_of_dvd)
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro role
     refine ⟨(), 0, 1, ?_⟩
-    change Deficient 0 ≠ Deficient 1
+    change decide (Deficient 0) ≠ decide (Deficient 1)
     norm_num [Deficient]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -523,7 +526,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

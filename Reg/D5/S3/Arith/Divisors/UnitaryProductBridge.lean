@@ -287,37 +287,40 @@ noncomputable section
 namespace PrimePowerUnitary
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => Bool)
 
 def actual : Realization signature :=
   realize signature
-    (fun _ N d => d ∈ N.divisors.filter (fun e => Nat.Coprime e (N / e)))
+    (fun _ N d => decide (d ∈ N.divisors.filter (fun e => Nat.Coprime e (N / e))))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (N : ℕ), N ≠ 0 → ∀ (F : Finset ℕ), F ⊆ N.primeFactors →
-    R.readout () N (∏ p ∈ F, p ^ N.factorization p)
+    R.readout () N (∏ p ∈ F, p ^ N.factorization p) = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 1 (by decide) ∅ (by simp)
+  exact Bool.false_ne_true (h 1 (by decide) ∅ (by simp))
 
 def family : Registration arena
     (type_of% @_root_.D5.S3.Arith.Divisors.UnitaryProductBridge.prime_power_product_unitary) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@prime_power_product_unitary, rejected, rejected_law⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := by
+    refine ⟨?_, rejected, rejected_law⟩
+    simpa only [arena, actual, realize, decide_eq_true_eq] using
+      (@prime_power_product_unitary)
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro role
     refine ⟨1, 0, 1, ?_⟩
-    change (0 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e))) ≠
-      (1 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e)))
+    change decide (0 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e))) ≠
+      decide (1 ∈ (1 : ℕ).divisors.filter (fun e => Nat.Coprime e (1 / e)))
     norm_num
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -348,7 +351,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
