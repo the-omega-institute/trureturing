@@ -95,6 +95,8 @@ private abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p :
     Profile I m :=
   ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
 
+universe u v
+
 abbrev spectrumSignature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
@@ -106,7 +108,7 @@ def spectrumRejected : Realization spectrumSignature :=
 
 abbrev spectrumArena : Arena where
   signature := spectrumSignature
-  Law R := ∀ {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
+  Law R := ∀ {I : Type u} {S : Type v} [Fintype I] [DecidableEq I] [Fintype S]
     [MulAction (Equiv.Perm I) S] (_two : 2 ≤ Fintype.card I)
     {m : ℕ} (_free : ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥)
     (w : S → ℝ) (_invariant : ∀ (g : Equiv.Perm I) s, w (g • s) = w s)
@@ -121,27 +123,32 @@ abbrev spectrumArena : Arena where
         ∃ d : Fin r → Fin (Fintype.card I + 1),
           ∑ j, (d j).val * weights j = (l.val : ℝ)
 
-private theorem spectrum_rejected_law : ¬ spectrumArena.Law spectrumRejected := by
+private theorem spectrum_rejected_law : ¬ spectrumArena.{u,v}.Law spectrumRejected := by
+  classical
   intro h
-  letI : MulAction (Equiv.Perm (Fin 2)) Empty :=
+  let I := ULift.{u} (Fin 2)
+  let S := ULift.{v} Empty
+  letI : MulAction (Equiv.Perm I) S :=
     { smul := fun _ s => s, one_smul := fun _ => rfl, mul_smul := fun _ _ _ => rfl }
-  have calibrated (p : Profile (Fin 2) 0) (i : Fin 2) :
-      (∑ s : Empty, if (nomatch s : Fin 2) = i then (nomatch s : ℝ) else 0) =
-        (p.val i : ℝ) := by
+  let f (_p : Profile I 0) (s : S) : I := isEmptyElim s
+  let w (s : S) : ℝ := isEmptyElim s
+  have cardI : Fintype.card I = 2 := by simp [I]
+  have cardS : Fintype.card S = 0 := by simp [S]
+  have calibrated (p : Profile I 0) (i : I) :
+      (∑ s : S, if f p s = i then w s else 0) = (p.val i : ℝ) := by
     have le : p.val i ≤ ∑ j, p.val j :=
       Finset.single_le_sum (fun j _ => Nat.zero_le (p.val j)) (Finset.mem_univ i)
-    have zero : p.val i = 0 := Nat.eq_zero_of_le_zero (p.property ▸ le)
-    simp [zero]
+    rw [p.property] at le
+    simp [Nat.eq_zero_of_le_zero le]
   obtain ⟨r, weights, support, _, cover⟩ :=
-    h (I := Fin 2) (S := Empty) (by decide) (m := 0) (fun s => nomatch s)
-      (fun s => nomatch s) (fun _ s => nomatch s) (fun _ s => nomatch s)
-      calibrated (fun _ _ s => nomatch s)
+    h (I := I) (S := S) (by rw [cardI]) (m := 0) (fun s => isEmptyElim s)
+      w (fun _ s => isEmptyElim s) f calibrated (fun _ _ s => isEmptyElim s)
   have zero : r = 0 := by
-    norm_num [Fintype.card_fin, Nat.factorial] at support
+    norm_num [cardI, cardS, Nat.factorial] at support
     omega
   subst r
-  have level : Fin (spectrumRejected.readout () () 0 / (Fintype.card (Fin 2) - 1) + 1) :=
-    ⟨1, by decide⟩
+  have level : Fin (spectrumRejected.readout () () 0 / (Fintype.card I - 1) + 1) :=
+    ⟨1, by rw [cardI]; decide⟩
   obtain ⟨digits, eq⟩ := cover level
   norm_num [level] at eq
 
