@@ -32,8 +32,9 @@ internal sealed class GridSeedFreenessDocument : IScribeDocumentDefinition
                     + "labels. For a profile fixed by the cycle, the total count on the cycle is "
                     + "a multiple of p, so a positive coordinate exists outside its support. "
                     + "For other profiles the associated subgroup of prime order has trivial "
-                    + "input stabilizer. In both cases the subgroup can fix a supported output "
-                    + "as required by the finite-kernel criterion. The resulting calibrating "
+                    + "input stabilizer, so any positive coordinate is allowed. At every profile "
+                    + "a positive output is fixed by the elements of the cyclic subgroup that "
+                    + "fix that profile. The resulting calibrating "
                     + "law has a positive seed fixed by the chosen nonidentity cycle."))),
             DescribeRole.Theorem))));
 

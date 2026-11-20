@@ -18,7 +18,7 @@ Let k and m be natural numbers with m positive. The input profiles are all natur
 
 If each prime at most k divides m, multiply the seed weights by m and apply the prime-cycle obstruction to the resulting unnormalized masses. A nontrivial seed stabilizer would contain an element of prime order.
 
-If a prime p at most k fails to divide m, choose a single p-cycle on the labels. For a profile fixed by the cycle, the total count on the cycle is a multiple of p, so a positive coordinate exists outside its support. For other profiles the associated subgroup of prime order has trivial input stabilizer. In both cases the subgroup can fix a supported output as required by the finite-kernel criterion. The resulting calibrating law has a positive seed fixed by the chosen nonidentity cycle.
+If a prime p at most k fails to divide m, choose a single p-cycle on the labels. For a profile fixed by the cycle, the total count on the cycle is a multiple of p, so a positive coordinate exists outside its support. For other profiles the associated subgroup of prime order has trivial input stabilizer, so any positive coordinate is allowed. At every profile a positive output is fixed by the elements of the cyclic subgroup that fix that profile. The resulting calibrating law has a positive seed fixed by the chosen nonidentity cycle.
 
 ## References
 
