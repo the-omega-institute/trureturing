@@ -130,7 +130,6 @@ def evaluateLinearizedApply :
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }]
 
-#print axioms evaluateLinearizedApply
 
 end
 end Reg.D5.S3.Combinatorics.SubspaceCodes.FerrersPolynomial

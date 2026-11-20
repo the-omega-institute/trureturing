@@ -15,7 +15,8 @@ internal sealed class FerrersCoefficientsDocument : IScribeDocumentDefinition
     private static readonly Formula Larger = F.Id("L");
     private static readonly Formula B = F.Id("b");
     private static readonly Formula C = F.Id("c");
-    private static readonly Formula Basis = F.Id("beta");
+    private static readonly Formula Basis = F.Id("B");
+    private static readonly Formula Parameter = F.Id("p");
     private static readonly Formula Point = F.Id("x");
     private static readonly Formula U = F.Id("u");
     private static readonly Formula V = F.Id("v");
@@ -48,7 +49,7 @@ internal sealed class FerrersCoefficientsDocument : IScribeDocumentDefinition
 
     private static Formula CoefficientMap()
     {
-        var third = Multiply(new Formula.Power(Group(Determinant()), Num(-1)),
+        var third = Multiply(new Formula.Power(Group(Determinant()), new Formula.Negate(Num(1))),
             Group(Subtract(Add(Cast(L), Multiply(C, Cast(K))), Multiply(B, Cast(U)))));
         var output = Seq(OpenBracket, Subtract(Cast(U), third), Comma, Sp, Cast(V), Comma, Sp,
             Cast(W), Comma, Sp, third, CloseBracket);
@@ -66,29 +67,38 @@ internal sealed class FerrersCoefficientsDocument : IScribeDocumentDefinition
         var largerOverSmaller = Call("toSubmodule",
             Call("toSubalgebra", Call("extendScalars", Smaller, Larger)));
         return OverFields(true, false, All("b", Extension,
-            ImpliesTo(NotEqual(Determinant(), Num(0)), All("beta", Call("Basis", Call("Fin", Num(4)), Smaller, Extension),
+            ImpliesTo(NotEqual(Determinant(), Num(0)), All("B", Call("Basis", Call("Fin", Num(4)), Smaller, Extension),
                 ImpliesTo(LeqTo(Smaller, Larger), ImpliesTo(Equal(flag, largerOverSmaller),
                     Call("Injective", CoefficientFunction(App(Basis, Num(2))))))))));
     }
 
-    private static Formula FirstEvaluation() =>
-        OverFields(true, true, ImpliesTo(DegreeThree(),
-            All("b", Extension, All("c", Extension, OverCoordinates(All("x", Smaller,
-                Equal(EvaluateAt(Cast(Point)), EvaluationTerms(Multiply(Cast(U), Cast(Point)), Cast(Point)))))))));
+    private static Formula FirstEvaluation()
+    {
+        var input = Cast(Point);
+        var linearTerm = Multiply(Cast(Projection(1)), input);
+        return OverFields(true, true, ImpliesTo(DegreeThree(),
+            All("b", Extension, All("c", Extension, All("p", ParameterType(), All("x", Smaller,
+                Equal(EvaluateAt(input), EvaluationTerms(linearTerm, input))))))));
+    }
 
     private static Formula SecondEvaluation()
     {
-        var input = Multiply(B, Cast(Point));
-        var linearTerm = Multiply(Group(Add(Cast(L), Multiply(C, Cast(K)))), Cast(Point));
+        var point = Cast(Point);
+        var input = Multiply(B, point);
+        var linearTerm = Multiply(Group(Add(Cast(Projection(2, 2, 2, 1)),
+            Multiply(C, Cast(Projection(2, 2, 2, 2))))), point);
         return OverFields(true, true, ImpliesTo(DegreeThree(), All("b", Extension, All("c", Extension,
-            ImpliesTo(NotEqual(Determinant(), Num(0)), OverCoordinates(All("x", Smaller,
-                Equal(EvaluateAt(input), EvaluationTerms(linearTerm, input)))))))));
+            ImpliesTo(NotEqual(Determinant(), Num(0)), All("p", ParameterType(), All("x", Smaller,
+                Equal(EvaluateAt(input), EvaluationTerms(linearTerm, Group(input))))))))));
     }
 
     private static Formula EvaluationTerms(Formula linearTerm, Formula input) =>
-        Add(Add(linearTerm, Multiply(Cast(V), new Formula.Power(Group(input), Call("card", Base)))),
-            Multiply(Cast(W), new Formula.Power(Group(input),
+        Add(Add(linearTerm, Multiply(Cast(Projection(2, 1)), new Formula.Power(input, Call("card", Base)))),
+            Multiply(Cast(Projection(2, 2, 1)), new Formula.Power(input,
                 new Formula.Power(Call("card", Base), Num(2)))));
+
+    private static Formula Projection(params int[] positions) =>
+        Seq([Parameter, .. positions.SelectMany(position => new[] { Dot, Num(position) })]);
 
     private static Formula OverFields(bool finiteBase, bool finiteExtension, Formula body)
     {
@@ -111,8 +121,8 @@ internal sealed class FerrersCoefficientsDocument : IScribeDocumentDefinition
     private static Formula ParameterType() => Call("Params", Smaller, Larger);
     private static Formula CoefficientFunction(Formula c) => App(
         Subscript(F.Id("paramCoefficients"), Seq(Smaller, Comma, Larger)), B, c);
-    private static Formula CoefficientsAt() => App(CoefficientFunction(C), Tuple());
-    private static Formula EvaluateAt(Formula input) => Call("evaluateLinearized", Base, Extension, CoefficientsAt(), input);
+    private static Formula EvaluateAt(Formula input) =>
+        App(Call("evaluateLinearized", Base, Extension, App(CoefficientFunction(C), Parameter)), input);
     private static Formula Determinant() =>
         Subtract(new Formula.Power(B, new Formula.Power(Call("card", Base), Num(3))), B);
     private static Formula DegreeThree() => Equal(Call("finrank", Base, Smaller), Num(3));

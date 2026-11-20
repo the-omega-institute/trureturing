@@ -113,7 +113,6 @@ def problem1RankNine :
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }]
 
-#print axioms problem1RankNine
 
 end
 end Reg.D5.S3.Combinatorics.SubspaceCodes.FerrersRankNine

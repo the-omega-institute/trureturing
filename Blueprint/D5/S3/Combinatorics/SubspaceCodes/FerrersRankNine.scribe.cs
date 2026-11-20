@@ -17,16 +17,17 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
         H("An optimal rank-nine Ferrers code"), Blocks(
             Node("height", "height", "Column heights", DescribeRole.Definition,
                 HeightDefinition(), AssessedProvenance.FromLiterature(Source),
-                Paragraph(Text("Notation 2.10 and Example 3.5 specify the block size three and the height profile. "
-                    + "The same diagram is named in Section 4, Problem 1, p. 17. " + Paper))),
+                Paragraph(Text("Notation 2.10 (p. 6) and Example 3.5 (p. 11) specify the block size three and the height profile. "
+                    + "The same diagram is named in Section 4, Problem 1, p. 18. " + Paper))),
             Node("supported", "Supported", "Ferrers support", DescribeRole.Definition,
                 SupportDefinition(), AssessedProvenance.FromLiterature(Source),
-                Paragraph(Text("Definition 2.1 top-aligns the columns and defines matrix support by the "
-                    + "diagram’s dots. Here the row indices are zero-based. " + Paper))),
+                Paragraph(Text("Definition 2.1 (p. 3) defines the diagram’s support as its dot positions. The "
+                    + "matrix-shape definition (p. 4) requires zeros outside those positions. Example 3.5 "
+                    + "(p. 11) shows the fixed diagram with top-aligned columns. Row indices here start at zero. " + Paper))),
             Node("problem-one-rank-nine-claim", "Problem1RankNine",
                 "The example's claim", DescribeRole.Definition,
                 Equivalent(F.Id("Problem1RankNine"), Statement()), AssessedProvenance.FromLiterature(Source),
-                Paragraph(Text("Section 4, Problem 1, p. 17, arXiv v1. " + Paper)),
+                Paragraph(Text("Section 4, Problem 1, p. 18, arXiv v1. " + Paper + "#page=18")),
                 Paragraph(Text("“For example, does there exist an optimal Ferrers diagram rank-metric code for "),
                     Math(In(Equal(MathcalDiagram(), BlockDiagram()))), Text(" and "),
                     Math(In(Equal(F.Id("d"), Num(9)))), Text(" when "),
@@ -43,9 +44,9 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Paragraph(Text("The first four columns have 27 allowed entries. A matrix in their projection "
                     + "kernel has rank at most eight, so projection onto those entries bounds any competing "
-                    + "code’s dimension by 27. The first three columns have 18 allowed entries, so their "
-                    + "projection has a nonzero kernel on a dimension-27 code. Each nonzero matrix in that "
-                    + "kernel has rank exactly nine."))),
+                    + "code’s dimension by 27. On a dimension-27 code with nonzero ranks at least nine, the "
+                    + "first three columns give a projection onto 18 allowed entries. Each nonzero matrix in "
+                    + "its nonzero kernel has rank exactly nine."))),
             Describe.Lean(DescribeId.Create("problem-one-rank-nine"),
                 DeclarationHandle.Create(Gid + ".problem1_rank_nine"),
                 H("The rank-nine example in Problem 1"),
@@ -80,7 +81,7 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
     {
         var column = F.Id("j");
         var index = Call("val", column);
-        var height = Call("height", column);
+        var height = Parenthesized(Seq(Call("height", column), Sp, Colon, Sp, Mathbb, Grp(F.Id("N"))));
         return All("j", IndexType(), And(
             ImpliesTo(LessThan(index, Num(3)), Equal(height, Num(6))),
             And(ImpliesTo(And(LeqTo(Num(3), index), LessThan(index, Num(6))), Equal(height, Num(9))),
