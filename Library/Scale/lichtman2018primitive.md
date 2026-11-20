@@ -7,7 +7,7 @@ doi: 10.1016/j.jnt.2018.03.021
 url: https://arxiv.org/abs/1801.01925
 claim: J. Number Theory 191 (2018), 104–118, Lemma 2.2 uses squarefree-divisor compression and distinct complementary quotients to bound primitive nondeficient numbers with a large prime factor.
 strata_touched:
-  - D5/S3/Arith/Abundancy/ZelinskyPrimitiveExceptionalSet
+  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjecture11
 license: citation-only
 triage: anchor
 ---

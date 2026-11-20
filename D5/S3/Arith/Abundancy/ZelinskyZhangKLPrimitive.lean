@@ -14,6 +14,7 @@ import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.SumPrimeReciprocals
 import Mathlib.Data.Finset.NatDivisors
 import Mathlib.Data.Nat.Totient
+import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic
 
@@ -483,8 +484,10 @@ private lemma core_sum_le (s : Finset ℕ) :
   classical
   rw [coreH, prod_one_add_ordered]
   gcongr with p hp
-  exact le_mul_of_one_le_right (by positivity)
-    (Finset.one_le_prod (fun q _ => by positivity))
+  have hprod : (1 : ℝ) ≤ ∏ q ∈ s with q < p, (1 + 1 / (q : ℝ)) :=
+    Finset.one_le_prod₀ (fun q _ => by positivity)
+  simpa only [mul_one] using
+    mul_le_mul_of_nonneg_left hprod (show (0 : ℝ) ≤ 1 / p by positivity)
 
 private lemma core_seed (B : ℕ) :
     ∃ s : Finset ℕ, (∀ p ∈ s, p.Prime ∧ B < p) ∧ coreH s < 2 ∧
@@ -641,11 +644,11 @@ private lemma coreIter_bounds {B : ℕ} {Y : ℝ}
   let Q (i : ℕ) := coreLog s.support + (i : ℝ) * (A + i * log 3)
   have hlo : coreAlpha s.support * (3 / 2 : ℝ) ^ j ≤ a j := by
     simpa only [a, coreIter, mul_comm] using
-      (geom_le (by norm_num : (0 : ℝ) ≤ 3 / 2) j
+      (geom_le (u := a) (by norm_num : (0 : ℝ) ≤ 3 / 2) j
         (fun i _ => (coreNext_spec hY (coreIter hY s i)).1))
   have hhi (i : ℕ) : a i ≤ coreAlpha s.support * 3 ^ i := by
     simpa only [a, coreIter, mul_comm] using
-      (le_geom (by norm_num : (0 : ℝ) ≤ 3) i
+      (le_geom (u := a) (by norm_num : (0 : ℝ) ≤ 3) i
         (fun k _ => (coreNext_spec hY (coreIter hY s k)).2.1))
   refine ⟨hlo, hhi j, ?_⟩
   have hstep (i : ℕ) : L (i + 1) - Q (i + 1) ≤ L i - Q i := by
@@ -658,7 +661,10 @@ private lemma coreIter_bounds {B : ℕ} {Y : ℝ}
       have hmul : 3 * a i ≤ (3 * coreAlpha s.support) * 3 ^ i := by
         nlinarith [hhi i]
       have hmono := log_le_log (by linarith : 0 < 3 * a i) hmul
-      rw [log_mul (by positivity) (by positivity), log_pow] at hmono
+      have heq : log ((3 * coreAlpha s.support) * 3 ^ i) =
+          A + (i : ℝ) * log 3 := by
+        rw [log_mul (by positivity) (by positivity), log_pow]
+      rw [heq] at hmono
       exact hmono
     have hlog := (coreNext_spec hY (coreIter hY s i)).2.2
     change L (i + 1) ≤ L i + log (3 * a i) at hlog
