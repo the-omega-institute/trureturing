@@ -6,9 +6,15 @@
    utility: none
    digest: Common links and exact neighborhood fibers of disjoint-union-free triple families. -/
 
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Tactic.Push
+import Mathlib.Tactic.Tauto
+import Mathlib.Tactic.Ext
+
+public section
 
 set_option autoImplicit false
 
@@ -20,34 +26,42 @@ open scoped Classical
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- All unordered pairs of vertices, including pairs absent from the triple family. -/
+@[expose]
 def pairs : Finset (Finset V) := univ.powersetCard 2
 
 /-- The literal uniqueness of an unordered pair of disjoint members from its union. -/
+@[expose]
 def DUF (H : Finset (Finset V)) : Prop :=
   ∀ A ∈ H, ∀ B ∈ H, ∀ C ∈ H, ∀ D ∈ H,
     Disjoint A B → Disjoint C D → A ∪ B = C ∪ D →
       (A = C ∧ B = D) ∨ (A = D ∧ B = C)
 
 /-- The exact set of extensions of a pair to a triple. -/
+@[expose]
 def neighbors (H : Finset (Finset V)) (p : Finset V) : Finset V :=
   univ.filter fun x => x ∉ p ∧ insert x p ∈ H
 
 /-- Transposing the directed extension relation gives the common-link pair family. -/
+@[expose]
 def common (H : Finset (Finset V)) (q : Finset V) : Finset (Finset V) :=
   pairs.filter fun p => q ⊆ neighbors H p
 
 /-- Pairs with exactly the prescribed neighborhood. -/
+@[expose]
 def fiber (H : Finset (Finset V)) (S : Finset V) : Finset (Finset V) :=
   pairs.filter fun p => neighbors H p = S
 
 /-- The pair-codegree hypothesis ranges over all ground-set pairs. -/
+@[expose]
 def CapFour (H : Finset (Finset V)) : Prop :=
   ∀ p ∈ (pairs : Finset (Finset V)), (neighbors H p).card ≤ 4
 
 /-- Edges of a star, with its center and leaves specified separately. -/
+@[expose]
 def star (c : V) (A : Finset V) : Finset (Finset V) := A.image fun a => {c, a}
 
 /-- Pairwise intersection for a family of edges. -/
+@[expose]
 def Intersecting (F : Finset (Finset V)) : Prop :=
   ∀ p ∈ F, ∀ q ∈ F, ¬ Disjoint p q
 
