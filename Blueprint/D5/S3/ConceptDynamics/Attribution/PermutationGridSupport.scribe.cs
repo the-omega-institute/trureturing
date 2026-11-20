@@ -42,6 +42,11 @@ internal sealed class PermutationGridSupportDocument : IScribeDocumentDefinition
                         + "times n is feasible exactly when k times q plus one is at most k plus one "
                         + "to the power n, with parentheses around the base.")),
                     Paragraph(Text(
+                        "At denominator zero the all-zero profile requires total mass zero across all labels. "
+                        + "The seed law has total mass one. The bounds on k and q guarantee a positive "
+                        + "denominator. For the lower bound, the full divisibility premise guarantees "
+                        + "the integer profile supported on the moved labels of each permutation.")),
+                    Paragraph(Text(
                         "For any nonidentity permutation, the profile constant on its moved labels and "
                         + "zero elsewhere has integer coordinates. A fixed seed would return a fixed label "
                         + "at that profile, which has zero mass. Each seed orbit is therefore regular. "
