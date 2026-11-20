@@ -38,10 +38,26 @@ Use clipped powers of k plus one, summing to q, as common orbit weights. The rou
 
 A block assigned to a group has an equivariant map to that label orbit, giving each of its labels H divided by s seeds. Extend the readout from one profile representative per orbit and normalize the weights on positive support.
 
+**Theorem 1.3 (Tied profiles determine a weighted digit covering).**
+
+$$\forall I S m w f, 2 \le \operatorname{Card}\left(I\right) \land \operatorname{FreeAction}\left(I, S\right) \land \operatorname{Invariant}\left(w\right) \land \operatorname{Calibrated}\left(m, w, f\right) \land \operatorname{Equivariant}\left(f\right) \Rightarrow \operatorname{OrbitDigitSpectrum}\left(\operatorname{Card}\left(I\right), S, m, w\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.weighted_orbit_spectrum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let k be the cardinality of the finite label type I, with k at least two. The full permutation group acts freely on the finite seed type S. Its real weights are invariant, and the readout is equivariant and calibrated in denominator units on every natural profile of total m.
+
+There are r regular orbits. Multiply each representative's weight by the factorial of k minus two to get its digit weight. The seed cardinality is k factorial times r. Multiplying the sum of the digit weights by k factorial gives the sum of seed weights times the factorial of k minus two. For every integer from zero through the floor of m divided by k minus one, with k minus one as the denominator, that integer is a weighted sum of digits from zero through k using this same family of weights.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.CalibratingLaw`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.grid_support_budget_iff`
+- Truth anchor: `D5/S3/ConceptDynamics/Attribution/PermutationGridSupport.weighted_orbit_spectrum`
 - Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/StabilizerFactorialDivisibility](../../Combinatorics/Partitions/StabilizerFactorialDivisibility.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/PrimeCycleSeedFreeness](PrimeCycleSeedFreeness.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ThreeOutcomeGridSupport](ThreeOutcomeGridSupport.md)
