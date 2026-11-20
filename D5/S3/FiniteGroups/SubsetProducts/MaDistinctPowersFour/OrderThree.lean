@@ -9,7 +9,6 @@
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LatinCore
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Logic.Equiv.Fin.Basic
-import Std.Tactic.BVDecide
 
 namespace MaLatin
 
@@ -22,18 +21,6 @@ private def cell {n : ℕ} (i j : Fin n) : ℕ := i.val * n + j.val
 
 private def cellEq {n : ℕ} (e : EqualityTable) (i j k l : Fin n) : Bool :=
   orderedEq e (cell i j) (cell k l)
-
-/-- The only nontrivial equivalence-relation axioms, stored for increasing triples. -/
-private def consistent (n : ℕ) (e : EqualityTable) : Bool :=
-  (List.range (n*n)).all fun i =>
-    (List.range (n*n)).all fun j =>
-      (List.range (n*n)).all fun k =>
-        if i < j ∧ j < k then
-          let a := e i j
-          let b := e j k
-          let c := e i k
-          (!(a && b) || c) && (!(a && c) || b) && (!(b && c) || a)
-        else true
 
 private def latinB (n : ℕ) (e : EqualityTable) : Bool :=
   allFin (n := n) fun k => allFin fun i => allFin fun j =>
@@ -84,17 +71,6 @@ private theorem encode_cell_not {n : ℕ} [DecidableEq α] (A : Fin n → Fin n 
   change (!cellEq (encode A) i j k l) = true ↔ ¬ (A i j = A k l)
   rw [← encode_cell A i j k l]
   cases cellEq (encode A) i j k l <;> decide
-
-private theorem encode_consistent {n : ℕ} [DecidableEq α] (A : Fin n → Fin n → α) :
-    consistent n (encode A) = true := by
-  simp only [consistent, List.all_eq_true, List.mem_range]
-  intro i _ j _ k _
-  split
-  · by_cases hab : flatten A i = flatten A j <;>
-      by_cases hbc : flatten A j = flatten A k <;>
-      by_cases hac : flatten A i = flatten A k <;>
-      simp_all [encode]
-  · rfl
 
 private theorem encode_latin {n : ℕ} [DecidableEq α] (A : Fin n → Fin n → α) (h : Latin A) :
     latinB n (encode A) = true := by
