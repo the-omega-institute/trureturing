@@ -12,6 +12,7 @@ escape_witness: transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229604Strip.finite_certificate
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
@@ -148,7 +149,8 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
       cl (e ∘ r) (d.val - (bondDefects ProperTransfer.between (e ∘ p) (e ∘ r) +
         bondDefects horizontal (e ∘ r) (e ∘ r))) = s then (1 : ℤ) else 0) =
       T (cl (e ∘ p) d.val) s at ht
-    simpa only [cl, HardinA229457StripClasses.class_relabel, bond_relabel,
+    simpa only [cl, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode,
+      HardinA229457StripClasses.class_relabel, bond_relabel,
       Function.comp_apply, ne_eq, e.injective.eq_iff] using ht
 
 end D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripClasses

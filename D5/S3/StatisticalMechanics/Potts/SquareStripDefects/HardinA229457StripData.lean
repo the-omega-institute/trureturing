@@ -48,7 +48,7 @@ def cl (p : Row) (d : ℕ) : Fin 42 :=
   if bondDefects horizontal p p = 0 then
     if 0 < d then (ProperTransfer.cl p).castAdd 32 else (ProperTransfer.cl p).natAdd 10 |>.castAdd 22
   else
-  let code : ℕ := (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) + (if p 0 = p 4 then 8 else 0) + (if p 0 = p 5 then 16 else 0) + (if p 1 = p 2 then 32 else 0) + (if p 1 = p 3 then 64 else 0) + (if p 1 = p 4 then 128 else 0) + (if p 1 = p 5 then 256 else 0) + (if p 2 = p 3 then 512 else 0) + (if p 2 = p 4 then 1024 else 0) + (if p 2 = p 5 then 2048 else 0) + (if p 3 = p 4 then 4096 else 0) + (if p 3 = p 5 then 8192 else 0) + (if p 4 = p 5 then 16384 else 0)
+  let code := D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode p
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 26 then 20 else
   if code ∈ ({1093, 19520} : Finset ℕ) then 21 else
   if code ∈ ({8533, 19482} : Finset ℕ) then 22 else

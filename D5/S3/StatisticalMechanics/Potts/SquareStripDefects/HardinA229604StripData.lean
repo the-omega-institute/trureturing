@@ -22,6 +22,7 @@ leading_block: proof_shape=bind-only; consumers=HardinA229604StripCut.leading_co
 terminal_block: proof_shape=bind-only; consumers=HardinA229604StripCut.terminal_counts
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -44,7 +45,7 @@ def cl (p : Row) (d : ℕ) : Fin 96 :=
       have := (HardinA229457StripData.cl p 0).isLt
       omega⟩
   else
-  let code : ℕ := (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) + (if p 0 = p 4 then 8 else 0) + (if p 0 = p 5 then 16 else 0) + (if p 1 = p 2 then 32 else 0) + (if p 1 = p 3 then 64 else 0) + (if p 1 = p 4 then 128 else 0) + (if p 1 = p 5 then 256 else 0) + (if p 2 = p 3 then 512 else 0) + (if p 2 = p 4 then 1024 else 0) + (if p 2 = p 5 then 2048 else 0) + (if p 3 = p 4 then 4096 else 0) + (if p 3 = p 5 then 8192 else 0) + (if p 4 = p 5 then 16384 else 0)
+  let code := D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode p
   if code ∈ ({9387, 29122} : Finset ℕ) then 74 else
   if code ∈ ({1195, 29120} : Finset ℕ) then 75 else
   if code ∈ ({2355, 28700} : Finset ℕ) then 76 else

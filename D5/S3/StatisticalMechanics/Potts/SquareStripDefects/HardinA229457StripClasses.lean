@@ -48,7 +48,7 @@ open HardinA229457StripData
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  simp only [cl,
+  simp only [cl, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode,
     D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses.class_relabel,
     bond_relabel, ProperTransfer.cl, HardinA233127SquareStrip.boundaryClass,
     Function.comp_apply, e.injective.eq_iff]

@@ -57,7 +57,7 @@ open HardinA229532StripData
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  simp only [cl, HardinA233172DiagonalStrip.boundaryClass,
+  simp only [cl, equalityPatternCode, HardinA233172DiagonalStrip.boundaryClass,
     bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
 theorem bond_relabel (e : Equiv.Perm (Fin 3))
