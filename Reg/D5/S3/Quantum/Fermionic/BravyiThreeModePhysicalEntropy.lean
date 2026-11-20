@@ -2,12 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations for the physical entropy identity and comparison. -/
+
 namespace Reg.D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy
 
 open _root_.D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy
 open _root_.D5.S3.Quantum.Fermionic.BravyiThreeModeDeterminantOrder
 open _root_.D5.S3.Quantum.Fermionic.FiniteSpectrumShiftedLogEntropy
-open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (density_posSemidef)
 open _root_.D5.S3.Quantum.Divergence.VonNeumannEntropyPinching (vonNeumannEntropy)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -84,81 +85,6 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   continuation := .unknown
   familyRecord := none
   options := #[]
-
-namespace Spectrum
-
-private abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Multiset ℝ)
-    (fun _ => Multiset ℝ → Prop)
-
-private def actual : Realization signature :=
-  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
-
-private def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
-
-private abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1)
-    (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1),
-    let h := (density_posSemidef (normalOutput h0 h1 hn)).isHermitian
-    let M := Finset.univ.val.map (chiral_isHermitian lam c p q).eigenvalues
-    let N := Finset.univ.val.map (complement_isHermitian lam c q).eigenvalues
-    R.readout () () (Finset.univ.val.map h.eigenvalues) (M + (N + N))
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  exact h (lam := 0) (c := 1) (p := 0) (q := 0) (by norm_num) (by norm_num) (by norm_num)
-
-private theorem dependence : ObservationalDependence signature actual := by
-  intro role
-  refine ⟨(), 0, ({0} : Multiset ℝ), ?_⟩
-  intro h
-  have he := congrFun h 0
-  have hzero : ({0} : Multiset ℝ) = 0 := Eq.mp he rfl
-  simpa using congrArg Multiset.card hzero
-
-def family : Registration arena (type_of% (@normalOutput_spectrum)) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@normalOutput_spectrum, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := dependence
-
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@normalOutput_spectrum) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy.normalOutput_spectrum.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy.Spectrum.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Fermionic.BravyiThreeModePhysicalEntropy
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end Spectrum
 
 namespace BlockSum
 

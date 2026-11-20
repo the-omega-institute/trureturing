@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fermionic.FiniteSpectrumShiftedLogEntropy
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
+
+/-! Source-bound registration of the finite-spectrum shifted-product order. -/
 
 namespace Reg.D5.S3.Quantum.Fermionic.FiniteSpectrumShiftedLogEntropy
 

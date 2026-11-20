@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fermionic.BravyiThreeModeCARBlocks
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registration of the exact CAR channel block reduction. -/
+
 namespace Reg.D5.S3.Quantum.Fermionic.BravyiThreeModeCARBlocks
 
 open _root_.D5.S3.Quantum.Fermionic.BravyiThreeModeCARBlocks
