@@ -6,6 +6,14 @@
    utility: none
    digest: Equality in the triameter bound by independence classifies chains of split cliques. -/
 
+/-
+proof_shape: question1: content
+escape_witness: The marked-block companions force every block fiber to be a clique
+  when the independence number attains the packing bound.
+admission_basis: open-problem-resolution (Hak–Kozerenko Question 1 at k = 1, #32242)
+Direct frozen dependencies: none. The proof uses pinned Mathlib.
+-/
+
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -54,12 +62,6 @@ private def H (q : Fin 3 → ℕ) : SimpleGraph (Vertex q) where
     · omega
     · omega
     · exact h rfl
-
-local instance (q : Fin 3 → ℕ) : DecidableRel (H q).Adj := fun x y => by
-  change Decidable
-    ((x.1 = y.1 ∧ (x.2.val + 1 = y.2.val ∨ y.2.val + 1 = x.2.val)) ∨
-      (x.1 ≠ y.1 ∧ x.2.val = 0 ∧ y.2.val = 0))
-  infer_instance
 
 /-- The two vertices of block `t` on leg `i`. -/
 private def peripheralBlock (q : Fin 3 → ℕ) (i : Fin 3) (t : ℕ) (ht : t ≤ q i) :
@@ -248,7 +250,7 @@ private theorem point_congr {e : ℕ} {L : Fin 3 → ℕ} {i j : Fin 3} {d f : �
   subst f
   rfl
 
-@[simp] theorem depth_point {e : ℕ} {L : Fin 3 → ℕ} (i : Fin 3) (d : ℕ) (hd : d ≤ L i) :
+@[simp] private theorem depth_point {e : ℕ} {L : Fin 3 → ℕ} (i : Fin 3) (d : ℕ) (hd : d ≤ L i) :
     depth (point (e := e) i d hd) = d := by
   unfold point
   split
@@ -607,7 +609,8 @@ end Projection
 noncomputable def perimeter {V : Type*} (G : SimpleGraph V) (a : Fin 3 → V) : ℕ :=
   G.dist (a 0) (a 1) + G.dist (a 0) (a 2) + G.dist (a 1) (a 2)
 
-private noncomputable def legLength {V : Type*} (G : SimpleGraph V) (a : Fin 3 → V) (i : Fin 3) : ℕ :=
+private noncomputable def legLength {V : Type*} (G : SimpleGraph V) (a : Fin 3 → V)
+    (i : Fin 3) : ℕ :=
   let x := G.dist (a 0) (a 1)
   let y := G.dist (a 0) (a 2)
   let z := G.dist (a 1) (a 2)
@@ -688,7 +691,8 @@ private theorem root_walk (he : e ≤ 1) {i j : Fin 3} (hij : i ≠ j) :
 
 private theorem walk_between_points (he : e ≤ 1) (i j : Fin 3) (d f : ℕ)
     (hd : d ≤ L i) (hf : f ≤ L j) :
-    ∃ p : (spider e L).Walk (point i d hd) (point j f hf), p.length = spiderDist (point (e := e) i d hd) (point j f hf) := by
+    ∃ p : (spider e L).Walk (point i d hd) (point j f hf),
+      p.length = spiderDist (point (e := e) i d hd) (point j f hf) := by
   rw [spiderDist_point]
   by_cases hij : i = j
   · subst j
@@ -1309,7 +1313,8 @@ private theorem clique_of_equal_block {V : Type*} [Finite V] {G : SimpleGraph V}
   omega
 
 /-- Fibers are layers. The central clique has three layers, and every other clique has two. -/
-structure CliqueChains {V : Type*} (G : SimpleGraph V) (q : Fin 3 → ℕ) (f : V → Vertex q) : Prop where
+structure CliqueChains {V : Type*} (G : SimpleGraph V) (q : Fin 3 → ℕ)
+    (f : V → Vertex q) : Prop where
   layers_nonempty : Function.Surjective f
   within_cliques : ∀ x y, x ≠ y → block (f x) = block (f y) → G.Adj x y
   allowed_edges : ∀ x y, G.Adj x y → block (f x) = block (f y) ∨ Interface (f x) (f y)
