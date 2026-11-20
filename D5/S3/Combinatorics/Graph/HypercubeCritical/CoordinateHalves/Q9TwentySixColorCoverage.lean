@@ -109,6 +109,7 @@ private theorem coloring_certificate (index : Fin 110) (group : Nat) (hgroup : g
   · rename_i word _
     exact ⟨word, hw⟩
 
+set_option maxRecDepth 8192 in
 private theorem colored_representative (index : Fin 110) (group : Nat) (hgroup : group < 2 ^ 14)
     (hadm : admissible (graphEdgesOfOrder 14 (decode representatives[index.val]!))
       (ColorCase.cycles coloredCases[index.val]!) group = true) :
@@ -119,17 +120,9 @@ private theorem colored_representative (index : Fin 110) (group : Nat) (hgroup :
         (models[model.val]!.2.testBit (p i).val ^^ reverse)) := by
   obtain ⟨word, hw⟩ := coloring_certificate index group hgroup hadm
   let model := word >>> 56
-  let code := representatives[models[model]!.1]!
   let color := models[model]!.2
   let reverse := group.testBit 0 != color.testBit (labels word 0)
-  change (decide (model < models.size) &&
-    (List.range 14).all (fun i => decide (labels word i < 14)) &&
-    (((List.range 14).map (labels word)).eraseDups.length == 14) &&
-    (List.range 14).all (fun i => (List.range 14).all fun j =>
-      adjacent (decode representatives[index.val]!) i j ==
-        (code >>> (14 * labels word i)).testBit (labels word j)) &&
-    (List.range 14).all (fun i => group.testBit i == (color.testBit (labels word i) ^^ reverse))) =
-      true at hw
+  unfold relabelsColor at hw
   obtain ⟨⟨⟨⟨hindex, hbound⟩, hn⟩, hmatrix⟩, hcolor⟩ := by
     simpa only [Bool.and_eq_true_iff] using hw
   let p := witnessPerm (order := 14) word
