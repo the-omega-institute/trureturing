@@ -24,6 +24,10 @@ $$\forall Alphabet \in Type,\; [\operatorname{Fintype}\left(Alphabet\right)], (2
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/AutomataCircuits/LowAutomaticComplexityCircuitLowerBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-ckkrs2510q51` (proved) by `D5/S3/Combinatorics/AutomataCircuits/LowAutomaticComplexityCircuitLowerBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-ckkrs2510q51","declaration_gid":"D5/S3/Combinatorics/AutomataCircuits/LowAutomaticComplexityCircuitLowerBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joey Chen; Bjørn Kjos-Hanssen; Ivan Koswara; Linus Richter; Frank Stephan (2025). *Languages of Words of Low Automatic Complexity Are Hard to Compute*. DOI: [10.48550/arXiv.2510.07696](https://doi.org/10.48550/arXiv.2510.07696). URL: <https://arxiv.org/abs/2510.07696v1>.
