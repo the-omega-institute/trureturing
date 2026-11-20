@@ -22,12 +22,6 @@ namespace D5.S3.Combinatorics.Probability.NamingRestrictionLaw
 
 variable {X Y Z : Type*} [Fintype X] [Fintype Y] [Fintype Z]
 
-private noncomputable def relabel (σ : Equiv.Perm Y) : (X ↪ Y) ≃ (X ↪ Y) where
-  toFun f := f.trans σ.toEmbedding
-  invFun f := f.trans σ.symm.toEmbedding
-  left_inv f := Function.Embedding.ext fun x => σ.symm_apply_apply (f x)
-  right_inv f := Function.Embedding.ext fun x => σ.apply_symm_apply (f x)
-
 private theorem uniform_restriction (ι : Z ↪ X) [Nonempty (X ↪ Y)] :
     let _ : Nonempty (Z ↪ Y) := ‹Nonempty (X ↪ Y)›.map (fun f => ι.trans f)
     (uniformPmf (X ↪ Y)).map (fun f => ι.trans f) = uniformPmf (Z ↪ Y) := by
@@ -41,7 +35,7 @@ private theorem uniform_restriction (ι : Z ↪ X) [Nonempty (X ↪ Y)] :
     obtain ⟨σ, hσ⟩ := Equiv.Perm.exists_extending_pair a b a.injective b.injective
     let e : (↑({f | restrict f = a} : Set (X ↪ Y))) ≃
         (↑({f | restrict f = b} : Set (X ↪ Y))) :=
-      (relabel σ).subtypeEquiv fun f => by
+      (Equiv.embeddingCongr (Equiv.refl X) σ).subtypeEquiv fun f => by
         constructor
         · intro he
           apply Function.Embedding.ext
