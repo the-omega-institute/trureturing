@@ -17,20 +17,6 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.Complex.Order
 
-/-
-Copyright (c) 2026 Joseph Tooby-Smith. All rights reserved.
-Released under Apache 2.0 license as described in
-  docs/reports/licenses/physlib-phase-polynomial-LICENSE.txt.
-Authors: Joseph Tooby-Smith
-
-Source: leanprover-community/physlib, a8823c76303bab825824ddecb7bd540880c4ae62,
-PhyslibAlpha/Particles/BeyondTheStandardModel/TwoHDM/ChargeBalance.lean
-and Invariants.lean (exists_infiniteOrder_unitary only).
-Retirement: when this repository's pinned Mathlib supplies equivalent declarations,
-remove the corresponding transplants and replace consumers with direct Mathlib imports.
--/
-
-
 namespace D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
 
 open MvPolynomial
@@ -68,6 +54,20 @@ lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
 end
 
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityGenericity
+
+/-
+Copyright (c) 2026 Joseph Tooby-Smith. All rights reserved.
+Released under Apache 2.0 license as described in
+  docs/reports/licenses/physlib-phase-polynomial-LICENSE.txt.
+Authors: Joseph Tooby-Smith
+
+Source: leanprover-community/physlib, a8823c76303bab825824ddecb7bd540880c4ae62,
+PhyslibAlpha/Particles/BeyondTheStandardModel/TwoHDM/ChargeBalance.lean
+and Invariants.lean (exists_infiniteOrder_unitary only).
+Retirement: when this repository's pinned Mathlib supplies equivalent declarations,
+remove the corresponding transplants and replace consumers with direct Mathlib imports.
+-/
+
 
 namespace MvPolynomial
 
