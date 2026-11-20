@@ -365,6 +365,10 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 tools/scripts/worktree/lean-cache-run.sh --prebuilt lake -d tools/lean-inspector-reg --no-build build :report
 ```
 
+调用者须提供当前可用的 StrataLint.Lean DLL。此命令默认使用工作树的 Release DLL，也可通过
+`STRATALINT_LEAN_PRODUCER_DLL` 指定绝对路径。低层入口只检查所选 DLL 文件是否存在。
+通过 `make lean-report` 或 `make lean-report-scoped` 使用工作树 DLL 时，报告入口会查询 MSBuild，核对它是否仍与当前构建输入匹配。
+
 `--prebuilt` 使用已有的工具和编译输入。`--no-build` 也禁止新提取和汇总报告，
 允许生成派生输入记录及恢复匹配的本地缓存工件。此命令的输出是原生目标检查结果。
 
@@ -372,7 +376,7 @@ tools/scripts/worktree/lean-cache-run.sh --prebuilt lake -d tools/lean-inspector
 | --- | --- |
 | 所需的编译输入和报告工件均可复用或恢复 | 检查成功。要发布到 `LEAN_REPORT`，运行 `make lean-report FULL_BUILD=1`。 |
 | 编译输入有效，报告工件需要提取或汇总 | 检查非零退出。运行 `make lean-report FULL_BUILD=1` 生成并发布报告。 |
-| 所需工具或编译输入缺失或过期，且没有匹配的缓存副本 | 检查非零退出。先运行 `make lean-report-prepare FULL_BUILD=1`，再运行报告命令。 |
+| 所选 DLL 缺失，或 Lake 跟踪的工具或模块需要重建且没有匹配的缓存副本 | 检查非零退出。先运行 `make lean-report-prepare FULL_BUILD=1`，再运行报告命令。 |
 
 [完整校验](publication.py) 保留每条声明的 `statement_id`、`type_sha256` 和规范
 material 校验，`include_in_statement=false` 的声明也须有对应材料。与 olean 相同，模块报告工件只在生成时完整校验一次，
