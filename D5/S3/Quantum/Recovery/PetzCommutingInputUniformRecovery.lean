@@ -1,4 +1,5 @@
 import D5.S3.Quantum.Recovery.PetzActualLikelihoodEntropy
+import D5.S3.Quantum.Recovery.PetzGeometricRiskSuperadditivity
 import D5.S3.Quantum.Recovery.PetzLikelihoodRectangularAmplitude
 import D5.S3.Quantum.Recovery.PetzSingularInputLimit
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
@@ -232,5 +233,58 @@ theorem traceNorm_sub_ordinaryPetz_sq_le_twelve_umegakiLoss_of_commute
         ρ σ hComm hSupp Φ hΦ hTP
     _ ≤ 8 * L.likelihoodMismatch Φ := by nlinarith only [sq_nonneg (L.likelihoodMismatch Φ)]
     _ ≤ _ := by linarith only [hLoss]
+
+/-- The nonlinear ordinary Petz bound from the actual finite Umegaki loss
+for commuting inputs and positive trace-preserving maps. -/
+theorem traceNorm_sub_ordinaryPetz_sq_le_nonlinear_umegakiLoss_of_commute
+    (ρ σ : DensityState a) (hComm : Commute (stateMatrix ρ) (stateMatrix σ))
+    (hSupp : SupportContained ρ σ) (Φ : MatrixMap a b ℂ) (hΦ : Φ.IsPositive)
+    (hTP : Φ.IsTracePreserving) :
+    let Δ := finiteTraceLogRelativeEntropy ρ σ -
+      finiteTraceLogRelativeEntropy (mapDensityState Φ hΦ hTP ρ) (mapDensityState Φ hΦ hTP σ)
+    traceNorm (stateMatrix ρ - ordinaryPetz Φ (stateMatrix σ) (Φ (stateMatrix ρ))) ^ 2 ≤
+      4 * (1 - (max 0 (1 - Δ)) ^ 2) := by
+  let L := commutingResolution ρ σ hComm hSupp
+  let J := L.likelihoodMismatch Φ
+  let Δ := finiteTraceLogRelativeEntropy ρ σ -
+    finiteTraceLogRelativeEntropy (mapDensityState Φ hΦ hTP ρ) (mapDensityState Φ hΦ hTP σ)
+  change _ ≤ 4 * (1 - (max 0 (1 - Δ)) ^ 2)
+  have hLoss := PetzGeometricRiskSuperadditivity.geometricRisk_sqrt_le_actualEntropyLoss
+    (fun i => Φ (L.piece i)) L.likelihood (fun i => hΦ (L.piece_pos i)) L.likelihood_nonneg
+  rw [← L.likelihoodMismatch_eq_geometricRisk Φ hΦ,
+    actualEntropyLoss_image ρ σ hComm hSupp Φ hΦ hTP] at hLoss
+  have hJ : J ≤ 1 :=
+    (L.likelihoodMismatch_bounds Φ hΦ hTP (density_posSemidef σ) ρ.2.2).2
+  have hOverlap : max 0 (1 - Δ) ≤ 1 - J :=
+    max_le (sub_nonneg.mpr hJ) (sub_le_sub_left hLoss 1)
+  have hSq := pow_le_pow_left₀ (le_max_left 0 (1 - Δ)) hOverlap 2
+  calc
+    _ ≤ 4 * (2 * J - J ^ 2) :=
+      PetzLikelihoodRectangularAmplitude.traceNorm_sub_ordinaryPetz_sq_le_of_commute
+        ρ σ hComm hSupp Φ hΦ hTP
+    _ ≤ _ := by nlinarith only [hSq]
+
+/-- The squared full trace-norm error of ordinary Petz recovery for commuting
+density states is at most eight times the finite Umegaki data-processing loss. -/
+theorem traceNorm_sub_ordinaryPetz_sq_le_eight_umegakiLoss_of_commute
+    (ρ σ : DensityState a) (hComm : Commute (stateMatrix ρ) (stateMatrix σ))
+    (hSupp : SupportContained ρ σ) (Φ : MatrixMap a b ℂ) (hΦ : Φ.IsPositive)
+    (hTP : Φ.IsTracePreserving) :
+    traceNorm (stateMatrix ρ - ordinaryPetz Φ (stateMatrix σ) (Φ (stateMatrix ρ))) ^ 2 ≤
+      8 * (finiteTraceLogRelativeEntropy ρ σ -
+        finiteTraceLogRelativeEntropy
+          (mapDensityState Φ hΦ hTP ρ) (mapDensityState Φ hΦ hTP σ)) := by
+  let Δ := finiteTraceLogRelativeEntropy ρ σ -
+    finiteTraceLogRelativeEntropy (mapDensityState Φ hΦ hTP ρ) (mapDensityState Φ hΦ hTP σ)
+  change _ ≤ 8 * Δ
+  calc
+    _ ≤ 4 * (1 - (max 0 (1 - Δ)) ^ 2) :=
+      traceNorm_sub_ordinaryPetz_sq_le_nonlinear_umegakiLoss_of_commute ρ σ hComm hSupp Φ hΦ hTP
+    _ ≤ 8 * Δ := by
+      by_cases hΔ : Δ ≤ 1
+      · rw [max_eq_right (sub_nonneg.mpr hΔ)]
+        nlinarith only [sq_nonneg Δ]
+      · rw [max_eq_left (sub_nonpos.mpr (le_of_not_ge hΔ))]
+        linarith only [lt_of_not_ge hΔ]
 
 end PetzCommutingInputUniformRecovery
