@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
 import Reg.Support.SingleDependentReadout
 
+/-! The original finite nonnegative-product law and its ordered relation readout. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -30,17 +32,17 @@ abbrev arena : Arena where
       (s : Finset ι) (x : ι → ℝ), (∀ i ∈ s, 0 ≤ x i) →
     R.readout () () ((1 - ∑ i ∈ s, x i) * (∏ i ∈ s, (1 + x i))) 1
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ι := ULift.{u} Unit) ∅ (fun _ => 0) (by simp)
 
-def family : Registration arena
+def family : Registration arena.{u}
     (type_of% @one_sub_sum_mul_prod_le_one.{u}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@one_sub_sum_mul_prod_le_one.{u}, rejected, rejected_law⟩
+  variation := ⟨@one_sub_sum_mul_prod_le_one.{u}, rejected, rejected_law.{u}⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+    arena.{u}.Law actual rejected rejected_law.{u}
   dependence := by
     intro role
     refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
@@ -57,11 +59,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature actual.readout actual.anchor)
