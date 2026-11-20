@@ -18,24 +18,28 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                 DescribeId.Create("vasilyev-force-divergence-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("Question 7.7"),
-                StatementSource.FromAuthor(Disp(ClaimFormula())),
+                StatementSource.FromAuthor(Disp(
+                    new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, ClaimBody()))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "Let P be the positive integers. At x in P the up and down steps are the "
-                        + "ceilings of 3x/2 and x/2, respectively. The map T for a set S takes "
+                        + "ceilings of 3x/2 and x/2, respectively. Lean writes them as (3x + 1) div 2 "
+                        + "and (x + 1) div 2 with natural-number division. The map T(S) takes "
                         + "the up step at members of S and the down step elsewhere.")),
                     Paragraph(Text(
                         "A subset A of P is force-divergent if, for every S with A contained in S "
                         + "and S contained in P, some positive starting vertex has an orbit under T "
-                        + "that never enters a periodic cycle. A contains a tail if the whole "
-                        + "forward up orbit of some positive vertex lies in A, including time zero."))),
+                        + "that never enters a periodic cycle. Here iterate(f, t, x) applies f to x "
+                        + "exactly t times, and periodicPts(f) is the set of points of positive period. "
+                        + "A contains a tail if the whole forward up orbit of some positive vertex "
+                        + "lies in A, including time zero."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("vasilyev-force-divergence-result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("A force-divergent set without a chain tail"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
+                StatementSource.FromAuthor(Disp(new Formula.Not(ClaimBody()))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -55,17 +59,40 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                         + "values. The same A therefore forces divergence and excludes every all-up tail."))),
                 DescribeRole.Theorem))));
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimBody()
     {
-        var a = F.Id("A");
-        Formula subsets = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Set"))),
-            [Seq(Mathbb, Grp(F.Id("N")))]);
-        Formula positive = new Formula.Relation(a, FormulaRelationOperator.SubsetOf, F.Id("P"));
-        Formula force = new Formula.Apply(Seq(Operatorname, Grp(F.Id("ForceDivergent"))), [a]);
-        Formula tail = new Formula.Apply(Seq(Operatorname, Grp(F.Id("ContainsTail"))), [a]);
-        Formula assertion = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("A"),
-            subsets, new Formula.Logic(positive, FormulaLogicOperator.Implies,
-                new Formula.Logic(force, FormulaLogicOperator.Implies, tail)));
-        return new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, assertion);
+        Formula a = F.Id("A"), s = F.Id("S"), x = F.Id("x"), y = F.Id("y");
+        Formula t = F.Id("t"), k = F.Id("k"), positive = F.Id("P");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula subsets = Call("Set", naturals);
+        Formula step = Call("T", s);
+        Formula entersCycle = Bind(FormulaQuantifier.Exists, "t", naturals,
+            Member(Call("iterate", step, t, x), Call("periodicPts", step)));
+        Formula divergentStart = Bind(FormulaQuantifier.Exists, "x", naturals,
+            new Formula.Logic(Member(x, positive), FormulaLogicOperator.And,
+                new Formula.Not(entersCycle)));
+        Formula force = Bind(FormulaQuantifier.ForAll, "S", subsets,
+            Implies(SubsetOf(s, positive), Implies(SubsetOf(a, s), divergentStart)));
+        Formula tail = Bind(FormulaQuantifier.Exists, "y", naturals,
+            new Formula.Logic(Member(y, positive), FormulaLogicOperator.And,
+                Bind(FormulaQuantifier.ForAll, "k", naturals,
+                    Member(Call("iterate", F.Id("U"), k, y), a))));
+        return Bind(FormulaQuantifier.ForAll, "A", subsets,
+            Implies(SubsetOf(a, positive), Implies(force, tail)));
     }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula Bind(FormulaQuantifier quantifier, string name, Formula domain, Formula body) =>
+        new Formula.Bind(quantifier, FormulaIdentifier.Create(name), domain, body);
+
+    private static Formula Implies(Formula premise, Formula conclusion) =>
+        new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
+
+    private static Formula Member(Formula element, Formula set) =>
+        new Formula.Relation(element, FormulaRelationOperator.MemberOf, set);
+
+    private static Formula SubsetOf(Formula subset, Formula superset) =>
+        new Formula.Relation(subset, FormulaRelationOperator.SubsetOf, superset);
 }

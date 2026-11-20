@@ -6,7 +6,7 @@ There is a set of positive integers that forces divergence in every superset but
 
 **Definition 1.1 (Question 7.7).**
 
-$$claim \Leftrightarrow \left(\forall A \in \operatorname{Set}\left(\mathbb{N}\right),\; A \subseteq P \Rightarrow \left(\operatorname{ForceDivergent}\left(A\right) \Rightarrow \operatorname{ContainsTail}\left(A\right)\right)\right)$$
+$$claim \Leftrightarrow \left(\forall A \in \operatorname{Set}\left(\mathbb{N}\right),\; A \subseteq P \Rightarrow \left(\left(\forall S \in \operatorname{Set}\left(\mathbb{N}\right),\; S \subseteq P \Rightarrow \left(A \subseteq S \Rightarrow \left(\exists x \in \mathbb{N},\; x \in P \land \left(\neg \left(\exists t \in \mathbb{N},\; \operatorname{iterate}\left(\operatorname{T}\left(S\right), t, x\right) \in \operatorname{periodicPts}\left(\operatorname{T}\left(S\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(\exists y \in \mathbb{N},\; y \in P \land \left(\forall k \in \mathbb{N},\; \operatorname{iterate}\left(U, k, y\right) \in A\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Dynamics/Recurrence/VasilyevForceDivergenceRefutation.claim` (`✓ std3`).
 
@@ -14,13 +14,13 @@ $$claim \Leftrightarrow \left(\forall A \in \operatorname{Set}\left(\mathbb{N}\r
 
 *Commentary.*
 
-Let P be the positive integers. At x in P the up and down steps are the ceilings of 3x/2 and x/2, respectively. The map T for a set S takes the up step at members of S and the down step elsewhere.
+Let P be the positive integers. At x in P the up and down steps are the ceilings of 3x/2 and x/2, respectively. Lean writes them as (3x + 1) div 2 and (x + 1) div 2 with natural-number division. The map T(S) takes the up step at members of S and the down step elsewhere.
 
-A subset A of P is force-divergent if, for every S with A contained in S and S contained in P, some positive starting vertex has an orbit under T that never enters a periodic cycle. A contains a tail if the whole forward up orbit of some positive vertex lies in A, including time zero.
+A subset A of P is force-divergent if, for every S with A contained in S and S contained in P, some positive starting vertex has an orbit under T that never enters a periodic cycle. Here iterate(f, t, x) applies f to x exactly t times, and periodicPts(f) is the set of points of positive period. A contains a tail if the whole forward up orbit of some positive vertex lies in A, including time zero.
 
 **Theorem 1.2 (A force-divergent set without a chain tail).**
 
-$$\neg claim$$
+$$\neg \left(\forall A \in \operatorname{Set}\left(\mathbb{N}\right),\; A \subseteq P \Rightarrow \left(\left(\forall S \in \operatorname{Set}\left(\mathbb{N}\right),\; S \subseteq P \Rightarrow \left(A \subseteq S \Rightarrow \left(\exists x \in \mathbb{N},\; x \in P \land \left(\neg \left(\exists t \in \mathbb{N},\; \operatorname{iterate}\left(\operatorname{T}\left(S\right), t, x\right) \in \operatorname{periodicPts}\left(\operatorname{T}\left(S\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(\exists y \in \mathbb{N},\; y \in P \land \left(\forall k \in \mathbb{N},\; \operatorname{iterate}\left(U, k, y\right) \in A\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Recurrence/VasilyevForceDivergenceRefutation.result` (`✓ std3`). ∎
 
