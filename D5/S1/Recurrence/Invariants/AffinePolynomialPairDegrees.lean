@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/AffinePolynomialPairDegrees
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Degree.Definitions]
+   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Degree.Defs]
    utility: none
    digest: The affine pair's companion u-coefficients and the degrees of u_n and v_n. -/
 
