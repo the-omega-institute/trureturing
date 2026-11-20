@@ -148,20 +148,28 @@ runs:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
-    - name: Validate the producer continuation
+    - id: native_resume
+      name: Validate the producer continuation
       if: steps.resume_lookup.outcome == 'success'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
       shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+      run: |
+        python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+        if [[ -f "$GITHUB_WORKSPACE/build/lean-cache/producer-resume-restored.json" ]]; then
+          echo 'restored=true' >> "$GITHUB_OUTPUT"
+        fi
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
-        PARTIAL_INDEXED_PROJECT: ${{ ((steps.sharded_seed.outputs.available || '0') != '0' && steps.sharded_seed.outputs.complete != 'true') || (steps.sharded_resume.outputs.available || '0') != '0' }}
+        PARTIAL_INDEXED_PROJECT: >-
+          ${{ ((steps.sharded_seed.outputs.available || '0') != '0' && steps.sharded_seed.outputs.complete != 'true')
+              || (steps.sharded_resume.outputs.available || '0') != '0'
+              || (inputs.shard-history-anchor != '' && steps.native_resume.outputs.restored == 'true') }}
         REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
