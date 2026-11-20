@@ -27,8 +27,9 @@ abbrev arena : Arena where
   Law R := ∀ {r k n B M : ℕ}, 0 < B → ∀ w : Fin (r + 1) → ℝ,
     (∀ d : ℕ, 0 < d → d < B → d ∣ M) →
     (¬ ∃ z : ℤ, (M : ℝ) * (∑ j, w j) = z) →
+    ∀ (level : Fin n → ℤ), Function.Injective level →
     (∀ x : Fin n, ∃ d : Fin (r + 1) → Fin (k + 1),
-      (∑ j, ((d j).val : ℝ) * w j) = x.val) →
+      (∑ j, ((d j).val : ℝ) * w j) = (level x : ℝ)) →
     n ≤ (k / R.readout () () B + 1) * (k + 1) ^ r
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -43,13 +44,18 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     have eq : (2 : ℝ) * z = 1 := by linarith
     have intEq : (2 : ℤ) * z = 1 := by exact_mod_cast eq
     omega
+  let level (x : Fin 2) : ℤ := x.val
+  have distinct : Function.Injective level := by
+    intro x y eq
+    apply Fin.ext
+    exact_mod_cast eq
   have covers (x : Fin 2) : ∃ d : Fin 1 → Fin 3,
-      (∑ j, ((d j).val : ℝ) * w j) = x.val := by
+      (∑ j, ((d j).val : ℝ) * w j) = (level x : ℝ) := by
     fin_cases x
-    · exact ⟨fun _ => 0, by norm_num [w]⟩
-    · exact ⟨fun _ => 2, by norm_num [w]⟩
+    · exact ⟨fun _ => 0, by norm_num [w, level]⟩
+    · exact ⟨fun _ => 2, by norm_num [w, level]⟩
   have impossible := h (r := 0) (k := 2) (n := 2) (B := 1) (M := 1)
-    (by decide) w short (by simpa only [Nat.cast_one] using nonintegral) covers
+    (by decide) w short (by simpa only [Nat.cast_one] using nonintegral) level distinct covers
   exact (by decide : ¬ (2 : ℕ) ≤ 1) impossible
 
 def family : Registration arena (type_of% (@integral_range_le_period_blocks)) where
@@ -86,7 +92,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "fn", "arg", "fn", "arg", "arg"]
+        "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none

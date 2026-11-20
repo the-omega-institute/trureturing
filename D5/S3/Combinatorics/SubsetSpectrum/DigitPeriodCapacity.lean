@@ -44,8 +44,9 @@ theorem integral_range_le_period_blocks {r k n B M : ℕ} (positive : 0 < B)
     (w : Fin (r + 1) → ℝ)
     (common : ∀ d : ℕ, 0 < d → d < B → d ∣ M)
     (nonintegral : ¬ ∃ z : ℤ, (M : ℝ) * (∑ j, w j) = z)
+    (level : Fin n → ℤ) (distinct : Function.Injective level)
     (cover : ∀ x : Fin n, ∃ d : Fin (r + 1) → Fin (k + 1),
-      (∑ j, ((d j).val : ℝ) * w j) = x.val) :
+      (∑ j, ((d j).val : ℝ) * w j) = (level x : ℝ)) :
     n ≤ (k / B + 1) * (k + 1) ^ r := by
   classical
   obtain ⟨i, gap⟩ := short_period_missing w common nonintegral
@@ -81,9 +82,9 @@ theorem integral_range_le_period_blocks {r k n B M : ℕ} (positive : 0 < B)
       rw [show digits x (i.succAbove j) = digits y (i.succAbove j) from congrFun same j]
     rw [rest] at hx
     apply gap (v - u) gap_pos gap_lt
-    refine ⟨(y.val : ℤ) - (x.val : ℤ), ?_⟩
-    rw [Int.cast_sub, Int.cast_natCast, Int.cast_natCast, Nat.cast_sub ord]
-    change ((v : ℝ) - (u : ℝ)) * w i = (y.val : ℝ) - x.val
+    refine ⟨level y - level x, ?_⟩
+    rw [Int.cast_sub, Nat.cast_sub ord]
+    change ((v : ℝ) - (u : ℝ)) * w i = (level y : ℝ) - level x
     linarith only [hx, hy]
   have inj : Function.Injective code := by
     intro x y h
@@ -98,7 +99,7 @@ theorem integral_range_le_period_blocks {r k n B M : ℕ} (positive : 0 < B)
       revert j
       rw [Fin.forall_iff_succAbove i]
       exact ⟨Fin.ext head, congrFun tail⟩
-    apply Fin.ext
+    apply distinct
     exact_mod_cast ((mass x).symm.trans (same ▸ mass y))
   simpa only [Fintype.card_fin, Fintype.card_fun, Fintype.card_prod] using
     Fintype.card_le_of_injective code inj

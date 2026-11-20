@@ -22,8 +22,8 @@ internal sealed class DigitPeriodCapacityDocument : IScribeDocumentDefinition
                     + "one real weights. A digit can be any integer from zero through k. "
                     + "ShortPeriodsDivide(B,M) means every positive integer below B divides M. "
                     + "NonintegralTotal(M,w) means M times the sum of the weights is nonintegral. "
-                    + "IntegerCoverage(r,k,n,w) means every level from zero through n minus one "
-                    + "is represented by a weighted digit vector.")),
+                    + "Let L be a list of n pairwise distinct integers. IntegerCoverage(r,k,w,L) "
+                    + "means every integer in L is represented by a weighted digit vector.")),
                 Paragraph(Text(
                     "A positive integer is a period for a coordinate if multiplying its weight "
                     + "by that integer produces integer mass. If each coordinate had a period "
@@ -32,7 +32,14 @@ internal sealed class DigitPeriodCapacityDocument : IScribeDocumentDefinition
                     + "periods. Fix the other digits and divide the selected digit by B, rounding down. "
                     + "Two integral representations with the same other digits and quotient must "
                     + "agree, since a positive difference below B would give a short period. "
-                    + "Choosing one representation of each level proves the bound."))),
+                    + "Choosing one representation of each level proves the bound.")),
+                Paragraph(Text(
+                    "Each arithmetic premise matters even for one weight. With k equal to two, "
+                    + "the weight one half covers zero and one. Taking B equal to zero and M equal "
+                    + "to one violates the bound without positivity. Taking B equal to three and M "
+                    + "equal to one violates it without the divisibility premise. With B equal to "
+                    + "three and M equal to two, the integer weight one covers zero, one and two, "
+                    + "showing the need for nonintegrality."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -43,11 +50,12 @@ internal sealed class DigitPeriodCapacityDocument : IScribeDocumentDefinition
         Formula b = F.Id("B");
         Formula m = F.Id("M");
         Formula w = F.Id("w");
+        Formula levels = F.Id("L");
         var quotient = new Formula.Floor(new Formula.Fraction(k, b));
-        return Disp(Seq(Forall, Sp, r, Sp, k, Sp, n, Sp, b, Sp, m, Sp, w, Comma, Sp,
+        return Disp(Seq(Forall, Sp, r, Sp, k, Sp, n, Sp, b, Sp, m, Sp, w, Sp, levels, Comma, Sp,
             D(0), Sp, Lt, Sp, b, Sp, Land, Sp, Call("ShortPeriodsDivide", b, m),
-            Sp, Land, Sp, Call("NonintegralTotal", m, w),
-            Sp, Land, Sp, Call("IntegerCoverage", r, k, n, w),
+            Sp, Land, Sp, Call("NonintegralTotal", m, w), Sp, Land, Sp, Call("DistinctLevels", levels, n),
+            Sp, Land, Sp, Call("IntegerCoverage", r, k, w, levels),
             Sp, Rightarrow, Sp, n, Sp, Le, Sp, Open, quotient, Plus, D(1), Close,
             Cdot, Sp, Open, k, Plus, D(1), Close, Caret, r));
     }
