@@ -27,10 +27,13 @@ internal sealed class NormalSubgroupFixedMassDocument : IScribeDocumentDefinitio
                         + "under G. The H row mass sums P over outputs fixed by all elements of H "
                         + "that fix that input.")),
                     Paragraph(Text(
-                        "The same minimizing row bounds the total weight of H-fixed seeds of "
-                        + "every finite calibration with nonnegative weights and a G-covariant "
-                        + "readout. There is an attaining finite calibration with positive weights "
-                        + "summing to one, invariant under G, with all marginals equal to P.")),
+                        "The same minimizing row bounds the total weight of H-fixed seeds for "
+                        + "every finite seed type in any universe, given nonnegative weights "
+                        + "and a pointwise G-covariant deterministic readout with marginals P. "
+                        + "An attaining finite seed type lives in the maximum of the input "
+                        + "and output type universes. Its weights are positive, sum to one, "
+                        + "and are G-invariant. Its deterministic readout is pointwise "
+                        + "G-covariant and has marginals P.")),
                     Paragraph(Text(
                         "Apply the full-group fixed mass theorem to H. Send each seed to its "
                         + "deterministic table. The table law has the required marginals, and "

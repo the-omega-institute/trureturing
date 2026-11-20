@@ -16,7 +16,7 @@ $$\forall H, P, \operatorname{Normal}\left(H\right) \land \operatorname{Covarian
 
 A group G acts on a nonempty finite input set X and a finite output set Y. Let H be a normal subgroup of G. The probability kernel P is covariant under G. The H row mass sums P over outputs fixed by all elements of H that fix that input.
 
-The same minimizing row bounds the total weight of H-fixed seeds of every finite calibration with nonnegative weights and a G-covariant readout. There is an attaining finite calibration with positive weights summing to one, invariant under G, with all marginals equal to P.
+The same minimizing row bounds the total weight of H-fixed seeds for every finite seed type in any universe, given nonnegative weights and a pointwise G-covariant deterministic readout with marginals P. An attaining finite seed type lives in the maximum of the input and output type universes. Its weights are positive, sum to one, and are G-invariant. Its deterministic readout is pointwise G-covariant and has marginals P.
 
 Apply the full-group fixed mass theorem to H. Send each seed to its deterministic table. The table law has the required marginals, and every H-fixed seed maps to an H-fixed table. Average this law over the finite image of G acting on the table space. Covariance preserves the marginals in each translated law. Normality ensures that each translate preserves the set of H-fixed tables. Restrict to the positive support of the averaged law and use the row bound to obtain equality.
 
