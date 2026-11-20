@@ -1,25 +1,22 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet
+import D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
 import Reg.Support.SingleDependentReadout
-
-/-! The real inequality in the primitive exceptional-set counting estimate. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 noncomputable section
-open Finset Real LeanInformationAudit
+universe u
+open LeanInformationAudit Finset
+open _root_.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
+open scoped BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Arith.Abundancy.ZelinskyZhangDoublePrimitive (PrimitiveNonDeficient)
-open _root_.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentDensity (radicalComponentSet)
 
-namespace Reg.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet
+namespace Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
 
-attribute [local instance] Classical.propDecidable
+namespace P
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
-    (fun _ => ℝ → Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature :=
   realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
@@ -29,27 +26,23 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∃ K : ℝ, 0 < K ∧ ∃ X₀ : ℕ, ∀ X : ℕ, X₀ ≤ X →
-    R.readout () ()
-      (((Icc 1 X).filter fun n =>
-        PrimitiveNonDeficient n ∧ n ∉ radicalComponentSet 2).card : ℝ)
-      (K * (X : ℝ) ^ (39 / 40 : ℝ))
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
+      (s : Finset ι) (x : ι → ℝ), (∀ i ∈ s, 0 ≤ x i) →
+    R.readout () () ((1 - ∑ i ∈ s, x i) * (∏ i ∈ s, (1 + x i))) 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
-  rintro ⟨K, hK, X₀, hX⟩
-  exact hX X₀ le_rfl
+  intro h
+  exact h (ι := ULift.{u} Unit) ∅ (fun _ => 0) (by simp)
 
 def family : Registration arena
-    (type_of% @_root_.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet.result) where
+    (type_of% @one_sub_sum_mul_prod_le_one.{u}) where
   actual := actual
   bridge := Iff.rfl
-  variation :=
-    ⟨@_root_.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet.result,
-      rejected, rejected_law⟩
+  variation := ⟨@one_sub_sum_mul_prod_le_one.{u}, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
-    intro i
+    intro role
     refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
     intro he
     have hh := congrFun he (0 : ℝ)
@@ -58,10 +51,10 @@ def family : Registration arena
     norm_num at hbad
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@_root_.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet.result)
+    (@one_sub_sum_mul_prod_le_one.{u})
     (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet.result.audit
-  realizationName := `Reg.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet.family
+  unitName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.audit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -77,11 +70,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet
+    owner := `D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "body", "arg", "arg", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -90,4 +83,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.Abundancy.ZelinskyPrimitiveExceptionalSet
+end P
+
+end Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
