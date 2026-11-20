@@ -203,7 +203,7 @@ private theorem lower_congruence (A : Matrix ι ι ℝ) (x : ι → ℝ) (h : pi
 def zeroIndex {A : Matrix ι ι ℝ} (hA : A.IsHermitian) : ℕ :=
   (Finset.univ.filter fun i => hA.eigenvalues i = 0).card
 
-private theorem zeroIndex_eq_nullity {A : Matrix ι ι ℝ} (hA : A.IsHermitian) :
+theorem zeroIndex_eq_nullity {A : Matrix ι ι ℝ} (hA : A.IsHermitian) :
     zeroIndex hA = Module.finrank ℝ (LinearMap.ker A.mulVecLin) := by
   have hr := hA.rank_eq_card_non_zero_eigs
   rw [Fintype.card_subtype] at hr
