@@ -26,7 +26,22 @@ that order and may specialize to it.
 [Question](https://arxiv.org/html/2611.25709v1#S6.p3.1) ·
 [Online model](https://arxiv.org/html/2611.25709v1#S3.SS0.SSS0.Px1)
 
-## Claim and counterexample
+## Motivation
+
+The sharp three-alternative bound motivates testing the first larger
+horizon. The settling declaration is
+`D5/S3/ConceptDynamics/Aggregation/OnlineVotingFourAlternatives.result`.
+
+## Gap
+
+The source is a tier-1 published question. The preregistration screened §3,
+§6, Lemmas 7–9 and 11, the available citation indexes and Lean repositories.
+Lemma 8 gives a four-option obstruction to perfect matching, while Lemmas 9
+and 11 give the tight three-option bound. The screen found no prior
+settlement of the exact threshold question within its recorded coverage.
+[Preregistration and search scope](https://github.com/the-omega-institute/trureturing/issues/32348)
+
+## Route
 
 The Lean `claim : Prop` says that some deterministic rule on twelve labeled
 voters and four labeled alternatives guarantees, for every compatible election
@@ -44,26 +59,27 @@ consistent order on ties.
 
 For each rule one fixed election realizes its computed decision path.
 All leaves share the same labeled six-to-six opening. For each opening
-decision the third-round comparisons agree across both fourth-round profiles. Each fourth profile has two compatible
-metrics, one for each fourth decision. The common metric on all sixteen labels
-uses the corresponding integer graph table scaled by 1000 plus one for
-distinct labels. The proof checks metric laws, ballot compatibility, prefix
-equalities, exact social costs and the positive minimum over all four
-alternatives. The cost ratios for the four leaves are 5503/1503, 6503/1503,
-11753/3253 and 7503/2003, all strictly above √13.
+decision the third-round comparisons agree across both fourth-round profiles.
+Each fourth profile has two compatible metrics, one for each fourth decision.
+The common metric on all sixteen labels uses the corresponding integer graph
+table scaled by 1000 plus one for distinct labels.
+
+## Falsifier
+
+For every deterministic rule, the certificate must yield a compatible common
+metric and fixed full ballots whose observed prefixes and earlier actions
+reproduce the selected path. At its final winner the social cost must exceed
+√13 times the positive cost of a global optimum.
+
+## Evidence
+
+Lean checks metric laws, ballot compatibility, prefix equalities, exact
+social costs and the positive minimum over all four alternatives. The four
+leaf ratios are 5503/1503, 6503/1503, 11753/3253 and 7503/2003, all strictly
+above √13.
 [Preregistered construction and independent replay](https://github.com/the-omega-institute/trureturing/issues/32348#issuecomment-7045275379)
 
-## Admission and boundary
-
-The source is a tier-1 published question. The preregistration screened §3,
-§6, Lemmas 7–9 and 11, the available citation indexes and Lean repositories.
-Lemma 8 gives a four-option obstruction to perfect matching, while Lemmas 9
-and 11 give the tight three-option bound. The screen found no prior
-settlement of the exact threshold question within its recorded coverage.
-[Preregistration and search scope](https://github.com/the-omega-institute/trureturing/issues/32348)
-
-The admission basis is `open-problem-resolution`. The proof shape is
-`content`. The finite computation `leaf_strict` proves, in every branch,
+The finite computation `leaf_strict` proves, in every branch,
 that 13 times the squared cost of the selected optimum is strictly less than
 the squared cost of the produced winner. It uses the exact cost table of the
 compatible metric witnesses. The proof of `counterexample` uses that fact
@@ -72,10 +88,19 @@ uses that inequality at the actual optimum.
 
 The Lean theorem `Padding.worst_case` gives the pointwise lower bound
 11753/3253 > √13 for every horizon m = 4 + k and every prescribed order.
-Fresh alternatives follow the old ones in every ballot, in arrival order. Each fresh label
-lies at distance 10001 from any other label, so it costs 120012 and preserves
-the old minimum. Any incumbent after round four is either the fourth-round
-winner or a fresh alternative. This establishes a worst-case lower bound for
-deterministic rules at twelve voters. Exact distortion above three alternatives
-and strict increases between successive higher horizons are separate claims.
+Fresh alternatives follow the old ones in every ballot, in arrival order.
+Each fresh label lies at distance 10001 from any other label, so it costs
+120012 and preserves the old minimum. Any incumbent after round four is
+either the fourth-round winner or a fresh alternative.
 [Pointwise construction](https://github.com/the-omega-institute/trureturing/issues/32348#issuecomment-7045275379)
+
+## Triage
+
+The uniform guarantee is refuted. The admission basis for `result` is
+`open-problem-resolution` and the proof shape is `content`.
+`Padding.worst_case` is the preregistered strengthening for the same question.
+
+## ASSUMED-UNVERIFIED
+
+The literature screen is bounded. The exact higher-horizon distortion and
+strict increases between successive higher horizons remain open here.
