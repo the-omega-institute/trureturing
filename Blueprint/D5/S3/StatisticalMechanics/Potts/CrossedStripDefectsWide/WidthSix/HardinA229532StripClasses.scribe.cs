@@ -8,10 +8,20 @@ internal sealed class HardinA229532StripClassesDocument : IScribeDocumentDefinit
     private const string Note = "D5/L/SpinModels/hardin2013a229532";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact width-six HDA transfer.", H("Width-six HDA transfer"), Blocks(
+            Describe.Lean(DescribeId.Create("class-relabel"), DeclarationHandle.Create(Prefix + "class_relabel"),
+                H("Colour permutation preserves the residual-budget class"),
+                StatementSource.FromAuthor(Disp(ClassRelabelFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("For every natural residual budget and every six-column row, permuting the three colours preserves its class. The classifier depends only on equalities between colours and the number of monochromatic horizontal bonds."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bond-relabel"), DeclarationHandle.Create(Prefix + "bond_relabel"),
+                H("Colour permutation preserves bond counts"),
+                StatementSource.FromAuthor(Disp(BondRelabelFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Every permutation of the three colours preserves the number of monochromatic bonds, for every finite bond set and pair of six-column rows."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("transition-counts"), DeclarationHandle.Create(Prefix + "transition_counts"),
                 H("All target classes"), StatementSource.FromAuthor(Disp(TransitionFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("For every actual row p, residual d : Fin 2 and target s : Fin 31, Valid p (Fin.val d) implies that the actual permitted successor sum is T (cl p (Fin.val d)) s. The proof transports a canonical representative back by a colour permutation; every new target case applies its checked canonical-row theorem; the final recurrence consumes the combined identity."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every row p, residual d : Fin 2 and target s : Fin 31, Valid p (Fin.val d) implies that the permitted successor sum is T (cl p (Fin.val d)) s. A colour permutation transports a canonical representative back to the given row while preserving bond counts and the residual-budget class."))), DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Num(string value) => D(value.Select(c => (byte)(c - '0')).ToArray());
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part,i) => i == 0
@@ -33,6 +43,23 @@ internal sealed class HardinA229532StripClassesDocument : IScribeDocumentDefinit
         Seq(Call("if"), Sp, Parenthesized(test), Sp, Call("then"), Sp, Parenthesized(yes), Sp, Call("else"), Sp, Parenthesized(no)));
     private static Formula SumOver(string n, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
+    private static Formula ClassRelabelFormula()
+    {
+        var e = V("e"); var p = V("p"); var d = V("d");
+        return All("e", Call("Equiv.Perm", Fin(3)), All("p", RowType(),
+            All("d", Call("Nat"), Eq(Call("HardinA229532StripData.cl",
+                Call("Function.comp", e, p), d), Call("HardinA229532StripData.cl", p, d)))));
+    }
+    private static Formula BondRelabelFormula()
+    {
+        var e = V("e"); var g = V("g"); var p = V("p"); var r = V("r");
+        var pairType = Seq(Fin(6), Sp, Times, Sp, Fin(6));
+        return All("e", Call("Equiv.Perm", Fin(3)),
+            All("g", Call("Finset", Parenthesized(pairType)), All("p", RowType(), All("r", RowType(),
+                Eq(Call("DefectTransfer.bondDefects", g,
+                    Call("Function.comp", e, p), Call("Function.comp", e, r)),
+                    Call("DefectTransfer.bondDefects", g, p, r))))));
+    }
     private static Formula TransitionFormula()
     {
         var p = V("p"); var d = V("d"); var r = V("r"); var dv = Call("Fin.val", d);
