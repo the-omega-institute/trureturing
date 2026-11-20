@@ -9,7 +9,6 @@
 import D5.S3.Analytic.Polynomial.HermiteAbsoluteModeBlocks
 import D5.S3.Analytic.Polynomial.HermiteSignedModeBlocks
 import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-! The signed and absolute maximal coefficients `B(n)` and `M(n)` of the physicists' Hermite
 polynomial: closed forms, `B ≤ M`, the exact value of `B/M` in each interlacing case, the exact
@@ -21,7 +20,7 @@ from the closed forms), BM_ratio (exact `B/M` in the three interlacing cases), n
 a_lim and b_lim (`a/√n → √2`, `b/√n → √2` from the explicit `O(1)` bounds), q_lim and t_lim, and the
 case limits g1_lim, g2_lim, h2_lim, r1_lim, r2_lim. Consumed bind-only helpers: coeff_formula,
 B_formula, M_formula, B_pos, M_pos, q_step, t_step, B_le_M, inv_sqrt_lim, inv_nat_lim, n1_lim,
-either_lim, either3_lim, s2_ne, s2_sq. -/
+either_lim, either3_lim, s2_sq. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
