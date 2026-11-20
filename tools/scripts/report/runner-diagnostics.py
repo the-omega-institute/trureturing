@@ -118,6 +118,51 @@ def memory_sample(directory):
     return result
 
 
+def report_sample(directory, started_ns):
+    # The process table provides ancestry even when Lake starts a new process group.
+    # Read only executable names and counters for descendants of this wrapper.
+    ps = subprocess.run(["ps", "-eo", "pid=,ppid=,rss=,cputimes=,comm="],
+                        capture_output=True, text=True, timeout=3, check=True)
+    children = {}
+    for line in ps.stdout.splitlines():
+        pid, parent, rss, cpu, name = line.split(None, 4)
+        children.setdefault(int(parent), []).append((int(pid), int(rss), int(cpu), name))
+    descendants = []
+    queue = [os.getpid()]
+    seen = set(queue)
+    while queue:
+        for pid, rss, cpu, name in children.get(queue.pop(), []):
+            if pid in seen:
+                continue
+            seen.add(pid)
+            descendants.append((rss, pid, cpu, name))
+            queue.append(pid)
+    processes = [dict(pid=pid, name=name, rss_kb=rss, cpu_seconds=cpu)
+                 for rss, pid, cpu, name in sorted(descendants, reverse=True)[:4]]
+    sample = dict(processes=processes, available_cpus=len(os.sched_getaffinity(0)))
+    if directory is not None:
+        try:
+            sample["cgroup_cpu_usec"] = int(dict(line.split() for line in
+                (directory / "cpu.stat").read_text().splitlines())["usage_usec"])
+        except (OSError, KeyError, ValueError):
+            pass
+    report = os.environ.get("REPORT", ".lake/build/stratalint/raw-lean-report.json")
+    phases = Path(report + ".logs") / "native-phases.jsonl"
+    try:
+        with phases.open("rb") as stream:
+            stat = os.fstat(stream.fileno())
+            if stat.st_mtime_ns >= started_ns:
+                stream.seek(max(0, stat.st_size - 4096))
+                lines = stream.read(4096).split(b"\n")
+                if len(lines) >= 2:
+                    row = json.loads(lines[-2])
+                    sample["native_phase"] = {key: row[key][:256] for key in
+                        ("phase", "boundary", "module", "operation") if isinstance(row.get(key), str)}
+    except (OSError, ValueError, AttributeError):
+        pass
+    return sample
+
+
 def own_group(process, record, number):
     # Both children are created with start_new_session=True. Never infer a group
     # from an unrelated or already-exited leader, nor signal the Worker ancestor.
@@ -166,7 +211,9 @@ def stop_privileged_tracer(pid, starttime, number):
 
 
 class Observer:
-    def __init__(self):
+    def __init__(self, report_resources=False):
+        self.report_resources = report_resources
+        self.started_ns = time.time_ns()
         self.stop = threading.Event()
         self.attached = threading.Event()
         self.sampler = self.reader = self.tracer = self.tracer_identity = None
@@ -176,6 +223,7 @@ class Observer:
     def sample(self):
         source = self.worker or identity(os.getpid())
         directory = cgroup_directory(source["pid"]) if source else None
+        next_sample = 0.0
         try:
             while True:
                 if source is None or not same_process(source):
@@ -184,6 +232,12 @@ class Observer:
                 emit("memory", source=source, scope="worker" if self.worker else "wrapper-only",
                      cgroup_path=str(directory) if directory else None,
                      **memory_sample(directory))
+                if self.report_resources and time.monotonic() >= next_sample:
+                    next_sample = time.monotonic() + 30
+                    try:
+                        emit("report", **report_sample(directory, self.started_ns))
+                    except (OSError, ValueError, subprocess.SubprocessError) as error:
+                        emit("unavailable", reason="report-sample", error_type=type(error).__name__)
                 if self.stop.wait(2):
                     break
         except Exception as error:
@@ -253,6 +307,8 @@ class Observer:
         self.worker = worker_ancestor()
         self.sampler = threading.Thread(target=self.sample, daemon=True)
         self.sampler.start()
+        if self.report_resources:
+            return
         worker = self.worker
         if worker is None:
             emit("unavailable", reason="worker-ancestor-not-found")
@@ -275,8 +331,8 @@ class Observer:
         emit("observers_joined", sampler_alive=self.sampler.is_alive() if self.sampler else False)
 
 
-def observed(command):
-    observer = Observer()
+def observed(command, report_resources=False):
+    observer = Observer(report_resources)
     child = child_identity = None
     interrupted = []
 
@@ -316,6 +372,9 @@ def main():
             return 64
         print(json.dumps(stop_privileged_tracer(*map(int, command[1:]))), flush=True)
         return 0
+    report_resources = command[:1] == ["--report-resources"]
+    if report_resources:
+        command.pop(0)
     if command[:1] == ["--"]:
         command.pop(0)
     if not command:
@@ -325,7 +384,7 @@ def main():
     if sys.platform != "linux":
         emit("unavailable", reason="linux-only")
         os.execvp(command[0], command)
-    return observed(command)
+    return observed(command, report_resources)
 
 
 if __name__ == "__main__":

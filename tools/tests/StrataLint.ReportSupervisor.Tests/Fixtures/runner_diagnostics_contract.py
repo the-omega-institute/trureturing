@@ -181,6 +181,36 @@ class RunnerDiagnosticsTests(unittest.TestCase):
         self.assertEqual(3.75, sample["memory.pressure"]["some"]["avg300"])
         self.assertEqual(5, sample["memory.pressure"]["full"]["total"])
 
+    def test_report_sample_uses_own_descendants_and_fresh_native_phase(self):
+        module = load()
+        report = self.directory / "report.json"
+        phases = Path(str(report) + ".logs") / "native-phases.jsonl"
+        phases.parent.mkdir()
+        phases.write_text('{"phase":"prepare","boundary":"start"}\n{"phase":"partial')
+        (self.directory / "cpu.stat").write_text("usage_usec 123\n")
+        table = "1 0 9000 99 init\n200 1 200 1 python3\n201 200 3000 2 lake\n202 201 990 10 lean\n"
+        with mock.patch.object(module.subprocess, "run",
+                               return_value=subprocess.CompletedProcess([], 0, table)), \
+                mock.patch.object(module.os, "getpid", return_value=200), \
+                mock.patch.object(module.os, "sched_getaffinity", return_value={0, 1, 2, 3}, create=True), \
+                mock.patch.dict(os.environ, REPORT=str(report)):
+            sample = module.report_sample(self.directory, 0)
+            stale = module.report_sample(self.directory, phases.stat().st_mtime_ns + 1)
+        self.assertEqual(4, sample["available_cpus"])
+        self.assertEqual(123, sample["cgroup_cpu_usec"])
+        self.assertEqual([201, 202], [row["pid"] for row in sample["processes"]])
+        self.assertEqual({"phase": "prepare", "boundary": "start"}, sample["native_phase"])
+        self.assertNotIn("native_phase", stale)
+
+    def test_report_resources_only_never_attaches_to_worker(self):
+        module = load()
+        observer = module.Observer(report_resources=True)
+        with mock.patch.object(module, "worker_ancestor", return_value=dict(pid=42)), \
+                mock.patch.object(observer, "sample"), mock.patch.object(observer, "start_trace") as trace:
+            observer.start()
+            observer.sampler.join()
+            trace.assert_not_called()
+
     def test_dispatch_adds_diagnostics_only_for_literal_true(self):
         sys.path.insert(0, str(REPO / "tools/scripts/worktree"))
         self.addCleanup(lambda: sys.path.remove(str(REPO / "tools/scripts/worktree")))
