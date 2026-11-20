@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LeaflessDynamics;
 
 internal sealed class FiniteMultigraphExactDynamicsDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S1/Dynamics/Shadowing/FiniteMultigraphExactDynamics.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteMultigraphExactDynamics.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact positive expansivity on finite multigraph realizations",
