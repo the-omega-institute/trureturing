@@ -102,12 +102,16 @@ private theorem integral_derivative (k : ℕ) {s : ℂ} (hs : 1 < s.re) :
 
 /-- Every complex derivative is an absolutely convergent signed logarithmic
 moment of the complete Mangoldt remainder on the full initial half-plane. -/
-theorem iterated_derivative_moment (k : ℕ) {s : ℂ} (hs : 1 < s.re) :
+theorem iterated_derivative_moment :
+    let Φ := CompleteMangoldtLaurent.transform
+    ∀ k : ℕ, ∀ {s : ℂ}, 1 < s.re →
     IntegrableOn (fun u : ℝ => (-(u : ℂ)) ^ k *
       (Complex.exp (-s * u) * (U (Real.exp u) : ℂ))) (Ioi 0) ∧
-    iteratedDeriv k CompleteMangoldtLaurent.transform s =
+    iteratedDeriv k Φ s =
       ∫ u : ℝ in Ioi 0, (-(u : ℂ)) ^ k *
         (Complex.exp (-s * u) * (U (Real.exp u) : ℂ)) := by
+  dsimp only
+  intro k s hs
   refine ⟨kernel_integrable k hs, ?_⟩
   change iteratedDeriv k CompleteMangoldtLaurent.transform s = ∫ u : ℝ in Ioi 0, kernel k s u
   induction k generalizing s with
