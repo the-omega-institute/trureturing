@@ -50,7 +50,7 @@ private instance (k : ℕ) : DecidablePred (fun ij : Fin 12 × Fin 12 =>
     ij.2.val < k ∧ ij.1.val < height ij.2) := fun _ => inferInstanceAs (Decidable (_ ∧ _))
 
 private def prefixProjection {F : Type*} [Field F] (k : ℕ) :
-    Mat F →ₗ[F] (PrefixEntries k → F) where
+    Matrix (Fin 12) (Fin 12) F →ₗ[F] (PrefixEntries k → F) where
   toFun M ij := M ij.val.1 ij.val.2
   map_add' _ _ := rfl
   map_smul' _ _ := rfl

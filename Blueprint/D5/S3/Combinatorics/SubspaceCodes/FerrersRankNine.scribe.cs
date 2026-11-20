@@ -8,27 +8,44 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SubspaceCodes;
 internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
 {
     private const string Gid = "D5/S3/Combinatorics/SubspaceCodes/FerrersRankNine";
+    private const string Paper = "https://arxiv.org/pdf/2611.19070v1";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/FiniteGeometry/jinningxuduan2026ferrers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(Gid, "An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram."),
         H("An optimal rank-nine Ferrers code"), Blocks(
-            Node("matrix-space", "Mat", "Ambient matrices", DescribeRole.Definition,
-                "Rows and columns of the matrices over F are both indexed by Fin 12."),
             Node("height", "height", "Column heights", DescribeRole.Definition,
-                "A zero-based column j has height 6 for j < 3, height 9 for 3 ≤ j < 6, and height 12 for 6 ≤ j."),
+                HeightDefinition(), AssessedProvenance.FromLiterature(Source),
+                Paragraph(Text("Notation 2.10 and Example 3.5 specify the block size three and the height profile. "
+                    + "The same diagram is named in Section 4, Problem 1, p. 17. " + Paper))),
             Node("supported", "Supported", "Ferrers support", DescribeRole.Definition,
-                "Every matrix in the code vanishes in each column at row indices at least that column's height."),
+                SupportDefinition(), AssessedProvenance.FromLiterature(Source),
+                Paragraph(Text("Definition 2.1 top-aligns the columns and defines matrix support by the "
+                    + "diagram’s dots. Here the row indices are zero-based. " + Paper))),
             Node("problem-one-rank-nine-claim", "Problem1RankNine",
                 "The example's claim", DescribeRole.Definition,
-                "For each finite field of odd order greater than three, the fixed diagram admits a supported code of dimension 27 with nonzero ranks at least nine and a nonzero matrix of rank nine. The same dimension is an upper bound for all supported codes with nonzero ranks at least nine."),
+                Equivalent(F.Id("Problem1RankNine"), Statement()), AssessedProvenance.FromLiterature(Source),
+                Paragraph(Text("Section 4, Problem 1, p. 17, arXiv v1. " + Paper)),
+                Paragraph(Text("“For example, does there exist an optimal Ferrers diagram rank-metric code for "),
+                    Math(In(Equal(MathcalDiagram(), BlockDiagram()))), Text(" and "),
+                    Math(In(Equal(F.Id("d"), Num(9)))), Text(" when "),
+                    Math(In(Rel(F.Id("q"), FormulaRelationOperator.GreaterThan, Num(3)))),
+                    Text(" is an odd prime power?”"))),
             Node("dimension-and-rank-bound", "SupportedDimension27WithRankLowerBound",
                 "Dimension and minimum rank condition", DescribeRole.Definition,
-                "Every finite field of odd order greater than three admits a supported code of dimension 27 whose nonzero matrices have rank at least nine."),
+                Equivalent(F.Id("SupportedDimension27WithRankLowerBound"), ExistenceStatement()),
+                AssessedProvenance.FromRepo(Source),
+                Paragraph(Text("This condition supplies the code used in the projection argument."))),
             Node("projection-equivalence", "problem1RankNine_iff_exists_supported_dim27",
                 "The two column projections", DescribeRole.Theorem,
-                "The claim is equivalent to the dimension and minimum rank condition. The first four columns have 27 allowed entries. A matrix in their projection kernel has rank at most eight, so projection onto those entries bounds the dimension of any competing code by 27. The first three columns have 18 allowed entries, so their projection has a nonzero kernel on a dimension-27 code. Each nonzero matrix in that kernel has rank exactly nine."),
+                Equivalent(F.Id("Problem1RankNine"), F.Id("SupportedDimension27WithRankLowerBound")),
+                AssessedProvenance.FromRepo(Source),
+                Paragraph(Text("The first four columns have 27 allowed entries. A matrix in their projection "
+                    + "kernel has rank at most eight, so projection onto those entries bounds any competing "
+                    + "code’s dimension by 27. The first three columns have 18 allowed entries, so their "
+                    + "projection has a nonzero kernel on a dimension-27 code. Each nonzero matrix in that "
+                    + "kernel has rank exactly nine."))),
             Describe.Lean(DescribeId.Create("problem-one-rank-nine"),
                 DeclarationHandle.Create(Gid + ".problem1_rank_nine"),
                 H("The rank-nine example in Problem 1"),
@@ -49,10 +66,41 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
                         + "competing codes. This is the fixed example from Section 4, Problem 1."))),
                 DescribeRole.Theorem))));
 
-    private static DocumentBlock Node(string id, string declaration, string title, DescribeRole role, string text) =>
+    private static DocumentBlock Node(string id, string declaration, string title, DescribeRole role,
+        Formula statement, AssessedProvenance provenance, params DocumentBlock[] narrative) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Gid + "." + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(text))), role);
+            H(title), StatementSource.FromAuthor(Disp(statement)), provenance, Blocks(narrative), role);
+
+    private static Formula MathcalDiagram() => Seq(Mathcal, Grp(F.Id("D")));
+    private static Formula BlockDiagram() => new Formula.Subscript(
+        Seq(OpenBracket, OpenBracket, Num(2), Comma, Num(3), Comma, Num(4), Comma, Num(4),
+            CloseBracket, CloseBracket), Num(3));
+
+    private static Formula HeightDefinition()
+    {
+        var column = F.Id("j");
+        var index = Call("val", column);
+        var height = Call("height", column);
+        return All("j", IndexType(), And(
+            ImpliesTo(LessThan(index, Num(3)), Equal(height, Num(6))),
+            And(ImpliesTo(And(LeqTo(Num(3), index), LessThan(index, Num(6))), Equal(height, Num(9))),
+                ImpliesTo(LeqTo(Num(6), index), Equal(height, Num(12))))));
+    }
+
+    private static Formula SupportDefinition()
+    {
+        var code = F.Id("C");
+        return All("F", F.Id("Type"), Seq(OpenBracket, Call("Field", F.Id("F")), CloseBracket, Sp,
+            All("C", CodeType(), Equivalent(Call("Supported", code), Supported(code)))));
+    }
+
+    private static Formula ExistenceStatement()
+    {
+        var field = F.Id("F");
+        var code = F.Id("C");
+        return OverFieldOrders(Some("C", CodeType(), And(Supported(code),
+            And(Equal(Call("finrank", field, code), Num(27)), RankLowerBound(code)))));
+    }
 
     internal static Formula Statement()
     {
@@ -60,7 +108,6 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
         var code = F.Id("C");
         var competitor = F.Id("D");
         var word = F.Id("M");
-        var order = Call("card", field);
 
         var distanceAttained = Some("M", MatrixType(),
             And(Member(word, code), And(NotEqual(word, Num(0)), Equal(Call("rank", word), Num(9)))));
@@ -71,12 +118,18 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
             ImpliesTo(Supported(competitor), ImpliesTo(RankLowerBound(competitor),
                 LeqTo(Call("finrank", field, competitor), Num(27)))));
 
+        return OverFieldOrders(And(existence, optimality));
+    }
+
+    private static Formula OverFieldOrders(Formula body)
+    {
+        var field = F.Id("F");
+        var order = Call("card", field);
         return All("F", F.Id("Type"), Seq(
             OpenBracket, Call("Field", field), CloseBracket, Sp,
             OpenBracket, Call("Fintype", field), CloseBracket, Comma, Sp,
             ImpliesTo(Call("Odd", order),
-                ImpliesTo(Rel(Num(3), FormulaRelationOperator.LessThan, order),
-                    And(existence, optimality)))));
+                ImpliesTo(LessThan(Num(3), order), body))));
     }
 
     private static Formula Supported(Formula code)
@@ -106,10 +159,13 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
     private static Formula Member(Formula a, Formula b) => Rel(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula LessThan(Formula a, Formula b) => Rel(a, FormulaRelationOperator.LessThan, b);
     private static Formula LeqTo(Formula a, Formula b) => Rel(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Equivalent(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula ImpliesTo(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
 }
