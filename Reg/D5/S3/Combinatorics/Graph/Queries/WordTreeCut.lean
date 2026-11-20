@@ -20,7 +20,7 @@ private abbrev cutSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -28,7 +28,7 @@ private def prefixMembership : Realization cutSignature :=
   realize cutSignature (fun _ p word => belowChild p.1 p.2.1 p.2.2 word) (fun e => nomatch e)
 
 private def emptyMembership : Realization cutSignature :=
-  realize cutSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize cutSignature (fun _ _ _ => false) (fun e => nomatch e)
 
 private abbrev arena : Arena where
   signature := cutSignature
@@ -36,21 +36,20 @@ private abbrev arena : Arena where
     let side := R.readout () ⟨k, p, a⟩
     ∀ u v : Vertex k,
       ((boundedWordTree k).deleteEdges {s(p, ⟨p.1 ++ [a], hChild⟩)}).Reachable u v ↔
-        (side u ↔ side v)
+        (side u = true ↔ side v = true)
 
 private def parent : Vertex 1 := ⟨[], by simp⟩
 private theorem childBound : (parent.1 ++ [false]).length ≤ 1 := by decide
 private def child : Vertex 1 := ⟨parent.1 ++ [false], childBound⟩
 
-private theorem parent_outside : ¬ belowChild 1 parent false parent := by
-  simp [belowChild, parent]
+private theorem parent_outside : belowChild 1 parent false parent ≠ true := by
+  decide
 
-private theorem child_inside : belowChild 1 parent false child :=
-  List.prefix_refl _
+private theorem child_inside : belowChild 1 parent false child = true := by decide
 
 private theorem emptyMembership_invalid : ¬ arena.Law emptyMembership := by
   intro h
-  have hFalse : (False ↔ False) := Iff.rfl
+  have hFalse : ((false : Bool) = true ↔ false = true) := Iff.rfl
   have hReach := (h 1 parent false childBound parent child).mpr hFalse
   have hSide := (bounded_reachable_after_extension_cut 1 parent false childBound parent child).mp hReach
   exact parent_outside (hSide.mpr child_inside)

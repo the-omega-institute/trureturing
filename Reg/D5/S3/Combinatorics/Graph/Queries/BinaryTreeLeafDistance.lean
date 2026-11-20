@@ -97,3 +97,79 @@ def registration :
 
 end
 end Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+
+namespace Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+
+open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+private abbrev extensionSignature : Signature where
+  Params := Bool
+  State _ := List Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def appendChild : Realization extensionSignature :=
+  realize extensionSignature (fun _ b p => p ++ [b]) (fun e => nomatch e)
+
+private def stayAtParent : Realization extensionSignature :=
+  realize extensionSignature (fun _ _ p => p) (fun e => nomatch e)
+
+private abbrev extensionArena : Arena where
+  signature := extensionSignature
+  Law R := ∀ (p : List Bool) (b : Bool), wordTree.Adj p (R.readout () b p)
+
+private theorem stayAtParent_invalid : ¬ extensionArena.Law stayAtParent := by
+  intro h
+  exact (wordTree.loopless.irrefl []) (h [] false)
+
+private theorem child_varies :
+    appendChild.readout () false [] ≠ appendChild.readout () false [false] := by decide
+
+noncomputable def childAdjEvidence : Registration extensionArena (type_of% (@child_adj)) where
+  actual := appendChild
+  bridge := Iff.rfl
+  variation := ⟨@child_adj, stayAtParent, stayAtParent_invalid⟩
+  sensitivity := ⟨fun i => ⟨stayAtParent,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, stayAtParent_invalid⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨false, [], [false], child_varies⟩
+
+noncomputable def childAdjRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@child_adj) (Realization extensionSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance.child_adj
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance.childAdjEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨extensionArena⟩
+  objectArena := .source ⟨extensionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source extensionArena ⟨childAdjEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize extensionSignature (fun _ b p => p ++ [b]) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance

@@ -122,8 +122,8 @@ private theorem induce_delete_extension (k : ℕ) (p : CutVertices k) (a : Bool)
     exact congrArg (Sym2.map Subtype.val) h
 
 /-- The descendants of the selected child, including the child itself. -/
-def belowChild (k : ℕ) (p : CutVertices k) (bit : Bool) (word : CutVertices k) : Prop :=
-  p.1 ++ [bit] <+: word.1
+def belowChild (k : ℕ) (p : CutVertices k) (bit : Bool) (word : CutVertices k) : Bool :=
+  decide (p.1 ++ [bit] <+: word.1)
 
 /-- Deleting the parent edge of a child separates its descendants from the other vertices. -/
 theorem bounded_reachable_after_extension_cut (k : ℕ) (p : CutVertices k) (a : Bool)
@@ -131,10 +131,9 @@ theorem bounded_reachable_after_extension_cut (k : ℕ) (p : CutVertices k) (a :
     let side := belowChild k p a
     ∀ u v : CutVertices k,
       ((boundedWordTree k).deleteEdges {s(p, ⟨p.1 ++ [a], hChild⟩)}).Reachable u v ↔
-        (side u ↔ side v) := by
+        (side u = true ↔ side v = true) := by
   intro side u v
-  change ((boundedWordTree k).deleteEdges {s(p, ⟨p.1 ++ [a], hChild⟩)}).Reachable u v ↔
-    (p.1 ++ [a] <+: u.1 ↔ p.1 ++ [a] <+: v.1)
+  simp only [side, belowChild, decide_eq_true_eq]
   rw [← induce_delete_extension k p a hChild]
   constructor
   · rintro ⟨walk⟩
