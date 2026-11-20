@@ -33,6 +33,65 @@ internal sealed class ZelinskyZhangKLPrimitiveDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("An integer n is deficient when its sum of "
                     + "positive divisors is strictly smaller than 2n."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("prime-increment-bounds"),
+                DeclarationHandle.Create(Prefix + "f_bounds"),
+                H("Bounds for the logarithmic prime increment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every natural p at least two, "
+                    + "f(p)=p/(p+1)*log(p/(p-1)) satisfies "
+                    + "2/(3p)<=f(p)<=2/p and 0<f(p)<log(2). "
+                    + "These estimates compare finite prime-tail sums with "
+                    + "reciprocal-prime sums."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-prime-tail-mass"),
+                DeclarationHandle.Create(Prefix + "tail_mass"),
+                H("Arbitrarily large finite prime-tail mass"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every pair of natural numbers Q and k, "
+                    + "there is a finite set of primes exceeding Q whose f sum "
+                    + "is at least k/3. In particular the increment upper bound "
+                    + "converts the choice k=6 into reciprocal mass at least one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("divisor-deficiency"),
+                DeclarationHandle.Create(Prefix + "deficient_of_dvd"),
+                H("Positive divisors preserve deficiency"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("If d and n are positive natural numbers, "
+                    + "d divides n, and n is deficient, then d is deficient. "
+                    + "This follows from monotonicity of sigma(n)/n under "
+                    + "divisibility and transfers the bounds on products "
+                    + "with one prime removed to all proper divisors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rough-deficient-core"),
+                DeclarationHandle.Create(Prefix + "rough_deficient_core"),
+                H("Exponential threshold control at quadratic logarithmic cost"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text("Fix any natural cutoff B. There are constants K>0 "
+                        + "and T such that for every real t at least T there is a "
+                        + "finite set S of primes exceeding B. Put "
+                        + "h=product over p in S of (1+1/p) and a=h/(2-h). Then "
+                        + "h<2, exp(t)<=a<=3*exp(t), every p in S is less than 2a, "
+                        + "and the sum of log(p) over S is at most K*t^2. "
+                        + "Distinctness of the prime factors makes their product "
+                        + "squarefree, and its abundancy ratio is h.")),
+                    Paragraph(Text("Divergence of the reciprocal-prime sum supplies "
+                        + "a finite prime product with h at least 2. A minimal "
+                        + "crossing set, with its largest prime removed, gives "
+                        + "a deficient starting core whose threshold parameter "
+                        + "exceeds its prime factors.")),
+                    Paragraph(Text("For a large current parameter a, choose a "
+                        + "prime p in (2a,3a]. Adjoining p "
+                        + "keeps the core deficient and replaces a by "
+                        + "a*(p+1)/(p-a), which lies between 3a/2 and 3a. "
+                        + "All old and new prime factors remain below twice the "
+                        + "new parameter. The first iteration to reach exp(t) "
+                        + "therefore has parameter at most 3*exp(t). The number "
+                        + "of iterations is linear in t, and each added prime "
+                        + "has logarithm bounded linearly in that iteration's "
+                        + "index, giving the quadratic total cost.")),
+                    Paragraph(Text("These deficient cores supply the initial factors "
+                        + "for the lower bound on primitive non-deficient integers."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Infinitely many deficient KL-primitive integers"),
