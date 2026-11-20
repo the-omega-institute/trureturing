@@ -12,7 +12,10 @@ public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Analysis.Complex.SqrtDeriv
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Complex.RealDeriv
+import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import D5.S3.Analytic.RadialVolterra
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
@@ -575,6 +578,417 @@ theorem radialSystem_K (m : ℕ) {u : ℂ} (hu : 0 < u.re) {r : ℝ} (hr : 0 < r
       2 * (order m : ℂ) * radialP u r * G r + radialP u r * psi w * F r
     rw [← hp]
     ring
+
+private theorem ray_norm {u : ℂ} (hu : ‖u‖ = 1) {r : ℝ} (hr : 0 ≤ r) :
+    ‖(r : ℂ) * u‖ = r := by
+  rw [norm_mul, hu, mul_one, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hr]
+
+/-- The phase root on a unit ray makes at most the angle of the ray with the positive axis. -/
+theorem radial_S_re_ge {u : ℂ} (hu : ‖u‖ = 1) (hure : 0 < u.re) {r : ℝ} (hr : 0 < r) :
+    u.re * ‖S ((r : ℂ) * u)‖ ≤ (S ((r : ℂ) * u)).re := by
+  let w := (r : ℂ) * u
+  let A := 1 + w ^ 2
+  let c := (u ^ 2).re
+  have hS : 0 < (S w).re := S_re_pos (ray_re_pos hure hr)
+  have hc : 2 * u.re ^ 2 = 1 + c := by
+    have hn : u.re ^ 2 + u.im ^ 2 = 1 := by
+      rw [pow_two, pow_two, ← Complex.normSq_apply, Complex.normSq_eq_norm_sq, hu, one_pow]
+    dsimp [c]
+    simp only [pow_two, Complex.mul_re]
+    nlinarith
+  have hwnorm : ‖w ^ 2‖ = r ^ 2 := by rw [norm_pow, show ‖w‖ = r from ray_norm hu hr.le]
+  have hAle : ‖A‖ ≤ 1 + r ^ 2 := by
+    exact (norm_add_le (1 : ℂ) (w ^ 2)).trans_eq (by rw [norm_one, hwnorm])
+  have hAge : r ^ 2 - 1 ≤ ‖A‖ := by
+    have h := norm_sub_norm_le (w ^ 2) (-1 : ℂ)
+    rw [hwnorm, norm_neg, norm_one, sub_neg_eq_add, add_comm] at h
+    exact h
+  have hAre : A.re = 1 + r ^ 2 * c := by
+    dsimp [A, w, c]
+    rw [mul_pow]
+    simp [← Complex.ofReal_pow, Complex.mul_re]
+  have hA : c * ‖A‖ ≤ A.re := by
+    rw [hAre]
+    by_cases h : 0 ≤ c
+    · have hc1 : c ≤ 1 := by
+        exact (Complex.re_le_norm _).trans_eq (by rw [norm_pow, hu, one_pow])
+      calc
+        _ ≤ c * (1 + r ^ 2) := mul_le_mul_of_nonneg_left hAle h
+        _ ≤ _ := by linarith
+    · have hc1 : -1 ≤ c := by
+        have hbound := Complex.abs_re_le_norm (u ^ 2)
+        rw [norm_pow, hu, one_pow] at hbound
+        exact (abs_le.mp hbound).1
+      calc
+        _ ≤ c * (r ^ 2 - 1) := mul_le_mul_of_nonpos_left hAge (le_of_not_ge h)
+        _ ≤ _ := by linarith
+  have hSre : 2 * (S w).re ^ 2 = ‖A‖ + A.re := by
+    have hn : ‖A‖ = ‖S w‖ ^ 2 := by rw [show A = S w ^ 2 from (S_sq w).symm, norm_pow]
+    rw [hn, Complex.sq_norm, Complex.normSq_apply, show A.re = ((S w) ^ 2).re from
+      congrArg Complex.re (S_sq w).symm]
+    simp only [pow_two, Complex.mul_re]
+    ring
+  have hSnorm : ‖S w‖ ^ 2 = ‖A‖ := by
+    rw [show A = S w ^ 2 from (S_sq w).symm, norm_pow]
+  change u.re * ‖S w‖ ≤ (S w).re
+  apply (sq_le_sq₀ (mul_nonneg hure.le (norm_nonneg _)) hS.le).mp
+  rw [mul_pow, hSnorm]
+  nlinarith only [hSre, hA, congrArg (fun x => x * ‖A‖) hc]
+
+private theorem radial_A_norm_ge {κ : ℝ} {u : ℂ} (hu : ‖u‖ = 1) (hsector : κ ≤ u.re)
+    (r : ℝ) : κ * (1 + r ^ 2) ≤ ‖1 + ((r : ℂ) * u) ^ 2‖ := by
+  let A := 1 + ((r : ℂ) * u) ^ 2
+  have hunit : u * (starRingEnd ℂ) u = 1 := by
+    rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hu]
+    simp
+  have heq : A * (starRingEnd ℂ) u = (starRingEnd ℂ) u + (r : ℂ) ^ 2 * u := by
+    dsimp only [A]
+    rw [add_mul, mul_pow]
+    linear_combination ((r : ℂ) ^ 2 * u) * hunit
+  have hre : (A * (starRingEnd ℂ) u).re = (1 + r ^ 2) * u.re := by
+    rw [heq]
+    simp [← Complex.ofReal_pow, Complex.add_re, Complex.mul_re, add_mul]
+  have hbound := Complex.re_le_norm (A * (starRingEnd ℂ) u)
+  rw [hre, norm_mul, Complex.norm_conj, hu, mul_one] at hbound
+  exact (by
+    rw [mul_comm κ]
+    exact (mul_le_mul_of_nonneg_left hsector (by positivity)).trans hbound)
+
+/-- An integrable real majorant for the radial potential on sectors of positive aperture. -/
+noncomputable def sectorMajorant (κ r : ℝ) : ℝ :=
+  r * (4 + r ^ 2) / (4 * ((Real.sqrt κ) ^ 5 * (Real.sqrt (1 + r ^ 2)) ^ 5))
+
+/-- Pointwise majorization of the complex radial potential on the closed sector. -/
+theorem norm_radialQ_le {κ : ℝ} (hκ : 0 < κ) {u : ℂ} (hu : ‖u‖ = 1)
+    (hsector : κ ≤ u.re) {r : ℝ} (hr : 0 < r) :
+    ‖radialQ u r‖ ≤ sectorMajorant κ r := by
+  let w := (r : ℂ) * u
+  let s := ‖S w‖
+  let d := Real.sqrt κ * Real.sqrt (1 + r ^ 2)
+  have hd : 0 < d := by dsimp [d]; positivity
+  have hs : 0 < s := norm_pos_iff.mpr (arg_ne_zero (S_re_pos (ray_re_pos (hκ.trans_le hsector) hr)))
+  have hsq : s ^ 2 = ‖1 + w ^ 2‖ := by rw [← S_sq w, norm_pow]
+  have hd_le : d ≤ s := by
+    apply (sq_le_sq₀ hd.le hs.le).mp
+    dsimp only [d]
+    rw [mul_pow, Real.sq_sqrt hκ.le, Real.sq_sqrt (by positivity), hsq]
+    exact radial_A_norm_ge hu hsector r
+  have h4 : ‖(4 : ℂ) - w ^ 2‖ ≤ 4 + r ^ 2 := by
+    have h := norm_sub_le (4 : ℂ) (w ^ 2)
+    rw [norm_pow, show ‖w‖ = r from ray_norm hu hr.le] at h
+    norm_num at h ⊢
+    exact h
+  have hq : ‖radialQ u r‖ = r * ‖(4 : ℂ) - w ^ 2‖ / (4 * s ^ 5) := by
+    change ‖(S w / (r : ℂ)) * (w ^ 2 * (4 - w ^ 2) / (4 * (1 + w ^ 2) ^ 3))‖ = _
+    rw [norm_mul, norm_div, norm_div, norm_mul, norm_mul, norm_pow, norm_pow, ← hsq,
+      ray_norm hu hr.le, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr]
+    have hfour : ‖(4 : ℂ)‖ = (4 : ℝ) := by norm_num
+    rw [hfour]
+    field_simp [hr.ne', hs.ne']
+    change s * ‖(4 : ℂ) - w ^ 2‖ = ‖(4 : ℂ) - w ^ 2‖ * s
+    exact mul_comm _ _
+  have hmajor : sectorMajorant κ r = r * (4 + r ^ 2) / (4 * d ^ 5) := by
+    rw [sectorMajorant, show d ^ 5 =
+      (Real.sqrt κ) ^ 5 * (Real.sqrt (1 + r ^ 2)) ^ 5 from mul_pow ..]
+  rw [hq, hmajor]
+  exact div_le_div_of_nonneg_left (by positivity) (by positivity)
+      (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hd.le hd_le 5) (by norm_num))
+    |>.trans' (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left h4 hr.le)
+      (by positivity))
+
+private theorem continuous_sectorMajorant {κ : ℝ} (hκ : 0 < κ) :
+    Continuous (sectorMajorant κ) := by
+  unfold sectorMajorant
+  apply Continuous.div
+  · fun_prop
+  · fun_prop
+  · intro r
+    positivity
+
+/-- The full positive radial interval gives mass at most (1/(2\kappa^{5/2})). -/
+theorem sectorMajorant_mass {κ : ℝ} (hκ : 0 < κ) {a b : ℝ} :
+    (∫ r in a..b, sectorMajorant κ r) ≤ 1 / (2 * (Real.sqrt κ) ^ 5) := by
+  let B (r : ℝ) := Real.sqrt (1 + r ^ 2)
+  let c := 4 * (Real.sqrt κ) ^ 5
+  let T (r : ℝ) := ((B r)⁻¹ + ((B r)⁻¹) ^ 3) / c
+  have hc : 0 < c := by dsimp [c]; positivity
+  have hB (r : ℝ) : 0 < B r := by dsimp [B]; positivity
+  have hB2 (r : ℝ) : B r ^ 2 = 1 + r ^ 2 := Real.sq_sqrt (by positivity)
+  have hd (r : ℝ) : HasDerivAt (fun t => -T t) (sectorMajorant κ r) r := by
+    have harg : HasDerivAt (fun t : ℝ => 1 + t ^ 2) (2 * r) r := by
+      simpa using ((hasDerivAt_id r).pow 2).const_add 1
+    have hroot : HasDerivAt B (r / B r) r := by
+      have h := (Real.hasDerivAt_sqrt (show (1 + r ^ 2 : ℝ) ≠ 0 by positivity)).comp r harg
+      refine h.congr_deriv ?_
+      change 1 / (2 * B r) * (2 * r) = r / B r
+      ring
+    have hinv := hroot.inv (hB r).ne'
+    have h := ((hinv.add (hinv.pow 3)).div_const c).neg
+    refine h.congr_deriv ?_
+    simp only [Nat.reduceSub, Nat.cast_ofNat, Pi.inv_apply, sectorMajorant]
+    change -((-(r / B r) / B r ^ 2 + 3 * (B r)⁻¹ ^ 2 * (-(r / B r) / B r ^ 2)) / c) =
+      r * (4 + r ^ 2) / (4 * ((Real.sqrt κ) ^ 5 * B r ^ 5))
+    rw [show (4 : ℝ) * ((Real.sqrt κ) ^ 5 * B r ^ 5) = c * B r ^ 5 by dsimp [c]; ring]
+    field_simp [(hB r).ne', hc.ne']
+    linear_combination r * hB2 r
+  have hint : IntervalIntegrable (sectorMajorant κ) MeasureTheory.volume a b :=
+    (continuous_sectorMajorant hκ).intervalIntegrable a b
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun r _ => hd r) hint]
+  have hTb : 0 ≤ T b := by dsimp [T]; positivity
+  have hBa : 1 ≤ B a := by
+    have h : 1 ≤ 1 + a ^ 2 := by nlinarith [sq_nonneg a]
+    simpa only [B, Real.sqrt_one] using Real.sqrt_le_sqrt h
+  have hi : (B a)⁻¹ ≤ 1 := inv_le_one_of_one_le₀ hBa
+  have hi3 : ((B a)⁻¹) ^ 3 ≤ 1 := pow_le_one₀ (by positivity) hi
+  calc
+    -T b - -T a ≤ T a := by linarith
+    _ ≤ 2 / c := div_le_div_of_nonneg_right (by linarith) hc.le
+    _ = 1 / (2 * (Real.sqrt κ) ^ 5) := by dsimp [c]; ring
+
+private theorem S_zero : S 0 = 1 := by simp [S, Complex.sqrt]
+
+private theorem div_re_pos_of_im_mul_nonneg {x y : ℂ} (hx : 0 < x.re) (hy : 0 < y.re)
+    (him : 0 ≤ x.im * y.im) : 0 < (x / y).re := by
+  rw [Complex.div_re, ← add_div]
+  exact div_pos (add_pos_of_pos_of_nonneg (mul_pos hx hy) him)
+    (Complex.normSq_pos.mpr (arg_ne_zero hy))
+
+private theorem S_im_mul_nonneg {w : ℂ} (hw : 0 < w.re) : 0 ≤ (S w).im * w.im := by
+  have hS := S_re_pos hw
+  have heq := congrArg Complex.im (S_sq w)
+  simp only [pow_two, Complex.add_im, Complex.one_im, zero_add, Complex.mul_im] at heq
+  have him : (S w).im * w.im = (w.re / (S w).re) * w.im ^ 2 := by
+    field_simp [hS.ne']
+    linear_combination (w.im / 2) * heq
+  rw [him]
+  positivity
+
+private theorem S_div_eq_inv {w : ℂ} (hw : 0 < w.re) : S w / w = S w⁻¹ := by
+  have hw0 := arg_ne_zero hw
+  have hpos := div_re_pos_of_im_mul_nonneg (S_re_pos hw) hw (S_im_mul_nonneg hw)
+  have hs : (S w / w) ^ 2 = 1 + (w⁻¹) ^ 2 := by
+    rw [div_pow, S_sq w]
+    field_simp [hw0]
+    exact add_comm _ _
+  change S w / w = Complex.sqrt (1 + (w⁻¹) ^ 2)
+  rw [← hs]
+  exact (Complex.sq_cpow_two_inv hpos).symm
+
+private theorem sqrtS_div_eq_inv {w : ℂ} (hw : 0 < w.re) :
+    Complex.sqrt (S w) / Complex.sqrt w = Complex.sqrt (S w⁻¹) := by
+  let a := Complex.sqrt (S w)
+  let b := Complex.sqrt w
+  have ha : 0 < a.re := sqrt_re_pos_of_mem_slitPlane
+    (Complex.mem_slitPlane_iff.mpr (Or.inl (S_re_pos hw)))
+  have hb : 0 < b.re := sqrt_re_pos_of_mem_slitPlane (Complex.mem_slitPlane_iff.mpr (Or.inl hw))
+  have hsa : a ^ 2 = S w := sqrt_sq _
+  have hsb : b ^ 2 = w := sqrt_sq _
+  have hima : (S w).im = 2 * a.re * a.im := by
+    rw [← hsa, pow_two, Complex.mul_im]
+    ring
+  have himb : w.im = 2 * b.re * b.im := by
+    rw [← hsb, pow_two, Complex.mul_im]
+    ring
+  have him := S_im_mul_nonneg hw
+  rw [hima, himb, show 2 * a.re * a.im * (2 * b.re * b.im) =
+    (4 * a.re * b.re) * (a.im * b.im) by ring] at him
+  have hab := div_re_pos_of_im_mul_nonneg ha hb
+    (nonneg_of_mul_nonneg_right him (by positivity))
+  have hsq : (a / b) ^ 2 = S w⁻¹ := by rw [div_pow, hsa, hsb, S_div_eq_inv hw]
+  change a / b = Complex.sqrt (S w⁻¹)
+  rw [← hsq]
+  exact (Complex.sq_cpow_two_inv hab).symm
+
+private theorem eta_sub_eq_inv {w : ℂ} (hw : 0 < w.re) :
+    eta w - w = w⁻¹ / (1 + S w⁻¹) - Complex.log (w⁻¹ + S w⁻¹) := by
+  have hS := S_div_eq_inv hw
+  have hw0 := arg_ne_zero hw
+  have hT : 0 < (S w⁻¹).re := by
+    rw [← hS]
+    exact div_re_pos_of_im_mul_nonneg (S_re_pos hw) hw (S_im_mul_nonneg hw)
+  have hone := arg_ne_zero (show 0 < (1 + S w⁻¹).re by
+    simpa only [Complex.add_re, Complex.one_re] using add_pos zero_lt_one hT)
+  have hdiff : S w - w = w⁻¹ / (1 + S w⁻¹) := by
+    apply (eq_div_iff hone).mpr
+    rw [← hS]
+    field_simp [hw0]
+    linear_combination S_sq w
+  have hquot : (1 + S w) / w = w⁻¹ + S w⁻¹ := by rw [add_div, one_div, hS]
+  rw [eta, ← hquot, log_div_of_re_pos (one_add_S_re_pos hw) hw, ← hdiff]
+  ring
+
+/-- The normalized amplitude in the reciprocal coordinate at the terminal endpoint. -/
+private noncomputable def terminalAmplitude (m : ℕ) (v : ℂ) : ℂ :=
+  Complex.sqrt (S v) *
+    Complex.exp ((order m : ℂ) * (v / (1 + S v) - Complex.log (v + S v))) *
+    aeval (v / (order m : ℂ)) (carrier m)
+
+private theorem F_K_eq_terminalAmplitude (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    F_K m w = terminalAmplitude m w⁻¹ := by
+  rw [F_K_eq_carrier m hw, terminalAmplitude, sqrtS_div_eq_inv hw, eta_sub_eq_inv hw,
+    mul_inv_rev]
+  simp only [div_eq_mul_inv]
+
+private theorem terminalAmplitude_zero (m : ℕ) : terminalAmplitude m 0 = 1 := by
+  simp [terminalAmplitude, S_zero, Complex.sqrt, aeval_def, eval₂_at_zero,
+    HalfIntegerBesselPolynomial.carrier_coeff_zero]
+
+private theorem terminalAmplitude_analyticAt (m : ℕ) :
+    AnalyticAt ℂ (terminalAmplitude m) 0 := by
+  have hv : AnalyticAt ℂ (fun v : ℂ => v) 0 := analyticAt_id
+  have hs : AnalyticAt ℂ S 0 := by
+    unfold S Complex.sqrt
+    apply (analyticAt_const.add (hv.pow 2)).cpow analyticAt_const
+    simp
+  have hsqrt : AnalyticAt ℂ (fun v => Complex.sqrt (S v)) 0 := by
+    unfold Complex.sqrt
+    exact hs.cpow analyticAt_const (by simp [S_zero])
+  have hdiv : AnalyticAt ℂ (fun v : ℂ => v / (1 + S v)) 0 :=
+    hv.div (analyticAt_const.add hs) (by simp [S_zero])
+  have hlog : AnalyticAt ℂ (fun v : ℂ => Complex.log (v + S v)) 0 :=
+    (hv.add hs).clog (by simp [S_zero])
+  have he : AnalyticAt ℂ (fun v : ℂ =>
+      Complex.exp ((order m : ℂ) * (v / (1 + S v) - Complex.log (v + S v)))) 0 :=
+    (analyticAt_const.mul (hdiv.sub hlog)).cexp
+  have hp : AnalyticAt ℂ (fun v : ℂ => aeval (v / (order m : ℂ)) (carrier m)) 0 := by
+    have hpol (v : ℂ) :
+        aeval v (carrier m) = (Polynomial.map (algebraMap ℚ ℂ) (carrier m)).eval v :=
+      (aeval_def _ _).trans (eval_map _ _).symm
+    simp_rw [hpol]
+    have hp : Differentiable ℂ (fun v : ℂ =>
+        ((carrier m).map (algebraMap ℚ ℂ)).eval v) :=
+      fun v => (((carrier m).map (algebraMap ℚ ℂ)).hasDerivAt v).differentiableAt
+    exact (hp.analyticAt _).comp (hv.div_const (c := (order m : ℂ)))
+  exact (hsqrt.mul he).mul hp
+
+private theorem D_F_K_eq_terminalAmplitude_deriv (m : ℕ) {w : ℂ} (hw : 0 < w.re)
+    (han : AnalyticAt ℂ (terminalAmplitude m) w⁻¹) :
+    D (F_K m) w = -(w⁻¹ ^ 2 / S w⁻¹) * deriv (terminalAmplitude m) w⁻¹ := by
+  have hw0 := arg_ne_zero hw
+  have hevent : ∀ᶠ z in 𝓝 w, 0 < z.re :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hw
+  have hformula : F_K m =ᶠ[𝓝 w] (fun z => terminalAmplitude m z⁻¹) :=
+    hevent.mono fun _ hz => F_K_eq_terminalAmplitude m hz
+  have h := han.differentiableAt.hasDerivAt.comp w (hasDerivAt_inv hw0)
+  unfold D
+  rw [(h.congr_of_eventuallyEq hformula).deriv, ← S_div_eq_inv hw]
+  field_simp [hw0, arg_ne_zero (S_re_pos hw)]
+
+/-- Both terminal values for the decaying amplitude hold along each right-half-plane ray. -/
+theorem radial_K_terminal (m : ℕ) {u : ℂ} (hu : 0 < u.re) :
+    Filter.Tendsto (fun r : ℝ => F_K m ((r : ℂ) * u)) Filter.atTop (𝓝 1) ∧
+    Filter.Tendsto (fun r : ℝ => D (F_K m) ((r : ℂ) * u)) Filter.atTop (𝓝 0) := by
+  let v (r : ℝ) := ((r : ℂ) * u)⁻¹
+  have hv : Filter.Tendsto v Filter.atTop (𝓝 0) := by
+    have hr : Filter.Tendsto (fun r : ℝ => ((r⁻¹ : ℝ) : ℂ)) Filter.atTop (𝓝 0) := by
+      simpa [Function.comp_def] using Complex.continuous_ofReal.continuousAt.tendsto.comp
+        (tendsto_inv_atTop_zero : Filter.Tendsto (Inv.inv : ℝ → ℝ) Filter.atTop (𝓝 0))
+    simpa [v, mul_inv_rev, Complex.ofReal_inv] using hr.const_mul u⁻¹
+  have hright : ∀ᶠ r : ℝ in Filter.atTop, 0 < ((r : ℂ) * u).re :=
+    (Filter.eventually_gt_atTop 0).mono fun _ hr => ray_re_pos hu hr
+  have ha := terminalAmplitude_analyticAt m
+  constructor
+  · have ht := ha.continuousAt.tendsto.comp hv
+    rw [terminalAmplitude_zero] at ht
+    exact ht.congr' (hright.mono fun _ hw => (F_K_eq_terminalAmplitude m hw).symm)
+  · have hS : ContinuousAt S (0 : ℂ) := by
+      have harg : ContinuousAt (fun v : ℂ => 1 + v ^ 2) 0 := by fun_prop
+      have hroot : ContinuousAt Complex.sqrt (1 : ℂ) :=
+        Complex.continuousAt_sqrt (Or.inl (by norm_num))
+      have harg0 : (fun v : ℂ => 1 + v ^ 2) 0 = 1 := by norm_num
+      exact hroot.comp_of_eq harg harg0
+    have hfactor : Filter.Tendsto (fun v : ℂ => -(v ^ 2 / S v)) (𝓝 0) (𝓝 0) := by
+      have hf : ContinuousAt (fun v : ℂ => -(v ^ 2 / S v)) 0 :=
+        (((continuous_id.pow 2).continuousAt).div hS (by simp [S_zero])).neg
+      simpa [S_zero] using hf.tendsto
+    have ht := (hfactor.comp hv).mul (ha.deriv.continuousAt.tendsto.comp hv)
+    simp only [zero_mul] at ht
+    refine ht.congr' ?_
+    have hev := hv.eventually ha.eventually_analyticAt
+    filter_upwards [hright, hev] with r hw hlocal
+    exact (D_F_K_eq_terminalAmplitude_deriv m hw hlocal).symm
+
+/-- The sector mass bound (V_\kappa=1/(2\kappa^{5/2})). -/
+noncomputable def sectorMass (κ : ℝ) : ℝ := 1 / (2 * (Real.sqrt κ) ^ 5)
+
+/-- Uniform Volterra bounds for the decaying amplitude on the whole positive ray. -/
+theorem radial_K_bounds (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hm : sectorMass κ < order m)
+    {u : ℂ} (hu : ‖u‖ = 1) (hsector : κ ≤ u.re) {r : ℝ} (hr : 0 < r) :
+    ‖F_K m ((r : ℂ) * u)‖ ≤ order m / (order m - sectorMass κ) ∧
+    ‖F_K m ((r : ℂ) * u) - 1‖ ≤ sectorMass κ / (order m - sectorMass κ) := by
+  have hure := hκ.trans_le hsector
+  have hp : ContinuousOn (radialP u) (Set.Ioi 0) := by
+    intro t ht
+    have htpos : 0 < t := ht
+    have harg : ContinuousAt (fun x : ℝ => (x : ℂ) * u) t := by fun_prop
+    have hs : ContinuousAt (fun x : ℝ => S ((x : ℂ) * u)) t :=
+      ContinuousAt.comp' (f := fun x : ℝ => (x : ℂ) * u)
+        (hasDerivAt_S (ray_re_pos hure htpos)).continuousAt harg
+    exact (hs.div Complex.continuous_ofReal.continuousAt
+      (Complex.ofReal_ne_zero.mpr htpos.ne')).continuousWithinAt
+  have hq : ContinuousOn (radialQ u) (Set.Ioi 0) := by
+    unfold radialQ
+    refine hp.mul ?_
+    intro t ht
+    have htpos : 0 < t := ht
+    have hdenom : 4 * (1 + ((t : ℂ) * u) ^ 2) ^ 3 ≠ 0 :=
+      mul_ne_zero (by norm_num) (pow_ne_zero _
+        (Complex.slitPlane_ne_zero (one_add_sq_mem_slitPlane (ray_re_pos hure htpos))))
+    have hcont : ContinuousAt (fun x : ℝ => psi ((x : ℂ) * u)) t := by
+      unfold psi
+      exact ContinuousAt.div (by fun_prop) (by fun_prop) hdenom
+    exact hcont.continuousWithinAt
+  have hsys (s : ℝ) (hs : 0 < s) := radialSystem_K m hure hs
+  obtain ⟨hF, hG⟩ := radial_K_terminal m hure
+  apply RadialVolterra.norm_bounds (show 0 ≤ sectorMass κ by unfold sectorMass; positivity) hm
+    hp hq (fun s hs => (hsys s hs).1) (fun s hs => (hsys s hs).2.1)
+    (fun s hs => (hsys s hs).2.2.1) (fun s hs => (hsys s hs).2.2.2.le) hF hG
+    (continuous_sectorMajorant hκ).continuousOn
+    (fun s hs => by unfold sectorMajorant; positivity)
+    (fun s hs => norm_radialQ_le hκ hu hsector hs)
+    (fun _ _ _ _ => sectorMajorant_mass hκ) r hr
+
+/-- The decaying amplitude is within the reviewed sector error and the carrier is nonzero. -/
+theorem sector_K_estimate (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hm : 4 * sectorMass κ ≤ order m)
+    {w : ℂ} (hw : w ≠ 0) (hsector : κ * ‖w‖ ≤ w.re) :
+    ‖F_K m w - 1‖ ≤ 2 * sectorMass κ / order m ∧
+    2 * sectorMass κ / order m ≤ 1 / 2 ∧
+    K m ((order m : ℂ) * w) ≠ 0 := by
+  let r := ‖w‖
+  let u := w / (r : ℂ)
+  have hr := norm_pos_iff.mpr hw
+  have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hr.ne'
+  have hu : ‖u‖ = 1 := by
+    change ‖w / (r : ℂ)‖ = 1
+    rw [norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr, div_self hr.ne']
+  have hre : u.re = w.re / r := by
+    change (w / (r : ℂ)).re = _
+    rw [Complex.div_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, zero_div, add_zero,
+      Complex.normSq_ofReal]
+    field_simp [hr.ne']
+  have huκ : κ ≤ u.re := by
+    rw [hre, le_div_iff₀ hr]
+    exact hsector
+  have hwu : (r : ℂ) * u = w := by
+    dsimp only [u]
+    field_simp [hr0]
+  have hV : 0 < sectorMass κ := by unfold sectorMass; positivity
+  have hsmall : sectorMass κ < order m := by linarith
+  have hb := (radial_K_bounds m hκ hsmall hu huκ hr).2
+  rw [hwu] at hb
+  have hbound : ‖F_K m w - 1‖ ≤ 2 * sectorMass κ / order m := by
+    refine hb.trans ?_
+    rw [div_le_div_iff₀ (sub_pos.mpr hsmall) (order_pos m)]
+    nlinarith [mul_nonneg hV.le (show 0 ≤ order m - 2 * sectorMass κ by linarith)]
+  have hhalf : 2 * sectorMass κ / order m ≤ 1 / 2 := by
+    rw [div_le_iff₀ (order_pos m)]
+    linarith
+  refine ⟨hbound, hhalf, ?_⟩
+  intro hk
+  have hz : F_K m w = 0 := by simp [F_K, hk]
+  have habs := hbound.trans hhalf
+  rw [hz, zero_sub, norm_neg, norm_one] at habs
+  norm_num at habs
 
 end LiouvilleGreen
 

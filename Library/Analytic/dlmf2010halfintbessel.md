@@ -32,3 +32,9 @@ $L=C e^z P_m(-1/z)/\sqrt z$, the regular combination is
 $\pi I=L-(-1)^m K$. The normalization and orientation of the ordinary
 Wronskian agree with [DLMF 10.28.2](https://dlmf.nist.gov/10.28.E2).
 The ordinary equation is [DLMF 10.25.1](https://dlmf.nist.gov/10.25.E1).
+
+The Liouville–Green phase and the normalizations of the decaying and regular
+amplitudes agree with [DLMF 10.41.3–4 and 10.41.7](https://dlmf.nist.gov/10.41#ii).
+The scaled potential and sector estimate use the finite carrier and the
+real-radial Volterra equation. [DLMF §2.7(iii)](https://dlmf.nist.gov/2.7#iii)
+describes the Liouville–Green transformation.

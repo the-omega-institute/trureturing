@@ -70,6 +70,10 @@ private theorem coeff_carrier (m k : ℕ) : (carrier m).coeff k = coefficient m 
   · simp [carrier, coeff_monomial, Finset.mem_range, h]
   · simp [carrier, coeff_monomial, Finset.mem_range, coefficient, h]
 
+/-- The finite reciprocal carrier has constant coefficient one. -/
+theorem carrier_coeff_zero (m : ℕ) : (carrier m).coeff 0 = 1 :=
+  (coeff_carrier m 0).trans (coefficient_zero m)
+
 /-- The differential equation in the reciprocal argument. -/
 theorem carrier_ode (m : ℕ) :
     X ^ 2 * (carrier m).derivative.derivative +
@@ -128,7 +132,7 @@ theorem reflected_wronskian (m : ℕ) :
     linear_combination q * hp - p * hq
   have hp0 : p.eval 0 = 1 := by
     rw [← coeff_zero_eq_eval_zero]
-    exact (coeff_carrier m 0).trans (coefficient_zero m)
+    exact carrier_coeff_zero m
   have hq0 : q.eval 0 = 1 := by
     simp [q, eval_comp, hp0]
   have hw0 : w.coeff 0 = 2 := by

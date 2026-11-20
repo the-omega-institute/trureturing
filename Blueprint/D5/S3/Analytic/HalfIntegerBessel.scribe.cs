@@ -94,6 +94,43 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
                 "For Re u > 0 and r > 0, eta(r u) has derivative p(r). With F(r) = F_K(r u) "
                 + "and G(r) = (D F_K)(r u), the real derivatives are F' = p G "
                 + "and G' = 2 nu p G + q F. Also Re p > 0.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("radial_S_re_ge", "Sector angle of the phase root",
+                "If u has unit norm and positive real part and r > 0, then "
+                + "Re S(r u) is at least Re u times the norm of S(r u).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sectorMajorant", "Sector majorant",
+                "Q_kappa(r) is r (4 + r^2) / (4 (sqrt(kappa))^5 (sqrt(1 + r^2))^5).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("norm_radialQ_le", "Pointwise radial potential bound",
+                "For kappa > 0, a unit ray with Re u at least kappa, and r > 0, "
+                + "the norm of q(r) is at most Q_kappa(r).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sectorMajorant_mass", "Finite interval mass bound",
+                "For every pair of real endpoints and kappa > 0, the oriented integral "
+                + "of Q_kappa is at most 1 / (2 (sqrt(kappa))^5). The negative derivative of "
+                + "((1+r^2)^(-1/2) + (1+r^2)^(-3/2)) / (4 kappa^(5/2)) is Q_kappa.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("radial_K_terminal", "Terminal values of the decaying amplitude",
+                "As r tends to infinity along Re u > 0, F_K(r u) tends to one and "
+                + "(D F_K)(r u) tends to zero. In the reciprocal coordinate v = 1/w, "
+                + "write T = S(v). The principal-root and logarithm identities give the "
+                + "analytic amplitude sqrt(T) exp(nu (v/(1+T) - Log(v+T))) P_m(v/nu) "
+                + "at v = 0. The derivative in the phase variable acts there by "
+                + "multiplying the v derivative by -v^2/T.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sectorMass", "Sector mass",
+                "V_kappa is 1 / (2 (sqrt(kappa))^5).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("radial_K_bounds", "Volterra bounds on a unit ray",
+                "For kappa > 0, nu > V_kappa, Re u at least kappa, |u| = 1 and r > 0, "
+                + "the norms of F_K(r u) and F_K(r u) - 1 are bounded by "
+                + "nu / (nu - V_kappa) and V_kappa / (nu - V_kappa), respectively.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sector_K_estimate", "Uniform sector error and nonvanishing",
+                "For kappa > 0 and nu at least 4 V_kappa, at every nonzero w with "
+                + "Re w at least kappa |w|, the norm of F_K(w) - 1 is at most "
+                + "2 V_kappa / nu, which is at most 1/2, and K_m(nu w) is nonzero.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
 
     private static DocumentBlock Node(string name, string title, string prose,
