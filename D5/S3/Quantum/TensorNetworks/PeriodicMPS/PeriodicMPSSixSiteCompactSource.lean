@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCompactSource
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPSProjectiveCoordinates,
-     lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteMarginal]
+   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPSProjectiveCoordinates, lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteMarginal]
    utility: none
    digest: The compact six-site trace graph carries the normalized adjacent two-site marginal. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPSProjectiveCoordinates
