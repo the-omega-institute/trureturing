@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.AURICOmega.ReadingExponent
+import D5.S3.Quantum.PureState.ReadingExponent
 import Reg.Support.SingleDependentReadout
 
 /-! Source-bound audit of the reading exponent.
@@ -7,9 +7,9 @@ The readout is the square `s ^ 2` on the right of the conclusion, as a function 
 function `F` and both hypotheses stay in the law verbatim. The square itself is multiplicative
 and normalized on the quarter circle, which refutes the identity readout `s ↦ s`. -/
 
-namespace Reg.D5.S3.Quantum.AURICOmega.ReadingExponent
+namespace Reg.D5.S3.Quantum.PureState.ReadingExponent
 
-open _root_.D5.S3.Quantum.AURICOmega.ReadingExponent
+open _root_.D5.S3.Quantum.PureState.ReadingExponent
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -67,8 +67,8 @@ end Square
 def eq_sq_of_mul_of_cos_add_sin_registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@eq_sq_of_mul_of_cos_add_sin) (Realization Square.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.ReadingExponent.eq_sq_of_mul_of_cos_add_sin_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.ReadingExponent.Square.source_registration
+  unitName := `Reg.D5.S3.Quantum.PureState.ReadingExponent.eq_sq_of_mul_of_cos_add_sin_unit
+  realizationName := `Reg.D5.S3.Quantum.PureState.ReadingExponent.Square.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨Square.arena⟩
@@ -84,7 +84,7 @@ def eq_sq_of_mul_of_cos_add_sin_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.AURICOmega.ReadingExponent
+    owner := `D5.S3.Quantum.PureState.ReadingExponent
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -98,4 +98,4 @@ def eq_sq_of_mul_of_cos_add_sin_registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.AURICOmega.ReadingExponent
+end Reg.D5.S3.Quantum.PureState.ReadingExponent

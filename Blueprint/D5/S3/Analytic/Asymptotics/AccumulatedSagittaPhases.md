@@ -6,7 +6,19 @@ For every N the accumulated versine of N equal angle steps sigma (T/N)^alpha lie
 
 Fix real numbers sigma, T and alpha. For a natural number N the step angle is theta_N = sigma (T/N)^alpha, a real power of the real quotient T/N, and the accumulated versine is A_N = N (1 - cos theta_N). In Lean, division by N = 0 returns 0 and real powers follow the Mathlib conventions; the value A_0 is 0. The versine 1 - cos theta is the sagitta of a unit-circle arc of half-angle theta, which is why the Lean declarations are named after the sagitta.
 
-**Theorem 1.1 (Two-sided bounds for every N).**
+**Lemma 1.1 (A quartic lower bound for the versine).**
+
+$$\frac{x^{2}}{2} - \frac{x^{4}}{24} \le 1 - \operatorname{cos} x.$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases.versine_ge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x, 1 - cos x is at least x^2/2 - x^4/24. No bound on |x| is assumed. Write 1 - cos x = 2 sin^2(x/2) and put y = x/2. The Mathlib bound |y - sin y| <= |y|^3/6 gives y (y - sin y) <= y^4/6, and expanding sin^2 y = (y - (y - sin y))^2 and discarding the square of the difference gives sin^2 y >= y^2 - y^4/3, which is the claim. This is a classical Taylor-remainder estimate for the cosine; the pinned Mathlib states the quartic estimate only for |x| <= 1 and with the constant 5/96.
+
+**Theorem 1.2 (Two-sided bounds for every N).**
 
 $$\theta_{N} = \sigma (T/N)^{\alpha},\quad A_{N} = N (1 - \operatorname{cos} \theta_{N}),\quad\\N (\frac{\theta_{N}^{2}}{2} - \frac{\theta_{N}^{4}}{24}) \le A_{N} \le N \frac{\theta_{N}^{2}}{2}.$$
 
@@ -22,7 +34,7 @@ The upper bound is the Mathlib inequality 1 - x^2/2 <= cos x. For the lower boun
 
 The lower bound is informative only while theta_N^2 < 12; for larger step angles it is negative and says less than A_N >= 0.
 
-**Theorem 1.2 (The three limit regimes).**
+**Theorem 1.3 (The three limit regimes).**
 
 $$\theta_{N} = \sigma (T/N)^{\alpha},\quad A_{N} = N (1 - \operatorname{cos} \theta_{N}),\quad\\(T > 0 \land \alpha > \frac{1}{2}) \implies \lim_{N \to \infty} A_{N} = 0,\quad\\(T > 0 \land \alpha = \frac{1}{2}) \implies \lim_{N \to \infty} A_{N} = \frac{\sigma^{2} T}{2},\quad\\(T > 0 \land \sigma \neq 0 \land 0 < \alpha < \frac{1}{2}) \implies \lim_{N \to \infty} A_{N} = \infty.$$
 
@@ -42,3 +54,4 @@ The divergence conjunct is restricted to alpha > 0. The restriction cannot simpl
 
 - Truth anchor: `D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases.accumulated_sagitta_bounds`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases.accumulated_sagitta_phases`
+- Truth anchor: `D5/S3/Analytic/Asymptotics/AccumulatedSagittaPhases.versine_ge`

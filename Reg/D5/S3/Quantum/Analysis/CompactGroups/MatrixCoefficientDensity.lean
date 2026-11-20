@@ -32,25 +32,49 @@ abbrev Params : Type (u + 1) :=
 /-- The group of a coefficient datum. -/
 def carrier (p : Params.{u}) : Type u := p.1
 
+/-- The data of a coefficient datum after its group. -/
+def rest₁ (p : Params.{u}) : Σ iG : Group (carrier p), Σ tG : TopologicalSpace (carrier p),
+    Σ n : ℕ, Σ _ : (letI := iG; letI := tG; carrier p →ₜ* Matrix.unitaryGroup (Fin n) ℂ),
+      Σ _ : Fin n, Fin n := p.2
+
 /-- The group structure of a coefficient datum. -/
-@[reducible] def group (p : Params.{u}) : Group (carrier p) := p.2.1
+@[reducible] def group (p : Params.{u}) : Group (carrier p) := (rest₁ p).1
+
+/-- The data of a coefficient datum after its group structure. -/
+def rest₂ (p : Params.{u}) : Σ tG : TopologicalSpace (carrier p), Σ n : ℕ,
+    Σ _ : (letI := group p; letI := tG; carrier p →ₜ* Matrix.unitaryGroup (Fin n) ℂ),
+      Σ _ : Fin n, Fin n := (rest₁ p).2
 
 /-- The topology of a coefficient datum. -/
-@[reducible] def topology (p : Params.{u}) : TopologicalSpace (carrier p) := p.2.2.1
+@[reducible] def topology (p : Params.{u}) : TopologicalSpace (carrier p) := (rest₂ p).1
+
+/-- The data of a coefficient datum after its topology. -/
+def rest₃ (p : Params.{u}) : Σ n : ℕ,
+    Σ _ : (letI := group p; letI := topology p; carrier p →ₜ* Matrix.unitaryGroup (Fin n) ℂ),
+      Σ _ : Fin n, Fin n := (rest₂ p).2
 
 /-- The dimension of the representation of a coefficient datum. -/
-def dim (p : Params.{u}) : ℕ := p.2.2.2.1
+def dim (p : Params.{u}) : ℕ := (rest₃ p).1
+
+/-- The data of a coefficient datum after its dimension. -/
+def rest₄ (p : Params.{u}) :
+    Σ _ : (letI := group p; letI := topology p;
+      carrier p →ₜ* Matrix.unitaryGroup (Fin (dim p)) ℂ), Σ _ : Fin (dim p), Fin (dim p) :=
+  (rest₃ p).2
 
 /-- The continuous unitary representation of a coefficient datum. -/
 def rep (p : Params.{u}) :
     letI := group p; letI := topology p
-    carrier p →ₜ* Matrix.unitaryGroup (Fin (dim p)) ℂ := p.2.2.2.2.1
+    carrier p →ₜ* Matrix.unitaryGroup (Fin (dim p)) ℂ := (rest₄ p).1
+
+/-- The pair of matrix indices of a coefficient datum. -/
+def indices (p : Params.{u}) : Σ _ : Fin (dim p), Fin (dim p) := (rest₄ p).2
 
 /-- The row index of a coefficient datum. -/
-def row (p : Params.{u}) : Fin (dim p) := p.2.2.2.2.2.1
+def row (p : Params.{u}) : Fin (dim p) := (indices p).1
 
 /-- The column index of a coefficient datum. -/
-def col (p : Params.{u}) : Fin (dim p) := p.2.2.2.2.2.2
+def col (p : Params.{u}) : Fin (dim p) := (indices p).2
 
 /-- The entry `(ρ g) i j` of the value of a continuous unitary representation at a group
 element. -/

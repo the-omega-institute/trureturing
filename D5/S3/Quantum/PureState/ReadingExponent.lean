@@ -1,10 +1,10 @@
-/- GID: D5/S3/Quantum/AURICOmega/ReadingExponent
+/- GID: D5/S3/Quantum/PureState/ReadingExponent
    generality: G
-   mirror-B: D5/B/S3/Quantum/AURICOmega/ReadingExponent
+   mirror-B: D5/B/S3/Quantum/PureState/ReadingExponent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Multiplicative on [0, 1] with F cos + F sin = 1 forces F s = s ^ 2. -/
+   digest: Multiplicative on [0, 1] with F cos + F sin = 1 forces F s = s ^ 2 on [0, 1]. -/
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.SpecialFunctions.Sqrt
@@ -22,7 +22,7 @@ assumed: multiplicativity gives `0 ≤ F`, the normalization gives `F ≤ 1`, an
 monotonicity squeezes it to the identity on `[0, 1]`.
 -/
 
-namespace D5.S3.Quantum.AURICOmega.ReadingExponent
+namespace D5.S3.Quantum.PureState.ReadingExponent
 
 open Set
 
@@ -67,7 +67,7 @@ variable (F : ℝ → ℝ)
 include hmul hnorm
 
 /-- The function lies in `[0, 1]` on `[0, 1]`. -/
-private theorem mem_Icc {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) : F s ∈ Icc (0 : ℝ) 1 := by
+private theorem mem_Icc_zero_one {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) : F s ∈ Icc (0 : ℝ) 1 := by
   constructor
   · have h := hmul _ (sqrt_mem hs) _ (sqrt_mem hs)
     rw [Real.mul_self_sqrt hs.1] at h
@@ -79,7 +79,7 @@ private theorem mem_Icc {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) : F s ∈ Icc (0 
     nlinarith [mul_self_nonneg (F (Real.sqrt (Real.sqrt (1 - s ^ 2))))]
 
 /-- The function is monotone on `[0, 1]`. -/
-private theorem monotoneOn : MonotoneOn F (Icc (0 : ℝ) 1) := by
+private theorem monotoneOn_Icc : MonotoneOn F (Icc (0 : ℝ) 1) := by
   intro s hs t ht hst
   rcases eq_or_lt_of_le ht.1 with h0 | hpos
   · have : s = 0 := le_antisymm (h0 ▸ hst) hs.1
@@ -90,8 +90,8 @@ private theorem monotoneOn : MonotoneOn F (Icc (0 : ℝ) 1) := by
     have h := hmul t ht (s / t) hq
     rw [mul_div_cancel₀ s hpos.ne'] at h
     rw [h]
-    have h1 := mem_Icc F hmul hnorm ht
-    have h2 := mem_Icc F hmul hnorm hq
+    have h1 := mem_Icc_zero_one F hmul hnorm ht
+    have h2 := mem_Icc_zero_one F hmul hnorm hq
     nlinarith [h1.1, h2.2]
 
 omit hmul in
@@ -158,7 +158,7 @@ private theorem sub_lt_sqrt {u : ℝ} (hu : u ∈ Icc (0 : ℝ) 1) (n : ℕ) :
     nlinarith [hu.2])
   have hle : (k : ℝ) / 2 ^ n ≤ u := (div_le_iff₀ hpow).2 hk1
   have hmem : (k : ℝ) / 2 ^ n ∈ Icc (0 : ℝ) 1 := ⟨by positivity, hle.trans hu.2⟩
-  have hmono := monotoneOn F hmul hnorm (sqrt_mem hmem) (sqrt_mem hu) (Real.sqrt_le_sqrt hle)
+  have hmono := monotoneOn_Icc F hmul hnorm (sqrt_mem hmem) (sqrt_mem hu) (Real.sqrt_le_sqrt hle)
   rw [sqrt_dyadic F hmul hnorm n k hk3] at hmono
   have : u - 1 / 2 ^ n < (k : ℝ) / 2 ^ n := by
     have he : u - 1 / 2 ^ n = (u * 2 ^ n - 1) / 2 ^ n := by field_simp
@@ -196,4 +196,4 @@ theorem eq_sq_of_mul_of_cos_add_sin (F : ℝ → ℝ)
   have h := sqrt_eq F hmul hnorm (u := s ^ 2) ⟨sq_nonneg s, pow_le_one₀ hs.1 hs.2⟩
   rwa [Real.sqrt_sq hs.1] at h
 
-end D5.S3.Quantum.AURICOmega.ReadingExponent
+end D5.S3.Quantum.PureState.ReadingExponent

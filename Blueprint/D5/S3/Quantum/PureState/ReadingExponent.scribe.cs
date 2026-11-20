@@ -2,14 +2,14 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.PureState;
 
 internal sealed class ReadingExponentDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Quantum/AURICOmega/ReadingExponent.";
+    private const string Module = "D5/S3/Quantum/PureState/ReadingExponent.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A function multiplicative on [0, 1] with F(cos t) + F(sin t) = 1 on the quarter circle is the square, without any continuity assumption.",
+        "A function multiplicative on [0, 1] with F(cos t) + F(sin t) = 1 on the quarter circle is the square on [0, 1], without any continuity assumption.",
         H("The reading exponent"),
         Blocks(
             Describe.Lean(
@@ -39,7 +39,8 @@ internal sealed class ReadingExponentDocument : IScribeDocumentDefinition
                         + "same bound for 1 − u together with G(u) + G(1 − u) = 1 gives "
                         + "G(u) < u + 1/2ⁿ. Hence G(u) = u, and F(s) = G(s²) = s².")),
                     Paragraph(Text(
-                        "Neither hypothesis can be dropped. The polynomial 3s⁴ − 2s⁶ satisfies the "
+                        "The following written argument, which is not stated as a theorem here, shows that "
+                        + "neither hypothesis can be dropped. The polynomial 3s⁴ − 2s⁶ satisfies the "
                         + "normalization, since with a = cos² t and b = sin² t one has "
                         + "3(a² + b²) − 2(a³ + b³) = 3(1 − 2ab) − 2(1 − 3ab) = 1, but it is not "
                         + "multiplicative: its value at 1/4 is 46/4096, while the square of its "
