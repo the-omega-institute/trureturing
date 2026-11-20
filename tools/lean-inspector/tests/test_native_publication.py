@@ -59,6 +59,7 @@ class NativePublicationConsumerTests:
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         self.write('lean-report-inputs.json', json.dumps(policy))
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
         self.build()
         state = native.state(self.root)
         artifact = state / 'modules/D5.Alone.zip'
