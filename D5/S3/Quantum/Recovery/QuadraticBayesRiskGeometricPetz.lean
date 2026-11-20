@@ -1,5 +1,8 @@
+import D5.S3.Quantum.Divergence.HyperbolicBKMArithmeticComparison
 import D5.S3.Quantum.Divergence.MaximalHockeyStickQuadratic
+import D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
 import D5.S3.Quantum.Divergence.UmegakiRareFlagBKM
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Recovery.PetzPositiveTraceFidelity
 import D5.S3.Quantum.Recovery.PetzPositiveTracePostselection
 
@@ -8,6 +11,9 @@ Finite quadratic Bayes risk on an ensemble of subnormalized positive matrices.
 The scores are arbitrary reals. The geometric trace deficit bounds the risk
 of every finite POVM from below. The supported pretty-good measurement has
 exactly twice that deficit, including when the total mass is singular.
+For positive definite total mass, the spectral measurement of the Hermitian
+SLD solution attains the minimum quadratic risk. The BKM deficit bounds
+the weighted combination of the geometric deficit and this minimum.
 
 The lower bound uses finite square Jensen and two matrix squares. The first
 is the Gram square of the commutator with the square root of the total mass.
@@ -15,7 +21,9 @@ The second completes the square in the trace form weighted by that root on
 both sides. The existing supported inverse suffices for both singular and
 faithful ensembles.
 
-This formalizes Section 1 of positive-map-commuting-input-petz-uniform.txt.
+This formalizes Section 1 of positive-map-commuting-input-petz-uniform.txt
+and the positive definite risk and coefficient comparison from
+positive-map-commuting-input-petz-constant12.txt.
 -/
 
 set_option autoImplicit false
@@ -163,6 +171,114 @@ private theorem risk_expansion (A : ι → Matrix n n ℂ) (c : ι → ℝ)
   simp_rw [hrow]
   rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, hfirst, ← tracePair_sum_left,
     scoreSecondMoment]
+
+omit [DecidableEq n] in
+private theorem exists_hermitian_sld (Q B : Matrix n n ℂ) (hQ : Q.PosDef)
+    (hB : B.IsHermitian) :
+    ∃ L : Matrix n n ℂ, L.IsHermitian ∧ (1 / 2 : ℝ) • (Q * L + L * Q) = B := by
+  classical
+  open D5.S3.Quantum.Divergence.UmegakiArithmeticBKM in
+  have solve : ∃ L : Matrix n n ℂ, (1 / 2 : ℝ) • (Q * L + L * Q) = B := by
+    have hM := hsArithmeticMap_isInvertible Q (1 / 2) hQ (by norm_num)
+    obtain ⟨L, hL⟩ := matrixHS.surjective ((hsArithmeticMap Q (1 / 2)).inverse (matrixHS B))
+    have h := hM.self_apply_inverse (matrixHS B)
+    rw [← hL, arithmetic_apply, show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num,
+      ← smul_add] at h
+    exact ⟨L, matrixHS.injective h⟩
+  obtain ⟨L, hL⟩ := solve
+  have hAdjoint : (1 / 2 : ℝ) • (Q * Lᴴ + Lᴴ * Q) = B := by
+    simpa only [Matrix.conjTranspose_smul, star_trivial, Matrix.conjTranspose_add,
+      Matrix.conjTranspose_mul, hQ.isHermitian.eq, hB.eq, add_comm] using
+      congrArg Matrix.conjTranspose hL
+  refine ⟨(1 / 2 : ℝ) • (L + Lᴴ), ?_, ?_⟩
+  · simp only [Matrix.IsHermitian, Matrix.conjTranspose_smul, star_trivial,
+      Matrix.conjTranspose_add, Matrix.conjTranspose_conjTranspose, add_comm]
+  · calc
+      _ = (1 / 2 : ℝ) • ((1 / 2 : ℝ) • (Q * L + L * Q) +
+            (1 / 2 : ℝ) • (Q * Lᴴ + Lᴴ * Q)) := by
+        simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul,
+          ← smul_add]
+        congr 1
+        abel_nf
+      _ = B := by rw [hL, hAdjoint, ← two_smul ℝ B, smul_smul]; norm_num
+
+omit [DecidableEq n] in
+private theorem sld_complete_square (Q B L X : Matrix n n ℂ)
+    (hL : (1 / 2 : ℝ) • (Q * L + L * Q) = B) :
+    tracePair Q (X * X) - 2 * tracePair B X =
+      tracePair Q ((X - L) * (X - L)) - tracePair B L := by
+  have hcross (Y : Matrix n n ℂ) :
+      tracePair Q (L * Y) + tracePair Q (Y * L) = 2 * tracePair B Y := by
+    have hTrace : trace (Q * (Y * L)) = trace (L * Q * Y) := by
+      rw [← Matrix.mul_assoc, Matrix.trace_mul_comm (Q * Y) L, Matrix.mul_assoc]
+    rw [← hL, tracePair_smul_left]
+    simp only [tracePair, Matrix.add_mul, Matrix.trace_add, Complex.add_re,
+      hTrace, Matrix.mul_assoc]
+    ring
+  have hXX := hcross X
+  have hLL := hcross L
+  simp only [tracePair, Matrix.sub_mul, Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re]
+    at hXX hLL ⊢
+  linarith only [hXX, hLL]
+
+open private eigenProjection eigenProjection_facts sum_eigenProjection from
+  D5.S3.Quantum.Recovery.PetzPositiveTraceFidelity
+
+/-- For positive definite total mass, the minimum over all finite POVMs and
+real estimates is the SLD deficit. The projective measurement uses one
+outcome for each distinct eigenvalue of the Hermitian SLD solution. -/
+theorem quadraticRisk_minimum_sld (A : ι → Matrix n n ℂ) (c : ι → ℝ)
+    (hA : ∀ i, (A i).PosSemidef) (hQ : (∑ i, A i).PosDef) :
+    ∃ L : Matrix n n ℂ, ∃ hL : L.IsHermitian,
+      (1 / 2 : ℝ) • ((∑ i, A i) * L + L * (∑ i, A i)) = scoreMoment A c ∧
+      (∀ (κ : Type*) [Fintype κ] (N : κ → Matrix n n ℂ) (y : κ → ℝ),
+        (∀ j, (N j).PosSemidef) → (∑ j, N j) = 1 →
+        (∑ i, c i ^ 2 * (trace (A i)).re) - tracePair (scoreMoment A c) L ≤
+          quadraticRisk A c N y) ∧
+      ∃ N : ↥(PetzPositiveTraceFidelity.fidelityEigenvalues hL) → Matrix n n ℂ,
+        (∀ j, IsStarProjection (N j) ∧ L * N j = j.val • N j) ∧ (∑ j, N j) = 1 ∧
+        quadraticRisk A c N (fun j => j.val) =
+          (∑ i, c i ^ 2 * (trace (A i)).re) - tracePair (scoreMoment A c) L := by
+  let Q := ∑ i, A i
+  let B := scoreMoment A c
+  obtain ⟨L, hL, hSolve⟩ := exists_hermitian_sld Q B hQ (scoreMoment_isHermitian A c hA)
+  refine ⟨L, hL, hSolve, ?_, ?_⟩
+  · intro κ _ N y hN hSum
+    let X := scoreMoment N y
+    have hX : X.IsHermitian := scoreMoment_isHermitian N y hN
+    have hDiff : ((X - L) * (X - L)).PosSemidef := by
+      simpa only [Matrix.conjTranspose_sub, hX.eq, hL.eq] using
+        Matrix.posSemidef_conjTranspose_mul_self (X - L)
+    have hPos : 0 ≤ tracePair Q ((X - L) * (X - L)) :=
+      (Complex.nonneg_iff.mp (hQ.posSemidef.trace_mul_nonneg hDiff)).1
+    have hJ : tracePair Q (X * X) ≤ tracePair Q (scoreMoment N (fun j => y j ^ 2)) :=
+      tracePair_mono_right hQ.posSemidef (square_jensen N y hN hSum)
+    rw [risk_expansion A c N y hSum]
+    change scoreSecondMoment A c - tracePair B L ≤
+      scoreSecondMoment A c - 2 * tracePair B X + tracePair Q (scoreMoment N (fun j => y j ^ 2))
+    linarith only [sld_complete_square Q B L X hSolve, hPos, hJ]
+  · let N : ↥(PetzPositiveTraceFidelity.fidelityEigenvalues hL) → Matrix n n ℂ :=
+      fun j => eigenProjection L j.val
+    have hProj (j : ↥(PetzPositiveTraceFidelity.fidelityEigenvalues hL)) :
+        IsStarProjection (N j) ∧ L * N j = j.val • N j := eigenProjection_facts hL j.val
+    have hSum : (∑ j, N j) = 1 := sum_eigenProjection hL
+    have hFirst : scoreMoment N (fun j => j.val) = L := by
+      simp only [scoreMoment, ← fun j => (hProj j).2, ← Matrix.mul_sum, hSum, Matrix.mul_one]
+    have hSecond : scoreMoment N (fun j => j.val ^ 2) = L * L := by
+      calc
+        _ = L * scoreMoment N (fun j => j.val) := by
+          simp only [scoreMoment, Matrix.mul_sum, Matrix.mul_smul, fun j => (hProj j).2,
+            smul_smul, pow_two]
+        _ = L * L := congrArg (L * ·) hFirst
+    refine ⟨N, hProj, hSum, ?_⟩
+    rw [risk_expansion A c N _ hSum, hFirst, hSecond]
+    change scoreSecondMoment A c - 2 * tracePair B L + tracePair Q (L * L) =
+      scoreSecondMoment A c - tracePair B L
+    have hSquare := sld_complete_square Q B L L hSolve
+    simp only [sub_self, tracePair, Matrix.mul_zero, Matrix.trace_zero,
+      Complex.zero_re, zero_sub] at hSquare
+    unfold tracePair
+    linarith only [hSquare]
 
 /-- The Gram square of the commutator with a Hermitian square root compares
 the arithmetic and geometric weights for the quadratic term. -/
@@ -468,11 +584,16 @@ private theorem pair_kernel_le_geometric (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
       simp [g, one_div, mul_comm]
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-/-- The BKM quadratic form is bounded by the geometric trace form. This
-uses the existing logarithmic derivative on positive definite matrices. -/
-theorem logDeriv_le_geometric (Q H : Matrix n n ℂ) (hQ : Q.PosDef) (hH : H.IsHermitian) :
+private theorem bkm_geometric_spectral (Q H : Matrix n n ℂ)
+    (hQ : Q.PosDef) (hH : H.IsHermitian) :
+    let U : Matrix n n ℂ := hQ.isHermitian.eigenvectorUnitary
+    let q := hQ.isHermitian.eigenvalues
+    let Y := Uᴴ * H * U
     let W := spectralInverseSqrt Q
-    tracePair H (logDeriv Q H) ≤ tracePair H (W * H * W) := by
+    (tracePair H (logDeriv Q H) = ∑ i, ∑ j,
+      (∫ t in Set.Ioi (0 : ℝ), 1 / ((q i + t) * (q j + t))) * Complex.normSq (Y i j)) ∧
+    (tracePair H (W * H * W) = ∑ i, ∑ j,
+      ((Real.sqrt (q i))⁻¹ * (Real.sqrt (q j))⁻¹) * Complex.normSq (Y i j)) := by
   let U : Matrix n n ℂ := hQ.isHermitian.eigenvectorUnitary
   let q := hQ.isHermitian.eigenvalues
   let Y := Uᴴ * H * U
@@ -504,9 +625,12 @@ theorem logDeriv_le_geometric (Q H : Matrix n n ℂ) (hQ : Q.PosDef) (hH : H.IsH
     simpa only [D, U, q, Unitary.coe_star, Matrix.star_eq_conjTranspose,
       Complex.ofReal_inv, k, one_div, mul_inv] using
       hDiag (fun i => (q i + t)⁻¹)
-  change tracePair H (logDeriv Q H) ≤
-    tracePair H (spectralInverseSqrt Q * H * spectralInverseSqrt Q)
-  rw [hW, hDiag]
+  refine ⟨?_, ?_⟩
+  swap
+  · rw [hW]
+    exact hDiag _
+  change tracePair H (logDeriv Q H) = ∑ i, ∑ j,
+    (∫ t in Set.Ioi (0 : ℝ), 1 / ((q i + t) * (q j + t))) * Complex.normSq (Y i j)
   calc
     _ = ∫ t in Set.Ioi (0 : ℝ), T (f t) := (T.integral_comp_comm hf).symm
     _ = ∫ t in Set.Ioi (0 : ℝ), ∑ i, ∑ j, k i j t := by
@@ -523,14 +647,73 @@ theorem logDeriv_le_geometric (Q H : Matrix n n ℂ) (hQ : Q.PosDef) (hH : H.IsH
       apply Finset.sum_congr rfl
       intro j _
       simp only [k, integral_mul_const]
-    _ ≤ _ := by
-      apply Finset.sum_le_sum
-      intro i _
-      apply Finset.sum_le_sum
-      intro j _
-      exact mul_le_mul_of_nonneg_right
-        (pair_kernel_le_geometric (q i) (q j) (hQ.eigenvalues_pos i) (hQ.eigenvalues_pos j))
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+/-- The BKM quadratic form is bounded by the geometric trace form. This
+uses the existing logarithmic derivative on positive definite matrices. -/
+theorem logDeriv_le_geometric (Q H : Matrix n n ℂ) (hQ : Q.PosDef) (hH : H.IsHermitian) :
+    let W := spectralInverseSqrt Q
+    tracePair H (logDeriv Q H) ≤ tracePair H (W * H * W) := by
+  obtain ⟨hBKM, hGeo⟩ := bkm_geometric_spectral Q H hQ hH
+  change tracePair H (logDeriv Q H) ≤
+    tracePair H (spectralInverseSqrt Q * H * spectralInverseSqrt Q)
+  rw [hBKM, hGeo]
+  exact Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ =>
+    mul_le_mul_of_nonneg_right
+      (pair_kernel_le_geometric _ _ (hQ.eigenvalues_pos i) (hQ.eigenvalues_pos j))
+      (Complex.normSq_nonneg _)
+
+private theorem pair_kernel_le_geometric_sld (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+    (∫ t in Set.Ioi (0 : ℝ), 1 / ((a + t) * (b + t))) ≤
+      (2 * ((Real.sqrt a)⁻¹ * (Real.sqrt b)⁻¹) + 2 / (a + b)) / 3 := by
+  rw [pair_kernel_eval a b ha hb]
+  simpa only [Real.sqrt_mul ha.le, one_div, mul_inv] using
+    HyperbolicBKMArithmeticComparison.bkm_log_divided_difference_le a b ha hb
+
+open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (spectralQFI)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (spectral_energy)
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+private theorem logDeriv_le_geometric_sld (Q B L : Matrix n n ℂ) (hQ : Q.PosDef)
+    (hB : B.IsHermitian) (hL : L.IsHermitian)
+    (hSolve : (1 / 2 : ℝ) • (Q * L + L * Q) = B) :
+    let W := spectralInverseSqrt Q
+    tracePair B (logDeriv Q B) ≤ (2 * tracePair B (W * B * W) + tracePair B L) / 3 := by
+  let U : Matrix n n ℂ := hQ.isHermitian.eigenvectorUnitary
+  let q := hQ.isHermitian.eigenvalues
+  let Y := Uᴴ * B * U
+  have hDouble : L * Q + Q * L = (2 : ℂ) • B := by
+    have h := congrArg (fun M : Matrix n n ℂ => (2 : ℝ) • M) hSolve
+    rw [smul_smul, show (2 : ℝ) * (1 / 2) = 1 by norm_num, one_smul, add_comm] at h
+    simpa only [two_smul] using h
+  have hPair : tracePair B L = (trace (L * Q * L)).re := by
+    have h := sld_complete_square Q B L L hSolve
+    simp only [sub_self, tracePair, Matrix.mul_zero, Matrix.trace_zero,
+      Complex.zero_re, zero_sub] at h
+    rw [Matrix.mul_assoc L Q L, ← Matrix.trace_mul_cycle' Q L L]
+    unfold tracePair
+    linarith only [h]
+  have hSLD : tracePair B L = ∑ i, ∑ j, (2 / (q i + q j)) * Complex.normSq (Y i j) := by
+    rw [hPair, spectral_energy Q B L hQ.posSemidef hL hDouble, spectralQFI]
+    exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by
+      change 2 * Complex.normSq (Y i j) / (q i + q j) = _
+      ring
+  obtain ⟨hBKM, hGeo⟩ := bkm_geometric_spectral Q B hQ hB
+  change tracePair B (logDeriv Q B) ≤
+    (2 * tracePair B (spectralInverseSqrt Q * B * spectralInverseSqrt Q) + tracePair B L) / 3
+  rw [hBKM, hGeo, hSLD]
+  simp only [Finset.mul_sum, ← Finset.sum_add_distrib, Finset.sum_div]
+  apply Finset.sum_le_sum
+  intro i _
+  apply Finset.sum_le_sum
+  intro j _
+  calc
+    _ ≤ ((2 * ((Real.sqrt (q i))⁻¹ * (Real.sqrt (q j))⁻¹) + 2 / (q i + q j)) / 3) *
+        Complex.normSq (Y i j) :=
+      mul_le_mul_of_nonneg_right
+        (pair_kernel_le_geometric_sld _ _ (hQ.eigenvalues_pos i) (hQ.eigenvalues_pos j))
         (Complex.normSq_nonneg _)
+    _ = _ := by ring
 
 /-- The difference between the classical score energy and its retained
 BKM form bounds the geometric deficit of the same ensemble and score. -/
@@ -541,5 +724,21 @@ theorem geometricRisk_le_bkm_deficit (A : ι → Matrix n n ℂ) (c : ι → ℝ
         tracePair (scoreMoment A c) (logDeriv (∑ i, A i) (scoreMoment A c)) := by
   exact sub_le_sub_left
     (logDeriv_le_geometric _ _ hQ (scoreMoment_isHermitian A c hA)) _
+
+/-- The exact BKM deficit bounds the weighted geometric and SLD risks.
+The latter is the attained minimum from `quadraticRisk_minimum_sld`. -/
+theorem geometricRisk_sldRisk_le_bkm_deficit (A : ι → Matrix n n ℂ) (c : ι → ℝ)
+    (hA : ∀ i, (A i).PosSemidef) (hQ : (∑ i, A i).PosDef)
+    (L : Matrix n n ℂ) (hL : L.IsHermitian)
+    (hSolve : (1 / 2 : ℝ) • ((∑ i, A i) * L + L * (∑ i, A i)) = scoreMoment A c) :
+    (2 * geometricRisk A c +
+        ((∑ i, c i ^ 2 * (trace (A i)).re) - tracePair (scoreMoment A c) L)) / 3 ≤
+      (∑ i, c i ^ 2 * (trace (A i)).re) -
+        tracePair (scoreMoment A c) (logDeriv (∑ i, A i) (scoreMoment A c)) := by
+  have h := logDeriv_le_geometric_sld _ _ L hQ (scoreMoment_isHermitian A c hA) hL hSolve
+  dsimp only [geometricRisk] at ⊢
+  change (2 * (scoreSecondMoment A c - _) + (scoreSecondMoment A c - _)) / 3 ≤
+    scoreSecondMoment A c - _
+  linarith only [h]
 
 end QuadraticBayesRiskGeometricPetz
