@@ -28,6 +28,10 @@ $$\begin{aligned}\operatorname{Tendsto}\left(sampleSize, \operatorname{atTop}, \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/ChenFixedOrder/FixedOrderWitness.fixedOrderWitness_holds` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chen-2026-fixed-order-inclusion` (proved) by `D5/S3/Estimation/ChenFixedOrder/FixedOrderWitness.fixedOrderWitness_holds`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-2026-fixed-order-inclusion","declaration_gid":"D5/S3/Estimation/ChenFixedOrder/FixedOrderWitness.fixedOrderWitness_holds","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jiahua Chen (2026). *Low-Order Inclusion Probabilities Do Not Determine Asymptotic Normality*. URL: <https://arxiv.org/abs/2610.09168v1>.

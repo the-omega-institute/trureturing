@@ -107,5 +107,7 @@ internal sealed class FixedOrderWitnessDocument : IScribeDocumentDefinition
                         + "with the real tilt. Weak continuity of the tilt gives the second limit. "
                         + "The Gaussian separation theorem gives a strictly larger expectation "
                         + "of the residual test under that limit, proving the limits unequal."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-2026-fixed-order-inclusion"), ResolutionKind.Proved)))));
 }
