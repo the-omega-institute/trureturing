@@ -127,7 +127,10 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                         "Concatenating these blocks gives unbounded orbit values from every positive start "
                         + "under each allowed S. An eventually periodic orbit has only finitely many "
                         + "values. The same A therefore forces divergence and excludes every all-up tail."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vasilyev-2026-force-divergence-question-7-7"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula NaturalSets => Call("Set", Naturals);

@@ -100,6 +100,10 @@ $$\neg \left(\forall A \in \operatorname{Set}\left(\mathbb{N}\right),\; A \subse
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Recurrence/VasilyevForceDivergenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/vasilyev-2026-force-divergence-question-7-7` (refuted) by `D5/S1/Dynamics/Recurrence/VasilyevForceDivergenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"vasilyev-2026-force-divergence-question-7-7","declaration_gid":"D5/S1/Dynamics/Recurrence/VasilyevForceDivergenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Oleg Vasilyev (2026). *Up or down at every integer: Collatz-type maps of arbitrary sets and the up-down graph*. URL: <https://arxiv.org/html/2611.20344v2#S7.Thmtheorem7>.
