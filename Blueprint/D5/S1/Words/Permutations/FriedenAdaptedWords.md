@@ -90,7 +90,7 @@ $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Word}\left(n\right),\;
 
 *Commentary.*
 
-For each natural n and each word on the n-1 adjacent generators, suppose its length is n(n-1)/2 and its chronological swaps send the identity to the reversal. Suppose also that restricting to any four labels gives a word outside X, whose elements are 123212, 321232, 212321 and 232123. Then there exists an initial path orientation in which the entire word is a legal sequence of source flips. Each two-generator projection must alternate because a repetition would force one of the four restrictions, with reflection exchanging the two ends of the edge. The first letter in each projection determines the edge direction needed for the sequence.
+For each natural n and each word on the n-1 adjacent generators, suppose its length is n(n-1)/2 and its chronological swaps send the identity to the reversal. Suppose also that restricting to any four labels gives a word outside X, whose elements are 123212, 321232, 212321 and 232123. Then there exists an initial path orientation in which the entire word is a legal sequence of source flips. The projection onto the two endpoints of each path edge must alternate because a repetition would force one of the four restrictions, with reflection exchanging the two ends of the edge. The first letter in each projection determines the edge direction needed for the sequence.
 
 **Theorem 1.8 (Conjecture 4.10).**
 
