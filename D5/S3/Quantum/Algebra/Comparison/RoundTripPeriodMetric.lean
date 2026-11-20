@@ -8,10 +8,10 @@
 import D5.S3.Analytic.Dilation.DuplicationCircleRigidity
 import D5.S3.Quantum.Algebra.Comparison.RoundTripClassification
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
-import Mathlib.Analysis.Real.Cardinality
 import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.Topology.Algebra.Module.FiniteDimensionBilinear
+import Mathlib.Topology.Separation.CompletelyRegular
 
 /-! Periods of the exponential comparison curves and their common metric. -/
 
@@ -694,18 +694,9 @@ private theorem normalizedDet_constant (D : ContinuousData L G) (hd : 1 < finran
   have hS : IsPreconnected S :=
     (isConnected_compl_singleton_of_one_lt_rank hr (0 : L)).isPreconnected.image _
       (normalizedDet_continuous D z)
-  let f : ℂ → ℝ := fun w => dist w (normalizedDet z X)
-  have hf : Continuous f := continuous_id.dist continuous_const
-  have hc : (f '' S).Countable := (normalizedDet_countable D z).image f
-  have hconn := (hS.image f hf.continuousOn).ordConnected
-  have h0 : (0 : ℝ) ∈ f '' S := by
-    exact ⟨normalizedDet z X, ⟨X, hX, rfl⟩, dist_self _⟩
-  have h1 : f (normalizedDet z Y) ∈ f '' S :=
-    ⟨_, ⟨Y, hY, rfl⟩, rfl⟩
-  have hI : Ioo 0 (f (normalizedDet z Y)) ⊆ f '' S := fun _ ht =>
-    hconn.out h0 h1 ⟨ht.1.le, ht.2.le⟩
-  have hz := Cardinal.Real.Ioo_countable_iff.mp (hc.mono hI)
-  exact (dist_eq_zero.mp (le_antisymm hz dist_nonneg)).symm
+  have hsub : S.Subsingleton :=
+    (normalizedDet_countable D z).isTotallyDisconnected S (Subset.rfl) hS
+  exact hsub ⟨X, hX, rfl⟩ ⟨Y, hY, rfl⟩
 
 private theorem normalized_period_eq_of_dim (D : ContinuousData L G) (hd : 1 < finrank ℝ L)
     {X Y : L} (hX : X ≠ 0) (hY : Y ≠ 0) (t : ℝ) :
@@ -851,7 +842,7 @@ private theorem comparison_expansion (D : ContinuousData L G)
     (hcos : ∀ (t : ℝ) (X : L),
       D.phi (D.exp (t • X)) = Real.cos (t * Real.sqrt (H X X / 2))^2) :
     (fun X : L => D.phi (D.exp X) - (1 - H X X / 2))
-      =o[𝓝 0] (fun X : L => ‖X‖^2) := by
+      =o[𝓝 0] (fun X : L => ‖X‖ ^ 2) := by
   let u (X : L) := Real.sqrt (H X X / 2)
   have hu2 (X : L) : u X ^ 2 = H X X / 2 := Real.sq_sqrt (div_nonneg (hH X) (by norm_num))
   have hcont : Continuous u := by
