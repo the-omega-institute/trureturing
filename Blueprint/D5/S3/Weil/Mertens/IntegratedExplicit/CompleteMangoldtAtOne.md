@@ -1,4 +1,4 @@
-# Cauchy estimates for the completed Mangoldt transform
+# Recovering a zeta-zero residue from the completed Mangoldt transform
 
 ## Abstract
 
@@ -16,9 +16,9 @@ $$\left(\forall s \in \mathbb{C},\; s \ne 1 \Rightarrow F\left(s\right) = T\left
 
 Write T for the explicit complete Mangoldt transform, h for the entire normalized zeta function, and A for its logarithmic derivative. Away from 1, h(s)=(s−1)ζ(s). At 1 its value is 1 and its derivative is Euler's constant γ. Thus A(1)=γ. The completed transform is denoted by F.
 
-**Theorem 1.2 (The unique fill and its single-pole Cauchy estimate).**
+**Theorem 1.2 (The unique fill, derivative estimates and residue limit).**
 
-$$\left(\left(\left(\forall s \in \mathbb{C},\; s \ne 1 \Rightarrow F\left(s\right) = T\left(s\right)\right) \land F\left(1\right) = 1 + \gamma - A'\left(1\right)\right) \land \left(\left(\forall s \in \mathbb{C},\; \left(s \ne 0 \land \zeta\left(s\right) \ne 0\right) \Rightarrow \operatorname{AnalyticAt}\left(\mathbb{C}, F, s\right)\right) \land \left(\forall G \in (\mathbb{C} \to \mathbb{C}),\; \left(\operatorname{ContinuousAt}\left(G, 1\right) \land \left(\forall s \in \mathbb{C},\; s \ne 1 \Rightarrow G\left(s\right) = T\left(s\right)\right)\right) \Rightarrow G = F\right)\right)\right) \land \left(\forall p \in \mathbb{C},\; \forall z \in \mathbb{C},\; \forall r \in \mathbb{R},\; \left(0 < r \land \left(p \ne z \land \left(\zeta\left(z\right) = 0 \land \left(\forall w \in \mathbb{C},\; w \in \operatorname{closedBall}\left(p, r\right) \Rightarrow \left(w \ne 0 \land \left(\zeta\left(w\right) = 0 \Rightarrow w = z\right)\right)\right)\right)\right)\right) \Rightarrow \left(\exists B \in \mathbb{R},\; 0 \le B \land \left(\forall n \in \mathbb{N},\; \left|\operatorname{iteratedDeriv}\left(n, F, p\right) - \frac{\operatorname{c}\left(z\right) \cdot \left(-1\right)^{n} \cdot \operatorname{factorial}\left(n\right)}{\left(p - z\right)^{n + 1}}\right| \le \frac{\operatorname{factorial}\left(n\right) \cdot B}{r^{n}}\right)\right)\right)$$
+$$\left(\left(\left(\forall s \in \mathbb{C},\; s \ne 1 \Rightarrow F\left(s\right) = T\left(s\right)\right) \land F\left(1\right) = 1 + \gamma - A'\left(1\right)\right) \land \left(\left(\forall s \in \mathbb{C},\; \left(s \ne 0 \land \zeta\left(s\right) \ne 0\right) \Rightarrow \operatorname{AnalyticAt}\left(\mathbb{C}, F, s\right)\right) \land \left(\forall G \in (\mathbb{C} \to \mathbb{C}),\; \left(\operatorname{ContinuousAt}\left(G, 1\right) \land \left(\forall s \in \mathbb{C},\; s \ne 1 \Rightarrow G\left(s\right) = T\left(s\right)\right)\right) \Rightarrow G = F\right)\right)\right) \land \left(\forall p \in \mathbb{C},\; \forall z \in \mathbb{C},\; \forall r \in \mathbb{R},\; \left(0 < r \land \left(p \ne z \land \left(\zeta\left(z\right) = 0 \land \left(\forall w \in \mathbb{C},\; w \in \operatorname{closedBall}\left(p, r\right) \Rightarrow \left(w \ne 0 \land \left(\zeta\left(w\right) = 0 \Rightarrow w = z\right)\right)\right)\right)\right)\right) \Rightarrow \left(\exists B \in \mathbb{R},\; 0 \le B \land \left(\left(\forall n \in \mathbb{N},\; \left|\operatorname{iteratedDeriv}\left(n, F, p\right) - \frac{\operatorname{c}\left(z\right) \cdot \left(-1\right)^{n} \cdot \operatorname{factorial}\left(n\right)}{\left(p - z\right)^{n + 1}}\right| \le \frac{\operatorname{factorial}\left(n\right) \cdot B}{r^{n}}\right) \land \left(\left(\forall n \in \mathbb{N},\; \left|J\left(n\right) - \operatorname{c}\left(z\right)\right| \le B \cdot \left|p - z\right| \cdot \frac{\left|p - z\right|}{r}^{n}\right) \land \left(\left|p - z\right| < r \Rightarrow \left(\operatorname{Tendsto}\left(J, atTop, \operatorname{nhds}\left(\operatorname{c}\left(z\right)\right)\right) \land \left(\exists N \in \mathbb{N},\; \forall n \in \mathbb{N},\; N \le n \Rightarrow \frac{\left|\operatorname{c}\left(z\right)\right|}{2} \le \left|J\left(n\right)\right|\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtAtOne.completed_disk_cauchy` (`✓ std3`). ∎
 
@@ -33,6 +33,8 @@ At every other nonzero point with ζ(s) nonzero, the ordinary quotient rules giv
 Let p be the center and r the radius of the closed disk. The disk excludes 0 and every zeta zero other than the selected zero z. The center differs from z. The disk may contain 1 and may include z in its interior or on its boundary. Write c(z)=m/[z(1−z)] for the residue, where m is the order of ζ at z.
 
 Subtract c(z)/(s−z) from F(s). At z assign to the difference the value of the analytic local Laurent remainder. This yields a single function analytic near every point of the disk, including 1. Its supremum on the circle bounds every Taylor coefficient at p by the Cauchy estimate. The derivative of the subtracted pole contributes the term c(z)(−1)ⁿn!/(p−z)ⁿ⁺¹.
+
+Write d=|p−z| and J(n)=(p−z)ⁿ⁺¹(−1)ⁿF⁽ⁿ⁾(p)/n!. The same constant B bounds |J(n)−c(z)| by Bd(d/r)ⁿ for all n. If d<r, these complex coefficients converge to the residue c(z). The residue is nonzero, so |J(n)| is at least |c(z)|/2 for all sufficiently large n.
 
 ## References
 
