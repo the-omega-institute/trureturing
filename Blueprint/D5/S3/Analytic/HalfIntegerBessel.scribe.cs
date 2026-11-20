@@ -51,7 +51,30 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
                 "At order nu = m+1/2 and on Re z > 0, the derivative of K' is "
                 + "(1+nu^2/z^2) K - K'/z. Differentiating the finite carrier twice "
                 + "reduces the equation to the rational polynomial equation at 1/z.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
+            Node("order", "Real order", "The order nu is m + 1/2.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("S", "Phase root", "S(w) is the principal square root of 1 + w^2.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("S_re_pos", "Sign of the phase root",
+                "If Re w > 0, then Re S(w) > 0. The radicand lies in the slit plane.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("eta", "Phase", "The phase is S(w) + Log w - Log(1 + S(w)), with principal logarithms.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("eta_eq_log_div", "Principal logarithm of the phase quotient",
+                "On Re w > 0 the phase is S(w) + Log(w / (1 + S(w))).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("hasDerivAt_eta", "Phase derivative",
+                "On Re w > 0 the derivative of the phase is S(w) / w.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("F_K", "Normalized decaying amplitude",
+                "F_K is sqrt(2 nu / pi) sqrt(S(w)) exp(nu eta(w)) K_m(nu w). "
+                + "The first root is real and the second is principal complex.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("F_K_eq_carrier", "Canceled normalization of the decaying amplitude",
+                "On Re w > 0, F_K is sqrt(S(w)) / sqrt(w) times exp(nu (eta(w) - w)) "
+                + "times P_m(1 / (nu w)). Positive real scaling factors out of the principal root.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
 
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role, AssessedProvenance provenance) =>

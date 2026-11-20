@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Complex half-integer modified Bessel carriers and their Wronskians. -/
+   digest: Finite complex half-integer Bessel carriers, Wronskians, and Liouville–Green normalization. -/
 module
 
 public import D5.S3.Analytic.HalfIntegerBesselPolynomial
 public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Analysis.Complex.SqrtDeriv
 import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
@@ -198,5 +199,140 @@ theorem hasDerivAt_deriv_K (m : ℕ) {z : ℂ} (hz : 0 < z.re) :
         amplitude z * (slope z * polynomial z - z⁻¹ ^ 2 * polynomial' z) / z
   simp only [slope, Nat.reduceSub, Nat.cast_ofNat, pow_one, inv_pow, div_eq_mul_inv]
   linear_combination (amplitude z * z⁻¹ ^ 2) * hpoly
+
+section LiouvilleGreen
+
+/-- The positive real order used to scale the carrier argument. -/
+noncomputable def order (m : ℕ) : ℝ := (m : ℝ) + 1 / 2
+
+/-- The principal square root in the Liouville–Green change of variable. -/
+noncomputable def S (w : ℂ) : ℂ := Complex.sqrt (1 + w ^ 2)
+
+/-- The Liouville–Green phase on the right half-plane. -/
+noncomputable def eta (w : ℂ) : ℂ := S w + Complex.log w - Complex.log (1 + S w)
+
+private theorem order_pos (m : ℕ) : 0 < order m := by
+  unfold order
+  positivity
+
+private theorem one_add_sq_mem_slitPlane {w : ℂ} (hw : 0 < w.re) :
+    1 + w ^ 2 ∈ Complex.slitPlane := by
+  rw [Complex.mem_slitPlane_iff]
+  by_cases him : w.im = 0
+  · left
+    simp only [pow_two, Complex.add_re, Complex.one_re, Complex.mul_re, him, mul_zero, sub_zero]
+    positivity
+  · right
+    simp only [pow_two, Complex.add_im, Complex.one_im, zero_add, Complex.mul_im]
+    rw [show w.re * w.im + w.im * w.re = 2 * w.re * w.im by ring]
+    exact mul_ne_zero (mul_ne_zero (by norm_num) hw.ne') him
+
+private theorem sqrt_re_pos_of_mem_slitPlane {z : ℂ} (hz : z ∈ Complex.slitPlane) :
+    0 < (Complex.sqrt z).re := by
+  rw [Complex.sqrt, Complex.cpow_def_of_ne_zero (Complex.slitPlane_ne_zero hz), Complex.exp_re]
+  apply mul_pos (Real.exp_pos _)
+  apply Real.cos_pos_of_mem_Ioo
+  have hlow := Complex.neg_pi_lt_arg z
+  have hhigh := lt_of_le_of_ne (Complex.arg_le_pi z) (Complex.slitPlane_arg_ne_pi hz)
+  simp only [Complex.mul_im, Complex.log_im]
+  norm_num
+  constructor <;> linarith
+
+/-- The phase root stays in the open right half-plane. -/
+theorem S_re_pos {w : ℂ} (hw : 0 < w.re) : 0 < (S w).re :=
+  sqrt_re_pos_of_mem_slitPlane (one_add_sq_mem_slitPlane hw)
+
+private theorem one_add_S_re_pos {w : ℂ} (hw : 0 < w.re) : 0 < (1 + S w).re := by
+  simpa only [Complex.add_re, Complex.one_re] using add_pos zero_lt_one (S_re_pos hw)
+
+private theorem S_sq (w : ℂ) : S w ^ 2 = 1 + w ^ 2 := sqrt_sq _
+
+private theorem hasDerivAt_principalSqrt {z : ℂ} (hz : z ∈ Complex.slitPlane) :
+    HasDerivAt Complex.sqrt (1 / (2 * Complex.sqrt z)) z := by
+  have h := Complex.hasDerivAt_sqrt hz
+  rw [show (-1 / 2 : ℂ) = -(2⁻¹) by norm_num, Complex.cpow_neg] at h
+  refine h.congr_deriv ?_
+  change (Complex.sqrt z)⁻¹ / 2 = 1 / (2 * Complex.sqrt z)
+  ring
+
+private theorem hasDerivAt_S {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt S (w / S w) w := by
+  have harg : HasDerivAt (fun t : ℂ => 1 + t ^ 2) (2 * w) w := by
+    simpa using ((hasDerivAt_id w).pow 2).const_add 1
+  refine ((hasDerivAt_principalSqrt (one_add_sq_mem_slitPlane hw)).comp w harg).congr_deriv ?_
+  change 1 / (2 * S w) * (2 * w) = w / S w
+  ring
+
+private theorem log_div_of_re_pos {x y : ℂ} (hx : 0 < x.re) (hy : 0 < y.re) :
+    Complex.log (x / y) = Complex.log x - Complex.log y := by
+  have hy0 := arg_ne_zero hy
+  have hxarg := abs_lt.mp (Complex.abs_arg_lt_pi_div_two_iff.mpr (Or.inl hx))
+  have hyarg := abs_lt.mp (Complex.abs_arg_lt_pi_div_two_iff.mpr (Or.inl hy))
+  have hyarg' : y.arg ≠ Real.pi := Complex.slitPlane_arg_ne_pi
+    (Complex.mem_slitPlane_iff.mpr (Or.inl hy))
+  rw [div_eq_mul_inv, Complex.log_mul (arg_ne_zero hx) (inv_ne_zero hy0), Complex.log_inv _ hyarg',
+    sub_eq_add_neg]
+  rw [Complex.arg_inv, ite_eq_right hyarg']
+  exact ⟨by linarith [hxarg.1, hyarg.2], by linarith [hxarg.2, hyarg.1]⟩
+
+/-- The principal logarithms in the phase combine to the logarithm of the quotient. -/
+theorem eta_eq_log_div {w : ℂ} (hw : 0 < w.re) :
+    eta w = S w + Complex.log (w / (1 + S w)) := by
+  rw [eta, log_div_of_re_pos hw (one_add_S_re_pos hw)]
+  ring
+
+/-- The phase derivative is the principal-root factor divided by the argument. -/
+theorem hasDerivAt_eta {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt eta (S w / w) w := by
+  have hs := hasDerivAt_S hw
+  have hlog := Complex.hasDerivAt_log (Complex.mem_slitPlane_iff.mpr (Or.inl hw))
+  have hlog' := (Complex.hasDerivAt_log
+    (Complex.mem_slitPlane_iff.mpr (Or.inl (one_add_S_re_pos hw)))).comp w (hs.const_add 1)
+  refine ((hs.add hlog).sub hlog').congr_deriv ?_
+  change w / S w + w⁻¹ - (1 + S w)⁻¹ * (w / S w) = S w / w
+  field_simp [arg_ne_zero hw, arg_ne_zero (S_re_pos hw), arg_ne_zero (one_add_S_re_pos hw)]
+  linear_combination -(S w) * S_sq w
+
+private theorem sqrt_real_mul {a : ℝ} (ha : 0 < a) {w : ℂ} (hw : 0 < w.re) :
+    Complex.sqrt ((a : ℂ) * w) = (Real.sqrt a : ℂ) * Complex.sqrt w := by
+  have hr : 0 < ((Real.sqrt a : ℂ) * Complex.sqrt w).re := by
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    exact mul_pos (Real.sqrt_pos.mpr ha)
+      (sqrt_re_pos_of_mem_slitPlane (Complex.mem_slitPlane_iff.mpr (Or.inl hw)))
+  have hs : ((Real.sqrt a : ℂ) * Complex.sqrt w) ^ 2 = (a : ℂ) * w := by
+    rw [mul_pow, sqrt_sq, ← Complex.ofReal_pow, Real.sq_sqrt ha.le]
+  rw [← hs]
+  exact Complex.sq_cpow_two_inv hr
+
+/-- The normalized decaying amplitude in the phase variable. -/
+noncomputable def F_K (m : ℕ) (w : ℂ) : ℂ :=
+  (Real.sqrt (2 * order m / Real.pi) : ℂ) * Complex.sqrt (S w) *
+    Complex.exp ((order m : ℂ) * eta w) * K m ((order m : ℂ) * w)
+
+/-- The normalized decaying amplitude with the positive real scaling canceled. -/
+theorem F_K_eq_carrier (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    F_K m w = (Complex.sqrt (S w) / Complex.sqrt w) *
+      Complex.exp ((order m : ℂ) * (eta w - w)) *
+      aeval (((order m : ℂ) * w)⁻¹) (carrier m) := by
+  have hν := order_pos m
+  have hνsqrt : (Real.sqrt (order m) : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr hν).ne'
+  have hnorm : (Real.sqrt (2 * order m / Real.pi) : ℂ) * (Real.sqrt (Real.pi / 2) : ℂ) =
+      (Real.sqrt (order m) : ℂ) := by
+    rw [← Complex.ofReal_mul, ← Real.sqrt_mul (by positivity)]
+    congr 2
+    field_simp [Real.pi_ne_zero]
+  rw [F_K, K, prefactor, sqrt_real_mul hν hw, mul_sub, Complex.exp_sub]
+  simp only [div_eq_mul_inv, Complex.exp_neg]
+  rw [mul_inv_rev (Real.sqrt (order m) : ℂ) (Complex.sqrt w)]
+  calc
+    _ = ((Real.sqrt (2 * order m / Real.pi) : ℂ) * (Real.sqrt (Real.pi / 2) : ℂ)) *
+        (Real.sqrt (order m) : ℂ)⁻¹ *
+        ((Complex.sqrt (S w) * (Complex.sqrt w)⁻¹) *
+          (Complex.exp ((order m : ℂ) * eta w) * (Complex.exp ((order m : ℂ) * w))⁻¹) *
+          aeval (((order m : ℂ) * w)⁻¹) (carrier m)) := by ring
+    _ = _ := by rw [hnorm, mul_inv_cancel₀ hνsqrt, one_mul]
+
+end LiouvilleGreen
 
 end D5.S3.Analytic.HalfIntegerBessel
