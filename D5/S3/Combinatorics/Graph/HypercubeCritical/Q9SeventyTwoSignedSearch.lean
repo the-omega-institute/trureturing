@@ -21,7 +21,7 @@ open private cubeParity cubeParity_ne_of_adj from
 open private flip_comm adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private matrix_true_prefix from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangIntegralSwitching
 open private theta theta_unit from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning
 open private diff diff_of_adj_flip from
