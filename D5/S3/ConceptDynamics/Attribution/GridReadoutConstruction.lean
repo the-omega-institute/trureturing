@@ -6,9 +6,7 @@
    utility: none
    digest: Equivariant calibration from common scaled stabilizer-block allocations. -/
 
-import D5.S3.Combinatorics.Partitions.CommonBlockWeights
 import D5.S3.Combinatorics.Partitions.StabilizerFactorialDivisibility
-import D5.S3.ConceptDynamics.Attribution.PrimeCycleSeedFreeness
 import D5.S3.ConceptDynamics.Attribution.ThreeOutcomeGridSupport
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -176,7 +174,7 @@ private theorem group_mass {I : Type*} [Fintype I] (p : I → ℕ) :
 noncomputable instance {I : Type*} [Fintype I] (p : I → ℕ) : Fintype (Preserving p) :=
   Fintype.ofFinite _
 
-theorem preserving_card {I : Type*} [Fintype I] [DecidableEq I] (p : I → ℕ) :
+private theorem preserving_card {I : Type*} [Fintype I] [DecidableEq I] (p : I → ℕ) :
     Fintype.card (Preserving p) = ∏ b : Groups p, (size p b)! := by
   classical
   calc
@@ -390,18 +388,6 @@ abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
 abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
     Profile I m :=
   ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
-
-/-- A shared positive seed law exactly calibrated on all profiles of a sufficiently divisible
-denominator has trivial seed stabilizers. -/
-theorem trivial_seed_stabilizers {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S] [MulAction (Equiv.Perm I) S]
-    {m : ℕ} (divisible : ∀ d : ℕ, 0 < d → d ≤ Fintype.card I → d ∣ m)
-    (w : S → ℝ) (positive : ∀ s, 0 < w s)
-    (f : Profile I m → S → I)
-    (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
-    (equivariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
-    ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥ :=
-  PrimeCycleSeedFreeness.free_of_prime_divisibility
-    (fun p prime le => divisible p prime.pos le) w positive f calibrated equivariant
 
 end PermutationGrid
 

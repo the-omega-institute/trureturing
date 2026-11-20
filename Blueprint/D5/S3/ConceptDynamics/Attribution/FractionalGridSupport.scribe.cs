@@ -23,7 +23,7 @@ internal sealed class FractionalGridSupportDocument : IScribeDocumentDefinition
                         "Take at least two labels and a positive natural number q. The denominator "
                         + "m is (k minus one) times q. PrimeDivisibility means every prime at most k "
                         + "divides m. The budget is k factorial times n plus one, with n plus one "
-                        + "as the orbit count. SeedBudget uses the same shared calibrating law.")),
+                        + "as the upper bound on the number of orbits. SeedBudget uses the same shared calibrating law.")),
                     Paragraph(Text(
                         "The prime-cycle test forces regular seed orbits. Profiles with k minus one "
                         + "tied labels require all q plus one integer levels. The weights of the "

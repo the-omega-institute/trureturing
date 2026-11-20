@@ -14,7 +14,7 @@ $$\forall k q n, 2 \le k \land 0 < q \land \operatorname{PrimeDivisibility}\left
 
 *Commentary.*
 
-Take at least two labels and a positive natural number q. The denominator m is (k minus one) times q. PrimeDivisibility means every prime at most k divides m. The budget is k factorial times n plus one, with n plus one as the orbit count. SeedBudget uses the same shared calibrating law.
+Take at least two labels and a positive natural number q. The denominator m is (k minus one) times q. PrimeDivisibility means every prime at most k divides m. The budget is k factorial times n plus one, with n plus one as the upper bound on the number of orbits. SeedBudget uses the same shared calibrating law.
 
 The prime-cycle test forces regular seed orbits. Profiles with k minus one tied labels require all q plus one integer levels. The weights of the orbit digits sum to q divided by k. Its reduced denominator is k divided by the greatest common divisor of k and q. Apply the integer-level capacity bound to these weights and the tied profiles.
 
@@ -23,5 +23,7 @@ For attainment, write q divided by k as A divided by b in lowest terms. Use the 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/FractionalGridSupport.fractional_grid_budget_iff`
+- Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/SubsetSpectrum/AdditiveDigitCapacity](../../Combinatorics/SubsetSpectrum/AdditiveDigitCapacity.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/PermutationGridSupport](PermutationGridSupport.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/PrimeCycleSeedFreeness](PrimeCycleSeedFreeness.md)

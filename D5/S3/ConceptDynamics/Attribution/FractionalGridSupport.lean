@@ -7,6 +7,8 @@
    digest: Sharp permutation-equivariant grid budgets with fractional orbit weights. -/
 
 import D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
+import D5.S3.Combinatorics.Partitions.CommonBlockWeights
+import D5.S3.ConceptDynamics.Attribution.PrimeCycleSeedFreeness
 import D5.S3.Combinatorics.SubsetSpectrum.AdditiveDigitCapacity
 import Mathlib.Tactic.LinearCombination
 

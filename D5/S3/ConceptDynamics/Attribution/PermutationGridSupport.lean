@@ -7,6 +7,7 @@
    digest: Sharp finite seed budgets for exact calibration under all outcome permutations. -/
 
 import D5.S3.ConceptDynamics.Attribution.GridReadoutConstruction
+import D5.S3.Combinatorics.Partitions.CommonBlockWeights
 import D5.S3.Combinatorics.Partitions.StabilizerFactorialDivisibility
 import D5.S3.ConceptDynamics.Attribution.PrimeCycleSeedFreeness
 import D5.S3.ConceptDynamics.Attribution.ThreeOutcomeGridSupport
@@ -202,6 +203,22 @@ theorem weighted_orbit_spectrum {I S : Type*} [Fintype I] [DecidableEq I] [Finty
     calc
       _ = ∑ j : J, ((digit l j).val : ℝ) * weight j := h
       _ = _ := by simpa only [weight, mul_assoc] using weighted l
+
+namespace PermutationGrid
+
+/-- A shared positive seed law exactly calibrated on all profiles of a sufficiently divisible
+denominator has trivial seed stabilizers. -/
+private theorem trivial_seed_stabilizers {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S] [MulAction (Equiv.Perm I) S]
+    {m : ℕ} (divisible : ∀ d : ℕ, 0 < d → d ≤ Fintype.card I → d ∣ m)
+    (w : S → ℝ) (positive : ∀ s, 0 < w s)
+    (f : Profile I m → S → I)
+    (calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
+    (equivariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)) :
+    ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥ :=
+  PrimeCycleSeedFreeness.free_of_prime_divisibility
+    (fun p prime le => divisible p prime.pos le) w positive f calibrated equivariant
+
+end PermutationGrid
 
 private theorem grid_lower {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
     [MulAction (Equiv.Perm I) S] (two : 2 ≤ Fintype.card I)

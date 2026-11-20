@@ -21,7 +21,5 @@ For each profile, split the labels into equal-coordinate groups. The group deman
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/GridReadoutConstruction.law_of_scaled_block_allocations`
-- Dependency: [D5/S3/Combinatorics/Partitions/CommonBlockWeights](../../Combinatorics/Partitions/CommonBlockWeights.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/StabilizerFactorialDivisibility](../../Combinatorics/Partitions/StabilizerFactorialDivisibility.md)
-- Dependency: [D5/S3/ConceptDynamics/Attribution/PrimeCycleSeedFreeness](PrimeCycleSeedFreeness.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ThreeOutcomeGridSupport](ThreeOutcomeGridSupport.md)
