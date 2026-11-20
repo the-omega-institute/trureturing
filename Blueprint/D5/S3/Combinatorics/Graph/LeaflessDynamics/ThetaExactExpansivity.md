@@ -6,9 +6,9 @@ Sharp finite positive expansivity on parallel-edge graphs
 
 **Theorem 1.1 (A topologically exact map of order one below the valence).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.exists_exact_order_on_graph`
+Lean statement: `D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.exists_exact_order_on_graph`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.exists_exact_order_on_graph` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.exists_exact_order_on_graph` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,6 +20,6 @@ Identifying corresponding points of the negative semicircles across the labelled
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.exists_exact_order_on_graph`
-- Dependency: [D5/S1/Dynamics/Shadowing/BouquetExactExpansivity](BouquetExactExpansivity.md)
-- Dependency: [D5/S1/Dynamics/Shadowing/TripleEdgeSubdivisionRealization](TripleEdgeSubdivisionRealization.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.exists_exact_order_on_graph`
+- Dependency: [D5/S1/Dynamics/Shadowing/BouquetExactExpansivity](../../../../S1/Dynamics/Shadowing/BouquetExactExpansivity.md)
+- Dependency: [D5/S3/Combinatorics/Graph/LeaflessDynamics/TripleEdgeSubdivisionRealization](TripleEdgeSubdivisionRealization.md)

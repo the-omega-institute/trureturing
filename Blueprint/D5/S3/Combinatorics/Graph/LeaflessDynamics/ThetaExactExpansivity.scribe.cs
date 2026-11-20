@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LeaflessDynamics;
 
 internal sealed class ThetaExactExpansivityDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class ThetaExactExpansivityDocument : IScribeDocumentDefinition
         H("Sharp finite positive expansivity on parallel-edge graphs"),
         Blocks(Describe.Lean(
             DescribeId.Create("parallel-edge-graph-exact-bowen-order"),
-            DeclarationHandle.Create("D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.exists_exact_order_on_graph"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.exists_exact_order_on_graph"),
             H("A topologically exact map of order one below the valence"),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(

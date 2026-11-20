@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/Shadowing/ThetaExactExpansivity
+/- GID: D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Shadowing/ThetaExactExpansivity
+   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -8,7 +8,7 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S1.Dynamics.Shadowing.BouquetExactExpansivity
-import D5.S1.Dynamics.Shadowing.TripleEdgeSubdivisionRealization
+import D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivisionRealization
 
 /-!
 The tour on the bouquet descends after identifying the copies of the negative
@@ -22,8 +22,9 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Function Set Topology
+open D5.S1.Dynamics.Shadowing
 
-namespace D5.S1.Dynamics.Shadowing.ThetaExactExpansivity
+namespace D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity
 
 open CircleFinitePositiveExpansiveness (Circle project continuous_project
   coordinate coordinate_mem project_coordinate project_dist_eq)
@@ -254,7 +255,7 @@ section GraphRealization
 open D5.S3.ConceptDynamics.Coding.EssentialWordRealization (DirectedMultigraph)
 open TripleEdgeSubdivisionRealization (realization)
 open private normal zeroParam oneParam from
-  D5.S1.Dynamics.Shadowing.TripleEdgeSubdivisionRealization
+  D5.S3.Combinatorics.Graph.LeaflessDynamics.TripleEdgeSubdivisionRealization
 
 /-- Two distinct vertices joined by `m` labelled positive edges and one common negative edge. -/
 def parallelGraph (m : ℕ) : DirectedMultigraph Bool (Fin m ⊕ PUnit) where
@@ -437,31 +438,31 @@ theorem exists_exact_order_on_graph (hm : 2 ≤ m) :
 end GraphRealization
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.ThetaExactExpansivity.coalescing_fibre'
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity.coalescing_fibre'
 depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms coalescing_fibre
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.ThetaExactExpansivity.exact_order'
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity.exact_order'
 depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms exact_order
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.ThetaExactExpansivity.graphHomeomorph'
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity.graphHomeomorph'
 depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms graphHomeomorph
 
 /--
-info: 'D5.S1.Dynamics.Shadowing.ThetaExactExpansivity.exists_exact_order_on_graph'
+info: 'D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity.exists_exact_order_on_graph'
 depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms exists_exact_order_on_graph
 
-end D5.S1.Dynamics.Shadowing.ThetaExactExpansivity
+end D5.S3.Combinatorics.Graph.LeaflessDynamics.ThetaExactExpansivity

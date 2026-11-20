@@ -163,7 +163,7 @@ identifying the sheets over one semicircle. Multiplication by m on the
 projected circle gives the upper bound, and m points on distinct arms
 coalesce in one step arbitrarily close to a branching vertex. The
 construction relates the exact order to the local valence m plus one.
-[Parallel-edge graph construction](../../Blueprint/D5/S1/Dynamics/Shadowing/ThetaExactExpansivity.md)
+[Parallel-edge graph construction](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.md)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
