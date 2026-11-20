@@ -220,133 +220,223 @@ section
 namespace RTWeightBudget
 open scoped BigOperators
 
-/-- Four weights in [1, 9/2] and their Frobenius budget imply the
-explicit scalar lower bound. The operator witness is not asserted here. -/
-theorem four_weight_lower_bound (w e : Fin 4 → ℝ) (p δ : ℝ)
-    (hp : 0 < p) (_hp1 : p ≤ 1) (hd : 0 ≤ δ)
-    (hl : ∀ i, 1 ≤ w i) (hu : ∀ i, w i ≤ 9/2)
-    (hW : 8*p ≤ ∑ i, w i)
-    (hbudget : (p/2)*(∑ i, w i)-2 ≤ ∑ i, w i * e i)
-    (hF : (∑ i, e i ^ 2) ≤ 2*δ^2) :
-    (12/11)*(p/2-1/(4*p)) ≤ δ := by
-  let W : ℝ := ∑ i, w i
-  let S : ℝ := ∑ i, w i * e i
-  let A : ℝ := ∑ i, w i ^ 2
-  let B : ℝ := ∑ i, e i ^ 2
-  change 8*p ≤ W at hW
-  change (p/2)*W-2 ≤ S at hbudget
-  change B ≤ 2*δ^2 at hF
-  have hA : A ≤ (11/2)*W-18 := by
+/-- Four signed aligned errors explain the full sharp real-plaquette
+constant when both a coherent budget and a squared budget are available. -/
+theorem sharp_zero_phase_of_square_and_sum (e : Fin 4 → ℝ) (δ : ℝ)
+    (hδ' : δ < 1/2)
+    (hentry : ∀ i, e i ≤ δ)
+    (hcoherent : (∑ i, e i) ≤ 2 * δ)
+    (hF : (∑ i, (e i)^2) ≤ 2 * δ^2)
+    (hsqrt : (∑ i, Real.sqrt (1/2 - e i)) ≤ 2) :
+    Real.sqrt 2 - 1 ≤ δ := by
+  let s := Real.sqrt (1/2)
+  let b := Real.sqrt (1/2 - δ)
+  let x (i : Fin 4) := Real.sqrt (1/2 - e i)
+  have hs : 0 < s := Real.sqrt_pos.2 (by norm_num)
+  have hss : s^2 = 1/2 := Real.sq_sqrt (by norm_num)
+  have hb : 0 ≤ b := Real.sqrt_nonneg _
+  have hbb : b^2 = 1/2 - δ := Real.sq_sqrt (by linarith)
+  have hxx (i : Fin 4) : (x i)^2 = 1/2 - e i :=
+    Real.sq_sqrt (by linarith [hentry i])
+  have hbx (i : Fin 4) : b ≤ x i := Real.sqrt_le_sqrt (by linarith [hentry i])
+  have hsb : 0 < s + b := by positivity
+  have hM : 0 < (s+b)^2 := pow_pos hsb 2
+  have hentry' (i : Fin 4) : (s+b)^2 * (s-x i)^2 ≤ (e i)^2 := by
+    have hle : (s+b)^2 ≤ (s+x i)^2 :=
+      pow_le_pow_left₀ hsb.le (add_le_add le_rfl (hbx i)) 2
+    apply (mul_le_mul_of_nonneg_right hle (sq_nonneg (s-x i))).trans
+    rw [← mul_pow]
+    have hprod : (s+x i)*(s-x i) = e i := by
+      linear_combination hss - hxx i
+    rw [hprod]
+  have hdiff : (∑ i, (s-x i)^2) ≤ 2*(s-b)^2 := by
+    apply (mul_le_mul_iff_of_pos_left hM).mp
+    rw [Finset.mul_sum]
     calc
-      A ≤ ∑ i : Fin 4, ((11/2)*w i-9/2) := by
-        apply Finset.sum_le_sum
-        intro i _
-        nlinarith [mul_nonneg (sub_nonneg.mpr (hl i)) (sub_nonneg.mpr (hu i))]
-      _ = (11/2)*W-18 := by
-        simp [W, Finset.sum_sub_distrib, Finset.mul_sum]
+      (∑ i, (s+b)^2 * (s-x i)^2) ≤ ∑ i, (e i)^2 :=
+        Finset.sum_le_sum fun i _ => hentry' i
+      _ ≤ 2*δ^2 := hF
+      _ = (s+b)^2 * (2*(s-b)^2) := by
+        have hprod : (s+b)*(s-b) = δ := by linear_combination hss - hbb
+        rw [← hprod]
         ring
-  have hW0 : 0 ≤ W := by linarith
-  have hA0 : 0 ≤ A := Finset.sum_nonneg (fun i _ => sq_nonneg (w i))
-  have hs : S^2 ≤ A*B := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ w e
-  have hcap : 2*A ≤ ((11/12)*W)^2 := by
-    nlinarith [sq_nonneg ((11/12)*W-6)]
-  have hsq : S^2 ≤ (((11/12)*W)*δ)^2 := by
+  have hexpand (i : Fin 4) : e i + (s-x i)^2 = 2*s*(s-x i) := by
+    linear_combination hxx i - hss
+  have hsum : (∑ i : Fin 4, (e i + (s-x i)^2)) = ∑ i : Fin 4, 2*s*(s-x i) :=
+    Finset.sum_congr rfl (fun i _ => hexpand i)
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hsum
+  change (∑ i, x i) ≤ 2 at hsqrt
+  have hmul := mul_le_mul_of_nonneg_left hsqrt (show 0 ≤ 2*s by positivity)
+  have hsb' : 2*s*b ≤ 2*s*(1-s) := by
+    norm_num at hsum
+    nlinarith only [hss, hbb, hsum, hcoherent, hdiff, hmul]
+  have hbs : b ≤ 1-s := (mul_le_mul_iff_of_pos_left (show 0 < 2*s by positivity)).mp
+    (by simpa only [mul_assoc] using hsb')
+  have hsquare : b^2 ≤ (1-s)^2 := pow_le_pow_left₀ hb hbs 2
+  have hrs : Real.sqrt 2 = 2*s := by
+    apply (sq_eq_sq₀ (Real.sqrt_nonneg 2) (by positivity)).mp
+    rw [Real.sq_sqrt (by norm_num)]
+    nlinarith only [hss]
+  rw [hrs]
+  nlinarith only [hsquare, hss, hbb]
+
+private theorem sharp_zero_phase_gauge (r y e : Fin 4 → ℝ) (δ : ℝ)
+    (hδ : δ < 1 / 2) (hr : ∀ i, 0 ≤ r i)
+    (hrsum : (∑ i, r i) ≤ 2) (hysum : (∑ i, y i) ≤ 2)
+    (hg : ∀ i, r i * y i = 1 / 2 - e i)
+    (he : ∀ i, e i ≤ δ) (hcoherent : (∑ i, e i) ≤ 2 * δ)
+    (hF : (∑ i, (e i)^2) ≤ 2 * δ^2) :
+    Real.sqrt 2 - 1 ≤ δ := by
+  have hy (i : Fin 4) : 0 ≤ y i := by
+    have hprod : 0 < r i * y i := by rw [hg i]; linarith [he i]
+    exact (pos_of_mul_pos_right hprod (hr i)).le
+  let q : Fin 4 → ℝ := fun i => Real.sqrt (1 / 2 - e i)
+  have hq (i : Fin 4) : (q i)^2 ≤ r i * y i := by
+    rw [hg i]
+    exact (Real.sq_sqrt (by linarith [he i])).le
+  have hcs := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+    (fun i _ => hr i) (fun i _ => hy i) (fun i _ => hq i)
+  have hy0 : 0 ≤ ∑ i, y i := Finset.sum_nonneg fun i _ => hy i
+  have hprod : (∑ i, r i) * (∑ i, y i) ≤ 4 := by
     calc
-      S^2 ≤ A*B := hs
-      _ ≤ A*(2*δ^2) := mul_le_mul_of_nonneg_left hF hA0
-      _ = (2*A)*δ^2 := by ring
-      _ ≤ ((11/12)*W)^2 * δ^2 := mul_le_mul_of_nonneg_right hcap (sq_nonneg δ)
-      _ = (((11/12)*W)*δ)^2 := by ring
-  have hs' : S ≤ ((11/12)*W)*δ := by
-    have hnon : 0 ≤ ((11/12)*W)*δ := mul_nonneg (mul_nonneg (by norm_num) hW0) hd
-    by_contra! hlt
-    have hpos := mul_pos (sub_pos.mpr hlt) (show 0 < S+((11/12)*W)*δ by linarith)
-    nlinarith
-  have hrecip : 2 ≤ (1/(4*p))*W := by
-    have hm := mul_le_mul_of_nonneg_left hW (show 0 ≤ 1/(4*p) by positivity)
-    calc
-      2 = (1/(4*p))*(8*p) := by field_simp; ring
-      _ ≤ _ := hm
-  have hscaled : (p/2-1/(4*p))*W ≤ ((11/12)*δ)*W := by
-    calc
-      (p/2-1/(4*p))*W ≤ (p/2)*W-2 := by rw [sub_mul]; linarith
-      _ ≤ S := hbudget
-      _ ≤ ((11/12)*δ)*W := by convert hs' using 1; ring
-  have hWpos : 0 < W := by linarith
-  have hfinal := le_of_mul_le_mul_right hscaled hWpos
-  linarith
+      _ ≤ 2 * (∑ i, y i) := mul_le_mul_of_nonneg_right hrsum hy0
+      _ ≤ _ := by linarith
+  have hsum : (∑ i, q i) ≤ 2 :=
+    (sq_le_sq₀ (Finset.sum_nonneg fun i _ => Real.sqrt_nonneg _) (by norm_num)).mp
+      (by norm_num; exact hcs.trans hprod)
+  exact sharp_zero_phase_of_square_and_sum e δ hδ he hcoherent hF hsum
 
-end RTWeightBudget
-
-end
-
-section
-
-namespace RTWeightBudget
-open scoped BigOperators
-
-/-- Scalar reduction of the opposite-phase gauge. The modulus floor and
-the reciprocal and second-block budgets are the operator interface. -/
-theorem one_party_gauge_block_lower (r y e : Fin 4 → ℝ) (p δ : ℝ)
-    (hp : 0 < p) (hp1 : p ≤ 1) (hd : 0 ≤ δ)
-    (hr : ∀ i, 1/2-δ ≤ r i ∧ r i ≤ 1)
-    (hg : ∀ i, r i * y i = p/2-e i)
-    (hy : (∑ i, y i) ≤ 2)
-    (hW : 8*p ≤ ∑ i, 1/r i)
-    (hF : (∑ i, e i ^ 2) ≤ 2*δ^2) :
-    (12/11)*(p/2-1/(4*p)) ≤ δ := by
-  by_cases hsmall : δ < 5/18
-  · have hrpos (i : Fin 4) : 0 < r i := by linarith [(hr i).1]
-    let w : Fin 4 → ℝ := fun i => 1/r i
-    have hwlow (i : Fin 4) : 1 ≤ w i :=
-      (le_div_iff₀ (hrpos i)).2 (by simpa using (hr i).2)
-    have hwup (i : Fin 4) : w i ≤ 9/2 :=
-      (div_le_iff₀ (hrpos i)).2 (by linarith [(hr i).1])
-    have hpoint (i : Fin 4) : w i * e i = (p/2)*w i-y i := by
-      have hi := hg i
-      dsimp [w]
-      field_simp [ne_of_gt (hrpos i)]
-      linarith
-    have hbudget : (p/2)*(∑ i, w i)-2 ≤ ∑ i, w i * e i := by
-      simp_rw [hpoint]
-      rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
-      linarith
-    exact four_weight_lower_bound w e p δ hp hp1 hd hwlow hwup hW hbudget hF
-  · have hrec : (1/4 : ℝ) ≤ 1/(4*p) :=
-      (le_div_iff₀ (by positivity)).2 (by linarith)
-    linarith
-
+/-- The reciprocal variance budget gives a strict improvement over the
+interval-only weight bound. The four denominators have arithmetic mean at most
+one after normalization; their reciprocals then have a controlled second moment. -/
 theorem one_party_gauge_block_lower_of_sum (r y e : Fin 4 → ℝ) (p δ : ℝ)
     (hp : 0 < p) (hp1 : p ≤ 1) (hd : 0 ≤ δ)
-    (hr : ∀ i, 1/2-δ ≤ r i ∧ r i ≤ 1)
+    (hr : ∀ i, 1/2-δ ≤ r i)
     (hg : ∀ i, r i * y i = p/2-e i)
     (hy : (∑ i, y i) ≤ 2)
     (hsum : (∑ i, r i) ≤ 2/p)
     (hF : (∑ i, e i ^ 2) ≤ 2*δ^2) :
-    (12/11)*(p/2-1/(4*p)) ≤ δ := by
-  by_cases hsmall : δ < 5/18
-  · have hrpos (i : Fin 4) : 0 < r i := by linarith [(hr i).1]
-    have hprod : (16 : ℝ) ≤ (∑ i, r i) * ∑ i, 1 / r i := by
-      have hcs := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul
-        (r := fun _ : Fin 4 => (1 : ℝ)) (f := r) (g := fun i => 1 / r i)
-        Finset.univ
-        (fun i _ => (hrpos i).le)
-        (fun i _ => div_nonneg (by norm_num) (hrpos i).le)
-        (fun i _ => by rw [mul_one_div_cancel (ne_of_gt (hrpos i)), one_pow])
-      norm_num at hcs
-      simpa only [one_div] using hcs
-    have hW0 : 0 ≤ ∑ i, 1 / r i :=
-      Finset.sum_nonneg (fun i _ => div_nonneg (by norm_num) (hrpos i).le)
-    have hb := hprod.trans (mul_le_mul_of_nonneg_right hsum hW0)
-    have hW : 8*p ≤ ∑ i, 1/r i := by
-      have h := mul_le_mul_of_nonneg_right hb hp.le
-      have he : (2/p)*p = 2 := div_mul_cancel₀ _ hp.ne'
-      rw [mul_right_comm, he] at h
-      linarith
-    exact one_party_gauge_block_lower r y e p δ hp hp1 hd hr hg hy hW hF
-  · have hrec : (1/4 : ℝ) ≤ 1/(4*p) :=
-      (le_div_iff₀ (by positivity)).2 (by linarith)
+    Real.sqrt 2 * (p/2-1/(4*p)) ≤ δ := by
+  let d : ℝ := p/2-1/(4*p)
+  change Real.sqrt 2 * d ≤ δ
+  by_contra! hlt
+  have hsqrt : Real.sqrt (2 : ℝ) ≤ 2 := by
+    apply (sq_le_sq₀ (Real.sqrt_nonneg _) (by norm_num)).mp
+    rw [Real.sq_sqrt (by norm_num)]
+    norm_num
+  have hrec : (1/4 : ℝ) ≤ 1/(4*p) :=
+    (le_div_iff₀ (by positivity)).2 (by linarith)
+  have hsmall : δ < 1/2 := by
+    have h := mul_le_mul_of_nonneg_left (show d ≤ 1/4 by dsimp [d]; linarith)
+      (Real.sqrt_nonneg 2)
     linarith
+  have hpd : p*d = p^2/2-1/4 := by dsimp [d]; field_simp
+  let a : Fin 4 → ℝ := fun i => 2*p*r i
+  have ha0 (i : Fin 4) : 0 < a i := by
+    dsimp [a]
+    exact mul_pos (by positivity) (by linarith only [hr i, hsmall])
+  let t : Fin 4 → ℝ := fun i => 1/a i
+  have hat (i : Fin 4) : a i*t i = 1 := mul_one_div_cancel (ha0 i).ne'
+  have ht0 (i : Fin 4) : 0 < t i := one_div_pos.mpr (ha0 i)
+  have hsa : (∑ i, a i) ≤ 4 := by
+    simp only [a, ← Finset.mul_sum]
+    have h := mul_le_mul_of_nonneg_left hsum (show 0 ≤ 2*p by positivity)
+    have h' : 2*p*(2/p) = 4 := by field_simp; norm_num
+    rwa [h'] at h
+  let D : ℝ := (∑ i, t i)-4
+  have hD : 0 ≤ D := by
+    have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul
+      (r := fun _ : Fin 4 => (1 : ℝ)) (f := a) (g := t) Finset.univ
+      (fun i _ => (ha0 i).le) (fun i _ => (ht0 i).le)
+      (fun i _ => by rw [hat, one_pow])
+    norm_num at h
+    have htSum : 0 ≤ ∑ i, t i := Finset.sum_nonneg (fun i _ => (ht0 i).le)
+    dsimp [D]
+    linarith only [h.trans (mul_le_mul_of_nonneg_right hsa htSum)]
+  have hvariance : (∑ i, a i*(t i-1)^2) ≤ D := by
+    have hid (i : Fin 4) : a i*(t i-1)^2 = t i-2+a i := by
+      linear_combination (t i-2)*(hat i)
+    simp_rw [hid, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+    norm_num
+    dsimp [D]
+    linarith only [hsa]
+  have ht (i : Fin 4) : t i ≤ 2+D := by
+    have h₁ := Finset.single_le_sum (s := Finset.univ)
+      (f := fun j : Fin 4 => a j*(t j-1)^2)
+      (fun j _ => mul_nonneg (ha0 j).le (sq_nonneg (t j-1))) (Finset.mem_univ i)
+    have h₂ : a i*(t i-1)^2 = t i-2+a i := by
+      linear_combination (t i-2)*(hat i)
+    rw [h₂] at h₁
+    linarith only [h₁.trans hvariance, (ha0 i).le]
+  have htvar : (∑ i, (t i-1)^2) ≤ (2+D)*D := by
+    calc
+      _ ≤ ∑ i, (2+D)*(a i*(t i-1)^2) := by
+        apply Finset.sum_le_sum
+        intro i _
+        have h := mul_le_mul_of_nonneg_right (ht i)
+          (mul_nonneg (ha0 i).le (sq_nonneg (t i-1)))
+        calc
+          (t i-1)^2 = t i*(a i*(t i-1)^2) := by
+            rw [← mul_assoc, mul_comm (t i) (a i), hat, one_mul]
+          _ ≤ _ := h
+      _ ≤ _ := by
+        rw [← Finset.mul_sum]
+        exact mul_le_mul_of_nonneg_left hvariance (by linarith)
+  let A : ℝ := ∑ i, t i ^ 2
+  let S : ℝ := ∑ i, t i * e i
+  have hA : A ≤ (2+D)^2 := by
+    have h : (∑ i, (t i-1)^2) = A-2*(∑ i, t i)+4 := by
+      simp_rw [show ∀ z : ℝ, (z-1)^2 = z^2-2*z+1 by intro; ring,
+        Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
+      norm_num [A]
+    rw [h] at htvar
+    have hD' : D = (∑ i, t i)-4 := rfl
+    calc
+      A ≤ 2*(∑ i, t i)-4+(2+D)*D := by linarith only [htvar]
+      _ = (2+D)^2 := by rw [show (∑ i, t i) = D+4 by linarith only [hD']]; ring
+  have hpoint (i : Fin 4) : t i*e i = (p/2)*t i-(1/(2*p))*y i := by
+    have hh := congrArg (fun z : ℝ => t i*z) (hg i)
+    have ht' : t i*r i = 1/(2*p) := by
+      apply (eq_div_iff (show 2*p ≠ 0 by positivity)).2
+      calc
+        _ = a i*t i := by dsimp [a]; ring
+        _ = 1 := hat i
+    change t i*(r i*y i) = t i*(p/2-e i) at hh
+    rw [← mul_assoc, ht'] at hh
+    linarith only [hh]
+  have hS : 4*d+(p/2)*D ≤ S := by
+    dsimp [S]
+    simp_rw [hpoint, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    have h := mul_le_mul_of_nonneg_left hy (show 0 ≤ 1/(2*p) by positivity)
+    have he : 2*(1/(2*p)) = 1/p := by field_simp
+    rw [mul_comm _ (2 : ℝ), he] at h
+    have he' : 4*(1/(4*p)) = 1/p := by field_simp
+    dsimp [D, d]
+    nlinarith only [h, he']
+  have hscale : 2*d ≤ p/2 := by
+    have h := mul_le_mul_of_nonneg_left hp1 hp.le
+    apply le_of_mul_le_mul_left ?_ hp
+    nlinarith only [h, hpd, hp1]
+  have hSd : 2*(2+D)*d ≤ S := by
+    nlinarith only [hS, mul_le_mul_of_nonneg_right hscale hD]
+  have hA0 : 0 ≤ A := Finset.sum_nonneg (fun i _ => sq_nonneg (t i))
+  have hK : 0 < 2+D := by linarith
+  have hSq : S^2 ≤ ((2+D)*(Real.sqrt 2*δ))^2 := calc
+    _ ≤ A*(∑ i, e i^2) := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ t e
+    _ ≤ A*(2*δ^2) := mul_le_mul_of_nonneg_left hF hA0
+    _ ≤ (2+D)^2*(2*δ^2) := mul_le_mul_of_nonneg_right hA (by positivity)
+    _ = _ := by
+      rw [mul_pow, mul_pow, Real.sq_sqrt (by norm_num)]
+  have hroot := mul_lt_mul_of_pos_left hlt (Real.sqrt_pos.2 (by norm_num : (0:ℝ)<2))
+  rw [← mul_assoc, ← pow_two, Real.sq_sqrt (by norm_num)] at hroot
+  have hStrict : (2+D)*(Real.sqrt 2*δ) < S := calc
+    _ < (2+D)*(2*d) := mul_lt_mul_of_pos_left hroot hK
+    _ = 2*(2+D)*d := by ring
+    _ ≤ S := hSd
+  have hnon : 0 ≤ (2+D)*(Real.sqrt 2*δ) := by positivity
+  have hh := mul_pos (sub_pos.mpr hStrict) (show 0 < S+(2+D)*(Real.sqrt 2*δ) by linarith)
+  nlinarith only [hh, hSq]
 
 end RTWeightBudget
 
@@ -408,6 +498,24 @@ private theorem opposite_gauge_exact {x y s u : ℂ} {p : ℝ}
       exact (div_le_iff₀ hp0).2 (by simpa only [mul_comm] using hh)
     exact (sq_le_sq₀ (abs_nonneg _) (norm_nonneg _)).2 hq |>.trans_eq' (sq_abs _)
 
+private theorem projectedError_of_zero_gauge {x y s u : ℂ}
+    (h : x ≠ 0) (hs : ‖s‖ = 1) (hu : ‖u‖ = 1)
+    (hre : (s * x * u).re = ‖x‖) :
+    projectedError x y s u = ((1 / 2 : ℂ) - x * y).re := by
+  let z := s * x * u
+  have hn : ‖z‖ = ‖x‖ := by simp [z, hs, hu]
+  have hi : z.im = 0 := by
+    have he := Complex.sq_norm z
+    rw [hn, Complex.normSq_apply, hre] at he
+    have hi' : z.im ^ 2 = 0 := by nlinarith only [he]
+    simpa using hi'
+  have hz : z = ((‖x‖ : ℝ) : ℂ) := Complex.ext (by simpa [z] using hre) (by simpa using hi)
+  unfold projectedError
+  change (star z * ((1 / 2 : ℂ) - x * y)).re / ‖x‖ = _
+  rw [hz, Complex.star_def, Complex.conj_ofReal, Complex.mul_re]
+  simp only [Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  exact mul_div_cancel_left₀ _ (norm_ne_zero_iff.mpr h)
+
 private theorem contraction_entry_bounds {a b c d : ℂ} (h : IsTwoContraction a b c d) :
     ‖a‖ ≤ 1 ∧ ‖b‖ ≤ 1 ∧ ‖c‖ ≤ 1 ∧ ‖d‖ ≤ 1 := by
   have h0 := h 1 0
@@ -427,10 +535,10 @@ theorem improved_plaquette_of_frobenius {a b c d A B C D : ℂ} {δ : ℝ}
         (‖(1/2 : ℂ)-c*C‖^2 + ‖(1/2 : ℂ)-d*D‖^2) ≤ 2*δ^2) :
     let θ := plaquetteArg a b c d
     let p := Real.cos (θ/4)
-    (12/11)*(p/2-1/(4*p)) ≤ δ := by
+    Real.sqrt 2 * (p/2-1/(4*p)) ≤ δ := by
   let θ := plaquetteArg a b c d
   let p := Real.cos (θ/4)
-  change (12/11)*(p/2-1/(4*p)) ≤ δ
+  change Real.sqrt 2 * (p/2-1/(4*p)) ≤ δ
   have hθ := plaquette_arg_abs_le_pi a b c d
   change |θ| ≤ Real.pi at hθ
   have hp0 : 0 < p := by
@@ -439,9 +547,8 @@ theorem improved_plaquette_of_frobenius {a b c d A B C D : ℂ} {δ : ℝ}
     constructor <;>
       linarith [le_abs_self θ, neg_abs_le θ, Real.pi_pos]
   have hp1 : p ≤ 1 := Real.cos_le_one _
-  by_cases hsmall : δ < 5/18
-  · obtain ⟨xa,xb,xc,xd⟩ := contraction_entry_bounds hX
-    obtain ⟨ya,yb,yc,yd⟩ := contraction_entry_bounds hY
+  by_cases hsmall : δ < 1/2
+  · obtain ⟨ya,yb,yc,yd⟩ := contraction_entry_bounds hY
     have lower {x y : ℂ} (hb : ‖y‖ ≤ 1)
         (h : ‖(1/2 : ℂ)-x*y‖ ≤ δ) : 1/2-δ ≤ ‖x‖ := by
       exact (matrix_unit_product_floor h).trans
@@ -466,7 +573,7 @@ theorem improved_plaquette_of_frobenius {a b c d A B C D : ℂ} {δ : ℝ}
     apply RTWeightBudget.one_party_gauge_block_lower_of_sum r y e p δ hp0 hp1
       ((norm_nonneg _).trans h0)
     · intro i
-      fin_cases i <;> first | exact ⟨za,xa⟩ | exact ⟨zb,xb⟩ | exact ⟨zc,xc⟩ | exact ⟨zd,xd⟩
+      fin_cases i <;> first | exact za | exact zb | exact zc | exact zd
     · intro i
       fin_cases i <;> first | exact aa | exact ab | exact ac | exact ad
     · have h := (Complex.re_le_norm _).trans
@@ -486,6 +593,81 @@ theorem improved_plaquette_of_frobenius {a b c d A B C D : ℂ} {δ : ℝ}
       linarith only [aa2,ab2,ac2,ad2,hF]
   · have hrec : (1/4 : ℝ) ≤ 1/(4*p) :=
       (le_div_iff₀ (by positivity)).2 (by linarith)
+    have hsqrt : Real.sqrt (2 : ℝ) ≤ 2 := by
+      apply (sq_le_sq₀ (Real.sqrt_nonneg _) (by norm_num)).mp
+      rw [Real.sq_sqrt (by norm_num)]
+      norm_num
+    have h := mul_le_mul_of_nonneg_left
+      (show p/2-1/(4*p) ≤ 1/4 by linarith) (Real.sqrt_nonneg 2)
+    linarith
+
+/-- The zero-phase scalar endpoint uses the flat sum in addition to the
+row-wise squared error budget. -/
+theorem sharp_zero_plaquette_of_coherent {a b c d A B C D : ℂ} {δ : ℝ}
+    (hX : IsTwoContraction a b c d) (hY : IsTwoContraction A B C D)
+    (hθ : plaquetteArg a b c d = 0)
+    (h0 : ‖(1/2 : ℂ)-a*A‖ ≤ δ) (h1 : ‖(1/2 : ℂ)-b*B‖ ≤ δ)
+    (h2 : ‖(1/2 : ℂ)-c*C‖ ≤ δ) (h3 : ‖(1/2 : ℂ)-d*D‖ ≤ δ)
+    (hF : ‖(1/2 : ℂ)-a*A‖^2 + ‖(1/2 : ℂ)-b*B‖^2 +
+        (‖(1/2 : ℂ)-c*C‖^2 + ‖(1/2 : ℂ)-d*D‖^2) ≤ 2*δ^2)
+    (hcoherent : ((1/2 : ℂ)-a*A).re + ((1/2 : ℂ)-b*B).re +
+        (((1/2 : ℂ)-c*C).re + ((1/2 : ℂ)-d*D).re) ≤ 2*δ) :
+    Real.sqrt 2 - 1 ≤ δ := by
+  by_cases hsmall : δ < 1/2
+  · obtain ⟨ya,yb,yc,yd⟩ := contraction_entry_bounds hY
+    have nz {x y : ℂ} (hb : ‖y‖ ≤ 1)
+        (h : ‖(1/2 : ℂ)-x*y‖ ≤ δ) : x ≠ 0 := by
+      have lower := (matrix_unit_product_floor h).trans
+        (show ‖x‖ * ‖y‖ ≤ ‖x‖ by simpa using mul_le_mul_of_nonneg_left hb (norm_nonneg x))
+      exact norm_pos_iff.mp (by linarith)
+    have na := nz ya h0
+    have nb := nz yb h1
+    have nc := nz yc h2
+    have nd := nz yd h3
+    obtain ⟨s,t,u,v,hs,ht,hu,hv,ha,hb,hc,hd⟩ :=
+      shared_checkerboard_gauge a b c d 0 (hθ ▸ plaquette_arg_angle na nb nc nd)
+    simp only [zero_div, Real.cos_zero, one_mul] at ha hb hc hd
+    let r : Fin 4 → ℝ := ![‖a‖,‖b‖,‖c‖,‖d‖]
+    let y : Fin 4 → ℝ := ![(star s*A*star u).re, (star s*B*star v).re,
+      (star t*C*star u).re, (star t*D*star v).re]
+    let e : Fin 4 → ℝ := ![((1/2 : ℂ)-a*A).re, ((1/2 : ℂ)-b*B).re,
+      ((1/2 : ℂ)-c*C).re, ((1/2 : ℂ)-d*D).re]
+    have entry {x z l m : ℂ} (hn : x ≠ 0) (hl : ‖l‖ = 1) (hm : ‖m‖ = 1)
+        (he : (l*x*m).re = ‖x‖) :
+        ‖x‖ * (star l*z*star m).re = 1/2 - ((1/2 : ℂ)-x*z).re ∧
+        (((1/2 : ℂ)-x*z).re)^2 ≤ ‖(1/2 : ℂ)-x*z‖^2 := by
+      simpa only [projectedError_of_zero_gauge hn hl hm he] using
+        opposite_gauge_exact hn hl hm (p := 1) (by simpa using he)
+    obtain ⟨aa,aa2⟩ := entry na hs hu ha
+    obtain ⟨ab,ab2⟩ := entry nb hs hv hb
+    obtain ⟨ac,ac2⟩ := entry nc ht hu hc
+    obtain ⟨ad,ad2⟩ := entry nd ht hv hd
+    apply RTWeightBudget.sharp_zero_phase_gauge r y e δ hsmall
+    · intro i
+      fin_cases i <;> exact norm_nonneg _
+    · have h := contraction_modulus_budget hX s t u v hs ht hu hv
+          (p := 1) (by simpa using ha) (by simpa using hb) (by simpa using hc) (by simpa using hd)
+      simpa [r, Fin.sum_univ_succ, add_assoc] using h
+    · have h := (Complex.re_le_norm _).trans
+        (contraction_flat_test hY (star s) (star t) (star u) (star v)
+          (by simpa using hs) (by simpa using ht) (by simpa using hu) (by simpa using hv))
+      rw [show star s*(A*star u+B*star v)+star t*(C*star u+D*star v) =
+        ((star s*A*star u+star s*B*star v)+star t*C*star u)+star t*D*star v by ring] at h
+      simp only [Complex.add_re] at h
+      simpa [y, Fin.sum_univ_succ, add_assoc] using h
+    · intro i
+      fin_cases i <;> first | exact aa | exact ab | exact ac | exact ad
+    · intro i
+      fin_cases i <;> apply (Complex.re_le_norm _).trans <;>
+        first | exact h0 | exact h1 | exact h2 | exact h3
+    · simpa [e, Fin.sum_univ_succ, add_assoc] using hcoherent
+    · simp only [e, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+        Fin.sum_univ_zero, add_zero]
+      linarith only [aa2,ab2,ac2,ad2,hF]
+  · have hsqrt : Real.sqrt (2 : ℝ) ≤ 3/2 := by
+      apply (sq_le_sq₀ (Real.sqrt_nonneg _) (by norm_num)).mp
+      rw [Real.sq_sqrt (by norm_num)]
+      norm_num
     linarith
 
 end RTMultiFibre
@@ -501,6 +683,112 @@ open scoped Matrix ComplexOrder BigOperators
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Recovery.PrincipalTrianglePhase
+
+open NativeDiamond (matrixAction)
+
+private def flatAmp : ℂ := ((Real.sqrt 2 / 2 : ℝ) : ℂ)
+
+private theorem flatAmp_star : star flatAmp = flatAmp := by
+  simp [flatAmp]
+
+private theorem flatAmp_mul : flatAmp * flatAmp = 1/2 := by
+  rw [flatAmp, ← Complex.ofReal_mul]
+  have hs : (Real.sqrt (2:ℝ))^2 = 2 := Real.sq_sqrt (by norm_num)
+  have hh : (Real.sqrt (2:ℝ) / 2) * (Real.sqrt (2:ℝ) / 2) = 1/2 := by nlinarith
+  rw [hh]
+  norm_num
+
+private def flatTwo {a : Type*} [DecidableEq a] (i j : a) : a → ℂ :=
+  Pi.single i flatAmp + Pi.single j flatAmp
+
+private theorem flatTwo_norm {a : Type*} [Fintype a] [DecidableEq a] {i j : a} (h : i ≠ j) :
+    star (flatTwo i j) ⬝ᵥ flatTwo i j = 1 := by
+  simp only [flatTwo, dotProduct_add, dotProduct_single, Pi.star_apply, Pi.add_apply,
+    Pi.single_apply, eq_self, ite_true, h, h.symm, ite_false, zero_add, add_zero,
+    flatAmp_star, flatAmp_mul]
+  norm_num
+
+private theorem flatTwo_matrix {a : Type*} [DecidableEq a] (i j : Fin 2 → a) :
+    Matrix.vecMulVec (flatTwo (i 0) (i 1)) (star (flatTwo (j 0) (j 1))) =
+      (1/2 : ℂ) • (∑ u : Fin 2, ∑ v : Fin 2, Matrix.single (i u) (j v) (1:ℂ)) := by
+  have hcell (x y : a) :
+      Matrix.vecMulVec (Pi.single x flatAmp) (Pi.single y flatAmp) =
+        (1/2 : ℂ) • Matrix.single x y (1:ℂ) := by
+    ext k l
+    by_cases hk : k = x <;> by_cases hl : l = y <;>
+      simp [Matrix.vecMulVec_apply, Matrix.smul_apply, Matrix.single_apply,
+        hk, hl, flatAmp_mul] <;> aesop
+  simp only [flatTwo, Fin.sum_univ_two, star_add, Pi.star_single, flatAmp_star,
+    Matrix.add_vecMulVec, Matrix.vecMulVec_add, hcell, smul_add]
+  abel
+
+/-- A coherent rank-one test with both inputs flat on their own
+two-coordinate supports bounds the complete block sum, not just a row. -/
+theorem flat_coeff_sum_norm
+    {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    (first second : QuantumChannel a b) (i j : Fin 2 ↪ a) (p q : b) :
+    ‖∑ u : Fin 2, ∑ v : Fin 2,
+      ((matrixAction first - matrixAction second) (Matrix.single (i u) (j v) 1)) p q‖ ≤
+      2 * diamondDistance first second := by
+  have hi : i 0 ≠ i 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (i.injective h)
+  have hj : j 0 ≠ j 1 := fun h => (by decide : (0:Fin 2) ≠ 1) (j.injective h)
+  have h := vectorCoefficient_le_diamondDistance first second
+    (flatTwo (i 0) (i 1)) (flatTwo (j 0) (j 1)) (flatTwo_norm hi) (flatTwo_norm hj) p q
+  rw [flatTwo_matrix i j, map_smul, map_sum] at h
+  simp only [map_sum, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, Complex.norm_mul] at h
+  have hhalf : ‖(1/2 : ℂ)‖ = 1/2 := by norm_num [norm_div]
+  rw [hhalf] at h
+  linarith only [h]
+
+/-- Actual paired-dilation flat coherent sum witness on one selected
+fibre pair, in the original unhalved diamond-distance convention. -/
+theorem native_flat_coherent_sum
+    {a b F e₁ e₂ : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype e₁] [Fintype e₂]
+    (first second : QuantumChannel a (b × b))
+    (V : Matrix (b × e₁) a ℂ) (W : Matrix (b × e₂) a ℂ)
+    (pair : ∀ X, matrixAction first X =
+      RTDiamond.dilationAction (RTDiamond.pairedDilation V W) X)
+    (f : a → b) (pick : F × Fin 2 ↪ a) (label : F → b)
+    (byFibre : ∀ p : F × Fin 2, f (pick p) = label p.1)
+    (i j : F)
+    (target : ∀ u v : Fin 2, matrixAction second
+      (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+      (label i,label i) (label j,label j) = 1/2) :
+    let G := (RTDiamond.forwardGram f V).submatrix pick pick
+    let H := (RTDiamond.forwardGram f W).submatrix pick pick
+    (∑ u : Fin 2, ∑ v : Fin 2, ((1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)).re) ≤
+      2 * diamondDistance first second := by
+  let G := (RTDiamond.forwardGram f V).submatrix pick pick
+  let H := (RTDiamond.forwardGram f W).submatrix pick pick
+  let emb (k : F) : Fin 2 ↪ a := ⟨fun t => pick (k,t), fun _ _ h =>
+    congrArg Prod.snd (pick.injective h)⟩
+  let L (u v : Fin 2) : ℂ :=
+    ((matrixAction first - matrixAction second) (Matrix.single (emb i u) (emb j v) 1))
+      (label i,label i) (label j,label j)
+  have h : ‖∑ u : Fin 2, ∑ v : Fin 2, L u v‖ ≤ 2 * diamondDistance first second :=
+    flat_coeff_sum_norm first second (emb i) (emb j) (label i,label i) (label j,label j)
+  have entry (u v : Fin 2) :
+      ((1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)).re = -(L u v).re := by
+    change ((1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)).re =
+      -(matrixAction first (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j) -
+      matrixAction second (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j)).re
+    have actual : matrixAction first (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+        (label i,label i) (label j,label j) = star (G (i,u) (j,v)*H (i,u) (j,v)) := by
+      rw [pair]
+      simpa only [byFibre, G, H, Matrix.submatrix_apply] using
+        RTDiamond.paired_channel_coefficient f V W (pick (i,u)) (pick (j,v))
+    rw [actual,target]
+    simp only [Complex.sub_re, Complex.star_def, Complex.conj_re]
+    ring
+  change (∑ u : Fin 2, ∑ v : Fin 2,
+    ((1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)).re) ≤ _
+  simp_rw [entry, Finset.sum_neg_distrib]
+  have hneg := (Complex.re_le_norm (-(∑ u : Fin 2, ∑ v : Fin 2, L u v))).trans
+    (by simpa only [norm_neg] using h)
+  simpa only [Complex.neg_re, Complex.re_sum] using hneg
 
 /-- The four cross-fibre coefficient errors in the actual paired action
 consume at most twice the squared native diamond distance. -/
@@ -596,7 +884,7 @@ theorem paired_improved_one_party_native_diamond
     let G := (RTDiamond.forwardGram f V).submatrix pick pick
     let θ := plaquetteArg (G (i,0) (j,0)) (G (i,0) (j,1)) (G (i,1) (j,0)) (G (i,1) (j,1))
     let p := Real.cos (θ/4)
-    (12/11)*(p/2-1/(4*p)) ≤ diamondDistance first second := by
+    Real.sqrt 2 * (p/2-1/(4*p)) ≤ diamondDistance first second := by
   let G := (RTDiamond.forwardGram f V).submatrix pick pick
   let H := (RTDiamond.forwardGram f W).submatrix pick pick
   have hG : G.PosSemidef := (RTDiamond.forwardGram_psd f V).submatrix pick
@@ -621,6 +909,55 @@ theorem paired_improved_one_party_native_diamond
     (native_cross_contraction H hH dH hij)
     (witness 0 0) (witness 0 1) (witness 1 0) (witness 1 1)
   simpa only [add_assoc] using hv
+
+/-- A single zero-phase plaquette forces a stronger absolute lower bound
+in the original native diamond distance, even with leakage. -/
+theorem paired_sharp_zero_plaquette_native_diamond
+    {a b F e₁ e₂ : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype F] [DecidableEq F] [Fintype e₁] [Fintype e₂]
+    (first second : QuantumChannel a (b × b))
+    (V : Matrix (b × e₁) a ℂ) (W : Matrix (b × e₂) a ℂ)
+    (hV : Vᴴ * V = 1) (hW : Wᴴ * W = 1)
+    (pair : ∀ X, NativeDiamond.matrixAction first X =
+      RTDiamond.dilationAction (RTDiamond.pairedDilation V W) X)
+    (f : a → b) (pick : F × Fin 2 ↪ a) (label : F → b)
+    (byFibre : ∀ p : F × Fin 2, f (pick p) = label p.1)
+    (i j : F) (hij : i ≠ j)
+    (zeroPhase : let G := (RTDiamond.forwardGram f V).submatrix pick pick
+      plaquetteArg (G (i,0) (j,0)) (G (i,0) (j,1))
+        (G (i,1) (j,0)) (G (i,1) (j,1)) = 0)
+    (target : ∀ u v : Fin 2, NativeDiamond.matrixAction second
+      (Matrix.single (pick (i,u)) (pick (j,v)) 1)
+      (label i,label i) (label j,label j) = 1/2) :
+    Real.sqrt 2 - 1 ≤ diamondDistance first second := by
+  let G := (RTDiamond.forwardGram f V).submatrix pick pick
+  let H := (RTDiamond.forwardGram f W).submatrix pick pick
+  have hG : G.PosSemidef := (RTDiamond.forwardGram_psd f V).submatrix pick
+  have hH : H.PosSemidef := (RTDiamond.forwardGram_psd f W).submatrix pick
+  let emb (k : F) : Fin 2 ↪ a := ⟨fun t => pick (k,t), fun _ _ h =>
+    congrArg Prod.snd (pick.injective h)⟩
+  have dG (k : F) : ((1 : Matrix (Fin 2) (Fin 2) ℂ) - RTPhaseCube.fibreBlock G k).PosSemidef :=
+    RTDiamond.forward_fibre_defect f V hV (emb k) (label k) (fun t => byFibre (k,t))
+  have dH (k : F) : ((1 : Matrix (Fin 2) (Fin 2) ℂ) - RTPhaseCube.fibreBlock H k).PosSemidef :=
+    RTDiamond.forward_fibre_defect f W hW (emb k) (label k) (fun t => byFibre (k,t))
+  have witness (u v : Fin 2) :
+      ‖(1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)‖ ≤ diamondDistance first second := by
+    apply native_witness first second (pick (i,u)) (pick (j,v))
+      (label i,label i) (label j,label j) _ _ _ (target u v)
+    rw [pair]
+    simpa only [byFibre, G, H, Matrix.submatrix_apply] using
+      RTDiamond.paired_channel_coefficient f V W (pick (i,u)) (pick (j,v))
+  have hv := native_frobenius_budget first second V W pair f pick label byFibre i j target
+  change (∑ u : Fin 2, ∑ v : Fin 2, ‖(1/2 : ℂ)-G (i,u) (j,v)*H (i,u) (j,v)‖^2) ≤ _ at hv
+  simp only [Fin.sum_univ_two, add_assoc] at hv
+  have hs := native_flat_coherent_sum first second V W pair f pick label byFibre i j target
+  change (∑ u : Fin 2, ∑ v : Fin 2,
+    ((1 / 2 : ℂ) - G (i,u) (j,v) * H (i,u) (j,v)).re) ≤ _ at hs
+  simp only [Fin.sum_univ_two] at hs
+  exact sharp_zero_plaquette_of_coherent (native_cross_contraction G hG dG hij)
+    (native_cross_contraction H hH dH hij) zeroPhase
+    (witness 0 0) (witness 0 1) (witness 1 0) (witness 1 1)
+    (by simpa only [add_assoc] using hv) hs
 
 
 end RTMultiFibre
