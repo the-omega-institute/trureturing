@@ -37,28 +37,22 @@ internal static class PullRequestLeanChecks
 
     internal static int Plan(string root, ImmutableArray<string> paths, TextWriter output)
     {
-        var plan = CreatePlan(root, paths, () =>
+        var needImports = paths.Any(path => Module(path) is not null || FrozenStatePath.IsUnderRoot(path));
+        var raw = GitRepositorySnapshotReader.ReadCurrent(root, readContents: path =>
+            needImports && Module(path) is not null || path == ValuesKernelBindingValidator.RelativePath
+            || path == ReportProducerScope.InputManifest || path.StartsWith("Meta/", StringComparison.Ordinal)
+            || path.StartsWith("Golden/Projection/", StringComparison.Ordinal));
+        var snapshot = SnapshotDecoder.Decode(raw) switch
         {
-            // Producer selection needs the candidate path inventory; dependency traversal
-            // needs source bytes only when an actual Lean module or pin was touched.
-            var needImports = paths.Any(path => Module(path) is not null || FrozenStatePath.IsUnderRoot(path));
-            var raw = GitRepositorySnapshotReader.ReadCurrent(root, readContents: path =>
-                needImports && Module(path) is not null || path == ValuesKernelBindingValidator.RelativePath
-                || path == ReportProducerScope.InputManifest || path.StartsWith("Meta/", StringComparison.Ordinal));
-            return SnapshotDecoder.Decode(raw) switch
-            {
-                SnapshotDecodeOutcome.Decoded accepted => accepted.Snapshot,
-                SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
-            };
-        });
+            SnapshotDecodeOutcome.Decoded accepted => accepted.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
+        };
+        var plan = CreatePlan(root, snapshot, paths);
         output.WriteLine(JsonSerializer.Serialize(plan, JsonSerializerOptions.Web));
         return 0;
     }
 
-    internal static PullRequestLeanPlan CreatePlan(string root, RepositorySnapshot snapshot, ImmutableArray<string> paths) =>
-        CreatePlan(root, paths, () => snapshot);
-
-    private static PullRequestLeanPlan CreatePlan(string root, ImmutableArray<string> paths, Func<RepositorySnapshot> readSnapshot)
+    internal static PullRequestLeanPlan CreatePlan(string root, RepositorySnapshot snapshot, ImmutableArray<string> paths)
     {
         var scribePaths = paths.ToHashSet(StringComparer.Ordinal);
         foreach (var path in paths.Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)))
@@ -66,11 +60,10 @@ internal static class PullRequestLeanChecks
             var stem = path.EndsWith(".md", StringComparison.Ordinal) ? path[..^3]
                 : path.EndsWith(".scribe.cs", StringComparison.Ordinal) ? path[..^10] : null;
             if (stem is null) continue;
-            if (File.Exists(Path.Combine(root, stem + ".md")) && !File.Exists(Path.Combine(root, stem + ".scribe.cs")))
+            if (snapshot.TryGetFile(stem + ".md", out _) && !snapshot.TryGetFile(stem + ".scribe.cs", out _))
                 throw new InvalidDataException("Blueprint markdown has no matching .scribe.cs source: " + stem + ".md");
             scribePaths.Add(stem + ".scribe.cs");
         }
-        var snapshot = readSnapshot();
         var changed = paths.Select(Module).OfType<string>().ToHashSet(StringComparer.Ordinal);
         var targets = new HashSet<string>(StringComparer.Ordinal);
         var programs = new HashSet<string>(StringComparer.Ordinal);
@@ -90,16 +83,17 @@ internal static class PullRequestLeanChecks
         }
         if (changed.Count > 0)
             AddAffectedModules(snapshot, changed, targets, programs);
-        var selected = ScribeDefinitionSelector.Select(root, scribePaths);
+        var selected = ScribeDefinitionSelector.Select(
+            path => snapshot.TryGetFile(path, out var file) ? file.RawBytes.ToArray() : null, scribePaths);
         if (!selected.IsSuccess) throw new InvalidDataException(selected.Failure);
         var definitions = selected.Paths.IsEmpty ? ImmutableDictionary<string, string[]>.Empty
-            : ScribeLeanInputs.ByDefinition(root, selected.Paths);
+            : ScribeLeanInputs.ByDefinition(root, selected);
         targets.UnionWith(definitions.Values.SelectMany(static roots => roots));
         if (StatementProjectionReconciliation.IsAffectedBy(snapshot, RawChangeSet.Create(paths)))
             targets.UnionWith(StatementProjectionFixtureLoader.LoadStatements(root).Keys.Select(LeanImportClosure.ModuleName));
         AddRuleEvidence(snapshot, paths, targets);
         return new([.. targets.Order(StringComparer.Ordinal)], [.. programs.Order(StringComparer.Ordinal)],
-            [.. scribePaths.Order(StringComparer.Ordinal)], definitions);
+            selected.Paths, definitions);
     }
 
     internal static void AddRuleEvidence(RepositorySnapshot snapshot, ImmutableArray<string> paths, HashSet<string> targets)
