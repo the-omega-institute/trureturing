@@ -9,6 +9,7 @@ namespace Reg.D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
 open _root_.D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open Finset
 open scoped Nat
 
 noncomputable section
@@ -79,6 +80,110 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
       stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+private abbrev Profile (I : Type*) [Fintype I] (m : ℕ) :=
+  {p : I → ℕ // ∑ i, p i = m}
+
+private abbrev relabel {I : Type*} [Fintype I] {m : ℕ} (g : Equiv.Perm I) (p : Profile I m) :
+    Profile I m :=
+  ⟨fun i => p.val (g⁻¹ i), (Equiv.sum_comp (g⁻¹ : Equiv.Perm I) p.val).trans p.property⟩
+
+abbrev spectrumSignature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def spectrumActual : Realization spectrumSignature :=
+  realize spectrumSignature (fun _ _ m => m) (fun e => nomatch e)
+
+def spectrumRejected : Realization spectrumSignature :=
+  realize spectrumSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev spectrumArena : Arena where
+  signature := spectrumSignature
+  Law R := ∀ {I S : Type*} [Fintype I] [DecidableEq I] [Fintype S]
+    [MulAction (Equiv.Perm I) S] (_two : 2 ≤ Fintype.card I)
+    {m : ℕ} (_free : ∀ s : S, MulAction.stabilizer (Equiv.Perm I) s = ⊥)
+    (w : S → ℝ) (_invariant : ∀ (g : Equiv.Perm I) s, w (g • s) = w s)
+    (f : Profile I m → S → I)
+    (_calibrated : ∀ p i, ∑ s, (if f p s = i then w s else 0) = (p.val i : ℝ))
+    (_covariant : ∀ g p s, f (relabel g p) (g • s) = g (f p s)),
+    ∃ (r : ℕ) (weights : Fin r → ℝ),
+      Fintype.card S = (Fintype.card I)! * r ∧
+      ((Fintype.card I)! : ℝ) * (∑ j, weights j) =
+        ((Fintype.card I - 2)! : ℝ) * ∑ s, w s ∧
+      ∀ l : Fin (R.readout () () m / (Fintype.card I - 1) + 1),
+        ∃ d : Fin r → Fin (Fintype.card I + 1),
+          ∑ j, (d j).val * weights j = (l.val : ℝ)
+
+private theorem spectrum_rejected_law : ¬ spectrumArena.Law spectrumRejected := by
+  intro h
+  letI : MulAction (Equiv.Perm (Fin 2)) Empty where
+    smul _ s := s
+    one_smul _ := rfl
+    mul_smul _ _ _ := rfl
+  have calibrated (p : Profile (Fin 2) 0) (i : Fin 2) :
+      (∑ s : Empty, if (nomatch s : Fin 2) = i then (nomatch s : ℝ) else 0) =
+        (p.val i : ℝ) := by
+    have le : p.val i ≤ ∑ j, p.val j :=
+      Finset.single_le_sum (fun j _ => Nat.zero_le (p.val j)) (Finset.mem_univ i)
+    have zero : p.val i = 0 := Nat.eq_zero_of_le_zero (p.property ▸ le)
+    simp [zero]
+  obtain ⟨r, weights, support, _, cover⟩ :=
+    h (I := Fin 2) (S := Empty) (by decide) (m := 0) (fun s => nomatch s)
+      (fun s => nomatch s) (fun _ s => nomatch s) (fun _ s => nomatch s)
+      calibrated (fun _ _ s => nomatch s)
+  have zero : r = 0 := by
+    norm_num [Fintype.card_fin, Nat.factorial] at support
+    omega
+  subst r
+  have level : Fin (spectrumRejected.readout () () 0 / (Fintype.card (Fin 2) - 1) + 1) :=
+    ⟨1, by decide⟩
+  obtain ⟨digits, eq⟩ := cover level
+  norm_num [level] at eq
+
+def spectrumFamily : Registration spectrumArena (type_of% (@weighted_orbit_spectrum)) where
+  actual := spectrumActual
+  bridge := Iff.rfl
+  variation := ⟨weighted_orbit_spectrum, spectrumRejected, spectrum_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    spectrumArena.Law spectrumActual spectrumRejected spectrum_rejected_law
+  dependence := by
+    intro role
+    exact ⟨(), 0, 1, (by decide : (0 : ℕ) ≠ 1)⟩
+
+def spectrumRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
+    (@weighted_orbit_spectrum) (Realization spectrumSignature) Type Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.PermutationGridSupport.weighted_spectrum_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.PermutationGridSupport.spectrumFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨spectrumArena⟩
+  objectArena := .source ⟨spectrumArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source spectrumArena ⟨spectrumFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize spectrumSignature (fun _ _ m => m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.PermutationGridSupport
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg", "body",
+        "arg", "body", "arg", "arg", "domain", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 7
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
