@@ -454,9 +454,9 @@ private lemma primitive_small_part_large {M n r t : ℕ} (hM : 100 ≤ M)
   have hprodle : B * (1 - z) ≤ 1 := by
     dsimp [B, z]
     rw [ratio_prime_product V (fun p hp => Nat.prime_of_mem_primeFactors (hV hp))]
-    simpa only [mul_comm] using
-      one_sub_sum_mul_prod_le_one V (fun p => 1 / (p : ℝ))
-          (fun p _hp => by positivity)
+    have hu := one_sub_sum_mul_prod_le_one V.attach
+      (fun p : V => 1 / (p.val : ℝ)) (fun p _hp => by positivity)
+    simpa only [sum_attach, prod_attach, mul_comm] using hu
   have hnratio := ZelinskyRadicalComponentConjectures.primitive_ratio_lower hn hC
   have hratio : divisorRatio n = A / U * B := by
     rw [← hprod]
@@ -724,7 +724,7 @@ theorem relative_density_one (S : Set ℕ)
       _ = K * (X : ℝ) ^ (-(1 / 80 : ℝ)) := by
         rw [mul_div_assoc, ← rpow_sub hx]
         norm_num
-  have hlim := tendsto_const_nhds.sub hezero
+  have hlim := (tendsto_const_nhds (x := (1 : ℝ)) (f := atTop)).sub hezero
   simp only [sub_zero] at hlim
   apply hlim.congr'
   filter_upwards [hlower, eventually_ge_atTop (1 : ℕ)] with X hlow hX
