@@ -96,7 +96,8 @@ fi
 if [[ "$1" == --prebuilt ]]; then
   shift
   [[ $# -gt 0 ]] || { echo 'lean-cache-run: --prebuilt requires a command' >&2; exit 2; }
-  exec "${cli[@]}" with-cache-reader --prebuilt -- "$@"
+  exec "${cli[@]}" with-cache-reader --prebuilt -- python3 -B \
+    "$ROOT/tools/lean-inspector/native.py" prebuilt-workspace "$ROOT" "$@"
 fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
