@@ -72,7 +72,7 @@ internal sealed class SpiderConnectedForcingDocument : IScribeDocumentDefinition
                         + "compositions s(j − 1; h_1, …, h_k) and s(j − 1; h_1, …, h_{ℓ−1}, h_{ℓ+1}, …, "
                         + "h_k). The hypotheses are needed: with two arms the spider is a path, whose end "
                         + "vertices are connected forcing sets of size 1 while the formula has no x term; with "
-                        + "an arm j of length 0 the graph is the spider on the other arms, while the "
+                        + "exactly one arm j of length 0 the graph is the spider on the other arms, while the "
                         + "formula becomes x^k ∏_{t≠j} F_{h_t}, which counts only the sets touching every "
                         + "other arm."))),
                 DescribeRole.Theorem))));

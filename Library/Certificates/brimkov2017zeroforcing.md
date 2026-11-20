@@ -85,4 +85,6 @@ coefficients of x^k (x ∏_j F_{h_j} + Σ_j ∏_{t≠j} F_{h_t}) with F_h = 1 + 
 generating function of s(j − 1; h_1, …, h_k) is x^{k+1} ∏_j F_{h_j}, and that of
 s(j − 1; h_1, …, h_{ℓ−1}, h_{ℓ+1}, …, h_k) is x^k ∏_{t≠ℓ} F_{h_t}.
 SpiderConnectedForcing.connected_forcing_iff characterizes the connected forcing sets as the
-centre with an initial segment of each arm, at most one arm untouched.
+centre with an initial segment of each arm, at most one arm untouched. The source states
+Proposition 7.11 without k ≥ 3; its proof cites Lemma 4.3, which assumes the graph is not a path,
+and for k ≤ 2 the spider is a path and the formula fails for every choice of arm lengths.
