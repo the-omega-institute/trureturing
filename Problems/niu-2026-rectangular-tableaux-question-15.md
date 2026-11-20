@@ -98,7 +98,7 @@ shape, tableau, and event or deletion data. The analytic results need a
 readout on the original sequences and indices that preserves the exact
 premises. Both groups need evidence of sensitivity to intervention and
 dependence on the actual observation.
-[Supporting registration disclosure](https://github.com/the-omega-institute/trureturing/issues/32036#issuecomment-7029891820)
+[Supporting registration disclosure](https://github.com/the-omega-institute/trureturing/issues/32036#issuecomment-7031770072)
 
 ## Triage
 
