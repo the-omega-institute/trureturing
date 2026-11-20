@@ -36,10 +36,15 @@ internal sealed class DigitPeriodCapacityDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "Each arithmetic premise matters even for one weight. With k equal to two, "
                     + "the weight one half covers zero and one. Taking B equal to zero and M equal "
-                    + "to one violates the bound without positivity. Taking B equal to three and M "
+                    + "to one violates the bound without positivity, using Lean's natural-number "
+                    + "division convention 2 / 0 = 0, which makes the upper bound one. "
+                    + "Taking B equal to three and M "
                     + "equal to one violates it without the divisibility premise. With B equal to "
                     + "three and M equal to two, the integer weight one covers zero, one and two, "
-                    + "showing the need for nonintegrality."))),
+                    + "showing the need for nonintegrality. With the same B and M and weight one "
+                    + "third, the upper bound is one. Without distinctness one can list zero "
+                    + "twice, and without coverage one can list zero and one even though one "
+                    + "has no representation."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
