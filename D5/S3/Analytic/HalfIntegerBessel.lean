@@ -1118,6 +1118,288 @@ theorem radial_eta_re_atBot {u : ℂ} (hu : ‖u‖ = 1) :
   rw [eta, Complex.sub_re, Complex.add_re, Complex.log_re, Complex.log_re, hn]
   ring
 
+private theorem hasDerivAt_radial_I_div_K (m : ℕ) {u : ℂ} (hu : 0 < u.re)
+    {s : ℝ} (hs : 0 < s) (hK : K m ((order m : ℂ) * ((s : ℂ) * u)) ≠ 0) :
+    HasDerivAt (fun t : ℝ => I m ((order m : ℂ) * ((t : ℂ) * u)) /
+      K m ((order m : ℂ) * ((t : ℂ) * u)))
+      (1 / ((s : ℂ) * K m ((order m : ℂ) * ((s : ℂ) * u)) ^ 2)) s := by
+  let z := (order m : ℂ) * ((s : ℂ) * u)
+  have hz := scaled_re_pos m (ray_re_pos hu hs)
+  have hz0 : z ≠ 0 := arg_ne_zero hz
+  have hs0 : (s : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hs.ne'
+  have hK0 : K m z ≠ 0 := hK
+  have hquot : HasDerivAt (fun w => I m w / K m w) ((1 / z) / K m z ^ 2) z := by
+    convert ((hasDerivAt_I m hz).differentiableAt.hasDerivAt.div
+      (hasDerivAt_K m hz).differentiableAt.hasDerivAt hK0) using 1
+    rw [← wronskian_KI m hz]
+    change (K m z * deriv (I m) z - deriv (K m) z * I m z) / K m z ^ 2 =
+      (deriv (I m) z * K m z - I m z * deriv (K m) z) / K m z ^ 2
+    ring
+  have harg : HasDerivAt (fun t : ℝ => (order m : ℂ) * ((t : ℂ) * u))
+      ((order m : ℂ) * u) s := by
+    simpa using ((Complex.ofRealCLM.hasFDerivAt (x := s)).hasDerivAt.mul_const u).const_mul
+      (order m : ℂ)
+  refine (hquot.scomp s harg).congr_deriv ?_
+  change (order m : ℂ) * u * ((1 / z) / K m z ^ 2) = 1 / ((s : ℂ) * K m z ^ 2)
+  field_simp [hz0, hs0, hK0]
+  dsimp [z]
+  ring
+
+private noncomputable def inwardKernel (m : ℕ) (u : ℂ) (r s : ℝ) : ℂ :=
+  Complex.exp (-2 * (order m : ℂ) * (eta ((r : ℂ) * u) - eta ((s : ℂ) * u)))
+
+private noncomputable def radialCorrection (m : ℕ) (u : ℂ) (r s : ℝ) : ℂ :=
+  (Real.pi : ℂ) * Complex.exp (-2 * (order m : ℂ) * eta ((r : ℂ) * u)) *
+    (I m ((order m : ℂ) * ((s : ℂ) * u)) / K m ((order m : ℂ) * ((s : ℂ) * u))) -
+    inwardKernel m u r s
+
+private theorem hasDerivAt_radialCorrection (m : ℕ) {u : ℂ} (hu : 0 < u.re) (r : ℝ)
+    {s : ℝ} (hs : 0 < s) (hK : K m ((order m : ℂ) * ((s : ℂ) * u)) ≠ 0) :
+    HasDerivAt (radialCorrection m u r)
+      (2 * (order m : ℂ) * radialP u s * inwardKernel m u r s *
+        ((F_K m ((s : ℂ) * u) ^ 2)⁻¹ - 1)) s := by
+  let w := (s : ℂ) * u
+  let ν : ℂ := order m
+  let φ := eta ((r : ℂ) * u)
+  have hν := order_pos m
+  have hν0 : ν ≠ 0 := Complex.ofReal_ne_zero.mpr hν.ne'
+  have hπ : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
+  have hs0 : (s : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hs.ne'
+  have hS0 : S w ≠ 0 := arg_ne_zero (S_re_pos (ray_re_pos hu hs))
+  have hK0 : K m (ν * w) ≠ 0 := hK
+  have hF2 : F_K m w ^ 2 =
+      (2 * ν / (Real.pi : ℂ)) * S w * Complex.exp (2 * ν * eta w) * K m (ν * w) ^ 2 := by
+    have hroot := Real.sq_sqrt (show 0 ≤ 2 * order m / Real.pi by positivity)
+    simp only [F_K, mul_pow, sqrt_sq, ← Complex.ofReal_pow, hroot,
+      Complex.ofReal_div, Complex.ofReal_mul, Complex.ofReal_ofNat]
+    change _ * _ * Complex.exp (ν * eta w) ^ 2 * _ = _
+    rw [pow_two (Complex.exp _), ← Complex.exp_add]
+    congr 3
+    ring
+  have hphase := (radialSystem_K m hu hs).1
+  have hE : HasDerivAt (inwardKernel m u r)
+      (2 * ν * radialP u s * inwardKernel m u r s) s := by
+    have hd := (Complex.hasDerivAt_exp (-2 * ν * (φ - eta w))).scomp s
+      ((hphase.const_sub φ).const_mul (-2 * ν))
+    refine hd.congr_deriv ?_
+    change -2 * ν * (-radialP u s) * inwardKernel m u r s = _
+    ring
+  have hweighted : 2 * ν * radialP u s * inwardKernel m u r s * (F_K m w ^ 2)⁻¹ =
+      (Real.pi : ℂ) * Complex.exp (-2 * ν * φ) * (1 / ((s : ℂ) * K m (ν * w) ^ 2)) := by
+    change 2 * ν * (S w / (s : ℂ)) * Complex.exp (-2 * ν * (φ - eta w)) * _ = _
+    rw [hF2, show -2 * ν * (φ - eta w) = -2 * ν * φ + 2 * ν * eta w by ring, Complex.exp_add]
+    field_simp [hν0, hπ, hs0, hS0, hK0, Complex.exp_ne_zero]
+  have hd := ((hasDerivAt_radial_I_div_K m hu hs hK).const_mul
+    ((Real.pi : ℂ) * Complex.exp (-2 * ν * φ))).sub hE
+  refine hd.congr_deriv ?_
+  change _ = 2 * ν * radialP u s * inwardKernel m u r s * ((F_K m w ^ 2)⁻¹ - 1)
+  rw [mul_sub, mul_one, hweighted]
+
+private theorem norm_ge_half_of_close_to_one {z : ℂ} (h : ‖z - 1‖ ≤ 1 / 2) :
+    1 / 2 ≤ ‖z‖ := by
+  have htriangle := norm_sub_norm_le (1 : ℂ) z
+  rw [norm_one, norm_sub_rev] at htriangle
+  linarith
+
+private theorem norm_inv_sq_sub_one_le {z : ℂ} {δ : ℝ} (h : ‖z - 1‖ ≤ δ)
+    (hδ : δ ≤ 1 / 2) : ‖(z ^ 2)⁻¹ - 1‖ ≤ 10 * δ := by
+  have hδ0 := (norm_nonneg _).trans h
+  have hz := norm_ge_half_of_close_to_one (h.trans hδ)
+  have hz0 : z ≠ 0 := norm_pos_iff.mp (by linarith)
+  have hplus : ‖1 + z‖ ≤ 5 / 2 := by
+    have htriangle := norm_add_le (2 : ℂ) (z - 1)
+    rw [show (2 : ℂ) + (z - 1) = 1 + z by ring, Complex.norm_two] at htriangle
+    linarith
+  have hdenom : (1 / 4 : ℝ) ≤ ‖z‖ ^ 2 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hz) (norm_nonneg z)]
+  rw [show (z ^ 2)⁻¹ - 1 = (1 - z) * (1 + z) / z ^ 2 by field_simp [hz0]; ring,
+    norm_div, norm_mul, norm_pow, norm_sub_rev (1 : ℂ) z, div_le_iff₀ (by positivity)]
+  calc
+    ‖z - 1‖ * ‖1 + z‖ ≤ δ * (5 / 2) :=
+      mul_le_mul h hplus (norm_nonneg _) hδ0
+    _ = (10 * δ) * (1 / 4) := by ring
+    _ ≤ (10 * δ) * ‖z‖ ^ 2 := mul_le_mul_of_nonneg_left hdenom (by positivity)
+
+open Filter in
+private theorem radialCorrection_zero (m : ℕ) {u : ℂ} (hu : ‖u‖ = 1)
+    (hure : 0 < u.re) (r : ℝ) :
+    Filter.Tendsto (radialCorrection m u r) (𝓝[>] 0) (𝓝 0) := by
+  have hν := order_pos m
+  have hE : Filter.Tendsto (inwardKernel m u r) (𝓝[>] 0) (𝓝 0) := by
+    rw [tendsto_zero_iff_norm_tendsto_zero]
+    have hshift : Tendsto (fun s : ℝ => -(eta ((r : ℂ) * u)).re + (eta ((s : ℂ) * u)).re)
+        (𝓝[>] 0) atBot :=
+      tendsto_const_nhds.add_atBot (radial_eta_re_atBot hu)
+    have harg := hshift.const_mul_atBot (show 0 < 2 * order m by positivity)
+    refine (Real.tendsto_exp_atBot.comp harg).congr fun s => ?_
+    simp only [Function.comp_apply, inwardKernel, Complex.norm_exp]
+    congr 1
+    simp [Complex.mul_re, Complex.sub_re]
+    ring
+  unfold radialCorrection
+  simpa only [mul_zero, sub_zero] using
+    ((radial_I_div_K_zero m hure).const_mul
+      ((Real.pi : ℂ) * Complex.exp (-2 * (order m : ℂ) * eta ((r : ℂ) * u)))).sub hE
+
+open Filter Set in
+private theorem radial_relative_bound (m : ℕ) {κ : ℝ} (hκ : 0 < κ)
+    (hm : 4 * sectorMass κ ≤ order m) {u : ℂ} (hu : ‖u‖ = 1) (huκ : κ ≤ u.re)
+    {r : ℝ} (hr : 0 < r) :
+    ‖F_I m ((r : ℂ) * u) / F_K m ((r : ℂ) * u) - 1‖ ≤
+      10 * (2 * sectorMass κ / order m) / κ := by
+  let δ := 2 * sectorMass κ / order m
+  let C := 10 * δ / κ
+  let ν := order m
+  let ray (s : ℝ) := (s : ℂ) * u
+  let phase (s : ℝ) := eta (ray s)
+  let E (s : ℝ) := Real.exp (2 * ν * ((phase s).re - (phase r).re))
+  let J := radialCorrection m u r
+  let j (s : ℝ) := 2 * (ν : ℂ) * radialP u s * inwardKernel m u r s *
+    ((F_K m (ray s) ^ 2)⁻¹ - 1)
+  let e (s : ℝ) := 2 * ν * (radialP u s).re * E s
+  have hν : 0 < ν := order_pos m
+  have hure := hκ.trans_le huκ
+  have hsector (s : ℝ) (hs : 0 < s) :=
+    sector_K_estimate m hκ hm (arg_ne_zero (ray_re_pos hure hs))
+      (show κ * ‖ray s‖ ≤ (ray s).re by
+        rw [show ‖ray s‖ = s from ray_norm hu hs.le]
+        simpa [ray, Complex.mul_re, mul_comm] using mul_le_mul_of_nonneg_left huκ hs.le)
+  have hJ (s : ℝ) (hs : 0 < s) : HasDerivAt J (j s) s :=
+    hasDerivAt_radialCorrection m hure r hs (hsector s hs).2.2
+  have hE (s : ℝ) (hs : 0 < s) : HasDerivAt E (e s) s := by
+    have hd : HasDerivAt (fun t => (phase t).re) (radialP u s).re s :=
+      Complex.reCLM.hasFDerivAt.comp_hasDerivAt s (radialSystem_K m hure hs).1
+    simpa only [mul_comm, e, E, mul_assoc, mul_left_comm] using
+      (((hd.sub_const (phase r).re).const_mul (2 * ν)).exp)
+  have hkernel (s : ℝ) : ‖inwardKernel m u r s‖ = E s := by
+    rw [inwardKernel, Complex.norm_exp]
+    congr 1
+    simp [ν, phase, ray, Complex.mul_re, Complex.sub_re]
+    ring
+  have hj_bound (s : ℝ) (hs : 0 < s) : ‖j s‖ ≤ C * e s := by
+    have hangle : κ * ‖radialP u s‖ ≤ (radialP u s).re := by
+      have ha := (mul_le_mul_of_nonneg_right huκ (norm_nonneg (S (ray s)))).trans
+        (radial_S_re_ge hu hure hs)
+      have hre : (radialP u s).re = (S (ray s)).re / s := by
+        simp [radialP, ray, Complex.div_re, Complex.normSq_ofReal]
+        field_simp [hs.ne']
+      rw [hre, radialP, norm_div, Complex.norm_real, Real.norm_of_nonneg hs.le, ← mul_div_assoc]
+      exact div_le_div_of_nonneg_right ha hs.le
+    have herror := norm_inv_sq_sub_one_le (hsector s hs).1 (hsector s hs).2.1
+    have hδ : 0 ≤ δ := (norm_nonneg _).trans (hsector s hs).1
+    have hEpos : 0 < E s := Real.exp_pos _
+    have hppos := radialP_re_pos hure hs
+    have hp := (le_div_iff₀ hκ).mpr (by rwa [mul_comm] : ‖radialP u s‖ * κ ≤ (radialP u s).re)
+    simp only [j, norm_mul, Complex.norm_two, Complex.norm_real, Real.norm_of_nonneg hν.le, hkernel]
+    calc
+      2 * ν * ‖radialP u s‖ * E s * ‖(F_K m (ray s) ^ 2)⁻¹ - 1‖
+          ≤ 2 * ν * ((radialP u s).re / κ) * E s * (10 * δ) := by gcongr
+      _ = C * e s := by dsimp only [C, e]; ring
+  have hp_cont (s : ℝ) (hs : 0 < s) : ContinuousAt (radialP u) s := by
+    have hray : ContinuousAt ray s := by unfold ray; fun_prop
+    have hS : ContinuousAt (fun t => S (ray t)) s :=
+      (hasDerivAt_S (ray_re_pos hure hs)).continuousAt.comp' (f := ray) hray
+    exact hS.div Complex.continuous_ofReal.continuousAt (Complex.ofReal_ne_zero.mpr hs.ne')
+  have hj_cont : ContinuousOn j (Ioi 0) := by
+    intro s hs
+    have hs0 : 0 < s := hs
+    have hsys := radialSystem_K m hure hs0
+    have hFK := hsys.2.1.continuousAt
+    have hF0 : F_K m (ray s) ≠ 0 := norm_pos_iff.mp
+      (lt_of_lt_of_le (by norm_num) (norm_ge_half_of_close_to_one
+        ((hsector s hs0).1.trans (hsector s hs0).2.1)))
+    have hker : ContinuousAt (inwardKernel m u r) s := by
+      unfold inwardKernel
+      exact Complex.continuous_exp.continuousAt.comp'
+        ((continuousAt_const.sub hsys.1.continuousAt).const_mul _)
+    exact ((((hp_cont s hs0).const_mul _).mul hker).mul
+      (((hFK.pow 2).inv₀ (pow_ne_zero _ hF0)).sub continuousAt_const)).continuousWithinAt
+  have he_cont : ContinuousOn (fun s => C * e s) (Ioi 0) := by
+    intro s hs
+    exact (((Complex.continuous_re.continuousAt.comp' (hp_cont s hs)).const_mul _).mul
+      (hE s hs).continuousAt).const_mul _ |>.continuousWithinAt
+  have hfinite (a : ℝ) (ha : 0 < a) (har : a ≤ r) : ‖J r - J a‖ ≤ C := by
+    have hinterval : uIcc a r ⊆ Ioi (0 : ℝ) := by
+      rw [uIcc_of_le har]
+      exact fun _ hs => ha.trans_le hs.1
+    have hJFTC : (∫ s in a..r, j s) = J r - J a :=
+      intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s hs => hJ s (hinterval hs))
+        (hj_cont.mono hinterval).intervalIntegrable
+    have hEFTC : (∫ s in a..r, C * e s) = C * E r - C * E a :=
+      intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (fun s hs => (hE s (hinterval hs)).const_mul C)
+        (he_cont.mono hinterval).intervalIntegrable
+    rw [← hJFTC]
+    calc
+      ‖∫ s in a..r, j s‖ ≤ ∫ s in a..r, C * e s :=
+        intervalIntegral.norm_integral_le_of_norm_le har
+          (Eventually.of_forall fun s hs => hj_bound s (ha.trans hs.1))
+          (he_cont.mono hinterval).intervalIntegrable
+      _ = C * E r - C * E a := hEFTC
+      _ ≤ C := by
+        have hC : 0 ≤ C := by
+          have hδ := (norm_nonneg _).trans (hsector r hr).1
+          change 0 ≤ δ at hδ
+          dsimp only [C]
+          positivity
+        have hEr : E r = 1 := by simp [E]
+        rw [hEr, mul_one]
+        exact sub_le_self _ (mul_nonneg hC (Real.exp_pos _).le)
+  have hlimit := radialCorrection_zero m hu hure r
+  have hclose : ‖J r‖ ≤ C := by
+    have ht : Tendsto (fun a => ‖J r - J a‖) (𝓝[>] 0) (𝓝 ‖J r‖) := by
+      simpa only [sub_zero] using (hlimit.const_sub (J r)).norm
+    apply le_of_tendsto ht
+    filter_upwards [Ioo_mem_nhdsGT hr] with a ha
+    exact hfinite a ha.1 ha.2.le
+  have hJr : J r = F_I m (ray r) / F_K m (ray r) - 1 := by
+    rw [F_I_div_F_K m (ray_re_pos hure hr) (hsector r hr).2.2]
+    simp [J, radialCorrection, inwardKernel]
+  rwa [hJr] at hclose
+
+/-- The regular amplitude and its ratio to the decaying amplitude obey uniform sector bounds. -/
+theorem sector_I_estimate (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hm : 4 * sectorMass κ ≤ order m)
+    {w : ℂ} (hw : w ≠ 0) (hsector : κ * ‖w‖ ≤ w.re) :
+    let δ := 2 * sectorMass κ / order m
+    ‖F_I m w / F_K m w - 1‖ ≤ 10 * δ / κ ∧
+      ‖F_I m w - 1‖ ≤ (1 + 15 / κ) * δ := by
+  intro δ
+  let r := ‖w‖
+  let u := w / (r : ℂ)
+  have hr := norm_pos_iff.mpr hw
+  have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hr.ne'
+  have hu : ‖u‖ = 1 := by
+    change ‖w / (r : ℂ)‖ = 1
+    rw [norm_div, Complex.norm_real, Real.norm_of_nonneg hr.le, div_self hr.ne']
+  have huκ : κ ≤ u.re := by
+    change κ ≤ (w / (r : ℂ)).re
+    rw [show (w / (r : ℂ)).re = w.re / r by
+      simp [Complex.div_re, Complex.normSq_ofReal]; field_simp [hr.ne'], le_div_iff₀ hr]
+    exact hsector
+  have hwu : (r : ℂ) * u = w := by
+    dsimp only [u]
+    field_simp [hr0]
+  have hrelative := radial_relative_bound m hκ hm hu huκ hr
+  rw [hwu] at hrelative
+  obtain ⟨hK, hhalf, _⟩ := sector_K_estimate m hκ hm hw hsector
+  have hF0 : F_K m w ≠ 0 := norm_pos_iff.mp
+    (lt_of_lt_of_le (by norm_num) (norm_ge_half_of_close_to_one (hK.trans hhalf)))
+  have hFupper : ‖F_K m w‖ ≤ 3 / 2 := by
+    have htriangle := norm_sub_norm_le (F_K m w) 1
+    rw [norm_one] at htriangle
+    linarith
+  have hδ : 0 ≤ δ := (norm_nonneg _).trans hK
+  refine ⟨hrelative, ?_⟩
+  rw [show F_I m w - 1 = (F_I m w / F_K m w - 1) * F_K m w + (F_K m w - 1) by
+    rw [sub_mul, div_mul_cancel₀ _ hF0, one_mul]
+    ring]
+  calc
+    _ ≤ ‖(F_I m w / F_K m w - 1) * F_K m w‖ + ‖F_K m w - 1‖ := norm_add_le _ _
+    _ ≤ (10 * δ / κ) * (3 / 2) + δ := by
+      rw [norm_mul]
+      exact add_le_add (mul_le_mul hrelative hFupper (norm_nonneg _) (by positivity)) hK
+    _ = (1 + 15 / κ) * δ := by ring
+
 end LiouvilleGreen
 
 end D5.S3.Analytic.HalfIntegerBessel
