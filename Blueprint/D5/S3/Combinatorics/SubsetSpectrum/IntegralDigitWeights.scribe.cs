@@ -28,9 +28,11 @@ internal sealed class IntegralDigitWeightsDocument : IScribeDocumentDefinition
                     + "projection differ by a nonzero multiple of the weight at the deleted coordinate. "
                     + "The multiplier is the absolute difference of the two digits, so it is less than b.")),
                 Paragraph(Text(
-                    "For a binary digit the weight itself is an integer. For a ternary digit the weight is "
-                    + "a half-integer. The latter applies to pair occupancies in the even-denominator "
-                    + "covariant calibration problem, after multiplying all seed weights by the denominator."))),
+                    "With two digit values and the strict count bound, the weight itself is an integer. "
+                    + "With three digit values and the strict count bound, twice the weight is an integer. "
+                    + "In an even-denominator covariant grid, the ternary application uses r exchanged "
+                    + "pairs, the weights scaled by the denominator m, and a strict bound of m plus one "
+                    + "above three to the power r minus one."))),
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
