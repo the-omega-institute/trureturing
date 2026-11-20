@@ -74,6 +74,8 @@ Confirm the isolated lane and pinned tools before editing.
 ### 1. Select the primary statement
 
 Use the statement from the assigned issue, external source or source-theories atom. Preserve its hypotheses and exact conclusion. Deposit accepts the declaration GID for every source.
+
+Aim at the strongest correct statement (`CLAUDE.md` §3.10). The formal target must imply the source claim, with the weakest hypotheses and the strongest conclusion the proof supports: an equivalence or a complete classification where one holds, exact constants and scope. When the source claim is false or overstated, formalize its strongest true replacement and record the counterexample or the missing condition; never prove a weaker statement to accommodate the source, and never rewrite a false claim into a vacuously true one. A hypothesis, instance argument or binder that the proof does not use, or that follows from the others, is removed before delivery. A change to a preregistered statement is recorded on its issue first (the new statement, how it relates to the old one, the fallback if it fails) and proved afterwards. Strengthening exempts nothing: a strongest form that only instantiates, projects or normalizes frozen or pinned upstream results is still bind-only (§3.2) and is cited, not added.
 Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
 
 - **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.
