@@ -54,7 +54,7 @@ Probe evidence (data, not authority — re-verify): `<<OP_SCRATCH>>/results/p12-
 
 ## Steps
 
-**Read the cache receipt before you build.** Your first command in the worktree is `make lean-cache-ensure`; its `LEAN_CACHE {…}` receipt names `project_olean_state` and `mathlib_olean_state`. Both must read `warm`. If either reads `cold`, STOP and return `verdict: blocked`, `reason: cold-cache`, quoting the receipt — do not run `make lean LEAN_TARGETS="<the delivered modules and every frozen module you re-pin, dotted>"`. Ask the orchestrator to reseed the tree from the warm donor. Elapsed time never decides anything (CLAUDE.md §10.2): the receipt does.
+**Build the selected modules.** Run `make lean LEAN_TARGETS="<the delivered modules and every frozen module you re-pin, dotted>"`. Lake reads matching artifacts from its local cache and builds missing targets and dependencies in the worktree.
 
 **Emission scope.** The doors (`make deposit`, `make emit`) choose their own scope (CLAUDE.md §8.2); no whole-library report is required. Run `make emit` twice and require the second run to report 0 changed. If you use `FromLiterature`, the note file MUST appear in `git status` — a `LibraryNoteRef` pointing at a file that is not in the diff is a mirror-check FAIL.
 

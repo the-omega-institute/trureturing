@@ -9,7 +9,7 @@ internal static partial class LeanCacheEnsureCommand
         ClonefileReceipt? clonefile, string reason) =>
         FailureReceipt("failed", root, location.MainCheckout, "clonefile-additive", pins.Sha256,
             reason + "; additive restoration did not complete; existing target artifacts were retained; "
-                + $"repair the reported provisioning boundary, then retry make -C {ShellQuote(root)} lean-cache-ensure",
+                + $"repair the reported provisioning boundary, then retry make -C {ShellQuote(root)} lean-cache-ensure FULL_BUILD=1",
             stampMiss, clonefile, LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
 
     private static CommandResult RestoreLinkedDependencies(

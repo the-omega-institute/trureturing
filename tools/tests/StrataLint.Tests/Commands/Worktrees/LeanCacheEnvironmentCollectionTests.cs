@@ -57,4 +57,13 @@ public sealed partial class LeanCacheEnsureCommandTests : IDisposable
 }
 
 [CollectionDefinition("Lean cache environment", DisableParallelization = true)]
-public sealed class LeanCacheEnvironmentCollectionDefinition;
+public sealed class LeanCacheEnvironmentCollectionDefinition : ICollectionFixture<FullBuildEnvironment>;
+
+public sealed class FullBuildEnvironment : IDisposable
+{
+    private readonly string? previous = Environment.GetEnvironmentVariable("FULL_BUILD");
+
+    public FullBuildEnvironment() => Environment.SetEnvironmentVariable("FULL_BUILD", "1");
+
+    public void Dispose() => Environment.SetEnvironmentVariable("FULL_BUILD", previous);
+}
