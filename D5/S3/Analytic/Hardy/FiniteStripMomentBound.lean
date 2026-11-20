@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Hardy/FiniteStripMomentBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Analytic/Hardy/FiniteBlaschkeBound]
+   anchors: [lake/module/D5.S3.Analytic.Hardy.FiniteBlaschkeBound]
    utility: none
    digest: The finite strip Blaschke bound for interpolation by finite-time Laplace moments. -/
 
