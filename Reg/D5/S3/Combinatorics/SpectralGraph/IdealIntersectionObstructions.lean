@@ -55,7 +55,7 @@ def family : Registration arena.{u}
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@one_sub_sum_mul_prod_le_one.{u})
     (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.audit
+  unitName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.unit
   realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions.P.family
   realizationSource := none
   generated := false
