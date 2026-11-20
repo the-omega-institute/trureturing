@@ -40,6 +40,8 @@ $$\forall m, k, w \in \mathbb{N}, 2^{m} \cdot (2 \cdot k+1) < 2^{w} \implies (\o
 
 *Acknowledgement.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
 
+*Acknowledgement.* Richard Ehrenborg; Einar Steingrímsson (2000). *The Excedance Set of a Permutation*. DOI: [10.1006/aama.1999.0671](https://doi.org/10.1006/aama.1999.0671). URL: <https://doi.org/10.1006/aama.1999.0671>.
+
 *Commentary.*
 
 Here wt is the binary popcount and T is the literal rational array A358612, revision 52. Equality is over the rationals and the sign exponent is an integer. The source uses exponent wt(k)−i in A329369 revision 239 and adds two in A358612. These exponents give the same sign, including at the two highest columns.
@@ -53,4 +55,6 @@ The literal A358612 coefficient theorem gives the ascending Pochhammer coordinat
 - Truth anchor: `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.binaryExcedances`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.conjecture4`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/KurkovA329369ConjectureFour.paddedCount`
+- Dependency: [D5/S1/Recurrence/Parity/DyadicPochhammerCoefficient](../../../S1/Recurrence/Parity/DyadicPochhammerCoefficient.md)
 - Dependency: [D5/S1/Recurrence/Parity/DyadicPowerRowClosedForm](../../../S1/Recurrence/Parity/DyadicPowerRowClosedForm.md)
+- Dependency: [D5/S3/Combinatorics/Permutation/AdjacentExcedanceSet](AdjacentExcedanceSet.md)

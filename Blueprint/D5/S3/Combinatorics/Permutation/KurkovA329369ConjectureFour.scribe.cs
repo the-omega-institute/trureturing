@@ -11,6 +11,8 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
         LibraryNoteRef.Create("D5/L/Arith/oeis2024a329369");
     private static readonly LibraryNoteRef Coefficients =
         LibraryNoteRef.Create("D5/L/Digit/kurkov2024a358612");
+    private static readonly LibraryNoteRef ExcedancePaper =
+        LibraryNoteRef.Create("D5/L/FiniteGroups/ehrenborgsteingrimsson2000excedance");
 
     private static Formula W => F.Id("w");
     private static Formula N => F.Id("n");
@@ -37,7 +39,8 @@ internal sealed class KurkovA329369ConjectureFourDocument : IScribeDocumentDefin
                 "The count is the finite cardinality of the permutations whose complete strict "
                 + "excedance set is the prescribed set. The width is admissible when n<2^w."),
             Node("conjecture-four", "conjecture4", "The signed factorial-power identity",
-                IdentityFormula(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Excedances, Coefficients),
+                IdentityFormula(), DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(Excedances, Coefficients, ExcedancePaper),
                 "Here wt is the binary popcount and T is the literal rational array A358612, "
                 + "revision 52. Equality is over the rationals and the sign exponent is an integer. "
                 + "The source uses exponent wt(k)−i in A329369 revision 239 and adds two in A358612. "
