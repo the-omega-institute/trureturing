@@ -14,6 +14,7 @@ import D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope
 import D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin
 import D5.S3.Arith.Robin.ThetaTailRobinWitness
 import D5.S3.Weil.Mertens.CriticalThetaTailPeak
+import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
 
 /-!
 # Canonical Robin records on meshes with vanishing logarithmic gaps
@@ -36,11 +37,14 @@ namespace D5.S3.Arith.Robin.PriceRecord.RobinVanishingRelativeGap
 open D5.S3.Analytic.Asymptotics.VanishingGapSignTransfer
 open MaximalRealPartProjection
 open D5.S3.Weil.ZeroSum (IsNontrivialZero)
-open D5.S3.Weil.Mertens.IntegratedExplicit (actualCoeff actualCoeff_hasSum actualH)
+open D5.S3.Weil.Mertens.IntegratedExplicit
+  (actualCoeff actualCoeff_hasSum actualH actual_complete_H_package)
+open D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction (golden_right_half_strip_implies_rh)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
   (actualZero actualData actualOccurrenceEquiv)
 open D5.S3.Weil.GronwallLowerEnvelope (robinLogMargin)
-open D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope (B D finite_cancellation)
+open D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
+  (B D finite_cancellation actual_B_rh_signed_asymptotic)
 open D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope
 open D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
 open D5.S3.Arith.Robin.ThetaTailRobinWitness (theta_tail_mertens_robin)
@@ -239,59 +243,56 @@ private lemma canonical_record_data {N : ℕ} (hN : 2 ≤ N) :
   change largestPrime m = Pn (N : ℝ)
   simp only [largestPrime, Pn, Nat.floor_natCast, hs]
 
+private lemma canonical_root_correction_tendsto {N : ℕ → ℕ}
+    (hx : Tendsto (fun k => (N k : ℝ)) atTop atTop) :
+    Tendsto (fun k => D (N k : ℝ) *
+      (robinLogMargin (canonicalRecord (N k)) - B (N k : ℝ))) atTop
+      (𝓝 (2 * Real.sqrt 2)) := by
+  have hPn := RHSharpOriginalRecordMargin.Pn_atTop.comp hx
+  have hscaled : Tendsto (fun k => D (Pn (N k : ℝ) : ℝ) *
+      (robinLogMargin (canonicalRecord (N k)) - B (N k : ℝ))) atTop
+      (𝓝 (2 * Real.sqrt 2)) := by
+    apply Metric.tendsto_nhds.mpr
+    intro ε hε
+    obtain ⟨T, _, hlead⟩ := RHSharpOriginalRecordMargin.fullC_leading ε hε
+    filter_upwards [hx.eventually_ge_atTop (2 : ℝ), hPn.eventually_ge_atTop T] with k hk hPk
+    have hNk : 2 ≤ N k := by exact_mod_cast hk
+    obtain ⟨hq, hm, hrecord, hprime⟩ := canonical_record_data hNk
+    have hlarge : T ≤ (largestPrime (canonicalRecord (N k)) : ℝ) := by
+      simpa only [Function.comp_def, hprime] using hPk
+    have hmargin : robinLogMargin (canonicalRecord (N k)) - B (N k : ℝ) =
+        FullArithmeticCorrectionSecondOrder.correction (canonicalRecord (N k)) := by
+      rw [RHSharpOriginalRecordMargin.margin_identity hm hq hrecord, hprime,
+        RHSharpOriginalRecordMargin.B_prefix, add_sub_cancel_left]
+    rw [Real.dist_eq, hmargin]
+    simpa only [hprime] using (hlead _ hm _ hq hrecord hlarge).2.2
+  have h := hscaled.div (RHSharpOriginalRecordMargin.normalization.comp hx)
+    (one_ne_zero : (1 : ℝ) ≠ 0)
+  rw [div_one] at h
+  apply h.congr'
+  filter_upwards [hPn.eventually_gt_atTop (1 : ℝ)] with k hPk
+  let x : ℝ := N k
+  let P : ℝ := Pn x
+  let Δ : ℝ := robinLogMargin (canonicalRecord (N k)) - B x
+  change 1 < P at hPk
+  have hDP : D P ≠ 0 :=
+    (mul_pos (Real.sqrt_pos.mpr (by linarith only [hPk])) (Real.log_pos hPk)).ne'
+  change (D P * Δ) / (D P / D x) = D x * Δ
+  rw [mul_comm (D P) Δ, mul_div_assoc, div_div_cancel₀ hDP, mul_comm Δ (D x)]
+
 private lemma eventually_canonical_root_correction {N : ℕ → ℕ}
     (hx : Tendsto (fun k => (N k : ℝ)) atTop atTop) :
     ∀ᶠ k : ℕ in atTop,
       0 ≤ D (N k : ℝ) * (robinLogMargin (canonicalRecord (N k)) - B (N k : ℝ)) ∧
       D (N k : ℝ) * (robinLogMargin (canonicalRecord (N k)) - B (N k : ℝ)) ≤
         2 * (2 * Real.sqrt 2 + 1) := by
-  obtain ⟨T, hT, hcorr⟩ := RHSharpOriginalRecordMargin.fullC_leading 1 zero_lt_one
-  have hPn := (RHSharpOriginalRecordMargin.Pn_atTop.comp hx).eventually
-    (eventually_ge_atTop T)
-  have hratio := (RHSharpOriginalRecordMargin.normalization.comp hx).eventually
-    (lt_mem_nhds (by norm_num : (1 / 2 : ℝ) < 1))
-  filter_upwards [hx.eventually (eventually_ge_atTop (2 : ℝ)), hPn, hratio] with k hk hPk hr
-  let x : ℝ := N k
-  let P : ℝ := Pn x
-  let m := canonicalRecord (N k)
-  change (2 : ℝ) ≤ x at hk
-  change T ≤ P at hPk
-  change (1 / 2 : ℝ) < D P / D x at hr
-  have hNk : 2 ≤ N k := by
-    change (2 : ℝ) ≤ (N k : ℝ) at hk
-    exact_mod_cast hk
-  obtain ⟨hq, hm, hrecord, hprime⟩ := canonical_record_data hNk
-  have hP : T ≤ (largestPrime m : ℝ) := by simpa only [m, hprime, P, x] using hPk
-  have hDx : 0 < D x :=
-    mul_pos (Real.sqrt_pos.mpr (by linarith only [hk])) (Real.log_pos (by linarith only [hk]))
-  have hDP : 0 < D P :=
-    mul_pos (Real.sqrt_pos.mpr (by linarith only [hT, hPk]))
-      (Real.log_pos (by linarith only [hT, hPk]))
   have hroot : (1 : ℝ) ≤ Real.sqrt 2 := by
     simpa only [Real.sqrt_one] using Real.sqrt_le_sqrt (by norm_num : (1 : ℝ) ≤ 2)
-  let C := FullArithmeticCorrectionSecondOrder.correction m
-  have habs : |D P * C - 2 * Real.sqrt 2| < 1 := by
-    simpa only [m, hprime, P, x, C] using (hcorr m hm _ hq hrecord hP).2.2
-  have hscaled0 : 0 ≤ D P * C := by linarith only [(abs_lt.mp habs).1, hroot]
-  have hC : 0 ≤ C := (mul_nonneg_iff_of_pos_left hDP).mp hscaled0
-  have hmargin : robinLogMargin m - B x = C := by
-    rw [RHSharpOriginalRecordMargin.margin_identity hm hq hrecord]
-    change B (largestPrime (canonicalRecord (N k)) : ℝ) + C - B x = C
-    rw [hprime, RHSharpOriginalRecordMargin.B_prefix]
-    change B x + C - B x = C
-    ring
-  have hDle : D x ≤ 2 * D P := by
-    have hh := (lt_div_iff₀ hDx).mp hr
-    linarith only [hh]
-  change 0 ≤ D x * (robinLogMargin m - B x) ∧
-    D x * (robinLogMargin m - B x) ≤ 2 * (2 * Real.sqrt 2 + 1)
-  rw [hmargin]
-  refine ⟨mul_nonneg hDx.le hC, ?_⟩
-  have hup : D P * C ≤ 2 * Real.sqrt 2 + 1 := by linarith only [(abs_lt.mp habs).2]
-  calc
-    D x * C ≤ (2 * D P) * C := mul_le_mul_of_nonneg_right hDle hC
-    _ = 2 * (D P * C) := by ring
-    _ ≤ 2 * (2 * Real.sqrt 2 + 1) := mul_le_mul_of_nonneg_left hup (by norm_num)
+  filter_upwards [(Metric.tendsto_nhds.mp (canonical_root_correction_tendsto hx)) 1 zero_lt_one]
+    with k hk
+  rw [Real.dist_eq] at hk
+  exact ⟨by linarith only [(abs_lt.mp hk).1, hroot],
+    by linarith only [(abs_lt.mp hk).2, hroot]⟩
 
 private lemma weight_eq_root_mul (a : ℝ) {x : ℝ} (hx : 0 < x) :
     weight a x = Real.rpow x (a - 1 / 2) * D x := by
@@ -323,6 +324,72 @@ private lemma canonical_correction_tendsto {N : ℕ → ℕ}
     have hpos := (Real.rpow_pos_of_pos hk₀ (a - 1 / 2)).le
     exact ⟨mul_nonneg hpos hk.1, mul_le_mul_of_nonneg_left hk.2 hpos⟩
   exact squeeze_zero' (hbounds.mono fun _ hk => hk.1) (hbounds.mono fun _ hk => hk.2) hupper
+
+/-- On any closed upper strip with `1 / 2 ≤ Θ < 1`, the critically weighted
+literal canonical Robin samples have the complete normalized zero series as
+their negative oscillatory term. The endpoint has constant `2 * √2 - 2`. -/
+theorem actual_canonical_samples_signed_asymptotic {Θ : ℝ}
+    (hhalf : 1 / 2 ≤ Θ) (hone : Θ < 1)
+    (hstrip : ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re ≤ Θ)
+    {N : ℕ → ℕ} (hN : Tendsto N atTop atTop) :
+    Tendsto (fun k =>
+      ((Real.rpow (N k : ℝ) (1 - Θ) * Real.log (N k : ℝ) *
+        robinLogMargin (strictInteger (firstLayerPrice ((N k : ℝ) + 1))) : ℝ) : ℂ) +
+      (Real.exp (-Θ * Real.log (N k : ℝ)) : ℂ) * actualH (Real.log (N k : ℝ)) -
+      ((if Θ = 1 / 2 then 2 * Real.sqrt 2 - 2 else 0 : ℝ) : ℂ)) atTop (𝓝 0) := by
+  have hx : Tendsto (fun k => (N k : ℝ)) atTop atTop :=
+    tendsto_natCast_atTop_atTop.comp hN
+  have hreal : Tendsto (fun k => weight (1 - Θ) (N k : ℝ) *
+      robinLogMargin (canonicalRecord (N k)) +
+      Real.exp (-Θ * Real.log (N k : ℝ)) * (actualH (Real.log (N k : ℝ))).re -
+      (if Θ = 1 / 2 then 2 * Real.sqrt 2 - 2 else 0)) atTop (𝓝 0) := by
+    by_cases hΘ : Θ = 1 / 2
+    · subst Θ
+      simp only [ite_true]
+      have hRH : RiemannHypothesis := by
+        apply golden_right_half_strip_implies_rh
+        intro ρ hzero hright hlt
+        exact (not_lt_of_ge (hstrip ρ ⟨hzero, by linarith only [hright], hlt⟩)) hright
+      have hB := (actual_B_rh_signed_asymptotic hRH).comp hx
+      have hc := canonical_root_correction_tendsto hx
+      have h := (hB.add hc).sub_const (2 * Real.sqrt 2)
+      simp only [zero_add, sub_self] at h
+      have hweight (x : ℝ) : weight (1 - 1 / 2) x = D x := by
+        unfold weight D
+        rw [show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num, Real.rpow_eq_pow, ← Real.sqrt_eq_rpow]
+      have hexp (y : ℝ) : -(1 / 2 : ℝ) * y = -y / 2 := by ring
+      refine h.congr fun k => ?_
+      simp only [Function.comp_def, hweight, hexp]
+      ring
+    · have hstrict : 1 / 2 < Θ := lt_of_le_of_ne hhalf (Ne.symm hΘ)
+      have hstrip' : ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re ≤ 1 - (1 - Θ) := by
+        simpa only [sub_sub_cancel] using hstrip
+      have hB := actual_B_critical_strip_signed_asymptotic (1 - Θ)
+        (sub_pos.mpr hone) (by linarith only [hstrict]) hstrip'
+      rw [sub_sub_cancel] at hB
+      have hB' : Tendsto (fun k => weight (1 - Θ) (N k : ℝ) * B (N k : ℝ) +
+          Real.exp (-Θ * Real.log (N k : ℝ)) * (actualH (Real.log (N k : ℝ))).re)
+          atTop (𝓝 0) := by
+        apply (hB.comp (Real.tendsto_log_atTop.comp hx)).congr'
+        filter_upwards [hx.eventually_gt_atTop (0 : ℝ)] with k hk
+        have he : Real.exp ((1 - Θ) * Real.log (N k : ℝ)) =
+            Real.rpow (N k : ℝ) (1 - Θ) := by
+          rw [Real.rpow_eq_pow, Real.rpow_def_of_pos hk, mul_comm]
+        simp only [Function.comp_def, he, Real.exp_log hk, weight]
+      have hc := canonical_correction_tendsto hx (a := 1 - Θ) (by linarith only [hstrict])
+      have h := hB'.add hc
+      rw [zero_add] at h
+      refine h.congr fun k => ?_
+      rw [ite_eq_right hΘ, sub_zero]
+      ring
+  have h := (Complex.continuous_ofReal.tendsto (0 : ℝ)).comp hreal
+  simp only [Function.comp_def, Complex.ofReal_zero] at h
+  refine h.congr fun k => ?_
+  have him : (actualH (Real.log (N k : ℝ))).im = 0 :=
+    (actual_complete_H_package.2.choose_spec.2.1 _).2.1
+  have hre : ((actualH (Real.log (N k : ℝ))).re : ℂ) = actualH (Real.log (N k : ℝ)) := by
+    apply Complex.ext <;> simp [him]
+  simp only [Complex.ofReal_sub, Complex.ofReal_add, Complex.ofReal_mul, hre]
 
 private lemma canonical_critical_approx {ρ : ℂ} (hρ : IsNontrivialZero ρ)
     (hρhalf : 1 / 2 < ρ.re) (hmax : ∀ z : ℂ, IsNontrivialZero z → z.re ≤ ρ.re)
