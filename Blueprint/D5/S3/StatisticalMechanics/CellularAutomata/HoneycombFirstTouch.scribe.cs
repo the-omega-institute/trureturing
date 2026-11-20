@@ -30,78 +30,115 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
             Paragraph(Text("A stored pair gives the tick and multiplicity of the first touch. "
                 + "A vertex with multiplicity one is born and sends on the next tick. "
                 + "The seed starts with the pair (0, 1). In the formulas, u is the universe "
-                + "of the vertex type. The witnesses e and d are Lean's typeclass arguments "
+                + "of the vertex type. The witnesses e and dec are Lean's typeclass arguments "
                 + "for decidable equality and adjacency. A type after a colon gives "
                 + "the type of a variable or of the displayed value.")),
-            Definition("sending-neighbors", "sendingNeighbors", "Sending neighbors", SendingNeighbors()),
-            Definition("state", "state", "Stored first-touch state", State()),
+            Definition("sending-neighbors", "sendingNeighbors", "Sending neighbors", SendingNeighbors(),
+                "Each retained sender is counted once by the finite set filter."),
+            Definition("state", "state", "Stored first-touch state", State(),
+                "The successor update keeps any stored pair. For an untouched retained vertex, the new pair is stored only when the sender count is positive."),
             Definition("touch", "Touch", "First touch", EventDefinitions("Touch",
-                Equal(Stored(Dmn, Seed, F.Id("t"), F.Id("v")), Some(F.Id("t"), Multiplicity)), Prop, true)),
+                Equal(Stored(Dmn, Seed, F.Id("t"), F.Id("v")), Some(F.Id("t"), Multiplicity)), Prop, true),
+                "The stored time must be the queried tick."),
             Definition("born", "Born", "Birth", EventDefinitions("Born",
-                TouchAt(Dmn, Seed, F.Id("t"), F.Id("v"), Num(1)), Prop)),
+                TouchAt(Dmn, Seed, F.Id("t"), F.Id("v"), Num(1)), Prop),
+                "A first touch with exactly one sender activates the vertex."),
             Definition("intact", "Intact", "Intact status", EventDefinitions("Intact",
-                Equal(Stored(Dmn, Seed, F.Id("t"), F.Id("v")), Name("none")), Prop)),
+                Equal(Stored(Dmn, Seed, F.Id("t"), F.Id("v")), Name("none")), Prop),
+                "The predicate checks the stored option. To use it as the status of a retained vertex, supply membership separately."),
             Definition("senders", "senders", "Senders at a vertex", EventDefinitions("senders",
                 SendersFrom(Dmn, F.Id("t"), CallNamed("state", Graph, Dmn, Seed, F.Id("t")), F.Id("v")),
-                CallNamed("Finset", F.Id("V")))),
-            Theorem("mem-senders", "mem_senders", "Membership in the sender set", MemSenders()),
-            Theorem("touch-zero-iff", "touch_zero_iff", "First touch at tick zero", TouchZero()),
+                CallNamed("Finset", F.Id("V")), proposition: false),
+                "The prior state is the state at the same tick t as the births that send."),
+            Theorem("mem-senders", "mem_senders", "Membership in the sender set", MemSenders(),
+                "Membership can be tested using the birth predicate at the source vertex w."),
+            Theorem("touch-zero-iff", "touch_zero_iff", "First touch at tick zero", TouchZero(),
+                "Tick zero supplies the initial event for the induction on time."),
             Theorem("touch-retained-and-positive", "touch_retained_and_positive",
-                "Retention and positive multiplicity", TouchRetained()),
-            Theorem("intact-iff-no-touch", "intact_iff_no_touch", "Intact status through a tick", IntactIff()),
-            Theorem("touch-unique", "touch_unique", "Uniqueness of touch data", TouchUnique()),
-            Theorem("strict-horizon", "strict_horizon", "Strict horizon on a general graph", StrictHorizon()),
+                "Retention and positive multiplicity", TouchRetained(),
+                "These constraints hold for the stored pair at any first-touch event."),
+            Theorem("intact-iff-no-touch", "intact_iff_no_touch", "Intact status through a tick", IntactIff(),
+                "The quantifier over earlier ticks includes the current tick."),
+            Theorem("touch-unique", "touch_unique", "Uniqueness of touch data", TouchUnique(),
+                "Persistence makes both the tick and the multiplicity unique."),
+            Theorem("strict-horizon", "strict_horizon", "Strict horizon on a general graph", StrictHorizon(),
+                "The wall hypothesis applies to exterior vertices with an edge into D. The second conclusion ranges over every exterior vertex of E."),
             Paragraph(Text("For honeycomb geometry, Vertex is Bool × ℤ × ℤ. Write v=(p,x,y) "
                 + "and use p(v), x(v), y(v) for its projections. The operation land is "
                 + "Nat.land, the bitwise AND of natural numbers. Subtraction in natural "
                 + "parameters is truncated.")),
-            Definition("vertex-a", "A", "A vertex", ColoredVertex("A", "false")),
-            Definition("vertex-b", "B", "B vertex", ColoredVertex("B", "true")),
-            Definition("neighbor-laws", "NeighborLaws", "Adjacency laws", NeighborLaws()),
-            Theorem("neighbors-a", "neighbors_A", "Neighbors of an A vertex", Neighbors("A", "B", false)),
-            Theorem("neighbors-b", "neighbors_B", "Neighbors of a B vertex", Neighbors("B", "A", true)),
+            Definition("vertex-a", "A", "A vertex", ColoredVertex("A", "false"),
+                "The first coordinate identifies the A part of the bipartition."),
+            Definition("vertex-b", "B", "B vertex", ColoredVertex("B", "true"),
+                "The first coordinate identifies the B part of the bipartition."),
+            Definition("neighbor-laws", "NeighborLaws", "Adjacency laws", NeighborLaws(),
+                "The two fields of the structure are opposite and fromA, in the order displayed."),
+            Theorem("neighbors-a", "neighbors_A", "Neighbors of an A vertex", Neighbors("A", "B", false),
+                "The two nonzero offsets from A to B each subtract one in a different coordinate."),
+            Theorem("neighbors-b", "neighbors_B", "Neighbors of a B vertex", Neighbors("B", "A", true),
+                "The reverse offsets from B to A each add one in a different coordinate."),
             Definition("part", "part", "Integer color", VertexReadout("part", Integers,
-                Ite(Color(F.Id("v")), Num(1), Num(0)))),
+                Ite(Color(F.Id("v")), Num(1), Num(0))),
+                "The Boolean color is read as an integer."),
             Definition("height-sum", "heightSum", "Coordinate sum", VertexReadout("heightSum", Integers,
-                Add(X(F.Id("v")), Y(F.Id("v"))))),
+                Add(X(F.Id("v")), Y(F.Id("v")))),
+                "The diagonal height is independent of the color."),
             Definition("g", "g", "Cut coordinate", VertexReadout("g", Integers,
-                Add(Add(Multiply(Num(2), X(F.Id("v"))), Y(F.Id("v"))), Part(F.Id("v"))))),
+                Add(Add(Multiply(Num(2), X(F.Id("v"))), Y(F.Id("v"))), Part(F.Id("v")))),
+                "The strict cut compares this integer coordinate with the cut threshold."),
             Definition("earliest", "earliest", "Earliest possible touch", VertexReadout("earliest", Naturals,
-                ToNat(Add(G(F.Id("v")), Y(F.Id("v")))))),
-            Definition("horizon", "horizon", "Displaced-wall horizon", Horizon()),
-            Definition("domain", "domain", "Retained finite domain", DomainDefinition()),
-            Theorem("mem-domain", "mem_domain", "Retained vertex criterion", MemDomain()),
-            Theorem("domain-mono", "domain_mono", "Monotonicity in height", DomainMono()),
-            Theorem("seed-mem", "seed_mem", "Seed retention", SeedMem()),
-            Theorem("earliest-bound", "earliest_bound", "Lower bound on touch time", EarliestBound()),
-            Definition("earliest-births", "EarliestBirths", "Sufficient parity condition", EarliestBirths()),
+                ToNat(Add(G(F.Id("v")), Y(F.Id("v"))))),
+                "The integer expression is converted to a natural only after adding the y-coordinate."),
+            Definition("horizon", "horizon", "Displaced-wall horizon", Horizon(),
+                "The formula allows any natural width P."),
+            Definition("domain", "domain", "Retained finite domain", DomainDefinition(),
+                "The braces denote a filter on the finite product with two half-open integer intervals."),
+            Theorem("mem-domain", "mem_domain", "Retained vertex criterion", MemDomain(),
+                "The nonnegative coordinates and the two strict bounds characterize the filtered domain."),
+            Theorem("domain-mono", "domain_mono", "Monotonicity in height", DomainMono(),
+                "The cut threshold K is held fixed."),
+            Theorem("seed-mem", "seed_mem", "Seed retention", SeedMem(),
+                "The strict inequalities on height and threshold retain the zero origin."),
+            Theorem("earliest-bound", "earliest_bound", "Lower bound on touch time", EarliestBound(),
+                "The bound applies to touches of arbitrary multiplicity in any finite retained set."),
+            Definition("earliest-births", "EarliestBirths", "Sufficient parity condition", EarliestBirths(),
+                "Only the sufficient direction of the bitwise criterion is assumed here."),
             Paragraph(Text("At a dyadic width dividing the smaller height, a crossing edge "
                 + "can leave the smaller domain only at the diagonal A wall. Below the "
                 + "dyadic width, the two eligible parents send together. At or above "
                 + "that width, the earliest-touch bound suffices. Induction on time "
                 + "transports the full touch data and excludes earlier exterior births.")),
             Theorem("clipped-first-touch", "clipped_first_touch", "Strict horizon across clipped honeycombs",
-                ClippedFirstTouch()),
-            Definition("omega-domain", "omegaDomain", "Adjacent-cut domain", OmegaDefinition()),
-            Theorem("domain-cut-mono", "domain_cut_mono", "Monotonicity in the cut threshold", DomainCutMono()),
-            Definition("earliest-birth-iff", "EarliestBirthIff", "Earliest-birth parity law", EarliestBirthIff()),
+                ClippedFirstTouch(),
+                "The same cut K, seed and horizon are used in both runs. Both conclusions are strict in the queried tick."),
+            Definition("omega-domain", "omegaDomain", "Adjacent-cut domain", OmegaDefinition(),
+                "Increasing d narrows the cut by lowering the threshold."),
+            Theorem("domain-cut-mono", "domain_cut_mono", "Monotonicity in the cut threshold", DomainCutMono(),
+                "The height a is held fixed."),
+            Definition("earliest-birth-iff", "EarliestBirthIff", "Earliest-birth parity law", EarliestBirthIff(),
+                "The criterion is restricted to the positive-height range 0 ≤ c ≤ a and to vertices in the cut domain."),
             Theorem("earliest-birth-iff-of-neighbor-laws", "earliestBirthIff_of_neighborLaws",
                 "Parity law from the adjacency laws", OnHoneycombGraph(
-                    Imp(Laws(), CallNamed("EarliestBirthIff", Graph)), decidable: true)),
+                    Imp(Laws(), CallNamed("EarliestBirthIff", Graph)), decidable: true),
+                "The graph-level adjacency laws suffice to derive the Pascal parity criterion for the cut domains."),
             Definition("repository-adjacency", "repositoryAdjacency", "Decidable repository adjacency",
-                Typed(Name("repositoryAdjacency"), DecidableAdj(Name("honeycombGraph")))),
+                Typed(Name("repositoryAdjacency"), DecidableAdj(Name("honeycombGraph"))),
+                "The decision procedure tests the color and the three allowed offsets of the repository graph."),
             Theorem("repository-neighbor-laws", "repositoryNeighborLaws",
-                "Adjacency laws on the repository graph", CallNamed("NeighborLaws", Name("honeycombGraph"))))));
+                "Adjacency laws on the repository graph", CallNamed("NeighborLaws", Name("honeycombGraph")),
+                "Here honeycombGraph is the existing graph in HoneycombCylinderCoordination."))));
 
-    private static DocumentBlock Definition(string id, string name, string title, Formula statement) =>
-        Mirror(id, name, title, statement, DescribeRole.Definition);
+    private static DocumentBlock Definition(string id, string name, string title, Formula statement, string description) =>
+        Mirror(id, name, title, statement, description, DescribeRole.Definition);
 
-    private static DocumentBlock Theorem(string id, string name, string title, Formula statement) =>
-        Mirror(id, name, title, statement, DescribeRole.Theorem);
+    private static DocumentBlock Theorem(string id, string name, string title, Formula statement, string description) =>
+        Mirror(id, name, title, statement, description, DescribeRole.Theorem);
 
-    private static DocumentBlock Mirror(string id, string name, string title, Formula statement, DescribeRole role) =>
+    private static DocumentBlock Mirror(string id, string name, string title, Formula statement,
+        string description, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(), Blocks(), role);
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(description))), role);
 
     private static Formula SendingNeighbors()
     {
@@ -111,7 +148,8 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var prior = Name("prior");
         var type = F.Id("V");
         var right = SetOf("w", type, And(Member(w, Dmn), Adj(v, w), Equal(App(prior, w), Some(t, Num(1)))));
-        return OnGenericGraph(TypedEquation(SendersFrom(Dmn, t, prior, v), CallNamed("Finset", type), right),
+        return GenericGraph(TypedEquation(SendersFrom(Dmn, t, prior, v), CallNamed("Finset", type), right),
+            false,
             ("D", CallNamed("Finset", type)), ("t", Naturals), ("prior", Arrow(type, TouchData)), ("v", type));
     }
 
@@ -129,17 +167,18 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var fresh = And(Member(v, Dmn), NotEqual(count, Num(0)));
         var next = Ite(NotEqual(previous, Name("none")), previous,
             Ite(fresh, Some(Add(t, Num(1)), count), Name("none")));
-        return OnGenericGraph(And(signature, initial, All(Equal(current, next), ("t", Naturals), ("v", type))),
+        return OnGenericGraph(Seq(signature, Comma, Quad, And(initial, All(Equal(current, next), ("t", Naturals), ("v", type)))),
             ("D", CallNamed("Finset", type)), ("seed", type));
     }
 
-    private static Formula EventDefinitions(string name, Formula right, Formula resultType, bool multiplicity = false)
+    private static Formula EventDefinitions(string name, Formula right, Formula resultType, bool multiplicity = false,
+        bool proposition = true)
     {
         var type = F.Id("V");
         var t = F.Id("t");
         var v = F.Id("v");
         var left = multiplicity ? TouchAt(Dmn, Seed, t, v, Multiplicity) : CallNamed(name, Graph, Dmn, Seed, t, v);
-        var equation = resultType == Prop ? IffForm(Typed(left, Prop), right) : TypedEquation(left, resultType, right);
+        var equation = proposition ? IffForm(Typed(left, Prop), right) : TypedEquation(left, resultType, right);
         return OnGenericGraph(multiplicity ? All(equation, ("mult", Naturals)) : equation,
             ("D", CallNamed("Finset", type)), ("seed", type), ("t", Naturals), ("v", type));
     }
@@ -151,7 +190,7 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var w = F.Id("w");
         return GenericEvent(IffForm(Member(w, CallNamed("senders", Graph, Dmn, Seed, t, v)),
             And(Member(w, Dmn), Adj(v, w), BornAt(Dmn, Seed, t, w))),
-            ("t", Naturals), ("v", F.Id("V")), ("w", F.Id("V")));
+            ("v", F.Id("V")), ("t", Naturals), ("w", F.Id("V")));
     }
 
     private static Formula TouchZero()
@@ -166,7 +205,7 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var t = F.Id("t");
         var v = F.Id("v");
         return GenericEvent(Imp(TouchAt(Dmn, Seed, t, v, Multiplicity), And(Member(v, Dmn), Positive(Multiplicity))),
-            ("t", Naturals), ("v", F.Id("V")), ("mult", Naturals));
+            ("v", F.Id("V")), ("t", Naturals), ("mult", Naturals));
     }
 
     private static Formula IntactIff()
@@ -177,7 +216,7 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var noTouch = All(Imp(LeqOf(s, t), All(Not(TouchAt(Dmn, Seed, s, v, Multiplicity)), ("mult", Naturals))),
             ("s", Naturals));
         return GenericEvent(IffForm(CallNamed("Intact", Graph, Dmn, Seed, t, v), noTouch),
-            ("t", Naturals), ("v", F.Id("V")));
+            ("v", F.Id("V")), ("t", Naturals));
     }
 
     private static Formula TouchUnique()
@@ -185,9 +224,10 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         var v = F.Id("v");
         var s = F.Id("s");
         var t = F.Id("t");
-        return GenericEvent(Imp(TouchAt(Dmn, Seed, s, v, Multiplicity), TouchAt(Dmn, Seed, t, v, OtherMultiplicity),
-            And(Equal(s, t), Equal(Multiplicity, OtherMultiplicity))),
-            ("s", Naturals), ("t", Naturals), ("v", F.Id("V")), ("mult", Naturals), ("other", Naturals));
+        var uniqueness = And(Equal(s, t), Equal(Multiplicity, OtherMultiplicity));
+        var secondTouch = All(Imp(TouchAt(Dmn, Seed, t, v, OtherMultiplicity), uniqueness), ("other", Naturals));
+        return GenericEvent(Imp(TouchAt(Dmn, Seed, s, v, Multiplicity), secondTouch),
+            ("v", F.Id("V")), ("t", Naturals), ("s", Naturals), ("mult", Naturals));
     }
 
     private static Formula StrictHorizon()
@@ -365,12 +405,18 @@ internal sealed class HoneycombFirstTouchDocument : IScribeDocumentDefinition
         OnGenericGraph(body, [("D", CallNamed("Finset", F.Id("V"))), ("seed", F.Id("V")), .. parameters]);
 
     private static Formula OnGenericGraph(Formula body, params (string, Formula)[] parameters) =>
-        All(All(body, parameters), ("V", Seq(Name("Type"), Sp, F.Id("u"))),
-            ("e", CallNamed("DecidableEq", F.Id("V"))), ("G", CallNamed("SimpleGraph", F.Id("V"))),
-            ("d", DecidableAdj(Graph)));
+        GenericGraph(body, true, parameters);
+
+    private static Formula GenericGraph(Formula body, bool decidableEquality, params (string, Formula)[] parameters)
+    {
+        var type = F.Id("V");
+        var graph = All(All(body, parameters), ("G", CallNamed("SimpleGraph", type)), ("dec", DecidableAdj(Graph)));
+        return All(decidableEquality ? All(graph, ("e", CallNamed("DecidableEq", type))) : graph,
+            ("V", Seq(Name("Type"), Sp, F.Id("u"))));
+    }
 
     private static Formula OnHoneycombGraph(Formula body, bool decidable = false) =>
-        All(decidable ? All(body, ("d", DecidableAdj(Graph))) : body, ("G", CallNamed("SimpleGraph", Vertex)));
+        All(decidable ? All(body, ("dec", DecidableAdj(Graph))) : body, ("G", CallNamed("SimpleGraph", Vertex)));
 
     private static Formula VertexReadout(string name, Formula type, Formula right) =>
         All(TypedEquation(CallNamed(name, F.Id("v")), type, right), ("v", Vertex));

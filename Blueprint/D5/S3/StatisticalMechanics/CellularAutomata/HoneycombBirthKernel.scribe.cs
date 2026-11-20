@@ -23,36 +23,48 @@ internal sealed class HoneycombBirthKernelDocument : IScribeDocumentDefinition
                 + "coordinate projections, and e is Lean's typeclass argument for "
                 + "decidable adjacency. Subtraction in tick and exponent expressions "
                 + "is truncated in ℕ. The symbol X denotes the polynomial indeterminate.")),
-            Definition("delta", "delta", "Adjacent-cut birth difference", DeltaDefinition()),
-            Definition("birth-weight", "birthWeight", "Birth indicator", BirthWeight()),
-            Definition("signed-weight", "signedWeight", "Difference of birth indicators", SignedWeight()),
-            Theorem("coeff-delta-on", "coeff_delta_on", "Coefficient over a common finite set", CoeffDeltaOn()),
+            Definition("delta", "delta", "Adjacent-cut birth difference", DeltaDefinition(),
+                "Each birth polynomial counts every retained vertex that is born with a monomial at its birth tick."),
+            Definition("birth-weight", "birthWeight", "Birth indicator", BirthWeight(),
+                "The value is an integer, so the difference of two such weights can be negative."),
+            Definition("signed-weight", "signedWeight", "Difference of birth indicators", SignedWeight(),
+                "The orientation is the weight at cut d minus the weight at cut d+1."),
+            Theorem("coeff-delta-on", "coeff_delta_on", "Coefficient over a common finite set", CoeffDeltaOn(),
+                "U contains the larger cut domain. Vertices outside each cut contribute zero to its birth count."),
             Paragraph(Text("At a positive multiple a of a dyadic strip width P, horizontal "
                 + "translation identifies the right strip with the height-P run after "
                 + "a delay of 2(a−P). On the left, the birth indicators for the two cuts agree.")),
             Theorem("adjacent-copy-of-earliest", "adjacent_copy_of_earliest",
-                "Dyadic copy of the adjacent-cut difference", AdjacentCopy()),
+                "Dyadic copy of the adjacent-cut difference", AdjacentCopy(),
+                "The graph satisfies both the adjacency laws and the earliest-birth parity law. The same column c is used at both heights."),
             Paragraph(Text("At neighboring cuts of an integral height, write τ=2a−d−1 "
                 + "for the removed layer's time. The potential 2τ−g+y changes by at "
                 + "most one along an edge before conversion to a natural. On the removed "
                 + "layer it equals the earliest possible touch time.")),
             Theorem("signed-support-of-neighbor-laws", "signedSupport_of_neighborLaws",
-                "Support of the signed birth indicator", SignedSupport()),
-            Definition("kernel-entry", "kernelEntry", "Normalized kernel coefficient", KernelEntry()),
+                "Support of the signed birth indicator", SignedSupport(),
+                "The conclusion expands the private predicate SignedSupport. The layer time and "
+                + "the natural index i are cast to integers before taking their difference."),
+            Definition("kernel-entry", "kernelEntry", "Normalized kernel coefficient", KernelEntry(),
+                "Choose the least natural exponent b with d < 2^b, then read the coefficient after the removed layer’s delay."),
             Theorem("kernel-entry-eq-coeff", "kernelEntry_eq_coeff",
-                "Coefficient at any eligible dyadic height", KernelEntryEqCoeff()),
+                "Coefficient at any eligible dyadic height", KernelEntryEqCoeff(),
+                "Any eligible dyadic height may be used with the same graph and parity law."),
             Definition("birth-kernel-entry", "birthKernelEntry", "Kernel coefficient on the repository graph",
-                BirthKernelEntry()))));
+                BirthKernelEntry(),
+                "The specialized readout uses the existing honeycomb graph and its concrete adjacency decision procedure."))));
 
-    private static DocumentBlock Definition(string id, string name, string title, Formula statement) =>
-        Mirror(id, name, title, statement, DescribeRole.Definition);
+    private static DocumentBlock Definition(string id, string name, string title, Formula statement, string description) =>
+        Mirror(id, name, title, statement, description, DescribeRole.Definition);
 
-    private static DocumentBlock Theorem(string id, string name, string title, Formula statement) =>
-        Mirror(id, name, title, statement, DescribeRole.Theorem);
+    private static DocumentBlock Theorem(string id, string name, string title, Formula statement, string description) =>
+        Mirror(id, name, title, statement, description, DescribeRole.Theorem);
 
-    private static DocumentBlock Mirror(string id, string name, string title, Formula statement, DescribeRole role) =>
+    private static DocumentBlock Mirror(string id, string name, string title, Formula statement,
+        string description, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(), Blocks(), role);
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(description))), role);
 
     private static Formula DeltaDefinition()
     {
