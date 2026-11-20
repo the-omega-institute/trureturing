@@ -6,12 +6,16 @@
    utility: none
    digest: Actual type-A matrix and quotient mathematics for uniform ordered products. -/
 
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+@[expose] public section
 
 /-! Actual upper unitriangular and upper triangular subgroups of SLn.
 Native block-triangular multiplication and inversion are reused. -/
@@ -60,6 +64,7 @@ theorem upper_mul_diag {g h : SpecialLinearGroup (Fin n) F}
       simp [hh j i hij]
   · simp
 
+set_option backward.proofsInPublic true in
 /-- The actual full upper-unitriangular subgroup, in every rank and field. -/
 def Uplus (n : ℕ) (F : Type u) [Field F] :
     Subgroup (SpecialLinearGroup (Fin n) F) where
