@@ -7,6 +7,7 @@
    digest: Maximal signed fair-bias faces have uniform size and obey lexicographic shelling. -/
 
 import D5.S3.TotalVariation.FairBiasFaceCount
+import Mathlib.Combinatorics.Colex
 import Mathlib.Combinatorics.Matroid.Map
 import Mathlib.Combinatorics.Matroid.Closure
 
@@ -172,8 +173,12 @@ theorem facet_card_eq_nullity (c : L → A) (S : Finset (L × Bool)) (hS : IsFac
   omega
 
 /-- Lexicographic precedence of equal-size faces, using the first differing signed vertex. -/
-def lexBefore (α : Type*) [LT α] (S T : Finset α) : Prop :=
-  ∃ x ∈ S, x ∉ T ∧ ∀ y ∈ T, y ∉ S → x < y
+def lexBefore (α : Type*) [LinearOrder α] (S T : Finset α) : Prop :=
+  toColex (α := Finset αᵒᵈ) T < toColex (α := Finset αᵒᵈ) S
+
+private theorem lexBefore_iff {α : Type*} [LinearOrder α] {S T : Finset α} :
+    lexBefore α S T ↔ ∃ x ∈ S, x ∉ T ∧ ∀ y ∈ T, y ∉ S → x < y :=
+  Finset.Colex.toColex_lt_toColex_iff_exists_forall_lt (α := αᵒᵈ)
 
 /-- Lexicographic order on the signed labels satisfies the facet shelling criterion. -/
 theorem lexicographic_facet_shelling (c : L → A) [LinearOrder (L × Bool)]
@@ -182,7 +187,7 @@ theorem lexicographic_facet_shelling (c : L → A) [LinearOrder (L × Bool)]
     ∃ U : Finset (L × Bool), IsFacet c U ∧ lexBefore (L × Bool) U T ∧
       (↑S : Set (L × Bool)) ∩ ↑T ⊆ ↑U ∧ ∃ y, (↑T : Set (L × Bool)) \ ↑U = {y} := by
   classical
-  obtain ⟨x, hxS, hxT, hfirst⟩ := hST
+  obtain ⟨x, hxS, hxT, hfirst⟩ := lexBefore_iff.mp hST
   let M := signedMatroid c
   have hBS := ((facet_iff_base c S).mp hS).2
   have hBT := ((facet_iff_base c T).mp hT).2
@@ -216,7 +221,7 @@ theorem lexicographic_facet_shelling (c : L → A) [LinearOrder (L × Bool)]
   have hU : (U : Set (L × Bool)) = V := Set.Finite.coe_toFinset _
   have hxU : x ∈ U := by change x ∈ (U : Set (L × Bool)); rwa [hU]
   refine ⟨U, (facet_iff_base c U).mpr ⟨⟨x, hxU⟩, hU.symm ▸ hV⟩, ?_, ?_, y, ?_⟩
-  · refine ⟨x, hxU, hxT, ?_⟩
+  · refine lexBefore_iff.mpr ⟨x, hxU, hxT, ?_⟩
     intro z hzT hzU
     have hzV : z ∉ V := by
       rw [← hU]
