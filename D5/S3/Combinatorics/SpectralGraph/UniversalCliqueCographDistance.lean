@@ -32,15 +32,16 @@ def graph (r s b : ℕ) : SimpleGraph (Vertex r s b) :=
 
 local notation "G" => graph r s b
 
-private theorem hub_universal (i : Fin r) : G.IsUniversal (hub i) := by
+private theorem hub_universal (i : Fin r) : (G).IsUniversal (hub i) := by
   intro v hv
-  cases v <;> simpa [graph, ne_comm] using hv
+  cases v <;> simp_all [graph]
 
 theorem connected (hr : 0 < r) : (graph r s b).Connected :=
   Connected.of_isUniversal (hub_universal ⟨0, hr⟩)
 
+open scoped Classical in
 theorem distance (hr : 0 < r) (u v : Vertex r s b) :
-    G.dist u v = if u = v then 0 else if G.Adj u v then 1 else 2 := by
+    (G).dist u v = if u = v then 0 else if (G).Adj u v then 1 else 2 := by
   classical
   split_ifs with heq hadj
   · subst v
@@ -50,19 +51,19 @@ theorem distance (hr : 0 < r) (u v : Vertex r s b) :
     have hu : u ≠ h := by
       intro e
       subst u
-      exact hadj (hub_universal _ (Ne.symm heq))
+      exact hadj (hub_universal ⟨0, hr⟩ heq)
     have hv : v ≠ h := by
       intro e
       subst v
-      exact hadj (hub_universal _ heq).symm
-    have hed := G.edist_eq_two_iff.mpr
-      ⟨heq, hadj, h, (hub_universal _ hu).symm, (hub_universal _ hv).symm⟩
+      exact hadj (hub_universal ⟨0, hr⟩ (Ne.symm heq)).symm
+    have hed := (G).edist_eq_two_iff.mpr
+      ⟨heq, hadj, h, (hub_universal ⟨0, hr⟩ (Ne.symm hu)).symm, (hub_universal ⟨0, hr⟩ (Ne.symm hv)).symm⟩
     simp [SimpleGraph.dist, hed]
 
 private theorem not_hub_of_nonadjacent {u v : Vertex r s b} (hne : u ≠ v)
-    (hn : ¬ G.Adj u v) : ∃ z, u = Sum.inr z := by
+    (hn : ¬ (G).Adj u v) : ∃ z, u = Sum.inr z := by
   cases u with
-  | inl i => exact (hn (hub_universal i hne.symm)).elim
+  | inl i => exact (hn (hub_universal i hne)).elim
   | inr z => exact ⟨z, rfl⟩
 
 theorem induced_path_excluded (r s b : ℕ) :
@@ -101,7 +102,7 @@ private theorem vicinal_hub (u : Vertex r s b) (i : Fin r) : vicinal G u (hub i)
   intro w _
   by_cases h : w = hub i
   · exact Or.inl h
-  · exact Or.inr (hub_universal i h)
+  · exact Or.inr (hub_universal i (Ne.symm h))
 
 private theorem vicinal_left (i j : Fin s) : vicinal G (left i) (left j) := by
   intro w h
@@ -120,8 +121,8 @@ private theorem vicinal_isolate (i : Fin b) (u : Vertex r s b) : vicinal G (isol
   rcases w with x | ((x | x) | x)
   · by_cases he : hub x = u
     · exact Or.inl he
-    · exact Or.inr (hub_universal x he.symm).symm
-  all_goals simp [graph, completeBipartiteGraph_adj, mem_neighborSet] at h
+    · exact Or.inr (hub_universal x he).symm
+  all_goals simp [graph, mem_neighborSet] at h
 
 private def chain (v : Vertex r s b) : Fin 2 :=
   match v with
@@ -157,13 +158,13 @@ theorem incomparable_parts (hs : 2 ≤ s) (i j : Fin s) :
   obtain ⟨i', hi⟩ := other i
   constructor
   · intro h
-    have hh := h (show right j' ∈ G.neighborSet (left i) by
+    have hh := h (show right j' ∈ (G).neighborSet (left i) by
       simp [graph, completeBipartiteGraph_adj, mem_neighborSet])
-    simpa [graph, completeBipartiteGraph_adj, mem_neighborSet, hj] using hh
+    simp [graph, completeBipartiteGraph_adj, mem_neighborSet, hj] at hh
   · intro h
-    have hh := h (show left i' ∈ G.neighborSet (right j) by
+    have hh := h (show left i' ∈ (G).neighborSet (right j) by
       simp [graph, completeBipartiteGraph_adj, mem_neighborSet])
-    simpa [graph, completeBipartiteGraph_adj, mem_neighborSet, hi] using hh
+    simp [graph, completeBipartiteGraph_adj, mem_neighborSet, hi] at hh
 
 theorem width (hs : 2 ≤ s) : dilworthNumber G = 2 := by
   apply le_antisymm
