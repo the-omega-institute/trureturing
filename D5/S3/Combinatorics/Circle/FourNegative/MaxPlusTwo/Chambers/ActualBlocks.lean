@@ -16,16 +16,12 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
+open private mass_margin ceilpos from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
+open private source_shadow_charge two_power_pred from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source
+open private seedZ modZ old enlarged charge shadow natural_lift_strips natural_lift_totals
+  from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift
+open private Strong strong_strips strong_append strong_of_shadow from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private mass_margin ceilpos from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic open private
-  source_shadow_charge two_power_pred from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source open private seedZ modZ old
-  enlarged charge shadow natural_lift_strips natural_lift_totals from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift open private Strong strong_strips
-  strong_append strong_of_shadow from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip open private
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private theorem power_two_ge (n : ℕ) (hn : 2 ≤ n) : (4 : ℤ) ≤ 2^n := by
   have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hn

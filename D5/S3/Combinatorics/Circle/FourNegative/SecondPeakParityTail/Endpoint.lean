@@ -37,13 +37,13 @@ open private qTerminal qModulus
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
 open private seed sourceMod chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
+open private native_masses
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
+open private four_perm four_strip
+  from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
+open private sum_linear prefix_nonneg_le strip_of_prefix
+  from D5.S3.Combinatorics.Circle.PeriodicShortening
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private native_masses from
-  D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native open private four_perm
-  four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open private
-  sum_linear prefix_nonneg_le strip_of_prefix from D5.S3.Combinatorics.Circle.PeriodicShortening
-  open private
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 -- The final bank ends with its W subword, whose last occurrence is q's bit.
 -- No change is made to the physical inventory or either actual bank mass.

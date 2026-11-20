@@ -15,13 +15,16 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast
 open SourceWidth PeriodicShortening RunFirstEarTransport
+open private A B L M N Bn Ln Mn Margin
+  from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Arithmetic
+open private source_table
+  from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
+open private negative_step
+  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
+open private Gates
+  from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private A B L M N Bn Ln Mn Margin from
-  D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Arithmetic open private source_table
-  from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable open private negative_step
-  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift open private Gates from
-  D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule open private
-  ladder_sum
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private def oldValue (s t i : ℕ) : ℤ :=

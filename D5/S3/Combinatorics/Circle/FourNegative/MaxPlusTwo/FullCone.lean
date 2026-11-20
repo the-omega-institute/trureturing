@@ -19,16 +19,12 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.FullCone
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
+open private mass_margin ceilpos rounded_reserve ceilpos_capacity from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic
+open private source_shadow_charge two_power_pred from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source
+open private seedZ modZ old enlarged charge shadow natural_lift_strips natural_lift_totals natural_lift_strong
+  from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift
+open private Strong strong_strips strong_append strong_of_shadow from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private mass_margin ceilpos rounded_reserve ceilpos_capacity from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Arithmetic open private
-  source_shadow_charge two_power_pred from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Source open private seedZ modZ old
-  enlarged charge shadow natural_lift_strips natural_lift_totals natural_lift_strong from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift open private Strong strong_strips
-  strong_append strong_of_shadow from
-  D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip open private
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 open private power_two_ge masked_inventory masked_weighted_masses actual_word_totals
   actual_chain_masses four_reserve_strong

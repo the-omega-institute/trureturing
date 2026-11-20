@@ -17,18 +17,12 @@ set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open PacketNormalForm SourceWidth PeriodicShortening RunFirstEarTransport
+open private seed sourceMod actual_values chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private DataCertificate DataCertificate.mk DataCertificate.positiveLabels DataCertificate.negativeOrder DataCertificate.oldEndpoints DataCertificate.newEndpoints finiteChecks finiteEarChecks finiteChecks_equiv from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
+open private strip_iff_packetChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
+open private zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private seed sourceMod actual_values chain_values source_signs from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source open private DataCertificate
-  DataCertificate.mk DataCertificate.positiveLabels DataCertificate.negativeOrder
-  DataCertificate.oldEndpoints DataCertificate.newEndpoints finiteChecks finiteEarChecks
-  finiteChecks_equiv from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate open
-  private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-  open private strip_iff_packetChecks from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets open private
-  zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
-  open private
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
 open scoped BigOperators
 

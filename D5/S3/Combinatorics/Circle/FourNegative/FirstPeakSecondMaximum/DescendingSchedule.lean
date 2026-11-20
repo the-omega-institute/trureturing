@@ -23,12 +23,11 @@ open private bank terminal word bank_inventory bank_good bank_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.DescendingSource
 open private sourceMod charge nextBase nextNewBase source_signs chain_values new_base_bounds source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
+open private native_masses
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
+open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
+open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private native_masses from
-  D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native open private inserted_perm
-  from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical open private four_strip from
-  D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open private
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option maxHeartbeats 2600000 in
 private theorem descending_joint_construction (a b c d : ℕ)

@@ -26,12 +26,14 @@ open private source_table
 open private sourceMod new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
+open private insertAt_add
+  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private Gates four_strip
+  from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
+open private negative_step
+  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private insertAt_add from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-  open private Gates four_strip from
-  D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule open private
-  negative_step from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift open
-  private ladder_sum
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private def size (s b : ℕ) : ℕ := s + b + s + s

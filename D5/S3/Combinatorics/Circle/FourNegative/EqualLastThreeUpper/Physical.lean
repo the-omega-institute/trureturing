@@ -13,11 +13,11 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper
 open SourceWidth PeriodicShortening RunFirstEarTransport
+open private rank amplitude delta heads newHeads successor newSuccessor start length f g N source source_numeric totals
+  from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Source
+open private Checks from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
-open private rank amplitude delta heads newHeads successor newSuccessor start length f g N source
-  source_numeric totals from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Source open
-  private Checks from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic open
-  private ladder_sum
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private range_positive inserted_perm
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
