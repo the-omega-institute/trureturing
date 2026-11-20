@@ -12,12 +12,8 @@
    left_ne_right: proof_shape: bind-only. Consumers include rank_step_move_right and mirror_step.
    Direct frozen dependencies: none. -/
 
-import Mathlib.Data.Fin.Rev
-import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Logic.Equiv.Basic
 
 namespace D5.S1.Words.Permutations.Frieden
 
