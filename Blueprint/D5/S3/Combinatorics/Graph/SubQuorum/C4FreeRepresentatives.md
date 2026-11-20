@@ -6,6 +6,8 @@ Pappus half-order refutation
 
 The certified Pappus graph is cubic, bipartite and C4-free, with dissociation maximum ten. It refutes the half-order bound at order eighteen. The parity labeling also supplies the common input to the representative proofs.
 
+The certified Pappus graph is cubic and has no four-cycle, and its even and odd classes have nine vertices each. C4RepresentativeBounds.objective_general_bound at degree three and side size nine gives T.card + M.card at most ten for every feasible singleton and matching pair. Finset.sup_le then bounds the representative maximum Omega(H) by ten. C4RepresentativeBounds.parameter_comparison gives beta(H,2) ≤ psiSq(H) ≤ Omega(H), and beta_pappus gives beta(H,2)=10. These bounds yield the three equalities for the parity-labeled Pappus graph in the pinned C4-free packing note. https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md#L128-L157
+
 **Definition 1.1 (pappusNeighbors).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusNeighbors`
@@ -203,4 +205,6 @@ There is no universal half-order bound 2 * beta G 2 ≤ 18 for all cubic biparti
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_selection`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.paritySide_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Comparison](../StarForming/Comparison.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity](../StarForming/DegreeCapacity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](C4RepresentativeBounds.md)
