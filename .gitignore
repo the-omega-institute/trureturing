@@ -26,6 +26,7 @@ __pycache__/
 /tools/lean-inspector/.lake/
 /tools/lean-inspector-interface/.lake/
 /tools/lean-inspector-reg/.lake/
+/tools/.report-workspace-*/
 
 /Reg/.lake/
 
