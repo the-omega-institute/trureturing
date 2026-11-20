@@ -9,15 +9,15 @@
 import D5.S3.Analytic.PetzStripFiniteSeries
 import D5.S3.Quantum.Divergence.CanonicalRelativeModularModel
 import D5.S3.Quantum.Divergence.ResolventDefectRigidity
-import D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 
 /-!
 # The supported-channel Petz strip identity
 
 The strip identity of Yang, arXiv:2609.33815v2, Theorem II.1, is realized
 for finite supported states as proposed in §V.3. The overlap uses the
-mixed reference/source eigenvector coordinates of the canonical channel model. The two deficits account for the norm lost by the channel
-contractions on the two strip boundaries.
+mixed reference/source eigenvector coordinates of the supported channel model.
+The two deficits account for the norm lost by the channel contractions on the
+two strip boundaries.
 -/
 
 set_option autoImplicit false
@@ -31,8 +31,6 @@ open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Divergence.CanonicalChannelDPI
 open D5.S3.Quantum.Divergence.ResolventDefectRigidity (contraction_saturation)
 open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity (cfc_diagonal)
-open D5.S3.Quantum.Recovery.PetzSpectralCoordinates (spectral_petz_coordinate_matrix)
-open D5.S3.Quantum.Recovery.SpectralTransposeRecovery (spectralInverseSqrt)
 open PetzCothStripMode (lowerWeight)
 open PetzExponentialBoundaryEvaluation (petzWeight)
 
@@ -113,13 +111,6 @@ private theorem modularPower_real_adjoint (d : n → ℝ) (r : ℝ) :
   simp only [Pi.star_apply, ← Complex.ofReal_mul, ← Complex.ofReal_exp, Complex.star_def,
     Complex.conj_ofReal]
 
-private theorem modularPower_real_eq_rpow (d : n → ℝ) (hd : ∀ i, 0 < d i) (r : ℝ) :
-    modularPower d (r : ℂ) = diagonal (fun i => ((d i ^ r : ℝ) : ℂ)) := by
-  unfold modularPower
-  apply congrArg Matrix.diagonal
-  funext i
-  rw [Real.rpow_def_of_pos (hd i), Complex.ofReal_exp, Complex.ofReal_mul]
-
 private theorem modularPower_unitary (d : n → ℝ) (t : ℂ) (ht : t.re = 0) :
     (modularPower d t)ᴴ * modularPower d t = 1 := by
   rw [← Matrix.diagonal_one]
@@ -166,24 +157,6 @@ private theorem outputRatio_pos (D : SupportedRelativeModularData Φ ρ σ) (j :
     0 < outputRatio D j :=
   div_pos j.1.2 j.2.2
 
-private theorem input_half_power (D : SupportedRelativeModularData Φ ρ σ) :
-    modularPower (inputRatio D) ((1 / 2 : ℝ) : ℂ) =
-      diagonal (fun i => (Real.sqrt (inputRatio D i) : ℂ)) := by
-  simpa only [← Real.sqrt_eq_rpow] using
-    modularPower_real_eq_rpow (inputRatio D) (inputRatio_pos D) (1 / 2)
-
-private theorem output_neg_half_power (D : SupportedRelativeModularData Φ ρ σ) :
-    modularPower (outputRatio D) (-((1 / 2 : ℝ) : ℂ)) =
-      cfc (fun x : ℝ => 1 / Real.sqrt x) D.B := by
-  have hdiag : cfc (fun x : ℝ => 1 / Real.sqrt x) D.B =
-      diagonal (fun j => ((1 / Real.sqrt (outputRatio D j) : ℝ) : ℂ)) :=
-    cfc_diagonal _ (outputRatio D)
-  have hpow (j : D.L × D.K) :
-      outputRatio D j ^ (-(1 / 2) : ℝ) = 1 / Real.sqrt (outputRatio D j) := by
-    rw [Real.rpow_neg (outputRatio_pos D j).le, ← Real.sqrt_eq_rpow, one_div]
-  rw [← Complex.ofReal_neg, modularPower_real_eq_rpow _ (outputRatio_pos D), hdiag]
-  simp only [hpow]
-
 private def frequency (D : SupportedRelativeModularData Φ ρ σ)
     (ij : (D.J × D.I) × (D.L × D.K)) : ℝ :=
   Real.log (inputRatio D ij.1) - Real.log (outputRatio D ij.2)
@@ -201,43 +174,7 @@ def overlap (D : SupportedRelativeModularData Φ ρ σ) : ℂ → ℂ :=
 def amplitude (D : SupportedRelativeModularData Φ ρ σ) (z : ℂ) : D.J × D.I → ℂ :=
   (modularPower (inputRatio D) z * D.V * modularPower (outputRatio D) (-z)) *ᵥ D.η
 
-/-- The amplitude uses the canonical physical adjoint applied to the actual
-spectral reconstruction on the output support. -/
-theorem amplitude_coordinate (M : SupportedRelativeModularModel Φ ρ σ) (z : ℂ)
-    (i : M.data.J × M.data.I) :
-    amplitude M.data z i =
-      Complex.exp ((Real.log (inputRatio M.data i) : ℂ) * z) *
-        ((Real.sqrt (M.data.ri i.2) : ℂ) *
-          (star (M.data.v i.1) ⬝ᵥ
-            (M.data.Ψ (M.data.spectralX
-              (modularPower (outputRatio M.data) (-z) *ᵥ M.data.η)) *ᵥ M.data.u i.2))) := by
-  rw [amplitude, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
-    modularPower, Matrix.mulVec_diagonal, M.coordinateAction]
-
-/-- At zero rotation the upper amplitude uses the supported physical
-Petz factor reconstructed by the existing spectral coordinate theorem. -/
-theorem amplitude_half_coordinate (M : SupportedRelativeModularModel Φ ρ σ)
-    (i : M.data.J × M.data.I) :
-    amplitude M.data ((1 / 2 : ℝ) : ℂ) i =
-      (Real.sqrt (M.data.sj i.1) : ℂ) *
-        (star (M.data.v i.1) ⬝ᵥ
-          (M.data.Ψ (spectralInverseSqrt M.data.Q * cfc Real.sqrt M.data.T) *ᵥ
-            M.data.u i.2)) := by
-  let D := M.data
-  have hc := amplitude_coordinate M ((1 / 2 : ℝ) : ℂ) i
-  have he : Complex.exp ((Real.log (inputRatio D i) : ℂ) * ((1 / 2 : ℝ) : ℂ)) =
-      (Real.sqrt (inputRatio D i) : ℂ) := by
-    simpa only [modularPower, Matrix.diagonal_apply_eq] using
-      congrArg (fun H : Matrix (D.J × D.I) (D.J × D.I) ℂ => H i i)
-        (input_half_power D)
-  have hs : Real.sqrt (inputRatio D i) * Real.sqrt (D.ri i.2) = Real.sqrt (D.sj i.1) := by
-    change Real.sqrt (D.sj i.1 / D.ri i.2) * Real.sqrt (D.ri i.2) = _
-    rw [Real.sqrt_div i.1.2.le, div_mul_cancel₀ _ (Real.sqrt_pos.mpr i.2.2).ne']
-  rw [output_neg_half_power M.data, spectral_petz_coordinate_matrix M.data,
-    he, ← mul_assoc, ← Complex.ofReal_mul, hs] at hc
-  exact hc
-
-theorem overlap_eq_pair (D : SupportedRelativeModularData Φ ρ σ) (z : ℂ) :
+private theorem overlap_eq_pair (D : SupportedRelativeModularData Φ ρ σ) (z : ℂ) :
     overlap D z = star D.ξ ⬝ᵥ amplitude D z := by
   rw [overlap, PetzStripFiniteSeries.finiteOverlap, amplitude, pair_sum]
   apply Finset.sum_congr rfl
@@ -247,12 +184,12 @@ theorem overlap_eq_pair (D : SupportedRelativeModularData Φ ρ σ) (z : ℂ) :
   rw [sub_mul, sub_eq_add_neg, Complex.exp_add, mul_neg]
   ring
 
-theorem overlap_zero_re (M : SupportedRelativeModularModel Φ ρ σ) :
+private theorem overlap_zero_re (M : SupportedRelativeModularModel Φ ρ σ) :
     (overlap M.data 0).re = 1 := by
   rw [overlap_eq_pair, amplitude, neg_zero, modularPower_zero, modularPower_zero,
     Matrix.one_mul, Matrix.mul_one, M.mapsη, pair_self_re, M.normξ]
 
-theorem adjoint_mapsξ (M : SupportedRelativeModularModel Φ ρ σ) :
+private theorem adjoint_mapsξ (M : SupportedRelativeModularModel Φ ρ σ) :
     M.data.Vᴴ *ᵥ M.data.ξ = M.data.η := by
   have hs : (star (M.data.V *ᵥ M.data.η) ⬝ᵥ (M.data.V *ᵥ M.data.η)).re =
       (star M.data.η ⬝ᵥ M.data.η).re := by
@@ -294,25 +231,19 @@ theorem hasDerivAt_overlap_zero (M : SupportedRelativeModularModel Φ ρ σ) :
   rw [← hd]
   exact PetzStripFiniteSeries.hasDerivAt_finiteOverlap_zero (frequency M.data) (coefficient M.data)
 
-theorem deriv_overlap_zero_re (M : SupportedRelativeModularModel Φ ρ σ) :
+private theorem deriv_overlap_zero_re (M : SupportedRelativeModularModel Φ ρ σ) :
     (deriv (overlap M.data) 0).re =
       -(finiteTraceLogRelativeEntropy ρ σ -
         finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
   simpa only [Complex.ofReal_re] using congrArg Complex.re (hasDerivAt_overlap_zero M).deriv
 
 /-- The comparison map on the upper edge at imaginary part zero. -/
-def halfComparison (D : SupportedRelativeModularData Φ ρ σ) :
+private def halfComparison (D : SupportedRelativeModularData Φ ρ σ) :
     Matrix (D.J × D.I) (D.L × D.K) ℂ :=
   modularPower (inputRatio D) ((1 / 2 : ℝ) : ℂ) * D.V *
     modularPower (outputRatio D) (-((1 / 2 : ℝ) : ℂ))
 
-theorem halfComparison_eq_cfc (D : SupportedRelativeModularData Φ ρ σ) :
-    halfComparison D = cfc Real.sqrt D.A * D.V * cfc (fun x : ℝ => 1 / Real.sqrt x) D.B := by
-  have hA : cfc Real.sqrt D.A = diagonal (fun i => (Real.sqrt (inputRatio D i) : ℂ)) :=
-    cfc_diagonal Real.sqrt (inputRatio D)
-  rw [halfComparison, input_half_power, output_neg_half_power, hA]
-
-theorem halfComparison_contraction (M : SupportedRelativeModularModel Φ ρ σ) :
+private theorem halfComparison_contraction (M : SupportedRelativeModularModel Φ ρ σ) :
     (halfComparison M.data)ᴴ * halfComparison M.data ≤ 1 := by
   let D := M.data
   let h : ℂ := ((1 / 2 : ℝ) : ℂ)
@@ -336,10 +267,6 @@ theorem halfComparison_contraction (M : SupportedRelativeModularModel Φ ρ σ) 
     change modularPower (outputRatio D) (-h) * modularPower (outputRatio D) 1 *
       modularPower (outputRatio D) (-h) = 1
     rw [← modularPower_add, ← modularPower_add, hsum, modularPower_zero]
-  have hA : F = cfc Real.sqrt D.A :=
-    (input_half_power D).trans (cfc_diagonal Real.sqrt (inputRatio D)).symm
-  have hG' : G = cfc (fun x : ℝ => 1 / Real.sqrt x) D.B := output_neg_half_power D
-  rw [halfComparison_eq_cfc, ← hA, ← hG']
   change (F * D.V * G)ᴴ * (F * D.V * G) ≤ 1
   calc
     _ = Gᴴ * (D.Vᴴ * D.A * D.V) * G := by
@@ -405,17 +332,16 @@ theorem upper_deficit_nonneg (M : SupportedRelativeModularModel Φ ρ σ) (s : �
   exact add_nonneg (Finset.sum_nonneg fun i _ => sq_nonneg _)
     (sub_nonneg.mpr (upper_amplitude_sq_le M s))
 
-/-- For the actual channel and a supported source/reference pair, both
-weighted boundary deficits are integrable and their sum is the entropy loss. -/
-theorem integral_supported_channel_strip (Φ : QuantumChannel a b) (ρ σ : DensityState a)
-    (support : SupportContained ρ σ) :
-    let D := (supported_relative_modular_model Φ ρ σ support).data
-    Integrable (fun s => lowerWeight s * deficit D 0 s) ∧
-      Integrable (fun s => petzWeight s * deficit D (1 / 2) s) ∧
-      (∫ s, lowerWeight s * deficit D 0 s) + (∫ s, petzWeight s * deficit D (1 / 2) s) =
+/-- Both weighted boundary deficits of a supported model are integrable and their sum is the
+actual channel entropy loss. Support containment supplies such a model through
+`supported_relative_modular_model`. -/
+theorem integral_supported_channel_strip (M : SupportedRelativeModularModel Φ ρ σ) :
+    Integrable (fun s => lowerWeight s * deficit M.data 0 s) ∧
+      Integrable (fun s => petzWeight s * deficit M.data (1 / 2) s) ∧
+      (∫ s, lowerWeight s * deficit M.data 0 s) +
+        (∫ s, petzWeight s * deficit M.data (1 / 2) s) =
         finiteTraceLogRelativeEntropy ρ σ -
           finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ) := by
-  let M := supported_relative_modular_model Φ ρ σ support
   have h := PetzStripFiniteSeries.integral_finiteOverlap_strip
     (frequency M.data) (coefficient M.data) (overlap_zero_re M)
     (lower_deficit_nonneg M)
