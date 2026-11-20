@@ -13,9 +13,11 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 differences, the structure of ties, the equality of signed and absolute maxima, and interlacing
 with the signed mode.
 
-admission_basis: escape-witness. proof_shape: content for signed_eq, even_le, interlace,
-B_eq_iff, tie_structure, b_window, h_L, three_iff and result; threshold_iff, unique_or_two and
-unique_iff are consumed helpers recombining frozen lemmas. -/
+admission_basis: escape-witness. Escape witnesses: interlace (|t - 2q| ≤ 1 between the absolute and
+signed mode indices), B_eq_iff, tie_structure, b_window with t_floor and b_sq_le, and h_L with
+three_iff. Consumed bind-only helpers: signed_eq, even_le, decreasing_after, rises_iff,
+threshold_iff, unique_or_two, unique_iff, le_t_iff, abs_diff_iff, h_step, h_le_iff and the
+remaining block lemmas. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -42,13 +44,7 @@ private theorem signed_eq (n r : ℕ) (hr : 2 * r ≤ n) :
 private theorem decreasing_after (n r : ℕ) (hr : mode n < r + 1) (h2 : 2 * (r + 1) ≤ n) :
     weight n (r + 1) < weight n r := by
   have hnot : ¬ rises n (r + 1) := fun h => by have := le_mode h; omega
-  have hlt : second (n - 2 * (r + 1)) < 4 * (r + 1) := by
-    by_contra h; push Not at h; exact hnot ⟨h2, h⟩
-  have he := adjacent n r h2
-  have hw := weight_pos n r (by omega)
-  have hq : (second (n - 2 * (r + 1)) : ℚ) < 4 * (r + 1) := by exact_mod_cast hlt
-  have hd : (0 : ℚ) < 4 * (r + 1) := by positivity
-  nlinarith
+  exact lt_of_not_ge fun h => hnot ((adjacent_le n r h2).1 h)
 
 private theorem even_le (n p : ℕ) (hp : 4 * p ≤ n) :
     weight n (2 * p) ≤ weight n (2 * HermiteSignedMode.mode n) := by
@@ -257,6 +253,22 @@ private theorem t_floor (n : ℕ) : ⌊((2 * n + 5 : ℝ) - √(8 * n + 17)) / 4
   push_cast
   constructor <;> linarith
 
+private theorem b_sq_le (n : ℕ) : b n ^ 2 ≤ 2 * n := by
+  have hm := (mode_rises n).1
+  have hpar : b n % 2 = n % 2 := by unfold b; omega
+  rcases Nat.lt_or_ge (b n) 2 with h | h
+  · rcases (show b n = 0 ∨ b n = 1 by omega) with h0 | h1
+    · rw [h0]; simp
+    · rw [h1]; norm_num; omega
+  · have hnot : ¬ 2 * n ≤ (b n - 2) ^ 2 + 5 * (b n - 2) + 2 := fun hh => by
+      have := (threshold_iff n (b n - 2) (by omega)).2 hh; omega
+    obtain ⟨i, hi⟩ : ∃ i, b n = i + 2 := ⟨b n - 2, by omega⟩
+    rw [hi, Nat.add_sub_cancel] at hnot
+    rw [hi]
+    rcases Nat.eq_zero_or_pos i with rfl | hi0
+    · omega
+    · nlinarith
+
 private theorem b_growth (n : ℕ) : -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) ∧ (b n : ℝ) - √(2 * n) < 2 := by
   obtain ⟨hl, hu⟩ := b_window n
   set s := √(8 * (n : ℝ) + 17)
@@ -291,16 +303,8 @@ private theorem le_t_iff (n k : ℕ) : k ≤ mode n ↔ absStart k ≤ n := by
     unfold absStart at h
     exact le_mode ⟨by omega, (h_le_iff k _).1 (by omega)⟩
 
-private theorem t_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) ≤ mode n + 1 := by
-  have h := HermiteAbsoluteMode.result.2 n
-  have h1 := (mode_rises n).1
-  have h2 := (mode_rises (n + 1)).1
-  simp only [b] at h
-  push_cast [h1, h2] at h
-  omega
-
 private theorem abs_diff_iff (n : ℕ) : (b (n + 1) : ℤ) - b n = -1 ↔ ∃ k, absStart k = n + 1 := by
-  have hs := t_step n
+  have hs := mode_step n
   have h1 := (mode_rises n).1
   have h2 := (mode_rises (n + 1)).1
   have hd : (b (n + 1) : ℤ) - b n = 1 - 2 * ((mode (n + 1) : ℤ) - mode n) := by
@@ -425,18 +429,18 @@ private theorem absMax_eq (n : ℕ) : absMax n = weight n (mode n) := by
 
 /-- Theorem 3 and Corollary 4 of Ma and Zhang on OEIS A381524/A381737, with `t(n) = mode n` and
 `b(n) = n - 2t(n)`: the quadratic threshold for `b`; at most two absolute maxima, a unique one
-exactly off the tie degrees; the floor formula for `t`; `-5/2 < b(n) - √(2n) < 2`; the block
+exactly off the tie degrees; the floor formula for `t`; `-5/2 < b(n) - √(2n)` and `b(n)² ≤ 2n`; the block
 structure of the differences of `b` with starts `m_k = 2k + h_k`, long blocks exactly at
 `L_j = ⌊(j + 1)(j + 2)/4⌋` starting at `2L_j + j`; at a tie degree the maximizing exponents are
 `b` and `b + 2`, with opposite signs, and `B = M`; `B = M` exactly at tie degrees or when `t` is
-even; and the signed mode `a` lies in `{b - 2, b, b + 2}`. -/
+even; and `a - b ∈ {-2, 0, 2}` for the signed mode `a`. -/
 theorem result :
     (∀ n : ℕ, b n % 2 = n % 2 ∧
       ∀ j : ℕ, j % 2 = n % 2 → (b n ≤ j ↔ 2 * n ≤ j ^ 2 + 5 * j + 2)) ∧
     (∀ k : ℕ, (∃! j, IsAbsMax k j) ∨ HasExactlyTwo k) ∧
     (∀ k : ℕ, (∃! j, IsAbsMax k j) ↔ ¬ ∃ m, 1 ≤ m ∧ (k : ℤ) = a m) ∧
     (∀ n : ℕ, ⌊((2 * n + 5 : ℝ) - √(8 * n + 17)) / 4⌋ = (mode n : ℤ)) ∧
-    (∀ n : ℕ, -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) ∧ (b n : ℝ) - √(2 * n) < 2) ∧
+    (∀ n : ℕ, b n ^ 2 ≤ 2 * n ∧ -(5 / 2 : ℝ) < (b n : ℝ) - √(2 * n) ∧ (b n : ℝ) ≤ √(2 * n)) ∧
     (∀ n k : ℕ, k ≤ mode n ↔ absStart k ≤ n) ∧
     (∀ n : ℕ, (b (n + 1) : ℤ) - b n = -1 ↔ ∃ k, absStart k = n + 1) ∧
     absStart 0 = 0 ∧ absStart 1 = 3 ∧
@@ -450,10 +454,11 @@ theorem result :
         (HermiteSignedMode.physicistsHermite n).coeff (b n + 2) < 0 ∧
       signedMax n = absMax n) ∧
     (∀ n : ℕ, signedMax n = absMax n ↔ HasExactlyTwo n ∨ Even (mode n)) ∧
-    (∀ n : ℕ, HermiteSignedMode.a n = b n - 2 ∨ HermiteSignedMode.a n = b n ∨
-      HermiteSignedMode.a n = b n + 2) := by
+    (∀ n : ℕ, (HermiteSignedMode.a n : ℤ) - b n = -2 ∨ (HermiteSignedMode.a n : ℤ) - b n = 0 ∨
+      (HermiteSignedMode.a n : ℤ) - b n = 2) := by
   refine ⟨fun n => ⟨by have := (mode_rises n).1; unfold b; omega, threshold_iff n⟩, unique_or_two,
-    unique_iff, t_floor, b_growth, le_t_iff, abs_diff_iff, abs_start_zero, abs_start_one,
+    unique_iff, t_floor, fun n => ⟨b_sq_le n, (b_growth n).1, by
+      rw [Real.le_sqrt (by positivity) (by positivity)]; exact_mod_cast b_sq_le n⟩, le_t_iff, abs_diff_iff, abs_start_zero, abs_start_one,
     abs_start_step, three_iff, abs_start_L, two_between,
     fun n hT => ⟨(tie_structure n hT).1, (tie_structure n hT).2, by
       rw [signedMax_eq, absMax_eq]; exact (B_eq_iff n).2 (Or.inl hT)⟩,
@@ -462,6 +467,7 @@ theorem result :
   have hq := (HermiteSignedMode.mode_rises n).1
   have ht := (mode_rises n).1
   unfold HermiteSignedMode.a b
+  push_cast [show 4 * HermiteSignedMode.mode n ≤ n from hq, show 2 * mode n ≤ n from ht]
   omega
 
 end D5.S3.Analytic.Polynomial.HermiteAbsoluteModeBlocks
