@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SubspaceCodes/FerrersRankNine
    generality: I
    mirror-B: D5/B/S3/Combinatorics/SubspaceCodes/FerrersRankNine
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram. -/

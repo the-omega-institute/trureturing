@@ -1,4 +1,3 @@
-using StrataLint.Engine;
 using StrataLint.Scribe;
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
@@ -13,10 +12,7 @@ internal sealed class FerrersRankNineDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/FiniteGeometry/jinningxuduan2026ferrers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        DocumentHeader.Create(GidRef.Create(Gid), Generality.Instance,
-            GidRef.Create("D5/B/" + Gid["D5/".Length..]),
-            new EvidenceMirror.Waiver(WaiverReason.Create("evidence-not-specified-by-formal-manifest")), [],
-            Digest.Create("An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram.")),
+        Header(Gid, "An optimal dimension-27 rank-nine code for the fixed twelve-column Ferrers diagram."),
         H("An optimal rank-nine Ferrers code"), Blocks(
             Node("matrix-space", "Mat", "Ambient matrices", DescribeRole.Definition,
                 "Rows and columns of the matrices over F are both indexed by Fin 12."),
