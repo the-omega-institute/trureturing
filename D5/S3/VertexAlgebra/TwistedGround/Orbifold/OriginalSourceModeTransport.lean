@@ -23,7 +23,7 @@ open LatticeGeneratingFieldLocality LatticeAllStateField LatticePositiveEnergy L
 open SourceBPZ.OriginalSourcePairing SourceBPZ.AllStateTranspose
 open HalfFock.LatticeHalfFockParityField
 open OriginalFourMChargeCoset (originalI)
-open private sourceGradePairingEquiv sourceGradePairingEquiv_evaluation from
+open private sourceGradePairingEquiv from
   D5.S3.VertexAlgebra.TwistedGround.OriginalFourMContraction
 open private oppositePull originalL1 from
   D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner

@@ -353,7 +353,7 @@ theorem prefix_series_eq (N : ℕ) (a : ℕ → ℤ) :
   · simp [hz]
   · by_cases hj : j < N <;> simp [hz, hj, Nat.pos_of_ne_zero hz]
 
-private theorem prefix_sign_unit (N : ℕ) (a : ℕ → ℤ) (c : PrefixColor N a) :
+theorem prefix_sign_unit (N : ℕ) (a : ℕ → ℤ) (c : PrefixColor N a) :
     prefixSign N a c = 1 ∨ prefixSign N a c = -1 := by
   rcases c with ⟨j, d | d⟩
   · exact Or.inl rfl
@@ -454,7 +454,7 @@ instance fixedByAssemblyFintype (allowed : ℕ → C → Prop) (g : Equiv.Perm V
 
 /-- Relabeling preserves arbitrary signed weights, and its fixedBy sum is exactly
 the structural invariant-assembly sum used by the coefficient factorization. -/
-private theorem assembly_action_fixed_sum (allowed : ℕ → C → Prop) (sign : C → ℤ)
+theorem assembly_action_fixed_sum (allowed : ℕ → C → Prop) (sign : C → ℤ)
     (g : Equiv.Perm V) :
     (∀ E : FullAssembly (d := d) (V := V) allowed, weight sign (g • E).val = weight sign E.val) ∧
     (∑ E : MulAction.fixedBy (FullAssembly (d := d) (V := V) allowed) g, weight sign E.val.val) =
@@ -554,7 +554,7 @@ def fixedByPointedEquiv (allowed : ℕ → C → Prop) (g : Equiv.Perm V) :
   left_inv _ := rfl
   right_inv _ := rfl
 
-private theorem pointed_action_fixed_sum (allowed : ℕ → C → Prop) (sign : C → ℤ)
+theorem pointed_action_fixed_sum (allowed : ℕ → C → Prop) (sign : C → ℤ)
     (g : Equiv.Perm V) :
     (∀ R : PointedAssembly (d := d) (V := V) allowed,
       pointedWeight sign (g • R) = pointedWeight sign R) ∧
@@ -658,7 +658,7 @@ theorem signed_burnside {Γ X : Type} [Group Γ] [Fintype Γ] [Fintype X]
   rw [hp', hn', ← sub_mul]
   exact dvd_mul_left _ _
 
-private theorem weight_unit_sign (sign : C → ℤ) (hs : ∀ c, sign c = 1 ∨ sign c = -1)
+theorem weight_unit_sign (sign : C → ℤ) (hs : ∀ c, sign c = 1 ∨ sign c = -1)
     (E : Finset (Block V C d)) : weight sign E = 1 ∨ weight sign E = -1 := by
   induction E using Finset.induction_on with
   | empty => exact Or.inl rfl
@@ -710,7 +710,7 @@ theorem moved_erase (g : Equiv.Perm V)
 /-- The signed subtraction uses fixed points of the actual two permutation actions.
 For positive fixed-vertex count, it is the lower source residual times the same
 invariant moved-block sum and the fixed-vertex factorial. -/
-private theorem fixed_point_subtraction_coefficient (allowed : ℕ → C → Prop) (sign : C → ℤ)
+theorem fixed_point_subtraction_coefficient (allowed : ℕ → C → Prop) (sign : C → ℤ)
     (g : Equiv.Perm V) (hf : 1 ≤ (fixedVertices g (univ : Finset V)).card) :
     let F := fixedVertices g (univ : Finset V)
     let f := F.card
@@ -829,7 +829,7 @@ private theorem sylow_subtraction_divisibility (allowed : ℕ → C → Prop) (s
     exact hzero g hg
   · simp
 
-private theorem moved_identity_sum (allowed : ℕ → C → Prop) (sign : C → ℤ) :
+theorem moved_identity_sum (allowed : ℕ → C → Prop) (sign : C → ℤ) :
     (∑ B : FixedAssembly (k := d) allowed (movedVertices (1 : Equiv.Perm V) univ) univ 1,
       weight sign B.val) = 1 := by
   classical
