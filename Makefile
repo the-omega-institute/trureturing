@@ -18,7 +18,11 @@ export DOTNET_EnableDiagnostics ?= 0
 # All tool-backed targets share one verified installation per make invocation.
 TOOLS_TARGETS := test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch mathlib-reanchor truth-export deliver-check deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test
 .PHONY: help install-tools require-full-build $(TOOLS_TARGETS)
-$(TOOLS_TARGETS): | install-tools
+$(filter-out lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
+# An unconfirmed full-cache request must fail before the release installer can run.
+ifeq ($(origin FULL_BUILD):$(FULL_BUILD),command line:1)
+$(filter lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
+endif
 
 install-tools:
 	@python3 .github/scripts/install-tools.py
