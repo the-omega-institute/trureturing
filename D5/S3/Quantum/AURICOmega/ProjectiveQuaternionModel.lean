@@ -287,7 +287,8 @@ private lemma projectiveModel_hasFeatureRank_ten : projectiveModel.HasFeatureRan
 
 /-- The ten points `1, i, j, k` and `(3 e_a + 4 e_b) / 5` for `a < b`. -/
 private def testPoint : Fin 10 → unitary ℍ[ℝ] :=
-  ![unitOf 1 0 0 0 (by norm_num), unitI, unitJ, unitOf 0 0 0 1 (by norm_num), unitOf (3 / 5) (4 / 5) 0 0 (by norm_num),
+  ![unitOf 1 0 0 0 (by norm_num), unitI, unitJ, unitOf 0 0 0 1 (by norm_num),
+    unitOf (3 / 5) (4 / 5) 0 0 (by norm_num),
     unitOf (3 / 5) 0 (4 / 5) 0 (by norm_num), unitOf (3 / 5) 0 0 (4 / 5) (by norm_num),
     unitOf 0 (3 / 5) (4 / 5) 0 (by norm_num), unitOf 0 (3 / 5) 0 (4 / 5) (by norm_num),
     unitOf 0 0 (3 / 5) (4 / 5) (by norm_num)]
