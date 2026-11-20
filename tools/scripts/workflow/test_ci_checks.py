@@ -358,11 +358,15 @@ class PullRequestReportTests(unittest.TestCase):
             def run(command, *, check, **kwargs):
                 self.assertTrue(check)
                 calls.append(command)
+                if command[0] == "make":
+                    self.assertEqual(kwargs["env"]["STRATALINT_LEAN_PRODUCER_DLL"], "/caller/StrataLint.Lean.dll")
                 if command[:2] == ["make", "lean-report-prepare"] and prepare_status:
                     raise subprocess.CalledProcessError(prepare_status, command)
                 return subprocess.CompletedProcess(command, 0, json.dumps(scope))
 
-            with self.subTest(prepare_status=prepare_status), patch.object(ci_pr_lean.subprocess, "run", run):
+            with self.subTest(prepare_status=prepare_status), patch.object(ci_pr_lean.subprocess, "run", run), \
+                    patch.dict(os.environ, GITHUB_EVENT_NAME="pull_request",
+                               STRATALINT_LEAN_PRODUCER_DLL="/caller/StrataLint.Lean.dll"):
                 if prepare_status:
                     with self.assertRaises(subprocess.CalledProcessError):
                         ci_pr_lean.check([])
@@ -372,6 +376,29 @@ class PullRequestReportTests(unittest.TestCase):
                     self.assertEqual(calls[1:3], [["make", "lean-report-prepare", targets],
                                                   ["make", "lean-report-scoped", targets]])
                     self.assertIn("content-check", calls[3])
+
+    def test_hosted_pr_uses_the_judge_producer_when_available_and_only_for_report_targets(self):
+        import ci_pr_lean
+        probe = ["bash", "tools/scripts/workflow/judge-lean-producer.sh", "tools/StrataLint.Cli/bin/Release/net10.0"]
+        dll = "/judge/StrataLint.Lean.dll"
+        for event, targets, detected in (("pull_request", ["D5.A"], dll), ("pull_request", ["D5.A"], ""),
+                                         ("pull_request", [], ""), ("", ["D5.A"], "")):
+            scope = {"programs": [], "targets": targets, "paths": [], "definitions": {}}
+            with self.subTest(event=event, targets=targets, detected=detected), \
+                    patch.dict(os.environ, GITHUB_EVENT_NAME=event, STRATALINT_LEAN_PRODUCER_DLL=""), \
+                    patch.object(ci_pr_lean.subprocess, "run") as run:
+                def invoke(command, **kwargs):
+                    output = detected + "\n" if command == probe else json.dumps(scope)
+                    return subprocess.CompletedProcess(command, 0, output)
+
+                run.side_effect = invoke
+                self.assertEqual(ci_pr_lean.check([]), 0)
+                commands = [call.args[0] for call in run.call_args_list]
+                self.assertEqual(commands.count(probe), int(bool(event and targets)))
+                report_calls = [call for call in run.call_args_list if call.args[0][0] == "make"]
+                self.assertEqual(len(report_calls), 2 if targets else 0)
+                self.assertTrue(all(call.kwargs["env"]["STRATALINT_LEAN_PRODUCER_DLL"] == detected
+                                    for call in report_calls))
 
     def test_empty_scope_has_no_build_and_large_scopes_keep_scribe_inputs_together(self):
         from ci_pr_lean import report_batches

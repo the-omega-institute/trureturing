@@ -21,6 +21,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [InlineData("test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation")]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
     [InlineData("test_native_prepare_same_named_library_keeps_module_scope")]
+    [InlineData("test_native_prepare_from_empty_cache_uses_one_locked_workspace")]
     [InlineData("test_native_explicit_module_preparation")]
     [InlineData("test_native_scope_reuses_unchanged_staged_readers")]
     [InlineData("test_native_scope_tracks_changed_imports_and_external_utility_claims")]

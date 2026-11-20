@@ -43,21 +43,13 @@ def prepare(roots, directory, need_inputs=True):
         raise ValueError('missing prebuilt Lean producer DLL: ' + producer)
     os.environ['STRATALINT_LEAN_PRODUCER_DLL'] = producer
     if roots:
-        subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join(TOOLS)], cwd=ROOT, check=True)
-        scope = subprocess.check_output([sys.executable, '-B', 'tools/lean-inspector/scoped.py',
-            'targets', '--repository', str(ROOT), '--targets', roots], cwd=ROOT, text=True)
-        targets = scope.split()
-        if not targets:
-            raise ValueError('scope discovery returned no compilation targets')
+        commands = [['bash', 'tools/scripts/worktree/lean-cache-run.sh', '--build-report-scope', roots]]
     else:
         targets = programs
         if need_inputs:
             targets = [*targets, *TOOLS, 'regInspector/auricFibAnalysis']
-    targets = sorted(set(targets))
-    if roots:
-        commands = [['make', 'lean', 'LEAN_TARGETS=' + ' '.join(targets)]]
-    else:
-        commands = [['bash', 'tools/scripts/worktree/lean-cache-run.sh', '--build-report-programs', *targets]]
+        commands = [['bash', 'tools/scripts/worktree/lean-cache-run.sh', '--build-report-programs',
+                     *sorted(set(targets))]]
     if not roots and need_inputs:
         modules = publication.selection.Selection(ROOT).modules()
         reported_paths = set(modules.values())
@@ -163,12 +155,28 @@ def checked_report(directory, output, seed, program_logs, work_file, *, try_seed
         print('LEAN_BUILD_WORK_UNKNOWN ' + str(error), file=sys.stderr)
 
 
+def compile_scope(roots):
+    # The scoped cache writer and common build lock cover discovery and compilation.
+    import scoped
+    roots = scoped.parse_targets(roots)
+    with tempfile.TemporaryDirectory(prefix='lean-scope-prepare.') as directory:
+        temporary = Path(directory)
+        entry = scoped.Entry(ROOT, temporary, temporary)
+        entry.provision()
+        scope, _ = entry.discover(roots, writer_owned=True)
+        subprocess.run(entry.lake_workspace('--log-level=error', 'build', *TOOLS, *scoped.preparation_targets(scope)),
+                       cwd=ROOT, env=entry.environment, check=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['prepare', 'check'])
+    parser.add_argument('action', choices=['prepare', 'check', 'compile-scope-with-writer'])
     parser.add_argument('--targets', default='')
     parser.add_argument('--output', type=Path, default=reuse.canonical_seed(ROOT))
     args = parser.parse_args()
+    if args.action == 'compile-scope-with-writer':
+        compile_scope(args.targets)
+        return
     if args.action == 'check' and (args.targets or os.environ.get('FULL_BUILD') != '1'):
         raise ValueError('checking the full report requires FULL_BUILD=1')
     work_file = Path(os.environ.get('STRATALINT_LEAN_BUILD_WORK_FILE', ROOT / 'build/lean-cache/build-work.json'))

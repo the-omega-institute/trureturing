@@ -225,12 +225,15 @@ class Entry:
             raise ValueError('an installed Lake toolchain is required (LAKE_BIN)')
         self.environment['LAKE_BIN'] = self.lake
 
+    def lake_workspace(self, *arguments):
+        return [self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
+
     def guarded(self, *arguments):
         # Use the existing writer lock without provisioning compiler inputs.
         return ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'), '--prebuilt',
-                self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
+                *self.lake_workspace(*arguments)]
 
-    def discover(self, roots):
+    def discover(self, roots, *, writer_owned=False):
         inputs = public.selection.Selection(self.root)
         inputs.validate('lean-report')
         if not set(roots) <= inputs.modules().keys():
@@ -259,7 +262,8 @@ class Entry:
         request, output = self.temporary / 'scope-request.json', self.temporary / 'selected-modules.json'
         request.write_bytes(materials.canonical_json(dict(roots=roots, modules=sorted(inputs.modules()),
             utilities=utilities, utility_inputs=utility_inputs)))
-        self.phase('scope', self.guarded('script', 'run', 'leanInspector/reportScope', str(request), str(output)))
+        workspace = self.lake_workspace if writer_owned else self.guarded
+        self.phase('scope', workspace('script', 'run', 'leanInspector/reportScope', str(request), str(output)))
         scope = public.read_json(output.read_bytes())
         check_scope(self.root, scope, roots)
         self.environment['STRATALINT_INSPECTOR_SCOPE_FILE'] = str(output)

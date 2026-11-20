@@ -61,6 +61,13 @@ def check(paths):
             subprocess.run(["bash", "tools/scripts/worktree/lean-cache-run.sh", "lake",
                             "-d", "tools/lean-inspector-reg", "build",
                             *["+" + module for module in programs]], env=environment, check=True)
+        # The hosted PR job restores the judge for this source key or builds it on a fresh runner.
+        if (targets and environment.get("GITHUB_EVENT_NAME") == "pull_request"
+                and not environment.get("STRATALINT_LEAN_PRODUCER_DLL")):
+            producer = subprocess.run(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
+                                       "tools/StrataLint.Cli/bin/Release/net10.0"],
+                                      stdout=subprocess.PIPE, text=True, check=True)
+            environment["STRATALINT_LEAN_PRODUCER_DLL"] = producer.stdout.strip()
         for targets, selected_paths in report_batches(scope):
             report = directory / "scoped-lean-report.json"
             pinned_targets = "LEAN_TARGETS=" + " ".join(targets)

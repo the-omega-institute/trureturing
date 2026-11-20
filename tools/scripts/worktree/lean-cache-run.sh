@@ -8,7 +8,7 @@ if [[ "$1" == --build-report-programs ]]; then
   [[ "${FULL_BUILD:-0}" == 1 && $# -gt 1 ]] || { echo 'lean-cache-run: full report programs require FULL_BUILD=1 and named targets' >&2; exit 2; }
   shift
   set -- --build "$@"
-elif [[ "$1" == --build && $# -gt 1 ]]; then
+elif [[ "$1" == --build-report-scope || ( "$1" == --build && $# -gt 1 ) ]]; then
   export FULL_BUILD=0
 fi
 if [[ "$1" == --build ]]; then
@@ -37,7 +37,7 @@ if [[ "$1" == --build-report-modules && ( "${FULL_BUILD:-0}" != 1 || $# != 2 || 
   echo 'lean-cache-run: --build-report-modules requires FULL_BUILD=1 and a report module list' >&2
   exit 2
 fi
-if [[ ( "$1" == --build || "$1" == --build-report-modules ) && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
+if [[ ( "$1" == --build || "$1" == --build-report-modules || "$1" == --build-report-scope ) && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.
   lean_common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
@@ -100,6 +100,12 @@ if [[ "$1" == --prebuilt ]]; then
 fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+if [[ "$1" == --build-report-scope ]]; then
+  [[ $# == 2 && -n "$2" ]] || { echo 'lean-cache-run: scoped preparation requires report roots' >&2; exit 2; }
+  # One writer owns dependency admission, discovery and compilation for this scope.
+  exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- python3 -B \
+    "$ROOT/tools/lean-inspector/build_inputs.py" compile-scope-with-writer --targets "$2"
+fi
 if [[ "$1" == --build-report-modules ]]; then
   exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error \
     -d "$ROOT/tools/lean-inspector-reg" script run leanInspector/compileReportModules "$2"

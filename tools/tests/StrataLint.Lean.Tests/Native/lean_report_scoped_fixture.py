@@ -328,6 +328,41 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
         self.assertEqual(json.loads(stamp.read_text()), seeded)
 
+    def test_native_prepare_from_empty_cache_uses_one_locked_workspace(self):
+        self.copy('tools/lean-inspector/build_inputs.py')
+        shutil.rmtree(self.root / '.lake')
+        self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
+        wrapper = self.root / 'bin/scope-lake'
+        self.write('bin/scope-lake', '''#!/usr/bin/env python3
+import fcntl, json, os, sys
+from pathlib import Path
+sys.path.insert(0, str(Path.cwd() / "tools/scripts/worktree"))
+from lean_cache_release import cache_guard
+with Path(".git/stratalint-lean-build.lock").open("a") as lock:
+    try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError: pass
+    else: raise SystemExit("missing shared build lock")
+try:
+    with cache_guard(Path.cwd()): raise SystemExit("missing private cache writer")
+except BlockingIOError: pass
+with Path("scope-commands").open("a") as out: print(json.dumps(sys.argv[1:]), file=out)
+os.execv(os.environ["FIXTURE_LAKE"], [os.environ["FIXTURE_LAKE"], *sys.argv[1:]])
+''')
+        wrapper.chmod(0o755)
+        env = dict(self.env, LAKE_BIN=str(wrapper), FIXTURE_LAKE=self.lake, FULL_BUILD='1')
+        env.pop('STRATALINT_ACCEPT_COLD_BUILD', None)
+        result = self.guarded_command(['make', 'lean-report-prepare', 'LEAN_TARGETS=Fixture'], env=env)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        discover, build = [json.loads(line) for line in (self.root / 'scope-commands').read_text().splitlines()]
+        workspace = ['-d', str((self.root / 'tools/lean-inspector-reg').resolve())]
+        self.assertEqual(discover[:5], [*workspace, 'script', 'run', 'leanInspector/reportScope'])
+        self.assertEqual(build[:4], [*workspace, '--log-level=error', 'build'])
+        self.assertEqual(set(build[4:]), {'+Fixture', '+External', 'leanInspector/inputDiscovery',
+                                           'leanInspector/reportInspector'})
+        self.scoped('Fixture')
+        self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
+        self.assertFalse((self.root / '.lake/build/lib/lean/D5/Alone.olean').exists())
+
     def test_native_explicit_module_preparation(self):
         request = self.root / 'requested modules.json'
         request.write_text(json.dumps(['D5.A', 'External']))
