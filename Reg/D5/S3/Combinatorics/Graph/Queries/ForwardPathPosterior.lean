@@ -171,3 +171,122 @@ def registration :
 
 end
 end Reg.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior
+
+namespace Reg.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior
+
+open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+universe u v w
+
+private abbrev ReplayParams :=
+  Σ P : Type u, Σ V : Type v, Σ S : Type w,
+    Σ (_ : P → S → Bool → V), Σ (_ : P → S → V → S),
+      Σ (_ : P → Equiv.Perm Bool), Schedule P
+
+private abbrev ReplaySignature : Signature where
+  Params := ReplayParams.{u,v,w}
+  State p := p.2.2.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := List (Entry p.1 p.2.2.1 p.2.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def candidateRows : Realization ReplaySignature.{u,v,w} :=
+  realize ReplaySignature
+    (fun _ p state => run p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 state)
+    (fun e => nomatch e)
+
+private def noRows : Realization ReplaySignature.{u,v,w} :=
+  realize ReplaySignature (fun _ _ _ => []) (fun e => nomatch e)
+
+private abbrev ReplayArena : Arena where
+  signature := ReplaySignature.{u,v,w}
+  Law R := ∀ {P : Type u} {V : Type v} {S : Type w}
+    (candidate reference : P → S → Bool → V)
+    (next : P → S → V → S) (table ref : P → Equiv.Perm Bool)
+    (slots : Schedule P) (initial : S),
+    R.readout () ⟨P, V, S, candidate, next, table, slots⟩ initial =
+        run reference next ref slots initial ↔
+      ∀ e ∈ run reference next ref slots initial,
+        candidate e.1.1 e.2.1 (table e.1.1 e.1.2) = e.2.2
+
+private abbrev DemoPosition := ULift.{u} Unit
+private abbrev DemoValue := ULift.{v} Bool
+private abbrev DemoState := ULift.{w} Bool
+
+private def demoChoices : DemoPosition.{u} → DemoState.{w} → Bool → DemoValue.{v} :=
+  fun _ s _ => ⟨s.down⟩
+
+private def demoNext : DemoPosition.{u} → DemoState.{w} → DemoValue.{v} → DemoState.{w} :=
+  fun _ s _ => s
+
+private def demoSlots : Schedule DemoPosition.{u} := [(⟨()⟩, false)]
+
+private theorem noRows_invalid : ¬ ReplayArena.{u,v,w}.Law noRows := by
+  intro h
+  have hMatches := (replay_iff demoChoices demoChoices demoNext
+    (fun _ => 1) (fun _ => 1) demoSlots ⟨false⟩).mp rfl
+  have hBad := (h demoChoices demoChoices demoNext (fun _ => 1) (fun _ => 1)
+    demoSlots ⟨false⟩).mpr hMatches
+  simp [noRows, realize, run, demoSlots] at hBad
+
+private theorem candidateRows_varies :
+    candidateRows.{u,v,w}.readout ()
+        ⟨DemoPosition.{u}, DemoValue.{v}, DemoState.{w}, demoChoices, demoNext, fun _ => 1, demoSlots⟩
+        ⟨false⟩ ≠
+      candidateRows.{u,v,w}.readout ()
+        ⟨DemoPosition.{u}, DemoValue.{v}, DemoState.{w}, demoChoices, demoNext, fun _ => 1, demoSlots⟩
+        ⟨true⟩ := by
+  simp [candidateRows, realize, run, demoSlots, demoChoices]
+
+noncomputable def replayEvidence :
+    Registration ReplayArena.{u,v,w} (type_of% (@replay_iff.{u,v,w})) where
+  actual := candidateRows
+  bridge := Iff.rfl
+  variation := ⟨@replay_iff.{u,v,w}, noRows, noRows_invalid⟩
+  sensitivity := ⟨fun i => ⟨noRows, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, noRows_invalid⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨⟨DemoPosition.{u}, DemoValue.{v}, DemoState.{w}, demoChoices, demoNext,
+    fun _ => 1, demoSlots⟩, ⟨false⟩, ⟨true⟩, candidateRows_varies⟩
+
+noncomputable def replayRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@replay_iff.{u,v,w}) (Realization ReplaySignature.{u,v,w}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior.replay_iff
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior.replayEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨ReplayArena.{u,v,w}⟩
+  objectArena := .source ⟨ReplayArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source ReplayArena.{u,v,w} ⟨replayEvidence.{u,v,w}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize ReplaySignature
+    (fun _ p state => run p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 state)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior
+    definition := none
+    coordinates := #[0, 1, 2, 3, 5, 6, 8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Combinatorics.Graph.Queries.ForwardPathPosterior
