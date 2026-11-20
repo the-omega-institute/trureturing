@@ -5,12 +5,13 @@ year: 2025
 title: Shadowing with small diameter sets of bounded cardinality
 doi: null
 url: https://arxiv.org/abs/2509.04312v1
-claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels. Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type. Question 5.5 asks for a language characterization of neighborhood two-shadowing. Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
+claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels. Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type. Question 5.4 asks for a shadowing characterization of quasi-finite type. Question 5.5 asks for a language characterization of neighborhood two-shadowing. Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
 strata_touched:
   - D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances
   - D5/S1/Dynamics/Shadowing/ProgressionExample
   - D5/S1/Dynamics/Shadowing/LacunaryShadowingHierarchy
   - D5/S1/Dynamics/Shadowing/LanguageCharacterization
+  - D5/S1/Dynamics/Shadowing/QuasiFiniteType
 license: citation-only
 triage: anchor
 ---
@@ -108,6 +109,31 @@ for Ellie Stephens, *Local Variations of Shadowing*, advised by Jonathan
 Meddaugh. The announcement discusses neighborhood shadowing but states no
 hierarchy theorem, and the full dissertation was inaccessible. Priority
 relative to that dissertation remains unverified.
+
+## Shadowing both tails of a single jump
+
+Question 5.4 asks for a shadowing characterization of exact-length
+quasi-finite type. For any compatible metric on a two-sided finite-alphabet
+subshift, quasi-finite type is equivalent to the following property.
+For every accuracy there are a tolerance and an integer cutoff.
+Take two points closer than that tolerance and form a pseudo-orbit
+from the entire past of the first and the entire future of the second.
+One true orbit traces both tails at the original times outside the
+interval set by the cutoff. The cutoff is uniform over both inputs.
+
+The forward argument uses Definition 3.5 on increasingly long exterior
+contexts of the common central block. Compactness gives a point realizing
+both infinite tails. Conversely, take accuracy small enough to detect
+coordinate zero, align occurrences with a long common bridge, and use the
+tracing point to retain the two exterior contexts. Its central coordinates
+supply the replacement of exactly the original bridge length.
+
+The single-jump pseudo-orbit also occurs in simple two-sided limit
+shadowing. That property describes eventual tracing for all pairs with
+pair-dependent onset. Two-sided limit shadowing with a phase gap allows
+shifting the positive-time comparison. The criterion for quasi-finite
+type applies to nearby inputs with a uniform interval and the original phase.
+[Primary comparison](https://arxiv.org/html/1402.0674v1)
 
 ## Finite-language characterization
 

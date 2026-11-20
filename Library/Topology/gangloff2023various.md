@@ -11,6 +11,10 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness
   - D5/S1/Dynamics/Shadowing/DendriteObstruction
   - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
+  - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
+  - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
+  - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
+  - D5/S3/Topology/CoveringDimension/GluedCircle
 license: citation-only
 triage: anchor
 ---
@@ -84,7 +88,60 @@ whose entire forward orbits stay in some open neighborhood of $K$.
 Otherwise, for every positive radius there are $N$ distinct points in
 one fiber that stay pairwise closer than that radius under every
 forward iterate. This gives the exact expansion order of the glued
-system. The overall continuum classification remains open.
+system.
+
+Remark 3.10 of the arXiv version realizes each exact finite order on a
+finite bouquet of circles. At order N at least two on the bouquet of N
+circles, the displayed map has image equal to its last circle.
+
+The repository also constructs a topologically exact continuous surjection
+of exact positive expansivity order N on the bouquet of N circles for every
+N at least two. On each circle the map runs through all N circles in order.
+The projection forgetting the circle label semiconjugates the map to
+multiplication by N on the circle. Each nonempty open set projects to a
+set containing an arc, whose image under sufficiently many iterates
+covers the circle. The next application of the traversal covers the
+whole bouquet. Distinct points with the same phase close to the common
+vertex coalesce in one step and witness all N points in a forward Bowen ball.
+[Finite bouquet construction](../../Blueprint/D5/S1/Dynamics/Shadowing/BouquetExactExpansivity.md)
+
+Hisao Kato constructs a surjective positively pseudo-expansive map on every
+finite connected graph containing a simple closed curve. His condition (P1)
+gives a finite closed cover with a positive separation scale on each member.
+A forward Bowen ball at less than half the minimum of those scales meets each
+member in at most one point, giving a uniform finite cardinal bound. The
+relevant locators are §2, pp. 202–203 and Theorem (4.3), pp. 207–208. The
+explicit bouquet traversal above specifies the exact order and proves
+topological exactness.
+[Kato 1991](https://doi.org/10.4064/fm-137-3-201-210)
+
+## Endpoint obstruction under topological exactness
+
+An embedded closed interval whose image away from one endpoint is open
+in the carrier obstructs finite positive expansivity of continuous exact
+selfmaps on compact metric spaces. When the fibers are finite, exactness
+sends an interior point of each open subarc to the free endpoint, and
+both nearby sides cover a common smaller arc. Controlling the finite
+prefix before each such fold produces arbitrarily large, eventually
+coalescing families at each strict forward Bowen scale. An infinite
+fiber supplies such families inside one small ball. This applies to
+any finite graph with a leaf.
+The argument uses the coalescing-witness mechanism of Remark 3.4 and
+Lemma 3.7. Question 3.2 asks about general continuous selfmaps and does
+not impose topological exactness.
+[Pendant arc obstruction](../../Blueprint/D5/S1/Dynamics/Shadowing/ExactPendantObstruction.md)
+
+For each integer N at least two, the repository constructs a compact connected
+metric space of covering dimension one with a continuous surjection of least
+positive expansivity order N. It glues N circles along the image of the
+ternary Cantor set and applies tripling on each circle. For positive Cantor
+points x tending to zero, (1 + x)/3 lies in the open middle third and enters
+the Cantor image in one step. These points give fibers that witness failure
+of every scale of order N − 1. The closed finite-to-one projection onto the
+circle gives the upper covering-dimension bound, and connectedness gives the
+lower bound. The result combines surjectivity with exact order on a
+one-dimensional continuum. The classification in Question 3.2 remains open.
+[Construction and covering dimension](../../Blueprint/D5/S3/Topology/CoveringDimension/GluedCircle.md)
 
 The GGO journal DOI
 [10.1016/j.topol.2025.109597](https://doi.org/10.1016/j.topol.2025.109597)
@@ -101,3 +158,4 @@ claim follows from this repository result.
 - Question 3.1, Section 3, page 7.
 - Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
+- Remark 3.10, Section 3.2, page 9.

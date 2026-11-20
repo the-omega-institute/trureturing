@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSAnalyticBranchSeparation
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSAnalyticBranchSeparation
    mirror-E: none(waiver:static-algebraic-identifiability)
    anchors: [mathlib/module/Mathlib.Analysis.Analytic.Uniqueness]

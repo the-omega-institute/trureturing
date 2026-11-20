@@ -68,9 +68,10 @@ def selection(data, paths, purpose):
     full_report = purpose == "push"
     hits["current"] |= full_report
     report = full_report or hits["current"] and matches(parse("[scope]\n" + data["current"]["report_paths"]), paths)["scope"]
-    delta = report and paths is not None and matches(
+    source_delta = hits["current"] and paths is not None and matches(
         parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]
-    return {"hits": hits, "report": report, "delta": delta, "full-report": full_report,
+    return {"hits": hits, "report": report, "delta": report and source_delta,
+            "source-delta": source_delta, "full-report": full_report,
             "compiled-audit": report and hits["tests-lean"],
             "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}
