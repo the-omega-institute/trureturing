@@ -64,7 +64,7 @@ jobs:
       (github.event_name == 'workflow_dispatch' && inputs.operation == 'build')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
-    concurrency: &full-lean-build
+    concurrency:
       group: lean-cache-producer
       queue: max
       cancel-in-progress: false
@@ -145,7 +145,10 @@ jobs:
       actions: write
     runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 360
-    concurrency: *full-lean-build
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
     steps:
@@ -262,7 +265,10 @@ jobs:
       actions: write
     runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
-    concurrency: *full-lean-build
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
     steps:
