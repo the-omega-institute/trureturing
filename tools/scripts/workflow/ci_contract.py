@@ -77,7 +77,6 @@ def selection(data, paths, purpose):
     return {"hits": hits, "report": report, "delta": report and source_delta,
             "source-delta": source_delta, "full-report": False,
             "compiled-audit": report and hits["tests-lean"],
-            "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}
 
 

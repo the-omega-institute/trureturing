@@ -123,10 +123,7 @@ the previous published report, including unavailable inputs and additions/remova
 owners. Changed inputs require this canonical suite after the writer returns and
 before new changed-report publication; failure prevents publication and retains
 the previous published inputs for retry. Equal inputs with no explicit selection
-run no FIB regressions. The explicit `tests-fib` whitelist in `CI_UNITS` selects
-compiler, discovery, analyzer, fixture, configuration and consumer coverage;
-On PRs and pushes, `current` runs the selected suite after scoped checks. The `tests-fib` job requires the
-successful `current` consumer and prepares no additional Lean cache. Lake owns
+run no FIB regressions. Lake owns
 incremental compilation and report artifact reuse inside selected consumers;
 unrelated owner edits do not force the FIB suite. Ordinary Registration inventory
 and source metadata remain covered by `tests-lean`, independently of Application

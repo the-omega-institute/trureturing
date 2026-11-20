@@ -19,41 +19,6 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class CheckTests(unittest.TestCase):
-    def test_local_fib_ack_uses_actual_current_without_extra_preparation_or_suite(self):
-        for current in (0, 1):
-            with self.subTest(current=current), patch.dict(os.environ,
-                    CI_CURRENT_RESULT="success", CI_CURRENT_UNIT="current"):
-                result, calls, plan = self.local_spies(source=current,
-                    paths=("tools/scripts/compiled-fib-test.sh",))
-                self.assertEqual(result.returncode, current)
-                self.assertTrue(plan["fib-regressions"])
-                records = [json.loads(line[9:]) for line in result.stdout.splitlines() if line.startswith("CI_CHECK ")]
-                ack = [r for r in records if r["check"] == "tests-fib"]
-                self.assertEqual(len(ack), 1)
-                self.assertEqual(ack[0]["status"], "success" if current == 0 else "blocked")
-                self.assertEqual(sum(call[:2] == ["make", "compiled-fib-test"] for call in calls), int(current == 0))
-
-    def test_standalone_fib_ack_has_no_current_success_and_emits_no_identity(self):
-        with tempfile.TemporaryDirectory() as directory:
-            output = Path(directory) / "output"
-            environment = dict(os.environ, GITHUB_OUTPUT=str(output))
-            environment.update(CI_CURRENT_RESULT="success", CI_CURRENT_UNIT="current")
-            result = subprocess.run([sys.executable, "tools/scripts/workflow/ci_checks.py", "unit", "tests-fib"],
-                cwd=ROOT, env=environment, capture_output=True, text=True)
-            self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
-            self.assertFalse(output.exists())
-
-    def test_fib_ack_requires_successful_current_identity_and_never_launches_suite(self):
-        data, _ = contract.load(ROOT)
-        unit = data["units"]["tests-fib"]
-        for status, identity, expected in (("success", "current", 0), ("failure", "current", 1),
-                ("cancelled", "current", 1), ("skipped", "current", 1), ("", "", 1),
-                ("success", "wrong", 1)):
-            with self.subTest(status=status, identity=identity), patch.dict(os.environ,
-                    CI_CURRENT_RESULT=status, CI_CURRENT_UNIT=identity), patch.object(checks, "execute") as execute:
-                self.assertEqual(checks.unit_run("tests-fib", unit, current=(status, identity)), expected)
-                execute.assert_not_called()
-
     def test_missing_executable_is_observable_infrastructure_failure(self):
         with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()) as output:
             code = checks.with_budget(Path(directory) / "budget", lambda: checks.execute(
@@ -75,7 +40,7 @@ class CheckTests(unittest.TestCase):
         plan = contract.selection(data, ["docs/develop/theory/Note.md"], "push")
         for targets, programs, suite, needs in (([], [], None, False), (["D5.A"], [], None, True),
                 ([], ["Audit"], None, True), ([], [], "source-evidence", True),
-                ([], [], "compiled-audit", True), ([], [], "fib-regressions", True)):
+                ([], [], "compiled-audit", True)):
             with self.subTest(targets=targets, programs=programs, suite=suite), tempfile.TemporaryDirectory() as temp:
                 scope = Path(temp) / "plan"
                 output = Path(temp) / "output"
@@ -90,8 +55,8 @@ class CheckTests(unittest.TestCase):
 
     def test_failed_plan_blocks_setup_but_failed_ancillary_setup_still_runs_source_admission(self):
         data, _ = contract.load(ROOT)
-        plan = contract.selection(data, ["tools/scripts/compiled-fib-test.sh"], "push")
-        self.assertTrue(plan["fib-regressions"])
+        plan = contract.selection(data, ["tools/scripts/compiled-judge-test.sh"], "push")
+        self.assertTrue(plan["compiled-audit"])
         for plan_code, prepared, runs_current in ((2, False, False), (0, True, True)):
             with self.subTest(plan_code=plan_code), patch.object(checks, "prepare_current", return_value=0), \
                     patch.object(checks, "prepare_lean_scope", return_value=(plan_code, False)), \

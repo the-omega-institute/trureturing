@@ -79,21 +79,11 @@ class ContractTests(unittest.TestCase):
             self.assertEqual({k: json.loads(values[k]) for k in expected}, expected)
         return expected
 
-    def test_fib_program_selects_shared_current_consumer_and_lightweight_ack(self):
+    def test_ordinary_ci_has_no_fib_suite(self):
         self.put("tools/scripts/compiled-fib-test.sh", b"# changed FIB suite\n")
         plan = self.parity()
-        self.assertTrue(plan["hits"]["tests-fib"])
-        self.assertTrue(plan["fib-regressions"])
-        data, _ = contract.load(self.root)
-        self.assertEqual(data["units"]["tests-fib"]["lean"], "none")
-        self.assertFalse(data["units"]["tests-fib"]["dotnet"])
-        self.assertEqual(data["units"]["tests-declared-template"]["lean"], "none")
-
-    def test_regular_owner_change_does_not_force_explicit_fib_suite(self):
-        self.put("Reg/D5/NewOwner.lean", b"-- compiled Application inputs decide\n")
-        plan = self.parity()
-        self.assertFalse(plan["hits"]["tests-fib"])
-        self.assertFalse(plan["fib-regressions"])
+        self.assertNotIn("tests-fib", plan["hits"])
+        self.assertNotIn("fib-regressions", plan)
 
     def test_normal_content_uses_source_policy_without_worktree_lifecycle(self):
         self.put("Blueprint/D5/S3/Content.scribe.cs", b"// changed content\n")

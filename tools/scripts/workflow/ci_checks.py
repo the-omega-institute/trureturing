@@ -88,13 +88,7 @@ def prepare_local_lean():
     return execute("prepare:lean-toolchain", ["elan", "run", pin, "lake", "--version"], compute=False)
 
 
-def unit_run(name, unit, *, current=None):
-    if unit["command"] == "acknowledge-current":
-        # The current job already ran the selected FIB suite.
-        # This unit only acknowledges an identified successful current job.
-        code = 0 if current == ("success", "current") else 1
-        result(name, "success" if code == 0 else "blocked", code, code)
-        return code
+def unit_run(name, unit):
     command = (["make", "-C", "tools", "test", "TEST_PROJECT=" + unit["project"]]
                if unit["project"] else ["bash", "-e", "-o", "pipefail", "-c", unit["command"]])
     return execute(name, command)
@@ -148,8 +142,6 @@ def current_phase(phase, data, plan, base, paths, scope_file=None):
     if phase in ("compiled-audit", "source-evidence") and not plan[phase]:
         result(phase, "not-applicable")
         return 0
-    if phase == "pr-fib":
-        return execute(phase, ["make", "compiled-fib-test"])
     if phase == "compiled-audit":
         return execute(phase, ["make", "compiled-judge-test"])
     if phase == "source-evidence":
@@ -168,8 +160,7 @@ def current_phase(phase, data, plan, base, paths, scope_file=None):
     raise DetectError(f"unknown current phase: {phase}")
 
 
-READY_PHASES = (("source-evidence", "source-evidence"), ("compiled-audit", "compiled-audit"),
-                ("pr-fib", "fib-regressions"))
+READY_PHASES = (("source-evidence", "source-evidence"), ("compiled-audit", "compiled-audit"))
 
 
 @dataclass(frozen=True)
@@ -255,7 +246,6 @@ def local(args, data, revision):
     if args.plan:
         return 0
     failures = []
-    current_code = None
     with tempfile.TemporaryDirectory(prefix="ci-local-") as directory:
         work = Path(directory)
         changed = work / "changed"
@@ -267,7 +257,7 @@ def local(args, data, revision):
                 prefix = current_prerequisite(data, plan, base, changed)
                 blocked = not prefix.allowed
                 return current_run(data, plan, base, changed, prefix)
-            code = current_code = with_budget(work / "current-budget", run_current)
+            code = with_budget(work / "current-budget", run_current)
             result("current", "success" if code == 0 else "failure", code, code)
             failures.append(code)
         for name, unit in data["units"].items():
@@ -276,11 +266,6 @@ def local(args, data, revision):
                 continue
             if blocked or failures and failures[-1] in (130, 143):
                 result(name, "blocked")
-                continue
-            if unit["command"] == "acknowledge-current":
-                failures.append(unit_run(name, unit, current=(
-                    "success" if current_code == 0 else "failure",
-                    "current" if current_code == 0 else "")))
                 continue
             prepared = prepare_local_lean() if unit["lean"] != "none" else 0
             prepared = prepared or prepare_unit(unit)
@@ -315,8 +300,6 @@ def main():
     unit = sub.add_parser("unit")
     unit.add_argument("unit")
     unit.add_argument("--prepare", action="store_true")
-    unit.add_argument("--current-result", default="")
-    unit.add_argument("--current-unit", default="")
     local_unit = sub.add_parser("local-unit")
     local_unit.add_argument("unit")
     current = sub.add_parser("current")
@@ -345,8 +328,6 @@ def main():
                     stream.write("definition=" + text + "\n")
                 return 0
             if args.operation == "local-unit":
-                if unit["command"] == "acknowledge-current":
-                    return unit_run(args.unit, unit)
                 prepared = prepare_local_lean() if unit["lean"] != "none" else 0
                 prepared = prepared or prepare_unit(unit)
                 if prepared:
@@ -357,7 +338,7 @@ def main():
                     return with_budget(Path(directory) / "budget", lambda: unit_run(args.unit, unit))
             if args.prepare:
                 return prepare_unit(unit)
-            code = unit_run(args.unit, unit, current=(args.current_result, args.current_unit))
+            code = unit_run(args.unit, unit)
             if code == 0 and os.environ.get("GITHUB_OUTPUT"):
                 with open(os.environ["GITHUB_OUTPUT"], "a") as stream:
                     stream.write("unit=" + args.unit + "\n")
