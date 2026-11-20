@@ -605,6 +605,8 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
                     self.assertEqual("primary", (build / f"lib/lean/{name}.olean").read_text())
                 self.assertEqual("primary", (build / shards.REPORT_PATH).read_text())
                 self.assertEqual(scenario != "valid", (build / shards.REPORT_RECEIPT).is_file())
+                with mock.patch.dict(os.environ, self.env, clear=True):
+                    self.assertEqual(scenario == "valid", producer.actions.adoption_record(self.root)["supplemented"])
 
     def test_sharded_preparation_installs_bundled_and_referenced_files_together(self):
         self.preparation()

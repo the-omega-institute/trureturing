@@ -542,6 +542,11 @@ def recover_and_reuse(repository, report, output):
     from lean_cache_release import cache_guard, checkout_topology, warm_dev_remediation
     # Authored registration failures must precede optional network recovery.
     capture(repository)
+    if os.environ.get('GITHUB_ACTIONS') == 'true' and report.resolve() == canonical_seed(repository).resolve():
+        from lean_actions import adoption_record
+        adopted = adoption_record(repository)
+        if adopted and adopted.get('supplemented') is True:
+            return miss('supplemented-pr-preparation')
     local = seed_format(report)
     try:
         linked, main_checkout = checkout_topology(repository)

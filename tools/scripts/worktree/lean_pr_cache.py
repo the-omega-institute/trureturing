@@ -467,7 +467,7 @@ def restore_project(root, directory, cache_action, identity, runtime):
     try:
         index = shards.read_index(directory / "project.json", shards.binding(root, "complete"), "complete")
     except shards.IncompatibleShardBinding:
-        return False
+        return False, False
     owner = dict(commit=identity["merge"], ref=identity["target_ref"], run=runtime["run"], attempt=runtime["attempt"])
     require(index is not None and index["owner"] == owner, "preparation index owner differs from validated source")
     packed = directory / "shards"
@@ -478,7 +478,9 @@ def restore_project(root, directory, cache_action, identity, runtime):
         result = shards.install(root, index, [], require_complete=True, preparation=directory,
                                 payload_directory=packed)
         if not result["complete"]:
-            return False
+            return False, False
+        report_receipt = directory / "native" / shards.PROJECT_BUILD / shards.REPORT_RECEIPT
+        had_receipt = report_receipt.is_file()
         try:
             sources = shards.tracked_sources(root, shards.workspace_modules(root))
             if sources != index["sources"]:
@@ -487,13 +489,13 @@ def restore_project(root, directory, cache_action, identity, runtime):
                                cwd=root, check=True)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             receipt("supplement-unavailable", identity, reason=str(error))
-        return True
+        return True, had_receipt and not report_receipt.is_file()
     # Earlier artifacts can still carry references to Actions cache entries.
     result = subprocess.run([*cache_action, "restore-preparation", str(directory)])
     if result.returncode == 3:
-        return False
+        return False, False
     result.check_returncode()
-    return True
+    return True, False
 
 
 def adopt(root, cache_action=None):
@@ -537,17 +539,20 @@ def adopt(root, cache_action=None):
             if validated is None:
                 continue
             identity, runtime = validated
-            if sharded and not restore_project(root, directory, cache_action, identity, runtime):
-                receipt("unavailable", identity, runtime=runtime, artifact=artifact["id"],
-                        reason="preparation project material is incompatible or unavailable")
-                continue
+            supplemented = False
+            if sharded:
+                restored, supplemented = restore_project(root, directory, cache_action, identity, runtime)
+                if not restored:
+                    receipt("unavailable", identity, runtime=runtime, artifact=artifact["id"],
+                            reason="preparation project material is incompatible or unavailable")
+                    continue
             unpack(root, directory / "native.tar.gz", directory / "native", dependency_only=sharded)
             install_native(root, directory / "native")
             unpack_seconds = time.monotonic() - unpack_started
         actions.stamp_restored_dependency(root, actions.actions_keys(root))
         actions.write_small_record(record, dict(run=os.environ["GITHUB_RUN_ID"], attempt=os.environ["GITHUB_RUN_ATTEMPT"],
             repository=str(root.resolve()), checkout=context["checkout"], ref=os.environ["GITHUB_REF"],
-            artifact=artifact["id"], merged=context["merged"]))
+            artifact=artifact["id"], merged=context["merged"], supplemented=supplemented))
         actions.output(dict(adopted=True))
         if sharded:
             actions.output(dict(sharded=True))

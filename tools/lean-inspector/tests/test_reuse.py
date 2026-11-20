@@ -235,6 +235,24 @@ class ReuseTests(unittest.TestCase):
                 api.recover_and_reuse(self.root, self.report, self.report)
             reuse_entry.assert_not_called()
 
+    def test_supplemented_ci_preparation_enters_lake_without_release_recovery(self):
+        api = self.receipt()
+        report = api.canonical_seed(self.root)
+        checkout = 'b' * 40
+        env = dict(GITHUB_ACTIONS='true', GITHUB_RUN_ID='15', GITHUB_RUN_ATTEMPT='2',
+                   GITHUB_REF='refs/heads/dev', GITHUB_SHA=checkout, STRATALINT_CACHE_CHECKED_OUT_SHA=checkout)
+        record = dict(run='15', attempt='2', repository=str(self.root.resolve()), checkout=checkout,
+                      ref=env['GITHUB_REF'], artifact=81, merged=True, supplemented=True)
+        with patch.dict(os.environ, env):
+            self.write('build/lean-cache/pr-adopted.json', json.dumps(record))
+            with patch.object(api, 'seed_format', side_effect=AssertionError('started Release recovery')):
+                self.assertEqual(dict(needs_lake=True, reason='supplemented-pr-preparation'),
+                                 api.recover_and_reuse(self.root, report, report))
+            self.write('build/lean-cache/pr-adopted.json', json.dumps(record | {'attempt': '1'}))
+            with patch.object(api, 'seed_format', side_effect=RuntimeError('ordinary recovery')):
+                with self.assertRaisesRegex(RuntimeError, 'ordinary recovery'):
+                    api.recover_and_reuse(self.root, report, report)
+
     def test_seed_base_record_does_not_participate_in_reuse_or_compatibility(self):
         api = self.receipt()
         before = api.probe(self.root, self.report)
