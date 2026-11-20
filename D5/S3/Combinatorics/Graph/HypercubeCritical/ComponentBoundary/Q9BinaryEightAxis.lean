@@ -114,6 +114,17 @@ private theorem weightedAction_off (w : Fin 9 → F) {b : Bool} {g : Q 9 → F}
   intro j _
   rw [hg _ (flip_off_parity j hx), mul_zero]
 
+private theorem weightedAction_extendParity (w : Fin 9 → F) {b : Bool}
+    (g : ParityVertices b → F) (hg : (parityBlock w b).mulVec g = 0) :
+    weightedAction w (extendParity g) = 0 := by
+  funext x
+  by_cases hx : parity x = !b
+  · let y : ParityVertices (!b) := ⟨x, hx⟩
+    have hrow := parityBlock_mulVec w (b := b) (fun _ => extendParity_off g) y
+    simp only [extendParity_apply] at hrow
+    exact hrow.symm.trans (congrFun hg y)
+  · exact weightedAction_off w (b := b) (fun _ => extendParity_off g) hx
+
 private theorem parityBlock_transpose_mulVec (w : Fin 9 → F) {b : Bool} {g : Q 9 → F}
     (hg : ∀ x, parity x ≠ !b → g x = 0) (x : ParityVertices b) :
     (parityBlock w b)ᵀ.mulVec (fun y => g y.1) x = weightedAction w g x.1 := by
@@ -148,14 +159,7 @@ theorem range_transpose_eq_ker (w : Fin 9 → F) (hw : ∑ i, w i ^ 2 = 0)
     exact funext fun x => (parityBlock_mulVec w (b := b) hv x).trans (congrFun him.1 x.1)
   · intro hg
     have hBg : (parityBlock w b).mulVec g = 0 := LinearMap.mem_ker.mp hg
-    have hkernel : weightedAction w (extendParity g) = 0 := by
-      funext x
-      by_cases hx : parity x = !b
-      · let y : ParityVertices (!b) := ⟨x, hx⟩
-        have hrow := parityBlock_mulVec w (b := b) (fun _ => extendParity_off g) y
-        simp only [extendParity_apply] at hrow
-        exact hrow.symm.trans (congrFun hBg y)
-      · exact weightedAction_off w (b := b) (fun _ => extendParity_off g) hx
+    have hkernel := weightedAction_extendParity w g hBg
     have hker : extendParity g ∈
         {v | weightedAction w v = 0 ∧ ∀ x, parity x ≠ !(!b) → v x = 0} :=
       ⟨hkernel, fun x hx => extendParity_off g (by simpa only [Bool.not_not] using hx)⟩
@@ -178,30 +182,37 @@ theorem parityMatrix_rank (w : Fin 9 → F) (hw : ∑ i, w i ^ 2 = 0)
   rw [Matrix.rank_transpose, Module.finrank_fintype_fun_eq_card, card_parityVertices] at h
   omega
 
+private theorem supported_parityBlock_mulVec (w : Fin 9 → F) (S : Finset (Q 9))
+    {b : Bool} {g : Q 9 → F} (hS : ∀ x ∉ S, g x = 0)
+    (hb : ∀ x, parity x ≠ b → g x = 0) :
+    ((parityBlock w b).submatrix id (parityPartInclusion S b)).mulVec
+      (fun y => g y.1) = fun x => weightedAction w g x.1 := by
+  funext x
+  let part : Finset (ParityVertices b) := Finset.univ.filter (fun y => y.1 ∈ S)
+  let e : ↥(parityPart S b) ≃ {y : ParityVertices b // y.1 ∈ S} :=
+    { toFun := fun y => ⟨parityPartInclusion S b y, (Finset.mem_filter.mp y.2).1⟩
+      invFun := fun y => ⟨y.1.1, Finset.mem_filter.mpr ⟨y.2, y.1.2⟩⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  let term (y : ParityVertices b) := parityBlock w b x y * g y.1
+  change (∑ y : parityPart S b, term (e y).1) = weightedAction w g x.1
+  rw [e.sum_comp (fun y => term y.1)]
+  rw [← Finset.sum_subtype part (fun y => by simp [part]) term]
+  calc
+    _ = ∑ y : ParityVertices b, term y := Finset.sum_subset
+      (Finset.subset_univ part) (fun y _ hy => by
+        have h := hS y.1 (by simpa [part] using hy)
+        simp [term, h])
+    _ = _ := parityBlock_mulVec w hb x
+
 private theorem supported_action_word_to_code (w : Fin 9 → F) (S : Finset (Q 9))
     {b : Bool} {g : Q 9 → F} (hg : g ≠ 0) (hS : ∀ x ∉ S, g x = 0)
     (hb : ∀ x, parity x ≠ b → g x = 0) (hker : weightedAction w g = 0) :
     ∃ v : parityCode (parityMatrix w) S b, v ≠ 0 := by
   let u (y : parityPart S b) := g y.1
   have hz : ((parityBlock w b).submatrix id (parityPartInclusion S b)).mulVec u = 0 := by
-    funext x
-    change (∑ y : parityPart S b, parityBlock w b x (parityPartInclusion S b y) * u y) = 0
-    let part : Finset (ParityVertices b) := Finset.univ.filter (fun y => y.1 ∈ S)
-    let e : ↥(parityPart S b) ≃ {y : ParityVertices b // y.1 ∈ S} :=
-      { toFun := fun y => ⟨parityPartInclusion S b y, (Finset.mem_filter.mp y.2).1⟩
-        invFun := fun y => ⟨y.1.1, Finset.mem_filter.mpr ⟨y.2, y.1.2⟩⟩
-        left_inv := fun _ => rfl
-        right_inv := fun _ => rfl }
-    let term (y : ParityVertices b) := parityBlock w b x y * g y.1
-    change (∑ y : parityPart S b, term (e y).1) = 0
-    rw [e.sum_comp (fun y => term y.1)]
-    rw [← Finset.sum_subtype part (fun y => by simp [part]) term]
-    calc
-      _ = ∑ y : ParityVertices b, term y := Finset.sum_subset
-        (Finset.subset_univ part) (fun y _ hy => by
-          have h := hS y.1 (by simpa [part] using hy)
-          simp [term, h])
-      _ = _ := (parityBlock_mulVec w hb x).trans (congrFun hker x.1)
+    rw [show u = (fun y => g y.1) from rfl, supported_parityBlock_mulVec w S hS hb, hker]
+    rfl
   have hm : u ∈ parityCode (parityMatrix w) S b := by
     cases b
     · rw [false_block_eq_transpose] at hz
@@ -213,6 +224,29 @@ private theorem supported_action_word_to_code (w : Fin 9 → F) (S : Finset (Q 9
     · exact congrFun (congrArg Subtype.val h) ⟨x, Finset.mem_filter.mpr ⟨hxS, hxb⟩⟩
     · exact hb x hxb
   · exact hS x hxS
+
+private theorem supported_action_word_of_code (w : Fin 9 → F) (S : Finset (Q 9))
+    {b : Bool} (v : parityCode (parityMatrix w) S b) (hv : v ≠ 0) :
+    ∃ g : Q 9 → F, g ≠ 0 ∧ (∀ x ∉ S, g x = 0) ∧
+      (∀ x, parity x ≠ b → g x = 0) ∧ weightedAction w g = 0 := by
+  let g (x : Q 9) : F := if hx : x ∈ parityPart S b then v.val ⟨x, hx⟩ else 0
+  have hg (x : parityPart S b) : g x.1 = v.val x := dite_eq_left x.2
+  have hS (x : Q 9) (hx : x ∉ S) : g x = 0 :=
+    dite_eq_right (fun h : x ∈ parityPart S b => hx (Finset.mem_filter.mp h).1)
+  have hb (x : Q 9) (hx : parity x ≠ b) : g x = 0 :=
+    dite_eq_right (fun h : x ∈ parityPart S b => hx (Finset.mem_filter.mp h).2)
+  have hcode : ((parityBlock w b).submatrix id (parityPartInclusion S b)).mulVec v.val = 0 := by
+    cases b
+    · rw [false_block_eq_transpose]
+      exact LinearMap.mem_ker.mp v.property
+    · exact LinearMap.mem_ker.mp v.property
+  refine ⟨g, fun h => hv (Subtype.ext (funext fun x => (hg x).symm.trans (congrFun h x.1))),
+    hS, hb, funext fun x => ?_⟩
+  by_cases hx : parity x = !b
+  · have h := supported_parityBlock_mulVec w S hS hb
+    rw [funext hg, hcode] at h
+    exact (congrFun h ⟨x, hx⟩).symm
+  · exact weightedAction_off w hb hx
 
 /-- The binary specialization with exactly the axis `k` inactive. -/
 def eightAxisWeights (k : Fin 9) (i : Fin 9) : ZMod 2 :=
@@ -260,6 +294,34 @@ private theorem integerWeights_mod_two (k : Fin 9) (A : Finset (Fin 9)) (i : Fin
         (show ((3 : ℤ) : ZMod 2) = 1 by decide)
     · simp [integerWeights, eightAxisWeights, hi, ha]
 
+private theorem exists_common_parity_of_integer_weights {q : ℕ} [Fact q.Prime]
+    (t : Fin 9 → ℤ) (ht : ∀ i, 0 < (t i : ℝ)) {s : ℤ}
+    (hroot : Real.sqrt (∑ i, (t i : ℝ) ^ 2) = (s : ℝ)) (hs : (q : ℤ) ∣ s)
+    (w : Fin 9 → ZMod q) (hcast : (fun i => (t i : ZMod q)) = w)
+    (hw : ∑ i, w i ^ 2 = 0) (i : Fin 9) (hi : w i ≠ 0)
+    {C D : Finset (Q 9)} (hsep : Separated C D) (hcard : (C ∪ D).card = 258)
+    (hc : ((hypercube 9).induce (C : Set (Q 9))).Connected)
+    (hd : ((hypercube 9).induce (D : Set (Q 9))).Connected)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D) :
+    ∃ p, (∃ v : parityCode (parityMatrix w) C p, v ≠ 0) ∧
+      (∃ v : parityCode (parityMatrix w) D p, v ≠ 0) := by
+  have word (S : Finset (Q 9)) {v : Q 9 → ℝ}
+      (hv : v ∈ Q9WeightedHuangSaturation.supportedWeightedEigenSpace (fun j => (t j : ℝ)) S)
+      (hn : v ≠ 0) : ∃ p, ∃ g : parityCode (parityMatrix w) S p, g ≠ 0 := by
+    obtain ⟨heigen, hsupport⟩ := (mem_supported_iff _ S v).mp hv
+    rw [hroot] at heigen
+    obtain ⟨p, g, hg, hgS, hgp, hker⟩ :=
+      exists_one_parity_word (p := q) t S hs hn hsupport
+        (by simpa [Q9WeightedHuangSaturation.weightedHuang] using heigen)
+    rw [hcast] at hker
+    exact ⟨p, supported_action_word_to_code w S hg hgS hgp hker⟩
+  obtain ⟨⟨v, hv, hvne⟩, ⟨u, hu, hune⟩⟩ :=
+    exists_supported_eigenvectors (fun j => (t j : ℝ)) ht hcard hsep hc hd hbC hbD
+  exact exists_common_parity_codeword _ (parityMatrix_rank w hw i hi) (parityMatrix_support _)
+    hsep hcard hrC hrD hbC hbD (word C hv hvne) (word D hu hune)
+
 /-- For any inactive axis, the actual binary eight-axis parity matrix gives nonzero
 words on a common parity of the two separated cubic supports. -/
 theorem exists_eight_axis_common_parity (k : Fin 9) {C D : Finset (Q 9)}
@@ -281,25 +343,14 @@ theorem exists_eight_axis_common_parity (k : Fin 9) {C D : Finset (Q 9)}
     by_cases hi : i = k <;> by_cases ha : i ∈ A <;> norm_num [t, integerWeights, hi, ha]
   have hnorm : ∑ i, t i ^ 2 = 36 := integerWeights_sq_sum k A hkA hAcard
   have hnormReal : ∑ i, (t i : ℝ) ^ 2 = 36 := by exact_mod_cast hnorm
-  have hroot : Real.sqrt (∑ i, (t i : ℝ) ^ 2) = 6 := by rw [hnormReal]; norm_num
+  have hroot : Real.sqrt (∑ i, (t i : ℝ) ^ 2) = ((6 : ℤ) : ℝ) := by
+    rw [hnormReal]
+    norm_num
   have hcast (i : Fin 9) : (t i : ZMod 2) = eightAxisWeights k i := integerWeights_mod_two k A i
   obtain ⟨i, hi⟩ := eightAxisWeights_nonzero k
-  have hrank := parityMatrix_rank (eightAxisWeights k) (eightAxisWeights_isotropic k) i hi
-  have word (S : Finset (Q 9)) {v : Q 9 → ℝ}
-      (hv : v ∈ Q9WeightedHuangSaturation.supportedWeightedEigenSpace (fun i => (t i : ℝ)) S)
-      (hn : v ≠ 0) : ∃ p, ∃ g : parityCode (parityMatrix (eightAxisWeights k)) S p, g ≠ 0 := by
-    obtain ⟨heigen, hsupport⟩ := (mem_supported_iff _ S v).mp hv
-    rw [hroot] at heigen
-    have heven : (2 : ℤ) ∣ 6 := by norm_num
-    obtain ⟨p, g, hg, hgS, hgp, hker⟩ :=
-      exists_one_parity_word (p := 2) t S heven hn hsupport
-        (by simpa [Q9WeightedHuangSaturation.weightedHuang] using heigen)
-    rw [show (fun i => (t i : ZMod 2)) = eightAxisWeights k from funext hcast] at hker
-    exact ⟨p, supported_action_word_to_code (eightAxisWeights k) S hg hgS hgp hker⟩
-  obtain ⟨⟨v, hv, hvne⟩, ⟨u, hu, hune⟩⟩ :=
-    exists_supported_eigenvectors (fun i => (t i : ℝ)) ht hcard hsep hc hd hbC hbD
-  exact exists_common_parity_codeword _ hrank (parityMatrix_support _) hsep hcard
-    hrC hrD hbC hbD (word C hv hvne) (word D hu hune)
+  exact exists_common_parity_of_integer_weights (q := 2) (s := 6) t ht hroot
+    (by norm_num) (eightAxisWeights k) (funext hcast) (eightAxisWeights_isotropic k) i hi
+    hsep hcard hc hd hrC hrD hbC hbD
 
 private theorem parityCode_rank_add_nullity (w : Fin 9 → F) (S : Finset (Q 9)) (b : Bool) :
     ((parityBlock w b).submatrix id (parityPartInclusion S b)).rank +
@@ -383,6 +434,43 @@ private theorem parityCode_finrank_union_ge (w : Fin 9 → F) (C D : Finset (Q 9
   change (M D).rank + _ = _ at hd
   omega
 
+private theorem exists_complement_word_of_common_parity
+    (w : Fin 9 → F) (hw : ∑ j, w j ^ 2 = 0) (i : Fin 9) (hi : w i ≠ 0)
+    {C D : Finset (Q 9)} (hsep : Separated C D) (hcard : (C ∪ D).card = 258)
+    (hrC : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hrD : ((hypercube 9).induce (D : Set (Q 9))).IsRegularOfDegree 3)
+    (hbC : IsBalanced C) (hbD : IsBalanced D) (p : Bool)
+    (hpC : ∃ v : parityCode (parityMatrix w) C p, v ≠ 0)
+    (hpD : ∃ v : parityCode (parityMatrix w) D p, v ≠ 0) :
+    ∃ g : ParityVertices p → F, g ≠ 0 ∧ (∀ x, x.1 ∈ C ∪ D → g x = 0) ∧
+      (parityBlock w p).mulVec g = 0 := by
+  have hpCpos := (Module.finrank_pos_iff_exists_ne_zero (R := F)).mpr hpC
+  have hpDpos := (Module.finrank_pos_iff_exists_ne_zero (R := F)).mpr hpD
+  have hge := parityCode_finrank_union_ge w C D p hsep.1
+  have hCcard := (direction_edge_count (d := 3) C hrC hbC 0).symm
+  have hDcard := (direction_edge_count (d := 3) D hrD hbD 0).symm
+  have hU : (parityPart (C ∪ D) p).card = 129 := by
+    rw [Finset.card_union_of_disjoint hsep.1] at hcard
+    rw [parityPart, Finset.filter_union, Finset.card_union_of_disjoint
+      (hsep.1.mono (Finset.filter_subset _ _) (Finset.filter_subset _ _))]
+    change (parityPart C p).card + (parityPart D p).card = 129
+    rw [cubic_parityPart_card hCcard hrC, cubic_parityPart_card hDcard hrD]
+    omega
+  have hdim := complement_nullity_add_one w hw i hi (C ∪ D) p hU
+  let V := LinearMap.ker (parityBlock w p).mulVecLin ⊓
+    LinearMap.ker (LinearMap.funLeft (F) (F) (parityPartInclusion (C ∪ D) p))
+  have hpos : 0 < Module.finrank (F) V := by
+    change Module.finrank (F) V + 1 = _ at hdim
+    change 0 < Module.finrank (F) (parityCode (parityMatrix w) C p) at hpCpos
+    change 0 < Module.finrank (F) (parityCode (parityMatrix w) D p) at hpDpos
+    omega
+  obtain ⟨g, hg⟩ := (Module.finrank_pos_iff_exists_ne_zero (R := F)).mp hpos
+  have hm : g.val ∈ V := g.property
+  refine ⟨g.val, fun h => hg (Subtype.ext h), ?_, LinearMap.mem_ker.mp hm.1⟩
+  intro x hx
+  exact congrFun (LinearMap.mem_ker.mp hm.2)
+    ⟨x.1, Finset.mem_filter.mpr ⟨hx, x.2⟩⟩
+
 /-- The common parity also has a nonzero binary kernel word supported outside
 both components. -/
 theorem exists_eight_axis_complement_word (k : Fin 9) {C D : Finset (Q 9)}
@@ -396,35 +484,13 @@ theorem exists_eight_axis_complement_word (k : Fin 9) {C D : Finset (Q 9)}
       (∃ v : parityCode (parityMatrix (eightAxisWeights k)) D p, v ≠ 0) ∧
       ∃ g : ParityVertices p → ZMod 2, g ≠ 0 ∧ (∀ x, x.1 ∈ C ∪ D → g x = 0) ∧
         (parityBlock (eightAxisWeights k) p).mulVec g = 0 := by
-  let w := eightAxisWeights k
   obtain ⟨p, hpC, hpD⟩ :=
     exists_eight_axis_common_parity k hsep hcard hc hd hrC hrD hbC hbD
-  have hpCpos := (Module.finrank_pos_iff_exists_ne_zero (R := ZMod 2)).mpr hpC
-  have hpDpos := (Module.finrank_pos_iff_exists_ne_zero (R := ZMod 2)).mpr hpD
-  have hge := parityCode_finrank_union_ge w C D p hsep.1
-  have hCcard := (direction_edge_count (d := 3) C hrC hbC 0).symm
-  have hDcard := (direction_edge_count (d := 3) D hrD hbD 0).symm
-  have hU : (parityPart (C ∪ D) p).card = 129 := by
-    rw [Finset.card_union_of_disjoint hsep.1] at hcard
-    rw [parityPart, Finset.filter_union, Finset.card_union_of_disjoint
-      (hsep.1.mono (Finset.filter_subset _ _) (Finset.filter_subset _ _))]
-    change (parityPart C p).card + (parityPart D p).card = 129
-    rw [cubic_parityPart_card hCcard hrC, cubic_parityPart_card hDcard hrD]
-    omega
   obtain ⟨i, hi⟩ := eightAxisWeights_nonzero k
-  have hdim := complement_nullity_add_one w (eightAxisWeights_isotropic k) i hi (C ∪ D) p hU
-  let V := LinearMap.ker (parityBlock w p).mulVecLin ⊓
-    LinearMap.ker (LinearMap.funLeft (ZMod 2) (ZMod 2) (parityPartInclusion (C ∪ D) p))
-  have hpos : 0 < Module.finrank (ZMod 2) V := by
-    change Module.finrank (ZMod 2) V + 1 = _ at hdim
-    change 0 < Module.finrank (ZMod 2) (parityCode (parityMatrix w) C p) at hpCpos
-    change 0 < Module.finrank (ZMod 2) (parityCode (parityMatrix w) D p) at hpDpos
-    omega
-  obtain ⟨g, hg⟩ := (Module.finrank_pos_iff_exists_ne_zero (R := ZMod 2)).mp hpos
-  have hm : g.val ∈ V := g.property
-  refine ⟨p, hpC, hpD, g.val, fun h => hg (Subtype.ext h), ?_, LinearMap.mem_ker.mp hm.1⟩
-  intro x hx
-  exact congrFun (LinearMap.mem_ker.mp hm.2)
-    ⟨x.1, Finset.mem_filter.mpr ⟨hx, x.2⟩⟩
+  exact ⟨p, hpC, hpD, exists_complement_word_of_common_parity (eightAxisWeights k)
+    (eightAxisWeights_isotropic k) i hi hsep hcard hrC hrD hbC hbD p hpC hpD⟩
+
+#print axioms exists_eight_axis_common_parity
+#print axioms exists_eight_axis_complement_word
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9BinaryEightAxis
