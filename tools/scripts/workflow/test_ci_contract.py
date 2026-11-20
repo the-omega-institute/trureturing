@@ -193,12 +193,18 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(all(contract.selection(data, None, "pull-request")["hits"].values()))
         self.assertTrue(contract.selection(data, None, "push")["report"])
 
-    def test_push_preserves_non_theory_delta_policy(self):
+    def test_push_runs_full_current_even_for_docs_and_replays_selected_delta(self):
         self.put("D5/changed.lean", b"-- changed\n")
         data, _ = contract.load(self.root)
         paths = contract.changed_paths(self.root, self.base)
         self.assertTrue(contract.selection(data, paths, "pull-request")["delta"])
-        self.assertFalse(self.parity("push")["delta"])
+        self.assertTrue(self.parity("push")["delta"])
+        for changed in ([], ["README.md"], None):
+            push = contract.selection(data, changed, "push")
+            self.assertTrue(push["hits"]["current"])
+            self.assertTrue(push["full-report"])
+            self.assertTrue(push["report"])
+        self.assertFalse(contract.selection(data, ["D5/changed.lean"], "pull-request")["full-report"])
 
     def test_invalid_base_fails_and_local_keeps_remotes(self):
         self.git("remote", "add", "persistent", "https://example.invalid/repository.git")

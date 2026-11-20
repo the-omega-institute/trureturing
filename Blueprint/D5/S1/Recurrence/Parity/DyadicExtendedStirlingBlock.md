@@ -18,7 +18,43 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{T}\left(
 
 The map T:N x N -> Q is defined by lexicographic recursion on (n,k), decreasing the row before the column. Column zero is separately set to zero. Every row has T(n,1)=1; the initial row has T(0,2)=1 and T(0,k)=0 for k>=3. For m>=0 and k>=2 the odd recursion reads T(2m+1,k)=k*T(m,k)+T(m,k-1). For m>=1 and k>=2 the even recursion subtracts (T(2m,k-1)+T(m,k-1))/(k-1) from k*T(m,k)+T(m,k-1). Here the coefficients k and k-1 and the displayed division are rational. Recursive column indices use Nat.sub. Every column used by these positive-domain recurrences is at least one, so their values are independent of the zero-column convention. The definition uses the source scalar recursion and initial values, without assuming the block identity.
 
-**Definition 1.2 (The dyadic valuation).**
+**Lemma 1.2 (First column).**
+
+$$\forall n \in \mathbb{N},\; \operatorname{T}\left(n, 1\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_one` (`✓ std3`). ∎
+
+*Citation.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
+
+*Commentary.*
+
+The first column is one for every natural row, including row zero.
+
+**Lemma 1.3 (Odd row recurrence).**
+
+$$\forall m \in \mathbb{N},\; \forall k \in \mathbb{N},\; (2 \le k) \Rightarrow (\operatorname{T}\left(2 \cdot m + 1, k\right) = (k:\mathbb{Q}) \cdot \operatorname{T}\left(m, k\right) + \operatorname{T}\left(m, \operatorname{Nat.sub}\left(k, 1\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_odd` (`✓ std3`). ∎
+
+*Citation.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
+
+*Commentary.*
+
+For every natural parent row and every column at least two, the odd row uses the two indicated parent entries.
+
+**Lemma 1.4 (Positive even row recurrence).**
+
+$$\forall m \in \mathbb{N},\; \forall k \in \mathbb{N},\; (0 < m) \Rightarrow ((2 \le k) \Rightarrow (\operatorname{T}\left(2 \cdot m, k\right) = (k:\mathbb{Q}) \cdot \operatorname{T}\left(m, k\right) + \operatorname{T}\left(m, \operatorname{Nat.sub}\left(k, 1\right)\right) - \frac{\operatorname{T}\left(2 \cdot m, \operatorname{Nat.sub}\left(k, 1\right)\right) + \operatorname{T}\left(m, \operatorname{Nat.sub}\left(k, 1\right)\right)}{(k:\mathbb{Q}) - 1}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_even` (`✓ std3`). ∎
+
+*Citation.* Mikhail Kurkov (2024). *OEIS A358612: extended Stirling numbers from binary row indices*. URL: <https://oeis.org/A358612>.
+
+*Commentary.*
+
+For a positive parent row and a column at least two, subtract the rational correction using the preceding even-row and parent entries.
+
+**Definition 1.5 (The dyadic valuation).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{g}\left(n\right) = \operatorname{padicValNat}\left(2, n\right)$$
 
@@ -30,7 +66,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{g}\left(n\right) = \operatorname{pad
 
 The map g:N -> N is padicValNat 2. For n>0 it is the exponent of the highest power of two dividing n, OEIS A007814(n). The natural-valued convention at zero is g(0)=0.
 
-**Definition 1.3 (The natural parent index).**
+**Definition 1.6 (The natural parent index).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{h}\left(n\right) = \operatorname{Nat.div}\left(\operatorname{Nat.sub}\left(\operatorname{Nat.div}\left(n, (2)^{\operatorname{g}\left(n\right)}\right), 1\right), 2\right)$$
 
@@ -42,7 +78,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{h}\left(n\right) = \operatorname{Nat
 
 The map h:N -> N first takes the natural quotient n/2^g(n), then subtracts one with natural monus, then takes the natural quotient by two. In particular h(0)=0. For positive n the quotient by 2^g(n) is exact and odd, and n=2^g(n)*(2*h(n)+1). Thus h(n)=A025480(n-1) on the source domain; no integer-floor expression with a negative numerator is used at zero.
 
-**Theorem 1.4 (Exact positive-row decomposition).**
+**Theorem 1.7 (Exact positive-row decomposition).**
 
 $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (n = (2)^{\operatorname{g}\left(n\right)} \cdot \left(2 \cdot \operatorname{h}\left(n\right) + 1\right))$$
 
@@ -56,7 +92,7 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (n = (2)^{\operatorname{g}\lef
 
 For every positive natural n, n=2^g(n)*(2*h(n)+1). The proof uses the exact power-of-two valuation and odd quotient. This source-owner helper is consumed by the block theorem and by the row-edge induction; no claim is made at zero.
 
-**Theorem 1.5 (The complete dyadic block identity).**
+**Theorem 1.8 (The complete dyadic block identity).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; (1 \le n) \Rightarrow ((2 \le k) \Rightarrow (\operatorname{T}\left(n, k\right) = ((k:\mathbb{Q}) - 1)^{\operatorname{g}\left(n\right)} \cdot \operatorname{T}\left(\operatorname{h}\left(n\right), \operatorname{Nat.sub}\left(k, 1\right)\right) + ((k:\mathbb{Q}))^{\operatorname{g}\left(n\right) + 1} \cdot \operatorname{T}\left(\operatorname{h}\left(n\right), k\right)))$$
 
@@ -73,6 +109,9 @@ For every n>=1 and k>=2, with no upper bound on either index, this is Kurkov's f
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T`
+- Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_even`
+- Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_odd`
+- Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.T_one`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_extended_stirling_block`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.dyadic_index`
 - Truth anchor: `D5/S1/Recurrence/Parity/DyadicExtendedStirlingBlock.g`
