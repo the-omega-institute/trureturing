@@ -39,6 +39,7 @@ layout preserved, 20,124 characters). Theorem 1 is in Section 1.
 H_n uses the physicists' normalization of DLMF 18.5.13, as in the frozen HermiteSignedMode
 module, whose result already gives the least maximizer a(n) and the differences 1 and −3. The
 remaining clauses are formalized: every other exponent, including those above n, has a strictly
-smaller coefficient; a(n) is the least j ≡ n (mod 4) with F(j) ≥ 2n; and a(n) = n − 4q(n) with the
+smaller coefficient; among j ≡ n (mod 4), a(n) ≤ j exactly when F(j) ≥ 2n, so a(n) is the least
+such j; and a(n) = n − 4q(n) with the
 radical floor formula over the reals. The source credits Mike Sheppard (OEIS A381423, revision 8)
 for the questions and DLMF 18.5.13 for the coefficient formula.

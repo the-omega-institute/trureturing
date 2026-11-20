@@ -9,7 +9,10 @@
 import D5.S3.Analytic.Polynomial.HermiteSignedMode
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
-/-! The signed Hermite mode is unique, with an explicit quadratic threshold and floor formula. -/
+/-! The signed Hermite mode is unique, with an explicit quadratic threshold and floor formula.
+
+admission_basis: escape-witness. proof_shape: content for divisor_ne_fourth (the ratio of adjacent
+positive coefficients is never one), weight_lt_succ, rises_iff, floor_eq and result. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -32,8 +35,7 @@ private theorem rises_iff (n r : ℕ) : rises n r ↔ 4 * r ≤ n ∧ 2 * n ≤ 
     push Not at hlt
     rcases Nat.eq_zero_or_pos r with rfl | hr
     · omega
-    · have h2 : (2 * r - 1 : ℕ) = 2 * r - 1 := rfl
-      zify [show 1 ≤ 2 * r by omega] at hd hlt
+    · zify [show 1 ≤ 2 * r by omega] at hd hlt
       nlinarith
   · rintro ⟨h4, hq⟩
     refine ⟨h4, ?_⟩
@@ -115,9 +117,7 @@ private theorem unique_max (n k : ℕ) (hk : k ≠ a n) :
     exact positive_coefficient n (mode n) hm
   rw [polynomial_coeff n k hkn]
   rcases coefficient_cases n k with h | ⟨r, hr, hj, hc⟩
-  · rw [← polynomial_coeff n k hkn] at h
-    rw [polynomial_coeff n k hkn] at h
-    exact lt_of_le_of_lt h hpos
+  · exact lt_of_le_of_lt h hpos
   · rw [hc, hval]
     have hrm : r ≠ mode n := by
       intro h; apply hk; rw [hj, h]; rfl
@@ -137,6 +137,16 @@ private theorem isLeast_a (n : ℕ) :
     have hrises : rises n r := (rises_iff n r).2 ⟨by omega, by rw [show n - 4 * r = j by omega]; exact hjF⟩
     have := le_mode hrises
     omega
+
+private theorem threshold_iff (n j : ℕ) (hj : j % 4 = n % 4) :
+    a n ≤ j ↔ 2 * n ≤ j ^ 2 + 7 * j + 7 := by
+  obtain ⟨⟨_, hF⟩, hleast⟩ := isLeast_a n
+  constructor
+  · intro h
+    have : a n ^ 2 ≤ j ^ 2 := Nat.pow_le_pow_left h 2
+    omega
+  · intro h
+    exact hleast ⟨hj, h⟩
 
 private theorem floor_eq (n : ℕ) :
     ⌊((2 * n + 7 : ℝ) - √(8 * n + 21)) / 8⌋ = (mode n : ℤ) := by
@@ -185,13 +195,14 @@ private theorem floor_eq (n : ℕ) :
     linarith
 
 /-- Theorem 1 of Ma and Zhang on OEIS A381423: the signed maximum of the physicists' Hermite
-coefficients is attained only at `a n`; `a n` is the least `j ≡ n (mod 4)` with
-`j² + 7j + 7 ≥ 2n`; and `a n = n - 4 ⌊(2n + 7 - √(8n + 21))/8⌋`. -/
+coefficients is attained only at `a n`; among `j ≡ n (mod 4)`, `a n ≤ j` exactly when
+`j² + 7j + 7 ≥ 2n`, so `a n` is the least such `j`; and `a n = n - 4 ⌊(2n + 7 - √(8n + 21))/8⌋`. -/
 theorem result :
     (∀ n k : ℕ, k ≠ a n → (physicistsHermite n).coeff k < (physicistsHermite n).coeff (a n)) ∧
-    (∀ n : ℕ, IsLeast {j : ℕ | j % 4 = n % 4 ∧ 2 * n ≤ j ^ 2 + 7 * j + 7} (a n)) ∧
+    (∀ n : ℕ, a n % 4 = n % 4 ∧
+      ∀ j : ℕ, j % 4 = n % 4 → (a n ≤ j ↔ 2 * n ≤ j ^ 2 + 7 * j + 7)) ∧
     (∀ n : ℕ, (a n : ℤ) = n - 4 * ⌊((2 * n + 7 : ℝ) - √(8 * n + 21)) / 8⌋) := by
-  refine ⟨unique_max, isLeast_a, fun n => ?_⟩
+  refine ⟨unique_max, fun n => ⟨(isLeast_a n).1.1, threshold_iff n⟩, fun n => ?_⟩
   rw [floor_eq n]
   have := (mode_rises n).1
   simp only [a]

@@ -21,7 +21,8 @@ internal sealed class HermiteSignedModeThresholdDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "Let a(n) be the least exponent maximizing the signed coefficients of H_n. Every "
                         + "other exponent k, including k > n, has a strictly smaller coefficient. Moreover "
-                        + "a(n) is the least j ≡ n (mod 4) with j² + 7j + 7 ≥ 2n, and "
+                        + "a(n) ≡ n (mod 4), and for every j ≡ n (mod 4), a(n) ≤ j exactly when "
+                        + "j² + 7j + 7 ≥ 2n; so a(n) is the least such j, and "
                         + "a(n) = n − 4⌊(2n + 7 − √(8n + 21))/8⌋.")),
                     Paragraph(Text(
                         "The positive coefficients are C_{n,r} = n! 2^{n−4r}/((2r)!(n − 4r)!) for 4r ≤ n; all "
