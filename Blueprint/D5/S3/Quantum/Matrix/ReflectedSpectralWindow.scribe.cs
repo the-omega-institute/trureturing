@@ -14,7 +14,8 @@ internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinitio
                     "D5/S3/Quantum/Matrix/ReflectedSpectralWindow.central_defect_endpoint_average"),
                 H("The central-defect endpoint average"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Eigenstructure/childs2003gluedtrees")),
                 Blocks(
                     Paragraph(Text(
                         "Use a path on 2n vertices with n at least one, zero diagonal, " +
@@ -26,10 +27,14 @@ internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinitio
                         "For any positive error parameter, let the time window start at zero and " +
                         "have length at least twice the vertex count divided by the error parameter " +
                         "and the actual gap. The real time average of the squared norm of the " +
-                        "opposite-endpoint entry of the complex matrix exponential strictly exceeds " +
+                        "entry from vertex zero to vertex 2n minus one of the matrix exponential " +
+                        "of the entrywise complexified path matrix multiplied by minus i times the " +
+                        "evolution time strictly exceeds " +
                         "the ratio of one minus the error parameter to the vertex count.")),
                     Paragraph(Text(
-                        "The existing spectral gap theorem gives simple eigenvalues. Coordinate " +
+                        "The estimate formalizes the weighted-path part of Childs et al., " +
+                        "Section III.D, Lemma 1. The existing spectral gap theorem gives " +
+                        "simple eigenvalues. Coordinate " +
                         "reversal preserves the matrix and each eigenline, so the eigenvectors have " +
                         "equal absolute weights at the endpoints. The exponential acts on these " +
                         "eigenlines by the corresponding phases. The diagonal part of the integrated " +
