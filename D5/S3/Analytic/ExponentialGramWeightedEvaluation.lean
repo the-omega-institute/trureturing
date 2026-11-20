@@ -9,7 +9,7 @@
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Measure.OpenPos
-import D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
+import D5.S3.Analytic.Entire.ExponentialBlockIndependence
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 
 /-!
@@ -29,8 +29,7 @@ open scoped BigOperators ComplexOrder Topology
 
 namespace ExponentialGramWeightedEvaluation
 
-open D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
-  (finite_moment_readout_apply finite_moment_readout_injective)
+open D5.S3.Analytic.Entire (blockEvaluation block_evaluation_injective)
 
 variable {ι : Type*}
 
@@ -288,40 +287,23 @@ private lemma exponentialSum_eq_zero_of_real (ω : ι → ℝ) (a : ι → ℂ)
 
 private lemma coefficients_eq_zero (ω : ι → ℝ) (a : ι → ℂ)
     (hω : Function.Injective ω) (hz : exponentialSum ω a = 0) : a = 0 := by
-  classical
-  have hmoment (k : ℕ) : (∑ i, a i * frequency ω i ^ k) = 0 := by
-    calc
-      _ = iteratedDeriv k (exponentialSum ω a) (0 : ℂ) := by
-        unfold exponentialSum
-        rw [iteratedDeriv_fun_sum]
-        · simp only [iteratedDeriv_const_mul_field, iteratedDeriv_cexp_const_mul,
-            mul_zero, Complex.exp_zero, mul_one]
-        · intro i _
-          fun_prop
-      _ = 0 := by
-        rw [hz, iteratedDeriv_const_zero]
   have hfreq : Function.Injective (frequency ω) := by
     intro i j hij
     apply hω
     simpa [frequency, Complex.mul_im] using congrArg Complex.im hij
-  let e : Fin (Fintype.card ι) ≃ ι := (Fintype.equivFin ι).symm
-  let nodes : Fin (Fintype.card ι) → ℂ := frequency ω ∘ e
-  let amplitudes : Fin (Fintype.card ι) → ℂ := a ∘ e
-  have hzero : amplitudes = 0 := by
-    apply finite_moment_readout_injective (show Function.Injective nodes from hfreq.comp e.injective)
-    funext k
-    rw [finite_moment_readout_apply, finite_moment_readout_apply]
-    calc
-      _ = ∑ i : ι, a i * frequency ω i ^ (k : ℕ) :=
-        e.sum_comp (fun i => a i * frequency ω i ^ (k : ℕ))
-      _ = 0 := hmoment k
-      _ = _ := by simp
+  have hblocks : (fun i => Polynomial.C (a i)) = 0 := by
+    apply block_evaluation_injective (frequency ω) hfreq
+    rw [map_zero]
+    funext z
+    change (∑ i, Complex.exp (frequency ω i * z) * (Polynomial.C (a i)).eval z) = 0
+    simpa only [Polynomial.eval_C, mul_comm, exponentialSum, Pi.zero_apply] using congrFun hz z
   funext i
-  simpa [amplitudes] using congrFun hzero (e.symm i)
+  apply Polynomial.C_injective
+  simpa only [Pi.zero_apply, map_zero] using congrFun hblocks i
 
 /-- Distinct real frequencies yield a positive definite Gram matrix.
-A zero energy forces the entire sum to vanish, and its derivatives at zero
-give the moments of an injective Vandermonde system. -/
+A zero energy forces the entire sum to vanish, and injectivity of evaluation
+for constant polynomial blocks forces the coefficients to vanish. -/
 private theorem gram_posDef (h : ℝ) (ω : ι → ℝ) (hh : 0 < h) (hω : Function.Injective ω) :
     (gram h ω).PosDef := by
   refine Matrix.PosDef.of_dotProduct_mulVec_pos (gram_isHermitian h ω) ?_
