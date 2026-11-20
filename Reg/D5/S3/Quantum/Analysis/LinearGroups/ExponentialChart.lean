@@ -49,7 +49,8 @@ theorem exp_zero_ne_exp_one : NormedSpace.exp (0 : Line.{u}) ≠ NormedSpace.exp
 namespace Chart
 
 abbrev signature : Signature where
-  Params := Σ A : Type u, NormedRing A
+  Params := Σ A : Type u, Σ _ : NormedRing A, Σ G : Type v, Σ _ : TopologicalSpace G,
+    Σ _ : Group G, NormedAlgebra ℝ A
   State p := p.1
   Role := Unit
   finiteRole := inferInstance
@@ -58,21 +59,21 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
-  realize signature (fun _ p s => letI := p.2; NormedSpace.exp s) (fun e => nomatch e)
+def actual : Realization signature.{u, v} :=
+  realize signature (fun _ p s => letI := p.2.1; NormedSpace.exp s) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u, v} :=
   realize signature (fun _ _ s => s) (fun e => nomatch e)
 
 /-- Retain the complete algebra, group, homomorphism and chart telescope of
 `exists_exp_chart`. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law r := ∀ {A : Type u} [iR : NormedRing A] {G : Type v} [TopologicalSpace G] [Group G]
-    [NormedAlgebra ℝ A] [FiniteDimensional ℝ A] [IsTopologicalGroup G] [LocallyCompactSpace G]
+  signature := signature.{u, v}
+  Law r := ∀ {A : Type u} [iR : NormedRing A] {G : Type v} [iT : TopologicalSpace G] [iG : Group G]
+    [iA : NormedAlgebra ℝ A] [FiniteDimensional ℝ A] [IsTopologicalGroup G] [LocallyCompactSpace G]
     (ρ : G →* Aˣ) (hc : Continuous ρ) (hi : Function.Injective ρ),
     ∃ ε : generatorSubalgebra ρ hc hi → G, Continuous ε ∧
-      (∀ X, ((ρ (ε X) : Aˣ) : A) = r.readout () ⟨A, iR⟩ (X : A)) ∧
+      (∀ X, ((ρ (ε X) : Aˣ) : A) = r.readout () ⟨A, iR, G, iT, iG, iA⟩ (X : A)) ∧
       ∃ U : Set (generatorSubalgebra ρ hc hi), IsOpen U ∧ (0 : generatorSubalgebra ρ hc hi) ∈ U ∧
         Topology.IsOpenEmbedding (U.domRestrict ε)
 
@@ -86,10 +87,11 @@ theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   simp [rejected, realize] at h0
 
 /-- In the real line the states `0` and `1` have different exponentials. -/
-theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature.{u, v} actual := by
   intro i
   cases i
-  exact ⟨⟨Line.{u}, inferInstance⟩, 0, 1, exp_zero_ne_exp_one⟩
+  exact ⟨⟨Line.{u}, inferInstance, Pt.{v}, inferInstance, inferInstance, inferInstance⟩, 0, 1,
+    exp_zero_ne_exp_one⟩
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement : Prop := type_of% @exists_exp_chart.{u, v}
@@ -110,7 +112,7 @@ end Chart
 
 def exists_exp_chart_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@exists_exp_chart.{u, v}) (Realization Chart.signature.{u}) Unit Unit := {
+      (@exists_exp_chart.{u, v}) (Realization Chart.signature.{u, v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart.exists_exp_chart_unit
   realizationName := `Reg.D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart.Chart.source_registration
   realizationSource := none
@@ -122,8 +124,8 @@ def exists_exp_chart_registration :
   realization := .source Chart.arena.{u, v} ⟨Chart.source_registration.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Chart.signature.{u}
-    (fun _ p s => letI := p.2; NormedSpace.exp s) (fun e => nomatch e))
+  readout := some (realize Chart.signature.{u, v}
+    (fun _ p s => letI := p.2.1; NormedSpace.exp s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -131,7 +133,7 @@ def exists_exp_chart_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.LinearGroups.ExponentialChart
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "arg", "body", "arg", "fn", "arg", "body", "arg"]

@@ -6,6 +6,7 @@
    utility: none
    digest: Isometric representations are semisimple; positivity of character kernels. -/
 
+import D5.S3.FiniteGroups.FiniteCharacterAlgebra
 import D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Analysis.InnerProductSpace.Projection.Submodule
@@ -17,11 +18,14 @@ import Mathlib.RepresentationTheory.Semisimple
 /-!
 # Unitary representations and positivity of character kernels
 
-Let `G` be an arbitrary group, with no topology.
+Let `G` be an arbitrary group (a monoid in the first statement), with no topology.
 
 * A representation of `G` on a finite-dimensional inner product space by isometries is
-  semisimple: the orthogonal complement of an invariant subspace is invariant, because the
-  adjoint of `ρ g` is `ρ g⁻¹`.
+  semisimple: an isometry `U` with `U S ≤ S` is injective, so in finite dimension `U S = S`,
+  and then `U` maps the orthogonal complement of `S` into itself.
+* For representations `ρ i` of `G` on finite-dimensional complex inner product spaces, each
+  acting by isometries, and nonnegative weights `c i`, the kernel
+  `(x, y) ↦ ∑ i, c i * χ_i (x * y⁻¹)` on `G` is positive semidefinite.
 * Let `ρ i`, for `i` in a finite type, be pairwise inequivalent irreducible representations of
   `G` on finite-dimensional complex inner product spaces, each acting by isometries, and let
   `c i` be complex weights. The kernel `(x, y) ↦ ∑ i, c i * χ_i (x * y⁻¹)` on `G` is positive
@@ -45,23 +49,28 @@ namespace D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel
 open Module D5.S3.FiniteGroups.GroupAlgebra.CharacterKernelRank
 open scoped ComplexOrder InnerProductSpace ComplexConjugate
 
-/-- A representation of a group on a finite-dimensional inner product space by isometries is
+/-- A representation of a monoid on a finite-dimensional inner product space by isometries is
 semisimple: every subrepresentation has a complement. -/
-theorem isSemisimpleRepresentation_of_norm_map {𝕜 G E : Type*} [RCLike 𝕜] [Group G]
+theorem isSemisimpleRepresentation_of_norm_map {𝕜 G E : Type*} [RCLike 𝕜] [Monoid G]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E]
     (ρ : Representation 𝕜 G E) (hρ : ∀ g v, ‖ρ g v‖ = ‖v‖) :
     ρ.IsSemisimpleRepresentation := by
-  have hinner : ∀ g v w, ⟪ρ g v, ρ g w⟫_𝕜 = ⟪v, w⟫_𝕜 :=
-    fun g => (LinearMap.norm_map_iff_inner_map_map (ρ g)).1 (hρ g)
   refine ⟨fun σ => ?_⟩
   let τ : Subrepresentation ρ :=
     { toSubmodule := σ.toSubmoduleᗮ
       apply_mem_toSubmodule := fun g v hv => by
-        rw [Submodule.mem_orthogonal] at hv ⊢
-        intro w hw
-        have h := hv _ (σ.apply_mem_toSubmodule g⁻¹ hw)
-        rwa [← hinner g, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one,
-          Module.End.one_apply] at h }
+        let U : E →ₗᵢ[𝕜] E := ⟨ρ g, hρ g⟩
+        -- `U` maps `σ` injectively into itself, hence onto itself in finite dimension.
+        have hle : σ.toSubmodule.map U.toLinearMap ≤ σ.toSubmodule :=
+          Submodule.map_le_iff_le_comap.2 fun x hx => σ.apply_mem_toSubmodule g hx
+        have heq : σ.toSubmodule.map U.toLinearMap = σ.toSubmodule :=
+          Submodule.eq_of_le_of_finrank_eq hle
+            (Submodule.equivMapOfInjective _ U.injective _).finrank_eq.symm
+        have hmap := Submodule.map_orthogonal σ.toSubmodule U
+        rw [heq] at hmap
+        have : U v ∈ σ.toSubmoduleᗮ.map U.toLinearMap := Submodule.mem_map_of_mem hv
+        rw [hmap] at this
+        exact this.1 }
   have h := σ.toSubmodule.isCompl_orthogonal
   exact ⟨τ, disjoint_iff.2 (Subrepresentation.ext (disjoint_iff.1 h.disjoint)),
     codisjoint_iff.2 (Subrepresentation.ext (codisjoint_iff.1 h.codisjoint))⟩
@@ -80,6 +89,33 @@ private theorem posSemidef_of_inner {n E : Type*} [NormedAddCommGroup E]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   rw [this, inner_self_eq_norm_sq_to_K, ← RCLike.ofReal_pow]
   exact RCLike.ofReal_nonneg.2 (sq_nonneg _)
+
+/-- For representations `ρ i` of a group on finite-dimensional complex inner product spaces, each
+acting by isometries, and nonnegative weights `c i`, the character kernel
+`(x, y) ↦ ∑ i, c i * χ_i (x * y⁻¹)` is positive semidefinite. -/
+theorem posSemidef_sum_character_kernel_of_nonneg {G : Type*} [Group G] {ι : Type*} [Fintype ι]
+    {W : ι → Type*} [∀ i, NormedAddCommGroup (W i)] [∀ i, InnerProductSpace ℂ (W i)]
+    [∀ i, FiniteDimensional ℂ (W i)] (ρ : ∀ i, Representation ℂ G (W i))
+    (hunit : ∀ i g v, ‖ρ i g v‖ = ‖v‖) (c : ι → ℂ) (hc : ∀ i, 0 ≤ c i) :
+    (Matrix.of fun x y : G => ∑ i, c i * (ρ i).character (x * y⁻¹)).PosSemidef := by
+  have hinner : ∀ i g v w, ⟪ρ i g v, ρ i g w⟫_ℂ = ⟪v, w⟫_ℂ :=
+    fun i g => (LinearMap.norm_map_iff_inner_map_map (ρ i g)).1 (hunit i g)
+  let b := fun i => stdOrthonormalBasis ℂ (W i)
+  -- The kernel is a nonnegative combination of Gram kernels.
+  have hK : (Matrix.of fun x y : G => ∑ i, c i * (ρ i).character (x * y⁻¹)) =
+      ∑ i, ∑ k, c i • Matrix.of fun x y : G => ⟪ρ i x⁻¹ (b i k), ρ i y⁻¹ (b i k)⟫_ℂ := by
+    ext x y
+    simp only [Matrix.of_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      ← Finset.mul_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [Representation.character, LinearMap.trace_eq_sum_inner _ (b i)]
+    congr 1
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [← hinner i x⁻¹ (b i k) (ρ i (x * y⁻¹) (b i k)), ← Module.End.mul_apply, ← map_mul,
+      inv_mul_cancel_left]
+  rw [hK]
+  exact Matrix.posSemidef_sum _ fun i _ => Matrix.posSemidef_sum _ fun k _ =>
+    (posSemidef_of_inner _).smul (hc i)
 
 /-- For pairwise inequivalent irreducible representations `ρ i` of a group on
 finite-dimensional complex inner product spaces, each acting by isometries, the character kernel
@@ -148,27 +184,12 @@ theorem posSemidef_sum_character_kernel_iff {G : Type*} [Group G] {ι : Type*} [
         exact absurd (Finset.mem_univ i) h
     have hpos := hK.2 b
     rw [hQ, hXY, hb, hval] at hpos
-    have : Nontrivial (ρ i).asModule := IsSimpleModule.nontrivial (MonoidAlgebra ℂ G) _
-    have : Nontrivial (W i) := (ρ i).asModuleEquiv.symm.toEquiv.nontrivial
-    have hd : (0 : ℂ) < Module.finrank ℂ (W i) := by exact_mod_cast Module.finrank_pos
+    have hd : (0 : ℂ) < Module.finrank ℂ (W i) := by
+      exact_mod_cast
+        D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.IsIrreducible.finrank_pos
+          (inferInstance : (ρ i).IsIrreducible)
     have := mul_nonneg hpos (inv_nonneg.2 hd.le)
     rwa [mul_assoc, mul_inv_cancel₀ hd.ne', mul_one] at this
-  · intro hc
-    let b := fun i => stdOrthonormalBasis ℂ (W i)
-    -- The kernel is a nonnegative combination of Gram kernels.
-    have hK : (Matrix.of fun x y : G => ∑ i, c i * (ρ i).character (x * y⁻¹)) =
-        ∑ i, ∑ k, c i • Matrix.of fun x y : G => ⟪ρ i x⁻¹ (b i k), ρ i y⁻¹ (b i k)⟫_ℂ := by
-      ext x y
-      simp only [Matrix.of_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
-        ← Finset.mul_sum]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      rw [Representation.character, LinearMap.trace_eq_sum_inner _ (b i)]
-      congr 1
-      refine Finset.sum_congr rfl fun k _ => ?_
-      rw [← hinner i x⁻¹ (b i k) (ρ i (x * y⁻¹) (b i k)), ← Module.End.mul_apply, ← map_mul,
-        inv_mul_cancel_left]
-    rw [hK]
-    exact Matrix.posSemidef_sum _ fun i _ => Matrix.posSemidef_sum _ fun k _ =>
-      (posSemidef_of_inner _).smul (hc i)
+  · exact posSemidef_sum_character_kernel_of_nonneg ρ hunit c
 
 end D5.S3.FiniteGroups.GroupAlgebra.UnitaryCharacterKernel

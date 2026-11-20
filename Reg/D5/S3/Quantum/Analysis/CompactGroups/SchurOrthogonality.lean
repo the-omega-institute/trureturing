@@ -129,9 +129,9 @@ theorem dependence : ObservationalDependence signature.{u, v} actual := by
 
 /-! ### Inequivalent representations -/
 
+attribute [-instance] instCommCStarAlgebraComplex in
 /-- Retain the complete telescope of `integral_dual_mul_dual_inv_eq_zero`. The topology of `ℂ`
 is elaborated through the same instance path as in the source statement. -/
-attribute [-instance] instCommCStarAlgebraComplex in
 abbrev arenaZero : Arena where
   signature := signature.{u, v}
   Law r := ∀ {G : Type u} {V : Type v} {W : Type w} [iG : Group G] [TopologicalSpace G]

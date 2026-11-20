@@ -69,7 +69,6 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Quaternions => Seq(Mathbb, Grp(F.Id("H")), OpenBracket, Reals, CloseBracket);
     private static Formula Units => Call("unitary", Quaternions);
-    private static Formula UnitI => Seq(Operatorname, Grp(F.Id("unitI")));
     private static Formula PhaseCircle => Seq(Operatorname, Grp(F.Id("phaseCircle")));
     private static Formula HopfMap => Seq(Operatorname, Grp(F.Id("hopf")));
     private static Formula Model => Seq(Operatorname, Grp(F.Id("quaternionModel")));
