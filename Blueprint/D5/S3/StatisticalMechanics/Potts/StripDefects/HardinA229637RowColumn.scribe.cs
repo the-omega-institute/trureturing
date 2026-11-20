@@ -51,7 +51,8 @@ internal sealed class HardinA229637RowColumnDocument : IScribeDocumentDefinition
                     + "T(1,k) = 6T(1,k−1) − 12T(1,k−2) + 8T(1,k−3) for k ≥ 7, with residual −4 at "
                     + "k = 6; and no recurrence of order at most two with rational coefficients "
                     + "holds for all large k. OEIS records the column and row recurrences as "
-                    + "empirical and identifies the row with A052482(k−2)."))),
+                    + "empirical and identifies the row with A052482(k−2); the residual at k = 6 "
+                    + "and the exclusion of order-two recurrences are added here."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a229637-result"),
                 DeclarationHandle.Create(Prefix + "result"),

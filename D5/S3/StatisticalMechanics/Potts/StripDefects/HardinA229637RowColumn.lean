@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/StripDefects/HardinA229637RowColumn
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
@@ -16,9 +16,11 @@ proof_shape:
   horiz, betw, T, claim: source definitions; consumers: column_one, row_one, result.
   monoSet, cnt: private definitions; consumers: the word-count lemmas, row_one.
   canonicalDecidable, arrayCanonicalDecidable: instances for T and cnt.
-  mono_snoc, canon_snoc, zero_of_canon, one_of_canon, valid_iff: content; consumer: ext_count.
+  mono_snoc_iff, mono_snoc, one_of_canon, valid_iff: content; consumer: ext_count.
+  canon_snoc, zero_of_canon: bind-only helpers; consumers: valid_iff, one_of_canon.
   ext_count: content; consumer: cnt_succ.
-  cnt_eq_sum, shift_sum, cnt_one: bind-only helpers; consumers: cnt_succ, the closed forms.
+  cnt_eq_sum, shift_sum, cnt_one, zero_word_mono: bind-only helpers; consumers: cnt_succ, the
+    closed forms.
   cnt_succ: content; consumers: cnt_zero_closed, cnt_one_closed, cnt_two_closed, row_small.
   cnt_zero_closed, cnt_one_closed, cnt_two_closed: content (induction); consumer: row_closed,
     result.
