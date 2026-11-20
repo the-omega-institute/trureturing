@@ -27,12 +27,14 @@ internal sealed class IntegralDigitWeightsDocument : IScribeDocumentDefinition
                     + "The strict count bound prevents injectivity. Two distinct integer levels with the same "
                     + "projection differ by a nonzero multiple of the weight at the deleted coordinate. "
                     + "The multiplier is the absolute difference of the two digits, so it is less than b.")),
-                Paragraph(Text(
-                    "With two digit values and the strict count bound, the weight itself is an integer. "
-                    + "With three digit values and the strict count bound, twice the weight is an integer. "
-                    + "In an even-denominator covariant grid, the ternary application uses r exchanged "
-                    + "pairs, the weights scaled by the denominator m, and a strict bound of m plus one "
-                    + "above three to the power r minus one."))),
+                Paragraph(
+                    Text("With two digit values and the strict count bound, the weight itself is an integer. "
+                        + "With three digit values and the strict count bound, twice the weight is an integer. "
+                        + "In an even-denominator covariant grid with r exchanged pairs, scale the weights "
+                        + "by the denominator m and require "),
+                    Math(Seq(F.Id("m"), Sp, Plus, Sp, D(1), Sp, Gt, Sp,
+                        D(3), Caret, Grp(F.Id("r"), Sp, Minus, Sp, D(1)))),
+                    Text("."))),
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
