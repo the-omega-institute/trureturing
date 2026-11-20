@@ -66,11 +66,16 @@ def binding(root, state):
         verification = os.environ.get("STRATALINT_SHARD_VERIFICATION", "")
         if verification:
             ref = os.environ.get("GITHUB_REF", "")
+            allowed_event = os.environ.get("GITHUB_EVENT_NAME") == "push" or (
+                verification in {"release-none", "release-partial"} and manual_source_is_valid()
+                and os.environ.get("GITHUB_WORKFLOW_REF")
+                == os.environ.get("GITHUB_REPOSITORY", "") + "/.github/workflows/ci-publication-verify.yml@" + ref
+            )
             if (verification not in {"release-none", "release-partial", "scoped-eviction"}
-                    or os.environ.get("GITHUB_EVENT_NAME") != "push"
+                    or not allowed_event
                     or os.environ.get("GITHUB_REF_PROTECTED") != "true"
                     or not re.fullmatch(r"refs/heads/integration-ci-[A-Za-z0-9._/-]+-tests", ref)):
-                raise ValueError("shard verification requires a protected integration push and a known scenario")
+                raise ValueError("shard verification requires a protected integration event and a known scenario")
             key["verification"] = {"scenario": verification, "run": os.environ["GITHUB_RUN_ID"]}
     return key
 
@@ -473,12 +478,23 @@ def pack_checkpoint(root, identity, previous, anchor, directory):
     output({"available": len(entries)})
 
 
-def restore_checkpoint(root, identity, directory, attempt):
-    record = read_index(directory / "index.json", identity, "resume")
+def read_checkpoint_index(root, identity, path, attempt, previous_run=None):
     owner = current_owner(root)
-    if (record is None or not record["entries"] or not 1 <= attempt < int(owner["attempt"])
-            or record["owner"] != (owner | {"attempt": str(attempt)})):
+    run = previous_run if previous_run is not None else owner["run"]
+    if (not re.fullmatch(r"[1-9][0-9]*", run) or attempt < 1
+            or (run == owner["run"] and attempt >= int(owner["attempt"]))
+            or (run != owner["run"] and not manual_source_is_valid())):
         raise ValueError("cold Release checkpoint has a different run or attempt")
+    previous_binding = identity | {"verification": identity["verification"] | {"run": run}}
+    record = read_index(path, previous_binding, "resume")
+    if (record is None or not record["entries"]
+            or record["owner"] != (owner | {"run": run, "attempt": str(attempt)})):
+        raise ValueError("cold Release checkpoint has a different run or attempt")
+    return record
+
+
+def restore_checkpoint(root, identity, directory, attempt, previous_run=None):
+    record = read_checkpoint_index(root, identity, directory / "index.json", attempt, previous_run)
     result = install(root, record, (), require_complete=True, payload_directory=directory / "payload")
     if result["missing"]:
         raise ValueError("cold Release checkpoint artifact is missing verified shard material")
@@ -499,6 +515,7 @@ def main():
     parser.add_argument("--preparation", type=Path)
     parser.add_argument("--artifact-directory", type=Path)
     parser.add_argument("--previous-attempt", type=int)
+    parser.add_argument("--previous-run")
     parser.add_argument("--stream-payloads", action="store_true")
     args = parser.parse_args()
     if args.stream_payloads and args.operation != "prepare":
@@ -510,7 +527,6 @@ def main():
     if args.operation == "identity":
         print(json.dumps({"prefix": index_prefix(identity), "owner": current_owner(root)}))
         return
-    record = read_index(args.index, identity, args.state) if args.index else None
     if args.operation.startswith("checkpoint-"):
         scenario = identity.get("verification", {}).get("scenario")
         if scenario not in {"release-none", "release-partial"} or args.artifact_directory is None:
@@ -518,12 +534,19 @@ def main():
         if args.operation == "checkpoint-pack":
             if not args.anchor or not re.fullmatch(r"[0-9a-f]{40}", args.anchor):
                 parser.error("checkpoint packing requires a fixed dev history anchor")
+            record = None
+            if args.index:
+                if args.previous_attempt is None:
+                    parser.error("prior checkpoint index requires its producing attempt")
+                record = read_checkpoint_index(root, identity, args.index, args.previous_attempt, args.previous_run)
             pack_checkpoint(root, identity, record, args.anchor, args.artifact_directory)
         else:
             if args.previous_attempt is None:
                 parser.error("checkpoint restore requires the earlier producing attempt")
-            restore_checkpoint(root, identity, args.artifact_directory, args.previous_attempt)
-    elif args.operation == "prepare":
+            restore_checkpoint(root, identity, args.artifact_directory, args.previous_attempt, args.previous_run)
+        return
+    record = read_index(args.index, identity, args.state) if args.index else None
+    if args.operation == "prepare":
         if args.target and args.state != "resume":
             raise ValueError("scoped save requires an incomplete producer index")
         if record is None and (not args.anchor or not re.fullmatch(r"[0-9a-f]{40}", args.anchor)):
