@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Combinatorics/Geometry/CompleteCentralParity
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
   - D5/S3/Combinatorics/Geometry/CentralSizeEdgeMinima
+  - D5/S3/Combinatorics/Geometry/NonemptyCentralMinimum
 license: citation-only
 triage: anchor
 ---
@@ -67,3 +68,9 @@ attains (k-1)⌈n/2⌉ central edges. The source bounds k by the row bound and T
 edges by Lemma 2. For odd n the n near-one-factors of K_n are completed by
 orienting the path formed by two reserved factors, which gives n-2 disjoint spanning edge
 covers of size (n+1)/2; the source credits Andersen's cover-index criterion as antecedent.
+
+Corollary 8 (Section 5): for n >= 2 a nonempty central graph has at least ⌈n/2⌉ edges; the
+equality graphs are (n/2)P2 for even n and P3 ∪ ((n-3)/2)P2 for odd n, and they are bicentral;
+without nonemptiness the minimum is zero for n >= 3. The nonempty minimum is Dovgoshey and
+Rovenska's Theorem 3.10; the source corrects the odd component count printed in their Theorem
+3.12 (P3 ∪ hP2 for n = 2h+1 has n+2 vertices).
