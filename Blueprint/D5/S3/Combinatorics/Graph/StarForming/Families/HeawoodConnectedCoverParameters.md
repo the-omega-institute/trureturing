@@ -4,7 +4,7 @@
 
 The complete binary-lift parameter dichotomy
 
-The six original fifteen-sets transport to every connected signing, giving beta fifteen or sixteen. Disconnected signings have beta fourteen. The exact beta values of the other four types and higher-cover optima remain open in this development.
+The structural classification gives an isomorphism from every connected lift to one of six signings. A second isomorphism identifies each signing with the graph of its supplier certificate, so the certificate bounds transport to every connected lift and give beta fifteen or sixteen. Disconnected signings have beta fourteen. The exact beta values of the other four types and higher-cover optima remain open in this development.
 
 **Definition 1.1 (sixIso).**
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnected
 
 *Commentary.*
 
-Exact declaration: def sixIso (k : Fin 6) : graph (HeawoodActions.representative k) ≃g HeawoodCertificates.sixGraph k.
+Exact declaration: def sixIso (k : Fin 6) : graph (HeawoodSixRepresentatives.representative k) ≃g HeawoodCertificates.sixGraph k.
 
 **Theorem 1.2 (connected beta).**
 
@@ -47,5 +47,6 @@ Exact declaration: theorem parameters (s : Signing) : SF (graph s) 2=16 ∧ (bet
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.connected_beta`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.parameters`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.sixIso`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodActions](HeawoodActions.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates](HeawoodCertificates.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives](HeawoodSixRepresentatives.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters](../HeawoodCoverParameters.md)
