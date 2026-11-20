@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#31328; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229532Strip.result)
-class_relabel: proof_shape=bind-only; consumers=transition_counts
-bond_relabel: proof_shape=bind-only; consumers=transition_counts
+class_relabel: proof_shape=bind-only; consumers=HardinA229532StripClasses.transition_counts, HardinA229457StripClasses.class_relabel
+bond_relabel: proof_shape=bind-only; consumers=HardinA229532StripClasses.transition_counts, HardinA229457StripClasses.class_relabel, HardinA229457StripClasses.transition_counts, HardinA229604StripClasses.transition_counts
 transition_counts: proof_shape=bind-only; consumers=HardinA229532Strip.finite_certificate
 -/
 

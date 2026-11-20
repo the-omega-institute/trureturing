@@ -20,10 +20,10 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 first_fibres: proof_shape=bind-only; consumers=initial_counts
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w
-w: proof_shape=bind-only; consumers=shifted_count
+w: proof_shape=bind-only; consumers=shifted_count, HardinA229457StripData.W, HardinA229457StripData.terminal, HardinA229457StripPowers.leading_steps, HardinA229457StripPowers.weighted_step, HardinA229457StripPowers.zero_image
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=shifted_count
-distribution: proof_shape=bind-only; consumers=distribution_step
+distribution: proof_shape=bind-only; consumers=distribution_step, distribution_step._proof_1, HardinA229457StripData.initial
 distribution_step: proof_shape=bind-only; consumers=shifted_count._simp_5
 shifted_count: proof_shape=bind-only; consumers=result
 distribution_relation: proof_shape=bind-only; consumers=result

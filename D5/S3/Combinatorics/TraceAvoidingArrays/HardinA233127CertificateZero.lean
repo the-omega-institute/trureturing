@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#28649; Proved)
 escape_witness: none; every declaration is bind-only.
 Declaration names use the D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip namespace.
-class_fibres: proof_shape=bind-only; consumers=class_fibres_normalized
+class_fibres: proof_shape=bind-only; consumers=class_fibres_normalized, ProperTransfer.raw_successors
 class_fibres_normalized: proof_shape=bind-only; consumers=completed_010101; used by all completed/unseen boundary proofs
 completed_010101: proof_shape=bind-only; consumers=row_counts_zero
 completed_010102: proof_shape=bind-only; consumers=row_counts_zero

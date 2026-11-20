@@ -45,13 +45,16 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229457StripData
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode)
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  simp only [cl, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode,
+  have hcode : equalityPatternCode (e ∘ p) = equalityPatternCode p := by
+    simp only [equalityPatternCode, Function.comp_apply, e.injective.eq_iff]
+  simp only [cl, hcode,
     D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses.class_relabel,
     bond_relabel, ProperTransfer.cl, HardinA233127SquareStrip.boundaryClass,
-    Function.comp_apply, e.injective.eq_iff]
+    Function.comp_apply, e.injective.eq_iff] <;> rfl
 
 theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → ∀ s : Fin 42,
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
