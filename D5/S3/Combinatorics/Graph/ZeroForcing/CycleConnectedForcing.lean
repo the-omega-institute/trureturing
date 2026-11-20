@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.CycleGraph]
    utility: none
-   digest: The connected forcing polynomial of the cycle C_n is n sum_(i=2)^(n-1) x^i + x^n for n = 1 and every n >= 3. -/
+   digest: The connected forcing polynomial of the cycle C_n is n sum_(i=2)^(n-1) x^i + x^n for n >= 3, with the cases n <= 2 also determined. -/
 
 import D5.S3.Combinatorics.Graph.ZeroForcing.ConnectedForcingCrossingRefutation
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
@@ -14,15 +14,17 @@ Zero Forcing, and Related Problems (PhD thesis, Rice University, 2017): for `n �
 `Z_c(C_n; x) = n Σ_{i=2}^{n-1} x^i + x^n`. The coefficients are the frozen
 `ConnectedForcingCrossingRefutation.coefficient` for Mathlib's `cycleGraph n`.
 
-`connected_forcing_iff` characterizes the connected forcing sets of `C_n` for every `n ≠ 2`: the
-arcs `{x | (x - a).val < i}` with `i ≥ 2`. A connected set missing a vertex `v` is an arc, since
-a walk avoiding `v` moves the offset from `v + 1` by one at each step; an arc with two vertices
-forces around the cycle from its last vertex; a single vertex has two white neighbours and forces
-nothing. On two vertices a single vertex forces the other, and both statements fail there.
+`connected_forcing_iff` characterizes the connected forcing sets of `C_n` for every `n`: the
+arcs `{x | (x - a).val < i}` with `i ≥ 2`, and on two vertices also the single vertices. A
+connected set missing a vertex `v` is an arc, since a walk avoiding `v` moves the offset from
+`v + 1` by one at each step; an arc with two vertices forces around the cycle from its last
+vertex; a single vertex has two white neighbours and forces nothing once `n ≥ 3`. `result` gives
+the coefficients for every `n`; for `n ≥ 3` they are those of Proposition 7.8.
 
 admission_basis: escape-witness. Escape witnesses: offset_step with walk_hits and
 eq_arc_of_connected (connected proper sets are arcs), arc_connected, forcing_arc and
-singleton_stuck (the forcing behaviour of arcs), card_arc and arc_injective (the counts). -/
+singleton_stuck (the forcing behaviour of arcs), card_arc and arc_injective (the counts), cf_one and
+cf_two (the cycles on one and two vertices). -/
 
 set_option autoImplicit false
 noncomputable section
@@ -351,57 +353,121 @@ private theorem cf_one (S : Finset (Fin 1)) :
     exact ⟨⟨fun x y => by rw [Subsingleton.elim x y]⟩,
       fun v => .init (Finset.mem_coe.mpr (Finset.mem_univ v))⟩
 
+/-- On two vertices every nonempty set is a connected forcing set. -/
+private theorem cf_two (S : Finset (Fin 2)) : connectedForcing (cycleGraph 2) S ↔ S.Nonempty := by
+  rw [cycleGraph_two_eq_top]
+  constructor
+  · rintro ⟨h, -⟩; obtain ⟨⟨x, hx⟩⟩ := h.nonempty; exact ⟨x, hx⟩
+  · rintro ⟨x, hx⟩
+    refine ⟨?_, ?_⟩
+    · have : Nonempty ↥((S : Set (Fin 2))) := ⟨⟨x, hx⟩⟩
+      refine ⟨fun u v => ?_⟩
+      by_cases h : u = v
+      · rw [h]
+      · exact SimpleGraph.Adj.reachable (show (⊤ : SimpleGraph (Fin 2)).Adj u.1 v.1 from
+          fun e => h (Subtype.ext e))
+    · intro v
+      by_cases hv : v = x
+      · exact .init (hv ▸ hx)
+      · refine .force (.init hx) (by simpa [eq_comm] using hv) ?_
+        intro y hy hyv
+        have : y ≠ x := fun e => hy (e ▸ rfl)
+        omega
+
 variable {n : ℕ}
 
-/-- The connected forcing sets of the cycle `C_n`, `n ≠ 2`: the arcs of at least two vertices,
-`{x | (x - a).val < i}` with `i ≥ 2` (all of `C_n` once `i ≥ n`). -/
-theorem connected_forcing_iff (hn : n ≠ 2) (S : Finset (Fin n)) :
+/-- The connected forcing sets of the cycle `C_n`: the arcs `{x | (x - a).val < i}` with `i ≥ 2`
+(all of `C_n` once `i ≥ n`), and on two vertices also the single vertices (`i = 1`). -/
+theorem connected_forcing_iff (S : Finset (Fin n)) :
     connectedForcing (cycleGraph n) S ↔
-      ∃ a : Fin n, ∃ i, 2 ≤ i ∧ S = Finset.univ.filter fun x => (x - a).val < i := by
+      ∃ a : Fin n, ∃ i, 1 ≤ i ∧ (2 ≤ i ∨ n = 2) ∧
+        S = Finset.univ.filter fun x => (x - a).val < i := by
   rcases Nat.lt_or_ge n 3 with h3 | h3
   · rcases Nat.lt_or_ge n 1 with h1 | h1
     · obtain rfl : n = 0 := by omega
       constructor
       · rintro ⟨h, -⟩; obtain ⟨⟨x, -⟩⟩ := h.nonempty; exact x.elim0
       · rintro ⟨a, -⟩; exact a.elim0
-    obtain rfl : n = 1 := by omega
-    rw [cf_one]
-    have hall : ∀ (a : Fin 1) (i : ℕ), 2 ≤ i →
-        (Finset.univ.filter fun x : Fin 1 => (x - a).val < i) = Finset.univ := by
-      intro a i hi; ext x; simp only [Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
-      have := (x - a).isLt; omega
-    constructor
-    · rintro rfl; exact ⟨0, 2, le_rfl, (hall 0 2 le_rfl).symm⟩
-    · rintro ⟨a, i, hi, rfl⟩; exact hall a i hi
-  · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
-    exact cf_iff S
-
-/-- The connected forcing polynomial of the cycle: `Z_c(C_n; x) = n Σ_{i=2}^{n-1} x^i + x^n` for
-`n = 1` and every `n ≥ 3`. -/
-theorem result (h0 : n ≠ 0) (h2 : n ≠ 2) (i : ℕ) :
-    coefficient (cycleGraph n) i = if i = n then 1 else if 2 ≤ i ∧ i < n then n else 0 := by
-  rcases Nat.lt_or_ge n 3 with h3 | h3
-  · obtain rfl : n = 1 := by omega
-    classical
-    unfold coefficient
-    have hfilter : (Finset.univ.filter fun S : Finset (Fin 1) =>
-        S.card = i ∧ connectedForcing (cycleGraph 1) S) =
-        Finset.univ.filter fun S : Finset (Fin 1) => S.card = i ∧ S = Finset.univ := by
-      ext S; simp only [Finset.mem_filter, Finset.mem_univ, true_and, cf_one]
-    rw [hfilter]
-    split_ifs with h1 h4
-    · subst h1
-      rw [Finset.card_eq_one]
-      refine ⟨Finset.univ, ?_⟩
-      ext S
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+    rcases Nat.lt_or_ge n 2 with h2 | h2
+    · obtain rfl : n = 1 := by omega
+      rw [cf_one]
+      have hall : ∀ (a : Fin 1) (i : ℕ), 1 ≤ i →
+          (Finset.univ.filter fun x : Fin 1 => (x - a).val < i) = Finset.univ := by
+        intro a i hi; ext x; simp only [Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
+        have := (x - a).isLt; omega
       constructor
-      · rintro ⟨-, rfl⟩; rfl
-      · rintro rfl; exact ⟨by simp, rfl⟩
-    · omega
-    · rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
-      rintro S - ⟨hc, rfl⟩
-      simp at hc; omega
+      · rintro rfl; exact ⟨0, 2, by omega, Or.inl le_rfl, (hall 0 2 (by omega)).symm⟩
+      · rintro ⟨a, i, hi, -, rfl⟩; exact hall a i hi
+    obtain rfl : n = 2 := by omega
+    rw [cf_two]
+    constructor
+    · intro hS
+      have key : ∀ T : Finset (Fin 2), T.Nonempty → ∃ a : Fin 2, ∃ i ∈ ({1, 2} : Finset ℕ),
+          T = Finset.univ.filter fun x => (x - a).val < i := by decide
+      obtain ⟨a, i, hi, h⟩ := key S hS
+      exact ⟨a, i, by simp at hi; omega, Or.inr rfl, h⟩
+    · rintro ⟨a, i, hi, -, rfl⟩
+      exact ⟨a, by simp only [Finset.mem_filter, Finset.mem_univ, true_and, sub_self,
+        Fin.val_zero]; omega⟩
+  · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
+    rw [cf_iff]
+    constructor
+    · rintro ⟨a, i, hi, rfl⟩; exact ⟨a, i, by omega, Or.inl hi, rfl⟩
+    · rintro ⟨a, i, -, hi, rfl⟩; exact ⟨a, i, by omega, rfl⟩
+
+/-- The connected forcing polynomial of the cycle `C_n` for every `n`, and Proposition 7.8 of
+Brimkov: `Z_c(C_n; x) = n Σ_{i=2}^{n-1} x^i + x^n` for `n ≥ 3`. -/
+theorem result :
+    (∀ i, coefficient (cycleGraph n) i =
+      if i = n ∧ n ≠ 0 then 1 else if 1 ≤ i ∧ i < n ∧ (2 ≤ i ∨ n = 2) then n else 0) ∧
+    (3 ≤ n → ∀ i, coefficient (cycleGraph n) i =
+      if i = n then 1 else if 2 ≤ i ∧ i < n then n else 0) := by
+  classical
+  refine ⟨fun i => ?_, fun h3 i => ?_⟩
+  · rcases Nat.lt_or_ge n 3 with h3 | h3
+    · rcases Nat.lt_or_ge n 1 with h1 | h1
+      · obtain rfl : n = 0 := by omega
+        unfold coefficient
+        rw [Finset.card_eq_zero.mpr]
+        · simp
+        rw [Finset.filter_eq_empty_iff]
+        rintro S - ⟨-, h, -⟩
+        obtain ⟨⟨x, -⟩⟩ := h.nonempty
+        exact x.elim0
+      rcases Nat.lt_or_ge n 2 with h2 | h2
+      · obtain rfl : n = 1 := by omega
+        unfold coefficient
+        have hfilter : (Finset.univ.filter fun S : Finset (Fin 1) =>
+            S.card = i ∧ connectedForcing (cycleGraph 1) S) =
+            Finset.univ.filter fun S : Finset (Fin 1) => S.card = i ∧ S = Finset.univ := by
+          ext S; simp only [Finset.mem_filter, Finset.mem_univ, true_and, cf_one]
+        rw [hfilter]
+        by_cases h1 : i = 1
+        · subst h1
+          rw [Finset.card_eq_one.mpr ⟨Finset.univ, by
+            ext S; simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+            constructor
+            · rintro ⟨-, rfl⟩; rfl
+            · rintro rfl; exact ⟨by simp, rfl⟩⟩]
+          simp
+        · rw [Finset.card_eq_zero.mpr]
+          · split_ifs <;> omega
+          rw [Finset.filter_eq_empty_iff]
+          rintro S - ⟨hc, rfl⟩
+          simp at hc; omega
+      obtain rfl : n = 2 := by omega
+      unfold coefficient
+      simp only [cf_two]
+      rcases Nat.lt_or_ge i 3 with h | h
+      · interval_cases i <;> decide
+      · rw [Finset.card_eq_zero.mpr]
+        · split_ifs <;> omega
+        rw [Finset.filter_eq_empty_iff]
+        rintro S - ⟨hc, -⟩
+        have := S.card_le_univ; simp at this; omega
+    · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
+      rw [coeff_formula]
+      split_ifs <;> omega
   · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
     exact coeff_formula i
 

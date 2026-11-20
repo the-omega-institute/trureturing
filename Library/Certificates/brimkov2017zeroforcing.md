@@ -71,8 +71,10 @@ the n − 1 single leaves, which force a star with at most two leaves. For every
 states that the coefficients agree with those of the path.
 StarConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of the star.
 
-CycleConnectedForcing.result states the coefficients of Z_c(C_n; x) for Mathlib's cycleGraph n,
-for n = 1 and every n ≥ 3: z_c(C_n; i) = 1 for i = n, n for 2 ≤ i < n, and 0 otherwise. The
-source states n ≥ 3; the case n = 1 also holds, while n = 0 and n = 2 fail.
-CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n,
-n ≠ 2, as the arcs of at least two vertices.
+CycleConnectedForcing.result states the coefficients of Z_c(C_n; x) for Mathlib's cycleGraph n
+and every n: z_c(C_n; i) = 1 for i = n ≠ 0, n for 1 ≤ i < n when i ≥ 2 or n = 2, and 0
+otherwise. For n ≥ 3 this is the source's formula, which it states as a second clause. The
+source's form also holds for n = 1, while for n = 0 no set is connected and for n = 2 each single
+vertex is a connected forcing set, giving Z_c(C_2; x) = 2x + x^2.
+CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n as
+the arcs of at least two vertices, together with the single vertices when n = 2.
