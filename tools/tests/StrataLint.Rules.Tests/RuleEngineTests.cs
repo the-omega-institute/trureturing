@@ -206,7 +206,7 @@ public sealed class RuleEngineTests
             fixture.Baseline[path] = fixture.Files[path];
             rows[path] = fixture.Reports[path] = new([.. imports], []);
         }
-        foreach (var change in new[] { owner + ".lean", RuleFixture.StageScriptPath })
+        foreach (var change in new[] { owner + ".lean", dependency + ".lean", RuleFixture.StageScriptPath })
         {
             var full = fixture.Build(RawChangeSet.Create([change]));
             var covered = rows.Where(row => row.Key != unrelated + ".lean").ToDictionary();
@@ -215,7 +215,10 @@ public sealed class RuleEngineTests
             var rule = RuleId.CreateKnown(number);
             var diagnostics = RuleCatalog.Default.EvaluateSingle(rule, scoped).Diagnostics;
             Assert.Contains(diagnostics, finding => finding.Path == owner + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
-            Assert.Contains(diagnostics, finding => finding.Path == dependency + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
+            if (number == 17 && change == owner + ".lean")
+                Assert.DoesNotContain(diagnostics, finding => finding.Path == dependency + ".lean");
+            else
+                Assert.Contains(diagnostics, finding => finding.Path == dependency + ".lean" && finding.AdmissionEffect == AdmissionEffect.Block);
             Assert.DoesNotContain(diagnostics, finding => finding.Path == unrelated + ".lean" || finding.Path == higher + ".lean");
             if (change == RuleFixture.StageScriptPath)
                 Assert.Contains(RuleCatalog.Default.EvaluateSingle(rule, full).Diagnostics,
