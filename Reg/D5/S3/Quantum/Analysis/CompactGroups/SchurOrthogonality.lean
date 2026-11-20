@@ -7,7 +7,7 @@ import Reg.Support.RealScalarLift
 
 /-! Source-bound audits of the Schur orthogonality relations for matrix coefficients of
 continuous irreducible representations of a compact group. The parameters of each readout are
-collected in a structure. -/
+read through accessor functions. -/
 
 namespace Reg.D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
 
@@ -141,40 +141,120 @@ theorem trivialR_irreducible :
 /-! ## Inequivalent representations: the coefficient `g ↦ φ (ρ g v)` over `𝕜` -/
 namespace CoefficientField
 
+set_option linter.checkUnivs false in
 /-- The data of the matrix coefficient `g ↦ φ (ρ g v)` of a representation on a normed space
 over a field with the `RCLike` structure. -/
-structure Parameters where
-  K : Type t
-  G : Type u
-  V : Type v
-  rclike : RCLike K
-  group : Group G
-  normed : NormedAddCommGroup V
-  space : letI := rclike; letI := normed; NormedSpace K V
-  rep : letI := rclike; letI := group; letI := normed; letI := space; Representation K G V
-  dual : letI := rclike; letI := normed; letI := space; Module.Dual K V
-  vec : V
+abbrev Params : Type (max (t + 1) (u + 1) (v + 1)) :=
+  Σ K : Type t, Σ G : Type u, Σ V : Type v, Σ _ : RCLike K, Σ _ : Group G,
+    Σ _ : NormedAddCommGroup V, Σ _ : NormedSpace K V, Σ _ : Representation K G V,
+      Σ _ : Module.Dual K V, V
+
+/-- The scalar field of a coefficient datum. -/
+@[reducible] def scalars (p : Params.{t, u, v}) : Type t := p.1
+
+/-- The group of a coefficient datum. -/
+@[reducible] def carrier (p : Params.{t, u, v}) : Type u := p.2.1
+
+/-- The space of a coefficient datum. -/
+@[reducible] def space (p : Params.{t, u, v}) : Type v := p.2.2.1
+
+/-- The data of a coefficient datum after its types. -/
+def rest₁ (p : Params.{t, u, v}) : Σ iK : RCLike (scalars p), Σ iG : Group (carrier p),
+    Σ iV : NormedAddCommGroup (space p), Σ iS : (letI := iK; letI := iV;
+      NormedSpace (scalars p) (space p)),
+    Σ _ : (letI := iK; letI := iG; letI := iV; letI := iS;
+      Representation (scalars p) (carrier p) (space p)),
+    Σ _ : (letI := iK; letI := iV; letI := iS; Module.Dual (scalars p) (space p)), space p :=
+  p.2.2.2
+
+/-- The `RCLike` structure of the scalar field of a coefficient datum. -/
+@[reducible] def rclike (p : Params.{t, u, v}) : RCLike (scalars p) := (rest₁ p).1
+
+/-- The data of a coefficient datum after its scalar structure. -/
+def rest₂ (p : Params.{t, u, v}) : Σ iG : Group (carrier p),
+    Σ iV : NormedAddCommGroup (space p), Σ iS : (letI := rclike p; letI := iV;
+      NormedSpace (scalars p) (space p)),
+    Σ _ : (letI := rclike p; letI := iG; letI := iV; letI := iS;
+      Representation (scalars p) (carrier p) (space p)),
+    Σ _ : (letI := rclike p; letI := iV; letI := iS; Module.Dual (scalars p) (space p)),
+      space p :=
+  (rest₁ p).2
+
+/-- The group structure of a coefficient datum. -/
+@[reducible] def group (p : Params.{t, u, v}) : Group (carrier p) := (rest₂ p).1
+
+/-- The data of a coefficient datum after its group structure. -/
+def rest₃ (p : Params.{t, u, v}) : Σ iV : NormedAddCommGroup (space p),
+    Σ iS : (letI := rclike p; letI := iV; NormedSpace (scalars p) (space p)),
+    Σ _ : (letI := rclike p; letI := group p; letI := iV; letI := iS;
+      Representation (scalars p) (carrier p) (space p)),
+    Σ _ : (letI := rclike p; letI := iV; letI := iS; Module.Dual (scalars p) (space p)),
+      space p :=
+  (rest₂ p).2
+
+/-- The norm of the space of a coefficient datum. -/
+@[reducible] def normed (p : Params.{t, u, v}) : NormedAddCommGroup (space p) := (rest₃ p).1
+
+/-- The data of a coefficient datum after its norm. -/
+def rest₄ (p : Params.{t, u, v}) :
+    Σ iS : (letI := rclike p; letI := normed p; NormedSpace (scalars p) (space p)),
+    Σ _ : (letI := rclike p; letI := group p; letI := normed p; letI := iS;
+      Representation (scalars p) (carrier p) (space p)),
+    Σ _ : (letI := rclike p; letI := normed p; letI := iS; Module.Dual (scalars p) (space p)),
+      space p :=
+  (rest₃ p).2
+
+/-- The normed space structure of a coefficient datum. -/
+@[reducible] def normedSpace (p : Params.{t, u, v}) :
+    letI := rclike p; letI := normed p; NormedSpace (scalars p) (space p) := (rest₄ p).1
+
+/-- The data of a coefficient datum after its normed space structure. -/
+def rest₅ (p : Params.{t, u, v}) :
+    Σ _ : (letI := rclike p; letI := group p; letI := normed p; letI := normedSpace p;
+      Representation (scalars p) (carrier p) (space p)),
+    Σ _ : (letI := rclike p; letI := normed p; letI := normedSpace p;
+      Module.Dual (scalars p) (space p)), space p :=
+  (rest₄ p).2
+
+/-- The representation of a coefficient datum. -/
+def rep (p : Params.{t, u, v}) :
+    letI := rclike p; letI := group p; letI := normed p; letI := normedSpace p
+    Representation (scalars p) (carrier p) (space p) := (rest₅ p).1
+
+/-- The functional and the vector of a coefficient datum. -/
+def rest₆ (p : Params.{t, u, v}) :
+    Σ _ : (letI := rclike p; letI := normed p; letI := normedSpace p;
+      Module.Dual (scalars p) (space p)), space p :=
+  (rest₅ p).2
+
+/-- The functional of a coefficient datum. -/
+def dual (p : Params.{t, u, v}) :
+    letI := rclike p; letI := normed p; letI := normedSpace p
+    Module.Dual (scalars p) (space p) := (rest₆ p).1
+
+/-- The vector of a coefficient datum. -/
+def vec (p : Params.{t, u, v}) : space p := (rest₆ p).2
 
 set_option linter.checkUnivs false in
 /-- The matrix coefficient `g ↦ φ (ρ g v)`, with values in the scalar field. -/
 abbrev signature : Signature where
-  Params := Parameters.{t, u, v}
-  State p := p.G
+  Params := Params.{t, u, v}
+  State p := carrier p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.K
+  Output _ p := scalars p
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{t, u, v} :=
-  realize signature (fun _ p g => letI := p.rclike; letI := p.group; letI := p.normed;
-    letI := p.space; p.dual (p.rep g p.vec)) (fun e => nomatch e)
+  realize signature (fun _ p g => letI := rclike p; letI := group p; letI := normed p;
+    letI := normedSpace p; dual p (rep p g (vec p))) (fun e => nomatch e)
 
 /-- The indicator of the identity element, read in place of every coefficient. -/
 def rejected : Realization signature.{t, u, v} :=
-  realize signature (fun _ p g => letI := p.rclike; letI := p.group;
-    Set.indicator {(1 : p.G)} 1 g) (fun e => nomatch e)
+  realize signature (fun _ p g => letI := rclike p; letI := group p;
+    Set.indicator {(1 : carrier p)} 1 g) (fun e => nomatch e)
 
 /-- The coefficient of the sign representation on the real line takes the value `1` at the
 identity and `-1` at the other element. -/
@@ -255,22 +335,78 @@ end CoefficientField
 /-! ## One representation: the coefficient `g ↦ φ (ρ g v)` over `ℂ` -/
 namespace Coefficient
 
+set_option linter.checkUnivs false in
 /-- The data of the matrix coefficient `g ↦ φ (ρ g v)` of a representation on a complex normed
 space. -/
-structure Parameters where
-  G : Type u
-  V : Type v
-  group : Group G
-  normed : NormedAddCommGroup V
-  space : letI := normed; NormedSpace ℂ V
-  rep : letI := group; letI := normed; letI := space; Representation ℂ G V
-  dual : letI := normed; letI := space; Module.Dual ℂ V
-  vec : V
+abbrev Params : Type (max (u + 1) (v + 1)) :=
+  Σ G : Type u, Σ V : Type v, Σ _ : Group G, Σ _ : NormedAddCommGroup V, Σ _ : NormedSpace ℂ V,
+    Σ _ : Representation ℂ G V, Σ _ : Module.Dual ℂ V, V
+
+/-- The group of a coefficient datum. -/
+@[reducible] def carrier (p : Params.{u, v}) : Type u := p.1
+
+/-- The space of a coefficient datum. -/
+@[reducible] def space (p : Params.{u, v}) : Type v := p.2.1
+
+/-- The data of a coefficient datum after its types. -/
+def rest₁ (p : Params.{u, v}) : Σ iG : Group (carrier p), Σ iV : NormedAddCommGroup (space p),
+    Σ iS : (letI := iV; NormedSpace ℂ (space p)),
+    Σ _ : (letI := iG; letI := iV; letI := iS; Representation ℂ (carrier p) (space p)),
+    Σ _ : (letI := iV; letI := iS; Module.Dual ℂ (space p)), space p :=
+  p.2.2
+
+/-- The group structure of a coefficient datum. -/
+@[reducible] def group (p : Params.{u, v}) : Group (carrier p) := (rest₁ p).1
+
+/-- The data of a coefficient datum after its group structure. -/
+def rest₂ (p : Params.{u, v}) : Σ iV : NormedAddCommGroup (space p),
+    Σ iS : (letI := iV; NormedSpace ℂ (space p)),
+    Σ _ : (letI := group p; letI := iV; letI := iS; Representation ℂ (carrier p) (space p)),
+    Σ _ : (letI := iV; letI := iS; Module.Dual ℂ (space p)), space p :=
+  (rest₁ p).2
+
+/-- The norm of the space of a coefficient datum. -/
+@[reducible] def normed (p : Params.{u, v}) : NormedAddCommGroup (space p) := (rest₂ p).1
+
+/-- The data of a coefficient datum after its norm. -/
+def rest₃ (p : Params.{u, v}) : Σ iS : (letI := normed p; NormedSpace ℂ (space p)),
+    Σ _ : (letI := group p; letI := normed p; letI := iS;
+      Representation ℂ (carrier p) (space p)),
+    Σ _ : (letI := normed p; letI := iS; Module.Dual ℂ (space p)), space p :=
+  (rest₂ p).2
+
+/-- The complex normed space structure of a coefficient datum. -/
+@[reducible] def normedSpace (p : Params.{u, v}) :
+    letI := normed p; NormedSpace ℂ (space p) := (rest₃ p).1
+
+/-- The data of a coefficient datum after its normed space structure. -/
+def rest₄ (p : Params.{u, v}) :
+    Σ _ : (letI := group p; letI := normed p; letI := normedSpace p;
+      Representation ℂ (carrier p) (space p)),
+    Σ _ : (letI := normed p; letI := normedSpace p; Module.Dual ℂ (space p)), space p :=
+  (rest₃ p).2
+
+/-- The representation of a coefficient datum. -/
+def rep (p : Params.{u, v}) :
+    letI := group p; letI := normed p; letI := normedSpace p
+    Representation ℂ (carrier p) (space p) := (rest₄ p).1
+
+/-- The functional and the vector of a coefficient datum. -/
+def rest₅ (p : Params.{u, v}) :
+    Σ _ : (letI := normed p; letI := normedSpace p; Module.Dual ℂ (space p)), space p :=
+  (rest₄ p).2
+
+/-- The functional of a coefficient datum. -/
+def dual (p : Params.{u, v}) :
+    letI := normed p; letI := normedSpace p; Module.Dual ℂ (space p) := (rest₅ p).1
+
+/-- The vector of a coefficient datum. -/
+def vec (p : Params.{u, v}) : space p := (rest₅ p).2
 
 /-- The matrix coefficient `g ↦ φ (ρ g v)` of a representation on a complex normed space. -/
 abbrev signature : Signature where
-  Params := Parameters.{u, v}
-  State p := p.G
+  Params := Params.{u, v}
+  State p := carrier p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -279,12 +415,12 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u, v} :=
-  realize signature (fun _ p g => letI := p.group; letI := p.normed; letI := p.space;
-    p.dual (p.rep g p.vec)) (fun e => nomatch e)
+  realize signature (fun _ p g => letI := group p; letI := normed p; letI := normedSpace p;
+    dual p (rep p g (vec p))) (fun e => nomatch e)
 
 /-- The indicator of the identity element, read in place of every coefficient. -/
 def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ p g => letI := p.group; Set.indicator {(1 : p.G)} 1 g)
+  realize signature (fun _ p g => letI := group p; Set.indicator {(1 : carrier p)} 1 g)
     (fun e => nomatch e)
 
 /-- The coefficient of the sign representation takes the value `1` at the identity and `-1` at
@@ -372,8 +508,10 @@ def integral_dual_mul_dual_inv_eq_zero_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize CoefficientField.signature.{t, u, v}
-    (fun _ p g => letI := p.rclike; letI := p.group; letI := p.normed;
-      letI := p.space; p.dual (p.rep g p.vec)) (fun e => nomatch e))
+    (fun _ p g => letI := CoefficientField.rclike p; letI := CoefficientField.group p;
+      letI := CoefficientField.normed p; letI := CoefficientField.normedSpace p;
+      CoefficientField.dual p (CoefficientField.rep p g (CoefficientField.vec p)))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -381,7 +519,7 @@ def integral_dual_mul_dual_inv_eq_zero_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
     definition := none
-    coordinates := #[0, 1, 2, 4, 5, 14, 15, 19, 25, 28]
+    coordinates := #[0, 1, 2, 19, 25, 28]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
@@ -411,8 +549,9 @@ def integral_dual_mul_dual_inv_self_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Coefficient.signature.{u, v}
-    (fun _ p g => letI := p.group; letI := p.normed; letI := p.space;
-      p.dual (p.rep g p.vec)) (fun e => nomatch e))
+    (fun _ p g => letI := Coefficient.group p; letI := Coefficient.normed p;
+      letI := Coefficient.normedSpace p;
+      Coefficient.dual p (Coefficient.rep p g (Coefficient.vec p))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -420,7 +559,7 @@ def integral_dual_mul_dual_inv_self_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
     definition := none
-    coordinates := #[0, 1, 2, 11, 12, 14, 17, 19]
+    coordinates := #[0, 1, 14, 17, 19]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",

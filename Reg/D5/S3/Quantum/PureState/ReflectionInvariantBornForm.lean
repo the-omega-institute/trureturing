@@ -110,10 +110,10 @@ theorem rejected_law : ¬ arena.{u, v}.Law zero := by
   intro h
   have hh := h (𝕜 := LiftReal.{u}) (E := Line.{v}) unitVector
     (fun ψ => ‖⟪unitVector.{v}, ψ⟫_(LiftReal.{u})‖ ^ 2)
-    (fun c ψ => born_smul unitVector c ψ)
-    (fun w _ => born_parallelogram unitVector unitVector w)
-    (fun ψ _ => born_reflection unitVector ψ norm_unitVector)
-    (born_self unitVector norm_unitVector)
+    (fun c ψ => born_smul unitVector.{v} c ψ)
+    (fun w _ => born_parallelogram unitVector.{v} unitVector.{v} w)
+    (fun ψ _ => born_reflection unitVector.{v} ψ norm_unitVector.{v})
+    (born_self unitVector.{v} norm_unitVector.{v})
     (fun ψ _ h0 => by simp only [h0, norm_zero]; norm_num)
     unitVector
   rw [born_self _ norm_unitVector] at hh
