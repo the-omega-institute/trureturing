@@ -35,3 +35,9 @@ the [freezing CA framework](https://arxiv.org/abs/1908.06751v4), the
 The screen found no settlement of the finite-monoid question in those sources.
 The registration gives the scope of the topical searches and citation-index
 readings. [Issue #32397](https://github.com/the-omega-institute/trureturing/issues/32397)
+
+## Verified locator
+
+Source version https://arxiv.org/abs/2611.16746v1. Theorem 6 is on printed p. 21.
+The monoid row of Table 2 is on printed p. 31. The question is in the second
+research direction of §9 on printed p. 32.
