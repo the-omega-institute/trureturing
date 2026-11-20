@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ
+/- GID: D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

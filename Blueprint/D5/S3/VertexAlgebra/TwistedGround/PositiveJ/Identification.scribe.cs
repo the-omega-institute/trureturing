@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.PositiveJ;
 
-internal sealed class OriginalGaussianExternalPositiveJDocument : IScribeDocumentDefinition
+internal sealed class IdentificationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.";
+    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Spatial regularity and positive J equality for the original Gaussian kernel",

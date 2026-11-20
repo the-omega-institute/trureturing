@@ -6,9 +6,9 @@ Spatial regularity and positive J equality for the original Gaussian kernel
 
 **Theorem 1.1 (Joint spatial differentiability).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.kernelMode_joint_differentiable`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.kernelMode_joint_differentiable`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.kernelMode_joint_differentiable` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.kernelMode_joint_differentiable` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ The kernel is the continuous complex bilinear pairing of Xout(u,z) with A(z) app
 
 **Theorem 1.2 (Native positive J kernel equality).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.positiveJ_eq_candidateJ`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.positiveJ_eq_candidateJ`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.positiveJ_eq_candidateJ` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.positiveJ_eq_candidateJ` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,6 +38,6 @@ For real 0 ≤ t ≤ 1, set D_w(t) = 1 − w + tw and φ_w(t) = tw/D_w(t) for w 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.kernelMode_joint_differentiable`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalPositiveJ.positiveJ_eq_candidateJ`
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate](OriginalGaussianExternalAnalyticCandidate.md)
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.kernelMode_joint_differentiable`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/PositiveJ/Identification.positiveJ_eq_candidateJ`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate](../OriginalGaussianExternalAnalyticCandidate.md)
