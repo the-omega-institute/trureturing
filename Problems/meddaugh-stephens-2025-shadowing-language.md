@@ -21,6 +21,19 @@ The source uses finite alphabets and two-sided configurations.
 Its Definition 2.1 uses natural-time pseudo-orbits, a fixed finite
 tracing set and an initial diameter bound. [Question 5.5](https://arxiv.org/html/2509.04312v1#S5.Thmtheorem5)
 
+## Motivation
+
+A single finite set must cover every pseudo-orbit time while all
+its members start in one small neighborhood. A word criterion
+makes the constraints on that fixed set accessible to finite
+combinatorial arguments.
+
+## Gap
+
+The primary paper gives sufficient conditions using mixing
+sofic shifts and quasi-finite type. Question 5.5 asks for an exact
+criterion in the language of any subshift.
+
 ## Route
 
 For each tracing radius $k$, choose one local radius $m\geq k$ before
@@ -40,6 +53,14 @@ For each finite horizon the criterion supplies a tuple of tracers.
 The feasible tuples form a decreasing sequence of nonempty closed
 sets in the compact tuple space. Their intersection supplies a fixed
 tuple that traces at all times.
+
+## Falsifier
+
+The forward implication would fail if neighborhood $N$-shadowing
+held while some tracing radius admitted a finite noncolorable word
+at every local radius. The reverse implication would fail if all
+finite words passed at the supplied radii while some infinite
+pseudo-orbit escaped every fixed anchored tracing tuple.
 
 ## Evidence
 
