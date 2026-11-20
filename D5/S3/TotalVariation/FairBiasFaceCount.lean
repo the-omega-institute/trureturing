@@ -42,7 +42,7 @@ private theorem mem_image_fst (S : Finset (L × Bool)) (i : L) :
   · rintro ⟨b, hb⟩
     exact Finset.mem_image.mpr ⟨(i, b), hb, rfl⟩
 
-private theorem fst_injOn {S : Finset (L × Bool)}
+theorem fst_injOn {S : Finset (L × Bool)}
     (hS : ∀ i, (i, true) ∈ S → (i, false) ∉ S) : Set.InjOn Prod.fst (S : Set (L × Bool)) := by
   rintro ⟨i, b⟩ hi ⟨j, d⟩ hj he
   change i = j at he
@@ -243,7 +243,7 @@ noncomputable def columnTutte (c : L → A) (x y : ℚ) : ℚ :=
     let r := Module.finrank (ZMod 2) (columnSpan c S)
     (x - 1) ^ (h - r) * (y - 1) ^ (S.card - r)
 
-private theorem span_as_closure (s : Set A) :
+theorem span_as_closure (s : Set A) :
     (Submodule.span (ZMod 2) s).toAddSubgroup = AddSubgroup.closure s := by
   rw [← Submodule.span_int_eq_addSubgroupClosure]
   exact congrArg Submodule.toAddSubgroup
