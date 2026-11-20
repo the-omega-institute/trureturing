@@ -184,7 +184,7 @@ abbrev signature.{w₁, w₂, w₃, w₄} : Signature where
   finiteAnchor := inferInstance
 
 /-- The value `m a b`. -/
-def observe.{w₁, w₂, w₃, w₄} (p : Params.{w₁, w₂, w₃, w₄}) (b : p.2.2.1) : p.2.2.2.1 :=
+abbrev observe.{w₁, w₂, w₃, w₄} (p : Params.{w₁, w₂, w₃, w₄}) (b : p.2.2.1) : p.2.2.2.1 :=
   letI := p.2.2.2.2.1; letI := p.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.1
   letI := p.2.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2.2.1; letI := p.2.2.2.2.2.2.2.2.2.1
   letI := p.2.2.2.2.2.2.2.2.2.2.1
