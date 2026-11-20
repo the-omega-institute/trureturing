@@ -1,11 +1,10 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GridProjectionRows
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GridHubBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q5SmallParitySupport
-import Mathlib.Data.Fin.Embedding
-import Mathlib.Data.ZMod.Basic
 
-/-! A balanced cubic support of size 72 with large coordinate halves cannot
-occupy the central fiber of the nine-point grid projection. -/
+/-! A balanced cubic support of size 72 projecting into the nine-point grid omits
+the central fiber when each coordinate half has at least 28 vertices. With at
+least 30 vertices in each half, the entire grid projection is impossible. -/
 
 set_option autoImplicit false
 
@@ -22,7 +21,7 @@ open Q9GridProjectionRows (gridEnvelope grid_projection_rows)
 open Q9GridHubBound (signed_hub_card_le_six)
 open Q5SmallParitySupport (neighborParity eight_le_card_of_neighborParity)
 open private pattern rightBlock leftCode_join join_blocks flipCode flip_pattern
-  prefixSign prefixSign_eq row_degree occupation from
+  prefixSign prefixSign_eq row_degree occupation flips_one from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9ThetaProjection
 open private flip_join_left flip_join_right sign_join_left from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SignedProjection
@@ -36,6 +35,64 @@ private noncomputable def carrier (S : Finset (Q 9)) (k : BitVec 4) : Finset (Q 
 private theorem mem_carrier (S : Finset (Q 9)) (k : BitVec 4) (y : Q 5) :
     y ∈ carrier S k ↔ join (pattern k) y ∈ S := by
   simp [carrier]
+
+private theorem mem_carrier_iff_fiber_ne_zero {S : Finset (Q 9)} {z : Q 9 → ℤ}
+    (hunit : ∀ u ∈ S, z u = 1 ∨ z u = -1) (hzero : ∀ u ∉ S, z u = 0)
+    (k : BitVec 4) (y : Q 5) :
+    y ∈ carrier S k ↔ fiber z y (pattern k) ≠ 0 := by
+  rw [mem_carrier]
+  constructor
+  · intro hy
+    change z (join (pattern k) y) ≠ 0
+    rcases hunit _ hy with hp | hm <;> omega
+  · intro hy
+    by_contra hn
+    exact hy (hzero _ hn)
+
+private theorem grid_carrier_equalities {S : Finset (Q 9)} {z : Q 9 → ℤ}
+    (hgrid : ∀ u ∈ S, leftCode u ∈ gridEnvelope)
+    (hunit : ∀ u ∈ S, z u = 1 ∨ z u = -1) (hzero : ∀ u ∉ S, z u = 0)
+    (hrow : ∀ u, signedRow z u = 3 * z u) :
+    carrier S 4 = carrier S 2 ∧ carrier S 5 = carrier S 3 ∧
+    carrier S 8 = carrier S 1 ∧ carrier S 10 = carrier S 3 ∧
+    carrier S 12 = carrier S 3 := by
+  let h (k : BitVec 4) (y : Q 5) := fiber z y (pattern k)
+  have rows (y : Q 5) := grid_projection_rows hgrid hzero hrow y
+  have selected (k : BitVec 4) (y : Q 5) : y ∈ carrier S k ↔ h k y ≠ 0 :=
+    mem_carrier_iff_fiber_ne_zero hunit hzero k y
+  have same {k l : BitVec 4} (he : ∀ y, h k y = h l y) : carrier S k = carrier S l := by
+    ext y
+    simp only [selected, he]
+  have same_neg {k l : BitVec 4} (he : ∀ y, h k y = -h l y) : carrier S k = carrier S l := by
+    ext y
+    simp only [selected, he, neg_ne_zero]
+  exact ⟨same (fun y => (rows y).1), same (fun y => (rows y).2.1),
+    same (fun y => (rows y).2.2.1), same_neg (fun y => (rows y).2.2.2.1),
+    same_neg (fun y => (rows y).2.2.2.2.1)⟩
+
+open Classical in
+private theorem no_common_carrier {S : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (h4 : carrier S 4 = carrier S 2) (h8 : carrier S 8 = carrier S 1) :
+    ∀ y ∈ carrier S 0, y ∈ carrier S 1 → y ∉ carrier S 2 := by
+  intro y hy hyB hyC
+  have h1 := (mem_carrier S 1 y).mp hyB
+  have h2 := (mem_carrier S 2 y).mp hyC
+  have h4y := (mem_carrier S 4 y).mp (h4.symm ▸ hyC)
+  have h8y := (mem_carrier S 8 y).mp (h8.symm ▸ hyB)
+  have hdeg := row_degree hr (k := 0) (a := 1) (b := 2) (c := 4) (d := 8)
+    (by decide +kernel) ((mem_carrier S 0 y).mp hy)
+  simp only [occupation, h1, h2, h4y, h8y, ite_true] at hdeg
+  omega
+
+open Classical in
+private theorem twelve_direction_edges {S : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced S) (hsize : S.card = 72) (i : Fin 9) :
+    directionEdges S i = 12 := by
+  have hd := direction_edge_count (d := 3) S hr hb i
+  rw [hsize] at hd
+  omega
 
 private theorem card_carrier (S : Finset (Q 9)) (k : BitVec 4) :
     (carrier S k).card = (S.filter fun u => leftCode u = k).card := by
@@ -120,7 +177,8 @@ private theorem carrier_cardinalities {S : Finset (Q 9)}
     simp only [carrier_cut]
   have hedge (i : Fin 4) :
       directionEdges S (i.castAdd 5) =
-        ∑ k ∈ gridEnvelope, (cond (pattern k i) ∅ (carrier S k ∩ carrier S (flipCode k i))).card := by
+        ∑ k ∈ gridEnvelope,
+          (cond (pattern k i) ∅ (carrier S k ∩ carrier S (flipCode k i))).card := by
     rw [directionEdges, card_sum_carriers (filter_subset _ S) hgrid]
     simp only [carrier_false_endpoints]
   have h6 := outside_grid_carrier hgrid (k := 6) (by decide +kernel)
@@ -261,51 +319,19 @@ theorem grid_projection_excludes_zero {S : Finset (Q 9)}
   let B := carrier S 1
   let C := carrier S 2
   let D := carrier S 3
-  have selected (k : BitVec 4) (y : Q 5) : y ∈ carrier S k ↔ h k y ≠ 0 := by
-    rw [mem_carrier]
-    constructor
-    · intro hy
-      change z (join (pattern k) y) ≠ 0
-      rcases hunit _ hy with hp | hm <;> omega
-    · intro hy
-      by_contra hn
-      exact hy (hzero _ hn)
+  have selected (k : BitVec 4) (y : Q 5) : y ∈ carrier S k ↔ h k y ≠ 0 :=
+    mem_carrier_iff_fiber_ne_zero hunit hzero k y
   have rows (y : Q 5) := grid_projection_rows hgrid hzero hrow y
-  have same {k l : BitVec 4} (he : ∀ y, h k y = h l y) : carrier S k = carrier S l := by
-    ext y
-    simp only [selected, he]
-  have same_neg {k l : BitVec 4} (he : ∀ y, h k y = -h l y) : carrier S k = carrier S l := by
-    ext y
-    simp only [selected, he, neg_ne_zero]
-  have h4 : carrier S 4 = C := same (fun y => (rows y).1)
-  have h5 : carrier S 5 = D := same (fun y => (rows y).2.1)
-  have h8 : carrier S 8 = B := same (fun y => (rows y).2.2.1)
-  have h10 : carrier S 10 = D := same_neg (fun y => (rows y).2.2.2.1)
-  have h12 : carrier S 12 = D := same_neg (fun y => (rows y).2.2.2.2.1)
+  obtain ⟨h4, h5, h8, h10, h12⟩ := grid_carrier_equalities hgrid hunit hzero hrow
   obtain ⟨htotal, hcut0, hcut1, hedge0, hedge1⟩ :=
     carrier_cardinalities hgrid h4 h5 h8 h10 h12
   have hB : 28 ≤ B.card + 2 * D.card := hcut0 ▸ hhalves ((0 : Fin 4).castAdd 5) true
   have hC : 28 ≤ C.card + 2 * D.card := hcut1 ▸ hhalves ((1 : Fin 4).castAdd 5) true
-  have hBedge : (A ∩ B).card + 2 * (C ∩ D).card = 12 := by
-    have hd := direction_edge_count (d := 3) S hr hb ((0 : Fin 4).castAdd 5)
-    rw [hedge0, hsize] at hd
-    dsimp only [A, B, C, D] at hd ⊢
-    omega
-  have hCedge : (A ∩ C).card + 2 * (B ∩ D).card = 12 := by
-    have hd := direction_edge_count (d := 3) S hr hb ((1 : Fin 4).castAdd 5)
-    rw [hedge1, hsize] at hd
-    dsimp only [A, B, C, D] at hd ⊢
-    omega
-  have hno : ∀ y ∈ A, y ∈ B → y ∉ C := by
-    intro y hy hyB hyC
-    have h1 := (mem_carrier S 1 y).mp hyB
-    have h2 := (mem_carrier S 2 y).mp hyC
-    have h4y := (mem_carrier S 4 y).mp (h4.symm ▸ hyC)
-    have h8y := (mem_carrier S 8 y).mp (h8.symm ▸ hyB)
-    have hdeg := row_degree hr (k := 0) (a := 1) (b := 2) (c := 4) (d := 8)
-      (by decide +kernel) ((mem_carrier S 0 y).mp hy)
-    simp only [occupation, h1, h2, h4y, h8y, ite_true] at hdeg
-    omega
+  have hBedge : (A ∩ B).card + 2 * (C ∩ D).card = 12 :=
+    hedge0 ▸ twelve_direction_edges hr hb hsize ((0 : Fin 4).castAdd 5)
+  have hCedge : (A ∩ C).card + 2 * (B ∩ D).card = 12 :=
+    hedge1 ▸ twelve_direction_edges hr hb hsize ((1 : Fin 4).castAdd 5)
+  have hno : ∀ y ∈ A, y ∈ B → y ∉ C := no_common_carrier hr h4 h8
   have hprefix : ∀ i : Fin 4, prefixSign 0 i = 1 := by decide +kernel
   have agree (i : Fin 4) (y : Q 5) (hy : y ∈ A) (hi : y ∈ carrier S (flipCode 0 i)) :
       h 0 y = h (flipCode 0 i) y := by
@@ -352,5 +378,85 @@ theorem grid_projection_excludes_zero {S : Finset (Q 9)}
   omega
 
 #print axioms grid_projection_excludes_zero
+
+open Classical in
+/-- A balanced induced cubic support of size 72 whose coordinate halves each
+have at least 30 vertices cannot project into the nine-point grid. -/
+theorem no_grid_projection_of_thirty_halves {S : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced S) (hsize : S.card = 72)
+    (hhalves : ∀ (i : Fin 9) (b : Bool), 30 ≤ (S.filter fun u => u i = b).card) :
+    ¬ (∀ u ∈ S, leftCode u ∈ gridEnvelope) := by
+  classical
+  intro hgrid
+  obtain ⟨z, hunit, hzero, _, hrow⟩ := q9_integral_true_prefix_switching hr hb
+  obtain ⟨h4, h5, h8, h10, h12⟩ := grid_carrier_equalities hgrid hunit hzero hrow
+  let A := carrier S 0
+  let B := carrier S 1
+  let C := carrier S 2
+  let D := carrier S 3
+  obtain ⟨htotal, hcut0, hcut1, hedge0, hedge1⟩ :=
+    carrier_cardinalities hgrid h4 h5 h8 h10 h12
+  have hcard : A.card + 2 * B.card + 2 * C.card + 4 * D.card = 72 := htotal.symm.trans hsize
+  have hB : 30 ≤ B.card + 2 * D.card := hcut0 ▸ hhalves ((0 : Fin 4).castAdd 5) true
+  have hC : 30 ≤ C.card + 2 * D.card := hcut1 ▸ hhalves ((1 : Fin 4).castAdd 5) true
+  have hcuts : A.card + B.card + C.card ≤ 12 := by omega
+  have hBedge : (A ∩ B).card + 2 * (C ∩ D).card = 12 :=
+    hedge0 ▸ twelve_direction_edges hr hb hsize ((0 : Fin 4).castAdd 5)
+  have hCedge : (A ∩ C).card + 2 * (B ∩ D).card = 12 :=
+    hedge1 ▸ twelve_direction_edges hr hb hsize ((1 : Fin 4).castAdd 5)
+  -- The two edge counts use disjoint portions of the central carrier.
+  have hno : ∀ y ∈ A, y ∈ B → y ∉ C := no_common_carrier hr h4 h8
+  have hdisj : Disjoint (A ∩ B) (A ∩ C) := by
+    refine Finset.disjoint_left.mpr ?_
+    intro y hyAB hyAC
+    exact hno y (mem_inter.mp hyAB).1 (mem_inter.mp hyAB).2 (mem_inter.mp hyAC).2
+  have hhub : (A ∩ B).card + (A ∩ C).card ≤ A.card := by
+    rw [← card_union_of_disjoint hdisj]
+    exact card_le_card (union_subset inter_subset_left inter_subset_left)
+  have hBDle : (B ∩ D).card ≤ B.card := card_le_card inter_subset_left
+  have hCDle : (C ∩ D).card ≤ C.card := card_le_card inter_subset_left
+  have hsum : 24 ≤ A.card + 2 * (B.card + C.card) := by omega
+  have hA : A = ∅ := card_eq_zero.mp (by omega)
+  have hBC : B.card + C.card = 12 := by omega
+  rw [hA, empty_inter, card_empty, zero_add] at hBedge hCedge
+  have hBD : (B ∩ D).card = 6 := by omega
+  have hCD : (C ∩ D).card = 6 := by omega
+  have hBcard : B.card = 6 := by omega
+  have hsub : B ⊆ D := by
+    have heq : B ∩ D = B :=
+      eq_of_subset_of_card_le inter_subset_left (by rw [hBD, hBcard])
+    exact heq ▸ inter_subset_right
+  -- A third neighbor of a code-1 vertex must lie in the same carrier.
+  obtain ⟨y, hy⟩ : B.Nonempty := card_pos.mp (by rw [hBcard]; decide)
+  have hy1 := (mem_carrier S 1 y).mp hy
+  have hy3 := (mem_carrier S 3 y).mp (hsub hy)
+  have hy5 := (mem_carrier S 5 y).mp (h5.symm ▸ hsub hy)
+  have hy0 : join (pattern 0) y ∉ S := by
+    rw [← mem_carrier, show carrier S 0 = ∅ from hA]
+    exact notMem_empty y
+  have h9 := outside_grid_carrier hgrid (k := 9) (by decide +kernel)
+  have hy9 : join (pattern 9) y ∉ S := by
+    rw [← mem_carrier, h9]
+    exact notMem_empty y
+  have hdeg := row_degree hr flips_one hy1
+  obtain ⟨j, hj⟩ : ∃ j : Fin 5, join (pattern 1) (flip y j) ∈ S := by
+    by_contra! hnone
+    simp only [occupation, hy0, hy3, hy5, hy9, hnone, ite_true, ite_false,
+      Finset.sum_const_zero] at hdeg
+    omega
+  have hj3 := (mem_carrier S 3 _).mp (hsub ((mem_carrier S 1 _).mpr hj))
+  have hleft (v : Q 5) :
+      flip (join (pattern 1) v) ((1 : Fin 4).castAdd 5) = join (pattern 3) v := by
+    rw [flip_join_left, flip_pattern, flips_one.2.1]
+  have hij : (1 : Fin 4).castAdd 5 ≠ j.natAdd 4 := by
+    intro heq
+    have hv := congrArg Fin.val heq
+    change 1 = 4 + j.val at hv
+    omega
+  exact BalancedCubeGirth.no_selected_square hb hij hy1 (by rwa [hleft])
+    (by rwa [flip_join_right]) (by rwa [hleft, flip_join_right])
+
+#print axioms no_grid_projection_of_thirty_halves
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GridProjection
