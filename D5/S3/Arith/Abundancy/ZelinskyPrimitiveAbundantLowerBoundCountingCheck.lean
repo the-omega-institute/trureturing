@@ -297,4 +297,12 @@ private lemma lower_bound_parameters (C : ℝ) :
     have hk0 : 0 < k := by dsimp only [k]; omega
     exact ⟨hNk, binomial_log_gain hk0 hNk ha ht0 hz1 hN hαL hden hgain⟩
 
+private lemma cutoff_parameter_atTop {D : ℝ} (hD : 0 < D) :
+    Tendsto (fun X : ℝ => sqrt (log X / D)) atTop atTop ∧
+      ∀ᶠ X : ℝ in atTop, D * sqrt (log X / D) ^ 2 = log X := by
+  refine ⟨tendsto_sqrt_atTop.comp (tendsto_log_atTop.atTop_div_const hD), ?_⟩
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
+  rw [sq_sqrt (div_nonneg (log_pos hX).le hD.le)]
+  field_simp
+
 end D5.S3.Arith.Abundancy.ZelinskyPrimitiveAbundantLowerBound
