@@ -125,22 +125,21 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
                 Exists("v", domain, And(old, And(readings, unit)))))));
     }
 
-    private static Formula Form(Formula d, Formula n, Formula x, Formula c, Formula t)
+    private static Formula Form(Formula square, Formula n, Formula x, Formula c, Formula t)
     {
         Formula i = F.Id("i"), j = F.Id("j");
         Formula linear = SumOver("i", Fin(n), Mul(At(c, i), Reading(At(x, i))));
         Formula quadratic = SumOver("i", Fin(n), SumOver("j", Fin(n),
             Mul(Mul(At(c, i), At(c, j)), Kappa(At(x, i), At(x, j)))));
-        Formula square = d is null ? Sq(t) : Mul(d, Sq(t));
         return AtMost(D(0), Add(Add(square, Mul(Mul(D(2), t), linear)), quadratic));
     }
 
-    /// <summary>Nonnegativity of the extended Gram forms over all finite families.</summary>
-    private static Formula AllFamilies(Formula? d)
+    /// <summary>Nonnegativity of the extended Gram forms over all finite families; the self-reading term is given as a function of t.</summary>
+    private static Formula AllFamilies(Func<Formula, Formula> square)
     {
         Formula n = F.Id("n"), x = F.Id("x"), c = F.Id("c"), t = F.Id("t");
         return ForAll("n", Naturals, ForAll("x", new Formula.TypeArrow(Fin(n), Units),
-            ForAll("c", new Formula.TypeArrow(Fin(n), Reals), ForAll("t", Reals, Form(d, n, x, c, t)))));
+            ForAll("c", new Formula.TypeArrow(Fin(n), Reals), ForAll("t", Reals, Form(square(t), n, x, c, t)))));
     }
 
     private static Formula NonnegFormula() =>
@@ -151,11 +150,11 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
     {
         Formula d = F.Id("d"), x = F.Id("x"), c = F.Id("c"), t = F.Id("t");
         Formula six = ForAll("x", new Formula.TypeArrow(Fin(D(6)), Units),
-            ForAll("c", new Formula.TypeArrow(Fin(D(6)), Reals), ForAll("t", Reals, Form(d, D(6), x, c, t))));
+            ForAll("c", new Formula.TypeArrow(Fin(D(6)), Reals), ForAll("t", Reals, Form(Mul(d, Sq(t)), D(6), x, c, t))));
         Formula affine = Exists("a", Reals, Exists("b", Quaternions,
             And(AtMost(Add(Sq(F.Id("a")), Sq(Norm(F.Id("b")))), d), AffineReading())));
         Formula tfae = Seq(Operatorname, Grp(F.Id("List"), Dot, F.Id("TFAE")), Open, OpenBracket,
-            Parenthesized(AllFamilies(d)), Comma, Sp, Parenthesized(six), Comma, Sp, Parenthesized(affine),
+            Parenthesized(AllFamilies(s => Mul(d, Sq(s)))), Comma, Sp, Parenthesized(six), Comma, Sp, Parenthesized(affine),
             CloseBracket, Close);
         return Disp(OverReading(ForAll("d", Reals, tfae)));
     }
@@ -174,7 +173,7 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
     }
 
     private static Formula OneFormula() =>
-        Disp(OverReading(Implies(AllFamilies(null),
+        Disp(OverReading(Implies(AllFamilies(s => Sq(s)),
             Iff(Exists("u", Units, Equal(Reading(F.Id("u")), D(1))), OldPoint()))));
 
     private static Formula ZeroFormula() =>
