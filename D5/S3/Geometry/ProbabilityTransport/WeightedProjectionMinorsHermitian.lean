@@ -8,18 +8,19 @@
 
 import D5.S3.Geometry.ProbabilityTransport.WeightedProjectionMinors
 
-/-! The weighted-minor comparison over `𝕜 = ℝ` or `ℂ`: for `x, y, z ∈ 𝕜ⁿ` with `‖z‖ = 1` and
+/-! The weighted-minor comparison over `𝕜 = ℝ` or `ℂ`: for `x, y, z ∈ 𝕜ⁿ` with
 `⟪z, x⟫ = ⟪z, y⟫ = 0`, the pair minors `p_ij` and triple minors `q_ijk` satisfy
-`∑_{i<j} |p_ij|² = ∑_{i<j<k} |q_ijk|²`, the pair-family domination, and for arbitrary real symmetric
-weights `∑ min{a} |q|² ≤ ∑ a |p|² ≤ ∑ max{a} |q|²`.
+`∑_{i<j<k} |q_ijk|² = ‖z‖² ∑_{i<j} |p_ij|²`, the pair-family domination, and for arbitrary real
+weights `∑ min{a} |q|² ≤ ‖z‖² ∑ a |p|² ≤ ∑ max{a} |q|²`.
 
 admission_basis: escape-witness. Escape witnesses: adjoint and energy (the Hermitian energy identity
 `∑|lift z v|² + 6∑|contract z v|² = 3‖z‖²∑|v|²`), contraction (Hermitian Cauchy–Schwarz contraction
 bound), recover_minors with mass_identity, family_domination, weighted_all_tuples, and the ordered
-identity used for the constant shift. Consumed bind-only helpers: sum_rotate, sum_swap, lift_alt,
-lower_skew, lower_lift, conj_mul_norm, pair_skew, triple_lift, contract_pair, unit_conj,
-projection_alt, projection_locality, pair_projection_le, triple_alt, triple_zero, triple_norm_sym,
-ordered_weighted, signed_upper, signed_lower, ordered_family. -/
+identity, and general (removal of the normalization of `z` by homogeneity and of the symmetry of
+weights and relations). Consumed bind-only helpers: sum_rotate, sum_swap, lift_alt, lower_skew,
+lower_lift, conj_mul_norm, pair_skew, triple_lift, contract_pair, unit_conj, projection_alt,
+projection_locality, pair_projection_le, triple_alt, triple_zero, triple_norm_sym, triple_smul,
+sum_pull, ordered_weighted, signed_upper, signed_lower, ordered_family. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -313,6 +314,7 @@ private theorem pair_projection_le (F : ι → ι → Prop) [DecidableRel F]
   apply Finset.sum_le_sum; intro j _
   by_cases h : F i j <;> simp [pairProjection, h]
 
+omit [Fintype ι] in
 private theorem triple_alt (x y z : ι → 𝕜) : Alt (tripleMinor x y z) := by
   rw [triple_lift]; exact lift_alt z (pair_skew x y)
 
@@ -371,11 +373,13 @@ private theorem weighted_all_tuples (x y z : ι → 𝕜) (hz : ∑ k, ‖z k‖
 
 variable [LinearOrder ι]
 
+omit [Fintype ι] [LinearOrder ι] in
 private theorem triple_zero (x y z : ι → 𝕜) (i k : ι) : tripleMinor x y z i i k = 0 := by
   have h := (triple_alt x y z).1 i i k
   have : (2 : 𝕜) * tripleMinor x y z i i k = 0 := by linear_combination h
   simpa using this
 
+omit [Fintype ι] [LinearOrder ι] in
 private theorem triple_norm_sym (x y z : ι → 𝕜) :
     (∀ i j k, ‖tripleMinor x y z j i k‖ = ‖tripleMinor x y z i j k‖) ∧
     (∀ i j k, ‖tripleMinor x y z k i j‖ = ‖tripleMinor x y z i j k‖) := by
@@ -502,44 +506,175 @@ private theorem ordered_family (x y z : ι → 𝕜) (hz : ∑ k, ‖z k‖ ^ 2 
     split_ifs <;> simp_all
 
 
+omit [Fintype ι] [LinearOrder ι] in
+private theorem triple_smul (c : 𝕜) (x y z : ι → 𝕜) (i j k : ι) :
+    ‖tripleMinor x y (fun l => c * z l) i j k‖ ^ 2 = ‖c‖ ^ 2 * ‖tripleMinor x y z i j k‖ ^ 2 := by
+  have h : tripleMinor x y (fun l => c * z l) i j k = c * tripleMinor x y z i j k := by
+    simp [tripleMinor, Matrix.det_fin_three]; ring
+  rw [h, norm_mul, mul_pow]
+
+omit [LinearOrder ι] in
+private theorem sum_pull (a : ℝ) (P : ι → ι → ι → Prop) [∀ i j k, Decidable (P i j k)]
+    (w v : ι → ι → ι → ℝ) :
+    (∑ i, ∑ j, ∑ k, if P i j k then w i j k * (a * v i j k) else 0) =
+      a * ∑ i, ∑ j, ∑ k, if P i j k then w i j k * v i j k else 0 := by
+  simp only [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
+    Finset.sum_congr rfl fun k _ => ?_
+  split_ifs <;> ring
+
+/-- The four comparisons with arbitrary weights and relations and an arbitrary `z ⟂ x, y`. -/
+private theorem general (x y z : ι → 𝕜)
+    (hzx : ∑ k, conj (z k) * x k = 0) (hzy : ∑ k, conj (z k) * y k = 0) :
+    (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then 1 * ‖tripleMinor x y z i j k‖ ^ 2 else 0) =
+      (∑ k, ‖z k‖ ^ 2) * (∑ i, ∑ j, if i < j then ‖pairMinor x y i j‖ ^ 2 else 0) ∧
+    (∀ (F : ι → ι → Prop) [DecidableRel F],
+      (∑ k, ‖z k‖ ^ 2) * (∑ i, ∑ j, if i < j ∧ F i j then ‖pairMinor x y i j‖ ^ 2 else 0) ≤
+        ∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ (F i j ∨ F i k ∨ F j k) then
+          1 * ‖tripleMinor x y z i j k‖ ^ 2 else 0) ∧
+    (∀ A : ι → ι → ℝ,
+      (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
+          min (A i j) (min (A i k) (A j k)) * ‖tripleMinor x y z i j k‖ ^ 2 else 0) ≤
+        (∑ k, ‖z k‖ ^ 2) * (∑ i, ∑ j, if i < j then A i j * ‖pairMinor x y i j‖ ^ 2 else 0) ∧
+      (∑ k, ‖z k‖ ^ 2) * (∑ i, ∑ j, if i < j then A i j * ‖pairMinor x y i j‖ ^ 2 else 0) ≤
+        ∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
+          max (A i j) (max (A i k) (A j k)) * ‖tripleMinor x y z i j k‖ ^ 2 else 0) := by
+  set s := ∑ k, ‖z k‖ ^ 2 with hs
+  rcases (show 0 ≤ s by positivity).eq_or_lt with h0 | hpos
+  · have hz : ∀ k, z k = 0 := fun k => by
+      have := (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => by positivity)).mp h0.symm k
+        (Finset.mem_univ k)
+      simpa using this
+    have hq : ∀ i j k, tripleMinor x y z i j k = 0 := fun i j k => by
+      simp [tripleMinor, Matrix.det_fin_three, hz]
+    simp [hq, ← h0]
+  -- normalize `z`
+  set c : 𝕜 := (((√s)⁻¹ : ℝ) : 𝕜) with hc
+  have hc2 : ‖c‖ ^ 2 = s⁻¹ := by
+    rw [hc, RCLike.norm_ofReal, abs_of_nonneg (by positivity), inv_pow, Real.sq_sqrt hpos.le]
+  let z' : ι → 𝕜 := fun l => c * z l
+  have hz' : ∑ k, ‖z' k‖ ^ 2 = 1 := by
+    simp only [z', norm_mul, mul_pow, ← Finset.mul_sum, hc2, ← hs]
+    exact inv_mul_cancel₀ hpos.ne'
+  have hzx' : ∑ k, conj (z' k) * x k = 0 := by
+    simp only [z', map_mul, mul_assoc, ← Finset.mul_sum, hzx, mul_zero]
+  have hzy' : ∑ k, conj (z' k) * y k = 0 := by
+    simp only [z', map_mul, mul_assoc, ← Finset.mul_sum, hzy, mul_zero]
+  have hscale : ∀ (P : ι → ι → ι → Prop) [∀ i j k, Decidable (P i j k)] (w : ι → ι → ι → ℝ),
+      (∑ i, ∑ j, ∑ k, if P i j k then w i j k * ‖tripleMinor x y z' i j k‖ ^ 2 else 0) =
+        s⁻¹ * ∑ i, ∑ j, ∑ k, if P i j k then w i j k * ‖tripleMinor x y z i j k‖ ^ 2 else 0 := by
+    intro P _ w
+    simp only [z', triple_smul, hc2]
+    exact sum_pull _ P w _
+  -- symmetrized weights and relations
+  have tri : ∀ (P : ι → ι → ι → Prop) [∀ i j k, Decidable (P i j k)] (f g : ι → ι → ι → ℝ),
+      (∀ i j k, i < j → j < k → P i j k → f i j k = g i j k) →
+      (∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ P i j k then f i j k else 0) =
+        ∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ P i j k then g i j k else 0 := by
+    intro P _ f g h
+    refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
+      Finset.sum_congr rfl fun k _ => ?_
+    split_ifs with hh
+    · exact h i j k hh.1 hh.2.1 hh.2.2
+    · rfl
+  refine ⟨?_, fun F _ => ?_, fun A => ?_⟩
+  · have h := ordered_identity x y z' hz' hzx' hzy'
+    have e := hscale (fun i j k => i < j ∧ j < k) (fun _ _ _ => 1)
+    simp only [one_mul] at e ⊢
+    rw [e] at h
+    field_simp at h
+    linarith
+  · let F' : ι → ι → Prop := fun i j => F (min i j) (max i j)
+    have hF' : ∀ i j, F' i j ↔ F' j i := fun i j => by simp only [F', min_comm, max_comm]
+    have h := ordered_family x y z' hz' hzx' hzy' F' hF'
+    have e1 : (∑ i, ∑ j, if i < j ∧ F' i j then ‖pairMinor x y i j‖ ^ 2 else 0) =
+        ∑ i, ∑ j, if i < j ∧ F i j then ‖pairMinor x y i j‖ ^ 2 else 0 := by
+      refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+      by_cases hij : i < j
+      · simp [F', hij, min_eq_left hij.le, max_eq_right hij.le]
+      · simp [hij]
+    have e2 : (∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ (F' i j ∨ F' i k ∨ F' j k) then
+          ‖tripleMinor x y z' i j k‖ ^ 2 else 0) =
+        ∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ (F i j ∨ F i k ∨ F j k) then
+          ‖tripleMinor x y z' i j k‖ ^ 2 else 0 := by
+      refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
+        Finset.sum_congr rfl fun k _ => ?_
+      by_cases hij : i < j
+      · by_cases hjk : j < k
+        · have hik := hij.trans hjk
+          simp [F', hij, hjk, min_eq_left hij.le, max_eq_right hij.le, min_eq_left hik.le,
+            max_eq_right hik.le, min_eq_left hjk.le, max_eq_right hjk.le]
+        · simp [hjk]
+      · simp [hij]
+    rw [e1, e2] at h
+    have e := hscale (fun i j k => i < j ∧ j < k ∧ (F i j ∨ F i k ∨ F j k)) (fun _ _ _ => 1)
+    simp only [one_mul] at e ⊢
+    rw [e] at h
+    rw [le_inv_mul_iff₀ hpos] at h
+    linarith
+  · let A' : ι → ι → ℝ := fun i j => A (min i j) (max i j)
+    have hA' : ∀ i j, A' i j = A' j i := fun i j => by simp only [A', min_comm, max_comm]
+    have e1 : (∑ i, ∑ j, if i < j then A' i j * ‖pairMinor x y i j‖ ^ 2 else 0) =
+        ∑ i, ∑ j, if i < j then A i j * ‖pairMinor x y i j‖ ^ 2 else 0 := by
+      refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+      by_cases hij : i < j
+      · simp [A', hij, min_eq_left hij.le, max_eq_right hij.le]
+      · simp [hij]
+    have eT : ∀ (m : ℝ → ℝ → ℝ → ℝ),
+        (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
+            m (A' i j) (A' i k) (A' j k) * ‖tripleMinor x y z' i j k‖ ^ 2 else 0) =
+          ∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
+            m (A i j) (A i k) (A j k) * ‖tripleMinor x y z' i j k‖ ^ 2 else 0 := by
+      intro m
+      refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
+        Finset.sum_congr rfl fun k _ => ?_
+      by_cases hh : i < j ∧ j < k
+      · have hik := hh.1.trans hh.2
+        simp [A', hh, min_eq_left hh.1.le, max_eq_right hh.1.le, min_eq_left hik.le,
+          max_eq_right hik.le, min_eq_left hh.2.le, max_eq_right hh.2.le]
+      · simp [hh]
+    have hl := signed_lower x y z' hz' hzx' hzy' A' hA'
+    have hu := signed_upper x y z' hz' hzx' hzy' A' hA'
+    rw [e1, eT (fun a b c => min a (min b c))] at hl
+    rw [e1, eT (fun a b c => max a (max b c))] at hu
+    rw [hscale (fun i j k => i < j ∧ j < k)] at hl hu
+    constructor
+    · rw [inv_mul_le_iff₀ hpos] at hl; linarith
+    · rw [le_inv_mul_iff₀ hpos] at hu; linarith
+
 omit [Fintype ι] [LinearOrder ι]
 
 /-- Theorem 1, Lemma 2 and Corollaries 3 and 4 of Ma and Zhang on MathOverflow 469781, over
-`𝕜 = ℝ` or `ℂ`: for `x, y, z ∈ 𝕜ⁿ` with `‖z‖ = 1` and `⟪z, x⟫ = ⟪z, y⟫ = 0` (no normalization or
-orthogonality of `x` and `y`), with `p_ij` the `2 × 2` and `q_ijk` the `3 × 3` minors over increasing
-indices: `∑_{i<j} |p_ij|² = ∑_{i<j<k} |q_ijk|²`; for every symmetric family `F` of pairs,
-`∑_{i<j, F} |p_ij|² ≤ ∑_{i<j<k meeting F} |q_ijk|²`; and for all real symmetric weights `a`,
-`∑ min(a_ij, a_ik, a_jk)|q_ijk|² ≤ ∑ a_ij |p_ij|² ≤ ∑ max(a_ij, a_ik, a_jk)|q_ijk|²`. -/
+`𝕜 = ℝ` or `ℂ`, in homogeneous form: for `x, y, z ∈ 𝕜ⁿ` with `⟪z, x⟫ = ⟪z, y⟫ = 0` (no normalization
+of `z`, no condition on `x` and `y`), with `p_ij` the `2 × 2` and `q_ijk` the `3 × 3` minors over
+increasing indices: `∑_{i<j<k} |q_ijk|² = ‖z‖² ∑_{i<j} |p_ij|²`; for every relation `F` on pairs,
+read on increasing pairs, `‖z‖² ∑_{i<j, F} |p_ij|² ≤ ∑_{i<j<k meeting F} |q_ijk|²`; and for every
+real weight array `a`, read on increasing pairs,
+`∑ min(a_ij, a_ik, a_jk)|q_ijk|² ≤ ‖z‖² ∑ a_ij |p_ij|² ≤ ∑ max(a_ij, a_ik, a_jk)|q_ijk|²`. -/
 theorem result {n : ℕ} (x y z : EuclideanSpace 𝕜 (Fin n))
-    (hz : ‖z‖ = 1) (hzx : inner 𝕜 z x = 0) (hzy : inner 𝕜 z y = 0) :
-    (∑ i, ∑ j, if i < j then ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) =
-      (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
-        ‖Matrix.det !![x i, x j, x k; y i, y j, y k; z i, z j, z k]‖ ^ 2 else 0) ∧
-    (∀ (F : Fin n → Fin n → Prop) [DecidableRel F], (∀ i j, F i j ↔ F j i) →
-      (∑ i, ∑ j, if i < j ∧ F i j then ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ≤
+    (hzx : inner 𝕜 z x = 0) (hzy : inner 𝕜 z y = 0) :
+    (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then
+        ‖Matrix.det !![x i, x j, x k; y i, y j, y k; z i, z j, z k]‖ ^ 2 else 0) =
+      ‖z‖ ^ 2 * (∑ i, ∑ j, if i < j then ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ∧
+    (∀ (F : Fin n → Fin n → Prop) [DecidableRel F],
+      ‖z‖ ^ 2 * (∑ i, ∑ j, if i < j ∧ F i j then ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ≤
         ∑ i, ∑ j, ∑ k, if i < j ∧ j < k ∧ (F i j ∨ F i k ∨ F j k) then
           ‖Matrix.det !![x i, x j, x k; y i, y j, y k; z i, z j, z k]‖ ^ 2 else 0) ∧
-    (∀ A : Fin n → Fin n → ℝ, (∀ i j, A i j = A j i) →
+    (∀ A : Fin n → Fin n → ℝ,
       (∑ i, ∑ j, ∑ k, if i < j ∧ j < k then min (A i j) (min (A i k) (A j k)) *
           ‖Matrix.det !![x i, x j, x k; y i, y j, y k; z i, z j, z k]‖ ^ 2 else 0) ≤
-        (∑ i, ∑ j, if i < j then A i j * ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ∧
-      (∑ i, ∑ j, if i < j then A i j * ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ≤
+        ‖z‖ ^ 2 * (∑ i, ∑ j, if i < j then A i j * ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ∧
+      ‖z‖ ^ 2 * (∑ i, ∑ j, if i < j then A i j * ‖Matrix.det !![x i, x j; y i, y j]‖ ^ 2 else 0) ≤
         ∑ i, ∑ j, ∑ k, if i < j ∧ j < k then max (A i j) (max (A i k) (A j k)) *
           ‖Matrix.det !![x i, x j, x k; y i, y j, y k; z i, z j, z k]‖ ^ 2 else 0) := by
-  have hz' : ∑ k, ‖z k‖ ^ 2 = 1 := by
-    rw [← EuclideanSpace.norm_sq_eq, hz]; norm_num
+  have hz : ‖z‖ ^ 2 = ∑ k, ‖z k‖ ^ 2 := EuclideanSpace.norm_sq_eq z
   have hzx' : ∑ k, conj (z k) * x k = 0 := by
     simpa [PiLp.inner_apply, RCLike.inner_apply, mul_comm] using hzx
   have hzy' : ∑ k, conj (z k) * y k = 0 := by
     simpa [PiLp.inner_apply, RCLike.inner_apply, mul_comm] using hzy
-  refine ⟨?_, fun F _ hF => ?_, fun A hA => ⟨?_, ?_⟩⟩
-  · simpa only [pairMinor, tripleMinor, Matrix.det_fin_two_of] using
-      ordered_identity (fun i => x i) (fun i => y i) (fun i => z i) hz' hzx' hzy'
-  · simpa only [pairMinor, tripleMinor, Matrix.det_fin_two_of] using
-      ordered_family (fun i => x i) (fun i => y i) (fun i => z i) hz' hzx' hzy' F hF
-  · simpa only [pairMinor, tripleMinor, Matrix.det_fin_two_of] using
-      signed_lower (fun i => x i) (fun i => y i) (fun i => z i) hz' hzx' hzy' A hA
-  · simpa only [pairMinor, tripleMinor, Matrix.det_fin_two_of] using
-      signed_upper (fun i => x i) (fun i => y i) (fun i => z i) hz' hzx' hzy' A hA
+  have h := general (fun i => x i) (fun i => y i) (fun i => z i) hzx' hzy'
+  simp only [pairMinor, tripleMinor, Matrix.det_fin_two_of, one_mul, ← hz] at h
+  simp only [Matrix.det_fin_two_of]
+  exact h
 
 end D5.S3.Geometry.ProbabilityTransport.WeightedProjectionMinorsHermitian

@@ -5,7 +5,7 @@ year: 2026
 title: "Proof of the weighted-minor inequality in MathOverflow 469781 (version 2)"
 doi: 10.5281/zenodo.23931738
 url: https://zenodo.org/records/23931738
-claim: "Theorem 1: for n >= 3, ||z|| = 1 and <z,x> = <z,y> = 0, for arbitrary real symmetric off-diagonal weights a_ij, sum_{i<j} a_ij p_ij^2 <= sum_{i<j<k} max{a_ij, a_ik, a_jk} q_ijk^2, where p_ij = x_i y_j - x_j y_i and q_ijk is the 3x3 determinant with rows x, y, z and columns i, j, k; moreover sum p_ij^2 = sum q_ijk^2. Lemma 2: under the same vector hypotheses every pair family F satisfies sum_{{i,j} in F} p_ij^2 <= sum_{T in N(F)} q_T^2, where N(F) is the set of triples containing a pair of F. Corollary 3: Theorem 1 holds for x, y, z in C^n with Hermitian orthogonality and squared absolute values. Corollary 4: under the hypotheses of Theorem 1 or its complex version, sum min{a_ij, a_ik, a_jk}|q_ijk|^2 <= sum a_ij |p_ij|^2 <= sum max{a_ij, a_ik, a_jk}|q_ijk|^2."
+claim: "Theorem 1: for n >= 3, ||z|| = 1 and <z,x> = <z,y> = 0, for arbitrary real symmetric off-diagonal weights a_ij, sum_{i<j} a_ij p_ij^2 <= sum_{i<j<k} max{a_ij, a_ik, a_jk} q_ijk^2, where p_ij = x_i y_j - x_j y_i and q_ijk is the 3x3 determinant with rows x, y, z and columns i, j, k. Section 2, display (2): under these hypotheses sum_{i<j} p_ij^2 = sum_{i<j<k} q_ijk^2. Lemma 2: under the same vector hypotheses every pair family F satisfies sum_{{i,j} in F} p_ij^2 <= sum_{T in N(F)} q_T^2, where N(F) is the set of triples containing a pair of F. Corollary 3: Theorem 1 holds for x, y, z in C^n with Hermitian orthogonality and squared absolute values. Corollary 4: under the hypotheses of Theorem 1 or its complex version, sum min{a_ij, a_ik, a_jk}|q_ijk|^2 <= sum a_ij |p_ij|^2 <= sum max{a_ij, a_ik, a_jk}|q_ijk|^2."
 strata_touched:
   - D5/S3/Geometry/ProbabilityTransport/WeightedProjectionMinorsHermitian
 license: CC-BY-4.0
@@ -47,12 +47,15 @@ proof of Theorem 1 and Corollaries 3 and 4 in Section 3.
 ## Mathematical scope
 
 The formalization works uniformly over 𝕜 = ℝ or ℂ (any `RCLike` field) for `x, y, z` in the
-Euclidean space on `Fin n`, with `‖z‖ = 1` and `⟪z, x⟫ = ⟪z, y⟫ = 0`, where the inner product is
-conjugate-linear in its first argument, so the contraction is Σ_k conj(z_k) q_kij = p_ij. The
-dimension bound n ≥ 3 is dropped: for n ≤ 2 every statement still holds. Formalized are
-identity (2) in increasing indices, Lemma 2 for every symmetric pair relation F (the sum over
-N(F) restricted to triples having at least one pair in F), and both bounds of Corollary 4 for
-arbitrary real symmetric weights, which contain Theorem 1 and Corollary 3. The exterior-algebra
+Euclidean space on `Fin n` with `⟪z, x⟫ = ⟪z, y⟫ = 0`, where the inner product is conjugate-linear
+in its first argument, so the contraction is Σ_k conj(z_k) q_kij = p_ij. The statements are proved
+in homogeneous form, with a factor ‖z‖² on the pair side, for every such z including z = 0; the
+case ‖z‖ = 1 is the source. The dimension bound n ≥ 3 is dropped: for n ≤ 2 every statement still
+holds. Weights and the pair relation are read only at increasing pairs, so no symmetry is assumed.
+Formalized are identity (2), Lemma 2 for every relation F (the sum over N(F) being the increasing
+triples having at least one pair in F), and both bounds of Corollary 4 for arbitrary real
+weights, which contain Theorem 1 and Corollary 3. Orthogonality is necessary: z = x = e_1,
+y = e_2 gives |p_12|² = 1 with all q zero. The exterior-algebra
 argument is replaced by an equivalent coordinate argument: a Hermitian energy identity for
 z ∧ (·), a Cauchy–Schwarz contraction bound, projection locality, a level-set expansion of the
 weights, and the constant shift using (2).
