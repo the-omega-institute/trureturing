@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/Shadowing/FiniteGraphExactDynamics
+/- GID: D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphExactDynamics
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Shadowing/FiniteGraphExactDynamics
+   mirror-B: D5/B/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphExactDynamics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -20,7 +20,9 @@ the graph. The first and last darts preserve the germs at the graph vertices.
 open Function Set
 open SimpleGraph hiding dist
 
-namespace D5.S1.Dynamics.Shadowing.FiniteGraphExactDynamics
+open D5.S1.Dynamics.Shadowing
+
+namespace D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteGraphExactDynamics
 
 open FiniteGraphAffineRealization
 
@@ -611,4 +613,4 @@ theorem exists_exact_finitelyPositiveExpansive_iff [Nontrivial V] [DecidableRel 
 
 end
 
-end D5.S1.Dynamics.Shadowing.FiniteGraphExactDynamics
+end D5.S3.Combinatorics.Graph.LeaflessDynamics.FiniteGraphExactDynamics

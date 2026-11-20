@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.LeaflessDynamics;
 
 internal sealed class FiniteGraphExactDynamicsDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S1/Dynamics/Shadowing/FiniteGraphExactDynamics.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphExactDynamics.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Classification of exact finite positive expansivity on simple graphs",
