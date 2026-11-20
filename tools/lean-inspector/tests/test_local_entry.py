@@ -489,7 +489,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
     def stub(self, path):
         destination = self.root / path
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text('#!/bin/bash\nprintf "%s\\n" "$*" >> "' + str(self.marker) + '"\n')
+        destination.write_text('#!/bin/bash\nprintf "FULL_BUILD=%s %s\\n" "$FULL_BUILD" "$*" >> "' + str(self.marker) + '"\n')
         destination.chmod(0o755)
 
     def test_make_full_entries_reject_missing_and_invalid_confirmation_before_dispatch(self):
@@ -548,6 +548,7 @@ class FullBuildConfirmationTests(unittest.TestCase):
     def test_direct_full_scripts_reject_before_side_effects(self):
         for path, arguments in (
             ('tools/scripts/worktree/lean-cache-run.sh', ['--build']),
+            ('tools/scripts/worktree/lean-cache-run.sh', ['--build-report-programs', 'Reg']),
             ('tools/scripts/worktree/lean-cache-ensure.sh', []),
             ('tools/scripts/worktree/warm-donor.sh', []),
             ('tools/scripts/report/lean-report.sh', []),
@@ -573,6 +574,12 @@ class FullBuildConfirmationTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('D5.Selected', self.marker.read_text())
         self.assertIn('lean-inspector-reg', self.marker.read_text())
+        for option, expected in [('--build', '0'), ('--build-report-programs', '1')]:
+            self.marker.unlink()
+            result = self.run_command('bash', 'tools/scripts/worktree/lean-cache-run.sh',
+                                      option, 'Reg', confirmed=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertTrue(self.marker.read_text().startswith('FULL_BUILD=' + expected + ' '))
 
     def test_native_wrapper_empty_target_cannot_select_full_build(self):
         for target in ('', '   '):

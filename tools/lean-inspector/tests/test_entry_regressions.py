@@ -104,17 +104,13 @@ class EntryRegressionTests(unittest.TestCase):
         write('tools/scripts/worktree/lean-cache-ensure.sh',
               '#!/bin/sh\nprintf "ensure\\n" >> "$CALLS"\n')
         write('bin/dotnet', '#!/bin/sh\n[ "$2" = lean-utility-input ] || exit 74\nprintf "[]\\n"\n')
-        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --build-report-modules ] && exit 0\n[ "$1" = --prebuilt ] && shift\nexec "$@"\n')
+        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\n[ "$1" = --build-report-programs ] && { [ "$FULL_BUILD" = 1 ] || exit 83; echo compile >> "$CALLS"; exit 0; }\n[ "$1" = --build-report-modules ] && exit 0\n[ "$1" = --prebuilt ] && shift\nexec "$@"\n')
         write('bin/lake', '#!/bin/sh\n'
               'if [ "${1:-}" = --version ]; then printf "fixture lake 1\\n"; exit 0; fi\n'
               'printf "report\\n" >> "$CALLS"\nmkdir -p .lake/build/lean-inspector\n'
               'cp produced.zip .lake/build/lean-inspector/report.zip\n')
         write('bin/make', """#!/bin/bash
 case "$1" in
-  lean)
-    echo compile >> "$CALLS"
-    echo "Build completed successfully (1 job)."
-    exit 0 ;;
   lean-report)
     exec bash "$PWD/tools/lean-inspector/inspect.sh" --repository "$PWD" \
       --output "${3#LEAN_REPORT=}" --log-dir "$STRATALINT_LEAN_REPORT_LOG_DIR" \

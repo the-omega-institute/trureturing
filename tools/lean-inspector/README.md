@@ -92,8 +92,7 @@ gh workflow run lean-cache-publish.yml --ref dev \
 `LEAN_REPORT` 可省略；默认输出为
 `.lake/build/stratalint/raw-lean-report.json`。相对目的路径按仓库根目录解析，
 也可用绝对路径；修改目的路径只改变发布位置。需要仓库钉版的 Lean/Lake、.NET SDK
-和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
-ensure、原生 Lake 报告构建和发布。
+和 Python 3。[入口](inspect.sh)校验输入及预编译的 utility 读取器，在缓存锁内从已有 Lake 产物提取并发布报告。
 
 Optional `Application.prediction` binds native operation evidence to the complete
 original theorem, separately from its initialized single-window law. The compiled

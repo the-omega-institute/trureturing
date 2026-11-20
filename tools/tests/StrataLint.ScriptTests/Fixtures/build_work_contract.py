@@ -146,7 +146,7 @@ class BuildWorkContracts(unittest.TestCase):
         script('bin/dotnet', '#!/bin/sh\n[ "$2" = lean-utility-input ] || exit 78\necho "[]"\n')
         script('tools/scripts/worktree/lean-cache-run.sh', '''#!/bin/sh
 case "$1" in
-  --build) cat program-output; exit "$PROGRAM_EXIT" ;;
+  --build-report-programs) [ "$FULL_BUILD" = 1 ] || exit 78; cat program-output; exit "$PROGRAM_EXIT" ;;
   --build-report-modules) exit 0 ;;
   --prebuilt)
     echo '{"kind":"extract","count":1}' >> "$STRATALINT_INSPECTOR_ACTIVITY"
@@ -515,8 +515,7 @@ esac
 
     def test_failed_build_removes_stale_fact_and_preserves_exit(self):
         result, fact, _ = self.check(failure=23)
-        self.assertEqual(2, result.returncode, result.stderr)
-        self.assertIn('Error 23', result.stderr)
+        self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
 
     def test_failed_report_producer_leaves_no_work_fact(self):

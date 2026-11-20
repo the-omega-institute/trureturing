@@ -312,6 +312,11 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
         self.ensure()
         self.restore_compiler()
+        # An earlier full seed may name a previous pin. Scoped work judges the live checkout.
+        stamp = self.root / '.lake/.stratalint-lean-cache-stamp.json'
+        seeded = json.loads(stamp.read_text())
+        seeded['mathlib_revision'] = '0' * 40
+        stamp.write_text(json.dumps(seeded))
         result = self.guarded_command(['make', 'lean-report-prepare', 'LEAN_TARGETS=Fixture'],
                                       cwd=self.root, env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -321,6 +326,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertFalse((directory / 'D5/Alone.olean').exists())
         self.scoped('Fixture')
         self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
+        self.assertEqual(json.loads(stamp.read_text()), seeded)
 
     def test_native_explicit_module_preparation(self):
         request = self.root / 'requested modules.json'

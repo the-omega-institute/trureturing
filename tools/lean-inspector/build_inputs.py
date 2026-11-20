@@ -53,7 +53,11 @@ def prepare(roots, directory, need_inputs=True):
         targets = programs
         if need_inputs:
             targets = [*targets, *TOOLS, 'regInspector/auricFibAnalysis']
-    commands = [['make', 'lean', 'LEAN_TARGETS=' + ' '.join(sorted(set(targets)))]]
+    targets = sorted(set(targets))
+    if roots:
+        commands = [['make', 'lean', 'LEAN_TARGETS=' + ' '.join(targets)]]
+    else:
+        commands = [['bash', 'tools/scripts/worktree/lean-cache-run.sh', '--build-report-programs', *targets]]
     if not roots and need_inputs:
         modules = publication.selection.Selection(ROOT).modules()
         reported_paths = set(modules.values())

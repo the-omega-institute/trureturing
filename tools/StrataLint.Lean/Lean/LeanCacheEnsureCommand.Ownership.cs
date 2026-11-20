@@ -73,9 +73,6 @@ internal static partial class LeanCacheEnsureCommand
         {
             var lake = Path.Combine(root, ".lake");
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-            var stamp = LeanCacheStamp.Inspect(lake, pins);
-            if (stamp.State is LeanCacheStampState.Mismatch or LeanCacheStampState.Corrupt)
-                return new CommandResult(false, string.Empty, $"Incompatible prebuilt Lake artifacts: {stamp.Reason}\n");
             var packageError = CheckPrebuiltPackages(lake, pins, runner);
             if (packageError is not null)
                 return new CommandResult(false, string.Empty,
