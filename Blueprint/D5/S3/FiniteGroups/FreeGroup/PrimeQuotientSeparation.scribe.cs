@@ -95,7 +95,7 @@ internal sealed class PrimeQuotientSeparationDocument : IScribeDocumentDefinitio
         Formula freeGroup = Call("FreeGroup", alphabet);
         Formula quotient = Apply(Qualified("HasQuotient", "Quotient"), freeGroup, subgroup);
         Formula nonidentity = new Formula.Not(
-            new Formula.Relation(word, FormulaRelationOperator.Equal, D(1)));
+            new Formula.Relation(word, FormulaRelationOperator.Equal, F.D(1)));
         Formula conclusion = Exists("N", Call("Subgroup", freeGroup),
             Exists("instNormal", Apply(Qualified("Subgroup", "Normal"), subgroup),
                 And(Apply(Qualified("Subgroup", "FiniteIndex"), subgroup),
