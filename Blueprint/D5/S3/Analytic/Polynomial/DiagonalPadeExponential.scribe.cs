@@ -11,7 +11,8 @@ internal sealed class DiagonalPadeExponentialDocument : IScribeDocumentDefinitio
         LibraryNoteRef.Create("D5/L/Analytic/dlmf2010halfintbessel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The rational diagonal exponential Padé denominator has an exact half-integer Bessel representation.",
+        "The rational diagonal exponential Padé denominator has an exact half-integer Bessel representation "
+        + "and its reciprocal coefficients are given by a sum over simple poles.",
         H("Diagonal exponential Padé denominator"),
         Blocks(
             Node("denominator", "Normalized rational denominator",
@@ -45,6 +46,38 @@ internal sealed class DiagonalPadeExponentialDocument : IScribeDocumentDefinitio
                 + "by the polynomial and comparing the Cauchy product with one identifies "
                 + "the formal inverse. On the right half-plane the denominator has the exact "
                 + "Bessel representation above.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)),
+            Node("denominator_root_derivative", "Nonzero simple roots and signed derivative",
+                "For every natural m and complex root z of q_m, both z and q_m'(z) are nonzero. "
+                + "The identity q_m(-z) q_m'(z) = (-1)^m (m!/(2m)!)^2 z^(2m) "
+                + "follows by reversing the finite carrier, differentiating at the root, "
+                + "and applying the reflected carrier Wronskian at 2/z.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)),
+            Node("residueWeight", "Geometric weight of a simple pole",
+                "The coefficient of the term (1 - z/ζ)^(-1) at a nonzero simple pole ζ "
+                + "is R_m(ζ) = -1/(ζ q_m'(ζ)).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Scardino)),
+            Node("residueWeight_eq", "Odd-order weight with factorial normalization",
+                "For every odd m and root ζ, R_m(ζ) equals "
+                + "q_m(-ζ)/((m!/(2m)!)^2 ζ^(2m+1)).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)),
+            Node("reciprocalCoefficient_eq_sum", "Reciprocal coefficients as a sum over distinct roots",
+                "For every positive natural m and natural n, the complex cast of the rational "
+                + "reciprocal coefficient is the sum of R_m(ζ) (ζ^(-1))^n over the distinct "
+                + "complex roots of q_m. Factoring over those roots and applying barycentric "
+                + "Lagrange interpolation to the constant one gives the partial fractions. "
+                + "Geometric expansions near zero and Taylor uniqueness identify their coefficients "
+                + "with the rational formal inverse.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)),
+            Node("residueWeight_pos", "Positive weight at a positive real pole",
+                "For every odd m and positive real root r, R_m(r) is a positive real number. "
+                + "The reflected denominator has nonnegative coefficients and constant term one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)),
+            Node("norm_normalized_residueWeight_le", "Normalized modulus bound",
+                "For every odd m, natural n, positive real root r, and complex root ζ with "
+                + "r ≤ |ζ|, the modulus of (R_m(ζ)/R_m(r)) (r/ζ)^n is at most "
+                + "(r/|ζ|)^(n+m+1). The reflected coefficients are nonnegative and their "
+                + "powers have degree at most m.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Scardino)))));
 
     private static DocumentBlock Node(string name, string title, string prose,
