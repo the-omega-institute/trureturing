@@ -77,6 +77,27 @@ public sealed class RegistrationImportDirectionTests
     }
 
     [Fact]
+    public void ScopedEvidencePreservesUnchangedDebtAndRemovesDeletedDebt()
+    {
+        var baseline = Files((Other, Imports(Judge)), (Source, Imports(Analysis)));
+        var candidate = Files((Other, Imports(Judge)));
+        var scoped = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>());
+        var diagnostics = Evaluate(baseline, candidate, scoped);
+        Assert.Contains(diagnostics, d => d.Path == Source && d.Message == "registration import debt: base=1, candidate=0");
+        Assert.Contains(diagnostics, d => d.Path == Other && d.Message == "registration import debt: base=1, candidate=1");
+    }
+
+    [Fact]
+    public void MissingChangedCandidateModuleCannotUseUnchangedDebt()
+    {
+        var baseline = Files((Source, Imports(Judge)));
+        var candidate = Files((Source, Imports(Analysis)));
+        var scoped = LeanAxiomReport.CreateScoped(new Dictionary<string, LeanFileReport>());
+        Assert.Contains(Source, Assert.Throws<InvalidDataException>(
+            () => Context(baseline, candidate, scoped)).Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ByteIdenticalDebtPassesEvenWithChangedPathSignal()
     {
         var files = Files((Source, Imports(Judge)));

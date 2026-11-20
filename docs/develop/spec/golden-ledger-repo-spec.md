@@ -428,11 +428,11 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
-`make test` 运行 lean-report 与 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `Meta/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
+`make test` 使用相对 BASE 的变更运行定向 check-current；显式 `FULL_BUILD=1` 运行完整报告与 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `Meta/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
 
 **共用检查边界。** `ci_contract.py` 消费唯一声明，不解释 workflow、不建立影响图或通用调度器。current 的报告适用性、定向目标、源码 delta 范围及编译审计、Fourier source evidence 的选择取同一契约；单元的 project/command、dotnet、lean 与依赖恢复声明也在该契约内，不在本地或 workflow 维护副本。检查所有者输出实际 check id、原始 exit 与解释；普通检查保留实际退出码。超时、取消保留原始退出；前置拒绝门失败时，其守护的后继明确 blocked，不声称已执行，也不等同未适用；已进入阶段中前置满足的独立适用检查继续给出结果，保留原有可达性与退出语义。make 外层仍遵守其原有 0/2，分类诊断以检查所有者输出为准。
 
-本地显式 BASE 必须解析为固定 commit，不可用时 exit 2，不能当作 hosted unavailable-base。本地比较 BASE 与实际候选工作树，合并 staged、unstaged、untracked 的完整 NUL 路径；addition、deletion 和 rename 两端均参与选择。候选内容身份涵盖路径、文件类型、模式和字节（包括未跟踪文件），与 base、contract revision、purpose 一起输出供两端配对；空变更不等于无 base。hosted PR 保留 M/B，push 保留 before/after，只有取不到 hosted base 时才全部命中。本地不删除 persistent remotes，不伪造事件认证、NEEDS 或 required 结果。hosted adapter 承担事件、权限、缓存运输、发布和真实 job 结果；本地使用已有缓存和工具准备定向检查。每个 current/unit 的各计算阶段共用累计 7200s，不因共享 helper 重置；下载和依赖恢复在预算外。
+本地显式 BASE 必须解析为固定 commit，不可用时 exit 2，不能当作 hosted unavailable-base。本地比较 BASE 与实际候选工作树，合并 staged、unstaged、untracked 的完整 NUL 路径；addition、deletion 和 rename 两端均参与选择。候选内容身份涵盖路径、文件类型、模式和字节（包括未跟踪文件），与 base、contract revision、purpose 一起输出供两端配对；空变更不等于无 base。hosted PR 保留 M/B，push 保留 before/after，已有分支的 before 不可读时检查失败；新分支按 push 事件的固定提交范围决定命中单元。本地不删除 persistent remotes，不伪造事件认证、NEEDS 或 required 结果。hosted adapter 承担事件、权限、缓存运输、发布和真实 job 结果；本地使用已有缓存和工具准备定向检查。每个 current/unit 的各计算阶段共用累计 7200s，不因共享 helper 重置；下载和依赖恢复在预算外。
 
 FILEMAP conformance 使用既有候选快照 reader 的当前路径和模式，纳入未跟踪文件并排除已删除文件；coverage、pattern population、依赖和生成物集合检查同样覆盖该候选。Architecture 的源码枚举及 hang-guard 路由检查同样消费现有候选快照 reader；canonical-copy 策略扫描原有完整可执行源码范围中的 tracked 与普通 untracked 工作树字节，遵守 Git ignore，不要求先 stage。run-local 工件的禁止入索引条件仍读取单独的 index 身份，不能以未跟踪文件冒充已入索引，也不能以本地验证要求用户先 stage。`make ci-unit UNIT=<id>` 提供同一执行声明的定向检查入口，不声称完整 gate 成功。
 
@@ -460,7 +460,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。仅改动 `docs/develop/theory/` 的候选执行适用源码文件和容量检查。完整 `check-current` 与带整库报告的 `check-delta` 保留独立入口。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
+**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。仅改动 `docs/develop/theory/` 的候选执行适用源码文件和容量检查。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
 

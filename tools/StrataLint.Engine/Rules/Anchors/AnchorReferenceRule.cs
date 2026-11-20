@@ -7,15 +7,21 @@ internal static class AnchorReferenceRule
     internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var checkAll = context.RuleImplementationChanged || context.Changes.Paths.Any(
+            path => RepositoryRules.IsLeanReportProducerInput(path.Value, context.RegisteredRuleBuildInputs));
+        var imports = checkAll && context.Lean.Report.IsScoped
+            ? LeanImportClosure.CandidateImports(context.Current, context.Lean.Report, includeDependencySources: true)
+                .ToDictionary(item => LeanImportClosure.ModuleName(item.Path), item => item.Imports, StringComparer.Ordinal)
+            : LeanImportClosure.ImportGraph(context.Lean.Report);
         foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            if (!RepositoryRules.TryHeader(file.Text, out var header))
+            if (!RepositoryRules.TryHeader(file.Text, out var header) || header.Anchors.Length == 0
+                || !checkAll && (!context.Lean.Report.Files.ContainsKey(path)
+                    || !RepositoryRules.IsLeanClosureFactAffected(context, path)))
             {
                 continue;
             }
-
-            var findingAffected = RepositoryRules.IsLeanClosureFactAffected(context, path);
 
             foreach (var anchor in header.Anchors)
             {
@@ -34,7 +40,7 @@ internal static class AnchorReferenceRule
                     MathlibAnchor { TargetKind: MathlibTargetKind.Module } mathlib => mathlib.Name,
                     _ => null,
                 };
-                if (moduleName is null && findingAffected)
+                if (moduleName is null)
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
@@ -45,10 +51,9 @@ internal static class AnchorReferenceRule
 
                 if (moduleName is not null
                     && !LeanImportClosure.ImportsExternalModule(
-                    context.Lean.Report,
+                    imports,
                     LeanImportClosure.ModuleName(path),
-                    moduleName.Value)
-                    && findingAffected)
+                    moduleName.Value))
                 {
                     findings.Add(new RuleFinding(
                         path.Value,

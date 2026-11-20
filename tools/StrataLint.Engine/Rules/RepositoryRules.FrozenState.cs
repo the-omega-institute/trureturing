@@ -51,6 +51,10 @@ internal static partial class RepositoryRules
                 continue;
             }
 
+            // Every pin still needs a canonical path, record and live module.
+            // Only owners in the verified closure have candidate kernel facts.
+            if (lean.Report.IsScoped && !lean.Report.Files.ContainsKey(modulePath)) continue;
+
             if (!states.TryGetValue(modulePath, out var state) || state is not TruthState.Closed)
             {
                 findings.Add(new RuleFinding(

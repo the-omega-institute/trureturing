@@ -122,7 +122,10 @@ def current_phase(phase, data, plan, base, paths):
     if phase == "pr-lean":
         if not paths.is_file():
             raise DetectError("incremental Lean checks require the changed paths")
-        return execute(phase, [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths)])
+        if plan["delta"] and not base:
+            raise DetectError("selected delta requires a readable protected base")
+        return execute(phase, [sys.executable, "tools/scripts/workflow/ci_pr_lean.py", str(paths),
+                               *(["--protected-base", base] if plan["delta"] else [])])
     if phase in ("compiled-audit", "source-evidence") and not plan[phase]:
         result(phase, "not-applicable")
         return 0
@@ -141,7 +144,8 @@ def current_phase(phase, data, plan, base, paths):
             return 0
         if not base:
             raise DetectError("selected delta requires a readable protected base")
-        return execute(phase, ["dotnet", CLI, "check-delta", "--protected-base", base], delta=True)
+        return execute(phase, ["dotnet", CLI, "check-delta", "--protected-base", base,
+                               "--changed-paths-from", str(paths)], delta=True)
     raise DetectError(f"unknown current phase: {phase}")
 
 

@@ -14,11 +14,12 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Imports(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, report) in context.Lean.Report.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        foreach (var (path, imports) in LeanImportClosure.CandidateImports(context.Current, context.Lean.Report)
+                     .OrderBy(item => item.Path.Value, StringComparer.Ordinal))
         {
             // Reg is a downstream registration package, not a mathematical stratum.
             if (path.Value == "Reg.lean" || path.Value.StartsWith("Reg/", StringComparison.Ordinal)) continue;
-            foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
+            foreach (var module in imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
                 if (!context.Current.TryGetFile(target, out _))
@@ -50,6 +51,14 @@ internal static partial class RepositoryRules
             .SelectMany(item => item.Value.Imports.Where(IsRegistrationImport)
                 .Select(module => (Path: item.Key, Module: module)))
             .ToHashSet();
+        if (context.Lean.Report.IsScoped)
+        {
+            // Unchanged owners outside the report retain their protected-base import debt.
+            // A deleted owner contributes no candidate edges.
+            candidate.UnionWith(baseline.Where(edge => context.Current.Files.TryGetValue(edge.Path, out var current)
+                && !context.Lean.Report.Files.ContainsKey(edge.Path)
+                && current.RawBytes.AsSpan().SequenceEqual(context.Baseline.Files[edge.Path].RawBytes.AsSpan())));
+        }
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
 
         if (baseline.Count == 0)
@@ -350,13 +359,8 @@ internal static partial class RepositoryRules
             .Select(item => (item.Path, Header: TryHeader(item.File.Text, out var header) ? header : null))
             .Where(static item => item.Header is not null)
             .ToDictionary(static item => item.Path.Value, static item => item.Header, StringComparer.Ordinal);
-        var imports = context.Lean.Report.Files.ToDictionary(
-            static item => item.Key.Value,
-            static item => item.Value.Imports
-                .Where(static module => module.StartsWith("D5.", StringComparison.Ordinal))
-                .Select(static module => module.Replace('.', '/') + ".lean")
-                .ToImmutableArray(),
-            StringComparer.Ordinal);
+        var imports = LeanImportClosure.CandidateImports(context.Current, context.Lean.Report)
+            .ToDictionary(item => item.Path.Value, item => D5ImportPaths(item.Imports), StringComparer.Ordinal);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (source, header) in headers)
         {
@@ -379,6 +383,11 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
+
+    private static ImmutableArray<string> D5ImportPaths(IEnumerable<string> imports) =>
+        imports.Where(static module => module.StartsWith("D5.", StringComparison.Ordinal))
+            .Select(static module => module.Replace('.', '/') + ".lean")
+            .ToImmutableArray();
 
     private static ImmutableArray<RuleFinding> Domains(CurrentRuleContext context)
     {

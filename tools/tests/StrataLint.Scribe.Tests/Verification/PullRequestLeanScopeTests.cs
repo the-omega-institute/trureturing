@@ -32,6 +32,29 @@ public sealed class PullRequestLeanScopeTests
     }
 
     [Fact]
+    public void SourceOnlyChangesDoNotSelectValuesOrAxiomsButChangedBindingsRequireBoth()
+    {
+        const string owner = "D5/S3/Constants/Values.lean";
+        var sources = RawRepositorySnapshot.Create([
+            RawRepositoryEntry.FromText(owner, "def ah := 1"),
+            RawRepositoryEntry.FromText(RepositoryRules.AxiomDebtPath, ""),
+            RawRepositoryEntry.FromText(ValuesKernelBindingValidator.RelativePath, """
+                schema_version = 1
+                [[constants]]
+                id = "ah"
+                lean_gid = "D5/S3/Constants/Values.ah"
+                lean_statement_sha256 = "abc"
+                """),
+        ]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(sources)).Snapshot;
+        var targets = new HashSet<string>(StringComparer.Ordinal);
+        PullRequestLeanChecks.AddRuleEvidence(snapshot, ["README.md", "tools/scripts/workflow/ci-entry.sh"], targets);
+        Assert.Empty(targets);
+        PullRequestLeanChecks.AddRuleEvidence(snapshot, [ValuesKernelBindingValidator.RelativePath], targets);
+        Assert.Equal(["D5.S3.Constants.Values", "D5.X_Assumptions.AxiomDebt"], targets.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public void DeletedModuleReachesSurvivingImportersAndAuditorWithoutSelectingUnrelatedModules()
     {
         var sources = RawRepositorySnapshot.Create([

@@ -1,6 +1,7 @@
 using StrataLint.Runtime;
 using StrataLint.Engine;
 using System.Text;
+using System.Text.Json;
 
 namespace StrataLint.Cli;
 
@@ -36,8 +37,16 @@ internal sealed class PrecomputedLeanReportSource(string repositoryRoot) : ILean
             return RawLeanReportArtifact.ReadFileForScope(ReportPath, scope, validateMaterials: true);
         }
 
+        internal JsonDocument CaptureProvenance()
+        {
+            CaptureFiles();
+            using var stream = File.OpenRead(ReportPath + ".provenance.json");
+            return JsonDocument.Parse(stream);
+        }
+
         private void CaptureFiles()
         {
+            if (Directory.Exists(directory)) return;
             Directory.CreateDirectory(directory);
             // Keep the report and its lazy statement materials alive for the entire batch.
             // Missing companions retain the final emission's failure-after-commit behavior.

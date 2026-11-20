@@ -371,8 +371,10 @@ jobs:
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - id: pr_lean
-        name: Check affected Lean modules and Scribe inputs
+        name: Check current and delta with affected Lean and Scribe inputs
         if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
       - name: Run selected FIB regressions
         if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']

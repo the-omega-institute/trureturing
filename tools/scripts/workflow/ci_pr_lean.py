@@ -1,4 +1,4 @@
-"""Build and check the explicit Lean inputs of a pull request."""
+"""Build scoped Lean evidence and check the candidate and its selected delta."""
 
 import argparse
 import json
@@ -10,6 +10,7 @@ import sys
 import tempfile
 
 from ci_contract import read_changed, write_paths
+from ci_checks import CLI
 
 SCRIBE = ["dotnet", "tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll"]
 MODULE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*")
@@ -44,11 +45,11 @@ def report_batches(scope, limit=60_000):
         yield sorted(targets), documents
 
 
-def check(paths):
+def check(manifest, protected_base=None):
+    if read_changed(manifest) is None:
+        raise ValueError("missing changed-path manifest")
     with tempfile.TemporaryDirectory(prefix="ci-pr-lean-") as temporary:
         directory = Path(temporary)
-        manifest = directory / "paths"
-        write_paths(manifest, paths)
         plan = subprocess.run([*SCRIBE, "lean-inputs", "--affected", "--paths-from", str(manifest)],
                               stdout=subprocess.PIPE, text=True, check=True)
         scope = json.loads(plan.stdout)
@@ -61,23 +62,39 @@ def check(paths):
             subprocess.run(["bash", "tools/scripts/worktree/lean-cache-run.sh", "lake",
                             "-d", "tools/lean-inspector-reg", "build",
                             *["+" + module for module in programs]], env=environment, check=True)
-        for targets, selected_paths in report_batches(scope):
-            report = directory / "scoped-lean-report.json"
+        reports = []
+        for index, (targets, selected_paths) in enumerate(report_batches(scope)):
+            batch = directory / str(index)
+            batch.mkdir()
+            report = batch / "scoped-lean-report.json"
             subprocess.run(["make", "lean-report-scoped", "LEAN_TARGETS=" + " ".join(targets)],
                            env=dict(environment, LEAN_REPORT=str(report), LEAN_NUM_THREADS="1"), check=True)
-            roots = directory / "roots"
+            reports.append(str(report))
+            roots = batch / "roots"
+            documents = batch / "documents"
             write_paths(roots, [name.replace(".", "/") + ".lean" for name in targets])
-            write_paths(manifest, selected_paths)
+            write_paths(documents, selected_paths)
             subprocess.run([*SCRIBE, "content-check", "--scoped", "--report", str(report),
-                            "--targets-from", str(roots), "--paths-from", str(manifest)], check=True)
-    return 0
+                            "--targets-from", str(roots), "--paths-from", str(documents)], check=True)
+
+        report_list = directory / "reports"
+        write_paths(report_list, reports)
+        arguments = ["--changed-paths-from", str(manifest), "--scoped-reports-from", str(report_list)]
+        current = subprocess.run(["dotnet", CLI, "check-current", *arguments])
+        if protected_base is None:
+            return current.returncode
+        delta = subprocess.run(["dotnet", CLI, "check-delta", "--protected-base", protected_base, *arguments])
+        return current.returncode or (0 if delta.returncode == 3 else delta.returncode)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path)
+    parser.add_argument("--protected-base")
+    args = parser.parse_args()
     try:
-        sys.exit(check(read_changed(parser.parse_args().manifest)))
+        code = check(args.manifest, args.protected_base)
+        sys.exit(code if code >= 0 else 128 - code)
     except subprocess.CalledProcessError as error:
         sys.exit(error.returncode if error.returncode > 0 else 128 - error.returncode)
     except (OSError, ValueError, KeyError) as error:

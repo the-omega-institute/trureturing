@@ -69,7 +69,6 @@ class CheckTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertIn(["pr-lean", "D5/changed.lean"], calls)
                 self.assertFalse(any(call[:2] == ["make", "lean-report"] for call in calls))
-                self.assertFalse(any("check-current" in call or "check-delta" in call for call in calls))
 
     def test_hosted_scope_rejects_missing_manifest_before_launch(self):
         data, revision = contract.load(ROOT)
@@ -85,17 +84,52 @@ class CheckTests(unittest.TestCase):
                 self.assertIn("missing changed-path manifest", error.getvalue())
                 execute.assert_not_called()
                 contract.write_paths(changed, ["D5/Changed.lean"])
+                self.assertEqual(checks.main(), 2)
+                command.extend(["--base", "b" * 40])
                 self.assertEqual(checks.main(), 0)
-                self.assertEqual(execute.call_args.args[1][-1], str(changed))
+                self.assertEqual(execute.call_args.args[1][-3:], [str(changed), "--protected-base", "b" * 40])
 
-    def test_no_report_delta_diagnostic_keeps_original_command(self):
+    def test_source_delta_uses_changed_paths_without_a_report(self):
         data, _ = contract.load(ROOT)
         plan = contract.selection(data, ["D5/Changed.lean"], "pull-request")
         base = "a" * 40
         with patch.object(checks, "execute", return_value=0) as execute:
             self.assertEqual(checks.current_phase("check-delta", data, dict(plan, report=False), base, Path("changed")), 0)
-            self.assertEqual(execute.call_args.args[1], ["dotnet", checks.CLI, "check-delta", "--protected-base", base])
+            self.assertEqual(execute.call_args.args[1], ["dotnet", checks.CLI, "check-delta", "--protected-base", base,
+                                                      "--changed-paths-from", "changed"])
             self.assertTrue(execute.call_args.kwargs["delta"])
+
+    def test_admission_reuses_all_batches_and_runs_without_reports_for_source_changes(self):
+        import ci_pr_lean
+        cases = [([], 0, 3, 0), (["D5.A", "D5.B"], 1, 0, 1), (["D5.A"], 0, 2, 2)]
+        for targets, current_exit, delta_exit, expected in cases:
+            with self.subTest(targets=targets), tempfile.TemporaryDirectory() as temp:
+                changed = Path(temp) / "changed"
+                contract.write_paths(changed, ["some-file"])
+                built, consumers = [], []
+                def run(command, **options):
+                    if "lean-inputs" in command:
+                        plan = {"programs": [], "targets": targets, "paths": [], "definitions": {}}
+                        return subprocess.CompletedProcess(command, 0, json.dumps(plan))
+                    if command[:2] == ["make", "lean-report-scoped"]:
+                        report = Path(options["env"]["LEAN_REPORT"])
+                        self.assertNotIn(report, built)
+                        report.touch()
+                        built.append(report)
+                    if command[2] in ("check-current", "check-delta"):
+                        consumers.append(command[2])
+                        manifest = Path(command[command.index("--changed-paths-from") + 1])
+                        self.assertEqual(contract.read_changed(manifest), ["some-file"])
+                        reports = Path(command[command.index("--scoped-reports-from") + 1])
+                        self.assertEqual(reports.read_bytes(), b"".join(os.fsencode(p) + b"\0" for p in built))
+                        self.assertTrue(all(path.is_file() for path in built))
+                        return subprocess.CompletedProcess(command, current_exit if command[2] == "check-current" else delta_exit)
+                    return subprocess.CompletedProcess(command, 0)
+                with patch.object(ci_pr_lean.subprocess, "run", side_effect=run), \
+                        patch.object(ci_pr_lean, "report_batches", return_value=[([target], []) for target in targets]):
+                    self.assertEqual(ci_pr_lean.check(changed, "a" * 40), expected)
+                self.assertEqual(consumers, ["check-current", "check-delta"])
+                self.assertEqual(len(built), len(targets))
 
     def test_real_process_exits_are_preserved(self):
         for raw in (0, 1, 2, 3, 124, 143):

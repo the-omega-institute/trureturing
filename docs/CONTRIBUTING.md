@@ -284,9 +284,11 @@ base_sha="$(git rev-parse upstream/dev^{commit})"
 make gate-plan BASE="$base_sha"
 ```
 
-Run `make gate BASE="$base_sha"` when the plan fits the local check scope. Both
-`make gate` and ordinary CI select checks from the changed paths. For an explicit
-whole-repository check, `make test FULL_BUILD=1` builds the full Lean report and
+Run `make gate BASE="$base_sha"` when the plan fits the local check scope. Ordinary CI and `make gate` use the changed paths to run
+`check-current` and applicable `check-delta`. Each consumes the same scoped
+Lean reports. Source-only input can be checked with an empty report list.
+Use `make test BASE="$base_sha"` to run the scoped current check on its own.
+For an explicit whole-repository check, `make test FULL_BUILD=1` builds the full Lean report and
 runs check-current.
 Base supplies data only. Use `origin/dev` when that is your project remote.
 Commit and push each logical change; local checks provide early feedback alongside
