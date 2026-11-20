@@ -8,7 +8,7 @@
 
 module
 
-public import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.SLnUnitriangular
+public import all D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.SLnUnitriangular
 public import Mathlib.Algebra.BigOperators.Intervals
 public import Mathlib.Data.Fintype.BigOperators
 
