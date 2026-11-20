@@ -75,6 +75,19 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
             build_output = self.root / ".lake/build" / source
             self.assertEqual(b"compiler output", build_output.read_bytes())
             build_output.unlink()
+            new_run = {**owner, "run": "18"}
+            new_identity = {"verification": {"scenario": "release-none", "run": "18"}}
+            with mock.patch.object(shards, "current_owner", return_value=new_run):
+                with mock.patch.object(shards, "manual_source_is_valid", return_value=False):
+                    with self.assertRaisesRegex(ValueError, "different run or attempt"):
+                        shards.restore_checkpoint(self.root, new_identity, artifact, 1, "17")
+                with mock.patch.object(shards, "manual_source_is_valid", return_value=True):
+                    shards.restore_checkpoint(self.root, new_identity, artifact, 1, "17")
+                    self.assertEqual(b"compiler output", build_output.read_bytes())
+                    build_output.unlink()
+                    with self.assertRaisesRegex(ValueError, "different run or attempt"):
+                        shards.restore_checkpoint(self.root, new_identity, artifact, 2, "17")
+            self.assertFalse(build_output.exists())
             (artifact / "payload" / (digest + ".tar.gz")).unlink()
             with self.assertRaisesRegex(ValueError, "missing verified shard material"):
                 shards.restore_checkpoint(self.root, identity, artifact, 1)

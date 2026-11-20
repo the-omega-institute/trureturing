@@ -3,6 +3,17 @@ name: CI publication verification
 on:
   push:
     branches: ['integration-ci-*-tests']
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Cold Release verification seed
+        type: choice
+        options: [none, partial]
+        required: true
+      checkpoint_run:
+        description: Previous verification run for this commit and mode
+        type: string
+        required: true
 
 permissions: {}
 
@@ -11,9 +22,10 @@ permissions: {}
 jobs:
   cache:
     name: verify cache publication and restore
+    if: github.event_name == 'push' || (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')
     runs-on: runner-for-trureturing-cache-release-publish
     # Cold and partial seed scenarios exercise the scheduled Release build.
-    timeout-minutes: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF) && 360 || 120 }}
+    timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
     outputs:
       indexed-tag: ${{ steps.publish.outputs.indexed_tag }}
     permissions:
@@ -21,7 +33,7 @@ jobs:
       actions: read
     env:
       STRATALINT_CACHE_WRITES: 'false'
-      SHARD_HANDOFF: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
+      SHARD_HANDOFF: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -97,6 +109,20 @@ jobs:
         env:
           HIT: ${{ steps.entry.outputs.hit }}
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - name: Bind the protected dispatch checkout
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
+        run: |
+          [[ "$SHARD_HANDOFF" == none || "$SHARD_HANDOFF" == partial ]]
+          [[ "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ]]
+          [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
+          {
+            echo 'STRATALINT_CACHE_SOURCE_VALIDATED=true'
+            echo "STRATALINT_CACHE_SOURCE_REF=$GITHUB_REF"
+            echo "STRATALINT_CACHE_SOURCE_COMMIT=$GITHUB_SHA"
+            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$GITHUB_SHA"
+          } >> "$GITHUB_ENV"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         if: steps.entry.outputs.hit == 'true'
@@ -130,6 +156,7 @@ jobs:
           mode: ${{ env.SHARD_HANDOFF }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+          checkpoint-run: ${{ inputs.checkpoint_run || '' }}
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
@@ -183,7 +210,7 @@ jobs:
 
   cache-shards:
     name: Verify Lean cache continuation transport
-    if: github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+    if: github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
@@ -307,6 +334,7 @@ jobs:
 
   scribe:
     name: verify Scribe publication and fetch
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:

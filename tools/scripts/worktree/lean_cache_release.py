@@ -296,13 +296,18 @@ def validate_source_ref(repo, source_ref, source_commit, api):
 
 def verification_identity(root, source_ref, source_commit, deadline):
     run, attempt = (os.environ.get(field, "") for field in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))
-    if (os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("GITHUB_EVENT_NAME") != "push"
+    event = os.environ.get("GITHUB_EVENT_NAME")
+    verification_workflow = ".github/workflows/ci-publication-verify.yml"
+    continued_dispatch = (event == "workflow_dispatch" and os.environ.get("GITHUB_REF_PROTECTED") == "true"
+                          and re.fullmatch(r"refs/heads/integration-ci-[A-Za-z0-9._/-]+-tests", source_ref)
+                          and os.environ.get("GITHUB_WORKFLOW_REF") == f"{REPO}/{verification_workflow}@{source_ref}")
+    if (os.environ.get("GITHUB_ACTIONS") != "true" or (event != "push" and not continued_dispatch)
             or not source_ref.startswith("refs/heads/integration-")
             or os.environ.get("GITHUB_REF") != source_ref or os.environ.get("GITHUB_SHA") != source_commit
             or os.environ.get("GITHUB_REPOSITORY") != REPO
             or not re.fullmatch(r"[0-9a-f]{40}", source_commit)
             or not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt))):
-        raise ValueError("verification requires a native integration push with explicit matching source and run attribution")
+        raise ValueError("verification requires an integration event with explicit matching source and run attribution")
     head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
     dirty = checked_run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"], deadline).stdout
     if head != source_commit or dirty:
@@ -312,10 +317,11 @@ def verification_identity(root, source_ref, source_commit, deadline):
     record = request(f"repos/{REPO}/actions/runs/{run}/attempts/{attempt}")
     if (not isinstance(record, dict) or type(record.get("id")) is not int or record["id"] != int(run)
             or type(record.get("run_attempt")) is not int or record["run_attempt"] != int(attempt)
-            or record.get("event") != "push" or record.get("head_sha") != source_commit
+            or record.get("event") != event or record.get("head_sha") != source_commit
+            or (continued_dispatch and record.get("path") != verification_workflow)
             or record.get("head_branch") != branch or not isinstance(record.get("repository"), dict)
             or record["repository"].get("full_name") != REPO):
-        raise ValueError("verification run does not match the native push source and attempt")
+        raise ValueError("verification run does not match the source, event and attempt")
     return {"producer_commit_sha": source_commit, "workflow_run_id": run,
             "workflow_run_attempt": attempt, "source_ref": source_ref}
 
