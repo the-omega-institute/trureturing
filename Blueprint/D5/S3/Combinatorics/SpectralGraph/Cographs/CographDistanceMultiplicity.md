@@ -10,10 +10,6 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMulti
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/manna-mandal-tura-2026-cograph-distance-multiplicity` (proved) by `D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manna-mandal-tura-2026-cograph-distance-multiplicity","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/Cographs/CographDistanceMultiplicity.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pallabi Manna; Santanu Mandal; Fernando C. Tura (2026). *The Spectral Theory of Cographs: A Survey, Organized by Graph Matrix*. URL: <https://arxiv.org/pdf/2611.06981v1#page=22>.
