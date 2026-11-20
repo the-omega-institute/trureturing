@@ -25,7 +25,8 @@ internal sealed class HardinA229750Document : IScribeDocumentDefinition
         AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229750"), ResolutionKind.Proved) : null);
 
     private static Formula Formula0()
     {
