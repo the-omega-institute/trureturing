@@ -16,6 +16,14 @@ triage: anchor
 
 # The range in the forbidden-subset-sum inverse theorem
 
+## Verified locator
+
+DOI <https://doi.org/10.48550/arXiv.2611.17205>
+
+Source <https://arxiv.org/html/2611.17205v1#S9>, Problems 9.1–9.3.
+
+## The range question
+
 Let \(q\) be the least positive nondivisor of a fixed positive integer \(s\).
 Theorem 1.2 asks when density greater than \(1/q\) in an initial interval
 \([1,E]\) forces a subset sum of \(sT\), with an additive density margin
