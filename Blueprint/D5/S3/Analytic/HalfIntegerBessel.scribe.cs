@@ -46,6 +46,11 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
             Node("wronskian_KI", "Wronskian of the decaying and regular carriers",
                 "On Re z > 0, K I' - K' I = 1/z. The multiple of K cancels and "
                 + "the reflected Wronskian is divided by pi.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
+            Node("hasDerivAt_deriv_K", "Ordinary modified Bessel equation",
+                "At order nu = m+1/2 and on Re z > 0, the derivative of K' is "
+                + "(1+nu^2/z^2) K - K'/z. Differentiating the finite carrier twice "
+                + "reduces the equation to the rational polynomial equation at 1/z.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)))));
 
     private static DocumentBlock Node(string name, string title, string prose,

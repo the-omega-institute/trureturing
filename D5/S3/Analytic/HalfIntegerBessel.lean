@@ -24,6 +24,7 @@ Their analytic identities use the open right half-plane.
 public section
 
 open Polynomial
+open scoped Topology
 open D5.S3.Analytic.HalfIntegerBesselPolynomial (carrier)
 
 namespace D5.S3.Analytic.HalfIntegerBessel
@@ -145,5 +146,57 @@ theorem wronskian_KI (m : ℕ) {z : ℂ} (hz : 0 < z.re) :
     _ = 1 / z := by
       field_simp [hpi, arg_ne_zero hz]
       linear_combination h
+
+/-- The ordinary modified Bessel equation for the decaying finite carrier. -/
+theorem hasDerivAt_deriv_K (m : ℕ) {z : ℂ} (hz : 0 < z.re) :
+    HasDerivAt (deriv (K m))
+      ((1 + ((m : ℂ) + 1 / 2)^2 / z^2) * K m z - deriv (K m) z / z) z := by
+  let p := carrier m
+  let amplitude (t : ℂ) := prefactor t * Complex.exp (-t)
+  let slope (t : ℂ) := -(1 + (2 * t)⁻¹)
+  let polynomial (t : ℂ) := aeval t⁻¹ p
+  let polynomial' (t : ℂ) := aeval t⁻¹ p.derivative
+  let polynomial'' (t : ℂ) := aeval t⁻¹ p.derivative.derivative
+  have hz0 := arg_ne_zero hz
+  have hrecip := hasDerivAt_inv hz0
+  have hslope : HasDerivAt slope (z⁻¹ ^ 2 / 2) z := by
+    have h := ((hasDerivAt_const z (1 : ℂ)).add (hrecip.div_const (2 : ℂ))).neg
+    have hs : slope = (fun t : ℂ => -(1 + t⁻¹ / 2)) := by
+      funext t
+      simp only [slope, mul_inv_rev, div_eq_mul_inv]
+    rw [hs]
+    refine h.congr_deriv ?_
+    simp only [inv_pow, div_eq_mul_inv]
+    ring
+  have hamplitude : HasDerivAt amplitude (amplitude z * slope z) z := by
+    have hexp := (Complex.hasDerivAt_exp (-z)).comp z (hasDerivAt_id z).neg
+    refine ((hasDerivAt_prefactor hz).mul hexp).congr_deriv ?_
+    simp only [amplitude, slope, Function.comp_apply, div_eq_mul_inv]
+    ring
+  have hpolynomial := hasDerivAt_reciprocal p hz0
+  have hpolynomial' := hasDerivAt_reciprocal p.derivative hz0
+  have hderiv := hamplitude.mul
+    ((hslope.mul hpolynomial).sub ((hrecip.pow 2).mul hpolynomial'))
+  have hevent : ∀ᶠ t in 𝓝 z, 0 < t.re :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hz
+  have hformula : (deriv (K m)) =ᶠ[𝓝 z]
+      (fun t => amplitude t * (slope t * polynomial t - t⁻¹ ^ 2 * polynomial' t)) :=
+    hevent.mono fun _ ht => (hasDerivAt_K m ht).deriv
+  have hpoly : z⁻¹ ^ 2 * polynomial'' z + (2 * z⁻¹ + 2) * polynomial' z =
+      (m : ℂ) * (m + 1) * polynomial z := by
+    simpa [polynomial, polynomial', polynomial'', p] using
+      congrArg (aeval (R := ℚ) z⁻¹) (HalfIntegerBesselPolynomial.carrier_ode m)
+  refine (hderiv.congr_of_eventuallyEq hformula).congr_deriv ?_
+  rw [(hasDerivAt_K m hz).deriv]
+  change (amplitude z * slope z *
+      (slope z * polynomial z - z⁻¹ ^ 2 * polynomial' z) +
+      amplitude z * ((z⁻¹ ^ 2 / 2 * polynomial z + slope z *
+        (-z⁻¹ ^ 2 * polynomial' z)) -
+        ((2 : ℕ) * z⁻¹ ^ (2 - 1) * (-(z ^ 2)⁻¹) * polynomial' z +
+          z⁻¹ ^ 2 * (-z⁻¹ ^ 2 * polynomial'' z)))) =
+      (1 + ((m : ℂ) + 1 / 2)^2 / z^2) * (amplitude z * polynomial z) -
+        amplitude z * (slope z * polynomial z - z⁻¹ ^ 2 * polynomial' z) / z
+  simp only [slope, Nat.reduceSub, Nat.cast_ofNat, pow_one, inv_pow, div_eq_mul_inv]
+  linear_combination (amplitude z * z⁻¹ ^ 2) * hpoly
 
 end D5.S3.Analytic.HalfIntegerBessel
