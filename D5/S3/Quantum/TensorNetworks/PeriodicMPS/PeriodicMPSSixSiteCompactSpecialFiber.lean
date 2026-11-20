@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCompactSpecialFiber
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteCompactExceptional,
-     lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteSpecialFiber]
+   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteCompactExceptional, lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteSpecialFiber]
    utility: none
    digest: The chosen adjacent marginal has two lifts in the compact trace graph. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteCompactExceptional

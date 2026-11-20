@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteRegularLocus
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteOrdinaryTrace,
-     lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSFiveSiteRegularLocus]
+   anchors: [lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteOrdinaryTrace, lake/module/D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSFiveSiteRegularLocus]
    utility: none
    digest: Analytic continuation on compact six-site fibers avoiding boundary and critical values. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.PeriodicMPSSixSiteOrdinaryTrace

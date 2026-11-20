@@ -51,6 +51,18 @@ internal static class DuplicateStatementAdvisory
         ArgumentNullException.ThrowIfNull(context);
         var changed = ChangedLeanModules(context);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        if (context.Lean.Report.IsScoped)
+        {
+            var comparable = changed.Where(path => context.Lean.Report.Files.TryGetValue(path, out var file)
+                    && file.Declarations.Any(IsAuthoredDeclaration))
+                .OrderBy(path => path.Value, StringComparer.Ordinal).FirstOrDefault();
+            var omitted = context.Current.Files.Keys.Count(path =>
+                LeanClosureValidator.IsReportLean(path.Value) && !context.Lean.Report.Files.ContainsKey(path));
+            if (comparable is not null && omitted > 0)
+                findings.Add(new RuleFinding(comparable.Value,
+                    $"duplicate comparison covers {context.Lean.Report.Files.Count} reported modules; "
+                    + $"{omitted} candidate modules are outside the scoped evidence", AdmissionEffect.Observe));
+        }
         var classes = context.Lean.Report.Files
             .SelectMany(static entry => entry.Value.Declarations
                 .Where(IsAuthoredDeclaration)
@@ -105,7 +117,9 @@ internal static class DuplicateStatementAdvisory
     private static HashSet<RepoPath> ChangedLeanModules(DeltaRuleContext context) =>
         context.RuleImplementationChanged
             ? context.Lean.Report.Files.Keys.ToHashSet()
-            : context.Changes.Paths
+            : context.Changes.Entries
+                .Where(change => change.Kind != RawChangeKind.Copied)
+                .Select(change => change.Path)
                 .Where(path => LeanClosureValidator.IsManagedLean(path.Value)
                     && context.Current.TryGetFile(path.Value, out _))
                 .ToHashSet();
