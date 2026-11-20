@@ -14,6 +14,25 @@
     "tools/scripts/workflow/ci_contract.py",
     "tools/scripts/workflow/ci_checks.py",
     "tools/scripts/workflow/ci_compute.py",
+    "# Installed proof projects inherit the consumer's .NET configuration.",
+    "[banned-api-proof]",
+    ".editorconfig",
+    ".globalconfig",
+    "Directory.Build.*",
+    "Directory.Packages.props",
+    "NuGet.Config",
+    "NuGet.config",
+    "nuget.config",
+    "global.json",
+    "[capability-proof]",
+    ".editorconfig",
+    ".globalconfig",
+    "Directory.Build.*",
+    "Directory.Packages.props",
+    "NuGet.Config",
+    "NuGet.config",
+    "nuget.config",
+    "global.json",
     "[current]",
     "tools/scripts/workflow/ci_pr_lean.py",
     "tools/scripts/maintenance_log.py",
@@ -1186,6 +1205,20 @@
     ]
   },
   "units": {
+    "banned-api-proof": {
+      "dotnet": true,
+      "lean": "none",
+      "project": "",
+      "command": "make -C tools compile-proof PROOF=banned-api-proof",
+      "cache-dependency-path": "tools/StrataLint.TestEvidence/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/tests/BannedApiCompileFailProof/packages.lock.json\n"
+    },
+    "capability-proof": {
+      "dotnet": true,
+      "lean": "none",
+      "project": "",
+      "command": "make -C tools compile-proof PROOF=capability-proof",
+      "cache-dependency-path": "tools/StrataLint.TestEvidence/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\ntools/tests/CompileFailProof/packages.lock.json\n"
+    },
     "filemap": {
       "dotnet": true,
       "lean": "none",
