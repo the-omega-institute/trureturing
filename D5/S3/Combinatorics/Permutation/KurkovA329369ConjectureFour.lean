@@ -19,9 +19,9 @@ namespace D5.S3.Combinatorics.Permutation.KurkovA329369ConjectureFour
 
 open Polynomial
 open scoped BigOperators
-open D5.S1.Digit.DyadicRowPolynomialRecurrence (R wt)
+open D5.S1.Digit.DyadicRowPolynomialRecurrence (wt)
 open D5.S1.Recurrence.Parity.DyadicExtendedStirlingBlock (T)
-open D5.S1.Recurrence.Parity.DyadicPowerRowClosedForm (b)
+open D5.S1.Recurrence.Parity.DyadicPowerRowClosedForm (b b_zero b_even_index b_odd_index)
 open D5.S1.Recurrence.Parity.DyadicPochhammerCoefficient
 
 noncomputable section
@@ -343,6 +343,52 @@ private theorem paddedCount_even {w n : ℕ} (hn : 0 < n) (hw : 2 * n < 2 ^ (w +
   unfold paddedCount
   change exactCount S = _
   rw [adjacentBA a S left right, swapped, deleteRight, deleteLeft]
+
+
+private theorem paddedCount_eq_b (n : ℕ) :
+    ∀ w : ℕ, n < 2 ^ w → (paddedCount w n : ℤ) = b n := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro w hw
+    obtain rfl | hn := Nat.eq_zero_or_pos n
+    · simp [paddedCount_zero, b_zero]
+    cases w with
+    | zero => simp at hw; omega
+    | succ w =>
+      let q := n / 2
+      have hq : q < n := Nat.div_lt_self hn (by decide)
+      have hqw : q < 2 ^ w := by rw [pow_succ] at hw; dsimp [q]; omega
+      by_cases he : n % 2 = 0
+      · have hindex : n = 2 * q := by dsimp [q]; omega
+        have hpos : 0 < q := by omega
+        have hd : 0 < 2 ^ padicValNat 2 q := Nat.two_pow_pos _
+        have hswap : 2 * q - 2 ^ padicValNat 2 q < n := by omega
+        have hremoved : q - 2 ^ padicValNat 2 q < 2 ^ w :=
+          (Nat.sub_le ..).trans_lt hqw
+        have hswapWidth : 2 * q - 2 ^ padicValNat 2 q < 2 ^ (w + 1) :=
+          hswap.trans hw
+        rw [hindex, paddedCount_even hpos (hindex ▸ hw), b_even_index q hpos]
+        push_cast
+        rw [ih _ hswap _ hswapWidth, ih q hq _ hqw,
+          ih _ ((Nat.sub_le ..).trans_lt hq) _ hremoved]
+        ring
+      · have hindex : n = 2 * q + 1 := by dsimp [q]; omega
+        rw [hindex, paddedCount_odd, b_odd_index]
+        exact ih q hq w hqw
+
+/-- OEIS A329369 Conjecture 4 at every admissible padding width.
+The sign uses the printed integer exponent, including the two upper columns. -/
+theorem conjecture4 (m k w : ℕ) (hw : 2 ^ m * (2 * k + 1) < 2 ^ w) :
+    (paddedCount w (2 ^ m * (2 * k + 1)) : ℚ) =
+      ∑ i ∈ Finset.Icc 1 (wt k + 2),
+        (i.factorial : ℚ) * (i : ℚ) ^ m * T k i *
+          (-1 : ℚ) ^ ((wt k : ℤ) - (i : ℤ)) := by
+  have h := congrArg (Int.castRingHom ℚ) (paddedCount_eq_b _ w hw)
+  have h' : (paddedCount w (2 ^ m * (2 * k + 1)) : ℚ) =
+      (b (2 ^ m * (2 * k + 1)) : ℚ) := by simpa using h
+  exact h'.trans (b_factorial_sum m k)
+
+#print axioms conjecture4
 
 end
 end D5.S3.Combinatorics.Permutation.KurkovA329369ConjectureFour
