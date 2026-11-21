@@ -164,7 +164,7 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_compile_layers.py verify --artifacts "$RUNNER_TEMP/lean-compile"
     - name: Complete missing project artifacts with Lake
-      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.checkpoint-seconds == '0'
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && env.LEAN_CACHE_SPARSE_PLAN == '' && inputs.checkpoint-seconds == '0'
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       shell: bash

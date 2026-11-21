@@ -13,6 +13,10 @@ on:
       volume_test_id:
         description: Shared identifier for two verification snapshots using reusable physical volumes
         type: string
+      sparse_release:
+        description: Prefer a compatible predecessor in the named volume namespace and reuse its checked report
+        type: boolean
+        default: true
       retire_volume_tag:
         description: Optional previous snapshot from this verification pair to retire before recovery
         type: string
@@ -39,6 +43,7 @@ jobs:
       source: ${{ github.sha }}
       strategy: ${{ inputs.mode }}
       publication-mode: verification
+      sparse-volume: ${{ inputs.sparse_release && inputs.volume_test_id || '' }}
       indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name }}
 
   cache:
@@ -65,6 +70,9 @@ jobs:
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
+      LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.parallel-compile.outputs.sparse == 'true' && '1' || '0' }}
       SHARD_HANDOFF: ${{ needs.parallel-compile.outputs.seed || github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
       CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
     steps:
@@ -74,6 +82,20 @@ jobs:
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
+      - name: Fetch the selected predecessor ancestry before disconnecting the checkout
+        if: needs.parallel-compile.outputs.sparse == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ fromJSON(needs.parallel-compile.outputs.base).producer }}
+        run: |
+          [[ "$BASE" =~ ^[0-9a-f]{40}$ && "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
+          if ! git merge-base --is-ancestor "$BASE" "$GITHUB_SHA" 2>/dev/null; then
+            ahead="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$GITHUB_SHA?per_page=1" \
+              --jq 'select(.status == "ahead" and .behind_by == 0) | .ahead_by')"
+            [[ "$ahead" =~ ^[1-9][0-9]*$ ]]
+            git fetch --no-tags --depth="$((10#$ahead + 1))" origin "$GITHUB_SHA"
+          fi
+          git merge-base --is-ancestor "$BASE" "$GITHUB_SHA"
       - name: Fetch the fixed dev history for cold build checkpoints
         if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && env.CHECKPOINT_SECONDS != '0' && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
         env:
@@ -192,8 +214,6 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-          LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
-          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
