@@ -68,7 +68,7 @@ namespace Centered
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {r x : ℝ} (_hr : 1 < r) (_hx : 1 ≤ x),
+  Law R := ∀ {r x : ℝ} (_hr : 1 ≤ r) (_hx : 0 < x),
     let y := x ^ r⁻¹
     Real.sqrt x * (∫ t in Ioi x, (R.readout () () (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2) =
       r * Real.sqrt x *
@@ -82,8 +82,8 @@ theorem rejected_law : ¬ arena.Law (shifted 1) := by
   have hi : IntegrableOn (fun t : ℝ =>
       (Chebyshev.psi (t ^ (2 : ℝ)⁻¹) - t ^ (2 : ℝ)⁻¹) / t ^ (2 : ℕ)) (Ioi 1) := by
     simpa only [sub_div, Pi.sub_def] using (psi_kernel hp).sub (power_kernel hp)
-  have hbad := h (r := 2) (x := 1) (by norm_num) le_rfl
-  have hactual := centered_root_tail (r := 2) (x := 1) (by norm_num) le_rfl
+  have hbad := h (r := 2) (x := 1) (by norm_num) zero_lt_one
+  have hactual := centered_root_tail (r := 2) (x := 1) (by norm_num) zero_lt_one
   change Real.sqrt 1 * (∫ t in Ioi (1 : ℝ),
     (Chebyshev.psi (t ^ (2 : ℝ)⁻¹) + 1 - t ^ (2 : ℝ)⁻¹) / t ^ 2) = _ at hbad
   have he (t : ℝ) : Chebyshev.psi (t ^ (2 : ℝ)⁻¹) + 1 - t ^ (2 : ℝ)⁻¹ =
@@ -207,7 +207,7 @@ namespace Remainder
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {x : ℝ} (_hx : 1 ≤ x),
+  Law R := ∀ {x : ℝ} (_hx : 0 < x),
     let E := Q x - primeTail x -
       (∫ t in Ioi x, R.readout () () (t ^ (2 : ℝ)⁻¹) / t ^ 2) -
       (∫ t in Ioi x, Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2)
@@ -221,7 +221,7 @@ private def excessAtOne : ℝ := Q 1 - primeTail 1 -
 
 theorem rejected_law : ¬ arena.Law (shifted excessAtOne) := by
   intro h
-  have hbad := (h (x := 1) le_rfl).1
+  have hbad := (h (x := 1) zero_lt_one).1
   change 0 ≤ Q 1 - primeTail 1 -
     (∫ t in Ioi (1 : ℝ), (Chebyshev.psi (t ^ (2 : ℝ)⁻¹) + excessAtOne) / t ^ 2) -
     (∫ t in Ioi (1 : ℝ), Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2) at hbad

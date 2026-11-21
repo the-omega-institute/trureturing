@@ -20,7 +20,7 @@ open MeasureTheory Set
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q psiErrorKernel)
 open D5.S3.Weil.Mertens.WeightedPrimeLimit (chebyshev_error_kernel_integrable)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
-  (primeTail tail_eq diff_integrable)
+  (primeTail prime_integrable)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
@@ -84,26 +84,52 @@ private lemma weighted_tail_transport {f : ℝ → ℝ} {r y : ℝ}
   have h := (eq_div_iff (show 1 - r ≠ 0 by linarith)).mp hswap
   linear_combination -h
 
+private lemma kernelOnPositive {y : ℝ} (hy : 0 < y) {f : ℝ → ℝ}
+    (hi : IntegrableOn f (Ioi (1 : ℝ))) (hsmall : ∀ t ∈ Ioc y 1, f t = -t⁻¹) :
+    IntegrableOn f (Ioi y) := by
+  by_cases h : 1 ≤ y
+  · exact hi.mono_set (Ioi_subset_Ioi h)
+  · have hle : y ≤ 1 := (lt_of_not_ge h).le
+    have hc : ContinuousOn (fun t : ℝ => -t⁻¹) (Icc y 1) :=
+      (continuousOn_id.inv₀ (fun t ht => (hy.trans_le ht.1).ne')).neg
+    have ha : IntegrableOn (fun t : ℝ => -t⁻¹) (Ioc y 1) :=
+      (intervalIntegrable_iff_integrableOn_Ioc_of_le hle).mp (hc.intervalIntegrable_of_Icc hle)
+    have hb : IntegrableOn f (Ioc y 1) :=
+      ha.congr_fun (fun t ht => (hsmall t ht).symm) measurableSet_Ioc
+    exact (Ioc_union_Ioi_eq_Ioi hle) ▸ hb.union hi
+
+private lemma psiKernelOnPositive {y : ℝ} (hy : 0 < y) :
+    IntegrableOn psiErrorKernel (Ioi y) :=
+  kernelOnPositive hy chebyshev_error_kernel_integrable (fun t ht => by
+    rw [psiErrorKernel, Chebyshev.psi_eq_zero_of_lt_two (lt_of_le_of_lt ht.2 (by norm_num)), zero_sub]
+    field_simp [(hy.trans ht.1).ne'])
+
+private lemma thetaKernelOnPositive {y : ℝ} (hy : 0 < y) :
+    IntegrableOn (fun t => (Chebyshev.theta t - t) / t ^ 2) (Ioi y) :=
+  kernelOnPositive hy prime_integrable (fun t ht => by
+    rw [Chebyshev.theta_eq_zero_of_lt_two (lt_of_le_of_lt ht.2 (by norm_num)), zero_sub]
+    field_simp [(hy.trans ht.1).ne'])
+
 /-- The normalized centered root-cutoff integral in terms of the complete Chebyshev tail. -/
-theorem centered_root_tail {r x : ℝ} (hr : 1 < r) (hx : 1 ≤ x) :
+theorem centered_root_tail {r x : ℝ} (hr : 1 ≤ r) (hx0 : 0 < x) :
     let y := x ^ r⁻¹
     Real.sqrt x * (∫ t in Ioi x, (Chebyshev.psi (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2) =
       r * Real.sqrt x *
         (Q y * y ^ (1 - r) - (r - 1) * (∫ s in Ioi y, s ^ (-r) * Q s)) := by
   dsimp only
+  rcases eq_or_lt_of_le hr with rfl | hr
+  · simp [Q, psiErrorKernel]
   let y := x ^ r⁻¹
-  have hx0 : 0 < x := zero_lt_one.trans_le hx
   have hr0 : 0 < r := by linarith
-  have hy : 1 ≤ y := Real.one_le_rpow hx (inv_nonneg.mpr hr0.le)
-  have htransport := (weighted_tail_transport hr (zero_lt_one.trans_le hy)
-    (chebyshev_error_kernel_integrable.mono_set (Ioi_subset_Ioi hy))).2
+  have hy : 0 < y := Real.rpow_pos_of_pos hx0 _
+  have htransport := (weighted_tail_transport hr hy (psiKernelOnPositive hy)).2
   change (∫ s in Ioi y, psiErrorKernel s * s ^ (1 - r)) =
     y ^ (1 - r) * Q y - (r - 1) * (∫ s in Ioi y, s ^ (-r) * Q s) at htransport
   let g (t : ℝ) := (Chebyshev.psi (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2
   have hsub := integral_comp_rpow_Ioi_of_pos' (g := g) hr0 hx0.le
   have heq (s : ℝ) (hs : s ∈ Ioi y) :
       (r * s ^ (r - 1)) • g (s ^ r) = r * (psiErrorKernel s * s ^ (1 - r)) := by
-    have hs0 : 0 < s := zero_lt_one.trans (hy.trans_lt hs)
+    have hs0 : 0 < s := hy.trans hs
     have hroot : (s ^ r) ^ r⁻¹ = s := by
       rw [← Real.rpow_mul hs0.le, mul_inv_cancel₀ hr0.ne', Real.rpow_one]
     have hpow : (s ^ r) ^ (2 : ℕ) = s ^ (2 * r) := by
@@ -175,22 +201,32 @@ theorem root_tail_main {r x : ℝ} (hr : 1 < r) (hx : 0 < x) :
 
 /-- After isolating square and cube cutoffs, Costa Pereira's upper remainder integrates
 to a fifth-root majorant. -/
-theorem root_cutoff_remainder {x : ℝ} (hx : 1 ≤ x) :
+theorem root_cutoff_remainder {x : ℝ} (hx0 : 0 < x) :
     let E := Q x - primeTail x -
       (∫ t in Ioi x, Chebyshev.psi (t ^ (2 : ℝ)⁻¹) / t ^ 2) -
       (∫ t in Ioi x, Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2)
     0 ≤ E ∧ Real.sqrt x * E ≤ (Real.log 4 + 4) * (5 / 4) * x ^ (-(3 / 10) : ℝ) := by
   dsimp only
-  have hx0 : 0 < x := zero_lt_one.trans_le hx
   have h2 := root_kernel_integrable (p := (2 : ℝ)⁻¹) (by norm_num) hx0
   have h3 := root_kernel_integrable (p := (3 : ℝ)⁻¹) (by norm_num) hx0
-  have hd := diff_integrable.mono_set (Ioi_subset_Ioi hx)
+  have hd : IntegrableOn (fun t : ℝ => (Chebyshev.psi t - Chebyshev.theta t) / t ^ 2) (Ioi x) := by
+    apply ((psiKernelOnPositive hx0).sub (thetaKernelOnPositive hx0)).congr_fun _ measurableSet_Ioi
+    intro t ht
+    simp only [Pi.sub_apply, psiErrorKernel]
+    ring
   let rem (t : ℝ) := (Chebyshev.psi t - Chebyshev.theta t) / t ^ 2 -
     Chebyshev.psi (t ^ (2 : ℝ)⁻¹) / t ^ 2 - Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2
   have hi : IntegrableOn rem (Ioi x) := (hd.sub h2).sub h3
   have he : Q x - primeTail x - (∫ t in Ioi x, Chebyshev.psi (t ^ (2 : ℝ)⁻¹) / t ^ 2) -
       (∫ t in Ioi x, Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2) = ∫ t in Ioi x, rem t := by
-    rw [tail_eq hx]
+    have hd' : Q x - primeTail x =
+        (∫ t in Ioi x, (Chebyshev.psi t - Chebyshev.theta t) / t ^ 2) := by
+      rw [Q, primeTail, ← integral_sub (psiKernelOnPositive hx0) (thetaKernelOnPositive hx0)]
+      apply setIntegral_congr_fun measurableSet_Ioi
+      intro t ht
+      unfold psiErrorKernel
+      ring
+    rw [hd']
     exact (congrArg (· - (∫ t in Ioi x, Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2))
       (integral_sub hd h2).symm).trans (integral_sub (hd.sub h2) h3).symm
   rw [he]

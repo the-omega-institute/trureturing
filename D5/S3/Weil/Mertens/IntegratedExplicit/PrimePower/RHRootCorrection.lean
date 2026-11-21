@@ -151,7 +151,7 @@ private lemma square_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 4 ≤ x) :
   have hroot : x ^ (2 : ℝ)⁻¹ = y := by
     change _ = Real.sqrt x
     rw [Real.sqrt_eq_rpow, one_div]
-  have ht := centered_root_tail (r := 2) (by norm_num) (by linarith : 1 ≤ x)
+  have ht := centered_root_tail (r := 2) (by norm_num) hx0
   dsimp only at ht
   change centered 2 x = _ at ht
   rw [hroot] at ht
@@ -219,7 +219,7 @@ private lemma cube_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 8 ≤ x) :
     norm_num at h
     simpa [y, one_div] using h
   have hy0 : 0 < y := by linarith
-  have ht := centered_root_tail (r := 3) (by norm_num) (by linarith : 1 ≤ x)
+  have ht := centered_root_tail (r := 3) (by norm_num) hx0
   dsimp only at ht
   change centered 3 x = 3 * Real.sqrt x *
     (Q y * y ^ (1 - (3 : ℝ)) - (3 - 1) * (∫ s in Ioi y, s ^ (-3 : ℝ) * Q s)) at ht
@@ -271,7 +271,7 @@ theorem rh_prime_power_density (hRH : RiemannHypothesis) :
     (∫ t in Ioi x, Chebyshev.psi (t ^ (2 : ℝ)⁻¹) / t ^ 2) -
     (∫ t in Ioi x, Chebyshev.psi (t ^ (3 : ℝ)⁻¹) / t ^ 2)
   have hrem : 0 ≤ E ∧ Real.sqrt x * E ≤ L * x ^ (-(3 / 10) : ℝ) :=
-    root_cutoff_remainder hx1
+    root_cutoff_remainder hx0
   have h2 := root_tail_main (r := 2) (by norm_num) hx0
   change _ = _ + centered 2 x at h2
   rw [show (2 : ℝ) / (2 - 1) = 2 by norm_num,

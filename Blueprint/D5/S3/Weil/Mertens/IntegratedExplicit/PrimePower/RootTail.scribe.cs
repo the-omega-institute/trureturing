@@ -19,8 +19,10 @@ internal sealed class RootTailDocument : IScribeDocumentDefinition
                 H("The signed centered integral at a root cutoff"), StatementSource.FromAuthor(Centered()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Substitute t=s^r with y=x^(1/r). The centered integral becomes "
-                    + "r times the integral of the Chebyshev error kernel against s^(1-r). "
+                    "At r=1 the centered integral is the complete tail Q(x) scaled by the square root of x. "
+                    + "For r>1, substitute t=s^r with y=x^(1/r). The centered integral becomes "
+                    + "r times the integral of the Chebyshev error kernel against s^(1-r), before scaling. "
+                    + "The error kernel is -1/t below 1 and is integrable there above any positive cutoff. "
                     + "The triangular product of the absolute integrable Chebyshev kernel and "
                     + "s^(-r) on y<s<t is integrable. Fubini and the power primitive on y<s<t "
                     + "give the boundary term Q(y)y^(1-r) and the subtracted weighted integral."))),
@@ -41,7 +43,8 @@ internal sealed class RootTailDocument : IScribeDocumentDefinition
                 H("The integrated fifth-root majorant"), StatementSource.FromAuthor(Remainder()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The Costa Pereira inequalities in Mathlib retain the square and cube "
+                    "Below 1 both Chebyshev functions vanish, so their centered kernels are "
+                    + "integrable above any positive cutoff. The Costa Pereira inequalities in Mathlib retain the square and cube "
                     + "cutoffs in psi minus theta. The seventh-root term makes the remainder "
                     + "nonnegative. The uncentered fifth-root term is bounded by "
                     + "(log(4)+4)t^(1/5), which integrates against t^(-2) to "
@@ -71,7 +74,7 @@ internal sealed class RootTailDocument : IScribeDocumentDefinition
         var right = Multiply(Multiply(r, Call("sqrt", x)),
             Subtract(Multiply(Call("Q", y), Power(F.Grp(y), Subtract(one, r))),
                 Multiply(Subtract(r, one), Call("W", r, y))));
-        return F.Disp(All("r", All("x", Imp(Lt(one, r), Imp(Le(one, x), Eq(Call("C", r, x), right))))));
+        return F.Disp(All("r", All("x", Imp(Le(one, r), Imp(Lt(F.D(0), x), Eq(Call("C", r, x), right))))));
     }
 
     private static Formula MainTerm()
@@ -92,7 +95,7 @@ internal sealed class RootTailDocument : IScribeDocumentDefinition
         var ten = F.Seq(F.D(1), F.D(0));
         var bound = Multiply(Multiply(Add(Call("log", F.D(4)), F.D(4)), new Formula.Fraction(F.D(5), F.D(4))),
             Power(x, new Formula.Negate(new Formula.Fraction(F.D(3), ten))));
-        return F.Disp(All("x", Imp(Le(F.D(1), x),
+        return F.Disp(All("x", Imp(Lt(F.D(0), x),
             And(Le(F.D(0), error), Le(Multiply(Call("sqrt", x), error), bound)))));
     }
 }
