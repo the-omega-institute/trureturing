@@ -749,6 +749,205 @@ private theorem scalar_energy (α β : ℝ) (C A B : ℂ) :
     Complex.ofReal_re, Complex.ofReal_im]
   ring
 
+section ClosePair
+
+open scoped InnerProductSpace
+open Submodule
+open D5.S3.Quantum.GNSMatrix (frobenius_norm_sq_eq_trace)
+
+local notation "E₃" => EuclideanSpace ℂ (Fin 3)
+local notation "M₃" => Matrix (Fin 3) (Fin 3) ℂ
+
+private theorem exists_unit_orthogonal_pair (x y : E₃) :
+    ∃ u : E₃, ‖u‖ = 1 ∧ ⟪x, u⟫_ℂ = 0 ∧ ⟪y, u⟫_ℂ = 0 := by
+  classical
+  let pair : Finset E₃ := {x, y}
+  let K : Submodule ℂ E₃ := Submodule.span ℂ (pair : Set E₃)
+  have hK : Module.finrank ℂ K ≤ 2 :=
+    (finrank_span_finset_le_card (R := ℂ) pair).trans
+      ((Finset.card_insert_le x {y}).trans (by simp))
+  have hdim := K.finrank_add_finrank_orthogonal
+  rw [finrank_euclideanSpace_fin] at hdim
+  have : Nontrivial Kᗮ :=
+    Module.nontrivial_of_finrank_pos (by omega : 0 < Module.finrank ℂ Kᗮ)
+  obtain ⟨v, hv⟩ := exists_ne (0 : Kᗮ)
+  have hv' : (v : E₃) ≠ 0 := by
+    intro h
+    exact hv (Subtype.ext h)
+  let u : E₃ := ((‖(v : E₃)‖⁻¹ : ℝ) : ℂ) • (v : E₃)
+  have hu : u ∈ Kᗮ := Kᗮ.smul_mem _ v.property
+  refine ⟨u, ?_, K.inner_right_of_mem_orthogonal (subset_span (by simp [pair])) hu,
+    K.inner_right_of_mem_orthogonal (subset_span (by simp [pair])) hu⟩
+  rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  exact inv_mul_cancel₀ (norm_ne_zero_iff.mpr hv')
+
+private def outer (x y : E₃) : M₃ := vecMulVec x.ofLp (star y.ofLp)
+
+private theorem trace_outer (x y : E₃) : (outer x y).trace = ⟪y, x⟫_ℂ :=
+  Matrix.trace_vecMulVec _ _
+
+private theorem trace_outer_mul (x y z w : E₃) :
+    (outer x y * outer z w).trace = ⟪y, z⟫_ℂ * ⟪w, x⟫_ℂ := by
+  simp only [outer, Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul,
+    EuclideanSpace.inner_eq_star_dotProduct, smul_eq_mul]
+  rw [dotProduct_comm (star y.ofLp)]
+
+private theorem adjoint_outer (x y : E₃) : (outer x y)ᴴ = outer y x := by
+  simp [outer, Matrix.conjTranspose_vecMulVec]
+
+private theorem norm_trace_mul_le {n : Type*} [Fintype n] (A B : Matrix n n ℂ) :
+    ‖(Aᴴ * B).trace‖ ≤ ‖A‖ * ‖B‖ := by
+  let flatten (X : Matrix n n ℂ) : EuclideanSpace ℂ (n × n) :=
+    WithLp.toLp 2 fun uv => X uv.1 uv.2
+  have hnorm (X : Matrix n n ℂ) : ‖flatten X‖ = ‖X‖ := by
+    apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1
+    rw [EuclideanSpace.norm_sq_eq, frobenius_sq, Fintype.sum_prod_type]
+  have hinner : ⟪flatten A, flatten B⟫_ℂ = (Aᴴ * B).trace := by
+    simp only [PiLp.inner_apply, flatten, RCLike.inner_apply',
+      Fintype.sum_prod_type, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, RCLike.star_def]
+    exact Finset.sum_comm
+  simpa only [hinner, hnorm] using norm_inner_le_norm (𝕜 := ℂ) (flatten A) (flatten B)
+
+/-- Project the identity away from a Hermitian matrix annihilating the three
+rank-one projectors. The construction uses only a single correlated pair. -/
+private theorem close_pair_trace_representer (z : Fin 3 → E₃)
+    (hz : ∀ i, ⟪z i, z i⟫_ℂ = 1) (j : Fin 3) (hj : j ≠ 0)
+    (hclose : (1 / 5 : ℝ) ≤ ‖⟪z 0, z j⟫_ℂ‖ ^ 2) :
+    ∃ R : M₃, Rᴴ = R ∧ ‖R‖ ^ 2 ≤ 8 / 3 ∧
+      ∀ i, (R * outer (z i) (z i)).trace = 1 := by
+  obtain ⟨u, hu, hu₁, hu₂⟩ := exists_unit_orthogonal_pair (z 1) (z 2)
+  let v := u - ⟪z 0, u⟫_ℂ • z 0
+  let t := ‖v‖ ^ 2
+  have huv₀ : ⟪z 0, v⟫_ℂ = 0 := by
+    dsimp only [v]
+    rw [inner_sub_right, inner_smul_right, hz, mul_one, sub_self]
+  have hvv₀ : ⟪v, z 0⟫_ℂ = 0 := inner_eq_zero_symm.mp huv₀
+  have huv : ⟪u, v⟫_ℂ = (t : ℂ) := by
+    calc
+      _ = ⟪v + ⟪z 0, u⟫_ℂ • z 0, v⟫_ℂ := by rw [show v + _ = u from sub_add_cancel _ _]
+      _ = _ := by simp [huv₀, t, inner_self_eq_norm_sq_to_K]
+  have hvu : ⟪v, u⟫_ℂ = (t : ℂ) := by
+    rw [← inner_conj_symm, huv]
+    simp
+  have hvv : ⟪v, v⟫_ℂ = (t : ℂ) := by
+    simp [t, inner_self_eq_norm_sq_to_K]
+  have huu : ⟪u, u⟫_ℂ = 1 := inner_self_eq_one_of_norm_eq_one hu
+  have ht : (1 / 5 : ℝ) ≤ t := by
+    let x := z 0 - ⟪u, z 0⟫_ℂ • u
+    have hx : ⟪x, x⟫_ℂ = (t : ℂ) := by
+      rw [← hvv]
+      simp only [x, v, inner_sub_left, inner_sub_right, inner_smul_left, inner_smul_right, hz, huu]
+      rw [inner_conj_symm u (z 0)]
+      ring
+    have hxn : ‖x‖ ^ 2 = t := by
+      have h : RCLike.re ⟪x, x⟫_ℂ = t := congrArg Complex.re hx
+      rwa [inner_self_eq_norm_sq] at h
+    have huzj : ⟪z j, u⟫_ℂ = 0 := by
+      fin_cases j
+      · exact (hj rfl).elim
+      · exact hu₁
+      · exact hu₂
+    have hpair : ⟪x, z j⟫_ℂ = ⟪z 0, z j⟫_ℂ := by
+      simp [x, inner_eq_zero_symm.mp huzj]
+    have hzn : ‖z j‖ = 1 := by
+      apply (sq_eq_sq₀ (norm_nonneg _) (by norm_num)).mp
+      have h : RCLike.re ⟪z j, z j⟫_ℂ = 1 := congrArg Complex.re (hz j)
+      rw [one_pow]
+      rwa [inner_self_eq_norm_sq] at h
+    have hc := norm_inner_le_norm (𝕜 := ℂ) x (z j)
+    rw [hpair, hzn, mul_one] at hc
+    exact hclose.trans ((pow_le_pow_left₀ (norm_nonneg _) hc 2).trans_eq hxn)
+  let W : M₃ := (1 / 2 : ℂ) • (outer u v + outer v u)
+  have hW : Wᴴ = W := by
+    simp only [W, Matrix.conjTranspose_smul, Matrix.conjTranspose_add, adjoint_outer,
+      star_div₀, star_one, star_ofNat]
+    rw [add_comm]
+  have hTr : W.trace = (t : ℂ) := by
+    simp only [W, Matrix.trace_smul, Matrix.trace_add, trace_outer, huv, hvu, smul_eq_mul]
+    ring
+  have hTrSq : (W * W).trace = (((t + t ^ 2) / 2 : ℝ) : ℂ) := by
+    simp only [W, Matrix.smul_mul, Matrix.mul_smul, add_mul, mul_add, Matrix.trace_smul,
+      Matrix.trace_add, trace_outer_mul, hvu, huv, hvv, huu, smul_eq_mul]
+    push_cast
+    ring
+  have hWP (i : Fin 3) : (W * outer (z i) (z i)).trace = 0 := by
+    simp only [W, Matrix.smul_mul, add_mul, Matrix.trace_smul, Matrix.trace_add,
+      trace_outer_mul, smul_eq_mul]
+    fin_cases i
+    · simp [huv₀, hvv₀]
+    · simp [hu₁, inner_eq_zero_symm.mp hu₁]
+    · simp [hu₂, inner_eq_zero_symm.mp hu₂]
+  let c := 2 / (1 + t)
+  let R : M₃ := 1 - (c : ℂ) • W
+  have hR : Rᴴ = R := by simp [R, Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, hW]
+  refine ⟨R, hR, ?_, fun i => ?_⟩
+  · have hnorm : ‖R‖ ^ 2 = 3 - 2 * c * t + c ^ 2 * ((t + t ^ 2) / 2) := by
+      have h : ((‖R‖ ^ 2 : ℝ) : ℂ) =
+          ((3 - 2 * c * t + c ^ 2 * ((t + t ^ 2) / 2) : ℝ) : ℂ) := by
+        rw [frobenius_norm_sq_eq_trace, hR]
+        simp only [R, sub_mul, mul_sub, Matrix.one_mul, Matrix.mul_one, Matrix.smul_mul,
+          Matrix.mul_smul, Matrix.trace_sub, Matrix.trace_one, Matrix.trace_smul,
+          hTr, hTrSq, smul_eq_mul, Fintype.card_fin, Nat.cast_ofNat]
+        push_cast
+        ring
+      exact_mod_cast h
+    have hden : 0 < 1 + t := by linarith
+    have hratio : (1 / 3 : ℝ) ≤ 2 * t / (1 + t) :=
+      (le_div_iff₀ hden).mpr (by linarith)
+    rw [hnorm, show 3 - 2 * c * t + c ^ 2 * ((t + t ^ 2) / 2) = 3 - 2 * t / (1 + t) by
+      dsimp [c]
+      field_simp
+      ring]
+    linarith
+  · simp only [R, sub_mul, Matrix.one_mul, Matrix.smul_mul, Matrix.trace_sub,
+      Matrix.trace_smul, trace_outer, hz, hWP, smul_zero, sub_zero]
+
+private theorem close_pair_weighted_evaluation (ω : Fin 3 → ℝ) (a : Fin 3 → ℂ)
+    (j : Fin 3) (hj : j ≠ 0) (hclose : (1 / 5 : ℝ) ≤ ‖correlation ω 0 j‖ ^ 2) :
+    Integrable (fun t : ℝ => petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) ∧
+    ‖exponentialSum ω a 0‖ ^ 2 ≤ (8 / 3) *
+      (∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) := by
+  obtain ⟨hInt, henergy⟩ := weighted_energy_eq_gram ω a
+  obtain ⟨hPSD, hdiag, _⟩ := PetzLogisticEvaluation.exact_gram_factorization ω
+  obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hPSD.nonneg
+  let z (i : Fin 3) : E₃ := WithLp.toLp 2 fun k => B k i
+  let P (i : Fin 3) := outer (z i) (z i)
+  let S : M₃ := ∑ i, a i • P i
+  have hdot (i j : Fin 3) : ⟪z i, z j⟫_ℂ = correlation ω i j := by
+    rw [hB]
+    exact (dotProduct_comm _ _)
+  obtain ⟨R, hR, hRnorm, hRP⟩ := close_pair_trace_representer z
+    (fun i => (hdot i i).trans (hdiag i)) j hj (by rwa [hdot])
+  have hP (i : Fin 3) : (P i)ᴴ = P i := adjoint_outer _ _
+  have hPair (i j : Fin 3) : (P i * P j).trace = (‖correlation ω i j‖ ^ 2 : ℂ) := by
+    rw [show P i = outer (z i) (z i) from rfl, show P j = outer (z j) (z j) from rfl,
+      trace_outer_mul, ← inner_conj_symm (z j) (z i), hdot]
+    exact Complex.mul_conj' _
+  have htrace : (Rᴴ * S).trace = ∑ i, a i := by
+    simp only [hR, S, Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
+      P, hRP, smul_eq_mul, mul_one]
+  have hnorm : ‖S‖ ^ 2 = ∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2 := by
+    have h := congrArg Complex.re (frobenius_norm_sq_eq_trace S)
+    rw [Complex.ofReal_re] at h
+    rw [h, ← Complex.ofReal_re (∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2),
+      henergy]
+    congr 1
+    simp only [S, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, hP,
+      Finset.sum_mul_sum, Matrix.trace_sum, Matrix.smul_mul, Matrix.mul_smul,
+      Matrix.trace_smul, hPair, smul_eq_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hEval := pow_le_pow_left₀ (norm_nonneg _) (norm_trace_mul_le R S) 2
+  rw [htrace, mul_pow] at hEval
+  have h := hEval.trans (mul_le_mul_of_nonneg_right hRnorm (sq_nonneg ‖S‖))
+  exact ⟨hInt, by simpa [exponentialSum, hnorm] using h⟩
+
+end ClosePair
+
 private theorem endpoint_young (c : ℝ) (a b : ℂ) :
     c * ‖a + b‖ ^ 2 ≤ (1 + c) * (c * ‖a‖ ^ 2 + ‖b‖ ^ 2) := by
   have hs : 0 ≤ ‖(c : ℂ) * a - b‖ ^ 2 := sq_nonneg _
