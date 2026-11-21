@@ -99,5 +99,99 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+abbrev boundarySignature : Signature where
+  Params := Σ _ : ℕ, ℕ
+  State p := Fin (p.1 + 2) → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def boundaryActual : Realization boundarySignature :=
+  realize boundarySignature (fun _ p v => by classical exact decide (ProfileBoundary p.1 p.2 v))
+    (fun e => nomatch e)
+
+def boundaryFalse : Realization boundarySignature :=
+  realize boundarySignature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev boundaryArena : Arena where
+  signature := boundarySignature
+  Law R := ∀ n k (v : Fin (n + 2) → ℕ),
+    (FeasibleProfileFloor n k v ∧
+      ∀ u, FeasibleProfileFloor n k u → (∀ i, v i ≤ u i) → u = v) ↔
+      R.readout () ⟨n, k⟩ v = true
+
+private theorem zero_boundary : ProfileBoundary 0 0 (fun _ => 0) := by
+  simp [ProfileBoundary]
+
+private theorem one_not_boundary : ¬ ProfileBoundary 0 0 (fun _ => 1) := by
+  intro h
+  have limit := h.1 (0 : Fin 2)
+  simp at limit
+
+private theorem boundaryFalse_fails : ¬ boundaryArena.Law boundaryFalse := by
+  intro h
+  have no := (h 0 0 (fun _ => 0)).1 ((exact_profile_frontier 0 0 _).2 zero_boundary)
+  simp [boundaryFalse, realize] at no
+
+def boundaryFamily : Registration boundaryArena (type_of% exact_profile_frontier) where
+  actual := boundaryActual
+  bridge := by
+    classical
+    simp [boundaryActual, realize]
+  variation := ⟨by
+    classical
+    simpa [boundaryArena, boundaryActual, realize] using exact_profile_frontier,
+    boundaryFalse, boundaryFalse_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      exact ⟨boundaryFalse, fun j hj => (hj (Subsingleton.elim j role)).elim,
+        rfl, boundaryFalse_fails⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    classical
+    intro role
+    cases role
+    refine ⟨⟨0, 0⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+    simp [boundaryActual, realize, zero_boundary, one_not_boundary]
+
+def boundaryRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    exact_profile_frontier (Realization boundarySignature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching.boundary
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching.boundaryFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨boundaryArena⟩
+  objectArena := .source ⟨boundaryArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source boundaryArena ⟨boundaryFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize boundarySignature
+    (fun _ p v => by classical exact decide (ProfileBoundary p.1 p.2 v)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching

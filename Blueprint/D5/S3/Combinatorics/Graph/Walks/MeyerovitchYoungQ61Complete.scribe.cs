@@ -22,6 +22,14 @@ internal sealed class MeyerovitchYoungQ61CompleteDocument : IScribeDocumentDefin
                     Paragraph(Text("For each Bob response in the lifted graph, setting the exit register to the current Alice edge's target saves an exit charge larger than the entry penalty it can affect at the next step. The initial register is free, so its minimum contribution gives precisely the common boundary charge. A legal original Bob walk lifts with those registers and attains the penalized score.")),
                     Paragraph(Text("Fix a connector of common length for every pair of Alice vertices. Scan the Alice word and copy each compatible edge. At an incompatible join replace a connector-length block with a walk to the original terminal vertex of the block. Replace a final short suffix with a walk of its own length. Each replacement begins at an original incompatible join. Against the same Bob response its loss is bounded by the connector length times the payoff range. Choosing C above that bound makes any illegal word strictly worse than its repair.")),
                     Paragraph(Text("For each ordered pair of lifted Bob vertices, minimize over its parallel edges. Give missing pairs a common cost above the largest original cost plus the connector length minus one times the cost range. Any minimum using a missing pair admits a strictly cheaper connector-length replacement with the same endpoints. For a shorter horizon, any original Bob walk of that length gives a strictly cheaper response because endpoints are free."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("matrix-minimum-spec"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Walks/MeyerovitchYoungQ61Complete.matrixMinimum_spec"),
+                H("Attainment and lower bound for the matrix minimum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a matrix family over a linearly ordered commutative ring on a finite nonempty vertex set, each word has a complete walk whose entry sum is the matrix minimum. The walk has the length of the word, and the same minimum bounds the entry sum of every complete walk of that length from below."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()

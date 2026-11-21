@@ -79,7 +79,7 @@ private theorem centered_root_tail_bound {r x M : ℝ} (hr : 1 < r) (hx : 1 ≤ 
         rw [mul_assoc, ← Real.rpow_add hy0, show -(1 / 2 : ℝ) + (1 - r) = 1 / 2 - r by ring])
     _ = _ := by rw [← hscale]; ring
 
-private theorem normalized_tail_bound {g : ℝ → ℝ} {x C p : ℝ}
+theorem normalized_tail_bound {g : ℝ → ℝ} {x C p : ℝ}
     (hx : 0 < x) (hp : p < 1)
     (hf : AEStronglyMeasurable (fun t => g t / t ^ 2) (volume.restrict (Ioi x)))
     (hg : ∀ t > x, |g t| ≤ C * t ^ p) :
@@ -266,7 +266,7 @@ private theorem transfer_fifth_log_window (hRH : RiemannHypothesis) {a B K : ℝ
   · ring
 
 
-private theorem fifth_centered_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 32 ≤ x) :
+theorem fifth_centered_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 32 ≤ x) :
     |centered 5 x| ≤ (10 * M) * x ^ (-(2 / 5) : ℝ) := by
   let y := x ^ (5 : ℝ)⁻¹
   have hy : 2 ≤ y := by
