@@ -24,17 +24,17 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
                     + "Integration also gives F(Y) + F(2Y) ≤ 24 WY/log Y. Subtracting the endpoint estimates "
                     + "cancels the common offset e. Nonnegativity of the count allows truncation at zero. "
                     + "The exceptional-zero distance gives W ≥ min(1,s)/(2Q²)."))), DescribeRole.Theorem),
-            Paragraph(Text("Write E(P;B,A,c,s) for the cyclotomic estimate. For each m ≥ 3 and each a coprime "
-                + "to m there exist 1 < Q ≤ m, θ, β and a real offset e satisfying S(θ,β,Q,s). "
-                + "For every t ≥ Qᴮ the absolute difference between φ(m)(P(m,a;0,t) + e) and F(t) "
-                + "is at most A(exp(−c log t/log Q) + exp(−√(c log t))) F(t). The witnesses, "
-                + "including e, stay fixed as t varies.")),
+            Paragraph(Text("Write E(m,a,B,A,c,s,Y) for the relative estimate at this pair of endpoints. "
+                + "There exist 1 < Q ≤ m, θ, β and a common real offset e satisfying S(θ,β,Q,s). "
+                + "For each t in {Y,2Y} with t ≥ Qᴮ, the absolute difference between "
+                + "φ(m)(P(m,a;0,t) + e) and F(t) is at most A(exp(−c log t/log Q) "
+                + "+ exp(−√(c log t))) F(t).")),
             Describe.Lean(DescribeId.Create("uniform-dyadic-count"),
                 DeclarationHandle.Create("D5/S3/CharacterSums/DyadicPrimeClassCount.uniform_dyadic_class_count"),
-                H("One pair of thresholds works for all reduced residue classes"),
+                H("One pair of thresholds works for every class with endpoint estimates"),
                 StatementSource.FromAuthor(UniformClaim()), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Take u = 2A/ε, k = max(1,B,u/c), K = k + 1, and "
+                    Paragraph(Text("Take u = 2A/ε, K = max(1,B,u/c), and "
                         + "D₀ = 2 max(16,exp(u²/c)). At both D/2 and D, each exponential multiplied "
                         + "by A is at most ε/2. Apply the endpoint theorem with Q ≤ m.")),
                     Paragraph(Text("For ε = 1/100 and Y = D/2 ≥ 16, use log(2Y) ≤ 2 log Y. "
@@ -45,8 +45,8 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
                         + "Theorem 1.4 (p. 1042) gives the relative asymptotic in writing, and Theorem 3.3 "
                         + "(p. 1052) gives the exceptional-zero distance. Take L = ℚ(ζₘ), H = Gal(L/ℚ) "
                         + "and fixed field ℚ. The character conductors divide m. For p coprime to m, "
-                        + "Frobenius raises roots of unity to the pth power. The Lean theorem takes "
-                        + "the resulting cyclotomic estimate E as a hypothesis."))), DescribeRole.Theorem))));
+                        + "Frobenius raises roots of unity to the pth power. For a reduced class and "
+                        + "Y above m, the two prefixes may differ from the field counts by one common offset. The published estimate at these two heights supplies E in the Lean theorem."))), DescribeRole.Theorem))));
 
     private static Formula EndpointClaim()
     {
@@ -81,15 +81,16 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
         var threshold = F.Seq(d, F.Underscore, F.Grp(Num(0)));
         var m = F.Id("m");
         var a = F.Id("a");
+        var y = F.Seq(d, F.Slash, Num(2));
         return Aligned(
             F.Seq(Quant(F.Forall, "R", b, aBound, c, s, F.Varepsilon), aBound, F.Gt, Num(0), F.Land, F.Sp,
-                c, F.Gt, Num(0), F.Land, F.Sp, s, F.Gt, Num(0), F.Land, F.Sp, F.Varepsilon, F.Gt, Num(0), F.Land, F.Sp,
-                At("E", F.Id("P"), b, aBound, c, s)),
-            F.Seq(F.Implies, F.Sp, Quant(F.Exists, "R", k, threshold), k, F.Gt, Num(0), F.Land, F.Sp, threshold,
-                F.Gt, Num(0), F.Land, F.Sp, F.OpenBracket, Quant(F.Forall, "N", m, a), Quant(F.Forall, "R", d)),
-            F.Seq(m, F.Ge, F.Sp, Num(3), F.Land, F.Sp, At("gcd", a, m), F.Eq, Num(1), F.Land, F.Sp, d, F.Ge, F.Sp,
-                At("max", threshold, F.Seq(F.Open, Num(4), m, F.Close, F.Caret, F.Grp(k)))),
-            F.Seq(F.Implies, F.Sp, Bound(m, a, s, m, F.Seq(d, F.Slash, Num(2)), d), F.CloseBracket));
+                c, F.Gt, Num(0), F.Land, F.Sp, s, F.Gt, Num(0), F.Land, F.Sp, F.Varepsilon, F.Gt, Num(0)),
+            F.Seq(F.Implies, F.Sp, Quant(F.Exists, "R", k, threshold), k, F.Ge, F.Sp, Num(1), F.Land, F.Sp,
+                threshold, F.Gt, Num(0), F.Land, F.Sp, F.OpenBracket, Quant(F.Forall, "N", m, a),
+                Quant(F.Forall, "R", d)),
+            F.Seq(d, F.Ge, F.Sp, At("max", threshold, F.Seq(Num(2), m, F.Caret, F.Grp(k))), F.Land, F.Sp,
+                At("E", m, a, b, aBound, c, s, y)),
+            F.Seq(F.Implies, F.Sp, Bound(m, a, s, m, y, d), F.CloseBracket));
     }
 
     private static Formula Bound(Formula m, Formula a, Formula s, Formula q, Formula lo, Formula hi) =>

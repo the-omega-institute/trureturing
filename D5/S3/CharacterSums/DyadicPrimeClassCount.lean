@@ -315,15 +315,14 @@ theorem dyadic_class_count {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ}
 def relativeError (A c Q t : ℝ) : ℝ :=
   A * (exp (-(c * log t / log Q)) + exp (-sqrt (c * log t)))
 
-/-- Relative prime counts for reduced classes with a possible real exceptional zero. -/
-def cyclotomicEstimate (count : ℕ → ℕ → ℝ → ℝ → ℝ) (B A c s : ℝ) : Prop :=
-  ∀ m a : ℕ, 3 ≤ m → a.Coprime m →
-    ∃ (Q : ℝ) (θ : ℤ) (β offset : ℝ),
-      1 < Q ∧ Q ≤ m ∧ (θ = -1 ∨ θ = 0 ∨ θ = 1) ∧ (θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1) ∧
-      (θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) ∧
-      ∀ t : ℝ, Q ^ B ≤ t →
-        |(m.totient : ℝ) * (count m a 0 t + offset) - mainTerm θ β t| ≤
-          relativeError A c Q t * mainTerm θ β t
+/-- The relative cyclotomic estimate restricted to the two prefixes used by one interval. -/
+def cyclotomicEndpoints (count : ℕ → ℕ → ℝ → ℝ → ℝ) (m a : ℕ) (B A c s Y : ℝ) : Prop :=
+  ∃ (Q : ℝ) (θ : ℤ) (β offset : ℝ),
+    1 < Q ∧ Q ≤ m ∧ (θ = -1 ∨ θ = 0 ∨ θ = 1) ∧ (θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1) ∧
+    (θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) ∧
+    ∀ t ∈ ({Y, 2 * Y} : Finset ℝ), Q ^ B ≤ t →
+      |(m.totient : ℝ) * (count m a 0 t + offset) - mainTerm θ β t| ≤
+        relativeError A c Q t * mainTerm θ β t
 
 private lemma exp_error {A u η : ℝ} (hη : 0 < η) (h : 2 * A / η ≤ u) :
     A * exp (-u) ≤ η / 2 := by
@@ -333,9 +332,9 @@ private lemma exp_error {A u η : ℝ} (hη : 0 < η) (h : 2 * A / η ≤ u) :
 
 /-- Each chosen relative-error tolerance has a polynomial modulus threshold for all classes. -/
 theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs : 0 < s)
-    (H : cyclotomicEstimate classCount B A c s) (η : ℝ) (hη : 0 < η) :
-    ∃ K D₀ : ℝ, 0 < K ∧ 0 < D₀ ∧ ∀ (m a : ℕ), 3 ≤ m → a.Coprime m → ∀ D : ℝ,
-      D₀ ≤ D → (4 * (m : ℝ)) ^ K ≤ D →
+    (η : ℝ) (hη : 0 < η) :
+    ∃ K D₀ : ℝ, 1 ≤ K ∧ 0 < D₀ ∧ ∀ (m a : ℕ) (D : ℝ),
+      D₀ ≤ D → 2 * (m : ℝ) ^ K ≤ D → cyclotomicEndpoints classCount m a B A c s (D / 2) →
       min 1 s / (2 * (m : ℝ) ^ 2) * dyadicMargin η (D / 2) ≤
         (m.totient : ℝ) * classCount m a (D / 2) D := by
   let u := 2 * A / η
@@ -344,24 +343,18 @@ theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs
   have hk1 : 1 ≤ k := le_trans (le_max_left _ _) (le_max_left _ _)
   have hkB : B ≤ k := le_trans (le_max_right _ _) (le_max_left _ _)
   have hkc : u / c ≤ k := le_max_right _ _
-  refine ⟨k + 1, 2 * max 16 (exp ((u) ^ 2 / c)), by linarith, by positivity,?_⟩
-  intro m a hm hcop D hD₀ hD
-  obtain ⟨Q, θ, β, e, hQ, hQm, hθ, hβ, hgap, Ht⟩ := H m a hm hcop
-  have hm3 : (3 : ℝ) ≤ m := by exact_mod_cast hm
-  have hm0 : 0 < (m : ℝ) := by linarith
+  refine ⟨k, 2 * max 16 (exp (u ^ 2 / c)), hk1, by positivity,?_⟩
+  intro m a D hD₀ hD H
+  obtain ⟨Q, θ, β, e, hQ, hQm, hθ, hβ, hgap, Ht⟩ := H
   have hQ0 : 0 < Q := by linarith
   let Y := D / 2
-  have hY16 : 16 ≤ Y := by dsimp [Y]; linarith [le_max_left (16 : ℝ) (exp ((u) ^ 2 / c))]
-  have hYa : exp ((u) ^ 2 / c) ≤ Y := by
+  have hY16 : 16 ≤ Y := by dsimp [Y]; linarith [le_max_left (16 : ℝ) (exp (u ^ 2 / c))]
+  have hYa : exp (u ^ 2 / c) ≤ Y := by
     dsimp [Y]
-    linarith [le_max_right (16 : ℝ) (exp ((u) ^ 2 / c))]
+    linarith [le_max_right (16 : ℝ) (exp (u ^ 2 / c))]
   have hY0 : 0 < Y := by linarith
   have hqk : Q ^ k ≤ Y := by
-    have hpow := rpow_le_rpow hQ0.le (show Q ≤ 4 * m by linarith) (by linarith : 0 ≤ k)
-    rw [rpow_add_one (by positivity : 4 * (m : ℝ) ≠ 0)] at hD
-    have hmul := mul_le_mul_of_nonneg_left (show (2 : ℝ) ≤ 4 * m by linarith)
-      (rpow_nonneg (by positivity : (0 : ℝ) ≤ 4 * m) k)
-    dsimp [Y]; linarith
+    exact (rpow_le_rpow hQ0.le hQm (by linarith : 0 ≤ k)).trans (by dsimp [Y]; linarith)
   have hQY : Q ≤ Y := by
     calc Q = Q ^ (1 : ℝ) := (rpow_one Q).symm
          _ ≤ _ := (rpow_le_rpow_of_exponent_le hQ.le hk1).trans hqk
@@ -373,7 +366,7 @@ theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs
       simp only [Finset.mem_insert, Finset.mem_singleton] at ht
       rcases ht with rfl | rfl <;> linarith
     have ht0 : 0 < t := hY0.trans_le hYt
-    have hlarge := (Ht t ((rpow_le_rpow_of_exponent_le hQ.le hkB).trans (hqk.trans hYt)))
+    have hlarge := Ht t ht ((rpow_le_rpow_of_exponent_le hQ.le hkB).trans (hqk.trans hYt))
     have hF : 0 ≤ mainTerm θ β t := by
       have hpos : 0 < relativeError A c Q t := by unfold relativeError; positivity
       exact (mul_nonneg_iff_of_pos_left hpos).1 ((abs_nonneg _).trans hlarge)

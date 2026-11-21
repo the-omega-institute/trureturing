@@ -134,33 +134,32 @@ private theorem margin_lower {Y : ℝ} (hY : 2 ≤ Y) :
 
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ {B A c s : ℝ}, 0 < A → 0 < c → 0 < s →
-    cyclotomicEstimate (V.readout ()) B A c s → ∀ η : ℝ, 0 < η →
-    ∃ K D₀ : ℝ, 0 < K ∧ 0 < D₀ ∧ ∀ (m a : ℕ), 3 ≤ m → a.Coprime m → ∀ D : ℝ,
-      D₀ ≤ D → (4 * (m : ℝ)) ^ K ≤ D →
+  Law V := ∀ {B A c s : ℝ}, 0 < A → 0 < c → 0 < s → ∀ η : ℝ, 0 < η →
+    ∃ K D₀ : ℝ, 1 ≤ K ∧ 0 < D₀ ∧ ∀ (m a : ℕ) (D : ℝ),
+      D₀ ≤ D → 2 * (m : ℝ) ^ K ≤ D → cyclotomicEndpoints (V.readout ()) m a B A c s (D / 2) →
       min 1 s / (2 * (m : ℝ) ^ 2) * dyadicMargin η (D / 2) ≤
         (m.totient : ℝ) * V.readout () m a (D / 2) D
 
 private theorem incompatible_fails : ¬ arena.Law incompatible := by
   intro h
-  have hmodel : cyclotomicEstimate (incompatible.readout ()) 1 1 1 1 := by
-    intro m a hm _
-    refine ⟨2, 0, 1 / 2, 0, by norm_num, by exact_mod_cast (show 2 ≤ m by omega),
-      Or.inr (Or.inl rfl), by norm_num, by norm_num,?_⟩
-    intro t ht
-    rw [incompatible_prefix (by omega : 0 < m), sub_self, abs_zero]
+  obtain ⟨K, D₀, _, _, hK⟩ := @h 1 1 1 1 (by norm_num) (by norm_num) (by norm_num)
+    (1 / 100) (by norm_num)
+  let D := max 32 (max D₀ (2 * (3 : ℝ) ^ K))
+  have hD : 32 ≤ D := le_max_left _ _
+  have hmodel : cyclotomicEndpoints (incompatible.readout ()) 3 1 1 1 1 1 (D / 2) := by
+    refine ⟨2, 0, 1 / 2, 0, by norm_num, by norm_num, Or.inr (Or.inl rfl),
+      by norm_num, by norm_num,?_⟩
+    intro t _ ht
+    rw [incompatible_prefix (by decide : 0 < 3), sub_self, abs_zero]
     rw [rpow_one] at ht
     simp only [mainTerm, Int.cast_zero, zero_mul, sub_zero]
     apply mul_nonneg (by unfold relativeError; positivity)
     apply intervalIntegral.integral_nonneg ht
     intro u hu
     exact div_nonneg zero_le_one (log_nonneg (by linarith [hu.1]))
-  obtain ⟨K, D₀, _, _, hK⟩ := @h 1 1 1 1 (by norm_num) (by norm_num) (by norm_num) hmodel
-    (1 / 100) (by norm_num)
-  let D := max 32 (max D₀ ((4 * (3 : ℝ)) ^ K))
-  have hD : 32 ≤ D := le_max_left _ _
-  have hcount := hK 3 1 (by decide) (by decide) D
-    ((le_max_left _ _).trans (le_max_right _ _)) ((le_max_right _ _).trans (le_max_right _ _))
+  have hcount := hK 3 1 D
+    ((le_max_left _ _).trans (le_max_right _ _))
+    ((le_max_right _ _).trans (le_max_right _ _)) hmodel
   have hY : 1 < D / 2 := by linarith
   have hzero : incompatible.readout () 3 1 (D / 2) D = 0 := by
     change (if D / 2 = 0 then _ else _) = _
@@ -202,13 +201,13 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
   sourceSelection := some {
     owner := `D5.S3.CharacterSums.DyadicPrimeClassCount
     definition := none
-    coordinates := #[12]
+    coordinates := #[11]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "body", "arg", "body", "arg", "arg",
-        "body", "body", "body", "body", "body", "body", "body", "arg",
-        "arg", "fn", "fn"]
-      stateBinder := 13
+        "body", "arg", "body", "arg", "body", "arg", "arg", "body",
+        "body", "body", "body", "body", "body", "arg", "arg", "fn",
+        "fn"]
+      stateBinder := 12
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
