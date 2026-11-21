@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity
 
 /-! A near-zero slope bound for the complete cosine series transfers to an additive
 gap at infinity via the midpoint inequality for the complete Mangoldt ramps. -/
@@ -20,57 +21,36 @@ open Filter Set Real
 open scoped Topology
 open D5.S3.Weil.Mertens.IntegratedExplicit
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
-  (G actual_G_control on_line coeff_real coeff_norm_hasSum)
+  (G actual_G_control abs_G_sub_normalized_actualH_le coeff_real coeff_norm_hasSum)
+open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity (actual_cosine_hasSum)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelSubexponential (K_eq_linearKernel)
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtCriticalGap
 
-private def cosineProfile (y : ℝ) : ℝ := exp (-y / 2) * (actualH y).re
-private def phaseDeficit (y : ℝ) : ℝ := firstLiMass - cosineProfile y
-
-private lemma normalized_term_re (rh : RiemannHypothesis) (s : ℝ) (k : ℕ) :
-    ((exp (-s / 2) : ℂ) * (actualCoeff k * Complex.exp ((s : ℂ) * actualZero k))).re =
-      ‖actualCoeff k‖ * cos (s * (actualZero k).im) := by
-  rw [coeff_real rh k, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_pos (one_div_pos.mpr (by positivity))]
-  have phase :
-      (exp (-s / 2) : ℂ) * Complex.exp ((s : ℂ) * actualZero k) =
-        Complex.exp (((s * (actualZero k).im : ℝ) : ℂ) * Complex.I) := by
-    rw [Complex.ofReal_exp, ← Complex.exp_add]
-    congr 1
-    apply Complex.ext <;>
-      simp [Complex.mul_re, Complex.mul_im, on_line rh k] <;> ring
-  rw [mul_left_comm, phase, Complex.re_ofReal_mul, Complex.exp_ofReal_mul_I_re]
-
-private theorem cosineProfile_hasSum (rh : RiemannHypothesis) (s : ℝ) :
-    HasSum (fun k => ‖actualCoeff k‖ * cos (s * (actualZero k).im)) (cosineProfile s) := by
-  simpa only [cosineProfile, actualH, Complex.re_ofReal_mul, normalized_term_re rh] using
-    Complex.hasSum_re ((actualH_summable s).hasSum.mul_left ((exp (-s / 2) : ℝ) : ℂ))
+private def phaseDeficit (y : ℝ) : ℝ := firstLiMass - K y
 
 private theorem phaseDeficit_le_second_difference (rh : RiemannHypothesis) (y h : ℝ) :
     2 * phaseDeficit h - 4 * phaseDeficit y ≤
-      2 * cosineProfile y - cosineProfile (y + h) - cosineProfile (y - h) := by
+      2 * K y - K (y + h) - K (y - h) := by
+  have series (s : ℝ) :
+      HasSum (fun k => ‖actualCoeff k‖ * cos ((actualZero k).im * s)) (K s) := by
+    have hnorm (k : ℕ) : ‖actualCoeff k‖ = 1 / (1 / 4 + (actualZero k).im ^ 2) := by
+      rw [coeff_real rh k, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos (one_div_pos.mpr (by positivity))]
+    simpa only [Complex.ofReal_re, hnorm] using Complex.hasSum_re (actual_cosine_hasSum rh s)
   have mass := coeff_norm_hasSum rh
-  have lhs := ((mass.sub (cosineProfile_hasSum rh h)).mul_left 2).sub
-    ((mass.sub (cosineProfile_hasSum rh y)).mul_left 4)
-  have rhs := (((cosineProfile_hasSum rh y).mul_left 2).sub (cosineProfile_hasSum rh (y+h))).sub
-    (cosineProfile_hasSum rh (y-h))
+  have lhs := ((mass.sub (series h)).mul_left 2).sub ((mass.sub (series y)).mul_left 4)
+  have rhs := (((series y).mul_left 2).sub (series (y + h))).sub (series (y - h))
   apply hasSum_le _ lhs rhs
   intro k
-  simp only [add_mul, sub_mul, Real.cos_add, Real.cos_sub]
+  simp only [mul_add, mul_sub, Real.cos_add, Real.cos_sub]
   have m := norm_nonneg (actualCoeff k)
-  have cy := sub_nonneg.mpr (cos_le_one (y*(actualZero k).im))
-  have ch : 0 ≤ cos (h*(actualZero k).im)+1 := by linarith [neg_one_le_cos (h*(actualZero k).im)]
+  have cy := sub_nonneg.mpr (cos_le_one ((actualZero k).im * y))
+  have ch : 0 ≤ cos ((actualZero k).im * h)+1 := by linarith [neg_one_le_cos ((actualZero k).im * h)]
   nlinarith [mul_nonneg m (mul_nonneg cy ch)]
-
-private theorem cosineProfile_eq {y : ℝ} (hy : 0 < y) :
-    cosineProfile y = exp (-y/2) * (U (exp y) - log (2*π) + trivialT y) := by
-  rw [cosineProfile, actual_integrated_explicit_formula hy, Complex.ofReal_re]
-
-private lemma cosineProfile_eq_K {y : ℝ} (hy : 0 < y) : cosineProfile y = K y := by
-  rw [cosineProfile_eq hy, K, abs_of_pos hy]
 
 private theorem phaseDeficit_div_tendsto_atTop :
     Tendsto (fun h : ℝ => phaseDeficit h / h) (𝓝[>] 0) atTop := by
@@ -87,7 +67,7 @@ private theorem phaseDeficit_div_tendsto_atTop :
   have hu_bound := hbound ⟨hu.1, hu.2.trans (hh.trans_le (min_le_left _ _))⟩
   change D1 u ≤ -B at hu_bound
   rw [hslope, K_zero, sub_zero] at hu_bound
-  rw [phaseDeficit, cosineProfile_eq_K hp, ← neg_sub, neg_div]
+  rw [phaseDeficit, ← neg_sub, neg_div]
   linarith
 
 private def positiveExp (y : ℝ) := exp (y/2)
@@ -171,18 +151,10 @@ private def residualConstant : ℝ := |log (2 * π)| + |1 - log 2|
 private lemma residualConstant_nonneg : 0 ≤ residualConstant :=
   add_nonneg (abs_nonneg _) (abs_nonneg _)
 
-private lemma abs_G_sub_cosineProfile_le {y : ℝ} (hy : 0 < y) :
-    |G y - cosineProfile y| ≤ negativeExp y * residualConstant := by
-  rw [cosineProfile_eq hy, G]
-  change |negativeExp y * U (exp y) - negativeExp y * (U (exp y)-log (2*π)+trivialT y)| ≤ _
-  rw [show negativeExp y * U (exp y) - negativeExp y * (U (exp y)-log (2*π)+trivialT y) =
-    negativeExp y*(log (2*π)-trivialT y) by ring, abs_mul,abs_of_pos (negativeExp_pos _)]
-  apply mul_le_mul_of_nonneg_left _ (negativeExp_pos _).le
-  have ht := trivialT_le_mass hy.le
-  have ha := abs_sub (log (2*π)) (trivialT y)
-  rw [abs_of_nonneg (trivialT_nonneg hy.le)] at ha
-  unfold residualConstant
-  linarith [le_abs_self (1-log 2)]
+private lemma abs_G_sub_K_le {y : ℝ} (hy : 0 < y) :
+    |G y - K y| ≤ negativeExp y * residualConstant := by
+  rw [K_eq_linearKernel hy]
+  exact abs_G_sub_normalized_actualH_le hy
 
 private lemma eventually_abs_exp_sub_one_le : ∀ᶠ h : ℝ in 𝓝[>] 0,
     |positiveExp h-1| ≤ 2*h ∧ |negativeExp h-1| ≤ 2*h ∧ h ≤ 1 := by
@@ -201,10 +173,9 @@ private lemma eventually_abs_exp_sub_one_le : ∀ᶠ h : ℝ in 𝓝[>] 0,
 private lemma negativeExp_tendsto_zero_right : Tendsto negativeExp atTop (𝓝[>] 0) := by
   apply tendsto_nhdsWithin_iff.mpr
   refine ⟨?_,Eventually.of_forall negativeExp_pos⟩
-  exact Real.tendsto_exp_atBot.comp (by
-    simpa only [negativeExp, show (fun y : ℝ => -y/2) = (fun y => y*(-1/2)) by funext y; ring] using
-      (tendsto_id.atTop_mul_const_of_neg (by norm_num : (-1 / 2 : ℝ) < 0) :
-        Tendsto (fun y : ℝ => y * (-1 / 2)) atTop atBot))
+  exact (Real.tendsto_exp_neg_atTop_nhds_zero.comp
+    (tendsto_id.atTop_mul_const (by norm_num : (0 : ℝ) < 1 / 2))).congr
+      (fun y => by simp [negativeExp, div_eq_mul_inv, neg_mul])
 
 private lemma eventually_phaseDeficit_transfer_le (rh : RiemannHypothesis) :
     ∃ B : ℝ, ∀ᶠ y : ℝ in atTop,
@@ -220,14 +191,14 @@ private lemma eventually_phaseDeficit_transfer_le (rh : RiemannHypothesis) :
   change |positiveExp h-1| ≤ 2*h at hv
   change |negativeExp h-1| ≤ 2*h at hw
   change h ≤ 1 at h1
-  have gyr := abs_G_sub_cosineProfile_le (by linarith : 0<y)
-  have gpl := abs_G_sub_cosineProfile_le (by linarith : 0<y+h)
-  have gmi := abs_G_sub_cosineProfile_le (by linarith : 0<y-h)
+  have gyr := abs_G_sub_K_le (by linarith : 0<y)
+  have gpl := abs_G_sub_K_le (by linarith : 0<y+h)
+  have gmi := abs_G_sub_K_le (by linarith : 0<y-h)
   rw [negativeExp_add] at gpl
   rw [negativeExp_sub] at gmi
-  change |G y-cosineProfile y| ≤ h*residualConstant at gyr
-  change |G (y+h)-cosineProfile (y+h)| ≤ h*negativeExp h*residualConstant at gpl
-  change |G (y-h)-cosineProfile (y-h)| ≤ h*positiveExp h*residualConstant at gmi
+  change |G y-K y| ≤ h*residualConstant at gyr
+  change |G (y+h)-K (y+h)| ≤ h*negativeExp h*residualConstant at gpl
+  change |G (y-h)-K (y-h)| ≤ h*positiveExp h*residualConstant at gmi
   have c1 := abs_le.mp hv
   have c2 := abs_le.mp hw
   have corr (z : ℝ) (hz : z ≤ 3) : h*z*residualConstant ≤ 3*h*residualConstant := by
@@ -264,15 +235,15 @@ private theorem critical_gap_tendsto_atTop (rh : RiemannHypothesis) :
   filter_upwards [Real.tendsto_log_atTop.eventually (hd.eventually_ge_atTop (D + residualConstant)),
     eventually_gt_atTop (1 : ℝ)] with x hx h1
   have hx0 := zero_lt_one.trans h1
-  have y := abs_G_sub_cosineProfile_le (log_pos h1)
+  have y := abs_G_sub_K_le (log_pos h1)
   have hs := (le_div_iff₀ (negativeExp_pos _)).mp hx
   have hw : negativeExp (log x) * sqrt x = 1 := by
     simpa [positiveExp, Real.exp_half, exp_log hx0] using negativeExp_mul_positiveExp (log x)
   have hy := (le_abs_self _).trans y
   rw [G, exp_log hx0] at hy
-  change negativeExp (log x) * U x - cosineProfile (log x) ≤
+  change negativeExp (log x) * U x - K (log x) ≤
     negativeExp (log x) * residualConstant at hy
-  change (D+residualConstant)*negativeExp (log x) ≤ firstLiMass-cosineProfile (log x) at hs
+  change (D+residualConstant)*negativeExp (log x) ≤ firstLiMass-K (log x) at hs
   apply le_of_mul_le_mul_left (a:=negativeExp (log x)) _ (negativeExp_pos _)
   nlinarith [congrArg (fun z : ℝ => firstLiMass*z) hw]
 
@@ -299,10 +270,10 @@ theorem rh_iff_critical_gap_tendsto_atTop :
       _ = firstLiMass := by
         rw [← exp_half, mul_left_comm, ← show positiveExp y = exp (y / 2) from rfl,
           negativeExp_mul_positiveExp, mul_one]
-  have hdiff := (neg_le_abs (G y - cosineProfile y)).trans (abs_G_sub_cosineProfile_le hy0)
+  have hdiff := (neg_le_abs (G y - K y)).trans (abs_G_sub_K_le hy0)
   have hdecay : negativeExp y ≤ 1 := exp_le_one_iff.mpr (by linarith)
   have hR := mul_le_of_le_one_left residualConstant_nonneg hdecay
-  rw [← cosineProfile_eq_K hy0, zero_mul, zero_add]
+  rw [zero_mul, zero_add]
   linarith
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtCriticalGap

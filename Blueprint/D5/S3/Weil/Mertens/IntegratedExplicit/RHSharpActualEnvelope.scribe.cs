@@ -45,6 +45,16 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                     + "Taking real parts in actualCoeff_hasSum gives the stated HasSum."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("abs-g-sub-normalized-actual-h-le"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le"),
+                H("The pointwise explicit-formula residual"),
+                StatementSource.FromAuthor(ResidualClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The exact explicit formula splits G into the normalized real zero series and "
+                    + "exp(-y/2)*(log(2*pi)-trivialT(y)). For positive y the triangle inequality "
+                    + "and 0<=trivialT(y)<=1-log(2) give the displayed pointwise estimate."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("actual-g-control"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control"),
                 H("Eventual absolute control and arbitrarily late values near the positive mass"),
@@ -132,6 +142,17 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
             FormulaRelationOperator.Equal,
             Multiply(Call("exp", new Formula.Fraction(new Formula.Negate(y), D(2))),
                 Call("U", Call("exp", y))))));
+    }
+
+    private static Formula ResidualClaim()
+    {
+        var y = F.Id("y");
+        var scale = Call("exp", new Formula.Fraction(new Formula.Negate(y), D(2)));
+        var normalized = Multiply(scale, Call("Re", Call("actualH", y)));
+        var size = Add(new Formula.Absolute(Call("log", Multiply(D(2), F.Pi))),
+            new Formula.Absolute(Subtract(D(1), Call("log", D(2)))));
+        return Disp(All("y", Real, ImpliesClaim(Less(D(0), y),
+            Le(new Formula.Absolute(Subtract(Call("G", y), normalized)), Multiply(scale, size)))));
     }
 
     private static Formula ControlClaim()

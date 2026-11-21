@@ -18,6 +18,7 @@
 
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
+import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 import D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 import D5.S3.Arith.Robin.EulerLayerRootCorrection
@@ -50,6 +51,8 @@ open D5.S3.Weil.ZeroSum (IsNontrivialZero)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.Mertens.IntegratedExplicit
 open D5.S3.Weil.Mertens.IntegratedExplicit.CountableResolvent (W R)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+  (G abs_G_sub_normalized_actualH_le)
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U psiErrorKernel)
 open D5.S3.Arith.Robin.ForwardKernel.KappaGap (zeroAbscissa)
 open D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
@@ -86,15 +89,9 @@ private lemma Q_exp_eq_neg_U {y : ℝ} (hy : Real.log 2 ≤ y) :
 
 private lemma U_sub_actualH_bound {y : ℝ} (hy : 0 < y) :
     |U (Real.exp y) - (actualH y).re| ≤ |Real.log (2 * Real.pi)| + |1 - Real.log 2| := by
-  have hformula := congrArg Complex.re (actual_integrated_explicit_formula hy)
-  simp only [Complex.ofReal_re] at hformula
-  have hdiff : U (Real.exp y) - (actualH y).re = Real.log (2 * Real.pi) - trivialT y := by
-    linarith
-  have htriv : |trivialT y| ≤ |1 - Real.log 2| := by
-    rw [abs_of_nonneg (trivialT_nonneg hy.le)]
-    exact (trivialT_le_mass hy.le).trans (le_abs_self _)
-  rw [hdiff]
-  exact (abs_sub _ _).trans (add_le_add le_rfl htriv)
+  have h := abs_G_sub_normalized_actualH_le hy
+  rw [G, ← mul_sub, abs_mul, abs_of_pos (Real.exp_pos _)] at h
+  exact le_of_mul_le_mul_left h (Real.exp_pos _)
 
 private lemma Q_exp_bound {alpha : ℝ} (hhalf : alpha ≤ 1 / 2)
     (hstrip : ∀ rho : ℂ, IsNontrivialZero rho → rho.re ≤ 1 - alpha) :

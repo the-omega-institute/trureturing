@@ -54,7 +54,19 @@ $$\operatorname{RiemannHypothesis} \Rightarrow \operatorname{HasSum}\left(\lambd
 
 Under RH each coefficient's norm is its real part. Taking real parts in actualCoeff_hasSum gives the stated HasSum.
 
-**Theorem 1.5 (Eventual absolute control and arbitrarily late values near the positive mass).**
+**Lemma 1.5 (The pointwise explicit-formula residual).**
+
+$$\forall y \in \mathbb{R},\; 0 < y \Rightarrow \left|\operatorname{G}\left(y\right) - \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{Re}\left(\operatorname{actualH}\left(y\right)\right)\right| \le \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \left(\left|\operatorname{log}\left(2 \cdot \pi\right)\right| + \left|1 - \operatorname{log}\left(2\right)\right|\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact explicit formula splits G into the normalized real zero series and exp(-y/2)*(log(2*pi)-trivialT(y)). For positive y the triangle inequality and 0<=trivialT(y)<=1-log(2) give the displayed pointwise estimate.
+
+**Theorem 1.6 (Eventual absolute control and arbitrarily late values near the positive mass).**
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; \forall y \in \mathbb{R},\; T \le y \Rightarrow \left|\operatorname{G}\left(y\right)\right| < firstLiMass + epsilon\right)\right) \land \left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists n \in \mathbb{N},\; Y \le n \land \left|\operatorname{G}\left(n\right) - firstLiMass\right| < epsilon\right)\right)\right)$$
 
@@ -77,6 +89,7 @@ WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, wh
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.G`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real`

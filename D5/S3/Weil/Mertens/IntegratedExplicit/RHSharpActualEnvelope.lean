@@ -127,25 +127,36 @@ private lemma G_split {y : ℝ} (hy : 0 < y) :
   rw [h]
   ring
 
-private lemma residual_zero : Tendsto residual atTop (𝓝 0) := by
-  have he : Tendsto (fun y : ℝ => Real.exp (-y / 2)) atTop (𝓝 0) :=
-    Real.tendsto_exp_atBot.comp (by
-      convert (tendsto_id.atTop_mul_const_of_neg (by norm_num : (-1 / 2 : ℝ) < 0) :
-          Tendsto (fun y : ℝ => y * (-1 / 2)) atTop atBot) using 1
-      funext y
-      ring)
-  apply squeeze_zero_norm' (a := fun y =>
-    Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|)) ?_
-    (by simpa using he.mul_const (|Real.log (2 * Real.pi)| + |1 - Real.log 2|))
-  filter_upwards [eventually_ge_atTop (0 : ℝ)] with y hy
-  rw [residual, norm_mul, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
-  gcongr
+private lemma abs_residual_le {y : ℝ} (hy : 0 ≤ y) :
+    |residual y| ≤ Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|) := by
+  rw [residual, abs_mul, abs_of_pos (Real.exp_pos _)]
+  apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
   calc
     _ ≤ |Real.log (2 * Real.pi)| + |trivialT y| := abs_sub _ _
     _ ≤ _ := by
       rw [abs_of_nonneg (trivialT_nonneg hy)]
-      gcongr
-      exact (trivialT_le_mass hy).trans (le_abs_self _)
+      exact add_le_add_right ((trivialT_le_mass hy).trans (le_abs_self _)) _
+
+/-- The normalized arithmetic remainder and the real zero series differ by
+at most an exponentially decaying explicit-formula residual. -/
+lemma abs_G_sub_normalized_actualH_le {y : ℝ} (hy : 0 < y) :
+    |G y - Real.exp (-y / 2) * (actualH y).re| ≤
+      Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|) := by
+  have hsplit := G_split hy
+  rw [normalizedH, Complex.re_ofReal_mul] at hsplit
+  rw [hsplit, add_sub_cancel_left]
+  exact abs_residual_le hy.le
+
+private lemma residual_zero : Tendsto residual atTop (𝓝 0) := by
+  have he : Tendsto (fun y : ℝ => Real.exp (-y / 2)) atTop (𝓝 0) :=
+    (Real.tendsto_exp_neg_atTop_nhds_zero.comp
+      (tendsto_id.atTop_mul_const (by norm_num : (0 : ℝ) < 1 / 2))).congr
+        (fun y => by simp [div_eq_mul_inv, neg_mul])
+  apply squeeze_zero_norm' (a := fun y =>
+    Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|)) ?_
+    (by simpa using he.mul_const (|Real.log (2 * Real.pi)| + |1 - Real.log 2|))
+  filter_upwards [eventually_ge_atTop (0 : ℝ)] with y hy
+  simpa only [Real.norm_eq_abs] using abs_residual_le hy
 
 /-- The normalized integrated prime term differs from the complete real zero
 series by a vanishing explicit-formula residual. -/
