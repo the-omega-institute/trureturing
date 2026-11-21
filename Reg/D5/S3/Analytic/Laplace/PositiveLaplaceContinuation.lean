@@ -102,4 +102,98 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms family
 #print axioms registration
 
+namespace AffineBound
+
+open _root_.D5.S3.Analytic.Laplace.EulerPoleObstruction (kernel tailLaplace)
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ → ℂ)
+    (fun _ => Set ℂ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ L S => AnalyticOnNhd ℂ L S) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law Q := ∀ {f : ℝ → ℝ} {F : ℂ → ℂ} {a b U c A B : ℝ},
+    0 ≤ U → a < b → Continuous f → c ≠ 0 →
+    (∀ᶠ t in atTop, c * f t ≤ A * t + B) →
+    (∀ s : ℂ, b < s.re → IntegrableOn (kernel f (s - a)) (Set.Ioi U)) →
+    (∀ s : ℂ, b < s.re → F s = tailLaplace f U (s - a)) →
+    MeromorphicOn F {s | a < s.re} →
+    (∀ x : ℝ, a < x → AnalyticAt ℂ F (x : ℂ)) →
+    ∃ L : ℂ → ℂ, Q.readout () () L {s | a < s.re} ∧
+      ∀ s : ℂ, b < s.re → L s = F s
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨_, bad, _⟩ := h (f := fun _ => 0) (F := fun _ => 0)
+    (a := 0) (b := 1) (U := 0) (c := 1) (A := 0) (B := 0)
+    le_rfl zero_lt_one continuous_const one_ne_zero (by simp)
+    (by intro s _; unfold kernel; simp) (by intro s _; simp [tailLaplace])
+    (fun z _ => MeromorphicAt.const 0 z) (fun _ _ => analyticAt_const)
+  exact bad
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro _
+  refine ⟨(), (fun _ : ℂ => (0 : ℂ)), (fun z : ℂ => z⁻¹), ?_⟩
+  intro he
+  have he' : AnalyticOnNhd ℂ (fun _ : ℂ => (0 : ℂ)) Set.univ =
+      AnalyticOnNhd ℂ (fun z : ℂ => z⁻¹) Set.univ := congrFun he Set.univ
+  have hi : AnalyticOnNhd ℂ (fun z : ℂ => z⁻¹) Set.univ := by
+    rw [← he']
+    exact analyticOnNhd_const
+  exact (differentiableAt_inv_iff.mp (hi 0 (Set.mem_univ 0)).differentiableAt) rfl
+
+def family : Registration arena (type_of% @analytic_continuation_of_affine_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@analytic_continuation_of_affine_bound, rejected, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_fails
+  dependence := actual_dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@analytic_continuation_of_affine_bound) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Analytic.Laplace.PositiveLaplaceContinuation.analytic_continuation_of_affine_bound.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Laplace.PositiveLaplaceContinuation.AffineBound.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ L S => AnalyticOnNhd ℂ L S) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.PositiveLaplaceContinuation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+
+end AffineBound
+
 end Reg.D5.S3.Analytic.Laplace.PositiveLaplaceContinuation

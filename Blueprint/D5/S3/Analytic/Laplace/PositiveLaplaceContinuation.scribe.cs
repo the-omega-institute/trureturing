@@ -34,5 +34,26 @@ internal sealed class PositiveLaplaceContinuationDocument : IScribeDocumentDefin
                         + "holomorphic extension excluded by AbscissaSingularity.no_holomorphic_extension_at_abscissa. "
                         + "Once convergence holds throughout Re(z)>a, the same identity argument gives "
                         + "the stated germ equality and the pointwise equality at continuity points."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("affine-bound-laplace-continuation"),
+                DeclarationHandle.Create("D5/S3/Analytic/Laplace/PositiveLaplaceContinuation."
+                    + "analytic_continuation_of_affine_bound"),
+                H("Laplace continuation from an eventual affine bound"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let f : ℝ → ℝ be continuous and let a, b, U, c, A and B be real, "
+                        + "with a < b, U ≥ 0 and c ≠ 0. Suppose c f(t) ≤ A t + B eventually as t → ∞. "
+                        + "For every complex s with Re(s) > b, assume exp(−(s−a)t) f(t) is integrable "
+                        + "on (U, ∞) and that F(s) equals its integral there. Assume F : ℂ → ℂ "
+                        + "is meromorphic on Re(s) > a and analytic at each real x > a. Then there "
+                        + "exists L : ℂ → ℂ holomorphic on Re(s) > a with L(s) = F(s) whenever Re(s) > b.")),
+                    Paragraph(Text("Choose a cutoff past which the affine gap A t + B − c f(t) "
+                        + "is nonnegative and multiply it by exp(−(b+1−a)t) to obtain a finite positive "
+                        + "measure on that tail. Its Laplace transform has a real-regular meromorphic "
+                        + "continuation obtained by subtracting the finite head and comparing with the "
+                        + "affine transform. Positive Laplace convergence extends the gap transform. "
+                        + "Subtracting it from the affine transform, dividing by c and restoring the "
+                        + "finite head produces the required L."))),
                 DescribeRole.Theorem))));
 }

@@ -781,62 +781,9 @@ private lemma completePrimitive_unconditional_growth :
       apply mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr _) (by positivity)
       nlinarith [mul_nonneg hε.le (cutoff_nonneg.trans hT)]
 
-private lemma affine_damped_integrable (A B : ℝ) {τ d : ℝ} (hτ : 0 ≤ τ) (hd : 0 < d) :
-    IntegrableOn (fun t : ℝ => Real.exp (-d * t) * (A * t + B)) (Ioi τ) := by
-  have hlin : IntegrableOn (fun t : ℝ => t * Real.exp (-d * t)) (Ioi 0) := by
-    simpa only [Real.rpow_one] using
-      (integrableOn_rpow_mul_exp_neg_mul_rpow (s := 1) (p := 1) (b := d)
-        (by norm_num) one_pos hd)
-  have hi : IntegrableOn
-      (fun t : ℝ => A * (t * Real.exp (-d * t)) + B * Real.exp (-d * t)) (Ioi τ) :=
-    ((hlin.mono_set (Ioi_subset_Ioi hτ)).const_mul A).add
-      ((integrableOn_exp_mul_Ioi (neg_lt_zero.mpr hd) τ).const_mul B)
-  refine hi.congr_fun (fun t _ => ?_) measurableSet_Ioi
-  dsimp only [Pi.add_apply]
-  ring
-
 private lemma sub_half_re (s : ℂ) : (s - 1 / 2).re = s.re - 1 / 2 := by
   rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by push_cast; rfl]
   simp only [Complex.sub_re, Complex.ofReal_re]
-
-private lemma affine_kernel_integrable (A B : ℝ) {τ : ℝ} (hτ : 0 ≤ τ)
-    {s : ℂ} (hs : 1 / 2 < s.re) :
-    IntegrableOn (EulerPoleObstruction.kernel (fun t => A * t + B) (s - 1 / 2)) (Ioi τ) := by
-  apply (integrable_norm_iff (kernel_continuous (by fun_prop) _).aestronglyMeasurable).mp
-  convert (affine_damped_integrable A B hτ (sub_pos.mpr hs)).norm using 1
-  funext t
-  rw [kernel_norm, sub_half_re, norm_mul, Real.norm_eq_abs (Real.exp _),
-    abs_of_pos (Real.exp_pos _)]
-
-private def affineLaplace (A B τ : ℝ) (s : ℂ) : ℂ :=
-  ∫ t in Ioi τ, EulerPoleObstruction.kernel (fun t => A * t + B) (s - 1 / 2) t
-
-private lemma affineLaplace_analytic (A B : ℝ) {τ : ℝ} (hτ : 0 ≤ τ) :
-    AnalyticOnNhd ℂ (affineLaplace A B τ) {s : ℂ | 1 / 2 < s.re} := by
-  intro s hs
-  change 1 / 2 < s.re at hs
-  let d : ℝ := (s.re - 1 / 2) / 2
-  have hd : 0 < d := by dsimp [d]; linarith
-  let g (t : ℝ) : ℝ := Real.exp (-d * t) * (A * t + B)
-  have hg : IntegrableOn g (Ioi τ) := affine_damped_integrable A B hτ hd
-  let shift (z : ℂ) : ℂ := (z - 1 / 2) - (d : ℂ)
-  have hf : affineLaplace A B τ =
-      (fun z => ∫ t in Ioi τ, EulerPoleObstruction.kernel g z t) ∘ shift := by
-    funext z
-    apply setIntegral_congr_fun measurableSet_Ioi
-    intro t _
-    simp only [shift, g, EulerPoleObstruction.kernel, Complex.ofReal_mul,
-      Complex.ofReal_exp, Complex.ofReal_neg, ← mul_assoc, ← Complex.exp_add]
-    congr 2
-    ring
-  rw [hf]
-  have hpos : 0 < (shift s).re := by
-    dsimp only [shift]
-    rw [Complex.sub_re, sub_half_re, Complex.ofReal_re]
-    dsimp [d]
-    linarith
-  exact (EulerPoleObstruction.tail_analytic hg hτ (shift s) hpos).comp
-    (f := shift) (x := s) ((analyticAt_id.sub analyticAt_const).sub analyticAt_const)
 
 private def primitiveContinuation (s : ℂ) : ℂ :=
   (CompleteMangoldtRealRegular.continued s - completeHead s) / (s - 1 / 2)
@@ -856,157 +803,40 @@ private theorem complete_transform_of_one_sided_bound {c A B : ℝ} (hc : c ≠ 
     (h : ∀ᶠ t in atTop, c * completePrimitive t ≤ A * t + B) :
     ∃ L : ℂ → ℂ, AnalyticOnNhd ℂ L {s : ℂ | 1 / 2 < s.re} ∧
       ∀ s : ℂ, 1 < s.re → L s = CompleteMangoldtLaurent.transform s := by
-  obtain ⟨R, hR⟩ := eventually_atTop.mp h
-  let τ := max cutoff R
-  have hcutτ : cutoff ≤ τ := le_max_left _ _
-  have hτ : 0 ≤ τ := cutoff_nonneg.trans hcutτ
-  let w (t : ℝ) : ℝ := Real.exp (-(2 - 1 / 2) * t) * (A * t + B - c * completePrimitive t)
-  let μ : Measure ℝ := (volume.restrict (Ioi τ)).withDensity (fun t => ENNReal.ofReal (w t))
-  have hw : IntegrableOn w (Ioi τ) := by
-    have hK := (damped_primitive completePrimitive_unconditional_growth
-      (s := (2 : ℂ)) (by norm_num)).1
-    have hcast : EulerPoleObstruction.kernel completePrimitive ((2 : ℂ) - 1 / 2) =
-        (fun t : ℝ => ((Real.exp (-(2 - 1 / 2) * t) * completePrimitive t : ℝ) : ℂ)) := by
-      funext t
-      simp only [EulerPoleObstruction.kernel, Complex.ofReal_mul, Complex.ofReal_exp,
-        Complex.ofReal_neg, Complex.ofReal_sub, Complex.ofReal_div, Complex.ofReal_one,
-        Complex.ofReal_ofNat]
-    rw [hcast] at hK
-    have hF := (IntegrableOn.iff_ofReal.mpr hK).mono_set (Ioi_subset_Ioi hcutτ)
-    have hi : IntegrableOn (fun t : ℝ =>
-        Real.exp (-(2 - 1 / 2) * t) * (A * t + B) -
-          c * (Real.exp (-(2 - 1 / 2) * t) * completePrimitive t)) (Ioi τ) :=
-      (affine_damped_integrable A B hτ (by norm_num : 0 < (2 : ℝ) - 1 / 2)).sub
-        (hF.const_mul c)
-    refine hi.congr_fun (fun t _ => ?_) measurableSet_Ioi
-    dsimp only [w, Pi.sub_apply]
-    ring
-  have hwpos : ∀ᵐ t ∂volume.restrict (Ioi τ), 0 ≤ w t := by
-    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    exact mul_nonneg (Real.exp_pos _).le (sub_nonneg.mpr (hR t
-      ((le_max_right cutoff R).trans ht.le)))
-  let hμ : IsFiniteMeasure μ :=
-    isFiniteMeasure_withDensity ((hasFiniteIntegral_iff_ofReal hwpos).mp hw.hasFiniteIntegral).ne
-  have hX : ∀ᵐ t ∂μ, 0 ≤ id t := by
-    apply (withDensity_absolutelyContinuous _ _).ae_le
-    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    exact hτ.trans ht.le
-  have hb : Integrable (fun t : ℝ => Real.exp (-(0 : ℝ) * id t)) μ := by
-    simp only [neg_zero, zero_mul, Real.exp_zero]
-    exact integrable_const (μ := μ) (1 : ℝ)
-  let P (s : ℂ) := EulerPoleObstruction.finiteHead completePrimitive cutoff τ (s - 1 / 2)
-  have hP (s : ℂ) : AnalyticAt ℂ P s := by
-    have he := EulerPoleObstruction.finiteHead_entire
-      (completePrimitive_continuous.integrableOn_Icc (a := cutoff) (b := τ)
-        |>.mono_set Ioc_subset_Icc_self)
-    exact (he.analyticAt (s - 1 / 2)).comp
-      (f := fun z : ℂ => z - 1 / 2) (x := s) (analyticAt_id.sub analyticAt_const)
   have hHead (s : ℂ) : AnalyticAt ℂ completeHead s :=
     (EulerPoleObstruction.finiteHead_entire
       (U_exp_continuous.integrableOn_Icc.mono_set Ioc_subset_Icc_self)).analyticAt s
   have hden (s : ℂ) : AnalyticAt ℂ (fun z : ℂ => z - 1 / 2) s :=
     analyticAt_id.sub analyticAt_const
-  have hden_ne {s : ℂ} (hs : 1 / 2 < s.re) : s - 1 / 2 ≠ 0 :=
-    Complex.ne_zero_of_re_pos (by rw [sub_half_re]; linarith)
-  let K := affineLaplace A B τ
-  have hK : AnalyticOnNhd ℂ K {s : ℂ | 1 / 2 < s.re} := affineLaplace_analytic A B hτ
-  let shift (z : ℂ) := z + 2
-  have hshift (z : ℂ) : AnalyticAt ℂ shift z := analyticAt_id.add analyticAt_const
-  let H (z : ℂ) := K (shift z) - (c : ℂ) * (primitiveContinuation (shift z) - P (shift z))
-  have hHm : MeromorphicOn H {z | (1 / 2 : ℝ) - 2 < z.re} := by
-    intro z hz
-    change (1 / 2 : ℝ) - 2 < z.re at hz
-    have hs : 1 / 2 < (shift z).re := by
-      simp [shift, Complex.add_re]
-      linarith
-    have hRe : 0 < (shift z).re := by linarith
-    have hm : MeromorphicAt primitiveContinuation (shift z) :=
-      ((CompleteMangoldtRealRegular.continuation.1 _ hRe).sub
-        (hHead _).meromorphicAt).div (hden _).meromorphicAt
-    have hc' : AnalyticAt ℂ (fun _ : ℂ => (c : ℂ)) (shift z) := analyticAt_const
-    exact ((hK _ hs).meromorphicAt.sub (hc'.meromorphicAt.mul
-      (hm.sub (hP _).meromorphicAt))).comp_analyticAt (hshift z)
-  have hHa (x : ℝ) (hx : (1 / 2 : ℝ) - 2 < x) : AnalyticAt ℂ H (x : ℂ) := by
-    have hs : 1 / 2 < x + 2 := by linarith
-    have he : shift (x : ℂ) = ((x + 2 : ℝ) : ℂ) := by simp [shift]
-    have hp : AnalyticAt ℂ primitiveContinuation (shift (x : ℂ)) := by
-      apply ((?_ : AnalyticAt ℂ CompleteMangoldtRealRegular.continued (shift (x : ℂ))).sub
-        (hHead _)).div (hden _) (hden_ne (by simpa [he] using hs))
-      rw [he]
-      exact CompleteMangoldtRealRegular.continuation.2.1 _ (by linarith)
-    exact ((hK _ (by simpa [he] using hs)).sub
-      (analyticAt_const.mul (hp.sub (hP _)))).comp
-        (f := shift) (x := (x : ℂ)) (hshift _)
-  let M (z : ℂ) := ProbabilityTheory.complexMGF id μ (-z)
-  have hmatch (z : ℂ) (hs : 1 < (shift z).re) : H z = M z := by
-    have hA := affine_kernel_integrable A B hτ (show 1 / 2 < (shift z).re by linarith)
-    have hFull := (damped_primitive completePrimitive_unconditional_growth hs).1
-    have hTail := hFull.mono_set (Ioi_subset_Ioi hcutτ)
-    have hsplit := setIntegral_union Ioc_disjoint_Ioi_same measurableSet_Ioi
-      (hFull.mono_set Ioc_subset_Ioi_self) hTail
-    rw [Ioc_union_Ioi_eq_Ioi hcutτ] at hsplit
-    change primitiveLaplace (shift z) = P (shift z) +
-      (∫ t in Ioi τ, EulerPoleObstruction.kernel completePrimitive (shift z - 1 / 2) t) at hsplit
-    calc
-      H z = (∫ t in Ioi τ,
-          EulerPoleObstruction.kernel (fun t => A * t + B) (shift z - 1 / 2) t -
-          (c : ℂ) * EulerPoleObstruction.kernel completePrimitive (shift z - 1 / 2) t) := by
-        dsimp only [H]
-        rw [primitiveContinuation_eq hs, hsplit,
-          integral_sub hA (hTail.const_mul (c : ℂ)), integral_const_mul]
-        simp only [K, affineLaplace, add_sub_cancel_left]
-      _ = M z := by
-        dsimp only [M, ProbabilityTheory.complexMGF, μ]
-        rw [integral_withDensity_eq_integral_toReal_smul₀ hw.aemeasurable.ennreal_ofReal
-            (Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
-        apply integral_congr_ae
-        filter_upwards [hwpos] with t ht
-        simp only [ENNReal.toReal_ofReal ht, id_eq, Complex.real_smul, w,
-          EulerPoleObstruction.kernel, Complex.ofReal_mul, Complex.ofReal_sub,
-          Complex.ofReal_add, Complex.ofReal_exp, Complex.ofReal_neg, Complex.ofReal_div,
-          Complex.ofReal_ofNat, Complex.ofReal_one]
-        have hexp : Complex.exp (-(((2 : ℂ) - 1 / 2)) * (t : ℂ)) *
-            Complex.exp (-z * (t : ℂ)) = Complex.exp (-(shift z - 1 / 2) * (t : ℂ)) := by
-          rw [← Complex.exp_add]
-          congr 1
-          dsimp [shift]
-          ring
-        rw [← hexp]
-        ring
-  have hbase : 1 < (shift (1 : ℂ)).re := by norm_num [shift]
-  have hAgree : H =ᶠ[𝓝 (1 : ℂ)] M := by
-    have hopen : IsOpen {z : ℂ | 1 < (shift z).re} :=
-      isOpen_lt continuous_const (Complex.continuous_re.comp
-        (show Continuous (fun z : ℂ => z + 2) by fun_prop))
-    filter_upwards [hopen.mem_nhds hbase] with z hz
-    exact hmatch z hz
-  obtain ⟨_, hM, _⟩ :=
-    PositiveLaplaceContinuation.integrable_and_analytic_of_meromorphic_continuation
-      (X := id) measurable_id.aemeasurable hX hb hHm (fun x hx _ => hHa x hx)
-      (z₀ := (1 : ℂ)) (by norm_num) (by norm_num) hAgree
-  let unshift (s : ℂ) := s - 2
-  let L (s : ℂ) := completeHead s + (s - 1 / 2) * (P s + (K s - M (unshift s)) / (c : ℂ))
-  refine ⟨L, ?_, ?_⟩
+  have hmer : MeromorphicOn primitiveContinuation {s : ℂ | 1 / 2 < s.re} := by
+    intro s hs
+    have hRe : 0 < s.re := lt_trans (by norm_num) hs
+    exact ((CompleteMangoldtRealRegular.continuation.1 s hRe).sub
+      (hHead s).meromorphicAt).div (hden s).meromorphicAt
+  have hreal (x : ℝ) (hx : 1 / 2 < x) : AnalyticAt ℂ primitiveContinuation (x : ℂ) := by
+    have hne : (x : ℂ) - 1 / 2 ≠ 0 := Complex.ne_zero_of_re_pos (by
+      rw [sub_half_re, Complex.ofReal_re]
+      exact sub_pos.mpr hx)
+    exact ((CompleteMangoldtRealRegular.continuation.2.1 x (by linarith)).sub
+      (hHead x)).div (hden x) hne
+  have hhalf : ((1 / 2 : ℝ) : ℂ) = 1 / 2 := by push_cast; rfl
+  obtain ⟨P, hP, hMatch⟩ :=
+    PositiveLaplaceContinuation.analytic_continuation_of_affine_bound
+      (a := 1 / 2) (b := 1) cutoff_nonneg (by norm_num) completePrimitive_continuous hc h
+      (fun s hs => by
+        rw [hhalf]
+        exact (damped_primitive completePrimitive_unconditional_growth hs).1)
+      (fun s hs => by
+        rw [hhalf]
+        change primitiveContinuation s = primitiveLaplace s
+        exact primitiveContinuation_eq hs) hmer hreal
+  refine ⟨fun s => completeHead s + (s - 1 / 2) * P s, ?_, ?_⟩
   · intro s hs
-    change 1 / 2 < s.re at hs
-    have hu : (1 / 2 : ℝ) - 2 < (unshift s).re := by
-      simp [unshift, Complex.sub_re]
-      linarith
-    have hm := (hM (unshift s) hu).comp (f := unshift) (x := s)
-      (analyticAt_id.sub analyticAt_const)
-    exact (hHead s).add ((hden s).mul ((hP s).add
-      (((hK s hs).sub hm).div analyticAt_const (Complex.ofReal_ne_zero.mpr hc))))
+    exact (hHead s).add ((hden s).mul (hP s hs))
   · intro s hs
-    have hshift_s : shift (unshift s) = s := sub_add_cancel s 2
-    have hm := hmatch (unshift s) (by rwa [hshift_s])
-    change K (shift (unshift s)) - (c : ℂ) *
-      (primitiveContinuation (shift (unshift s)) - P (shift (unshift s))) = M (unshift s) at hm
-    rw [hshift_s, primitiveContinuation_eq hs] at hm
-    rw [← continuedTransform_eq le_rfl completePrimitive_unconditional_growth hs]
-    dsimp only [L, continuedTransform]
-    rw [← hm]
-    field_simp [Complex.ofReal_ne_zero.mpr hc]
-    ring
+    change completeHead s + (s - 1 / 2) * P s = CompleteMangoldtLaurent.transform s
+    rw [hMatch s hs, primitiveContinuation_eq hs]
+    exact continuedTransform_eq le_rfl completePrimitive_unconditional_growth hs
 
 private theorem rh_of_completePrimitive_one_sided_bound {c A B : ℝ} (hc : c ≠ 0)
     (h : ∀ᶠ t in atTop, c * completePrimitive t ≤ A * t + B) :
