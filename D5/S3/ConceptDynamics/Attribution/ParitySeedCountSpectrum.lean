@@ -8,7 +8,7 @@
 
 import D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization
 import Mathlib.Algebra.Group.Action.Sum
-import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.GroupTheory.PGroup
 import Mathlib.Data.Set.Card
 
 /-! The attainable fixed counts inside the coordinatewise parity boundary. -/
@@ -34,11 +34,10 @@ private theorem orbit_two_or_four_dvd {G S : Type*} [Group G] [Fintype G] [Finty
   classical
   dsimp only
   letI : Fintype (orbit G s) := Fintype.ofFinite _
-  letI : Fintype (stabilizer G s) := Fintype.ofFinite _
-  have card_dvd : Fintype.card (orbit G s) ∣ 2 ^ d :=
-    ⟨Fintype.card (stabilizer G s), order.symm.trans
-      (card_orbit_mul_card_stabilizer_eq_card_group G s).symm⟩
-  obtain ⟨r, _, orbit_size⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp card_dvd
+  have groupOrder : Nat.card G = 2 ^ d := (Nat.card_eq_fintype_card (α := G)).trans order
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  obtain ⟨r, orbit_size⟩ := (IsPGroup.of_card groupOrder).card_orbit s
+  rw [Nat.card_eq_fintype_card] at orbit_size
   have two_le : 2 ≤ Fintype.card (orbit G s) := by
     obtain ⟨g, change⟩ := moves
     by_contra! small
@@ -316,14 +315,7 @@ private theorem uniform_coloured_fibre_four_dvd_of_no_coordinate_fixed {n : ℕ}
   apply four_dvd_of_fixed_images_but_moved_sources action_order generator readout
   · intro g s
     exact equiv g s.val
-  · intro s
-    obtain ⟨_, j, rightZero⟩ := bits_on_right even (readout s).2
-    by_contra! all
-    have both := (fixed_pair_iff (readout s).1.val (readout s).2.val j).1 (by
-      intro g _
-      exact ⟨congrArg (fun a : Pair n => a.1.val) (all g),
-        congrArg (fun a : Pair n => a.2.val) (all g)⟩)
-    simp [rightZero] at both
+  · exact fun s => pair_action_moves (readout s)
   · intro s
     obtain ⟨⟨i, rightOne⟩, _⟩ := bits_on_right even (readout s).2
     have leftOne : (readout s).1.val.profile i = true := by
