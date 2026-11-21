@@ -164,7 +164,7 @@ private theorem unaveraged_formula {t : ℝ} (ht : Real.log 2 ≤ t) :
   ring
 
 /-- At the abscissa scale the complete tail differs from the projected series by o(1). -/
-private theorem normalized_complete_tail_approx {β : ℝ} (hβ : 0 < β)
+theorem normalized_complete_tail_approx {β : ℝ} (hβ : 0 < β)
     (hmax : ∀ k, (actualZero k).re ≤ β) :
     Tendsto (fun t : ℝ => Real.exp ((1 - β) * t) * Q (Real.exp t) +
       (maximalSeries actualCoeff actualZero β t).re) atTop (𝓝 0) := by
@@ -210,7 +210,7 @@ private theorem normalized_complete_tail_approx {β : ℝ} (hβ : 0 < β)
 
 /-- At any scale with exponent strictly above one half, removing prime powers changes
 the normalized tail by a quantity that tends to zero. -/
-private theorem normalized_prime_power_error {β : ℝ} (hβ : 1 / 2 < β) :
+theorem normalized_prime_power_error {β : ℝ} (hβ : 1 / 2 < β) :
     Tendsto (fun t : ℝ => Real.exp ((1 - β) * t) * (Q (Real.exp t) - primeTail (Real.exp t)))
       atTop (𝓝 0) := by
   have hbase := prime_power_window_correction.1.comp Real.tendsto_exp_atTop

@@ -19,12 +19,12 @@ namespace RefinedBMV
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def walk (B : Matrix n n ℂ) : (n → n → n → ℂ) →ₗ[ℂ] ℂ where
+def walk (B : Matrix n n ℂ) : (n → n → n → ℂ) →ₗ[ℂ] ℂ where
   toFun f := ∑ i, ∑ j, ∑ k, B i j * B j k * B k i * f i j k
   map_add' f g := by simp [Pi.add_apply, mul_add, Finset.sum_add_distrib]
   map_smul' c f := by simp [Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_left_comm]
 
-private theorem walk_rotate (B : Matrix n n ℂ) (f : n → n → n → ℂ) :
+theorem walk_rotate (B : Matrix n n ℂ) (f : n → n → n → ℂ) :
     walk B (fun i j k ↦ f j k i) = walk B f := by
   change (∑ i, ∑ j, ∑ k, B i j * B j k * B k i * f j k i) =
     ∑ i, ∑ j, ∑ k, B i j * B j k * B k i * f i j k
@@ -34,7 +34,7 @@ private theorem walk_rotate (B : Matrix n n ℂ) (f : n → n → n → ℂ) :
   refine Finset.sum_congr rfl fun j _ ↦ Finset.sum_congr rfl fun k _ ↦ ?_
   ring
 
-private theorem trace_diagonal_walk (B : Matrix n n ℂ) (u v w : n → ℂ) :
+theorem trace_diagonal_walk (B : Matrix n n ℂ) (u v w : n → ℂ) :
     trace (diagonal u * (B * (diagonal v * (B * (diagonal w * B))))) =
       walk B (fun i j k ↦ u i * v j * w k) := by
   change _ = ∑ i, ∑ j, ∑ k, B i j * B j k * B k i * (u i * v j * w k)
@@ -47,7 +47,7 @@ private theorem trace_diagonal_walk (B : Matrix n n ℂ) (u v w : n → ℂ) :
   simp only [diagonal_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun k _ ↦ by ring
 
-private theorem trace_pow_walk (B : Matrix n n ℂ) (a : n → ℂ) (p q r : ℕ) :
+theorem trace_pow_walk (B : Matrix n n ℂ) (a : n → ℂ) (p q r : ℕ) :
     trace ((diagonal a) ^ p * B * (diagonal a) ^ q * B * (diagonal a) ^ r * B) =
       walk B (fun i j k ↦ a i ^ p * a j ^ q * a k ^ r) := by
   simpa only [mul_assoc, diagonal_pow, Pi.pow_apply] using

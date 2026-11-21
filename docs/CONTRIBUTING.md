@@ -165,7 +165,7 @@ Check `dotnet --version`, `lean --version` and
 `python3 --version` from the checkout. Dependency downloads need network access;
 individual experiments may have additional prerequisites.
 
-The root Makefile installs the release selected by `Meta/tools-release.json`.
+The root Makefile installs the release selected by `Meta/tools-release.json`. To exercise a tools preview, run `make install-tools`, then `python3 tools/consumer/pin.py <preview-tag>` and commit the updated lock. The consumer runs its Lean, FILEMAP, Scribe and release workflows. The tools repository runs its own build, unit tests and consumer-fixture tests before publishing.
 Run `make install-tools` before using `make -C tools`, a script under `tools/`,
 or Lake directly in `Reg/`. For an offline checkout, install a copy of the
 same release asset with `python3 .github/scripts/install-tools.py --archive /path/to/trureturing-tools.tar.gz`.

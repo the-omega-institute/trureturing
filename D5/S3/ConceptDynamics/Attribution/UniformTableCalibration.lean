@@ -30,7 +30,7 @@ section MinimumSupport
 
 variable {I J : Type*} [Fintype J]
 
-private noncomputable def form (c x : J → ℝ) : ℝ := ∑ j, c j * x j
+noncomputable def form (c x : J → ℝ) : ℝ := ∑ j, c j * x j
 
 private theorem form_step (c x v : J → ℝ) (t : ℝ) :
     form c (fun j => x j + t * v j) = form c x + t * form c v := by
@@ -214,7 +214,7 @@ variable {I J : Type*} [Fintype I] [Fintype J]
 
 set_option maxHeartbeats 700000 in
 open Classical in
-private theorem integer_optimum [DecidableEq J] (A : Matrix I J ℤ) (b : I → ℝ) (cost : J → ℝ)
+theorem integer_optimum [DecidableEq J] (A : Matrix I J ℤ) (b : I → ℝ) (cost : J → ℝ)
     (normalization : ∃ i, ∀ j, 0 < A i j)
     (optimum : ∃ x : J → ℝ, (∀ j, 0 ≤ x j) ∧
       (∀ i, form (fun j => (A i j : ℝ)) x = b i) ∧
@@ -295,7 +295,7 @@ open Classical in
 noncomputable def orbitCount (A : Finset T) (o : Orbit G T) : ℕ :=
   (A.filter (fun t => orbit t = o)).card
 
-private theorem count_pos (o : Orbit G T) : 0 < orbitCount univ o := by
+theorem count_pos (o : Orbit G T) : 0 < orbitCount univ o := by
   classical
   exact Finset.card_pos.mpr ⟨Quotient.out o, mem_filter.mpr ⟨mem_univ _, Quotient.out_eq o⟩⟩
 
@@ -447,7 +447,7 @@ private def copiesEquiv (n : S → ℕ) : Copies n ≃ Σ s, Fin (n s) where
   mul_smul g h p := Subtype.ext (Prod.ext (mul_smul g h _) rfl)
 
 open Classical in
-private theorem exact_card_count [Fintype S] (n : S → ℕ)
+theorem exact_card_count [Fintype S] (n : S → ℕ)
     (invariant : ∀ (g : G) s, n (g • s) = n s) :
     ∃ (S' : Type v) (_ : Fintype S') (_ : MulAction G S') (p : S' → S),
       (∀ (g : G) s', p (g • s') = g • p s') ∧

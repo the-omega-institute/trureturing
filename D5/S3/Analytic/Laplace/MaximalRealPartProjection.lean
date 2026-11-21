@@ -62,14 +62,14 @@ private theorem norm_normalizedTerm_le (hz : ∀ n, (z n).re ≤ Θ)
   exact mul_le_of_le_one_right (norm_nonneg _)
     (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonneg_of_nonpos ht (sub_nonpos.mpr (hz n))))
 
-private theorem norm_maximalTerm_le (n : ℕ) (t : ℝ) :
+theorem norm_maximalTerm_le (n : ℕ) (t : ℝ) :
     ‖maximalTerm a z Θ n t‖ ≤ ‖a n‖ := by
   by_cases hn : (z n).re = Θ
   · rw [maximalTerm, ite_eq_left hn, norm_normalizedTerm, hn, sub_self, mul_zero,
       Real.exp_zero, mul_one]
   · simp only [maximalTerm, ite_eq_right hn, norm_zero, norm_nonneg]
 
-private theorem summable_norm_maximalTerm (ha : Summable (fun n => ‖a n‖)) (t : ℝ) :
+theorem summable_norm_maximalTerm (ha : Summable (fun n => ‖a n‖)) (t : ℝ) :
     Summable (fun n => ‖maximalTerm a z Θ n t‖) :=
   ha.of_norm_bounded (fun n => by
     simpa only [norm_norm] using (norm_maximalTerm_le (a := a) (z := z) (Θ := Θ) n t))

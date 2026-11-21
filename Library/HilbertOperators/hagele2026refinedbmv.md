@@ -5,12 +5,20 @@ year: 2026
 title: "On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices"
 doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
-claim: Section 7(iii) leaves the refined BMV lower bounds for word counts (3,3) and (4,3) open for dimensions at least four.
+claim: Section 7 identifies the dimension-three refined BMV lower bound for (5,3) and the bounds for (3,3) and (4,3) in dimensions at least four.
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
   - D5/S3/Quantum/Analysis/RefinedBMV43
   - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
+  - D5/S3/Quantum/Analysis/RefinedBMVDimThree
+  - D5/S3/Quantum/Analysis/RefinedBMVDimThreeCertificate
+  - D5/S3/Quantum/Analysis/RefinedBMVDimThreePairing
+  - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectralValues
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
 license: citation-only
 triage: anchor
 ---
@@ -60,6 +68,52 @@ a Gram matrix from four polynomial features and a weighted Cauchy matrix.
 This coefficient identity treats every finite dimension and gives the
 trace-power comparison. Apply it to `exp(H/3)` and `exp K` and use the same
 dyadic argument to obtain the lower bound `Tr exp(4H + 3K)`.
+
+Section 7(ii–iii) identifies the case `(5,3)` in dimension three and
+describes the scalar certificate route for three copies of the second
+factor. For `p = 5, 6, 7`, the dimension-three proof uses Proposition 2
+and the pairing of Lemma 5. The certificate compares the square of the
+mixed deficit with the square of a sum of two square roots. Substituting
+ordered cube roots as a nonnegative base and two nonnegative increments
+reduces this comparison to the signs of exact integer coefficients.
+The kernel checks the signs by a packed integer comparison, using
+homogeneity and a bound on the coefficient sizes. The pairing uses the
+unique index triangle in dimension three. The all-dimensional proofs
+use centered coefficient matrices.
+
+For five, six, or seven first factors, the same scalar certificate applies
+in every finite dimension if the first factor has at most three distinct
+eigenvalues. If `P_i` is the projection of a spectral label and `B` is the
+second PSD factor, the paired terms are cubic traces of
+`C_i = sqrt(B) P_i sqrt(B)`. The Hilbert–Schmidt pairing of
+`C_i sqrt(C_k)` and `C_j sqrt(C_k)` supplies the bound at the center
+`k`, including when some projections have rank zero. The exponential
+comparison uses the exact dyadic limit from Lemma 2.
+
+For matrices of size four, the accompanying proof
+`p-three-dimension-four-proof.txt` derives a comparison using all four
+oriented triples. An ordered-cube-root coefficient inequality bounds each
+squared geometric mean by the squared mixed defect. The phase choice in
+each column gives a nonnegative trace of a positive quadratic form with
+the same repeated-index contribution as the cubic walk. With three
+negative faces, the two negative edges in a column form a path and the
+cycle product determines the real-part sign on its third edge. The
+formal comparison uses this proof for `p = 5, 6, 7` together with Hägele's
+word expansion and dyadic trace-power comparison.
+
+The repository proof answers the unrestricted `(5,3)` question from
+Hägele's Section 7 in every finite dimension, with any number of distinct
+eigenvalues of the first factor. For complex positive semidefinite `A, B`,
+the mean trace of the 56 words with five copies of `A` and three copies
+of `B` is at least `Tr((A^(5/3) B)^3)`, with `A^(5/3)` defined by spectral
+calculus. Exact polynomial signs give nonnegative rectangle differences
+of the normalized upper kernel on each sorted finite sample. These
+differences telescope to a weighted Gram sum of interval indicators.
+Diagonal rescaling and a rank-one lower block give the centered kernels,
+whose Schur products with `B` in the eigenbasis give nonnegative cubic
+walk contributions. For complex Hermitian `H, K` in every finite dimension,
+Hägele's dyadic trace comparison in Lemma 2 gives the lower bound
+`Tr exp(5H + 3K)` for the same word mean on `exp H, exp K`.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
