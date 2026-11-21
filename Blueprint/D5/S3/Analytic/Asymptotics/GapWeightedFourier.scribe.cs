@@ -31,5 +31,24 @@ internal sealed class GapWeightedFourierDocument : IScribeDocumentDefinition
                         + "mesh intervals. The mode at w is constant. The exponential factors are "
                         + "bounded by one once y is nonnegative, so absolute summability permits "
                         + "passage to the limit in the series. The average of the null error tends to zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("frequently-two-signs-of-zero-mean"),
+                DeclarationHandle.Create(Gid + ".frequently_two_signs_of_zero_mean"),
+                H("Two-sided excursions from a zero mean and a twisted limit"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let y be a strictly increasing real sequence tending to +∞, let a(k) be "
+                        + "real, and let u(k) be complex with norm one. Suppose the gap-weighted "
+                        + "averages of a(k) tend to zero and those of a(k)u(k) tend to L. For each "
+                        + "c≥0 with 2c<‖L‖, arbitrarily large indices satisfy a(k)>c and arbitrarily "
+                        + "large indices satisfy a(k)<−c.")),
+                    Paragraph(Text(
+                        "Under an eventual upper bound a(k)≤c, the quantity "
+                        + "2c−a(k)+2 max(a(k)−c,0) bounds |a(k)u(k)|. The correction has finite "
+                        + "support and its gap-weighted average tends to zero. The triangle "
+                        + "inequality and the zero mean then give ‖L‖≤2c. Applying the same "
+                        + "argument to −a gives the lower excursions."))),
                 DescribeRole.Theorem))));
 }

@@ -8,8 +8,7 @@
 
 import D5.S3.Analytic.Fourier.PositiveDefinite.IsolatedSingularity
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
-import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
-import D5.S3.Weil.ZetaBridge.RhLocatesZeroData
+import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Abs
 import Mathlib.Topology.Order.LeftRightNhds
@@ -25,9 +24,9 @@ open Filter Set Matrix Asymptotics
 open scoped Topology BigOperators ComplexOrder
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
-open D5.S3.Weil.ZetaBridge.RhLocatesZeroData
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (on_line coeff_real)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity
 
@@ -35,20 +34,11 @@ private def weight (k : ℕ) : ℝ := 1 / (1 / 4 + (actualZero k).im ^ 2)
 
 /-- The complete series retains every analytic occurrence. Taking real parts
 avoids any need to reindex by conjugate occurrences. -/
-private lemma actual_cosine_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
-    HasSum (fun k : ℕ => ((weight k * Real.cos ((actualZero k).im * t) : ℝ) : ℂ))
+lemma actual_cosine_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
+    HasSum (fun k : ℕ =>
+      (((1 / (1 / 4 + (actualZero k).im ^ 2)) * Real.cos ((actualZero k).im * t) : ℝ) : ℂ))
       (K t : ℂ) := by
-  have hline (k : ℕ) : (actualZero k).re = 1 / 2 := by
-    simpa only [actualZero, D5.S3.Weil.Convention.criticalAbscissa] using
-      zeroData_zero_on_critical_line_of_rh hRH actualData (actualOccurrenceEquiv k).1
-  have hcoeff (k : ℕ) : actualCoeff k = (weight k : ℂ) := by
-    have hd : actualZero k * (1 - actualZero k) =
-        ((1 / 4 + (actualZero k).im ^ 2 : ℝ) : ℂ) := by
-      apply Complex.ext <;>
-        simp only [Complex.mul_re, Complex.mul_im, Complex.sub_re, Complex.sub_im,
-          Complex.one_re, Complex.one_im, Complex.ofReal_re, Complex.ofReal_im,
-          hline k] <;> ring
-    simp only [actualCoeff, weight, hd, Complex.ofReal_div, Complex.ofReal_one]
+  change HasSum (fun k : ℕ => ((weight k * Real.cos ((actualZero k).im * t) : ℝ) : ℂ)) _
   have hkernel : (Real.exp (-|t| / 2) : ℂ) * actualH |t| = (K t : ℂ) := by
     by_cases ht : t = 0
     · subst t
@@ -75,9 +65,11 @@ private lemma actual_cosine_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
     have hexp : Real.exp (-|t| / 2) * Real.exp (|t| * (1 / 2)) = 1 := by
       rw [← Real.exp_add, show -|t| / 2 + |t| * (1 / 2) = 0 by ring,
         Real.exp_zero]
-    rw [hcoeff k]
+    rw [coeff_real hRH k]
+    change ((Real.exp (-|t| / 2) : ℂ) *
+      ((weight k : ℂ) * Complex.exp (((|t| : ℝ) : ℂ) * actualZero k))).re = _
     simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-      sub_zero, Complex.exp_re, Complex.mul_im, add_zero, hline k]
+      sub_zero, Complex.exp_re, Complex.mul_im, add_zero, on_line hRH k]
     rw [hcos]
     calc
       Real.exp (-|t| / 2) *
@@ -107,7 +99,7 @@ private lemma actual_positiveDefinite (hRH : RiemannHypothesis) :
     dsimp only [weight]
     positivity
   · intro t
-    simpa only [Complex.ofReal_mul] using (actual_cosine_hasSum hRH t).tendsto_sum_nat
+    simpa only [weight, Complex.ofReal_mul] using (actual_cosine_hasSum hRH t).tendsto_sum_nat
 
 /-- The finite ramp formula supplies increment bounds at every nonzero point,
 including each prime-power activation point. -/

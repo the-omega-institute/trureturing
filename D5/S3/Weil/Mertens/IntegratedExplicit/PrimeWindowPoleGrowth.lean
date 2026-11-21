@@ -252,7 +252,7 @@ private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hp : 1 < p.re) (hρ : riemannZe
   linarith
 
 
-private lemma compare_prime_mass {C x y : ℝ}
+lemma compare_prime_mass {C x y : ℝ}
     (hC : ∀ t, 1 ≤ t → Chebyshev.psi t - Chebyshev.theta t ≤ C * Real.sqrt t)
     (hx : 1 ≤ x) (hxy : x ≤ y) :
     let A := ∫ t in x..y, max (-Q t) 0 / Real.sqrt t

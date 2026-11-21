@@ -40,6 +40,12 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For the Boolean upperA, the D lip is the open half-plane Im t < 0 "
                     + "when upperA is true and Im t > 0 when upperA is false."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d-lip-mem-double-slit"),
+                DeclarationHandle.Create(Prefix + "dLip_mem_doubleSlit"),
+                H("The open D lip lies in the double slit"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both choices of D lip have nonzero imaginary part, so their "
+                    + "points lie in the canonical Euler double slit."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-d-germ"),
                 DeclarationHandle.Create(Prefix + "dPeriod"),
                 H("The D period germ"), StatementSource.WithoutFormula(),
@@ -47,6 +53,28 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For a Boolean upperA and complex t, set s = 1 when upperA is true "
                     + "and s = −1 when it is false. Then dPeriod(upperA,t) = (τ(1−1/t)+s) P(1−t)/i."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("dperiod-analyticat"),
+                DeclarationHandle.Create(Prefix + "dPeriod_analyticAt"),
+                H("Analyticity of the D period at the boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For either lip and every real t > 1, the continued D period is "
+                        + "complex analytic at t.")),
+                    Paragraph(Text("Compose the analytic Euler period and period ratio with the two "
+                        + "boundary coordinates 1−t and 1−1/t. The first is in the Euler slit and "
+                        + "the second is in the double slit. Multiply the period by the shifted ratio "
+                        + "and divide by i."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("dperiod-ne-zero"),
+                DeclarationHandle.Create(Prefix + "dPeriod_ne_zero"),
+                H("Nonvanishing of the D period at the boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For either lip and every real t > 1, the continued D period "
+                        + "is nonzero at t.")),
+                    Paragraph(Text("The imaginary part of the ratio at 1−1/t is positive, so either "
+                        + "real shift preserves nonvanishing. The Euler period at 1−t is nonzero."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-d-agreement"),
                 DeclarationHandle.Create(Prefix + "dPeriod_eq_slit"),
                 H("Agreement with the Euler period on the open lip"), StatementSource.WithoutFormula(),
@@ -62,6 +90,17 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                     + "the selected D lip, P(u) tends to dPeriod(upperA,t) and deriv(P)(u) tends to "
                     + "the complex derivative of dPeriod(upperA,·) at t."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("equate-germs-at-an-interior-d-lip-point"),
+                DeclarationHandle.Create(Prefix + "eq_near_dLip_of_real_germ"),
+                H("A real germ comparison gives equality near an interior lip point"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let F and G be complex analytic at a real t. Suppose F and G "
+                    + "agree on a real neighborhood of t, and G agrees with D as the complex argument "
+                    + "approaches t within the selected lip. The punctured real neighborhood supplies "
+                    + "complex accumulation at t. The analytic identity theorem extends equality of "
+                    + "F and G to a complex neighborhood of t. The selected open half-plane meets "
+                    + "every neighborhood of t, so F and D agree on a full complex neighborhood "
+                    + "of some interior point of that lip."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-chart-correction"),
                 DeclarationHandle.Create(Prefix + "chartCorrection"),
                 H("Corrections in native chart arguments"), StatementSource.WithoutFormula(),

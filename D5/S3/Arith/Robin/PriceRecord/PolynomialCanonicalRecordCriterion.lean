@@ -43,7 +43,7 @@ open D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope (D B)
 open D5.S3.Weil.GronwallLowerEnvelope (robinLogMargin)
 open D5.S3.Weil.ZeroSum (IsNontrivialZero)
 open ActualBalancedCutoff (firstLayerPrice)
-open ActualBoundaryPriceLocalization (FullRecord)
+open ActualBoundaryPriceLocalization (FullRecord strictInteger_fullRecord)
 open RHSharpOriginalRecordMargin (Pn)
 open PolynomialMeshBounds
 open Asymptotics
@@ -63,18 +63,6 @@ private def W (alpha X : ℝ) : ℝ := Real.rpow X alpha * Real.log X
 
 private lemma W_pos (alpha : ℝ) {X : ℝ} (hX : 1 < X) : 0 < W alpha X :=
   PolynomialMeshBounds.W_pos alpha hX
-
-private lemma strict_record {q : ℝ} (hq : 0 < q) : FullRecord (strictInteger q) q := by
-  obtain ⟨hm, _, hopt, hleast⟩ := strictInteger_spec hq
-  intro n hn hnm
-  have hle := hopt n (by omega)
-  by_contra! hnot
-  have heq := le_antisymm hle hnot
-  have hnopt : IsGoldenResourceOptimal q n := by
-    intro j hj
-    rw [heq]
-    exact hopt j hj
-  exact (Nat.le_of_dvd hn (hleast n (by omega) hnopt)).not_gt hnm
 
 private lemma support_of_active {q : ℝ} (hq : 0 < q) (N : ℕ)
     (hactive : ∀ p : ℕ, p.Prime → (q < goldenLayerMarginal p 1 ↔ p ≤ N)) :
@@ -138,7 +126,7 @@ private lemma specified_data {N : ℕ} (hN : 3 ≤ N) :
       have : (p : ℝ) ≤ N := by exact_mod_cast h
       linarith
   have hs := support_of_active hq N hactive
-  exact ⟨hq, size_of_support hq hN hs, strict_record hq, hs, largest_of_support hs⟩
+  exact ⟨hq, size_of_support hq hN hs, strictInteger_fullRecord hq, hs, largest_of_support hs⟩
 
 private lemma exact_pressure_ge_margin {X : ℝ} (hX : 1 < X) {n : ℕ}
     (hn : 1 ≤ n) (hlog : 1 < Real.log (n : ℝ))
@@ -195,16 +183,17 @@ private lemma exists_canonical_price_cutoff {N : ℕ} (hN : 12 ≤ N) :
     (by linarith only [hNr])
 
 /-- The exact-price sample for `N ≥ 12`, extended by the natural cast at small indices. -/
-private def canonicalPriceCutoff (N : ℕ) : ℝ :=
+def canonicalPriceCutoff (N : ℕ) : ℝ :=
   if hN : 12 ≤ N then Classical.choose (exists_canonical_price_cutoff hN) else (N : ℝ)
 
-private lemma canonical_price_cutoff_spec {N : ℕ} (hN : 12 ≤ N) :
+lemma canonical_price_cutoff_spec {N : ℕ} (hN : 12 ≤ N) :
     (N : ℝ) + 1 < canonicalPriceCutoff N ∧
-      canonicalPriceCutoff N < (N : ℝ) + 1 + 1 / 2 ∧ price (canonicalPriceCutoff N) = mu N := by
-  simpa only [canonicalPriceCutoff, dif_pos hN] using
+      canonicalPriceCutoff N < (N : ℝ) + 1 + 1 / 2 ∧
+      price (canonicalPriceCutoff N) = firstLayerPrice ((N : ℝ) + 1) := by
+  simpa only [canonicalPriceCutoff, dif_pos hN, mu] using
     Classical.choose_spec (exists_canonical_price_cutoff hN)
 
-private lemma le_canonical_price_cutoff (N : ℕ) : (N : ℝ) ≤ canonicalPriceCutoff N := by
+lemma le_canonical_price_cutoff (N : ℕ) : (N : ℝ) ≤ canonicalPriceCutoff N := by
   by_cases hN : 12 ≤ N
   · have hleft := (canonical_price_cutoff_spec hN).1
     linarith only [hleft]
@@ -303,7 +292,7 @@ private lemma record_theta_le_log {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
     sum_nonneg (fun p _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg p))
   linarith only [hsplit, hnonneg]
 
-private lemma clock_power (epsilon : ℝ) (hepsilon : 0 < epsilon)
+lemma clock_power (epsilon : ℝ) (hepsilon : 0 < epsilon)
     (hbeta : (1 / 2 : ℝ) ≤
       D5.S3.Arith.Robin.ForwardKernel.KappaGap.zeroAbscissa + epsilon) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ X : ℝ, 2 ≤ X →

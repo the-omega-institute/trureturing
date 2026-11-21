@@ -9,6 +9,15 @@ internal sealed class ActualBoundaryPriceGeometryDocument : IScribeDocumentDefin
         H("Actual boundary-price exchange geometry"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actualboundarypricegeometry-strict-integer-full-record"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.strictInteger_fullRecord"),
+                H("Full recordhood of the least optimizer"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At every positive real price q, strictInteger(q) strictly beats every "
+                    + "positive smaller integer in the original objective at q. A tie would make the "
+                    + "predecessor an optimizer and hence a multiple of strictInteger(q)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actualboundarypricegeometry-pricelip-nonneg"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.priceLip_nonneg"),
                 H("Nonnegative local price bound"),

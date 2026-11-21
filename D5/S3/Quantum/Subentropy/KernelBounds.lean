@@ -36,7 +36,7 @@ private theorem reciprocal_product_tangent {ι : Type*} [Fintype ι]
   rw [heq] at hexp
   linarith
 
-private theorem one_add_sum_le_product {ι : Type*} (s : Finset ι)
+theorem one_add_sum_le_product {ι : Type*} (s : Finset ι)
     (a : ι → ℝ) (ha : ∀ i ∈ s, 0 ≤ a i) :
     1 + ∑ i ∈ s, a i ≤ ∏ i ∈ s, (1 + a i) := by
   classical
