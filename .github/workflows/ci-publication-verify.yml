@@ -209,6 +209,10 @@ jobs:
                        {metadata_bytes: (map(.size) | add), assets: .}'
             if [[ -n "$LEAN_CACHE_VOLUME_RETIRE_TAG" ]]; then
               jq -e '.payload_bytes > 0 and .reused_bytes > 0' <<< "$upload"
+              sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$receipt" |
+                jq -e --arg previous "$LEAN_CACHE_VOLUME_RETIRE_TAG" --arg current "$tag" \
+                  --arg ref "$GITHUB_REF" --arg test "$LEAN_CACHE_VOLUME_TEST_ID" \
+                  'select(.tag == $previous and .retained_tag == $current and .source_ref == $ref and .test_id == $test)'
             fi
           else
             [[ "$tag" == lean-cache-verify-v2-* ]]
