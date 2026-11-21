@@ -6,7 +6,7 @@ A determinant bound for optimal uniform calibrations of rational finite kernels.
 
 **Theorem 1.1 (A nonsingular orbit minor gives an optimal uniform calibration).**
 
-$$\exists q, r, \operatorname{Injective}(r) \land \operatorname{PositiveMinorBudget}(A, m, q, r, N) \land (\exists U, f, \operatorname{Cardinality}(U, N) \land \operatorname{UniformCalibration}(U, f, N) \land \operatorname{TableWeights}(U, f, N, q) \land \operatorname{Optimal}(U, f, N))$$
+$$\exists q, r, N, \operatorname{Injective}(r) \land \operatorname{PositiveMinorBudget}(A, m, q, r, N) \land (\exists U, f, \operatorname{Cardinality}(U, N) \land \operatorname{UniformCalibration}(U, f, N) \land \operatorname{TableWeights}(U, f, N, q) \land \operatorname{Optimal}(U, f, N))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/UniformTableCalibration.uniform_kernel_optimum` (`✓ std3`). ∎
 

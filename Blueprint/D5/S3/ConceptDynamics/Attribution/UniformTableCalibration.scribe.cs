@@ -57,7 +57,7 @@ internal sealed class UniformTableCalibrationDocument : IScribeDocumentDefinitio
         Formula n = F.Id("N");
         Formula u = F.Id("U");
         Formula f = F.Id("f");
-        return Disp(Seq(Exists, Sp, q, Comma, Sp, r, Comma, Sp,
+        return Disp(Seq(Exists, Sp, q, Comma, Sp, r, Comma, Sp, n, Comma, Sp,
             Call("Injective", r), Sp, Land, Sp, Call("PositiveMinorBudget", F.Id("A"), F.Id("m"), q, r, n),
             Sp, Land, Sp, Open, Exists, Sp, u, Comma, Sp, f, Comma, Sp,
             Call("Cardinality", u, n), Sp, Land, Sp, Call("UniformCalibration", u, f, n),
