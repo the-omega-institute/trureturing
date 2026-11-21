@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue
+import D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue
 import Reg.Support.DependentFamily
 
 /-! The free-endpoint maximin readout as a function of the horizon. -/
@@ -11,7 +11,7 @@ open scoped Topology
 
 set_option autoImplicit false
 
-namespace Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue
+namespace Reg.D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue
 
 noncomputable section
 
@@ -91,8 +91,8 @@ def cycleValueFamily : Registration arena (type_of% (@maximin_tendsto_cycleMean_
 
 def cycleValueRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@maximin_tendsto_cycleMean_subcritical) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue.cycleValueUnit
-  realizationName := `Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue.cycleValueFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue.cycleValueUnit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue.cycleValueFamily
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -108,7 +108,7 @@ def cycleValueRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue
+    owner := `D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -124,4 +124,4 @@ def cycleValueRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 
-end Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61CycleValue
+end Reg.D5.S3.Combinatorics.Graph.Pressure.MeyerovitchYoungQ61CycleValue

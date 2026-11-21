@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Pressure;
 
 internal sealed class MeyerovitchYoungQ61CycleValueDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A maximum reachable cycle mean gives the original free-endpoint value in this family.",

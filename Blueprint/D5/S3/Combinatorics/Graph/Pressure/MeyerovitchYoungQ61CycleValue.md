@@ -8,9 +8,9 @@ The vertices are the reachable real scores, starting at c. Each Alice loop gives
 
 **Theorem 1.1 (Bounded error at finite horizons).**
 
-Lean statement: `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For a nonnegative subcritical toll and any uniform hitting bound, a reachable si
 
 **Theorem 1.2 (The original value is attained as a simple cycle mean).**
 
-Lean statement: `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ Every real toll satisfying 0 ≤ 2c < 1 + √2 admits a uniform Pell hitting bou
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit`
-- Truth anchor: `D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical`
-- Dependency: [D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61Subcritical](MeyerovitchYoungQ61Subcritical.md)
-- Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/PositiveCircuitSupplier](../../../S3/Combinatorics/Graph/LayeredCirculation/PositiveCircuitSupplier.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_cycle_estimate_of_hit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61CycleValue.maximin_tendsto_cycleMean_subcritical`
+- Dependency: [D5/S1/Dynamics/Symbolic/MeyerovitchYoungQ61Subcritical](../../../../S1/Dynamics/Symbolic/MeyerovitchYoungQ61Subcritical.md)
+- Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/PositiveCircuitSupplier](../LayeredCirculation/PositiveCircuitSupplier.md)
