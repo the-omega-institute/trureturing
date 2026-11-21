@@ -175,10 +175,14 @@ private theorem value_eq_top {x : A₂} (hx : x.fst ≠ 0) :
 
 private theorem mul_eq_smul_of_mem {x : A₂} (hx : x ∈ I) (a : A₂) :
     a * x = a.fst • x := by
-  have hzero : x.fst = 0 := (mem_ideal x).mp hx
-  apply TrivSqZeroExt.ext
-  · simp [hzero]
-  · simp [hzero]
+  have hprod : (inr a.snd : A₂) * x ∈ I * I :=
+    Ideal.mul_mem_mul (show (inr a.snd : A₂) ∈ I from rfl) hx
+  have hzero : (inr a.snd : A₂) * x = 0 := by
+    rwa [← pow_two, kerIdeal_sq, Submodule.mem_bot] at hprod
+  calc
+    a * x = (inl a.fst + inr a.snd) * x := by rw [inl_fst_add_inr_snd_eq]
+    _ = inl a.fst * x := by rw [add_mul, hzero, add_zero]
+    _ = a.fst • x := inl_mul_eq_smul _ _
 
 private def binaryTMap : TMap K A₂ where
   count := 3
@@ -368,6 +372,4 @@ theorem result : Not claim := by
   exact binary_not_principal ((h K A₂ ⟨residueEquiv⟩ binaryTMap I).mpr
     ⟨binary_full, binary_dependent⟩)
 
-
 end D5.S3.HomologicalAlgebra.ShiYauZuoTPrincipalRefutation
-
