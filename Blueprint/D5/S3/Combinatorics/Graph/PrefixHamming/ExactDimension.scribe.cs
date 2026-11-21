@@ -8,7 +8,7 @@ internal sealed class ExactDimensionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/PrefixHamming/ExactDimension.";
     private static readonly LibraryNoteRef Rossi =
-        LibraryNoteRef.Create("D5/L/Combinatorics/rossi2026permutohedron");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/rossi2026permutohedron");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For every ground-set size at least three, the least dimension of a unit binary Hamming cube "

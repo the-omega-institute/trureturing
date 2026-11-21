@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixHamming/ExactDimension
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.InformationTheory.Hamming, D5/L/Combinatorics/rossi2026permutohedron]
+   anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
    digest: The minimum binary Hamming dimension of the permutation prefix-set metric. -/
 
