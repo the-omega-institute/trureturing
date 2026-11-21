@@ -34,7 +34,8 @@ internal sealed class HardinA229457StripDocument : IScribeDocumentDefinition
     {
         var d = V("d");
         var height = Add(V("m"), Num("1"));
-        var labelled = Call("DefectTransfer.literalCount", Call("HardinA229584StripData.horizontal"),
+        var labelled = Call("DefectTransfer.literalCount",
+            Parenthesized(Seq(V("q"), Sp, Colon, F.Eq, Sp, Num("3"))), Call("HardinA229584StripData.horizontal"),
             Call("ProperTransfer.between"), d, height);
         return All("d", Call("Nat"), All("m", Call("Nat"), Imp(Lt(d, Num("5")),
             Eq(labelled, Mul(Num("6"), Call("HardinA229457Strip.canonicalCount", d, height))))));
