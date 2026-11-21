@@ -10,7 +10,7 @@ Write S(θ,β,Q,s) for the following conditions. The sign θ belongs to {−1,0,
 
 **Theorem 1.1 (Two endpoint estimates give a lower bound for the interval).**
 
-$$\begin{aligned}&\forall m,a\in \mathbb{N},\,\forall \theta\in \mathbb{Z},\,\forall \beta,Y,Q,s,e,\varepsilon\in \mathbb{R},\,\\&Y\ge 16\land Q>1\land s>0\land \varepsilon\ge 0\land \operatorname{S}\left(\theta, \beta, Q, s\right)\\&\land (\theta=1\implies Q\le Y)\\&\land (\forall t\in \{Y,2Y\},\,\lvert\varphi(m)(\operatorname{P}\left(m, a, 0, t\right)+e)-\operatorname{F}\left(t\right)\rvert\le \varepsilon \operatorname{F}\left(t\right))\\&\implies \frac{\operatorname{min}\left(1, s\right)}{2Q^{2}}\operatorname{M}\left(\varepsilon, Y\right)\le \varphi(m)\operatorname{P}\left(m, a, Y, 2Y\right)\end{aligned}$$
+$$\begin{aligned}&\forall m,a\in \mathbb{N},\,\forall \theta\in \mathbb{Z},\,\forall \beta,Y,Q,s,e,\varepsilon\in \mathbb{R},\,\\&Y\ge 16\land Q>1\land s>0\land \operatorname{S}\left(\theta, \beta, Q, s\right)\\&\land (\theta=1\implies Q\le Y)\\&\land (\forall t\in \{Y,2Y\},\,\lvert\varphi(m)(\operatorname{P}\left(m, a, 0, t\right)+e)-\operatorname{F}\left(t\right)\rvert\le \varepsilon \operatorname{F}\left(t\right))\\&\implies \frac{\operatorname{min}\left(1, s\right)}{2Q^{2}}\operatorname{M}\left(\varepsilon, Y\right)\le \varphi(m)\operatorname{P}\left(m, a, Y, 2Y\right)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/CharacterSums/DyadicPrimeClassCount.dyadic_class_count` (`✓ std3`). ∎
 

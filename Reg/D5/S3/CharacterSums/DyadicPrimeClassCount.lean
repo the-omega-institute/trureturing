@@ -48,7 +48,7 @@ namespace Endpoint
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ},
-    16 ≤ Y → 1 < Q → (θ = 1 → Q ≤ Y) → 0 < s → 0 ≤ η →
+    16 ≤ Y → 1 < Q → (θ = 1 → Q ≤ Y) → 0 < s →
     (θ = -1 ∨ θ = 0 ∨ θ = 1) → (θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1) →
     (θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) →
     (∀ t ∈ ({Y, 2 * Y} : Finset ℝ),
@@ -59,7 +59,7 @@ abbrev arena : Arena where
 private theorem incompatible_fails : ¬ arena.Law incompatible := by
   intro h
   have hc := @h 3 1 0 (1 / 2) 16 2 1 0 0 (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) (Or.inr (Or.inl rfl)) (by norm_num) (by norm_num) (by
+    (by norm_num) (Or.inr (Or.inl rfl)) (by norm_num) (by norm_num) (by
       intro t _
       rw [incompatible_prefix (by decide : 0 < 3), sub_self, abs_zero, zero_mul])
   change _ ≤ (_ : ℝ) * (if (16 : ℝ) = 0 then _ else 0) at hc
@@ -105,7 +105,7 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "arg", "fn", "fn"]
+        "body", "arg", "arg", "fn", "fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none

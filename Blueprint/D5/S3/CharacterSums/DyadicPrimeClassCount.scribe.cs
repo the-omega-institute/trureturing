@@ -62,7 +62,7 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
             F.Seq(Quant(F.Forall, "N", m, a), Quant(F.Forall, "Z", F.Theta),
                 Quant(F.Forall, "R", F.Beta, y, q, s, e, F.Varepsilon)),
             F.Seq(y, F.Ge, F.Sp, Num(16), F.Land, F.Sp, q, F.Gt, Num(1), F.Land, F.Sp, s, F.Gt, Num(0),
-                F.Land, F.Sp, F.Varepsilon, F.Ge, F.Sp, Num(0), F.Land, F.Sp, At("S", F.Theta, F.Beta, q, s)),
+                F.Land, F.Sp, At("S", F.Theta, F.Beta, q, s)),
             F.Seq(F.Land, F.Sp, F.Open, F.Theta, F.Eq, Num(1), F.Implies, F.Sp, q, F.Le, F.Sp, y, F.Close),
             F.Seq(F.Land, F.Sp, F.Open, F.Forall, F.Sp, t, F.InMacro, F.Sp, F.OpenBrace, y, F.Comma, twoY, F.CloseBrace,
                 F.Comma, F.Thin, F.Lvert, Phi(m), F.Open, At("P", m, a, Num(0), t), F.Plus, e, F.Close,

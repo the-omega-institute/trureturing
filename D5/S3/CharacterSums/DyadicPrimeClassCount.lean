@@ -57,14 +57,15 @@ private lemma integral_diff_le {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
   rw [← h]
   linarith [show (b - a) * (1 / log a) = (b - a) / log a by ring]
 
+private lemma integral_strictMono : StrictMonoOn logarithmicIntegral (Ioi 1) := by
+  apply strictMonoOn_of_hasDerivWithinAt_pos (convex_Ioi _)
+  · exact fun _ hx => (integral_deriv hx).continuousAt.continuousWithinAt
+  · exact fun _ hx => (integral_deriv (interior_subset hx)).hasDerivWithinAt
+  · exact fun _ hx => div_pos zero_lt_one (log_pos (interior_subset hx))
+
 private lemma mono_integral {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
-    logarithmicIntegral a ≤ logarithmicIntegral b := by
-  have hm : MonotoneOn logarithmicIntegral (Ioi 1) := by
-    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ioi _)
-    · exact fun _ hx => (integral_deriv hx).continuousAt.continuousWithinAt
-    · exact fun _ hx => (integral_deriv (interior_subset hx)).hasDerivWithinAt
-    · exact fun _ hx => div_nonneg zero_le_one (log_pos (interior_subset hx)).le
-  exact hm ha (ha.trans_le hab) hab
+    logarithmicIntegral a ≤ logarithmicIntegral b :=
+  integral_strictMono.monotoneOn ha (ha.trans_le hab) hab
 
 private lemma integral_bound {t : ℝ} (ht : 16 ≤ t) : logarithmicIntegral t ≤ 4 * t / log t := by
   have hlog : log 16 = 4 * log 2 := by
@@ -235,6 +236,33 @@ private lemma stark_weight {Q Y s β : ℝ} (hs : 0 < s) (hQ : 1 < Q) (hQY : Q �
   dsimp [A] at hle
   linarith [show min 1 s / (2 * Q ^ 2) = (min 1 s / Q ^ 2) / 2 by ring]
 
+private lemma mainTerm_pos {θ : ℤ} {β Y Q s : ℝ} (hY : 16 ≤ Y) (hQ : 1 < Q) (hs : 0 < s)
+    (hθ : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1)
+    (hgap : θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) : 0 < mainTerm θ β Y := by
+  have hy : 1 < Y := by linarith
+  have hli : 0 < logarithmicIntegral Y := by
+    have h := integral_strictMono (a := 2) (b := Y) (by norm_num [mem_Ioi]) hy (by linarith)
+    simpa [logarithmicIntegral] using h
+  rcases hθ with rfl | rfl | rfl
+  · have hp : 2 ≤ Y ^ β :=
+      (show (2 : ℝ) ≤ (4 : ℝ) ^ (1 / 2 : ℝ) by rw [← Real.sqrt_eq_rpow]; norm_num).trans
+        ((rpow_le_rpow (by norm_num) (by linarith) (by norm_num)).trans
+          (rpow_le_rpow_of_exponent_le hy.le (hβ (by norm_num)).1))
+    have hnon := mono_integral (a := 2) (by norm_num) hp
+    rw [show logarithmicIntegral 2 = 0 by simp [logarithmicIntegral]] at hnon
+    simp only [mainTerm, Int.cast_neg, Int.cast_one, neg_mul, one_mul, sub_neg_eq_add]
+    exact add_pos_of_pos_of_nonneg hli hnon
+  · simpa [mainTerm] using hli
+  · have hβ_lt : β < 1 := by
+      have hpos : 0 < s / (Q ^ 2 * log Q) := by
+        exact div_pos hs (mul_pos (sq_pos_of_pos (by linarith)) (log_pos hQ))
+      linarith [hgap rfl]
+    have hβ_pos : 0 < β := by linarith [(hβ (by norm_num)).1]
+    have hpower : Y ^ β < Y := by
+      simpa only [rpow_one] using rpow_lt_rpow_of_exponent_lt hy hβ_lt
+    simpa [mainTerm] using sub_pos.mpr
+      (integral_strictMono (one_lt_rpow hy hβ_pos) hy hpower)
+
 /-- Primes in a single residue class, with open lower and closed upper endpoint. -/
 def classPrimes (m a : ℕ) (lo hi : ℝ) : Finset ℕ :=
   (Finset.Ioc ⌊lo⌋₊ ⌊hi⌋₊).filter fun p => Nat.Prime p ∧ p ≡ a [MOD m]
@@ -255,9 +283,10 @@ private lemma count_add (m a : ℕ) {Y : ℝ} (hY : 0 ≤ Y) :
 def dyadicMargin (η Y : ℝ) : ℝ :=
   max 0 (Y / log (2 * Y) - 24 * η * (Y / log Y))
 
-/-- Endpoint extraction with a common offset and any nonnegative relative error. -/
+set_option maxHeartbeats 400000 in
+/-- Endpoint extraction with a common offset and a relative error bound. -/
 theorem dyadic_class_count {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ}
-    (hY : 16 ≤ Y) (hQ : 1 < Q) (hQY : θ = 1 → Q ≤ Y) (hs : 0 < s) (hη : 0 ≤ η)
+    (hY : 16 ≤ Y) (hQ : 1 < Q) (hQY : θ = 1 → Q ≤ Y) (hs : 0 < s)
     (hθ : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1)
     (hgap : θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β)
     (hend : ∀ t ∈ ({Y, 2 * Y} : Finset ℝ),
@@ -265,6 +294,8 @@ theorem dyadic_class_count {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ}
         η * mainTerm θ β t) :
     min 1 s / (2 * Q ^ 2) * dyadicMargin η Y ≤
       (m.totient : ℝ) * classCount m a Y (2 * Y) := by
+  have hη : 0 ≤ η := (mul_nonneg_iff_of_pos_right (mainTerm_pos hY hQ hs hθ hβ hgap)).mp
+    ((abs_nonneg _).trans (hend Y (by simp)))
   let γ := if θ = 0 then 1 else β
   have hγ : 1 / 2 ≤ γ ∧ γ ≤ 1 := by
     by_cases h : θ = 0
@@ -386,7 +417,7 @@ theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs
     apply mul_le_mul_of_nonneg_right _ hF
     unfold relativeError
     linarith only [exp_error hη hu, exp_error hη hv]
-  have h := dyadic_class_count hY16 hQ (fun _ => hQY) hs hη.le hθ hβ hgap hend
+  have h := dyadic_class_count hY16 hQ (fun _ => hQY) hs hθ hβ hgap hend
   have h2Y : 2 * Y = D := by dsimp [Y]; ring
   rw [h2Y] at h
   refine le_trans ?_ h
