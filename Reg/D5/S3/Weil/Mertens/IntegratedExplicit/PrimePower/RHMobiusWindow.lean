@@ -27,7 +27,7 @@ def massConclusion (R : Realization windowSignature) : Prop :=
           (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) -
         (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
-        K * (m : ℝ)^2 *
+        K * ((m : ℝ) * (1 + Real.log m)^2) *
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2))
 
 abbrev massArena : Arena := ⟨windowSignature, fun R => RiemannHypothesis → massConclusion R⟩
@@ -46,7 +46,7 @@ theorem mass_altered_rejects : ¬ massConclusion windowAltered := by
       (a₀ ^ ((n : ℝ)⁻¹ - 1 / 2) - a₀ ^ ((n : ℝ)⁻¹ - 1 / 2))) -
     (∑ n ∈ (Finset.Icc 2 2).filter (fun n => 2 * n < 2 + 1),
       -(μ n : ℝ) * (rootPrimitive (n : ℝ) a₀ - rootPrimitive (n : ℝ) a₀))| ≤
-    K * (2 : ℝ)^2 * (a₀ ^ ((2 + 1 : ℝ)⁻¹ - 1 / 2) - a₀ ^ ((2 + 1 : ℝ)⁻¹ - 1 / 2)) at hdiagonal
+    K * ((2 : ℝ) * (1 + Real.log 2)^2) * (a₀ ^ ((2 + 1 : ℝ)⁻¹ - 1 / 2) - a₀ ^ ((2 + 1 : ℝ)⁻¹ - 1 / 2)) at hdiagonal
   norm_num [div_self hnonzero, sub_add_cancel] at hdiagonal
 
 theorem mass_sensitivity_iff_rh : Sensitivity massArena massActual ↔ RiemannHypothesis := by

@@ -24,12 +24,13 @@ internal sealed class RHMobiusWindowDocument : IScribeDocumentDefinition
                     + "subtract −μ(n) times the nth root primitive at B minus its value at a. "
                     + "Every primitive uses the same actual zero occurrences with multiplicity.")),
                 Paragraph(Text("A finite Möbius truncation produces an arithmetic error whose density constant "
-                    + "grows at most linearly in m. Continuity of the complete-tail residual on [1,2] "
-                    + "extends its existing inverse-power bound to every root argument at least one. "
-                    + "The resulting centered root error is bounded by a constant times n x^(-1/2). "
-                    + "Each omitted spectral density has size at most a constant times n "
-                    + "times x^(1/(2n) − 1/2), which is within the target rate when 2n ≥ m+1.")),
-                Paragraph(Text("Summing the errors gives a density bound with a constant times m². "
+                    + "grows at most linearly in m. The centered transform of the complete tail "
+                    + "gives coefficient n/(2j(n+2j)) for the jth trivial zero. Its sum is bounded "
+                    + "by a harmonic number, including at rooted argument one. Splitting the actual "
+                    + "nontrivial zeros by height at n bounds the omitted spectral density by a "
+                    + "constant times (1+log n)² x^(1/(2n) − 1/2), within the target decay "
+                    + "when 2n ≥ m+1.")),
+                Paragraph(Text("Summing gives the uniform density factor m(1+log m)². "
                     + "Integration over [log a, log B] preserves both endpoints. "
                     + "The rate s(m)=1/2 − 1/(m+1) lies above or at 1/6, so integration keeps one "
                     + "constant for all m. The inequality includes B=a.")),
@@ -60,7 +61,9 @@ internal sealed class RHMobiusWindowDocument : IScribeDocumentDefinition
         var residual = new Formula.FunctionCall(FormulaIdentifier.Create("E"), [m, a, b]);
         var rate = new Formula.Negate(new Formula.FunctionCall(FormulaIdentifier.Create("s"), [m]));
         var gap = Subtract(new Formula.Power(a, rate), new Formula.Power(b, rate));
-        var bound = Le(new Formula.Absolute(residual), Multiply(Multiply(k, new Formula.Power(m, F.D(2))), gap));
+        var log = F.Seq(F.Log, F.Sp, m);
+        var logWeight = new Formula.Power(Add(F.D(1), log), F.D(2));
+        var bound = Le(new Formula.Absolute(residual), Multiply(Multiply(Multiply(k, m), logWeight), gap));
         var positive = new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, k);
         var windows = Bind(FormulaQuantifier.ForAll, "a", "R",
             Bind(FormulaQuantifier.ForAll, "B", "R", Imp(And(Le(t, a), Le(a, b)), bound)));
