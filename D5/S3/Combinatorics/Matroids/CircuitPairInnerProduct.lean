@@ -15,6 +15,7 @@ public import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.Ring.Rat
 import Mathlib.LinearAlgebra.Matrix.DotProduct
+import Mathlib.RingTheory.Localization.Rat
 import Mathlib.Tactic.Ring
 
 /-! The cross pairing of oriented circuit lifts factors through contraction of their union. -/
@@ -184,7 +185,7 @@ private lemma lift_nonzero {M : Matroid V} {C F : Finset V}
   exact ⟨by_contra fun hF => hn ((join_topCycle hC hw).vanishes _ hF),
     simplexBoundary_support.mp (left_ne_zero_of_mul (right_ne_zero_of_mul hn))⟩
 
-/-- Without union nullity two, the lifted circuit summands pair to zero. -/
+/-- Distinct circuit lifts pair to zero when the union has nullity other than two. -/
 theorem circuitPairing_eq_zero {M : Matroid V} {C D : Finset V}
     (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V)) (hCD : C ≠ D)
     (h : ¬ UnionNullityTwo M C D)
@@ -549,19 +550,16 @@ private lemma mem_rationalTopCycles_iff {M : Matroid V} {z : Chain V} :
 
 private lemma exists_integral_multiple {M : Matroid V} (z : rationalTopCycles M) :
     ∃ (c : ℚ) (w : topCycles M), c ≠ 0 ∧ castChain w.val = c • z.val := by
-  let d := ∏ F : Finset V, (z.val F).den
-  have hd : d ≠ 0 := prod_ne_zero_iff.mpr fun F _ => (z.val F).den_nz
-  have hclear (F : Finset V) : ∃ n : ℤ, (n : ℚ) = (d : ℚ) * z.val F := by
-    obtain ⟨e, he⟩ := dvd_prod_of_mem (fun G : Finset V => (z.val G).den) (mem_univ F)
-    refine ⟨(z.val F).num * (e : ℤ), ?_⟩
-    push_cast
-    have hde : d = (z.val F).den * e := he
-    rw [hde, Nat.cast_mul, ← Rat.mul_den_eq_num (z.val F)]
-    ring
-  choose w hw using hclear
-  have hcast : castChain w = (d : ℚ) • z.val := funext hw
-  exact ⟨d, ⟨w, mem_rationalTopCycles_iff.mp
-    (hcast.symm ▸ (rationalTopCycles M).smul_mem (d : ℚ) z.prop)⟩, by exact_mod_cast hd, hcast⟩
+  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite
+    (nonZeroDivisors ℤ) z.val
+  choose w hw using hd
+  have hd0 : (d : ℤ) ≠ 0 := nonZeroDivisors.ne_zero d.property
+  have hcast : castChain w = ((d : ℤ) : ℚ) • z.val := by
+    funext F
+    simpa [castChain, Algebra.smul_def] using hw F
+  exact ⟨(d : ℤ), ⟨w, mem_rationalTopCycles_iff.mp
+    (hcast.symm ▸ (rationalTopCycles M).smul_mem ((d : ℤ) : ℚ) z.prop)⟩,
+    by exact_mod_cast hd0, hcast⟩
 
 /-- The oriented circuit lift on rational coordinate chains. -/
 def rationalLift (K : Finset V) : (Finset V → ℚ) →ₗ[ℚ] (Finset V → ℚ) where
