@@ -15,6 +15,12 @@ triage: anchor
 
 # Olairez on the dihedral permutohedron
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2610.28672
+- URL: https://arxiv.org/html/2610.28672v2#S6.Thmquestion2
+- Version and location: arXiv:2610.28672v2, §6, printed p. 21, Question 6.2.
+
 Question 6.2 of arXiv:2610.28672v2, §6, p. 21 asks:
 
 > What is the full group of affine symmetries for the dihedral permutohedron?
