@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
   - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
+  - D5/S3/ConceptDynamics/GraphColoring/JacoEdgeRefutation
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -108,3 +109,10 @@ equals q exactly on the blocks [5k_q,5k_(q+1)-1], the first starting at 1,
 with k_q=floor((5q-1)phi)+3q for q>=1; these blocks partition the positive
 integers. Possible answers posted on MathDB were not inspected, so no priority
 is claimed.
+
+## Theorem 2.15
+
+Theorem 2.15 on printed page 9 asserts, for n=7+3k, that Delta_n<=n-(3+k)
+and that the edge (v_Delta, v_n) exists. The repository proves the bound and
+shows that the edge exists exactly when Delta_n=b_n, so the edge clause fails
+at n=19, where Delta_19=11 and R_11=18.
