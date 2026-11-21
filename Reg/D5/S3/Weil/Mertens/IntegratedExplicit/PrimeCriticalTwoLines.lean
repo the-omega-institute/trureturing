@@ -147,10 +147,11 @@ def contactArena : Arena where
       (∀ U > W, Filter.liminf (fun B : ℝ =>
         (∫ x in B * Real.exp (-U)..B, max (-primeTail x) 0 / Real.sqrt x) /
           B ^ (β - 1 / 2)) atTop ≠ 0)) →
-    (∀ h ∈ closure (range phaseOrbit), ∀ s ∈ Icc (0 : ℝ) W,
-      profile β h (-s) = 0 →
-      (∀ v ∈ Icc (0 : ℝ) W, 0 ≤ profile β h (-v)) →
-      profile γ h (-s) < 0) →
+    ∀ K : Set ((ℕ → Circle) × ℝ), IsCompact K →
+    K ⊆ closure (range phaseOrbit) ×ˢ Icc (0 : ℝ) W →
+    (∀ p ∈ K, ∀ v ∈ Icc (0 : ℝ) W, profile β p.1 (-p.2) ≤ profile β p.1 (-v)) →
+    (∀ h ∈ closure (range phaseOrbit), ∃ s : ℝ, (h, s) ∈ K) →
+    (∀ p ∈ K, profile β p.1 (-p.2) = 0 → profile γ p.1 (-p.2) < 0) →
     ∃ c > 0, ∃ T : ℝ, ∀ t ≥ T,
       (∃ u ∈ Icc (t - W) t, Real.exp ((1 - γ) * u) * primeTail (Real.exp u) ≤ -c) ∧
       0 < ∫ x in Real.exp t * Real.exp (-W)..Real.exp t, max (-primeTail x) 0 / Real.sqrt x
@@ -162,7 +163,12 @@ private theorem negativeLineAtOne_fails_contact : ¬ contactArena.Law negativeLi
     (Or.inl fun _ _ => ⟨0, by simp, by
       change (if (2 : ℝ) = 1 then -1 else 0) ≤ (0 : ℝ)
       norm_num⟩)
-    (fun _ _ _ _ _ _ => by
+    (closure (range phaseOrbit) ×ˢ ({0} : Set ℝ))
+    (isClosed_closure.isCompact.prod isCompact_singleton)
+    (Set.prod_mono_right (by simp))
+    (fun _ _ _ _ => le_rfl)
+    (fun h hh => ⟨0, hh, mem_singleton _⟩)
+    (fun _ _ _ => by
       change (if (1 : ℝ) = 1 then -1 else 0) < (0 : ℝ)
       norm_num)
   obtain ⟨S, hS⟩ := eventually_atTop.mp

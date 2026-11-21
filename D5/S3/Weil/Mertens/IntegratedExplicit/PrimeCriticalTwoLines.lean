@@ -189,46 +189,37 @@ private theorem exists_nonpos_on_window_of_cutoff {β W : ℝ}
   exact hcutoff V hWV ((hcluster.liminf_le hlower).antisymm (le_liminf_of_le hcb hnonneg))
 
 /-- The continuous minimum of the two profiles is uniformly negative on the
-compact graph of first-profile minimizers. -/
+compact selection of first-profile minimizers. -/
 private theorem uniform_contact_gap {X : Type*} [TopologicalSpace X]
-    {H : Set X} {L : Set ℝ} (hH : IsCompact H) (hHne : H.Nonempty)
-    (hL : IsCompact L) (hLne : L.Nonempty)
+    {H : Set X} {L : Set ℝ} {K : Set (X × ℝ)} (hHne : H.Nonempty)
+    (hK : IsCompact K) (hsub : K ⊆ H ×ˢ L)
     {f g : X × ℝ → ℝ} (hf : Continuous f) (hg : Continuous g)
+    (hmin : ∀ p ∈ K, ∀ v ∈ L, f p ≤ f (p.1, v))
+    (hcover : ∀ h ∈ H, ∃ s : ℝ, (h, s) ∈ K)
     (hnonpos : ∀ h ∈ H, ∃ s ∈ L, f (h, s) ≤ 0)
-    (hsign : ∀ h ∈ H, ∀ s ∈ L, f (h, s) = 0 →
-      (∀ v ∈ L, 0 ≤ f (h, v)) → g (h, s) < 0) :
+    (hsign : ∀ p ∈ K, f p = 0 → g p < 0) :
     ∃ d > 0, ∃ C : ℝ, ∀ h ∈ H, ∃ s ∈ L,
       f (h, s) ≤ 0 ∧ g (h, s) ≤ C ∧ (f (h, s) ≤ -d ∨ g (h, s) ≤ -d) := by
-  let G : Set (X × ℝ) := H ×ˢ L ∩ ⋂ v : L, {p | f p ≤ f (p.1, v)}
-  have hG : IsCompact G :=
-    (hH.prod hL).inter_right (isClosed_iInter fun v =>
-      isClosed_le hf (hf.comp (continuous_fst.prodMk continuous_const)))
-  have hfiber (h : X) (hh : h ∈ H) : ∃ s : ℝ, (h, s) ∈ G := by
-    obtain ⟨s, hs, hmin⟩ := hL.exists_isMinOn hLne
-      (hf.comp (continuous_const.prodMk continuous_id)).continuousOn
-    exact ⟨s, ⟨hh, hs⟩, mem_iInter.mpr fun v => hmin v.2⟩
   obtain ⟨h, hh⟩ := hHne
-  obtain ⟨s, hs⟩ := hfiber h hh
-  have hGne : G.Nonempty := ⟨(h, s), hs⟩
-  have hf₀ (p : X × ℝ) (hp : p ∈ G) : f p ≤ 0 := by
-    obtain ⟨v, hv, hfv⟩ := hnonpos p.1 hp.1.1
-    exact (mem_iInter.mp hp.2 ⟨v, hv⟩).trans hfv
-  have hneg (p : X × ℝ) (hp : p ∈ G) : min (f p) (g p) < 0 := by
+  obtain ⟨s, hs⟩ := hcover h hh
+  have hKne : K.Nonempty := ⟨(h, s), hs⟩
+  have hf₀ (p : X × ℝ) (hp : p ∈ K) : f p ≤ 0 := by
+    obtain ⟨v, hv, hfv⟩ := hnonpos p.1 (hsub hp).1
+    exact (hmin p hp v hv).trans hfv
+  have hneg (p : X × ℝ) (hp : p ∈ K) : min (f p) (g p) < 0 := by
     rcases (hf₀ p hp).lt_or_eq with hlt | heq
     · exact (min_le_left _ _).trans_lt hlt
-    · have hγ := hsign p.1 hp.1.1 p.2 hp.1.2 heq fun v hv =>
-        heq ▸ (mem_iInter.mp hp.2 ⟨v, hv⟩ : f p ≤ f (p.1, v))
-      exact (min_le_right _ _).trans_lt hγ
-  obtain ⟨p, hp, hbest⟩ := hG.exists_isMaxOn hGne (hf.min hg).continuousOn
-  obtain ⟨q, _, hbound⟩ := hG.exists_isMaxOn hGne hg.continuousOn
+    · exact (min_le_right _ _).trans_lt (hsign p hp heq)
+  obtain ⟨p, hp, hbest⟩ := hK.exists_isMaxOn hKne (hf.min hg).continuousOn
+  obtain ⟨q, _, hbound⟩ := hK.exists_isMaxOn hKne hg.continuousOn
   refine ⟨-min (f p) (g p), neg_pos.mpr (hneg p hp), g q, fun h hh => ?_⟩
-  obtain ⟨s, hs⟩ := hfiber h hh
+  obtain ⟨s, hs⟩ := hcover h hh
   have hle : min (f (h, s)) (g (h, s)) ≤ min (f p) (g p) := hbest hs
-  exact ⟨s, hs.1.2, hf₀ _ hs, hbound hs, min_le_iff.mp (by rwa [neg_neg])⟩
+  exact ⟨s, (hsub hs).2, hf₀ _ hs, hbound hs, min_le_iff.mp (by rwa [neg_neg])⟩
 
-/-- A strict joint contact sign gives a uniform negative point and positive
-negative-part mass in each late window. The first profile must attain a
-nonpositive value in every phase window, as it does at the critical cutoff. -/
+/-- A compact set of upper-line minimizers covering every phase gives a uniform
+negative point and positive negative-part mass in each late window if the lower
+line is strictly negative at the selected zero contacts. -/
 theorem prime_tail_negative_windows_of_two_line_contact (β γ W : ℝ) :
     let profile := phaseProfile Complex.re
     0 < W → 1 / 2 < γ → γ < β →
@@ -238,15 +229,16 @@ theorem prime_tail_negative_windows_of_two_line_contact (β γ W : ℝ) :
       (∀ V > W, Filter.liminf (fun B : ℝ =>
         (∫ x in B * Real.exp (-V)..B, max (-primeTail x) 0 / Real.sqrt x) /
           B ^ (β - 1 / 2)) atTop ≠ 0)) →
-    (∀ h ∈ closure (range phaseOrbit), ∀ s ∈ Icc (0 : ℝ) W,
-      profile β h (-s) = 0 →
-      (∀ v ∈ Icc (0 : ℝ) W, 0 ≤ profile β h (-v)) →
-      profile γ h (-s) < 0) →
+    ∀ K : Set ((ℕ → Circle) × ℝ), IsCompact K →
+    K ⊆ closure (range phaseOrbit) ×ˢ Icc (0 : ℝ) W →
+    (∀ p ∈ K, ∀ v ∈ Icc (0 : ℝ) W, profile β p.1 (-p.2) ≤ profile β p.1 (-v)) →
+    (∀ h ∈ closure (range phaseOrbit), ∃ s : ℝ, (h, s) ∈ K) →
+    (∀ p ∈ K, profile β p.1 (-p.2) = 0 → profile γ p.1 (-p.2) < 0) →
     ∃ c > 0, ∃ T : ℝ, ∀ t ≥ T,
       (∃ u ∈ Icc (t - W) t, Real.exp ((1 - γ) * u) * primeTail (Real.exp u) ≤ -c) ∧
       0 < ∫ x in Real.exp t * Real.exp (-W)..Real.exp t, max (-primeTail x) 0 / Real.sqrt x := by
   dsimp only
-  intro hW hγ hγβ hmax hcut hwidth hcontact
+  intro hW hγ hγβ hmax hcut hwidth K hK hsub hmin hcover hcontact
   have hH (t : ℝ) : phaseOrbit t ∈ closure (range phaseOrbit) :=
     subset_closure (mem_range_self t)
   have hnonpos : ∀ h ∈ closure (range phaseOrbit), ∃ s ∈ Icc (0 : ℝ) W,
@@ -256,8 +248,8 @@ theorem prime_tail_negative_windows_of_two_line_contact (β γ W : ℝ) :
   have hcont (α : ℝ) : Continuous (fun p : (ℕ → Circle) × ℝ =>
       phaseProfile Complex.re α p.1 (-p.2)) :=
     (phaseProfile_continuous Complex.re α).comp (continuous_fst.prodMk continuous_snd.neg)
-  obtain ⟨d, hd, C, hgap⟩ := uniform_contact_gap isClosed_closure.isCompact ⟨_, hH 0⟩
-    isCompact_Icc ⟨0, le_rfl, hW.le⟩ (hcont β) (hcont γ) hnonpos hcontact
+  obtain ⟨d, hd, C, hgap⟩ := uniform_contact_gap ⟨_, hH 0⟩ hK hsub
+    (hcont β) (hcont γ) hmin hcover hnonpos hcontact
   have happrox := prime_tail_two_line_approx β γ hγ hγβ hmax hcut
   obtain ⟨E, hE⟩ := eventually_atTop.mp (Metric.tendsto_nhds.mp happrox (d / 2) (half_pos hd))
   have hscale : Tendsto (fun u : ℝ => Real.exp ((β - γ) * u)) atTop atTop :=

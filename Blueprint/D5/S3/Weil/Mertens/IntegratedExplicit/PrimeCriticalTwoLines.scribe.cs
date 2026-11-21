@@ -46,9 +46,9 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Let N(A,B) be the integral of max(−Qϑ(x),0)/√x from A to B. "
                         + "Let H be the closure of the actual simultaneous phase orbit φ. At width W>0, "
-                        + "a contact is a pair (h,s) in H×[0,W] where Fβ(h,−s)=0 and the "
-                        + "whole first profile is nonnegative over the lag interval. Assume "
-                        + "Fγ(h,−s)<0 at every such pair.")),
+                        + "take a compact K in H×[0,W] consisting of β-line minimizing pairs, "
+                        + "with at least one pair for each phase h. At every pair in K where "
+                        + "Fβ(h,−s)=0, require Fγ(h,−s)<0. Both values use the same phase and lag.")),
                     Paragraph(Text(
                         "The first profile must take a nonpositive value in each phase window. "
                         + "This holds if every wider window has nonzero lower limit of the normalized "
@@ -57,13 +57,11 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
                         + "The fixed-width cluster theorem gives an actual cluster value of zero "
                         + "for that wider width, hence a zero lower limit by eventual nonnegativity.")),
                     Paragraph(Text(
-                        "The first-profile minimizers form a compact graph in H×[0,W]. The graph is "
-                        + "cut out by the closed comparison inequalities with every other lag. "
-                        + "At a minimizing pair, Fβ≤0, and equality activates the strict contact "
-                        + "condition. The maximum of min(Fβ,Fγ) on the graph is therefore −d<0. "
-                        + "The same graph supplies a finite upper bound for Fγ.")),
+                        "At every pair in K, Fβ≤0 by minimality, and equality activates the strict "
+                        + "contact condition. The maximum of min(Fβ,Fγ) on K is therefore −d<0. "
+                        + "The maximum of Fγ on K gives a finite upper bound C.")),
                     Paragraph(Text(
-                        "Apply this graph estimate at φ(t) and put u=t−s at the chosen minimizing lag. "
+                        "Choose (φ(t),s) in K and put u=t−s. "
                         + "If Fβ≤−d, the growing factor exp((β−γ)u) makes it dominate the upper bound "
                         + "for Fγ. If Fγ≤−d, the leading term is nonpositive. As u≥t−W, one threshold "
                         + "makes the γ-scale approximation error smaller than d/2 throughout all later "
@@ -72,9 +70,19 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
                         + "positive even when the selected point is an endpoint.")),
                     Paragraph(Text(
                         "At an attained maximal real part β>1/2, the critical-width theorem "
-                        + "supplies exactly the wider-width premise at W=W*. Thus arbitrarily late "
-                        + "zero-mass critical windows force a joint contact with Fγ≥0. The "
-                        + "arithmetic gap and the joint contact sign remain hypotheses."))),
+                        + "supplies the wider-width premise at W=W*. The full minimizing graph is "
+                        + "compact because the comparisons with every lag define closed subsets "
+                        + "of H×[0,W]. It covers H because each continuous lag profile attains its "
+                        + "minimum. Taking K to be this graph recovers the all-contacts condition. "
+                        + "Thus arbitrarily late zero-mass critical windows force a joint minimizing "
+                        + "pair with Fβ=0 and Fγ≥0.")),
+                    Paragraph(Text(
+                        "Pointwise existence of a favorable minimizer can fail to give a uniform "
+                        + "gap. On [0,1]×[0,1], take f(h,s)=s(1−s)+hs and g(h,s)=−h−s. "
+                        + "The unique minimizer for h>0 is s=0, where g=−h. At h=0 the minimizer "
+                        + "s=1 gives g=−1. A compact selection covering every phase must contain "
+                        + "the limit (0,0), where f=g=0. For a scalar multiplier λ≥1, the choice "
+                        + "h=1/λ gives min over s of λf+g equal to −1/λ."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -143,7 +151,6 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
         var phases = F.Id("H");
         var lags = Call("Icc", zero, width);
         var upperProfile = Call("F", beta, h, Neg(s));
-        var lowerProfile = Call("F", gamma, h, Neg(s));
         var nonpositivePoint = All("h", phases, Exists("s", lags, Le(upperProfile, zero)));
         var widerMass = new Formula.Fraction(
             Call("N", Multiply(right, Call("exp", Neg(largerWidth))), right),
@@ -152,10 +159,25 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
             new Formula.Relation(AtInfinity("liminf", right, widerMass), FormulaRelationOperator.NotEqual, zero)));
         var widthPremise = new Formula.Logic(Parens(nonpositivePoint), FormulaLogicOperator.Or,
             Parens(widerCutoff));
-        var contact = All("h", phases, All("s", lags, Implies(
-            And(Equal(upperProfile, zero),
-                Parens(All("v", lags, Le(zero, Call("F", beta, h, Neg(v)))))),
-            Lt(lowerProfile, zero))));
+        var selection = F.Id("K");
+        var pair = F.Id("p");
+        var pairPhase = Call("fst", pair);
+        var pairLag = Call("snd", pair);
+        var selectedUpper = Call("F", beta, pairPhase, Neg(pairLag));
+        var selectedLower = Call("F", gamma, pairPhase, Neg(pairLag));
+        var phaseLag = Parens(F.Seq(h, F.Comma, F.Sp, s));
+        var ambientPhases = new Formula.Power(F.Seq(F.Mathbb, F.Grp(F.Id("T"))),
+            F.Seq(F.Mathbb, F.Grp(F.Id("N"))));
+        var setType = Call("Set", F.Seq(ambientPhases, F.Sp, F.Times, F.Sp, Real));
+        var containment = new Formula.Relation(selection, FormulaRelationOperator.SubsetOf,
+            F.Seq(phases, F.Sp, F.Times, F.Sp, lags));
+        var minimizing = All("p", selection, All("v", lags,
+            Le(selectedUpper, Call("F", beta, pairPhase, Neg(v)))));
+        var coverage = All("h", phases, Exists("s", Real,
+            new Formula.Relation(phaseLag, FormulaRelationOperator.MemberOf, selection)));
+        var contact = All("p", selection, Implies(Equal(selectedUpper, zero), Lt(selectedLower, zero)));
+        var selectionPremise = And(And(Call("IsCompact", selection), containment),
+            And(Parens(minimizing), And(Parens(coverage), Parens(contact))));
         var sameWindow = Exists("u", Call("Icc", Subtract(t, width), t),
             Le(NormalizedTail(gamma, u), Neg(c)));
         var mass = Call("N", Multiply(Call("exp", t), Call("exp", Neg(width))), Call("exp", t));
@@ -164,6 +186,7 @@ internal sealed class PrimeCriticalTwoLinesDocument : IScribeDocumentDefinition
         var conclusion = Exists("c", Real, And(Lt(zero, c), Parens(Exists("T", Real, lateWindows))));
         return All("beta", Real, All("gamma", Real, All("W", Real,
             Implies(Parens(And(Lt(zero, width), SpectralBounds(beta, gamma))),
-                Implies(Parens(widthPremise), Implies(Parens(contact), conclusion))))));
+                Implies(Parens(widthPremise), All("K", setType,
+                    Implies(Parens(selectionPremise), conclusion)))))));
     }
 }
