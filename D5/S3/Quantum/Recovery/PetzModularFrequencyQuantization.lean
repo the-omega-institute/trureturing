@@ -234,7 +234,13 @@ private theorem completedWithCoefficients_exact (W : Matrix (b × e) a ℂ) (t :
       completed D W t := by
   rw [completedWithCoefficients, retainedFactor_exact]
   change physicalFactor D W t *ₘ completionColumns D W t = _
-  rw [completionColumns, Matrix.mul_fromCols, completed, complementaryAmplitude, Matrix.mul_assoc]
+  let V := dilationColumns D W
+  let P : Matrix (b × e) (b × e) ℂ := 1 - V * Vᴴ
+  let U := phaseMatrix D t
+  let K := physicalFactor D W t
+  change K *ₘ fromCols (V *ₘ U) P = fromCols (K *ₘ V *ₘ U) (K *ₘ P)
+  exact (Matrix.mul_fromCols K (V *ₘ U) P).trans
+    (congrArg (fun X => fromCols X (K *ₘ P)) (Matrix.mul_assoc K V U).symm)
 
 private theorem common_endpoint (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ) :
     quantizedCompleted D W assign 0 = completed D W 0 := by
@@ -425,16 +431,21 @@ private theorem completionColumns_phase (W : Matrix (b × e) a ℂ) (t : ℝ) :
     simp [phaseMatrix, modularPower_zero]
   unfold completionColumns
   rw [h0, Matrix.mul_one]
+  let V := dilationColumns D W
+  let P : Matrix (b × e) (b × e) ℂ := 1 - V * Vᴴ
+  let d (c : D.I ⊕ (b × e)) := scalarPhase (columnShift D c) t
   ext x c
-  rw [Matrix.mul_diagonal]
+  change fromCols (V *ₘ phaseMatrix D t) P x c = (fromCols V P *ₘ diagonal d) x c
+  rw [show (fromCols V P *ₘ diagonal d) x c = fromCols V P x c * d c from
+    Matrix.mul_diagonal d (fromCols V P) x c]
   cases c with
   | inl i =>
     simp only [fromCols_apply_inl, phaseMatrix, modularPower, Matrix.mul_diagonal,
-      columnShift, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_neg, Complex.ofReal_mul]
+      d, columnShift, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_neg, Complex.ofReal_mul]
     congr 2
     ring
   | inr c =>
-    simp [columnShift, scalarPhase, PetzLogisticEvaluation.mode]
+    simp [d, columnShift, scalarPhase, PetzLogisticEvaluation.mode]
 
 private theorem rowFactor_phase (t : ℝ) :
     rowFactor D (upper t) =
@@ -464,7 +475,11 @@ private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L ×
   have hLift : lift (e := e) (0 : Matrix b b ℂ) = 0 := by
     ext i j
     simp [lift]
-  rw [endpointCoefficient, hmode, smul_zero, hLift, Matrix.mul_zero, Matrix.zero_mul]
+  rw [endpointCoefficient, hmode, smul_zero, hLift]
+  let H := rowFactor D ½ *ₘ Wᴴ
+  let C := completionColumns D W 0
+  exact congrArg (fun X => X *ₘ C) (Matrix.mul_zero (o := b × e) H) |>.trans
+    (Matrix.zero_mul C)
 
 private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
     (t : ℝ) (j : D.J) (c : D.I ⊕ (b × e)) :
