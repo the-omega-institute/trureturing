@@ -244,4 +244,185 @@ private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 <
   rw [lt_div_iff₀ (by positivity)] at h3
   nlinarith [abs_nonneg C, pow_pos hq0 n]
 
+section Sequence
+
+variable {m : ℕ} {x : ℕ → ℕ}
+
+/-- The radicand `∑_{i<m} x (n + i)^2`. -/
+private def rad (m : ℕ) (x : ℕ → ℕ) (n : ℕ) : ℝ := ∑ i ∈ Finset.range m, (x (n + i) : ℝ) ^ 2
+
+private theorem rad_nonneg (n : ℕ) : 0 ≤ rad m x n :=
+  Finset.sum_nonneg fun _ _ => sq_nonneg _
+
+private theorem round_err
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) (n : ℕ) :
+    |(x (n + m) : ℝ) - Real.sqrt (rad m x n)| ≤ 1 / 2 := by
+  have h := abs_sub_round (Real.sqrt (rad m x n))
+  rw [← hrec n, abs_sub_comm] at h
+  exact_mod_cast h
+
+private theorem sq_err
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) (n : ℕ) :
+    |(x (n + m) : ℝ) ^ 2 - rad m x n| ≤ Real.sqrt (rad m x n) + 1 / 4 := by
+  have h := round_err hrec n
+  have hs := Real.sq_sqrt (rad_nonneg (m := m) (x := x) n)
+  have hs0 := Real.sqrt_nonneg (rad m x n)
+  obtain ⟨h1, h2⟩ := abs_le.mp h
+  rw [abs_le]
+  constructor <;> nlinarith [sq_nonneg ((x (n + m) : ℝ) - Real.sqrt (rad m x n))]
+
+/-- Every earlier entry of the window is at most the new entry. -/
+private theorem le_next
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) (n i : ℕ) (hi : i < m) :
+    x (n + i) ≤ x (n + m) := by
+  have h := (abs_le.mp (round_err hrec n)).1
+  have hsq : (x (n + i) : ℝ) ^ 2 ≤ rad m x n :=
+    Finset.single_le_sum (f := fun i => (x (n + i) : ℝ) ^ 2) (fun j _ => sq_nonneg _)
+      (Finset.mem_range.mpr hi)
+  have hle : (x (n + i) : ℝ) ≤ Real.sqrt (rad m x n) :=
+    Real.le_sqrt_of_sq_le hsq
+  have : (x (n + i) : ℝ) < x (n + m) + 1 := by linarith
+  exact_mod_cast Nat.lt_succ_iff.mp (by exact_mod_cast this)
+
+/-- From index `m - 1` on, the sequence is nondecreasing. -/
+private theorem mono (hm : 0 < m)
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) {j k : ℕ} (hj : m - 1 ≤ j)
+    (hjk : j ≤ k) : x j ≤ x k := by
+  induction k, hjk using Nat.le_induction with
+  | base => exact le_rfl
+  | succ k hk ih =>
+    have := le_next hrec (k + 1 - m) (m - 1) (by omega)
+    rw [show k + 1 - m + (m - 1) = k by omega, show k + 1 - m + m = k + 1 by omega] at this
+    exact ih.trans this
+
+/-- If the window starts at `k` with `k + 1/4 < (m - 1) k^2`, the new entry exceeds `k`. -/
+private theorem step_up (hm : 0 < m)
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) (n : ℕ) (hn : m - 1 ≤ n)
+    (hk : (x n : ℝ) + 1 / 4 < (m - 1 : ℝ) * (x n : ℝ) ^ 2) : x n + 1 ≤ x (n + m) := by
+  have hwin : (m : ℝ) * (x n : ℝ) ^ 2 ≤ rad m x n := by
+    have : ∑ i ∈ Finset.range m, (x n : ℝ) ^ 2 ≤ rad m x n :=
+      Finset.sum_le_sum fun i _ => by
+        have := mono hm hrec hn (show n ≤ n + i by omega)
+        have : (x n : ℝ) ≤ x (n + i) := by exact_mod_cast this
+        nlinarith [(Nat.cast_nonneg (x n) : (0 : ℝ) ≤ x n)]
+    simpa using this
+  have hlt : ((x n : ℝ) + 1 / 2) ^ 2 < rad m x n := by nlinarith
+  have hsq : (x n : ℝ) + 1 / 2 < Real.sqrt (rad m x n) :=
+    Real.lt_sqrt_of_sq_lt hlt
+  have h := (abs_le.mp (round_err hrec n)).1
+  have : (x n : ℝ) < x (n + m) := by linarith
+  exact_mod_cast this
+
+/-- Once an entry from index `m - 1` on reaches a threshold `k₀` with `k + 1/4 < (m - 1) k^2`
+for all `k ≥ k₀`, the sequence tends to infinity. -/
+private theorem tendsto_atTop (hm : 0 < m)
+    (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n))) (k₀ : ℕ)
+    (hk : ∀ k : ℕ, k₀ ≤ k → (k : ℝ) + 1 / 4 < (m - 1 : ℝ) * (k : ℝ) ^ 2)
+    (N : ℕ) (hN : m - 1 ≤ N) (hxN : k₀ ≤ x N) :
+    Tendsto (fun n => (x n : ℝ)) atTop atTop := by
+  have hgrow : ∀ j, x N + j ≤ x (N + m * j) := by
+    intro j
+    induction j with
+    | zero => simp
+    | succ j ih =>
+      have hge : k₀ ≤ x (N + m * j) := hxN.trans
+        ((Nat.le_add_right _ _).trans ih)
+      have := step_up hm hrec (N + m * j) (by omega)
+        (hk _ hge)
+      rw [show N + m * j + m = N + m * (j + 1) by ring] at this
+      omega
+  rw [tendsto_atTop_atTop]
+  intro B
+  refine ⟨N + m * ⌈B⌉₊, fun n hn => ?_⟩
+  have h1 := hgrow ⌈B⌉₊
+  have h2 := mono hm hrec (show m - 1 ≤ N + m * ⌈B⌉₊ by omega) hn
+  have h3 : (⌈B⌉₊ : ℝ) ≤ x n := by exact_mod_cast (by omega : ⌈B⌉₊ ≤ x n)
+  exact (Nat.le_ceil B).trans h3
+
+end Sequence
+
+/-- Rationalizing: `x^2 = L R^n + O(R^(n/2))` gives `x = √L √R^n + O(1)` and the ratio rate. -/
+private theorem finish (x : ℕ → ℕ) (R : ℝ) (hR : 1 < R) (L : ℝ) (hL : 0 < L)
+    (h : (fun n => (x n : ℝ) ^ 2 - L * R ^ n) =O[atTop] (fun n => Real.sqrt R ^ n)) :
+    (fun n => (x n : ℝ) - Real.sqrt L * Real.sqrt R ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
+      (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt R) =O[atTop]
+        (fun n => (Real.sqrt R ^ n)⁻¹) := by
+  set lam := Real.sqrt R with hlam
+  have hR0 : 0 < R := by linarith
+  have hs0 : 0 < lam := Real.sqrt_pos.mpr hR0
+  have hs1 : 1 < lam := by
+    rw [hlam, show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt zero_le_one hR
+  have hspow : ∀ j : ℕ, (lam ^ j) ^ 2 = R ^ j := fun j => by
+    rw [← pow_mul, mul_comm, pow_mul, hlam, Real.sq_sqrt hR0.le]
+  have hc0 : 0 < Real.sqrt L := Real.sqrt_pos.mpr hL
+  obtain ⟨C, hC⟩ := h.bound
+  obtain ⟨M, hM⟩ := eventually_atTop.mp hC
+  set B := |C| / Real.sqrt L with hBdef
+  have hdev : ∀ n, M ≤ n → |(x n : ℝ) - Real.sqrt L * lam ^ n| ≤ B := by
+    intro n hn
+    have hb := hM n hn
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (pow_pos hs0 n)] at hb
+    set u : ℝ := (x n : ℝ)
+    set y : ℝ := Real.sqrt L * lam ^ n
+    have hu : 0 ≤ u := Nat.cast_nonneg _
+    have hy : 0 < y := by positivity
+    have hdiff : u ^ 2 - L * R ^ n = (u - y) * (u + y) := by
+      have : y ^ 2 = L * R ^ n := by rw [mul_pow, Real.sq_sqrt hL.le, hspow]
+      nlinarith [this]
+    rw [hdiff, abs_mul, abs_of_pos (by linarith : 0 < u + y)] at hb
+    rw [hBdef, le_div_iff₀ hc0]
+    have hpos : 0 < lam ^ n := pow_pos hs0 n
+    have h3 : |u - y| * y ≤ |C| * lam ^ n := by
+      have := abs_nonneg (u - y)
+      nlinarith [le_abs_self C]
+    have h4 : |u - y| * Real.sqrt L * lam ^ n ≤ |C| * lam ^ n := by
+      simpa [y, mul_assoc] using h3
+    nlinarith
+  have hB0 : 0 ≤ B := by positivity
+  refine ⟨IsBigO.of_bound B (eventually_atTop.mpr ⟨M, fun n hn => ?_⟩), ?_⟩
+  · rw [Real.norm_eq_abs, norm_one, mul_one]
+    exact hdev n hn
+  have hgrow : Tendsto (fun n : ℕ => lam ^ n) atTop atTop := tendsto_pow_atTop_atTop_of_one_lt hs1
+  obtain ⟨P, hP⟩ := eventually_atTop.mp
+    (hgrow.eventually_ge_atTop (2 * B / Real.sqrt L))
+  refine IsBigO.of_bound (2 * B * (1 + lam) / Real.sqrt L)
+    (eventually_atTop.mpr ⟨max M P, fun n hn => ?_⟩)
+  have hn1 : M ≤ n := le_of_max_le_left hn
+  have hn2 : P ≤ n := le_of_max_le_right hn
+  have hpow : 0 < lam ^ n := pow_pos hs0 n
+  have hd0 := hdev n hn1
+  have hd1 := hdev (n + 1) (by omega)
+  have hbig : 2 * B ≤ Real.sqrt L * lam ^ n := by
+    have := hP n hn2
+    rw [div_le_iff₀ hc0] at this
+    linarith
+  have hlow : Real.sqrt L * lam ^ n / 2 ≤ (x n : ℝ) := by
+    have := (abs_le.mp hd0).1
+    linarith
+  have hxpos : 0 < (x n : ℝ) := by
+    have : 0 < Real.sqrt L * lam ^ n := by positivity
+    linarith
+  have hnum : |(x (n + 1) : ℝ) - lam * x n| ≤ B * (1 + lam) := by
+    have hsplit : (x (n + 1) : ℝ) - lam * x n =
+        ((x (n + 1) : ℝ) - Real.sqrt L * lam ^ (n + 1)) -
+          lam * ((x n : ℝ) - Real.sqrt L * lam ^ n) := by ring
+    rw [hsplit]
+    calc _ ≤ |(x (n + 1) : ℝ) - Real.sqrt L * lam ^ (n + 1)| +
+          |lam * ((x n : ℝ) - Real.sqrt L * lam ^ n)| := abs_sub _ _
+      _ = |(x (n + 1) : ℝ) - Real.sqrt L * lam ^ (n + 1)| +
+          lam * |(x n : ℝ) - Real.sqrt L * lam ^ n| := by
+          rw [abs_mul, abs_of_pos hs0]
+      _ ≤ B + lam * B := by gcongr
+      _ = B * (1 + lam) := by ring
+  have hratio : (x (n + 1) : ℝ) / x n - lam = ((x (n + 1) : ℝ) - lam * x n) / x n := by
+    field_simp
+  rw [hratio, Real.norm_eq_abs, Real.norm_eq_abs, abs_div, abs_of_pos hxpos,
+    abs_of_pos (inv_pos.mpr hpow), div_le_iff₀ hxpos]
+  calc |(x (n + 1) : ℝ) - lam * x n| ≤ B * (1 + lam) := hnum
+    _ = 2 * B * (1 + lam) / Real.sqrt L * (lam ^ n)⁻¹ * (Real.sqrt L * lam ^ n / 2) := by
+        field_simp
+    _ ≤ 2 * B * (1 + lam) / Real.sqrt L * (lam ^ n)⁻¹ * (x n : ℝ) := by
+        gcongr
+
 end D5.S1.Recurrence.RoundedNormBoundedError
