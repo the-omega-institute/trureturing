@@ -18,8 +18,8 @@ zero_image: proof_shape=content; consumers=leading_steps
 leading_steps: proof_shape=content; consumers=steps
 steps: proof_shape=content; consumers=forward_table, HardinA229604StripPowers.leading_steps
 relation: proof_shape=content; consumers=forward_relation
-forward_table: proof_shape=bind-only; consumers=forward_relation, HardinA229604StripPowers.old_relation
-forward_relation: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229604StripPowers.old_relation
+forward_table: proof_shape=content; consumers=forward_relation, HardinA229604StripPowers.old_relation
+forward_relation: proof_shape=content; consumers=HardinA229457Strip.result, HardinA229604StripPowers.old_relation
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
