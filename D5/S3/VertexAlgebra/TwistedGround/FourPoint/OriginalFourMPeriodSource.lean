@@ -199,7 +199,8 @@ private theorem real_d_aux {t : ℝ} (ht : 1 < t) :
     · simpa [sub_re] using sub_pos.mpr hInv
     · simpa [sub_re] using hi
 
-private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+/-- The continued D period is analytic at each real boundary point greater than one. -/
+theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     AnalyticAt ℂ (dPeriod upperA) (t : ℂ) := by
   have ht₀ : (t : ℂ) ≠ 0 := ofReal_ne_zero.mpr (by linarith)
   have h₁ : AnalyticAt ℂ (fun u : ℂ => 1 - u) (t : ℂ) :=
@@ -211,7 +212,8 @@ private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
   have hPeriod := (slitPeriod_analyticOnNhd _ h.1).comp (f := fun u : ℂ => 1 - u) h₁
   exact ((hRatio.add analyticAt_const).mul hPeriod).div_const
 
-private theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+/-- The continued D period is nonzero at each real boundary point greater than one. -/
+theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     dPeriod upperA (t : ℂ) ≠ 0 := by
   have him := tau_im_pos (real_d_aux ht).2
   have hs : tau (1 - (t : ℂ)⁻¹) + lipSign upperA ≠ 0 := by

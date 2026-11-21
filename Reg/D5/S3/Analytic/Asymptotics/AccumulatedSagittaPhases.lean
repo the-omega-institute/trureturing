@@ -2,7 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases
 
-/-! Source-bound registrations for the accumulated versine bounds and its three limits.
+/-! Source-bound registrations for the quartic lower bound of the versine, the accumulated
+versine bounds and its three limits.
 Each record selects one actual occurrence of its readout in the original statement and
 keeps every other clause verbatim. -/
 
@@ -12,6 +13,78 @@ open Filter Topology
 
 noncomputable section
 namespace Reg.D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases
+
+namespace VersineLower
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.cos x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ x : ℝ, x ^ 2 / 2 - x ^ 4 / 24 ≤ 1 - R.readout () () x
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 0
+  simp only [rejected, realize] at hh
+  norm_num at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, Real.pi, ?_⟩
+  change Real.cos 0 ≠ Real.cos Real.pi
+  rw [Real.cos_zero, Real.cos_pi]
+  norm_num
+
+def source : Registration arena (type_of% @versine_ge) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@versine_ge, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law
+    actual rejected rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@versine_ge) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases.VersineLower.unit
+  realizationName := `Reg.D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases.VersineLower.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Real.cos x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Asymptotics.AccumulatedSagittaPhases
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end VersineLower
 
 namespace Bounds
 

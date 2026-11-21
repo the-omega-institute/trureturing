@@ -34,8 +34,34 @@ Lean statement: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.isGreatest_pGu
 
 For repeated copies of a common normalized pair, the guessing probability is the greatest element of the actual success set. An attaining family of positive semidefinite matrices sums to the identity on the original product carrier. The greatest-element property bounds the success of every joint POVM on that carrier.
 
+**Theorem 1.3 (The strict-overlap Walsh carrier embeds in the original product).**
+
+Lean statement: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_coordinateRecord_isometry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_coordinateRecord_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When all overlap moduli are below one, an isometry maps each canonical Walsh conditional density to the corresponding original product density. Rephasing each pair makes the overlap real and preserves the conditional densities.
+
+**Theorem 1.4 (The active Walsh carrier embeds even at overlap one).**
+
+Lean statement: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_activeRecord_isometry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_activeRecord_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Choose the active coordinates by the strict overlap condition. An isometry transports the resulting Walsh density to each original whole-word density using the restriction of that word to its active coordinates. The original full labels remain in the statement.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_activeRecord_isometry`
+- Truth anchor: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.exists_coordinateRecord_isometry`
 - Truth anchor: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.isGreatest_pGuess_productRecord`
 - Truth anchor: `D5/S3/Quantum/PureState/BinaryPureRecordDecoding.pGuess_coordinateProductRecord`
 - Dependency: [D5/S3/Quantum/PureState/JointRecordTransport](JointRecordTransport.md)
