@@ -1936,6 +1936,105 @@ theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT
   exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag
     (saddle_real_cancellation n hβ hs (saddle_realPotential_eval n hn (mul_pos hn hT) hβ hs))
 
+private theorem radius_between {β y : ℝ} (hβ : 0 ≤ β) (hy : 0 ≤ y) :
+    y ≤ radius β y ∧ radius β y ≤ y + β := by
+  unfold radius
+  exact ⟨(Real.le_sqrt hy (by positivity)).2 (by linarith [sq_nonneg β]),
+    Real.sqrt_le_iff.mpr ⟨by positivity, by nlinarith [mul_nonneg hβ hy]⟩⟩
+
+private theorem saddleLogAverage_le_log_linear {β y : ℝ} (hβ : 0 < β) (hy : 1 ≤ y) :
+    saddleLogAverage β y ≤ Real.log ((5 + 2 * β) * y) := by
+  let r (θ : ℝ) := 2 - 2 * Real.cos θ
+  let f (θ : ℝ) := Real.log (radius β y + radius β (r θ))
+  have hp (θ : ℝ) : 0 < radius β y + radius β (r θ) := by unfold radius; positivity
+  have hc : Continuous f :=
+    Continuous.log (by unfold r radius; fun_prop) (fun θ => (hp θ).ne')
+  have hbound (θ : ℝ) : f θ ≤ Real.log ((5 + 2 * β) * y) := by
+    apply Real.log_le_log (hp θ)
+    have hr0 : 0 ≤ r θ := by dsimp [r]; linarith [Real.cos_le_one θ]
+    have hr4 : r θ ≤ 4 := by dsimp [r]; linarith [Real.neg_one_le_cos θ]
+    have h₁ := (radius_between hβ.le (by linarith : 0 ≤ y)).2
+    have h₂ := (radius_between hβ.le hr0).2
+    nlinarith [mul_nonneg (show 0 ≤ y - 1 by linarith)
+      (show 0 ≤ 4 + 2 * β by positivity)]
+  have hi := intervalIntegral.integral_mono_on Real.pi_pos.le
+    (hc.intervalIntegrable (μ := volume) 0 Real.pi) intervalIntegrable_const
+    (fun θ _ => hbound θ)
+  unfold saddleLogAverage spectralAverage
+  change (∫ θ in 0..Real.pi, f θ) / Real.pi ≤ _
+  apply (div_le_iff₀ Real.pi_pos).2
+  simpa [intervalIntegral.integral_const, mul_comm] using hi
+
+/-- The imaginary-axis growth attains half the rescaled physical time, which
+is also a global exponential type bound for the normalized canonical product. -/
+theorem canonicalProduct_type_at_saddle (n : ℕ) (hn : 0 < (n : ℝ)) {a β : ℝ}
+    (ha : 0 < a) (hβ : 0 < β) (hs : saddleMass β = a / 2)
+    (bins : EqualMassBins β (saddleDensity n β)) :
+    (∀ z : ℂ, ‖bins.canonicalProduct z‖ ≤ Real.exp ((n : ℝ) * a / 2 * ‖z‖)) ∧
+      Tendsto (fun y : ℝ => Real.log ‖bins.canonicalProduct ((y : ℂ) * Complex.I)‖ / y)
+        atTop (𝓝 ((n : ℝ) * a / 2)) := by
+  obtain ⟨_, hd, _, _⟩ := saddleDensity_spec n hn ha hβ hs
+  let D := (n : ℝ) * a / (2 * Real.pi)
+  have hD : 0 < D := by dsimp [D]; positivity
+  let P y := imaginaryPotential β (saddleDensity n β) y
+  let A := (n : ℝ) * a / 2
+  have hImag := imaginaryPotential_eval_of_resolvent n hn ha hβ hs
+    (fun y _ => saddleDensity_resolvent n hβ hs y)
+  have hwidth (y : ℝ) (hy : 0 ≤ y) : P y ≤ A * y := by
+    have hlog := saddleLogAverage_mono hβ (le_refl 0) hy
+    have hrad := (radius_between hβ.le hy).2
+    rw [show P y = imaginaryPotential β (saddleDensity n β) y from rfl, hImag y hy]
+    calc
+      _ ≤ (n : ℝ) * (a / 2 * y) := by
+        apply mul_le_mul_of_nonneg_left _ hn.le
+        have h := mul_le_mul_of_nonneg_left
+          (show radius β y - β ≤ y by linarith) (by positivity : 0 ≤ a / 2)
+        linarith
+      _ = A * y := by dsimp [A]; ring
+  refine ⟨bins.canonicalProduct_half_width hβ hD (fun t ht => (hd t ht).2) hwidth, ?_⟩
+  let B := A * β + (n : ℝ) * (Real.log (5 + 2 * β) - saddleLogAverage β 0) +
+    Real.log (1 + (β ^ 2)⁻¹)
+  let F y := Real.log ‖bins.canonicalProduct ((y : ℂ) * Complex.I)‖
+  have hlog : Tendsto (fun y : ℝ => Real.log y / y) atTop (𝓝 0) := by
+    simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
+  have hB : Tendsto (fun y : ℝ => B / y) atTop (𝓝 0) := by
+    simpa only [div_eq_mul_inv, mul_zero] using (tendsto_inv_atTop_zero.const_mul B)
+  have hlim : Tendsto (fun y : ℝ => A - (B / y + ((n : ℝ) + 2) * (Real.log y / y)))
+      atTop (𝓝 A) := by
+    simpa using (tendsto_const_nhds (x := A)).sub (hB.add (hlog.const_mul ((n : ℝ) + 2)))
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlim tendsto_const_nhds
+  · filter_upwards [eventually_ge_atTop (1 : ℝ)] with y hy
+    have hy0 : 0 < y := by linarith
+    obtain ⟨hlo, _⟩ := bins.canonicalProduct_imaginary_bounds hβ hD (fun t ht => (hd t ht).2) y
+    have hlo' := Real.log_le_log (Real.exp_pos _) hlo
+    rw [Real.log_exp] at hlo'
+    have hJ := saddleLogAverage_le_log_linear hβ hy
+    rw [Real.log_mul (by positivity : 5 + 2 * β ≠ 0) hy0.ne'] at hJ
+    have he : 1 + y ^ 2 / β ^ 2 ≤ (1 + (β ^ 2)⁻¹) * y ^ 2 := by
+      rw [div_eq_mul_inv, add_mul, one_mul, mul_comm (β ^ 2)⁻¹]
+      linarith [pow_le_pow_left₀ (by norm_num : 0 ≤ (1 : ℝ)) hy 2]
+    have he' := Real.log_le_log (show 0 < 1 + y ^ 2 / β ^ 2 by positivity) he
+    rw [Real.log_mul (by positivity : 1 + (β ^ 2)⁻¹ ≠ 0) (sq_pos_of_pos hy0).ne',
+      Real.log_pow] at he'
+    have hR := (radius_between hβ.le hy0.le).1
+    have hh : A * y - (B + ((n : ℝ) + 2) * Real.log y) ≤ F y := by
+      change _ ≤ Real.log ‖bins.canonicalProduct ((y : ℂ) * Complex.I)‖
+      rw [hImag y hy0.le] at hlo'
+      dsimp [A, B]
+      nlinarith [mul_nonneg (mul_nonneg hn.le ha.le) (sub_nonneg.mpr hR),
+        mul_nonneg hn.le (sub_nonneg.mpr hJ)]
+    change A - (B / y + ((n : ℝ) + 2) * (Real.log y / y)) ≤ F y / y
+    calc
+      _ = (A * y - (B + ((n : ℝ) + 2) * Real.log y)) / y := by field_simp
+      _ ≤ _ := div_le_div_of_nonneg_right hh hy0.le
+  · filter_upwards [eventually_ge_atTop (1 : ℝ)] with y hy
+    have hy0 : 0 < y := by linarith
+    obtain ⟨hlo, hhi⟩ := bins.canonicalProduct_imaginary_bounds hβ hD (fun t ht => (hd t ht).2) y
+    have h := Real.log_le_log ((Real.exp_pos _).trans_le hlo) hhi
+    rw [Real.log_exp] at h
+    exact (div_le_iff₀ hy0).2 (h.trans (hwidth y hy0.le))
+
+#print axioms canonicalProduct_type_at_saddle
 #print axioms physical_log_inverse_diagonal_error
 #print axioms inverse_diagonal_lower_bound_at_saddle
 #print axioms inverse_diagonal_upper_bound_of_quantiles

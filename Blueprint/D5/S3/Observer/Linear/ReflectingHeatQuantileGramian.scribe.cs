@@ -37,6 +37,15 @@ internal sealed class ReflectingHeatQuantileGramianDocument : IScribeDocumentDef
                     "The angular average of the reciprocal saddle radius is continuous and strictly decreasing on the positive half-line. The polynomial bounds at small and large radii bracket half the window parameter, so the intermediate value theorem gives the unique radius used by the physical estimate."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("reflecting-heat-quantile-gramian-type"),
+                DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatQuantileGramian.canonicalProduct_type_at_saddle"),
+                H("Exact half-width of the saddle multiplier"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Radial comparison gives a global exponential bound with coefficient na/2. Along the positive imaginary axis the evaluated potential has that linear term, and the angular average and first-bin discrepancy contribute only logarithmic terms. Dividing by the imaginary argument gives the limiting coefficient na/2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("reflecting-heat-quantile-gramian-log-loss"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatQuantileGramian.physical_log_inverse_diagonal_error"),
                 H("Uniform logarithmic loss at the continuum saddle"),
