@@ -4,9 +4,10 @@ authors: Haobo Ma; Wenlin Zhang
 year: 2026
 title: Counterexamples to Wang's Conjectures 3.26 and 5.3 on semigroup algebras
 doi: 10.5281/zenodo.23884901
-claim: Lemma 4 computes every relative Davenport constant of the capped union monoid P_fin(U) x {0,1,2} as D_(A,k)(S_U)=|A|+k.
+claim: Lemma 2 gives d(S_U,R)=1 for the capped union monoid P_fin(U) x {0,1,2} over every nonzero commutative unitary ring, and Lemma 4 computes every relative Davenport constant as D_(A,k)(S_U)=|A|+k.
 strata_touched:
   - D5/S0/Certificates/Algebra/CappedUnionDavenport
+  - D5/S0/Certificates/Algebra/CappedUnionAlgebraicDavenport
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -40,3 +41,8 @@ subsequences by proper index subsets, and states the constant as the greatest
 element of the set of lengths of such minimal sequences. Its upper bound uses
 single deletions: a term whose deletion keeps the capped level must be the only
 carrier of some point of A.
+
+Lemma 2 states that (X^(A,1)-X^(A,2))(X^(B,1)-X^(B,2))=0 in the ordinary
+semigroup algebra R[S_U] and that d(S_U,R)=1. The repository states d with the
+definitions of WangConjecture326Refutation, whose factors use the
+cyclic idempotent of each label; in S_U that idempotent is x+x.
