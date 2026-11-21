@@ -8,11 +8,11 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: zero_crossing, zero_table, transition_counts
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229604Strip.result)
 last_class: proof_shape=bind-only; consumers=transition_counts
-zero_crossing: proof_shape=content; consumers=zero_table
-zero_table: proof_shape=content; consumers=transition_counts
-transition_counts: proof_shape=content; consumers=TwoDefects.Last.HardinA229604StripClass16.transition_counts, TwoDefects.Last.HardinA229604StripClass17.transition_counts, TwoDefects.Last.HardinA229604StripClass18.transition_counts, TwoDefects.Last.HardinA229604StripClass19.transition_counts, TwoDefects.Last.HardinA229604StripClass20.transition_counts, TwoDefects.Last.HardinA229604StripClass21.transition_counts, TwoDefects.Last.HardinA229604StripClass22.transition_counts, TwoDefects.Last.HardinA229604StripClass23.transition_counts, TwoDefects.Last.HardinA229604StripClass24.transition_counts, TwoDefects.Last.HardinA229604StripClass25.transition_counts, TwoDefects.Last.HardinA229604StripClass26.transition_counts
+zero_crossing: proof_shape=bind-only; consumers=zero_table
+zero_table: proof_shape=bind-only; consumers=transition_counts
+transition_counts: proof_shape=bind-only; consumers=TwoDefects.Last.HardinA229604StripClass16.transition_counts, TwoDefects.Last.HardinA229604StripClass17.transition_counts, TwoDefects.Last.HardinA229604StripClass18.transition_counts, TwoDefects.Last.HardinA229604StripClass19.transition_counts, TwoDefects.Last.HardinA229604StripClass20.transition_counts, TwoDefects.Last.HardinA229604StripClass21.transition_counts, TwoDefects.Last.HardinA229604StripClass22.transition_counts, TwoDefects.Last.HardinA229604StripClass23.transition_counts, TwoDefects.Last.HardinA229604StripClass24.transition_counts, TwoDefects.Last.HardinA229604StripClass25.transition_counts, TwoDefects.Last.HardinA229604StripClass26.transition_counts
 -/
 
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripCut

@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: transition_counts
 class_relabel: proof_shape=bind-only; consumers=HardinA229457StripClasses.transition_counts, HardinA229604StripClasses.transition_counts
-transition_counts: proof_shape=content; consumers=HardinA229457Strip.finite_certificate
+transition_counts: proof_shape=content; consumers=HardinA229457Strip.finite_certificate, HardinA229604StripCut.leading_counts, HardinA229604StripCut.terminal_counts, HardinA229604StripCut.one_defect_counts
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
@@ -48,9 +48,7 @@ open HardinA229457StripData
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  have hcode : equalityPatternCode (e ∘ p) = equalityPatternCode p := by
-    simp only [equalityPatternCode, Function.comp_apply, e.injective.eq_iff]
-  simp only [cl, hcode,
+  simp only [cl, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode_relabel,
     D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses.class_relabel,
     bond_relabel, ProperTransfer.cl, HardinA233127SquareStrip.boundaryClass,
     Function.comp_apply, e.injective.eq_iff] <;> rfl

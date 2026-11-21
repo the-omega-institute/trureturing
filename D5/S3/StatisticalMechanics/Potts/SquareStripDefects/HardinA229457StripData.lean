@@ -9,16 +9,15 @@
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229457Strip.result)
-Valid: proof_shape=bind-only; consumers=HardinA229457Strip.result
+Valid: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457Strip.finite_certificate, HardinA229457StripClass0.transition_counts, HardinA229457StripClass1.transition_counts, HardinA229457StripClass2.transition_counts, HardinA229457StripClass3.transition_counts, HardinA229457StripClass4.transition_counts, HardinA229457StripClass5.transition_counts, HardinA229457StripClass6.transition_counts, HardinA229457StripClass7.transition_counts, HardinA229457StripClasses.transition_counts, HardinA229457StripCut.active_counts, HardinA229457StripData.decidableValid, HardinA229604Strip.finite_certificate, HardinA229604StripCut.leading_counts, HardinA229604StripCut.one_defect_counts, HardinA229604StripCut.terminal_counts
 decidableValid: proof_shape=bind-only; consumers=HardinA229457Strip.finite_certificate._proof_1
-equalityPatternCode: proof_shape=bind-only; consumers=HardinA229457StripData.cl, HardinA229604StripData.cl, HardinA229457StripClasses.class_relabel, HardinA229604StripClasses.transition_counts
-cl: proof_shape=bind-only; consumers=HardinA229457Strip.result
+cl: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457Strip.finite_certificate, HardinA229457StripClass0.transition_counts, HardinA229457StripClass1.transition_counts, HardinA229457StripClass2.transition_counts, HardinA229457StripClass3.transition_counts, HardinA229457StripClass4.transition_counts, HardinA229457StripClass5.transition_counts, HardinA229457StripClass6.transition_counts, HardinA229457StripClass7.transition_counts, HardinA229457StripClasses.class_relabel, HardinA229457StripClasses.transition_counts, HardinA229457StripCut.active_counts, HardinA229457StripCut.class_cut, HardinA229457StripCut.numeric_cut, HardinA229457StripCut.proper_counts, HardinA229457StripCut.proper_table, HardinA229604Strip.finite_certificate, HardinA229604StripClasses.transition_counts, HardinA229604StripCut.active_cut, HardinA229604StripCut.leading_counts, HardinA229604StripCut.one_defect_counts, HardinA229604StripCut.one_defect_cut, HardinA229604StripCut.terminal_counts, HardinA229604StripCut.terminal_cut, HardinA229604StripData.cl, HardinA229604StripLastCut.last_class, HardinA229604StripLastCut.zero_table
 crossing: proof_shape=bind-only; consumers=T
 lastRows: proof_shape=bind-only; consumers=T
-T: proof_shape=bind-only; consumers=HardinA229457Strip.result
-initial: proof_shape=bind-only; consumers=HardinA229457Strip.result
-terminal: proof_shape=bind-only; consumers=HardinA229457Strip.result
-W: proof_shape=bind-only; consumers=HardinA229457Strip.result
+T: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457Strip.finite_certificate, HardinA229457StripClass0.transition_counts, HardinA229457StripClass1.transition_counts, HardinA229457StripClass2.transition_counts, HardinA229457StripClass3.transition_counts, HardinA229457StripClass4.transition_counts, HardinA229457StripClass5.transition_counts, HardinA229457StripClass6.transition_counts, HardinA229457StripClass7.transition_counts, HardinA229457StripClasses.transition_counts, HardinA229457StripCut.active_counts, HardinA229457StripCut.proper_counts, HardinA229457StripCut.proper_table, HardinA229457StripPowers.leading_steps, HardinA229457StripPowers.lower, HardinA229457StripPowers.steps, HardinA229457StripPowers.top, HardinA229457StripStep0.steps, HardinA229457StripStep1.steps, HardinA229604Strip.finite_certificate, HardinA229604StripCut.leading_counts, HardinA229604StripCut.one_defect_counts, HardinA229604StripCut.terminal_counts, HardinA229604StripData.T, HardinA229604StripData.leading_block, HardinA229604StripData.terminal_block, HardinA229604StripLastCut.zero_table, HardinA229604StripPowers.leading_steps, HardinA229604StripPowers.old_relation
+initial: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457Strip.finite_certificate, HardinA229457StripData.W, HardinA229457StripPowers.balance, HardinA229457StripPowers.leading_steps, HardinA229457StripPowers.steps, HardinA229457StripPowers.weighted_step, HardinA229457StripPowers.zero_image, HardinA229604Strip.finite_certificate, HardinA229604StripData.initial, HardinA229604StripPowers.leading_steps, HardinA229604StripPowers.old_relation
+terminal: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457Strip.finite_certificate, HardinA229604Strip.finite_certificate, HardinA229604StripData.terminal
+W: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229457StripPowers.leading_steps, HardinA229457StripPowers.relation, HardinA229457StripPowers.steps, HardinA229457StripPowers.weighted_step, HardinA229457StripPowers.zero_image, HardinA229457StripStep0.steps, HardinA229457StripStep1.steps, HardinA229604StripData.W, HardinA229604StripPowers.leading_steps, HardinA229604StripPowers.old_relation, HardinA229604StripPowers.relation
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
@@ -36,6 +35,7 @@ open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 open DefectTransfer (bondDefects)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
@@ -45,13 +45,6 @@ def Valid (p : Row) (d : ℕ) : Prop :=
 instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable
     (D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid p d))
-/-- Encode the equality pattern in lexicographic order on the fifteen column pairs. -/
-def equalityPatternCode (p : Row) : ℕ :=
-  (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) +
-  (if p 0 = p 4 then 8 else 0) + (if p 0 = p 5 then 16 else 0) + (if p 1 = p 2 then 32 else 0) +
-  (if p 1 = p 3 then 64 else 0) + (if p 1 = p 4 then 128 else 0) + (if p 1 = p 5 then 256 else 0) +
-  (if p 2 = p 3 then 512 else 0) + (if p 2 = p 4 then 1024 else 0) + (if p 2 = p 5 then 2048 else 0) +
-  (if p 3 = p 4 then 4096 else 0) + (if p 3 = p 5 then 8192 else 0) + (if p 4 = p 5 then 16384 else 0)
 
 def cl (p : Row) (d : ℕ) : Fin 42 :=
   if bondDefects horizontal p p = 0 then
@@ -60,7 +53,9 @@ def cl (p : Row) (d : ℕ) : Fin 42 :=
   let code := equalityPatternCode p
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 26 then 20 else
   if code ∈ ({1093, 19520} : Finset ℕ) then 21 else
-  if code ∈ ({8533, 19482} : Finset ℕ) then 22 else
+  if (if bondDefects horizontal p p = 1 then
+      D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p 0 = 30
+    else code ∈ ({8533, 19482} : Finset ℕ)) then 22 else
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 29 then 23 else
   if code ∈ ({2185, 16772} : Finset ℕ) then 24 else
   if code ∈ ({8329, 16770} : Finset ℕ) then 25 else
@@ -132,7 +127,7 @@ def initial : Fin 42 → ℤ :=
       if j.val = 0 then
         3 * D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.distribution 0 0
       else 0) / 8)
-    (Fin.append (fun _ : Fin 10 => 0) ![D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 26, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 29, 12, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 25, 6, 12, 6, 12, 12, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 22, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 21, 12, 6, 6])
+    (Fin.append (fun _ : Fin 10 => 0) ![D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 26, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 30, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 29, 12, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 25, 6, 12, 6, 12, 12, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 22, 12, 12, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 21, 12, 6, 6])
 def terminal : Fin 42 → ℤ :=
   Fin.append (fun _ : Fin 10 => 0)
     (Fin.append (fun j : Fin 10 =>

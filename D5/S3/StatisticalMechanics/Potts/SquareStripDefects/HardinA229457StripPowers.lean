@@ -8,16 +8,16 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: top, lower, balance, weighted_step, zero_image, leading_steps, steps, relation
-top: proof_shape=content; consumers=leading_steps
-lower: proof_shape=content; consumers=leading_steps
+escape_witness: balance, weighted_step, zero_image, leading_steps, steps, relation
+top: proof_shape=bind-only; consumers=leading_steps
+lower: proof_shape=bind-only; consumers=leading_steps
 balance: proof_shape=content; consumers=weighted_step
 no_return: proof_shape=bind-only; consumers=weighted_step
 weighted_step: proof_shape=content; consumers=zero_image, leading_steps
 zero_image: proof_shape=content; consumers=leading_steps
 leading_steps: proof_shape=content; consumers=steps
 steps: proof_shape=content; consumers=HardinA229457Strip.result, HardinA229604StripPowers.leading_steps, HardinA229604StripPowers.old_relation
-relation: proof_shape=content; consumers=HardinA229457Strip.result
+relation: proof_shape=content; consumers=HardinA229457Strip.result, HardinA229604StripPowers.old_relation
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip

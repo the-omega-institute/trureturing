@@ -15,7 +15,7 @@ transition_counts: proof_shape=content; consumers=HardinA229604Strip.finite_cert
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
-import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -61,7 +61,7 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229604StripData
-open HardinA229457StripData (equalityPatternCode)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode_relabel)
 open HardinA233177Canonical (canonical_exists_unique)
 theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
@@ -149,9 +149,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
       cl (e ∘ r) (d.val - (bondDefects ProperTransfer.between (e ∘ p) (e ∘ r) +
         bondDefects horizontal (e ∘ r) (e ∘ r))) = s then (1 : ℤ) else 0) =
       T (cl (e ∘ p) d.val) s at ht
-    have hcode (r : Row) : equalityPatternCode (e ∘ r) = equalityPatternCode r := by
-      simp only [equalityPatternCode, Function.comp_apply, e.injective.eq_iff]
-    simpa only [cl, hcode,
+    simpa only [cl, equalityPatternCode_relabel,
       HardinA229457StripClasses.class_relabel, bond_relabel,
       Function.comp_apply, ne_eq, e.injective.eq_iff] using ht
 

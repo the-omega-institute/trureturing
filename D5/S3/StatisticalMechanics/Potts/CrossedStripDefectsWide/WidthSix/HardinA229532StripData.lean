@@ -12,9 +12,11 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 between: proof_shape=bind-only; consumers=HardinA229532Strip.result
 Valid: proof_shape=bind-only; consumers=HardinA229532Strip.result
 decidableValid: proof_shape=bind-only; consumers=HardinA229532Strip.result
-cl: proof_shape=bind-only; consumers=HardinA229532Strip.result
+equalityPatternCode: proof_shape=bind-only; consumers=cl, equalityPatternCode_relabel, SquareStripDefects.HardinA229457StripData.cl, SquareStripDefects.HardinA229604StripData.cl
+equalityPatternCode_relabel: proof_shape=bind-only; consumers=SquareStripDefects.HardinA229457StripClasses.class_relabel, SquareStripDefects.HardinA229604StripClasses.transition_counts
+cl: proof_shape=bind-only; consumers=HardinA229532Strip.result, SquareStripDefects.HardinA229457StripData.cl, SquareStripDefects.HardinA229457Strip.finite_certificate
 T: proof_shape=bind-only; consumers=HardinA229532Strip.result
-initial: proof_shape=bind-only; consumers=HardinA229532Strip.result
+initial: proof_shape=bind-only; consumers=HardinA229532Strip.result, SquareStripDefects.HardinA229457StripData.initial
 terminal: proof_shape=bind-only; consumers=HardinA229532Strip.result
 W: proof_shape=bind-only; consumers=HardinA229532Strip.result
 raw_successors: proof_shape=bind-only; consumers=HardinA229532Strip.result
@@ -46,13 +48,28 @@ def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 1 ∧ bondDefects horizontal p p ≤ 1 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
+
+/-- Encode the equality pattern in lexicographic order on the fifteen column pairs. -/
+def equalityPatternCode (p : Row) : ℕ :=
+  (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) +
+  (if p 0 = p 4 then 8 else 0) + (if p 0 = p 5 then 16 else 0) + (if p 1 = p 2 then 32 else 0) +
+  (if p 1 = p 3 then 64 else 0) + (if p 1 = p 4 then 128 else 0) + (if p 1 = p 5 then 256 else 0) +
+  (if p 2 = p 3 then 512 else 0) + (if p 2 = p 4 then 1024 else 0) + (if p 2 = p 5 then 2048 else 0) +
+  (if p 3 = p 4 then 4096 else 0) + (if p 3 = p 5 then 8192 else 0) + (if p 4 = p 5 then 16384 else 0)
+
+
+/-- A colour permutation preserves the equality pattern of the row. -/
+theorem equalityPatternCode_relabel (e : Equiv.Perm (Fin 3)) (p : Row) :
+    equalityPatternCode (e ∘ p) = equalityPatternCode p := by
+  simp only [equalityPatternCode, Function.comp_apply, e.injective.eq_iff]
+
 def cl (p : Row) (d : ℕ) : Fin 31 :=
   if bondDefects horizontal p p = 0 then
     ⟨(HardinA233172DiagonalStrip.boundaryClass (true, true) p).val - 1 +
       (if 0 < d then 0 else 10), by
       have := (HardinA233172DiagonalStrip.boundaryClass (true, true) p).isLt
       split_ifs <;> omega⟩ else
-  let code : ℕ := (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) + (if p 0 = p 3 then 4 else 0) + (if p 0 = p 4 then 8 else 0) + (if p 0 = p 5 then 16 else 0) + (if p 1 = p 2 then 32 else 0) + (if p 1 = p 3 then 64 else 0) + (if p 1 = p 4 then 128 else 0) + (if p 1 = p 5 then 256 else 0) + (if p 2 = p 3 then 512 else 0) + (if p 2 = p 4 then 1024 else 0) + (if p 2 = p 5 then 2048 else 0) + (if p 3 = p 4 then 4096 else 0) + (if p 3 = p 5 then 8192 else 0) + (if p 4 = p 5 then 16384 else 0)
+  let code := equalityPatternCode p
   if code ∈ ({10902, 646, 6354, 6162, 9396, 1188, 8244, 2340, 6156, 6336, 656, 10880} : Finset ℕ) then 20 else
   if code ∈ ({2344, 4364} : Finset ℕ) then 21 else
   if code ∈ ({4354, 8232} : Finset ℕ) then 22 else

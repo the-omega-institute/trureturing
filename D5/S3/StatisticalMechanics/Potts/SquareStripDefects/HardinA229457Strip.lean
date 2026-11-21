@@ -14,6 +14,7 @@ finite_certificate: proof_shape=content; consumers=result, HardinA229604Strip.fi
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Strip
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
@@ -63,7 +64,7 @@ theorem finite_certificate :
     (∀ s : Fin 42, (∑ r : Row, if bondDefects horizontal r r ≤ 1 ∧
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) := by
   refine ⟨by decide +kernel, ?_, HardinA229457StripClasses.transition_counts,
-    ?_, by decide +kernel⟩
+    ?_, ?_⟩
   · intro p d hp r hr
     dsimp only [Valid,
       D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid] at hp ⊢
@@ -72,6 +73,20 @@ theorem finite_certificate :
     dsimp only [Valid,
       D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid]
     omega
+  · intro s
+    by_cases hs : s = 22
+    · subst s
+      have fibre : ∀ r : Row,
+          (bondDefects horizontal r r ≤ 1 ∧ cl r (1 - bondDefects horizontal r r) = 22) ↔
+          (bondDefects horizontal r r ≤ 1 ∧
+            D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl r
+              (1 - bondDefects horizontal r r) = 30) := by
+        decide +kernel
+      simp_rw [fibre]
+      change _ = D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 30
+      exact D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Strip.finite_certificate.2.2.2.2.1 30
+    · revert s
+      decide +kernel
 
 attribute [local irreducible] a
 
