@@ -87,6 +87,18 @@ $N(1+\pi)=5$. These different divisor patterns produce equal normalized sums.
 The source’s ring-prime-power theorem and its odd-$n$ cases retain their
 stated scope. [Theorem 2.2(e), Theorem 3.2 and Corollary 3.2](https://arxiv.org/pdf/1506.05416v1)
 
+The same pair gives a negative answer to Defant’s adjoining question of
+whether $\pi^{\alpha_1}\bar\pi^{\alpha_2}$ is always $n$-powerfully solitary.
+In the $d=-11$ UFD specified in §1, $N(\pi)=\pi\bar\pi=3$ is a rational
+prime. By multiplicativity of the norm, any factorization of $\pi$ has a
+factor of norm $1$, which is a unit with inverse its conjugate. Thus $\pi$
+is irreducible and hence prime in this UFD. Taking $\alpha_1=\alpha_2=1$
+and $n=2$ gives $3=\pi\bar\pi$, with $7\pi-3$ as its friend at index
+$16/9$ and with a different absolute value. This is an arithmetic
+consequence of the certified witness. The Lean theorem `result : Not claim`
+formalizes the refutation of the numbered Conjecture 4.1.
+[Defant, arXiv v1, §§1 and 4](https://arxiv.org/pdf/1506.05416v1#page=23)
+
 ## ASSUMED-UNVERIFIED
 
 The compiled statement covers the full rational-prime-power conjecture.
