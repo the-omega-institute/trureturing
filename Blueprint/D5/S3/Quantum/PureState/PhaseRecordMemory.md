@@ -76,6 +76,6 @@ For normalized orthogonal phase rows and a memory with 1 ≤ M ≤ N, an encoder
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseRecordMemory.phaseDual_gap`
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseRecordMemory.phase_optimum_attainable_iff`
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseRecordMemory.phase_success_le`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/PureState/JointRecordTransport](JointRecordTransport.md)
-- Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](../QuantumChannels/PositiveFilterTransposeRefutation.md)
 - Dependency: [D5/S3/Quantum/Recovery/KrausCompletion](../Recovery/KrausCompletion.md)

@@ -6,9 +6,9 @@
    utility: none
    digest: Exact memory threshold and finite CPTP decoding bounds for flat phase records. -/
 
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.PureState.JointRecordTransport
 import D5.S3.Quantum.Recovery.KrausCompletion
-import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import Mathlib.Data.Fintype.EquivFin
 
 /-!
@@ -139,22 +139,28 @@ def channelMatrix (Φ : QuantumChannel ι μ) : MatrixMap ι μ ℂ :=
   (CStarMatrix.ofMatrixₗ.symm (R := ℂ)).toLinearMap.comp
     (Φ.toCompletelyPositiveMap.toLinearMap.comp (CStarMatrix.ofMatrixₗ (R := ℂ)).toLinearMap)
 
-/-- The Heisenberg pullback under a canonical CPTP encoder. -/
+/-- The Heisenberg pullback under a canonical CPTP encoder, using the adjoint Kraus operators. -/
 def pullEffect (Φ : QuantumChannel ι μ) : MatrixMap μ ι ℂ :=
-  (channelMatrix Φ).dual
+  let K := (krausRepresentation Φ.toCompletelyPositiveMap).1
+  MatrixMap.of_kraus (fun r => (K r)ᴴ) (fun r => (K r)ᴴ)
 
 theorem pullEffect_trace (Φ : QuantumChannel ι μ) (A : Matrix ι ι ℂ) (D : Matrix μ μ ℂ) :
     trace (pullEffect Φ D * A) = trace (D * channelMatrix Φ A) := by
-  rw [trace_mul_comm (pullEffect Φ D), trace_mul_comm D]
-  exact (MatrixMap.Dual.trace_eq (channelMatrix Φ) A D).symm
+  let K := krausRepresentation Φ.toCompletelyPositiveMap
+  have hA : channelMatrix Φ A = ∑ r, K.1 r * A * (K.1 r)ᴴ := K.2 A
+  rw [hA]
+  simp only [pullEffect, MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+    AddHom.coe_mk, conjTranspose_conjTranspose, Matrix.sum_mul, Matrix.mul_sum, trace_sum]
+  refine Finset.sum_congr rfl fun r _ => ?_
+  change trace ((K.1 r)ᴴ * D * K.1 r * A) = trace (D * (K.1 r * A * (K.1 r)ᴴ))
+  rw [Matrix.mul_assoc ((K.1 r)ᴴ * D), ← Matrix.mul_assoc D (K.1 r * A),
+    Matrix.trace_mul_cycle D (K.1 r * A)]
 
 theorem pullEffect_posSemidef (Φ : QuantumChannel ι μ) {D : Matrix μ μ ℂ}
     (hD : D.PosSemidef) : (pullEffect Φ D).PosSemidef := by
-  apply MatrixMap.IsPositive.dual _ hD
-  intro A hA
-  exact (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
-    (map_nonneg Φ.toCompletelyPositiveMap
-      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hA.nonneg))).posSemidef
+  simp only [pullEffect, MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+    AddHom.coe_mk, conjTranspose_conjTranspose]
+  exact Matrix.posSemidef_sum _ fun _ _ => hD.conjTranspose_mul_mul_same _
 
 theorem pullEffect_one (Φ : QuantumChannel ι μ) : pullEffect Φ 1 = 1 := by
   apply Matrix.ext_iff_trace_mul_right.mpr
