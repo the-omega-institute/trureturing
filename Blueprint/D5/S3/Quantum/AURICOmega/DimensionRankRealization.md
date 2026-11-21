@@ -1,0 +1,63 @@
+# Realization of the dimension and feature rank bounds
+
+## Abstract
+
+For natural numbers d and r, four conditions are equivalent, with carriers in an arbitrary universe: a noncommutative ternary comparison structure of feature rank at most r exists on a preconnected, locally compact space with continuous transfer, each reading kappa x continuous at x, and a neighbourhood of a point mapped continuously and injectively into R^d; such a structure exists on a compact, Hausdorff, path-connected space with jointly continuous reading and a continuous map into R^d injective on an open set containing the point; d >= 3 and r >= 5; and the unit quaternion model has feature rank at most r and admits a continuous map into R^d injective on an open set containing 1. So the unit quaternions realize every such pair. The imaginary part is injective on a set S of unit quaternions exactly when every q in S with -star q in S has real part zero, and the closed hemisphere of nonnegative real part is the largest set that contains the open hemisphere and on which the imaginary part is injective.
+
+**Theorem 1.1 (The sets on which the imaginary part is injective).**
+
+$$\forall S: \operatorname{Set}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right), \operatorname{InjOn}\left((q: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{im}\left(q\right), S\right) \iff (\forall q \in S, -\operatorname{star}\left(q\right) \in S \to \operatorname{re}\left(q\right) = 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/DimensionRankRealization.injOn_im_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In this document re q and im q denote the real part and the imaginary part of the quaternion underlying a unit quaternion q, that is, of the image of q in the quaternions. Let S be a set of unit quaternions. The map q -> im q is injective on S if and only if every q in S with -star q in S has re q = 0. The unit quaternion -star q has real part -re q and the same imaginary part as q. If the imaginary part is injective on S and both q and -star q lie in S, then q = -star q, so re q = -re q and re q = 0. Conversely, a unit quaternion satisfies re q ^ 2 + imI q ^ 2 + imJ q ^ 2 + imK q ^ 2 = 1, so two unit quaternions p and q with the same imaginary part have re p ^ 2 = re q ^ 2. Then either re p = re q, and p = q, or re p = -re q, and p = -star q; in the second case q and -star q both lie in S, so re q = 0, hence re p = re q and again p = q. So the imaginary part fails to be injective on S exactly when S contains a pair q, -star q with re q different from zero, and such a pair has a common imaginary part.
+
+**Proposition 1.2 (The closed hemisphere is the largest set of injectivity of the imaginary part).**
+
+$$\operatorname{IsGreatest}\left(\{S: \operatorname{Set}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right) \mid \{q: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \mid 0 < \operatorname{re}\left(q\right)\} \subseteq S \land \operatorname{InjOn}\left((q: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{im}\left(q\right), S\right)\}, \{q \mid 0 \leq \operatorname{re}\left(q\right)\}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/DimensionRankRealization.isGreatest_injOn_im` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Consider the sets S of unit quaternions that contain the open hemisphere of unit quaternions q with 0 < re q and on which the map q -> im q is injective. The closed hemisphere of unit quaternions q with 0 <= re q is the largest of these sets: it is one of them, and it contains each of them. It is one of them by the preceding theorem, since 0 <= re q and 0 <= re(-star q) = -re q force re q = 0. If S is one of these sets and some q in S had re q < 0, then -star q would lie in the open hemisphere, hence in S, and the preceding theorem would give re q = 0, which is impossible. In particular the imaginary part is injective on the closed hemisphere: there the real part is the nonnegative square root of 1 - |im q| ^ 2.
+
+**Lemma 1.3 (The transfer of the unit quaternion model is continuous).**
+
+$$\operatorname{Continuous}\left((p: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \times \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \times \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{tri}\left(\operatorname{quaternionModel}, p.1, p.2.1, p.2.2\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/DimensionRankRealization.continuous_tri_quaternionModel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The transfer of quaternionModel is (x, y, z) -> x * y^-1 * z on the group of unit quaternions. The unit quaternions form a topological group in the subspace topology of the quaternions, so multiplication and inversion are continuous, and the transfer is continuous on the product of three copies of the group.
+
+**Theorem 1.4 (Four equivalent conditions on the pairs of dimension and feature rank).**
+
+$$\forall d, r: \mathbb{N}, \operatorname{TFAE}\left([\exists M: \operatorname{Type} u, \exists [\operatorname{TopologicalSpace}\left(M\right)], \exists [\operatorname{LocallyCompactSpace}\left(M\right)], \exists [\operatorname{PreconnectedSpace}\left(M\right)], \exists C: \operatorname{TernaryComparison}\left(M\right), \exists o: M, \exists V: \operatorname{Set}\left(M\right), \exists f: M \to \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right), \operatorname{Continuous}\left((p: M \times M \times M) \mapsto \operatorname{tri}\left(C, p.1, p.2.1, p.2.2\right)\right) \land (\forall x: M, \operatorname{ContinuousAt}\left(\operatorname{kappa}\left(C, x\right), x\right)) \land \operatorname{Noncommutative}\left(C\right) \land \operatorname{HasFeatureRank}\left(C, r\right) \land V \in \operatorname{nhds}\left(o\right) \land \operatorname{ContinuousOn}\left(f, V\right) \land \operatorname{InjOn}\left(f, V\right), \exists M: \operatorname{Type} u, \exists [\operatorname{TopologicalSpace}\left(M\right)], \exists [\operatorname{CompactSpace}\left(M\right)], \exists [\operatorname{T2Space}\left(M\right)], \exists [\operatorname{PathConnectedSpace}\left(M\right)], \exists C: \operatorname{TernaryComparison}\left(M\right), \exists o: M, \exists V: \operatorname{Set}\left(M\right), \exists f: M \to \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right), \operatorname{Continuous}\left((p: M \times M \times M) \mapsto \operatorname{tri}\left(C, p.1, p.2.1, p.2.2\right)\right) \land \operatorname{Continuous}\left((p: M \times M) \mapsto \operatorname{kappa}\left(C, p.1, p.2\right)\right) \land \operatorname{Noncommutative}\left(C\right) \land \operatorname{HasFeatureRank}\left(C, r\right) \land \operatorname{IsOpen}\left(V\right) \land o \in V \land \operatorname{Continuous}\left(f\right) \land \operatorname{InjOn}\left(f, V\right), 3 \leq d \land 5 \leq r, \exists V: \operatorname{Set}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right), \exists f: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \to \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right), \operatorname{HasFeatureRank}\left(\operatorname{quaternionModel}, r\right) \land \operatorname{IsOpen}\left(V\right) \land 1 \in V \land \operatorname{Continuous}\left(f\right) \land \operatorname{InjOn}\left(f, V\right)]\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/DimensionRankRealization.exists_model_tfae` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let d and r be natural numbers and let u be a universe level; the types M in conditions (1) and (2) range over Type u. Here C has feature rank r means that the reading kappa x y is the inner product of phi x and phi y for some map phi from M into Euclidean space of dimension r; so it says that C has feature rank at most r. The following four conditions are equivalent. (1) There is a type M with a topology that is locally compact and preconnected, a ternary comparison structure C on M, a point o, a set V and a map f from M into Euclidean space of dimension d, such that the transfer (x, y, z) -> tri x y z is continuous on M x M x M, the reading kappa x is continuous at x for every x, C is noncommutative, C has feature rank r, V is a neighbourhood of o, and f is continuous on V and injective on V. (2) There is a type M with a topology that is compact, Hausdorff and path-connected, a ternary comparison structure C on M, a point o, a set V and a map f from M into Euclidean space of dimension d, such that the transfer is continuous on M x M x M, the reading (x, y) -> kappa x y is continuous on M x M, C is noncommutative, C has feature rank r, V is open and contains o, f is continuous on M, and f is injective on V. (3) d >= 3 and r >= 5. (4) The unit quaternion model quaternionModel has feature rank r, and there are a set V of unit quaternions and a map f from the unit quaternions into Euclidean space of dimension d such that V is open and contains 1, f is continuous, and f is injective on V. Condition (2) implies condition (1): a compact Hausdorff space is locally compact, a path-connected space is preconnected, joint continuity of the reading gives continuity of kappa x at x, an open set containing o is a neighbourhood of o, and a continuous map is continuous on V. Condition (1) implies condition (3) by the dimension and feature rank bound for such structures, theorem three_le_dim_of_hasFeatureRank, which holds for carriers in every universe. For condition (3) implies condition (4) write d = 3 + m. The unit quaternions with the transfer x * y^-1 * z and the reading (1 + <x, y>) / 2 form a noncommutative structure of feature rank five, hence of feature rank at most r for every r >= 5, since feature rank is monotone. Take for V the open hemisphere of unit quaternions of positive real part, an open set containing 1, and take for f the map sending q to its three imaginary coordinates followed by m zero coordinates. This map is continuous on all unit quaternions, and it is injective on the closed hemisphere by the preceding proposition, hence on V. For condition (4) implies condition (2) take for M the lift ULift of the unit quaternions to the universe u, with the topology induced by the projection onto the unit quaternions, and carry the unit quaternion model, the point 1, the set V and the map f along this projection. The lift is homeomorphic to the unit quaternions, which are compact and Hausdorff, being the unit sphere of the quaternions, and path-connected, by the lemma that the unit quaternions are path-connected. The carried structure is noncommutative and has feature rank r, its transfer is continuous by the lemma above, its reading is continuous by the lemma that the reading of the unit quaternion model is continuous, and openness, continuity and injectivity pass along the homeomorphism. So the unit quaternions realize every pair d >= 3, r >= 5, as condition (4) states, and the pairs are attained already in the more restrictive class of condition (2), in every universe. In condition (2) the requirement that M be Hausdorff follows from the joint continuity of the reading: kappa x y = 1 holds exactly when x = y, so the diagonal of M x M is the preimage of 1 under the continuous reading and is closed. This remark is not stated as a theorem here. The result is assembled from classical facts (the unit three-sphere is a compact connected group, and the hemisphere of nonnegative real part is the graph of a function of the imaginary part) together with the bounds proved in this library; no novelty is claimed. Not stated here: which other structures realize a given pair (d, r); any manifold structure on the unit quaternions; and examples showing that individual hypotheses of the dimension and feature rank bound cannot be dropped.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/AURICOmega/DimensionRankRealization.continuous_tri_quaternionModel`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/DimensionRankRealization.exists_model_tfae`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/DimensionRankRealization.injOn_im_iff`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/DimensionRankRealization.isGreatest_injOn_im`
+- Dependency: [D5/S3/Quantum/AURICOmega/FiniteRankDimensionBound](FiniteRankDimensionBound.md)
+- Dependency: [D5/S3/Quantum/AURICOmega/GramRankFeatureMap](GramRankFeatureMap.md)
+- Dependency: [D5/S3/Quantum/AURICOmega/QuaternionComparisonModel](QuaternionComparisonModel.md)
