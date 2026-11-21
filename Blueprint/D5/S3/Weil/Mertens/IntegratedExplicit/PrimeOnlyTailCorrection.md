@@ -36,8 +36,27 @@ Monotonicity of ϑ bounds the increment Qϑ(z)−Qϑ(x) by log(z/x)+ϑ(x)(1/z−
 
 The negative part is therefore at least 2r² throughout a subinterval of length rx, where √z≤2√x. Integrating gives r³√x. A budget strictly below r³√x excludes the asserted depth at that interior point. The estimate requires a given window and gives no existence result for small-budget windows.
 
+**Theorem 1.3 (Logarithmically frequent positive averages force window mass).**
+
+$$\forall u \in \mathbb{N}\to\mathbb{R},\; \forall beta \in \mathbb{R},\; \forall c \in \mathbb{R},\; \forall M \in \mathbb{R},\; \forall epsilon \in \mathbb{R},\; \left(\left(\operatorname{Tendsto}\left(u, atTop, atTop\right) \land \operatorname{Tendsto}\left((\lambda n \mapsto \frac{\operatorname{u}\left(n+1\right)}{\operatorname{u}\left(n\right)}), atTop, \operatorname{nhds}\left(1\right)\right)\right) \land \left(\left(0 < c \land \left(\frac{1}{2} < beta \land 0 < epsilon\right)\right) \land \operatorname{Eventually}\left((\lambda n \mapsto \frac{c \cdot \operatorname{exp}\left(beta \cdot \operatorname{u}\left(n\right)\right)}{\operatorname{u}\left(n\right)^{M}} \le \operatorname{H}\left(\operatorname{u}\left(n\right)\right)), atTop\right)\right)\right) \Rightarrow \operatorname{Eventually}\left((\lambda y \mapsto \operatorname{exp}\left((\frac{3}{2} \cdot (beta - \frac{1}{2}) - epsilon) \cdot y\right) \le \operatorname{B}\left(y\right)), atTop\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection.eventual_prime_window_lower_of_log_frequency` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let U be the complete Mangoldt remainder. In the displayed claim H(v) is the integral of U(exp(t)) from v−log(2) to v. Write B(y)=N(exp(y),exp(3y/2)) using the same prime-only mass N as in the preceding theorem. The two Eventually conditions use the natural numbers for n and the real numbers for y.
+
+On the logarithmic scale, a sequence tending to infinity with consecutive ratios tending to one meets every sufficiently late interval [ky,3y/2] for each fixed 1<k<3/2. Use the first index which crosses ky. Its predecessor lies below ky and the ratio bound keeps the crossing below 3y/2.
+
+At a crossing v the interval [exp(v)/2,exp(v)] is contained in [exp(y),exp(3y/2)] for all sufficiently large y. On this shorter interval, the complete tail equals −U(x)/x. Substituting x=exp(t) in H(v), using the prime-power comparison, and bounding √x by exp(v/2) give H(v)≤exp(v/2)B(y). The spare exponent absorbs the factor v^M and the constant c. Choosing k near 3/2 and the spare exponent small gives the displayed estimate.
+
+The positive-average sequence is a premise. Connecting an off-line zeta zero to such a sequence requires a separate oscillation theorem and its analytic hypotheses.
+
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection.eventual_prime_window_lower_of_log_frequency`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection.prime_power_window_correction`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection.prime_tail_negative_window_lower`
 - Dependency: [D5/S3/Arith/Robin/CompleteMertensPeak](../../../Arith/Robin/CompleteMertensPeak.md)
