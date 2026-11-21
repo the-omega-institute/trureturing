@@ -64,13 +64,13 @@ private theorem shift_pow_apply (k : ℕ) (u : ℕ → ℂ) (j : ℕ) : (shift ^
     simp [shift, LinearMap.funLeft_apply, Nat.add_assoc]
 
 /-- Evaluating a polynomial at the shift gives the recurrence sum. -/
-private theorem aeval_apply (p : ℂ[X]) (u : ℕ → ℂ) (j : ℕ) :
+theorem aeval_apply (p : ℂ[X]) (u : ℕ → ℂ) (j : ℕ) :
     (aeval shift p) u j = ∑ k ∈ Finset.range (p.natDegree + 1), p.coeff k * u (j + k) := by
   rw [aeval_eq_sum_range, LinearMap.sum_apply, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.smul_apply, Pi.smul_apply, shift_pow_apply, smul_eq_mul]
 
-private theorem aeval_X_sub_C_apply (z : ℂ) (u : ℕ → ℂ) (j : ℕ) :
+theorem aeval_X_sub_C_apply (z : ℂ) (u : ℕ → ℂ) (j : ℕ) :
     (aeval shift (X - C z)) u j = u (j + 1) - z * u j := by
   simp [shift, LinearMap.funLeft_apply, Module.algebraMap_end_apply]
 
