@@ -20,7 +20,8 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         "Write Qθ(x) for the integral of (θ(v)−v)/v² on v>x, with each prime "
                         + "counted once in θ. Zhao's equation (14) identifies this tail in the "
                         + "cumulative Mertens error. Let Q be the corresponding complete "
-                        + "Chebyshev tail that includes prime powers.")),
+                        + "Chebyshev tail that includes prime powers. Set C=(101/100) firstLiMass, "
+                        + "where firstLiMass is the first Li mass of the actual zeros.")),
                     Paragraph(Text(
                         "Let ρ(k) run over all actual zero occurrences, with their analytic "
                         + "multiplicities, and put c(k)=1/(ρ(k)(1−ρ(k))). At a real-part upper bound "
@@ -36,13 +37,13 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         + "Its β-line contribution is exp((β−1/2)u)Pβ(u). Its intermediate "
                         + "contribution is at most Gβ(u). For u≥0, all occurrences with real part "
                         + "at most one half have weight at most one. Their total contribution is "
-                        + "at most the full coefficient norm sum, bounded by 101/100 via the "
-                        + "inverse-square ordinate sum and the first Li mass.")),
+                        + "at most the full coefficient norm sum, bounded by C via the "
+                        + "inverse-square ordinate sum.")),
                     Paragraph(Text(
-                        "The prime-power correction √x (Q(x)−Qθ(x)) tends to 2 and eventually "
-                        + "exceeds 7/4. After subtracting it, the upper bound on √x Qθ(x) is "
-                        + "exp((β−1/2)u)Pβ(u)+Gβ(u)−1/2. The lower bound on u comes from "
-                        + "the prime-power correction and x≥2, so it is uniform in β."))),
+                        "For each 0<d<2−C, the prime-power correction √x (Q(x)−Qθ(x)) tends "
+                        + "to 2 and eventually exceeds C+d. Subtracting it gives the upper bound "
+                        + "exp((β−1/2)u)Pβ(u)+G(β,u)−d on √x Qθ(x). The lower bound on u "
+                        + "comes from the prime-power correction and x≥2, so it is uniform in β."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("prime-tail-mass-pos-or-intermediate-or-wider-zero-cluster"),
                 DeclarationHandle.Create(Module + "prime_tail_mass_pos_or_intermediate_or_wider_zero_cluster"),
@@ -51,18 +52,19 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
-                        "Let N(A,B) integrate max(−Qθ(x),0)/√x from A to B. Fix β>1/2, "
-                        + "an upper bound for the actual zero real parts. For W>0 and a sufficiently "
-                        + "late left log endpoint t−W, use the actual window [exp(t−W),exp(t)]. "
-                        + "Either its mass is positive, Gβ(u) reaches 1/2 somewhere in [t−W,t], "
+                        "Let N(A,B) integrate max(−Qθ(x),0)/√x from A to B. For each 0<d<2−C, "
+                        + "one threshold for the left log endpoint t−W works for all W>0 and "
+                        + "all upper bounds β>1/2 for the actual zero real parts. Use the window "
+                        + "[exp(t−W),exp(t)]. Either its mass is positive, G(β,u) reaches d "
+                        + "somewhere in [t−W,t], "
                         + "or zero is a cluster value of normalized mass at a width W′>W. "
                         + "For B>0 the wider window starts at exp(log B−W′)=B exp(−W′), and "
                         + "its normalization is exp((log B)(β−1/2))=B^(β−1/2).")),
                     Paragraph(Text(
                         "If the mass vanishes, continuity of the density and positivity of "
                         + "the weight give Qθ(exp(u))≥0 throughout the closed window, including "
-                        + "both endpoints. If Gβ(u)<1/2 throughout that same window, the "
-                        + "root-scale bound gives exp((β−1/2)u)Pβ(u)≥1/2−Gβ(u)>0. "
+                        + "both endpoints. If G(β,u)<d throughout that same window, the "
+                        + "root-scale bound gives exp((β−1/2)u)Pβ(u)≥d−G(β,u)>0. "
                         + "One threshold for the left endpoint applies the bound at every u.")),
                     Paragraph(Text(
                         "The line series is uniformly continuous, so its strict sign at t−W "
@@ -72,12 +74,13 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         + "to a zero cluster value of the normalized mass as real B tends to infinity.")),
                     Paragraph(Text(
                         "Suppose a zero attains β and every zero strictly below β has real "
-                        + "part at most one half. Then Gβ is zero. The attained-abscissa cutoff "
+                        + "part at most one half. The bound firstLiMass<1/3 gives 1<2−C, so "
+                        + "we may take d=1. The gap makes G(β,u) zero. The attained-abscissa cutoff "
                         + "gives a unique W*>0 and a nonzero lower limit at every W′>W*. "
                         + "A zero cluster value would bound the real lower limit above by every "
                         + "positive number, while late nonnegativity bounds it below by zero. "
-                        + "Thus the wider-window alternative is impossible at W*. For all "
-                        + "sufficiently large B the mass at W* is strictly positive.")),
+                        + "Thus the wider-window alternative is impossible at W*. For "
+                        + "B≥exp(T+W*), the mass at W* is strictly positive.")),
                     Paragraph(Text(
                         "For any W≥W* with B exp(−W)≥2, keep the same B. The interval at W* "
                         + "is contained in the interval at W, and the nonnegative density "
@@ -105,6 +108,12 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
 
     private static Formula Some(string name, Formula domain, Formula body) =>
         Bind(FormulaQuantifier.Exists, name, domain, body);
+
+    private static Formula AllMargins(Formula body)
+    {
+        var d = F.Id("d");
+        return All("d", Real, Implies(Lt(F.D(0), d), Implies(Lt(d, Subtract(F.D(2), F.Id("C"))), body)));
+    }
 
     private static Formula Lt(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
@@ -146,11 +155,11 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
             Call("Qtheta", Call("exp", u)));
         var line = Multiply(Call("exp", Multiply(Around(Subtract(beta, Half)), u)),
             Call("P", beta, u));
-        var estimate = Le(left, Subtract(Add(line, Call("G", beta, u)), Half));
+        var estimate = Le(left, Subtract(Add(line, Call("G", beta, u)), F.Id("d")));
         var allBounds = AllAbscissae(Implies(Lt(Half, beta),
             Implies(Around(UpperBound(beta)), estimate)));
         return F.Disp(And(Around(summability),
-            Call("Eventually", F.Id("atTop"), Lambda(u, Real, allBounds))));
+            Around(AllMargins(Call("Eventually", F.Id("atTop"), Lambda(u, Real, allBounds))))));
     }
 
     private static Formula WindowAlternative()
@@ -164,7 +173,7 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
         var endpoint = F.Id("B");
         var left = Subtract(t, width);
         var localMass = Lt(F.D(0), Call("N", Call("exp", left), Call("exp", t)));
-        var intermediate = Some("u", Call("Icc", left, t), Le(Half, Call("G", beta, u)));
+        var intermediate = Some("u", Call("Icc", left, t), Le(F.Id("d"), Call("G", beta, u)));
         var normalization = Call("exp",
             Multiply(Call("log", endpoint), Around(Subtract(beta, Half))));
         var mass = new Formula.Fraction(
@@ -176,7 +185,7 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
             Or(Around(intermediate), Around(Some("V", Real, And(Lt(width, wider), cluster)))));
         var window = All("t", Real, All("W", Real,
             Implies(Lt(F.D(0), width), Implies(Le(threshold, left), Around(alternative)))));
-        return F.Disp(Some("T", Real, AllAbscissae(Implies(Lt(Half, beta),
-            Implies(Around(UpperBound(beta)), window)))));
+        return F.Disp(AllMargins(Some("T", Real, AllAbscissae(Implies(Lt(Half, beta),
+            Implies(Around(UpperBound(beta)), window))))));
     }
 }

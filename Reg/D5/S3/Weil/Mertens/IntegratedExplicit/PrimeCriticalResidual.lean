@@ -47,18 +47,22 @@ def rootScaleArena : Arena where
     (∀ β t : ℝ, Summable
       (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
         ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
-    ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
-      (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
-      Real.exp (t / 2) * primeTail (Real.exp t) ≤
-        Real.exp ((β - 1 / 2) * t) * (-lineRealPart (maximalSeries actualCoeff actualZero β t)) +
-          (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
-            ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2
+    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+      ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
+        (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
+        Real.exp (t / 2) * primeTail (Real.exp t) ≤
+          Real.exp ((β - 1 / 2) * t) * (-lineRealPart (maximalSeries actualCoeff actualZero β t)) +
+            (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+              ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - d
+
+private theorem one_lt_margin_bound : (1 : ℝ) < 2 - (101 / 100 : ℝ) * firstLiMass := by
+  linarith only [firstLiMass_lt_third]
 
 private theorem exaggeratedLine_fails : ¬ rootScaleArena.Law exaggeratedLine := by
   intro h
   have htend : Tendsto primeTail atTop (𝓝 0) := tendsto_integral_Ioi_zero tendsto_id
   obtain ⟨t, ht, hroot, htail⟩ := ((eventually_ge_atTop (0 : ℝ)).and
-    (h.2.and ((htend.comp Real.tendsto_exp_atTop).eventually_const_lt
+    ((h.2 1 zero_lt_one one_lt_margin_bound).and ((htend.comp Real.tendsto_exp_atTop).eventually_const_lt
       (show (-1 : ℝ) < 0 by norm_num)))).exists
   let intermediate : Set ℕ := {k | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < 1}
   have hscaled : (∑' k : intermediate,
@@ -82,7 +86,7 @@ private theorem exaggeratedLine_fails : ¬ rootScaleArena.Law exaggeratedLine :=
   change Real.exp (t / 2) * primeTail (Real.exp t) ≤
     Real.exp ((1 - 1 / 2) * t) * -(coefficientNormSum + 1) +
       (∑' k : intermediate, ‖actualCoeff k.1‖ *
-        Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2 at hbad
+        Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 at hbad
   rw [show (1 - 1 / 2 : ℝ) * t = t / 2 by ring] at hbad
   have hbad' : Real.exp (t / 2) * primeTail (Real.exp t) ≤ Real.exp (t / 2) * (-1) := by
     linarith only [hbad, hscaled,
@@ -142,7 +146,7 @@ abbrev scaleSignature : Signature :=
 def actualScale : Realization scaleSignature :=
   realize scaleSignature (fun _ _ => Real.exp) (fun e => nomatch e)
 
-private def collapsedValue : ℝ := (2 * (coefficientNormSum + 1))⁻¹
+private def collapsedValue : ℝ := (coefficientNormSum + 1)⁻¹
 
 def collapsedScale : Realization scaleSignature :=
   realize scaleSignature (fun _ _ _ => collapsedValue) (fun e => nomatch e)
@@ -151,15 +155,16 @@ def windowArena : Arena where
   signature := scaleSignature
   Law V :=
     let scale := V.readout () ()
-    ∃ T : ℝ, ∀ β : ℝ, 1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
-      ∀ t W : ℝ, 0 < W → T ≤ t - W →
-        0 < (∫ x in scale (t - W)..scale t, max (-primeTail x) 0 / Real.sqrt x) ∨
-        (∃ u ∈ Icc (t - W) t, 1 / 2 ≤
-          ∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
-            ‖actualCoeff k.1‖ * scale (((actualZero k.1).re - 1 / 2) * u)) ∨
-        ∃ W' > W, MapClusterPt 0 atTop (fun B : ℝ =>
-          (∫ x in scale (Real.log B - W')..B, max (-primeTail x) 0 / Real.sqrt x) /
-            scale (Real.log B * (β - 1 / 2)))
+    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+      ∃ T : ℝ, ∀ β : ℝ, 1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
+        ∀ t W : ℝ, 0 < W → T ≤ t - W →
+          0 < (∫ x in scale (t - W)..scale t, max (-primeTail x) 0 / Real.sqrt x) ∨
+          (∃ u ∈ Icc (t - W) t, d ≤
+            ∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+              ‖actualCoeff k.1‖ * scale (((actualZero k.1).re - 1 / 2) * u)) ∨
+          ∃ W' > W, MapClusterPt 0 atTop (fun B : ℝ =>
+            (∫ x in scale (Real.log B - W')..B, max (-primeTail x) 0 / Real.sqrt x) /
+              scale (Real.log B * (β - 1 / 2)))
 
 private theorem continuousOn_density_above {a : ℝ} (ha : 0 < a) (ha₁ : a ≤ 1) :
     ContinuousOn (fun x : ℝ => max (-primeTail x) 0 / Real.sqrt x) (Ici a) := by
@@ -184,21 +189,21 @@ private theorem collapsedScale_fails : ¬ windowArena.Law collapsedScale := by
   have hc : 0 < collapsedValue := inv_pos.mpr (by linarith only [hC])
   have hc₁ : collapsedValue ≤ 1 := (inv_le_one₀ (by linarith only [hC])).mpr
     (by linarith only [hC])
-  have hhalf : coefficientNormSum * collapsedValue < 1 / 2 := by
+  have hsmall : coefficientNormSum * collapsedValue < 1 := by
     rw [collapsedValue, ← div_eq_mul_inv, div_lt_iff₀ (by linarith only [hC])]
     linarith
   intro h
-  obtain ⟨T, hT⟩ := h
+  obtain ⟨T, hT⟩ := h 1 zero_lt_one one_lt_margin_bound
   rcases hT 1 (by norm_num) (fun _ hz => hz.2.2.le) (T + 1) 1 zero_lt_one (by linarith) with
     hlocal | ⟨u, hu, hlarge⟩ | ⟨W', hW', hcluster⟩
   · change 0 < ∫ x in collapsedValue..collapsedValue, max (-primeTail x) 0 / Real.sqrt x at hlocal
     simp only [intervalIntegral.integral_same, lt_irrefl] at hlocal
   · let intermediate : Set ℕ := {k | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < 1}
-    change 1 / 2 ≤ ∑' k : intermediate, ‖actualCoeff k.1‖ * collapsedValue at hlarge
+    change 1 ≤ ∑' k : intermediate, ‖actualCoeff k.1‖ * collapsedValue at hlarge
     rw [tsum_mul_right] at hlarge
     have hnorms := actualCoeff_hasSum.summable.norm.tsum_subtype_le _ intermediate
       (fun _ => norm_nonneg _)
-    exact hhalf.not_ge (hlarge.trans (mul_le_mul_of_nonneg_right hnorms hc.le))
+    exact hsmall.not_ge (hlarge.trans (mul_le_mul_of_nonneg_right hnorms hc.le))
   · let density (x : ℝ) := max (-primeTail x) 0 / Real.sqrt x
     change MapClusterPt 0 atTop (fun B : ℝ => (∫ x in collapsedValue..B, density x) /
       collapsedValue) at hcluster
