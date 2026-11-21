@@ -58,6 +58,10 @@ $$\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; 3 \le n \Rightarrow ((
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixHamming/ExactDimension.minimum_hamming_dimension` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rossi-2026-prefix-hamming-dimension` (proved) by `D5/S3/Combinatorics/Graph/PrefixHamming/ExactDimension.minimum_hamming_dimension`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rossi-2026-prefix-hamming-dimension","declaration_gid":"D5/S3/Combinatorics/Graph/PrefixHamming/ExactDimension.minimum_hamming_dimension","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Giovanni Rossi (2026). *Beyond geometric lattices: pseudo-atoms and redundant join representations in the face lattice of the permutohedron*. DOI: [10.48550/arXiv.2611.25741](https://doi.org/10.48550/arXiv.2611.25741). URL: <https://arxiv.org/abs/2611.25741v1>.
