@@ -53,7 +53,10 @@ internal sealed class ShiYauZuoTPrincipalRefutationDocument : IScribeDocumentDef
                     + "The product survives coefficient reduction because the polynomial ring over ZMod 2 is a domain. This proves the colon test for every generating tuple. "
                     + "Every binary pair makes at least one of u, v, and u + v zero. Scalar multiplication preserves the missing coordinate, and a unit gives the whole ring. Thus I is never a value ideal. "
                     + "The finite example refutes sufficiency for a chosen tuple, an existential tuple, and the reading that every tuple must pass. The infinite-field biconditional in Theorem 4.76 holds with the existential tuple reading.",
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shi-yau-zuo-t-principal-4-79"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
