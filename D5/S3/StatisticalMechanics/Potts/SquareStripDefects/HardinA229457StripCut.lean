@@ -88,11 +88,19 @@ private theorem numeric_cut : ∀ (r : Row) (c d : Fin 2) (s : Fin 20),
     HardinA229532StripData.cl r (d.val - c.val) = (crossedProperSlot s).castAdd 11 at slot
   have squareBoundary : ∀ p : Row,
       HardinA233127SquareStrip.boundaryClass (true, true) p = (ProperTransfer.cl p).succ := by
-    decide +kernel
+    rw [Fin.forall_fin_succ_pi]
+    intro x
+    rw [Fin.forall_fin_succ_pi]
+    intro y
+    fin_cases x <;> fin_cases y <;> decide +kernel
   have crossedBoundary : ∀ p : Row,
       HardinA233172DiagonalStrip.boundaryClass (true, true) p =
         (crossedProperClass (ProperTransfer.cl p)).succ := by
-    decide +kernel
+    rw [Fin.forall_fin_succ_pi]
+    intro x
+    rw [Fin.forall_fin_succ_pi]
+    intro y
+    fin_cases x <;> fin_cases y <;> decide +kernel
   have nextBoundary (i : Fin 20) :
       (⟨(crossedProperSlot i).val % 10 + 1, by
         have := Nat.mod_lt (crossedProperSlot i).val (by decide : 0 < 10)

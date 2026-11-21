@@ -174,7 +174,7 @@ theorem result (n : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, canonical_count_scale 1 m (by decide)]
     push_cast
-    rfl
+    simp only [a]
   have poly := HardinA229457StripPowers.forward_relation
   have h := forward_shift T initial terminal 14 1 ![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] poly n
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,

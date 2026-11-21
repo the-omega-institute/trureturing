@@ -124,7 +124,7 @@ theorem result (n : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← labelled, HardinA229457Strip.canonical_count_scale 2 m (by decide)]
     push_cast
-    rfl
+    simp only [a]
   have scalar (i : Fin 25) : dotProduct (W i) terminal =
       dotProduct initial ((T ^ i.val).mulVec terminal) := by
     rw [← tab i, DefectTransfer.forward_eq, ← Matrix.dotProduct_mulVec]
