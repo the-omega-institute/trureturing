@@ -219,6 +219,36 @@ jobs:
             [[ "$tag" == lean-cache-verify-v2-* ]]
           fi
           echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Recheck retirement from the published successor manifest
+        if: steps.publish.outputs.indexed_tag != '' && inputs.retire_volume_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ steps.publish.outputs.indexed_tag }}
+          PREVIOUS_TAG: ${{ inputs.retire_volume_tag }}
+          TEST_ID: ${{ inputs.volume_test_id }}
+        run: |
+          set -o pipefail
+          gh release download "$CURRENT_TAG" --repo "$GITHUB_REPOSITORY" --pattern manifest.json --dir "$RUNNER_TEMP/retirement"
+          PYTHONPATH=tools/scripts/worktree python3 - <<'PYTHON' | tee "$RUNNER_TEMP/retirement/retry.log"
+          import json
+          import os
+          from pathlib import Path
+          import lean_cache_release as release
+          import lean_release_volume_remote as volumes
+
+          env = os.environ
+          current = json.loads((Path(env["RUNNER_TEMP"]) / "retirement/manifest.json").read_bytes())
+          expected = {"schema": "lean-release-seed-v6", "source_ref": env["GITHUB_REF"],
+                      "producer_commit_sha": env["GITHUB_SHA"], "volume_test_id": env["TEST_ID"],
+                      "workflow_run_id": env["GITHUB_RUN_ID"], "workflow_run_attempt": env["GITHUB_RUN_ATTEMPT"]}
+          if any(current.get(key) != value for key, value in expected.items()):
+              raise ValueError("successor manifest differs from this verification publication")
+          volumes.retire_verification(release, current["partition"], current["cache_key"], env["CURRENT_TAG"],
+                                      current, env["PREVIOUS_TAG"], release.operation_deadline())
+          PYTHON
+          sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$RUNNER_TEMP/retirement/retry.log" |
+            jq -e -s --arg old "$PREVIOUS_TAG" --arg new "$CURRENT_TAG" \
+              'length == 1 and (.[0] | .status == "already-retired" and .tag == $old and .retained_tag == $new and .reclaimed_payload_bytes == 0)'
 
   indexed-consumer:
     name: Verify indexed Release recovery in a clean checkout
