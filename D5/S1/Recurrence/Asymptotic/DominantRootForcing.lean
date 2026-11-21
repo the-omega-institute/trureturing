@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Asymptotic/DominantRootForcing
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Analysis.Asymptotics.AsymptoticEquivalent]
+   anchors: [mathlib/module/Mathlib.Analysis.Asymptotics.Defs]
    utility: none
    digest: A forced linear recurrence with a simple dominant real root R has solutions L R^j + O(q^j), with L the leading coefficient. -/
 
