@@ -71,7 +71,7 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
             Let(k,new Formula.Floor(F.Grp(Multiply(Multiply(s,h),a)))),
             Let(outside,set), Let(f,F.Seq(F.Open,u,F.Sp,F.Mapsto,F.Sp,density,F.Close)),
             And(Call("IntegrableOn",f,outside), Le(mass,bound))]);
-        var allInputs = All("s",real,Implies(And(Lt(zero,s),tilt),All("a",real,Implies(Lt(zero,a),
+        var allInputs = All("s",real,Implies(tilt,All("a",real,Implies(Lt(zero,a),
             All("g",new Formula.TypeArrow(real,real),Implies(Call("Measurable",g),
                 All("M",real,Implies(growth,estimate))))))));
         return F.Disp(All("h",real,All("b",real,Implies(And(Lt(one,h),Lt(h,b)),And(eventually,allInputs)))));

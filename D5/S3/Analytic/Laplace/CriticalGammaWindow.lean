@@ -266,7 +266,7 @@ theorem adjustable_window_off_mass {h b : ℝ} (hh : 1 < h) (hb : h < b) :
     let L := fun σ : ℝ => σ*(h*log h-h+1)-2
     let R := fun σ : ℝ => σ*(b-h-h*log (b/h))-2*b
     (∀ T : ℝ, ∀ᶠ σ : ℝ in Filter.atTop, 2 < σ*(1-h/b) ∧ T < L σ ∧ T < R σ) ∧
-    ∀ {σ : ℝ}, 0 < σ → 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
+    ∀ {σ : ℝ}, 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
       ∀ {M : ℝ}, (∀ u, 0 ≤ u → |g u| ≤ M * exp (2*u)) →
       let k := ⌊σ*h*a⌋₊
       let f := fun u : ℝ => |g u| * (u ^ k * exp (-(σ*u)) / k.factorial)
@@ -275,7 +275,10 @@ theorem adjustable_window_off_mass {h b : ℝ} (hh : 1 < h) (hb : h < b) :
         (exp (-L σ*a) / σ + b/(h*σ)*exp (-R σ*a)) :=
   by
   refine ⟨decay_rates hh hb, ?_⟩
-  intro σ hσ hsign a ha g hg M hM
+  intro σ hsign a ha g hg M hM
+  have hb0 : 0 < b := by linarith
+  have hfactor : 0 < 1 - h/b := sub_pos.2 ((div_lt_one hb0).2 hb)
+  have hσ : 0 < σ := pos_of_mul_pos_left (by linarith : 0 < σ*(1-h/b)) hfactor.le
   exact mass_at_rate hh hb hσ hsign ha hg hM
 
 end D5.S3.Analytic.Laplace.CriticalGammaWindow

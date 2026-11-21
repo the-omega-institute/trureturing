@@ -108,7 +108,7 @@ def arena : Arena where
     let L := V.readout () () h
     let R := fun σ : ℝ => σ*(b-h-h*log (b/h))-2*b
     (∀ T : ℝ, ∀ᶠ σ : ℝ in Filter.atTop, 2 < σ*(1-h/b) ∧ T < L σ ∧ T < R σ) ∧
-    ∀ {σ : ℝ}, 0 < σ → 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
+    ∀ {σ : ℝ}, 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
       ∀ {M : ℝ}, (∀ u, 0 ≤ u → |g u| ≤ M * exp (2*u)) →
       let k := ⌊σ*h*a⌋₊
       let f := fun u : ℝ => |g u| * (u ^ k * exp (-(σ*u)) / k.factorial)
