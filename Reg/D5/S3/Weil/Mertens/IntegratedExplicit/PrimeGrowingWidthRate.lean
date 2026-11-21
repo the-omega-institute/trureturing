@@ -148,39 +148,49 @@ def upperArena : Arena where
     (∀ z : ℂ, IsNontrivialZero z → realPart z < β → realPart z ≤ γ) →
     ∃ K > (0 : ℝ), ∀ B : ℝ, ∀ a ∈ Icc 2 B,
       let p := β - 1 / 2
+      let r := γ - 1 / 2
       let error := (∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ p -
         phaseWindowInfinite realPart β (phaseOrbit (Real.log B))
       |error| ≤ K * ((a / B) ^ p +
-        if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else B ^ (γ - β))
+        if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else (B ^ r - a ^ r) / B ^ p)
 
 private theorem constant_one_upper_fails : ¬ upperArena.Law constantOne := by
   intro law
-  obtain ⟨K, _, hK⟩ :=
-    law 1 (1 / 2) le_rfl (by norm_num) (fun _ _ => le_rfl) (fun _ _ h => (lt_irrefl _ h).elim)
+  obtain ⟨K, hK₀, hK⟩ :=
+    law 1 (3 / 4) (by norm_num) (by norm_num) (fun _ _ => le_rfl)
+      (fun _ _ h => (lt_irrefl _ h).elim)
   let p : ℝ := 1 - 1 / 2
+  let r : ℝ := 3 / 4 - 1 / 2
   have hp : 0 < p := by norm_num [p]
-  have hdecay : Tendsto (fun B : ℝ => K * ((2 / B) ^ p + B ^ (-p) * Real.log (B / 2)))
+  have hdecay : Tendsto (fun B : ℝ => K * ((2 / B) ^ p + B ^ ((3 : ℝ) / 4 - 1)))
       atTop (𝓝 0) := by
-    have hc : Tendsto (fun B : ℝ => ((2 : ℝ) ^ p - Real.log 2) / B ^ p) atTop (𝓝 0) :=
-      tendsto_const_nhds.div_atTop (tendsto_rpow_atTop hp)
-    have hl := (isLittleO_log_rpow_atTop hp).tendsto_div_nhds_zero
-    have hf := (hl.add hc).const_mul K
-    rw [add_zero, mul_zero] at hf
-    apply hf.congr'
-    filter_upwards [eventually_gt_atTop (0 : ℝ)] with B hB
-    rw [Real.div_rpow (by norm_num : (0 : ℝ) ≤ 2) hB.le,
-      Real.rpow_neg hB.le, Real.log_div hB.ne' (by norm_num)]
-    ring
+    have hleft : Tendsto (fun B : ℝ => (2 / B) ^ p) atTop (𝓝 0) := by
+      have hquotient : Tendsto (fun B : ℝ => (2 : ℝ) ^ p / B ^ p) atTop (𝓝 0) :=
+        tendsto_const_nhds.div_atTop (tendsto_rpow_atTop hp)
+      apply hquotient.congr'
+      filter_upwards [eventually_ge_atTop (0 : ℝ)] with B hB
+      rw [Real.div_rpow (by norm_num : (0 : ℝ) ≤ 2) hB]
+    have hright : Tendsto (fun B : ℝ => B ^ ((3 : ℝ) / 4 - 1)) atTop (𝓝 0) := by
+      simpa only [neg_sub] using tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 1 - 3 / 4)
+    simpa only [add_zero, mul_zero] using (hleft.add hright).const_mul K
   obtain ⟨m, hm, hfreq⟩ := frequently_negative_error_at_one
   obtain ⟨B, ⟨h2B, hnegative⟩, hsmall⟩ :=
     (hfreq.and_eventually (hdecay.eventually_lt_const hm)).exists
   have h := hK B 2 ⟨le_rfl, h2B⟩
   dsimp only at h
-  rw [ite_eq_left rfl] at h
+  rw [ite_eq_right (by norm_num : (3 : ℝ) / 4 ≠ 1 / 2)] at h
   change |(∫ x in (2 : ℝ)..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ p -
       phaseWindowInfinite (fun _ => 1) 1 (phaseOrbit (Real.log B))| ≤
-    K * ((2 / B) ^ p + B ^ (-p) * Real.log (B / 2)) at h
-  linarith only [(abs_le.mp h).1, hnegative, hsmall]
+    K * ((2 / B) ^ p + (B ^ r - (2 : ℝ) ^ r) / B ^ p) at h
+  have hB₀ : 0 < B := (by norm_num : (0 : ℝ) < 2).trans_le h2B
+  have hrate : (B ^ r - (2 : ℝ) ^ r) / B ^ p ≤ B ^ ((3 : ℝ) / 4 - 1) := by
+    calc
+      _ ≤ B ^ r / B ^ p := div_le_div_of_nonneg_right
+        (sub_le_self _ (Real.rpow_nonneg (by norm_num) _)) (Real.rpow_nonneg hB₀.le _)
+      _ = _ := by
+        rw [← Real.rpow_sub hB₀, show r - p = (3 : ℝ) / 4 - 1 by norm_num [r, p]]
+  have hupper := h.trans (mul_le_mul_of_nonneg_left (add_le_add le_rfl hrate) hK₀.le)
+  linarith only [(abs_le.mp hupper).1, hnegative, hsmall]
 
 def upperFamily :
     Registration upperArena (type_of% @prime_tail_window_error_of_lower_spectral_bound) where

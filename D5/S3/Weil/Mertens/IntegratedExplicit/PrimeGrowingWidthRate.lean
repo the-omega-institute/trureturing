@@ -520,8 +520,9 @@ private theorem correction_global_bound {β γ : ℝ} (hγ : 1 / 2 ≤ γ)
     exact (div_le_iff₀ (Real.exp_pos _)).1 h
 
 /-- The normalized phase approximation is uniform in the left endpoint.
-A strictly supercritical lower spectral ceiling gives a power error. At the
-critical ceiling, the integrated root-scale error is proportional to log width. -/
+A strictly supercritical lower spectral ceiling gives a difference of endpoint
+powers. At the critical ceiling, the integrated root-scale error is proportional
+to log width. -/
 theorem prime_tail_window_error_of_lower_spectral_bound (β γ : ℝ) :
     let realPart := Complex.re
     1 / 2 ≤ γ → γ < β →
@@ -529,10 +530,11 @@ theorem prime_tail_window_error_of_lower_spectral_bound (β γ : ℝ) :
     (∀ z : ℂ, IsNontrivialZero z → realPart z < β → realPart z ≤ γ) →
     ∃ K > (0 : ℝ), ∀ B : ℝ, ∀ a ∈ Icc 2 B,
       let p := β - 1 / 2
+      let r := γ - 1 / 2
       let error := (∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ p -
         phaseWindowInfinite realPart β (phaseOrbit (Real.log B))
       |error| ≤ K * ((a / B) ^ p +
-        if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else B ^ (γ - β)) := by
+        if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else (B ^ r - a ^ r) / B ^ p) := by
   dsimp only
   intro hγ hγβ hmax hbelow
   let p := β - 1 / 2
@@ -556,7 +558,7 @@ theorem prime_tail_window_error_of_lower_spectral_bound (β γ : ℝ) :
   let h := phaseOrbit t
   let N := ∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x
   let V := B ^ p * (phaseWindowInfinite Complex.re β h - phaseWindow Complex.re β (t - v) h)
-  let R := if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else B ^ (γ - β)
+  let R := if γ = 1 / 2 then B ^ (-p) * Real.log (B / a) else (B ^ r - a ^ r) / B ^ p
   have hBpow : 0 < B ^ p := Real.rpow_pos_of_pos hB₀ _
   have hV : 0 ≤ V ∧ V ≤ coeffMass / p * a ^ p := omitted_phase_mass_bound hβ ha₀ hB₀
   have hfund := prime_mass_sub_phase_window (β := β) ha.1 ha.2
@@ -588,25 +590,20 @@ theorem prime_tail_window_error_of_lower_spectral_bound (β γ : ℝ) :
       have heqint : r * (∫ u in v..t, Real.exp (r * u)) =
           Real.exp (r * t) - Real.exp (r * v) := by
         rw [intervalIntegral.mul_integral_comp_mul_left (f := Real.exp), integral_exp]
-      have hle : (∫ u in v..t, Real.exp (r * u)) ≤ Real.exp (r * t) / r := by
-        apply (le_div_iff₀ hr).2
-        rw [mul_comm, heqint]
-        exact sub_le_self _ (Real.exp_nonneg _)
-      have hpow : Real.exp (r * t) / B ^ p = B ^ (γ - β) := by
-        rw [show γ - β = r - p by dsimp [r, p]; ring, Real.rpow_sub hB₀ r p,
-          Real.rpow_def_of_pos hB₀ r]
-        dsimp only [t]
-        rw [mul_comm]
+      have hIntegral : (∫ u in v..t, Real.exp (r * u)) = (B ^ r - a ^ r) / r := by
+        apply (eq_div_iff hr.ne').2
+        rw [mul_comm, heqint, Real.rpow_def_of_pos hB₀, Real.rpow_def_of_pos ha₀,
+          mul_comm (Real.log B) r, mul_comm (Real.log a) r]
       dsimp only [k, R]
-      rw [ite_eq_right heq, ite_eq_right heq, ← hpow]
-      exact (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hle hK.le) hBpow.le).trans_eq
-        (by ring)
+      rw [ite_eq_right heq, ite_eq_right heq, hIntegral]
+      exact le_of_eq (by ring)
   have hR : 0 ≤ R := by
     dsimp only [R]
     split_ifs
     · exact mul_nonneg (Real.rpow_nonneg hB₀.le _)
         (Real.log_nonneg ((le_div_iff₀ ha₀).2 (by simpa using ha.2)))
-    · exact Real.rpow_nonneg hB₀.le _
+    · exact div_nonneg
+        (sub_nonneg.mpr (Real.rpow_le_rpow ha₀.le ha.2 (sub_nonneg.mpr hγ))) hBpow.le
   change |N / B ^ p - phaseWindowInfinite Complex.re β h| ≤
     max (coeffMass / p) k * ((a / B) ^ p + R)
   have hnormalize : N / B ^ p - phaseWindowInfinite Complex.re β h =

@@ -70,8 +70,10 @@ internal sealed class PrimeGrowingWidthRateDocument : IScribeDocumentDefinition
                         + "is 1-Lipschitz, so the majorant also bounds the absolute log density error.")),
                     Paragraph(Text(
                         "The fixed-window substitution integrates that bound from log a to log B. "
-                        + "When γ>1/2, this gives a constant times B^(γ−1/2), and dividing by B^p "
-                        + "gives B^(γ−β). At γ=1/2 the integrated majorant is proportional to log(B/a). "
+                        + "When γ>1/2, put r=γ−1/2. The exponential integrates to (B^r−a^r)/r, "
+                        + "so after division by B^p the bound has the term (B^r−a^r)/B^p "
+                        + "with 1/r absorbed into K. At γ=1/2 the normalized term is B^(−p)log(B/a). "
+                        + "Both spectral terms vanish at a=B. "
                         + "The omitted phase tail contributes the term (a/B)^p in both cases."))),
                 DescribeRole.Theorem))));
 
@@ -127,6 +129,7 @@ internal sealed class PrimeGrowingWidthRateDocument : IScribeDocumentDefinition
         var z = F.Id("z");
         var re = Call("Re", z);
         var p = Subtract(beta, Half);
+        var r = Subtract(gamma, Half);
         var max = All("z", Complex, Implies(Call("NontrivialZero", z), Le(re, beta)));
         var gap = All("z", Complex, Implies(Call("NontrivialZero", z), Implies(Lt(re, beta), Le(re, gamma))));
         var b = F.Id("B");
@@ -136,7 +139,8 @@ internal sealed class PrimeGrowingWidthRateDocument : IScribeDocumentDefinition
         var extent = new Formula.Power(new Formula.Fraction(a, b), p);
         var logRate = Multiply(new Formula.Power(b, new Formula.Negate(p)),
             Call("log", new Formula.Fraction(b, a)));
-        var powerRate = new Formula.Power(b, Subtract(gamma, beta));
+        var powerRate = new Formula.Fraction(
+            Subtract(new Formula.Power(b, r), new Formula.Power(a, r)), new Formula.Power(b, p));
         var critical = Implies(Equal(gamma, Half), Le(error, Multiply(k, Add(extent, logRate))));
         var above = Implies(Lt(Half, gamma), Le(error, Multiply(k, Add(extent, powerRate))));
         var uniform = All("B", Real, All("a", Real,
