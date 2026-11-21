@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.PureState;
 internal sealed class DistillationProfileDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/PureState/DistillationProfile.";
-    private static LibraryNoteRef Distillation => LibraryNoteRef.Create("D5/L/Quantum/regula2018oneshotcoherence");
+    private static LibraryNoteRef Distillation => LibraryNoteRef.Create("D5/L/Resource/regula2018oneshotcoherence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Clipping solves the scalar optimization for finite phase-memory profiles.",
