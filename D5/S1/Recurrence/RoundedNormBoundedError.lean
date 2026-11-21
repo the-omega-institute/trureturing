@@ -153,27 +153,16 @@ private theorem sqrt_le_of_le_pow {s A c : ℝ} (n : ℕ) (hA : 0 ≤ A) (hc : 0
     _ = Real.sqrt A * Real.sqrt c ^ n := by
         rw [← h2, Real.sqrt_sq (by positivity)]
 
-/-- The analytic core: a nonnegative sequence satisfying the recurrence of `P` with a forcing of
-size `√s + 1/4`, where `s n = ∑_{i<m} b (n + i) → ∞`, is `L R^n + O(R^(n/2))` with `L > 0`. -/
-private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 < R)
-    (hmult : P.rootMultiplicity R = 1)
-    (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < 1)
-    {K K' c c' : ℝ} (hK1 : 1 < K) (hK'0 : 0 ≤ K') (hK'1 : K' < 1) (hc1 : 1 < c)
-    (hcR : c < R ^ 2) (hcc' : c < c' ^ 2) (hc'0 : 0 < c')
-    (hcK : K * ∑ i ∈ Finset.range m, c ^ i ≤ c ^ m)
-    (hc'K' : c' ^ m ≤ K' * ∑ i ∈ Finset.range m, c' ^ i)
-    (b : ℕ → ℝ) (hb0 : ∀ n, 0 ≤ b n)
-    (hsum : ∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) =
-      b (j + m) - ∑ i ∈ Finset.range m, b (j + i))
+/-- Eventual comparisons from a rounding error of size `√s + 1/4` with `s → ∞`. -/
+private theorem comparisons {m : ℕ} {K K' : ℝ} (hK1 : 1 < K) (hK'1 : K' < 1) (b : ℕ → ℝ)
+    (hb0 : ∀ n, 0 ≤ b n)
     (herr : ∀ n, |b (n + m) - ∑ i ∈ Finset.range m, b (n + i)| ≤
       Real.sqrt (∑ i ∈ Finset.range m, b (n + i)) + 1 / 4)
-    (hinf : Tendsto (fun n => ∑ i ∈ Finset.range m, b (n + i)) atTop atTop)
-    (hpos : ∀ᶠ n in atTop, 0 < b n) :
-    ∃ L : ℝ, 0 < L ∧ (fun n => b n - L * R ^ n) =O[atTop] (fun n => Real.sqrt R ^ n) := by
+    (hinf : Tendsto (fun n => ∑ i ∈ Finset.range m, b (n + i)) atTop atTop) :
+    (∀ᶠ n in atTop, b (n + m) ≤ K * ∑ i ∈ Finset.range m, b (n + i)) ∧
+      (∀ᶠ n in atTop, K' * ∑ i ∈ Finset.range m, b (n + i) ≤ b (n + m)) := by
   set s : ℕ → ℝ := fun n => ∑ i ∈ Finset.range m, b (n + i) with hsdef
   have hs0 : ∀ n, 0 ≤ s n := fun n => Finset.sum_nonneg fun i _ => hb0 _
-  have hR0 : 0 < R := by linarith
-  -- eventually the rounding error is a small fraction of `s`
   set ε := min (K - 1) (1 - K') with hε
   have hε0 : 0 < ε := lt_min (by linarith) (by linarith)
   have hεK : ε ≤ K - 1 := min_le_left _ _
@@ -190,21 +179,43 @@ private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 <
       rw [div_le_iff₀ hε0] at hu2
       linarith
     nlinarith
-  have hup : ∀ n, N0 ≤ n → b (n + m) ≤ K * s n := by
-    intro n hn
-    have h1 := (abs_le.mp (herr n)).2
+  refine ⟨eventually_atTop.mpr ⟨N0, fun n hn => ?_⟩, eventually_atTop.mpr ⟨N0, fun n hn => ?_⟩⟩
+  · have h1 := (abs_le.mp (herr n)).2
     have h2 := hsmall n hn
     have h4 := hs0 n
     simp only [hsdef] at h2 h4 ⊢
     nlinarith
-  have hdown : ∀ n, N0 ≤ n → K' * s n ≤ b (n + m) := by
-    intro n hn
-    have h1 := (abs_le.mp (herr n)).1
+  · have h1 := (abs_le.mp (herr n)).1
     have h2 := hsmall n hn
     have h4 := hs0 n
     simp only [hsdef] at h2 h4 ⊢
     nlinarith
-  obtain ⟨M, hM⟩ := upper_compare (by linarith) (by linarith) hcK N0 hup
+
+/-- The analytic core. Let `b` satisfy the recurrence of `P` with forcing `e`, where `P` has
+the simple root `R > 1` and all other roots below `√c`. If eventually
+`b (n + m₁) ≤ K ∑_{i<m₁} b (n + i)` with `K ∑ c^i ≤ c^m₁`, eventually
+`K' ∑_{i<m₂} b (n + i) ≤ b (n + m₂)` with `c'^m₂ ≤ K' ∑ c'^i`, `1 < c < min (R^2) (c'^2)`, `b`
+is eventually positive, and eventually `|e n| ≤ √(∑_{i<w} b (n + i)) + 1/4`, then
+`b n = L R^n + O(R^(n/2))` with `L > 0`. -/
+theorem analytic (P : ℝ[X]) (R : ℝ) (hR : 1 < R) (hmult : P.rootMultiplicity R = 1)
+    {m₁ m₂ w : ℕ} (hm₂ : 0 < m₂) {K K' c c' : ℝ} (hK0 : 0 ≤ K) (hK'0 : 0 ≤ K')
+    (hc1 : 1 < c) (hcR : c < R ^ 2) (hcc' : c < c' ^ 2) (hc'0 : 0 < c')
+    (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) →
+      ‖z‖ < Real.sqrt c ∧ ‖z‖ < Real.sqrt R)
+    (hcK : K * ∑ i ∈ Finset.range m₁, c ^ i ≤ c ^ m₁)
+    (hc'K' : c' ^ m₂ ≤ K' * ∑ i ∈ Finset.range m₂, c' ^ i)
+    (b : ℕ → ℝ)
+    (hup : ∀ᶠ n in atTop, b (n + m₁) ≤ K * ∑ i ∈ Finset.range m₁, b (n + i))
+    (hdown : ∀ᶠ n in atTop, K' * ∑ i ∈ Finset.range m₂, b (n + i) ≤ b (n + m₂))
+    (hpos : ∀ᶠ n in atTop, 0 < b n) (e : ℕ → ℝ)
+    (hsum : ∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j)
+    (he : ∀ᶠ n in atTop, |e n| ≤ Real.sqrt (∑ i ∈ Finset.range w, b (n + i)) + 1 / 4) :
+    ∃ L : ℝ, 0 < L ∧ (fun n => b n - L * R ^ n) =O[atTop] (fun n => Real.sqrt R ^ n) := by
+  have hR0 : 0 < R := by linarith
+  obtain ⟨N0, hN0⟩ := eventually_atTop.mp hup
+  obtain ⟨Ne, hNe⟩ := eventually_atTop.mp he
+  obtain ⟨M, hM⟩ := upper_compare hK0 (by linarith) hcK N0 hN0
+  set T : ℕ → ℝ := fun n => ∑ i ∈ Finset.range w, b (n + i) with hTdef
   -- the forcing is `O((√c)^n)`
   set q := Real.sqrt c with hqdef
   have hq0 : 0 < q := Real.sqrt_pos.mpr (by linarith)
@@ -213,33 +224,27 @@ private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 <
     exact Real.sqrt_lt_sqrt zero_le_one hc1
   have hqR : q < R := (Real.sqrt_lt' hR0).mpr hcR
   have hqc' : q < c' := (Real.sqrt_lt' hc'0).mpr hcc'
-  set e : ℕ → ℝ := fun j => ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k)
-    with hedef
-  have he_le : ∀ n, |e n| ≤ Real.sqrt (s n) + 1 / 4 := fun n => by
-    simp only [hedef, hsum]
-    exact herr n
-  set A := |M| * ∑ i ∈ Finset.range m, c ^ i with hAdef
+  set A := |M| * ∑ i ∈ Finset.range w, c ^ i with hAdef
   have hA0 : 0 ≤ A := by positivity
-  have hsA : ∀ n, N0 ≤ n → s n ≤ A * c ^ n := by
+  have hTA : ∀ n, N0 ≤ n → T n ≤ A * c ^ n := by
     intro n hn
-    calc s n = ∑ i ∈ Finset.range m, b (n + i) := rfl
-      _ ≤ ∑ i ∈ Finset.range m, |M| * c ^ (n + i) := Finset.sum_le_sum fun i _ =>
+    calc T n = ∑ i ∈ Finset.range w, b (n + i) := rfl
+      _ ≤ ∑ i ∈ Finset.range w, |M| * c ^ (n + i) := Finset.sum_le_sum fun i _ =>
           (hM (n + i) (by omega)).trans (by gcongr; exact le_abs_self M)
       _ = A * c ^ n := by
           rw [hAdef, Finset.mul_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun i _ => ?_
           ring
-  have he : e =O[atTop] (fun j => q ^ j) := by
-    refine IsBigO.of_bound (Real.sqrt A + 1 / 4) (eventually_atTop.mpr ⟨N0, fun n hn => ?_⟩)
-    have h1 := sqrt_le_of_le_pow n hA0 (by linarith) (hsA n hn)
+  have he1 : e =O[atTop] (fun j => q ^ j) := by
+    refine IsBigO.of_bound (Real.sqrt A + 1 / 4)
+      (eventually_atTop.mpr ⟨max N0 Ne, fun n hn => ?_⟩)
+    have h1 := sqrt_le_of_le_pow n hA0 (by linarith) (hTA n (le_of_max_le_left hn))
     have hq1n : 1 ≤ q ^ n := one_le_pow₀ hq1.le
     rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (pow_pos hq0 n)]
-    have := he_le n
+    have := hNe n (le_of_max_le_right hn)
     nlinarith
-  have hother_q : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < q :=
-    fun z hz hne => (hother z hz hne).trans hq1
   obtain ⟨L, hL⟩ := (D5.S1.Recurrence.Asymptotic.DominantRootForcing.result).1 P R q hmult hq0
-    (by rwa [abs_of_pos hR0]) hother_q b e (fun j => rfl) he
+    (by rwa [abs_of_pos hR0]) (fun z hz hne => (hother z hz hne).1) b e hsum he1
   obtain ⟨C, hC⟩ := hL.bound
   obtain ⟨N1, hN1⟩ := eventually_atTop.mp hC
   have hbL : ∀ n, N1 ≤ n → |b n - L * R ^ n| ≤ |C| * q ^ n := by
@@ -258,7 +263,7 @@ private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 <
   have hpR : p < |R| := by
     rw [abs_of_pos hR0]
     exact (Real.sqrt_lt' hR0).mpr (by nlinarith)
-  set B := (|L| + |C|) * ∑ i ∈ Finset.range m, R ^ i with hBdef
+  set B := (|L| + |C|) * ∑ i ∈ Finset.range w, R ^ i with hBdef
   have hB0 : 0 ≤ B := by positivity
   have hbR : ∀ n, N1 ≤ n → b n ≤ (|L| + |C|) * R ^ n := by
     intro n hn
@@ -267,37 +272,39 @@ private theorem analytic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 <
     have hLn : L * R ^ n ≤ |L| * R ^ n := by gcongr; exact le_abs_self L
     nlinarith [abs_nonneg C, pow_pos hR0 n]
   have he2 : e =O[atTop] (fun j => p ^ j) := by
-    refine IsBigO.of_bound (Real.sqrt B + 1 / 4) (eventually_atTop.mpr ⟨N1, fun n hn => ?_⟩)
-    have hsB : s n ≤ B * R ^ n := by
-      calc s n = ∑ i ∈ Finset.range m, b (n + i) := rfl
-        _ ≤ ∑ i ∈ Finset.range m, (|L| + |C|) * R ^ (n + i) :=
+    refine IsBigO.of_bound (Real.sqrt B + 1 / 4)
+      (eventually_atTop.mpr ⟨max N1 Ne, fun n hn => ?_⟩)
+    have hTB : T n ≤ B * R ^ n := by
+      calc T n = ∑ i ∈ Finset.range w, b (n + i) := rfl
+        _ ≤ ∑ i ∈ Finset.range w, (|L| + |C|) * R ^ (n + i) :=
             Finset.sum_le_sum fun i _ => hbR (n + i) (by omega)
         _ = B * R ^ n := by
             rw [hBdef, Finset.mul_sum, Finset.sum_mul]
             refine Finset.sum_congr rfl fun i _ => ?_
             ring
-    have h1 := sqrt_le_of_le_pow n hB0 hR0.le hsB
+    have h1 := sqrt_le_of_le_pow n hB0 hR0.le hTB
     have hp1n : 1 ≤ p ^ n := one_le_pow₀ hp1.le
     rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (pow_pos hp0 n)]
-    have := he_le n
+    have := hNe n (le_of_max_le_right hn)
     nlinarith
   have hmain := (D5.S1.Recurrence.Asymptotic.DominantRootForcing.result).2 P R p hmult hp0 hpR
-    (fun z hz hne => (hother z hz hne).trans hp1) b e L (fun j => rfl) hlo he2
+    (fun z hz hne => (hother z hz hne).2) b e L hsum hlo he2
   -- positivity of `L`
   obtain ⟨N2, hN2⟩ := eventually_atTop.mp hpos
-  obtain ⟨M', hM'0, hM'⟩ := lower_compare hm hK'0 hc'0 hc'K' (max N0 N2)
-    (fun i _ => hN2 _ (by omega)) (fun n hn => hdown n (by omega))
+  obtain ⟨N3, hN3⟩ := eventually_atTop.mp hdown
+  obtain ⟨M', hM'0, hM'⟩ := lower_compare hm₂ hK'0 hc'0 hc'K' (max N2 N3)
+    (fun i _ => hN2 _ (by omega)) (fun n hn => hN3 n (by omega))
   refine ⟨L, ?_, hmain⟩
   by_contra hL0
   push Not at hL0
   have hρ : Tendsto (fun n : ℕ => (q / c') ^ n) atTop (nhds 0) :=
     tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) ((div_lt_one hc'0).mpr hqc')
-  obtain ⟨N3, hN3⟩ := eventually_atTop.mp
+  obtain ⟨N4, hN4⟩ := eventually_atTop.mp
     (hρ.eventually (gt_mem_nhds (show 0 < M' / (|C| + 1) by positivity)))
-  set n := max (max N1 N3) (max N0 N2) with hn
+  set n := max (max N1 N4) (max N2 N3) with hn
   have h1 := hM' n (by omega)
   have h2 := (abs_le.mp (hbL n (by omega))).2
-  have h3 := hN3 n (by omega)
+  have h3 := hN4 n (by omega)
   have hc'n : 0 < c' ^ n := pow_pos hc'0 n
   have h4 : L * R ^ n ≤ 0 := mul_nonpos_of_nonpos_of_nonneg hL0 (pow_nonneg hR0.le n)
   have h5 : (q / c') ^ n * c' ^ n = q ^ n := by rw [div_pow]; field_simp
@@ -402,7 +409,7 @@ private theorem tendsto_atTop (hm : 0 < m)
 end Sequence
 
 /-- Rationalizing: `x^2 = L R^n + O(R^(n/2))` gives `x = √L √R^n + O(1)` and the ratio rate. -/
-private theorem finish (x : ℕ → ℕ) (R : ℝ) (hR : 1 < R) (L : ℝ) (hL : 0 < L)
+theorem finish (x : ℕ → ℕ) (R : ℝ) (hR : 1 < R) (L : ℝ) (hL : 0 < L)
     (h : (fun n => (x n : ℝ) ^ 2 - L * R ^ n) =O[atTop] (fun n => Real.sqrt R ^ n)) :
     (fun n => (x n : ℝ) - Real.sqrt L * Real.sqrt R ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
       (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt R) =O[atTop]
@@ -514,9 +521,19 @@ private theorem generic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 < 
     simpa using this
   have hpos : ∀ᶠ n in atTop, 0 < b n :=
     (hb.eventually_gt_atTop 0)
-  obtain ⟨L, hL, hO⟩ := analytic hm P R hR hmult hother hK1 hK'0 hK'1 hc1 hcR hcc' hc'0 hcK
-    hc'K' b (fun n => sq_nonneg _) (hP b)
-    (fun n => by rw [← hrad]; exact sq_err hrec n) hinf hpos
+  have herr : ∀ n, |b (n + m) - ∑ i ∈ Finset.range m, b (n + i)| ≤
+      Real.sqrt (∑ i ∈ Finset.range m, b (n + i)) + 1 / 4 := fun n => by
+    rw [← hrad]; exact sq_err hrec n
+  obtain ⟨hup, hdown⟩ := comparisons hK1 hK'1 b (fun n => sq_nonneg _) herr hinf
+  have hsqc : 1 < Real.sqrt c := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt zero_le_one hc1
+  have hsqR : 1 < Real.sqrt R := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt zero_le_one hR
+  obtain ⟨L, hL, hO⟩ := analytic P R hR hmult hm (by linarith) hK'0 hc1 hcR hcc' hc'0
+    (fun z hz hne => ⟨(hother z hz hne).trans hsqc, (hother z hz hne).trans hsqR⟩) hcK hc'K' b hup hdown
+    hpos _ (fun j => (hP b j).trans rfl) (Eventually.of_forall herr)
   obtain ⟨h1, h2⟩ := finish x R hR L hL hO
   exact ⟨Real.sqrt L, Real.sqrt_pos.mpr hL, h1, h2⟩
 
