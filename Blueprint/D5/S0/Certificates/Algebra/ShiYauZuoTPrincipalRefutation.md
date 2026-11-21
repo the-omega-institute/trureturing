@@ -130,6 +130,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Algebra/ShiYauZuoTPrincipalRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shi-yau-zuo-t-principal-4-79` (refuted) by `D5/S0/Certificates/Algebra/ShiYauZuoTPrincipalRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shi-yau-zuo-t-principal-4-79","declaration_gid":"D5/S0/Certificates/Algebra/ShiYauZuoTPrincipalRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Quan Shi; Stephen S.-T. Yau; Huaiqing Zuo (2024). *On T-maps and ideals of antiderivatives of hypersurface singularities*. DOI: [10.4213/im9488e](https://doi.org/10.4213/im9488e). URL: <https://m.mathnet.ru/php/getFT.phtml?jrnid=im&paperid=9488&what=fullteng&option_lang=eng#page=33>.
