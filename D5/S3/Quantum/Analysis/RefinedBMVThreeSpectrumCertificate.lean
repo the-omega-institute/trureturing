@@ -6,11 +6,11 @@
    utility: none
    digest: The all-degree refined BMV lower bounds with at most three spectral values. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedBinding
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedRows0
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedRows1
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedRows2
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedRows3
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedBinding
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedRows0
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedRows1
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedRows2
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedRows3
 import D5.S3.Quantum.Analysis.RefinedBMVThreeSpectrumReduction
 
 /-! The refined BMV lower bounds in every positive degree with at most three

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVGroupedBinding
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/GroupedBinding
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,9 +6,9 @@
    utility: none
    digest: Exact verification of the coefficient table used by the refined BMV certificate. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedData
-import D5.S3.Quantum.Analysis.RefinedBMVQuarticPacking
-import D5.S3.Quantum.Analysis.RefinedBMVJetCertificate
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedData
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.QuarticPacking
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetCertificate
 
 /-! Exact arithmetic for the same sparse coefficients used by the sign check. -/
 

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVJetEvaluation
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/JetEvaluation
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,9 +6,9 @@
    utility: none
    digest: Affine exponential rates and their derivative values. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVExponentialChain
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.ExponentialChain
 import D5.S3.Quantum.Analysis.RefinedBMVUniformDiscriminant
-import D5.S3.Quantum.Analysis.RefinedBMVUniformExpansion
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.UniformExpansion
 import Mathlib.Algebra.Polynomial.Eval.Algebra
 
 /-! Affine exponential rates for the uniform refined BMV discriminant. -/

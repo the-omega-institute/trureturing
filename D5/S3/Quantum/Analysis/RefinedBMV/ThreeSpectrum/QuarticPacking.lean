@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVQuarticPacking
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/QuarticPacking
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact equality of the cleared discriminant and its sparse coefficient table. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVUniformExpansion
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.UniformExpansion
 import Mathlib.Data.Int.Bitwise
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.Algebra.Order.BigOperators.Group.Finset

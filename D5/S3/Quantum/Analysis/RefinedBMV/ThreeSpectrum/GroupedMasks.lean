@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVGroupedMasks
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/GroupedMasks
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: An integer recurrence for checking all mixed derivatives of the cleared discriminant. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVJetEvaluation
-import D5.S3.Quantum.Analysis.RefinedBMVJetMask
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetEvaluation
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetMask
 
 /-! The packed mask checker and its connection to the jet of the grouped sparse table. -/
 

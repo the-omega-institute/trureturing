@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVJetCertificate
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/JetCertificate
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,9 +6,9 @@
    utility: none
    digest: Scalar positivity from checked signs of the mixed derivatives. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVJetBounds
-import D5.S3.Quantum.Analysis.RefinedBMVJetEvaluation
-import D5.S3.Quantum.Analysis.RefinedBMVJetMask
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetBounds
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetEvaluation
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.JetMask
 
 /-! Integer bounds and mask interpretation for the uniform scalar certificate. -/
 

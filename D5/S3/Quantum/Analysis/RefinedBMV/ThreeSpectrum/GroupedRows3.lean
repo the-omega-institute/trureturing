@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVGroupedRows3
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/GroupedRows3
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: A block of kernel-checked signs for the refined BMV scalar certificate. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVGroupedData
+import D5.S3.Quantum.Analysis.RefinedBMV.ThreeSpectrum.GroupedData
 
 /-! Kernel-checked signs for a block of X-prefixes. -/
 

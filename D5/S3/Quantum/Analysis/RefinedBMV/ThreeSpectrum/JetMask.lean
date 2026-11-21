@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVJetMask
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/ThreeSpectrum/JetMask
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
