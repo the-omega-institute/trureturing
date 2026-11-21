@@ -539,7 +539,7 @@ private theorem generic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 < 
 
 /-- A positive multiple of an unbounded geometric sequence is not within `O(1)` of a bounded
 sequence. -/
-private theorem not_bounded_geom (x : ℕ → ℕ) (B₀ : ℕ) (hx : ∀ n, x n ≤ B₀) {C lam : ℝ}
+theorem not_bounded_geom (x : ℕ → ℕ) (B₀ : ℕ) (hx : ∀ n, x n ≤ B₀) {C lam : ℝ}
     (hC : 0 < C) (hlam : 1 < lam)
     (h : (fun n => (x n : ℝ) - C * lam ^ n) =O[atTop] (fun _ => (1 : ℝ))) : False := by
   obtain ⟨B, hB⟩ := h.bound
