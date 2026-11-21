@@ -18,7 +18,7 @@ Let E(m,a,B) be the signed residual. Start with the integral of the negative par
 
 The integrated arithmetic truncation contributes at most a constant times m at the target decay rate. The retained root spectra leave a centered trivial-zero error of size (1+log n) times x^(−1/2) per root. For an omitted degree n use both the actual-zero coefficient bound and the Schoenfeld bound integrated through the same centered tail. The latter uses the global Chebyshev bound on rooted arguments between one and the explicit threshold.
 
-Write u=log x, q=m+1, λ=u/q and L=1+log m. After taking out the target decay, the two bounds supply the minimum of (1+2λ)² and L² times exp(−u(1/q−1/(2n))). For n at or above the first omitted degree this weight is at most exp(−λ(n−ceil(q/2))/q). Its sum is at most m and at most 1+q/λ for λ>0. The product with the minimum is at most 24mL. This count includes an omitted degree with zero exponent slack.
+Write u=log x, q=m+1, λ=u/q and L=1+log m. After taking out the target decay, the two bounds supply the minimum of (1+2λ)² and L² times exp(−u(1/q−1/(2n))). For n at or above the first omitted degree this weight is at most exp(−λ(n−ceil(q/2))/q). Its sum is at most m and at most 1+q/λ for λ>0. The product with the minimum is at most 24mL. For odd m, the first omitted degree has zero exponent slack and contributes unit weight.
 
 The pointwise bound integrates over [log a, log B]. The rate s(m)=1/2−1/(m+1) is at least 1/6. The constant from integration is therefore uniform in m. Both sides vanish at B=a.
 

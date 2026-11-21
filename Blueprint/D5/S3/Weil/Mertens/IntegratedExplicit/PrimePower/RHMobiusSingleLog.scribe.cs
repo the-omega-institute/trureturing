@@ -34,7 +34,7 @@ internal sealed class RHMobiusSingleLogDocument : IScribeDocumentDefinition
                     + "times exp(−u(1/q−1/(2n))). For n at or above the first omitted degree "
                     + "this weight is at most exp(−λ(n−ceil(q/2))/q). Its sum is at most m and "
                     + "at most 1+q/λ for λ>0. The product with the minimum is at most 24mL. "
-                    + "This count includes an omitted degree with zero exponent slack.")),
+                    + "For odd m, the first omitted degree has zero exponent slack and contributes unit weight.")),
                 Paragraph(Text("The pointwise bound integrates over [log a, log B]. The rate "
                     + "s(m)=1/2−1/(m+1) is at least 1/6. The constant from integration is "
                     + "therefore uniform in m. Both sides vanish at B=a."))),
