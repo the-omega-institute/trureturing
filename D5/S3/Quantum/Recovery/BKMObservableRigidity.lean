@@ -13,6 +13,8 @@ import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
 import D5.S3.Weil.ZetaLinear.HermitianPosPart
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation
 
+/-! # Fixed-observable BKM rigidity for the actual partial trace -/
+
 noncomputable section
 
 open Matrix MeasureTheory Set
@@ -22,7 +24,8 @@ open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport
-  (partialTraceRight_posDef partialTraceRight_mul_embed partialTraceRight_embed_mul trace_embed_pair)
+  (partialTraceRight_posDef partialTraceRight_mul_embed partialTraceRight_embed_mul
+    trace_embed_pair)
 
 namespace D5.S3.Quantum.Recovery.BKMObservableRigidity
 
@@ -60,6 +63,7 @@ private def weightedEquiv (X : Matrix n n ℂ) (hX : X.PosDef) :
         rw [mpow_add hX, neg_add_cancel, mpow_zero hX]
       constructor
       · intro K L he
+        change vec (K * mpow X (1 / 2)) = vec (L * mpow X (1 / 2)) at he
         have hv := Matrix.vec_bijective.injective he
         simpa only [Matrix.mul_assoc, hright, Matrix.mul_one] using
           congrArg (fun M => M * mpow X (-(1 / 2))) hv
@@ -85,10 +89,14 @@ private theorem weightedLift_apply [Nonempty E] (A : Matrix (R × E) (R × E) �
     (hA : A.PosDef) (K : Matrix R R ℂ) :
     weightedLift A hA *ᵥ weightedVec (partialTraceRight A) K = weightedVec A (lift K) := by
   rw [weightedLift, LinearMap.toMatrix'_mulVec, LinearMap.comp_apply, LinearMap.comp_apply]
-  change weightedVec A (lift ((weightedEquiv (partialTraceRight A)
-    (partialTraceRight_posDef A hA)).symm
-      (weightedEquiv (partialTraceRight A) (partialTraceRight_posDef A hA) K))) = _
-  rw [LinearEquiv.symm_apply_apply]
+  have hK : weightedVec (partialTraceRight A) K =
+      weightedEquiv (partialTraceRight A) (partialTraceRight_posDef A hA) K := by
+    unfold weightedEquiv
+    rfl
+  rw [hK, LinearEquiv.coe_toLinearMap, LinearEquiv.coe_toLinearMap,
+    LinearEquiv.symm_apply_apply]
+  unfold weightedEquiv liftLinear
+  rfl
 
 private theorem half_hermitian {X : Matrix n n ℂ} (hX : X.PosDef) :
     (mpow X (1 / 2)).IsHermitian := by
@@ -121,7 +129,8 @@ private theorem modular_pair {X : Matrix n n ℂ} (hX : X.PosDef) (K L : Matrix 
       show (1 / 2 : ℝ) + (-1) + 1 / 2 = 0 by norm_num, mpow_zero hX]
   change star (vec (K * H)) ⬝ᵥ (((X⁻¹)ᵀ ⊗ₖ X) *ᵥ vec (L * H)) = _
   rw [Matrix.kronecker_mulVec_vec, Matrix.transpose_transpose, Matrix.star_vec_dotProduct_vec,
-    Matrix.conjTranspose_mul, show Hᴴ = H from (half_hermitian hX).eq, Matrix.mul_assoc H, Matrix.trace_mul_comm H]
+    Matrix.conjTranspose_mul, show Hᴴ = H from (half_hermitian hX).eq,
+    Matrix.mul_assoc H, Matrix.trace_mul_comm H]
   calc
     _ = (Kᴴ * X * L * ((H * X⁻¹) * H)).trace := by simp only [Matrix.mul_assoc]
     _ = _ := by rw [hHH, Matrix.mul_one]
@@ -131,8 +140,10 @@ private theorem star_pair_mul {i j : Type*} [Fintype i] [Fintype j]
     star (V *ᵥ x) ⬝ᵥ y = star x ⬝ᵥ (Vᴴ *ᵥ y) := by
   rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec]
 
+omit [DecidableEq n] in
 private theorem matrix_eq_of_pair (M N : Matrix n n ℂ)
     (h : ∀ x y, star x ⬝ᵥ (M *ᵥ y) = star x ⬝ᵥ (N *ᵥ y)) : M = N := by
+  classical
   ext i j
   simpa [Matrix.mulVec_single_one, Pi.star_def, Pi.single_apply, dotProduct] using
     h (Pi.single i 1) (Pi.single j 1)
@@ -151,7 +162,7 @@ theorem weightedLift_compression [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     obtain ⟨L, rfl⟩ := (weightedEquiv (partialTraceRight A)
       (partialTraceRight_posDef A hA)).surjective y
     change star (weightedVec (partialTraceRight A) K) ⬝ᵥ
-      ((weightedLift A hA)ᴴ * weightedLift A hA *ᵥ weightedVec (partialTraceRight A) L) =
+      (((weightedLift A hA)ᴴ * weightedLift A hA) *ᵥ weightedVec (partialTraceRight A) L) =
         star (weightedVec (partialTraceRight A) K) ⬝ᵥ (1 *ᵥ weightedVec (partialTraceRight A) L)
     rw [← Matrix.mulVec_mulVec, ← star_pair_mul, Matrix.one_mulVec,
       weightedLift_apply, weightedLift_apply, weighted_pair hA,
@@ -164,7 +175,7 @@ theorem weightedLift_compression [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     obtain ⟨L, rfl⟩ := (weightedEquiv (partialTraceRight A)
       (partialTraceRight_posDef A hA)).surjective y
     change star (weightedVec (partialTraceRight A) K) ⬝ᵥ
-      ((weightedLift A hA)ᴴ * modular A * weightedLift A hA *ᵥ
+      (((weightedLift A hA)ᴴ * modular A * weightedLift A hA) *ᵥ
         weightedVec (partialTraceRight A) L) = star (weightedVec (partialTraceRight A) K) ⬝ᵥ
           (modular (partialTraceRight A) *ᵥ weightedVec (partialTraceRight A) L)
     rw [Matrix.mul_assoc, ← Matrix.mulVec_mulVec, ← star_pair_mul, ← Matrix.mulVec_mulVec,
@@ -175,32 +186,40 @@ theorem weightedLift_compression [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
 private theorem modular_posDef {X : Matrix n n ℂ} (hX : X.PosDef) : (modular X).PosDef :=
   hX.inv.transpose.kronecker hX
 
+set_option maxHeartbeats 800000 in
 private theorem modular_power {X : Matrix n n ℂ} (hX : X.PosDef) (p : ℝ) :
     mpow (modular X) p = (mpow X (-p))ᵀ ⊗ₖ mpow X p := by
   let U := hX.isHermitian.eigenvectorUnitary
+  let Ubar := Matrix.UnitaryGroup.map_star U
   let W : Matrix.unitaryGroup (n × n) ℂ :=
-    ⟨(↑U.map_star : Matrix n n ℂ) ⊗ₖ (↑U : Matrix n n ℂ),
-      Matrix.kronecker_mem_unitary U.map_star.2 U.2⟩
+    ⟨(↑Ubar : Matrix n n ℂ) ⊗ₖ (↑U : Matrix n n ℂ),
+      Matrix.kronecker_mem_unitary Ubar.2 U.2⟩
   let d := hX.isHermitian.eigenvalues
+  have hUbar : (Ubar : Matrix n n ℂ) = (U : Matrix n n ℂ)ᴴᵀ := rfl
   have tensor (a b : ℝ → ℝ) :
       (cfc a X)ᵀ ⊗ₖ cfc b X =
         (↑W : Matrix (n × n) (n × n) ℂ) *
-          diagonal (fun i : n × n => ((a (d i.1) * b (d i.2) : ℝ) : ℂ)) * star ↑W := by
+          diagonal (fun i : n × n => ((a (d i.1) * b (d i.2) : ℝ) : ℂ)) * star (↑W : Matrix (n × n) (n × n) ℂ) := by
     rw [hX.isHermitian.cfc_eq, hX.isHermitian.cfc_eq]
     simp only [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply,
-      Matrix.star_eq_conjTranspose, Function.comp_apply, RCLike.ofReal_eq_complex_ofReal,
+      Matrix.star_eq_conjTranspose, RCLike.ofReal_eq_complex_ofReal,
       Matrix.transpose_mul, Matrix.diagonal_transpose, W, Matrix.conjTranspose_kronecker,
-      Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal, Complex.ofReal_mul, U, d]
-    rfl
+      ← Matrix.mul_assoc,
+      Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal, Complex.ofReal_mul,
+      hUbar, Matrix.conjTranspose_transpose_eq_transpose_conjTranspose,
+      Matrix.conjTranspose_conjTranspose, U, d, Function.comp_def]
   have hd : modular X = (↑W : Matrix (n × n) (n × n) ℂ) *
-      diagonal (fun i : n × n => (((d i.1) ^ (-1 : ℝ) * d i.2 : ℝ) : ℂ)) * star ↑W := by
-    simpa only [modular, ← mpow_neg_one hX, mpow, cfc_id' ℝ X hX.isHermitian.isSelfAdjoint]
-      using tensor (fun x => x ^ (-1 : ℝ)) id
+      diagonal (fun i : n × n => (((d i.1) ^ (-1 : ℝ) * d i.2 : ℝ) : ℂ)) * star (↑W : Matrix (n × n) (n × n) ℂ) := by
+    have ht := tensor (fun x => x ^ (-1 : ℝ)) (fun x => x)
+    rw [cfc_id' ℝ X hX.isHermitian.isSelfAdjoint] at ht
+    simpa only [modular, ← mpow_neg_one hX, mpow] using ht
   rw [mpow, hd, D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.cfc_unitary_diagonal]
   rw [show mpow X (-p) = cfc (fun x : ℝ => x ^ (-p)) X from rfl,
     show mpow X p = cfc (fun x : ℝ => x ^ p) X from rfl, tensor]
-  congr 2
+  apply congrArg (fun D : n × n → ℂ =>
+    (W : Matrix (n × n) (n × n) ℂ) * diagonal D * star (W : Matrix (n × n) (n × n) ℂ))
   funext i
+  dsimp only [d]
   rw [Real.mul_rpow (Real.rpow_nonneg (hX.eigenvalues_pos i.1).le _) (hX.eigenvalues_pos i.2).le,
     ← Real.rpow_mul (hX.eigenvalues_pos i.1).le, neg_one_mul]
 
@@ -250,41 +269,48 @@ private def tracePair (K : Matrix n n ℂ) : Matrix n n ℂ →L[ℝ] ℝ :=
     ((Matrix.traceLinearMap n ℝ ℂ).toContinuousLinearMap.comp
       (LinearMap.mulLeft ℝ Kᴴ).toContinuousLinearMap)
 
+private theorem continuous_tracePair_power {X : Matrix n n ℂ} (hX : X.PosDef)
+    (L : Matrix n n ℂ) :
+    Continuous (fun p : ℝ => tracePair L (mpow X p * L * mpow X (1 - p))) :=
+  (tracePair L).continuous.comp
+    (((continuous_mpow X hX).mul continuous_const).mul
+      ((continuous_mpow X hX).comp (continuous_const.sub continuous_id)))
+
 private theorem continuous_powerDefect [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     (hA : A.PosDef) (K : Matrix R R ℂ) : Continuous (powerDefect A hA K) := by
-  have hForm {X : Matrix n n ℂ} (hX : X.PosDef) (L : Matrix n n ℂ) :
-      Continuous (fun p : ℝ => tracePair L (mpow X p * L * mpow X (1 - p))) :=
-    (tracePair L).continuous.comp
-      (((continuous_mpow X hX).mul continuous_const).mul
-        ((continuous_mpow X hX).comp (continuous_const.sub continuous_id)))
-  simp_rw [powerDefect_trace]
-  exact (hForm (partialTraceRight_posDef A hA) K).sub (hForm hA (lift K))
+  have he : powerDefect A hA K = fun p : ℝ =>
+      tracePair K (mpow (partialTraceRight A) p * K * mpow (partialTraceRight A) (1 - p)) -
+        tracePair (lift K) (mpow A p * lift K * mpow A (1 - p)) :=
+    funext (powerDefect_trace A hA K)
+  rw [he]
+  exact (continuous_tracePair_power (partialTraceRight_posDef A hA) K).sub
+    (continuous_tracePair_power hA (lift K))
+
+private theorem tracePair_omega {X : Matrix n n ℂ} (hX : X.PosDef) (L : Matrix n n ℂ) :
+    tracePair L (omega X L) =
+      ∫ p in (0 : ℝ)..1, tracePair L (mpow X p * L * mpow X (1 - p)) := by
+  have hc : Continuous (fun p : ℝ => mpow X p * L * mpow X (1 - p)) :=
+    ((continuous_mpow X hX).mul (continuous_const (y := L))).mul
+      ((continuous_mpow X hX).comp ((continuous_const (y := (1 : ℝ))).sub continuous_id))
+  exact ((tracePair L).intervalIntegral_comp_comm (hc.intervalIntegrable 0 1)).symm
 
 private theorem bkmGap_integral [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     (hA : A.PosDef) (K : Matrix R R ℂ) (hK : K.IsHermitian) :
     bkmGap A K = ∫ p in (0 : ℝ)..1, powerDefect A hA K p := by
   have hLift : (lift (ι := E) K).IsHermitian := by
     rw [Matrix.IsHermitian, lift, Matrix.conjTranspose_kronecker, hK.eq, Matrix.conjTranspose_one]
-  have pair_integral {X : Matrix n n ℂ} (hX : X.PosDef) (L : Matrix n n ℂ) :
-      (tracePair L) (omega X L) =
-        ∫ p in (0 : ℝ)..1, tracePair L (mpow X p * L * mpow X (1 - p)) := by
-    have hc := ((continuous_mpow X hX).mul (continuous_const (y := L))).mul
-      ((continuous_mpow X hX).comp (continuous_const.sub continuous_id))
-    exact ((tracePair L).intervalIntegral_comp_comm (hc.intervalIntegrable 0 1)).symm
-  have hIntegrable {X : Matrix n n ℂ} (hX : X.PosDef) (L : Matrix n n ℂ) :
-      IntervalIntegrable (fun p : ℝ => tracePair L (mpow X p * L * mpow X (1 - p))) volume 0 1 :=
-    ((tracePair L).continuous.comp
-      (((continuous_mpow X hX).mul continuous_const).mul
-        ((continuous_mpow X hX).comp (continuous_const.sub continuous_id)))).intervalIntegrable 0 1
   let S := partialTraceRight A
   have hS := partialTraceRight_posDef A hA
   calc
     bkmGap A K = tracePair K (omega S K) - tracePair (lift K) (omega A (lift K)) := by
-      simp only [bkmGap, tracePair, ContinuousLinearMap.comp_apply, LinearMap.coe_toContinuousLinearMap,
-        Complex.reCLM_apply, Matrix.traceLinearMap_apply, LinearMap.mulLeft_apply, hK.eq, hLift.eq, S]
+      change _ = (Kᴴ * omega S K).trace.re - ((lift K)ᴴ * omega A (lift K)).trace.re
+      rw [hK.eq, hLift.eq]
+      rfl
     _ = _ := by
-      rw [pair_integral hS, pair_integral hA,
-        ← intervalIntegral.integral_sub (hIntegrable hS K) (hIntegrable hA (lift K))]
+      rw [tracePair_omega hS, tracePair_omega hA,
+        ← intervalIntegral.integral_sub
+          ((continuous_tracePair_power hS K).intervalIntegrable 0 1)
+          ((continuous_tracePair_power hA (lift K)).intervalIntegrable 0 1)]
       congr 1
       funext p
       exact (powerDefect_trace A hA K p).symm
@@ -319,16 +345,19 @@ private theorem compensated_integral {M : Matrix n n ℂ} (hM : M.PosDef)
       (fun t : ℝ => Real.rpowIntegrand₀₁ p t (d i) * w i) (Ioi 0) :=
     (Real.integrableOn_rpowIntegrand₀₁_Ioi hp (hM.eigenvalues_pos i).le).mul_const _
   have hw : quadratic 1 x = ∑ i, w i := by
-    simpa only [cfc_const_one, one_mul] using quadratic_cfc hM.isHermitian x (fun _ => 1)
+    simpa only [cfc_const_one ℝ M, one_mul] using quadratic_cfc hM.isHermitian x (fun _ => 1)
   have hpt : EqOn J (fun t : ℝ => t ^ p * (t⁻¹ * quadratic 1 x - shiftedForm M x t)) (Ioi 0) := by
     intro t ht
+    change J t = t ^ p * (t⁻¹ * quadratic 1 x - shiftedForm M x t)
     rw [show shiftedForm M x t = quadratic (cfc (fun z : ℝ => (z + t)⁻¹) M) x by
       rw [shiftedForm, cfc_shift_inverse M hM.posSemidef t ht]]
     rw [quadratic_cfc hM.isHermitian, hw]
     simp only [J, Real.rpowIntegrand₀₁, add_comm t,
-      mul_assoc, mul_sub, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum]
+      mul_assoc, mul_sub, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum, d, w]
+  have hJ : IntegrableOn J (Ioi (0 : ℝ)) :=
+    integrable_finsetSum Finset.univ (fun i _ => hi i)
   dsimp only
-  refine ⟨(integrable_finsetSum Finset.univ (fun i _ => hi i)).congr_fun hpt measurableSet_Ioi, ?_⟩
+  refine ⟨hJ.congr_fun hpt measurableSet_Ioi, ?_⟩
   rw [← setIntegral_congr_fun measurableSet_Ioi hpt]
   change (∫ t in Ioi (0 : ℝ), ∑ i, Real.rpowIntegrand₀₁ p t (d i) * w i) = _
   rw [integral_finsetSum Finset.univ (fun i _ => hi i), mpow, quadratic_cfc hM.isHermitian,
@@ -364,15 +393,14 @@ private theorem shiftedForm_continuousOn {M : Matrix n n ℂ} (hM : M.PosDef) (x
     ContinuousOn (shiftedForm M x) (Ioi (0 : ℝ)) := by
   let F : ℝ → ℝ := fun t => ∑ i, (hM.isHermitian.eigenvalues i + t)⁻¹ *
     ‖(hM.isHermitian.eigenvectorUnitaryᴴ *ᵥ x) i‖ ^ 2
-  refine ContinuousOn.congr ?_ (fun t ht => ?_)
+  refine ContinuousOn.congr (f := F) ?_ (fun t ht => ?_)
   · apply continuousOn_finsetSum
     intro i _
     apply ContinuousOn.mul _ continuousOn_const
     apply ContinuousOn.inv₀ (continuous_const.add continuous_id).continuousOn
     intro t ht
     exact (add_pos (hM.eigenvalues_pos i) ht).ne'
-  · change shiftedForm M x t = F t
-    rw [shiftedForm, ← cfc_shift_inverse M hM.posSemidef t ht, quadratic_cfc hM.isHermitian]
+  · rw [shiftedForm, ← cfc_shift_inverse M hM.posSemidef t ht, quadratic_cfc hM.isHermitian]
 
 /-- The actual BKM gap is the integral of the power defects. It is nonnegative,
 and it vanishes exactly when the entire real spectral calculus intertwines on the
@@ -397,6 +425,8 @@ theorem bkmGap_rigidity [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
   have hM : M.PosDef := modular_posDef hA
   have hN : N.PosDef := modular_posDef (partialTraceRight_posDef A hA)
   obtain ⟨_, hV, hVN⟩ := weightedLift_compression A hA
+  change Vᴴ * V = 1 at hV
+  change Vᴴ * M * V = N at hVN
   have hV' : Vᴴ * V ≤ 1 := hV.le
   have hVN' : Vᴴ * M * V ≤ N := hVN.le
   have hadj (z : R × R → ℂ) : star a ⬝ᵥ (V *ᵥ z) = star b ⬝ᵥ z := by
@@ -420,15 +450,17 @@ theorem bkmGap_rigidity [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     obtain hp0 | hp0 := hp.1.lt_or_eq
     · obtain hp1 | rfl := hp.2.lt_or_eq
       · have hpi : p ∈ Ioo (0 : ℝ) 1 := ⟨hp0, hp1⟩
-        have h := setIntegral_nonneg measurableSet_Ioi
-          (fun t ht => mul_nonneg (Real.rpow_nonneg ht.le _) (hg t ht))
+        have h : 0 ≤ ∫ t in Ioi (0 : ℝ), t ^ p * g t :=
+          setIntegral_nonneg measurableSet_Ioi
+            (fun t ht => mul_nonneg (Real.rpow_nonneg ht.le p) (hg t ht))
         rw [(hi hpi).2] at h
         exact nonneg_of_mul_nonneg_right h (Real.integral_rpowIntegrand₀₁_one_pos hpi)
       · have hmoment : star a ⬝ᵥ (M *ᵥ a) = star b ⬝ᵥ (N *ᵥ b) := by
           change star (V *ᵥ b) ⬝ᵥ (M *ᵥ (V *ᵥ b)) = _
-          rw [star_pair_mul, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.mul_assoc, hVN]
+          rw [star_pair_mul, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hVN]
         change 0 ≤ quadratic (mpow N 1) b - quadratic (mpow M 1) a
-        rw [mpow_one hN.isHermitian, mpow_one hM.isHermitian, quadratic, quadratic, hmoment, sub_self]
+        rw [mpow_one hN.isHermitian, mpow_one hM.isHermitian, quadratic, quadratic,
+          hmoment, sub_self]
     · subst p
       change 0 ≤ quadratic (mpow N 0) b - quadratic (mpow M 0) a
       rw [mpow_zero hN, mpow_zero hM, hmass, sub_self]
@@ -461,15 +493,18 @@ theorem bkmGap_rigidity [Nonempty E] (A : Matrix (R × E) (R × E) ℂ)
     have hpoint := MeasureTheory.Measure.eqOn_open_of_ae_eq hFae isOpen_Ioi hFcont continuousOn_const
     have hgzero (t : ℝ) (ht : 0 < t) : g t = 0 :=
       (mul_eq_zero.mp (hpoint ht)).resolve_left (Real.rpow_pos_of_pos ht _).ne'
-    exact zero_resolvent_defects_force_functional_intertwining M N hM.posSemidef hN.posSemidef
-      V hV' hVN' b hsaturation hgzero
+    exact zero_resolvent_defects_force_functional_intertwining M N hM.posSemidef
+      hN.posSemidef V hV' hVN' b hsaturation hgzero
   · intro h
     have hzero (p : ℝ) : d p = 0 := by
       have hp := h (fun z : ℝ => z ^ p)
       change mpow M p *ᵥ a = V *ᵥ (mpow N p *ᵥ b) at hp
-      change (star b ⬝ᵥ (mpow N p *ᵥ b)).re - (star a ⬝ᵥ (mpow M p *ᵥ a)).re = 0
+      change (star b ⬝ᵥ (mpow N p *ᵥ b)).re -
+        (star a ⬝ᵥ (mpow M p *ᵥ a)).re = 0
       rw [hp, hadj, sub_self]
-    rw [hgap, show d = 0 from funext hzero, intervalIntegral.integral_zero]
+    rw [hgap]
+    change (∫ p in (0 : ℝ)..1, d p) = 0
+    simp_rw [hzero, intervalIntegral.integral_zero]
 
 #print axioms weightedLift_compression
 #print axioms bkmGap_rigidity
