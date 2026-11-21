@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
   - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
+  - D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -108,3 +109,18 @@ equals q exactly on the blocks [5k_q,5k_(q+1)-1], the first starting at 1,
 with k_q=floor((5q-1)phi)+3q for q>=1; these blocks partition the positive
 integers. Possible answers posted on MathDB were not inspected, so no priority
 is claimed.
+
+## Orders with three maximum-degree vertices
+
+Corollary 6 of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24369124, restates
+Conjecture 2.16.1 of J. Kok, Linear Jaco Graphs: A Critical Review, Journal of
+Informatics and Mathematical Sciences 8(2) (2016) 67-103, DOI
+10.26713/jims.v8i2.402, page 73, as a recurrence: with p_0=1 and
+p_(j+1)=p_j+3+2(floor((j+2)/phi)-floor((j+1)/phi)), the orders whose maximum
+set has three vertices are p_1,p_2,...=6,9,14,19,22,.... The corollary credits
+the underlying classification to Patel's solution of MathDB problem 369424.
+The repository proves p_j=3j+1+2b_j, the criterion that J_n has three vertices
+exactly when b_(n+3)=b_(n+1)+2 for n at least two, the exact enumeration by
+p_j with j at least one, and the gap patterns: gaps 3 or 5, no two consecutive
+gaps 3 and no three consecutive gaps 5. The 2016 journal text and the MathDB
+answer were not inspected, so no priority is claimed.
