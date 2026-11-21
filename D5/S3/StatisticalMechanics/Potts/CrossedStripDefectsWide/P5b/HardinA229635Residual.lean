@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
    digest: Characteristic-polynomial closure of the signed scalar strip residual. -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -74,7 +74,5 @@ theorem residual_zero (M : Matrix (Fin D) (Fin D) ℤ) (v e : Fin D → ℤ)
     ∀ t, residual M v e t = 0 := by
   simp_rw [residual_as_power] at hprefix ⊢
   exact scalar_powers_zero M _ e hprefix
-
-#print axioms residual_zero
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Residual
