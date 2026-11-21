@@ -107,16 +107,16 @@ theorem normal_closure_loss_gap_and_eq (H : Subgroup G) (a : S → ℝ)
     let count (s : S) := Nat.card {B : events // s ∈ B.val}
     let lhs := (d : ℝ) * (total - seedFixedMass (G := N) a)
     let rhs := (Nat.card ↥events : ℝ) * (total - seedFixedMass (G := H) a)
-    (rhs - lhs = ∑ s, if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)) ∧
-    ((∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → d ≤ count s) →
+    (∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → d ≤ count s) →
+      (rhs - lhs = ∑ s, if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)) ∧
       lhs ≤ rhs ∧ ((lhs = rhs) ↔
-        ∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → count s = d)) := by
+        ∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → count s = d) := by
   classical
-  intro E N total count lhs rhs
+  intro E N total count lhs rhs lower
   let summand (s : S) :=
     if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)
   have gap : rhs - lhs = ∑ s, summand s := loss_gap_identity H a invariant d
-  refine ⟨gap, fun lower => ?_⟩
+  refine ⟨gap, ?_⟩
   have each_nonneg (s : S) : 0 ≤ summand s := by
     unfold summand
     split

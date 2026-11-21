@@ -44,10 +44,10 @@ abbrev arena : Arena where
       let count (s : S) := Nat.card {B : events // s ∈ B.val}
       let lhs := (d : ℝ) * (total - seedFixedMass (G := N) a)
       let rhs := (Nat.card ↥events : ℝ) * (total - seedFixedMass (G := H) (R.readout () S a))
-      (rhs - lhs = ∑ s, if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)) ∧
-      ((∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → d ≤ count s) →
+      (∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → d ≤ count s) →
+        (rhs - lhs = ∑ s, if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)) ∧
         lhs ≤ rhs ∧ ((lhs = rhs) ↔
-          ∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → count s = d))
+          ∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → count s = d)
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   classical
@@ -63,7 +63,8 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     rintro ⟨_, ⟨g, rfl⟩⟩
     cases g
     rfl
-  have bad := (altered (G := G) H a (fun _ => le_rfl) (fun _ _ => rfl) 0).1
+  have bad := (altered (G := G) H a (fun _ => le_rfl) (fun _ _ => rfl) 0
+    (fun _ _ _ => Nat.zero_le _)).1
   let N := Subgroup.normalClosure (H : Set G)
   have hf (s : S) (h : H) : h • s = s := Subsingleton.elim _ _
   have nf (s : S) (n : N) : n • s = s := Subsingleton.elim _ _

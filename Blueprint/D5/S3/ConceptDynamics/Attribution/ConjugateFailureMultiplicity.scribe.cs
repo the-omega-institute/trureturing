@@ -26,10 +26,10 @@ internal sealed class ConjugateFailureMultiplicityDocument : IScribeDocumentDefi
                     + "by an element of the conjugate of H by g. Count each different event once "
                     + "and write r for their number. For a seed s write C(s) for the number of "
                     + "events containing it. Write L(K) for T minus M(K).")),
-                Paragraph(Text("For any natural number d, the expression on the left is the "
-                    + "sum on the right, with SumMoved ranging over seeds moved by N. If d is a lower bound on "
-                    + "C(s) for all positive-weight seeds moved by N, that expression is "
-                    + "nonnegative. It equals zero exactly when every such seed has C(s) equal to d.")),
+                Paragraph(Text("Let d be a natural number that bounds C(s) from below for every "
+                    + "positive-weight seed moved by N. The gap equals the sum on the right, "
+                    + "with SumMoved ranging over seeds moved by N. The gap is nonnegative and "
+                    + "equals zero exactly when every such seed has C(s) equal to d.")),
                 Paragraph(Text("Weight invariance gives the same loss for every conjugate "
                     + "event. Counting by seed gives the weighted multiplicity, which is zero "
                     + "on a seed fixed by N. Subtracting d times the loss for N gives the "
