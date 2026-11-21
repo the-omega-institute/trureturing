@@ -55,7 +55,9 @@ private theorem iteratedDeriv_slice {E : Type*} [NormedAddCommGroup E] [NormedSp
     rw [he.iteratedDeriv_eq n]
     exact ih (analytic_directional hf _)
 
-private theorem analytic_coefficient_slice {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+/-- Fixed Taylor coefficients in the first variable of a joint analytic germ are analytic
+in the remaining variable. -/
+theorem analytic_coefficient_slice {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     {f : ℂ × E → ℂ} {y : E} (hf : AnalyticAt ℂ f (0, y)) (n : ℕ) :
     AnalyticAt ℂ (fun t => coefficient n (fun u => f (u, t))) y := by
   have hit (k : ℕ) : AnalyticAt ℂ (((directional (E := ℂ × E) (1, 0))^[k]) f) (0, y) := by

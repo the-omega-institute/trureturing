@@ -11,6 +11,14 @@ internal sealed class OriginalFourMSlitTaylorDocument : IScribeDocumentDefinitio
         "Exact Taylor entries of the native signed Gaussian on the Euler slit",
         H("Signed mean and covariance coefficients"),
         Blocks(
+            D("analytic-coefficient-slice", "analytic_coefficient_slice",
+                "Analytic dependence of a Taylor coefficient", DescribeRole.Theorem,
+                Text("Let f be complex analytic at (0,y) on the product of ℂ and a complex normed "
+                    + "space. For every n, the ordinary order-n coefficient at zero of the first "
+                    + "variable is analytic in the remaining variable at y."), Text(" Iterate the "
+                    + "directional Fréchet derivative in the first coordinate, restrict to the slice "
+                    + "at zero and divide by n factorial. Near y those directional derivatives "
+                    + "agree with the iterated one-variable derivatives.")),
             D("slit-mean-entry", "slitMeanEntry", "Slit mean entry", DescribeRole.Definition,
                 Text("At a fixed leg and sign, take the ordinary coefficient of order p at the external "
                     + "origin of the slit mean multiplied by minus the leg sign and divided by the Euler period. "
