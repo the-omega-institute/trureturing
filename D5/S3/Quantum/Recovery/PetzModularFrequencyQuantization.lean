@@ -122,7 +122,7 @@ private theorem retainedFactor_exact (t : ℝ) :
   have hs := boundary_scalar (inv_pos.mpr hr) t
   rw [Real.log_inv, inv_div] at hs
   calc
-    _ = Complex.exp ((-Real.log (outputRatio D k) : ℂ) * upper t) := by
+    _ = Complex.exp (((-Real.log (outputRatio D k) : ℝ) : ℂ) * upper t) := by
       rw [hs]
       congr 1
       unfold scalarPhase PetzLogisticEvaluation.mode retainedLogFrequency
@@ -250,8 +250,7 @@ private theorem completion_pair (M : SupportedRelativeModularModel Φ ρ σ)
   rw [← Matrix.mul_assoc (lift (e := e) (X * Yᴴ)) W Fᴴ,
     ← Matrix.mul_assoc Wᴴ _ Fᴴ, hcompress,
     ← Matrix.mul_assoc F _ Fᴴ, Matrix.trace_mul_comm (F * M.data.Ψ (X * Yᴴ)) Fᴴ,
-    ← Matrix.mul_assoc, rowFactor_gram, M.tracePair]
-  rfl
+    ← Matrix.mul_assoc, rowFactor_gram, M.tracePair] <;> rfl
 
 private theorem completedWithCoefficients_pair (M : SupportedRelativeModularModel Φ ρ σ)
     (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
@@ -363,6 +362,29 @@ private theorem integral_phase_cost (x : ℝ) :
   rw [integral_const_mul, integral_sub integrable_petzWeight (integrable_petzWeight_mul_cos x),
     integral_petzWeight, integral_petzWeight_mul_cos, logisticCorrelation]
 
+private def phaseDensity (assign : ℝ → ℝ) (k : D.L × D.K) (t : ℝ) : ℝ :=
+  spectralMass D k * (petzWeight t * (2 * (1 -
+    Real.cos ((retainedLogFrequency D k - assign (retainedLogFrequency D k)) * t))))
+
+private theorem phaseDensity_integral (assign : ℝ → ℝ) (k : D.L × D.K) :
+    Integrable (phaseDensity D assign k) ∧
+    (∫ t, phaseDensity D assign k t) = spectralMass D k *
+      (2 * (1 - logisticCorrelation (retainedLogFrequency D k - assign (retainedLogFrequency D k)))) := by
+  obtain ⟨hi, he⟩ := integral_phase_cost (retainedLogFrequency D k - assign (retainedLogFrequency D k))
+  refine ⟨hi.const_mul _, ?_⟩
+  simp only [phaseDensity, integral_const_mul, he]
+
+private theorem weighted_discrepancy (M : SupportedRelativeModularModel Φ ρ σ)
+    (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
+    (assign : ℝ → ℝ) (t : ℝ) :
+    petzWeight t * ‖completed M.data W t - quantizedCompleted M.data W assign t‖ ^ 2 =
+      ∑ k, phaseDensity M.data assign k t := by
+  rw [phase_discrepancy M W hW hAction assign, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  exact mul_left_comm _ _ _
+
 /-- The completed physical Stinespring discrepancy has exactly the logistic
 cost under the retained spectral law. -/
 theorem exact_phase_discrepancy (M : SupportedRelativeModularModel Φ ρ σ)
@@ -371,22 +393,9 @@ theorem exact_phase_discrepancy (M : SupportedRelativeModularModel Φ ρ σ)
     (assign : ℝ → ℝ) :
     (∫ t : ℝ, petzWeight t * ‖completed M.data W t - quantizedCompleted M.data W assign t‖ ^ 2) =
       phaseCost M.data assign := by
-  simp_rw [phase_discrepancy M W hW hAction assign, Finset.mul_sum]
-  rw [integral_finsetSum]
-  · unfold phaseCost
-    apply Finset.sum_congr rfl
-    intro k _
-    rw [show (fun t : ℝ => petzWeight t * (spectralMass M.data k *
-        (2 * (1 - Real.cos ((retainedLogFrequency M.data k -
-          assign (retainedLogFrequency M.data k)) * t))))) =
-        (fun t : ℝ => spectralMass M.data k * (petzWeight t *
-          (2 * (1 - Real.cos ((retainedLogFrequency M.data k -
-            assign (retainedLogFrequency M.data k)) * t))))) from
-        funext (fun _ => mul_left_comm _ _ _), integral_const_mul, (integral_phase_cost _).2]
-  · intro k _
-    simpa only [mul_left_comm (petzWeight _) (spectralMass M.data k)] using
-      (integral_phase_cost (retainedLogFrequency M.data k -
-        assign (retainedLogFrequency M.data k))).1.const_mul (spectralMass M.data k)
+  simp_rw [weighted_discrepancy M W hW hAction assign]
+  rw [integral_finsetSum _ (fun k _ => (phaseDensity_integral M.data assign k).1)]
+  simp only [(phaseDensity_integral M.data assign _).2, phaseCost]
 
 private def columnShift : D.I ⊕ (b × e) → ℝ
   | .inl i => -Real.log (D.ri i)
@@ -418,8 +427,7 @@ private theorem rowFactor_phase (t : ℝ) :
     simp only [modularPower, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_mul,
       mul_assoc]
   rw [rowFactor, show upper t = phase t + ½ by exact add_comm _ _,
-    modularPower_add, hdiag, Matrix.mul_assoc]
-  rfl
+    modularPower_add, hdiag, Matrix.mul_assoc] <;> rfl
 
 private def endpointCoefficient (W : Matrix (b × e) a ℂ) (k : D.L × D.K) :
     Matrix D.J (D.I ⊕ (b × e)) ℂ :=
@@ -466,8 +474,7 @@ private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → �
         rw [hLift, rowFactor_phase, completionColumns_phase]
         simp only [H, L, C, R, Matrix.mul_assoc]
       _ = _ := by
-        simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul]
-        rfl
+        simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul] <;> rfl
   rw [hExpanded]
   change ((diagonal _ * (∑ k, f k • endpointCoefficient D W k)) * diagonal _) j c = _
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply,
@@ -586,8 +593,7 @@ private theorem weighted_sq_triangle {H : Type*} [SeminormedAddCommGroup H]
       exact mul_le_mul_of_nonneg_left
         (pow_le_pow_left₀ (norm_nonneg _) (norm_add_le (F t) (G t)) 2) (petzWeight_pos t).le
     _ = ‖hf.toLp f + hg.toLp g‖ ^ 2 := by
-      rw [← hf.toLp_add hg, hnorm (hf.add hg)]
-      rfl
+      rw [← hf.toLp_add hg, hnorm (hf.add hg)] <;> rfl
     _ ≤ _ := by
       rw [← hnormF, ← hnormG]
       exact pow_le_pow_left₀ (norm_nonneg _) (norm_add_le _ _) 2
@@ -633,26 +639,22 @@ private theorem trace_bound (M : SupportedRelativeModularModel Φ ρ σ)
     simpa only [hpoint] using (integral_supported_channel_strip M).2.1
   have hiG : Integrable (fun t => petzWeight t * ‖G t‖ ^ 2) := by
     change Integrable (fun t => petzWeight t * ‖completed D W t - quantizedCompleted D W assign t‖ ^ 2)
-    simp_rw [phase_discrepancy M W hW hAction assign, Finset.mul_sum]
-    exact integrable_finsetSum _ (fun k _ => by
-      simpa only [mul_left_comm (petzWeight _) (spectralMass D k)] using
-        (integral_phase_cost (retainedLogFrequency D k -
-          assign (retainedLogFrequency D k))).1.const_mul (spectralMass D k))
-  have hsum : (fun t => F t + G t) = fun t => A - C t := by
-    funext t
+    simp_rw [weighted_discrepancy M W hW hAction assign]
+    exact integrable_finsetSum _ (fun k _ => (phaseDensity_integral D assign k).1)
+  have hsum (t : ℝ) : F t + G t = A - C t := by
     dsimp only [F, G]
     abel
   obtain ⟨hiSum, hEval⟩ := quantized_evaluation D W assign centres hc
   have hC0 : C 0 = B 0 := common_endpoint D W assign
   have htri := weighted_sq_triangle F G (continuous_const.sub (completed_continuous D W))
     ((completed_continuous D W).sub (quantized_continuous D W assign)) hiF hiG
-    (by rw [hsum]; exact hiSum)
+    (by simpa only [hsum] using hiSum)
   have hLoss : (∫ t, petzWeight t * ‖F t‖ ^ 2) ≤ Δ := by
     simp only [hpoint]
     exact upperIntegral_le_loss M
   have hJ : (∫ t, petzWeight t * ‖G t‖ ^ 2) = phaseCost D assign :=
     exact_phase_discrepancy M W hW hAction assign
-  rw [hsum, hJ] at htri
+  simp only [hsum, hJ] at htri
   have hEnergy : (∫ t, petzWeight t * ‖A - C t‖ ^ 2) ≤
       (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2 :=
     htri.trans (pow_le_pow_left₀ (add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
