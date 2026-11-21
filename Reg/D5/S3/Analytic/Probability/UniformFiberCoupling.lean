@@ -16,32 +16,41 @@ universe u v
 
 noncomputable section
 
+abbrev Params :=
+  Σ G : Type u, Σ H : Type v, Σ g : Group G, Σ h : Group H,
+    Σ _ : (letI := g; letI := h; G →* H), H
+
+abbrev observedFiber (p : Params.{u, v}) : Type u :=
+  letI := p.2.2.1
+  letI := p.2.2.2.1
+  Fiber p.2.2.2.2.1 p.2.2.2.2.2
+
 abbrev signature : Signature where
-  Params := Type u
-  State T := T → ℝ
+  Params := Params.{u, v}
+  State p := observedFiber p → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ T := T → ℝ
+  Output _ p := observedFiber p → ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u, v} :=
   realize signature (fun _ _ law => law) (fun e => nomatch e)
 
-def negative : Realization signature.{u} :=
+def negative : Realization signature.{u, v} :=
   realize signature (fun _ _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {G : Type u} {H : Type v} [Group G] [Group H] [Fintype G]
+  signature := signature.{u, v}
+  Law R := ∀ {G : Type u} {H : Type v} [g : Group G] [h : Group H] [Fintype G]
     (φ : G →* H) (t : H) (ρ : Fiber φ t → ℝ),
     ((∀ d, 0 ≤ ρ d) ∧ ∑ d, ρ d = 1) ↔
       ∃ w : Fiber φ 1 → Fiber φ t → ℝ,
         (∀ x y, 0 ≤ w x y) ∧
         (∀ x, ∑ y, w x y = 1 / (Fintype.card (Fiber φ 1) : ℝ)) ∧
         (∀ y, ∑ x, w x y = 1 / (Fintype.card (Fiber φ t) : ℝ)) ∧
-        displacement φ t w = R.readout () (Fiber φ t) ρ
+        displacement φ t w = R.readout () ⟨G, H, g, h, φ, t⟩ ρ
 
 private theorem negative_fails : ¬ arena.{u, v}.Law negative := by
   intro law
@@ -74,14 +83,17 @@ def family : Registration arena.{u, v} (type_of% (@displacement_iff)) where
       exact nomatch anchor
   dependence := by
     intro _
-    refine ⟨PUnit.{u+1}, (fun _ => 0), (fun _ => 1), ?_⟩
+    let φ : PUnit.{u+1} →* PUnit.{v+1} := 1
+    let p : Params.{u, v} := ⟨PUnit.{u+1}, PUnit.{v+1}, inferInstance, inferInstance, φ, 1⟩
+    let idPoint : observedFiber p := ⟨1, φ.map_one⟩
+    refine ⟨p, (fun _ => 0), (fun _ => 1), ?_⟩
     intro eq
-    have point := congrFun eq PUnit.unit
+    have point := congrFun eq idPoint
     change (0 : ℝ) = 1 at point
     norm_num at point
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@displacement_iff.{u, v}) (Realization signature.{u}) Unit Unit where
+    (@displacement_iff.{u, v}) (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.Probability.UniformFiberCoupling.displacementLaw
   realizationName := `Reg.D5.S3.Analytic.Probability.UniformFiberCoupling.family
   realizationSource := none
