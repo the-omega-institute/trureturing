@@ -9,6 +9,7 @@ claim: "The symmetric Werner–Holevo channel has minimal mixed-unitary rank exa
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/WernerHolevo/AffineNineRank
   - D5/S3/Quantum/QuantumChannels/WernerHolevo/AffineNineWernerHolevo
+  - D5/S3/Quantum/QuantumChannels/WernerHolevo/TransversalNineGluing
 license: citation-only
 triage: anchor
 ---
@@ -57,3 +58,25 @@ modulo eight. Ma gives rigorous interval certificates for odd
 dimensions through 67.
 [Levick–Rahaman, Corollary 3.12](https://arxiv.org/abs/2105.00975)
 [Ma, Theorem 10](https://doi.org/10.5281/zenodo.24246318)
+
+## The order-27 seed for transversal gluing
+
+Qiyuan Ma's Hexagon preprint 2611.00505v1, §4, Theorem 10 (p. 5)
+and Table 1 (p. 6, row $n=27$), gives a full Hilbert–Schmidt
+orthogonal basis of 378 symmetric unitary matrices in order 27.
+The version 1.1 Zenodo supplement includes the archive `code.zip`.
+From its `sym-unitary-code` directory, run `certify.py` with the
+arguments `27 --from-center` to read `centers/cert_sol_n27.npy`.
+This reproduces the Krawczyk inclusion in 128-bit Arb ball
+arithmetic on the archived box of radius $10^{-9}$.
+[Ma, §4, Theorem 10 and Table 1](https://hexagonmath.org/pdf/2611.00505v1#page=5)
+[Zenodo supplement, version 1.1](https://doi.org/10.5281/zenodo.24246318)
+
+The Lean gluing extends a full order-$m$ basis to order $9m$ given
+a resolvable transversal design $\mathrm{TD}(9,m)$ and $3\mid m$.
+Finite fields supply the design for $m=3^r$ when $r\ge2$.
+The power-of-three rank theorem takes the full order-27 basis as an
+explicit hypothesis. It uses induction for odd exponents and the
+affine power-of-nine result for even exponents. The Lean kernel
+checks this implication. Ma's order-27 seed has the separate
+interval verification described above.
