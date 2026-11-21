@@ -14,6 +14,8 @@
 
 在仓库根目录运行；`<…>` 换成实际值。完整参数以 `make help`、`make -C tools help` 和脚本用法为准；有 make 目标就用目标（第 8.1 条），长任务用宿主后台作业（第 8.6 条）。
 
+**工具依赖**：主仓在 `Meta/tools-release.json` 钉住工具 release 及 SHA-256。根 Makefile 自动安装。直接运行 `tools/` 中的命令或进入 `Reg/` 调用 Lake 前先运行 `make install-tools`。工具与测试源码在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 维护。
+
 **Python 版本**：仓库脚本及构建、测试、gate 使用 **Python 3.12 或更新版本**。执行前用 `python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version; import tomllib; print(sys.executable, sys.version)'` 核对实际解释器。版本不符时，先选择已安装的合规 Python，将其 `python3` 所在目录放在本次命令的 `PATH` 最前，并让 Make、Shell、Lean 子进程继承该环境；macOS 可使用 Homebrew 安装或升级的 Python。本条为 agent 执行约定，自动版本检查以现役脚本为准。
 
 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条）。常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
@@ -55,7 +57,7 @@ Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。并行合并带回的正文与消化账本副本可暂留主仓，后续按批次归并。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
+- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
 
 ### 1.3 真值图、冻结与两个偏序
 

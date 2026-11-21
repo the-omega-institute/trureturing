@@ -508,7 +508,7 @@ private theorem opposite_phase (D : LatticeData) (a : Charge D)
     LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_square, ha]
   norm_num [paritySign]
 
-private theorem ground_square (D : LatticeData) (hu : IsUnit D.G.det)
+theorem ground_square (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) :
     groundAction D hu a * groundAction D hu a = 1 := by
   have h := ground_action_product D hu a (-a)
