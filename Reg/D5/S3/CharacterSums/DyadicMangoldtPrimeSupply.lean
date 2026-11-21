@@ -87,4 +87,86 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+namespace RealScale
+
+open Real _root_.D5.S3.CharacterSums.PrimeProgressionWindowMass
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℝ, ℝ) (fun _ => Finset ℕ) (fun _ => ℝ)
+
+def observed : Realization signature :=
+  realize signature (fun _ p E => survivingMass p.1 p.2 E) (fun e => nomatch e)
+
+def zeroMass : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop, ∀ E : Finset ℕ,
+    (E.card:ℝ) ≤ exp (x^(ε/5)/3) → x^(ε/5)/173065984000 ≤ V.readout () ⟨ε,x⟩ E
+
+private theorem positive_somewhere (V : Realization signature) (h : arena.Law V) :
+    ∃ x : ℝ, 0 < V.readout () ⟨1,x⟩ ∅ := by
+  obtain ⟨x,hx,hl⟩ := ((eventually_gt_atTop (0:ℝ)).and (h 1 one_pos)).exists
+  refine ⟨x,lt_of_lt_of_le (by positivity) (hl ∅ (by simpa only [Finset.card_empty,Nat.cast_zero] using (exp_pos _).le))⟩
+
+private theorem zero_fails : ¬ arena.Law zeroMass := by
+  intro h
+  obtain ⟨x,hx⟩ := positive_somewhere _ h
+  exact lt_irrefl _ hx
+
+private theorem dependence : ObservationalDependence signature observed := by
+  intro _
+  obtain ⟨x,hx⟩ := positive_somewhere observed real_scale_quadratic_mangoldt_supply
+  let allPrimes := primeBand (3:ZMod 8) (x^((1:ℝ)/5))
+  refine ⟨⟨1,x⟩,∅,allPrimes,?_⟩
+  have he : survivingMass 1 x allPrimes = 0 := by
+    simp +contextual [survivingMass,allPrimes]
+  change survivingMass 1 x ∅ ≠ survivingMass 1 x allPrimes
+  rw [he]; exact ne_of_gt hx
+
+def family : Registration arena (type_of% @real_scale_quadratic_mangoldt_supply) where
+  actual := observed
+  bridge := Iff.rfl
+  variation := ⟨real_scale_quadratic_mangoldt_supply,zeroMass,zero_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law observed zeroMass zero_fails
+  dependence := dependence
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@real_scale_quadratic_mangoldt_supply) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.CharacterSums.DyadicMangoldtPrimeSupply.real_scale_quadratic_mangoldt_supply
+    "__information_unit"
+  realizationName := `Reg.D5.S3.CharacterSums.DyadicMangoldtPrimeSupply.RealScale.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p E => survivingMass p.1 p.2 E) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.CharacterSums.DyadicMangoldtPrimeSupply
+    definition := none
+    coordinates := #[0,2]
+    readouts := #[{
+      path := #["body","body","fn","arg","body","body","body","arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RealScale
+
 end Reg.D5.S3.CharacterSums.DyadicMangoldtPrimeSupply

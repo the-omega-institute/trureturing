@@ -4,11 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: At the prescribed dyadic size the square-root bound for the actual truncated quadratic Mangoldt sum holds on a divergent logarithmic mass of auxiliary primes, and the exceptional mass is finite. -/
+   digest: The quadratic Mangoldt test has summable exceptional dyadic mass and a positive logarithmic mass of acceptable primes at every sufficiently large real scale, even after sparse exclusions. -/
 
 import Mathlib.NumberTheory.LSeries.PrimesInAP
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import D5.S3.CharacterSums.PrimeProgressionWindowMass
 import D5.S3.CharacterSums.QuadraticPrimeCrossPeriod
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.NumberTheory.Harmonic.Bounds
@@ -40,7 +41,7 @@ private lemma clipped_weight {x : ℝ} {n : ℕ} (hx : 0 < x) (hn : 0 < n) :
     field_simp
 
 /-- Non-prime powers in the damped Mangoldt sum cost O(sqrt x), uniformly in the truncation. -/
-private theorem clipped_prime_powers :
+theorem clipped_prime_powers :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ x : ℝ, 0 < x → ∀ N : ℕ,
     ∑ n ∈ (Ioc 0 N).filter (fun n => ¬n.Prime), vonMangoldt n * min 1 (x/n) ≤ K * sqrt x := by
   obtain ⟨C,hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
@@ -142,7 +143,7 @@ private theorem prime_second_moment (P : Finset ℕ) (a : ℕ → ℝ) (A L : �
   · simp_rw [← mul_sum]
     rw [← sum_mul, ← mul_sum, sq, mul_assoc]
 
-private theorem coefficient_bounds (x : ℝ) (hx : 0 ≤ x) (N : ℕ) (hN : 1 ≤ N) (P : Finset ℕ)
+theorem coefficient_bounds (x : ℝ) (hx : 0 ≤ x) (N : ℕ) (hN : 1 ≤ N) (P : Finset ℕ)
     (hP : P ⊆ Icc 1 N) :
     let a := fun p : ℕ => log p * min 1 (x/p)
     (∑ p ∈ P, (a p)^2) ≤ (log N)^2*x*(1+log N) ∧
@@ -518,5 +519,256 @@ theorem dyadic_quadratic_mangoldt_supply (ε : ℝ) (hε : 0 < ε) :
     Summable (badMass ε) ∧
     Tendsto (fun K : ℕ => ∑ k ∈ Finset.range K, goodMass ε (k+1)) atTop atTop :=
   ⟨summable_bad_prime_blocks ε hε, divergent_good_prime_blocks ε hε⟩
+
+
+open D5.S3.CharacterSums.PrimeProgressionWindowMass
+
+theorem window_moment_scale {ε : ℝ} (hε : 0 < ε) (H : ℝ) :
+    ∀ᶠ x : ℝ in atTop, 1 ≤ x ∧ 1 ≤ cutoff x ∧ ∀ A : ℕ,
+      Real.exp (x^(ε/5)/2) ≤ 2*(A:ℝ) →
+      2*((A:ℝ)*((Real.log (cutoff x))^2*x*(1+Real.log (cutoff x))) +
+        8*((cutoff x:ℝ)^2*Real.log (cutoff x))^2) + H*(A:ℝ)*x ≤ A*x*x^ε := by
+  have hT := tendsto_rpow_atTop (show 0 < ε/5 by linarith)
+  have hc := (isLittleO_log_rpow_rpow_atTop 3 hε).bound
+    (show (0:ℝ) < 1/1000000000 by norm_num)
+  have hb := (isLittleO_rpow_exp_pos_mul_atTop (2400*(5/ε)) (show (0:ℝ) < 1/2 by norm_num)).bound
+    (show (0:ℝ) < 1/32 by norm_num)
+  filter_upwards [eventually_ge_atTop (1:ℝ),Real.tendsto_log_atTop.eventually_ge_atTop 1,hc,
+    hT.eventually hb,(tendsto_rpow_atTop hε).eventually_ge_atTop (3*H+3)] with x hx hlog h3 hfast hh
+  let N := cutoff x
+  have hx0 : 0 < x := by linarith
+  have hN : 1 ≤ N := Nat.floor_pos.2 (one_le_pow₀ hx)
+  refine ⟨hx,hN,?_⟩
+  intro A hA
+  have hNl : 0 ≤ Real.log (N:ℝ) := Real.log_nonneg (by exact_mod_cast hN)
+  have hNu : (N:ℝ) ≤ x^(400:ℕ) := Nat.floor_le (by positivity)
+  have hlogN := Real.log_le_log (show 0 < (N:ℝ) by exact_mod_cast hN) hNu
+  rw [Real.log_pow] at hlogN
+  norm_num at hlogN
+  change ‖(Real.log x)^(3:ℝ)‖ ≤ _*‖x^ε‖ at h3
+  have hc3 : (Real.log x)^3 ≤ (1/1000000000)*x^ε := by
+    simpa only [Real.norm_eq_abs,Real.rpow_ofNat,abs_of_nonneg (pow_nonneg (by linarith : 0 ≤ Real.log x) 3),
+      abs_of_nonneg (Real.rpow_nonneg hx0.le ε)] using h3
+  have hbig : (Real.log N)^2*(1+Real.log N) ≤ x^ε/6 := by
+    have h1 : 1+Real.log N ≤ 401*Real.log x := by linarith
+    have h2 := (sq_le_sq₀ hNl (by positivity)).2 hlogN
+    calc
+      _ ≤ (400*Real.log x)^2*(401*Real.log x) := mul_le_mul h2 h1 (by linarith) (sq_nonneg _)
+      _ = 64160000*(Real.log x)^3 := by ring
+      _ ≤ _ := by linarith only [hc3,Real.rpow_nonneg hx0.le ε]
+  have hpow : (x^(ε/5))^(2400*(5/ε)) = x^(2400:ℕ) := by
+    rw [← Real.rpow_mul hx0.le,show ε/5*(2400*(5/ε))=2400 by field_simp]
+    norm_num
+  change ‖(x^(ε/5))^(2400*(5/ε))‖ ≤ _*‖Real.exp (1/2*x^(ε/5))‖ at hfast
+  rw [hpow,Real.norm_eq_abs,abs_of_nonneg (by positivity),Real.norm_eq_abs,abs_of_pos (Real.exp_pos _)] at hfast
+  have hbdy : ((N:ℝ)^2*Real.log N)^2 ≤ x^(2400:ℕ) := by
+    have hl : Real.log N ≤ x^(400:ℕ) := (Real.log_le_self (Nat.cast_nonneg _)).trans hNu
+    calc
+      _ ≤ ((x^(400:ℕ))^2*x^(400:ℕ))^2 := by gcongr
+      _ = _ := by ring
+  change 3*H+3 ≤ x^ε at hh
+  have hD := mul_le_mul_of_nonneg_left hbig (mul_nonneg (Nat.cast_nonneg A) hx0.le)
+  have hE := mul_le_mul_of_nonneg_left hh (mul_nonneg (Nat.cast_nonneg A) hx0.le)
+  have hAx := mul_nonneg (Nat.cast_nonneg (α:=ℝ) A) (sub_nonneg.mpr hx)
+  rw [show (1:ℝ)/2*x^(ε/5)=x^(ε/5)/2 by ring] at hfast
+  change 2*((A:ℝ)*((Real.log N)^2*x*(1+Real.log N))+8*((N:ℝ)^2*Real.log N)^2)+H*(A:ℝ)*x ≤ _
+  nlinarith only [hD,hE,hbdy,hfast,hA,hAx,mul_nonneg (mul_nonneg (Nat.cast_nonneg (α:=ℝ) A) hx0.le) (Real.rpow_nonneg hx0.le ε)]
+
+private lemma dyadic_prefix (w : ℕ → ℝ) (K : ℕ) :
+    ∑ n ∈ range (2^K), w n =
+      w 0 + ∑ j ∈ range K, ∑ i ∈ range (2^j), w (2^j+i) := by
+  induction K with
+  | zero => simp
+  | succ k ih =>
+    rw [show 2^(k+1) = 2^k+2^k by rw [pow_succ]; omega, sum_range_add, ih, sum_range_succ]
+    ring
+
+/-- Exceptional logarithmic prime weight in the actual selector's window at the same real x. -/
+private def selectorBadMass (ε x : ℝ) : ℝ :=
+  let T := x^(ε/5)
+  let band := primeBand (3 : ZMod 8) T
+  ∑ q ∈ band.filter (fun q => x^(1/2+ε)/2 < |twist x (cutoff x) q|), Real.log q/q
+
+private theorem window_bad_estimate (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ x : ℝ in atTop, selectorBadMass ε x ≤ 36*(x^(ε/5))^2/x^ε := by
+  classical
+  obtain ⟨H,_,hm⟩ := actual_second_moment
+  have htlim := tendsto_rpow_atTop (show 0 < ε/5 by linarith)
+  filter_upwards [window_moment_scale hε H, htlim.eventually_ge_atTop 2] with x hx ht
+  obtain ⟨hx,hN,hscale⟩ := hx
+  let T := x^(ε/5)
+  let K := ⌈T/Real.log 2⌉₊+1
+  let M := ⌊Real.exp T⌋₊+1
+  let w := fun q : ℕ => if Real.exp (T/2) < (q:ℝ) ∧ q%8=3 ∧ q.Prime ∧
+    x^(1/2+ε)/2 < |twist x (cutoff x) q| then Real.log q/q else 0
+  have hx0 : 0 < x := by linarith
+  have hT : 2 ≤ T := ht
+  have hpT : 0 < T := by linarith
+  have h2 : (1:ℝ)/2 < Real.log 2 := by linarith [Real.log_two_gt_d9]
+  have hl2 : Real.log 2 < 1 := by linarith [Real.log_two_lt_d9]
+  have hK0 := Nat.le_ceil (T/Real.log 2)
+  have hK1 := Nat.ceil_lt_add_one (a:=T/Real.log 2) (by positivity)
+  have hKK : (K:ℝ) ≤ 3*T := by
+    dsimp [K]; push_cast
+    have hq : T/Real.log 2 ≤ 2*T := (div_le_iff₀ (by linarith)).2 (by nlinarith [mul_nonneg hpT.le (sub_nonneg.mpr h2.le)])
+    linarith
+  have hbound : T < (K:ℝ)*Real.log 2 := by
+    have hh := (div_le_iff₀ (by linarith : 0 < Real.log 2)).1 hK0
+    dsimp [K]; push_cast; nlinarith
+  have hM : M ≤ 2^K := by
+    have he := Real.exp_lt_exp.mpr hbound
+    rw [Real.exp_nat_mul,Real.exp_log (by norm_num)] at he
+    dsimp [M]; apply Nat.succ_le_of_lt
+    apply (Nat.floor_lt (Real.exp_pos _).le).2
+    exact_mod_cast he
+  have hnon (q : ℕ) : 0 ≤ w q := by
+    dsimp [w]; split
+    · rename_i h; exact div_nonneg (Real.log_nonneg (by exact_mod_cast h.2.2.1.one_le)) (Nat.cast_nonneg _)
+    · rfl
+  have hrepresent : selectorBadMass ε x = ∑ q ∈ range M, w q := by
+    have hclass (q : ℕ) : (q : ZMod 8) = 3 ↔ q%8=3 := by
+      simpa using ZMod.natCast_eq_natCast_iff' q 3 8
+    unfold selectorBadMass; simp only [primeBand,hclass]
+    rw [Finset.sum_filter,Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro q _; dsimp only [w,T]; split_ifs <;> grind
+  have hw0 : w 0=0 := by simp [w]
+  have hblock (j : ℕ) (hj : j ∈ range K) :
+      ∑ i ∈ range (2^j), w (2^j+i) ≤ 12*T/x^ε := by
+    let A : ℕ := 2^j
+    have ha : 0 < A := by dsimp [A]; positivity
+    have haR : (0:ℝ) < A := by exact_mod_cast ha
+    have ht2 : (x^(1/2+ε)/2)^2 = x*(x^ε)^2/4 := by
+      rw [div_pow, ← Real.rpow_mul_natCast hx0.le,show (1/2+ε)*(2:ℕ) = 1+ε*2 by push_cast; ring,
+        Real.rpow_add hx0,Real.rpow_one,Real.rpow_mul hx0.le]; norm_num
+    by_cases hA : Real.exp (T/2) ≤ 2*(A:ℝ)
+    · have moment := (hm x hx (cutoff x) A A hN).trans (hscale A hA)
+      have bound := bad_weight_bound ha ha (twist x (cutoff x))
+        (show 0 < x^(1/2+ε)/2 by positivity) moment
+      have logA : Real.log ((A+A:ℕ):ℝ) ≤ 3*T := by
+        have hz : A+A=2^(j+1) := by dsimp [A]; rw [pow_succ]; omega
+        rw [hz]; push_cast; rw [Real.log_pow]
+        have hj' : j+1 ≤ K := by simpa using Finset.mem_range.1 hj
+        have hjR : (j:ℝ)+1 ≤ K := by exact_mod_cast hj'
+        push_cast
+        nlinarith [mul_nonneg (show 0 ≤ (j:ℝ)+1 by positivity) (sub_nonneg.mpr hl2.le)]
+      have sub : (∑ i ∈ range A, w (A+i)) ≤
+          ∑ i ∈ (range A).filter (fun i => (A+i)%8=3 ∧ (A+i).Prime ∧
+            x^(1/2+ε)/2 < |twist x (cutoff x) (A+i)|), Real.log (A+i:ℕ)/(A+i:ℕ) := by
+        rw [Finset.sum_filter]
+        apply Finset.sum_le_sum
+        intro i hi; dsimp [w]; split_ifs <;> first | rfl | (exfalso; tauto) | positivity
+      apply sub.trans (bound.trans ?_)
+      rw [ht2]
+      have he : 0 < x^ε := Real.rpow_pos_of_pos hx0 _
+      calc
+        _ = 4*Real.log ((A+A:ℕ):ℝ)/x^ε := by field_simp
+        _ ≤ _ := (div_le_div_iff_of_pos_right he).2 (by linarith only [logA])
+    · have hw (i : ℕ) (hi : i ∈ range A) : w (A+i)=0 := by
+        have hl : A+i<A+A := Nat.add_lt_add_left (Finset.mem_range.1 hi) _
+        have hl' : (A:ℝ)+i < 2*(A:ℝ) := by exact_mod_cast (show A+i<2*A by omega)
+        dsimp only [w]; rw [ite_eq_right]
+        rintro ⟨h,_⟩; push_cast at h; linarith
+      change (∑ i ∈ range A, w (A+i)) ≤ _
+      rw [Finset.sum_eq_zero hw]; positivity
+  rw [hrepresent]
+  apply (Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hM) (fun q _ _ => hnon q)).trans
+  rw [dyadic_prefix,hw0,zero_add]
+  apply (Finset.sum_le_sum hblock).trans
+  simp only [Finset.sum_const,Finset.card_range,nsmul_eq_mul]
+  have he : 0 < x^ε := Real.rpow_pos_of_pos hx0 _
+  dsimp only [T] at *
+  calc
+    _ ≤ (3*x^(ε/5))*(12*x^(ε/5)/x^ε) := by gcongr
+    _ = _ := by ring
+
+/-- At the prescribed real height the exceptional band weight is negligible on the log scale. -/
+private theorem selector_bad_mass_small (ε c : ℝ) (hε : 0 < ε) (hc : 0 < c) :
+    ∀ᶠ x : ℝ in atTop, selectorBadMass ε x ≤ c*x^(ε/5) := by
+  have hlim := tendsto_rpow_atTop (show 0 < 4*ε/5 by linarith)
+  filter_upwards [window_bad_estimate ε hε, hlim.eventually_ge_atTop (36/c), eventually_ge_atTop (1:ℝ)]
+    with x h hx h1
+  have hx0 : 0 < x := by linarith
+  have hxε : 0 < x^ε := Real.rpow_pos_of_pos hx0 _
+  have ht : 0 < x^(ε/5) := Real.rpow_pos_of_pos hx0 _
+  have hh : 36 ≤ c*x^(4*ε/5) := by
+    simpa [mul_comm] using (div_le_iff₀ hc).1 hx
+  have hs : x^(ε/5)*x^(4*ε/5) = x^ε := by
+    rw [← Real.rpow_add hx0, show ε/5+4*ε/5=ε by ring]
+  apply h.trans ((div_le_iff₀ hxε).2 ?_)
+  have hmul := mul_le_mul_of_nonneg_left hh (sq_nonneg (x^(ε/5)))
+  calc
+    _ ≤ (x^(ε/5))^2*(c*x^(4*ε/5)) := by linarith only [hmul]
+    _ = (c*x^(ε/5))*(x^(ε/5)*x^(4*ε/5)) := by ring
+    _ = _ := by rw [hs]
+
+/-- The logarithmic prime weight left after the character-sum test and a further finite exclusion. -/
+def survivingMass (ε x : ℝ) (E : Finset ℕ) : ℝ :=
+  let T := x^(ε/5)
+  ∑ q ∈ (primeBand (3 : ZMod 8) T).filter
+    (fun q => |twist x (cutoff x) q| ≤ x^(1/2+ε)/2 ∧ q ∉ E), log q / q
+
+private theorem deletion_cost {T : ℝ} (hT : 0 < T) (E : Finset ℕ)
+    (hE : (E.card:ℝ) ≤ exp (T/3)) :
+    (∑ q ∈ (primeBand (3:ZMod 8) T).filter (· ∈ E), log q / q) ≤ T * exp (-T/6) := by
+  let S := (primeBand (3:ZMod 8) T).filter (· ∈ E)
+  have hsub : S ⊆ E := fun q h => (mem_filter.1 h).2
+  have hcard : (S.card:ℝ) ≤ exp (T/3) := (Nat.cast_le.mpr (card_le_card hsub)).trans hE
+  have point (q : ℕ) (hq : q ∈ S) : log q/q ≤ T / exp (T/2) := by
+    obtain ⟨hband,_⟩ := mem_filter.1 hq
+    obtain ⟨hhi,hlo,_,hp⟩ := mem_filter.1 hband
+    have hhi' : (q:ℝ) ≤ exp T := (Nat.le_floor_iff (exp_pos T).le).mp (Nat.lt_succ_iff.mp (mem_range.mp hhi))
+    have hln := log_le_log (by exact_mod_cast hp.pos : (0:ℝ) < q) hhi'
+    rw [log_exp] at hln
+    exact div_le_div₀ hT.le hln (exp_pos _) hlo.le
+  calc
+    _ ≤ ∑ _q ∈ S, T / exp (T/2) := sum_le_sum point
+    _ = (S.card:ℝ) * (T / exp (T/2)) := by simp
+    _ ≤ exp (T/3) * (T / exp (T/2)) := mul_le_mul_of_nonneg_right hcard (by positivity)
+    _ = T * exp (-T/6) := by
+      rw [show -T/6 = T/3 + -(T/2) by ring,exp_add,exp_neg]; ring
+
+/-- Every sufficiently large real scale admits a positive logarithmic weight of
+auxiliary primes passing the actual quadratic Mangoldt test, even after any
+further exclusion of at most exp(x^(ε/5)/3) integers. -/
+theorem real_scale_quadratic_mangoldt_supply (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ x : ℝ in atTop, ∀ E : Finset ℕ, (E.card:ℝ) ≤ exp (x^(ε/5)/3) →
+      x^(ε/5)/173065984000 ≤ survivingMass ε x E := by
+  let D := (86532992000:ℝ)
+  have hD : 0 < D := by norm_num [D]
+  have htot := prime_progression_window_mass (3:ZMod 8)
+    ((ZMod.isUnit_iff_coprime 3 8).2 (by decide))
+  have hm : Nat.totient 8 = 4 := by decide
+  rw [hm] at htot
+  have hpow := tendsto_rpow_atTop (show 0 < ε/5 by positivity)
+  filter_upwards [hpow.eventually htot,hpow.eventually_gt_atTop 0,
+    hpow.eventually_ge_atTop (6 * log (4*D)),selector_bad_mass_small ε (1/(4*D)) hε (by positivity)] with x ht hx hlarge hb
+  intro E hE
+  let T := x^(ε/5)
+  let S := primeBand (3:ZMod 8) T
+  have ht' : T / D ≤ ∑ q ∈ S, log q / q := by simpa only [S,T,D,show (21633248000:ℝ) * (4:ℕ) = 86532992000 by norm_num] using ht
+  have hd := deletion_cost hx E hE
+  have he : exp (-T/6) ≤ 1/(4*D) := by
+    rw [one_div,← exp_log (show 0 < 4*D by positivity),← exp_neg]
+    apply exp_le_exp.mpr
+    change 6 * log (4*D) ≤ T at hlarge
+    rw [neg_div]
+    apply neg_le_neg
+    exact (le_div_iff₀ (by norm_num : (0:ℝ) < 6)).2 (by simpa only [mul_comm] using hlarge)
+  have splitWeight : (∑ q ∈ S, log q / q) ≤ survivingMass ε x E +
+      (∑ q ∈ S.filter (fun q => x^(1/2+ε)/2 < |twist x (cutoff x) q|), log q / q) +
+      ∑ q ∈ S.filter (· ∈ E), log q / q := by
+    change _ ≤ (∑ q ∈ S.filter _, _) + _ + _
+    simp only [sum_filter,← sum_add_distrib]
+    apply sum_le_sum; intro q hq
+    have hp := (mem_filter.1 hq).2.2.2
+    have hw : 0 ≤ log (q:ℝ)/q := div_nonneg (log_nonneg (by exact_mod_cast hp.one_le)) q.cast_nonneg
+    split_ifs <;> grind
+  have hh := mul_le_mul_of_nonneg_left he hx.le
+  change (∑ q ∈ S.filter (fun q => x^(1/2+ε)/2 < |twist x (cutoff x) q|), log q/q) ≤ (1/(4*D))*T at hb
+  change _ ≤ T * _ at hd
+  change T/173065984000 ≤ _
+  dsimp [D] at ht' hb hh
+  linarith only [ht',hd,hh,hb,splitWeight,hx]
 
 end D5.S3.CharacterSums.DyadicMangoldtPrimeSupply
