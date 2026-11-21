@@ -21,7 +21,7 @@ open PositiveSpectralKernel
 
 namespace D5.S3.Arith.Robin.Analytic.ActualUnattainedAbscissaFilter
 
-private theorem actual_conjugate_occurrence (j : ℕ) :
+theorem actual_conjugate_occurrence (j : ℕ) :
     ∃ k : ℕ, actualZero k = star (actualZero j) := by
   let n := actualData.conjugation (actualOccurrenceEquiv j).1
   let i : Fin (actualData.multiplicity n) := ⟨0, actualData.multiplicity_pos n⟩
@@ -29,7 +29,7 @@ private theorem actual_conjugate_occurrence (j : ℕ) :
   simp only [actualZero, Equiv.apply_symm_apply, n]
   exact actualData.zero_conjugation _
 
-private theorem actual_occurrence_of_zero {z : ℂ}
+theorem actual_occurrence_of_zero {z : ℂ}
     (hz : D5.S3.Weil.ZeroSum.IsNontrivialZero z) :
     ∃ j : ℕ, actualZero j = z := by
   obtain ⟨n, hn⟩ := actualData.zero_exhaustive hz

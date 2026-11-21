@@ -5,7 +5,7 @@ description: 在 trureturing 的 fork 中贡献 Lean、Blueprint Scribe、逃逸
 
 # Fork 内的轻量形式化贡献
 
-本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的编译器和判官来自 fork 的钉版源码。
+本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的工具和贡献适配器由 fork 的 `Meta/tools-release.json` 锁定。
 
 无需准备主检出的项目缓存、下载项目 Release cache 或编译全库。首次执行仍需 Lean 工具链、钉版 Mathlib 源码与依赖缓存、`global.json` 指定的 .NET SDK、Python ≥3.12、Git、Make 和冻结命令所需的 jq。现有依赖准备执行 `lake exe cache get`，不保证只下载所选模块的 Mathlib 缓存，也不保证零下载。项目模块只编译所选目标及其 import/utility 闭包。
 
@@ -42,7 +42,7 @@ Golden/Frozen/state/D5/<路径>.lean.json ← canonical writer 生成
 迭代只选择实际模块和实际保留的 Reg 源码，例如：
 
 ```sh
-make lean LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
+make lean-report-prepare LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make lean-report-scoped LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make emit BASE="$CONTRIBUTION_BASE"
 ```
@@ -51,15 +51,16 @@ make emit BASE="$CONTRIBUTION_BASE"
 
 ## 本地 Scribe 和逃逸审计
 
-从技能所在目录调用适配器；可安装到任意目录，无需安装其他个人技能：
+在 fork 工作树中安装锁定的工具并调用贡献适配器。
 
 ```sh
-python3 <skill-directory>/scripts/check.py \
+make install-tools
+python3 tools/scripts/lean-fork-contribute/scripts/check.py \
   --repository "$PWD" --base "$CONTRIBUTION_BASE" \
   --module D5.My.Module
 ```
 
-适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 canonical `make emit` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
+适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 `make emit`，再对选定的目标运行 `make lean-report-prepare` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
 
 每个新增、源码手写、公开 D5 theorem/lemma 都须尝试忠实的四槽登记。适配器用受保护基线中的源码名排除历史定理，排除 private 和编译器生成声明；utility 指定的 refutation result 只有通过现役 typed utility 校验才能豁免。按源码 owner 的 `Reg/D5/…` mirror 与其 imports 解析证据，不接受 D5 自登记。变动 Reg 的 payload 也交原验证器检查。辅助声明不递归产生 D5 目标。
 

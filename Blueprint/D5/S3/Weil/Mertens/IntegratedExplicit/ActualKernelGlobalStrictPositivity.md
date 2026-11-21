@@ -31,5 +31,4 @@ At the origin K is continuous, including the endpoint. For 0<t<log(2), its publi
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelGlobalStrictPositivity.actual_kernel_strict_gram_of_rh`
 - Dependency: [D5/S3/Analytic/Fourier/PositiveDefinite/IsolatedSingularity](../../../Analytic/Fourier/PositiveDefinite/IsolatedSingularity.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity](ActualKernelLocalPositivity.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula](WholeFormula.md)
-- Dependency: [D5/S3/Weil/ZetaBridge/RhLocatesZeroData](../../ZetaBridge/RhLocatesZeroData.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](RHSharpActualEnvelope.md)

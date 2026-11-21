@@ -195,16 +195,17 @@ private lemma exists_canonical_price_cutoff {N : ℕ} (hN : 12 ≤ N) :
     (by linarith only [hNr])
 
 /-- The exact-price sample for `N ≥ 12`, extended by the natural cast at small indices. -/
-private def canonicalPriceCutoff (N : ℕ) : ℝ :=
+def canonicalPriceCutoff (N : ℕ) : ℝ :=
   if hN : 12 ≤ N then Classical.choose (exists_canonical_price_cutoff hN) else (N : ℝ)
 
-private lemma canonical_price_cutoff_spec {N : ℕ} (hN : 12 ≤ N) :
+lemma canonical_price_cutoff_spec {N : ℕ} (hN : 12 ≤ N) :
     (N : ℝ) + 1 < canonicalPriceCutoff N ∧
-      canonicalPriceCutoff N < (N : ℝ) + 1 + 1 / 2 ∧ price (canonicalPriceCutoff N) = mu N := by
-  simpa only [canonicalPriceCutoff, dif_pos hN] using
+      canonicalPriceCutoff N < (N : ℝ) + 1 + 1 / 2 ∧
+      price (canonicalPriceCutoff N) = firstLayerPrice ((N : ℝ) + 1) := by
+  simpa only [canonicalPriceCutoff, dif_pos hN, mu] using
     Classical.choose_spec (exists_canonical_price_cutoff hN)
 
-private lemma le_canonical_price_cutoff (N : ℕ) : (N : ℝ) ≤ canonicalPriceCutoff N := by
+lemma le_canonical_price_cutoff (N : ℕ) : (N : ℝ) ≤ canonicalPriceCutoff N := by
   by_cases hN : 12 ≤ N
   · have hleft := (canonical_price_cutoff_spec hN).1
     linarith only [hleft]
@@ -303,7 +304,7 @@ private lemma record_theta_le_log {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
     sum_nonneg (fun p _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg p))
   linarith only [hsplit, hnonneg]
 
-private lemma clock_power (epsilon : ℝ) (hepsilon : 0 < epsilon)
+lemma clock_power (epsilon : ℝ) (hepsilon : 0 < epsilon)
     (hbeta : (1 / 2 : ℝ) ≤
       D5.S3.Arith.Robin.ForwardKernel.KappaGap.zeroAbscissa + epsilon) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ X : ℝ, 2 ≤ X →

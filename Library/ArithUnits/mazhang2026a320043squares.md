@@ -9,6 +9,7 @@ claim: "Corollary 6: for n >= 1 and 1 <= k <= n, with X(n,k) = (n+1-k)^2 k / gcd
 strata_touched:
   - D5/S3/ArithSums/SpeziaA320043RowProduct
   - D5/S3/ArithSums/SpeziaA320043AllRowDivisorFormula
+  - D5/S3/ArithSums/SpeziaA320043PellPrimeIndices
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -22,7 +23,8 @@ Zenodo record: https://zenodo.org/records/24058057
 DOI: 10.5281/zenodo.24058057 (version 2; Zenodo publication date 2026-11-08, PDF dated
 November 5, 2026). Source PDF:
 https://zenodo.org/api/records/24058057/files/note-v2.pdf/content (text extracted locally,
-19,673 characters). Corollaries 6 and 7 are in Section 3, PDF page 4.
+19,673 characters). Corollary 4 is in Section 2, PDF page 3; Corollaries 6 and 7 are in
+Section 3, PDF page 4.
 
 ## Source statement
 
@@ -46,6 +48,17 @@ https://zenodo.org/api/records/24058057/files/note-v2.pdf/content (text extracte
 > yields 12C(m) = m⁴ ∑_{d|m} μ(d)/d − m² ∑_{d|m} μ(d)d = m³φ(m) − m²E(m). … Summing proves the
 > formula, including the zero contribution at m = 1.
 
+> Corollary 4. Let r_j = ((2 + √3)^j + (2 − √3)^j)/2 be A001075, with r_0 = 1, r_1 = 2. For a
+> prime p, a(p − 1) is a square if and only if p is a prime term of (r_j), that is, a term of
+> A277434. If p > 2, then p = x_{2^h} for some h ≥ 0, and p ≡ 7 (mod 30).
+
+> Proof. Since (2 + √3)² = 7 + 2√12, r_{2t} = x_t. … For odd d > 1, write (7 + 2√12)^s = u + v√12.
+> … hence x_s | x_{ds}. Since 1 < x_s < x_{ds}, a prime x_t requires t = 2^h. The doubling
+> identity x_{2t} = 2x_t² − 1 and x_1 = 7 then give x_{2^h} ≡ 7 (mod 30) by induction. The index
+> restriction was proved by Zhu (2011) [3, p. 200]. The congruence and divisibility also appear in
+> Tiffin's 2016 comments in A001075 and A277434 [7, 9]; Andrews gave the odd-multiple argument
+> for the subsequence r_{4j} in 2019 [12].
+
 ## Mathematical scope
 
 X(n, k) is the n-th antidiagonal of Spezia's triangle A322550 (see `spezia2018a320043`), whose
@@ -57,3 +70,11 @@ supplies a proof by the gcd reduction gcd(n + 1 − k, k) = gcd(n + 1, k).
 For Corollary 7, a(n) is the A320043 row sum of the frozen SpeziaA320043SquareValuesRefutation
 module. The paper credits the generalization to Ma and Zhang. Its proof uses Möbius inversion
 with the divisor sums ∑_{d|m} μ(d)/d = φ(m)/m and ∑_{d|m} μ(d)d = E(m).
+
+SpeziaA320043PellPrimeIndices.result states Corollary 4 with r defined by its recurrence and
+x_0 = 1, x_1 = 7, x_{t+2} = 14x_{t+1} − x_t: the quotients of a are exact, r_{2t} = x_t, a prime p
+has a(p − 1) a square iff p is a term of r, for p > 2 iff p = x_{2^h} for some h, and every
+x_{2^h} is 7 modulo 90, which strengthens the source's modulo 30 since 2·7² − 1 = 7 + 90. The
+index restriction is Zhu's (2011); the congruence and divisibility appear in Tiffin's 2016 OEIS
+comments; the paper credits the odd-multiple argument for the subsequence r_{4j} to Andrews
+(2019).
