@@ -59,8 +59,8 @@ worldwide openness, first computation, or publication-priority claim follows.
 
 The repository's corrected law is not stated in the source. Write phi for
 the golden ratio, frac(n) for the fractional part of (n+2)/phi and
-alpha=sqrt(5)-2. For every nonempty finite family of positive orders with r
-members and total N, Delta(N) minus the sum of the members' maximum degrees
+alpha=sqrt(5)-2. For every finite family of natural orders with r members
+and total N, Delta(N) minus the sum of the members' maximum degrees
 equals floor(sum frac(n_j)-(r-1)alpha). For two summands the correction is
 -1, 0 or 1 according to the position of frac(n)+frac(m) relative to alpha
 and 1+alpha, attained at the orders (3,11), (3,4) and (4,6). The maximum-degree

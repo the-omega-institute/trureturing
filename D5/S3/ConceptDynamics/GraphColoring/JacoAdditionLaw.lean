@@ -42,28 +42,25 @@ private theorem two_div_phi : 2 / Real.goldenRatio = Real.sqrt 5 - 1 := by
   rw [div_eq_mul_inv, Real.inv_goldenRatio, Real.goldenConj]
   ring
 
-private theorem delta_floor (n : ℕ) (hn : 1 ≤ n) :
+private theorem delta_floor (n : ℕ) :
     delta n = ⌊((n : ℝ) + 2) / Real.goldenRatio⌋ - 1 := by
-  have hpos : (0 : ℝ) ≤ ((n : ℝ) + 2) / Real.goldenRatio := by
-    have := Real.goldenRatio_pos
-    positivity
+  have hp := Real.goldenRatio_pos
+  have hpos : (0 : ℝ) ≤ ((n : ℝ) + 2) / Real.goldenRatio := by positivity
   rw [← Int.natCast_floor_eq_floor hpos]
-  by_cases h1 : n = 1
-  · subst h1
-    have : Subsingleton (Vertex 1) := ⟨by
+  by_cases h1 : n ≤ 1
+  · have : Subsingleton (Vertex n) := ⟨by
       intro a b
       apply Subtype.ext
       have ha := Finset.mem_Icc.mp a.2
       have hb := Finset.mem_Icc.mp b.2
       omega⟩
-    have hf : ⌊((1 : ℕ) + 2 : ℝ) / Real.goldenRatio⌋₊ = 1 := by
+    have hf : ⌊((n : ℝ) + 2) / Real.goldenRatio⌋₊ = 1 := by
       rw [Nat.floor_eq_iff hpos]
       have hlo := Real.one_lt_goldenRatio
-      have hhi := Real.goldenRatio_lt_two
-      have hp := Real.goldenRatio_pos
+      have hn : (n : ℝ) ≤ 1 := by exact_mod_cast h1
       norm_num
       constructor
-      · rw [le_div_iff₀ hp]; linarith
+      · rw [le_div_iff₀ hp]; linarith [Real.goldenRatio_lt_two, Nat.cast_nonneg (α := ℝ) n]
       · rw [div_lt_iff₀ hp]
         nlinarith [Real.goldenRatio_sq]
     rw [hf, delta, SimpleGraph.maxDegree_of_subsingleton]
@@ -76,33 +73,29 @@ private theorem delta_floor (n : ℕ) (hn : 1 ≤ n) :
     rw [he] at h
     have hge : 1 ≤ ⌊((n : ℝ) + 2) / Real.goldenRatio⌋₊ := by
       apply (Nat.le_floor_iff hpos).2
-      rw [le_div_iff₀ Real.goldenRatio_pos]
+      rw [le_div_iff₀ hp]
       have := Real.goldenRatio_lt_two
       push_cast
       linarith
     rw [delta, h]
     omega
 
-private theorem delta_real (n : ℕ) (hn : 1 ≤ n) :
+private theorem delta_real (n : ℕ) :
     (delta n : ℝ) = ((n : ℝ) + 2) / Real.goldenRatio - frac n - 1 := by
-  rw [delta_floor n hn, frac, Int.fract]
+  rw [delta_floor n, frac, Int.fract]
   push_cast
   ring
 
-/-- The universal correction law for any nonempty family of positive orders. -/
-theorem sum_law {ι : Type u} (s : Finset ι) (n : ι → ℕ) (hs : s.Nonempty)
-    (hn : ∀ j ∈ s, 1 ≤ n j) :
+/-- The universal correction law for every finite family of orders. -/
+theorem sum_law {ι : Type u} (s : Finset ι) (n : ι → ℕ) :
     delta (∑ j ∈ s, n j) - ∑ j ∈ s, delta (n j) =
       ⌊∑ j ∈ s, frac (n j) - ((s.card : ℝ) - 1) * alpha⌋ := by
   symm
   rw [Int.floor_eq_iff]
-  have hN : 1 ≤ ∑ j ∈ s, n j := by
-    obtain ⟨j, hj⟩ := hs
-    exact (hn j hj).trans (Finset.single_le_sum (fun _ _ => Nat.zero_le _) hj)
   have hsum : (∑ j ∈ s, (delta (n j) : ℝ)) =
       ∑ j ∈ s, (((n j : ℝ) + 2) / Real.goldenRatio - frac (n j) - 1) :=
-    Finset.sum_congr rfl fun j hj => delta_real (n j) (hn j hj)
-  have hD := delta_real _ hN
+    Finset.sum_congr rfl fun j _ => delta_real (n j)
+  have hD := delta_real (∑ j ∈ s, n j)
   have hx0 : 0 ≤ frac (∑ j ∈ s, n j) := Int.fract_nonneg _
   have hx1 : frac (∑ j ∈ s, n j) < 1 := Int.fract_lt_one _
   have key : ((delta (∑ j ∈ s, n j) - ∑ j ∈ s, delta (n j) : ℤ) : ℝ) =
@@ -125,11 +118,11 @@ private theorem alpha_bounds : 0 < alpha ∧ alpha < 1 := by
   have h0 := Real.sqrt_nonneg 5
   constructor <;> (rw [alpha]; nlinarith)
 
-private theorem delta_at (n k : ℕ) (hn : 1 ≤ n)
+private theorem delta_at (n k : ℕ)
     (hl : (k : ℝ) * Real.goldenRatio ≤ (n : ℝ) + 2)
     (hh : (n : ℝ) + 2 < (k + 1 : ℝ) * Real.goldenRatio) : delta n = k - 1 := by
   have hp := Real.goldenRatio_pos
-  rw [delta_floor n hn]
+  rw [delta_floor n]
   congr 1
   rw [Int.floor_eq_iff]
   push_cast
@@ -138,10 +131,10 @@ private theorem delta_at (n k : ℕ) (hn : 1 ≤ n)
 /-- The two-summand law, its three exact regimes, and three witnesses
 attaining the values `-1`, `0` and `1` at distinct orders. -/
 theorem result :
-    (∀ {ι : Type u} (s : Finset ι) (n : ι → ℕ), s.Nonempty → (∀ j ∈ s, 1 ≤ n j) →
+    (∀ {ι : Type u} (s : Finset ι) (n : ι → ℕ),
       delta (∑ j ∈ s, n j) - ∑ j ∈ s, delta (n j) =
         ⌊∑ j ∈ s, frac (n j) - ((s.card : ℝ) - 1) * alpha⌋) ∧
-    (∀ n m : ℕ, 1 ≤ n → 1 ≤ m →
+    (∀ n m : ℕ,
       delta (n + m) - delta n - delta m = ⌊frac n + frac m - alpha⌋ ∧
       (delta (n + m) - delta n - delta m = -1 ↔ frac n + frac m < alpha) ∧
       (delta (n + m) - delta n - delta m = 0 ↔ alpha ≤ frac n + frac m ∧ frac n + frac m < 1 + alpha) ∧
@@ -149,10 +142,9 @@ theorem result :
     delta (3 + 11) - delta 3 - delta 11 = -1 ∧
     delta (3 + 4) - delta 3 - delta 4 = 0 ∧
     delta (4 + 6) - delta 4 - delta 6 = 1 := by
-  refine ⟨fun s n hs hn => sum_law s n hs hn, ?_, ?_⟩
-  · intro n m hn hm
-    have h := sum_law (Finset.univ : Finset (Fin 2)) ![n, m] Finset.univ_nonempty
-      (by intro j _; fin_cases j <;> simpa)
+  refine ⟨fun s n => sum_law s n, ?_, ?_⟩
+  · intro n m
+    have h := sum_law (Finset.univ : Finset (Fin 2)) ![n, m]
     simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
       Finset.card_univ, Fintype.card_fin] at h
     norm_num at h
@@ -186,25 +178,25 @@ theorem result :
       rw [Real.goldenRatio]
       nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num), Real.sqrt_nonneg 5]
     have d3 : delta 3 = 2 := by
-      have := delta_at 3 3 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 3 3 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d4 : delta 4 = 2 := by
-      have := delta_at 4 3 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 4 3 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d6 : delta 6 = 3 := by
-      have := delta_at 6 4 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 6 4 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d7 : delta 7 = 4 := by
-      have := delta_at 7 5 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 7 5 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d10 : delta 10 = 6 := by
-      have := delta_at 10 7 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 10 7 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d11 : delta 11 = 7 := by
-      have := delta_at 11 8 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 11 8 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     have d14 : delta 14 = 8 := by
-      have := delta_at 14 9 (by norm_num) (by norm_num; linarith) (by norm_num; linarith)
+      have := delta_at 14 9 (by norm_num; linarith) (by norm_num; linarith)
       simpa using this
     norm_num [d3, d4, d6, d7, d10, d11, d14]
 
