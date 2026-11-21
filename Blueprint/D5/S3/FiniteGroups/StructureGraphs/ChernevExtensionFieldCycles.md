@@ -60,6 +60,10 @@ $$\forall K \in Type,\; [\operatorname{Field}\left(K\right)], [\operatorname{Fin
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/StructureGraphs/ChernevExtensionFieldCycles.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chernev-chernev-2026-structure-graphs-hypothesis-6-1` (proved) by `D5/S3/FiniteGroups/StructureGraphs/ChernevExtensionFieldCycles.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chernev-chernev-2026-structure-graphs-hypothesis-6-1","declaration_gid":"D5/S3/FiniteGroups/StructureGraphs/ChernevExtensionFieldCycles.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrey M. Chernev, Nikolay A. Chernev (2026). *On the Connected Components of Structure Graphs of Associative Rings*. DOI: [10.48550/arXiv.2611.07521](https://doi.org/10.48550/arXiv.2611.07521). URL: <https://arxiv.org/abs/2611.07521v1>.

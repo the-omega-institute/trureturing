@@ -36,13 +36,15 @@ internal sealed class ChernevExtensionFieldCyclesDocument : IScribeDocumentDefin
                 + "In characteristic two the degree is greater than two. An odd prime divisor of the degree gives an odd-degree subfield, and divisibility by four gives a subfield of order sixteen. "
                 + "In that subfield a root of X⁴ + X + 1 supplies polynomial coordinates for an explicit eight-cycle. "
                 + "Field embeddings preserve the successor and distinctness. The finite-field isomorphism given by equality of cardinalities transports the cycle to K.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chernev-chernev-2026-structure-graphs-hypothesis-6-1"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("chernev-extension-field-cycles-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
