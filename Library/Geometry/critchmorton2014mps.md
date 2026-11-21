@@ -30,6 +30,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCriticalChart
   - D5/S3/Quantum/TensorNetworks/PeriodicMPS/PeriodicMPSSixSiteCompactSpecialFiber
   - D5/S3/Quantum/TensorNetworks/PeriodicMPSSixSiteGenericRecovery
+  - D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/SevenSiteGenericRecovery
 license: citation-only
 triage: anchor
 ---
@@ -683,3 +684,15 @@ At length six, `PeriodicMPSSixSiteCriticalChart.relatively_prime_chartMinors` pr
 The compact graph is defined by the cubic amplitude on the quadric of weight-two trace coordinates. A particular observation has two distinct actual amplitude rays and a two-point fiber in the full compact graph. These two lifts are regular. Their local normalized marginal images have distinct germs by the cubic calculation in a common raw tangent projection. The six-dimensional covers of the boundary and critical observations permit continuation on the connected remaining source. This gives the generic result despite the explicit two-point ambiguity.
 
 The literature boundary for the six-site theorem is the physical input and its quantifiers. The three-site parent-Hamiltonian result cited above applies at six sites. Czapliński, Michałek and Seynnaeve, Theorem 3.30, starts from the full tensor. The six-site theorem establishes the fixed-length real-generic threshold.
+
+`SevenSiteGenericRecovery.generic_twoSite_recovery` establishes recovery at
+length seven against every competitor in the compact closure of the actual
+periodic binary bond-two projector image. Its relatively Euclidean-open dense
+locus consists of actual projectors. One normalized adjacent-pair marginal
+determines each such target. The proof bounds the ordinary-chart boundary and
+rank-deficient locus by real Hausdorff dimension six. The hard-core state
+supplies a compact singleton neighborhood, and a linear readout of the full
+trace-word tensor determines the weighted invariant lift on that neighborhood.
+Analytic continuation gives the dense recovery locus. With the one-site
+ambiguity theorem, two adjacent sites are the real-generic minimum at this
+fixed length. The all-length periodic question and priority remain open.

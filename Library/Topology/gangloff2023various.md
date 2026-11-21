@@ -15,6 +15,7 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
   - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
   - D5/S3/Topology/CoveringDimension/GluedCircle
+  - D5/S1/Dynamics/Symbolic/RightTailBranching
 license: citation-only
 triage: anchor
 ---
@@ -202,6 +203,30 @@ body associated with [DOI 10.1016/j.topol.2026.110006](https://doi.org/10.1016/j
 remain unavailable for comparison. No worldwide originality or priority
 claim follows from this repository result.
 
+## Finite positive expansivity for S-adic shifts
+
+Question 4.1 asks which two-sided subshifts are finitely positively expansive,
+including substitutions and S-adic systems. Lemma 4.7 identifies the exact order
+with the largest number of two-sided extensions of a right tail. The repository
+proves that a finite set (B) of right tails with multiple immediate predecessors
+gives the uniform bound (1+|B|(|A|-1)) over an alphabet (A), exactly when
+periodic right tails have only periodic extensions. The proof encodes a past by
+its last departure from a chosen default predecessor and relates the bound to
+strict forward Bowen balls for any compatible metric.
+[Branching futures and finite positive expansivity](../../Blueprint/D5/S1/Dynamics/Symbolic/RightTailBranching.md)
+
+For an everywhere-growing directive sequence of finite alphabet rank (K), the
+finite-word factorization theorem of Espinoza and Maass bounds (|B|) by
+(122K^7). Reflect left and right in Theorem 1.2 and the proof of Theorem 1.3,
+then apply the bound at a cofinal sequence of levels with at most (K) tiles
+and arbitrarily long minimum tile length. Distinct branching futures have
+distinct prefixes at sufficiently high levels. The argument applies to points
+defined by the S-adic language and also to the all-tilings limit set of
+Definition 4.14, where every point has the requisite factorizations. This gives a
+criterion for that class in Question 4.1. The factorization theorem is the
+literature input used in the mathematical deduction.
+[Espinoza and Maass, arXiv:2008.05996v2](https://arxiv.org/abs/2008.05996v2)
+
 ## Verified locator
 
 - https://arxiv.org/abs/2310.17241v1
@@ -210,3 +235,5 @@ claim follows from this repository result.
 - Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
 - Remark 3.10, Section 3.2, page 9.
+- Question 4.1, Section 4, page 10.
+- Lemma 4.7, Section 4.2, page 11.

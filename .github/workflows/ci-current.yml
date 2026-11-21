@@ -354,6 +354,19 @@ jobs:
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
 
+  banned-api-proof:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      unit: banned-api-proof
+
+  capability-proof:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      unit: capability-proof
 
   filemap:
     needs: [detect, source]
@@ -536,7 +549,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-declared-template, tests-engine, tests-filemap, tests-instruction-contract, tests-lean, tests-lean-cache-script, tests-playbook-script, tests-pr-script, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-scribe, tests-script, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-declared-template, tests-engine, tests-filemap, tests-instruction-contract, tests-lean, tests-lean-cache-script, tests-playbook-script, tests-pr-script, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-scribe, tests-script, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
