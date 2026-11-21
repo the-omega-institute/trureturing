@@ -41,7 +41,7 @@ private lemma clipped_weight {x : ℝ} {n : ℕ} (hx : 0 < x) (hn : 0 < n) :
     field_simp
 
 /-- Non-prime powers in the damped Mangoldt sum cost O(sqrt x), uniformly in the truncation. -/
-private theorem clipped_prime_powers :
+theorem clipped_prime_powers :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ x : ℝ, 0 < x → ∀ N : ℕ,
     ∑ n ∈ (Ioc 0 N).filter (fun n => ¬n.Prime), vonMangoldt n * min 1 (x/n) ≤ K * sqrt x := by
   obtain ⟨C,hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
@@ -143,7 +143,7 @@ private theorem prime_second_moment (P : Finset ℕ) (a : ℕ → ℝ) (A L : �
   · simp_rw [← mul_sum]
     rw [← sum_mul, ← mul_sum, sq, mul_assoc]
 
-private theorem coefficient_bounds (x : ℝ) (hx : 0 ≤ x) (N : ℕ) (hN : 1 ≤ N) (P : Finset ℕ)
+theorem coefficient_bounds (x : ℝ) (hx : 0 ≤ x) (N : ℕ) (hN : 1 ≤ N) (P : Finset ℕ)
     (hP : P ⊆ Icc 1 N) :
     let a := fun p : ℕ => log p * min 1 (x/p)
     (∑ p ∈ P, (a p)^2) ≤ (log N)^2*x*(1+log N) ∧
@@ -523,7 +523,7 @@ theorem dyadic_quadratic_mangoldt_supply (ε : ℝ) (hε : 0 < ε) :
 
 open D5.S3.CharacterSums.PrimeProgressionWindowMass
 
-private theorem window_moment_scale {ε : ℝ} (hε : 0 < ε) (H : ℝ) :
+theorem window_moment_scale {ε : ℝ} (hε : 0 < ε) (H : ℝ) :
     ∀ᶠ x : ℝ in atTop, 1 ≤ x ∧ 1 ≤ cutoff x ∧ ∀ A : ℕ,
       Real.exp (x^(ε/5)/2) ≤ 2*(A:ℝ) →
       2*((A:ℝ)*((Real.log (cutoff x))^2*x*(1+Real.log (cutoff x))) +
