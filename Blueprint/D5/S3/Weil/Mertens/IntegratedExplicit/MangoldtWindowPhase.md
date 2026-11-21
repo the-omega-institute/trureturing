@@ -30,7 +30,9 @@ $$\forall C \in \mathbb{R},\; \forall b \in \mathbb{R},\; C < M \Rightarrow \lef
 
 *Commentary.*
 
-If whole windows admitted coefficient C < M, they would also admit the larger coefficient M+1. The square-root window criterion would imply RH. For tolerance M−C, the first result then places a positive peak at time j between log Y and b log Y for every sufficiently large Y. Indeed, round log Y up to n and allow the fixed number of additional steps. At x = exp j one has U(x) > C√x, which contradicts the assumed whole-window inequality. The case C = M remains open here.
+If whole windows admitted coefficient C < M, they would also admit the larger coefficient M+1. The square-root window criterion would imply RH. For tolerance M−C, the first result then places a positive peak at time j between log Y and b log Y for every sufficiently large Y. Indeed, round log Y up to n and allow the fixed number of additional steps. At x = exp j one has U(x) > C√x, which contradicts the assumed whole-window inequality.
+
+At C = M, the critical-gap theorem gives M√x − U(x) → +∞ under RH. Thus U(x) ≤ M√x on every sufficiently late window. Conversely, arbitrarily late windows with coefficient M also admit coefficient M+1, so the square-root window criterion gives RH.
 
 ## References
 
@@ -38,3 +40,4 @@ If whole windows admitted coefficient C < M, they would also admit the larger co
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtWindowPhase.no_windows_below_mass`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtPointwiseWindows](MangoldtPointwiseWindows.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](RHSharpActualEnvelope.md)
+- Narrative reference: [D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtCriticalGap](MangoldtCriticalGap.md)
