@@ -267,7 +267,7 @@ private theorem higher_weight {F : Finset V} {a x : V} (ha : a ∈ F)
   omega
 
 private theorem normalized_cycle_bound (M : Matroid V) (bases : Finset (Finset V))
-    (hbase : ∀ F ∈ bases, M.IsBase (F : Set V)) (B : Finset V) (hB : B ∈ bases)
+    (hbase : ∀ F ∈ bases, M.IsBase (F : Set V)) (B : Finset V) (hB : M.Indep (B : Set V))
     (z : Finset V → ℤ) (sign : Finset V → Finset V → ℤ)
     (hunit : ∀ R T, R ⊆ T → R.card + 1 = T.card → sign R T = 1 ∨ sign R T = -1)
     (hcycle : ∀ F ∈ bases, ∀ a ∈ F,
@@ -288,7 +288,7 @@ private theorem normalized_cycle_bound (M : Matroid V) (bases : Finset (Finset V
       · by_cases he : F = B
         · subst F
           exact ⟨fun _ => ⟨fun _ hb hn => (hn hb).elim, fun _ _ _ hb hn => (hn hb).elim⟩,
-            by simp [hnorm B hB hcrit]⟩
+            by simp [hnorm B hF hcrit]⟩
         · have hz : z F = 0 := by simpa [he] using hnorm F hF hcrit
           exact ⟨fun hn => (hn hz).elim, by simp [hz]⟩
       let active := F.filter (fun a => ¬ Passive M (F : Set V) a)
@@ -355,7 +355,7 @@ private theorem normalized_cycle_bound (M : Matroid V) (bases : Finset (Finset V
                 simpa [hUy, R] using hbase U hUb
               have hyG : y ∈ M.E := hybase.subset_ground (Set.mem_insert _ _)
               have he : x = y :=
-                unique_admissible_insert (hbase F hF) (hbase B hB).indep
+                unique_admissible_insert (hbase F hF) hB
                   ha haB hx hy hxB hyB hxG hyG hTxset hOnly hOnly'
               exact (hne (hUy.trans (he ▸ hTx.symm))).elim
           · exact fun hn => (hn hTr).elim
@@ -455,7 +455,7 @@ private theorem signed_ridge_equation (z : Face c → ℤ)
 /-- Normalize a top integral cycle on the full-restriction facets. Each signed
 face then has coefficient zero, one, or minus one. -/
 theorem normalized_cycle_unit_coefficients (c : L → A) (B : Face c)
-    (hB : B.val ∈ facets c) (z : Face c → ℤ)
+    (z : Face c → ℤ)
     (hTop : ∀ S : Face c, S.val ∉ facets c → z S = 0)
     (hCycle : ∀ R : Face c, ∑ T : Face c, boundary c R T * z T = 0)
     (hNorm : ∀ S : Face c, S.val ∈ facets c → restrictionFace c S.val = S.val →
@@ -463,7 +463,10 @@ theorem normalized_cycle_unit_coefficients (c : L → A) (B : Face c)
     (S : Face c) : -1 ≤ z S ∧ z S ≤ 1 := by
   classical
   by_cases hS : S.val ∈ facets c
-  · have hBound := normalized_cycle_bound (signedMatroid c) (facets c)
+  · obtain ⟨F, hF, hFirst⟩ := exists_first_facet c ⟨S.val, hS⟩ B.property
+    have hB : (signedMatroid c).Indep (B.val : Set (L × Bool)) :=
+      ((facet_iff_base c F).mp (mem_facets.mp hF)).2.indep.subset hFirst.1
+    have hBound := normalized_cycle_bound (signedMatroid c) (facets c)
         (fun F hF => ((facet_iff_base c F).mp (mem_facets.mp hF)).2)
         B.val hB (extendFace z) (extendedBoundary c) ?_ ?_ ?_ S.val hS
     · simpa only [extendFace_apply] using hBound

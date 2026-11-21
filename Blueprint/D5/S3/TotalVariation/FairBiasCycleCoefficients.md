@@ -14,7 +14,7 @@ Lean statement: `D5/S3/TotalVariation/FairBiasCycleCoefficients.normalized_cycle
 
 *Commentary.*
 
-Fix a finite binary column family and an order on its signed labels. Take an integral cycle supported on the signed facets. Its coordinates on the full-restriction facets are one at the selected facet and zero elsewhere.
+Fix a finite binary column family and an order on its signed labels. Take an integral cycle supported on the signed facets and select an augmented face. The coefficient at each full-restriction facet is one if it equals the selected face, and zero otherwise.
 
 Call a member of a basis passive when a smaller element can replace it. At a basis with a nonpassive element, use the boundary equation on the ridge opposite the least such element. Its other cofaces come later and the exchange preserves passivity and makes the inserted element passive.
 
