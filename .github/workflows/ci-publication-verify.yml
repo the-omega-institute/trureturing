@@ -26,7 +26,7 @@ jobs:
   cache:
     name: verify cache publication and restore
     if: github.event_name == 'push' || (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')
-    runs-on: runner-for-trureturing-cache-release-publish
+    runs-on: ubuntu-24.04-arm
     # Cold and partial seed scenarios exercise the scheduled Release build.
     timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
     outputs:
@@ -171,7 +171,7 @@ jobs:
     name: Verify indexed Release recovery in a clean checkout
     needs: cache
     if: needs.cache.outputs.indexed-tag != ''
-    runs-on: runner-for-trureturing-cache-release-publish
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     strategy:
       fail-fast: false
