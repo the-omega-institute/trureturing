@@ -24,7 +24,7 @@ open OriginalFourMPeriodSource (dLip dPeriod dPeriod_eq_slit periodCorrection)
 open OriginalGaussianExternalAnalyticCandidate (b)
 open OriginalGaussianExternalSignedCandidate (h rho rationalT cauchy E K N)
 open OriginalFourMSlitMean (slitMean slitCovariance slitJ slitT)
-open private dPeriod_analyticAt dPeriod_ne_zero deriv_dPeriod_eq
+open private deriv_dPeriod_eq
   from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
 open private slitW mixedFree_joint
   from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitCovariance
@@ -81,10 +81,10 @@ theorem dLipCovariance_joint_analytic (upperA l k e f : Bool) {t : ℝ} (ht : 1 
       (0, 0, (t : ℂ)) :=
     (dLipMean_joint_analytic upperA f ht).comp_of_eq
       (f := fun p : Spatial => (p.2.1, p.2.2)) (by fun_prop) rfl
-  have hPeriod := dPeriod_analyticAt upperA ht
+  have hPeriod := OriginalFourMPeriodSource.dPeriod_analyticAt upperA ht
   have hCorr : AnalyticAt ℂ (dCorrection upperA) (t : ℂ) :=
     (((analyticAt_id.mul (analyticAt_const.sub analyticAt_id)).mul hPeriod.deriv).div
-      hPeriod (dPeriod_ne_zero upperA ht))
+      hPeriod (OriginalFourMPeriodSource.dPeriod_ne_zero upperA ht))
   have hc : AnalyticAt ℂ (fun p : Spatial => dCorrection upperA p.2.2) (0, 0, (t : ℂ)) :=
     hCorr.comp_of_eq (f := fun p : Spatial => p.2.2) (by fun_prop) rfl
   by_cases hlk : l = k

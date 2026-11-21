@@ -6,6 +6,7 @@
    utility: none
    digest: The original four-point covariance correction on the paired period lips. -/
 
+import Mathlib.Analysis.Analytic.IsolatedZeros
 import D5.S3.Analytic.OriginalHalfBinomialPfaffNome
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMActualChart
 
@@ -158,6 +159,11 @@ private theorem dLip_im_ne_zero {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upper
   · exact (show 0 < t.im from ht).ne'
   · exact (show t.im < 0 from ht).ne
 
+/-- The selected open D lip lies in the canonical double slit. -/
+theorem dLip_mem_doubleSlit {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
+    t ∈ doubleSlit :=
+  mem_doubleSlit_of_im (dLip_im_ne_zero ht)
+
 /-- The explicit D germ agrees with the frozen Euler period on the genuine
 adjacent open half-plane. -/
 theorem dPeriod_eq_slit {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
@@ -176,7 +182,7 @@ theorem dPeriod_eq_slit {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
       rw [lipSign, ← pfaffMap_eq t ht₀]
       exact tau_pfaff_upper hu
   have hp := slitPeriod_ne_zero (r := 1 - t)
-    (complement_mem (mem_doubleSlit_of_im (dLip_im_ne_zero ht)))
+    (complement_mem (dLip_mem_doubleSlit ht))
   rw [dPeriod, ← hj, tau, sub_sub_cancel]
   field_simp [hp, I_ne_zero]
 
@@ -199,7 +205,8 @@ private theorem real_d_aux {t : ℝ} (ht : 1 < t) :
     · simpa [sub_re] using sub_pos.mpr hInv
     · simpa [sub_re] using hi
 
-private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+/-- The continued D period is analytic at each real boundary point greater than one. -/
+theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     AnalyticAt ℂ (dPeriod upperA) (t : ℂ) := by
   have ht₀ : (t : ℂ) ≠ 0 := ofReal_ne_zero.mpr (by linarith)
   have h₁ : AnalyticAt ℂ (fun u : ℂ => 1 - u) (t : ℂ) :=
@@ -211,7 +218,8 @@ private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
   have hPeriod := (slitPeriod_analyticOnNhd _ h.1).comp (f := fun u : ℂ => 1 - u) h₁
   exact ((hRatio.add analyticAt_const).mul hPeriod).div_const
 
-private theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+/-- The continued D period is nonzero at each real boundary point greater than one. -/
+theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     dPeriod upperA (t : ℂ) ≠ 0 := by
   have him := tau_im_pos (real_d_aux ht).2
   have hs : tau (1 - (t : ℂ)⁻¹) + lipSign upperA ≠ 0 := by
@@ -252,6 +260,29 @@ private theorem dLip_neBot (upperA : Bool) (t : ℝ) :
       have hv' : 0 < v := hv
       cases upperA <;> simpa [path, s, dLip, add_im, mul_im] using hv'
   exact (show (Filter.map path (𝓝[>] (0 : ℝ))).NeBot from inferInstance).mono hp
+
+/-- A real germ comparison at the D boundary determines a full complex germ
+at an interior point of the selected lip. -/
+theorem eq_near_dLip_of_real_germ {F G D : ℂ → ℂ} (upperA : Bool) {t : ℝ}
+    (hF : AnalyticAt ℂ F (t : ℂ)) (hG : AnalyticAt ℂ G (t : ℂ))
+    (hReal : ∀ᶠ s : ℝ in 𝓝 t, F (s : ℂ) = G (s : ℂ))
+    (hLip : G =ᶠ[𝓝[dLip upperA] (t : ℂ)] D) :
+    ∃ u ∈ dLip upperA, F =ᶠ[𝓝 u] D := by
+  have hCast : Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[≠] t) (𝓝[≠] (t : ℂ)) := by
+    apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+    · exact Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with s hs
+      simpa only [mem_compl_iff, mem_singleton_iff, Complex.ofReal_inj] using hs
+  have hEq : F =ᶠ[𝓝 (t : ℂ)] G :=
+    (hF.frequently_eq_iff_eventually_eq hG).mp
+      (hCast.frequently (hReal.filter_mono nhdsWithin_le_nhds).frequently)
+  have he : F =ᶠ[𝓝[dLip upperA] (t : ℂ)] D :=
+    (hEq.filter_mono nhdsWithin_le_nhds).trans hLip
+  have : (𝓝[dLip upperA] (t : ℂ)).NeBot := dLip_neBot upperA t
+  obtain ⟨u, huEq, hu⟩ :=
+    ((eventually_eventually_nhdsWithin.mpr he).and self_mem_nhdsWithin).exists
+  rw [(isOpen_dLip upperA).nhdsWithin_eq hu] at huEq
+  exact ⟨u, hu, huEq⟩
 
 private theorem chartD_complementary_correction (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     periodCorrection slitPeriod (1 - (t : ℂ)) + periodCorrection (dPeriod upperA) t =

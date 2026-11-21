@@ -53,7 +53,7 @@ private theorem phaseOrbit_nat (n : ℕ) : phaseOrbit (n : ℝ) = phaseOrbit 1 ^
   funext k
   simp only [phaseOrbit, Pi.pow_apply, one_mul, Circle.exp_natCast_mul]
 
-private theorem phaseOrbit_cluster_iff (h : ℕ → Circle) :
+theorem phaseOrbit_cluster_iff (h : ℕ → Circle) :
     MapClusterPt h atTop phaseOrbit ↔ h ∈ closure (range phaseOrbit) := by
   constructor
   · intro hc
@@ -72,7 +72,7 @@ private theorem phaseOrbit_cluster_iff (h : ℕ → Circle) :
     apply MapClusterPt.of_comp hcofinal
     simpa only [mul_one, Function.comp_def, phaseOrbit_add, phaseOrbit_nat] using hrec
 
-private theorem phaseProfile_continuous (realPart : ℂ → ℝ) (β : ℝ) :
+theorem phaseProfile_continuous (realPart : ℂ → ℝ) (β : ℝ) :
     Continuous (fun q : (ℕ → Circle) × ℝ => phaseProfile realPart β q.1 q.2) := by
   apply Continuous.neg
   apply Complex.continuous_re.comp
@@ -84,7 +84,7 @@ private theorem phaseProfile_continuous (realPart : ℂ → ℝ) (β : ℝ) :
   · rfl
   · simpa only [norm_zero] using norm_nonneg (actualCoeff k)
 
-private theorem phaseWindow_continuous (β W : ℝ) : Continuous (phaseWindow Complex.re β W) := by
+theorem phaseWindow_continuous (β W : ℝ) : Continuous (phaseWindow Complex.re β W) := by
   exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
     (continuous_exp_weight β |>.mul
       (((phaseProfile_continuous Complex.re β).comp
@@ -112,10 +112,10 @@ theorem phaseProfile_on_orbit (β t u : ℝ) :
       simp [Complex.mul_re, Complex.mul_im, hk]
   · simp
 
-private def signedInput (β u : ℝ) : ℝ :=
+def signedInput (β u : ℝ) : ℝ :=
   Real.exp ((1 - β) * u) * primeTail (Real.exp u)
 
-private theorem signedInput_approx {β : ℝ} (hβ₀ : 0 < β) (hβ : 1 / 2 < β)
+theorem signedInput_approx {β : ℝ} (hβ₀ : 0 < β) (hβ : 1 / 2 < β)
     (hmax : ∀ k, (actualZero k).re ≤ β) :
     Tendsto (fun u : ℝ => signedInput β u +
       (maximalSeries actualCoeff actualZero β u).re) atTop (𝓝 0) := by
@@ -125,7 +125,7 @@ private theorem signedInput_approx {β : ℝ} (hβ₀ : 0 < β) (hβ : 1 / 2 < �
   unfold signedInput
   ring
 
-private theorem primeMass_exp_substitution (β W t : ℝ) (hW : 0 ≤ W) (ht : W ≤ t) :
+theorem primeMass_exp_substitution (β W t : ℝ) (hW : 0 ≤ W) (ht : W ≤ t) :
     (∫ x in Real.exp t * Real.exp (-W)..Real.exp t, max (-primeTail x) 0 / Real.sqrt x) /
       (Real.exp t) ^ (β - 1 / 2) =
     ∫ s in 0..W, Real.exp (-(β - 1 / 2) * s) * max (-signedInput β (t - s)) 0 := by
@@ -170,7 +170,7 @@ private theorem primeMass_exp_substitution (β W t : ℝ) (hW : 0 ≤ W) (ht : W
       ring
 
 /-- An arbitrarily small tail error bounds every late window by the same integrated weight. -/
-private theorem window_transfer {β W : ℝ} (hW : 0 ≤ W)
+theorem window_transfer {β W : ℝ} (hW : 0 ≤ W)
     (happrox : Tendsto (fun u : ℝ => signedInput β u +
       (maximalSeries actualCoeff actualZero β u).re) atTop (𝓝 0)) :
     Tendsto (fun t : ℝ =>
@@ -235,7 +235,7 @@ private theorem window_transfer {β W : ℝ} (hW : 0 ≤ W)
         δ * K < δ * (K + 1) := mul_lt_mul_of_pos_left (lt_add_one K) hδ
         _ = ε := div_mul_cancel₀ _ hK₁.ne'
 
-private theorem mapClusterPt_of_sub_tendsto_zero {f g : ℝ → ℝ} {y : ℝ}
+theorem mapClusterPt_of_sub_tendsto_zero {f g : ℝ → ℝ} {y : ℝ}
     (hfg : Tendsto (fun t => f t - g t) atTop (𝓝 0))
     (hf : MapClusterPt y atTop f) : MapClusterPt y atTop g := by
   refine (Metric.nhds_basis_ball.mapClusterPt_iff_frequently.mp hf |> fun h =>

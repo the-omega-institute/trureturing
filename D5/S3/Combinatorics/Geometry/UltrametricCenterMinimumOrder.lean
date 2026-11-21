@@ -51,9 +51,10 @@ private theorem center_finite {X : Type} [Finite X] [MetricSpace X] (p : X) : (c
   (Set.finite_range _).subset (center_subset_dists p)
 
 /-- Points within distance `< m` of `p`. -/
-private abbrev inner {X : Type} [MetricSpace X] (p : X) (m : ℝ) : Type := {y : X // dist p y < m}
+abbrev inner {X : Type} [MetricSpace X] (p : X) (m : ℝ) : Type := {y : X // dist p y < m}
 
-private theorem center_sub {X : Type} [MetricSpace X] [IsUltrametricDist X] (p : X) {m : ℝ}
+/-- Below the diameter `m`, the open `m`-ball around `p` keeps every central value other than `m`. -/
+theorem center_sub {X : Type} [MetricSpace X] [IsUltrametricDist X] (p : X) {m : ℝ}
     (hm : ∀ x y : X, dist x y ≤ m) :
     center X \ {m} ⊆ center (inner p m) := by
   rintro t ⟨⟨ht0, h⟩, htm⟩

@@ -143,7 +143,8 @@ private lemma edges_split {a D : ℝ} (haD : a < D) (hC : center X = {0, a, D}) 
 
 omit [IsUltrametricDist X] in
 open Classical in
-private lemma mem_lengthEdges_iff {t : ℝ} (x y : X) :
+/-- Membership among the central edges of length `t`. -/
+lemma mem_lengthEdges_iff {t : ℝ} (x y : X) :
     s(x, y) ∈ lengthEdges X t ↔ (centralGraph X).Adj x y ∧ dist x y = t := by
   unfold lengthEdges
   rw [Finset.mem_filter, SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet]
@@ -152,7 +153,7 @@ private lemma mem_lengthEdges_iff {t : ℝ} (x y : X) :
 omit [IsUltrametricDist X] in
 open Classical in
 /-- A diameter edge is a central edge of length `D`. -/
-private lemma mem_lengthEdges_D {D : ℝ} (hD : D ∈ center X) {u v : X} (huv : u ≠ v)
+lemma mem_lengthEdges_D {D : ℝ} (hD : D ∈ center X) {u v : X} (huv : u ≠ v)
     (h : dist u v = D) : s(u, v) ∈ lengthEdges X D := by
   rw [mem_lengthEdges_iff]
   refine ⟨?_, h⟩
@@ -175,7 +176,8 @@ private lemma mem_image_pairs [Fintype X] [DecidableEq X] (A : Finset X) (x y : 
       exact ⟨y, x, ⟨hy, hx⟩, Or.inr ⟨rfl, rfl⟩⟩
 
 omit [Fintype X] [MetricSpace X] [IsUltrametricDist X] in
-private lemma image_pairs_card [Fintype X] [DecidableEq X] (A : Finset X) :
+/-- The pairs across a set and its complement number `|A| |Aᶜ|`. -/
+lemma image_pairs_card [Fintype X] [DecidableEq X] (A : Finset X) :
     ((A ×ˢ Aᶜ).image (fun q => s(q.1, q.2))).card = A.card * Aᶜ.card := by
   rw [Finset.card_image_of_injOn, Finset.card_product]
   rintro ⟨u, v⟩ huv ⟨u', v'⟩ huv' h

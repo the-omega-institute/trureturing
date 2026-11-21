@@ -427,12 +427,10 @@ private lemma zetaOne_is_solution {L : ℂ → ℂ} {s : ℂ} (hs : 1 < s.re)
   field_simp [hs0, sub_ne_zero.mpr hs1, hζ]
   ring
 
-/-- The growth exponent bounds the real part of every zero of the actual zeta function. -/
-theorem zeta_zero_re_le_of_signedPrimePrimitive_exponent {β : ℝ}
-    (hβ : 1 / 2 ≤ β) (hβ1 : β < 1) (h : HasExponentBound β signedPrimePrimitive)
+private theorem zeta_zero_re_le_of_complete_transform {β : ℝ} (hβ1 : β < 1)
+    {L : ℂ → ℂ} (hL : AnalyticOnNhd ℂ L {s : ℂ | β < s.re})
+    (hMatch : ∀ s : ℂ, 1 < s.re → L s = CompleteMangoldtLaurent.transform s)
     {ρ : ℂ} (hρ : riemannZeta ρ = 0) : ρ.re ≤ β := by
-  have hF := completePrimitive_growth hβ h
-  let L := continuedTransform
   let G := odeCoefficient L
   let H : Set ℂ := {s | β < s.re}
   have hH : IsOpen H := isOpen_lt continuous_const Complex.continuous_re
@@ -446,7 +444,7 @@ theorem zeta_zero_re_le_of_signedPrimePrimitive_exponent {β : ℝ}
       (analyticAt_const.mul analyticAt_id).sub analyticAt_const
     exact hlinear.sub
       ((analyticAt_id.mul (analyticAt_id.sub analyticAt_const)).mul
-        (continuedTransform_analytic hF s hs))
+        (hL s hs))
   have htwo : 1 < (2 : ℂ).re := by norm_num
   have htwo1 : (2 : ℂ) ≠ 1 := by norm_num
   have hbase : riemannZeta₁ 2 ≠ 0 := by
@@ -455,12 +453,20 @@ theorem zeta_zero_re_le_of_signedPrimePrimitive_exponent {β : ℝ}
   have hlocal : deriv riemannZeta₁ =ᶠ[𝓝 (2 : ℂ)] (fun s => G s * riemannZeta₁ s) := by
     filter_upwards [(isOpen_lt continuous_const Complex.continuous_re).mem_nhds htwo]
       with s hs
-    exact zetaOne_is_solution hs (continuedTransform_eq hβ1.le hF hs)
+    exact zetaOne_is_solution hs (hMatch s hs)
   have hfree := (local_logarithmic_equation_zero_free hH hconn hζ hG
     (show (2 : ℂ) ∈ H from hβ1.trans htwo) hbase hlocal).2
   by_contra! hr
   have hρ1 : ρ ≠ 1 := fun he => riemannZeta_one_ne_zero (he ▸ hρ)
   exact hfree ρ hr (by rw [zetaOne_eq hρ1, hρ, mul_zero])
+
+/-- The growth exponent bounds the real part of every zero of the actual zeta function. -/
+theorem zeta_zero_re_le_of_signedPrimePrimitive_exponent {β : ℝ}
+    (hβ : 1 / 2 ≤ β) (hβ1 : β < 1) (h : HasExponentBound β signedPrimePrimitive)
+    {ρ : ℂ} (hρ : riemannZeta ρ = 0) : ρ.re ≤ β := by
+  have hF := completePrimitive_growth hβ h
+  exact zeta_zero_re_le_of_complete_transform hβ1 (continuedTransform_analytic hF)
+    (fun _ hs => continuedTransform_eq hβ1.le hF hs) hρ
 
 /-- A fixed polynomial factor allows the same zero boundary, including at beta = 1/2. -/
 private theorem zeta_zero_re_le_of_signedPrimePrimitive_polynomial {β : ℝ} {m : ℕ}
@@ -797,38 +803,55 @@ private lemma primitiveContinuation_eq {s : ℂ} (hs : 1 < s.re) :
   dsimp [continuedTransform]
   ring
 
-/-- A single affine majorant of a nonzero multiple of the complete primitive
-suffices to continue the complete Mangoldt transform across the full right half-strip. -/
-private theorem complete_transform_of_one_sided_bound {c A B : ℝ} (hc : c ≠ 0)
-    (h : ∀ᶠ t in atTop, c * completePrimitive t ≤ A * t + B) :
-    ∃ L : ℂ → ℂ, AnalyticOnNhd ℂ L {s : ℂ | 1 / 2 < s.re} ∧
+private def normalizedPrimitive (β t : ℝ) : ℝ :=
+  Real.exp (-(β - 1 / 2) * t) * completePrimitive t
+
+private lemma normalizedPrimitive_kernel (β : ℝ) (s : ℂ) :
+    EulerPoleObstruction.kernel (normalizedPrimitive β) (s - β) =
+      EulerPoleObstruction.kernel completePrimitive (s - 1 / 2) := by
+  funext t
+  simp only [EulerPoleObstruction.kernel, normalizedPrimitive, Complex.ofReal_mul,
+    Complex.ofReal_exp, Complex.ofReal_neg, Complex.ofReal_sub, ← mul_assoc, ← Complex.exp_add]
+  push_cast
+  congr 2
+  ring
+
+/-- An affine majorant after exponential normalization continues the complete
+Mangoldt transform to the open half-plane at the normalization exponent. -/
+private theorem complete_transform_of_one_sided_bound {β c A B : ℝ}
+    (hβ : 1 / 2 ≤ β) (hβ1 : β < 1) (hc : c ≠ 0)
+    (h : ∀ᶠ t in atTop, c * normalizedPrimitive β t ≤ A * t + B) :
+    ∃ L : ℂ → ℂ, AnalyticOnNhd ℂ L {s : ℂ | β < s.re} ∧
       ∀ s : ℂ, 1 < s.re → L s = CompleteMangoldtLaurent.transform s := by
   have hHead (s : ℂ) : AnalyticAt ℂ completeHead s :=
     (EulerPoleObstruction.finiteHead_entire
       (U_exp_continuous.integrableOn_Icc.mono_set Ioc_subset_Icc_self)).analyticAt s
   have hden (s : ℂ) : AnalyticAt ℂ (fun z : ℂ => z - 1 / 2) s :=
     analyticAt_id.sub analyticAt_const
-  have hmer : MeromorphicOn primitiveContinuation {s : ℂ | 1 / 2 < s.re} := by
+  have hmer : MeromorphicOn primitiveContinuation {s : ℂ | β < s.re} := by
     intro s hs
-    have hRe : 0 < s.re := lt_trans (by norm_num) hs
+    have hRe : 0 < s.re := lt_trans (by norm_num) (hβ.trans_lt hs)
     exact ((CompleteMangoldtRealRegular.continuation.1 s hRe).sub
       (hHead s).meromorphicAt).div (hden s).meromorphicAt
-  have hreal (x : ℝ) (hx : 1 / 2 < x) : AnalyticAt ℂ primitiveContinuation (x : ℂ) := by
+  have hreal (x : ℝ) (hx : β < x) : AnalyticAt ℂ primitiveContinuation (x : ℂ) := by
     have hne : (x : ℂ) - 1 / 2 ≠ 0 := Complex.ne_zero_of_re_pos (by
       rw [sub_half_re, Complex.ofReal_re]
-      exact sub_pos.mpr hx)
+      exact sub_pos.mpr (hβ.trans_lt hx))
     exact ((CompleteMangoldtRealRegular.continuation.2.1 x (by linarith)).sub
       (hHead x)).div (hden x) hne
-  have hhalf : ((1 / 2 : ℝ) : ℂ) = 1 / 2 := by push_cast; rfl
+  have hcont : Continuous (normalizedPrimitive β) :=
+    (show Continuous (fun t : ℝ => Real.exp (-(β - 1 / 2) * t)) by fun_prop).mul
+      completePrimitive_continuous
   obtain ⟨P, hP, hMatch⟩ :=
     PositiveLaplaceContinuation.analytic_continuation_of_affine_bound
-      (a := 1 / 2) (b := 1) cutoff_nonneg (by norm_num) completePrimitive_continuous hc h
+      (a := β) (b := 1) cutoff_nonneg hβ1 hcont hc h
       (fun s hs => by
-        rw [hhalf]
+        rw [normalizedPrimitive_kernel]
         exact (damped_primitive completePrimitive_unconditional_growth hs).1)
       (fun s hs => by
-        rw [hhalf]
-        change primitiveContinuation s = primitiveLaplace s
+        change primitiveContinuation s =
+          ∫ t in Ioi cutoff, EulerPoleObstruction.kernel (normalizedPrimitive β) (s - β) t
+        rw [normalizedPrimitive_kernel]
         exact primitiveContinuation_eq hs) hmer hreal
   refine ⟨fun s => completeHead s + (s - 1 / 2) * P s, ?_, ?_⟩
   · intro s hs
@@ -838,36 +861,59 @@ private theorem complete_transform_of_one_sided_bound {c A B : ℝ} (hc : c ≠ 
     rw [hMatch s hs, primitiveContinuation_eq hs]
     exact continuedTransform_eq le_rfl completePrimitive_unconditional_growth hs
 
-private theorem rh_of_completePrimitive_one_sided_bound {c A B : ℝ} (hc : c ≠ 0)
-    (h : ∀ᶠ t in atTop, c * completePrimitive t ≤ A * t + B) :
-    RiemannHypothesis := by
-  obtain ⟨L, hL, hMatch⟩ := complete_transform_of_one_sided_bound hc h
-  let G := odeCoefficient L
-  let S : Set ℂ := {s | 1 / 2 < s.re}
-  have hS : IsOpen S := isOpen_lt continuous_const Complex.continuous_re
-  have hconn : IsPreconnected S := (convex_halfSpace_re_gt (1 / 2)).isPreconnected
-  have hζ : AnalyticOnNhd ℂ riemannZeta₁ S :=
-    fun s _ => differentiable_riemannZeta₁.analyticAt s
-  have hG : AnalyticOnNhd ℂ G S := by
-    intro s hs
-    have hlinear : AnalyticAt ℂ
-        (fun z : ℂ => ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) * z - 1) s :=
-      (analyticAt_const.mul analyticAt_id).sub analyticAt_const
-    exact hlinear.sub ((analyticAt_id.mul (analyticAt_id.sub analyticAt_const)).mul (hL s hs))
-  have htwo : 1 < (2 : ℂ).re := by norm_num
-  have htwo1 : (2 : ℂ) ≠ 1 := by norm_num
-  have hbase : riemannZeta₁ 2 ≠ 0 := by
-    rw [zetaOne_eq htwo1]
-    exact mul_ne_zero (sub_ne_zero.mpr htwo1) (riemannZeta_ne_zero_of_one_lt_re htwo)
-  have hlocal : deriv riemannZeta₁ =ᶠ[𝓝 (2 : ℂ)] (fun s => G s * riemannZeta₁ s) := by
-    filter_upwards [(isOpen_lt continuous_const Complex.continuous_re).mem_nhds htwo] with s hs
-    exact zetaOne_is_solution hs (hMatch s hs)
-  have hfree := (local_logarithmic_equation_zero_free hS hconn hζ hG
-    (show (2 : ℂ) ∈ S by norm_num [S]) hbase hlocal).2
-  apply golden_right_half_strip_implies_rh
-  intro ρ hρ hright _
-  have hρ1 : ρ ≠ 1 := fun he => riemannZeta_one_ne_zero (he ▸ hρ)
-  exact hfree ρ hright (by rw [zetaOne_eq hρ1, hρ, mul_zero])
+private lemma normalized_correction_le {β c D K T : ℝ} (hβ : 1 / 2 ≤ β) (hT : 0 ≤ T)
+    {E : ℝ} (hE : |E| ≤ D * T) :
+    Real.exp (-(β - 1 / 2) * T) * (-c * (E - K)) ≤ |c| * D * T + |c| * |K| := by
+  let w := Real.exp (-(β - 1 / 2) * T)
+  have hw : w ≤ 1 := Real.exp_le_one_iff.mpr
+    (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (sub_nonneg.mpr hβ)) hT)
+  calc
+    _ ≤ w * |-c * (E - K)| :=
+      mul_le_mul_of_nonneg_left (le_abs_self _) (Real.exp_nonneg _)
+    _ ≤ 1 * |-c * (E - K)| := mul_le_mul_of_nonneg_right hw (abs_nonneg _)
+    _ ≤ |c| * (D * T + |K|) := by
+      rw [one_mul, abs_mul, abs_neg]
+      exact mul_le_mul_of_nonneg_left ((abs_sub _ _).trans (add_le_add hE le_rfl))
+        (abs_nonneg _)
+    _ = _ := by ring
+
+/-- An exact exponential-affine upper bound on any nonzero multiple of the
+actual signed prime-tail primitive from 5040 bounds every zeta zero. -/
+theorem zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040 {β c A B : ℝ}
+    (hβ : 1 / 2 ≤ β) (hβ1 : β < 1) (hc : c ≠ 0) {ρ : ℂ} :
+    let observations :=
+      ((fun T : ℝ => ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x),
+        riemannZeta ρ)
+    (∀ᶠ T in atTop, c * observations.1 T ≤ Real.exp ((β - 1 / 2) * T) * (A * T + B)) →
+      observations.2 = 0 → ρ.re ≤ β := by
+  dsimp only
+  intro h hρ
+  obtain ⟨D, _, herror⟩ := primitive_prime_power_bound
+  let K : ℝ := ∫ x in 2..(5040 : ℝ), primeTail x / Real.sqrt x
+  have hnorm : ∀ᶠ T in atTop, -c * normalizedPrimitive β T ≤
+      (A + |c| * D) * T + (B + |c| * |K|) := by
+    filter_upwards [h, eventually_ge_atTop cutoff, eventually_ge_atTop (Real.log 5040)]
+      with T hbound ht ha
+    let F : ℝ := ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x
+    let w := Real.exp (-(β - 1 / 2) * T)
+    have hw : 0 ≤ w := Real.exp_nonneg _
+    have hinv : w * Real.exp ((β - 1 / 2) * T) = 1 := by
+      dsimp [w]
+      rw [← Real.exp_add, show -(β - 1 / 2) * T + (β - 1 / 2) * T = 0 by ring, Real.exp_zero]
+    have hscaled : w * (c * F) ≤ A * T + B := by
+      change c * F ≤ _ at hbound
+      simpa only [← mul_assoc, hinv, one_mul] using mul_le_mul_of_nonneg_left hbound hw
+    have herr := herror T ht
+    rw [signedPrimePrimitive_eq_from_5040 ha, Real.norm_eq_abs] at herr
+    change |completePrimitive T + (K + F)| ≤ D * T at herr
+    have hcorr := normalized_correction_le (c := c) (K := K) hβ (cutoff_nonneg.trans ht) herr
+    change -c * (w * completePrimitive T) ≤ _
+    calc
+      _ = w * (c * F) + w * (-c * (completePrimitive T + (K + F) - K)) := by ring
+      _ ≤ (A * T + B) + (|c| * D * T + |c| * |K|) := add_le_add hscaled hcorr
+      _ = _ := by ring
+  obtain ⟨L, hL, hMatch⟩ := complete_transform_of_one_sided_bound hβ hβ1 (neg_ne_zero.mpr hc) hnorm
+  exact zeta_zero_re_le_of_complete_transform hβ1 hL hMatch hρ
 
 /-- Either eventual affine bound on the signed actual theta-tail integral
 starting at 5040 is equivalent to the Riemann hypothesis. -/
@@ -877,7 +923,6 @@ theorem rh_iff_signedPrimePrimitive_affine_bounds_from_5040 :
     (RiemannHypothesis ↔ ∃ A B : ℝ, ∀ᶠ T in atTop,
       A * T + B ≤ (∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x)) := by
   let F (T : ℝ) := ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x
-  let K : ℝ := ∫ x in 2..(5040 : ℝ), primeTail x / Real.sqrt x
   have hRHBounds (hRH : RiemannHypothesis) :
       ∀ᶠ T in atTop, -3 * T ≤ F T ∧ F T ≤ -T := by
     have hSlope := rh_iff_signedPrimePrimitive_slope_from_5040.mp hRH
@@ -888,32 +933,29 @@ theorem rh_iff_signedPrimePrimitive_affine_bounds_from_5040 :
       eventually_gt_atTop (0 : ℝ)] with T hl hu ht
     exact ⟨(lt_div_iff₀ ht).mp hl |>.le,
       (div_lt_iff₀ ht).mp hu |>.le.trans_eq (neg_one_mul T)⟩
-  obtain ⟨D, _, hD⟩ := primitive_prime_power_bound
-  have herror : ∀ᶠ T in atTop,
-      -(D * T) ≤ completePrimitive T + (K + F T) ∧
-        completePrimitive T + (K + F T) ≤ D * T := by
-    filter_upwards [eventually_ge_atTop cutoff, eventually_ge_atTop (Real.log 5040)] with T hc ha
-    have he := hD T hc
-    rw [signedPrimePrimitive_eq_from_5040 ha, Real.norm_eq_abs] at he
-    exact abs_le.mp he
+  have hhalf : (1 / 2 : ℝ) < 1 := by norm_num
   constructor
   · constructor
     · exact fun h => ⟨-1, 0, (hRHBounds h).mono fun T ht => by simpa using ht.2⟩
     · rintro ⟨A, B, h⟩
-      apply rh_of_completePrimitive_one_sided_bound
-        (c := -1) (A := A + D) (B := B + K) (by norm_num)
-      filter_upwards [h, herror] with T ht he
-      change F T ≤ A * T + B at ht
-      linarith [he.1]
+      apply golden_right_half_strip_implies_rh
+      intro ρ hρ hright _
+      exact (not_lt_of_ge (zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040
+        le_rfl hhalf one_ne_zero (A := A) (B := B)
+        (h.mono fun T ht => by
+          simpa only [one_mul, sub_self, zero_mul, Real.exp_zero] using ht) hρ)) hright
   · constructor
     · exact fun h => ⟨-3, 0, (hRHBounds h).mono fun T ht => by simpa using ht.1⟩
     · rintro ⟨A, B, h⟩
-      apply rh_of_completePrimitive_one_sided_bound
-        (c := 1) (A := D - A) (B := -B - K) one_ne_zero
-      filter_upwards [h, herror] with T ht he
-      change A * T + B ≤ F T at ht
-      linarith [he.2]
+      apply golden_right_half_strip_implies_rh
+      intro ρ hρ hright _
+      exact (not_lt_of_ge (zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040
+        le_rfl hhalf (c := -1) (by norm_num) (A := -A) (B := -B)
+        (h.mono fun T ht => by
+          simp only [sub_self, zero_mul, Real.exp_zero, one_mul, neg_one_mul]
+          linarith) hρ)) hright
 
+#print axioms zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040
 #print axioms zeta_zero_re_le_of_signedPrimePrimitive_exponent
 #print axioms rh_iff_signedPrimePrimitive_slope_from_5040
 #print axioms rh_iff_signedPrimePrimitive_affine_bounds_from_5040

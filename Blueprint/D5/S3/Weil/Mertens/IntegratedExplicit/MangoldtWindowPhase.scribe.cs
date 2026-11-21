@@ -40,8 +40,14 @@ internal sealed class MangoldtWindowPhaseDocument : IScribeDocumentDefinition
                     + "places a positive peak at time j between log Y and b log Y for "
                     + "every sufficiently large Y. Indeed, round log Y up to n and allow "
                     + "the fixed number of additional steps. At x = exp j one has "
-                    + "U(x) > C√x, which contradicts the assumed whole-window inequality. "
-                    + "The case C = M remains open here."))), DescribeRole.Theorem))));
+                    + "U(x) > C√x, which contradicts the assumed whole-window inequality.")),
+                    Paragraph(Text("At C = M, the critical-gap theorem gives "
+                        + "M√x − U(x) → +∞ under RH. Thus U(x) ≤ M√x on every sufficiently "
+                        + "late window. Conversely, arbitrarily late windows with coefficient M "
+                        + "also admit coefficient M+1, so the square-root window criterion gives RH."))),
+                DescribeRole.Theorem)),
+        [DocumentEdge.NarrativeReference.ToDocument(
+            GidRef.Create("D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtCriticalGap"))]));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
     private static Formula Nat => F.Seq(F.Mathbb, F.Grp(F.Id("N")));

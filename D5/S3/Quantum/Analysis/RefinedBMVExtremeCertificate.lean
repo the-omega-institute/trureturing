@@ -119,26 +119,38 @@ def q [Add R] [Sub R] [Mul R] [Pow R Nat] [NatCast R] [Zero R] (p : ℕ) (a x y 
   defect p a a y * defect p x x y
 
 /-- The defect contribution to the numerator of the first partial derivative. -/
+noncomputable def _root_.RefinedBMV.Extreme.XAt (p : ℕ) (a x y : ℝ) : ℝ :=
+  2 * defect p a x x * deriv (fun t => defect p a t y) x -
+    deriv (fun t => defect p a t t) x * defect p a x y
+
 noncomputable def _root_.RefinedBMV.Extreme.X (a x y : ℝ) : ℝ :=
-  2 * defect 5 a x x * deriv (fun t => defect 5 a t y) x -
-    deriv (fun t => defect 5 a t t) x * defect 5 a x y
+  RefinedBMV.Extreme.XAt 5 a x y
 
 /-- The radicand contribution to the numerator of the first partial derivative. -/
+noncomputable def _root_.RefinedBMV.Extreme.UAt (p : ℕ) (a x y : ℝ) : ℝ :=
+  defect p a x x * deriv (fun t => q p a t y) x -
+    deriv (fun t => defect p a t t) x * q p a x y
+
 noncomputable def _root_.RefinedBMV.Extreme.U (a x y : ℝ) : ℝ :=
-  defect 5 a x x * deriv (fun t => q 5 a t y) x -
-    deriv (fun t => defect 5 a t t) x * q 5 a x y
+  RefinedBMV.Extreme.UAt 5 a x y
 
 /-- The defect contribution to the numerator of the second partial derivative. -/
+noncomputable def _root_.RefinedBMV.Extreme.YAt (p : ℕ) (a x y : ℝ) : ℝ :=
+  2 * defect p a y y * deriv (defect p a x) y -
+    deriv (fun t => defect p a t t) y * defect p a x y
+
 noncomputable def _root_.RefinedBMV.Extreme.Y (a x y : ℝ) : ℝ :=
-  2 * defect 5 a y y * deriv (defect 5 a x) y -
-    deriv (fun t => defect 5 a t t) y * defect 5 a x y
+  RefinedBMV.Extreme.YAt 5 a x y
 
 /-- The radicand contribution to the numerator of the second partial derivative. -/
-noncomputable def _root_.RefinedBMV.Extreme.V (a x y : ℝ) : ℝ :=
-  defect 5 a y y * deriv (q 5 a x) y -
-    deriv (fun t => defect 5 a t t) y * q 5 a x y
+noncomputable def _root_.RefinedBMV.Extreme.VAt (p : ℕ) (a x y : ℝ) : ℝ :=
+  defect p a y y * deriv (q p a x) y -
+    deriv (fun t => defect p a t t) y * q p a x y
 
-open RefinedBMV.Extreme (X U Y V)
+noncomputable def _root_.RefinedBMV.Extreme.V (a x y : ℝ) : ℝ :=
+  RefinedBMV.Extreme.VAt 5 a x y
+
+open RefinedBMV.Extreme (X U Y V XAt UAt YAt VAt)
 
 /-- The contribution of the mixed defect to the mixed derivative numerator. -/
 noncomputable def Z (p : ℕ) (a x y : ℝ) : ℝ :=
@@ -243,18 +255,18 @@ private theorem qyPolynomial_dx (p : ℕ) (a x y : ℝ) :
 private theorem qPolynomial_eq (p : ℕ) (a x y : ℝ) : qPolynomial p a x y = q p a x y := by
   simp only [qPolynomial, q, partial_zero, Shape.args]
 
-private theorem edgePolynomials_eq (a x y : ℝ) :
-    xPolynomial 5 a x y = X a x y ∧ uPolynomial 5 a x y = U a x y ∧
-    yPolynomial 5 a x y = Y a x y ∧ vPolynomial 5 a x y = V a x y := by
-  have hrx := (partial_dx 5 .xx false a x y).deriv
-  have hry := (partial_dy 5 .yy false a x y).deriv
-  have hdx := (partial_dx 5 .mixed false a x y).deriv
-  have hdy := (partial_dy 5 .mixed false a x y).deriv
-  have hqx := (qPolynomial_dx 5 a x y).deriv
-  have hqy := (qPolynomial_dy 5 a x y).deriv
+private theorem edgePolynomials_eq (p : ℕ) (a x y : ℝ) :
+    xPolynomial p a x y = XAt p a x y ∧ uPolynomial p a x y = UAt p a x y ∧
+    yPolynomial p a x y = YAt p a x y ∧ vPolynomial p a x y = VAt p a x y := by
+  have hrx := (partial_dx p .xx false a x y).deriv
+  have hry := (partial_dy p .yy false a x y).deriv
+  have hdx := (partial_dx p .mixed false a x y).deriv
+  have hdy := (partial_dy p .mixed false a x y).deriv
+  have hqx := (qPolynomial_dx p a x y).deriv
+  have hqy := (qPolynomial_dy p a x y).deriv
   simp only [partial_zero, Shape.args] at hrx hry hdx hdy
   simp only [qPolynomial_eq] at hqx hqy
-  simp [xPolynomial, uPolynomial, yPolynomial, vPolynomial, X, U, Y, V,
+  simp [xPolynomial, uPolynomial, yPolynomial, vPolynomial, XAt, UAt, YAt, VAt,
     partial_zero, Shape.args, qPolynomial_eq, hrx, hry, hdx, hdy, hqx, hqy]
 
 private theorem zPolynomial_eq (p : ℕ) (a x y : ℝ) : zPolynomial p a x y = Z p a x y := by
@@ -298,26 +310,28 @@ private theorem shape_degree (shape : Shape) (i j k : ℕ) :
       (shape.exponents (i, j, k)).2.2 = i + j + k := by
   cases shape <;> simp [Shape.exponents] <;> omega
 
-/-- Each derivative contributes a factor at most 15. Each input has norm at most 3. -/
-private abbrev monomialBudget : ℕ := 225 * 3 ^ 15
-private abbrev defectBudget : ℕ := 42 * monomialBudget
+/-- Each derivative contributes a factor at most the total degree. -/
+private abbrev monomialBudget (d : ℕ) : ℕ := d * d * 3 ^ d
 
-private theorem monomial_bound {a x y : Sparse}
+private abbrev defectBudget (p : ℕ) : ℕ :=
+  2 * (gaps p).length * monomialBudget (3 * p)
+
+private theorem monomial_bound {d : ℕ} (hd₀ : 0 < d) {a x y : Sparse}
     (ha : Controlled a.terms 1 3) (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3)
-    (dx dy : Bool) (g : Exponents) (hd : g.1 + g.2.1 + g.2.2 = 15) :
-    Controlled (monomial dx dy a x y g).terms (15 - dx.toNat - dy.toNat) monomialBudget := by
+    (dx dy : Bool) (g : Exponents) (hd : g.1 + g.2.1 + g.2.2 = d) :
+    Controlled (monomial dx dy a x y g).terms (d - dx.toNat - dy.toNat) (monomialBudget d) := by
   unfold monomial
   split
   next h =>
     let k := (if dx then g.2.1 else 1) * (if dy then g.2.2 else 1)
-    have hk : k ≤ 225 := by
-      have hx' : (if dx then g.2.1 else 1) ≤ 15 := by split <;> omega
-      have hy' : (if dy then g.2.2 else 1) ≤ 15 := by split <;> omega
+    have hk : k ≤ d * d := by
+      have hx' : (if dx then g.2.1 else 1) ≤ d := by split <;> omega
+      have hy' : (if dy then g.2.2 else 1) ≤ d := by split <;> omega
       exact Nat.mul_le_mul hx' hy'
     have hh := mul_bound (mul_bound (mul_bound (constant_bound k) (pow_bound ha g.1))
       (pow_bound hx (g.2.1 - dx.toNat))) (pow_bound hy (g.2.2 - dy.toNat))
     have he : g.1 + (g.2.1 - dx.toNat) + (g.2.2 - dy.toNat) =
-        15 - dx.toNat - dy.toNat := by omega
+        d - dx.toNat - dy.toNat := by omega
     simp only [Nat.one_mul, Nat.zero_add] at hh
     rw [he] at hh
     refine mono hh ?_
@@ -326,41 +340,45 @@ private theorem monomial_bound {a x y : Sparse}
   next =>
     exact empty_controlled _ _
 
-private theorem partial_bound {a x y : Sparse}
+private theorem partial_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse}
     (ha : Controlled a.terms 1 3) (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3)
     (shape : Shape) (dx dy : Bool) :
-    Controlled (defectPartial 5 shape dx dy a x y).terms (15 - dx.toNat - dy.toNat) defectBudget := by
+    Controlled (defectPartial p shape dx dy a x y).terms (3 * p - dx.toNat - dy.toNat) (defectBudget p) := by
   let M := fun g : Exponents => monomial dx dy a x y
     (shape.exponents (3 * g.1, 3 * g.2.1, 3 * g.2.2))
-  have hs := sum_bound ((gaps 5).map M) _ monomialBudget (by
+  have hs := sum_bound ((gaps p).map M) _ (monomialBudget (3 * p)) (by
     intro m hm
     obtain ⟨g, hg, rfl⟩ := List.mem_map.mp hm
-    apply monomial_bound ha hx hy
-    have h := gap_degree 5 g hg
+    apply monomial_bound (d := 3 * p) (by omega) ha hx hy
+    have h := gap_degree p g hg
     rw [shape_degree]
     omega)
-  have hg := mul_bound (constant_bound (gaps 5).length)
-    (monomial_bound ha hx hy dx dy (shape.exponents (5, 5, 5)) (by rw [shape_degree]))
+  have hg := mul_bound (constant_bound (gaps p).length)
+    (monomial_bound (d := 3 * p) (by omega) ha hx hy dx dy (shape.exponents (p, p, p)) (by rw [shape_degree]; omega))
   have h := sub_bound hs (by simpa only [Nat.zero_add] using hg)
-  change Controlled (((gaps 5).map M).sum -
-    Sparse.constant (gaps 5).length * monomial dx dy a x y (shape.exponents (5, 5, 5))).terms
-      (15 - dx.toNat - dy.toNat) defectBudget
-  simpa only [List.length_map, show (gaps 5).length = 21 by decide,
-    show 21 * monomialBudget + 21 * monomialBudget = defectBudget by decide +kernel] using h
+  change Controlled (((gaps p).map M).sum -
+    Sparse.constant (gaps p).length * monomial dx dy a x y (shape.exponents (p, p, p))).terms
+      (3 * p - dx.toNat - dy.toNat) (defectBudget p)
+  simpa only [List.length_map, defectBudget, Nat.two_mul, Nat.add_mul] using h
 
-private abbrev qBudget : ℕ := defectBudget ^ 2
-private abbrev zBudget : ℕ := 9 * defectBudget ^ 3
-private abbrev pBudget : ℕ := 10 * defectBudget ^ 6
+private theorem controlled_degree {terms : List Term} {d e b : ℕ}
+    (h : Controlled terms d b) (he : d = e) : Controlled terms e b := he ▸ h
 
-private theorem q_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private abbrev qBudget (p : ℕ) : ℕ := (defectBudget p) ^ 2
+private abbrev zBudget (p : ℕ) : ℕ := 9 * (defectBudget p) ^ 3
+private abbrev pBudget (p : ℕ) : ℕ := 10 * (defectBudget p) ^ 6
+
+private theorem q_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (qPolynomial 5 a x y).terms 30 qBudget :=
-  mul_bound (partial_bound ha hx hy .aay false false) (partial_bound ha hx hy .xxy false false)
+    Controlled (qPolynomial p a x y).terms (6 * p) (qBudget p) := by
+  rw [qBudget, pow_two]
+  exact controlled_degree (mul_bound (partial_bound hp ha hx hy .aay false false)
+    (partial_bound hp ha hx hy .xxy false false)) (by simp [Bool.toNat]; omega)
 
-private theorem z_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem z_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (zPolynomial 5 a x y).terms 43 zBudget := by
-  have H := partial_bound ha hx hy
+    Controlled (zPolynomial p a x y).terms (9 * p - 2) (zBudget p) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
   have hm := mul_bound (mul_bound (mul_bound (constant_bound 4) (H .xx false false))
     (H .yy false false)) (H .mixed true true)
   have hx := mul_bound (mul_bound (mul_bound (constant_bound 2) (H .xx false false))
@@ -368,177 +386,239 @@ private theorem z_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
   have hy := mul_bound (mul_bound (mul_bound (constant_bound 2) (H .yy false false))
     (H .xx true false)) (H .mixed false true)
   have hxy := mul_bound (mul_bound (H .xx true false) (H .yy false true)) (H .mixed false false)
-  exact mono (add_bound (sub_bound (sub_bound hm hx) hy) hxy) (by decide +kernel)
+  exact mono (add_bound (sub_bound
+    (sub_bound (controlled_degree hm (by simp [Bool.toNat]; omega))
+      (controlled_degree hx (by simp [Bool.toNat]; omega)))
+      (controlled_degree hy (by simp [Bool.toNat]; omega)))
+      (controlled_degree hxy (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
-private theorem p_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem p_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (pPolynomial 5 a x y).terms 88 pBudget := by
-  have H := partial_bound ha hx hy
-  have hQ := q_bound ha hx hy
-  have hQx : Controlled (qxPolynomial 5 a x y).terms 29 qBudget :=
-    mul_bound (H .aay false false) (H .xxy true false)
-  have hQy : Controlled (qyPolynomial 5 a x y).terms 29 (2 * qBudget) :=
-    mono (add_bound (mul_bound (H .aay false true) (H .xxy false false))
-      (mul_bound (H .aay false false) (H .xxy false true))) (by decide +kernel)
-  have hQxy : Controlled (qxyPolynomial 5 a x y).terms 28 (2 * qBudget) :=
-    mono (add_bound (mul_bound (H .aay false true) (H .xxy true false))
-      (mul_bound (H .aay false false) (H .xxy true true))) (by decide +kernel)
-  have hMixed := mul_bound (mul_bound (constant_bound 2) hQ) hQxy
-  have hFirst := mul_bound hQx hQy
+    Controlled (pPolynomial p a x y).terms (18 * p - 2) (pBudget p) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
+  have hQ := q_bound hp ha hx hy
+  have hQx : Controlled (qxPolynomial p a x y).terms (6 * p - 1) (qBudget p) := by
+    rw [qBudget, pow_two]
+    exact controlled_degree (mul_bound (H .aay false false) (H .xxy true false))
+      (by simp [Bool.toNat]; omega)
+  have hQy : Controlled (qyPolynomial p a x y).terms (6 * p - 1) (2 * qBudget p) := by
+    have h₁ := controlled_degree (mul_bound (H .aay false true) (H .xxy false false))
+      (show _ = 6 * p - 1 by simp [Bool.toNat]; omega)
+    have h₂ := controlled_degree (mul_bound (H .aay false false) (H .xxy false true))
+      (show _ = 6 * p - 1 by simp [Bool.toNat]; omega)
+    exact mono (add_bound h₁ h₂) (by ring_nf; omega)
+  have hQxy : Controlled (qxyPolynomial p a x y).terms (6 * p - 2) (2 * qBudget p) := by
+    have h₁ := controlled_degree (mul_bound (H .aay false true) (H .xxy true false))
+      (show _ = 6 * p - 2 by simp [Bool.toNat]; omega)
+    have h₂ := controlled_degree (mul_bound (H .aay false false) (H .xxy true true))
+      (show _ = 6 * p - 2 by simp [Bool.toNat]; omega)
+    exact mono (add_bound h₁ h₂) (by ring_nf; omega)
+  have hMixed := controlled_degree (mul_bound (mul_bound (constant_bound 2) hQ) hQxy)
+    (show _ = 12 * p - 2 by omega)
+  have hFirst := controlled_degree (mul_bound hQx hQy) (show _ = 12 * p - 2 by omega)
   have hm := mul_bound (mul_bound (H .xx false false) (H .yy false false))
     (sub_bound hMixed hFirst)
   have hx := mul_bound (mul_bound (mul_bound (H .xx false false) (H .yy false true)) hQ) hQx
   have hy := mul_bound (mul_bound (mul_bound (H .yy false false) (H .xx true false)) hQ) hQy
   have hxy := mul_bound (mul_bound (H .xx true false) (H .yy false true)) (pow_bound hQ 2)
-  exact mono (add_bound (sub_bound (sub_bound hm hx) hy) hxy) (by decide +kernel)
+  exact mono (add_bound (sub_bound
+    (sub_bound (controlled_degree hm (by simp [Bool.toNat]; omega))
+      (controlled_degree hx (by simp [Bool.toNat]; omega)))
+      (controlled_degree hy (by simp [Bool.toNat]; omega)))
+      (controlled_degree hxy (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
-private abbrev edgeBudget : ℕ := 3 * defectBudget ^ 3
-private abbrev edgeSquareBudget : ℕ := 18 * defectBudget ^ 6
+private abbrev edgeBudget (p : ℕ) : ℕ := 3 * (defectBudget p) ^ 3
+private abbrev edgeSquareBudget (p : ℕ) : ℕ := 18 * (defectBudget p) ^ 6
 
-private theorem x_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem x_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (xPolynomial 5 a x y).terms 29 (3 * defectBudget ^ 2) := by
-  have H := partial_bound ha hx hy
+    Controlled (xPolynomial p a x y).terms (6 * p - 1) (3 * (defectBudget p) ^ 2) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
   have hd := mul_bound (mul_bound (constant_bound 2) (H .xx false false))
     (H .mixed true false)
   have hw := mul_bound (H .xx true false) (H .mixed false false)
-  exact mono (sub_bound hd hw) (by decide +kernel)
+  exact mono (sub_bound (controlled_degree hd (by simp [Bool.toNat]; omega))
+    (controlled_degree hw (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
-private theorem u_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem u_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (uPolynomial 5 a x y).terms 44 edgeBudget := by
-  have H := partial_bound ha hx hy
-  have hQx : Controlled (qxPolynomial 5 a x y).terms 29 qBudget :=
-    mul_bound (H .aay false false) (H .xxy true false)
+    Controlled (uPolynomial p a x y).terms (9 * p - 1) (edgeBudget p) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
+  have hQx : Controlled (qxPolynomial p a x y).terms (6 * p - 1) (qBudget p) := by
+    rw [qBudget, pow_two]
+    exact controlled_degree (mul_bound (H .aay false false) (H .xxy true false))
+      (by simp [Bool.toNat]; omega)
   have hq := mul_bound (H .xx false false) hQx
-  have hw := mul_bound (H .xx true false) (q_bound ha hx hy)
-  exact mono (sub_bound hq hw) (by decide +kernel)
+  have hw := mul_bound (H .xx true false) (q_bound hp ha hx hy)
+  exact mono (sub_bound (controlled_degree hq (by simp [Bool.toNat]; omega))
+    (controlled_degree hw (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
-private theorem y_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem y_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (yPolynomial 5 a x y).terms 29 (3 * defectBudget ^ 2) := by
-  have H := partial_bound ha hx hy
+    Controlled (yPolynomial p a x y).terms (6 * p - 1) (3 * (defectBudget p) ^ 2) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
   have hd := mul_bound (mul_bound (constant_bound 2) (H .yy false false))
     (H .mixed false true)
   have hw := mul_bound (H .yy false true) (H .mixed false false)
-  exact mono (sub_bound hd hw) (by decide +kernel)
+  exact mono (sub_bound (controlled_degree hd (by simp [Bool.toNat]; omega))
+    (controlled_degree hw (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
-private theorem v_bound {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem v_bound {p : ℕ} (hp : 0 < p) {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (vPolynomial 5 a x y).terms 44 edgeBudget := by
-  have H := partial_bound ha hx hy
-  have hQy : Controlled (qyPolynomial 5 a x y).terms 29 (2 * qBudget) :=
-    mono (add_bound (mul_bound (H .aay false true) (H .xxy false false))
-      (mul_bound (H .aay false false) (H .xxy false true))) (by decide +kernel)
+    Controlled (vPolynomial p a x y).terms (9 * p - 1) (edgeBudget p) := by
+  have H (shape : Shape) (dx dy : Bool) := partial_bound hp ha hx hy shape dx dy
+  have hQy : Controlled (qyPolynomial p a x y).terms (6 * p - 1) (2 * qBudget p) := by
+    have h₁ := controlled_degree (mul_bound (H .aay false true) (H .xxy false false))
+      (show _ = 6 * p - 1 by simp [Bool.toNat]; omega)
+    have h₂ := controlled_degree (mul_bound (H .aay false false) (H .xxy false true))
+      (show _ = 6 * p - 1 by simp [Bool.toNat]; omega)
+    exact mono (add_bound h₁ h₂) (by ring_nf; omega)
   have hq := mul_bound (H .yy false false) hQy
-  have hw := mul_bound (H .yy false true) (q_bound ha hx hy)
-  exact mono (sub_bound hq hw) (by decide +kernel)
+  have hw := mul_bound (H .yy false true) (q_bound hp ha hx hy)
+  exact mono (sub_bound (controlled_degree hq (by simp [Bool.toNat]; omega))
+    (controlled_degree hw (by simp [Bool.toNat]; omega)))
+    (by ring_nf; omega)
 
 private inductive Sign
   | z | p | discriminant
   | gap | left | leftSquare | right | rightSquare
 
-private def Sign.degree : Sign → ℕ
-  | .z => 43
-  | .p => 88
-  | .discriminant => 176
-  | .gap => 30
-  | .left | .right => 44
-  | .leftSquare | .rightSquare => 88
+private def Sign.degree (p : ℕ) : Sign → ℕ
+  | .z => 9 * p - 2
+  | .p => 18 * p - 2
+  | .discriminant => 36 * p - 4
+  | .gap => 6 * p
+  | .left | .right => 9 * p - 1
+  | .leftSquare | .rightSquare => 18 * p - 2
 
-private def Sign.bits : Sign → ℕ
-  | .z => 128
-  | .p => 256
-  | .discriminant => 512
-  | .gap => 75
-  | .left | .right => 113
-  | .leftSquare | .rightSquare => 227
+private def Sign.budget (p : ℕ) : Sign → ℕ
+  | .z => zBudget p
+  | .p => pBudget p
+  | .discriminant => (zBudget p) ^ 2 * (qBudget p) ^ 3 + (pBudget p) ^ 2
+  | .gap => 2 * (defectBudget p) ^ 2
+  | .left | .right => edgeBudget p
+  | .leftSquare | .rightSquare => edgeSquareBudget p
 
-private def Sign.budget : Sign → ℕ
-  | .z => zBudget
-  | .p => pBudget
-  | .discriminant => zBudget ^ 2 * qBudget ^ 3 + pBudget ^ 2
-  | .gap => 2 * defectBudget ^ 2
-  | .left | .right => edgeBudget
-  | .leftSquare | .rightSquare => edgeSquareBudget
+-- The centered digit must strictly exceed the bound on the coefficient norm.
+private def Sign.bits (sign : Sign) (p : ℕ) : ℕ := (sign.budget p).log2 + 1
 
 private def Sign.polynomial [Add R] [Sub R] [Mul R] [Pow R Nat] [NatCast R] [Zero R]
-    (sign : Sign) (a x y : R) : R :=
+    (sign : Sign) (p : ℕ) (a x y : R) : R :=
   match sign with
-  | .z => 0 - zPolynomial 5 a x y
-  | .p => 0 - pPolynomial 5 a x y
-  | .discriminant => zPolynomial 5 a x y ^ (2 : ℕ) * qPolynomial 5 a x y ^ (3 : ℕ) -
-      pPolynomial 5 a x y ^ (2 : ℕ)
-  | .gap => defectPartial 5 .mixed false false a x y ^ (2 : ℕ) - qPolynomial 5 a x y
-  | .left => 0 - uPolynomial 5 a x y
-  | .leftSquare => uPolynomial 5 a x y ^ (2 : ℕ) -
-      xPolynomial 5 a x y ^ (2 : ℕ) * qPolynomial 5 a x y
-  | .right => vPolynomial 5 a x y
-  | .rightSquare => vPolynomial 5 a x y ^ (2 : ℕ) -
-      yPolynomial 5 a x y ^ (2 : ℕ) * qPolynomial 5 a x y
+  | .z => 0 - zPolynomial p a x y
+  | .p => 0 - pPolynomial p a x y
+  | .discriminant => zPolynomial p a x y ^ (2 : ℕ) * qPolynomial p a x y ^ (3 : ℕ) -
+      pPolynomial p a x y ^ (2 : ℕ)
+  | .gap => defectPartial p .mixed false false a x y ^ (2 : ℕ) - qPolynomial p a x y
+  | .left => 0 - uPolynomial p a x y
+  | .leftSquare => uPolynomial p a x y ^ (2 : ℕ) -
+      xPolynomial p a x y ^ (2 : ℕ) * qPolynomial p a x y
+  | .right => vPolynomial p a x y
+  | .rightSquare => vPolynomial p a x y ^ (2 : ℕ) -
+      yPolynomial p a x y ^ (2 : ℕ) * qPolynomial p a x y
 
 private theorem Sign.eval_polynomial {R : Type*} [CommRing R]
-    (sign : Sign) (s t u : R) (a x y : Sparse) :
-    (sign.polynomial a x y).eval s t u =
-      sign.polynomial (a.eval s t u) (x.eval s t u) (y.eval s t u) := by
+    (sign : Sign) (p : ℕ) (s t u : R) (a x y : Sparse) :
+    (sign.polynomial p a x y).eval s t u =
+      sign.polynomial p (a.eval s t u) (x.eval s t u) (y.eval s t u) := by
   cases sign <;> simp only [Sign.polynomial, zPolynomial, pPolynomial, qPolynomial, qxPolynomial,
     qyPolynomial, qxyPolynomial, xPolynomial, uPolynomial, yPolynomial, vPolynomial,
     eval_zero, eval_cast, eval_add, eval_sub, eval_mul, eval_pow, eval_partial]
 
-private theorem Sign.controlled (sign : Sign) {a x y : Sparse} (ha : Controlled a.terms 1 3)
+private theorem Sign.controlled (sign : Sign) {p : ℕ} (hp : 0 < p)
+    {a x y : Sparse} (ha : Controlled a.terms 1 3)
     (hx : Controlled x.terms 1 3) (hy : Controlled y.terms 1 3) :
-    Controlled (sign.polynomial a x y).terms sign.degree sign.budget := by
+    Controlled (sign.polynomial p a x y).terms (sign.degree p) (sign.budget p) := by
   have hzero (d : ℕ) : Controlled (0 : Sparse).terms d 0 := empty_controlled d 0
   cases sign with
   | z =>
-    have h := sub_bound (hzero 43) (z_bound ha hx hy)
-    exact mono h (by decide +kernel)
+    change Controlled (0 - zPolynomial p a x y).terms (9 * p - 2) (zBudget p)
+    simpa only [Nat.zero_add] using sub_bound (hzero (9 * p - 2)) (z_bound hp ha hx hy)
   | p =>
-    have h := sub_bound (hzero 88) (p_bound ha hx hy)
-    exact mono h (by decide +kernel)
+    change Controlled (0 - pPolynomial p a x y).terms (18 * p - 2) (pBudget p)
+    simpa only [Nat.zero_add] using sub_bound (hzero (18 * p - 2)) (p_bound hp ha hx hy)
   | discriminant =>
-    exact sub_bound (mul_bound (pow_bound (z_bound ha hx hy) 2) (pow_bound (q_bound ha hx hy) 3))
-      (pow_bound (p_bound ha hx hy) 2)
+    have hz := controlled_degree
+      (mul_bound (pow_bound (z_bound hp ha hx hy) 2) (pow_bound (q_bound hp ha hx hy) 3))
+      (show _ = 36 * p - 4 by omega)
+    have hp' := controlled_degree (pow_bound (p_bound hp ha hx hy) 2)
+      (show _ = 36 * p - 4 by omega)
+    exact sub_bound hz hp'
   | gap =>
-    have h := sub_bound (pow_bound (partial_bound ha hx hy .mixed false false) 2)
-      (q_bound ha hx hy)
-    exact mono h (by decide +kernel)
+    have hd := controlled_degree (pow_bound (partial_bound hp ha hx hy .mixed false false) 2)
+      (show _ = 6 * p by simp [Bool.toNat]; omega)
+    exact mono (sub_bound hd (q_bound hp ha hx hy)) (by simp only [Sign.budget]; ring_nf; omega)
   | left =>
-    have h := sub_bound (hzero 44) (u_bound ha hx hy)
-    exact mono h (by decide +kernel)
+    change Controlled (0 - uPolynomial p a x y).terms (9 * p - 1) (edgeBudget p)
+    simpa only [Nat.zero_add] using sub_bound (hzero (9 * p - 1)) (u_bound hp ha hx hy)
   | leftSquare =>
-    have hEdge := pow_bound (u_bound ha hx hy) 2
-    have hScaled := mul_bound (pow_bound (x_bound ha hx hy) 2) (q_bound ha hx hy)
-    exact mono (sub_bound hEdge hScaled) (by decide +kernel)
-  | right => exact v_bound ha hx hy
+    have hEdge := controlled_degree (pow_bound (u_bound hp ha hx hy) 2)
+      (show _ = 18 * p - 2 by omega)
+    have hScaled := controlled_degree (mul_bound (pow_bound (x_bound hp ha hx hy) 2)
+      (q_bound hp ha hx hy)) (show _ = 18 * p - 2 by omega)
+    exact mono (sub_bound hEdge hScaled)
+      (by simp only [Sign.budget]; ring_nf; omega)
+  | right => exact v_bound hp ha hx hy
   | rightSquare =>
-    have hEdge := pow_bound (v_bound ha hx hy) 2
-    have hScaled := mul_bound (pow_bound (y_bound ha hx hy) 2) (q_bound ha hx hy)
-    exact mono (sub_bound hEdge hScaled) (by decide +kernel)
+    have hEdge := controlled_degree (pow_bound (v_bound hp ha hx hy) 2)
+      (show _ = 18 * p - 2 by omega)
+    have hScaled := controlled_degree (mul_bound (pow_bound (y_bound hp ha hx hy) 2)
+      (q_bound hp ha hx hy)) (show _ = 18 * p - 2 by omega)
+    exact mono (sub_bound hEdge hScaled)
+      (by simp only [Sign.budget]; ring_nf; omega)
 
-private theorem Sign.budget_lt (sign : Sign) : sign.budget < 2 ^ sign.bits := by
-  cases sign <;> decide +kernel
+private theorem Sign.budget_lt (sign : Sign) (p : ℕ) :
+    sign.budget p < 2 ^ sign.bits p :=
+  Nat.lt_log2_self
 
-private def Sign.base (sign : Sign) : ℕ := 2 ^ (sign.bits + 1)
+private def Sign.base (sign : Sign) (p : ℕ) : ℕ := 2 ^ (sign.bits p + 1)
 
 /-- Evaluate at the integer encoding of the three ordered gaps. -/
-private def Sign.encoded (sign : Sign) : ℤ :=
-  let b : ℤ := sign.base
-  sign.polynomial 1 (1 + b) (1 + b + b ^ (sign.degree + 1))
+private def Sign.encoded (sign : Sign) (p : ℕ) : ℤ :=
+  let b : ℤ := (sign.base p)
+  sign.polynomial p 1 (1 + b) (1 + b + b ^ (sign.degree p + 1))
 
-private def Sign.mask (sign : Sign) : ℕ := PackedCheck.centeredMask sign.bits sign.degree
+private def Sign.mask (sign : Sign) (p : ℕ) : ℕ := PackedCheck.centeredMask (sign.bits p) (sign.degree p)
 
-private def Sign.check (sign : Sign) : Bool :=
-  ((sign.encoded + ↑sign.mask).toNat &&& sign.mask) == sign.mask
+private def Sign.check (sign : Sign) (p : ℕ) : Bool :=
+  (((sign.encoded p) + ↑(sign.mask p)).toNat &&& (sign.mask p)) == (sign.mask p)
 
 set_option maxHeartbeats 0 in
 -- Each packed check evaluates the full integer certificate with kernel reduction.
-private theorem Sign.passes (sign : Sign) : sign.check = true := by
+private theorem Sign.passes_five (sign : Sign) : sign.check 5 = true := by
   cases sign <;> decide +kernel
 
-private theorem Sign.ordered_nonneg (sign : Sign) (a x y : ℝ)
+set_option maxHeartbeats 0 in
+-- The kernel reduces the complete degree-six packed integer masks.
+private theorem Sign.passes_six (sign : Sign) : sign.check 6 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+-- The kernel reduces the complete degree-seven packed integer masks.
+private theorem Sign.passes_seven (sign : Sign) : sign.check 7 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_eight (sign : Sign) : sign.check 8 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_nine (sign : Sign) : sign.check 9 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_ten (sign : Sign) : sign.check 10 = true := by
+  cases sign <;> decide +kernel
+
+private theorem Sign.ordered_nonneg (sign : Sign) {p : ℕ}
+    (hp : 0 < p) (hpass : sign.check p = true) (a x y : ℝ)
     (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
-    0 ≤ sign.polynomial a x y := by
+    0 ≤ sign.polynomial p a x y := by
   let s : Sparse := ⟨[⟨(1, 0, 0), 1⟩]⟩
   let t : Sparse := ⟨[⟨(0, 1, 0), 1⟩]⟩
   let u : Sparse := ⟨[⟨(0, 0, 1), 1⟩]⟩
@@ -547,47 +627,129 @@ private theorem Sign.ordered_nonneg (sign : Sign) (a x y : ℝ)
   have hu : Controlled u.terms 1 1 := by simp [Controlled, coefficientNorm, u, Term.degree]
   have hst := add_bound hs ht
   have hstu := add_bound hst hu
-  let poly := sign.polynomial s (s + t) (s + t + u)
-  have hc : Controlled poly.terms sign.degree sign.budget :=
-    sign.controlled (mono hs (by decide)) (mono hst (by decide)) hstu
+  let poly := sign.polynomial p s (s + t) (s + t + u)
+  have hc : Controlled poly.terms (sign.degree p) (sign.budget p) :=
+    sign.controlled hp (mono hs (by decide)) (mono hst (by decide)) hstu
   have eval_ordered {R : Type} [CommRing R] (v w z : R) :
-      poly.eval v w z = sign.polynomial v (v + w) (v + w + z) := by
+      poly.eval v w z = sign.polynomial p v (v + w) (v + w + z) := by
     simp only [poly, Sign.eval_polynomial, eval_add]
     simp [s, t, u, Sparse.eval_unit_term]
-  have he : poly.eval (1 : ℤ) (sign.base : ℤ) ((sign.base : ℤ) ^ (sign.degree + 1)) =
-      sign.encoded := eval_ordered (1 : ℤ) (sign.base : ℤ) ((sign.base : ℤ) ^ (sign.degree + 1))
-  have h := Sparse.nonneg_of_packed (poly := poly) (d := sign.degree) (w := sign.bits) ha (sub_nonneg.mpr hax) (sub_nonneg.mpr hxy)
-    hc.1 (hc.2.trans_lt sign.budget_lt) sign.encoded
-    he (beq_iff_eq.mp sign.passes)
+  have he : poly.eval (1 : ℤ) ((sign.base p) : ℤ) (((sign.base p) : ℤ) ^ (sign.degree p + 1)) =
+      (sign.encoded p) := eval_ordered (1 : ℤ) ((sign.base p) : ℤ) (((sign.base p) : ℤ) ^ (sign.degree p + 1))
+  have h := Sparse.nonneg_of_packed (poly := poly) (d := (sign.degree p)) (w := (sign.bits p)) ha (sub_nonneg.mpr hax) (sub_nonneg.mpr hxy)
+    hc.1 (hc.2.trans_lt (sign.budget_lt p)) (sign.encoded p)
+    he (beq_iff_eq.mp hpass)
   simpa only [eval_ordered, add_sub_cancel, show a + (x - a) = x by ring,
     show x + (y - x) = y by ring] using h
+
+private theorem ordered_of_check {p : ℕ} (hp : 0 < p)
+    (hpass : ∀ sign : Sign, sign.check p = true) (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z p a x y ≤ 0 ∧ P p a x y ≤ 0 ∧ P p a x y ^ 2 ≤ Z p a x y ^ 2 * q p a x y ^ 3 := by
+  have hz := Sign.ordered_nonneg .z hp (hpass .z) a x y ha hax hxy
+  have hpSign := Sign.ordered_nonneg .p hp (hpass .p) a x y ha hax hxy
+  have hd := Sign.ordered_nonneg .discriminant hp (hpass .discriminant) a x y ha hax hxy
+  simp only [Sign.polynomial, zPolynomial_eq, pPolynomial_eq, qPolynomial_eq, sub_nonneg] at hz hpSign hd
+  exact ⟨hz, hpSign, hd⟩
+
+private theorem ordered_edges_of_check {p : ℕ} (hp : 0 < p)
+    (hpass : ∀ sign : Sign, sign.check p = true) (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q p a x y ≤ defect p a x y ^ 2 ∧
+    UAt p a x y ≤ 0 ∧ XAt p a x y ^ 2 * q p a x y ≤ UAt p a x y ^ 2 ∧
+    0 ≤ VAt p a x y ∧ YAt p a x y ^ 2 * q p a x y ≤ VAt p a x y ^ 2 := by
+  obtain ⟨hx, hu, hy, hv⟩ := edgePolynomials_eq p a x y
+  have hgap := Sign.ordered_nonneg .gap hp (hpass .gap) a x y ha hax hxy
+  have hleft := Sign.ordered_nonneg .left hp (hpass .left) a x y ha hax hxy
+  have hleftSq := Sign.ordered_nonneg .leftSquare hp (hpass .leftSquare) a x y ha hax hxy
+  have hright := Sign.ordered_nonneg .right hp (hpass .right) a x y ha hax hxy
+  have hrightSq := Sign.ordered_nonneg .rightSquare hp (hpass .rightSquare) a x y ha hax hxy
+  simp only [Sign.polynomial, partial_zero, Shape.args, qPolynomial_eq, hx, hu, hy, hv,
+    sub_nonneg] at hgap hleft hleftSq hright hrightSq
+  exact ⟨hgap, hleft, hleftSq, hright, hrightSq⟩
 
 /-- The exact three ordered scalar signs for the unrestricted `(5,3)` argument.
 The signs also hold on the closed ordered chamber. -/
 theorem ordered_five (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
-    Z 5 a x y ≤ 0 ∧ P 5 a x y ≤ 0 ∧ P 5 a x y ^ 2 ≤ Z 5 a x y ^ 2 * q 5 a x y ^ 3 := by
-  have hz := Sign.ordered_nonneg .z a x y ha hax hxy
-  have hp := Sign.ordered_nonneg .p a x y ha hax hxy
-  have hd := Sign.ordered_nonneg .discriminant a x y ha hax hxy
-  simp only [Sign.polynomial, zPolynomial_eq, pPolynomial_eq, qPolynomial_eq, sub_nonneg] at hz hp hd
-  exact ⟨hz, hp, hd⟩
+    Z 5 a x y ≤ 0 ∧ P 5 a x y ≤ 0 ∧ P 5 a x y ^ 2 ≤ Z 5 a x y ^ 2 * q 5 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_five a x y ha hax hxy
 
 /-- The corner and the two edge derivative bounds on the closed ordered chamber. -/
 theorem ordered_edges_five (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     q 5 a x y ≤ defect 5 a x y ^ 2 ∧
     U a x y ≤ 0 ∧ X a x y ^ 2 * q 5 a x y ≤ U a x y ^ 2 ∧
-    0 ≤ V a x y ∧ Y a x y ^ 2 * q 5 a x y ≤ V a x y ^ 2 := by
-  obtain ⟨hx, hu, hy, hv⟩ := edgePolynomials_eq a x y
-  have hgap := Sign.ordered_nonneg .gap a x y ha hax hxy
-  have hleft := Sign.ordered_nonneg .left a x y ha hax hxy
-  have hleftSq := Sign.ordered_nonneg .leftSquare a x y ha hax hxy
-  have hright := Sign.ordered_nonneg .right a x y ha hax hxy
-  have hrightSq := Sign.ordered_nonneg .rightSquare a x y ha hax hxy
-  simp only [Sign.polynomial, partial_zero, Shape.args, qPolynomial_eq, hx, hu, hy, hv,
-    sub_nonneg] at hgap hleft hleftSq hright hrightSq
-  exact ⟨hgap, hleft, hleftSq, hright, hrightSq⟩
+    0 ≤ V a x y ∧ Y a x y ^ 2 * q 5 a x y ≤ V a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_five a x y ha hax hxy
+
+/-- Exact ordered scalar signs at degree six. -/
+theorem ordered_six (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 6 a x y ≤ 0 ∧ P 6 a x y ≤ 0 ∧ P 6 a x y ^ 2 ≤ Z 6 a x y ^ 2 * q 6 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_six a x y ha hax hxy
+
+/-- Exact ordered scalar signs at degree six. -/
+theorem ordered_edges_six (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 6 a x y ≤ defect 6 a x y ^ 2 ∧
+    UAt 6 a x y ≤ 0 ∧ XAt 6 a x y ^ 2 * q 6 a x y ≤ UAt 6 a x y ^ 2 ∧
+    0 ≤ VAt 6 a x y ∧ YAt 6 a x y ^ 2 * q 6 a x y ≤ VAt 6 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_six a x y ha hax hxy
+
+/-- Exact ordered scalar signs at degree seven. -/
+theorem ordered_seven (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 7 a x y ≤ 0 ∧ P 7 a x y ≤ 0 ∧ P 7 a x y ^ 2 ≤ Z 7 a x y ^ 2 * q 7 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_seven a x y ha hax hxy
+
+/-- The degree-seven corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_seven (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 7 a x y ≤ defect 7 a x y ^ 2 ∧
+    UAt 7 a x y ≤ 0 ∧ XAt 7 a x y ^ 2 * q 7 a x y ≤ UAt 7 a x y ^ 2 ∧
+    0 ≤ VAt 7 a x y ∧ YAt 7 a x y ^ 2 * q 7 a x y ≤ VAt 7 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_seven a x y ha hax hxy
+
+/-- The degree-eight mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_eight (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 8 a x y ≤ 0 ∧ P 8 a x y ≤ 0 ∧ P 8 a x y ^ 2 ≤ Z 8 a x y ^ 2 * q 8 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_eight a x y ha hax hxy
+
+/-- The degree-eight corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_eight (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 8 a x y ≤ defect 8 a x y ^ 2 ∧
+    UAt 8 a x y ≤ 0 ∧ XAt 8 a x y ^ 2 * q 8 a x y ≤ UAt 8 a x y ^ 2 ∧
+    0 ≤ VAt 8 a x y ∧ YAt 8 a x y ^ 2 * q 8 a x y ≤ VAt 8 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_eight a x y ha hax hxy
+
+/-- The degree-nine mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_nine (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 9 a x y ≤ 0 ∧ P 9 a x y ≤ 0 ∧ P 9 a x y ^ 2 ≤ Z 9 a x y ^ 2 * q 9 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_nine a x y ha hax hxy
+
+/-- The degree-nine corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_nine (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 9 a x y ≤ defect 9 a x y ^ 2 ∧
+    UAt 9 a x y ≤ 0 ∧ XAt 9 a x y ^ 2 * q 9 a x y ≤ UAt 9 a x y ^ 2 ∧
+    0 ≤ VAt 9 a x y ∧ YAt 9 a x y ^ 2 * q 9 a x y ≤ VAt 9 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_nine a x y ha hax hxy
+
+/-- The degree-ten mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_ten (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 10 a x y ≤ 0 ∧ P 10 a x y ≤ 0 ∧ P 10 a x y ^ 2 ≤ Z 10 a x y ^ 2 * q 10 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_ten a x y ha hax hxy
+
+/-- The degree-ten corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_ten (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 10 a x y ≤ defect 10 a x y ^ 2 ∧
+    UAt 10 a x y ≤ 0 ∧ XAt 10 a x y ^ 2 * q 10 a x y ≤ UAt 10 a x y ^ 2 ∧
+    0 ≤ VAt 10 a x y ∧ YAt 10 a x y ^ 2 * q 10 a x y ≤ VAt 10 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_ten a x y ha hax hxy
 
 #print axioms ordered_five
 #print axioms ordered_edges_five
+#print axioms ordered_six
+#print axioms ordered_edges_six
+#print axioms ordered_seven
+#print axioms ordered_edges_seven
+#print axioms ordered_eight
+#print axioms ordered_edges_eight
+#print axioms ordered_nine
+#print axioms ordered_edges_nine
+#print axioms ordered_ten
+#print axioms ordered_edges_ten
 
 end RefinedBMV.ExtremeCertificate
