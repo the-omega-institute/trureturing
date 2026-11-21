@@ -3,20 +3,20 @@ import D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the Klein model on the open Bloch ball. The readout is the norm of the
-filtered Bloch vector `filter g r`, in the clause that the filter of an invertible matrix keeps the
-open ball. -/
+filtered Bloch vector `blochFilter g r` in the bound `‖blochFilter g r‖ ≤ 1` of the clause that the
+filter of an invertible matrix keeps the closed ball. -/
 
 namespace Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 
 open _root_.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 open _root_.D5.S3.Geometry.HyperbolicUpperHalfSpace (HyperbolicThreeSpace)
+open _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum (blochMatrix)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 open scoped InnerProductSpace Matrix ComplexOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option linter.style.longLine false
 noncomputable section
 
 /-- Bloch vectors observed through their Euclidean norm. -/
@@ -37,28 +37,30 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 2) (fun e => nomatch e)
 
-/-- Retain the complete four-clause statement of `bloch_ball_hyperbolic`; only the norm of the
-filtered vector in the third clause is read out. -/
+/-- Retain the complete five-clause statement of `bloch_ball_hyperbolic`; only the norm of the
+filtered vector in the bound `‖blochFilter g r‖ ≤ 1` of the fourth clause is read out. -/
 abbrev arena : Arena where
   signature := signature
   Law ρ :=
     (∃ Φ : {r : EuclideanSpace ℝ (Fin 3) // ‖r‖ < 1} ≃ HyperbolicThreeSpace,
       ∀ r s, Real.cosh (dist (Φ r) (Φ s)) = kleinCosh r s) ∧
-    (∀ r : EuclideanSpace ℝ (Fin 3), filter 1 r = r) ∧
+    (∀ r : EuclideanSpace ℝ (Fin 3), blochFilter 1 r = r) ∧
+    (∀ (g h : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)),
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
-      (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ρ.readout () () (filter g r) < 1) ∧
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
-        ∀ h : Matrix (Fin 2) (Fin 2) ℂ, filter h (filter g r) = filter (h * g) r) ∧
+        ρ.readout () () (blochFilter g r) ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
       ∀ r s : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖s‖ < 1 →
-        kleinCosh (filter g r) (filter g s) = kleinCosh r s) ∧
+        kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s) ∧
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
-      ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ filter g 0 = r
+      ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r
 
-/-- For the identity matrix and the centre the rejected reading would give `2 < 1`. -/
+/-- For the identity matrix and the centre the rejected reading would give `2 ≤ 1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h.2.2.1 1 (by simp)).1 0 (by simp)
-  change (2 : ℝ) < 1 at hh
+  have hh := ((h.2.2.2.1 1 (by simp)).1 0 (by simp)).1
+  change (2 : ℝ) ≤ 1 at hh
   norm_num at hh
 
 /-- The centre has norm `0` and the first basis vector has norm `1`. -/
@@ -110,7 +112,8 @@ def bloch_ball_hyperbolic_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body", "fn",
+        "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

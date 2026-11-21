@@ -8,15 +8,13 @@
 
 import D5.S3.Geometry.Hyperideal.LengthGramMetricSegments
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
-import D5.S3.Quantum.Information.ActualQubitChordObstruction
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped InnerProductSpace Matrix ComplexOrder
-open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (blochMatrix bloch blochMatrix_trace
-  bloch_blochMatrix bloch_geometry_of_isHermitian)
-open D5.S3.Quantum.Information.ActualQubitChordObstruction (det_bloch)
+open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (blochMatrix bloch blochLinear
+  blochMatrix_trace bloch_blochMatrix bloch_geometry_of_isHermitian)
 open D5.S3.Geometry.Hyperideal.LengthGramBody (lorentz)
 open D5.S3.Geometry.Hyperideal.LengthGramMetricSegments (lift lift_unit lift_cosh lift_injective
   lift_of_coordinates lift_time project)
@@ -32,7 +30,7 @@ def kleinCosh (r s : EuclideanSpace ℝ (Fin 3)) : ℝ :=
   (1 - ⟪r, s⟫_ℝ) / √((1 - ‖r‖ ^ 2) * (1 - ‖s‖ ^ 2))
 
 /-- The filter `ρ ↦ g ρ gᴴ / Tr (g ρ gᴴ)` written on Bloch vectors. -/
-def filter (g : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)) :
+def blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)) :
     EuclideanSpace ℝ (Fin 3) :=
   (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ • bloch (g * blochMatrix 1 r * gᴴ)
 
@@ -41,8 +39,9 @@ private def normalizeBloch (M : Matrix (Fin 2) (Fin 2) ℂ) : EuclideanSpace ℝ
 
 private theorem bloch_smul (c : ℝ) (M : Matrix (Fin 2) (Fin 2) ℂ) :
     bloch ((c : ℂ) • M) = c • bloch M := by
-  ext i
-  fin_cases i <;> simp [bloch] <;> ring
+  have h := blochLinear.map_smul c M
+  rw [RCLike.real_smul_eq_coe_smul (K := ℂ) c M] at h
+  exact h
 
 private theorem normalize_smul (c : ℝ) (hc : c ≠ 0) (M : Matrix (Fin 2) (Fin 2) ℂ) :
     normalizeBloch ((c : ℂ) • M) = normalizeBloch M := by
@@ -147,18 +146,8 @@ private theorem posDef_blochMatrix (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) (h
   have : 0 < a ^ 2 - ‖r‖ ^ 2 := by nlinarith [norm_nonneg r]
   exact_mod_cast (by positivity : (a ^ 2 - ‖r‖ ^ 2) / 4 ≠ 0)
 
-private theorem filter_eq (g : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)) :
-    filter g r = normalizeBloch (g * blochMatrix 1 r * gᴴ) := rfl
-
-private theorem posDef_conj (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ < 1) :
-    (g * blochMatrix 1 r * gᴴ).PosDef :=
-  (posDef_blochMatrix 1 r hr).mul_mul_conjTranspose_same
-    (Matrix.vecMul_injective_iff_isUnit.mpr ((Matrix.isUnit_iff_isUnit_det g).mpr hg.isUnit))
-
-private theorem trace_re_pos {M : Matrix (Fin 2) (Fin 2) ℂ} (hM : M.PosDef) :
-    0 < (Matrix.trace M).re :=
-  (Complex.pos_iff.mp hM.trace_pos).1
+private theorem blochFilter_eq (g : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)) :
+    blochFilter g r = normalizeBloch (g * blochMatrix 1 r * gᴴ) := rfl
 
 private theorem posSemidef_conj (g : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3))
     (hr : ‖r‖ ≤ 1) : (g * blochMatrix 1 r * gᴴ).PosSemidef :=
@@ -183,47 +172,47 @@ private theorem trace_conj_re_ne_zero (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.d
   rw [hX, Matrix.trace_zero] at h1
   simp at h1
 
-private theorem blochMatrix_filter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
+/-- On the closed ball the trace of `g ρ gᴴ` is a positive real number for invertible `g`. -/
+private theorem trace_conj_re_pos (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
     (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
-    blochMatrix 1 (filter g r) =
-      (((Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ : ℝ) : ℂ) • (g * blochMatrix 1 r * gᴴ) :=
-  blochMatrix_normalize _ (posSemidef_conj g r hr).isHermitian (trace_conj_re_ne_zero g hg r hr)
+    0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re :=
+  lt_of_le_of_ne (Complex.nonneg_iff.mp (posSemidef_conj g r hr).trace_nonneg).1
+    (trace_conj_re_ne_zero g hg r hr).symm
 
-/-- Composition of filters on the closed ball. -/
-private theorem filter_mul (g h : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
-    filter h (filter g r) = filter (h * g) r := by
-  rw [filter_eq h, blochMatrix_filter g hg r hr, filter_eq, Matrix.conjTranspose_mul]
-  rw [Matrix.mul_smul, Matrix.smul_mul,
-    normalize_smul _ (inv_ne_zero (trace_conj_re_ne_zero g hg r hr))]
+/-- When the normaliser is nonzero, the Bloch matrix of the filtered vector is the normalized
+matrix `g ρ gᴴ / Re tr (g ρ gᴴ)`. -/
+private theorem blochMatrix_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ)
+    (r : EuclideanSpace ℝ (Fin 3)) (htr : (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0) :
+    blochMatrix 1 (blochFilter g r) =
+      (((Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ : ℝ) : ℂ) • (g * blochMatrix 1 r * gᴴ) :=
+  blochMatrix_normalize _
+    (Matrix.isHermitian_mul_mul_conjTranspose g (conjTranspose_blochMatrix 1 r)) htr
+
+/-- Composition of filters wherever the normaliser of the first filter is nonzero. -/
+private theorem blochFilter_mul (g h : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3))
+    (htr : (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0) :
+    blochFilter h (blochFilter g r) = blochFilter (h * g) r := by
+  rw [blochFilter_eq h, blochMatrix_blochFilter g r htr, blochFilter_eq,
+    Matrix.conjTranspose_mul]
+  rw [Matrix.mul_smul, Matrix.smul_mul, normalize_smul _ (inv_ne_zero htr)]
   simp only [Matrix.mul_assoc]
 
-private theorem filter_one (r : EuclideanSpace ℝ (Fin 3)) : filter 1 r = r := by
-  rw [filter_eq]; simpa using normalize_blochMatrix r
-
-private theorem norm_filter_lt (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ < 1) : ‖filter g r‖ < 1 := by
-  have hpos : (blochMatrix 1 (filter g r)).PosDef := by
-    rw [blochMatrix_filter g hg r hr.le]
-    exact (posDef_conj g hg r hr).smul (by
-      exact_mod_cast (inv_pos.mpr (trace_re_pos (posDef_conj g hg r hr))))
-  have hd := hpos.det_pos
-  rw [det_bloch] at hd
-  have : 0 < (1 - ‖filter g r‖ ^ 2) / 4 := by exact_mod_cast hd
-  nlinarith [norm_nonneg (filter g r)]
+private theorem blochFilter_one (r : EuclideanSpace ℝ (Fin 3)) : blochFilter 1 r = r := by
+  rw [blochFilter_eq]; simpa using normalize_blochMatrix r
 
 private theorem pairing (r s : EuclideanSpace ℝ (Fin 3)) :
     (1 - ⟪r, s⟫_ℝ) =
       2 * (Matrix.trace (blochMatrix 1 r * Matrix.adjugate (blochMatrix 1 s))).re := by
   rw [trace_mul_adjugate, Complex.ofReal_re]; ring
 
-private theorem pairing_filter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r s : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ < 1) (hs : ‖s‖ < 1) :
-    1 - ⟪filter g r, filter g s⟫_ℝ =
+private theorem pairing_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (r s : EuclideanSpace ℝ (Fin 3))
+    (hr : (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0)
+    (hs : (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re ≠ 0) :
+    1 - ⟪blochFilter g r, blochFilter g s⟫_ℝ =
       ((Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
         (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re⁻¹ * Complex.normSq g.det) *
         (1 - ⟪r, s⟫_ℝ) := by
-  rw [pairing, pairing r s, blochMatrix_filter g hg r hr.le, blochMatrix_filter g hg s hs.le,
+  rw [pairing, pairing r s, blochMatrix_blochFilter g r hr, blochMatrix_blochFilter g s hs,
     Matrix.adjugate_smul, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, Matrix.trace_smul,
     trace_conj_mul_adjugate, trace_mul_adjugate]
   have hd : g.det * star g.det = (Complex.normSq g.det : ℂ) := Complex.mul_conj g.det
@@ -232,26 +221,51 @@ private theorem pairing_filter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 
     Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, zero_mul]
   ring
 
+/-- An invertible filter keeps the closed ball, and a point of the closed ball goes to the open
+ball exactly when it lies in the open ball. -/
+private theorem norm_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
+    (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
+    ‖blochFilter g r‖ ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1) := by
+  have ht := trace_conj_re_pos g hg r hr
+  have h := pairing_blochFilter g r r ht.ne' ht.ne'
+  rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h
+  have hK : 0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ * Complex.normSq g.det :=
+    mul_pos (mul_pos (inv_pos.mpr ht) (inv_pos.mpr ht)) (Complex.normSq_pos.mpr hg)
+  set K := (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ * Complex.normSq g.det
+  have hr2 : ‖r‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg r]
+  have hf0 := norm_nonneg (blochFilter g r)
+  refine ⟨?_, ⟨fun hf => ?_, fun hr' => ?_⟩⟩
+  · nlinarith [mul_nonneg hK.le (sub_nonneg.mpr hr2)]
+  · by_contra hc
+    have h1 : ‖r‖ = 1 := le_antisymm hr (not_lt.mp hc)
+    rw [h1] at h
+    nlinarith
+  · have h2 : 0 < 1 - ‖r‖ ^ 2 := by nlinarith [norm_nonneg r]
+    nlinarith [mul_pos hK h2]
+
 private theorem klein_scale (A B C l m D : ℝ) (hl : 0 < l) (hm : 0 < m) (hD : 0 < D) :
     (l * m * D * A) / √((l * l * D * B) * (m * m * D * C)) = A / √(B * C) := by
   have : (l * l * D * B) * (m * m * D * C) = (l * m * D) ^ 2 * (B * C) := by ring
   rw [this, Real.sqrt_mul (by positivity), Real.sqrt_sq (by positivity),
     mul_div_mul_left _ _ (by positivity)]
 
-private theorem kleinCosh_filter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r s : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ < 1) (hs : ‖s‖ < 1) :
-    kleinCosh (filter g r) (filter g s) = kleinCosh r s := by
+private theorem kleinCosh_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
+    (r s : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) (hs : ‖s‖ ≤ 1) :
+    kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s := by
+  have hr' := trace_conj_re_pos g hg r hr
+  have hs' := trace_conj_re_pos g hg s hs
   unfold kleinCosh
   have hsq (v : EuclideanSpace ℝ (Fin 3)) : ‖v‖ ^ 2 = ⟪v, v⟫_ℝ :=
     (real_inner_self_eq_norm_sq v).symm
-  rw [hsq, hsq (filter g s), hsq r, hsq s, pairing_filter g hg r s hr hs,
-    pairing_filter g hg r r hr hr, pairing_filter g hg s s hs hs]
-  exact klein_scale _ _ _ _ _ _ (inv_pos.mpr (trace_re_pos (posDef_conj g hg r hr)))
-    (inv_pos.mpr (trace_re_pos (posDef_conj g hg s hs)))
-    (Complex.normSq_pos.mpr hg)
+  rw [hsq, hsq (blochFilter g s), hsq r, hsq s, pairing_blochFilter g r s hr'.ne' hs'.ne',
+    pairing_blochFilter g r r hr'.ne' hr'.ne', pairing_blochFilter g s s hs'.ne' hs'.ne']
+  exact klein_scale _ _ _ _ _ _ (inv_pos.mpr hr') (inv_pos.mpr hs') (Complex.normSq_pos.mpr hg)
 
-private theorem exists_posDef_det_one_filter (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ < 1) :
-    ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ filter g 0 = r := by
+private theorem exists_posDef_det_one_blochFilter (r : EuclideanSpace ℝ (Fin 3))
+    (hr : ‖r‖ < 1) :
+    ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r := by
   set δ := √(1 - ‖r‖ ^ 2) / 2
   have hδ0 : 0 ≤ δ := by positivity
   have hr2 : ‖r‖ ^ 2 < 1 := by nlinarith [norm_nonneg r]
@@ -275,7 +289,7 @@ private theorem exists_posDef_det_one_filter (r : EuclideanSpace ℝ (Fin 3)) (h
         Matrix.mul_smul, Matrix.smul_mul, smul_smul, Complex.ofReal_mul]
     have h0 : blochMatrix 1 (0 : EuclideanSpace ℝ (Fin 3)) = (((1 / 2 : ℝ)) : ℂ) • 1 := by
       ext i j; fin_cases i <;> fin_cases j <;> simp [blochMatrix]
-    rw [filter_eq, hconj, normalize_smul _ (by positivity), h0, conjTranspose_blochMatrix,
+    rw [blochFilter_eq, hconj, normalize_smul _ (by positivity), h0, conjTranspose_blochMatrix,
       Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, blochMatrix_sq 1 δ r hδ, smul_smul,
       ← Complex.ofReal_mul, normalize_smul _ (by positivity), normalize_blochMatrix]
 
@@ -374,24 +388,28 @@ private theorem exists_isometry :
 
 /-- The open Bloch ball is the Klein model of hyperbolic three-space: it is in bijection with the
 upper half-space model `HyperbolicThreeSpace` so that `cosh` of the hyperbolic distance is
-`kleinCosh`. The filter of the identity is the identity. Every invertible `g` maps the open ball
-into itself; on the closed ball its filter composes with any further filter `h` as the filter of
-`h * g`; and it preserves `kleinCosh` on the open ball. Every interior point is the image of the
-centre under the filter of a positive definite matrix of determinant one. -/
+`kleinCosh`. The filter of the identity is the identity. The filter of `g` composes with any
+further filter `h` as the filter of `h * g` at every point where the normaliser of `g` is nonzero.
+The filter of an invertible `g` maps the closed ball into itself, sends a point of the closed
+ball into the open ball exactly when the point lies in the open ball, and preserves `kleinCosh` on
+the open ball. Every point of the open ball is the image of the centre under the filter of a
+positive definite matrix of determinant one. -/
 theorem bloch_ball_hyperbolic :
     (∃ Φ : {r : EuclideanSpace ℝ (Fin 3) // ‖r‖ < 1} ≃ HyperbolicThreeSpace,
       ∀ r s, Real.cosh (dist (Φ r) (Φ s)) = kleinCosh r s) ∧
-    (∀ r : EuclideanSpace ℝ (Fin 3), filter 1 r = r) ∧
+    (∀ r : EuclideanSpace ℝ (Fin 3), blochFilter 1 r = r) ∧
+    (∀ (g h : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)),
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
-      (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖filter g r‖ < 1) ∧
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
-        ∀ h : Matrix (Fin 2) (Fin 2) ℂ, filter h (filter g r) = filter (h * g) r) ∧
+        ‖blochFilter g r‖ ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
       ∀ r s : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖s‖ < 1 →
-        kleinCosh (filter g r) (filter g s) = kleinCosh r s) ∧
+        kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s) ∧
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
-      ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ filter g 0 = r :=
-  ⟨exists_isometry, filter_one, fun g hg =>
-    ⟨norm_filter_lt g hg, fun r hr h => filter_mul g h hg r hr, kleinCosh_filter g hg⟩,
-    exists_posDef_det_one_filter⟩
+      ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r :=
+  ⟨exists_isometry, blochFilter_one, blochFilter_mul, fun g hg =>
+    ⟨norm_blochFilter g hg, fun r s hr hs => kleinCosh_blochFilter g hg r s hr.le hs.le⟩,
+    exists_posDef_det_one_blochFilter⟩
 
 end D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
