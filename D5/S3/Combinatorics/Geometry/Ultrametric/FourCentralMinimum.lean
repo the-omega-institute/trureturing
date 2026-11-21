@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum
+/- GID: D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum
+   mirror-B: D5/B/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
@@ -39,7 +39,7 @@ Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (len, 
   D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges (center, centralGraph;
   sha256:846beddcd39fdb877075256f79f15ee0060283f2ccd0f5f6bad09d7f46dd7bc0),
   D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum (mem_lengthEdges_iff,
-  mem_lengthEdges_D, image_pairs_card; made public here and re-pinned by ledger-align).
+  mem_lengthEdges_D, image_pairs_card; made public here).
 Search record (§3.1): the per-length cover bound, the central maximum distance and the
   cross-class pair count are reused from the frozen modules above; Mathlib supplies the
   handshake identity SimpleGraph.sum_degrees_eq_twice_card_edges, the fiberwise sums
@@ -66,7 +66,7 @@ ultrametric with noncentral intermediate distances attains all three bounds at o
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+namespace D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum
 
 open D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 open D5.S3.Combinatorics.Geometry.CentralEdgeCover
@@ -914,4 +914,4 @@ theorem ultra_four_central_minimum (n : ℕ) :
 
 end
 
-end D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+end D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum

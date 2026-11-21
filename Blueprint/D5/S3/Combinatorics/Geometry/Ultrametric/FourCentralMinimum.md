@@ -6,9 +6,9 @@ A four-central ultrametric has at least eight points and at least 6n−16−4⌊
 
 **Definition 1.1 (The attaining ultrametric).**
 
-Lean statement: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.FourTree`
+Lean statement: `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.FourTree`
 
-*Formalization.* `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.FourTree` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.FourTree` (`✓ std3`).
 
 *Citation.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska's central-edge conjectures: sharp bounds and tree corollaries*. DOI: [10.5281/zenodo.24389010](https://doi.org/10.5281/zenodo.24389010). URL: <https://doi.org/10.5281/zenodo.24389010>.
 
@@ -18,9 +18,9 @@ FourTree n is the point set {0,…,n−1} cut into the blocks {4k,…,4k+3} for 
 
 **Theorem 1.2 (The minimum and its length-by-length bounds).**
 
-Lean statement: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.ultra_four_central_minimum`
+Lean statement: `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.ultra_four_central_minimum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.ultra_four_central_minimum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.ultra_four_central_minimum` (`✓ std3`). ∎
 
 *Citation.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska's central-edge conjectures: sharp bounds and tree corollaries*. DOI: [10.5281/zenodo.24389010](https://doi.org/10.5281/zenodo.24389010). URL: <https://doi.org/10.5281/zenodo.24389010>.
 
@@ -36,6 +36,6 @@ The hypothesis of four central values is used for both lower lengths: without th
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.FourTree`
-- Truth anchor: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.ultra_four_central_minimum`
-- Dependency: [D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum](UltrametricThreeCentralMinimum.md)
+- Truth anchor: `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.FourTree`
+- Truth anchor: `D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.ultra_four_central_minimum`
+- Dependency: [D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum](../UltrametricThreeCentralMinimum.md)

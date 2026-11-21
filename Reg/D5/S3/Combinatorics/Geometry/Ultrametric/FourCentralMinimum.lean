@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+import D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum
 import Reg.Support.SingleDependentReadout
 
-namespace Reg.D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+namespace Reg.D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum
 
-open _root_.D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+open _root_.D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum
 open _root_.D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 open _root_.D5.S3.Combinatorics.Geometry.CentralEdgeCover
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -64,8 +64,8 @@ def family : Registration arena (type_of% (@ultra_four_central_minimum)) where
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ultra_four_central_minimum) (Realization signature) Unit Unit where
   unitName :=
-    `D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum.ultra_four_central_minimum.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum.family
+    `D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum.ultra_four_central_minimum.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -81,7 +81,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+    owner := `D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -99,4 +99,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end
-end Reg.D5.S3.Combinatorics.Geometry.UltrametricFourCentralMinimum
+end Reg.D5.S3.Combinatorics.Geometry.Ultrametric.FourCentralMinimum

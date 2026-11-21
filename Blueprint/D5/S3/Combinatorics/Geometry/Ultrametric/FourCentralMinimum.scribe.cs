@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry.Ultrametric;
 
-internal sealed class UltrametricFourCentralMinimumDocument : IScribeDocumentDefinition
+internal sealed class FourCentralMinimumDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.";
+    private const string Prefix = "D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Topology/mazhang2026centraledgesv4");
 

@@ -7,7 +7,7 @@ doi: "10.5281/zenodo.24389010"
 url: "https://doi.org/10.5281/zenodo.24389010"
 claim: "Theorem 5: for every n ≥ 8 the minimum number of central edges among n-point ultrametric spaces with |C(X)| = 4 is 6n-16-4⌊n/4⌋+⌈n/2⌉, and no such space exists for n < 8."
 strata_touched:
-  - D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum
+  - D5/S3/Combinatorics/Geometry/Ultrametric/FourCentralMinimum
 license: citation-only
 triage: anchor
 ---
