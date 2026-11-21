@@ -354,10 +354,7 @@ private theorem signScalar_injective : Function.Injective signScalar := by
   intro e d h
   exact Subtype.ext (Units.ext h)
 
-@[simp] theorem signScalar_one : signScalar 1 = 1 := rfl
-
-@[simp] theorem signScalar_mul (e d : Signs) :
-    signScalar (e * d) = signScalar e * signScalar d := rfl
+@[simp] private theorem signScalar_one : signScalar 1 = 1 := rfl
 
 private theorem signScalar_cases (e : Signs) : signScalar e = 1 ∨ signScalar e = -1 := by
   apply sq_eq_one_iff.mp
@@ -371,7 +368,7 @@ def negativeSign : Signs := ⟨-1, by
   apply Units.ext
   norm_num⟩
 
-@[simp] theorem signScalar_negativeSign : signScalar negativeSign = -1 := rfl
+@[simp] private theorem signScalar_negativeSign : signScalar negativeSign = -1 := rfl
 
 private theorem signed_wrap_eq (hn : 3 ≤ n) {e d : Signs} {i j : ZMod n}
     (h : signScalar e • wrapPoint i = signScalar d • wrapPoint j) :
@@ -458,8 +455,8 @@ private def normalizedAction (n : ℕ) [NeZero n] :
     intro x
     change signedCoords (g.1 * h.1) (g.2 * h.2) x =
       signedCoords g.1 g.2 (signedCoords h.1 h.2 x)
-    simp only [signedCoords_eval, signScalar_mul, map_smul, smul_smul]
-    rw [mul_comm (signScalar g.2) (signScalar h.2)]
+    simp only [signedCoords_eval, map_smul, smul_smul]
+    rw [mul_comm (signScalar h.2) (signScalar g.2)]
     rfl
 
 private theorem normalizedAction_wrap (g : Equiv.Perm (ZMod n) × Signs) (i : ZMod n) :
