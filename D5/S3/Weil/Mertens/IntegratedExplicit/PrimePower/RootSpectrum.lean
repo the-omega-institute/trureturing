@@ -382,7 +382,7 @@ theorem root_centered_error {r : ℝ} (hr : 1 < r)
     rw [← Real.exp_neg, ← Real.exp_add]
     congr 1
     ring
-  have hcut := centered_root_tail (r := r) hr hx1
+  have hcut := centered_root_tail (r := r) hr.le (zero_lt_one.trans_le hx1)
   dsimp only at hcut
   change centered r x = _ at hcut
   rw [hroot] at hcut
