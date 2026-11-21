@@ -10,14 +10,16 @@
 admission_basis: open-problem-resolution for preregistered issue #28580.
 The Frozen state slice records this module's statement identity. The Blueprint Scribe binds
 result to the hardin233178 dossier with a typed OpenProblemResolutionClaim (Proved).
-proof_shape: count_transfer=bind-only (array/column equivalence and generic continuation count),
-consumed by chromatic_recurrence and result;
-chromatic_recurrence=bind-only, consumed by scaled_recurrence and result;
-result=content after inlining the new three-label vector relation and applying the
-frozen literal source-cardinality bridge.
-columnEquiv, column_apply and arrayEquiv feed proper_columns and count_transfer;
-proper_columns and tail_iff_good feed count_transfer;
-count_transfer feeds chromatic_recurrence; scaled_recurrence feeds result.
+escape_witness: the checked three-label vector relation in HardinA233178Chromatic feeds chromatic_recurrence and the scaled literal recurrence.
+columnEquiv: proof_shape=bind-only; consumers=HardinA233178Recurrence.arrayEquiv, HardinA229538StripData.cost
+column_apply: proof_shape=bind-only; consumers=HardinA233178Recurrence.arrayEquiv._proof_1
+arrayEquiv: proof_shape=bind-only; consumers=HardinA233178Recurrence.proper_columns, HardinA233178Recurrence.count_transfer
+proper_columns: proof_shape=bind-only; consumers=HardinA233178Recurrence.count_transfer._simp_1_1
+tail_iff_good: proof_shape=bind-only; consumers=HardinA233178Recurrence.count_transfer
+count_transfer: proof_shape=bind-only; consumers=HardinA233178Recurrence.chromatic_recurrence._simp_1_1
+chromatic_recurrence: proof_shape=content; consumers=HardinA233178Recurrence.scaled_recurrence
+scaled_recurrence: proof_shape=content; consumers=HardinA233178Recurrence.result
+result: proof_shape=content; consumers=none (external open-problem-resolution #28580)
 The final exact source bridge is HardinA233178Literal.chromatic_source_count.
 Generic propagation reuses the original TransferMatrix.cont_matrix and scalarRelationShift.
 utility none: this module proves an unbounded literal recurrence by source bijections and
@@ -28,6 +30,7 @@ remains incomplete and this unit makes no global-priority claim.
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Chromatic
+import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 
 /-! The array-to-column correspondence precedes the all-width recurrence. -/
 
@@ -39,7 +42,7 @@ attribute [local instance] Classical.propDecidable
 open HardinA233178Literal (Array Edges Proper chromaticCount a)
 open HardinA233178Chromatic (Column colour Bond T v)
 
-private def columnEquiv : Column ≃ (Fin 5 → Fin 3) :=
+def columnEquiv : Column ≃ (Fin 5 → Fin 3) :=
   (finFunctionFinEquiv (m := 3) (n := 5)).symm
 
 private theorem column_apply (p : Column) (r : Fin 5) : columnEquiv p r = colour p r := rfl
@@ -70,11 +73,11 @@ private theorem proper_columns (n : ℕ) (f : Fin (n + 1) → Column) :
     rw [List.getD_eq_getElem (List.ofFn f) default (by simpa using hi), List.getElem_ofFn]
   constructor
   · intro hp i hi
-    rw [get i (by omega), get (i+1) hi]
+    rw [get i (Nat.lt_of_succ_lt hi), get (i+1) hi]
     intro r s hrs
-    exact hp (r,⟨i,by omega⟩) (s,⟨i+1,hi⟩) ⟨rfl,hrs⟩
+    exact hp (r,⟨i,Nat.lt_of_succ_lt hi⟩) (s,⟨i+1,hi⟩) ⟨rfl,hrs⟩
   · intro hf p q he
-    have hi : p.2.val + 1 < n+1 := by have := q.2.isLt; have := he.1; omega
+    have hi : p.2.val + 1 < n+1 := he.1 ▸ q.2.isLt
     have hg := hf p.2.val hi
     rw [get _ p.2.isLt, get _ hi] at hg
     have hq : (⟨p.2.val+1,hi⟩ : Fin (n+1)) = q.2 := Fin.ext he.1.symm
@@ -114,12 +117,8 @@ theorem count_transfer (n : ℕ) :
   simp_rw [hc]
   have hT (a b : Column) (_ : True) (s : Column) :
       (∑ c : Column, if True ∧ Bond b c ∧ c = s then (1:ℤ) else 0) = T b s := by
-    calc
-      _ = ∑ c : Column, if c = s then (if Bond b c then (1:ℤ) else 0) else 0 := by
-        apply Finset.sum_congr rfl
-        intro c _
-        by_cases hc : c = s <;> by_cases hb : Bond b c <;> simp [hc,hb]
-      _ = T b s := by rw [Finset.sum_ite_eq']; simp only [Finset.mem_univ, ite_true]; rfl
+    simp only [true_and, @and_comm (Bond b _) (_ = s), ite_and, Finset.sum_ite_eq',
+      Finset.mem_univ, ite_true, T]
   have hm (p : Column) := TransferMatrix.cont_matrix (fun _ _ : Column => True)
     (fun _ b c => Bond b c) (fun _ b => b) T
     (by intro a b hab s; simpa only [true_and] using hT a b hab s) n p p trivial
@@ -142,17 +141,17 @@ private theorem scaled_recurrence (n : ℕ) :
       13992198144 * (a (n+7) : ℤ) + 99857989632 * (a (n+6) : ℤ) -
       17660905521152 * (a (n+5) : ℤ) + 211106232532992 * (a (n+4) : ℤ) +
       2533274790395904 * (a (n+3) : ℤ) - 40532396646334464 * (a (n+2) : ℤ) := by
-  have s12 := HardinA233178Literal.chromatic_source_count (n+12) (by omega)
-  have s11 := HardinA233178Literal.chromatic_source_count (n+11) (by omega)
-  have s10 := HardinA233178Literal.chromatic_source_count (n+10) (by omega)
-  have s9 := HardinA233178Literal.chromatic_source_count (n+9) (by omega)
-  have s8 := HardinA233178Literal.chromatic_source_count (n+8) (by omega)
-  have s7 := HardinA233178Literal.chromatic_source_count (n+7) (by omega)
-  have s6 := HardinA233178Literal.chromatic_source_count (n+6) (by omega)
-  have s5 := HardinA233178Literal.chromatic_source_count (n+5) (by omega)
-  have s4 := HardinA233178Literal.chromatic_source_count (n+4) (by omega)
-  have s3 := HardinA233178Literal.chromatic_source_count (n+3) (by omega)
-  have s2 := HardinA233178Literal.chromatic_source_count (n+2) (by omega)
+  have s12 := HardinA233178Literal.chromatic_source_count (n+12) (Nat.le_add_left 2 (n + 10))
+  have s11 := HardinA233178Literal.chromatic_source_count (n+11) (Nat.le_add_left 2 (n + 9))
+  have s10 := HardinA233178Literal.chromatic_source_count (n+10) (Nat.le_add_left 2 (n + 8))
+  have s9 := HardinA233178Literal.chromatic_source_count (n+9) (Nat.le_add_left 2 (n + 7))
+  have s8 := HardinA233178Literal.chromatic_source_count (n+8) (Nat.le_add_left 2 (n + 6))
+  have s7 := HardinA233178Literal.chromatic_source_count (n+7) (Nat.le_add_left 2 (n + 5))
+  have s6 := HardinA233178Literal.chromatic_source_count (n+6) (Nat.le_add_left 2 (n + 4))
+  have s5 := HardinA233178Literal.chromatic_source_count (n+5) (Nat.le_add_left 2 (n + 3))
+  have s4 := HardinA233178Literal.chromatic_source_count (n+4) (Nat.le_add_left 2 (n + 2))
+  have s3 := HardinA233178Literal.chromatic_source_count (n+3) (Nat.le_add_left 2 (n + 1))
+  have s2 := HardinA233178Literal.chromatic_source_count (n+2) (Nat.le_add_left 2 n)
   norm_num [pow_add] at s12 s11 s10 s9 s8 s7 s6 s5 s4 s3 s2
   have hr := chromatic_recurrence n
   have h48 : 48 * ((a (n+12) : ℤ) - (192 * (a (n+11) : ℤ) +
@@ -176,12 +175,17 @@ theorem result :
       17660905521152 * (a (n-7) : ℤ) + 211106232532992 * (a (n-8) : ℤ) +
       2533274790395904 * (a (n-9) : ℤ) - 40532396646334464 * (a (n-10) : ℤ) := by
   intro n hn
-  obtain ⟨k,rfl⟩ : ∃ k, n = k+12 := ⟨n-12,by omega⟩
+  obtain ⟨k,rfl⟩ := Nat.exists_eq_add_of_le' (show 12 ≤ n from hn)
   have h := scaled_recurrence k
-  simpa only [show k+12-1 = k+11 by omega, show k+12-2 = k+10 by omega,
-    show k+12-3 = k+9 by omega, show k+12-4 = k+8 by omega,
-    show k+12-5 = k+7 by omega, show k+12-6 = k+6 by omega,
-    show k+12-7 = k+5 by omega, show k+12-8 = k+4 by omega,
-    show k+12-9 = k+3 by omega, show k+12-10 = k+2 by omega] using h
+  simpa only [Nat.add_sub_assoc (Nat.le_add_right 1 11) k,
+    Nat.add_sub_assoc (Nat.le_add_right 2 10) k,
+    Nat.add_sub_assoc (Nat.le_add_right 3 9) k,
+    Nat.add_sub_assoc (Nat.le_add_right 4 8) k,
+    Nat.add_sub_assoc (Nat.le_add_right 5 7) k,
+    Nat.add_sub_assoc (Nat.le_add_right 6 6) k,
+    Nat.add_sub_assoc (Nat.le_add_right 7 5) k,
+    Nat.add_sub_assoc (Nat.le_add_right 8 4) k,
+    Nat.add_sub_assoc (Nat.le_add_right 9 3) k,
+    Nat.add_sub_assoc (Nat.le_add_right 10 2) k] using h
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Recurrence
