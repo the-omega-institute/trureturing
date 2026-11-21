@@ -69,7 +69,7 @@ theorem canonical_count_scale (d m : ℕ) (hd : d < 5) :
   have nonconstant : ∀ f, predicate f → ∃ x y, f x ≠ f y := by
     intro f h
     by_contra he
-    push_neg at he
+    push Not at he
     have const : f = fun _ => f (0, 0) := funext fun x => he x (0, 0)
     change defects horizontal ProperTransfer.between _ = d at h
     rw [const] at h
@@ -132,7 +132,7 @@ theorem finite_certificate :
           initial (j.castAdd 32) =
             HardinA229532StripData.initial
               ((HardinA229457StripCut.crossedProperSlot (j.castAdd 10)).castAdd 11) := by
-        decide +kernel
+        fin_cases j <;> decide +kernel
       simp_rw [fibre, weight i]
       exact HardinA229532Strip.finite_certificate.2.2.2.2.1 (t.castAdd 11)
     · let squareIndex : Fin 6 → Fin 42 := ![20, 22, 23, 27, 35, 38]
@@ -178,7 +178,7 @@ theorem result (n : ℕ) :
   have poly := HardinA229457StripPowers.forward_relation
   have h := forward_shift T initial terminal 14 1 ![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] poly n
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.val_one] at h
+    Matrix.cons_val_zero, Matrix.cons_val_succ] at h
   have h0 := bridge (n + 1)
   have h1 := bridge (n + 2)
   have h2 := bridge (n + 3)
