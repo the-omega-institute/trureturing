@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Under RH the prime-window discrepancy has an endpoint primitive and cluster interval. -/
+   digest: RH gives the exact prime-window remainder and cluster interval. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 
@@ -237,7 +237,8 @@ private lemma fixed_cutoff_interval (hRH : RiemannHypothesis) (a : ℝ) :
 
 /-- Under RH, the endpoint difference removes the discrepancy uniformly for late cutoffs.
 For a fixed left cutoff the cluster set is the translated primitive image, a nondegenerate
-compact real interval. -/
+compact real interval. For every ordered window above two, the residual is exactly the
+integral of `windowError` between the logarithmic cutoffs. -/
 theorem prime_window_remainder_of_rh (hRH : RiemannHypothesis) :
     (∀ ε : ℝ, 0 < ε → ∃ X : ℝ, 2 ≤ X ∧ ∀ a B : ℝ, X ≤ a → a ≤ B →
       |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
@@ -246,8 +247,13 @@ theorem prime_window_remainder_of_rh (hRH : RiemannHypothesis) :
       {y | MapClusterPt y atTop (windowDiscrepancy a)} =
         (fun h => fixedCutoffConstant a + spectralPrimitive h) '' closure (range phaseOrbit) ∧
       ∃ lower upper : ℝ, lower < upper ∧
-        {y | MapClusterPt y atTop (windowDiscrepancy a)} = Icc lower upper) := by
-  refine ⟨fun ε hε => uniform_error hRH hε, fun a ha => ?_⟩
+        {y | MapClusterPt y atTop (windowDiscrepancy a)} = Icc lower upper) ∧
+    (∀ a B : ℝ, 2 ≤ a → a ≤ B →
+      windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
+        spectralPrimitive (phaseOrbit (Real.log a)) =
+          ∫ y in Real.log a..Real.log B, windowError y) := by
+  refine ⟨fun ε hε => uniform_error hRH hε, ?_, fun _ _ ha haB => window_error_identity hRH ha haB⟩
+  intro a ha
   have hcluster := fixed_cutoff_cluster hRH ha
   rw [hcluster]
   exact ⟨rfl, fixed_cutoff_interval hRH a⟩

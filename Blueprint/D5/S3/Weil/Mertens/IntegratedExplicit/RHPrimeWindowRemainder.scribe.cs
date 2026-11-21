@@ -43,7 +43,7 @@ internal sealed class RHPrimeWindowRemainderDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("prime-window-remainder-of-rh"),
                 DeclarationHandle.Create(Module + "prime_window_remainder_of_rh"),
-                H("Uniform remainder and exact cluster interval"), StatementSource.FromAuthor(Claim()),
+                H("Uniform remainder, cluster interval and exact window identity"), StatementSource.FromAuthor(Claim()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
@@ -133,6 +133,10 @@ internal sealed class RHPrimeWindowRemainderDocument : IScribeDocumentDefinition
         var nondegenerate = ExistsReal("l", ExistsReal("u", And(Lt(lower, upper), Eq(cluster, interval))));
         var image = Add(Call("C", a), Call("P", F.Id("H")));
         var fixedCutoff = All("a", Imp(Le(D(2), a), And(Eq(cluster, image), nondegenerate)));
-        return Disp(Imp(F.Id("RH"), And(uniform, fixedCutoff)));
+        var y = F.Id("y");
+        var error = Seq(Int, Underscore, Grp(Call("log", a)), Caret, Grp(Call("log", b)), Sp,
+            Call("e", y), Sp, F.Id("d"), y);
+        var identity = All("a", All("B", Imp(Le(D(2), a), Imp(Le(a, b), Eq(discrepancy, error)))));
+        return Disp(Imp(F.Id("RH"), And(uniform, And(fixedCutoff, identity))));
     }
 }

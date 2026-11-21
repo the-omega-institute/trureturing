@@ -13,6 +13,7 @@ open Filter Set
 open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
+open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (windowError)
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
 
 namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
@@ -35,9 +36,15 @@ def clusterLaw (V : Realization signature) : Prop :=
     ∃ lower upper : ℝ, lower < upper ∧
       {y | MapClusterPt y atTop (fun B => V.readout () () (a, B))} = Icc lower upper
 
+def identityLaw (V : Realization signature) : Prop :=
+  ∀ a B : ℝ, 2 ≤ a → a ≤ B →
+    V.readout () () (a, B) - spectralPrimitive (phaseOrbit (Real.log B)) +
+      spectralPrimitive (phaseOrbit (Real.log a)) =
+        ∫ y in Real.log a..Real.log B, windowError y
+
 abbrev arena : Arena where
   signature := signature
-  Law V := RiemannHypothesis → uniformLaw V ∧ clusterLaw V
+  Law V := RiemannHypothesis → uniformLaw V ∧ clusterLaw V ∧ identityLaw V
 
 theorem source_bridge : (type_of% @prime_window_remainder_of_rh) ↔ arena.Law actual := Iff.rfl
 
@@ -81,6 +88,6 @@ theorem sensitivity_iff_rh : Sensitivity arena actual ↔ RiemannHypothesis := b
     exact rejected_law_implies_rh bad hbad
   · intro hRH
     exact _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual atTwoIntervention
-      (fun h => intervention_rejects_cluster (h hRH).2)
+      (fun h => intervention_rejects_cluster (h hRH).2.1)
 
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
