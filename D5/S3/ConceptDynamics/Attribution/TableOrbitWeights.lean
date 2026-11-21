@@ -268,7 +268,7 @@ theorem maximal_table_fixed_mass
         (∑ o, w o * orbitFrequency fixed o) ≤ ∑ o, z o * orbitFrequency fixed o) ∧
       (∀ (U : Type s) [Fintype U] [MulAction G U]
         (w : U → ℝ) (f : X → U → Y),
-        (∀ s, 0 ≤ w s) → (∑ s, w s = 1) → (∀ (g : G) s, w (g • s) = w s) →
+        (∀ s, 0 ≤ w s) → (∀ (g : G) s, w (g • s) = w s) →
         (∀ x y, (∑ s, if f x s = y then w s else 0) = P x y) →
         (∀ (g : G) x s, f (g • x) (g • s) = g • f x s) →
         seedFixedMass (G := H) w ≤ ∑ o, z o * orbitFrequency fixed o) ∧
@@ -291,7 +291,15 @@ theorem maximal_table_fixed_mass
   refine ⟨z, zn, zt, fun x y => zr (x, y), ?_, ?_, ?_⟩
   · intro weights hn ht hr
     exact maximal weights hn ht (fun xy => hr xy.1 xy.2)
-  · intro S _ _ mass readout hn ht hi hp hc
+  · intro S _ _ mass readout hn hi hp hc
+    let x₀ : X := Classical.choice ‹Nonempty X›
+    have ht : ∑ s, mass s = 1 := calc
+      _ = ∑ s, ∑ y, if readout x₀ s = y then mass s else 0 := by
+        simp [eq_comm]
+      _ = ∑ y, ∑ s, if readout x₀ s = y then mass s else 0 := sum_comm
+      _ = 1 := by
+        simp_rw [hp]
+        exact normalized x₀
     obtain ⟨p, pn, pt, pi, pr, bound⟩ :=
       calibration_table_law H mass hn ht hi readout hc P hp
     obtain ⟨weights, wn, wt, wr, same⟩ :=

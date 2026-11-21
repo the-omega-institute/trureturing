@@ -19,15 +19,19 @@ internal sealed class TableOrbitWeightsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(EventEquivalence()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("A group G acts on a finite type T. Events A are finite subsets of T "
-                        + "indexed by an arbitrary type I, and m gives their prescribed real masses. "
-                        + "An invariant law on T has nonnegative weights summing to one and is constant "
-                        + "on every orbit. The orbit frequency of an event counts its intersection with "
-                        + "the orbit and divides by the orbit size.")),
-                    Paragraph(Text("An invariant law with the prescribed event masses gives orbit totals "
-                        + "that are nonnegative and sum to one. Conversely, distribute each orbit total "
-                        + "uniformly within its orbit. Every prescribed event is then recovered by the "
-                        + "same linear combination of its orbit frequencies."))),
+                    Paragraph(Text("Let G be a group acting on a finite type T, and let I be any index type. "
+                        + "The three types may belong to independent universes. For each i in I take a finite "
+                        + "subset A(i) of T and a real prescribed mass m(i). Write Q for the type of G-orbits "
+                        + "in T. The frequency of an event C in an orbit o is the cardinality of their "
+                        + "intersection divided by the cardinality of o.")),
+                    Paragraph(Math(Call("Law", F.Id("p"))), Text(" means that p is nonnegative on T, "
+                        + "sums to one on T, satisfies p(g acting on t) = p(t) for every g and t, and "
+                        + "sums to m(i) over A(i) for every i in I. "), Math(Call("Feasible", F.Id("z"))),
+                        Text(" means that z is nonnegative on Q, sums to one on Q, and for every i in I "
+                            + "the sum over all orbits o of z(o) times the frequency of A(i) in o equals m(i).")),
+                    Paragraph(Text("To obtain z from p, sum p over each orbit. To obtain p from z, divide "
+                        + "each orbit total by the orbit cardinality and assign the result to every point "
+                        + "in that orbit."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("maximal-invariant-event-mass"),
@@ -36,13 +40,19 @@ internal sealed class TableOrbitWeightsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(EventMaximum()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Fix an additional target event B in a finite G-set. Assume that some "
-                        + "invariant probability law has all the prescribed event masses. The feasible "
-                        + "orbit totals form a nonempty closed subset of a compact box. The target "
-                        + "mass is a linear objective and has a maximizer there.")),
-                    Paragraph(Text("For every real value a, an invariant law satisfying the event "
-                        + "constraints and assigning a to B exists exactly when a feasible orbit vector "
-                        + "has objective value a."))),
+                    Paragraph(Text("Let G act on a finite type T and let I be arbitrary, with independent "
+                        + "universes as in the event equivalence. Fix finite subsets A(i) of T and real "
+                        + "masses m(i) for every i in I. Fix a finite target subset B of T. Assume there "
+                        + "is a single real function p on T satisfying Law(p) for all the events A(i).")),
+                    Paragraph(Text("For any real function w on Q, Score(w) is the sum over orbits o of "
+                        + "w(o) times the frequency of B in o. TargetMass(p) is the sum of p over B. "
+                        + "Law and Feasible have the same meaning as in the event equivalence. The "
+                        + "maximizing z is feasible, and each real a is realized as TargetMass by some "
+                        + "law if and only if it is realized as Score by some feasible vector.")),
+                    Paragraph(Text("The feasible orbit vectors form a nonempty closed subset of the "
+                        + "compact box with coordinates in the unit interval. Continuity gives attainment. "
+                        + "Adjoining the target event to the indexed family gives the equality of attainable "
+                        + "values while keeping all the original event constraints on the same law."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("maximal-table-fixed-mass"),
@@ -51,70 +61,100 @@ internal sealed class TableOrbitWeightsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(KernelMaximum()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("A group G acts on a nonempty finite input type X in universe v "
-                        + "and a finite output type Y in universe w with decidable equality. "
-                        + "The deterministic table type has a finite enumeration. "
-                        + "Let H be a subgroup of G and let P be a G-covariant probability kernel. "
-                        + "The table action simultaneously transports arguments and outputs. "
-                        + "The linear constraints prescribe all evaluation marginals, and the target "
-                        + "event consists of the tables fixed by H.")),
-                    Paragraph(Text("The chosen vector of orbit totals is feasible and maximizes the "
-                        + "target objective over every feasible vector. That value bounds the H-fixed "
-                        + "mass of every finite seed type in arbitrary universe s with nonnegative, "
-                        + "normalized, G-invariant weights and a G-covariant deterministic readout "
-                        + "having marginals P. A finite seed type in the maximum of v and w attains "
-                        + "the value with strictly positive normalized G-invariant weights and a "
-                        + "G-covariant deterministic readout with marginals P.")),
-                    Paragraph(Text("Pushing a calibration to its deterministic tables preserves the "
-                        + "marginals and can increase the fixed mass. The optimizer lifts back by "
-                        + "restricting its table law to the positive support and taking evaluation "
-                        + "as the deterministic readout."))),
+                    Paragraph(Text("Let G be a group acting on a nonempty finite input type X in universe v "
+                        + "and a finite output type Y in universe w. Assume decidable equality on Y and a "
+                        + "finite enumeration of the function type from X to Y. Fix any subgroup H of G "
+                        + "and a real function P on X times Y. Its entries are nonnegative, its rows sum "
+                        + "to one, and P(g acting on x, g acting on y) = P(x,y) for every g, x and y.")),
+                    Paragraph(Text("The G-action on a table t sends it under g to the table that takes x "
+                        + "to g acting on t evaluated at the inverse translate of x. Let Q be its orbit "
+                        + "type. For each cell (x,y), take the event of tables with t(x) = y. Feasible(z) "
+                        + "means that z is nonnegative on Q, sums to one there, and for every x and y "
+                        + "the sum of z(o) times the cell frequency in o over all o equals P(x,y). "
+                        + "Score(z) sums z(o) times the H-fixed-table frequency in o over all o.")),
+                    Paragraph(Text("UniversalBound(z) means that for every finite seed type U in any "
+                        + "universe s with a G-action, every real weight function a on U, and every "
+                        + "readout f from X times U to Y, the following implication holds. If a is "
+                        + "nonnegative and G-invariant, f is pointwise G-equivariant, and for every x "
+                        + "and y the sum of a over seeds with f(x,u) = y equals P(x,y), then the sum "
+                        + "of a over seeds fixed by all of H is at most Score(z).")),
+                    Paragraph(Text("PositiveAttainment(z) means that there exists a finite seed type "
+                        + "U in the maximum of v and w, a G-action on U, a real weight function a "
+                        + "on U, and a readout f from X times U to Y. The weights are strictly "
+                        + "positive, sum to one and are G-invariant. The readout is pointwise "
+                        + "G-equivariant, its weighted marginals equal P at every cell, and "
+                        + "the total weight of H-fixed seeds equals Score(z).")),
+                    Paragraph(Text("Pushing seeds to their tables preserves the row marginals and "
+                        + "can increase the fixed mass. Each positive-weight table can also serve "
+                        + "as a seed with evaluation as the readout. For the universal bound, summing "
+                        + "the marginal equations at any one input already shows that the weights "
+                        + "sum to one. Weight invariance makes the table law constant on orbits "
+                        + "and readout equivariance transports fixed seeds into fixed tables."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Typed(Formula name, Formula type) => Seq(name, Colon, type);
+    private static Formula FunctionType(Formula domain, Formula codomain) => Seq(domain, Sp, To, Sp, codomain);
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+
+    private static Formula EventFamily(Formula consequence)
+    {
+        Formula index = F.Id("I");
+        return Seq(Forall, Sp, F.Id("G"), Comma, Sp, F.Id("T"), Comma, Sp, index, Comma, Sp,
+            Typed(F.Id("A"), FunctionType(index, Call("Finset", F.Id("T")))), Comma, Sp,
+            Typed(F.Id("m"), FunctionType(index, Reals())), Comma, Sp, consequence);
+    }
+
+    private static Formula Witness(Formula variable, Formula domain, Formula predicate) =>
+        Seq(Exists, Sp, Typed(variable, FunctionType(domain, Reals())), Comma, Sp, predicate);
 
     private static Formula EventEquivalence()
     {
-        Formula g = F.Id("G");
-        Formula t = F.Id("T");
-        Formula a = F.Id("A");
-        Formula m = F.Id("m");
         Formula p = F.Id("p");
         Formula z = F.Id("z");
-        return Disp(Seq(Forall, Sp, g, Comma, Sp, t, Comma, Sp, a, Comma, Sp, m,
-            Comma, Sp, Open, Exists, Sp, p, Comma, Sp, Call("InvariantLaw", g, t, a, m, p), Close,
-            Sp, Iff, Sp, Open, Exists, Sp, z, Comma, Sp, Call("FeasibleOrbitMasses", g, t, a, m, z), Close));
+        return Disp(EventFamily(Seq(Open, Witness(p, F.Id("T"), Call("Law", p)), Close,
+            Sp, Iff, Sp, Open, Witness(z, F.Id("Q"), Call("Feasible", z)), Close)));
     }
 
     private static Formula EventMaximum()
     {
-        Formula a = F.Id("A");
-        Formula m = F.Id("m");
-        Formula b = F.Id("B");
+        Formula t = F.Id("T");
+        Formula q = F.Id("Q");
+        Formula p = F.Id("p");
         Formula z = F.Id("z");
-        return Disp(Seq(Call("InvariantEventConstraintsFeasible", a, m), Sp, Rightarrow,
-            Sp, Exists, Sp, z, Comma, Sp, Call("OptimalOrbitMasses", a, m, b, z),
-            Sp, Land, Sp, Call("SameAttainableTargetMasses", a, m, b)));
+        Formula w = F.Id("w");
+        Formula a = F.Id("a");
+        Formula law = Call("Law", p);
+        Formula feasible = Call("Feasible", w);
+        return Disp(EventFamily(Seq(Typed(F.Id("B"), Call("Finset", t)), Comma, Sp,
+            Open, Witness(p, t, law), Close, Sp, Rightarrow, Sp,
+            Witness(z, q, Seq(Call("Feasible", z), Sp, Land, Sp, ScoreBound(z, q),
+                Sp, Land, Sp, Open, Forall, Sp, Typed(a, Reals()), Comma, Sp,
+                Open, Witness(p, t, Seq(law, Sp, Land, Sp, Call("TargetMass", p), Eq, a)), Close,
+                Sp, Iff, Sp,
+                Open, Witness(w, q, Seq(feasible, Sp, Land, Sp, Call("Score", w), Eq, a)), Close,
+                Close)))));
+    }
+
+    private static Formula ScoreBound(Formula z, Formula orbitType)
+    {
+        Formula w = F.Id("w");
+        return Seq(Open, Forall, Sp, Typed(w, FunctionType(orbitType, Reals())), Comma, Sp,
+            Call("Feasible", w), Sp, Rightarrow, Sp, Call("Score", w), Sp, Le, Sp, Call("Score", z),
+            Close);
     }
 
     private static Formula KernelMaximum()
     {
         Formula g = F.Id("G");
-        Formula h = F.Id("H");
         Formula x = F.Id("X");
         Formula y = F.Id("Y");
-        Formula p = F.Id("P");
-        Formula v = F.Id("v");
-        Formula w = F.Id("w");
-        Formula s = F.Id("s");
         Formula z = F.Id("z");
-        return Disp(Seq(Call("Subgroup", h, g), Sp, Land, Sp, Call("NonemptyFiniteInput", x, v),
-            Sp, Land, Sp, Call("FiniteOutputWithDecidableEquality", y, w),
-            Sp, Land, Sp, Call("FiniteTableType", x, y),
-            Sp, Land, Sp, Call("CovariantProbabilityKernel", g, x, y, p),
-            Sp, Rightarrow, Sp, Exists, Sp, z, Comma, Sp, Call("OptimalKernelOrbitMasses", h, p, z),
-            Sp, Land, Sp, Call("UniversalCalibrationBound", h, p, z, s),
-            Sp, Land, Sp, Call("PositiveCalibrationAttainment", h, p, z, Call("MaxUniverse", v, w))));
+        Formula q = F.Id("Q");
+        return Disp(Seq(Forall, Sp, g, Comma, Sp, x, Comma, Sp, y, Comma, Sp,
+            Typed(F.Id("H"), Call("Subgroup", g)), Comma, Sp,
+            Typed(F.Id("P"), FunctionType(Seq(x, Sp, Times, Sp, y), Reals())), Comma, Sp,
+            Call("CovariantProbabilityKernel", F.Id("P")), Sp, Rightarrow, Sp,
+            Witness(z, q, Seq(Call("Feasible", z), Sp, Land, Sp, ScoreBound(z, q),
+                Sp, Land, Sp, Call("UniversalBound", z), Sp, Land, Sp, Call("PositiveAttainment", z)))));
     }
 }

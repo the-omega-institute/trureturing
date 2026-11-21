@@ -245,7 +245,7 @@ abbrev arena : Arena where
           (∑ o, w o * orbitFrequency fixed o) ≤ ∑ o, z o * orbitFrequency fixed o) ∧
         (∀ (U : Type s) [Fintype U] [MulAction G U]
           (w : U → ℝ) (f : X → U → Y),
-          (∀ s, 0 ≤ w s) → (∑ s, w s = 1) → (∀ (g : G) s, w (g • s) = w s) →
+          (∀ s, 0 ≤ w s) → (∀ (g : G) s, w (g • s) = w s) →
           (∀ x y, (∑ s, if f x s = y then w s else 0) = P x y) →
           (∀ (g : G) x s, f (g • x) (g • s) = g • f x s) →
           seedFixedMass (G := H) w ≤ ∑ o, z o * orbitFrequency fixed o) ∧
