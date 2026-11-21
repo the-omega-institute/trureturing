@@ -14,7 +14,8 @@ internal sealed class RobinMeshLogWindowsDocument : IScribeDocumentDefinition
                 DescribeId.Create("actual-attained-canonical-critical-log-windows"),
                 DeclarationHandle.Create(Gid + ".actual_attained_canonical_critical_log_windows"),
                 H("Positive gap-weight shares for both signs"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Analytic/crossley2026primeraceexcursions")),
                 Blocks(
                     Paragraph(Text(
                         "Suppose a nontrivial zeta zero ρ attains the zero abscissa Θ with "
@@ -35,6 +36,7 @@ internal sealed class RobinMeshLogWindowsDocument : IScribeDocumentDefinition
                         + "moments on each late block. Absolute summability bounds the late samples, so a lower "
                         + "bound on the twisted moment and a small ordinary mean force a "
                         + "positive weight share on each side. The first mesh crossings of "
-                        + "t and t+H select the block, whose span stays large as the gaps vanish."))),
+                        + "t and t+H select the block, whose span stays large as the gaps vanish.")),
+                    Paragraph(Text("Crossley studies the change in the 547/727 split–inert prime-ideal race when the starting height doubles. Under primitive Dirichlet GRH, in every sufficiently late interval of log length at least 250,000, more than 10% of the log starting heights give a gain above 1.9735 log 2 and more than 10% give a loss above that magnitude."))),
                 DescribeRole.Theorem))));
 }
