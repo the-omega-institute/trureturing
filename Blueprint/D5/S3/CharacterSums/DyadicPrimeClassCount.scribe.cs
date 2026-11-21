@@ -61,13 +61,13 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
         return Aligned(
             F.Seq(Quant(F.Forall, "N", m, a), Quant(F.Forall, "Z", F.Theta),
                 Quant(F.Forall, "R", F.Beta, y, q, s, e, F.Varepsilon)),
-            F.Seq(y, F.Ge, Num(16), F.Land, q, F.Gt, Num(1), F.Land, s, F.Gt, Num(0),
-                F.Land, F.Varepsilon, F.Ge, Num(0), F.Land, At("S", F.Theta, F.Beta, q, s)),
-            F.Seq(F.Land, F.Open, F.Theta, F.Eq, Num(1), F.Implies, q, F.Le, y, F.Close),
-            F.Seq(F.Land, F.Open, F.Forall, t, F.InMacro, F.OpenBrace, y, F.Comma, twoY, F.CloseBrace,
+            F.Seq(y, F.Ge, F.Sp, Num(16), F.Land, F.Sp, q, F.Gt, Num(1), F.Land, F.Sp, s, F.Gt, Num(0),
+                F.Land, F.Sp, F.Varepsilon, F.Ge, F.Sp, Num(0), F.Land, F.Sp, At("S", F.Theta, F.Beta, q, s)),
+            F.Seq(F.Land, F.Sp, F.Open, F.Theta, F.Eq, Num(1), F.Implies, F.Sp, q, F.Le, F.Sp, y, F.Close),
+            F.Seq(F.Land, F.Sp, F.Open, F.Forall, F.Sp, t, F.InMacro, F.Sp, F.OpenBrace, y, F.Comma, twoY, F.CloseBrace,
                 F.Comma, F.Thin, F.Lvert, Phi(m), F.Open, At("P", m, a, Num(0), t), F.Plus, e, F.Close,
-                F.Minus, At("F", t), F.Rvert, F.Le, F.Varepsilon, At("F", t), F.Close),
-            F.Seq(F.Implies, Bound(m, a, s, q, y, twoY)));
+                F.Minus, At("F", t), F.Rvert, F.Le, F.Sp, F.Varepsilon, F.Sp, At("F", t), F.Close),
+            F.Seq(F.Implies, F.Sp, Bound(m, a, s, q, y, twoY)));
     }
 
     private static Formula UniformClaim()
@@ -82,19 +82,19 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
         var m = F.Id("m");
         var a = F.Id("a");
         return Aligned(
-            F.Seq(Quant(F.Forall, "R", b, aBound, c, s, F.Varepsilon), aBound, F.Gt, Num(0), F.Land,
-                c, F.Gt, Num(0), F.Land, s, F.Gt, Num(0), F.Land, F.Varepsilon, F.Gt, Num(0), F.Land,
+            F.Seq(Quant(F.Forall, "R", b, aBound, c, s, F.Varepsilon), aBound, F.Gt, Num(0), F.Land, F.Sp,
+                c, F.Gt, Num(0), F.Land, F.Sp, s, F.Gt, Num(0), F.Land, F.Sp, F.Varepsilon, F.Gt, Num(0), F.Land, F.Sp,
                 At("E", F.Id("P"), b, aBound, c, s)),
-            F.Seq(F.Implies, Quant(F.Exists, "R", k, threshold), k, F.Gt, Num(0), F.Land, threshold,
-                F.Gt, Num(0), F.Land, F.OpenBracket, Quant(F.Forall, "N", m, a), Quant(F.Forall, "R", d)),
-            F.Seq(m, F.Ge, Num(3), F.Land, At("gcd", a, m), F.Eq, Num(1), F.Land, d, F.Ge,
+            F.Seq(F.Implies, F.Sp, Quant(F.Exists, "R", k, threshold), k, F.Gt, Num(0), F.Land, F.Sp, threshold,
+                F.Gt, Num(0), F.Land, F.Sp, F.OpenBracket, Quant(F.Forall, "N", m, a), Quant(F.Forall, "R", d)),
+            F.Seq(m, F.Ge, F.Sp, Num(3), F.Land, F.Sp, At("gcd", a, m), F.Eq, Num(1), F.Land, F.Sp, d, F.Ge, F.Sp,
                 At("max", threshold, F.Seq(F.Open, Num(4), m, F.Close, F.Caret, F.Grp(k)))),
-            F.Seq(F.Implies, Bound(m, a, s, m, F.Seq(d, F.Slash, Num(2)), d), F.CloseBracket));
+            F.Seq(F.Implies, F.Sp, Bound(m, a, s, m, F.Seq(d, F.Slash, Num(2)), d), F.CloseBracket));
     }
 
     private static Formula Bound(Formula m, Formula a, Formula s, Formula q, Formula lo, Formula hi) =>
         F.Seq(F.Frac, F.Grp(At("min", Num(1), s)), F.Grp(Num(2), q, F.Caret, F.Grp(Num(2))),
-            At("M", F.Varepsilon, lo), F.Le, Phi(m), At("P", m, a, lo, hi));
+            At("M", F.Varepsilon, lo), F.Le, F.Sp, Phi(m), At("P", m, a, lo, hi));
 
     private static Formula Phi(Formula m) => F.Seq(F.Varphi, F.Open, m, F.Close);
 
@@ -102,8 +102,8 @@ internal sealed class DyadicPrimeClassCountDocument : IScribeDocumentDefinition
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
 
     private static Formula Quant(Formula quantifier, string domain, params Formula[] variables) =>
-        F.Seq(quantifier, F.Seq([.. variables.SelectMany((v, i) => i == 0 ? new[] { v } : [F.Comma, v])]),
-            F.InMacro, F.Mathbb, F.Grp(F.Id(domain)), F.Comma, F.Thin);
+        F.Seq(quantifier, F.Sp, F.Seq([.. variables.SelectMany((v, i) => i == 0 ? new[] { v } : [F.Comma, v])]),
+            F.InMacro, F.Sp, F.Mathbb, F.Grp(F.Id(domain)), F.Comma, F.Thin);
 
     private static Formula Aligned(params Formula[] lines) =>
         F.Disp(F.Seq(F.Begin, F.Grp(F.Id("aligned")),
