@@ -15,7 +15,8 @@ public import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.Ring.Rat
 import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.RingTheory.Localization.Rat
+import Mathlib.RingTheory.Localization.FractionRing
+import Mathlib.RingTheory.Localization.Integer
 import Mathlib.Tactic.Ring
 
 /-! The cross pairing of oriented circuit lifts factors through contraction of their union. -/
