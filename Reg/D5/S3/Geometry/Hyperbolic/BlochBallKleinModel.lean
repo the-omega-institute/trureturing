@@ -52,10 +52,14 @@ abbrev arena : Arena where
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
         0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ∧
         ρ.readout () () (blochFilter g r) ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
-      ∀ r s : EuclideanSpace ℝ (Fin 3),
+      (∀ r s : EuclideanSpace ℝ (Fin 3),
         0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re *
           (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re →
         kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s) ∧
+      ∀ r s : EuclideanSpace ℝ (Fin 3),
+        (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re *
+          (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re < 0 →
+        kleinCosh (blochFilter g r) (blochFilter g s) = -kleinCosh r s) ∧
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
       ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r
 
