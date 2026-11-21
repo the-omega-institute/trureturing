@@ -60,6 +60,36 @@ reference. In particular, their proper paired Choi marginals agree.
 A GHZ input with access to the full output distinguishes them with
 certainty in one call.
 
+## Nearest-neighbor realization with environment records
+
+On an open path of N qubits, write d = 2ᴺ and pair each input
+reference with its corresponding output. For either of two explicit
+channels, every proper paired marginal on s sites is the identity
+divided by 4ˢ. The full normalized Choi entropy is 2 log d − (log 2)/d.
+For pairwise disjoint L, M, R the paired conditional mutual information
+is (log 2)/d when their union is the full path and both outer regions
+are nonempty, and zero otherwise. In nats, (log 2) exp(−(log 2)|M|)
+bounds it uniformly in the path length and in the regions, as
+required in Definition 1.
+
+The full normalized Choi states have unhalved trace norm difference
+2/d, while the channels have unhalved diamond distance 2. Every
+channel-valued estimator from all exact proper paired marginals has
+worst-case diamond error at least 1 on this pair. One call on the
+all-ones product input followed by a global parity measurement
+identifies the channel when this probe is available.
+
+The adjacent XOR sampler for a uniform parity class appears in Horacsek, Lee, Shinkar, Viola and Zhou, *Local Samplers for Product Distributions*, §1, p. 109:2, with attribution to Babai and Boppana–Lagarias. The channel here makes the parity constraint conditional on a designated input and proves the induced marginal and CMI formulas. [DOI](https://doi.org/10.4230/LIPIcs.ICALP.2026.109)
+
+Lean verifies the finite record isometry and that its environment
+partial trace gives the channel action on every input matrix. The
+trace specializes to the repository's EnvironmentRecords qubit
+trace. The accompanying paper proof establishes a ten-layer
+nearest-neighbor realization with at most six ancillas per site,
+including the output, from a pure product initialization. The
+construction gives the same exact-data obstruction when the channels
+are promised this local Stinespring realization.
+
 ## Verified locator
 
 PRX Quantum 7, 043015, PDF p. 4, Eq. (3) and Definition 1,
