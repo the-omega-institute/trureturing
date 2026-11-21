@@ -59,7 +59,7 @@ internal sealed class HardinA229532StripDocument : IScribeDocumentDefinition
             -40816, -108224, 56184, 23849, -19128, 340, 1854, -436, 36];
         Formula SignedInt(int value)
         {
-            var absolute = Num(Math.Abs(value).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            var absolute = Num((value < 0 ? -value : value).ToString(System.Globalization.CultureInfo.InvariantCulture));
             return value < 0 ? Seq(Minus, absolute) : absolute;
         }
         var vector = Seq(new Formula[] { Bang, OpenBracket }.Concat(coefficients.SelectMany((value, index) =>

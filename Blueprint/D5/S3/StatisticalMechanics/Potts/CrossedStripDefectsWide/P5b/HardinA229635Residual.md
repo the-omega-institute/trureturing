@@ -1,8 +1,8 @@
-# Symbolic recurrence closure
+# Signed transfer residual
 
 ## Abstract
 
-A scalar readout and Cayley–Hamilton close the signed residual.
+A scalar readout transports the signed residual through the transfer.
 
 **Definition 1.1 (The signed lag vector).**
 
@@ -74,26 +74,11 @@ $$\forall D: \operatorname{\mathit{Nat}}, (\forall M: \operatorname{\mathit{Matr
 
 Each lagged term has the same additional power. Distributivity moves that power after the signed sum.
 
-**Theorem 1.6 (Closure by the characteristic polynomial).**
-
-$$\forall D: \operatorname{\mathit{Nat}}, (\forall M: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(D\right), \operatorname{\mathit{Fin}}\left(D\right), \operatorname{\mathit{Int}}\right), (\forall v: (\operatorname{\mathit{Fin}}\left(D\right)) \to (\operatorname{\mathit{Int}}), (\forall e: (\operatorname{\mathit{Fin}}\left(D\right)) \to (\operatorname{\mathit{Int}}), ((\forall t: \operatorname{\mathit{Nat}}, ((t < D) \implies (\operatorname{\mathit{residual}}\left(M, v, e, t\right) = 0))) \implies (\forall t: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{residual}}\left(M, v, e, t\right) = 0))))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.residual_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229635: width-six arrays with two monochromatic bonds*. URL: <https://oeis.org/A229635/internal>.
-
-*Commentary.*
-
-Cayley–Hamilton gives a monic relation of degree equal to the matrix dimension. Applying the scalar readout yields a recurrence for the residual. A zero prefix of that dimension forces every residual to vanish.
-
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.coefficients`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.residual`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.residualVector`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.residual_as_power`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.residual_zero`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual.scalar`
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)

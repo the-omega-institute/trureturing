@@ -88,21 +88,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 A boundary row and its remaining defect budget must fit within the total allowance of two.
 
-**Definition 1.7 (Decidability of a boundary state).**
-
-$$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{instDecidableValid}}\left(p, d\right) = \operatorname{\mathit{inferInstanceAs}}\left(\operatorname{\mathit{Decidable}}\left(\operatorname{h}\left(p\right) + d \le 2\right)\right)))$$
-
-*Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.instDecidableValid` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229635: width-six arrays with two monochromatic bonds*. URL: <https://oeis.org/A229635/internal>.
-
-*Commentary.*
-
-The validity test is the natural-number comparison of the horizontal defects plus the remaining budget with two.
-
-**Definition 1.8 (Numbering of labelled rows).**
+**Definition 1.7 (Numbering of labelled rows).**
 
 $$\operatorname{\mathit{rowEquiv}} = \operatorname{\mathit{Equiv}}.\operatorname{\mathit{symm}}\left(\operatorname{\mathit{finFunctionFinEquiv}}\left(3, 6\right)\right)$$
 
@@ -116,7 +102,7 @@ $$\operatorname{\mathit{rowEquiv}} = \operatorname{\mathit{Equiv}}.\operatorname
 
 The inverse of the base-three finite-function equivalence enumerates the six entries of every labelled row.
 
-**Definition 1.9 (Representative of a fresh state).**
+**Definition 1.8 (Representative of a fresh state).**
 
 $$\forall i: \operatorname{\mathit{Fresh}}, (\operatorname{\mathit{rep}}\left(i\right) = \operatorname{\mathit{rowEquiv}}\left(\operatorname{\mathit{Fin}}.\operatorname{\mathit{ofNat}}\left(729, \operatorname{\mathit{Option}}.\operatorname{\mathit{getD}}\left(\operatorname{\mathit{Array}}.\operatorname{\mathit{getElemOptional}}\left(\operatorname{\mathit{representativeNumbers}}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(i\right)\right), 0\right)\right)\right))$$
 
@@ -130,7 +116,7 @@ $$\forall i: \operatorname{\mathit{Fresh}}, (\operatorname{\mathit{rep}}\left(i\
 
 The table gives row numbers for the 96 canonical equality patterns with at most two horizontal defects.
 
-**Definition 1.10 (Remaining budget of a fresh state).**
+**Definition 1.9 (Remaining budget of a fresh state).**
 
 $$\forall i: \operatorname{\mathit{Fresh}}, (\operatorname{\mathit{budget}}\left(i\right) = 2 - \operatorname{h}\left(\operatorname{\mathit{rep}}\left(i\right)\right))$$
 
@@ -144,7 +130,7 @@ $$\forall i: \operatorname{\mathit{Fresh}}, (\operatorname{\mathit{budget}}\left
 
 The remaining budget is the total allowance less the representative row's horizontal defects.
 
-**Definition 1.11 (Index of the equality pattern).**
+**Definition 1.10 (Index of the equality pattern).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\operatorname{\mathit{fresh}}\left(p\right) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{ofNat}}\left(96, \operatorname{\mathit{List}}.\operatorname{\mathit{idxOf}}\left(\operatorname{\mathit{rowCode}}\left(p\right), \operatorname{\mathit{representativeCodes}}\right)\right))$$
 
@@ -158,7 +144,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\operatorname{\mathit{fresh}}\left(p\
 
 The row code records equality for each pair of columns. The search locates that code in the fresh pattern table.
 
-**Definition 1.12 (Transfer class of a boundary state).**
+**Definition 1.11 (Transfer class of a boundary state).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{cl}}\left(p, d\right) = (\operatorname{\mathit{if}} \operatorname{h}\left(p\right) + d \le 1 \operatorname{\mathit{then}} \operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(96, \operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{cl}}\left(p, d\right)\right) \operatorname{\mathit{else}} \operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(31, \operatorname{\mathit{fresh}}\left(p\right)\right))))$$
 
@@ -172,7 +158,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 The 31 inherited states cover rows and budgets with sum at most one. All other valid states use the fresh pattern index after that block.
 
-**Definition 1.13 (Destination of a candidate successor).**
+**Definition 1.12 (Destination of a candidate successor).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\forall r: \operatorname{\mathit{Row}}, (\operatorname{\mathit{destination}}\left(p, d, r\right) = (\operatorname{\mathit{if}} \operatorname{\mathit{cost}}\left(p, r\right) \le d \operatorname{\mathit{then}} \operatorname{\mathit{some}}\left(\operatorname{\mathit{cl}}\left(r, d - \operatorname{\mathit{cost}}\left(p, r\right)\right)\right) \operatorname{\mathit{else}} \operatorname{\mathit{none}}))))$$
 
@@ -186,7 +172,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 The available budget guards the subtraction. A legal transition records the successor row with its updated budget.
 
-**Definition 1.14 (Full weighted successor list).**
+**Definition 1.13 (Full weighted successor list).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{outgoing}}\left(p, d\right) = \operatorname{\mathit{List}}.\operatorname{\mathit{filterMap}}\left(\operatorname{\mathit{destination}}\left(p, d\right), \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\operatorname{\mathit{rowEquiv}}\right)\right)))$$
 
@@ -200,7 +186,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 The list examines every labelled row and retains one class entry for each affordable move.
 
-**Definition 1.15 (Class for a candidate first row).**
+**Definition 1.14 (Class for a candidate first row).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\operatorname{\mathit{startClass}}\left(p\right) = (\operatorname{\mathit{if}} \operatorname{h}\left(p\right) \le 2 \operatorname{\mathit{then}} \operatorname{\mathit{some}}\left(\operatorname{\mathit{cl}}\left(p, 2 - \operatorname{h}\left(p\right)\right)\right) \operatorname{\mathit{else}} \operatorname{\mathit{none}}))$$
 
@@ -214,7 +200,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\operatorname{\mathit{startClass}}\le
 
 The first row uses only its horizontal defects and starts from allowance two.
 
-**Definition 1.16 (List of allowed first-row classes).**
+**Definition 1.15 (List of allowed first-row classes).**
 
 $$\operatorname{\mathit{startClasses}} = \operatorname{\mathit{List}}.\operatorname{\mathit{filterMap}}\left(\operatorname{\mathit{startClass}}, \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\operatorname{\mathit{rowEquiv}}\right)\right)$$
 
@@ -228,7 +214,7 @@ $$\operatorname{\mathit{startClasses}} = \operatorname{\mathit{List}}.\operatorn
 
 Enumerating all labelled rows gives the initial class multiplicities.
 
-**Theorem 1.17 (Filter-map multiplicities).**
+**Theorem 1.16 (Filter-map multiplicities).**
 
 $$\forall f: (\operatorname{\mathit{Row}}) \to (\operatorname{\mathit{Option}}\left(\operatorname{\mathit{State}}\right)), (\forall s: \operatorname{\mathit{State}}, ((\operatorname{\mathit{List}}.\operatorname{\mathit{count}}\left(s, \operatorname{\mathit{List}}.\operatorname{\mathit{filterMap}}\left(f, \operatorname{\mathit{List}}.\operatorname{\mathit{ofFn}}\left(\operatorname{\mathit{rowEquiv}}\right)\right)\right): \int) = \sum_{r: \operatorname{\mathit{Row}}} ((\operatorname{\mathit{if}} f\left(r\right) = \operatorname{\mathit{some}}\left(s\right) \operatorname{\mathit{then}} 1 \operatorname{\mathit{else}} 0))))$$
 
@@ -242,7 +228,7 @@ $$\forall f: (\operatorname{\mathit{Row}}) \to (\operatorname{\mathit{Option}}\l
 
 Filtering a complete list of rows and counting an output class agrees with summing its indicator over all rows.
 
-**Theorem 1.18 (Entry of the weighted successor vector).**
+**Theorem 1.17 (Entry of the weighted successor vector).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\forall s: \operatorname{\mathit{State}}, ((\operatorname{\mathit{List}}.\operatorname{\mathit{count}}\left(s, \operatorname{\mathit{outgoing}}\left(p, d\right)\right): \int) = \sum_{r: \operatorname{\mathit{Row}}} ((\operatorname{\mathit{if}} (\operatorname{\mathit{cost}}\left(p, r\right) \le d) \land (\operatorname{\mathit{cl}}\left(r, d - \operatorname{\mathit{cost}}\left(p, r\right)\right) = s) \operatorname{\mathit{then}} 1 \operatorname{\mathit{else}} 0)))))$$
 
@@ -256,7 +242,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 The indicator imposes both affordability and the destination class after payment.
 
-**Theorem 1.19 (Entry of the first-row vector).**
+**Theorem 1.18 (Entry of the first-row vector).**
 
 $$\forall s: \operatorname{\mathit{State}}, ((\operatorname{\mathit{List}}.\operatorname{\mathit{count}}\left(s, \operatorname{\mathit{startClasses}}\right): \int) = \sum_{r: \operatorname{\mathit{Row}}} ((\operatorname{\mathit{if}} (\operatorname{h}\left(r\right) \le 2) \land (\operatorname{\mathit{cl}}\left(r, 2 - \operatorname{h}\left(r\right)\right) = s) \operatorname{\mathit{then}} 1 \operatorname{\mathit{else}} 0)))$$
 
@@ -270,7 +256,7 @@ $$\forall s: \operatorname{\mathit{State}}, ((\operatorname{\mathit{List}}.\oper
 
 The indicator enforces the two-defect allowance and the class of the resulting first row.
 
-**Theorem 1.20 (Horizontal cost is relabelling invariant).**
+**Theorem 1.19 (Horizontal cost is relabelling invariant).**
 
 $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\operatorname{\mathit{Fin}}\left(3\right)\right), (\forall p: \operatorname{\mathit{Row}}, (\operatorname{h}\left((e) \circ (p)\right) = \operatorname{h}\left(p\right)))$$
 
@@ -284,7 +270,7 @@ $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\op
 
 A common colour permutation preserves endpoint equality.
 
-**Theorem 1.21 (Transition cost is relabelling invariant).**
+**Theorem 1.20 (Transition cost is relabelling invariant).**
 
 $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\operatorname{\mathit{Fin}}\left(3\right)\right), (\forall p: \operatorname{\mathit{Row}}, (\forall r: \operatorname{\mathit{Row}}, (\operatorname{\mathit{cost}}\left((e) \circ (p), (e) \circ (r)\right) = \operatorname{\mathit{cost}}\left(p, r\right))))$$
 
@@ -298,7 +284,7 @@ $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\op
 
 The same permutation acts on both rows and preserves all three types of bond defects.
 
-**Theorem 1.22 (Class is relabelling invariant).**
+**Theorem 1.21 (Class is relabelling invariant).**
 
 $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\operatorname{\mathit{Fin}}\left(3\right)\right), (\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{cl}}\left((e) \circ (p), d\right) = \operatorname{\mathit{cl}}\left(p, d\right))))$$
 
@@ -312,7 +298,7 @@ $$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\op
 
 Both the inherited and fresh class maps depend on equality patterns and the remaining budget.
 
-**Theorem 1.23 (Closure of valid states).**
+**Theorem 1.22 (Closure of valid states).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, (\forall r: \operatorname{\mathit{Row}}, ((\operatorname{\mathit{Valid}}\left(p, d\right)) \implies ((\operatorname{\mathit{cost}}\left(p, r\right) \le d) \implies (\operatorname{\mathit{Valid}}\left(r, d - \operatorname{\mathit{cost}}\left(p, r\right)\right))))))$$
 
@@ -326,7 +312,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 After an affordable move the new horizontal cost plus the new budget is at most the old budget.
 
-**Theorem 1.24 (Closure of the inherited block).**
+**Theorem 1.23 (Closure of the inherited block).**
 
 $$\forall p: \operatorname{\mathit{Row}}, (\forall r: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}}, ((\operatorname{h}\left(p\right) + d \le 1) \implies ((\operatorname{\mathit{cost}}\left(p, r\right) \le d) \implies (\operatorname{h}\left(r\right) + d - \operatorname{\mathit{cost}}\left(p, r\right) \le 1)))))$$
 
@@ -338,9 +324,9 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall r: \operatorname{\mathit{Row}
 
 *Commentary.*
 
-A transition from the one-defect sector stays in the inherited block.
+The one-defect validity condition is equivalent to the sum of horizontal defects and remaining budget being at most one. Under the guard that the step cost fits the remaining budget, the inherited closure law gives the same bound for the destination.
 
-**Theorem 1.25 (Validity of an allowed first row).**
+**Theorem 1.24 (Validity of an allowed first row).**
 
 $$\forall r: \operatorname{\mathit{Row}}, ((\operatorname{h}\left(r\right) \le 2) \implies (\operatorname{\mathit{Valid}}\left(r, 2 - \operatorname{h}\left(r\right)\right)))$$
 
@@ -371,7 +357,6 @@ First-row payment leaves budget two minus the horizontal cost.
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.fresh`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.h`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.h_relabel`
-- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.instDecidableValid`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.legal`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.legal_start`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.outgoing`
@@ -382,4 +367,4 @@ First-row payment leaves budget two minus the horizontal cost.
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.startClasses`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State.start_count`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripData](../WidthSix/HardinA229532StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229532Strip](../HardinA229532Strip.md)

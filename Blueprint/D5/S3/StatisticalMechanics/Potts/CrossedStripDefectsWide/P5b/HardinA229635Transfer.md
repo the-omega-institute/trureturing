@@ -58,7 +58,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 *Commentary.*
 
-In the inherited region the old weighted transitions apply. In the fresh region a common relabelling sends the source to its canonical representative and transports its full successor multiset.
+In the inherited block the one-defect certificate gives weighted transition counts, and its closure law ensures zero weight toward fresh states. In the fresh region a common relabelling sends the source to its canonical representative and transports its full successor multiset.
 
 **Theorem 1.5 (Exact terminal readout).**
 
@@ -72,7 +72,7 @@ $$\forall p: \operatorname{\mathit{Row}}, (\forall d: \operatorname{\mathit{Nat}
 
 *Commentary.*
 
-Zero remaining budget accepts the array at either kind of state.
+Zero remaining budget accepts the array in either block. The one-defect certificate gives the inherited terminal weights.
 
 **Theorem 1.6 (Exact initial vector).**
 
@@ -99,4 +99,3 @@ The initial vector counts precisely the labelled choices for the first row in ea
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Laws](HardinA229635Laws.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635RowCertificate](HardinA229635RowCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Starts](HardinA229635Starts.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses](../WidthSix/HardinA229532StripClasses.md)
