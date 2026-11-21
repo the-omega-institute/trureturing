@@ -11,7 +11,7 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
         LibraryNoteRef.Create("D5/L/FiniteGeometry/lao2026dynamicstransversal");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Full neighborhoods and pair matchings detect a four-element uniform minor in a bipartite presentation.",
+        "Full neighborhoods and pair matchings determine which four-element sets support a uniform minor in a bipartite presentation.",
         H("A graph criterion for a four-element uniform minor"),
         Blocks(
             Definition("Matchable", "Matchable left sets",
@@ -21,7 +21,7 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
             Theorem("transversal_ground", "The whole left ground", GroundStatement(),
                 "Every left vertex is in the ground, including isolated vertices."),
             Theorem("transversal_indep_iff", "Independence as matchability", IndependenceStatement(),
-                "For a finite left type, every subset of the whole left type is independent exactly when it is matchable. The equivalence includes the empty subset and permits an empty right type."),
+                "For arbitrary left and right types, a finite left set is independent exactly when it is matchable. This covers every subset when the left type is finite, including the empty subset, and permits an empty right type."),
             Definition("neighborhood", "Full right neighborhood",
                 "The neighborhood of I contains every right vertex adjacent to any vertex of I."),
             Definition("uniform24", "The rank-two uniform matroid on four points",
@@ -29,14 +29,15 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("has-uniform24-minor-iff"),
                 DeclarationHandle.Create(Module + ".has_uniform24_minor_iff"),
-                H("A native uniform minor exactly when the full neighborhood admits the pair matchings"),
+                H("Uniform minors on a specified four-element ground"),
                 StatementSource.FromAuthor(Disp(MinorStatement())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Lao asks for a necessary and sufficient condition on a supplied bipartite graph in Question 7.0.2. The relation A runs from the designated left ground L to the presentation indices R. Both types are arbitrary finite types. The minor is a native matroid minor N with a ground equivalence to all of Fin 4 whose relabeling equals the rank-two uniform matroid.")),
-                    Paragraph(Text("The graph condition chooses disjoint left sets C and X with X of size four. The full right neighborhood B of their union must have size |C| + 2. Each two-element subset P of X has an edge-respecting bijection from C ∪ P onto that same B. The bijection may depend on P.")),
+                    Paragraph(Text("The relation A runs from the designated left ground L to the presentation indices R. Both types are arbitrary finite types. Fix any four-element left set X. The native matroid minor N must have ground exactly X and a ground equivalence to all of Fin 4 whose relabeling equals the rank-two uniform matroid.")),
+                    Paragraph(Text("The graph condition chooses a left set C disjoint from the fixed X. The full right neighborhood B of their union must have size |C| + 2. Each two-element subset P of X has an edge-respecting bijection from C ∪ P onto that same B. The bijection may depend on P.")),
                     Paragraph(Text("Normalize the minor to a contraction and deletion and choose a basis K of the contracted set. The four surviving vertices are X, and adjoining any pair from X to K gives an independent set. Augmentation rules out a larger matchable subset of K ∪ X. Adding one universal dummy right vertex still falls short of a matching of K ∪ X, so Hall's theorem finds a left subset whose full neighborhood falls short by at least two. This subset must contain all of X. If it omitted a surviving vertex, restricting a suitable pair matching would leave at most one left vertex unmatched. Remove X from the deficient subset to obtain C. The restricted pair matchings give the opposite bound on the size of B, forcing equality and hence bijectivity.")),
-                    Paragraph(Text("Conversely, contract C and delete the remaining vertices outside X. Extending a subset of X of size at most two to a pair proves its independence after contraction. A larger subset cannot be independent because its required matching would have too many vertices for B. This describes every independent set of the minor and yields the relabeling to Fin 4."))),
+                    Paragraph(Text("Conversely, contract C and delete the remaining vertices outside X. Extending a subset of X of size at most two to a pair proves its independence after contraction. A larger subset cannot be independent because its required matching would have too many vertices for B. This describes every independent set of the minor and yields the relabeling to Fin 4.")),
+                    Paragraph(Text("Lao's Question 7.0.2 asks whether any such minor exists. Any minor relabeled to the uniform matroid on Fin 4 has a four-element ground, so applying the equivalence to that ground gives the graph condition. A graph certificate for any four-element X gives the required minor by the reverse implication."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string title, string body) =>
@@ -56,9 +57,10 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
         Equal(Call("ground", Call("transversal", V("A"))), V("univ")));
 
     private static Formula IndependenceStatement() => GraphParameters(
-        Finite("L", Bind(Forall, "I", SetOf("L"),
-            Logic(Call("Indep", Call("transversal", V("A")), V("I")),
-                FormulaLogicOperator.Iff, Call("Matchable", V("A"), V("I"))))));
+        Bind(Forall, "I", SetOf("L"),
+            Logic(Call("Finite", V("I")), FormulaLogicOperator.Implies,
+                Logic(Call("Indep", Call("transversal", V("A")), V("I")),
+                    FormulaLogicOperator.Iff, Call("Matchable", V("A"), V("I"))))));
 
     private static Formula MinorStatement()
     {
@@ -68,7 +70,8 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
         var relabel = Bind(Exists, "e", Call("Equiv", Subtype(ground), Subtype(targetGround)),
             Equal(Call("mapSetEquiv", V("N"), V("e")), V("uniform24")));
         var minor = Bind(Exists, "N", Call("Matroid", V("L")),
-            And(Call("IsMinor", V("N"), Call("transversal", V("A"))), relabel));
+            And(Call("IsMinor", V("N"), Call("transversal", V("A"))),
+                And(Equal(ground, V("X")), relabel)));
 
         var pairDomain = Subtype(Union("C", "P"));
         var bijection = Bind(Exists, "f", Arrow(pairDomain, Subtype(V("B"))),
@@ -82,10 +85,13 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
         var neighborhood = Seq(V("let"), Sp, V("B"), Sp, Colon, Eq, Sp,
             Call("neighborhood", V("A"), Union("C", "X")), Semi, Sp,
             And(Equal(Card("B"), Seq(Card("C"), Sp, Plus, Sp, D(2))), pairMatchings));
-        var certificate = Bind(Exists, "C", SetOf("L"), Bind(Exists, "X", SetOf("L"),
-            And(Call("Disjoint", V("C"), V("X")), And(Equal(Card("X"), D(4)), neighborhood))));
+        var certificate = Bind(Exists, "C", SetOf("L"),
+            And(Call("Disjoint", V("C"), V("X")), neighborhood));
+        var fixedGround = Bind(Forall, "X", SetOf("L"),
+            Logic(Equal(Card("X"), D(4)), FormulaLogicOperator.Implies,
+                Logic(minor, FormulaLogicOperator.Iff, certificate)));
         return VertexTypes(Finite("L", Finite("R",
-            EdgeRelation(Logic(minor, FormulaLogicOperator.Iff, certificate)))));
+            EdgeRelation(fixedGround))));
     }
 
     private static Formula GraphParameters(Formula body) => VertexTypes(EdgeRelation(body));

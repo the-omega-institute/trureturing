@@ -164,12 +164,12 @@ private lemma matchable_augment [DecidableEq L] {I J : Finset L}
   unfold transversal
   rfl
 
-/-- Every subset is independent exactly when it has an edge-respecting injection. -/
-theorem transversal_indep_iff [Finite L] (I : Set L) :
+/-- A finite subset is independent exactly when it has an edge-respecting injection. -/
+theorem transversal_indep_iff (I : Set L) (hI : I.Finite) :
     (transversal A).Indep I ↔ Matchable A I := by
   classical
-  let I₀ : Finset L := (Set.toFinite I).toFinset
-  have hI₀ : (I₀ : Set L) = I := (Set.toFinite I).coe_toFinset
+  let I₀ : Finset L := hI.toFinset
+  have hI₀ : (I₀ : Set L) = I := hI.coe_toFinset
   rw [← hI₀]
   rw [transversal, IndepMatroid.matroid_Indep]
   exact IndepMatroid.ofFinset_indep ..
@@ -318,13 +318,15 @@ private lemma relabel_uniform_iff [Finite L] (N : Matroid L) :
     rw [hMap, hind, uniform24_indep, hSize, and_iff_right]
     exact (image_subset_range _ _).trans_eq (hGround e)
 
-/-- Lao's Question 7.0.2 (arXiv:2611.02586v1, p. 104). A native contraction-deletion minor
-relabels to the rank-two uniform matroid on `Fin 4` exactly when the graph supplies the
-stated full neighborhood and pair matchings. -/
-theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
-    (∃ N : Matroid L, N ≤m transversal A ∧
+/-- A specified four-element set is the ground of a native minor relabeling to the rank-two
+uniform matroid on `Fin 4` exactly when it admits the stated full neighborhood and pair matchings.
+Existentially quantifying over the ground answers Lao's Question 7.0.2
+(arXiv:2611.02586v1, p. 104). -/
+theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop)
+    (X : Set L) (hFour : X.ncard = 4) :
+    (∃ N : Matroid L, N ≤m transversal A ∧ N.E = X ∧
       ∃ e : N.E ≃ (univ : Set (Fin 4)), N.mapSetEquiv e = uniform24) ↔
-    ∃ C X : Set L, Disjoint C X ∧ X.ncard = 4 ∧
+    ∃ C : Set L, Disjoint C X ∧
       let B := neighborhood A (C ∪ X)
       B.ncard = C.ncard + 2 ∧
         ∀ P : Set L, P ⊆ X → P.ncard = 2 →
@@ -333,26 +335,25 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
   simp_rw [relabel_uniform_iff]
   let M := transversal A
   constructor
-  · rintro ⟨N, hN, hFour, hUniform⟩
+  · rintro ⟨N, hN, hGround, -, hUniform⟩
     obtain ⟨C₀, D, hC₀, -, -, rfl⟩ := hN.exists_eq_contract_delete_disjoint
-    let X := (M ／ C₀ ＼ D).E
     obtain ⟨K, hK⟩ := M.exists_isBasis C₀ hC₀
     have hCX : Disjoint C₀ X := by
-      change Disjoint C₀ ((M ／ C₀ ＼ D).E)
-      rw [delete_ground, contract_ground]
+      rw [← hGround, delete_ground, contract_ground]
       exact disjoint_sdiff_right.mono_right sdiff_subset
     have hXD : Disjoint X D := by
-      change Disjoint ((M ／ C₀ ＼ D).E) D
-      rw [delete_ground]
+      rw [← hGround, delete_ground]
       exact disjoint_sdiff_left
+    have hUniformX (J : Set L) :
+        (M ／ C₀ ＼ D).Indep J ↔ J ⊆ X ∧ J.ncard ≤ 2 := by
+      simpa only [hGround] using hUniform J
     have hKX : Disjoint K X := hCX.mono_left hK.subset
     have hPair {P : Set L} (hPX : P ⊆ X) (hP : P.ncard = 2) : M.Indep (K ∪ P) := by
-      have hPminor := (hUniform P).mpr ⟨hPX, hP.le⟩
+      have hPminor := (hUniformX P).mpr ⟨hPX, hP.le⟩
       rw [union_comm]
       exact (hK.contract_indep_iff_of_disjoint (hCX.mono_right hPX)).mp hPminor.of_delete
     let S₀ := K ∪ X
-    have hFour' : X.ncard = 4 := hFour
-    have hS₀ : S₀.ncard = K.ncard + 4 := by rw [ncard_union_eq hKX, hFour']
+    have hS₀ : S₀.ncard = K.ncard + 4 := by rw [ncard_union_eq hKX, hFour]
     obtain ⟨P₀, hP₀X, hP₀⟩ := exists_subset_card_eq (s := X) (n := 2) (by omega)
     -- Augmentation rules out a matching larger than the basis and a pair, even if
     -- the matching's left set omits some of the chosen basis.
@@ -365,7 +366,8 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
       have hEnc : (K ∪ P₀).encard < J.encard := by
         rw [← (Set.toFinite (K ∪ P₀)).cast_ncard_eq, ← (Set.toFinite J).cast_ncard_eq]
         exact_mod_cast hSmall
-      obtain ⟨e, he, hAug⟩ := (hPair hP₀X hP₀).augment ((transversal_indep_iff J).mpr hJ) hEnc
+      obtain ⟨e, he, hAug⟩ :=
+        (hPair hP₀X hP₀).augment ((transversal_indep_iff J (Set.toFinite J)).mpr hJ) hEnc
       have heX : e ∈ X := (hJS he.1).resolve_left (fun h ↦ he.2 (Or.inl h))
       have heP₀ : e ∉ P₀ := fun h ↦ he.2 (Or.inr h)
       have hTriple : insert e P₀ ⊆ X := insert_subset heX hP₀X
@@ -374,7 +376,7 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
         rwa [insert_union, union_comm P₀ K]
       have hMinor : (M ／ C₀ ＼ D).Indep (insert e P₀) :=
         delete_indep_iff.mpr ⟨hContract, hXD.mono_left hTriple⟩
-      have hBound := ((hUniform _).mp hMinor).2
+      have hBound := ((hUniformX _).mp hMinor).2
       rw [ncard_insert_of_notMem heP₀, hP₀] at hBound
       omega
     obtain ⟨S, hSS₀, hDef⟩ := exists_deficient_subset S₀ hCap
@@ -401,7 +403,7 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
       have hLoss' := (ncard_mono hDiff).trans hLoss
       have hSum := ncard_sdiff_add_ncard_of_subset (show J ⊆ S from inter_subset_left)
       have hJ : Matchable A J :=
-        (transversal_indep_iff J).mp ((hPair hPX hP).subset inter_subset_right)
+        (transversal_indep_iff J (Set.toFinite J)).mp ((hPair hPX hP).subset inter_subset_right)
       have hLe := hJ.ncard_le_neighborhood (show J ⊆ S from inter_subset_left)
       omega
     let C := S \ X
@@ -410,7 +412,8 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
     have hUnion : C ∪ X = S := sdiff_union_of_subset hXS
     have hPairMatch (P : Set L) (hPX : P ⊆ X) (hP : P.ncard = 2) :
         Matchable A (C ∪ P) :=
-      (transversal_indep_iff _).mp ((hPair hPX hP).subset (union_subset_union hCK Subset.rfl))
+      (transversal_indep_iff _ (Set.toFinite (C ∪ P))).mp
+        ((hPair hPX hP).subset (union_subset_union hCK Subset.rfl))
     have hSize (P : Set L) (hPX : P ⊆ X) (hP : P.ncard = 2) :
         (C ∪ P).ncard = C.ncard + 2 := by
       rw [ncard_union_eq (hDisj.mono_right hPX), hP]
@@ -419,20 +422,20 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
         (union_subset_union (Subset.rfl : C ⊆ C) hP₀X)
       rw [hSize P₀ hP₀X hP₀] at hLower
       have hSSize := congrArg Set.ncard hUnion
-      rw [ncard_union_eq hDisj, hFour'] at hSSize
+      rw [ncard_union_eq hDisj, hFour] at hSSize
       rw [hUnion] at hLower ⊢
       omega
-    refine ⟨C, X, hDisj, hFour', hB, fun P hPX hP ↦ ?_⟩
+    refine ⟨C, hDisj, hB, fun P hPX hP ↦ ?_⟩
     obtain ⟨f, hf, hEdge⟩ := (hPairMatch P hPX hP).intoNeighborhood
       (union_subset_union (Subset.rfl : C ⊆ C) hPX)
     exact ⟨f, (Nat.bijective_iff_injective_and_card f).mpr
       ⟨hf, (hSize P hPX hP).trans hB.symm⟩, hEdge⟩
-  · rintro ⟨C, X, hCX, hFour, hB, hPairs⟩
+  · rintro ⟨C, hCX, hB, hPairs⟩
     have hMatch (P : Set L) (hPX : P ⊆ X) (hP : P.ncard = 2) : Matchable A (C ∪ P) := by
       obtain ⟨f, hf, hEdge⟩ := hPairs P hPX hP
       exact ⟨Subtype.val ∘ f, Subtype.val_injective.comp hf.injective, hEdge⟩
     obtain ⟨P₀, hP₀X, hP₀⟩ := exists_subset_card_eq (s := X) (n := 2) (by omega)
-    have hC : M.Indep C := (transversal_indep_iff C).mpr
+    have hC : M.Indep C := (transversal_indep_iff C (Set.toFinite C)).mpr
       ((hMatch P₀ hP₀X hP₀).mono subset_union_left)
     let M' := M ／ C
     have hX : X ⊆ M'.E := by
@@ -446,7 +449,7 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
     have hGround : N.E = X := by
       change (M' ＼ (M'.E \ X)).E = X
       rw [delete_ground, sdiff_sdiff_cancel_left hX]
-    refine ⟨N, contract_delete_isMinor M C D, hGround ▸ hFour, fun J ↦ ?_⟩
+    refine ⟨N, contract_delete_isMinor M C D, hGround, hGround ▸ hFour, fun J ↦ ?_⟩
     rw [hGround]
     by_cases hJX : J ⊆ X
     · have hDisj : Disjoint J C := hCX.symm.mono_left hJX
@@ -454,7 +457,8 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
       change (M' ＼ D).Indep J ↔ _
       rw [delete_indep_iff, and_iff_left hJD, and_iff_right hJX]
       change (M ／ C).Indep J ↔ _
-      rw [hC.contract_indep_iff, and_iff_right hDisj, union_comm J C, transversal_indep_iff]
+      rw [hC.contract_indep_iff, and_iff_right hDisj, union_comm J C,
+        transversal_indep_iff _ (Set.toFinite (C ∪ J))]
       constructor
       · intro hJ
         have hBound := hJ.ncard_le_neighborhood (union_subset_union (Subset.rfl : C ⊆ C) hJX)

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Full neighborhoods and pair matchings detect a four-element uniform minor in a bipartite presentation.
+Full neighborhoods and pair matchings determine which four-element sets support a uniform minor in a bipartite presentation.
 
 **Definition 1.1 (Matchable left sets).**
 
@@ -42,7 +42,7 @@ Every left vertex is in the ground, including isolated vertices.
 
 **Theorem 1.4 (Independence as matchability).**
 
-$$\forall (L : Type_{u}), \forall (R : Type_{v}), \forall (A : L \to \left(R \to Prop\right)), [Finite\left(L\right)] \forall (I : Set\left(L\right)), (Indep\left(transversal\left(A\right), I\right)) \Leftrightarrow (Matchable\left(A, I\right))$$
+$$\forall (L : Type_{u}), \forall (R : Type_{v}), \forall (A : L \to \left(R \to Prop\right)), \forall (I : Set\left(L\right)), (Finite\left(I\right)) \Rightarrow ((Indep\left(transversal\left(A\right), I\right)) \Leftrightarrow (Matchable\left(A, I\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.transversal_indep_iff` (`✓ std3`). ∎
 
@@ -50,7 +50,7 @@ $$\forall (L : Type_{u}), \forall (R : Type_{v}), \forall (A : L \to \left(R \to
 
 *Commentary.*
 
-For a finite left type, every subset of the whole left type is independent exactly when it is matchable. The equivalence includes the empty subset and permits an empty right type.
+For arbitrary left and right types, a finite left set is independent exactly when it is matchable. This covers every subset when the left type is finite, including the empty subset, and permits an empty right type.
 
 **Definition 1.5 (Full right neighborhood).**
 
@@ -76,9 +76,9 @@ Lean statement: `D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.uniform
 
 Its ground is all of Fin 4. Its independent sets are exactly the subsets of cardinality at most two.
 
-**Theorem 1.7 (A native uniform minor exactly when the full neighborhood admits the pair matchings).**
+**Theorem 1.7 (Uniform minors on a specified four-element ground).**
 
-$$\forall (L : Type_{u}), \forall (R : Type_{v}), [Finite\left(L\right)] [Finite\left(R\right)] \forall (A : L \to \left(R \to Prop\right)), (\exists (N : Matroid\left(L\right)), (IsMinor\left(N, transversal\left(A\right)\right)) \land (\exists (e : Equiv\left(Subtype\left(ground\left(N\right)\right), Subtype\left((univ : Set\left(Fin\left(4\right)\right))\right)\right)), mapSetEquiv\left(N, e\right) = uniform24)) \Leftrightarrow (\exists (C : Set\left(L\right)), \exists (X : Set\left(L\right)), (Disjoint\left(C, X\right)) \land ((ncard\left(X\right) = 4) \land (let B := neighborhood\left(A, (C \cup X)\right); (ncard\left(B\right) = ncard\left(C\right) + 2) \land (\forall (P : Set\left(L\right)), (P \subseteq X) \Rightarrow ((ncard\left(P\right) = 2) \Rightarrow (\exists (f : Subtype\left((C \cup P)\right) \to Subtype\left(B\right)), (Bijective\left(f\right)) \land (\forall (x : Subtype\left((C \cup P)\right)), A\left(x, f\left(x\right)\right))))))))$$
+$$\forall (L : Type_{u}), \forall (R : Type_{v}), [Finite\left(L\right)] [Finite\left(R\right)] \forall (A : L \to \left(R \to Prop\right)), \forall (X : Set\left(L\right)), (ncard\left(X\right) = 4) \Rightarrow ((\exists (N : Matroid\left(L\right)), (IsMinor\left(N, transversal\left(A\right)\right)) \land ((ground\left(N\right) = X) \land (\exists (e : Equiv\left(Subtype\left(ground\left(N\right)\right), Subtype\left((univ : Set\left(Fin\left(4\right)\right))\right)\right)), mapSetEquiv\left(N, e\right) = uniform24))) \Leftrightarrow (\exists (C : Set\left(L\right)), (Disjoint\left(C, X\right)) \land (let B := neighborhood\left(A, (C \cup X)\right); (ncard\left(B\right) = ncard\left(C\right) + 2) \land (\forall (P : Set\left(L\right)), (P \subseteq X) \Rightarrow ((ncard\left(P\right) = 2) \Rightarrow (\exists (f : Subtype\left((C \cup P)\right) \to Subtype\left(B\right)), (Bijective\left(f\right)) \land (\forall (x : Subtype\left((C \cup P)\right)), A\left(x, f\left(x\right)\right))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.has_uniform24_minor_iff` (`✓ std3`). ∎
 
@@ -88,13 +88,15 @@ $$\forall (L : Type_{u}), \forall (R : Type_{v}), [Finite\left(L\right)] [Finite
 
 *Commentary.*
 
-Lao asks for a necessary and sufficient condition on a supplied bipartite graph in Question 7.0.2. The relation A runs from the designated left ground L to the presentation indices R. Both types are arbitrary finite types. The minor is a native matroid minor N with a ground equivalence to all of Fin 4 whose relabeling equals the rank-two uniform matroid.
+The relation A runs from the designated left ground L to the presentation indices R. Both types are arbitrary finite types. Fix any four-element left set X. The native matroid minor N must have ground exactly X and a ground equivalence to all of Fin 4 whose relabeling equals the rank-two uniform matroid.
 
-The graph condition chooses disjoint left sets C and X with X of size four. The full right neighborhood B of their union must have size |C| + 2. Each two-element subset P of X has an edge-respecting bijection from C ∪ P onto that same B. The bijection may depend on P.
+The graph condition chooses a left set C disjoint from the fixed X. The full right neighborhood B of their union must have size |C| + 2. Each two-element subset P of X has an edge-respecting bijection from C ∪ P onto that same B. The bijection may depend on P.
 
 Normalize the minor to a contraction and deletion and choose a basis K of the contracted set. The four surviving vertices are X, and adjoining any pair from X to K gives an independent set. Augmentation rules out a larger matchable subset of K ∪ X. Adding one universal dummy right vertex still falls short of a matching of K ∪ X, so Hall's theorem finds a left subset whose full neighborhood falls short by at least two. This subset must contain all of X. If it omitted a surviving vertex, restricting a suitable pair matching would leave at most one left vertex unmatched. Remove X from the deficient subset to obtain C. The restricted pair matchings give the opposite bound on the size of B, forcing equality and hence bijectivity.
 
 Conversely, contract C and delete the remaining vertices outside X. Extending a subset of X of size at most two to a pair proves its independence after contraction. A larger subset cannot be independent because its required matching would have too many vertices for B. This describes every independent set of the minor and yields the relabeling to Fin 4.
+
+Lao's Question 7.0.2 asks whether any such minor exists. Any minor relabeled to the uniform matroid on Fin 4 has a four-element ground, so applying the equivalence to that ground gives the graph condition. A graph certificate for any four-element X gives the required minor by the reverse implication.
 
 ## References
 
