@@ -24,6 +24,34 @@ internal sealed class FairBiasRestrictionDocument : IScribeDocumentDefinition
                     "earlier occurrence of S into a one-vertex omission at B."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("augmented-of-subset-facet"),
+                DeclarationHandle.Create(Module + ".augmented_of_subset_facet"),
+                H("Every subset of a facet is an augmented face"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The augmented complex contains the empty face and every nonempty subset of a facet."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-first-facet"),
+                DeclarationHandle.Create(Module + ".exists_first_facet"),
+                H("Each augmented face has a first containing facet"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If a nonempty facet exists, every augmented face has a containing facet " +
+                    "that precedes all other containing facets in the given signed-label order."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("first-unique"),
+                DeclarationHandle.Create(Module + ".first_unique"),
+                H("The first containing facet is unique"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Two facets that are first for the same face in the given order coincide."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("face-enumerator-eq-sum"),
                 DeclarationHandle.Create(Module + ".faceEnumerator_eq_sum"),
                 H("The face enumerator is the sum of the interval enumerators"),

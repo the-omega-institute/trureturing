@@ -98,7 +98,7 @@ theorem exists_facet_superset (c : L → A) {S : Finset (L × Bool)}
   exact Finset.Subset.antisymm (hmax (Finset.mem_filter.mpr
     ⟨Finset.mem_univ _, hT, hSB.trans hBT⟩) hBT) hBT
 
-private theorem augmented_of_subset_facet (c : L → A) {B S : Finset (L × Bool)}
+theorem augmented_of_subset_facet (c : L → A) {B S : Finset (L × Bool)}
     (hB : B ∈ facets c) (hSB : S ⊆ B) : S ∈ augmentedFaces c := by
   classical
   by_cases he : S = ∅
@@ -107,7 +107,7 @@ private theorem augmented_of_subset_facet (c : L → A) {B S : Finset (L × Bool
       (((signedComplex c).isRelLowerSet_faces (mem_facets.mp hB).1).2 hSB
         (Finset.nonempty_iff_ne_empty.mpr he)))
 
-private theorem exists_first_facet (c : L → A) (h : (facets c).Nonempty)
+theorem exists_first_facet (c : L → A) (h : (facets c).Nonempty)
     {S : Finset (L × Bool)} (hS : S ∈ augmentedFaces c) :
     ∃ B ∈ facets c, FirstAt c S B := by
   classical
@@ -124,7 +124,7 @@ private theorem exists_first_facet (c : L → A) (h : (facets c).Nonempty)
   exact ⟨B, hBf, hSB, fun C hC hc hSC =>
     (not_lt_of_ge (hmax C (Finset.mem_filter.mpr ⟨hC, hSC⟩))) hc⟩
 
-private theorem first_unique (c : L → A) {S B C : Finset (L × Bool)}
+theorem first_unique (c : L → A) {S B C : Finset (L × Bool)}
     (hB : B ∈ facets c) (hC : C ∈ facets c)
     (hb : FirstAt c S B) (hc : FirstAt c S C) : B = C := by
   rcases lt_trichotomy (toColex (α := Finset (L × Bool)ᵒᵈ) B)
