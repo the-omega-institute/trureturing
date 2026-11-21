@@ -72,7 +72,7 @@ private theorem phaseOrbit_cluster_iff (h : ℕ → Circle) :
     apply MapClusterPt.of_comp hcofinal
     simpa only [mul_one, Function.comp_def, phaseOrbit_add, phaseOrbit_nat] using hrec
 
-private theorem phaseProfile_continuous (realPart : ℂ → ℝ) (β : ℝ) :
+theorem phaseProfile_continuous (realPart : ℂ → ℝ) (β : ℝ) :
     Continuous (fun q : (ℕ → Circle) × ℝ => phaseProfile realPart β q.1 q.2) := by
   apply Continuous.neg
   apply Complex.continuous_re.comp
@@ -94,7 +94,7 @@ where
       Continuous (fun q : (ℕ → Circle) × ℝ => Real.exp (-(β - 1 / 2) * q.2)) := by
     fun_prop
 
-private theorem phaseProfile_on_orbit (β t u : ℝ) :
+theorem phaseProfile_on_orbit (β t u : ℝ) :
     phaseProfile Complex.re β (phaseOrbit t) u =
       -(maximalSeries actualCoeff actualZero β (t + u)).re := by
   unfold phaseProfile maximalSeries
