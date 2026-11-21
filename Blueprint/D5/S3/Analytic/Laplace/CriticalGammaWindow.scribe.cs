@@ -25,7 +25,7 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("adjustable-gamma-window"),
                 DeclarationHandle.Create("D5/S3/Analytic/Laplace/CriticalGammaWindow.adjustable_window_off_mass"),
                 H("Both tails at an adjustable order and width"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(AdjustableClaim()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Fix 1 < h < b. The left decay rate is σ(h log h − h + 1) − 2. "
                         + "The right decay rate is σ(b − h − h log(b/h)) − 2b. Strictness in the "
@@ -39,6 +39,43 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
                         + "−k, the two exponentials carry "
                         + "prefactors 1/σ and b/(hσ). The estimate applies even when k is zero."))),
                 DescribeRole.Theorem))));
+
+    private static Formula AdjustableClaim()
+    {
+        var h = F.Id("h"); var b = F.Id("b"); var s = F.Id("s"); var a = F.Id("a");
+        var k = F.Id("k"); var m = F.Id("M"); var u = F.Id("u"); var g = F.Id("g");
+        var f = F.Id("f"); var outside = F.Id("S"); var t = F.Id("T");
+        var real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        var zero = F.D(0); var one = F.D(1); var two = F.D(2);
+        Formula Sub(Formula x, Formula y) => F.Seq(F.Open, x, F.Minus, y, F.Close);
+        Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
+        Formula Lt(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
+        var left = Sub(Multiply(s, Add(Sub(Multiply(h, Call("log", h)), h), one)), two);
+        var right = Sub(Multiply(s, Sub(Sub(b, h), Multiply(h, Call("log", Frac(b,h))))), Multiply(two,b));
+        var tilt = Lt(two, Multiply(s, Sub(one, Frac(h,b))));
+        var eventually = All("T", real, new Formula.Bind(FormulaQuantifier.Exists,
+            FormulaIdentifier.Create("C"), real, All("s", real, Implies(Le(F.Id("C"),s),
+                And(tilt, And(Lt(t,left), Lt(t,right)))))));
+        var growth = All("u", real, Implies(Le(zero,u), Le(new Formula.Absolute(new Formula.Apply(g,[u])),
+            Multiply(m, Call("exp", Multiply(two,u))))));
+        var kernel = Frac(Multiply(new Formula.Power(u,k), Call("exp", new Formula.Negate(Multiply(s,u)))),
+            F.Seq(k,F.Bang));
+        var density = Multiply(new Formula.Absolute(new Formula.Apply(g,[u])), kernel);
+        var set = F.Seq(F.Open, zero, F.Comma, F.Infty, F.Close, F.Sp, F.Setminus, F.Sp,
+            F.OpenBracket, a, F.Comma, Multiply(b,a), F.CloseBracket);
+        var bound = Multiply(Multiply(m,new Formula.Power(s,new Formula.Negate(k))),
+            Add(Frac(Call("exp",new Formula.Negate(Multiply(left,a))),s),
+                Multiply(Frac(b,Multiply(h,s)),Call("exp",new Formula.Negate(Multiply(right,a))))));
+        var mass = F.Seq(F.Int, F.Underscore, F.Grp(outside), F.Sp, new Formula.Apply(f,[u]), F.Sp,F.Id("d"),u);
+        var estimate = new Formula.Aligned([
+            Let(k,new Formula.Floor(Multiply(Multiply(s,h),a))),
+            Let(outside,set), Let(f,F.Seq(F.Open,u,F.Sp,F.Mapsto,F.Sp,density,F.Close)),
+            And(Call("IntegrableOn",f,outside), Le(mass,bound))]);
+        var allInputs = All("s",real,Implies(And(Lt(zero,s),tilt),All("a",real,Implies(Lt(zero,a),
+            All("g",new Formula.TypeArrow(real,real),Implies(Call("Measurable",g),
+                All("M",real,Implies(growth,estimate))))))));
+        return F.Disp(All("h",real,All("b",real,Implies(And(Lt(one,h),Lt(h,b)),And(eventually,allInputs)))));
+    }
 
     private static Formula Claim()
     {
