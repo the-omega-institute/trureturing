@@ -35,5 +35,5 @@ The marginal BKM form minus the joint BKM form on the identity lift is the integ
 - Dependency: [D5/S3/Quantum/Divergence/EntropyDefectResolventIntegralBudget](../Divergence/EntropyDefectResolventIntegralBudget.md)
 - Dependency: [D5/S3/Quantum/Divergence/ResolventFunctionalRigidity](../Divergence/ResolventFunctionalRigidity.md)
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiKernelContraction](../Divergence/UmegakiKernelContraction.md)
-- Dependency: [D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree](../Information/RenyiInformationCombiningOrderThree.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMFlagRefinement](BKMFlagRefinement.md)

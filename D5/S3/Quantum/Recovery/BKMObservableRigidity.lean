@@ -10,7 +10,8 @@ import D5.S3.Quantum.Recovery.BKMFlagRefinement
 import D5.S3.Quantum.Divergence.EntropyDefectResolventIntegralBudget
 import D5.S3.Quantum.Divergence.UmegakiKernelContraction
 import D5.S3.Quantum.Divergence.ResolventFunctionalRigidity
-import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Isometry
 import D5.S3.Weil.ZetaLinear.HermitianPosPart
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation
 
@@ -24,8 +25,6 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
-open D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
-  (cfc_unitary_diagonal kronecker_rpow)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport
   (partialTraceRight_posDef partialTraceRight_mul_embed partialTraceRight_embed_mul
     trace_embed_pair)
@@ -206,19 +205,42 @@ private theorem modular_power {X : Matrix n n ℂ} (hX : X.PosDef) (p : ℝ) :
       hUbar, Matrix.conjTranspose_transpose_eq_transpose_conjTranspose,
       Matrix.conjTranspose_conjTranspose, U, d, Function.comp_def]
   have hinv : (X⁻¹)ᵀ = (Ubar : Matrix n n ℂ) *
-      diagonal (fun i => ((d i ^ (-1 : ℝ) : ℝ) : ℂ)) * star (Ubar : Matrix n n ℂ) := by
-    simpa only [← mpow_neg_one hX, mpow] using transpose_cfc (fun x => x ^ (-1 : ℝ))
-  have hfactor : ((X⁻¹)ᵀ) ^ p = (mpow X (-p))ᵀ := by
-    rw [CFC.rpow_eq_cfc_real hX.inv.transpose.posSemidef.nonneg, hinv,
-      cfc_unitary_diagonal, mpow, transpose_cfc]
-    have hp (i : n) : (d i ^ (-1 : ℝ)) ^ p = d i ^ (-p) := by
-      rw [← Real.rpow_mul (hX.eigenvalues_pos i).le, neg_one_mul]
-    simp only [hp]
+      diagonal (fun i => (((d i)⁻¹ : ℝ) : ℂ)) * star (Ubar : Matrix n n ℂ) := by
+    simpa only [← mpow_neg_one hX, mpow, Real.rpow_neg_one] using
+      transpose_cfc (fun x => x ^ (-1 : ℝ))
+  have hXdiag : X = (U : Matrix n n ℂ) * diagonal (fun i => (d i : ℂ)) *
+      star (U : Matrix n n ℂ) := by
+    simpa only [Unitary.conjStarAlgAut_apply, RCLike.ofReal_eq_complex_ofReal,
+      Function.comp_def] using
+      hX.isHermitian.spectral_theorem
+  let W : Matrix.unitaryGroup (n × n) ℂ :=
+    ⟨(Ubar : Matrix n n ℂ) ⊗ₖ (U : Matrix n n ℂ),
+      Matrix.kronecker_mem_unitary Ubar.property U.property⟩
+  let D : n × n → ℝ := fun ij => (d ij.1)⁻¹ * d ij.2
+  have hWstar : star W.val =
+      star (Ubar : Matrix n n ℂ) ⊗ₖ star (U : Matrix n n ℂ) := by
+    simp only [W, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker]
+  have hdiag : modular X = W.val * diagonal (RCLike.ofReal ∘ D) * star W.val := by
+    calc
+      modular X =
+          ((Ubar : Matrix n n ℂ) *
+            diagonal (fun i => (((d i)⁻¹ : ℝ) : ℂ)) * star (Ubar : Matrix n n ℂ)) ⊗ₖ
+          ((U : Matrix n n ℂ) * diagonal (fun i => (d i : ℂ)) * star (U : Matrix n n ℂ)) :=
+        congrArg₂ (fun A B => A ⊗ₖ B) hinv hXdiag
+      _ = _ := by
+        simp only [hWstar, Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal,
+          W, D, Function.comp_def, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_mul]
+  have hDpow (ij : n × n) : D ij ^ p = d ij.1 ^ (-p) * d ij.2 ^ p := by
+    change ((d ij.1)⁻¹ * d ij.2) ^ p = _
+    rw [Real.mul_rpow (inv_nonneg.mpr (hX.eigenvalues_pos ij.1).le)
+      (hX.eigenvalues_pos ij.2).le, Real.rpow_neg_eq_inv_rpow]
   change cfc (fun x : ℝ => x ^ p) (modular X) =
-    (mpow X (-p))ᵀ ⊗ₖ cfc (fun x : ℝ => x ^ p) X
-  rw [← CFC.rpow_eq_cfc_real (modular_posDef hX).posSemidef.nonneg,
-    modular, kronecker_rpow hX.inv.transpose.posSemidef hX.posSemidef p,
-    hfactor, CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
+    (cfc (fun x : ℝ => x ^ (-p)) X)ᵀ ⊗ₖ cfc (fun x : ℝ => x ^ p) X
+  have hM := (modular_posDef hX).isHermitian
+  rw [hM.cfc_eq, hM.cfc_eq_any_unitary hdiag, transpose_cfc, hX.isHermitian.cfc_eq]
+  simp only [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply, hWstar,
+    Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal, W, U, d,
+    Function.comp_def, RCLike.ofReal_eq_complex_ofReal, hDpow, Complex.ofReal_mul]
 
 private theorem weighted_power_action {X : Matrix n n ℂ} (hX : X.PosDef)
     (K : Matrix n n ℂ) (p : ℝ) :
