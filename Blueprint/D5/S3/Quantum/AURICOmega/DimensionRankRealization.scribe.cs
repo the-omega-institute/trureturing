@@ -25,11 +25,6 @@ internal sealed class DimensionRankRealizationDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(TriFormula()), DescribeRole.Lemma,
                 "The transfer of quaternionModel is (x, y, z) -> x * y^-1 * z on the group of unit quaternions. "
                     + "The unit quaternions form a topological group in the subspace topology of the quaternions, so multiplication and inversion are continuous, and the transfer is continuous on the product of three copies of the group."),
-            Node("continuous-kappa", "continuous_kappa_quaternionModel",
-                "The reading of the unit quaternion model is continuous",
-                StatementSource.FromAuthor(KappaFormula()), DescribeRole.Lemma,
-                "The reading of quaternionModel is (x, y) -> (1 + <x, y>) / 2, where <x, y> is the real inner product of the quaternions. "
-                    + "The inclusion of the unit quaternions into the quaternions is continuous and the real inner product is continuous, so the reading is continuous on pairs of unit quaternions."),
             Node("exists-model-tfae", "exists_model_tfae",
                 "Three equivalent conditions on the pairs of dimension and feature rank",
                 StatementSource.FromAuthor(ExistsFormula()), DescribeRole.Theorem,
@@ -43,7 +38,7 @@ internal sealed class DimensionRankRealizationDocument : IScribeDocumentDefiniti
                     + "Condition (1) implies condition (3) by the dimension and feature rank bound for such structures, theorem three_le_dim_of_hasFeatureRank. "
                     + "For condition (3) implies condition (2) write d = 3 + m. The unit quaternions with the transfer x * y^-1 * z and the reading (1 + <x, y>) / 2 form a noncommutative structure of feature rank five, hence of feature rank at most r for every r >= 5, since feature rank is monotone. "
                     + "The unit quaternions are the unit sphere of the quaternions, so they are compact, Hausdorff, and connected. "
-                    + "Transfer and reading are continuous by the two lemmas above. "
+                    + "The transfer is continuous by the lemma above, and the reading is continuous by the lemma that the reading of the unit quaternion model is continuous. "
                     + "Take o = 1, take for V the open hemisphere of unit quaternions of positive real part, an open set containing 1, and take for f the map sending q to its three imaginary coordinates followed by m zero coordinates. "
                     + "This map is continuous on all unit quaternions, and it is injective on V because V lies in the closed hemisphere, on which the imaginary part is injective. "
                     + "So the bounds d >= 3 and r >= 5 are attained, and they are attained already in the more restrictive class of condition (2). "
@@ -85,13 +80,6 @@ internal sealed class DimensionRankRealizationDocument : IScribeDocumentDefiniti
     }
 
     private static Formula TriFormula() => Disp(Call("Continuous", Transfer(Model, Unit)));
-
-    private static Formula KappaFormula()
-    {
-        Formula p = F.Id("p");
-        return Disp(Call("Continuous", Seq(Open, p, Colon, Sp, Times2(Unit), Close, Sp, Mapsto, Sp,
-            Call("kappa", Model, Seq(p, Dot, D(1)), Seq(p, Dot, D(2))))));
-    }
 
     private static Formula ExistsFormula()
     {

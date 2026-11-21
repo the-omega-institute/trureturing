@@ -9,12 +9,11 @@ import Reg.Support.DependentFamily
 
 The injectivity of the imaginary part is audited through the defining predicate of the hemisphere
 `{q | 0 ≤ re q}`; on the whole group the imaginary part identifies `1` and `-1`. The continuity of
-transfer and reading is audited through the comparison structure whose transfer or reading is
-taken; the rejected readings are maps that separate the point `1` from the rest of the
-connected group of unit quaternions, and the observed structures are the unit quaternion model,
-its transport along inversion and its discrete reading. The three equivalent conditions on the
-realized pairs are audited through the dimension `d` of the third condition `3 ≤ d`; the rejected
-reading `0` fails at the pair `(3, 5)`. -/
+the transfer is audited through the comparison structure whose transfer is taken; the rejected
+reading is a map that separates the point `1` from the rest of the connected group of unit
+quaternions, and the observed structures are the unit quaternion model and its transport along
+inversion. The three equivalent conditions on the realized pairs are audited through the
+dimension `d` of the third condition `3 ≤ d`; the rejected reading `0` fails at the pair `(3, 5)`. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization
 
@@ -22,8 +21,8 @@ open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open _root_.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open _root_.D5.S3.Quantum.AURICOmega.DimensionRankRealization
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonProduct (discrete transport)
-open Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (one_ne_unitI)
+open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonProduct (transport)
+open Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (one_ne_unitI not_continuous_of_isolates)
 
 open scoped InnerProductSpace Quaternion
 
@@ -31,34 +30,6 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
 noncomputable section
-
-/-- The point `1` is not open in the connected group of unit quaternions. -/
-theorem not_isOpen_singleton_one : ¬ IsOpen ({1} : Set (unitary ℍ[ℝ])) := by
-  intro h
-  have := preconnectedSpace_unitary
-  have hc : IsClopen ({1} : Set (unitary ℍ[ℝ])) := ⟨isClosed_singleton, h⟩
-  rcases isClopen_iff.mp hc with h0 | h1
-  · exact Set.singleton_ne_empty _ h0
-  · have hi : unitI ∈ ({1} : Set (unitary ℍ[ℝ])) := by rw [h1]; trivial
-    exact one_ne_unitI (Set.mem_singleton_iff.mp hi).symm
-
-/-- A continuous map taking one value at `1` and another value everywhere else does not exist. -/
-theorem not_continuous_of_isolates {X : Type} [TopologicalSpace X] [T1Space X]
-    (g : unitary ℍ[ℝ] → X) (b : X) (hb : g 1 ≠ b) (hg : ∀ x, x ≠ 1 → g x = b) :
-    ¬ Continuous g := by
-  intro hc
-  apply not_isOpen_singleton_one
-  have hpre : g ⁻¹' {b}ᶜ = {1} := by
-    ext x
-    simp only [Set.mem_preimage, Set.mem_compl_iff, Set.mem_singleton_iff]
-    constructor
-    · intro hx
-      by_contra hne
-      exact hx (hg x hne)
-    · rintro rfl
-      exact hb
-  rw [← hpre]
-  exact isOpen_compl_singleton.preimage hc
 
 /-! The defining predicate `fun q => 0 ≤ re q` of the hemisphere in `injOn_im_of_re_nonneg`. -/
 namespace Hemisphere
@@ -187,77 +158,6 @@ def source_registration : Registration arena sourceStatement where
 
 end Transfer
 
-/-! The comparison structure whose reading is taken in `continuous_kappa_quaternionModel`. -/
-namespace Reading
-
-abbrev signature : Signature where
-  Params := Unit
-  State _ := TernaryComparison (unitary ℍ[ℝ])
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := unitary ℍ[ℝ] → unitary ℍ[ℝ] → ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ C => C.kappa) (fun e => nomatch e)
-
-open Classical in
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ x y => if x = y then 1 else 0) (fun e => nomatch e)
-
-/-- Retain the complete statement of `continuous_kappa_quaternionModel`. -/
-abbrev arena : Arena where
-  signature := signature
-  Law r := Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
-    r.readout () () quaternionModel p.1 p.2
-
-/-- The indicator of the diagonal is not continuous on pairs of unit quaternions. -/
-theorem rejected_law : ¬ arena.Law rejected := by
-  classical
-  intro h
-  have h' : Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
-      if p.1 = p.2 then (1 : ℝ) else 0 := h
-  have hg := h'.comp (continuous_id.prodMk continuous_const :
-    Continuous fun x : unitary ℍ[ℝ] => (x, (1 : unitary ℍ[ℝ])))
-  refine not_continuous_of_isolates _ (0 : ℝ) ?_ ?_ hg
-  · simp
-  · intro x hx
-    simp [hx]
-
-/-- The quaternion model and its discrete reading differ at `(1, i)`. -/
-theorem dependence : ObservationalDependence signature actual := by
-  classical
-  intro i
-  refine ⟨(), quaternionModel, discrete quaternionModel, fun h => ?_⟩
-  have h' : quaternionModel.kappa = (discrete quaternionModel).kappa := h
-  have h1 := congrFun (congrFun h' 1) unitI
-  have h0 : quaternionModel.kappa 1 unitI = 1 / 2 := by
-    change (1 + ⟪((1 : unitary ℍ[ℝ]) : ℍ[ℝ]), (unitI : ℍ[ℝ])⟫_ℝ) / 2 = 1 / 2
-    rw [inner_eq_components]
-    simp [unitI]
-  have h2 : (discrete quaternionModel).kappa 1 unitI = 0 := by
-    simp [discrete, one_ne_unitI]
-  rw [h0, h2] at h1
-  norm_num at h1
-
-abbrev sourceStatement : Prop := type_of% continuous_kappa_quaternionModel
-
-def source_registration : Registration arena sourceStatement where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨continuous_kappa_quaternionModel, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
-    · intro e
-      exact nomatch e
-  dependence := dependence
-
-end Reading
-
 /-! The dimension `d` in the third condition `3 ≤ d` of `exists_model_tfae`. -/
 namespace Pairs
 
@@ -383,39 +283,6 @@ def continuous_tri_quaternionModel_registration :
     coordinates := #[]
     readouts := #[{
       path := #["arg", "body", "fn", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
-def continuous_kappa_quaternionModel_registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      continuous_kappa_quaternionModel (Realization Reading.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.continuous_kappa_quaternionModel_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.Reading.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Reading.arena⟩
-  objectArena := .source ⟨Reading.arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Reading.arena ⟨Reading.source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Reading.signature (fun _ _ C => C.kappa) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.AURICOmega.DimensionRankRealization
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["arg", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

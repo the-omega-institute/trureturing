@@ -141,6 +141,13 @@ theorem preconnectedSpace_unitary : PreconnectedSpace (unitary ℍ[ℝ]) :=
     rw [coe_unitary_eq_sphere]
     exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
 
+/-- The reading `(1 + ⟪x, y⟫) / 2` of the unit quaternion model is continuous. -/
+theorem continuous_kappa_quaternionModel :
+    Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] => quaternionModel.kappa p.1 p.2 := by
+  change Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
+    (1 + ⟪(p.1 : ℍ[ℝ]), (p.2 : ℍ[ℝ])⟫_ℝ) / 2
+  fun_prop
+
 /-- Any two unit quaternions are joined by chains of readings within `ε` of one: the unit
 three-sphere is connected and the reading is continuous with value one on the diagonal. -/
 theorem quaternionModel_chainConnected : quaternionModel.ChainConnected := by

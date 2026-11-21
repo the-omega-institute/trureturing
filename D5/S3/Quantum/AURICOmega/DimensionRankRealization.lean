@@ -9,6 +9,7 @@
 import D5.S3.Quantum.AURICOmega.FiniteRankDimensionBound
 import D5.S3.Quantum.AURICOmega.GramRankFeatureMap
 import D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+import D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-! The dimension and feature rank bounds are sharp.
 
@@ -29,12 +30,6 @@ namespace D5.S3.Quantum.AURICOmega.DimensionRankRealization
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 
-/-- A unit quaternion satisfies `re ^ 2 + imI ^ 2 + imJ ^ 2 + imK ^ 2 = 1`. -/
-private theorem normSq_components_unitary (q : unitary ℍ[ℝ]) :
-    (q : ℍ[ℝ]).re ^ 2 + (q : ℍ[ℝ]).imI ^ 2 + (q : ℍ[ℝ]).imJ ^ 2 + (q : ℍ[ℝ]).imK ^ 2 = 1 := by
-  rw [← Quaternion.normSq_def', Quaternion.normSq_eq_norm_mul_self,
-    CStarRing.norm_coe_unitary, mul_one]
-
 /-- On the unit quaternions of nonnegative real part the imaginary part is injective: the real
 part is the nonnegative square root of `1 - ‖im q‖ ^ 2`. -/
 theorem injOn_im_of_re_nonneg :
@@ -47,8 +42,8 @@ theorem injOn_im_of_re_nonneg :
   have hK : (p : ℍ[ℝ]).imK = (q : ℍ[ℝ]).imK := by
     simpa using congrArg QuaternionAlgebra.imK h
   have hsq : (p : ℍ[ℝ]).re ^ 2 = (q : ℍ[ℝ]).re ^ 2 := by
-    have h1 := normSq_components_unitary p
-    have h2 := normSq_components_unitary q
+    have h1 := D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup.sq_add_sq_coe_unitary p
+    have h2 := D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup.sq_add_sq_coe_unitary q
     rw [hI, hJ, hK] at h1
     linarith
   have hre : (p : ℍ[ℝ]).re = (q : ℍ[ℝ]).re :=
@@ -60,13 +55,6 @@ theorem continuous_tri_quaternionModel :
     Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
       quaternionModel.tri p.1 p.2.1 p.2.2 := by
   change Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] × unitary ℍ[ℝ] => p.1 * p.2.1⁻¹ * p.2.2
-  fun_prop
-
-/-- The reading `(1 + ⟪x, y⟫) / 2` of the unit quaternion model is continuous. -/
-theorem continuous_kappa_quaternionModel :
-    Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] => quaternionModel.kappa p.1 p.2 := by
-  change Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
-    (1 + ⟪(p.1 : ℍ[ℝ]), (p.2 : ℍ[ℝ])⟫_ℝ) / 2
   fun_prop
 
 /-- The unit quaternions form a compact space: they are the unit sphere of `ℍ`. -/

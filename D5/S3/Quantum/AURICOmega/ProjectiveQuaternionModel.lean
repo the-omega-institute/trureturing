@@ -333,12 +333,6 @@ private lemma projectiveModel_not_hasFeatureRank_nine : ¬ projectiveModel.HasFe
   have h := hli.fintype_card_le_finrank
   simp at h
 
-/-- Feature rank is monotone: a Gram rank bound `r` is a Gram rank bound `s ≥ r`. -/
-private lemma hasFeatureRank_mono {M : Type*} {C : TernaryComparison M} {r s : ℕ} (hrs : r ≤ s)
-    (h : C.HasFeatureRank r) : C.HasFeatureRank s := by
-  rw [← gramRankLE_iff_hasFeatureRank] at h ⊢
-  exact fun n x => (h n x).trans hrs
-
 /-- **Unit quaternions modulo sign.** With transfer `x * y⁻¹ * z` and reading `⟪x, y⟫ ^ 2`,
 the unit quaternions modulo sign form a noncommutative, chain-connected, reading-complete ternary
 comparison structure touching zero, whose reading has feature rank `r` exactly when `10 ≤ r`, and in

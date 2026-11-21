@@ -148,9 +148,22 @@ $$\operatorname{PreconnectedSpace}\left(\operatorname{unitary}\left(\mathbb{H}[\
 
 With the subspace topology of the quaternions, the group of unit quaternions is a preconnected space. By the lemma that the unit quaternions form the unit sphere, it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere in a real normed space of dimension greater than one is preconnected.
 
+**Lemma 1.13 (The reading of the unit quaternion model is continuous).**
+
+$$\operatorname{Continuous}\left((p: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \times \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{kappa}\left(\operatorname{quaternionModel}, p.1, p.2\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reading of quaternionModel is (x, y) -> (1 + <x, y>) / 2, where <x, y> is the real inner product of the quaternions. The inclusion of the unit quaternions into the quaternions is continuous and the real inner product is continuous, so the reading is continuous on pairs of unit quaternions.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.coe_unitary_eq_sphere`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.feature`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_eq_components`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_feature`
