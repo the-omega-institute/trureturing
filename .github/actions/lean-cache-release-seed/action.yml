@@ -128,7 +128,7 @@ runs:
         result=0
         bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- bash -e -c '
           make lean FULL_BUILD=1
-          make lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+          make check-lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
         ' || result=$?
         if [[ "$result" == 124 ]]; then
           echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
