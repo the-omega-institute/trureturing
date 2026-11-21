@@ -236,7 +236,7 @@ private theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
   ring
 
 
-private def trivialConstant : ℝ := 1 + |Real.log (2 * Real.pi)|
+def trivialConstant : ℝ := 1 + |Real.log (2 * Real.pi)|
 
 private theorem q_weighted_log_bound {n : ℕ} (hn : 2 ≤ n) {v : ℝ} (hv : 0 ≤ v) :
     |(n : ℝ) * Real.exp v * (qError (Real.exp v) - ((n : ℝ) - 1) * Real.exp (((n : ℝ) - 1) * v) *
@@ -366,7 +366,7 @@ private theorem root_coeff_mass_bound (hRH : RiemannHypothesis) :
       nlinarith [mul_le_mul_of_nonneg_left hsq hB, sq_nonneg (1 + Real.log r)]
 
 
-private theorem root_density_log_sq (hRH : RiemannHypothesis) :
+theorem root_density_log_sq (hRH : RiemannHypothesis) :
     ∃ C : ℝ, 0 < C ∧ ∀ r ≥ 2, ∀ u : ℝ,
       |rootDensity r u| ≤ C * (1 + Real.log r)^2 *
         Real.exp (((2 * r)⁻¹ - 1 / 2) * u) := by
@@ -388,7 +388,7 @@ private theorem root_density_log_sq (hRH : RiemannHypothesis) :
     (mul_le_mul_of_nonneg_right hle (Real.exp_nonneg _))
 
 
-private theorem root_centered_log_bound {n : ℕ} (hn : 2 ≤ n)
+theorem root_centered_log_bound {n : ℕ} (hn : 2 ≤ n)
     {v : ℝ} (hv : 0 ≤ v) :
     |centered (n : ℝ) (Real.exp ((n : ℝ) * v)) - rootDensity (n : ℝ) ((n : ℝ) * v)| ≤
       trivialConstant * (1 + Real.log n) * Real.exp (-((n : ℝ) * v) / 2) := by
@@ -458,9 +458,9 @@ private theorem root_centered_log_bound {n : ℕ} (hn : 2 ≤ n)
     abs_of_pos (Real.exp_pos _), mul_comm (Real.exp (-(r * v) / 2))]
   exact mul_le_mul_of_nonneg_right (q_weighted_log_bound hn hv) (Real.exp_nonneg _)
 
-private def orderRate (m : ℕ) : ℝ := 1 / 2 - (m + 1 : ℝ)⁻¹
+def orderRate (m : ℕ) : ℝ := 1 / 2 - (m + 1 : ℝ)⁻¹
 
-private def capturedSpectrum (m n : ℕ) (u : ℝ) : ℝ :=
+def capturedSpectrum (m n : ℕ) (u : ℝ) : ℝ :=
   if 2 * n < m + 1 then rootDensity (n : ℝ) u else 0
 
 private theorem centered_after_spectrum_log {Z : ℝ} (hZ₀ : 0 < Z)
@@ -510,13 +510,13 @@ private theorem centered_after_spectrum_log {Z : ℝ} (hZ₀ : 0 < Z)
         add_le_add hcenter (h.trans (mul_le_mul_of_nonneg_left hdecay (by positivity)))
       _ = _ := by ring
 
-private def arithmeticRate (n : ℕ) : ℝ := 1 / 2 - (n : ℝ)⁻¹
+def arithmeticRate (n : ℕ) : ℝ := 1 / 2 - (n : ℝ)⁻¹
 
-private def retainedDensity (m n : ℕ) (u : ℝ) : ℝ :=
+def retainedDensity (m n : ℕ) (u : ℝ) : ℝ :=
   -(μ n : ℝ) * ((n : ℝ) / ((n : ℝ) - 1) *
     Real.exp (-(arithmeticRate n) * u) + capturedSpectrum m n u)
 
-private theorem integrated_mobius_linear {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
+theorem integrated_mobius_linear {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
     (hx : 2 ≤ Real.exp u) :
     |Real.sqrt (Real.exp u) * (primeTail (Real.exp u) - Q (Real.exp u)) -
       ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
@@ -669,13 +669,13 @@ private theorem all_orders_density_log_sq (hRH : RiemannHypothesis) :
           (by simpa using mul_le_mul_of_nonneg_left hms₁ hC) hW.le))
     _ = _ := by dsimp only [M]; ring
 
-private def powerGap (s a B : ℝ) : ℝ := a ^ (-s) - B ^ (-s)
+def powerGap (s a B : ℝ) : ℝ := a ^ (-s) - B ^ (-s)
 
-private def arithmeticPrimitive (n : ℕ) (a B : ℝ) : ℝ :=
+def arithmeticPrimitive (n : ℕ) (a B : ℝ) : ℝ :=
   -(μ n : ℝ) * (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
     powerGap (arithmeticRate n) a B
 
-private def capturedPrimitive (m n : ℕ) (a B : ℝ) : ℝ :=
+def capturedPrimitive (m n : ℕ) (a B : ℝ) : ℝ :=
   if 2 * n < m + 1 then -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0
 
 private theorem root_rate_positive {n : ℕ} (hn : 3 ≤ n) : 0 < arithmeticRate n := by
@@ -683,7 +683,7 @@ private theorem root_rate_positive {n : ℕ} (hn : 3 ≤ n) : 0 < arithmeticRate
   have hi := inv_strictAnti₀ (show (0 : ℝ) < 2 by norm_num) hn₀
   exact sub_pos.mpr (by simpa only [one_div] using hi)
 
-private theorem retainedDensity_integral {m n : ℕ} (hn : 2 ≤ n) {a B : ℝ}
+theorem retainedDensity_integral {m n : ℕ} (hn : 2 ≤ n) {a B : ℝ}
     (ha : 0 < a) (hB : 0 < B) :
     IntervalIntegrable (retainedDensity m n) volume (Real.log a) (Real.log B) ∧
       (∫ u in Real.log a..Real.log B, retainedDensity m n u) =
