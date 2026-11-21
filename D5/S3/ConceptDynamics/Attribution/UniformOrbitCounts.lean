@@ -61,7 +61,7 @@ theorem realize_orbit_copy_counts {G : Type u} {T : Type v}
 set_option maxHeartbeats 900000 in
 open Classical in
 theorem count_seed_fibers_by_orbit {G : Type u} {T : Type v} {S : Type w}
-    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+    [Group G] [MulAction G T] [Fintype (Orbit G T)]
     [Fintype S] [MulAction G S] (f : S → T)
     (equiv : ∀ (g : G) s, f (g • s) = g • f s) :
     ∃ n : Orbit G T → ℕ, ∀ A : Finset T,
@@ -104,7 +104,7 @@ theorem count_seed_fibers_by_orbit {G : Type u} {T : Type v} {S : Type w}
 open Classical in
 /-- Rows count how many members of each orbit lie in the corresponding event. -/
 noncomputable def orbitEventMatrix {G : Type u} {T : Type v} {I : Type w}
-    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+    [Group G] [MulAction G T] [Fintype (Orbit G T)]
     (E : I → Finset T) : (Orbit G T → ℤ) →+ (I → ℤ) where
   toFun n i := ∑ o, (orbitCount (E i) o : ℤ) * n o
   map_zero' := by ext i; simp

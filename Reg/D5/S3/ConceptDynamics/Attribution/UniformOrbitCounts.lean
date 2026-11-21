@@ -51,7 +51,7 @@ abbrev fiberArena : Arena where
   signature := signature.{v}
   Law R :=
     ∀ {G : Type u} {T : Type v} {S : Type w}
-      [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+      [Group G] [MulAction G T] [Fintype (Orbit G T)]
       [Fintype S] [MulAction G S] (f : S → T),
       (∀ (g : G) s, f (g • s) = g • f s) →
       ∃ n : Orbit G T → ℕ, ∀ A : Finset T,
@@ -199,9 +199,9 @@ def fiberRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "arg", "body", "body", "arg", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 12
+      stateBinder := 11
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

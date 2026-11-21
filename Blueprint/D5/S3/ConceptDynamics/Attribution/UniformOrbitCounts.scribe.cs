@@ -34,7 +34,7 @@ internal sealed class UniformOrbitCountsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Count()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Let a group act on finite sets S and T, and let f from S to T "
+                    Paragraph(Text("Let a group act on a finite source S and a target T with finitely many orbits, and let f from S to T "
                         + "be equivariant. There is one nonnegative integer n(O) per orbit of T "
                         + "such that the seed count of each event A is the displayed sum.")),
                     Paragraph(Text("A group element transports the seed fiber over t bijectively "

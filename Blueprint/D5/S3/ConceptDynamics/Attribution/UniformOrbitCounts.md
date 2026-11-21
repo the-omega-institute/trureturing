@@ -28,7 +28,7 @@ $$C(A) = \sum_{O} c(A,O) n(O)$$
 
 *Commentary.*
 
-Let a group act on finite sets S and T, and let f from S to T be equivariant. There is one nonnegative integer n(O) per orbit of T such that the seed count of each event A is the displayed sum.
+Let a group act on a finite source S and a target T with finitely many orbits, and let f from S to T be equivariant. There is one nonnegative integer n(O) per orbit of T such that the seed count of each event A is the displayed sum.
 
 A group element transports the seed fiber over t bijectively to the fiber over its translate. Hence the fiber size is constant on each orbit. Equivariance is used in this step. For a two-element orbit, a map from a singleton to just one element has unequal fiber sizes.
 
