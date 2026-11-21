@@ -11,6 +11,8 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtAtOne
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 import D5.S3.Analytic.Laplace.CriticalGammaWindow
 import D5.S3.Weil.ZetaBridge.EqualRadiusZeroDisks
+import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
+import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -250,11 +252,14 @@ private lemma disk_lower {p ρ : ℂ} {r : ℝ} (hp : 1 < p.re) (hρ : riemannZe
   linarith
 
 
-private lemma compare_prime_mass {x y : ℝ} (hx : 1 ≤ x) (hxy : x ≤ y) :
-    (∫ t in x..y, max (-Q t) 0 / Real.sqrt t) ≤
-      ∫ t in x..y, max (-PrimeOnlyTailCorrection.primeTail t) 0 / Real.sqrt t := by
-  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
-  have hc := (PrimeOnlyTailCorrection.prime_power_window_correction.2 C (fun t _ => hC t)).1
+private lemma compare_prime_mass {C x y : ℝ}
+    (hC : ∀ t, 1 ≤ t → Chebyshev.psi t - Chebyshev.theta t ≤ C * Real.sqrt t)
+    (hx : 1 ≤ x) (hxy : x ≤ y) :
+    let A := ∫ t in x..y, max (-Q t) 0 / Real.sqrt t
+    let B := ∫ t in x..y, max (-PrimeOnlyTailCorrection.primeTail t) 0 / Real.sqrt t
+    A ≤ B ∧ B ≤ A + 2*C*Real.log (y/x) := by
+  dsimp only
+  have hc := (PrimeOnlyTailCorrection.prime_power_window_correction.2 C hC).1
   let H (t : ℝ) := (Chebyshev.theta t - t) / t^2
   have hmeas : Measurable H := (Chebyshev.theta_mono.measurable.sub measurable_id).div
     (measurable_id.pow_const 2)
@@ -289,10 +294,12 @@ private lemma compare_prime_mass {x y : ℝ} (hx : 1 ≤ x) (hxy : x ≤ y) :
     rw [Real.norm_eq_abs, abs_of_nonneg (div_nonneg (le_max_right _ _) hsp)]
     apply div_le_div_of_nonneg_right _ hsp
     exact max_le (by linarith [neg_le_abs (Q t)]) (by linarith [abs_nonneg (Q t)])
-  apply intervalIntegral.integral_mono_on hxy hQ ((intervalIntegrable_iff_integrableOn_Ioc_of_le hxy).mpr ht)
-  intro t ht
-  have h := (hc t (hx.trans ht.1)).1
-  exact div_le_div_of_nonneg_right (max_le_max (by linarith) le_rfl) (Real.sqrt_nonneg t)
+  have hbudget := (PrimeOnlyTailCorrection.prime_power_window_correction.2 C hC).2 x y hx hxy
+  dsimp only at hbudget
+  simp only [sub_div] at hbudget
+  rw [intervalIntegral.integral_sub ((intervalIntegrable_iff_integrableOn_Ioc_of_le hxy).mpr ht)
+    hQ] at hbudget
+  constructor <;> linarith [hbudget.1, hbudget.2]
 
 
 private lemma input_growth : ∃ M : ℝ, 0 ≤ M ∧
@@ -463,8 +470,9 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
         _ = _ := by dsimp [C]; ring
     have hB := coeff_window k hhp (a := a) (z := b*a) ha
     rw [hpre, log_window_mass hab h2] at hB
-    have hmass := compare_prime_mass (Real.one_le_exp ha.le)
-      (Real.exp_le_exp.mpr hab)
+    obtain ⟨C₀, hC₀⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+    have hmass := (compare_prime_mass (C := C₀) (fun t _ => hC₀ t) (Real.one_le_exp ha.le)
+      (Real.exp_le_exp.mpr hab)).1
     apply he.trans
     apply habs
     have hdisc' : L ≤ d^k*(‖coeff k p‖ + (coeff k (σ : ℂ)).re) := by simpa only [hpre] using hdisc
@@ -477,5 +485,67 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
     with Y hY hy
   rw [Real.rpow_def_of_pos hy, Real.rpow_def_of_pos hy]
   simpa only [Real.exp_log hy, mul_comm b (Real.log Y)] using hY
+
+
+private lemma eventual_small_windows (hRH : RiemannHypothesis) {b : ℝ} (hb : 1 < b)
+    {η : ℝ} (hη : 0 < η) :
+    ∀ᶠ Y : ℝ in atTop, (∫ x in Y..Y^b, max (-primeTail x) 0 / Real.sqrt x) ≤ Y^η := by
+  let ℓ := D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds.firstLiMass + 1
+  obtain ⟨u₀, hwhole⟩ := eventually_atTop.mp ((RHSharpActualEnvelope.actual_G_control hRH).1 1 one_pos)
+  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  let K := (ℓ+2*C)*(b-1)
+  have H : ∀ᶠ a : ℝ in atTop, (∫ x in Real.exp a..Real.exp (b*a),
+      max (-primeTail x) 0 / Real.sqrt x) ≤ Real.exp (a*η) := by
+    filter_upwards [eventually_ge_atTop u₀, eventually_gt_atTop (0 : ℝ),
+      Real.tendsto_exp_atTop.eventually (eventually_ge_atTop (2 : ℝ)),
+      eventually_ge_atTop (2*K/η^2)] with a hau ha ha2 hbig
+    have hab : a ≤ b*a := by nlinarith
+    have hG : (∫ u in Icc a (b*a), max (U (Real.exp u)) 0 * Real.exp (-(u/2))) ≤ ℓ*(b*a-a) := by
+      have hc : Continuous (fun u => max (U (Real.exp u)) 0 * Real.exp (-(u/2))) :=
+        (U_exp_continuous.max continuous_const).mul (by fun_prop)
+      calc
+        _ ≤ ∫ _ in Icc a (b*a), ℓ := by
+          apply setIntegral_mono_on hc.integrableOn_Icc continuous_const.integrableOn_Icc measurableSet_Icc
+          intro u hu
+          have H := (hwhole u (hau.trans hu.1)).le
+          change |Real.exp (-u/2) * U (Real.exp u)| ≤ ℓ at H
+          rw [abs_mul, abs_of_pos (Real.exp_pos _)] at H
+          rw [neg_div] at H
+          exact (mul_le_mul_of_nonneg_right (max_le (le_abs_self _) (abs_nonneg _))
+            (Real.exp_pos _).le).trans (by simpa only [mul_comm] using H)
+        _ = _ := by rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hab,
+          intervalIntegral.integral_const]; simp [mul_comm]
+    rw [log_window_mass hab ha2] at hG
+    have hc := (compare_prime_mass (C := C) (fun t _ => hC t) (Real.one_le_exp ha.le)
+      (Real.exp_le_exp.mpr hab)).2
+    rw [← Real.exp_sub, Real.log_exp] at hc
+    have hp := Real.pow_div_factorial_le_exp (a*η) (mul_nonneg ha.le hη.le) 2
+    norm_num at hp
+    have hKA := (div_le_iff₀ (sq_pos_of_pos hη)).mp hbig
+    calc
+      _ ≤ K*a := hc.trans (by dsimp [K]; nlinarith [hG])
+      _ ≤ _ := by nlinarith [mul_le_mul_of_nonneg_right hKA ha.le]
+  filter_upwards [Real.tendsto_log_atTop.eventually H, eventually_gt_atTop (0 : ℝ)] with Y hY hy
+  rw [Real.rpow_def_of_pos hy, Real.rpow_def_of_pos hy]
+  simpa only [Real.exp_log hy, mul_comm b (Real.log Y)] using hY
+
+/-- For each fixed power-window width above one, the Riemann hypothesis is
+equivalent to arbitrarily late windows of subpower prime-only negative mass. -/
+theorem rh_iff_frequently_small_prime_windows {b : ℝ} (hb : 1 < b) :
+    RiemannHypothesis ↔ ∀ η : ℝ, 0 < η → ∃ᶠ Y : ℝ in atTop,
+      (∫ x in Y..Y^b, max (-primeTail x) 0 / Real.sqrt x) ≤ Y^η := by
+  constructor
+  · exact fun hRH _ hη => (eventual_small_windows hRH hb hη).frequently
+  · intro h
+    apply D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
+    intro z hz hhalf _
+    let η := b*(z.re-1/2)/3
+    have hη : 0 < η := div_pos (mul_pos (zero_lt_one.trans hb) (sub_pos.mpr hhalf)) (by norm_num)
+    have hlower := off_line_zero_forces_window_mass hz hhalf hb hη
+    obtain ⟨Y, hY, hlow, hY1⟩ := ((h η hη).and_eventually (hlower.and
+      (eventually_gt_atTop (1 : ℝ)))).exists
+    have hstrict : Y^η < Y^(b*(z.re-1/2)-η) :=
+      Real.rpow_lt_rpow_of_exponent_lt hY1 (by dsimp [η] at *; linarith)
+    exact (not_lt_of_ge (hlow.trans hY)) hstrict
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
