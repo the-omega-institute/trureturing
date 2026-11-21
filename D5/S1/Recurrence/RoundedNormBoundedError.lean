@@ -1,3 +1,46 @@
+/- GID: D5/S1/Recurrence/RoundedNormBoundedError
+   generality: I
+   mirror-B: D5/B/S1/Recurrence/RoundedNormBoundedError
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
+   anchors: [mathlib/module/Mathlib.NumberTheory.Real.GoldenRatio]
+   utility: none
+   digest: Rounded two- and three-norm sequences satisfy x_n = C R^(n/2) + O(1), C > 0, exactly for the seeds that do not stall. -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#352)
+escape_witness: analytic (a nonnegative sequence satisfying the characteristic recurrence with
+  forcing √s + 1/4, s → ∞, is L R^n + O(R^(n/2)) with L > 0: comparison bounds b = O(2^n), dominant-
+  root forcing at q = √2 and then at q = √R, and a lower comparison with ratio 3/2 rules out
+  L <= 0), upper_compare and lower_compare (window comparison of linear recurrent inequalities),
+  step_up and tendsto_atTop (the rounded norm strictly exceeds the window start past a
+  threshold, so the sequence is unbounded), finish (rationalizing the squared expansion into
+  the bounded error and the ratio rate), P2_other and P3_other (the non-dominant roots of
+  X^2 - X - 1 and X^3 - X^2 - X - 1 have modulus below one), and two_case and three_case (the
+  seed conditions are also necessary: otherwise the sequence stays at most one).
+proof_shape:
+  rad, P2, P3: definitions; consumers: the lemmas below.
+  sqrt_le_of_le_pow, rad_nonneg, round_err, sq_err, P2_natDegree, P3_natDegree, P2_sum, P3_sum,
+    trib_gt, not_bounded_geom: bind-only helpers; consumers: analytic, le_next, step_up,
+    generic, two_case, three_case.
+  le_next, mono, P2_rootMultiplicity, P3_rootMultiplicity: bind-only helpers (instantiation of
+    the rounding bound; induction over le_next; derivative at the root); consumers: step_up,
+    tendsto_atTop, two_case, three_case.
+  generic: bind-only helper (assembles analytic and finish); consumers: two_case, three_case.
+  upper_compare, lower_compare, step_up, tendsto_atTop, analytic, finish, P2_other, P3_other,
+    two_case, three_case: content; consumers: generic, two_case, three_case, result.
+  result: content (after inlining the helpers added here, its live proof path runs through
+    two_case, three_case and the lemmas above).
+Direct frozen dependencies (module statement_id):
+  D5/S1/Recurrence/Asymptotic/DominantRootForcing (result),
+    sha256:1d9580e02dfd6fc17ce8d9039a9444783c195aa2b491d01ec9b830fd96091820;
+  D5/S0/Tower/Tribonacci/Values (tribonacciConstant, one_lt_tribonacciConstant,
+    tribonacciConstant_lt_two, tribonacciConstant_cubic),
+    sha256:f0e84eed265aa226b9c3573b615c900dd052f29b0606f05c018db2a9cb665a5f.
+Search record (§3.1): D5/S1/Recurrence/OEISA400644 proves the ratio limit for the fixed
+  three-term seed (0, 0, 1) only; no D5 declaration treats general seeds, the two-term rule or a
+  bounded-error rate; pinned Mathlib has no rounded-norm recurrences.
+-/
+
 import D5.S1.Recurrence.Asymptotic.DominantRootForcing
 import D5.S0.Tower.Tribonacci.Values
 import Mathlib.NumberTheory.Real.GoldenRatio
@@ -5,6 +48,16 @@ import Mathlib.NumberTheory.Real.GoldenRatio
 set_option autoImplicit false
 
 noncomputable section
+
+/-! # Rounded two- and three-norm sequences
+
+For `x (n + m) = round √(x n² + ⋯ + x (n + m - 1)²)` with `m = 2` or `m = 3`, let `R` be the
+dominant root of `y^m - y^(m-1) - ⋯ - 1` (the golden ratio, resp. the Tribonacci constant). There
+is `C > 0` with `x n = C R^(n/2) + O(1)` and `x (n+1)/x n = √R + O(R^(-n/2))` exactly when the seed
+does not stall: `max (x 0) (x 1) ≥ 2` for `m = 2`, and a nonzero seed for `m = 3`. The squares
+satisfy the characteristic recurrence up to the rounding error `√s + 1/4`; dominant-root forcing
+gives `x n² = L R^n + O(R^(n/2))` with `L > 0`, and rationalizing gives the bounded error.
+-/
 
 namespace D5.S1.Recurrence.RoundedNormBoundedError
 
