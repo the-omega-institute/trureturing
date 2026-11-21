@@ -170,6 +170,9 @@ domains:
   PrimeObserver:
     stratum: S3
     definition: Prime-indexed observer memory structures with projective golden-mode multipliers.
+  ProcessReconstruction:
+    stratum: S3
+    definition: Finite quantum process reconstruction from reduced output channels and its obstructions.
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.

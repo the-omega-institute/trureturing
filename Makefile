@@ -25,7 +25,14 @@ $(filter lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
 endif
 
 install-tools:
-	@python3 .github/scripts/install-tools.py
+	@python3 -I -B .github/scripts/install-tools.py
+
+# A recursive dry run can print the planned sub-make before tools are installed.
+ifeq ($(wildcard tools/Makefile),)
+ifneq ($(findstring n,$(filter-out -% %=%,$(firstword $(MAKEFLAGS)))),)
+show_tool_make := echo
+endif
+endif
 
 require-full-build:
 	@test "$(FULL_BUILD)" = 1 || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
@@ -41,7 +48,7 @@ test: require-full-build
 else
 test: export CHECK_BASE := $(value BASE)
 test:
-	@$(MAKE) -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+	@$(show_tool_make) $(MAKE) -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
 	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; \
 		base="$$(git rev-parse --verify --end-of-options "$$CHECK_BASE^{commit}")"; \
 		python3 .github/scripts/install-tools.py --cache-revision "$$base"; \
@@ -115,7 +122,7 @@ filemap:
 	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- filemap
 
 filemap-conform:
-	@$(MAKE) -C tools filemap-conform
+	@$(show_tool_make) $(MAKE) -C tools filemap-conform
 
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
@@ -210,7 +217,7 @@ ci-unit:
 ci-unit: export CI_UNIT := $(value UNIT)
 
 compiled-judge-test:
-	@/bin/bash tools/scripts/compiled-judge-test.sh
+	@$(show_tool_make) $(MAKE) -C tools compiled-judge-test
 
 compiled-fib-test:
-	@/bin/bash tools/scripts/compiled-fib-test.sh
+	@$(show_tool_make) $(MAKE) -C tools compiled-fib-test
