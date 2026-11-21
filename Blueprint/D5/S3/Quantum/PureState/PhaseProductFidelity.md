@@ -8,7 +8,7 @@ Encode a choice of n phases by the n + 1 amplitudes consisting of one and the ph
 
 **Definition 1.1 (Singleton phase overlap).**
 
-$$A(u)=\frac{\left|1+\sum_{k}u_{k}\right|^{2}}{(n+1)^{2}}$$
+$$\forall n\in \mathbb{N},u\in \mathbb{C}^{n},\\A(u)=\frac{\left|1+\sum_{1\le k\le n} u_{k}\right|^{2}}{(n+1)^{2}}$$
 
 *Formalization.* `D5/S3/Quantum/PureState/PhaseProductFidelity.simplex` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For unit phases this is the squared inner product with the constant phase vector
 
 **Definition 1.2 (Product phase overlap).**
 
-$$B(u)=\prod_{k}\frac{1+\Re u_{k}}{2}$$
+$$\forall n\in \mathbb{N},u\in \mathbb{C}^{n},\\B(u)=\prod_{1\le k\le n}\frac{1+\Re u_{k}}{2}$$
 
 *Formalization.* `D5/S3/Quantum/PureState/PhaseProductFidelity.cube` (`✓ std3`).
 
@@ -32,7 +32,7 @@ Each unit complex coordinate contributes the squared overlap of the two equatori
 
 **Definition 1.3 (Ensemble purity loss).**
 
-$$L(F,p,v)=\sum_{i,j}p_{i}p_{j}(1-F(\overline{v_{i}}v_{j}))$$
+$$\forall m\in \mathbb{N},n\in \mathbb{N},F: \mathbb{C}^{n}\to \mathbb{R},p\in \mathbb{R}^{m},v\in \mathbb{C}^{m\times n},\\L(F,p,v)=\sum_{1\le i\le m} \sum_{1\le j\le m} p_{i}p_{j}(1-F(\overline{v_{i}}v_{j}))$$
 
 *Formalization.* `D5/S3/Quantum/PureState/PhaseProductFidelity.mixedDeficit` (`✓ std3`).
 
@@ -44,7 +44,7 @@ The product of the conjugated row and the other row is coordinatewise. Drawing t
 
 **Theorem 1.4 (Sharp comparison for all finite phase ensembles).**
 
-$$\forall n\ge1,C\in\mathbb{R},\\(\forall m,p,v,(p_{i}\ge0,\sum_{i}p_{i}=1,\left|v_{ik}\right|=1)\Rightarrow L(B,p,v)\le CL(A,p,v))\Leftrightarrow\frac{(n+1)^{2}}{4}\le C$$
+$$\forall n\in \mathbb{N},n\ge1,C\in \mathbb{R},\\(\forall m\in \mathbb{N},p\in \mathbb{R}^{m},v\in \mathbb{C}^{m\times n},\\((\forall 1\le i\le m,p_{i}\ge0)\land \sum_{1\le i\le m} p_{i}=1\land (\forall 1\le i\le m,1\le k\le n,\left|v_{ik}\right|=1))\\\Rightarrow L(B,p,v)\le CL(A,p,v))\Leftrightarrow\frac{(n+1)^{2}}{4}\le C$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/PureState/PhaseProductFidelity.mixed_coefficient_iff` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ Here n is a positive integer, m is an arbitrary finite ensemble size, p is a pro
 
 The loss of a product of factors in the unit interval is at most the sum of their individual losses. The modulus of the sum of n phases is at most n. Expanding the singleton overlap then gives the displayed coefficient for each pair and multiplication by the nonnegative pair weights preserves it.
 
-For sharpness, give equal weights to the constant row and a row whose coordinates are all the same phase. As this phase approaches one, the ratio of the two losses tends to the claimed coefficient. For two independent phases the coefficient is nine quarters.
+For sharpness, give equal weights to the constant row and a row whose coordinates are all the same phase. As this phase approaches one, the ratio of the two losses tends to the claimed coefficient. When n equals two the coefficient is nine quarters.
 
 ## References
 

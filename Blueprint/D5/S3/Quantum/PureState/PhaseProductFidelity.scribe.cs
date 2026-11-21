@@ -16,6 +16,19 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
     private static Formula Apply(string name, params Formula[] args) => Seq(V(name), Par(args));
     private static Formula Factor() => Ratio(Sq(Par(V("n"), Plus, D(1))), D(4));
 
+    private static Formula Field(string name) => Seq(Mathbb, Grp(V(name)));
+    private static Formula Space(string field, params Formula[] dimensions) =>
+        Seq(Field(field), Caret, Grp(Seq(dimensions)));
+    private static Formula Nat(string name) => Seq(V(name), InMacro, Sp, Field("N"));
+    private static Formula Index(string name, string size) =>
+        Seq(D(1), Le, Sp, V(name), Le, Sp, V(size));
+    private static Formula PhaseDomain() => Seq(Forall, Sp, Nat("n"), Comma,
+        V("u"), InMacro, Sp, Space("C", V("n")), Comma, RowBreak);
+    private static Formula Ensemble() => Seq(V("p"), InMacro, Sp, Space("R", V("m")),
+        Comma, V("v"), InMacro, Sp, Space("C", V("m"), Times, Sp, V("n")));
+    private static Formula SumIndex(string name, string size) =>
+        Seq(Sum, Underscore, Grp(Index(name, size)), Sp);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The best uniform purity-loss coefficient between the singleton and product phase encodings.",
         H("Purity of two phase encodings"),
@@ -25,19 +38,21 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                 + "Its normalized vector is a tensor product of n equatorial qubit vectors. "
                 + "Both squared overlaps depend only on the coordinatewise relative phases.")),
             Definition("simplex", "phase-simplex-overlap", "Singleton phase overlap",
-                Seq(Apply("A", V("u")), Eq,
-                    Ratio(Sq(new Formula.Absolute(Seq(D(1), Plus, Sum, Underscore, Grp(V("k")),
+                Seq(PhaseDomain(), Apply("A", V("u")), Eq,
+                    Ratio(Sq(new Formula.Absolute(Seq(D(1), Plus, SumIndex("k", "n"),
                         Sub("u", "k")))), Sq(Par(V("n"), Plus, D(1))))),
                 "For unit phases this is the squared inner product with the constant phase vector. "
                 + "For a pair of inputs, take u to be their coordinatewise relative phase."),
             Definition("cube", "phase-product-overlap", "Product phase overlap",
-                Seq(Apply("B", V("u")), Eq, Prod, Underscore, Grp(V("k")),
+                Seq(PhaseDomain(), Apply("B", V("u")), Eq, Prod, Underscore, Grp(Index("k", "n")),
                     Ratio(Seq(D(1), Plus, Re, Sp, Sub("u", "k")), D(2))),
                 "Each unit complex coordinate contributes the squared overlap of the two "
                 + "equatorial qubit states in that tensor factor."),
             Definition("mixedDeficit", "phase-ensemble-deficit", "Ensemble purity loss",
-                Seq(Apply("L", V("F"), Comma, V("p"), Comma, V("v")), Eq, Sum,
-                    Underscore, Grp(V("i"), Comma, V("j")), Sub("p", "i"), Sub("p", "j"),
+                Seq(Forall, Sp, Nat("m"), Comma, Nat("n"), Comma, V("F"), Colon, Sp,
+                    Space("C", V("n")), To, Sp, Field("R"), Comma, Ensemble(), Comma, RowBreak,
+                    Apply("L", V("F"), Comma, V("p"), Comma, V("v")), Eq,
+                    SumIndex("i", "m"), SumIndex("j", "m"), Sub("p", "i"), Sub("p", "j"),
                     Par(D(1), Minus, Apply("F", Overline, Grp(Sub("v", "i")), Sub("v", "j")))),
                 "The product of the conjugated row and the other row is coordinatewise. "
                 + "Drawing two independent indices from the same distribution gives pairwise "
@@ -47,10 +62,13 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + "mixed_coefficient_iff"),
                 H("Sharp comparison for all finite phase ensembles"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Forall, Sp, V("n"), Ge, D(1), Comma, V("C"), InMacro, Mathbb, Grp(V("R")),
-                    Comma, RowBreak, Par(Forall, Sp, V("m"), Comma, V("p"), Comma, V("v"),
-                    Comma, Par(Sub("p", "i"), Ge, D(0), Comma, Sum, Underscore, Grp(V("i")),
-                    Sub("p", "i"), Eq, D(1), Comma, new Formula.Absolute(Sub("v", "ik")), Eq, D(1)),
+                    Forall, Sp, Nat("n"), Comma, V("n"), Ge, D(1), Comma,
+                    V("C"), InMacro, Sp, Field("R"), Comma, RowBreak,
+                    Par(Forall, Sp, Nat("m"), Comma, Ensemble(), Comma, RowBreak,
+                    Par(Par(Forall, Sp, Index("i", "m"), Comma, Sub("p", "i"), Ge, D(0)),
+                        Land, Sp, SumIndex("i", "m"), Sub("p", "i"), Eq, D(1), Land, Sp,
+                        Par(Forall, Sp, Index("i", "m"), Comma, Index("k", "n"), Comma,
+                            new Formula.Absolute(Sub("v", "ik")), Eq, D(1))), RowBreak,
                     Rightarrow, Sp, Apply("L", V("B"), Comma, V("p"), Comma, V("v")), Le, Sp, V("C"),
                     Apply("L", V("A"), Comma, V("p"), Comma, V("v"))),
                     Leftrightarrow, Factor(), Le, Sp, V("C")))),
@@ -64,8 +82,8 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                     + "for each pair and multiplication by the nonnegative pair weights preserves it.")),
                     Paragraph(Text("For sharpness, give equal weights to the constant row and a row "
                     + "whose coordinates are all the same phase. As this phase approaches one, the "
-                    + "ratio of the two losses tends to the claimed coefficient. For two independent "
-                    + "phases the coefficient is nine quarters."))), DescribeRole.Theorem))));
+                    + "ratio of the two losses tends to the claimed coefficient. When n equals two "
+                    + "the coefficient is nine quarters."))), DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(string name, string id, string title, Formula statement,
         string description) => Describe.Lean(DescribeId.Create(id),
