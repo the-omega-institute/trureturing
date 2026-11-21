@@ -27,7 +27,9 @@ private abbrev arena : Arena where
     (center : Fin 3 ↪ Finset (Fin n)) (entry : Fin 3 → Finset (Fin n) → ℤ)
     (_hsign : ∀ j x, x ∈ rows → (center j ∆ x).card = 1 → entry j x = 1 ∨ entry j x = -1)
     (_hzero : ∀ j x, x ∈ rows → (center j ∆ x).card ≠ 1 → entry j x = 0)
-    (_hsize : ∀ j, 4 ≤ (rows.filter (fun x => (center j ∆ x).card = 1)).card)
+    (_hsize : 4 ≤ (rows.filter (fun x => (center 0 ∆ x).card = 1)).card ∧
+      3 ≤ (rows.filter (fun x => (center 1 ∆ x).card = 1)).card ∧
+      1 ≤ (rows.filter (fun x => (center 2 ∆ x).card = 1)).card)
     (coeff : Fin 3 → ℝ)
     (_hrow : ∀ x ∈ rows, ∃ z : ℤ, (∑ j, (entry j x : ℝ) * coeff j) = 2 * (z : ℝ)),
     ∀ j, ∃ z : ℤ, r.readout () coeff j = 2 * (z : ℝ)
@@ -46,11 +48,6 @@ private def sampleCenter : Fin 3 ↪ Finset (Fin 4) where
       Finset.singleton_injective h
     exact Fin.ext (congrArg (Fin.val : Fin 4 → ℕ) h')
 
-private theorem sample_support : ∀ j,
-    4 ≤ ((Finset.univ : Finset (Finset (Fin 4))).filter
-      (fun x => (sampleCenter j ∆ x).card = 1)).card := by
-  decide
-
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let rows : Finset (Finset (Fin 4)) := Finset.univ
@@ -62,9 +59,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hzero (j : Fin 3) (x : Finset (Fin 4)) (_hx : x ∈ rows)
       (hfar : (sampleCenter j ∆ x).card ≠ 1) : entry j x = 0 := by
     simp [entry, hfar]
+  have hsize : 4 ≤ (rows.filter (fun x => (sampleCenter 0 ∆ x).card = 1)).card ∧
+      3 ≤ (rows.filter (fun x => (sampleCenter 1 ∆ x).card = 1)).card ∧
+      1 ≤ (rows.filter (fun x => (sampleCenter 2 ∆ x).card = 1)).card := by
+    decide
   have hrow (x : Finset (Fin 4)) (_hx : x ∈ rows) :
       ∃ z : ℤ, (∑ j, (entry j x : ℝ) * (0 : ℝ)) = 2 * (z : ℝ) := ⟨0, by simp⟩
-  obtain ⟨z, hz⟩ := h rows sampleCenter entry hsign hzero sample_support (fun _ => 0) hrow 0
+  obtain ⟨z, hz⟩ := h rows sampleCenter entry hsign hzero hsize (fun _ => 0) hrow 0
   change (1 : ℝ) = 2 * (z : ℝ) at hz
   norm_cast at hz
   omega

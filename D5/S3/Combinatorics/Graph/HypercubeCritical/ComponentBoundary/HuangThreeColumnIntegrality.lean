@@ -118,18 +118,19 @@ private theorem triple_common_neighbor {x y z : Finset (Fin n)} (hxy : x ≠ y)
 
 private theorem exists_private_column (center : Fin 3 ↪ Finset (Fin n))
     (support : Fin 3 → Finset (Finset (Fin n)))
-    (hsub : ∀ j, support j ⊆ neighbors (center j)) (hsize : ∀ j, 4 ≤ (support j).card) :
-    ∃ j, ∃ r ∈ support j, ∀ k, k ≠ j → r ∉ neighbors (center k) := by
+    (hsub : ∀ j, support j ⊆ neighbors (center j))
+    (h0 : 4 ≤ (support 0).card) (h1 : 3 ≤ (support 1).card) :
+    ∃ j, (j = 0 ∨ j = 1) ∧ ∃ r ∈ support j, ∀ k, k ≠ j → r ∉ neighbors (center k) := by
   have peel (i j k : Fin 3) (hall : ∀ t, t = i ∨ t = j ∨ t = k)
-      (hbound : (neighbors (center i) ∩ (neighbors (center j) ∪ neighbors (center k))).card ≤ 3) :
-      ∃ p, ∃ r ∈ support p, ∀ q, q ≠ p → r ∉ neighbors (center q) := by
+      (hbound :
+        (neighbors (center i) ∩ (neighbors (center j) ∪ neighbors (center k))).card <
+          (support i).card) :
+      ∃ r ∈ support i, ∀ q, q ≠ i → r ∉ neighbors (center q) := by
     have hnot : ¬ support i ⊆ neighbors (center j) ∪ neighbors (center k) := by
       intro h
-      have hcard := card_le_card (subset_inter (hsub i) h)
-      have hi := hsize i
-      omega
+      exact (not_le_of_gt hbound) (card_le_card (subset_inter (hsub i) h))
     obtain ⟨r, hr, hrnot⟩ := not_subset.mp hnot
-    refine ⟨i, r, hr, fun q hqi hq => ?_⟩
+    refine ⟨r, hr, fun q hqi hq => ?_⟩
     rcases hall q with rfl | rfl | rfl
     · exact hqi rfl
     · exact hrnot (mem_union_left _ hq)
@@ -141,13 +142,13 @@ private theorem exists_private_column (center : Fin 3 ↪ Finset (Fin n))
     common_neighbors_card_le_two (different h)
   have empty_case (i j k : Fin 3) (hik : i ≠ k)
       (hempty : ¬ (neighbors (center i) ∩ neighbors (center j)).Nonempty) :
-      (neighbors (center i) ∩ (neighbors (center j) ∪ neighbors (center k))).card ≤ 3 := by
+      (neighbors (center i) ∩ (neighbors (center j) ∪ neighbors (center k))).card ≤ 2 := by
     rw [inter_union_distrib_left, not_nonempty_iff_eq_empty.mp hempty, empty_union]
-    exact (pair i k hik).trans (by decide)
+    exact pair i k hik
   by_cases h01 : (neighbors (center 0) ∩ neighbors (center 1)).Nonempty
   · by_cases h02 : (neighbors (center 0) ∩ neighbors (center 2)).Nonempty
     · by_cases h12 : (neighbors (center 1) ∩ neighbors (center 2)).Nonempty
-      · apply peel 0 1 2 (by decide)
+      · refine ⟨0, Or.inl rfl, peel 0 1 2 (by decide) ?_⟩
         obtain ⟨r, hr0, hr1, hr2⟩ := triple_common_neighbor
           (different (show (0 : Fin 3) ≠ 1 by decide))
           (different (show (0 : Fin 3) ≠ 2 by decide))
@@ -161,18 +162,24 @@ private theorem exists_private_column (center : Fin 3 ↪ Finset (Fin n))
         have h₁ := pair 0 1 (by decide)
         have h₂ := pair 0 2 (by decide)
         omega
-      · exact peel 1 2 0 (by decide) (empty_case 1 2 0 (by decide) h12)
-    · exact peel 0 2 1 (by decide) (empty_case 0 2 1 (by decide) h02)
-  · exact peel 0 1 2 (by decide) (empty_case 0 1 2 (by decide) h01)
+      · refine ⟨1, Or.inr rfl, peel 1 2 0 (by decide) ?_⟩
+        exact lt_of_le_of_lt (empty_case 1 2 0 (by decide) h12) h1
+    · refine ⟨0, Or.inl rfl, peel 0 2 1 (by decide) ?_⟩
+      exact lt_of_le_of_lt (empty_case 0 2 1 (by decide) h02) (by omega)
+  · refine ⟨0, Or.inl rfl, peel 0 1 2 (by decide) ?_⟩
+    exact lt_of_le_of_lt (empty_case 0 1 2 (by decide) h01) (by omega)
 
-/-- On a common set of rows, each of three signed cube columns has at least four
-neighbors. If the row sums are even integers, each real coefficient is an even integer. -/
+/-- On a common set of rows, signed cube columns 0, 1, and 2 have at least four,
+three, and one neighboring rows respectively. Even integer row sums force each real
+coefficient to be an even integer. -/
 theorem even_coefficients_of_three_cube_columns (rows : Finset (Finset (Fin n)))
     (center : Fin 3 ↪ Finset (Fin n)) (entry : Fin 3 → Finset (Fin n) → ℤ)
     (hsign : ∀ j r, r ∈ rows → (center j ∆ r).card = 1 →
       entry j r = 1 ∨ entry j r = -1)
     (hzero : ∀ j r, r ∈ rows → (center j ∆ r).card ≠ 1 → entry j r = 0)
-    (hsize : ∀ j, 4 ≤ (rows.filter (fun r => (center j ∆ r).card = 1)).card)
+    (hsize : 4 ≤ (rows.filter (fun r => (center 0 ∆ r).card = 1)).card ∧
+      3 ≤ (rows.filter (fun r => (center 1 ∆ r).card = 1)).card ∧
+      1 ≤ (rows.filter (fun r => (center 2 ∆ r).card = 1)).card)
     (coeff : Fin 3 → ℝ)
     (hrow : ∀ r ∈ rows, ∃ z : ℤ, (∑ j, (entry j r : ℝ) * coeff j) = 2 * (z : ℝ)) :
     ∀ j, ∃ z : ℤ, coeff j = 2 * (z : ℝ) := by
@@ -182,6 +189,7 @@ theorem even_coefficients_of_three_cube_columns (rows : Finset (Finset (Fin n)))
     simp only [zsmul_eq_mul]
     exact exists_congr (fun z => by rw [mul_comm (z : ℝ) 2, eq_comm])
   let support (j : Fin 3) := rows.filter (fun r => (center j ∆ r).card = 1)
+  change 4 ≤ (support 0).card ∧ 3 ≤ (support 1).card ∧ 1 ≤ (support 2).card at hsize
   have hsub (j : Fin 3) : support j ⊆ neighbors (center j) :=
     fun _ hr => mem_neighbors.mpr (mem_filter.mp hr).2
   have recover (j : Fin 3) (r : Finset (Fin n)) (hr : r ∈ support j)
@@ -205,32 +213,41 @@ theorem even_coefficients_of_three_cube_columns (rows : Finset (Finset (Fin n)))
     rcases hsign j r hrRows hnear with h | h
     · simpa [h] using hj
     · simpa [h] using E.neg_mem hj
-  obtain ⟨p, r, hr, hprivate⟩ := exists_private_column center support hsub hsize
+  obtain ⟨p, hpIndex, r, hr, hprivate⟩ :=
+    exists_private_column center support hsub hsize.1 hsize.2.1
   have hp : coeff p ∈ E :=
     recover p r hr (fun k hk hn => (hprivate k hk hn).elim)
+  have recover_second (j k : Fin 3) (hk : coeff k ∈ E) (hj2 : j ≠ 2)
+      (hall : ∀ t, t = j ∨ t = k ∨ t = 2) (hsizej : 3 ≤ (support j).card) :
+      coeff j ∈ E := by
+    have hnot : ¬ support j ⊆ neighbors (center 2) := by
+      intro h
+      have hc := card_le_card (subset_inter (hsub j) h)
+      have hb := common_neighbors_card_le_two (fun he => hj2 (center.injective he))
+      omega
+    obtain ⟨s, hs, hsnot⟩ := not_subset.mp hnot
+    apply recover j s hs
+    intro t ht hnear
+    rcases hall t with rfl | rfl | rfl
+    · exact (ht rfl).elim
+    · exact hk
+    · exact (hsnot hnear).elim
+  have all_columns : ∀ k : Fin 3, k = 0 ∨ k = 1 ∨ k = 2 := by decide
+  have h0Size : 3 ≤ (support 0).card := le_trans (by decide) hsize.1
+  obtain ⟨h0, h1⟩ : coeff 0 ∈ E ∧ coeff 1 ∈ E := by
+    rcases hpIndex with rfl | rfl
+    · exact ⟨hp, recover_second 1 0 hp (by decide) (by decide) hsize.2.1⟩
+    · exact ⟨recover_second 0 1 hp (by decide) all_columns h0Size, hp⟩
+  have h2 : coeff 2 ∈ E := by
+    obtain ⟨s, hs⟩ := card_pos.mp hsize.2.2
+    apply recover 2 s hs
+    intro k hk _
+    rcases all_columns k with rfl | rfl | rfl
+    · exact h0
+    · exact h1
+    · exact (hk rfl).elim
   intro j
   apply (even_iff _).mp
-  by_cases hj : j = p
-  · simpa [hj] using hp
-  have hother : ∃ k : Fin 3, k ≠ j ∧ k ≠ p ∧ ∀ t, t = j ∨ t = p ∨ t = k := by
-    have h : ∀ a b : Fin 3, a ≠ b →
-        ∃ c : Fin 3, c ≠ a ∧ c ≠ b ∧ ∀ t, t = a ∨ t = b ∨ t = c := by decide
-    exact h j p hj
-  obtain ⟨k, hkj, _, hall⟩ := hother
-  have hnot : ¬ support j ⊆ neighbors (center k) := by
-    intro h
-    have hc := card_le_card (subset_inter (hsub j) h)
-    have hb := common_neighbors_card_le_two
-      (fun he => hkj (center.injective he.symm))
-    have hs := hsize j
-    change 4 ≤ (support j).card at hs
-    omega
-  obtain ⟨s, hs, hsnot⟩ := not_subset.mp hnot
-  apply recover j s hs
-  intro t ht hnear
-  rcases hall t with rfl | rfl | rfl
-  · exact (ht rfl).elim
-  · exact hp
-  · exact (hsnot hnear).elim
+  rcases all_columns j with rfl | rfl | rfl <;> assumption
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.HuangThreeColumnIntegrality
