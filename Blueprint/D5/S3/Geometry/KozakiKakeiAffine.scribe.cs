@@ -22,10 +22,10 @@ internal sealed class KozakiKakeiAffineDocument : IScribeDocumentDefinition
                 "The variable at the chosen index becomes the outer indeterminate.",
                 IsolateXSelf()),
             Theorem("isolate_X_other", "A remaining variable",
-                "A variable at a different index becomes a constant coefficient in the outer polynomial.",
+                "For a proof h of j ≠ w, the pair ⟨j, h⟩ indexes a variable in Rest(w), so its variable belongs to Coeff(w). Polynomial.C embeds that coefficient as a constant outer polynomial.",
                 IsolateXOther()),
             Theorem("eval_isolate", "Evaluation after isolation",
-                "Evaluation at the full assignment equals evaluation of the outer polynomial after evaluating its coefficients at the remaining assignment.",
+                "The inverse of Equiv.optionSubtypeNe(w) sends w to none and each other index i to some ⟨i, h⟩ in the option type on Rest(w). Option.elim assigns z on none and uses t on the remaining index. Polynomial.map evaluates the coefficients by the ring homomorphism MvPolynomial.eval(t), and Polynomial.eval then evaluates the outer variable at z.",
                 EvalIsolate()),
             Theorem("diff_prime", "Prime coordinate differences",
                 "An oriented difference of two distinct variables is prime. Isolate the second variable to turn the factor into a monic linear polynomial.",
@@ -38,10 +38,10 @@ internal sealed class KozakiKakeiAffineDocument : IScribeDocumentDefinition
             Definition("remainingProduct", "Product off the distinguished edge",
                 "The product uses precisely the edges other than the distinguished edge."),
             Theorem("matching_isolate_left", "Isolation at the first endpoint",
-                "The linear coefficient is the negative of the remaining product. The constant coefficient is the second endpoint variable times the remaining product.",
+                "Let h prove M(e, true) ≠ M(e, false) by injectivity of M. The second endpoint is indexed by ⟨M(e, true), h⟩ in Rest(M(e, false)). The linear coefficient is the negative of the remaining product. The constant coefficient is the second endpoint variable times that product.",
                 MatchingIsolateLeft()),
             Theorem("matching_isolate_right", "Isolation at the second endpoint",
-                "The linear coefficient is the remaining product. The constant coefficient is the negative of the first endpoint variable times the remaining product.",
+                "Let h prove M(e, false) ≠ M(e, true) by injectivity of M. The first endpoint is indexed by ⟨M(e, false), h⟩ in Rest(M(e, true)). The linear coefficient is the remaining product. The constant coefficient is the negative of the product of the first endpoint variable and the remaining product.",
                 MatchingIsolateRight()),
             Theorem("matching_exists_linear", "Linearity in every coordinate",
                 "Find the matching edge and endpoint containing the chosen coordinate and apply its ordered isolation formula.",
@@ -72,9 +72,9 @@ internal sealed class KozakiKakeiAffineDocument : IScribeDocumentDefinition
     private static Formula IsolateXOther() => Seq(
         Forall, Sp, F.Id("V"), Sp, Colon, Sp, Word("Type"), Comma, Sp, OpenBracket, Word("DecidableEq"), Open,
         F.Id("V"), Close, CloseBracket, Comma, Sp, Forall, Sp, F.Id("w"), Comma, F.Id("j"), Sp, Colon, Sp,
-        F.Id("V"), Comma, Sp, F.Id("j"), Sp, Neq, Sp, F.Id("w"), Sp, Implies, Sp, Word("isolate"), Open,
-        F.Id("w"), Comma, F.Id("X"), Open, F.Id("j"), Close, Close, Sp, Eq, Sp, Word("PolynomialC"), Open,
-        F.Id("X"), Open, F.Id("j"), Close, Close);
+        F.Id("V"), Comma, Sp, Forall, Sp, F.Id("h"), Sp, Colon, Sp, F.Id("j"), Sp, Neq, Sp, F.Id("w"),
+        Comma, Sp, Call("isolate", F.Id("w"), Call("X", F.Id("j"))), Sp, Eq, Sp,
+        Apply(Qualified("Polynomial", "C"), Call("X", RemainingIndex(F.Id("j")))));
 
     private static Formula EvalIsolate() => Seq(
         Forall, Sp, F.Id("V"), Sp, Colon, Sp, Word("Type"), Comma, Sp, OpenBracket, Word("DecidableEq"), Open,
@@ -82,10 +82,15 @@ internal sealed class KozakiKakeiAffineDocument : IScribeDocumentDefinition
         F.Id("p"), Sp, Colon, Sp, Word("MvPolynomial"), Open, F.Id("V"), Comma, Seq(Mathbb, Grp(F.Id("C"))),
         Close, Comma, Sp, F.Id("t"), Sp, Colon, Sp, Word("Rest"), Open, F.Id("w"), Close, Sp, To, Sp,
         Seq(Mathbb, Grp(F.Id("C"))), Comma, Sp, F.Id("z"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("C"))), Comma,
-        Sp, Word("eval"), Open, Word("extend"), Open, F.Id("w"), Comma, F.Id("t"), Comma, F.Id("z"), Close,
-        Comma, F.Id("p"), Close, Sp, Eq, Sp, Word("evalPoly"), Open, F.Id("z"), Comma, Word("map"), Open,
-        Word("eval"), Open, F.Id("t"), Close, Comma, Word("isolate"), Open, F.Id("w"), Comma, F.Id("p"), Close,
-        Close, Close);
+        Sp, Apply(Qualified("MvPolynomial", "eval"),
+            Seq(F.Id("i"), Sp, Mapsto, Sp, Apply(Qualified("Option", "elim"),
+                Seq(Open, Apply(Qualified("Equiv", "optionSubtypeNe"), F.Id("w")), Close, Caret, Grp(Minus, D(1)),
+                    Open, F.Id("i"), Close), F.Id("z"), F.Id("t"))),
+            F.Id("p")), Sp, Eq, Sp,
+        Apply(Qualified("Polynomial", "eval"), F.Id("z"),
+            Apply(Qualified("Polynomial", "map"),
+                Apply(Qualified("MvPolynomial", "eval"), F.Id("t")),
+                Call("isolate", F.Id("w"), F.Id("p")))));
 
     private static Formula DiffPrime() => Seq(
         Forall, Sp, F.Id("V"), Sp, Colon, Sp, Word("Type"), Comma, Sp, Forall, Sp, F.Id("i"), Comma, F.Id("j"),
@@ -103,23 +108,37 @@ internal sealed class KozakiKakeiAffineDocument : IScribeDocumentDefinition
     private static Formula MatchingIsolateLeft() => Seq(
         Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Forall, Sp, F.Id("M"),
         Sp, Colon, Sp, Word("Matching"), Open, F.Id("m"), Close, Comma, Sp, F.Id("e"), Sp, Colon, Sp,
-        Word("Fin"), Open, F.Id("m"), Close, Comma, Sp, Word("isolate"), Open, F.Id("M"), Open, F.Id("e"),
+        Word("Fin"), Open, F.Id("m"), Close, Comma, Sp, EndpointInequality("true", "false"),
+        Word("isolate"), Open, F.Id("M"), Open, F.Id("e"),
         Comma, Word("false"), Close, Comma, Word("matchingPolynomial"), Open, F.Id("M"), Close, Close, Sp, Eq,
-        Sp, Word("PolynomialC"), Open, Minus, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"),
-        Comma, Word("false"), Close, Close, Sp, Cdot, Sp, Word("PolynomialX"), Sp, Plus, Sp,
-        Word("PolynomialC"), Open, F.Id("X"), Open, F.Id("M"), Open, F.Id("e"), Comma, Word("true"), Close,
-        Close, Sp, Cdot, Sp, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma, Word("false"),
+        Sp, Qualified("Polynomial", "C"), Open, Minus, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"),
+        Comma, Word("false"), Close, Close, Sp, Cdot, Sp, Qualified("Polynomial", "X"), Sp, Plus, Sp,
+        Qualified("Polynomial", "C"), Open, Call("X", RemainingIndex(Call("M", F.Id("e"), Word("true")))),
+        Sp, Cdot, Sp, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma, Word("false"),
         Close, Close);
 
     private static Formula MatchingIsolateRight() => Seq(
         Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Forall, Sp, F.Id("M"),
         Sp, Colon, Sp, Word("Matching"), Open, F.Id("m"), Close, Comma, Sp, F.Id("e"), Sp, Colon, Sp,
-        Word("Fin"), Open, F.Id("m"), Close, Comma, Sp, Word("isolate"), Open, F.Id("M"), Open, F.Id("e"),
+        Word("Fin"), Open, F.Id("m"), Close, Comma, Sp, EndpointInequality("false", "true"),
+        Word("isolate"), Open, F.Id("M"), Open, F.Id("e"),
         Comma, Word("true"), Close, Comma, Word("matchingPolynomial"), Open, F.Id("M"), Close, Close, Sp, Eq,
-        Sp, Word("PolynomialC"), Open, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma,
-        Word("true"), Close, Close, Sp, Cdot, Sp, Word("PolynomialX"), Sp, Minus, Sp, Word("PolynomialC"),
-        Open, F.Id("X"), Open, F.Id("M"), Open, F.Id("e"), Comma, Word("false"), Close, Close, Sp, Cdot, Sp,
-        Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma, Word("true"), Close, Close);
+        Sp, Qualified("Polynomial", "C"), Open, Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma,
+        Word("true"), Close, Close, Sp, Cdot, Sp, Qualified("Polynomial", "X"), Sp, Plus, Sp,
+        Qualified("Polynomial", "C"), Open, Minus, Open,
+        Call("X", RemainingIndex(Call("M", F.Id("e"), Word("false")))), Sp, Cdot, Sp,
+        Word("remainingProduct"), Open, F.Id("M"), Comma, F.Id("e"), Comma, Word("true"), Close, Close, Close);
+
+    private static Formula RemainingIndex(Formula index) => Seq(Langle, Sp, index, Comma, Sp, F.Id("h"), Sp, Rangle);
+
+    private static Formula EndpointInequality(string remaining, string removed) =>
+        Seq(Forall, Sp, F.Id("h"), Sp, Colon, Sp, Call("M", F.Id("e"), Word(remaining)), Sp, Neq, Sp,
+            Call("M", F.Id("e"), Word(removed)), Comma, Sp);
+
+    private static Formula Qualified(string owner, string name) => Seq(Word(owner), Dot, Word(name));
+
+    private static Formula Apply(Formula op, params Formula[] operands) =>
+        new Formula.Apply(op, [.. operands]);
 
     private static Formula MatchingExistsLinear() => Seq(
         Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Forall, Sp, F.Id("M"),

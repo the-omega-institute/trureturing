@@ -9,8 +9,8 @@ claim: "Outside six columns, the allowable column permutations of the double-nor
 strata_touched:
   - D5/S3/Geometry/KozakiKakeiMatching
   - D5/S3/Geometry/KozakiKakeiNormalization
+  - D5/S3/Geometry/KozakiKakeiPreservation
   - D5/S3/Geometry/KozakiKakeiConjecture13
-  - D5/S3/Geometry/Polygons/KozakiKakeiFourNormal
 license: citation-only
 triage: anchor
 ---
@@ -39,9 +39,22 @@ invertible left multiplication and invertible right diagonal rescaling.
 [Matrix definitions and multi-ratio](https://arxiv.org/html/2611.25785v1#S2) ·
 [Column action](https://arxiv.org/html/2611.25785v1#S3)
 
+Theorem 7(ii) gives the unique even-order normal form exactly on the admissible
+level-one locus of equations (24)–(26). It is the published result formalized by
+`normalized_representative_iff`. Lemma 5 gives the level equation for
+single-normalized matrices and applies to the double-normalized matrices in
+`normalized_level`.
+[Theorem 7](https://arxiv.org/html/2611.25785v1#Thmproposition7) ·
+[Lemma 5](https://arxiv.org/html/2611.25785v1#Thmproposition5)
+
+Equations (42)–(44) give the rotation and reflection generators, their
+preservation of level one, and their action by reordering and normalizing.
+`dihedral_preservesLevel` formalizes level preservation for the generated
+group, including the common orientation factor in the written products.
+[Equations (42)–(44)](https://arxiv.org/html/2611.25785v1#S3.E42)
+
 The Lean endpoint classifies the allowable permutations of the column labels for all
-$m\ge2$ with $m\ne3$. For $m=2$ the allowable subgroup has eight elements and its
-action on the singleton normal-form space has one-element image.
+$m\ge2$ with $m\ne3$, including the four-column case.
 
 ## Related results
 

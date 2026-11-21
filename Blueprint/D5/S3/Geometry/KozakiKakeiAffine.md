@@ -54,7 +54,7 @@ The variable at the chosen index becomes the outer indeterminate.
 
 **Theorem 1.5 (A remaining variable).**
 
-$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w,j : V, j \neq w \implies \operatorname{isolate}(w,X(j)) = \operatorname{PolynomialC}(X(j))$$
+$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w,j : V, \forall h : j \neq w, \operatorname{isolate}\left(w, \operatorname{X}\left(j\right)\right) = \operatorname{Polynomial}.\operatorname{C}\left(\operatorname{X}\left(\langle j, h \rangle\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.isolate_X_other` (`✓ std3`). ∎
 
@@ -62,11 +62,11 @@ $$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w,j 
 
 *Commentary.*
 
-A variable at a different index becomes a constant coefficient in the outer polynomial.
+For a proof h of j ≠ w, the pair ⟨j, h⟩ indexes a variable in Rest(w), so its variable belongs to Coeff(w). Polynomial.C embeds that coefficient as a constant outer polynomial.
 
 **Theorem 1.6 (Evaluation after isolation).**
 
-$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w : V, p : \operatorname{MvPolynomial}(V,\mathbb{C}), t : \operatorname{Rest}(w) \to \mathbb{C}, z : \mathbb{C}, \operatorname{eval}(\operatorname{extend}(w,t,z),p) = \operatorname{evalPoly}(z,\operatorname{map}(\operatorname{eval}(t),\operatorname{isolate}(w,p)))$$
+$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w : V, p : \operatorname{MvPolynomial}(V,\mathbb{C}), t : \operatorname{Rest}(w) \to \mathbb{C}, z : \mathbb{C}, \operatorname{MvPolynomial}.\operatorname{eval}\left(i \mapsto \operatorname{Option}.\operatorname{elim}\left((\operatorname{Equiv}.\operatorname{optionSubtypeNe}\left(w\right))^{-1}(i), z, t\right), p\right) = \operatorname{Polynomial}.\operatorname{eval}\left(z, \operatorname{Polynomial}.\operatorname{map}\left(\operatorname{MvPolynomial}.\operatorname{eval}\left(t\right), \operatorname{isolate}\left(w, p\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.eval_isolate` (`✓ std3`). ∎
 
@@ -74,7 +74,7 @@ $$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w : 
 
 *Commentary.*
 
-Evaluation at the full assignment equals evaluation of the outer polynomial after evaluating its coefficients at the remaining assignment.
+The inverse of Equiv.optionSubtypeNe(w) sends w to none and each other index i to some ⟨i, h⟩ in the option type on Rest(w). Option.elim assigns z on none and uses t on the remaining index. Polynomial.map evaluates the coefficients by the ring homomorphism MvPolynomial.eval(t), and Polynomial.eval then evaluates the outer variable at z.
 
 **Theorem 1.7 (Prime coordinate differences).**
 
@@ -126,7 +126,7 @@ The product uses precisely the edges other than the distinguished edge.
 
 **Theorem 1.11 (Isolation at the first endpoint).**
 
-$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \operatorname{isolate}(M(e,\operatorname{false}),\operatorname{matchingPolynomial}(M)) = \operatorname{PolynomialC}(-\operatorname{remainingProduct}(M,e,\operatorname{false})) \cdot \operatorname{PolynomialX} + \operatorname{PolynomialC}(X(M(e,\operatorname{true})) \cdot \operatorname{remainingProduct}(M,e,\operatorname{false}))$$
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \forall h : \operatorname{M}\left(e, \operatorname{true}\right) \neq \operatorname{M}\left(e, \operatorname{false}\right), \operatorname{isolate}(M(e,\operatorname{false}),\operatorname{matchingPolynomial}(M)) = \operatorname{Polynomial}.\operatorname{C}(-\operatorname{remainingProduct}(M,e,\operatorname{false})) \cdot \operatorname{Polynomial}.\operatorname{X} + \operatorname{Polynomial}.\operatorname{C}(\operatorname{X}\left(\langle \operatorname{M}\left(e, \operatorname{true}\right), h \rangle\right) \cdot \operatorname{remainingProduct}(M,e,\operatorname{false}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_left` (`✓ std3`). ∎
 
@@ -134,11 +134,11 @@ $$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorn
 
 *Commentary.*
 
-The linear coefficient is the negative of the remaining product. The constant coefficient is the second endpoint variable times the remaining product.
+Let h prove M(e, true) ≠ M(e, false) by injectivity of M. The second endpoint is indexed by ⟨M(e, true), h⟩ in Rest(M(e, false)). The linear coefficient is the negative of the remaining product. The constant coefficient is the second endpoint variable times that product.
 
 **Theorem 1.12 (Isolation at the second endpoint).**
 
-$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \operatorname{isolate}(M(e,\operatorname{true}),\operatorname{matchingPolynomial}(M)) = \operatorname{PolynomialC}(\operatorname{remainingProduct}(M,e,\operatorname{true})) \cdot \operatorname{PolynomialX} - \operatorname{PolynomialC}(X(M(e,\operatorname{false})) \cdot \operatorname{remainingProduct}(M,e,\operatorname{true}))$$
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \forall h : \operatorname{M}\left(e, \operatorname{false}\right) \neq \operatorname{M}\left(e, \operatorname{true}\right), \operatorname{isolate}(M(e,\operatorname{true}),\operatorname{matchingPolynomial}(M)) = \operatorname{Polynomial}.\operatorname{C}(\operatorname{remainingProduct}(M,e,\operatorname{true})) \cdot \operatorname{Polynomial}.\operatorname{X} + \operatorname{Polynomial}.\operatorname{C}(-(\operatorname{X}\left(\langle \operatorname{M}\left(e, \operatorname{false}\right), h \rangle\right) \cdot \operatorname{remainingProduct}(M,e,\operatorname{true})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_right` (`✓ std3`). ∎
 
@@ -146,7 +146,7 @@ $$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorn
 
 *Commentary.*
 
-The linear coefficient is the remaining product. The constant coefficient is the negative of the first endpoint variable times the remaining product.
+Let h prove M(e, false) ≠ M(e, true) by injectivity of M. The first endpoint is indexed by ⟨M(e, false), h⟩ in Rest(M(e, true)). The linear coefficient is the remaining product. The constant coefficient is the negative of the product of the first endpoint variable and the remaining product.
 
 **Theorem 1.13 (Linearity in every coordinate).**
 

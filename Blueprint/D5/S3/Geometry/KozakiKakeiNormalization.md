@@ -22,11 +22,11 @@ $$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implie
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_level` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Yuta Kozaki and Saburo Kakei (2026). *Coxeter Group Symmetries of Frieze Patterns*. DOI: [10.48550/arXiv.2611.25785](https://doi.org/10.48550/arXiv.2611.25785). URL: <https://arxiv.org/abs/2611.25785v1>.
 
 *Commentary.*
 
-All factors of both written matching products are one.
+This is the double-normalized case of Kozaki and Kakei's Lemma 5. All factors of both written matching products are one.
 
 **Theorem 1.3 (Existence of the ordered representative).**
 
@@ -34,11 +34,11 @@ $$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implie
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_exists` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Yuta Kozaki and Saburo Kakei (2026). *Coxeter Group Symmetries of Frieze Patterns*. DOI: [10.48550/arXiv.2611.25785](https://doi.org/10.48550/arXiv.2611.25785). URL: <https://arxiv.org/abs/2611.25785v1>.
 
 *Commentary.*
 
-An invertible row operation fixes the first two columns. The initial diagonal factors fix the third, and a recurrence sets the remaining consecutive minors to one. The level equation then forces the closing minor to be one.
+This is the existence direction of Kozaki and Kakei's Theorem 7(ii). An invertible row operation fixes the first two columns. The initial diagonal factors fix the third, and a recurrence sets the remaining consecutive minors to one. The level equation then forces the closing minor to be one.
 
 **Theorem 1.4 (Uniqueness within a matrix class).**
 
@@ -46,11 +46,11 @@ $$\forall m : \mathbb{N}, \forall Z,W : \operatorname{Chart}(K,m), 2 \le m \impl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_unique_of_equiv` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Yuta Kozaki and Saburo Kakei (2026). *Coxeter Group Symmetries of Frieze Patterns*. DOI: [10.48550/arXiv.2611.25785](https://doi.org/10.48550/arXiv.2611.25785). URL: <https://arxiv.org/abs/2611.25785v1>.
 
 *Commentary.*
 
-The first two fixed columns force the left transformation to be diagonal. The third forces its entries to agree, and the consecutive minors determine all remaining column factors.
+In the uniqueness part of Kozaki and Kakei's Theorem 7(ii), the first two fixed columns force the left transformation to be diagonal. The third forces its entries to agree, and the consecutive minors determine all remaining column factors.
 
 **Theorem 1.5 (Characterization of normalizable matrices).**
 
@@ -58,11 +58,11 @@ $$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implie
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_representative_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Yuta Kozaki and Saburo Kakei (2026). *Coxeter Group Symmetries of Frieze Patterns*. DOI: [10.48550/arXiv.2611.25785](https://doi.org/10.48550/arXiv.2611.25785). URL: <https://arxiv.org/abs/2611.25785v1>.
 
 *Commentary.*
 
-For every admissible matrix, the existence of exactly one normalized equivalent matrix is equivalent to the literal equality of the two determinant products.
+Kozaki and Kakei's Theorem 7(ii) characterizes even-order normalization. For every admissible matrix, the existence of exactly one normalized equivalent matrix is equivalent to the literal equality of the two determinant products in equations (24)–(26).
 
 ## References
 
