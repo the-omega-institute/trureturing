@@ -172,5 +172,71 @@ def singleShiftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+def alwaysFalse : Realization signature.{u} :=
+  realize signature (fun _ _ _ _ => false) (fun e => nomatch e)
+
+abbrev pairedShiftArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {I : Type u} [Fintype I] (p q : I → Bool), p ≠ q →
+    (∃ j, R.readout () I p j = false) → (∃ j, q j = false) →
+    Function.Surjective (fun v : I → ZMod 2 => (shift p v, shift q v))
+
+private theorem always_false_fails : ¬ pairedShiftArena.{u}.Law alwaysFalse := by
+  intro law
+  let p : PUnit.{u+1} → Bool := fun _ => true
+  let q : PUnit.{u+1} → Bool := fun _ => false
+  have ne : p ≠ q := fun eq => Bool.noConfusion (congrFun eq PUnit.unit)
+  obtain ⟨v, h⟩ := law p q ne ⟨PUnit.unit, rfl⟩ ⟨PUnit.unit, rfl⟩ (1, 0)
+  have left := congrArg Prod.fst h
+  change shift p v = 1 at left
+  simp [shift, p] at left
+
+def pairedShiftFamily : Registration pairedShiftArena.{u} (type_of% (@shifts_surjective.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@shifts_surjective, alwaysFalse, always_false_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨alwaysFalse, ?_, rfl, always_false_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := family.dependence
+
+def pairedShiftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shifts_surjective.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.pairedShiftProfile
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.pairedShiftFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pairedShiftArena.{u}⟩
+  objectArena := .source ⟨pairedShiftArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pairedShiftArena.{u} ⟨pairedShiftFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ profile => profile) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "domain",
+        "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
