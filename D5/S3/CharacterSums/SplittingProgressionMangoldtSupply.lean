@@ -117,7 +117,7 @@ private theorem damped_signed_prime_bound {x : ℝ} (hx : 0 ≤ x) {N : ℕ} (hN
 
 /-- Uniform discarded mass for any bounded real multiplier and any modulus whose
 prime factors up to the cutoff are at most the real threshold y. -/
-private theorem clipped_coprime_prime_error :
+theorem clipped_coprime_prime_error :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ (x y : ℝ) (N m d : ℕ) (v : ℕ → ℝ), 0 < x →
       (∀ n, |v n| ≤ 1) → (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ y ∨ N < p) →
       |(∑ n ∈ Finset.Icc 1 N, vonMangoldt n * min 1 (x/n) * v n * (jacobiSym (n:ℤ) d : ℝ)) -
