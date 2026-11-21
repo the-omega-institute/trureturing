@@ -74,6 +74,7 @@ with the divisor sums ∑_{d|m} μ(d)/d = φ(m)/m and ∑_{d|m} μ(d)d = E(m).
 SpeziaA320043PellPrimeIndices.result states Corollary 4 with r defined by its recurrence and
 x_0 = 1, x_1 = 7, x_{t+2} = 14x_{t+1} − x_t: the quotients of a are exact, r_{2t} = x_t, a prime p
 has a(p − 1) a square iff p is a term of r, for p > 2 iff p = x_{2^h} for some h, and every
-x_{2^h} is 7 modulo 30. The index restriction is Zhu's (2011); the congruence and divisibility
-appear in Tiffin's 2016 OEIS comments; the paper credits the odd-multiple argument to Andrews
+x_{2^h} is 7 modulo 90, which strengthens the source's modulo 30 since 2·7² − 1 = 7 + 90. The
+index restriction is Zhu's (2011); the congruence and divisibility appear in Tiffin's 2016 OEIS
+comments; the paper credits the odd-multiple argument for the subsequence r_{4j} to Andrews
 (2019).
