@@ -38,8 +38,9 @@ abbrev arena : Arena where
       let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
       let h := addOrderOf q
       0 < h ∧ (∀ N ∈ countedDegrees A (R.readout () I w), h ∣ N) ∧
-        ∃ r : ℕ, 0 < r ∧ h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
-          ∀ t ≥ r * (r - 1), h * t ∈ countedDegrees A w
+        ∃ b r : ℕ, B = h * b ∧ b ≤ r ∧ 0 < r ∧
+          h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
+          ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   classical

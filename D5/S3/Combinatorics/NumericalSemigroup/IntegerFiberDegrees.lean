@@ -32,16 +32,15 @@ def countedDegrees (A : (J → ℤ) →+ (I → ℤ)) (w : I → ℤ) : AddSubmo
     rintro a b ⟨va, ha, hav⟩ ⟨vb, hb, hbv⟩
     exact ⟨va + vb, fun j => add_nonneg (ha j) (hb j), by rw [map_add, hav, hbv, add_nsmul]⟩
 
-private theorem consecutive (D : AddSubmonoid ℕ) (h r : ℕ)
-    (left : h * r ∈ D) (right : h * (r + 1) ∈ D) {t : ℕ} (ht : r * (r - 1) ≤ t) :
+private theorem coprime_degrees (D : AddSubmonoid ℕ) (h b r : ℕ)
+    (coprime : b.Coprime (r + 1)) (left : h * b ∈ D) (right : h * (r + 1) ∈ D)
+    {t : ℕ} (ht : (b - 1) * r ≤ t) :
     h * t ∈ D := by
-  have coprime : r.Coprime (r + 1) :=
-    Nat.coprime_self_add_right.mpr (Nat.coprime_one_right r)
-  obtain ⟨a, b, eq⟩ := Nat.exists_add_mul_eq_of_gcd_dvd_of_mul_pred_le r (r + 1) t
+  obtain ⟨a, c, eq⟩ := Nat.exists_add_mul_eq_of_gcd_dvd_of_mul_pred_le b (r + 1) t
     (coprime.gcd_eq_one.symm ▸ one_dvd t)
-    (by simpa [Nat.pred_eq_sub_one, Nat.mul_comm] using ht)
-  have combination := D.add_mem (D.nsmul_mem left a) (D.nsmul_mem right b)
-  have scaled : a * (h * r) + b * (h * (r + 1)) = h * t := by
+    (by simpa [Nat.pred_eq_sub_one] using ht)
+  have combination := D.add_mem (D.nsmul_mem left a) (D.nsmul_mem right c)
+  have scaled : a * (h * b) + c * (h * (r + 1)) = h * t := by
     rw [← eq]
     ring
   simpa only [nsmul_eq_mul, Nat.cast_id, scaled] using combination
@@ -53,8 +52,9 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
     let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
     let h := addOrderOf q
     0 < h ∧ (∀ N ∈ countedDegrees A w, h ∣ N) ∧
-      ∃ r : ℕ, 0 < r ∧ h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
-        ∀ t ≥ r * (r - 1), h * t ∈ countedDegrees A w := by
+      ∃ b r : ℕ, B = h * b ∧ b ≤ r ∧ 0 < r ∧
+        h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
+        ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w := by
   classical
   letI : Fintype J := Fintype.ofFinite J
   let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
@@ -103,7 +103,12 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
     refine ⟨u + k • p, pos, ?_⟩
     rw [map_add, map_nsmul, hu, hpA, smul_smul, ← add_nsmul,
       Nat.mul_add, Nat.mul_one, hleft, add_comm]
-  refine ⟨hh, fun N ⟨v, _, hv⟩ => (range_iff N).mpr ⟨v, hv⟩,
-    r, hr, left, right, fun t ht => consecutive (countedDegrees A w) h r left right ht⟩
+  have base : h * b ∈ countedDegrees A w := ⟨p, fun j => (hp j).le, hb ▸ hpA⟩
+  have coprime : b.Coprime (r + 1) := by
+    have hcop := (Nat.coprime_add_mul_right_right b 1 k).mpr (Nat.coprime_one_right b)
+    simpa only [r, Nat.add_comm] using hcop
+  exact ⟨hh, fun N ⟨v, _, hv⟩ => (range_iff N).mpr ⟨v, hv⟩,
+    b, r, hb, Nat.le_mul_of_pos_left b hk, hr, left, right,
+    fun t ht => coprime_degrees (countedDegrees A w) h b r coprime base right ht⟩
 
 end D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees
