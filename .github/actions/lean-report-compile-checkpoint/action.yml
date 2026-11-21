@@ -1,0 +1,56 @@
+name: Continue preparation of full Lean report compiler inputs
+description: Persist completed Lake compiler outputs against this run's immutable native seeds
+inputs:
+  seconds:
+    description: Wall-clock budget for one preparation attempt
+    required: true
+runs:
+  using: composite
+  steps:
+    - id: previous
+      shell: bash
+      run: |
+        test -n "$PROJECT_SEED" && test -n "$DEPENDENCY_SEED"
+        python3 "$GITHUB_ACTION_PATH/progress.py" mark "$RUNNER_TEMP/lean-report-progress"
+        gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" |
+          jq -sr --arg prefix "lean-report-compile-$GITHUB_RUN_ID-" --argjson current "$GITHUB_RUN_ATTEMPT" '
+            [.[].artifacts[] | select(.expired == false and (.name | startswith($prefix)))
+            | select((.digest // "") | test("^sha256:[0-9a-f]{64}$"))
+            | .attempt = (.name | ltrimstr($prefix)) | select(.attempt | test("^[1-9][0-9]*$"))
+            | .attempt |= tonumber
+            | select(.attempt < $current)] | max_by(.attempt) // empty | "artifact=\(.id)"' >> "$GITHUB_OUTPUT"
+    - if: steps.previous.outputs.artifact != ''
+      uses: actions/download-artifact@v8
+      with:
+        artifact-ids: ${{ steps.previous.outputs.artifact }}
+        path: ${{ runner.temp }}/lean-report-progress
+        digest-mismatch: error
+    - if: steps.previous.outputs.artifact != ''
+      shell: bash
+      run: python3 "$GITHUB_ACTION_PATH/progress.py" restore "$RUNNER_TEMP/lean-report-progress"
+    - id: prepare
+      shell: bash
+      env:
+        STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ inputs.seconds }}
+        LEAN_NUM_THREADS: '2'
+      run: |
+        result=0
+        bash .github/actions/lean-compile-layer/measure.sh bash tools/scripts/report/report-supervisor.sh \
+          --role lean-report-preparation -- make lean-report-prepare FULL_BUILD=1 || result=$?
+        case "$result" in 0|124) ;; *) exit "$result" ;; esac
+        python3 "$GITHUB_ACTION_PATH/progress.py" save "$RUNNER_TEMP/lean-report-progress-out"
+        [[ ! -f "$RUNNER_TEMP/lean-report-progress-out/manifest.json" ]] || echo 'saved=true' >> "$GITHUB_OUTPUT"
+        echo "result=$result" >> "$GITHUB_OUTPUT"
+    - if: steps.prepare.outputs.saved == 'true'
+      uses: actions/upload-artifact@v6
+      with:
+        name: lean-report-compile-${{ github.run_id }}-${{ github.run_attempt }}
+        path: ${{ runner.temp }}/lean-report-progress-out/
+        compression-level: 0
+        if-no-files-found: error
+        retention-days: 3
+    - if: steps.prepare.outputs.result == '124'
+      shell: bash
+      run: |
+        echo "The preparation interval elapsed. Resume with gh run rerun $GITHUB_RUN_ID --repo $GITHUB_REPOSITORY --failed" >&2
+        exit 1

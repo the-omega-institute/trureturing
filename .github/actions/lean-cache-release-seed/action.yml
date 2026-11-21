@@ -23,6 +23,12 @@ inputs:
     description: Cold build interval before saving a checkpoint, or zero for a normal build
     default: '0'
 outputs:
+  project-key:
+    description: Immutable native project cache restored for this build
+    value: ${{ steps.project.outputs.cache-matched-key }}
+  dependency-key:
+    description: Immutable dependency cache restored for this build
+    value: ${{ steps.dependency.outputs.cache-matched-key }}
   report-checked:
     description: A completed checkpoint slice already checked the full report
     value: ${{ steps.cold_build.outcome == 'success' && steps.cold_build.outputs.checkpoint != 'true' }}
