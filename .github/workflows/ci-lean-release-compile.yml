@@ -1,0 +1,104 @@
+name: Compile cold Lean Release inputs
+
+on:
+  workflow_call:
+    inputs:
+      source:
+        description: Protected commit selected for publication
+        required: true
+        type: string
+      force:
+        description: Exercise a cold project build even when a seed is visible
+        type: boolean
+        default: false
+      indexed:
+        description: Check the sharded Actions seed before scheduling a cold build
+        type: boolean
+        default: false
+    outputs:
+      seed:
+        description: Effective Release seed selection for the checked-out source
+        value: ${{ jobs.common.outputs.seed }}
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  common:
+    name: Select Release seeds and compile shared imports
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    outputs:
+      seed: ${{ steps.route.outputs.seed }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      # Historical manual sources continue through their own publication entry.
+      - id: support
+        shell: bash
+        run: |
+          if [[ -f .github/actions/lean-compile-layer/action.yml ]]; then
+            python3 .github/scripts/install-tools.py
+            test -f tools/scripts/worktree/lean_compile_layers.py
+            echo 'supported=true' >> "$GITHUB_OUTPUT"
+          fi
+      - id: keys
+        if: steps.support.outputs.supported == 'true' && !inputs.force
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: indexed
+        if: inputs.indexed && steps.keys.outputs.project_key != ''
+        uses: ./.github/actions/lean-cache-shards
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: lookup
+      - id: native
+        if: steps.keys.outputs.project_key != '' && steps.indexed.outputs.complete != 'true'
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          lookup-only: true
+      - id: route
+        if: steps.support.outputs.supported == 'true'
+        env:
+          NATIVE: ${{ steps.native.outputs.cache-matched-key }}
+          INDEXED: ${{ steps.indexed.outputs.complete }}
+        run: |
+          if [[ -n "$NATIVE" ]]; then
+            echo 'seed=legacy' >> "$GITHUB_OUTPUT"
+          elif [[ "$INDEXED" == true ]]; then
+            echo 'seed=auto' >> "$GITHUB_OUTPUT"
+          else
+            echo 'seed=parallel' >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.route.outputs.seed == 'parallel'
+        uses: ./.github/actions/lean-compile-layer
+        with:
+          stage: common
+
+  worker:
+    name: Compile exclusive Lean modules (${{ matrix.stage }})
+    needs: common
+    if: needs.common.outputs.seed == 'parallel'
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: [0, 1, 2, 3]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - run: python3 .github/scripts/install-tools.py
+      - uses: ./.github/actions/lean-compile-layer
+        with:
+          stage: ${{ matrix.stage }}

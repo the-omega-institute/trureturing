@@ -168,6 +168,13 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   }
 }
 
+async function visibleMaterial(identity, index, cacheVersion) {
+  const { owner } = JSON.parse(await readFile(index, 'utf8'));
+  const material = optionalInventory(owner.ref, identity.prefix + 'material-');
+  const visible = new Set(material.map(row => row.key + '/' + row.version));
+  return digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)));
+}
+
 async function restorePayloads(cache, cacheVersion, identity, index, preparation) {
   const started = performance.now();
   const needed = python('restore-plan', ['--index', index, ...targetArgs]);
@@ -209,10 +216,7 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
     pending = pending.filter(digest => !downloaded.has(digest));
     if (pending.length === 0 || retries === 2) break;
     if (retries === 0) {
-      const { owner } = JSON.parse(await readFile(index, 'utf8'));
-      const material = optionalInventory(owner.ref, identity.prefix + 'material-');
-      const visible = new Set(material.map(row => row.key + '/' + row.version));
-      pending = pending.filter(digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
+      pending = pending.filter(await visibleMaterial(identity, index, cacheVersion));
     }
     retries += 1;
   }
@@ -233,6 +237,14 @@ async function restore(cache, cacheVersion, identity) {
   const matched = await fetchIndex(cache, cacheVersion, identity);
   if (!matched) {
     console.log('LEAN_ACTIONS_SHARDS no compatible index was found');
+    return;
+  }
+  if (operation === 'lookup') {
+    const entries = python('restore-plan', ['--index', indexPath]);
+    const digests = [...new Set(Object.values(entries))];
+    const present = digests.filter(await visibleMaterial(identity, indexPath, cacheVersion)).length;
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({ operation, requested: digests.length, visible: present }));
+    await setOutputs({ key: matched, visible: present, complete: present > 0 && present === digests.length });
     return;
   }
   const result = await restorePayloads(cache, cacheVersion, identity, indexPath);
@@ -433,7 +445,7 @@ async function main() {
     if (!result.complete) process.exitCode = 3;
     return;
   }
-  if (!['save', 'restore'].includes(operation) || !['complete', 'resume'].includes(state)) {
+  if (!['save', 'restore', 'lookup'].includes(operation) || !['complete', 'resume'].includes(state)) {
     throw new Error('invalid Actions shard operation or state');
   }
   if (operation === 'save' && !anchor) throw new Error('Actions cache writes require a pinned history anchor');
