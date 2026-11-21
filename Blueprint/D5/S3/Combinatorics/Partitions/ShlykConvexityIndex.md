@@ -10,6 +10,10 @@ $$\forall k \in \mathbb{N},\; ((2 \le k) \Rightarrow (\exists N \in \mathbb{N},\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/ShlykConvexityIndex.shlyk_eventual_convexity_index` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shlyk-convexity-index-eventual-existence` (proved) by `D5/S3/Combinatorics/Partitions/ShlykConvexityIndex.shlyk_eventual_convexity_index`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shlyk-convexity-index-eventual-existence","declaration_gid":"D5/S3/Combinatorics/Partitions/ShlykConvexityIndex.shlyk_eventual_convexity_index","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vladimir A. Shlyk (2026). *On the Vertex Growth Rate of Integer Partition Polytopes and Their Non-Vertex Structure*. URL: <https://arxiv.org/html/2611.24835v1>.
