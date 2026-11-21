@@ -17,6 +17,17 @@ triage: anchor
 
 # Khovanov homology, wedges of spheres and complexity
 
+## Verified locator
+
+DOI: 10.1007/s13398-024-01594-z
+
+Source: https://arxiv.org/abs/2305.18648v1
+
+Corollary 1.6, Remark 2.1 and Section 9.1 appear on pages 3, 5
+and 36–37 of arXiv v1 and on pages 3, 4 and 32 of the published PDF.
+
+## Scope and conventions
+
 Corollary 1.6 allows the potential extreme framed quantum row of a four-strand
 braid diagram to vanish or to have graded group $\mathbb Z$ or
 $\mathbb Z[k]\oplus\mathbb Z^r[i]$ with $1\le r\le 3$ and $k\ge i$.
