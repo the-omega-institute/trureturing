@@ -38,9 +38,12 @@ abbrev arena : Arena where
       let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
       let h := addOrderOf q
       0 < h ∧ (∀ N ∈ countedDegrees A (R.readout () I w), h ∣ N) ∧
-        ∃ b r : ℕ, B = h * b ∧ b ≤ r ∧ 0 < r ∧
-          h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
-          ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w
+        ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, A u = h • w) ∧
+          ∀ u : J → ℤ, A u = h • w →
+            letI : Fintype J := Fintype.ofFinite J
+            let r := (1 + ∑ j, (u j).natAbs) * b
+            0 < r ∧ h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
+              ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   classical

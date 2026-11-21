@@ -52,11 +52,14 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
     let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
     let h := addOrderOf q
     0 < h ∧ (∀ N ∈ countedDegrees A w, h ∣ N) ∧
-      ∃ b r : ℕ, B = h * b ∧ b ≤ r ∧ 0 < r ∧
-        h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
-        ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w := by
+      ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, A u = h • w) ∧
+        ∀ u : J → ℤ, A u = h • w →
+          letI : Fintype J := Fintype.ofFinite J
+          let r := (1 + ∑ j, (u j).natAbs) * b
+          0 < r ∧ h * r ∈ countedDegrees A w ∧ h * (r + 1) ∈ countedDegrees A w ∧
+            ∀ t ≥ (b - 1) * r, h * t ∈ countedDegrees A w := by
   classical
-  letI : Fintype J := Fintype.ofFinite J
+  let _ : Fintype J := Fintype.ofFinite J
   let q : (I → ℤ) ⧸ A.range := QuotientAddGroup.mk w
   let h := addOrderOf q
   have range_iff (n : ℕ) : h ∣ n ↔ ∃ x : J → ℤ, A x = n • w := by
@@ -68,7 +71,10 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
     exact AddMonoidHom.mem_range
   have dvdB := (range_iff B).mpr ⟨p, hpA⟩
   have hh : 0 < h := Nat.pos_of_dvd_of_pos dvdB hB
-  obtain ⟨u, hu⟩ := (range_iff h).mp (dvd_refl h)
+  obtain ⟨b, hb⟩ := dvdB
+  refine ⟨hh, fun N ⟨v, _, hv⟩ => (range_iff N).mpr ⟨v, hv⟩,
+    b, hb, (range_iff h).mp (dvd_refl h), ?_⟩
+  intro u hu
   let k := 1 + ∑ j, (u j).natAbs
   have hk : 0 < k := by simp [k]
   have pos (j : J) : 0 ≤ (u + k • p) j := by
@@ -86,7 +92,6 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
         (Int.natCast_nonneg k)
     change 0 ≤ u j + (k : ℤ) * p j
     linarith
-  obtain ⟨b, hb⟩ := dvdB
   let r := k * b
   have hr : 0 < r := by
     have hbpos : 0 < b := by
@@ -107,8 +112,7 @@ theorem eventual_counts [Finite J] (A : (J → ℤ) →+ (I → ℤ)) (w : I →
   have coprime : b.Coprime (r + 1) := by
     have hcop := (Nat.coprime_add_mul_right_right b 1 k).mpr (Nat.coprime_one_right b)
     simpa only [r, Nat.add_comm] using hcop
-  exact ⟨hh, fun N ⟨v, _, hv⟩ => (range_iff N).mpr ⟨v, hv⟩,
-    b, r, hb, Nat.le_mul_of_pos_left b hk, hr, left, right,
+  exact ⟨hr, left, right,
     fun t ht => coprime_degrees (countedDegrees A w) h b r coprime base right ht⟩
 
 end D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees

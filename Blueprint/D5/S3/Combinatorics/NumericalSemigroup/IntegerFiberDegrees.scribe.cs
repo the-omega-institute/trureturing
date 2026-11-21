@@ -30,8 +30,9 @@ internal sealed class IntegerFiberDegreesDocument : IScribeDocumentDefinition
                     Paragraph(Text("The positive solution proves that h is finite. By the quotient "
                         + "equation there is an integer vector u of degree h. Adding enough copies "
                         + "of p to u makes every coordinate nonnegative. This gives two solutions "
-                        + "whose degrees differ by h. Their normalized degrees are r and r + 1, "
-                        + "where r is a positive multiple of b = B / h. The original positive "
+                        + "whose degrees differ by h. For any signed solution u at degree h, "
+                        + "multiply one plus the sum of the absolute coordinates of u by b to get r, "
+                        + "with b = B / h. The original positive "
                         + "solution has normalized degree b. Since b and r + 1 are coprime, the "
                         + "bound for two coprime generators gives the cutoff (b − 1) r.")),
                     Paragraph(Text("The finite coordinate set makes a single shift sufficient. "
@@ -53,14 +54,21 @@ internal sealed class IntegerFiberDegreesDocument : IScribeDocumentDefinition
         Formula r = F.Id("r");
         Formula t = F.Id("t");
         Formula d = F.Id("D");
+        Formula u = F.Id("u");
+        Formula j = F.Id("j");
+        Formula image = Seq(F.Id("A"), Open, u, Close, Sp, Eq, Sp, h, F.Id("w"));
         return Disp(Seq(
             D(0), Sp, Lt, Sp, h, Sp, Land, Sp,
             Open, Forall, Sp, n, Sp, InMacro, Sp, d, Comma, Sp, h, Sp, Mid, Sp, n, Close,
-            Sp, Land, Sp, Exists, Sp, b, Comma, Sp, r, Comma, Sp,
-            F.Id("B"), Sp, Eq, Sp, h, b, Sp, Land, Sp, b, Sp, Leq, Sp, r, Sp, Land, Sp,
+            Sp, Land, Sp, Exists, Sp, b, Comma, Sp,
+            F.Id("B"), Sp, Eq, Sp, h, b, Sp, Land, Sp, Open, Exists, Sp, u, Comma, Sp, image, Close,
+            Sp, Land, Sp, Open, Forall, Sp, u, Comma, Sp, image, Sp, Rightarrow, Sp,
+            Forall, Sp, r, Comma, Sp,
+            r, Sp, Eq, Sp, b, Open, D(1), Sp, Plus, Sp, new Formula.Subscript(Sum, j), Sp,
+            Vert, Sp, new Formula.Subscript(u, j), Vert, Close, Sp, Rightarrow, Sp,
             D(0), Sp, Lt, Sp, r, Sp, Land, Sp, h, r, Sp, InMacro, Sp, d, Sp, Land, Sp,
             h, Open, r, Plus, D(1), Close, Sp, InMacro, Sp, d, Sp, Land, Sp,
             Open, Forall, Sp, t, Sp, Geq, Sp, Open, b, Minus, D(1), Close, r,
-            Comma, Sp, h, t, Sp, InMacro, Sp, d, Close));
+            Comma, Sp, h, t, Sp, InMacro, Sp, d, Close, Close));
     }
 }
