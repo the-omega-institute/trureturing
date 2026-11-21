@@ -41,11 +41,6 @@ def properSumset (n r : ℕ) : Set (FVector n) :=
 def extend {n : ℕ} (f : FVector n) (k : ℕ) : ℕ :=
   if hk : k < n + 1 then f ⟨k, hk⟩ else 0
 
-theorem extend_injective {n : ℕ} : Function.Injective (extend (n := n)) := by
-  intro f g h
-  funext j
-  simpa [extend, j.isLt] using congrFun h j.val
-
 theorem extend_sumTuple {n r : ℕ} (s : Fin r → FVector n) (k : ℕ) :
     extend (sumTuple s) k = ∑ i, extend (s i) k := by
   by_cases hk : k < n + 1 <;> simp [extend, sumTuple, hk]

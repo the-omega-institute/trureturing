@@ -37,8 +37,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -/
 
-namespace ExteriorConvex
-namespace ModuleKK
+namespace D5.S3.Combinatorics.Kozlov.LexCompression
 
 section Abstract
 
@@ -80,12 +79,6 @@ lemma greedy_sum (C : ι → ℕ) (ks : List ι) (T : ℕ) :
   | cons k ks ih =>
     simp only [greedy, List.sum_cons, ih, List.map_cons]
     omega
-
-lemma Feasible.sum_le {C : ι → ℕ} {ks : List ι} {ts : List ℕ} (h : Feasible C ks ts) :
-    ts.sum ≤ (ks.map C).sum := by
-  induction h with
-  | nil => simp
-  | cons h _ ih => simp only [List.sum_cons, List.map_cons]; omega
 
 variable {rel : ι → ι → Prop} {C : ι → ℕ} {c : ι → ℕ → ℕ}
 
@@ -168,10 +161,4 @@ theorem prop_greedy (n : ℕ) (ks : List ℤ) (hks : ks.Pairwise (· ≥ ·)) (t
     cost (costZ n) ks (greedy (capZ n) ks ts.sum) ≤ cost (costZ n) ks ts :=
   greedy_le_of_exchange (exchange_sig n) ks hks ts hts
 
-/-- The greedy vector is admissible: `t*ᵢ ≤ Cᵢ`, and `∑ t*ᵢ = T` for `T ≤ ∑ Cᵢ`. -/
-theorem greedy_admissible (n : ℕ) (ks : List ℤ) (T : ℕ) (hT : T ≤ (ks.map (capZ n)).sum) :
-    Feasible (capZ n) ks (greedy (capZ n) ks T) ∧ (greedy (capZ n) ks T).sum = T :=
-  ⟨greedy_feasible _ _ _, by rw [greedy_sum, min_eq_left hT]⟩
-
-end ModuleKK
-end ExteriorConvex
+end D5.S3.Combinatorics.Kozlov.LexCompression

@@ -39,8 +39,7 @@ SOFTWARE.
 open Finset
 open scoped FinsetFamily
 
-namespace ExteriorConvex
-namespace ModuleKK
+namespace D5.S3.Combinatorics.Kozlov.LexCompression
 
 /-! ### Greedy-shaped vectors -/
 
@@ -412,5 +411,4 @@ theorem lem_lexF_shadow_subset {ks : List ℤ} (hks : ks.Pairwise (· ≥ ·)) {
 
 end Shadow
 
-end ModuleKK
-end ExteriorConvex
+end D5.S3.Combinatorics.Kozlov.LexCompression

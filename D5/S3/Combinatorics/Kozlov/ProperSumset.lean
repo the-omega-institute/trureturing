@@ -12,7 +12,7 @@ import Mathlib.Data.List.GetD
 
 set_option autoImplicit false
 
-open Finset ExteriorConvex.ModuleKK
+open Finset D5.S3.Combinatorics.Kozlov.LexCompression
 open scoped BigOperators FinsetFamily
 
 namespace D5.S3.Combinatorics.Kozlov
@@ -55,13 +55,6 @@ private theorem shadow_mass_le {n r : ℕ} (D : Fin r → Family n)
       ((List.ofFn fun i => missing (D i) (k + 1)).map card).sum := by
   rw [List.map_ofFn, List.map_ofFn, sum_list_ofFn, sum_list_ofFn]
   exact Finset.sum_le_sum fun i _ => card_le_card (missing_upShadow_subset (hD i))
-
-private theorem card_sum_forall₂ {n : ℕ} {M M' : List (Family n)}
-    (h : List.Forall₂ (fun A B => #A = #B) M M') :
-    (M.map card).sum = (M'.map card).sum := by
-  induction h with
-  | nil => rfl
-  | cons h _ ih => simp [h, ih]
 
 private theorem at_list_length {n r k : ℕ} {L : List (Family n)}
     (h : List.Forall₂ Component (degrees r k) L) : L.length = r := by

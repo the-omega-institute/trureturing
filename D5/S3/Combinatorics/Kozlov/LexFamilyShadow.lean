@@ -40,8 +40,7 @@ SOFTWARE.
 open Finset
 open scoped FinsetFamily
 
-namespace ExteriorConvex
-namespace ModuleKK
+namespace D5.S3.Combinatorics.Kozlov.LexCompression
 
 /-! ### The lex order and lex-initial families -/
 
@@ -117,10 +116,6 @@ lemma c0_injective : Function.Injective (c0 (n := n)) := by
 
 lemma lift_injective : Function.Injective (lift (n := n)) := by
   intro A B h; ext i; rw [← succ_mem_lift (B := A), h, succ_mem_lift]
-
-@[simp] lemma c0_inj {A B : Finset (Fin n)} : c0 A = c0 B ↔ A = B := c0_injective.eq_iff
-
-@[simp] lemma lift_inj {A B : Finset (Fin n)} : lift A = lift B ↔ A = B := lift_injective.eq_iff
 
 @[simp] lemma c0_ne_lift (A B : Finset (Fin n)) : c0 A ≠ lift B :=
   fun h => zero_notMem_lift B (h ▸ zero_mem_c0 A)
@@ -443,13 +438,7 @@ theorem thm_kk_rank1 {𝒜 : Finset (Finset (Fin n))} {k : ℕ}
 
 end Translate
 
-/-! ### Capstone: the combinatorial core of Theorem 6 (`thm-module-kk`)
-
-For `r` components of integer exterior degrees `k₁ ≥ ⋯ ≥ k_r` (a monomial family of `F_j` is a
-list of families `𝒜ᵢ` of `kᵢ`-subsets of `Fin n`, empty when `kᵢ < 0`), the total upper shadow is
-at least the cost of the greedy split of the total size, and the greedy split is realised by
-lex-initial components (the lex_F segment). Lemma 1 (passage from subspaces to monomial
-families) and the identification with `B` are not formalised. -/
+/-! ### Greedy component shadow bounds -/
 
 section Module
 variable {n : ℕ}
@@ -515,5 +504,4 @@ theorem exists_lexInit_components (ks : List ℤ) (ts : List ℕ) (h : Feasible 
 
 end Module
 
-end ModuleKK
-end ExteriorConvex
+end D5.S3.Combinatorics.Kozlov.LexCompression

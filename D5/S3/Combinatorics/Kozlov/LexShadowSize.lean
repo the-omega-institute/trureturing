@@ -36,6 +36,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -/
 
+namespace D5.S3.Combinatorics.Kozlov.LexCompression
+
 def sig : ℕ → ℕ → ℕ → ℕ
   | 0, _, _ => 0
   | n+1, 0, t => if t = 0 then 0 else 1 + sig n 0 t
@@ -275,3 +277,5 @@ theorem sig_Q (n k k' x y : ℕ) (hk : k' ≤ k) (hx : x ≤ n.choose k) (hy : y
     (h : n.choose k ≤ x + y) :
     n.choose (k+1) + sig n k' (x + y - n.choose k) ≤ sig n k x + sig n k' y :=
   (PQ_all n).2 k k' x y _ hk hx hy (by omega)
+
+end D5.S3.Combinatorics.Kozlov.LexCompression

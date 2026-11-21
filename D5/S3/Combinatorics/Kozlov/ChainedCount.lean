@@ -216,8 +216,6 @@ noncomputable def properVectors (n : ℕ) : Finset (FVector n) := by
   classical
   simp [properVectors, SnF]
 
-def standard {m : ℕ} (i : Fin m) : Fin m → ℕ := fun j => if j = i then 1 else 0
-
 noncomputable def transfer (hn : 1 ≤ n) (S : Finset (FVector n)) : Matrix (Fin n) (Fin n) ℕ :=
   TG S (topState hn) (cond hn)
 
