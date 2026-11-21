@@ -106,7 +106,7 @@ def family : Registration arena (type_of% @prime_tail_mass_no_finite_limit_of_at
   dependence := actual_dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@prime_tail_mass_no_finite_limit_of_attained_zero) (Realization signature) Type Unit where
+    (@prime_tail_mass_no_finite_limit_of_attained_zero) (Realization signature) Unit Unit where
   unitName := .str ``prime_tail_mass_no_finite_limit_of_attained_zero "__information_unit"
   realizationName := ``family
   realizationSource := none
@@ -122,7 +122,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeAttainedMassNonconvergence
     definition := none
