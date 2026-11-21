@@ -20,8 +20,7 @@ internal sealed class WidePrimeWindowMassDocument : IScribeDocumentDefinition
                     + "where θ sums log p over primes p ≤ t. This is the tail in Zhao's equation (14), "
                     + "arXiv:2411.18903v2. Let N(A,B) be the integral of max(−Qθ(x),0)/√x "
                     + "from A to B.")),
-                Paragraph(Text("Loning's derivation in the discussion of trureturing issue #32573 uses "
-                    + "the last whole power window inside [A,B]. Put Y = B^(1/b). "
+                Paragraph(Text("Use the last whole power window inside [A,B], with Y = B^(1/b). "
                     + "Since A ≥ 2 and b > 1, the width condition gives A ≤ Y ≤ Y^b = B. "
                     + "The reference HasWindows interface in riemann-hypothesis asks for a whole "
                     + "power window in the relevant set above each prescribed threshold. "
