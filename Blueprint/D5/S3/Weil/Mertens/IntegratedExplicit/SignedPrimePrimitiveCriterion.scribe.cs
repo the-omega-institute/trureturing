@@ -60,6 +60,36 @@ internal sealed class SignedPrimePrimitiveCriterionDocument : IScribeDocumentDef
                         + "amount for large T, which vanishes after division by T.")),
                     Paragraph(Text("Conversely, the limit gives a linear bound for the signed primitive from 2. "
                         + "Apply the growth theorem at β=1/2 and use the functional equation to obtain RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rh-signed-prime-affine-bounds"),
+                DeclarationHandle.Create(Module + "rh_iff_signedPrimePrimitive_affine_bounds_from_5040"),
+                H("Either eventual affine bound is equivalent to RH"),
+                StatementSource.FromAuthor(F.Disp(AffineBoundsCriterion())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Write W(T) for the signed, unnormalized interval integral from 5040 to exp(T) "
+                        + "of thetaTail(x)/√x. Here thetaTail(x) is the set integral of (θ(u)−u)/u² on (x,∞), "
+                        + "and θ(u) sums log p over primes p≤u. The upper and lower comparisons each have their "
+                        + "own real coefficients A, B and their own eventual threshold. Under RH the slope −2 "
+                        + "gives the eventual upper bound −T and the eventual lower bound −3T.")),
+                    Paragraph(Text("For large T, the primitive from 2 equals W(T) plus the fixed signed interval "
+                        + "integral from 2 to 5040. The sum of this prime primitive and the signed complete "
+                        + "Mangoldt primitive in log coordinates has absolute value at most DT. "
+                        + "A prime upper bound therefore yields an affine majorant of the negative complete "
+                        + "primitive. A prime lower bound yields an affine majorant of the complete primitive.")),
+                    Paragraph(Text("The integrable Chebyshev error kernel gives initial exponential control. "
+                        + "On a late half-line, the gap between the affine majorant and the signed complete "
+                        + "primitive is nonnegative. Damping it by exp(−3t/2) gives a finite positive measure. "
+                        + "After the shift s=z+2, the real-regular meromorphic Mangoldt continuation supplies "
+                        + "a continuation of the gap transform to Re(z)>−3/2. Positive Laplace convergence "
+                        + "makes the actual gap transform holomorphic there. Subtract the gap transform from "
+                        + "the affine transform, divide by the sign chosen for the complete primitive, and "
+                        + "restore the finite integration intervals. Integration by parts then recovers a "
+                        + "holomorphic complete Mangoldt transform on Re(s)>1/2.")),
+                    Paragraph(Text("The first-order equation for the pole-removed zeta function propagates "
+                        + "from Re(s)>1 across this half-plane. The function is nonzero at s=2, so the equation "
+                        + "excludes zeta zeros in the right half of the critical strip. The functional "
+                        + "equation gives RH."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -132,5 +162,22 @@ internal sealed class SignedPrimePrimitiveCriterionDocument : IScribeDocumentDef
             new Formula.Fraction(Window(F.D(5, 0, 4, 0)), F.Id("T")));
         return new Formula.Logic(F.Id("RiemannHypothesis"), FormulaLogicOperator.Iff,
             Equal(limit, new Formula.Negate(F.D(2))));
+    }
+
+    private static Formula AffineBoundsCriterion()
+    {
+        var rh = F.Id("RiemannHypothesis");
+        var time = F.Id("T");
+        var affine = Add(Multiply(F.Id("A"), time), F.Id("B"));
+        var window = Call("W", time);
+
+        Formula Eventually(Formula comparison) =>
+            Exists("A", Exists("B", Exists("Y",
+                All("T", Real, Implies(Le(F.Id("Y"), time), comparison)))));
+        Formula Criterion(Formula comparison) =>
+            F.Seq(F.Open, new Formula.Logic(rh, FormulaLogicOperator.Iff, Eventually(comparison)), F.Close);
+
+        return F.Seq(Equal(window, Window(F.D(5, 0, 4, 0))), F.Qquad,
+            And(Criterion(Le(window, affine)), Criterion(Le(affine, window))));
     }
 }
