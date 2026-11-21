@@ -30,7 +30,7 @@ internal sealed class FairBiasCycleCoefficientsDocument : IScribeDocumentDefinit
                     "elements outside the selected face are nonpassive. A missing element " +
                     "of the selected face exceeds any lower bound strictly below every " +
                     "nonpassive element. At any nonzero later coface the removed element " +
-                    "therefore lies outside the selected facet and the inserted element lies in it.")),
+                    "therefore lies outside the selected face and the inserted element lies in it.")),
                 Paragraph(Text(
                     "When a facet exists, the selected augmented face extends to a facet and is " +
                     "therefore independent. The fundamental circuit of each admissible insertion " +
