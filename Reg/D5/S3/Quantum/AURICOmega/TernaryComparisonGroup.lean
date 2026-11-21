@@ -2,7 +2,11 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import Reg.Support.DependentFamily
 
-/-! Source-bound audits of the transfer and reading theorems for ternary comparison structures. -/
+/-! Source-bound audits of the transfer and reading theorems for ternary comparison structures.
+
+Two constructions are shared with the audits of the modules built on comparison structures: the
+two-point structure, and the discrete reading of a structure, which keeps the transfer and reads
+one exactly on the diagonal and zero elsewhere. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 

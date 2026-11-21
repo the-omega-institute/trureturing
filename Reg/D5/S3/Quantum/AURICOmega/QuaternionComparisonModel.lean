@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
-import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonProduct
+import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import Reg.Support.DependentFamily
 
 /-! Source-bound audits of the component formula for the quaternion inner product, of the inner
-product of features, of the radius of the sphere of unit quaternions, of the preconnectedness of
+product of features, of the radius of the sphere of unit quaternions, of the path-connectedness of
 the unit quaternions and of the continuity of the reading, and full-telescope source applications
 for the four closed statements about the model.
 Those applications supply only the original statements; they supply no enrolled-template
@@ -22,7 +22,7 @@ namespace Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open _root_.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup (TernaryComparison)
-open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonProduct (discrete)
+open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup (discrete)
 
 open scoped InnerProductSpace Quaternion
 
@@ -314,7 +314,7 @@ theorem not_preconnectedSpace_of_forall_isOpen (τ : TopologicalSpace (unitary �
 theorem isOpen_bot_set {X : Type} (s : Set X) : @IsOpen X ⊥ s :=
   @isOpen_discrete X ⊥ (discreteTopology_bot X) s
 
-/-! The ambient topology of the quaternions in `preconnectedSpace_unitary`. -/
+/-! The ambient topology of the quaternions in `pathConnectedSpace_unitary`. -/
 namespace AmbientTopology
 
 /-- Observe the subspace topology of the unit quaternions as a function of the topology of the
@@ -336,17 +336,19 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => ⊥) (fun e => nomatch e)
 
-/-- Retain the complete statement of `preconnectedSpace_unitary`. -/
+/-- Retain the complete statement of `pathConnectedSpace_unitary`. -/
 abbrev arena : Arena where
   signature := signature
-  Law r := @PreconnectedSpace (unitary ℍ[ℝ]) (r.readout () () (by infer_instance))
+  Law r := @PathConnectedSpace (unitary ℍ[ℝ]) (r.readout () () (by infer_instance))
 
-/-- The discrete topology on the unit quaternions is not preconnected. -/
-theorem rejected_law : ¬ arena.Law rejected :=
+/-- The discrete topology on the unit quaternions is not path-connected: it is not even
+preconnected. -/
+theorem rejected_law : ¬ arena.Law rejected := fun h =>
   not_preconnectedSpace_of_forall_isOpen ⊥ isOpen_bot_set
+    (@ConnectedSpace.toPreconnectedSpace _ ⊥ (@PathConnectedSpace.connectedSpace _ ⊥ h))
 
 /-- The discrete topology of the quaternions induces the discrete topology on the unit
-quaternions, which differs from the connected subspace topology. -/
+quaternions, which differs from the path-connected subspace topology. -/
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (by infer_instance), ⊥, fun h => ?_⟩
@@ -355,18 +357,19 @@ theorem dependence : ObservationalDependence signature actual := by
     have h' : @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) (by infer_instance) =
         @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥ := h
     rw [← h']
-    exact preconnectedSpace_unitary
+    have := pathConnectedSpace_unitary
+    exact (inferInstance : PreconnectedSpace (unitary ℍ[ℝ]))
   refine not_preconnectedSpace_of_forall_isOpen
     (@instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥) (fun s => ?_) hp
   exact (@isOpen_induced_iff _ _ ⊥ s Subtype.val).2
     ⟨Subtype.val '' s, isOpen_bot_set _, Set.preimage_image_eq _ Subtype.val_injective⟩
 
-abbrev sourceStatement : Prop := type_of% preconnectedSpace_unitary
+abbrev sourceStatement : Prop := type_of% pathConnectedSpace_unitary
 
 def source_registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨preconnectedSpace_unitary, rejected, rejected_law⟩
+  variation := ⟨pathConnectedSpace_unitary, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -377,10 +380,10 @@ def source_registration : Registration arena sourceStatement where
 
 end AmbientTopology
 
-def preconnectedSpace_unitary_registration :
+def pathConnectedSpace_unitary_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      preconnectedSpace_unitary (Realization AmbientTopology.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.preconnectedSpace_unitary_unit
+      pathConnectedSpace_unitary (Realization AmbientTopology.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.pathConnectedSpace_unitary_unit
   realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.AmbientTopology.source_registration
   realizationSource := none
   generated := false
@@ -414,7 +417,7 @@ def preconnectedSpace_unitary_registration :
 /-- The point `1` is not open in the connected group of unit quaternions. -/
 theorem not_isOpen_singleton_one : ¬ IsOpen ({1} : Set (unitary ℍ[ℝ])) := by
   intro h
-  have := preconnectedSpace_unitary
+  have := pathConnectedSpace_unitary
   have hc : IsClopen ({1} : Set (unitary ℍ[ℝ])) := ⟨isClosed_singleton, h⟩
   rcases isClopen_iff.mp hc with h0 | h1
   · exact Set.singleton_ne_empty _ h0
