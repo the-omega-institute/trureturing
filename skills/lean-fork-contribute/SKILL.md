@@ -42,7 +42,7 @@ Golden/Frozen/state/D5/<路径>.lean.json ← canonical writer 生成
 迭代只选择实际模块和实际保留的 Reg 源码，例如：
 
 ```sh
-make lean LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
+make lean-report-prepare LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make lean-report-scoped LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make emit BASE="$CONTRIBUTION_BASE"
 ```
@@ -59,7 +59,7 @@ python3 <skill-directory>/scripts/check.py \
   --module D5.My.Module
 ```
 
-适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 canonical `make emit` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
+适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 `make emit`，再对选定的目标运行 `make lean-report-prepare` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
 
 每个新增、源码手写、公开 D5 theorem/lemma 都须尝试忠实的四槽登记。适配器用受保护基线中的源码名排除历史定理，排除 private 和编译器生成声明；utility 指定的 refutation result 只有通过现役 typed utility 校验才能豁免。按源码 owner 的 `Reg/D5/…` mirror 与其 imports 解析证据，不接受 D5 自登记。变动 Reg 的 payload 也交原验证器检查。辅助声明不递归产生 D5 目标。
 

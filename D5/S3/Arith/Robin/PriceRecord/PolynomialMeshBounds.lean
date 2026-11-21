@@ -138,7 +138,7 @@ lemma mesh_geometry (r : ℕ) (hr : 2 ≤ r) {k : ℕ} (hk : 4 ≤ k) :
       ((k : ℝ) + 1) ^ r ≤ ((k : ℝ) ^ 2) ^ r := hh
       _ = ((k : ℝ) ^ r) ^ 2 := by simp only [← pow_mul]; congr 1; omega
 
-private lemma mesh_bracket_of_strictMono {mesh : ℕ → ℝ} (hmesh : StrictMono mesh)
+lemma mesh_bracket_of_strictMono {mesh : ℕ → ℝ} (hmesh : StrictMono mesh)
     (hmeshTop : Tendsto mesh atTop atTop) (K : ℕ) {X : ℝ} (hX : mesh K ≤ X) :
     ∃ k : ℕ, K ≤ k ∧ mesh k ≤ X ∧ X < mesh (k + 1) := by
   classical
