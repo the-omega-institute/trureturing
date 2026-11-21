@@ -16,7 +16,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 
-open WidthSix (HardinA229532StripData)
+open WidthSix
 open HardinA229584StripData (Row horizontal)
 open HardinA229532StripData (between)
 open HardinA233177Canonical (Canonical)
@@ -39,7 +39,7 @@ def Valid (p : Row) (d : ℕ) : Prop := h p + d ≤ 2
 instance (p : Row) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ≤ _))
 
-def rowEquiv : RowNumber ≃ Row := finFunctionFinEquiv.symm
+def rowEquiv : RowNumber ≃ Row := (finFunctionFinEquiv (m := 3) (n := 6)).symm
 
 private def rowCode (p : Row) : ℕ :=
   (if p 0 = p 1 then 1 else 0) + (if p 0 = p 2 then 2 else 0) +
@@ -104,14 +104,14 @@ private theorem filterMap_count (f : Row → Option State) (s : State) (rows : L
     | some j =>
       by_cases hs : s = j
       · subst j
-        simp [hr, List.count_cons, ih, add_comm]
-      · simp [hr, List.count_cons, ih, hs, Ne.symm hs]
+        simp [hr, ih, add_comm]
+      · simp [hr, ih, Ne.symm hs]
 
 theorem count_classes (f : Row → Option State) (s : State) :
     (((List.ofFn rowEquiv).filterMap f).count s : ℤ) =
       ∑ r : Row, if f r = some s then (1 : ℤ) else 0 := by
   rw [filterMap_count, List.map_ofFn, List.sum_ofFn]
-  exact rowEquiv.sum_comp _
+  exact rowEquiv.sum_comp (fun r : Row => if f r = some s then (1 : ℤ) else 0)
 
 theorem outgoing_count (p : Row) (d : ℕ) (s : State) :
     ((outgoing p d).count s : ℤ) =
@@ -151,7 +151,6 @@ theorem legal (p : Row) (d : ℕ) (hp : Valid p d) (r : Row) (hr : cost p r ≤ 
     Valid r (d - cost p r) := by
   unfold cost at hr ⊢
   unfold Valid at hp ⊢
-  unfold cost
   omega
 
 theorem closed (p r : Row) (d : ℕ) (hp : h p + d ≤ 1) (hr : cost p r ≤ d) :

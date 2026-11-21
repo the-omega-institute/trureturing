@@ -25,9 +25,6 @@ set_option Elab.async false
 private theorem same_horizontal : horiz 6 = horizontal := by decide +kernel
 private theorem same_between : betw 6 = between := by decide +kernel
 
-private theorem row_major {n : ℕ} (x : Fin n × Fin 6) :
-    (finProdFinEquiv x).val = x.2.val + 6 * x.1.val := rfl
-
 private def ExactTwo {n : ℕ} (A : Fin n × Fin 6 → Fin 3) : Prop :=
   defects horizontal between (List.ofFn fun i j => A (i, j)) = 2
 
@@ -47,7 +44,7 @@ theorem six_labellings (m : ℕ) :
       ∃ x y, A x ≠ A y := by
     intro A h
     by_contra he
-    push_neg at he
+    push Not at he
     have const : A = fun _ => A (0, 0) := funext fun x => he x (0, 0)
     unfold ExactTwo at h
     rw [const, List.ofFn_const, DefectTransfer.constant_defects] at h
@@ -60,10 +57,11 @@ theorem six_labellings (m : ℕ) :
   unfold literalCount T
   rw [same_horizontal, same_between]
   convert orbit using 1
-  apply congrArg (fun x : ℕ => 6 * x)
-  apply congrArg Finset.card
-  ext A
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and, ExactTwo, order]
+  all_goals
+    try apply congrArg (fun x : ℕ => 6 * x)
+    apply congrArg Finset.card
+    ext A
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, ExactTwo]
 
 #print axioms six_labellings
 
