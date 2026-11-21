@@ -10,7 +10,7 @@ internal sealed class FiniteMorseCancellationDocument : IScribeDocumentDefinitio
         Blocks(Describe.Lean(
             DescribeId.Create("finite-morse-cancellation"),
             DeclarationHandle.Create(
-                "D5/S3/HomologicalAlgebra/FiniteMorseCancellation.Matching.finite_morse_cancellation"),
+                "D5/S3/HomologicalAlgebra/FiniteMorseCancellation.finite_morse_cancellation"),
             H("The integral chains retract onto their unmatched coordinates"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

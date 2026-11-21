@@ -16,6 +16,7 @@ import Mathlib.Tactic.Ring
 set_option autoImplicit false
 
 open Finset
+open D5.S3.TotalVariation.FairBiasLink
 open D5.S3.TotalVariation.FairBiasMatching
 open D5.S3.TotalVariation.FairBiasRestriction
 open D5.S3.TotalVariation.FairBiasShelling
@@ -75,16 +76,6 @@ private theorem cover_of_boundary_ne_zero {c : L → A} {s t : Face c}
   by_contra hc
   exact hn (signedEntry_eq_zero_of_not_cover hc)
 
-private theorem erase_eq_of_cover {c : L → A} {s t : Face c} (h : Cover s t)
-    {x : L × Bool} (hxt : x ∈ t.val) (hxs : x ∉ s.val) : t.val.erase x = s.val := by
-  have hle : s.val ⊆ t.val.erase x := by
-    intro y hy
-    exact mem_erase.mpr ⟨fun hyx => hxs (hyx ▸ hy), h.1 hy⟩
-  exact (eq_of_subset_of_card_le hle (by
-    have hc := card_erase_add_one hxt
-    have hcard := h.2
-    omega)).symm
-
 private theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
     (h : Cover s t) : boundary c s t * boundary c s t = 1 := by
   classical
@@ -98,7 +89,7 @@ private theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
     omega
   obtain ⟨x, hx⟩ := hne
   have hx' := mem_sdiff.mp hx
-  have he := erase_eq_of_cover h hx'.1 hx'.2
+  have he := erased_pivot_of_cover h.1 h.2 hx'.1 hx'.2
   have hv : boundary c s t = deletionSign t.val x := by
     unfold boundary signedEntry
     rw [sum_eq_single x]
@@ -198,6 +189,7 @@ private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
     ∃ (mate : Face c → Face c) (rank : Face c → ℕ),
       IsIntervalMatching c mate ∧ Function.Involutive mate ∧
       (∀ s, mate s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
+      (∀ s t, (Cover t s ∧ mate s ≠ t ∨ Cover s t ∧ mate s = t) → rank t < rank s) ∧
       (∀ s, (mate s).val.card = s.val.card + 1 ∨
         s.val.card = (mate s).val.card + 1 ∨ mate s = s) ∧
       (∀ s t, boundary c s t ≠ 0 → t.val.card = s.val.card + 1) ∧
@@ -209,7 +201,7 @@ private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
         s.val.card = Fintype.card L -
           Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c))) := by
   obtain ⟨mate, rank, hinterval, hinv, hcover, hfixed, hrank⟩ := actualAugmentedMatching c h
-  refine ⟨mate, rank, hinterval, hinv, hfixed, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨mate, rank, hinterval, hinv, hfixed, hrank, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro s
     rcases hcover s with hup | hdown | hfix
     · exact Or.inl hup.2
@@ -240,18 +232,57 @@ private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
     exact facet_card_eq_nullity c s.val (mem_facets.mp ((hfixed s).mp hs).1)
 
 
+private theorem critical_projection (c : L → A) (m : Matching (Face c))
+    (hD : m.D = boundary c)
+    (hfacet : ∀ s, m.mate s = s → s.val ∈ facets c)
+    (N : ℕ) : m.P N = m.p0 := by
+  classical
+  have hrow (i : m.Critical) (j : Face c) : m.D i.val j = 0 := by
+    rw [hD]
+    apply signedEntry_eq_zero_of_not_cover
+    intro hj
+    have hf := mem_facets.mp (hfacet i.val i.property)
+    have hjne : j.val ≠ ∅ := by
+      intro he
+      have hcard := hj.2
+      simp [he] at hcard
+    have hjmem : j.val ∈ signedComplex c := by
+      simpa [augmentedFaces, hjne] using j.property
+    have hEq := hf.2 j.val hjmem hj.1
+    have hcard := hj.2
+    rw [hEq] at hcard
+    omega
+  have hd : m.p0 * m.delta = 0 := by
+    ext i j
+    rw [Matrix.mul_apply, sum_eq_single i.val]
+    · simp [Matching.p0, Matching.i0, Matching.delta, Matching.A, hrow i j]
+    · intro k _ hne
+      simp [Matching.p0, Matching.i0, hne]
+    · simp
+  rw [Matching.P, Matching.J, D5.S3.HomologicalAlgebra.FinitePerturbation.inversePolynomial,
+    Matrix.mul_sum,
+    sum_eq_single 0]
+  · simp
+  · intro j _ hj
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hj
+    rw [pow_succ', ← Matrix.mul_assoc, Matrix.mul_neg, ← Matrix.mul_assoc, hd]
+    simp
+  · simp
+
 /-- The augmented signed chains contract onto the full-restriction facets with
 explicit finite correction matrices and their degree laws. -/
 theorem actualContraction (c : L → A) (h : (facets c).Nonempty) :
-    ∃ (m : Matching (Face c)) (N : ℕ),
-      1 ≤ N ∧ m.D = boundary c ∧ (∀ s, m.d s = s.val.card) ∧
+    ∃ (m : Matching (Face c)) (rank : Face c → ℕ) (N : ℕ),
+      N = Finset.univ.sup rank + 1 ∧ m.D = boundary c ∧ (∀ s, m.d s = s.val.card) ∧
       IsIntervalMatching c m.mate ∧
+      (∀ s t, (Cover t s ∧ m.mate s ≠ t ∨ Cover s t ∧ m.mate s = t) →
+        rank t < rank s) ∧
       (∀ s, m.mate s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
       (∀ s : m.Critical, m.d s.val = Fintype.card L -
         Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c))) ∧
-      m.Contraction N := by
+      m.P N = m.p0 ∧ m.Contraction N := by
   classical
-  obtain ⟨mate, rank, hinterval, hinv, hfixed, hadj, hdown, hunit, hunmatched,
+  obtain ⟨mate, rank, hinterval, hinv, hfixed, hrank, hadj, hdown, hunit, hunmatched,
     hmatched, hsize⟩ := actual_morse_data c h
   let m : Matching (Face c) :=
     { d := fun s => s.val.card
@@ -271,9 +302,10 @@ theorem actualContraction (c : L → A) (h : (facets c).Nonempty) :
   have hpos : 1 ≤ N := Nat.succ_le_succ (Nat.zero_le _)
   have hbound (s : Face c) : rank s < N :=
     Nat.lt_succ_of_le (Finset.le_sup (f := rank) (Finset.mem_univ s))
-  refine ⟨m, N, hpos, rfl, fun _ => rfl, hinterval, hfixed, ?_, ?_⟩
+  refine ⟨m, rank, N, rfl, rfl, fun _ => rfl, hinterval, hrank, hfixed, ?_, ?_, ?_⟩
   · intro s
     exact hsize s.val s.property
+  · exact critical_projection c m rfl (fun s hs => ((hfixed s).mp hs).1) N
   · exact m.finite_morse_cancellation rank _ N hpos hbound
       (fun s t hne hst => hunmatched s t hst (Ne.symm hne))
       (fun s hs => hmatched s hs.symm) hsize

@@ -47,7 +47,7 @@ end
 
 section
 
-private theorem erased_pivot_of_cover {V : Type*} [DecidableEq V] {p q : Finset V} {x : V}
+theorem erased_pivot_of_cover {V : Type*} [DecidableEq V] {p q : Finset V} {x : V}
     (hpq : p ⊆ q) (hcard : q.card = p.card + 1) (hxq : x ∈ q) (hxp : x ∉ p) :
     q.erase x = p := by
   have hsub : p ⊆ q.erase x := by
