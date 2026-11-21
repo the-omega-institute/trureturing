@@ -6,7 +6,7 @@
    utility: none
    digest: Centered Schur walks for the unrestricted refined BMV comparison. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVThreeSpectralValues
+import D5.S3.Quantum.Analysis.RefinedBMVThreeSpectrumReduction
 
 /-! # Centered Schur walks for the refined BMV comparison
 
@@ -23,8 +23,8 @@ noncomputable section
 
 namespace RefinedBMV.ExtremeWalk
 
-open DimThree (defect defect_cycle defect_swap defect_diag defect_nonneg
-  gaps mean_map trace_gap word_counts)
+open DimThree (defect gaps mean_map trace_gap_all word_counts_all)
+open UniformThreeSpectrum (defect_cycle_all defect_diag_all defect_nonneg_all)
 
 universe u
 
@@ -49,31 +49,31 @@ private theorem centeredKernel_comm (p : ℕ) (a x y : ℝ) :
   simp only [centeredKernel, upperKernel, min_comm x y, max_comm x y,
     and_comm, mul_comm (√(defect p x x a))]
 
-private theorem defect_last_swap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
-    (a x y : ℝ) : defect p a y x = defect p a x y := by
+private theorem defect_last_swap (p : ℕ) (a x y : ℝ) :
+    defect p a y x = defect p a x y := by
   calc
-    defect p a y x = defect p y x a := (defect_cycle hp a y x).symm
-    _ = defect p x y a := defect_swap hp x y a
-    _ = defect p a x y := defect_cycle hp a x y
+    defect p a y x = defect p y x a := (defect_cycle_all p a y x).symm
+    _ = defect p x y a := DividedDifference.defect_swap_general p x y a
+    _ = defect p a x y := defect_cycle_all p a x y
 
-private theorem cyclic_ordered {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem cyclic_ordered (p : ℕ)
     {a x y : ℝ} (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     defect p a x y = centeredKernel p a x y + centeredKernel p x y a +
       centeredKernel p y a x := by
   rcases hax.eq_or_lt with rfl | hax
   · rcases hxy.eq_or_lt with rfl | hay
-    · simp [centeredKernel, defect_diag hp]
+    · simp [centeredKernel, defect_diag_all]
     · simp [centeredKernel, hay, not_lt_of_ge hay.le,
-        Real.mul_self_sqrt (defect_nonneg hp _ _ _ ha ha (ha.trans hay.le))]
+        Real.mul_self_sqrt (defect_nonneg_all p _ _ _ ha ha (ha.trans hay.le))]
   · rcases hxy.eq_or_lt with rfl | hxy
-    · simp [centeredKernel, upperKernel, hax, not_lt_of_ge hax.le, defect_diag hp]
+    · simp [centeredKernel, upperKernel, hax, not_lt_of_ge hax.le, defect_diag_all]
     · have hay := hax.trans hxy
       simp [centeredKernel, upperKernel, hax, hxy, hay, not_lt_of_ge hax.le,
         not_lt_of_ge hxy.le, not_lt_of_ge hay.le, min_eq_left hxy.le, max_eq_right hxy.le,
-        Real.sqrt_mul (defect_nonneg hp a a y ha ha (ha.trans hay.le))]
+        Real.sqrt_mul (defect_nonneg_all p a a y ha ha (ha.trans hay.le))]
 
-/-- The centered kernels sum to the exact coefficient, including all ties. -/
-theorem defect_eq_cyclic {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+/-- The centered kernels sum to the exact coefficient at every degree, including all ties. -/
+theorem defect_eq_cyclic_all (p : ℕ)
     (a x y : ℝ) (ha : 0 ≤ a) (hx : 0 ≤ x) (hy : 0 ≤ y) :
     defect p a x y = centeredKernel p a x y + centeredKernel p x y a +
       centeredKernel p y a x := by
@@ -82,27 +82,27 @@ theorem defect_eq_cyclic {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
         centeredKernel p y a x) :
       defect p x y a = centeredKernel p x y a + centeredKernel p y a x +
         centeredKernel p a x y := by
-    rw [defect_cycle hp a x y, h]
+    rw [defect_cycle_all p a x y, h]
     ac_rfl
   have flip {a x y : ℝ}
       (h : defect p a x y = centeredKernel p a x y + centeredKernel p x y a +
         centeredKernel p y a x) :
       defect p a y x = centeredKernel p a y x + centeredKernel p y x a +
         centeredKernel p x a y := by
-    rw [defect_last_swap hp a x y, h, centeredKernel_comm p a y x,
+    rw [defect_last_swap p a x y, h, centeredKernel_comm p a y x,
       centeredKernel_comm p y x a, centeredKernel_comm p x a y]
     ac_rfl
   rcases le_total a x with hax | hxa
   · rcases le_total x y with hxy | hyx
-    · exact cyclic_ordered hp ha hax hxy
+    · exact cyclic_ordered p ha hax hxy
     · rcases le_total a y with hay | hya
-      · exact flip (cyclic_ordered hp ha hay hyx)
-      · exact rotate (cyclic_ordered hp hy hya hax)
+      · exact flip (cyclic_ordered p ha hay hyx)
+      · exact rotate (cyclic_ordered p hy hya hax)
   · rcases le_total a y with hay | hya
-    · exact flip (rotate (cyclic_ordered hp hx hxa hay))
+    · exact flip (rotate (cyclic_ordered p hx hxa hay))
     · rcases le_total x y with hxy | hyx
-      · exact rotate (rotate (cyclic_ordered hp hx hxy hya))
-      · exact rotate (flip (cyclic_ordered hp hy hyx hxa))
+      · exact rotate (rotate (cyclic_ordered p hx hxy hya))
+      · exact rotate (flip (cyclic_ordered p hy hyx hxa))
 
 variable {n : Type u} [Fintype n]
 
@@ -139,7 +139,7 @@ private theorem centered_posSemidef {p : ℕ} (hUpper : UpperPSD.{u} p)
   rw [hsplit]
   exact hsum
 
-private theorem walk_defect_nonneg {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem walk_defect_nonneg {p : ℕ}
     (hUpper : UpperPSD.{u} p) (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
     (B : Matrix n n ℂ) (hB : B.PosSemidef) :
     0 ≤ walk B (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) := by
@@ -165,27 +165,27 @@ private theorem walk_defect_nonneg {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
       g + (fun i j k ↦ g j k i) + (fun i j k ↦ g k i j) := by
     funext i j k
     simp only [Pi.add_apply, g]
-    exact_mod_cast defect_eq_cyclic hp (a i) (a j) (a k) (ha i) (ha j) (ha k)
+    exact_mod_cast defect_eq_cyclic_all p (a i) (a j) (a k) (ha i) (ha j) (ha k)
   rw [h, map_add, map_add, walk_rotate B (fun i j k ↦ g j k i), walk_rotate B g]
   exact add_nonneg (add_nonneg hg hg) hg
 
 variable [DecidableEq n]
 
-private theorem diagonal_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem diagonal_bound {p : ℕ}
     (hUpper : UpperPSD.{u} p) (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
     (B : Matrix n n ℂ) (hB : B.PosSemidef) :
     trace (((diagonal fun i ↦ (a i : ℂ)) ^ p * B) ^ 3) ≤
       DimThree.wordMean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B := by
-  have hn := walk_defect_nonneg hp hUpper a ha B hB
-  rw [← trace_gap hp] at hn
-  have hlen : (0 : ℝ) < (gaps p).length := by exact_mod_cast (word_counts hp).2.1
+  have hn := walk_defect_nonneg hUpper a ha B hB
+  rw [← trace_gap_all p] at hn
+  have hlen : (0 : ℝ) < (gaps p).length := by exact_mod_cast (word_counts_all p).2.1
   obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hn
   simp only [Complex.mul_re, Complex.mul_im, Complex.natCast_re, Complex.natCast_im,
     Complex.sub_re, Complex.sub_im, zero_mul, sub_zero, add_zero] at hre him
   exact Complex.le_def.mpr ⟨sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hlen).mp hre),
     (sub_eq_zero.mp (mul_eq_zero.mp him.symm |>.resolve_left hlen.ne')).symm⟩
 
-private theorem cubeRoot_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem cubeRoot_bound {p : ℕ}
     (hUpper : UpperPSD.{u} p) (X B : Matrix n n ℂ) (hX : X.PosSemidef)
     (hB : B.PosSemidef) :
     trace ((X ^ p * B) ^ 3) ≤ DimThree.wordMean p (X ^ 3) B := by
@@ -199,7 +199,7 @@ private theorem cubeRoot_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     change (Unitary.conjStarAlgAut ℂ _ (star U) B).PosSemidef
     rw [Unitary.conjStarAlgAut_star_apply]
     exact hB.conjTranspose_mul_mul_same (U : Matrix n n ℂ)
-  have h := diagonal_bound hp hUpper _ hX.eigenvalues_nonneg (f B) hB'
+  have h := diagonal_bound hUpper _ hX.eigenvalues_nonneg (f B) hB'
   change trace (((diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues)) ^ p * f B) ^ 3) ≤
     DimThree.wordMean p ((diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues)) ^ 3) (f B) at h
   have hd : f X = diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues) :=
@@ -207,8 +207,8 @@ private theorem cubeRoot_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   rw [← hd, ← map_pow f, ← map_mul f, ← map_pow f, ← map_pow f, trace_conjugation] at h
   exact h.trans_eq (mean_map p f.toAlgEquiv (trace_conjugation (star U)) (X ^ 3) B)
 
-/-- The refined BMV product bound given the upper-block positivity condition. -/
-theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+/-- The refined BMV product bound at every degree, given upper-block positivity. -/
+theorem product_bound_all {p : ℕ}
     (hUpper : UpperPSD.{u} p) (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
     trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ DimThree.wordMean p A B := by
   let X := A ^ (1 / 3 : ℝ)
@@ -222,10 +222,10 @@ theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     rw [hpow]
     congr 1
     ring
-  simpa only [h3, hp'] using cubeRoot_bound hp hUpper X B hX.posSemidef hB
+  simpa only [h3, hp'] using cubeRoot_bound hUpper X B hX.posSemidef hB
 
-/-- The refined BMV exponential bound given the upper-block positivity condition. -/
-theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+/-- The refined BMV exponential bound at every degree, given upper-block positivity. -/
+theorem exponential_bound_all {p : ℕ}
     (hUpper : UpperPSD.{u} p) (H K : Matrix n n ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian) :
     trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) := by
   let T : Matrix n n ℂ := (1 / 3 : ℝ) • H
@@ -236,7 +236,7 @@ theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   have h3 : X ^ (3 : ℕ) = exp H := by
     rw [hpow]
     norm_num [T, smul_smul]
-  have h := cubeRoot_bound hp hUpper X (exp K)
+  have h := cubeRoot_bound hUpper X (exp K)
     hT.isSelfAdjoint.exp_nonneg.posSemidef hK.isSelfAdjoint.exp_nonneg.posSemidef
   rw [h3, hpow p] at h
   have ht := ThreeSpectralValues.trace_exp_le_cube ((p : ℝ) • T) K
@@ -249,8 +249,34 @@ theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   rw [hScale] at ht
   exact ht.trans h
 
-#print axioms defect_eq_cyclic
-#print axioms product_bound
-#print axioms exponential_bound
+section Compatibility
+
+-- Keep the named degree argument for callers of the original theorems.
+set_option linter.unusedVariables false
+
+/-- The centered kernels sum to the exact coefficient, including all ties. -/
+theorem defect_eq_cyclic {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+    (a x y : ℝ) (ha : 0 ≤ a) (hx : 0 ≤ x) (hy : 0 ≤ y) :
+    defect p a x y = centeredKernel p a x y + centeredKernel p x y a +
+      centeredKernel p y a x :=
+  defect_eq_cyclic_all p a x y ha hx hy
+
+/-- The refined BMV product bound given the upper-block positivity condition. -/
+theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+    (hUpper : UpperPSD.{u} p) (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ DimThree.wordMean p A B :=
+  product_bound_all hUpper A B hA hB
+
+/-- The refined BMV exponential bound given the upper-block positivity condition. -/
+theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+    (hUpper : UpperPSD.{u} p) (H K : Matrix n n ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) :=
+  exponential_bound_all hUpper H K hH hK
+
+end Compatibility
+
+#print axioms defect_eq_cyclic_all
+#print axioms product_bound_all
+#print axioms exponential_bound_all
 
 end RefinedBMV.ExtremeWalk
