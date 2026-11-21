@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Residual
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Transport of the signed residual through the width-six transfer. -/
 
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
