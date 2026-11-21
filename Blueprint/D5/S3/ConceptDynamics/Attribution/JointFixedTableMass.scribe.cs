@@ -10,7 +10,7 @@ internal sealed class JointFixedTableMassDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/Attribution/JointFixedTableMass.two_table_masses_attain_row_minima_iff";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "One scalar inequality characterizes simultaneous attainment of two fixed-table masses.",
+        "One scalar inequality characterizes simultaneous attainment of two fixed-table masses and their intersection mass.",
         H("Two invariant output events"),
         Blocks(
             Describe.Lean(
@@ -26,20 +26,20 @@ internal sealed class JointFixedTableMassDocument : IScribeDocumentDefinition
                         + "The action on tables X to Y acts on each output coordinate.")),
                     Paragraph(Text("Let a and b be the least row masses of the first and second "
                         + "flags. Let i and u be the least row masses of the intersection and "
-                        + "the union. Each minimum is attained by a row, and the minimizing rows may "
+                        + "the union. The input set is nonempty because each minimum is attained by a row. These rows may "
                         + "differ. Let F assert the existence of a normalized, nonnegative and invariant table law. "
                         + "It has the specified row marginals. Its mass of tables with the first "
-                        + "flag true at every input is a, and the analogous second mass is b.")),
+                        + "flag true at every input is a, the analogous second mass is b, and the mass of tables with both flags true at every input is i.")),
                     Paragraph(Text("The inequality follows by adding the masses of the union and "
                         + "intersection of the two all-input table events and bounding each by "
-                        + "its corresponding least row mass. Conversely, take a common law of "
+                        + "its corresponding least row mass. The union of the two table events lies inside the event that every entry has either flag. Conversely, take a common law of "
                         + "two flags with coordinate masses a and b and intersection mass "
-                        + "max(0, a + b minus u). The four nontrivial upper sets of the Boolean "
+                        + "i. The four nontrivial upper sets of the Boolean "
                         + "square give the inequalities for ordered coupling to each row. "
                         + "Use the finite ordered coupling theorem, lift each coupling to the row "
                         + "outputs, and take the conditionally independent product across rows. "
-                        + "The minimizing row for each flag makes the corresponding lower "
-                        + "bound exact."))),
+                        + "The minimizing rows for the two flags and their intersection make the corresponding lower "
+                        + "bounds exact."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement() =>

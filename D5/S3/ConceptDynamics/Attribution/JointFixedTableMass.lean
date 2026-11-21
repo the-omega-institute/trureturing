@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A scalar inequality characterizes joint attainment of two invariant output event bounds. -/
+   digest: A scalar inequality characterizes joint attainment of two invariant output event bounds and their intersection bound. -/
 
 import D5.S3.Analytic.Probability.FiniteOrderedStrassen
 import Mathlib.Algebra.BigOperators.Field
@@ -404,9 +404,8 @@ private theorem simultaneous_flag_optima (P : X → Y → ℝ) (Pnn : ∀ x y, 0
       (∀ t, 0 ≤ w t) ∧ (∑ t, w t) = 1 ∧
       (∀ (g : G) t, w (fun x => g • t x) = w t) ∧
       (∀ x y, (∑ t : X → Y, if t x = y then w t else 0) = P x y) ∧
-      tableMass w flag first = m₁ ∧ tableMass w flag second = m₂ := by
+      tableMass w flag first = m₁ ∧ tableMass w flag second = m₂ ∧ tableMass w flag both = iMin := by
   let p (x : X) (a : Flags) := ∑ y ∈ univ.filter (fun y => flag y = a), P x y
-  let c := max 0 (m₁ + m₂ - uMin)
   have pnn (x : X) (a : Flags) : 0 ≤ p x a := sum_nonneg (fun y _ => Pnn x y)
   have ptotal (x : X) : mass (p x) univ = 1 := by
     rw [pushed_rows P flag x univ]
@@ -425,54 +424,51 @@ private theorem simultaneous_flag_optima (P : X → Y → ℝ) (Pnn : ∀ x y, 0
   obtain ⟨x₂, h₂⟩ := attain₂
   obtain ⟨xI, hI⟩ := attainI
   obtain ⟨xU, hU⟩ := attainU
-  have mn₁ := h₁ ▸ lower x₁ first
-  have mn₂ := h₂ ▸ lower x₂ second
-  have inonneg := hI ▸ lower xI both
-  have u₁ : m₁ ≤ uMin := (least₁ xU).trans (hU ▸ sub first either (by decide) xU)
-  have u₂ : m₂ ≤ uMin := (least₂ xU).trans (hU ▸ sub second either (by decide) xU)
+  have c₀ := hI ▸ lower xI both
+  have c₁ : iMin ≤ m₁ := (leastI x₁).trans (h₁ ▸ sub both first (by decide) x₁)
+  have c₂ : iMin ≤ m₂ := (leastI x₂).trans (h₂ ▸ sub both second (by decide) x₂)
   have u₀ : uMin ≤ 1 := by
     have hu := sub either univ (subset_univ _) xU
     rw [hU, ← pushed_rows P flag xU univ] at hu
     exact hu.trans_eq (ptotal xU)
-  have c₀ : 0 ≤ c := le_max_left _ _
-  have c₁ : c ≤ m₁ := max_le mn₁ (by linarith)
-  have c₂ : c ≤ m₂ := max_le mn₂ (by linarith)
-  have ci : c ≤ iMin := max_le inonneg (by linarith)
-  have cu : m₁ + m₂ - c ≤ uMin := by
-    have h := le_max_right (0 : ℝ) (m₁ + m₂ - uMin)
-    change m₁ + m₂ - uMin ≤ c at h
-    linarith
+  have cu : m₁ + m₂ - iMin ≤ uMin := by linarith
   have pfirst (x : X) : m₁ ≤ mass (p x) first := by
     rw [pushed_rows P flag x first]
     exact least₁ x
   have psecond (x : X) : m₂ ≤ mass (p x) second := by
     rw [pushed_rows P flag x second]
     exact least₂ x
-  have pboth (x : X) : c ≤ mass (p x) both := by
+  have pboth (x : X) : iMin ≤ mass (p x) both := by
     rw [pushed_rows P flag x both]
-    exact ci.trans (leastI x)
-  have peither (x : X) : m₁ + m₂ - c ≤ mass (p x) either := by
+    exact leastI x
+  have peither (x : X) : m₁ + m₂ - iMin ≤ mass (p x) either := by
     rw [pushed_rows P flag x either]
     exact cu.trans (leastU x)
-  choose π πn πr πc πs using coupled_mask p m₁ m₂ c pnn ptotal c₀ c₁ c₂ (cu.trans u₀)
+  choose π πn πr πc πs using coupled_mask p m₁ m₂ iMin pnn ptotal c₀ c₁ c₂ (cu.trans u₀)
     pfirst psecond pboth peither
-  let U (b : Bool) := if b then first else second
-  obtain ⟨norm, _, lf, ls, _⟩ := law_values m₁ m₂ c
-  have upper (b : Bool) : ∀ ⦃a d : Flags⦄, a ∈ U b → a ≤ d → d ∈ U b := by
-    cases b <;> decide
-  have tight (b : Bool) : ∃ x, rowMass P flag x (U b) = ∑ a ∈ U b, law m₁ m₂ c a := by
-    cases b
+  let U : Option Bool → Finset Flags
+    | none => both
+    | some true => first
+    | some false => second
+  obtain ⟨norm, li, lf, ls, _⟩ := law_values m₁ m₂ iMin
+  have upper (event : Option Bool) : ∀ ⦃a d : Flags⦄, a ∈ U event → a ≤ d → d ∈ U event := by
+    rcases event with _ | (_ | _) <;> decide
+  have tight (event : Option Bool) :
+      ∃ x, rowMass P flag x (U event) = ∑ a ∈ U event, law m₁ m₂ iMin a := by
+    rcases event with _ | (_ | _)
+    · exact ⟨xI, hI.trans li.symm⟩
     · exact ⟨x₂, h₂.trans ls.symm⟩
     · exact ⟨x₁, h₁.trans lf.symm⟩
   obtain ⟨w, wn, wt, wi, wr, eq⟩ := table_mass_eq_of_tight_row P Pnn Pinv flag stable
-    (law m₁ m₂ c) (law_nonneg m₁ m₂ c c₀ c₁ c₂ (cu.trans u₀)) norm π πn πr (fun x b => by
+    (law m₁ m₂ iMin) (law_nonneg m₁ m₂ iMin c₀ c₁ c₂ (cu.trans u₀)) norm π πn πr (fun x b => by
       rw [πc]
       apply sum_congr
       · ext y
         simp
       · intro y _
         rfl) πs U upper tight
-  exact ⟨w, wn, wt, wi, wr, (eq true).trans lf, (eq false).trans ls⟩
+  exact ⟨w, wn, wt, wi, wr, (eq (some true)).trans lf, (eq (some false)).trans ls,
+    (eq none).trans li⟩
 
 open Classical in
 private theorem simultaneous_flag_optima_bound (P : X → Y → ℝ)
@@ -522,7 +518,7 @@ section
 variable {G X Y : Type*} [Monoid G] [MulAction G Y] [Fintype X] [Fintype Y]
 
 open Classical in
-/-- A single invariant table law attains both coordinate row minima exactly when their sum
+/-- A single invariant table law attains both coordinate row minima and the intersection minimum exactly when the coordinate sum
 is at most the sum of the least intersection and least union masses. -/
 theorem two_table_masses_attain_row_minima_iff (P : X → Y → ℝ)
     (Pnn : ∀ x y, 0 ≤ P x y) (Pnorm : ∀ x, ∑ y, P x y = 1)
@@ -541,10 +537,10 @@ theorem two_table_masses_attain_row_minima_iff (P : X → Y → ℝ)
       (∀ t, 0 ≤ w t) ∧ (∑ t, w t) = 1 ∧
       (∀ (g : G) t, w (fun x => g • t x) = w t) ∧
       (∀ x y, (∑ t : X → Y, if t x = y then w t else 0) = P x y) ∧
-      tableMass w flag first = m₁ ∧ tableMass w flag second = m₂) ↔
+      tableMass w flag first = m₁ ∧ tableMass w flag second = m₂ ∧ tableMass w flag both = iMin) ↔
     m₁ + m₂ ≤ iMin + uMin := by
   constructor
-  · rintro ⟨w, wn, _, _, wm, e₁, e₂⟩
+  · rintro ⟨w, wn, _, _, wm, e₁, e₂, _⟩
     obtain ⟨xI, hI⟩ := attainI
     obtain ⟨xU, hU⟩ := attainU
     have bound := simultaneous_flag_optima_bound P w wn wm flag xI xU

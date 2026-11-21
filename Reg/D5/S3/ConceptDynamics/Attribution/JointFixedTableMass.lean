@@ -52,7 +52,8 @@ abbrev arena : Arena where
         (∀ t, 0 ≤ w t) ∧ (∑ t, w t) = 1 ∧
         (∀ (g : G) t, w (fun x => g • t x) = w t) ∧
         (∀ x y, (∑ t : X → Y, if t x = y then w t else 0) = P x y) ∧
-        tableMass w flag first = m₁ ∧ tableMass w (R.readout () Y flag) second = m₂) ↔
+        tableMass w flag first = m₁ ∧ tableMass w (R.readout () Y flag) second = m₂ ∧
+        tableMass w flag both = iMin) ↔
       m₁ + m₂ ≤ iMin + uMin)
 
 @[instance_reducible] private def trivialAction (G Y : Type*) [Monoid G] : MulAction G Y where
@@ -84,7 +85,7 @@ private theorem empty_flags_fail : ¬ arena.{g,x,y}.Law emptyFlags := by
   have b (x : X) : rowMass P flag x second = 1 := mass x second (by decide)
   have i (x : X) : rowMass P flag x both = 1 := mass x both (by decide)
   have u (x : X) : rowMass P flag x either = 1 := mass x either (by decide)
-  obtain ⟨w, _, _, _, _, _, impossible⟩ :=
+  obtain ⟨w, _, _, _, _, _, impossible, _⟩ :=
     (law (G := G) P (fun _ _ => zero_le_one) (fun _ => by simp [P]) (fun _ _ _ => rfl)
       flag (fun _ _ => rfl) 1 1 1 1
       (fun x => (a x).symm.le) (fun x => (b x).symm.le)
@@ -139,10 +140,7 @@ def jointRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[2]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-          "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-          "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg",
-          "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
         stateBinder := 11
         functionOperand := false
         stateOperand := none
