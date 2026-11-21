@@ -76,20 +76,89 @@ internal sealed class OlairezQ62Document : IScribeDocumentDefinition
                 DescribeId.Create("olairez-source-conjugacy"),
                 DeclarationHandle.Create(Module + ".source_coordinate_conjugacy"),
                 H("Conjugacy of the original orbit"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Geq, D(3), Comma, Quad,
-                    Forall, Sp, F.Id("j"), InMacro, Mathbb, Grp(F.Id("Z")), Underscore, Grp(F.Id("n")), Colon, Quad,
-                    Delta, Open, Indexed("r", F.Id("j")), Minus, F.Id("c"), Close, Eq,
-                    Indexed("w", Seq(D(1), Minus, F.Id("j"))), Comma, Quad,
-                    Delta, Open, Indexed("f", F.Id("j")), Minus, F.Id("c"), Close, Eq,
-                    Minus, Indexed("w", Seq(D(1), Minus, F.Id("j")))))),
+                StatementSource.FromAuthor(ConjugacyFormula()),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Fix any natural n at least three. Residue zero has label n. The generators’ matrix entries are the row-column formulas from Eq. (2). Matrix-vector multiplication equals the inverse-index action, which respects identity and composition. The generators square to the identity and group membership is equivalent to being a shift or a reflection.")),
-                    Paragraph(Text("The rotation word and the word obtained by appending the fixed reflection send the standard basepoint to the two stated vertex families. Every coordinate of each family follows the formulas for r and f. That fixed reflection sends rotation j to antipode 2 minus j. Using the forward index in place of the inverse fails for the second rotation, and no fixed source reflection pairs each rotation with its own indexed antipode.")),
-                    Paragraph(Text("The orbit equals the union of both families. Embedding the centered hull into ambient coordinates gives exactly the translate of the source hull by the negative center. The linear equivalence takes forward cyclic differences at every index. Here w_k is the vector of ones minus n times the kth coordinate vector. As j ranges over all residues, 1 minus j ranges over every wrap index. The image of the centered hull is the convex hull of all wrap vectors and their negatives."))),
+                    Paragraph(Text("Here Zₙ is the residue ring, Vₙ is its real coordinate space, and Uₙ is the sum-zero subspace. The paper label ℓ and the nonzero column functions C₁ and C₂ use the one-based conventions above. Brackets around a condition give its zero-one indicator. M_g is the permutation matrix and A_g is the inverse-index action. Products of permutations compose from right to left.")),
+                    Paragraph(Text("Gₙ is the source group. The left factor of the word for f_j is the rotation word and its right factor is the fixed reflection. The exponent uses the natural representative of the residue j minus one. The vector ρ is the standard basepoint and Oₙ is its source orbit.")),
+                    Paragraph(Text("The inclusion ι forgets the sum-zero subtype. Qₙ is the source hull, Qₙ⁰ is the centered hull, and r_j⁰ and f_j⁰ are the centered vertices in Uₙ. The center is c, Δ is the cyclic-difference equivalence on Uₙ, and w_k is the vector of ones minus n times the kth coordinate vector. The final convex hull is taken in Uₙ."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Indexed(string name, Formula index) => Seq(F.Id(name), Underscore, Grp(index));
+    private static Formula ConjugacyFormula()
+    {
+        Formula n = F.Id("n"), i = F.Id("i"), j = F.Id("j"), k = F.Id("k"), a = F.Id("a");
+        Formula g = F.Id("g"), h = F.Id("h"), x = F.Id("x"), center = F.Id("c");
+        Formula residues = Indexed(Seq(Mathbb, Grp(F.Id("Z"))), n);
+        Formula coordinates = Indexed(F.Id("V"), n), sumZero = Indexed(F.Id("U"), n);
+        Formula permutations = Call(Op("Sym"), residues);
+        Formula s1 = Indexed(F.Id("s"), D(1)), s2 = Indexed(F.Id("s"), D(2));
+        Formula rotation = Seq(s2, Star, s1), reversal = Seq(s2, Star, s1, Star, s2);
+        Formula word = Seq(Open, rotation, Close, Caret,
+            Grp(Call(Op("val"), Seq(j, Minus, D(1)))));
+        Formula rj = Indexed(F.Id("r"), j), fj = Indexed(F.Id("f"), j);
+        Formula wrap = Indexed(F.Id("w"), Seq(D(1), Minus, j));
+        Formula hull = Indexed(F.Id("Q"), n), centeredHull = Seq(hull, Caret, Grp(D(0)));
+        Formula label(Formula index) => Call(Ell, index);
+        Formula matrix(Formula p) => Indexed(F.Id("M"), p);
+        Formula act(Formula p, Formula v) => Call(Indexed(F.Id("A"), p), v);
+        Formula entry(Formula s, Formula columnFunction) =>
+            Seq(Call(matrix(s), i, j), Eq, OpenBracket, label(j), Eq,
+                Call(columnFunction, n, label(i)), CloseBracket);
+
+        return Disp(new Formula.Aligned([
+            Seq(Amp, All(n, Seq(Mathbb, Grp(F.Id("N")))), n, Geq, D(3), Sp, Implies),
+            Seq(Amp, Open, label(D(0)), Eq, n),
+            Seq(Amp, Land, Sp, Open, All(Seq(i, Comma, j), residues),
+                entry(s1, Indexed(F.Id("C"), D(1))), Sp, Land, Sp,
+                entry(s2, Indexed(F.Id("C"), D(2))), Close),
+            Seq(Amp, Land, Sp, Open, All(g, permutations), All(x, coordinates),
+                matrix(g), x, Eq, act(g, x), Close),
+            Seq(Amp, Land, Sp, Open, All(x, coordinates), act(D(1), x), Eq, x, Close),
+            Seq(Amp, Land, Sp, Open, All(Seq(g, Comma, h), permutations), All(x, coordinates),
+                act(Seq(g, Star, h), x), Eq, act(g, act(h, x)), Close),
+            Seq(Amp, Land, Sp, Open, s1, Star, s1, Eq, D(1), Sp, Land, Sp,
+                s2, Star, s2, Eq, D(1), Close),
+            Seq(Amp, Land, Sp, Open, All(g, permutations),
+                g, Sp, InMacro, Sp, Indexed(F.Id("G"), n), Sp, Iff, Sp,
+                Open, Exists, Sp, In(a, residues), Comma, g, Eq, Call(Op("shift"), a), Close,
+                Sp, Lor, Sp, Open, Exists, Sp, In(a, residues), Comma,
+                g, Eq, Call(Op("reflection"), a), Close, Close),
+            Seq(Amp, Land, Sp, Open, All(j, residues), act(word, Rho), Eq, rj,
+                Sp, Land, Sp, act(Seq(word, Star, Open, reversal, Close), Rho), Eq, fj),
+            Seq(Amp, Quad, Land, Sp, Open, All(i, residues),
+                Call(rj, i), Eq, label(Seq(i, Plus, j, Minus, D(1))), Sp, Land, Sp,
+                Call(fj, i), Eq, n, Plus, D(1), Minus, Call(rj, i), Close, Close),
+            Seq(Amp, Land, Sp, Open, All(j, residues), act(reversal, rj), Eq,
+                Indexed(F.Id("f"), Seq(D(2), Minus, j)), Close),
+            Seq(Amp, Land, Sp, Open, i, Sp, Mapsto, Sp,
+                Call(Rho, Call(Seq(Open, rotation, Close), i)), Close, Sp, Neq, Sp,
+                Indexed(F.Id("r"), D(2))),
+            Seq(Amp, Land, Sp, Neg, Sp, Open, Exists, Sp, In(a, residues), Comma, Sp,
+                All(j, residues), act(Call(Op("reflection"), a), rj), Eq, fj, Close),
+            Seq(Amp, Land, Sp, Indexed(F.Id("O"), n), Eq,
+                Call(Op("ran"), F.Id("r")), Sp, Cup, Sp, Call(Op("ran"), F.Id("f"))),
+            Seq(Amp, Land, Sp, Iota, OpenBracket, centeredHull, CloseBracket, Eq,
+                Open, x, Sp, Mapsto, Sp, x, Minus, center, Close,
+                OpenBracket, hull, CloseBracket),
+            Seq(Amp, Land, Sp, Open, All(x, sumZero), All(i, residues),
+                Call(Call(Iota, Call(Delta, x)), i), Eq,
+                Call(Call(Iota, x), Seq(i, Plus, D(1))), Minus, Call(Call(Iota, x), i), Close),
+            Seq(Amp, Land, Sp, Open, All(j, residues),
+                Call(Delta, Seq(rj, Caret, Grp(D(0)))), Eq, wrap, Sp, Land, Sp,
+                Call(Delta, Seq(fj, Caret, Grp(D(0)))), Eq, Minus, wrap, Close),
+            Seq(Amp, Land, Sp, Delta, OpenBracket, centeredHull, CloseBracket, Eq,
+                Call(Indexed(Op("conv"), Seq(Mathbb, Grp(F.Id("R")))),
+                    Seq(OpenBrace, Pm, Sp, Indexed(F.Id("w"), k), Sp, Mid, Sp,
+                        In(k, residues), CloseBrace)), Close),
+        ]));
+    }
+
+    private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Indexed(Formula value, Formula index) => Seq(value, Underscore, Grp(index));
+    private static Formula Call(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula In(Formula value, Formula domain) => Seq(value, Sp, InMacro, Sp, domain);
+    private static Formula All(Formula variables, Formula domain) =>
+        Seq(Forall, Sp, In(variables, domain), Comma, Sp);
 
     private static DocumentBlock Definition(string id, string selector, string heading, string text,
         bool fromSource = false) =>

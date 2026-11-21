@@ -146,7 +146,7 @@ For each natural n at least three, this multiplicative equivalence sends a permu
 
 **Theorem 1.11 (Full real affine symmetry group).**
 
-$$\forall n\geq3:\quad\Vert\operatorname{AffSym}(Q_{n})\Vert=2n!$$
+$$\begin{aligned}&\forall n \in \mathbb{N}, n\geq3 \implies\\&(\operatorname{aff}_{\mathbb{R}}\left(Q_{n}\right)=P_{n}\\&\land (\forall x \in V_{n}, x \in P_{n} \iff \sum_{i \in \mathbb{Z}_{n}}x_{i}=\frac{n(n+1)}{2})\\&\land (\forall a \in L_{n}, \iota\left(R_{a}\right)=r_{\overline{a}} \land \iota\left(F_{a}\right)=f_{\overline{a}})\\&\land (\forall (\sigma,\varepsilon) \in \operatorname{Sym}\left(L_{n}\right) \times \{1, -1\}, \forall a \in L_{n}, \iota\left(\phi_{(\sigma,\varepsilon)}\left(R_{a}\right)\right)=c+\varepsilon \cdot (\iota\left(R_{\sigma\left(a\right)}\right)-c)\\&\quad\land \iota\left(\phi_{(\sigma,\varepsilon)}\left(F_{a}\right)\right)=c+\varepsilon \cdot (\iota\left(F_{\sigma\left(a\right)}\right)-c))\\&\land (\forall (\sigma,\varepsilon) \in \operatorname{Sym}\left(L_{n}\right) \times \{1, -1\}, \exists! T \in A_{n}, \forall a \in L_{n}, \iota\left(T\left(R_{a}\right)\right)=c+\varepsilon \cdot (\iota\left(R_{\sigma\left(a\right)}\right)-c))\\&\land (\forall T \in A_{n}, \exists! (\sigma,\varepsilon) \in \operatorname{Sym}\left(L_{n}\right) \times \{1, -1\}, \forall a \in L_{n}, \iota\left(T\left(R_{a}\right)\right)=c+\varepsilon \cdot (\iota\left(R_{\sigma\left(a\right)}\right)-c))\\&\land (\forall T \in A_{n}, T\left(C\right)=C)\\&\land (\forall (\sigma,\varepsilon),(\tau,\alpha) \in \operatorname{Sym}\left(L_{n}\right) \times \{1, -1\}, \forall x \in P_{n}, \phi_{(\sigma \circ \tau,\varepsilon\alpha)}\left(x\right)=\phi_{(\sigma,\varepsilon)}\left(\phi_{(\tau,\alpha)}\left(x\right)\right))\\&\land (\forall x \in P_{n}, \iota\left(\phi_{(1,-1)}\left(x\right)\right)=2 \cdot c-\iota\left(x\right))\\&\land \operatorname{card}\left(A_{n}\right)=2 \cdot n!)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezStabilizer.result` (`✓ std3`). ∎
 
@@ -156,11 +156,9 @@ $$\forall n\geq3:\quad\Vert\operatorname{AffSym}(Q_{n})\Vert=2n!$$
 
 *Commentary.*
 
-For every natural n at least three, the affine hull of the original orbit hull is exactly the real hyperplane with coordinate sum n(n + 1) / 2. The intrinsic vertices indexed by each paper label are the original rotation and antipode with that label.
+The ambient coordinate space Vₙ is indexed by residues Zₙ, and Pₙ is the intrinsic source plane with inclusion ι into Vₙ. The hull Qₙ is in Vₙ, and Hₙ is its preimage in Pₙ. Write Aₙ for the group of real affine bijections of Pₙ that carry Hₙ onto itself. The ambient center is c and its point in Pₙ is C.
 
-For every permutation σ of the labels 1 through n and every sign ε, the affine symmetry sends each rotation r_j to c + ε(r_{σ(j)} − c) and each antipode f_j to c + ε(f_{σ(j)} − c). The rotation formulas alone characterize a unique affine symmetry for each pair. Conversely, each affine preserver has a unique such pair.
-
-All preservers fix the center c. Composition is permutation composition and sign multiplication in the same order. The identity permutation with sign minus one is x ↦ 2c − x. The stabilizer has exactly 2n! elements.
+Lₙ consists of the literal paper labels 1 through n. The bar on a label denotes its residue, so label n has residue zero. Rₐ and Fₐ are the intrinsic vertices, and r and f are the original residue-indexed families. The affine map φ for each permutation and sign is the image of that pair under the group equivalence above. The signs in the ambient action formulas act by their real scalars.
 
 The wrap vectors span the sum-zero space, and their only dependence has all coefficients equal. Their signed hull has exactly those signed vertices and has centroid zero. An affine preserver fixes the centroid and permutes the antipodal pairs. The unique dependence forces a common sign across the pairs. The cyclic-difference equivalence carries this action back to the original labels. The result concerns the intrinsic real affine group of the standard-basepoint orbit. The lattice and arbitrary-basepoint questions have separate hypotheses.
 
