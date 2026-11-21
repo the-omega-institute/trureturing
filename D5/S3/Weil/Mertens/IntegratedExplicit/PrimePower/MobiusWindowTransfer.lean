@@ -29,9 +29,10 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
 
 /-- Integrate a uniform log-density estimate on the actual prime-only window. -/
 theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
-    (factor : ℕ → ℝ) (hfactor : ∀ m : ℕ, 2 ≤ m → 0 ≤ factor m)
+    (factor : ℕ → ℝ)
     (retained : ℕ → ℕ → ℝ → ℝ)
-    (hterm : ∀ (m n : ℕ), 2 ≤ n → ∀ {a B : ℝ}, 0 < a → 0 < B →
+    (hterm : ∀ (m : ℕ), 2 ≤ m → ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
+      ∀ {a B : ℝ}, 2 ≤ a → a ≤ B →
       IntervalIntegrable (retained m n) volume (Real.log a) (Real.log B) ∧
       (∫ u in Real.log a..Real.log B, retained m n u) =
         (if n = 2 then 2 * (Real.log B - Real.log a) else
@@ -102,7 +103,7 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
       simp [f, Finset.sum_apply]
     rw [hf]
     exact IntervalIntegrable.sum (f := retained m) (Finset.Icc 2 m) (fun n hn =>
-      (hterm m n (Finset.mem_Icc.mp hn).1 ha₀ hB₀).1)
+      (hterm m hm n hn ha₂ hab).1)
   have hc : IntervalIntegrable (fun _ : ℝ => (2 : ℝ)) volume (Real.log a) (Real.log B) :=
     intervalIntegrable_const
   have hei : IntervalIntegrable e volume (Real.log a) (Real.log B) := hi.sub (hfi.sub hc)
@@ -119,13 +120,13 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a)) := by
     unfold f
     rw [intervalIntegral.integral_finsetSum fun n hn =>
-      (hterm m n (Finset.mem_Icc.mp hn).1 ha₀ hB₀).1]
+      (hterm m hm n hn ha₂ hab).1]
     calc
       _ = ∑ n ∈ Finset.Icc 2 m,
           ((if n = 2 then 2 * (Real.log B - Real.log a) else arithmetic n a B) +
             captured m n a B) :=
         Finset.sum_congr rfl fun n hn =>
-          (hterm m n (Finset.mem_Icc.mp hn).1 ha₀ hB₀).2
+          (hterm m hm n hn ha₂ hab).2
       _ = _ := by
         rw [Finset.sum_add_distrib]
         have hs : Finset.Icc 2 m = insert 2 (Finset.Icc 3 m) := by
@@ -158,7 +159,10 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
   have hle : (∫ u in Real.log a..Real.log B, w u) ≤
       6 * K * factor m * (a ^ (-rate) - B ^ (-rate)) := by
     rw [hw]
-    exact (mul_le_mul_of_nonneg_left hdiv (mul_nonneg hK.le (hfactor m hm))).trans_eq (by ring)
+    have hbound := (abs_nonneg _).trans (hD m hm (Real.log 2) le_rfl)
+    have hfactor_nonneg : 0 ≤ factor m :=
+      nonneg_of_mul_nonneg_right (nonneg_of_mul_nonneg_left hbound (Real.exp_pos _)) hK
+    exact (mul_le_mul_of_nonneg_left hdiv (mul_nonneg hK.le hfactor_nonneg)).trans_eq (by ring)
   refine (?_ : _ ≤ ∫ u in Real.log a..Real.log B, w u).trans hle
   dsimp only [e] at hmono
   rw [intervalIntegral.integral_sub hi (hfi.sub hc), intervalIntegral.integral_sub hfi hc, Hf,
