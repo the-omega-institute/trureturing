@@ -10,11 +10,12 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/ZeroForcing/PathConnectedForcing
   - D5/S3/Combinatorics/Graph/ZeroForcing/StarConnectedForcing
   - D5/S3/Combinatorics/Graph/ZeroForcing/CycleConnectedForcing
+  - D5/S3/Combinatorics/Graph/ZeroForcing/SpiderConnectedForcing
 license: citation-only
 triage: anchor
 ---
 
-# Connected forcing polynomials of the path, the cycle and the star
+# Connected forcing polynomials of paths, cycles, stars and spiders
 
 ## Verified locator
 
@@ -78,3 +79,12 @@ every n other than 0 and 2, so it also holds for n = 1; for n = 0 no set is conn
 n = 2 each single vertex is a connected forcing set, giving Z_c(C_2; x) = 2x + x^2.
 CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n as
 the arcs of at least two vertices, together with the single vertices when n = 2.
+
+SpiderConnectedForcing.result states Proposition 7.11 for k ≥ 3 arms of lengths h_j ≥ 1, as the
+coefficients of x^k (x ∏_j F_{h_j} + Σ_j ∏_{t≠j} F_{h_t}) with F_h = 1 + x + ⋯ + x^{h−1}: the
+generating function of s(j − 1; h_1, …, h_k) is x^{k+1} ∏_j F_{h_j}, and that of
+s(j − 1; h_1, …, h_{ℓ−1}, h_{ℓ+1}, …, h_k) is x^k ∏_{t≠ℓ} F_{h_t}.
+SpiderConnectedForcing.connected_forcing_iff characterizes the connected forcing sets as the
+centre with an initial segment of each arm, at most one arm untouched. The source states
+Proposition 7.11 without k ≥ 3; its proof cites Lemma 4.3, which assumes the graph is not a path,
+and for k ≤ 2 the spider is a path and the formula fails for every choice of arm lengths.
