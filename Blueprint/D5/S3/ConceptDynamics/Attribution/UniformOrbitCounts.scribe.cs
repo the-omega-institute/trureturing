@@ -49,8 +49,8 @@ internal sealed class UniformOrbitCountsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Fiber()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Let a group act on a finite table set T. Choose a finite indexed "
-                        + "family of events E(i) in T and an integer target vector w. The additive "
+                    Paragraph(Text("Let a group act on a finite table set T. Choose an indexed "
+                        + "family of finite events E(i) in T and an integer target vector w. The additive "
                         + "map M has entry M(i, O) equal to the size of the intersection of E(i) "
                         + "with orbit O. Fix a natural degree k.")),
                     Paragraph(Text("The fiber at k w contains a nonnegative integer vector exactly "

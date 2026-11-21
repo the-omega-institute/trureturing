@@ -42,7 +42,7 @@ $$(\exists n \geq 0, \operatorname{M}\left(n\right) = kw) \iff (\exists S, f, \o
 
 *Commentary.*
 
-Let a group act on a finite table set T. Choose a finite indexed family of events E(i) in T and an integer target vector w. The additive map M has entry M(i, O) equal to the size of the intersection of E(i) with orbit O. Fix a natural degree k.
+Let a group act on a finite table set T. Choose an indexed family of finite events E(i) in T and an integer target vector w. The additive map M has entry M(i, O) equal to the size of the intersection of E(i) with orbit O. Fix a natural degree k.
 
 The fiber at k w contains a nonnegative integer vector exactly when there exist a finite seed set S with a group action and an equivariant map f from S to T that realizes the displayed event counts. For every subgroup H and seed s, H fixes s exactly when H fixes f(s).
 
