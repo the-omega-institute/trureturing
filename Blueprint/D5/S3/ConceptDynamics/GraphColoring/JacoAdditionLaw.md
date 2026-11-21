@@ -44,7 +44,21 @@ $$alpha = \operatorname{sqrt}\left(5\right) - 2$$
 
 alpha=sqrt(5)-2, approximately 0.236, equals 2/phi-1, since 2/phi=sqrt(5)-1.
 
-**Theorem 1.4 (The multi-summand correction law).**
+**Theorem 1.4 (Maximum degree at every order).**
+
+$$\forall n \in \mathrm{Nat},\; \operatorname{delta}\left(n\right) = \left\lfloor\frac{n + 2}{phi}\right\rfloor - 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.delta_eq_floor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Johan Kok; Paul Fisher; Bettina Wilkens; Mokhwetha Mabula; Vivian Mukungunugwa (2014). *Characteristics of Finite Jaco Graphs, J_n(1), n in N*. DOI: [10.48550/arXiv.1404.0484](https://doi.org/10.48550/arXiv.1404.0484).
+
+*Commentary.*
+
+For every natural n, delta n=floor((n+2)/phi)-1. For n at least two this is the existing JacoMaximumDegree.result, rewritten through 2/(1+sqrt(5))=1/phi; the same formula appears as Theorem 4.8 of Raso and Kok, arXiv:2611.01554v1, for n at least one. The graphs of order zero and one have at most one vertex, hence maximum degree zero, and floor(2/phi)=floor(3/phi)=1 because 1<phi<2 and phi^2=phi+1.
+
+**Theorem 1.5 (The multi-summand correction law).**
 
 $$\forall s \in \operatorname{Finset}\left(iota\right),\; \forall n \in iota \to \mathrm{Nat},\; \operatorname{delta}\left(\sum_{j in s} (n_{j})\right) - \sum_{j in s} (\operatorname{delta}\left(n_{j}\right)) = \left\lfloor\sum_{j in s} (\operatorname{frac}\left(n_{j}\right)) - (\operatorname{card}\left(s\right) - 1) \cdot alpha\right\rfloor$$
 
@@ -58,7 +72,7 @@ $$\forall s \in \operatorname{Finset}\left(iota\right),\; \forall n \in iota \to
 
 For every finite family of natural orders n_j, j in s, with r=|s| members and total N, the maximum degree of J_N exceeds the sum of the members' maximum degrees by exactly floor(sum_j frac(n_j)-(r-1)alpha). Proof: the existing maximum-degree theorem gives delta n=floor((n+2)/phi)-1 for n at least two; the graphs of order zero and one have at most one vertex and maximum degree zero, which matches floor(2/phi)-1=floor(3/phi)-1=0. Hence delta n=(n+2)/phi-frac(n)-1 as real numbers. Subtracting, the summands' constants (n_j+2)/phi cancel against (N+2)/phi except for (2-2r)/phi, and 2/phi=sqrt(5)-1 turns the remaining constant into -(r-1)alpha. The integer difference therefore equals sum_j frac(n_j)-(r-1)alpha-frac(N), and since frac(N) lies in [0,1) it is the floor of sum_j frac(n_j)-(r-1)alpha. The source states only the two-branch conjecture for two distinct summands at least three, which is false; this law replaces it for any number of summands, including the empty family, where both sides vanish.
 
-**Theorem 1.5 (Two-summand trichotomy and witnesses).**
+**Theorem 1.6 (Two-summand trichotomy and witnesses).**
 
 $$(\forall s \in \operatorname{Finset}\left(iota\right),\; \forall n \in iota \to \mathrm{Nat},\; \operatorname{delta}\left(\sum_{j in s} (n_{j})\right) - \sum_{j in s} (\operatorname{delta}\left(n_{j}\right)) = \left\lfloor\sum_{j in s} (\operatorname{frac}\left(n_{j}\right)) - (\operatorname{card}\left(s\right) - 1) \cdot alpha\right\rfloor) \land ((\forall n \in \mathrm{Nat},\; \forall m \in \mathrm{Nat},\; (\operatorname{delta}\left(n + m\right) - \operatorname{delta}\left(n\right) - \operatorname{delta}\left(m\right) = \left\lfloor\operatorname{frac}\left(n\right) + \operatorname{frac}\left(m\right) - alpha\right\rfloor) \land (((\operatorname{delta}\left(n + m\right) - \operatorname{delta}\left(n\right) - \operatorname{delta}\left(m\right) = -1) \Leftrightarrow (\operatorname{frac}\left(n\right) + \operatorname{frac}\left(m\right) < alpha)) \land (((\operatorname{delta}\left(n + m\right) - \operatorname{delta}\left(n\right) - \operatorname{delta}\left(m\right) = 0) \Leftrightarrow ((alpha \le \operatorname{frac}\left(n\right) + \operatorname{frac}\left(m\right)) \land (\operatorname{frac}\left(n\right) + \operatorname{frac}\left(m\right) < 1 + alpha))) \land ((\operatorname{delta}\left(n + m\right) - \operatorname{delta}\left(n\right) - \operatorname{delta}\left(m\right) = 1) \Leftrightarrow (1 + alpha \le \operatorname{frac}\left(n\right) + \operatorname{frac}\left(m\right)))))) \land ((\operatorname{delta}\left(3 + 11\right) - \operatorname{delta}\left(3\right) - \operatorname{delta}\left(11\right) = -1) \land ((\operatorname{delta}\left(3 + 4\right) - \operatorname{delta}\left(3\right) - \operatorname{delta}\left(4\right) = 0) \land (\operatorname{delta}\left(4 + 6\right) - \operatorname{delta}\left(4\right) - \operatorname{delta}\left(6\right) = 1))))$$
 
@@ -76,6 +90,7 @@ The first clause restates the multi-summand law. For any two orders n,m it reads
 
 - Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.alpha`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.delta`
+- Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.delta_eq_floor`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.frac`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.result`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.sum_law`

@@ -17,6 +17,7 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw
 
 /-
 proof_shape:
+  delta_eq_floor: content
   sum_law: content
   result: content
 escape_witness: the real identity delta n = (n + 2) / phi - frac n - 1, summed over the
@@ -42,7 +43,8 @@ private theorem two_div_phi : 2 / Real.goldenRatio = Real.sqrt 5 - 1 := by
   rw [div_eq_mul_inv, Real.inv_goldenRatio, Real.goldenConj]
   ring
 
-private theorem delta_floor (n : ℕ) :
+/-- The maximum degree of every finite linear Jaco graph, order zero included. -/
+theorem delta_eq_floor (n : ℕ) :
     delta n = ⌊((n : ℝ) + 2) / Real.goldenRatio⌋ - 1 := by
   have hp := Real.goldenRatio_pos
   have hpos : (0 : ℝ) ≤ ((n : ℝ) + 2) / Real.goldenRatio := by positivity
@@ -82,7 +84,7 @@ private theorem delta_floor (n : ℕ) :
 
 private theorem delta_real (n : ℕ) :
     (delta n : ℝ) = ((n : ℝ) + 2) / Real.goldenRatio - frac n - 1 := by
-  rw [delta_floor n, frac, Int.fract]
+  rw [delta_eq_floor n, frac, Int.fract]
   push_cast
   ring
 
@@ -122,7 +124,7 @@ private theorem delta_at (n k : ℕ)
     (hl : (k : ℝ) * Real.goldenRatio ≤ (n : ℝ) + 2)
     (hh : (n : ℝ) + 2 < (k + 1 : ℝ) * Real.goldenRatio) : delta n = k - 1 := by
   have hp := Real.goldenRatio_pos
-  rw [delta_floor n]
+  rw [delta_eq_floor n]
   congr 1
   rw [Int.floor_eq_iff]
   push_cast
