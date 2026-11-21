@@ -22,7 +22,7 @@ proof_shape:
     pair_vanish, result)
   double_self_or_one: bind-only (consumer: pair_vanish)
   zero_fold: bind-only (consumer: result)
-  cyclic_le: content (consumer: cyclicIdempotent_eq)
+  cyclic_le: content (consumers: cyclicIdempotent_eq, CappedUnionStructure.result)
   cyclicIdempotent_eq: content (consumers: pair_vanish, result)
   pair_vanish: content (consumer: result)
   result: content
@@ -41,7 +41,7 @@ private theorem add_eq (x y : Capped U) :
     x + y = ⟨x.support ∪ y.support, ⟨min 2 (x.level.val + y.level.val), by omega⟩⟩ := rfl
 
 /-- The positive cyclic subsemigroup of `x` is `{x, x + x}`. -/
-private theorem cyclic_le (x : Capped U) : (cyclic x : Set (Capped U)) ⊆ {x, x + x} := by
+theorem cyclic_le (x : Capped U) : (cyclic x : Set (Capped U)) ⊆ {x, x + x} := by
   have hclosed : ∀ a ∈ ({x, x + x} : Set (Capped U)), ∀ b ∈ ({x, x + x} : Set (Capped U)),
       a + b ∈ ({x, x + x} : Set (Capped U)) := by
     intro a ha b hb
