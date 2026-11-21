@@ -496,14 +496,6 @@ private def Sign.degree (p : ℕ) : Sign → ℕ
   | .left | .right => 9 * p - 1
   | .leftSquare | .rightSquare => 18 * p - 2
 
-private def Sign.bits (p : ℕ) : Sign → ℕ
-  | .z => if p = 5 then 128 else if p = 6 then 132 else 148
-  | .p => if p = 5 then 256 else if p = 6 then 260 else 293
-  | .discriminant => if p = 5 then 512 else if p = 6 then 520 else 587
-  | .gap => if p = 5 then 75 else if p = 6 then 87 else 98
-  | .left | .right => if p = 5 then 113 else if p = 6 then 130 else 147
-  | .leftSquare | .rightSquare => if p = 5 then 227 else if p = 6 then 261 else 294
-
 private def Sign.budget (p : ℕ) : Sign → ℕ
   | .z => zBudget p
   | .p => pBudget p
@@ -511,6 +503,9 @@ private def Sign.budget (p : ℕ) : Sign → ℕ
   | .gap => 2 * (defectBudget p) ^ 2
   | .left | .right => edgeBudget p
   | .leftSquare | .rightSquare => edgeSquareBudget p
+
+-- The centered digit must strictly exceed the bound on the coefficient norm.
+private def Sign.bits (sign : Sign) (p : ℕ) : ℕ := (sign.budget p).log2 + 1
 
 private def Sign.polynomial [Add R] [Sub R] [Mul R] [Pow R Nat] [NatCast R] [Zero R]
     (sign : Sign) (p : ℕ) (a x y : R) : R :=
@@ -577,9 +572,9 @@ private theorem Sign.controlled (sign : Sign) {p : ℕ} (hp : 0 < p)
     exact mono (sub_bound hEdge hScaled)
       (by simp only [Sign.budget]; ring_nf; omega)
 
-private theorem Sign.budget_lt (sign : Sign) {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) :
-    sign.budget p < 2 ^ sign.bits p := by
-  rcases hp with rfl | rfl | rfl <;> cases sign <;> decide +kernel
+private theorem Sign.budget_lt (sign : Sign) (p : ℕ) :
+    sign.budget p < 2 ^ sign.bits p :=
+  Nat.lt_log2_self
 
 private def Sign.base (sign : Sign) (p : ℕ) : ℕ := 2 ^ (sign.bits p + 1)
 
@@ -608,8 +603,20 @@ set_option maxHeartbeats 0 in
 private theorem Sign.passes_seven (sign : Sign) : sign.check 7 = true := by
   cases sign <;> decide +kernel
 
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_eight (sign : Sign) : sign.check 8 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_nine (sign : Sign) : sign.check 9 = true := by
+  cases sign <;> decide +kernel
+
+set_option maxHeartbeats 0 in
+private theorem Sign.passes_ten (sign : Sign) : sign.check 10 = true := by
+  cases sign <;> decide +kernel
+
 private theorem Sign.ordered_nonneg (sign : Sign) {p : ℕ}
-    (hp : p = 5 ∨ p = 6 ∨ p = 7) (hpass : sign.check p = true) (a x y : ℝ)
+    (hp : 0 < p) (hpass : sign.check p = true) (a x y : ℝ)
     (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     0 ≤ sign.polynomial p a x y := by
   let s : Sparse := ⟨[⟨(1, 0, 0), 1⟩]⟩
@@ -622,7 +629,7 @@ private theorem Sign.ordered_nonneg (sign : Sign) {p : ℕ}
   have hstu := add_bound hst hu
   let poly := sign.polynomial p s (s + t) (s + t + u)
   have hc : Controlled poly.terms (sign.degree p) (sign.budget p) :=
-    sign.controlled (show 0 < p by rcases hp with rfl | rfl | rfl <;> decide) (mono hs (by decide)) (mono hst (by decide)) hstu
+    sign.controlled hp (mono hs (by decide)) (mono hst (by decide)) hstu
   have eval_ordered {R : Type} [CommRing R] (v w z : R) :
       poly.eval v w z = sign.polynomial p v (v + w) (v + w + z) := by
     simp only [poly, Sign.eval_polynomial, eval_add]
@@ -630,12 +637,12 @@ private theorem Sign.ordered_nonneg (sign : Sign) {p : ℕ}
   have he : poly.eval (1 : ℤ) ((sign.base p) : ℤ) (((sign.base p) : ℤ) ^ (sign.degree p + 1)) =
       (sign.encoded p) := eval_ordered (1 : ℤ) ((sign.base p) : ℤ) (((sign.base p) : ℤ) ^ (sign.degree p + 1))
   have h := Sparse.nonneg_of_packed (poly := poly) (d := (sign.degree p)) (w := (sign.bits p)) ha (sub_nonneg.mpr hax) (sub_nonneg.mpr hxy)
-    hc.1 (hc.2.trans_lt (sign.budget_lt hp)) (sign.encoded p)
+    hc.1 (hc.2.trans_lt (sign.budget_lt p)) (sign.encoded p)
     he (beq_iff_eq.mp hpass)
   simpa only [eval_ordered, add_sub_cancel, show a + (x - a) = x by ring,
     show x + (y - x) = y by ring] using h
 
-private theorem ordered_of_check {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem ordered_of_check {p : ℕ} (hp : 0 < p)
     (hpass : ∀ sign : Sign, sign.check p = true) (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     Z p a x y ≤ 0 ∧ P p a x y ≤ 0 ∧ P p a x y ^ 2 ≤ Z p a x y ^ 2 * q p a x y ^ 3 := by
   have hz := Sign.ordered_nonneg .z hp (hpass .z) a x y ha hax hxy
@@ -644,7 +651,7 @@ private theorem ordered_of_check {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   simp only [Sign.polynomial, zPolynomial_eq, pPolynomial_eq, qPolynomial_eq, sub_nonneg] at hz hpSign hd
   exact ⟨hz, hpSign, hd⟩
 
-private theorem ordered_edges_of_check {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+private theorem ordered_edges_of_check {p : ℕ} (hp : 0 < p)
     (hpass : ∀ sign : Sign, sign.check p = true) (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     q p a x y ≤ defect p a x y ^ 2 ∧
     UAt p a x y ≤ 0 ∧ XAt p a x y ^ 2 * q p a x y ≤ UAt p a x y ^ 2 ∧
@@ -663,38 +670,74 @@ private theorem ordered_edges_of_check {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7
 The signs also hold on the closed ordered chamber. -/
 theorem ordered_five (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     Z 5 a x y ≤ 0 ∧ P 5 a x y ≤ 0 ∧ P 5 a x y ^ 2 ≤ Z 5 a x y ^ 2 * q 5 a x y ^ 3 :=
-  ordered_of_check (Or.inl rfl) Sign.passes_five a x y ha hax hxy
+  ordered_of_check (by decide) Sign.passes_five a x y ha hax hxy
 
 /-- The corner and the two edge derivative bounds on the closed ordered chamber. -/
 theorem ordered_edges_five (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     q 5 a x y ≤ defect 5 a x y ^ 2 ∧
     U a x y ≤ 0 ∧ X a x y ^ 2 * q 5 a x y ≤ U a x y ^ 2 ∧
     0 ≤ V a x y ∧ Y a x y ^ 2 * q 5 a x y ≤ V a x y ^ 2 :=
-  ordered_edges_of_check (Or.inl rfl) Sign.passes_five a x y ha hax hxy
+  ordered_edges_of_check (by decide) Sign.passes_five a x y ha hax hxy
 
 /-- Exact ordered scalar signs at degree six. -/
 theorem ordered_six (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     Z 6 a x y ≤ 0 ∧ P 6 a x y ≤ 0 ∧ P 6 a x y ^ 2 ≤ Z 6 a x y ^ 2 * q 6 a x y ^ 3 :=
-  ordered_of_check (Or.inr (Or.inl rfl)) Sign.passes_six a x y ha hax hxy
+  ordered_of_check (by decide) Sign.passes_six a x y ha hax hxy
 
 /-- Exact ordered scalar signs at degree six. -/
 theorem ordered_edges_six (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     q 6 a x y ≤ defect 6 a x y ^ 2 ∧
     UAt 6 a x y ≤ 0 ∧ XAt 6 a x y ^ 2 * q 6 a x y ≤ UAt 6 a x y ^ 2 ∧
     0 ≤ VAt 6 a x y ∧ YAt 6 a x y ^ 2 * q 6 a x y ≤ VAt 6 a x y ^ 2 :=
-  ordered_edges_of_check (Or.inr (Or.inl rfl)) Sign.passes_six a x y ha hax hxy
+  ordered_edges_of_check (by decide) Sign.passes_six a x y ha hax hxy
 
 /-- Exact ordered scalar signs at degree seven. -/
 theorem ordered_seven (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     Z 7 a x y ≤ 0 ∧ P 7 a x y ≤ 0 ∧ P 7 a x y ^ 2 ≤ Z 7 a x y ^ 2 * q 7 a x y ^ 3 :=
-  ordered_of_check (Or.inr (Or.inr rfl)) Sign.passes_seven a x y ha hax hxy
+  ordered_of_check (by decide) Sign.passes_seven a x y ha hax hxy
 
 /-- The degree-seven corner and edge derivative bounds on the closed ordered chamber. -/
 theorem ordered_edges_seven (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
     q 7 a x y ≤ defect 7 a x y ^ 2 ∧
     UAt 7 a x y ≤ 0 ∧ XAt 7 a x y ^ 2 * q 7 a x y ≤ UAt 7 a x y ^ 2 ∧
     0 ≤ VAt 7 a x y ∧ YAt 7 a x y ^ 2 * q 7 a x y ≤ VAt 7 a x y ^ 2 :=
-  ordered_edges_of_check (Or.inr (Or.inr rfl)) Sign.passes_seven a x y ha hax hxy
+  ordered_edges_of_check (by decide) Sign.passes_seven a x y ha hax hxy
+
+/-- The degree-eight mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_eight (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 8 a x y ≤ 0 ∧ P 8 a x y ≤ 0 ∧ P 8 a x y ^ 2 ≤ Z 8 a x y ^ 2 * q 8 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_eight a x y ha hax hxy
+
+/-- The degree-eight corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_eight (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 8 a x y ≤ defect 8 a x y ^ 2 ∧
+    UAt 8 a x y ≤ 0 ∧ XAt 8 a x y ^ 2 * q 8 a x y ≤ UAt 8 a x y ^ 2 ∧
+    0 ≤ VAt 8 a x y ∧ YAt 8 a x y ^ 2 * q 8 a x y ≤ VAt 8 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_eight a x y ha hax hxy
+
+/-- The degree-nine mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_nine (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 9 a x y ≤ 0 ∧ P 9 a x y ≤ 0 ∧ P 9 a x y ^ 2 ≤ Z 9 a x y ^ 2 * q 9 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_nine a x y ha hax hxy
+
+/-- The degree-nine corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_nine (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 9 a x y ≤ defect 9 a x y ^ 2 ∧
+    UAt 9 a x y ≤ 0 ∧ XAt 9 a x y ^ 2 * q 9 a x y ≤ UAt 9 a x y ^ 2 ∧
+    0 ≤ VAt 9 a x y ∧ YAt 9 a x y ^ 2 * q 9 a x y ≤ VAt 9 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_nine a x y ha hax hxy
+
+/-- The degree-ten mixed derivative bounds on the closed ordered chamber. -/
+theorem ordered_ten (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    Z 10 a x y ≤ 0 ∧ P 10 a x y ≤ 0 ∧ P 10 a x y ^ 2 ≤ Z 10 a x y ^ 2 * q 10 a x y ^ 3 :=
+  ordered_of_check (by decide) Sign.passes_ten a x y ha hax hxy
+
+/-- The degree-ten corner and edge derivative bounds on the closed ordered chamber. -/
+theorem ordered_edges_ten (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : x ≤ y) :
+    q 10 a x y ≤ defect 10 a x y ^ 2 ∧
+    UAt 10 a x y ≤ 0 ∧ XAt 10 a x y ^ 2 * q 10 a x y ≤ UAt 10 a x y ^ 2 ∧
+    0 ≤ VAt 10 a x y ∧ YAt 10 a x y ^ 2 * q 10 a x y ≤ VAt 10 a x y ^ 2 :=
+  ordered_edges_of_check (by decide) Sign.passes_ten a x y ha hax hxy
 
 #print axioms ordered_five
 #print axioms ordered_edges_five
@@ -702,5 +745,11 @@ theorem ordered_edges_seven (a x y : ℝ) (ha : 0 ≤ a) (hax : a ≤ x) (hxy : 
 #print axioms ordered_edges_six
 #print axioms ordered_seven
 #print axioms ordered_edges_seven
+#print axioms ordered_eight
+#print axioms ordered_edges_eight
+#print axioms ordered_nine
+#print axioms ordered_edges_nine
+#print axioms ordered_ten
+#print axioms ordered_edges_ten
 
 end RefinedBMV.ExtremeCertificate
