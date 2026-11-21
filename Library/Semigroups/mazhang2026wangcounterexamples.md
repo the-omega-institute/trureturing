@@ -9,6 +9,7 @@ strata_touched:
   - D5/S0/Certificates/Algebra/CappedUnionDavenport
   - D5/S0/Certificates/Algebra/CappedUnionAlgebraicDavenport
   - D5/S0/Certificates/Algebra/CappedUnionGreen
+  - D5/S0/Certificates/Algebra/CappedUnionStructure
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -54,3 +55,8 @@ Schutzenberger group is trivial. The repository states these with the
 principal ideal and Green congruence of WangConjecture326Refutation and the
 Green relation, H-classes and translation groups Gamma of
 WangConjecture53Refutation.
+
+Theorem 1 assembles these facts: S_U is a commutative periodic monoid,
+d(S_U,R)=1, Green H is equality, D_(A,k)(S_U)=|A|+k, the positive cyclic
+semigroup of (A,k) is a group exactly when k is not 1, and every
+Schutzenberger group is trivial.
