@@ -2,6 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/FiniteGroups/Quandles/GenevoisQ94Settlement
    mirror-E: none(waiver:kernel-checked-refutation)
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.claim; result=D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.result; claim=D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.claim
    digest: Two conjugate upper factors in Genevois's two-factor construction intersect in a nonparabolic subgroup. -/
 
