@@ -79,11 +79,14 @@ internal sealed class UniformOrbitCountsDocument : IScribeDocumentDefinition
         Formula k = F.Id("k");
         Formula w = F.Id("w");
         Formula n = F.Id("n");
+        Formula seeds = F.Id("S");
+        Formula f = F.Id("f");
         return Disp(Seq(
             Open, Exists, Sp, n, Sp, Geq, Sp, D(0), Comma, Sp,
             Call("M", n), Sp, Eq, Sp, k, w, Close,
-            Sp, Iff, Sp, Open, Exists, Sp, F.Id("S"), Comma, Sp, F.Id("f"), Comma, Sp,
-            Forall, Sp, i, Comma, Sp,
-            Call("C", Call("E", i)), Sp, Eq, Sp, k, new Formula.Subscript(w, i), Close));
+            Sp, Iff, Sp, Open, Exists, Sp, seeds, Comma, Sp, f, Comma, Sp,
+            Call("Equivariant", f), Sp, Land, Sp, Call("ReflectsFixedness", f), Sp, Land, Sp,
+            Open, Forall, Sp, i, Comma, Sp,
+            Call("C", seeds, f, Call("E", i)), Sp, Eq, Sp, k, new Formula.Subscript(w, i), Close, Close));
     }
 }

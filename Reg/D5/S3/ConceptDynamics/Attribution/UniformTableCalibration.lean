@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
 import Reg.D5.S3.ConceptDynamics.Attribution.FiniteKernelStabilizers
+import Reg.Support.DependentFamily
 
 /-! The uniform construction reads the prescribed marginals on the copies of the tables. -/
 
@@ -121,6 +122,114 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev copyEventSignature : Signature where
+  Params := Type v
+  State T := T → Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ T := T → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def copyEventActual : Realization copyEventSignature.{v} :=
+  realize copyEventSignature (fun _ _ event => event) (fun e => nomatch e)
+
+def copyEventEmpty : Realization copyEventSignature.{v} :=
+  realize copyEventSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+open Classical in
+abbrev copyEventArena : Arena where
+  signature := copyEventSignature.{v}
+  Law R :=
+    ∀ {G : Type u} {T : Type v} [Group G] [MulAction G T] [Fintype T] (n : T → ℕ),
+      (∀ (g : G) t, n (g • t) = n t) →
+      ∃ (S : Type v) (_ : Fintype S) (_ : MulAction G S) (f : S → T),
+        (∀ (g : G) s, f (g • s) = g • f s) ∧
+        (∀ (H : Subgroup G) s, (∀ h : H, (h : G) • s = s) ↔
+          ∀ h : H, (h : G) • f s = f s) ∧
+        ∀ A : T → Prop,
+          (∑ s : S, if R.readout () T A (f s) then 1 else (0 : ℕ)) =
+            ∑ t : T, if A t then n t else 0
+
+private theorem empty_copy_event_fails : ¬ copyEventArena.{u,v}.Law copyEventEmpty := by
+  classical
+  intro law
+  let G := PUnit.{u+1}
+  let T := PUnit.{v+1}
+  let _ : Group G := inferInstanceAs (Group PUnit)
+  let _ : Fintype T := inferInstanceAs (Fintype PUnit)
+  let _ : MulAction G T :=
+    { smul := fun _ t => t
+      one_smul := fun _ => rfl
+      mul_smul := fun _ _ _ => rfl }
+  obtain ⟨S, _, _, f, _, _, counts⟩ :=
+    law (G := G) (T := T) (fun _ => 1) (fun _ _ => rfl)
+  have impossible := counts (fun _ => True)
+  have empty (s : S) : copyEventEmpty.readout () T (fun _ => True) (f s) = False := rfl
+  simp only [empty, ite_false, ite_true, Finset.sum_const_zero] at impossible
+  simp [T] at impossible
+
+def copyEventFamily : Registration copyEventArena.{u,v}
+    (type_of% (@SeedCopies.exact_card_count)) where
+  actual := copyEventActual
+  bridge := Iff.rfl
+  variation := ⟨@SeedCopies.exact_card_count, copyEventEmpty, empty_copy_event_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨copyEventEmpty, ?_, rfl, empty_copy_event_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · intro anchor
+      exact nomatch anchor
+  dependence := by
+    intro _
+    refine ⟨PUnit.{v+1}, fun _ => False, fun _ => True, ?_⟩
+    intro equal
+    exact (Eq.mp (congrFun equal PUnit.unit).symm trivial)
+
+def copyEventRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@SeedCopies.exact_card_count) (Realization copyEventSignature.{v}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.copyEventCounts
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.copyEventFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨copyEventArena.{u,v}⟩
+  objectArena := .source ⟨copyEventArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source copyEventArena.{u,v} ⟨copyEventFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize copyEventSignature (fun _ _ event => event) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
+    definition := none
+    coordinates := #[1]
+    readouts := #[
+      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body",
+          "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg",
+          "arg", "body", "fn", "fn", "fn", "arg", "fn"]
+        stateBinder := 11
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body",
+          "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg",
+          "arg", "body", "fn", "fn", "arg", "arg", "fn"]
+        stateBinder := 11
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

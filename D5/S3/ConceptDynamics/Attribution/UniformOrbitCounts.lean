@@ -17,6 +17,7 @@ open Finset
 
 namespace D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts
 
+open D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees (countedDegrees)
 open UniformTableCalibration (Orbit orbit orbitCount)
 
 universe u v w
@@ -100,10 +101,8 @@ theorem count_seed_fibers_by_orbit {G : Type u} {T : Type v} {S : Type w}
           rw [lifted, (mem_filter.mp ht).2]
         _ = _ := by rw [Finset.sum_const, nsmul_eq_mul, Nat.cast_id]
 
-open D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees (countedDegrees)
-
-/-- Rows count how many members of each orbit lie in the corresponding event. -/
 open Classical in
+/-- Rows count how many members of each orbit lie in the corresponding event. -/
 noncomputable def orbitEventMatrix {G : Type u} {T : Type v} {I : Type w}
     [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
     (E : I → Finset T) : (Orbit G T → ℤ) →+ (I → ℤ) where
@@ -112,10 +111,10 @@ noncomputable def orbitEventMatrix {G : Type u} {T : Type v} {I : Type w}
   map_add' n k := by ext i; simp [mul_add, sum_add_distrib]
 
 
-/-- A feasible integer degree realizes all event counts on one equivariant seed set,
-with subgroup fixedness reflected by the seed map. -/
 set_option maxHeartbeats 900000 in
 open Classical in
+/-- A feasible integer degree realizes all event counts on one equivariant seed set,
+with subgroup fixedness reflected by the seed map. -/
 theorem orbit_event_counts_match_fiber {G : Type u} {T : Type v} {I : Type w}
     [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
     (E : I → Finset T) (w : I → ℤ) (k : ℕ) :
