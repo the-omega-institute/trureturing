@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/CircuitPairInnerProduct.residual_c
 
 *Commentary.*
 
-Take two distinct finite circuits C and D on a totally ordered carrier. If their union has two more elements than its rank, the difference of D with C is a circuit after contracting C, and the difference of C with D is a circuit after contracting D. Deleting one vertex from each exclusive difference gives an independent spanning set of the union. This transports independence of each single deletion to the appropriate contraction.
+Take two finite circuits C and D on a totally ordered carrier. If their union has two more elements than its rank, the difference of D with C is a circuit after contracting C, and the difference of C with D is a circuit after contracting D. Deleting one vertex from each exclusive difference gives an independent spanning set of the union. This transports independence of each single deletion to the appropriate contraction.
 
 **Theorem 1.2 (Orthogonality away from union nullity two).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/CircuitPairInnerProduct.circuitPai
 
 *Commentary.*
 
-For two distinct circuits C and D of a finite ordered matroid, write S for their intersection, P for the difference of C with D, and Q for the difference of D with C. Suppose their union has nullity two. Take augmented integral top cycles in the contractions by C and D. For the first cycle sum its signed restrictions along Q over every choice of a deleted vertex of Q. For the second use P in the same way. Both coordinate families vanish away from bases after contracting the union.
+For two circuits C and D of a finite ordered matroid, write S for their intersection, P for the difference of C with D, and Q for the difference of D with C. Suppose their union has nullity two. Take augmented integral top cycles in the contractions by C and D. For the first cycle sum its signed restrictions along Q over every choice of a deleted vertex of Q. For the second use P in the same way. Both coordinate families vanish away from bases after contracting the union.
 
 The ambient inner product of the lifts equals the inner product of these two families times a fixed sign. Multiply the two signs for sorting S followed by P and S followed by Q, and multiply by minus one to the product of the sizes of P and Q each reduced by one. Shared bases are indexed by the two deleted vertices and a basis in the contraction of the union. The sign accounts for the interchange of the two ordered exclusive parts after the deletions.
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/CircuitPairInnerProduct.circuitPai
 
 *Commentary.*
 
-Let two distinct circuits of a finite ordered matroid have union nullity two. Regard their ambient lift pairing as a rational linear map from the augmented top cycles in the first contraction into the dual of the augmented top cycles in the second. Its image dimension equals the rational augmented top-cycle dimension after contracting the union.
+Let two circuits of a finite ordered matroid have union nullity two. Regard their ambient lift pairing as a rational linear map from the augmented top cycles in the first contraction into the dual of the augmented top cycles in the second. Its image dimension equals the rational augmented top-cycle dimension after contracting the union.
 
 Each sum of signed restrictions, composed with the corresponding residual-circuit lift, multiplies by the size of that circuit. The two sums are therefore surjective over the rationals. The coordinate dot product on the common target has trivial radical.
 

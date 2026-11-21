@@ -122,13 +122,24 @@ private lemma residual_circuit_right {M : Matroid V} {C D : Finset V}
     exact ⟨(twoErases_basis hC hD hx hy' h).indep,
       Set.disjoint_sdiff_right.mono_right Set.sdiff_subset⟩
 
+private lemma circuits_ne_of_union_nullity_two {M : Matroid V} {C D : Finset V}
+    (hC : M.IsCircuit (C : Set V)) (h : UnionNullityTwo M C D) : C ≠ D := by
+  rintro rfl
+  rw [UnionNullityTwo, union_self, ← Set.encard_coe_eq_coe_finsetCard,
+    ← hC.eRk_add_one_eq] at h
+  have hfinite : M.eRk (C : Set V) ≠ ⊤ :=
+    (lt_of_le_of_lt (M.eRk_le_encard _) (by simp)).ne
+  have htwo : (2 : ℕ∞) = 1 := ENat.add_right_injective_of_ne_top hfinite h
+  norm_num at htwo
+
 /-- At nullity two, each exclusive difference is a circuit after contracting the other circuit. -/
 theorem residual_circuits {M : Matroid V} {C D : Finset V}
-    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V)) (hCD : C ≠ D)
+    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V))
     (h : UnionNullityTwo M C D) :
     (M ／ (C : Set V)).IsCircuit (↑(D \ C) : Set V) ∧
-      (M ／ (D : Set V)).IsCircuit (↑(C \ D) : Set V) :=
-  ⟨residual_circuit_right hC hD hCD h,
+      (M ／ (D : Set V)).IsCircuit (↑(C \ D) : Set V) := by
+  have hCD := circuits_ne_of_union_nullity_two hC h
+  exact ⟨residual_circuit_right hC hD hCD h,
     residual_circuit_right hD hC hCD.symm (nullity_comm h)⟩
 
 private lemma missing_vertices_exclusive [Finite V] {M : Matroid V} {C D F : Finset V} {x y : V}
@@ -378,7 +389,7 @@ private lemma sharedFace_weight {M : Matroid V} {C D T : Finset V} {x y : V}
 
 /-- At nullity two the integral cross pairing factors through the contraction of the union. -/
 theorem circuitPairing_factor {M : Matroid V} {C D : Finset V}
-    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V)) (hCD : C ≠ D)
+    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V))
     (h : UnionNullityTwo M C D)
     (w : topCycles (M ／ (C : Set V))) (v : topCycles (M ／ (D : Set V))) :
     circuitPairing C D w.val v.val =
@@ -386,6 +397,7 @@ theorem circuitPairing_factor {M : Matroid V} {C D : Finset V}
         aggregateRestriction (M ／ (C : Set V)) (D \ C) w.val T *
           aggregateRestriction (M ／ (D : Set V)) (C \ D) v.val T := by
   classical
+  have hCD := circuits_ne_of_union_nullity_two hC h
   let bases := (univ : Finset (Finset V)).filter
     (fun (T : Finset V) => (M ／ (↑(C ∪ D) : Set V)).IsBase (T : Set V))
   let shared := (univ : Finset (Finset V)).filter (fun (F : Finset V) =>
@@ -664,7 +676,7 @@ def rationalCircuitPairing (M : Matroid V) (C D : Finset V) :
     ((rationalLift D).comp (rationalTopCycles (M ／ (D : Set V))).subtype)
 
 private lemma rationalPairing_factor {M : Matroid V} {C D : Finset V}
-    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V)) (hCD : C ≠ D)
+    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V))
     (h : UnionNullityTwo M C D)
     (w : rationalTopCycles (M ／ (C : Set V))) (v : rationalTopCycles (M ／ (D : Set V))) :
     rationalCircuitPairing M C D w v =
@@ -680,7 +692,7 @@ private lemma rationalPairing_factor {M : Matroid V} {C D : Finset V}
           (castChain (aggregateRestriction (M ／ (C : Set V)) (D \ C) a.val))
           (castChain (aggregateRestriction (M ／ (D : Set V)) (C \ D) b.val)) := by
     simpa only [dotProduct, castChain, ← Int.cast_mul, ← Int.cast_sum, circuitPairing] using
-      congrArg (fun n : ℤ => (n : ℚ)) (circuitPairing_factor hC hD hCD h a b)
+      congrArg (fun n : ℤ => (n : ℚ)) (circuitPairing_factor hC hD h a b)
   rw [← rationalLift_cast, ← rationalLift_cast, ← rationalAggregate_cast, ← rationalAggregate_cast,
     ha, hb, map_smul, map_smul, map_smul, map_smul] at hint
   simp only [smul_dotProduct, dotProduct_smul, smul_eq_mul] at hint
@@ -711,11 +723,11 @@ private lemma unionRestrictionMap_surjective {M : Matroid V} {C D : Finset V}
 /-- The rank of the rational circuit cross pairing is the top-cycle dimension after
 contracting the union. -/
 theorem circuitPairing_rank {M : Matroid V} {C D : Finset V}
-    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V)) (hCD : C ≠ D)
+    (hC : M.IsCircuit (C : Set V)) (hD : M.IsCircuit (D : Set V))
     (h : UnionNullityTwo M C D) :
     Module.finrank ℚ (LinearMap.range (rationalCircuitPairing M C D)) =
       Module.finrank ℚ (rationalTopCycles (M ／ (↑(C ∪ D) : Set V))) := by
-  obtain ⟨hQ, hP⟩ := residual_circuits hC hD hCD h
+  obtain ⟨hQ, hP⟩ := residual_circuits hC hD h
   let U := rationalTopCycles (M ／ (↑(C ∪ D) : Set V))
   let A : rationalTopCycles (M ／ (C : Set V)) →ₗ[ℚ] U :=
     unionRestrictionMap hQ
@@ -732,7 +744,7 @@ theorem circuitPairing_rank {M : Matroid V} {C D : Finset V}
     intro w
     apply LinearMap.ext
     intro v
-    exact rationalPairing_factor hC hD hCD h w v
+    exact rationalPairing_factor hC hD h w v
   have hinj : Function.Injective G := by
     apply LinearMap.ker_eq_bot.mp
     apply LinearMap.ker_eq_bot'.mpr

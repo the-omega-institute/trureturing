@@ -17,7 +17,7 @@ internal sealed class CircuitPairInnerProductDocument : IScribeDocumentDefinitio
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Take two distinct finite circuits C and D on a totally ordered carrier. "
+                    "Take two finite circuits C and D on a totally ordered carrier. "
                     + "If their union has two more elements than its rank, the difference of D "
                     + "with C is a circuit after contracting C, and the difference of C with D "
                     + "is a circuit after contracting D. Deleting one vertex from each exclusive "
@@ -47,7 +47,7 @@ internal sealed class CircuitPairInnerProductDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For two distinct circuits C and D of a finite ordered matroid, write S "
+                        "For two circuits C and D of a finite ordered matroid, write S "
                         + "for their intersection, P for the difference of C with D, and Q for "
                         + "the difference of D with C. Suppose their union has nullity two. "
                         + "Take augmented integral top cycles in the contractions by C and D. "
@@ -71,7 +71,7 @@ internal sealed class CircuitPairInnerProductDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let two distinct circuits of a finite ordered matroid have union nullity "
+                        "Let two circuits of a finite ordered matroid have union nullity "
                         + "two. Regard their ambient lift pairing as a rational linear map from "
                         + "the augmented top cycles in the first contraction into the dual of "
                         + "the augmented top cycles in the second. Its image dimension equals "
