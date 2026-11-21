@@ -25,5 +25,6 @@ For c below 1/48, choose a finite N with c below this coefficient before taking 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtFejerGap.rh_iff_eventually_fejer_gap`
+- Dependency: [D5/S1/Phase/Interference/DedekindReciprocityFiniteSums](../../../../S1/Phase/Interference/DedekindReciprocityFiniteSums.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtLogSquareGap](MangoldtLogSquareGap.md)
 - Dependency: [D5/S3/Zeros/Repulsion/FejerNearCollisionBound](../../../Zeros/Repulsion/FejerNearCollisionBound.md)

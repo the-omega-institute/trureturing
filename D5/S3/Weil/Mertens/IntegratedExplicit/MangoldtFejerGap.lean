@@ -7,6 +7,7 @@
    digest: Finite Fejér averages yield critical logarithm-squared savings up to every c below 1/48. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtLogSquareGap
+import D5.S1.Phase.Interference.DedekindReciprocityFiniteSums
 import D5.S3.Zeros.Repulsion.FejerNearCollisionBound
 import Mathlib.Algebra.BigOperators.Intervals
 import Batteries.Tactic.OpenPrivate
@@ -25,6 +26,7 @@ open RHSharpActualEnvelope (G actual_G_control coeff_real coeff_norm_hasSum)
 open ActualKernelGlobalStrictPositivity (actual_cosine_hasSum)
 open ActualKernelLocalPositivity (K K_zero)
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
+open D5.S1.Phase.Interference.DedekindReciprocityFiniteSums (sum_Ico_cast sum_Ico_cast_sq)
 open private pair_cosine_sum_eq_normSq from D5.S3.Zeros.Repulsion.FejerNearCollisionBound
 open private phaseDeficit positiveExp negativeExp negativeExp_pos negativeExp_add negativeExp_sub
   negativeExp_mul_positiveExp G_second_difference_le residualConstant residualConstant_nonneg
@@ -74,15 +76,18 @@ private theorem double_sum_succ (N : ℕ) (f : ℝ → ℝ) (hf : f 0 = 0) :
 
 private theorem sum_successors (N : ℕ) :
     (∑ i ∈ range N, ((i : ℝ) + 1)) = N * ((N : ℝ) + 1) / 2 := by
-  induction N with
-  | zero => simp
-  | succ N ih => rw [sum_range_succ, ih, Nat.cast_succ]; ring
-
+  have h := congrArg (fun t : ℚ => (t : ℝ)) (sum_Ico_cast (N + 1))
+  rw [sum_Ico_eq_sum_range] at h
+  push_cast at h
+  simp only [add_comm (1:ℝ)] at h
+  linarith
 private theorem sum_successor_squares (N : ℕ) :
     (∑ i ∈ range N, ((i : ℝ) + 1)^2) = N * ((N : ℝ) + 1) * (2*N+1) / 6 := by
-  induction N with
-  | zero => simp
-  | succ N ih => rw [sum_range_succ, ih, Nat.cast_succ]; ring
+  have h := congrArg (fun t : ℚ => (t : ℝ)) (sum_Ico_cast_sq (N + 1))
+  rw [sum_Ico_eq_sum_range] at h
+  push_cast at h
+  simp only [add_comm (1:ℝ)] at h
+  linarith
 
 private theorem sum_pairDistance (N : ℕ) :
     (∑ j ∈ range N, ∑ k ∈ range N, pairDistance j k) =
