@@ -15,6 +15,9 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMVDimThreeCertificate
   - D5/S3/Quantum/Analysis/RefinedBMVDimThreePairing
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectralValues
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
+  - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
 license: citation-only
 triage: anchor
 ---
@@ -87,6 +90,17 @@ second PSD factor, the paired terms are cubic traces of
 comparison uses the exact dyadic limit from Lemma 2. Section 7's
 unrestricted higher-dimensional question at `(5,3)` allows four or more
 distinct eigenvalues of the first factor.
+
+For matrices of size four, the accompanying proof
+`p-three-dimension-four-proof.txt` derives a comparison using all four
+oriented triples. An ordered-cube-root coefficient inequality bounds each
+squared geometric mean by the squared mixed defect. The phase choice in
+each column gives a nonnegative trace of a positive quadratic form with
+the same repeated-index contribution as the cubic walk. With three
+negative faces, the two negative edges in a column form a path and the
+cycle product determines the real-part sign on its third edge. The
+formal comparison uses this proof for `p = 5, 6, 7` together with Hägele's
+word expansion and dyadic trace-power comparison.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
