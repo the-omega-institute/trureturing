@@ -3,8 +3,8 @@ import D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the Klein model on the open Bloch ball. The readout is the norm of the
-filtered Bloch vector `blochFilter g r` in the bound `‖blochFilter g r‖ ≤ 1` of the clause that the
-filter of an invertible matrix keeps the closed ball. -/
+filtered Bloch vector `blochFilter g r` in the bound `‖blochFilter g r‖ ≤ 1` of the closed-ball
+clause for invertible matrices. -/
 
 namespace Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 
@@ -50,6 +50,7 @@ abbrev arena : Arena where
         blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
+        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ∧
         ρ.readout () () (blochFilter g r) ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
       ∀ r s : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖s‖ < 1 →
         kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s) ∧
@@ -59,7 +60,7 @@ abbrev arena : Arena where
 /-- For the identity matrix and the centre the rejected reading would give `2 ≤ 1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := ((h.2.2.2.1 1 (by simp)).1 0 (by simp)).1
+  have hh := ((h.2.2.2.1 1 (by simp)).1 0 (by simp)).2.1
   change (2 : ℝ) ≤ 1 at hh
   norm_num at hh
 
@@ -112,8 +113,8 @@ def bloch_ball_hyperbolic_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body", "fn",
-        "arg", "fn", "arg"]
+      path := #["arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body",
+        "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

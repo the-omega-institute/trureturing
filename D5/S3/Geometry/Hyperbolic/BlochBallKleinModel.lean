@@ -390,10 +390,11 @@ private theorem exists_isometry :
 upper half-space model `HyperbolicThreeSpace` so that `cosh` of the hyperbolic distance is
 `kleinCosh`. The filter of the identity is the identity. The filter of `g` composes with any
 further filter `h` as the filter of `h * g` at every point where the normaliser of `g` is nonzero.
-The filter of an invertible `g` maps the closed ball into itself, sends a point of the closed
-ball into the open ball exactly when the point lies in the open ball, and preserves `kleinCosh` on
-the open ball. Every point of the open ball is the image of the centre under the filter of a
-positive definite matrix of determinant one. -/
+For an invertible `g` and a point of the closed ball the normaliser is positive; the filter of `g`
+maps the closed ball into itself, sends a point of the closed ball into the open ball exactly when
+the point lies in the open ball, and preserves `kleinCosh` on the open ball. Every point of the
+open ball is the image of the centre under the filter of a positive definite matrix of determinant
+one. -/
 theorem bloch_ball_hyperbolic :
     (∃ Φ : {r : EuclideanSpace ℝ (Fin 3) // ‖r‖ < 1} ≃ HyperbolicThreeSpace,
       ∀ r s, Real.cosh (dist (Φ r) (Φ s)) = kleinCosh r s) ∧
@@ -403,13 +404,15 @@ theorem bloch_ball_hyperbolic :
         blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
+        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ∧
         ‖blochFilter g r‖ ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
       ∀ r s : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖s‖ < 1 →
         kleinCosh (blochFilter g r) (blochFilter g s) = kleinCosh r s) ∧
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
       ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r :=
   ⟨exists_isometry, blochFilter_one, blochFilter_mul, fun g hg =>
-    ⟨norm_blochFilter g hg, fun r s hr hs => kleinCosh_blochFilter g hg r s hr.le hs.le⟩,
+    ⟨fun r hr => ⟨trace_conj_re_pos g hg r hr, norm_blochFilter g hg r hr⟩,
+      fun r s hr hs => kleinCosh_blochFilter g hg r s hr.le hs.le⟩,
     exists_posDef_det_one_blochFilter⟩
 
 end D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
