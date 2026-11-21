@@ -414,33 +414,77 @@ def profileFibreCount {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
   ∑ s, if (f s).1.val.profile = booleanProfile p.val ∧
     (f s).2.val.profile = booleanProfile q.val then 1 else 0
 
+private def seedPushforward {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
+    (x y : Output (Fin (n + 2))) : ℕ :=
+  ∑ s, if (f s).1.val = x ∧ (f s).2.val = y then 1 else 0
+
+private theorem seedPushforward_invariant {n : ℕ} {S : Type} [Fintype S]
+    [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n)
+    (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
+    (g : Acting (Fin (n + 2))) (x y : Output (Fin (n + 2))) :
+    seedPushforward f (g • x) (g • y) = seedPushforward f x y := by
+  unfold seedPushforward
+  rw [← Equiv.sum_comp (MulAction.toPerm g : Equiv.Perm S)
+    (fun s => if (f s).1.val = g • x ∧ (f s).2.val = g • y then (1 : ℕ) else 0)]
+  apply sum_congr rfl
+  intro s _
+  change (if (f (g • s)).1.val = g • x ∧ (f (g • s)).2.val = g • y then 1 else 0) = _
+  rw [equiv]
+  change (if g • (f s).1.val = g • x ∧ g • (f s).2.val = g • y then 1 else 0) = _
+  let move : Equiv.Perm (Output (Fin (n + 2))) := MulAction.toPerm g
+  have inject : ∀ a b : Output (Fin (n + 2)), g • a = g • b ↔ a = b :=
+    fun _ _ => move.injective.eq_iff
+  rw [inject, inject]
+
+private theorem seedPushforward_pooled {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
+    (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
+    pairMass (seedPushforward f) p.val q.val = profileFibreCount f p q := by
+  unfold pairMass seedPushforward profileFibreCount
+  simp_rw [sum_comm (s := (univ : Finset (ZMod 2))) (t := (univ : Finset S))]
+  apply sum_congr rfl
+  intro s _
+  rcases (f s).1.val with ⟨profile₁, colour₁⟩
+  rcases (f s).2.val with ⟨profile₂, colour₂⟩
+  simp only [Output.mk.injEq]
+  by_cases hp : profile₁ = booleanProfile p.val
+  · by_cases hq : profile₂ = booleanProfile q.val
+    · simp only [hp, hq, true_and, ite_true]
+      calc
+        _ = ∑ a : ZMod 2 × ZMod 2, if (colour₁, colour₂) = a then (1 : ℕ) else 0 := by
+          rw [Fintype.sum_prod_type]
+          simp only [Prod.mk.injEq]
+        _ = 1 := by simp
+    · simp [hp, hq]
+  · simp [hp]
+
+/-- Uniform profile marginals force fourfold divisibility in every ordered profile fibre. -/
+theorem profile_fibre_four_dvd {n : ℕ} {S : Type} [Fintype S]
+    [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n)
+    (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s) (k : ℕ)
+    (rows : ∀ p, (∑ q, profileFibreCount f p q) = k)
+    (cols : ∀ q, (∑ p, profileFibreCount f p q) = k)
+    (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
+    4 ∣ profileFibreCount f p q := by
+  let w := seedPushforward f
+  have pooled (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
+      pairMass w p.val q.val = profileFibreCount f p q := seedPushforward_pooled f p q
+  have result := check_coloured_count _ w (seedPushforward_invariant f equiv) k rfl
+    (fun p => (sum_congr (Finset.ext fun q => by simp) (fun q _ => pooled p q)).trans (rows p))
+    (fun q => (sum_congr (Finset.ext fun p => by simp) (fun p _ => pooled p q)).trans (cols q))
+  rw [← pooled]
+  exact result.2 p q
+
 private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
     [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n) (card : Fintype.card S = N)
     (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
     (k : ℕ)
     (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
     (cols : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k) :
-    ∃ w, MatrixRealizes n N w ∧
-      ∀ p q, pairMass w p.val q.val = profileFibreCount f p q := by
-  let w (x y : Output (Fin (n + 2))) : ℕ :=
-    ∑ s : S, if (f s).1.val = x ∧ (f s).2.val = y then 1 else 0
-  have invariant (g : Acting (Fin (n + 2))) (x y : Output (Fin (n + 2))) :
-      w (g • x) (g • y) = w x y := by
-    unfold w
-    rw [← Equiv.sum_comp (MulAction.toPerm g : Equiv.Perm S)
-      (fun s => if (f s).1.val = g • x ∧ (f s).2.val = g • y then (1 : ℕ) else 0)]
-    apply sum_congr rfl
-    intro s _
-    change (if (f (g • s)).1.val = g • x ∧ (f (g • s)).2.val = g • y then 1 else 0) = _
-    rw [equiv]
-    change (if g • (f s).1.val = g • x ∧ g • (f s).2.val = g • y then 1 else 0) = _
-    let move : Equiv.Perm (Output (Fin (n + 2))) := MulAction.toPerm g
-    have inject : ∀ a b : Output (Fin (n + 2)), g • a = g • b ↔ a = b :=
-      fun _ _ => move.injective.eq_iff
-    rw [inject, inject]
+    ∃ w, MatrixRealizes n N w := by
+  let w := seedPushforward f
   have atom (x : slice (n + 2) 0) (y : slice (n + 2) 1) :
       w x.val y.val = ∑ s : S, if (f s).1 = x ∧ (f s).2 = y then 1 else 0 := by
-    unfold w
+    unfold w seedPushforward
     simp only [Subtype.val_inj]
   have rowCount (x : slice (n + 2) 0) :
       (∑ y : slice (n + 2) 1, w x.val y.val) = k := by
@@ -463,7 +507,7 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
         (∑ a : Pair n, if (f s).1 = a.1 ∧ (f s).2 = a.2 then (1 : ℕ) else 0) = 1 := by
       simp [← Prod.ext_iff]
     simp [single, card]
-  refine ⟨w, ⟨invariant, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩, ?_⟩
+  refine ⟨w, seedPushforward_invariant f equiv, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩
   · intro p c
     have h := rowCount (sliceEquiv (n + 2) 0 (p, c))
     rw [← (sliceEquiv (n + 2) 1).sum_comp, Fintype.sum_prod_type] at h
@@ -482,36 +526,6 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
       simp
     · intro p _
       rfl
-  · intro p q
-    unfold pairMass w profileFibreCount
-    simp_rw [sum_comm (s := (univ : Finset (ZMod 2))) (t := (univ : Finset S))]
-    apply sum_congr rfl
-    intro s _
-    rcases (f s).1.val with ⟨profile₁, colour₁⟩
-    rcases (f s).2.val with ⟨profile₂, colour₂⟩
-    simp only [Output.mk.injEq]
-    by_cases hp : profile₁ = booleanProfile p.val
-    · by_cases hq : profile₂ = booleanProfile q.val
-      · simp only [hp, hq, true_and, ite_true]
-        calc
-          _ = ∑ a : ZMod 2 × ZMod 2, if (colour₁, colour₂) = a then (1 : ℕ) else 0 := by
-            rw [Fintype.sum_prod_type]
-            simp only [Prod.mk.injEq]
-          _ = 1 := by simp
-      · simp [hp, hq]
-    · simp [hp]
-
-/-- Every ordered profile pair has a multiple of four seeds in a uniform implementation. -/
-theorem profile_fibre_four_dvd {n : ℕ} {S : Type} [Fintype S]
-    [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n)
-    (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s) (k : ℕ)
-    (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
-    (cols : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k)
-    (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
-    4 ∣ profileFibreCount f p q := by
-  obtain ⟨w, matrix, counts⟩ := seeds_to_matrix f rfl equiv k rows cols
-  rw [← counts]
-  exact matrix.four_dvd.2 p q
 
 /-- Count budgets for an equivariant implementation of two uniform coloured parity laws. -/
 theorem exact_seed_budget (n N : ℕ) :
@@ -523,8 +537,7 @@ theorem exact_seed_budget (n N : ℕ) :
     2 ^ (n + 3) ∣ N := by
   constructor
   · rintro ⟨S, _, _, f, card, equiv, k, rows, cols⟩
-    obtain ⟨w, matrix, _⟩ := seeds_to_matrix f card equiv k rows cols
-    exact (exact_matrix_budget n N).mp ⟨w, matrix⟩
+    exact (exact_matrix_budget n N).mp (seeds_to_matrix f card equiv k rows cols)
   · intro d
     obtain ⟨w, h⟩ := (exact_matrix_budget n N).mpr d
     exact matrix_to_seeds h

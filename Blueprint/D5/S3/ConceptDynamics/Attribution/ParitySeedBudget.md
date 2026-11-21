@@ -22,7 +22,7 @@ For sufficiency, match even and odd profiles with identical tails. Use all four 
 
 **Theorem 1.2 (Every ordered profile pair has a multiple of four seeds).**
 
-$$\forall n \in Nat,\; \forall A \in \operatorname{UniformImplementations}\left(n\right),\; \forall p \in \operatorname{EvenProfiles}\left(n\right),\; \forall q \in \operatorname{OddProfiles}\left(n\right),\; 4 \mid \operatorname{Count}\left(A, p, q\right)$$
+$$\forall n \in Nat,\; \forall A \in \operatorname{UniformProfileImplementations}\left(n\right),\; \forall p \in \operatorname{EvenProfiles}\left(n\right),\; \forall q \in \operatorname{OddProfiles}\left(n\right),\; 4 \mid \operatorname{Count}\left(A, p, q\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParitySeedBudget.profile_fibre_four_dvd` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\forall n \in Nat,\; \forall A \in \operatorname{UniformImplementations}\left(
 
 *Commentary.*
 
-The profiles have n+2 coordinates. A ranges over finite sets of seeds with the coordinate colour action and equivariant readout into the two coloured parity classes. Every coloured output on either side has the same seed count. Count(A,p,q) counts seeds whose readout profiles are p and q, pooling the four possible pairs of colours.
+The profiles have n+2 coordinates. A ranges over finite sets of seeds with the coordinate colour action and equivariant readout into the two coloured parity classes. The marginals after pooling colours are uniform with a common count. Count(A,p,q) counts seeds whose readout profiles are p and q, pooling the four possible pairs of colours.
 
 The count for a given pair is exactly the sum of its four coloured cells in the pushforward matrix. The common marginals transfer fourfold divisibility to the cells incident to the all-ones profile.
 

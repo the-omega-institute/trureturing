@@ -30,7 +30,7 @@ internal sealed class ParitySeedBudgetDocument : IScribeDocumentDefinition
         var n = F.Id("n");
         var count = Seq(D(4), Sp, Mid, Sp, Call("Count", implementation, even, odd));
         var profilePairs = All("p", Call("EvenProfiles", n), All("q", Call("OddProfiles", n), count));
-        return Disp(All("n", F.Id("Nat"), All("A", Call("UniformImplementations", n), profilePairs)));
+        return Disp(All("n", F.Id("Nat"), All("A", Call("UniformProfileImplementations", n), profilePairs)));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -75,8 +75,8 @@ internal sealed class ParitySeedBudgetDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("The profiles have n+2 coordinates. A ranges over finite sets " +
                     "of seeds with the coordinate colour action and equivariant readout into " +
-                    "the two coloured parity classes. Every coloured output on either side " +
-                    "has the same seed count. Count(A,p,q) counts seeds whose readout profiles " +
+                    "the two coloured parity classes. The marginals after pooling colours are " +
+                    "uniform with a common count. Count(A,p,q) counts seeds whose readout profiles " +
                     "are p and q, pooling the four possible pairs of colours.")),
                 Paragraph(Text("The count for a given pair is exactly the sum of its four " +
                     "coloured cells in the pushforward matrix. The common marginals transfer " +

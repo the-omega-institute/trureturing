@@ -123,8 +123,8 @@ abbrev arena : Arena where
   Law R := ∀ {n : ℕ} {S : Type} [hS : Fintype S] [MulAction (Acting (Fin (n + 2))) S]
     (f : S → Pair n) (_ : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
     (k : ℕ)
-    (_ : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
-    (_ : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k)
+    (_ : ∀ p, (∑ q, profileFibreCount f p q) = k)
+    (_ : ∀ q, (∑ p, profileFibreCount f p q) = k)
     (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1),
     4 ∣ R.readout () ⟨n, S, hS, p, q⟩ f
 
@@ -138,8 +138,13 @@ private def oddHead : ParityClass 2 1 := ⟨Fin.cons 1 0, by
 
 private theorem always_one_fails : ¬ arena.Law alwaysOne := by
   intro law
-  obtain ⟨S, _, _, f, _, equiv, k, rows, cols⟩ := (exact_seed_budget 0 8).mpr ⟨1, rfl⟩
-  have h : 4 ∣ (1 : ℕ) := law f equiv k rows cols evenZero oddHead
+  letI : MulAction (Acting (Fin 2)) Empty := {
+    smul := fun _ s => s
+    one_smul := fun _ => rfl
+    mul_smul := fun _ _ _ => rfl }
+  let f : Empty → Pair 0 := Empty.elim
+  have h : 4 ∣ (1 : ℕ) := law f (fun _ s => s.elim) 0
+    (by simp [profileFibreCount]) (by simp [profileFibreCount]) evenZero oddHead
   exact (Nat.not_succ_le_self 1) ((Nat.le_add_right 2 2).trans (Nat.le_of_dvd Nat.one_pos h))
 
 private theorem actual_dependence : ∃ a : signature.Params, ∃ f g : signature.State a,
