@@ -64,8 +64,17 @@ Corollary 3 in Section 2 of the same version states, for every finite noncommuta
 ring R, not assumed unital and with no commutative-centralizer assumption, with z the order of
 the center and n the number of noncentral elements, that n >= z + 2 >= 3 and that the
 common-neighbourhood energy of the commuting graph on the individual noncentral elements is at
-most n(n - z - 2) < 2(n - 1)(n - 2). The earlier CC-ring result of Fasfous–Nath and
-Tak–Dutta–Nath assumes commutative centralizers. The centralizer of a noncentral element is a
-proper additive subgroup, so it has at most |R|/2 elements while containing the center, the
-element and its neighbours. Combined with the neighbourhood-clique bound this gives the
-repository's sharper form E_CN <= n max(n - z - 4, 0).
+most n(n - z - 2) < 2(n - 1)(n - 2). Corollary 4 of the same section gives, for finite
+nonabelian groups and finite noncommutative rings, E_CN <= 2 sum_(x not central)
+max(|C(x)| - z - 2, 0) and, with p the least prime divisor of the order,
+E_CN <= 2n((n + z)/p - z - 1). The commutative-centralizer case was posed by Fasfous and Nath
+as Conjecture 3.12 and proved by Tak, Dutta and Nath as Corollary 5.5.
+
+The repository states these for every finite ring whose multiplication distributes over
+addition, associative or not, with the commutative center {x : xy = yx for all y}; the
+associative statements of Corollaries 3 and 4 are the specialisation. The centralizer of a
+noncentral element is a proper additive subgroup equal to the disjoint union of the center, the
+element and its graph neighbours, so its index is a divisor of |R| exceeding one, and the center
+is a proper additive subgroup of it. This gives the chain
+2 sum max(|C(x)| - z - 2, 0) <= n max(2(n + z)/p - 2z - 4, 0) <= n max(n - z - 4, 0)
+<= n(n - z - 2), together with n >= 3z and z | n.
