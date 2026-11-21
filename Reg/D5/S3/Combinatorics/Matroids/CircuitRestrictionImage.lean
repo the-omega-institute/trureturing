@@ -101,7 +101,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Matroids.CircuitRestrictionImage
     definition := none
-    coordinates := #[0, 1, 4]
+    coordinates := #[0, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "fn", "arg", "arg", "body", "arg", "fn", "arg"]

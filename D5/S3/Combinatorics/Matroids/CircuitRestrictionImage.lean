@@ -11,8 +11,10 @@ module
 public import D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
 public import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.EuclideanDomain.Int
 import Mathlib.Data.Int.GCD
 import Mathlib.Combinatorics.Matroid.Loop
+import Mathlib.RingTheory.PrincipalIdealDomain
 import Mathlib.Tactic.Ring
 
 /-! The signed circuit restriction for a one-element extension of a spanning circuit. -/
@@ -320,23 +322,14 @@ private lemma sum_fibers {ι : Type*} [DecidableEq ι] {S : Finset V} (f : V →
 private lemma gcd_eq_sum {ι : Type*} (S : Finset ι) (w : ι → ℕ) :
     ∃ q : ι → ℤ, ((S.gcd w : ℕ) : ℤ) = ∑ c ∈ S, (w c : ℤ) * q c := by
   classical
-  induction S using Finset.induction_on with
-  | empty => exact ⟨0, by simp⟩
-  | @insert a S ha ih =>
-    obtain ⟨q, hq⟩ := ih
-    let u := Nat.gcdA (w a) (S.gcd w)
-    let v := Nat.gcdB (w a) (S.gcd w)
-    refine ⟨fun c => if c = a then u else q c * v, ?_⟩
-    rw [gcd_insert, sum_insert ha]
-    change ((Nat.gcd (w a) (S.gcd w) : ℕ) : ℤ) = _
-    rw [Nat.gcd_eq_gcd_ab, show Nat.gcdA (w a) (S.gcd w) = u from rfl,
-      show Nat.gcdB (w a) (S.gcd w) = v from rfl, hq, sum_mul]
-    congr 1
-    · simp
-    · apply sum_congr rfl
-      intro c hc
-      have hca : c ≠ a := fun he => ha (he ▸ hc)
-      simp only [ite_eq_right hca, mul_assoc]
+  have hcast (T : Finset ι) : ((T.gcd w : ℕ) : ℤ) = T.gcd (fun c => (w c : ℤ)) := by
+    induction T using Finset.induction_on with
+    | empty => simp
+    | @insert a T ha ih =>
+      rw [gcd_insert, gcd_insert, ← ih, ← Int.coe_gcd, Int.gcd_eq_natAbs, Int.natAbs_natCast, Int.natAbs_natCast]
+      rfl
+  rw [hcast]
+  exact Finset.gcd_eq_sum_mul S (fun c => (w c : ℤ))
 
 /-- The attainable signed restrictions are exactly the multiples of the gcd of the dual
 parallel-class sizes in the spanning circuit. -/
