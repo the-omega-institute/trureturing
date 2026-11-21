@@ -356,7 +356,7 @@ private theorem energy_symm (L : ℕ) (A B : Finset ℕ) : energy L A B = energy
   intro x hx
   rw [Nat.dist_comm]
 
-private theorem int_distance (x y : ℕ) : ((x : ℤ) - (y : ℤ)).natAbs = Nat.dist x y := by
+theorem int_distance (x y : ℕ) : ((x : ℤ) - (y : ℤ)).natAbs = Nat.dist x y := by
   rcases le_total x y with h | h
   · rw [Int.natAbs_natCast_sub_natCast_of_le h, Nat.dist_eq_sub_of_le h]
   · rw [Int.natAbs_natCast_sub_natCast_of_ge h, Nat.dist_eq_sub_of_le_right h]

@@ -21,6 +21,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
+  - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumCertificate
 license: citation-only
 triage: anchor
 ---
@@ -136,6 +137,17 @@ positive-root case. Continuity extends a nonnegative discriminant to
 ties and zero roots. For each first degree, positivity of this scalar
 polynomial implies the product and exponential bounds in arbitrary
 finite dimension when the first matrix has at most three spectral values.
+
+The coefficient certificate proves the required positivity for every positive
+integer degree. Its 12,476 terms are checked against the factored discriminant
+by an injective mixed-radix integer evaluation. The resulting exponential sum
+has 65 affine rates along each log gap. For each pair of prefixes of these rates,
+the associated mixed derivative at the origin is a polynomial in `p - 1`.
+A packed integer sign check certifies its nonnegative coefficients. The
+first-order differential equations for the exponential factors propagate
+the signs along both log gaps. The trace reduction therefore gives the
+product and exponential bounds throughout the three-spectrum class, including
+arbitrary spectral multiplicities and singular positive semidefinite inputs.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
