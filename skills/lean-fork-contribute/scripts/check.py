@@ -83,6 +83,7 @@ def check(args):
                                 root, env=environment, capture=True).stdout.splitlines()
         roots = sorted(set(roots) | {lean_path(module) for module in scribe_inputs})
         targets = " ".join(path.removesuffix(".lean").replace("/", ".") for path in roots)
+        run(["make", "lean-report-prepare", "LEAN_TARGETS=" + targets], root, env=environment)
         run(["make", "lean-report-scoped", "LEAN_TARGETS=" + targets], root, env=environment)
         baseline = scratch / "baseline"
         for path in roots:
