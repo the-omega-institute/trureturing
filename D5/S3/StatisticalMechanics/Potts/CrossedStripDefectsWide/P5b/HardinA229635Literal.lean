@@ -61,7 +61,7 @@ theorem six_labellings (m : ℕ) :
     try apply congrArg (fun x : ℕ => 6 * x)
     apply congrArg Finset.card
     ext A
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, ExactTwo]
+    simp [ExactTwo]
 
 #print axioms six_labellings
 

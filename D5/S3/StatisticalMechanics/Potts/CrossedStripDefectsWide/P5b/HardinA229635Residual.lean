@@ -36,12 +36,15 @@ private theorem scalar_shift (M : Matrix (Fin D) (Fin D) ℤ) (v e : Fin D → �
     scalar M v e (k + t) = dotProduct (forward M v k) ((M ^ t).mulVec e) := by
   simp only [scalar, forward_eq, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, ← pow_add]
 
-private theorem residual_as_power (M : Matrix (Fin D) (Fin D) ℤ) (v e : Fin D → ℤ)
+def residualVector (M : Matrix (Fin D) (Fin D) ℤ) (v : Fin D → ℤ) : Fin D → ℤ :=
+  forward M v 30 - ∑ j : Fin 27, coefficients j • forward M v (29 - j.val)
+
+theorem residual_as_power (M : Matrix (Fin D) (Fin D) ℤ) (v e : Fin D → ℤ)
     (t : ℕ) :
     residual M v e t =
-      dotProduct (forward M v 30 - ∑ j : Fin 27, coefficients j • forward M v (29 - j.val))
-        ((M ^ t).mulVec e) := by
-  simp only [residual, scalar_shift, sub_dotProduct, sum_dotProduct, smul_dotProduct, smul_eq_mul]
+      dotProduct (residualVector M v) ((M ^ t).mulVec e) := by
+  simp only [residual, residualVector, scalar_shift, sub_dotProduct, sum_dotProduct,
+    smul_dotProduct, smul_eq_mul]
 
 private theorem scalar_powers_zero (M : Matrix (Fin D) (Fin D) ℤ) (w e : Fin D → ℤ)
     (hprefix : ∀ t < D, dotProduct w ((M ^ t).mulVec e) = 0) :
