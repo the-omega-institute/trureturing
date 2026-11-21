@@ -107,5 +107,70 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+open Classical in
+abbrev singleShiftArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {I : Type u} [Fintype I] (p : I → Bool) (i : I) (a : ZMod 2),
+    shift p (Pi.single i a) = if R.readout () I p i then 0 else a
+
+private theorem zero_shift_fails : ¬ singleShiftArena.{u}.Law alwaysTrue := by
+  classical
+  intro law
+  let I := PUnit.{u+1}
+  let i : I := PUnit.unit
+  let profile : I → Bool := fun _ => false
+  have original := eval_single profile i (1 : ZMod 2)
+  have modified := law profile i (1 : ZMod 2)
+  have incompatible := original.symm.trans modified
+  have eq : (1 : ZMod 2) = 0 := by simpa [profile, alwaysTrue, realize] using incompatible
+  exact one_ne_zero eq
+
+def singleShiftFamily : Registration singleShiftArena.{u} (type_of% (@eval_single.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@eval_single, alwaysTrue, zero_shift_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨alwaysTrue, ?_, rfl, zero_shift_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := family.dependence
+
+def singleShiftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@eval_single.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.singleShiftProfile
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.singleShiftFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨singleShiftArena.{u}⟩
+  objectArena := .source ⟨singleShiftArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source singleShiftArena.{u} ⟨singleShiftFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ profile => profile) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body",
+        "arg", "fn", "fn", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit

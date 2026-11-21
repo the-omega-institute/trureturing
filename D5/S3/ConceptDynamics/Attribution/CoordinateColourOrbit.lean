@@ -21,7 +21,8 @@ open D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 variable {I : Type*} [Fintype I]
 
 open Classical in
-private theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
+/-- A single coordinate contributes exactly when its profile bit is false. -/
+theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
     shift p (Pi.single i a) = if p i then 0 else a := by
   unfold shift
   rw [sum_eq_single i]
