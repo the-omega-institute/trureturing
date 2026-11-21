@@ -32,11 +32,11 @@ def alwaysOdd : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (d : Fin (n + 2) → ℕ), ∑ i, d i = 2 ^ (n + 1) →
-    (∃ (F : ParityClass (n + 2) 0 ≃ ParityClass (n + 2) 1)
+    ((∃ (F : ParityClass (n + 2) 0 ≃ ParityClass (n + 2) 1)
         (dir : ParityClass (n + 2) 0 → Fin (n + 2)),
       (∀ p, F p = flipToOdd p (dir p)) ∧
         ∀ i, (∑ p, if dir p = i then 1 else (0 : ℕ)) = d i) ↔
-      ∀ i, Even (R.readout () n d i)
+      ∀ i, Even (R.readout () n d i))
 
 private theorem always_odd_fails : ¬ arena.Law alwaysOdd := by
   intro law

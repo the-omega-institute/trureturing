@@ -34,10 +34,12 @@ internal sealed class DirectionMatchingDocument : IScribeDocumentDefinition
                 Call("Value", d, i)));
         var matching = Bind(FormulaQuantifier.Exists, "f", Call("Equiv", evenProfiles, oddProfiles),
             Bind(FormulaQuantifier.Exists, "r", new Formula.TypeArrow(evenProfiles, directions),
-                new Formula.Logic(row, FormulaLogicOperator.And, counts)));
+                new Formula.Logic(Seq(Open, row, Close), FormulaLogicOperator.And,
+                    Seq(Open, counts, Close))));
         var even = Bind(FormulaQuantifier.ForAll, "i", directions,
             Call("Even", Call("Value", d, i)));
-        var law = new Formula.Logic(matching, FormulaLogicOperator.Iff, even);
+        var law = new Formula.Logic(Seq(Open, matching, Close), FormulaLogicOperator.Iff,
+            Seq(Open, even, Close));
         return Disp(Bind(FormulaQuantifier.ForAll, "n", F.Id("Nat"),
             Bind(FormulaQuantifier.ForAll, "d", new Formula.TypeArrow(directions, F.Id("Nat")),
                 new Formula.Logic(Call("Total", n, d), FormulaLogicOperator.Implies,
