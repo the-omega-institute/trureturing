@@ -1,8 +1,8 @@
-# The refined BMV lower bound at first degrees five through seven in every finite dimension
+# The refined BMV lower bound at first degrees five through ten in every finite dimension
 
 ## Abstract
 
-The refined BMV lower bound at first degrees five through seven
+The refined BMV lower bound at first degrees five through ten
 
 **Theorem 1.1 (The spectral-power trace comparison).**
 
@@ -88,11 +88,101 @@ Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bo
 
 For complex Hermitian H and K in any finite dimension, the same word mean on exp H and exp K is bounded below by the trace of exp(7H + 3K). Apply the product comparison to the two exponentials and then use the dyadic trace comparison from Hägele's Lemma 2.
 
+**Theorem 1.7 (Eight copies of the first factor).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_eight`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_eight` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For positive semidefinite complex matrices A and B in any finite dimension, the mean trace of the 165 words with eight copies of A and three of B is at least the trace of the cube of A^(8/3) B. The power of A is defined by spectral calculus. The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof.
+
+**Theorem 1.8 (The exponential comparison at degree eight).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_eight`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_eight` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K is at least the trace of exp(8H + 3K). The product bound combines with Hägele's dyadic trace comparison.
+
+**Theorem 1.9 (Nine copies of the first factor).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_nine`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_nine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For positive semidefinite complex matrices A and B in any finite dimension, the mean trace of the 220 words with nine copies of A and three of B is at least the trace of the cube of A^(9/3) B. The power of A is defined by spectral calculus. The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof.
+
+**Theorem 1.10 (The exponential comparison at degree nine).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_nine`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_nine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K is at least the trace of exp(9H + 3K). The product bound combines with Hägele's dyadic trace comparison.
+
+**Theorem 1.11 (Ten copies of the first factor).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_ten`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_ten` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For positive semidefinite complex matrices A and B in any finite dimension, the mean trace of the 286 words with ten copies of A and three of B is at least the trace of the cube of A^(10/3) B. The power of A is defined by spectral calculus. The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof.
+
+**Theorem 1.12 (The exponential comparison at degree ten).**
+
+Lean statement: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_ten`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_ten` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Hägele (2026). *On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices*. DOI: [10.48550/arXiv.2611.00129](https://doi.org/10.48550/arXiv.2611.00129). URL: <https://arxiv.org/abs/2611.00129v1>.
+
+*Commentary.*
+
+For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K is at least the trace of exp(10H + 3K). The product bound combines with Hägele's dyadic trace comparison.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_eight`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_five`
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_nine`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_seven`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_six`
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_ten`
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_eight`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_five`
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_nine`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_seven`
 - Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_six`
+- Truth anchor: `D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_ten`

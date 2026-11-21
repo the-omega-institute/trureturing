@@ -14,7 +14,7 @@ import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Positivity
 
-/-! # The unrestricted refined BMV comparison at degrees five through seven
+/-! # The unrestricted refined BMV comparison at degrees five through ten
 
 The exact derivative signs give positive semidefiniteness on every finite
 sample, and the centered walks yield the two matrix inequalities.
@@ -393,26 +393,17 @@ structure FiveEdgeSigns : Prop where
 private theorem FiveEdgeSigns.toEdgeSigns (signs : FiveEdgeSigns) : EdgeSigns 5 :=
   ⟨signs.gap, signs.left, signs.right⟩
 
-private theorem edgeSigns_five : EdgeSigns 5 where
-  gap a x y ha hx hy := (ExtremeCertificate.ordered_edges_five a x y ha hx.le hy.le).1
+private theorem edgeSigns_of_ordered
+    (ordered : ∀ a x y : ℝ, 0 ≤ a → a ≤ x → x ≤ y →
+      q p a x y ≤ defect p a x y ^ 2 ∧
+      UAt p a x y ≤ 0 ∧ XAt p a x y ^ 2 * q p a x y ≤ UAt p a x y ^ 2 ∧
+      0 ≤ VAt p a x y ∧ YAt p a x y ^ 2 * q p a x y ≤ VAt p a x y ^ 2) :
+    EdgeSigns p where
+  gap a x y ha hx hy := (ordered a x y ha hx.le hy.le).1
   left a x y ha hx hy := by
-    obtain ⟨_, hu, hsq, _, _⟩ := ExtremeCertificate.ordered_edges_five a x y ha hx.le hy.le
+    obtain ⟨_, hu, hsq, _, _⟩ := ordered a x y ha hx.le hy.le
     exact ⟨hu, hsq⟩
-  right a x y ha hx hy := (ExtremeCertificate.ordered_edges_five a x y ha hx.le hy.le).2.2.2
-
-private theorem edgeSigns_six : EdgeSigns 6 where
-  gap a x y ha hx hy := (ExtremeCertificate.ordered_edges_six a x y ha hx.le hy.le).1
-  left a x y ha hx hy := by
-    obtain ⟨_, hu, hsq, _, _⟩ := ExtremeCertificate.ordered_edges_six a x y ha hx.le hy.le
-    exact ⟨hu, hsq⟩
-  right a x y ha hx hy := (ExtremeCertificate.ordered_edges_six a x y ha hx.le hy.le).2.2.2
-
-private theorem edgeSigns_seven : EdgeSigns 7 where
-  gap a x y ha hx hy := (ExtremeCertificate.ordered_edges_seven a x y ha hx.le hy.le).1
-  left a x y ha hx hy := by
-    obtain ⟨_, hu, hsq, _, _⟩ := ExtremeCertificate.ordered_edges_seven a x y ha hx.le hy.le
-    exact ⟨hu, hsq⟩
-  right a x y ha hx hy := (ExtremeCertificate.ordered_edges_seven a x y ha hx.le hy.le).2.2.2
+  right a x y ha hx hy := (ordered a x y ha hx.le hy.le).2.2.2
 
 /-- Its continuous diagonal value, for every point above a nonnegative center. -/
 theorem kernel_diagonal {a x : ℝ} (ha : 0 ≤ a) (hx : a < x) : kernel a x x = 1 :=
@@ -443,15 +434,33 @@ theorem kernel_deriv_left_deriv_right_nonpos {a x y : ℝ}
 
 /-- The upper block for the (5,3) defect is PSD on every finite sample. -/
 theorem upperPSD_five : ExtremeWalk.UpperPSD.{u} 5 :=
-  upperPSD_of_signs (by decide) edgeSigns_five ExtremeCertificate.ordered_five
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_five)
+    ExtremeCertificate.ordered_five
 
 /-- The upper block for the (6,3) defect is PSD on every finite sample. -/
 theorem upperPSD_six : ExtremeWalk.UpperPSD.{u} 6 :=
-  upperPSD_of_signs (by decide) edgeSigns_six ExtremeCertificate.ordered_six
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_six)
+    ExtremeCertificate.ordered_six
 
 /-- The upper block for the (7,3) defect is PSD on every finite sample. -/
 theorem upperPSD_seven : ExtremeWalk.UpperPSD.{u} 7 :=
-  upperPSD_of_signs (by decide) edgeSigns_seven ExtremeCertificate.ordered_seven
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_seven)
+    ExtremeCertificate.ordered_seven
+
+/-- The upper block for the (8,3) defect is PSD on every finite sample. -/
+theorem upperPSD_eight : ExtremeWalk.UpperPSD.{u} 8 :=
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_eight)
+    ExtremeCertificate.ordered_eight
+
+/-- The upper block for the (9,3) defect is PSD on every finite sample. -/
+theorem upperPSD_nine : ExtremeWalk.UpperPSD.{u} 9 :=
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_nine)
+    ExtremeCertificate.ordered_nine
+
+/-- The upper block for the (10,3) defect is PSD on every finite sample. -/
+theorem upperPSD_ten : ExtremeWalk.UpperPSD.{u} 10 :=
+  upperPSD_of_signs (by decide) (edgeSigns_of_ordered ExtremeCertificate.ordered_edges_ten)
+    ExtremeCertificate.ordered_ten
 
 variable {n : Type u} [Fintype n]
 
@@ -493,6 +502,42 @@ theorem exponential_bound_seven (H K : Matrix n n ℂ)
     trace (exp ((7 : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean 7 (exp H) (exp K) := by
   simpa using ExtremeWalk.exponential_bound_all upperPSD_seven H K hH hK
 
+/-- Product comparison at degree eight for arbitrary finite complex matrices with PSD factors. -/
+theorem product_bound_eight (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace (((A ^ (8 / 3 : ℝ)) * B) ^ 3) ≤ DimThree.wordMean 8 A B := by
+  simpa using ExtremeWalk.product_bound_all upperPSD_eight A B hA hB
+
+/-- Exponential comparison at degree eight for finite complex Hermitian matrices. -/
+theorem exponential_bound_eight (H K : Matrix n n ℂ)
+    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((8 : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean 8 (exp H) (exp K) := by
+  simpa using ExtremeWalk.exponential_bound_all upperPSD_eight H K hH hK
+
+/-- Product comparison at degree nine for arbitrary finite complex matrices with PSD factors. -/
+theorem product_bound_nine (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace (((A ^ (9 / 3 : ℝ)) * B) ^ 3) ≤ DimThree.wordMean 9 A B := by
+  simpa using ExtremeWalk.product_bound_all upperPSD_nine A B hA hB
+
+/-- Exponential comparison at degree nine for finite complex Hermitian matrices. -/
+theorem exponential_bound_nine (H K : Matrix n n ℂ)
+    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((9 : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean 9 (exp H) (exp K) := by
+  simpa using ExtremeWalk.exponential_bound_all upperPSD_nine H K hH hK
+
+/-- Product comparison at degree ten for arbitrary finite complex matrices with PSD factors. -/
+theorem product_bound_ten (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace (((A ^ (10 / 3 : ℝ)) * B) ^ 3) ≤ DimThree.wordMean 10 A B := by
+  simpa using ExtremeWalk.product_bound_all upperPSD_ten A B hA hB
+
+/-- Exponential comparison at degree ten for finite complex Hermitian matrices. -/
+theorem exponential_bound_ten (H K : Matrix n n ℂ)
+    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((10 : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean 10 (exp H) (exp K) := by
+  simpa using ExtremeWalk.exponential_bound_all upperPSD_ten H K hH hK
+
 #print axioms upperPSD_five
 #print axioms product_bound_five
 #print axioms exponential_bound_five
@@ -502,5 +547,14 @@ theorem exponential_bound_seven (H K : Matrix n n ℂ)
 #print axioms upperPSD_seven
 #print axioms product_bound_seven
 #print axioms exponential_bound_seven
+#print axioms upperPSD_eight
+#print axioms product_bound_eight
+#print axioms exponential_bound_eight
+#print axioms upperPSD_nine
+#print axioms product_bound_nine
+#print axioms exponential_bound_nine
+#print axioms upperPSD_ten
+#print axioms product_bound_ten
+#print axioms exponential_bound_ten
 
 end RefinedBMV.Extreme

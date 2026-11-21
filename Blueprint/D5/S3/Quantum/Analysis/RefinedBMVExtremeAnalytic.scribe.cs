@@ -7,8 +7,8 @@ internal sealed class RefinedBMVExtremeAnalyticDocument : IScribeDocumentDefinit
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/HilbertOperators/hagele2026refinedbmv");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The refined BMV lower bound at first degrees five through seven",
-        H("The refined BMV lower bound at first degrees five through seven in every finite dimension"),
+        "The refined BMV lower bound at first degrees five through ten",
+        H("The refined BMV lower bound at first degrees five through ten in every finite dimension"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("refined-bmv-extreme-product-five"),
@@ -86,5 +86,71 @@ internal sealed class RefinedBMVExtremeAnalyticDocument : IScribeDocumentDefinit
                     "For complex Hermitian H and K in any finite dimension, the same word mean on exp H and exp K " +
                     "is bounded below by the trace of exp(7H + 3K). Apply the product comparison to the two exponentials " +
                     "and then use the dyadic trace comparison from Hägele's Lemma 2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-product-eight"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_eight"),
+                H("Eight copies of the first factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For positive semidefinite complex matrices A and B in any finite dimension, " +
+                    "the mean trace of the 165 words with eight copies of A and three of B is at least " +
+                    "the trace of the cube of A^(8/3) B. The power of A is defined by spectral calculus. " +
+                    "The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-exponential-eight"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_eight"),
+                H("The exponential comparison at degree eight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K " +
+                    "is at least the trace of exp(8H + 3K). The product bound combines with Hägele's dyadic trace comparison."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-product-nine"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_nine"),
+                H("Nine copies of the first factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For positive semidefinite complex matrices A and B in any finite dimension, " +
+                    "the mean trace of the 220 words with nine copies of A and three of B is at least " +
+                    "the trace of the cube of A^(9/3) B. The power of A is defined by spectral calculus. " +
+                    "The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-exponential-nine"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_nine"),
+                H("The exponential comparison at degree nine"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K " +
+                    "is at least the trace of exp(9H + 3K). The product bound combines with Hägele's dyadic trace comparison."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-product-ten"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.product_bound_ten"),
+                H("Ten copies of the first factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For positive semidefinite complex matrices A and B in any finite dimension, " +
+                    "the mean trace of the 286 words with ten copies of A and three of B is at least " +
+                    "the trace of the cube of A^(10/3) B. The power of A is defined by spectral calculus. " +
+                    "The coefficient certificate at this degree supplies the ordered derivative signs for the finite interval Gram proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("refined-bmv-extreme-exponential-ten"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic.exponential_bound_ten"),
+                H("The exponential comparison at degree ten"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For Hermitian complex matrices H and K in any finite dimension, the same word mean on exp H and exp K " +
+                    "is at least the trace of exp(10H + 3K). The product bound combines with Hägele's dyadic trace comparison."))),
                 DescribeRole.Theorem))));
 }

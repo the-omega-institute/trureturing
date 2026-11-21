@@ -4,14 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Analyticity of the original lowered D-lip Laurent channel at real boundary points. -/
+   digest: Analyticity, open-lip agreement and conditional A/D overlap of the original D channel. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.FourPointChannelCoefficients
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipCovariance
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipNome
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSectorContinuation
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitChartGerms
 
-/-! Analyticity of the original charge-sector sums and lowered Laurent channel on either D lip. -/
+/-! Analytic continuation of the original D channel and its overlap with the A chart. -/
 
 open Filter Set Metric
 open scoped BigOperators Topology
@@ -26,12 +26,15 @@ open FourPoint.OriginalFourMChargeNormal
 open OriginalChargedRowSource OriginalGaussianSourceRestriction
 open OriginalFourMEnergyCoefficient OriginalGaussianSewnAnalytic OriginalGaussianExternalBlocks
 open OriginalCurrentMetric
-open OriginalFourMPeriodSource (dPeriod dPeriod_analyticAt dPeriod_ne_zero)
+open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit dPeriod dPeriod_analyticAt
+  dPeriod_eq_slit dPeriod_ne_zero)
 open OriginalFourMSignedOverlap (legSign)
-open OriginalFourMSlitMean (analytic_coefficient_slice)
-open OriginalFourMDLipMean (dLipMean dLipMean_joint_analytic dLipCovariance
-  dLipCovariance_joint_analytic)
-open OriginalFourMDLipNome (dNome dNome_analyticAt dNome_subunit_near)
+open OriginalFourMSlitMean (analytic_coefficient_slice coefficient_congr slitMeanEntry
+  slitCovarianceEntry)
+open OriginalFourMDLipMean (dLipMean dLipMean_joint_analytic dLipMean_eventuallyEq
+  dLipCovariance dLipCovariance_joint_analytic dLipCovariance_eq_of_means)
+open OriginalFourMDLipNome (dNome dNome_analyticAt dNome_subunit_near dNome_eq_exp)
+open D5.S3.Analytic.OriginalSlitNome (slitNome slitNome_eq_exp rank24Determinant)
 
 private def dLipMeanEntry (upperA l e : Bool) (p : ℕ) (r : ℂ) : ℂ :=
   coefficient p (fun u => -legSign l * dLipMean upperA e u r / dPeriod upperA r)
@@ -58,6 +61,24 @@ private theorem dLipCovarianceEntry_analyticAt (D : LatticeData) (upperA l k : B
       (0, 0, (t : ℂ)) :=
     analyticAt_const.mul (dLipCovariance_joint_analytic upperA l k x.1 y.1 ht)
   exact analytic_coefficient_slice (analytic_coefficient_slice hf x.2.2) y.2.2
+
+private theorem dLipMeanEntry_eq_slit (upperA l e : Bool) (p : ℕ) {r : ℂ}
+    (hr : r ∈ dLip upperA) :
+    dLipMeanEntry upperA l e p r = slitMeanEntry l e p r := by
+  unfold dLipMeanEntry slitMeanEntry
+  apply coefficient_congr
+  filter_upwards [dLipMean_eventuallyEq upperA e hr] with u hu
+  rw [hu, dPeriod_eq_slit hr]
+
+private theorem dLipCovarianceEntry_eq_slit (D : LatticeData) (upperA l k : Bool)
+    (x y : External D) {r : ℂ} (hr : r ∈ dLip upperA) :
+    dLipCovarianceEntry D upperA l k x y r = slitCovarianceEntry D l k x y r := by
+  unfold dLipCovarianceEntry slitCovarianceEntry
+  apply coefficient_congr
+  filter_upwards [dLipMean_eventuallyEq upperA y.1 hr] with v hv
+  apply coefficient_congr
+  filter_upwards [dLipMean_eventuallyEq upperA x.1 hr] with u hu
+  rw [dLipCovariance_eq_of_means upperA l k x.1 y.1 hr hu hv]
 
 private def dDeterminant (upperA : Bool) (r : ℂ) : ℂ :=
   ((1 - r) ^ (3 : ℕ))⁻¹ * (dPeriod upperA r ^ (12 : ℕ))⁻¹
@@ -126,6 +147,25 @@ theorem dLipChargeSector_analyticAt (D : LatticeData)
     (fun i r hr => ((hB hr).2.2.2.2 i).differentiableAt.differentiableWithinAt)
   exact (hd.analyticOnNhd isOpen_ball) _ (mem_ball_self hδ)
 
+/-- The D-lip and canonical slit sector sums agree at each point on the open lip. -/
+theorem dLipChargeSector_eq_slit (D : LatticeData) (upperA : Bool) (a : ModTwoCharge D)
+    (betaL gammaL betaR gammaR : Exponent D) {r : ℂ} (hr : r ∈ dLip upperA) :
+    dLipChargeSector D upperA a betaL gammaL betaR gammaR r =
+      slitChargeSector D a betaL gammaL betaR gammaR r := by
+  have hNome := (dNome_eq_exp hr).trans (slitNome_eq_exp (dLip_mem_doubleSlit hr)).symm
+  let e := compactExternal D (fourSupport D betaL gammaL betaR gammaR)
+  have hMatrix : dMatrix D upperA e r = slitMatrix D e r := by
+    funext i j
+    cases i <;> cases j <;> exact dLipCovarianceEntry_eq_slit D upperA _ _ _ _ hr
+  have hLinear : dLinear D upperA e r = slitLinear D e r := by
+    funext i
+    cases i <;> exact dLipMeanEntry_eq_slit upperA _ _ _ hr
+  dsimp only [e] at hMatrix hLinear
+  unfold dLipChargeSector slitChargeSector slitChargeTerm
+  apply tsum_congr
+  intro q
+  simp only [dDeterminant, rank24Determinant, dPeriod_eq_slit hr, hNome, hMatrix, hLinear]
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSectorContinuation
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
@@ -134,7 +174,11 @@ open LatticeGeneratingFieldLocality LatticeHalfFock LatticePositiveEnergy
 open LatticeTwistedGroundRealization.SignQuotient
 open FourPoint.FourPointChannelCoefficients (laurent loweredLaurent loweringCutoff)
 open FourPoint.OriginalFourMChargeNormal (projectOccupations)
-open OriginalFourMSectorContinuation (dLipChargeSector dLipChargeSector_analyticAt)
+open OriginalFourMSectorContinuation (dLipChargeSector dLipChargeSector_analyticAt
+  dLipChargeSector_eq_slit)
+open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit eq_near_dLip_of_real_germ)
+open OriginalFourPointChartGluing (Ω U_A U_D)
+open FourPoint.OriginalFourMActualChart (parameter)
 
 private def dLipNumerator (D : LatticeData) (upperA : Bool) (H K : ℕ) (s : ℤ)
     (P Q R S : Oscillator D) (a : ModTwoCharge D) (t : ℂ) : ℂ :=
@@ -177,5 +221,58 @@ theorem dLipChannel_analyticAt (D : LatticeData)
   intro ell _
   exact analyticAt_const.mul (hPow.mul (dLipNumerator_analyticAt D hD upperA H L
     (m + n + r + (ell : ℤ)) P R Q ((oscillatorLower D ^ ell) S) a ht))
+
+private theorem dLipNumerator_eq_slitDiagonal (D : LatticeData) (upperA : Bool)
+    (H K : ℕ) (s : ℤ) (P Q R S : Oscillator D) (a : ModTwoCharge D)
+    {t : ℂ} (ht : t ∈ dLip upperA) :
+    dLipNumerator D upperA H K s P Q R S a t = slitDiagonal D H K s P Q R S a t := by
+  unfold dLipNumerator slitDiagonal
+  simp only [dLipChargeSector_eq_slit D upperA a _ _ _ _ ht]
+
+/-- On the open D lip the lowered D continuation is the canonical slit D channel. -/
+theorem dLipChannel_eq_slit (D : LatticeData) (upperA : Bool)
+    (H K L : ℕ) (m n r : ℤ) (P Q R S : Oscillator D) (b : ModTwoCharge D)
+    {t : ℂ} (ht : t ∈ dLip upperA) :
+    dLipChannel D upperA H K L m n r P Q R S b t = slitChannelD D H K L m n r P Q R S b t := by
+  simp only [dLipChannel, slitChannelD, slitLowered, loweredLaurent, laurent, neg_neg,
+    dLipNumerator_eq_slitDiagonal D upperA _ _ _ _ _ _ _ _ ht]
+
+/-- Real-neighborhood agreement with the actual D continuation gives an
+interior A/D overlap in the physical chart coordinate. -/
+theorem slit_AD_overlap (D : LatticeData) (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (upperA : Bool) (H K L : ℕ) (m n r : ℤ) (P Q R S : Oscillator D) (b : ModTwoCharge D)
+    {t : ℝ} (ht : 1 < t)
+    (hReal : ∀ᶠ s : ℝ in 𝓝 t, slitChannelA D H K (m + n + r) P Q R S b (1 - (s : ℂ)) =
+      dLipChannel D upperA H K L m n r P Q R S b (s : ℂ)) :
+    ∃ y ∈ U_A ∩ U_D, ∀ᶠ z in 𝓝 y,
+      slitChannelA D H K (m + n + r) P Q R S b (parameter .A z) =
+        slitChannelD D H K L m n r P Q R S b (parameter .D z) := by
+  have hmem : 1 - (t : ℂ) ∈ Ω := by
+    refine ⟨?_, sub_ne_zero.mpr (by exact_mod_cast ht.ne)⟩
+    change 1 - (1 - (t : ℂ)) ∈ Complex.slitPlane
+    rw [sub_sub_cancel]
+    exact Complex.ofReal_mem_slitPlane.mpr (zero_lt_one.trans ht)
+  have hA := (slitChannelA_analyticOnNhd D hD H K (m + n + r) P Q R S b _ hmem).comp
+    (f := fun u : ℂ => 1 - u) (analyticAt_const.sub analyticAt_id)
+  obtain ⟨u, hu, he⟩ := eq_near_dLip_of_real_germ upperA hA
+    (dLipChannel_analyticAt D hD upperA H K L m n r P Q R S b ht) hReal
+    (eventuallyEq_nhdsWithin_of_eqOn fun _ hz =>
+      dLipChannel_eq_slit D upperA H K L m n r P Q R S b hz)
+  have hSlit := dLip_mem_doubleSlit hu
+  have hu₀ : u ≠ 0 := Complex.slitPlane_ne_zero hSlit.2
+  have hu₁ : 1 - u ≠ 0 := Complex.slitPlane_ne_zero hSlit.1
+  have hyA : u⁻¹ ∈ U_A := by
+    change u⁻¹ ≠ 0 ∧ 1 - (u⁻¹)⁻¹ ∈ Ω
+    rw [inv_inv]
+    refine ⟨inv_ne_zero hu₀, ?_, hu₁⟩
+    change 1 - (1 - u) ∈ Complex.slitPlane
+    simpa only [sub_sub_cancel] using hSlit.2
+  have hyD : u⁻¹ ∈ U_D := by
+    change u⁻¹ ≠ 0 ∧ (u⁻¹)⁻¹ ∈ Ω
+    rw [inv_inv]
+    exact ⟨inv_ne_zero hu₀, hSlit.1, hu₀⟩
+  have hinv : Tendsto (fun z : ℂ => z⁻¹) (𝓝 (u⁻¹)) (𝓝 u) := by
+    simpa only [inv_inv] using (continuousAt_inv₀ (inv_ne_zero hu₀)).tendsto
+  exact ⟨u⁻¹, ⟨hyA, hyD⟩, hinv.eventually he⟩
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
