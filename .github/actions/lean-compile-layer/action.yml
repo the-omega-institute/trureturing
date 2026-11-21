@@ -39,9 +39,7 @@ runs:
       shell: bash
       run: |
         python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
-        if [[ ! -d .lake/packages/mathlib ]]; then
-          make lean-cache-ensure FULL_BUILD=1
-        fi
+        bash .github/actions/lean-compile-layer/prepare-dependencies.sh
     - if: inputs.stage != 'common'
       uses: ./.github/actions/lean-recover-layer
       with:

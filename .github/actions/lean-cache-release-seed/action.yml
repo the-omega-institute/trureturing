@@ -117,9 +117,7 @@ runs:
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       run: |
-        if [[ ! -d .lake/packages/mathlib ]]; then
-          make lean-cache-ensure FULL_BUILD=1
-        fi
+        bash .github/actions/lean-compile-layer/prepare-dependencies.sh
     - if: inputs.mode == 'parallel'
       uses: ./.github/actions/lean-recover-layer
       with:
