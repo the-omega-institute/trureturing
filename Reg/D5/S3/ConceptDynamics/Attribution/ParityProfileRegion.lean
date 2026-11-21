@@ -32,13 +32,13 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ a : Fin 3 → ℝ,
     (∃ w : Profile → Profile → ℝ, Feasible w ∧ ∀ i, commonMass w i = R.readout () () a i) ↔
-      (∀ i, 0 ≤ a i) ∧ (∀ i, a i ≤ a (i+1) + a (i+2)) ∧ a 0 + a 1 + a 2 ≤ 1
+      (∀ i, a i ≤ a (i+1) + a (i+2)) ∧ a 0 + a 1 + a 2 ≤ 1
 
 private theorem zero_target_fails : ¬ arena.Law zeroTarget := by
   intro law
   let a (i : Fin 3) : ℝ := if i = 0 then 1 else 0
   obtain ⟨w, hw, zero⟩ := (attainable_iff (fun _ => 0)).mpr (by simp)
-  have triangle := ((law a).mp ⟨w, hw, zero⟩).2.1 (0 : Fin 3)
+  have triangle := ((law a).mp ⟨w, hw, zero⟩).1 (0 : Fin 3)
   norm_num [a] at triangle
 
 def family : Registration arena (type_of% (@attainable_iff)) where

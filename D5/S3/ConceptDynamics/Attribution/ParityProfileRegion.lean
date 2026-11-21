@@ -280,7 +280,7 @@ private theorem mixture_mask (c : Fin 4 → ℝ) (i : Fin 4) :
 /-- Exact simultaneous common-flag masses for uniform opposite-parity rows. -/
 theorem attainable_iff (a : Fin 3 → ℝ) :
     (∃ w : Profile → Profile → ℝ, Feasible w ∧ ∀ i, commonMass w i = a i) ↔
-      (∀ i, 0 ≤ a i) ∧ (∀ i, a i ≤ a (i+1) + a (i+2)) ∧
+      (∀ i, a i ≤ a (i+1) + a (i+2)) ∧
         a 0 + a 1 + a 2 ≤ 1 := by
   constructor
   · rintro ⟨w, hw, masses⟩
@@ -298,14 +298,7 @@ theorem attainable_iff (a : Fin 3 → ℝ) :
     have n₂ := mask_nonneg w hw (singletonMask 2)
     have n₃ := mask_nonneg w hw (true,true,true)
     have total := masks_take_total w hw
-    refine ⟨fun i => ?_, fun i => ?_, by linarith⟩
-    · fin_cases i
-      · change 0 ≤ a 0
-        linarith
-      · change 0 ≤ a 1
-        linarith
-      · change 0 ≤ a 2
-        linarith
+    refine ⟨fun i => ?_, by linarith⟩
     · fin_cases i
       · change a 0 ≤ a 1 + a 2
         linarith
@@ -313,7 +306,7 @@ theorem attainable_iff (a : Fin 3 → ℝ) :
         linarith
       · change a 2 ≤ a 0 + a 1
         linarith
-  · rintro ⟨nonneg, triangle, total⟩
+  · rintro ⟨triangle, total⟩
     let c (i : Fin 4) : ℝ :=
       if i = 0 then a 1 + a 2 - a 0
       else if i = 1 then a 2 + a 0 - a 1

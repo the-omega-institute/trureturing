@@ -27,7 +27,7 @@ internal sealed class ParityProfileRegionDocument : IScribeDocumentDefinition
                     Paragraph(Text("Both marginals are fair in each coordinate, so each agreement "
                         + "probability is twice its true-in-both-rows probability. The difference of "
                         + "the coupled profiles can flip one coordinate or all three. Its four masses "
-                        + "are nonnegative and sum to one, which gives the listed inequalities.")),
+                        + "are nonnegative and sum to one, which gives the listed inequalities. The triangle inequalities also imply each coordinate is nonnegative.")),
                     Paragraph(Text("Conversely, choose the single-coordinate flips with probabilities "
                         + "b+c-a, c+a-b and a+b-c. Choose the triple flip with the remaining probability "
                         + "1-a-b-c. Applying the sampled flip to an independent uniform even profile "
@@ -37,9 +37,7 @@ internal sealed class ParityProfileRegionDocument : IScribeDocumentDefinition
     private static Formula Statement() => Disp(Seq(
         F.Id("F"), Open, F.Id("a"), Comma, F.Id("b"), Comma, F.Id("c"), Close,
         Sp, Iff, Sp,
-        D(0), Sp, Leq, Sp, F.Id("a"), Sp, Land, Sp, D(0), Sp, Leq, Sp, F.Id("b"),
-        Sp, Land, Sp, D(0), Sp, Leq, Sp, F.Id("c"),
-        Sp, Land, Sp, F.Id("a"), Sp, Leq, Sp, F.Id("b"), Sp, Plus, Sp, F.Id("c"),
+        F.Id("a"), Sp, Leq, Sp, F.Id("b"), Sp, Plus, Sp, F.Id("c"),
         Sp, Land, Sp, F.Id("b"), Sp, Leq, Sp, F.Id("c"), Sp, Plus, Sp, F.Id("a"),
         Sp, Land, Sp, F.Id("c"), Sp, Leq, Sp, F.Id("a"), Sp, Plus, Sp, F.Id("b"),
         Sp, Land, Sp, F.Id("a"), Sp, Plus, Sp, F.Id("b"), Sp, Plus, Sp, F.Id("c"),
