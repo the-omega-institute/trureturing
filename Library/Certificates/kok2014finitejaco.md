@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw
   - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
+  - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -93,4 +94,17 @@ Delta_n to R_t with t=n-Delta_n, of one, two or three vertices, with exact
 singleton criteria. The request attributes that description to Patel's
 solution posted on MathDB; MathDB refuses automated fetches, and those answers
 were not inspected, so they may already settle Lemma 2.2 and no priority is
+claimed.
+
+## Progressions of orders
+
+The first open problem on printed page 11 records that the maximum degree of
+J_(5k)(1) is 3k for 5k in [1,44] and 3k+1 for 5k in [45,99], and asks for a
+partitioning of the orders that closes this pattern. The repository proves that for all d and k,
+Delta(dk)=floor(d/phi)k+floor(beta_d k+alpha), where beta_d is the fractional
+part of d/phi and alpha=sqrt(5)-2, and gives the exact range of k for each
+value of the correction. For d=5 the correction equals q exactly on the blocks
+[5k_q,5k_(q+1)-1] (the first starting at 1), with k_q=floor((5q-1)phi)+3q;
+these blocks partition the positive integers.
+Possible answers posted on MathDB were not inspected, so no priority is
 claimed.
