@@ -78,7 +78,7 @@ If i and j are both below 10, the entry is ProperTransfer.T i j. If i is below 1
 
 If i and j are both in 10 through 19, the entry is ProperTransfer.T (i − 10) (j − 10). If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the new 22 by 10 table for rows with one horizontal defect. Every other entry is 0.
 
-HardinA229457StripClasses.transition_counts pins the entries of the two new integer tables to the successor sums.
+HardinA229457StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean#L83-L116).
 
 **Definition 1.6 (initial).**
 
@@ -110,7 +110,7 @@ $$\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{terminal}
 
 *Commentary.*
 
-This one by 42 row vector accepts precisely residual budget zero. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for the rows with a horizontal defect.
+For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. The vector has 42 integer coordinates. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for the rows with a horizontal defect.
 
 **Definition 1.8 (W).**
 
@@ -128,7 +128,7 @@ For k : Fin 26 and j : Fin 42, use their natural values in the index arithmetic.
 
 For j at least 10 and k = 0, W k j is initial j. For j at least 10 and k at least 1, W k j is at row k − 1 and column j − 10 of the new 25 by 32 integer table.
 
-HardinA229457StripPowers.steps pins the new rows by giving the initial row and the product of each preceding row with T.
+HardinA229457StripPowers.steps gives the initial row and the product of each preceding row with T. The 25 by 32 table is the literal tail of the Fin.cons argument to [W](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean#L141).
 
 ## References
 
