@@ -6,7 +6,7 @@
    utility: none
    digest: Closed-private witnesses and labelled one-apex trapezohedral configurations. -/
 
-import D5.S3.Combinatorics.Graph.DominatingSetAverage
+import D5.S3.ConceptDynamics.GraphColoring.GraphCoverDomination
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Combinatorics.SimpleGraph.VertexCover
 
@@ -402,7 +402,8 @@ private theorem alphaSet_admissible_with_interior_iff {n : ℕ} (hn : 3 ≤ n) (
         | a k => simp [graph, adjacent] at hwt
         | b k => exact congrArg b ht
 
-private theorem rotate_twice_ne {n : ℕ} (hn : 3 ≤ n) (i : Fin n) :
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29985.
+theorem rotate_twice_ne {n : ℕ} (hn : 3 ≤ n) (i : Fin n) :
     finRotate n (finRotate n i) ≠ i := by
   letI : NeZero n := ⟨by omega⟩
   intro h
