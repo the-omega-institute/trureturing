@@ -136,6 +136,80 @@ def gramRankLE_iff_hasFeatureRank_registration :
   familyRecord := none
   options := #[] }
 
+/-! The target rank `s` in the conclusion `C.HasFeatureRank s` of `hasFeatureRank_mono`; the
+rejected reading `0` fails on the one-point structure, which has feature rank one but not zero. -/
+namespace MonoBound
+
+def actual : Realization RankBound.signature.{u} :=
+  realize RankBound.signature (fun _ _ s => s) (fun e => nomatch e)
+
+def constant : Realization RankBound.signature.{u} :=
+  realize RankBound.signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+/-- Retain the complete carrier, structure, rank and hypothesis telescope of
+`hasFeatureRank_mono`. -/
+abbrev arena : Arena where
+  signature := RankBound.signature.{u}
+  Law rd := ∀ {M : Type u} {C : TernaryComparison M} {r s : ℕ}, r ≤ s → C.HasFeatureRank r →
+    C.HasFeatureRank (rd.readout () ⟨M, C⟩ s)
+
+theorem rejected_law : ¬ arena.{u}.Law constant := fun h =>
+  onePoint_not_hasFeatureRank_zero (h (C := onePoint.{u}) (le_refl 1) onePoint_hasFeatureRank_one)
+
+theorem dependence : ObservationalDependence RankBound.signature.{u} actual := by
+  intro i
+  cases i
+  exact ⟨⟨ULift.{u} Unit, onePoint⟩, 0, 1, by decide⟩
+
+abbrev sourceStatement : Prop := type_of% @hasFeatureRank_mono.{u}
+
+def source_registration : Registration arena.{u} sourceStatement.{u} where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@hasFeatureRank_mono.{u}, constant, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨constant, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end MonoBound
+
+def hasFeatureRank_mono_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@hasFeatureRank_mono.{u}) (Realization RankBound.signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.GramRankFeatureMap.hasFeatureRank_mono_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.GramRankFeatureMap.MonoBound.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨MonoBound.arena.{u}⟩
+  objectArena := .source ⟨MonoBound.arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source MonoBound.arena.{u} ⟨MonoBound.source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize RankBound.signature.{u} (fun _ _ s => s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.GramRankFeatureMap
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 
 end Reg.D5.S3.Quantum.AURICOmega.GramRankFeatureMap

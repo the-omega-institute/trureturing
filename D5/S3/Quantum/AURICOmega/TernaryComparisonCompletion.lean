@@ -77,13 +77,6 @@ private lemma lt_kappa_of_dist_lt {a b : unitary ℍ[ℝ]} {ε : ℝ} (h : dist 
   have h2 := h.trans_le (min_le_right 1 ε)
   nlinarith
 
-/-- The reading of the unit quaternions is continuous in both arguments. -/
-private lemma continuous_kappa :
-    Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] => quaternionModel.kappa p.1 p.2 := by
-  change Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
-    (1 + ⟪((p.1 : unitary ℍ[ℝ]) : ℍ[ℝ]), ((p.2 : unitary ℍ[ℝ]) : ℍ[ℝ])⟫_ℝ) / 2
-  fun_prop
-
 /-- Chains with steps in a set `S` of unit quaternions extend to chains with steps in its
 closure: a point of the closure has points of `S` at reading close to one. -/
 private lemma chain_closure (S : Set (unitary ℍ[ℝ]))
@@ -145,12 +138,6 @@ private lemma denseRange_of_chainConnected {M : Type*} (C : TernaryComparison M)
     rw [Function.comp_apply, hw, mul_inv_cancel_left]
   rw [hv]
   exact (mul_left_surjective (v o)).denseRange.comp hd (by fun_prop)
-
-/-- The unit three-sphere is preconnected. -/
-private lemma preconnectedSpace_unitary : PreconnectedSpace (unitary ℍ[ℝ]) :=
-  Subtype.preconnectedSpace (by
-    rw [coe_unitary_eq_sphere]
-    exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
 
 /-- In a dense image, any two points are joined by chains of steps of distance less than any
 `δ > 0`: on the connected unit sphere, the relation "points of the image within `δ / 3` of `a`
@@ -270,7 +257,7 @@ theorem exists_subgroupModel_not_readingComplete :
   have h3 : (subgroupModel H).TouchesZero := fun ε hε => by
     obtain ⟨a, b, hab⟩ := quaternionModel_touchesZero ε hε
     obtain ⟨p, ⟨hp1, hp2⟩, hp⟩ := (hHd.prod hHd).exists_mem_open
-      (isOpen_lt continuous_kappa continuous_const) ⟨(a, b), hab⟩
+      (isOpen_lt continuous_kappa_quaternionModel continuous_const) ⟨(a, b), hab⟩
     exact ⟨⟨p.1, hp1⟩, ⟨p.2, hp2⟩, hp⟩
   have h4 : (subgroupModel H).HasFeatureRank 5 := by
     obtain ⟨φ, hφ⟩ := quaternionModel_hasFeatureRank_five

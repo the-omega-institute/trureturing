@@ -34,11 +34,6 @@ universe u
 /-- The unit quaternions in universe `u`. -/
 abbrev Quat : Type u := ULift.{u} (unitary ℍ[ℝ])
 
-theorem preconnectedSpace_unitary : PreconnectedSpace (unitary ℍ[ℝ]) :=
-  Subtype.preconnectedSpace (by
-    rw [coe_unitary_eq_sphere]
-    exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
-
 local instance : PreconnectedSpace Quat.{u} := by
   have := preconnectedSpace_unitary
   refine ⟨?_⟩

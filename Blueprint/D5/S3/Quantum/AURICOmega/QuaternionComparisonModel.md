@@ -136,12 +136,38 @@ $$\operatorname{HasFeatureRank}\left(\operatorname{quaternionModel}, 5\right)$$
 
 The feature map sends q to (1 / sqrt 2) * (1, re q, imI q, imJ q, imK q) in Euclidean five-space. The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q.
 
+**Lemma 1.12 (The unit quaternions are preconnected).**
+
+$$\operatorname{PreconnectedSpace}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.preconnectedSpace_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With the subspace topology of the quaternions, the group of unit quaternions is a preconnected space. By the lemma that the unit quaternions form the unit sphere, it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere in a real normed space of dimension greater than one is preconnected.
+
+**Lemma 1.13 (The reading of the unit quaternion model is continuous).**
+
+$$\operatorname{Continuous}\left((p: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \times \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{kappa}\left(\operatorname{quaternionModel}, p.1, p.2\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reading of quaternionModel is (x, y) -> (1 + <x, y>) / 2, where <x, y> is the real inner product of the quaternions. The inclusion of the unit quaternions into the quaternions is continuous and the real inner product is continuous, so the reading is continuous on pairs of unit quaternions.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.coe_unitary_eq_sphere`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.feature`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_eq_components`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_feature`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.preconnectedSpace_unitary`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_chainConnected`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_hasFeatureRank_five`
