@@ -8,7 +8,7 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none, legacy, auto, release, parallel]
+        options: [complete, partial, none, legacy, auto, release, parallel, checkpoint-probe]
         required: true
       volume_test_id:
         description: Shared identifier for two verification snapshots using reusable physical volumes
@@ -33,6 +33,46 @@ permissions: {}
 # This native integration event verifies the Lean-cache publication and restore
 # programs. It is separate from the required CI workflows.
 jobs:
+  probe-common:
+    name: Interrupt and recover the shared compile layer
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'checkpoint-probe' && github.ref_protected && startsWith(github.ref_name, 'diagnostic/lean-compile-progress-31553')
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+    permissions: {contents: read, actions: read}
+    env:
+      LEAN_LAYER_INTERRUPT_PROBE: 'true'
+      LEAN_LAYER_TARGETS: &probe_targets >-
+        D5.S0.Tower.GoldenGapZeckendorf
+        D5.S0.Tower.Champions.GoldenSurvivorTubes
+        D5.S0.Tower.MetricGeometry.GoldenSurvivorSet
+        D5.S0.Tower.Champions.GoldenAsymptotic
+    steps:
+      - uses: actions/checkout@v5
+        with: {ref: "${{ github.sha }}", persist-credentials: false}
+      - run: python3 .github/scripts/install-tools.py
+      - uses: ./.github/actions/lean-compile-layer
+        with: {stage: common}
+
+  probe-worker:
+    name: Interrupt and recover an exclusive compile layer
+    needs: probe-common
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+    permissions: {contents: read, actions: read}
+    env:
+      LEAN_LAYER_INTERRUPT_PROBE: 'true'
+      LEAN_LAYER_TARGETS: *probe_targets
+    steps:
+      - uses: actions/checkout@v5
+        with: {ref: "${{ github.sha }}", persist-credentials: false}
+      - run: python3 .github/scripts/install-tools.py
+      - uses: ./.github/actions/lean-compile-layer
+        with: {stage: '0'}
+      - name: Verify the completed worker roots without rebuilding
+        run: |
+          read -ra targets <<< "$LEAN_LAYER_TARGETS"
+          python3 tools/scripts/worktree/lean_compile_layers.py verify --stage 0 --artifacts "$RUNNER_TEMP/lean-compile" --target "${targets[@]}"
+
   parallel-compile:
     if: github.event_name == 'workflow_dispatch' && contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests')
     permissions:
