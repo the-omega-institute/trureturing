@@ -145,7 +145,7 @@ and of `b` are so joined" holds for nearby `a, b` and is transitive by density. 
 private lemma chain_of_dense {ι : Type*} {f : ι → unitary ℍ[ℝ]} (hf : DenseRange f)
     {δ : ℝ} (hδ : 0 < δ) (x y : ι) :
     Relation.ReflTransGen (fun a b : ι => dist (f a) (f b) < δ) x y := by
-  have := preconnectedSpace_unitary
+  have := pathConnectedSpace_unitary
   let P : unitary ℍ[ℝ] → unitary ℍ[ℝ] → Prop := fun a b => ∀ a' b' : ι,
     dist a (f a') < δ / 3 → dist b (f b') < δ / 3 →
       Relation.ReflTransGen (fun p q : ι => dist (f p) (f q) < δ) a' b'

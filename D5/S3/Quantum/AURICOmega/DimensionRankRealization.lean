@@ -124,8 +124,7 @@ theorem exists_model_tfae (d r : ℕ) :
     rintro ⟨hd, hr⟩
     obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hd
     have : CompactSpace (unitary ℍ[ℝ]) := compactSpace_unitary
-    have : ConnectedSpace (unitary ℍ[ℝ]) :=
-      { toPreconnectedSpace := preconnectedSpace_unitary, toNonempty := ⟨1⟩ }
+    have := pathConnectedSpace_unitary
     refine ⟨unitary ℍ[ℝ], inferInstance, inferInstance, inferInstance, inferInstance,
       quaternionModel, 1, {q | 0 < (q : ℍ[ℝ]).re}, imPad m, continuous_tri_quaternionModel,
       continuous_kappa_quaternionModel, quaternionModel_noncommutative,
