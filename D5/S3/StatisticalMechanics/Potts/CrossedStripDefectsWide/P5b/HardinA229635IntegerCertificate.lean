@@ -46,27 +46,57 @@ private theorem step_checks (i : Fin 30) : power i.succ = step (power i.castSucc
     have hi : (⟨20 + k.val, by omega⟩ : Fin 30) = i := Fin.ext (by dsimp [k]; omega)
     simpa only [hi] using HardinA229635PowerCheck2.checked k
 
-private theorem forward_at (i : Fin 31) : forward T initial i.val = power i := by
+private theorem forward_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
+    (v : Fin d → ℤ) (next : (Fin d → ℤ) → Fin d → ℤ) (p : Fin 31 → Fin d → ℤ)
+    (hnext : ∀ w, next w = Matrix.vecMul w M) (hzero : p 0 = v)
+    (hstep : ∀ i : Fin 30, p i.succ = next (p i.castSucc)) (i : Fin 31) :
+    forward M v i.val = p i := by
   induction i using Fin.induction with
-  | zero => exact (funext initial_power).symm
+  | zero => exact hzero.symm
   | succ i ih =>
-    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
-    change Matrix.vecMul (forward T initial i.val) T = power i.succ
-    change forward T initial i.val = power i.castSucc at ih
-    rw [ih, ← step_correct]
-    exact (step_checks i).symm
+    have hs : forward M v (i.val + 1) = Matrix.vecMul (forward M v i.val) M := by
+      simp only [DefectTransfer.forward_eq, pow_succ, Matrix.vecMul_vecMul]
+    calc
+      forward M v i.succ.val = Matrix.vecMul (forward M v i.val) M := hs
+      _ = Matrix.vecMul (p i.castSucc) M := congrArg (fun w => Matrix.vecMul w M) ih
+      _ = next (p i.castSucc) := (hnext _).symm
+      _ = p i.succ := (hstep i).symm
+
+private def lagIndex (j : Fin 27) : Fin 31 := ⟨29 - j.val, by omega⟩
+
+private theorem residual_vector_of_table {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
+    (v : Fin d → ℤ) (p : Fin 31 → Fin d → ℤ)
+    (h : ∀ i : Fin 31, forward M v i.val = p i) :
+    residualVector M v = p 30 - ∑ j : Fin 27, coefficients j • p (lagIndex j) := by
+  have hlead : forward M v 30 = p 30 := h 30
+  have hlag (j : Fin 27) : forward M v (29 - j.val) = p (lagIndex j) := h (lagIndex j)
+  simp only [residualVector, hlead, hlag]
+
+private theorem residual_of_zero_image {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ)
+    (v e w : Fin d → ℤ) (hv : residualVector M v = w)
+    (hread : dotProduct w e = 0) (hstep : Matrix.vecMul w M = 0) (t : ℕ) :
+    residual M v e t = 0 := by
+  calc
+    residual M v e t = dotProduct (residualVector M v) ((M ^ t).mulVec e) :=
+      residual_as_power M v e t
+    _ = dotProduct w ((M ^ t).mulVec e) :=
+      congrArg (fun u => dotProduct u ((M ^ t).mulVec e)) hv
+    _ = 0 := by
+      cases t with
+      | zero => simpa only [pow_zero, Matrix.one_mulVec] using hread
+      | succ k =>
+        rw [pow_succ', ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, hstep, zero_dotProduct]
 
 private theorem residual_entries : ∀ s : State,
-    (power 30 - ∑ j : Fin 27, coefficients j • power ⟨29 - j.val, by omega⟩) s =
+    (power 30 - ∑ j : Fin 27, coefficients j • power (lagIndex j)) s =
       initialResidual s := by
-  decide +kernel
-
-private theorem vector_residual : residualVector T initial = initialResidual := by
-  have h0 : forward T initial 30 = power 30 := forward_at 30
-  have hj (j : Fin 27) : forward T initial (29 - j.val) =
-      power ⟨29 - j.val, by omega⟩ := forward_at _
-  simp only [residualVector, h0, hj]
-  exact funext residual_entries
+  have checked : ∀ s : State,
+      power 30 s - (List.ofFn fun j : Fin 27 => coefficients j * power (lagIndex j) s).sum =
+        initialResidual s := by
+    decide +kernel
+  intro s
+  simpa only [Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, List.sum_ofFn]
+    using checked s
 
 private theorem initial_readout : dotProduct initialResidual terminal = 0 := by decide +kernel
 
@@ -74,13 +104,13 @@ private theorem image_entries : ∀ s : State, step initialResidual s = 0 := by 
 
 theorem residual_prefix : ∀ t < 127, residual T initial terminal t = 0 := by
   intro t _
-  rw [residual_as_power, vector_residual]
-  cases t with
-  | zero => simpa using initial_readout
-  | succ k =>
-    rw [pow_succ', ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← step_correct]
-    have hz : step initialResidual = 0 := funext image_entries
-    simp only [hz, zero_dotProduct]
+  have hforward : ∀ i : Fin 31, forward T initial i.val = power i :=
+    forward_table T initial step power step_correct (funext initial_power) step_checks
+  have hvector : residualVector T initial = initialResidual :=
+    (residual_vector_of_table T initial power hforward).trans (funext residual_entries)
+  have himage : Matrix.vecMul initialResidual T = 0 :=
+    (step_correct initialResidual).symm.trans (funext image_entries)
+  exact residual_of_zero_image T initial terminal initialResidual hvector initial_readout himage t
 
 #print axioms residual_prefix
 
