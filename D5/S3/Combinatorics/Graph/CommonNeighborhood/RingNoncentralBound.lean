@@ -6,7 +6,6 @@
    utility: none
    digest: Every finite noncommutative ring, associative or not, has n >= 3z, z | n and noncentral commuting-graph CN energy at most 2 sum max(|C(x)| - z - 2, 0) <= n max(2(n + z)/p - 2z - 4, 0) <= n(n - z - 2) < 2(n - 1)(n - 2). -/
 
-/- Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/32738 -/
 import D5.S3.Combinatorics.Graph.CommonNeighborhood.NeighbourhoodCliqueBound
 
 set_option autoImplicit false
