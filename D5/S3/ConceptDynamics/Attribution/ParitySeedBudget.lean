@@ -222,12 +222,6 @@ private theorem matching_row (n k : ℕ) (p : ParityClass (n + 2) 0) :
     (∑ q : ParityClass (n + 2) 1, pairMass (matchingCount n k) p.val q.val) = 4 * k := by
   simp [matching_cell]
 
-private theorem matching_col (n k : ℕ) (q : ParityClass (n + 2) 1) :
-    (∑ p : ParityClass (n + 2) 0, pairMass (matchingCount n k) p.val q.val) = 4 * k := by
-  simp_rw [matching_cell]
-  rw [← (nextProfile n).symm.sum_comp]
-  simp
-
 private theorem matching_total (n k : ℕ) :
     (∑ p : ParityClass (n + 2) 0, ∑ q : ParityClass (n + 2) 1,
       pairMass (matchingCount n k) p.val q.val) = 2 ^ (n + 3) * k := by
