@@ -29,37 +29,15 @@ internal sealed class ExactDimensionDocument : IScribeDocumentDefinition
             Definition("prefix-distance", "prefixDistance", "Scaled prefix distance",
                 ForPermutations(Equal(Call("prefixDistance", P, Q), ScaledCount())),
                 "Each proper rank at which the unordered prefixes differ contributes two."),
-            Definition("cut-family", "cutFamily", "The cut family",
-                All("n", Naturals, All("p", Permutations, Equal(Call("cutFamily", P),
-                    Collection(Call("prefixSet", P, K), Member(K, Ranks))))),
-                "The cut family contains one unordered prefix at each proper rank. Its prefix sets "
-                + "have distinct cardinalities, so sorting them by size recovers the prefix chain."),
             Definition("minimum-dimension", "minimumDimension", "The dimension threshold",
                 All("n", Naturals, Equal(Call("minimumDimension", N), Threshold())),
                 "The threshold gives the least feasible dimension for ground-set sizes at least three."),
-            Describe.Lean(
-                DescribeId.Create("cut-distance-identity"),
-                DeclarationHandle.Create(Prefix + "prefix_distance_eq_cut_symmDiff"),
-                H("Symmetric difference of cut families"),
-                StatementSource.FromAuthor(Disp(ForPermutations(Equal(Call("prefixDistance", P, Q),
-                    Call("card", Seq(Call("cutFamily", P), Sp, Delta, Sp, Call("cutFamily", Q))))))),
-                AssessedProvenance.FromLiterature(Rossi),
-                Blocks(
-                    Paragraph(Text("At every ground-set size and for any two permutations, the scaled "
-                        + "prefix distance equals the cardinality of the symmetric difference of their "
-                        + "cut families.")),
-                    Paragraph(Text("Represent each nonempty proper subset by its rank and the subset "
-                        + "itself. The subset cardinality determines the rank. Within a rank, the two "
-                        + "incidence words differ at exactly two coordinates when their prefixes differ, "
-                        + "and at zero when they agree. Forgetting the rank gives a bijection from "
-                        + "differing incidence coordinates to the symmetric difference."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("minimum-binary-hamming-dimension"),
                 DeclarationHandle.Create(Prefix + "minimum_hamming_dimension"),
                 H("Exact dimension and all feasible paddings"),
                 StatementSource.FromAuthor(Disp(DimensionStatement())),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Rossi),
                 Blocks(
                     Paragraph(Text("For each natural n at least three and each natural d, the formula "
                         + "asks for one map on all permutations into d Boolean coordinates. The "

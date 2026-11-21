@@ -32,6 +32,10 @@ the symmetric difference of the two cut families and with ordinary Hamming dista
 incidence words. The cut family determines the permutation by recovering successive entries of its
 prefix chain. [Question](https://arxiv.org/pdf/2611.25741v1#page=26) · [Definition and scale](https://arxiv.org/pdf/2611.25741v1#page=11)
 
+The formal theorem `D5/S3/Combinatorics/Graph/PrefixHamming/ExactDimension.minimum_hamming_dimension`
+uses twice the proper-rank mismatch count. It gives minimum dimension 12 at n = 4 and
+2ⁿ − 2 otherwise, for every n ≥ 3.
+
 ## Related results
 
 - Ovchinnikov's *Graphs and Cubes* is the source for the inversion-set graph embedding discussed in

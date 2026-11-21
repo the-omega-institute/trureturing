@@ -9,7 +9,6 @@
 module
 
 public import Mathlib.InformationTheory.Hamming
-public import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Mathlib.Tactic.Abel
@@ -38,7 +37,7 @@ public section
 namespace D5.S3.Combinatorics.Graph.PrefixHamming
 
 open Finset
-open scoped BigOperators symmDiff
+open scoped BigOperators
 
 set_option autoImplicit false
 
@@ -676,49 +675,6 @@ private theorem card_cutCoord {n : ℕ} (hn : 0 < n) : Fintype.card (CutCoord n)
     omega
   rw [card_erase_of_mem (mem_erase.mpr ⟨hu, mem_univ _⟩), card_erase_of_mem (mem_univ _)]
   simp only [card_univ, Fintype.card_finset, Fintype.card_fin, Nat.sub_sub]
-
-/-- The cut family of a permutation consists of its nonempty proper unordered prefixes. -/
-@[expose] def cutFamily {n : ℕ} (p : Equiv.Perm (Fin n)) : Finset (Finset (Fin n)) :=
-  univ.image fun k : Rank n => prefixSet p k.val.val
-
-private theorem incidence_true_iff_cut {n : ℕ} (p : Equiv.Perm (Fin n)) (z : CutCoord n) :
-    incidence p z = true ↔ z.2.val ∈ cutFamily p := by
-  rw [cutFamily, mem_image]
-  simp only [mem_univ, true_and, incidence, oneHot, decide_eq_true_eq]
-  constructor
-  · intro h
-    exact ⟨z.1, (congrArg Subtype.val h).symm⟩
-  · obtain ⟨j, hj⟩ := z
-    rintro ⟨k, hk⟩
-    have hn : k = j := cutCoordinate_injective
-      (show (⟨k, rankPrefix p k⟩ : CutCoord n).2.val = (⟨j, hj⟩ : CutCoord n).2.val from hk)
-      |> congrArg Sigma.fst
-    subst k
-    exact Subtype.ext hk.symm
-
-/-- Rossi's scaled distance is the cardinality of the symmetric difference of cut families. -/
-theorem prefix_distance_eq_cut_symmDiff {n : ℕ} (p q : Equiv.Perm (Fin n)) :
-    prefixDistance p q = (cutFamily p ∆ cutFamily q).card := by
-  classical
-  rw [← incidence_dist, hammingDist]
-  have hmem (z : CutCoord n) :
-      z ∈ (univ.filter fun i => incidence p i ≠ incidence q i) ↔
-        z.2.val ∈ cutFamily p ∆ cutFamily q := by
-    rw [mem_filter, mem_symmDiff, ← incidence_true_iff_cut, ← incidence_true_iff_cut]
-    cases incidence p z <;> cases incidence q z <;> simp
-  refine card_bij (fun z _ => z.2.val) (fun z hz => (hmem z).mp hz)
-    (fun _ _ _ _ h => cutCoordinate_injective h) ?_
-  intro A hA
-  have repr (r : Equiv.Perm (Fin n)) (hAr : A ∈ cutFamily r) :
-      ∃ z : CutCoord n, z.2.val = A := by
-    obtain ⟨k, _, hk⟩ := mem_image.mp hAr
-    exact ⟨⟨k, rankPrefix r k⟩, hk⟩
-  have hex : ∃ z : CutCoord n, z.2.val = A := by
-    rcases mem_symmDiff.mp hA with hl | hr
-    · exact repr p hl.1
-    · exact repr q hr.1
-  obtain ⟨z, hz⟩ := hex
-  exact ⟨z, (hmem z).mpr (hz.symm ▸ hA), hz⟩
 
 /-- The threshold at scale two, with three-bit blocks for the two outer ranks at ground-set size four. -/
 @[expose] def minimumDimension (n : ℕ) : ℕ := if n = 4 then 12 else 2 ^ n - 2
