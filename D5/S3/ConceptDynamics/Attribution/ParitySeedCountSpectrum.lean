@@ -329,7 +329,8 @@ private theorem uniform_coloured_fibre_four_dvd_of_no_coordinate_fixed {n : ℕ}
   · intro s i h
     exact source_moves s.val i (congrArg Subtype.val h)
 
-private theorem left_colour_marginal {n k : ℕ} {S : Type} [Fintype S]
+/-- Count the seeds in each coloured left marginal fibre. -/
+theorem left_colour_marginal {n k : ℕ} {S : Type} [Fintype S]
     (f : S → Pair n) (card : Fintype.card S = 2 ^ (n + 3) * k)
     (c : ℕ) (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = c) :
     c = 2 * k := by
