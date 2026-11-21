@@ -23,6 +23,14 @@ internal sealed class FourPointAffineProjectionDocument : IScribeDocumentDefinit
                     "offset s, the column map c, and the Bernoulli rates t. The four masses " +
                     "are read at 00, 10, 01, 11 in that order.")),
                 Paragraph(Text(
+                    "The rate bounds make each Bernoulli factor a nonnegative unit-mass law, " +
+                    "and the finite index set supplies a finite product of these factors. " +
+                    "Both probability assumptions on p are needed. Direct arithmetic gives " +
+                    "d(p) = 0 for the zero mass function, which has distance one-half from " +
+                    "every comparison law. For signed masses (1, -1, 0, 1) of total mass one, " +
+                    "the formula gives one-half. The negative atom alone forces distance at " +
+                    "least one to every probability law because the total masses agree.")),
+                Paragraph(Text(
                     "To evaluate d(p), relabel the atoms by placing their masses in the order " +
                     "largest, smallest, second-smallest, second-largest. The first coordinate " +
                     "and the sum of the coordinates then have moments a and h with 0 <= a <= h. " +
