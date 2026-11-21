@@ -421,7 +421,36 @@ async function setOutputs(fields) {
   await writeFile(process.env.GITHUB_OUTPUT, lines, { flag: 'a' });
 }
 
+// The cache SDK reports policy denials as warnings and returns the same miss
+// sentinel as a reservation race. Keep its diagnostic and distinguish the two
+// before a failed producer tries to stage a full archive for the same service.
+async function saveContinuation() {
+  const child = spawn(process.execPath, [fileURLToPath(import.meta.url), 'save'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  let blocked;
+  const relay = async (stream, destination) => {
+    for await (const line of createInterface({ input: stream, crlfDelay: Infinity })) {
+      destination.write(line + '\n');
+      if (/\b(?:ENOSPC|no space left on device)\b/i.test(line)) blocked = 'disk-full';
+      if (/cache write denied:|your cache is now read[ -]only/i.test(line)) blocked = 'cache-read-only';
+    }
+  };
+  const finished = new Promise((resolve, reject) => {
+    child.once('error', reject);
+    child.once('close', resolve);
+  });
+  const [code] = await Promise.all([finished, relay(child.stdout, process.stdout), relay(child.stderr, process.stderr)]);
+  if (code !== 0) {
+    const fallback = code !== null && !blocked;
+    console.error('LEAN_ACTIONS_SHARDS legacy continuation fallback=' + (blocked || (fallback ? 'allowed' : 'interrupted')));
+    await setOutputs({ legacy_fallback: String(fallback) });
+    process.exitCode = code || 1;
+  }
+}
+
 async function main() {
+  if (operation === 'save-continuation' && state === 'resume') return saveContinuation();
   if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {
     throw new Error('resume-after-attempt requires a continuation restore and a nonnegative attempt number');
   }

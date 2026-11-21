@@ -240,25 +240,27 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
       with:
-        operation: save
+        operation: save-continuation
         state: resume
         anchor: ${{ inputs.shard-history-anchor }}
     - id: resume_snapshot
       name: Prepare producer progress
+      continue-on-error: true
       # A tolerated nonzero build has a successful step conclusion.
       if: >-
         ${{ !cancelled() && steps.build.conclusion == 'success' && steps.build.outcome != 'success'
-            && steps.sharded_progress.outputs.available == '' }}
+            && (inputs.shard-history-anchor == '' || steps.sharded_progress.outputs.legacy_fallback == 'true') }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
+      continue-on-error: true
       if: ${{ !cancelled() && steps.resume_snapshot.outputs.resume_ready == 'true' }}
       uses: actions/cache/save@v5
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
     - name: Require a complete producer report
-      if: steps.build.outcome != 'success'
+      if: ${{ !cancelled() && steps.build.outcome != 'success' }}
       env:
         BUILD_EXIT: ${{ steps.build.outputs.exit_code }}
       shell: bash
@@ -268,6 +270,7 @@ runs:
         else
           echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
         fi
+        if [[ "$BUILD_EXIT" =~ ^[1-9][0-9]{0,2}$ ]] && (( 10#$BUILD_EXIT <= 255 )); then exit "$BUILD_EXIT"; fi
         exit 1
     - id: sharded_project
       name: Publish the complete sharded project seed

@@ -219,7 +219,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: >-
-          bash .github/actions/lean-compile-layer/measure.sh make check-lean-report FULL_BUILD=1
+          bash .github/actions/lean-compile-layer/measure.sh --report make check-lean-report FULL_BUILD=1
           LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
       - id: publish
         if: steps.entry.outputs.hit == 'true'
@@ -330,7 +330,14 @@ jobs:
             make lean-cache-from-github-without-mathlib
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
           if [[ "$RESTORE" == full ]]; then
-            PYTHONPATH=tools/lean-inspector python3 -c 'from pathlib import Path; import reuse; assert reuse.read_receipt(reuse.canonical_seed(Path.cwd()))["completed"] == reuse.CHECKED'
+            PYTHONPATH=tools/lean-inspector python3 - <<'PYTHON'
+          from pathlib import Path
+          import reuse
+
+          receipt = reuse.read_receipt(reuse.canonical_seed(Path.cwd()))
+          if receipt["completed"] != reuse.CHECKED:
+              raise SystemExit("Restored publication lacks the current full-report check")
+          PYTHON
           else
             test ! -e .lake/build/stratalint/raw-lean-report.json
           fi
