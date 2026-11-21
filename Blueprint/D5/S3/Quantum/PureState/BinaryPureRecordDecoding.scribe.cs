@@ -25,5 +25,19 @@ internal sealed class BinaryPureRecordDecodingDocument : IScribeDocumentDefiniti
                 H("A full-carrier joint POVM attains the optimum"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(EldarForney),
                 Blocks(Paragraph(Text("For repeated copies of a common normalized pair, the guessing probability is the greatest element of the actual success set. An attaining family of positive semidefinite matrices sums to the identity on the original product carrier. The greatest-element property bounds the success of every joint POVM on that carrier."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("strict-coordinate-record-isometry"),
+                DeclarationHandle.Create(Module + "exists_coordinateRecord_isometry"),
+                H("The strict-overlap Walsh carrier embeds in the original product"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("When all overlap moduli are below one, an isometry maps each canonical Walsh conditional density to the corresponding original product density. Rephasing each pair makes the overlap real and preserves the conditional densities."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("active-coordinate-record-isometry"),
+                DeclarationHandle.Create(Module + "exists_activeRecord_isometry"),
+                H("The active Walsh carrier embeds even at overlap one"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Choose the active coordinates by the strict overlap condition. An isometry transports the resulting Walsh density to each original whole-word density using the restriction of that word to its active coordinates. The original full labels remain in the statement."))),
                 DescribeRole.Theorem))));
 }
