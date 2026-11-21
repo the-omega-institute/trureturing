@@ -1,10 +1,10 @@
-/- GID: D5/S3/QuadraticForms/OddDimensionZeroDivisor
+/- GID: D5/S3/QuadraticForms/BilinearZeroDivisor
    generality: G
-   mirror-B: D5/B/S3/QuadraticForms/OddDimensionZeroDivisor
+   mirror-B: D5/B/S3/QuadraticForms/BilinearZeroDivisor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Bilinear maps have zero divisors when polynomials of the source degree have roots. -/
+   digest: Zero divisors of bilinear maps U x V -> W with dim W <= dim U, under a root condition. -/
 
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -12,23 +12,24 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 /-!
 # Zero divisors of bilinear maps
 
-Let `m : U × V → W` be bilinear over a field `K` with `dim W ≤ dim U` and `V` of rank at
-least two (possibly infinite-dimensional). If `dim W < dim U`, or if `dim W = dim U` and every
-polynomial over `K` whose degree is `dim U` has a root, then `m a b = 0` for some nonzero `a`,
-`b`. Over the real numbers the root condition holds in every odd dimension of `U`; over an
-algebraically closed field in every positive dimension.
+Let `m : U × V → W` be bilinear over a field `K`, with `W` finite-dimensional, `dim W ≤ dim U`
+and `V` of rank at least two (possibly infinite-dimensional). If `dim W < dim U`, or if
+`dim W = dim U` and every polynomial over `K` whose degree is `dim U` has a root, then
+`m a b = 0` for some nonzero `a`, `b`. Over the real numbers the root condition holds in every
+odd dimension of `U`; over an algebraically closed field in every positive dimension.
 
 The argument: choose linearly independent `b`, `c`. If `m(·, b)` is not injective it has a
 nonzero kernel vector. Otherwise it is an isomorphism `U ≃ W`, and an eigenvector `a` of
 `m(·, b)⁻¹ ∘ m(·, c)` with eigenvalue `μ` satisfies `m a (c - μ • b) = 0`.
 -/
 
-namespace D5.S3.QuadraticForms.OddDimensionZeroDivisor
+namespace D5.S3.QuadraticForms.BilinearZeroDivisor
 
 open Module
 
-/-- A bilinear map `m : U × V → W` with `dim W ≤ dim U` and `1 < rank V` has a zero divisor
-when `dim W < dim U`, or when `dim W = dim U` and every polynomial of degree `dim U` has a root. -/
+/-- A bilinear map `m : U × V → W` with `W` finite-dimensional, `dim W ≤ dim U` and
+`1 < rank V` has a zero divisor when `dim W < dim U`, or when `dim W = dim U` and every
+polynomial of degree `dim U` has a root. -/
 theorem exists_zero_divisor {K U V W : Type*} [Field K]
     [AddCommGroup U] [Module K U] [AddCommGroup V] [Module K V]
     [AddCommGroup W] [Module K W] [FiniteDimensional K W]
@@ -72,4 +73,4 @@ theorem exists_zero_divisor {K U V W : Type*} [Field K]
     obtain ⟨a, hab, ha⟩ := hinj
     exact ⟨a, b, ha, hb, hab⟩
 
-end D5.S3.QuadraticForms.OddDimensionZeroDivisor
+end D5.S3.QuadraticForms.BilinearZeroDivisor
