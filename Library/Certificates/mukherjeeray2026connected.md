@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2611.10985v1
 claim: Problem 5.3 asks for a fixed ordered low-index <= and high-index >= coefficient crossing for every pair of same-order trees, without a common leaf count.
 strata_touched:
   - D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation
+  - D5/S3/Combinatorics/Graph/ZeroForcing/CrossingSmallestOrder
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -29,3 +30,10 @@ The source family consists of all n-vertex trees with exactly p degree-one verti
 ## Source example and boundary
 
 Section 4 already gives the four-vertex path and star, with coefficient lists (0,2,3,2,1) and (0,0,0,3,1). These data and examples are attributed to the authors. The formal refutation needs only the singleton coefficients, derived from the forcing semantics. The source's proved tree results and separate Problem 5.2 are outside this settlement. Authorial intent beyond the printed orientation is unverified.
+
+## Smallest order of a counterexample
+
+CrossingSmallestOrder.result states that the assertion restricted to trees of a fixed order n
+holds exactly when n ≤ 3. All trees on at most three vertices are isomorphic to the path on as
+many vertices and so have equal coefficients; at every order n ≥ 4 the path followed by the star
+has no cutoff, since the path has two connected forcing sets of size one and the star none.
