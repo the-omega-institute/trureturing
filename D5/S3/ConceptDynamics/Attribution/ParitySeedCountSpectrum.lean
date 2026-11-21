@@ -21,6 +21,7 @@ namespace D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum
 
 open Finset CoordinateFlagCoupling ParitySeedBudget ParitySeedOptimization
 open D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching
+open D5.S3.QuantumBounds.MerminMeasurementDependence (bit_cases)
 
 open MulAction
 
@@ -364,11 +365,7 @@ private theorem zero_coordinate_counts_force_odd_dimension_or_even_multiplier {n
   · refine Or.inr ?_
     have moves (s : S) (i : Fin (n + 2)) : generator i • s ≠ s := by
       intro fixed
-      have e : ∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s := by
-        have inclusion : coordinate i ≤ MulAction.stabilizer (Acting (Fin (n + 2))) s := by
-          rw [coordinate, Subgroup.zpowers_le, MulAction.mem_stabilizer_iff]
-          exact fixed
-        exact fun h => MulAction.mem_stabilizer_iff.mp (inclusion h.property)
+      have e := (coordinate_fixed_iff_generator i s).2 fixed
       have hz := noneFixed i
       unfold fixedSeedCount at hz
       have atSeed := (Finset.sum_eq_zero_iff_of_nonneg
@@ -522,8 +519,6 @@ private theorem rightParity_bijective : Function.Bijective rightParity := by
   rw [ZMod.card, ← Nat.card_eq_fintype_card, parityCard]
   decide
 
-private theorem binary (a : Bit) : a = 0 ∨ a = 1 := by decide +revert
-
 private theorem equivariant (g : G) (s : Seeds) : f (g • s) = g • f s := by
   rcases s with ⟨a,b,c,d⟩
   change f (motion g (a,b,c,d)) = g • f (a,b,c,d)
@@ -533,14 +528,14 @@ private theorem equivariant (g : G) (s : Seeds) : f (g • s) = g • f s := by
         (motion g (a,b,c,d)).2.2.1 =
       Output.mk (booleanProfile (leftProfile a))
         (shift (booleanProfile (leftProfile a)) g.toAdd + c)
-    rcases binary a with rfl | rfl <;>
+    rcases bit_cases a with rfl | rfl <;>
       simp [motion, leftProfile, booleanProfile, shift, Fin.sum_univ_two]
   · apply Subtype.ext
     change Output.mk (booleanProfile (rightProfile (motion g (a,b,c,d)).1))
         (motion g (a,b,c,d)).2.2.2 =
       Output.mk (booleanProfile (rightProfile a))
         (shift (booleanProfile (rightProfile a)) g.toAdd + d)
-    rcases binary a with rfl | rfl <;>
+    rcases bit_cases a with rfl | rfl <;>
       simp [motion, rightProfile, booleanProfile, shift, Fin.sum_univ_two]
 
 attribute [local instance 10000] Classical.propDecidable
@@ -583,16 +578,9 @@ private theorem right_marginal (y : slice 2 1) :
 private theorem generator_fixed (s : Seeds) (i : Fin 2) :
     generator i • s = s ↔ i = 0 ∧ s.1 = 1 ∧ s.2.2.1 = 0 := by
   rcases s with ⟨a,b,c,d⟩
-  rcases binary a with rfl | rfl <;> fin_cases i <;>
+  rcases bit_cases a with rfl | rfl <;> fin_cases i <;>
     change motion (generator _) (_,_,_,_) = (_,_,_,_) ↔ _ <;>
     simp [motion, generator, Prod.mk.injEq]
-
-private theorem subgroup_fixed (s : Seeds) (i : Fin 2) :
-    (∀ h : coordinate i, (h : G) • s = s) ↔ generator i • s = s := by
-  have inclusion : (∀ h : coordinate i, (h : G) • s = s) ↔
-      coordinate i ≤ MulAction.stabilizer G s :=
-    ⟨fun fix g hg => fix ⟨g,hg⟩, fun sub g => sub g.property⟩
-  rw [inclusion, coordinate, Subgroup.zpowers_le, MulAction.mem_stabilizer_iff]
 
 section
 attribute [local instance 10000] Classical.propDecidable
@@ -609,7 +597,7 @@ private theorem mixed_seed_witness : RealizableSeedCounts 0 2 ![4,0] := by
       unfold fixedSeedCount
       apply sum_congr rfl
       intro s _
-      have condition := (subgroup_fixed s i).trans (generator_fixed s i)
+      have condition := (coordinate_fixed_iff_generator (n := 0) i s).trans (generator_fixed s i)
       by_cases h : i = 0 ∧ s.1 = 1 ∧ s.2.2.1 = 0
       · rw [ite_eq_left (condition.mpr h), ite_eq_left h]
       · rw [ite_eq_right (mt condition.mp h), ite_eq_right h]
@@ -739,14 +727,6 @@ private theorem rename_generator (p : Equiv.Perm (Index n)) (i : Index n) :
   have eq_iff : p.symm j = i ↔ j = p i := p.symm_apply_eq
   simp [precompose, generator, Pi.single_apply, eq_iff]
 
-private theorem generator_fixed_iff {S : Type} [MulAction (Acting (Index n)) S]
-    (i : Index n) (s : S) :
-    (∀ h : coordinate i, (h : Acting (Index n)) • s = s) ↔ generator i • s = s := by
-  have inclusion : (∀ h : coordinate i, (h : Acting (Index n)) • s = s) ↔
-      coordinate i ≤ MulAction.stabilizer (Acting (Index n)) s :=
-    ⟨fun fix g hg => fix ⟨g,hg⟩, fun sub g => sub g.property⟩
-  rw [inclusion, coordinate, Subgroup.zpowers_le, MulAction.mem_stabilizer_iff]
-
 attribute [local instance 10000] Classical.propDecidable
 
 private theorem realizable_relabel {k : ℕ} (p : Equiv.Perm (Index n))
@@ -778,8 +758,8 @@ private theorem realizable_relabel {k : ℕ} (p : Equiv.Perm (Index n))
     have condition :
         (∀ g : coordinate i, renamedAct.smul g.val s = s) ↔
         (∀ g : coordinate (p i), act.smul g.val s = s) := by
-      have left := @generator_fixed_iff n S renamedAct i s
-      have right := @generator_fixed_iff n S act (p i) s
+      have left := @coordinate_fixed_iff_generator n S renamedAct i s
+      have right := @coordinate_fixed_iff_generator n S act (p i) s
       have gens : renamedAct.smul (generator i) s = act.smul (generator (p i)) s := by
         change act.smul (precompose p.symm (generator i)) s = _
         rw [rename_generator]
