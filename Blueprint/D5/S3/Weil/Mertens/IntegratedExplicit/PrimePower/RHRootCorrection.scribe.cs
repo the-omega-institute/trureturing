@@ -64,7 +64,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula l, Formula r) => new Formula.Logic(l, FormulaLogicOperator.Implies, r);
     private static Formula And(Formula l, Formula r) => new Formula.Logic(l, FormulaLogicOperator.And, r);
     private static Formula NegativePower(Formula x, Formula num, Formula den) =>
-        F.Seq(x, F.Caret, F.Grp(F.Neg, F.Sp, new Formula.Fraction(num, den)));
+        F.Seq(x, F.Caret, F.Grp(new Formula.Negate(new Formula.Fraction(num, den))));
     private static Formula CubePower(Formula x) => NegativePower(x, F.D(1), F.D(6));
     private static Formula ErrorPower(Formula x) => NegativePower(x, F.D(3), F.Seq(F.D(1), F.D(0)));
 
@@ -88,7 +88,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         var t = F.Id("T");
         var k = F.Id("K");
         var positive = All("x", Imp(Le(t, x),
-            Lt(F.D(0), Multiply(Call("sqrt", x), F.Seq(F.Neg, F.Sp, Call("Qtheta", x))))));
+            Lt(F.D(0), Multiply(Call("sqrt", x), new Formula.Negate(Call("Qtheta", x))))));
         var cube = Multiply(F.D(9), Subtract(CubePower(a), CubePower(b)));
         var error = Add(Subtract(Subtract(Call("W", a, b), cube), Call("A", b)), Call("A", a));
         var estimate = Le(new Formula.Absolute(error), Multiply(k, Subtract(ErrorPower(a), ErrorPower(b))));

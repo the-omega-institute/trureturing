@@ -91,7 +91,7 @@ internal sealed class RootTailDocument : IScribeDocumentDefinition
         var error = Call("E", x);
         var ten = F.Seq(F.D(1), F.D(0));
         var bound = Multiply(Multiply(Add(Call("log", F.D(4)), F.D(4)), new Formula.Fraction(F.D(5), F.D(4))),
-            Power(x, F.Seq(F.Neg, F.Sp, new Formula.Fraction(F.D(3), ten))));
+            Power(x, new Formula.Negate(new Formula.Fraction(F.D(3), ten))));
         return F.Disp(All("x", Imp(Le(F.D(1), x),
             And(Le(F.D(0), error), Le(Multiply(Call("sqrt", x), error), bound)))));
     }

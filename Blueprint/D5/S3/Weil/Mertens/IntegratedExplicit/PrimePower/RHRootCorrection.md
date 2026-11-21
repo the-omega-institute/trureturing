@@ -8,7 +8,7 @@ Write Qtheta for the prime-only tail, D for squareDensity, A(x) for squarePrimit
 
 **Theorem 1.1 (The normalized square and cube terms).**
 
-$$RH \Rightarrow \left(\exists K \in \mathbb{R},\; 0 < K \land \left(\forall x \in \mathbb{R},\; 8 \le x \Rightarrow \left|\operatorname{sqrt}\left(x\right) \cdot \left(\operatorname{Q}\left(x\right) - \operatorname{Qtheta}\left(x\right)\right) - 2 - \frac{3}{2} \cdot x^{\neg \frac{1}{6}} - \operatorname{D}\left(\operatorname{log}\left(x\right)\right)\right| \le K \cdot x^{\neg \frac{3}{10}}\right)\right)$$
+$$RH \Rightarrow \left(\exists K \in \mathbb{R},\; 0 < K \land \left(\forall x \in \mathbb{R},\; 8 \le x \Rightarrow \left|\operatorname{sqrt}\left(x\right) \cdot \left(\operatorname{Q}\left(x\right) - \operatorname{Qtheta}\left(x\right)\right) - 2 - \frac{3}{2} \cdot x^{-\frac{1}{6}} - \operatorname{D}\left(\operatorname{log}\left(x\right)\right)\right| \le K \cdot x^{-\frac{3}{10}}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_prime_power_density` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ At x=exp(u), add the complete normalized tail residual to the square-root-scaled
 
 **Theorem 1.3 (The cube primitive and the shrinking endpoint error).**
 
-$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 8 \le T \land \left(0 < K \land \left(\left(\forall x \in \mathbb{R},\; T \le x \Rightarrow 0 < \operatorname{sqrt}\left(x\right) \cdot \neg \operatorname{Qtheta}\left(x\right)\right) \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{W}\left(a, B\right) - 9 \cdot \left(a^{\neg \frac{1}{6}} - B^{\neg \frac{1}{6}}\right) - \operatorname{A}\left(B\right) + \operatorname{A}\left(a\right)\right| \le K \cdot \left(a^{\neg \frac{3}{10}} - B^{\neg \frac{3}{10}}\right)\right)\right)\right)\right)\right)$$
+$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 8 \le T \land \left(0 < K \land \left(\left(\forall x \in \mathbb{R},\; T \le x \Rightarrow 0 < \operatorname{sqrt}\left(x\right) \cdot \left(-\operatorname{Qtheta}\left(x\right)\right)\right) \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{W}\left(a, B\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - \operatorname{A}\left(B\right) + \operatorname{A}\left(a\right)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_root_correction_window` (`✓ std3`). ∎
 

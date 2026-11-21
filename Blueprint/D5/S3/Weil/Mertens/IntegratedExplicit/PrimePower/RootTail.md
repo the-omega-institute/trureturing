@@ -32,7 +32,7 @@ The Chebyshev linear bound gives integrability for the uncentered root kernel. I
 
 **Theorem 1.3 (The integrated fifth-root majorant).**
 
-$$\forall x \in \mathbb{R},\; 1 \le x \Rightarrow \left(0 \le \operatorname{E}\left(x\right) \land \operatorname{sqrt}\left(x\right) \cdot \operatorname{E}\left(x\right) \le \left(\operatorname{log}\left(4\right) + 4\right) \cdot \frac{5}{4} \cdot x^{\neg \frac{3}{10}}\right)$$
+$$\forall x \in \mathbb{R},\; 1 \le x \Rightarrow \left(0 \le \operatorname{E}\left(x\right) \land \operatorname{sqrt}\left(x\right) \cdot \operatorname{E}\left(x\right) \le \left(\operatorname{log}\left(4\right) + 4\right) \cdot \frac{5}{4} \cdot x^{-\frac{3}{10}}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootTail.root_cutoff_remainder` (`✓ std3`). ∎
 
