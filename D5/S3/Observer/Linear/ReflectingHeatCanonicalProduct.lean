@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.Linear.ReflectingHeatQuantile
 import Mathlib.Analysis.Complex.LocallyUniformLimit
+import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.Normed.Module.MultipliableUniformlyOn
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -120,13 +121,98 @@ private theorem imaginary_kernel_le (y x : ℝ) :
   have h := Real.log_le_sub_one_of_pos (show 0 < 1 + y ^ 2 / x ^ 2 by positivity)
   linarith
 
-private theorem integrableOn_inv_sq (hβ : 0 < β) :
+/-- The inverse-square majorant is integrable away from the origin. -/
+theorem integrableOn_inv_sq (hβ : 0 < β) :
     IntegrableOn (fun x : ℝ => (x ^ 2)⁻¹) (Ioi β) := by
   refine (integrableOn_Ioi_rpow_of_lt (a := -2) (by norm_num) hβ).congr_fun ?_ measurableSet_Ioi
   intro x hx
   change x ^ (-2 : ℝ) = (x ^ 2)⁻¹
   rw [Real.rpow_neg ((hβ.trans hx).le)]
   norm_num
+
+private theorem imaginaryKernel_continuousOn {β : ℝ} (hβ : 0 < β) (y : ℝ) :
+    ContinuousOn (fun t : ℝ => Real.log (1 + y ^ 2 / t ^ 2)) (Ici β) := by
+  apply ContinuousOn.log (continuousOn_const.add
+    (continuousOn_const.div (continuousOn_id.pow 2) fun t ht =>
+      pow_ne_zero 2 (hβ.trans_le (mem_Ici.mp ht)).ne'))
+  intro t _
+  change 1 + y ^ 2 / t ^ 2 ≠ 0
+  positivity
+
+private theorem imaginaryKernel_integrable {β D : ℝ} {density : ℝ → ℝ} (hβ : 0 < β)
+    (hc : ContinuousOn density (Ici β))
+    (hd : ∀ t ∈ Ici β, 0 ≤ density t ∧ density t ≤ D) (y : ℝ) :
+    IntegrableOn (fun t => Real.log (1 + y ^ 2 / t ^ 2) * density t) (Ioi β) := by
+  have hbound := (integrableOn_inv_sq hβ).const_mul (D * y ^ 2)
+  apply hbound.mono'
+    ((((imaginaryKernel_continuousOn hβ y).mul hc).mono Ioi_subset_Ici_self).aestronglyMeasurable
+      measurableSet_Ioi)
+  filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))] with t ht
+  have hd' := hd t (Ioi_subset_Ici_self ht)
+  change |Real.log (1 + y ^ 2 / t ^ 2) * density t| ≤ D * y ^ 2 * (t ^ 2)⁻¹
+  rw [abs_of_nonneg (mul_nonneg (imaginary_kernel_nonnegative y t) hd'.1)]
+  calc
+    _ ≤ (y ^ 2 / t ^ 2) * D :=
+      mul_le_mul (imaginary_kernel_le y t) hd'.2 hd'.1 (by positivity)
+    _ = _ := by ring
+
+/-- Differentiating the imaginary potential produces the weighted resolvent.
+The inverse-square majorant holds on every bounded neighborhood of the
+imaginary argument. -/
+theorem hasDerivAt_imaginaryPotential {β D : ℝ} {density : ℝ → ℝ}
+    (hβ : 0 < β) (hc : ContinuousOn density (Ici β))
+    (hd : ∀ t ∈ Ici β, 0 ≤ density t ∧ density t ≤ D) (y : ℝ) :
+    HasDerivAt (imaginaryPotential β density)
+      (∫ t in Ioi β, (2 * y / (t ^ 2 + y ^ 2)) * density t) y := by
+  let F (u t : ℝ) := Real.log (1 + u ^ 2 / t ^ 2) * density t
+  let F' (u t : ℝ) := (2 * u / (t ^ 2 + u ^ 2)) * density t
+  let K := 2 * (|y| + 1) * D
+  have hD : 0 ≤ D := (hd β (mem_Ici.mpr le_rfl)).1.trans (hd β (mem_Ici.mpr le_rfl)).2
+  have hF' (u : ℝ) : ContinuousOn (F' u) (Ici β) := by
+    apply ContinuousOn.mul _ hc
+    apply continuousOn_const.div (by fun_prop)
+    intro t ht
+    have h := hβ.trans_le (mem_Ici.mp ht)
+    positivity
+  have hder (u t : ℝ) (ht : β < t) : HasDerivAt (fun v => F v t) (F' u t) u := by
+    have ht0 := hβ.trans ht
+    have hpos : 0 < 1 + u ^ 2 / t ^ 2 := by positivity
+    have h := (((hasDerivAt_pow 2 u).div_const (t ^ 2)).const_add 1).log hpos.ne'
+    convert h.mul_const (density t) using 1
+    dsimp [F']
+    field_simp
+  have hbound : ∀ᵐ t ∂volume.restrict (Ioi β), ∀ u ∈ Metric.ball y 1,
+      ‖F' u t‖ ≤ K * (t ^ 2)⁻¹ := by
+    filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))] with t ht
+    intro u hu
+    have ht0 := hβ.trans ht
+    have hd' := hd t (Ioi_subset_Ici_self ht)
+    have hu' : |u| ≤ |y| + 1 := by
+      have h := abs_add_le (u - y) y
+      rw [sub_add_cancel] at h
+      have hdist : |u - y| < 1 := by simpa [Real.dist_eq] using hu
+      linarith
+    have hrs : 0 < t ^ 2 + u ^ 2 := by positivity
+    dsimp [F', K]
+    rw [abs_mul, abs_div, abs_mul,
+      abs_of_nonneg (by norm_num : 0 ≤ (2 : ℝ)), abs_of_nonneg hrs.le, abs_of_nonneg hd'.1]
+    calc
+      _ ≤ (2 * (|y| + 1) / (t ^ 2)) * D := by
+        apply mul_le_mul _ hd'.2 hd'.1 (by positivity)
+        calc
+          _ ≤ 2 * |u| / t ^ 2 :=
+            div_le_div_of_nonneg_left (by positivity) (by positivity) (by linarith [sq_nonneg u])
+          _ ≤ _ := div_le_div_of_nonneg_right (by linarith) (by positivity)
+      _ = _ := by ring
+  exact (hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (μ := volume.restrict (Ioi β)) (Metric.ball_mem_nhds y zero_lt_one)
+    (.of_forall fun u => (((imaginaryKernel_continuousOn hβ u).mul hc).mono
+      Ioi_subset_Ici_self).aestronglyMeasurable measurableSet_Ioi)
+    (imaginaryKernel_integrable hβ hc hd y)
+    (((hF' y).mono Ioi_subset_Ici_self).aestronglyMeasurable measurableSet_Ioi)
+    hbound ((integrableOn_inv_sq hβ).const_mul K)
+    ((ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))).mono fun t ht u _ =>
+      hder u t ht)).2
 
 /-- On the imaginary axis the signed right-endpoint error is between
 the negative first logarithmic factor and zero. The lower bound is positive
@@ -139,12 +225,7 @@ theorem canonicalProduct_imaginary_bounds (hβ : 0 < β)
         Real.exp (imaginaryPotential β density y) := by
   let g (x : ℝ) := Real.log (1 + y ^ 2 / x ^ 2)
   have hpos : ∀ x ∈ Ici β, 0 < x := fun _ hx => hβ.trans_le hx
-  have hg : ContinuousOn g (Ici β) := by
-    apply ContinuousOn.log (continuousOn_const.add
-      (continuousOn_const.div (continuousOn_id.pow 2) fun x hx => pow_ne_zero 2 (hpos x hx).ne'))
-    intro x _
-    change 1 + y ^ 2 / x ^ 2 ≠ 0
-    positivity
+  have hg : ContinuousOn g (Ici β) := imaginaryKernel_continuousOn hβ y
   have hanti : AntitoneOn g (Ici β) := by
     intro u hu v hv huv
     apply Real.log_le_log (by positivity)
@@ -155,19 +236,9 @@ theorem canonicalProduct_imaginary_bounds (hβ : 0 < β)
     refine ((bins.summable_endpoint_inv_sq hβ hD hcap).mul_left (y ^ 2)).of_nonneg_of_le
       (fun _ => imaginary_kernel_nonnegative _ _) ?_
     simpa [g, div_eq_mul_inv] using fun k : ℕ => imaginary_kernel_le y (bins.endpoint (k + 1))
-  have hi : IntegrableOn (fun x => g x * density x) (Ioi β) := by
-    have hbound := (integrableOn_inv_sq hβ).const_mul (D * y ^ 2)
-    apply hbound.mono'
-      (((hg.mul bins.continuous_density).mono Ioi_subset_Ici_self).aestronglyMeasurable
-        measurableSet_Ioi)
-    filter_upwards [ae_restrict_mem (μ := volume) measurableSet_Ioi] with x hx
-    have hx' := Ioi_subset_Ici_self hx
-    change |g x * density x| ≤ D * y ^ 2 * (x ^ 2)⁻¹
-    rw [abs_of_nonneg (mul_nonneg (imaginary_kernel_nonnegative y x) (bins.nonnegative x hx'))]
-    calc
-      g x * density x ≤ (y ^ 2 / x ^ 2) * D :=
-        mul_le_mul (imaginary_kernel_le y x) (hcap x hx') (bins.nonnegative x hx') (by positivity)
-      _ = _ := by ring
+  have hi : IntegrableOn (fun x => g x * density x) (Ioi β) :=
+    imaginaryKernel_integrable hβ bins.continuous_density
+      (fun t ht => ⟨bins.nonnegative t ht, hcap t ht⟩) y
   have hz : Tendsto g atTop (𝓝 0) := by
     have ht : Tendsto (fun x : ℝ => y ^ 2 * x⁻¹ ^ 2) atTop (𝓝 (0 : ℝ)) := by
       simpa using (tendsto_inv_atTop_zero.pow 2).const_mul (y ^ 2)

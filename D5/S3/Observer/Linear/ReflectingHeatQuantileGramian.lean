@@ -772,6 +772,345 @@ private theorem saddleLogAverage_mono {β : ℝ} (hβ : 0 < β) {u v : ℝ}
     ((hg u).intervalIntegrable _ _) ((hg v).intervalIntegrable _ _)
     (fun θ _ => Real.log_le_log (hp u θ) (add_le_add_left hR _))
 
+private theorem hasDerivAt_saddleRadiusFunction {β : ℝ} (hβ : 0 < β) (y : ℝ) :
+    HasDerivAt (radius β) (y / radius β y) y := by
+  have h := ((hasDerivAt_pow 2 y).add_const (β ^ 2)).sqrt
+    (show y ^ 2 + β ^ 2 ≠ 0 by positivity)
+  unfold radius
+  convert h using 1
+  norm_num
+  ring
+
+private theorem hasDerivAt_saddleLogAverage {β : ℝ} (hβ : 0 < β) (y : ℝ) :
+    HasDerivAt (saddleLogAverage β)
+      (y / radius β y * spectralAverage (fun r => (radius β y + radius β r)⁻¹)) y := by
+  let r (θ : ℝ) := 2 - 2 * Real.cos θ
+  let F (v θ : ℝ) := Real.log (radius β v + radius β (r θ))
+  let G (v θ : ℝ) := (radius β v + radius β (r θ))⁻¹
+  let F' (v θ : ℝ) := (v / radius β v) * G v θ
+  let μ := volume.restrict (Ioc (0 : ℝ) Real.pi)
+  have hb (v : ℝ) : β ≤ radius β v := by
+    unfold radius
+    exact (Real.le_sqrt hβ.le (by positivity)).2 (by linarith [sq_nonneg v])
+  have hp (v θ : ℝ) : 0 < radius β v + radius β (r θ) := by
+    exact add_pos_of_pos_of_nonneg (hβ.trans_le (hb v)) (Real.sqrt_nonneg _)
+  have hc (v : ℝ) : Continuous (F v) := by
+    apply Continuous.log (by dsimp [r, radius]; fun_prop)
+    exact fun θ => (hp v θ).ne'
+  have hcG (v : ℝ) : Continuous (G v) := by
+    apply Continuous.inv₀ (by dsimp [r, radius]; fun_prop)
+    exact fun θ => (hp v θ).ne'
+  have hf' (v θ : ℝ) : HasDerivAt (fun u => F u θ) (F' v θ) v := by
+    simpa only [F, F', G, div_eq_mul_inv] using
+      ((hasDerivAt_saddleRadiusFunction hβ v).add_const (radius β (r θ))).log (hp v θ).ne'
+  have hbound (v θ : ℝ) : ‖F' v θ‖ ≤ β⁻¹ := by
+    have hv : |v| ≤ radius β v := by
+      unfold radius
+      exact (Real.le_sqrt (abs_nonneg v) (by positivity)).2 (by nlinarith [sq_abs v])
+    have hg : G v θ ≤ β⁻¹ :=
+      inv_anti₀ hβ ((hb v).trans (le_add_of_nonneg_right (Real.sqrt_nonneg _)))
+    rw [Real.norm_eq_abs, show F' v θ = (v / radius β v) * G v θ from rfl,
+      abs_mul, abs_div, abs_of_pos (hβ.trans_le (hb v)),
+      abs_of_nonneg (inv_nonneg.mpr (hp v θ).le)]
+    exact (mul_le_of_le_one_left (inv_nonneg.mpr (hp v θ).le)
+      ((div_le_one (hβ.trans_le (hb v))).2 hv)).trans hg
+  have hd := (hasDerivAt_integral_of_dominated_loc_of_deriv_le (μ := μ) (s := univ) univ_mem
+    (.of_forall fun v => (hc v).aestronglyMeasurable)
+    ((hc y).intervalIntegrable (μ := volume) 0 Real.pi).1
+    ((hcG y).const_mul (y / radius β y)).aestronglyMeasurable
+    (ae_of_all μ fun θ v _ => hbound v θ)
+    (integrable_const β⁻¹)
+    (ae_of_all μ fun θ v _ => hf' v θ)).2
+  have h := hd.div_const Real.pi
+  change HasDerivAt (fun v => (∫ θ in 0..Real.pi, F v θ) / Real.pi) _ y
+  rw [show (fun v => (∫ θ in 0..Real.pi, F v θ) / Real.pi) =
+    (fun v => (∫ θ, F v θ ∂μ) / Real.pi) by
+      funext v
+      rw [intervalIntegral.integral_of_le Real.pi_pos.le]]
+  simpa only [spectralAverage, F', G, μ, r, intervalIntegral.integral_of_le Real.pi_pos.le,
+    integral_const_mul, mul_div_assoc] using h
+
+private theorem cauchy_half {A : ℝ} (hA : 0 < A) :
+    Integrable (fun s : ℝ => (s ^ 2 + A ^ 2)⁻¹) ∧
+      (∫ s in Ioi (0 : ℝ), (s ^ 2 + A ^ 2)⁻¹) = Real.pi / (2 * A) := by
+  let f (s : ℝ) := (1 + s ^ 2)⁻¹
+  have hA' : 0 < A⁻¹ := inv_pos.mpr hA
+  have he (s : ℝ) : (s ^ 2 + A ^ 2)⁻¹ = (A ^ 2)⁻¹ * f (A⁻¹ * s) := by
+    have hs : 0 < s ^ 2 + A ^ 2 := by positivity
+    have hf : 0 < 1 + (A⁻¹ * s) ^ 2 := by positivity
+    dsimp [f]
+    field_simp [hA.ne', hs.ne', hf.ne']
+    <;> ring
+  simp_rw [he]
+  have hi := (integrable_inv_one_add_mul_sq hA'.ne').const_mul (A ^ 2)⁻¹
+  refine ⟨hi, ?_⟩
+  rw [integral_const_mul, integral_comp_mul_left_Ioi f 0 hA', mul_zero, inv_inv, smul_eq_mul]
+  have h := integral_Ioi_inv_one_add_sq (i := 0)
+  rw [Real.arctan_zero, sub_zero] at h
+  change (A ^ 2)⁻¹ * (A * ∫ s in Ioi (0 : ℝ), f s) = _
+  rw [show (∫ s in Ioi (0 : ℝ), f s) = Real.pi / 2 from h]
+  field_simp
+
+private theorem cauchy_pair_half {A R : ℝ} (hA : 0 < A) (hR : 0 < R) :
+    (∫ s in Ioi (0 : ℝ), s ^ 2 / ((s ^ 2 + A ^ 2) * (s ^ 2 + R ^ 2))) =
+      Real.pi / (2 * (A + R)) := by
+  let C := A * R
+  let g (s : ℝ) := s ^ 2 / ((s ^ 2 + A ^ 2) * (s ^ 2 + R ^ 2))
+  let h (s : ℝ) := C / ((s ^ 2 + A ^ 2) * (s ^ 2 + R ^ 2))
+  have hC : 0 < C := mul_pos hA hR
+  have hg (s : ℝ) : 0 ≤ g s := by dsimp [g]; positivity
+  have hh (s : ℝ) : 0 ≤ h s := by dsimp [h, C]; positivity
+  have hplus (s : ℝ) :
+      g s + h s = (A * (s ^ 2 + A ^ 2)⁻¹ + R * (s ^ 2 + R ^ 2)⁻¹) / (A + R) := by
+    dsimp [g, h, C]
+    field_simp [show 0 < s ^ 2 + A ^ 2 by positivity, show 0 < s ^ 2 + R ^ 2 by positivity,
+      (add_pos hA hR).ne']
+    ring
+  have hi : Integrable (fun s => g s + h s) := by
+    simp_rw [hplus, div_eq_mul_inv]
+    exact (((cauchy_half hA).1.const_mul A).add ((cauchy_half hR).1.const_mul R)).mul_const _
+  have hgc : Continuous g := by
+    apply Continuous.div (by fun_prop) (by fun_prop)
+    intro s
+    positivity
+  have hhc : Continuous h := by
+    apply Continuous.div (by fun_prop) (by fun_prop)
+    intro s
+    positivity
+  have hgi : Integrable g := hi.mono' hgc.aestronglyMeasurable
+    (.of_forall fun s => by simpa [Real.norm_eq_abs, abs_of_nonneg (hg s)] using hh s)
+  have hhi : Integrable h := hi.mono' hhc.aestronglyMeasurable
+    (.of_forall fun s => by simpa [Real.norm_eq_abs, abs_of_nonneg (hh s)] using hg s)
+  let f (s : ℝ) := C * s⁻¹
+  have hf : Set.InjOn f (Ioi 0) := by
+    intro u _ v _ huv
+    exact inv_injective (mul_left_cancel₀ hC.ne' huv)
+  have himage : f '' Ioi 0 = Ioi 0 := by
+    ext s
+    constructor
+    · rintro ⟨u, hu, rfl⟩
+      exact mul_pos hC (inv_pos.mpr hu)
+    · intro hs
+      refine ⟨C * s⁻¹, mul_pos hC (inv_pos.mpr hs), ?_⟩
+      dsimp [f]
+      field_simp [hC.ne', (show 0 < s from hs).ne']
+  have hDeriv (s : ℝ) (hs : s ∈ Ioi 0) :
+      HasDerivWithinAt f (C * (-(s ^ 2)⁻¹)) (Ioi 0) s :=
+    ((hasDerivAt_inv (show 0 < s from hs).ne').const_mul C).hasDerivWithinAt
+  have he := integral_image_eq_integral_abs_deriv_smul measurableSet_Ioi hDeriv hf g
+  rw [himage] at he
+  have hsub : (∫ s in Ioi (0 : ℝ), g s) = ∫ s in Ioi (0 : ℝ), h s := by
+    refine he.trans (setIntegral_congr_fun measurableSet_Ioi fun s hs => ?_)
+    have hs' : 0 < s := hs
+    have hCnonneg : 0 ≤ C * (s ^ 2)⁻¹ := by positivity
+    rw [mul_neg, abs_neg, abs_of_nonneg hCnonneg, smul_eq_mul]
+    dsimp [f, g, h, C]
+    field_simp [hs'.ne', hA.ne', hR.ne',
+      show 0 < s ^ 2 + A ^ 2 by positivity, show 0 < s ^ 2 + R ^ 2 by positivity,
+      show 0 < (A * R * s⁻¹) ^ 2 + A ^ 2 by positivity,
+      show 0 < (A * R * s⁻¹) ^ 2 + R ^ 2 by positivity]
+    <;> ring
+  have hm : (∫ s in Ioi (0 : ℝ), g s + h s) = Real.pi / (A + R) := by
+    simp_rw [hplus, div_eq_mul_inv]
+    rw [integral_mul_const, integral_add ((cauchy_half hA).1.const_mul A).integrableOn
+      ((cauchy_half hR).1.const_mul R).integrableOn,
+      integral_const_mul, integral_const_mul, (cauchy_half hA).2, (cauchy_half hR).2]
+    field_simp [hA.ne', hR.ne', (add_pos hA hR).ne']
+    <;> ring
+  rw [integral_add hgi.integrableOn hhi.integrableOn, ← hsub] at hm
+  change (∫ s in Ioi (0 : ℝ), g s) = _
+  apply (eq_div_iff (by positivity : 2 * (A + R) ≠ 0)).2
+  apply (eq_div_iff (add_pos hA hR).ne').1 at hm
+  linarith
+
+private theorem saddle_radial_resolvent {β : ℝ} (hβ : 0 < β) (y r : ℝ) :
+    (∫ t in Ioi β,
+      (2 * y / (t ^ 2 + y ^ 2)) *
+        ((radius β r)⁻¹ * (t * Real.sqrt (t ^ 2 - β ^ 2) / (t ^ 2 + r ^ 2)))) =
+      Real.pi * y / (radius β r * (radius β y + radius β r)) := by
+  let A := radius β y
+  let R := radius β r
+  let f := radius β
+  have hA : 0 < A := by dsimp [A, radius]; positivity
+  have hR : 0 < R := by dsimp [R, radius]; positivity
+  have hp (s : ℝ) : 0 < f s := by dsimp [f, radius]; positivity
+  have hsq (s : ℝ) : f s ^ 2 = s ^ 2 + β ^ 2 :=
+    Real.sq_sqrt (by positivity)
+  have ha' : A ^ 2 = y ^ 2 + β ^ 2 := hsq y
+  have hr' : R ^ 2 = r ^ 2 + β ^ 2 := hsq r
+  have hf : Set.InjOn f (Ioi 0) := by
+    intro u hu v hv h
+    exact (sq_eq_sq₀ (le_of_lt hu) (le_of_lt hv)).1 (by
+      linarith [hsq u, hsq v, congrArg (fun z : ℝ => z ^ 2) h])
+  have himage : f '' Ioi 0 = Ioi β := by
+    ext t
+    constructor
+    · rintro ⟨s, hs, rfl⟩
+      exact (sq_lt_sq₀ hβ.le (hp s).le).1 (by
+        rw [hsq]
+        linarith [sq_pos_of_pos (show 0 < s from hs)])
+    · intro ht
+      have ht0 : 0 < t := hβ.trans ht
+      have ht2 : β ^ 2 < t ^ 2 := (sq_lt_sq₀ hβ.le ht0.le).2 ht
+      refine ⟨Real.sqrt (t ^ 2 - β ^ 2), Real.sqrt_pos.mpr (sub_pos.mpr ht2), ?_⟩
+      dsimp [f, radius]
+      rw [Real.sq_sqrt (by linarith), sub_add_cancel, Real.sqrt_sq ht0.le]
+  have hDeriv (s : ℝ) (_ : s ∈ Ioi 0) : HasDerivWithinAt f (s / f s) (Ioi 0) s :=
+    (hasDerivAt_saddleRadiusFunction hβ s).hasDerivWithinAt
+  let Q (t : ℝ) := (2 * y / (t ^ 2 + y ^ 2)) *
+    (R⁻¹ * (t * Real.sqrt (t ^ 2 - β ^ 2) / (t ^ 2 + r ^ 2)))
+  have hc := integral_image_eq_integral_abs_deriv_smul measurableSet_Ioi hDeriv hf Q
+  rw [himage] at hc
+  calc
+    _ = ∫ s in Ioi (0 : ℝ), |s / f s| • Q (f s) := hc
+    _ = ∫ s in Ioi (0 : ℝ), (2 * y / R) *
+        (s ^ 2 / ((s ^ 2 + A ^ 2) * (s ^ 2 + R ^ 2))) := by
+      apply setIntegral_congr_fun measurableSet_Ioi
+      intro s hs
+      have hs' : 0 < s := hs
+      change |s / f s| • Q (f s) = (2 * y / R) *
+        (s ^ 2 / ((s ^ 2 + A ^ 2) * (s ^ 2 + R ^ 2)))
+      rw [abs_of_nonneg (div_nonneg hs'.le (hp s).le), smul_eq_mul]
+      have hsqrt : Real.sqrt (f s ^ 2 - β ^ 2) = s := by
+        rw [hsq, add_sub_cancel_right, Real.sqrt_sq hs'.le]
+      dsimp only [Q]
+      rw [hsqrt, hsq, ha', hr']
+      have hz : 0 < s ^ 2 + β ^ 2 + y ^ 2 := by positivity
+      have hz' : 0 < s ^ 2 + β ^ 2 + r ^ 2 := by positivity
+      have h₁ : s ^ 2 + (y ^ 2 + β ^ 2) = s ^ 2 + β ^ 2 + y ^ 2 := by ring
+      have h₂ : s ^ 2 + (r ^ 2 + β ^ 2) = s ^ 2 + β ^ 2 + r ^ 2 := by ring
+      rw [h₁, h₂]
+      field_simp [(hp s).ne', hR.ne', hz.ne', hz'.ne']
+    _ = _ := by
+      rw [integral_const_mul, cauchy_pair_half hA hR]
+      change (2 * y / R) * (Real.pi / (2 * (A + R))) = Real.pi * y / (R * (A + R))
+      field_simp [hR.ne', (add_pos hA hR).ne']
+
+private theorem saddleDensity_resolvent (n : ℕ) {a β : ℝ} (hβ : 0 < β)
+    (hs : saddleMass β = a / 2) (y : ℝ) :
+    (∫ t in Ioi β, (2 * y / (t ^ 2 + y ^ 2)) * saddleDensity n β t) =
+      (n : ℝ) * (y / radius β y) *
+        (a / 2 - spectralAverage (fun r => (radius β y + radius β r)⁻¹)) := by
+  let r (θ : ℝ) := 2 - 2 * Real.cos θ
+  let A := radius β y
+  let R (θ : ℝ) := radius β (r θ)
+  let H (t θ : ℝ) := (R θ)⁻¹ * (t * Real.sqrt (t ^ 2 - β ^ 2) / (t ^ 2 + r θ ^ 2))
+  let Q (t θ : ℝ) := (2 * y / (t ^ 2 + y ^ 2)) * H t θ
+  let μ := volume.restrict (Ioi β)
+  let ν := volume.restrict (Ioc (0 : ℝ) Real.pi)
+  let N : ℝ := n
+  have hA : 0 < A := by dsimp [A, radius]; positivity
+  have hR (θ : ℝ) : β ≤ R θ := by
+    unfold R radius
+    exact (Real.le_sqrt hβ.le (by positivity)).2 (by linarith [sq_nonneg (r θ)])
+  have hRp (θ : ℝ) : 0 < R θ := hβ.trans_le (hR θ)
+  have hcap (t θ : ℝ) (ht : β < t) : 0 ≤ H t θ ∧ H t θ ≤ β⁻¹ := by
+    have ht0 := hβ.trans ht
+    have hS : Real.sqrt (t ^ 2 - β ^ 2) ≤ t :=
+      Real.sqrt_le_iff.mpr ⟨ht0.le, by linarith [sq_nonneg β]⟩
+    have hfactor : t * Real.sqrt (t ^ 2 - β ^ 2) / (t ^ 2 + r θ ^ 2) ≤ 1 := by
+      exact (div_le_iff₀ (by positivity)).2
+        (by nlinarith [mul_le_mul_of_nonneg_left hS ht0.le, sq_nonneg (r θ)])
+    exact ⟨mul_nonneg (inv_nonneg.mpr (hRp θ).le) (by positivity),
+      (mul_le_of_le_one_right (inv_nonneg.mpr (hRp θ).le) hfactor).trans (inv_anti₀ hβ (hR θ))⟩
+  have hmeas : AEStronglyMeasurable (Function.uncurry Q) (μ.prod ν) := by
+    apply Measurable.aestronglyMeasurable
+    dsimp [Function.uncurry, Q, H, R, r, radius]
+    fun_prop
+  have hinv : Integrable (fun t : ℝ => 2 * |y| * β⁻¹ * (t ^ 2)⁻¹) μ := by
+    exact (integrableOn_inv_sq hβ).const_mul _
+  have hmajor : Integrable (fun x : ℝ × ℝ => 2 * |y| * β⁻¹ * (x.1 ^ 2)⁻¹) (μ.prod ν) := by
+    exact hinv.comp_fst ν
+  have hi : Integrable (Function.uncurry Q) (μ.prod ν) := by
+    apply hmajor.mono' hmeas
+    have ht : ∀ᵐ x : ℝ × ℝ ∂μ.prod ν, β < x.1 := by
+      apply (Measure.ae_prod_iff_ae_ae (p := fun x : ℝ × ℝ => β < x.1)
+        (measurable_fst measurableSet_Ioi)).2
+      exact (ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))).mono
+        (fun t ht => ae_of_all ν fun _ => ht)
+    filter_upwards [ht] with x hx
+    have ht0 := hβ.trans hx
+    have hcc := hcap x.1 x.2 hx
+    change |(2 * y / (x.1 ^ 2 + y ^ 2)) * H x.1 x.2| ≤ _
+    rw [abs_mul, abs_div, abs_mul, abs_of_nonneg (by norm_num : 0 ≤ (2 : ℝ)),
+      abs_of_nonneg (by positivity : 0 ≤ x.1 ^ 2 + y ^ 2), abs_of_nonneg hcc.1]
+    calc
+      _ ≤ (2 * |y| / x.1 ^ 2) * β⁻¹ :=
+        mul_le_mul (div_le_div_of_nonneg_left (by positivity) (by positivity)
+          (by linarith [sq_nonneg y])) hcc.2 hcc.1 (by positivity)
+      _ = _ := by ring
+  have hfub := integral_integral_swap hi
+  have houter :
+      (∫ t, (2 * y / (t ^ 2 + y ^ 2)) * saddleDensity n β t ∂μ) =
+        N / Real.pi ^ 2 * ∫ θ, (∫ t, Q t θ ∂μ) ∂ν := by
+    rw [← hfub, ← integral_const_mul]
+    apply integral_congr_ae
+    filter_upwards [] with t
+    dsimp only [saddleDensity, spectralAverage, Q, H, ν, r, R, N]
+    rw [intervalIntegral.integral_of_le Real.pi_pos.le, integral_const_mul]
+    ring
+  have hintegral : (∫ θ, (∫ t, Q t θ ∂μ) ∂ν) =
+      ∫ θ, Real.pi * y / (R θ * (A + R θ)) ∂ν := by
+    apply integral_congr_ae
+    exact ae_of_all _ fun θ => saddle_radial_resolvent hβ y (r θ)
+  have hsplit (θ : ℝ) : Real.pi * y / (R θ * (A + R θ)) =
+      Real.pi * (y / A) * ((R θ)⁻¹ - (A + R θ)⁻¹) := by
+    field_simp [hA.ne', (hRp θ).ne', (add_pos hA (hRp θ)).ne']
+    ring
+  have hRc : Continuous R := by dsimp [R, r, radius]; fun_prop
+  have hiR : Integrable (fun θ => (R θ)⁻¹) ν :=
+    (hRc.inv₀ fun θ => (hRp θ).ne').intervalIntegrable (μ := volume) 0 Real.pi |>.1
+  have hiA : Integrable (fun θ => (A + R θ)⁻¹) ν :=
+    ((continuous_const.add hRc).inv₀ fun θ => (add_pos hA (hRp θ)).ne').intervalIntegrable
+      (μ := volume) 0 Real.pi |>.1
+  have hs' : (∫ θ, (R θ)⁻¹ ∂ν) / Real.pi = a / 2 := by
+    simpa only [saddleMass, spectralAverage, intervalIntegral.integral_of_le Real.pi_pos.le, ν, R, r]
+      using hs
+  change (∫ t, _ ∂μ) = _
+  rw [houter, hintegral]
+  simp_rw [hsplit]
+  rw [integral_const_mul, integral_sub hiR hiA, ← hs']
+  unfold spectralAverage
+  rw [intervalIntegral.integral_of_le Real.pi_pos.le]
+  let U := ∫ θ, (R θ)⁻¹ ∂ν
+  let V := ∫ θ, (A + R θ)⁻¹ ∂ν
+  change N / Real.pi ^ 2 * (Real.pi * (y / A) * (U - V)) =
+    N * (y / A) * (U / Real.pi - V / Real.pi)
+  field_simp [Real.pi_ne_zero, hA.ne']
+
+private theorem imaginaryPotential_eval_of_resolvent (n : ℕ) (hn : 0 < (n : ℝ)) {a β : ℝ}
+    (ha : 0 < a) (hβ : 0 < β) (hs : saddleMass β = a / 2)
+    (hresolvent : ∀ y ≥ 0,
+      (∫ t in Ioi β, (2 * y / (t ^ 2 + y ^ 2)) * saddleDensity n β t) =
+        (n : ℝ) * (y / radius β y) *
+          (a / 2 - spectralAverage (fun r => (radius β y + radius β r)⁻¹))) :
+    ∀ y ≥ 0, imaginaryPotential β (saddleDensity n β) y =
+      (n : ℝ) * (a / 2 * (radius β y - β) -
+        (saddleLogAverage β y - saddleLogAverage β 0)) := by
+  obtain ⟨hc, hcap, _, _⟩ := saddleDensity_spec n hn ha hβ hs
+  let F := imaginaryPotential β (saddleDensity n β)
+  let G (v : ℝ) := (n : ℝ) * (a / 2 * (radius β v - β) -
+        (saddleLogAverage β v - saddleLogAverage β 0))
+  let D (v : ℝ) := (n : ℝ) * (v / radius β v) *
+    (a / 2 - spectralAverage (fun r => (radius β v + radius β r)⁻¹))
+  have hf (v : ℝ) (hv : 0 ≤ v) : HasDerivAt F (D v) v := by
+    dsimp only [D, F]
+    rw [← hresolvent v hv]
+    exact hasDerivAt_imaginaryPotential hβ hc hcap v
+  have hg (v : ℝ) : HasDerivAt G (D v) v := by
+    have hR := (hasDerivAt_saddleRadiusFunction hβ v).sub_const β
+    have hJ := (hasDerivAt_saddleLogAverage hβ v).sub_const (saddleLogAverage β 0)
+    convert ((hR.const_mul (a / 2)).sub hJ).const_mul (n : ℝ) using 1
+    dsimp [D]
+    ring
+  have h0 : F 0 = G 0 := by
+    simp [F, G, imaginaryPotential, radius, Real.sqrt_sq hβ.le]
+  intro y hy
+  exact eq_of_has_deriv_right_eq (fun v hv => (hf v hv.1).hasDerivWithinAt)
+    (fun v _ => (hg v).hasDerivWithinAt)
+    (fun v hv => (hf v hv.1).continuousAt.continuousWithinAt)
+    (fun v _ => (hg v).continuousAt.continuousWithinAt) h0 y ⟨hy, le_rfl⟩
+
 /-- The physical-time estimate for the actual saddle density. Its remaining
 analytic inputs are the imaginary-axis evaluation and real-axis cancellation
 identities for that density. -/
@@ -830,10 +1169,6 @@ private theorem log_inverse_diagonal_error_at_saddle_radius (n : ℕ) (j : Mode 
 /-- The physical-time estimate at the unique positive saddle for the window.
 The two axis assertions concern the density built from that radius. -/
 theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT : 0 < T)
-    (hImag : let a := (n : ℝ) * T; let β := saddleRadius a
-      ∀ y ≥ 0, imaginaryPotential β (saddleDensity n β) y =
-        (n : ℝ) * (a / 2 * (radius β y - β) -
-          (saddleLogAverage β y - saddleLogAverage β 0)))
     (hReal : let a := (n : ℝ) * T; let β := saddleRadius a
       ∀ ω : ℝ, ∃ ζ : ℂ, ζ ≠ 0 ∧
         ζ + ζ⁻¹ = (ω : ℂ) * Complex.I - 2 ∧ 1 ≤ ‖ζ‖ ∧
@@ -847,6 +1182,8 @@ theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT
     have := j.isLt
     exact_mod_cast (show 0 < n by omega)
   obtain ⟨hβ, hs⟩ := saddleRadius_spec (mul_pos hn hT)
+  have hImag := imaginaryPotential_eval_of_resolvent n hn (mul_pos hn hT) hβ hs
+    (fun y _ => saddleDensity_resolvent n hβ hs y)
   exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag hReal
 
 #print axioms physical_log_inverse_diagonal_error
