@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripPowers
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.result; premises=D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.result; premises=D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripPowers.steps,D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripPowers.relation,D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripPowers.initial_relation
    digest: Exact residual-budget square-lattice strip transfer. -/
 
 /-
