@@ -313,7 +313,7 @@ private theorem source_growth {a : ℕ → ℕ} (ha : IsSourceSequence a)
     rw [pow_succ, pow_succ] at *
     nlinarith [show 0 ≤ (a m:ℝ)*(5/3:ℝ)^k by positivity]
 
-private theorem source_error {a : ℕ → ℕ} (ha : IsSourceSequence a)
+theorem source_error {a : ℕ → ℕ} (ha : IsSourceSequence a)
     (n : ℕ) (hn : 4 ≤ n) :
     |(a (n+1):ℝ)^2 - (radicand a n:ℝ)| ≤ 2*(a n:ℝ) := by
   have hrec := (ha.2.2.2.2 n hn).2
@@ -345,7 +345,7 @@ open D5.S0.Tower.NonPisotFrontier.BetaThirteen
 set_option autoImplicit false
 set_option maxHeartbeats 1200000
 
-private theorem r_bounds : (17 : ℝ)/10 < squaredLimit ∧ squaredLimit < 7/4 := by
+theorem r_bounds : (17 : ℝ)/10 < squaredLimit ∧ squaredLimit < 7/4 := by
   have hq := sqrt_thirteen_sq
   have hn := sqrt_thirteen_nonneg
   have hlo : (18 : ℝ)/5 < Real.sqrt 13 := by nlinarith
@@ -358,7 +358,7 @@ private theorem r_bounds : (17 : ℝ)/10 < squaredLimit ∧ squaredLimit < 7/4 :
   dsimp [squaredLimit]
   constructor <;> linarith
 
-private theorem r_quad :
+theorem r_quad :
     squaredLimit ^ 2 - betaThirteen * squaredLimit + 1 = 0 := by
   have hq := sqrt_thirteen_sq
   have hn := sqrt_thirteen_bounds.1
@@ -366,7 +366,7 @@ private theorem r_quad :
   dsimp [squaredLimit, betaThirteen]
   nlinarith
 
-private theorem r_poly :
+theorem r_poly :
     squaredLimit ^ 4 - squaredLimit ^ 3 - squaredLimit ^ 2 - squaredLimit + 1 = 0 := by
   have hq := r_quad
   have ht := betaThirteen_quadratic
@@ -461,7 +461,7 @@ open D5.S1.Recurrence.OEISA400644 (sourceRound)
 set_option autoImplicit false
 set_option maxHeartbeats 1500000
 
-private noncomputable def b (a : ℕ → ℕ) (n : ℕ) : ℝ := (a (n+23):ℝ)^2
+noncomputable def b (a : ℕ → ℕ) (n : ℕ) : ℝ := (a (n+23):ℝ)^2
 private noncomputable def err (a : ℕ → ℕ) (n : ℕ) : ℝ :=
   b a (n+4)-b a (n+3)-b a (n+2)-b a (n+1)+b a n
 private noncomputable def proj (a : ℕ → ℕ) (n : ℕ) : ℝ :=
@@ -635,7 +635,7 @@ open D5.S1.Recurrence.OEISA400644 (sourceRound)
 set_option autoImplicit false
 set_option maxHeartbeats 1500000
 
-private theorem square_asymptotic {a : ℕ → ℕ} (ha : IsSourceSequence a) :
+theorem square_asymptotic {a : ℕ → ℕ} (ha : IsSourceSequence a) :
     ∃ L : ℝ, 0 < L ∧ Tendsto (fun n => b a n/squaredLimit^n) atTop (nhds L) := by
   obtain ⟨U,hUpos,hU⟩ := dominant_limit ha
   have hr := r_bounds

@@ -67,7 +67,7 @@ private lemma log_tangent_bounds {a z : ℝ} (ha : 0 < a) (hz : 0 < z) :
     field_simp [ha.ne'] at h'
     nlinarith
 
-private lemma remainder_chord {a b x B : ℝ} (ha : 0 < a) (hab : a < b)
+lemma remainder_chord {a b x B : ℝ} (ha : 0 < a) (hab : a < b)
     (hax : a ≤ x) (hxb : x ≤ b) (hau : U a ≤ B) (hbu : U b ≤ B) :
     U x ≤ B + (b-a)^2/a := by
   let q := (x-a)/(b-a)
@@ -92,7 +92,7 @@ private lemma remainder_chord {a b x B : ℝ} (ha : 0 < a) (hab : a < b)
     hlinear (Real.log a), hc, congrArg (fun z : ℝ => z*B) hs, congrArg (fun z : ℝ => z*a) hs]
 
 /-- The quadratic remainder of a chord clipped to one fourth - power cell. -/
-private lemma quartic_chord_error {n a z : ℝ} (hn : 1 ≤ n)
+lemma quartic_chord_error {n a z : ℝ} (hn : 1 ≤ n)
     (ha : n ^ 4 ≤ a) (haz : a ≤ z) (hz : z ≤ (n + 1) ^ 4) :
     (z - a) ^ 2 / a ≤ 225 * n ^ 2 := by
   have hn0 : 0 < n := by linarith

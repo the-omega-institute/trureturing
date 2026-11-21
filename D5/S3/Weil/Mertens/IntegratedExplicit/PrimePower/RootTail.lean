@@ -152,7 +152,7 @@ theorem centered_root_tail {r x : ℝ} (hr : 1 ≤ r) (hx0 : 0 < x) :
   rw [← hsub]
   ring
 
-private lemma root_kernel_integrable {p x : ℝ} (hp : p < 1) (hx : 0 < x) :
+lemma root_kernel_integrable {p x : ℝ} (hp : p < 1) (hx : 0 < x) :
     IntegrableOn (fun t => Chebyshev.psi (t ^ p) / t ^ 2) (Ioi x) := by
   apply ((integrableOn_Ioi_rpow_of_lt (a := p - 2) (by linarith) hx).const_mul
     (Real.log 4 + 4)).mono'

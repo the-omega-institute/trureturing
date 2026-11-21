@@ -48,7 +48,7 @@ def a (n : ℕ) : ℕ :=
     (@Canonical (Fin n × Fin 6)
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A)).card
 
-private theorem finite_certificate :
+theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
       terminal (cl p d.val) = (if d.val = 0 then 1 else 0)) ∧
     (∀ p (d : Fin 2), Valid p d.val → ∀ r : Row,
