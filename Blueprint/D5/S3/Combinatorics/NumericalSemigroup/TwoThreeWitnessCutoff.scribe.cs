@@ -34,7 +34,14 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
                     Paragraph(Text("With p = (1, 1) and u = (−1, 1), write t = 8 + 4q + r "
                         + "with q ≥ 0 and 0 ≤ r < 4. The vector (4 + 2q − r, r) has degree t "
                         + "and is an integer combination of the two witnesses. Thus eight "
-                        + "is attained."))),
+                        + "is attained.")),
+                    Paragraph(Text("Allowing the first or second coordinate of p to be zero gives "
+                        + "the witness pair with p = (0, 1) or p = (1, 0) and u = (−1, 1). "
+                        + "Allowing a signed witness of another degree gives p = (1, 1) "
+                        + "and u = (1, 0). Each pair has determinant of absolute value one "
+                        + "and generates the whole integer lattice. The full fiber has cutoff "
+                        + "two because every even degree at least two is a multiple of two "
+                        + "and every odd degree at least three is three plus a multiple of two."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
