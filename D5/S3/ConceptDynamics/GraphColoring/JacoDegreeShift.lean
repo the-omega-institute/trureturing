@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
    mirror-E: none(waiver:structural-proof)
    anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw]
