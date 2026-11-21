@@ -359,18 +359,20 @@ private theorem profile_threshold (n k C : ℕ) :
     exact profile_cap_necessary n k C w rows cols common
   · exact profile_cap_sufficient n k C
 
+private def balancedCommonOneCount (n k : ℕ) : ℕ :=
+  let M := k * 2 ^ n
+  M - (M + (n + 2 - 1)) / (n + 2)
+
 /-- The maximum minimum common-one count across coordinates of an integer parity coupling. -/
 theorem best_profile_count (n k : ℕ) (positive : 0 < k) :
-    let M := k * 2 ^ n
-    let C := (M + (n + 2 - 1)) / (n + 2)
-    let best := M - C
+    let best := balancedCommonOneCount n k
     (∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
       (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
       ∀ i, best ≤ commonOneCount w i) ∧
     ∀ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
       (∀ p, ∑ q, w p q = k) → (∀ q, ∑ p, w p q = k) →
       ∃ i, commonOneCount w i ≤ best := by
-  dsimp only
+  dsimp only [balancedCommonOneCount]
   let M := k * 2 ^ n
   let C := (M + (n + 2 - 1)) / (n + 2)
   have positiveM : 0 < M := Nat.mul_pos positive (by positivity)
