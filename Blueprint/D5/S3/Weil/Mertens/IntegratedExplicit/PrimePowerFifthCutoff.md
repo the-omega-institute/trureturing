@@ -4,19 +4,7 @@
 
 Chebyshev prime powers through the fifth root
 
-**Theorem 1.1 (The common finite exponent sum).**
-
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.psi_sub_roots_eq_sum`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.psi_sub_roots_eq_sum` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For t ≥ 2 and N at least the floor of log(t)/log(2), the square, cube and fifth cutoffs combine into a sum over exponents six through N. Each θ(t^(1/k)) is weighted by one minus the number of divisors of k among 2, 3 and 5. The coefficients at exponents two through five vanish.
-
-**Theorem 1.2 (The signed sixth-root contribution).**
+**Theorem 1.1 (The signed sixth-root contribution).**
 
 $$\forall t \in \mathbb{R},\; 2 \le t \Rightarrow \left|\operatorname{R}\left(t\right)+\theta\left(t^{\frac{1}{6}}\right)\right| \le 4 \cdot \operatorname{log}\left(t\right) \cdot t^{\frac{1}{7}}$$
 
@@ -32,7 +20,7 @@ Use Mathlib's finite Chebyshev decomposition at each root. On a common exponent 
 
 From exponent seven onward its absolute value is at most two. Chebyshev's linear upper bound for θ gives a bound of log(4) times t^(1/7) per term before multiplying by the coefficient. There are at most log(t)/log(2) terms.
 
-**Theorem 1.3 (A uniform bound for real cutoffs).**
+**Theorem 1.2 (A uniform bound for real cutoffs).**
 
 $$\exists C \in \mathbb{R},\; 0 < C \land \left(\forall t \in \mathbb{R},\; 2 \le t \Rightarrow \left|\operatorname{R}\left(t\right)\right| \le C \cdot t^{\frac{1}{6}}\right)$$
 
@@ -48,4 +36,3 @@ The inequality log(t) ≤ 42 t^(1/42) brings the tail to sixth-root scale. The t
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.abs_psi_sub_roots_add_theta_sixth_le`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.exists_abs_psi_sub_roots_le`
-- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.psi_sub_roots_eq_sum`
