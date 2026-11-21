@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Hypercube;
 internal sealed class DirectionMatchingDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/felzenbaumholzman1993packing");
+        LibraryNoteRef.Create("D5/L/Hamming/felzenbaumholzman1993packing");
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
