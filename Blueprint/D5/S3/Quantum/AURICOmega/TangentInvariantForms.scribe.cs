@@ -9,7 +9,7 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Quantum/AURICOmega/TangentInvariantForms.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Bilinear forms on the pure quaternions that are invariant under conjugation by unit quaternions: uniqueness up to a factor is equivalent to irreducibility, all conjugations together act irreducibly, and a single rotation through an angle outside the multiples of pi leaves exactly a three-parameter family invariant, with uniquely determined parameters.",
+        "Bilinear forms on the pure quaternions that are invariant under conjugation by unit quaternions: uniqueness up to a factor is equivalent to irreducibility, all conjugations together act irreducibly, and a single rotation through an angle outside the multiples of pi leaves exactly a three-parameter family invariant, with uniquely determined parameters. The pure quaternions are the tangent space of the unit quaternions at 1, and conjugation by a unit quaternion is the adjoint action on it.",
         H("Invariant bilinear forms on the pure quaternions"),
         Blocks(
             Node("tfae", "invariant_bilinear_tfae",
@@ -22,16 +22,16 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
             Node("all-conjugations", "conj_invariant_bilinear_eq_smul_inner",
                 "Forms invariant under all conjugations",
                 StatementSource.FromAuthor(AllConjugationsFormula()),
-                "A real bilinear form B on the quaternions that is invariant on the pure quaternions under the conjugation by every unit quaternion is, on the pure quaternions, a real multiple c <x, y> of the inner product.",
+                "A real bilinear form B on the quaternions that is invariant on the pure quaternions under the conjugation by every unit quaternion is, on the pure quaternions, a real multiple c <x, y> of the inner product, and there is exactly one such real number c.",
                 DescribeRole.Theorem,
-                "This is condition (1) of the preceding equivalence for the set of all unit quaternions, and condition (3) holds for that set: a nonzero invariant subspace W contains a nonzero pure quaternion w, any two unit quaternions with the same real part are conjugate, so w / |w| is conjugate to x / |x| for every nonzero pure quaternion x, and x is then a real multiple of a conjugate of w, which lies in W. The full conjugation group is the rotation group of the three-dimensional space of pure quaternions; this classical fact is not stated as a theorem here."),
+                "This is condition (1) of the preceding equivalence for the set of all unit quaternions, and condition (3) holds for that set: a nonzero invariant subspace W contains a nonzero pure quaternion w, any two unit quaternions with the same real part are conjugate, so w / |w| is conjugate to x / |x| for every nonzero pure quaternion x, and x is then a real multiple of a conjugate of w, which lies in W. The factor c is unique: at the pure unit quaternion i one has <i, i> = 1, so c = B(i, i). The full conjugation group is the rotation group of the three-dimensional space of pure quaternions; this classical fact is not stated as a theorem here."),
             Node("one-rotation", "conj_invariant_bilinear_iff",
                 "Forms invariant under one rotation",
                 StatementSource.FromAuthor(OneRotationFormula()),
-                "Let u be a unit quaternion with re(u) nonzero and im(u) nonzero, and write n = im(u). A real bilinear form B on the quaternions is invariant on the pure quaternions under the conjugation by u if and only if there is exactly one triple c = (c.1, c.2.1, c.2.2) of real numbers with B(x, y) = c.1 <x, y> + c.2.1 <n, x> <n, y> + c.2.2 <n, x y> for all pure x, y; in the display the triple ranges over R x R x R and c.1, c.2.1, c.2.2 are its three coordinates. For pure x and y one has x y = -<x, y> + x cross y, so <n, x y> = <n, x cross y>; the third form is the triple product with n and is antisymmetric. The invariant symmetric forms are exactly those with c.2.2 = 0, a two-dimensional family; this consequence is not stated as a theorem here.",
+                "Let u be a unit quaternion with re(u) nonzero and im(u) nonzero, and write n = im(u). A real bilinear form B on the quaternions is invariant on the pure quaternions under the conjugation by u if and only if there is exactly one triple c = (c.1, c.2.1, c.2.2) of real numbers with B(x, y) = c.1 <x, y> + c.2.1 <n, x> <n, y> + c.2.2 <n, x y> for all pure x, y; in the display the triple ranges over R x R x R and c.1, c.2.1, c.2.2 are its three coordinates. For pure x and y one has x y = -<x, y> + x cross y, so <n, x y> = <n, x cross y>; the third form is the triple product with n and is antisymmetric. On the pure quaternions, the invariant forms that are symmetric there are exactly those with c.2.2 = 0, a two-dimensional family; this consequence is not stated as a theorem here.",
                 DescribeRole.Theorem,
-                "The conjugation by u = cos t + sin t m, with m a unit pure quaternion, is the rotation about the axis m through the angle 2t, and the hypotheses say that 2t is not a multiple of pi. Each of the three forms is invariant because u commutes with n. Conversely, a unit quaternion q carrying i to n / |n| reduces the problem to the axis i, where the invariance equations on the basis i, j, k force the matrix of the form on the pure quaternions to commute with a rotation through an angle outside the multiples of pi about i; such matrices are spanned by the identity, the projection onto i and the cross product with i, because the rotation has the distinct eigenvalues 1, e^(2it) and e^(-2it). The triple is unique because the three forms are linearly independent on the pure quaternions when n is nonzero: in the same frame, with j and k orthogonal to n, the pair (j, j) gives the first coordinate, the pair (i, i) then gives the second, and the pair (j, k) gives |n| times the third. "
-                    + "Both hypotheses are needed; the following counts were obtained numerically and are not formalized. When re(u) = 0 the conjugation is a half-turn, and its invariant bilinear forms on the pure quaternions form a five-dimensional space. When im(u) = 0, that is u = 1 or u = -1, the conjugation is the identity and all bilinear forms, a nine-dimensional space, are invariant. The classification is an instance of the classical description of the commutant of a rotation in three dimensions."))));
+                "The conjugation by u = cos t + sin t m, with m a unit pure quaternion, is the rotation about the axis m through the angle 2t, and the hypotheses say that 2t is not a multiple of pi. The form <x, y> is invariant because conjugation by a unit quaternion is an isometry; the other two forms are invariant because, in addition, u commutes with n, so the conjugation fixes n. Conversely, a unit quaternion q carrying i to n / |n| reduces the problem to the axis i, where the invariance equations on the basis i, j, k force the matrix of the form on the pure quaternions to commute with a rotation through an angle outside the multiples of pi about i; such matrices are spanned by the identity, the projection onto i and the cross product with i, because the rotation has the distinct eigenvalues 1, e^(2it) and e^(-2it). The triple is unique because the three forms are linearly independent on the pure quaternions when n is nonzero: in the same frame, with j and k orthogonal to n, the pair (j, j) gives the first coordinate, the pair (i, i) then gives the second, and the pair (j, k) gives |n| times the third. "
+                    + "Both hypotheses are needed; the following counts are elementary and are not formalized. When re(u) = 0 the conjugation is a half-turn, with matrix diag(1, -1, -1) in a suitable orthonormal frame, and its invariant bilinear forms on the pure quaternions are given by the matrices commuting with it, a space of dimension 1 + 4 = 5. When im(u) = 0, that is u = 1 or u = -1, the conjugation is the identity and every bilinear form on the pure quaternions is invariant, a space of dimension 3 x 3 = 9. The classification is an instance of the classical description of the commutant of a rotation in three dimensions."))));
 
     private static DocumentBlock Node(
         string id, string selector, string title, StatementSource statement, string prose, DescribeRole role,
@@ -75,6 +75,13 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
         Exists("c", Reals, ForAllPure(Equal(Call("B", F.Id("x"), F.Id("y")),
             Mul(F.Id("c"), Inner(F.Id("x"), F.Id("y"))))));
 
+    private static Formula UniqueScalarMultiple()
+    {
+        Formula c = F.Id("c");
+        return Seq(F.Exists, Bang, Sp, c, Sp, InMacro, Sp, Reals, Comma, Sp,
+            ForAllPure(Equal(Call("B", F.Id("x"), F.Id("y")), Mul(c, Inner(F.Id("x"), F.Id("y"))))));
+    }
+
     private static Formula TfaeFormula()
     {
         Formula b = F.Id("B"), u = F.Id("u"), w = F.Id("W"), s = F.Id("S");
@@ -99,7 +106,7 @@ internal sealed class TangentInvariantFormsDocument : IScribeDocumentDefinition
     {
         Formula b = F.Id("B"), u = F.Id("u");
         return Disp(ForAll("B", Forms,
-            Implies(ForAll("u", Units, Invariance(b, u)), ScalarMultiple())));
+            Implies(ForAll("u", Units, Invariance(b, u)), UniqueScalarMultiple())));
     }
 
     private static Formula OneRotationFormula()

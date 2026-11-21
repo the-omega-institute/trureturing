@@ -23,9 +23,8 @@ For a family `S` of unit quaternions, uniqueness of invariant forms up to a fact
 to irreducibility of the conjugation action of `S` on the pure quaternions, for arbitrary and for
 symmetric forms. The conjugations by all unit quaternions act irreducibly, so an invariant form
 is a multiple of the inner product on the pure quaternions with exactly one factor. A single
-conjugation
-by `u` with `u.re ≠ 0` and `u.im ≠ 0` (a rotation through an angle outside `πℤ` about `u.im`)
-leaves exactly the three-parameter family `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫`,
+conjugation by `u` with `u.re ≠ 0` and `u.im ≠ 0` (a rotation through an angle outside `πℤ`
+about `u.im`) leaves exactly the three-parameter family `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫`,
 `n = u.im`, invariant, and the three parameters are determined by the form. -/
 
 open scoped InnerProductSpace Quaternion
@@ -521,7 +520,7 @@ theorem conj_invariant_bilinear_eq_smul_inner (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ]
     B fun u _ => hB u
   refine ⟨c, hc, fun d hd => ?_⟩
   have h := (hd qI qI rfl rfl).symm.trans (hc qI qI rfl rfl)
-  have hI : ⟪qI, qI⟫_ℝ = 1 := by simp [qI, inner_eq_components]
+  have hI : ⟪qI, qI⟫_ℝ = 1 := by rw [inner_eq_components]; simp [qI]
   rwa [hI, mul_one, mul_one] at h
 
 /-- For a unit quaternion `u` that is neither `±1` nor pure (`u.re ≠ 0`, `u.im ≠ 0`), a bilinear

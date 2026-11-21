@@ -19,8 +19,8 @@ set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
 noncomputable section
 
-/-- The quaternion `1` has inner product `1` with itself. -/
-theorem inner_one_one : ⟪(1 : ℍ[ℝ]), (1 : ℍ[ℝ])⟫_ℝ = 1 := by
+/-- The pure unit quaternion `i` has inner product `1` with itself. -/
+theorem inner_i_i : ⟪(⟨0, 1, 0, 0⟩ : ℍ[ℝ]), (⟨0, 1, 0, 0⟩ : ℍ[ℝ])⟫_ℝ = 1 := by
   rw [inner_eq_components]; simp
 
 /-! ## The scalar multiple of the inner product -/
@@ -47,11 +47,13 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ p c => c * ⟪p.1, p.2⟫_ℝ + 1) (fun e => nomatch e)
 
+/-- At the pure quaternions `x = y = i` the value `c ⟪i, i⟫ = c` depends on `c`. -/
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨1, 1⟩, 0, 1, ?_⟩
-  change (0 : ℝ) * ⟪(1 : ℍ[ℝ]), (1 : ℍ[ℝ])⟫_ℝ ≠ 1 * ⟪(1 : ℍ[ℝ]), (1 : ℍ[ℝ])⟫_ℝ
-  rw [inner_one_one]; norm_num
+  refine ⟨⟨⟨0, 1, 0, 0⟩, ⟨0, 1, 0, 0⟩⟩, 0, 1, ?_⟩
+  change (0 : ℝ) * ⟪(⟨0, 1, 0, 0⟩ : ℍ[ℝ]), (⟨0, 1, 0, 0⟩ : ℍ[ℝ])⟫_ℝ ≠
+    1 * ⟪(⟨0, 1, 0, 0⟩ : ℍ[ℝ]), (⟨0, 1, 0, 0⟩ : ℍ[ℝ])⟫_ℝ
+  rw [inner_i_i]; norm_num
 
 /-- The zero form is invariant under every conjugation. -/
 theorem zero_invariant (u : unitary ℍ[ℝ]) (x y : ℍ[ℝ]) :
@@ -91,8 +93,8 @@ hold as well, and it fails for the zero form. -/
 theorem tfae_rejected_law : ¬ tfaeArena.Law rejected := by
   intro h
   have h13 := (invariant_bilinear_tfae Set.univ).out 1 3
-  have h3 := h13.1 fun B hB => conj_invariant_bilinear_eq_smul_inner B
-    fun u => hB u (Set.mem_univ u)
+  have h3 := h13.1 fun B hB => (conj_invariant_bilinear_eq_smul_inner B
+    fun u => hB u (Set.mem_univ u)).exists
   have h13' := (h Set.univ).out 1 3
   obtain ⟨c, hc⟩ := h13'.2 h3 0 fun u _ x y _ _ => zero_invariant u x y
   exact rejected_zero c hc
@@ -114,18 +116,20 @@ def tfae_registration_proof : Registration tfaeArena tfaeStatement where
 
 /-! ### `conj_invariant_bilinear_eq_smul_inner` -/
 
-/-- Retain the complete form and invariance telescope of
+/-- Retain the complete form, invariance and unique-factor telescope of
 `conj_invariant_bilinear_eq_smul_inner`; only the multiple `c ⟪x, y⟫` is read out. -/
 abbrev univArena : Arena where
   signature := signature
   Law r := ∀ (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ),
     (∀ u : unitary ℍ[ℝ], ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
       B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) ((u : ℍ[ℝ]) * y * star (u : ℍ[ℝ])) = B x y) →
-    ∃ c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = r.readout () ⟨x, y⟩ c
+    ∃! c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = r.readout () ⟨x, y⟩ c
 
+/-- The zero form is invariant under every conjugation, while the rejected reading would give
+`0 = c ⟪0, 0⟫ + 1`. -/
 theorem univ_rejected_law : ¬ univArena.Law rejected := by
   intro h
-  obtain ⟨c, hc⟩ := h 0 fun u x y _ _ => zero_invariant u x y
+  obtain ⟨c, hc, -⟩ := h 0 fun u x y _ _ => zero_invariant u x y
   exact rejected_zero c hc
 
 /-- The exact statement of the source theorem. -/
@@ -209,11 +213,15 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hh := hf 0 0 (by simp) (by simp)
   simp [rejected, realize, observe] at hh
 
+/-- At the rotor `3/5 + (4/5) i`, the triple `(0, 0, 0)` and the pure quaternions `x = y = i`,
+the value `α ⟪i, i⟫ = α` depends on `α`. -/
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨1, (0, 0, 0), 1, 1⟩, 0, 1, ?_⟩
-  change observe ⟨1, (0, 0, 0), 1, 1⟩ 0 ≠ observe ⟨1, (0, 0, 0), 1, 1⟩ 1
-  simp [observe]
+  refine ⟨⟨rotor, (0, 0, 0), ⟨0, 1, 0, 0⟩, ⟨0, 1, 0, 0⟩⟩, 0, 1, ?_⟩
+  change observe ⟨rotor, (0, 0, 0), ⟨0, 1, 0, 0⟩, ⟨0, 1, 0, 0⟩⟩ 0 ≠
+    observe ⟨rotor, (0, 0, 0), ⟨0, 1, 0, 0⟩, ⟨0, 1, 0, 0⟩⟩ 1
+  simp only [observe, inner_i_i]
+  norm_num
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement : Prop := type_of% @conj_invariant_bilinear_iff
