@@ -40,6 +40,12 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For the Boolean upperA, the D lip is the open half-plane Im t < 0 "
                     + "when upperA is true and Im t > 0 when upperA is false."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d-lip-mem-double-slit"),
+                DeclarationHandle.Create(Prefix + "dLip_mem_doubleSlit"),
+                H("The open D lip lies in the double slit"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both choices of D lip have nonzero imaginary part, so their "
+                    + "points lie in the canonical Euler double slit."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-d-germ"),
                 DeclarationHandle.Create(Prefix + "dPeriod"),
                 H("The D period germ"), StatementSource.WithoutFormula(),
@@ -84,6 +90,17 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                     + "the selected D lip, P(u) tends to dPeriod(upperA,t) and deriv(P)(u) tends to "
                     + "the complex derivative of dPeriod(upperA,·) at t."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("equate-germs-at-an-interior-d-lip-point"),
+                DeclarationHandle.Create(Prefix + "eq_near_dLip_of_real_germ"),
+                H("A real germ comparison gives equality near an interior lip point"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let F and G be complex analytic at a real t. Suppose F and G "
+                    + "agree on a real neighborhood of t, and G agrees with D as the complex argument "
+                    + "approaches t within the selected lip. The punctured real neighborhood supplies "
+                    + "complex accumulation at t. The analytic identity theorem extends equality of "
+                    + "F and G to a complex neighborhood of t. The selected open half-plane meets "
+                    + "every neighborhood of t, so F and D agree on a full complex neighborhood "
+                    + "of some interior point of that lip."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-chart-correction"),
                 DeclarationHandle.Create(Prefix + "chartCorrection"),
                 H("Corrections in native chart arguments"), StatementSource.WithoutFormula(),
