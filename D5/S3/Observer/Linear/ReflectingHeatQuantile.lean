@@ -173,5 +173,60 @@ theorem discrepancy_antitone {f : ℝ → ℝ} (hf : ContinuousOn f (Ici β))
       (fun N => (bins.prefix_discrepancy_antitone hf hanti N).1)
   · exact le_of_tendsto' hd fun N => (bins.prefix_discrepancy_antitone hf hanti N).2
 
+/-- Construct the right endpoints by inverting the cumulative density at the
+natural numbers, starting with the zero-mass endpoint. -/
+def ofDensity (hc : ContinuousOn density (Ici β)) (hn : ∀ x ∈ Ici β, 0 ≤ density x)
+    (hp : ∀ x > β, 0 < density x)
+    (hu : Tendsto (fun u => ∫ x in β..u, density x) atTop atTop) :
+    EqualMassBins β density := by
+  let mass (u : ℝ) := ∫ x in β..u, density x
+  have hint {u v : ℝ} (hb : β ≤ u) (hle : u ≤ v) :
+      IntervalIntegrable density volume u v :=
+    (hc.mono (on_interval hb)).intervalIntegrable_of_Icc hle
+  have hs : StrictMonoOn mass (Ici β) := by
+    intro u hbu v hbv huv
+    have hpos : 0 < ∫ x in u..v, density x :=
+      intervalIntegral.integral_pos huv (hc.mono (on_interval hbu))
+        (fun x hx => hn x (mem_Ici.mpr (hbu.trans hx.1.le)))
+        ⟨v, right_mem_Icc.mpr huv.le, hp v (hbu.trans_lt huv)⟩
+    have he := intervalIntegral.integral_add_adjacent_intervals (hint le_rfl hbu) (hint hbu huv.le)
+    dsimp [mass]
+    linarith
+  have hex (k : ℕ) : ∃ u ∈ Ici β, mass u = k := by
+    obtain ⟨v, hb, hv⟩ := ((eventually_ge_atTop β).and (hu.eventually_ge_atTop (k : ℝ))).exists
+    have hc' : ContinuousOn mass (Icc β v) := by
+      simpa only [uIcc_of_le hb] using
+        intervalIntegral.continuousOn_primitive_interval' (hint le_rfl hb) (left_mem_uIcc (a := β) (b := v))
+    have hk : (k : ℝ) ∈ Icc (mass β) (mass v) :=
+      ⟨by simp [mass], hv⟩
+    obtain ⟨u, hu, hu'⟩ := intermediate_value_Icc hb hc' hk
+    exact ⟨u, mem_Ici.mpr hu.1, hu'⟩
+  let t (k : ℕ) := (hex k).choose
+  have ht (k : ℕ) : t k ∈ Ici β := (hex k).choose_spec.1
+  have he (k : ℕ) : mass (t k) = k := (hex k).choose_spec.2
+  have hmono : StrictMono t := by
+    intro i j hij
+    by_contra! hji
+    have h := hs.monotoneOn (ht j) (ht i) hji
+    rw [he, he] at h
+    exact (not_le_of_gt hij) (by exact_mod_cast h)
+  refine ⟨t, ?_, hmono, ?_, hc, hn, ?_⟩
+  · apply hs.injOn (ht 0) (mem_Ici.mpr le_rfl)
+    rw [he, Nat.cast_zero]
+    simp [mass]
+  · apply hmono.monotone.tendsto_atTop_atTop
+    intro R
+    obtain ⟨k, hk⟩ := exists_nat_gt (mass (max R β))
+    refine ⟨k, (le_max_left R β).trans ?_⟩
+    by_contra! h
+    exact (not_le_of_gt hk) (he k ▸
+      hs.monotoneOn (ht k) (mem_Ici.mpr (le_max_right R β)) h.le)
+  · intro k
+    have h := intervalIntegral.integral_add_adjacent_intervals
+      (hint le_rfl (ht k)) (hint (ht k) (hmono.monotone (Nat.le_succ k)))
+    change mass (t k) + _ = mass (t (k + 1)) at h
+    rw [he, he, Nat.cast_add, Nat.cast_one] at h
+    linarith
+
 end EqualMassBins
 end D5.S3.Observer.Linear.ReflectingHeatInterpolation

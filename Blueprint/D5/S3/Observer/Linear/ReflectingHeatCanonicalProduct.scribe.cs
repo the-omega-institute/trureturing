@@ -19,6 +19,15 @@ internal sealed class ReflectingHeatCanonicalProductDocument : IScribeDocumentDe
                     "A bound on the density forces the positive endpoints to grow at least linearly in their index. Their inverse squares are summable. This gives locally uniform convergence of the paired-zero factors, so the limit is entire."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("reflecting-heat-quantile-product-real"),
+                DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatCanonicalProduct.canonicalProduct_real_bound"),
+                H("Real-axis estimate with logarithmic clipping"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The clipped logarithm decreases to its minimum and then increases to zero. Its signed quadrature error costs at most log(1+|x|/δ). The integral of the clipping correction with density bounded by D costs at most 2Dδ. Choosing δ=1/D yields the factor exp(2)(1+D|x|). The finite-product comparison includes zeros of the product."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("reflecting-heat-quantile-product-imaginary"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatCanonicalProduct.canonicalProduct_imaginary_bounds"),
                 H("Signed imaginary-axis estimate"),
