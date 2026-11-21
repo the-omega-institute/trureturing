@@ -8,7 +8,7 @@ internal sealed class KrebsC12SettlementDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/KrebsC12Settlement.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/krebsleyva2025ranktwo");
+        LibraryNoteRef.Create("D5/L/CayleyGrowth/krebsleyva2025ranktwo");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Rank-three standardized Abelian Cayley graphs can contain four-cliques at unbounded row counts.",
