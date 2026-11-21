@@ -43,6 +43,30 @@ jobs:
       SHARD_HANDOFF: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
       CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
     steps:
+      - name: Measure storage before checkout
+        run: |
+          cat > "$RUNNER_TEMP/measure-lean-publisher-disk.py" <<'PYTHON'
+          from pathlib import Path
+          import json
+          import os
+          import shutil
+          import subprocess
+          import sys
+
+          workspace = Path(os.environ["GITHUB_WORKSPACE"])
+          reading = {"phase": sys.argv[1], "runner": os.environ["RUNNER_NAME"]}
+          for label, path in (("workspace", workspace), ("temp", Path(os.environ["RUNNER_TEMP"]))):
+              disk = shutil.disk_usage(path)
+              reading[label] = {"device": path.stat().st_dev, "total_bytes": disk.total,
+                                "used_bytes": disk.used, "available_bytes": disk.free}
+          for item in (".lake/build", ".lake/packages"):
+              path = workspace / item
+              reading[item] = (int(subprocess.check_output(
+                  ["du", "--summarize", "--block-size=1", "--one-file-system", "--", str(path)]
+              ).split()[0]) if path.is_dir() else None)
+          print("LEAN_PUBLISHER_DISK " + json.dumps(reading), flush=True)
+          PYTHON
+          python3 "$RUNNER_TEMP/measure-lean-publisher-disk.py" start
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
@@ -142,6 +166,9 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Measure storage before seed
+        if: steps.entry.outputs.hit == 'true'
+        run: python3 "$RUNNER_TEMP/measure-lean-publisher-disk.py" before_seed
       - name: Restore the selected Release build seeds
         if: steps.entry.outputs.hit == 'true'
         uses: ./.github/actions/lean-cache-release-seed
@@ -153,6 +180,9 @@ jobs:
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
           checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
+      - name: Measure storage after seed
+        if: steps.entry.outputs.hit == 'true'
+        run: python3 "$RUNNER_TEMP/measure-lean-publisher-disk.py" after_seed
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
