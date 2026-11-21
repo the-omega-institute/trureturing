@@ -5,7 +5,7 @@ description: 在 trureturing 的 fork 中贡献 Lean、Blueprint Scribe、逃逸
 
 # Fork 内的轻量形式化贡献
 
-本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的编译器和判官来自 fork 的钉版源码。
+本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的工具和贡献适配器由 fork 的 `Meta/tools-release.json` 锁定。
 
 无需准备主检出的项目缓存、下载项目 Release cache 或编译全库。首次执行仍需 Lean 工具链、钉版 Mathlib 源码与依赖缓存、`global.json` 指定的 .NET SDK、Python ≥3.12、Git、Make 和冻结命令所需的 jq。现有依赖准备执行 `lake exe cache get`，不保证只下载所选模块的 Mathlib 缓存，也不保证零下载。项目模块只编译所选目标及其 import/utility 闭包。
 
@@ -51,10 +51,11 @@ make emit BASE="$CONTRIBUTION_BASE"
 
 ## 本地 Scribe 和逃逸审计
 
-从技能所在目录调用适配器；可安装到任意目录，无需安装其他个人技能：
+在 fork 工作树中安装锁定的工具并调用贡献适配器。
 
 ```sh
-python3 <skill-directory>/scripts/check.py \
+make install-tools
+python3 tools/scripts/lean-fork-contribute/scripts/check.py \
   --repository "$PWD" --base "$CONTRIBUTION_BASE" \
   --module D5.My.Module
 ```
