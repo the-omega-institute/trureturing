@@ -27,7 +27,10 @@ internal sealed class KozakiKakeiConjecture13Document : IScribeDocumentDefinitio
     private static DocumentBlock Claim(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(ClaimFormula())), AssessedProvenance.FromRepo(Primary),
-            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("kozaki-kakei-2026-even-frieze-dihedral"),
+                ResolutionKind.Proved));
 
     private static Formula ClaimFormula()
     {

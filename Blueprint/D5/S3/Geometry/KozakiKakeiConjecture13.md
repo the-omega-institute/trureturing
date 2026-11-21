@@ -22,6 +22,10 @@ $$\forall m \in \mathbb{N},\; \left(2 \le m \land m \ne 3\right) \Rightarrow \le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiConjecture13.conjecture_13` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kozaki-kakei-2026-even-frieze-dihedral` (proved) by `D5/S3/Geometry/KozakiKakeiConjecture13.conjecture_13`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kozaki-kakei-2026-even-frieze-dihedral","declaration_gid":"D5/S3/Geometry/KozakiKakeiConjecture13.conjecture_13","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yuta Kozaki and Saburo Kakei (2026). *Coxeter Group Symmetries of Frieze Patterns*. DOI: [10.48550/arXiv.2611.25785](https://doi.org/10.48550/arXiv.2611.25785). URL: <https://arxiv.org/abs/2611.25785v1>.
