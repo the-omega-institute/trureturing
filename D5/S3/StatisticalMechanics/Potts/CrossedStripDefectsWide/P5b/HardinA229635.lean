@@ -41,7 +41,7 @@ theorem result (n : ℕ) (hn : 31 ≤ n) :
       ∑ j : Fin 27, coefficients j * (HardinA229637RowColumn.T (n - (j.val + 1)) 6 : ℤ) := by
   obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le hn
   have hzero := residual_zero T initial terminal finite_certificate t
-  unfold residual at hzero
+  unfold HardinA229635Residual.residual at hzero
   have hlead : 30 + t + 1 = 31 + t := by omega
   have hlag (j : Fin 27) : 29 - j.val + t + 1 = 31 + t - (j.val + 1) := by omega
   simp only [scalar_count, hlead, hlag] at hzero
