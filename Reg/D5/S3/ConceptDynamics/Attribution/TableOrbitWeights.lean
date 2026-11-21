@@ -218,7 +218,7 @@ open FixedKernelMass (seedFixedMass)
 open Reg.D5.S3.ConceptDynamics.Attribution.FiniteKernelStabilizers renaming
   signature → kernelSignature, actual → kernelActual, rejected → kernelRejected
 
-attribute [local instance 2000] NormalSubgroupFixedMass.tableSMul NormalSubgroupFixedMass.tableAction
+attribute [local instance 2000] FiniteTableCalibration.tableSMul FiniteTableCalibration.tableAction
 
 local instance (priority := 2100) subgroupTableAction {G X Y : Type*} [Group G]
     [MulAction G X] [MulAction G Y] (H : Subgroup G) : MulAction H (X → Y) :=
@@ -229,8 +229,8 @@ open Classical in
 abbrev arena : Arena where
   signature := kernelSignature.{x,y}
   Law R :=
-    ∀ {G : Type g} [Group G] {X : Type x} {Y : Type y} [Fintype (X → Y)]
-      [MulAction G X] [MulAction G Y] [Fintype X] [Fintype Y] [Nonempty X] [DecidableEq Y]
+    ∀ {G : Type g} [Group G] {X : Type x} {Y : Type y}
+      [MulAction G X] [MulAction G Y] [Fintype X] [Fintype Y] [Nonempty X]
       (H : Subgroup G) (P : X → Y → ℝ) (_nn : ∀ x y, 0 ≤ P x y)
       (_normalized : ∀ x, ∑ y, P x y = 1)
       (_cov : ∀ (g : G) x y, P (g • x) (g • y) = P x y),
@@ -265,19 +265,15 @@ private theorem rejected_law : ¬ arena.{g,x,y,s}.Law kernelRejected := by
   let P : X → Y → ℝ := fun _ _ => 1
   obtain ⟨z, _, total, prescribed, _, _, _⟩ := altered (G := G) (⊤ : Subgroup G) P
     (by simp [P]) (by simp [P]) (by simp [P])
-  have full (o : MulAction.orbitRel.Quotient G (X → Y)) :
-      orbitFrequency (G := G) (univ.filter (fun t : X → Y => t PUnit.unit = PUnit.unit)) o = 1 := by
-    have event : univ.filter (fun t : X → Y => t PUnit.unit = PUnit.unit) = univ := by
-      simp only [filter_eq_self, mem_univ, forall_const]
-      exact fun _ => Subsingleton.elim _ _
-    rw [event]
+  have full [Fintype (X → Y)] (o : MulAction.orbitRel.Quotient G (X → Y)) :
+      orbitFrequency (G := G) univ o = 1 := by
     unfold orbitFrequency
     simp
     exact Subsingleton.elim _ _
   have zero := prescribed (PUnit.unit : X) (PUnit.unit : Y)
-  change (∑ o, z o * orbitFrequency (G := G)
-    (univ.filter (fun t : X → Y => t PUnit.unit = PUnit.unit)) o) = 0 at zero
-  simp only [full, mul_one, total] at zero
+  change _ = 0 at zero
+  have hit (t : X → Y) : t PUnit.unit = PUnit.unit := Subsingleton.elim _ _
+  simp only [hit, filter_true, full, mul_one, total] at zero
   exact one_ne_zero zero
 
 def family : Registration arena.{g,x,y,s} (type_of% (@maximal_table_fixed_mass)) where
@@ -321,10 +317,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[2, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
         "fn", "arg", "body", "body", "arg", "fn", "fn"]
-      stateBinder := 12
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

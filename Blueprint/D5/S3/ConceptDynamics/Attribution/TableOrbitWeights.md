@@ -46,7 +46,7 @@ $$\forall G, X, Y, H:\operatorname{Subgroup}\left(G\right), P:X \times Y \to \ma
 
 *Commentary.*
 
-Let G be a group acting on a nonempty finite input type X in universe v and a finite output type Y in universe w. Assume decidable equality on Y and a finite enumeration of the function type from X to Y. Fix any subgroup H of G and a real function P on X times Y. Its entries are nonnegative, its rows sum to one, and P(g acting on x, g acting on y) = P(x,y) for every g, x and y.
+Let G be a group acting on a nonempty finite input type X in universe v and a finite output type Y in universe w. The tables are the functions from X to Y. Fix any subgroup H of G and a real function P on X times Y. Its entries are nonnegative, its rows sum to one, and P(g acting on x, g acting on y) = P(x,y) for every g, x and y.
 
 The G-action on a table t sends it under g to the table that takes x to g acting on t evaluated at the inverse translate of x. Let Q be its orbit type. For each cell (x,y), take the event of tables with t(x) = y. Feasible(z) means that z is nonnegative on Q, sums to one there, and for every x and y the sum of z(o) times the cell frequency in o over all o equals P(x,y). Score(z) sums z(o) times the H-fixed-table frequency in o over all o.
 
@@ -61,4 +61,4 @@ Pushing seeds to their tables preserves the row marginals and can increase the f
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/TableOrbitWeights.invariant_event_masses_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/TableOrbitWeights.maximal_invariant_event_mass`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/TableOrbitWeights.maximal_table_fixed_mass`
-- Dependency: [D5/S3/ConceptDynamics/Attribution/NormalSubgroupFixedMass](NormalSubgroupFixedMass.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/FiniteTableCalibration](FiniteTableCalibration.md)

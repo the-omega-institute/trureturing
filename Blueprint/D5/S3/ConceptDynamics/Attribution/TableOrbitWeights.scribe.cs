@@ -62,8 +62,8 @@ internal sealed class TableOrbitWeightsDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let G be a group acting on a nonempty finite input type X in universe v "
-                        + "and a finite output type Y in universe w. Assume decidable equality on Y and a "
-                        + "finite enumeration of the function type from X to Y. Fix any subgroup H of G "
+                        + "and a finite output type Y in universe w. The tables are the functions from X to Y. "
+                        + "Fix any subgroup H of G "
                         + "and a real function P on X times Y. Its entries are nonnegative, its rows sum "
                         + "to one, and P(g acting on x, g acting on y) = P(x,y) for every g, x and y.")),
                     Paragraph(Text("The G-action on a table t sends it under g to the table that takes x "
