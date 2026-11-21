@@ -74,6 +74,20 @@ The integrable Chebyshev error kernel gives initial exponential control. On a la
 
 The first-order equation for the pole-removed zeta function propagates from Re(s)>1 across this half-plane. The function is nonzero at s=2, so the equation excludes zeta zeros in the right half of the critical strip. The functional equation gives RH.
 
+**Theorem 1.6 (An exponential affine majorant implies the exact zeta strip).**
+
+$$\forall b \in \mathbb{R},\; \forall c \in \mathbb{R},\; \forall A \in \mathbb{R},\; \forall B \in \mathbb{R},\; \left(\left(\frac{1}{2} \le b \land b < 1\right) \land c \ne 0\right) \Rightarrow \left(\left(\exists Y \in \mathbb{R},\; \forall T \in \mathbb{R},\; Y \le T \Rightarrow c \cdot \int_{5040}^{\operatorname{exp}\left(T\right)}\frac{\operatorname{thetaTail}\left(x\right)}{\sqrt{x}}\,dx \le \operatorname{exp}\left((b - \frac{1}{2}) \cdot T\right) \cdot (A \cdot T + B)\right) \Rightarrow \left(\forall r \in \mathbb{C},\; \zeta(r) = 0 \Rightarrow \operatorname{Re}\left(r\right) \le b\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The signed integral starts at 5040. Any nonzero real multiplier gives the corresponding one-sided test. The fixed anchor and prime-power correction contribute at most a constant plus a linear term after exponential normalization.
+
+Shifting the Laplace kernel by b for the normalized complete primitive gives the original kernel shifted by one half. Real-regular meromorphic continuation and the affine majorant continue this transform to Re(s)>b. The logarithmic differential equation for pole-removed zeta then excludes zeros there.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.HasExponentBound`
@@ -81,6 +95,7 @@ The first-order equation for the pole-removed zeta function propagates from Re(s
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.rh_iff_signedPrimePrimitive_slope_from_5040`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.signedPrimePrimitive`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.zeta_zero_re_le_of_signedPrimePrimitive_exponent`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040`
 - Dependency: [D5/S3/Analytic/Laplace/EulerPoleObstruction](../../../Analytic/Laplace/EulerPoleObstruction.md)
 - Dependency: [D5/S3/Analytic/Laplace/PositiveLaplaceContinuation](../../../Analytic/Laplace/PositiveLaplaceContinuation.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaurent](CompleteMangoldtLaurent.md)
