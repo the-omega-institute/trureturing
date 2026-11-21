@@ -279,6 +279,7 @@ theorem inverse_diagonal_lower_bound_at_saddle (n : ℕ) (j : Mode n) {a β : �
     _ = _ := by rw [← hnorm]; ring
 
 set_option maxHeartbeats 500000 in
+-- Expanding the two logarithmic prefactors exceeds the default limit.
 /-- The two estimates give a common logarithmic loss uniform in the
 positive mode and in the window parameter. The potential assumptions are the
 continuum saddle identities used on the two axes. -/
@@ -510,6 +511,107 @@ private theorem saddle_radius_bounds {β a : ℝ} (hβ : 0 < β) (ha : 0 < a)
     · exact (inv_le_one_of_one_le₀ (le_of_not_ge hβ1)).trans (by
         linarith [le_max_left (1 : ℝ) (a ^ 2)])
 
+private theorem saddleMass_pos {β : ℝ} (hβ : 0 < β) : 0 < saddleMass β := by
+  let f (θ : ℝ) := (radius β (2 - 2 * Real.cos θ))⁻¹
+  have hp (θ : ℝ) : 0 < f θ := by dsimp [f, radius]; positivity
+  have hf : Continuous f := by
+    apply Continuous.inv₀ (by dsimp [radius]; fun_prop)
+    intro θ h
+    exact (hp θ).ne' (by simp [f, h])
+  unfold saddleMass spectralAverage
+  exact div_pos (intervalIntegral.integral_pos Real.pi_pos hf.continuousOn
+    (fun θ _ => (hp θ).le) ⟨0, ⟨le_rfl, Real.pi_pos.le⟩, hp 0⟩) Real.pi_pos
+
+private theorem saddleMass_strictAnti : StrictAntiOn saddleMass (Ioi 0) := by
+  intro b hb c hc hbc
+  let f (β θ : ℝ) := (radius β (2 - 2 * Real.cos θ))⁻¹
+  have hp {β : ℝ} (hβ : 0 < β) (θ : ℝ) :
+      0 < radius β (2 - 2 * Real.cos θ) := by unfold radius; positivity
+  have hf {β : ℝ} (hβ : 0 < β) : Continuous (f β) :=
+    (by dsimp [radius]; fun_prop : Continuous fun θ => radius β (2 - 2 * Real.cos θ)).inv₀
+      (fun θ => (hp hβ θ).ne')
+  have hlt (θ : ℝ) : f c θ < f b θ := by
+    apply inv_strictAnti₀ (hp hb θ)
+    unfold radius
+    exact Real.sqrt_lt_sqrt (by positivity) (add_lt_add_right
+      (pow_lt_pow_left₀ hbc (le_of_lt hb) (by decide : 2 ≠ 0)) _)
+  unfold saddleMass spectralAverage
+  exact div_lt_div_of_pos_right
+    (intervalIntegral.integral_lt_integral_of_continuousOn_of_le_of_exists_lt
+      Real.pi_pos (hf hc).continuousOn (hf hb).continuousOn
+      (fun θ _ => (hlt θ).le) ⟨0, ⟨le_rfl, Real.pi_pos.le⟩, hlt 0⟩) Real.pi_pos
+
+private theorem saddleMass_continuousOn {l u : ℝ} (hl : 0 < l) :
+    ContinuousOn saddleMass (Icc l u) := by
+  let f (β θ : ℝ) := (radius β (2 - 2 * Real.cos θ))⁻¹
+  have hb (β : ℝ) (hβ : β ∈ Icc l u) (θ : ℝ) :
+      l ≤ radius β (2 - 2 * Real.cos θ) := by
+    unfold radius
+    apply (Real.le_sqrt hl.le (by positivity)).2
+    nlinarith [pow_le_pow_left₀ hl.le hβ.1 2, sq_nonneg (2 - 2 * Real.cos θ)]
+  have hi : ContinuousOn (fun β => ∫ θ in 0..Real.pi, f β θ) (Icc l u) := by
+    intro b hbi
+    apply intervalIntegral.continuousWithinAt_of_dominated_interval (bound := fun _ => l⁻¹)
+    · filter_upwards [self_mem_nhdsWithin] with β hβ
+      exact ((show Continuous (fun θ => radius β (2 - 2 * Real.cos θ)) by
+        dsimp [radius]; fun_prop).inv₀ (fun θ => (hl.trans_le (hb β hβ θ)).ne')).aestronglyMeasurable
+    · filter_upwards [self_mem_nhdsWithin] with β hβ
+      exact ae_of_all _ fun θ _ => by
+        change |(radius β (2 - 2 * Real.cos θ))⁻¹| ≤ l⁻¹
+        rw [abs_of_nonneg (inv_nonneg.mpr (hl.le.trans (hb β hβ θ)))]
+        exact inv_anti₀ hl (hb β hβ θ)
+    · exact intervalIntegrable_const
+    · exact ae_of_all _ fun θ _ =>
+        (ContinuousOn.inv₀ (by dsimp [radius]; fun_prop)
+          (fun β hβ => (hl.trans_le (hb β hβ θ)).ne')) b hbi
+  change ContinuousOn (fun β => (∫ θ in 0..Real.pi, f β θ) / Real.pi) (Icc l u)
+  exact hi.div_const _
+
+/-- Every positive window parameter has a unique positive saddle radius. -/
+theorem existsUnique_saddle_radius {a : ℝ} (ha : 0 < a) :
+    ∃! β : ℝ, 0 < β ∧ saddleMass β = a / 2 := by
+  let l : ℝ := (32 * (1 + a) ^ 2)⁻¹
+  let u : ℝ := max 1 (4 / a)
+  have hl : 0 < l := by dsimp [l]; positivity
+  have hpow : 1 ≤ (1 + a) ^ 2 := by
+    nlinarith [sq_nonneg a]
+  have hlu : l ≤ u := by
+    exact (inv_le_one_of_one_le₀ (show 1 ≤ 32 * (1 + a) ^ 2 by linarith)).trans (le_max_left _ _)
+  have hu : 0 < u := hl.trans_le hlu
+  have hlval : a / 2 ≤ saddleMass l := by
+    by_contra! h
+    have hlmass := saddleMass_pos hl
+    have hb := (saddle_radius_bounds hl (show 0 < 2 * saddleMass l by positivity)
+      (show saddleMass l = (2 * saddleMass l) / 2 by ring)).2
+    have hs : (2 * saddleMass l) ^ 2 ≤ a ^ 2 :=
+      pow_le_pow_left₀ (by positivity) (by linarith) 2
+    have hx : max 1 ((2 * saddleMass l) ^ 2) ≤ (1 + a) ^ 2 :=
+      max_le hpow (hs.trans (by linarith))
+    have hh := hb.trans (mul_le_mul_of_nonneg_left hx (show (0 : ℝ) ≤ 16 by norm_num))
+    change ((32 * (1 + a) ^ 2)⁻¹)⁻¹ ≤ 16 * (1 + a) ^ 2 at hh
+    rw [inv_inv] at hh
+    linarith
+  have huval : saddleMass u ≤ a / 2 := by
+    have humass := saddleMass_pos hu
+    have hb := (saddle_radius_bounds hu (show 0 < 2 * saddleMass u by positivity)
+      (show saddleMass u = (2 * saddleMass u) / 2 by ring)).1
+    have hh : 4 / a ≤ 2 / (2 * saddleMass u) := (le_max_right _ _).trans hb
+    have he := (div_le_div_iff₀ ha (show 0 < 2 * saddleMass u by positivity)).1 hh
+    linarith
+  obtain ⟨β, hβ, he⟩ := intermediate_value_Icc' hlu (saddleMass_continuousOn hl) ⟨huval, hlval⟩
+  have hp := hl.trans_le hβ.1
+  refine ⟨β, ⟨hp, he⟩, ?_⟩
+  intro γ hγ
+  exact saddleMass_strictAnti.injOn hγ.1 hp (hγ.2.trans he.symm)
+
+/-- The positive solution of the scalar saddle equation for a physical window. -/
+def saddleRadius (a : ℝ) : ℝ :=
+  if ha : 0 < a then (existsUnique_saddle_radius ha).exists.choose else 0
+
+private theorem saddleRadius_spec {a : ℝ} (ha : 0 < a) :
+    0 < saddleRadius a ∧ saddleMass (saddleRadius a) = a / 2 := by
+  simpa only [saddleRadius, dite_eq_left ha] using (existsUnique_saddle_radius ha).exists.choose_spec
+
 /-- The continuous zero density, including the number of cells in the
 equal-mass condition. This is the nonnegative formula at the saddle. -/
 def saddleDensity (n : ℕ) (β t : ℝ) : ℝ :=
@@ -673,7 +775,7 @@ private theorem saddleLogAverage_mono {β : ℝ} (hβ : 0 < β) {u v : ℝ}
 /-- The physical-time estimate for the actual saddle density. Its remaining
 analytic inputs are the imaginary-axis evaluation and real-axis cancellation
 identities for that density. -/
-theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T β : ℝ}
+private theorem log_inverse_diagonal_error_at_saddle_radius (n : ℕ) (j : Mode n) {T β : ℝ}
     (hT : 0 < T) (hβ : 0 < β)
     (hs : saddleMass β = ((n : ℝ) * T) / 2)
     (hImag : ∀ y ≥ 0, imaginaryPotential β (saddleDensity n β) y =
@@ -724,6 +826,28 @@ theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T β : ℝ}
   change |Real.log (Real.sqrt ((physicalGramian n (a / N))⁻¹ j j)) -
       N * saddleRate a β (rate n j)| ≤ 20 * (1 + Real.log N + |Real.log a|) at H
   rwa [he] at H
+
+/-- The physical-time estimate at the unique positive saddle for the window.
+The two axis assertions concern the density built from that radius. -/
+theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT : 0 < T)
+    (hImag : let a := (n : ℝ) * T; let β := saddleRadius a
+      ∀ y ≥ 0, imaginaryPotential β (saddleDensity n β) y =
+        (n : ℝ) * (a / 2 * (radius β y - β) -
+          (saddleLogAverage β y - saddleLogAverage β 0)))
+    (hReal : let a := (n : ℝ) * T; let β := saddleRadius a
+      ∀ ω : ℝ, ∃ ζ : ℂ, ζ ≠ 0 ∧
+        ζ + ζ⁻¹ = (ω : ℂ) * Complex.I - 2 ∧ 1 ≤ ‖ζ‖ ∧
+        realPotential β (saddleDensity n β) |ω| + (n : ℝ) * Real.log ‖ζ‖ ≤
+          (n : ℝ) * saddleRate a β 0) :
+    let a := (n : ℝ) * T
+    |Real.log (Real.sqrt ((physicalGramian n T)⁻¹ j j)) -
+      (n : ℝ) * saddleRate a (saddleRadius a) (rate n j)| ≤
+        20 * (1 + Real.log (n : ℝ) + |Real.log a|) := by
+  have hn : 0 < (n : ℝ) := by
+    have := j.isLt
+    exact_mod_cast (show 0 < n by omega)
+  obtain ⟨hβ, hs⟩ := saddleRadius_spec (mul_pos hn hT)
+  exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag hReal
 
 #print axioms physical_log_inverse_diagonal_error
 #print axioms inverse_diagonal_lower_bound_at_saddle

@@ -28,6 +28,15 @@ internal sealed class ReflectingHeatQuantileGramianDocument : IScribeDocumentDef
                     "The logarithm of the sum of two saddle radii increases along the angular grid. The right-endpoint sum bounds its angular average from above. Removing the endpoint at π and the selected positive mode costs at most twice the terminal logarithm. The resulting bound retains the exact factor q_j b_j and the time factor sqrt(na)."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("reflecting-heat-quantile-gramian-saddle-radius"),
+                DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatQuantileGramian.existsUnique_saddle_radius"),
+                H("Unique positive saddle radius"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The angular average of the reciprocal saddle radius is continuous and strictly decreasing on the positive half-line. The polynomial bounds at small and large radii bracket half the window parameter, so the intermediate value theorem gives the unique radius used by the physical estimate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("reflecting-heat-quantile-gramian-log-loss"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/ReflectingHeatQuantileGramian.physical_log_inverse_diagonal_error"),
                 H("Uniform logarithmic loss at the continuum saddle"),
