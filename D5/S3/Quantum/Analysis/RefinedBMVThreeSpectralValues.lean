@@ -25,7 +25,7 @@ noncomputable section
 namespace RefinedBMV.ThreeSpectralValues
 
 open DimThree (defect_cycle defect_swap defect_diag defect_nonneg pairing_all
-  criterion_nonneg_ordered mean mean_map trace_gap word_counts)
+  criterion_nonneg_ordered mean_map trace_gap word_counts)
 
 variable {n : Type*} [Fintype n]
 
@@ -182,7 +182,7 @@ private theorem diagonal_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (a : Fin 3 → ℝ) (ha : ∀ i, 0 ≤ a i) (label : n → Fin 3)
     (B : Matrix n n ℂ) (hB : B.PosSemidef) :
     trace (((diagonal fun i ↦ (a (label i) : ℂ)) ^ p * B) ^ 3) ≤
-      mean p ((diagonal fun i ↦ (a (label i) : ℂ)) ^ 3) B := by
+      DimThree.wordMean p ((diagonal fun i ↦ (a (label i) : ℂ)) ^ 3) B := by
   let C (i : Fin 3) := CFC.sqrt B * spectralProjection label i * CFC.sqrt B
   have hC (i : Fin 3) : (C i).PosSemidef := by
     have hP : (spectralProjection label i).PosSemidef := by
@@ -231,7 +231,7 @@ three second factors. The first PSD matrix has at most three distinct eigenvalue
 theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
     (hs : (Finset.univ.image hA.isHermitian.eigenvalues).card ≤ 3) :
-    trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ mean p A B := by
+    trace (((A ^ ((p : ℝ) / 3)) * B) ^ 3) ≤ DimThree.wordMean p A B := by
   obtain ⟨a, label, hlabel, ha⟩ := spectral_labels _ hs 0
   have ha₀ (i : Fin 3) : 0 ≤ a i := by
     rcases ha i with h | ⟨k, h⟩
@@ -271,7 +271,7 @@ theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     congr 1
     ring
   have h := diagonal_bound hp x (fun i ↦ Real.rpow_nonneg (ha₀ i) _) label (f B) hB'
-  change trace ((D ^ p * f B) ^ 3) ≤ mean p (D ^ 3) (f B) at h
+  change trace ((D ^ p * f B) ^ 3) ≤ DimThree.wordMean p (D ^ 3) (f B) at h
   rw [← hd, ← hpow, ← map_mul f, ← map_pow f, trace_conjugation] at h
   exact h.trans_eq (mean_map p f.toAlgEquiv (trace_conjugation (star U)) A B)
 
@@ -313,7 +313,7 @@ when the first Hermitian matrix has at most three distinct eigenvalues. -/
 theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (H K : Matrix n n ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian)
     (hs : (Finset.univ.image hH.eigenvalues).card ≤ 3) :
-    trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ mean p (exp H) (exp K) := by
+    trace (exp ((p : ℝ) • H + (3 : ℝ) • K)) ≤ DimThree.wordMean p (exp H) (exp K) := by
   obtain ⟨a, label, hlabel, _⟩ := spectral_labels _ hs 0
   let U := hH.eigenvectorUnitary
   let f := Unitary.conjStarAlgAut ℂ _ (star U)
@@ -347,9 +347,9 @@ theorem exponential_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     rw [Unitary.conjStarAlgAut_star_apply]
     exact hB.conjTranspose_mul_mul_same (U : Matrix n n ℂ)
   have h := diagonal_bound hp x (fun i ↦ (Real.exp_pos _).le) label (f (exp K)) hB'
-  change trace ((D ^ p * f (exp K)) ^ 3) ≤ mean p (D ^ 3) (f (exp K)) at h
+  change trace ((D ^ p * f (exp K)) ^ 3) ≤ DimThree.wordMean p (D ^ 3) (f (exp K)) at h
   rw [← hd, ← map_pow f, ← map_mul f, ← map_pow f, trace_conjugation, ← map_pow f] at h
-  change _ ≤ mean p (f.toAlgEquiv (X ^ 3)) (f.toAlgEquiv (exp K)) at h
+  change _ ≤ DimThree.wordMean p (f.toAlgEquiv (X ^ 3)) (f.toAlgEquiv (exp K)) at h
   rw [mean_map p f.toAlgEquiv (trace_conjugation (star U))] at h
   have hpow (k : ℕ) : X ^ k = exp ((k : ℝ) • T) := by
     rw [Nat.cast_smul_eq_nsmul, Matrix.exp_nsmul]

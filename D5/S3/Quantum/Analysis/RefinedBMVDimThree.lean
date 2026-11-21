@@ -211,10 +211,15 @@ theorem pairing_all {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
 private abbrev Mat := Matrix (Fin 3) (Fin 3) ℂ
 
 variable {n : Type*} [Fintype n] [DecidableEq n] in
-/-- The mean trace of the words with (p) copies of the first factor and three of the second. -/
-def mean (p : ℕ) (A B : Matrix n n ℂ) : ℂ :=
+/-- The mean trace of the words with `p` copies of the first factor and three of the second. -/
+def wordMean (p : ℕ) (A B : Matrix n n ℂ) : ℂ :=
   ((balancedWords p 3).map (fun w ↦ trace (evalWord A B w))).sum /
     (balancedWords p 3).length
+
+/-- The mean trace of the same words for matrices indexed by `Fin 3`. -/
+def mean (p : ℕ) (A B : Mat) : ℂ :=
+  -- Preserve the compiled body used by the frozen statement identity.
+  delta% wordMean p A B
 
 private def rotations (p : ℕ) (g : Gap) : List (List Bool) :=
   (List.range (p + 3)).map (gapWord43 g).rotate
@@ -244,7 +249,7 @@ private theorem sum_expand {α β : Type*} (l : List α) (f : α → List β) (v
 
 variable {n : Type*} [Fintype n] [DecidableEq n] in
 private theorem mean_eq_gaps {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (A B : Matrix n n ℂ) :
-    mean p A B = ((gaps p).map (traceGaps43 A B)).sum / (gaps p).length := by
+    wordMean p A B = ((gaps p).map (traceGaps43 A B)).sum / (gaps p).length := by
   let v := fun w ↦ trace (evalWord A B w)
   have hr (g : Gap) : ((rotations p g).map v).sum = (p + 3 : ℂ) * traceGaps43 A B g := by
     simp [rotations, v, Function.comp_def, evalWord_rotate_trace43, evalWord_gap_trace43,
@@ -266,7 +271,7 @@ variable {n : Type*} [Fintype n] [DecidableEq n] in
 theorem trace_gap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (a : n → ℝ) (B : Matrix n n ℂ) :
     ((gaps p).length : ℂ) *
-      (mean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B -
+      (wordMean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B -
         trace (((diagonal fun i ↦ (a i : ℂ)) ^ p * B) ^ 3)) =
       walk B (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) := by
   let d : n → ℂ := fun i ↦ a i
@@ -280,7 +285,7 @@ theorem trace_gap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     simpa only [pow_succ, pow_zero, one_mul, mul_assoc] using trace_pow_walk B d p p p
   have hlen : ((gaps p).length : ℂ) ≠ 0 := by exact_mod_cast (word_counts hp).2.1.ne'
   change ((gaps p).length : ℂ) *
-    (mean p ((diagonal d) ^ 3) B - trace (((diagonal d) ^ p * B) ^ 3)) = _
+    (wordMean p ((diagonal d) ^ 3) B - trace (((diagonal d) ^ p * B) ^ 3)) = _
   rw [mul_sub, mean_eq_gaps hp, mul_div_cancel₀ _ hlen, htrace, sum_walk43 B, hcube]
   change walk B _ - ((gaps p).length : ℂ) • walk B _ = _
   rw [← map_smul, ← map_sub]
@@ -310,12 +315,12 @@ private theorem diagonal_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
 
 variable {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m] in
 theorem mean_map (p : ℕ) (f : Matrix n n ℂ ≃ₐ[ℂ] Matrix m m ℂ) (hf : ∀ M, trace (f M) = trace M)
-    (A B : Matrix n n ℂ) : mean p (f A) (f B) = mean p A B := by
+    (A B : Matrix n n ℂ) : wordMean p (f A) (f B) = wordMean p A B := by
   have h (w : List Bool) : evalWord (f A) (f B) w = f (evalWord A B w) := by
     induction w with
     | nil => simp [evalWord]
     | cons b w ih => cases b <;> simp [evalWord, ih]
-  simp only [mean, h, hf]
+  simp only [wordMean, h, hf]
 
 private theorem cubeRoot_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (hcert : ∀ a b c : ℝ, 0 ≤ a → a ≤ b → b ≤ c → 0 ≤ criterion p a b c)
@@ -333,7 +338,8 @@ private theorem cubeRoot_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   have hd : f X = diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues) :=
     hX.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
   rw [← hd, ← map_pow f, ← map_mul f, ← map_pow f, ← map_pow f, trace_conjugation] at h
-  change _ ≤ mean p (f.toAlgEquiv (X ^ 3)) (f.toAlgEquiv B) at h
+  change _ ≤ wordMean p (f.toAlgEquiv (X ^ 3)) (f.toAlgEquiv B) at h
+  change _ ≤ wordMean p (X ^ 3) B
   simpa only [mean_map p f.toAlgEquiv (trace_conjugation (star U))] using h
 
 open scoped MatrixOrder Matrix.Norms.L2Operator in
