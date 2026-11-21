@@ -8,7 +8,7 @@ Write C(r,x) for the centered integral of (psi(t^(1/r))-t^(1/r))/t² over t>x, s
 
 **Theorem 1.1 (The signed centered integral at a root cutoff).**
 
-$$\forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; 1 < r \Rightarrow \left(1 \le x \Rightarrow \operatorname{C}\left(r, x\right) = r \cdot \operatorname{sqrt}\left(x\right) \cdot \left(\operatorname{Q}\left(x^{\frac{1}{r}}\right) \cdot {x^{\frac{1}{r}}}^{1 - r} - \left(r - 1\right) \cdot \operatorname{W}\left(r, x^{\frac{1}{r}}\right)\right)\right)$$
+$$\forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; 1 \le r \Rightarrow \left(0 < x \Rightarrow \operatorname{C}\left(r, x\right) = r \cdot \operatorname{sqrt}\left(x\right) \cdot \left(\operatorname{Q}\left(x^{\frac{1}{r}}\right) \cdot {x^{\frac{1}{r}}}^{1 - r} - \left(r - 1\right) \cdot \operatorname{W}\left(r, x^{\frac{1}{r}}\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootTail.centered_root_tail` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ $$\forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; 1 < r \Rightarrow \lef
 
 *Commentary.*
 
-Substitute t=s^r with y=x^(1/r). The centered integral becomes r times the integral of the Chebyshev error kernel against s^(1-r). The triangular product of the absolute integrable Chebyshev kernel and s^(-r) on y<s<t is integrable. Fubini and the power primitive on y<s<t give the boundary term Q(y)y^(1-r) and the subtracted weighted integral.
+At r=1 the centered integral is the complete tail Q(x) scaled by the square root of x. For r>1, substitute t=s^r with y=x^(1/r). The centered integral becomes r times the integral of the Chebyshev error kernel against s^(1-r), before scaling. The error kernel is -1/t below 1 and is integrable there above any positive cutoff. The triangular product of the absolute integrable Chebyshev kernel and s^(-r) on y<s<t is integrable. Fubini and the power primitive on y<s<t give the boundary term Q(y)y^(1-r) and the subtracted weighted integral.
 
 **Theorem 1.2 (The explicit uncentered power contribution).**
 
@@ -32,7 +32,7 @@ The Chebyshev linear bound gives integrability for the uncentered root kernel. I
 
 **Theorem 1.3 (The integrated fifth-root majorant).**
 
-$$\forall x \in \mathbb{R},\; 1 \le x \Rightarrow \left(0 \le \operatorname{E}\left(x\right) \land \operatorname{sqrt}\left(x\right) \cdot \operatorname{E}\left(x\right) \le \left(\operatorname{log}\left(4\right) + 4\right) \cdot \frac{5}{4} \cdot x^{-\frac{3}{10}}\right)$$
+$$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \left(0 \le \operatorname{E}\left(x\right) \land \operatorname{sqrt}\left(x\right) \cdot \operatorname{E}\left(x\right) \le \left(\operatorname{log}\left(4\right) + 4\right) \cdot \frac{5}{4} \cdot x^{-\frac{3}{10}}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootTail.root_cutoff_remainder` (`✓ std3`). ∎
 
@@ -40,7 +40,7 @@ $$\forall x \in \mathbb{R},\; 1 \le x \Rightarrow \left(0 \le \operatorname{E}\l
 
 *Commentary.*
 
-The Costa Pereira inequalities in Mathlib retain the square and cube cutoffs in psi minus theta. The seventh-root term makes the remainder nonnegative. The uncentered fifth-root term is bounded by (log(4)+4)t^(1/5), which integrates against t^(-2) to (log(4)+4)(5/4)x^(-4/5) before normalization. The source inequality is reproduced in Broadbent et al., arXiv:2002.11068v2, equation (3.16).
+Below 1 both Chebyshev functions vanish, so their centered kernels are integrable above any positive cutoff. The Costa Pereira inequalities in Mathlib retain the square and cube cutoffs in psi minus theta. The seventh-root term makes the remainder nonnegative. The uncentered fifth-root term is bounded by (log(4)+4)t^(1/5), which integrates against t^(-2) to (log(4)+4)(5/4)x^(-4/5) before normalization. The source inequality is reproduced in Broadbent et al., arXiv:2002.11068v2, equation (3.16).
 
 ## References
 
