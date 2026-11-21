@@ -31,6 +31,8 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCla
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClass5
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClass6
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClass7
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Logic.Equiv.Defs
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 

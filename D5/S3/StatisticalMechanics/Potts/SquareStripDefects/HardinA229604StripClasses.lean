@@ -48,6 +48,8 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.Hardi
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.HardinA229604StripClass24
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.HardinA229604StripClass25
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.HardinA229604StripClass26
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Logic.Equiv.Defs
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
