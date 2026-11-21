@@ -9,6 +9,7 @@
 module
 
 public import Mathlib.Combinatorics.Matroid.Minor.Contract
+public import D5.S3.HomologicalAlgebra.OrderedFaceSign
 import Mathlib.Combinatorics.Colex
 import Mathlib.Tactic.Ring
 
@@ -24,14 +25,12 @@ open scoped Matroid
 
 namespace D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
 
+open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
+
 variable {V : Type*} [LinearOrder V]
 
 /-- Integral coefficients in ambient ordered face coordinates. -/
 abbrev Chain (V : Type*) := Finset V → ℤ
-
-/-- The sign for inserting a vertex into an ordered ridge. -/
-def insertionSign (R : Finset V) (x : V) : ℤ :=
-  (-1) ^ (R.filter (· < x)).card
 
 /-- Boundary, summing insertions from the specified vertex set. -/
 def boundaryOn (U : Finset V) (z : Chain V) (R : Finset V) : ℤ :=

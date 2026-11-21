@@ -20,6 +20,7 @@ open scoped Matroid
 namespace D5.S3.TotalVariation.FairBiasCycleFactorization
 
 open D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
+open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 open D5.S3.TotalVariation.FairBiasMatching
 open D5.S3.TotalVariation.FairBiasRestriction
 open D5.S3.TotalVariation.FairBiasShelling

@@ -9,6 +9,7 @@ namespace Reg.D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
 
 open LeanInformationAudit
 open _root_.D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
+open _root_.D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.Support.UniverseSingleReadout (signature sensitivity)
 open Finset Matroid
