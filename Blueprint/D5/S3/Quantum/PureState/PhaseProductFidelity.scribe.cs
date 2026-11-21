@@ -56,8 +56,9 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                     Par(D(1), Minus, Apply("F", Overline, Grp(Sub("v", "i")), Sub("v", "j")))),
                 "The product of the conjugated row and the other row is coordinatewise. "
                 + "Drawing two independent indices from the same distribution gives pairwise "
-                + "weights p_i p_j. For normalized states this average loss is one minus the "
-                + "purity of their mixture."),
+                + "weights p_i p_j. For a probability vector p, if F on each relative row equals the squared "
+                + "inner product of the corresponding unit encoded states, this average loss is one minus "
+                + "the purity of their mixture. The singleton and product overlaps meet this condition."),
             Describe.Lean(DescribeId.Create("phase-product-sharp-ensemble-coefficient"),
                 DeclarationHandle.Create(Module + "mixed_coefficient_iff"),
                 H("Sharp comparison for all finite phase ensembles"),

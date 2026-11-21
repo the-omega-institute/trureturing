@@ -40,7 +40,7 @@ $$\forall m\in \mathbb{N},n\in \mathbb{N},F: \mathbb{C}^{n}\to \mathbb{R},p\in \
 
 *Commentary.*
 
-The product of the conjugated row and the other row is coordinatewise. Drawing two independent indices from the same distribution gives pairwise weights p_i p_j. For normalized states this average loss is one minus the purity of their mixture.
+The product of the conjugated row and the other row is coordinatewise. Drawing two independent indices from the same distribution gives pairwise weights p_i p_j. For a probability vector p, if F on each relative row equals the squared inner product of the corresponding unit encoded states, this average loss is one minus the purity of their mixture. The singleton and product overlaps meet this condition.
 
 **Theorem 1.4 (Sharp comparison for all finite phase ensembles).**
 

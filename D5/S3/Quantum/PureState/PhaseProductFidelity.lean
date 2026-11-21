@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sharp purity-loss comparison for finite phase ensembles under the Boolean product embedding. -/
+   digest: Sharp purity-loss comparison for finite singleton and product phase ensembles. -/
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic.FieldSimp
@@ -42,8 +42,8 @@ noncomputable def cube {n : ℕ} (u : Fin n → ℂ) : ℝ :=
 
 private theorem normSq_one_add (z : ℂ) :
     Complex.normSq (1+z) = 1+2*z.re+Complex.normSq z := by
-  simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.one_re, Complex.one_im]
-  ring
+  rw [Complex.normSq_add]
+  simp [add_assoc, add_comm, add_left_comm]
 
 private theorem loss_le {n : ℕ} (u : Fin n → ℂ) (hu : ∀ i, ‖u i‖ = 1) :
     1-cube u ≤ ((n:ℝ)+1)^2/4*(1-simplex u) := by
@@ -145,14 +145,9 @@ private theorem two_points {n : ℕ} (F : (Fin n → ℂ) → ℝ) (h1 : F 1 = 1
     (1 - F u)/2 := by
   have hd : (fun k => star (u k) * u k) = 1 := by
     funext k
-    have hz := Complex.sq_norm (u k)
-    rw [hu] at hz
-    apply Complex.ext
-    · change (u k).re*(u k).re- (-(u k).im)*(u k).im = 1
-      simp only [Complex.normSq_apply] at hz
-      linarith only [hz]
-    · change (u k).re*(u k).im + (-(u k).im)*(u k).re = 0
-      ring
+    change (starRingEnd ℂ) (u k) * u k = 1
+    rw [Complex.conj_mul', hu]
+    norm_num
   simp [mixedDeficit, Fin.sum_univ_two]
   change (2:ℝ)⁻¹*2⁻¹*(1-F 1)+(2:ℝ)⁻¹*2⁻¹*(1-F u)+
     ((2:ℝ)⁻¹*2⁻¹*(1-F (fun k => star (u k)))+
