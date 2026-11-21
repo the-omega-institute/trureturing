@@ -19,7 +19,7 @@ internal sealed class AffineNineRankDocument : IScribeDocumentDefinition
                 Call("rank", new Formula.Subscript(F.Id("J"), Phi)), Sp, Eq, Sp,
                 new Formula.Fraction(Seq(F.Id("n"), Open, F.Id("n"), Plus, D(1), Close), D(2))))),
             AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/QuantumChannels/girard2022mixedunitaryrank")),
+                LibraryNoteRef.Create("D5/L/HilbertOperators/girard2022mixedunitaryrank")),
             Blocks(Paragraph(DefinitionDsl.Text(
                 "For a finite index type of cardinality n, the unnormalized Choi operator is 2/(n+1) times "
                 + "the projection onto the symmetric subspace of the two tensor factors. Under vectorization "

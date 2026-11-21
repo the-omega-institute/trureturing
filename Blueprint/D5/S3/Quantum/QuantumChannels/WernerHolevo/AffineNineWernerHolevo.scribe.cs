@@ -8,7 +8,7 @@ internal sealed class AffineNineWernerHolevoDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/QuantumChannels/WernerHolevo/AffineNineWernerHolevo";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/QuantumChannels/girard2022mixedunitaryrank");
+        LibraryNoteRef.Create("D5/L/HilbertOperators/girard2022mixedunitaryrank");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The symmetric Werner–Holevo channel attains its Choi rank in each dimension 9 to a power at least two.",
