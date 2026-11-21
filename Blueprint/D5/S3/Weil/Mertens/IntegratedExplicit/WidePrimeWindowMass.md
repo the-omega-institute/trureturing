@@ -18,7 +18,7 @@ $$\forall b \in \mathbb{R},\; 1 < b \Rightarrow \left(\left(\left(\neg RH\right)
 
 Let Qθ(x) be the integral of (θ(t)−t)/t² from x to infinity, where θ sums log p over primes p ≤ t. This is the tail in Zhao's equation (14), arXiv:2411.18903v2. Let N(A,B) be the integral of max(−Qθ(x),0)/√x from A to B.
 
-Loning's derivation in the discussion of trureturing issue #32573 uses the last whole power window inside [A,B]. Put Y = B^(1/b). Since A ≥ 2 and b > 1, the width condition gives A ≤ Y ≤ Y^b = B. The reference HasWindows interface in riemann-hypothesis asks for a whole power window in the relevant set above each prescribed threshold. Here the width condition gives a whole subinterval of each measured interval, and nonnegativity of the integrand transfers its mass lower bound to [A,B].
+Use the last whole power window inside [A,B], with Y = B^(1/b). Since A ≥ 2 and b > 1, the width condition gives A ≤ Y ≤ Y^b = B. The reference HasWindows interface in riemann-hypothesis asks for a whole power window in the relevant set above each prescribed threshold. Here the width condition gives a whole subinterval of each measured interval, and nonnegativity of the integrand transfers its mass lower bound to [A,B].
 
 If RH fails, right-half-strip reduction gives a zero with real part β > 1/2. For any 0 < η < β−1/2, apply the pole estimate on [Y,Y^b] with loss b(β−1/2−η). This gives N(A,B) ≥ B^η above a threshold on B alone. Since log(B/A) ≤ log B and log B = o(B^η), the discrepancy diverges uniformly over admissible A.
 
