@@ -104,10 +104,10 @@ theorem liftedModel_tri_continuous :
     (ULift.up (p.1.down * p.2.1.down⁻¹ * p.2.2.down) : Quat.{u})
   fun_prop
 
-theorem liftedModel_kappa_continuousAt (x : Quat.{u}) : ContinuousAt (liftedModel.kappa x) x := by
-  have h : Continuous fun y : Quat.{u} => (1 + ⟪(x.down : ℍ[ℝ]), (y.down : ℍ[ℝ])⟫_ℝ) / 2 := by
-    fun_prop
-  exact h.continuousAt
+theorem liftedModel_kappa_continuousAt (x : Quat.{u}) : ContinuousAt (liftedModel.kappa x) x :=
+  (continuous_kappa_quaternionModel.comp
+    (continuous_const.prodMk continuous_uliftDown :
+      Continuous fun y : Quat.{u} => (x.down, y.down))).continuousAt
 
 /-! The dimension `d` in the conclusion `3 ≤ d` of `three_le_of_orthogonal`. -/
 namespace GroupBound

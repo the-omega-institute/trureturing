@@ -20,7 +20,7 @@ Let C be a ternary comparison structure on M and r a natural number. The left si
 
 **Lemma 1.2 (Feature rank is monotone).**
 
-$$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryComparison}\left(M\right),\; \forall r, s: \mathbb{N}, r \leq s \Rightarrow \operatorname{HasFeatureRank}\left(C, r\right) \Rightarrow \operatorname{HasFeatureRank}\left(C, s\right)$$
+$$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryComparison}\left(M\right),\; \forall r \in \mathbb{N},\; \forall s \in \mathbb{N},\; r \le s \Rightarrow \left(\operatorname{HasFeatureRank}\left(C, r\right) \Rightarrow \operatorname{HasFeatureRank}\left(C, s\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/GramRankFeatureMap.hasFeatureRank_mono` (`✓ std3`). ∎
 
