@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/PureState/PhaseRecordSpectralMemory
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: The largest dual eigenvalues bound pure-state guessing through finite quantum memory. -/
 
 import D5.S3.Quantum.PureState.PhaseRecordMemory
