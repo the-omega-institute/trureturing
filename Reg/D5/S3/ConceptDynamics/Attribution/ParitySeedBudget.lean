@@ -225,5 +225,85 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ProfileFibre
 
+namespace ParityCard
+
+abbrev signature : Signature where
+  Params := ZMod 2
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => 2 ^ n) (fun e => nomatch e)
+
+def alwaysZero : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (t : ZMod 2),
+    Nat.card (ParityClass (n + 1) t) = R.readout () t n
+
+private theorem always_zero_fails : ¬ arena.Law alwaysZero := by
+  intro law
+  have h := (parityCard 0 0).symm.trans (law 0 0)
+  exact Nat.one_ne_zero h
+
+def family : Registration arena (type_of% parityCard) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨parityCard, alwaysZero, always_zero_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨alwaysZero, ?_, rfl, always_zero_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · intro anchor
+      exact nomatch anchor
+  dependence := by
+    intro _
+    refine ⟨0, 0, 1, ?_⟩
+    change (1 : ℕ) ≠ 2
+    exact Nat.ne_of_lt (Nat.lt_succ_self 1)
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    parityCard (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedBudget.ParityCard.power
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedBudget.ParityCard.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => 2 ^ n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.ParitySeedBudget
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ParityCard
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedBudget
