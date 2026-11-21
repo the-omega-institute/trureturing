@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Abundancy/DefantC41Settlement
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Algebra.QuadraticAlgebra.Basic, mathlib/module/Mathlib.Algebra.BigOperators.Finprod, mathlib/module/Mathlib.Analysis.Real.Sqrt]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/DefantC41Settlement.claim; result=D5.S3.Arith.Abundancy.DefantC41Settlement.result; claim=D5.S3.Arith.Abundancy.DefantC41Settlement.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/DefantC41Settlement.claim; result=D5/S3/Arith/Abundancy/DefantC41Settlement.result; claim=D5/S3/Arith/Abundancy/DefantC41Settlement.claim
    digest: The rational prime 3 refutes Defant's conjecture on powerful solitude in quadratic integer rings. -/
 
 /- Formalization classification:
