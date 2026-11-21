@@ -142,9 +142,5 @@ theorem rename_F_exists_linear {m : ℕ} (σ : Equiv.Perm (Col m)) (w : Col m) :
     hE, hO, map_sub, map_sub]
   ring
 
-#print axioms diff_prime
-#print axioms diff_not_dvd_of_edges_ne
-#print axioms rename_F_exists_linear
-
 end
 end D5.S3.Geometry.KozakiKakei

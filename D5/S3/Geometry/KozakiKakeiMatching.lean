@@ -149,6 +149,4 @@ theorem constant_matrix_implication {m : ℕ} {σ : Equiv.Perm (Col m)}
   rw [eval_rename, eval_F, sub_eq_zero]
   exact RatFunc.C_injective h
 
-#print axioms constant_matrix_implication
-
 end D5.S3.Geometry.KozakiKakei

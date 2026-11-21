@@ -75,8 +75,5 @@ theorem dihedral_of_preservesLevel {m : ℕ} (hm : 2 ≤ m) (hm3 : m ≠ 3)
     exact dihedral_of_scalar_four σ hs
   · exact dihedral_of_scalar_large (by omega) σ hc hs
 
-#print axioms dihedral_of_scalar_four
-#print axioms dihedral_of_preservesLevel
-
 end
 end D5.S3.Geometry.KozakiKakei

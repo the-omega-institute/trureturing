@@ -160,8 +160,5 @@ theorem admissible_constant_matrix_scalar {m : ℕ} (hm : 2 ≤ m) (hm3 : m ≠ 
     ∃ c : ℂ, c ≠ 0 ∧ rename σ (F m) = MvPolynomial.C c * F m :=
   affine_polynomial_scalar hm hm3 σ (constant_matrix_implication hp)
 
-#print axioms affine_polynomial_scalar
-#print axioms admissible_constant_matrix_scalar
-
 end
 end D5.S3.Geometry.KozakiKakei

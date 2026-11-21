@@ -210,6 +210,4 @@ theorem dihedral_of_preserves_adjacency {m : ℕ} (hm : 2 ≤ m) (σ : Equiv.Per
   · exact Or.inl (add_case (extend u (Or.inl rfl) hs))
   · exact Or.inr (sub_case (extend (-u) (Or.inr rfl) (by simpa [sub_eq_add_neg] using hs)))
 
-#print axioms dihedral_of_preserves_adjacency
-
 end D5.S3.Geometry.KozakiKakei

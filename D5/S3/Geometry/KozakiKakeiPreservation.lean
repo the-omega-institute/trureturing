@@ -217,6 +217,4 @@ theorem dihedral_preservesLevel {m : ℕ} (hm : 2 ≤ m) (σ : Equiv.Perm (Col m
     · simpa [hp] using hsum
     · simpa [hp, add_comm] using hsum
 
-#print axioms dihedral_preservesLevel
-
 end D5.S3.Geometry.KozakiKakei

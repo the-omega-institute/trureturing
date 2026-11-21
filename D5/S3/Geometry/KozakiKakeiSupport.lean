@@ -280,8 +280,5 @@ theorem dihedral_of_scalar_large {m : ℕ} (hm : 4 ≤ m) (σ : Equiv.Perm (Col 
   rw [pairSupport_card_invariant σ hc hs]
   exact (signed_support_recovers_adjacency hm hn).mp ha
 
-#print axioms signed_support_recovers_adjacency
-#print axioms dihedral_of_scalar_large
-
 end
 end D5.S3.Geometry.KozakiKakei

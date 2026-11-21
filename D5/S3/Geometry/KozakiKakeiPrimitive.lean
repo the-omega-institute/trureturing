@@ -243,8 +243,5 @@ theorem A_not_unit {m : ℕ} (hm : 2 ≤ m) : ¬ IsUnit (A hm) := by
   rw [A, map_sub, hU, hV, sub_self] at hu
   exact not_isUnit_zero hu
 
-#print axioms signed_four_coefficient
-#print axioms primitive_coefficients
-
 end
 end D5.S3.Geometry.KozakiKakei

@@ -246,7 +246,5 @@ theorem normalized_representative_iff {m : ℕ} (hm : 2 ≤ m) (Z : Chart K m)
     rintro V ⟨hV, hv⟩
     exact normalized_unique_of_equiv hW hV (matEquivalent_trans hv (matEquivalent_symm heq))
 
-#print axioms normalized_representative_iff
-
 end
 end D5.S3.Geometry.KozakiKakei
