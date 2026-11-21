@@ -134,7 +134,7 @@ private theorem normalize_coloured_counts {n k : ℕ}
     simp only [scale, colSum, margin]
 
 open Classical in
-private theorem seed_indicator_sum {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
+theorem seed_indicator_sum {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
     (P : Pair n → Prop) :
     (∑ s, if P (f s) then (1 : ℕ) else 0) =
       ∑ a, if P a then seedWeight (seedPushforward f) a else 0 := by
@@ -195,7 +195,7 @@ private theorem fixed_seed_count_le_pushforward {n : ℕ} {S : Type} [Fintype S]
     · rw [ite_eq_left ha, ite_eq_left ha]
     · rw [ite_eq_right ha, ite_eq_right ha]
 
-private theorem matrix_fixed_total {n : ℕ}
+theorem matrix_fixed_total {n : ℕ}
     (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ) (i : Fin (n + 2)) :
     (∑ a : Pair n, if (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • a = a)
       then seedWeight w a else 0) =
@@ -255,7 +255,7 @@ def RealizableSeedCounts (n k : ℕ) (v : Fin (n + 2) → ℕ) : Prop :=
 
 end
 
-private theorem realize_scaled_profile_counts {n k : ℕ}
+theorem realize_scaled_profile_counts {n k : ℕ}
     (W : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ)
     (rows : ∀ p, ∑ q, W p q = k) (cols : ∀ q, ∑ p, W p q = k) :
     RealizableSeedCounts n k (fun i => 4 * commonOneCount W i) := by
@@ -281,7 +281,7 @@ private theorem realize_profile_boundary {n k : ℕ} {v : Fin (n + 2) → ℕ}
   have eq := maximal (commonOneCount W) ⟨W, rows, cols, fun _ => le_rfl⟩ bounds
   simpa only [eq] using realize_scaled_profile_counts W rows cols
 
-private theorem seed_vector_dominated {n k : ℕ} {z : Fin (n + 2) → ℕ}
+theorem seed_vector_dominated {n k : ℕ} {z : Fin (n + 2) → ℕ}
     (h : RealizableSeedCounts n k z) :
     ∃ v, ProfileBoundary n k v ∧ ∀ i, z i ≤ 4 * v i := by
   obtain ⟨S, _, _, f, card, equiv, ⟨c, rows, cols⟩, equal⟩ := h
