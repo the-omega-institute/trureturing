@@ -60,7 +60,8 @@ private lemma window_bound {a z κ : ℝ} (ha : 2 ≤ a) (haz : a ≤ z) (hκ : 
   calc
     _ ≤ ∫ x in a..z, (4 * z ^ κ) * x⁻¹ := by
       rw [intervalIntegral.integral_of_le haz, intervalIntegral.integral_of_le haz]
-      apply integral_mono_of_nonneg (ae_of_all _ (fun x => div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _))) hi.1
+      apply integral_mono_of_nonneg
+        (ae_of_all _ fun x => div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _)) hi.1
       filter_upwards [ae_restrict_mem (μ := volume) measurableSet_Ioc] with t ht
       have ht0 := zero_lt_one.trans_le (ha1.trans ht.1.le)
       have hs := Real.sqrt_pos.mpr ht0
@@ -95,7 +96,8 @@ private lemma rh_of_pointwise_windows {b : ℝ} (hb : 1 < b)
   have hY0 := zero_lt_one.trans_le hY1
   have hYY : Y ≤ Y ^ b := by
     simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le hY1 hb.le
-  have hfin := window_bound hY2 hYY hκ.le (fun x hx => hT x ((le_max_left _ _).trans (hY.trans hx))) hw
+  have hfin := window_bound hY2 hYY hκ.le
+    (fun x hx => hT x ((le_max_left _ _).trans (hY.trans hx))) hw
   rw [← Real.rpow_mul hY0.le, hbκ, Real.log_div (Real.rpow_pos_of_pos hY0 _).ne' hY0.ne',
     Real.log_rpow hY0] at hfin
   simp only [Real.norm_eq_abs, abs_of_nonneg (Real.log_nonneg hY1),
@@ -118,18 +120,21 @@ private theorem sqrt_windows_of_rh {C b : ℝ} (hC : firstLiMass < C) (rh : Riem
   refine ⟨max (max R 2) T, le_max_left _ _, ?_⟩
   intro x hx
   have h := ht x ((le_max_right _ _).trans hx.1)
-  have hx0 : 0 < x := by linarith only [((le_max_right R (2 : ℝ)).trans (le_max_left _ _)).trans hx.1]
+  have hx0 : 0 < x := by
+    linarith only [((le_max_right R (2 : ℝ)).trans (le_max_left _ _)).trans hx.1]
   change |exp (-log x / 2) * _| < firstLiMass + (C - firstLiMass) at h
   rw [exp_log hx0, abs_mul, abs_of_pos (exp_pos _), add_sub_cancel _ _] at h
   have hinv : exp (-log x / 2) = (Real.sqrt x)⁻¹ := by
     rw [Real.sqrt_eq_rpow, Real.rpow_def_of_pos hx0, ← exp_neg]
-    congr 1 <;> ring
-  rw [hinv, ←div_eq_inv_mul] at h
+    congr 1
+    ring
+  rw [hinv, ← div_eq_inv_mul] at h
   exact (le_abs_self _).trans ((div_le_iff₀ (Real.sqrt_pos.mpr hx0)).mp h.le)
 
 private theorem power_windows_of_sqrt {C b : ℝ}
     (h : ∀ R : ℝ, ∃ Y ≥ max R 2, ∀ x ∈ Icc Y (Y ^ b), U x ≤ C * Real.sqrt x) :
-    ∀ κ : ℝ, 0 < κ → ∃ᶠ Y : ℝ in atTop, ∀ x ∈ Icc Y (Y ^ b), U x ≤ x ^ ((1 : ℝ) / 2 + κ) := by
+    ∀ κ : ℝ, 0 < κ → ∃ᶠ Y : ℝ in atTop,
+      ∀ x ∈ Icc Y (Y ^ b), U x ≤ x ^ ((1 : ℝ) / 2 + κ) := by
   intro κ hk
   apply frequently_atTop.mpr
   intro R
@@ -141,9 +146,10 @@ private theorem power_windows_of_sqrt {C b : ℝ}
   have hx0 : 0 < x := by linarith only [((le_max_right _ _).trans hY).trans hx.1]
   apply (H x hx).trans
   rw [Real.rpow_add hx0, ← Real.sqrt_eq_rpow, mul_comm]
-  exact mul_le_mul_of_nonneg_left (hT x ((le_max_right _ _).trans (hYR.trans hx.1))) (Real.sqrt_nonneg _)
+  exact mul_le_mul_of_nonneg_left (hT x ((le_max_right _ _).trans (hYR.trans hx.1)))
+    (Real.sqrt_nonneg _)
 
-/-- An arbitrarily small power loss suffices in a one-sided bound on arbitrarily late full windows. -/
+/-- Arbitrarily small power losses suffice in a one-sided bound on arbitrarily late windows. -/
 theorem rh_iff_pointwise_power_windows {b : ℝ} (hb : 1 < b) :
     RiemannHypothesis ↔ ∀ κ : ℝ, 0 < κ → ∃ᶠ Y : ℝ in atTop,
       ∀ x ∈ Icc Y (Y ^ b), U x ≤ x ^ ((1 : ℝ) / 2 + κ) :=

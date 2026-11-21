@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows
 import Reg.Support.SingleDependentReadout
 
+/-! Dependence of the pointwise window criteria on the observed Mangoldt remainder. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -62,7 +64,8 @@ private theorem changed_fails : ¬ arena.Law changed := by
     filter_upwards [eventually_ge_atTop (2 : ℝ)] with Y hY
     intro x hx
     change (if RiemannHypothesis then x ^ 2 + 1 else 0) ≤ _
-    simpa only [hr, ↓reduceIte] using Real.rpow_nonneg ((by norm_num : (0 : ℝ) ≤ 2).trans (hY.trans hx.1)) _
+    simpa only [hr, ↓reduceIte] using
+      Real.rpow_nonneg ((by norm_num : (0 : ℝ) ≤ 2).trans (hY.trans hx.1)) _
 
 def evidence : Registration arena (type_of% @rh_iff_pointwise_power_windows) where
   actual := actual
@@ -118,7 +121,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   unitName := .str
     `D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.rh_iff_pointwise_power_windows
     "__information_unit"
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.Power.evidence
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.Power.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -138,7 +142,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "body", "fn", "arg", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "arg", "body", "body", "fn", "arg",
+        "body", "body", "body", "fn", "arg"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
@@ -156,7 +161,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   unitName := .str
     `D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.rh_iff_pointwise_sqrt_windows
     "__information_unit"
-  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.Sqrt.evidence
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows.Sqrt.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -176,7 +182,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "arg",
+        "body", "arg", "body", "body", "fn", "arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
