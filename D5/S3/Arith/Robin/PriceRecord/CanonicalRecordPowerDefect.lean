@@ -4,7 +4,7 @@
    mirror-E: none(waiver:finite-quantitative-analysis)
    anchors: []
    utility: none
-   digest: Complete defect estimates for the deterministic strict record at real reference points. -/
+   digest: Complete defect bounds for canonical strict records at real references. -/
 import D5.S3.Arith.Robin.PriceRecord.CompleteHigherInventoryDuality
 import D5.S3.Arith.Robin.PriceRecord.ActualHigherMassResponse
 import D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
@@ -81,14 +81,15 @@ private theorem deterministic_cutoff_bracket {X : ℝ} (hX : exp 4 ≤ X) :
       (show 1 + 1 / X ≠ 1 by linarith)
     linarith only [hh]
   have hmul : X * (1 + 1 / X) = X + 1 := by
-    field_simp [hX0.ne'] <;> ring
+    field_simp [hX0.ne']
   have hlogN : log (X + 1) ≤ log X + 1 / X := by
     rw [← hmul, log_mul hX0.ne' (by positivity : 1 + 1 / X ≠ 0)]
     linarith only [hloghi]
   have hrat : 2 * (1 / (X + 1)) / (1 / (X + 1) + 2) =
       2 / (2 * X + 3) := by
     field_simp [hN0.ne', (show 1 / (X + 1) + 2 ≠ 0 by positivity),
-      (show 2 * X + 3 ≠ 0 by linarith)] <;> ring
+      (show 2 * X + 3 ≠ 0 by linarith)]
+    ring
   have hnum : 1 / (X + 2) ≤ log (1 + 1 / (X + 1)) := by
     have hh := lt_log_one_add_of_pos hinvN
     rw [hrat] at hh
@@ -106,7 +107,7 @@ private theorem deterministic_cutoff_bracket {X : ℝ} (hX : exp 4 ≤ X) :
     have hid : a * (log X + 1 / X) * (X + 2) =
         ((X - 3) * (X + 2) * (X * log X + 1)) / (X ^ 3 * log X) := by
       dsimp [a, referencePrice]
-      field_simp [hX0.ne', hL0.ne'] <;> ring
+      field_simp [hX0.ne', hL0.ne']
     rw [hid]
     apply (div_le_one (by positivity : 0 < X ^ 3 * log X)).mpr
     nlinarith [mul_nonneg (sq_nonneg X) (show 0 ≤ log X - 1 by linarith),
@@ -153,6 +154,7 @@ private theorem deterministic_record_support {X : ℝ} (hX : exp 4 ≤ X) :
   have hm : 1 ≤ m := strictInteger_pos hmu
   have h2 : 1 ≤ m.factorization 2 :=
     (deterministic_first_count hX Nat.prime_two).mpr (by
+      change (2 : ℝ) < X + 1
       have := (threshold_bounds hX).1
       linarith)
   have h2dvd : 2 ∣ m := (Nat.prime_two.dvd_iff_one_le_factorization
@@ -197,7 +199,7 @@ private theorem log_reciprocal_endpoint_bounds {X : ℝ} (hX : 0 < X) :
   have hlo := hquad.trans_lt (lt_log_one_add_of_pos hx)
   have hsquare : x ^ 2 / 2 = 1 / (2 * X ^ 2) := by
     dsimp [x]
-    field_simp [hX.ne'] <;> ring
+    field_simp [hX.ne']
   change 0 < x - log (1 + x) ∧ x - log (1 + x) < _
   constructor
   · linarith only [hhi]
@@ -233,10 +235,7 @@ private theorem deterministic_inventory_bound {X : ℝ} (hX : exp 4 ≤ X) :
   have hEB : E ⊆ B := canonical_coordinates_antitone hq hhi (by
     nlinarith [mul_nonneg hs.le hq.le])
   have hEC : E ⊆ C := fun c hc => hAC (hBA (hEB hc))
-  have hdiff : B \ A = ∅ := by
-    apply eq_empty_iff_forall_not_mem.mpr
-    intro c hc
-    exact (mem_sdiff.mp hc).2 (hBA (mem_sdiff.mp hc).1)
+  have hdiff : B \ A = ∅ := sdiff_eq_empty_iff_subset.mpr hBA
   have hM : higherInventoryMismatch X (strictInteger (firstLayerPrice (X + 1))) =
       ∑ c ∈ A \ B, coordinateWeight c := by
     change (∑ c ∈ (A \ B) ∪ (B \ A), coordinateWeight c) = _
@@ -322,10 +321,7 @@ private theorem one_sided_complete_loss {X mu : ℝ} (hX : 1 < X)
     apply hzero
     by_contra hcB
     exact hnot (mem_sdiff.mpr ⟨hc, hcB⟩)
-  have hdiff : B \ A = ∅ := by
-    apply eq_empty_iff_forall_not_mem.mpr
-    intro c hc
-    exact (mem_sdiff.mp hc).2 (hBA (mem_sdiff.mp hc).1)
+  have hdiff : B \ A = ∅ := sdiff_eq_empty_iff_subset.mpr hBA
   have hM : higherInventoryMismatch X m = ∑ c ∈ A \ B, coordinateWeight c := by
     change (∑ c ∈ (A \ B) ∪ (B \ A), coordinateWeight c) = _
     rw [hdiff, union_empty]
@@ -364,7 +360,7 @@ private theorem unoccupied_first_loss_zero {X : ℝ} (hX : exp 4 ≤ X)
   have hraw : rawLayerMargin X p 1 ≤ 0 := by
     unfold rawLayerMargin
     exact mul_nonpos_of_nonneg_of_nonpos hp.log_pos.le (by linarith)
-  simp only [layerLoss, if_neg hv, max_eq_right hraw, sub_self]
+  simp only [layerLoss, ite_eq_right hv, max_eq_right hraw, sub_self]
 
 /- The actual public cutoff says X-rho is positive and less than 1/2.
    Nonzero first loss is strictly above rho (the rho equality has zero loss).
@@ -395,7 +391,7 @@ private theorem first_loss_localized {X : ℝ} (hX : exp 4 ≤ X)
       rw [golden_layer_marginal_one_eq_log_one_add_inv hp]
       change 0 ≤ firstLayerPrice (p : ℝ) - referencePrice X
       exact sub_nonneg.mpr hprice
-    exact hnz (by simp only [layerLoss, if_pos hv, max_eq_left hmargin, sub_self])
+    exact hnz (by simp only [layerLoss, ite_eq_left hv, max_eq_left hmargin, sub_self])
   exact ⟨by linarith only [hhalf, hrp], hpX⟩
 
 /- At most two NATURAL integers in an open interval of length two.
@@ -432,21 +428,21 @@ private theorem losing_first_coordinate_bound {X : ℝ} (hX : exp 4 ≤ X)
   have hnegative : rawLayerMargin X p 1 < 0 := by
     by_contra hn
     have hh : 0 ≤ rawLayerMargin X p 1 := le_of_not_gt hn
-    exact hnz (by simp only [layerLoss, if_pos hv, max_eq_left hh, sub_self])
+    exact hnz (by simp only [layerLoss, ite_eq_left hv, max_eq_left hh, sub_self])
   have hraw : rawLayerMargin X p 1 =
       log (1 + 1 / (p : ℝ)) - referencePrice X * log (p : ℝ) := by
     rw [rawLayerMargin, golden_layer_marginal_one_eq_log_one_add_inv hp]
-    field_simp [hp.log_pos.ne'] <;> ring
+    field_simp [hp.log_pos.ne']
   have hterm : layerLoss X (strictInteger (firstLayerPrice (X + 1))) p 1 =
       referencePrice X * log (p : ℝ) - log (1 + 1 / (p : ℝ)) := by
-    rw [layerLoss, if_pos hv, max_eq_right hnegative.le, hraw]
+    rw [layerLoss, ite_eq_left hv, max_eq_right hnegative.le, hraw]
     ring
   have hloghi : log (1 + 1 / X) < 1 / X := by
     have hh := log_lt_sub_one_of_pos (show 0 < 1 + 1 / X by positivity)
       (show 1 + 1 / X ≠ 1 by have := one_div_pos.mpr hX0; linarith)
     linarith only [hh]
   have hmul : X * (1 + 1 / X) = X + 1 := by
-    field_simp [hX0.ne'] <;> ring
+    field_simp [hX0.ne']
   have hlogN : log (X + 1) ≤ log X + 1 / X := by
     rw [← hmul, log_mul hX0.ne' (by positivity : 1 + 1 / X ≠ 0)]
     linarith only [hloghi]
@@ -455,7 +451,8 @@ private theorem losing_first_coordinate_bound {X : ℝ} (hX : exp 4 ≤ X)
   have hrat : 2 * (1 / (X + 1)) / (1 / (X + 1) + 2) =
       2 / (2 * X + 3) := by
     field_simp [hN0.ne', (show 1 / (X + 1) + 2 ≠ 0 by positivity),
-      (show 2 * X + 3 ≠ 0 by linarith)] <;> ring
+      (show 2 * X + 3 ≠ 0 by linarith)]
+    ring
   have hnum : 1 / (X + 2) ≤ log (1 + 1 / (X + 1)) := by
     have hh := lt_log_one_add_of_pos (one_div_pos.mpr hN0)
     rw [hrat] at hh
@@ -473,7 +470,8 @@ private theorem losing_first_coordinate_bound {X : ℝ} (hX : exp 4 ≤ X)
   have hscalar : referencePrice X * (log X + 1 / X) - 1 / (X + 2) =
       2 / (X * (X + 2)) + 1 / (X ^ 2 * log X) := by
     dsimp [referencePrice]
-    field_simp [hX0.ne', hL0.ne', (show X + 2 ≠ 0 by linarith)] <;> ring
+    field_simp [hX0.ne', hL0.ne', (show X + 2 ≠ 0 by linarith)]
+    ring
   have hA : 2 / (X * (X + 2)) ≤ 2 / X ^ 2 :=
     div_le_div_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 2) (sq_pos_of_pos hX0)
       (by nlinarith : X ^ 2 ≤ X * (X + 2))
@@ -481,7 +479,8 @@ private theorem losing_first_coordinate_bound {X : ℝ} (hX : exp 4 ≤ X)
     one_div_le_one_div_of_le (by positivity : 0 < 4 * X ^ 2)
       (by nlinarith [mul_le_mul_of_nonneg_left hL4 (sq_nonneg X)])
   have hsum : 2 / X ^ 2 + 1 / (4 * X ^ 2) = 9 / (4 * X ^ 2) := by
-    field_simp [hX0.ne'] <;> ring
+    field_simp [hX0.ne']
+    ring
   rw [hterm]
   calc
     _ ≤ referencePrice X * (log X + 1 / X) - 1 / (X + 2) := by
@@ -520,7 +519,8 @@ private theorem complete_first_loss_bound {X : ℝ} (hX : exp 4 ≤ X) :
     exact hnot (mem_filter.mpr ⟨hp, hnz⟩)
   have hX0 : 0 < X := (exp_pos 4).trans_le hX
   have hhalf : 2 * (9 / (4 * X ^ 2)) = (9 / 2) / X ^ 2 := by
-    field_simp [hX0.ne'] <;> ring
+    field_simp [hX0.ne']
+    ring
   refine ⟨hloc, ?_, ?_⟩
   · unfold completeFirstLayerLoss
     exact sum_nonneg (fun p _ => layer_loss_nonneg X m p 1)
@@ -591,7 +591,8 @@ theorem canonical_record_power_defect (X : ℝ) (hX : exp 4 ≤ X) :
         mul_le_mul_of_nonneg_left hM (by dsimp [referencePrice]; positivity)
       _ = _ := by
         dsimp [referencePrice]
-        field_simp [hX0.ne', hL0.ne'] <;> ring
+        field_simp [hX0.ne', hL0.ne']
+        ring
   obtain ⟨hloc, hfirst0, hfirst5⟩ := complete_first_loss_bound hX
   have hD0 : 0 ≤ actualDefect X m := by linarith only [hR.1, hfirst0]
   have hDhi : actualDefect X m ≤ (2400 * log X + 5) / X ^ 2 := by
@@ -622,7 +623,7 @@ theorem canonical_integer_first_loss (N : ℕ) (hN : exp 4 ≤ (N : ℝ)) :
     have hhighN : p < N + 1 := by exact_mod_cast hhi
     omega
   by_cases hpN : N.Prime
-  · rw [if_pos hpN]
+  · rw [ite_eq_left hpN]
     have hN0 : (0 : ℝ) < N := by exact_mod_cast hpN.pos
     have hLN : 0 < log (N : ℝ) := hpN.log_pos
     have hv : 1 ≤ m.factorization N :=
@@ -636,7 +637,7 @@ theorem canonical_integer_first_loss (N : ℕ) (hN : exp 4 ≤ (N : ℝ)) :
         log (1 + 1 / (N : ℝ)) - 1 / (N : ℝ) := by
       rw [rawLayerMargin, golden_layer_marginal_one_eq_log_one_add_inv hpN]
       dsimp [referencePrice]
-      field_simp [hN0.ne', hLN.ne'] <;> ring
+      field_simp [hN0.ne', hLN.ne']
     have hnegative : rawLayerMargin (N : ℝ) N 1 < 0 := by
       rw [hraw]
       linarith only [(log_reciprocal_endpoint_bounds hN0).1]
@@ -645,9 +646,9 @@ theorem canonical_integer_first_loss (N : ℕ) (hN : exp 4 ≤ (N : ℝ)) :
         unfold completeFirstLayerLoss
         exact sum_eq_single N hzero (fun hnot => (hnot hmem).elim)
       _ = _ := by
-        rw [layerLoss, if_pos hv, max_eq_right hnegative.le, hraw]
+        rw [layerLoss, ite_eq_left hv, max_eq_right hnegative.le, hraw]
         ring
-  · rw [if_neg hpN]
+  · rw [ite_eq_right hpN]
     unfold completeFirstLayerLoss
     apply sum_eq_zero
     intro p hp
