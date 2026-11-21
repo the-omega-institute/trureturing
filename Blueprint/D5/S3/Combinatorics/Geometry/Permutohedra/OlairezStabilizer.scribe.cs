@@ -38,7 +38,7 @@ internal sealed class OlairezStabilizerDocument : IScribeDocumentDefinition
                 DescribeId.Create("olairez-intrinsic-affine-symmetries"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("Full real affine symmetry group"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, F.Id("n"), Geq, D(3), Colon, Quad,
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Geq, D(3), Colon, Quad,
                     Vert, Operatorname, Grp(F.Id("AffSym")), Open, Indexed("Q"), Close, Vert,
                     Eq, D(2), F.Id("n"), Bang))),
                 AssessedProvenance.FromRepo(Source),

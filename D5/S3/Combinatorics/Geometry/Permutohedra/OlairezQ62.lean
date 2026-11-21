@@ -63,16 +63,18 @@ def paperLabelsEquiv (n : ℕ) [NeZero n] : ZMod n ≃ PaperLabels n where
   right_inv a := Subtype.ext (label_of_cast a.property.1 a.property.2)
 
 def shift (a : ZMod n) : Equiv.Perm (ZMod n) :=
-  Equiv.addRight a
+  (Equiv.subRight a).symm
 
-def reflection (a : ZMod n) : Equiv.Perm (ZMod n) :=
-  Equiv.subLeft a
+def reflection (a : ZMod n) : Equiv.Perm (ZMod n) where
+  toFun i := a - i
+  invFun i := a - i
+  left_inv i := sub_sub_cancel a i
+  right_inv i := sub_sub_cancel a i
 
 private theorem reflection_inv (a : ZMod n) : (reflection a)⁻¹ = reflection a := by
   apply Equiv.ext
   intro i
-  change -i + a = a - i
-  rw [sub_eq_add_neg, add_comm]
+  rfl
 
 def s1 (n : ℕ) : Equiv.Perm (ZMod n) := reflection 3
 def s2 (n : ℕ) : Equiv.Perm (ZMod n) := reflection 2
@@ -90,11 +92,11 @@ private theorem act_mul (g h : Equiv.Perm (ZMod n)) (x : Coordinates n) :
     act (g * h) x = act g (act h x) := rfl
 
 def permutationMatrix (g : Equiv.Perm (ZMod n)) : Matrix (ZMod n) (ZMod n) ℝ :=
-  g.symm.permMatrix ℝ
+  Equiv.Perm.permMatrix ℝ g.symm
 
 private theorem matrix_action [NeZero n] (g : Equiv.Perm (ZMod n)) (x : Coordinates n) :
     (permutationMatrix g).mulVec x = act g x :=
-  Matrix.permMatrix_mulVec g.symm
+  Matrix.permMatrix_mulVec (v := x) g.symm
 
 /-- The nonzero column label in each row of the two matrices in Equation (2). -/
 def paperColumn1 (n i : ℕ) : ℕ :=
@@ -105,7 +107,6 @@ def paperColumn2 (n i : ℕ) : ℕ :=
 
 private theorem s1_column [NeZero n] (hn : 3 ≤ n) (i : ZMod n) :
     paperLabel ((s1 n).symm i) = paperColumn1 n (paperLabel i) := by
-  rw [← Equiv.Perm.inv_def, s1, reflection_inv]
   change paperLabel (3 - i) = paperColumn1 n (paperLabel i)
   obtain ⟨hlo, hhi⟩ := label_bounds i
   have hi := label_cast i
@@ -127,7 +128,6 @@ private theorem s1_column [NeZero n] (hn : 3 ≤ n) (i : ZMod n) :
 
 private theorem s2_column [NeZero n] (hn : 3 ≤ n) (i : ZMod n) :
     paperLabel ((s2 n).symm i) = paperColumn2 n (paperLabel i) := by
-  rw [← Equiv.Perm.inv_def, s2, reflection_inv]
   change paperLabel (2 - i) = paperColumn2 n (paperLabel i)
   obtain ⟨hlo, hhi⟩ := label_bounds i
   have hi := label_cast i
@@ -149,9 +149,9 @@ private theorem equation_two [NeZero n] (hn : 3 ≤ n) (i j : ZMod n) :
       (if paperLabel j = paperColumn2 n (paperLabel i) then 1 else 0) := by
   constructor
   · simp only [permutationMatrix, Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_apply,
-      Pi.single_apply, eq_comm j, ← s1_column hn i, (label_injective (n := n)).eq_iff]
+      Pi.single_apply, eq_comm, ← s1_column hn i, (label_injective (n := n)).eq_iff]
   · simp only [permutationMatrix, Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_apply,
-      Pi.single_apply, eq_comm j, ← s2_column hn i, (label_injective (n := n)).eq_iff]
+      Pi.single_apply, eq_comm, ← s2_column hn i, (label_injective (n := n)).eq_iff]
 
 private theorem shift_zero : shift (0 : ZMod n) = 1 := by
   apply Equiv.ext
@@ -505,7 +505,8 @@ private theorem delta_r [NeZero n] (j : ZMod n) :
   rw [delta_apply]
   change (rho n ((i + 1) + j - 1) - ((n : ℝ) + 1) / 2) -
       (rho n (i + j - 1) - ((n : ℝ) + 1) / 2) =
-    1 - (n : ℝ) * (if i = 1 - j then 1 else 0)
+    1 - (n : ℝ) * basisVector (1 - j) i
+  simp only [basisVector, Pi.single_apply]
   rw [show (i + 1) + j - 1 = (i + j - 1) + 1 by abel]
   have hstep := rho_step (i + j - 1)
   have hwrap : (i + j - 1 = 0) ↔ i = 1 - j := by
@@ -516,6 +517,7 @@ private theorem delta_r [NeZero n] (j : ZMod n) :
       rw [h]
       abel
   simp only [hwrap] at hstep
+  simp only [eq_comm] at hstep ⊢
   linarith
 
 private theorem delta_f [NeZero n] (j : ZMod n) :

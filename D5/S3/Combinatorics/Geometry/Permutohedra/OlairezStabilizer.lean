@@ -39,14 +39,16 @@ private def coord (i : ZMod n) : sumZero n →ₗ[ℝ] ℝ :=
   (LinearMap.proj i).comp (sumZero n).subtype
 
 private theorem wrap_apply (k i : ZMod n) :
-    (wrapPoint k).val i = 1 - (n : ℝ) * (if i = k then 1 else 0) := rfl
+    (wrapPoint k).val i = 1 - (n : ℝ) * (if i = k then 1 else 0) := by
+  simp [wrapPoint, basisVector, Pi.single_apply, eq_comm]
 
 private theorem sum_wrap_coord (a : ZMod n → ℝ) (i : ZMod n) :
     coord i (∑ k, a k • wrapPoint k) = (∑ k, a k) - (n : ℝ) * a i := by
   classical
   rw [map_sum]
   simp only [map_smul, smul_eq_mul]
-  change (∑ k : ZMod n, a k * (1 - (n : ℝ) * (if i = k then 1 else 0))) = _
+  change (∑ k : ZMod n, a k * (wrapPoint k).val i) = _
+  simp only [wrap_apply]
   simp_rw [mul_sub, mul_one, sum_sub_distrib]
   congr 1
   rw [sum_eq_single i]
