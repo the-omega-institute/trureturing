@@ -369,8 +369,8 @@ open D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching
 
 private theorem copy_count (n k : ℕ) [NeZero k] :
     Nat.card (CopyGroup n k) = 2 ^ (n + 1) * k := by
-  rw [Nat.card_prod, Nat.card_fun, Nat.card_fin, Nat.card_eq_fintype_card (α := ZMod 2),
-    Nat.card_eq_fintype_card (α := ZMod k), ZMod.card, ZMod.card]
+  change Nat.card (Profile (n + 1) × ZMod k) = _
+  rw [Nat.card_prod, profileCard, Nat.card_eq_fintype_card (α := ZMod k), ZMod.card]
 
 private theorem group_column_zero {m d : ℕ} (A : Fin m → Profile d)
     (counts : ∀ i, Even (columnCounts A i)) : (∑ j, A j) = 0 := by
@@ -477,7 +477,7 @@ private theorem mismatch_counts_satisfy_even_cuts (n k : ℕ)
   let P := ParityClass (n + 2) 0
   let Q := ParityClass (n + 2) 1
   have ct : Fintype.card P = 2 ^ (n + 1) := by
-    rw [Fintype.card_congr (tailEquiv (n + 1) 0), Fintype.card_fun, Fintype.card_fin, ZMod.card]
+    rw [Fintype.card_congr (tailEquiv (n + 1) 0), ← Nat.card_eq_fintype_card, profileCard]
   have total : ∑ p : P, ∑ q : Q, W p q = 2 * M := by
     calc
       _ = ∑ _ : P, k := sum_congr rfl (fun p _ => rows p)

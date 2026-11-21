@@ -227,7 +227,7 @@ private theorem coordinates_apply {k : ℕ} (tuple : UnboundedTuple k) :
 def cylinder {k : ℕ} (tuple : UnboundedTuple k) : Set Stream :=
   {ω | ∀ i : Fin k, ω i.val = nth tuple i}
 
-private theorem box {k : ℕ} (tuple : UnboundedTuple k) :
+theorem box {k : ℕ} (tuple : UnboundedTuple k) :
     cylinder tuple = Set.pi (Finset.range k : Set ℕ)
       (fun i => {c | ∀ h : i < k, c = nth tuple ⟨i, h⟩}) := by
   ext ω

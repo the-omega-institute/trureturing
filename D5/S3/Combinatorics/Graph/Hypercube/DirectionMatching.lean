@@ -87,7 +87,8 @@ private theorem number_parity_classes (n : ℕ)
     Fin.tail (E j).val + Fin.tail (unit (dirs j)) by rfl, hj, single_tail]
 
 
-private theorem profileCard (n : ℕ) : Nat.card (Profile n) = 2 ^ n := by
+/-- A binary profile has two choices independently in each coordinate. -/
+theorem profileCard (n : ℕ) : Nat.card (Profile n) = 2 ^ n := by
   rw [Nat.card_eq_fintype_card, Fintype.card_fun, Fintype.card_fin, ZMod.card]
 
 private def labels {n : ℕ} (d : Fin (n + 1) → ℕ) (total : ∑ i, d i = 2 ^ n) :
