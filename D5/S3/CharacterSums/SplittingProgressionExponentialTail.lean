@@ -190,25 +190,28 @@ private theorem affine_interval_even_moment (P : Finset ℕ) (a : ℕ → ℝ)
 /-- The cost of each endpoint is exponential in k log x; the interval length
 has exponent x^(ε/5) (log x)^2. The complete-period contribution uses a
 positive power saving in the per-pair moment-to-threshold ratio. -/
-private theorem absorb_interval_moment {ε : ℝ} (hε : 0 < ε) (B : ℝ) (hB : 0 < B) :
+private theorem absorb_interval_moment {ε : ℝ} (hε : 0 < ε)  :
     ∀ᶠ x : ℝ in atTop,
       let y := x^(ε/5)
-      let k := ⌊y⌋₊
+      let u := y*log x/4800
+      let B := min ε 1/8*log x
+      let k := ⌊u⌋₊
       let t := x^(1/2+ε)/4
       let N := cutoff x
       let V := (log N)^2*x*(1+log N)
       let W := (N:ℝ)^2*log N
       ∀ L : ℕ, exp (y*(log x)^2)/(4*exp (4*y)) ≤ L →
         2*L*(2*exp 1*k*V)^k + 2*W^(2*k) ≤
-          (L:ℝ)*exp (-B*y)/2*t^(2*k) := by
+          (L:ℝ)*exp (-B*u)/2*t^(2*k) := by
   have hc := (isLittleO_log_rpow_rpow_atTop 3 hε).bound
     (show (0:ℝ) < 1/64160000 by norm_num)
-  have hpow := tendsto_rpow_atTop (show 0 < 4*ε/5 by linarith)
-  filter_upwards [eventually_ge_atTop (1:ℝ),tendsto_log_atTop.eventually_ge_atTop (2500+B),
+  have hlogAbs := (isLittleO_log_rpow_atTop (show 0 < ε/2 by linarith)).bound
+    (show 0 < (32*exp 1*exp 4)⁻¹ by positivity)
+  filter_upwards [eventually_ge_atTop (1:ℝ),tendsto_log_atTop.eventually_ge_atTop 4800,
     (tendsto_rpow_atTop (show 0 < ε/5 by linarith)).eventually_ge_atTop 2,
-    hc,hpow.eventually_ge_atTop (32*exp 1*exp (2*B+4)),
-    (tendsto_rpow_atTop (show 0 < 1/2+ε by linarith)).eventually_ge_atTop 4] with x hx hl hy hc hconst ht
-  intro y k t N V W L hL
+    hc,hlogAbs,
+    (tendsto_rpow_atTop (show 0 < 1/2+ε by linarith)).eventually_ge_atTop 4] with x hx hl hy hc hlogAbs ht
+  intro y u B k t N V W L hL
   have hxpos : 0 < x := zero_lt_one.trans_le hx
   have hlog : 1 ≤ log x := by linarith
   have hN : 1 ≤ N := Nat.floor_pos.2 (one_le_pow₀ hx)
@@ -226,10 +229,13 @@ private theorem absorb_interval_moment {ε : ℝ} (hε : 0 < ε) (B : ℝ) (hB :
     nlinarith only [h,hc]
   have hV : V ≤ x*x^ε := by dsimp [V]; nlinarith only [mul_le_mul_of_nonneg_left hg hxpos.le]
   have hV0 : 0 ≤ V := by dsimp [V]; positivity
-  have hk : (k:ℝ) ≤ y := Nat.floor_le (rpow_nonneg hxpos.le _)
-  have hky : y < (k:ℝ)+1 := Nat.lt_floor_add_one y
   have hy2 : 2 ≤ y := hy
-  have hk1 : 1 ≤ (k:ℝ) := by linarith only [hky,hy2]
+  have hu : y ≤ u := by
+    dsimp [u]; nlinarith only [mul_le_mul_of_nonneg_left hl (show 0 ≤ y by linarith)]
+  have hk : (k:ℝ) ≤ u := Nat.floor_le (by linarith)
+  have hku : u < (k:ℝ)+1 := Nat.lt_floor_add_one u
+  have hk1 : 1 ≤ (k:ℝ) := by linarith
+  have hB : 0 < B := by dsimp [B]; exact mul_pos (div_pos (lt_min hε one_pos) (by norm_num)) (by linarith)
   have ht1 : 1 ≤ t := by dsimp [t]; linarith
   have hsq : t^2 = x*x^(2*ε)/16 := by
     dsimp [t]; rw [div_pow,← rpow_mul_natCast hxpos.le,
@@ -237,23 +243,38 @@ private theorem absorb_interval_moment {ε : ℝ} (hε : 0 < ε) (B : ℝ) (hB :
   have scale : 2*exp 1*k*V ≤ exp (-(2*B+4))*t^2 := by
     have hp : y*x^ε*x^(4*ε/5) = x^(2*ε) := by
       dsimp [y]; rw [← rpow_add hxpos,← rpow_add hxpos]; congr 1;ring
-    have hc' : 32*exp 1 ≤ exp (-(2*B+4))*x^(4*ε/5) := by
-      rw [exp_neg,← div_eq_inv_mul]; apply (le_div_iff₀ (exp_pos _)).2; exact hconst
+    have hδ : min ε 1 ≤ ε := min_le_left _ _
+    have hExp : exp (2*B) ≤ x^(ε/4) := by
+      rw [rpow_def_of_pos hxpos]; apply exp_le_exp.mpr; dsimp [B]
+      nlinarith only [mul_le_mul_of_nonneg_right hδ (show 0 ≤ log x by linarith)]
+    have hlc : 32*exp 1*exp 4*log x ≤ x^(ε/2) := by
+      change ‖log x‖ ≤ _*‖x^(ε/2)‖ at hlogAbs
+      rw [norm_eq_abs,abs_of_nonneg (by linarith),norm_eq_abs,
+        abs_of_nonneg (rpow_nonneg hxpos.le _),← div_eq_inv_mul] at hlogAbs
+      linarith only [(le_div_iff₀ (by positivity)).mp hlogAbs]
+    have hc' : 32*exp 1*log x ≤ exp (-(2*B+4))*x^(4*ε/5) := by
+      rw [exp_neg,← div_eq_inv_mul]; apply (le_div_iff₀ (exp_pos _)).2
+      rw [exp_add]
+      calc
+        _ = (32*exp 1*exp 4*log x)*exp (2*B) := by ring
+        _ ≤ x^(ε/2)*x^(ε/4) := by gcongr
+        _ ≤ x^(4*ε/5) := by rw [← rpow_add hxpos]; exact rpow_le_rpow_of_exponent_le hx (by linarith)
+    have hku' : (k:ℝ) ≤ y*log x := hk.trans (by dsimp [u]; nlinarith only [mul_nonneg (show 0 ≤ y by linarith) (show 0 ≤ log x by linarith)])
     calc
-      _ ≤ 2*exp 1*y*(x*x^ε) := by gcongr
-      _ = (32*exp 1)*(x*y*x^ε)/16 := by ring
+      _ ≤ 2*exp 1*(y*log x)*(x*x^ε) := by gcongr
+      _ = (32*exp 1*log x)*(x*y*x^ε)/16 := by ring
       _ ≤ (exp (-(2*B+4))*x^(4*ε/5))*(x*y*x^ε)/16 := by gcongr
       _ = exp (-(2*B+4))*t^2 := by rw [hsq,← hp];ring
-  have hmain : 2*L*(2*exp 1*k*V)^k ≤ (L:ℝ)*exp (-B*y)/4*t^(2*k) := by
+  have hmain : 2*L*(2*exp 1*k*V)^k ≤ (L:ℝ)*exp (-B*u)/4*t^(2*k) := by
     have h := pow_le_pow_left₀ (by positivity) scale k
     rw [mul_pow (exp _) (t^2),← exp_nat_mul,← pow_mul] at h
     have h8 : (8:ℝ) ≤ exp 4 := by
       have he := quadratic_le_exp_of_nonneg (by norm_num : (0:ℝ) ≤ 4)
       norm_num at he;linarith
-    have h8' : 8*exp ((k:ℝ)* -(2*B+4)) ≤ exp (-B*y) := by
+    have h8' : 8*exp ((k:ℝ)* -(2*B+4)) ≤ exp (-B*u) := by
       calc
         _ ≤ exp 4 * exp ((k:ℝ)* -(2*B+4)) := by gcongr
-        _ ≤ _ := by rw [← exp_add];apply exp_le_exp.mpr; nlinarith only [hk1,mul_le_mul_of_nonneg_left (show y ≤ 2*k by linarith) hB.le]
+        _ ≤ _ := by rw [← exp_add];apply exp_le_exp.mpr; nlinarith only [hk1,mul_le_mul_of_nonneg_left (show u ≤ 2*k by linarith) hB.le]
     have h' := mul_le_mul_of_nonneg_right h8' (pow_nonneg (zero_le_one.trans ht1) (2*k))
     nlinarith only [mul_le_mul_of_nonneg_left h (Nat.cast_nonneg (α:=ℝ) L),
       mul_le_mul_of_nonneg_left h' (Nat.cast_nonneg (α:=ℝ) L)]
@@ -269,41 +290,43 @@ private theorem absorb_interval_moment {ε : ℝ} (hε : 0 < ε) (B : ℝ) (hB :
         exact h.symm
   have hWk := pow_le_pow_left₀ hW0 hW (2*k)
   rw [← exp_nat_mul] at hWk
-  have hDom : (32:ℝ)*exp (4*y)*exp (B*y)*W^(2*k) ≤ exp (y*(log x)^2) := by
+  have hDom : (32:ℝ)*exp (4*y)*exp (B*u)*W^(2*k) ≤ exp (y*(log x)^2) := by
     have h32 : (32:ℝ) ≤ exp 6 := by
       have h := pow_div_factorial_le_exp (6:ℝ) (by norm_num) 3
       norm_num at h;linarith
     calc
-      _ ≤ exp 6 * exp (4*y) * exp (B*y) * exp ((2*k:ℕ)*(1200*log x)) := by gcongr
+      _ ≤ exp 6 * exp (4*y) * exp (B*u) * exp ((2*k:ℕ)*(1200*log x)) := by gcongr
       _ ≤ _ := by
         rw [← exp_add,← exp_add,← exp_add];apply exp_le_exp.mpr
         push_cast
-        have h1 := mul_le_mul_of_nonneg_right hk (by positivity : 0 ≤ 2400*log x)
-        have h2 := mul_nonneg (by linarith : 0 ≤ log x - (2400+B+10)) (by linarith : 0 ≤ log x)
-        have h3 := mul_le_mul_of_nonneg_left (show 2400*log x + B+7 ≤ (log x)^2 by nlinarith only [h2,mul_nonneg hB.le (by linarith : 0 ≤ log x-1),hl,hB]) (by linarith : 0 ≤ y)
-        nlinarith only [h1,h3,hy2]
+        have hklog := mul_le_mul_of_nonneg_right hk (show 0 ≤ 2400*log x by positivity)
+        have hBu := mul_le_mul_of_nonneg_right
+          (show B ≤ log x by
+            dsimp [B]; nlinarith only [mul_le_mul_of_nonneg_right (min_le_right ε 1) (show 0 ≤ log x by linarith),hl])
+          (show 0 ≤ u by linarith)
+        dsimp only [u] at hklog hBu ⊢
+        have hlog2 : 32 ≤ (log x)^2 := by nlinarith only [sq_nonneg (log x-1),hl]
+        nlinarith only [hklog,hBu,mul_le_mul_of_nonneg_left hlog2 (show 0 ≤ y by linarith),hy2]
   have hsize := (div_le_iff₀ (by positivity : 0 < 4*exp (4*y))).1 hL
-  have hEnd : 2*W^(2*k) ≤ (L:ℝ)*exp (-B*y)/4 := by
-    have h := (le_of_mul_le_mul_left (a := 4*exp (4*y)) (b := 8*exp (B*y)*W^(2*k)) (c := (L:ℝ))
+  have hEnd : 2*W^(2*k) ≤ (L:ℝ)*exp (-B*u)/4 := by
+    have h := (le_of_mul_le_mul_left (a := 4*exp (4*y)) (b := 8*exp (B*u)*W^(2*k)) (c := (L:ℝ))
       (by nlinarith only [hDom,hsize]) (by positivity : 0 < 4*exp (4*y)))
     rw [neg_mul,exp_neg]; field_simp
     linarith only [h]
   have htn := one_le_pow₀ ht1 (n:=2*k)
-  nlinarith only [hmain,hEnd,mul_le_mul_of_nonneg_left htn (show 0 ≤ (L:ℝ)*exp (-B*y)/4 by positivity)]
+  nlinarith only [hmain,hEnd,mul_le_mul_of_nonneg_left htn (show 0 ≤ (L:ℝ)*exp (-B*u)/4 by positivity)]
 
 private lemma fourth_threshold_error {ε : ℝ} (hε : 0 < ε) (K : ℝ) (hK : 0 ≤ K) :
-    ∀ᶠ x : ℝ in atTop, K*sqrt x + log 2 + Chebyshev.theta (x^(ε/5)) ≤ x^(1/2+ε)/4 := by
+    ∀ᶠ x : ℝ in atTop, K*sqrt x + log 2 + Chebyshev.theta (x^(1/2+ε/2)) ≤ x^(1/2+ε)/4 := by
   let C := K+log 2+log 4
-  have he := (tendsto_rpow_atTop (show 0 < 3*ε/4 by linarith)).eventually_ge_atTop (4*C)
+  have he := (tendsto_rpow_atTop (show 0 < ε/2 by linarith)).eventually_ge_atTop (4*C)
   filter_upwards [eventually_ge_atTop (1:ℝ),he] with x hx hc
   have hxpos := zero_lt_one.trans_le hx
-  let E := x^(1/2+ε/4)
+  let E := x^(1/2+ε/2)
   have hroot : sqrt x ≤ E := by rw [sqrt_eq_rpow];exact rpow_le_rpow_of_exponent_le hx (by linarith)
-  have hy : x^(ε/5) ≤ E := rpow_le_rpow_of_exponent_le hx (by linarith)
   have hE : 1 ≤ E := one_le_rpow hx (by linarith)
-  have ht := (Chebyshev.theta_le_log4_mul_x (rpow_nonneg hxpos.le (ε/5))).trans
-    (mul_le_mul_of_nonneg_left hy (log_nonneg (by norm_num)))
-  have hpow : x^(1/2+ε) = E*x^(3*ε/4) := by
+  have ht := Chebyshev.theta_le_log4_mul_x (rpow_nonneg hxpos.le (1/2+ε/2))
+  have hpow : x^(1/2+ε) = E*x^(ε/2) := by
     dsimp [E];rw [← rpow_add hxpos];congr 1;ring
   rw [hpow]
   have h := mul_le_mul_of_nonneg_left hc (zero_le_one.trans hE)
@@ -311,24 +334,24 @@ private lemma fourth_threshold_error {ε : ℝ} (hε : 0 < ε) (K : ℝ) (hK : 0
   nlinarith only [h,ht,mul_le_mul_of_nonneg_left hroot hK,
     mul_le_mul_of_nonneg_left hE (log_nonneg (by norm_num : (1:ℝ) ≤ 2))]
 
-/-- At the reference exponential length, either quadratic test has an arbitrarily
-large fixed exponential saving, uniformly over the first denominator. -/
-theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
+/-- The proportion failing either clipped test saves a fixed power of the reference
+length scale D = exp(x^(ε/5) (log x)^2). Small stride primes may reach x^(1/2+ε/2). -/
+theorem splitting_progression_power_tail (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ x : ℝ in atTop, ∀ q b m A L : ℕ, b%4=3 → 4 ∣ m →
-      (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(ε/5) ∨ cutoff x < p) →
+      (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(1/2+ε/2) ∨ cutoff x < p) →
       exp (x^(ε/5)*(log x)^2)/(4*exp (4*x^(ε/5))) ≤ L →
-      ((failures x ε q b m A L).card:ℝ) ≤ L*exp (-B*x^(ε/5)) := by
+      ((failures x ε q b m A L).card:ℝ) ≤ L*exp (-(min ε 1/38400)*x^(ε/5)*(log x)^2) := by
   classical
-  let rate := max 1 B
-  have hr : 0 < rate := zero_lt_one.trans_le (le_max_left _ _)
   obtain ⟨K,hK,herr⟩ := clipped_coprime_prime_error
   filter_upwards [eventually_ge_atTop (2:ℝ),fourth_threshold_error hε K hK,
-    absorb_interval_moment hε rate hr,
-    (tendsto_rpow_atTop (show 0 < ε/5 by linarith)).eventually_ge_atTop 2] with x hx err scale hy
+    absorb_interval_moment hε,tendsto_log_atTop.eventually_ge_atTop 4800,
+    (tendsto_rpow_atTop (show 0 < ε/5 by linarith)).eventually_ge_atTop 2] with x hx err scale hl hy
   intro q b m A L hb hm hfactor hlen
   let y := x^(ε/5)
+  let u := y*log x/4800
+  let rate := min ε 1/8*log x
   let N := cutoff x
-  let k := ⌊y⌋₊
+  let k := ⌊u⌋₊
   let t := x^(1/2+ε)/4
   let P := (Icc 1 N).filter (fun p => Nat.Prime p ∧ p ≠ 2 ∧ m.Coprime p)
   let d (i : ℕ) := b+m*(A+i)
@@ -337,7 +360,8 @@ theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
   let V := (log N)^2*x*(1+log N)
   let W := (N:ℝ)^2*log N
   have hxpos : 0 < x := by linarith
-  have hk : 0 < k := Nat.floor_pos.mpr (by dsimp [y];linarith)
+  have hk : 0 < k := Nat.floor_pos.mpr (by
+    dsimp [u]; nlinarith only [mul_le_mul_of_nonneg_right (show 2 ≤ y from hy) (show 0 ≤ log x by linarith),hl])
   have hN : 2 ≤ N := Nat.le_floor (by
     change ((2:ℕ):ℝ) ≤ x^(400:ℕ)
     exact hx.trans (le_self_pow₀ (by linarith) (by decide)))
@@ -349,7 +373,7 @@ theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
   have hP (p : ℕ) (hp : p ∈ P) := (mem_filter.1 hp).2
   have hcoeff := coefficient_bounds x hxpos.le N (by omega) P (filter_subset _ _)
   have moment (v : ℕ → ℝ) (hv : ∀ n, |v n| ≤ 1) :
-      (∑ i ∈ range L, (g v i)^(2*k)) ≤ (L:ℝ)*exp (-rate*y)/2*t^(2*k) := by
+      (∑ i ∈ range L, (g v i)^(2*k)) ≤ (L:ℝ)*exp (-rate*u)/2*t^(2*k) := by
     have ha (p : ℕ) (hp : p ∈ P) : 0 ≤ c p := by
       exact mul_nonneg (log_nonneg (by exact_mod_cast (hP p hp).1.one_le))
         (le_min zero_le_one (div_nonneg hxpos.le p.cast_nonneg))
@@ -367,7 +391,7 @@ theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
     gcongr
   have error (v : ℕ → ℝ) (hv : ∀ n, |v n| ≤ 1) (i : ℕ) :
       |twistedBy x N (d i) v - g v i| ≤ t := by
-    have he := herr x y N m (d i) v hxpos hv hfactor
+    have he := herr x (x^(1/2+ε/2)) N m (d i) v hxpos hv hfactor
     have heq : (Icc 1 N).filter (fun p => p.Prime ∧ p ≠ 2 ∧ p.Coprime m) = P := by
       ext p;simp [P,Nat.coprime_comm]
     rw [heq] at he; exact he.trans err
@@ -384,7 +408,7 @@ theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
   have hp (z : ℝ) (hz : t ≤ |z|) : t^(2*k) ≤ z^(2*k) := by
     have h := pow_le_pow_left₀ ht.le hz (2*k)
     rwa [← abs_pow,abs_of_nonneg (Even.pow_nonneg (even_two_mul k) _)] at h
-  have hbad : (S.card:ℝ)*t^(2*k) ≤ (L:ℝ)*exp (-rate*y)*t^(2*k) := calc
+  have hbad : (S.card:ℝ)*t^(2*k) ≤ (L:ℝ)*exp (-rate*u)*t^(2*k) := calc
     _ = ∑ _i ∈ S, t^(2*k) := by simp
     _ ≤ ∑ i ∈ S, ((g (fun _ => 1) i)^(2*k)+(g v i)^(2*k)) := by
       apply sum_le_sum; intro i hi
@@ -395,9 +419,30 @@ theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
       sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun i _ _ =>
         add_nonneg (Even.pow_nonneg (even_two_mul k) _) (Even.pow_nonneg (even_two_mul k) _))
     _ ≤ _ := by rw [sum_add_distrib];linarith only [moment (fun _ => 1) (by simp),moment v hv]
-  apply ((mul_le_mul_iff_left₀ (pow_pos ht _)).mp hbad).trans
+  have bound := (mul_le_mul_iff_left₀ (pow_pos ht _)).mp hbad
+  convert bound using 2
+  dsimp [rate,u,y]
+  congr 1
+  ring
+
+/-- Every fixed exponential rate follows by taking x sufficiently large. -/
+theorem splitting_progression_exponential_tail (ε B : ℝ) (hε : 0 < ε) :
+    ∀ᶠ x : ℝ in atTop, ∀ q b m A L : ℕ, b%4=3 → 4 ∣ m →
+      (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(ε/5) ∨ cutoff x < p) →
+      exp (x^(ε/5)*(log x)^2)/(4*exp (4*x^(ε/5))) ≤ L →
+      ((failures x ε q b m A L).card:ℝ) ≤ L*exp (-B*x^(ε/5)) := by
+  have hd : 0 < min ε 1 / 38400 := div_pos (lt_min hε one_pos) (by norm_num)
+  filter_upwards [splitting_progression_power_tail ε hε,eventually_ge_atTop (1:ℝ),
+    tendsto_log_atTop.eventually_ge_atTop (max 1 (B/(min ε 1/38400)))] with x h hx hl
+  intro q b m A L hb hm hf hL
+  have hbound := h q b m A L hb hm (fun p hp hp' => (hf p hp hp').imp_left
+    (fun h => h.trans (rpow_le_rpow_of_exponent_le hx (by linarith)))) hL
+  apply hbound.trans
   apply mul_le_mul_of_nonneg_left _ L.cast_nonneg
   apply exp_le_exp.mpr
-  exact mul_le_mul_of_nonneg_right (neg_le_neg (le_max_right 1 B)) (rpow_nonneg hxpos.le _)
+  have h1 := (le_max_left (1:ℝ) _).trans hl
+  have h2 := (div_le_iff₀ hd).mp ((le_max_right (1:ℝ) _).trans hl)
+  have h3 := mul_le_mul_of_nonneg_left (show log x ≤ (log x)^2 by nlinarith only [sq_nonneg (log x-1),h1]) hd.le
+  nlinarith only [mul_le_mul_of_nonneg_right (show B ≤ min ε 1/38400*(log x)^2 by linarith) (rpow_nonneg (zero_le_one.trans hx) (ε/5))]
 
 end D5.S3.CharacterSums.SplittingProgressionExponentialTail
