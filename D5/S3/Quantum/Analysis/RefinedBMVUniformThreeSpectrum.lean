@@ -39,7 +39,8 @@ theorem defect_cycle_all (p : ℕ) (a x y : ℝ) :
     ring
   · rw [show x * y * a = a * x * y by ring]
 
-private theorem defect_diag_all (p : ℕ) (a : ℝ) : defect p a a a = 0 := by
+/-- The defect vanishes when all three roots coincide. -/
+theorem defect_diag_all (p : ℕ) (a : ℝ) : defect p a a a = 0 := by
   unfold defect
   have h : ((gaps p).map fun g =>
       (a ^ 3) ^ g.1 * (a ^ 3) ^ g.2.1 * (a ^ 3) ^ g.2.2) =
@@ -49,7 +50,8 @@ private theorem defect_diag_all (p : ℕ) (a : ℝ) : defect p a a a = 0 := by
   rw [h, List.map_const', List.sum_replicate, nsmul_eq_mul]
   rw [show a * a * a = a ^ 3 by ring, sub_self]
 
-private theorem defect_nonneg_all (p : ℕ) (a x y : ℝ)
+/-- The scalar corner inequality implies nonnegativity of the defect. -/
+theorem defect_nonneg_all (p : ℕ) (a x y : ℝ)
     (ha : 0 ≤ a) (hx : 0 ≤ x) (hy : 0 ≤ y) :
     0 ≤ defect p a x y := (Real.sqrt_nonneg _).trans (DimThree.defect_corner p ha hx hy)
 
