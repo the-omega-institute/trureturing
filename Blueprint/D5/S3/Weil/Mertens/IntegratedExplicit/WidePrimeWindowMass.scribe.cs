@@ -13,19 +13,20 @@ internal sealed class WidePrimeWindowMassDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/"
                 + "WidePrimeWindowMass.prime_tail_wide_window_mass"),
             H("The logarithmic lower bound and divergence when RH fails"),
-            StatementSource.FromAuthor(F.Disp(Claim())), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(F.Disp(Claim())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
             Blocks(
                 Paragraph(Text("Let Qθ(x) be the integral of (θ(t)−t)/t² from x to infinity, "
                     + "where θ sums log p over primes p ≤ t. This is the tail in Zhao's equation (14), "
                     + "arXiv:2411.18903v2. Let N(A,B) be the integral of max(−Qθ(x),0)/√x "
                     + "from A to B.")),
-                Paragraph(Text("The derivation in the discussion of trureturing issue #32573 uses "
+                Paragraph(Text("Loning's derivation in the discussion of trureturing issue #32573 uses "
                     + "the last whole power window inside [A,B]. Put Y = B^(1/b). "
                     + "Since A ≥ 2 and b > 1, the width condition gives A ≤ Y ≤ Y^b = B. "
                     + "The reference HasWindows interface in riemann-hypothesis asks for a whole "
                     + "power window in the relevant set above each prescribed threshold. "
                     + "Here the width condition gives a whole subinterval of each measured interval, "
-                    + "and positivity of the integrand transfers its mass lower bound to [A,B].")),
+                    + "and nonnegativity of the integrand transfers its mass lower bound to [A,B].")),
                 Paragraph(Text("If RH fails, right-half-strip reduction gives a zero with real "
                     + "part β > 1/2. For any 0 < η < β−1/2, apply the pole estimate on [Y,Y^b] "
                     + "with loss b(β−1/2−η). This gives N(A,B) ≥ B^η above a threshold on B "
