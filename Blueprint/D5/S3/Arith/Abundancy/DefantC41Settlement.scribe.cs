@@ -18,7 +18,7 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
                 "Defant restricts the conjecture to these nine negative radicands."),
             Definition("defant-ring", "Quadratic integer ring", "R", Ring(),
                 "In the integral basis, the generator is the square root of d when d is "
-                    + "2 or 3 modulo 4, and one plus that root divided by two when d is "
+                    + "2 or 3 modulo 4, and half the sum of one and that root when d is "
                     + "1 modulo 4. The two parameters a and b encode the equation "
                     + "for the square of the generator as a plus b times the generator. "
                     + "The remainder and division in the parameters are integer operations."),
@@ -160,7 +160,7 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
         var p = F.Id("p");
         var k = F.Id("k");
         return Equal(Field(Call("primePower", d, p, k, F.Id("hp")), "val"),
-            Cast(Typed(Power(p, k), NumberDomain("N")), Call("R", d)));
+            Cast(Cast(Power(p, k), NumberDomain("N")), Call("R", d)));
     }
 
     private static Formula Conjecture()
@@ -177,8 +177,9 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
             Seq(Neg, Call("PowerfullyFriendly", n, power, z)));
         var positiveIndex = Universal("n", natural,
             Logic(Less(D(0), n), FormulaLogicOperator.Implies, solitude));
-        var primePowers = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("p", natural), Bound("hp", prime), Bound("k", natural)],
+        var primePowers = Seq(Forall, Sp, Parenthesized(Typed(p, natural)), Sp,
+            Parenthesized(Typed(F.Id("hp"), prime)), Sp,
+            Parenthesized(Typed(k, natural)), Comma, Sp,
             Logic(Less(D(0), k), FormulaLogicOperator.Implies, positiveIndex));
         return Universal("d", NumberDomain("Z"),
             Logic(Relation(d, FormulaRelationOperator.MemberOf, F.Id("K")),
@@ -187,9 +188,6 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
 
     private static Formula Universal(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
-
-    private static Formula.BoundVariable Bound(string name, Formula domain) =>
-        new(FormulaIdentifier.Create(name), domain);
 
     private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
         Parenthesized(Seq(Operator("if"), Sp, condition, Sp,
