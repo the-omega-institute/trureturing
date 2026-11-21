@@ -360,7 +360,7 @@ private lemma slitDomain_star : StarConvex ℝ (1 / 2 : ℂ) slitDomain := by
         nlinarith [mul_lt_mul_of_pos_left hz hb0]))
     · exact (mem_slitDomain _).2 (Or.inr (by rw [him]; exact mul_ne_zero hb0.ne' hz))
 
-private lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
+lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
   apply IsConnected.isPreconnected
   apply IsPathConnected.isConnected
   apply StarConvex.isPathConnected _ midpoint_mem

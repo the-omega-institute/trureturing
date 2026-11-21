@@ -25,7 +25,7 @@ open HalfFock.LatticeHalfFockParityField OperatorAlgebra
 open LatticeHalfFockChargedTensorCoefficients LatticeTwistedGroundRealization.SignQuotient
 open OriginalFourMChargeCoset OriginalFourMEnergyCoefficient OriginalFourMChargeNormal
 open OriginalGaussianSewnAnalytic
-open private sewn_term_diff projectOccupations cosetSeries_sewnTaylor
+open private sewn_term_diff cosetSeries_sewnTaylor
   from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChargeNormal
 open private groundForm from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
 
@@ -91,7 +91,7 @@ private theorem analytic_neg_square_even_part {f : ℂ → ℂ} (hf : AnalyticAt
   simpa only [smul_eq_mul, mul_comm] using hspl
 
 
-private def chargeSectorSewn (D : LatticeData) (a : ModTwoCharge D)
+def chargeSectorSewn (D : LatticeData) (a : ModTwoCharge D)
     (betaL gammaL betaR gammaR : Exponent D) (z : ℂ) : ℂ :=
   ∑' q : Charge D, if reduceCharge D q = a then
     sewnChargeTerm D betaL gammaL betaR gammaR q z else 0
@@ -135,8 +135,8 @@ private theorem coefficient_mul_const (n : ℕ) (c : ℂ) (f : ℂ → ℂ) :
 
 private theorem projection_on_diagonal (D : LatticeData) (H K E : ℕ) (t₀ : ℤ)
     (P Q R S : Oscillator D) (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) :
-    projectOccupations D H K E ((E : ℤ) + t₀) P Q R S F =
-      projectOccupations D H K 0 t₀ P Q R S F := by
+    OriginalFourMChargeNormal.projectOccupations D H K E ((E : ℤ) + t₀) P Q R S F =
+      OriginalFourMChargeNormal.projectOccupations D H K 0 t₀ P Q R S F := by
   have hzero : chargeNorm D 0 = 0 := by simp [chargeNorm, bilinear]
   have hs (e : ℤ) (β γ : Exponent D) :
       selector D 0 (e - 2 * (E : ℤ)) E β γ = selector D 0 e 0 β γ := by
@@ -155,13 +155,13 @@ private theorem projection_on_diagonal (D : LatticeData) (H K E : ℕ) (t₀ : �
       selector D 0 (-2 * ((E : ℤ) + t₀) - 2) E β γ = selector D 0 (-2 * t₀ - 2) 0 β γ := by
     rw [show -2 * ((E : ℤ) + t₀) - 2 = (-2 * t₀ - 2) - 2 * (E : ℤ) by ring]
     exact hs _ _ _
-  simp only [projectOccupations, hL, hR]
+  simp only [OriginalFourMChargeNormal.projectOccupations, hL, hR]
 
 /-- The native sewn charge sum with the finite lowering and Laurent projection
 on the right-mode diagonal `t = E + t₀`. -/
 def diagonalSewn (D : LatticeData) (H K : ℕ) (t₀ : ℤ)
     (P Q R S : Oscillator D) (a : ModTwoCharge D) (z : ℂ) : ℂ :=
-  projectOccupations D H K 0 t₀ P Q R S
+  OriginalFourMChargeNormal.projectOccupations D H K 0 t₀ P Q R S
     (fun betaL gammaL betaR gammaR => chargeSectorSewn D a betaL gammaL betaR gammaR z)
 
 /-- The rescaled original coset coefficients on the energy diagonal form a
@@ -181,23 +181,23 @@ theorem cosetSeries_negative_square_germ (D : LatticeData) (hunit : IsUnit D.G.d
       AnalyticAt ℂ (chargeSectorSewn D a betaL gammaL betaR gammaR) 0 :=
     chargeSectorSewn_analyticAt D hunit hD a betaL gammaL betaR gammaR
   have hf : AnalyticAt ℂ f 0 := by
-    change AnalyticAt ℂ (fun z => projectOccupations D H K 0 t₀ P Q R S
+    change AnalyticAt ℂ (fun z => OriginalFourMChargeNormal.projectOccupations D H K 0 t₀ P Q R S
       (fun betaL gammaL betaR gammaR => chargeSectorSewn D a betaL gammaL betaR gammaR z)) 0
-    unfold projectOccupations
+    unfold OriginalFourMChargeNormal.projectOccupations
     fun_prop
   have hc (n : ℕ) :
-      coefficient n f = projectOccupations D H K 0 t₀ P Q R S
+      coefficient n f = OriginalFourMChargeNormal.projectOccupations D H K 0 t₀ P Q R S
         (fun betaL gammaL betaR gammaR =>
           coefficient n (chargeSectorSewn D a betaL gammaL betaR gammaR)) := by
-    change coefficient n (fun z => projectOccupations D H K 0 t₀ P Q R S
+    change coefficient n (fun z => OriginalFourMChargeNormal.projectOccupations D H K 0 t₀ P Q R S
       (fun betaL gammaL betaR gammaR => chargeSectorSewn D a betaL gammaL betaR gammaR z)) = _
-    simp (discharger := fun_prop) only [projectOccupations, coefficient_fun_sum,
+    simp (discharger := fun_prop) only [OriginalFourMChargeNormal.projectOccupations, coefficient_fun_sum,
       coefficient_const_mul]
   have hcoef (E : ℕ) :
       (-1 : ℂ) ^ E * coefficient (2 * E) f = PowerSeries.coeff E
         (PowerSeries.rescale (-1) (cosetSeries D hD H K ((E : ℤ) + t₀) P Q R S a)) := by
     rw [hc, PowerSeries.coeff_rescale, cosetSeries_sewnTaylor D hunit hD]
-    change _ = (-1 : ℂ) ^ E * projectOccupations D H K E ((E : ℤ) + t₀) P Q R S
+    change _ = (-1 : ℂ) ^ E * OriginalFourMChargeNormal.projectOccupations D H K E ((E : ℤ) + t₀) P Q R S
       (fun betaL gammaL betaR gammaR =>
         coefficient (2 * E) (chargeSectorSewn D a betaL gammaL betaR gammaR))
     rw [projection_on_diagonal]

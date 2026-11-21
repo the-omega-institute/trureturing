@@ -4,7 +4,19 @@
 
 The original four-point diagonal germ in the negative square coordinate
 
-**Theorem 1.1 (Analytic descent of each sewn charge coset).**
+**Definition 1.1 (Native sewn charge-sector sum).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.chargeSectorSewn`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.chargeSectorSewn` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a fixed lattice datum, charge class, four occupations and complex sewing coordinate, sum the sewn charge terms in the class with zero contribution from all other charges.
+
+**Theorem 1.2 (Analytic descent of each sewn charge coset).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.cosetSeries_negative_square_germ`
 
@@ -20,7 +32,7 @@ On the diagonal t = E + t₀, the left exponent and the right exponent −2t −
 
 For any Taylor radius R > 0 chosen strictly inside a disk of expansion at zero, absolute summability of the Taylor coefficients at R yields absolute summability of the descended coefficients at R². Their degree-E coefficient is (−1)^E times the ordinary Taylor coefficient of fₐ of order 2E, equivalently the coefficient of degree E of cosetSeries at t = E + t₀ rescaled by −1. The descended germ Gₐ satisfies Gₐ(−w²) = (fₐ(w) + fₐ(−w))/2 near zero. The two sewing evaluations use w and −w and enter the average with plus signs.
 
-**Theorem 1.2 (The actual fourM germ at all orders).**
+**Theorem 1.3 (The actual fourM germ at all orders).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.fourM_scalar_negative_square_germ`
 
@@ -36,6 +48,7 @@ Near zero, G(−w²) is the sum over mod-two charge classes a of ((fₐ(w) + f�
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.chargeSectorSewn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.cosetSeries_negative_square_germ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.fourM_scalar_negative_square_germ`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal](OriginalFourMChargeNormal.md)

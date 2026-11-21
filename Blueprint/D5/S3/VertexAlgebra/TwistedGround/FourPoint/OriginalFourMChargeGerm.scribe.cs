@@ -10,6 +10,14 @@ internal sealed class OriginalFourMChargeGermDocument : IScribeDocumentDefinitio
         "The original four-point diagonal germ in the negative square coordinate",
         H("The original four-point diagonal germ"),
         Blocks(
+            Describe.Lean(DescribeId.Create("chargesectorsewn"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeGerm.chargeSectorSewn"),
+                H("Native sewn charge-sector sum"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a fixed lattice datum, charge class, four occupations and complex sewing "
+                    + "coordinate, sum the sewn charge terms in the class with zero contribution from all "
+                    + "other charges."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("original-fourm-coset-negative-square-germ"),
                 DeclarationHandle.Create(Prefix + "cosetSeries_negative_square_germ"),
