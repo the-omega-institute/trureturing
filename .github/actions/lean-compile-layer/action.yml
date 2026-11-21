@@ -1,0 +1,67 @@
+name: Compile a Lean Release layer
+description: Build the shared imports or one independent branch at the checked-out revision
+inputs:
+  stage:
+    description: common or the zero-based worker number
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-dotnet@v5
+      with:
+        global-json-file: global.json
+    - shell: bash
+      run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+    - id: keys
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+    - uses: actions/cache/restore@v5
+      if: steps.keys.outputs.elan_key != ''
+      continue-on-error: true
+      with:
+        path: ~/.elan
+        key: ${{ steps.keys.outputs.elan_key }}
+    - shell: bash
+      run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+    - id: dependency
+      uses: actions/cache/restore@v5
+      if: steps.keys.outputs.dependency_key != ''
+      continue-on-error: true
+      with:
+        path: ${{ steps.keys.outputs.dependency_archive_path }}
+        key: ${{ steps.keys.outputs.dependency_key }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+    - name: Prepare the pinned mathlib dependencies
+      env:
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+      shell: bash
+      run: |
+        python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+        bash .github/actions/lean-compile-layer/prepare-dependencies.sh
+    - if: inputs.stage != 'common'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: common
+    - name: Recover shared imports and compile the assigned targets
+      env:
+        STAGE: ${{ inputs.stage }}
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+      shell: bash
+      run: |
+        compiler=tools/scripts/worktree/lean_compile_layers.py
+        directory="$RUNNER_TEMP/lean-compile"
+        if [[ "$STAGE" != common ]]; then
+          python3 "$compiler" verify --stage common --artifacts "$directory"
+        fi
+        bash .github/actions/lean-compile-layer/measure.sh python3 "$compiler" build --stage "$STAGE" --artifacts "$directory"
+    - uses: actions/upload-artifact@v6
+      with:
+        name: lean-compile-${{ github.run_id }}-${{ inputs.stage }}
+        path: ${{ runner.temp }}/lean-compile/${{ inputs.stage }}.tar.gz
+        compression-level: 0
+        if-no-files-found: error
+        overwrite: true
+        retention-days: 7
