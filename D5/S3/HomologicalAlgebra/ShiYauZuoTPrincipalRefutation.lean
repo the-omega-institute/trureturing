@@ -1,3 +1,11 @@
+/- GID: D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation
+   generality: I
+   mirror-B: D5/B/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: [mathlib/module/Mathlib.Algebra.TrivSqZeroExt.Ideal, mathlib/module/Mathlib.RingTheory.Ideal.Colon, mathlib/module/Mathlib.RingTheory.LocalRing.ResidueField.Basic]
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation.claim; result=D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation.result; claim=D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation.claim
+   digest: A binary square-zero local algebra refutes Shi-Yau-Zuo Conjecture 4.79. -/
+
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Algebra.MvPolynomial.Eval
@@ -22,7 +30,7 @@ def valueIdeal {F A : Type} [Field F] [CommRing A] [Algebra F A] {n : ℕ}
     (components : Fin n → A →ₗ[F] A) (f : A) : Ideal A :=
   Ideal.span (Set.range fun j => components j f)
 
-/-- Definitions 4.1 and 4.3. The linear maps are part of the T-map data. -/
+/-- Definition 4.1 and Remark 4.3. The linear maps are part of the T-map data. -/
 structure TMap (F A : Type) [Field F] [CommRing A] [Algebra F A] where
   count : ℕ
   components : Fin count → A →ₗ[F] A
@@ -104,7 +112,7 @@ private instance : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
 private abbrev scalar : A₂ →ₐ[K] K := fstHom K K E
 
 private theorem scalar_surjective : Function.Surjective scalar :=
-  fun c => ⟨inl c, rfl⟩
+  fst_surjective
 
 private instance : IsLocalHom scalar.toRingHom :=
   ⟨fun _ hx => isUnit_iff_isUnit_fst.mpr hx⟩
@@ -154,12 +162,9 @@ private def components (i : Fin 3) : A₂ →ₗ[K] A₂ :=
     (inrHom K E).comp ((LinearMap.single K (fun _ : Fin 3 => K) i).comp
       ((form i).comp (sndHom K E)))
 
-private theorem components_apply (i : Fin 3) (x : A₂) :
-    components i x = inl x.fst + inr (Pi.single i (form i x.snd)) := rfl
-
 private theorem fst_components (i : Fin 3) (x : A₂) :
     (components i x).fst = x.fst := by
-  simp [components_apply]
+  simp [components]
 
 private theorem component_mem (i : Fin 3) (x : A₂) :
     components i x ∈ valueIdeal components x :=
@@ -220,9 +225,9 @@ private theorem image_eq_ideal : imageIdeal binaryTMap I = I := by
     rintro _ ⟨i, rfl⟩
     have himage : ∃ j : Fin 3, components i (axis j) = axis i := by
       fin_cases i
-      · exact ⟨0, by simp [components_apply, form, axis]⟩
-      · exact ⟨1, by simp [components_apply, form, axis]⟩
-      · exact ⟨0, by simp [components_apply, form, axis]⟩
+      · exact ⟨0, by simp [components, form, axis]⟩
+      · exact ⟨1, by simp [components, form, axis]⟩
+      · exact ⟨0, by simp [components, form, axis]⟩
     obtain ⟨j, hj⟩ := himage
     rw [← hj]
     exact le_iSup (fun x : I => valueIdeal binaryTMap.components x)
@@ -263,8 +268,8 @@ private theorem binary_not_principal : ¬ TPrincipal binaryTMap I := by
       refine ⟨(mem_ideal _).mpr ((fst_components j x).trans hz), ?_⟩
       by_cases hji : j = i
       · subst j
-        simp [components_apply, hi]
-      · simp [components_apply, Ne.symm hji]
+        simp [components, hi]
+      · simp [components, Ne.symm hji]
     have haxis := hle (show axis i ∈ valueIdeal components x from hx ▸ axis_mem_ideal i)
     have hzero : (axis i).snd i = 0 := haxis.2
     simp [axis] at hzero
@@ -314,7 +319,7 @@ private theorem generic_axis_mem (i : Fin 3) :
   rw [generic_coefficients]
   change (∑ j : Fin 3, C (components i (axis j)) * X j) = _
   fin_cases i <;>
-    simp [Fin.sum_univ_three, components_apply, form, axis, Pi.single_apply,
+    simp [Fin.sum_univ_three, components, form, axis, Pi.single_apply,
       factor, U, V, mul_add]
 
 private theorem P_mul_axis_mem (i : Fin 3) :
