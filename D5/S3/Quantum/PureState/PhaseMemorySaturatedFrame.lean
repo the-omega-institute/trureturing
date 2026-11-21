@@ -903,9 +903,8 @@ lemma dominantProfile_data (t : Fin 4 → ℝ) (ht : ∀ i, 0 < t i)
   linear_combination fourierTail t * htail
 
 /-- Exact nonattainment for positive normalized Fourier amplitudes with
-(t_0^2 ge 1/2) and (t_1 
-e t_3). The unaveraged equality in the statement
-corresponds to success probability ((t_0+|t_{mathrm{tail}}|)^2/4). -/
+`1 / 2 ≤ t 0 ^ 2` and `t 1 ≠ t 3`. The unaveraged equality in the statement
+has success probability `(t 0 + |fourierTail t|) ^ 2 / 4`. -/
 private theorem fourier4_dominant_ne_upper_of_local_effects
     (t : Fin 4 → ℝ) (ht : ∀ i, 0 < t i) (hn : ∑ i, t i ^ 2 = 1)
     (hdominant : (1 / 2 : ℝ) ≤ t 0 ^ 2) (hasym : t 1 ≠ t 3)
