@@ -9,6 +9,7 @@ claim: "Section 4, printed page 11, Conjecture 2: the noncentral commuting graph
 strata_touched:
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/NoncentralBound
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/RingNoncentralBound
 license: citation-only
 triage: anchor
 ---

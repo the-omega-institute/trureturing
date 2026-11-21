@@ -9,6 +9,7 @@ claim: "Proposition 7: a disjoint union H of k >= 1 cliques K_(s_i) on n = sum s
 strata_touched:
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/RingNoncentralBound
 license: citation-only
 triage: anchor
 ---
@@ -56,3 +57,15 @@ repository proves it from CN(H) = A^2 - D = sum_v (a_v a_v^T - diag a_v), where 
 indicator of the neighbourhood of v: with the averaging projection Pi_v onto that neighbourhood,
 each summand is (d_v - 1) Pi_v - (diag a_v - Pi_v), both parts are positive semidefinite, and the
 energy of a difference of positive semidefinite matrices is at most the sum of their traces.
+
+## Finite noncommutative rings
+
+Corollary 3 in Section 2 of the same version states, for every finite noncommutative associative
+ring R, not assumed unital and with no commutative-centralizer assumption, with z the order of
+the center and n the number of noncentral elements, that n >= z + 2 >= 3 and that the
+common-neighbourhood energy of the commuting graph on the individual noncentral elements is at
+most n(n - z - 2) < 2(n - 1)(n - 2). The earlier CC-ring result of Fasfous–Nath and
+Tak–Dutta–Nath assumes commutative centralizers. The centralizer of a noncentral element is a
+proper additive subgroup, so it has at most |R|/2 elements while containing the center, the
+element and its neighbours. Combined with the neighbourhood-clique bound this gives the
+repository's sharper form E_CN <= n max(n - z - 4, 0).
