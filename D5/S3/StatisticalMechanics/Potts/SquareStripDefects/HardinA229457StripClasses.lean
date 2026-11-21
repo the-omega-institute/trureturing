@@ -21,7 +21,6 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCut
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClass0
@@ -37,7 +36,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCla
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses

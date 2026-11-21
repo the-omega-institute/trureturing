@@ -51,7 +51,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.Hardi
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripClasses

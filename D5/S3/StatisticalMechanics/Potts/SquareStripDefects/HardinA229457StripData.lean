@@ -32,7 +32,7 @@ import Mathlib.Logic.Equiv.Fin.Basic
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData

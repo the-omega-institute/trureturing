@@ -28,7 +28,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
 
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData

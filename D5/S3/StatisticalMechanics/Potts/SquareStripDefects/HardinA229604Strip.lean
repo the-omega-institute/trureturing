@@ -32,7 +32,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 open scoped BigOperators
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State HardinA229635Transfer)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604Strip
