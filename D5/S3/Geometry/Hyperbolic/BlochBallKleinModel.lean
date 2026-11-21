@@ -1,6 +1,6 @@
-/- GID: D5/S3/Geometry/BlochBallKleinModel
+/- GID: D5/S3/Geometry/Hyperbolic/BlochBallKleinModel
    generality: I
-   mirror-B: D5/B/S3/Geometry/BlochBallKleinModel
+   mirror-B: D5/B/S3/Geometry/Hyperbolic/BlochBallKleinModel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -24,7 +24,7 @@ open D5.S3.Geometry.HyperbolicUpperHalfSpace (HyperbolicThreeSpace)
 
 noncomputable section
 
-namespace D5.S3.Geometry.BlochBallKleinModel
+namespace D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 
 /-- The right-hand side of the Klein distance formula on the open Bloch ball:
 `cosh d(r, s) = (1 - ⟪r, s⟫) / √((1 - ‖r‖²) (1 - ‖s‖²))`. -/
@@ -394,4 +394,4 @@ theorem bloch_ball_hyperbolic :
     ⟨norm_filter_lt g hg, fun r hr h => filter_mul g h hg r hr, kleinCosh_filter g hg⟩,
     exists_posDef_det_one_filter⟩
 
-end D5.S3.Geometry.BlochBallKleinModel
+end D5.S3.Geometry.Hyperbolic.BlochBallKleinModel

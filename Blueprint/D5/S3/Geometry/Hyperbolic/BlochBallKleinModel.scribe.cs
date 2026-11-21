@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Hyperbolic;
 
 internal sealed class BlochBallKleinModelDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Geometry/BlochBallKleinModel.";
+    private const string Prefix = "D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.";
     private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

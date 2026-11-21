@@ -8,7 +8,7 @@ The open Bloch ball with the Klein distance is isometric to hyperbolic three-spa
 
 $$\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), s \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{kleinCosh}\left(r, s\right) = \frac{1 - \langle r, s \rangle}{\sqrt{\left(1 - \left\lVert r \right\rVert^{2}\right) \cdot \left(1 - \left\lVert s \right\rVert^{2}\right)}}$$
 
-*Formalization.* `D5/S3/Geometry/BlochBallKleinModel.kleinCosh` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.kleinCosh` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ For vectors r and s of the Euclidean space R^3, kleinCosh(r, s) = (1 - <r, s>) /
 
 $$\forall g \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{filter}\left(g, r\right) = \operatorname{re}\left(\operatorname{trace}\left(g \cdot \operatorname{blochMatrix}\left(1, r\right) \cdot \operatorname{conjTranspose}\left(g\right)\right)\right)^{-1} \cdot \operatorname{bloch}\left(g \cdot \operatorname{blochMatrix}\left(1, r\right) \cdot \operatorname{conjTranspose}\left(g\right)\right)$$
 
-*Formalization.* `D5/S3/Geometry/BlochBallKleinModel.filter` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.filter` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ For a two-by-two complex matrix g and a vector r of R^3, let rho(r) = blochMatri
 
 $$\left(\exists Phi \in \operatorname{Equiv}\left(\{v \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right) \mid \left\lVert v \right\rVert < 1\}, \operatorname{HyperbolicThreeSpace}\right),\; \forall r \in \{v \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right) \mid \left\lVert v \right\rVert < 1\}, s \in \{v \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right) \mid \left\lVert v \right\rVert < 1\},\; \operatorname{cosh}\left(\operatorname{dist}\left(Phi\left(r\right), Phi\left(s\right)\right)\right) = \operatorname{kleinCosh}\left(r, s\right)\right) \land \left(\left(\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{filter}\left(1, r\right) = r\right) \land \left(\left(\forall g \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{det}\left(g\right) \ne 0 \Rightarrow \left(\left(\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \left\lVert r \right\rVert < 1 \Rightarrow \left\lVert \operatorname{filter}\left(g, r\right) \right\rVert < 1\right) \land \left(\left(\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \left\lVert r \right\rVert \le 1 \Rightarrow \left(\forall h \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{filter}\left(h, \operatorname{filter}\left(g, r\right)\right) = \operatorname{filter}\left(h \cdot g, r\right)\right)\right) \land \left(\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), s \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \left\lVert r \right\rVert < 1 \Rightarrow \left(\left\lVert s \right\rVert < 1 \Rightarrow \operatorname{kleinCosh}\left(\operatorname{filter}\left(g, r\right), \operatorname{filter}\left(g, s\right)\right) = \operatorname{kleinCosh}\left(r, s\right)\right)\right)\right)\right)\right) \land \left(\forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \left\lVert r \right\rVert < 1 \Rightarrow \left(\exists g \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{PosDef}\left(g\right) \land \left(\operatorname{det}\left(g\right) = 1 \land \operatorname{filter}\left(g, 0\right) = r\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/BlochBallKleinModel.bloch_ball_hyperbolic` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.bloch_ball_hyperbolic` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ The hypothesis det(g) nonzero is needed; this example is not formalized: for the
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/BlochBallKleinModel.bloch_ball_hyperbolic`
-- Truth anchor: `D5/S3/Geometry/BlochBallKleinModel.filter`
-- Truth anchor: `D5/S3/Geometry/BlochBallKleinModel.kleinCosh`
-- Dependency: [D5/S3/Geometry/Hyperideal/LengthGramMetricSegments](Hyperideal/LengthGramMetricSegments.md)
-- Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Quantum/Information/ActualPureQubitGeometry.md)
-- Dependency: [D5/S3/Quantum/Information/ActualQubitChordObstruction](../Quantum/Information/ActualQubitChordObstruction.md)
+- Truth anchor: `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.bloch_ball_hyperbolic`
+- Truth anchor: `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.filter`
+- Truth anchor: `D5/S3/Geometry/Hyperbolic/BlochBallKleinModel.kleinCosh`
+- Dependency: [D5/S3/Geometry/Hyperideal/LengthGramMetricSegments](../Hyperideal/LengthGramMetricSegments.md)
+- Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Quantum/Information/ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Information/ActualQubitChordObstruction](../../Quantum/Information/ActualQubitChordObstruction.md)

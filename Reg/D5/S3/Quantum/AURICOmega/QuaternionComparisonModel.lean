@@ -284,6 +284,117 @@ def coe_unitary_eq_sphere_registration :
   familyRecord := none
   options := #[] }
 
+/-- The unit quaternion `1` differs from `i`. -/
+theorem one_ne_unitI : (1 : unitary ℍ[ℝ]) ≠ unitI := by
+  intro h
+  have h' := congrArg (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).re) h
+  change ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]).re = (unitI : ℍ[ℝ]).re at h'
+  simp [unitI] at h'
+
+/-- A topology on the unit quaternions in which every set is open is not preconnected. -/
+theorem not_preconnectedSpace_of_forall_isOpen (τ : TopologicalSpace (unitary ℍ[ℝ]))
+    (hτ : ∀ s : Set (unitary ℍ[ℝ]), IsOpen[τ] s) : ¬ @PreconnectedSpace _ τ := by
+  intro hp
+  letI : TopologicalSpace (unitary ℍ[ℝ]) := τ
+  have hc : @Continuous _ _ τ (⊥ : TopologicalSpace (unitary ℍ[ℝ])) id :=
+    @continuous_def _ _ τ ⊥ id |>.2 fun s _ => hτ _
+  exact one_ne_unitI (@PreconnectedSpace.constant _ τ _ ⊥ ⟨rfl⟩ hp id hc 1 unitI)
+
+/-! The ambient topology of the quaternions in `preconnectedSpace_unitary`. -/
+namespace AmbientTopology
+
+/-- Observe the subspace topology of the unit quaternions as a function of the topology of the
+quaternions. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := TopologicalSpace ℍ[ℝ]
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := TopologicalSpace (unitary ℍ[ℝ])
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) t)
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ⊥) (fun e => nomatch e)
+
+/-- Retain the complete statement of `preconnectedSpace_unitary`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := @PreconnectedSpace (unitary ℍ[ℝ]) (r.readout () () (by infer_instance))
+
+/-- The discrete topology on the unit quaternions is not preconnected. -/
+theorem rejected_law : ¬ arena.Law rejected :=
+  not_preconnectedSpace_of_forall_isOpen ⊥ fun _ => trivial
+
+/-- The discrete topology of the quaternions induces the discrete topology on the unit
+quaternions, which differs from the connected subspace topology. -/
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (by infer_instance), ⊥, fun h => ?_⟩
+  have hp : @PreconnectedSpace (unitary ℍ[ℝ])
+      (@instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥) := by
+    have h' : @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) (by infer_instance) =
+        @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥ := h
+    rw [← h']
+    exact preconnectedSpace_unitary
+  refine not_preconnectedSpace_of_forall_isOpen _ (fun s => ?_) hp
+  exact ⟨Subtype.val '' s, trivial, Set.preimage_image_eq _ Subtype.val_injective⟩
+
+abbrev sourceStatement : Prop := type_of% preconnectedSpace_unitary
+
+def source_registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨preconnectedSpace_unitary, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end AmbientTopology
+
+def preconnectedSpace_unitary_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      preconnectedSpace_unitary (Realization AmbientTopology.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.preconnectedSpace_unitary_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.AmbientTopology.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨AmbientTopology.arena⟩
+  objectArena := .source ⟨AmbientTopology.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source AmbientTopology.arena ⟨AmbientTopology.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize AmbientTopology.signature
+    (fun _ _ t => @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 abbrev noncommutativeSourceScope : Prop := type_of% quaternionModel_noncommutative
 
 theorem noncommutative_source_application : noncommutativeSourceScope :=

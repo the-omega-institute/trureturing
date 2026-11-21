@@ -1,14 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Geometry.BlochBallKleinModel
+import D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the Klein model on the open Bloch ball. The readout is the norm of the
 filtered Bloch vector `filter g r`, in the clause that the filter of an invertible matrix keeps the
 open ball. -/
 
-namespace Reg.D5.S3.Geometry.BlochBallKleinModel
+namespace Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 
-open _root_.D5.S3.Geometry.BlochBallKleinModel
+open _root_.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 open _root_.D5.S3.Geometry.HyperbolicUpperHalfSpace (HyperbolicThreeSpace)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -89,8 +89,8 @@ def source_registration : Registration arena sourceStatement where
 def bloch_ball_hyperbolic_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@bloch_ball_hyperbolic) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Geometry.BlochBallKleinModel.bloch_ball_hyperbolic_unit
-  realizationName := `Reg.D5.S3.Geometry.BlochBallKleinModel.source_registration
+  unitName := `Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel.bloch_ball_hyperbolic_unit
+  realizationName := `Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -106,7 +106,7 @@ def bloch_ball_hyperbolic_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Geometry.BlochBallKleinModel
+    owner := `D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -121,4 +121,4 @@ def bloch_ball_hyperbolic_registration :
 
 end
 
-end Reg.D5.S3.Geometry.BlochBallKleinModel
+end Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
