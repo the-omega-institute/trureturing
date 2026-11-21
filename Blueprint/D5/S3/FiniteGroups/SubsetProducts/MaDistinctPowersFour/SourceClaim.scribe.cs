@@ -46,6 +46,15 @@ internal sealed class MaSourceClaimDocument : IScribeDocumentDefinition
                 H("claim"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/FiniteGroups/ma2026distinctpowers")),
-                Blocks(Paragraph(Text("The registered proposition ranges over every positive n and every finite group, with the class-size bound four."))),
+                Blocks(
+                    Paragraph(Text(
+                        "Ma asks in Remark 2.2 (p. 3), “It remains open whether an analogous general theorem holds "
+                        + "when the equivalence classes have size at most 4.” "
+                        + "Section 9 (p. 16) repeats the question: “More generally, it would be interesting to know "
+                        + "whether the hypothesis ‘size at most 3’ in Theorem 1.1 can be replaced by ‘size at most 4’.”")),
+                    Paragraph(Text(
+                        "The proposition keeps the other hypotheses of Theorem 1.1 (p. 1). "
+                        + "The subset has positive cardinality n, and no group element has order from 2 through n + 1. "
+                        + "An equivalence from Fin n enumerates the subset, with exponent one plus the index."))),
                 DescribeRole.Definition))));
 }

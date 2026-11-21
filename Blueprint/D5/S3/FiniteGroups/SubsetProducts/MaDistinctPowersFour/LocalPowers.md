@@ -44,7 +44,7 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPow
 
 *Commentary.*
 
-Three consecutive exponents are assigned by reducing to a prime dividing the generator order.
+The prime-divisor bounds make the three consecutive exponents distinct units modulo the full generator order. Their products with the three distinct generator coordinates form a Latin array over that unit group. The order-three transversal supplies a permutation whose selected products stay distinct modulo the full order. The generator coordinates transfer this permutation back to the original powers.
 
 **Theorem 1.4 (arrange_four).**
 

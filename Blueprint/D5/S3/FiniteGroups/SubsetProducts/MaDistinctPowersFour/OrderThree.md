@@ -10,9 +10,7 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderThr
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderThree.orderThree` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Darcy Best; Kevin Hendrey; Ian M. Wanless; Tim E. Wilson; David R. Wood (2017). *Transversals in Latin Arrays with Many Distinct Symbols*. DOI: [10.1002/jcd.21566](https://doi.org/10.1002/jcd.21566). URL: <https://arxiv.org/abs/1612.09443>.
+*Citation.* Darcy Best; Kevin Hendrey; Ian M. Wanless; Tim E. Wilson; David R. Wood (2017). *Transversals in Latin Arrays with Many Distinct Symbols*. DOI: [10.1002/jcd.21566](https://doi.org/10.1002/jcd.21566). URL: <https://arxiv.org/abs/1612.09443>.
 
 *Commentary.*
 

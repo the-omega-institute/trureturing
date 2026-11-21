@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Every finite-group subset with generator classes of size at most four admits distinct powers. -/
+   digest: An n-element subset (n > 0) of a finite group with no elements of orders 2 through n + 1 admits pairwise distinct powers with exponents 1 through n if its generator classes have size at most four. -/
 
 /- admission_basis: open-problem-resolution (GitHub #29890)
    result proof_shape: content

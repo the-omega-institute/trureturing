@@ -10,7 +10,8 @@ internal sealed class MaDistinctPowersFourDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/FiniteGroups/ma2026distinctpowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite group subsets with generator classes of size at most four have distinct powers.",
+        "An n-element subset (n > 0) of a finite group with no elements of orders 2 through n + 1 "
+        + "admits pairwise distinct powers with exponents 1 through n if its generator classes have size at most four.",
         H("Ma's distinct powers question"),
         Blocks(Describe.Lean(
             DescribeId.Create("ma-distinct-powers-four"),

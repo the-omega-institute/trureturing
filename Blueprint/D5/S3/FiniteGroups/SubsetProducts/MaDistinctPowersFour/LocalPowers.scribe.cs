@@ -30,7 +30,11 @@ internal sealed class MaLocalPowersDocument : IScribeDocumentDefinition
                 H("arrange_triple"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/ma2026distinctpowers")),
-                Blocks(Paragraph(Text("Three consecutive exponents are assigned by reducing to a prime dividing the generator order."))),
+                Blocks(Paragraph(Text(
+                    "The prime-divisor bounds make the three consecutive exponents distinct units modulo the full generator order. "
+                    + "Their products with the three distinct generator coordinates form a Latin array over that unit group. "
+                    + "The order-three transversal supplies a permutation whose selected products stay distinct modulo the full order. "
+                    + "The generator coordinates transfer this permutation back to the original powers."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("ma-localpowers-arrange-four"),

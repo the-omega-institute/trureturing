@@ -30,6 +30,13 @@ internal sealed class MaOrderFourCheckerDocument : IScribeDocumentDefinition
                 H("sound"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A successful check closes the given equality state. Transversal branches cover all six row pairs, clashes contradict row or column injectivity, and exact partition matches allow reuse. A motif branch splits on the fifth cell equality. A columns leaf supplies a match for each row in each pair of columns."))),
+                Blocks(
+                    Paragraph(Text("A successful check closes the given equality state. Transversal branches cover all six row pairs, clashes contradict row or column injectivity, and exact partition matches allow reuse. A motif branch splits on the fifth cell equality. A columns leaf supplies a match for each row in each pair of columns.")),
+                    Paragraph(Text(
+                        "Certificate parts 1 through 17 supply the 319 checked inputs to this proof. "
+                        + "Each check proves Boolean acceptance for its certificate, partition and reuse list. "
+                        + "Soundness turns each accepted input and the earlier closures it uses into a closure for arbitrary realizing arrays. "
+                        + "In part 17, check318 accepts certificate318 at the initial partition with thirteen previously closed states. "
+                        + "MaLatin.orderFour applies the resulting initial_closed to the input array when it has no transversal."))),
                 DescribeRole.Theorem))));
 }

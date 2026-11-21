@@ -35,11 +35,6 @@ def slot (n : ℕ) (count : Fin 4 → ℕ) (k : Fin 4)
   | 2 => count 1 + 3 * i.val + j.val
   | _ => count 1 + 3 * count 2 + 4 * i.val + j.val
 
-private theorem fin4_mk_zero (h : 0 < 4) : (⟨0, h⟩ : Fin 4) = 0 := rfl
-private theorem fin4_mk_one (h : 1 < 4) : (⟨1, h⟩ : Fin 4) = 1 := rfl
-private theorem fin4_mk_two (h : 2 < 4) : (⟨2, h⟩ : Fin 4) = 2 := rfl
-private theorem fin4_mk_three (h : 3 < 4) : (⟨3, h⟩ : Fin 4) = 3 := rfl
-
 theorem slot_lt {n : ℕ} {count : Fin 4 → ℕ}
     (hn : n = 2 * count 1 + 3 * count 2 + 4 * count 3 + count 0)
     (k : Fin 4) (i : Fin (count k)) (j : Fin (k.val + 1)) :
@@ -48,7 +43,11 @@ theorem slot_lt {n : ℕ} {count : Fin 4 → ℕ}
   all_goals
     have hi := i.isLt
     have hj := j.isLt
-    simp only [fin4_mk_zero, fin4_mk_one, fin4_mk_two, fin4_mk_three] at hi
+    first
+    | change i.val < count 0 at hi
+    | change i.val < count 1 at hi
+    | change i.val < count 2 at hi
+    | change i.val < count 3 at hi
     simp only [slot, Fin.val_mk] at hj ⊢
     try split
     all_goals omega
@@ -64,7 +63,16 @@ theorem slot_injective {n : ℕ} {count : Fin 4 → ℕ}
     have hi' := i'.isLt
     have hj := j.isLt
     have hj' := j'.isLt
-    simp only [fin4_mk_zero, fin4_mk_one, fin4_mk_two, fin4_mk_three] at hi hi'
+    first
+    | change i.val < count 0 at hi
+    | change i.val < count 1 at hi
+    | change i.val < count 2 at hi
+    | change i.val < count 3 at hi
+    first
+    | change i'.val < count 0 at hi'
+    | change i'.val < count 1 at hi'
+    | change i'.val < count 2 at hi'
+    | change i'.val < count 3 at hi'
     simp only [slot, Fin.val_mk] at h hj hj'
     try split at h
   all_goals try split at h

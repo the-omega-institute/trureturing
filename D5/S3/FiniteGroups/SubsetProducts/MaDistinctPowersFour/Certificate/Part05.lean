@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part05
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderFour.orderFour; instance=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part05.certificate99
    digest: Order-four certificate decisions for chunks 81 through 99. -/
 
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.OrderFourChecker

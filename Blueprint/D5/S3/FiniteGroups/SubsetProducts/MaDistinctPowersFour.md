@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite group subsets with generator classes of size at most four have distinct powers.
+An n-element subset (n > 0) of a finite group with no elements of orders 2 through n + 1 admits pairwise distinct powers with exponents 1 through n if its generator classes have size at most four.
 
 **Theorem 1.1 (The size-four extension of Theorem 1.1).**
 
