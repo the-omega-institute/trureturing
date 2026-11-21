@@ -13,12 +13,12 @@ internal sealed class CoefficientListInvarianceDocument : IScribeDocumentDefinit
         "Multiplying a polynomial by q^s or substituting q -> q^k with k at least one preserves its ordered list of nonzero coefficients, and hence almost palindromicity.",
         H("Invariance of the nonzero-coefficient list"),
         Blocks(
-            Node("coefficient-list", "The ordered nonzero-coefficient list", "coeffList",
-                Disp(Equal(Call("coeffList", F.Id("f")), Call("map", Call("coeff", F.Id("f")), Call("sort", Call("support", F.Id("f")))))),
-                "coeffList f is the list of the coefficients of f at its support, read in increasing order of exponent; for f in Z[q] these are the f_(lambda_1),...,f_(lambda_kappa) of Definition 9.52, and OkadaPreMergedNonPalindromic.IsAlmostPalindromic f says that this list is a palindrome.",
+            Node("coefficient-list", "The ordered nonzero-coefficient list", "supportCoeffList",
+                Disp(Equal(Call("supportCoeffList", F.Id("f")), Call("map", Call("coeff", F.Id("f")), Call("sort", Call("support", F.Id("f")))))),
+                "supportCoeffList f is the list of the coefficients of f at its support, read in increasing order of exponent; for f in Z[q] these are the f_(lambda_1),...,f_(lambda_kappa) of Definition 9.52, and OkadaPreMergedNonPalindromic.IsAlmostPalindromic f says that this list is a palindrome. In the result, RPoly is R[q] for a semiring R (a commutative semiring for the substitution) and ZPoly is Z[q].",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("coefficient-list-invariance", "Shifts and substitutions keep the list", "result", ResultFormula(),
-                "For every polynomial f over a semiring and every s, the support of q^s f is the support of f shifted by s, and the coefficient of q^s f at n+s is that of f at n; since n -> n+s is strictly increasing it commutes with sorting, so coeffList(q^s f)=coeffList f. Over a commutative semiring and for k at least one, the support of f(q^k) is k times the support of f and the coefficient of f(q^k) at kn is that of f at n, so likewise coeffList(f(q^k))=coeffList f. No hypothesis f nonzero is needed: the zero polynomial has the empty list. Over Z these identities give that q^s f and f(q^k) are almost palindromic exactly when f is. The invariance is stated in the request as the remark after Definition 9.52(1) of Okada, arXiv:2003.02112v2, page 94, defining almost palindromic q-polynomials; it is elementary, and the proof here is repo-derived.",
+                "For every polynomial f over a semiring and every s, the support of q^s f is the support of f shifted by s, and the coefficient of q^s f at n+s is that of f at n; since n -> n+s is strictly increasing it commutes with sorting, so supportCoeffList(q^s f)=supportCoeffList f. Over a commutative semiring and for k at least one, the support of f(q^k) is k times the support of f and the coefficient of f(q^k) at kn is that of f at n, so likewise supportCoeffList(f(q^k))=supportCoeffList f. No hypothesis f nonzero is needed: the zero polynomial has the empty list. Over Z these identities give that q^s f and f(q^k) are almost palindromic exactly when f is. Okada, arXiv:2003.02112v2, Definition 9.52(1), page 94, defines almost palindromic polynomials; the paper does not state this invariance, and the statement and proof are repo-derived. The support identity for q^s f is transported from Mathlib's AddMonoidAlgebra.support_coeff_single_mul.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static Formula ResultFormula()
@@ -26,13 +26,16 @@ internal sealed class CoefficientListInvarianceDocument : IScribeDocumentDefinit
         var f = F.Id("f");
         var s = F.Id("s");
         var k = F.Id("k");
-        var shift = Multiply(Pow(F.Id("q"), s), f);
+        var shift = Multiply(new Formula.Power(F.Id("q"), s), f);
         var sub = Call("expand", k, f);
-        var shiftList = All("s", Nat(), Equal(Call("coeffList", shift), Call("coeffList", f)));
-        var subList = All("k", Nat(), Imp(Le(D(1), k), Equal(Call("coeffList", sub), Call("coeffList", f))));
-        var palin = All("k", Nat(), Imp(Le(D(1), k), And(Iff(AP(shift), AP(f)), Iff(AP(sub), AP(f)))));
+        var shiftList = All("f", Poly(), All("s", Nat(), Equal(Call("supportCoeffList", shift), Call("supportCoeffList", f))));
+        var subList = All("f", Poly(), All("k", Nat(), Imp(Le(D(1), k), Equal(Call("supportCoeffList", sub), Call("supportCoeffList", f)))));
+        var palin = All("f", IntPoly(), All("s", Nat(), All("k", Nat(), Imp(Le(D(1), k), And(Iff(AP(shift), AP(f)), Iff(AP(sub), AP(f)))))));
         return Disp(And(shiftList, And(subList, palin)));
     }
+
+    private static Formula Poly() => new Formula.NamedConstant(FormulaIdentifier.Create("RPoly"));
+    private static Formula IntPoly() => new Formula.NamedConstant(FormulaIdentifier.Create("ZPoly"));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance) =>
