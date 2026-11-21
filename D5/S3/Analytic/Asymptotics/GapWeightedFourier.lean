@@ -11,6 +11,7 @@ import Mathlib.Analysis.Normed.Group.InfiniteSum
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Topology.Algebra.InfiniteSum.Ring
 
@@ -116,6 +117,85 @@ theorem tendsto_average {y : ℕ → ℝ} (hm : StrictMono y)
         average y (fun k => a k - z) M + average y (fun _ => z) M := by
       rw [average_const hm hM z]
     _ = average y a M := by rw [← average_add]; simp only [sub_add_cancel]
+
+private theorem average_neg (y : ℕ → ℝ) (f : ℕ → ℂ) (M : ℕ) :
+    average y (fun k => -f k) M = -average y f M := by
+  simp only [average, mul_neg, Finset.sum_neg_distrib, neg_div]
+
+private theorem eventually_norm_average_le_re_average {y : ℕ → ℝ}
+    (hm : StrictMono y) {f b : ℕ → ℂ} (h : ∀ k, ‖f k‖ ≤ (b k).re) :
+    ∀ᶠ M in atTop, ‖average y f M‖ ≤ (average y b M).re := by
+  filter_upwards [eventually_gt_atTop (0 : ℕ)] with M hM
+  have hspan : 0 < y M - y 0 := sub_pos.mpr (hm hM)
+  simp only [average, norm_div, Complex.norm_of_nonneg hspan.le, Complex.div_ofReal_re,
+    div_le_div_iff_of_pos_right hspan, Complex.re_sum, Complex.re_ofReal_mul]
+  refine norm_sum_le_of_le _ fun k _ => ?_
+  rw [norm_mul, Complex.norm_of_nonneg (gap_nonneg hm k)]
+  exact mul_le_mul_of_nonneg_left (h k) (gap_nonneg hm k)
+
+private theorem norm_twisted_limit_le_of_eventually_le {y a : ℕ → ℝ}
+    (hm : StrictMono y) (hy : Tendsto y atTop atTop) {u : ℕ → ℂ}
+    (hu : ∀ k, ‖u k‖ = 1) {L : ℂ}
+    (hzero : Tendsto (average y (fun k => (a k : ℂ))) atTop (𝓝 0))
+    (htwist : Tendsto (average y (fun k => (a k : ℂ) * u k)) atTop (𝓝 L))
+    {c : ℝ} (hc : 0 ≤ c) (hle : ∀ᶠ k in atTop, a k ≤ c) : ‖L‖ ≤ 2 * c := by
+  let correction : ℕ → ℂ := fun k => ((2 * max (a k - c) 0 : ℝ) : ℂ)
+  let majorant : ℕ → ℂ := fun k => ((2 * c : ℝ) : ℂ) - (a k : ℂ) + correction k
+  -- An eventual upper bound leaves only finitely many nonzero corrections.
+  have hcorrection : Tendsto correction atTop (𝓝 0) := by
+    refine (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℂ)) atTop (𝓝 0)).congr' ?_
+    filter_upwards [hle] with k hk
+    simp [correction, max_eq_right (sub_nonpos.mpr hk)]
+  have hconst : Tendsto (average y (fun _ => ((2 * c : ℝ) : ℂ))) atTop
+      (𝓝 ((2 * c : ℝ) : ℂ)) := tendsto_average hm hy tendsto_const_nhds
+  have hmajorant : Tendsto (average y majorant) atTop (𝓝 ((2 * c : ℝ) : ℂ)) := by
+    have h := (hconst.sub hzero).add (tendsto_average_zero hm hy hcorrection)
+    rw [sub_zero, add_zero] at h
+    refine h.congr fun M => ?_
+    simp only [majorant, sub_eq_add_neg, average_add, average_neg]
+  have hre : Tendsto (fun M => (average y majorant M).re) atTop (𝓝 (2 * c)) := by
+    simpa only [Function.comp_def, Complex.ofReal_re] using
+      (Complex.continuous_re.tendsto ((2 * c : ℝ) : ℂ)).comp hmajorant
+  apply le_of_tendsto_of_tendsto htwist.norm hre
+  apply eventually_norm_average_le_re_average hm
+  intro k
+  simp only [norm_mul, hu, mul_one, Complex.norm_real, Real.norm_eq_abs,
+    majorant, correction, Complex.add_re, Complex.sub_re, Complex.ofReal_re]
+  refine abs_le.mpr ⟨?_, ?_⟩
+  · have hk : 0 ≤ max (a k - c) 0 := le_max_right _ _
+    linarith only [hc, hk]
+  · have hk : a k - c ≤ max (a k - c) 0 := le_max_left _ _
+    linarith only [hk]
+
+/-- A zero gap-weighted mean and a nonzero twisted limit force excursions of
+both signs above every nonnegative threshold with `2 * c < ‖L‖`.
+The twist can be any sequence of unit complex numbers. -/
+theorem frequently_two_signs_of_zero_mean {y a : ℕ → ℝ}
+    (hm : StrictMono y) (hy : Tendsto y atTop atTop) {u : ℕ → ℂ}
+    (hu : ∀ k, ‖u k‖ = 1) {L : ℂ}
+    (hzero : Tendsto (average y (fun k => (a k : ℂ))) atTop (𝓝 0))
+    (htwist : Tendsto (average y (fun k => (a k : ℂ) * u k)) atTop (𝓝 L))
+    {c : ℝ} (hc : 0 ≤ c) (hcL : 2 * c < ‖L‖) :
+    (∃ᶠ k in atTop, c < a k) ∧ (∃ᶠ k in atTop, a k < -c) := by
+  have positive {b : ℕ → ℝ} {B : ℂ}
+      (hbzero : Tendsto (average y (fun k => (b k : ℂ))) atTop (𝓝 0))
+      (hbtwist : Tendsto (average y (fun k => (b k : ℂ) * u k)) atTop (𝓝 B))
+      (hcB : 2 * c < ‖B‖) : ∃ᶠ k in atTop, c < b k := by
+    by_contra h
+    have hle : ∀ᶠ k in atTop, b k ≤ c := by
+      simpa only [not_lt] using not_frequently.mp h
+    exact (not_le_of_gt hcB)
+      (norm_twisted_limit_le_of_eventually_le hm hy hu hbzero hbtwist hc hle)
+  have hzero_neg : Tendsto (average y (fun k => ((-a k : ℝ) : ℂ))) atTop (𝓝 0) := by
+    simpa only [Complex.ofReal_neg, average_neg, neg_zero] using hzero.neg
+  have htwist_neg :
+      Tendsto (average y (fun k => ((-a k : ℝ) : ℂ) * u k)) atTop (𝓝 (-L)) := by
+    simpa only [Complex.ofReal_neg, neg_mul, average_neg] using htwist.neg
+  refine ⟨positive hzero htwist hcL, ?_⟩
+  have hnegative := positive hzero_neg htwist_neg (by simpa only [norm_neg] using hcL)
+  refine hnegative.mono fun k hk => ?_
+  change c < -a k at hk
+  linarith only [hk]
 
 /-- A single phase has limiting average one at frequency zero and zero at every
 other frequency. The gaps need only tend to zero. -/
