@@ -3,10 +3,10 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_power,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.step_checks,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_entries,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_readout,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.image_entries
    digest: Residual-budget states for width-six two-defect HDA strips. -/
 
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Algebra.BigOperators.Fin
 
@@ -35,9 +35,6 @@ def h (p : Row) : ℕ := bondDefects horizontal p p
 def cost (p r : Row) : ℕ := bondDefects between p r + h r
 
 def Valid (p : Row) (d : ℕ) : Prop := h p + d ≤ 2
-
-instance (p : Row) (d : ℕ) : Decidable (Valid p d) :=
-  inferInstanceAs (Decidable (_ ≤ _))
 
 def rowEquiv : RowNumber ≃ Row := (finFunctionFinEquiv (m := 3) (n := 6)).symm
 
@@ -153,10 +150,16 @@ theorem legal (p : Row) (d : ℕ) (hp : Valid p d) (r : Row) (hr : cost p r ≤ 
   unfold Valid at hp ⊢
   omega
 
+private theorem inherited_valid_iff (p : Row) (d : ℕ) :
+    HardinA229532StripData.Valid p d ↔ h p + d ≤ 1 := by
+  change d ≤ 1 ∧ h p ≤ 1 - d ↔ h p + d ≤ 1
+  omega
+
 theorem closed (p r : Row) (d : ℕ) (hp : h p + d ≤ 1) (hr : cost p r ≤ d) :
     h r + (d - cost p r) ≤ 1 := by
-  unfold cost at hr ⊢
-  omega
+  let budget : Fin 2 := ⟨d, by omega⟩
+  exact (inherited_valid_iff r (d - cost p r)).mp
+    (HardinA229532Strip.finite_certificate.2.1 p budget ((inherited_valid_iff p d).mpr hp) r hr)
 
 theorem legal_start (r : Row) (hr : h r ≤ 2) : Valid r (2 - h r) := by
   unfold Valid

@@ -3,10 +3,9 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Transfer
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_power,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.step_checks,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_entries,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_readout,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.image_entries
    digest: Exact width-six HDA transfer with two defects. -/
 
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635RowCertificate
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Starts
@@ -38,6 +37,11 @@ def terminal (s : State) : ℤ :=
   Fin.addCases (m := 31) (n := 96) HardinA229532StripData.terminal
     (fun i => if budget i = 0 then 1 else 0) s
 
+private theorem inherited_valid (p : Row) (d : ℕ) (hp : h p + d ≤ 1) :
+    HardinA229532StripData.Valid p d := by
+  change d ≤ 1 ∧ h p ≤ 1 - d
+  omega
+
 private theorem old_cl (p : Row) (d : ℕ) (hpd : h p + d ≤ 1) :
     cl p d = (HardinA229532StripData.cl p d).castAdd 96 := by simp only [cl, ite_eq_left hpd]
 
@@ -56,9 +60,8 @@ private theorem old_counts (p : Row) (d : ℕ) (hp : h p + d ≤ 1) (s : State) 
         exact (Fin.castAdd_injective 31 96).eq_iff
       · simp [hr]
     simp_rw [he]
-    have hold : HardinA229532StripData.Valid p d := by unfold HardinA229532StripData.Valid; change d ≤ 1 ∧ h p ≤ 1 - d; omega
-    let d' : Fin 2 := ⟨d, by omega⟩
-    exact WidthSix.HardinA229532StripClasses.transition_counts p d' hold j
+    let budget : Fin 2 := ⟨d, by omega⟩
+    exact HardinA229532Strip.finite_certificate.2.2.1 p budget (inherited_valid p d hp) j
   · intro j
     rw [T, Fin.addCases_left, Fin.addCases_right]
     have hzero (r : Row) : ¬ (cost p r ≤ d ∧ cl r (d - cost p r) = j.natAdd 31) := by
@@ -110,7 +113,8 @@ theorem terminal_correct (p : Row) (d : ℕ) (hp : Valid p d) :
     terminal (cl p d) = if d = 0 then 1 else 0 := by
   by_cases hold : h p + d ≤ 1
   · rw [old_cl p d hold, terminal, Fin.addCases_left]
-    exact old_terminal p ⟨d, by omega⟩ hold
+    let budget : Fin 2 := ⟨d, by omega⟩
+    exact HardinA229532Strip.finite_certificate.1 p budget (inherited_valid p d hold)
   · obtain ⟨q, ⟨hq, e, he⟩, _⟩ := canonical_exists_unique p
     have hq' : h q + d = 2 := by unfold Valid at hp; rw [he, h_relabel]; omega
     have hr := representatives_complete q hq (by omega)

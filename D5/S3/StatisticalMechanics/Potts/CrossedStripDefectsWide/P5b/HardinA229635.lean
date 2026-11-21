@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_power,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.step_checks,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_entries,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_readout,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.image_entries
    digest: Hardin's order-27 recurrence for the literal width-six two-defect HDA count. -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635IntegerCertificate
@@ -37,8 +37,7 @@ theorem result (n : ℕ) (hn : 31 ≤ n) :
     (HardinA229637RowColumn.T n 6 : ℤ) =
       ∑ j : Fin 27, coefficients j * (HardinA229637RowColumn.T (n - (j.val + 1)) 6 : ℤ) := by
   obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le hn
-  have hzero := residual_zero T initial terminal
-    HardinA229635IntegerCertificate.residual_prefix t
+  have hzero := HardinA229635IntegerCertificate.residual_all_offsets t
   unfold HardinA229635Residual.residual at hzero
   have hlead : 30 + t + 1 = 31 + t := by omega
   have hlag (j : Fin 27) : 29 - j.val + t + 1 = 31 + t - (j.val + 1) := by omega

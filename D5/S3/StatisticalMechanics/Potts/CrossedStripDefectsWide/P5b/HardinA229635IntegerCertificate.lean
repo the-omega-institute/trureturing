@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_power,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.step_checks,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_entries,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_readout,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.image_entries
    digest: Signed residual at the first index and its one-step image. -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Sparse
@@ -124,8 +124,7 @@ private theorem initial_readout : dotProduct initialResidual terminal = 0 := by 
 
 private theorem image_entries : ∀ s : State, step initialResidual s = 0 := by decide +kernel
 
-theorem residual_prefix : ∀ t < 127, residual T initial terminal t = 0 := by
-  intro t _
+theorem residual_all_offsets (t : ℕ) : residual T initial terminal t = 0 := by
   have hforward : ∀ i : Fin 31, forward T initial i.val = power i :=
     forward_table T initial step power step_correct (funext initial_power) step_checks
   have hvector : residualVector T initial = initialResidual :=

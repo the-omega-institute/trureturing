@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Laws
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_prefix
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_power,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.step_checks,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.residual_entries,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.initial_readout,D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635IntegerCertificate.image_entries
    digest: Canonical pattern coverage and boundary laws for the width-six transfer. -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
@@ -53,30 +53,6 @@ theorem representatives_complete (p : Row) (hc : Canonical p) (hh : h p ≤ 2) :
   dsimp [i] at h
   rw [Equiv.apply_symm_apply] at h
   exact h hh hc
-
-
-private def oldTerminalCheck (i : RowNumber) (d : Fin 2) : Prop :=
-  h (rowEquiv i) + d.val ≤ 1 →
-    HardinA229532StripData.terminal (HardinA229532StripData.cl (rowEquiv i) d.val) =
-      if d.val = 0 then 1 else 0
-
-local instance (i : RowNumber) (d : Fin 2) : Decidable (oldTerminalCheck i d) := by
-  unfold oldTerminalCheck
-  infer_instance
-
-private theorem terminal_zero : ∀ i, oldTerminalCheck i 0 := by decide +kernel
-private theorem terminal_one : ∀ i, oldTerminalCheck i 1 := by decide +kernel
-
-theorem old_terminal (p : Row) (d : Fin 2) (hp : h p + d.val ≤ 1) :
-    HardinA229532StripData.terminal (HardinA229532StripData.cl p d.val) =
-      if d.val = 0 then 1 else 0 := by
-  have ht : oldTerminalCheck (rowEquiv.symm p) d := by
-    fin_cases d
-    · exact terminal_zero _
-    · exact terminal_one _
-  unfold oldTerminalCheck at ht
-  rw [Equiv.apply_symm_apply] at ht
-  exact ht hp
 
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
