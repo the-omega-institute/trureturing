@@ -6,6 +6,7 @@
    utility: none
    digest: Sharp purity-loss comparison for finite singleton and product phase ensembles. -/
 
+import D5.S3.Factorization.JordanCototientRecordLimitInfinity
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FinCases
@@ -17,20 +18,6 @@ import Mathlib.Tactic.Ring
 
 namespace D5.S3.Quantum.PureState.PhaseProductFidelity
 open scoped BigOperators
-
-private theorem product_loss {ι : Type*} (s : Finset ι) (f : ι → ℝ)
-    (h0 : ∀ i ∈ s, 0 ≤ f i) (h1 : ∀ i ∈ s, f i ≤ 1) :
-    1 - ∏ i ∈ s, f i ≤ ∑ i ∈ s, (1 - f i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert x s hx ih =>
-    have h0s : ∀ i ∈ s, 0 ≤ f i := fun i hi => h0 i (Finset.mem_insert_of_mem hi)
-    have h1s : ∀ i ∈ s, f i ≤ 1 := fun i hi => h1 i (Finset.mem_insert_of_mem hi)
-    have hp : ∏ i ∈ s, f i ≤ 1 := Finset.prod_le_one₀ h0s h1s
-    have hx1 := h1 x (Finset.mem_insert_self ..)
-    rw [Finset.prod_insert hx, Finset.sum_insert hx]
-    nlinarith only [ih h0s h1s,mul_nonneg (sub_nonneg.mpr hx1) (sub_nonneg.mpr hp)]
 
 /-- Squared overlap for the constant tag and the individual phases. -/
 noncomputable def simplex {n : ℕ} (u : Fin n → ℂ) : ℝ :=
@@ -55,9 +42,11 @@ private theorem loss_le {n : ℕ} (u : Fin n → ℂ) (hu : ∀ i, ‖u i‖ = 1
     rw [Complex.normSq_eq_norm_sq]
     exact pow_le_pow_left₀ (norm_nonneg z) hz 2
   have hr : ∀ i, |(u i).re| ≤ 1 := fun i => (Complex.abs_re_le_norm _).trans_eq (hu i)
-  have h := product_loss Finset.univ (fun i => (1+(u i).re)/2)
-    (fun i _ => by linarith [(abs_le.mp (hr i)).1])
+  have h := D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum
+    Finset.univ (fun i => 1-(1+(u i).re)/2)
     (fun i _ => by linarith [(abs_le.mp (hr i)).2])
+    (fun i _ => by linarith [(abs_le.mp (hr i)).1])
+  simp only [sub_sub_cancel] at h
   have hf : ∑ i, (1-(1+(u i).re)/2) = ((n:ℝ)-z.re)/2 := by
     change _ = ((n:ℝ)-(∑ i, u i).re)/2
     rw [Complex.re_sum]

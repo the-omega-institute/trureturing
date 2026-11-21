@@ -64,3 +64,4 @@ For sharpness, give equal weights to the constant row and a row whose coordinate
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseProductFidelity.mixedDeficit`
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseProductFidelity.mixed_coefficient_iff`
 - Truth anchor: `D5/S3/Quantum/PureState/PhaseProductFidelity.simplex`
+- Dependency: [D5/S3/Factorization/JordanCototientRecordLimitInfinity](../../Factorization/JordanCototientRecordLimitInfinity.md)
