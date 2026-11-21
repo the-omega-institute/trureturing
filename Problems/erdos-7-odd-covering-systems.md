@@ -196,7 +196,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original-layout distance forces a Jensen loss](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/001-064/34-original-layout-distance-forces-a-jensen-loss.md)
 - [Retained and removed events: the complete convex-cost bound](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/001-064/33-retained-and-removed-original-events-control-convex-costs.md)
 
-## A prime-weighted continuation using RH
+### A prime-weighted continuation using RH
 
 Let a finite family have distinct odd moduli greater than one and arbitrary
 fixed residues. Write the distinct prime factors of its LCM in increasing
@@ -220,7 +220,7 @@ Mathlib. The analytic step below only needs ordinary RH.
 [Statement comparison](https://math.mit.edu/~drew/grh/con-leche-compare.log) ·
 [Axiom audit](https://math.mit.edu/~drew/grh/audit.log)
 
-### Survivor measures and continuation
+#### Survivor measures and continuation
 
 Take the actual primes at most \(B\) as the head. Resolve their finite
 coordinates at the full heights required by the original family. The
@@ -261,7 +261,7 @@ complete-query estimate. The inequalities hold for each \(0<\delta<1\),
 so the clipping parameter can be fixed separately for each prime before
 processing the family. [Quartic continuation, HM7–HM13](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md)
 
-### Every prime above the computation range
+#### Every prime above the computation range
 
 Set \(T=200000\) and use \(\delta=2/5\) for \(p>T\). The binomial
 coefficients give \(g_{2/5}(t)\le(1+t)^{25}\) for \(t\ge0\).
@@ -313,7 +313,7 @@ parts repeatedly. The integral of \((\log x)^{25}/x^4\) is
 These estimates bound the full infinite comparison sum and therefore
 every finite choice of original primes above \(T\).
 
-### Exact cutoffs
+#### Exact cutoffs
 
 Put \(S=10^{24}\) and start with \(u=\lceil SR\rceil=44446336\).
 Visit every prime in \((B,T]\) in decreasing order. At each such prime
@@ -344,7 +344,7 @@ also need a tenth prime at most 8231. Extending these bounds to all
 possible small-prime supports requires a stronger survivor estimate
 for the head.
 
-### The second-moment threshold at 73
+#### The second-moment threshold at 73
 
 Suppose a probability on the full-height survivors of the head at 73 has
 \(\max_L\mathbb E L^2\le139.1\), with the maximum over complete divisor
