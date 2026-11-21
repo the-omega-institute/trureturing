@@ -27,7 +27,8 @@ internal sealed class ConjugateFailureMultiplicityDocument : IScribeDocumentDefi
                     + "and write r for their number. For a seed s write C(s) for the number of "
                     + "events containing it. Write L(K) for T minus M(K).")),
                 Paragraph(Text("Let d be a natural number that bounds C(s) from below for every "
-                    + "positive-weight seed moved by N. The gap equals the sum on the right, "
+                    + "positive-weight seed moved by N. LowerBound is that premise. ExactMultiplicity "
+                    + "means C(s) equals d on the same seeds. The gap equals the sum on the right, "
                     + "with SumMoved ranging over seeds moved by N. The gap is nonnegative and "
                     + "equals zero exactly when every such seed has C(s) equal to d.")),
                 Paragraph(Text("Weight invariance gives the same loss for every conjugate "
@@ -41,9 +42,15 @@ internal sealed class ConjugateFailureMultiplicityDocument : IScribeDocumentDefi
     {
         Formula seed = F.Id("s");
         Formula excess = Seq(Open, Apply("C", seed), Sp, Minus, Sp, F.Id("d"), Close);
-        return Disp(Seq(F.Id("r"), Sp, Apply("L", F.Id("H")), Sp, Minus, Sp,
-            F.Id("d"), Sp, Apply("L", F.Id("N")), Sp, Eq, Sp,
-            Apply("SumMoved", seed, Seq(Apply("a", seed), Sp, excess))));
+        Formula d = F.Id("d");
+        Formula gap = Seq(F.Id("r"), Sp, Apply("L", F.Id("H")), Sp, Minus, Sp,
+            d, Sp, Apply("L", F.Id("N")));
+        Formula weightedSum = Apply("SumMoved", seed, Seq(Apply("a", seed), Sp, excess));
+        return Disp(Seq(Apply("LowerBound", d), Sp, Rightarrow, Sp, Open,
+            gap, Sp, Eq, Sp, weightedSum, Sp, Land, Sp,
+            D(0), Sp, Le, Sp, gap, Sp, Land, Sp,
+            Open, gap, Sp, Eq, Sp, D(0), Sp, Leftrightarrow, Sp,
+            Apply("ExactMultiplicity", d), Close, Close));
     }
 
     private static Formula Apply(string name, params Formula[] arguments) =>
