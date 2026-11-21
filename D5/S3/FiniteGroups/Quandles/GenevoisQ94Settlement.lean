@@ -1,3 +1,19 @@
+/- GID: D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement
+   generality: I
+   mirror-B: D5/B/S3/FiniteGroups/Quandles/GenevoisQ94Settlement
+   mirror-E: none(waiver:kernel-checked-refutation)
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.claim; result=D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.result; claim=D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.claim
+   digest: Two conjugate upper factors in Genevois's two-factor construction intersect in a nonparabolic subgroup. -/
+
+/- admission_basis: open-problem-resolution (#31669).
+   result: proof_shape: content. The escape_witness is intersection_top_image:
+   the top image of the actual quotient intersection is exactly {0, 2}.
+   result uses both directions against the bottom-or-top parabolic dichotomy.
+   Direct frozen dependencies: D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.Gr
+   (module statement_id sha256:bfad43af4e9707949b9a98fb85daa5ca68c0bd957c0fa73ecbe5d2eb479a219e).
+   The sole authored public theorem is the designated refutation result and
+   is exempt from four-slot escape registration under CLAUDE.md §3.9. -/
+
 import D5.S3.FiniteGroups.Quandles.TaThreeInvariantRefutation
 
 import Mathlib.Algebra.Group.Subgroup.Basic
