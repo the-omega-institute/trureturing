@@ -47,6 +47,14 @@ internal sealed class RobinVanishingRelativeGapDocument : IScribeDocumentDefinit
                 Attainment + "Assume Re(ρ)>1/2. " + Mesh + "For any real α>1−Re(ρ), real M and "
                 + "natural K there is k≥K with W(α,N(k)) robinLogMargin(m(k))<M. The factor "
                 + "N(k)^(α−(1−Re(ρ))) tends to +∞ and amplifies the fixed negative excursions."),
+            Theorem("actual-canonical-two-signed-ratio-one-meshes", "actual_canonical_two_signed_ratio_one_meshes",
+                "Opposite limits on two ratio-one meshes under unattainment",
+                "Suppose the actual zero abscissa Θ is unattained and 1−Θ<α<1/2. "
+                + "There are two strictly increasing sequences of cutoff indices with adjacent ratios "
+                + "tending to one. The literal canonical margins, multiplied by N^α log(N), tend to "
+                + "positive infinity on one sequence and negative infinity on the other. The positive "
+                + "samples use the first theta crossing and the negative samples use integer ceilings. "
+                + "Each sign is sampled through a fixed power threshold in every late log window."),
             Theorem("actual-b-negative-on-vanishing-gap-mesh", "actual_B_negative_on_vanishing_gap_mesh",
                 "Negative arithmetic excursions on a logarithmic mesh",
                 Attainment + "Assume Re(ρ)>1/2. Let y be a real sequence tending to +∞ whose forward "
@@ -87,10 +95,9 @@ internal sealed class RobinVanishingRelativeGapDocument : IScribeDocumentDefinit
                         + "error stays bounded after multiplication by exp(αt), including at α=1/2.")),
                     Paragraph(Text("The quantifiers use one fixed width h and all sufficiently large "
                         + "real starts t. The integral samples the literal canonical records at the "
-                        + "floor of each exp(t+u) throughout the interval. When the supremum of zero "
-                        + "real parts is unattained, the implication from an eventual pointwise lower "
-                        + "bound to the closed strip bound remains open for general ratio-one meshes, "
-                        + "with power-saving gaps covered by PolynomialCanonicalRecordCriterion.result_of_power_saving_gaps. "
+                        + "floor of each exp(t+u) throughout the interval. Under unattainment and "
+                        + "1−Θ<α<1/2, the two-mesh theorem gives a ratio-one mesh with an eventual "
+                        + "pointwise lower bound even though the closed strip bound fails. "
                         + "At α=1/2 the zero-side condition in the "
                         + "equivalence is Re(ρ)≤1/2 for every actual nontrivial zero."))),
                 DescribeRole.Theorem))));
