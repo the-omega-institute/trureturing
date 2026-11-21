@@ -43,5 +43,18 @@ internal sealed class MaLocalPowersDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/ma2026distinctpowers")),
                 Blocks(Paragraph(Text("Coordinates in the units modulo the common order transfer the modular four-block assignment to the original group."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("ma-localpowers-order-four-obstruction"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.OrderFourObstruction"),
+                H("OrderFourObstruction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/FiniteGroups/ma2026distinctpowers")),
+                Blocks(Paragraph(Text(
+                    "`OrderFourObstruction : Prop` is the proposition "
+                    + "`∀ {α : Type} (B : Fin 4 → Fin 4 → α), MaLatin.Latin B → "
+                    + "MaLatin.Rainbow B ∨ MaLatin.EqualColumns B ∨ MaLatin.Motif B`. "
+                    + "It says that every such Latin array has a rainbow transversal, equal column symbol sets, "
+                    + "or the specified motif. The implicit label type `α` ranges over `Type` at universe zero."))),
+                DescribeRole.Definition))));
 }

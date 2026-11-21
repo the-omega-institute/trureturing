@@ -60,8 +60,23 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPow
 
 Coordinates in the units modulo the common order transfer the modular four-block assignment to the original group.
 
+**Definition 1.5 (OrderFourObstruction).**
+
+Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.OrderFourObstruction`
+
+*Formalization.* `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.OrderFourObstruction` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dingying Ma (2026). *On Distinct Powers in Finite Groups*. DOI: [10.48550/arXiv.2611.13582](https://doi.org/10.48550/arXiv.2611.13582). URL: <https://arxiv.org/abs/2611.13582v1>.
+
+*Commentary.*
+
+`OrderFourObstruction : Prop` is the proposition `∀ {α : Type} (B : Fin 4 → Fin 4 → α), MaLatin.Latin B → MaLatin.Rainbow B ∨ MaLatin.EqualColumns B ∨ MaLatin.Motif B`. It says that every such Latin array has a rainbow transversal, equal column symbol sets, or the specified motif. The implicit label type `α` ranges over `Type` at universe zero.
+
 ## References
 
+- Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.OrderFourObstruction`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.arrange_four`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.arrange_pair`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LocalPowers.arrange_triple`

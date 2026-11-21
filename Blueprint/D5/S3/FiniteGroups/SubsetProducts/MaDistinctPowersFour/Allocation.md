@@ -88,11 +88,43 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocati
 
 Each quadruple gets four consecutive exponents after the triples.
 
+**Definition 1.7 (ClassPositions).**
+
+Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.ClassPositions`
+
+*Formalization.* `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.ClassPositions` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dingying Ma (2026). *On Distinct Powers in Finite Groups*. DOI: [10.48550/arXiv.2611.13582](https://doi.org/10.48550/arXiv.2611.13582). URL: <https://arxiv.org/abs/2611.13582v1>.
+
+*Commentary.*
+
+The abbreviation `ClassPositions (count : Fin 4 → ℕ) : Type` is `Σ k : Fin 4, Fin (count k) × Fin (k.val + 1)`. The index `k` records the class size minus one. The two finite indices select a class of that size and a position within it.
+
+**Definition 1.8 (slot).**
+
+Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.slot`
+
+*Formalization.* `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.slot` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dingying Ma (2026). *On Distinct Powers in Finite Groups*. DOI: [10.48550/arXiv.2611.13582](https://doi.org/10.48550/arXiv.2611.13582). URL: <https://arxiv.org/abs/2611.13582v1>.
+
+*Commentary.*
+
+`slot (n : ℕ) (count : Fin 4 → ℕ) (k : Fin 4) (i : Fin (count k)) (j : Fin (k.val + 1)) : ℕ` gives the zero-based exponent position for class `i` of size `k.val + 1` and position `j` within the class. It matches on `k.val`.
+
+For `0` it gives `count 1 + 3 * count 2 + 4 * count 3 + i.val`. For `1` it gives `if j.val = 0 then i.val else n - (i.val + 1)`, using natural subtraction. For `2` it gives `count 1 + 3 * i.val + j.val`. The remaining case `3` gives `count 1 + 3 * count 2 + 4 * i.val + j.val`.
+
 ## References
 
+- Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.ClassPositions`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.card_classPositions`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.four_slots`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.pair_slots`
+- Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.slot`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.slot_injective`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.slot_lt`
 - Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Allocation.triple_slots`
