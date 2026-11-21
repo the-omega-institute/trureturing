@@ -18,7 +18,7 @@ Defant restricts the conjecture to these nine negative radicands.
 
 **Definition 1.2 (Quadratic integer ring).**
 
-$$\operatorname{R}\left(d\right) = \operatorname{QuadraticAlgebra}\left(\mathbb{Z}, (\mathrm{if} d \bmod 4 = 1 \mathrm{then} (d-1)/4 \mathrm{else} d), (\mathrm{if} d \bmod 4 = 1 \mathrm{then} 1 \mathrm{else} 0)\right)$$
+$$\forall d \in \mathbb{Z},\; \operatorname{R}\left(d\right) = \operatorname{QuadraticAlgebra}\left(\mathbb{Z}, (\mathrm{if} d \bmod 4 = 1 \mathrm{then} (d-1)/4 \mathrm{else} d), (\mathrm{if} d \bmod 4 = 1 \mathrm{then} 1 \mathrm{else} 0)\right)$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.R` (`✓ std3`).
 
@@ -30,7 +30,7 @@ In the integral basis, the generator is the square root of d when d is 2 or 3 mo
 
 **Definition 1.3 (Nonzero elements).**
 
-$$\operatorname{Nonzero}\left(d\right) = \{z: \operatorname{R}\left(d\right) \mid z \ne 0\}$$
+$$\forall d \in \mathbb{Z},\; \operatorname{Nonzero}\left(d\right) = \{z: \operatorname{R}\left(d\right) \mid z \ne 0\}$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.Nonzero` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The divisor sum, index, and friendship are defined on nonzero ring elements.
 
 **Definition 1.4 (Absolute value).**
 
-$$\operatorname{absoluteValue}\left(z\right) = \sqrt{(QuadraticAlgebra.norm\left(z\right): \mathbb{R})}$$
+$$\forall d \in \mathbb{Z}, z \in \operatorname{R}\left(d\right),\; \operatorname{absoluteValue}\left(z\right) = \sqrt{(QuadraticAlgebra.norm\left(z\right): \mathbb{R})}$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.absoluteValue` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The norm is the integer obtained by multiplying an element by its conjugate. The
 
 **Definition 1.5 (Half-open sector).**
 
-$$\operatorname{A}\left(d\right) = \{z \mid (\mathrm{if} (d = -1) \lor (d = -3) \mathrm{then} (0 < z.re) \land (0 \le z.im) \mathrm{else} (0 < z.im) \lor ((z.im = 0) \land (0 < z.re)))\}$$
+$$\forall d \in \mathbb{Z},\; \operatorname{A}\left(d\right) = \{z: \operatorname{R}\left(d\right) \mid (\mathrm{if} (d = -1) \lor (d = -3) \mathrm{then} (0 < z.re) \land (0 \le z.im) \mathrm{else} (0 < z.im) \lor ((z.im = 0) \land (0 < z.re)))\}$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.A` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The real and imaginary projections here are integral coordinates. The coordinate
 
 **Definition 1.6 (Power sum of sector divisors).**
 
-$$\operatorname{delta}\left(n, z\right): \mathbb{R} = \sum^{\mathrm{f}}_{x: \operatorname{R}\left(d\right)} (\mathrm{if} (x \mid z.val) \land (x \in \operatorname{A}\left(d\right)) \mathrm{then} \operatorname{absoluteValue}\left(x\right)^{n} \mathrm{else} 0)$$
+$$\forall d \in \mathbb{Z}, n \in \mathbb{Z}, z \in \operatorname{Nonzero}\left(d\right),\; \operatorname{delta}\left(n, z\right): \mathbb{R} = \sum^{\mathrm{f}}_{x: \operatorname{R}\left(d\right)} (\mathrm{if} (x \mid z.val) \land (x \in \operatorname{A}\left(d\right)) \mathrm{then} \operatorname{absoluteValue}\left(x\right)^{n} \mathrm{else} 0)$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.delta` (`✓ std3`).
 
@@ -78,7 +78,7 @@ Definition 2.1 permits integer exponents. The terms range over the ring, with ze
 
 **Definition 1.7 (Normalized abundancy index).**
 
-$$\operatorname{I}\left(n, z\right) = \frac{\operatorname{delta}\left((n: \mathbb{Z}), z\right)}{\operatorname{absoluteValue}\left(z.val\right)^{n}}$$
+$$\forall d \in \mathbb{Z}, n \in \mathbb{N}, z \in \operatorname{Nonzero}\left(d\right),\; \operatorname{I}\left(n, z\right) = \frac{\operatorname{delta}\left((n: \mathbb{Z}), z\right)}{\operatorname{absoluteValue}\left(z.val\right)^{n}}$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.I` (`✓ std3`).
 
@@ -90,7 +90,7 @@ Definition 2.2 uses positive natural exponents. The numerator casts n to an inte
 
 **Definition 1.8 (Powerful friendship).**
 
-$$(\operatorname{PowerfullyFriendly}\left(n, z, w\right)) \Leftrightarrow ((\operatorname{I}\left(n, z\right) = \operatorname{I}\left(n, w\right)) \land (\operatorname{absoluteValue}\left(z.val\right) \ne \operatorname{absoluteValue}\left(w.val\right)))$$
+$$\forall d \in \mathbb{Z}, n \in \mathbb{N}, z \in \operatorname{Nonzero}\left(d\right), w \in \operatorname{Nonzero}\left(d\right),\; (\operatorname{PowerfullyFriendly}\left(n, z, w\right)) \Leftrightarrow ((\operatorname{I}\left(n, z\right) = \operatorname{I}\left(n, w\right)) \land (\operatorname{absoluteValue}\left(z.val\right) \ne \operatorname{absoluteValue}\left(w.val\right)))$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.PowerfullyFriendly` (`✓ std3`).
 
@@ -102,7 +102,7 @@ Two nonzero inputs are n-powerfully friendly when the normalized indices agree a
 
 **Definition 1.9 (Rational prime power).**
 
-$$\operatorname{primePower}\left(d, p, k, hp\right).val = ((p^{k}: \mathbb{N}): \operatorname{R}\left(d\right))$$
+$$\forall (d: \mathbb{Z}) (p: \mathbb{N}) (k: \mathbb{N}) (hp: Nat.Prime\left(p\right)), \operatorname{primePower}\left(d, p, k, hp\right).val = ((p^{k}: \mathbb{N}): \operatorname{R}\left(d\right))$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.primePower` (`✓ std3`).
 
@@ -136,7 +136,7 @@ $$\neg(\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall (p: \mathbb{N}
 
 *Commentary.*
 
-For d = −11 the integral basis generator π satisfies π² = π − 3. Take p = 3, k = 1, n = 2, and the challenger 7π − 3. The squared absolute values are 9 and 135. A sector element divides an input exactly when its norm divides both integral coordinates of the input times its conjugate. The norm bound confines both divisor sets to coordinates −15 through 11 and 0 through 7. The complete divisor sets in that box give sums of 16 and 240, so both indices equal 16/9 and the absolute values differ.
+For d = −11 the integral basis generator π satisfies π² = π − 3. Take p = 3, k = 1, n = 2, and the challenger 7π − 3. The squared absolute values are 9 and 135. A sector element u divides an input z exactly when the norm of u divides both integral coordinates of z times the conjugate of u. The norm bound confines both divisor sets to coordinates −15 through 11 and 0 through 7. The complete divisor sets in that box give sums of 16 and 240, so both indices equal 16/9 and the absolute values differ.
 
 ## References
 

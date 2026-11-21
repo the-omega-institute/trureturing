@@ -59,9 +59,9 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For d = −11 the integral basis generator π satisfies π² = π − 3. "
                     + "Take p = 3, k = 1, n = 2, and the challenger 7π − 3. "
-                    + "The squared absolute values are 9 and 135. A sector element divides "
-                    + "an input exactly when its norm divides both integral coordinates "
-                    + "of the input times its conjugate. The norm bound confines both "
+                    + "The squared absolute values are 9 and 135. A sector element u divides "
+                    + "an input z exactly when the norm of u divides both integral coordinates "
+                    + "of z times the conjugate of u. The norm bound confines both "
                     + "divisor sets to coordinates −15 through 11 and 0 through 7. "
                     + "The complete divisor sets in that box give sums of 16 and 240, "
                     + "so both indices equal 16/9 and the absolute values differ."))),
@@ -85,22 +85,25 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
         var condition = Equal(new Formula.Modulo(d, D(4)), D(1));
         var a = Conditional(condition, Seq(Parenthesized(Seq(d, Minus, D(1))), Slash, D(4)), d);
         var b = Conditional(condition, D(1), D(0));
-        return Equal(Call("R", d), Call("QuadraticAlgebra", NumberDomain("Z"), a, b));
+        return Universal("d", NumberDomain("Z"),
+            Equal(Call("R", d), Call("QuadraticAlgebra", NumberDomain("Z"), a, b)));
     }
 
     private static Formula NonzeroElements()
     {
         var d = F.Id("d");
         var z = F.Id("z");
-        return Equal(Call("Nonzero", d), Seq(
-            OpenBrace, Typed(z, Call("R", d)), Sp, Mid, Sp, Different(z, D(0)), CloseBrace));
+        return Universal("d", NumberDomain("Z"), Equal(Call("Nonzero", d), Seq(
+            OpenBrace, Typed(z, Call("R", d)), Sp, Mid, Sp, Different(z, D(0)), CloseBrace)));
     }
 
     private static Formula AbsoluteValue()
     {
+        var d = F.Id("d");
         var z = F.Id("z");
-        return Equal(Call("absoluteValue", z),
+        var definition = Equal(Call("absoluteValue", z),
             Seq(Sqrt, Grp(Cast(Qualified("QuadraticAlgebra", "norm", z), NumberDomain("R")))));
+        return Universal(definition, Bound("d", NumberDomain("Z")), Bound("z", Call("R", d)));
     }
 
     private static Formula Sector()
@@ -115,8 +118,9 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
             Relation(D(0), FormulaRelationOperator.LessThanOrEqual, imag));
         var boundary = Logic(Equal(imag, D(0)), FormulaLogicOperator.And, Less(D(0), real));
         var second = Logic(Less(D(0), imag), FormulaLogicOperator.Or, boundary);
-        return Equal(Call("A", d),
-            Seq(OpenBrace, z, Sp, Mid, Sp, Conditional(condition, first, second), CloseBrace));
+        return Universal("d", NumberDomain("Z"), Equal(Call("A", d),
+            Seq(OpenBrace, Typed(z, Call("R", d)), Sp, Mid, Sp,
+                Conditional(condition, first, second), CloseBrace)));
     }
 
     private static Formula DivisorSum()
@@ -130,28 +134,36 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
             Power(Call("absoluteValue", x), F.Id("n")), D(0));
         var sum = Seq(Sum, Caret, Grp(Operator("f")), Underscore,
             Grp(Typed(x, Call("R", d))), Sp, summand);
-        return Equal(Typed(Call("delta", F.Id("n"), z), NumberDomain("R")), sum);
+        return Universal(Equal(Typed(Call("delta", F.Id("n"), z), NumberDomain("R")), sum),
+            Bound("d", NumberDomain("Z")), Bound("n", NumberDomain("Z")),
+            Bound("z", Call("Nonzero", d)));
     }
 
     private static Formula Index()
     {
+        var d = F.Id("d");
         var z = F.Id("z");
         var n = F.Id("n");
-        return Equal(Call("I", n, z), new Formula.Fraction(
+        var definition = Equal(Call("I", n, z), new Formula.Fraction(
             Call("delta", Cast(n, NumberDomain("Z")), z),
             Power(Call("absoluteValue", Field(z, "val")), n)));
+        return Universal(definition, Bound("d", NumberDomain("Z")),
+            Bound("n", NumberDomain("N")), Bound("z", Call("Nonzero", d)));
     }
 
     private static Formula Friendship()
     {
+        var d = F.Id("d");
         var n = F.Id("n");
         var z = F.Id("z");
         var w = F.Id("w");
         var index = Equal(Call("I", n, z), Call("I", n, w));
         var magnitude = Different(Call("absoluteValue", Field(z, "val")),
             Call("absoluteValue", Field(w, "val")));
-        return Logic(Call("PowerfullyFriendly", n, z, w), FormulaLogicOperator.Iff,
+        var definition = Logic(Call("PowerfullyFriendly", n, z, w), FormulaLogicOperator.Iff,
             Logic(index, FormulaLogicOperator.And, magnitude));
+        return Universal(definition, Bound("d", NumberDomain("Z")), Bound("n", NumberDomain("N")),
+            Bound("z", Call("Nonzero", d)), Bound("w", Call("Nonzero", d)));
     }
 
     private static Formula PrimePower()
@@ -159,8 +171,13 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
         var d = F.Id("d");
         var p = F.Id("p");
         var k = F.Id("k");
-        return Equal(Field(Call("primePower", d, p, k, F.Id("hp")), "val"),
+        var hp = F.Id("hp");
+        var natural = NumberDomain("N");
+        var definition = Equal(Field(Call("primePower", d, p, k, hp), "val"),
             Cast(Cast(Power(p, k), NumberDomain("N")), Call("R", d)));
+        return Seq(Forall, Sp, Parenthesized(Typed(d, NumberDomain("Z"))), Sp,
+            Parenthesized(Typed(p, natural)), Sp, Parenthesized(Typed(k, natural)), Sp,
+            Parenthesized(Typed(hp, Qualified("Nat", "Prime", p))), Comma, Sp, definition);
     }
 
     private static Formula Conjecture()
@@ -188,6 +205,12 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
 
     private static Formula Universal(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+
+    private static Formula Universal(Formula body, params Formula.BoundVariable[] variables) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+
+    private static Formula.BoundVariable Bound(string name, Formula domain) =>
+        new(FormulaIdentifier.Create(name), domain);
 
     private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
         Parenthesized(Seq(Operator("if"), Sp, condition, Sp,
