@@ -1,8 +1,9 @@
-/- GID: D5/S3/Combinatorics/ElekMagicWordConverseRefutation
+/- GID: D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/ElekMagicWordConverseRefutation
-   mirror-E: none(waiver:direct-refutation-proof)
+   mirror-B: D5/B/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.GroupTheory.Coxeter.Length, mathlib/module/Mathlib.LinearAlgebra.Matrix.Cartan.Basic]
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.claim; result=D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.result; claim=D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.claim
    digest: The type B₂ interval from s to sts is Boolean and has no magic word. -/
 
 /-
@@ -11,8 +12,8 @@ Copyright (c) 2026 Jeromie N. Beasley. All rights reserved.
 Released under Apache 2.0 license as described in the repository root LICENSE.
 Authors of the lift: Jeromie N. Beasley
 Source: https://github.com/dicipler-pixel/mathlib4/blob/08e259a357c8e0caed76ca53aef41f40286b3694/Mathlib/GroupTheory/Coxeter/Dihedral.lean
-Retire the local lift and generator lemmas when the project's pinned Mathlib
-exposes the equivalent canonical homomorphism and its two generator equations.
+Use the canonical Mathlib import once the pinned revision provides the equivalent
+homomorphism and both generator equations.
 -/
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Finset.Insert
@@ -38,18 +39,18 @@ private theorem dihedralSimple_isLiftable (m : ℕ) :
     simp [dihedralSimple, CoxeterMatrix.I, DihedralGroup.r_pow]
 
 /-- The canonical homomorphism to the corresponding dihedral group. -/
-def toDihedral (m : ℕ) :
+private def toDihedral (m : ℕ) :
     (CoxeterMatrix.I m).Group →* DihedralGroup (m + 2) :=
   (CoxeterMatrix.I m).toCoxeterSystem.lift
     ⟨dihedralSimple m, dihedralSimple_isLiftable m⟩
 
-@[simp] theorem toDihedral_simple_zero (m : ℕ) :
+private theorem toDihedral_simple_zero (m : ℕ) :
     toDihedral m ((CoxeterMatrix.I m).simple (0 : Fin 2)) = sr 0 := by
   simpa [toDihedral, dihedralSimple] using
     (CoxeterMatrix.I m).toCoxeterSystem.lift_apply_simple
       (dihedralSimple_isLiftable m) (0 : Fin 2)
 
-@[simp] theorem toDihedral_simple_one (m : ℕ) :
+private theorem toDihedral_simple_one (m : ℕ) :
     toDihedral m ((CoxeterMatrix.I m).simple (1 : Fin 2)) = sr 1 := by
   simpa [toDihedral, dihedralSimple] using
     (CoxeterMatrix.I m).toCoxeterSystem.lift_apply_simple
@@ -57,7 +58,7 @@ def toDihedral (m : ℕ) :
 
 end CoxeterMatrix.I
 
-namespace D5.S3.Combinatorics.ElekMagicWordConverseRefutation
+namespace D5.S3.FiniteGroups.CoxeterMagic.ElekMagicWordConverseRefutation
 
 open DihedralGroup CoxeterMatrix.I
 
@@ -90,7 +91,6 @@ private theorem cartan_origin_I_two : CartanOrigin (CoxeterMatrix.I 2) := by
     intro i j hij
     rw [entries_I_two_eq_B_two i j]
     exact cartanB i j hij
-
 
 private abbrev cs₂ := (CoxeterMatrix.I 2).toCoxeterSystem
 private abbrev w₂ := cs₂.wordProd ([0, 1, 0] : List (Fin 2))
@@ -181,7 +181,8 @@ def MaskFor (cs : CoxeterSystem M W) (Q : List S) (u : W) (mask : List Bool) : P
   mask.length = Q.length ∧ positionalProduct cs Q mask = u
 
 /-- The subword criterion uses some reduced expression of the upper element.
-Deleting letters from a nonreduced retained word extracts a reduced word with its product. -/
+The deletion condition gives the same comparison if the retained word is
+required to be reduced. See Björner–Brenti, Theorem 2.2.2 and Corollary 2.2.3. -/
 def BruhatLE (cs : CoxeterSystem M W) (u w : W) : Prop :=
   ∃ Q : List S, cs.IsReduced Q ∧ cs.wordProd Q = w ∧
     ∃ mask : List Bool, MaskFor cs Q u mask
@@ -201,6 +202,7 @@ def MagicFor (cs : CoxeterSystem M W) (v w : W) (Q : List S) : Prop :=
 end Source
 
 /-- Elek, Conjecture 3.3 in the Weyl setting of §2.1.
+“A Bruhat interval [v,w] is a hypercube if and only if there exists a magic word Q for [v,w].”
 https://arxiv.org/html/2610.22730v1#S3.Thmtheorem3 -/
 def claim : Prop :=
   ∀ (S : Type) (M : CoxeterMatrix S) (W : Type) [Group W]
@@ -375,28 +377,6 @@ private theorem interval_iff (x : W₂) :
     refine ⟨(comparison 1 (cubeIndex j)).mpr ?_, (comparison (cubeIndex j) 5).mpr ?_⟩
     all_goals (fin_cases j <;> decide +kernel)
 
-/-- In particular the two longer dihedral elements lie outside the lower set of `sts`. -/
-private theorem longer_words_excluded :
-    ¬ BruhatLE cs₂ (cs₂.wordProd [1, 0, 1]) w₂ ∧
-    ¬ BruhatLE cs₂ (cs₂.wordProd [0, 1, 0, 1]) w₂ := by
-  have exclude (Q : List (Fin 2))
-      (different : ∀ i : Fin 6, evalWord (shortWord i) ≠ evalWord Q) :
-      ¬ BruhatLE cs₂ (cs₂.wordProd Q) w₂ := by
-    intro h
-    obtain ⟨i, _, hi⟩ := List.mem_map.mp ((lower_iff (cs₂.wordProd Q) 5).mp h)
-    apply different i
-    calc
-      evalWord (shortWord i) = toDihedral 2 (word₂ i) := (map_wordProd _).symm
-      _ = toDihedral 2 (cs₂.wordProd Q) := congrArg (toDihedral 2) hi
-      _ = evalWord Q := map_wordProd Q
-  constructor
-  · apply exclude
-    intro i
-    fin_cases i <;> decide +kernel
-  · apply exclude
-    intro i
-    fin_cases i <;> decide +kernel
-
 private def cubeSet : Fin 4 → Finset (Fin 2) := ![∅, {0}, {1}, {0, 1}]
 
 private theorem cubeIndex_injective : Function.Injective cubeIndex := by
@@ -483,4 +463,4 @@ theorem result : ¬ claim := by
   obtain ⟨cartan, comparable, cube, noMagic⟩ := b2_witness
   exact noMagic ((h (Fin 2) (CoxeterMatrix.I 2) W₂ cs₂ s₂ w₂ cartan comparable).mp cube)
 
-end D5.S3.Combinatorics.ElekMagicWordConverseRefutation
+end D5.S3.FiniteGroups.CoxeterMagic.ElekMagicWordConverseRefutation
