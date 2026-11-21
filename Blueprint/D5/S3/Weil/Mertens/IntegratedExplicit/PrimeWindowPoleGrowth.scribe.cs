@@ -22,8 +22,9 @@ internal sealed class PrimeWindowPoleGrowthDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Let β be the real part of the given zero. On a vertical line of "
                     + "large real part σ, choose two disks of equal radius. The disk centered at σ is "
                     + "free of zeros. A vertical displacement gives a unique closest zero in the second "
-                    + "disk, at distance d less than σ−β+δ. Subtracting the pole of the completed "
-                    + "Mangoldt transform gives a geometric lower bound for every high derivative. "
+                    + "disk, at distance d less than σ−β+δ. After subtracting the principal part, "
+                    + "Cauchy's estimate bounds the analytic remainder. The pole term gives a geometric "
+                    + "lower bound for all sufficiently high normalized derivatives. "
                     + "The zero in the second disk can differ from the original zero.")),
                     Paragraph(Text("Adding the derivative at the real center bounds this quantity by "
                     + "twice the positive Mangoldt moment. Set a=log Y and choose order floor(σha) "

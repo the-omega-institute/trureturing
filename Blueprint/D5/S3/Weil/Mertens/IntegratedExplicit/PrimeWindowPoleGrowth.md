@@ -16,7 +16,7 @@ $$\forall z \in \mathbb{C},\; \left(\operatorname{zeta}\left(z\right) = 0 \land 
 
 *Commentary.*
 
-Let β be the real part of the given zero. On a vertical line of large real part σ, choose two disks of equal radius. The disk centered at σ is free of zeros. A vertical displacement gives a unique closest zero in the second disk, at distance d less than σ−β+δ. Subtracting the pole of the completed Mangoldt transform gives a geometric lower bound for every high derivative. The zero in the second disk can differ from the original zero.
+Let β be the real part of the given zero. On a vertical line of large real part σ, choose two disks of equal radius. The disk centered at σ is free of zeros. A vertical displacement gives a unique closest zero in the second disk, at distance d less than σ−β+δ. After subtracting the principal part, Cauchy's estimate bounds the analytic remainder. The pole term gives a geometric lower bound for all sufficiently high normalized derivatives. The zero in the second disk can differ from the original zero.
 
 Adding the derivative at the real center bounds this quantity by twice the positive Mangoldt moment. Set a=log Y and choose order floor(σha) with 1<h<b. Tilting the two gamma tails controls the parts outside [a,ba]. Inside the window the kernel of order k is bounded by exp(−u/2)/(σ−1/2)ᵏ. Choosing h close to b and δ small gives the stated exponent at every sufficiently large Y.
 
@@ -41,4 +41,5 @@ Under RH the complete Mangoldt remainder divided by √x is eventually bounded, 
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtMoments](CompleteMangoldtMoments.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection](PrimeOnlyTailCorrection.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](RHSharpActualEnvelope.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/EqualRadiusZeroDisks](../../ZetaBridge/EqualRadiusZeroDisks.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction](../../ZetaBridge/RightHalfStripRiemannReduction.md)
