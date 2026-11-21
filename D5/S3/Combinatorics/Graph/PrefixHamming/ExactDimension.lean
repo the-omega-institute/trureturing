@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixHamming/ExactDimension
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
+   anchors: [mathlib/module/Mathlib.InformationTheory.Hamming, D5/L/Combinatorics/rossi2026permutohedron]
    utility: none
    digest: The minimum binary Hamming dimension of the permutation prefix-set metric. -/
 
@@ -720,7 +720,7 @@ theorem prefix_distance_eq_cut_symmDiff {n : ℕ} (p q : Equiv.Perm (Fin n)) :
   obtain ⟨z, hz⟩ := hex
   exact ⟨z, (hmem z).mpr (hz.symm ▸ hA), hz⟩
 
-/-- The threshold at scale two, with the two three-bit exceptions in rank four. -/
+/-- The threshold at scale two, with three-bit blocks for the two outer ranks at ground-set size four. -/
 @[expose] def minimumDimension (n : ℕ) : ℕ := if n = 4 then 12 else 2 ^ n - 2
 
 private theorem sum_blockSizes {n : ℕ} (hn : 3 ≤ n) :
@@ -755,11 +755,6 @@ private theorem hamming_reindex {ι κ : Type*} [Fintype ι] [Fintype κ]
 private def parityCode : Fin 4 → Fin 3 → Bool :=
   ![![false, false, false], ![false, true, true], ![true, false, true], ![true, true, false]]
 
-private theorem parityCode_dist (a b : Fin 4) :
-    hammingDist (parityCode a) (parityCode b) = if a = b then 0 else 2 := by
-  revert a b
-  decide
-
 private noncomputable def blockWord {α : Type*} [Fintype α] [DecidableEq α]
     (a : α) : Fin (blockSize (Fintype.card α)) → Bool :=
   if h : Fintype.card α = 4 then
@@ -772,7 +767,11 @@ private noncomputable def blockWord {α : Type*} [Fintype α] [DecidableEq α]
 private theorem blockWord_dist {α : Type*} [Fintype α] [DecidableEq α] (a b : α) :
     hammingDist (blockWord a) (blockWord b) = if a = b then 0 else 2 := by
   by_cases h : Fintype.card α = 4
-  · rw [blockWord, blockWord, dite_eq_left h, dite_eq_left h, hamming_reindex, parityCode_dist]
+  · have parityCode_dist (x y : Fin 4) :
+        hammingDist (parityCode x) (parityCode y) = if x = y then 0 else 2 := by
+      revert x y
+      decide
+    rw [blockWord, blockWord, dite_eq_left h, dite_eq_left h, hamming_reindex, parityCode_dist]
     simp only [Equiv.apply_eq_iff_eq]
   · rw [blockWord, blockWord, dite_eq_right h, dite_eq_right h, oneHot_dist]
     simp only [Equiv.apply_eq_iff_eq]
