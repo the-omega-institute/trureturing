@@ -67,7 +67,7 @@ theorem charge_sector_differentiableOn (D : LatticeData)
   refine Complex.differentiableOn_tsum_of_summable_norm hb ?_ isOpen_ball ?_
   · intro q
     by_cases hq : reduceCharge D q = a
-    · simp only [hq, if_true]
+    · simp only [hq, ite_true]
       apply DifferentiableOn.mono _ (hballK.trans hKU)
       exact (hp.mul (hQ.pow _)).mul
         (OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn hA
@@ -76,8 +76,8 @@ theorem charge_sector_differentiableOn (D : LatticeData)
   · intro q x hx
     have bound := hmajor q x (hballK hx)
     by_cases hq : reduceCharge D q = a
-    · simpa only [hq, if_true] using bound
-    · simpa only [hq, if_false, norm_zero] using (norm_nonneg _).trans bound
+    · simpa only [hq, ite_true] using bound
+    · simpa only [hq, ite_false, norm_zero] using (norm_nonneg _).trans bound
 
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
 open D5.S3.Analytic.OriginalSlitNome
@@ -122,7 +122,7 @@ theorem slitChargeSector_differentiableOn (D : LatticeData)
     DifferentiableOn ℂ (slitChargeSector D a betaL gammaL betaR gammaR) slitDomain := by
   unfold slitChargeSector slitChargeTerm
   exact charge_sector_differentiableOn D hD betaL gammaL betaR gammaR a _
-    OriginalHalfBinomialSlitPeriod.isOpen_slitDomain
+    isOpen_slitDomain
     rank24Determinant slitNome rank24Determinant_analyticOnNhd.differentiableOn
     slitNome_analyticOnNhd.differentiableOn (fun _ => slitNome_norm_lt_one)
     (slitMatrix D _) (slitLinear D _)
@@ -133,7 +133,7 @@ private theorem rank24Determinant_eq_native (D : LatticeData) (h24 : D.rank = 24
     {w : ℂ} (hw : ‖w‖ < 1) :
     rank24Determinant (w ^ 2) =
       Complex.exp (-(D.rank : ℂ) / 2 * gaussianLogDet w) := by
-  have hmem := OriginalHalfBinomialSlitPeriod.ball_subset_slitDomain (show w ^ 2 ∈ ball (0 : ℂ) 1 by
+  have hmem := ball_subset_slitDomain (show w ^ 2 ∈ ball (0 : ℂ) 1 by
     rw [mem_ball_zero_iff, norm_pow]; exact pow_lt_one₀ (norm_nonneg w) hw (by decide))
   have hn : 1 - w ^ 2 ≠ 0 := Complex.slitPlane_ne_zero hmem
   have hw2 : ‖w ^ 2‖ < 1 := mem_ball_zero_iff.mp
@@ -191,8 +191,9 @@ theorem slitChargeTerm_eq_native (D : LatticeData) (h24 : D.rank = 24)
       affineCoefficient (slitMatrix D e (w ^ 2)) _ _ =
     (chargeScalar D q * chargeScalar D (-q)) * w ^ (2 * m) * sewn D q e _ w
   rw [hmatrix, hlinear, rank24Determinant_eq_native D h24 hw,
-    slitNome_eq_Q0 hw2, OriginalFourMChargeNormal.nome_square_source (mem_ball_zero_iff.mpr hw),
-    OriginalFourMEnergyCoefficient.chargeScalar_pair, hs, sewn, hn, div_pow, mul_pow, ← pow_mul, ← Complex.exp_nat_mul]
+    slitNome_eq_Q0 hw2, nome_square_source (mem_ball_zero_iff.mpr hw),
+    OriginalFourMEnergyCoefficient.chargeScalar_pair, hs, sewn, hn, div_pow, mul_pow,
+    ← pow_mul, ← Complex.exp_nat_mul]
   rw [show (m : ℂ) * (2 * sourceConstant w) = 2 * (m : ℂ) * sourceConstant w by ring]
   ring
 
