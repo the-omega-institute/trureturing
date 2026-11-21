@@ -6,6 +6,7 @@
    utility: none
    digest: Either exponential bound from 5040 characterizes the zeta strip. -/
 
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeAttainedCriticalWidth
 import D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion
 
 /-! Exact exponential bounds for the fixed-anchor signed prime primitive. -/
@@ -16,15 +17,10 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Filter MeasureTheory Set
-open scoped Topology
-open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
-open D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity (complete_chebyshev_tail_identity)
-open D5.S3.Weil.Mertens.WeightedPrimeLimit (chebyshev_error_kernel_integrable)
-open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveEndpoint
 
-open PrimeOnlyTailCorrection (primeTail prime_integrable prime_power_window_correction)
+open PrimeOnlyTailCorrection (primeTail prime_integrable)
 open SignedPrimePrimitiveCriterion (zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040)
 
 private def primeLogDensity (t : ℝ) : ℝ :=
@@ -34,78 +30,24 @@ private theorem eventually_norm_primeLogDensity_le {β : ℝ} (hβ : 1 / 2 < β)
     (hmax : ∀ ρ : ℂ, riemannZeta ρ = 0 → ρ.re ≤ β) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ t : ℝ in atTop,
       ‖primeLogDensity t‖ ≤ C * Real.exp ((β - 1 / 2) * t) := by
-  have hzero (j : ℕ) : (actualZero j).re ≤ β :=
-    hmax _ (actualData.zero_isNontrivial (actualOccurrenceEquiv j).1).1
-  let C : ℝ := ∑' j : ℕ, ‖actualCoeff j‖
-  have hC : 0 ≤ C := tsum_nonneg fun _ => norm_nonneg _
-  have hH (t : ℝ) (ht : 0 ≤ t) : ‖actualH t‖ ≤ C * Real.exp (β * t) := by
-    change ‖∑' j, actualCoeff j * Complex.exp ((t : ℂ) * actualZero j)‖ ≤ _
-    refine tsum_of_norm_bounded (actualCoeff_hasSum.summable.norm.hasSum.mul_right _) ?_
-    intro j
-    rw [norm_mul, Complex.norm_exp, Complex.re_ofReal_mul]
-    exact mul_le_mul_of_nonneg_left
-      (Real.exp_le_exp.mpr (by
-        rw [mul_comm β t]
-        exact mul_le_mul_of_nonneg_left (hzero j) ht)) (norm_nonneg _)
-  let correction (t : ℝ) := Real.sqrt (Real.exp t) * (Q (Real.exp t) - primeTail (Real.exp t))
-  let error (t : ℝ) :=
-    RHSharpActualEnvelope.G t - Real.exp (-t / 2) * (actualH t).re + correction t
-  have herr : Tendsto error atTop (𝓝 2) := by
-    simpa only [error, correction, Function.comp_def, zero_add] using
-      RHSharpActualEnvelope.G_sub_normalized_actualH_tendsto_zero.add
-      (prime_power_window_correction.1.comp Real.tendsto_exp_atTop)
-  refine ⟨C + 3, add_nonneg hC (by norm_num), ?_⟩
-  filter_upwards [(Metric.tendsto_nhds.mp herr) 1 zero_lt_one,
-    eventually_ge_atTop (0 : ℝ), eventually_ge_atTop (Real.log 2)] with t he ht hlog
-  have herror : |error t| ≤ 3 := by
-    rw [Real.dist_eq] at he
-    have hsum := abs_add_le (error t - 2) (2 : ℝ)
-    rw [sub_add_cancel, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)] at hsum
-    linarith
-  have htwo : 2 ≤ Real.exp t := by
-    simpa only [Real.exp_log (by norm_num : (0 : ℝ) < 2)] using Real.exp_le_exp.mpr hlog
-  have hQ := complete_chebyshev_tail_identity chebyshev_error_kernel_integrable htwo
-  change Q (Real.exp t) = _ at hQ
-  have hU : U (Real.exp t) = -Q (Real.exp t) * Real.exp t := by
-    rw [U, hQ]
-    field_simp [(Real.exp_pos t).ne']
-    ring
-  have hroot : Real.exp (-t / 2) * Real.exp t = Real.sqrt (Real.exp t) := by
-    rw [← Real.exp_add, ← Real.exp_half]
+  obtain ⟨C, hC, hbound⟩ := PrimeAttainedCriticalWidth.eventually_abs_normalized_tail_le hβ
+    (fun z hz => hmax z hz.1)
+  refine ⟨C, hC.le, ?_⟩
+  filter_upwards [Real.tendsto_exp_atTop.eventually hbound] with t ht
+  have hratio : Real.exp t / Real.sqrt (Real.exp t) = Real.exp (t / 2) := by
+    rw [← Real.exp_half, ← Real.exp_sub, show t - t / 2 = t / 2 by ring]
+  have hdensity : primeLogDensity t = Real.exp (t / 2) * primeTail (Real.exp t) := by
+    calc
+      _ = (Real.exp t / Real.sqrt (Real.exp t)) * primeTail (Real.exp t) := by
+        unfold primeLogDensity
+        ring
+      _ = _ := by rw [hratio]
+  have hscale : Real.exp ((β - 1 / 2) * t) * Real.exp t ^ (1 - β) = Real.exp (t / 2) := by
+    rw [← Real.exp_mul, ← Real.exp_add]
     congr 1
     ring
-  have hG : RHSharpActualEnvelope.G t = -(Real.sqrt (Real.exp t) * Q (Real.exp t)) := by
-    rw [RHSharpActualEnvelope.G, hU, ← hroot]
-    ring
-  have hdensity : primeLogDensity t = Real.sqrt (Real.exp t) * primeTail (Real.exp t) := by
-    have hs := Real.sqrt_pos.mpr (Real.exp_pos t)
-    have hratio : Real.exp t / Real.sqrt (Real.exp t) = Real.sqrt (Real.exp t) := by
-      apply (div_eq_iff hs.ne').2
-      rw [← pow_two, Real.sq_sqrt (Real.exp_nonneg t)]
-    rw [primeLogDensity, div_mul_eq_mul_div, mul_div_assoc, hratio, mul_comm]
-  have hsplit :
-      primeLogDensity t = -(Real.exp (-t / 2) * (actualH t).re + error t) := by
-    rw [hdensity]
-    dsimp only [error, correction]
-    rw [hG]
-    ring
-  have hexp (t : ℝ) : Real.exp (-t / 2) * Real.exp (β * t) = Real.exp ((β - 1 / 2) * t) := by
-    rw [← Real.exp_add]
-    congr 1
-    ring
-  have hscaled : 1 ≤ Real.exp ((β - 1 / 2) * t) :=
-    Real.one_le_exp_iff.mpr (mul_nonneg (sub_nonneg.mpr hβ.le) ht)
-  rw [hsplit, norm_neg, Real.norm_eq_abs]
-  calc
-    _ ≤ |Real.exp (-t / 2) * (actualH t).re| + |error t| := abs_add_le _ _
-    _ ≤ Real.exp (-t / 2) * (C * Real.exp (β * t)) + 3 := by
-      rw [abs_mul, abs_of_pos (Real.exp_pos _)]
-      exact add_le_add (mul_le_mul_of_nonneg_left
-        ((Complex.abs_re_le_norm _).trans (hH t ht)) (Real.exp_nonneg _)) herror
-    _ = C * Real.exp ((β - 1 / 2) * t) + 3 := by rw [← hexp]; ring
-    _ ≤ (C + 3) * Real.exp ((β - 1 / 2) * t) := by
-      rw [add_mul]
-      exact add_le_add le_rfl (le_mul_of_one_le_right (by norm_num) hscaled)
+  rw [hdensity, ← hscale, mul_assoc, Real.norm_eq_abs, abs_mul, abs_of_pos (Real.exp_pos _)]
+  exact (mul_le_mul_of_nonneg_left ht (Real.exp_nonneg _)).trans_eq (mul_comm _ _)
 
 private theorem abs_primitive_bound_from_5040 {β : ℝ} (hβ : 1 / 2 < β)
     (hmax : ∀ ρ : ℂ, riemannZeta ρ = 0 → ρ.re ≤ β) :

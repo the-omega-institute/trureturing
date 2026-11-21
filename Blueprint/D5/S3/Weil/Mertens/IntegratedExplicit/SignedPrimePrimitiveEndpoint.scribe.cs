@@ -18,12 +18,13 @@ internal sealed class SignedPrimePrimitiveEndpointDocument : IScribeDocumentDefi
                 Paragraph(Text("Write Qθ(x) for the integral of (θ(u)−u)/u² over u>x. The signed "
                     + "primitive integrates Qθ(x)/√x from 5040 to exp(T). "
                     + "Each nonzero real c specifies one one-sided test.")),
-                Paragraph(Text("When all zero real parts are at most b, summing the norms of the "
-                    + "actual explicit-formula terms bounds the zero series by C exp(bt). "
-                    + "The integrated arithmetic residual and the prime-power correction are bounded "
-                    + "in the logarithmic density, which is therefore bounded in absolute value "
-                    + "by a constant times exp((b−1/2)t). Integrating this bound and absorbing the "
-                    + "finite initial interval gives the constant majorant for either sign.")),
+                Paragraph(Text("If all zero real parts are at most b, the absolute tail estimate "
+                    + "in PrimeAttainedCriticalWidth bounds |x^(1−b) Qθ(x)| by a constant C "
+                    + "for all sufficiently large x. With x=exp(t), the logarithmic density is "
+                    + "exp(t/2) Qθ(exp(t)). Multiplying the normalized bound by exp((b−1/2)t) "
+                    + "therefore bounds the density in absolute value by C exp((b−1/2)t). "
+                    + "Integrating the exponential bound and absorbing the finite initial interval "
+                    + "from log(5040) gives the constant majorant for either sign.")),
                 Paragraph(Text("The one-sided affine continuation criterion applies with zero "
                     + "linear coefficient when b<1. For b≥1, the zeta zero-free half-plane gives "
                     + "the asserted strip directly."))),
