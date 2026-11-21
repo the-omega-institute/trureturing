@@ -29,6 +29,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 open Finset Filter Real
 open scoped Topology BigOperators
 open D5.S3.Arith.GoldenResourceOptimalInteger
+open D5.S3.Arith.Robin.ActualTwoPriceDefect (strictInteger strictInteger_spec)
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (price_record_prime_structure)
 open D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
@@ -44,6 +45,19 @@ open D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 def FullRecord (m : ℕ) (mu : ℝ) : Prop :=
   ∀ n : ℕ, 0 < n → n < m →
     goldenResourceObjective mu n < goldenResourceObjective mu m
+
+/-- The least optimizer at a positive price strictly beats every positive smaller integer. -/
+theorem strictInteger_fullRecord {q : ℝ} (hq : 0 < q) : FullRecord (strictInteger q) q := by
+  obtain ⟨_, _, hopt, hleast⟩ := strictInteger_spec hq
+  intro n hn hnm
+  have hle := hopt n (by omega)
+  by_contra! hnot
+  have heq := le_antisymm hle hnot
+  have hnopt : IsGoldenResourceOptimal q n := by
+    intro j hj
+    rw [heq]
+    exact hopt j hj
+  exact (Nat.le_of_dvd hn (hleast n (by omega) hnopt)).not_gt hnm
 
 def bhpExponent : ℝ := 21 / 40
 def priceExponent (j : ℕ) : ℝ := 19 / (40 * (j : ℝ))

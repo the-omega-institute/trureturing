@@ -47,8 +47,8 @@ abbrev arena : Arena where
       0 ≤ R₀ ∧ R₀ ≤ 2400 * log X / X ^ 2 ∧
       (∀ p ∈ lossPrimes X m, layerLoss X m p 1 ≠ 0 →
         X - 1 / 2 < (p : ℝ) ∧ (p : ℝ) < X + 1) ∧
-      0 ≤ completeFirstLayerLoss X m ∧ completeFirstLayerLoss X m ≤ 5 / X ^ 2 ∧
-      0 ≤ D ∧ D ≤ (2400 * log X + 5) / X ^ 2
+      0 ≤ completeFirstLayerLoss X m ∧ completeFirstLayerLoss X m ≤ (7 / 4) / X ^ 2 ∧
+      0 ≤ D ∧ D ≤ (2400 * log X + 7 / 4) / X ^ 2
 
 private theorem rejected_law : ¬ arena.Law DefectObservation.rejected := by
   intro h

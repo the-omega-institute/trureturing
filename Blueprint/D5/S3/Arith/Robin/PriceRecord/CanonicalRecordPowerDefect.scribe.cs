@@ -35,8 +35,8 @@ internal sealed class CanonicalRecordPowerDefectDocument : IScribeDocumentDefini
                         + "the union of the prime supports of strictInteger(q) and m, a nonzero "
                         + "layerLoss(X, m, p, 1) implies X − 1/2 < p < X + 1 in ℝ. Summing these "
                         + "first-layer losses over the full union gives "
-                        + "0 ≤ completeFirstLayerLoss(X, m) ≤ 5/X², "
-                        + "and 0 ≤ D ≤ (2400 log X + 5)/X².")),
+                        + "0 ≤ completeFirstLayerLoss(X, m) ≤ (7/4)/X², "
+                        + "and 0 ≤ D ≤ (2400 log X + 7/4)/X².")),
                     Paragraph(Text(
                         "The strict layer rule includes exactly the layers with marginal above the "
                         + "price. The strict optimizer divides every optimizer at the same price, "
@@ -59,10 +59,12 @@ internal sealed class CanonicalRecordPowerDefectDocument : IScribeDocumentDefini
                         "An unoccupied first coordinate has nonpositive margin at q and zero loss. "
                         + "The first-layer price equals q at a real cutoff ρ with X − 1/2 < ρ < X. "
                         + "An occupied coordinate at or below ρ also has zero loss. The remaining "
-                        + "nonzero terms lie in (X − 1/2, X + 1), which contains at most two natural "
-                        + "integers. Each term is q log p − log(1 + 1/p), at most "
-                        + "2/(X(X + 2)) + 1/(X² log X) ≤ 9/(4X²). The full sum therefore lies "
-                        + "between zero and 5/X². Adding it to R gives the bounds on D."))),
+                        + "nonzero terms lie in (X − 1/2, X + 1), an interval of length 3/2. "
+                        + "All primes there are odd since X > 16, so at most one term contributes. "
+                        + "For that term, log p ≤ log X + 1/X and log(1 + 1/p) ≥ 1/(X + 3/2). "
+                        + "The loss q log p − log(1 + 1/p) is at most "
+                        + "(3/2)/(X(X + 3/2)) + 1/(X² log X) ≤ (7/4)/X². "
+                        + "Adding the complete first-layer sum to R gives the bounds on D."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("canonical-integer-first-loss"),
