@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RootTail
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SquareSpectrum
+import D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 
 /-! The integrated complete tail controls both root cutoffs. The fifth-root majorant
@@ -26,6 +27,11 @@ open D5.S3.Weil.Mertens.ZeroAbscissaPower (primitive_eq_negative_tail)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (firstLiMass firstLiMass_lt_one)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
   (primeTail prime_integrable prime_power_window_correction)
+open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
+  (windowError normalizedMass normalizedZeroSeries)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
+  (prime_window_remainder_of_rh spectralPrimitive windowDiscrepancy)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
   (G abs_G_sub_normalized_actualH_le actual_G_control coeff_norm_hasSum)
 
@@ -438,5 +444,37 @@ theorem rh_root_correction_window (hRH : RiemannHypothesis) :
   · congr 1
     ring
   · ring
+
+
+/-- The late prime-only negative mass with its ordinary zero primitive, cube main
+term and square-cutoff primitive, on the same pair of endpoints. -/
+theorem prime_window_cube_and_square_of_rh (hRH : RiemannHypothesis) :
+    ∃ a₀ K : ℝ, 2 ≤ a₀ ∧ 0 < K ∧ ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+      |(∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x) - 2 * Real.log (B / a) -
+        spectralPrimitive (phaseOrbit (Real.log B)) + spectralPrimitive (phaseOrbit (Real.log a)) -
+        9 * (a ^ (-(1 / 6) : ℝ) - B ^ (-(1 / 6) : ℝ)) - squarePrimitive B + squarePrimitive a| ≤
+          K * (a ^ (-(3 / 10) : ℝ) - B ^ (-(3 / 10) : ℝ)) := by
+  obtain ⟨a₀, K, ha₀, hK, hpositive, hwindow⟩ := rh_root_correction_window hRH
+  refine ⟨a₀, K, by linarith, hK, fun a B ha hab => ?_⟩
+  have ha0 : 0 < a := by linarith
+  have hlog := Real.log_le_log ha0 hab
+  have hIntegral : (∫ u in Real.log a..Real.log B, windowError u) =
+      ∫ u in Real.log a..Real.log B, rootWindowDensity u := by
+    apply intervalIntegral.integral_congr
+    intro u hu
+    rw [uIcc_of_le hlog] at hu
+    have hx : a ≤ Real.exp u := by simpa [Real.exp_log ha0] using Real.exp_le_exp.mpr hu.1
+    have hpos := hpositive (Real.exp u) (ha.trans hx)
+    have hscaled := complete_scaled (x := Real.exp u) (by linarith)
+    rw [Real.log_exp] at hscaled
+    rw [windowError, normalizedMass, normalizedZeroSeries, max_eq_left hpos.le,
+      rootWindowDensity, Complex.re_ofReal_mul, hscaled]
+    ring
+  have hIdentity := (prime_window_remainder_of_rh hRH).2.2 a B (by linarith) hab
+  change |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
+    spectralPrimitive (phaseOrbit (Real.log a)) -
+    9 * (a ^ (-(1 / 6) : ℝ) - B ^ (-(1 / 6) : ℝ)) - squarePrimitive B + squarePrimitive a| ≤ _
+  rw [hIdentity, hIntegral]
+  exact hwindow a B ha hab
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
