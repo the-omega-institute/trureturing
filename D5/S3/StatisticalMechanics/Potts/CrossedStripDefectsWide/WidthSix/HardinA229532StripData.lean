@@ -13,7 +13,7 @@ between: proof_shape=bind-only; consumers=HardinA229532Strip.result
 Valid: proof_shape=bind-only; consumers=HardinA229532Strip.result
 decidableValid: proof_shape=bind-only; consumers=HardinA229532Strip.result
 equalityPatternCode: proof_shape=bind-only; consumers=cl, equalityPatternCode_relabel, SquareStripDefects.HardinA229457StripData.cl, SquareStripDefects.HardinA229604StripData.cl
-equalityPatternCode_relabel: proof_shape=bind-only; consumers=SquareStripDefects.HardinA229457StripClasses.class_relabel, SquareStripDefects.HardinA229604StripClasses.transition_counts
+equalityPatternCode_relabel: proof_shape=bind-only; consumers=HardinA229532StripClasses.class_relabel, SquareStripDefects.HardinA229457StripClasses.class_relabel, SquareStripDefects.HardinA229604StripClasses.transition_counts
 cl: proof_shape=bind-only; consumers=HardinA229532Strip.result, SquareStripDefects.HardinA229457StripData.cl, SquareStripDefects.HardinA229457Strip.finite_certificate
 T: proof_shape=bind-only; consumers=HardinA229532Strip.result
 initial: proof_shape=bind-only; consumers=HardinA229532Strip.result, SquareStripDefects.HardinA229457StripData.initial
