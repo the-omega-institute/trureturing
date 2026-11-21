@@ -163,7 +163,7 @@ internal sealed class RussoHeapLowerSweepDocument : IScribeDocumentDefinition
         All("label", Arrow(Nat, A), All("L", Nat, If(Method("Nodup", Labels()),
             All("p", Nat, All("i", Nat, If(Lt(I, V("L")),
                 Equal(App(Pow(Method("formPerm", Labels()), P), App(V("label"), I)),
-                    App(V("label"), Mod(Add(I, P), V("L")))))))))));
+                    App(V("label"), Mod(Par(Add(I, P)), V("L")))))))))));
 
     private static Formula NetCoordinate()
     {

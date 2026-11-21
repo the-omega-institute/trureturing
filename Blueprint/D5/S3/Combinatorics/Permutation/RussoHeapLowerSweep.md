@@ -216,7 +216,7 @@ Definition 22 places the target reversal on the right of the negative power of t
 
 **Theorem 1.17 (Powers of the cycle of a list).**
 
-$$\forall(\alpha:Type),[\operatorname{DecidableEq}\left(\alpha\right)],\forall(\mathit{label}:\mathbb{N} \to \alpha),\forall(L:\mathbb{N}),((\operatorname{List.ofFn}\left((i:\operatorname{Fin}\left(L\right))\mapsto \mathit{label}\left((i).val\right)\right)).Nodup)\longrightarrow \forall(p:\mathbb{N}),\forall(i:\mathbb{N}),(i < L)\longrightarrow \left((\operatorname{List.ofFn}\left((i:\operatorname{Fin}\left(L\right))\mapsto \mathit{label}\left((i).val\right)\right)).formPerm^{p}\right)\left(\mathit{label}\left(i\right)\right) = \mathit{label}\left(i + p \operatorname{mod} L\right)$$
+$$\forall(\alpha:Type),[\operatorname{DecidableEq}\left(\alpha\right)],\forall(\mathit{label}:\mathbb{N} \to \alpha),\forall(L:\mathbb{N}),((\operatorname{List.ofFn}\left((i:\operatorname{Fin}\left(L\right))\mapsto \mathit{label}\left((i).val\right)\right)).Nodup)\longrightarrow \forall(p:\mathbb{N}),\forall(i:\mathbb{N}),(i < L)\longrightarrow \left((\operatorname{List.ofFn}\left((i:\operatorname{Fin}\left(L\right))\mapsto \mathit{label}\left((i).val\right)\right)).formPerm^{p}\right)\left(\mathit{label}\left(i\right)\right) = \mathit{label}\left((i + p) \operatorname{mod} L\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/RussoHeapLowerSweep.formPerm_ofFn_pow` (`✓ std3`). ∎
 
