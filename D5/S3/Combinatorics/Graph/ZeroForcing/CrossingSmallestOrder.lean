@@ -2,12 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/ZeroForcing/CrossingSmallestOrder
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Star]
    utility: none
-   digest: The ordered connected forcing crossing of Mukherjee and Ray holds at every order n <= 3 and fails at every order n >= 4. -/
+   digest: Trees of order n have equal connected forcing coefficients, and the ordered crossing of Mukherjee and Ray holds, exactly when n <= 3. -/
 
 import D5.S3.Combinatorics.Graph.ZeroForcing.StarConnectedForcing
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.Star
 
 /-! Problem 5.3 of S. Mukherjee and P. Ray, On the connected zero forcing polynomial of finite
 trees (arXiv:2611.10985), asks for a cutoff `l` with the first tree's connected forcing
@@ -15,15 +15,17 @@ coefficients below the second's up to `l` and above them afterwards, for every p
 the same order. `claimAt n` is that assertion at order `n`; the frozen
 `ConnectedForcingCrossingRefutation.claim` is its conjunction over all orders.
 
-`result`: `claimAt n` holds exactly when `n ≤ 3`. Every tree on at most three vertices is
+`result`: all trees of order `n` have the same coefficients exactly when `n ≤ 3`, and `claimAt n`
+holds exactly when `n ≤ 3`. Every tree on at most three vertices is
 isomorphic to the path on as many vertices, and the coefficients are invariant under graph
 isomorphism, so all trees of such an order have the same coefficients and `l = n` works. For
 `n ≥ 4` the path followed by the star has no cutoff: the path has two connected forcing sets of
 size one and the star none. Hence the smallest order of a counterexample is four.
 
 admission_basis: escape-witness. Escape witnesses: black_map with cf_forward and coefficient_iso
-(isomorphism invariance), exists_adj, coefficient_eq_path and tree_le_three (trees on at most three
-vertices), star_tree (the star is a tree). -/
+(isomorphism invariance of the coefficients), coefficient_eq_path and tree_le_three (trees on at
+most three vertices); the star is a tree by Mathlib's `isTree_starGraph`.
+-/
 
 set_option autoImplicit false
 
@@ -54,12 +56,7 @@ private theorem cf_forward (G : SimpleGraph V) (H : SimpleGraph W) (e : G ≃g H
   refine ⟨?_, fun w => ?_⟩
   · rw [hset]
     have iso : G.induce (S : Set V) ≃g H.induce (e '' (S : Set V)) :=
-      { toFun := fun x => ⟨e x.1, ⟨x.1, x.2, rfl⟩⟩
-        invFun := fun y => ⟨e.symm y.1, by
-          obtain ⟨y, x, hx, rfl⟩ := y; simpa using hx⟩
-        left_inv := fun x => by simp
-        right_inv := fun y => by simp
-        map_rel_iff' := by intro a b; simp [e.map_adj_iff] }
+      e.induce e.injective.injOn.bijOn_image
     exact (Iso.connected_iff iso).mp hc
   · rw [hset]
     have := black_map G H e S (e.symm w) (hf _)
@@ -99,15 +96,6 @@ private theorem coefficient_eq_path [Fintype V] (G : SimpleGraph V) (n : ℕ)
     { toEquiv := Equiv.ofBijective f hb
       map_rel_iff' := by intro u v; exact (hadj u v).symm } i
 
-/-- In a connected graph with at least two vertices every vertex has a neighbour. -/
-private theorem exists_adj [Fintype V] (G : SimpleGraph V) (hG : G.Connected) (v w : V)
-    (hvw : v ≠ w) :
-    ∃ u, G.Adj v u := by
-  obtain ⟨p⟩ := hG.preconnected v w
-  cases p with
-  | nil => exact absurd rfl hvw
-  | cons h _ => exact ⟨_, h⟩
-
 /-- A tree on at most three vertices has the coefficients of the path on as many vertices. -/
 private theorem tree_le_three [Fintype V] (G : SimpleGraph V) (hG : G.IsTree) (n : ℕ)
     (hV : Fintype.card V = n) (hn : n ≤ 3) (i : ℕ) :
@@ -127,7 +115,8 @@ private theorem tree_le_three [Fintype V] (G : SimpleGraph V) (hG : G.IsTree) (n
       simpa using hV)
     have hmem : ∀ u, u = x ∨ u = y := fun u => by
       have := Finset.mem_univ u; rw [huniv] at this; simpa using this
-    obtain ⟨u, hu⟩ := exists_adj G hG.connected x y hxy
+    have : Nontrivial V := ⟨⟨x, y, hxy⟩⟩
+    obtain ⟨u, hu⟩ := hG.connected.preconnected.exists_adj_of_nontrivial x
     have hxy' : G.Adj x y := by
       rcases hmem u with rfl | rfl
       · exact absurd hu (hirr _)
@@ -157,11 +146,8 @@ private theorem tree_le_three [Fintype V] (G : SimpleGraph V) (hG : G.IsTree) (n
       have h2 := hG.card_edgeFinset
       omega
     -- each vertex has a neighbour
-    have nb : ∀ v, ∃ u, G.Adj v u := fun v => by
-      rcases hmem v with rfl | rfl | rfl
-      · exact exists_adj G hG.connected _ _ hxy
-      · exact exists_adj G hG.connected _ _ (Ne.symm hxy)
-      · exact exists_adj G hG.connected _ _ (Ne.symm hxz)
+    have : Nontrivial V := ⟨⟨x, y, hxy⟩⟩
+    have nb : ∀ v, ∃ u, G.Adj v u := hG.connected.preconnected.exists_adj_of_nontrivial
     have nbx : G.Adj x y ∨ G.Adj x z := by
       obtain ⟨u, hu⟩ := nb x
       rcases hmem u with rfl | rfl | rfl
@@ -206,44 +192,12 @@ private theorem tree_le_three [Fintype V] (G : SimpleGraph V) (hG : G.IsTree) (n
         simp [hca, hcb, hca.symm, hcb.symm, hnab, hnba, hbc, Ne.symm hab, Ne.symm hac,
           pathGraph_adj]
 
-/-- The star `K_{1,n-1}` is a tree. -/
+/-- The star `K_{1,n-1}` is Mathlib's star graph centred at `0`, a tree. -/
 private theorem star_tree {n : ℕ} (hn : 1 ≤ n) :
     (StarConnectedForcing.starGraph n).IsTree := by
-  classical
-  rw [isTree_iff_connected_and_card]
-  set c : Fin n := ⟨0, hn⟩
-  refine ⟨Connected.of_isUniversal (v := c) (fun w hw => ⟨hw, Or.inl rfl⟩), ?_⟩
-  rw [Nat.card_eq_fintype_card, ← edgeFinset_card, Nat.card_eq_fintype_card, Fintype.card_fin]
-  have hE : (StarConnectedForcing.starGraph n).edgeFinset =
-      (Finset.univ.erase c).image fun v => s(c, v) := by
-    ext e
-    induction e using Sym2.ind with
-    | _ u v =>
-      rw [mem_edgeFinset, mem_edgeSet]
-      simp only [Finset.mem_image, Finset.mem_erase, Finset.mem_univ, and_true]
-      change u ≠ v ∧ (u.val = 0 ∨ v.val = 0) ↔ _
-      constructor
-      · rintro ⟨huv, hu | hv⟩
-        · have : u = c := Fin.ext hu
-          subst this
-          exact ⟨v, fun h => huv h.symm, rfl⟩
-        · have : v = c := Fin.ext hv
-          subst this
-          exact ⟨u, huv, Sym2.eq_swap⟩
-      · rintro ⟨w, hw, he⟩
-        rw [Sym2.eq_iff] at he
-        rcases he with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-        · exact ⟨fun h => hw h.symm, Or.inl rfl⟩
-        · exact ⟨hw, Or.inr rfl⟩
-  rw [hE, Finset.card_image_of_injOn, Finset.card_erase_of_mem (Finset.mem_univ c),
-    Finset.card_univ, Fintype.card_fin]
-  · omega
-  · intro v _ w _ h
-    simp only at h
-    rw [Sym2.eq_iff] at h
-    rcases h with ⟨-, h⟩ | ⟨h1, h2⟩
-    · exact h
-    · exact h2.trans h1
+  have : StarConnectedForcing.starGraph n = SimpleGraph.starGraph (⟨0, hn⟩ : Fin n) := by
+    ext u v; simp [StarConnectedForcing.starGraph, SimpleGraph.starGraph_adj, Fin.ext_iff]
+  rw [this]; exact isTree_starGraph _
 
 /-- The ordered crossing assertion of Problem 5.3 at a fixed order `n`; `claim` is its
 conjunction over all `n`. -/
@@ -256,31 +210,54 @@ def claimAt (n : ℕ) : Prop :=
       ∀ i : ℤ, (1 ≤ i ∧ i ≤ l → coefficient G i.toNat ≤ coefficient H i.toNat) ∧
         (l + 1 ≤ i ∧ i ≤ (n : ℤ) → coefficient H i.toNat ≤ coefficient G i.toNat)
 
-/-- The smallest order of a counterexample to the ordered crossing assertion is four: it holds at
-every order `n ≤ 3`, where all trees of the same order have the same coefficients, and fails at
-every order `n ≥ 4`, witnessed by the path followed by the star. -/
-theorem result (n : ℕ) : claimAt n ↔ n ≤ 3 := by
+/-- Path followed by star at order `n ≥ 4`: two connected forcing sets of size one against none. -/
+private theorem path_star_one {n : ℕ} (hn : 4 ≤ n) :
+    coefficient (pathGraph n) 1 = 2 ∧ coefficient (StarConnectedForcing.starGraph n) 1 = 0 := by
+  have hs := (StarConnectedForcing.result (n := n)).2.1 hn 1
+  have h1 : ¬ (1 = n) := by omega
+  have h2 : ¬ (1 + 1 = n) := by omega
+  simp only [h1, h2, ↓reduceIte] at hs
+  exact ⟨(PathConnectedForcing.result (n := n) (by omega)).2.1, hs⟩
+
+/-- All trees of order `n` have the same connected forcing coefficients exactly when `n ≤ 3`. -/
+private theorem equal_iff (n : ℕ) :
+    (∀ (V W : Type) [Fintype V] [Fintype W] (G : SimpleGraph V) (H : SimpleGraph W),
+      G.IsTree → H.IsTree → Fintype.card V = n → Fintype.card W = n →
+      ∀ i, coefficient G i = coefficient H i) ↔ n ≤ 3 := by
   constructor
   · intro h
     by_contra hn
     push Not at hn
-    obtain ⟨l, hl, -, hi⟩ := h _ _ (Fin n) (Fin n) (pathGraph n)
-      (StarConnectedForcing.starGraph n)
+    have := h (Fin n) (Fin n) (pathGraph n) (StarConnectedForcing.starGraph n)
       (isTree_pathGraph.mpr (by omega)) (star_tree (by omega)) (Fintype.card_fin n)
-      (Fintype.card_fin n) rfl rfl
+      (Fintype.card_fin n) 1
+    have := path_star_one hn
+    omega
+  · intro hn V W _ _ G H hG hH hV hW i
+    rw [tree_le_three G hG n hV hn, tree_le_three H hH n hW hn]
+
+/-- The smallest order of a counterexample to the ordered crossing assertion is four. All trees of
+order `n` have the same connected forcing coefficients exactly when `n ≤ 3`, and the crossing
+assertion holds at order `n` exactly when `n ≤ 3`; at every order `n ≥ 4` the path followed by the
+star is a counterexample to both. -/
+theorem result (n : ℕ) :
+    ((∀ (V W : Type) [Fintype V] [Fintype W] (G : SimpleGraph V) (H : SimpleGraph W),
+      G.IsTree → H.IsTree → Fintype.card V = n → Fintype.card W = n →
+      ∀ i, coefficient G i = coefficient H i) ↔ n ≤ 3) ∧
+    (claimAt n ↔ n ≤ 3) := by
+  refine ⟨equal_iff n, ⟨fun h => ?_, fun hn => ?_⟩⟩
+  · by_contra hn
+    push Not at hn
+    obtain ⟨l, hl, -, hi⟩ := h _ _ (Fin n) (Fin n) (pathGraph n)
+      (StarConnectedForcing.starGraph n) (isTree_pathGraph.mpr (by omega))
+      (star_tree (by omega)) (Fintype.card_fin n) (Fintype.card_fin n) rfl rfl
     have bad := (hi 1).1 ⟨le_rfl, hl⟩
-    have hp := (PathConnectedForcing.result
-      (n := n) (by omega)).2.1
-    have hs := (D5.S3.Combinatorics.Graph.ZeroForcing.StarConnectedForcing.result
-      (n := n)).2.1 (by omega) 1
-    have h1 : ¬ (1 = n) := by omega
-    have h2 : ¬ (1 + 1 = n) := by omega
-    simp only [h1, h2, ↓reduceIte] at hs
+    obtain ⟨hp, hs⟩ := path_star_one hn
     simp only [Int.toNat_one, hp, hs] at bad
     omega
-  · intro hn p q V W _ _ G H hG hH hV hW _ _
+  · intro p q V W _ _ G H hG hH hV hW _ _
     have hpos : 0 < n := hV ▸ (@Fintype.card_pos _ _ hG.connected.nonempty)
     refine ⟨n, by omega, le_rfl, fun i => ⟨fun _ => ?_, fun hi => by omega⟩⟩
-    rw [tree_le_three G hG n hV hn, tree_le_three H hH n hW hn]
+    rw [(equal_iff n).mpr hn V W G H hG hH hV hW]
 
 end D5.S3.Combinatorics.Graph.ZeroForcing.CrossingSmallestOrder

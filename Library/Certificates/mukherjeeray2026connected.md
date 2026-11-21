@@ -33,7 +33,8 @@ Section 4 already gives the four-vertex path and star, with coefficient lists (0
 
 ## Smallest order of a counterexample
 
-CrossingSmallestOrder.result states that the assertion restricted to trees of a fixed order n
-holds exactly when n ≤ 3. All trees on at most three vertices are isomorphic to the path on as
+CrossingSmallestOrder.result states that all trees of order n have equal coefficients exactly
+when n ≤ 3, and that the assertion restricted to trees of a fixed order n holds exactly when
+n ≤ 3. All trees on at most three vertices are isomorphic to the path on as
 many vertices and so have equal coefficients; at every order n ≥ 4 the path followed by the star
 has no cutoff, since the path has two connected forcing sets of size one and the star none.
