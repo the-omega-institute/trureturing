@@ -41,7 +41,7 @@ open ExponentialGramWeightedEvaluation (exponentialSum frequency)
 open private frobenius_sq sum_evaluations traceNorm_gram_sub_le from
   D5.S3.Quantum.Recovery.PetzExponentialBoundaryEvaluation
 open private columns columns_apply columns_isometry supportedFunction supportedFunction_id
-  mode outputProduct outputProduct_sum exp_ratio boundary_scalar upper rowFactor rowFactor_gram
+  mode outputProduct outputProduct_sum boundary_scalar upper rowFactor rowFactor_gram
   lift lift_mul lift_conjTranspose compression sourceAmplitude sourceAmplitude_unit completed
   physicalFactor complementaryAmplitude dilationColumns phaseMatrix dilationColumns_isometry
   phase_unitary physicalFactor_unitTrace Us upperIntegral_le_loss
@@ -433,7 +433,7 @@ private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L ×
   have hov : overlap D k = 0 := by
     have hnorm : ‖overlap D k‖ ^ 2 = 0 :=
       (mul_eq_zero.mp hmass).resolve_left k.2.2.ne'
-    exact norm_eq_zero.mp (pow_eq_zero hnorm)
+    exact norm_eq_zero.mp ((pow_eq_zero_iff (by decide : 2 ≠ 0)).mp hnorm)
   have hmode : mode D k = 0 := by
     simp [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov]
   simp [endpointCoefficient, hmode, lift]
@@ -453,16 +453,29 @@ private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → �
     apply Finset.sum_congr rfl
     intro k _
     ring
-  change (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) *
-    completionColumns D W t) j c = _
-  rw [hLift, rowFactor_phase, completionColumns_phase]
-  simp only [← Matrix.mul_assoc _ _ (diagonal _), Matrix.mul_diagonal, Matrix.mul_sum,
-    Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul]
-  simp only [Matrix.mul_assoc, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  let L := diagonal (fun j => scalarPhase (Real.log (D.sj j)) t)
+  let R := diagonal (fun c : D.I ⊕ (b × e) => scalarPhase (columnShift D c) t)
+  let H := rowFactor D ½ * Wᴴ
+  let C := completionColumns D W 0
+  have hExpanded : quantizedCompleted D W assign t =
+      L * (∑ k, f k • endpointCoefficient D W k) * R := by
+    change rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) *
+      completionColumns D W t = _
+    calc
+      _ = L * (H * (∑ k, f k • lift (Z k)) * C) * R := by
+        rw [hLift, rowFactor_phase, completionColumns_phase]
+        simp only [H, L, C, R, Matrix.mul_assoc]
+      _ = _ := by
+        simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul]
+        rfl
+  rw [hExpanded]
+  change ((diagonal _ * (∑ k, f k • endpointCoefficient D W k)) * diagonal _) j c = _
+  simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply,
+    smul_eq_mul]
   rw [Finset.mul_sum, Finset.sum_mul]
   apply Finset.sum_congr rfl
   intro k _
-  simp only [endpointCoefficient, Matrix.mul_assoc, Z, f, scalarPhase_add]
+  simp only [f, scalarPhase_add]
   ring
 
 private theorem quantized_evaluation (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
@@ -513,7 +526,7 @@ private theorem quantized_evaluation (W : Matrix (b × e) a ℂ) (assign : ℝ �
       | some k =>
         exact Finset.mem_insert_of_mem (Finset.mem_image_of_mem shift (hc k.1 k.2))
     exact (Finset.card_le_card hsub).trans
-      (Finset.card_insert_le 0 _ |>.trans (Nat.add_le_add_right Finset.card_image_le 1))
+      ((Finset.card_insert_le 0 _).trans (Nat.add_le_add_right Finset.card_image_le 1))
   have hsum (t : ℝ) : ‖E t‖ ^ 2 =
       ∑ jc : D.J × (D.I ⊕ (b × e)), ‖E t jc.1 jc.2‖ ^ 2 := by
     rw [frobenius_sq, Fintype.sum_prod_type]
@@ -584,8 +597,7 @@ private theorem quantized_continuous (W : Matrix (b × e) a ℂ) (assign : ℝ �
   apply continuous_matrix
   intro j c
   simp_rw [quantized_entry]
-  refine continuous_finsetSum _ (fun k hk => ?_)
-  clear hk
+  refine continuous_finsetSum _ (fun k _ => ?_)
   dsimp only [scalarPhase, PetzLogisticEvaluation.mode]
   fun_prop
 
