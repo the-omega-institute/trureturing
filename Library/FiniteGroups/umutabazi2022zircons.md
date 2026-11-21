@@ -8,7 +8,7 @@ url: https://arxiv.org/abs/2206.06538v1
 claim: "Section 4 exhibits the smooth type B₂ interval from s₁ to s₁s₂s₁ as a counterexample to extending a left-descent criterion to multiply laced types."
 strata_touched:
   - D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation
-license: arXiv perpetual non-exclusive license
+license: CC-BY-4.0
 triage: anchor
 ---
 
@@ -28,3 +28,4 @@ multiply laced example.
 
 - DOI https://doi.org/10.48550/arXiv.2206.06538
 - Version https://arxiv.org/abs/2206.06538v1
+- Version license https://arxiv.org/html/2206.06538v1#license-tr
