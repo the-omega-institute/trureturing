@@ -40,9 +40,8 @@ def actual : Realization scalarSignature :=
 def rejected : Realization scalarSignature :=
   realize scalarSignature (fun _ _ x y => x + 1 = y) (fun e => nomatch e)
 
-abbrev arena : Arena where
-  signature := scalarSignature
-  Law R := ∀ {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
+private def observedLaw (R : Realization scalarSignature) : Prop :=
+  ∀ {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
     [Fintype b] [DecidableEq b] [Nonempty b] [Fintype e] [DecidableEq e]
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
     (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ) (_hW : Wᴴ * W = 1)
@@ -54,6 +53,9 @@ abbrev arena : Arena where
     (∀ t, R.readout () () (‖A - B t‖ ^ 2) (deficit D (1 / 2) t) ∧
       B t * (B t)ᴴ = rotatedGram D t) ∧
       physicalGram D A = D.R ∧ physicalGram D (B 0) = recoveredState D
+
+abbrev arena : Arena :=
+  ⟨scalarSignature, observedLaw.{u}⟩
 
 private theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
   intro law
@@ -68,7 +70,9 @@ private theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
     deficit M.data (1 / 2) 0 at bad
   linarith only [h, bad]
 
-def family : Registration arena.{u} (type_of% @supported_stinespring_gram.{u}) where
+private abbrev statement : Prop := type_of% @supported_stinespring_gram.{u}
+
+def family : Registration arena.{u} statement.{u} where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@supported_stinespring_gram.{u}, rejected, rejectedLaw⟩
