@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
+namespace StrataLint.Scribe.Blueprint.D5.S3.CharacterSums;
 
 internal sealed class SplitPrimeHostSeriesDocument : IScribeDocumentDefinition
 {
@@ -20,7 +20,7 @@ internal sealed class SplitPrimeHostSeriesDocument : IScribeDocumentDefinition
                 + "tends to infinity and that for every natural threshold N there is an element of S greater than N.")),
             Describe.Lean(
                 DescribeId.Create("weighted-split-prime-supply"),
-                DeclarationHandle.Create("D5/S3/Arith/SplitPrimeHostSeries.split_prime_host_series"),
+                DeclarationHandle.Create("D5/S3/CharacterSums/SplitPrimeHostSeries.split_prime_host_series"),
                 H("Divergence in either order of prime selection"),
                 StatementSource.FromAuthor(Claim()), AssessedProvenance.FromRepo(),
                 Blocks(

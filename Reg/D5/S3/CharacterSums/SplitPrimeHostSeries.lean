@@ -1,16 +1,16 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.SplitPrimeHostSeries
+import D5.S3.CharacterSums.SplitPrimeHostSeries
 import Reg.Support.SingleDependentReadout
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Filter Set
-open _root_.D5.S3.Arith.SplitPrimeHostSeries
+open _root_.D5.S3.CharacterSums.SplitPrimeHostSeries
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S3.Arith.SplitPrimeHostSeries
+namespace Reg.D5.S3.CharacterSums.SplitPrimeHostSeries
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → Prop)
@@ -67,10 +67,10 @@ def family : Registration arena (type_of% @split_prime_host_series) where
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@split_prime_host_series) (Realization signature) Unit Unit where
   unitName := .str
-    `D5.S3.Arith.SplitPrimeHostSeries.split_prime_host_series
+    `D5.S3.CharacterSums.SplitPrimeHostSeries.split_prime_host_series
     "__information_unit"
   realizationName := .str
-    `Reg.D5.S3.Arith.SplitPrimeHostSeries "family"
+    `Reg.D5.S3.CharacterSums.SplitPrimeHostSeries "family"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -87,7 +87,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.SplitPrimeHostSeries
+    owner := `D5.S3.CharacterSums.SplitPrimeHostSeries
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -100,4 +100,4 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.SplitPrimeHostSeries
+end Reg.D5.S3.CharacterSums.SplitPrimeHostSeries

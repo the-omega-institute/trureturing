@@ -12,7 +12,7 @@ For each set S, M(S,X) sums (log n)/n over its elements n < X. In the formula, L
 
 $$\forall B \in \mathbb{N},\; \operatorname{L}\left(\operatorname{D}\left(B\right)\right) \land \left(\left(\forall d \in \mathbb{N},\; d \in \operatorname{D}\left(B\right) \Rightarrow \operatorname{L}\left(\operatorname{Q}\left(d\right)\right)\right) \land \left(\forall q \in \mathbb{N},\; \left(\operatorname{Prime}\left(q\right) \land \operatorname{mod}\left(q, 8\right) = 3\right) \Rightarrow \operatorname{L}\left(\operatorname{T}\left(B, q\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/SplitPrimeHostSeries.split_prime_host_series` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/CharacterSums/SplitPrimeHostSeries.split_prime_host_series` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,4 +28,4 @@ Placing the same q and d in prescribed logarithmic ranges and controlling their 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/SplitPrimeHostSeries.split_prime_host_series`
+- Truth anchor: `D5/S3/CharacterSums/SplitPrimeHostSeries.split_prime_host_series`

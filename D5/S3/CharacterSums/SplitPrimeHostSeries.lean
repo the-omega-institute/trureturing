@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/SplitPrimeHostSeries
+/- GID: D5/S3/CharacterSums/SplitPrimeHostSeries
    generality: I
-   mirror-B: D5/B/S3/Arith/SplitPrimeHostSeries
+   mirror-B: D5/B/S3/CharacterSums/SplitPrimeHostSeries
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -16,7 +16,7 @@ noncomputable section
 
 open Filter ArithmeticFunction
 
-namespace D5.S3.Arith.SplitPrimeHostSeries
+namespace D5.S3.CharacterSums.SplitPrimeHostSeries
 
 /-- Prime discriminant parameter subject to all the prescribed small splitting tests. -/
 def splittingPrime (B d : ℕ) : Prop :=
@@ -139,4 +139,4 @@ theorem split_prime_host_series (B : ℕ) :
       Tendsto (mass S) atTop atTop ∧ ∀ N : ℕ, ∃ d > N, S d :=
   ⟨discriminants B, fun _ hd => companions hd.2.1, reverse_selection B⟩
 
-end D5.S3.Arith.SplitPrimeHostSeries
+end D5.S3.CharacterSums.SplitPrimeHostSeries
