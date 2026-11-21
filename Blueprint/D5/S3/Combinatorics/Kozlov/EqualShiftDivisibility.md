@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall A \in \mathbb{Q}[X
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/EqualShiftDivisibility.equal_shift_kozlov_deficiency_divisible` (`✓ std3`). ∎
 
+*Resolves.* `Problems/snellman-equal-shift-kozlov-deficiency` (proved) by `D5/S3/Combinatorics/Kozlov/EqualShiftDivisibility.equal_shift_kozlov_deficiency_divisible`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"snellman-equal-shift-kozlov-deficiency","declaration_gid":"D5/S3/Combinatorics/Kozlov/EqualShiftDivisibility.equal_shift_kozlov_deficiency_divisible","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.

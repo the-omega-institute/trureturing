@@ -18,15 +18,18 @@ internal sealed class EqualShiftDivisibilityDocument : IScribeDocumentDefinition
             Node("equal-shift-count-polynomials-exist", "equal_shift_count_polynomials_exist", "Both literal counts have rational interpolants", DescribeRole.Theorem,
                 "Part III, Corollary 34, states polynomiality of both counts and credits Part II, Theorems 36 and 41, for the proper count and its transfer formula. Here the rational witnesses come from the two falling-binomial matrix polynomials composed with X+1. The unconditional proper and lattice transfer laws identify each entry of power r+1 with its literal count at every positive rank r.", Existence()),
             Node("equal-shift-kozlov-deficiency-divisible", "equal_shift_kozlov_deficiency_divisible", "Divisibility by X times X plus one", DescribeRole.Theorem,
-                "Infinitely many positive natural ranks identify each interpolant with its matrix polynomial. At argument zero the relevant power is one and the first-to-last entry is one in each matrix. At argument minus one the relevant power is zero, so the identity entry is one when n=1 and zero otherwise. Thus the difference has both roots, giving the product of the two factors. This proves the divisibility question in Part III, Section 10 item 2.", Divisibility()))));
+                "Infinitely many positive natural ranks identify each interpolant with its matrix polynomial. At argument zero the relevant power is one and the first-to-last entry is one in each matrix. At argument minus one the relevant power is zero, so the identity entry is one when n=1 and zero otherwise. Thus the difference has both roots, giving the product of the two factors. This proves the divisibility question in Part III, Section 10 item 2.", Divisibility(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("snellman-equal-shift-kozlov-deficiency"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string prose, Formula? formula = null) =>
+    private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string prose, Formula? formula = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("kozlov-equal-shift-divisibility-" + id),
             DeclarationHandle.Create(Prefix + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(formula),
             name == "equal_shift_count_polynomials_exist"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Natural() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rational() => Seq(Mathbb, Grp(F.Id("Q")));
