@@ -17,17 +17,18 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoProgression
 
 /-
 proof_shape:
-  beta, blockStart, block: definition
-  two_div, inv_phi, alpha_phi, phi_bounds, beta_lt: bind-only (consumers: progression,
-    beta_five, blockStart_eq_ceil, block_delta, result)
-  beta_pos, beta_five, blockStart_pos, blockStart_succ, lower_succ, mem_block: content
-    (consumers: correction_iff, blockStart_eq_ceil, blocks_partition, block_delta, result)
-  progression, correction_iff, blockStart_eq_ceil, blockStart_lt, lower_strictMono,
-    blocks_partition, block_delta: content (consumer: result)
+  beta, blockStart, block, lower: definition
+  two_div, inv_phi, alpha_phi, phi_bounds, five_div, floor_five, beta_five, beta_lt: bind-only
+    (consumers: progression, blockStart_eq_ceil, block_delta, result)
+  beta_pos, correction_iff: bind-only (consumers: blockStart_eq_ceil, block_delta, result)
+  blockStart_pos, blockStart_succ, lower_succ, mem_block, blockStart_lt, lower_strictMono,
+    block_pos, block_nonempty: bind-only (consumers: blocks_partition, block_delta, result)
+  progression: bind-only (consumers: block_delta, result)
+  blockStart_eq_ceil, blocks_partition, block_delta: content (consumer: result)
   result: content
-escape_witness: (d k + 2) / phi = floor(d / phi) k + 1 + (beta_d k + alpha) through
-  2 / phi = 1 + alpha; the inverse (5 phi - 8)^-1 = 3 + 5 phi turns (q - alpha) / beta_5 into
-  3q - 1 + (5q - 1) phi, whose ceiling is floor((5q - 1) phi) + 3q by irrationality.
+escape_witness: the closed-form ceiling of blockStart_eq_ceil, obtained from the inverse
+  (5 phi - 8)^-1 = 3 + 5 phi and the irrationality of (5q - 1) phi; the Nat.find construction
+  of blocks_partition; and their composition with the correction range in block_delta.
 admission_basis: escape-witness
 -/
 
@@ -86,13 +87,15 @@ private theorem phi_bounds : (8 : ℝ) / 5 < Real.goldenRatio ∧ Real.goldenRat
   have h0 := Real.sqrt_nonneg 5
   constructor <;> (rw [Real.goldenRatio]; nlinarith)
 
-private theorem beta_five : beta 5 = 5 * Real.goldenRatio - 8 := by
+private theorem five_div : (5 : ℝ) / Real.goldenRatio = 5 * Real.goldenRatio - 5 := by
+  rw [div_eq_mul_inv, inv_phi]; ring
+
+private theorem floor_five : ⌊((5 : ℕ) : ℝ) / Real.goldenRatio⌋ = 3 := by
   obtain ⟨hl, hh⟩ := phi_bounds
-  have he : (5 : ℝ) / Real.goldenRatio = 5 * Real.goldenRatio - 5 := by
-    rw [div_eq_mul_inv, inv_phi]; ring
-  have hf : ⌊((5 : ℕ) : ℝ) / Real.goldenRatio⌋ = 3 := by
-    rw [Int.floor_eq_iff]; push_cast; rw [he]; constructor <;> linarith
-  rw [beta, Int.fract, hf]; push_cast; rw [he]; ring
+  rw [Int.floor_eq_iff]; push_cast; rw [five_div]; constructor <;> linarith
+
+private theorem beta_five : beta 5 = 5 * Real.goldenRatio - 8 := by
+  rw [beta, Int.fract, floor_five]; push_cast; rw [five_div]; ring
 
 /-- The block starts `k_q`, with `k_0 = 1`. -/
 noncomputable def blockStart (q : ℕ) : ℕ :=
@@ -120,14 +123,8 @@ private theorem blockStart_eq_ceil (q : ℕ) (hq : 1 ≤ q) :
   set t := ((5 * q - 1 : ℕ) : ℝ) * Real.goldenRatio with ht
   have ht0 : 0 ≤ t := by positivity
   rw [hid, Int.ceil_add_intCast]
-  have hc : ⌈t⌉ = ⌊t⌋ + 1 := by
-    rw [Int.ceil_eq_iff]; push_cast; rw [add_sub_cancel_right]
-    have := Int.floor_le t
-    have := Int.lt_floor_add_one t
-    have hne : (⌊t⌋ : ℝ) ≠ t := fun h => hirr ⌊t⌋ h.symm
-    constructor
-    · exact lt_of_le_of_ne (by linarith) hne
-    · linarith
+  have hc : ⌈t⌉ = ⌊t⌋ + 1 :=
+    (Int.ceil_eq_floor_add_one_iff_notMem t).mpr (fun ⟨z, hz⟩ => hirr z hz.symm)
   rw [hc, ← Int.natCast_floor_eq_floor ht0]
   push_cast
   omega
@@ -198,10 +195,7 @@ private theorem blocks_partition (m : ℕ) (hm : 1 ≤ m) : ∃! q, m ∈ block 
 /-- On the block `P_q`, the maximum degree at order `5k` is `3k + q`. -/
 private theorem block_delta (q k : ℕ) (hk : 5 * k ∈ block q) : delta (5 * k) = 3 * k + q := by
   obtain ⟨hl, hh⟩ := phi_bounds
-  have hf : ⌊((5 : ℕ) : ℝ) / Real.goldenRatio⌋ = 3 := by
-    have he : (5 : ℝ) / Real.goldenRatio = 5 * Real.goldenRatio - 5 := by
-      rw [div_eq_mul_inv, inv_phi]; ring
-    rw [Int.floor_eq_iff]; push_cast; rw [he]; constructor <;> linarith
+  have hf := floor_five
   rw [mem_block] at hk
   have hup : k < blockStart (q + 1) := by
     have := hk.2; rw [lower_succ] at this; omega
@@ -234,20 +228,33 @@ private theorem block_delta (q k : ℕ) (hk : 5 * k ∈ block q) : delta (5 * k)
 
 private theorem beta_lt (d : ℕ) : beta d < 1 := Int.fract_lt_one _
 
+private theorem block_pos (q m : ℕ) (hm : m ∈ block q) : 1 ≤ m := by
+  rw [mem_block] at hm
+  have := blockStart_pos q
+  have := hm.1
+  unfold lower at this
+  split_ifs at this <;> omega
+
+private theorem block_nonempty (q : ℕ) : (block q).Nonempty :=
+  ⟨lower q, (mem_block q (lower q)).mpr ⟨le_rfl, lower_strictMono (Nat.lt_succ_self q)⟩⟩
+
 /-- The maximum degree along every progression `d k`, the exact range of `k` for each
 correction value, and for `d = 5` the closed-form block starts, the block partition of
 the positive orders and the maximum degree on each block. -/
 theorem result :
     (∀ d k : ℕ, delta (d * k) = ⌊(d : ℝ) / Real.goldenRatio⌋ * k + ⌊beta d * k + alpha⌋) ∧
     (∀ d : ℕ, 1 ≤ d → 0 < beta d ∧ beta d < 1) ∧
+    (⌊((5 : ℕ) : ℝ) / Real.goldenRatio⌋ = 3 ∧ beta 5 = 5 / Real.goldenRatio - 3) ∧
     (∀ d k : ℕ, 1 ≤ d → 1 ≤ k → ∀ q : ℤ,
       (⌊beta d * k + alpha⌋ = q ↔
         max 1 ⌈((q : ℝ) - alpha) / beta d⌉ ≤ k ∧ (k : ℤ) < ⌈((q : ℝ) + 1 - alpha) / beta d⌉)) ∧
     (∀ q : ℕ, 1 ≤ q → ⌈((q : ℝ) - alpha) / beta 5⌉ = (blockStart q : ℤ)) ∧
     (∀ m : ℕ, 1 ≤ m → ∃! q, m ∈ block q) ∧
+    (∀ q m : ℕ, m ∈ block q → 1 ≤ m) ∧ (∀ q : ℕ, (block q).Nonempty) ∧
     (∀ q k : ℕ, 5 * k ∈ block q → delta (5 * k) = 3 * k + q) :=
-  ⟨progression, fun d hd => ⟨beta_pos d hd, beta_lt d⟩, correction_iff, blockStart_eq_ceil,
-    blocks_partition, block_delta⟩
+  ⟨progression, fun d hd => ⟨beta_pos d hd, beta_lt d⟩,
+    ⟨floor_five, by rw [beta_five, five_div]; ring⟩, correction_iff, blockStart_eq_ceil,
+    blocks_partition, block_pos, block_nonempty, block_delta⟩
 
 #print axioms result
 
