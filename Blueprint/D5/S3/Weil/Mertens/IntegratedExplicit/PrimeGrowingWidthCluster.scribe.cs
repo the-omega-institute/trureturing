@@ -20,38 +20,51 @@ internal sealed class PrimeGrowingWidthClusterDocument : IScribeDocumentDefiniti
                     + "is indexed by an actual zero occurrence, including multiplicities. "
                     + "The integral uses Lebesgue measure on s>0. Including s=0 gives the same value."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("prime-tail-window-extent-bound-of-upper-bound"),
+                DeclarationHandle.Create(Module + "prime_tail_window_extent_bound_of_upper_bound"),
+                H("Uniform left-endpoint bound"), StatementSource.FromAuthor(ExtentBound()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
+                Blocks(
+                    Paragraph(Text(
+                        "Write Qϑ(x) for the actual prime-only tail, the integral of (ϑ(u)−u)/u² "
+                        + "over u>x from Zhao's equation (14). The mass N(a,B) integrates "
+                        + "max(−Qϑ(x),0)/√x from a to B. Put p=β−1/2 and let φ be the simultaneous "
+                        + "phase orbit of the actual zero occurrences. The threshold in B can depend "
+                        + "on ε and β and applies to every a∈[2,B].")),
+                    Paragraph(Text(
+                        "Let X≥2 be a fixed threshold beyond which the arithmetic density is bounded "
+                        + "by C x^(p−1), and write C₀=N(2,X). A prefix ending below X has mass at most C₀. "
+                        + "Above X, integrating the power bound gives N(2,a)≤C₀+(C/p)(a^p−X^p). "
+                        + "Since a≥2, K=C₀/2^p+C/p bounds N(2,a)/a^p in both cases.")),
+                    Paragraph(Text(
+                        "For fixed L≥0 and large B, the rightmost window starts at D=B exp(−L). "
+                        + "The normalized prefix up to D is bounded by K exp(−pL). The fixed-width "
+                        + "transfer approximates the normalized mass from D to B by the truncated "
+                        + "phase integral at φ(log B). If S is the sum of the norms of the complete-tail "
+                        + "coefficients, the omitted phase integral is bounded by (S/p) exp(−pL), "
+                        + "uniformly in the phase. Taking L large and then B large makes the cumulative "
+                        + "residual arbitrarily small. This argument gives eventual control for each ε.")),
+                    Paragraph(Text(
+                        "Subtract N(2,a)/B^p from the cumulative normalized mass. This subtraction "
+                        + "can increase the lower error by at most K(a/B)^p. The upper error stays "
+                        + "bounded by ε because the removed mass is nonnegative."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("prime-tail-growing-width-cluster-iff-of-upper-bound"),
                 DeclarationHandle.Create(Module + "prime_tail_growing_width_cluster_iff_of_upper_bound"),
                 H("Exact cluster values for moving left endpoints"), StatementSource.FromAuthor(Claim()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
-                        "Write Qϑ(x) for the actual prime-only tail, the integral of (ϑ(u)−u)/u² "
-                        + "over u>x from Zhao's equation (14). The mass N(A,B) integrates "
-                        + "max(−Qϑ(x),0)/√x from A to B. The variable B tends to +∞ through real values. "
-                        + "The left endpoint A(B) is chosen pointwise. The constant choice A(B)=2 "
-                        + "gives the cumulative mass.")),
+                        "Let H be the closure of φ. The finite-width phase integrals are continuous, "
+                        + "and the uniform exponential bound on their tails makes the infinite phase "
+                        + "integral continuous as well.")),
                     Paragraph(Text(
-                        "Let H be the closure of the simultaneous orbit φ of the actual zero occurrences, "
-                        + "and put p=β−1/2>0. If S is the sum of the norms of the complete-tail coefficients, "
-                        + "the infinite phase integral minus its truncation at L≥0 lies between zero and "
-                        + "(S/p) exp(−pL) for every phase. Thus the continuous finite-width integrals "
-                        + "converge uniformly, and the infinite phase integral is continuous.")),
-                    Paragraph(Text(
-                        "Fix L≥0 and put D=B exp(−L). Eventually A(B)≤D≤B. Let X≥2 be a fixed "
-                        + "threshold beyond which the arithmetic density is bounded by C x^(p−1). "
-                        + "For B with D≥X, split the added segment [A(B),D] at max(A(B),X). "
-                        + "Its early contribution is at most C₀=N(2,X). Integrating the power "
-                        + "bound on the rest and dividing by B^p bounds the normalized added mass by "
-                        + "(C/p) exp(−pL)+C₀/B^p, uniformly in the admissible left endpoint.")),
-                    Paragraph(Text(
-                        "At fixed L the logarithmic change of variables and the signed-input estimate "
-                        + "approximate the normalized rightmost window by the finite phase integral at "
-                        + "φ(log B). Taking L large and then B large makes the moving mass differ "
-                        + "from the infinite integral at that very phase by a quantity tending to zero. "
-                        + "Forward recurrence of φ and compactness of H give both directions of the "
-                        + "cluster equivalence. If the β-line is empty, the phase image is {0}. "
-                        + "In particular β=1 is an admissible upper bound and its line is empty.")),
+                        "When log(B/A(B)) tends to infinity, the endpoint factor (A(B)/B)^p tends to "
+                        + "zero. The uniform bound therefore transfers the cluster values from the "
+                        + "phase integral evaluated at φ(log B) to the moving mass. Forward recurrence "
+                        + "of φ and compactness of H give both directions of the cluster equivalence. "
+                        + "If the β-line is empty, the phase image is {0}. In particular β=1 is "
+                        + "an admissible upper bound and its line is empty.")),
                     Paragraph(Text(
                         "Bugajewski, Diagana and Mahop study integrable-kernel convolution of "
                         + "asymptotically almost periodic functions in Theorem 3.3 and the exponential "
@@ -96,6 +109,30 @@ internal sealed class PrimeGrowingWidthClusterDocument : IScribeDocumentDefiniti
             Multiply(Call("exp", exponent), negativePart), Sp, F.Id("d"), s);
         return Disp(All("r", FunctionType(Complex, Real), All("beta", Real, All("h", Phases,
             Equal(WindowAt(r, beta, h), integral)))));
+    }
+
+    private static Formula ExtentBound()
+    {
+        var beta = F.Id("beta");
+        var z = F.Id("z");
+        var a = F.Id("a");
+        var b = F.Id("B");
+        var k = F.Id("K");
+        var epsilon = F.Id("epsilon");
+        var p = Subtract(beta, Half);
+        var betaBound = new Formula.Relation(Half, FormulaRelationOperator.LessThan, beta);
+        var upperBound = All("z", Complex,
+            ImpliesClaim(Call("NontrivialZero", z), Le(Call("Re", z), beta)));
+        var error = Subtract(new Formula.Fraction(Call("N", a, b), new Formula.Power(b, p)),
+            WindowAt(F.Id("Re"), beta, Call("phi", Call("log", b))));
+        var extent = Multiply(k, new Formula.Power(new Formula.Fraction(a, b), p));
+        var uniformBound = All("a", Real, ImpliesClaim(And(Le(D(2), a), Le(a, b)),
+            And(Le(new Formula.Absolute(error), Add(epsilon, extent)), Le(error, epsilon))));
+        var eventually = Call("Eventually", Lambda(b, uniformBound), F.Id("atTop"));
+        var positive = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, epsilon);
+        var exists = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("K"), Real,
+            And(Le(D(0), k), All("epsilon", Real, ImpliesClaim(positive, eventually))));
+        return Disp(All("beta", Real, ImpliesClaim(betaBound, ImpliesClaim(upperBound, exists))));
     }
 
     private static Formula Claim()

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The infinite phase window gives the prime-tail mass cluster set at growing widths. -/
+   digest: The infinite phase window controls prime-tail extent errors and cluster values. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeAttainedCriticalWidth
@@ -110,85 +110,125 @@ private theorem phaseWindow_tendstoUniformly {β : ℝ} (hβ : 1 / 2 < β) :
 private def movingMass (p : ℝ) (A : ℝ → ℝ) (B : ℝ) : ℝ :=
   (∫ x in A B..B, integrand x) / B ^ p
 
-private def fixedLeft (L B : ℝ) : ℝ := B * Real.exp (-L)
+/-- Moving the left endpoint from 2 to `a` removes a nonnegative prefix. -/
+private theorem movingMass_removed_bound {p K a B : ℝ} (ha : 2 ≤ a) (haB : a ≤ B)
+    (hprefix : (∫ x in (2 : ℝ)..a, integrand x) ≤ K * a ^ p) :
+    0 ≤ movingMass p (fun _ => 2) B - movingMass p (fun _ => a) B ∧
+    movingMass p (fun _ => 2) B - movingMass p (fun _ => a) B ≤ K * (a / B) ^ p := by
+  have ha₀ : 0 < a := (by norm_num : (0 : ℝ) < 2).trans_le ha
+  have hB := ha₀.trans_le haB
+  have hBp : 0 ≤ B ^ p := Real.rpow_nonneg hB.le _
+  unfold movingMass
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    (integrand_intervalIntegrable le_rfl ha) (integrand_intervalIntegrable ha haB),
+    add_div, add_sub_cancel_right, Real.div_rpow ha₀.le hB.le, ← mul_div_assoc]
+  exact ⟨div_nonneg (intervalIntegral.integral_nonneg_of_forall ha integrand_nonneg) hBp,
+    div_le_div_of_nonneg_right hprefix hBp⟩
 
-/-- The exterior mass is bounded by a fixed early integral and the late power integral,
-uniformly in the choice of admissible left endpoint. -/
-private theorem eventually_exterior_mass_bound {p C X : ℝ} (hp : 0 < p) (hC : 0 ≤ C)
-    (hX : 2 ≤ X) (hdom : ∀ x ≥ X, integrand x ≤ C * x ^ (p - 1))
-    {A : ℝ → ℝ} (hA : ∀ᶠ B in atTop, 2 ≤ A B ∧ A B ≤ B)
-    (hgrow : Tendsto (fun B => Real.log (B / A B)) atTop atTop)
-    {L : ℝ} (hL : 0 ≤ L) :
-    ∀ᶠ B in atTop,
-      0 ≤ movingMass p A B - movingMass p (fixedLeft L) B ∧
-      movingMass p A B - movingMass p (fixedLeft L) B ≤
-        C / p * Real.exp (-p * L) + (∫ x in (2 : ℝ)..X, integrand x) / B ^ p := by
-  have hleft : Tendsto (fixedLeft L) atTop atTop :=
-    tendsto_id.atTop_mul_const (Real.exp_pos _)
-  filter_upwards [hA, hgrow.eventually_ge_atTop L, hleft.eventually_ge_atTop X] with B hAB hlog hXD
-  let D := fixedLeft L B
-  have hA₀ : 0 < A B := (by norm_num : (0 : ℝ) < 2).trans_le hAB.1
-  have hB₀ : 0 < B := hA₀.trans_le hAB.2
-  have hAD : A B ≤ D := by
-    have hquot := Real.exp_le_exp.mpr hlog
-    rw [Real.exp_log (div_pos hB₀ hA₀)] at hquot
-    have hmul := (le_div_iff₀ hA₀).mp hquot
-    change A B ≤ B * Real.exp (-L)
-    simpa only [Real.exp_neg, div_eq_mul_inv] using
-      (le_div_iff₀ (Real.exp_pos L)).mpr (by rwa [mul_comm])
-  have hDB : D ≤ B := mul_le_of_le_one_right hB₀.le (Real.exp_le_one_iff.mpr (neg_nonpos.mpr hL))
-  have hBp : 0 < B ^ p := Real.rpow_pos_of_pos hB₀ _
-  have hadd :
-      movingMass p A B - movingMass p (fixedLeft L) B = (∫ x in A B..D, integrand x) / B ^ p := by
-    change (∫ x in A B..B, integrand x) / B ^ p - (∫ x in D..B, integrand x) / B ^ p = _
-    rw [← intervalIntegral.integral_add_adjacent_intervals
-      (integrand_intervalIntegrable hAB.1 hAD) (integrand_intervalIntegrable (hX.trans hXD) hDB),
-      add_div, add_sub_cancel_right]
-  let M := max (A B) X
-  have hAM : A B ≤ M := le_max_left _ _
-  have hXM : X ≤ M := le_max_right _ _
-  have hMD : M ≤ D := max_le hAD hXD
-  have hearly : (∫ x in A B..M, integrand x) ≤ ∫ x in (2 : ℝ)..X, integrand x := by
-    rcases le_total (A B) X with h | h
-    · rw [show M = X from max_eq_right h]
-      exact intervalIntegral.integral_mono_interval hAB.1 h le_rfl
-        (Eventually.of_forall integrand_nonneg) (integrand_intervalIntegrable le_rfl hX)
-    · rw [show M = A B from max_eq_left h, intervalIntegral.integral_same]
-      exact intervalIntegral.integral_nonneg_of_forall hX integrand_nonneg
-  have hpint : -1 < p - 1 := by linarith only [hp]
-  have hDpow : D ^ p = B ^ p * Real.exp (-p * L) := by
-    change (B * Real.exp (-L)) ^ p = _
-    rw [Real.mul_rpow hB₀.le (Real.exp_nonneg _), ← Real.exp_mul]
-    congr 2
-    ring
-  have hlate : (∫ x in M..D, integrand x) ≤ C / p * D ^ p := by
+/-- Integrating the late power bound and absorbing the fixed early mass gives a
+single bound for all prefixes, including those ending below the late threshold. -/
+private theorem prefix_mass_bound {p C X : ℝ} (hp : 0 < p) (hC : 0 ≤ C)
+    (hX : 2 ≤ X) (hdom : ∀ x ≥ X, integrand x ≤ C * x ^ (p - 1)) :
+    ∃ K ≥ 0, ∀ a ≥ 2, (∫ x in (2 : ℝ)..a, integrand x) ≤ K * a ^ p := by
+  let early := ∫ x in (2 : ℝ)..X, integrand x
+  have hearly : 0 ≤ early := intervalIntegral.integral_nonneg_of_forall hX integrand_nonneg
+  have htwo : 0 < (2 : ℝ) ^ p := Real.rpow_pos_of_pos (by norm_num) _
+  refine ⟨early / (2 : ℝ) ^ p + C / p, add_nonneg (div_nonneg hearly htwo.le)
+    (div_nonneg hC hp.le), fun a ha => ?_⟩
+  have ha₀ : 0 ≤ a := (by norm_num : (0 : ℝ) ≤ 2).trans ha
+  have habsorb : early ≤ early / (2 : ℝ) ^ p * a ^ p := by
     calc
-      _ ≤ ∫ x in M..D, C * x ^ (p - 1) :=
-        intervalIntegral.integral_mono_on hMD
-          (integrand_intervalIntegrable (hX.trans hXM) hMD)
-          ((intervalIntegral.intervalIntegrable_rpow' hpint).const_mul _)
-          (fun x hx => hdom x (hXM.trans hx.1))
-      _ = C / p * (D ^ p - M ^ p) := by
-        rw [intervalIntegral.integral_const_mul, integral_rpow (Or.inl hpint), sub_add_cancel]
-        ring
+      early = early / (2 : ℝ) ^ p * (2 : ℝ) ^ p := (div_mul_cancel₀ _ htwo.ne').symm
       _ ≤ _ := mul_le_mul_of_nonneg_left
-        (sub_le_self _ (Real.rpow_nonneg ((by norm_num : (0 : ℝ) ≤ 2).trans (hX.trans hXM)) _))
-        (div_nonneg hC hp.le)
-  rw [hadd]
-  refine ⟨div_nonneg (intervalIntegral.integral_nonneg_of_forall hAD integrand_nonneg) hBp.le, ?_⟩
-  rw [← intervalIntegral.integral_add_adjacent_intervals (integrand_intervalIntegrable hAB.1 hAM)
-    (integrand_intervalIntegrable (hX.trans hXM) hMD)]
-  calc
-    _ ≤ ((∫ x in (2 : ℝ)..X, integrand x) + C / p * D ^ p) / B ^ p :=
-      div_le_div_of_nonneg_right (add_le_add hearly hlate) hBp.le
-    _ = _ := by rw [hDpow, add_div]; field_simp; ring
+        (Real.rpow_le_rpow (by norm_num) ha hp.le) (div_nonneg hearly htwo.le)
+  have hlate_nonneg : 0 ≤ C / p * a ^ p :=
+    mul_nonneg (div_nonneg hC hp.le) (Real.rpow_nonneg ha₀ _)
+  rw [add_mul]
+  rcases le_total a X with haX | hXa
+  · have hsmall : (∫ x in (2 : ℝ)..a, integrand x) ≤ early :=
+      intervalIntegral.integral_mono_interval le_rfl ha haX
+        (Eventually.of_forall integrand_nonneg) (integrand_intervalIntegrable le_rfl hX)
+    linarith only [hsmall, habsorb, hlate_nonneg]
+  · have hpint : -1 < p - 1 := by linarith only [hp]
+    have hlate : (∫ x in X..a, integrand x) ≤ C / p * a ^ p := by
+      calc
+        _ ≤ ∫ x in X..a, C * x ^ (p - 1) :=
+          intervalIntegral.integral_mono_on hXa (integrand_intervalIntegrable hX hXa)
+            ((intervalIntegral.intervalIntegrable_rpow' hpint).const_mul _)
+            (fun x hx => hdom x hx.1)
+        _ = C / p * (a ^ p - X ^ p) := by
+          rw [intervalIntegral.integral_const_mul, integral_rpow (Or.inl hpint), sub_add_cancel]
+          ring
+        _ ≤ _ := mul_le_mul_of_nonneg_left
+          (sub_le_self _ (Real.rpow_nonneg ((by norm_num : (0 : ℝ) ≤ 2).trans hX) _))
+          (div_nonneg hC hp.le)
+    rw [← intervalIntegral.integral_add_adjacent_intervals (integrand_intervalIntegrable le_rfl hX)
+      (integrand_intervalIntegrable hX hXa)]
+    exact add_le_add habsorb hlate
 
-private theorem movingMass_approx {β : ℝ} (hβ : 1 / 2 < β)
+private theorem cumulativeMass_approx {β K : ℝ} (hβ : 1 / 2 < β)
     (hmax : ∀ z : ℂ, IsNontrivialZero z → z.re ≤ β)
-    {A : ℝ → ℝ} (hA : ∀ᶠ B in atTop, 2 ≤ A B ∧ A B ≤ B)
-    (hgrow : Tendsto (fun B => Real.log (B / A B)) atTop atTop) :
-    Tendsto (fun B => movingMass (β - 1 / 2) A B -
+    (hprefix : ∀ a ≥ 2, (∫ x in (2 : ℝ)..a, integrand x) ≤ K * a ^ (β - 1 / 2)) :
+    Tendsto (fun B => movingMass (β - 1 / 2) (fun _ => 2) B -
       phaseWindowInfinite Complex.re β (phaseOrbit (Real.log B))) atTop (𝓝 0) := by
+  let p := β - 1 / 2
+  have hp : 0 < p := sub_pos.mpr hβ
+  refine Metric.tendsto_nhds.mpr fun ε hε => ?_
+  have hε₃ : 0 < ε / 3 := by positivity
+  obtain ⟨L, hL, harith, hphase⟩ :=
+    ((eventually_ge_atTop (0 : ℝ)).and (((exp_decay p hp K).eventually_lt_const hε₃).and
+      ((exp_decay p hp (coeffMass / p)).eventually_lt_const hε₃))).exists
+  let D (B : ℝ) := B * Real.exp (-L)
+  have hleft : Tendsto D atTop atTop := tendsto_id.atTop_mul_const (Real.exp_pos _)
+  have hfixed := (window_transfer hL (signedInput_approx (by linarith only [hβ]) hβ
+    (fun k => hmax _ (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)))).comp
+      Real.tendsto_log_atTop
+  have hfixed' : Tendsto (fun B => movingMass p (fun _ => D B) B -
+      phaseWindow Complex.re β L (phaseOrbit (Real.log B))) atTop (𝓝 0) := by
+    refine hfixed.congr' ?_
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with B hB
+    simp only [Function.comp_def, Real.exp_log hB, movingMass, D, integrand, p]
+  filter_upwards [eventually_gt_atTop (0 : ℝ), hleft.eventually_ge_atTop 2,
+    Metric.tendsto_nhds.mp hfixed' (ε / 3) hε₃] with B hB hD hwindow
+  have hDB : D B ≤ B := mul_le_of_le_one_right hB.le
+    (Real.exp_le_one_iff.mpr (neg_nonpos.mpr hL))
+  have hDpow : (D B / B) ^ p = Real.exp (-p * L) := by
+    dsimp only [D]
+    rw [mul_div_cancel_left₀ _ hB.ne', ← Real.exp_mul]
+    congr 1
+    ring
+  have hsegment :
+      |movingMass p (fun _ => 2) B - movingMass p (fun _ => D B) B| ≤
+        K * Real.exp (-p * L) := by
+    have hremoved := movingMass_removed_bound hD hDB (hprefix _ hD)
+    rw [abs_of_nonneg hremoved.1, ← hDpow]
+    exact hremoved.2
+  rw [Real.dist_eq, sub_zero] at hwindow ⊢
+  let h := phaseOrbit (Real.log B)
+  have htail := phaseWindowInfinite_sub_window hβ L h
+  change |movingMass p (fun _ => 2) B - phaseWindowInfinite Complex.re β h| < ε
+  calc
+    _ ≤ |movingMass p (fun _ => 2) B - movingMass p (fun _ => D B) B| +
+        |movingMass p (fun _ => D B) B - phaseWindow Complex.re β L h| +
+        |phaseWindow Complex.re β L h - phaseWindowInfinite Complex.re β h| := by
+      exact (abs_sub_le _ (phaseWindow Complex.re β L h) _).trans
+        (add_le_add_left (abs_sub_le _ _ _) _)
+    _ < ε := by
+      rw [abs_sub_comm (phaseWindow Complex.re β L h), abs_of_nonneg htail.1]
+      linarith only [hsegment, harith, hwindow, htail.2, hphase]
+
+/-- Uniform control of the normalized window for every left endpoint at a common
+right endpoint. The omitted prefix contributes only to the lower error. -/
+theorem prime_tail_window_extent_bound_of_upper_bound (β : ℝ) :
+    let realPart := Complex.re
+    1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → realPart z ≤ β) →
+    ∃ K ≥ 0, ∀ ε > 0, ∀ᶠ B : ℝ in atTop, ∀ a ∈ Icc 2 B,
+      let p := β - 1 / 2
+      let error := (∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ p -
+        phaseWindowInfinite realPart β (phaseOrbit (Real.log B))
+      |error| ≤ ε + K * (a / B) ^ p ∧ error ≤ ε := by
+  dsimp only
+  intro hβ hmax
   let p := β - 1 / 2
   have hp : 0 < p := sub_pos.mpr hβ
   obtain ⟨C, hC, hbound⟩ := eventually_abs_normalized_tail_le hβ hmax
@@ -198,38 +238,20 @@ private theorem movingMass_approx {β : ℝ} (hβ : 1 / 2 < β)
   have hdom (x : ℝ) (hx : X ≤ x) : integrand x ≤ C * x ^ (p - 1) :=
     integrand_le_power hC.le ((by norm_num : (0 : ℝ) < 2).trans_le (hX.trans hx))
       (hX₀ x ((le_max_right _ _).trans hx))
-  refine Metric.tendsto_nhds.mpr fun ε hε => ?_
-  have hε₄ : 0 < ε / 4 := by positivity
-  obtain ⟨L, hL, harith, hphase⟩ :=
-    ((eventually_ge_atTop (0 : ℝ)).and (((exp_decay p hp (C / p)).eventually_lt_const hε₄).and
-      ((exp_decay p hp (coeffMass / p)).eventually_lt_const hε₄))).exists
-  have hfixed := (window_transfer hL (signedInput_approx (by linarith only [hβ]) hβ
-    (fun k => hmax _ (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)))).comp
-      Real.tendsto_log_atTop
-  have hfixed' : Tendsto (fun B => movingMass p (fixedLeft L) B -
-      phaseWindow Complex.re β L (phaseOrbit (Real.log B))) atTop (𝓝 0) := by
-    refine hfixed.congr' ?_
-    filter_upwards [eventually_gt_atTop (0 : ℝ)] with B hB
-    simp only [Function.comp_def, Real.exp_log hB, movingMass, fixedLeft, integrand, p]
-  have hearly : Tendsto (fun B : ℝ => (∫ x in (2 : ℝ)..X, integrand x) / B ^ p)
-      atTop (𝓝 0) := (tendsto_rpow_atTop hp).const_div_atTop _
-  filter_upwards [eventually_exterior_mass_bound hp hC.le hX hdom hA hgrow hL,
-    hearly.eventually_lt_const hε₄, Metric.tendsto_nhds.mp hfixed' (ε / 4) hε₄] with
-      B hsegment he hwindow
-  rw [Real.dist_eq, sub_zero] at hwindow ⊢
-  let h := phaseOrbit (Real.log B)
-  have htail := phaseWindowInfinite_sub_window hβ L h
-  change |movingMass p A B - phaseWindowInfinite Complex.re β h| < ε
-  calc
-    _ ≤ |movingMass p A B - movingMass p (fixedLeft L) B| +
-        |movingMass p (fixedLeft L) B - phaseWindow Complex.re β L h| +
-        |phaseWindow Complex.re β L h - phaseWindowInfinite Complex.re β h| := by
-      exact (abs_sub_le _ (phaseWindow Complex.re β L h) _).trans
-        (add_le_add_left (abs_sub_le _ _ _) _)
-    _ < ε := by
-      rw [abs_of_nonneg hsegment.1, abs_sub_comm (phaseWindow Complex.re β L h),
-        abs_of_nonneg htail.1]
-      linarith only [hsegment.2, he, harith, hwindow, htail.2, hphase]
+  obtain ⟨K, hK, hprefix⟩ := prefix_mass_bound hp hC.le hX hdom
+  refine ⟨K, hK, fun ε hε => ?_⟩
+  have hcumulative := Metric.tendsto_nhds.mp (cumulativeMass_approx hβ hmax hprefix) ε hε
+  filter_upwards [hcumulative] with B hc a ha
+  rw [Real.dist_eq, sub_zero] at hc
+  have hremoved := movingMass_removed_bound ha.1 ha.2 (hprefix a ha.1)
+  let w := phaseWindowInfinite Complex.re β (phaseOrbit (Real.log B))
+  change |movingMass p (fun _ => a) B - w| ≤ ε + K * (a / B) ^ p ∧
+    movingMass p (fun _ => a) B - w ≤ ε
+  rcases abs_lt.mp hc with ⟨hlower, hupper⟩
+  have hup : movingMass p (fun _ => a) B - w ≤ ε := by
+    linarith only [hupper, hremoved.1]
+  exact ⟨abs_le.mpr ⟨by linarith only [hlower, hremoved.2],
+    hup.trans (le_add_of_nonneg_right (hremoved.1.trans hremoved.2))⟩, hup⟩
 
 /-- At any real-part upper bound above one half, every admissible growing logarithmic
 window has exactly the cluster values of the infinite integral on the actual phase hull. -/
@@ -247,7 +269,30 @@ theorem prime_tail_growing_width_cluster_iff_of_upper_bound (β : ℝ) :
   have hcontinuous : Continuous window :=
     (phaseWindow_tendstoUniformly hβ).continuous
       (Frequently.of_forall (phaseWindow_continuous β))
-  have happrox := movingMass_approx hβ hmax hA hgrow
+  let p := β - 1 / 2
+  have hp : 0 < p := sub_pos.mpr hβ
+  obtain ⟨K, _, hbound⟩ := prime_tail_window_extent_bound_of_upper_bound β hβ hmax
+  have hdecay : Tendsto (fun B => K * (A B / B) ^ p) atTop (𝓝 0) := by
+    refine ((exp_decay p hp K).comp hgrow).congr' ?_
+    filter_upwards [hA] with B hAB
+    have ha : 0 < A B := (by norm_num : (0 : ℝ) < 2).trans_le hAB.1
+    have hb := ha.trans_le hAB.2
+    have hratio : 0 < A B / B := div_pos ha hb
+    change K * Real.exp (-p * Real.log (B / A B)) = K * (A B / B) ^ p
+    have hlog : Real.log (A B / B) = -Real.log (B / A B) := by
+      rw [← Real.log_inv, inv_div]
+    rw [Real.rpow_def_of_pos hratio, hlog]
+    congr 2
+    ring
+  have happrox : Tendsto (fun B => movingMass p A B - window (phaseOrbit (Real.log B)))
+      atTop (𝓝 0) := by
+    refine Metric.tendsto_nhds.mpr fun ε hε => ?_
+    have hhalf : 0 < ε / 2 := by positivity
+    filter_upwards [hA, hbound (ε / 2) hhalf, hdecay.eventually_lt_const hhalf] with B hab h hsmall
+    rw [Real.dist_eq, sub_zero]
+    have hb := (h (A B) hab).1
+    change |movingMass p A B - window (phaseOrbit (Real.log B))| ≤ ε / 2 + K * (A B / B) ^ p at hb
+    linarith only [hb, hsmall]
   have himage : IsClosed (window '' closure (range phaseOrbit)) :=
     (isClosed_closure.isCompact.image hcontinuous).isClosed
   change MapClusterPt y atTop (movingMass (β - 1 / 2) A) ↔ _
