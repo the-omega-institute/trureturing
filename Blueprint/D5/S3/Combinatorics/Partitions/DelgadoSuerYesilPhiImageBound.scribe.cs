@@ -25,7 +25,8 @@ internal sealed class DelgadoSuerYesilPhiImageBoundDocument : IScribeDocumentDef
                         + "of genus F - g + 1 and Frobenius number 2(F - g + 1) - 1 ≤ F. For every "
                         + "F ≥ 1 let S_F be the set of row deletions of the almost symmetric "
                         + "semigroups with Frobenius number F and NS_F the additively closed members "
-                        + "of S_F; then 1 ≤ |NS_F| ≤ |S_F| ≤ 2^(⌊(F+1)/2⌋ - 1). The symmetry of the "
+                        + "of S_F; then 1 ≤ |NS_F| ≤ |S_F| ≤ 2^(⌊(F+1)/2⌋ - 1), and the two upper bounds "
+                        + "also hold at F = 0, where there are no sources. The symmetry of the "
                         + "output is Theorem 4.2 of M. Delgado, M. Süer and M. Yeşil; the genus, "
                         + "Frobenius and cardinality statements are Corollary 5 of H. Ma and "
                         + "W. Zhang (version 2).")),

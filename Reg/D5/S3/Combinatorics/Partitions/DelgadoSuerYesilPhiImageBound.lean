@@ -32,10 +32,10 @@ abbrev arena : Arena where
       DelgadoSuerYesilPhiRefutation.frobenius V =
         2 * (DelgadoSuerYesilPhiRefutation.frobenius S - S.gaps.card + 1) - 1 ∧
       DelgadoSuerYesilPhiRefutation.frobenius V ≤ DelgadoSuerYesilPhiRefutation.frobenius S) ∧
-    (∀ F : ℕ, 1 ≤ F →
-      1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧
+    (∀ F : ℕ,
+      (1 ≤ F → 1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧
             DelgadoSuerYesilPhiRefutation.frobenius S = F} ∧
-          ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ∧
+          ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard) ∧
       {X | X ∈ phi '' {S | AlmostSymmetric S ∧ DelgadoSuerYesilPhiRefutation.frobenius S = F} ∧
           ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ≤
         (phi '' {S | AlmostSymmetric S ∧ DelgadoSuerYesilPhiRefutation.frobenius S = F}).ncard ∧
@@ -43,7 +43,7 @@ abbrev arena : Arena where
         (phi '' {S | AlmostSymmetric S ∧ DelgadoSuerYesilPhiRefutation.frobenius S = F}).ncard
         (2 ^ ((F + 1) / 2 - 1)))
 
-private theorem rejected_law : ¬ arena.Law rejected := fun h => (h.2 1 le_rfl).2.2
+private theorem rejected_law : ¬ arena.Law rejected := fun h => (h.2 0).2.2
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -90,7 +90,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "body", "body", "arg", "arg", "fn", "fn"]
+      path := #["arg", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

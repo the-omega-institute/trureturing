@@ -481,14 +481,24 @@ private lemma small_targets (H : ℕ) (hH : 1 ≤ H) :
 
 /-- For every `F ≥ 1`, among the row deletions of the almost symmetric numerical semigroups
 with Frobenius number `F`, the semigroups number at least one and the outputs at most
-`2^(⌊(F+1)/2⌋ - 1)`. -/
-private lemma image_bound (F : ℕ) (hF : 1 ≤ F) :
-    1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
-        ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ∧
+`2^(⌊(F+1)/2⌋ - 1)`; the upper bounds also hold at `F = 0`, where there are no sources. -/
+private lemma image_bound (F : ℕ) :
+    (1 ≤ F → 1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
+        ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard) ∧
     {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
         ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ≤
       (phi '' {S | AlmostSymmetric S ∧ frobenius S = F}).ncard ∧
     (phi '' {S | AlmostSymmetric S ∧ frobenius S = F}).ncard ≤ 2 ^ ((F + 1) / 2 - 1) := by
+  rcases Nat.eq_zero_or_pos F with hF0 | hF
+  · have he : {S : NumericalSet | AlmostSymmetric S ∧ frobenius S = F} = ∅ := by
+      ext S
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
+      intro _ h
+      have := frob_pos S
+      omega
+    rw [he, Set.image_empty]
+    refine ⟨fun h => absurd h (by omega), ?_, by simp⟩
+    simp
   obtain ⟨hfinA, hA⟩ := small_targets ((F + 1) / 2) (by omega)
   have hsub : phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ⊆
       members '' {U : NumericalSet | Symmetric U ∧ frobenius U ≤ 2 * ((F + 1) / 2) - 1 ∧
@@ -515,7 +525,7 @@ private lemma image_bound (F : ℕ) (hF : 1 ≤ F) :
     intro a b ha hb
     simp only [Set.mem_ofPred_eq] at ha hb ⊢
     omega
-  refine ⟨?_, Set.ncard_le_ncard hNsub hfinS, hbound⟩
+  refine ⟨fun _ => ?_, Set.ncard_le_ncard hNsub hfinS, hbound⟩
   exact Nat.one_le_iff_ne_zero.mpr
     (Set.ncard_ne_zero_of_mem hmem (hfinS.subset hNsub))
 
@@ -523,14 +533,14 @@ private lemma image_bound (F : ℕ) (hF : 1 ≤ F) :
 the row deletion `Φ(S)` is a symmetric numerical set of genus `F - g + 1` and Frobenius number
 `2(F - g + 1) - 1 ≤ F`. For every `F ≥ 1`, writing `S_F` for the set of row deletions of the
 almost symmetric semigroups with Frobenius number `F` and `NS_F` for those that are additively
-closed, `1 ≤ |NS_F| ≤ |S_F| ≤ 2^(⌊(F+1)/2⌋ - 1)`. -/
+closed, `1 ≤ |NS_F| ≤ |S_F| ≤ 2^(⌊(F+1)/2⌋ - 1)`; the two upper bounds hold for every `F`. -/
 theorem result :
     (∀ S : NumericalSet, AlmostSymmetric S → ∃ V : NumericalSet, members V = phi S ∧
       Symmetric V ∧ V.gaps.card = frobenius S - S.gaps.card + 1 ∧
       frobenius V = 2 * (frobenius S - S.gaps.card + 1) - 1 ∧ frobenius V ≤ frobenius S) ∧
-    (∀ F : ℕ, 1 ≤ F →
-      1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
-          ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ∧
+    (∀ F : ℕ,
+      (1 ≤ F → 1 ≤ {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
+          ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard) ∧
       {X | X ∈ phi '' {S | AlmostSymmetric S ∧ frobenius S = F} ∧
           ∀ a b, a ∈ X → b ∈ X → a + b ∈ X}.ncard ≤
         (phi '' {S | AlmostSymmetric S ∧ frobenius S = F}).ncard ∧
