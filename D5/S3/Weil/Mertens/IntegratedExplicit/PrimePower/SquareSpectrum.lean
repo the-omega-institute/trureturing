@@ -25,24 +25,24 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
 private def exponent (k : ℕ) : ℂ := actualZero k - 1
 
-private def mode (c u : ℝ) (k : ℕ) : ℂ :=
+def mode (c u : ℝ) (k : ℕ) : ℂ :=
   actualCoeff k * Complex.exp ((actualZero k - (c : ℂ)) * (u : ℂ))
 
 /-- Complete occurrence-indexed spectral term of the centered tail at log cutoff `u`. -/
 def zeroTail (u : ℝ) : ℂ := ∑' k : ℕ, mode 1 u k
 
-private lemma zero_re_pos (k : ℕ) : 0 < (actualZero k).re :=
+lemma zero_re_pos (k : ℕ) : 0 < (actualZero k).re :=
   (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2.1
 
-private lemma zero_re_lt_one (k : ℕ) : (actualZero k).re < 1 :=
+lemma zero_re_lt_one (k : ℕ) : (actualZero k).re < 1 :=
   (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2.2
 
-private lemma norm_mode (c u : ℝ) (k : ℕ) :
+lemma norm_mode (c u : ℝ) (k : ℕ) :
     ‖mode c u k‖ = ‖actualCoeff k‖ * Real.exp (((actualZero k).re - c) * u) := by
   simp only [mode, norm_mul, Complex.norm_exp, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, Complex.sub_re, mul_zero, sub_zero]
 
-private lemma mode_summable (c u : ℝ) : Summable (mode c u) := by
+lemma mode_summable (c u : ℝ) : Summable (mode c u) := by
   apply (actualCoeff_hasSum.summable.norm.mul_right (Real.exp (|u| + |c * u|))).of_norm_bounded
   intro k
   rw [norm_mode]
@@ -77,7 +77,7 @@ theorem norm_zeroTail_le (hRH : RiemannHypothesis) (u : ℝ) :
     Real.norm_eq_abs, abs_of_pos (Real.exp_pos _), mul_comm firstLiMass]
   exact mul_le_mul_of_nonneg_left h (Real.exp_nonneg _)
 
-private lemma zeroTail_continuous : Continuous zeroTail := by
+lemma zeroTail_continuous : Continuous zeroTail := by
   convert (show Continuous (fun u : ℝ => (Real.exp (-u) : ℂ)) by fun_prop).mul
     actualH_continuous using 1
   exact funext zeroTail_eq
