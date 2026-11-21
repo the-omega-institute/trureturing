@@ -6,6 +6,7 @@
    utility: none
    digest: The Stinespring complement gives the exact Petz upper deficit and a physical trace error bound. -/
 
+import Batteries.Tactic.Alias
 import D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
 import D5.S3.Quantum.Recovery.PetzSpectralCoordinates
 import D5.S3.Quantum.Recovery.PetzSchwarzRecovery
@@ -44,6 +45,9 @@ open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (partialTraceRight_mul_e
 open D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality (channel_kraus_stinespring)
 open D5.S3.Quantum.Recovery.PetzSpectralCoordinates (cfc_supported_sum)
 open D5.S3.Quantum.Recovery.PetzSchwarzRecovery (petz_output_support_projection)
+
+open private frobenius_sq from D5.S3.Quantum.Recovery.PetzExponentialBoundaryEvaluation
+open private support_preserves_of_kernel from D5.S3.Quantum.Recovery.PetzSchwarzRecovery
 
 namespace D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
 
@@ -160,33 +164,6 @@ private theorem power_neg_half (h : H.PosSemidef) :
 
 /-- Positive spectral columns span every vector with zero coefficients in
 the kernel of a positive semidefinite matrix. -/
-private theorem columns_project (h : H.PosSemidef) {v : n → ℂ}
-    (hz : ∀ j, h.1.eigenvalues j = 0 →
-      star (fun x => h.1.eigenvectorBasis j x) ⬝ᵥ v = 0) :
-    (columns h.1 * (columns h.1)ᴴ) *ᵥ v = v := by
-  classical
-  have hproj : columns h.1 * (columns h.1)ᴴ = supportedFunction h.1 (fun _ => 1) := by
-    simp [supportedFunction]
-  rw [hproj, supportedFunction_sum, Matrix.sum_mulVec]
-  simp only [one_smul, Matrix.vecMulVec_mulVec, op_smul_eq_smul]
-  have hfull := congrArg WithLp.ofLp (h.1.eigenvectorBasis.sum_repr' (WithLp.toLp 2 v))
-  simp only [WithLp.ofLp_sum, WithLp.ofLp_smul, EuclideanSpace.inner_eq_star_dotProduct,
-    WithLp.ofLp_toLp] at hfull
-  have hsplit := Fintype.sum_subtype_add_sum_subtype (fun j => 0 < h.1.eigenvalues j)
-    (fun j => (star (fun x => h.1.eigenvectorBasis j x) ⬝ᵥ v) •
-      (fun x => h.1.eigenvectorBasis j x))
-  rw [show (∑ j : n, (star (fun x => h.1.eigenvectorBasis j x) ⬝ᵥ v) •
-      (fun x => h.1.eigenvectorBasis j x)) = v by
-    simpa only [dotProduct_comm] using hfull] at hsplit
-  have hzero : (∑ j : {j : n // ¬0 < h.1.eigenvalues j},
-      (star (fun x => h.1.eigenvectorBasis j.1 x) ⬝ᵥ v) •
-        (fun x => h.1.eigenvectorBasis j.1 x)) = 0 := by
-    apply Finset.sum_eq_zero
-    intro j _
-    rw [hz j.1 (le_antisymm (le_of_not_gt j.2) (h.eigenvalues_nonneg j.1)), zero_smul]
-  rw [hzero, add_zero] at hsplit
-  exact hsplit
-
 private theorem columns_support (h : H.PosSemidef) :
     columns h.1 * (columns h.1)ᴴ = spectralSupport H := by
   rw [← supportedFunction_one h]
@@ -205,12 +182,6 @@ section ColumnCompletion
 
 variable {r i c : Type*} [Fintype r] [Fintype i] [Fintype c]
 
-
-private theorem frobenius_sq (A : Matrix r c ℂ) :
-    ‖A‖ ^ 2 = ∑ j, ∑ k, ‖A j k‖ ^ 2 := by
-  rw [Matrix.frobenius_norm_def]
-  simp only [Real.rpow_two, ← Real.sqrt_eq_rpow]
-  exact Real.sq_sqrt (Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _)
 
 private theorem frobenius_sq_trace (A : Matrix r c ℂ) : ‖A‖ ^ 2 = (A * Aᴴ).trace.re := by
   rw [frobenius_sq]
@@ -467,18 +438,9 @@ private theorem rowFactor_gram (t : ℝ) :
     _ = D.S := by
       rw [rowFactor_lift, power_conjTranspose, power_mul, upper_star_add, power_one D.hS]
 
-private theorem projection_on_columns {n : Type*} [Fintype n] [DecidableEq n]
-    {X Y : Matrix n n ℂ} (hX : X.PosSemidef) (hY : Y.PosSemidef)
-    (hz : ∀ j, hX.1.eigenvalues j = 0 → ∀ (i : n), 0 < hY.1.eigenvalues i →
-      star (fun x => hX.1.eigenvectorBasis j x) ⬝ᵥ (fun x => hY.1.eigenvectorBasis i x) = 0) :
-    (columns hX.1 * (columns hX.1)ᴴ) * columns hY.1 = columns hY.1 := by
-  ext x i
-  have he := congrFun (columns_project hX (v := fun y => hY.1.eigenvectorBasis i.1 y)
-    (fun j hj => hz j hj i.1 i.2)) x
-  simpa only [Matrix.mul_apply, Matrix.mulVec, dotProduct, columns_apply] using he
-
 private theorem physicalFactor_gram (M : SupportedRelativeModularModel Φ ρ σ)
-    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
     (t : ℝ) :
     physicalFactor M.data W t * (physicalFactor M.data W t)ᴴ =
       rowFactor M.data (upper t) *
@@ -508,7 +470,8 @@ private theorem physicalFactor_gram (M : SupportedRelativeModularModel Φ ρ σ)
     _ = _ := by rw [hC]
 
 private theorem physicalFactor_unitTrace (M : SupportedRelativeModularModel Φ ρ σ)
-    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
     (t : ℝ) :
     (physicalFactor M.data W t * (physicalFactor M.data W t)ᴴ).trace.re = 1 := by
   let D := M.data
@@ -536,7 +499,8 @@ private theorem physicalFactor_unitTrace (M : SupportedRelativeModularModel Φ �
     Complex.one_re]
 
 private theorem completed_columns (M : SupportedRelativeModularModel Φ ρ σ)
-    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
     (t : ℝ) (j : M.data.J) (i : M.data.I) :
     completed M.data W t j (.inl i) = amplitude M.data (upper t) (j, i) := by
   let D := M.data
@@ -596,10 +560,9 @@ private theorem source_gram_lift (M : SupportedRelativeModularModel Φ ρ σ) :
     Us M.data * (sourceBlock M.data * (sourceBlock M.data)ᴴ) * (Us M.data)ᴴ = M.data.R := by
   let D := M.data
   let V := Us D
-  have hproj := projection_on_columns D.hS D.hR M.zeroCoordinatesR
   have hP : (V * Vᴴ) * D.R = D.R := by
-    rw [(show supportedFunction D.hR.1 Complex.ofReal = D.R from supportedFunction_id D.hR).symm]
-    rw [supportedFunction, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hproj]
+    rw [columns_support D.hS]
+    exact support_preserves_of_kernel D.S D.R D.hS D.hR M.inputSupport
   have hP' : D.R * (V * Vᴴ) = D.R := by
     have h := congrArg Matrix.conjTranspose hP
     simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, D.hR.1.eq] using h
@@ -617,12 +580,13 @@ def recoveredState (D : SupportedRelativeModularData Φ ρ σ) : Matrix a a ℂ 
     krausAdjoint (actual_kraus_representation Φ).kraus (Qinv * D.T * Qinv) *
     cfc Real.sqrt D.S
 
-/-- The actual retained-first dilation gives unit amplitudes on the whole
-upper edge. The two endpoint Grams lift to the original state and its
-ordinary recovery. The complement contributes the exact missing squared norm. -/
+/-- The completed amplitude has the adjoint Gram at every real upper-edge phase.
+Its orthogonal column block contributes the missing squared norm. The two
+zero-phase Grams lift to the original state and its ordinary recovery. -/
 theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
     (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
-    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))) :
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))) :
     let D := M.data
     let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
     let B := completed D W
@@ -630,6 +594,10 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
       (∀ t, ‖A - B t‖ ^ 2 = deficit D (1 / 2) t) ∧
       (∀ t, ‖physicalFactor D W t * (1 - dilationColumns D W * (dilationColumns D W)ᴴ)‖ ^ 2 =
         1 - ∑ i, ‖amplitude D (upper t) i‖ ^ 2) ∧
+      (∀ t, B t * (B t)ᴴ =
+        rowFactor D (upper t) *
+          D.Ψ (qPower D (-upper t) * D.T * qPower D (-star (upper t))) *
+          (rowFactor D (upper t))ᴴ) ∧
       Us D * (A * Aᴴ) * (Us D)ᴴ = D.R ∧
       Us D * (B 0 * (B 0)ᴴ) * (Us D)ᴴ = recoveredState D := by
   let D := M.data
@@ -645,7 +613,15 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
         ∑ i, ‖amplitude D (upper t) i‖ ^ 2 := by
     rw [frobenius_sq, Fintype.sum_prod_type]
     simp only [hcol]
-  refine ⟨sourceAmplitude_unit M, fun t => (hc t).2.1, ?_, ?_, ?_, ?_⟩
+  have hGram (t : ℝ) :
+      completed D W t * (completed D W t)ᴴ =
+        rowFactor D (upper t) *
+          D.Ψ (qPower D (-upper t) * D.T * qPower D (-star (upper t))) *
+          (rowFactor D (upper t))ᴴ := by
+    calc
+      _ = physicalFactor D W t * (physicalFactor D W t)ᴴ := (hc t).1
+      _ = _ := by rw [physicalFactor_gram W M hAction, outputProduct_gram]
+  refine ⟨sourceAmplitude_unit M, fun t => (hc t).2.1, ?_, ?_, hGram, ?_, ?_⟩
   · intro t
     have hdist : ‖A - completed D W t‖ ^ 2 =
         ‖sourceBlock D - physicalFactor D W t * dilationColumns D W * phaseMatrix D t‖ ^ 2 +
@@ -661,9 +637,7 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
       conjTranspose_fromCols_eq_fromRows_conjTranspose, fromCols_mul_fromRows,
       Matrix.zero_mul, add_zero, source_gram_lift M]
   · change Us D * (completed D W 0 * (completed D W 0)ᴴ) * (Us D)ᴴ = _
-    have hGram : completed D W 0 * (completed D W 0)ᴴ =
-        physicalFactor D W 0 * (physicalFactor D W 0)ᴴ := (hc 0).1
-    rw [hGram, physicalFactor_gram W M hAction, outputProduct_gram]
+    rw [hGram]
     have h0 : upper 0 = ½ := by simp [upper]
     have hs0 : star ½ = ½ := by rw [Complex.star_def, Complex.conj_ofReal]
     rw [h0, hs0]
@@ -811,7 +785,8 @@ private theorem upperIntegral_le_loss (M : SupportedRelativeModularModel Φ ρ �
 its product row coordinates. The right partial trace is the actual channel. -/
 private theorem exists_retainedFirst_stinespring (Φ : QuantumChannel a b) :
     ∃ V : Matrix (b × (b × a)) a ℂ, Vᴴ * V = 1 ∧
-      ∀ X : Matrix a a ℂ, partialTraceRight (V * X * Vᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) := by
+      ∀ X : Matrix a a ℂ, partialTraceRight (V * X * Vᴴ) =
+        CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) := by
   obtain ⟨W, hW, hAction⟩ := channel_kraus_stinespring.2 Φ
   let swap : b × (b × a) ≃ (b × a) × b := Equiv.prodComm b (b × a)
   let V := W.submatrix swap id
@@ -820,13 +795,15 @@ private theorem exists_retainedFirst_stinespring (Φ : QuantumChannel a b) :
     rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv Wᴴ W id swap id,
       Matrix.submatrix_id_id, hW]
   · intro X
-    change partialTraceLeft (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))
+    change partialTraceLeft (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))
     exact hAction X
 
 set_option maxHeartbeats 800000 in
 -- The dependent spectral carriers also occur in the endpoint and integral types.
 private theorem traceBound_of_dilation (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
-    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
+      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)))
     (m : ℕ) (hm : let D := M.data
       ∀ l, (distinctFrequencies (retainedFrequency (outer D l) D.ql D.pk)).card ≤ m) :
     let D := M.data
@@ -839,7 +816,7 @@ private theorem traceBound_of_dilation (M : SupportedRelativeModularModel Φ ρ 
   let E := petzBoundary (block (e := e) D) (outer D) D.ql D.pk A (coefficients D W)
   have hE (t : ℝ) : E t = A - B t := boundary_eq D W t
   have hB : A - E 0 = B 0 := by rw [hE, sub_sub_cancel]
-  obtain ⟨hAu, hBu, hd, _, hA, hRec⟩ := supported_stinespring_gram M W hW hAction
+  obtain ⟨hAu, hBu, hd, _, _, hA, hRec⟩ := supported_stinespring_gram M W hW hAction
   have hEv := traceNorm_gram_sub_sq_le_petz_boundary (block (e := e) D) (outer D)
     D.ql D.pk A (coefficients D W) m hm hAu (by
       change ‖A - E 0‖ = 1
