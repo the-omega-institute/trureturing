@@ -18,7 +18,43 @@ The real function U is CompleteMertensPeak.U, with the complete inclusive Mangol
 
 Write M=ActualReciprocalSquareBounds.firstLiMass, and use the canonical actualZero, actualCoeff and actualH of ActualZeroLaplace. Every natural index is an actual analytic zero occurrence through actualOccurrenceEquiv, including its multiplicity. Both conjugate signs are included.
 
-**Theorem 1.2 (Eventual absolute control and arbitrarily late values near the positive mass).**
+**Theorem 1.2 (The real part of each actual zero under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \left(\forall k \in \mathbb{N},\; \operatorname{Re}\left(\operatorname{actualZero}\left(k\right)\right) = \frac{1}{2}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Apply the critical-line theorem to the zero selected by actualOccurrenceEquiv.
+
+**Theorem 1.3 (The actual zero coefficient under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \left(\forall k \in \mathbb{N},\; \operatorname{actualCoeff}\left(k\right) = \operatorname{ofReal}\left(\frac{1}{\frac{1}{4} + \operatorname{Im}\left(\operatorname{actualZero}\left(k\right)\right)^{2}}\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here ofReal denotes the real embedding into the complex numbers. The critical-line identity gives the positive real denominator.
+
+**Theorem 1.4 (The complete coefficient norm series under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \operatorname{HasSum}\left(\lambda k : \mathbb{N}, \left\lVert \operatorname{actualCoeff}\left(k\right) \right\rVert, firstLiMass\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under RH each coefficient's norm is its real part. Taking real parts in actualCoeff_hasSum gives the stated HasSum.
+
+**Theorem 1.5 (Eventual absolute control and arbitrarily late values near the positive mass).**
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; \forall y \in \mathbb{R},\; T \le y \Rightarrow \left|\operatorname{G}\left(y\right)\right| < firstLiMass + epsilon\right)\right) \land \left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists n \in \mathbb{N},\; Y \le n \land \left|\operatorname{G}\left(n\right) - firstLiMass\right| < epsilon\right)\right)\right)$$
 
@@ -42,5 +78,8 @@ WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, wh
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.G`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula](WholeFormula.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RhLocatesZeroData](../../ZetaBridge/RhLocatesZeroData.md)

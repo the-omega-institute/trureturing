@@ -22,6 +22,29 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                 + "actualCoeff and actualH of ActualZeroLaplace. Every natural index is an actual analytic "
                 + "zero occurrence through actualOccurrenceEquiv, including its multiplicity. Both conjugate signs are included.")),
             Describe.Lean(
+                DescribeId.Create("on-line"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line"),
+                H("The real part of each actual zero under RH"),
+                StatementSource.FromAuthor(OnLineClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Apply the critical-line theorem to the zero selected by actualOccurrenceEquiv."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coeff-real"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real"),
+                H("The actual zero coefficient under RH"),
+                StatementSource.FromAuthor(CoefficientClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Here ofReal denotes the real embedding into the complex numbers. "
+                    + "The critical-line identity gives the positive real denominator."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coeff-norm-has-sum"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum"),
+                H("The complete coefficient norm series under RH"),
+                StatementSource.FromAuthor(CoefficientMassClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under RH each coefficient's norm is its real part. "
+                    + "Taking real parts in actualCoeff_hasSum gives the stated HasSum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-g-control"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control"),
                 H("Eventual absolute control and arbitrarily late values near the positive mass"),
@@ -75,6 +98,32 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Equal(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula UnderRh(Formula body) =>
+        Disp(ImpliesClaim(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))), body));
+
+    private static Formula OnLineClaim()
+    {
+        var zero = Call("actualZero", F.Id("k"));
+        return UnderRh(All("k", Nat, Equal(Call("Re", zero), new Formula.Fraction(D(1), D(2)))));
+    }
+
+    private static Formula CoefficientClaim()
+    {
+        var k = F.Id("k");
+        var ordinate = Call("Im", Call("actualZero", k));
+        var denominator = Add(new Formula.Fraction(D(1), D(4)), new Formula.Power(ordinate, D(2)));
+        return UnderRh(All("k", Nat, Equal(Call("actualCoeff", k),
+            Call("ofReal", new Formula.Fraction(D(1), denominator)))));
+    }
+
+    private static Formula CoefficientMassClaim()
+    {
+        var norm = new Formula.Norm(Call("actualCoeff", F.Id("k")));
+        var series = Seq(LambdaLower, Sp, F.Id("k"), Sp, Colon, Sp, Nat, Comma, Sp, norm);
+        return UnderRh(Call("HasSum", series, F.Id("firstLiMass")));
+    }
 
     private static Formula GDefinition()
     {
@@ -99,7 +148,6 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         var recurrence = All("epsilon", Real, ImpliesClaim(Less(D(0), e),
             All("Y", Real, ExistsOne("n", Nat, And(Le(threshold, n),
                 Less(new Formula.Absolute(Subtract(Call("G", n), mass)), e))))));
-        return Disp(ImpliesClaim(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))),
-            And(envelope, recurrence)));
+        return UnderRh(And(envelope, recurrence));
     }
 }

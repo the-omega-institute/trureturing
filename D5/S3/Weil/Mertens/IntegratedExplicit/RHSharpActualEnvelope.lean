@@ -31,12 +31,14 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
 def G (y : ℝ) : ℝ := Real.exp (-y / 2) * U (Real.exp y)
 
-private lemma on_line (hRH : RiemannHypothesis) (k : ℕ) :
+/-- Under RH, each actual zero occurrence has real part one half. -/
+lemma on_line (hRH : RiemannHypothesis) (k : ℕ) :
     (actualZero k).re = 1 / 2 := by
   simpa only [actualZero, D5.S3.Weil.Convention.criticalAbscissa] using
     zeroData_zero_on_critical_line_of_rh hRH actualData (actualOccurrenceEquiv k).1
 
-private lemma coeff_real (hRH : RiemannHypothesis) (k : ℕ) :
+/-- Under RH, each actual zero coefficient is a positive real reciprocal. -/
+lemma coeff_real (hRH : RiemannHypothesis) (k : ℕ) :
     actualCoeff k = ((1 / (1 / 4 + (actualZero k).im ^ 2) : ℝ) : ℂ) := by
   have hd : actualZero k * (1 - actualZero k) =
       ((1 / 4 + (actualZero k).im ^ 2 : ℝ) : ℂ) := by
@@ -46,7 +48,8 @@ private lemma coeff_real (hRH : RiemannHypothesis) (k : ℕ) :
         on_line hRH k] <;> ring
   simp only [actualCoeff, hd, Complex.ofReal_div, Complex.ofReal_one]
 
-private lemma coeff_norm_hasSum (hRH : RiemannHypothesis) :
+/-- Under RH, the sum of the norms of all actual zero coefficients is the first Li mass. -/
+lemma coeff_norm_hasSum (hRH : RiemannHypothesis) :
     HasSum (fun k : ℕ => ‖actualCoeff k‖) firstLiMass := by
   have hn (k : ℕ) : ‖actualCoeff k‖ = (actualCoeff k).re := by
     rw [coeff_real hRH k]

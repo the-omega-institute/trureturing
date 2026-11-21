@@ -16,7 +16,7 @@ $$\operatorname{RiemannHypothesis} \Leftrightarrow \left(\forall D \in \mathbb{R
 
 Here U is CompleteMertensPeak.U, the original complete integrated Mangoldt remainder. The coefficient M is firstLiMass. Both the lower bound D and the arguments x range over the reals. The displayed quantifiers unfold convergence to positive infinity.
 
-With y = log x, RH gives a real normalized zero sum F(y) with cosine terms, nonnegative coefficients, and total coefficient mass M. Write d(y) = M − F(y). The product (1 − cos(γy))(1 + cos(γh)) is nonnegative for each zero ordinate γ. Summing this inequality gives 2d(h) − 4d(y) ≤ 2F(y) − F(y+h) − F(y−h).
+With y = log x, RH gives a real normalized zero sum F(y) with cosine terms, nonnegative coefficients, and total coefficient mass M. RHSharpActualEnvelope supplies the critical-line identity, the real coefficient formula and the complete norm sum. Write d(y) = M − F(y). The product (1 − cos(γy))(1 + cos(γh)) is nonnegative for each zero ordinate γ. Summing this inequality gives 2d(h) − 4d(y) ≤ 2F(y) − F(y+h) − F(y−h).
 
 At positive arguments the explicit formula identifies F with the full arithmetic kernel K, whose value at zero is M. Its derivative tends to negative infinity from the right. The mean value theorem on [0,h] therefore shows that d(h)/h tends to positive infinity as h decreases to zero.
 

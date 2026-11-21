@@ -19,9 +19,9 @@ noncomputable section
 open Filter Set Real
 open scoped Topology
 open D5.S3.Weil.Mertens.IntegratedExplicit
-open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (G actual_G_control)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+  (G actual_G_control on_line coeff_real coeff_norm_hasSum)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
-open D5.S3.Weil.ZetaBridge.RhLocatesZeroData (zeroData_zero_on_critical_line_of_rh)
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
@@ -30,34 +30,19 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtCriticalGap
 private def cosineProfile (y : ℝ) : ℝ := exp (-y / 2) * (actualH y).re
 private def phaseDeficit (y : ℝ) : ℝ := firstLiMass - cosineProfile y
 
-private lemma actualZero_re_of_rh (rh : RiemannHypothesis) (k : ℕ) :
-    (actualZero k).re = 1 / 2 := by
-  simpa only [actualZero, D5.S3.Weil.Convention.criticalAbscissa] using
-    zeroData_zero_on_critical_line_of_rh rh actualData (actualOccurrenceEquiv k).1
-
-private lemma actualCoeff_eq_ofReal_norm (rh : RiemannHypothesis) (k : ℕ) :
-    actualCoeff k = (‖actualCoeff k‖ : ℂ) := by
-  have hc : 1 - actualZero k = (starRingEnd ℂ) (actualZero k) := by
-    apply Complex.ext
-    · norm_num [Complex.sub_re, actualZero_re_of_rh rh k]
-    · simp [Complex.sub_im]
-  rw [actualCoeff, hc, mul_comm (actualZero k), ← Complex.normSq_eq_conj_mul_self,
-    ← Complex.ofReal_one, ← Complex.ofReal_div,
-    Complex.norm_real, Real.norm_eq_abs,
-    abs_of_nonneg (div_nonneg zero_le_one (Complex.normSq_nonneg (actualZero k)))]
-
 private lemma normalized_term_re (rh : RiemannHypothesis) (s : ℝ) (k : ℕ) :
     ((exp (-s / 2) : ℂ) * (actualCoeff k * Complex.exp ((s : ℂ) * actualZero k))).re =
       ‖actualCoeff k‖ * cos (s * (actualZero k).im) := by
-  conv_lhs => rw [actualCoeff_eq_ofReal_norm rh k]
-  simp only [Complex.exp_re, Complex.mul_re, Complex.mul_im,
-    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, add_zero, actualZero_re_of_rh rh k]
-  have hcancel : exp (-s / 2) * exp (s * (1 / 2)) = 1 := by
-    rw [← exp_add, show -s / 2 + s * (1 / 2) = 0 by ring, exp_zero]
-  calc
-    _ = (exp (-s / 2) * exp (s * (1 / 2))) * (‖actualCoeff k‖ * cos (s * (actualZero k).im)) := by
-      ring
-    _ = _ := by rw [hcancel, one_mul]
+  rw [coeff_real rh k, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_pos (one_div_pos.mpr (by positivity))]
+  have phase :
+      (exp (-s / 2) : ℂ) * Complex.exp ((s : ℂ) * actualZero k) =
+        Complex.exp (((s * (actualZero k).im : ℝ) : ℂ) * Complex.I) := by
+    rw [Complex.ofReal_exp, ← Complex.exp_add]
+    congr 1
+    apply Complex.ext <;>
+      simp [Complex.mul_re, Complex.mul_im, on_line rh k] <;> ring
+  rw [mul_left_comm, phase, Complex.re_ofReal_mul, Complex.exp_ofReal_mul_I_re]
 
 private theorem cosineProfile_hasSum (rh : RiemannHypothesis) (s : ℝ) :
     HasSum (fun k => ‖actualCoeff k‖ * cos (s * (actualZero k).im)) (cosineProfile s) := by
@@ -67,10 +52,7 @@ private theorem cosineProfile_hasSum (rh : RiemannHypothesis) (s : ℝ) :
 private theorem phaseDeficit_le_second_difference (rh : RiemannHypothesis) (y h : ℝ) :
     2 * phaseDeficit h - 4 * phaseDeficit y ≤
       2 * cosineProfile y - cosineProfile (y + h) - cosineProfile (y - h) := by
-  have mass : HasSum (fun k => ‖actualCoeff k‖) firstLiMass := by
-    apply (Complex.hasSum_re actualCoeff_hasSum).congr_fun
-    intro k
-    exact ((congrArg Complex.re (actualCoeff_eq_ofReal_norm rh k)).trans (Complex.ofReal_re _)).symm
+  have mass := coeff_norm_hasSum rh
   have lhs := ((mass.sub (cosineProfile_hasSum rh h)).mul_left 2).sub
     ((mass.sub (cosineProfile_hasSum rh y)).mul_left 4)
   have rhs := (((cosineProfile_hasSum rh y).mul_left 2).sub (cosineProfile_hasSum rh (y+h))).sub
