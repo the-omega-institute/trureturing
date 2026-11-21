@@ -26,4 +26,4 @@ At m=10 the eighth and ninth deterministic terms vanish. The tenth term has coef
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHMobiusWindow.prime_window_mobius_of_rh`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/MobiusCutoff](MobiusCutoff.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootSpectrum](RootSpectrum.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/MobiusWindowTransfer](MobiusWindowTransfer.md)

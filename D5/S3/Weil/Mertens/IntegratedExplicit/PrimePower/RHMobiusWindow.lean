@@ -7,7 +7,7 @@
    digest: A uniform all-orders prime-only window expansion under RH. -/
 
 import Mathlib.NumberTheory.Harmonic.Bounds
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RootSpectrum
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.MobiusWindowTransfer
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.MobiusCutoff
 
 /-! Möbius truncation, actual root spectra and one common threshold for the prime window. -/
@@ -752,126 +752,12 @@ theorem prime_window_mobius_of_rh (hRH : RiemannHypothesis) :
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
         K * ((m : ℝ) * (1 + Real.log m)^2) *
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
-  obtain ⟨T, hT⟩ := Filter.eventually_atTop.mp (late_strict_prime_tail hRH)
   obtain ⟨K, hK, hD⟩ := all_orders_density_log_sq hRH
-  refine ⟨max T 2, 6 * K, le_max_right _ _, by positivity, ?_⟩
-  intro m hm a B ha hab
-  have h_arithmetic (n : ℕ) : -(arithmeticRate n) = (n : ℝ)⁻¹ - 1 / 2 := by
-    unfold arithmeticRate
-    ring
-  have h_order : -(orderRate m) = (m + 1 : ℝ)⁻¹ - 1 / 2 := by
-    unfold orderRate
-    ring
-  simp_rw [← h_order, ← h_arithmetic]
-  change |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
-      spectralPrimitive (phaseOrbit (Real.log a)) -
-      (∑ n ∈ Finset.Icc 3 m, arithmeticPrimitive n a B) -
-      (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
-        -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
-      6 * K * ((m : ℝ) * (1 + Real.log m)^2) * powerGap (orderRate m) a B
-  have ha₂ := (le_max_right T (2 : ℝ)).trans ha
-  have ha₀ : 0 < a := by linarith
-  have hB₀ := ha₀.trans_le hab
-  have hlog := Real.log_le_log ha₀ hab
-  have hlog₂ := Real.log_le_log (by norm_num : (0 : ℝ) < 2) ha₂
-  have hr : 1 / 6 ≤ orderRate m := by
-    have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
-    have h := inv_anti₀ (show (0 : ℝ) < 3 by norm_num)
-      (show (3 : ℝ) ≤ (m + 1 : ℝ) by linarith)
-    unfold orderRate
-    norm_num at h
-    linarith
-  have hr₀ : 0 < orderRate m := (by norm_num : (0 : ℝ) < 1 / 6).trans_le hr
-  have Hwin : (∫ u in Real.log a..Real.log B, windowError u) =
-      ∫ u in Real.log a..Real.log B, rootWindowDensity u := by
-    apply intervalIntegral.integral_congr
-    intro u hu
-    rw [uIcc_of_le hlog] at hu
-    have hx : a ≤ Real.exp u := by simpa only [Real.exp_log ha₀] using Real.exp_le_exp.mpr hu.1
-    have hpos := hT _ ((le_max_left T 2).trans (ha.trans hx))
-    have hscaled := complete_scaled (x := Real.exp u) (ha₂.trans hx)
-    rw [Real.log_exp] at hscaled
-    rw [windowError, normalizedMass, normalizedZeroSeries, max_eq_left hpos.le,
-      rootWindowDensity, Complex.re_ofReal_mul, hscaled]
-    ring
-  let f (u : ℝ) := ∑ n ∈ Finset.Icc 2 m, retainedDensity m n u
-  let e (u : ℝ) := rootWindowDensity u - (f u - 2)
-  let w (u : ℝ) := K * ((m : ℝ) * (1 + Real.log m)^2) * Real.exp (-(orderRate m) * u)
-  have hi : IntervalIntegrable rootWindowDensity volume (Real.log a) (Real.log B) :=
-    (rootWindowDensity_continuousOn.mono (by
-      rw [uIcc_of_le hlog]
-      exact fun _ hu => hlog₂.trans hu.1)).intervalIntegrable
-  have hfi : IntervalIntegrable f volume (Real.log a) (Real.log B) := by
-    have hf : f = ∑ n ∈ Finset.Icc 2 m, retainedDensity m n := by
-      funext u
-      simp [f, Finset.sum_apply]
-    rw [hf]
-    exact IntervalIntegrable.sum (f := retainedDensity m) (Finset.Icc 2 m) (fun n hn =>
-      (retainedDensity_integral (Finset.mem_Icc.mp hn).1 ha₀ hB₀).1)
-  have hc : IntervalIntegrable (fun _ : ℝ => (2 : ℝ)) volume (Real.log a) (Real.log B) :=
-    intervalIntegrable_const
-  have hei : IntervalIntegrable e volume (Real.log a) (Real.log B) := hi.sub (hfi.sub hc)
-  have hwi : IntervalIntegrable w volume (Real.log a) (Real.log B) :=
-    (by unfold w; fun_prop : Continuous w).intervalIntegrable _ _
-  have hmono : |∫ u in Real.log a..Real.log B, e u| ≤ ∫ u in Real.log a..Real.log B, w u :=
-    (intervalIntegral.abs_integral_le_integral_abs hlog).trans
-      (intervalIntegral.integral_mono_on hlog hei.abs hwi
-        (fun u hu => hD m hm u (hlog₂.trans hu.1)))
-  have Hf : (∫ u in Real.log a..Real.log B, f u) =
-      2 * (Real.log B - Real.log a) +
-        (∑ n ∈ Finset.Icc 3 m, arithmeticPrimitive n a B) +
-        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
-          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a)) := by
-    unfold f
-    rw [intervalIntegral.integral_finsetSum fun n hn =>
-      (retainedDensity_integral (Finset.mem_Icc.mp hn).1 ha₀ hB₀).1]
-    calc
-      _ = ∑ n ∈ Finset.Icc 2 m,
-          ((if n = 2 then 2 * (Real.log B - Real.log a) else arithmeticPrimitive n a B) +
-            capturedPrimitive m n a B) :=
-        Finset.sum_congr rfl fun _ hn =>
-          (retainedDensity_integral (Finset.mem_Icc.mp hn).1 ha₀ hB₀).2
-      _ = _ := by
-        rw [Finset.sum_add_distrib]
-        have hs : Finset.Icc 2 m = insert 2 (Finset.Icc 3 m) := by
-          ext n
-          simp only [Finset.mem_Icc, Finset.mem_insert]
-          omega
-        have hmain :
-            (∑ n ∈ Finset.Icc 2 m,
-              if n = 2 then 2 * (Real.log B - Real.log a) else arithmeticPrimitive n a B) =
-              2 * (Real.log B - Real.log a) + ∑ n ∈ Finset.Icc 3 m, arithmeticPrimitive n a B := by
-          rw [hs, Finset.sum_insert (by simp)]
-          congr 1
-          refine Finset.sum_congr rfl fun n hn => ite_eq_right ?_
-          have hn3 := (Finset.mem_Icc.mp hn).1
-          omega
-        rw [hmain, Finset.sum_filter]
-        rfl
-  have hw : (∫ u in Real.log a..Real.log B, w u) =
-      K * ((m : ℝ) * (1 + Real.log m)^2) * (powerGap (orderRate m) a B / orderRate m) := by
-    unfold w
-    rw [intervalIntegral.integral_const_mul, exp_decay_integral hr₀]
-    have hrpow {x : ℝ} (hx : 0 < x) (r : ℝ) : Real.exp (-r * Real.log x) = x ^ (-r) := by
-      rw [Real.rpow_def_of_pos hx, mul_comm]
-    rw [hrpow ha₀, hrpow hB₀]
-    rfl
-  have hgap : 0 ≤ powerGap (orderRate m) a B :=
-    sub_nonneg.mpr (Real.rpow_le_rpow_of_nonpos ha₀ hab (neg_nonpos.mpr hr₀.le))
-  have hdiv : powerGap (orderRate m) a B / orderRate m ≤ 6 * powerGap (orderRate m) a B := by
-    apply (div_le_iff₀ hr₀).mpr
-    nlinarith only [mul_nonneg hgap (show 0 ≤ 6 * orderRate m - 1 by linarith)]
-  rw [(prime_window_remainder_of_rh hRH).2.2 a B ha₂ hab, Hwin]
-  have hle : (∫ u in Real.log a..Real.log B, w u) ≤
-      6 * K * ((m : ℝ) * (1 + Real.log m)^2) * powerGap (orderRate m) a B := by
-    rw [hw]
-    exact (mul_le_mul_of_nonneg_left hdiv (by positivity)).trans_eq (by ring)
-  refine (?_ : _ ≤ ∫ u in Real.log a..Real.log B, w u).trans hle
-  dsimp only [e] at hmono
-  rw [intervalIntegral.integral_sub hi (hfi.sub hc), intervalIntegral.integral_sub hfi hc, Hf,
-    intervalIntegral.integral_const, smul_eq_mul] at hmono
-  convert hmono using 1
-  congr 1
-  ring
+  exact prime_window_of_density_bound hRH (fun m => (m : ℝ) * (1 + Real.log m)^2)
+    (fun _ _ => by positivity) retainedDensity
+    (fun m n hn a B ha hB => by
+      simpa only [arithmeticPrimitive, capturedPrimitive, powerGap, arithmeticRate, neg_sub]
+        using retainedDensity_integral (m := m) hn ha hB)
+    hK hD
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
