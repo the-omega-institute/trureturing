@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sharp purity-loss comparison for finite singleton and product phase ensembles. -/
+   digest: Sharp purity-loss comparison for finite singleton and product readouts on the complex unit disk. -/
 
 import D5.S3.Factorization.JordanCototientRecordLimitInfinity
 import Mathlib.Analysis.Complex.Basic
@@ -32,16 +32,17 @@ private theorem normSq_one_add (z : ℂ) :
   rw [Complex.normSq_add]
   simp [add_assoc, add_comm, add_left_comm]
 
-private theorem loss_le {n : ℕ} (u : Fin n → ℂ) (hu : ∀ i, ‖u i‖ = 1) :
+private theorem loss_le {n : ℕ} (u : Fin n → ℂ) (hu : ∀ i, ‖u i‖ ≤ 1) :
     1-cube u ≤ ((n:ℝ)+1)^2/4*(1-simplex u) := by
   let z := ∑ i, u i
   have hz : ‖z‖ ≤ n := calc
     ‖z‖ ≤ ∑ i, ‖u i‖ := norm_sum_le _ _
-    _ = n := by simp [hu]
+    _ ≤ ∑ _i : Fin n, (1 : ℝ) := Finset.sum_le_sum (fun i _ => hu i)
+    _ = n := by simp
   have hs : Complex.normSq z ≤ (n:ℝ)^2 := by
     rw [Complex.normSq_eq_norm_sq]
     exact pow_le_pow_left₀ (norm_nonneg z) hz 2
-  have hr : ∀ i, |(u i).re| ≤ 1 := fun i => (Complex.abs_re_le_norm _).trans_eq (hu i)
+  have hr : ∀ i, |(u i).re| ≤ 1 := fun i => (Complex.abs_re_le_norm _).trans (hu i)
   have h := D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum
     Finset.univ (fun i => 1-(1+(u i).re)/2)
     (fun i _ => by linarith [(abs_le.mp (hr i)).2])
@@ -148,10 +149,10 @@ private theorem two_points {n : ℕ} (F : (Fin n → ℂ) → ℝ) (h1 : F 1 = 1
   rw [hd,h1,hc]
   ring
 
-/-- The same sharp coefficient controls all finite phase ensembles with nonnegative weights. -/
+/-- The same sharp coefficient controls finite disk ensembles with nonnegative pair weights. -/
 theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     (∀ (m : ℕ) (p : Fin m → ℝ) (v : Fin m → Fin n → ℂ),
-      (∀ i, 0 ≤ p i) → (∀ i k, ‖v i k‖ = 1) →
+      (∀ i j, 0 ≤ p i * p j) → (∀ i, p i ≠ 0 → ∀ k, ‖v i k‖ ≤ 1) →
       mixedDeficit cube p v ≤ C * mixedDeficit simplex p v) ↔
     ((n:ℝ)+1)^2/4 ≤ C := by
   constructor
@@ -160,7 +161,7 @@ theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     intro u hu
     let v : Fin 2 → Fin n → ℂ := ![1,u]
     have hv (i : Fin 2) (k : Fin n) : ‖v i k‖ = 1 := by fin_cases i <;> simp [v,hu]
-    have hb := h 2 (fun _ => (1:ℝ)/2) v (by intro; norm_num) hv
+    have hb := h 2 (fun _ => (1:ℝ)/2) v (by intros; norm_num) (fun i _ k => (hv i k).le)
     have hco : cube (1 : Fin n → ℂ) = 1 := by simp [cube]
     have hsi : simplex (1 : Fin n → ℂ) = 1 := by
       simp [simplex, normSq_one_add]
@@ -177,20 +178,27 @@ theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     rw [Finset.mul_sum]
     apply Finset.sum_le_sum
     intro j _
+    by_cases hi : p i = 0
+    · simp [hi]
+    by_cases hj : p j = 0
+    · simp [hj]
     let u (k : Fin n) := star (v i k) * v j k
-    have hu (k : Fin n) : ‖u k‖ = 1 := by simp [u, hv]
+    have hu (k : Fin n) : ‖u k‖ ≤ 1 := by
+      simpa [u, norm_mul] using mul_le_one₀ (hv i hi k) (norm_nonneg (v j k)) (hv j hj k)
     have h := loss_le u hu
     have hS : 0 ≤ 1-simplex u := by
       have hsum : ‖1 + ∑ k, u k‖ ≤ (n:ℝ)+1 := calc
         _ ≤ ‖(1:ℂ)‖ + ‖∑ k, u k‖ := norm_add_le _ _
         _ ≤ ‖(1:ℂ)‖ + ∑ k, ‖u k‖ := add_le_add_right (norm_sum_le ..) _
-        _ = _ := by simp [hu,add_comm]
+        _ ≤ ‖(1:ℂ)‖ + ∑ _k : Fin n, (1 : ℝ) :=
+          add_le_add_right (Finset.sum_le_sum (fun k _ => hu k)) _
+        _ = _ := by simp [add_comm]
       apply sub_nonneg.mpr
       change Complex.normSq _ / _ ≤ 1
       rw [Complex.normSq_eq_norm_sq, div_le_one (by positivity)]
       exact pow_le_pow_left₀ (norm_nonneg _) hsum 2
     have g := mul_le_mul_of_nonneg_left
-      (h.trans (mul_le_mul_of_nonneg_right hC hS)) (mul_nonneg (hp i) (hp j))
+      (h.trans (mul_le_mul_of_nonneg_right hC hS)) (hp i j)
     change p i*p j*(1-cube u) ≤ C*(p i*p j*(1-simplex u))
     linarith only [g]
 

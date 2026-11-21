@@ -27,14 +27,14 @@ def arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ}, 0 < n → ∀ C : ℝ,
     (∀ (m : ℕ) (p : Fin m → ℝ) (v : Fin m → Fin n → ℂ),
-      (∀ i, 0 ≤ p i) → (∀ i k, ‖v i k‖ = 1) →
+      (∀ i j, 0 ≤ p i * p j) → (∀ i, p i ≠ 0 → ∀ k, ‖v i k‖ ≤ 1) →
       R.readout () ⟨n,m,p⟩ v ≤ C * mixedDeficit simplex p v) ↔
       ((n : ℝ) + 1)^2 / 4 ≤ C
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have H := (h (n := 1) (by decide) 1).mpr (by norm_num)
-  have bad := H 1 (fun _ => 1) (fun _ _ => 1) (by intro; norm_num)
+  have bad := H 1 (fun _ => 1) (fun _ _ => 1) (by intros; norm_num)
     (by intros; simp)
   norm_num [rejected, realize, mixedDeficit, simplex, Fin.sum_univ_one,
     Complex.normSq_apply] at bad

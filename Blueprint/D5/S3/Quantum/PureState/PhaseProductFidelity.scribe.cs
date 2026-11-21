@@ -58,7 +58,7 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                 + "Drawing two independent indices from the same distribution gives pairwise "
                 + "weights p_i p_j. For a probability vector p, if F on each relative row equals the squared "
                 + "inner product of the corresponding unit encoded states, this average loss is one minus "
-                + "the purity of their mixture. The singleton and product overlaps meet this condition."),
+                + "the purity of their mixture. Both overlaps meet this condition for unit phases."),
             Describe.Lean(DescribeId.Create("phase-product-sharp-ensemble-coefficient"),
                 DeclarationHandle.Create(Module + "mixed_coefficient_iff"),
                 H("Sharp comparison for all finite phase ensembles"),
@@ -66,19 +66,19 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                     Forall, Sp, Nat("n"), Comma, V("n"), Ge, D(1), Comma,
                     V("C"), InMacro, Sp, Field("R"), Comma, RowBreak,
                     Par(Forall, Sp, Nat("m"), Comma, Ensemble(), Comma, RowBreak,
-                    Par(Par(Forall, Sp, Index("i", "m"), Comma, Sub("p", "i"), Ge, D(0)),
+                    Par(Par(Forall, Sp, Index("i", "m"), Comma, Index("j", "m"), Comma, Sub("p", "i"), Sub("p", "j"), Ge, D(0)),
                         Land, Sp,
-                        Par(Forall, Sp, Index("i", "m"), Comma, Index("k", "n"), Comma,
-                            new Formula.Absolute(Sub("v", "ik")), Eq, D(1))), RowBreak,
+                        Par(Forall, Sp, Index("i", "m"), Comma, Sub("p", "i"), Neq, D(0), Rightarrow, Sp, Forall, Sp, Index("k", "n"), Comma,
+                            new Formula.Absolute(Sub("v", "ik")), Le, D(1))), RowBreak,
                     Rightarrow, Sp, Apply("L", V("B"), Comma, V("p"), Comma, V("v")), Le, Sp, V("C"),
                     Apply("L", V("A"), Comma, V("p"), Comma, V("v"))),
                     Leftrightarrow, Factor(), Le, Sp, V("C")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Here n is a positive integer, m is an arbitrary finite ensemble "
-                    + "size, p is a nonnegative weight vector of length m, and v is an m by n array of "
-                    + "unit complex phases. The bound permits every total weight. For a probability distribution it compares the two mixture purities. At n = 0 both losses vanish for every coefficient. With rows (1,1) and (-1,-1) and signed weights 2 and -1, the product loss is -4 and nine quarters times the singleton loss is -8. With a single entry 2 of weight one at n = 1, the product loss is -3/2 and the singleton loss is -21/4.")),
+                    + "size, and all pair products of weights are nonnegative. Each coordinate in a row of nonzero weight lies in the closed complex unit disk. "
+                    + "A row of zero weight contributes nothing. For probability weights and unit phases the bound compares two mixture purities. At n = 0 both losses vanish for every coefficient. With rows (1,1) and (-1,-1) and signed weights 2 and -1, the product loss is -4 and nine quarters times the singleton loss is -8. With a single entry 2 of weight one at n = 1, the product loss is -3/2 and the singleton loss is -21/4.")),
                     Paragraph(Text("The loss of a product of factors in the unit interval is at most "
-                    + "the sum of their individual losses. The modulus of the sum of n phases is "
+                    + "the sum of their individual losses. The modulus of the sum of n disk coordinates is "
                     + "at most n. Expanding the singleton overlap then gives the displayed coefficient "
                     + "for each pair and multiplication by the nonnegative pair weights preserves it.")),
                     Paragraph(Text("For sharpness, give equal weights to the constant row and a row "
