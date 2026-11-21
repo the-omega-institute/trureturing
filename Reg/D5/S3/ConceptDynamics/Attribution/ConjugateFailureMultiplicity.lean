@@ -31,19 +31,23 @@ def actual : Realization signature.{v} :=
 def rejected : Realization signature.{v} :=
   realize signature (fun _ _ _ _ => 1) (fun e => nomatch e)
 
+open Classical in
 abbrev arena : Arena where
   signature := signature.{v}
   Law R :=
     ∀ {G : Type u} {S : Type v} [Group G] [MulAction G S] [Fintype S]
       (H : Subgroup G) (a : S → ℝ)
       (_nonneg : ∀ s, 0 ≤ a s) (_invariant : ∀ (g : G) s, a (g • s) = a s) (d : ℕ),
-      let lossSets := Set.range fun g : G => {s : S | ¬∀ h : H, h • (g⁻¹ • s) = g⁻¹ • s}
+      let events := Set.range fun g : G => {s : S | ¬∀ h : H, h • (g⁻¹ • s) = g⁻¹ • s}
       let N := Subgroup.normalClosure (H : Set G)
       let total := ∑ s, a s
-      (∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) →
-        d ≤ Nat.card {B : lossSets // s ∈ B.val}) →
-        (d : ℝ) * (total - seedFixedMass (G := N) a) ≤
-          (Nat.card ↥lossSets : ℝ) * (total - seedFixedMass (G := H) (R.readout () S a))
+      let count (s : S) := Nat.card {B : events // s ∈ B.val}
+      let lhs := (d : ℝ) * (total - seedFixedMass (G := N) a)
+      let rhs := (Nat.card ↥events : ℝ) * (total - seedFixedMass (G := H) (R.readout () S a))
+      (rhs - lhs = ∑ s, if ∀ n : N, n • s = s then 0 else a s * ((count s : ℝ) - d)) ∧
+      ((∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → d ≤ count s) →
+        lhs ≤ rhs ∧ ((lhs = rhs) ↔
+          ∀ s : S, 0 < a s → (¬∀ n : N, n • s = s) → count s = d))
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   classical
@@ -59,18 +63,20 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     rintro ⟨_, ⟨g, rfl⟩⟩
     cases g
     rfl
-  have bad := altered (G := G) H a (fun _ => le_rfl) (fun _ _ => rfl) 0
-    (fun _ _ _ => Nat.zero_le _)
-  change ((0 : ℕ) : ℝ) * _ ≤ (Nat.card ↥(Set.range broken) : ℝ) *
-    ((∑ s, a s) - seedFixedMass (G := H) (fun _ : S => 1)) at bad
-  have fixed (s : S) (h : H) : h • s = s := Subsingleton.elim _ _
-  apply (not_le_of_gt (zero_lt_one : (0 : ℝ) < 1))
-  simpa [card, a, seedFixedMass, fixed] using bad
+  have bad := (altered (G := G) H a (fun _ => le_rfl) (fun _ _ => rfl) 0).1
+  let N := Subgroup.normalClosure (H : Set G)
+  have hf (s : S) (h : H) : h • s = s := Subsingleton.elim _ _
+  have nf (s : S) (n : N) : n • s = s := Subsingleton.elim _ _
+  change (Nat.card ↥(Set.range broken) : ℝ) *
+      ((∑ s, a s) - seedFixedMass (G := H) (fun _ : S => 1)) -
+    ((0 : ℕ) : ℝ) * _ = _ at bad
+  have impossible : (-1 : ℝ) = 0 := by simpa [card, a, seedFixedMass, hf, nf] using bad
+  exact neg_ne_zero.mpr one_ne_zero impossible
 
-def family : Registration arena.{u,v} (type_of% (@normal_closure_loss_mul_le)) where
+def family : Registration arena.{u,v} (type_of% (@normal_closure_loss_gap_and_eq)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@normal_closure_loss_mul_le, rejected, rejected_law⟩
+  variation := ⟨@normal_closure_loss_gap_and_eq, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro role
@@ -86,7 +92,7 @@ def family : Registration arena.{u,v} (type_of% (@normal_closure_loss_mul_le)) w
     exact zero_ne_one (congrFun equal PUnit.unit)
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@normal_closure_loss_mul_le) (Realization signature.{v}) Unit Unit where
+    (@normal_closure_loss_gap_and_eq) (Realization signature.{v}) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Attribution.ConjugateFailureMultiplicity.lossMultiplicity
   realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.ConjugateFailureMultiplicity.family
   realizationSource := none
@@ -109,7 +115,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg"]
+        "body", "body", "body", "body", "body", "body", "value", "arg", "arg",
+        "arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
