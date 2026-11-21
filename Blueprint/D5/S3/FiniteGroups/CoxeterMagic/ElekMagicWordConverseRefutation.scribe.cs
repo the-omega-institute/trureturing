@@ -99,7 +99,10 @@ internal sealed class ElekMagicWordConverseRefutationDocument : IScribeDocumentD
                         + "therefore fails. Umutabazi uses the same interval for a left-descent "
                         + "criterion. Elek’s Lemma 2.17 gives the related last-letter obstruction "
                         + "to uniqueness even among reduced subwords."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("elek-2026-magic-word-converse"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Definition(
         string name, string title, Formula formula, AssessedProvenance provenance, string explanation) =>
