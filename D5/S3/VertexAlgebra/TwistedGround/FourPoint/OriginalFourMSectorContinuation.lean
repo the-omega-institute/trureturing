@@ -6,7 +6,6 @@
    utility: none
    digest: Normal convergence and native agreement of the rank-24 charge-sector terms. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChargeNormal
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitTaylor
 import D5.S3.Analytic.OriginalSlitNome
@@ -25,8 +24,6 @@ open LatticeTwistedGroundRealization.SignQuotient
 open FourPoint.OriginalFourMChargeNormal
 open OriginalChargedRowSource OriginalGaussianSourceRestriction
 open OriginalFourMEnergyCoefficient OriginalGaussianSewnAnalytic
-open private affine_coefficient_differentiableOn from
-  D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
 
 /-- The original fixed-occupation coset sum is holomorphic on an open chart
 on which the actual Gaussian data are holomorphic and the nome is subunit. -/
@@ -73,7 +70,8 @@ theorem charge_sector_differentiableOn (D : LatticeData)
     · simp only [hq, if_true]
       apply DifferentiableOn.mono _ (hballK.trans hKU)
       exact (hp.mul (hQ.pow _)).mul
-        (affine_coefficient_differentiableOn hA (fun i => (hu i).const_mul _) _)
+        (OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn hA
+          (fun i => (hu i).const_mul _) _)
     · simp [hq]
   · intro q x hx
     have bound := hmajor q x (hballK hx)
@@ -88,12 +86,6 @@ open OriginalFourMSlitMean OriginalGaussianExternalBlocks OriginalGaussianDeterm
 open OriginalFourMSignedOverlap (taggedMode)
 open OriginalGaussianSourceMeans (sourceConstant)
 open LatticeHalfFockChargedTensorCoefficients (chargeScalar chargeNorm)
-open private isOpen_slitDomain ball_subset_slitDomain from
-  D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
-open private chargeScalar_pair from
-  D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
-open private nome_square_source from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChargeNormal
 
 private def leg {X : Type*} : X ⊕ X → Bool := Sum.elim (fun _ => false) (fun _ => true)
 
@@ -129,7 +121,8 @@ theorem slitChargeSector_differentiableOn (D : LatticeData)
     (betaL gammaL betaR gammaR : Exponent D) :
     DifferentiableOn ℂ (slitChargeSector D a betaL gammaL betaR gammaR) slitDomain := by
   unfold slitChargeSector slitChargeTerm
-  exact charge_sector_differentiableOn D hD betaL gammaL betaR gammaR a _ isOpen_slitDomain
+  exact charge_sector_differentiableOn D hD betaL gammaL betaR gammaR a _
+    OriginalHalfBinomialSlitPeriod.isOpen_slitDomain
     rank24Determinant slitNome rank24Determinant_analyticOnNhd.differentiableOn
     slitNome_analyticOnNhd.differentiableOn (fun _ => slitNome_norm_lt_one)
     (slitMatrix D _) (slitLinear D _)
@@ -140,7 +133,7 @@ private theorem rank24Determinant_eq_native (D : LatticeData) (h24 : D.rank = 24
     {w : ℂ} (hw : ‖w‖ < 1) :
     rank24Determinant (w ^ 2) =
       Complex.exp (-(D.rank : ℂ) / 2 * gaussianLogDet w) := by
-  have hmem := ball_subset_slitDomain (show w ^ 2 ∈ ball (0 : ℂ) 1 by
+  have hmem := OriginalHalfBinomialSlitPeriod.ball_subset_slitDomain (show w ^ 2 ∈ ball (0 : ℂ) 1 by
     rw [mem_ball_zero_iff, norm_pow]; exact pow_lt_one₀ (norm_nonneg w) hw (by decide))
   have hn : 1 - w ^ 2 ≠ 0 := Complex.slitPlane_ne_zero hmem
   have hw2 : ‖w ^ 2‖ < 1 := mem_ball_zero_iff.mp
@@ -162,9 +155,9 @@ private theorem rank24Determinant_eq_native (D : LatticeData) (h24 : D.rank = 24
     mul_pow, hpow, rank24Determinant, slitPeriod_eq_period hw2, mul_inv_rev, mul_comm]
 
 /-- Agreement holds for every individual charge, throughout the native opening disk. -/
-theorem slitChargeTerm_eq_native (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
-    (betaL gammaL betaR gammaR : Exponent D) (q : Charge D) {w : ℂ} (hw : ‖w‖ < 1) :
+theorem slitChargeTerm_eq_native (D : LatticeData) (h24 : D.rank = 24)
+    (betaL gammaL betaR gammaR : Exponent D) (q : Charge D)
+    (hq : 0 ≤ chargeEnergy D q) {w : ℂ} (hw : ‖w‖ < 1) :
     slitChargeTerm D betaL gammaL betaR gammaR q (w ^ 2) =
       sewnChargeTerm D betaL gammaL betaR gammaR q w := by
   let F := fourSupport D betaL gammaL betaR gammaR
@@ -183,7 +176,7 @@ theorem slitChargeTerm_eq_native (D : LatticeData)
     · simpa [slitLinear, leg, taggedMode] using slitMeanEntry_eq_native D q e false _ hw
     · simpa [slitLinear, leg, taggedMode] using slitMeanEntry_eq_native D q e true _ hw
   let m := (chargeEnergy D q).toNat
-  have hm : (m : ℤ) = chargeEnergy D q := Int.toNat_of_nonneg (chargeEnergy_nonneg D hD q)
+  have hm : (m : ℤ) = chargeEnergy D q := Int.toNat_of_nonneg hq
   have hn : (chargeNorm D q : ℂ) = 2 * (m : ℂ) := by
     have h : (chargeNorm D q : ℤ) = 2 * (m : ℤ) := by
       rw [hm, two_chargeEnergy]
@@ -198,8 +191,8 @@ theorem slitChargeTerm_eq_native (D : LatticeData)
       affineCoefficient (slitMatrix D e (w ^ 2)) _ _ =
     (chargeScalar D q * chargeScalar D (-q)) * w ^ (2 * m) * sewn D q e _ w
   rw [hmatrix, hlinear, rank24Determinant_eq_native D h24 hw,
-    slitNome_eq_Q0 hw2, nome_square_source (mem_ball_zero_iff.mpr hw),
-    chargeScalar_pair, hs, sewn, hn, div_pow, mul_pow, ← pow_mul, ← Complex.exp_nat_mul]
+    slitNome_eq_Q0 hw2, OriginalFourMChargeNormal.nome_square_source (mem_ball_zero_iff.mpr hw),
+    OriginalFourMEnergyCoefficient.chargeScalar_pair, hs, sewn, hn, div_pow, mul_pow, ← pow_mul, ← Complex.exp_nat_mul]
   rw [show (m : ℂ) * (2 * sourceConstant w) = 2 * (m : ℂ) * sourceConstant w by ring]
   ring
 

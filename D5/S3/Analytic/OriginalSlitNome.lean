@@ -6,7 +6,6 @@
    utility: none
    digest: Subunit continuation of the native nome and rank-24 determinant on the Euler slit. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.OriginalHalfBinomialNome
 import D5.S3.Analytic.OriginalHalfBinomialPfaffNome
 import Mathlib.Analysis.Complex.ReImTopology
@@ -22,8 +21,6 @@ open OriginalHalfBinomialPfaffNome
 open OriginalHalfBinomialNome
 open OriginalHalfBinomialContinuation
 open OriginalHalfBinomialDiskCorrection (disk)
-open private tau_analyticAt from D5.S3.Analytic.OriginalHalfBinomialPfaffNome
-open private ball_subset_slitDomain from D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
 
 noncomputable section
 
@@ -35,13 +32,9 @@ private def nomeOffZero (r : ℂ) : ℂ := by
   classical
   exact if r ∈ doubleSlit then expNome r else negativeChartNome r
 
-private theorem doubleSlit_open : IsOpen doubleSlit :=
-  (Complex.isOpen_slitPlane.preimage (continuous_const.sub continuous_id)).inter
-    Complex.isOpen_slitPlane
-
 private theorem expNome_analytic {r : ℂ} (hr : r ∈ doubleSlit) :
     AnalyticAt ℂ expNome r :=
-  (analyticAt_const.mul (tau_analyticAt hr)).cexp'
+  (analyticAt_const.mul (OriginalHalfBinomialPfaffNome.tau_analyticAt hr)).cexp'
 
 private theorem expNome_norm_lt_one {r : ℂ} (hr : r ∈ doubleSlit) :
     ‖expNome r‖ < 1 := by
@@ -69,7 +62,7 @@ private theorem offZero_analytic_norm {r : ℂ} (hr : r ∈ puncturedSlit) :
   classical
   by_cases h : r ∈ doubleSlit
   · refine ⟨(expNome_analytic h).congr ?_, ?_⟩
-    · filter_upwards [doubleSlit_open.mem_nhds h] with z hz
+    · filter_upwards [OriginalHalfBinomialSlitPeriod.isOpen_doubleSlit.mem_nhds h] with z hz
       simp [nomeOffZero, hz]
     · simpa [nomeOffZero, h] using expNome_norm_lt_one h
   · obtain ⟨x, hx, hxlt⟩ := negative_of_not_doubleSlit hr h
@@ -83,7 +76,7 @@ private theorem offZero_analytic_norm {r : ℂ} (hr : r ∈ puncturedSlit) :
     · simpa [nomeOffZero, h] using hnorm _ hxU
 
 private theorem slitDisk_sub {z : ℂ} (hz : z ∈ slitDisk) : z ∈ doubleSlit :=
-  ⟨ball_subset_slitDomain hz.1, hz.2⟩
+  ⟨OriginalHalfBinomialSlitPeriod.ball_subset_slitDomain hz.1, hz.2⟩
 
 private theorem midpoint_mem_slitDisk : (1 / 2 : ℂ) ∈ slitDisk := by
   constructor
@@ -124,7 +117,7 @@ private theorem qDisk_eq_expNome : EqOn Q0 expNome slitDisk := by
 private theorem disk_eq_offZero : EqOn Q0 nomeOffZero (disk \ {0}) := by
   classical
   have hsub : disk \ {0} ⊆ puncturedSlit := fun _ hz =>
-    ⟨ball_subset_slitDomain hz.1, hz.2⟩
+    ⟨OriginalHalfBinomialSlitPeriod.ball_subset_slitDomain hz.1, hz.2⟩
   have hopen : IsOpen (disk \ {0}) := Metric.isOpen_ball.sdiff isClosed_singleton
   have hnonreal : Dense {z : ℂ | z.im ≠ 0} := by
     have he : {z : ℂ | z.im ≠ 0} = im ⁻¹' ({0}ᶜ : Set ℝ) := rfl

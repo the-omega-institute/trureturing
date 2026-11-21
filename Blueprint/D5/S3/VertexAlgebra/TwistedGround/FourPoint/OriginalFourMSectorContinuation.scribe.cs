@@ -46,8 +46,8 @@ internal sealed class OriginalFourMSectorContinuationDocument : IScribeDocumentD
                 Ref(SlitTaylor + "slitMeanEntry_analyticOnNhd")),
             D("slit-charge-term-native", "slitChargeTerm_eq_native", "Exact agreement with native sewing",
                 DescribeRole.Theorem,
-                Text("For a positive definite rank-24 lattice datum, any fixed occupations and any "
-                    + "individual charge, the continued term at r = w² equals the original sewn term "
+                Text("For a rank-24 lattice datum, any fixed occupations and any individual charge "
+                    + "of nonnegative energy, the continued term at r = w² equals the original sewn term "
                     + "for every complex |w| < 1. The exact Taylor entries identify the native covariance "
                     + "and mean. The determinant uses the twelfth power of the Gaussian period identity, "
                     + "and the disk nome recovers the native displacement exponential, both charge scalars "

@@ -6,7 +6,6 @@
    utility: none
    digest: Holomorphic exact signed Taylor selectors for the native Gaussian. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitCovariance
 
 /-! Holomorphic exact signed Taylor selectors for the native Gaussian. -/
@@ -22,8 +21,6 @@ open scoped Topology NNReal
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
 open OriginalGaussianSewnAnalytic (coefficient)
 open OriginalFourMSignedOverlap
-open private coefficient_of_hasSum norm_sq_lt from
-  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSignedCovariance
 open LatticeGeneratingFieldLocality LatticeHalfFock
 open OriginalGaussianExternalBlocks OriginalCurrentMetric
 
@@ -115,7 +112,10 @@ theorem slitCovarianceEntry_eq_native (D : LatticeData) {X : Type*} (label : X �
     slitCovarianceEntry D l k (label x) (label y) (w ^ 2) =
       explicitEffectiveKernel D label w (taggedMode l x) (taggedMode k y) := by
   rw [native_tagged_entry D label l k x y hw, slitCovarianceEntry]
-  have hs := small_for_norm (norm_sq_lt hw)
+  have hw2 : ‖w ^ 2‖ < 1 := by
+    rw [norm_pow]
+    exact pow_lt_one₀ (norm_nonneg w) hw (by decide)
+  have hs := small_for_norm hw2
   apply coefficient_congr
   filter_upwards [hs] with v hv
   apply coefficient_congr
@@ -130,18 +130,17 @@ theorem slitMeanEntry_eq_native (D : LatticeData) (a : Charge D) {X : Type*}
   let e := (label x).1
   let p := (label x).2.2
   let c := -legSign l / slitPeriod (w ^ 2)
-  let R : ℝ≥0 := ⟨(1 - ‖w ^ 2‖) / 2, by
-    have h := norm_sq_lt hw
-    linarith⟩
+  have hw2 : ‖w ^ 2‖ < 1 := by
+    rw [norm_pow]
+    exact pow_lt_one₀ (norm_nonneg w) hw (by decide)
+  let R : ℝ≥0 := ⟨(1 - ‖w ^ 2‖) / 2, by linarith⟩
   have hR : 0 < R := by
     change 0 < (1 - ‖w ^ 2‖) / 2
-    have h := norm_sq_lt hw
     linarith
   have hsmall : ‖(R : ℂ)‖ + ‖w ^ 2‖ < 1 := by
     change ‖((R : ℝ) : ℂ)‖ + ‖w ^ 2‖ < 1
     rw [Complex.norm_real, Real.norm_of_nonneg R.coe_nonneg]
     change (1 - ‖w ^ 2‖) / 2 + ‖w ^ 2‖ < 1
-    have h := norm_sq_lt hw
     linarith
   let A := OriginalGaussianSourceEvaluation.sourceAmplitude e
   have hsum (u : ℂ) (hu : ‖u‖ + ‖w ^ 2‖ < 1) :
@@ -153,10 +152,11 @@ theorem slitMeanEntry_eq_native (D : LatticeData) (a : Charge D) {X : Type*}
     · exact (OriginalGaussianExternalGenerators.sourceAmplitude_generators hu).1.summable.hasSum
   have hcoef : slitMeanEntry l e p (w ^ 2) = c * A p (w ^ 2) := by
     unfold slitMeanEntry
-    refine coefficient_of_hasSum (a := fun n => c * A n (w ^ 2)) hR ?_ ?_ p
+    refine OriginalFourMSignedOverlap.coefficient_of_hasSum
+      (a := fun n => c * A n (w ^ 2)) hR ?_ ?_ p
     · have h := ((hsum R hsmall).mul_left c).summable.norm
       simpa only [mul_assoc] using h
-    · filter_upwards [small_for_norm (norm_sq_lt hw)] with u hu
+    · filter_upwards [small_for_norm hw2] with u hu
       have hval : c * slitMean e u (w ^ 2) = -legSign l * slitMean e u (w ^ 2) /
           slitPeriod (w ^ 2) := by simp only [c, div_eq_mul_inv]; ring
       rw [← hval]
@@ -164,6 +164,7 @@ theorem slitMeanEntry_eq_native (D : LatticeData) (a : Charge D) {X : Type*}
   rw [native_mean D a label l x hw]
   change _ * slitMeanEntry l e p (w ^ 2) = _
   rw [hcoef]
-  cases l <;> simp [A, c, e, p, legSign, slitPeriod_eq_period (norm_sq_lt hw)] <;> ring <;> simp
+  cases l <;> simp [A, c, e, p, legSign, slitPeriod_eq_period hw2]
+    <;> ring <;> simp
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSlitMean
