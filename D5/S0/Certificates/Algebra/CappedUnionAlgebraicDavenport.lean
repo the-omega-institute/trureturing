@@ -18,8 +18,10 @@ namespace D5.S0.Certificates.Algebra.CappedUnionAlgebraicDavenport
 
 /-
 proof_shape:
-  add_eq, double_self_or_one, zero_fold: bind-only (consumers: cyclic_le, cyclicIdempotent_eq,
+  add_eq: bind-only (consumers: cyclic_le, cyclicIdempotent_eq, double_self_or_one,
     pair_vanish, result)
+  double_self_or_one: bind-only (consumer: pair_vanish)
+  zero_fold: bind-only (consumer: result)
   cyclic_le: content (consumer: cyclicIdempotent_eq)
   cyclicIdempotent_eq: content (consumers: pair_vanish, result)
   pair_vanish: content (consumer: result)
@@ -107,16 +109,16 @@ private theorem zero_fold {R : Type*} [CommRing R] (l : List (Capped U × ℕ)) 
   | nil => rfl
   | cons a l ih => simpa only [List.foldl_cons, zero_mul] using ih
 
-/-- In `R[S_U]` the two-level differences multiply to zero, and over every nonzero
-commutative ring the algebraic Davenport constant of `S_U` is one. -/
+/-- In `R[S_U]` the two-level differences multiply to zero, and the algebraic Davenport
+constant of `S_U` is one exactly over the nonzero commutative rings. -/
 theorem result (R : Type*) [CommRing R] :
     (∀ A B : Finset U,
       (AddMonoidAlgebra.single (⟨A, 1⟩ : Capped U) (1 : R) -
           AddMonoidAlgebra.single (⟨A, 2⟩ : Capped U) 1) *
         (AddMonoidAlgebra.single (⟨B, 1⟩ : Capped U) 1 -
           AddMonoidAlgebra.single (⟨B, 2⟩ : Capped U) 1) = 0) ∧
-    (Nontrivial R → algebraicD (Capped U) R = 1) := by
-  refine ⟨fun A B => ?_, fun hR => ?_⟩
+    (algebraicD (Capped U) R = 1 ↔ Nontrivial R) := by
+  refine ⟨fun A B => ?_, ⟨fun h => ?_, fun hR => ?_⟩⟩
   · have hA : (⟨A, 2⟩ : Capped U) = ⟨A, 1⟩ + ⟨A, 1⟩ := by
       ext1
       · simp only [add_eq, Finset.union_idempotent]
@@ -127,6 +129,19 @@ theorem result (R : Type*) [CommRing R] :
       · rfl
     have := pair_vanish (R := R) (⟨A, 1⟩ : Capped U) ⟨B, 1⟩
     simpa only [factor, cyclicIdempotent_eq, ← hA, ← hB] using this
+  · by_contra hn
+    have : Subsingleton R := not_nontrivial_iff_subsingleton.mp hn
+    have htop : algebraicD (Capped U) R = ⊤ := by
+      refine ENat.eq_top_iff_forall_ge.mpr fun n => ?_
+      have hg : GoodSequence (R := R) (List.replicate (n + 1) (⟨∅, 0⟩ : Capped U)) := by
+        intro c hc
+        exact absurd (Subsingleton.elim (c 0) 0) (hc 0 (by simp))
+      have := le_iSup₂ (f := fun (l : List (Capped U)) (_ : GoodSequence (R := R) l) =>
+        (l.length : ℕ∞)) _ hg
+      simp only [List.length_replicate] at this
+      exact le_trans (by exact_mod_cast Nat.le_succ n) this
+    rw [htop] at h
+    exact ENat.top_ne_one h
   · apply le_antisymm
     · refine iSup_le fun l => iSup_le fun hl => ?_
       have hlen : l.length ≤ 1 := by

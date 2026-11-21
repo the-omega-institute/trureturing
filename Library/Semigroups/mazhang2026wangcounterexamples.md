@@ -44,5 +44,5 @@ carrier of some point of A.
 
 Lemma 2 states that (X^(A,1)-X^(A,2))(X^(B,1)-X^(B,2))=0 in the ordinary
 semigroup algebra R[S_U] and that d(S_U,R)=1. The repository states d with the
-existing definitions of WangConjecture326Refutation, whose factors use the
+definitions of WangConjecture326Refutation, whose factors use the
 cyclic idempotent of each label; in S_U that idempotent is x+x.
