@@ -5,11 +5,12 @@ year: 2026
 title: "A negative answer to Delgado, Süer and Yeşil's symmetrization question"
 doi: "10.5281/zenodo.24391331"
 url: "https://doi.org/10.5281/zenodo.24391331"
-claim: "Corollary 2: for h >= 2 there are 2^(h-1) symmetric numerical sets with Frobenius number 2h-1, and at least 2^(h-2) of them lie outside the image of Phi. Corollary 3: every proper symmetric numerical semigroup S is almost symmetric and satisfies Phi(S) = S; conversely, among proper numerical semigroups these are exactly the fixed points of the extended row-deletion map. Corollary 4: Phi(S) = N0 minus {1} exactly for the ordinary semigroups O_m, m >= 2, each almost symmetric."
+claim: "Corollary 2: for h >= 2 there are 2^(h-1) symmetric numerical sets with Frobenius number 2h-1, and at least 2^(h-2) of them lie outside the image of Phi. Corollary 3: every proper symmetric numerical semigroup S is almost symmetric and satisfies Phi(S) = S; conversely, among proper numerical semigroups these are exactly the fixed points of the extended row-deletion map. Corollary 4: Phi(S) = N0 minus {1} exactly for the ordinary semigroups O_m, m >= 2, each almost symmetric. Corollary 5: for F >= 1, 1 <= |NS_F| <= |S_F| <= 2^(floor((F+1)/2)-1), and every output has Frobenius number 2(F - g(S) + 1) - 1 <= F."
 strata_touched:
   - D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiFixedPoints
   - D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiOrdinaryFiber
   - D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiSymmetricTargets
+  - D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiImageBound
 license: CC BY 4.0
 triage: anchor
 ---
@@ -19,7 +20,7 @@ triage: anchor
 ## Verified locator
 
 The written proof is by **Haobo Ma and Wenlin Zhang**, version 2, exact-version DOI
-https://doi.org/10.5281/zenodo.24391331, Corollaries 2, 3 and 4. The map Phi is the row deletion of
+https://doi.org/10.5281/zenodo.24391331, Corollaries 2, 3, 4 and 5. The map Phi is the row deletion of
 M. Delgado, M. Süer and M. Yeşil, arXiv:2611.14268v1, Theorem 4.2, recorded in
 delgadosueryesil2026symmetrization.
 
@@ -44,3 +45,10 @@ the 2^(h-2) choices containing 1 lie outside the image of Phi, because Phi(S) ne
 No symmetric numerical set has even Frobenius number, and at Frobenius number 1 the sole target
 N0 minus {1} is reached. The total count is due to J. Marzuola and A. Miller,
 arXiv:0805.3493v1, p. 12.
+
+Corollary 5: for F >= 1 let AS_F be the almost symmetric numerical semigroups of Frobenius
+number F, S_F = Phi(AS_F) and NS_F the semigroups in S_F, as in Delgado, Süer and Yeşil,
+Section 5, pp. 8-9. Then 1 <= |NS_F| <= |S_F| <= 2^(floor((F+1)/2) - 1). Every output has genus
+F - g(S) + 1 and Frobenius number 2(F - g(S) + 1) - 1 <= F; the proof uses the symmetry of the
+output, Delgado, Süer and Yeşil, Theorem 4.2, and the count of Corollary 2. The lower bound comes
+from O_{F+1}, whose image is the semigroup N0 minus {1}.
