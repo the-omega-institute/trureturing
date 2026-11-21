@@ -4,15 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Characterizes the profile pairs whose colour-refined counts are universally divisible by four. -/
+   digest: Exact fourfold divisibility of invariant colour-pair counts. -/
 
 import D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
-import Mathlib.Algebra.Group.Pi.Lemmas
+
+/-! Count the colour pairs supported on each orbit of two Boolean profiles. -/
 
 set_option autoImplicit false
 
 open Finset
-open scoped Classical
 
 namespace D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
 
@@ -20,6 +20,7 @@ open D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 
 variable {I : Type*} [Fintype I]
 
+open Classical in
 private theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
     shift p (Pi.single i a) = if p i then 0 else a := by
   unfold shift
@@ -40,6 +41,7 @@ private theorem add_shift (p : I → Bool) (x y : I → ZMod 2) :
 private theorem lift_on_pivot (p q : I → Bool) (i j : I) (hi : p i = false)
     (hq : q i = true) (hj : q j = false) (a b : ZMod 2) :
     ∃ v : I → ZMod 2, shift p v = a ∧ shift q v = b := by
+  classical
   let extra := if p j then (0 : ZMod 2) else b
   refine ⟨Pi.single i (a - extra) + Pi.single j b, ?_, ?_⟩
   · rw [add_shift, eval_single, eval_single, hi]
@@ -82,6 +84,7 @@ private theorem four_dvd_colour_count (m : Output I → Output I → ℕ)
   exact ⟨m ⟨p, 0⟩ ⟨q, 0⟩, by omega⟩
 
 
+open Classical in
 private noncomputable def selectedPair (p q : I → Bool) (r : ZMod 2 → ZMod 2 → Prop)
     (x y : Output I) : ℕ :=
   if x.profile = p ∧ y.profile = q ∧ r x.colour y.colour then 1 else 0
@@ -89,11 +92,13 @@ private noncomputable def selectedPair (p q : I → Bool) (r : ZMod 2 → ZMod 2
 private theorem selectedPair_invariant (p q : I → Bool) (r : ZMod 2 → ZMod 2 → Prop)
     (stable : ∀ v c d, r (shift p v + c) (shift q v + d) ↔ r c d) :
     ∀ (g : Acting I) x y, selectedPair p q r (g • x) (g • y) = selectedPair p q r x y := by
+  classical
   intro g x y
   unfold selectedPair
-  change (if x.profile = p ∧ y.profile = q ∧
-      r (shift x.profile g.toAdd + x.colour) (shift y.profile g.toAdd + y.colour) then 1 else 0) =
-      if x.profile = p ∧ y.profile = q ∧ r x.colour y.colour then 1 else 0
+  apply if_congr ?_ rfl rfl
+  change (x.profile = p ∧ y.profile = q ∧
+      r (shift x.profile g.toAdd + x.colour) (shift y.profile g.toAdd + y.colour)) ↔
+      x.profile = p ∧ y.profile = q ∧ r x.colour y.colour
   by_cases hx : x.profile = p
   · by_cases hy : y.profile = q
     · simp only [hx, hy, true_and, stable]
@@ -172,6 +177,4 @@ theorem universally_four_dvd_iff (p q : I → Bool) :
   · rintro ⟨different, someFalseP, someFalseQ⟩ m inv
     exact four_dvd_colour_count m inv p q different someFalseP someFalseQ
 
-#print axioms universally_four_dvd_iff
-
-end ColourOrbit
+end D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
