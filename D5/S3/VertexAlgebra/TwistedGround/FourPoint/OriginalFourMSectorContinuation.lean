@@ -89,12 +89,14 @@ open LatticeHalfFockChargedTensorCoefficients (chargeScalar chargeNorm)
 
 private def leg {X : Type*} : X ⊕ X → Bool := Sum.elim (fun _ => false) (fun _ => true)
 
-private def slitMatrix (D : LatticeData) {X : Type*} (e : X → External D) (r : ℂ)
+/-- The matrix of canonical slit covariance entries on the two tagged legs. -/
+def slitMatrix (D : LatticeData) {X : Type*} (e : X → External D) (r : ℂ)
     (i j : X ⊕ X) : ℂ :=
   let label := Sum.elim e e
   slitCovarianceEntry D (leg i) (leg j) (label i) (label j) r
 
-private def slitLinear (D : LatticeData) {X : Type*} (e : X → External D) (r : ℂ)
+/-- The canonical slit mean entries on the two tagged legs. -/
+def slitLinear (D : LatticeData) {X : Type*} (e : X → External D) (r : ℂ)
     (i : X ⊕ X) : ℂ :=
   let x := Sum.elim e e i
   slitMeanEntry (leg i) x.1 x.2.2 r
