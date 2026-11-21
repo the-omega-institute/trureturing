@@ -11,6 +11,14 @@ internal sealed class OriginalFourMChargeNormalDocument : IScribeDocumentDefinit
         "Taylor coefficients of the original four-point sewn charge sums",
         H("The original four-point sewn Taylor coefficient"),
         Blocks(
+            Describe.Lean(DescribeId.Create("projectoccupations"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations"),
+                H("Finite occupation projection"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For fixed lattice datum, weights and Laurent index, project occupation values using "
+                    + "the finite lowering sums, signed factorial weights and the two Laurent selectors on "
+                    + "the four oscillator inputs."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("nome-square-source"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source"),
                 H("The disk nome in the sewing coordinate"), StatementSource.WithoutFormula(),
