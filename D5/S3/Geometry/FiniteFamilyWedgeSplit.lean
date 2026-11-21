@@ -30,26 +30,50 @@ def split (b : ∀ j, Z j) (i : J) :
           Quotient.mk _ (Sum.inr (point (fun k : {k // k ≠ i} => b k.val) j x))} := by
   classical
   let r := fun j : {j // j ≠ i} => b j.val
-  let l := collapseMap (wedgePoints (b i) (base r))
-  let a := l (Sum.inl (b i))
-  have ha : l (Sum.inr (base r)) = a := Quotient.sound
+  let a : Z i ⊕ FamilyWedge r := Sum.inl (b i)
+  have ha : (Quotient.mk (subsetSetoid (wedgePoints (b i) (base r)))
+      (Sum.inr (base r))) = Quotient.mk _ a := Quotient.sound
     (Or.inr ⟨Or.inr rfl, Or.inl rfl⟩)
-  let left : C(Z i, Wedge (b i) (base r)) := ⟨l ∘ Sum.inl, l.continuous.comp continuous_inl⟩
-  let right : C(FamilyWedge r, Wedge (b i) (base r)) :=
-    ⟨l ∘ Sum.inr, l.continuous.comp continuous_inr⟩
-  let piece (j : J) : C(Z j, Wedge (b i) (base r)) :=
+  let left : C(Z i, Z i ⊕ FamilyWedge r) := ⟨Sum.inl, continuous_inl⟩
+  let right : C(FamilyWedge r, Z i ⊕ FamilyWedge r) := ⟨Sum.inr, continuous_inr⟩
+  let piece (j : J) : C(Z j, Z i ⊕ FamilyWedge r) :=
     if h : j = i then h ▸ left else right.comp (point r ⟨j, h⟩)
-  let f := descend b a piece (by
-    intro j
-    dsimp only [piece]
-    split_ifs with hj
-    · subst j
-      rfl
-    · change right (point r ⟨j, hj⟩ (b j)) = a
-      rw [show b j = r ⟨j, hj⟩ from rfl, point_base]
-      exact ha)
+  let rawForward : Unit ⊕ (Σ j, Z j) → Z i ⊕ FamilyWedge r :=
+    Sum.elim (fun _ => a) (fun j => piece j.1 j.2)
+  have forwardBase : ∀ x ∈ basePoints b, rawForward x ∈ wedgePoints (b i) (base r) := by
+    rintro x (rfl | ⟨j, rfl⟩)
+    · exact Or.inl rfl
+    · by_cases hj : j = i
+      · subst j
+        exact Or.inl (by simp [rawForward, piece, a])
+      · apply Or.inr
+        simp [rawForward, piece, hj, right, show b j = r ⟨j, hj⟩ from rfl, point_base]
+  have forwardRel : ∀ x y, (subsetSetoid (basePoints b)).r x y →
+      (subsetSetoid (wedgePoints (b i) (base r))).r (rawForward x) (rawForward y) := by
+    rintro _ _ (rfl | ⟨hx, hy⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨forwardBase _ hx, forwardBase _ hy⟩
+  let f : C(FamilyWedge b, Wedge (b i) (base r)) :=
+    ⟨Quotient.map' rawForward forwardRel,
+      (continuous_const.sumElim (continuous_sigma_iff.mpr
+        (fun j => (piece j).continuous))).quotient_map' forwardRel⟩
+  let rawRemain : Unit ⊕ (Σ j : {j // j ≠ i}, Z j.val) → Unit ⊕ (Σ j, Z j) :=
+    Sum.map id (fun j => ⟨j.1.val, j.2⟩)
+  have remainBase : ∀ x ∈ basePoints r, rawRemain x ∈ basePoints b := by
+    rintro x (rfl | ⟨j, rfl⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨j.val, rfl⟩
+  have remainRel : ∀ x y, (subsetSetoid (basePoints r)).r x y →
+      (subsetSetoid (basePoints b)).r (rawRemain x) (rawRemain y) := by
+    rintro _ _ (rfl | ⟨hx, hy⟩)
+    · exact Or.inl rfl
+    · exact Or.inr ⟨remainBase _ hx, remainBase _ hy⟩
+  have continuousRemain : Continuous rawRemain := by
+    apply continuous_sum_dom.mpr
+    exact ⟨continuous_inl, continuous_inr.comp
+      (continuous_sigma_iff.mpr (fun j => continuous_sigmaMk))⟩
   let remain : C(FamilyWedge r, FamilyWedge b) :=
-    descend r (base b) (fun j => point b j.val) (fun j => point_base b j.val)
+    ⟨Quotient.map' rawRemain remainRel, continuousRemain.quotient_map' remainRel⟩
   let raw : C(Z i ⊕ FamilyWedge r, FamilyWedge b) :=
     ⟨Sum.elim (point b i) remain, (point b i).continuous.sumElim remain.continuous⟩
   have compatible (x y : Z i ⊕ FamilyWedge r) :
@@ -70,7 +94,7 @@ def split (b : ∀ j, Z j) (i : J) :
     rintro (u | ⟨j, x⟩)
     · cases u
       exact point_base b i
-    · change g (piece j x) = point b j x
+    · change g (Quotient.mk _ (piece j x)) = point b j x
       by_cases hj : j = i
       · subst j
         rw [show piece i = left from dite_eq_left rfl]
@@ -80,20 +104,20 @@ def split (b : ∀ j, Z j) (i : J) :
   · intro y
     refine Quotient.inductionOn y ?_
     rintro (x | y)
-    · change piece i x = left x
+    · change Quotient.mk _ (piece i x) = Quotient.mk _ (left x)
       rw [show piece i = left from dite_eq_left rfl]
     · refine Quotient.inductionOn y ?_
       rintro (u | ⟨j, x⟩)
       · cases u
         exact ha.symm
-      · change piece j.val x = right (point r j x)
+      · change Quotient.mk _ (piece j.val x) = Quotient.mk _ (right (point r j x))
         rw [show piece j.val = right.comp (point r j) from dite_eq_right j.property]
         rfl
   · intro x
-    change piece i x = left x
+    change Quotient.mk _ (piece i x) = Quotient.mk _ (left x)
     rw [show piece i = left from dite_eq_left rfl]
   · intro j x
-    change piece j.val x = right (point r j x)
+    change Quotient.mk _ (piece j.val x) = Quotient.mk _ (right (point r j x))
     rw [show piece j.val = right.comp (point r j) from dite_eq_right j.property]
     rfl
 
