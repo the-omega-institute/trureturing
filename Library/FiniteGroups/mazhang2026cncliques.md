@@ -1,0 +1,44 @@
+---
+bibkey: mazhang2026cncliques
+authors: "Haobo Ma; Wenlin Zhang"
+year: 2026
+title: "Proofs of Nath–Fasfous–Das–Shang's commuting and surface conjectures, and a sharp form of Tak–Dutta–Nath's clique theorem"
+doi: "10.5281/zenodo.24398996"
+url: "https://doi.org/10.5281/zenodo.24398996"
+claim: "Proposition 7: a disjoint union H of k >= 1 cliques K_(s_i) on n = sum s_i vertices has E_CN(H) = 2 sum (s_i - 1)(s_i - 2) <= 2(n - 1)(n - 2), with equality iff k = 1, or k = 2 and s_1 = s_2 = 1."
+strata_touched:
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
+license: citation-only
+triage: anchor
+---
+<!-- GID: D5/L/FiniteGroups/mazhang2026cncliques -->
+# Common-neighbourhood energy of a union of cliques
+
+## Verified locator
+
+The written proof is by **Haobo Ma and Wenlin Zhang**, version 2, exact-version DOI
+https://doi.org/10.5281/zenodo.24398996, Proposition 7 in Section 4. The paper repository is
+https://github.com/mathesis-papers/nath2021-commuting-cn-conjecture2. The underlying
+non-hyperenergetic conclusion for unions of cliques is Theorem 5.4 of Tak, Dutta and Nath,
+arXiv:2605.22160v1. The definitions of the common-neighbourhood matrix and energy are those of
+Nath, Fasfous, Das and Shang, Symmetry 13 (2021), 1651, recorded in `nath2021commutingcn`.
+
+## Statement
+
+For a finite simple graph H, CN(H) has zero diagonal and off-diagonal entries counting common
+neighbours; E_CN(H) is the sum of the absolute values of its real eigenvalues with
+multiplicity. Put B(n) = 2(n - 1)(n - 2). If H is the disjoint union of k >= 1 complete graphs
+K_(s_i) with s_i >= 1 and n = sum s_i, then E_CN(H) = 2 sum (s_i - 1)(s_i - 2) <= B(n), with
+equality exactly when k = 1, or k = 2 and s_1 = s_2 = 1.
+
+## Repository form
+
+The repository states the result for the graph on any finite vertex type whose cliques are the
+fibres of an arbitrary labelling map, so the clique orders are the fibre cardinalities and k is
+the number of labels attained. The energy is pinned from both sides: writing Pi for the
+orthogonal projection onto vectors constant on each clique, the common-neighbour matrix is
+W Pi - W'(1 - Pi) with nonnegative clique-constant weights W = (s - 2)(s - 1) and
+W' = max(s - 2, 0), and S = 2 Pi - 1 satisfies -1 <= S <= 1 with tr(CN S) equal to the trace of
+both parts. The equality analysis uses the identity g(a + N) - g(a) - g(N) = 2aN - 2 for
+g(s) = (s - 1)(s - 2). With no labels attained the vertex set is empty, the energy is 0 and the
+bound B(0) = 4 is strict, so no hypothesis k >= 1 is needed.
