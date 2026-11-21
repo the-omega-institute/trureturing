@@ -56,7 +56,7 @@ Under RH each coefficient's norm is its real part. Taking real parts in actualCo
 
 **Lemma 1.5 (The pointwise explicit-formula residual).**
 
-$$\forall y \in \mathbb{R},\; 0 < y \Rightarrow \left|\operatorname{G}\left(y\right) - \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{Re}\left(\operatorname{actualH}\left(y\right)\right)\right| \le \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \left(\left|\operatorname{log}\left(2 \cdot \pi\right)\right| + \left|1 - \operatorname{log}\left(2\right)\right|\right)$$
+$$\forall y \in \mathbb{R},\; 0 \le y \Rightarrow \left|\operatorname{G}\left(y\right) - \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{Re}\left(\operatorname{actualH}\left(y\right)\right)\right| < \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{log}\left(2 \cdot \pi\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le` (`✓ std3`). ∎
 
@@ -64,7 +64,7 @@ $$\forall y \in \mathbb{R},\; 0 < y \Rightarrow \left|\operatorname{G}\left(y\ri
 
 *Commentary.*
 
-The exact explicit formula splits G into the normalized real zero series and exp(-y/2)*(log(2*pi)-trivialT(y)). For positive y the triangle inequality and 0<=trivialT(y)<=1-log(2) give the displayed pointwise estimate.
+The exact explicit formula splits G into the normalized real zero series and exp(-y/2)*(log(2*pi)-trivialT(y)). Continuity on the closed half-axis extends the split to y=0. The trivial-zero mass bound keeps the signed residual positive, and the first trivial-zero summand is strictly positive at each finite y, giving the strict upper bound. The trivial-zero sum is at most exp(-2*y)*(1-log(2)), so log(2*pi) is the least uniform coefficient.
 
 **Theorem 1.6 (Eventual absolute control and arbitrarily late values near the positive mass).**
 
@@ -84,7 +84,7 @@ On the compact infinite product group Z=(Nat -> Circle), put g(k)=Circle.exp(Im(
 
 Apply mapClusterPt_one_atTop_pow on this compact product, followed by MapClusterPt.continuousAt_comp and MapClusterPt.frequently. Every neighborhood of M contains F(g^n) for arbitrarily large natural n. This requires neither linear independence nor a rate or shrinking target.
 
-WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds 0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm controls the real phase error directly. Eventual control follows from the norm bound. For recurrence, combine a phase error below epsilon/2 with the residual below epsilon/2 and the required lower bound on n. The real-part estimate transfers the complex phase recurrence to G.
+The signed split gives G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>=0, where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds 0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm controls the real phase error directly. Eventual control follows from the norm bound. For recurrence, combine a phase error below epsilon/2 with the residual below epsilon/2 and the required lower bound on n. The real-part estimate transfers the complex phase recurrence to G.
 
 ## References
 

@@ -89,9 +89,10 @@ private lemma Q_exp_eq_neg_U {y : ℝ} (hy : Real.log 2 ≤ y) :
 
 private lemma U_sub_actualH_bound {y : ℝ} (hy : 0 < y) :
     |U (Real.exp y) - (actualH y).re| ≤ |Real.log (2 * Real.pi)| + |1 - Real.log 2| := by
-  have h := abs_G_sub_normalized_actualH_le hy
+  have h := abs_G_sub_normalized_actualH_le hy.le
   rw [G, ← mul_sub, abs_mul, abs_of_pos (Real.exp_pos _)] at h
-  exact le_of_mul_le_mul_left h (Real.exp_pos _)
+  exact (le_of_mul_le_mul_left h.le (Real.exp_pos _)).trans
+    ((le_abs_self _).trans (le_add_of_nonneg_right (abs_nonneg _)))
 
 private lemma Q_exp_bound {alpha : ℝ} (hhalf : alpha ≤ 1 / 2)
     (hstrip : ∀ rho : ℂ, IsNontrivialZero rho → rho.re ≤ 1 - alpha) :

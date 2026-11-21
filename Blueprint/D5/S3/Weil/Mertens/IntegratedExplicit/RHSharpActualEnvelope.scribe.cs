@@ -51,8 +51,11 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(ResidualClaim()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The exact explicit formula splits G into the normalized real zero series and "
-                    + "exp(-y/2)*(log(2*pi)-trivialT(y)). For positive y the triangle inequality "
-                    + "and 0<=trivialT(y)<=1-log(2) give the displayed pointwise estimate."))),
+                    + "exp(-y/2)*(log(2*pi)-trivialT(y)). Continuity on the closed half-axis "
+                    + "extends the split to y=0. The trivial-zero mass bound keeps the signed "
+                    + "residual positive, and the first trivial-zero summand is strictly positive at "
+                    + "each finite y, giving the strict upper bound. The trivial-zero sum is at most "
+                    + "exp(-2*y)*(1-log(2)), so log(2*pi) is the least uniform coefficient."))),
                 DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("actual-g-control"),
@@ -84,7 +87,7 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                         + "contains F(g^n) for arbitrarily large natural n. This requires neither linear independence "
                         + "nor a rate or shrinking target.")),
                     Paragraph(Text(
-                        "WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, "
+                        "The signed split gives G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>=0, "
                         + "where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds "
                         + "0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm "
                         + "controls the real phase error directly. Eventual control follows from the norm bound. "
@@ -149,10 +152,9 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         var y = F.Id("y");
         var scale = Call("exp", new Formula.Fraction(new Formula.Negate(y), D(2)));
         var normalized = Multiply(scale, Call("Re", Call("actualH", y)));
-        var size = Add(new Formula.Absolute(Call("log", Multiply(D(2), F.Pi))),
-            new Formula.Absolute(Subtract(D(1), Call("log", D(2)))));
-        return Disp(All("y", Real, ImpliesClaim(Less(D(0), y),
-            Le(new Formula.Absolute(Subtract(Call("G", y), normalized)), Multiply(scale, size)))));
+        var size = Call("log", Multiply(D(2), F.Pi));
+        return Disp(All("y", Real, ImpliesClaim(Le(D(0), y),
+            Less(new Formula.Absolute(Subtract(Call("G", y), normalized)), Multiply(scale, size)))));
     }
 
     private static Formula ControlClaim()

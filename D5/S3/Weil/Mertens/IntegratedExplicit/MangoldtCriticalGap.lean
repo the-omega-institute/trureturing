@@ -146,15 +146,15 @@ private theorem G_second_difference_le (y h : ℝ) :
     positiveExp_add, positiveExp_sub]
   linarith
 
-private def residualConstant : ℝ := |log (2 * π)| + |1 - log 2|
+private def residualConstant : ℝ := log (2 * π)
 
 private lemma residualConstant_nonneg : 0 ≤ residualConstant :=
-  add_nonneg (abs_nonneg _) (abs_nonneg _)
+  log_nonneg (by linarith [pi_gt_three])
 
 private lemma abs_G_sub_K_le {y : ℝ} (hy : 0 < y) :
     |G y - K y| ≤ negativeExp y * residualConstant := by
   rw [K_eq_linearKernel hy]
-  exact abs_G_sub_normalized_actualH_le hy
+  exact (abs_G_sub_normalized_actualH_le hy.le).le
 
 private lemma eventually_abs_exp_sub_one_le : ∀ᶠ h : ℝ in 𝓝[>] 0,
     |positiveExp h-1| ≤ 2*h ∧ |negativeExp h-1| ≤ 2*h ∧ h ≤ 1 := by

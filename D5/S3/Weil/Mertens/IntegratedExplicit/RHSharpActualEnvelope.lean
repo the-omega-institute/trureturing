@@ -127,25 +127,48 @@ private lemma G_split {y : ℝ} (hy : 0 < y) :
   rw [h]
   ring
 
-private lemma abs_residual_le {y : ℝ} (hy : 0 ≤ y) :
-    |residual y| ≤ Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|) := by
-  rw [residual, abs_mul, abs_of_pos (Real.exp_pos _)]
-  apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
-  calc
-    _ ≤ |Real.log (2 * Real.pi)| + |trivialT y| := abs_sub _ _
-    _ ≤ _ := by
-      rw [abs_of_nonneg (trivialT_nonneg hy)]
-      exact add_le_add_right ((trivialT_le_mass hy).trans (le_abs_self _)) _
+private lemma G_split_nonneg {y : ℝ} (hy : 0 ≤ y) :
+    G y = (normalizedH y).re + residual y := by
+  have hG : Continuous G := by
+    unfold G
+    exact (by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2))).mul U_exp_continuous
+  have hH : Continuous (fun t => (normalizedH t).re) := by
+    unfold normalizedH
+    exact Complex.continuous_re.comp ((by fun_prop :
+      Continuous (fun t : ℝ => (Real.exp (-t / 2) : ℂ))).mul actualH_continuous)
+  have hR : ContinuousOn residual (Ici 0) := by
+    unfold residual
+    exact (by fun_prop : Continuous (fun t : ℝ => Real.exp (-t / 2))).continuousOn.mul
+      (continuousOn_const.sub trivialT_continuousOn)
+  have h : EqOn G (fun t => (normalizedH t).re + residual t) (Ioi 0) :=
+    fun _ ht => G_split ht
+  exact h.of_subset_closure hG.continuousOn (hH.continuousOn.add hR)
+    Ioi_subset_Ici_self (by rw [closure_Ioi]) hy
 
-/-- The normalized arithmetic remainder and the real zero series differ by
-at most an exponentially decaying explicit-formula residual. -/
-lemma abs_G_sub_normalized_actualH_le {y : ℝ} (hy : 0 < y) :
-    |G y - Real.exp (-y / 2) * (actualH y).re| ≤
-      Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|) := by
-  have hsplit := G_split hy
+private lemma abs_residual_lt {y : ℝ} (hy : 0 ≤ y) :
+    |residual y| < Real.exp (-y / 2) * Real.log (2 * Real.pi) := by
+  have hlog : Real.log 2 ≤ Real.log (2 * Real.pi) :=
+    Real.log_le_log (by norm_num) (by linarith [Real.pi_gt_three])
+  have hsign : 0 < Real.log (2 * Real.pi) - trivialT y := by
+    linarith [trivialT_le_mass hy, Real.log_two_gt_d9]
+  have hpos : 0 < trivialT y := by
+    have hterm : 0 < trivialCoeff 0 * Real.exp (-(2 * ((↑(0 : ℕ) : ℝ) + 1)) * y) := by
+      unfold trivialCoeff
+      positivity
+    exact hterm.trans_le ((trivialT_summable hy).le_tsum 0
+      (fun n _ => mul_nonneg (trivialCoeff_nonneg n) (Real.exp_nonneg _)))
+  rw [residual, abs_of_pos (mul_pos (Real.exp_pos _) hsign)]
+  exact mul_lt_mul_of_pos_left (sub_lt_self _ hpos) (Real.exp_pos _)
+
+/-- The normalized arithmetic remainder and real zero series differ by strictly less
+than `exp (-y / 2) * log (2 * π)` on the closed nonnegative half-axis. -/
+lemma abs_G_sub_normalized_actualH_le {y : ℝ} (hy : 0 ≤ y) :
+    |G y - Real.exp (-y / 2) * (actualH y).re| <
+      Real.exp (-y / 2) * Real.log (2 * Real.pi) := by
+  have hsplit := G_split_nonneg hy
   rw [normalizedH, Complex.re_ofReal_mul] at hsplit
   rw [hsplit, add_sub_cancel_left]
-  exact abs_residual_le hy.le
+  exact abs_residual_lt hy
 
 private lemma residual_zero : Tendsto residual atTop (𝓝 0) := by
   have he : Tendsto (fun y : ℝ => Real.exp (-y / 2)) atTop (𝓝 0) :=
@@ -153,18 +176,18 @@ private lemma residual_zero : Tendsto residual atTop (𝓝 0) := by
       (tendsto_id.atTop_mul_const (by norm_num : (0 : ℝ) < 1 / 2))).congr
         (fun y => by simp [div_eq_mul_inv, neg_mul])
   apply squeeze_zero_norm' (a := fun y =>
-    Real.exp (-y / 2) * (|Real.log (2 * Real.pi)| + |1 - Real.log 2|)) ?_
-    (by simpa using he.mul_const (|Real.log (2 * Real.pi)| + |1 - Real.log 2|))
+    Real.exp (-y / 2) * Real.log (2 * Real.pi)) ?_
+    (by simpa using he.mul_const (Real.log (2 * Real.pi)))
   filter_upwards [eventually_ge_atTop (0 : ℝ)] with y hy
-  simpa only [Real.norm_eq_abs] using abs_residual_le hy
+  simpa only [Real.norm_eq_abs] using (abs_residual_lt hy).le
 
 /-- The normalized integrated prime term differs from the complete real zero
 series by a vanishing explicit-formula residual. -/
 lemma G_sub_normalized_actualH_tendsto_zero :
     Tendsto (fun y : ℝ => G y - Real.exp (-y / 2) * (actualH y).re) atTop (𝓝 0) := by
   apply residual_zero.congr'
-  filter_upwards [eventually_gt_atTop (0 : ℝ)] with y hy
-  have hsplit := G_split hy
+  filter_upwards [eventually_ge_atTop (0 : ℝ)] with y hy
+  have hsplit := G_split_nonneg hy
   simp only [normalizedH, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, sub_zero] at hsplit
   simp only [hsplit, add_sub_cancel_left]
@@ -180,8 +203,8 @@ theorem actual_G_control (hRH : RiemannHypothesis) :
   constructor
   · intro epsilon he
     filter_upwards [hres.eventually_lt_const he,
-      eventually_gt_atTop (0 : ℝ)] with y hr hy
-    rw [G_split hy]
+      eventually_ge_atTop (0 : ℝ)] with y hr hy
+    rw [G_split_nonneg hy]
     calc
       _ ≤ |(normalizedH y).re| + |residual y| := abs_add_le _ _
       _ ≤ ‖normalizedH y‖ + |residual y| :=
@@ -200,13 +223,12 @@ theorem actual_G_control (hRH : RiemannHypothesis) :
     have hr : ∀ᶠ n : ℕ in atTop, |residual (n : ℝ)| < epsilon / 2 :=
       tendsto_natCast_atTop_atTop.eventually
         (hres.eventually_lt_const (by positivity : 0 < epsilon / 2))
-    have hY : ∀ᶠ n : ℕ in atTop, max Y 1 ≤ (n : ℝ) :=
-      tendsto_natCast_atTop_atTop.eventually (eventually_ge_atTop (max Y 1))
+    have hY : ∀ᶠ n : ℕ in atTop, Y ≤ (n : ℝ) :=
+      tendsto_natCast_atTop_atTop.eventually (eventually_ge_atTop Y)
     obtain ⟨n, hn, hrn, hYn⟩ := (hfreq.and_eventually (hr.and hY)).exists
-    refine ⟨n, (le_max_left _ _).trans hYn, ?_⟩
-    have hn0 : 0 < (n : ℝ) := by linarith [le_max_right Y 1]
+    refine ⟨n, hYn, ?_⟩
     rw [phaseSum_pow hRH] at hn
-    rw [G_split hn0]
+    rw [G_split_nonneg (Nat.cast_nonneg n)]
     have hre : |(normalizedH (n : ℝ)).re - firstLiMass| < epsilon / 2 := by
       have := (Complex.abs_re_le_norm
         (normalizedH (n : ℝ) - (firstLiMass : ℂ))).trans_lt hn

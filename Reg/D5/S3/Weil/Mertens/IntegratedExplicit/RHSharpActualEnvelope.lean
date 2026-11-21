@@ -52,24 +52,25 @@ private theorem source_bridge :
    holds for every family. No extra anchor equality is added to the source law. -/
 
 private def residualScale (y : ℝ) : ℝ := exp (-y / 2)
-private def residualSize : ℝ := |log (2 * π)| + |1 - log 2|
+private def residualSize : ℝ := log (2 * π)
 private def zeroReadout (y : ℝ) : ℝ := residualScale y * (actualH y).re
 
 def residualArena : Arena where
   signature := signature
-  Law V := ∀ {y : ℝ}, 0 < y →
-    |V.readout () () y - zeroReadout y| ≤ residualScale y * residualSize
+  Law V := ∀ {y : ℝ}, 0 ≤ y →
+    |V.readout () () y - zeroReadout y| < residualScale y * residualSize
 
 private def residualChanged : Realization signature :=
-  realize signature (fun _ _ y => zeroReadout y + residualScale y * residualSize + 1)
+  realize signature (fun _ _ y => zeroReadout y + residualScale y * residualSize)
     (fun e => nomatch e)
 
 private theorem residualChanged_fails : ¬ residualArena.Law residualChanged := by
   intro h
-  have h1 := h (y := 1) one_pos
-  change |zeroReadout 1 + residualScale 1 * residualSize + 1 - zeroReadout 1| ≤
-    residualScale 1 * residualSize at h1
-  linarith [(le_abs_self _).trans h1]
+  have h0 := h (y := 0) le_rfl
+  change |zeroReadout 0 + residualScale 0 * residualSize - zeroReadout 0| <
+    residualScale 0 * residualSize at h0
+  rw [add_sub_cancel_left] at h0
+  exact (not_lt_of_ge (le_abs_self _)) h0
 
 private theorem G_nonpositive {y : ℝ} (hy : y ≤ 0) :
     G y = exp (y / 2) * (1 + eulerMascheroniConstant - y) := by
