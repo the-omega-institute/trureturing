@@ -50,7 +50,7 @@ The source Lemma 4.12 gives the sufficiently-large-base comparison for a
 fixed $\kappa>1$ and a fixed layer. The source appendix treats $\kappa=2$.
 Neither of those statements supplies the all-layer threshold for every
 $\kappa>1$. The theory volume
-`docs/develop/theory/LCM_POWER_ROBIN_KAPPA_THRESHOLD.md`, Section 4, gives
+[LCM power, Robin and the κ threshold](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/LCM_POWER_ROBIN_KAPPA_THRESHOLD.md), Section 4, gives
 an analytic derivation of that threshold. Its recorded literature search
 covers the source article, Molnar arXiv:2610.12816v1, and arXiv searches;
 that bounded search is not a claim of worldwide priority.

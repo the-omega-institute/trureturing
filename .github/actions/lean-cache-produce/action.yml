@@ -7,9 +7,6 @@ inputs:
   release-seed-producer:
     description: Immutable commit that produced the selected local Release
     default: ''
-  preparation-only:
-    description: Build for isolated PR artifact transport without ordinary cache publication
-    default: 'false'
   regenerate-report-artifacts:
     description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
     default: 'false'
@@ -32,6 +29,10 @@ runs:
     - name: Reserve time to save producer progress
       shell: bash
       run: echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
+    - name: Install the pinned tools release
+      if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+      shell: bash
+      run: python3 .github/scripts/install-tools.py
     - uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
@@ -39,7 +40,6 @@ runs:
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
     - id: prepared
-      if: inputs.preparation-only != 'true'
       env:
         GH_TOKEN: ${{ github.token }}
       shell: bash
@@ -148,6 +148,7 @@ runs:
           *) echo "CACHE_SEED_ERROR invalid report regeneration input" >&2; exit 2 ;;
         esac
         export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
+        export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-1}"
         status=0
         python3 tools/scripts/report/runner-diagnostics.py -- \
           bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
@@ -160,7 +161,7 @@ runs:
     - id: resume_snapshot
       name: Prepare producer progress
       # A tolerated nonzero build has a successful step conclusion.
-      if: ${{ !cancelled() && steps.build.conclusion == 'success' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && steps.build.outcome != 'success' }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
@@ -182,7 +183,6 @@ runs:
         fi
         exit 1
     - id: project_snapshot
-      if: inputs.preparation-only != 'true'
       name: Prepare the project seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -191,7 +191,6 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
     - name: Require a usable project seed
-      if: inputs.preparation-only != 'true'
       env:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
@@ -208,7 +207,6 @@ runs:
         path: ${{ steps.keys.outputs.project_archive_path }}
         key: ${{ steps.keys.outputs.project_key }}
     - id: dependency_snapshot
-      if: inputs.preparation-only != 'true'
       name: Prepare the dependency seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -236,7 +234,7 @@ runs:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
     - name: Publish the toolchain seed
-      if: inputs.preparation-only != 'true' && steps.elan.outputs.cache-hit != 'true'
+      if: steps.elan.outputs.cache-hit != 'true'
       uses: actions/cache/save@v5
       with:
         path: ~/.elan

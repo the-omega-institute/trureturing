@@ -17,7 +17,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointEightWord
 
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q flip gamma IsBalanced IsSwitching)
-open private switching_sq from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
+open BalancedCriticalSpectrum (switching_sq)
 open private huangMatrix huangMatrix_symmetric from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 
 private def separated {α : Type*} (w : Fin 8 → α) : Prop :=
@@ -187,10 +187,10 @@ private theorem normalize {n : ℕ} (w : Fin 8 → Fin n) (hs : separated w)
   · intro hi
     exact (hs i).2 (by rw [hgu i, hgu (i + 2)]; exact congrArg g hi)
 
-private noncomputable def wordGamma {n : ℕ} (word : List (Fin n)) (z : Q n → ℝ) : Q n → ℝ :=
+noncomputable def wordGamma {n : ℕ} (word : List (Fin n)) (z : Q n → ℝ) : Q n → ℝ :=
   word.foldr (fun a f => gamma a f) z
 
-private theorem gamma_square {n : ℕ} (a : Fin n) (z : Q n → ℝ) :
+theorem gamma_square {n : ℕ} (a : Fin n) (z : Q n → ℝ) :
     gamma a (gamma a z) = z := by
   funext x
   rw [BalancedCriticalSpectrum.gamma_apply, BalancedCriticalSpectrum.gamma_apply,
@@ -198,7 +198,7 @@ private theorem gamma_square {n : ℕ} (a : Fin n) (z : Q n → ℝ) :
     ← pow_two, SupportedEigenSaturation.matrix_sq_of_adj (BalancedCriticalSpectrum.flip_adj x a),
     one_mul]
 
-private theorem word_switching {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+theorem word_switching {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
     (hs : IsSwitching S sigma) (x : Q n) (word : List (Fin n))
     (hx : ∀ y ∈ word.scanl flip x, y ∈ S) :
     wordGamma word (fun _ => 1) x = sigma x * sigma (word.foldl flip x) := by

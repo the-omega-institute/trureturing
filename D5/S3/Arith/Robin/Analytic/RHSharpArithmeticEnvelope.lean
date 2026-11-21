@@ -25,6 +25,7 @@ open Filter Set MeasureTheory Asymptotics
 open scoped Topology BigOperators
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U psiErrorKernel)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+open D5.S3.Weil.Mertens.IntegratedExplicit (actualH)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
 namespace D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
@@ -748,6 +749,18 @@ private lemma signed_B_limit (hRH : RiemannHypothesis) :
   apply h.congr'
   filter_upwards [eventually_ge_atTop (2 : ℝ)] with x hx
   rw [(tails hx).2.2]
+  ring
+
+/-- On RH, the signed arithmetic profile has constant term `-2` and the
+negative of the complete normalized real zero series. -/
+theorem actual_B_rh_signed_asymptotic (hRH : RiemannHypothesis) :
+    Tendsto (fun x : ℝ => D x * B x + 2 +
+      Real.exp (-Real.log x / 2) * (actualH (Real.log x)).re) atTop (𝓝 0) := by
+  have h := (signed_B_limit hRH).sub
+    (G_sub_normalized_actualH_tendsto_zero.comp Real.tendsto_log_atTop)
+  rw [sub_self] at h
+  refine h.congr fun x => ?_
+  dsimp only [Function.comp_def]
   ring
 
 /-- The sharp lower endpoint on all sufficiently late real endpoints, including its exact liminf. -/

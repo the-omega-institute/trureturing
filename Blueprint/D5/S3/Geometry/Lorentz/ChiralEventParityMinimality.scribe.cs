@@ -9,6 +9,7 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
     private const string Module = "D5/S3/Geometry/Lorentz/ChiralEventParityMinimality";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/Geometry/lesterhaddadingripaios2022parity");
+    private static LibraryNoteRef Borsuk => LibraryNoteRef.Create("D5/L/Topology/borsuk1933spheres");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Any two continuous invariant parity-odd real variables vanish together on a chiral four-particle event in each of the two event classes.",
@@ -66,6 +67,24 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
                     + "The first two momenta are fixed; the final two encode the sphere coordinates in their energies, transverse lengths and opposite longitudinal coordinates. "
                     + "The formula is defined on all of Euclidean three-space; its collision membership and chirality are used on the unit sphere.", false),
             Describe.Lean(
+                DescribeId.Create("planar-odd-map-zero"),
+                DeclarationHandle.Create(Module + ".planar_odd_map_zero"),
+                H("An odd map from the two-sphere to the plane has a zero"),
+                StatementSource.FromAuthor(Disp(PlanarOddMapZeroFormula())),
+                AssessedProvenance.FromRepo(Borsuk),
+                Blocks(
+                    Paragraph(Text(
+                        "A complex-valued function on Euclidean three-space that is continuous on the unit sphere and odd there, f(-v) = -f(v), vanishes at some point of the unit sphere. "
+                            + "This is the case n = 2 of Borsuk's Satz II: a continuous map of the two-sphere into the plane takes equal values at some pair of antipodal points p and -p, and for an odd map f(p) = f(-p) = -f(p) gives f(p) = 0.")),
+                    Paragraph(Text(
+                        "The proof is by contradiction. Suppose f has no zero on the sphere. "
+                            + "The map sending a point z of the closed unit disk of the complex plane to (re z, im z, sqrt(1 - |z|^2)) is continuous and lands in the closed upper hemisphere of the unit sphere, and it sends -z to the antipode of the image of z when |z| = 1. "
+                            + "Composing f with it and dividing by the modulus gives a continuous map g from the disk to the unit circle. "
+                            + "The disk is contractible and locally path connected, so g lifts through the covering t -> exp(i t) of the circle by the reals to a continuous real function F on the disk. "
+                            + "Let l be the restriction of F to the boundary circle. Oddness of f gives g(-z) = -g(z) for |z| = 1, so delta(z) = l(-z) - l(z) is a continuous function on the circle whose exponential is -1, hence it takes values in the discrete set of odd multiples of pi and is constant, the circle being connected. "
+                            + "But delta(-1) = l(1) - l(-1) = -delta(1), so the constant value is 0, whose exponential is 1, not -1. This contradiction proves the existence of a zero."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("A common zero on a chiral event"),
@@ -107,6 +126,16 @@ internal sealed class ChiralEventParityMinimalityDocument : IScribeDocumentDefin
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("lester-haddadin-gripaios-2022-chiral-event-parity-minimality"),
                     ResolutionKind.Proved)))));
+
+    private static Formula PlanarOddMapZeroFormula()
+    {
+        Formula sphere = At(Qualified("Metric", "sphere"), D(0), D(1));
+        return All("f", Arrow(EuclideanType(), Seq(Mathbb, Grp(F.Id("C")))),
+            Imp(At(Qualified("ContinuousOn"), X("f"), sphere),
+                Imp(All("v", EuclideanType(), Imp(Member(X("v"), sphere),
+                        Equal(At(X("f"), Negative(X("v"))), Negative(At(X("f"), X("v")))))),
+                    Some("v", EuclideanType(), And(Member(X("v"), sphere), Equal(At(X("f"), X("v")), D(0)))))));
+    }
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose, bool literature) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),

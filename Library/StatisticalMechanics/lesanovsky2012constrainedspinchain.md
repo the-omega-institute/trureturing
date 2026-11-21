@@ -13,13 +13,18 @@ triage: anchor
 
 # A constrained-spin parent and its boundary conditions
 
+## Verified locator
+
 The primary source is Lesanovsky,
 *Physical Review Letters* 108, 105301,
 [DOI:10.1103/PhysRevLett.108.105301](https://doi.org/10.1103/PhysRevLett.108.105301),
-[arXiv:1110.1815v1](https://arxiv.org/pdf/1110.1815v1),
+[arXiv:1110.1815v1](https://arxiv.org/abs/1110.1815v1),
+[full text](https://arxiv.org/pdf/1110.1815v1),
 equations (1)--(2) and the boundary-condition
 discussion. This note does not redistribute the
 source text or PDF.
+
+## Local operator
 
 Write $P_i=|0\rangle\langle0|$, $n_i=|1\rangle\langle1|$
 and $z_i=\sqrt{\lambda_i}>0$. The local constrained
