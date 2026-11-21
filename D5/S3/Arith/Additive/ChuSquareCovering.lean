@@ -4,19 +4,21 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.Group.Pointwise.Finset.Basic]
    utility: none
-   digest: Sets A, B of sizes a, b in {0, ..., N-1} with A + B covering {0, ..., N-1} exist exactly when N <= ab, a <= N and b <= N; for N = n^2 the least common size is n. -/
+   digest: Sets A, B of sizes a, b in {0, ..., N-1} with A + B covering {0, ..., N-1} exist exactly when N <= ab, a <= N and b <= N; for N = n^2 and a = b the least size is n. -/
 
 import Mathlib.Algebra.Group.Pointwise.Finset.Basic
 
-/-! M. Chu's question on additive covers of `{0, …, n² - 1}` (OEIS A000290), solved by
+/-! M. Chu's conjecture on additive covers of `{0, …, n² - 1}` (OEIS A000290), proved as
 Proposition 9.1 of R. Blanco Gómez, Open statements in core entries of the OEIS, III (2026): the
 least `k` such that some `A, B ⊆ {0, …, n² - 1}` with `|A| = |B| = k` satisfy
 `A + B ⊇ {0, …, n² - 1}` is `n`.
 
-`achievable_iff` determines every pair of sizes: sets `A, B ⊆ {0, …, N - 1}` with `|A| = a`,
-`|B| = b` and `A + B ⊇ {0, …, N - 1}` exist exactly when `N ≤ ab`, `a ≤ N` and `b ≤ N`. The bound
-`|A + B| ≤ |A| |B|` gives necessity; for sufficiency `{0, …, a - 1}` plus the multiples of `a`
-below `N`, completed to `b` elements, covers `{0, …, N - 1}` by division by `a`.
+`result` determines every pair of sizes for every initial interval: sets `A, B ⊆ {0, …, N - 1}`
+with `|A| = a`, `|B| = b` and `A + B ⊇ {0, …, N - 1}` exist exactly when `N ≤ ab`, `a ≤ N` and
+`b ≤ N`. With `N = n²` and `a = b = k` the condition is `n ≤ k ≤ n²`, which contains
+Proposition 9.1 and its case `n = 0`. The bound `|A + B| ≤ |A| |B|` gives necessity; for
+sufficiency `{0, …, a - 1}` plus the multiples of `a` below `N`, completed to `b` elements, covers
+`{0, …, N - 1}` by division by `a`.
 
 admission_basis: escape-witness. Escape witnesses: cover (division by `a` covers the interval)
 and card_multiples (at most `b` multiples of `a` lie below `N ≤ ab`). -/
@@ -54,8 +56,9 @@ private theorem card_multiples (N a b : ℕ) (hN : N ≤ a * b) :
     _ = b := Finset.card_range b
 
 /-- Sizes `(a, b)` of sets `A, B ⊆ {0, …, N - 1}` with `A + B ⊇ {0, …, N - 1}`: exactly
-`N ≤ a b`, `a ≤ N` and `b ≤ N`. -/
-theorem achievable_iff (N a b : ℕ) :
+`N ≤ a b`, `a ≤ N` and `b ≤ N`. For `N = n²` and `a = b = k` this reads `n ≤ k ≤ n²`, so the
+least common size is `n` (Chu's conjecture, Blanco Gómez, Proposition 9.1). -/
+theorem result (N a b : ℕ) :
     (∃ A B : Finset ℕ, A ⊆ range N ∧ B ⊆ range N ∧ A.card = a ∧ B.card = b ∧
       range N ⊆ A + B) ↔ N ≤ a * b ∧ a ≤ N ∧ b ≤ N := by
   constructor
@@ -79,17 +82,5 @@ theorem achievable_iff (N a b : ℕ) :
     refine ⟨range a, B, ?_, hBN, card_range a, hBcard, ?_⟩
     · intro x hx; simp only [Finset.mem_range] at hx ⊢; omega
     · exact (cover N a ha).trans (Finset.add_subset_add_left hMB)
-
-/-- M. Chu's question, solved by Blanco Gómez: the least `k` for which some `A, B` of size `k`
-in `{0, …, n² - 1}` have `A + B ⊇ {0, …, n² - 1}` is `n`. -/
-theorem result (n : ℕ) :
-    IsLeast {k | ∃ A B : Finset ℕ, A ⊆ range (n ^ 2) ∧ B ⊆ range (n ^ 2) ∧ A.card = k ∧
-      B.card = k ∧ range (n ^ 2) ⊆ A + B} n := by
-  refine ⟨(achievable_iff (n ^ 2) n n).mpr ⟨by rw [sq], ?_, ?_⟩, fun k hk => ?_⟩
-  · rw [sq]; exact Nat.le_mul_self n
-  · rw [sq]; exact Nat.le_mul_self n
-  · have := ((achievable_iff (n ^ 2) k k).mp hk).1
-    rw [sq] at this
-    exact Nat.mul_self_le_mul_self_iff.mp this
 
 end D5.S3.Arith.Additive.ChuSquareCovering

@@ -29,8 +29,8 @@ B = {0, n, 2n, …, (n − 1)n} lie in {0, …, n² − 1} and A + B = {0, …, 
 
 ## Mathematical scope
 
-ChuSquareCovering.result states Proposition 9.1 for every n, n = 0 included (then k = 0 with
-A = B = ∅). ChuSquareCovering.achievable_iff determines every pair of sizes for an arbitrary
-interval {0, …, N − 1}: sets A, B in it with |A| = a, |B| = b and A + B ⊇ {0, …, N − 1} exist
-exactly when N ≤ ab, a ≤ N and b ≤ N. For sufficiency B consists of the multiples of a below N,
-completed to b elements inside the interval.
+ChuSquareCovering.result determines every pair of sizes for an arbitrary interval
+{0, …, N − 1}: sets A, B in it with |A| = a, |B| = b and A + B ⊇ {0, …, N − 1} exist exactly
+when N ≤ ab, a ≤ N and b ≤ N. With N = n² and a = b = k the condition is n ≤ k ≤ n², which gives
+Proposition 9.1 and its case n = 0 (least size 0, with A = B = ∅). For sufficiency B consists of
+the multiples of a below N, completed to b elements inside the interval.

@@ -10,13 +10,13 @@ internal sealed class ChuSquareCoveringDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sets A, B of sizes a, b in {0, …, N − 1} with A + B covering {0, …, N − 1} exist exactly when "
-        + "N ≤ ab, a ≤ N and b ≤ N; for N = n² the least common size is n.",
+        + "N ≤ ab, a ≤ N and b ≤ N; for N = n² and a = b the least size is n.",
         H("Additive covers of an initial interval"),
         Blocks(
             Describe.Lean(DescribeId.Create("chu-cover-sizes"),
-                DeclarationHandle.Create(Prefix + "achievable_iff"),
+                DeclarationHandle.Create(Prefix + "result"),
                 H("All achievable pairs of sizes"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
                         "For natural numbers N, a and b, there are sets A, B ⊆ {0, …, N − 1} with |A| = a, "
@@ -27,22 +27,12 @@ internal sealed class ChuSquareCoveringDocument : IScribeDocumentDefinition
                         + "{0, …, a − 1} plus the multiples of a below N covers the interval; there are at "
                         + "most b such multiples because a multiple ja below N ≤ ab has j < b, and they are "
                         + "completed to b elements of the interval. For a = 0 the conditions force "
-                        + "N = b = 0. This extends the argument of Proposition 9.1 of R. Blanco Gómez, "
-                        + "Open statements in core entries of the OEIS, III (2026), from N = n² and "
-                        + "a = b = n to every interval and every pair of sizes."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("chu-square-cover"),
-                DeclarationHandle.Create(Prefix + "result"),
-                H("Chu's question"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
-                Blocks(
+                        + "N = b = 0.")),
                     Paragraph(Text(
-                        "For every n, the least k such that some A, B ⊆ {0, …, n² − 1} with |A| = |B| = k "
-                        + "satisfy A + B ⊇ {0, …, n² − 1} is n. This is M. Chu's question (2022) in OEIS "
-                        + "A000290, answered by Proposition 9.1 of Blanco Gómez (2026), stated there for "
-                        + "n ≥ 1; for n = 0 the least size is 0.")),
-                    Paragraph(Text(
-                        "By the characterization of achievable sizes, k is achievable exactly when "
-                        + "n² ≤ k² and k ≤ n², that is n ≤ k ≤ n²."))),
+                        "With N = n² and a = b = k the condition reads n ≤ k ≤ n², so the least k is n. "
+                        + "This is M. Chu's conjecture (2022) in OEIS A000290, proved as Proposition 9.1 of "
+                        + "R. Blanco Gómez, Open statements in core entries of the OEIS, III (2026), for "
+                        + "n ≥ 1; for n = 0 the least size is 0. The theorem extends the source's argument "
+                        + "to every interval and every pair of sizes."))),
                 DescribeRole.Theorem))));
 }
