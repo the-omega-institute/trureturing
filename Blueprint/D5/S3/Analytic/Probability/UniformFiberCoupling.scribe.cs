@@ -9,6 +9,41 @@ internal sealed class UniformFiberCouplingDocument : IScribeDocumentDefinition
     private const string Result =
         "D5/S3/Analytic/Probability/UniformFiberCoupling.displacement_iff";
 
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Membership(string name, string carrier) =>
+        Seq(V(name), Sp, InMacro, Sp, V(carrier));
+    private static Formula All(string name, string carrier) =>
+        Seq(Forall, Sp, Membership(name, carrier), Comma, Sp);
+    private static Formula SumOver(string name, string carrier) =>
+        Seq(Sum, Underscore, Grp(Membership(name, carrier)), Sp);
+    private static Formula ReciprocalCardinality(string carrier) =>
+        Seq(Frac, Grp(D(1)), Grp(Bar, V(carrier), Bar));
+    private static Formula W => At(V("w"), V("x"), V("y"));
+
+    private static Formula Statement() => Disp(new Formula.Aligned([
+        Seq(Forall, Sp, V("G"), Comma, Sp, V("H"), Colon, Sp,
+            Operatorname, Grp(V("Group")), Comma, Sp, Forall, Sp,
+            Phi, Colon, Sp, At(Seq(Operatorname, Grp(V("Hom"))), V("G"), V("H")),
+            Comma, Sp, All("t", "H")),
+        Seq(Bar, V("K"), Bar, Sp, Lt, Sp, Infty, Sp, Implies, Sp,
+            Forall, Sp, Rho, Colon, Sp, V("T"), Sp, To, Sp, Real, Comma),
+        Seq(Open, All("d", "T"), D(0), Sp, Leq, Sp, At(Rho, V("d")), Close,
+            Sp, Land, Sp, SumOver("d", "T"), At(Rho, V("d")), Sp, Eq, Sp, D(1)),
+        Seq(Iff, Sp, Exists, Sp, V("w"), Colon, Sp, V("K"), Sp, Times, Sp,
+            V("T"), Sp, To, Sp, Real, Comma, Sp,
+            Open, All("x", "K"), All("y", "T"), D(0), Sp, Leq, Sp, W, Close),
+        Seq(Land, Sp, Open, All("x", "K"), SumOver("y", "T"), W,
+            Sp, Eq, Sp, ReciprocalCardinality("K"), Close),
+        Seq(Land, Sp, Open, All("y", "T"), SumOver("x", "K"), W,
+            Sp, Eq, Sp, ReciprocalCardinality("T"), Close),
+        Seq(Land, Sp, Open, All("d", "T"), Sum, Underscore,
+            Grp(Membership("x", "K"), Comma, Sp, Membership("y", "T"), Comma, Sp,
+                V("x"), Caret, Grp(Minus, D(1)), V("y"), Sp, Eq, Sp, V("d")),
+            Sp, W, Sp, Eq, Sp, At(Rho, V("d")), Close)
+    ]));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every law on a group homomorphism fiber arises as the displacement of a uniform coupling.",
         H("Displacements of uniform couplings on group fibers"),
@@ -17,7 +52,7 @@ internal sealed class UniformFiberCouplingDocument : IScribeDocumentDefinition
                 DescribeId.Create("uniform-fiber-coupling"),
                 DeclarationHandle.Create(Result),
                 H("Exact displacement laws for a uniform fiber coupling"),
-                StatementSource.FromAuthor(Disp(Seq(F.Id("P"), Sp, Iff, Sp, F.Id("C")))),
+                StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let G and H be groups, and take a homomorphism from G to " +
@@ -25,11 +60,6 @@ internal sealed class UniformFiberCouplingDocument : IScribeDocumentDefinition
                         "the fiber over t. If T is empty, neither assertion can hold. There " +
                         "is no probability law on T, and the row at the identity cannot " +
                         "have its prescribed positive mass.")),
-                    Paragraph(Text("For a real weight function on T, P says that its weights " +
-                        "are nonnegative and sum to one. C says that a nonnegative matrix on " +
-                        "K times T has the uniform marginals on both fibers and recovers the " +
-                        "given weight at d by summing its entries over pairs with displacement " +
-                        "x inverse times y equal to d.")),
                     Paragraph(Text("To construct the coupling, give a pair the weight of its " +
                         "displacement divided by the size of K. With the first entry fixed, " +
                         "left translation permutes T. With the second entry fixed, varying " +
