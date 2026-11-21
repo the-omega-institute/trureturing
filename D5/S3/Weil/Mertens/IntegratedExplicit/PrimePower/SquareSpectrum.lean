@@ -66,9 +66,6 @@ private lemma zeroTail_continuous : Continuous zeroTail := by
     actualH_continuous using 1
   exact funext zeroTail_eq
 
-private lemma gap_re (hRH : RiemannHypothesis) (c : ℝ) (k : ℕ) :
-    (actualZero k - (c : ℂ)).re = 1 / 2 - c := by simp [on_line hRH k]
-
 private lemma gap_norm (hRH : RiemannHypothesis) (k : ℕ) :
     1 ≤ ‖actualZero k - 2‖ := by
   have h := Complex.abs_re_le_norm (actualZero k - 2)

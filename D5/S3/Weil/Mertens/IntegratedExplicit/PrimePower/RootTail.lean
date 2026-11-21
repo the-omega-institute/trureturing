@@ -163,7 +163,6 @@ theorem root_tail_main {r x : ℝ} (hr : 1 < r) (hx : 0 < x) :
         rw [Real.rpow_sub (hx.trans ht), Real.rpow_two]),
       integral_Ioi_rpow_of_lt (by linarith) hx, Real.sqrt_eq_rpow]
     have hcoef : - (r⁻¹ - 2 + 1)⁻¹ = r / (r - 1) := by
-      have hr1 : r - 1 ≠ 0 := sub_ne_zero.mpr hr.ne'
       have hh : r⁻¹ - 2 + 1 = -(r - 1) / r := by
         field_simp [hr0.ne']
         ring
