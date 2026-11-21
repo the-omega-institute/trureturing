@@ -4,12 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Under RH the additive gap below the sharp critical Mertens envelope diverges. -/
+   digest: The additive gap below the sharp critical Mertens envelope diverges exactly under RH. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
-import Batteries.Tactic.OpenPrivate
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak
 
-/-! normalizedMangoldt near-zero slope bound for the complete cosine series transfers to an additive
+/-! A near-zero slope bound for the complete cosine series transfers to an additive
 gap at infinity via the midpoint inequality for the complete Mangoldt ramps. -/
 
 set_option autoImplicit false
@@ -19,40 +19,58 @@ noncomputable section
 open Filter Set Real
 open scoped Topology
 open D5.S3.Weil.Mertens.IntegratedExplicit
-open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (G)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (G actual_G_control)
+open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+open D5.S3.Weil.ZetaBridge.RhLocatesZeroData (zeroData_zero_on_critical_line_of_rh)
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
-open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (firstLiMass actualZero)
-open private on_line coeff_real coeff_norm_hasSum normalizedH from
-  D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtCriticalGap
 
-private def cosineProfile (y : ℝ) : ℝ := (normalizedH y).re
+private def cosineProfile (y : ℝ) : ℝ := exp (-y / 2) * (actualH y).re
 private def phaseDeficit (y : ℝ) : ℝ := firstLiMass - cosineProfile y
 
+private lemma actualZero_re_of_rh (rh : RiemannHypothesis) (k : ℕ) :
+    (actualZero k).re = 1 / 2 := by
+  simpa only [actualZero, D5.S3.Weil.Convention.criticalAbscissa] using
+    zeroData_zero_on_critical_line_of_rh rh actualData (actualOccurrenceEquiv k).1
+
+private lemma actualCoeff_eq_ofReal_norm (rh : RiemannHypothesis) (k : ℕ) :
+    actualCoeff k = (‖actualCoeff k‖ : ℂ) := by
+  have hc : 1 - actualZero k = (starRingEnd ℂ) (actualZero k) := by
+    apply Complex.ext
+    · norm_num [Complex.sub_re, actualZero_re_of_rh rh k]
+    · simp [Complex.sub_im]
+  rw [actualCoeff, hc, mul_comm (actualZero k), ← Complex.normSq_eq_conj_mul_self,
+    ← Complex.ofReal_one, ← Complex.ofReal_div,
+    Complex.norm_real, Real.norm_eq_abs,
+    abs_of_nonneg (div_nonneg zero_le_one (Complex.normSq_nonneg (actualZero k)))]
+
 private lemma normalized_term_re (rh : RiemannHypothesis) (s : ℝ) (k : ℕ) :
-    ((exp (-s/2) : ℂ) * (actualCoeff k * Complex.exp ((s : ℂ) * actualZero k))).re =
+    ((exp (-s / 2) : ℂ) * (actualCoeff k * Complex.exp ((s : ℂ) * actualZero k))).re =
       ‖actualCoeff k‖ * cos (s * (actualZero k).im) := by
-  have hc := coeff_real rh k
-  rw [hc, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (one_div_pos.mpr (by positivity))]
-  have hp : (exp (-s/2) : ℂ) * Complex.exp ((s:ℂ) * actualZero k) =
-      Complex.exp (((s*(actualZero k).im:ℝ):ℂ)*Complex.I) := by
-    rw [Complex.ofReal_exp, ← Complex.exp_add]
-    congr 1
-    apply Complex.ext <;>
-      simp [Complex.mul_re, Complex.mul_im, on_line rh k]
-    ring
-  rw [mul_left_comm, hp, Complex.re_ofReal_mul, Complex.exp_ofReal_mul_I_re]
+  conv_lhs => rw [actualCoeff_eq_ofReal_norm rh k]
+  simp only [Complex.exp_re, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, add_zero, actualZero_re_of_rh rh k]
+  have hcancel : exp (-s / 2) * exp (s * (1 / 2)) = 1 := by
+    rw [← exp_add, show -s / 2 + s * (1 / 2) = 0 by ring, exp_zero]
+  calc
+    _ = (exp (-s / 2) * exp (s * (1 / 2))) * (‖actualCoeff k‖ * cos (s * (actualZero k).im)) := by
+      ring
+    _ = _ := by rw [hcancel, one_mul]
 
 private theorem cosineProfile_hasSum (rh : RiemannHypothesis) (s : ℝ) :
-    HasSum (fun k => ‖actualCoeff k‖ * cos (s*(actualZero k).im)) (cosineProfile s) := by
-  exact (Complex.hasSum_re (((actualH_summable s).hasSum).mul_left ((exp (-s/2):ℝ):ℂ))).congr_fun
-    (fun k => (normalized_term_re rh s k).symm)
+    HasSum (fun k => ‖actualCoeff k‖ * cos (s * (actualZero k).im)) (cosineProfile s) := by
+  simpa only [cosineProfile, actualH, Complex.re_ofReal_mul, normalized_term_re rh] using
+    Complex.hasSum_re ((actualH_summable s).hasSum.mul_left ((exp (-s / 2) : ℝ) : ℂ))
 
 private theorem phaseDeficit_le_second_difference (rh : RiemannHypothesis) (y h : ℝ) :
     2 * phaseDeficit h - 4 * phaseDeficit y ≤
       2 * cosineProfile y - cosineProfile (y + h) - cosineProfile (y - h) := by
-  have mass := coeff_norm_hasSum rh
+  have mass : HasSum (fun k => ‖actualCoeff k‖) firstLiMass := by
+    apply (Complex.hasSum_re actualCoeff_hasSum).congr_fun
+    intro k
+    exact ((congrArg Complex.re (actualCoeff_eq_ofReal_norm rh k)).trans (Complex.ofReal_re _)).symm
   have lhs := ((mass.sub (cosineProfile_hasSum rh h)).mul_left 2).sub
     ((mass.sub (cosineProfile_hasSum rh y)).mul_left 4)
   have rhs := (((cosineProfile_hasSum rh y).mul_left 2).sub (cosineProfile_hasSum rh (y+h))).sub
@@ -67,109 +85,27 @@ private theorem phaseDeficit_le_second_difference (rh : RiemannHypothesis) (y h 
 
 private theorem cosineProfile_eq {y : ℝ} (hy : 0 < y) :
     cosineProfile y = exp (-y/2) * (U (exp y) - log (2*π) + trivialT y) := by
-  rw [cosineProfile, normalizedH, actual_integrated_explicit_formula hy, ← Complex.ofReal_mul,
-    Complex.ofReal_re]
+  rw [cosineProfile, actual_integrated_explicit_formula hy, Complex.ofReal_re]
 
-private theorem trivial_drop_div_tendsto_atTop :
-    Tendsto (fun h : ℝ => (trivialT 0 - trivialT h) / h) (𝓝[>] 0) atTop := by
-  apply tendsto_atTop.mpr
-  intro B
-  obtain ⟨N,hN⟩ := (Real.tendsto_sum_range_one_div_nat_succ_atTop.eventually_ge_atTop (6*B)).exists
-  have cutoff_pos : (0 : ℝ) < 1 / (2 * ((N : ℝ) + 1)) := by positivity
-  filter_upwards [self_mem_nhdsWithin,
-    eventually_nhdsWithin_of_eventually_nhds (eventually_lt_nhds cutoff_pos)] with h hpos hsmall
-  change 0 < h at hpos
-  have hbound (n : ℕ) (hn : n ∈ Finset.range N) :
-      h / (6 * ((n:ℝ)+1)) ≤ trivialCoeff n * (1-exp (-(2*((n:ℝ)+1))*h)) := by
-    let a := 2*((n:ℝ)+1)*h
-    have ha : 0 ≤ a := by dsimp [a]; positivity
-    have hnN : (n:ℝ) ≤ N := by exact_mod_cast (Finset.mem_range.mp hn).le
-    have ha1 : a ≤ 1 := by
-      have hh := (lt_div_iff₀ (by positivity : (0:ℝ) < 2*((N:ℝ)+1))).mp hsmall
-      dsimp [a]
-      nlinarith [mul_le_mul_of_nonneg_right hnN hpos.le]
-    have hex := add_one_le_exp a
-    have hrec : exp (-a) ≤ 1 / (1+a) := by
-      rw [exp_neg, inv_eq_one_div]
-      apply one_div_le_one_div_of_le (by linarith)
-      linarith
-    have hl : a/2 ≤ 1-exp (-a) := by
-      have haux : a/2 ≤ 1-1/(1+a) := by
-        field_simp [show 0<1+a by linarith]
-        nlinarith [mul_nonneg ha (sub_nonneg.mpr ha1)]
-      linarith
-    rw [show -(2*((n:ℝ)+1))*h = -a by dsimp [a]; ring]
-    apply le_trans _ (mul_le_mul_of_nonneg_left hl (trivialCoeff_nonneg _))
-    dsimp [trivialCoeff,a]
-    field_simp
-    nlinarith [mul_nonneg hpos.le (Nat.cast_nonneg (α:=ℝ) n)]
-  have hs := trivialCoeff_hasSum.summable.sub (trivialT_summable hpos.le)
-  have hdrop : trivialT 0 - trivialT h =
-      ∑' n, (trivialCoeff n - trivialCoeff n * exp (-(2*((n:ℝ)+1))*h)) := by
-    rw [trivialT, trivialT, ← Summable.tsum_sub]
-    · simp
-    · simpa using trivialCoeff_hasSum.summable
-    · exact trivialT_summable hpos.le
-  have hpart := hs.sum_le_tsum (Finset.range N) (fun n _ => by
-    have hexp : exp (-(2 * ((n : ℝ) + 1)) * h) ≤ 1 :=
-      exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hpos.le)
-    exact sub_nonneg.mpr (mul_le_of_le_one_right (trivialCoeff_nonneg n) hexp))
-  have hsum := Finset.sum_le_sum hbound
-  rw [hdrop]
-  apply (le_div_iff₀ hpos).2
-  calc
-    B * h ≤ (∑ i ∈ Finset.range N, 1 / ((i : ℝ) + 1)) * (h / 6) := by
-      nlinarith [mul_le_mul_of_nonneg_right hN hpos.le]
-    _ = ∑ i ∈ Finset.range N, h / (6 * ((i : ℝ) + 1)) := by
-      rw [Finset.sum_mul]
-      apply Finset.sum_congr rfl
-      intro i _
-      simp only [div_eq_mul_inv, mul_inv_rev]
-      ring
-    _ ≤ _ := hsum
-    _ ≤ _ := by simpa only [mul_sub, mul_one] using hpart
-
-private def smoothBackground (h : ℝ) : ℝ :=
-  exp (-h / 2) * ((1 + eulerMascheroniConstant - h) * exp h - log (2 * π))
-
-private theorem U_exp_of_lt_log_two {h : ℝ} (hh : h < log 2) :
-    U (exp h) = (1 + eulerMascheroniConstant - h) * exp h := by
-  have h2 : exp h < (2:ℝ) := (lt_log_iff_exp_lt (by norm_num)).mp hh
-  rw [U_eq_complete_ramps (exp_pos _).le,
-    mangoldtPart_eq_range (N := 2) (exp_pos _).le (by simpa using h2)]
-  simp [Finset.sum_range_succ, mangoldtRamp, Real.log_exp]
-  ring
+private lemma cosineProfile_eq_K {y : ℝ} (hy : 0 < y) : cosineProfile y = K y := by
+  rw [cosineProfile_eq hy, K, abs_of_pos hy]
 
 private theorem phaseDeficit_div_tendsto_atTop :
     Tendsto (fun h : ℝ => phaseDeficit h / h) (𝓝[>] 0) atTop := by
-  have hM : firstLiMass = smoothBackground 0 + trivialT 0 := by
-    simp [smoothBackground, trivialT, firstLiMass, trivialCoeff_hasSum.tsum_eq,
-      log_mul (by norm_num : (2 : ℝ) ≠ 0) (sqrt_pos.mpr pi_pos).ne',
-      log_mul (by norm_num : (2 : ℝ) ≠ 0) pi_pos.ne', log_sqrt pi_pos.le]
-    ring
-  have hd : DifferentiableAt ℝ smoothBackground 0 := by unfold smoothBackground; fun_prop
-  have ht := hd.hasDerivAt.tendsto_slope_zero_right
-  have hb : ∀ᶠ h : ℝ in 𝓝[>] 0,
-      (smoothBackground h - smoothBackground 0) / h ≤ deriv smoothBackground 0 + 1 := by
-    simpa only [zero_add, smul_eq_mul, ← div_eq_inv_mul] using
-      (ht.eventually_le_const (lt_add_one _))
   apply tendsto_atTop.mpr
   intro B
-  have log_two_pos : 0 < log 2 := log_pos (by norm_num)
-  filter_upwards [hb,
-    trivial_drop_div_tendsto_atTop.eventually_ge_atTop (B + deriv smoothBackground 0 + 1),
-    self_mem_nhdsWithin,
-    eventually_nhdsWithin_of_eventually_nhds (eventually_lt_nhds log_two_pos)] with h hs ht hp hl
+  have hderiv := D1_atBot.eventually (eventually_le_atBot (-B))
+  obtain ⟨δ, hδ, hbound⟩ := mem_nhdsGT_iff_exists_Ioo_subset.mp hderiv
+  have hlog : 0 < log 2 := log_pos (by norm_num)
+  filter_upwards [self_mem_nhdsWithin, eventually_nhdsWithin_of_eventually_nhds
+    (eventually_lt_nhds (lt_min hδ hlog))] with h hp hh
   change 0 < h at hp
-  have hf : cosineProfile h = smoothBackground h + exp (-h/2)*trivialT h := by
-    rw [cosineProfile_eq hp, U_exp_of_lt_log_two hl, smoothBackground]
-    ring
-  have hle := mul_le_of_le_one_left (trivialT_nonneg hp.le)
-    (exp_le_one_iff.mpr (by linarith : -h / 2 ≤ 0))
-  rw [phaseDeficit, hM, hf]
-  apply (le_div_iff₀ hp).2
-  have h1 := (le_div_iff₀ hp).mp ht
-  have h2 := (div_le_iff₀ hp).mp hs
+  obtain ⟨u, hu, hslope⟩ := exists_hasDerivAt_eq_slope K D1 hp K_continuous.continuousOn
+    (fun u hu => hasDerivAt_K hu.1 (hu.2.trans (hh.trans_le (min_le_right _ _))))
+  have hu_bound := hbound ⟨hu.1, hu.2.trans (hh.trans_le (min_le_left _ _))⟩
+  change D1 u ≤ -B at hu_bound
+  rw [hslope, K_zero, sub_zero] at hu_bound
+  rw [phaseDeficit, cosineProfile_eq_K hp, ← neg_sub, neg_div]
   linarith
 
 private def positiveExp (y : ℝ) := exp (y/2)
@@ -266,21 +202,6 @@ private lemma abs_G_sub_cosineProfile_le {y : ℝ} (hy : 0 < y) :
   unfold residualConstant
   linarith [le_abs_self (1-log 2)]
 
-private lemma abs_G_le (rh : RiemannHypothesis) {y : ℝ} (hy : 0 < y) :
-    |G y| ≤ firstLiMass + residualConstant := by
-  have hf : |cosineProfile y| ≤ firstLiMass := by
-    rw [← (cosineProfile_hasSum rh y).tsum_eq, ← Real.norm_eq_abs]
-    exact tsum_of_norm_bounded (coeff_norm_hasSum rh) (fun k => by
-      rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg (norm_nonneg _)]
-      exact mul_le_of_le_one_right (norm_nonneg _) (abs_cos_le_one _))
-  have hr := abs_G_sub_cosineProfile_le hy
-  have hw : negativeExp y ≤ 1 := exp_le_one_iff.mpr (by linarith)
-  calc
-    |G y| ≤ |G y - cosineProfile y| + |cosineProfile y| := by
-      simpa using abs_sub_le (G y) (cosineProfile y) 0
-    _ ≤ firstLiMass + residualConstant := by
-      linarith [mul_le_of_le_one_left residualConstant_nonneg hw]
-
 private lemma eventually_abs_exp_sub_one_le : ∀ᶠ h : ℝ in 𝓝[>] 0,
     |positiveExp h-1| ≤ 2*h ∧ |negativeExp h-1| ≤ 2*h ∧ h ≤ 1 := by
   have H (a : ℝ) (ha : |a| < 2) : ∀ᶠ h : ℝ in 𝓝[>] 0, |exp (a*h)-1| ≤ 2*h := by
@@ -306,10 +227,11 @@ private lemma negativeExp_tendsto_zero_right : Tendsto negativeExp atTop (𝓝[>
 private lemma eventually_phaseDeficit_transfer_le (rh : RiemannHypothesis) :
     ∃ B : ℝ, ∀ᶠ y : ℝ in atTop,
       2 * phaseDeficit (negativeExp y) - 4 * phaseDeficit y ≤ B * negativeExp y := by
-  let C := firstLiMass+residualConstant
-  refine ⟨4+4*C+8*residualConstant,?_⟩
+  let C := firstLiMass + 1
+  refine ⟨4 + 4 * C + 8 * residualConstant, ?_⟩
   filter_upwards [eventually_gt_atTop (2 : ℝ),
-    negativeExp_tendsto_zero_right.eventually eventually_abs_exp_sub_one_le] with y hy loc
+    negativeExp_tendsto_zero_right.eventually eventually_abs_exp_sub_one_le,
+    (actual_G_control rh).1 1 one_pos] with y hy loc hG
   let h := negativeExp y
   have hp : 0<h := negativeExp_pos y
   obtain ⟨hv,hw,h1⟩ := loc
@@ -331,7 +253,7 @@ private lemma eventually_phaseDeficit_transfer_le (rh : RiemannHypothesis) :
   have hP := (le_abs_self _).trans (gpl.trans (corr _ (by linarith)))
   have hN := (le_abs_self _).trans (gmi.trans (corr _ (by linarith)))
   have hY := (neg_le_abs _).trans gyr
-  have gb := abs_G_le rh (by linarith : 0<y)
+  have gb : |G y| ≤ C := hG.le
   have um : |2-(positiveExp h+negativeExp h)| ≤ 4*h := by rw [abs_le]; constructor <;> linarith
   have coeff := mul_le_mul um gb (abs_nonneg _) (by linarith : 0 ≤ 4*h)
   rw [← abs_mul] at coeff
@@ -344,9 +266,7 @@ private lemma eventually_phaseDeficit_transfer_le (rh : RiemannHypothesis) :
   dsimp only [C]
   linarith
 
-/-- Under RH the additive gap below the sharp critical envelope diverges along the real
-atTop filter. -/
-theorem critical_gap_tendsto_atTop (rh : RiemannHypothesis) :
+private theorem critical_gap_tendsto_atTop (rh : RiemannHypothesis) :
     Tendsto (fun x : ℝ => firstLiMass*sqrt x-U x) atTop atTop := by
   obtain ⟨B,hB⟩ := eventually_phaseDeficit_transfer_le rh
   have hc := phaseDeficit_div_tendsto_atTop.comp negativeExp_tendsto_zero_right
@@ -373,5 +293,34 @@ theorem critical_gap_tendsto_atTop (rh : RiemannHypothesis) :
   change (D+residualConstant)*negativeExp (log x) ≤ firstLiMass-cosineProfile (log x) at hs
   apply le_of_mul_le_mul_left (a:=negativeExp (log x)) _ (negativeExp_pos _)
   nlinarith [congrArg (fun z : ℝ => firstLiMass*z) hw]
+
+/-- The additive gap below the sharp critical envelope diverges along the real
+atTop filter exactly when RH holds. -/
+theorem rh_iff_critical_gap_tendsto_atTop :
+    RiemannHypothesis ↔ Tendsto (fun x : ℝ => firstLiMass * sqrt x - U x) atTop atTop := by
+  refine ⟨critical_gap_tendsto_atTop, ?_⟩
+  intro hgap
+  obtain ⟨a, ha⟩ := eventually_atTop.mp
+    (tendsto_exp_atTop.eventually (hgap.eventually_ge_atTop (0 : ℝ)))
+  let t := max a 1
+  have ht : 0 < t := zero_lt_one.trans_le (le_max_right _ _)
+  apply actual_kernel_affine_tail_implies_rh t 0 (firstLiMass + residualConstant) ht
+  intro y hy
+  have hy0 := ht.trans_le hy
+  have hU : U (exp y) ≤ firstLiMass * sqrt (exp y) :=
+    sub_nonneg.mp (ha y ((le_max_left _ _).trans hy))
+  have hG : G y ≤ firstLiMass := by
+    change negativeExp y * U (exp y) ≤ firstLiMass
+    calc
+      _ ≤ negativeExp y * (firstLiMass * sqrt (exp y)) :=
+        mul_le_mul_of_nonneg_left hU (negativeExp_pos y).le
+      _ = firstLiMass := by
+        rw [← exp_half, mul_left_comm, ← show positiveExp y = exp (y / 2) from rfl,
+          negativeExp_mul_positiveExp, mul_one]
+  have hdiff := (neg_le_abs (G y - cosineProfile y)).trans (abs_G_sub_cosineProfile_le hy0)
+  have hdecay : negativeExp y ≤ 1 := exp_le_one_iff.mpr (by linarith)
+  have hR := mul_le_of_le_one_left residualConstant_nonneg hdecay
+  rw [← cosineProfile_eq_K hy0, zero_mul, zero_add]
+  linarith
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtCriticalGap

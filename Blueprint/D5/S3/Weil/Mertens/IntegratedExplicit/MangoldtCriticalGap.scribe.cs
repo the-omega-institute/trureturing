@@ -10,10 +10,10 @@ internal sealed class MangoldtCriticalGapDocument : IScribeDocumentDefinition
         "The additive gap below the critical Mertens envelope",
         H("The critical coefficient for the complete Mangoldt remainder"),
         Blocks(Describe.Lean(
-            DescribeId.Create("critical-gap-tendsto-at-top"),
+            DescribeId.Create("rh-iff-critical-gap-tendsto-at-top"),
             DeclarationHandle.Create(
-                "D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtCriticalGap.critical_gap_tendsto_atTop"),
-            H("Divergence of the additive gap under the Riemann hypothesis"),
+                "D5/S3/Weil/Mertens/IntegratedExplicit/MangoldtCriticalGap.rh_iff_critical_gap_tendsto_atTop"),
+            H("The Riemann hypothesis and divergence of the additive gap"),
             StatementSource.FromAuthor(Claim()), AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -26,16 +26,22 @@ internal sealed class MangoldtCriticalGapDocument : IScribeDocumentDefinition
                     + "The product (1 − cos(γy))(1 + cos(γh)) is nonnegative for each zero ordinate γ. "
                     + "Summing this inequality gives 2d(h) − 4d(y) ≤ 2F(y) − F(y+h) − F(y−h).")),
                 Paragraph(Text(
-                    "Near zero the explicit formula separates a smooth term from the trivial-zero series. "
-                    + "Each fixed finite prefix of the trivial-zero series bounds the right secant slope "
-                    + "of d from below by a constant times the corresponding harmonic partial sum, up to "
-                    + "a bounded smooth contribution. Thus d(h)/h tends to positive infinity as h decreases to zero.")),
+                    "At positive arguments the explicit formula identifies F with the full arithmetic "
+                    + "kernel K, whose value at zero is M. Its derivative tends to negative infinity "
+                    + "from the right. The mean value theorem on [0,h] therefore shows that d(h)/h "
+                    + "tends to positive infinity as h decreases to zero.")),
                 Paragraph(Text(
                     "The nonnegative Mangoldt ramps give a weighted midpoint inequality for the normalized "
                     + "arithmetic remainder. At h = exp(−y/2) its smooth part and the correction from the "
                     + "explicit formula give an upper bound proportional to h for the second difference of F. "
                     + "The cosine inequality forces d(y)/h to tend to positive infinity. The bounded additive "
-                    + "correction from the explicit formula then gives the stated limit in x."))),
+                    + "correction from the explicit formula then gives the stated limit in x. "
+                    + "The source derivation is at https://github.com/the-omega-institute/trureturing/issues/32551#issuecomment-7060395310.")),
+                Paragraph(Text(
+                    "Conversely, divergence of the gap gives U(x) ≤ M√x on a real tail. "
+                    + "Substituting x = exp(y) and multiplying by exp(−y/2) bounds G(y) by M. "
+                    + "The explicit-formula correction then supplies a constant upper bound for K on "
+                    + "a positive tail. The affine-tail criterion for K, used with slope zero, gives RH."))),
             DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
@@ -58,6 +64,7 @@ internal sealed class MangoldtCriticalGapDocument : IScribeDocumentDefinition
             ImpliesClaim(Le(F.Id("T"), x), Le(F.Id("D"), gap)));
         var limit = Bind(FormulaQuantifier.ForAll, "D",
             Bind(FormulaQuantifier.Exists, "T", tail));
-        return Disp(ImpliesClaim(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))), limit));
+        return Disp(new Formula.Logic(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))),
+            FormulaLogicOperator.Iff, limit));
     }
 }
