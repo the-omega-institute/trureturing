@@ -90,6 +90,42 @@ including the output, from a pure product initialization. The
 construction gives the same exact-data obstruction when the channels
 are promised this local Stinespring realization.
 
+## Coherent query lower bound for hidden activation on a path
+
+Put d = 2ᴺ on the N-qubit path. For each mark a, translate each input bit
+xᵢ by 1 − aᵢ before the edge-record channel. Only the input word a becomes
+all ones. The original independent fair edge and site bits then yield
+uniform outputs off a and the uniform parity-b law on a. In Lean the marked
+CPTP oracle equals this translated path channel. Precomposing the original
+record isometry by the same basis permutation and tracing the original
+environment gives its action on every input matrix.
+
+On the normalized Choi state, the translation permutes the input reference
+basis and factors over any kept and discarded site sets. Every proper paired
+marginal remains maximally mixed for every (a,b). The paired entropies and
+conditional mutual information in Liu–Wild Definition 1 retain the
+values of the original path channels. In particular the uniform bound in
+nats is (log 2) exp(−(log 2)|M|), with |M| the number of middle sites.
+For a fixed mark the two parities have unhalved diamond distance 2.
+
+Any T-call protocol that reports the parity with probability at least
+2/3 on every (a,b) needs T ≥ d/3. The protocol may start with an
+arbitrary entangled probe and use arbitrary adaptive CPTP operations on
+the query register and finite quantum memory. The decision may receive
+a after the last call. The same lower bound applies to a finite POVM
+whose outcomes give channel estimates with unhalved diamond error
+strictly below 1 with probability at least 2/3 on every (a,b).
+
+Ghosh, Jackson and Datta, arXiv:2611.20366v1, §3.1, Eqs. (8)–(10), give the rank-one perturbation family containing these channels as a deterministic specialization. Rosenthal, Aaronson, Subramanian, Datta and Gur, arXiv:2409.12566v4, Theorem 1.2 and §3, use rare input weights to prove a coherent query lower bound for replacement-channel certification. The path construction supplies the one-dimensional realization, proper-window equality and uniform Choi CMI for the specific family used here. [Ghosh–Jackson–Datta](https://arxiv.org/abs/2611.20366v1) · [Rosenthal et al.](https://arxiv.org/abs/2409.12566v4)
+
+The channel model exposes the system output after the environment trace.
+A known mark can be queried directly with one computational product probe
+and a parity measurement. The accompanying paper proof supplies the
+original ten-layer nearest-neighbor schedule from a pure product
+environment. Prepending one parallel layer of local input flips realizes
+the translated path family with the same ancilla count. The paper also
+gives an O(d)-call product-probe algorithm under the marked family promise.
+
 ## Verified locator
 
 PRX Quantum 7, 043015, PDF p. 4, Eq. (3) and Definition 1,
