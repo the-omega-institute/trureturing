@@ -14,6 +14,12 @@ triage: anchor
 
 # Defant's abundancy index in quadratic integer rings
 
+## Verified locator
+
+DOI: 10.48550/arXiv.1506.05416
+
+Source: https://arxiv.org/pdf/1506.05416v1#page=23
+
 Colin Defant, *An Extension of the Abundancy Index to Certain Quadratic Rings*,
 *International Journal of Mathematics and Computer Science* 9(2) (2014), 63–82.
 The integral bases and the set of radicands are in Section 1. The half-open
