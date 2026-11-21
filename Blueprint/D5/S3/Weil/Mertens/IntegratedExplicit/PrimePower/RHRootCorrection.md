@@ -68,13 +68,27 @@ Let N(a,B) be the integral of max(-Qtheta(x),0)/sqrt(x) from a to B. Let p(u) be
 
 The exact ordinary endpoint identity of RHPrimeWindowRemainder expresses the discrepancy after subtraction of the logarithm and the first primitive as an integral of windowError. Eventual positivity identifies windowError with rootWindowDensity on the same closed log window. Apply the integrated estimate with cube coefficient 9 and the square primitive at both endpoints.
 
+**Theorem 1.5 (The same window estimate characterizes RH).**
+
+$$RH \Leftrightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2 \le T \land \left(0 < K \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{N}\left(a, B\right) - 2 \cdot \operatorname{log}\left(\frac{B}{a}\right) - \operatorname{p}\left(\operatorname{log}\left(B\right)\right) + \operatorname{p}\left(\operatorname{log}\left(a\right)\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - A_{2}(B) + A_{2}(a)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_iff_prime_window_cube_and_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Both endpoint primitives are bounded for cutoffs at least 1 by absolute summability, the ordinate gap and the open critical strip. At a fixed admissible left cutoff, the window estimate then bounds the mass minus its logarithmic main term. The wide-window prime-tail theorem forces this discrepancy to grow beyond every bound if RH fails, once the right endpoint is sufficiently large and at least the square of the left cutoff.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.prime_window_cube_and_square_of_rh`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_iff_prime_window_cube_and_square`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_prime_power_density`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_root_correction_window`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rootWindowDensity`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootTail](RootTail.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SquareSpectrum](SquareSpectrum.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHPrimeWindowRemainder](../RHPrimeWindowRemainder.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WidePrimeWindowMass](../WidePrimeWindowMass.md)
 - Dependency: [D5/S3/Weil/Mertens/ZeroAbscissaPower](../../ZeroAbscissaPower.md)

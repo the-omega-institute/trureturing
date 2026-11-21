@@ -70,6 +70,18 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
                         + "as an integral of windowError. Eventual positivity identifies windowError "
                         + "with rootWindowDensity on the same closed log window. Apply the integrated "
                         + "estimate with cube coefficient 9 and the square primitive at both endpoints."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rh-iff-prime-window-cube-and-square"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_iff_prime_window_cube_and_square"),
+                H("The same window estimate characterizes RH"), StatementSource.FromAuthor(PrimeWindow(characterizesRh: true)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Both endpoint primitives are bounded for cutoffs at least 1 by absolute summability, "
+                    + "the ordinate gap and the open critical strip. At a fixed admissible left cutoff, "
+                    + "the window estimate then bounds the mass minus its logarithmic main term. "
+                    + "The wide-window prime-tail theorem forces this discrepancy to grow beyond every bound "
+                    + "if RH fails, once the right endpoint is sufficiently large and at least the square of the left cutoff."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -131,7 +143,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
             And(Lt(F.D(0), k), And(positive, window)))))));
     }
 
-    private static Formula PrimeWindow()
+    private static Formula PrimeWindow(bool characterizesRh = false)
     {
         var a = F.Id("a");
         var b = F.Id("B");
@@ -144,7 +156,8 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         var error = Add(Subtract(Subtract(ordinary, cube), SquareAt(b)), SquareAt(a));
         var estimate = Le(new Formula.Absolute(error), Multiply(k, Subtract(ErrorPower(a), ErrorPower(b))));
         var window = All("a", All("B", Imp(Le(t, a), Imp(Le(a, b), estimate))));
-        return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K", And(Le(F.D(2), t),
-            And(Lt(F.D(0), k), window))))));
+        var bound = Exists("T", Exists("K", And(Le(F.D(2), t), And(Lt(F.D(0), k), window))));
+        var relation = characterizesRh ? FormulaLogicOperator.Iff : FormulaLogicOperator.Implies;
+        return F.Disp(new Formula.Logic(F.Id("RH"), relation, bound));
     }
 }

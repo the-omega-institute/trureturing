@@ -9,6 +9,7 @@
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RootTail
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SquareSpectrum
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
+import D5.S3.Weil.Mertens.IntegratedExplicit.WidePrimeWindowMass
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 
 /-! The integrated complete tail controls both root cutoffs. The fifth-root majorant
@@ -24,7 +25,8 @@ open scoped Topology
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
 open D5.S3.Weil.Mertens.WeightedPrimeLimit (chebyshev_error_kernel_integrable)
 open D5.S3.Weil.Mertens.ZeroAbscissaPower (primitive_eq_negative_tail)
-open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (firstLiMass firstLiMass_lt_one)
+open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+  (actualZero actualData actualOccurrenceEquiv actual_height_gt_ten firstLiMass firstLiMass_lt_one)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
   (primeTail prime_integrable prime_power_window_correction)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
@@ -476,5 +478,74 @@ theorem prime_window_cube_and_square_of_rh (hRH : RiemannHypothesis) :
     9 * (a ^ (-(1 / 6) : ℝ) - B ^ (-(1 / 6) : ℝ)) - squarePrimitive B + squarePrimitive a| ≤ _
   rw [hIdentity, hIntegral]
   exact hwindow a B ha hab
+
+private lemma endpoint_primitives_bounded :
+    ∃ M : ℝ, ∀ x : ℝ, 1 ≤ x →
+      |spectralPrimitive (phaseOrbit (Real.log x))| ≤ M ∧ |squarePrimitive x| ≤ 4 * M := by
+  let M := ∑' k : ℕ, ‖actualCoeff k‖
+  have hM : HasSum (fun k : ℕ => ‖actualCoeff k‖) M :=
+    actualCoeff_hasSum.summable.norm.hasSum
+  refine ⟨M, fun x hx => ⟨?_, ?_⟩⟩
+  · unfold spectralPrimitive
+    refine (Complex.abs_re_le_norm _).trans (tsum_of_norm_bounded hM fun k => ?_)
+    have hg : 10 < |(actualZero k).im| :=
+      actual_height_gt_ten _ (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)
+    rw [norm_div, norm_mul, Circle.norm_coe, mul_one, norm_mul, Complex.norm_I, one_mul,
+      Complex.norm_real, Real.norm_eq_abs]
+    exact div_le_self (norm_nonneg _) (by linarith)
+  · have hx0 : 0 < x := zero_lt_one.trans_le hx
+    change |4 * (∑' k : ℕ, (x : ℂ) ^ ((actualZero k - 1) / 2) /
+      (actualZero k * (1 - actualZero k) * (2 - actualZero k))).re| ≤ 4 * M
+    rw [abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 4)]
+    refine mul_le_mul_of_nonneg_left ((Complex.abs_re_le_norm _).trans
+      (tsum_of_norm_bounded hM fun k => ?_)) (by norm_num)
+    have hstrip := (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2.2
+    change (actualZero k).re < 1 at hstrip
+    have hgap : 1 ≤ ‖2 - actualZero k‖ := by
+      have h := Complex.abs_re_le_norm (2 - actualZero k)
+      rw [Complex.sub_re, Complex.re_ofNat, abs_of_pos (by linarith)] at h
+      linarith
+    have hp : ‖(x : ℂ) ^ ((actualZero k - 1) / 2)‖ ≤ 1 := by
+      rw [Complex.norm_cpow_eq_rpow_re_of_pos hx0]
+      apply Real.rpow_le_one_of_one_le_of_nonpos hx
+      norm_num [Complex.div_re, Complex.sub_re]
+      linarith
+    rw [show (x : ℂ) ^ ((actualZero k - 1) / 2) /
+        (actualZero k * (1 - actualZero k) * (2 - actualZero k)) =
+        ((x : ℂ) ^ ((actualZero k - 1) / 2) * actualCoeff k) / (2 - actualZero k) by
+      simp only [actualCoeff, div_eq_mul_inv, mul_inv, mul_assoc, one_mul]]
+    rw [norm_div, norm_mul]
+    exact (div_le_self (by positivity) hgap).trans
+      (mul_le_of_le_one_left (norm_nonneg _) hp)
+
+/-- The full corrected prime-only window estimate characterizes RH. -/
+theorem rh_iff_prime_window_cube_and_square :
+    RiemannHypothesis ↔
+    ∃ a₀ K : ℝ, 2 ≤ a₀ ∧ 0 < K ∧ ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+      |(∫ x in a..B, max (-primeTail x) 0 / Real.sqrt x) - 2 * Real.log (B / a) -
+        spectralPrimitive (phaseOrbit (Real.log B)) + spectralPrimitive (phaseOrbit (Real.log a)) -
+        9 * (a ^ (-(1 / 6) : ℝ) - B ^ (-(1 / 6) : ℝ)) - squarePrimitive B + squarePrimitive a| ≤
+          K * (a ^ (-(3 / 10) : ℝ) - B ^ (-(3 / 10) : ℝ)) := by
+  refine ⟨prime_window_cube_and_square_of_rh, ?_⟩
+  rintro ⟨a, K, ha, hK, hwindow⟩
+  by_contra hRH
+  obtain ⟨M, hM⟩ := endpoint_primitives_bounded
+  obtain ⟨S, hS⟩ := (WidePrimeWindowMass.prime_tail_wide_window_mass 2 (by norm_num)).1
+    hRH (K + 10 * M + 10)
+  let B := max S (a ^ (2 : ℝ))
+  have ha1 : 1 ≤ a := by linarith
+  have hab : a ≤ B := (Real.self_le_rpow_of_one_le ha1 (by norm_num)).trans (le_max_right _ _)
+  obtain ⟨hpa, hAa⟩ := hM a ha1
+  obtain ⟨hpB, hAB⟩ := hM B (ha1.trans hab)
+  have hup := (abs_le.mp (hwindow a B le_rfl hab)).2
+  have hlow := hS B (le_max_left _ _) a ha (le_max_right _ _)
+  have hc : a ^ (-(1 / 6) : ℝ) - B ^ (-(1 / 6) : ℝ) ≤ 1 :=
+    sub_le_self _ (Real.rpow_nonneg (by linarith) _) |>.trans
+      (Real.rpow_le_one_of_one_le_of_nonpos ha1 (by norm_num))
+  have he : a ^ (-(3 / 10) : ℝ) - B ^ (-(3 / 10) : ℝ) ≤ 1 :=
+    sub_le_self _ (Real.rpow_nonneg (by linarith) _) |>.trans
+      (Real.rpow_le_one_of_one_le_of_nonpos ha1 (by norm_num))
+  linarith only [hup, hlow, hc, mul_le_of_le_one_right hK.le he,
+    (abs_le.mp hpa).1, (abs_le.mp hAa).1, (abs_le.mp hpB).2, (abs_le.mp hAB).2]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
