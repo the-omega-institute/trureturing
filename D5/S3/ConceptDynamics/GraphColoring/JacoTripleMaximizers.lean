@@ -22,6 +22,8 @@ proof_shape:
     shape, frac_bounds, gap, e_bounds, orders_three, between, result)
   bo_le, bo_eq_iff, bo_mono, bo_zero: bind-only (consumers: closed_form, card_three_iff,
     shape_floor, frac_bounds, gap, between, bracket, result)
+  g_pos, g_quad, bo_le, bo_eq_iff, bo_zero are public; their downstream consumers are
+    JacoMorrieTheorem and JacoMorrieTheoremRefutation
   shape, shape_floor, frac_bounds, gap, e_bounds: bind-only (consumers: orders_three, between,
     increments)
   closed_form: content (consumers: shape, between, increments, enumerate, result)
@@ -51,9 +53,9 @@ noncomputable def orders : ℕ → ℕ
   | 0 => 1
   | j + 1 => orders j + 3 + 2 * (beattyOut (j + 1) - beattyOut j)
 
-private theorem g_pos : 0 < Real.goldenRatio⁻¹ := inv_pos.mpr Real.goldenRatio_pos
+theorem g_pos : 0 < Real.goldenRatio⁻¹ := inv_pos.mpr Real.goldenRatio_pos
 
-private theorem g_quad : Real.goldenRatio⁻¹ ^ 2 + Real.goldenRatio⁻¹ = 1 := by
+theorem g_quad : Real.goldenRatio⁻¹ ^ 2 + Real.goldenRatio⁻¹ = 1 := by
   rw [Real.inv_goldenRatio, neg_sq, Real.goldenConj_sq]; ring
 
 private theorem g_fine : (61 : ℝ) / 100 < Real.goldenRatio⁻¹ ∧ Real.goldenRatio⁻¹ < 5 / 8 := by
@@ -64,7 +66,7 @@ private theorem g_fine : (61 : ℝ) / 100 < Real.goldenRatio⁻¹ ∧ Real.golde
 private theorem g_ne (k : ℕ) (hk : 1 ≤ k) (m : ℤ) : (k : ℝ) * Real.goldenRatio⁻¹ ≠ m :=
   (Real.goldenRatio_irrational.inv.natCast_mul (by omega)).ne_int m
 
-private theorem bo_le (k : ℕ) :
+theorem bo_le (k : ℕ) :
     (beattyOut k : ℝ) ≤ ((k : ℝ) + 1) * Real.goldenRatio⁻¹ ∧
       ((k : ℝ) + 1) * Real.goldenRatio⁻¹ < beattyOut k + 1 := by
   have hpos : (0 : ℝ) ≤ ((k : ℝ) + 1) * Real.goldenRatio⁻¹ := by have := g_pos; positivity
@@ -72,7 +74,7 @@ private theorem bo_le (k : ℕ) :
   rw [← div_eq_mul_inv] at hpos
   exact ⟨Nat.floor_le hpos, Nat.lt_floor_add_one _⟩
 
-private theorem bo_eq_iff (k N : ℕ) :
+theorem bo_eq_iff (k N : ℕ) :
     beattyOut k = N ↔
       (N : ℝ) ≤ ((k : ℝ) + 1) * Real.goldenRatio⁻¹ ∧
         ((k : ℝ) + 1) * Real.goldenRatio⁻¹ < N + 1 := by
@@ -88,7 +90,7 @@ private theorem bo_mono (k : ℕ) : beattyOut k ≤ beattyOut (k + 1) := by
   gcongr
   linarith
 
-private theorem bo_zero : beattyOut 0 = 0 := by
+theorem bo_zero : beattyOut 0 = 0 := by
   rw [bo_eq_iff]
   have := g_fine
   push_cast
