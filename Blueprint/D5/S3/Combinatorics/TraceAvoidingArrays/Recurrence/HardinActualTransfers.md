@@ -102,15 +102,15 @@ For both bond rules and every k,m≥0, sum the power vector indexed by all prope
 
 **Theorem 1.9 (Pullback of a quotient power).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.powerOnes_of_rows`
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.row_fibres_iff_pow_mulVec`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.powerOnes_of_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.row_fibres_iff_pow_mulVec` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For finite state sets A and B and matrices T and Q over the integers, fix a map c from A to B. If every row of T has total Q(c(a),b) in the fibre over b, then for every a and every m≥0, the a-entry of T^m on ones equals the c(a)-entry of Q^m on ones. Regroup the successor sum into fibres at each induction step. The degree-zero case includes every state.
+Let T and Q be integer matrices on finite state sets A and B and let c map A to B. The row total of T at a over the fibre of b is Q(c(a),b) for every a and b if and only if T^m(v∘c)(a) = (Q^m v)(c(a)) for every integer vector v on B, exponent m≥0, and a in A. For the forward direction regroup the sum into fibres at each step. For the reverse direction take m=1 and let v be the indicator of b.
 
 **Definition 1.10 (Lag convention).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActual
 
 *Commentary.*
 
-For a length-d coefficient list c, the relation with shift b equates T^(b+d) on ones with the sum of c_j times T^(b+d−j) on ones for j from one through d. Diagonal strip columns use b=1 and proper row words use b=0.
+For a length-d coefficient list c, the relation with shift b equates T^(b+d) on ones with the sum of c_j times T^(b+d−j) on ones for j from one through d. The manuscript uses b=1 for diagonal strip columns and b=0 for proper row words. The height-one and height-two column relations also hold at b=0.
 
 Write T(h,n) for the cardinality of the literal normalized diagonal arrays of positive height h and width n. Read the columns in increasing order and recover the colour at (r,j) from position r of column j. The column compatibility test compares the labels at positions r and t whenever their distance is at most one. Reading the rows in increasing order instead recovers the colour at (r,j) from position j of row r. Each row is a proper word, and successive rows compare the two opposite diagonals at every adjacent pair of positions. These inverse maps give the exact graph colourings in either orientation. The unique empty tail gives the all-one vector, and each successor step is multiplication by the same matrix, indexed by current state and then successor state.
 
@@ -142,7 +142,7 @@ For width one the column series is (6x/(1−6x) + 3·4x/(1−4x) + 15·2x/(1−2
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.column_continuations`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.column_count`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.column_power`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.powerOnes_of_rows`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.row_fibres_iff_pow_mulVec`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.wordTransfer`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.word_continuations`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers.word_count`
