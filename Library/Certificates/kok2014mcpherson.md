@@ -14,7 +14,13 @@ triage: anchor
 
 # The McPherson number
 
-Source: https://arxiv.org/abs/1410.8637v1 (posted 31 October 2014), by Johan Kok and Susanth C.
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.1410.8637
+
+Source: https://arxiv.org/abs/1410.8637v1
+
+The paper is by Johan Kok and Susanth C, arXiv version 1.
 
 ## Definition
 
