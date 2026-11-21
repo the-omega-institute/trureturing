@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
   - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
+  - D5/S3/ConceptDynamics/GraphColoring/JacoFibonacciSums
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -108,3 +109,20 @@ equals q exactly on the blocks [5k_q,5k_(q+1)-1], the first starting at 1,
 with k_q=floor((5q-1)phi)+3q for q>=1; these blocks partition the positive
 integers. Possible answers posted on MathDB were not inspected, so no priority
 is claimed.
+
+## Fibonacci orders and sums
+
+Proposition 3.2 on printed pages 10 and 11 takes consecutive Fibonacci
+numbers t=F_(r-1), h=F_r and a further Fibonacci number l=F_s, all at least
+three, and asserts Delta_h=F_(r-1), J_h={v_(F_(r-1))},
+Delta_(h+l)=Delta_h+Delta_l and J_(h+l)={v_(Delta_h+Delta_l)}; the last two
+are proved there through the conjectured Theorem 2.10. Corollary 10 of Ma and
+Zhang, Zenodo DOI 10.5281/zenodo.24369124, states the first three throughout
+that domain and the failure of the singleton at h=l=5, and for r,s>=4 the
+exceptional orders (F_r,F_s)=(3,3) for the degree and (3,3),(5,5) for the
+singleton. The
+repository proves this through the Binet error eps_r=F_r/phi-F_(r-1)=
+-(-1/phi)^r and extends it to indices r,s>=3: Delta_(F_r)=F_(r-1) for r>=3
+with a singleton maximum set exactly for r>=4, and for sums the degree fails
+only at r=s=4 while the singleton holds exactly away from (4,4), (5,5) and the
+pairs containing an index 3 other than {3,4}.
