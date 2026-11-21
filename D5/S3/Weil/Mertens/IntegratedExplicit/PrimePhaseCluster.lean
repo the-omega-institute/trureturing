@@ -94,7 +94,7 @@ where
       Continuous (fun q : (ℕ → Circle) × ℝ => Real.exp (-(β - 1 / 2) * q.2)) := by
     fun_prop
 
-private theorem phaseProfile_on_orbit (β t u : ℝ) :
+theorem phaseProfile_on_orbit (β t u : ℝ) :
     phaseProfile Complex.re β (phaseOrbit t) u =
       -(maximalSeries actualCoeff actualZero β (t + u)).re := by
   unfold phaseProfile maximalSeries

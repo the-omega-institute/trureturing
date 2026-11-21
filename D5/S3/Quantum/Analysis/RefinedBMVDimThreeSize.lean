@@ -21,7 +21,7 @@ def coefficientNorm (l : List Term) : Nat :=
 def Controlled (l : List Term) (d M : Nat) : Prop :=
   (∀ m ∈ l, m.degree = d) ∧ coefficientNorm l ≤ M
 
-private theorem empty_controlled (d M : Nat) : Controlled [] d M := by
+theorem empty_controlled (d M : Nat) : Controlled [] d M := by
   simp [Controlled, coefficientNorm]
 
 theorem mono {l : List Term} {d M N : Nat} (h : Controlled l d M) (hMN : M ≤ N) :
@@ -173,7 +173,7 @@ theorem mul_bound {a b : Sparse} {d e M N : Nat}
         using h
   exact hsum a.terms ha.1
 
-private theorem constant_bound (n : Nat) :
+theorem constant_bound (n : Nat) :
     Controlled (Sparse.constant n).terms 0 n := by
   simp [Controlled, Sparse.constant, Term.degree, coefficientNorm]
 
@@ -194,7 +194,7 @@ theorem pow_bound {a : Sparse} {d M : Nat} (ha : Controlled a.terms d M) (k : Na
     change Controlled (a ^ k * a).terms (d * (k + 1)) (M ^ (k + 1))
     simpa only [Nat.mul_succ, Nat.pow_succ] using mul_bound ih ha
 
-private theorem sum_bound (l : List Sparse) (d M : Nat)
+theorem sum_bound (l : List Sparse) (d M : Nat)
     (h : ∀ a ∈ l, Controlled a.terms d M) :
     Controlled l.sum.terms d (l.length * M) := by
   induction l with
@@ -204,7 +204,7 @@ private theorem sum_bound (l : List Sparse) (d M : Nat)
     have hh := add_bound (h a (by simp)) (ih h')
     simpa [Nat.add_mul, Nat.add_comm] using hh
 
-private theorem gap_degree (p : Nat) (g : Nat × Nat × Nat) (hg : g ∈ gaps p) :
+theorem gap_degree (p : Nat) (g : Nat × Nat × Nat) (hg : g ∈ gaps p) :
     g.1 + g.2.1 + g.2.2 = p := by
   unfold gaps at hg
   rcases List.mem_flatMap.mp hg with ⟨i, hi, hg⟩

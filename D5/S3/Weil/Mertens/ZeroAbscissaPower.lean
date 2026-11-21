@@ -32,7 +32,7 @@ namespace D5.S3.Weil.Mertens.ZeroAbscissaPower
 private def primitiveTerm (s : ℝ) (k : ℕ) : ℂ :=
   actualCoeff k * Complex.exp ((Real.log s : ℂ) * (actualZero k - 1))
 
-private theorem actual_zero (k : ℕ) : IsNontrivialZero (actualZero k) :=
+theorem actual_zero (k : ℕ) : IsNontrivialZero (actualZero k) :=
   actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
 
 private theorem actual_zero_ne (k : ℕ) : actualZero k ≠ 0 ∧ actualZero k ≠ 1 := by

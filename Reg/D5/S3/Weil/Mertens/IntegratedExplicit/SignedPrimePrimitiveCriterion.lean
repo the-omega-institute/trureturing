@@ -152,4 +152,110 @@ def slopeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev affineSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def affineReadout (_ _ : Unit) (T : ℝ) : ℝ :=
+  ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x
+
+def affineActual : Realization affineSignature :=
+  realize affineSignature affineReadout (fun e => nomatch e)
+
+abbrev affineArena : Arena where
+  signature := affineSignature
+  Law V :=
+    (RiemannHypothesis ↔ ∃ A B : ℝ, ∀ᶠ T in atTop, V.readout () () T ≤ A * T + B) ∧
+    (RiemannHypothesis ↔ ∃ A B : ℝ, ∀ᶠ T in atTop, A * T + B ≤
+      ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x)
+
+private theorem affine_depends : ObservationalDependence affineSignature affineActual := by
+  intro i
+  cases i
+  by_contra! h
+  apply window_not_zero_everywhere (a := 5040) (by norm_num)
+  intro x hx
+  have hAnchor : affineReadout () () (Real.log 5040) = 0 := by
+    simp [affineReadout, Real.exp_log (by norm_num : (0 : ℝ) < 5040)]
+  have he : affineReadout () () (Real.log x) = 0 := (h () (Real.log x) _).trans hAnchor
+  change window 5040 (Real.exp (Real.log x)) = 0 at he
+  rwa [Real.exp_log (zero_lt_one.trans hx)] at he
+
+private theorem square_has_no_affine_upper :
+    ¬ ∃ A B : ℝ, ∀ᶠ T in atTop, T ^ 2 ≤ A * T + B := by
+  rintro ⟨A, B, h⟩
+  obtain ⟨Y, hY⟩ := eventually_atTop.mp h
+  let T : ℝ := max Y (|A| + |B| + 2)
+  have hLarge : |A| + |B| + 2 ≤ T := le_max_right _ _
+  have hOne : 1 ≤ T := by linarith [abs_nonneg A, abs_nonneg B]
+  have hPos : 0 < T := zero_lt_one.trans_le hOne
+  have hStrict : |A| + |B| < T := by linarith
+  have hAbove : A * T + B < T ^ 2 := calc
+    A * T + B ≤ |A| * T + |B| * T := by
+      exact add_le_add (mul_le_mul_of_nonneg_right (le_abs_self A) hPos.le)
+        ((le_abs_self B).trans (le_mul_of_one_le_right (abs_nonneg B) hOne))
+    _ = (|A| + |B|) * T := (add_mul _ _ _).symm
+    _ < T ^ 2 := by
+      simpa only [pow_two] using mul_lt_mul_of_pos_right hStrict hPos
+  exact (not_lt_of_ge (hY T (le_max_left _ _))) hAbove
+
+private theorem affine_rejection : ∃ bad : Realization affineSignature, ¬ affineArena.Law bad := by
+  classical
+  by_cases hRH : RiemannHypothesis
+  · refine ⟨realize affineSignature (fun _ _ T => T ^ 2) (fun e => nomatch e), ?_⟩
+    intro h
+    exact square_has_no_affine_upper (h.1.mp hRH)
+  · refine ⟨realize affineSignature (fun _ _ _ => 0) (fun e => nomatch e), ?_⟩
+    intro h
+    apply hRH
+    refine h.1.mpr ⟨0, 0, Eventually.of_forall fun _ => ?_⟩
+    change (0 : ℝ) ≤ 0 * _ + 0
+    simp
+
+def affineFamily :
+    Registration affineArena (type_of% @rh_iff_signedPrimePrimitive_affine_bounds_from_5040) where
+  actual := affineActual
+  bridge := Iff.rfl
+  variation := ⟨rh_iff_signedPrimePrimitive_affine_bounds_from_5040, affine_rejection⟩
+  sensitivity := by
+    obtain ⟨bad, hbad⟩ := affine_rejection
+    exact _root_.Reg.Support.SingleDependentReadout.sensitivity
+      affineArena.Law affineActual bad hbad
+  dependence := affine_depends
+
+def affineAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@rh_iff_signedPrimePrimitive_affine_bounds_from_5040) (Realization affineSignature)
+    Unit Unit where
+  unitName :=
+    `D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion.rh_iff_signedPrimePrimitive_affine_bounds_from_5040.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion.affineFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨affineArena⟩
+  objectArena := .source ⟨affineArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source affineArena ⟨affineFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize affineSignature affineReadout (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg", "arg", "arg", "body", "arg", "body",
+        "fn", "arg", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion

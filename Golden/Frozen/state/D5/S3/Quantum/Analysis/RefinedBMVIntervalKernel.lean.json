@@ -1,0 +1,1 @@
+{"statement_id":"sha256:cf85883e5be24124fb6df2f1515ca920a8885c033f829f691ac75087b6df1b7e","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:RefinedBMV),14:IntervalKernel),21:posSemidef_truncation)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,10:RefinedBMV),14:IntervalKernel),38:rectangle_nonneg_of_mixed_deriv_nonpos)","kind":"theorem"}]}

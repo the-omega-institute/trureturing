@@ -93,4 +93,79 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms evidence
 #print axioms registration
 
+
+namespace Window
+
+def arena : Arena where
+  signature := signature
+  Law V := ∀ {b : ℝ}, 1 < b → (RiemannHypothesis ↔ ∀ κ : ℝ, 0 < κ →
+    ∃ᶠ Y : ℝ in atTop, ∀ t, WindowSample Y (Y ^ b) t →
+      V.readout () () t ≤ t ^ ((1 : ℝ) / 2 + κ))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  intro h
+  have h2 := h (b := 2) (by norm_num)
+  by_cases rh : RiemannHypothesis
+  · obtain ⟨Y, hw, hY⟩ := ((h2.mp rh (1/2) (by norm_num)).and_eventually
+      (eventually_ge_atTop (2 : ℝ))).exists
+    have hsample : WindowSample Y (Y ^ (2 : ℝ)) Y := by
+      exact ⟨⟨le_rfl, Real.self_le_rpow_of_one_le (by linarith) (by norm_num)⟩, Or.inl rfl⟩
+    have hbad := hw Y hsample
+    change (if RiemannHypothesis then Y+1 else -1) ≤ Y ^ ((1 : ℝ)/2+1/2) at hbad
+    simp only [rh, ↓reduceIte, show (1 : ℝ)/2+1/2 = 1 by norm_num, Real.rpow_one] at hbad
+    linarith
+  · apply rh
+    apply h2.mpr
+    intro κ _
+    apply Filter.Eventually.frequently
+    filter_upwards [eventually_ge_atTop (2 : ℝ)] with Y hY
+    intro t ht
+    change (if RiemannHypothesis then t+1 else -1) ≤ _
+    simp only [rh, ↓reduceIte]
+    exact (by norm_num : (-1 : ℝ) ≤ 0).trans
+      (Real.rpow_nonneg ((by norm_num : (0 : ℝ) ≤ 2).trans (hY.trans ht.1.1)) _)
+
+def evidence : Registration arena (type_of% @rh_iff_quartic_power_windows) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rh_iff_quartic_power_windows, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.evidence.dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@rh_iff_quartic_power_windows) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.rh_iff_quartic_power_windows.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.Window.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => U x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "body", "fn", "arg",
+        "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Window
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling

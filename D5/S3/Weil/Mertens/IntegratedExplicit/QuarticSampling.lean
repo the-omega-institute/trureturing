@@ -4,16 +4,17 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: RH is equivalent to a one-sided square-root bound at all sufficiently large fourth powers. -/
+   digest: Full-tail and cofinal-window tests at fourth powers characterize RH. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
+import D5.S3.Weil.Mertens.IntegratedExplicit.MangoldtPointwiseWindows
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-open Filter
+open Filter Set
 open scoped Topology
 open D5.S3.Arith.Robin.CompleteMertensPeak (U)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
@@ -90,18 +91,26 @@ private lemma remainder_chord {a b x B : ℝ} (ha : 0 < a) (hab : a < b)
   nlinarith only [hr, hl, hu, hm, hw, hlinear (1+Real.eulerMascheroniConstant),
     hlinear (Real.log a), hc, congrArg (fun z : ℝ => z*B) hs, congrArg (fun z : ℝ => z*a) hs]
 
+/-- The quadratic remainder of a chord clipped to one fourth - power cell. -/
+private lemma quartic_chord_error {n a z : ℝ} (hn : 1 ≤ n)
+    (ha : n ^ 4 ≤ a) (haz : a ≤ z) (hz : z ≤ (n + 1) ^ 4) :
+    (z - a) ^ 2 / a ≤ 225 * n ^ 2 := by
+  have hn0 : 0 < n := by linarith
+  have hgap : (n + 1) ^ 4 - n ^ 4 ≤ 15 * n ^ 3 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hn) (sq_nonneg n),
+      mul_nonneg (sub_nonneg.mpr hn) hn0.le]
+  have hstep := (sub_le_sub hz ha).trans hgap
+  apply (div_le_iff₀ ((pow_pos hn0 4).trans_le ha)).mpr
+  calc
+    _ ≤ (15 * n ^ 3) ^ 2 := pow_le_pow_left₀ (sub_nonneg.mpr haz) hstep _
+    _ = 225 * n ^ 2 * n ^ 4 := by ring
+    _ ≤ 225 * n ^ 2 * a := mul_le_mul_of_nonneg_left ha (by positivity)
+
 private lemma quartic_cell {n x : ℝ} (hn : 1 ≤ n) (hax : n^4 ≤ x) (hxb : x ≤ (n+1)^4)
     (ha : U (n^4) < n^2) (hb : U ((n+1)^4) < (n+1)^2) : U x ≤ 229*n^2 := by
   have hn0 : 0 < n := by linarith
-  have hgap : (n+1)^4-n^4 ≤ 15*n^3 := by
-    nlinarith [mul_nonneg (sub_nonneg.mpr hn) (sq_nonneg n),
-      mul_nonneg (sub_nonneg.mpr hn) hn0.le]
   have hlt : n^4 < (n+1)^4 := by gcongr; linarith
-  have herr : ((n+1)^4-n^4)^2 / n^4 ≤ 225*n^2 := by
-    apply (div_le_iff₀ (pow_pos hn0 4)).mpr
-    calc
-      _ ≤ (15*n^3)^2 := by gcongr
-      _ = _ := by ring
+  have herr := quartic_chord_error hn le_rfl hlt.le le_rfl
   have hend : (n+1)^2 ≤ 4*n^2 := by nlinarith [mul_nonneg (sub_nonneg.mpr hn) hn0.le]
   have h := remainder_chord (pow_pos hn0 4) hlt hax hxb (ha.le.trans (by nlinarith [sq_nonneg n])) (hb.le.trans hend)
   linarith
@@ -176,5 +185,116 @@ theorem rh_iff_eventually_quartic_samples :
         rw [← Real.exp_add, show -t/2+t/2=0 by ring, Real.exp_zero]
       nlinarith only [hprod]
     _ ≤ 230 := by linarith [Real.exp_le_one_iff.mpr (show -t/2 ≤ 0 by linarith)]
+
+open Real
+
+/-- Window endpoints and the natural fourth powers between them. -/
+def WindowSample (Y Z t : ℝ) : Prop :=
+  t ∈ Icc Y Z ∧ (t = Y ∨ t = Z ∨ ∃ n : ℕ, t = (n:ℝ) ^ 4)
+
+/-- A power bound at the two ends and the fourth powers inside the interval
+controls the complete Mangoldt remainder at every intermediate real scale. -/
+private theorem interpolate_window {Y Z x p : ℝ} (hY : 1 ≤ Y) (hx : x ∈ Icc Y Z)
+    (hp : 1 / 2 ≤ p) (hp' : p ≤ 1) (H : ∀ t, WindowSample Y Z t → U t ≤ t ^ p) :
+    U x ≤ 241 * x ^ p := by
+  have hx1 := hY.trans hx.1
+  have hx0 : 0 < x := by linarith
+  let y := Real.exp (Real.log x / 4)
+  let n : ℕ := ⌊y⌋₊
+  let v : ℝ := n
+  have hy : 1 ≤ y := Real.one_le_exp (div_nonneg (log_nonneg hx1) (by norm_num))
+  have hv : 1 ≤ v := by
+    have : 1 ≤ n := Nat.le_floor (by simpa using hy)
+    change (1:ℝ) ≤ (n:ℝ)
+    exact_mod_cast this
+  have hv0 : 0 < v := by linarith
+  have hy4 : y ^ 4 = x := by
+    rw [show y ^ 4 = exp (4 * (log x / 4)) by exact (exp_nat_mul _ 4).symm]
+    rw [show 4 * (log x / 4) = log x by ring, exp_log hx0]
+  have hlow : v ^ 4 ≤ x := by
+    rw [← hy4]
+    exact pow_le_pow_left₀ hv0.le (Nat.floor_le (zero_le_one.trans hy)) _
+  have hhigh : x ≤ (v + 1) ^ 4 := by
+    rw [← hy4]
+    exact pow_le_pow_left₀ (zero_le_one.trans hy) (Nat.lt_floor_add_one y).le _
+  let a := max Y (v ^ 4)
+  let z := min Z ((v + 1) ^ 4)
+  have hax : a ≤ x := max_le hx.1 hlow
+  have hxz : x ≤ z := le_min hx.2 hhigh
+  have haz := hax.trans hxz
+  have ha0 : 0 < a := (zero_lt_one.trans_le hY).trans_le (le_max_left _ _)
+  have sa : WindowSample Y Z a := by
+    refine ⟨⟨le_max_left _ _, hax.trans hx.2⟩, ?_⟩
+    rcases le_total (v ^ 4) Y with h|h
+    · exact Or.inl (max_eq_left h)
+    · exact Or.inr (Or.inr ⟨n, max_eq_right h⟩)
+  have sz : WindowSample Y Z z := by
+    refine ⟨⟨hx.1.trans hxz, min_le_left _ _⟩, ?_⟩
+    rcases le_total Z ((v + 1) ^ 4) with h|h
+    · exact Or.inr (Or.inl (min_eq_left h))
+    · exact Or.inr (Or.inr ⟨n + 1, by simpa [z,v] using min_eq_right h⟩)
+  have hp0 : 0 ≤ p := by linarith
+  have hxp : 0 ≤ x ^ p := rpow_nonneg hx0.le _
+  have endpoint {t : ℝ} (ht : WindowSample Y Z t) (htop : t ≤ (v + 1) ^ 4) : U t ≤ 16 * x ^ p := by
+    have hstep : (v + 1) ^ 4 ≤ 16 * x := calc
+      (v + 1) ^ 4 ≤ (2 * v) ^ 4 := pow_le_pow_left₀ (by linarith) (by linarith) _
+      _ = 16 * v ^ 4 := by ring
+      _ ≤ 16 * x := by linarith
+    have t0 := (zero_le_one.trans hY).trans ht.1.1
+    calc
+      U t ≤ t ^ p := H t ht
+      _ ≤ (16 * x) ^ p := rpow_le_rpow t0 (htop.trans hstep) hp0
+      _ = (16:ℝ) ^ p * x ^ p := mul_rpow (by norm_num) hx0.le
+      _ ≤ 16 * x ^ p := by
+        gcongr
+        simpa using rpow_le_rpow_of_exponent_le (by norm_num : (1:ℝ)≤16) hp'
+  have hUa := endpoint sa (hax.trans hhigh)
+  have hUz := endpoint sz (min_le_right _ _)
+  rcases haz.eq_or_lt with he|hlt
+  · have : a=x := le_antisymm hax (hxz.trans he.ge)
+    linarith [this ▸ hUa]
+  have herr := quartic_chord_error hv (le_max_right Y (v ^ 4)) haz (min_le_right Z ((v + 1) ^ 4))
+  have hs : v ^ 2 ≤ sqrt x := by
+    apply (le_sqrt (by positivity) hx0.le).2
+    nlinarith only [hlow]
+  rw [sqrt_eq_rpow] at hs
+  have hxpow := rpow_le_rpow_of_exponent_le hx1 hp
+  have hc := remainder_chord ha0 hlt hax hxz hUa hUz
+  linarith
+
+/-- On arbitrarily late closed power windows, the two ends and the fourth powers inside
+suffice to test the one - sided estimate with every positive exponent loss. -/
+theorem rh_iff_quartic_power_windows {b : ℝ} (hb : 1 < b) :
+    RiemannHypothesis ↔ ∀ κ : ℝ, 0 < κ → ∃ᶠ Y : ℝ in atTop,
+      ∀ t, WindowSample Y (Y ^ b) t → U t ≤ t ^ (1 / 2 + κ) := by
+  constructor
+  · intro rh κ hκ
+    exact ((MangoldtPointwiseWindows.rh_iff_pointwise_power_windows hb).1 rh κ hκ).mono
+      (fun Y h t ht => h t ht.1)
+  intro hw
+  apply (MangoldtPointwiseWindows.rh_iff_pointwise_power_windows hb).2
+  intro κ hκ
+  let δ := min (κ / 2) (1 / 2)
+  have hd : 0 < δ := lt_min (half_pos hκ) (by norm_num)
+  have hd1 : 1 / 2 + δ ≤ 1 := by linarith only [min_le_right (κ / 2) (1 / 2:ℝ)]
+  have hr : 0 < κ - δ := by linarith only [min_le_left (κ / 2) (1 / 2:ℝ),hκ]
+  obtain ⟨T,ht⟩ := eventually_atTop.mp ((tendsto_rpow_atTop hr).eventually_ge_atTop 241)
+  apply frequently_atTop.mpr
+  intro R
+  obtain ⟨Y, H, hY⟩ := ((hw δ hd).and_eventually (eventually_ge_atTop (max (max R T) 2))).exists
+  have hR := (le_max_left R T).trans ((le_max_left _ _).trans hY)
+  have h2 := (le_max_right _ _).trans hY
+  refine ⟨Y, hR, ?_⟩
+  intro x hx
+  have hx0 : 0<x := by linarith only [h2.trans hx.1]
+  have h := interpolate_window (x:=x) (by linarith only [h2]) hx (by linarith only [hd])
+    hd1 H
+  calc
+    _ ≤ 241 * x ^ (1 / 2 + δ) := h
+    _ ≤ x ^ (κ - δ) * x ^ (1 / 2 + δ) :=
+      mul_le_mul_of_nonneg_right
+        (ht x ((le_max_right _ _).trans ((le_max_left _ _).trans (hY.trans hx.1))))
+        (rpow_nonneg hx0.le _)
+    _ = x ^ (1 / 2 + κ) := by rw [←rpow_add hx0]; congr 1; ring
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling
