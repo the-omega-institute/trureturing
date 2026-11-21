@@ -17,7 +17,8 @@ escape_witness: peel (a factor S - z with |z| < q maps only O(q^j) sequences to 
 proof_shape:
   shift: definition; consumers: every lemma below.
   shift_pow_apply, aeval_apply, aeval_X_sub_C_apply, aeval_geom, global_bound: bind-only helpers;
-    consumers: peel, rstep, dominant.
+    consumers: peel, rstep, dominant; aeval_apply and aeval_X_sub_C_apply are public, also
+    consumed by D5/S1/Recurrence/Algebraic/OEISA289916Asymptotics.
   peel, rstep: content; consumers: peel_prod, dominant.
   peel_prod: content (multiset induction over peel); consumer: dominant.
   dominant: content; consumers: given_L, result.

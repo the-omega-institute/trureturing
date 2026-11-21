@@ -1,3 +1,44 @@
+/- GID: D5/S1/Recurrence/Algebraic/OEISA289916Asymptotics
+   generality: I
+   mirror-B: D5/B/S1/Recurrence/Algebraic/OEISA289916Asymptotics
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Lagrange]
+   utility: none
+   digest: The coefficients of Barker's generating function for A289916 satisfy v_n = D r^n + O(1) with D > 0, and v_(n+1)/v_n tends to r. -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#355)
+escape_witness: geom_decomp (a sequence annihilated by a complex polynomial with simple roots is a
+  combination of the geometric sequences of its roots, via the Lagrange basis summing to one and
+  each basis factor times X - z being a multiple of the nodal polynomial), charPoly_roots (the
+  recurrence polynomial (X^2 - X + 1)(X^4 - X^3 - X^2 - X + 1) has exactly the six distinct roots
+  r, β - r, t/2 ± i s and 1/2 ± i √3/2), roots6_norm (all roots but r have modulus at most one)
+  and result (bounded error, positivity of D from strict increase, and the ratio limit).
+proof_shape:
+  charPoly, tt, ss, roots6: definitions; consumers: the lemmas below.
+  charPoly_natDegree: bind-only helper; consumers: charPoly_ne_zero, aeval_charPoly,
+    charPoly_roots.
+  charPoly_ne_zero, aeval_charPoly, charPoly_eval, bounds, ss_sq, ss_pos: bind-only helpers;
+    consumers: roots6_isRoot, roots6_nodup, roots6_norm, charPoly_roots, result.
+  rec_of_gf: bind-only helper (coefficient nine onward of the generating-function identity);
+    consumer: result.
+  geom_decomp, roots6_isRoot, roots6_nodup, charPoly_roots, roots6_norm: content; consumer:
+    result.
+  result: content.
+Direct frozen dependencies (module statement_id):
+  D5/S1/Recurrence/Algebraic/OEISA289916StrictIncrease (den, num, result),
+    sha256:2e7867b3466a0100efb3f27b19466603da2c732435e8ead3aeb9be99e7886c0b;
+  D5/S1/Recurrence/Asymptotic/DominantRootForcing (shift, aeval_apply, aeval_X_sub_C_apply; the
+    last two made public here for reuse);
+  D5/S1/Recurrence/OEISA400645 (squaredLimit, r_quad, r_bounds);
+  D5/S0/Tower/NonPisotFrontier/BetaThirteen (betaThirteen, betaThirteen_quadratic,
+    two_lt_betaThirteen, sqrt_thirteen_bounds),
+    sha256:cc19b57aaf3e1c818ccd8e593f82bbb5cfe0d926845fc6592e52fd2240bd66ab.
+Search record (§3.1): pinned Mathlib has LinearRecurrence (homogeneous solution space and
+  geometric solutions) but no decomposition of solutions into geometric sequences; the Lagrange
+  basis lemmas are reused. D5 has the strict increase of these coefficients but no asymptotic.
+-/
+
 import D5.S1.Recurrence.Algebraic.OEISA289916StrictIncrease
 import D5.S1.Recurrence.Asymptotic.DominantRootForcing
 import D5.S1.Recurrence.OEISA400645
@@ -6,6 +47,15 @@ import Mathlib.LinearAlgebra.Lagrange
 set_option autoImplicit false
 
 noncomputable section
+
+/-! # Asymptotics of Barker's generating function for A289916
+
+The coefficients `v n` of `(1 + z)²(1 - z + z² - z³ + z⁴ - z⁵ + z⁶)/((1 - z + z²)Q(z))`,
+`Q(z) = z⁴ - z³ - z² - z + 1`, satisfy `v n = D r^n + O(1)` with `D > 0`, where `r` is the largest
+real root of `Q`, and `v (n + 1) / v n → r`. The recurrence polynomial has six simple roots: `r`,
+`1/r`, two on the unit circle from `Q`, and the primitive sixth roots of unity. Every solution is
+a combination of their geometric sequences, and all of them but `r^n` stay bounded.
+-/
 
 namespace D5.S1.Recurrence.Algebraic.OEISA289916Asymptotics
 
