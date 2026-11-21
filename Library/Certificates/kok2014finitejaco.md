@@ -84,8 +84,13 @@ maximum degree n in the first case and n-1 in the second.
 ## Maximum sets
 
 Lemma 2.2 (Conjectured) on printed page 4 asserts that b_(n-1)<b_n<b_(n+1)
-implies that v_(b_n) is the unique Jaconian vertex of J_n(1). The repository
-proves this for n at least two and shows that the converse, which the source
-does not assert, fails at n=5. It also proves the complete description of the
-maximum set for n at least two: the label interval from Delta_n to R_t with
-t=n-Delta_n, of one, two or three vertices, with exact singleton criteria.
+implies that v_(b_n) is the unique Jaconian vertex of J_n(1), and the
+open-problem list on printed page 11 asks to prove it. The repository proves
+this implication for every n; the converse, which the source does not assert,
+fails at n=5, where J_5={v_3} although b_4=b_5=3. It also proves the complete
+description of the maximum set for n at least two: the label interval from
+Delta_n to R_t with t=n-Delta_n, of one, two or three vertices, with exact
+singleton criteria. The request attributes that description to Patel's
+solution posted on MathDB; MathDB refuses automated fetches, and those answers
+were not inspected, so they may already settle Lemma 2.2 and no priority is
+claimed.

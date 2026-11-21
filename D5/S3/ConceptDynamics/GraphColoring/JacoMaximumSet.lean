@@ -2,11 +2,11 @@
    generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
    mirror-E: none(waiver:structural-proof)
-   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw]
+   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoDegreeShift]
    utility: none
    digest: The maximum set of a finite linear Jaco graph is the label interval [p, R_(n-p)] of one, two or three vertices. -/
 
-import D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw
+import D5.S3.ConceptDynamics.GraphColoring.JacoDegreeShift
 
 /-! Maximum-degree vertex sets of the finite linear Jaco graphs. -/
 
@@ -18,6 +18,13 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoMaximumSet
 /-
 proof_shape:
   jaconian: definition
+  mem_jaconian: content (consumer: set_eq)
+  g_mul, phi_eq, g_quad, g_bounds, g_fine: bind-only (consumers: the floor lemmas, result,
+    strict_out_singleton)
+  bo, frac_eq, P_eq, P_real, P_le, out_shift, P_succ: bind-only (consumers: right_t, out_p,
+    out_p1, set_eq, result, strict_out_singleton)
+  not_int, frac_ne: content (consumers: regions, result)
+  right_t, out_p, out_p1, set_eq, card_eq, regions: content (consumer: result)
   result: content
   strict_out_singleton: content
 escape_witness: the degree formula min(i, n - b_i) and the Beatty threshold turn the
@@ -404,10 +411,9 @@ theorem result :
         omega
   · intro n hn hsing
     have hA := (single n hn).mp hsing
-    obtain ⟨r1, r2, r3, r4, r5, r6⟩ := (regions n).1 hA
+    obtain ⟨r1, r2, r3, -, r5, r6⟩ := (regions n).1 hA
     have hP := P_eq n
     have hbP1 := out_p1 n
-    have hb0 := out_shift n 0
     have hPs := P_succ n
     have hxe := frac_eq n
     set F := ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹⌋ with hF
@@ -416,11 +422,8 @@ theorem result :
         ⌊frac n + Real.goldenRatio⁻¹⌋ + F := by
       rw [hy, show frac n + (F : ℝ) + Real.goldenRatio⁻¹ =
         frac n + Real.goldenRatio⁻¹ + (F : ℝ) by ring, Int.floor_add_intCast]
-    rw [show ((0 : ℕ) : ℝ) - 1 = -1 by norm_num, Nat.add_zero] at hb0
-    have hminus : ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹ + -1 * Real.goldenRatio⁻¹⌋ =
-        ⌊frac n - Real.goldenRatio⁻¹⌋ + F := by
-      rw [hy, show frac n + (F : ℝ) + -1 * Real.goldenRatio⁻¹ =
-        frac n - Real.goldenRatio⁻¹ + (F : ℝ) by ring, Int.floor_add_intCast]
+    have hbn : beattyOut n = (jaco n).maxDegree :=
+      ((JacoDegreeShift.result n).2.1.mpr (by linarith [g_bounds.1])).symm
     have hR1 := endpoint_eq_beatty ((jaco n).maxDegree + 1)
     have hPeq : (jaco (n + 1)).maxDegree = (jaco n).maxDegree := by omega
     refine ⟨by omega, by omega, ?_, ?_⟩
@@ -460,65 +463,53 @@ private theorem g_fine : (61 : ℝ) / 100 < Real.goldenRatio⁻¹ ∧ Real.golde
   constructor <;> nlinarith
 
 /-- Strictly increasing outdegrees around `n` force the singleton maximum set
-`{b_n}`; the converse fails at order five. -/
-theorem strict_out_singleton :
-    (∀ n : ℕ, 2 ≤ n → beattyOut (n - 1) < beattyOut n → beattyOut n < beattyOut (n + 1) →
-      jaconian n = {beattyOut n}) ∧
-    jaconian 5 = {3} ∧ beattyOut 4 = beattyOut 5 := by
+`{b_n}`. -/
+theorem strict_out_singleton (n : ℕ) (h1 : beattyOut (n - 1) < beattyOut n)
+    (h2 : beattyOut n < beattyOut (n + 1)) : jaconian n = {beattyOut n} := by
   obtain ⟨-, -, hsing, -⟩ := result
   obtain ⟨hg61, hg58⟩ := g_fine
-  constructor
-  · intro n hn h1 h2
-    have hP := P_eq n
-    have hxe := frac_eq n
-    have hx0 : 0 ≤ frac n := Int.fract_nonneg _
-    have hb0 := out_shift n 0
-    have hb1 := out_shift n 1
-    have hbm : (beattyOut (n - 1) : ℤ) = ⌊(n : ℝ) * Real.goldenRatio⁻¹⌋ := by
-      rw [bo]; congr 1; push_cast [show 1 ≤ n by omega]; ring
-    set F := ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹⌋ with hF
-    rw [show ((0 : ℕ) : ℝ) - 1 = -1 by norm_num, Nat.add_zero] at hb0
-    rw [show ((1 : ℕ) : ℝ) - 1 = 0 by norm_num, zero_mul, add_zero] at hb1
-    have e0 : ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹ + -1 * Real.goldenRatio⁻¹⌋ =
-        ⌊frac n - Real.goldenRatio⁻¹⌋ + F := by
-      rw [show ((n : ℝ) + 2) * Real.goldenRatio⁻¹ + -1 * Real.goldenRatio⁻¹ =
-        frac n - Real.goldenRatio⁻¹ + (F : ℝ) by linarith, Int.floor_add_intCast]
-    have em : ⌊(n : ℝ) * Real.goldenRatio⁻¹⌋ = ⌊frac n - 2 * Real.goldenRatio⁻¹⌋ + F := by
-      rw [show (n : ℝ) * Real.goldenRatio⁻¹ =
-        frac n - 2 * Real.goldenRatio⁻¹ + (F : ℝ) by linarith, Int.floor_add_intCast]
-    -- b_n < b_(n+1) gives x < 1/φ; then b_(n-1) < b_n gives x < 2/φ - 1 < 1/φ²
-    have hlt1 : frac n < Real.goldenRatio⁻¹ := by
-      by_contra hc
-      have : 0 ≤ ⌊frac n - Real.goldenRatio⁻¹⌋ := Int.floor_nonneg.mpr (by linarith)
+  by_cases hn : n ≤ 1
+  · exfalso
+    rcases (show n = 0 ∨ n = 1 by omega) with rfl | rfl
+    · simp at h1
+    · have b1 : (beattyOut 1 : ℤ) = 1 := by
+        rw [bo, Int.floor_eq_iff]; push_cast; constructor <;> linarith
+      have b2 : (beattyOut (1 + 1) : ℤ) = 1 := by
+        rw [bo, Int.floor_eq_iff]; push_cast; constructor <;> linarith
       omega
-    have hm1 : ⌊frac n - Real.goldenRatio⁻¹⌋ = -1 := by
-      rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
-    have hlt2 : frac n < 2 * Real.goldenRatio⁻¹ - 1 := by
-      by_contra hc
-      have : -1 ≤ ⌊frac n - 2 * Real.goldenRatio⁻¹⌋ := Int.le_floor.mpr (by push_cast; linarith)
-      omega
-    have hA : frac n < 1 - Real.goldenRatio⁻¹ := by linarith
-    have hbn : beattyOut n = (jaco n).maxDegree := by omega
-    rw [hbn]
-    exact ((hsing n hn).1).mpr hA
-  · have hP5 : (jaco 5).maxDegree = 3 := by
-      have h := P_eq 5
-      have : ⌊((5 : ℕ) + 2 : ℝ) * Real.goldenRatio⁻¹⌋ = 4 := by
-        rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
-      omega
-    have hA : frac 5 < 1 - Real.goldenRatio⁻¹ := by
-      rw [frac_eq]
-      have : ⌊((5 : ℕ) + 2 : ℝ) * Real.goldenRatio⁻¹⌋ = 4 := by
-        rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
-      rw [this]; push_cast; linarith
-    have h5 := ((hsing 5 (by norm_num)).1).mpr hA
-    rw [hP5] at h5
-    refine ⟨h5, ?_⟩
-    have b4 : (beattyOut 4 : ℤ) = 3 := by
-      rw [bo, Int.floor_eq_iff]; push_cast; constructor <;> linarith
-    have b5 : (beattyOut 5 : ℤ) = 3 := by
-      rw [bo, Int.floor_eq_iff]; push_cast; constructor <;> linarith
+  have hn : 2 ≤ n := by omega
+  have hP := P_eq n
+  have hxe := frac_eq n
+  have hx0 : 0 ≤ frac n := Int.fract_nonneg _
+  have hb0 := out_shift n 0
+  have hb1 := out_shift n 1
+  have hbm : (beattyOut (n - 1) : ℤ) = ⌊(n : ℝ) * Real.goldenRatio⁻¹⌋ := by
+    rw [bo]; congr 1; push_cast [show 1 ≤ n by omega]; ring
+  set F := ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹⌋ with hF
+  rw [show ((0 : ℕ) : ℝ) - 1 = -1 by norm_num, Nat.add_zero] at hb0
+  rw [show ((1 : ℕ) : ℝ) - 1 = 0 by norm_num, zero_mul, add_zero] at hb1
+  have e0 : ⌊((n : ℝ) + 2) * Real.goldenRatio⁻¹ + -1 * Real.goldenRatio⁻¹⌋ =
+      ⌊frac n - Real.goldenRatio⁻¹⌋ + F := by
+    rw [show ((n : ℝ) + 2) * Real.goldenRatio⁻¹ + -1 * Real.goldenRatio⁻¹ =
+      frac n - Real.goldenRatio⁻¹ + (F : ℝ) by linarith, Int.floor_add_intCast]
+  have em : ⌊(n : ℝ) * Real.goldenRatio⁻¹⌋ = ⌊frac n - 2 * Real.goldenRatio⁻¹⌋ + F := by
+    rw [show (n : ℝ) * Real.goldenRatio⁻¹ =
+      frac n - 2 * Real.goldenRatio⁻¹ + (F : ℝ) by linarith, Int.floor_add_intCast]
+  -- b_n < b_(n+1) gives x < 1/φ; then b_(n-1) < b_n gives x < 2/φ - 1 < 1/φ²
+  have hlt1 : frac n < Real.goldenRatio⁻¹ := by
+    by_contra hc
+    have : 0 ≤ ⌊frac n - Real.goldenRatio⁻¹⌋ := Int.floor_nonneg.mpr (by linarith)
     omega
+  have hm1 : ⌊frac n - Real.goldenRatio⁻¹⌋ = -1 := by
+    rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
+  have hlt2 : frac n < 2 * Real.goldenRatio⁻¹ - 1 := by
+    by_contra hc
+    have : -1 ≤ ⌊frac n - 2 * Real.goldenRatio⁻¹⌋ := Int.le_floor.mpr (by push_cast; linarith)
+    omega
+  have hA : frac n < 1 - Real.goldenRatio⁻¹ := by linarith
+  have hbn : beattyOut n = (jaco n).maxDegree := ((JacoDegreeShift.result n).2.1.mpr hlt1).symm
+  rw [hbn]
+  exact ((hsing n hn).1).mpr hA
 
 #print axioms strict_out_singleton
 
