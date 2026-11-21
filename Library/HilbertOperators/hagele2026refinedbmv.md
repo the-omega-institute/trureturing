@@ -20,6 +20,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
+  - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
 license: citation-only
 triage: anchor
 ---
@@ -125,6 +126,16 @@ Ordinary Cauchy–Schwarz on the two repeated-root defects and their
 geometric corrections transfers the inequality to the defect. This
 proves the corner inequality used in the interval proof. Equality
 occurs exactly when the first two roots coincide or the degree is zero.
+
+The uniform three-spectrum reduction uses the cyclic three-gap expansion
+of Proposition 2 and the trace pairing from Lemma 5. The complete
+homogeneous sum is a second divided difference of a monomial. Its
+explicit formulas at distinct and repeated nodes clear the denominators
+in a quartic scalar discriminant. Two log gaps then describe the strict
+positive-root case. Continuity extends a nonnegative discriminant to
+ties and zero roots. For each first degree, positivity of this scalar
+polynomial implies the product and exponential bounds in arbitrary
+finite dimension when the first matrix has at most three spectral values.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

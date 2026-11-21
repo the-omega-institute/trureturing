@@ -4,13 +4,25 @@
 
 OriginalGaussianSewnAnalytic
 
+**Lemma 1.1 (Holomorphy of a fixed affine coefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite decidable index type, differentiable matrix and mean entries on a complex set give a differentiable affine coefficient for every fixed occupation on that set.
+
 The finite function is exp(-(rank/2)*finiteLog) times exp(effectiveConstant) times the ordinary affine coefficient of the actual effective kernel and mean. The limiting function uses gaussianLogDet, explicitEffectiveKernel, the literal left and right sourceExternal means, and the full chargeNorm*sourceConstant. The source constant retains its inverse frequency denominator. The ordinary coefficient of order m is iteratedDeriv m at zero divided by m factorial.
 
 Normalized finite sections have norm below one throughout the unit disk. Their squared resolvent is holomorphic. The proved ordered inverse similarities express the raw inverses through this resolvent without requiring raw contraction on that disk. Finite matrix expressions and the finite polynomial formula for the affine coefficient give finite sewn holomorphy. The original finite logarithm holomorphy supplier is used directly.
 
 The accepted uniform kernel, mean, constant and logarithm limits combine in a finite tuple. On a compact subdisk, uniform convergence bounds the eventual finite tuples inside a common compact ball. The continuous exponential and affine coefficient map is uniformly continuous on that ball, so composition gives uniform convergence of the actual sewn functions. Locally uniform derivative convergence can then be iterated to every fixed order. This does not exchange an occupation series with external coefficients and does not identify the result with the original fixed-energy source sum.
 
-**Definition 1.1 (Literal limiting source means).**
+**Definition 1.2 (Literal limiting source means).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.explicitMean`
 
@@ -22,7 +34,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The left sign is -1+sourceExternal and the right sign is 1-sourceExternal.
 
-**Definition 1.2 (Actual finite sewn function).**
+**Definition 1.3 (Actual finite sewn function).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The cutoff is the original finite effective data and finite trace logarithm.
 
-**Definition 1.3 (Literal explicit limiting function).**
+**Definition 1.4 (Literal explicit limiting function).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.sewn`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The limiting constant is the full chargeNorm*sourceConstant, with no residual overall half.
 
-**Definition 1.4 (Ordinary scalar Taylor coefficient).**
+**Definition 1.5 (Ordinary scalar Taylor coefficient).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.coefficient`
 
@@ -58,7 +70,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The coefficient uses the complete factorial of its derivative order.
 
-**Theorem 1.5 (Finite sewn holomorphy).**
+**Theorem 1.6 (Finite sewn holomorphy).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn_differentiableOn`
 
@@ -70,7 +82,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 Every finite sewn function is holomorphic on the same open unit disk.
 
-**Theorem 1.6 (Uniform passage through the finite coefficient polynomial).**
+**Theorem 1.7 (Uniform passage through the finite coefficient polynomial).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn_tendstoUniformlyOn`
 
@@ -82,7 +94,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The actual sewn functions converge uniformly on every nonnegative closed subdisk of radius less than one.
 
-**Theorem 1.7 (Locally uniform literal cutoff limit).**
+**Theorem 1.8 (Locally uniform literal cutoff limit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn_tendstoLocallyUniformlyOn`
 
@@ -94,7 +106,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 Closed subdisks provide the neighbourhoods required for locally uniform convergence.
 
-**Theorem 1.8 (Holomorphy of the literal limit).**
+**Theorem 1.9 (Holomorphy of the literal limit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.sewn_differentiableOn`
 
@@ -106,7 +118,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.
 
 The locally uniform limit of the proved finite holomorphic functions is holomorphic.
 
-**Theorem 1.9 (Every fixed ordinary coefficient passes to the limit).**
+**Theorem 1.10 (Every fixed ordinary coefficient passes to the limit).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn_coefficient_tendsto`
 
@@ -120,6 +132,7 @@ Iterate the upstream locally uniform derivative theorem, evaluate at zero, and d
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.explicitMean`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianSewnAnalytic.finiteSewn`
