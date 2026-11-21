@@ -10,6 +10,10 @@ $$\forall n: \operatorname{\mathit{Nat}}, ((31 \le n) \implies ((\operatorname{\
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229635` (proved) by `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229635","declaration_gid":"D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635.result","resolution_kind":"proved"} -->
+
 *Citation.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229635: width-six arrays with two monochromatic bonds*. URL: <https://oeis.org/A229635/internal>.
 
 *Commentary.*
