@@ -9,6 +9,7 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.PetzStripFiniteSeries
 import D5.S3.Quantum.GNSMatrix
+import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 
 /-!
@@ -26,7 +27,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Filter Matrix MeasureTheory Set
-open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.Frobenius
+open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.Frobenius Topology
 
 namespace PetzLogisticEvaluation
 
@@ -90,7 +91,7 @@ private theorem gamma_norm_sq (ω : ℝ) :
   have harg : (Real.pi : ℂ) * z = ((ω / 2 : ℝ) : ℂ) * Complex.I := by
     dsimp only [z, gammaArgument]
     push_cast
-    field_simp
+    field_simp [hπ]
   have hs : (Real.sinh (ω / 2) : ℂ) ≠ 0 := by
     exact_mod_cast Real.sinh_ne_zero.mpr (div_ne_zero hω (by norm_num))
   rw [if_neg hω]
@@ -134,7 +135,7 @@ private theorem correlation_posSemidef (ω : ι → ℝ) : (correlation ω).PosS
     apply integral_congr_ae
     exact Filter.Eventually.of_forall fun x => by
       rw [hentry j i, hentry i j]
-      simp only [Complex.star_def, map_mul, Complex.conj_ofReal, involutive_starRingEnd]
+      simp only [Complex.star_def, map_mul, Complex.conj_ofReal, starRingEnd_self_apply]
       ring
   · let f (i j : ι) (x : ℝ) := star (a i) * a j * logExponentialMode (ω j - ω i) x
     have hi (i j : ι) : IntegrableOn (f i j) (Ioi 0) :=
@@ -337,9 +338,87 @@ theorem weighted_evaluation (ω : ι → ℝ) (a : ι → ℂ) :
   rw [hSum, Fintype.card_coe] at h
   exact h
 
+private theorem tendsto_integral_weighted_mode :
+    Tendsto (fun ω : ℝ => ∫ t : ℝ, (petzWeight t : ℂ) * mode ω t)
+      (cocompact ℝ) (𝓝 0) := by
+  have h := Real.tendsto_integral_exp_smul_cocompact (fun t => (petzWeight t : ℂ))
+  have hπ : 2 * Real.pi ≠ 0 := by positivity
+  have hscale : Tendsto (fun ω : ℝ => -(1 / (2 * Real.pi)) * ω)
+      (cocompact ℝ) (cocompact ℝ) := by
+    have hneg : -(1 / (2 * Real.pi)) < 0 := by positivity
+    rw [cocompact_eq_atBot_atTop]
+    exact tendsto_sup.mpr
+      ⟨((tendsto_const_mul_atTop_of_neg hneg).2 tendsto_id).mono_right le_sup_right,
+       ((tendsto_const_mul_atBot_of_neg hneg).2 tendsto_id).mono_right le_sup_left⟩
+  convert h.comp hscale using 1
+  funext ω
+  apply integral_congr_ae
+  exact Eventually.of_forall fun t => by
+    have harg : 2 * Real.pi * -(t * (-(1 / (2 * Real.pi)) * ω)) = ω * t := by
+      field_simp
+      <;> ring
+    simp only [Function.comp_apply, Circle.smul_def, Real.fourierChar_apply, mode,
+      smul_eq_mul, harg]
+    exact mul_comm _ _
+
+/-- For a nonempty frequency index, every bound valid for all injective
+frequency lists has coefficient at least the index cardinality. -/
+theorem card_le_of_uniform_bound {m : ℕ} (hm : 0 < m) (K : ℝ)
+    (hK : ∀ (ω : Fin m → ℝ), Function.Injective ω → ∀ a : Fin m → ℂ,
+      ‖exponentialSum ω a 0‖ ^ 2 ≤ K *
+        (∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2)) :
+    (m : ℝ) ≤ K := by
+  classical
+  let ω (R : ℝ) (i : Fin m) : ℝ := (i.val : ℝ) * R
+  let E (R : ℝ) := ∫ t : ℝ, petzWeight t * ‖exponentialSum (ω R) (fun _ => 1) (t : ℂ)‖ ^ 2
+  have hPair (R : ℝ) (i j : Fin m) :
+      (‖correlation (ω R) i j‖ ^ 2 : ℂ) =
+        ∫ t : ℝ, (petzWeight t : ℂ) * mode (((j.val : ℝ) - i.val) * R) t := by
+    rw [show ((j.val : ℝ) - i.val) * R = ω R j - ω R i by dsimp [ω]; ring]
+    exact ((exact_gram_factorization (ω R)).2.2 i j).symm
+  have hLimit (i j : Fin m) :
+      Tendsto (fun R : ℝ => (‖correlation (ω R) i j‖ ^ 2 : ℂ)) atTop
+        (𝓝 (if i = j then 1 else 0)) := by
+    by_cases hij : i = j
+    · subst j
+      simpa only [if_pos rfl, correlation_diag, norm_one, one_pow, Complex.ofReal_one] using
+        (tendsto_const_nhds : Tendsto (fun _ : ℝ => (1 : ℂ)) atTop (𝓝 1))
+    · have hn : (j.val : ℝ) - i.val ≠ 0 := by
+        intro he
+        have hval : j.val = i.val := by exact_mod_cast sub_eq_zero.mp he
+        exact hij (Fin.ext hval.symm)
+      have hscale : Tendsto (fun R : ℝ => ((j.val : ℝ) - i.val) * R) atTop (cocompact ℝ) := by
+        rcases lt_or_gt_of_ne hn with hneg | hpos
+        · exact ((tendsto_const_mul_atBot_of_neg hneg).2 tendsto_id).mono_right atBot_le_cocompact
+        · exact ((tendsto_const_mul_atTop_of_pos hpos).2 tendsto_id).mono_right atTop_le_cocompact
+      simp only [if_neg hij, hPair]
+      exact tendsto_integral_weighted_mode.comp hscale
+  have hSum := tendsto_finsetSum Finset.univ (fun i _ =>
+    tendsto_finsetSum Finset.univ (fun j _ => hLimit i j))
+  have hEnergy : Tendsto E atTop (𝓝 (m : ℝ)) := by
+    have he (R : ℝ) : (E R : ℂ) = ∑ i, ∑ j, (‖correlation (ω R) i j‖ ^ 2 : ℂ) := by
+      simpa only [E, star_one, one_mul] using
+        (weighted_energy_eq_gram (ω R) (fun _ => 1)).2
+    have hComplex : Tendsto (fun R => (E R : ℂ)) atTop (𝓝 (m : ℂ)) := by
+      simpa [he] using hSum
+    simpa only [Function.comp_def, Complex.ofReal_re, Complex.natCast_re] using
+      (Complex.continuous_re.tendsto (m : ℂ)).comp hComplex
+  have hev : ∀ᶠ R : ℝ in atTop, (m : ℝ) ^ 2 ≤ K * E R := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with R hR
+    have hinj : Function.Injective (ω R) := by
+      intro i j h
+      have h' : (i.val : ℝ) = j.val := mul_right_cancel₀ hR.ne' h
+      exact Fin.ext (by exact_mod_cast h')
+    have hEval := hK (ω R) hinj (fun _ => 1)
+    simpa [E, exponentialSum, Complex.norm_natCast] using hEval
+  have hlim : (m : ℝ) ^ 2 ≤ K * (m : ℝ) :=
+    le_of_tendsto (tendsto_const_nhds.mul hEnergy) hev
+  exact le_of_mul_le_mul_right (by simpa [pow_two] using hlim) (by exact_mod_cast hm)
+
 end Gram
 
 #print axioms exact_gram_factorization
 #print axioms weighted_evaluation
+#print axioms card_le_of_uniform_bound
 
 end PetzLogisticEvaluation
