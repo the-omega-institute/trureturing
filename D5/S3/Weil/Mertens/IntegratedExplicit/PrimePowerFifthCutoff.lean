@@ -62,8 +62,40 @@ private theorem psi_root_eq_sum_multiples {t : ℝ} (ht : 1 ≤ t) {d N : ℕ} (
     congr 2
     field_simp
 
-private def coefficient (k : ℕ) : ℝ :=
+def coefficient (k : ℕ) : ℝ :=
   1 - (if 2 ∣ k then 1 else 0) - (if 3 ∣ k then 1 else 0) - (if 5 ∣ k then 1 else 0)
+
+/-- The square, cube and fifth-root cutoffs combine on one finite exponent support. -/
+theorem psi_sub_roots_eq_sum {t : ℝ} (ht : 2 ≤ t) {N : ℕ}
+    (hN : ⌊log t / log 2⌋₊ ≤ N) :
+    psi t - theta t - psi (t ^ (1 / 2 : ℝ)) - psi (t ^ (1 / 3 : ℝ)) -
+      psi (t ^ (1 / 5 : ℝ)) =
+      ∑ k ∈ Icc 6 N, coefficient k * theta (t ^ (1 / (k : ℝ))) := by
+  have ht1 : 1 ≤ t := by linarith
+  let f : ℕ → ℝ := fun k => coefficient k * theta (t ^ (1 / (k : ℝ)))
+  have hskip : ∑ k ∈ Icc 6 N, f k = ∑ k ∈ Icc 2 N, f k := by
+    apply sum_subset
+    · intro k hk
+      simp only [mem_Icc] at hk ⊢
+      omega
+    · intro k hk hk'
+      simp only [mem_Icc] at hk hk'
+      have hk2 := hk.1
+      have hk6 : k < 6 := by omega
+      interval_cases k <;> norm_num [f, coefficient]
+  rw [hskip]
+  rw [psi_eq_theta_add_sum_theta' ht hN, add_sub_cancel_left]
+  rw [show psi (t ^ (1 / 2 : ℝ)) = _ from
+      psi_root_eq_sum_multiples ht1 (d := 2) (by decide) hN,
+    show psi (t ^ (1 / 3 : ℝ)) = _ from
+      psi_root_eq_sum_multiples ht1 (d := 3) (by decide) hN,
+    show psi (t ^ (1 / 5 : ℝ)) = _ from
+      psi_root_eq_sum_multiples ht1 (d := 5) (by decide) hN]
+  simp only [sum_filter, ← sum_sub_distrib]
+  apply sum_congr rfl
+  intro k _
+  by_cases h2 : 2 ∣ k <;> by_cases h3 : 3 ∣ k <;> by_cases h5 : 5 ∣ k <;>
+    simp [f, coefficient, h2, h3, h5] <;> ring
 
 /-- After adding back the sixth-root term, only exponents at least seven contribute. -/
 theorem abs_psi_sub_roots_add_theta_sixth_le {t : ℝ} (ht : 2 ≤ t) :
@@ -78,37 +110,13 @@ theorem abs_psi_sub_roots_add_theta_sixth_le {t : ℝ} (ht : 2 ≤ t) :
   let f : ℕ → ℝ := fun k => coefficient k * theta (t ^ (1 / (k : ℝ)))
   have hN : M ≤ N := le_max_left _ _
   have hN6 : 6 ≤ N := le_max_right _ _
-  have hsum :
-      psi t - theta t - psi (t ^ (1 / 2 : ℝ)) - psi (t ^ (1 / 3 : ℝ)) -
-        psi (t ^ (1 / 5 : ℝ)) = ∑ k ∈ Icc 2 N, f k := by
-    rw [psi_eq_theta_add_sum_theta' ht hN, add_sub_cancel_left]
-    rw [show psi (t ^ (1 / 2 : ℝ)) = _ from
-        psi_root_eq_sum_multiples ht1 (d := 2) (by decide) hN,
-      show psi (t ^ (1 / 3 : ℝ)) = _ from
-        psi_root_eq_sum_multiples ht1 (d := 3) (by decide) hN,
-      show psi (t ^ (1 / 5 : ℝ)) = _ from
-        psi_root_eq_sum_multiples ht1 (d := 5) (by decide) hN]
-    simp only [sum_filter, ← sum_sub_distrib]
-    apply sum_congr rfl
-    intro k _
-    by_cases h2 : 2 ∣ k <;> by_cases h3 : 3 ∣ k <;> by_cases h5 : 5 ∣ k <;>
-      simp [f, coefficient, h2, h3, h5] <;> ring
-  have hskip : ∑ k ∈ Icc 6 N, f k = ∑ k ∈ Icc 2 N, f k := by
-    apply sum_subset
-    · intro k hk
-      simp only [mem_Icc] at hk ⊢
-      omega
-    · intro k hk hk'
-      simp only [mem_Icc] at hk hk'
-      have hk2 := hk.1
-      have hk6 : k < 6 := by omega
-      interval_cases k <;> norm_num [f, coefficient]
+  have hsum : _ = ∑ k ∈ Icc 6 N, f k := psi_sub_roots_eq_sum ht hN
   have hsplit : Icc 6 N = insert 6 (Icc 7 N) := by
     ext k
     simp only [mem_Icc, mem_insert]
     omega
   have hsix : f 6 = -theta (t ^ (1 / 6 : ℝ)) := by norm_num [f, coefficient]
-  rw [hsum, ← hskip, hsplit, sum_insert (by simp), hsix]
+  rw [hsum, hsplit, sum_insert (by simp), hsix]
   rw [neg_add_eq_sub, sub_add_cancel]
   have hcard : (Icc 7 N).card ≤ M := by
     rw [Nat.card_Icc]

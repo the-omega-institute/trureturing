@@ -47,13 +47,13 @@ lemma mass_nonneg (hRH : RiemannHypothesis) : 0 ≤ firstLiMass := by
   rw [← (coeff_norm_hasSum hRH).tsum_eq]
   exact tsum_nonneg fun _ => norm_nonneg _
 
-private def qError (x : ℝ) : ℝ := Q x + (zeroTail (Real.log x)).re
+def qError (x : ℝ) : ℝ := Q x + (zeroTail (Real.log x)).re
 
 lemma q_continuous : ContinuousOn Q (Ici 2) :=
   chebyshev_error_kernel_integrable.continuousOn_Ici_primitive_Ioi.mono
     (Ici_subset_Ici.mpr (by norm_num))
 
-private lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) (Ici 2) := by
+lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) (Ici 2) := by
   simp_rw [zeroTail_eq]
   have hlog : ContinuousOn Real.log (Ici (2 : ℝ)) :=
     Real.continuousOn_log.mono (fun x hx => by simpa using (show x ≠ 0 by linarith [mem_Ici.mp hx]))
@@ -61,7 +61,7 @@ private lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) 
     ((((Complex.continuous_ofReal.comp (Real.continuous_exp.comp continuous_neg)).mul
       actualH_continuous).comp_continuousOn hlog))
 
-private lemma qError_bound {x : ℝ} (hx : 2 ≤ x) : |qError x| ≤ C * x ^ (-1 : ℝ) := by
+lemma qError_bound {x : ℝ} (hx : 2 ≤ x) : |qError x| ≤ C * x ^ (-1 : ℝ) := by
   have hx0 : 0 < x := by linarith
   have hh := (abs_G_sub_normalized_actualH_le (Real.log_nonneg (by linarith : 1 ≤ x))).le
   rw [G, Real.exp_log hx0, ← mul_sub, abs_mul, abs_of_nonneg (Real.exp_nonneg _)] at hh
