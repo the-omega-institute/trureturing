@@ -2,12 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoMcPherson
    mirror-E: none(waiver:structural-proof)
-   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree, lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount]
+   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree, lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoTripleMaximizers]
    utility: none
    digest: The McPherson number of the finite Jaco graph J_n(1) is b_n - 1, so it is nonrepetitive exactly when b_n is. -/
 
 import D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree
-import D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount
+import D5.S3.ConceptDynamics.GraphColoring.JacoTripleMaximizers
 
 /-! The McPherson number of the finite linear Jaco graphs. -/
 
@@ -19,14 +19,13 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoMcPherson
 open D5.S0.Certificates.JacoExponentialDominationRefutation
 open D5.S3.ConceptDynamics.GraphColoring.JacoDomPathDiameterRefutation
 open D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty
-open D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount (out_step)
+open D5.S3.ConceptDynamics.GraphColoring.JacoMaximumDegree (out_mono)
 
 /-
 proof_shape:
   explode, run, mcpherson: definition
   run_adj: content (consumer: run_eq_top_iff)
   run_eq_top_iff: content (consumers: mcpherson_jaco, result)
-  bo_mono: bind-only (consumer: clique_bound)
   clique_bound: content (consumer: mcpherson_jaco)
   mcpherson_jaco: content (consumer: result)
   result: content
@@ -34,8 +33,10 @@ direct frozen dependencies:
   D5/S3/ConceptDynamics/GraphColoring/JacoEndpointBeatty.beatty_threshold, beatty_bounds,
     endpoint_eq_beatty (statement_id
     sha256:15f9f8627a73d9d28232ecd5a1deb1d41054ab6114f152475628df4fd9def028)
-  D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.out_step (statement_id
-    sha256:74ed8276649f9d55a661f745fd37f2ae64e7da5a7f055108f907540926bcb3b4)
+  D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.out_mono (made public in this delivery;
+    the module is re-pinned through the canonical writer)
+  D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers.bo_zero (statement_id
+    sha256:9eb0c30e4bc66cb8afb1eb6f9c71517c9be6c29aae118e2ab59e200b54844d07)
   D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.jaco (statement_id
     sha256:4b9772e09b0b920432abf047ae184610f43166f07e49ae9c6e49b79e6cf2092a)
 escape_witness: run_eq_top_iff (explosions complete the graph exactly when the non-exploding
@@ -55,8 +56,8 @@ def explode (H : SimpleGraph V) (w : V) : SimpleGraph V :=
 /-- The McPherson recursion: the vertices of `L` explode in order. -/
 def run (G : SimpleGraph V) (L : List V) : SimpleGraph V := L.foldl explode G
 
-/-- The McPherson number `Υ(G)`: the least number of explosions after which the underlying
-graph is complete. -/
+/-- The McPherson number `Υ(G)` of a finite graph: the least number of explosions after which the
+underlying graph is complete. -/
 noncomputable def mcpherson (G : SimpleGraph V) : ℕ :=
   sInf {ℓ | ∃ L : List V, L.length = ℓ ∧ run G L = ⊤}
 
@@ -109,11 +110,6 @@ theorem run_eq_top_iff (G : SimpleGraph V) (L : List V) :
       · exact Or.inr ⟨hab, Or.inr hb⟩
       exact Or.inl (h ha hb hab)
 
-private theorem bo_mono {a b : ℕ} (h : a ≤ b) : beattyOut a ≤ beattyOut b := by
-  have hm : Monotone beattyOut := monotone_nat_of_le_succ fun k => by
-    rcases out_step k with h | h <;> omega
-  exact hm h
-
 /-- Every clique of `J_n(1)` has at most `n + 1 - b_n` vertices. -/
 private theorem clique_bound (n : ℕ) (hn : 1 ≤ n) (K : Finset (Vertex n))
     (hK : (jaco n).IsClique (K : Set (Vertex n))) : K.card + beattyOut n ≤ n + 1 := by
@@ -151,7 +147,7 @@ private theorem clique_bound (n : ℕ) (hn : 1 ≤ n) (K : Finset (Vertex n))
     omega
   · -- m < b_n, so b_m ≤ b_(b_n - 1) ≤ n - b_n
     have hthr := (beatty_threshold n (beattyOut n - 1)).not.mpr (by omega)
-    have hmono : beattyOut m ≤ beattyOut (beattyOut n - 1) := bo_mono (by omega)
+    have hmono : beattyOut m ≤ beattyOut (beattyOut n - 1) := out_mono (by omega)
     have := min_le_right n (m + beattyOut m)
     omega
 
@@ -159,10 +155,7 @@ private theorem clique_bound (n : ℕ) (hn : 1 ≤ n) (K : Finset (Vertex n))
 private theorem mcpherson_jaco (n : ℕ) : mcpherson (jaco n) = beattyOut n - 1 := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · -- `J_0` has no vertices: the empty explosion list completes it
-    have hb0 : beattyOut 0 = 0 := by
-      have := (beatty_threshold 0 0).mp (by omega)
-      omega
-    rw [hb0]
+    rw [JacoTripleMaximizers.bo_zero]
     apply Nat.eq_zero_of_le_zero
     apply Nat.sInf_le
     refine ⟨[], rfl, ?_⟩
@@ -223,12 +216,14 @@ private theorem mcpherson_jaco (n : ℕ) : mcpherson (jaco n) = beattyOut n - 1 
     have := List.toFinset_card_le M
     omega
 
+universe u
+
 /-- The McPherson number of `J_n(1)` is `Υ_n = b_n - 1` with `b_n = ⌊(n + 1)/φ⌋`, for every `n`;
 in particular `Υ_n` is nonrepetitive (`Υ_(n-1) < Υ_n < Υ_(n+1)`) exactly when `b_n` is, for every
 `n ≥ 2`. The explosions of a list complete a graph exactly when the non-exploding vertices form a
 clique. -/
 theorem result :
-    (∀ (V : Type) (G : SimpleGraph V) (L : List V), run G L = ⊤ ↔ G.IsClique {v | v ∉ L}) ∧
+    (∀ (V : Type u) (G : SimpleGraph V) (L : List V), run G L = ⊤ ↔ G.IsClique {v | v ∉ L}) ∧
     (∀ n, mcpherson (jaco n) = beattyOut n - 1) ∧
     (∀ n, 2 ≤ n →
       ((mcpherson (jaco (n - 1)) < mcpherson (jaco n) ∧
