@@ -32,4 +32,5 @@ For x ≥ 2 and m ≥ 2, subtract the complete Chebyshev tail and the sum of the
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/MobiusCutoff.chebyshev_mobius_truncation`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/MobiusCutoff.integrated_mobius_truncation`
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/FifthExponents](FifthExponents.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHFifthWindow](RHFifthWindow.md)

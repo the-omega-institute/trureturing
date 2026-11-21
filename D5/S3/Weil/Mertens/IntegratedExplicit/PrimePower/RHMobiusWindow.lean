@@ -170,15 +170,13 @@ private theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
   have hconst : IntegrableOn (fun u => Real.exp (-r * u) * l) (Ioi v) :=
     (integrableOn_exp_mul_Ioi (a := -r) (by linarith) v).mul_const l
   have htriv : IntegrableOn (fun u => Real.exp (-r * u) * trivialT u) (Ioi v) := by
-    apply ((integrableOn_exp_mul_Ioi (a := -r) (by linarith) v).mul_const
-      (1 - Real.log 2)).mono'
-    · exact ((by fun_prop : Continuous (fun u : ℝ => Real.exp (-r * u))).continuousOn.mul
-        (trivialT_continuousOn.mono (fun _ hu => hv.trans hu.le))).aestronglyMeasurable
-          measurableSet_Ioi
-    · filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
-      have hu₀ := hv.trans hu.le
-      rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (Real.exp_nonneg _) (trivialT_nonneg hu₀))]
-      exact mul_le_mul_of_nonneg_left (trivialT_le_mass hu₀) (Real.exp_nonneg _)
+    have h := (trivialT_laplace_integrable (s := (r : ℂ)) (by simpa using hr₀)).mono_set
+      (Ioi_subset_Ioi hv)
+    have hre := h.re
+    change IntegrableOn (fun u : ℝ =>
+      (Complex.exp (-(r : ℂ) * u) * (trivialT u : ℂ)).re) (Ioi v) at hre
+    simpa only [← Complex.ofReal_neg, ← Complex.ofReal_mul, ← Complex.ofReal_exp,
+      Complex.ofReal_re] using hre
   have hdiff : IntegrableOn (fun u => Real.exp (-r * u) * (trivialT u - l)) (Ioi v) := by
     simp_rw [mul_sub]
     exact htriv.sub hconst
