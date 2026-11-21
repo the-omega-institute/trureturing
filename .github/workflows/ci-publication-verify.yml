@@ -8,7 +8,7 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none]
+        options: [complete, partial, none, legacy]
         required: true
       checkpoint_run:
         description: Optional earlier checkpoint run for the same commit and cold mode
@@ -104,7 +104,7 @@ jobs:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
         run: |
           case "$SHARD_HANDOFF" in
-            complete) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
               [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
               [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
