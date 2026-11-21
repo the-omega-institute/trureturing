@@ -150,6 +150,10 @@ $$\begin{aligned}&\forall n \in \mathbb{N}, n\geq3 \implies\\&(\operatorname{aff
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezStabilizer.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/olairez-2026-dihedral-permutohedron-affine-symmetries` (proved) by `D5/S3/Combinatorics/Geometry/Permutohedra/OlairezStabilizer.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"olairez-2026-dihedral-permutohedron-affine-symmetries","declaration_gid":"D5/S3/Combinatorics/Geometry/Permutohedra/OlairezStabilizer.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Olairez (2026). *Triangulation, Volume, and Symmetries of a Dihedral Group Analogue of the Permutohedron*. DOI: [10.48550/arXiv.2610.28672](https://doi.org/10.48550/arXiv.2610.28672). URL: <https://arxiv.org/html/2610.28672v2#S6.Thmquestion2>.

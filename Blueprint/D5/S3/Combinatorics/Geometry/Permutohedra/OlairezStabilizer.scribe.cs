@@ -44,7 +44,10 @@ internal sealed class OlairezStabilizerDocument : IScribeDocumentDefinition
                     Paragraph(Text("The ambient coordinate space Vₙ is indexed by residues Zₙ, and Pₙ is the intrinsic source plane with inclusion ι into Vₙ. The hull Qₙ is in Vₙ, and Hₙ is its preimage in Pₙ. Write Aₙ for the group of real affine bijections of Pₙ that carry Hₙ onto itself. The ambient center is c and its point in Pₙ is C.")),
                     Paragraph(Text("Lₙ consists of the literal paper labels 1 through n. The bar on a label denotes its residue, so label n has residue zero. Rₐ and Fₐ are the intrinsic vertices, and r and f are the original residue-indexed families. The affine map φ for each permutation and sign is the image of that pair under the group equivalence above. The signs in the ambient action formulas act by their real scalars.")),
                     Paragraph(Text("The wrap vectors span the sum-zero space, and their only dependence has all coefficients equal. Their signed hull has exactly those signed vertices and has centroid zero. An affine preserver fixes the centroid and permutes the antipodal pairs. The unique dependence forces a common sign across the pairs. The cyclic-difference equivalence carries this action back to the original labels. The result concerns the intrinsic real affine group of the standard-basepoint orbit. The lattice and arbitrary-basepoint questions have separate hypotheses."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("olairez-2026-dihedral-permutohedron-affine-symmetries"),
+                    ResolutionKind.Proved)))));
 
     private static Formula StabilizerFormula()
     {
