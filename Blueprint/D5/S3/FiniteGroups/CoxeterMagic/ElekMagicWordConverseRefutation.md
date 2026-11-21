@@ -146,6 +146,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/elek-2026-magic-word-converse` (refuted) by `D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"elek-2026-magic-word-converse","declaration_gid":"D5/S3/FiniteGroups/CoxeterMagic/ElekMagicWordConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Balázs Elek (2026). *Hypercube Richardson varieties from magic words*. DOI: [10.48550/arXiv.2610.22730](https://doi.org/10.48550/arXiv.2610.22730). URL: <https://arxiv.org/abs/2610.22730v1>.
