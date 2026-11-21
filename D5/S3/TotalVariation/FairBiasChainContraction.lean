@@ -8,6 +8,7 @@
 
 import D5.S3.TotalVariation.FairBiasMatching
 import D5.S3.HomologicalAlgebra.FiniteMorseCancellation
+import D5.S3.HomologicalAlgebra.OrderedFaceSign
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Tactic.Ring
 
@@ -21,6 +22,7 @@ open D5.S3.TotalVariation.FairBiasMatching
 open D5.S3.TotalVariation.FairBiasRestriction
 open D5.S3.TotalVariation.FairBiasShelling
 open D5.S3.HomologicalAlgebra.FiniteMorseCancellation
+open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 
 namespace D5.S3.TotalVariation.FairBiasChainContraction
 
@@ -37,11 +39,8 @@ local instance (c : L → A) : Fintype (Face c) := by
 
 local instance (c : L → A) : DecidableEq (Face c) := Classical.decEq _
 
-private def deletionSign {V : Type*} [LinearOrder V] (s : Finset V) (x : V) : ℤ :=
-  (-1) ^ (s.filter (· < x)).card
-
 private def signedEntry {V : Type*} [LinearOrder V] (s t : Finset V) : ℤ :=
-  ∑ x ∈ t, if s = t.erase x then deletionSign t x else 0
+  ∑ x ∈ t, if s = t.erase x then insertionSign t x else 0
 
 /-- The integral boundary in augmented signed-face coordinates, with column inputs. -/
 def boundary (c : L → A) : Matrix (Face c) (Face c) ℤ :=
@@ -49,9 +48,9 @@ def boundary (c : L → A) : Matrix (Face c) (Face c) ℤ :=
 
 private theorem sign_erase {V : Type*} [LinearOrder V] (s : Finset V) {x y : V}
     (hx : x ∈ s) :
-    deletionSign (s.erase x) y =
-      if x < y then -deletionSign s y else deletionSign s y := by
-  unfold deletionSign
+    insertionSign (s.erase x) y =
+      if x < y then -insertionSign s y else insertionSign s y := by
+  unfold insertionSign
   rw [Finset.filter_erase]
   by_cases hxy : x < y
   · rw [ite_eq_left hxy, ← card_erase_add_one (mem_filter.mpr ⟨hx, hxy⟩), pow_succ]
@@ -90,7 +89,7 @@ theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
   obtain ⟨x, hx⟩ := hne
   have hx' := mem_sdiff.mp hx
   have he := erased_pivot_of_cover h.1 h.2 hx'.1 hx'.2
-  have hv : boundary c s t = deletionSign t.val x := by
+  have hv : boundary c s t = insertionSign t.val x := by
     unfold boundary signedEntry
     rw [sum_eq_single x]
     · rw [ite_eq_left he.symm]
@@ -101,15 +100,15 @@ theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
       rw [hye] at hnot
       exact hnot (mem_erase.mpr ⟨Ne.symm hyx, hx'.1⟩)
     · exact fun hn => False.elim (hn hx'.1)
-  rw [hv, deletionSign, ← mul_pow]
+  rw [hv, insertionSign, ← mul_pow]
   norm_num
 
 private theorem deletionPair_antisymm {V : Type*} [LinearOrder V] (s t : Finset V)
     {x y : V} (hx : x ∈ t) (hy : y ∈ t) :
     (if y ∈ t.erase x ∧ s = (t.erase x).erase y then
-      deletionSign (t.erase x) y * deletionSign t x else 0) =
+      insertionSign (t.erase x) y * insertionSign t x else 0) =
     -(if x ∈ t.erase y ∧ s = (t.erase y).erase x then
-      deletionSign (t.erase y) x * deletionSign t y else 0) := by
+      insertionSign (t.erase y) x * insertionSign t y else 0) := by
   by_cases he : x = y
   · subst y
     simp
@@ -137,13 +136,13 @@ private theorem boundary_squared (c : L → A) (h : (facets c).Nonempty) :
   obtain ⟨B, hB, ht, _⟩ := exists_first_facet c h t.property
   let term (x y : L × Bool) : ℤ :=
     if y ∈ t.val.erase x ∧ s.val = (t.val.erase x).erase y then
-      deletionSign (t.val.erase x) y * deletionSign t.val x else 0
+      insertionSign (t.val.erase x) y * insertionSign t.val x else 0
   have expand :
       (boundary c * boundary c) s t =
         ∑ x ∈ t.val, ∑ y ∈ t.val, term x y := by
     rw [Matrix.mul_apply]
     change (∑ u : Face c, boundary c s u *
-      (∑ x ∈ t.val, if u.val = t.val.erase x then deletionSign t.val x else 0)) = _
+      (∑ x ∈ t.val, if u.val = t.val.erase x then insertionSign t.val x else 0)) = _
     simp only [mul_sum]
     rw [sum_comm]
     apply sum_congr rfl
@@ -152,7 +151,7 @@ private theorem boundary_squared (c : L → A) (h : (facets c).Nonempty) :
       ((erase_subset x t.val).trans ht)⟩
     rw [sum_eq_single u]
     · change boundary c s u *
-        (if u.val = t.val.erase x then deletionSign t.val x else 0) = _
+        (if u.val = t.val.erase x then insertionSign t.val x else 0) = _
       simp only [u, ite_true]
       unfold boundary signedEntry
       rw [sum_mul]
