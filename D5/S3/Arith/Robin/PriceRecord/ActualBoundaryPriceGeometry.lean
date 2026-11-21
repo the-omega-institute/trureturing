@@ -29,6 +29,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 open Finset Filter Real
 open scoped Topology BigOperators
 open D5.S3.Arith.GoldenResourceOptimalInteger
+open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion (IsGoldenResourceOptimal)
 open D5.S3.Arith.Robin.ActualTwoPriceDefect (strictInteger strictInteger_spec)
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (price_record_prime_structure)

@@ -1,9 +1,8 @@
 import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
 import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
-/-! The least-optimizer registration and full-telescope source bridges for the
-boundary-price estimates. -/
+/-! The least-optimizer registration and source bridges for the boundary-price estimates. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -11,6 +10,8 @@ namespace Reg.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
 open Real Filter Finset
 open scoped Topology BigOperators
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
+open _root_.D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
+  (golden_layer_marginal_one_eq_log_one_add_inv)
 open _root_.D5.S3.Arith.Robin.ActualTwoPriceDefect
   (strictInteger strict_layer_iff)
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
@@ -22,15 +23,8 @@ open LeanInformationAudit
 
 namespace StrictIntegerFullRecord
 
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℕ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℕ)
 
 def actual : Realization signature :=
   realize signature (fun _ _ q => strictInteger q) (fun e => nomatch e)
@@ -48,7 +42,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hcmp := htwo 1 (by norm_num) (by norm_num)
   have hlog : log (3 / 2 : ℝ) < log 2 :=
     log_lt_log (by norm_num) (by norm_num)
-  norm_num [goldenResourceObjective, Nat.divisors_prime Nat.prime_two] at hcmp
+  norm_num [goldenResourceObjective, Nat.prime_two.divisors] at hcmp
   linarith only [hcmp, hlog]
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
@@ -71,14 +65,8 @@ def family : Registration arena (type_of% (@strictInteger_fullRecord)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨strictInteger_fullRecord, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual
+    rejected rejected_law
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -114,6 +102,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end StrictIntegerFullRecord
+
+/- Full-telescope actual laws and definitional source bridges.
+Four-slot registration is unfinished: lawful enrolled-template application,
+compiler occurrence/sourceSelection binding, whole-family intervention,
+fixed-coordinate sensitivity and observational dependence remain unproved. -/
 
 namespace priceLip_nonneg
 abbrev signature : Signature where
