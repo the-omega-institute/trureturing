@@ -76,5 +76,4 @@ internal sealed class HardinA229604StripDataDocument : IScribeDocumentDefinition
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
     private static Formula Lam(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));
     private static Formula Conditional(Formula c, Formula y, Formula n) => Parenthesized(Seq(Call("if"), Sp, Parenthesized(c), Sp, Call("then"), Sp, Parenthesized(y), Sp, Call("else"), Sp, Parenthesized(n)));
-    private static Formula Matrix(params Formula[][] a) => Seq(new Formula[] { Begin, Grp(F.Id("pmatrix")) }.Concat(a.SelectMany((row,i) => (i == 0 ? Array.Empty<Formula>() : new Formula[] {RowBreak}).Concat(row.SelectMany((x,j) => j==0 ? new[] {x} : new[] {Amp,x})))).Concat(new Formula[] {End, Grp(F.Id("pmatrix"))}).ToArray());
 }

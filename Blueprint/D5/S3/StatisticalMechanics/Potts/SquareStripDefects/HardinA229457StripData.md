@@ -62,9 +62,9 @@ For i, j of type Fin 42, use Fin.val i and Fin.val j in the guards and offsets. 
 
 If both values are below 10, apply ProperTransfer.T to the Fin 10 indices formed from Fin.val i and Fin.val j using those bounds. If i is below 10 and j is at least 10, the entry is at row i and column j − 10 of the new 10 by 32 crossing table.
 
-If both values are in 10 through 19, apply ProperTransfer.T to the Fin 10 indices formed from Fin.val i − 10 and Fin.val j − 10 using those bounds. If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the new 22 by 10 table for classes 20 through 41. Every other entry is 0.
+If both values are in 10 through 19, apply ProperTransfer.T to the Fin 10 indices formed from Fin.val i − 10 and Fin.val j − 10 using those bounds. If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the 22 by 10 table for classes 20 through 41. At local rows 12 and 19 that table uses ProperTransfer.T at row 5 and the Fin 10 column of value Fin.val j − 10. Every other entry outside the described blocks is 0.
 
-HardinA229457StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean#L78-L111).
+HardinA229457StripClasses.transition_counts identifies the entries with the successor sums. The literal entries and the two inherited rows are specified by [crossing and lastRows](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean#L78-L111).
 
 **Definition 1.5 (initial).**
 
@@ -86,7 +86,7 @@ HardinA229457Strip.finite_certificate identifies each entry with its literal fir
 
 **Definition 1.6 (terminal).**
 
-$$\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{terminal}} = \begin{pmatrix}0&0&0&0&0&0&0&0&0&0&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1\end{pmatrix}$$
+$$(\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{terminal}}: \operatorname{\mathit{Fin}}\left(42\right) \to \operatorname{\mathit{Int}})$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.terminal` (`✓ std3`).
 
@@ -96,7 +96,7 @@ $$\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{terminal}
 
 *Commentary.*
 
-For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. The vector has 42 integer coordinates. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for classes 20 through 41, which represent rows with one horizontal defect among Valid states.
+For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. Fin.append joins ten zeros, ten proper coordinates, and 22 ones for classes 20 through 41, which represent rows with one horizontal defect among Valid states. For j of type Fin 10, the middle coordinate is HardinA233127SquareStrip.w 0 applied to the Fin 11 index with value Fin.val j + 1.
 
 **Definition 1.7 (W).**
 

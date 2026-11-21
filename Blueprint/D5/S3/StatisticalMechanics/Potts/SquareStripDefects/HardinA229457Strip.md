@@ -34,7 +34,7 @@ Filter the finite set of arrays by the exact number d of monochromatic square-la
 
 **Theorem 1.3 (Labelled and canonical square-strip counts).**
 
-$$\forall d: \operatorname{\mathit{Nat}}, (\forall m: \operatorname{\mathit{Nat}}, ((d < 5) \implies (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}\left(\operatorname{\mathit{HardinA229584StripData}}.\operatorname{\mathit{horizontal}}, \operatorname{\mathit{ProperTransfer}}.\operatorname{\mathit{between}}, d, m + 1\right) = 6 \cdot \operatorname{\mathit{HardinA229457Strip}}.\operatorname{\mathit{canonicalCount}}\left(d, m + 1\right))))$$
+$$\forall d: \operatorname{\mathit{Nat}}, (\forall m: \operatorname{\mathit{Nat}}, ((d < 5) \implies (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{literalCount}}\left((q := 3), \operatorname{\mathit{HardinA229584StripData}}.\operatorname{\mathit{horizontal}}, \operatorname{\mathit{ProperTransfer}}.\operatorname{\mathit{between}}, d, m + 1\right) = 6 \cdot \operatorname{\mathit{HardinA229457Strip}}.\operatorname{\mathit{canonicalCount}}\left(d, m + 1\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457Strip.canonical_count_scale` (`✓ std3`). ∎
 

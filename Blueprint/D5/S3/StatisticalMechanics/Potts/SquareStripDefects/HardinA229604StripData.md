@@ -88,7 +88,7 @@ For j from 74 through 95, the entry at local index j − 74 is taken from the ne
 
 **Definition 1.6 (terminal).**
 
-$$\operatorname{\mathit{HardinA229604StripData}}.\operatorname{\mathit{terminal}} = \begin{pmatrix}0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1&1\end{pmatrix}$$
+$$(\operatorname{\mathit{HardinA229604StripData}}.\operatorname{\mathit{terminal}}: \operatorname{\mathit{Fin}}\left(96\right) \to \operatorname{\mathit{Int}})$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripData.terminal` (`✓ std3`).
 
@@ -98,7 +98,7 @@ $$\operatorname{\mathit{HardinA229604StripData}}.\operatorname{\mathit{terminal}
 
 *Commentary.*
 
-The terminal vector is zero on the first 42 classes and one on the last 54. For a Valid state, it accepts exactly residual budget zero. Fin.append joins 42 zeros, the 32 accepted coordinates of HardinA229457StripData.terminal at indices j.natAdd 10, and 22 ones for classes 74 through 95, which represent rows with two horizontal defects among Valid states.
+Fin.append joins 42 zeros, the coordinates HardinA229457StripData.terminal (Fin.natAdd 10 j) for j of type Fin 32, and 22 ones for classes 74 through 95, which represent rows with two horizontal defects among Valid states. For a Valid state, it accepts exactly residual budget zero.
 
 **Definition 1.7 (W).**
 
