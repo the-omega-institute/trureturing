@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Under RH the prime-window discrepancy has an endpoint primitive and a cluster interval. -/
+   digest: Under RH the prime-window discrepancy has an endpoint primitive and cluster interval. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 
@@ -19,14 +19,16 @@ noncomputable section
 
 open Filter MeasureTheory Set
 open scoped Topology
-open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (actual_height_gt_ten firstLiMass firstLiMass_pos)
+open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+  (actualZero actualData actualOccurrenceEquiv actual_height_gt_ten firstLiMass firstLiMass_pos)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
 
 open PrimePhaseCluster (phaseOrbit phaseOrbit_cluster_iff mapClusterPt_of_sub_tendsto_zero)
 open PrimeOnlyTailCorrection (primeTail)
-open RHPrimeWindowMean (normalizedZeroSeries frequency frequency_real exp_mode_norm normalized_hasSum
-  normalizedMass windowError normalizedZeroSeries_continuous windowError_integrable mass_log_substitution)
+open RHPrimeWindowMean (normalizedZeroSeries frequency frequency_real exp_mode_norm
+  normalized_hasSum normalizedMass windowError normalizedZeroSeries_continuous
+  windowError_integrable mass_log_substitution)
 
 /-- The real primitive evaluated on a sequence of unit phases. -/
 def spectralPrimitive (h : ℕ → Circle) : ℝ :=
@@ -135,7 +137,7 @@ private lemma uniform_error (hRH : RiemannHypothesis) {ε : ℝ} (hε : 0 < ε) 
       |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
         spectralPrimitive (phaseOrbit (Real.log a))| < ε := by
   have htail : Tendsto (fun a : ℝ => ∫ y in Ioi (Real.log a), |windowError y|) atTop (𝓝 0) :=
-    intervalIntegral.tendsto_integral_Ioi_zero Real.tendsto_log_atTop
+    tendsto_integral_Ioi_zero Real.tendsto_log_atTop
   have hsmall := (Metric.tendsto_nhds.mp htail) ε hε
   obtain ⟨X, hX⟩ := eventually_atTop.mp hsmall
   refine ⟨max 2 X, le_max_left _ _, fun a B ha hab => ?_⟩
@@ -149,7 +151,7 @@ private lemma uniform_error (hRH : RiemannHypothesis) {ε : ℝ} (hε : 0 < ε) 
       intervalIntegral.abs_integral_le_integral_abs hlog
     _ ≤ ∫ y in Ioi (Real.log a), |windowError y| := by
       rw [intervalIntegral.integral_of_le hlog]
-      exact setIntegral_mono_set ((windowError_integrable hRH).norm.mono_set (Ioi_subset_Ioi hlo))
+      exact setIntegral_mono_set (((windowError_integrable hRH).mono_set (Ioi_subset_Ioi hlo)).norm)
         (ae_of_all _ fun _ => abs_nonneg _) (ae_of_all _ Ioc_subset_Ioi_self)
     _ < ε := by
       have hx := hX a ((le_max_right 2 X).trans ha)
@@ -172,7 +174,7 @@ private lemma primitive_varies (hRH : RiemannHypothesis) :
   have hpos : 0 < ∫ y in 0..δ / 2, f y := by
     apply intervalIntegral.integral_pos hhalf hf.continuousOn
     · intro y hy
-      refine (hδf ?_).le
+      refine (hδf (y := y) ?_).le
       rw [Metric.mem_ball, Real.dist_eq, sub_zero, abs_of_nonneg hy.1.le]
       exact hy.2.trans_lt (half_lt_self hδ)
     · exact ⟨0, ⟨le_rfl, hhalf.le⟩, hf0⟩
@@ -183,7 +185,7 @@ private lemma fixed_cutoff_error (hRH : RiemannHypothesis) {a : ℝ} (ha : 2 ≤
     Tendsto (fun B : ℝ => windowDiscrepancy a B -
       (fixedCutoffConstant a + spectralPrimitive (phaseOrbit (Real.log B)))) atTop (𝓝 0) := by
   have hlo := Real.log_le_log (by norm_num : (0 : ℝ) < 2) ha
-  have hlimit := intervalIntegral.intervalIntegral_tendsto_integral_Ioi (Real.log a)
+  have hlimit := intervalIntegral_tendsto_integral_Ioi (Real.log a)
     ((windowError_integrable hRH).mono_set (Ioi_subset_Ioi hlo)) Real.tendsto_log_atTop
   have hcenter := hlimit.sub_const (∫ y in Ioi (Real.log a), windowError y)
   rw [sub_self] at hcenter
@@ -205,7 +207,8 @@ private lemma fixed_cutoff_cluster (hRH : RiemannHypothesis) {a : ℝ} (ha : 2 �
   constructor
   · intro hy
     exact hclosed.mem_of_mapClusterPt (mapClusterPt_of_sub_tendsto_zero herror hy)
-      (Eventually.of_forall fun B => mem_image_of_mem P (subset_closure (mem_range_self (Real.log B))))
+      (Eventually.of_forall fun B =>
+        mem_image_of_mem P (subset_closure (mem_range_self (Real.log B))))
   · rintro ⟨h, hh, rfl⟩
     have horbit := ((phaseOrbit_cluster_iff h).mpr hh).continuousAt_comp hP.continuousAt
     have hlog : MapClusterPt (P h) atTop (fun B => P (phaseOrbit (Real.log B))) := by
@@ -229,7 +232,7 @@ private lemma fixed_cutoff_interval (hRH : RiemannHypothesis) (a : ℝ) :
     mem_image_of_mem P (subset_closure (mem_range_self s))
   exact ⟨sInf (P '' H), sSup (P '' H),
     (csInf_le hcompact.bddBelow (hmem 0)).trans_lt
-      ((add_lt_add_left ht _).trans_le (le_csSup hcompact.bddAbove (hmem t))),
+      ((add_lt_add_right ht (fixedCutoffConstant a)).trans_le (le_csSup hcompact.bddAbove (hmem t))),
     eq_Icc_of_connected_compact hconn hcompact⟩
 
 /-- Under RH, the endpoint difference removes the discrepancy uniformly for late cutoffs.
