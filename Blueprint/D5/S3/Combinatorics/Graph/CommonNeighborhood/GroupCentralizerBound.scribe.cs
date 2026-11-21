@@ -18,9 +18,10 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("For every finite group G with two elements whose products differ, write z for the order of "
                         + "its center, n for the number of noncentral elements, C(x) for the centralizer of x and p for the least "
-                        + "prime dividing |G|. Then z is at least 1, n is at least (p^2-1)z, n is at least z+2 and at least 3, and z "
+                        + "prime dividing |G|; in the displayed formula the real quantities n, z, p and the centralizer orders are the casts of these natural numbers. Then z is at least 1, n is at least (p^2-1)z, n is at least z+2 and at least 3, and z "
                         + "divides n. The common-neighbourhood energy of the commuting graph on the individual noncentral elements "
-                        + "(commutingGraph(G) of the noncentral commuting-graph module) is at most twice the sum over noncentral x "
+                        + "(Vertex(G) and commutingGraph(G) of the noncentral commuting-graph module, graphEnergy of the "
+                        + "cyclic-extension module) is at most twice the sum over noncentral x "
                         + "of max(|C(x)|-z-2,0), and that is at most n max(2(n+z)/p-2z-4,0). This last quantity is at most "
                         + "2n((n+z)/p-z-1), and also at most n max(n-z-4,0), which is at most n(n-z-2), strictly below the "
                         + "complete-graph value 2(n-1)(n-2).")),
@@ -55,6 +56,7 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Exists(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
@@ -64,37 +66,35 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Par(Formula a) => Seq(Open, a, Close);
-    private static Formula Real(Formula a) => Seq(Open, a, Colon, Mathbb, Grp(F.Id("R")), Close);
     private static Formula Instance(Formula type, Formula body) => Seq(OpenBracket, type, CloseBracket, body);
 
     private static Formula ResultFormula()
     {
         var G = F.Id("G");
-        var vertex = Call("D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound.Vertex", G);
-        var graph = Call("D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound.commutingGraph", G);
-        var z = Call("Fintype.card", Call("Subgroup.center", G));
-        var n = Call("Fintype.card", vertex);
-        var nr = Real(n);
-        var zr = Real(z);
-        var energy = Call("D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation.graphEnergy", graph,
-            Call("D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation.MatrixKind.commonNeighbour"));
-        var c = Real(Call("Fintype.card", Call("Subgroup.centralizer", Seq(OpenBrace, Call("Subtype.val", F.Id("x")), CloseBrace))));
-        var p = Real(Call("Nat.minFac", Call("Fintype.card", G)));
+        var vertex = Call("Vertex", G);
+        var graph = Call("commutingGraph", G);
+        var z = F.Id("z");
+        var n = F.Id("n");
+        var p = F.Id("p");
+        var energy = Call("graphEnergy", graph, Call("MatrixKind.commonNeighbour"));
+        var c = Call("Fintype.card", Call("Subgroup.centralizer", Seq(OpenBrace, F.Id("x"), CloseBrace)));
         var perVertex = Mul(D(2), Seq(new Formula.Subscript(Sum, Seq(F.Id("x"), Colon, Sp, vertex)), Sp,
-            Call("max", Sub(Sub(c, zr), D(2)), D(0))));
-        var ratio = new Formula.Fraction(Add(nr, zr), p);
-        var prime = Mul(nr, Call("max", Sub(Sub(new Formula.Fraction(Mul(D(2), Par(Add(nr, zr))), p), Mul(D(2), zr)), D(4)), D(0)));
-        var paper = Mul(Mul(D(2), nr), Par(Sub(Sub(ratio, zr), D(1))));
-        var sharp = Mul(nr, Call("max", Sub(Sub(nr, zr), D(4)), D(0)));
-        var weak = Mul(nr, Par(Sub(Sub(nr, zr), D(2))));
-        var bench = Mul(Mul(D(2), Par(Sub(nr, D(1)))), Par(Sub(nr, D(2))));
+            Call("max", Sub(Sub(c, z), D(2)), D(0))));
+        var ratio = new Formula.Fraction(Add(n, z), p);
+        var prime = Mul(n, Call("max", Sub(Sub(new Formula.Fraction(Mul(D(2), Par(Add(n, z))), p), Mul(D(2), z)), D(4)), D(0)));
+        var paper = Mul(Mul(D(2), n), Par(Sub(Sub(ratio, z), D(1))));
+        var sharp = Mul(n, Call("max", Sub(Sub(n, z), D(4)), D(0)));
+        var weak = Mul(n, Par(Sub(Sub(n, z), D(2))));
+        var bench = Mul(Mul(D(2), Par(Sub(n, D(1)))), Par(Sub(n, D(2))));
         var nonabelian = Exists("a", G, Exists("b", G, Ne(Mul(F.Id("a"), F.Id("b")), Mul(F.Id("b"), F.Id("a")))));
-        var p2 = Sub(new Formula.Power(Call("Nat.minFac", Call("Fintype.card", G)), D(2)), D(1));
-        var orders = And(Le(D(1), z), And(Le(Mul(Par(p2), z), n), And(Le(Add(z, D(2)), n), And(Le(D(3), n),
-            new Formula.Relation(z, FormulaRelationOperator.Divides, n)))));
+        var orders = And(Le(D(1), z), And(Le(Mul(Par(Sub(new Formula.Power(p, D(2)), D(1))), z), n),
+            And(Le(Add(z, D(2)), n), And(Le(D(3), n), new Formula.Relation(z, FormulaRelationOperator.Divides, n)))));
         var chain = And(Le(energy, perVertex), And(Le(perVertex, prime), And(Le(prime, paper),
             And(Le(prime, sharp), And(Le(sharp, weak), Lt(weak, bench))))));
-        return Disp(All("G", Call("Type"), Instance(Call("Group", G), Instance(Call("Fintype", G),
-            Imp(nonabelian, And(orders, chain))))));
+        var names = Seq(Comma, Sp, Eq(n, Call("Fintype.card", vertex)), Comma, Sp,
+            Eq(z, Call("Fintype.card", Call("Subgroup.center", G))), Comma, Sp,
+            Eq(p, Call("Nat.minFac", Call("Fintype.card", G))));
+        return Disp(Seq(All("G", Call("Type"), Instance(Call("Group", G), Instance(Call("Fintype", G),
+            Imp(nonabelian, And(orders, chain))))), names));
     }
 }
