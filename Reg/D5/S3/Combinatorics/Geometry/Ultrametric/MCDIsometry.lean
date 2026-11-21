@@ -28,7 +28,7 @@ abbrev arena : Arena where
     ∀ {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X]
       [MetricSpace Y] [IsUltrametricDist Y] [Finite Y],
       Nat.card X = 2 ^ ((center X).ncard - 1) →
-      (Nat.card X = Nat.card Y ∨ Nat.card Y = 2 ^ ((center Y).ncard - 1)) →
+      (Nat.card Y ≤ Nat.card X ∨ Nat.card Y = 2 ^ ((center Y).ncard - 1)) →
       (Q.readout () () (center X) (center Y) ↔ Nonempty (X ≃ᵢ Y))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -38,7 +38,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       (Finset.mem_singleton_self 0) (by simp)).2
   have hX : Nat.card X = 2 ^ ((center X).ncard - 1) := by
     rw [hC, Set.ncard_coe_finset, Nat.card_eq_fintype_card, hcard]
-  exact (hlaw (X := X) (Y := X) hX (Or.inl rfl)).mpr ⟨IsometryEquiv.refl X⟩
+  exact (hlaw (X := X) (Y := X) hX (Or.inl le_rfl)).mpr ⟨IsometryEquiv.refl X⟩
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

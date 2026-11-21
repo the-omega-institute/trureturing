@@ -29,8 +29,8 @@ import D5.S3.Combinatorics.Geometry.UltrametricCenterMinimumOrder
 /-! # Isometry rigidity of minimum-order ultrametric spaces
 
 A finite ultrametric space `X` is minimum-order (MCD) when `|X| = 2^(|C(X)| - 1)`. If `X` is MCD
-and `Y` has as many points as `X` or is itself MCD, then `C(X) = C(Y)` exactly when `X` and `Y`
-are isometric. Around two points at the diameter the open balls below the diameter split an MCD
+and `Y` has at most as many points as `X` or is itself MCD, then `C(X) = C(Y)` exactly when `X`
+and `Y` are isometric. Around two points at the diameter the open balls below the diameter split an MCD
 space into two MCD halves with the lower center; isometries of the halves glue across the
 diameter.
 -/
@@ -205,10 +205,10 @@ private theorem split (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X
       exact Nat.card_congr (Equiv.subtypeEquivRight ((hsame r).2 hr'))
   exact ⟨hcardr, (hball r).2 hcardr.le⟩
 
-/-- An isometric embedding between spaces with equally many points is an isometry onto. -/
 private theorem nonempty_of_card {X : Type} {k : ℕ} (h : Nat.card X = 2 ^ k) : Nonempty X :=
   (Nat.card_pos_iff.mp (by rw [h]; positivity)).1
 
+/-- An isometric embedding into a space with no more points is an isometry onto. -/
 private theorem isoOfIsometry {X Y : Type} [MetricSpace X] [MetricSpace Y] [Finite X] [Finite Y]
     (f : X → Y) (hf : ∀ x y, dist (f x) (f y) = dist x y) (hc : Nat.card Y ≤ Nat.card X) :
     Nonempty (X ≃ᵢ Y) := by
@@ -289,19 +289,15 @@ private theorem center_sub_of_iso {X Y : Type} [MetricSpace X] [MetricSpace Y] (
   exact ⟨e y, by rw [← e.apply_symm_apply p', e.dist_eq]; exact hy⟩
 
 /-- Let `X` be a finite ultrametric space of minimum order `2^(|C(X)| - 1)` and `Y` a finite
-ultrametric space that has as many points as `X` or is itself of minimum order. Then `X` and `Y`
-have the same center exactly when they are isometric. -/
+ultrametric space that has at most as many points as `X` or is itself of minimum order. Then `X`
+and `Y` have the same center exactly when they are isometric. -/
 theorem result {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X]
     [MetricSpace Y] [IsUltrametricDist Y] [Finite Y]
     (hX : Nat.card X = 2 ^ ((center X).ncard - 1))
-    (hYc : Nat.card X = Nat.card Y ∨ Nat.card Y = 2 ^ ((center Y).ncard - 1)) :
+    (hYc : Nat.card Y ≤ Nat.card X ∨ Nat.card Y = 2 ^ ((center Y).ncard - 1)) :
     center X = center Y ↔ Nonempty (X ≃ᵢ Y) := by
   constructor
   · intro hC
-    have hXY : Nat.card X = Nat.card Y := by
-      rcases hYc with h | h
-      · exact h
-      · rw [hX, h, hC]
     have hXne : Nonempty X := nonempty_of_card hX
     obtain ⟨p⟩ := hXne
     have hfin : (center X).Finite := by
@@ -314,6 +310,12 @@ theorem result {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X]
     have hAY : center Y = ↑hfin.toFinset := by rw [← hC]; exact hA
     have hcardA : hfin.toFinset.card = (center X).ncard - 1 + 1 := by
       rw [← Set.ncard_eq_toFinset_card _ hfin]; omega
+    have hXY : Nat.card X = Nat.card Y := by
+      rcases hYc with h | h
+      · have hlow := lower Y hfin.toFinset hAY
+        rw [hcardA, Nat.add_sub_cancel, ← hX] at hlow
+        omega
+      · rw [hX, h, hC]
     exact iso _ X Y hfin.toFinset hcardA hA hAY hX (by rw [← hXY, hX])
   · rintro ⟨e⟩
     exact le_antisymm (center_sub_of_iso e) (center_sub_of_iso e.symm)

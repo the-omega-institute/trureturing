@@ -61,7 +61,8 @@ ultrametric space, and 0 ∈ A ⊆ [0, ∞) are equivalent; for such A, the leas
 with D(X) = C(X) = A. The realization uses binary words of length |A| − 1, with the distance of two
 words the element of A indexed by one plus the highest position where they differ. It replaces the
 labelled perfect binary tree of Proposition 4.5 by this explicit word metric; the uniqueness up to
-isometry in Proposition 4.5 is not formalized.
+isometry in Proposition 4.5 follows from MCDIsometry.result, since two minimum-order spaces with
+the same center are isometric.
 
 Conjecture 4.3 (p. 20): for finite ultrametric spaces X and Y with |X| = |Y| = 2^n and
 |C(X)| = n + 1, C(X) = C(Y) holds exactly when X and Y are isometric. It is proved as

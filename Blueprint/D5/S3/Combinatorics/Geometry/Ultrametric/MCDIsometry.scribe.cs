@@ -21,7 +21,7 @@ internal sealed class MCDIsometryDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Let X be a finite ultrametric space with |X| = 2^(|C(X)| - 1), where C(X) "
                         + "is the center of distances, and let Y be a finite ultrametric space "
-                        + "that has as many points as X or also satisfies |Y| = 2^(|C(Y)| - 1). "
+                        + "that has at most as many points as X or also satisfies |Y| = 2^(|C(Y)| - 1). "
                         + "Then C(X) = C(Y) if and only if X and Y are isometric. This is "
                         + "Conjecture 4.3 of O. Dovgoshey and O. Rovenska, proved as Corollary 4.3 "
                         + "(with Theorem 4.2) of Dovgoshey, Jaiswal, Kainth, Kaur and Rovenska.")),
