@@ -42,7 +42,8 @@ internal sealed class MaDistinctPowersFourDocument : IScribeDocumentDefinition
                     + "dividing the order. The first and second power sums of the four consecutive "
                     + "coefficients rule it out. The transversal therefore supplies a valid block even "
                     + "when the reduced generator coordinates repeat."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(ProblemSlugRef.Create("ma-2026-distinct-powers-four"), ResolutionKind.Proved)))));
 
     private static Formula Statement()
     {

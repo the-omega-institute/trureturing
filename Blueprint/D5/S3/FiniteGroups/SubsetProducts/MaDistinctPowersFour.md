@@ -10,6 +10,10 @@ $$\forall (n : \mathbb{N}) (G : Type) [Group\left(G\right)] [Finite\left(G\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ma-2026-distinct-powers-four` (proved) by `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ma-2026-distinct-powers-four","declaration_gid":"D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dingying Ma (2026). *On Distinct Powers in Finite Groups*. DOI: [10.48550/arXiv.2611.13582](https://doi.org/10.48550/arXiv.2611.13582). URL: <https://arxiv.org/abs/2611.13582v1>.
