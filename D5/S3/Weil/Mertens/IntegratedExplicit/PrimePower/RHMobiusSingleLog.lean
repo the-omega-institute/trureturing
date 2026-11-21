@@ -198,7 +198,7 @@ private theorem global_psi_error (hRH : RiemannHypothesis) {y : ℝ} (hy : 1 ≤
             exact le_mul_of_one_le_right (by positivity) (by nlinarith)
 
 /-- The Schoenfeld bound transported through the actual centered root-tail integral. -/
-private theorem centered_chebyshev_log (hRH : RiemannHypothesis) {r u : ℝ}
+theorem centered_chebyshev_log (hRH : RiemannHypothesis) {r u : ℝ}
     (hr : 2 ≤ r) (hu : 0 ≤ u) :
     |centered r (Real.exp u)| ≤
       (16 * ((Real.log 4 + 5) * 5000)) * (1 + u / r)^2 *

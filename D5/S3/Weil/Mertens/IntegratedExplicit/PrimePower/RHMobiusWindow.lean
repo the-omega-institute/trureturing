@@ -66,7 +66,7 @@ private theorem q_error_formula_from_one {x : ℝ} (hx : 1 ≤ x) :
   linear_combination hQ
 
 
-private def trivialHeight (k : ℕ) : ℝ := 2 * ((k : ℝ) + 1)
+def trivialHeight (k : ℕ) : ℝ := 2 * ((k : ℝ) + 1)
 
 private theorem trivial_weighted_tail {r v : ℝ} (hr : 0 < r) (hv : 0 ≤ v) :
     HasSum (fun k : ℕ =>
@@ -106,7 +106,7 @@ private theorem trivial_weighted_tail {r v : ℝ} (hr : 0 < r) (hv : 0 ≤ v) :
     exact integral_const_mul ..,
     integral_exp_mul_Ioi (by linarith), div_neg, neg_div, neg_neg, mul_div_assoc]
 
-private theorem trivial_mode_bound (n : ℕ) :
+theorem trivial_mode_bound (n : ℕ) :
     (∑' k : ℕ, (n : ℝ) / (trivialHeight k * ((n : ℝ) + trivialHeight k))) ≤
       (1 + Real.log n) / 2 := by
   let g (k : ℕ) : ℝ := ((k : ℝ) + 1)⁻¹
@@ -148,7 +148,7 @@ private theorem trivial_mode_bound (n : ℕ) :
       linarith [harmonic_le_one_add_log n]
 
 
-private theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
+theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
     IntegrableOn (fun t => t ^ (-r) * qError t) (Ioi (Real.exp v)) ∧
     r * Real.exp v * (qError (Real.exp v) - (r - 1) * Real.exp ((r - 1) * v) *
       (∫ t in Ioi (Real.exp v), t ^ (-r) * qError t)) =
