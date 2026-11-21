@@ -92,7 +92,7 @@ internal sealed class HardinA229532StripDataDocument : IScribeDocumentDefinition
     {
         var p = V("p");
         Formula Term(string i, string j, string weight) => Cond(
-            Eq(Call("p", Num(i)), Call("p", Num(j))), Num(weight), Num("0"));
+            Eq(new Formula.Apply(p, [Num(i)]), new Formula.Apply(p, [Num(j)])), Num(weight), Num("0"));
         Formula[] terms =
         [
             Term("0", "1", "1"), Term("0", "2", "2"), Term("0", "3", "4"),
