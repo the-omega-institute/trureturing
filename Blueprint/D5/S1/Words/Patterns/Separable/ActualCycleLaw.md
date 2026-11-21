@@ -42,8 +42,21 @@ For each natural k and each actual tuple gamma of length k, Box(k,gamma) is the 
 
 The equality is extensional: cylinder membership gives each coordinate constraint, and a box member supplies each finite-index equality. At k=0 both sides are the full stream space. This is the existing prefix box identity, exposed unchanged so the next-coordinate hazard proof can consume it directly.
 
+**Theorem 1.3 (Decoding preserves the size of a fixed-count cycle).**
+
+$$\operatorname{size}\left(\operatorname{decode}\left(p\right)\right) = \operatorname{size}\left(p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/ActualCycleLaw.decode_size` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every starting sign and removal count, each fixed-count code p has the same total shape size after decoding. This existing identity is exposed unchanged for the scaled marked-cycle generating function.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.actual_countable_cycle_law`
 - Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.box`
+- Truth anchor: `D5/S1/Words/Patterns/Separable/ActualCycleLaw.decode_size`
 - Dependency: [D5/S1/Words/Patterns/Separable/ActualCycles](ActualCycles.md)

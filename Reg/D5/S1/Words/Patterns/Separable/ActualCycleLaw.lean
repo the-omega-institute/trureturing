@@ -195,6 +195,92 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end PrefixBox
 
+namespace FixedDecodeSize
+
+open _root_.D5.S1.Words.Patterns.Separable.EndpointHistoryKernel (indecomposableWitness)
+
+abbrev signature : Signature where
+  Params := Σ _ : Bool, ℕ
+  State a := Fixed a.1 a.2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ a := UnboundedCycle a.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ p => Fixed.decode p) (fun a => nomatch a)
+
+def rejected : Realization signature :=
+  realize signature (fun _ a _ => .terminal 0 (indecomposableWitness a.1 1))
+    (fun a => nomatch a)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {s : Bool} {k : ℕ} (p : Fixed s k),
+    (R.readout () ⟨s, k⟩ p).size = p.size
+
+private def terminalFixed (n : ℕ) : Fixed false 0 :=
+  ⟨n, indecomposableWitness false (n + 1)⟩
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (terminalFixed 1)
+  change (1 : ℕ) = 2 at he
+  omega
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨false, 0⟩, terminalFixed 0, terminalFixed 1, ?_⟩
+  intro h
+  have he := congrArg UnboundedCycle.size h
+  change (1 : ℕ) = 2 at he
+  omega
+
+def family : Registration arena (type_of% @Fixed.decode_size) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨Fixed.decode_size, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (@Subsingleton.elim Unit _ j i)).elim,
+    rfl, rejected_law⟩, fun a => nomatch a⟩
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@Fixed.decode_size) (Realization signature) (Type) Unit where
+  unitName := `Reg.D5.S1.Words.Patterns.Separable.ActualCycleLaw.FixedDecodeSize.unit
+  realizationName := `Reg.D5.S1.Words.Patterns.Separable.ActualCycleLaw.FixedDecodeSize.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ p => Fixed.decode p) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.Patterns.Separable.ActualCycleLaw
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end FixedDecodeSize
+
 #print axioms audit
 end
 end Reg.D5.S1.Words.Patterns.Separable.ActualCycleLaw
