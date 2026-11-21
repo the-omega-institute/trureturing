@@ -94,7 +94,7 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 Hardin's shifted integer recurrence.
 
-Each column contributes six free side bits. Scaling the pair-pattern relation multiplies the coefficient at lag j by 64^j. The finite instance supplies width 26; the shifted transfer relation supplies every greater width. The index n+26 expresses exactly the published range index>25.
+For an ordered partition into k pair blocks the first cell of each block has its lower colour fixed, leaving 6n−k free signs and 2^(6n−k) lifts. At width two a two-block partition has 1024 lifts. In degree one the one-block partition has 32 lifts. For n≥2 the counting bridge has the common algebraic factor 2^(6n)=64^n in 48a(n)=64^n(L(n)+6). The ratio of the factors at widths n and n−j is 64^j, which scales the coefficient at lag j. The finite instance supplies width 26 and the shifted transfer relation supplies every width n≥27. The index n+26 expresses exactly the published range index>25.
 
 For every positive width n, a(n) is T(6,n) for the diagonal strip. The row-major bijection sends cell (r,j) to r*n+j and its inverse reconstructs the array. It preserves the first cell, both predecessor conditions and the complementary-pair bond predicate. HardinThinGraphTransport.literalEquiv identifies these same arrays with normalized colourings of the ordered strip graph.
 
