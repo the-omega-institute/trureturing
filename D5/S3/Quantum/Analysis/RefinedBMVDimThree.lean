@@ -39,7 +39,7 @@ private theorem gap_total {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) :
 private def monomial {R : Type*} [CommRing R] (a b c : R) (g : Gap) :=
   (a ^ 3) ^ g.1 * (b ^ 3) ^ g.2.1 * (c ^ 3) ^ g.2.2
 
-private theorem defect_cycle {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ) :
+theorem defect_cycle {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ) :
     defect p b c a = defect p a b c := by
   unfold defect
   change ((gaps p).map (monomial b c a)).sum - _ = ((gaps p).map (monomial a b c)).sum - _
@@ -54,7 +54,7 @@ private theorem defect_cycle {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c :
   rw [← hrot b c a]
   ring
 
-private theorem defect_swap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ) :
+theorem defect_swap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ) :
     defect p b a c = defect p a b c := by
   unfold defect
   change ((gaps p).map (monomial b a c)).sum - _ = ((gaps p).map (monomial a b c)).sum - _
@@ -90,7 +90,7 @@ private theorem gap_exponents {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     {g : Gap} (hg : g ∈ gaps p) : g.1 + g.2.1 + g.2.2 = p := by
   exact beq_iff_eq.mp (List.all_eq_true.mp (gap_total hp) g hg)
 
-private theorem defect_diag {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a : ℝ) :
+theorem defect_diag {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a : ℝ) :
     defect p a a a = 0 := by
   unfold defect
   have he : ((gaps p).map (monomial a a a)) = (gaps p).map (fun _ ↦ (a * a * a) ^ p) := by
@@ -102,7 +102,7 @@ private theorem defect_diag {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a : ℝ)
   rw [he]
   simp [List.map_const', List.sum_replicate, nsmul_eq_mul]
 
-private theorem defect_nonneg {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ)
+theorem defect_nonneg {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c : ℝ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) : 0 ≤ defect p a b c := by
   let m := (a * b * c) ^ p
   let f := monomial a b c
@@ -139,7 +139,7 @@ private theorem defect_nonneg {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (a b c 
   change 0 ≤ ((gaps p).map f).sum - _ * m
   nlinarith only [hsum]
 
-private def paired (d : ℝ → ℝ → ℝ → ℝ) (a b c : ℝ) : ℝ :=
+def paired (d : ℝ → ℝ → ℝ → ℝ) (a b c : ℝ) : ℝ :=
   Real.sqrt (d b b a * d c c a) + Real.sqrt (d a a b * d c c b) + Real.sqrt (d a a c * d b b c)
 
 private theorem paired_ordered {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
@@ -176,7 +176,7 @@ private theorem paired_ordered {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     nlinarith [Real.sq_sqrt hQ, Real.sq_sqrt hW]
   exact hsq.trans (add_le_add_left hroot (Real.sqrt W))
 
-private theorem pairing_all {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+theorem pairing_all {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (hcert : ∀ a b c : ℝ, 0 ≤ a → a ≤ b → b ≤ c → 0 ≤ criterion p a b c)
     (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     defect p a b c ≤ paired (defect p) a b c := by
@@ -210,8 +210,9 @@ private theorem pairing_all {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
 
 private abbrev Mat := Matrix (Fin 3) (Fin 3) ℂ
 
+variable {n : Type*} [Fintype n] [DecidableEq n] in
 /-- The mean trace of the words with (p) copies of the first factor and three of the second. -/
-def mean (p : ℕ) (A B : Mat) : ℂ :=
+def mean (p : ℕ) (A B : Matrix n n ℂ) : ℂ :=
   ((balancedWords p 3).map (fun w ↦ trace (evalWord A B w))).sum /
     (balancedWords p 3).length
 
@@ -228,7 +229,7 @@ private theorem word_rotations {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) :
     simp only [balancedWords, List.map_cons, List.map_nil, List.cons_append, List.nil_append] <;>
     decide +kernel
 
-private theorem word_counts {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) :
+theorem word_counts {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) :
     0 < (balancedWords p 3).length ∧ 0 < (gaps p).length ∧
       3 * (balancedWords p 3).length = (p + 3) * (gaps p).length := by
   rcases hp with rfl | rfl | rfl <;>
@@ -241,7 +242,8 @@ private theorem sum_expand {α β : Type*} (l : List α) (f : α → List β) (v
   | nil => rfl
   | cons a l ih => simp [List.flatMap_cons, List.sum_append, ih]
 
-private theorem mean_eq_gaps {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (A B : Mat) :
+variable {n : Type*} [Fintype n] [DecidableEq n] in
+private theorem mean_eq_gaps {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (A B : Matrix n n ℂ) :
     mean p A B = ((gaps p).map (traceGaps43 A B)).sum / (gaps p).length := by
   let v := fun w ↦ trace (evalWord A B w)
   have hr (g : Gap) : ((rotations p g).map v).sum = (p + 3 : ℂ) * traceGaps43 A B g := by
@@ -260,14 +262,15 @@ private theorem mean_eq_gaps {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7) (A B : M
   linear_combination (((gaps p).length : ℂ) / 3) * h -
     ((List.map (traceGaps43 A B) (gaps p)).sum / 3) * hcast
 
-private theorem trace_gap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
-    (a : Fin 3 → ℝ) (B : Mat) :
+variable {n : Type*} [Fintype n] [DecidableEq n] in
+theorem trace_gap {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
+    (a : n → ℝ) (B : Matrix n n ℂ) :
     ((gaps p).length : ℂ) *
       (mean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B -
         trace (((diagonal fun i ↦ (a i : ℂ)) ^ p * B) ^ 3)) =
       walk B (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) := by
-  let d : Fin 3 → ℂ := fun i ↦ a i
-  let f (g : Gap) (i j k : Fin 3) : ℂ := monomial (d i) (d j) (d k) g
+  let d : n → ℂ := fun i ↦ a i
+  let f (g : Gap) (i j k : n) : ℂ := monomial (d i) (d j) (d k) g
   have htrace : traceGaps43 ((diagonal d) ^ 3) B = fun g ↦ walk B (f g) := by
     funext g
     simpa only [traceGaps43, f, monomial, pow_mul, mul_assoc] using
@@ -305,8 +308,9 @@ private theorem diagonal_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   exact Complex.le_def.mpr ⟨sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hlen).mp hre),
     (sub_eq_zero.mp (mul_eq_zero.mp him.symm |>.resolve_left hlen.ne')).symm⟩
 
-private theorem mean_map (p : ℕ) (f : Mat ≃ₐ[ℂ] Mat) (hf : ∀ M, trace (f M) = trace M)
-    (A B : Mat) : mean p (f A) (f B) = mean p A B := by
+variable {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m] in
+theorem mean_map (p : ℕ) (f : Matrix n n ℂ ≃ₐ[ℂ] Matrix m m ℂ) (hf : ∀ M, trace (f M) = trace M)
+    (A B : Matrix n n ℂ) : mean p (f A) (f B) = mean p A B := by
   have h (w : List Bool) : evalWord (f A) (f B) w = f (evalWord A B w) := by
     induction w with
     | nil => simp [evalWord]

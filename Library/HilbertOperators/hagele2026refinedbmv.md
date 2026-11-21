@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMVDimThree
   - D5/S3/Quantum/Analysis/RefinedBMVDimThreeCertificate
   - D5/S3/Quantum/Analysis/RefinedBMVDimThreePairing
+  - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectralValues
 license: citation-only
 triage: anchor
 ---
@@ -75,6 +76,17 @@ The kernel checks the signs by a packed integer comparison, using
 homogeneity and a bound on the coefficient sizes. The pairing uses the
 unique index triangle in dimension three. The all-dimensional proofs
 use centered coefficient matrices.
+
+For five, six, or seven first factors, the same scalar certificate applies
+in every finite dimension if the first factor has at most three distinct
+eigenvalues. If `P_i` is the projection of a spectral label and `B` is the
+second PSD factor, the paired terms are cubic traces of
+`C_i = sqrt(B) P_i sqrt(B)`. The Hilbert–Schmidt pairing of
+`C_i sqrt(C_k)` and `C_j sqrt(C_k)` supplies the bound at the center
+`k`, including when some projections have rank zero. The exponential
+comparison uses the exact dyadic limit from Lemma 2. Section 7's
+unrestricted higher-dimensional question at `(5,3)` allows four or more
+distinct eigenvalues of the first factor.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
