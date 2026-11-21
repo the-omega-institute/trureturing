@@ -187,10 +187,14 @@ theorem frequently_two_signs_of_zero_mean {y a : ℕ → ℝ}
     exact (not_le_of_gt hcB)
       (norm_twisted_limit_le_of_eventually_le hm hy hu hbzero hbtwist hc hle)
   have hzero_neg : Tendsto (average y (fun k => ((-a k : ℝ) : ℂ))) atTop (𝓝 0) := by
-    simpa only [Complex.ofReal_neg, average_neg, neg_zero] using hzero.neg
+    have h := hzero.neg
+    rw [neg_zero] at h
+    refine h.congr fun M => ?_
+    simp only [Complex.ofReal_neg, average_neg]
   have htwist_neg :
       Tendsto (average y (fun k => ((-a k : ℝ) : ℂ) * u k)) atTop (𝓝 (-L)) := by
-    simpa only [Complex.ofReal_neg, neg_mul, average_neg] using htwist.neg
+    refine htwist.neg.congr fun M => ?_
+    simp only [Complex.ofReal_neg, neg_mul, average_neg]
   refine ⟨positive hzero htwist hcL, ?_⟩
   have hnegative := positive hzero_neg htwist_neg (by simpa only [norm_neg] using hcL)
   refine hnegative.mono fun k hk => ?_

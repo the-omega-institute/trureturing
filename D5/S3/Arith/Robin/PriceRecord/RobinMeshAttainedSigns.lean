@@ -138,7 +138,9 @@ theorem actual_attained_canonical_divergent_subsequences {ρ : ℂ}
     have he : α = q + (1 - zeroAbscissa) := by
       dsimp only [q]
       ring
-    have hpow := (congrArg (Real.rpow (N k : ℝ)) he).trans
+    have hpow : Real.rpow (N k : ℝ) α =
+        Real.rpow (N k : ℝ) q * Real.rpow (N k : ℝ) (1 - zeroAbscissa) :=
+      (congrArg (Real.rpow (N k : ℝ)) he).trans
       (Real.rpow_add (hxpos k) q (1 - zeroAbscissa))
     simp only [hpow, mul_assoc]
   have hfactor (i : ℕ → ℕ) (hi : StrictMono i) :
