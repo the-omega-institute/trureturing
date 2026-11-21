@@ -38,7 +38,10 @@ internal sealed class LaoTransversalUniformMinorDocument : IScribeDocumentDefini
                     Paragraph(Text("Normalize the minor to a contraction and deletion and choose a basis K of the contracted set. The four surviving vertices are X, and adjoining any pair from X to K gives an independent set. Augmentation rules out a larger matchable subset of K ∪ X. Adding one universal dummy right vertex still falls short of a matching of K ∪ X, so Hall's theorem finds a left subset whose full neighborhood falls short by at least two. This subset must contain all of X. If it omitted a surviving vertex, restricting a suitable pair matching would leave at most one left vertex unmatched. Remove X from the deficient subset to obtain C. The restricted pair matchings give the opposite bound on the size of B, forcing equality and hence bijectivity.")),
                     Paragraph(Text("Conversely, contract C and delete the remaining vertices outside X. Extending a subset of X of size at most two to a pair proves its independence after contraction. A larger subset cannot be independent because its required matching would have too many vertices for B. This describes every independent set of the minor and yields the relabeling to Fin 4.")),
                     Paragraph(Text("Lao's Question 7.0.2 asks whether any such minor exists. Any minor relabeled to the uniform matroid on Fin 4 has a four-element ground, so applying the equivalence to that ground gives the graph condition. A graph certificate for any four-element X gives the required minor by the reverse implication."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lao-2026-transversal-uniform-minor-question-7-0-2"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, string body) =>
         Describe.Lean(Id(name), DeclarationHandle.Create(Module + "." + name), H(title),

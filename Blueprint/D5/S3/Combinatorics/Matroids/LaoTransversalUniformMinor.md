@@ -82,6 +82,10 @@ $$\forall (L : Type_{u}), \forall (R : Type_{v}), [Finite\left(L\right)] [Finite
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.has_uniform24_minor_iff` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lao-2026-transversal-uniform-minor-question-7-0-2` (proved) by `D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.has_uniform24_minor_iff`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lao-2026-transversal-uniform-minor-question-7-0-2","declaration_gid":"D5/S3/Combinatorics/Matroids/LaoTransversalUniformMinor.has_uniform24_minor_iff","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hin Lon Lao (2026). *Dynamics of Transversal Matroids*. DOI: [10.48550/arXiv.2611.02586](https://doi.org/10.48550/arXiv.2611.02586). URL: <https://arxiv.org/abs/2611.02586v1>.
