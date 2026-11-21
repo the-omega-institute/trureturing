@@ -81,7 +81,7 @@ golden-ledger/
 地层是显式语义坐标,由疆域词表决定:`Meta/domains.yaml` 每个疆域必须携 `stratum` 字段,落格 `S<stratum>/<疆域>/<模块>.lean`。执法两条:(i)H1 闭包不变量:S_k 单元之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然);(ii)一致性:单元 import 闭包之最高地层 ≤ 其疆域地层。`1 + max(import 之地层)` 仅为新概念选层之下界启发,不再定义地层。
 
 ## 2.3 生长律
-目录内计容量文件 >96 或 SL-003 登记材料(`tools/ci/ci-checks.json`,含根目录与 `D5/` 下的 Lean 源及 `Reg/`)中的文件 >1000 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排。阈值常量唯一住在 `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`:文件 >800 行为 Observe 软提示,>1000 行 Block;目录准入上限 96,改动触及的目录超限且含受保护基线没有的计容量路径即 Block,否则 Observe;全树另以 192 为容忍上限,超出即 Block。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写;根目录 `CLAUDE.md` 也豁免文件行数软硬上限;目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,满额 Lean 桶的 Blueprint 镜像在半数模块蓝图化后即超限。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
+目录内计容量文件 >96 或 SL-003 登记材料(`Meta/ci-checks.json`,含根目录与 `D5/` 下的 Lean 源及 `Reg/`)中的文件 >1000 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排。阈值常量唯一住在 `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`:文件 >800 行为 Observe 软提示,>1000 行 Block;目录准入上限 96,改动触及的目录超限且含受保护基线没有的计容量路径即 Block,否则 Observe;全树另以 192 为容忍上限,超出即 Block。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写;根目录 `CLAUDE.md` 也豁免文件行数软硬上限;目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,满额 Lean 桶的 Blueprint 镜像在半数模块蓝图化后即超限。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
 
 **文献笔记容量(delta-only)。** SL-003 对 `Library/**` 下新增或修改的 Markdown 文件检查候选全文，硬上限为 3,000 行；扩展名不区分大小写，空行计入，末尾换行符不额外计一行。超过上限即 Block，诊断包含路径、实测行数和上限。改名或复制的目标路径视为新增；修改已有长文时仍须满足候选全文上限，即使修改未增加行数。删除及未触及的历史长文不在本项检查范围，判官实现变更也不扩大选集。Library Markdown 不适用通用文件行数软硬上限，check-current 及 repository capacity-audit 不检查其行数，目录容量照常计算。超出单篇篇幅的内容拆为独立笔记并以引用衔接。
 
@@ -367,7 +367,7 @@ Downstream projection tools cannot provide registration verdicts or replace prod
 
 **A16 零信任合并门(v7.12, CLAUDE.md 第 19 条之 spec 形)** 提交者身份(维护者/agent/fork)与准入无关,一切 PR 过同一道纯机器门。CI 的目标检查集、current/delta 分工、候选与 base 身份及最终 required check 名由 A22 定义。门脚本、判官与 workflow 取自候选合并树,base 仅以数据参与跨树检查。SL-029 仅报混面警告,SL-022 保护面标注、dev push 检测与独立评审继续适用;strict=false。机器 exit 语义仍为 0=通过、1=违规、2=输入/基础设施失败、3=SL-022 标注。SL-030 与 SL-032 继续按现役实现执行,不把早反馈冒称为不存在 base 判官的保证。
 
-**SL-029 混面警告与删除路径分类**:合法混面 changed set 恰报一条 `ADMISSION-PLANE-MIXED`,为 `DisplaySeverity.Warning` + `AdmissionEffect.Observe`,随后继续全部普通验证。完整 `check` 与 `check-delta` 均在普通结果中保留该警告;不得提前返回成功、以仅含 Observe 的结果拒绝或吞掉其它 Block。单面不报该警告。混面不削减适用的完整 engineering 义务,生产 CI 的测试/检查选择由 CI workflow 内的单元白名单承担。SL-029 不再强制分面,不能防止同一 PR 改弱判官并修改内容;此残余不由警告消除。缺失、畸形、歧义、不安全的 FILEMAP、错误的策略文件分类及无效删除/base 来源仍作基础设施失败。变更路径只有在候选原始快照中缺席、且在不可变 protected-base 原始快照中在场时,才按 protected-base 的 FILEMAP 分类;候选中找不到登记不构成删除证据。每个删除路径必须在 base FILEMAP 中恰有一条有效登记,base FILEMAP 缺失、无法解析、登记缺失或多重匹配均 fail-closed。非空 delta 的候选 FILEMAP 仍须通过准入分类元数据校验,即使所有变更路径均已删除;未涉及实际删除时不要求 base FILEMAP。存续、新增与修改路径保留既有候选 FILEMAP 分类语义。重命名的删除端与新增端分别参与分类,复制源不作为变更端。删除判官文件可同时移除其字面登记;删除内容文件与判官变更同交仍报 `ADMISSION-PLANE-MIXED` 警告并继续验证。候选准入使用这一分类器,base 仅作为字节数据读取。engineering 与 current 不读取 base;测试执行由唯一 required check `required` 汇总，删除项目同步删除其作业与白名单段，不要求它在 candidate 登记表中保留。
+**SL-029 混面警告与删除路径分类**:合法混面 changed set 恰报一条 `ADMISSION-PLANE-MIXED`,为 `DisplaySeverity.Warning` + `AdmissionEffect.Observe`,随后继续全部普通验证。完整 `check` 与 `check-delta` 均在普通结果中保留该警告;不得提前返回成功、以仅含 Observe 的结果拒绝或吞掉其它 Block。单面不报该警告。混面不削减适用的完整 engineering 义务,主仓的检查选择由 `Meta/ci-units.json` 登记。SL-029 不再强制分面,不能防止同一 PR 改弱判官并修改内容;此残余不由警告消除。缺失、畸形、歧义、不安全的 FILEMAP、错误的策略文件分类及无效删除/base 来源仍作基础设施失败。变更路径只有在候选原始快照中缺席、且在不可变 protected-base 原始快照中在场时,才按 protected-base 的 FILEMAP 分类;候选中找不到登记不构成删除证据。每个删除路径必须在 base FILEMAP 中恰有一条有效登记,base FILEMAP 缺失、无法解析、登记缺失或多重匹配均 fail-closed。非空 delta 的候选 FILEMAP 仍须通过准入分类元数据校验,即使所有变更路径均已删除;未涉及实际删除时不要求 base FILEMAP。存续、新增与修改路径保留既有候选 FILEMAP 分类语义。重命名的删除端与新增端分别参与分类,复制源不作为变更端。删除判官文件可同时移除其字面登记;删除内容文件与判官变更同交仍报 `ADMISSION-PLANE-MIXED` 警告并继续验证。候选准入使用这一分类器,base 仅作为字节数据读取。engineering 与 current 不读取 base;测试执行由唯一 required check `required` 汇总，删除项目同步删除其作业与白名单段，不要求它在 candidate 登记表中保留。
 
 **A16.2 准入证书 v3 与规则缩域** `AdmissionCertificate.FormatVersion=3` 的规则处置闭集恰分为 `ExecutedRules`、`SkippedRules`、`DeferredRules`;三者两两不交且并集恰为本轮 catalog。active rule 仅在其具名 `IsAffectedBy` 输入闭包命中时进入 executed 并实际求值,未命中时只进入 skipped;deferred rule 从不调用 affected/evaluate,只以 `(rule_id,case_id,title)` 进入 deferred,不得冒充 executed 或 skipped。证书 fingerprint 的 UTF-8 material 恰为逐行 `admission-certificate-v3`、`input_scope:admission-inputs`、`canonical:<sha256>`、按 catalog 顺序的 `executed:<rule_id>`、`skipped:<rule_id>`、`deferred:<rule_id>:<case_id>`,末尾恰一 LF,再作 lowercase SHA-256。canonical 身份只绑定 FILEMAP 政策以及已读取文件的 `(path,length,sha256)`；未读取的消化辅助正文及其路径清单、文件 mode、base 和 delta 不参与此身份，未读取的必需准入正文导致基础设施失败。格式、scope 标记、规则处置或已读输入变化按对应 material 影响 fingerprint。完整路径与 custody 每轮独立检查，相同 fingerprint 不授权复用准入结论。不同格式的指纹不得直接比较,现役 writer 不双写或迁移旧 fingerprint。每条 active repository rule 必须声明实际消费输入与 affected closure;只有真正的全仓不变量可保留无条件执行且须给依据。缩域测试必须同时钉住未受影响时进入 skipped,以及候选真实修改该规则任一权威输入时仍进入 executed;每条可阻断 active rule 另须有候选坏输入仍唤醒并拒绝的放行侧测试,防止 silent over-scoping。
 
@@ -410,7 +410,7 @@ Metadata access uses bounded, nonblocking coordination scoped to the private adm
 
 **A22 CI 单元作业与 current/delta 契约**
 
-**入口与选工。** 主仓的 `ci-current.yml` 接收事件并调用工具仓锁定提交中的同名可复用工作流。普通检查由该可复用工作流承担，PR 与 push 各自触发；独立缓存入口见本节缓存契约。每个独立程序或测试项目是其中一个单元作业，互无前置依赖的作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 检出安装器与 `Meta/tools-release.json`，再安装包含单元登记的工具包），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按 `tools/ci/ci-units.json` 中唯一 `CI_UNITS` 与执行声明一次判定各单元和 current 子检查是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
+**入口与选工。** 普通检查由 workflow `ci-current.yml` 承担，PR 与 push 各自触发；独立缓存入口见本节缓存契约。主仓运行面向当前检出的 FILEMAP、源码与 Lean/Scribe 检查。工具工程测试、selftest、编译反证与判官的固定样例在工具仓 CI 运行。`detect` 作业只取提交与目录树（blobless、sparse 检出安装器、`Meta/tools-release.json` 和 `Meta/ci-units.json`，先安装固定摘要的工具包），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明一次判定各单元和 current 子检查是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
 
 PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。普通 push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit。全零 before 时，用固定的 GitHub 事件载荷及其 SHA 比较核验新分支引入的提交范围。只创建 ref 且无引入提交时生成空清单。无法取回非零 before、载荷缺失、截断或不一致、以及缺失改动清单，均在选工阶段失败。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 
@@ -428,7 +428,7 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
-`make test` 使用相对 BASE 的变更运行定向 check-current；显式 `FULL_BUILD=1` 运行完整报告与 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `tools/ci/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
+`make test` 使用相对 BASE 的变更运行定向 check-current；显式 `FULL_BUILD=1` 运行完整报告与 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `Meta/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
 
 **共用检查边界。** `ci_contract.py` 消费唯一声明，不解释 workflow、不建立影响图或通用调度器。current 的报告适用性、定向目标、源码 delta 范围及编译审计、Fourier source evidence 的选择取同一契约；单元的 project/command、dotnet、lean 与依赖恢复声明也在该契约内，不在本地或 workflow 维护副本。检查所有者输出实际 check id、原始 exit 与解释；普通检查保留实际退出码。超时、取消保留原始退出；前置拒绝门失败时，其守护的后继明确 blocked，不声称已执行，也不等同未适用；已进入阶段中前置满足的独立适用检查继续给出结果，保留原有可达性与退出语义。make 外层仍遵守其原有 0/2，分类诊断以检查所有者输出为准。
 
@@ -452,17 +452,17 @@ current 在定向 Lean 和 Scribe 检查就绪后运行选中的 Fourier source 
 
 hosted 成功单元输出实际执行的 unit id，current 在所选检查成功后输出自身 id；required 同时核对该输出与命中表及 needs 的作业名一致。缺失或错配的成功执行身份也拒绝；本地不生成 NEEDS 或认证远端结果。
 
-current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模拟 current。delta-only 定义域及债务收缩范围保持，包括 SL-029 混面告警与 SL-030/031/032。delta 不合取测试或其它作业的执行证据；合取由 required check `required` 承担。测试拓扑仍检查候选中的生产/测试关系和测试间依赖；删除测试项目同步删除其单元作业与白名单段，不再要求它留在当前登记表中。
+current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模拟 current。delta-only 定义域及债务收缩范围保持，包括 SL-029 混面告警与 SL-030/031/032。delta 不合取测试或其它作业的执行证据；合取由 required check `required` 承担。测试拓扑仍检查候选中的生产/测试关系和测试间依赖；工具仓维护测试项目的运行登记。
 
 **登记与材料。** `Meta/engineering-projects.json` version 1 严格声明项目 path、assembly、role、include/exclude、references、owner、owned_test_assembly、test_partition、root_namespace、namespace_exclude、global_namespace_exceptions，及顶层 rule_build_inputs。程序集身份、测试归属、Compile 与 namespace 检查按登记消费；历史 reader 只读取自身需要的项目声明，不执行历史程序。不从 MSBuild、目录名称、反射、调用图或 IO 效果推导 CI 选工。
 
-单元白名单 `CI_UNITS` 以 `[单元 id]` 开段，段名等于作业 id；`[*]` 段的模式适用于全部单元且不得排除。其余非空、非 `#` 行各为一个整路径模式：`*` 匹配任意文本（含 `/`），`?` 匹配一个字符，前导 `!` 只从本单元排除；含 `[`、`]`、`{`、`}`、`(`、`)`、`|`、`\`、`@` 的模式被拒绝。路径命中某单元，当且仅当它匹配该单元或 `[*]` 的包含模式且不匹配该单元的排除模式。重复段、重复模式、无包含模式的单元及无单元的白名单均失败。无 base 的事件（新分支、取不到 before、非 PR/push 事件）全部命中。白名单是选工谓词，不从工程登记、FILEMAP 或调用关系推导；工程依赖或测试读取的文件改变时，同一变更修改对应单元的白名单。普通单元作业经 `ci-unit.yml` 以 unit id 读取同一执行声明并调用 `ci_checks.py`：`project` 为测试项目时执行 `make -C tools test TEST_PROJECT=...`，否则执行非空 `command`，二者恰设其一；`dotnet` 为布尔值，`lean` 为 none/toolchain/build。current 的判官缓存键由 runner 平台、实际 `dotnet --version`、同一契约的 `judge_build_args` 配方摘要与 `JUDGE_INPUTS` 所列 git glob pathspec 选中的已跟踪文件路径与 blob id 的 sha256 组成，精确命中时跳过判官编译。
+单元白名单 `CI_UNITS` 以 `[单元 id]` 开段，段名等于作业 id；`[*]` 段的模式适用于全部单元且不得排除。其余非空、非 `#` 行各为一个整路径模式：`*` 匹配任意文本（含 `/`），`?` 匹配一个字符，前导 `!` 只从本单元排除；含 `[`、`]`、`{`、`}`、`(`、`)`、`|`、`\`、`@` 的模式被拒绝。路径命中某单元，当且仅当它匹配该单元或 `[*]` 的包含模式且不匹配该单元的排除模式。重复段、重复模式、无包含模式的单元及无单元的白名单均失败。无 base 的事件（新分支、取不到 before、非 PR/push 事件）全部命中。白名单是选工谓词，不从工程登记、FILEMAP 或调用关系推导；工程依赖或测试读取的文件改变时，同一变更修改对应单元的白名单。主仓的 FILEMAP 作业通过登记的命令校验候选文件树，并将执行结果交给 `required`。current 的判官缓存键由 runner 平台、实际 `dotnet --version`、同一契约的 `judge_build_args` 配方摘要与 `JUDGE_INPUTS` 所列 git glob pathspec 选中的已跟踪文件路径与 blob id 的 sha256 组成，精确命中时跳过判官编译。
 
-`tools/ci/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
+`Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
+**Workflow 与报告消费。** 主仓 FILEMAP 作业执行命中的文件登记检查。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
 
-`StrataLint topology` 读取远端默认分支固定提交的 `ci-current.yml`，核对其 dev pull_request 事件、工作流引用和工具锁，并从该修订的包读取 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
+`StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
 
 离线 truth release bundle 接口验证完整性及调用者声明的成功 check 名称；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
 
@@ -475,8 +475,8 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 
 | 角色 | 责任与边界 |
 | --- | --- |
-| PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），`ci-unit.yml` 默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
-| 独立长 Actions producer | 受保护 dev 的非删除 push 和已校验的手动构建使用 `tools/ci/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，并按上文 Native executable boundary 完成报告所需的依赖范围 FIB 回归；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
+| PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），FILEMAP 作业默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
+| 独立长 Actions producer | 受保护 dev 的非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，并按上文 Native executable boundary 完成报告所需的依赖范围 FIB 回归；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
 | Actions producer 并发 | 全部受保护 ref 的 producer、定时与手动 Lean Release 发布、集成测试的 Lean Release 验证作业共用仓库级原生 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
@@ -511,11 +511,11 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 平台 360m 上限涵盖准备、计算、上传和清理。长 producer 与定时 Release 各有独立的 360m job 上限。
 
-普通 compiled-judge 检查与可选 `make compiled-fib-test` 分离，后者保留编译夹具、compiledFibTests、通用 FIB 行为与 analyzer 测试。`tests-declared-template` 使用 `lean:none`，仅执行不含 FourierBridgeSourceEvidenceTests 的补集；current 在选定 Lean 检查成功后执行该 Fourier 子集。两端使用 `tools/ci/ci-units.json` 中同一执行声明。
+普通 compiled-judge 检查与可选 `make compiled-fib-test` 分离，后者保留编译夹具、compiledFibTests、通用 FIB 行为与 analyzer 测试。工具仓 CI 在固定主仓样例上运行声明模板测试、Fourier 证据测试和 compiled judge 测试。
 
 内容检查与基础设施行为测试分责：Lean、Scribe 及既有可执行源码全集的复制策略 guard 由 architecture 单元消费；普通内容变更不选择重量级 worktree 行为测试。worktree 实现、夹具及实际构建依赖变更仍由 `CI_UNITS` 显式选择行为测试，不通过运行时推导测试影响范围。原生报告的编译与模块 trace 仍是唯一增量权威；模块注册只建立 Lake 依赖，不逐模块同步等待编译输入分类；分类完成后由依赖 continuation 准备对应模块；FIB 先将完整编译 Application 输入及可复用 reading 写入既有 spool，仅实际 generated 工作大于零时才准备 analyzer，再完成并校验模块。保留原有输入 trace 和失败传播，不把判官程序身份混入报告 trace。共享程序构建与被选中的审计执行分责，缓存复用不免除审计。一次构建同时包含 Inspector 与下游审计程序时，在既有下游 Lake workspace 中共同构建，避免对同一程序闭包重复注册与缓存准备；单独 Inspector 或 Reg 入口保持原职责。Release 传输契约按既有 transport、verification 与本地/旧名 case 所有者分别执行，各组保留完整用例并独立使用原有子进程 hang guard；CI 单元选择、累计计算预算和功能判据不随分组改变。
 
-每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `tools/ci/ci-cache-paths.json` 声明。长 producer 的聚合报告入口按完整编译 Application 输入差量执行所需 FIB 回归。required 同时核对 source、current 和各命中单元的真实结果。
+每个 job 的本地 `.lake/build` 承载编译、模块报告、聚合报告与材料。Actions cache 传输的原生路径由 `Meta/ci-cache-paths.json` 声明。长 producer 的聚合报告入口按完整编译 Application 输入差量执行所需 FIB 回归。required 同时核对 source、current 和各命中单元的真实结果。
 
 **触发、身份、读写与预算。** 表中写入资格还须满足下文工作量与成功条件；producer 不在 `required` 的 needs 中，不能替代实际选中的检查。
 
@@ -576,7 +576,7 @@ Release 的 execution 摘要只投影声明的 toolchain pin、工具集合、�
 
 长 Actions 核心在报告构建后、snapshot/save 前调用现有 `publication.py validate` 严格验证完整 bundle；失败保留原始原因且不发布新的 project seed。显式重产失败不封成功 receipt，不触发另一种修复。普通 `REBUILD_REPORT_CACHE=1`、默认长 producer、PR、push 和定时 Release 均不隐式启用这一选项；没有 FIB 专用扫描、自动迁移或读取器兼容分支。此能力不证明远端故障已恢复：须安装当前候选后，在固定提交显式长重产，取得既有严格 Release 发布/取回验证及正常短 CI 消费证据，再结算远端恢复。
 
-调用依据：[普通 CI](../../../.github/workflows/ci-current.yml)、[单元工作流](https://github.com/the-omega-institute/trureturing-tools/blob/6a8e3ac6228a8f3bbfd6d994f45f9f2eea05f0d4/.github/workflows/ci-unit.yml)、[缓存构建 action](https://github.com/the-omega-institute/trureturing-tools/blob/6a8e3ac6228a8f3bbfd6d994f45f9f2eea05f0d4/tools/ci/actions/lean-cache-produce/action.yml)、[手动与定时入口](../../../.github/workflows/lean-cache-publish.yml)、[Actions 运输](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/scripts/worktree/lean_actions.py)、[Release 发布/取回](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/scripts/worktree/lean_cache_release.py)、[报告复用](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/lean-inspector/reuse.py)、[免报告理论检查](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/StrataLint.Engine/Rules/RuleCatalog.cs)。
+调用依据：[普通 CI](../../../.github/workflows/ci-current.yml)、[长 Actions 核心](../../../.github/actions/lean-cache-produce/action.yml)、[手动与定时入口](../../../.github/workflows/lean-cache-publish.yml)、[Actions 运输](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/scripts/worktree/lean_actions.py)、[Release 发布/取回](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/scripts/worktree/lean_cache_release.py)、[报告复用](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/lean-inspector/reuse.py)、[免报告理论检查](https://github.com/the-omega-institute/trureturing-tools/blob/f2cb19194353ed36282c05c164c9c52d3816befd/tools/StrataLint.Engine/Rules/RuleCatalog.cs)。
 
 project 恢复在 current 与 Lean build 单元中先查读者可见的种子：pull_request 优先取自身 `refs/pull/<number>/merge`，该 ref 无合格种子时再取 `refs/heads/$GITHUB_BASE_REF`；push 取 `$GITHUB_REF`。`lean_actions.py keys` 使用可选的 `GH_TOKEN`、`GITHUB_REPOSITORY` 与 `GITHUB_API_URL`（默认 `https://api.github.com`），通过标准库 HTTP 请求完整分页的 Actions cache 列表，显式按 `created_at` 降序分页；每行的 cache `id` 须为互异正整数，重复、缺失或无效 id，或不同 id 的总数与 `total_count` 不符，均走具名不完整列表 fallback。只接纳 ref 精确相同、key 为当前 project restore prefix 加正十进制 run id 与 attempt 的条目，按数值 `(run id, attempt)` 取最大值，不使用列表顺序或时间字段。`project_restore_key` 是独立的恢复输出，`project_key` 仍是本次发布 key。查找未配置、请求失败、HTTP 错误、列表畸形或不完整、无合格条目时具名报告原因并请求本次 key，保留现有 prefix restore；偏好 key 被淘汰或不兼容时也经同一 prefix fallback 与既有恢复入口补齐。每次请求保留固定网络 timeout；整个可选查找由单个固定 10 秒 transport hang guard 限定，涵盖名称解析、连接、headers、body 及全部分页。查找在 daemon thread 中执行；guard 到期即放弃等待，以 `lookup-transport-hang-guard` 原因输出既有 fallback 收据并继续本次 key，不重试或轮询。daemon thread 不输出收据或 key。restore 收据同时给出 requested key 与实际 matched key。此偏好仅是性能启发式；run id 大小不证明 push 顺序、构建材料包含关系或有效性，查找与缓存命中均不承载检查成功或判词。
 
@@ -665,7 +665,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 # 第七部:CI 作业与结果
 
-`ci-current.yml` 的 `detect` 与本地 gate 按 `tools/ci/ci-units.json` 中唯一 `CI_UNITS` 判定命中单元。
+`ci-current.yml` 的 `detect` 与本地 gate 按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 判定命中单元。
 current、FILEMAP、selftest、编译反证与各测试项目分别运行；
 `required` 合取实际命中单元的成功与未命中单元的跳过。
 普通 PR 和 push 的 current 使用定向 Lean 目标与 Scribe 输入。整库缓存由独立 producer 刷新。

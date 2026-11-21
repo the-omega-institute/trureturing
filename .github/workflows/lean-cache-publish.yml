@@ -1,5 +1,11 @@
 name: Lean build cache publication
 
+# Dev pushes and pinned manual builds refresh the Actions cache.
+# Scheduled runs publish the protected-dev Release.
+# Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
+# allow up to the GitHub-hosted 360-minute job limit.  Example:
+# gh workflow run lean-cache-publish.yml --ref dev \
+#   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
   push:
     branches: [dev]
@@ -37,19 +43,305 @@ on:
         type: string
         default: '100'
 
-permissions:
-  contents: write
-  actions: write
-  pull-requests: read
+permissions: {}
+
+# Replace only a pending automatic refresh for the same ref. Manual and
+# scheduled runs each get their own workflow group before job-level locking.
+concurrency:
+  group: lean-cache-publication-${{ github.event_name == 'push' && github.ref || github.run_id }}
+  cancel-in-progress: false
 
 jobs:
-  run:
-    uses: the-omega-institute/trureturing-tools/.github/workflows/lean-cache-publish.yml@a332ab65560ad7b7c0c51773349159ac470999a8
-    with:
-      source_ref: ${{ inputs.source_ref || '' }}
-      source_sha: ${{ inputs.source_sha || '' }}
-      operation: ${{ inputs.operation || '' }}
-      release_seed_tag: ${{ inputs.release_seed_tag || '' }}
-      release_seed_producer: ${{ inputs.release_seed_producer || '' }}
-      regenerate_report_artifacts: ${{ inputs.regenerate_report_artifacts || false }}
-      native_report_batch_modules: ${{ inputs.native_report_batch_modules || '' }}
+  producer:
+    name: Produce the protected branch Lean cache
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: read
+    if: >-
+      (github.event_name == 'push' && github.event.deleted == false && github.ref_protected &&
+        github.ref == 'refs/heads/dev') ||
+      (github.event_name == 'workflow_dispatch' && inputs.operation == 'build')
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the manual source ref and immutable pin
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          WORKFLOW_REF: ${{ github.ref }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_REF" == "$WORKFLOW_REF" ]] || {
+            echo "CACHE_SOURCE_ERROR source_ref must equal the workflow dispatch ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
+            echo "CACHE_SOURCE_ERROR source ref is outside dev/integration protected scope" >&2
+            exit 2
+          }
+          git check-ref-format "$SOURCE_REF" >/dev/null || {
+            echo "CACHE_SOURCE_ERROR source ref is not a valid Git ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != "$(printf '%040d' 0)" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
+            exit 2
+          }
+          branch="${SOURCE_REF#refs/heads/}"
+          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
+          [[ "$protected" == true ]] || {
+            echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
+            exit 2
+          }
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
+          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
+            exit 2
+          }
+          {
+            echo "STRATALINT_CACHE_SOURCE_REF=$SOURCE_REF"
+            echo "STRATALINT_CACHE_SOURCE_COMMIT=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_SOURCE_VALIDATED=true"
+          } >> "$GITHUB_ENV"
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
+          fi
+          bash tools/scripts/workflow/ci-entry.sh
+      - name: Produce the Actions cache
+        uses: ./.github/actions/lean-cache-produce
+        with:
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts && 'true' || 'false' }}
+          native-report-batch-modules: ${{ inputs.native_report_batch_modules || '100' }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+
+  publish:
+    name: Publish the Lean build cache
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
+    permissions:
+      contents: write
+      actions: write
+    runs-on: runner-for-trureturing-cache-release-publish
+    timeout-minutes: 360
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+      - name: Build the scheduled Release producer
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional validated seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Publish the protected-dev Release snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
+
+  manual-release-authorize:
+    name: Authorize the manual cache Release
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - name: Authorize the caller and pin protected dev content
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_ACTOR" == loning && "$GITHUB_TRIGGERING_ACTOR" == loning ]] || {
+            echo '::error::Only loning may start or rerun manual cache Release publication.'
+            exit 1
+          }
+          [[ "$GITHUB_REF_PROTECTED" == true && "$GITHUB_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
+            echo '::error::Manual cache Release requires a protected dev or integration workflow ref.'
+            exit 1
+          }
+          [[ "$SOURCE_REF" == refs/heads/dev && "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != 0000000000000000000000000000000000000000 ]] || {
+            echo '::error::Manual cache Release requires source_ref=refs/heads/dev and a nonzero full source_sha.'
+            exit 1
+          }
+          source="$(gh api "repos/$REPOSITORY/branches/dev")"
+          jq -e '.name == "dev" and .protected == true' <<< "$source" >/dev/null || {
+            echo '::error::The dev source branch must be protected.'
+            exit 1
+          }
+          tip="$(jq -er '.commit.sha' <<< "$source")"
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$tip" --jq '.merge_base_commit.sha')"
+          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
+            echo '::error::source_sha must be on the protected dev branch snapshot.'
+            exit 1
+          }
+          echo "sha=$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+
+  manual-release:
+    name: Manually publish the Lean build cache
+    needs: manual-release-authorize
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
+    permissions:
+      contents: write
+      actions: write
+    runs-on: runner-for-trureturing-cache-release-publish
+    timeout-minutes: 120
+    concurrency:
+      group: lean-cache-producer
+      queue: max
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - name: Recheck the actor for this publication attempt
+        run: |
+          [[ "$GITHUB_ACTOR" == loning && "$GITHUB_TRIGGERING_ACTOR" == loning ]] || {
+            echo '::error::Only loning may start or rerun manual cache Release publication.'
+            exit 1
+          }
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.manual-release-authorize.outputs.source_sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          RELEASE_SOURCE_SHA: ${{ needs.manual-release-authorize.outputs.source_sha }}
+        run: GITHUB_SHA="$RELEASE_SOURCE_SHA" bash tools/scripts/workflow/ci-entry.sh
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+      - name: Build the manual Release producer
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional validated seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Publish the protected-dev Release snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1

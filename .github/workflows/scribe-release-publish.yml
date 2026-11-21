@@ -12,8 +12,34 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: scribe-resources-publication
+  cancel-in-progress: false
+
 jobs:
-  run:
-    uses: the-omega-institute/trureturing-tools/.github/workflows/scribe-release-publish.yml@a332ab65560ad7b7c0c51773349159ac470999a8
-    with:
-      ref: ${{ inputs.ref }}
+  publish:
+    name: Publish the Scribe resource pack
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    steps:
+      - id: checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || 'dev' }}
+          persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+      - name: Publish the exact content digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TARGET: ${{ steps.checkout.outputs.commit }}
+        run: make scribe-release-publish TARGET="$RELEASE_TARGET"

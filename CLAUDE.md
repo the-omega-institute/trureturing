@@ -14,7 +14,7 @@
 
 在仓库根目录运行；`<…>` 换成实际值。完整参数以 `make help`、`make -C tools help` 和脚本用法为准；有 make 目标就用目标（第 8.1 条），长任务用宿主后台作业（第 8.6 条）。
 
-**工具依赖**：主仓在 `Meta/tools-release.json` 锁定工具发行标签、压缩包 SHA-256 和可复用工作流的提交。根 Makefile 安装并调用包内命令。直接运行 `tools/` 中的命令或进入 `Reg/` 调用 Lake 前先运行 `make install-tools`。工具与测试源码在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 维护。
+**工具依赖**：主仓在 `Meta/tools-release.json` 钉住工具 release 及 SHA-256。根 Makefile 自动安装。直接运行 `tools/` 中的命令或进入 `Reg/` 调用 Lake 前先运行 `make install-tools`。工具与测试源码在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 维护。
 
 **Python 版本**：仓库脚本及构建、测试、gate 使用 **Python 3.12 或更新版本**。执行前用 `python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version; import tomllib; print(sys.executable, sys.version)'` 核对实际解释器。版本不符时，先选择已安装的合规 Python，将其 `python3` 所在目录放在本次命令的 `PATH` 最前，并让 Make、Shell、Lean 子进程继承该环境；macOS 可使用 Homebrew 安装或升级的 Python。本条为 agent 执行约定，自动版本检查以现役脚本为准。
 
@@ -26,7 +26,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓运行 `python3 tools/consumer/pin.py <release-tag>` 同步版本、摘要和工作流引用。稳定版本从工具仓 `main` 发布。
+工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓运行 `python3 tools/consumer/pin.py <release-tag>` 锁定版本与 SHA-256。稳定版本从工具仓 `main` 发布。
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -297,7 +297,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 **地址由算法算出,不开会。** GID 是规范地址(F 层为字面路径),地层由 import 偏序算;桶满只裂不迁,历史只追加。算法地址使并行贡献不撞址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树只呈当前最优形态;格式/规则/词表/语料单 PR 全量迁移并机器验证,不留 grandfather、legacy alias、旧格式双读、待晋升隔离区或 deprecated 存根。禁的是为旧状态保留运行时机制;Chronicle/冻结账本/spec 修订等当前审计链不是兼容层,历史归 git,过程材料仍依第 2.10 条不保存。
-**数据居所律**:harness 在 `tools/`,测试在 `tools/tests/`;程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)源码只许类型/逻辑/loader/writer/测试等程序,`tools/` 保护面的数据限于下述测试 fixture，以及已校验工具包中由对应验证器读取的三个 CI 登记（`tools/ci/ci-units.json`、`ci-checks.json`、`ci-cache-paths.json`）。判例、常数、目录条目、文档等声明实例须在程序目录外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{FILEMAP.toml,domains.yaml}`、`Library/`、`Evidence/`、`D5/*.lean`),或测试项目内部的合成 fixture(非 canonical 数据)。类型/schema 留程序集,实例集合移出;类型内封闭字母表(S0–S4、PLANE)可写死并加一处锚定测试。数据文件的 parse 是 harness,须 fail-closed loader+schema。内容不因重要而进入 SL-022;golden corpus/判例住顶层 `Golden/`,由 strict loader 守。
+**数据居所律**:harness 在 `tools/`,测试在 `tools/tests/`;程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)源码只许类型/逻辑/loader/writer/测试等程序,整个 `tools/` 保护面不得住 `kind=data`。判例、常数、目录条目、文档等声明实例须在程序目录外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{FILEMAP.toml,domains.yaml}`、`Library/`、`Evidence/`、`D5/*.lean`),或测试项目内部的合成 fixture(非 canonical 数据)。类型/schema 留程序集,实例集合移出;类型内封闭字母表(S0–S4、PLANE)可写死并加一处锚定测试。数据文件的 parse 是 harness,须 fail-closed loader+schema。内容不因重要而进入 SL-022;golden corpus/判例住顶层 `Golden/`,由 strict loader 守。
 **停用边界**:`Meta/StrataLint/` 旧位置不复存在,保守扩展重放/C0/证书机器已退役。当前 SL-008 只判成员状态与当前树一致,无历史单调判官(第 1.3、4.7 条)。
 *成熟锚*:SSOT、事件溯源、内容寻址、mathlib 治理、trunk-based 单版本、expand–contract 必收尾、git 历史库、config outside binary、资产/引擎分离。〔守护:**硬+软**·GID/地层/词表/文件头由 lint 判;兼容垫层靠评审,识别即拆〕
 
@@ -536,7 +536,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- 主仓的 `ci-current.yml` 将事件交给工具仓锁定的同名工作流：`detect` 作业一次列出改动路径,按 `tools/ci/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。tests-declared-template 保持 lean:none，current 消费互补的 Fourier 证据子集。检查只执行候选代码,base 只作为固定数据。
+- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;主仓 CI 验证 FILEMAP、源码、当前快照及与基线的差异，主仓另维护 Lean 缓存和 Scribe 资源发布。工具仓 CI 构建工具，运行工具测试、selftest 和编译反证。主仓的单元作业只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。`make pr`/`make pr-open` 默认 arm auto-merge,required checks 绿后自动合;`AUTO_MERGE=0` 或 `DRAFT=1` 不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
@@ -800,9 +800,9 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 ### 8.16 CI 与判官的显式白名单权威
 
-CI 选工的唯一权威是 `tools/ci/ci-units.json` 的 `CI_UNITS` 与单元执行声明，本地 gate 和远程 `detect` 共享消费:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与单元作业一一对应、命中者成功、未命中者跳过；另直接核对仅属于已选 current 的 source 前置 phase。该 phase 不增 CI_UNITS 项，未选 current 时跳过；确定性源码拒绝阻止所守护的后继，bootstrap/input 失败与 blocked 保留原分类及有效 fallback，执行和累计预算依 SPEC A22。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
+CI 选工的唯一权威是 `Meta/ci-units.json` 的 `CI_UNITS` 与单元执行声明，本地 gate 和远程 `detect` 共享消费:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 校验完整改动路径列表,不设路径数量截断,一次判定全部单元并输出命中表;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与单元作业一一对应、命中者成功、未命中者跳过；另直接核对仅属于已选 current 的 source 前置 phase。该 phase 不增 CI_UNITS 项，未选 current 时跳过；确定性源码拒绝阻止所守护的后继，bootstrap/input 失败与 blocked 保留原分类及有效 fallback，执行和累计预算依 SPEC A22。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
 
-FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `tools/ci/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
+FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
 
 登记缺失与冲突具名失败,只修对应登记;不得通过 MSBuild、目录/名称启发式、反射、调用图或 IO 效果推导 CI 影响范围。缓存只复用增量工作,命中不构成检查成功。实际 required set、事件、覆盖、性能及稳定验证依 §8.12;workflow 测试禁令依 §8.13。
 

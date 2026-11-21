@@ -1,5 +1,7 @@
 name: CI
 
+# The required job verifies the selected source, current and FILEMAP checks.
+
 on:
   pull_request:
     branches: [dev, 'integration-**']
@@ -12,18 +14,382 @@ permissions:
   actions: read
   pull-requests: read
 
-jobs:
-  checks:
-    uses: the-omega-institute/trureturing-tools/.github/workflows/ci-current.yml@a332ab65560ad7b7c0c51773349159ac470999a8
+env:
+  JUDGE_LOCKFILES: |
+    tools/StrataLint.Cli/packages.lock.json
+    tools/StrataLint.Configuration/packages.lock.json
+    tools/StrataLint.Engine/packages.lock.json
+    tools/StrataLint.Engineering/packages.lock.json
+    tools/StrataLint.Runtime/packages.lock.json
+    tools/StrataLint.FileMap/packages.lock.json
+    tools/StrataLint.Lean/packages.lock.json
+    tools/StrataLint.Scribe/packages.lock.json
+    tools/StrataLint.TestEvidence/packages.lock.json
+    tools/Trureturing.Truth/packages.lock.json
 
-  required:
-    needs: checks
-    if: always()
-    permissions: {}
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  detect:
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 5
+    timeout-minutes: 10
+    outputs:
+      base: ${{ steps.entry.outputs.base }}
+      hits: ${{ steps.detect.outputs.hits }}
+      report: ${{ steps.detect.outputs.report }}
     steps:
-      - name: Report the required check
+      # Check out only the release bootstrap and CI selection contract.
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
-          RESULT: ${{ needs.checks.result }}
-        run: test "$RESULT" = success
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+          GH_TOKEN: ${{ github.event_name == 'push' && github.event.created && github.token || '' }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - id: detect
+        name: Decide which units the change hits
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
+
+  source:
+    needs: detect
+    if: fromJSON(needs.detect.outputs.hits || '{}').current
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    outputs:
+      source_status: ${{ steps.prefix.outputs.source_status }}
+      continuation: ${{ steps.prefix.outputs.continuation }}
+      judge_key: ${{ steps.judge_key.outputs.key }}
+      compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Verify the candidate and list the changed paths
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+          cache: false
+      - id: nuget
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
+      - id: judge_key
+        env:
+          JUDGE_INPUTS: |
+            Meta/tools-release.json
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+        run: |
+          sdk="$(dotnet --version)"
+          [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
+          recipe="$(python3 tools/scripts/workflow/ci_checks.py judge-recipe | sha256sum | cut -c1-16)"
+          specs=()
+          while IFS= read -r spec; do [[ -n "$spec" ]] && specs+=(":(glob)$spec"); done <<< "$JUDGE_INPUTS"
+          listing="$RUNNER_TEMP/judge-inputs"
+          git ls-files -s -z -- "${specs[@]}" > "$listing"
+          [[ -s "$listing" ]] || { echo "judge inputs select no tracked file" >&2; exit 2; }
+          inputs="$(sha256sum < "$listing" | cut -c1-64)"
+          echo "key=judge-${{ runner.os }}-${{ runner.arch }}-sdk$sdk-$recipe-$inputs" >> "$GITHUB_OUTPUT"
+      - id: judge
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
+      - id: compute_budget
+        name: Initialize the cumulative current compute allowance
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: prefix
+        name: Check the selected source prerequisite
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
+      - id: remainder
+        name: Carry the remaining current compute allowance
+        if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
+
+  # Both events use the same scoped Lean and Scribe checks.
+  current:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
+    runs-on: ubuntu-24.04-arm
+    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
+    timeout-minutes: 360
+    outputs:
+      unit: ${{ steps.checked.outputs.unit }}
+    env:
+      STRATALINT_ACCEPT_COLD_BUILD: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Verify the candidate and list the changed paths
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_EXPECTED_BASE: ${{ needs.detect.outputs.base }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Cache the tools used by the protected base snapshot
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: python3 .github/scripts/install-tools.py --cache-revision "$BASE"
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+          cache: false
+      - id: nuget
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
+      - id: judge
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ needs.source.outputs.judge_key }}
+      - id: compute_budget
+        name: Resume the cumulative current compute allowance
+        env:
+          COMPUTE_REMAINING: ${{ needs.source.outputs.compute_remaining }}
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py resume-current "$budget" "$COMPUTE_REMAINING"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: current_prepare
+        name: Prepare judge dependencies
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+        run: python3 tools/scripts/workflow/ci_checks.py current prepare
+      - id: build_judge
+        name: Build the judge
+        if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - id: lean_plan
+        name: Select affected Lean inputs
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: ${{ !cancelled() && steps.lean_plan.outputs.needs_lean == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+      - id: keys
+        if: ${{ !cancelled() && steps.prepared.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: ${{ !cancelled() && steps.keys.outputs.elan_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - id: toolchain
+        if: ${{ !cancelled() && steps.keys.outcome == 'success' }}
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' }}
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_restore_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - id: lean_seeds
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
+        name: Restore optional Lean build seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Theory-only file and capacity checks
+        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: pr_lean
+        name: Check current and delta with affected Lean and Scribe inputs
+        if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
+      - id: checked
+        name: Confirm selected current checks succeeded
+        run: echo 'unit=current' >> "$GITHUB_OUTPUT"
+
+  filemap:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    outputs:
+      unit: ${{ steps.run.outputs.unit }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - name: Verify the candidate
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: candidate
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - id: definition
+        run: python3 tools/scripts/workflow/ci_checks.py describe filemap
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
+          cache: false
+      - id: nuget
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(fromJSON(steps.definition.outputs.definition)['cache-dependency-path']) }}
+      - name: Restore FILEMAP dependencies
+        run: python3 tools/scripts/workflow/ci_checks.py unit filemap --prepare
+      - name: Initialize the FILEMAP compute allowance
+        run: |
+          budget="$RUNNER_TEMP/unit-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: run
+        name: Check FILEMAP conformance
+        env:
+          CI: 'true'
+          CI_DOTNET_PREPARED: '1'
+          DOTNET_CLI_UI_LANGUAGE: en-US
+        run: python3 tools/scripts/workflow/ci_checks.py unit filemap
+
+  # The one required check. It always runs, so a failed or cancelled unit, or a
+  # failed detection, is red rather than skipped.
+  required:
+    if: always()
+    needs: [detect, source, current, filemap]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/scripts/install-tools.py
+            /Meta/tools-release.json
+            /Meta/ci-units.json
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - env:
+          NEEDS: ${{ toJSON(needs) }}
+          HITS: ${{ needs.detect.outputs.hits }}
+        run: python3 tools/scripts/workflow/ci_required.py

@@ -1,0 +1,54 @@
+{
+  "CI_UNITS": [
+    "[*]",
+    "Meta/ci-units.json",
+    "Meta/tools-release.json",
+    ".github/workflows/ci-current.yml",
+    "[current]",
+    "*",
+    "!README.md",
+    "!docs/VISION.md",
+    "!docs/assets/inquiry-cycle.svg",
+    "!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+    "!docs/develop/spec/trureturing_engineering_optimization_v1.md",
+    "!docs/reports/*",
+    "!tools/TestSupport/StrataLint.RuleTestSupport/*",
+    "!tools/lean-inspector/README.md",
+    "!tools/scripts/agent/openproblem/README.md",
+    "!tools/scripts/agent/openproblem/SCREENED-OUT*.md",
+    "!tools/scripts/agent/prime_slabs/CPU.md",
+    "[filemap]",
+    "*",
+    "!README.md",
+    "!docs/VISION.md",
+    "!docs/assets/inquiry-cycle.svg",
+    "!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+    "!docs/develop/spec/trureturing_engineering_optimization_v1.md",
+    "!docs/reports/*",
+    "!tools/TestSupport/StrataLint.RuleTestSupport/*",
+    "!tools/lean-inspector/README.md",
+    "!tools/scripts/agent/openproblem/README.md",
+    "!tools/scripts/agent/openproblem/SCREENED-OUT*.md",
+    "!tools/scripts/agent/prime_slabs/CPU.md"
+  ],
+  "current": {
+    "report_paths": "*\n",
+    "delta_paths": "*\n!Blueprint/*.md\n!Evidence/*\n!Golden/Projection/*.json\n!Problems/*\n!README.md\n!docs/VISION.md\n!docs/assets/inquiry-cycle.svg\n!docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md\n!docs/develop/spec/trureturing_engineering_optimization_v1.md\n!docs/reports/*\n!tools/TestSupport/StrataLint.RuleTestSupport/*\n!tools/lean-inspector/README.md\n!tools/scripts/agent/openproblem/README.md\n!tools/scripts/agent/openproblem/SCREENED-OUT*.md\n!tools/scripts/agent/prime_slabs/CPU.md\n",
+    "judge_build_args": [
+      "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+      "--configuration",
+      "Release",
+      "-p:RestoreLockedMode=true",
+      "-nologo"
+    ]
+  },
+  "units": {
+    "filemap": {
+      "dotnet": true,
+      "lean": "none",
+      "project": "",
+      "command": "make filemap-conform",
+      "cache-dependency-path": "tools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
+    }
+  }
+}
