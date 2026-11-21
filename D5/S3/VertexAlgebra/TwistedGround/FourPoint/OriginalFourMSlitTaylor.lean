@@ -105,7 +105,8 @@ private theorem small_for_norm {r : ℂ} (hr : ‖r‖ < 1) :
     ∀ᶠ u : ℂ in 𝓝 0, ‖u‖ + ‖r‖ < 1 :=
   (isOpen_lt (continuous_norm.add continuous_const) continuous_const).mem_nhds (by simpa using hr)
 
-private theorem coefficient_congr {f g : ℂ → ℂ} (h : f =ᶠ[𝓝 0] g) (n : ℕ) :
+/-- Equal germs at the external origin have the same Taylor coefficients. -/
+theorem coefficient_congr {f g : ℂ → ℂ} (h : f =ᶠ[𝓝 0] g) (n : ℕ) :
     coefficient n f = coefficient n g :=
   congrArg (fun z : ℂ => z / (n.factorial : ℂ)) (h.iteratedDeriv_eq n)
 

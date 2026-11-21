@@ -23,9 +23,8 @@ open scoped Topology
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMDLipNome
 
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
-open OriginalFourMPeriodSource (dLip dPeriod dPeriod_eq_slit)
-open private lipSign real_d_aux analyticAt_tau dLip_im_ne_zero
-  mem_doubleSlit_of_im complement_mem from
+open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit dPeriod dPeriod_eq_slit)
+open private lipSign real_d_aux analyticAt_tau complement_mem from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
 
 /-- The continuation of the D period ratio on its indicated lip. -/
@@ -37,7 +36,7 @@ def dNome (upperA : Bool) (t : ℂ) : ℂ := Complex.exp (I * (Real.pi : ℂ) * 
 
 theorem dTau_eq_tau {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
     dTau upperA t = tau t := by
-  have htd : t ∈ doubleSlit := mem_doubleSlit_of_im (dLip_im_ne_zero ht)
+  have htd : t ∈ doubleSlit := dLip_mem_doubleSlit ht
   have hP : slitPeriod (1 - t) ≠ 0 := slitPeriod_ne_zero (complement_mem htd)
   have hQ : slitPeriod t ≠ 0 := slitPeriod_ne_zero htd.1
   have he := dPeriod_eq_slit ht
