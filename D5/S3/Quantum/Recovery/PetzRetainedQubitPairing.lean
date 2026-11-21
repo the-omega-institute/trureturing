@@ -1126,6 +1126,72 @@ private theorem qubit_evaluation {e : Type*} [Fintype e] [DecidableEq e]
   exact add_le_add h₀ h₁
 
 
+private theorem qubit_close_evaluation {e : Type*} [Fintype e] [DecidableEq e]
+    (p q : Fin 2 → ℝ) (U : Matrix (Fin 2) (Fin 2) ℂ)
+    (X Y : Matrix (Fin 2 × e) (Fin 2 × e) ℂ)
+    (hclose : ∀ i j, (1 / 5 : ℝ) ≤ logistic (sourceGap p j) ∨
+      (1 / 5 : ℝ) ≤ logistic (referenceGap q i)) :
+    let F (t : ℝ) := mixedBoundary p q X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t
+    ‖F 0‖ ^ 2 ≤ (8 / 3) * (∫ t, petzWeight t * ‖F t‖ ^ 2) := by
+  dsimp only
+  let F (t : ℝ) := mixedBoundary p q X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t
+  have hentry (r c : Fin 2 × e) :
+      Integrable (fun t => petzWeight t * ‖F t r c‖ ^ 2) ∧
+      ‖F 0 r c‖ ^ 2 ≤ (8 / 3) * (∫ t, petzWeight t * ‖F t r c‖ ^ 2) := by
+    obtain ⟨i, u⟩ := r
+    obtain ⟨j, v⟩ := c
+    let ω : Fin 3 → ℝ := ![0, sourceGap p j, referenceGap q i]
+    let a : Fin 3 → ℂ :=
+      ![central p q U X Y i j u v, sourceOff U X i j u v, referenceOff p q U Y i j u v]
+    have hnorm (t : ℝ) : ‖F t (i,u) (j,v)‖ = ‖exponentialSum ω a (t : ℂ)‖ := by
+      dsimp only [F]
+      rw [mixedBoundary_qubit_entry, norm_mul, Complex.norm_exp]
+      simp [ω, a, frequency, Complex.mul_re, Complex.mul_im]
+    simp only [hnorm]
+    have hcorr (k : Fin 3) : ‖correlation ω 0 k‖ ^ 2 = logistic (ω k) := by
+      have h := logistic_correlation ω 0 k
+      have hzero : ω 0 = 0 := rfl
+      rw [hzero, sub_zero] at h
+      exact_mod_cast h
+    rcases hclose i j with hs | hq
+    · exact close_pair_weighted_evaluation ω a 1 (by decide) (by rwa [hcorr])
+    · exact close_pair_weighted_evaluation ω a 2 (by decide) (by rwa [hcorr])
+  simp only [F, frobenius_sq, Finset.mul_sum]
+  rw [integral_finsetSum _ (fun r _ => integrable_finsetSum _ (fun c _ => (hentry r c).1))]
+  simp_rw [integral_finsetSum _ (fun c _ => (hentry _ c).1), Finset.mul_sum]
+  exact Finset.sum_le_sum fun r _ => Finset.sum_le_sum fun c _ => (hentry r c).2
+
+private theorem logistic_eq_at_zero (gap : Fin 2 → ℝ) (hgap : gap 1 = -gap 0)
+    (i : Fin 2) : logistic (gap i) = logistic (gap 0) := by
+  fin_cases i
+  · rfl
+  · change logistic (gap 1) = _
+    rw [hgap, logistic_neg]
+
+private theorem qubit_evaluation_all_gaps {e : Type*} [Fintype e] [DecidableEq e]
+    (p q : Fin 2 → ℝ) (U : Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : Uᴴ * U = 1) (hU' : U * Uᴴ = 1)
+    (X Y : Matrix (Fin 2 × e) (Fin 2 × e) ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian) :
+    let F (t : ℝ) := mixedBoundary p q X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t
+    ‖F 0‖ ^ 2 ≤ K₂ * (∫ t, petzWeight t * ‖F t‖ ^ 2) := by
+  have hs := logistic_eq_at_zero (sourceGap p) (opposite_gaps p q 0 0).1
+  have hq := logistic_eq_at_zero (referenceGap q) (opposite_gaps p q 0 0).2
+  by_cases hfar : logistic (sourceGap p 0) ≤ 1 / 5 ∧ logistic (referenceGap q 0) ≤ 1 / 5
+  · have hx (j : Fin 2) := (hs j).le.trans hfar.1
+    have hy (i : Fin 2) := (hq i).le.trans hfar.2
+    exact qubit_evaluation p q U hU hU' X Y hX hY hx hy
+      (fun i j => logistic_gap _ _ (hx j) (hy i))
+  · have hc (i j : Fin 2) : (1 / 5 : ℝ) ≤ logistic (sourceGap p j) ∨
+        (1 / 5 : ℝ) ≤ logistic (referenceGap q i) := by
+      rw [hs, hq]
+      rcases not_and_or.mp hfar with hs' | hq'
+      · exact Or.inl (le_of_lt (lt_of_not_ge hs'))
+      · exact Or.inr (le_of_lt (lt_of_not_ge hq'))
+    exact (qubit_close_evaluation p q U X Y hc).trans
+      (mul_le_mul_of_nonneg_right (by linarith only [root_bounds.1])
+        (integral_nonneg fun t => mul_nonneg (petzWeight_pos t).le (sq_nonneg _)))
+
+
 section Reindex
 
 variable {k l e : Type*} [Fintype k] [Fintype l] [Fintype e]
@@ -1183,15 +1249,14 @@ variable {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
   {Φ : QuantumChannel a b} {ρ σ : DensityState a}
   (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ)
 
-private theorem physical_evaluation (hW : Wᴴ * W = 1)
+private theorem physical_evaluation_of_blocks (hW : Wᴴ * W = 1)
     (hAction : ∀ X, partialTraceRight (dilate W X) = act Φ X)
     (f : Fin 2 ≃ M.data.K) (g : Fin 2 ≃ M.data.L)
-    (hx : ∀ j, logistic (sourceGap (M.data.pk ∘ f) j) ≤ 1 / 5)
-    (hy : ∀ i, logistic (referenceGap (M.data.ql ∘ g) i) ≤ 1 / 5)
-    (hgap : ∀ i j, (logistic (sourceGap (M.data.pk ∘ f) j) -
-        logistic (referenceGap (M.data.ql ∘ g) i)) ^ 2 ≤
-      (7 / 25) * (1 - logistic (sourceGap (M.data.pk ∘ f) j -
-        referenceGap (M.data.ql ∘ g) i))) :
+    (hEval : ∀ (U : Matrix (Fin 2) (Fin 2) ℂ), Uᴴ * U = 1 → U * Uᴴ = 1 →
+      ∀ (X Y : Matrix (Fin 2 × e) (Fin 2 × e) ℂ), X.IsHermitian → Y.IsHermitian →
+      let F (t : ℝ) := mixedBoundary (M.data.pk ∘ f) (M.data.ql ∘ g) X Y
+        (U ⊗ₖ (1 : Matrix e e ℂ)) t
+      ‖F 0‖ ^ 2 ≤ K₂ * (∫ t, petzWeight t * ‖F t‖ ^ 2)) :
     ‖lowerAmplitude M W 0 - upperAmplitude M W 0‖ ^ 2 ≤
       K₂ * (∫ t, petzWeight t * ‖lowerAmplitude M W t - upperAmplitude M W t‖ ^ 2) := by
   let D := M.data
@@ -1255,7 +1320,22 @@ private theorem physical_evaluation (hW : Wᴴ * W = 1)
         physical_mixed_sq M W hW hAction t
       _ = _ := by rw [← hMixed, submatrix_norm_sq]
   simp only [hNorm]
-  exact qubit_evaluation (D.pk ∘ f) (D.ql ∘ g) U hU hU' X Y hX hY hx hy hgap
+  exact hEval U hU hU' X Y hX hY
+
+private theorem physical_trace_bound_of_evaluation (hW : Wᴴ * W = 1)
+    (hAction : ∀ X, partialTraceRight (dilate W X) = act Φ X)
+    (hEval : ‖lowerAmplitude M W 0 - upperAmplitude M W 0‖ ^ 2 ≤
+      K₂ * (∫ t, petzWeight t * ‖lowerAmplitude M W t - upperAmplitude M W t‖ ^ 2)) :
+    traceNorm (M.data.R - recoveredState M.data) ^ 2 ≤
+      (8 + 2 * Real.sqrt 2) *
+        (finiteTraceLogRelativeEntropy ρ σ -
+          finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
+  classical
+  convert (trace_error_le_boundary M W hW hAction).trans
+      (mul_le_mul_of_nonneg_left
+        (hEval.trans (mul_le_mul_of_nonneg_left (full_logistic_physical M W hW hAction)
+          (by positivity : 0 ≤ K₂))) (by norm_num : (0 : ℝ) ≤ 4)) using 1
+  ring
 
 omit [DecidableEq e] in
 private theorem physical_trace_bound (hW : Wᴴ * W = 1)
@@ -1272,12 +1352,9 @@ private theorem physical_trace_bound (hW : Wᴴ * W = 1)
         (finiteTraceLogRelativeEntropy ρ σ -
           finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
   classical
-  convert (trace_error_le_boundary M W hW hAction).trans
-      (mul_le_mul_of_nonneg_left
-        ((physical_evaluation M W hW hAction f g hx hy hgap).trans
-          (mul_le_mul_of_nonneg_left (full_logistic_physical M W hW hAction)
-            (by positivity : 0 ≤ K₂))) (by norm_num : (0 : ℝ) ≤ 4)) using 1
-  ring
+  exact physical_trace_bound_of_evaluation M W hW hAction
+    (physical_evaluation_of_blocks M W hW hAction f g fun U hU hU' X Y hX hY =>
+      qubit_evaluation _ _ U hU hU' X Y hX hY hx hy hgap)
 
 end Physical
 
@@ -1373,6 +1450,71 @@ theorem ordinary_petz_traceNorm_sq_le_of_qubit_gaps
     have hq (i : Fin 2) : logistic (referenceGap (D.ql ∘ g) i) ≤ 1 / 5 :=
       hQgap _ _ (fun he => hOpp i (g.injective he.symm))
     exact physical_trace_bound M V hV hDilate f g hs hq (fun i j => logistic_gap _ _ (hs j) (hq i))
+
+/-- For every finite channel whose reference output has support rank at most two,
+the ordinary Petz channel has squared full trace-norm error bounded by
+`(8 + 2√2) * Δ` for every supported input, where `Δ` is the Umegaki entropy loss. -/
+theorem ordinary_petz_traceNorm_sq_le_of_qubit_output
+    (Φ : QuantumChannel a b) (σ : DensityState a) :
+    let K := (actual_kraus_representation Φ).kraus
+    let S := CStarMatrix.ofMatrix.symm σ.1
+    let Q := CStarMatrix.ofMatrix.symm (Φ.mapState σ).1
+    let H := cfc Real.sqrt S
+    let W := spectralInverseSqrt Q
+    let P := spectralSupport Q
+    ∃ recovery : QuantumChannel b a,
+      (∀ X : Matrix b b ℂ,
+        CStarMatrix.ofMatrix.symm
+          (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+          (∑ c, H * (K c)ᴴ * W * X * W * K c * H) +
+            Matrix.trace ((1 - P) * X) • S) ∧
+      recovery.mapState (Φ.mapState σ) = σ ∧
+      ∀ (ρ : DensityState a) (support : SupportContained ρ σ),
+        let M := supported_relative_modular_model Φ ρ σ support
+        let error := traceNorm (CStarMatrix.ofMatrix.symm ρ.1 -
+          CStarMatrix.ofMatrix.symm (recovery.mapState (Φ.mapState ρ)).1) ^ 2
+        let Δ := finiteTraceLogRelativeEntropy ρ σ -
+          finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)
+        M.data.Q.rank ≤ 2 → error ≤ (8 + 2 * Real.sqrt 2) * Δ := by
+  classical
+  dsimp only
+  obtain ⟨recovery, hAction, hReference, hGaps⟩ :=
+    ordinary_petz_traceNorm_sq_le_of_qubit_gaps Φ σ
+  refine ⟨recovery, hAction, hReference, ?_⟩
+  intro ρ support hQ
+  let M := supported_relative_modular_model Φ ρ σ support
+  let D := M.data
+  obtain ⟨V, hV, hDilate⟩ := exists_retainedFirst_stinespring Φ
+  by_cases hT : D.T.rank ≤ 1
+  · have hΔ : 0 ≤ finiteTraceLogRelativeEntropy ρ σ -
+        finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ) :=
+      (integral_nonneg (fun t => mul_nonneg (petzWeight_pos t).le (sq_nonneg _))).trans
+        (full_logistic_physical M V hV hDilate)
+    exact ((hGaps ρ support hQ).1 hT).trans
+      (mul_le_mul_of_nonneg_right (by linarith [Real.sqrt_nonneg (2 : ℝ)]) hΔ)
+  · have hT₂ : D.T.rank = 2 := by
+      have hr : D.T.rank ≤ D.Q.rank := output_rank_le M
+      change D.Q.rank ≤ 2 at hQ
+      omega
+    have hQ₂ : D.Q.rank = 2 := le_antisymm hQ
+      (by simpa only [hT₂] using output_rank_le M)
+    let f := (Fintype.equivFinOfCardEq ((card_positive_eigenvalues D.hT).trans hT₂)).symm
+    let g := (Fintype.equivFinOfCardEq ((card_positive_eigenvalues D.hQ).trans hQ₂)).symm
+    have hTrace : Matrix.trace ((1 - spectralSupport D.Q) * D.T) = 0 := by
+      rw [Matrix.sub_mul, Matrix.one_mul, petz_output_support_projection M, sub_self,
+        Matrix.trace_zero]
+    have hr := hAction D.T
+    rw [hTrace, zero_smul, add_zero] at hr
+    have hRecovered :
+        CStarMatrix.ofMatrix.symm (recovery.mapState (Φ.mapState ρ)).1 = recoveredState D := by
+      refine hr.trans ?_
+      simp only [recoveredState, krausAdjoint, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+    rw [hRecovered]
+    exact physical_trace_bound_of_evaluation M V hV hDilate
+      (physical_evaluation_of_blocks M V hV hDilate f g
+        (qubit_evaluation_all_gaps (D.pk ∘ f) (D.ql ∘ g)))
+
+#print axioms ordinary_petz_traceNorm_sq_le_of_qubit_output
 
 #print axioms ordinary_petz_traceNorm_sq_le_of_qubit_gaps
 
