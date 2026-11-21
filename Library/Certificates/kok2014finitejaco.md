@@ -8,6 +8,8 @@ claim: Theorem 2.10 (Conjectured) gives a two-branch maximum-total-degree additi
 strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw
+  - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -68,3 +70,27 @@ formula floor((n+2)/phi)-1 that it rests on appears as Theorem 4.8 of Raso and
 Kok, [arXiv:2611.01554v1](https://arxiv.org/abs/2611.01554v1), whose readable
 text contains no addition law. A bounded web search found no published
 statement of the corrected law; no worldwide priority claim follows.
+
+## Maximum degree and the shifted order
+
+Theorem 2.9 on printed page 7 states only that, with m=n+Delta_n, the graph
+J_m(1) has maximum degree n or n-1. Its proof splits on the outdegree
+d+(v_n), which equals b_n=floor((n+1)/phi), and in its second case concludes
+only "n or n-1". The repository proves the sharper statement for every
+natural n: Delta_n equals b_n or b_n-1, the first case holds exactly when the
+fractional part of (n+2)/phi is below 1/phi, and the order n+Delta_n has
+maximum degree n in the first case and n-1 in the second.
+
+## Maximum sets
+
+Lemma 2.2 (Conjectured) on printed page 4 asserts that b_(n-1)<b_n<b_(n+1)
+implies that v_(b_n) is the unique Jaconian vertex of J_n(1), and the
+open-problem list on printed page 11 asks to prove it. The repository proves
+this implication for every n; the converse, which the source does not assert,
+fails at n=5, where J_5={v_3} although b_4=b_5=3. It also proves the complete
+description of the maximum set for n at least two: the label interval from
+Delta_n to R_t with t=n-Delta_n, of one, two or three vertices, with exact
+singleton criteria. The request attributes that description to Patel's
+solution posted on MathDB; MathDB refuses automated fetches, and those answers
+were not inspected, so they may already settle Lemma 2.2 and no priority is
+claimed.

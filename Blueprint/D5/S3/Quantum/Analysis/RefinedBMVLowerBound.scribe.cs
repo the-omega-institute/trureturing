@@ -19,5 +19,17 @@ internal sealed class RefinedBMVLowerBoundDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hagele-2026-refined-bmv-33-dimension-four"),
+                    ResolutionKind.Proved)),
+            Describe.Lean(
+                DescribeId.Create("refinedbmvlowerbound-l33-all"),
+                DeclarationHandle.Create("D5/S3/Quantum/Analysis/RefinedBMVLowerBound.L33_all"),
+                H("The lower bound in every finite dimension"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/HilbertOperators/hagele2026refinedbmv")),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite complex Hermitian matrices, the twenty-word mean dominates the exponential trace. The general product bound and the dyadic Lie–Trotter comparison prove the claim."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hagele-2026-refined-bmv-33-all-dimensions"),
                     ResolutionKind.Proved)))));
 }
