@@ -30,7 +30,7 @@ Let Z be symmetric and p a probability vector. If p minimizes E over the probabi
 
 For symmetric Z, E(p+td) = E(p) + 2t d·(Zp) + t²E(d). If p is a minimizer and p+td stays a probability vector for all small t > 0, the coefficient d·(Zp) is nonnegative. The direction e_j − p is feasible for t ≤ 1 and gives (Zp)_j ≥ E(p); when p_i > 0 the direction p − e_i is feasible for t ≤ p_i and gives (Zp)_i ≤ E(p). Conversely, for another probability vector q put d = q − p, whose coordinates sum to 0. Then d·(Zp) = Σ_j q_j (Zp)_j − E(p) ≥ 0 by the lower condition and E(d) ≥ 0 by hypothesis, so E(q) ≥ E(p).
 
-The hypotheses are needed as follows. Necessity uses only symmetry. For sufficiency the nonnegativity of E on vectors of sum zero cannot be dropped: for Z with zero diagonal and off-diagonal entries 1 on two points, p = (1/2, 1/2) satisfies both conditions with E(p) = 1/2, while the vertices have energy 0; this example is not compiled.
+The hypotheses are needed as follows. Necessity uses only symmetry. For sufficiency the nonnegativity of E on vectors of sum zero cannot be dropped: for Z with zero diagonal and off-diagonal entries 1 on two points, p = (1/2, 1/2) satisfies both conditions with E(p) = 1/2, while the vertices have energy 0. Symmetry is needed in both directions: for Z with rows (0,1) and (−1,0), E vanishes identically, so every probability vector minimizes E, yet at p = (1,0) the second coordinate of Zp is −1 < 0; for Z with rows (0,−2) and (1,0), E(v) = v_1² ≥ 0 on vectors of sum zero and p = (1,0) satisfies both conditions, yet E(1/2,1/2) = −1/4 < 0. These examples are not compiled.
 
 ## References
 

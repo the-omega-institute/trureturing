@@ -6,7 +6,7 @@ internal sealed class SimplexQuadraticOptimalityDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/Geometry/Diversity/SimplexQuadraticOptimality.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Geometry/mazhang2026bouafianegativetype");
+        LibraryNoteRef.Create("D5/L/Convexity/mazhang2026bouafianegativetype");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The minimizers of a symmetric quadratic form on the probability simplex satisfy the "

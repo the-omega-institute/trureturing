@@ -11,7 +11,7 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
-<!-- GID: D5/L/Geometry/mazhang2026bouafianegativetype -->
+<!-- GID: D5/L/Convexity/mazhang2026bouafianegativetype -->
 # Simplex optimality for diversity energies
 
 ## Verified locator
