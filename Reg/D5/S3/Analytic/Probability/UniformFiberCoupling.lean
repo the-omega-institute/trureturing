@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Probability.UniformFiberCoupling
 import Reg.Support.DependentFamily
+import Mathlib.Algebra.Group.PUnit
 
 /-! The right side recovers the prescribed displacement law at every point of the fiber. -/
 
@@ -50,14 +51,14 @@ private theorem negative_fails : ¬ arena.{u, v}.Law negative := by
   have nn (d : Fiber φ 1) : 0 ≤ ρ d := by
     unfold ρ
     split <;> norm_num
-  have total : ∑ d, ρ d = 1 := by simp [ρ]
-  obtain ⟨w, hw, _, _, recover⟩ := (law φ 1 ρ).mp ⟨nn, total⟩
+  obtain ⟨w, hw, _, _, recover⟩ := (law φ 1 ρ).mp ⟨nn, by simp [ρ]⟩
   have nonnegative : 0 ≤ displacement φ 1 w idPoint := by
     unfold displacement
     exact sum_nonneg fun x _ => sum_nonneg fun y _ => by split <;> simp [hw]
   have point := congrFun recover idPoint
   change displacement φ 1 w idPoint = -1 at point
-  norm_num [point] at nonnegative
+  rw [point] at nonnegative
+  exact (not_le.mpr (by norm_num : (-1 : ℝ) < 0)) nonnegative
 
 def family : Registration arena.{u, v} (type_of% (@displacement_iff)) where
   actual := actual
