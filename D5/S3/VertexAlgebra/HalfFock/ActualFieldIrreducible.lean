@@ -33,7 +33,7 @@ open LatticeHalfFockChargedCoefficients LatticeAllStateField
 open LatticeTwistedGroundRealization LatticeTwistedGroundRealization.SignQuotient
 open MvPolynomial
 
-open private current_coeff from D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
+open LatticeHalfFockCurrentBorcherds (current_coeff)
 open private creation_zero from D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
 
 private theorem currents_mem (D : LatticeData) (hu : IsUnit D.G.det)
