@@ -18,10 +18,10 @@ internal sealed class CoordinateColourOrbitDocument : IScribeDocumentDefinition
         Seq(Open, Exists, Sp, V(coordinate), Sp, InMacro, Sp, V("I"), Comma, Sp,
             FlagValue(profile, coordinate), Sp, Eq, Sp, D(0), Close);
     private static Formula Statement() => Disp(new Formula.Aligned([
-        Seq(Forall, Sp, V("m"), Sp, InMacro, Sp, V("M"), Comma, Sp, D(4),
+        Seq(Open, Forall, Sp, V("m"), Sp, InMacro, Sp, V("M"), Comma, Sp, D(4),
             Sp, Mid, Sp, Sum, Underscore, Grp(V("c"), Comma, V("d")),
             Sp, Apply(V("m"), Seq(Open, V("p"), Comma, V("c"), Close),
-                Seq(Open, V("q"), Comma, V("d"), Close))),
+                Seq(Open, V("q"), Comma, V("d"), Close)), Close),
         Seq(Iff, Sp, V("p"), Sp, Neq, Sp, V("q"), Sp, Land, Sp,
             HasFalseCoordinate("p", "i"), Sp, Land, Sp, HasFalseCoordinate("q", "j"))
     ]));

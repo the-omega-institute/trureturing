@@ -30,24 +30,16 @@ private theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
     simp [Pi.single_eq_of_ne hj]
   · exact fun h => (h (mem_univ i)).elim
 
-private theorem add_shift (p : I → Bool) (x y : I → ZMod 2) :
-    shift p (x + y) = shift p x + shift p y := by
-  let g : Acting I := Multiplicative.ofAdd x
-  let h : Acting I := Multiplicative.ofAdd y
-  have eq := congrArg Output.colour (mul_smul g h (⟨p, 0⟩ : Output I))
-  change shift p (x + y) + 0 = shift p x + (shift p y + 0) at eq
-  simpa only [add_zero] using eq
-
 private theorem lift_on_pivot (p q : I → Bool) (i j : I) (hi : p i = false)
     (hq : q i = true) (hj : q j = false) (a b : ZMod 2) :
     ∃ v : I → ZMod 2, shift p v = a ∧ shift q v = b := by
   classical
   let extra := if p j then (0 : ZMod 2) else b
   refine ⟨Pi.single i (a - extra) + Pi.single j b, ?_, ?_⟩
-  · rw [add_shift, eval_single, eval_single, hi]
+  · rw [shift_add, eval_single, eval_single, hi]
     change a - extra + extra = a
     exact sub_add_cancel a extra
-  · simp only [add_shift, eval_single, hq, hj, Bool.false_eq_true, ite_false, ite_true, zero_add]
+  · simp only [shift_add, eval_single, hq, hj, Bool.false_eq_true, ite_false, ite_true, zero_add]
 
 private theorem shifts_surjective (p q : I → Bool) (different : p ≠ q)
     (someFalseP : ∃ j, p j = false) (someFalseQ : ∃ j, q j = false) :
