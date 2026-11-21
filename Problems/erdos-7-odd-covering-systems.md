@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [RH gives an explicit prime-weighted continuation with cutoffs 449, 2543 and 8231](#a-prime-weighted-continuation-using-rh)
 - [Passing every complete prime marginal requires at least six support primes; with exactly six, five monotone survivor-profile exclusions leave only seventeen prime sets, with arbitrary heights and residues. These are necessary conditions, not feasible constructions or a solution of the unrestricted problem](../Library/Arith/lettlsun2008cosets.md#existing-survivor-laws-restrict-simultaneous-complete-marginal-feasibility)
 - [Actual tight rows can be individually coverable yet admit no common original phases: a complete odd-wheel CRT graph passes every clique budget and has a sharp positive defect on its tight region; other rows remain below one, so this is not a new global noncoverage range](../Library/Arith/lettlsun2008cosets.md#common-original-phases-can-obstruct-all-tight-rows)
 - [A blocked joint-loss tree forces private leaves or a doubled multiplicity budget; removing the height factor requires one distribution across blocked fibres. Two odd noncovers defeat the local geometric shortcut, while the complete-source projection count rejects both](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/350-399/375-deep-prime-prefix-projections-and-tree-contraction.md#9-liability-multiplicity-and-the-missing-distribution-of-blocked-fibres)
@@ -194,6 +195,154 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Actual AP(4,5): layout costs and complete finite-core tails](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/001-064/35-ap45-layout-costs-and-complete-core-tails.md)
 - [Original-layout distance forces a Jensen loss](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/001-064/34-original-layout-distance-forces-a-jensen-loss.md)
 - [Retained and removed events: the complete convex-cost bound](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/001-064/33-retained-and-removed-original-events-control-convex-costs.md)
+
+## A prime-weighted continuation using RH
+
+Let a finite family have distinct odd moduli greater than one and arbitrary
+fixed residues. Write the distinct prime factors of its LCM in increasing
+order. Each row gives a sufficient condition for an uncovered integer.
+All prime-power heights, including those of the head primes inside mixed
+moduli, are unrestricted. The number of prime factors above the indicated
+cutoff is unrestricted.
+
+| Cutoff \(B\) | Maximum number of prime factors at most \(B\) | Additional condition |
+| ---: | ---: | --- |
+| 449 | 7 | Every such family |
+| 2543 | 8 | Every such family |
+| 8231 | 9 | If the ninth prime is at most \(B\), it is at least 271 |
+
+These are ordinary proofs using the published RH result and the existing
+survivor measure constructions. Alpöge's Lean declaration has type
+\(\mathrm{RiemannHypothesis}\) without hypotheses. The independent
+statement comparison and axiom audit verify that declaration against
+Mathlib. The analytic step below only needs ordinary RH.
+[Proof declaration](https://github.com/the-omega-institute/riemann-hypothesis/blob/1ef6c4e2e944fb2784ecf3168a84810bf50ca6db/src/Main.lean) ·
+[Statement comparison](https://math.mit.edu/~drew/grh/con-leche-compare.log) ·
+[Axiom audit](https://math.mit.edu/~drew/grh/audit.log)
+
+### Survivor measures and continuation
+
+Take the actual primes at most \(B\) as the head. Resolve their finite
+coordinates at the full heights required by the original family. The
+head submeasure avoids the classes supported entirely in the head. Its
+mass is at least \(m\), and the integral of the fourth power of every
+complete divisor query is at most \(K\). Such a query counts hits against
+one fixed residue for each divisor of the head period, including the
+unit. Hölder bounds the integral of any product of four queries by the
+same \(K\) on this measure. The following source bounds apply, with
+unused head coordinates padded when necessary.
+
+| Head | \(m\) | \(K\) | Source |
+| --- | ---: | ---: | --- |
+| At most seven primes | \(7235955529/450000000000\) | \(82461631627375/127401984\) | [Seven-prime source and fourth moment, HM1–HM6](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md) |
+| At most eight primes | \(1/33750\) | \(590500\) | [Capped eight-prime source, (1)–(5)](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md) |
+| Nine primes, ninth at least 271 | \(1/2500000\) | \(450000\) | [Nine-prime source, (1)–(5)](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/750-799/780-a-ninth-prime-from271-admits-an-unrestricted-larger-tail.md) |
+
+For the last row with at most eight head primes, use the eight-prime
+source and the cutoff of 2543. In the nine-prime case the separation
+condition is imposed on the actual ninth prime.
+
+Process the larger actual primes in increasing order and charge each
+remaining class at its largest prime. For \(t=1/(p-1)\), put
+\[
+ A(t)=15t+50t^2+60t^3+24t^4,\quad
+ c_\delta=\frac{27}{256\delta^3(1-\delta)},\quad
+ g_\delta(t)=1+\frac{A(t)}{1-\delta}.
+\]
+The fourth-moment continuation bounds the absolute loss at a prime by
+\(Kc_\delta t^4\), with next fourth-moment allowance \(Kg_\delta(t)\).
+It uses the actual forbidden fraction \(\beta(x)\) on the \(p\)-fibre
+over each old point \(x\), restricting Haar to the allowed points and
+dividing by \(1-\min(\beta(x),\delta)\). The mass loss is thus the integral
+of \((\beta-\delta)_+/(1-\delta)\). All old cofactors and phases remain
+those of the original classes. At each new exponent, distinctness gives
+at most one phase per old divisor. This is the hypothesis used in the
+complete-query estimate. The inequalities hold for each \(0<\delta<1\),
+so the clipping parameter can be fixed separately for each prime before
+processing the family. [Quartic continuation, HM7–HM13](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md)
+
+### Every prime above the computation range
+
+Set \(T=200000\) and use \(\delta=2/5\) for \(p>T\). The binomial
+coefficients give \(g_{2/5}(t)\le(1+t)^{25}\) for \(t\ge0\).
+For \(x\ge T\), the reciprocal prime-product bound gives
+\[
+ \prod_{T<p\le x}\frac p{p-1}
+ \le \frac{243}{241}\frac{\log x}{\log T},
+ \qquad 11<\log T<13.
+\]
+Indeed \(3^{11}<T\) and \((27/10)^{13}>T\). The constant follows by dividing
+the upper bound at \(x\) by the lower bound at \(T\) and using
+\(\log T>11\). [Rosser–Schoenfeld, Theorem 8](../Library/Arith/rosser1962approximate.md)
+
+With \(\vartheta(x)=\sum_{p\le x}\log p\), write
+\(E(x)=\vartheta(x)-x\). Under RH,
+\(|E(x)|\le\sqrt{x}(\log x)^2/(8\pi)\) for \(x\ge T\), by weakening
+Lee–Nosal's explicit bound. Since \((\log x)^2/\sqrt{x}\) decreases
+for \(x\ge T\), \(|E(x)|\le\varepsilon x\) throughout this range, where
+\(\varepsilon=169/(24\cdot447)\). [Lee–Nosal, Theorem 1.2(3)](https://arxiv.org/abs/2312.05628)
+
+Let \(f(x)=(\log x)^{24}/x^4\). It is positive and decreasing over
+\([T,\infty)\). Partial summation over the primes strictly greater than \(T\)
+gives
+\[
+ \sum_{p>T}\log(p) f(p)
+ = \int_T^\infty f(x)\,dx-E(T)f(T)-\int_T^\infty E(x)f'(x)\,dx
+ \le (1+\varepsilon)\int_T^\infty f(x)\,dx+2\varepsilon T f(T).
+\]
+The endpoint at infinity vanishes since \(xf(x)\to0\).
+In the prime loss bound use
+\((p-1)^{-4}\le (T/(T-1))^4p^{-4}\), then apply the product
+bound to all moment multipliers from \(T\) to \(p\).
+After dividing out the moment allowance at \(T\), the resulting prime
+sum is at most
+\[
+ R=\frac{5625}{2048}\left(\frac{243}{241}\right)^{25}
+       \frac{T}{(T-1)^4}
+ \left[
+ \frac{1+\varepsilon}{33}
+   \sum_{j=0}^{25}\frac{25!}{(25-j)!\,33^j}
+   +\frac{2\varepsilon}{11}
+ \right].
+\]
+For the integral, use \(f(x)\le (\log x)^{25}/(11x^4)\) and integrate by
+parts repeatedly. The integral of \((\log x)^{25}/x^4\) is
+\((\log T)^{25}/(3T^3)\) times the displayed factorial sum with
+\(3\log T\) in place of 33. The endpoint term uses
+\(T f(T)=(\log T)^{25}/(T^3\log T)\).
+These estimates bound the full infinite comparison sum and therefore
+every finite choice of original primes above \(T\).
+
+### Exact cutoffs
+
+Put \(S=10^{24}\) and start with \(u=\lceil SR\rceil=44446336\).
+Visit every prime in \((B,T]\) in decreasing order. At each such prime
+replace \(u\) by
+\[
+ \min_{\delta\in\{1/4,\,3/10,\,1/3,\,3/8,\,2/5\}}
+ \left\lceil Sc_\delta/(p-1)^4+g_\delta(1/(p-1))u\right\rceil .
+\]
+A minimizing parameter at each step fixes the forward clipping schedule.
+The recurrence is an upper bound on the remaining loss per unit of
+moment allowance, multiplied by \(S\). Missing any scheduled prime only
+decreases this allowance because the loss term is nonnegative and
+\(g_\delta\ge1\). All inputs and rounding operations are rational. The
+table gives the integer replay values and strict lower bounds for the
+final live mass \(m-Ku/S\).
+
+| \(B\) | Primes in \((B,T]\) | Final \(u\) | Final live mass greater than |
+| ---: | ---: | ---: | ---: |
+| 449 | 17897 | 24477013422083484 | \(1/5000\) |
+| 2543 | 17612 | 49669053146940 | \(3/10^7\) |
+| 8231 | 16952 | 888884725255 | \(1/10^{12}\) |
+
+Positive live mass gives a point on the finite CRT carrier avoiding
+every original class, hence an uncovered integer. In particular, any odd
+distinct cover would need at least eight support primes at most 449 and
+at least nine at most 2543. If its ninth prime is at least 271, it would
+also need a tenth prime at most 8231. Extending these bounds to all
+possible small-prime supports requires a stronger survivor estimate
+for the head.
 
 ## Motivation
 
