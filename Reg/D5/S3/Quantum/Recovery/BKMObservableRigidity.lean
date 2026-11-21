@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Recovery.BKMObservableRigidity
 
+/-! Source-bound readouts of the weighted compression and integrated BKM gap. -/
+
 noncomputable section
 
 universe u
@@ -27,18 +29,6 @@ private abbrev equalitySignature (P : Type*) (X : P → Type*) : Signature where
 private def rejectEquality (P : Type*) (X : P → Type*) :
     Realization (equalitySignature P X) :=
   realize (equalitySignature P X) (fun _ _ _ _ => False) (fun e => nomatch e)
-
-private theorem sensitive {P : Type*} {X : P → Type*}
-    {law : Realization (equalitySignature P X) → Prop} (hr : ¬ law (rejectEquality P X)) :
-    Sensitivity ⟨equalitySignature P X, law⟩
-      (realize (equalitySignature P X) (fun _ _ x y => x = y) (fun e => nomatch e)) := by
-  constructor
-  · intro role
-    refine ⟨rejectEquality P X, ?_, rfl, hr⟩
-    intro other h
-    exact (h (Subsingleton.elim _ _)).elim
-  · intro e
-    exact nomatch e
 
 private theorem dependent {P : Type*} {X : P → Type*} (p : P) (x y : X p) (h : x ≠ y) :
     ObservationalDependence (equalitySignature P X)
@@ -72,7 +62,18 @@ def family : Registration arena.{u} (type_of% @weightedLift_compression.{u}) whe
   actual := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@weightedLift_compression.{u}, rejectEquality _ _, rejected⟩
-  sensitivity := sensitive rejected
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejectEquality _ _, ?_, ?_, rejected⟩
+      · intro other h
+        cases role
+        cases other
+        exact (h rfl).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := by
     apply dependent (ULift.{u} Unit) 0 (fun _ _ => 1)
     intro h
@@ -80,7 +81,8 @@ def family : Registration arena.{u} (type_of% @weightedLift_compression.{u}) whe
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@weightedLift_compression.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.BKMObservableRigidity.weightedLift_compression.__information_unit
+  unitName :=
+    `D5.S3.Quantum.Recovery.BKMObservableRigidity.weightedLift_compression.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Recovery.BKMObservableRigidity.Compression.family
   realizationSource := none
   generated := false
@@ -121,7 +123,7 @@ private abbrev signature := equalitySignature Unit (fun _ => ℝ)
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {R E : Type u} [Fintype R] [DecidableEq R] [Fintype E] [DecidableEq E] [Nonempty E]
-    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef) (K : Matrix R R ℂ) (hK : K.IsHermitian),
+    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef) (K : Matrix R R ℂ) (_hK : K.IsHermitian),
     let S := partialTraceRight A
     let V := weightedLift A hA
     let b := weightedVec S K
@@ -139,7 +141,18 @@ def family : Registration arena.{u} (type_of% @bkmGap_rigidity.{u}) where
   actual := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@bkmGap_rigidity.{u}, rejectEquality _ _, rejected⟩
-  sensitivity := sensitive rejected
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨rejectEquality _ _, ?_, ?_, rejected⟩
+      · intro other h
+        cases role
+        cases other
+        exact (h rfl).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependent () (0 : ℝ) 1 zero_ne_one
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
