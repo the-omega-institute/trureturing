@@ -98,17 +98,6 @@ private theorem norm_le_of_dvd {d : ℤ} (hd : d ∈ K) {u z : R d}
   obtain ⟨q, rfl⟩ := h
   exact Int.le_of_dvd (norm_pos hd hz) ⟨q.norm, map_mul norm u q⟩
 
-private theorem coordinate_bounds {x bound : ℤ} (h : x ^ 2 ≤ bound) :
-    -bound ≤ x ∧ x ≤ bound := by
-  have hb : 0 ≤ bound := (sq_nonneg x).trans h
-  constructor
-  · by_contra! hl
-    have : x ≤ -bound - 1 := by omega
-    nlinarith [sq_nonneg (x + 1)]
-  · by_contra! hu
-    have : bound + 1 ≤ x := by omega
-    nlinarith [sq_nonneg (x - 1)]
-
 /-- Multiplying by the conjugate converts divisibility into an integral
 quotient test in both coordinates of the same ring. -/
 private theorem dvd_iff_coordinates {d : ℤ} {u z : R d} (hu : u.norm ≠ 0) :
