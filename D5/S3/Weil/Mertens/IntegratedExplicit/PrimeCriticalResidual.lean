@@ -34,10 +34,7 @@ open MaximalRealPartProjection
 open PrimeOnlyTailCorrection (primeTail prime_integrable prime_power_window_correction)
 open PrimePhaseCluster (phaseOrbit phaseProfile phaseProfile_on_orbit phaseWindow
   prime_tail_mass_cluster_iff_of_upper_bound)
-open ZeroAbscissaPower (primitive_eq_negative_tail)
-
-private theorem actual_nontrivial (k : ℕ) : IsNontrivialZero (actualZero k) :=
-  actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
+open ZeroAbscissaPower (actual_zero primitive_eq_negative_tail)
 
 private def rootTerm (t : ℝ) (k : ℕ) : ℂ :=
   actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - 1 / 2))
@@ -52,7 +49,7 @@ private theorem summable_norm_rootTerm (t : ℝ) : Summable (fun k => ‖rootTer
   intro k
   rw [norm_norm, norm_rootTerm]
   apply mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr ?_) (norm_nonneg _)
-  obtain ⟨hpos, hlt⟩ := (actual_nontrivial k).2
+  obtain ⟨hpos, hlt⟩ := (actual_zero k).2
   have hcentered : |(actualZero k).re - 1 / 2| ≤ 1 / 2 :=
     abs_le.mpr ⟨by linarith, by linarith⟩
   calc
@@ -72,8 +69,8 @@ private theorem scaled_shift_eq_rootTerm (β t : ℝ) (k : ℕ) :
 private theorem coeff_mass_bound : (∑' k : ℕ, ‖actualCoeff k‖) ≤ (101 / 100 : ℝ) * firstLiMass := by
   obtain ⟨_, conjIndex, hconj, _⟩ := actual_complete_H_package
   obtain ⟨_, _, _, _, _, _, _, hcoeff⟩ := ZeroCoefficientBudget.zero_coefficient_budget
-    actualZero (fun k => (actual_nontrivial k).2) conjIndex hconj
-    (fun k => actual_height_gt_ten _ (actual_nontrivial k)) actual_coefficient_mass
+    actualZero (fun k => (actual_zero k).2) conjIndex hconj
+    (fun k => actual_height_gt_ten _ (actual_zero k)) actual_coefficient_mass
   have hinv : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) :=
     actualOccurrenceEquiv.summable_iff.mpr actual_sigma_inverse_square_summable
   refine (actualCoeff_hasSum.summable.norm.tsum_le_tsum (fun k => ?_) hinv).trans
@@ -196,7 +193,7 @@ theorem eventually_prime_tail_root_scale :
     rw [hsqrt, mul_sub] at hgap
     have hcomplete := complete_tail_root_bound ht
     have ht0 : 0 ≤ t := (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans ht
-    have hzeros := root_zero_sum_bound ht0 hβ (fun k => hmax _ (actual_nontrivial k))
+    have hzeros := root_zero_sum_bound ht0 hβ (fun k => hmax _ (actual_zero k))
     linarith only [hgap, hcomplete, hzeros]
 
 private theorem continuousOn_prime_mass_density :
