@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.ActualThetaTailLaplace
 import D5.S3.Analytic.Laplace.EulerPoleObstruction
+import D5.S3.Analytic.Laplace.WindowEulerPole
 import D5.S3.Analytic.Isolation.RiemannZetaPositiveRealSign
 
 /-! Arithmetic forcing for the common actual-tail coefficient obstruction. -/
@@ -166,5 +167,182 @@ theorem critical_theta_tail_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
   obtain ⟨u, hu, hval⟩ := hpeak 1 (by norm_num) c hc (by rw [hcoef]; exact hcA) T
   refine ⟨u, hu, ?_⟩
   simpa only [σ, neg_sub, one_mul] using hval
+
+open D5.S3.Analytic.Laplace
+open EulerLocalContinuation (rightHalfDisk)
+open ForwardWindowLaplace
+  (forwardWindow tailLaplace_firstMoment_eq_neg_deriv neg_deriv_euler_of_first_moment)
+open ActualThetaTailLaplace (actual_theta_tail_laplace_ode u₀)
+
+private theorem actual_firstMoment_integrable {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t => Real.exp (-x * t) * (t * ActualThetaTailLaplace.f t))
+      (Ioi u₀) := by
+  have hx' : 0 < (x : ℂ).re := by simpa only [Complex.ofReal_re] using hx
+  have hm := (actual_theta_tail_laplace_ode.2.2.2.2.2.2.2.2.2 u₀ le_rfl).2 (x : ℂ) hx'
+  have hreal := Complex.reCLM.integrable_comp (hm.1 1)
+  have hcast (t : ℝ) :
+      (t : ℂ) ^ (1 : ℕ) * Complex.exp (-(x : ℂ) * (t : ℂ)) *
+          (ActualThetaTailLaplace.f t : ℂ) =
+        ((Real.exp (-x * t) * (t * ActualThetaTailLaplace.f t) : ℝ) : ℂ) := by
+    simp only [pow_one, Complex.ofReal_mul, Complex.ofReal_exp, Complex.ofReal_neg]
+    ring
+  simpa only [IntegrableOn, Complex.reCLM_apply, hcast, Complex.ofReal_re] using hreal
+
+private theorem actual_firstMoment_eq_neg_deriv {z : ℂ} (hz : 0 < z.re) :
+    tailLaplace (fun t => t * ActualThetaTailLaplace.f t) u₀ z =
+      -deriv (ActualThetaTailLaplace.L u₀) z := by
+  have h := (actual_theta_tail_laplace_ode.2.2.2.2.2.2.2.2.2 u₀ le_rfl).2 z hz
+  exact tailLaplace_firstMoment_eq_neg_deriv (f := ActualThetaTailLaplace.f) (U := u₀) h.2.1
+
+private theorem actual_firstMoment_euler {z : ℂ} (hz : 0 < z.re) :
+    WindowEulerPole.firstMomentEuler
+        (tailLaplace (fun t => t * ActualThetaTailLaplace.f t) u₀) z =
+      -deriv (forcing u₀) z := by
+  have hF := (actual_theta_tail_laplace_ode.2.2.2.2.2.2.2.2.2 u₀ le_rfl).1
+  have hright : {w : ℂ | 0 < w.re} ∈ 𝓝 z :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hz
+  have hΦ : euler (ActualThetaTailLaplace.L u₀) =ᶠ[𝓝 z] forcing u₀ := by
+    filter_upwards [hright] with w hw
+    exact actual_euler u₀ le_rfl hw
+  have hL : tailLaplace (fun t => t * ActualThetaTailLaplace.f t) u₀ =ᶠ[𝓝 z]
+      -deriv (ActualThetaTailLaplace.L u₀) := by
+    filter_upwards [hright] with w hw
+    exact actual_firstMoment_eq_neg_deriv hw
+  exact (neg_deriv_euler_of_first_moment (hF z hz) hΦ hL).symm
+
+private theorem actual_tail_laplace_zero_limit (hU : 0 ≤ u₀) :
+    Tendsto (fun x : ℝ => ActualThetaTailLaplace.L u₀ (x : ℂ)) (𝓝[Ioi 0] 0)
+      (𝓝 (∫ t in Ioi u₀, (ActualThetaTailLaplace.f t : ℂ))) := by
+  have hf : IntegrableOn ActualThetaTailLaplace.f (Ioi u₀) := actual_tail_integrable le_rfl
+  let K (x t : ℝ) : ℂ :=
+    Complex.exp (-(x : ℂ) * (t : ℂ)) * (ActualThetaTailLaplace.f t : ℂ)
+  have hm : ∀ᶠ x : ℝ in 𝓝[Ioi 0] 0,
+      AEStronglyMeasurable (K x) (volume.restrict (Ioi u₀)) := by
+    apply Eventually.of_forall
+    intro x
+    have he : Continuous (fun t : ℝ => Complex.exp (-(x : ℂ) * (t : ℂ))) := by fun_prop
+    exact he.aestronglyMeasurable.mul
+      (Complex.continuous_ofReal.comp_aestronglyMeasurable hf.aestronglyMeasurable)
+  have hb : ∀ᶠ x : ℝ in 𝓝[Ioi 0] 0,
+      ∀ᵐ t ∂volume.restrict (Ioi u₀), ‖K x t‖ ≤ ‖ActualThetaTailLaplace.f t‖ := by
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    dsimp only [K]
+    rw [norm_mul, Complex.norm_real, Complex.norm_exp]
+    simp only [Complex.mul_re, Complex.neg_re, Complex.neg_im, Complex.ofReal_re,
+      Complex.ofReal_im, mul_zero, sub_zero]
+    exact mul_le_of_le_one_left (norm_nonneg _) (Real.exp_le_one_iff.mpr
+      (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hx.le) (hU.trans ht.le)))
+  have hl : ∀ᵐ t ∂volume.restrict (Ioi u₀),
+      Tendsto (fun x : ℝ => K x t) (𝓝[Ioi 0] 0)
+        (𝓝 (ActualThetaTailLaplace.f t : ℂ)) := by
+    apply Eventually.of_forall
+    intro t
+    have hcont : Continuous (fun x : ℝ => K x t) := by
+      dsimp only [K]
+      fun_prop
+    simpa [K] using (hcont.tendsto (0 : ℝ)).mono_left nhdsWithin_le_nhds
+  exact tendsto_integral_filter_of_dominated_convergence (fun t => ‖ActualThetaTailLaplace.f t‖)
+    hm hb hf.norm hl
+
+private theorem actual_firstMoment_extension_at_zero (hU : 0 ≤ u₀) :
+    ∃ r : ℝ, 0 < r ∧ ∃ H : ℂ → ℂ,
+      DifferentiableOn ℂ H (Metric.ball (0 : ℂ) r) ∧
+        EqOn H (tailLaplace (fun t => t * ActualThetaTailLaplace.f t) u₀)
+          (rightHalfDisk 0 r) := by
+  have hΦ : AnalyticAt ℂ (forcing u₀) 0 := by
+    simpa only [Complex.ofReal_zero] using
+      (forcing_real_analytic u₀ hU (x := 0) (by norm_num))
+  obtain ⟨r, hr, hrΦ⟩ := Metric.mem_nhds_iff.mp hΦ.eventually_analyticAt
+  have hR : DifferentiableOn ℂ (forcing u₀) (Metric.ball (0 : ℂ) r) :=
+    fun z hz => (hrΦ hz).differentiableAt.differentiableWithinAt
+  have hF := (actual_theta_tail_laplace_ode.2.2.2.2.2.2.2.2.2 u₀ le_rfl).1
+  have hFright : DifferentiableOn ℂ (ActualThetaTailLaplace.L u₀) (rightHalfDisk 0 r) :=
+    hF.differentiableOn.mono (fun _ hz => hz.2)
+  have hODE : ∀ z ∈ rightHalfDisk 0 r, euler (ActualThetaTailLaplace.L u₀) z = forcing u₀ z :=
+    fun z hz => actual_euler u₀ le_rfl (show 0 < z.re from hz.2)
+  obtain ⟨δ, hδ, _, H, hH, hAgree, _⟩ :=
+    EulerLocalContinuation.exists_extension_at_zero hr hR hFright hODE
+      (actual_tail_laplace_zero_limit hU)
+  have hOpen : IsOpen (rightHalfDisk 0 δ) :=
+    Metric.isOpen_ball.inter (isOpen_lt continuous_const Complex.continuous_re)
+  refine ⟨δ, hδ, -deriv H, (hH.deriv Metric.isOpen_ball).neg, ?_⟩
+  intro z hz
+  change -deriv H z = _
+  rw [hAgree.deriv hOpen hz]
+  exact (actual_firstMoment_eq_neg_deriv hz.2).symm
+
+private theorem forcing_neg_deriv_order (U : ℝ) (hU : 0 ≤ U) {ρ : ℂ}
+    (hβ : (1 / 2 : ℝ) < ρ.re) (hzero : riemannZeta ρ = 0) :
+    meromorphicOrderAt (-deriv (forcing U)) (ρ - 1) = (-3 : ℤ) := by
+  let a := ρ - 1
+  obtain ⟨_, _, _, _, _, H, _, _, _, _, hOrder⟩ :=
+    (ThetaLaplaceContinuation.theta_laplace_continuation U hU).2.2.2.2.2.2.2 ρ hβ hzero
+  have hBoundary : AnalyticAt ℂ (boundary U) a := by unfold boundary; fun_prop
+  have hLt : meromorphicOrderAt
+      (fun z => -deriv (ThetaLaplaceContinuation.M U) z + ThetaLaplaceContinuation.M U z) a <
+        meromorphicOrderAt (boundary U) a := by
+    rw [hOrder]
+    have hNeg : ((-2 : ℤ) : WithTop ℤ) < 0 := by
+      rw [← WithTop.coe_zero, WithTop.coe_lt_coe]
+      norm_num
+    exact hNeg.trans_le hBoundary.meromorphicOrderAt_nonneg
+  have horder : meromorphicOrderAt (forcing U) a = (-2 : ℤ) := by
+    change meromorphicOrderAt
+      ((fun z => -deriv (ThetaLaplaceContinuation.M U) z + ThetaLaplaceContinuation.M U z) +
+        boundary U) a = _
+    exact (meromorphicOrderAt_add_eq_left_of_lt hBoundary.meromorphicAt hLt).trans hOrder
+  change meromorphicOrderAt (-deriv (forcing U)) a = _
+  rw [← meromorphicOrderAt_neg]
+  have hcast : ((-2 : ℤ) : ℂ) ≠ 0 := by norm_num
+  have hsub : (-2 : ℤ) - 1 = -3 := by norm_num
+  simpa only [hsub] using meromorphicOrderAt_deriv_eq_sub_one hcast horder
+
+/-- A genuine zero in the open right half of the critical strip forces the
+first-moment forward window of any positive width to exceed every exponential
+bound with exponent below the real part of the shifted zero at arbitrarily late times. -/
+theorem actual_theta_tail_window_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
+    (hzero : riemannZeta ρ = 0) {h σ : ℝ}
+    (hh : 0 < h) (hσρ : σ < ρ.re - 1) (C T : ℝ) :
+    ∃ t : ℝ, T ≤ t ∧ C * Real.exp (σ * t) <
+      forwardWindow (fun v => v * ActualThetaTailLaplace.f v) h t := by
+  let σ' := max σ (-(1 / 2 : ℝ))
+  have hdσ' : -(1 / 2 : ℝ) ≤ σ' := le_max_right _ _
+  have hβ1 : ρ.re < 1 := lt_of_not_ge fun h => riemannZeta_ne_zero_of_one_le_re h hzero
+  have hU : 0 ≤ u₀ := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).le
+  have hσa : σ' < (ρ - 1).re := by
+    simpa only [Complex.sub_re, Complex.one_re] using
+      max_lt hσρ (by linarith only [hβ] : -(1 / 2 : ℝ) < ρ.re - 1)
+  have ha : (ρ - 1).re < 0 := by simpa only [Complex.sub_re, Complex.one_re, sub_neg] using hβ1
+  have hreal : ∀ c : ℝ, σ' < c → c < 0 →
+      AnalyticAt ℂ (-deriv (forcing u₀)) (c : ℂ) := by
+    intro c hσc _
+    exact (forcing_real_analytic u₀ hU (hdσ'.trans_lt hσc)).deriv.neg
+  have hpole : meromorphicOrderAt (-deriv (forcing u₀)) (ρ - 1) < 0 := by
+    rw [forcing_neg_deriv_order u₀ hU hβ hzero, ← WithTop.coe_zero, WithTop.coe_lt_coe]
+    norm_num
+  have hNoBound := WindowEulerPole.no_eventually_le_exp_of_pole
+    (g := fun v => v * ActualThetaTailLaplace.f v) (U := u₀) (σ := σ') (C := max C 0)
+    (P := -deriv (forcing u₀)) (a := ρ - 1)
+    hh (fun _ hx => actual_firstMoment_integrable hx)
+    (fun z hz => (forcing_meromorphic u₀ hU).deriv.neg z (hdσ'.trans_lt hz))
+    hreal (fun _ hz => actual_firstMoment_euler hz)
+    (actual_firstMoment_extension_at_zero hU) hσa ha hpole
+  have hPeaks : ∃ᶠ t : ℝ in atTop, max C 0 * Real.exp (σ' * t) <
+      forwardWindow (fun v => v * ActualThetaTailLaplace.f v) h t := by
+    simpa only [Filter.Frequently, not_lt] using hNoBound
+  obtain ⟨t, ht, hpeak⟩ := frequently_atTop.mp hPeaks (max T 0)
+  have ht₀ : 0 ≤ t := (le_max_right T 0).trans ht
+  have hExp : Real.exp (σ * t) ≤ Real.exp (σ' * t) :=
+    Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_right (le_max_left _ _) ht₀)
+  refine ⟨t, (le_max_left T 0).trans ht, ?_⟩
+  calc
+    C * Real.exp (σ * t) ≤ max C 0 * Real.exp (σ * t) :=
+      mul_le_mul_of_nonneg_right (le_max_left C 0) (Real.exp_pos _).le
+    _ ≤ max C 0 * Real.exp (σ' * t) :=
+      mul_le_mul_of_nonneg_left hExp (le_max_right C 0)
+    _ < _ := hpeak
+
+#print axioms actual_theta_tail_window_peak
 
 end D5.S3.Weil.Mertens.CriticalThetaTailPeak

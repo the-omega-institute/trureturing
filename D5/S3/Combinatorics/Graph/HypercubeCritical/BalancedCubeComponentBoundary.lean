@@ -28,7 +28,8 @@ open BalancedCriticalSpectrum (Q flip IsBalanced switchingVector)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private selected_neighbor_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
@@ -37,7 +38,7 @@ open Classical in
 def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
   Finset.univ.filter fun i => BalancedCriticalSpectrum.flip x i ∈ C
 
-@[simp] private theorem mem_directions {n : Nat} (C : Finset (Q n)) (x : Q n)
+@[simp] theorem mem_directions {n : Nat} (C : Finset (Q n)) (x : Q n)
     (i : Fin n) : i ∈ directions C x ↔ flip x i ∈ C := by
   simp [directions]
 
@@ -49,7 +50,7 @@ private theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x)
   cases hxi : x i <;> simp [BalancedCriticalSpectrum.flip, hij, hxi] at h
 
 open Classical in
-private theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
+theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
     (directions C x).card = (C.filter fun y => (hypercube n).Adj x y).card := by
   apply Finset.card_bij (fun i _ => flip x i)
   · intro i hi

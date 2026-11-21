@@ -20,11 +20,10 @@ git fetch upstream dev
 make worktree KIND=math NAME=my-contribution BASE=upstream/dev DEST=../trureturing-my-contribution
 cd ../trureturing-my-contribution
 CONTRIBUTION_BASE=$(git rev-parse upstream/dev)
-export STRATALINT_ACCEPT_COLD_BUILD=1
 export SCRIBE_DOTNET="$(python3 -c 'import pathlib,shutil; print(pathlib.Path(shutil.which("dotnet")).resolve())')"
 ```
 
-`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理；适配器只验证提交存在且为祖先，上游来源是调用方条件。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。冷构建入口仅在 linked worktree 中成立；fork 的主检出不走这条分支。
+`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理；适配器只验证提交存在且为祖先，上游来源是调用方条件。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。定向构建从本机 Lake 缓存恢复产物，缺失时编译目标及其依赖。
 
 ## 写内容与定向核验
 
@@ -43,12 +42,12 @@ Golden/Frozen/state/D5/<路径>.lean.json ← canonical writer 生成
 迭代只选择实际模块和实际保留的 Reg 源码，例如：
 
 ```sh
-make lean LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
+make lean-report-prepare LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make lean-report-scoped LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make emit BASE="$CONTRIBUTION_BASE"
 ```
 
-所有命令继承 `STRATALINT_ACCEPT_COLD_BUILD=1` 和绝对路径 `SCRIBE_DOTNET`，后者是 Scribe SDK 执行的宿主；仅有 `dotnet` 在 PATH 上不足以满足 SDK admission。目标必须非空，使用实际 dotted module names。定向报告包含显式 utility 输入与 imports；它不等于全库健康证明。源码未变时复用已有成功读数。长命令使用宿主作业句柄并等待真实退出码。
+所有命令继承绝对路径 `SCRIBE_DOTNET`，后者是 Scribe SDK 执行的宿主；仅有 `dotnet` 在 PATH 上不足以满足 SDK admission。目标必须非空，使用实际 dotted module names。定向报告包含显式 utility 输入与 imports；它不等于全库健康证明。源码未变时复用已有成功读数。长命令使用宿主作业句柄并等待真实退出码。
 
 ## 本地 Scribe 和逃逸审计
 
@@ -60,7 +59,7 @@ python3 <skill-directory>/scripts/check.py \
   --module D5.My.Module
 ```
 
-适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 canonical `make emit` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
+适配器自动纳入相对基线变动的全部 D5/Reg 源码及存在的 Reg mirror，运行 `make emit`，再对选定的目标运行 `make lean-report-prepare` 和 `make lean-report-scoped`。随后直接使用 fork 自身的 scoped report reader、Scribe 内容/公式检查器、四槽证据验证器和冻结状态解析器。临时 host 只提供调用入口，不修改仓内工具；它不执行全局 projection reconciliation，也不是 required checks 的替代品。诊断中的 `FORK_AUDIT` 是本地读数，不是新的持久化状态。
 
 每个新增、源码手写、公开 D5 theorem/lemma 都须尝试忠实的四槽登记。适配器用受保护基线中的源码名排除历史定理，排除 private 和编译器生成声明；utility 指定的 refutation result 只有通过现役 typed utility 校验才能豁免。按源码 owner 的 `Reg/D5/…` mirror 与其 imports 解析证据，不接受 D5 自登记。变动 Reg 的 payload 也交原验证器检查。辅助声明不递归产生 D5 目标。
 

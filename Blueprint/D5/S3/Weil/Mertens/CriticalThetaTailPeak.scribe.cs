@@ -22,5 +22,27 @@ internal sealed class CriticalThetaTailPeakDocument : IScribeDocumentDefinition
                     Paragraph(Text("At the nonreal point a=rho-1 the exact double-pole coefficient of T is -m/rho. P and B are regular there. A punctured neighborhood of that selected pole, together with the Euler identity at its regular points, gives epsilon^2 (zG''+2G')(a+epsilon) tending to m/rho. Positivity of the genuine moment integrals gives norm(G'(x+i gamma)) <= -G'(x) and norm(G''(x+i gamma)) <= G''(x). Their real limits imply m/norm(rho) <= norm(rho-1)c, contradicting the assumed strict coefficient bound. No rightmost-zero hypothesis is needed.")),
                     Paragraph(Text("The same actual theta forcing gives both real signs. For every s with s^2=1, every 0<=c<m/(norm(rho) norm(rho-1)), and every real T, some u>max(T,log 2) satisfies c<u exp((1-Re(rho))u)(s f(u)). Apply EulerPoleObstruction.signed_peaks at U0=log 2 with g=f, d=-1/2, sigma=Re(rho)-1, a=rho-1 and Lambda=-m/rho. ActualThetaTailLaplace supplies integrability and the Euler equation. The normalized-zeta real sign supplies the full real corridor, and the local Laurent formula including the actual cutoff boundary term supplies the full complex DoublePole. The norm ratio is exactly m/(norm(rho) norm(rho-1)). The positive theorem uses s=1 directly in this common supplier. This conditional consequence asserts no off-line zero.")),
                     Paragraph(Text("Taking c to be half the positive amplitude supplies conditional arbitrarily late peaks. Since exp((beta-one half)u)/u tends to infinity, these eventually cross an envelope of the form 7 exp(-u/2). An arithmetic bridge from that envelope to actual prefix least-common-multiple Robin violations is a separate requirement. This theorem does not assert an off-line zero, the Riemann hypothesis, an unconditional violating integer, an effective peak location, an endpoint beta=one half or beta=one, or a peak strictly above the limiting amplitude. The argument uses classical positive Laplace continuation and local pole comparison; no literature originality is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-theta-tail-window-peak"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/CriticalThetaTailPeak.actual_theta_tail_window_peak"),
+                H("First-moment peaks in every fixed positive window"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let ρ be an actual Riemann zeta zero with 1/2<Re(ρ). "
+                        + "Nonvanishing on Re(z)≥1 gives Re(ρ)<1. Fix h>0 and any σ<Re(ρ)−1. "
+                        + "For every real C and T there is a real t≥T such that "
+                        + "C exp(σt)<∫₀ʰ (t+u) f(t+u) du, where f(v)=ActualThetaTailLaplace.f(v) "
+                        + "is the actual signed theta tail in logarithmic time.")),
+                    Paragraph(Text("The transform of v↦v f(v) is the negative derivative of the "
+                        + "theta-tail transform on Re(z)>0. Its Euler forcing is the negative "
+                        + "derivative of the original forcing. The order −2 of −M′+M is preserved "
+                        + "by adding the entire cutoff term, so the first-moment forcing has order −3 "
+                        + "at ρ−1. It is holomorphic at the real cuts max(σ,−1/2)<c<0. At zero, the regular original "
+                        + "forcing and the finite right-hand limit of the theta-tail transform "
+                        + "give a local extension whose negative derivative extends the first-moment "
+                        + "transform. The obstruction gives a peak above max(C,0) exp(max(σ,−1/2)t) "
+                        + "at some t≥max(T,0), which also exceeds C exp(σt)."))),
                 DescribeRole.Theorem))));
 }

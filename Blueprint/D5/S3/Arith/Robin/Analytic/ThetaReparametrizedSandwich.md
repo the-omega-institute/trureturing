@@ -22,9 +22,22 @@ For a,b>1, the derivative of (b-t)*g(t)+log(log(t)) is -(b-t)*w(t). The original
 
 If x<=Chebyshev.theta(x), theta monotonicity makes the integrand nonnegative on the forward interval. If Chebyshev.theta(x)<=x, the integrand is nonpositive on the reversed interval, and reversing orientation changes its sign. Thus the telescope is nonnegative in both orders. The original loglog_tangent_gap_quadratic supplies N(x)<=0. These two signs and the literal B decomposition give the lower and upper inequalities respectively. No derivative or continuity of theta at a prime is used. This is a pointwise statement and asserts no limiting theorem or RH conclusion.
 
+**Theorem 1.2 (Local displacement of the actual theta tail).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/ThetaReparametrizedSandwich.actual_theta_tail_local_modulus`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/ThetaReparametrizedSandwich.actual_theta_tail_local_modulus` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all sufficiently large u and every v≥u, the absolute change of the signed weighted tail is at most 2(v−u)/(u log(u)).
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ThetaReparametrizedSandwich.actual_theta_reparametrized_sandwich`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/ThetaReparametrizedSandwich.actual_theta_tail_local_modulus`
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature](LogLogGlobalCurvature.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope](RHSharpArithmeticEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](../MellinWeightedVariation.md)

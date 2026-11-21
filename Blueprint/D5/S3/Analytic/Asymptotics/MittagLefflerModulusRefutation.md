@@ -180,7 +180,21 @@ $$\forall alpha \in Real,\; \left(1 < alpha \land alpha < 2\right) \Rightarrow \
 
 The argument of minus the direction is minus the prescribed angle. The principal argument follows by positive scaling of the unit-circle direction, and the angular margin is strictly positive.
 
-**Theorem 1.14 (One finite endpoint deficit).**
+**Theorem 1.14 (The endpoint deficit beyond a radius).**
+
+$$\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),\; IsSourceSeries\left(E\right) \Rightarrow \left(\forall alpha \in Real,\; \left(1 < alpha \land alpha < 2\right) \Rightarrow \left(\exists R \in Real,\; 0 < R \land \left(\forall r \in Real,\; R < r \Rightarrow \left\lVert E\left(alpha, alpha - 1, r \cdot rayDirection\left(alpha\right)\right) \right\rVert < re\left(E\left(alpha, alpha - 1, val\left(re\left(r \cdot rayDirection\left(alpha\right)\right), Complex\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_endpoint_eventually` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Roberto Garrappa, Stefan Gerhold, Marina Popolizio, Thomas Simon (2025). *On some inequalities for the two-parameter Mittag-Leffler function in the complex plane*. URL: <https://arxiv.org/abs/2410.11852v4>.
+
+*Commentary.*
+
+The scaled negative-axis real part tends to the positive endpoint coefficient, and the scaled ray norm tends to that coefficient divided by one plus the squared tilt. Since the second limit is strictly smaller, the scaled ray norm is eventually below the scaled axis value, so there is a positive radius R beyond which every point r times the prescribed direction has a strict modulus deficit; the real part of that point is minus r.
+
+**Theorem 1.15 (One finite endpoint deficit).**
 
 $$\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),\; IsSourceSeries\left(E\right) \Rightarrow \left(\forall alpha \in Real,\; \left(1 < alpha \land alpha < 2\right) \Rightarrow \left(\exists r \in Real,\; 0 < r \land \left\lVert E\left(alpha, alpha - 1, r \cdot rayDirection\left(alpha\right)\right) \right\rVert < re\left(E\left(alpha, alpha - 1, val\left(re\left(r \cdot rayDirection\left(alpha\right)\right), Complex\right)\right)\right)\right)\right)$$
 
@@ -192,9 +206,9 @@ $$\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),
 
 *Commentary.*
 
-The scaled negative-axis real part tends to the positive endpoint coefficient. The scaled ray norm tends to that coefficient divided by one plus the squared tilt. Their strict limit gap gives one finite positive radius.
+Any radius beyond the threshold of the eventual deficit gives one finite positive radius.
 
-**Theorem 1.15 (The same point on a closed beta interval).**
+**Theorem 1.16 (The same point on a closed beta interval).**
 
 $$\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),\; IsSourceSeries\left(E\right) \Rightarrow \left(\forall alpha \in Real,\; \left(1 < alpha \land alpha < 2\right) \Rightarrow \left(\exists z \in Complex,\; \exists epsilon \in Real,\; 0 < epsilon \land \left(epsilon < 1 \land \left(0 < im\left(z\right) \land \left(\left(\exists r \in Real,\; 0 < r \land z = r \cdot rayDirection\left(alpha\right)\right) \land \left(\forall beta \in Real,\; \left(alpha - 1 \le beta \land beta \le alpha - 1 + epsilon\right) \Rightarrow \left\lVert E\left(alpha, beta, z\right) \right\rVert < re\left(E\left(alpha, beta, val\left(re\left(z\right), Complex\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -208,7 +222,7 @@ $$\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),
 
 For every alpha between one and two, choose the finite point on the prescribed ray first. Continuity in beta gives an open neighborhood of strict deficits. A positive epsilon smaller than one places the whole closed interval from alpha minus one to alpha minus one plus epsilon inside that neighborhood.
 
-**Theorem 1.16 (The characterization is false).**
+**Theorem 1.17 (The characterization is false).**
 
 $$\neg (\left(\exists E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),\; IsSourceSeries\left(E\right)\right) \land \left(\forall E \in Real \to \left(Real \to \left(Complex \to Complex\right)\right),\; IsSourceSeries\left(E\right) \Rightarrow \left(\forall alpha \in Real,\; \forall beta \in Real,\; 1 < alpha \Rightarrow \left(alpha < 2 \Rightarrow \left(0 \le beta \Rightarrow \left(\left(\left(\forall z \in Complex,\; \operatorname{Complex}.\operatorname{re}\left(E\left(alpha, beta, val\left(\operatorname{Complex}.\operatorname{re}\left(z\right), Complex\right)\right)\right) \le \left\lVert E\left(alpha, beta, z\right) \right\rVert\right) \Leftrightarrow \left(alpha - 1 \le beta \land beta \le alpha\right)\right) \land \left(\left(alpha - 1 \le beta \land beta \le alpha\right) \Leftrightarrow \left(\left(\forall x \in Real,\; 0 < x \Rightarrow 0 < reciprocal\left(E, alpha, beta, x\right)\right) \land \operatorname{D5}.\operatorname{S3}.\operatorname{Analytic}.\operatorname{ExpRatioCM}.\operatorname{Defs}.\operatorname{CompletelyMonotoneOn}\left(reciprocal\left(E, alpha, beta\right)\right)\right)\right)\right)\right)\right)\right)\right))$$
 
@@ -240,6 +254,7 @@ The literal source family exists for every positive alpha, every real beta and e
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_barnes_identity`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_closed_beta_family`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_continuous_beta`
+- Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_endpoint_eventually`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_endpoint_expansion`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_endpoint_failure`
 - Truth anchor: `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.source_endpoint_scaled_limit`

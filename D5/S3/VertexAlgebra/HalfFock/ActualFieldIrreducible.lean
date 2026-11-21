@@ -67,12 +67,14 @@ private theorem groundAction_mem (D : LatticeData) (hu : IsUnit D.G.det)
   change ((1 : Oscillator D) ⊗ₜ[ℂ] groundAction D hu charge g) ∈ S
   simpa only [smul_smul, inv_mul_cancel₀ hn, one_smul] using scaled
 
-private def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
-    (S : Submodule ℂ (ActualTensor D hu))
-    (stable : ∀ (source : Carrier D) (e : ℤ) (x : ActualTensor D hu),
-      x ∈ S → (correctedField D hu source).coeff e x ∈ S) :
+/-- A ground submodule stable under every charge lift carries the actual quotient
+representation because the central sign acts by a scalar. -/
+def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
+    (U : Submodule ℂ (ActualGround D hu))
+    (stable : ∀ (charge : Charge D) (g : ActualGround D hu),
+      g ∈ U → groundAction D hu charge g ∈ U) :
     Subrepresentation (groundRepresentation D hu) where
-  toSubmodule := groundIntersection D hu S
+  toSubmodule := U
   apply_mem_toSubmodule element g hg := by
     induction element using Quotient.inductionOn with
     | h representative =>
@@ -81,17 +83,16 @@ private def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
           (⟨sign, 0⟩ : Extension D) * ⟨0, charge⟩ := by
         apply SignExtension.ext <;> simp [HMul.hMul, Mul.mul]
       change groundRepresentation D hu
-        ((QuotientGroup.mk' (K D)) (⟨sign, charge⟩ : Extension D)) g ∈
-          groundIntersection D hu S
+        ((QuotientGroup.mk' (K D)) (⟨sign, charge⟩ : Extension D)) g ∈ U
       rw [decompose, map_mul, map_mul, Module.End.mul_apply]
-      have hc := groundAction_mem D hu S stable charge g hg
+      have hc := stable charge g hg
       change groundRepresentation D hu (QuotientGroup.mk (⟨sign, 0⟩ : Extension D))
-        (groundAction D hu charge g) ∈ groundIntersection D hu S
+        (groundAction D hu charge g) ∈ U
       have signs : sign = 0 ∨ sign = 1 := by fin_cases sign <;> simp
       rcases signs with hzero | hone
       · rw [hzero]
         change groundRepresentation D hu (QuotientGroup.mk' (K D) 1)
-          (groundAction D hu charge g) ∈ groundIntersection D hu S
+          (groundAction D hu charge g) ∈ U
         simpa only [map_one, Module.End.one_apply] using hc
       · rw [hone]
         have central : groundRepresentation D hu
@@ -100,7 +101,7 @@ private def groundSubrepresentation (D : LatticeData) (hu : IsUnit D.G.det)
           (Classical.choose_spec
             (Classical.choose_spec (actual_twisted_ground_representation D hu))).2.2.1
         simpa only [central, LinearMap.neg_apply, Module.End.one_apply] using
-          (groundIntersection D hu S).neg_mem hc
+          U.neg_mem hc
 
 private theorem all_ground_mem (D : LatticeData) (hu : IsUnit D.G.det)
     (S : Submodule ℂ (ActualTensor D hu)) (hS : S ≠ ⊥)
@@ -113,11 +114,12 @@ private theorem all_ground_mem (D : LatticeData) (hu : IsUnit D.G.det)
   let : (groundRepresentation D hu).IsIrreducible :=
     (Classical.choose_spec
       (Classical.choose_spec (actual_twisted_ground_representation D hu))).2.1
-  rcases eq_bot_or_eq_top (groundSubrepresentation D hu S stable) with bottom | top
-  · have member : v ∈ groundSubrepresentation D hu S stable := hmember
+  let V := groundSubrepresentation D hu (groundIntersection D hu S) (groundAction_mem D hu S stable)
+  rcases eq_bot_or_eq_top V with bottom | top
+  · have member : v ∈ V := hmember
     rw [bottom] at member
     exact False.elim (hv member)
-  · have member : g ∈ groundSubrepresentation D hu S stable := by rw [top]; trivial
+  · have member : g ∈ V := by rw [top]; trivial
     exact member
 
 /-- The complete actual tensor module has no proper nonzero submodule stable

@@ -7,6 +7,13 @@ doi: 10.48550/arXiv.1404.0484
 claim: Theorem 2.10 (Conjectured) gives a two-branch maximum-total-degree addition law for all distinct orders at least three.
 strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation
+  - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw
+  - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
+  - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
+  - D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheorem
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheoremRefutation
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -53,3 +60,83 @@ successfully inspected sources. MathDB live contents, complete citation
 enumeration, the special issue *Reflections on Jaco Graphs*, the named
 domination research note and unindexed sources remain coverage gaps. No
 worldwide openness, first computation, or publication-priority claim follows.
+
+## Corrected addition law
+
+The repository's corrected law is not stated in the source. Write phi for
+the golden ratio, frac(n) for the fractional part of (n+2)/phi and
+alpha=sqrt(5)-2. For every finite family of natural orders with r members
+and total N, Delta(N) minus the sum of the members' maximum degrees
+equals floor(sum frac(n_j)-(r-1)alpha). For two summands the correction is
+-1, 0 or 1 according to the position of frac(n)+frac(m) relative to alpha
+and 1+alpha, attained at the orders (3,11), (3,4) and (4,6). The maximum-degree
+formula floor((n+2)/phi)-1 that it rests on appears as Theorem 4.8 of Raso and
+Kok, [arXiv:2611.01554v1](https://arxiv.org/abs/2611.01554v1), whose readable
+text contains no addition law. A bounded web search found no published
+statement of the corrected law; no worldwide priority claim follows.
+
+## Maximum degree and the shifted order
+
+Theorem 2.9 on printed page 7 states only that, with m=n+Delta_n, the graph
+J_m(1) has maximum degree n or n-1. Its proof splits on the outdegree
+d+(v_n), which equals b_n=floor((n+1)/phi), and in its second case concludes
+only "n or n-1". The repository proves the sharper statement for every
+natural n: Delta_n equals b_n or b_n-1, the first case holds exactly when the
+fractional part of (n+2)/phi is below 1/phi, and the order n+Delta_n has
+maximum degree n in the first case and n-1 in the second.
+
+## Maximum sets
+
+Lemma 2.2 (Conjectured) on printed page 4 asserts that b_(n-1)<b_n<b_(n+1)
+implies that v_(b_n) is the unique Jaconian vertex of J_n(1), and the
+open-problem list on printed page 11 asks to prove it. The repository proves
+this implication for every n; the converse, which the source does not assert,
+fails at n=5, where J_5={v_3} although b_4=b_5=3. It also proves the complete
+description of the maximum set for n at least two: the label interval from
+Delta_n to R_t with t=n-Delta_n, of one, two or three vertices, with exact
+singleton criteria. The request attributes that description to Patel's
+solution posted on MathDB; MathDB refuses automated fetches, and those answers
+were not inspected, so they may already settle Lemma 2.2 and no priority is
+claimed.
+
+## Progressions of orders
+
+The first open problem on printed page 11 records that the maximum degree of
+J_(5k)(1) is 3k for 5k in [1,44] and 3k+1 for 5k in [45,99], and asks for a
+partitioning of the orders that closes this pattern. The repository proves
+that for all d and k, Delta(dk)=floor(d/phi)k+floor(beta_d k+alpha), where
+beta_d is the fractional part of d/phi and alpha=sqrt(5)-2, and gives the
+exact range of k for each value of the correction. For d=5 the correction
+equals q exactly on the blocks [5k_q,5k_(q+1)-1], the first starting at 1,
+with k_q=floor((5q-1)phi)+3q for q>=1; these blocks partition the positive
+integers. Possible answers posted on MathDB were not inspected, so no priority
+is claimed.
+
+## Orders with three maximum-degree vertices
+
+Corollary 6 of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24369124, restates
+Conjecture 2.16.1 of J. Kok, Linear Jaco Graphs: A Critical Review, Journal of
+Informatics and Mathematical Sciences 8(2) (2016) 67-103, DOI
+10.26713/jims.v8i2.402, page 73, as a recurrence: with p_0=1 and
+p_(j+1)=p_j+3+2(floor((j+2)/phi)-floor((j+1)/phi)), the orders whose maximum
+set has three vertices are p_1,p_2,...=6,9,14,19,22,.... The corollary credits
+the underlying classification to Patel's solution of MathDB problem 369424.
+The repository proves p_j=3j+1+2b_j, the criterion that J_n has three vertices
+exactly when b_(n+3)=b_(n+1)+2 for n at least two, the exact enumeration by
+p_j with j at least one, and the gap patterns: gaps 3 or 5, no two consecutive
+gaps 3 and no three consecutive gaps 5. The 2016 journal text and the MathDB
+answer were not inspected, so no priority is claimed.
+
+## Morrie's theorem
+
+Theorem 2.3 (Morrie's Theorem) on printed page 4 asserts, for n>=2 and the
+prime (least) Jaconian vertex v_k of J_n(1): (a) d^-(v_k)=d^-(v_(k+1)) and
+d^-(v_(k+2))=d^-(v_(k+1))+1 if and only if J_n={v_k} and
+J_(n+1)={v_k,v_(k+1),v_(k+2)}; (b) d^-(v_k)=d^-(v_(k+1))=d^-(v_(k+2)) if and
+only if J_n={v_k} and J_(n+1)={v_k,v_(k+1)}. Both fail as stated: at n=6,
+k=3 the indegrees satisfy (a) but J_6 is not a singleton, and at n=4, k=2
+they satisfy (b) but J_4 is not a singleton. Corollary 4 of Ma and Zhang,
+Zenodo DOI 10.5281/zenodo.24369124, adds n=R_k to each left-hand condition.
+The repository proves both corrected equivalences, with d^-(v_i)=i-b_i, and
+that in (a) the condition d^-(v_k)=d^-(v_(k+1)) is implied by the others; it
+proves separately that each part fails as stated, at n=6 and at n=4.
