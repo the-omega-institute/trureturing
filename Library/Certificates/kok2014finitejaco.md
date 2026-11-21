@@ -72,9 +72,10 @@ statement of the corrected law; no worldwide priority claim follows.
 
 ## Maximum degree and the shifted order
 
-Theorem 2.9 on printed page 7 states that for n at least one the maximum
-degree Delta_n equals b_n or b_n-1, where b_n=floor((n+1)/phi) counts the
-outgoing arcs of v_n in the infinite graph, and that the order n+Delta_n has
-maximum degree n in the first case and n-1 in the second. The repository
-proves this for every natural n, with the first case holding exactly when the
-fractional part of (n+2)/phi is below 1/phi.
+Theorem 2.9 on printed page 7 states only that, with m=n+Delta_n, the graph
+J_m(1) has maximum degree n or n-1. Its proof splits on the outdegree
+d+(v_n), which equals b_n=floor((n+1)/phi), and in its second case concludes
+only "n or n-1". The repository proves the sharper statement for every
+natural n: Delta_n equals b_n or b_n-1, the first case holds exactly when the
+fractional part of (n+2)/phi is below 1/phi, and the order n+Delta_n has
+maximum degree n in the first case and n-1 in the second.

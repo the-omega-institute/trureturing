@@ -17,6 +17,7 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoDegreeShift
 
 /-
 proof_shape:
+  g_sq: bind-only (consumer: result)
   result: content
 escape_witness: the identity (n + Delta_n + 2) / phi = n + 2 - (1 + frac n) / phi, from
   phi^-2 = 1 - phi^-1, together with frac n != 1 / phi from the irrationality of phi, fixes
@@ -29,9 +30,7 @@ open D5.S3.ConceptDynamics.GraphColoring.JacoEndpointBeatty
 open D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw
 
 private theorem g_sq : Real.goldenRatio⁻¹ ^ 2 = 1 - Real.goldenRatio⁻¹ := by
-  rw [Real.inv_goldenRatio, Real.goldenConj]
-  have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
-  nlinarith
+  rw [Real.inv_goldenRatio, neg_sq, Real.goldenConj_sq]; ring
 
 /-- For every order `n`, `Δ_n` is `b_n` or `b_n - 1`, the first case holding exactly when the golden
 fractional part of `(n + 2) / φ` lies below `1 / φ`; in the first case the order
@@ -82,7 +81,7 @@ theorem result (n : ℕ) :
         ((n : ℝ) + 2) * Real.goldenRatio - (1 + (n + 2) * g - F) * (g * Real.goldenRatio) := by ring
     rw [this, hgp]
     have hphi : Real.goldenRatio = 1 + g := by
-      rw [hg, Real.inv_goldenRatio, Real.goldenConj, Real.goldenRatio]; ring
+      rw [hg, Real.inv_goldenRatio]; linarith [Real.one_sub_goldenConj]
     rw [hphi]
     nlinarith [hgsq]
   have hshiftD : ((jaco (n + (jaco n).maxDegree)).maxDegree : ℤ) =
