@@ -19,6 +19,8 @@ triage: anchor
 
 ## Verified locator
 
+DOI `10.48550/arXiv.2611.25785` · [arXiv edition](https://arxiv.org/abs/2611.25785v1)
+
 Yuta Kozaki and Saburo Kakei, *Coxeter Group Symmetries of Frieze Patterns*,
 arXiv:2611.25785v1, §3, printed p. 9, Conjecture 13, state:
 

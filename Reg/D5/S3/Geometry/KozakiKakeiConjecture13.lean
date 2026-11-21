@@ -14,6 +14,9 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.Support.SingleDependentReadout (sensitivity)
 open LeanInformationAudit
 
+noncomputable section
+open Classical
+
 private theorem identity_dihedral : Dihedral (Equiv.refl (Col 2)) :=
   ⟨0, Or.inl (fun i => (zero_add i).symm)⟩
 
@@ -33,35 +36,37 @@ private theorem swap_not_dihedral : ¬ Dihedral (Equiv.swap (0 : Col 2) 1) := by
 
 private abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ
-    (fun m => Equiv.Perm (Col m)) (fun _ => Prop)
+    (fun m => Equiv.Perm (Col m)) (fun _ => Bool)
 
 private def actual : Realization signature :=
-  realize signature (fun _ _ σ => Dihedral σ) (fun e => nomatch e)
+  realize signature (fun _ _ σ => decide (Dihedral σ)) (fun e => nomatch e)
 
 private def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 private abbrev arena : Arena where
   signature := signature
   Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (_ : m ≠ 3) (σ : Equiv.Perm (Col m)),
-    Allowable hm σ ↔ R.readout () m σ
+    Allowable hm σ ↔ R.readout () m σ = true
 
 private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
   have ha := (conjecture_13 (m := 2) (by decide) (by decide) (Equiv.refl _)).mpr
     identity_dihedral
-  exact (h (by decide) (by decide) (Equiv.refl (Col 2))).mp ha
+  have impossible := (h (by decide) (by decide) (Equiv.refl (Col 2))).mp ha
+  cases impossible
 
 def evidence : Registration arena (type_of% @conjecture_13) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@conjecture_13, rejected, rejected_fails⟩
+  bridge := by
+    simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @conjecture_13,
+    rejected, rejected_fails⟩
   sensitivity := sensitivity arena.Law actual rejected rejected_fails
   dependence := by
     intro _
     refine ⟨2, Equiv.refl _, Equiv.swap 0 1, ?_⟩
-    intro h
-    exact swap_not_dihedral (Eq.mp h identity_dihedral)
+    simpa [actual, realize, identity_dihedral, swap_not_dihedral]
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
@@ -77,7 +82,7 @@ def registration :
   realization := .source arena ⟨evidence⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ σ => Dihedral σ) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ σ => decide (Dihedral σ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -88,10 +93,10 @@ def registration :
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 3
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }]
+      stateOperand := some #["arg"]
+      booleanPredicate := true }]
   }
   continuation := .unknown
   familyRecord := none
@@ -100,12 +105,12 @@ def registration :
 namespace Level
 
 private def observesLevel : Realization signature :=
-  realize signature (fun _ _ σ => PreservesLevel σ) (fun e => nomatch e)
+  realize signature (fun _ _ σ => decide (PreservesLevel σ)) (fun e => nomatch e)
 
 private abbrev levelArena : Arena where
   signature := signature
   Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (σ : Equiv.Perm (Col m)),
-    Allowable hm σ ↔ R.readout () m σ
+    Allowable hm σ ↔ R.readout () m σ = true
 
 private theorem identity_preserves : PreservesLevel (Equiv.refl (Col 2)) :=
   fun _ _ h => h
@@ -114,20 +119,24 @@ private theorem rejects_level : ¬ levelArena.Law rejected := by
   intro h
   have ha := (allowable_iff_preservesLevel (m := 2) (by decide) (Equiv.refl _)).mpr
     identity_preserves
-  exact (h (by decide) (Equiv.refl (Col 2))).mp ha
+  have impossible := (h (by decide) (Equiv.refl (Col 2))).mp ha
+  cases impossible
 
 def levelEvidence : Registration levelArena (type_of% @allowable_iff_preservesLevel) where
   actual := observesLevel
-  bridge := Iff.rfl
-  variation := ⟨@allowable_iff_preservesLevel, rejected, rejects_level⟩
+  bridge := by
+    simp [levelArena, observesLevel, realize]
+  variation := ⟨by simpa [levelArena, observesLevel, realize] using @allowable_iff_preservesLevel,
+    rejected, rejects_level⟩
   sensitivity := sensitivity levelArena.Law observesLevel rejected rejects_level
   dependence := by
     intro _
     refine ⟨2, Equiv.refl _, Equiv.swap 0 1, ?_⟩
-    intro h
-    have hp : PreservesLevel (Equiv.swap (0 : Col 2) 1) := Eq.mp h identity_preserves
-    have ha := (allowable_iff_preservesLevel (m := 2) (by decide) _).mpr hp
-    exact swap_not_dihedral ((conjecture_13 (m := 2) (by decide) (by decide) _).mp ha)
+    have bad : ¬ PreservesLevel (Equiv.swap (0 : Col 2) 1) := by
+      intro hp
+      have ha := (allowable_iff_preservesLevel (m := 2) (by decide) _).mpr hp
+      exact swap_not_dihedral ((conjecture_13 (m := 2) (by decide) (by decide) _).mp ha)
+    simpa [observesLevel, realize, identity_preserves, bad]
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
@@ -143,7 +152,7 @@ def registration :
   realization := .source levelArena ⟨levelEvidence⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ σ => PreservesLevel σ) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ σ => decide (PreservesLevel σ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -154,15 +163,17 @@ def registration :
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }]
+      stateOperand := some #["arg"]
+      booleanPredicate := true }]
   }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 end Level
+
+end
 
 end Reg.D5.S3.Geometry.KozakiKakeiConjecture13
