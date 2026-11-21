@@ -166,7 +166,7 @@ theorem weighted_affine_fiber_eq_iff {F P R V : Type*}
     · exact fun h y => h _ (param y).property.1 (param y).property.2
   simp_rw [hconst]
 
-private noncomputable def fiberFreeEquiv {L P F T : Type*}
+noncomputable def fiberFreeEquiv {L P F T : Type*}
     [Fintype L] [Fintype P] [Fintype F]
     (C : Matrix T L (ZMod 2)) (split : P ⊕ F ≃ L) (target : T → ZMod 2)
     (hlin : LinearIndependent (ZMod 2) (fun j : P => C.col (split (.inl j))))
