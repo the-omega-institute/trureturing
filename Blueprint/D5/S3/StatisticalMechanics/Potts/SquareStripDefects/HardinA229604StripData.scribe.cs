@@ -36,7 +36,7 @@ internal sealed class HardinA229604StripDataDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(
                     Paragraph(Text("For j of type Fin 96, use Fin.val j in the guards and offsets. If Fin.val j is below 42, apply HardinA229457StripData.initial to the Fin 42 index formed from Fin.val j using that bound. If Fin.val j is from 42 through 73, the entry is 0.")),
-                    Paragraph(Text("For j from 74 through 95, the entry at local index j − 74 is taken from the new integer row (12, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 6, 12, 12, 12, 6). HardinA229604Strip.finite_certificate identifies the resulting entries with the literal first-row counts."))), DescribeRole.Definition),
+                    Paragraph(Text("For j from 74 through 95, the entry at local index j − 74 is taken from the integer row (12, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 6, 12, 12, 12, 6). These entries sum the frozen A229635 first-row tallies over the representatives whose square-strip classes equal j. The first-row horizontal defects and the remaining budget are the same in both geometries. HardinA229604Strip.finite_certificate identifies the resulting entries with the literal first-row counts."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("terminal"), DeclarationHandle.Create(Prefix + "terminal"),
                 H("terminal"), StatementSource.FromAuthor(Disp(Typed(Call("HardinA229604StripData.terminal"), Arrow(Call("Fin", Num("96")), Call("Int"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),

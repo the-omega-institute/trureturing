@@ -10,11 +10,15 @@
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: finite_certificate, result
 a: proof_shape=bind-only; consumers=result
+startImage: proof_shape=bind-only; consumers=map_start, initial_image, finite_certificate
+map_start: proof_shape=content; consumers=finite_certificate
+initial_image: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Transfer
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457Strip
@@ -28,7 +32,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 open scoped BigOperators
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State HardinA229635Transfer)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604Strip
@@ -40,6 +44,26 @@ open HardinA229604StripData
 open DefectTransfer (literalCount lumped_count forward forward_shift)
 /-- Literal row-major canonical arrays with two monochromatic bonds. -/
 def a (n : ℕ) : ℕ := HardinA229457Strip.canonicalCount 2 n
+
+private def startImage (s : HardinA229635State.State) : Fin 96 :=
+  Fin.addCases (fun _ : Fin 31 => 0)
+    (fun i : HardinA229635State.Fresh =>
+      cl (HardinA229635State.rep i) (HardinA229635State.budget i)) s
+
+private theorem map_start : ∀ r : Row, HardinA229635State.h r ≤ 2 →
+    startImage (HardinA229635State.cl r (2 - HardinA229635State.h r)) =
+      cl r (2 - HardinA229635State.h r) := by
+  rw [Fin.forall_fin_succ_pi]
+  intro a
+  rw [Fin.forall_fin_succ_pi]
+  intro b
+  fin_cases a <;> fin_cases b <;> decide +kernel +revert
+
+private theorem initial_image : ∀ j : Fin 54,
+    (∑ s : HardinA229635State.State,
+      if startImage s = j.natAdd 42 then HardinA229635Transfer.initial s else 0) =
+      initial (j.natAdd 42) := by
+  decide +kernel
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -78,14 +102,29 @@ theorem finite_certificate :
       simp_rw [cut]
       simpa only [HardinA229604StripData.initial, Fin.append_left] using
         HardinA229457Strip.finite_certificate.2.2.2.2 j
-    · have new_counts : ∀ j : Fin 54,
-          (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
-            cl r (2 - bondDefects horizontal r r) = j.natAdd 42
-            then (1 : ℤ) else 0) = initial (j.natAdd 42) := by decide +kernel
-      let j : Fin 54 := ⟨s.val - 42, by omega⟩
+    · let j : Fin 54 := ⟨s.val - 42, by omega⟩
       have he : s = j.natAdd 42 := by apply Fin.ext; dsimp [j]; omega
-      rw [he]
-      exact new_counts j
+      rw [he, ← initial_image j]
+      change (∑ r : Row, if HardinA229635State.h r ≤ 2 ∧
+        cl r (2 - HardinA229635State.h r) = j.natAdd 42 then (1 : ℤ) else 0) = _
+      simp_rw [← HardinA229635Transfer.initial_correct, Finset.ite_sum_zero]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro r _
+      by_cases hr : HardinA229635State.h r ≤ 2
+      · simp only [hr, true_and, ← map_start r hr]
+        rw [show (∑ s : HardinA229635State.State, if startImage s = j.natAdd 42 then
+            (if HardinA229635State.cl r (2 - HardinA229635State.h r) = s
+              then (1 : ℤ) else 0) else 0) =
+            ∑ s : HardinA229635State.State,
+              if s = HardinA229635State.cl r (2 - HardinA229635State.h r) then
+                (if startImage s = j.natAdd 42 then (1 : ℤ) else 0) else 0 by
+          apply Finset.sum_congr rfl
+          intro s _
+          by_cases h : s = HardinA229635State.cl r (2 - HardinA229635State.h r) <;>
+            simp [h, eq_comm]]
+        simp
+      · simp [hr]
 
 attribute [local irreducible] a
 
