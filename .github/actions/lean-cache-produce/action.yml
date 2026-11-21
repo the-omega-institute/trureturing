@@ -272,6 +272,29 @@ runs:
       with:
         operation: save
         anchor: ${{ inputs.shard-history-anchor }}
+    - id: published_index
+      name: Read back the Actions index rebuilt from the pinned Release
+      if: inputs.release-seed-tag != '' && inputs.shard-history-anchor != '' && steps.sharded_project.outputs.complete == 'true'
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: lookup
+    - name: Confirm that the rebuilt index and its material are visible on the protected ref
+      if: inputs.release-seed-tag != '' && inputs.shard-history-anchor != ''
+      shell: bash
+      env:
+        SAVED: ${{ steps.sharded_project.outputs.key }}
+        MATCHED: ${{ steps.published_index.outputs.key }}
+        COMPLETE: ${{ steps.published_index.outputs.complete }}
+        VISIBLE: ${{ steps.published_index.outputs.visible }}
+        TAG: ${{ inputs.release-seed-tag }}
+        PRODUCER: ${{ inputs.release-seed-producer }}
+      run: |
+        [[ -n "$SAVED" && "$MATCHED" == "$SAVED" && "$COMPLETE" == true && "$VISIBLE" =~ ^[1-9][0-9]*$ ]]
+        jq -n -c --arg tag "$TAG" --arg producer "$PRODUCER" --arg ref "$GITHUB_REF" \
+          --arg index "$MATCHED" --argjson visible "$VISIBLE" \
+          '{release_tag:$tag,producer_commit:$producer,ref:$ref,index_key:$index,visible_payloads:$visible}'
     - id: project_snapshot
       if: steps.sharded_project.outputs.complete != 'true'
       name: Prepare the project seed
