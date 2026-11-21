@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61Subcritical
 import Reg.Support.DependentFamily
 
-/-! Dependent-family registration of the zero-overshoot criterion. -/
+/-! Dependent-family registrations for overshoot and the Pell hitting threshold. -/
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -89,6 +89,86 @@ def overshootRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev hittingSignature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actualWidth : Realization hittingSignature :=
+  realize hittingSignature (fun _ _ c => 2 * c) (fun e => nomatch e)
+
+def zeroWidth : Realization hittingSignature :=
+  realize hittingSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def hittingArena : Arena where
+  signature := hittingSignature
+  Law r := ∀ {c : ℝ}, r.readout () () c < circumference → ∃ N, UniformForbiddenHit c N
+
+private theorem zeroWidth_fails : ¬ hittingArena.Law zeroWidth := by
+  intro h
+  obtain ⟨N, hN⟩ := h (c := circumference) circumference_pos
+  have hx : (0 : ℝ) ∈ Set.Icc 0 (2 * circumference) :=
+    ⟨le_rfl, mul_nonneg (by norm_num) circumference_pos.le⟩
+  obtain ⟨_, _, _, y, hy, _⟩ := hN 0 hx
+  have hlo := hy.1
+  have hhi := hy.2
+  linarith only [hlo, hhi, circumference_pos]
+
+def hittingFamily : Registration hittingArena (type_of% (@uniformForbiddenHit_pell)) where
+  actual := actualWidth
+  bridge := Iff.rfl
+  variation := ⟨@uniformForbiddenHit_pell, zeroWidth, zeroWidth_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨zeroWidth, ?_, rfl, zeroWidth_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro _
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    change (2 : ℝ) * 0 ≠ 2 * 1
+    norm_num
+
+def hittingRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@uniformForbiddenHit_pell) (Realization hittingSignature) Unit Unit where
+  unitName := `Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61Subcritical.hittingUnit
+  realizationName := `Reg.D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61Subcritical.hittingFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨hittingArena⟩
+  objectArena := .source ⟨hittingArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source hittingArena ⟨hittingFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize hittingSignature (fun _ _ c => 2 * c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61Subcritical
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "domain", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
