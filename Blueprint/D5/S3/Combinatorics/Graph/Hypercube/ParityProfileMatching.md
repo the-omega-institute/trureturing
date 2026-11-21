@@ -23,6 +23,6 @@ For attainment, distribute M units among the coordinates using the ceiling as a 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.best_profile_count`
-- Dependency: [D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity](../../../../S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Hypercube/DirectionMatching](DirectionMatching.md)
 - Dependency: [D5/S3/Combinatorics/Transportation/OrderedMarginAllocation](../../Transportation/OrderedMarginAllocation.md)
+- Dependency: [D5/S3/QuantumBounds/MerminMeasurementDependence/Coordinates](../../../QuantumBounds/MerminMeasurementDependence/Coordinates.md)

@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching
 import D5.S3.Combinatorics.Transportation.OrderedMarginAllocation
-import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
+import D5.S3.QuantumBounds.MerminMeasurementDependence.Coordinates
 import Mathlib.Algebra.Order.Floor.Div
 
 set_option autoImplicit false
@@ -16,7 +16,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching
 
 open Finset DirectionMatching
-open D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity (binary)
+open D5.S3.QuantumBounds.MerminMeasurementDependence (bit_cases)
 open D5.S3.Combinatorics.Transportation.OrderedMarginAllocation
 open scoped Classical
 
@@ -158,7 +158,7 @@ private theorem parity_fair (n : ℕ) (t : ZMod 2) (i : Fin (n + 2)) :
     have di : d i = 1 := by simp [d, Pi.single_eq_of_ne hji.symm]
     change (if p.val i = 1 then 1 else 0) + (if p.val i + d i = 1 then 1 else 0) = 1
     rw [di]
-    rcases binary (p.val i) with h | h <;> simp [h, show (1 : ZMod 2) + 1 = 0 by decide]
+    rcases bit_cases (p.val i) with h | h <;> simp [h, show (1 : ZMod 2) + 1 = 0 by decide]
   change 2 * (∑ p, bit p) = _
   calc
     _ = (∑ p, bit p) + (∑ p, bit (E p)) := by rw [Equiv.sum_comp E bit, two_mul]
@@ -281,8 +281,8 @@ private theorem coordinates_detect_difference {n : ℕ} (p : ParityClass (n + 2)
   have same : p.val = q.val := by
     funext i
     have h := equal i
-    rcases binary (x := p.val i) with hp | hp <;>
-      rcases binary (x := q.val i) with hq | hq <;> simp_all
+    rcases bit_cases (p.val i) with hp | hp <;>
+      rcases bit_cases (q.val i) with hq | hq <;> simp_all
   exact zero_ne_one (p.property.symm.trans ((congrArg parity same).trans q.property))
 
 private theorem profile_cap_necessary (n k C : ℕ)
@@ -334,8 +334,8 @@ private theorem profile_cap_sufficient (n k C : ℕ) (cap : k * 2 ^ n ≤ (n + 2
       (if p.val i = 1 then w p q else 0) + (if q.val i = 1 then w p q else 0) =
       2 * (if p.val i = 1 ∧ q.val i = 1 then w p q else 0) +
         (if p.val i ≠ q.val i then w p q else 0) := by
-    rcases binary (x := p.val i) with hp | hp <;>
-      rcases binary (x := q.val i) with hq | hq <;> simp [hp, hq, two_mul, zero_ne_one]
+    rcases bit_cases (p.val i) with hp | hp <;>
+      rcases bit_cases (q.val i) with hq | hq <;> simp [hp, hq, two_mul, zero_ne_one]
   have summed := sum_congr (rfl : (univ : Finset (ParityClass (n + 2) 0)) = univ)
     (fun p _ => sum_congr (rfl : (univ : Finset (ParityClass (n + 2) 1)) = univ) (fun q _ => pointwise p q))
   simp only [sum_add_distrib, ← mul_sum, (weighted_bit_totals n k w rows cols i).1,
