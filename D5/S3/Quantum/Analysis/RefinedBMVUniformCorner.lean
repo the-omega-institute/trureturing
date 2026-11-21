@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The ordered scalar corner inequality for the refined BMV defect at every positive exponent. -/
+   digest: The refined BMV scalar corner inequality at every exponent. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVDimThreeInteger
 import D5.S3.Quantum.Schatten.CompoundMatrices
@@ -16,7 +16,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
-/-! # The refined BMV scalar corner inequality for every positive exponent
+/-! # The refined BMV scalar corner inequality for every exponent
 
 The proof uses the triangular coefficient matrix from
 a reverse Cauchy–Schwarz argument via the rectangular Cauchy–Binet theorem.
@@ -27,6 +27,52 @@ open scoped BigOperators Matrix
 noncomputable section
 
 namespace RefinedBMV.DimThree
+
+/-- The gap enumeration contains exactly the triples with the prescribed total. -/
+theorem mem_gaps_iff_total (p : Nat) (g : Nat × Nat × Nat) :
+    g ∈ gaps p ↔ g.1 + g.2.1 + g.2.2 = p := by
+  rcases g with ⟨i, j, k⟩
+  change (i, j, k) ∈ gaps p ↔ i + j + k = p
+  simp only [gaps, List.mem_flatMap, List.mem_map, List.mem_range, Prod.mk.injEq]
+  constructor
+  · rintro ⟨i', hi, j', hj, rfl, rfl, rfl⟩
+    omega
+  · intro h
+    exact ⟨i, by omega, j, by omega, rfl, rfl, by omega⟩
+
+private theorem gaps_nodup (p : Nat) : (gaps p).Nodup := by
+  unfold List.Nodup gaps
+  refine List.pairwise_flatMap.mpr ⟨?_, ?_⟩
+  · intro i _
+    rw [List.pairwise_map]
+    exact List.nodup_range.imp fun h he => h (congrArg (fun g : Nat × Nat × Nat => g.2.1) he)
+  · refine (List.nodup_range (n := p + 1)).imp ?_
+    intro i i' h g hg g' hg' he
+    obtain ⟨j, _, rfl⟩ := List.mem_map.mp hg
+    obtain ⟨j', _, rfl⟩ := List.mem_map.mp hg'
+    exact h (congrArg Prod.fst he)
+
+/-- Cycling the three gaps preserves the entire enumeration with multiplicity. -/
+theorem gaps_cycle_all (p : Nat) :
+    ((gaps p).map fun g => (g.2.1, g.2.2, g.1)).Perm (gaps p) := by
+  have nodup : ((gaps p).map fun g => (g.2.1, g.2.2, g.1)).Nodup := by
+    rw [List.Nodup, List.pairwise_map]
+    refine (gaps_nodup p).imp ?_
+    intro g g' h he
+    exact h (congrArg (fun t : Nat × Nat × Nat => (t.2.2, t.1, t.2.1)) he)
+  apply (List.perm_ext_iff_of_nodup nodup (gaps_nodup p)).mpr
+  intro g
+  constructor
+  · intro h
+    obtain ⟨g', hg', rfl⟩ := List.mem_map.mp h
+    rw [mem_gaps_iff_total] at hg' ⊢
+    change g'.2.1 + g'.2.2 + g'.1 = p
+    omega
+  · intro h
+    refine List.mem_map.mpr ⟨(g.2.2, g.1, g.2.1), ?_, rfl⟩
+    rw [mem_gaps_iff_total] at h ⊢
+    change g.2.2 + g.1 + g.2.1 = p
+    omega
 
 private def triangle (p : ℕ) : Finset (ℕ × ℕ) :=
   (Finset.range (p + 1) ×ˢ Finset.range (p + 1)).filter fun ij => ij.1 + ij.2 ≤ p
@@ -62,7 +108,7 @@ private theorem sum_gaps {R : Type*} [AddCommMonoid R] (p : ℕ) (f : ℕ × ℕ
     | nil => rfl
     | cons i l ih => simp [List.flatMap_cons, List.sum_append, ih]
   rw [gaps, List.map_flatMap, sum_flatMap, list_sum_range, sum_triangle]
-  simp_rw [List.map_map, Function.comp_apply, list_sum_range]
+  simp only [List.map_map, Function.comp_apply, list_sum_range]
 
 private theorem triangle_card (p : ℕ) : (triangle p).card = (p + 2).choose 2 := by
   calc
@@ -119,21 +165,9 @@ private def rotate (p : ℕ) (ij : ℕ × ℕ) : ℕ × ℕ :=
 
 private theorem sum_rotate (p : ℕ) (f : ℕ × ℕ → ℝ) :
     (∑ ij ∈ triangle p, f (rotate p ij)) = ∑ ij ∈ triangle p, f ij := by
-  refine Finset.sum_nbij' (rotate p) (fun ij => (p - ij.1 - ij.2, ij.1)) ?_ ?_ ?_ ?_ ?_
-  · intro ij hij
-    simp only [mem_triangle, rotate] at hij ⊢
-    omega
-  · intro ij hij
-    simp only [mem_triangle] at hij ⊢
-    omega
-  · intro ij hij
-    have h := mem_triangle.mp hij
-    apply Prod.ext <;> simp only [rotate] <;> omega
-  · intro ij hij
-    have h := mem_triangle.mp hij
-    apply Prod.ext <;> simp only [rotate] <;> omega
-  · intro ij _
-    rfl
+  have rotated := ((gaps_cycle_all p).map (fun g => f (g.1, g.2.1))).sum_eq
+  simp only [List.map_map, Function.comp_def, sum_gaps] at rotated
+  exact rotated
 
 private theorem correction_nonneg (p : ℕ) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
     (hy : 0 ≤ y) : 0 ≤ correction p a x y := by
@@ -206,7 +240,7 @@ private theorem compression_apply (p : ℕ) (u : Fin 2 → ℝ) (y : ℝ) (r s :
     homogeneous, triangle, Finset.sum_filter, Finset.sum_product]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   by_cases hij : i + j ≤ p
-  · simp only [entry, monomial, Prod.fst, Prod.snd, if_pos hij]
+  · simp only [entry, monomial, ite_eq_left hij]
     ring
   · simp [entry, hij]
 
@@ -243,11 +277,12 @@ private theorem coefficients_minor_nonpos {p : ℕ} {y : ℝ} (hy : 0 ≤ y)
   · have h00 : (r 0).val + (c 0).val ≤ p := by omega
     have h01 : (r 0).val + (c 1).val ≤ p := by omega
     have h10 : (r 1).val + (c 0).val ≤ p := by omega
-    simp only [if_pos h, if_pos h00, if_pos h01, if_pos h10, sub_nonpos, ← pow_add]
+    simp only [ite_eq_left h, ite_eq_left h00, ite_eq_left h01, ite_eq_left h10,
+      sub_nonpos, ← pow_add]
     have he : (p - (r 0).val - (c 0).val) + (p - (r 1).val - (c 1).val) =
         (p - (r 0).val - (c 1).val) + (p - (r 1).val - (c 0).val) := by omega
     exact le_of_eq (congrArg (fun n : ℕ => (y ^ 3) ^ n) he)
-  · simp only [if_neg h, mul_zero, zero_sub, neg_nonpos]
+  · simp only [ite_eq_right h, mul_zero, zero_sub, neg_nonpos]
     split_ifs <;> positivity
 
 private theorem powers_minor_nonneg {p : ℕ} {a x : ℝ} (ha : 0 ≤ a) (hax : a ≤ x)
@@ -260,7 +295,7 @@ private theorem powers_minor_nonneg {p : ℕ} {a x : ℝ} (ha : 0 ≤ a) (hax : 
   have hpow : (a ^ 3) ^ ((c 1).val - (c 0).val) ≤ (x ^ 3) ^ ((c 1).val - (c 0).val) :=
     pow_le_pow_left₀ (by positivity) (pow_le_pow_left₀ ha hax 3) _
   simp only [Matrix.det_fin_two, Matrix.submatrix_apply, powers, Matrix.of_apply, id_eq,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [he]
   simp only [pow_add]
   calc
@@ -288,7 +323,7 @@ private theorem homogeneous_det_bound {p : ℕ} (hp : 0 < p) {a x y : ℝ} (ha :
   have he0 : indices ends 0 = 0 := by
     simpa only [Matrix.cons_val_zero] using (congrFun hindices 0).symm
   have he1 : indices ends 1 = last := by
-    simpa only [Matrix.cons_val_one, Matrix.head_cons] using (congrFun hindices 1).symm
+    simpa only [Matrix.cons_val_one, Matrix.cons_val_zero] using (congrFun hindices 1).symm
   have hF : (F.submatrix id (indices ends)).det = (x ^ 3) ^ p - (a ^ 3) ^ p := by
     simp [F, powers, Matrix.det_fin_two, he0, he1, last]
   have hM : (M.submatrix (indices ends) (indices ends)).det = -1 := by
@@ -360,27 +395,50 @@ private theorem corner_ordered {p : ℕ} (hp : 0 < p) {a x y : ℝ} (ha : 0 ≤ 
       (sub_neg.mp (hdet.trans_lt (neg_lt_zero.mpr (sq_pos_of_pos (sub_pos.mpr hpow)))))
   exact (lt_sub_iff_add_lt).mpr (hcs.trans_lt hs)
 
-/-- The scalar corner inequality for every positive exponent and nonnegative roots. -/
-theorem defect_corner {p : ℕ} (hp : 0 < p) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
-    (hy : 0 ≤ y) : √(defect p a a y * defect p x x y) ≤ defect p a x y := by
-  rcases le_total a x with h | h
-  · exact (corner_ordered hp ha h hy).1
-  · simpa only [defect_swap_first p a x y, mul_comm (defect p x x y)] using
-      (corner_ordered hp hx h hy).1
+/-- At degree zero the one homogeneous monomial equals the geometric term. -/
+private theorem defect_zero (a x y : ℝ) : defect 0 a x y = 0 := by
+  norm_num [defect, gaps, List.range_one]
 
-/-- The corner inequality is strict when the two roots differ. -/
-theorem defect_corner_strict {p : ℕ} (hp : 0 < p) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
-    (hy : 0 ≤ y) (hax : a ≠ x) : √(defect p a a y * defect p x x y) < defect p a x y := by
+/-- The scalar corner inequality for every exponent and nonnegative roots. -/
+theorem defect_corner (p : ℕ) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
+    (hy : 0 ≤ y) : √(defect p a a y * defect p x x y) ≤ defect p a x y := by
+  by_cases hp : p = 0
+  · subst p
+    simp [defect_zero]
+  have hp' : 0 < p := Nat.pos_of_ne_zero hp
+  rcases le_total a x with h | h
+  · exact (corner_ordered hp' ha h hy).1
+  · simpa only [defect_swap_first p a x y, mul_comm (defect p x x y)] using
+      (corner_ordered hp' hx h hy).1
+
+private theorem defect_corner_strict {p : ℕ} (hp : 0 < p) {a x y : ℝ}
+    (ha : 0 ≤ a) (hx : 0 ≤ x) (hy : 0 ≤ y) (hax : a ≠ x) :
+    √(defect p a a y * defect p x x y) < defect p a x y := by
   rcases lt_or_gt_of_ne hax with h | h
   · exact (corner_ordered hp ha h.le hy).2 h
   · simpa only [defect_swap_first p a x y, mul_comm (defect p x x y)] using
       (corner_ordered hp hx h.le hy).2 h
 
-/-- The polynomial form of the scalar corner inequality. -/
-theorem defect_corner_sq {p : ℕ} (hp : 0 < p) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
-    (hy : 0 ≤ y) : defect p a a y * defect p x x y ≤ defect p a x y ^ 2 := by
-  have h := defect_corner hp ha hx hy
-  exact (Real.sqrt_le_left ((Real.sqrt_nonneg _).trans h)).mp h
+/-- Equality occurs exactly at a repeated root or degree zero. -/
+theorem defect_corner_eq_iff (p : ℕ) {a x y : ℝ} (ha : 0 ≤ a) (hx : 0 ≤ x)
+    (hy : 0 ≤ y) : √(defect p a a y * defect p x x y) = defect p a x y ↔
+      p = 0 ∨ a = x := by
+  constructor
+  · intro h
+    by_cases hp : p = 0
+    · exact Or.inl hp
+    exact Or.inr (by
+      by_contra hax
+      exact (defect_corner_strict (Nat.pos_of_ne_zero hp) ha hx hy hax).ne h)
+  · rintro (rfl | rfl)
+    · simp [defect_zero]
+    · have h : 0 ≤ defect p a a y := by
+        rw [defect_eq_sub]
+        exact sub_nonneg.mpr (correction_le_homogeneous p ha ha hy)
+      rw [← sq, Real.sqrt_sq_eq_abs, abs_of_nonneg h]
+
+#print axioms defect_corner
+#print axioms defect_corner_eq_iff
 
 end RefinedBMV.DimThree
 

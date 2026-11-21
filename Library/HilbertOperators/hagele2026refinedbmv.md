@@ -116,15 +116,15 @@ walk contributions. For complex Hermitian `H, K` in every finite dimension,
 Hägele's dyadic trace comparison in Lemma 2 gives the lower bound
 `Tr exp(5H + 3K)` for the same word mean on `exp H, exp K`.
 
-For every positive number of first factors, the scalar mixed defect
+For every number of first factors, the scalar mixed defect
 dominates the geometric mean of the two repeated-root defects at the
 largest spectral center. Compress the triangular coefficient matrix of
 the complete homogeneous polynomial to the two root vectors. The signs
 of its two-by-two minors give reverse Cauchy–Schwarz after compression.
 Ordinary Cauchy–Schwarz on the two repeated-root defects and their
 geometric corrections transfers the inequality to the defect. This
-proves the corner inequality used in the interval proof at every
-positive exponent.
+proves the corner inequality used in the interval proof. Equality
+occurs exactly when the first two roots coincide or the degree is zero.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
