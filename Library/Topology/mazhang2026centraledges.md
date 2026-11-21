@@ -9,7 +9,6 @@ claim: "Lemma 2: a finite metric space with n points and k central distances (ze
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
-  - D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum
   - D5/S3/Combinatorics/Geometry/ThreeCentralMinimum
   - D5/S3/Combinatorics/Geometry/CompleteCentralParity
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
@@ -57,10 +56,6 @@ n-point ultrametric is 2n-4+⌈n/2⌉, with equality exactly when the diametrica
 bipartite with parts of sizes 2 and n-2 and the other positive central distance has ⌈n/2⌉ edges.
 The diameter classes are fully joined at the diameter, and merging classes reduces to two parts
 with p(n-p) - 2(n-2) = (p-2)(n-p-2) >= 0; a nested pair/triple ultrametric attains the bound.
-UltrametricFourCentralMinimum applies the same class argument to four central values
-{0,a,b,D}: each class below D has at least four points, the closed b-balls each carry at least
-4|K|-8 incidences of length b, and the minimum is 6n-16-4⌊n/4⌋+⌈n/2⌉ for every n >= 8, with no
-four-central ultrametric below eight points. This extension is repository-derived.
 
 Theorem 5 (Section 4): for n >= 1 a metric space of order n with complete n-central graph
 exists if and only if n = 1 or n is even. The source shows that each positive central distance

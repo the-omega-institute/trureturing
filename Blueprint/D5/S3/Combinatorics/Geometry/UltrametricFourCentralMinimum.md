@@ -10,9 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.Four
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.FourTree` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)*. DOI: [10.5281/zenodo.24369118](https://doi.org/10.5281/zenodo.24369118). URL: <https://doi.org/10.5281/zenodo.24369118>.
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska's central-edge conjectures: sharp bounds and tree corollaries*. DOI: [10.5281/zenodo.24389010](https://doi.org/10.5281/zenodo.24389010). URL: <https://doi.org/10.5281/zenodo.24389010>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.ultr
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.ultra_four_central_minimum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)*. DOI: [10.5281/zenodo.24369118](https://doi.org/10.5281/zenodo.24369118). URL: <https://doi.org/10.5281/zenodo.24369118>.
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska's central-edge conjectures: sharp bounds and tree corollaries*. DOI: [10.5281/zenodo.24389010](https://doi.org/10.5281/zenodo.24389010). URL: <https://doi.org/10.5281/zenodo.24389010>.
 
 *Commentary.*
 
@@ -36,7 +32,7 @@ The largest distance D is central and bounds every distance. For a point x, the 
 
 The closed balls of radius b partition X. Inside a ball K, the points at distance below b from one of its points form a set U with at least two points, the rest K∖U also has at least two points, and every point of U is at distance b from every point of K∖U. Counting the points at distance b from each point of K gives at least 2|U||K∖U| ≥ 4|K|−8, so each ball has at least four points and there are at most ⌊n/4⌋ balls. Since the total count over all points is twice the number of edges of length b, there are at least 2n−4⌊n/4⌋ such edges. The length a has at least ⌈n/2⌉ edges because its edges cover every point.
 
-The hypothesis of four central values is used for both lower lengths: without the value b the class bound drops to two points, which is the three-central case. The bound 4(n−4) needs n ≥ 8, which the class bound forces. O. Dovgoshey and O. Rovenska pose the central-edge problem in arXiv:2610.11596, Section 4, and H. Ma and W. Zhang settle the three-central ultrametric case in Theorem 4; the four-central bound and its attaining space are derived in this repository by the same class argument together with the ball count for the middle length.
+The hypothesis of four central values is used for both lower lengths: without the value b the class bound drops to two points, which is the three-central case. This is Theorem 5 of H. Ma and W. Zhang (version 4), whose proof bounds the middle length by merging classes inside each ball; the Lean proof counts the incidences of length b from one class of each ball instead. O. Dovgoshey and O. Rovenska pose the central-edge problem in arXiv:2610.11596, Section 4. A structural characterization of the spaces attaining the minimum is not formalized; equality holds exactly when all three length bounds are attained, since they sum to the minimum.
 
 ## References
 

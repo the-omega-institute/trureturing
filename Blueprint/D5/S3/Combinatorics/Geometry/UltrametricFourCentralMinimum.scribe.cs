@@ -6,7 +6,7 @@ internal sealed class UltrametricFourCentralMinimumDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S3/Combinatorics/Geometry/UltrametricFourCentralMinimum.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Topology/mazhang2026centraledges");
+        LibraryNoteRef.Create("D5/L/Topology/mazhang2026centraledgesv4");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A four-central ultrametric has at least eight points and at least "
@@ -17,7 +17,7 @@ internal sealed class UltrametricFourCentralMinimumDocument : IScribeDocumentDef
             Describe.Lean(DescribeId.Create("ultrametric-four-central-minimum-tree"),
                 DeclarationHandle.Create(Prefix + "FourTree"),
                 H("The attaining ultrametric"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "FourTree n is the point set {0,…,n−1} cut into the blocks "
                     + "{4k,…,4k+3} for k < ⌊n/4⌋, the last block absorbing the remaining "
@@ -38,7 +38,7 @@ internal sealed class UltrametricFourCentralMinimumDocument : IScribeDocumentDef
             Describe.Lean(DescribeId.Create("ultrametric-four-central-minimum-result"),
                 DeclarationHandle.Create(Prefix + "ultra_four_central_minimum"),
                 H("The minimum and its length-by-length bounds"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "Let X be a finite ultrametric space with n points whose center has "
@@ -72,12 +72,13 @@ internal sealed class UltrametricFourCentralMinimumDocument : IScribeDocumentDef
                     Paragraph(Text(
                         "The hypothesis of four central values is used for both lower "
                         + "lengths: without the value b the class bound drops to two points, "
-                        + "which is the three-central case. The bound 4(n−4) needs n ≥ 8, which "
-                        + "the class bound forces. O. Dovgoshey and O. Rovenska pose the "
-                        + "central-edge problem in arXiv:2610.11596, Section 4, and H. Ma and "
-                        + "W. Zhang settle the three-central ultrametric case in Theorem 4; "
-                        + "the four-central bound and its attaining space are derived in this "
-                        + "repository by the same class argument together with the ball count "
-                        + "for the middle length."))),
+                        + "which is the three-central case. This is Theorem 5 of H. Ma and "
+                        + "W. Zhang (version 4), whose proof bounds the middle length by merging "
+                        + "classes inside each ball; the Lean proof counts the incidences of "
+                        + "length b from one class of each ball instead. O. Dovgoshey and "
+                        + "O. Rovenska pose the central-edge problem in arXiv:2610.11596, "
+                        + "Section 4. A structural characterization of the spaces attaining the "
+                        + "minimum is not formalized; equality holds exactly when all three "
+                        + "length bounds are attained, since they sum to the minimum."))),
                 DescribeRole.Theorem))));
 }
