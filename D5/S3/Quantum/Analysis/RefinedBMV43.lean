@@ -8,16 +8,10 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMV43Kernel
 import D5.S3.Quantum.Analysis.RefinedBMVLowerBound
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 import Mathlib.Data.List.Rotate
 
 /-! # The refined BMV (4,3) product and exponential bounds -/
-
-open private walk walk_rotate trace_pow_walk
-  from D5.S3.Quantum.Analysis.RefinedBMV33
-open private exp_posDef hermitian_real_smul
-  from D5.S3.Quantum.Analysis.RefinedBMVLowerBound
 
 open Matrix NormedSpace
 open scoped ComplexOrder BigOperators
@@ -28,14 +22,14 @@ namespace RefinedBMV
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def gapWord43 (g : ℕ × ℕ × ℕ) : List Bool :=
+def gapWord43 (g : ℕ × ℕ × ℕ) : List Bool :=
   List.replicate g.1 true ++ [false] ++ List.replicate g.2.1 true ++ [false] ++
     List.replicate g.2.2 true ++ [false]
 
 private def rotations43 (w : List Bool) : List (List Bool) :=
   (List.range 7).map w.rotate
 
-private def traceGaps43 (A B : Matrix n n ℂ) (g : ℕ × ℕ × ℕ) : ℂ :=
+def traceGaps43 (A B : Matrix n n ℂ) (g : ℕ × ℕ × ℕ) : ℂ :=
   trace (A ^ g.1 * (B * (A ^ g.2.1 * (B * (A ^ g.2.2 * B)))))
 
 /-- The mean trace of the words with four copies of A and three copies of B. -/
@@ -54,7 +48,7 @@ private theorem evalWord_append43 (A B : Matrix n n ℂ) (u v : List Bool) :
   | nil => simp [evalWord]
   | cons a u ih => cases a <;> simp [evalWord, ih, mul_assoc]
 
-private theorem evalWord_rotate_trace43 (A B : Matrix n n ℂ) (w : List Bool) (k : ℕ) :
+theorem evalWord_rotate_trace43 (A B : Matrix n n ℂ) (w : List Bool) (k : ℕ) :
     trace (evalWord A B (w.rotate k)) = trace (evalWord A B w) := by
   rw [List.rotate_eq_drop_append_take_mod, evalWord_append43, trace_mul_comm,
     ← evalWord_append43, List.take_append_drop]
@@ -66,7 +60,7 @@ private theorem evalWord_block43 (A B : Matrix n n ℂ) (p : ℕ) (w : List Bool
   | succ p ih =>
     simp [List.replicate_succ, evalWord, ih, pow_succ', mul_assoc]
 
-private theorem evalWord_gap_trace43 (A B : Matrix n n ℂ) (g : ℕ × ℕ × ℕ) :
+theorem evalWord_gap_trace43 (A B : Matrix n n ℂ) (g : ℕ × ℕ × ℕ) :
     trace (evalWord A B (gapWord43 g)) = traceGaps43 A B g := by
   simp [gapWord43, traceGaps43, List.append_assoc, evalWord_block43, evalWord]
 
@@ -125,7 +119,7 @@ private theorem mean43_map {m : Type*} [Fintype m] [DecidableEq m]
   simp only [mean43, h]
 
 omit [DecidableEq n] in
-private theorem sum_walk43 {α : Type*} (B : Matrix n n ℂ) (l : List α)
+theorem sum_walk43 {α : Type*} (B : Matrix n n ℂ) (l : List α)
     (f : α → n → n → n → ℂ) :
     (l.map (fun a ↦ walk B (f a))).sum =
       walk B (fun i j k ↦ (l.map (fun a ↦ f a i j k)).sum) := by
