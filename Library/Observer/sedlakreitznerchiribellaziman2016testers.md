@@ -9,6 +9,7 @@ claim: "Testers (process POVMs) are compatible when they are marginals of a join
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/AncillaFreeTesterRobustnessEquality
   - D5/S3/Quantum/QuantumChannels/SedlakMaximalTesterOrthogonality
+  - D5/S3/Quantum/QuantumChannels/SedlakWeightedTesterCover
 license: citation-only
 triage: anchor
 ---
@@ -38,3 +39,7 @@ Proposition 12 equates effectwise orthogonality ($A_j B_k=0$ for all outcomes) w
 > In summary, we have seen that  orthogonal  testers  are always maximally incompatible.   It is an open problem whether maximally incompatible testers must be orthogonal.
 
 The finite-dimensional converse is the subject of the §V.C preregistration and its own dossier. The question above about canonical POVM robustness concerns §VI.C. [Preregistration #24241](https://github.com/the-omega-institute/trureturing/issues/24241) · [§V.C dossier](../../Problems/sedlak-reitzner-chiribella-ziman-2016-maximal-tester-orthogonality.md)
+
+## Effect-weighted bound
+
+For finite testers with normalization states $\rho,\sigma$, let $a=\sum_j\|A_j\|_\infty$, $b=\sum_k\|B_k\|_\infty$, and $\delta=\operatorname{Re}\operatorname{tr}(\rho\sigma)$. The effect-weighted positive joint cover gives $R_{\mathrm t}\leq 1-(2-\delta^2/(a+b))^{-1}$. Proportional splitting preserves the sums of norms. The proof extends the joint-cover construction in the project and uses the tester model from the cited article.
