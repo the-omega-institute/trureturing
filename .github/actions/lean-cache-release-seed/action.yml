@@ -26,13 +26,13 @@ runs:
   using: composite
   steps:
     - id: dependency
-      if: fromJSON(inputs.cache-keys).dependency_key != ''
+      if: fromJSON(inputs.cache-keys || '{}').dependency_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
-        path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
-        key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+        path: ${{ fromJSON(inputs.cache-keys || '{}').dependency_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys || '{}').dependency_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').dependency_restore_prefix }}
     - id: previous_checkpoint
       name: Find the last published cold Release checkpoint
       if: inputs.verification-history-anchor != '' && (inputs.checkpoint-run != '' || (inputs.checkpoint-seconds != '0' && fromJSON(github.run_attempt) > 1))
@@ -73,13 +73,13 @@ runs:
         require-complete: ${{ inputs.mode == 'complete' }}
         targets: ${{ inputs.mode == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
     - id: project
-      if: fromJSON(inputs.cache-keys).project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
+      if: fromJSON(inputs.cache-keys || '{}').project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
-        path: ${{ fromJSON(inputs.cache-keys).project_archive_path }}
-        key: ${{ fromJSON(inputs.cache-keys).project_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys).project_restore_prefix }}
+        path: ${{ fromJSON(inputs.cache-keys || '{}').project_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys || '{}').project_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').project_restore_prefix }}
     - name: Validate and install the selected seeds
       shell: bash
       env:
@@ -130,9 +130,9 @@ runs:
       with:
         operation: install-base
         mode: ${{ inputs.publication-mode }}
-        tag: ${{ fromJSON(inputs.previous-base).tag }}
-        producer: ${{ fromJSON(inputs.previous-base).producer }}
-        manifest: ${{ fromJSON(inputs.previous-base).manifest }}
+        tag: ${{ fromJSON(inputs.previous-base || '{}').tag }}
+        producer: ${{ fromJSON(inputs.previous-base || '{}').producer }}
+        manifest: ${{ fromJSON(inputs.previous-base || '{}').manifest }}
     - name: Verify the selected Release was recovered
       if: inputs.mode == 'release'
       shell: bash
