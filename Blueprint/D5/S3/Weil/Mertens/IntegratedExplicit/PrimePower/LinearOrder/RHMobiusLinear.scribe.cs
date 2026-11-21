@@ -19,7 +19,7 @@ internal sealed class RHMobiusLinearDocument : IScribeDocumentDefinition
                 Paragraph(Text("Let E(m,a,B) be the signed residual. Start with the integral of the "
                     + "negative part of the prime-only tail divided by sqrt(x) on [a,B]. "
                     + "Subtract 2 log(B/a) and the ordinary spectral primitive at B minus its value at a. "
-                    + "For 3 ≤ n ≤ m subtract the endpoint power difference of exponent 1/n − 1/2 "
+                    + "For 3 ≤ n ≤ m subtract a^(1/n−1/2)−B^(1/n−1/2) "
                     + "with coefficient −2μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m with 2n < m+1 "
                     + "subtract −μ(n) times the nth root primitive at B minus its value at a. "
                     + "Every primitive uses the same actual zero occurrences with multiplicity.")),
@@ -37,8 +37,9 @@ internal sealed class RHMobiusLinearDocument : IScribeDocumentDefinition
                 Paragraph(Text("The sample spacing is at least 1/q. On a unit interval the sampling "
                     + "bound controls the sum of the absolute values using the local integrals of the "
                     + "finite series and its derivative. Telescope over adjacent degrees to accommodate "
-                    + "the varying coefficients. Their increments have size of order 1/q relative "
-                    + "to the common bin majorant. Each band contributes at most a constant times q "
+                    + "the varying coefficients. Their increments and the log-coordinate derivatives of those increments "
+                    + "are bounded by 4/q and 1 times the reciprocal-norm majorant, respectively. Each "
+                    + "band contributes at most a constant times q "
                     + "before its geometric weight, including the first band at zero exponent slack. "
                     + "Absolute convergence for each sample passes the bound to the full series.")),
                 Paragraph(Text("The pointwise bound integrates over [log a, log B]. The rate "

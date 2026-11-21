@@ -413,7 +413,7 @@ private theorem separated_samples_le {S : Finset ℕ} {v : ℕ → ℝ} {f f' : 
       have hlr : l i < r i := by dsimp [l, r]; linarith
       have hv' : v i ∈ Set.Icc (l i) (r i) := ⟨by dsimp [l]; linarith, by dsimp [r]; linarith⟩
       have hlen : r i - l i = h := by dsimp [l, r]; ring
-      simpa only [hlen] using point_le_interval_average hf hcont hlr hv' 
+      simpa only [hlen] using point_le_interval_average hf hcont hlr hv'
     _ ≤ _ := by
       rw [Finset.sum_add_distrib, ← Finset.sum_div]
       apply add_le_add
