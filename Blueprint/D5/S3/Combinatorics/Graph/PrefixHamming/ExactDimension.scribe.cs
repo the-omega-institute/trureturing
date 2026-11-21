@@ -59,7 +59,10 @@ internal sealed class ExactDimensionDocument : IScribeDocumentDefinition
                         + "distinct words. For n at least three this saving occurs only at the two "
                         + "outer ranks for n equal to four. Extra zero coordinates preserve every "
                         + "distance, giving the map for all dimensions above the threshold."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rossi-2026-prefix-hamming-dimension"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
