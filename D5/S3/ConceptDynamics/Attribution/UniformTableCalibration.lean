@@ -447,7 +447,7 @@ private def copiesEquiv (n : S → ℕ) : Copies n ≃ Σ s, Fin (n s) where
   mul_smul g h p := Subtype.ext (Prod.ext (mul_smul g h _) rfl)
 
 open Classical in
-private theorem exact_card_count [Fintype S] (n : S → ℕ)
+theorem exact_card_count [Fintype S] (n : S → ℕ)
     (invariant : ∀ (g : G) s, n (g • s) = n s) :
     ∃ (S' : Type v) (_ : Fintype S') (_ : MulAction G S') (p : S' → S),
       (∀ (g : G) s', p (g • s') = g • p s') ∧
