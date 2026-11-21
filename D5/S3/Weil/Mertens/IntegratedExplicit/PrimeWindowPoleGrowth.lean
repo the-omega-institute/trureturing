@@ -9,6 +9,8 @@
 import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtMoments
 import D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtAtOne
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
+import D5.S3.Analytic.Laplace.CriticalGammaWindow
+import D5.S3.Weil.ZetaBridge.EqualRadiusZeroDisks
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -291,5 +293,189 @@ private lemma compare_prime_mass {x y : ℝ} (hx : 1 ≤ x) (hxy : x ≤ y) :
   intro t ht
   have h := (hc t (hx.trans ht.1)).1
   exact div_le_div_of_nonneg_right (max_le_max (by linarith) le_rfl) (Real.sqrt_nonneg t)
+
+
+private lemma input_growth : ∃ M : ℝ, 0 ≤ M ∧
+    ∀ u, 0 ≤ u → |U (Real.exp u)| ≤ M * Real.exp (2*u) := by
+  let K := Real.log 4 + 4
+  let c := 1 + Real.eulerMascheroniConstant
+  have hK : 0 ≤ K := by dsimp [K]; positivity
+  refine ⟨2*K+1+|c|, by positivity, ?_⟩
+  intro u hu
+  let x := Real.exp u
+  have hx : 1 ≤ x := Real.one_le_exp hu
+  have hx0 : 0 ≤ x := zero_le_one.trans hx
+  let S := ∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)
+  have hS : 0 ≤ S := Finset.sum_nonneg fun _ _ =>
+    div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Nat.cast_nonneg _)
+  have hψ := Chebyshev.psi_nonneg x
+  have hSX : S ≤ Chebyshev.psi x := by
+    unfold S Chebyshev.psi
+    apply Finset.sum_le_sum
+    intro n hn
+    have hn1 : 1 ≤ n := (Finset.mem_Ioc.mp hn).1
+    exact div_le_self ArithmeticFunction.vonMangoldt_nonneg (by exact_mod_cast hn1)
+  have hψb : Chebyshev.psi x ≤ K*x := Chebyshev.psi_le_const_mul_self hx0
+  have hx2 : x ≤ x^2 := by nlinarith [mul_nonneg hx0 (sub_nonneg.mpr hx)]
+  have hA : x*S ≤ K*x^2 :=
+    (mul_le_mul_of_nonneg_left (hSX.trans hψb) hx0).trans_eq (by ring)
+  have hB := hψb.trans (mul_le_mul_of_nonneg_left hx2 hK)
+  have hl : Real.log x ≤ x := (Real.log_le_sub_one_of_pos (zero_lt_one.trans_le hx)).trans
+    (by linarith)
+  have hC : x*Real.log x ≤ x^2 := (mul_le_mul_of_nonneg_left hl hx0).trans_eq (by ring)
+  have hC0 := mul_nonneg hx0 (Real.log_nonneg hx)
+  have hD := (mul_le_mul_of_nonneg_right (le_abs_self c) hx0).trans
+    (mul_le_mul_of_nonneg_left hx2 (abs_nonneg c))
+  have hD' := (mul_le_mul_of_nonneg_right (neg_le_abs c) hx0).trans
+    (mul_le_mul_of_nonneg_left hx2 (abs_nonneg c))
+  rw [show Real.exp (2*u) = x^2 by rw [two_mul, Real.exp_add]; dsimp [x]; ring, abs_le]
+  change -( _ * x^2) ≤ x*S - Chebyshev.psi x - x*Real.log x + c*x ∧ _
+  dsimp only [U]
+  change _ ∧ x*S - Chebyshev.psi x - x*Real.log x + c*x ≤ _ * x^2
+  constructor <;> nlinarith [mul_nonneg hx0 hS, mul_nonneg (abs_nonneg c) (sq_nonneg x),
+    mul_nonneg hK (sq_nonneg x)]
+
+
+private lemma select_parameters {v b ε : ℝ} (hv : 0 < v) (hb : 1 < b) (hε : 0 < ε) :
+    ∃ h δ : ℝ, 1 < h ∧ h < b ∧ 0 < δ ∧ δ < v ∧ b*v-ε < h*(v-δ) := by
+  have H : max 1 ((b*v-ε/2)/v) < b :=
+    max_lt hb ((div_lt_iff₀ hv).mpr (by linarith))
+  obtain ⟨h, hh, hhb⟩ := exists_between H
+  obtain ⟨hh1, hh2⟩ := max_lt_iff.mp hh
+  have hh0 : 0 < h := zero_lt_one.trans hh1
+  obtain ⟨δ, hδ, hδ'⟩ := exists_between (lt_min hv (div_pos (half_pos hε) hh0))
+  obtain ⟨hδv, hs⟩ := lt_min_iff.mp hδ'
+  have hi := (div_lt_iff₀ hv).mp hh2
+  have hj := (lt_div_iff₀ hh0).mp hs
+  exact ⟨h, δ, hh1, hhb, hδ, hδv, by nlinarith⟩
+
+private lemma rate_gain {β δ σ d : ℝ} (hσ : 2 < σ) (hd : 0 < d)
+    (hgap : 0 < β-1/2-δ) (hupper : d < σ-β+δ) :
+    β-1/2-δ < σ * Real.log ((σ-1/2)/d) := by
+  have hσ' : 0 < σ-1/2 := by linarith
+  have qpos := div_pos hσ' hd
+  have hlog := Real.one_sub_inv_le_log_of_pos qpos
+  rw [inv_div] at hlog
+  have hs : (β-1/2-δ) * (σ-1/2) < σ*((σ-1/2)-d) := by
+    nlinarith [mul_pos (show 0 < σ by linarith) (sub_pos.mpr hupper)]
+  have ht : β-1/2-δ < σ * (1 - d/(σ-1/2)) := by
+    calc
+      _ < (σ*((σ-1/2)-d))/(σ-1/2) := (lt_div_iff₀ hσ').mpr hs
+      _ = _ := by rw [mul_div_assoc, sub_div, div_self hσ'.ne']
+  exact ht.trans_le (mul_le_mul_of_nonneg_left hlog (by linarith))
+
+private lemma exp_le_floor_power {q T τ C : ℝ} (hq : 1 < q) (hC : 0 < C)
+    (hτ : τ < T * Real.log q) :
+    ∀ᶠ a : ℝ in atTop, Real.exp (a*τ) ≤ C*q^⌊T*a⌋₊ := by
+  have hq0 := zero_lt_one.trans hq
+  have hlog := Real.log_pos hq
+  have hgap := sub_pos.mpr hτ
+  filter_upwards [eventually_ge_atTop ((Real.log q - Real.log C) / (T*Real.log q-τ))]
+    with a ha
+  have hA := (div_le_iff₀ hgap).mp ha
+  have hK := mul_le_mul_of_nonneg_right (Nat.lt_floor_add_one (T*a)).le hlog.le
+  have hpow : q^⌊T*a⌋₊ = Real.exp ((⌊T*a⌋₊ : ℝ)*Real.log q) := by
+    rw [Real.exp_nat_mul, Real.exp_log hq0]
+  rw [hpow, ← Real.exp_log hC]
+  rw [← Real.exp_add, Real.exp_le_exp]
+  nlinarith
+
+
+private lemma absorb_tails {d σ L C : ℝ} (hd : 0 < d) (hσ : 1 < σ)
+    (hdσ : d < σ) (hL : 0 < L) :
+    ∀ᶠ k : ℕ in atTop, ∀ A : ℝ,
+      L ≤ d^k * (2 * ((σ-1/2)⁻¹^k * A + C * σ⁻¹^k)) →
+      (L/4) * ((σ-1/2)/d)^k ≤ A := by
+  have hσ0 := zero_lt_one.trans hσ
+  have hσ' : 0 < σ-1/2 := by linarith
+  have hsmall := (tendsto_pow_atTop_nhds_zero_of_lt_one (div_nonneg hd.le hσ0.le)
+    ((div_lt_one hσ0).mpr hdσ)).const_mul (2*C)
+  have he : ∀ᶠ k : ℕ in atTop, 2*C*(d/σ)^k < L/2 := by
+    apply (tendsto_order.mp (by simpa using hsmall :
+      Tendsto (fun k : ℕ => 2*C*(d/σ)^k) atTop (𝓝 0))).2 _ (half_pos hL)
+  filter_upwards [he] with k hk A hA
+  have hrew : d^k * (2 * ((σ-1/2)⁻¹^k * A + C * σ⁻¹^k)) =
+      2*((d/(σ-1/2))^k*A) + 2*C*(d/σ)^k := by
+    rw [div_pow, div_pow, inv_pow, inv_pow]; ring
+  rw [hrew] at hA
+  have hm : L/4 ≤ (d/(σ-1/2))^k*A := by linarith
+  calc
+    _ = (L/4)/(d/(σ-1/2))^k := by
+      rw [div_eq_mul_inv _ ((d/(σ-1/2))^k), ← inv_pow, inv_div]
+    _ ≤ _ := (div_le_iff₀ (pow_pos (div_pos hd hσ') k)).mpr (by simpa [mul_comm] using hm)
+
+open PrimeOnlyTailCorrection (primeTail)
+
+/-- A zero with real part above one half forces prime-only negative-part mass
+on every sufficiently late power window, at the full exponent up to any
+positive loss. -/
+theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0)
+    (hβ : 1/2 < z₀.re) {b ε : ℝ} (hb : 1 < b) (hε : 0 < ε) :
+    ∀ᶠ Y : ℝ in atTop, Y^(b*(z₀.re-1/2)-ε) ≤
+      ∫ x in Y..Y^b, max (-primeTail x) 0 / Real.sqrt x := by
+  obtain ⟨h, δ, hh, hhb, hδ, hδv, hg⟩ :=
+    select_parameters (sub_pos.mpr hβ) hb hε
+  have hgamma := D5.S3.Analytic.Laplace.CriticalGammaWindow.adjustable_window_off_mass hh hhb
+  obtain ⟨σ, hσ2, hsign, hleft, hright⟩ :=
+    ((eventually_gt_atTop (2 : ℝ)).and (hgamma.1 0)).exists
+  have hσ : 1 < σ := by linarith
+  have hσ0 : 0 < σ := by linarith
+  have hh0 := zero_lt_one.trans hh
+  have hb0 := zero_lt_one.trans hb
+  obtain ⟨p, ρ, r, hpre, hρ, hd₀, hdr₀, hr, hre, hcomplex⟩ :=
+    D5.S3.Weil.ZetaBridge.EqualRadiusZeroDisks.equal_radius_zero_disks hz hσ2 hδ hδv
+  let d := ‖p-ρ‖
+  have hd : 0 < d := by simpa [d, dist_eq_norm] using hd₀
+  have hdr : d < r := by simpa [d, dist_eq_norm] using hdr₀
+  have hhp : 1 < p.re := hpre ▸ hσ
+  have hcoord (w : ℂ) (hw : 1/2 < w.re) : w ≠ 0 := by
+    rintro rfl; norm_num at hw
+  obtain ⟨L, hL, hD⟩ := disk_lower hhp hρ hd hdr
+    (fun w hw => ⟨hcoord w (hcomplex w hw).1, (hcomplex w hw).2⟩)
+    (fun w hw => by rw [hpre] at hw; exact ⟨hcoord w (hre w hw).1, (hre w hw).2⟩)
+  obtain ⟨M, hM0, hM⟩ := input_growth
+  let C := M * (1/σ + b/(h*σ))
+  let q := (σ-1/2)/d
+  have hd' : d < σ-z₀.re+δ := hdr.trans hr
+  have hq : 1 < q := (one_lt_div hd).mpr (by linarith)
+  have hrate := rate_gain hσ2 hd (by linarith : 0 < z₀.re-1/2-δ) hd'
+  have hτ : b*(z₀.re-1/2)-ε < σ*h*Real.log q := by
+    change _ < σ*h*Real.log ((σ-1/2)/d)
+    nlinarith [mul_lt_mul_of_pos_left hrate hh0]
+  have hexp := exp_le_floor_power hq (by positivity : 0 < L/4) hτ
+  have hAbs := absorb_tails (C := C) hd hσ (by linarith : d < σ) hL
+  have hK : Tendsto (fun a : ℝ => ⌊σ*h*a⌋₊) atTop atTop :=
+    tendsto_nat_floor_atTop.comp (Filter.tendsto_id.const_mul_atTop (mul_pos hσ0 hh0))
+  have hlogwin : ∀ᶠ a : ℝ in atTop, Real.exp (a*(b*(z₀.re-1/2)-ε)) ≤
+      ∫ x in Real.exp a..Real.exp (b*a), max (-primeTail x) 0 / Real.sqrt x := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ), Real.tendsto_exp_atTop (eventually_ge_atTop 2),
+      hK.eventually hD, hK.eventually hAbs, hexp] with a ha h2 hdisc habs he
+    let k := ⌊σ*h*a⌋₊
+    have hab : a ≤ b*a := by nlinarith
+    have Htail := (hgamma.2 hσ0 hsign ha U_exp_continuous.measurable hM).2
+    have hTail : (∫ u in Ioi (0 : ℝ) \ Icc a (b*a), |U (Real.exp u)| * weight k σ u)
+        ≤ C * σ⁻¹^k := by
+      apply Htail.trans
+      have h1 := Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hleft.le) ha.le)
+      have h2' := Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hright.le) ha.le)
+      calc
+        _ ≤ (M*σ⁻¹^k) * (1/σ + b/(h*σ)*1) := by gcongr
+        _ = _ := by dsimp [C]; ring
+    have hB := coeff_window k hhp (a := a) (z := b*a) ha
+    rw [hpre, log_window_mass hab h2] at hB
+    have hmass := compare_prime_mass (Real.one_le_exp ha.le)
+      (Real.exp_le_exp.mpr hab)
+    apply he.trans
+    apply habs
+    have hdisc' : L ≤ d^k*(‖coeff k p‖ + (coeff k (σ : ℂ)).re) := by simpa only [hpre] using hdisc
+    apply hdisc'.trans
+    apply mul_le_mul_of_nonneg_left _ (pow_nonneg hd.le k)
+    exact hB.trans (mul_le_mul_of_nonneg_left (add_le_add
+      (mul_le_mul_of_nonneg_left hmass (pow_nonneg (inv_nonneg.mpr (by linarith)) k)) hTail)
+      (by norm_num))
+  filter_upwards [Real.tendsto_log_atTop.eventually hlogwin, eventually_gt_atTop (0 : ℝ)]
+    with Y hY hy
+  rw [Real.rpow_def_of_pos hy, Real.rpow_def_of_pos hy]
+  simpa only [Real.exp_log hy, mul_comm b (Real.log Y)] using hY
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
