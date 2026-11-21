@@ -229,15 +229,11 @@ private theorem normalized_prime_power_error {β : ℝ} (hβ : 1 / 2 < β) :
   congr 2
   ring
 
-/-- If an actual zero attains the maximal real part above one half, each sufficiently
-late multiplicative range contains the start of a whole positive prime-tail window.
-Its negative mass also vanishes on every narrower window from the same start. -/
-theorem prime_tail_positive_short_windows_of_attained_zero (ρ : ℂ) (hρ : IsNontrivialZero ρ)
+/-- A uniform modulus and a positive margin give a whole log interval at each late peak. -/
+private theorem positive_prime_tail_log_windows {ρ : ℂ} (hρ : IsNontrivialZero ρ)
     (hβ : 1 / 2 < ρ.re) (hmax : ∀ z : ℂ, IsNontrivialZero z → z.re ≤ ρ.re) :
-    ∃ κ₀ K X₀ : ℝ, 1 < κ₀ ∧ 1 ≤ K ∧ 2 ≤ X₀ ∧
-      ∀ X : ℝ, X₀ ≤ X → ∃ A ∈ Icc X (K * X),
-        (∀ x ∈ Icc A (κ₀ * A), 0 < primeTail x) ∧
-        ∀ κ ∈ Icc 1 κ₀, (∫ x in A..κ * A, max (-primeTail x) 0 / Real.sqrt x) = 0 := by
+    ∃ W Δ : ℝ, 0 < W ∧ 0 < Δ ∧ ∀ᶠ T : ℝ in atTop,
+      ∃ u ∈ Icc T (T + W), ∀ v ∈ Icc u (u + Δ), 0 < primeTail (Real.exp v) := by
   let F (t : ℝ) := Real.exp ((1 - ρ.re) * t) * primeTail (Real.exp t)
   let G (t : ℝ) := -(maximalSeries actualCoeff actualZero ρ.re t).re
   have hbound (k : ℕ) : (actualZero k).re ≤ ρ.re :=
@@ -264,8 +260,41 @@ theorem prime_tail_positive_short_windows_of_attained_zero (ρ : ℂ) (hρ : IsN
       (∃ u ∈ Icc T (T + W), c < Real.exp ((1 - ρ.re) * u) * Q (Real.exp u)) ∧
       |F T - G T| < c / 8 ∧
       |Real.exp ((1 - ρ.re) * T) * (Q (Real.exp T) - primeTail (Real.exp T))| < c / 8)
+  refine ⟨W, δ / 2, hW, half_pos hδ, ?_⟩
+  filter_upwards [eventually_ge_atTop T₀] with T hT
+  obtain ⟨u, hu, hpeak⟩ := (hT₀ T hT).1
+  have hu₀ := hT.trans hu.1
+  have hFu : 7 * c / 8 < F u := by
+    have he := (abs_lt.mp (hT₀ u hu₀).2.2).2
+    dsimp only [F]
+    rw [mul_sub] at he
+    linarith only [he, hpeak]
+  refine ⟨u, hu, fun v hv => ?_⟩
+  have hv₀ := hu₀.trans hv.1
+  have huv : dist u v < δ := by
+    rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hv.1)]
+    linarith only [hv.2, hδ]
+  have hGuv := hmod huv
+  rw [Real.dist_eq] at hGuv
+  have huclose := (abs_lt.mp (hT₀ u hu₀).2.1).2
+  have hvclose := (abs_lt.mp (hT₀ v hv₀).2.1).1
+  have hGstep := (abs_lt.mp hGuv).2
+  have hF : 0 < F v := by linarith only [hc, hFu, huclose, hvclose, hGstep]
+  exact pos_of_mul_pos_right hF (Real.exp_nonneg _)
+
+/-- If an actual zero attains the maximal real part above one half, each sufficiently
+late multiplicative range contains the start of a whole positive prime-tail window.
+Its negative mass also vanishes on every narrower window from the same start. -/
+theorem prime_tail_positive_short_windows_of_attained_zero (ρ : ℂ) (hρ : IsNontrivialZero ρ)
+    (hβ : 1 / 2 < ρ.re) (hmax : ∀ z : ℂ, IsNontrivialZero z → z.re ≤ ρ.re) :
+    ∃ κ₀ K X₀ : ℝ, 1 < κ₀ ∧ 1 ≤ K ∧ 2 ≤ X₀ ∧
+      ∀ X : ℝ, X₀ ≤ X → ∃ A ∈ Icc X (K * X),
+        (∀ x ∈ Icc A (κ₀ * A), 0 < primeTail x) ∧
+        ∀ κ ∈ Icc 1 κ₀, (∫ x in A..κ * A, max (-primeTail x) 0 / Real.sqrt x) = 0 := by
+  obtain ⟨W, Δ, hW, hΔ, hlogWindows⟩ := positive_prime_tail_log_windows hρ hβ hmax
+  obtain ⟨T₀, hT₀⟩ := eventually_atTop.mp hlogWindows
   let T₁ := max T₀ (Real.log 2)
-  refine ⟨Real.exp (δ / 2), Real.exp W, Real.exp T₁, Real.one_lt_exp_iff.mpr (half_pos hδ),
+  refine ⟨Real.exp Δ, Real.exp W, Real.exp T₁, Real.one_lt_exp_iff.mpr hΔ,
     Real.one_le_exp hW.le, ?_, ?_⟩
   · rw [← Real.exp_log (show 0 < (2 : ℝ) by norm_num)]
     exact Real.exp_le_exp.mpr (le_max_right _ _)
@@ -273,34 +302,16 @@ theorem prime_tail_positive_short_windows_of_attained_zero (ρ : ℂ) (hρ : IsN
   have hXpos := (Real.exp_pos T₁).trans_le hX
   have hstart : T₀ ≤ Real.log X :=
     (le_max_left _ _).trans ((Real.le_log_iff_exp_le hXpos).2 hX)
-  obtain ⟨u, hu, hpeak⟩ := (hT₀ _ hstart).1
-  have hu₀ := hstart.trans hu.1
-  have hFu : 7 * c / 8 < F u := by
-    have he := (abs_lt.mp (hT₀ u hu₀).2.2).2
-    dsimp only [F]
-    rw [mul_sub] at he
-    linarith only [he, hpeak]
-  have hwhole (v : ℝ) (hv : v ∈ Icc u (u + δ / 2)) : 0 < primeTail (Real.exp v) := by
-    have hv₀ := hu₀.trans hv.1
-    have huv : dist u v < δ := by
-      rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hv.1)]
-      linarith only [hv.2, hδ]
-    have hGuv := hmod huv
-    rw [Real.dist_eq] at hGuv
-    have huclose := (abs_lt.mp (hT₀ u hu₀).2.1).2
-    have hvclose := (abs_lt.mp (hT₀ v hv₀).2.1).1
-    have hverts := (abs_lt.mp hGuv).2
-    have hF : 0 < F v := by linarith only [hc, hFu, huclose, hvclose, hverts]
-    exact pos_of_mul_pos_right hF (Real.exp_nonneg _)
+  obtain ⟨u, hu, hwhole⟩ := hT₀ _ hstart
   have hA : Real.exp u ∈ Icc X (Real.exp W * X) := by
     refine ⟨?_, ?_⟩
     · rw [← Real.exp_log hXpos]
       exact Real.exp_le_exp.mpr hu.1
     · simpa only [Real.exp_add, Real.exp_log hXpos, mul_comm] using Real.exp_le_exp.mpr hu.2
-  have hpos (x : ℝ) (hx : x ∈ Icc (Real.exp u) (Real.exp (δ / 2) * Real.exp u)) :
+  have hpos (x : ℝ) (hx : x ∈ Icc (Real.exp u) (Real.exp Δ * Real.exp u)) :
       0 < primeTail x := by
     have hx₀ := (Real.exp_pos u).trans_le hx.1
-    have hlog : Real.log x ∈ Icc u (u + δ / 2) := by
+    have hlog : Real.log x ∈ Icc u (u + Δ) := by
       refine ⟨(Real.le_log_iff_exp_le hx₀).2 hx.1, (Real.log_le_iff_le_exp hx₀).2 ?_⟩
       simpa only [Real.exp_add, mul_comm] using hx.2
     simpa only [Real.exp_log hx₀] using hwhole (Real.log x) hlog
@@ -309,7 +320,7 @@ theorem prime_tail_positive_short_windows_of_attained_zero (ρ : ℂ) (hρ : IsN
   have horder : Real.exp u ≤ κ * Real.exp u :=
     le_mul_of_one_le_left (Real.exp_nonneg _) hκ.1
   have hsub : Icc (Real.exp u) (κ * Real.exp u) ⊆
-      Icc (Real.exp u) (Real.exp (δ / 2) * Real.exp u) :=
+      Icc (Real.exp u) (Real.exp Δ * Real.exp u) :=
     Icc_subset_Icc le_rfl (mul_le_mul_of_nonneg_right hκ.2 (Real.exp_nonneg _))
   calc
     _ = ∫ _ in Real.exp u..κ * Real.exp u, (0 : ℝ) := by
