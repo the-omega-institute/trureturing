@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound
    mirror-E: none(waiver:structural-proof)
    anchors: [lake/module/D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound]
