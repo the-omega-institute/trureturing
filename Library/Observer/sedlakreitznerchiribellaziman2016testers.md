@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1511.00976v2
 claim: "Testers (process POVMs) are compatible when they are marginals of a joint tester; the robustness of incompatibility R_t is the least noise weight, with separate noise testers, that makes two testers compatible. For testers with a common normalization state R_t is at most the robustness R_m of their canonical POVMs, with equality for a pure normalization state; whether equality holds for all ancilla-free testers is stated as open."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/AncillaFreeTesterRobustnessEquality
+  - D5/S3/Quantum/QuantumChannels/SedlakMaximalTesterOrthogonality
 license: citation-only
 triage: anchor
 ---
@@ -29,3 +30,11 @@ Source: https://arxiv.org/abs/1511.00976v2
   - ancilla-free testers, l. 329–338; compatible testers, l. 451–459;
   - $\lambda$-compatibility and $R_{\rm t}$, l. 567–578; $R_{\rm m}$, l. 760–771;
   - Propositions 15 and 16 and the open question, l. 772–807.
+
+## Maximal incompatibility (§V.C)
+
+Proposition 12 equates effectwise orthogonality ($A_j B_k=0$ for all outcomes) with orthogonality of the normalization states ($\rho\sigma=0$). Orthogonal testers attain $R_{\rm t}=1/2$. The section ends with the following question (v2, p. 10, `ti_pra_07.tex`, lines 676–701, quotation at line 701).
+
+> In summary, we have seen that  orthogonal  testers  are always maximally incompatible.   It is an open problem whether maximally incompatible testers must be orthogonal.
+
+The finite-dimensional converse is the subject of the §V.C preregistration and its own dossier. The question above about canonical POVM robustness concerns §VI.C. [Preregistration #24241](https://github.com/the-omega-institute/trureturing/issues/24241) · [§V.C dossier](../../Problems/sedlak-reitzner-chiribella-ziman-2016-maximal-tester-orthogonality.md)
