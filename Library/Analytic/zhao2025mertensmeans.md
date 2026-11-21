@@ -13,12 +13,18 @@ triage: anchor
 
 # Cumulative Mertens errors and the actual Robin tail
 
+## Verified locator
+
+The accepted version is <https://arxiv.org/abs/2411.18903v2>.
+[Equation (14)](https://arxiv.org/html/2411.18903v2#S2.E14) identifies the
+prime-only Chebyshev tail at the upper cutoff.
+
 The inspected primary is [arXiv:2411.18903v2](https://arxiv.org/pdf/2411.18903v2),
 revised 24 June 2025, 23 pages, 566,342 bytes, SHA-256
 `db20602b1b53c56b06ccdb5b6e72f848ad804d27e6b5c1809f265af0d4b240b1`.
-Crossref records the DOI above in *Research in Number Theory* 11(3),
-article 62, with publication date 16 June 2025. The journal edition was
-not inspected; the locators below refer to the accepted arXiv version.
+Crossref records DOI [10.1007/s40993-025-00640-y](https://doi.org/10.1007/s40993-025-00640-y)
+in *Research in Number Theory* 11(3), article 62, with publication date 16 June 2025.
+The article locators below refer to the accepted arXiv version.
 This note applies existing identities, without repeating their proofs,
 finite computations, or claiming a new theorem or Lean certification.
 
