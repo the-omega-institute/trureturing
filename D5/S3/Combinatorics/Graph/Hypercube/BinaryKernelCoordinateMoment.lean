@@ -30,14 +30,15 @@ open scoped BigOperators symmDiff
 variable {n : ℕ}
 
 /-- Unsigned cube adjacency over the binary field. -/
-def adjacency (f : Finset (Fin n) → ZMod 2) (x : Finset (Fin n)) : ZMod 2 :=
+@[expose] def adjacency (f : Finset (Fin n) → ZMod 2) (x : Finset (Fin n)) : ZMod 2 :=
   ∑ j : Fin n, f (x ∆ {j})
 
 /-- The value of a vertex in coordinate `i`. -/
 def coordinateBit (i : Fin n) (x : Finset (Fin n)) : ZMod 2 :=
   if i ∈ x then 1 else 0
 
-private theorem coordinateBit_toggle (i j : Fin n) (x : Finset (Fin n)) :
+/-- A singleton flip changes precisely its own coordinate bit. -/
+theorem coordinateBit_toggle (i j : Fin n) (x : Finset (Fin n)) :
     coordinateBit i (x ∆ {j}) = coordinateBit i x + if j = i then 1 else 0 := by
   by_cases h : j = i
   · subst j

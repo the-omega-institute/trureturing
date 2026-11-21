@@ -9,7 +9,6 @@
 module
 
 public import D5.S3.Combinatorics.Graph.Hypercube.BinaryKernelCoordinateMoment
-import all D5.S3.Combinatorics.Graph.Hypercube.BinaryKernelCoordinateMoment
 import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-! Orthogonality and quadratic moments for fixed words of unsigned binary cube
@@ -120,7 +119,8 @@ private theorem pairMoment_comm (f : Finset (Fin n) → ZMod 2) (i j : Fin n) :
     mul_comm (coordinateBit i _) (coordinateBit j _)]
 
 /-- In odd dimension the three pair moments on distinct coordinates sum to zero. -/
-private theorem pairMoment_triangle (hn : Odd n) {f : Finset (Fin n) → ZMod 2} (hf : adjacency f = f)
+private theorem pairMoment_triangle (hn : Odd n) {f : Finset (Fin n) → ZMod 2}
+    (hf : adjacency f = f)
     {i j k : Fin n} (hij : i ≠ j) (hjk : j ≠ k) (hki : k ≠ i) :
     pairMoment f i j + pairMoment f j k + pairMoment f k i = 0 := by
   simpa only [pairMoment, ite_eq_right hij, ite_eq_right hjk, ite_eq_right hki,
