@@ -194,10 +194,6 @@ theorem prime_window_seventh_of_rh (hRH : RiemannHypothesis) :
       refine hG.trans ?_
       rw [mul_comm (Real.exp _)]
       exact mul_le_mul (le_abs_self _) (Real.exp_le_exp.mpr (by linarith)) (Real.exp_nonneg _) hC
-    have hsplit : ∀ b c d f g h i : ℝ,
-        b - 2 + c - d - f - g + h - i = (b - 2 - d - f - g + h - i) + c := by
-      intros
-      ring
     have hh : e u =
         (Real.sqrt (Real.exp u) * (Q (Real.exp u) - primeTail (Real.exp u)) - 2 -
           (3 / 2) * Real.exp (-(1 / 6 : ℝ) * u) - squareDensity u -
