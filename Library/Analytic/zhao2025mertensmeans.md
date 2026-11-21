@@ -22,6 +22,12 @@ not inspected; the locators below refer to the accepted arXiv version.
 This note applies existing identities, without repeating their proofs,
 finite computations, or claiming a new theorem or Lean certification.
 
+## Verified locator
+
+- Journal DOI https://doi.org/10.1007/s40993-025-00640-y
+- Accepted manuscript https://arxiv.org/abs/2411.18903v2
+- Equation (14) on printed page 6 gives the prime-only Chebyshev tail identity. See https://arxiv.org/html/2411.18903v2#S2.E14.
+
 ## The existing criterion and its hypotheses
 
 The definitions on printed p.1 are
