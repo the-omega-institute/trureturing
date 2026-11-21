@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.FiniteRankDimensionBound
 import D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+import Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import Reg.Support.DependentFamily
 
@@ -22,6 +24,7 @@ open _root_.D5.S3.Quantum.AURICOmega.FiniteRankDimensionBound
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive (liftedModel
   liftedModel_noncommutative liftedModel_hasFeatureRank_five)
+open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup (discrete)
 
 open scoped InnerProductSpace Quaternion Topology
 
@@ -34,13 +37,8 @@ universe u
 /-- The unit quaternions in universe `u`. -/
 abbrev Quat : Type u := ULift.{u} (unitary ℍ[ℝ])
 
-theorem preconnectedSpace_unitary : PreconnectedSpace (unitary ℍ[ℝ]) :=
-  Subtype.preconnectedSpace (by
-    rw [coe_unitary_eq_sphere]
-    exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
-
 local instance : PreconnectedSpace Quat.{u} := by
-  have := preconnectedSpace_unitary
+  have := pathConnectedSpace_unitary
   refine ⟨?_⟩
   have h := isPreconnected_range
     (continuous_uliftUp : Continuous (ULift.up.{u} : unitary ℍ[ℝ] → Quat.{u}))
@@ -106,10 +104,10 @@ theorem liftedModel_tri_continuous :
     (ULift.up (p.1.down * p.2.1.down⁻¹ * p.2.2.down) : Quat.{u})
   fun_prop
 
-theorem liftedModel_kappa_continuousAt (x : Quat.{u}) : ContinuousAt (liftedModel.kappa x) x := by
-  have h : Continuous fun y : Quat.{u} => (1 + ⟪(x.down : ℍ[ℝ]), (y.down : ℍ[ℝ])⟫_ℝ) / 2 := by
-    fun_prop
-  exact h.continuousAt
+theorem liftedModel_kappa_continuousAt (x : Quat.{u}) : ContinuousAt (liftedModel.kappa x) x :=
+  (continuous_kappa_quaternionModel.comp
+    (continuous_const.prodMk continuous_uliftDown :
+      Continuous fun y : Quat.{u} => (x.down, y.down))).continuousAt
 
 /-! The dimension `d` in the conclusion `3 ≤ d` of `three_le_of_orthogonal`. -/
 namespace GroupBound
@@ -221,64 +219,6 @@ end StructureBound
 /-! The structure `C` in the conclusion `C.ChainConnected` of `chainConnected_of_connected`. -/
 namespace Chain
 
-/-- The structure with the same transfer and the indicator of equality as reading. -/
-def discrete {M : Type u} (C : TernaryComparison M) : TernaryComparison M := by
-  classical
-  exact
-  { tri := C.tri
-    kappa := fun x y => if x = y then 1 else 0
-    tri_self_left := C.tri_self_left
-    tri_self_right := C.tri_self_right
-    tri_assoc := C.tri_assoc
-    kappa_symm := fun x y => by
-      by_cases h : x = y
-      · simp [h]
-      · simp [h, Ne.symm h]
-    kappa_eq_one_iff := fun x y => by
-      by_cases h : x = y <;> simp [h]
-    kappa_nonneg := fun x y => by
-      by_cases h : x = y <;> simp [h]
-    kappa_tri_right := fun x y u v => by
-      have hinj : C.tri x u v = C.tri y u v ↔ x = y := by
-        constructor
-        · intro e
-          have e' := congrArg (fun z => C.tri z v u) e
-          simp only [C.tri_assoc, C.tri_self_left, C.tri_self_right] at e'
-          exact e'
-        · rintro rfl
-          rfl
-      simp only [hinj]
-    kappa_tri_left := fun u v x y => by
-      have hinj : C.tri u v x = C.tri u v y ↔ x = y := by
-        constructor
-        · intro e
-          have e' := congrArg (fun z => C.tri v u z) e
-          simp only [← C.tri_assoc, C.tri_self_left, C.tri_self_right] at e'
-          exact e'
-        · rintro rfl
-          rfl
-      simp only [hinj]
-    kappa_gram_nonneg := fun n x c => by
-      have key : ∑ i, ∑ j, c i * c j * (if x i = x j then (1 : ℝ) else 0) =
-          ∑ z ∈ Finset.univ.image x, (∑ j ∈ Finset.univ.filter (fun j => x j = z), c j) ^ 2 := by
-        have h1 : ∀ i, ∑ j, c i * c j * (if x i = x j then (1 : ℝ) else 0) =
-            c i * ∑ j ∈ Finset.univ.filter (fun j => x j = x i), c j := by
-          intro i
-          rw [Finset.mul_sum, Finset.sum_filter]
-          refine Finset.sum_congr rfl fun j _ => ?_
-          by_cases h : x i = x j
-          · simp [h]
-          · simp [h, Ne.symm h]
-        simp only [h1]
-        rw [← Finset.sum_fiberwise_of_maps_to (g := x) (t := Finset.univ.image x)
-          (fun i _ => Finset.mem_image_of_mem x (Finset.mem_univ i))]
-        refine Finset.sum_congr rfl fun z _ => ?_
-        rw [sq, Finset.sum_mul]
-        refine Finset.sum_congr rfl fun i hi => ?_
-        rw [(Finset.mem_filter.mp hi).2]
-      rw [key]
-      exact Finset.sum_nonneg fun z _ => sq_nonneg _ }
-
 theorem discrete_not_chainConnected {M : Type u} (C : TernaryComparison M) {x y : M}
     (hxy : x ≠ y) : ¬ (discrete C).ChainConnected := by
   intro h
@@ -330,14 +270,8 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact discrete_not_chainConnected liftedModel.{u} one_ne_negOne
     (h liftedModel.{u} liftedModel_kappa_continuousAt)
 
-theorem unitary_one_ne_unitI : (1 : unitary ℍ[ℝ]) ≠ unitI := by
-  intro h
-  have h' := congrArg (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).re) h
-  change ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]).re = (unitI : ℍ[ℝ]).re at h'
-  simp [unitI] at h'
-
 theorem one_ne_unitI : (⟨1⟩ : Quat.{u}) ≠ ⟨unitI⟩ := fun h =>
-  unitary_one_ne_unitI (congrArg ULift.down h)
+  Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.one_ne_unitI (congrArg ULift.down h)
 
 theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -352,7 +286,7 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
     simp [unitI]
   classical
   have h2 : (discrete liftedModel.{u}).kappa ⟨1⟩ ⟨unitI⟩ = 0 := by
-    simp [discrete, unitary_one_ne_unitI]
+    simp [discrete, Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.one_ne_unitI]
   rw [h0, h2] at h1
   norm_num at h1
 
