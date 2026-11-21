@@ -34,7 +34,7 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimeFixedRatioWindowMass
 
 /-- A common forward probability average transfers signed mass to positive-part
 mass on an interval containing all of the translates. -/
-private theorem average_integral_le_positive_mass {f : ℝ → ℝ} {ν : Measure ℝ}
+theorem average_integral_le_positive_mass {f : ℝ → ℝ} {ν : Measure ℝ}
     [IsProbabilityMeasure ν] {a b h l r : ℝ} (hν : ν (Icc 0 h) = 1)
     (hla : l ≤ a) (hab : a ≤ b) (hbr : b + h ≤ r)
     (hf : ContinuousOn f (Icc l r)) :
@@ -85,7 +85,7 @@ private theorem average_integral_le_positive_mass {f : ℝ → ℝ} {ν : Measur
     integral_mono_ae houter (integrable_const mass) hshift
 
 /-- A fixed subinterval of each two-period window has cosine at least one half. -/
-private theorem cosine_subinterval {γ : ℝ} (hγ : 0 < γ) (phase T : ℝ) :
+theorem cosine_subinterval {γ : ℝ} (hγ : 0 < γ) (phase T : ℝ) :
     ∃ a : ℝ, T ≤ a ∧ a + (Real.pi / 3) / γ ≤ T + 2 * (2 * Real.pi / γ) ∧
       ∀ t ∈ Icc a (a + (Real.pi / 3) / γ), 1 / 2 ≤ Real.cos (γ * t + phase) := by
   let lag := toIcoMod Real.two_pi_pos 0 (-(γ * T + phase))
@@ -118,7 +118,7 @@ private theorem cosine_subinterval {γ : ℝ} (hγ : 0 < γ) (phase T : ℝ) :
     have hthird : Real.pi / 3 ∈ Icc 0 Real.pi := ⟨by positivity, by linarith [Real.pi_pos]⟩
     exact Real.antitoneOn_cos ⟨hangle.1, hangle.2.trans hthird.2⟩ hthird hangle.2
 
-private theorem prime_mass_from_log_mass {T U : ℝ} (hT : Real.log 2 ≤ T) (hTU : T ≤ U) :
+theorem prime_mass_from_log_mass {T U : ℝ} (hT : Real.log 2 ≤ T) (hTU : T ≤ U) :
     Real.exp (T / 2) * (∫ t in T..U, max (-Q (Real.exp t)) 0) ≤
       ∫ x in Real.exp T..Real.exp U, max (-primeTail x) 0 / Real.sqrt x := by
   have hx (t : ℝ) (ht : T ≤ t) : 1 ≤ Real.exp t :=
