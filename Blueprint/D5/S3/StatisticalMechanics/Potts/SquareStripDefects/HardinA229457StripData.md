@@ -58,11 +58,11 @@ $$(\operatorname{\mathit{HardinA229457StripData}}.\operatorname{T}: \operatornam
 
 *Commentary.*
 
-For i, j : Fin 42, write i and j for their natural values in the index ranges below. All matrix entries are integers. The indices 0 through 9 and 10 through 19 are the proper-row classes with positive and zero residual budget, respectively. Indices 20 through 41 are the rows with one horizontal defect.
+For i, j of type Fin 42, use Fin.val i and Fin.val j in the guards and offsets. All entries are integers. Among Valid states, indices 0 through 9 and 10 through 19 are the proper-row classes with positive and zero residual budget, respectively. Indices 20 through 41 represent rows with one horizontal defect. The total classifier also sends a constant row at residual zero to class 41, outside Valid because its horizontal cost is five.
 
-If i and j are both below 10, the entry is ProperTransfer.T i j. If i is below 10 and j is at least 10, the entry is at row i and column j − 10 of the new 10 by 32 crossing table.
+If both values are below 10, apply ProperTransfer.T to the Fin 10 indices formed from Fin.val i and Fin.val j using those bounds. If i is below 10 and j is at least 10, the entry is at row i and column j − 10 of the new 10 by 32 crossing table.
 
-If i and j are both in 10 through 19, the entry is ProperTransfer.T (i − 10) (j − 10). If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the new 22 by 10 table for rows with one horizontal defect. Every other entry is 0.
+If both values are in 10 through 19, apply ProperTransfer.T to the Fin 10 indices formed from Fin.val i − 10 and Fin.val j − 10 using those bounds. If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the new 22 by 10 table for classes 20 through 41. Every other entry is 0.
 
 HardinA229457StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean#L78-L111).
 
@@ -78,9 +78,9 @@ $$(\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{initial}
 
 *Commentary.*
 
-For j : Fin 42, the following cases use the natural value of j. For j below 10, let d(j) = HardinA233127SquareStrip.distribution 0 (j + 1) and d₀ = HardinA233127SquareStrip.distribution 0 0. At j = 0 the entry is (6 · d(j) + 3 · d₀) / 8. At j in 1 through 9 it is 6 · d(j) / 8. Both divisions are in Int. The entries at j in 10 through 19 are 0.
+For j of type Fin 42, the cases use Fin.val j. When Fin.val j is below 10, form the Fin 11 index with value Fin.val j + 1 using that bound. Let d(j) be HardinA233127SquareStrip.distribution at first index 0 and that Fin 11 index, and let d₀ be its entry at two zero indices. At j = 0 the entry is (6 · d(j) + 3 · d₀) / 8. At j in 1 through 9 it is 6 · d(j) / 8. Both divisions are in Int. The entries at j in 10 through 19 are 0.
 
-In the final block, the entries at j = 20, 22, 23, 27, 35 and 38 are the entries of HardinA229532StripData.initial at 26, 30, 29, 25, 22 and 21, respectively. The remaining entries are 6 at j = 28, 30, 40 and 41, and 12 at every other index in 20 through 41.
+In the final block, the entries at j = 20, 22, 23, 27, 35 and 38 are the entries of HardinA229532StripData.initial at the Fin 31 indices 26, 30, 29, 25, 22 and 21, respectively. The remaining entries are 6 at j = 28, 30, 40 and 41, and 12 at every other index in 20 through 41.
 
 HardinA229457Strip.finite_certificate identifies each entry with its literal first-row count.
 
@@ -96,7 +96,7 @@ $$\operatorname{\mathit{HardinA229457StripData}}.\operatorname{\mathit{terminal}
 
 *Commentary.*
 
-For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. The vector has 42 integer coordinates. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for the rows with a horizontal defect.
+For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. The vector has 42 integer coordinates. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for classes 20 through 41, which represent rows with one horizontal defect among Valid states.
 
 **Definition 1.7 (W).**
 
@@ -110,7 +110,7 @@ $$(\operatorname{\mathit{HardinA229457StripData}}.\operatorname{W}: \operatornam
 
 *Commentary.*
 
-For k of type Fin 26 and j of type Fin 42 with Fin.val j below 10, W k j equals initial j times HardinA233127SquareStrip.w (Fin.val k) applied at the Fin 11 index of value Fin.val j + 1, divided in Int by 64 raised to Fin.val k.
+For k of type Fin 26 and j of type Fin 42 with Fin.val j below 10, multiply initial j by HardinA233127SquareStrip.w (Fin.val k) at the Fin 11 index with value Fin.val j + 1. Divide that product by 64 raised to Fin.val k. The division is in Int.
 
 For Fin.val j at least 10 and Fin.val k = 0, W k j is initial j. For Fin.val j at least 10 and Fin.val k at least 1, W k j is at row Fin.val k − 1 and column Fin.val j − 10 of the new 25 by 32 integer table.
 

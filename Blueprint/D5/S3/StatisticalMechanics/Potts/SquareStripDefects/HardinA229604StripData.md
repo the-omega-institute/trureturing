@@ -44,7 +44,7 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-Positive residual budgets use the one-defect class after subtracting one. At residual zero, the old classes are shifted by 32; the remaining classes use the equality-pattern code from HardinA229457StripData, with a bit for each column pair in lexicographic order. Natural subtraction truncates at zero; Fin.castAdd preserves the index value in a larger finite type.
+Positive residual budgets use the one-defect class after subtracting one. At residual zero with at most one horizontal defect, add 32 to the one-defect class. At residual zero with more than one horizontal defect, use HardinA229532StripData.equalityPatternCode from CrossedStripDefectsWide.WidthSix, with a bit for each column pair in lexicographic order. Natural subtraction truncates at zero. Fin.castAdd preserves the index value in a larger finite type.
 
 **Definition 1.4 (T).**
 
@@ -58,13 +58,13 @@ $$(\operatorname{\mathit{HardinA229604StripData}}.\operatorname{T}: \operatornam
 
 *Commentary.*
 
-For i, j : Fin 96, index ranges and offsets use the natural values of i and j. All matrix entries are integers. For i, j below 42, the entry is HardinA229457StripData.T i j. For i at least 42 and j below 42, it is 0.
+For i, j of type Fin 96, guards and offsets use Fin.val i and Fin.val j. All entries are integers. If both values are below 42, apply HardinA229457StripData.T to the Fin 42 indices formed from Fin.val i and Fin.val j using those bounds. If i is at least 42 and j is below 42, the entry is 0.
 
 The 32 by 54 crossing table has a 10 by 54 upper block. For i below 10 and j at least 42, use row i and column j − 42 of that block. The bottom 22 rows consist of a 22 by 32 integer block followed by 22 zero columns. For i from 20 through 41 and j from 42 through 73, use row i − 20 and column j − 42 of the 22 by 32 block. For the same source rows and j from 74 through 95, the entry is 0.
 
-For i from 10 through 19 and j from 42 through 73, the entry is HardinA229457StripData.T (i − 10) (j − 32). For i and j both from 42 through 73, it is HardinA229457StripData.T (i − 32) (j − 32). These are the inherited crossing and terminal blocks.
+For i from 10 through 19 and j from 42 through 73, apply HardinA229457StripData.T to the Fin 42 indices with values Fin.val i − 10 and Fin.val j − 32. For i and j both from 42 through 73, apply it to the Fin 42 indices with values Fin.val i − 32 and Fin.val j − 32. The branch bounds justify each reconstruction.
 
-For i at least 74 and j from 42 through 51, the entry is at row i − 74 and column j − 42 of the new 22 by 10 integer table for rows with two horizontal defects. Every other entry is 0.
+For i at least 74 and j from 42 through 51, the entry is at row i − 74 and column j − 42 of the new 22 by 10 integer table. Every other entry is 0. Among Valid states, indices 74 through 95 represent rows with two horizontal defects. The total classifier also sends a constant row at residual zero to class 95, outside Valid because its horizontal cost is five.
 
 HardinA229604StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripData.lean#L71-L129).
 
@@ -82,7 +82,7 @@ $$(\operatorname{\mathit{HardinA229604StripData}}.\operatorname{\mathit{initial}
 
 *Commentary.*
 
-For j : Fin 96, write j for its natural value in the index ranges. If j is below 42, the entry is HardinA229457StripData.initial at j. If j is from 42 through 73, the entry is 0.
+For j of type Fin 96, use Fin.val j in the guards and offsets. If Fin.val j is below 42, apply HardinA229457StripData.initial to the Fin 42 index formed from Fin.val j using that bound. If Fin.val j is from 42 through 73, the entry is 0.
 
 For j from 74 through 95, the entry at local index j − 74 is taken from the new integer row (12, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 12, 6, 12, 12, 12, 12, 6, 12, 12, 12, 6). HardinA229604Strip.finite_certificate identifies the resulting entries with the literal first-row counts.
 
@@ -98,7 +98,7 @@ $$\operatorname{\mathit{HardinA229604StripData}}.\operatorname{\mathit{terminal}
 
 *Commentary.*
 
-The terminal vector is zero on the first 42 classes and one on the last 54; it accepts exactly residual budget zero. Fin.append joins 42 zeros, the 32 accepted coordinates of HardinA229457StripData.terminal at indices j.natAdd 10, and 22 ones for rows with two horizontal defects.
+The terminal vector is zero on the first 42 classes and one on the last 54. For a Valid state, it accepts exactly residual budget zero. Fin.append joins 42 zeros, the 32 accepted coordinates of HardinA229457StripData.terminal at indices j.natAdd 10, and 22 ones for classes 74 through 95, which represent rows with two horizontal defects among Valid states.
 
 **Definition 1.7 (W).**
 

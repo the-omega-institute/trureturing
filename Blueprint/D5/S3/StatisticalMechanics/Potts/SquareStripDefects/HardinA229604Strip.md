@@ -28,7 +28,7 @@ $$\forall n: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229604St
 
 *Commentary.*
 
-This is the literal filtered count of arrays from Fin n times Fin 6 to Fin 3 with exactly two monochromatic square-lattice bonds. Every smaller colour must occur earlier in row-major order.
+This is HardinA229457Strip.canonicalCount at defect budget two. This is the literal filtered count of arrays from Fin n times Fin 6 to Fin 3 with exactly two monochromatic square-lattice bonds. Every smaller colour must occur earlier in row-major order.
 
 **Theorem 1.3 (result).**
 
@@ -49,7 +49,6 @@ For every index at least 24, the literal canonical count satisfies the displayed
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.result`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457Strip](HardinA229457Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData](HardinA229457StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripClasses](HardinA229604StripClasses.md)
