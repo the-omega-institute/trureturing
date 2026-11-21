@@ -20,7 +20,7 @@ The primitive quadratic character of an odd prime gives Jₚ. At level eight, χ
 
 For the next statement the coefficient values may lie in any commutative monoid with zero. Fix positive levels r and a and a positive test modulus M. Let χ be primitive of level r and suppose f has a primitive representative of level a. Write C(n) for the value of χ at n modulo r. Assume C(n) = f(n) for every n coprime to M.
 
-**Theorem 1.2 (Agreement on integers coprime to a test modulus recovers every value).**
+**Theorem 1.2 (Agreement on natural inputs coprime to a test modulus recovers every value).**
 
 $$r = a \land \left(\forall n \in \mathbb{N},\; \operatorname{C}\left(n\right) = \operatorname{f}\left(n\right)\right)$$
 
@@ -30,7 +30,7 @@ $$r = a \land \left(\forall n \in \mathbb{N},\; \operatorname{C}\left(n\right) =
 
 *Commentary.*
 
-Lift both primitive characters to level raM. Every unit there has a natural representative coprime to M, so the lifted characters agree. Taking conductors identifies r with a. Injectivity of the change of level then identifies the characters on their common native level, including their values at integers sharing factors with M.
+Lift both primitive characters to level raM. Every unit there has a natural representative coprime to M, so the lifted characters agree. Taking conductors identifies r with a. Injectivity of the change of level then identifies the characters on their common native level, including their values at natural inputs sharing factors with M.
 
 ## References
 

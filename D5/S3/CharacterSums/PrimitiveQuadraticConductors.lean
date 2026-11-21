@@ -86,7 +86,7 @@ private theorem represents_join {a b : ℕ} [NeZero (a * b)] {f g : ℕ → ℂ}
   obtain ⟨ψ,hψ,eg⟩ := hg
   exact ⟨join χ ψ,primitive_join χ ψ hab hχ hψ,fun n => by rw [join_apply,ef,eg]⟩
 
-/-- Primitive native representatives at all six conductor levels, on every integer. -/
+/-- Primitive native representatives at all six conductor levels, on every natural input. -/
 theorem six_quadratic_levels (q d : ℕ) (hq : q.Prime) (hd : d.Prime)
     (hq2 : q ≠ 2) (hd2 : d ≠ 2) (hqd : q ≠ d) :
     let j (p n : ℕ) : ℂ := (jacobiSym (n:ℤ) p:ℂ)

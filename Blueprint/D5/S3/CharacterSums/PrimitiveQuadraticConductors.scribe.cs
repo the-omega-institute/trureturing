@@ -29,7 +29,7 @@ internal sealed class PrimitiveQuadraticConductorsDocument : IScribeDocumentDefi
                 + "of level r and suppose f has a primitive representative of level a. Write C(n) for the "
                 + "value of χ at n modulo r. Assume C(n) = f(n) for every n coprime to M.")),
             Describe.Lean(DescribeId.Create("inducing-level"), DeclarationHandle.Create(Module + "inducing_level_and_values"),
-                H("Agreement on integers coprime to a test modulus recovers every value"),
+                H("Agreement on natural inputs coprime to a test modulus recovers every value"),
                 StatementSource.FromAuthor(F.Disp(And(Eq(F.Id("r"),F.Id("a")),
                     new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"),
                         F.Seq(F.Mathbb,F.Grp(F.Id("N"))), Eq(At("C",F.Id("n")), At("f",F.Id("n"))))))),
@@ -37,7 +37,7 @@ internal sealed class PrimitiveQuadraticConductorsDocument : IScribeDocumentDefi
                     Paragraph(Text("Lift both primitive characters to level raM. Every unit there has a natural "
                         + "representative coprime to M, so the lifted characters agree. Taking conductors "
                         + "identifies r with a. Injectivity of the change of level then identifies the characters "
-                        + "on their common native level, including their values at integers sharing factors with M."))),
+                        + "on their common native level, including their values at natural inputs sharing factors with M."))),
                 DescribeRole.Theorem))));
 
     private static Formula Six()
