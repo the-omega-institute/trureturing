@@ -2,27 +2,27 @@ schema = "gate-authority-roots-v1"
 
 [[roots]]
 root_id = "Makefile/gate"
-entrypoint = "Makefile"
+entrypoint = "tools/consumer/Makefile"
 
 
 [[roots]]
 root_id = "Makefile/test"
-entrypoint = "Makefile"
+entrypoint = "tools/consumer/Makefile"
 
 
 [[roots]]
 root_id = "ci-current.yml/current"
-entrypoint = ".github/workflows/ci-current.yml"
+entrypoint = "tools/ci/workflows/ci-current.yml"
 
 
 [[roots]]
 root_id = "ci-current.yml/required"
-entrypoint = ".github/workflows/ci-current.yml"
+entrypoint = "tools/ci/workflows/ci-current.yml"
 
 
 [[roots]]
 root_id = "ci-unit.yml/run"
-entrypoint = ".github/workflows/ci-unit.yml"
+entrypoint = "tools/ci/workflows/ci-unit.yml"
 
 
 [[roots]]
