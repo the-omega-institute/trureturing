@@ -63,7 +63,8 @@ def family : Registration arena (type_of% best_profile_count) where
     · intro anchor
       exact nomatch anchor
   dependence := by
-    intro _
+    intro role
+    cases role
     exact ⟨0, 1, 2, by decide⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
