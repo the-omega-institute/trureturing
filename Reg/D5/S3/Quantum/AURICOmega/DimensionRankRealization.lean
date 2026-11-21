@@ -8,13 +8,13 @@ import Reg.Support.DependentFamily
 /-! Source-bound audits of the realization of the dimension and feature rank bounds.
 
 The injectivity of the imaginary part is audited through the defining predicate of the hemisphere
-`{q | 0 < re q}`; on the whole group the imaginary part identifies `1` and `-1`. The continuity of
+`{q | 0 ≤ re q}`; on the whole group the imaginary part identifies `1` and `-1`. The continuity of
 transfer and reading is audited through the comparison structure whose transfer or reading is
 taken; the rejected readings are maps that separate the point `1` from the rest of the
 connected group of unit quaternions, and the observed structures are the unit quaternion model,
-its transport along inversion and its discrete reading. The characterization of the realized
-pairs is audited through the dimension `d` of the conclusion `3 ≤ d`; the rejected reading `0`
-fails at the pair `(3, 5)`. -/
+its transport along inversion and its discrete reading. The three equivalent conditions on the
+realized pairs are audited through the dimension `d` of the third condition `3 ≤ d`; the rejected
+reading `0` fails at the pair `(3, 5)`. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization
 
@@ -60,7 +60,7 @@ theorem not_continuous_of_isolates {X : Type} [TopologicalSpace X] [T1Space X]
   rw [← hpre]
   exact isOpen_compl_singleton.preimage hc
 
-/-! The defining predicate `fun q => 0 < re q` of the hemisphere in `injOn_im_of_re_pos`. -/
+/-! The defining predicate `fun q => 0 ≤ re q` of the hemisphere in `injOn_im_of_re_nonneg`. -/
 namespace Hemisphere
 
 abbrev signature : Signature where
@@ -79,11 +79,11 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => Set.univ) (fun e => nomatch e)
 
-/-- Retain the complete statement of `injOn_im_of_re_pos`. -/
+/-- Retain the complete statement of `injOn_im_of_re_nonneg`. -/
 abbrev arena : Arena where
   signature := signature
   Law r := Set.InjOn (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).im)
-    (r.readout () () fun q : unitary ℍ[ℝ] => 0 < (q : ℍ[ℝ]).re)
+    (r.readout () () fun q : unitary ℍ[ℝ] => 0 ≤ (q : ℍ[ℝ]).re)
 
 /-- On all unit quaternions the imaginary part identifies `1` and `-1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -96,18 +96,18 @@ theorem rejected_law : ¬ arena.Law rejected := by
 /-- The hemisphere contains `1`; the set of the predicate `False` does not. -/
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), fun q : unitary ℍ[ℝ] => 0 < (q : ℍ[ℝ]).re, fun _ => False, fun h => ?_⟩
-  have h' : {q : unitary ℍ[ℝ] | 0 < (q : ℍ[ℝ]).re} = {_q : unitary ℍ[ℝ] | False} := h
-  have h1 : (1 : unitary ℍ[ℝ]) ∈ {q : unitary ℍ[ℝ] | 0 < (q : ℍ[ℝ]).re} := by simp
+  refine ⟨(), fun q : unitary ℍ[ℝ] => 0 ≤ (q : ℍ[ℝ]).re, fun _ => False, fun h => ?_⟩
+  have h' : {q : unitary ℍ[ℝ] | 0 ≤ (q : ℍ[ℝ]).re} = {_q : unitary ℍ[ℝ] | False} := h
+  have h1 : (1 : unitary ℍ[ℝ]) ∈ {q : unitary ℍ[ℝ] | 0 ≤ (q : ℍ[ℝ]).re} := by simp
   rw [h'] at h1
   exact h1
 
-abbrev sourceStatement : Prop := type_of% injOn_im_of_re_pos
+abbrev sourceStatement : Prop := type_of% injOn_im_of_re_nonneg
 
 def source_registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨injOn_im_of_re_pos, rejected, rejected_law⟩
+  variation := ⟨injOn_im_of_re_nonneg, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -258,7 +258,7 @@ def source_registration : Registration arena sourceStatement where
 
 end Reading
 
-/-! The dimension `d` in the conclusion `3 ≤ d` of `exists_model_iff`. -/
+/-! The dimension `d` in the third condition `3 ≤ d` of `exists_model_tfae`. -/
 namespace Pairs
 
 abbrev signature : Signature where
@@ -277,21 +277,30 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
-/-- Retain the complete statement of `exists_model_iff`, both sides of the equivalence and both
-conjuncts of its right side. -/
+/-- Retain the complete statement of `exists_model_tfae`, all three conditions and both
+conjuncts of the third. -/
 abbrev arena : Arena where
   signature := signature
   Law rd := ∀ d r : ℕ,
-    (∃ (M : Type) (_ : TopologicalSpace M) (_ : LocallyCompactSpace M) (_ : PreconnectedSpace M)
+    List.TFAE [
+      ∃ (M : Type) (_ : TopologicalSpace M) (_ : LocallyCompactSpace M) (_ : PreconnectedSpace M)
         (C : TernaryComparison M) (o : M) (V : Set M) (f : M → EuclideanSpace ℝ (Fin d)),
         (Continuous fun p : M × M × M => C.tri p.1 p.2.1 p.2.2) ∧
         (∀ x, ContinuousAt (C.kappa x) x) ∧ C.Noncommutative ∧ C.HasFeatureRank r ∧
-        V ∈ nhds o ∧ ContinuousOn f V ∧ Set.InjOn f V) ↔ 3 ≤ rd.readout () () d ∧ 5 ≤ r
+        V ∈ nhds o ∧ ContinuousOn f V ∧ Set.InjOn f V,
+      ∃ (M : Type) (_ : TopologicalSpace M) (_ : CompactSpace M) (_ : T2Space M)
+        (_ : ConnectedSpace M) (C : TernaryComparison M) (o : M) (V : Set M)
+        (f : M → EuclideanSpace ℝ (Fin d)),
+        (Continuous fun p : M × M × M => C.tri p.1 p.2.1 p.2.2) ∧
+        (Continuous fun p : M × M => C.kappa p.1 p.2) ∧ C.Noncommutative ∧ C.HasFeatureRank r ∧
+        IsOpen V ∧ o ∈ V ∧ Continuous f ∧ Set.InjOn f V,
+      3 ≤ rd.readout () () d ∧ 5 ≤ r]
 
 /-- The pair `(3, 5)` is realized, so the reading `0` would give `3 ≤ 0`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h 3 5).1 ((exists_model_iff 3 5).2 ⟨le_rfl, le_rfl⟩)
+  have h35 : 3 ≤ 3 ∧ 5 ≤ 5 := ⟨le_rfl, le_rfl⟩
+  have hh := ((h 3 5).out 1 3).1 (((exists_model_tfae 3 5).out 1 3).2 h35)
   exact absurd hh.1 (by decide)
 
 theorem dependence : ObservationalDependence signature actual := by
@@ -300,12 +309,12 @@ theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), 3, 0, ?_⟩
   decide
 
-abbrev sourceStatement : Prop := type_of% exists_model_iff
+abbrev sourceStatement : Prop := type_of% exists_model_tfae
 
 def source_registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨exists_model_iff, rejected, rejected_law⟩
+  variation := ⟨exists_model_tfae, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -316,10 +325,10 @@ def source_registration : Registration arena sourceStatement where
 
 end Pairs
 
-def injOn_im_of_re_pos_registration :
+def injOn_im_of_re_nonneg_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      injOn_im_of_re_pos (Realization Hemisphere.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.injOn_im_of_re_pos_unit
+      injOn_im_of_re_nonneg (Realization Hemisphere.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.injOn_im_of_re_nonneg_unit
   realizationName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.Hemisphere.source_registration
   realizationSource := none
   generated := false
@@ -415,10 +424,10 @@ def continuous_kappa_quaternionModel_registration :
   familyRecord := none
   options := #[] }
 
-def exists_model_iff_registration :
+def exists_model_tfae_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      exists_model_iff (Realization Pairs.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.exists_model_iff_unit
+      exists_model_tfae (Realization Pairs.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.exists_model_tfae_unit
   realizationName := `Reg.D5.S3.Quantum.AURICOmega.DimensionRankRealization.Pairs.source_registration
   realizationSource := none
   generated := false
@@ -439,7 +448,7 @@ def exists_model_iff_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "arg"]
+      path := #["body", "body", "arg", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

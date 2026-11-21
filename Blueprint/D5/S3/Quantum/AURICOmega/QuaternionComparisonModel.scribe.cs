@@ -49,10 +49,6 @@ internal sealed class QuaternionComparisonModelDocument : IScribeDocumentDefinit
                 "As a subset of the quaternions, the set of unit quaternions is the sphere of radius one about zero. "
                     + "A unit quaternion has norm one because the norm is multiplicative and star q * q = 1. "
                     + "Conversely, if the norm of q is one, then star q * q and q * star q both equal the squared norm of q, which is one, so q is unitary."),
-            Node("preconnected-unitary", "preconnectedSpace_unitary", "The unit quaternions are connected",
-                StatementSource.FromAuthor(Disp(Call("PreconnectedSpace", Call("unitary", Seq(Mathbb, Grp(F.Id("H")), OpenBracket, Seq(Mathbb, Grp(F.Id("R"))), CloseBracket))))), DescribeRole.Lemma,
-                "With the subspace topology of the quaternions, the group of unit quaternions is a preconnected space. "
-                    + "By the previous lemma it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere in a real normed space of dimension greater than one is preconnected."),
             Node("chain-connected", "quaternionModel_chainConnected", "The model is chain connected",
                 StatementSource.FromAuthor(Disp(Call("ChainConnected", Model))), DescribeRole.Theorem,
                 "The unit quaternions are exactly the quaternions of norm one, the unit three-sphere in a real space of dimension four, and this sphere is connected. "
@@ -61,7 +57,11 @@ internal sealed class QuaternionComparisonModelDocument : IScribeDocumentDefinit
             Node("feature-rank-five", "quaternionModel_hasFeatureRank_five", "The reading has feature rank five",
                 StatementSource.FromAuthor(Disp(Call("HasFeatureRank", Model, D(5)))), DescribeRole.Theorem,
                 "The feature map sends q to (1 / sqrt 2) * (1, re q, imI q, imJ q, imK q) in Euclidean five-space. "
-                    + "The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q."))));
+                    + "The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q."),
+            Node("preconnected-unitary", "preconnectedSpace_unitary", "The unit quaternions are preconnected",
+                StatementSource.FromAuthor(Disp(Call("PreconnectedSpace", Call("unitary", Seq(Mathbb, Grp(F.Id("H")), OpenBracket, Seq(Mathbb, Grp(F.Id("R"))), CloseBracket))))), DescribeRole.Lemma,
+                "With the subspace topology of the quaternions, the group of unit quaternions is a preconnected space. "
+                    + "By the lemma that the unit quaternions form the unit sphere, it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere in a real normed space of dimension greater than one is preconnected."))));
 
     private static Formula Model => Seq(Operatorname, Grp(F.Id("quaternionModel")));
 
