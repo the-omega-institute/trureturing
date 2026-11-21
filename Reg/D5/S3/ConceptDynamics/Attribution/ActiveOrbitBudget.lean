@@ -59,7 +59,8 @@ abbrev arena : Arena where
             ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, M u = h • z) ∧
               ∀ u : J → ℤ, M u = h • z →
                 letI : Fintype J := Fintype.ofFinite J
-                ∀ t : ℕ, 0 < t → (b - 1) * ((1 + ∑ j, (u j).natAbs) * b) ≤ t →
+                ∀ t : ℕ, 0 < t →
+                  ((b - 1 : ℕ) : ℤ) * ((1 + ∑ j, |u j|) * (b : ℤ)) ≤ (t : ℤ) →
                   EventBudget (G := G) (R.readout () ⟨T, I⟩ E) q (m * (h * t))
 
 @[instance_reducible] private def trivialAction (G A : Type*) [Monoid G] : MulAction G A where
@@ -97,8 +98,14 @@ private theorem empty_events_fail : ¬ arena.{u,v,w}.Law emptyEvents := by
   let _ : Fintype {o : Orbit G T // Active (fun _ : I => fun o => (orbitCount (univ : Finset T) o : ℤ)) z o} :=
     Fintype.ofFinite _
   let threshold := (b - 1) * ((1 + ∑ j, (u j).natAbs) * b)
+  have large : ((b - 1 : ℕ) : ℤ) * ((1 + ∑ j, |u j|) * (b : ℤ)) ≤
+      ((threshold + 1 : ℕ) : ℤ) := by
+    have lifted : (threshold : ℤ) ≤ ((threshold + 1 : ℕ) : ℤ) := by
+      exact_mod_cast Nat.le_succ threshold
+    simpa only [threshold, Nat.cast_mul, Nat.cast_add, Nat.cast_one, Nat.cast_sum,
+      Int.natCast_natAbs] using lifted
   obtain ⟨S, _, _, f, _, _, _, counts⟩ :=
-    tail u hu (threshold + 1) (Nat.zero_lt_succ _) (Nat.le_succ _)
+    tail u hu (threshold + 1) (Nat.zero_lt_succ _) large
   have impossible := counts PUnit.unit
   change ((∑ s : S, if f s ∈ (∅ : Finset T) then (1 : ℕ) else 0) : ℚ) / _ = 1
     at impossible

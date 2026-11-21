@@ -368,7 +368,8 @@ theorem eventual_uniform_event_budgets {G : Type u} {T : Type v} {I : Type w}
           ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, M u = h • w) ∧
             ∀ u : J → ℤ, M u = h • w →
               letI : Fintype J := Fintype.ofFinite J
-              ∀ t : ℕ, 0 < t → (b - 1) * ((1 + ∑ j, (u j).natAbs) * b) ≤ t →
+              ∀ t : ℕ, 0 < t →
+                ((b - 1 : ℕ) : ℤ) * ((1 + ∑ j, |u j|) * (b : ℤ)) ≤ (t : ℤ) →
                 EventBudget (G := G) E q (m * (h * t)) := by
   intro feasible
   letI : Fintype (Orbit G T) := Fintype.ofFinite _
@@ -423,8 +424,15 @@ theorem eventual_uniform_event_budgets {G : Type u} {T : Type v} {I : Type w}
     obtain ⟨t, ht⟩ := periodic k counted
     exact ⟨t, by rw [hk, ht, mul_assoc]⟩
   · intro u hu t ht enough
+    letI : Fintype {o // Active (fun i o => (orbitCount (G := G) (E i) o : ℤ)) w o} :=
+      Fintype.ofFinite _
     obtain ⟨_, _, _, eventual⟩ := tail u hu
+    have naturalBound : (b - 1) * ((1 + ∑ j, (u j).natAbs) * b) ≤ t := by
+      have lifted : (((b - 1) * ((1 + ∑ j, (u j).natAbs) * b) : ℕ) : ℤ) ≤ (t : ℤ) := by
+        simpa only [Nat.cast_mul, Nat.cast_add, Nat.cast_one, Nat.cast_sum, Int.natCast_natAbs]
+          using enough
+      exact_mod_cast lifted
     exact (exactBudget (m * (h * t)) (Nat.mul_pos hm (Nat.mul_pos hh ht))).mpr
-      ⟨h * t, rfl, eventual t enough⟩
+      ⟨h * t, rfl, eventual t naturalBound⟩
 
 end D5.S3.ConceptDynamics.Attribution.ActiveOrbitBudget
