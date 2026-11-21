@@ -29,7 +29,7 @@ section NonemptyDimension
 
 variable [NeZero n]
 
-private theorem exp_posDef {H : Mat} (hH : H.IsHermitian) : (exp H).PosDef := by
+theorem exp_posDef {H : Mat} (hH : H.IsHermitian) : (exp H).PosDef := by
   letI : NormedAlgebra ℚ CMat := NormedAlgebra.restrictScalars ℚ ℂ _
   let A : CMat := CStarMatrix.ofMatrix H
   have hA : IsSelfAdjoint A := by
@@ -45,7 +45,7 @@ private theorem exp_posDef {H : Mat} (hH : H.IsHermitian) : (exp H).PosDef := by
   rw [hbridge]
   exact Matrix.isUnit_exp H
 
-private theorem hermitian_real_smul {H : Mat} (hH : H.IsHermitian) (r : ℝ) :
+theorem hermitian_real_smul {H : Mat} (hH : H.IsHermitian) (r : ℝ) :
     (r • H).IsHermitian := by
   change (r • H)ᴴ = r • H
   rw [conjTranspose_smul, hH.eq]

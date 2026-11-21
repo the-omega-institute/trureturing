@@ -26,6 +26,6 @@ internal sealed class RefinedBMVDimThreeDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "For every complex Hermitian pair of size three, apply the product comparison to the exponentials of the first matrix divided by three and the second matrix. The dyadic trace-power comparison gives the lower bound for p equal to five, six, or seven. Hägele names the five-and-three question in Section 7 of arXiv:2611.00129v1."))),
+                    "For every complex Hermitian pair of size three, the cube-root comparison uses the exponential of one third of the first matrix and the exponential of the second matrix. The cube of the first exponential is the first factor of the words. The dyadic trace-power comparison gives the lower bound for p equal to five, six, or seven. Hägele names the five-and-three question in Section 7 of arXiv:2611.00129v1."))),
                 DescribeRole.Theorem))));
 }

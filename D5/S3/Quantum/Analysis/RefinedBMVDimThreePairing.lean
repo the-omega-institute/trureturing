@@ -7,7 +7,6 @@
    digest: The three-vertex cubic walk bound from PSD and arithmetic–geometric mean. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV33
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.Matrix.Order
 
 /-!
@@ -18,8 +17,6 @@ Their arithmetic means dominate the corresponding triangle terms by the
 two-column Gram bound. This is the pairing in Hägele, arXiv:2611.00129v1,
 Lemma 5, applied without division by the diagonal entries.
 -/
-
-open private walk from D5.S3.Quantum.Analysis.RefinedBMV33
 
 open Matrix
 open scoped ComplexOrder BigOperators MatrixOrder

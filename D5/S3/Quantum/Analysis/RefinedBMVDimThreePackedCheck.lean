@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Analysis/RefinedBMVDimThreePackedCheck
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Analysis/RefinedBMVDimThreeCertificate.criterion_nonneg_ordered; instance=D5/S3/Quantum/Analysis/RefinedBMVDimThreePackedCheck.mask_check_five
    digest: Exact integer coefficient checks for the three-dimensional refined BMV bounds. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVDimThreeInteger

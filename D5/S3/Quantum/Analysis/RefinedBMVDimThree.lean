@@ -12,11 +12,6 @@ import D5.S3.Quantum.Analysis.RefinedBMVDimThreePairing
 
 /-! # Three-dimensional refined BMV bounds with three second factors -/
 
-open private walk trace_pow_walk from D5.S3.Quantum.Analysis.RefinedBMV33
-open private gapWord43 evalWord_rotate_trace43 evalWord_gap_trace43 traceGaps43 sum_walk43
-  from D5.S3.Quantum.Analysis.RefinedBMV43
-open private exp_posDef hermitian_real_smul from D5.S3.Quantum.Analysis.RefinedBMVLowerBound
-
 open Matrix NormedSpace
 open scoped ComplexOrder BigOperators
 
