@@ -20,8 +20,25 @@ An equivariant map takes fixed seeds to fixed output pairs. Pooling the two colo
 
 Starting with a profile coupling that attains the sharp bound, retain every colour pair over each profile copy and let the group preserve the copy index. Then a seed is fixed in a coordinate exactly when both profile bits equal one in that coordinate.
 
+**Theorem 1.2 (Maximal coordinate fixed-seed vectors).**
+
+$$\forall n \in Nat,\; \forall k \in Nat,\; \forall z \in \operatorname{CountVectors}\left(n\right),\; (\operatorname{Realizable}\left(n, k, z\right) \land (\forall u \in \operatorname{CountVectors}\left(n\right),\; (\operatorname{Realizable}\left(n, k, u\right) \land (\forall i \in \operatorname{Coordinates}\left(n\right),\; \operatorname{Value}\left(z, i\right) \le \operatorname{Value}\left(u, i\right))) \Rightarrow u = z)) \Leftrightarrow (\exists v \in \operatorname{CountVectors}\left(n\right),\; \operatorname{Boundary}\left(n, k, v\right) \land (\forall i \in \operatorname{Coordinates}\left(n\right),\; \operatorname{Value}\left(z, i\right) = 4\cdot\operatorname{Value}\left(v, i\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParitySeedOptimization.maximal_coordinate_fixed_vectors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+CountVectors(n) consists of natural-valued functions on Coordinates(n). Value(z,i) is the value of z at i. Realizable(n,k,z) means that one action and readout in UniformRealizations(n,k) has exactly z(i) seeds fixed at each coordinate i.
+
+Boundary(n,k,v) means that all entries of v are at most M = k times 2 to the power n, and the sum of M minus the entries of v equals M. Dividing pooled counts by four gives a profile coupling whose common-one counts bound the fixed-seed counts after scaling.
+
+The matching construction gives a profile boundary vector dominating the normalized counts. The colour-copy lift attains its scaled fixed counts simultaneously. All boundary vectors have the same coordinate sum.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParitySeedOptimization.best_fixed_seed_count`
+- Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParitySeedOptimization.maximal_coordinate_fixed_vectors`
 - Dependency: [D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching](../../Combinatorics/Graph/Hypercube/ParityProfileMatching.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedBudget](ParitySeedBudget.md)
