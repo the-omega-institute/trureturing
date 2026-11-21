@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Continuous maps from the unit sphere of R^(d+1) to R^d with d <= 2 meet antipodally. -/
+   digest: Borsuk-Ulam for d <= 2; no continuous injection of open sets of R^m into R^d, d < m. -/
 
 import D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
 import Mathlib.Analysis.InnerProductSpace.PiL2

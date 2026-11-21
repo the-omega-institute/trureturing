@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A map from a topological group into a real inner product space with left-invariant Gram kernel, finite-dimensional span and continuous orbit maps yields a continuous homomorphism into the orthogonal group of the dimension of the span, whose kernel is the stabilizer of the family.
+A map from a group with a topology into a real inner product space with left-invariant Gram kernel, finite-dimensional span and continuous orbit maps yields a continuous homomorphism into the orthogonal group of the dimension of the span, whose kernel is the stabilizer of the family.
 
 **Theorem 1.1 (Invariant Gram kernels give orthogonal representations).**
 

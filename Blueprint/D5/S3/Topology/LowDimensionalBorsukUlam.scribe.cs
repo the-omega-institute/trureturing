@@ -19,7 +19,7 @@ internal sealed class LowDimensionalBorsukUlamDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(AntipodalFormula()), AssessedProvenance.FromLiterature(Borsuk),
                 "Let d <= 2 and let f be a map from Euclidean space of dimension d + 1 to Euclidean space of dimension d that is continuous on the unit sphere. "
                     + "Then f x = f (-x) for some point x of the unit sphere. "
-                    + "This is Borsuk's Satz II, the classical Borsuk-Ulam theorem, in the cases d <= 2 (Satz II for the d-dimensional sphere); the theorem for general d is not stated here, and it is not available in the underlying formal library. "
+                    + "This is Borsuk's Satz II, the classical Borsuk-Ulam theorem, in the cases d <= 2 (Satz II for the d-dimensional sphere); the theorem for general d is not stated here. "
                     + "For d = 0 the target is a single point. "
                     + "For d = 1 the function g x = f x - f (-x) with values in the real line is continuous on the unit circle and odd, g (-x) = -g x, so it takes a value of each sign at the antipodal points of a fixed point; since the circle is connected, the intermediate value theorem gives a zero of g. "
                     + "For d = 2 the plane is identified isometrically with the complex numbers, and the map x -> f x - f (-x) becomes a continuous odd complex-valued map on the unit sphere of three-space; such a map has a zero, which is the required point.",

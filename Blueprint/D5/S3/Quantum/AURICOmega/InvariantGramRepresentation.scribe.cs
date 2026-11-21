@@ -9,7 +9,7 @@ internal sealed class InvariantGramRepresentationDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Quantum/AURICOmega/InvariantGramRepresentation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A map from a topological group into a real inner product space with left-invariant Gram kernel, finite-dimensional span and continuous orbit maps yields a continuous homomorphism into the orthogonal group of the dimension of the span, whose kernel is the stabilizer of the family.",
+        "A map from a group with a topology into a real inner product space with left-invariant Gram kernel, finite-dimensional span and continuous orbit maps yields a continuous homomorphism into the orthogonal group of the dimension of the span, whose kernel is the stabilizer of the family.",
         H("Orthogonal representations from invariant Gram kernels"),
         Blocks(
             Node("exists-orthogonal-rep-ker-eq", "exists_orthogonal_rep_ker_eq",

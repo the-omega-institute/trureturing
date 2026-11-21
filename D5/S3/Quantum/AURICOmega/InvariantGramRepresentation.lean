@@ -56,10 +56,10 @@ private lemma span_range_spanFamily {G V : Type*} [NormedAddCommGroup V]
   rw [h]
   exact Submodule.span_span_coe_preimage
 
-/-- Let `φ` be a map from a topological group into a real inner product space whose Gram kernel
-is invariant under left multiplication, whose image spans a finite-dimensional subspace, and
-whose orbit maps `g ↦ φ (g * x)` are continuous. Then there is a continuous homomorphism into
-the orthogonal group whose size is the dimension of the span of the image of `φ`, and its
+/-- Let `φ` be a map from a group with a topology into a real inner product space whose Gram
+kernel is invariant under left multiplication, whose image spans a finite-dimensional subspace,
+and whose orbit maps `g ↦ φ (g * x)` are continuous. Then there is a continuous homomorphism
+into the orthogonal group whose size is the dimension of the span of the image of `φ`, and its
 kernel is the stabilizer `{g | ∀ x, φ (g * x) = φ x}`. In particular it is injective as soon as
 only the identity fixes every `φ (g * x)`. -/
 theorem exists_orthogonal_rep_ker_eq {G V : Type*} [TopologicalSpace G] [Group G]
