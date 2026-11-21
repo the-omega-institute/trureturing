@@ -64,6 +64,14 @@ variable (D : SupportedRelativeModularData Φ ρ σ)
 local notation "½" => (((1 / 2 : ℝ) : ℂ))
 private def timePhase (t : ℝ) : ℂ := (t : ℂ) * Complex.I
 
+-- Fix the rectangular Matrix instance in products whose operands can
+-- also be elaborated as CStarMatrix.
+private abbrev matrixProduct {r i c : Type*} [Fintype i]
+    (A : Matrix r i ℂ) (B : Matrix i c ℂ) : Matrix r c ℂ :=
+  @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid A B
+
+local infixl:70 " *ₘ " => matrixProduct
+
 private abbrev scalarPhase := PetzLogisticEvaluation.mode
 
 /-- The retained log likelihood log p minus log q on positive spectral pairs. -/
@@ -182,7 +190,6 @@ private theorem retainedFactor_pair (f g : D.L × D.K → ℂ) :
     _ = _ := by
       rw [hs]
       simp only [Complex.star_def]
-      ring
 
 variable {e : Type u} [Fintype e] [DecidableEq e]
 
@@ -214,8 +221,7 @@ private theorem completionColumns_coisometry (W : Matrix (b × e) a ℂ) (hW : W
 
 private def completedWithCoefficients (W : Matrix (b × e) a ℂ) (t : ℝ)
     (f : D.L × D.K → ℂ) : Matrix D.J (D.I ⊕ (b × e)) ℂ :=
-  (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) : Matrix D.J (b × e) ℂ) *
-    completionColumns D W t
+  rowFactor D (upper t) *ₘ Wᴴ *ₘ lift (retainedFactor D f) *ₘ completionColumns D W t
 
 /-- Completed physical amplitude with the assigned phases on the retained
 pairs and the original outer phases and Stinespring columns. -/
@@ -227,7 +233,7 @@ private theorem completedWithCoefficients_exact (W : Matrix (b × e) a ℂ) (t :
     completedWithCoefficients D W t (fun k => scalarPhase (retainedLogFrequency D k) t) =
       completed D W t := by
   rw [completedWithCoefficients, retainedFactor_exact]
-  change physicalFactor D W t * completionColumns D W t = _
+  change physicalFactor D W t *ₘ completionColumns D W t = _
   rw [completionColumns, Matrix.mul_fromCols, completed, complementaryAmplitude, Matrix.mul_assoc]
 
 private theorem common_endpoint (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ) :
@@ -241,11 +247,11 @@ private theorem completion_pair (M : SupportedRelativeModularModel Φ ρ σ)
     (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
     (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
     (t : ℝ) (X Y : Matrix b b ℂ) :
-    let F : Matrix M.data.J (b × e) ℂ := rowFactor M.data (upper t) * Wᴴ
+    let F := rowFactor M.data (upper t) *ₘ Wᴴ
     let C := completionColumns M.data W t
-    let K : Matrix M.data.J (b × e) ℂ := F * lift X
-    let L : Matrix M.data.J (b × e) ℂ := F * lift Y
-    ((K * C) * (L * C)ᴴ).trace =
+    let K := F *ₘ lift X
+    let L := F *ₘ lift Y
+    ((K *ₘ C) *ₘ (L *ₘ C)ᴴ).trace =
       (M.data.Q * (X * Yᴴ)).trace := by
   dsimp only
   let F := rowFactor M.data (upper t)
@@ -413,7 +419,7 @@ private theorem scalarPhase_add (x y t : ℝ) :
     Complex.exp_add]
 
 private theorem completionColumns_phase (W : Matrix (b × e) a ℂ) (t : ℝ) :
-    completionColumns D W t = completionColumns D W 0 *
+    completionColumns D W t = completionColumns D W 0 *ₘ
       diagonal (fun c => scalarPhase (columnShift D c) t) := by
   have h0 : phaseMatrix D 0 = 1 := by
     simp [phaseMatrix, modularPower_zero]
@@ -442,9 +448,8 @@ private theorem rowFactor_phase (t : ℝ) :
 
 private def endpointCoefficient (W : Matrix (b × e) a ℂ) (k : D.L × D.K) :
     Matrix D.J (D.I ⊕ (b × e)) ℂ :=
-  (rowFactor D ½ * Wᴴ *
-    lift ((Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k) : Matrix D.J (b × e) ℂ) *
-    completionColumns D W 0
+  rowFactor D ½ *ₘ Wᴴ *ₘ
+    lift ((Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k) *ₘ completionColumns D W 0
 
 private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L × D.K)
     (hk : ¬0 < spectralMass D k) : endpointCoefficient D W k = 0 := by
@@ -478,27 +483,24 @@ private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → �
     ring
   let L := diagonal (fun j => scalarPhase (Real.log (D.sj j)) t)
   let R := diagonal (fun c : D.I ⊕ (b × e) => scalarPhase (columnShift D c) t)
-  let H : Matrix D.J (b × e) ℂ := rowFactor D ½ * Wᴴ
+  let H := rowFactor D ½ *ₘ Wᴴ
   let C := completionColumns D W 0
   have hExpanded : quantizedCompleted D W assign t =
-      (L * (∑ k, f k • endpointCoefficient D W k) : Matrix D.J (D.I ⊕ (b × e)) ℂ) * R := by
-    change (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) : Matrix D.J (b × e) ℂ) *
+      L *ₘ (∑ k, f k • endpointCoefficient D W k) *ₘ R := by
+    change rowFactor D (upper t) *ₘ Wᴴ *ₘ lift (retainedFactor D f) *ₘ
       completionColumns D W t = _
     calc
-      _ = (L * ((H * (∑ k, f k • lift (Z k)) : Matrix D.J (b × e) ℂ) * C) :
-          Matrix D.J (D.I ⊕ (b × e)) ℂ) * R := by
+      _ = L *ₘ (H *ₘ (∑ k, f k • lift (Z k)) *ₘ C) *ₘ R := by
         rw [hLift, rowFactor_phase, completionColumns_phase]
         simp only [H, L, C, R, Matrix.mul_assoc]
       _ = _ := by
-        have hSum : (H * (∑ k, f k • lift (Z k)) : Matrix D.J (b × e) ℂ) * C =
+        have hSum : H *ₘ (∑ k, f k • lift (Z k)) *ₘ C =
             ∑ k, f k • endpointCoefficient D W k := by
           simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul]
           rfl
         rw [hSum]
   rw [hExpanded]
-  change (((diagonal _ * (∑ k, f k • endpointCoefficient D W k) :
-    Matrix D.J (D.I ⊕ (b × e)) ℂ) * (diagonal _ : Matrix (D.I ⊕ (b × e)) _ ℂ)) :
-    Matrix D.J (D.I ⊕ (b × e)) ℂ) j c = _
+  change ((diagonal _ *ₘ (∑ k, f k • endpointCoefficient D W k)) *ₘ diagonal _) j c = _
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply,
     smul_eq_mul]
   rw [Finset.mul_sum, Finset.sum_mul]
