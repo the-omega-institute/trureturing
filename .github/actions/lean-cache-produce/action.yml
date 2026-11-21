@@ -36,6 +36,10 @@ runs:
     - name: Reserve time to save producer progress
       shell: bash
       run: echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
+    - name: Install the pinned tools release
+      if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+      shell: bash
+      run: python3 .github/scripts/install-tools.py
     - uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
