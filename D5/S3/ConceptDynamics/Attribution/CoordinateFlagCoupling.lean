@@ -117,7 +117,7 @@ noncomputable def commonFixed (w : Output I → Output I → ℝ) (i : I) : ℝ 
   classical
   exact ∑ x, ∑ y, if (∀ g ∈ coordinate i, g • x = x ∧ g • y = y) then w x y else 0
 
-private theorem fixed_pair_iff (x y : Output I) (i : I) :
+theorem fixed_pair_iff (x y : Output I) (i : I) :
     (∀ g ∈ coordinate i, g • x = x ∧ g • y = y) ↔ (x.profile i && y.profile i) = true := by
   simp only [forall_and, coordinate_fixed_iff, Bool.and_eq_true]
 
