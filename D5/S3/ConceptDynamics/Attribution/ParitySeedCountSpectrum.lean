@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Orbit sizes restrict the actual coordinate fixed counts of uniformly coloured parity seeds. -/
+   digest: Exact fixed-count restrictions for coloured parity seeds. -/
 
 import D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization
 import Mathlib.Algebra.Group.Action.Sum
@@ -149,7 +149,10 @@ private theorem pair_action_moves {n : ℕ} (a : Pair n) :
   rw [a.1.property, a.2.property] at equal
   exact zero_ne_one equal
 
-open MulAction in
+section
+attribute [local instance 10000] Classical.propDecidable
+
+/-- Uniform coloured marginals make each actual fixed count a multiple of four. -/
 theorem coordinate_fixed_count_four_dvd {n : ℕ} {S : Type} [Fintype S]
     [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n)
     (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
@@ -229,6 +232,8 @@ theorem coordinate_fixed_count_four_dvd {n : ℕ} {S : Type} [Fintype S]
       simp [M, hs]
   rw [split] at eligible
   exact (Nat.dvd_add_iff_left divMoved).2 eligible
+
+end
 
 section
 
@@ -705,14 +710,12 @@ private def renameSlice (p : Equiv.Perm (Index n)) (a : ZMod 2) :
   left_inv x := by
     apply Subtype.ext
     rcases x with ⟨⟨bits,c⟩, _⟩
-    ·
-      change Output.mk ((bits ∘ p) ∘ p.symm) c = Output.mk bits c
+    · change Output.mk ((bits ∘ p) ∘ p.symm) c = Output.mk bits c
       simp [Function.comp_def]
   right_inv x := by
     apply Subtype.ext
     rcases x with ⟨⟨bits,c⟩, _⟩
-    ·
-      change Output.mk ((bits ∘ p.symm) ∘ p) c = Output.mk bits c
+    · change Output.mk ((bits ∘ p.symm) ∘ p) c = Output.mk bits c
       simp [Function.comp_def]
 
 private theorem rename_smul (p : Equiv.Perm (Index n)) (g : Acting (Index n))
@@ -858,7 +861,7 @@ private theorem odd_dimension_all_zero (n k : ℕ) (odd : Odd (n + 2)) :
   have counts := realize_scaled_profile_counts (complementW odd k) rows cols
   simpa [complement_common_one_zero odd k] using counts
 
-/-- A zero coordinate fixed-count vector is possible exactly in odd dimension or at even multiplicity. -/
+/-- The zero vector is attained in odd dimension or at even multiplicity. -/
 theorem zero_coordinate_counts_iff (n k : ℕ) :
     RealizableSeedCounts n k (fun _ => 0) ↔ Odd (n + 2) ∨ Even k := by
   constructor
@@ -879,7 +882,7 @@ private theorem mixed_reversed : RealizableSeedCounts 0 2 ![0,4] := by
     TwoCoordinateMixedSeedWitness.mixed_seed_witness
   have eq : (![4,0] : Fin 2 → ℕ) ∘ p = ![0,4] := by
     funext i
-    fin_cases i <;> simp [Function.comp_def, p]
+    fin_cases i <;> simp [p]
   rwa [eq] at h
 
 private theorem two_coordinate_attainment (k t u : ℕ)
@@ -902,7 +905,9 @@ private theorem two_coordinate_attainment (k t u : ℕ)
       rw [hBudget] at h
       convert h using 1
       funext i
-      fin_cases i <;> (simp; omega)
+      fin_cases i
+      · simp <;> omega
+      · simp <;> omega
     · have h := add_realizable_seed_counts
         (add_realizable_seed_counts (two_coordinate_boundary t (u - 1)) mixed_reversed)
           (rescale_even_zero j)
@@ -910,8 +915,11 @@ private theorem two_coordinate_attainment (k t u : ℕ)
       rw [hBudget] at h
       convert h using 1
       funext i
-      fin_cases i <;> (simp; omega)
+      fin_cases i
+      · simp <;> omega
+      · simp <;> omega
 
+/-- Exact realizability of the coordinate fixed-count vector in dimension two. -/
 theorem exact_two_coordinate_counts (k : ℕ) (z : Fin 2 → ℕ) :
     RealizableSeedCounts 0 k z ↔
       ∃ t u : ℕ, z = ![4 * t, 4 * u] ∧ t + u ≤ k ∧ (Even k ∨ 0 < t + u) := by
