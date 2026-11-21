@@ -402,7 +402,7 @@ private theorem decode_surjective (hp2 : p.Coprime 2) :
       rw [cyclic_card, levelGenerator_order]
       exact hp2.pow_right _
     · let i : Fin t := ⟨j.val - (B - t + 1), by have := j.isLt; omega⟩
-      have hi : activeLevel ht i = j := Fin.ext (by dsimp [i]; omega)
+      have hi : activeLevel ht i = j := Fin.ext (by dsimp [i, activeLevel]; omega)
       have hactive : φ (levelGenerator B j) ≠ 1 := mt ((level_quiet_iff φ hord ht j).mp) hquiet
       obtain ⟨a, ha⟩ := overTrivial_of_active φ H hbot _ hj.symm hactive
       refine ⟨.inr (.inr (i, a)), ?_⟩
