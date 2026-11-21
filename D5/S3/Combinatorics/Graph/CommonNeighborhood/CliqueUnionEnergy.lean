@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
    mirror-E: none(waiver:structural-proof)
    anchors: [lake/module/D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound]
