@@ -18,7 +18,55 @@ The real function U is CompleteMertensPeak.U, with the complete inclusive Mangol
 
 Write M=ActualReciprocalSquareBounds.firstLiMass, and use the canonical actualZero, actualCoeff and actualH of ActualZeroLaplace. Every natural index is an actual analytic zero occurrence through actualOccurrenceEquiv, including its multiplicity. Both conjugate signs are included.
 
-**Theorem 1.2 (Eventual absolute control and arbitrarily late values near the positive mass).**
+**Theorem 1.2 (The real part of each actual zero under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \left(\forall k \in \mathbb{N},\; \operatorname{Re}\left(\operatorname{actualZero}\left(k\right)\right) = \frac{1}{2}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Apply the critical-line theorem to the zero selected by actualOccurrenceEquiv.
+
+**Theorem 1.3 (The actual zero coefficient under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \left(\forall k \in \mathbb{N},\; \operatorname{actualCoeff}\left(k\right) = \operatorname{ofReal}\left(\frac{1}{\frac{1}{4} + \operatorname{Im}\left(\operatorname{actualZero}\left(k\right)\right)^{2}}\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here ofReal denotes the real embedding into the complex numbers. The critical-line identity gives the positive real denominator.
+
+**Theorem 1.4 (The complete coefficient norm series under RH).**
+
+$$\operatorname{RiemannHypothesis} \Rightarrow \operatorname{HasSum}\left(\lambda k : \mathbb{N}, \left\lVert \operatorname{actualCoeff}\left(k\right) \right\rVert, firstLiMass\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under RH each coefficient's norm is its real part. Taking real parts in actualCoeff_hasSum gives the stated HasSum.
+
+**Lemma 1.5 (The pointwise explicit-formula residual).**
+
+$$\forall y \in \mathbb{R},\; 0 \le y \Rightarrow \left|\operatorname{G}\left(y\right) - \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{Re}\left(\operatorname{actualH}\left(y\right)\right)\right| < \operatorname{exp}\left(\frac{-y}{2}\right) \cdot \operatorname{log}\left(2 \cdot \pi\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact explicit formula splits G into the normalized real zero series and exp(-y/2)*(log(2*pi)-trivialT(y)). Continuity on the closed half-axis extends the split to y=0. The trivial-zero mass bound keeps the signed residual positive, and the first trivial-zero summand is strictly positive at each finite y, giving the strict upper bound. The trivial-zero sum is at most exp(-2*y)*(1-log(2)), so log(2*pi) is the least uniform coefficient.
+
+**Theorem 1.6 (Eventual absolute control and arbitrarily late values near the positive mass).**
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; \forall y \in \mathbb{R},\; T \le y \Rightarrow \left|\operatorname{G}\left(y\right)\right| < firstLiMass + epsilon\right)\right) \land \left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists n \in \mathbb{N},\; Y \le n \land \left|\operatorname{G}\left(n\right) - firstLiMass\right| < epsilon\right)\right)\right)$$
 
@@ -36,11 +84,15 @@ On the compact infinite product group Z=(Nat -> Circle), put g(k)=Circle.exp(Im(
 
 Apply mapClusterPt_one_atTop_pow on this compact product, followed by MapClusterPt.continuousAt_comp and MapClusterPt.frequently. Every neighborhood of M contains F(g^n) for arbitrarily large natural n. This requires neither linear independence nor a rate or shrinking target.
 
-WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds 0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm controls the real phase error directly. Eventual control follows from the norm bound. For recurrence, combine a phase error below epsilon/2 with the residual below epsilon/2 and the required lower bound on n. The real-part estimate transfers the complex phase recurrence to G.
+The signed split gives G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>=0, where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds 0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm controls the real phase error directly. Eventual control follows from the norm bound. For recurrence, combine a phase error below epsilon/2 with the residual below epsilon/2 and the required lower bound on n. The real-part estimate transfers the complex phase recurrence to G.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.G`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.abs_G_sub_normalized_actualH_le`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_norm_hasSum`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.coeff_real`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.on_line`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula](WholeFormula.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RhLocatesZeroData](../../ZetaBridge/RhLocatesZeroData.md)

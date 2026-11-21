@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
 license: citation-only
 triage: anchor
 ---
@@ -87,9 +88,7 @@ second PSD factor, the paired terms are cubic traces of
 `C_i = sqrt(B) P_i sqrt(B)`. The Hilbert–Schmidt pairing of
 `C_i sqrt(C_k)` and `C_j sqrt(C_k)` supplies the bound at the center
 `k`, including when some projections have rank zero. The exponential
-comparison uses the exact dyadic limit from Lemma 2. Section 7's
-unrestricted higher-dimensional question at `(5,3)` allows four or more
-distinct eigenvalues of the first factor.
+comparison uses the exact dyadic limit from Lemma 2.
 
 For matrices of size four, the accompanying proof
 `p-three-dimension-four-proof.txt` derives a comparison using all four
@@ -101,6 +100,20 @@ negative faces, the two negative edges in a column form a path and the
 cycle product determines the real-part sign on its third edge. The
 formal comparison uses this proof for `p = 5, 6, 7` together with Hägele's
 word expansion and dyadic trace-power comparison.
+
+The repository proof answers the unrestricted `(5,3)` question from
+Hägele's Section 7 in every finite dimension, with any number of distinct
+eigenvalues of the first factor. For complex positive semidefinite `A, B`,
+the mean trace of the 56 words with five copies of `A` and three copies
+of `B` is at least `Tr((A^(5/3) B)^3)`, with `A^(5/3)` defined by spectral
+calculus. Exact polynomial signs give nonnegative rectangle differences
+of the normalized upper kernel on each sorted finite sample. These
+differences telescope to a weighted Gram sum of interval indicators.
+Diagonal rescaling and a rank-one lower block give the centered kernels,
+whose Schur products with `B` in the eigenbasis give nonnegative cubic
+walk contributions. For complex Hermitian `H, K` in every finite dimension,
+Hägele's dyadic trace comparison in Lemma 2 gives the lower bound
+`Tr exp(5H + 3K)` for the same word mean on `exp H, exp K`.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

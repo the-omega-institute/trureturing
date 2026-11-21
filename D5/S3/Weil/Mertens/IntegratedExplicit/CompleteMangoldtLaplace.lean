@@ -48,7 +48,7 @@ theorem mangoldtRamp_at_entry (n : ℕ) : mangoldtRamp n (n : ℝ) = 0 := by
   · simp [mangoldtRamp]
   · simp [mangoldtRamp, Nat.cast_ne_zero.mpr hn]
 
-private theorem ramp_zero_of_lt {n : ℕ} {t : ℝ} (ht : 0 ≤ t) (h : t < n) :
+theorem ramp_zero_of_lt {n : ℕ} {t : ℝ} (ht : 0 ≤ t) (h : t < n) :
     mangoldtRamp n t = 0 := by
   have hn : (0 : ℝ) < n := lt_of_le_of_lt ht h
   dsimp only [mangoldtRamp]
@@ -57,7 +57,7 @@ private theorem ramp_zero_of_lt {n : ℕ} {t : ℝ} (ht : 0 ≤ t) (h : t < n) :
     linarith)]
   exact mul_zero _
 
-private theorem ramp_eq_affine {n : ℕ} {t : ℝ}
+theorem ramp_eq_affine {n : ℕ} {t : ℝ}
     (hn : 0 < n) (h : (n : ℝ) ≤ t) :
     mangoldtRamp n t = ArithmeticFunction.vonMangoldt n * (t / (n : ℝ) - 1) := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn

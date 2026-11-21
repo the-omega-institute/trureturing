@@ -56,14 +56,35 @@ The endpoints in the criterion are the real number 5040 and exp(T). The divisor 
 
 Conversely, the limit gives a linear bound for the signed primitive from 2. Apply the growth theorem at β=1/2 and use the functional equation to obtain RH.
 
+**Theorem 1.5 (Either eventual affine bound is equivalent to RH).**
+
+$$\operatorname{W}\left(T\right) = \int_{5040}^{\operatorname{exp}\left(T\right)}\frac{\operatorname{thetaTail}\left(x\right)}{\sqrt{x}}\,dx\qquad(RiemannHypothesis \Leftrightarrow \left(\exists A \in \mathbb{R},\; \exists B \in \mathbb{R},\; \exists Y \in \mathbb{R},\; \forall T \in \mathbb{R},\; Y \le T \Rightarrow \operatorname{W}\left(T\right) \le A \cdot T + B\right)) \land (RiemannHypothesis \Leftrightarrow \left(\exists A \in \mathbb{R},\; \exists B \in \mathbb{R},\; \exists Y \in \mathbb{R},\; \forall T \in \mathbb{R},\; Y \le T \Rightarrow A \cdot T + B \le \operatorname{W}\left(T\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.rh_iff_signedPrimePrimitive_affine_bounds_from_5040` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Write W(T) for the signed, unnormalized interval integral from 5040 to exp(T) of thetaTail(x)/√x. Here thetaTail(x) is the set integral of (θ(u)−u)/u² on (x,∞), and θ(u) sums log p over primes p≤u. The upper and lower comparisons each have their own real coefficients A, B and their own eventual threshold. Under RH the slope −2 gives the eventual upper bound −T and the eventual lower bound −3T.
+
+For large T, the primitive from 2 equals W(T) plus the fixed signed interval integral from 2 to 5040. The sum of this prime primitive and the signed complete Mangoldt primitive in log coordinates has absolute value at most DT. A prime upper bound therefore yields an affine majorant of the negative complete primitive. A prime lower bound yields an affine majorant of the complete primitive.
+
+The integrable Chebyshev error kernel gives initial exponential control. On a late half-line, the gap between the affine majorant and the signed complete primitive is nonnegative. Damping it by exp(−3t/2) gives a finite positive measure. After the shift s=z+2, the real-regular meromorphic Mangoldt continuation supplies a continuation of the gap transform to Re(z)>−3/2. Positive Laplace convergence makes the actual gap transform holomorphic there. Subtract the gap transform from the affine transform, divide by the sign chosen for the complete primitive, and restore the finite integration intervals. Integration by parts then recovers a holomorphic complete Mangoldt transform on Re(s)>1/2.
+
+The first-order equation for the pole-removed zeta function propagates from Re(s)>1 across this half-plane. The function is nonzero at s=2, so the equation excludes zeta zeros in the right half of the critical strip. The functional equation gives RH.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.HasExponentBound`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.rh_iff_signedPrimePrimitive_affine_bounds_from_5040`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.rh_iff_signedPrimePrimitive_slope_from_5040`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.signedPrimePrimitive`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/SignedPrimePrimitiveCriterion.zeta_zero_re_le_of_signedPrimePrimitive_exponent`
 - Dependency: [D5/S3/Analytic/Laplace/EulerPoleObstruction](../../../Analytic/Laplace/EulerPoleObstruction.md)
+- Dependency: [D5/S3/Analytic/Laplace/PositiveLaplaceContinuation](../../../Analytic/Laplace/PositiveLaplaceContinuation.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtLaurent](CompleteMangoldtLaurent.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/CompleteMangoldtRealRegular](CompleteMangoldtRealRegular.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection](PrimeOnlyTailCorrection.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](RHSharpActualEnvelope.md)
 - Dependency: [D5/S3/Weil/Probability/AnalyticLogarithmicContinuation](../../Probability/AnalyticLogarithmicContinuation.md)
