@@ -4,11 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The root-scale prime tail has a uniform negative margin relative to its zero terms. -/
+   digest: The root-scale prime-tail margin extends widths with zero as a cluster value. -/
 
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualSignedGaussianEndpoint
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
 
 /-! The prime-power correction supplies a negative margin at the square-root scale. -/
@@ -18,7 +19,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-open Filter Set
+open Filter MeasureTheory Set
 open scoped Topology
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
 open D5.S3.Arith.Robin.OffLinePeak
@@ -28,8 +29,11 @@ open D5.S3.Weil.ZeroSum (IsNontrivialZero)
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimeCriticalResidual
 
 open ActualSignedGaussianEndpoint (actual_coefficient_mass)
-open MaximalRealPartProjection (maximalSeries summable_norm_maximalTerm)
-open PrimeOnlyTailCorrection (primeTail prime_power_window_correction)
+open MaximalRealPartProjection
+  (maximalSeries summable_norm_maximalTerm uniformContinuous_maximalSeries)
+open PrimeOnlyTailCorrection (primeTail prime_integrable prime_power_window_correction)
+open PrimePhaseCluster (phaseOrbit phaseProfile phaseProfile_on_orbit phaseWindow
+  prime_tail_mass_cluster_iff_of_upper_bound)
 open ZeroAbscissaPower (primitive_eq_negative_tail)
 
 private theorem actual_nontrivial (k : ℕ) : IsNontrivialZero (actualZero k) :=
@@ -166,15 +170,17 @@ private theorem complete_tail_root_bound {t : ℝ} (ht : Real.log 2 ≤ t) :
 At all sufficiently large log endpoints, one threshold works for every upper bound `β > 1/2`
 on the real parts of the nontrivial zeros. -/
 theorem eventually_prime_tail_root_scale :
+    let lineRealPart := Complex.re
     (∀ β t : ℝ, Summable
       (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
         ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
     ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
       (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
       Real.exp (t / 2) * primeTail (Real.exp t) ≤
-        Real.exp ((β - 1 / 2) * t) * (-(maximalSeries actualCoeff actualZero β t).re) +
+        Real.exp ((β - 1 / 2) * t) * (-lineRealPart (maximalSeries actualCoeff actualZero β t)) +
           (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
             ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2 := by
+  dsimp only
   refine ⟨fun β t => ?_, ?_⟩
   · exact ((summable_norm_rootTerm t).subtype
       {k : ℕ | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}).congr
@@ -192,5 +198,92 @@ theorem eventually_prime_tail_root_scale :
     have ht0 : 0 ≤ t := (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans ht
     have hzeros := root_zero_sum_bound ht0 hβ (fun k => hmax _ (actual_nontrivial k))
     linarith only [hgap, hcomplete, hzeros]
+
+private theorem continuousOn_prime_mass_density :
+    ContinuousOn (fun x : ℝ => max (-primeTail x) 0 / Real.sqrt x) (Ici 1) :=
+  (prime_integrable.continuousOn_Ici_primitive_Ioi.neg.sup continuousOn_const).div
+    Real.continuous_sqrt.continuousOn
+    (fun _ hx => (Real.sqrt_pos.mpr (zero_lt_one.trans_le (mem_Ici.mp hx))).ne')
+
+/-- A late window with zero prime-tail mass and intermediate zero sum below one half
+throughout gives a zero cluster value at a strictly wider width. A common threshold
+for the left endpoint works for every real-part upper bound above one half. -/
+theorem prime_tail_mass_pos_or_intermediate_or_wider_zero_cluster :
+    let scale := Real.exp
+    ∃ T : ℝ, ∀ β : ℝ, 1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
+      ∀ t W : ℝ, 0 < W → T ≤ t - W →
+        0 < (∫ x in scale (t - W)..scale t, max (-primeTail x) 0 / Real.sqrt x) ∨
+        (∃ u ∈ Icc (t - W) t, 1 / 2 ≤
+          ∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+            ‖actualCoeff k.1‖ * scale (((actualZero k.1).re - 1 / 2) * u)) ∨
+        ∃ W' > W, MapClusterPt 0 atTop (fun B : ℝ =>
+          (∫ x in scale (Real.log B - W')..B, max (-primeTail x) 0 / Real.sqrt x) /
+            scale (Real.log B * (β - 1 / 2))) := by
+  dsimp only
+  obtain ⟨T, hT⟩ := eventually_atTop.mp eventually_prime_tail_root_scale.2
+  refine ⟨max T 0, ?_⟩
+  intro β hβ hmax t W hW hlate
+  by_cases hmass : 0 < (∫ x in Real.exp (t - W)..Real.exp t, max (-primeTail x) 0 / Real.sqrt x)
+  · exact Or.inl hmass
+  right
+  by_cases hinter : ∃ u ∈ Icc (t - W) t, 1 / 2 ≤
+      ∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+        ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * u)
+  · exact Or.inl hinter
+  right
+  have hends : Real.exp (t - W) < Real.exp t := Real.exp_lt_exp.mpr (sub_lt_self t hW)
+  have hleft : 1 ≤ Real.exp (t - W) :=
+    Real.one_le_exp ((le_max_right T 0).trans hlate)
+  have htail (u : ℝ) (hu : u ∈ Icc (t - W) t) : 0 ≤ primeTail (Real.exp u) := by
+    by_contra! hneg
+    apply hmass
+    have hx : Real.exp u ∈ Icc (Real.exp (t - W)) (Real.exp t) :=
+      ⟨Real.exp_le_exp.mpr hu.1, Real.exp_le_exp.mpr hu.2⟩
+    exact intervalIntegral.integral_pos hends
+      (continuousOn_prime_mass_density.mono (fun _ hy => hleft.trans hy.1))
+      (fun _ _ => div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _))
+      ⟨Real.exp u, hx, div_pos ((neg_pos.mpr hneg).trans_le (le_max_left _ _))
+        (Real.sqrt_pos.mpr (Real.exp_pos u))⟩
+  let profile (u : ℝ) := -(maximalSeries actualCoeff actualZero β u).re
+  have hpositive (u : ℝ) (hu : u ∈ Icc (t - W) t) : 0 < profile u := by
+    have hroot := hT u (((le_max_left T 0).trans hlate).trans hu.1) β hβ hmax
+    change _ ≤ Real.exp ((β - 1 / 2) * u) * profile u + _ - 1 / 2 at hroot
+    have hsum := lt_of_not_ge (fun h => hinter ⟨u, hu, h⟩)
+    have hscaled : 0 < Real.exp ((β - 1 / 2) * u) * profile u := by
+      linarith only [hroot, hsum, mul_nonneg (Real.exp_nonneg (u / 2)) (htail u hu)]
+    exact pos_of_mul_pos_right hscaled (Real.exp_nonneg _)
+  have hcontinuous : Continuous profile := by
+    unfold profile
+    exact (Complex.continuous_re.comp
+      (uniformContinuous_maximalSeries (z := actualZero) (Θ := β)
+        actualCoeff_hasSum.summable.norm).continuous).neg
+  obtain ⟨δ, hδ, hball⟩ := Metric.eventually_nhds_iff.mp
+    (hcontinuous.continuousAt.eventually
+      (lt_mem_nhds (hpositive (t - W) ⟨le_rfl, sub_le_self t hW.le⟩)))
+  let W' := W + δ / 2
+  have hww' : W < W' := lt_add_of_pos_right W (half_pos hδ)
+  have hW' : 0 ≤ W' := (hW.trans hww').le
+  have hphase : phaseWindow Complex.re β W' (phaseOrbit t) = 0 := by
+    unfold phaseWindow
+    trans (∫ _ in (0 : ℝ)..W', (0 : ℝ))
+    · apply intervalIntegral.integral_congr
+      intro s hs
+      rw [uIcc_of_le hW'] at hs
+      have hspos : 0 < profile (t - s) := by
+        by_cases hsW : s ≤ W
+        · exact hpositive _ ⟨sub_le_sub_left hsW _, sub_le_self _ hs.1⟩
+        · apply hball
+          rw [Real.dist_eq, abs_lt]
+          constructor <;> dsimp [W'] at hs <;> linarith only [hs.2, lt_of_not_ge hsW, hδ]
+      change Real.exp _ * max (-phaseProfile Complex.re β (phaseOrbit t) (-s)) 0 = 0
+      rw [phaseProfile_on_orbit, ← sub_eq_add_neg]
+      change Real.exp _ * max (-profile (t - s)) 0 = 0
+      rw [max_eq_right (neg_nonpos.mpr hspos.le), mul_zero]
+    · simp
+  have hcluster := (prime_tail_mass_cluster_iff_of_upper_bound β hβ hmax W' hW' 0).2
+    ⟨phaseOrbit t, subset_closure (mem_range_self t), hphase.symm⟩
+  refine ⟨W', hww', hcluster.congrFun ?_⟩
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with B hB
+  simp only [sub_eq_add_neg, Real.exp_add, Real.exp_log hB, Real.rpow_def_of_pos hB]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeCriticalResidual
