@@ -24,23 +24,22 @@ namespace D5.S3.CharacterSums.DirichletRampWindow
 private abbrev coeff {N : ℕ} (χ : DirichletCharacter ℂ N) (n : ℕ) : ℂ :=
   (ArithmeticFunction.vonMangoldt n : ℂ) * χ (n : ZMod N)
 
+private theorem zero_before {n : ℕ} {t : ℝ} (h : t ≤ n) : mangoldtRamp n t = 0 := by
+  rcases eq_or_lt_of_le h with rfl | hlt
+  · exact mangoldtRamp_at_entry n
+  by_cases ht : 0 ≤ t
+  · exact ramp_zero_of_lt ht hlt
+  · have hr := div_nonpos_of_nonpos_of_nonneg (le_of_not_ge ht) (Nat.cast_nonneg n : (0 : ℝ) ≤ n)
+    simp [mangoldtRamp, max_eq_right (by linarith : t / n - 1 ≤ 0)]
+
 private theorem extend_ramp {N : ℕ} (χ : DirichletCharacter ℂ N) {y Z : ℝ} (hy : y ≤ Z) :
-    characterRamp χ y = ∑ n ∈ Finset.Ioc 0 ⌊Z⌋₊,
-      coeff χ n * ((max (y / n - 1) 0 : ℝ) : ℂ) := by
-  rw [← Finset.sum_subset (s₁ := Finset.Ioc 0 ⌊y⌋₊)
-    (Finset.Ioc_subset_Ioc_right (Nat.floor_mono hy))]
-  · apply Finset.sum_congr rfl
-    intro n _
-    simp only [mangoldtRamp, Complex.ofReal_mul, coeff]
-    ring
-  · intro n hn hny
-    obtain ⟨hn0, _⟩ := Finset.mem_Ioc.mp hn
-    have hlt : ⌊y⌋₊ < n := by
-      by_contra! h
-      exact hny (Finset.mem_Ioc.mpr ⟨hn0,h⟩)
-    have hp : (0:ℝ) < n := by exact_mod_cast hn0
-    rw [max_eq_right (sub_nonpos.mpr ((div_le_one hp).mpr (Nat.lt_of_floor_lt hlt).le))]
-    simp
+    characterRamp χ y = ∑ n ∈ Finset.Ioc 0 ⌊Z⌋₊, (mangoldtRamp n y : ℂ) * χ (n : ZMod N) := by
+  apply Finset.sum_subset (Finset.Ioc_subset_Ioc_right (Nat.floor_mono hy))
+  intro n hn hny
+  have hlt : ⌊y⌋₊ < n := by
+    by_contra! h
+    exact hny (Finset.mem_Ioc.mpr ⟨(Finset.mem_Ioc.mp hn).1,h⟩)
+  simp [zero_before (Nat.lt_of_floor_lt hlt).le]
 
 private theorem affine {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} (hn : χ ≠ 1)
     {u x v a b : ℝ} (hu : u ≤ x) (hv : x ≤ v)
@@ -53,19 +52,23 @@ private theorem affine {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} (hn 
     rw [extend_ramp χ hv, extend_ramp χ (hu.trans hv), extend_ramp χ (le_refl v),
       Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun n hnm => ?_
-    have hpos : (0:ℝ)<n := by exact_mod_cast (Finset.mem_Ioc.mp hnm).1
+    have hn0 := (Finset.mem_Ioc.mp hnm).1
     by_cases hnu : (n:ℝ) ≤ u
-    · have hw (t : ℝ) (ht : (n:ℝ) ≤ t) : max (t / n - 1) 0 = t/n-1 :=
-        max_eq_left (sub_nonneg.mpr ((one_le_div hpos).mpr ht))
-      rw [hw _ (hnu.trans hu), hw _ hnu, hw _ (hnu.trans (hu.trans hv))]
+    · rw [ramp_eq_affine hn0 (hnu.trans hu), ramp_eq_affine hn0 hnu,
+        ramp_eq_affine hn0 (hnu.trans (hu.trans hv))]
       push_cast
       rw [← hm']
-      linear_combination coeff χ n * hab'
+      linear_combination ((ArithmeticFunction.vonMangoldt n : ℂ) * χ (n : ZMod N)) * hab'
     by_cases hvn : v ≤ (n:ℝ)
-    · have hw (t : ℝ) (ht : t ≤ (n:ℝ)) : max (t / n - 1) 0 = 0 :=
-        max_eq_right (sub_nonpos.mpr ((div_le_one hpos).mpr ht))
-      simp [hw _ (hv.trans hvn), hw _ (hu.trans (hv.trans hvn)), hw _ hvn]
-    · simp [hc n ⟨lt_of_not_ge hnu, lt_of_not_ge hvn⟩]
+    · simp [zero_before (hv.trans hvn), zero_before (hu.trans (hv.trans hvn)), zero_before hvn]
+    · have hcoeff := hc n ⟨lt_of_not_ge hnu, lt_of_not_ge hvn⟩
+      have zero_term (t : ℝ) : (mangoldtRamp n t : ℂ) * χ (n : ZMod N) = 0 := by
+        calc
+          _ = coeff χ n * ((max (t/n-1) 0 : ℝ) : ℂ) := by
+            simp only [coeff, mangoldtRamp, Complex.ofReal_mul]
+            ring
+          _ = 0 := by rw [hcoeff, zero_mul]
+      simp only [zero_term, mul_zero, add_zero]
   simp only [gChi,ite_eq_right hn,hsum]
   rw [← hm']
   ring
