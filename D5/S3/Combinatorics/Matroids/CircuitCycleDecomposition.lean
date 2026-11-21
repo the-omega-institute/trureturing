@@ -54,18 +54,18 @@ abbrev CircuitThrough (M : Matroid V) (e : V) :=
   {C : Finset V // M.IsCircuit (C : Set V) ∧ e ∈ C}
 
 omit [Fintype V] in
-private def restrictionSign (C : Finset V) (e : V) (T : Finset V) : ℤ :=
+def restrictionSign (C : Finset V) (e : V) (T : Finset V) : ℤ :=
   insertionSign (C.erase e) e * shuffleSign (C.erase e) T
 
 omit [Fintype V] in
-private lemma restrictionSign_sq (C : Finset V) (e : V) (T : Finset V) :
+lemma restrictionSign_sq (C : Finset V) (e : V) (T : Finset V) :
     restrictionSign C e T * restrictionSign C e T = 1 := by
   unfold restrictionSign insertionSign shuffleSign
   rw [← pow_add, sign_sq]
 
 open scoped Classical in
 omit [Fintype V] in
-private noncomputable def restrictChain (M : Matroid V) (C : Finset V) (e : V) (z : Chain V) :
+noncomputable def restrictChain (M : Matroid V) (C : Finset V) (e : V) (z : Chain V) :
     Chain V := fun T =>
   if (M ／ (C : Set V)).IsBase (T : Set V) then
     restrictionSign C e T * z (T ∪ C.erase e)
@@ -169,7 +169,7 @@ private lemma restrictChain_topCycle {M : Matroid V} {C : Finset V} {e : V}
       fun hB => hS ((contract_base_disjoint hB).mono_left (subset_insert x S))
     rw [restrictChain, ite_eq_right h, mul_zero]
 
-private lemma join_topCycle {M : Matroid V} {C : Finset V} (hC : M.IsCircuit (C : Set V))
+lemma join_topCycle {M : Matroid V} {C : Finset V} (hC : M.IsCircuit (C : Set V))
     {w : Chain V} (hw : TopCycle (M ／ (C : Set V)) w) :
     TopCycle M (signedJoin C (simplexBoundary C) w) := by
   refine ⟨fun F hF => ?_, fun R => ?_⟩
@@ -202,7 +202,7 @@ private lemma reconstruct_apply {M : Matroid V} {e : V}
   rw [reconstruct, Submodule.coe_sum]
   exact map_sum (Pi.evalAddMonoidHom (fun _ : Finset V => ℤ) F) _ _
 
-private lemma circuit_eq_circuitAt {M : Matroid V} {e : V}
+lemma circuit_eq_circuitAt {M : Matroid V} {e : V}
     (C : CircuitThrough M e) {F : Finset V} (hF : M.IsBase (F : Set V))
     (hpart : F ∩ C.val = C.val.erase e) : C.val = circuitAt M F e := by
   apply coe_injective
