@@ -63,18 +63,17 @@ private theorem deviation_total {I T : Type*} [Fintype I] [Fintype T]
   omega
 
 private theorem deviation_bound {I T : Type*} [Fintype I] [Fintype T]
-    (p q : T → I → Bool) (weight : T → ℕ) (h C : ℕ)
+    (p q : T → I → Bool) (weight : T → ℕ) (h : ℕ) (C : I → ℕ)
     (total : ∑ x, weight x = 2 * h)
     (fairP : ∀ i, (∑ x, if p x i then weight x else 0) = h)
     (fairQ : ∀ i, (∑ x, if q x i then weight x else 0) = h)
     (differ : ∀ x, ∃ i, p x i ≠ q x i)
-    (bound : ∀ i, h - commonOne p q weight i ≤ C) :
-    h ≤ Fintype.card I * C := by
+    (bound : ∀ i, h - commonOne p q weight i ≤ C i) :
+    h ≤ ∑ i, C i := by
   calc
     h ≤ ∑ i, (h - commonOne p q weight i) :=
       deviation_total p q weight h total fairP fairQ differ
-    _ ≤ ∑ _ : I, C := sum_le_sum fun i _ => bound i
-    _ = _ := by simp
+    _ ≤ ∑ i : I, C i := sum_le_sum fun i _ => bound i
 
 private theorem allocate_under_caps {R C : Type*} [Fintype R] [Fintype C]
     (supply : R → ℕ) (caps : C → ℕ)
@@ -230,17 +229,17 @@ private theorem profile_card (n : ℕ) (t : ZMod 2) :
     Fintype.card (ParityClass (n + 2) t) = 2 ^ (n + 1) := by
   rw [Fintype.card_congr (tailEquiv (n + 1) t), Fintype.card_fun, Fintype.card_fin, ZMod.card]
 
-private theorem target_under_coordinate_caps (n M C : ℕ) (capacity : M ≤ (n + 2) * C) :
-    ∃ target : Fin (n + 2) → ℕ, (∑ i, target i) = M ∧ ∀ i, target i ≤ C := by
-  have fits : (∑ _ : Unit, M) ≤ ∑ _ : Fin (n + 2), C := by simpa using capacity
+private theorem target_under_coordinate_caps (n M : ℕ) (C : Fin (n + 2) → ℕ) (capacity : M ≤ ∑ i, C i) :
+    ∃ target : Fin (n + 2) → ℕ, (∑ i, target i) = M ∧ ∀ i, target i ≤ C i := by
+  have fits : (∑ _ : Unit, M) ≤ ∑ i : Fin (n + 2), C i := by simpa using capacity
   obtain ⟨w, sum, caps⟩ :=
-    allocate_under_caps (fun _ : Unit => M) (fun _ : Fin (n + 2) => C) fits
+    allocate_under_caps (fun _ : Unit => M) C fits
   exact ⟨w (), sum (), fun i => by simpa using caps i⟩
 
-private theorem matching_profile_counts (n k C : ℕ) (capacity : k * 2 ^ n ≤ (n + 2) * C) :
+private theorem matching_profile_counts (n k : ℕ) (C : Fin (n + 2) → ℕ) (capacity : k * 2 ^ n ≤ ∑ i, C i) :
     ∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
       (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
-      ∀ i : Fin (n + 2), (∑ p, ∑ q, if p.val i ≠ q.val i then w p q else 0) ≤ 2 * C := by
+      ∀ i : Fin (n + 2), (∑ p, ∑ q, if p.val i ≠ q.val i then w p q else 0) ≤ 2 * C i := by
   obtain ⟨target, total, caps⟩ := target_under_coordinate_caps n (k * 2 ^ n) C capacity
   obtain ⟨partner, direction, edges, counts⟩ := batch_matches n k target total
   refine ⟨edgeWeight partner, (edge_margins partner).1, (edge_margins partner).2, fun i => ?_⟩
@@ -285,11 +284,11 @@ private theorem coordinates_detect_difference {n : ℕ} (p : ParityClass (n + 2)
       rcases binary (x := q.val i) with hq | hq <;> simp_all
   exact zero_ne_one (p.property.symm.trans ((congrArg parity same).trans q.property))
 
-private theorem profile_cap_necessary (n k C : ℕ)
+private theorem profile_cap_necessary (n k : ℕ) (C : Fin (n + 2) → ℕ)
     (w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ)
     (rows : ∀ p, ∑ q, w p q = k) (cols : ∀ q, ∑ p, w p q = k)
-    (common : ∀ i, k * 2 ^ n - C ≤ commonOneCount w i) :
-    k * 2 ^ n ≤ (n + 2) * C := by
+    (common : ∀ i, k * 2 ^ n - C i ≤ commonOneCount w i) :
+    k * 2 ^ n ≤ ∑ i, C i := by
   classical
   let T := ParityClass (n + 2) 0 × ParityClass (n + 2) 1
   let p : T → Fin (n + 2) → Bool := fun a i => decide (a.1.val i = 1)
@@ -313,18 +312,18 @@ private theorem profile_cap_necessary (n k C : ℕ)
     unfold commonOne commonOneCount
     rw [Fintype.sum_prod_type]
     simp [p, q, weight]
-  have cap (i : Fin (n + 2)) : k * 2 ^ n - commonOne p q weight i ≤ C := by
+  have cap (i : Fin (n + 2)) : k * 2 ^ n - commonOne p q weight i ≤ C i := by
     have h := common i
     rw [typed]
     omega
   have h := deviation_bound p q weight (k * 2 ^ n) C total left right
     (fun a => coordinates_detect_difference a.1 a.2) cap
-  simpa only [Fintype.card_fin] using h
+  exact h
 
-private theorem profile_cap_sufficient (n k C : ℕ) (cap : k * 2 ^ n ≤ (n + 2) * C) :
+private theorem profile_cap_sufficient (n k : ℕ) (C : Fin (n + 2) → ℕ) (cap : k * 2 ^ n ≤ ∑ i, C i) :
     ∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
       (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
-      ∀ i, k * 2 ^ n - C ≤ commonOneCount w i := by
+      ∀ i, k * 2 ^ n - C i ≤ commonOneCount w i := by
   classical
   obtain ⟨w, rows, cols, mismatch⟩ := matching_profile_counts n k C cap
   refine ⟨w, rows, cols, ?_⟩
@@ -341,18 +340,19 @@ private theorem profile_cap_sufficient (n k C : ℕ) (cap : k * 2 ^ n ≤ (n + 2
   simp only [sum_add_distrib, ← mul_sum, (weighted_bit_totals n k w rows cols i).1,
     (weighted_bit_totals n k w rows cols i).2] at summed
   change k * 2 ^ n + k * 2 ^ n = 2 * commonOneCount w i + diff at summed
-  have diffBound : diff ≤ 2 * C := mismatch i
+  have diffBound : diff ≤ 2 * C i := mismatch i
   omega
 
-private theorem profile_threshold (n k C : ℕ) :
+private theorem profile_threshold (n k : ℕ) (C : Fin (n + 2) → ℕ) :
     (∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
       (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
-      ∀ i, k * 2 ^ n - C ≤ commonOneCount w i) ↔
-      k * 2 ^ n ≤ (n + 2) * C := by
+      ∀ i, k * 2 ^ n - C i ≤ commonOneCount w i) ↔
+      k * 2 ^ n ≤ ∑ i, C i := by
   constructor
   · rintro ⟨w, rows, cols, common⟩
     exact profile_cap_necessary n k C w rows cols common
   · exact profile_cap_sufficient n k C
+
 
 private def balancedCommonOneCount (n k : ℕ) : ℕ :=
   let M := k * 2 ^ n
@@ -386,17 +386,111 @@ theorem best_profile_count (n k : ℕ) (positive : 0 < k) :
     (ceiling_le M).mpr
       (by rw [Nat.add_mul]; omega)
   constructor
-  · exact (profile_threshold n k C).mpr
-      ((ceiling_le C).mp le_rfl)
+  · apply (profile_threshold n k (fun _ => C)).mpr
+    simpa using (ceiling_le C).mp le_rfl
   · intro w rows cols
     by_contra! bad
     have lower (i : Fin (n + 2)) : M - (C - 1) ≤ commonOneCount w i := by
       have hi := bad i
       change M - C < commonOneCount w i at hi
       omega
-    have tooSmall := profile_cap_necessary n k (C - 1) w rows cols lower
-    have h := (ceiling_le (C - 1)).mpr tooSmall
+    have tooSmall := profile_cap_necessary n k (fun _ => C - 1) w rows cols lower
+    have h := (ceiling_le (C - 1)).mpr (by simpa using tooSmall)
     change C ≤ C - 1 at h
     exact (Nat.not_le_of_lt (Nat.sub_lt positiveC Nat.one_pos)) h
+
+/-- A vector is a feasible floor when one coupling meets all its coordinate bounds. -/
+def FeasibleProfileFloor (n k : ℕ) (v : Fin (n + 2) → ℕ) : Prop :=
+  ∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
+    (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
+    ∀ i, v i ≤ commonOneCount w i
+
+private theorem common_le_marginal (n k : ℕ)
+    (w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ)
+    (rows : ∀ p, ∑ q, w p q = k) (cols : ∀ q, ∑ p, w p q = k) (i : Fin (n + 2)) :
+    commonOneCount w i ≤ k * 2 ^ n := by
+  rw [← (weighted_bit_totals n k w rows cols i).1]
+  unfold commonOneCount
+  apply sum_le_sum
+  intro p _
+  apply sum_le_sum
+  intro q _
+  split
+  · rename_i h
+    simp [h.1]
+  · exact Nat.zero_le _
+
+private theorem feasible_floor_iff (n k : ℕ) (v : Fin (n + 2) → ℕ) :
+    FeasibleProfileFloor n k v ↔
+      (∀ i, v i ≤ k * 2 ^ n) ∧ k * 2 ^ n ≤ ∑ i, (k * 2 ^ n - v i) := by
+  constructor
+  · rintro ⟨w, rows, cols, bounds⟩
+    have bounded (i : Fin (n + 2)) : v i ≤ k * 2 ^ n :=
+      (bounds i).trans (common_le_marginal n k w rows cols i)
+    refine ⟨bounded, ?_⟩
+    apply (profile_threshold n k (fun i => k * 2 ^ n - v i)).1
+    refine ⟨w, rows, cols, fun i => ?_⟩
+    rw [Nat.sub_sub_self (bounded i)]
+    exact bounds i
+  · rintro ⟨bounded, cap⟩
+    obtain ⟨w, rows, cols, bounds⟩ := (profile_threshold n k (fun i => k * 2 ^ n - v i)).2 cap
+    refine ⟨w, rows, cols, fun i => ?_⟩
+    have h := bounds i
+    change k * 2 ^ n - (k * 2 ^ n - v i) ≤ commonOneCount w i at h
+    rwa [Nat.sub_sub_self (bounded i)] at h
+
+/-- A profile count vector with the full coordinate sum allowed by opposite parity. -/
+def ProfileBoundary (n k : ℕ) (v : Fin (n + 2) → ℕ) : Prop :=
+  (∀ i, v i ≤ k * 2 ^ n) ∧ ∑ i, (k * 2 ^ n - v i) = k * 2 ^ n
+
+/-- A feasible floor is dominated by a vector on the profile boundary. -/
+theorem profile_floor_dominated {n k : ℕ} {v : Fin (n + 2) → ℕ}
+    (h : FeasibleProfileFloor n k v) :
+    ∃ u, ProfileBoundary n k u ∧ ∀ i, v i ≤ u i := by
+  let M := k * 2 ^ n
+  obtain ⟨bounded, capacity⟩ := (feasible_floor_iff n k v).1 h
+  change M ≤ ∑ i, (M - v i) at capacity
+  obtain ⟨a, total, caps⟩ := target_under_coordinate_caps n M (fun i => M - v i) capacity
+  let u (i : Fin (n + 2)) := M - a i
+  have aLe (i : Fin (n + 2)) : a i ≤ M := (caps i).trans (Nat.sub_le _ _)
+  refine ⟨u, ⟨fun _ => Nat.sub_le _ _, ?_⟩, fun i => ?_⟩
+  · change (∑ i, (M - (M - a i))) = M
+    simpa only [Nat.sub_sub_self (aLe _)] using total
+  · have hi := bounded i
+    have ai := caps i
+    change v i ≤ M at hi
+    change a i ≤ M - v i at ai
+    change v i ≤ M - a i
+    omega
+
+/-- The maximal feasible floors are exactly the profile boundary vectors. -/
+theorem exact_profile_frontier (n k : ℕ) (v : Fin (n + 2) → ℕ) :
+    (FeasibleProfileFloor n k v ∧
+      ∀ u, FeasibleProfileFloor n k u → (∀ i, v i ≤ u i) → u = v) ↔
+    ProfileBoundary n k v := by
+  let M := k * 2 ^ n
+  constructor
+  · rintro ⟨feasible, maximal⟩
+    obtain ⟨u, boundary, dominates⟩ := profile_floor_dominated feasible
+    have eq := maximal u ((feasible_floor_iff n k u).2 ⟨boundary.1, boundary.2.ge⟩) dominates
+    simpa only [eq] using boundary
+  · rintro ⟨bounded, equality⟩
+    refine ⟨(feasible_floor_iff n k v).2 ⟨bounded, equality.ge⟩, ?_⟩
+    intro u feasible dominates
+    apply funext
+    intro i
+    by_contra! neq
+    have strict : v i < u i := lt_of_le_of_ne (dominates i) (Ne.symm neq)
+    obtain ⟨uBound, uCapacity⟩ := (feasible_floor_iff n k u).1 feasible
+    have less : M - u i < M - v i := by
+      have hu := uBound i
+      have hv := bounded i
+      change u i ≤ M at hu
+      change v i ≤ M at hv
+      omega
+    have totalLess : (∑ j, (M - u j)) < ∑ j, (M - v j) :=
+      sum_lt_sum (fun j _ => Nat.sub_le_sub_left (dominates j) M) ⟨i, mem_univ i, less⟩
+    exact (Nat.not_lt_of_ge (equality.le.trans uCapacity)) totalLess
+
 
 end D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching
