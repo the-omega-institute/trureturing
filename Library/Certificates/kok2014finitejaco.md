@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.1404.0484
 claim: Theorem 2.10 (Conjectured) gives a two-branch maximum-total-degree addition law for all distinct orders at least three.
 strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation
+  - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -53,3 +54,17 @@ successfully inspected sources. MathDB live contents, complete citation
 enumeration, the special issue *Reflections on Jaco Graphs*, the named
 domination research note and unindexed sources remain coverage gaps. No
 worldwide openness, first computation, or publication-priority claim follows.
+
+## Corrected addition law
+
+The repository's corrected law is not stated in the source. Write phi for
+the golden ratio, frac(n) for the fractional part of (n+2)/phi and
+alpha=sqrt(5)-2. For every finite family of natural orders with r members
+and total N, Delta(N) minus the sum of the members' maximum degrees
+equals floor(sum frac(n_j)-(r-1)alpha). For two summands the correction is
+-1, 0 or 1 according to the position of frac(n)+frac(m) relative to alpha
+and 1+alpha, attained at the orders (3,11), (3,4) and (4,6). The maximum-degree
+formula floor((n+2)/phi)-1 that it rests on appears as Theorem 4.8 of Raso and
+Kok, [arXiv:2611.01554v1](https://arxiv.org/abs/2611.01554v1), whose readable
+text contains no addition law. A bounded web search found no published
+statement of the corrected law; no worldwide priority claim follows.
