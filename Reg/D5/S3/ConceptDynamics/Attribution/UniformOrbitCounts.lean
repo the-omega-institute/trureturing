@@ -211,12 +211,12 @@ def fiberRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 set_option linter.checkUnivs false in
 abbrev degreeEventSignature : Signature where
-  Params := Type w × Type v
-  State p := p.1 → Finset p.2
+  Params := Σ _ : Type v, Type w
+  State p := p.2 → Finset p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.1 → Finset p.2
+  Output _ p := p.2 → Finset p.1
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -239,7 +239,7 @@ abbrev degreeEventArena : Arena where
           (∀ (g : G) s, f (g • s) = g • f s) ∧
           (∀ (H : Subgroup G) s, (∀ h : H, (h : G) • s = s) ↔
             ∀ h : H, (h : G) • f s = f s) ∧
-          ∀ i, ((∑ s : S, if f s ∈ R.readout () ⟨I,T⟩ E i then (1 : ℕ) else 0) : ℤ) =
+          ∀ i, ((∑ s : S, if f s ∈ R.readout () ⟨T, I⟩ E i then (1 : ℕ) else 0) : ℤ) =
             (k : ℤ) * w i
 
 private theorem empty_degree_event_fails : ¬ degreeEventArena.{u,v,w}.Law degreeEventEmpty := by
@@ -270,7 +270,7 @@ private theorem empty_degree_event_fails : ¬ degreeEventArena.{u,v,w}.Law degre
   obtain ⟨S, _, _, f, _, _, counts⟩ :=
     (law (G := G) (T := T) (I := I) (fun _ => univ) (fun _ => 1) 1).mp feasible
   have impossible := counts PUnit.unit
-  have empty : degreeEventEmpty.readout () ⟨I,T⟩ (fun _ => univ) PUnit.unit = ∅ := rfl
+  have empty : degreeEventEmpty.readout () ⟨T, I⟩ (fun _ => univ) PUnit.unit = ∅ := rfl
   rw [empty] at impossible
   simp at impossible
 
@@ -289,7 +289,7 @@ def degreeEventFamily : Registration degreeEventArena.{u,v,w}
       exact nomatch anchor
   dependence := by
     intro _
-    refine ⟨⟨PUnit.{w+1}, PUnit.{v+1}⟩, fun _ => ∅, fun _ => {PUnit.unit}, ?_⟩
+    refine ⟨⟨PUnit.{v+1}, PUnit.{w+1}⟩, fun _ => ∅, fun _ => {PUnit.unit}, ?_⟩
     intro equal
     have events := congrFun equal PUnit.unit
     change (∅ : Finset PUnit.{v+1}) = {PUnit.unit} at events
@@ -316,20 +316,12 @@ def degreeEventRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts
     definition := none
-    coordinates := #[1]
+    coordinates := #[1, 2]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
           "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
           "arg", "body", "fn", "arg", "arg", "body", "fn", "fn", "fn", "arg",
           "fn", "arg", "fn"]
-        stateBinder := 7
-        functionOperand := false
-        stateOperand := none
-        booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-          "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
-          "arg", "body", "fn", "arg", "arg", "body", "fn", "fn", "arg", "arg",
-          "fn"]
         stateBinder := 7
         functionOperand := false
         stateOperand := none

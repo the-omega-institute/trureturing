@@ -222,13 +222,6 @@ def copyEventRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
         stateBinder := 11
         functionOperand := false
         stateOperand := none
-        booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body",
-          "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg",
-          "arg", "body", "fn", "fn", "arg", "arg", "fn"]
-        stateBinder := 11
-        functionOperand := false
-        stateOperand := none
         booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
