@@ -28,15 +28,18 @@ internal sealed class CircuitCycleDecompositionDocument : IScribeDocumentDefinit
                         + "basis T the forward map reads the original coefficient at the union of "
                         + "T and A, multiplied by the insertion sign of e at A and the shuffle "
                         + "sign of A followed by T. The coefficient is zero away from contracted "
-                        + "bases. The inverse sums the oriented joins of the simplex boundary "
-                        + "of each circuit and its contracted cycle.")),
+                        + "bases. The inverse sums the joins of the augmented circuit boundaries "
+                        + "with their contracted cycles. At an ambient face, take the circuit "
+                        + "vertices first and the outside vertices second, sorting their "
+                        + "concatenation with its permutation sign.")),
                     Paragraph(Text(
-                        "At a ridge disjoint from the circuit, the two boundary sums compare "
-                        + "term by term. The insertion of e has zero original coefficient because "
-                        + "it contains the circuit. The remaining insertion signs differ by the "
-                        + "same signed shuffle factor throughout the sum. This proves the contracted "
-                        + "cycle equation. The augmented join boundary rule gives the converse "
-                        + "cycle construction.")),
+                        "At a ridge disjoint from the circuit, the boundary of the signed "
+                        + "restriction equals the original boundary at its union with A, times "
+                        + "the insertion sign of e at A, the shuffle sign of A followed by the "
+                        + "ridge, and minus one to the size of A. Inserting e contributes zero "
+                        + "because the extended face contains the circuit. At a ridge meeting "
+                        + "the circuit, every extension lies outside the contracted base support. "
+                        + "The augmented join boundary rule gives the converse cycle construction.")),
                     Paragraph(Text(
                         "Each basis omitting e determines its summand by the unique fundamental "
                         + "circuit in the basis with e adjoined. On these bases the two signed "
