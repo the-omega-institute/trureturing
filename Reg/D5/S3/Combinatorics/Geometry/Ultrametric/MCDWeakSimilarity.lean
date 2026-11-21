@@ -13,7 +13,7 @@ set_option autoImplicit false
 noncomputable section
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ∞) (fun _ => ℕ∞ → Prop)
 
 def actual : Realization signature :=
   realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
@@ -30,7 +30,7 @@ abbrev arena : Arena where
       Nat.card X = 2 ^ ((center X).ncard - 1) → Nat.card Y = 2 ^ ((center Y).ncard - 1) →
       Nat.card X = Nat.card Y → WeaklySimilar X Y) ∧
     (∀ {X Y : Type} [MetricSpace X] [MetricSpace Y],
-      WeaklySimilar X Y → Q.readout () () (center X).ncard (center Y).ncard) ∧
+      WeaklySimilar X Y → Q.readout () () (center X).encard (center Y).encard) ∧
     (∀ {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X]
       [MetricSpace Y] [IsUltrametricDist Y] [Finite Y] (h : ℕ),
       Nat.card X = 2 ^ h → Nat.card Y = 2 ^ h → (center X).ncard = h + 1 →
@@ -43,8 +43,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 1, 0, ?_⟩
   intro h
-  have hh := congrFun h (0 : ℕ)
-  norm_num [actual, realize] at hh
+  have hh := congrFun h (0 : ℕ∞)
+  simp [actual, realize] at hh
 
 def family : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Geometry.Ultrametric.MCDWeakSimilarity.result))

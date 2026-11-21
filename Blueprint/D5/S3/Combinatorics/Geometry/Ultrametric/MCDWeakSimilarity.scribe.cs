@@ -31,10 +31,15 @@ internal sealed class MCDWeakSimilarityDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Two finite ultrametric spaces X and Y with |X| = 2^(|C(X)| - 1), "
                         + "|Y| = 2^(|C(Y)| - 1) and |X| = |Y| are weakly similar. Every weak "
-                        + "similarity of metric spaces preserves the number of central distances. "
+                        + "similarity of metric spaces preserves the number of central distances, finite or "
+                        + "infinite. "
                         + "Hence, for finite ultrametric spaces with |X| = |Y| = 2^h and "
                         + "|C(X)| = h + 1, |C(Y)| = h + 1 exactly when X and Y are weakly similar. "
-                        + "This is Conjecture 4.2 of O. Dovgoshey and O. Rovenska.")),
+                        + "This is Conjecture 4.2 of O. Dovgoshey and O. Rovenska. The paper "
+                        + "arXiv:2609.11384 of Dovgoshey, Jaiswal, Kainth, Kaur and Rovenska proves "
+                        + "their companion Conjecture 4.3 and classifies the representing trees of "
+                        + "minimum-order spaces (Theorem 4.1) but does not state Conjecture 4.2; the "
+                        + "proof here is direct.")),
                     Paragraph(Text(
                         "On a minimum-order space every distance is central, and the two open "
                         + "balls below the diameter around points at the diameter are "

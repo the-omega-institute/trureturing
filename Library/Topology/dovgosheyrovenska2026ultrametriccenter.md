@@ -74,4 +74,5 @@ arXiv:2609.11384v1, pp. 23-25.
 Definition 4.1 (p. 19): a bijection Φ : X → Y is a weak similarity if there is a strictly
 increasing f : D(Y) → D(X) with d(x, y) = f(ρ(Φ(x), Φ(y))) for all x, y in X. Conjecture 4.2
 (p. 20): if |X| = |Y| = 2^n and |C(X)| = n + 1, then |C(Y)| = |C(X)| holds exactly when X and Y
-are weakly similar.
+are weakly similar. arXiv:2609.11384v1 classifies the representing trees of minimum-order spaces
+(Theorem 4.1) and proves Conjecture 4.3, but does not state Conjecture 4.2.

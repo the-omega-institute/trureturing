@@ -37,7 +37,7 @@ import D5.S3.Combinatorics.Geometry.Ultrametric.MCDIsometry
 A weak similarity between metric spaces `X` and `Y` is a bijection `Φ` together with a function
 `f`, strictly increasing on the distances of `Y`, such that `d(x, y) = f (ρ(Φ x, Φ y))`. Two finite
 ultrametric spaces of minimum order `2^(|C| - 1)` with equally many points are weakly similar, and
-a weak similarity preserves `|C|`. Hence, for `|X| = |Y| = 2^h` and `|C(X)| = h + 1`,
+a weak similarity preserves `|C|`, finite or infinite. Hence, for `|X| = |Y| = 2^h` and `|C(X)| = h + 1`,
 `|C(Y)| = h + 1` exactly when `X` and `Y` are weakly similar.
 -/
 
@@ -209,7 +209,7 @@ private theorem sim (n : ℕ) : ∀ (X Y : Type) [MetricSpace X] [IsUltrametricD
 /-- On a nonempty target, a weak similarity carries the center bijectively onto the center. -/
 private theorem center_ncard_aux {X Y : Type} [MetricSpace X] [MetricSpace Y] (Φ : X ≃ Y)
     (f : ℝ → ℝ) (hf : StrictMonoOn f (distances Y)) (hd : ∀ x y : X, dist x y = f (dist (Φ x) (Φ y)))
-    (q0 : Y) : (center X).ncard = (center Y).ncard := by
+    (q0 : Y) : (center X).encard = (center Y).encard := by
   have hCD : center Y ⊆ distances Y := fun t ht => by
     obtain ⟨y, hy⟩ := ht.2 q0
     exact ⟨y, q0, hy⟩
@@ -234,11 +234,11 @@ private theorem center_ncard_aux {X Y : Type} [MetricSpace X] [MetricSpace Y] (�
         refine ⟨Φ.symm y, ?_⟩
         rw [hd, Φ.apply_symm_apply, hy]
   rw [heq]
-  exact (hf.injOn.mono hCD).ncard_image
+  exact (hf.injOn.mono hCD).encard_image
 
-/-- A weak similarity preserves the number of central distances. -/
+/-- A weak similarity preserves the number of central distances, finite or infinite. -/
 private theorem center_ncard {X Y : Type} [MetricSpace X] [MetricSpace Y]
-    (h : WeaklySimilar X Y) : (center X).ncard = (center Y).ncard := by
+    (h : WeaklySimilar X Y) : (center X).encard = (center Y).encard := by
   obtain ⟨Φ, f, hf, hd⟩ := h
   rcases isEmpty_or_nonempty Y with hY | hY
   · have hX : IsEmpty X := Φ.isEmpty
@@ -318,7 +318,8 @@ private theorem weak_of_mcd {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [
 
 /-- Weak similarity of minimum-order ultrametric spaces (Dovgoshey–Rovenska, Conjecture 4.2):
 two finite ultrametric spaces of minimum order `2^(|C| - 1)` with equally many points are weakly
-similar; weak similarity of metric spaces preserves the number of central distances; hence if
+similar; weak similarity of metric spaces preserves the number of central distances, finite or
+infinite; hence if
 `|X| = |Y| = 2^h` and `|C(X)| = h + 1`, then `|C(Y)| = h + 1` exactly when `X` and `Y` are weakly
 similar. -/
 theorem result :
@@ -327,7 +328,7 @@ theorem result :
       Nat.card X = 2 ^ ((center X).ncard - 1) → Nat.card Y = 2 ^ ((center Y).ncard - 1) →
       Nat.card X = Nat.card Y → WeaklySimilar X Y) ∧
     (∀ {X Y : Type} [MetricSpace X] [MetricSpace Y],
-      WeaklySimilar X Y → (center X).ncard = (center Y).ncard) ∧
+      WeaklySimilar X Y → (center X).encard = (center Y).encard) ∧
     (∀ {X Y : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X]
       [MetricSpace Y] [IsUltrametricDist Y] [Finite Y] (h : ℕ),
       Nat.card X = 2 ^ h → Nat.card Y = 2 ^ h → (center X).ncard = h + 1 →
@@ -339,7 +340,7 @@ theorem result :
     exact weak_of_mcd (by rw [hX, hC, Nat.add_sub_cancel]) (by rw [hY, hCY, Nat.add_sub_cancel])
       (by rw [hX, hY])
   · intro hW
-    rw [← center_ncard hW, hC]
+    rw [Set.ncard_def, ← center_ncard hW, ← Set.ncard_def, hC]
 
 
 end D5.S3.Combinatorics.Geometry.Ultrametric.MCDWeakSimilarity
