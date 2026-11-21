@@ -477,7 +477,7 @@ truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰
 | --- | --- |
 | PR 和 push 的 required CI | 准入与检查消费者；`current` 计算累计限时 120 分钟（2 小时），FILEMAP 作业默认同为 120 分钟计算预算；两者外层 job 平台挂钟上限为 360 分钟。缓存与工具依赖下载准备不扣计算预算。按 `CI_UNITS` 执行命中的检查和测试，恢复种子后由 Lake 原生增量补齐。 |
 | 独立长 Actions producer | 受保护 dev 的非删除 push 和已校验的手动构建使用 `.github/actions/lean-cache-produce/action.yml`，限时 360 分钟；构建完整可用种子及所需原生程序、测试可执行文件和编译夹具，并按上文 Native executable boundary 完成报告所需的依赖范围 FIB 回归；其它测试仍由短 CI 命中单元执行。完整指产物齐备，不要求强制 clean；有效 Lake traces 仍可复用。 |
-| Actions producer 并发 | 全部受保护 ref 的 Actions producer 与定时、手动 Lean Release 发布共用 `lean-cache-producer` 并发组。集成分支的 Lean Release 验证使用 `lean-cache-publication-verification` 并发组。两组各自按 `queue: max` 排队。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
+| Actions producer 并发 | 全部受保护 ref 的 Actions producer 与定时、手动 Lean Release 发布共用 `lean-cache-producer` 并发组。集成分支使用 `lean-cache-publication-verification` 排队验证 Release。带 `volume_test_id` 的跨版物理卷验证写入独立标签空间，统一进入 `lean-cache-volume-publication-verification`，使物理卷发布与回收串行。各组使用 `queue: max`。同一 ref 的自动刷新在 workflow 层仅保留运行中的刷新和最新的等待刷新。每次手动或定时运行有独立 workflow 并发组。 |
 | GitHub Actions Cache | 按 ref 可见性运输 project、dependency、elan 与 judge 编译产物；命中只提供构建起点，不是报告读取成功或检查通过。 |
 | GitHub Release cache | 发布不含 mathlib 等 `.lake/packages` 依赖的项目 buildDir 种子；有独立 manifest、资产校验和恢复入口，与 Actions Cache、上文 truth release bundle 分责。 |
 
@@ -558,7 +558,7 @@ GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev pu
 
 启用索引的分支从钉版 dev 历史生成按导入与历史共变分组的项目布局。普通 PR 和 push 共用受影响目标计划选取分片，Lake 补齐其余所需工件。独立的受保护缓存生产作业校验完整报告、确认全部所需数据后，写本次 run/attempt 的完整索引。内容未变的分片沿用已有条目，完整索引仍按本次事件发布。索引及数据必须能在其保护 ref 确认。
 
-Release 独立验证源码身份和完整报告。自动发布优先使用已具备完整载荷的 Actions 种子；若无，则选择同一发布范围内兼容的祖先 Release，按 tag、producer SHA 和清单摘要安装。Lake 对当前固定提交补编，报告照常核验。没有兼容种子时，普通 ARM64 runner 先编译共享 import，再由四个作业编译独占模块，汇合后以 `lake --no-build` 检查。集成分支可以指定 `release` 检验严格较早提交的播种，或指定 `parallel` 检验冷编。启用索引 Release 时，完整快照按压缩字节分卷，模块、导入闭包、资产区间及摘要登记在索引中。完整恢复核验整份快照，定向恢复按目标闭包和已登记资产区间取回。受保护集成分支的冷验证使用不可变检查点。同一提交、分支、仓库与模式的后续 run 可以显式接续，归档和各分片在安装之前分别校验。
+Release 独立验证源码身份和完整报告。自动发布优先使用已具备完整载荷的 Actions 种子；若无，则选择同一发布范围内兼容的祖先 Release，按 tag、producer SHA 和清单摘要安装。Lake 对当前固定提交补编，报告照常核验。没有兼容种子时，普通 ARM64 runner 先编译共享 import，再由四个作业编译独占模块，汇合后以 `lake --no-build` 检查。集成分支可以指定 `release` 检验严格较早提交的播种，或指定 `parallel` 检验冷编。启用索引 Release 时，完整快照按压缩字节分卷，模块、导入闭包、资产区间及摘要登记在索引中。完整恢复核验整份快照，定向恢复按目标闭包和已登记资产区间取回。在已启用索引的发布端，将 `LEAN_CACHE_RELEASE_VOLUMES_REF` 设为 `dev` 可启用跨版物理卷复用。新标签发布完整逻辑清单与索引，索引记录成员所在的不可变物理卷和字节区间。新旧标签可直接引用同一卷。只有所有存活快照均已解除引用的卷可被回收。受保护的集成发布可用同一 `volume_test_id` 验证一对快照，并在恢复前退役本对测试的旧标签。受保护集成分支的冷验证使用不可变检查点。同一提交、分支、仓库与模式的后续 run 可以显式接续，归档和各分片在安装之前分别校验。
 
 **键、格式及归属。** 以下标识分别承担各自契约，报告格式与容器/manifest 代际不得混用：
 

@@ -10,6 +10,12 @@ on:
         type: choice
         options: [complete, partial, none, legacy, auto, release, parallel]
         required: true
+      volume_test_id:
+        description: Shared identifier for two verification snapshots using reusable physical volumes
+        type: string
+      retire_volume_tag:
+        description: Optional previous snapshot from this verification pair to retire before recovery
+        type: string
       checkpoint_run:
         description: Optional earlier checkpoint run for the same commit and cold mode
         type: string
@@ -53,7 +59,8 @@ jobs:
       contents: write
       actions: read
     concurrency:
-      group: lean-cache-publication-verification
+      # Serialize v6 publication and retirement while the independent v5 queue runs.
+      group: ${{ inputs.volume_test_id != '' && 'lean-cache-volume-publication-verification' || 'lean-cache-publication-verification' }}
       queue: max
       cancel-in-progress: false
     env:
@@ -124,7 +131,10 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         env:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
+          VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+          RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
         run: |
+          [[ -z "$RETIRE_VOLUME_TAG" || -n "$VOLUME_TEST_ID" ]]
           case "$SHARD_HANDOFF" in
             release|parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
@@ -182,14 +192,63 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
+          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+          LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
           bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
           tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
-          [[ "$tag" == lean-cache-verify-v2-* ]]
+          if [[ "$LEAN_CACHE_RELEASE_VOLUMES" == 1 ]]; then
+            [[ "$tag" == lean-cache-verify-v3-* ]]
+            upload="$(sed -n 's/^LEAN_CACHE_VOLUME-UPLOAD //p' "$receipt" | jq -ec 'select(.status == "saved")')"
+            jq '{new_volumes, payload_bytes, reused_bytes, peak_staged_payload_bytes, compacted}' <<< "$upload"
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+              | jq -e '[.assets[] | {name, size}] | select(map(.name) | sort == ["index.json.gz", "manifest.json"]) |
+                       {metadata_bytes: (map(.size) | add), assets: .}'
+            if [[ -n "$LEAN_CACHE_VOLUME_RETIRE_TAG" ]]; then
+              jq -e '(.payload_bytes | type == "number" and . >= 0) and .reused_bytes > 0' <<< "$upload"
+              sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$receipt" |
+                jq -e --arg previous "$LEAN_CACHE_VOLUME_RETIRE_TAG" --arg current "$tag" \
+                  --arg ref "$GITHUB_REF" --arg test "$LEAN_CACHE_VOLUME_TEST_ID" \
+                  'select(.tag == $previous and .retained_tag == $current and .source_ref == $ref and .test_id == $test)'
+            fi
+          else
+            [[ "$tag" == lean-cache-verify-v2-* ]]
+          fi
           echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Recheck retirement from the published successor manifest
+        if: steps.publish.outputs.indexed_tag != '' && inputs.retire_volume_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ steps.publish.outputs.indexed_tag }}
+          PREVIOUS_TAG: ${{ inputs.retire_volume_tag }}
+          TEST_ID: ${{ inputs.volume_test_id }}
+        run: |
+          set -o pipefail
+          gh release download "$CURRENT_TAG" --repo "$GITHUB_REPOSITORY" --pattern manifest.json --dir "$RUNNER_TEMP/retirement"
+          PYTHONPATH=tools/scripts/worktree python3 - <<'PYTHON' | tee "$RUNNER_TEMP/retirement/retry.log"
+          import json
+          import os
+          from pathlib import Path
+          import lean_cache_release as release
+          import lean_release_volume_remote as volumes
+
+          env = os.environ
+          current = json.loads((Path(env["RUNNER_TEMP"]) / "retirement/manifest.json").read_bytes())
+          expected = {"schema": "lean-release-seed-v6", "source_ref": env["GITHUB_REF"],
+                      "producer_commit_sha": env["GITHUB_SHA"], "volume_test_id": env["TEST_ID"],
+                      "workflow_run_id": env["GITHUB_RUN_ID"], "workflow_run_attempt": env["GITHUB_RUN_ATTEMPT"]}
+          if any(current.get(key) != value for key, value in expected.items()):
+              raise ValueError("successor manifest differs from this verification publication")
+          volumes.retire_verification(release, current["partition"], current["cache_key"], env["CURRENT_TAG"],
+                                      current, env["PREVIOUS_TAG"], release.operation_deadline())
+          PYTHON
+          sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$RUNNER_TEMP/retirement/retry.log" |
+            jq -e -s --arg old "$PREVIOUS_TAG" --arg new "$CURRENT_TAG" \
+              'length == 1 and (.[0] | .status == "already-retired" and .tag == $old and .retained_tag == $new and .reclaimed_payload_bytes == 0)'
 
   indexed-consumer:
     name: Verify indexed Release recovery in a clean checkout
@@ -209,6 +268,7 @@ jobs:
       LEAN_CACHE_SOURCE_COMMIT: ${{ github.sha }}
       LEAN_CACHE_MODE: candidate
       RESTORE: ${{ matrix.restore }}
+      RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -217,6 +277,16 @@ jobs:
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Confirm that the previous test snapshot was retired
+        if: env.RETIRE_VOLUME_TAG != ''
+        run: |
+          for resource in "releases/tags" "git/ref/tags"; do
+            if gh api "repos/$GITHUB_REPOSITORY/$resource/$RETIRE_VOLUME_TAG" > "$RUNNER_TEMP/prior-tag.json"; then
+              echo "Previous test tag is still present in $resource" >&2
+              exit 1
+            fi
+            jq -e '.status == "404"' "$RUNNER_TEMP/prior-tag.json"
+          done
       - name: Restore from Release assets
         run: |
           test ! -e .lake/build
