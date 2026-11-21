@@ -44,13 +44,13 @@ open private columns columns_apply columns_isometry supportedFunction supportedF
   mode outputProduct outputProduct_sum exp_ratio boundary_scalar upper rowFactor rowFactor_gram
   lift lift_mul lift_conjTranspose compression sourceAmplitude sourceAmplitude_unit completed
   physicalFactor complementaryAmplitude dilationColumns phaseMatrix dilationColumns_isometry
-  phase_unitary physicalFactor_unitTrace complete_gram Us upperIntegral_le_loss
-  sourceBlock frobenius_sq_trace exists_retainedFirst_stinespring from
+  phase_unitary physicalFactor_unitTrace Us upperIntegral_le_loss
+  frobenius_sq_trace exists_retainedFirst_stinespring from
   D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
 open private modularPower_add modularPower_zero from D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
 open private integral_petzWeight_mul_cos integrable_petzWeight_mul_cos integrable_petzWeight
   integral_petzWeight from D5.S3.Analytic.PetzStripFiniteSeries
-open private mode star_mode_mul norm_mode from D5.S3.Analytic.PetzLogisticEvaluation
+open private PetzLogisticEvaluation.mode star_mode_mul norm_mode from D5.S3.Analytic.PetzLogisticEvaluation
 
 namespace D5.S3.Quantum.Recovery.PetzModularFrequencyQuantization
 
@@ -263,6 +263,46 @@ private theorem completedWithCoefficients_pair (M : SupportedRelativeModularMode
   rw [completedWithCoefficients, completedWithCoefficients, completion_pair M W hW hAction,
     retainedFactor_pair]
 
+private theorem spectralMass_sum (M : SupportedRelativeModularModel Φ ρ σ)
+    (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X) :
+    (∑ k : M.data.L × M.data.K, spectralMass M.data k) = 1 := by
+  let D := M.data
+  have hexact : retainedFactor D (fun _ => 1) = outputProduct D (upper 0) := by
+    simpa only [scalarPhase, PetzLogisticEvaluation.mode, mul_zero, Complex.ofReal_zero,
+      zero_mul, Complex.exp_zero] using retainedFactor_exact D 0
+  have h := retainedFactor_pair D (fun _ => 1) (fun _ => 1)
+  simp only [hexact, star_one, mul_one] at h
+  have hphysical := completion_pair M W hW hAction 0 (outputProduct D (upper 0))
+    (outputProduct D (upper 0))
+  have htrace := physicalFactor_unitTrace W M hAction 0
+  let K := physicalFactor D W 0
+  let C := completionColumns D W 0
+  have hC : C * Cᴴ = 1 := completionColumns_coisometry D W hW 0
+  have hgram : (K * C) * (K * C)ᴴ = K * Kᴴ := by
+    simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc C Cᴴ Kᴴ,
+      hC, Matrix.one_mul]
+  change ((K * C) * (K * C)ᴴ).trace = _ at hphysical
+  rw [hgram] at hphysical
+  have hreal := congrArg Complex.re (hphysical.trans h)
+  simp only [Complex.re_sum, Complex.ofReal_re] at hreal
+  exact hreal.symm.trans htrace
+
+private theorem quantizedCompleted_unit (M : SupportedRelativeModularModel Φ ρ σ)
+    (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
+    (assign : ℝ → ℝ) (t : ℝ) : ‖quantizedCompleted M.data W assign t‖ = 1 := by
+  let D := M.data
+  let f (k : D.L × D.K) := scalarPhase (assign (retainedLogFrequency D k)) t
+  have hsq : ‖quantizedCompleted D W assign t‖ ^ 2 = 1 := by
+    rw [quantizedCompleted, frobenius_sq_trace, completedWithCoefficients_pair M W hW hAction,
+      Complex.re_sum]
+    change (∑ k : D.L × D.K, (((spectralMass D k : ℂ) * f k) * star (f k)).re) = 1
+    simp only [mul_assoc, Complex.star_def, Complex.mul_conj', f, norm_mode, one_pow,
+      mul_one, Complex.ofReal_re]
+    exact spectralMass_sum M W hW hAction
+  nlinarith only [hsq, norm_nonneg (quantizedCompleted D W assign t)]
+
 private theorem completedWithCoefficients_sub (W : Matrix (b × e) a ℂ) (t : ℝ)
     (f g : D.L × D.K → ℂ) :
     completedWithCoefficients D W t (fun k => f k - g k) =
@@ -280,7 +320,7 @@ private theorem completedWithCoefficients_sub (W : Matrix (b × e) a ℂ) (t : �
 
 private theorem phase_sub_sq (x y t : ℝ) :
     ‖scalarPhase x t - scalarPhase y t‖ ^ 2 = 2 * (1 - Real.cos ((x - y) * t)) := by
-  rw [norm_sub_sq (𝕜 := ℂ)]
+  rw [norm_sub_sq (𝕜 := ℂ), RCLike.inner_apply']
   change ‖scalarPhase x t‖ ^ 2 - 2 *
     (star (scalarPhase x t) * scalarPhase y t).re + ‖scalarPhase y t‖ ^ 2 = _
   rw [norm_mode, norm_mode, star_mode_mul]
@@ -347,5 +387,305 @@ theorem exact_phase_discrepancy (M : SupportedRelativeModularModel Φ ρ σ)
     simpa only [mul_left_comm (petzWeight _) (spectralMass M.data k)] using
       (integral_phase_cost (retainedLogFrequency M.data k -
         assign (retainedLogFrequency M.data k))).1.const_mul (spectralMass M.data k)
+
+private def columnShift : D.I ⊕ (b × e) → ℝ
+  | .inl i => -Real.log (D.ri i)
+  | .inr _ => 0
+
+private theorem scalarPhase_add (x y t : ℝ) :
+    scalarPhase (x + y) t = scalarPhase x t * scalarPhase y t := by
+  simp only [scalarPhase, PetzLogisticEvaluation.mode, add_mul, Complex.ofReal_add, add_mul,
+    Complex.exp_add]
+
+private theorem completionColumns_phase (W : Matrix (b × e) a ℂ) (t : ℝ) :
+    completionColumns D W t = completionColumns D W 0 *
+      diagonal (fun c => scalarPhase (columnShift D c) t) := by
+  have h0 : phaseMatrix D 0 = 1 := by
+    simp [phaseMatrix, modularPower_zero]
+  ext x (i | c)
+  · simp only [completionColumns, Matrix.mul_diagonal, fromCols_apply_inl, h0,
+      Matrix.mul_one, phaseMatrix, modularPower, columnShift, scalarPhase,
+      PetzLogisticEvaluation.mode, Complex.ofReal_neg, Complex.ofReal_mul]
+    congr 2
+    ring
+  · simp [completionColumns, columnShift, scalarPhase, PetzLogisticEvaluation.mode]
+
+private theorem rowFactor_phase (t : ℝ) :
+    rowFactor D (upper t) =
+      diagonal (fun j => scalarPhase (Real.log (D.sj j)) t) * rowFactor D ½ := by
+  have hdiag : modularPower D.sj (phase t) =
+      diagonal (fun j => scalarPhase (Real.log (D.sj j)) t) := by
+    simp only [modularPower, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_mul,
+      mul_assoc]
+  rw [rowFactor, show upper t = phase t + ½ by exact add_comm _ _,
+    modularPower_add, hdiag, Matrix.mul_assoc]
+  rfl
+
+private def endpointCoefficient (W : Matrix (b × e) a ℂ) (k : D.L × D.K) :
+    Matrix D.J (D.I ⊕ (b × e)) ℂ :=
+  rowFactor D ½ * Wᴴ *
+    lift ((Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k) * completionColumns D W 0
+
+private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L × D.K)
+    (hk : ¬0 < spectralMass D k) : endpointCoefficient D W k = 0 := by
+  have hmass : spectralMass D k = 0 := le_antisymm (le_of_not_gt hk)
+    (mul_nonneg k.2.2.le (sq_nonneg _))
+  have hov : overlap D k = 0 := by
+    have hnorm : ‖overlap D k‖ ^ 2 = 0 :=
+      (mul_eq_zero.mp hmass).resolve_left k.2.2.ne'
+    exact norm_eq_zero.mp (pow_eq_zero hnorm)
+  have hmode : mode D k = 0 := by
+    simp [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov]
+  simp [endpointCoefficient, hmode, lift]
+
+private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
+    (t : ℝ) (j : D.J) (c : D.I ⊕ (b × e)) :
+    quantizedCompleted D W assign t j c = ∑ k : D.L × D.K,
+      endpointCoefficient D W k j c *
+        scalarPhase (Real.log (D.sj j) + columnShift D c + assign (retainedLogFrequency D k)) t := by
+  let f (k : D.L × D.K) := scalarPhase (assign (retainedLogFrequency D k)) t
+  let Z (k : D.L × D.K) := (Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k
+  have hLift : lift (e := e) (retainedFactor D f) = ∑ k : D.L × D.K, f k • lift (Z k) := by
+    rw [retainedFactor_sum]
+    ext x y
+    simp only [lift, Z, Matrix.kroneckerMap_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  change (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) *
+    completionColumns D W t) j c = _
+  rw [hLift, rowFactor_phase, completionColumns_phase]
+  simp only [← Matrix.mul_assoc _ _ (diagonal _), Matrix.mul_diagonal, Matrix.mul_sum,
+    Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul]
+  simp only [Matrix.mul_assoc, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  rw [Finset.mul_sum, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro k _
+  simp only [endpointCoefficient, Matrix.mul_assoc, Z, f, scalarPhase_add]
+  ring
+
+private theorem quantized_evaluation (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
+    (centres : Finset ℝ) (hc : UsesCentres D assign centres) :
+    let E := fun t => sourceAmplitude (e := e) D - quantizedCompleted D W assign t
+    Integrable (fun t : ℝ => petzWeight t * ‖E t‖ ^ 2) ∧
+    ‖E 0‖ ^ 2 ≤ ((centres.card : ℝ) + 1) * ∫ t : ℝ, petzWeight t * ‖E t‖ ^ 2 := by
+  classical
+  let E := fun t => sourceAmplitude (e := e) D - quantizedCompleted D W assign t
+  let S := {k : D.L × D.K // 0 < spectralMass D k}
+  let ω (j : D.J) (c : D.I ⊕ (b × e)) : Option S → ℝ
+    | none => 0
+    | some k => Real.log (D.sj j) + columnShift D c + assign (retainedLogFrequency D k.1)
+  let coeff (j : D.J) (c : D.I ⊕ (b × e)) : Option S → ℂ
+    | none => sourceAmplitude D j c
+    | some k => -endpointCoefficient D W k.1 j c
+  have hentry (j : D.J) (c : D.I ⊕ (b × e)) (t : ℝ) :
+      E t j c = exponentialSum (ω j c) (coeff j c) (t : ℂ) := by
+    change sourceAmplitude D j c - quantizedCompleted D W assign t j c = _
+    rw [quantized_entry]
+    let term (k : D.L × D.K) := endpointCoefficient D W k j c *
+      scalarPhase (Real.log (D.sj j) + columnShift D c + assign (retainedLogFrequency D k)) t
+    change sourceAmplitude D j c - ∑ k, term k = _
+    have hzero (k : D.L × D.K) (hk : ¬0 < spectralMass D k) : term k = 0 := by
+      simp [term, endpointCoefficient_zero D W k hk]
+    have hsum : (∑ k : D.L × D.K, term k) = ∑ k : S, term k.1 := by
+      have h := Fintype.sum_subtype_add_sum_subtype (fun k => 0 < spectralMass D k) term
+      rw [show (∑ k : {k // ¬0 < spectralMass D k}, term k.1) = 0 from
+        Finset.sum_eq_zero (fun k _ => hzero k.1 k.2), add_zero] at h
+      exact h.symm
+    rw [hsum]
+    simp only [exponentialSum, Fintype.sum_option, ω, coeff, frequency, Complex.ofReal_zero,
+      mul_zero, zero_mul, Complex.exp_zero, mul_one, neg_mul, Finset.sum_neg_distrib, sub_eq_add_neg]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro k _
+    dsimp only [term, scalarPhase, PetzLogisticEvaluation.mode]
+    push_cast
+    rw [mul_rotate Complex.I]
+  have hcard (j : D.J) (c : D.I ⊕ (b × e)) :
+      (distinctFrequencies (ω j c)).card ≤ centres.card + 1 := by
+    let shift (x : ℝ) := Real.log (D.sj j) + columnShift D c + x
+    have hsub : distinctFrequencies (ω j c) ⊆ insert 0 (centres.image shift) := by
+      intro x hx
+      obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hx
+      cases k with
+      | none => exact Finset.mem_insert_self _ _
+      | some k =>
+        exact Finset.mem_insert_of_mem (Finset.mem_image_of_mem shift (hc k.1 k.2))
+    exact (Finset.card_le_card hsub).trans
+      (Finset.card_insert_le 0 _ |>.trans (Nat.add_le_add_right Finset.card_image_le 1))
+  have hsum (t : ℝ) : ‖E t‖ ^ 2 =
+      ∑ jc : D.J × (D.I ⊕ (b × e)), ‖E t jc.1 jc.2‖ ^ 2 := by
+    rw [frobenius_sq, Fintype.sum_prod_type]
+  have hDensity : (fun t : ℝ => petzWeight t * ‖E t‖ ^ 2) =
+      fun t => ∑ jc : D.J × (D.I ⊕ (b × e)), petzWeight t * ‖E t jc.1 jc.2‖ ^ 2 := by
+    funext t
+    rw [hsum, Finset.mul_sum]
+  change Integrable (fun t : ℝ => petzWeight t * ‖E t‖ ^ 2) ∧ ‖E 0‖ ^ 2 ≤ _
+  rw [hsum, hDensity]
+  apply sum_evaluations
+  intro jc
+  simp only [hentry, Complex.ofReal_zero]
+  obtain ⟨hi, he⟩ := PetzLogisticEvaluation.weighted_evaluation (ω jc.1 jc.2) (coeff jc.1 jc.2)
+  refine ⟨hi, he.trans (mul_le_mul_of_nonneg_right ?_ (integral_nonneg fun t =>
+    mul_nonneg (petzWeight_pos t).le (sq_nonneg _)))⟩
+  exact_mod_cast hcard jc.1 jc.2
+
+private theorem weighted_sq_triangle {H : Type*} [SeminormedAddCommGroup H]
+    (F G : ℝ → H) (hF : Continuous F) (hG : Continuous G)
+    (hiF : Integrable (fun t => petzWeight t * ‖F t‖ ^ 2))
+    (hiG : Integrable (fun t => petzWeight t * ‖G t‖ ^ 2))
+    (hiSum : Integrable (fun t => petzWeight t * ‖F t + G t‖ ^ 2)) :
+    (∫ t, petzWeight t * ‖F t + G t‖ ^ 2) ≤
+      (Real.sqrt (∫ t, petzWeight t * ‖F t‖ ^ 2) +
+        Real.sqrt (∫ t, petzWeight t * ‖G t‖ ^ 2)) ^ 2 := by
+  let f (t : ℝ) := Real.sqrt (petzWeight t) * ‖F t‖
+  let g (t : ℝ) := Real.sqrt (petzWeight t) * ‖G t‖
+  have hfs (t : ℝ) : f t ^ 2 = petzWeight t * ‖F t‖ ^ 2 := by
+    rw [show f t = _ from rfl, mul_pow, Real.sq_sqrt (petzWeight_pos t).le]
+  have hgs (t : ℝ) : g t ^ 2 = petzWeight t * ‖G t‖ ^ 2 := by
+    rw [show g t = _ from rfl, mul_pow, Real.sq_sqrt (petzWeight_pos t).le]
+  have cf : Continuous f := (Real.continuous_sqrt.comp continuous_petzWeight).mul hF.norm
+  have cg : Continuous g := (Real.continuous_sqrt.comp continuous_petzWeight).mul hG.norm
+  have hf : MemLp f 2 volume := (memLp_two_iff_integrable_sq cf.aestronglyMeasurable).2
+    (by simpa only [hfs] using hiF)
+  have hg : MemLp g 2 volume := (memLp_two_iff_integrable_sq cg.aestronglyMeasurable).2
+    (by simpa only [hgs] using hiG)
+  have hnorm {h : ℝ → ℝ} (hh : MemLp h 2 volume) :
+      ‖hh.toLp h‖ ^ 2 = ∫ t, h t ^ 2 := by
+    rw [← real_inner_self_eq_norm_sq, L2.inner_def]
+    apply integral_congr_ae
+    filter_upwards [hh.coeFn_toLp] with t ht
+    rw [ht, Real.inner_apply, pow_two]
+  have hnormF : ‖hf.toLp f‖ = Real.sqrt (∫ t, petzWeight t * ‖F t‖ ^ 2) := by
+    rw [← Real.sqrt_sq (norm_nonneg (hf.toLp f)), hnorm hf]
+    simp only [hfs]
+  have hnormG : ‖hg.toLp g‖ = Real.sqrt (∫ t, petzWeight t * ‖G t‖ ^ 2) := by
+    rw [← Real.sqrt_sq (norm_nonneg (hg.toLp g)), hnorm hg]
+    simp only [hgs]
+  calc
+    _ ≤ ∫ t, (f t + g t) ^ 2 := by
+      refine integral_mono hiSum ((memLp_two_iff_integrable_sq
+        (hf.add hg).aestronglyMeasurable).1 (hf.add hg)) (fun t => ?_)
+      change petzWeight t * ‖F t + G t‖ ^ 2 ≤ (f t + g t) ^ 2
+      rw [show f t + g t = Real.sqrt (petzWeight t) * (‖F t‖ + ‖G t‖) from
+        (mul_add _ _ _).symm, mul_pow, Real.sq_sqrt (petzWeight_pos t).le]
+      exact mul_le_mul_of_nonneg_left
+        (pow_le_pow_left₀ (norm_nonneg _) (norm_add_le (F t) (G t)) 2) (petzWeight_pos t).le
+    _ = ‖hf.toLp f + hg.toLp g‖ ^ 2 := by
+      rw [← hf.toLp_add hg, hnorm (hf.add hg)]
+      rfl
+    _ ≤ _ := by
+      rw [← hnormF, ← hnormG]
+      exact pow_le_pow_left₀ (norm_nonneg _) (norm_add_le _ _) 2
+
+private theorem quantized_continuous (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ) :
+    Continuous (quantizedCompleted D W assign) := by
+  apply continuous_matrix
+  intro j c
+  simp_rw [quantized_entry]
+  refine continuous_finsetSum _ (fun k hk => ?_)
+  clear hk
+  dsimp only [scalarPhase, PetzLogisticEvaluation.mode]
+  fun_prop
+
+private theorem completed_continuous (W : Matrix (b × e) a ℂ) :
+    Continuous (completed D W) := by
+  have heq (t : ℝ) : quantizedCompleted D W id t = completed D W t :=
+    completedWithCoefficients_exact D W t
+  rw [← funext heq]
+  exact quantized_continuous D W id
+
+set_option maxHeartbeats 1000000 in
+private theorem trace_bound (M : SupportedRelativeModularModel Φ ρ σ)
+    (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
+    (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
+    (assign : ℝ → ℝ) (centres : Finset ℝ) (hc : UsesCentres M.data assign centres) :
+    let D := M.data
+    let Δ := finiteTraceLogRelativeEntropy ρ σ -
+      finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)
+    traceNorm (D.R - recoveredState D) ^ 2 ≤
+      4 * ((centres.card : ℝ) + 1) * (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2 := by
+  dsimp only
+  let D := M.data
+  let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
+  let B := completed D W
+  let C := quantizedCompleted D W assign
+  let F := fun t => A - B t
+  let G := fun t => B t - C t
+  let Δ := finiteTraceLogRelativeEntropy ρ σ -
+    finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)
+  obtain ⟨hd, hSource, hRecovery⟩ := supported_stinespring_gram M W hW hAction
+  have hpoint (t : ℝ) : ‖F t‖ ^ 2 = deficit D (1 / 2) t := (hd t).1
+  have hiF : Integrable (fun t => petzWeight t * ‖F t‖ ^ 2) := by
+    simpa only [hpoint] using (integral_supported_channel_strip M).2.1
+  have hiG : Integrable (fun t => petzWeight t * ‖G t‖ ^ 2) := by
+    change Integrable (fun t => petzWeight t * ‖completed D W t - quantizedCompleted D W assign t‖ ^ 2)
+    simp_rw [phase_discrepancy M W hW hAction assign, Finset.mul_sum]
+    exact integrable_finsetSum _ (fun k _ => by
+      simpa only [mul_left_comm (petzWeight _) (spectralMass D k)] using
+        (integral_phase_cost (retainedLogFrequency D k -
+          assign (retainedLogFrequency D k))).1.const_mul (spectralMass D k))
+  have hsum : (fun t => F t + G t) = fun t => A - C t := by
+    funext t
+    dsimp only [F, G]
+    abel
+  obtain ⟨hiSum, hEval⟩ := quantized_evaluation D W assign centres hc
+  have hC0 : C 0 = B 0 := common_endpoint D W assign
+  have htri := weighted_sq_triangle F G (continuous_const.sub (completed_continuous D W))
+    ((completed_continuous D W).sub (quantized_continuous D W assign)) hiF hiG
+    (by rw [hsum]; exact hiSum)
+  have hLoss : (∫ t, petzWeight t * ‖F t‖ ^ 2) ≤ Δ := by
+    simp only [hpoint]
+    exact upperIntegral_le_loss M
+  have hJ : (∫ t, petzWeight t * ‖G t‖ ^ 2) = phaseCost D assign :=
+    exact_phase_discrepancy M W hW hAction assign
+  rw [hsum, hJ] at htri
+  have hEnergy : (∫ t, petzWeight t * ‖A - C t‖ ^ 2) ≤
+      (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2 :=
+    htri.trans (pow_le_pow_left₀ (add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
+      (add_le_add_right (Real.sqrt_le_sqrt hLoss) _) 2)
+  have hAu : ‖A‖ = 1 := sourceAmplitude_unit M
+  have hBu : ‖B 0‖ = 1 := by
+    rw [← hC0]
+    exact quantizedCompleted_unit M W hW hAction assign 0
+  have hTrace : traceNorm (B 0 * (B 0)ᴴ - A * Aᴴ) ≤ 2 * ‖A - C 0‖ := by
+    simpa only [hAu, hBu, hC0, one_add_one_eq_two, ← neg_sub A (B 0), norm_neg] using
+      traceNorm_gram_sub_le A (B 0)
+  have hLift : Us D * (B 0 * (B 0)ᴴ - A * Aᴴ) * (Us D)ᴴ = recoveredState D - D.R := by
+    rw [Matrix.mul_sub, Matrix.sub_mul]
+    exact congrArg₂ (· - ·) hRecovery hSource
+  have hIsometry := traceNorm_isometry (Us D) (columns_isometry D.hS.1)
+    (B 0 * (B 0)ᴴ - A * Aᴴ)
+  rw [hLift, ← neg_sub, Foundation.FiniteTraceDistance.traceNorm_neg] at hIsometry
+  change traceNorm (D.R - recoveredState D) ^ 2 ≤
+    4 * ((centres.card : ℝ) + 1) * (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2
+  calc
+    _ = traceNorm (B 0 * (B 0)ᴴ - A * Aᴴ) ^ 2 := by rw [hIsometry]
+    _ ≤ (2 * ‖A - C 0‖) ^ 2 := pow_le_pow_left₀ (traceNorm_nonneg _) hTrace 2
+    _ = 4 * ‖A - C 0‖ ^ 2 := by ring
+    _ ≤ 4 * (((centres.card : ℝ) + 1) * ∫ t, petzWeight t * ‖A - C t‖ ^ 2) :=
+      mul_le_mul_of_nonneg_left hEval (by norm_num)
+    _ ≤ _ := by
+      rw [mul_assoc]
+      exact mul_le_mul_of_nonneg_left hEnergy (by positivity)
+
+/-- Changing the retained frequencies to at most the given number of centres
+bounds the squared trace error of the actual ordinary Petz recovery. Only
+positive-mass frequencies have to be assigned to those centres. -/
+theorem ordinary_petz_traceNorm_sq_le_quantized_phase_cost
+    (M : SupportedRelativeModularModel Φ ρ σ) (assign : ℝ → ℝ)
+    (centres : Finset ℝ) (hc : UsesCentres M.data assign centres) :
+    let D := M.data
+    let Δ := finiteTraceLogRelativeEntropy ρ σ -
+      finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)
+    traceNorm (D.R - recoveredState D) ^ 2 ≤
+      4 * ((centres.card : ℝ) + 1) * (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2 := by
+  classical
+  obtain ⟨W, hW, hAction⟩ := exists_retainedFirst_stinespring Φ
+  exact trace_bound M W hW hAction assign centres hc
+
+#print axioms exact_phase_discrepancy
+#print axioms ordinary_petz_traceNorm_sq_le_quantized_phase_cost
 
 end D5.S3.Quantum.Recovery.PetzModularFrequencyQuantization
