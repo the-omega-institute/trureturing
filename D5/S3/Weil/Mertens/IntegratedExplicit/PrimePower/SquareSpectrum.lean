@@ -312,13 +312,15 @@ private lemma primitiveMode_tsum_re (hRH : RiemannHypothesis) (u : ℝ) :
 
 /-- Absolute termwise integration gives the same primitive at both log cutoffs. -/
 theorem square_density_integral (hRH : RiemannHypothesis) {a b : ℝ} (hab : a ≤ b) :
-    (∫ u in a..b, squareDensity u) =
-      squarePrimitive (Real.exp b) - squarePrimitive (Real.exp a) := by
+    IntervalIntegrable squareDensity volume a b ∧
+      (∫ u in a..b, squareDensity u) =
+        squarePrimitive (Real.exp b) - squarePrimitive (Real.exp a) := by
   let series (u : ℝ) := ∑' k, squareMode k u
   have hcont : ContinuousOn series (uIcc a b) := by
     apply (squareSeries_continuousOn hRH a).mono
     rw [uIcc_of_le hab]
     exact Icc_subset_Ici_self
+  refine ⟨(Complex.continuous_re.comp_continuousOn hcont).intervalIntegrable, ?_⟩
   have hre : (∫ u in a..b, squareDensity u) = (∫ u in a..b, series u).re := by
     change (∫ u in a..b, (series u).re) = _
     rw [intervalIntegral.integral_of_le hab, intervalIntegral.integral_of_le hab]

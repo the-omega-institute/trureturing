@@ -139,6 +139,41 @@ private lemma root_kernel_integrable {p x : ℝ} (hp : p < 1) (hx : 0 < x) :
       Real.rpow_sub ht0, Real.rpow_two, ← mul_div_assoc]
     exact div_le_div_of_nonneg_right (Chebyshev.psi_le_const_mul_self (by positivity)) (sq_nonneg _)
 
+/-- The uncentered root-cutoff integral is the centered integral plus its power main term. -/
+theorem root_tail_main {r x : ℝ} (hr : 1 < r) (hx : 0 < x) :
+    Real.sqrt x * (∫ t in Ioi x, Chebyshev.psi (t ^ r⁻¹) / t ^ 2) =
+      r / (r - 1) * x ^ (r⁻¹ - 1 / 2) +
+        Real.sqrt x * (∫ t in Ioi x, (Chebyshev.psi (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2) := by
+  have hr0 : 0 < r := by linarith
+  have hp : r⁻¹ < 1 := (inv_lt_one₀ hr0).mpr hr
+  have hψ := root_kernel_integrable hp hx
+  have ha : IntegrableOn (fun t : ℝ => t ^ r⁻¹ / t ^ 2) (Ioi x) :=
+    (integrableOn_Ioi_rpow_of_lt (a := r⁻¹ - 2) (by linarith) hx).congr_fun (fun t ht => by
+      change t ^ (r⁻¹ - 2) = _
+      rw [Real.rpow_sub (hx.trans ht), Real.rpow_two]) measurableSet_Ioi
+  have hsplit : (∫ t in Ioi x, (Chebyshev.psi (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2) =
+      (∫ t in Ioi x, Chebyshev.psi (t ^ r⁻¹) / t ^ 2) - ∫ t in Ioi x, t ^ r⁻¹ / t ^ 2 := by
+    rw [← integral_sub hψ ha]
+    exact setIntegral_congr_fun measurableSet_Ioi (fun t _ => sub_div _ _ _)
+  have hpower : Real.sqrt x * (∫ t in Ioi x, t ^ r⁻¹ / t ^ 2) =
+      r / (r - 1) * x ^ (r⁻¹ - 1 / 2) := by
+    rw [setIntegral_congr_fun measurableSet_Ioi (g := fun t : ℝ => t ^ (r⁻¹ - 2))
+      (fun t ht => by
+        change _ = t ^ (r⁻¹ - 2)
+        rw [Real.rpow_sub (hx.trans ht), Real.rpow_two]),
+      integral_Ioi_rpow_of_lt (by linarith) hx, Real.sqrt_eq_rpow]
+    have hcoef : - (r⁻¹ - 2 + 1)⁻¹ = r / (r - 1) := by
+      have hr1 : r - 1 ≠ 0 := sub_ne_zero.mpr hr.ne'
+      have hh : r⁻¹ - 2 + 1 = -(r - 1) / r := by
+        field_simp [hr0.ne']
+        ring
+      rw [hh, inv_div, div_neg, neg_neg]
+    rw [show r⁻¹ - 1 / 2 = 1 / 2 + (r⁻¹ - 2 + 1) by ring,
+      Real.rpow_add hx (1 / 2) (r⁻¹ - 2 + 1), ← hcoef]
+    ring
+  rw [hsplit]
+  linarith only [hpower]
+
 /-- After isolating square and cube cutoffs, Costa Pereira's upper remainder integrates
 to a fifth-root majorant. -/
 theorem root_cutoff_remainder {x : ℝ} (hx : 1 ≤ x) :
