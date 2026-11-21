@@ -5,9 +5,10 @@ year: 2026
 title: On the center of distances of finite ultrametric spaces
 doi: 10.48550/arXiv.2603.25850
 url: https://arxiv.org/abs/2603.25850v1
-claim: "Corollary 3.12: a finite ultrametric space with |C(X)| = m >= 1 has at least 2^(m-1) points; Example 3.13 attains this with binary words; Conjecture 4.4 (proved as Corollary 4.6 of arXiv:2609.11384): every finite A in R+ with 0 in A is D(X) = C(X) for a finite ultrametric space."
+claim: "Corollary 3.12: a finite ultrametric space with |C(X)| = m >= 1 has at least 2^(m-1) points; Example 3.13 attains this with binary words; Conjecture 4.4 (proved as Corollary 4.6 of arXiv:2609.11384): every finite A in R+ with 0 in A is D(X) = C(X) for a finite ultrametric space; Conjecture 4.3 (proved as Corollary 4.3 of arXiv:2609.11384): minimum-order spaces with equally many points are isometric exactly when their centers agree."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/UltrametricCenterMinimumOrder
+  - D5/S3/Combinatorics/Geometry/Ultrametric/MCDIsometry
 license: citation-only
 triage: anchor
 ---
@@ -61,3 +62,9 @@ with D(X) = C(X) = A. The realization uses binary words of length |A| − 1, wit
 words the element of A indexed by one plus the highest position where they differ. It replaces the
 labelled perfect binary tree of Proposition 4.5 by this explicit word metric; the uniqueness up to
 isometry in Proposition 4.5 is not formalized.
+
+Conjecture 4.3 (p. 20): for finite ultrametric spaces X and Y with |X| = |Y| = 2^n and
+|C(X)| = n + 1, C(X) = C(Y) holds exactly when X and Y are isometric. It is proved as
+Corollary 4.3, via Theorem 4.2 (the equivalence of isometry and C(X) = C(Y) for minimum-order
+spaces), in O. Dovgoshey, N. S. Jaiswal, S. P. S. Kainth, G. Kaur and O. Rovenska,
+arXiv:2609.11384v1, pp. 23-25.
