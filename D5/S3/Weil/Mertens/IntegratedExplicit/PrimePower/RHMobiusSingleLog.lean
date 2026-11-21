@@ -9,6 +9,8 @@
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RHMobiusWindow
 import D5.S3.Weil.Mertens.Cryptids.Schoenfeld
 
+/-! Uniform Möbius truncation with one logarithm in the order bound. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -133,7 +135,9 @@ private theorem omitted_root_weight_sum_le {m : ℕ} (hm : 2 ≤ m) {u : ℝ} (h
       exact h
     calc
       _ ≤ 9 * (m : ℝ) := mul_le_mul ((min_le_left _ _).trans hsq) hA_m hA₀ (by norm_num)
-      _ ≤ _ := by nlinarith [mul_nonneg (show (0 : ℝ) ≤ m by positivity) (show 0 ≤ L - 1 by linarith)]
+      _ ≤ _ := by
+        nlinarith [mul_nonneg (show (0 : ℝ) ≤ m by positivity)
+          (show 0 ≤ L - 1 by linarith)]
   have hl₁ : 1 < l := lt_of_not_ge hh
   by_cases hsmall : l ≤ L
   · have hsq : (1 + 2 * l)^2 ≤ (3 * l)^2 :=
@@ -149,7 +153,8 @@ private theorem omitted_root_weight_sum_le {m : ℕ} (hm : 2 ≤ m) {u : ℝ} (h
           mul_le_mul hsmall (add_le_add_left hsmall _) (by positivity) (by linarith)
         have hb : L + q ≤ (5 / 2 : ℝ) * m := by linarith
         have hbound := hprod.trans (mul_le_mul_of_nonneg_left hb (show 0 ≤ L by linarith))
-        nlinarith only [hbound, mul_nonneg (show 0 ≤ L by linarith) (show 0 ≤ (m : ℝ) by positivity)]
+        nlinarith only [hbound, mul_nonneg (show 0 ≤ L by linarith)
+          (show 0 ≤ (m : ℝ) by positivity)]
   · have hLa : L ≤ l := le_of_lt (lt_of_not_ge hsmall)
     have hdiv : q / l ≤ q / L := div_le_div_of_nonneg_left hq.le (by linarith) hLa
     calc
@@ -157,7 +162,9 @@ private theorem omitted_root_weight_sum_le {m : ℕ} (hm : 2 ≤ m) {u : ℝ} (h
         mul_le_mul (min_le_right _ _) ((hAgeom (by linarith)).trans (add_le_add_right hdiv _))
           hA₀ (sq_nonneg _)
       _ = L * (L + q) := by field_simp [show L ≠ 0 by linarith]
-      _ ≤ _ := by nlinarith [mul_nonneg (show 0 ≤ L by linarith) (show 0 ≤ 24 * m - (L + q) by linarith)]
+      _ ≤ _ := by
+        nlinarith [mul_nonneg (show 0 ≤ L by linarith)
+          (show 0 ≤ 24 * m - (L + q) by linarith)]
 
 open ConjectureMachines.Semantics.Riemann
   (SchoenfeldPsiBound abs_psi_sub_self_le_seven_eighths_of_five_thousand_le)
@@ -185,7 +192,8 @@ private theorem global_psi_error (hRH : RiemannHypothesis) {y : ℝ} (hy : 1 ≤
       _ ≤ _ := by
         calc
           _ ≤ ((Real.log 4 + 5) * 5000) * Real.sqrt y := by
-            simpa using mul_le_mul_of_nonneg_left hs (show 0 ≤ (Real.log 4 + 5) * 5000 by positivity)
+            simpa using mul_le_mul_of_nonneg_left hs
+              (show 0 ≤ (Real.log 4 + 5) * 5000 by positivity)
           _ ≤ _ := by
             exact le_mul_of_one_le_right (by positivity) (by nlinarith)
 

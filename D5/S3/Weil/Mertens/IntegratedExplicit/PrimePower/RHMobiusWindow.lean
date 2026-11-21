@@ -675,7 +675,7 @@ def arithmeticPrimitive (n : ℕ) (a B : ℝ) : ℝ :=
   -(μ n : ℝ) * (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
     powerGap (arithmeticRate n) a B
 
-private def capturedPrimitive (m n : ℕ) (a B : ℝ) : ℝ :=
+def capturedPrimitive (m n : ℕ) (a B : ℝ) : ℝ :=
   if 2 * n < m + 1 then -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0
 
 private theorem root_rate_positive {n : ℕ} (hn : 3 ≤ n) : 0 < arithmeticRate n := by
