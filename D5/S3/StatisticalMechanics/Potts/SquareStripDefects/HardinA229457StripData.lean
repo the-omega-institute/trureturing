@@ -51,6 +51,7 @@ def cl (p : Row) (d : ℕ) : Fin 42 :=
   if bondDefects horizontal p p = 0 then
     if 0 < d then (ProperTransfer.cl p).castAdd 32 else (ProperTransfer.cl p).natAdd 10 |>.castAdd 22
   else
+  -- Residual two selects the equality-pattern representative in the crossed classifier.
   let state := HardinA229635State.cl p 2
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 26 then 20 else
   if state ∈ ({72, 106} : Finset HardinA229635State.State) then 21 else

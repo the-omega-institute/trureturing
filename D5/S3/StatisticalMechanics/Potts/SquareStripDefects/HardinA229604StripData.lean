@@ -47,6 +47,7 @@ def cl (p : Row) (d : ℕ) : Fin 96 :=
       omega⟩
   else
   if 2 < bondDefects horizontal p p then 95 else
+  -- Residual two selects the equality-pattern representative in the crossed classifier.
   let state := HardinA229635State.cl p 2
   if state ∈ ({31, 51} : Finset HardinA229635State.State) then 74 else
   if state ∈ ({32, 66} : Finset HardinA229635State.State) then 75 else
