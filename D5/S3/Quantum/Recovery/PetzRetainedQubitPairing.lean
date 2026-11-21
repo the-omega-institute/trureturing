@@ -14,7 +14,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Matrix MeasureTheory
+open Matrix MeasureTheory Set
 open scoped BigOperators Matrix Matrix.Norms.Frobenius Kronecker
 open D5.S3.Quantum.Recovery.PetzMixedBoundaryEvaluation (mixedBoundary)
 open PetzLogisticEvaluation (correlation)
@@ -29,6 +29,30 @@ open private mixedBoundary_entry mixedFrequency from
   D5.S3.Quantum.Recovery.PetzMixedBoundaryEvaluation
 open private gamma_norm_sq integral_logExponentialMode weighted_energy_eq_gram from
   D5.S3.Analytic.PetzLogisticEvaluation
+
+open D5.S3.Quantum.Recovery.PetzMixedBoundaryEvaluation
+open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
+open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
+open D5.S3.Quantum.Divergence.CanonicalChannelDPI
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (act)
+open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open D5.S3.Quantum.Recovery.PetzSchwarzRecovery (petz_output_support_projection)
+open D5.S3.Quantum.Recovery.SpectralTransposeRecovery (spectralSupport spectralInverseSqrt)
+open D5.S3.Quantum.Recovery.PetzSupportedStinespringGram (recoveredState)
+open PetzExponentialBoundaryEvaluation (petzWeight petzWeight_pos)
+
+
+open private diagonalPhase from D5.S3.Quantum.Recovery.PetzMixedBoundaryEvaluation
+open private columns columns_isometry columns_support card_positive_eigenvalues
+  exists_retainedFirst_stinespring power_zero from
+  D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
+open private tensorId tensorId_mul tensorId_adjoint dilate sourceRoot referenceRoot
+  sourceRoot_selfAdjoint referenceRoot_selfAdjoint outputSourceColumns outputReferenceColumns
+  lowerAmplitude upperAmplitude physical_mixed_sq full_logistic_physical
+  trace_error_le_boundary power_of_support_left trace_sq_le_of_dilation levelCount_le_card
+  output_rank_le from
+  D5.S3.Quantum.Recovery.PetzSupportedLinearRank
 
 namespace D5.S3.Quantum.Recovery.PetzRetainedQubitPairing
 
@@ -137,11 +161,14 @@ private theorem centered_quadratic {x y z η u v r : ℝ}
   dsimp [A, B, C, diagonal, cross] at hq
   linarith only [hq]
 
-private def logistic (t : ℝ) : ℝ :=
+/-- Fourier correlation of the probability weight on the upper Petz strip boundary. -/
+def logisticCorrelation (t : ℝ) : ℝ :=
   if t = 0 then 1 else (t / 2) / Real.sinh (t / 2)
 
+local notation "logistic" => logisticCorrelation
+
 private theorem logistic_neg (t : ℝ) : logistic (-t) = logistic t := by
-  simp only [logistic, neg_eq_zero, neg_div, Real.sinh_neg, div_neg, neg_neg]
+  simp only [logisticCorrelation, neg_eq_zero, neg_div, Real.sinh_neg, div_neg, neg_neg]
 
 private theorem logistic_bounds (t : ℝ) : 0 ≤ logistic t ∧ logistic t ≤ 1 := by
   suffices h : ∀ s ≥ (0 : ℝ), 0 ≤ logistic s ∧ logistic s ≤ 1 by
@@ -151,15 +178,15 @@ private theorem logistic_bounds (t : ℝ) : 0 ≤ logistic t ∧ logistic t ≤ 
       exact h (-t) (neg_nonneg.mpr ht)
   intro s hs
   rcases eq_or_lt_of_le hs with rfl | hs
-  · norm_num [logistic]
+  · norm_num [logisticCorrelation]
   have hhalf : 0 < s / 2 := by positivity
   have hden := Real.sinh_pos_iff.mpr hhalf
-  rw [logistic, ite_eq_right hs.ne']
+  rw [logisticCorrelation, ite_eq_right hs.ne']
   exact ⟨div_nonneg hhalf.le hden.le, (div_le_one₀ hden).2
     (Real.self_le_sinh_iff.mpr hhalf.le)⟩
 
-private theorem logistic_ge_sech_sq (t : ℝ) : 1 / Real.cosh (t / 4) ^ 2 ≤ logistic t := by
-  have hmon : MonotoneOn (fun u : ℝ => u * Real.cosh u - Real.sinh u) (Set.Ici 0) := by
+private theorem mul_cosh_sub_sinh_monotone :
+    MonotoneOn (fun u : ℝ => u * Real.cosh u - Real.sinh u) (Set.Ici 0) := by
     apply monotoneOn_of_deriv_nonneg (convex_Ici _) (by fun_prop)
     · intro x _
       exact (((hasDerivAt_id x).mul (Real.hasDerivAt_cosh x)).sub
@@ -171,28 +198,178 @@ private theorem logistic_ge_sech_sq (t : ℝ) : 1 / Real.cosh (t / 4) ^ 2 ≤ lo
         (Real.hasDerivAt_sinh x)).deriv]
       simp only [id_eq, one_mul, add_sub_cancel_left]
       exact mul_nonneg hx' (Real.sinh_nonneg_iff.mpr hx')
+
+private theorem logistic_ge_sech_sq (t : ℝ) : 1 / Real.cosh (t / 4) ^ 2 ≤ logistic t := by
+  have hmon := mul_cosh_sub_sinh_monotone
   suffices h : ∀ s ≥ (0 : ℝ), 1 / Real.cosh (s / 4) ^ 2 ≤ logistic s by
     rcases le_total 0 t with ht | ht
     · exact h t ht
     · simpa only [neg_div, Real.cosh_neg, logistic_neg] using h (-t) (neg_nonneg.mpr ht)
   intro s hs
   rcases eq_or_lt_of_le hs with rfl | hs
-  · norm_num [logistic]
+  · norm_num [logisticCorrelation]
   let u := s / 4
   have hu : 0 < u := by positivity
   have hc := Real.cosh_pos u
   have hval : Real.sinh u ≤ u * Real.cosh u := by
     have h := hmon (show (0 : ℝ) ∈ Set.Ici (0 : ℝ) by simp) hu.le hu.le
     simpa only [zero_mul, Real.sinh_zero, sub_zero, sub_nonneg] using h
-  rw [logistic, ite_eq_right hs.ne', show s / 2 = 2 * u by dsimp [u]; ring, Real.sinh_two_mul]
+  have hu₂ : s / 2 = 2 * u := by dsimp [u]; ring
+  rw [logisticCorrelation, ite_eq_right hs.ne', hu₂, Real.sinh_two_mul]
   change 1 / Real.cosh u ^ 2 ≤ 2 * u / (2 * Real.sinh u * Real.cosh u)
-  apply (div_le_div_iff₀ (sq_pos_of_pos hc) (by positivity : 0 < 2 * Real.sinh u * Real.cosh u)).2
+  have hden : 0 < 2 * Real.sinh u * Real.cosh u := by positivity
+  apply (div_le_div_iff₀ (sq_pos_of_pos hc) hden).2
   nlinarith only [mul_le_mul_of_nonneg_right hval (show 0 ≤ 2 * Real.cosh u by positivity)]
 
 private theorem logistic_correlation {ι : Type*} (ω : ι → ℝ) (i j : ι) :
     (‖correlation ω i j‖ ^ 2 : ℂ) = (logistic (ω j - ω i) : ℂ) := by
   rw [correlation, Matrix.of_apply, integral_logExponentialMode]
   exact gamma_norm_sq _
+
+private theorem logistic_derivative {x : ℝ} (hx : 0 < x) :
+    HasDerivAt logistic
+      ((Real.sinh (x / 2) - (x / 2) * Real.cosh (x / 2)) /
+        (2 * Real.sinh (x / 2) ^ 2)) x := by
+  have ht : 0 < x / 2 := by positivity
+  have hs := (Real.sinh_pos_iff.mpr ht).ne'
+  have h₁ : HasDerivAt (fun t : ℝ => t / 2) (1 / 2) x := (hasDerivAt_id x).div_const 2
+  have h := h₁.div (h₁.sinh) hs
+  change HasDerivAt (fun t : ℝ => (t/2) / Real.sinh (t/2)) _ x at h
+  have heq : logistic =ᶠ[nhds x] (fun t : ℝ => (t / 2) / Real.sinh (t / 2)) := by
+    filter_upwards [Ioi_mem_nhds hx] with t ht
+    exact ite_eq_right (Set.mem_Ioi.mp ht).ne'
+  convert h.congr_of_eventuallyEq heq using 1
+  ring
+
+private theorem logistic_slope {x : ℝ} (hx : 0 < x) :
+    -(logistic x) / 2 ≤ deriv logistic x ∧ deriv logistic x ≤ 0 := by
+  let t := x / 2
+  have ht : 0 < t := by positivity
+  have hs := Real.sinh_pos_iff.mpr ht
+  have hc := Real.cosh_pos t
+  rw [(logistic_derivative hx).deriv, logisticCorrelation, ite_eq_right hx.ne']
+  change -(t / Real.sinh t) / 2 ≤
+      (Real.sinh t - t * Real.cosh t) / (2 * Real.sinh t ^ 2) ∧
+    (Real.sinh t - t * Real.cosh t) / (2 * Real.sinh t ^ 2) ≤ 0
+  have hden : 0 < 2 * Real.sinh t ^ 2 := by positivity
+  constructor
+  · have hexp : t * Real.exp (-t) ≤ Real.sinh t := by
+      have hE := Real.add_one_le_exp (2 * t)
+      have h := mul_le_mul_of_nonneg_right hE (Real.exp_pos (-t)).le
+      rw [← Real.exp_add, show 2*t + -t = t by ring] at h
+      rw [Real.sinh_eq]
+      linarith only [h]
+    apply (le_div_iff₀ hden).2
+    have hcancel : -(t / Real.sinh t) / 2 * (2 * Real.sinh t ^ 2) =
+        -t * Real.sinh t := by field_simp [hs.ne']
+    rw [hcancel]
+    have hh := Real.cosh_sub_sinh t
+    nlinarith only [hexp, mul_nonneg ht.le (sub_nonneg.mpr hh.le),
+      mul_nonneg ht.le (sub_nonneg.mpr hh.ge)]
+  · apply div_nonpos_of_nonpos_of_nonneg _ hden.le
+    have hmon := mul_cosh_sub_sinh_monotone
+    have h := hmon (show (0 : ℝ) ∈ Set.Ici (0 : ℝ) by simp) ht.le ht.le
+    simp only [zero_mul, Real.sinh_zero, sub_zero] at h
+    linarith only [h]
+
+private theorem logistic_le_cubic (s : ℝ) :
+    s ^ 2 ≤ (24 + s ^ 2) * (1 - logistic s) := by
+  have hSinh {x : ℝ} (hx : 0 ≤ x) : x + x ^ 3 / 6 ≤ Real.sinh x := by
+    have hD (v : ℝ) : HasDerivAt (fun u : ℝ => Real.sinh u - (u + u ^ 3 / 6))
+        (Real.cosh v - (1 + v ^ 2 / 2)) v := by
+      convert (Real.hasDerivAt_sinh v).sub ((hasDerivAt_id v).add
+        (((hasDerivAt_id v).pow 3).div_const 6)) using 1
+      · ext u
+        rfl
+      · norm_num
+        ring
+    have hM : MonotoneOn (fun u : ℝ => Real.sinh u - (u + u ^ 3 / 6)) (Set.Ici 0) := by
+      refine monotoneOn_of_deriv_nonneg (convex_Ici _) (by fun_prop)
+        (fun u _ => (hD u).differentiableAt.differentiableWithinAt) ?_
+      intro u hu
+      have hu' : 0 ≤ u := interior_subset hu
+      have hu2 : 0 ≤ u / 2 := by positivity
+      have hsq := pow_le_pow_left₀ hu2 (Real.self_le_sinh_iff.mpr hu2) 2
+      rw [(hD u).deriv, show u = 2 * (u / 2) by ring, Real.cosh_two_mul]
+      linarith only [Real.cosh_sq_sub_sinh_sq (u / 2), hsq]
+    have h := hM (show (0 : ℝ) ∈ Set.Ici (0 : ℝ) by simp) hx hx
+    simpa only [Real.sinh_zero, zero_pow (by decide : (3:ℕ) ≠ 0), zero_div, add_zero, sub_zero,
+      sub_nonneg] using h
+  have hAux (t : ℝ) (ht : 0 ≤ t) : t ^ 2 ≤ (24 + t ^ 2) * (1 - logistic t) := by
+    rcases eq_or_lt_of_le ht with rfl | ht'
+    · norm_num [logisticCorrelation]
+    have hpos : 0 < t / 2 := by positivity
+    have hs := Real.sinh_pos_iff.mpr hpos
+    rw [logisticCorrelation, ite_eq_right ht'.ne']
+    have h := hSinh hpos.le
+    have hcal : (24 + t ^ 2) * ((t / 2) / Real.sinh (t / 2)) ≤ 24 := by
+      rw [← mul_div_assoc, div_le_iff₀ hs]
+      linarith only [h]
+    linarith only [hcal]
+  rcases le_total 0 s with hs | hs
+  · exact hAux s hs
+  · simpa only [neg_sq, logistic_neg] using hAux (-s) (neg_nonneg.mpr hs)
+
+private theorem logistic_gap (a b : ℝ)
+    (ha : logistic a ≤ 1 / 5) (hb : logistic b ≤ 1 / 5) :
+    (logistic a - logistic b) ^ 2 ≤ (7 / 25) * (1 - logistic (a - b)) := by
+  have hAbs (x : ℝ) : logistic |x| = logistic x := by
+    rcases le_total 0 x with hx | hx
+    · rw [abs_of_nonneg hx]
+    · rw [abs_of_nonpos hx, logistic_neg]
+  have hmono : AntitoneOn logistic (Set.Ioi 0) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Ioi _) ?_ ?_ ?_
+    · exact (fun u hu => (logistic_derivative hu).continuousAt.continuousWithinAt)
+    · intro u hu
+      exact (logistic_derivative (interior_subset hu)).differentiableAt.differentiableWithinAt
+    · exact fun u hu => (logistic_slope (interior_subset hu)).2
+  have hna (x : ℝ) (hx : logistic x ≤ 1 / 5) : 0 < |x| := by
+    apply abs_pos.mpr
+    rintro rfl
+    norm_num [logisticCorrelation] at hx
+  have hf (x y : ℝ) (hx : 0 < x) (hxy : x ≤ y) (hsmall : logistic x ≤ 1 / 5) :
+      |logistic y - logistic x| ≤ (1 / 10) * |y - x| := by
+    have hu (t : ℝ) (ht : t ∈ Set.Icc x y) : 0 < t := hx.trans_le ht.1
+    have h := Convex.norm_image_sub_le_of_norm_deriv_le (𝕜 := ℝ)
+      (fun t ht => (logistic_derivative (hu t ht)).differentiableAt)
+      (fun t ht => show ‖deriv logistic t‖ ≤ (1 / 10 : ℝ) by
+        have htSmall := (hmono hx (hu t ht) ht.1).trans hsmall
+        obtain ⟨hl, hr⟩ := logistic_slope (hu t ht)
+        rw [Real.norm_eq_abs, abs_of_nonpos hr]
+        linarith)
+      (convex_Icc x y) (Set.left_mem_Icc.mpr hxy) (Set.right_mem_Icc.mpr hxy)
+    simpa only [Real.norm_eq_abs] using h
+  have hh : |logistic a - logistic b| ≤ (1 / 10) * |a - b| := by
+    have hdist := abs_abs_sub_abs_le_abs_sub a b
+    rcases le_total |a| |b| with hab | hba
+    · have h := hf |a| |b| (hna a ha) hab (by rwa [hAbs])
+      rw [hAbs, hAbs, abs_sub_comm (logistic b), abs_sub_comm |b|] at h
+      exact h.trans (mul_le_mul_of_nonneg_left hdist (by norm_num))
+    · have h := hf |b| |a| (hna b hb) hba (by rwa [hAbs])
+      rw [hAbs, hAbs] at h
+      exact h.trans (mul_le_mul_of_nonneg_left hdist (by norm_num))
+  have habs : |logistic a - logistic b| ≤ 1 / 5 := by
+    rw [abs_le]
+    exact ⟨by linarith [(logistic_bounds a).1], by linarith [(logistic_bounds b).1]⟩
+  have hs := logistic_le_cubic (a - b)
+  have hz := (logistic_bounds (a - b)).2
+  by_cases ht : |a - b| ≤ 2
+  · have hs' := pow_le_pow_left₀ (abs_nonneg (a-b)) ht 2
+    rw [sq_abs] at hs'
+    have hcoef : (a - b)^2 ≤ 28 * (1 - logistic (a - b)) :=
+      hs.trans (mul_le_mul_of_nonneg_right (by linarith) (sub_nonneg.mpr hz))
+    have hsq := pow_le_pow_left₀ (abs_nonneg _) hh 2
+    rw [mul_pow, sq_abs, sq_abs] at hsq
+    linarith only [hsq, hcoef]
+  · have hs' := pow_le_pow_left₀ (show (0 : ℝ) ≤ 2 by norm_num) (le_of_not_ge ht) 2
+    rw [sq_abs] at hs'
+    have hm : (24 + (a-b)^2) * (1 / 7) ≤ (a-b)^2 := by linarith
+    have hpos : 0 < 24 + (a-b)^2 := by positivity
+    have hz' := (mul_le_mul_iff_right₀ hpos).mp (hm.trans hs)
+    have hsq := pow_le_pow_left₀ (abs_nonneg _) habs 2
+    rw [sq_abs] at hsq
+    linarith only [hz', hsq]
+
 
 section Blocks
 
@@ -565,7 +742,7 @@ private theorem scalar_energy (α β : ℝ) (C A B : ℂ) :
     Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail, Function.comp_apply,
     show (0 : Fin 1).succ = (1 : Fin 2) from rfl, sub_zero, zero_sub, sub_self, logistic_neg,
     show β - α = -(α - β) by ring,
-    show logistic 0 = 1 by simp [logistic]] at h
+    show logistic 0 = 1 by simp [logisticCorrelation]] at h
   rw [h]
   simp only [Complex.sq_norm, Complex.normSq_apply, Complex.add_re, Complex.add_im,
     Complex.mul_re, Complex.mul_im, Complex.star_def, Complex.conj_re, Complex.conj_im,
@@ -656,7 +833,7 @@ private theorem opposite_gaps (p q : Qubit → ℝ) (i j : Qubit) :
 /-- Opposite mixed spectral blocks, in any finite environment, have the
 centered logistic endpoint bound when the two marginal correlations and the
 difference of those correlations satisfy the scalar inequalities displayed here. -/
-theorem mixedBoundary_opposite_blocks_evaluation [DecidableEq e]
+private theorem mixedBoundary_opposite_blocks_evaluation [DecidableEq e]
     (p q : Fin 2 → ℝ) (U : Matrix (Fin 2) (Fin 2) ℂ)
     (hU : Uᴴ * U = 1) (hU' : U * Uᴴ = 1)
     (X Y : Matrix (Fin 2 × e) (Fin 2 × e) ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian)
@@ -694,8 +871,313 @@ theorem mixedBoundary_opposite_blocks_evaluation [DecidableEq e]
   have hc : 0 ≤ 1 + λ₀ := by linarith
   nlinarith only [hEval, hEval', mul_le_mul_of_nonneg_left hp hc]
 
-#print axioms mixedBoundary_opposite_blocks_evaluation
-
 end Blocks
+
+
+local notation "K₂" => (2 + Real.sqrt 2 / 2)
+
+private theorem qubit_evaluation {e : Type*} [Fintype e] [DecidableEq e]
+    (p q : Fin 2 → ℝ) (U : Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : Uᴴ * U = 1) (hU' : U * Uᴴ = 1)
+    (X Y : Matrix (Fin 2 × e) (Fin 2 × e) ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian)
+    (hx : ∀ j, logistic (sourceGap p j) ≤ 1 / 5)
+    (hy : ∀ i, logistic (referenceGap q i) ≤ 1 / 5)
+    (hgap : ∀ i j, (logistic (sourceGap p j) - logistic (referenceGap q i)) ^ 2 ≤
+      (7 / 25) * (1 - logistic (sourceGap p j - referenceGap q i))) :
+    let F (t : ℝ) := mixedBoundary p q X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t
+    ‖F 0‖ ^ 2 ≤ K₂ * (∫ t, petzWeight t * ‖F t‖ ^ 2) := by
+  dsimp only
+  let F (t : ℝ) := mixedBoundary p q X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t
+  let G (i j : Fin 2) (t : ℝ) := ∑ u : e, ∑ v : e, ‖F t (i,u) (j,v)‖ ^ 2
+  have hG (i j : Fin 2) (t : ℝ) : (∑ u : e, ∑ v : e,
+      (‖F t (i,u) (j,v)‖ ^ 2 + ‖F t (i.rev,u) (j.rev,v)‖ ^ 2)) = G i j t + G i.rev j.rev t := by
+    simp only [G, Finset.sum_add_distrib]
+  have hnorm (t : ℝ) : ‖F t‖ ^ 2 = (G 0 0 t + G 1 1 t) + (G 0 1 t + G 1 0 t) := by
+    rw [frobenius_sq, Fintype.sum_prod_type]
+    simp only [Fintype.sum_prod_type, Fin.sum_univ_two, Finset.sum_add_distrib, G]
+    ring
+  have hEval (i j : Fin 2) := mixedBoundary_opposite_blocks_evaluation p q U hU hU' X Y hX hY
+    i j (hx j) (hy i) (hgap i j)
+  dsimp only at hEval
+  have he (i j : Fin 2) : G i j 0 + G i.rev j.rev 0 ≤
+      K₂ * (∫ t, petzWeight t * G i j t + petzWeight t * G i.rev j.rev t) := by
+    have h := hEval i j
+    change (∑ u : e, ∑ v : e,
+      (‖F 0 (i,u) (j,v)‖ ^ 2 + ‖F 0 (i.rev,u) (j.rev,v)‖ ^ 2)) ≤
+      _ * (∫ t, petzWeight t * (∑ u : e, ∑ v : e,
+        (‖F t (i,u) (j,v)‖ ^ 2 + ‖F t (i.rev,u) (j.rev,v)‖ ^ 2))) at h
+    simpa only [hG, mul_add] using h
+  have hInt (i j : Fin 2) : Integrable (fun t => petzWeight t * G i j t) :=
+    (block_centering p q U X Y i j).1
+  change ‖F 0‖ ^ 2 ≤ K₂ * (∫ t, petzWeight t * ‖F t‖ ^ 2)
+  simp only [hnorm, mul_add]
+  have ht := integral_add ((hInt 0 0).add (hInt 1 1)) ((hInt 0 1).add (hInt 1 0))
+  change (∫ t, (petzWeight t * G 0 0 t + petzWeight t * G 1 1 t) +
+      (petzWeight t * G 0 1 t + petzWeight t * G 1 0 t)) =
+    (∫ t, petzWeight t * G 0 0 t + petzWeight t * G 1 1 t) +
+    (∫ t, petzWeight t * G 0 1 t + petzWeight t * G 1 0 t) at ht
+  rw [ht]
+  have h₀ := he 0 0
+  have h₁ := he 0 1
+  change G 0 0 0 + G 1 1 0 ≤ K₂ *
+    (∫ t, petzWeight t * G 0 0 t + petzWeight t * G 1 1 t) at h₀
+  change G 0 1 0 + G 1 0 0 ≤ K₂ *
+    (∫ t, petzWeight t * G 0 1 t + petzWeight t * G 1 0 t) at h₁
+  rw [mul_add]
+  exact add_le_add h₀ h₁
+
+
+section Reindex
+
+variable {k l e : Type*} [Fintype k] [Fintype l] [Fintype e]
+  [DecidableEq k] [DecidableEq l] [DecidableEq e]
+
+private theorem diagonalPhase_reindex {s s' : Type*} [DecidableEq s] [DecidableEq s']
+    (f : s' ≃ s) (p : s → ℝ) (z : ℂ) :
+    (diagonalPhase p z).submatrix f f = diagonalPhase (p ∘ f) z := by
+  rw [diagonalPhase, diagonalPhase, Matrix.submatrix_diagonal_equiv]
+  rfl
+
+private theorem mixed_reindex (f : Fin 2 ≃ k) (g : Fin 2 ≃ l)
+    (p : k → ℝ) (q : l → ℝ) (X : Matrix (k × e) (k × e) ℂ)
+    (Y : Matrix (l × e) (l × e) ℂ) (C : Matrix (l × e) (k × e) ℂ) (t : ℝ) :
+    let f' := f.prodCongr (Equiv.refl e)
+    let g' := g.prodCongr (Equiv.refl e)
+    (mixedBoundary p q X Y C t).submatrix g' f' =
+      mixedBoundary (p ∘ f) (q ∘ g) (X.submatrix f' f') (Y.submatrix g' g')
+        (C.submatrix g' f') t := by
+  dsimp only
+  let f' := f.prodCongr (Equiv.refl e)
+  let g' := g.prodCongr (Equiv.refl e)
+  change (mixedBoundary p q X Y C t).submatrix g' f' = _
+  let z := (t : ℂ) * Complex.I
+  let h := ((1 / 2 : ℝ) : ℂ)
+  let P (w : ℂ) := diagonalPhase (p ∘ Prod.fst : k × e → ℝ) w
+  let Q (w : ℂ) := diagonalPhase (q ∘ Prod.fst : l × e → ℝ) w
+  change (Q (-z) * C * P z * X - Y * Q (-h - z) * C * P (h + z)).submatrix g' f' = _
+  change (Q (-z) * C * P z * X).submatrix g' f' -
+    (Y * Q (-h - z) * C * P (h + z)).submatrix g' f' = _
+  rw [← Matrix.submatrix_mul_equiv _ _ g' f' f', ← Matrix.submatrix_mul_equiv _ _ g' f' f',
+    ← Matrix.submatrix_mul_equiv _ _ g' g' f']
+  rw [← Matrix.submatrix_mul_equiv _ _ g' f' f', ← Matrix.submatrix_mul_equiv _ _ g' g' f',
+    ← Matrix.submatrix_mul_equiv _ _ g' g' g']
+  simp only [P, Q, diagonalPhase_reindex]
+  rfl
+
+private theorem submatrix_norm_sq {r c r' c' : Type*}
+    [Fintype r] [Fintype c] [Fintype r'] [Fintype c'] (A : Matrix r c ℂ)
+    (f : r' ≃ r) (g : c' ≃ c) : ‖A.submatrix f g‖ ^ 2 = ‖A‖ ^ 2 := by
+  simp only [frobenius_sq, Matrix.submatrix_apply]
+  calc
+    _ = ∑ i : r', ∑ j : c, ‖A (f i) j‖ ^ 2 :=
+      Finset.sum_congr rfl fun i _ => g.sum_comp (fun j : c => ‖A (f i) j‖ ^ 2)
+    _ = _ := f.sum_comp (fun i : r => ∑ j : c, ‖A i j‖ ^ 2)
+
+end Reindex
+
+section Physical
+
+universe u
+
+variable {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
+  [Fintype b] [DecidableEq b] [Nonempty b] [Fintype e] [DecidableEq e]
+  {Φ : QuantumChannel a b} {ρ σ : DensityState a}
+  (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ)
+
+private theorem physical_evaluation (hW : Wᴴ * W = 1)
+    (hAction : ∀ X, partialTraceRight (dilate W X) = act Φ X)
+    (f : Fin 2 ≃ M.data.K) (g : Fin 2 ≃ M.data.L)
+    (hx : ∀ j, logistic (sourceGap (M.data.pk ∘ f) j) ≤ 1 / 5)
+    (hy : ∀ i, logistic (referenceGap (M.data.ql ∘ g) i) ≤ 1 / 5)
+    (hgap : ∀ i j, (logistic (sourceGap (M.data.pk ∘ f) j) -
+        logistic (referenceGap (M.data.ql ∘ g) i)) ^ 2 ≤
+      (7 / 25) * (1 - logistic (sourceGap (M.data.pk ∘ f) j -
+        referenceGap (M.data.ql ∘ g) i))) :
+    ‖lowerAmplitude M W 0 - upperAmplitude M W 0‖ ^ 2 ≤
+      K₂ * (∫ t, petzWeight t * ‖lowerAmplitude M W t - upperAmplitude M W t‖ ^ 2) := by
+  let D := M.data
+  let f' := f.prodCongr (Equiv.refl e)
+  let g' := g.prodCongr (Equiv.refl e)
+  let P₀ := columns D.hT.1
+  let Q₀ := columns D.hQ.1
+  let P := outputSourceColumns M (e := e)
+  let Q := outputReferenceColumns M (e := e)
+  let C : Matrix D.L D.K ℂ := Q₀ᴴ * P₀
+  let U : Matrix (Fin 2) (Fin 2) ℂ := C.submatrix g f
+  let X₀ := Pᴴ * sourceRoot M W * P
+  let Y₀ := Qᴴ * referenceRoot M W * Q
+  let X := X₀.submatrix f' f'
+  let Y := Y₀.submatrix g' g'
+  have hQP : (Q₀ * Q₀ᴴ) * (P₀ * P₀ᴴ) = P₀ * P₀ᴴ := by
+    rw [columns_support D.hQ, columns_support D.hT, ← power_zero D.hT]
+    exact power_of_support_left D.hT _ (petz_output_support_projection M) 0
+  have hQcol : (Q₀ * Q₀ᴴ) * P₀ = P₀ := by
+    have h := congrArg (fun A : Matrix b b ℂ => A * P₀) hQP
+    have hP₀ : P₀ᴴ * P₀ = 1 := columns_isometry D.hT.1
+    simpa only [Matrix.mul_assoc, hP₀, Matrix.mul_one] using h
+  have hC : Cᴴ * C = 1 := by
+    dsimp only [C]
+    rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      Matrix.mul_assoc, ← Matrix.mul_assoc Q₀, hQcol, columns_isometry D.hT.1]
+  have hU : Uᴴ * U = 1 := by
+    dsimp only [U]
+    rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv _ _ f g f, hC,
+      Matrix.submatrix_one_equiv]
+  have hU' : U * Uᴴ = 1 := (mul_eq_one_comm (a := Uᴴ) (b := U)).mp hU
+  have hX : X.IsHermitian := by
+    change (X₀.submatrix f' f')ᴴ = _
+    rw [Matrix.conjTranspose_submatrix]
+    congr 1
+    dsimp only [X₀]
+    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, sourceRoot_selfAdjoint,
+      Matrix.mul_assoc]
+  have hY : Y.IsHermitian := by
+    change (Y₀.submatrix g' g')ᴴ = _
+    rw [Matrix.conjTranspose_submatrix]
+    congr 1
+    dsimp only [Y₀]
+    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      referenceRoot_selfAdjoint,
+      Matrix.mul_assoc]
+  have hTensor : (Qᴴ * P).submatrix g' f' = U ⊗ₖ (1 : Matrix e e ℂ) := by
+    have h : Qᴴ * P = tensorId (e := e) C := by
+      change (tensorId Q₀)ᴴ * tensorId P₀ = _
+      rw [tensorId_adjoint, tensorId_mul]
+    rw [h]
+    rfl
+  have hNorm (t : ℝ) : ‖lowerAmplitude M W t - upperAmplitude M W t‖ ^ 2 =
+      ‖mixedBoundary (D.pk ∘ f) (D.ql ∘ g) X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t‖ ^ 2 := by
+    have hMixed : (mixedBoundary D.pk D.ql X₀ Y₀ (Qᴴ * P) t).submatrix g' f' =
+        mixedBoundary (D.pk ∘ f) (D.ql ∘ g) X Y (U ⊗ₖ (1 : Matrix e e ℂ)) t := by
+      rw [← hTensor]
+      exact mixed_reindex f g D.pk D.ql X₀ Y₀ (Qᴴ * P) t
+    calc
+      _ = ‖mixedBoundary D.pk D.ql X₀ Y₀ (Qᴴ * P) t‖ ^ 2 :=
+        physical_mixed_sq M W hW hAction t
+      _ = _ := by rw [← hMixed, submatrix_norm_sq]
+  simp only [hNorm]
+  exact qubit_evaluation (D.pk ∘ f) (D.ql ∘ g) U hU hU' X Y hX hY hx hy hgap
+
+omit [DecidableEq e] in
+private theorem physical_trace_bound (hW : Wᴴ * W = 1)
+    (hAction : ∀ X, partialTraceRight (dilate W X) = act Φ X)
+    (f : Fin 2 ≃ M.data.K) (g : Fin 2 ≃ M.data.L)
+    (hx : ∀ j, logistic (sourceGap (M.data.pk ∘ f) j) ≤ 1 / 5)
+    (hy : ∀ i, logistic (referenceGap (M.data.ql ∘ g) i) ≤ 1 / 5)
+    (hgap : ∀ i j, (logistic (sourceGap (M.data.pk ∘ f) j) -
+        logistic (referenceGap (M.data.ql ∘ g) i)) ^ 2 ≤
+      (7 / 25) * (1 - logistic (sourceGap (M.data.pk ∘ f) j -
+        referenceGap (M.data.ql ∘ g) i))) :
+    traceNorm (M.data.R - recoveredState M.data) ^ 2 ≤
+      (8 + 2 * Real.sqrt 2) *
+        (finiteTraceLogRelativeEntropy ρ σ -
+          finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
+  classical
+  convert (trace_error_le_boundary M W hW hAction).trans
+      (mul_le_mul_of_nonneg_left
+        ((physical_evaluation M W hW hAction f g hx hy hgap).trans
+          (mul_le_mul_of_nonneg_left (full_logistic_physical M W hW hAction)
+            (by positivity : 0 ≤ K₂))) (by norm_num : (0 : ℝ) ≤ 4)) using 1
+  ring
+
+end Physical
+
+section Channel
+
+universe u
+
+variable {a b : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
+  [Fintype b] [DecidableEq b] [Nonempty b]
+
+/-- The ordinary Petz channel has squared trace error bounded by eight times the
+entropy loss for rank-one source outputs when the reference output has rank at
+most two. For two rank-two outputs with logistic correlations at most one fifth,
+the same channel has coefficient `8 + 2√2`. -/
+theorem ordinary_petz_traceNorm_sq_le_of_qubit_gaps
+    (Φ : QuantumChannel a b) (σ : DensityState a) :
+    let K := (actual_kraus_representation Φ).kraus
+    let S := CStarMatrix.ofMatrix.symm σ.1
+    let Q := CStarMatrix.ofMatrix.symm (Φ.mapState σ).1
+    let H := cfc Real.sqrt S
+    let W := spectralInverseSqrt Q
+    let P := spectralSupport Q
+    ∃ recovery : QuantumChannel b a,
+      (∀ X : Matrix b b ℂ,
+        CStarMatrix.ofMatrix.symm
+          (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+          (∑ c, H * (K c)ᴴ * W * X * W * K c * H) +
+            Matrix.trace ((1 - P) * X) • S) ∧
+      recovery.mapState (Φ.mapState σ) = σ ∧
+      ∀ (ρ : DensityState a) (support : SupportContained ρ σ),
+        let M := supported_relative_modular_model Φ ρ σ support
+        let error := traceNorm (CStarMatrix.ofMatrix.symm ρ.1 -
+          CStarMatrix.ofMatrix.symm (recovery.mapState (Φ.mapState ρ)).1) ^ 2
+        let Δ := finiteTraceLogRelativeEntropy ρ σ -
+          finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)
+        M.data.Q.rank ≤ 2 →
+          (M.data.T.rank ≤ 1 → error ≤ 8 * Δ) ∧
+          (M.data.T.rank = 2 →
+            (∀ j k : M.data.K, j ≠ k →
+              logistic (Real.log (M.data.pk j) - Real.log (M.data.pk k)) ≤ 1 / 5) →
+            (∀ i l : M.data.L, i ≠ l →
+              logistic (Real.log (M.data.ql i) - Real.log (M.data.ql l)) ≤ 1 / 5) →
+            error ≤ (8 + 2 * Real.sqrt 2) * Δ) := by
+  classical
+  dsimp only
+  obtain ⟨recovery, hAction, hReference, _⟩ :=
+    D5.S3.Quantum.Recovery.CanonicalPetzEquality.supported_entropy_equality_iff_fixed_petz_recovery
+      Φ σ
+  refine ⟨recovery, hAction, hReference, ?_⟩
+  intro ρ support hQ
+  let M := supported_relative_modular_model Φ ρ σ support
+  let D := M.data
+  have hTrace : Matrix.trace ((1 - spectralSupport D.Q) * D.T) = 0 := by
+    rw [Matrix.sub_mul, Matrix.one_mul, petz_output_support_projection M, sub_self,
+      Matrix.trace_zero]
+  have hr := hAction D.T
+  rw [hTrace, zero_smul, add_zero] at hr
+  have hRecovered :
+      CStarMatrix.ofMatrix.symm (recovery.mapState (Φ.mapState ρ)).1 = recoveredState D := by
+    refine hr.trans ?_
+    simp only [recoveredState, krausAdjoint, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+  rw [hRecovered]
+  obtain ⟨V, hV, hDilate⟩ := exists_retainedFirst_stinespring Φ
+  constructor
+  · intro hT
+    have hlevels : levelCount D.pk + levelCount D.ql - 1 ≤ 2 := by
+      have hTP := (levelCount_le_card D.pk).trans_eq (card_positive_eigenvalues D.hT)
+      have hQP := (levelCount_le_card D.ql).trans_eq (card_positive_eigenvalues D.hQ)
+      change D.Q.rank ≤ 2 at hQ
+      change D.T.rank ≤ 1 at hT
+      change levelCount D.pk ≤ D.T.rank at hTP
+      change levelCount D.ql ≤ D.Q.rank at hQP
+      omega
+    have hΔ : 0 ≤ finiteTraceLogRelativeEntropy ρ σ -
+        finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ) :=
+      (integral_nonneg (fun t => mul_nonneg (petzWeight_pos t).le (sq_nonneg _))).trans
+        (full_logistic_physical M V hV hDilate)
+    refine (trace_sq_le_of_dilation M V hV hDilate).trans ?_
+    apply mul_le_mul_of_nonneg_right _ hΔ
+    calc
+      _ ≤ 4 * ((2 : ℕ) : ℝ) :=
+        mul_le_mul_of_nonneg_left (Nat.cast_le.mpr hlevels) (by norm_num)
+      _ = 8 := by norm_num
+  · intro hT hPgap hQgap
+    have hQ₂ : D.Q.rank = 2 := le_antisymm hQ
+      (by simpa only [hT] using output_rank_le M)
+    let f := (Fintype.equivFinOfCardEq ((card_positive_eigenvalues D.hT).trans hT)).symm
+    let g := (Fintype.equivFinOfCardEq ((card_positive_eigenvalues D.hQ).trans hQ₂)).symm
+    have hOpp (i : Fin 2) : i.rev ≠ i := by
+      fin_cases i <;> decide
+    have hs (j : Fin 2) : logistic (sourceGap (D.pk ∘ f) j) ≤ 1 / 5 :=
+      hPgap _ _ (fun he => hOpp j (f.injective he))
+    have hq (i : Fin 2) : logistic (referenceGap (D.ql ∘ g) i) ≤ 1 / 5 :=
+      hQgap _ _ (fun he => hOpp i (g.injective he.symm))
+    exact physical_trace_bound M V hV hDilate f g hs hq (fun i j => logistic_gap _ _ (hs j) (hq i))
+
+#print axioms ordinary_petz_traceNorm_sq_le_of_qubit_gaps
+
+end Channel
+
 
 end D5.S3.Quantum.Recovery.PetzRetainedQubitPairing
