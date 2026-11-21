@@ -86,7 +86,7 @@ jobs:
         if: needs.parallel-compile.outputs.sparse == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          BASE: ${{ fromJSON(needs.parallel-compile.outputs.base).producer }}
+          BASE: ${{ fromJSON(needs.parallel-compile.outputs.base || '{}').producer }}
         run: |
           [[ "$BASE" =~ ^[0-9a-f]{40}$ && "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
           if ! git merge-base --is-ancestor "$BASE" "$GITHUB_SHA" 2>/dev/null; then
