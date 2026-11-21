@@ -28,13 +28,17 @@ proof_shape:
   P2_sum, P2_rootMultiplicity: bind-only helpers; consumer: two_case.
   P3_sum, P3_rootMultiplicity: bind-only helpers; consumer: three_case.
   trib_gt: bind-only helper; consumers: P3_other, three_case.
-  not_bounded_geom: bind-only helper; consumers: two_case, three_case.
+  not_bounded_geom: bind-only helper; consumers: two_case, three_case,
+    D5/S1/Recurrence/OEISA400645LargeSeeds.result.
+  comparisons: content (eventual window comparisons from a rounding error √s + 1/4 with
+    s → ∞); consumer: generic.
   le_next: bind-only helper (instantiation of the rounding bound); consumers: mono, two_case,
     three_case.
   mono: bind-only helper (induction over le_next); consumers: step_up, tendsto_atTop.
   generic: bind-only helper (assembles analytic and finish); consumers: two_case, three_case.
   upper_compare, lower_compare, step_up, tendsto_atTop, analytic, finish, P2_other, P3_other,
-    two_case, three_case: content; consumers: generic, two_case, three_case, result.
+    two_case, three_case: content; consumers: generic, two_case, three_case, result; analytic
+    and finish also D5/S1/Recurrence/OEISA400645LargeSeeds.asymptotic.
   result: content (after inlining the helpers added here, its live proof path runs through
     two_case, three_case and the lemmas above).
 Direct frozen dependencies (module statement_id):

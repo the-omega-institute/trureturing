@@ -17,11 +17,13 @@ escape_witness: other_roots (the complex roots of y^4 - y^3 - y^2 - y + 1 other 
 proof_shape:
   charPoly: definition; consumers: every lemma below.
   charPoly_natDegree: bind-only helper; consumer: charPoly_sum.
-  charPoly_sum: bind-only helper; consumer: forcing_bound.
+  charPoly_sum: bind-only helper; consumers: forcing_bound,
+    D5/S1/Recurrence/OEISA400645LargeSeeds.asymptotic.
   charPoly_eval: bind-only helper; consumer: rootMultiplicity_charPoly.
   forcing_bound: bind-only helper (source_error at j + 26 after unfolding radicand and b);
     consumer: result.
-  rootMultiplicity_charPoly, other_roots: content; consumer: result.
+  rootMultiplicity_charPoly, other_roots: content; consumers: result,
+    D5/S1/Recurrence/OEISA400645LargeSeeds.asymptotic.
   result: content.
 Direct frozen dependencies (module statement_id):
   D5/S1/Recurrence/Asymptotic/DominantRootForcing (result),

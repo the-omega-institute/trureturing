@@ -1,9 +1,55 @@
+/- GID: D5/S1/Recurrence/OEISA400645LargeSeeds
+   generality: G
+   mirror-B: D5/B/S1/Recurrence/OEISA400645LargeSeeds
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
+   anchors: []
+   utility: none
+   digest: For every nondecreasing seed the signed A400645 rule has nonnegative radicands, and a_n = c λ^n + O(1) with c > 0 unless the seed is (0,0,0,0) or (1,1,1,1). -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#351)
+escape_witness: growth (once a term reaches three, the next increments are positive: the
+  radicand at k + 3 is at most (7/4 a_(k+3))^2 and the next radicand exceeds
+  (a_(k+4) + 1/2)^2), escape (a nondecreasing seed other than (0,0,0,0) and (1,1,1,1) reaches
+  three: a run of twos gives the radicand 8 and the next term 3, and a zero followed by three
+  ones gives the radicand 3 and the next term 2), stall (the two constant seeds have radicand
+  2 c^2 and stay constant), and asymptotic (the squares satisfy the characteristic recurrence
+  with forcing √s + 1/4, the window comparisons 8/7 over three terms and 9/10 over two terms
+  hold eventually, and the reusable analytic core gives a_n^2 = L r^n + O(r^(n/2))).
+proof_shape:
+  rad3, round_sqrt_eq, round_err3, round_val3, mono_le, monoR: bind-only helpers; consumers:
+    mono_rad, growth, stall, escape, unbounded, asymptotic, result.
+  mono_rad: content (monotonicity and radicand lower bound by strong induction); consumers:
+    mono_le, asymptotic, result.
+  growth, escape, stall, unbounded, asymptotic: content; consumer: result.
+  result: content.
+Direct frozen dependencies (module statement_id):
+  D5/S1/Recurrence/OEISA400645 (radicand, squaredLimit, limitingRatio, r_bounds),
+    sha256:6b9935aa3f2f34c16302ab77311ac7fb8824542a3447a5f9a6013494c199e7aa;
+  D5/S1/Recurrence/OEISA400645BoundedError (charPoly, charPoly_sum, rootMultiplicity_charPoly,
+    other_roots; made public here for reuse), re-pinned in this delivery;
+  D5/S1/Recurrence/RoundedNormBoundedError (analytic, finish, not_bounded_geom; made public
+    here for reuse), re-pinned in this delivery.
+Search record (§3.1): D5/S1/Recurrence/OEISA400645 and OEISA400645BoundedError treat only the
+  seed (0, 0, 0, 1); OEISA400645FixedLagGrowth gives fixed-lag limits for that seed; no D5
+  declaration quantifies over seeds of the signed rule; pinned Mathlib has no rounded-norm
+  recurrences.
+-/
+
 import D5.S1.Recurrence.OEISA400645BoundedError
 import D5.S1.Recurrence.RoundedNormBoundedError
 
 set_option autoImplicit false
 
 noncomputable section
+
+/-! # The signed A400645 rule for every nondecreasing seed
+
+Let `a 1 ≤ a 2 ≤ a 3 ≤ a 4` and `a (n + 1) = round √(a n ² + a (n-1)² + a (n-2)² - a (n-3)²)` for
+`n ≥ 4`. Every radicand is nonnegative. The seeds `(0, 0, 0, 0)` and `(1, 1, 1, 1)` give constant
+sequences; every other seed gives `a n = c λ^n + O(1)` with `c > 0` and
+`a (n + 1) / a n = λ + O(λ^(-n))`, where `λ = limitingRatio`.
+-/
 
 namespace D5.S1.Recurrence.OEISA400645LargeSeeds
 
