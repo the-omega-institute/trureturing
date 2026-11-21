@@ -12,6 +12,8 @@ import Mathlib.Data.Finset.Max
 
 -- Source (proper family and degree-count conventions): https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Spine/Complexes.lean
 -- Source (natural proper carrier): https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Counting/Duality.lean
+-- Source (top): https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Counting/Stats.lean#L105-108
+-- Source (indeg): https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Counting/Stats.lean#L112-115
 /-
 Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
 When the project's pinned Mathlib provides an equivalent declaration,

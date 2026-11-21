@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.lym`
 
 *Commentary.*
 
-Apply the local LYM bound to the lower shadow of the next layer and use downward closure to bound this shadow by the current layer.
+Apply the local LYM bound to the lower shadow of the next layer and use downward closure to bound this shadow by the current layer. Snellman's Spine/LYM.lean, line 46, states the inequality for order ideals.
 
 **Definition 1.2 (Real skeleton vertices).**
 
@@ -22,13 +22,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.skel`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.skel` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Fill the layer capacity up to the cutoff and put zero above it, in real coordinates.
+Fill the layer capacity up to the cutoff and put zero above it, in real coordinates. See Spine/LYM.lean, line 76.
 
 **Definition 1.3 (Positive skeleton vertices).**
 
@@ -36,13 +34,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.skelSet`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.skelSet` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Use the skeletons with cutoffs from one through n.
+Use the skeletons with cutoffs from one through n. See Spine/LYM.lean, line 80.
 
 **Definition 1.4 (Consecutive normalized inequalities).**
 
@@ -50,13 +46,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.lymChain`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.lymChain` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Require the fixed first two coordinates, nonnegativity and the comparison of adjacent ratios to the binomial capacities.
+Fix the first two coordinates, compare adjacent ratios to the binomial capacities, and require a nonnegative last coordinate. See Spine/LYM.lean, line 85.
 
 **Theorem 1.5 (Identify the singleton coordinate).**
 
@@ -64,13 +58,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.fin_one_eq`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.fin_one_eq` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-The degree-one index used in the inequalities is the same index as the singleton coordinate for positive ground size.
+The degree-one index used in the inequalities is the same index as the singleton coordinate for positive ground size. See Spine/LYM.lean, line 94.
 
 **Theorem 1.6 (The normalized region is convex).**
 
@@ -78,69 +70,59 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.convex_lymChain`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.convex_lymChain` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-The defining equalities and inequalities are linear. They hold under convex combinations.
+The defining equalities and inequalities are linear. They hold under convex combinations. See Spine/LYM.lean, line 102.
 
-**Definition 1.7 (Weights from consecutive ratio differences).**
+**Definition 1.7 (Normalized coordinates extended by zero).**
 
 Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Subtract the next normalized coordinate from the current one and use zero beyond the last degree.
+At degree k through n, divide x[k] by the binomial coefficient choose(n,k). Extend the ratio by zero beyond n. See Spine/LYM.lean, line 164 and Part III, Proposition 2, equation (14).
 
-**Theorem 1.8 (The weight inside the coordinate window).**
+**Theorem 1.8 (The ratio inside the coordinate window).**
 
 Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf_of_le`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf_of_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Inside the window the weight is the indicated normalized difference, with the next value zero at the boundary.
+For k at most n, the value is x[k] divided by choose(n,k), including at k = n. See Spine/LYM.lean, line 167.
 
-**Theorem 1.9 (The weight beyond the coordinate window).**
+**Theorem 1.9 (The ratio beyond the coordinate window).**
 
 Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf_of_gt`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.muOf_of_gt` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-There are no coordinates past the last degree and the weight there vanishes.
+For k greater than n, the extended ratio is zero. See Spine/LYM.lean, line 171.
 
-**Theorem 1.10 (The weights telescope).**
+**Theorem 1.10 (Consecutive ratio differences telescope).**
 
 Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.sum_mu_telescope`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.sum_mu_telescope` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Summing the consecutive differences from a degree through the end recovers the normalized count in that degree.
+Summing each ratio minus the next from degree k through n recovers the ratio at k, since the extended ratio at n+1 is zero. See Spine/LYM.lean, line 176.
 
 **Theorem 1.11 (Normalized inequalities give a skeleton mixture).**
 
@@ -152,7 +134,7 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.lymChain_subset_hull`
 
 *Commentary.*
 
-The consecutive differences are nonnegative and sum to one. Their skeleton combination has the same coordinates by telescoping.
+The barycentric weight of the skeleton at cutoff k is the ratio at k minus the ratio at k+1. These weights are nonnegative and sum to one. Their skeleton combination has the same coordinates by telescoping. See Spine/LYM.lean, line 197 and Part III, Proposition 2 at scale one.
 
 **Definition 1.12 (Real f-vector coordinates).**
 
@@ -174,13 +156,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.realVector`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.realVector` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Cast each natural coordinate to the reals.
+Cast each natural coordinate to the reals, as in the image map in Counting/Duality.lean, line 322.
 
 **Definition 1.14 (Real realizations of proper f-vectors).**
 
@@ -188,13 +168,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.realVectors`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/ConvexHull.realVectors` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Take the image of the literal proper vector set under coordinatewise real casting.
+Take the image of the literal proper vector set under coordinatewise real casting. Counting/Duality.lean, line 322, identifies this image with the real carrier in Spine/Complexes.lean, line 68.
 
 **Theorem 1.15 (The literal convex hull is the normalized region).**
 
@@ -202,13 +180,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.hull_eq_lymChain`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.hull_eq_lymChain` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Actual face vectors satisfy local LYM. Conversely the skeleton mixture expresses every point of the region using actual proper face vectors.
+Actual face vectors satisfy local LYM. Conversely the skeleton mixture expresses every point of the region using actual proper face vectors. See Spine/KozlovThm.lean, line 145.
 
 **Theorem 1.16 (Positive real layer capacities).**
 
@@ -238,7 +214,7 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.Normalized`
 
 Fix the first two coordinates at their scaled capacities. Require nonnegative coordinates and monotone normalized counts.
 
-**Theorem 1.18 (Compare any two normalized coordinates in order).**
+**Theorem 1.18 (The scale bounds each normalized coordinate).**
 
 Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.ratio_le`
 
@@ -250,7 +226,7 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.ratio_le`
 
 *Commentary.*
 
-Apply the antitonicity field at the two indices.
+Compare each degree with degree zero by antitonicity. The degree-zero ratio equals the scale.
 
 **Theorem 1.19 (Adjacent and all-index comparisons at scale one).**
 
@@ -272,13 +248,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ConvexHull.mem_dilate_iff`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ConvexHull.mem_dilate_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Use the hull equality and cancel the positive dilation factor in the coordinate and ratio conditions.
+Use the hull equality and cancel the positive dilation factor in the coordinate and ratio conditions. This is the Kozlov specialization of Part III, Proposition 2.
 
 ## References
 

@@ -18,7 +18,7 @@ internal sealed class LatticeCountDocument : IScribeDocumentDefinition
             Node("castintvector", "castIntVector", "Integral vectors as real vectors", DescribeRole.Definition,
                 "Cast the integer coordinates into the real ambient space of the polytope."),
             Node("dilatelattice", "dilateLattice", "Literal lattice points in the real dilate", DescribeRole.Definition,
-                "An integer vector belongs exactly when its real image lies in the scalar dilate of the convex hull of actual proper f-vectors."),
+                "An integer vector belongs exactly when its real image lies in the scalar dilate of the convex hull of actual proper f-vectors. See Lattice/TransferEhrhart.lean, line 595."),
             Node("cast-intvector", "cast_intVector", "The two coordinate casts agree", DescribeRole.Theorem,
                 "Casting a natural coordinate through the integers agrees with its direct real cast."),
             Node("natdilation", "natDilation", "Natural vectors satisfying the dilation conditions", DescribeRole.Definition,
@@ -38,14 +38,15 @@ internal sealed class LatticeCountDocument : IScribeDocumentDefinition
             Node("lattice-terminal", "lattice_terminal", "The terminal rank-one lattice vector is full", DescribeRole.Theorem,
                 "If the top coordinate is positive it reaches its unit capacity. Monotonicity of normalized coordinates forces every earlier coordinate to reach capacity too."),
             Node("lattice-chained-exists", "lattice_chained_exists", "Chained integral decomposition for every positive rank", DescribeRole.Theorem,
-                "Clip the vector at the rank-one capacities and subtract this last member. The residual ratios are the positive parts after subtracting one, so they are antitone. A deficient coordinate of the clipped member forces the residual to vanish from that degree onward. Induct on rank and append the clipped member."),
+                "This is the equal-shift Kozlov case of Part III, Theorem 6 and Corollary 7. Clip the vector at the rank-one capacities and subtract this last member. The residual ratios are the positive parts after subtracting one, so they are antitone. A deficient coordinate of the clipped member forces the residual to vanish from that degree onward. Induct on rank and append the clipped member."),
             Node("lattice-count-transfer", "lattice_count_transfer", "The transfer formula for literal lattice points", DescribeRole.Theorem,
-                "The natural-dilation carrier is the image of chained rank-one lattice tuples. Use the integral decomposition for surjectivity, uniqueness of bounded chained sums, and the injective coordinate cast."))));
+                "The natural-dilation carrier is the image of chained rank-one lattice tuples. Use the integral decomposition for surjectivity, uniqueness of bounded chained sums, and the injective coordinate cast. See Part III, Corollary 33 and Lattice/TransferEhrhart.lean, line 613."))));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string prose, Formula? formula = null) =>
         Describe.Lean(DescribeId.Create("kozlov-lattice-count-" + id),
             DeclarationHandle.Create(Prefix + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source),
+            name is "dilateLattice" or "lattice_chained_exists" or "lattice_count_transfer"
+                ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

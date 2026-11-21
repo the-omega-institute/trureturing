@@ -24,13 +24,11 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\exists A \in \mathbb{Q}[X
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/EqualShiftDivisibility.equal_shift_count_polynomials_exist` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Apply the falling-binomial power polynomial separately to the proper and lattice transfer matrices and substitute X+1. At any positive rank r the respective entry of power r+1 is the literal count of rank r.
+Part III, Corollary 34, states polynomiality of both counts and credits Part II, Theorems 36 and 41, for the proper count and its transfer formula. Here the rational witnesses come from the two falling-binomial matrix polynomials composed with X+1. The unconditional proper and lattice transfer laws identify each entry of power r+1 with its literal count at every positive rank r.
 
 **Theorem 1.3 (Divisibility by X times X plus one).**
 

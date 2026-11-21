@@ -108,13 +108,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.SnF_bounded`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.SnF_bounded` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Every layer lies inside the family of all subsets of that size.
+Every layer lies inside the family of all subsets of that size. See the bound for order ideals in Counting/Stats.lean, line 70.
 
 **Theorem 1.9 (Proper f-vectors are full in degrees zero and one).**
 
@@ -122,13 +120,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.SnF_fixed`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.SnF_fixed` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Use the absence of missing faces in those two degrees.
+Use the absence of missing faces in those two degrees. See Spine/Complexes.lean, lines 65–69.
 
 **Theorem 1.10 (Positive coordinates are bounded above by the top).**
 
@@ -136,13 +132,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.le_top_of_pos`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.le_top_of_pos` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-A positive coordinate belongs to the nonempty finite support over which the top is the maximum.
+A positive coordinate belongs to the nonempty finite support over which the top is the maximum. See Counting/Stats.lean, line 137.
 
 **Theorem 1.11 (Coordinates above the top vanish).**
 
@@ -150,13 +144,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.vanish_of_top_lt`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.vanish_of_top_lt` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Positive occupancy would contradict the maximum's bound.
+Positive occupancy would contradict the maximum's bound. See Counting/Stats.lean, line 146.
 
 **Theorem 1.12 (A deficiency bounds the first missing degree).**
 
@@ -164,13 +156,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.indeg_le_of_lt_cap`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.indeg_le_of_lt_cap` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-The deficient coordinate belongs to the set whose minimum defines the first missing degree.
+The deficient coordinate belongs to the set whose minimum defines the first missing degree. See Counting/Stats.lean, line 166.
 
 **Theorem 1.13 (Earlier bounded coordinates are full).**
 
@@ -178,13 +168,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.full_below_indeg`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.full_below_indeg` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-A below-capacity coordinate would force the minimum to be no higher than that coordinate.
+A below-capacity coordinate would force the minimum to be no higher than that coordinate. Apply the lower bound in Counting/Stats.lean, line 175, to capacity-bounded coordinates.
 
 **Theorem 1.14 (Fullness through a degree characterizes the first deficit).**
 
@@ -192,13 +180,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.lt_indeg_iff`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.lt_indeg_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Read the minimum of the deficient degrees or use the sentinel when that set is empty.
+Read the minimum of the deficient degrees or use the sentinel when that set is empty. This is the bounded case of Counting/Stats.lean, line 196, with threshold k+1.
 
 **Theorem 1.15 (The cutoff is the top of a full skeleton).**
 
@@ -220,13 +206,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.chained_sum_injective`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.chained_sum_injective` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-At each coordinate the final summand is the lesser of the total and the capacity. A deficit in that summand forces all previous summands to vanish in that coordinate. Peel off the last summand and induct on tuple length.
+At each coordinate the final summand is the lesser of the total and the capacity. A deficit in that summand forces all previous summands to vanish in that coordinate. Peel off the last summand and induct on tuple length. Counting/Chaining.lean, line 693, gives the shifted injectivity statement.
 
 **Definition 1.17 (State indexed by the top degree).**
 
@@ -346,13 +330,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/ChainedCount.proper_count_transfer`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/ChainedCount.proper_count_transfer` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-The chained subset has the full proper sumset as image by unconditional surjectivity. Its boundedness and fixed coordinates allow the chain cardinality formula.
+The chained subset has the full proper sumset as image by unconditional surjectivity. Its boundedness and fixed coordinates allow the chain cardinality formula. See Part II, Theorem 41 at equal shifts.
 
 **Theorem 1.26 (The top-degree face forces a full simplex).**
 

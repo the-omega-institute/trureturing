@@ -30,17 +30,17 @@ internal sealed class TransferEndpointsDocument : IScribeDocumentDefinition
             Node("transfer-sandwich", "transfer_sandwich", "The endpoint matrix power identity", DescribeRole.Theorem,
                 "Replace the two boundary vectors by the selected row and column and reassociate multiplication, adding two factors of the transfer matrix."),
             Node("propertransfer", "properTransfer", "The proper transfer matrix", DescribeRole.Definition,
-                "Use the actual proper f-vectors as the rank-one carrier."),
+                "Use the actual proper f-vectors as the rank-one carrier. This is the positive-top block of the zero-gap transfer in Part II, Theorem 41."),
             Node("latticetransfer", "latticeTransfer", "The lattice transfer matrix", DescribeRole.Definition,
-                "Use the natural rank-one lattice vectors as the carrier."),
+                "Use the natural rank-one lattice vectors as the carrier. See Part III, equation (42) at zero gap and Lattice/TransferEhrhart.lean, line 444."),
             Node("proper-count-as-entry", "proper_count_as_entry", "The proper count as one matrix entry", DescribeRole.Theorem,
                 "The count at rank r+1 equals the first-to-last entry of the proper transfer matrix to power r+2."),
             Node("lattice-count-as-entry", "lattice_count_as_entry", "The lattice count as one matrix entry", DescribeRole.Theorem,
                 "The count at rank r+1 equals the first-to-last entry of the lattice transfer matrix to power r+2."),
             Node("propertransfer-unitriangular", "properTransfer_unitriangular", "The proper transfer is upper unitriangular", DescribeRole.Theorem,
-                "Proper f-vectors are bounded and fixed, and the full skeleton of each positive cutoff is proper. These facts give the triangular vanishing and diagonal identities."),
+                "Proper f-vectors are bounded and fixed, and the full skeleton of each positive cutoff is proper. These facts give the triangular vanishing and diagonal identities. See Part II, Lemma 44."),
             Node("latticetransfer-unitriangular", "latticeTransfer_unitriangular", "The lattice transfer is upper unitriangular", DescribeRole.Theorem,
-                "Rank-one lattice vectors are bounded and fixed and contain the full skeleton of each positive cutoff. Apply the same two entry identities to this carrier."),
+                "Rank-one lattice vectors are bounded and fixed and contain the full skeleton of each positive cutoff. Apply the same two entry identities to this carrier. See Part III, equation (43) and Lattice/TransferEhrhart.lean, lines 742 and 754."),
             Node("firststate-eq-laststate-iff", "firstState_eq_lastState_iff", "The one-state case", DescribeRole.Theorem,
                 "The first index is zero and the last is n-1, which agree exactly when n is one."))));
 
@@ -48,6 +48,8 @@ internal sealed class TransferEndpointsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("kozlov-transfer-endpoints-" + id),
             DeclarationHandle.Create(Prefix + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source),
+            name is "properTransfer" or "latticeTransfer" or "properTransfer_unitriangular"
+                or "latticeTransfer_unitriangular"
+                ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

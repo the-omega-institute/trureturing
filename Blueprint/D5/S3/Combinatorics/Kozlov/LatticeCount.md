@@ -52,13 +52,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/LatticeCount.dilateLattice`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/LatticeCount.dilateLattice` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-An integer vector belongs exactly when its real image lies in the scalar dilate of the convex hull of actual proper f-vectors.
+An integer vector belongs exactly when its real image lies in the scalar dilate of the convex hull of actual proper f-vectors. See Lattice/TransferEhrhart.lean, line 595.
 
 **Theorem 1.5 (The two coordinate casts agree).**
 
@@ -192,13 +190,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/LatticeCount.lattice_chained_exists`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/LatticeCount.lattice_chained_exists` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Clip the vector at the rank-one capacities and subtract this last member. The residual ratios are the positive parts after subtracting one, so they are antitone. A deficient coordinate of the clipped member forces the residual to vanish from that degree onward. Induct on rank and append the clipped member.
+This is the equal-shift Kozlov case of Part III, Theorem 6 and Corollary 7. Clip the vector at the rank-one capacities and subtract this last member. The residual ratios are the positive parts after subtracting one, so they are antitone. A deficient coordinate of the clipped member forces the residual to vanish from that degree onward. Induct on rank and append the clipped member.
 
 **Theorem 1.15 (The transfer formula for literal lattice points).**
 
@@ -206,13 +202,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/LatticeCount.lattice_count_transfer`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/LatticeCount.lattice_count_transfer` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-The natural-dilation carrier is the image of chained rank-one lattice tuples. Use the integral decomposition for surjectivity, uniqueness of bounded chained sums, and the injective coordinate cast.
+The natural-dilation carrier is the image of chained rank-one lattice tuples. Use the integral decomposition for surjectivity, uniqueness of bounded chained sums, and the injective coordinate cast. See Part III, Corollary 33 and Lattice/TransferEhrhart.lean, line 613.
 
 ## References
 

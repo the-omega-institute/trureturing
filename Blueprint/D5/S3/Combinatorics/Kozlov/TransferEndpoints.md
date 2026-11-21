@@ -136,13 +136,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/TransferEndpoints.properTransfer`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/TransferEndpoints.properTransfer` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Use the actual proper f-vectors as the rank-one carrier.
+Use the actual proper f-vectors as the rank-one carrier. This is the positive-top block of the zero-gap transfer in Part II, Theorem 41.
 
 **Definition 1.11 (The lattice transfer matrix).**
 
@@ -150,13 +148,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/TransferEndpoints.latticeTransfer`
 
 *Formalization.* `D5/S3/Combinatorics/Kozlov/TransferEndpoints.latticeTransfer` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Use the natural rank-one lattice vectors as the carrier.
+Use the natural rank-one lattice vectors as the carrier. See Part III, equation (42) at zero gap and Lattice/TransferEhrhart.lean, line 444.
 
 **Theorem 1.12 (The proper count as one matrix entry).**
 
@@ -192,13 +188,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/TransferEndpoints.properTransfer_uni
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/TransferEndpoints.properTransfer_unitriangular` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Proper f-vectors are bounded and fixed, and the full skeleton of each positive cutoff is proper. These facts give the triangular vanishing and diagonal identities.
+Proper f-vectors are bounded and fixed, and the full skeleton of each positive cutoff is proper. These facts give the triangular vanishing and diagonal identities. See Part II, Lemma 44.
 
 **Theorem 1.15 (The lattice transfer is upper unitriangular).**
 
@@ -206,13 +200,11 @@ Lean statement: `D5/S3/Combinatorics/Kozlov/TransferEndpoints.latticeTransfer_un
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Kozlov/TransferEndpoints.latticeTransfer_unitriangular` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
+*Citation.* Jan Snellman (2026). *Hilbert functions over the exterior algebra and f-vectors in higher rank III: Lattice points of the Kozlov polytope*. DOI: [10.48550/arXiv.2611.26110](https://doi.org/10.48550/arXiv.2611.26110). URL: <https://arxiv.org/pdf/2611.26110v1#page=52>.
 
 *Commentary.*
 
-Rank-one lattice vectors are bounded and fixed and contain the full skeleton of each positive cutoff. Apply the same two entry identities to this carrier.
+Rank-one lattice vectors are bounded and fixed and contain the full skeleton of each positive cutoff. Apply the same two entry identities to this carrier. See Part III, equation (43) and Lattice/TransferEhrhart.lean, lines 742 and 754.
 
 **Theorem 1.16 (The one-state case).**
 
