@@ -24,7 +24,7 @@ open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTrac
 open _root_.Reg.Support.SingleDependentReadout (signature sensitivity)
 open scoped BigOperators Classical ComplexOrder MatrixOrder Matrix.Norms.Frobenius
 
-open private Us upper sourceAmplitude completed complementaryAmplitude rotatedGram
+open private sourceAmplitude completed physicalGram rotatedGram
   exists_retainedFirst_stinespring from D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
 open private unitModel unitChannel from Reg.D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
 
@@ -51,21 +51,17 @@ abbrev arena : Arena where
     let D := M.data
     let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
     let B := completed D W
-    ‖A‖ = 1 ∧ (∀ t, ‖B t‖ = 1) ∧
-      (∀ t, R.readout () () (‖A - B t‖ ^ 2) (deficit D (1 / 2) t)) ∧
-      (∀ t, ‖complementaryAmplitude D W t‖ ^ 2 =
-        1 - ∑ i, ‖amplitude D (upper t) i‖ ^ 2) ∧
-      (∀ t, B t * (B t)ᴴ = rotatedGram D t) ∧
-      Us D * (A * Aᴴ) * (Us D)ᴴ = D.R ∧
-      Us D * (B 0 * (B 0)ᴴ) * (Us D)ᴴ = recoveredState D
+    (∀ t, R.readout () () (‖A - B t‖ ^ 2) (deficit D (1 / 2) t) ∧
+      B t * (B t)ᴴ = rotatedGram D t) ∧
+      physicalGram D A = D.R ∧ physicalGram D (B 0) = recoveredState D
 
 private theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
   intro law
   let M := unitModel.{u,u}
   obtain ⟨W, hW, hAction⟩ := exists_retainedFirst_stinespring
     (unitChannel (ULift.{u} Unit) (ULift.{u} Unit))
-  have h := (supported_stinespring_gram M W hW hAction).2.2.1 0
-  have bad := (law M W hW hAction).2.2.1 0
+  have h := ((supported_stinespring_gram M W hW hAction).1 0).1
+  have bad := ((law M W hW hAction).1 0).1
   change ‖sourceAmplitude M.data - completed M.data W 0‖ ^ 2 =
     deficit M.data (1 / 2) 0 at h
   change ‖sourceAmplitude M.data - completed M.data W 0‖ ^ 2 + 1 =
@@ -110,7 +106,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "fn", "fn"]
+        "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body",
+        "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

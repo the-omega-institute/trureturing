@@ -592,6 +592,9 @@ def recoveredState (D : SupportedRelativeModularData Φ ρ σ) : Matrix a a ℂ 
     krausAdjoint (actual_kraus_representation Φ).kraus (Qinv * D.T * Qinv) *
     cfc Real.sqrt D.S
 
+private def physicalGram {c : Type u} [Fintype c] (A : Matrix D.J c ℂ) : Matrix a a ℂ :=
+  Us D * (A * Aᴴ) * (Us D)ᴴ
+
 /-- The completed amplitude has the adjoint Gram at every real upper-edge phase.
 Its orthogonal column block contributes the missing squared norm. The two
 zero-phase Grams lift to the original state and its ordinary recovery. -/
@@ -602,13 +605,9 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
     let D := M.data
     let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
     let B := completed D W
-    ‖A‖ = 1 ∧ (∀ t, ‖B t‖ = 1) ∧
-      (∀ t, ‖A - B t‖ ^ 2 = deficit D (1 / 2) t) ∧
-      (∀ t, ‖complementaryAmplitude D W t‖ ^ 2 =
-        1 - ∑ i, ‖amplitude D (upper t) i‖ ^ 2) ∧
-      (∀ t, B t * (B t)ᴴ = rotatedGram D t) ∧
-      Us D * (A * Aᴴ) * (Us D)ᴴ = D.R ∧
-      Us D * (B 0 * (B 0)ᴴ) * (Us D)ᴴ = recoveredState D := by
+    (∀ t, ‖A - B t‖ ^ 2 = deficit D (1 / 2) t ∧
+      B t * (B t)ᴴ = rotatedGram D t) ∧
+      physicalGram D A = D.R ∧ physicalGram D (B 0) = recoveredState D := by
   let D := M.data
   let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
   have hc (t : ℝ) := complete_gram (sourceBlock D) (physicalFactor D W t)
@@ -626,8 +625,9 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
     calc
       _ = physicalFactor D W t * (physicalFactor D W t)ᴴ := (hc t).1
       _ = _ := by rw [physicalFactor_gram W M hAction, outputProduct_gram, rotatedGram]
-  refine ⟨sourceAmplitude_unit M, fun t => (hc t).2.1, ?_, ?_, hGram, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_⟩
   · intro t
+    refine ⟨?_, hGram t⟩
     have hdist : ‖A - completed D W t‖ ^ 2 =
         ‖sourceBlock D - physicalFactor D W t * dilationColumns D W * phaseMatrix D t‖ ^ 2 +
           (1 - ‖physicalFactor D W t * dilationColumns D W * phaseMatrix D t‖ ^ 2) := (hc t).2.2.2
@@ -635,8 +635,6 @@ theorem supported_stinespring_gram (M : SupportedRelativeModularModel Φ ρ σ)
     rw [hdist, deficit_eq_distance_add_defect M, hnorm, frobenius_sq, Fintype.sum_prod_type]
     simp only [Matrix.sub_apply, sourceBlock_apply, hcol, upper, Fintype.sum_prod_type]
     rfl
-  · intro t
-    simpa only [complementaryAmplitude, hnorm t] using (hc t).2.2.1
   · change Us D * (A * Aᴴ) * (Us D)ᴴ = D.R
     rw [show A = fromCols (sourceBlock D) (0 : Matrix D.J (b × e) ℂ) from rfl,
       conjTranspose_fromCols_eq_fromRows_conjTranspose, fromCols_mul_fromRows,
@@ -821,23 +819,29 @@ private theorem traceBound_of_dilation (M : SupportedRelativeModularModel Φ ρ 
   let E := petzBoundary (block (e := e) D) (outer D) D.ql D.pk A (coefficients D W)
   have hE (t : ℝ) : E t = A - B t := boundary_eq D W t
   have hB : A - E 0 = B 0 := by rw [hE, sub_sub_cancel]
-  obtain ⟨hAu, hBu, hd, _, _, hA, hRec⟩ := supported_stinespring_gram M W hW hAction
+  obtain ⟨hd, hA, hRec⟩ := supported_stinespring_gram M W hW hAction
+  have hAu : ‖A‖ = 1 := sourceAmplitude_unit M
+  have hBu : ‖B 0‖ = 1 :=
+    (complete_gram (sourceBlock D) (physicalFactor D W 0) (dilationColumns D W)
+      (phaseMatrix D 0) (dilationColumns_isometry D W hW) (phase_unitary D 0)
+      (physicalFactor_unitTrace W M hAction 0)).2.1
   have hEv := traceNorm_gram_sub_sq_le_petz_boundary (block (e := e) D) (outer D)
     D.ql D.pk A (coefficients D W) m hm hAu (by
       change ‖A - E 0‖ = 1
       rw [hB]
-      exact hBu 0)
+      exact hBu)
   dsimp only at hEv
   change traceNorm ((A - E 0) * (A - E 0)ᴴ - A * Aᴴ) ^ 2 ≤
     (8 * (m : ℝ)) * (∫ t : ℝ, petzWeight t * ‖E t‖ ^ 2) at hEv
   have hpoint (t : ℝ) : ‖E t‖ ^ 2 = deficit D (1 / 2) t := by
     rw [hE]
-    exact hd t
+    exact (hd t).1
   rw [hB] at hEv
   simp only [hpoint] at hEv
   have hLift : Us D * (B 0 * (B 0)ᴴ - A * Aᴴ) * (Us D)ᴴ =
       recoveredState D - D.R := by
-    rw [Matrix.mul_sub, Matrix.sub_mul, hA, hRec]
+    rw [Matrix.mul_sub, Matrix.sub_mul]
+    exact congrArg₂ (· - ·) hRec hA
   have hTrace := traceNorm_isometry (Us D) (columns_isometry D.hS.1)
     (B 0 * (B 0)ᴴ - A * Aᴴ)
   rw [hLift, ← neg_sub, Foundation.FiniteTraceDistance.traceNorm_neg] at hTrace
