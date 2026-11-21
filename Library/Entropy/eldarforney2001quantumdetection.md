@@ -34,3 +34,19 @@ bound and a normalized Walsh measurement. It proves the labelled
 coinciding-state endpoint and transports the attainable success set to
 the original product carrier. The product formula allows different pairs and carriers at each position. The separate finite-scale limit for a common overlap uses the
 logarithmic slope of the resulting scalar success curve.
+
+## Coarse coordinate readout at fixed block probabilities
+
+The authors’ arXiv manuscript gives the square-root minimum-error readout
+for geometrically uniform pure signals in Theorem 4 (PDF p. 35).
+The finite discrimination dual used for the recorded score is in
+Eldar, Megretski and Verghese, §3.1–3.2, Eqs. (14)–(20), arXiv PDF
+pp. 9–10. [Eldar and Forney](https://arxiv.org/abs/quant-ph/0005132v2) · [Eldar, Megretski and Verghese](https://arxiv.org/abs/quant-ph/0205178v1) · [Dual paper DOI 10.1109/TIT.2003.809510](https://doi.org/10.1109/TIT.2003.809510)
+
+The AURIC calculation uses the exact coordinate-PVM score from the earlier
+overlay. At fixed q, sparse and flat amplitudes in each block give the two
+extreme losses. Linear interpolation of squared amplitudes stays at the same
+q and gives all intermediate losses. The Walsh pair has the same law
+(1/2, 1/2), entropy log 2, and coherent success 49/64. The recorded maxima
+49/128 and 197/512 differ even with joint readout of the terminal flag and
+residual register. This is a finite, single-shot minimum-error comparison.
