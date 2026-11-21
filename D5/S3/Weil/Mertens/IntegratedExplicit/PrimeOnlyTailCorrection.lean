@@ -10,6 +10,7 @@ import D5.S3.Arith.Robin.EulerLayerRootCorrection
 import D5.S3.Arith.Robin.CompleteMertensPeak
 import D5.S3.Weil.Mertens.WeightedPrimeLimit
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -334,5 +335,213 @@ theorem prime_tail_negative_window_lower {a b x r : ℝ}
     have hsign := mul_nonpos_of_nonneg_of_nonpos (sub_nonneg.mpr h)
       (sub_nonpos.mpr (inv_anti₀ hx0 hz.1))
     linarith [primeTail_persists hx hz1 hr hr' (hleft.trans hz.1) hz.2 hsign]
+
+/-- A sequence with consecutive ratios tending to one intersects every
+sufficiently late interval of a fixed relative width. -/
+private theorem eventual_sequence_hits_relative_window {u : ℕ → ℝ} (hu : Tendsto u atTop atTop)
+    (hratio : Tendsto (fun n => u (n + 1) / u n) atTop (𝓝 1)) {a b : ℝ}
+    (ha : 0 < a) (hab : a < b) (N : ℕ) :
+    ∀ᶠ y : ℝ in atTop, ∃ n ≥ N, a * y ≤ u n ∧ u n ≤ b * y := by
+  have hb := ha.trans hab
+  have hmargin : 1 < b / a := (lt_div_iff₀ ha).2 (by simpa using hab)
+  have hsteps : ∀ᶠ n in atTop, 0 < u n ∧ u (n + 1) / u n ≤ b / a :=
+    (hu.eventually_gt_atTop 0).and
+      ((hratio.eventually (gt_mem_nhds hmargin)).mono fun _ h => h.le)
+  obtain ⟨T, hT⟩ := eventually_atTop.1 hsteps
+  let S := max T N
+  have hlarge : ∀ᶠ y : ℝ in atTop, u S / a < y := eventually_gt_atTop _
+  filter_upwards [hlarge] with y hy
+  have hbelow : u S < a * y := by
+    simpa [mul_comm] using (div_lt_iff₀ ha).1 hy
+  have hex : ∃ n, a * y ≤ u (S + n) := by
+    obtain ⟨K', hK'⟩ := eventually_atTop.1 (hu.eventually_ge_atTop (a * y))
+    exact ⟨K', hK' _ (Nat.le_add_left _ _)⟩
+  have hhit := Nat.find_spec hex
+  have hindex : Nat.find hex ≠ 0 := by
+    intro hzero
+    rw [hzero, Nat.add_zero] at hhit
+    exact (not_le_of_gt hbelow) hhit
+  obtain ⟨n, hn⟩ : ∃ n, Nat.find hex = n + 1 := Nat.exists_eq_succ_of_ne_zero hindex
+  have hbefore : u (S + n) < a * y :=
+    not_le.mp (Nat.find_min hex (by omega : n < Nat.find hex))
+  obtain ⟨hpos, hstep⟩ := hT (S + n)
+    ((le_max_left T N).trans (Nat.le_add_right S n))
+  have hupper : u ((S + n) + 1) ≤ b / a * u (S + n) := (div_le_iff₀ hpos).1 hstep
+  have hproduct : b / a * (a * y) = b * y := by
+    field_simp
+  refine ⟨S + (n + 1), (le_max_right T N).trans (Nat.le_add_right S _), ?_, ?_⟩
+  · simpa [hn] using hhit
+  · rw [← Nat.add_assoc, ← hproduct]
+    exact hupper.trans (mul_le_mul_of_nonneg_left hbefore.le (div_nonneg hb.le ha.le))
+
+
+open D5.S3.Arith.Robin.CompleteMertensPeak (U)
+open D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity (complete_chebyshev_tail_identity)
+
+/-- The log-window integral of the actual complete remainder is dominated by
+the weighted negative mass of the prime-only tail. -/
+private theorem integral_U_exp_le_prime_window {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b) :
+    (∫ u in Real.log a..Real.log b, U (Real.exp u)) ≤
+      Real.sqrt b * (∫ z in a..b, max (-primeTail z) 0 / Real.sqrt z) := by
+  have ha0 : 0 < a := by linarith
+  have hb0 := ha0.trans_le hab
+  have hla := Real.log_le_log ha0 hab
+  have hmem {z : ℝ} (hz : z ∈ uIcc a b) : 1 ≤ z := by
+    have hz' := uIcc_of_le hab ▸ hz
+    linarith [hz'.1]
+  have qContinuous : ContinuousOn Q (Ici 1) :=
+    chebyshev_error_kernel_integrable.continuousOn_Ici_primitive_Ioi
+  have hpri : ContinuousOn primeTail (uIcc a b) :=
+    prime_integrable.continuousOn_Ici_primitive_Ioi.mono (fun z hz => hmem hz)
+  have hmass : IntervalIntegrable (fun z => max (-primeTail z) 0 / Real.sqrt z) volume a b :=
+    ((hpri.neg.sup continuousOn_const).div Real.continuous_sqrt.continuousOn
+      (fun z hz => (Real.sqrt_pos.mpr (zero_lt_one.trans_le (hmem hz))).ne')).intervalIntegrable
+  have htwo {u : ℝ} (hu : u ∈ uIcc (Real.log a) (Real.log b)) : 2 ≤ Real.exp u := by
+    rw [uIcc_of_le hla] at hu
+    exact ha.trans (by simpa [Real.exp_log ha0] using Real.exp_le_exp.mpr hu.1)
+  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  have htailOrder (z : ℝ) (hz : 1 ≤ z) : primeTail z ≤ Q z := by
+    have hh := ((prime_power_window_correction.2 C (fun z _ => hC z)).1 z hz).1
+    linarith
+  calc
+    _ = ∫ u in Real.log a..Real.log b, (-Q (Real.exp u)) * Real.exp u := by
+      apply intervalIntegral.integral_congr
+      intro u hu
+      have hQ := complete_chebyshev_tail_identity chebyshev_error_kernel_integrable (htwo hu)
+      change Q (Real.exp u) = _ at hQ
+      change U (Real.exp u) = -Q (Real.exp u) * Real.exp u
+      rw [hQ, U]
+      field_simp [(Real.exp_pos u).ne']
+      ring
+    _ = ∫ z in a..b, -Q z := by
+      have hchange := intervalIntegral.integral_comp_mul_deriv'
+        (a := Real.log a) (b := Real.log b) (f := Real.exp) (f' := Real.exp)
+        (g := fun z => -Q z) (fun u _ => Real.hasDerivAt_exp u)
+        Real.continuous_exp.continuousOn (qContinuous.neg.mono (by
+          rintro _ ⟨u, hu, rfl⟩
+          exact (by norm_num : (1 : ℝ) ≤ 2).trans (htwo hu)))
+      simpa [Function.comp_def, Real.exp_log ha0, Real.exp_log hb0] using hchange
+    _ ≤ ∫ z in a..b, Real.sqrt b * (max (-primeTail z) 0 / Real.sqrt z) := by
+      refine intervalIntegral.integral_mono_on hab (qContinuous.neg.mono (fun z hz => hmem hz)).intervalIntegrable
+        (hmass.const_mul _) (fun z hz => ?_)
+      have hz1 := hmem (uIcc_of_le hab ▸ hz)
+      have hz0 := zero_lt_one.trans_le hz1
+      have hweight := Real.sqrt_le_sqrt hz.2
+      calc
+        -Q z ≤ max (-primeTail z) 0 :=
+          (neg_le_neg (htailOrder z hz1)).trans (le_max_left _ _)
+        _ = Real.sqrt z * (max (-primeTail z) 0 / Real.sqrt z) := by
+          field_simp [(Real.sqrt_pos.mpr hz0).ne']
+        _ ≤ _ := mul_le_mul_of_nonneg_right hweight
+          (div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _))
+    _ = _ := intervalIntegral.integral_const_mul _ _
+
+
+/-- Logarithmically frequent positive remainders force a lower bound in each late window. -/
+private theorem eventual_prime_window_of_log_frequency {u : ℕ → ℝ} {β c M k θ : ℝ}
+    (hu : Tendsto u atTop atTop)
+    (hratio : Tendsto (fun n => u (n + 1) / u n) atTop (𝓝 1))
+    (hc : 0 < c) (hk : 1 < k) (hk' : k < 3 / 2)
+    (hθ : 0 < θ) (hβ : θ + 1 / 2 < β)
+    (hpeaks : ∀ᶠ n in atTop,
+      c * Real.exp (β * u n) / (u n) ^ M ≤
+        ∫ t in u n - Real.log 2..u n, U (Real.exp t)) :
+    ∀ᶠ y : ℝ in atTop, Real.exp (θ * k * y) ≤
+      ∫ z in Real.exp y..Real.exp ((3 / 2) * y), max (-primeTail z) 0 / Real.sqrt z := by
+  let mass : ℝ → ℝ := fun z => max (-primeTail z) 0 / Real.sqrt z
+  let δ : ℝ := β - (θ + 1 / 2)
+  have hδ : 0 < δ := sub_pos.mpr hβ
+  have hexp : Tendsto (fun n => Real.exp (δ * u n) / (u n) ^ M) atTop atTop :=
+    (tendsto_exp_mul_div_rpow_atTop M δ hδ).comp hu
+  have habsorb := hexp.eventually_ge_atTop c⁻¹
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (hpeaks.and habsorb)
+  have hhit := eventual_sequence_hits_relative_window hu hratio
+    (show 0 < k from zero_lt_one.trans hk) hk' N
+  have hlim : ∀ᶠ y : ℝ in atTop, max (Real.log 2) (Real.log 2 / (k - 1)) ≤ y :=
+    eventually_ge_atTop _
+  filter_upwards [hhit, hlim] with y hy hy'
+  obtain ⟨n, hn, hnlo, hnhi⟩ := hy
+  obtain ⟨hpeak, habs⟩ := hN n hn
+  have hlog2 : 0 ≤ Real.log 2 := Real.log_nonneg (by norm_num)
+  have hgap : y + Real.log 2 ≤ u n := by
+    have h := (div_le_iff₀ (sub_pos.mpr hk)).1 ((le_max_right _ _).trans hy')
+    linarith
+  have hA : Real.exp y ≤ Real.exp (u n - Real.log 2) := Real.exp_le_exp.mpr (by linarith)
+  have hA2 : 2 ≤ Real.exp y := by
+    have h := Real.exp_le_exp.mpr ((le_max_left _ _).trans hy')
+    simpa [Real.exp_log (by norm_num : (0 : ℝ) < 2)] using h
+  have hAorder : Real.exp (u n - Real.log 2) ≤ Real.exp (u n) :=
+    Real.exp_le_exp.mpr (by linarith)
+  have hB : Real.exp (u n) ≤ Real.exp ((3 / 2) * y) := Real.exp_le_exp.mpr hnhi
+  have hcover := le_trans hA (hAorder.trans hB)
+  have hmass : IntervalIntegrable mass volume (Real.exp y) (Real.exp ((3 / 2) * y)) := by
+    have hcont : ContinuousOn primeTail (uIcc (Real.exp y) (Real.exp ((3 / 2) * y))) :=
+      prime_integrable.continuousOn_Ici_primitive_Ioi.mono (fun _ ht =>
+        (by norm_num : (1 : ℝ) ≤ 2).trans (hA2.trans ((uIcc_of_le hcover ▸ ht).1)))
+    apply ((hcont.neg.sup continuousOn_const).div Real.continuous_sqrt.continuousOn _).intervalIntegrable
+    intro z hz
+    exact (Real.sqrt_pos.mpr ((Real.exp_pos y).trans_le ((uIcc_of_le hcover ▸ hz).1))).ne'
+  have hmassSub := intervalIntegral.integral_mono_interval hA hAorder hB
+    (Eventually.of_forall (fun z => div_nonneg (le_max_right _ _) (Real.sqrt_nonneg z))) hmass
+  have hcomp := integral_U_exp_le_prime_window (hA2.trans hA) hAorder
+  simp only [Real.log_exp] at hcomp
+  have hcoefficient : 1 ≤ c * (Real.exp (δ * u n) / (u n) ^ M) := by
+    have hp := mul_le_mul_of_nonneg_left habs hc.le
+    simpa [mul_inv_cancel₀ hc.ne'] using hp
+  have hexp_eq : Real.exp ((θ + 1 / 2) * u n) *
+      (c * (Real.exp (δ * u n) / (u n) ^ M)) = c * Real.exp (β * u n) / (u n) ^ M := by
+    rw [show Real.exp ((θ + 1 / 2) * u n) *
+          (c * (Real.exp (δ * u n) / (u n) ^ M)) =
+        c * (Real.exp ((θ + 1 / 2) * u n) * Real.exp (δ * u n)) / (u n) ^ M by ring,
+      ← Real.exp_add]
+    congr 3
+    dsimp [δ]
+    ring
+  have hPeak : Real.exp ((θ + 1 / 2) * u n) ≤
+      Real.sqrt (Real.exp (u n)) *
+        (∫ z in Real.exp (u n - Real.log 2)..Real.exp (u n), mass z) := by
+    have hc' := mul_le_mul_of_nonneg_left hcoefficient (Real.exp_nonneg ((θ + 1 / 2) * u n))
+    rw [mul_one, hexp_eq] at hc'
+    exact hc'.trans (hpeak.trans hcomp)
+  have hhalf : Real.sqrt (Real.exp (u n)) = Real.exp (u n / 2) := by
+    rw [Real.sqrt_eq_rpow, ← Real.exp_mul]
+    congr 1
+    ring
+  rw [hhalf, show (θ + 1 / 2) * u n = u n / 2 + θ * u n by ring, Real.exp_add] at hPeak
+  have hnWindow := le_of_mul_le_mul_left hPeak (Real.exp_pos (u n / 2))
+  exact (Real.exp_le_exp.mpr (by
+    simpa [mul_assoc] using mul_le_mul_of_nonneg_left hnlo hθ.le)).trans
+    (hnWindow.trans hmassSub)
+
+
+/-- A logarithmically frequent positive excursion of the complete remainder
+forces weighted negative prime-tail mass in every sufficiently late power window. -/
+theorem eventual_prime_window_lower_of_log_frequency {u : ℕ → ℝ} {β c M : ℝ}
+    (hu : Tendsto u atTop atTop)
+    (hratio : Tendsto (fun n => u (n + 1) / u n) atTop (𝓝 1))
+    (hc : 0 < c) (hβ : 1 / 2 < β)
+    (hpeaks : ∀ᶠ n in atTop,
+      c * Real.exp (β * u n) / (u n) ^ M ≤
+        ∫ t in u n - Real.log 2..u n, U (Real.exp t))
+    {ε : ℝ} (hε : 0 < ε) :
+    ∀ᶠ y : ℝ in atTop, Real.exp (((3 / 2) * (β - 1 / 2) - ε) * y) ≤
+      ∫ z in Real.exp y..Real.exp ((3 / 2) * y), max (-primeTail z) 0 / Real.sqrt z := by
+  have hden : 0 < β + 1 := by linarith
+  have hmin : 0 < min (1 / 2) (min (β - 1 / 2) (ε / (β + 1))) :=
+    lt_min (by norm_num) (lt_min (sub_pos.mpr hβ) (div_pos hε hden))
+  obtain ⟨d, hd, hd'⟩ := exists_between hmin
+  have hd0 : d < 1 / 2 := lt_of_lt_of_le hd' (min_le_left _ _)
+  have hd1 : d < β - 1 / 2 := hd'.trans_le ((min_le_right _ _).trans (min_le_left _ _))
+  have hd2 : d * (β + 1) < ε := (lt_div_iff₀ hden).1
+    (hd'.trans_le ((min_le_right _ _).trans (min_le_right _ _)))
+  have hh := eventual_prime_window_of_log_frequency
+    (u := u) (k := 3 / 2 - d) (θ := β - 1 / 2 - d)
+    hu hratio hc (by linarith) (by linarith) (by linarith) (by linarith) hpeaks
+  filter_upwards [hh, eventually_ge_atTop (0 : ℝ)] with y hy hy0
+  apply le_trans _ hy
+  apply Real.exp_le_exp.mpr
+  apply mul_le_mul_of_nonneg_right _ hy0
+  nlinarith only [hd2, sq_nonneg d]
+
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
