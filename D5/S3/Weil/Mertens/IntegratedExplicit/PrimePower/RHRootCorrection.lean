@@ -39,21 +39,21 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
-private def C : ℝ := |Real.log (2 * Real.pi)|
+def C : ℝ := |Real.log (2 * Real.pi)|
 
-private def M : ℝ := firstLiMass + C
+def M : ℝ := firstLiMass + C
 
-private lemma mass_nonneg (hRH : RiemannHypothesis) : 0 ≤ firstLiMass := by
+lemma mass_nonneg (hRH : RiemannHypothesis) : 0 ≤ firstLiMass := by
   rw [← (coeff_norm_hasSum hRH).tsum_eq]
   exact tsum_nonneg fun _ => norm_nonneg _
 
-private def qError (x : ℝ) : ℝ := Q x + (zeroTail (Real.log x)).re
+def qError (x : ℝ) : ℝ := Q x + (zeroTail (Real.log x)).re
 
-private lemma q_continuous : ContinuousOn Q (Ici 2) :=
+lemma q_continuous : ContinuousOn Q (Ici 2) :=
   chebyshev_error_kernel_integrable.continuousOn_Ici_primitive_Ioi.mono
     (Ici_subset_Ici.mpr (by norm_num))
 
-private lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) (Ici 2) := by
+lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) (Ici 2) := by
   simp_rw [zeroTail_eq]
   have hlog : ContinuousOn Real.log (Ici (2 : ℝ)) :=
     Real.continuousOn_log.mono (fun x hx => by simpa using (show x ≠ 0 by linarith [mem_Ici.mp hx]))
@@ -61,7 +61,7 @@ private lemma z_continuous : ContinuousOn (fun x => (zeroTail (Real.log x)).re) 
     ((((Complex.continuous_ofReal.comp (Real.continuous_exp.comp continuous_neg)).mul
       actualH_continuous).comp_continuousOn hlog))
 
-private lemma qError_bound {x : ℝ} (hx : 2 ≤ x) : |qError x| ≤ C * x ^ (-1 : ℝ) := by
+lemma qError_bound {x : ℝ} (hx : 2 ≤ x) : |qError x| ≤ C * x ^ (-1 : ℝ) := by
   have hx0 : 0 < x := by linarith
   have hh := (abs_G_sub_normalized_actualH_le (Real.log_nonneg (by linarith : 1 ≤ x))).le
   rw [G, Real.exp_log hx0, ← mul_sub, abs_mul, abs_of_nonneg (Real.exp_nonneg _)] at hh
@@ -84,7 +84,7 @@ private lemma z_bound (hRH : RiemannHypothesis) {x : ℝ} (hx : 0 < x) :
   rw [← he]
   exact (Complex.abs_re_le_norm _).trans (norm_zeroTail_le hRH _)
 
-private lemma q_bound (hRH : RiemannHypothesis) {x : ℝ} (hx : 2 ≤ x) :
+lemma q_bound (hRH : RiemannHypothesis) {x : ℝ} (hx : 2 ≤ x) :
     |Q x| ≤ M * x ^ (-(1 / 2) : ℝ) := by
   have hx0 : 0 < x := by linarith
   have he : Q x = qError x - (zeroTail (Real.log x)).re := by unfold qError; ring
@@ -100,7 +100,7 @@ private lemma q_bound (hRH : RiemannHypothesis) {x : ℝ} (hx : 2 ≤ x) :
       have hc := mul_le_mul_of_nonneg_left hp (show 0 ≤ C from abs_nonneg _)
       linarith only [hc]
 
-private lemma weighted_bound {f : ℝ → ℝ} {y b d D : ℝ} (hy : 2 ≤ y) (hbd : 1 < b + d)
+lemma weighted_bound {f : ℝ → ℝ} {y b d D : ℝ} (hy : 2 ≤ y) (hbd : 1 < b + d)
     (hc : ContinuousOn f (Ici 2))
     (hb : ∀ s, 2 ≤ s → |f s| ≤ D * s ^ (-d)) :
     IntegrableOn (fun s => s ^ (-b) * f s) (Ioi y) ∧
@@ -136,10 +136,10 @@ private lemma weighted_bound {f : ℝ → ℝ} {y b d D : ℝ} (hy : 2 ≤ y) (h
       rw [neg_div, div_neg, neg_neg]
       ring
 
-private def centered (r x : ℝ) : ℝ :=
+def centered (r x : ℝ) : ℝ :=
   Real.sqrt x * (∫ t in Ioi x, (Chebyshev.psi (t ^ r⁻¹) - t ^ r⁻¹) / t ^ 2)
 
-private lemma square_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 4 ≤ x) :
+lemma square_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 4 ≤ x) :
     |centered 2 x - squareDensity (Real.log x)| ≤ (4 * C) * x ^ (-(1 / 2) : ℝ) := by
   have hx0 : 0 < x := by linarith
   let y := Real.sqrt x
@@ -207,7 +207,7 @@ private lemma square_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 4 ≤ x) :
         mul_nonneg (abs_nonneg _) (Real.rpow_nonneg hx0.le _)
       nlinarith only [hp]
 
-private lemma cube_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 8 ≤ x) :
+lemma cube_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 8 ≤ x) :
     |centered 3 x| ≤ (9 * M) * x ^ (-(1 / 3) : ℝ) := by
   have hx0 : 0 < x := by linarith
   let y := x ^ (3 : ℝ)⁻¹
@@ -309,7 +309,7 @@ def rootWindowDensity (u : ℝ) : ℝ :=
   Real.sqrt (Real.exp u) * (Q (Real.exp u) - primeTail (Real.exp u)) - 2 +
     (G u - Real.exp (-u / 2) * (actualH u).re)
 
-private lemma exp_decay_integral {r a b : ℝ} (hr : 0 < r) :
+lemma exp_decay_integral {r a b : ℝ} (hr : 0 < r) :
     (∫ u in a..b, Real.exp (-r * u)) = (Real.exp (-r * a) - Real.exp (-r * b)) / r := by
   have hi : IntervalIntegrable (fun u => Real.exp (-r * u)) volume a b :=
     (by fun_prop : Continuous (fun u : ℝ => Real.exp (-r * u))).intervalIntegrable _ _
@@ -328,7 +328,7 @@ private lemma exp_neg_log_rpow {x : ℝ} (hx : 0 < x) (r : ℝ) :
     Real.exp (-r * Real.log x) = x ^ (-r) := by
   rw [← exp_rpow, Real.exp_log hx]
 
-private lemma complete_scaled {x : ℝ} (hx : 2 ≤ x) :
+lemma complete_scaled {x : ℝ} (hx : 2 ≤ x) :
     G (Real.log x) = -(Real.sqrt x * Q x) := by
   have hx0 : 0 < x := by linarith
   have hU := (div_eq_iff hx0.ne').mp (primitive_eq_negative_tail hx)
@@ -342,7 +342,7 @@ private lemma complete_scaled {x : ℝ} (hx : 2 ≤ x) :
   rw [G, Real.exp_log hx0, hU]
   linear_combination -Q x * hscale
 
-private lemma late_strict_prime_tail (hRH : RiemannHypothesis) :
+lemma late_strict_prime_tail (hRH : RiemannHypothesis) :
     ∀ᶠ x : ℝ in atTop, 0 < Real.sqrt x * (-primeTail x) := by
   have hG := (actual_G_control hRH).1 (1 / 2) (by norm_num)
   have hb := prime_power_window_correction.1.eventually_const_lt (show (3 / 2 : ℝ) < 2 by norm_num)
@@ -352,7 +352,7 @@ private lemma late_strict_prime_tail (hRH : RiemannHypothesis) :
   linarith only [(abs_lt.mp hg).1, firstLiMass_lt_one, hb,
     mul_sub (Real.sqrt x) (Q x) (primeTail x), mul_neg (Real.sqrt x) (primeTail x)]
 
-private lemma rootWindowDensity_continuousOn :
+lemma rootWindowDensity_continuousOn :
     ContinuousOn rootWindowDensity (Ici (Real.log 2)) := by
   have htexp : MapsTo Real.exp (Ici (Real.log 2)) (Ici 2) := by
     intro u hu
