@@ -16,8 +16,9 @@ jobs:
     permissions:
       contents: write
       actions: read
+      statuses: write
     concurrency:
-      group: lean-cache-publication-verification
+      group: lean-cache-release-diagnostics
       queue: max
       cancel-in-progress: false
     env:
@@ -120,7 +121,85 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
+        run: |
+          python3 - <<'PY'
+          import os
+          import runpy
+          import subprocess
+          import tempfile
+          from pathlib import Path
+
+          diagnostics = runpy.run_path("tools/scripts/report/runner-diagnostics.py")
+          worker = diagnostics["worker_ancestor"]()
+          cgroup = diagnostics["cgroup_directory"]((worker or {"pid": os.getpid()})["pid"])
+          temporary = Path(tempfile.gettempdir())
+          repo, commit = os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_SHA"]
+          run, attempt = os.environ["GITHUB_RUN_ID"], os.environ["GITHUB_RUN_ATTEMPT"]
+          endpoint = f"repos/{repo}/statuses/{commit}"
+          run_url = f"https://github.com/{repo}/actions/runs/{run}/attempts/{attempt}"
+
+          def current_phase():
+              stages = list(temporary.glob("lean-release-*"))
+              if any((stage / "downloaded").is_dir() for stage in stages):
+                  return "restore"
+              processes = subprocess.check_output(["ps", "-eo", "args="], text=True)
+              if any("gh release " + operation in processes for operation in ("create", "upload", "edit")):
+                  return "upload"
+              if stages:
+                  return "archive"
+              if "compiled-fib-test" in processes:
+                  return "fib"
+              if "check-lean-report" in processes:
+                  return "report"
+              return "setup"
+
+          def record(phase, state):
+              try:
+                  workspace, temp = (os.statvfs(path) for path in (Path.cwd(), temporary))
+                  workspace_mib = workspace.f_bavail * workspace.f_frsize // (1024 ** 2)
+                  temporary_mib = temp.f_bavail * temp.f_frsize // (1024 ** 2)
+                  memory = diagnostics["memory_sample"](cgroup)
+                  available_kib = memory.get("MemAvailable_kb")
+                  available_mib = available_kib // 1024 if available_kib is not None else "?"
+                  current_bytes = memory.get("memory.current")
+                  current_mib = current_bytes // (1024 ** 2) if isinstance(current_bytes, int) else "?"
+                  events = memory.get("memory.events", {})
+                  description = (
+                      f"{phase} free={workspace_mib}/{temporary_mib}MiB "
+                      f"inodes={min(workspace.f_favail, temp.f_favail)} "
+                      f"mem={available_mib}/{current_mib}MiB "
+                      f"oom={events.get('oom', '?')}/{events.get('oom_kill', '?')}"
+                  )
+                  print(description, flush=True)
+                  subprocess.run(
+                      ["gh", "api", "--silent", "--method", "POST", endpoint,
+                       "-f", "context=diagnostics/lean-cache-release/resources",
+                       "-f", f"state={state}", "-f", f"description={description}",
+                       "-f", f"target_url={run_url}"],
+                      timeout=10, check=False,
+                  )
+              except (OSError, subprocess.TimeoutExpired) as error:
+                  print(f"Resource status unavailable ({type(error).__name__})", flush=True)
+
+          record("before", "pending")
+          process = subprocess.Popen(
+              ["make", "lean-cache-to-github-without-mathlib", "FULL_BUILD=1",
+               "LEAN_CACHE_MODE=verification", f"LEAN_CACHE_SOURCE_REF={os.environ['GITHUB_REF']}",
+               f"LEAN_CACHE_SOURCE_COMMIT={commit}"]
+          )
+          while True:
+              try:
+                  result = process.wait(timeout=45)
+                  break
+              except subprocess.TimeoutExpired:
+                  try:
+                      phase = current_phase()
+                  except (OSError, subprocess.SubprocessError):
+                      phase = "unknown"
+                  record(phase, "pending")
+          record(f"exit={result}", "success" if result == 0 else "failure")
+          raise SystemExit(result if result >= 0 else 128 - result)
+          PY
 
   scribe:
     name: verify Scribe publication and fetch
