@@ -17,10 +17,10 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeMiddleGapJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
-open private label lift_order marked_word schedule_from_tail ladder_sum from
-  D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private mask_labels mask_labels_bound mask_labels_sum labelled_permutation from
-  D5.S3.Combinatorics.Circle.ThreeBitSource
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private schedule_from_tail ladder_sum
+  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeBitSource (mask_labels mask_labels_bound mask_labels_sum labelled_permutation)
 
 private theorem floor_margin (r s t p C : ℤ)
     (hs : 4 ≤ s) (hr : 2 * s ≤ r) (hp : s = 2 * p)
