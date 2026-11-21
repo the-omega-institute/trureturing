@@ -6,6 +6,7 @@
    utility: none
    digest: Uniform arithmetic and integrated tails for the Mobius prime-power truncation. -/
 
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.FifthExponents
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RHFifthWindow
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 

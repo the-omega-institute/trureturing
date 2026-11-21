@@ -209,7 +209,7 @@ private lemma rootExponent_norm {r : ℝ} (hr : 1 < r) (k : ℕ) :
       exact div_le_div_of_nonneg_right (by linarith) hr0.le
     _ ≤ _ := Complex.abs_im_le_norm _
 
-lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
+private lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
     ‖rootCoeff r k‖ ≤ r * ‖actualCoeff k‖ := by
   have hgap : ‖1 - actualZero k‖ ≤ ‖(r : ℂ) - actualZero k‖ := by
     rw [Complex.norm_def, Complex.norm_def]
