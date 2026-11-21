@@ -68,7 +68,7 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
                 Multiply(Frac(b,Multiply(h,s)),Call("exp",new Formula.Negate(Multiply(right,a))))));
         var mass = F.Seq(F.Int, F.Underscore, F.Grp(outside), F.Sp, new Formula.Apply(f,[u]), F.Sp,F.Id("d"),u);
         var estimate = new Formula.Aligned([
-            Let(k,new Formula.Floor(Multiply(Multiply(s,h),a))),
+            Let(k,new Formula.Floor(F.Grp(Multiply(Multiply(s,h),a)))),
             Let(outside,set), Let(f,F.Seq(F.Open,u,F.Sp,F.Mapsto,F.Sp,density,F.Close)),
             And(Call("IntegrableOn",f,outside), Le(mass,bound))]);
         var allInputs = All("s",real,Implies(And(Lt(zero,s),tilt),All("a",real,Implies(Lt(zero,a),
