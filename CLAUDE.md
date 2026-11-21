@@ -26,7 +26,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓锁定 release 版本与 SHA-256。稳定版本从工具仓 `main` 发布。
+工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓运行 `python3 tools/consumer/pin.py <release-tag>` 锁定版本与 SHA-256。稳定版本从工具仓 `main` 发布。
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -536,7 +536,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。tests-declared-template 保持 lean:none，current 消费互补的 Fourier 证据子集。检查只执行候选代码,base 只作为固定数据。
+- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;主仓 CI 验证 FILEMAP、源码、当前快照及与基线的差异，主仓另维护 Lean 缓存和 Scribe 资源发布。工具仓 CI 构建工具，运行工具测试、selftest 和编译反证。主仓的单元作业只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。`make pr`/`make pr-open` 默认 arm auto-merge,required checks 绿后自动合;`AUTO_MERGE=0` 或 `DRAFT=1` 不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
