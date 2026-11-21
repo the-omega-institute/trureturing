@@ -179,6 +179,17 @@ runs:
         operation: restore
         state: resume
         resume-after-attempt: ${{ steps.native_resume.outputs.attempt || '0' }}
+    - name: Remove leftover cache download archives
+      shell: bash
+      run: |
+        # actions/cache uses UUID directories and treats unlink failures as debug messages.
+        for archive in "${RUNNER_TEMP:?}"/*/cache.{tzst,tgz}; do
+          directory="${archive%/*}"
+          [[ ${directory##*/} =~ ^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$ ]] || continue
+          [[ -f "$archive" && ! -L "$archive" && ! -L "$directory" ]] || continue
+          rm -v -- "$archive"
+        done
+        df -h -- "$RUNNER_TEMP"
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
