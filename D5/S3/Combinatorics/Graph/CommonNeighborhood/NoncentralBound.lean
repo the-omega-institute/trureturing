@@ -123,7 +123,8 @@ private theorem cn_energy_le_twice_degree_sum {V : Type} [Fintype V]
       simp [Matrix.trace, A, g.adjMatrix_mul_self_apply_self, SimpleGraph.degMatrix]
       <;> ring
 
-/-- The center, `x` and the graph neighbours of `x` are disjoint inside `C(x)`. -/
+/-- `deg(x) + |Z| + 1 ≤ |C(x)|`: the center, `x` and the neighbours of `x` are disjoint subsets of
+`C(x)`. -/
 theorem degree_and_center_le_centralizer (G : Type) [Group G] [Fintype G]
     (x : Vertex G) :
     (commutingGraph G).degree x + Fintype.card (Subgroup.center G) + 1 ≤
