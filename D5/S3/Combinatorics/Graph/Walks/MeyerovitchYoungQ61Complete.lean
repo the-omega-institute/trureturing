@@ -322,7 +322,6 @@ private theorem repair_cost (G : EdgeGraph V E) (d : ℕ) (h : ConnectsAt G (d +
       simp only [repair, wordCost, List.zipWith_cons_cons, List.sum_cons, badJoins] at hind ⊢
       linarith only [hind]
 
-
 private theorem badFrom_eq_zero_iff (G : EdgeGraph V E) (prev : E) (a : List E) :
     badFrom G prev a = 0 ↔ ∃ t, follows G (G.target prev) a t := by
   induction a generalizing prev with
@@ -646,13 +645,11 @@ def matrixCost (A : E → Matrix W W K) (e : E) (f : W × W) : K :=
 takes the minimum of the entry sums over complete vertex walks. -/
 noncomputable def matrixMinimum (A : E → Matrix W W K) [Finite W] [Nonempty W] (a : List E) : K :=
   freeMinimum (completeGraph W) 0 (complete_connects W) (matrixCost A) a
-
 omit [IsStrictOrderedRing K] in
 /-- The matrix minimum is attained by a complete walk and bounds every such walk of the same length. -/
 theorem matrixMinimum_spec (A : E → Matrix W W K) [Finite W] [Nonempty W] (a : List E) :
     IsMinimum (completeGraph W) (matrixCost A) a (matrixMinimum A a) :=
   freeMinimum_spec (completeGraph W) 0 (complete_connects W) (matrixCost A) a
-
 private theorem follows_complete (Y : EdgeGraph W F) {i j : W} {b : List F}
     (hb : follows Y i b j) :
     follows (completeGraph W) i (b.map fun f => (Y.source f, Y.target f)) j := by
