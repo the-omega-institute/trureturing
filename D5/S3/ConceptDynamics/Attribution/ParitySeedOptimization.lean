@@ -85,7 +85,8 @@ private theorem pair_fixed_coordinate {n : ℕ} (a : Pair n) (i : Fin (n + 2)) :
     obtain ⟨left, right⟩ := fixed g g.property
     exact Prod.ext (Subtype.ext left) (Subtype.ext right)
 
-private theorem normalize_coloured_counts {n k : ℕ}
+/-- Divide the pooled colour counts by four to recover exact parity marginals. -/
+theorem normalize_coloured_counts {n k : ℕ}
     {w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ}
     (h : MatrixRealizes n (2 ^ (n + 3) * k) w) :
     ∃ W : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
@@ -221,7 +222,8 @@ theorem matrix_fixed_total {n : ℕ}
   intro q _
   by_cases h : p.val i = 1 ∧ q.val i = 1 <;> simp [h, entry, pairMass]
 
-private theorem scaled_fixed_total {n : ℕ}
+/-- Read the output-fixed count as four times the normalized common-one count. -/
+theorem scaled_fixed_total {n : ℕ}
     {w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ}
     {W : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ}
     (scale : ∀ p q, 4 * W p q = pairMass w p.val q.val) (i : Fin (n + 2)) :
