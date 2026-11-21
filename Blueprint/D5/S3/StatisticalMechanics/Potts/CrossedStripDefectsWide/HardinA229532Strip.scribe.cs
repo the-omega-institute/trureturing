@@ -57,7 +57,11 @@ internal sealed class HardinA229532StripDocument : IScribeDocumentDefinition
                 Call("Matrix.vecMul", Data("W", Call("Fin.castSucc", i)), Data("T")))));
         int[] coefficients = [-25, 240, 204, -6334, 6468, 42628, -83203, -34136, 160400,
             -40816, -108224, 56184, 23849, -19128, 340, 1854, -436, 36];
-        Formula SignedInt(int value) => value < 0 ? Seq(Minus, Num((-value).ToString())) : Num(value.ToString());
+        Formula SignedInt(int value)
+        {
+            var absolute = Num(Math.Abs(value).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            return value < 0 ? Seq(Minus, absolute) : absolute;
+        }
         var vector = Seq(new Formula[] { Bang, OpenBracket }.Concat(coefficients.SelectMany((value, index) =>
             index == 0 ? new[] { SignedInt(value) } : new[] { Comma, Sp, SignedInt(value) })).Append(CloseBracket).ToArray());
         var relation = Eq(Data("W", Num("20")), SumOver("j", Call("Fin", Num("18")),
