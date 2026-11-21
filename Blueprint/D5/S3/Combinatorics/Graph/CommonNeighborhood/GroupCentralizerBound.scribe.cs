@@ -18,7 +18,7 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("For every finite group G with two elements whose products differ, write z for the order of "
                         + "its center, n for the number of noncentral elements, C(x) for the centralizer of x and p for the least "
-                        + "prime dividing |G|. Then z is at least 1, n is at least 3z, n is at least z+2 and at least 3, and z "
+                        + "prime dividing |G|. Then z is at least 1, n is at least (p^2-1)z, n is at least z+2 and at least 3, and z "
                         + "divides n. The common-neighbourhood energy of the commuting graph on the individual noncentral elements "
                         + "(commutingGraph(G) of the noncentral commuting-graph module) is at most twice the sum over noncentral x "
                         + "of max(|C(x)|-z-2,0), and that is at most n max(2(n+z)/p-2z-4,0). This last quantity is at most "
@@ -27,14 +27,20 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
                     Paragraph(Text("The per-vertex sum and the bound 2n((n+z)/p-z-1) are Corollary 4 of Ma and Zhang, Zenodo DOI "
                         + "10.5281/zenodo.24398996, and the strict bound n(n-z-2) < 2(n-1)(n-2) with n at least z+2 at least 3 is "
                         + "their Theorem 2. The repository sharpens the least-prime form to n max(2(n+z)/p-2z-4,0) and adds n at "
-                        + "least 3z and z dividing n. The ring analogue is RingNoncentralBound.")),
-                    Paragraph(Text("For a noncentral x, the centralizer C(x) is exactly the disjoint union of the center, x itself "
-                        + "and the graph neighbours of x, so deg(x) = |C(x)|-z-1; the noncentral commuting-graph module proves "
-                        + "only the inequality. C(x) is a proper subgroup, so its index is a divisor of |G| exceeding one, hence at "
-                        + "least p, and p|C(x)| is at most |G| = n+z. The center is a proper subgroup of C(x), so |C(x)| is at "
-                        + "least 2z and |G| at least 4z; Lagrange also gives z dividing |G| and hence n. The neighbourhood-clique "
-                        + "bound turns the degree identity into the per-vertex energy bound; the remaining steps use p at least 2 "
-                        + "and |C(x)| at least z+1, and 2(n-1)(n-2)-n(n-z-2) = (n-2)^2+nz is positive."))),
+                        + "least (p^2-1)z and z dividing n. The ring analogue is RingNoncentralBound.")),
+                    Paragraph(Text("For a noncentral x, the center, x itself and the graph neighbours of x are disjoint inside "
+                        + "the centralizer C(x), so deg(x)+z+1 is at most |C(x)|; this inequality is the noncentral "
+                        + "commuting-graph module's degree_and_center_le_centralizer. C(x) is a proper subgroup, so its index is a "
+                        + "divisor of |G| exceeding one, hence at least p, and p|C(x)| is at most |G| = n+z. The center is a proper "
+                        + "subgroup of C(x) whose index is likewise at least p, so p^2 z is at most |G| and n is at least "
+                        + "(p^2-1)z; Lagrange also gives z dividing |G| and hence n. The neighbourhood-clique bound and the degree "
+                        + "inequality give the per-vertex energy bound; the remaining steps use p at least 2 and |C(x)| at least "
+                        + "z+1, and 2(n-1)(n-2)-n(n-z-2) = (n-2)^2+nz is positive.")),
+                    Paragraph(Text("The hypotheses are needed as follows. Without two non-commuting elements the vertex type is "
+                        + "empty and n at least z+2 fails. Finiteness is needed for the orders and the spectrum. The quaternion "
+                        + "group and the extraspecial groups of order p^3 attain p^2 z = |G|; in the symmetric group on three "
+                        + "letters and the quaternion group the least-prime bound is 0, which equals the energy. These examples "
+                        + "are not compiled."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
@@ -83,7 +89,8 @@ internal sealed class GroupCentralizerBoundDocument : IScribeDocumentDefinition
         var weak = Mul(nr, Par(Sub(Sub(nr, zr), D(2))));
         var bench = Mul(Mul(D(2), Par(Sub(nr, D(1)))), Par(Sub(nr, D(2))));
         var nonabelian = Exists("a", G, Exists("b", G, Ne(Mul(F.Id("a"), F.Id("b")), Mul(F.Id("b"), F.Id("a")))));
-        var orders = And(Le(D(1), z), And(Le(Mul(D(3), z), n), And(Le(Add(z, D(2)), n), And(Le(D(3), n),
+        var p2 = Sub(new Formula.Power(Call("Nat.minFac", Call("Fintype.card", G)), D(2)), D(1));
+        var orders = And(Le(D(1), z), And(Le(Mul(Par(p2), z), n), And(Le(Add(z, D(2)), n), And(Le(D(3), n),
             new Formula.Relation(z, FormulaRelationOperator.Divides, n)))));
         var chain = And(Le(energy, perVertex), And(Le(perVertex, prime), And(Le(prime, paper),
             And(Le(prime, sharp), And(Le(sharp, weak), Lt(weak, bench))))));

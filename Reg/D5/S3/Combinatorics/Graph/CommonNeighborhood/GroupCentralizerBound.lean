@@ -30,7 +30,8 @@ abbrev arena : Arena where
   Law Q := ∀ (G : Type) [Group G] [Fintype G],
     (∃ a b : G, a * b ≠ b * a) →
       1 ≤ Fintype.card (Subgroup.center G) ∧
-      3 * Fintype.card (Subgroup.center G) ≤ Fintype.card (Vertex G) ∧
+      ((Fintype.card G).minFac ^ 2 - 1) * Fintype.card (Subgroup.center G) ≤
+        Fintype.card (Vertex G) ∧
       Fintype.card (Subgroup.center G) + 2 ≤ Fintype.card (Vertex G) ∧
       3 ≤ Fintype.card (Vertex G) ∧
       Fintype.card (Subgroup.center G) ∣ Fintype.card (Vertex G) ∧

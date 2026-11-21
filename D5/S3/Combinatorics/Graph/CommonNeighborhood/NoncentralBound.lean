@@ -8,6 +8,7 @@
 
 /- Escape audit unfinished for psd_difference_bound: https://github.com/the-omega-institute/trureturing/issues/32710 -/
 /- Escape audit unfinished for common_neighbour_eq_square_sub_degree: https://github.com/the-omega-institute/trureturing/issues/32715 -/
+/- Escape audit unfinished for degree_and_center_le_centralizer: https://github.com/the-omega-institute/trureturing/issues/32715 -/
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation
 import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.Subgroup.Centralizer
@@ -122,7 +123,8 @@ private theorem cn_energy_le_twice_degree_sum {V : Type} [Fintype V]
       simp [Matrix.trace, A, g.adjMatrix_mul_self_apply_self, SimpleGraph.degMatrix]
       <;> ring
 
-private theorem degree_and_center_le_centralizer (G : Type) [Group G] [Fintype G]
+/-- The center, `x` and the graph neighbours of `x` are disjoint inside `C(x)`. -/
+theorem degree_and_center_le_centralizer (G : Type) [Group G] [Fintype G]
     (x : Vertex G) :
     (commutingGraph G).degree x + Fintype.card (Subgroup.center G) + 1 ≤
       Fintype.card (Subgroup.centralizer ({x.val} : Set G)) := by
