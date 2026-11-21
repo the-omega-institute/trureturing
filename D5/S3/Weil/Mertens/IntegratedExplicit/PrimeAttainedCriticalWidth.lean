@@ -26,16 +26,16 @@ open PrimeAttainedShortWindows
 open PrimeFixedRatioWindowMass (prime_tail_fixed_ratio_mass_of_zero)
 open PrimeOnlyTailCorrection (primeTail prime_integrable)
 
-private noncomputable def integrand (x : ℝ) : ℝ :=
+noncomputable def integrand (x : ℝ) : ℝ :=
   max (-primeTail x) 0 / Real.sqrt x
 
 private noncomputable def mass (p W B : ℝ) : ℝ :=
   (∫ x in B * Real.exp (-W)..B, integrand x) / B ^ p
 
-private theorem integrand_nonneg (x : ℝ) : 0 ≤ integrand x :=
+theorem integrand_nonneg (x : ℝ) : 0 ≤ integrand x :=
   div_nonneg (le_max_right _ _) (Real.sqrt_nonneg x)
 
-private theorem integrand_intervalIntegrable {A B : ℝ} (hA : 2 ≤ A) (hAB : A ≤ B) :
+theorem integrand_intervalIntegrable {A B : ℝ} (hA : 2 ≤ A) (hAB : A ≤ B) :
     IntervalIntegrable integrand volume A B := by
   have hone (x : ℝ) (hx : x ∈ Icc A B) : 1 ≤ x :=
     one_le_two.trans (hA.trans hx.1)
@@ -44,7 +44,7 @@ private theorem integrand_intervalIntegrable {A B : ℝ} (hA : 2 ≤ A) (hAB : A
       (fun x hx => (Real.sqrt_pos.mpr (zero_lt_one.trans_le (hone x hx))).ne')
     ).intervalIntegrable_of_Icc hAB
 
-private theorem eventually_abs_normalized_tail_le {β : ℝ} (hβ : 1 / 2 < β)
+theorem eventually_abs_normalized_tail_le {β : ℝ} (hβ : 1 / 2 < β)
     (hmax : ∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) :
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ x : ℝ in atTop, |x ^ (1 - β) * primeTail x| ≤ C := by
   have hrealPart (j : ℕ) : (actualZero j).re ≤ β :=
@@ -73,7 +73,7 @@ private theorem eventually_abs_normalized_tail_le {β : ℝ} (hβ : 1 / 2 < β)
         (maximalSeries actualCoeff actualZero β (Real.log x)).re| := by rw [add_sub_cancel_right]
     _ ≤ _ := (abs_sub _ _).trans (add_le_add hx.le (hseries _))
 
-private theorem integrand_le_power {β C x : ℝ} (hC : 0 ≤ C) (hx : 0 < x)
+theorem integrand_le_power {β C x : ℝ} (hC : 0 ≤ C) (hx : 0 < x)
     (h : |x ^ (1 - β) * primeTail x| ≤ C) :
     integrand x ≤ C * x ^ ((β - 1 / 2) - 1) := by
   have hpow : 0 < x ^ (1 - β) := Real.rpow_pos_of_pos hx _
