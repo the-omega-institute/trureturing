@@ -25,6 +25,9 @@ import Mathlib.GroupTheory.GroupAction.Defs
 set_option autoImplicit false
 
 open Finset
+open scoped Classical
+
+noncomputable section
 
 namespace D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 
@@ -34,12 +37,11 @@ structure Output (I : Type*) where
   profile : I → Bool
   colour : ZMod 2
 
-variable {I : Type*} [Fintype I] [DecidableEq I]
+variable {I : Type*} [Fintype I]
 
 def shift (profile : I → Bool) (v : I → ZMod 2) : ZMod 2 :=
   ∑ i, if profile i then 0 else v i
 
-omit [DecidableEq I] in
 private theorem shift_add (profile : I → Bool) (v w : I → ZMod 2) :
     shift profile (v + w) = shift profile v + shift profile w := by
   rw [shift, shift, shift, ← sum_add_distrib]
@@ -119,16 +121,16 @@ private theorem fixed_pair_iff (x y : Output I) (i : I) :
     (∀ g ∈ coordinate i, g • x = x ∧ g • y = y) ↔ (x.profile i && y.profile i) = true := by
   simp only [forall_and, coordinate_fixed_iff, Bool.and_eq_true]
 
-private noncomputable def push (w : Output I → Output I → ℝ) (p q : I → Bool) : ℝ :=
+noncomputable def forgetColours (w : Output I → Output I → ℝ) (p q : I → Bool) : ℝ :=
   ∑ c : ZMod 2, ∑ d : ZMod 2, w ⟨p, c⟩ ⟨q, d⟩
 
 private noncomputable def lift (w : (I → Bool) → (I → Bool) → ℝ) (x y : Output I) : ℝ :=
   w x.profile y.profile / 4
 
 private theorem push_common (w : Output I → Output I → ℝ) (i : I) :
-    commonFixed w i = commonTrue (push w) i := by
+    commonFixed w i = commonTrue (forgetColours w) i := by
   classical
-  unfold commonFixed commonTrue push
+  unfold commonFixed commonTrue forgetColours
   simp_rw [fixed_pair_iff, sum_outputs]
   apply sum_congr rfl
   intro p _
@@ -137,51 +139,51 @@ private theorem push_common (w : Output I → Output I → ℝ) (i : I) :
   intro q _
   by_cases h : (p i && q i) = true <;> simp [h]
 
-omit [Fintype I] [DecidableEq I] in
+omit [Fintype I] in
 private theorem push_lift (w : (I → Bool) → (I → Bool) → ℝ) :
-    push (lift w) = w := by
+    forgetColours (lift w) = w := by
   funext p q
-  simp only [push, lift, sum_colours_constant]
+  simp only [forgetColours, lift, sum_colours_constant]
   ring
 
-/-- Splitting each profile uniformly over two colours realizes every coupling profile
-as the fixed-event probabilities of coordinate subgroups. -/
-theorem invariant_coupling_iff (left right : (I → Bool) → ℝ) (a : I → ℝ) :
-    (∃ w : Output I → Output I → ℝ,
-      Coupling (fun x => left x.profile / 2) (fun y => right y.profile / 2) w ∧
-      (∀ (g : Acting I) x y, w (g • x) (g • y) = w x y) ∧
-      ∀ i, commonFixed w i = a i) ↔
-    ∃ w : (I → Bool) → (I → Bool) → ℝ, Coupling left right w ∧ ∀ i, commonTrue w i = a i := by
+-- Each matrix entry is preserved by projecting the invariant lift.
+theorem invariant_coupling_iff (left right : (I → Bool) → ℝ)
+    (w : (I → Bool) → (I → Bool) → ℝ) :
+    Coupling left right w ↔
+      ∃ W : Output I → Output I → ℝ,
+        Coupling (fun x => left x.profile / 2) (fun y => right y.profile / 2) W ∧
+        (∀ (g : Acting I) x y, W (g • x) (g • y) = W x y) ∧
+        forgetColours W = w ∧ ∀ i, commonFixed W i = commonTrue w i := by
   constructor
-  · rintro ⟨w, ⟨nonneg, row, column⟩, _, masses⟩
-    refine ⟨push w, ⟨fun p q => ?_, fun p => ?_, fun q => ?_⟩, fun i => ?_⟩
-    · exact sum_nonneg fun c _ => sum_nonneg fun d _ => nonneg ⟨p, c⟩ ⟨q, d⟩
-    · unfold push
-      rw [sum_comm]
-      simp_rw [← sum_outputs, row, sum_colours_constant]
-      ring
-    · unfold push
-      calc
-        (∑ p : I → Bool, ∑ c : ZMod 2, ∑ d : ZMod 2, w ⟨p, c⟩ ⟨q, d⟩) =
-            ∑ p : I → Bool, ∑ d : ZMod 2, ∑ c : ZMod 2, w ⟨p, c⟩ ⟨q, d⟩ := by
-          exact sum_congr rfl (fun _ _ => sum_comm)
-        _ = ∑ d : ZMod 2, ∑ p : I → Bool, ∑ c : ZMod 2, w ⟨p, c⟩ ⟨q, d⟩ := sum_comm
-        _ = right q := by
-          have collapse (d : ZMod 2) :
-              (∑ p : I → Bool, ∑ c : ZMod 2, w ⟨p, c⟩ ⟨q, d⟩) = right q / 2 :=
-            (sum_outputs (fun x => w x ⟨q, d⟩)).symm.trans (column ⟨q, d⟩)
-          simp only [collapse, sum_colours_constant]
-          ring
-    · exact (push_common w i).symm.trans (masses i)
-  · rintro ⟨w, ⟨nonneg, row, column⟩, masses⟩
+  · rintro ⟨nonneg, row, column⟩
     refine ⟨lift w, ⟨fun x y => div_nonneg (nonneg _ _) (by norm_num), fun x => ?_, fun y => ?_⟩,
-      fun _ _ _ => rfl, fun i => ?_⟩
+      fun _ _ _ => rfl, push_lift w, fun i => ?_⟩
     · rw [sum_outputs]
       simp_rw [lift, sum_colours_constant, ← mul_div_assoc, ← sum_div, ← mul_sum, row]
       ring
     · rw [sum_outputs]
       simp_rw [lift, sum_colours_constant, ← mul_div_assoc, ← sum_div, ← mul_sum, column]
       ring
-    · rw [push_common, push_lift, masses]
+    · rw [push_common, push_lift]
+  · rintro ⟨W, ⟨nonneg, row, column⟩, _, same, _⟩
+    rw [← same]
+    refine ⟨fun p q => ?_, fun p => ?_, fun q => ?_⟩
+    · exact sum_nonneg fun c _ => sum_nonneg fun d _ => nonneg ⟨p, c⟩ ⟨q, d⟩
+    · unfold forgetColours
+      rw [sum_comm]
+      simp_rw [← sum_outputs, row, sum_colours_constant]
+      ring
+    · unfold forgetColours
+      calc
+        (∑ p : I → Bool, ∑ c : ZMod 2, ∑ d : ZMod 2, W ⟨p, c⟩ ⟨q, d⟩) =
+            ∑ p : I → Bool, ∑ d : ZMod 2, ∑ c : ZMod 2, W ⟨p, c⟩ ⟨q, d⟩ := by
+          exact sum_congr rfl (fun _ _ => sum_comm)
+        _ = ∑ d : ZMod 2, ∑ p : I → Bool, ∑ c : ZMod 2, W ⟨p, c⟩ ⟨q, d⟩ := sum_comm
+        _ = right q := by
+          have collapse (d : ZMod 2) :
+              (∑ p : I → Bool, ∑ c : ZMod 2, W ⟨p, c⟩ ⟨q, d⟩) = right q / 2 :=
+            (sum_outputs (fun x => W x ⟨q, d⟩)).symm.trans (column ⟨q, d⟩)
+          simp only [collapse, sum_colours_constant]
+          ring
 
 end D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling

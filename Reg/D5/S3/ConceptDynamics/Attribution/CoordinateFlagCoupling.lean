@@ -7,6 +7,7 @@ import Reg.Support.DependentFamily
 namespace Reg.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 
 open Finset LeanInformationAudit
+open scoped Classical
 open _root_.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -31,29 +32,25 @@ def negativeLeft : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {I : Type u} [Fintype I] [DecidableEq I]
-    (left right : (I → Bool) → ℝ) (a : I → ℝ),
-    (∃ w : Output I → Output I → ℝ,
-      Coupling (R.readout () I left) (fun y => right y.profile / 2) w ∧
-      (∀ (g : Acting I) x y, w (g • x) (g • y) = w x y) ∧
-      ∀ i, commonFixed w i = a i) ↔
-    ∃ w : (I → Bool) → (I → Bool) → ℝ, Coupling left right w ∧ ∀ i, commonTrue w i = a i
+  Law R := ∀ {I : Type u} [Fintype I] (left right : (I → Bool) → ℝ)
+    (w : (I → Bool) → (I → Bool) → ℝ),
+    Coupling left right w ↔
+      ∃ W : Output I → Output I → ℝ,
+        Coupling (R.readout () I left) (fun y => right y.profile / 2) W ∧
+        (∀ (g : Acting I) x y, W (g • x) (g • y) = W x y) ∧
+        forgetColours W = w ∧ ∀ i, commonFixed W i = commonTrue w i
 
 private theorem negative_left_fails : ¬ arena.{u}.Law negativeLeft := by
   intro law
   let I := PUnit.{u+1}
   let _ : Fintype I := inferInstanceAs (Fintype PUnit)
-  let _ : DecidableEq I := inferInstanceAs (DecidableEq PUnit)
-  have feasible :
-      ∃ w : (I → Bool) → (I → Bool) → ℝ, Coupling (fun _ => 0) (fun _ => 0) w ∧
-        ∀ i, commonTrue w i = 0 := by
-    refine ⟨fun _ _ => 0, ⟨fun _ _ => le_rfl, by simp, by simp⟩, fun i => ?_⟩
-    simp [commonTrue]
-  obtain ⟨w, hw, _, _⟩ := (law (I := I) (fun _ => 0) (fun _ => 0) (fun _ => 0)).mpr feasible
+  have feasible : Coupling (A := I → Bool) (fun _ => 0) (fun _ => 0) (fun _ _ => 0) := by
+    exact ⟨fun _ _ => le_rfl, by simp, by simp⟩
+  obtain ⟨W, hw, _, _, _⟩ := (law (I := I) (fun _ => 0) (fun _ => 0) (fun _ _ => 0)).mp feasible
   let y : Output I := ⟨fun _ => false, 0⟩
-  have nonnegative : 0 ≤ ∑ z, w y z := sum_nonneg (fun z _ => hw.1 y z)
+  have nonnegative : 0 ≤ ∑ z, W y z := sum_nonneg (fun z _ => hw.1 y z)
   have negative := hw.2.1 y
-  change (∑ z, w y z) = -1 at negative
+  change (∑ z, W y z) = -1 at negative
   norm_num [negative] at nonnegative
 
 def family : Registration arena.{u} (type_of% (@invariant_coupling_iff)) where
@@ -100,9 +97,9 @@ def colouredRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body",
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "body",
         "fn", "arg", "fn", "fn", "arg"]
-      stateBinder := 3
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
