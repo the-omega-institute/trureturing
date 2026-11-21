@@ -6,6 +6,8 @@
    utility: none
    digest: Consecutive exponents for four generators over a composite modulus. -/
 
+/- Escape audit unfinished for 2 supporting theorems. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LatinCore
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Ring.Commute

@@ -6,6 +6,8 @@
    utility: none
    digest: Assemble subgroup-local permutations into one distinct-power enumeration. -/
 
+/- Escape audit unfinished for 1 supporting theorem. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LocalPowers
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.Allocation
 

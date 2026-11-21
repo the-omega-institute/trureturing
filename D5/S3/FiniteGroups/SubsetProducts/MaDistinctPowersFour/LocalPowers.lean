@@ -6,6 +6,8 @@
    utility: none
    digest: Power separation within generator classes of size two, three or four. -/
 
+/- Escape audit unfinished for 4 supporting theorems. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.SourceClaim
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.OrderThree
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.ModularBlock

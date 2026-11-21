@@ -6,6 +6,8 @@
    utility: none
    digest: Allocate disjoint exponent positions to classes of sizes one through four. -/
 
+/- Escape audit unfinished for 6 supporting theorems. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import Mathlib.Tactic.FinCases
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.BigOperators

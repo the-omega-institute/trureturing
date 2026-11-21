@@ -14,7 +14,7 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certific
 
 *Commentary.*
 
-These are the closed equality states consumed by later parts. Each local chunk has a kernel decision and passes its checked branches to the soundness theorem.
+The ordered List Partition contains state103, state104, state105, state106, state111, state112, state113, state117. Each state has type Partition (Vector Nat 16) and records a symbol for each cell. Known asserts closure for these states so later certificates can reuse them.
 
 ## References
 

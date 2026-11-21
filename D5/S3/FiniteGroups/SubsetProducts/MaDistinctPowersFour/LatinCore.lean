@@ -3,8 +3,17 @@
    mirror-B: D5/B/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/LatinCore
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderFourChecker.sound; instance=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part17.certificate318
    digest: Row and column injectivity and the three array outcomes. -/
+
+/- The outer transversal of certificate318 tests ![0, 1, 2, 3] at initial.
+   check318 proves acceptance with its ordered reuse list. In sound, the
+   transversal branch uses injective_of_injectiveB to obtain a collision
+   when there is no rainbow transversal, and the columns branch uses
+   allFin_true and anyFin_true to obtain column matches. The closure of
+   initial supplies the order-four classification. -/
+
+/- Escape audit unfinished for 3 supporting theorems. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
 
 import Mathlib.Data.Fintype.EquivFin
 

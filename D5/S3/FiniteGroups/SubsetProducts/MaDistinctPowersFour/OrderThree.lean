@@ -6,6 +6,8 @@
    utility: none
    digest: A row- and column-injective array of order three has a transversal. -/
 
+/- Escape audit unfinished for 1 supporting theorem. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LatinCore
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Logic.Equiv.Fin.Basic

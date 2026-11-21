@@ -14,6 +14,9 @@ internal sealed class MaPart08Document : IScribeDocumentDefinition
                 H("boundary08"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("These are the closed equality states consumed by later parts. Each local chunk has a kernel decision and passes its checked branches to the soundness theorem."))),
+                Blocks(Paragraph(Text(
+                    "The ordered List Partition contains state146, state147, state149, state155, state156. "
+                    + "Each state has type Partition (Vector Nat 16) and records a symbol for each cell. "
+                    + "Known asserts closure for these states so later certificates can reuse them."))),
                 DescribeRole.Theorem))));
 }

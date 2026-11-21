@@ -6,6 +6,8 @@
    utility: kind=checker; basis=consumer=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderFour.orderFour; instance=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part17.certificate318
    digest: Sound checking of equality branches for arbitrary order-four arrays. -/
 
+/- Escape audit unfinished for 3 supporting theorems. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.LatinCore
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Logic.Equiv.Fin.Basic

@@ -6,6 +6,8 @@
    utility: none
    digest: A transversal, equal columns or a prescribed motif at order four. -/
 
+/- Escape audit unfinished for 1 supporting theorem. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.Certificate.Part17
 
 namespace MaLatin

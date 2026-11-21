@@ -6,6 +6,8 @@
    utility: kind=checker; basis=consumer=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/OrderFour.orderFour; instance=D5/S3/FiniteGroups/SubsetProducts/MaDistinctPowersFour/Certificate/Part13.certificate250
    digest: Order-four certificate decisions for chunks 232 through 250. -/
 
+/- Escape audit unfinished for 1 supporting theorem. See https://github.com/the-omega-institute/trureturing/issues/32494. -/
+
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.OrderFourChecker
 import D5.S3.FiniteGroups.SubsetProducts.MaDistinctPowersFour.Certificate.Part12
 
