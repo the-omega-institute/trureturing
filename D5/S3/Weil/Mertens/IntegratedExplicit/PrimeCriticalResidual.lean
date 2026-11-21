@@ -34,15 +34,15 @@ open PrimePhaseCluster (phaseOrbit phaseProfile phaseProfile_on_orbit phaseWindo
   prime_tail_mass_cluster_iff_of_upper_bound)
 open ZeroAbscissaPower (actual_zero primitive_eq_negative_tail)
 
-private def rootTerm (t : ℝ) (k : ℕ) : ℂ :=
+def rootTerm (t : ℝ) (k : ℕ) : ℂ :=
   actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - 1 / 2))
 
-private theorem norm_rootTerm (t : ℝ) (k : ℕ) :
+theorem norm_rootTerm (t : ℝ) (k : ℕ) :
     ‖rootTerm t k‖ = ‖actualCoeff k‖ * Real.exp (((actualZero k).re - 1 / 2) * t) := by
   have hre : ((1 / 2 : ℂ)).re = (1 / 2 : ℝ) := by norm_num
   rw [rootTerm, norm_mul, Complex.norm_exp, Complex.re_ofReal_mul, Complex.sub_re, hre, mul_comm t]
 
-private theorem summable_norm_rootTerm (t : ℝ) : Summable (fun k => ‖rootTerm t k‖) := by
+theorem summable_norm_rootTerm (t : ℝ) : Summable (fun k => ‖rootTerm t k‖) := by
   refine (actualCoeff_hasSum.summable.norm.mul_right (Real.exp (|t| / 2))).of_norm_bounded ?_
   intro k
   rw [norm_norm, norm_rootTerm]
@@ -56,7 +56,7 @@ private theorem summable_norm_rootTerm (t : ℝ) : Summable (fun k => ‖rootTer
     _ ≤ 1 / 2 * |t| := mul_le_mul_of_nonneg_right hcentered (abs_nonneg _)
     _ = |t| / 2 := by ring
 
-private theorem scaled_shift_eq_rootTerm (β t : ℝ) (k : ℕ) :
+theorem scaled_shift_eq_rootTerm (β t : ℝ) (k : ℕ) :
     (Real.exp ((β - 1 / 2) * t) : ℂ) *
       (actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - (β : ℂ)))) = rootTerm t k := by
   rw [rootTerm, Complex.ofReal_exp, mul_left_comm, ← Complex.exp_add]

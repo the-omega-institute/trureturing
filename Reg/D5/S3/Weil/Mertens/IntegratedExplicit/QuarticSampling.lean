@@ -168,4 +168,73 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end Window
 
+namespace IntegerBlocks
+
+def arena : Arena where
+  signature := signature
+  Law V := RiemannHypothesis ↔ ∀ κ : ℝ, 0 < κ → ∀ A : ℕ, ∃ k ≥ max A 2,
+    ∀ n : ℕ, k ^ 3 ≤ n → n ≤ k ^ 4 →
+      V.readout () () ((n : ℝ) ^ 4) ≤ ((n : ℝ) ^ 4) ^ (1 / 2 + κ)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  intro h
+  by_cases rh : RiemannHypothesis
+  · obtain ⟨k, hk, hblock⟩ := h.mp rh (1 / 2) (by norm_num) 2
+    have hk1 : 1 ≤ k := by omega
+    have hb := hblock (k ^ 3) le_rfl (pow_le_pow_right₀ hk1 (by decide : 3 ≤ 4))
+    change (if RiemannHypothesis then _ + 1 else -1) ≤ _ at hb
+    simp only [rh, ↓reduceIte, show (1 : ℝ) / 2 + 1 / 2 = 1 by norm_num, Real.rpow_one] at hb
+    linarith
+  · apply rh
+    apply h.mpr
+    intro κ _ A
+    refine ⟨max A 2, le_rfl, ?_⟩
+    intro n _ _
+    change (if RiemannHypothesis then _ + 1 else -1) ≤ _
+    simp only [rh, ↓reduceIte]
+    exact (by norm_num : (-1 : ℝ) ≤ 0).trans (Real.rpow_nonneg (by positivity) _)
+
+def evidence : Registration arena (type_of% @rh_iff_quartic_integer_blocks) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rh_iff_quartic_integer_blocks, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.evidence.dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@rh_iff_quartic_integer_blocks) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.rh_iff_quartic_integer_blocks.__information_unit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling.IntegerBlocks.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => U x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "body", "body", "body", "arg", "body", "arg",
+        "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end IntegerBlocks
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling

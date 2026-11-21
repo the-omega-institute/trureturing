@@ -47,6 +47,28 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For a Boolean upperA and complex t, set s = 1 when upperA is true "
                     + "and s = −1 when it is false. Then dPeriod(upperA,t) = (τ(1−1/t)+s) P(1−t)/i."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("dperiod-analyticat"),
+                DeclarationHandle.Create(Prefix + "dPeriod_analyticAt"),
+                H("Analyticity of the D period at the boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For either lip and every real t > 1, the continued D period is "
+                        + "complex analytic at t.")),
+                    Paragraph(Text("Compose the analytic Euler period and period ratio with the two "
+                        + "boundary coordinates 1−t and 1−1/t. The first is in the Euler slit and "
+                        + "the second is in the double slit. Multiply the period by the shifted ratio "
+                        + "and divide by i."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("dperiod-ne-zero"),
+                DeclarationHandle.Create(Prefix + "dPeriod_ne_zero"),
+                H("Nonvanishing of the D period at the boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For either lip and every real t > 1, the continued D period "
+                        + "is nonzero at t.")),
+                    Paragraph(Text("The imaginary part of the ratio at 1−1/t is positive, so either "
+                        + "real shift preserves nonvanishing. The Euler period at 1−t is nonzero."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-period-d-agreement"),
                 DeclarationHandle.Create(Prefix + "dPeriod_eq_slit"),
                 H("Agreement with the Euler period on the open lip"), StatementSource.WithoutFormula(),

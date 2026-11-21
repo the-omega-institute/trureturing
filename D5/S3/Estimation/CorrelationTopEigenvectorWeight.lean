@@ -20,7 +20,8 @@ namespace D5.S3.Estimation.CorrelationTopEigenvectorWeight
 
 noncomputable section
 
-private lemma two_point_energy {n : ℕ} (hn : 3 ≤ n) (μ : Fin n → ℝ)
+/-- For a centered vector `μ` and distinct `i, j`, `n (μ_i + μ_j)² ≤ 2 (n - 2) Σ μ_k²`. -/
+lemma two_point_energy {n : ℕ} (hn : 3 ≤ n) (μ : Fin n → ℝ)
     (hsum : ∑ j, μ j = 0) (i j : Fin n) (hij : i ≠ j) :
     (n : ℝ) * (μ i + μ j) ^ 2 ≤
       2 * ((n : ℝ) - 2) * ∑ k, μ k ^ 2 := by
@@ -50,15 +51,19 @@ private lemma two_point_energy {n : ℕ} (hn : 3 ≤ n) (μ : Fin n → ℝ)
   have hpair := mul_nonneg hn0 (sq_nonneg (μ i - μ j))
   nlinarith [hrestsq]
 
-private lemma top_pair_of_weights {n : ℕ} (hn : 3 ≤ n) (μ w : Fin n → ℝ)
+/-- If the weight of a maximal coordinate `i` is at most one half, some other coordinate `j`
+satisfies `2 Σ μ_k w_k ≤ μ_i + μ_j`. -/
+lemma top_pair_of_weights {n : ℕ} (μ w : Fin n → ℝ)
     (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1) (i : Fin n)
-    (htop : ∀ j, μ j ≤ μ i) (hhalf : w i < 1 / 2) :
+    (htop : ∀ j, μ j ≤ μ i) (hhalf : w i ≤ 1 / 2) :
     ∃ j, j ≠ i ∧ 2 * (∑ k, μ k * w k) ≤ μ i + μ j := by
   classical
   have hne : (univ.erase i).Nonempty := by
-    apply card_pos.mp
-    rw [card_erase_of_mem (mem_univ i), card_univ, Fintype.card_fin]
-    omega
+    rw [Finset.nonempty_iff_ne_empty]
+    intro he
+    have h := sum_erase_add univ w (mem_univ i)
+    rw [he, sum_empty, zero_add, hsum] at h
+    linarith
   obtain ⟨j, hj, hmax⟩ := exists_max_image (univ.erase i) μ hne
   refine ⟨j, (mem_erase.mp hj).1, ?_⟩
   have hsumle : ∑ k ∈ univ.erase i, μ k * w k ≤
@@ -81,7 +86,7 @@ private theorem centered_energy_strict {n : ℕ} (hn : 3 ≤ n) (c σ : ℝ) (hc
     (hrayleigh : ∑ j, μ j * w j = ((n : ℝ) - 1) * c)
     (i : Fin n) (htop : ∀ j, μ j ≤ μ i) (hhalf : w i < 1 / 2) :
     c ^ 2 < σ ^ 2 := by
-  obtain ⟨j, hji, hpair⟩ := top_pair_of_weights hn μ w hw hsum i htop hhalf
+  obtain ⟨j, hji, hpair⟩ := top_pair_of_weights μ w hw hsum i htop hhalf.le
   have hbound := two_point_energy hn μ hμ i j hji.symm
   have hnreal : (3 : ℝ) ≤ n := by exact_mod_cast hn
   have hn2 : 0 < (n : ℝ) - 2 := by linarith
@@ -276,7 +281,8 @@ private lemma delta_norm {n : ℕ} (hn : 0 < n) : ‖delta n‖ ^ 2 = 1 := by
   rw [inv_pow, Real.sq_sqrt (Nat.cast_nonneg n),
     mul_inv_cancel₀ (by exact_mod_cast hn.ne')]
 
-private lemma eigenbasis_rayleigh {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
+/-- In an eigenbasis, the Rayleigh quotient is the weighted sum of the eigenvalues. -/
+lemma eigenbasis_rayleigh {n : ℕ} (a : Matrix (Fin n) (Fin n) ℝ)
     (v : OrthonormalBasis (Fin n) ℝ (EuclideanSpace ℝ (Fin n))) (l : Fin n → ℝ)
     (hv : ∀ j, a *ᵥ (v j : Fin n → ℝ) = l j • (v j : Fin n → ℝ))
     (u : EuclideanSpace ℝ (Fin n)) :

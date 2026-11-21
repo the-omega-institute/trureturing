@@ -44,10 +44,10 @@ def slitPeriod (r : ℂ) : ℂ :=
   (2 / (Real.pi : ℂ)) * ∫ θ in (0 : ℝ)..Real.pi / 2,
     (1 - r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ)
 
-private lemma isOpen_slitDomain : IsOpen slitDomain :=
+lemma isOpen_slitDomain : IsOpen slitDomain :=
   Complex.isOpen_slitPlane.preimage (continuous_const.sub continuous_id)
 
-private lemma isOpen_doubleSlit : IsOpen doubleSlit :=
+lemma isOpen_doubleSlit : IsOpen doubleSlit :=
   isOpen_slitDomain.inter Complex.isOpen_slitPlane
 
 private lemma mem_slitDomain (r : ℂ) :
@@ -160,7 +160,7 @@ private lemma slitPeriod_eq_period_real {r : ℝ} (h₀ : 0 ≤ r) (h₁ : r < 1
   push_cast
   rfl
 
-private lemma ball_subset_slitDomain : Metric.ball (0 : ℂ) 1 ⊆ slitDomain := by
+lemma ball_subset_slitDomain : Metric.ball (0 : ℂ) 1 ⊆ slitDomain := by
   intro r hr
   exact (mem_slitDomain r).2 (Or.inl ((Complex.re_le_norm r).trans_lt (by simpa using hr)))
 
@@ -360,7 +360,7 @@ private lemma slitDomain_star : StarConvex ℝ (1 / 2 : ℂ) slitDomain := by
         nlinarith [mul_lt_mul_of_pos_left hz hb0]))
     · exact (mem_slitDomain _).2 (Or.inr (by rw [him]; exact mul_ne_zero hb0.ne' hz))
 
-private lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
+lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
   apply IsConnected.isPreconnected
   apply IsPathConnected.isConnected
   apply StarConvex.isPathConnected _ midpoint_mem

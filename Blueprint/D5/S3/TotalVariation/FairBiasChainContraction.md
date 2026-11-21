@@ -28,4 +28,5 @@ The operators I and P preserve size, and H raises size by one. They obey PI = 1,
 
 - Truth anchor: `D5/S3/TotalVariation/FairBiasChainContraction.actualContraction`
 - Dependency: [D5/S3/HomologicalAlgebra/FiniteMorseCancellation](../HomologicalAlgebra/FiniteMorseCancellation.md)
+- Dependency: [D5/S3/HomologicalAlgebra/OrderedFaceSign](../HomologicalAlgebra/OrderedFaceSign.md)
 - Dependency: [D5/S3/TotalVariation/FairBiasMatching](FairBiasMatching.md)
