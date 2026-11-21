@@ -539,13 +539,14 @@ private theorem clippedLog_eq_add_correction {x δ t : ℝ} (hx : 0 ≤ x) (hδ 
     rw [max_eq_left hh, Real.log_abs, clippingCorrection, indicator_of_notMem h, add_zero]
 
 include bins in
-private theorem clipping_cost (hβ : 0 < β) {D x δ : ℝ} (hD : 0 < D)
+private theorem clipping_integrable (hβ : 0 < β) {D x δ : ℝ}
     (hcap : ∀ t ∈ Ici β, density t ≤ D) (hx : 0 ≤ x) (hδ : 0 < δ) :
-    (∫ t in Ioi β, clippedLog x δ t * density t) ≤ realPotential β density x + 2 * D * δ := by
+    IntegrableOn (fun t => clippedLog x δ t * density t) (Ioi β) ∧
+      IntegrableOn (fun t => clippingCorrection x δ t * density t) (Ioi β) ∧
+      (fun t => clippedLog x δ t * density t - clippingCorrection x δ t * density t)
+        =ᵐ[volume.restrict (Ioi β)] fun t => Real.log |1 - x ^ 2 / t ^ 2| * density t := by
   let c := clippingCorrection x δ
-  obtain ⟨hci, hcv⟩ := clippingCorrection_integral (x := x) hδ
-  have hci' : Integrable c := hci
-  have hcv' : (∫ t, c t) = 2 * δ := hcv
+  have hci' : Integrable c := (clippingCorrection_integral (x := x) hδ).1
   have hcn : 0 ≤ᵐ[volume] c := (ae_ne_real x).mono fun _ ht => clippingCorrection_nonnegative ht
   have hweight : IntegrableOn (fun t => c t * density t) (Ioi β) := by
     apply (hci'.restrict.const_mul D).mono'
@@ -558,13 +559,32 @@ private theorem clipping_cost (hβ : 0 < β) {D x δ : ℝ} (hD : 0 < D)
     rw [abs_of_nonneg (mul_nonneg hct (bins.nonnegative t ht')), mul_comm D]
     exact mul_le_mul_of_nonneg_left (hcap t ht') hct
   have hclip := bins.clippedLog_integrable hβ hcap hx hδ
-  have hsub : (fun t => clippedLog x δ t * density t - c t * density t) =ᵐ[volume.restrict (Ioi β)]
-      fun t => Real.log |1 - x ^ 2 / t ^ 2| * density t := by
-    filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β)),
-      ae_restrict_of_ae (ae_ne_real x)] with t ht hne
-    rw [clippedLog_eq_add_correction hx hδ (hβ.trans ht) hne]
-    dsimp [c]
-    ring
+  refine ⟨hclip, hweight, ?_⟩
+  show (fun t => clippedLog x δ t * density t - c t * density t) =ᵐ[volume.restrict (Ioi β)]
+      fun t => Real.log |1 - x ^ 2 / t ^ 2| * density t
+  filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β)),
+    ae_restrict_of_ae (ae_ne_real x)] with t ht hne
+  rw [clippedLog_eq_add_correction hx hδ (hβ.trans ht) hne]
+  dsimp [c]
+  ring
+
+include bins in
+/-- The logarithmic real-axis kernel is integrable against the bounded bin density,
+including at arguments in the support of the density. -/
+theorem realPotential_integrable (hβ : 0 < β) {D x : ℝ}
+    (hcap : ∀ t ∈ Ici β, density t ≤ D) (hx : 0 ≤ x) :
+    IntegrableOn (fun t => Real.log |1 - x ^ 2 / t ^ 2| * density t) (Ioi β) := by
+  obtain ⟨hclip, hweight, heq⟩ := bins.clipping_integrable hβ hcap hx zero_lt_one
+  exact (hclip.sub hweight).congr heq
+
+include bins in
+private theorem clipping_cost (hβ : 0 < β) {D x δ : ℝ} (hD : 0 < D)
+    (hcap : ∀ t ∈ Ici β, density t ≤ D) (hx : 0 ≤ x) (hδ : 0 < δ) :
+    (∫ t in Ioi β, clippedLog x δ t * density t) ≤ realPotential β density x + 2 * D * δ := by
+  let c := clippingCorrection x δ
+  obtain ⟨hci', hcv'⟩ := clippingCorrection_integral (x := x) hδ
+  have hcn : 0 ≤ᵐ[volume] c := (ae_ne_real x).mono fun _ ht => clippingCorrection_nonnegative ht
+  obtain ⟨hclip, hweight, hsub⟩ := bins.clipping_integrable hβ hcap hx hδ
   have hsplit : (∫ t in Ioi β, clippedLog x δ t * density t) =
       realPotential β density x + ∫ t in Ioi β, c t * density t := by
     unfold realPotential

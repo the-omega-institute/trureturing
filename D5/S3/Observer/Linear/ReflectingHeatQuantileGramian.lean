@@ -13,7 +13,7 @@ import Mathlib.Analysis.Polynomial.MahlerMeasure
 /-! The canonical multiplier in the physical reflecting heat moment problem. -/
 
 open Filter MeasureTheory Set
-open scoped BigOperators
+open scoped BigOperators Topology
 
 noncomputable section
 
@@ -1257,6 +1257,542 @@ def realSaddleRoot (β x : ℝ) : ℂ :=
   if x ≤ β then Complex.ofReal (Real.sqrt (β ^ 2 - x ^ 2))
   else Complex.ofReal (Real.sqrt (x ^ 2 - β ^ 2)) * Complex.I
 
+private def potentialRatio (β t : ℝ) (w : ℂ) : ℂ :=
+  1 + (w ^ 2 - (β : ℂ) ^ 2) / (t : ℂ) ^ 2
+
+private theorem potentialRatio_slit {β t : ℝ} (hβ : 0 < β) (ht : β ≤ t)
+    {w : ℂ} (hw : 0 < w.re) : potentialRatio β t w ∈ Complex.slitPlane := by
+  have ht0 := hβ.trans_le ht
+  have hs : 0 ≤ t ^ 2 - β ^ 2 :=
+    sub_nonneg.mpr (pow_le_pow_left₀ hβ.le ht 2)
+  rw [Complex.mem_slitPlane_iff]
+  unfold potentialRatio
+  rw [← Complex.ofReal_pow, ← Complex.ofReal_pow]
+  by_cases hi : w.im = 0
+  · left
+    simp only [Complex.add_re, Complex.one_re, Complex.div_ofReal_re,
+      Complex.sub_re, Complex.ofReal_re, pow_two, Complex.mul_re, hi, mul_zero, sub_zero]
+    have h : -1 < (w.re * w.re - β * β) / (t * t) := by
+      rw [lt_div_iff₀ (mul_pos ht0 ht0)]
+      nlinarith [sq_pos_of_pos hw]
+    linarith
+  · right
+    simp only [Complex.add_im, Complex.one_im, zero_add, Complex.div_ofReal_im,
+      Complex.sub_im, Complex.ofReal_im, sub_zero, pow_two, Complex.mul_im]
+    rw [show w.re * w.im + w.im * w.re = 2 * (w.re * w.im) by ring]
+    exact div_ne_zero (mul_ne_zero two_ne_zero (mul_ne_zero hw.ne' hi))
+      (mul_ne_zero ht0.ne' ht0.ne')
+
+private theorem potentialDenominator_lower {β t δ : ℝ} (hβ : 0 < β) (ht : β ≤ t)
+    {w : ℂ} (hδ : 0 ≤ δ) (hw : δ ≤ w.re) :
+    δ ^ 2 ≤ ‖(t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2‖ := by
+  let u := Real.sqrt (t ^ 2 - β ^ 2)
+  have hu : u ^ 2 = t ^ 2 - β ^ 2 :=
+    Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hβ.le ht 2))
+  have he : (w + (u : ℂ) * Complex.I) * (w - (u : ℂ) * Complex.I) =
+      (t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2 := by
+    rw [show (w + (u : ℂ) * Complex.I) * (w - (u : ℂ) * Complex.I) =
+      w ^ 2 - (u : ℂ) ^ 2 * Complex.I ^ 2 by ring, Complex.I_sq, ← Complex.ofReal_pow, hu]
+    push_cast
+    ring
+  have h₁ : δ ≤ ‖w + (u : ℂ) * Complex.I‖ := hw.trans (by
+    simpa [Complex.add_re, Complex.mul_re] using Complex.re_le_norm (w + (u : ℂ) * Complex.I))
+  have h₂ : δ ≤ ‖w - (u : ℂ) * Complex.I‖ := hw.trans (by
+    simpa [Complex.sub_re, Complex.mul_re] using Complex.re_le_norm (w - (u : ℂ) * Complex.I))
+  rw [← he, norm_mul, pow_two]
+  exact mul_le_mul h₁ h₂ hδ (norm_nonneg _)
+
+private theorem hasDerivAt_potentialKernel {β t : ℝ} (hβ : 0 < β) (ht : β ≤ t)
+    {w : ℂ} (hw : 0 < w.re) (d : ℝ) :
+    HasDerivAt (fun v => Complex.log (potentialRatio β t v) * (d : ℂ))
+      (2 * w / ((t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2) * (d : ℂ)) w := by
+  have ht0 := hβ.trans_le ht
+  have hratio := potentialRatio_slit hβ ht hw
+  have h := (Complex.hasDerivAt_log hratio).comp w
+    ((((hasDerivAt_pow 2 w).sub_const ((β : ℂ) ^ 2)).div_const ((t : ℂ) ^ 2)).const_add 1)
+  convert h.mul_const (d : ℂ) using 1
+  · simp [potentialRatio]
+  · have hden : (t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2 ≠ 0 :=
+      norm_pos_iff.mp ((sq_pos_of_pos hw).trans_le
+        (potentialDenominator_lower hβ ht hw.le le_rfl))
+    have ht' : (t : ℂ) ≠ 0 := by exact_mod_cast ht0.ne'
+    have he : potentialRatio β t w =
+        ((t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2) / (t : ℂ) ^ 2 := by
+      unfold potentialRatio
+      field_simp [ht']
+      ring
+    rw [he]
+    norm_num
+    field_simp [ht', hden] <;> norm_num
+
+private theorem potentialKernel_deriv_bound {β t δ B d D : ℝ} (hβ : 0 < β) (ht : β ≤ t)
+    {w : ℂ} (hδ : 0 < δ) (hw : δ ≤ w.re) (hB : ‖w‖ ≤ B) (hd : 0 ≤ d ∧ d ≤ D) :
+    ‖2 * w / ((t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2) * (d : ℂ)‖ ≤
+      (2 * B * (1 + (B ^ 2 + β ^ 2) / δ ^ 2) * D) * (t ^ 2)⁻¹ := by
+  let v : ℂ := (t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2
+  have hB0 := (norm_nonneg w).trans hB
+  have hv : δ ^ 2 ≤ ‖v‖ := potentialDenominator_lower hβ ht hδ.le hw
+  have hv0 := (sq_pos_of_pos hδ).trans_le hv
+  have ht0 := hβ.trans_le ht
+  have htri : t ^ 2 ≤ ‖v‖ + (B ^ 2 + β ^ 2) := by
+    calc
+      t ^ 2 = ‖v + ((β : ℂ) ^ 2 - w ^ 2)‖ := by
+        rw [show v + ((β : ℂ) ^ 2 - w ^ 2) = (t : ℂ) ^ 2 by dsimp [v]; ring]
+        rw [norm_pow, Complex.norm_of_nonneg ht0.le]
+      _ ≤ ‖v‖ + (‖(β : ℂ) ^ 2‖ + ‖w ^ 2‖) :=
+        (norm_add_le _ _).trans (add_le_add_right (norm_sub_le _ _) _)
+      _ ≤ _ := by
+        simp only [norm_pow, Complex.norm_of_nonneg hβ.le]
+        linarith [pow_le_pow_left₀ (norm_nonneg w) hB 2]
+  have hdiv : (t ^ 2) / ‖v‖ ≤ 1 + (B ^ 2 + β ^ 2) / δ ^ 2 := by
+    calc
+      _ ≤ (‖v‖ + (B ^ 2 + β ^ 2)) / ‖v‖ := div_le_div_of_nonneg_right htri hv0.le
+      _ = 1 + (B ^ 2 + β ^ 2) / ‖v‖ := by rw [add_div, div_self hv0.ne']
+      _ ≤ _ := add_le_add_right (div_le_div_of_nonneg_left (sq_nonneg B |>.trans (le_add_of_nonneg_right (sq_nonneg β))) (sq_pos_of_pos hδ) hv) _
+  have hscale : ‖v‖⁻¹ ≤ (1 + (B ^ 2 + β ^ 2) / δ ^ 2) * (t ^ 2)⁻¹ := by
+    rw [← div_eq_mul_inv, le_div_iff₀ (sq_pos_of_pos ht0)]
+    simpa [div_eq_mul_inv, mul_comm] using hdiv
+  change ‖2 * w / v * (d : ℂ)‖ ≤ _
+  rw [norm_mul, norm_div, norm_mul, Complex.norm_of_nonneg hd.1, Complex.norm_ofNat,
+    div_eq_mul_inv]
+  calc
+    _ ≤ (2 * B * ((1 + (B ^ 2 + β ^ 2) / δ ^ 2) * (t ^ 2)⁻¹)) * D := by
+      have hM : 0 ≤ 2 * B := by positivity
+      exact mul_le_mul (mul_le_mul (mul_le_mul_of_nonneg_left hB (by norm_num))
+        hscale (by positivity) hM) hd.2 hd.1 (by positivity)
+    _ = _ := by ring
+
+private def holomorphicPotential (β : ℝ) (density : ℝ → ℝ) (w : ℂ) : ℂ :=
+  ∫ t in Ioi β, Complex.log (potentialRatio β t w) * (density t : ℂ)
+
+private theorem holomorphicPotential_integrable_and_differentiable {β D : ℝ} {density : ℝ → ℝ}
+    (hβ : 0 < β) (hc : ContinuousOn density (Ici β))
+    (hd : ∀ t ∈ Ici β, 0 ≤ density t ∧ density t ≤ D) :
+    ∀ w : ℂ, 0 < w.re →
+      IntegrableOn (fun t => Complex.log (potentialRatio β t w) * (density t : ℂ)) (Ioi β) ∧
+      DifferentiableAt ℂ (holomorphicPotential β density) w := by
+  let F (w : ℂ) (t : ℝ) := Complex.log (potentialRatio β t w) * (density t : ℂ)
+  let F' (w : ℂ) (t : ℝ) := 2 * w / ((t : ℂ) ^ 2 - (β : ℂ) ^ 2 + w ^ 2) * (density t : ℂ)
+  have hopen : IsOpen {w : ℂ | 0 < w.re} := isOpen_lt continuous_const Complex.continuous_re
+  have hF (w : ℂ) (hw : 0 < w.re) : ContinuousOn (F w) (Ioi β) := by
+    apply ContinuousOn.mul _ (Complex.continuous_ofReal.comp_continuousOn
+      (hc.mono Ioi_subset_Ici_self))
+    apply ContinuousOn.clog
+    · unfold potentialRatio
+      apply continuousOn_const.add
+      exact continuousOn_const.div (by fun_prop) (fun t ht =>
+        pow_ne_zero _ (by exact_mod_cast (hβ.trans ht).ne'))
+    · exact fun t ht => potentialRatio_slit hβ ht.le hw
+  have hF' (w : ℂ) (hw : 0 < w.re) : ContinuousOn (F' w) (Ioi β) := by
+    apply ContinuousOn.mul _ (Complex.continuous_ofReal.comp_continuousOn
+      (hc.mono Ioi_subset_Ici_self))
+    apply continuousOn_const.div (by fun_prop)
+    intro t ht
+    exact norm_pos_iff.mp ((sq_pos_of_pos hw).trans_le
+      (potentialDenominator_lower hβ ht.le hw.le le_rfl))
+  intro w hw
+  let δ := min β w.re / 2
+  let B := max β ‖w‖ + 1
+  let K := 2 * B * (1 + (B ^ 2 + β ^ 2) / δ ^ 2) * D
+  let U : Set ℂ := {v | δ ≤ v.re} ∩ Metric.closedBall 0 B
+  have hδ : 0 < δ := by dsimp [δ]; positivity
+  have hU : Convex ℝ U := (convex_halfSpace_re_ge δ).inter
+    (convex_closedBall 0 B)
+  have hβmem : (β : ℂ) ∈ U := by
+    refine ⟨?_, ?_⟩
+    · change δ ≤ β
+      dsimp [δ]
+      linarith [min_le_left β w.re]
+    · simp [B, dist_zero_right, abs_of_pos hβ]
+      linarith [le_max_left β ‖w‖]
+  have hU_nhds : U ∈ 𝓝 w := by
+    apply inter_mem
+    · have hstrict : IsOpen {v : ℂ | δ < v.re} :=
+        isOpen_lt continuous_const Complex.continuous_re
+      have hwd : w ∈ {v : ℂ | δ < v.re} := by
+        change δ < w.re
+        dsimp [δ]
+        linarith [min_le_right β w.re]
+      exact mem_of_superset (hstrict.mem_nhds hwd) (fun v hv => (show δ < v.re from hv).le)
+    · apply Metric.closedBall_mem_nhds_of_mem
+      rw [Metric.mem_ball, dist_zero_right]
+      dsimp [B]
+      linarith [le_max_right β ‖w‖]
+  have hwmem := mem_of_mem_nhds hU_nhds
+  have hbound (t : ℝ) (ht : β < t) (v : ℂ) (hv : v ∈ U) : ‖F' v t‖ ≤ K * (t ^ 2)⁻¹ :=
+    potentialKernel_deriv_bound hβ ht.le hδ hv.1
+      (by simpa [dist_zero_right] using hv.2) (hd t ht.le)
+  have hderiv (t : ℝ) (ht : β < t) (v : ℂ) (hv : v ∈ U) :
+      HasDerivAt (F · t) (F' v t) v := hasDerivAt_potentialKernel hβ ht.le (hδ.trans_le hv.1) _
+  have hmeas := (hF w hw).aestronglyMeasurable (μ := volume) measurableSet_Ioi
+  have hint : IntegrableOn (F w) (Ioi β) := by
+    apply ((integrableOn_inv_sq hβ).const_mul (K * ‖w - (β : ℂ)‖)).mono' hmeas
+    filter_upwards [ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))] with t ht
+    have h := hU.norm_image_sub_le_of_norm_hasDerivWithin_le
+      (fun v hv => (hderiv t ht v hv).hasDerivWithinAt) (hbound t ht) hβmem hwmem
+    have hz : F (β : ℂ) t = 0 := by simp [F, potentialRatio]
+    rw [hz, sub_zero] at h
+    exact h.trans_eq (by ring)
+  refine ⟨hint, ?_⟩
+  have hw' : w ∈ {v : ℂ | 0 < v.re} := hw
+  exact (hasDerivAt_integral_of_dominated_loc_of_deriv_le hU_nhds
+    (Filter.Eventually.mono (hopen.mem_nhds hw') fun v hv =>
+      (hF v hv).aestronglyMeasurable measurableSet_Ioi)
+    hint ((hF' w hw).aestronglyMeasurable measurableSet_Ioi)
+    ((ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))).mono hbound)
+    ((integrableOn_inv_sq hβ).const_mul K)
+    ((ae_restrict_mem (μ := volume) (measurableSet_Ioi (a := β))).mono hderiv)).2.differentiableAt
+
+private def complexSaddleLogAverage (β : ℝ) (w : ℂ) : ℂ :=
+  (∫ θ in 0..Real.pi,
+    Complex.log (w + (radius β (2 - 2 * Real.cos θ) : ℂ))) / (Real.pi : ℂ)
+
+private theorem continuous_complexSaddleLogKernel {β : ℝ} (hβ : 0 < β)
+    {w : ℂ} (hw : 0 ≤ w.re) :
+    Continuous (fun θ => Complex.log (w + (radius β (2 - 2 * Real.cos θ) : ℂ))) := by
+  apply Continuous.clog (by unfold radius; fun_prop)
+  intro θ
+  apply Complex.mem_slitPlane_iff.mpr
+  left
+  simp only [Complex.add_re, Complex.ofReal_re]
+  have hp : 0 < radius β (2 - 2 * Real.cos θ) := by unfold radius; positivity
+  linarith
+
+private theorem complexSaddleLogAverage_analytic {β : ℝ} (hβ : 0 < β) :
+    AnalyticOnNhd ℂ (complexSaddleLogAverage β) {w | 0 < w.re} := by
+  let R (θ : ℝ) := radius β (2 - 2 * Real.cos θ)
+  let F (w : ℂ) (θ : ℝ) := Complex.log (w + (R θ : ℂ))
+  let F' (w : ℂ) (θ : ℝ) := (w + (R θ : ℂ))⁻¹
+  let U : Set ℂ := {w | 0 < w.re}
+  have hopen : IsOpen U := isOpen_lt continuous_const Complex.continuous_re
+  have hR (θ : ℝ) : β ≤ R θ := by
+    unfold R radius
+    exact (Real.le_sqrt hβ.le (by positivity)).2 (by linarith [sq_nonneg (2 - 2 * Real.cos θ)])
+  have hre (w : ℂ) (hw : w ∈ U) (θ : ℝ) : β ≤ (w + (R θ : ℂ)).re := by
+    change 0 < w.re at hw
+    simp only [Complex.add_re, Complex.ofReal_re]
+    linarith [hR θ]
+  have hne (w : ℂ) (hw : w ∈ U) (θ : ℝ) : w + (R θ : ℂ) ≠ 0 :=
+    norm_pos_iff.mp (hβ.trans_le ((hre w hw θ).trans (Complex.re_le_norm _)))
+  have hc (w : ℂ) (hw : w ∈ U) : Continuous (F w) :=
+    continuous_complexSaddleLogKernel hβ (le_of_lt hw)
+  have hc' (w : ℂ) (hw : w ∈ U) : Continuous (F' w) :=
+    Continuous.inv₀ (by unfold R radius; fun_prop) (hne w hw)
+  apply DifferentiableOn.analyticOnNhd _ hopen
+  intro w hw
+  let μ := volume.restrict (Ioc (0 : ℝ) Real.pi)
+  have hd := (hasDerivAt_integral_of_dominated_loc_of_deriv_le (μ := μ)
+    (hopen.mem_nhds hw) (Filter.Eventually.mono (hopen.mem_nhds hw) fun v hv => (hc v hv).aestronglyMeasurable)
+    ((hc w hw).intervalIntegrable (μ := volume) 0 Real.pi).1
+    ((hc' w hw).aestronglyMeasurable)
+    (ae_of_all μ fun θ v hv => by
+      rw [show F' v θ = (v + (R θ : ℂ))⁻¹ from rfl, norm_inv]
+      exact inv_anti₀ hβ ((hre v hv θ).trans (Complex.re_le_norm _)))
+    (integrable_const β⁻¹)
+    (ae_of_all μ fun θ v hv => by
+      simpa only [F, F', Function.comp_def, id_eq, mul_one] using (Complex.hasDerivAt_log
+        (Complex.mem_slitPlane_iff.mpr (Or.inl (hβ.trans_le (hre v hv θ))))).comp v
+          ((hasDerivAt_id v).add_const (R θ : ℂ)))).2
+  have h := (hd.div_const (Real.pi : ℂ)).differentiableAt.differentiableWithinAt (s := U)
+  have he : complexSaddleLogAverage β = fun v => (∫ θ, F v θ ∂μ) / (Real.pi : ℂ) := by
+    funext v
+    unfold complexSaddleLogAverage
+    rw [intervalIntegral.integral_of_le Real.pi_pos.le]
+  rw [he]
+  exact h
+
+private theorem complexSaddleLogAverage_re {β : ℝ} (hβ : 0 < β)
+    {w : ℂ} (hw : 0 ≤ w.re) :
+    (complexSaddleLogAverage β w).re =
+      spectralAverage (fun r => Real.log ‖w + (radius β r : ℂ)‖) := by
+  let f (θ : ℝ) := Complex.log (w + (radius β (2 - 2 * Real.cos θ) : ℂ))
+  have hi : IntervalIntegrable f volume 0 Real.pi :=
+    (continuous_complexSaddleLogKernel hβ hw).intervalIntegrable _ _
+  have h := Complex.reCLM.intervalIntegral_comp_comm hi
+  change (∫ θ in 0..Real.pi, (f θ).re) = (∫ θ in 0..Real.pi, f θ).re at h
+  simp only [complexSaddleLogAverage, Complex.div_ofReal_re, spectralAverage]
+  change (∫ θ in 0..Real.pi, f θ).re / Real.pi = _
+  rw [← h]
+  simp only [f, Complex.log_re]
+
+private theorem complexSaddleLogAverage_real_argument {β u : ℝ}
+    (hu : 0 ≤ u) :
+    complexSaddleLogAverage β (u : ℂ) =
+      (spectralAverage (fun r => Real.log (u + radius β r)) : ℂ) := by
+  unfold complexSaddleLogAverage spectralAverage
+  push_cast
+  congr 1
+  rw [← intervalIntegral.integral_ofReal]
+  apply intervalIntegral.integral_congr
+  intro θ _
+  dsimp only
+  rw [← Complex.ofReal_add, ← Complex.ofReal_log
+    (add_nonneg hu (show 0 ≤ radius β (2 - 2 * Real.cos θ) from Real.sqrt_nonneg _))]
+
+private theorem holomorphicPotential_eval (n : ℕ) (hn : 0 < (n : ℝ)) {a β : ℝ}
+    (ha : 0 < a) (hβ : 0 < β) (hs : saddleMass β = a / 2) :
+    Set.EqOn (holomorphicPotential β (saddleDensity n β))
+      (fun w => (n : ℂ) * (((a : ℂ) / 2) * (w - (β : ℂ)) -
+        complexSaddleLogAverage β w + (saddleLogAverage β 0 : ℂ)))
+      {w | 0 < w.re} := by
+  obtain ⟨hc, hcap, _, _⟩ := saddleDensity_spec n hn ha hβ hs
+  let F := holomorphicPotential β (saddleDensity n β)
+  let G (w : ℂ) := (n : ℂ) * (((a : ℂ) / 2) * (w - (β : ℂ)) -
+        complexSaddleLogAverage β w + (saddleLogAverage β 0 : ℂ))
+  let U : Set ℂ := {w | 0 < w.re}
+  have hopen : IsOpen U := isOpen_lt continuous_const Complex.continuous_re
+  have hF : AnalyticOnNhd ℂ F U := by
+    apply DifferentiableOn.analyticOnNhd _ hopen
+    exact fun w hw => ((holomorphicPotential_integrable_and_differentiable hβ hc hcap w hw).2).differentiableWithinAt
+  have hG : AnalyticOnNhd ℂ G U :=
+    analyticOnNhd_const.mul
+      (((analyticOnNhd_const.mul (analyticOnNhd_id.sub analyticOnNhd_const)).sub
+        (complexSaddleLogAverage_analytic hβ)).add analyticOnNhd_const)
+  have hU : IsPreconnected U :=
+    (convex_halfSpace_re_gt 0).isPreconnected
+  have hreal (u : ℝ) (hu : β ≤ u) : F (u : ℂ) = G (u : ℂ) := by
+    let y := Real.sqrt (u ^ 2 - β ^ 2)
+    have hy₂ : y ^ 2 = u ^ 2 - β ^ 2 :=
+      Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hβ.le hu 2))
+    have hRu : radius β y = u := by
+      rw [radius, hy₂, sub_add_cancel, Real.sqrt_sq (hβ.le.trans hu)]
+    have hR0 : radius β 0 = β := by simp [radius, Real.sqrt_sq hβ.le]
+    have hImag := imaginaryPotential_eval_of_resolvent n hn ha hβ hs
+      (fun v _ => saddleDensity_resolvent n hβ hs v) y (Real.sqrt_nonneg _)
+    have hval : F (u : ℂ) = (imaginaryPotential β (saddleDensity n β) y : ℂ) := by
+      unfold F holomorphicPotential imaginaryPotential
+      rw [← integral_complex_ofReal (μ := volume.restrict (Ioi β))
+        (f := fun t => Real.log (1 + y ^ 2 / t ^ 2) * saddleDensity n β t)]
+      apply integral_congr_ae
+      filter_upwards with t
+      have hpos : 0 ≤ 1 + y ^ 2 / t ^ 2 := by positivity
+      rw [potentialRatio, ← Complex.ofReal_pow, ← Complex.ofReal_pow, ← Complex.ofReal_pow,
+        ← Complex.ofReal_sub, ← hy₂, ← Complex.ofReal_div, ← Complex.ofReal_one,
+        ← Complex.ofReal_add, ← Complex.ofReal_log hpos, ← Complex.ofReal_mul]
+    rw [hval, hImag]
+    unfold G
+    rw [complexSaddleLogAverage_real_argument (hβ.le.trans hu)]
+    simp only [saddleLogAverage, hRu]
+    push_cast
+    ring
+  apply hF.eqOn_of_preconnected_of_mem_closure hG hU
+    (show (β : ℂ) ∈ U from hβ)
+  have hcβ : β ∈ closure (Ioi β) := by rw [closure_Ioi]; exact mem_Ici.mpr le_rfl
+  refine closure_mono ?_ (image_closure_subset_closure_image Complex.continuous_ofReal
+    (mem_image_of_mem Complex.ofReal hcβ))
+  rintro _ ⟨u, hu, rfl⟩
+  exact ⟨hreal u hu.le, by simpa using hu.ne'⟩
+
+private theorem realSaddleRoot_spec {β x : ℝ} (hβ : 0 < β) (hx : 0 ≤ x) :
+    0 ≤ (realSaddleRoot β x).re ∧ (realSaddleRoot β x) ^ 2 =
+      ((β ^ 2 - x ^ 2 : ℝ) : ℂ) := by
+  by_cases h : x ≤ β
+  · have hs := Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hx h 2))
+    simp only [realSaddleRoot, if_pos h, Complex.ofReal_re, ← Complex.ofReal_pow, hs]
+    exact ⟨Real.sqrt_nonneg _, trivial⟩
+  · have hs := Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hβ.le (le_of_not_ge h) 2))
+    simp only [realSaddleRoot, if_neg h, Complex.mul_re, Complex.ofReal_re, Complex.I_re,
+      Complex.ofReal_im, Complex.I_im, mul_zero, zero_mul, sub_self, le_refl, true_and,
+      mul_pow, Complex.I_sq, ← Complex.ofReal_pow, hs]
+    push_cast
+    ring
+
+private theorem potentialRatio_boundary {β x t : ℝ} (hβ : 0 < β) (hx : 0 ≤ x) :
+    potentialRatio β t (realSaddleRoot β x) = ((1 - x ^ 2 / t ^ 2 : ℝ) : ℂ) := by
+  rw [potentialRatio, (realSaddleRoot_spec hβ hx).2]
+  push_cast
+  ring
+
+private theorem potentialRatio_norm_mono_real {β t : ℝ} (hβ : 0 < β) (ht : β ≤ t)
+    {w : ℂ} (hw : 0 ≤ w.re) {e : ℝ} (he : 0 ≤ e) :
+    ‖potentialRatio β t w‖ ≤ ‖potentialRatio β t (w + (e : ℂ))‖ := by
+  let u := Real.sqrt (t ^ 2 - β ^ 2)
+  have hu : u ^ 2 = t ^ 2 - β ^ 2 :=
+    Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hβ.le ht 2))
+  have ht0 : (t : ℂ) ≠ 0 := by exact_mod_cast (hβ.trans_le ht).ne'
+  have hf (z : ℂ) : potentialRatio β t z =
+      (z + (u : ℂ) * Complex.I) * (z - (u : ℂ) * Complex.I) / (t : ℂ) ^ 2 := by
+    rw [show (z + (u : ℂ) * Complex.I) * (z - (u : ℂ) * Complex.I) =
+      z ^ 2 - (u : ℂ) ^ 2 * Complex.I ^ 2 by ring, Complex.I_sq, ← Complex.ofReal_pow, hu]
+    unfold potentialRatio
+    push_cast
+    field_simp [ht0]
+    ring
+  have hm (z : ℂ) (hz : 0 ≤ z.re) : ‖z‖ ≤ ‖z + (e : ℂ)‖ := by
+    apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    rw [Complex.sq_norm, Complex.sq_norm, Complex.normSq_apply, Complex.normSq_apply]
+    simp only [Complex.add_re, Complex.ofReal_re, Complex.add_im, Complex.ofReal_im, add_zero]
+    nlinarith [mul_nonneg hz he, sq_nonneg e]
+  rw [hf, hf, norm_div, norm_div, norm_mul, norm_mul]
+  apply div_le_div_of_nonneg_right _ (norm_nonneg _)
+  apply mul_le_mul _ _ (norm_nonneg _) (norm_nonneg _)
+  · simpa [add_right_comm] using hm (w + (u : ℂ) * Complex.I)
+      (by simpa [Complex.add_re, Complex.mul_re] using hw)
+  · simpa [add_sub_right_comm] using hm (w - (u : ℂ) * Complex.I)
+      (by simpa [Complex.sub_re, Complex.mul_re] using hw)
+
+private theorem realPotential_boundary_limit {β D x : ℝ} {density : ℝ → ℝ}
+    (hβ : 0 < β) (hx : 0 ≤ x) (bins : EqualMassBins β density)
+    (hd : ∀ t ∈ Ici β, 0 ≤ density t ∧ density t ≤ D) :
+    Tendsto (fun e : ℝ => (holomorphicPotential β density (realSaddleRoot β x + (e : ℂ))).re)
+      (𝓝[>] 0) (𝓝 (realPotential β density x)) := by
+  let S := realSaddleRoot β x
+  let U (e : ℝ) := S + (e : ℂ)
+  let F (e t : ℝ) := Real.log ‖potentialRatio β t (U e)‖ * density t
+  let f (t : ℝ) := Real.log |1 - x ^ 2 / t ^ 2| * density t
+  let K := ((‖S‖ + 1) ^ 2 + β ^ 2) * D
+  let μ := volume.restrict (Ioi β)
+  have hS : 0 ≤ S.re := (realSaddleRoot_spec hβ hx).1
+  have hU (e : ℝ) (he : 0 < e) : 0 < (U e).re := by
+    simpa only [U, Complex.add_re, Complex.ofReal_re] using add_pos_of_nonneg_of_pos hS he
+  have hhol (e : ℝ) (he : 0 < e) :=
+    (holomorphicPotential_integrable_and_differentiable hβ bins.continuous_density hd (U e) (hU e he)).1
+  have heq (e : ℝ) (he : 0 < e) : (holomorphicPotential β density (U e)).re = ∫ t, F e t ∂μ := by
+    unfold holomorphicPotential
+    have h := Complex.reCLM.integral_comp_comm (hhol e he)
+    change (∫ t, (Complex.log (potentialRatio β t (U e)) * (density t : ℂ)).re ∂μ) =
+      (∫ t, Complex.log (potentialRatio β t (U e)) * (density t : ℂ) ∂μ).re at h
+    rw [← h]
+    apply integral_congr_ae
+    filter_upwards with t
+    simp [F, Complex.mul_re, Complex.log_re]
+  have hfi : Integrable f μ := bins.realPotential_integrable hβ (fun t ht => (hd t ht).2) hx
+  have hae : ∀ᵐ t ∂μ, β < t ∧ t ≠ x := by
+    have hne : ∀ᵐ t : ℝ ∂volume, t ≠ x := by rw [ae_iff]; simp
+    exact (ae_restrict_mem measurableSet_Ioi).and (ae_restrict_of_ae hne)
+  have hbase (t : ℝ) (ht : β < t) (htx : t ≠ x) : 0 < |1 - x ^ 2 / t ^ 2| := by
+    apply abs_pos.mpr
+    intro he
+    have ht' := hβ.trans ht
+    have hpow : x ^ 2 = t ^ 2 := by
+      have he' : x ^ 2 / t ^ 2 = 1 := by linarith
+      exact (div_eq_iff (sq_pos_of_pos ht').ne').mp he' |>.trans (one_mul _)
+    exact htx ((sq_eq_sq₀ ht'.le hx).mp hpow.symm)
+  have hFbound (e : ℝ) (he : 0 < e) (he1 : e < 1)
+      (t : ℝ) (ht : β < t) (htx : t ≠ x) :
+      ‖F e t‖ ≤ ‖f t‖ + K * (t ^ 2)⁻¹ := by
+    have hd' := hd t ht.le
+    have ht0 := hβ.trans ht
+    have hlow : |1 - x ^ 2 / t ^ 2| ≤ ‖potentialRatio β t (U e)‖ := by
+      have h := potentialRatio_norm_mono_real hβ ht.le hS he.le
+      rw [show potentialRatio β t S = _ from potentialRatio_boundary hβ hx,
+        Complex.norm_real, Real.norm_eq_abs] at h
+      exact h
+    have hpos := (hbase t ht htx).trans_le hlow
+    have hloglow : f t ≤ F e t := mul_le_mul_of_nonneg_right
+      (Real.log_le_log (hbase t ht htx) hlow) hd'.1
+    have hnormU : ‖U e‖ ≤ ‖S‖ + 1 := by
+      calc
+        _ ≤ ‖S‖ + ‖(e : ℂ)‖ := norm_add_le _ _
+        _ ≤ _ := by rw [Complex.norm_of_nonneg he.le]; linarith
+    let C := (‖S‖ + 1) ^ 2 + β ^ 2
+    have hnorm : ‖potentialRatio β t (U e)‖ ≤ 1 + C / t ^ 2 := by
+      calc
+        _ ≤ 1 + ‖(U e ^ 2 - (β : ℂ) ^ 2) / (t : ℂ) ^ 2‖ := by
+          simpa only [potentialRatio, norm_one] using norm_add_le (1 : ℂ) ((U e ^ 2 - (β : ℂ) ^ 2) / (t : ℂ) ^ 2)
+        _ ≤ _ := by
+          rw [norm_div, norm_pow (t : ℂ), Complex.norm_of_nonneg ht0.le]
+          apply add_le_add_right (div_le_div_of_nonneg_right _ (by positivity : 0 ≤ t ^ 2))
+          calc
+            _ ≤ ‖U e ^ 2‖ + ‖(β : ℂ) ^ 2‖ := norm_sub_le _ _
+            _ ≤ C := by
+              simp only [C, norm_pow, Complex.norm_of_nonneg hβ.le]
+              exact add_le_add_left (pow_le_pow_left₀ (norm_nonneg _) hnormU 2) _
+    have hloghi : F e t ≤ K * (t ^ 2)⁻¹ := by
+      have h := (Real.log_le_sub_one_of_pos hpos).trans (sub_le_sub_right hnorm 1)
+      have h' : Real.log ‖potentialRatio β t (U e)‖ ≤ C / t ^ 2 := by linarith
+      calc
+        _ ≤ (C / t ^ 2) * D :=
+          mul_le_mul h' hd'.2 hd'.1 (by dsimp [C]; positivity)
+        _ = _ := by dsimp [K, C]; ring
+    have hk : 0 ≤ K * (t ^ 2)⁻¹ := by
+      have hD := hd'.1.trans hd'.2
+      dsimp [K]
+      positivity
+    rw [Real.norm_eq_abs, abs_le, Real.norm_eq_abs]
+    constructor
+    · linarith [neg_abs_le (f t)]
+    · linarith [abs_nonneg (f t)]
+  have hright0 : ∀ᶠ e : ℝ in 𝓝[>] 0, 0 < e := self_mem_nhdsWithin
+  have hright1 : ∀ᶠ e : ℝ in 𝓝[>] 0, e < 1 := nhdsWithin_le_nhds (gt_mem_nhds zero_lt_one)
+  have hright := hright0.and hright1
+  have hlim : Tendsto (fun e : ℝ => ∫ t, F e t ∂μ) (𝓝[>] 0) (𝓝 (∫ t, f t ∂μ)) := by
+    apply tendsto_integral_filter_of_dominated_convergence (fun t => ‖f t‖ + K * (t ^ 2)⁻¹)
+    · refine hright.mono fun e he => ?_
+      exact (Complex.continuous_re.comp_aestronglyMeasurable
+        (hhol e he.1).aestronglyMeasurable).congr
+        (Filter.Eventually.of_forall fun t => by simp [F, Complex.mul_re, Complex.log_re])
+    · exact hright.mono fun e he => hae.mono fun t ht => hFbound e he.1 he.2 t ht.1 ht.2
+    · exact hfi.norm.add ((integrableOn_inv_sq hβ).const_mul K)
+    · filter_upwards [hae] with t ht
+      have h0 : potentialRatio β t (U 0) = ((1 - x ^ 2 / t ^ 2 : ℝ) : ℂ) := by
+        simpa [U, S] using (potentialRatio_boundary (t := t) hβ hx)
+      have hc : Continuous (fun e : ℝ => ‖potentialRatio β t (U e)‖) := by
+        unfold potentialRatio U
+        fun_prop
+      have hn : ‖potentialRatio β t (U 0)‖ ≠ 0 := by
+        rw [h0, Complex.norm_real, Real.norm_eq_abs]
+        exact (hbase t ht.1 ht.2).ne'
+      have harg : Tendsto (fun e : ℝ => ‖potentialRatio β t (U e)‖)
+          (𝓝 0) (𝓝 ‖potentialRatio β t (U 0)‖) := hc.continuousAt
+      have hh : Tendsto (fun e : ℝ => F e t) (𝓝 0) (𝓝 (F 0 t)) :=
+        ((Real.continuousAt_log hn).tendsto.comp harg).mul tendsto_const_nhds
+      have hval : F 0 t = f t := by
+        unfold F f
+        rw [h0, Complex.norm_real, Real.norm_eq_abs]
+      exact hval ▸ hh.mono_left nhdsWithin_le_nhds
+  exact hlim.congr' (hright.mono fun e he => (heq e he.1).symm)
+
+private theorem saddle_realPotential_eval (n : ℕ) (hn : 0 < (n : ℝ)) {a β : ℝ}
+    (ha : 0 < a) (hβ : 0 < β) (hs : saddleMass β = a / 2) (x : ℝ) (hx : 0 ≤ x) :
+    realPotential β (saddleDensity n β) x =
+      (n : ℝ) * (a / 2 * ((realSaddleRoot β x).re - β) -
+        spectralAverage (fun r => Real.log ‖realSaddleRoot β x + (radius β r : ℂ)‖) +
+        saddleLogAverage β 0) := by
+  obtain ⟨hc, hd, hp, hu⟩ := saddleDensity_spec n hn ha hβ hs
+  let bins := EqualMassBins.ofDensity hc (fun t ht => (hd t ht).1) hp hu
+  let S := realSaddleRoot β x
+  let U (e : ℝ) := S + (max e 0 : ℝ)
+  let J (e : ℝ) := spectralAverage (fun r => Real.log ‖U e + (radius β r : ℂ)‖)
+  have hS : 0 ≤ S.re := (realSaddleRoot_spec hβ hx).1
+  have hJ : Continuous J := by
+    let f (e θ : ℝ) := Real.log ‖U e + (radius β (2 - 2 * Real.cos θ) : ℂ)‖
+    have hfc : Continuous (Function.uncurry f) := by
+      apply Continuous.log
+      · unfold U radius
+        fun_prop
+      · rintro ⟨e, θ⟩
+        apply norm_ne_zero_iff.mpr
+        have hr : 0 < radius β (2 - 2 * Real.cos θ) := by unfold radius; positivity
+        intro h
+        have he := congrArg Complex.re h
+        simp only [Function.uncurry, U, Complex.add_re, Complex.ofReal_re, Complex.zero_re] at he
+        linarith [le_max_right e 0]
+    exact (intervalIntegral.continuous_parametric_intervalIntegral_of_continuous' hfc 0 Real.pi).div_const _
+  let G (e : ℝ) := (n : ℝ) * (a / 2 * ((U e).re - β) - J e + saddleLogAverage β 0)
+  have hcG : Continuous G := by
+    unfold G
+    have hU : Continuous U := by unfold U; fun_prop
+    exact continuous_const.mul (((Complex.continuous_re.comp hU).sub continuous_const |>.const_mul (a / 2)).sub hJ |>.add continuous_const)
+  have hlim := realPotential_boundary_limit hβ hx bins hd
+  have hG := hcG.continuousAt (x := (0 : ℝ)) |>.continuousWithinAt (s := Ioi 0) |>.tendsto
+  have heq : ∀ᶠ e : ℝ in 𝓝[>] 0, (holomorphicPotential β (saddleDensity n β) (S + (e : ℂ))).re = G e := by
+    filter_upwards [self_mem_nhdsWithin (s := Ioi (0 : ℝ))] with e he
+    have he0 : 0 < e := he
+    have hUe : U e = S + (e : ℂ) := by dsimp [U]; rw [max_eq_left he0.le]
+    have hre : 0 < (U e).re := by
+      rw [hUe, Complex.add_re, Complex.ofReal_re]
+      linarith
+    have h := congrArg Complex.re
+      (holomorphicPotential_eval n hn ha hβ hs (show 0 < (U e).re from hre))
+    rw [Complex.mul_re, Complex.natCast_re, Complex.natCast_im, zero_mul, sub_zero,
+      Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.div_ofNat_re,
+      Complex.div_ofNat_im, Complex.ofReal_re, Complex.ofReal_im, zero_div, zero_mul, sub_zero,
+      Complex.sub_re, Complex.ofReal_re, complexSaddleLogAverage_re hβ hre.le] at h
+    simpa only [G, J, hUe, Complex.ofReal_re] using h
+  have h := tendsto_nhds_unique_of_eventuallyEq hlim hG heq
+  simpa only [G, J, U, max_self, Complex.ofReal_zero, add_zero, S] using h
+
 private theorem norm_axis_difference_sq (r x : ℝ) :
     ‖(r : ℂ) - (x : ℂ) * Complex.I‖ ^ 2 = r ^ 2 + x ^ 2 := by
   rw [Complex.sq_norm, Complex.normSq_apply]
@@ -1384,15 +1920,9 @@ private theorem saddle_real_cancellation (n : ℕ) {a β : ℝ} (hβ : 0 < β)
     rw [hre, mul_zero, zero_add]
     simp only [J, Gamma, hnrm, le_refl]
 
-/-- The estimate at the unique positive saddle for the physical window.
-The imaginary potential is evaluated by the weighted resolvent. The remaining
-hypothesis is the real boundary value of the same potential. -/
-theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT : 0 < T)
-    (hReal : let a := (n : ℝ) * T; let β := saddleRadius a
-      ∀ x ≥ 0, realPotential β (saddleDensity n β) x =
-        (n : ℝ) * (a / 2 * ((realSaddleRoot β x).re - β) -
-          spectralAverage (fun r => Real.log ‖realSaddleRoot β x + (radius β r : ℂ)‖) +
-          saddleLogAverage β 0)) :
+/-- The two-sided logarithmic estimate on the actual positive modes of the
+reflecting heat Gramian at the unique saddle for the physical window. -/
+theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT : 0 < T) :
     let a := (n : ℝ) * T
     |Real.log (Real.sqrt ((physicalGramian n T)⁻¹ j j)) -
       (n : ℝ) * saddleRate a (saddleRadius a) (rate n j)| ≤
@@ -1404,7 +1934,7 @@ theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT
   have hImag := imaginaryPotential_eval_of_resolvent n hn (mul_pos hn hT) hβ hs
     (fun y _ => saddleDensity_resolvent n hβ hs y)
   exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag
-    (saddle_real_cancellation n hβ hs hReal)
+    (saddle_real_cancellation n hβ hs (saddle_realPotential_eval n hn (mul_pos hn hT) hβ hs))
 
 #print axioms physical_log_inverse_diagonal_error
 #print axioms inverse_diagonal_lower_bound_at_saddle
