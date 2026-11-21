@@ -344,6 +344,94 @@ also need a tenth prime at most 8231. Extending these bounds to all
 possible small-prime supports requires a stronger survivor estimate
 for the head.
 
+### The second-moment threshold at 73
+
+Suppose a probability on the full-height survivors of the head at 73 has
+\(\max_L\mathbb E L^2\le139.1\), with the maximum over complete divisor
+queries as above. Then the whole original family is noncovering. The
+proof tracks the mass lost and the second moment on the same
+submeasure. In this scalar continuation, even optimal clipping at each
+prime can certify a threshold strictly below \(139.26\) when every
+prime above 73 may occur. The known star family at 73 forces a second
+moment greater than \(139.59\) for every supported probability.
+[Star family](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md)
+
+At an intermediate step write \(m\) for the live mass, \(K\) for a bound
+on every complete-query second moment, and \(D\) for the actual mass
+deleted by the next prime \(p\). Put
+\[
+ a_p=\frac{3p-1}{(p-1)^2},\qquad b_p=\frac{1}{4(p-1)^2}.
+\]
+The same restricted kernel gives \(D\le Kb_p/(\delta(1-\delta))\).
+This follows from \((y-\delta)_+\le y^2/(4\delta)\), by completing each
+old cofactor query and bounding each product by Cauchy–Schwarz. In the
+enlarged second moment, the term with both new exponents zero loses at
+least \(D\), since the corresponding old complete query contains the
+unit term and is everywhere at least one. The other exponent pairs use
+the cylinder cap \(p^{-j}/(1-\delta)\) at their maximum depth \(j\).
+There are \(2j+1\) such pairs. Thus
+\[
+ m'=m-D,\qquad K'\le\left(1+\frac{a_p}{1-\delta}\right)K-D.
+\]
+The loss credit uses the same \(D\) in both bounds. [Second-moment continuation, T1–T6](https://github.com/the-omega-institute/trureturing-experiments/blob/80d407671ff57ec39cec5e7244b2fee1df2059c3/docs/reports/erdos7-odd-covering/problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
+
+For a continuation requiring \(m'>vK'\), with \(0\le v<1\), the
+preceding step can use the sufficient threshold
+\[
+ \Phi_p(v)=v+\min_{0<\delta\le1/2}
+ \left\{\frac{b_p(1-v)}{\delta}
+       +\frac{b_p(1-v)+a_pv}{1-\delta}\right\}
+ =v+\left(\sqrt{b_p(1-v)}+\sqrt{b_p(1-v)+a_pv}\right)^2 .
+\]
+Indeed the worst loss permitted by the scalar bounds is the largest
+one, since it reduces \(m'-vK'\) by \((1-v)D\). If that loss
+can exhaust the live mass, the scalar bounds already allow zero
+survival. The minimizer is
+\(\sqrt{b_p(1-v)}/(\sqrt{b_p(1-v)}+\sqrt{b_p(1-v)+a_pv})\).
+The formula increases on \(0\le v\le1/4\). The sum of the two
+radicands increases there since \(a_p>2b_p\), and their product
+has derivative at least \(b_p(a_p-3b_p)/2>0\).
+Also \(\Phi_p(v)\ge v\) on \(0\le v<1\), so a missing prime can
+be skipped. A scalar threshold that reaches \(1/4\) already
+excludes any head with \(m/K\le1/4\).
+
+For primes beyond \(T=5000000\), take \(\delta=1/2\) and use
+\(1+2a_p\le(p/(p-1))^6\). Dropping the loss credit gives a
+sufficient terminal bound. In the preceding partial summation use
+\(f(x)=(\log x)^5/x^2\), \(15<\log T<16\) and
+\(\varepsilon=16^2/(24\cdot2236)\). The log bounds follow from
+\((11/4)^{15}<T<(27/10)^{16}\) and \(27/10<e<11/4\).
+The prime-product and Chebyshev bounds give this terminal threshold
+per unit of second moment:
+\[
+ R_2=\left(\frac{451}{449}\right)^6\frac{T}{(T-1)^2}
+ \frac{1}{15}\left[
+ (1+\varepsilon)\sum_{j=0}^{5}\frac{5!}{(5-j)!\,15^j}
+ +2\varepsilon\right].
+\]
+The factorial sum comes from integrating \((\log x)^5/x^2\).
+The boundary term again accounts for the possible negative error
+in \(\vartheta(T)-T\).
+
+Use \(S=10^{24}\) and visit all 348492 primes in \((73,T]\) in
+decreasing order. For an integer \(u\), put \(X=S-u\),
+\(Y=X+4(3p-1)u\), and \(d=4(p-1)^2\). Then the floor of
+\(S\Phi_p(u/S)\) is
+\[
+ u+\left\lfloor\frac{X+Y+\lfloor\sqrt{4XY}\rfloor}{d}\right\rfloor .
+\]
+One more than the floor gives a strict upper rounding. The replay
+starting from \(\lceil SR_2\rceil=19978401471981184\) and rounding
+up at each step ends at \(7187192385814385692968\). Its ratio to
+\(S\) is less than \(1/139.1\), so the stated head moment suffices.
+Starting from zero and rounding down gives \(7181063643367434956708\),
+whose ratio to \(S\) is greater than \(1/139.26\). This replay
+bounds the best scalar threshold from below even for a tail that
+ends at \(T\), with every prime in \((73,T]\). The upper replay
+keeps all values below \(1/4\), which verifies the monotonicity domain
+for both comparisons. The star family rules out reaching all heads
+by uniformly improving this second-moment continuation alone.
+
 ## Motivation
 
 [Read this section](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/02-current-bounds-and-comparisons.md#motivation).
