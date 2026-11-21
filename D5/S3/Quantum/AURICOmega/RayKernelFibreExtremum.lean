@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/AURICOmega/QuaternionHopfFibration
+/- GID: D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum
    generality: I
-   mirror-B: D5/B/S3/Quantum/AURICOmega/QuaternionHopfFibration
+   mirror-B: D5/B/S3/Quantum/AURICOmega/RayKernelFibreExtremum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -25,7 +25,7 @@ open scoped InnerProductSpace Quaternion
 
 noncomputable section
 
-namespace D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+namespace D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
 
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
@@ -191,5 +191,5 @@ theorem rayKernel_isGreatest_and_integral (x y : unitary ℍ[ℝ]) :
   refine ⟨h1 ▸ h2 ▸ hG, h2 ▸ hG, ?_⟩
   rw [integral_inner_mul_phase_sq, rayKernel_eq_inner]
 
-end D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+end D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
 

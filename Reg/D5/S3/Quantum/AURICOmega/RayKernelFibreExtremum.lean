@@ -1,16 +1,16 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+import D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
 import Reg.D5.S3.Quantum.AURICOmega.QuaternionRayKernel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the extremum and integral of the reading over a phase-circle fibre of
 the unit quaternions. -/
 
-namespace Reg.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+namespace Reg.D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
 
 open _root_.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open _root_.D5.S3.Quantum.AURICOmega.QuaternionRayKernel
-open _root_.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+open _root_.D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 open scoped InnerProductSpace Quaternion
@@ -71,8 +71,8 @@ def rayKernel_isGreatest_and_integral_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@rayKernel_isGreatest_and_integral)
       (Realization Reg.D5.S3.Quantum.AURICOmega.QuaternionRayKernel.signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration.rayKernel_isGreatest_and_integral_unit
-  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration.Fibre.source_registration
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum.rayKernel_isGreatest_and_integral_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum.Fibre.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨Fibre.arena⟩
@@ -89,7 +89,7 @@ def rayKernel_isGreatest_and_integral_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+    owner := `D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -103,4 +103,4 @@ def rayKernel_isGreatest_and_integral_registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
+end Reg.D5.S3.Quantum.AURICOmega.RayKernelFibreExtremum

@@ -8,19 +8,19 @@ Along a right coset of the phase circle of the unit quaternions the round-trip r
 
 $$\forall c \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; c \in \operatorname{phaseCircle} \Leftrightarrow \left(\operatorname{imJ}\left(c\right) = 0 \land \operatorname{imK}\left(c\right) = 0\right)$$
 
-*Formalization.* `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.phaseCircle` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum.phaseCircle` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-phaseCircle is the subgroup of the unit quaternions whose elements have vanishing j and k components, that is the unit quaternions a + b i with a^2 + b^2 = 1. It is closed under products because the j and k components of a product of two elements of the real span of 1 and i vanish, and under inverses because the inverse of a unit quaternion is its conjugate. The quotient of the unit quaternions by this subgroup is formed with the cosets x * phaseCircle, so two unit quaternions lie in the same class exactly when they differ by a factor of the circle on the right. Remark (not stated as a theorem here): the Hopf map sends x to x * i * star x, and the ray kernel is a function of the inner product of Hopf images, equal to one exactly on the right cosets of the phase circle; together with the conjugacy of unit quaternions with equal real parts, these results show that the Hopf map identifies the quotient of the unit quaternions by the phase circle with the sphere of unit imaginary quaternions.
+phaseCircle is the subgroup of the unit quaternions whose elements have vanishing j and k components, that is the unit quaternions a + b i with a^2 + b^2 = 1. It is closed under products because the j and k components of a product of two elements of the real span of 1 and i vanish, and under inverses because the inverse of a unit quaternion is its conjugate. The quotient of the unit quaternions by this subgroup is formed with the cosets x * phaseCircle, so two unit quaternions lie in the same class exactly when they differ by a factor of the circle on the right. Remark (not stated as a theorem here): the Hopf map sends x to x * i * star x, and the ray kernel is a function of the inner product of Hopf images, equal to one exactly on the right cosets of the phase circle; together with the conjugacy of unit quaternions with equal real parts, these results show that the Hopf map induces a bijection from the quotient of the unit quaternions by the phase circle onto the sphere of unit imaginary quaternions, and this bijection is a homeomorphism because it is continuous, the quotient is compact and the sphere is Hausdorff.
 
 **Theorem 1.2 (Maximum and integral of the reading over a fibre).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{IsGreatest}\left(\{r \mid \exists c \in \operatorname{phaseCircle},\; r = \operatorname{kappa}\left(\operatorname{quaternionModel}, y, \operatorname{tri}\left(\operatorname{quaternionModel}, x \cdot c, y, x \cdot c\right)\right)\}, \operatorname{rayKernel}\left(x, y\right)\right) \land \left(\operatorname{IsGreatest}\left(\{r \mid \exists c \in \operatorname{phaseCircle},\; r = \left(2 \cdot \operatorname{kappa}\left(\operatorname{quaternionModel}, x \cdot c, y\right) - 1\right)^{2}\}, \operatorname{rayKernel}\left(x, y\right)\right) \land \int_{0}^{2\pi} \left(\langle x \cdot \operatorname{mk}\left(\operatorname{cos}\left(t\right), \operatorname{sin}\left(t\right), 0, 0\right), y \rangle_{\mathbb{R}}\right)^{2} dt = \pi \cdot \operatorname{rayKernel}\left(x, y\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.rayKernel_isGreatest_and_integral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum.rayKernel_isGreatest_and_integral` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,7 +30,7 @@ In the display, kappa and tri are the reading and the transfer of the quaternion
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.phaseCircle`
-- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.rayKernel_isGreatest_and_integral`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum.phaseCircle`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum.rayKernel_isGreatest_and_integral`
 - Dependency: [D5/S3/Quantum/AURICOmega/QuaternionRayKernel](QuaternionRayKernel.md)
 - Dependency: [D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup](UnitQuaternionClosedSubgroup.md)

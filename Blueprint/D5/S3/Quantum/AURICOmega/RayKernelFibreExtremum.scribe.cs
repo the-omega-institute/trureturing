@@ -4,9 +4,9 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega;
 
-internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinition
+internal sealed class RayKernelFibreExtremumDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/AURICOmega/QuaternionHopfFibration.";
+    private const string Prefix = "D5/S3/Quantum/AURICOmega/RayKernelFibreExtremum.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Along a right coset of the phase circle of the unit quaternions the round-trip reading and the squared shifted reading attain the ray kernel as their maximum, and the squared inner product has the ray kernel times pi as its integral over a full turn.",
@@ -17,7 +17,7 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
                 "phaseCircle is the subgroup of the unit quaternions whose elements have vanishing j and k components, that is the unit quaternions a + b i with a^2 + b^2 = 1. "
                     + "It is closed under products because the j and k components of a product of two elements of the real span of 1 and i vanish, and under inverses because the inverse of a unit quaternion is its conjugate. "
                     + "The quotient of the unit quaternions by this subgroup is formed with the cosets x * phaseCircle, so two unit quaternions lie in the same class exactly when they differ by a factor of the circle on the right. "
-                    + "Remark (not stated as a theorem here): the Hopf map sends x to x * i * star x, and the ray kernel is a function of the inner product of Hopf images, equal to one exactly on the right cosets of the phase circle; together with the conjugacy of unit quaternions with equal real parts, these results show that the Hopf map identifies the quotient of the unit quaternions by the phase circle with the sphere of unit imaginary quaternions."),
+                    + "Remark (not stated as a theorem here): the Hopf map sends x to x * i * star x, and the ray kernel is a function of the inner product of Hopf images, equal to one exactly on the right cosets of the phase circle; together with the conjugacy of unit quaternions with equal real parts, these results show that the Hopf map induces a bijection from the quotient of the unit quaternions by the phase circle onto the sphere of unit imaginary quaternions, and this bijection is a homeomorphism because it is continuous, the quotient is compact and the sphere is Hausdorff."),
             Node("fibre-extremum", "rayKernel_isGreatest_and_integral", "Maximum and integral of the reading over a fibre",
                 StatementSource.FromAuthor(ExtremumFormula()), AssessedProvenance.FromRepo(), DescribeRole.Theorem,
                 "In the display, kappa and tri are the reading and the transfer of the quaternion comparison model, with kappa(x, y) = (1 + <x, y>) / 2 and tri(p, y, p) = p * y^-1 * p, IsGreatest(S, m) means that m belongs to S and bounds S from above, mk(a, b, c, d) is the quaternion a + b i + c j + d k, and the integration variable t runs over the interval from 0 to 2 pi. "
