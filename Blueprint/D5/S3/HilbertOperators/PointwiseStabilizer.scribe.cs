@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.Unitary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.HilbertOperators;
 
 internal sealed class PointwiseStabilizerDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Algebra/Unitary/PointwiseStabilizer.";
+    private const string Prefix = "D5/S3/HilbertOperators/PointwiseStabilizer.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For a subspace K of an inner product space E over the real or complex numbers that admits an orthogonal projection, restriction to the orthogonal complement is a group isomorphism from the linear isometries of E fixing K pointwise onto the linear isometries of the orthogonal complement; when E is finite-dimensional it preserves the determinant.",
@@ -53,7 +53,7 @@ internal sealed class PointwiseStabilizerDocument : IScribeDocumentDefinition
                 + "det(U) = det(e(U)) times 1. "
                 + "The finite dimension is required of E and not only of K^perp. The determinant of a "
                 + "linear map of a space that has no finite basis is 1 by convention, so for an "
-                + "infinite-dimensional E and a closed K whose complement K^perp is a line, the "
+                + "infinite-dimensional E and a complete K whose complement K^perp is a line, the "
                 + "isometry that is the identity on K and -1 on K^perp has determinant 1 on E and "
                 + "-1 on K^perp; this example is a remark and is not formalised. "
                 + "The hypothesis that K has an orthogonal projection is equivalent to the "

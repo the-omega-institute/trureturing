@@ -37,8 +37,8 @@ internal sealed class TensorSquareSingletDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(TheoremFormula()), AssessedProvenance.FromRepo(),
                 DescribeRole.Theorem,
                 "In the display, specialUnitaryGroup(Fin(2), C) is the group of two-by-two unitary "
-                + "matrices of determinant one, Set(M) is the type of sets of two-by-two complex "
-                + "matrices, Submodule(C, V) is the type of complex subspaces of V, 0 is the zero "
+                + "matrices of determinant one, Set(Matrix(Fin(2), Fin(2), C)) is the type of sets of "
+                + "two-by-two complex matrices, Submodule(C, V) is the type of complex subspaces of V, 0 is the zero "
                 + "subspace, C omega is the line spanned by omega, and the last term V of the "
                 + "four-fold disjunction is the whole space. The theorem has six conjuncts. "
                 + "phaseMatrix and rotationMatrix are special unitary. For every set S of two-by-two "

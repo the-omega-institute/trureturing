@@ -4,7 +4,7 @@
 
 A ternary comparison structure of feature rank at most eight that contains a transfer- and reading-preserving copy of the unit quaternion comparison model is that copy, eight is the largest rank with this property, and in feature rank five a reading-preserving copy alone already exhausts the structure.
 
-**Theorem 1.1 (A copy of the model in feature rank at most eight is everything).**
+**Theorem 1.1 (A transfer- and reading-preserving copy of the model in feature rank at most eight is everything).**
 
 $$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryComparison}\left(M\right),\; \forall r \in \mathbb{N},\; \operatorname{HasFeatureRank}\left(C, r\right) \Rightarrow \left(r \le 8 \Rightarrow \left(\forall j \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \to M,\; \left(\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), z \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; j\left(\operatorname{tri}\left(\operatorname{quaternionModel}, x, y, z\right)\right) = \operatorname{tri}\left(C, j\left(x\right), j\left(y\right), j\left(z\right)\right)\right) \Rightarrow \left(\left(\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{kappa}\left(C, j\left(x\right), j\left(y\right)\right) = \operatorname{kappa}\left(\operatorname{quaternionModel}, x, y\right)\right) \Rightarrow \operatorname{Bijective}\left(j\right)\right)\right)\right)$$
 

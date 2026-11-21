@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Two explicit SU(2) elements already fix the four invariant subspaces of C2 tensor C2. -/
+   digest: Two explicit SU(2) elements determine the four invariant subspaces of C2 tensor C2. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -31,21 +31,21 @@ two explicit elements suffice. Moreover `(g ⊗ g) ω = det g • ω` for every 
 
 namespace D5.S3.Quantum.Algebra.Unitary.TensorSquareSinglet
 
-local notation "V" => EuclideanSpace ℂ (Fin 2 × Fin 2)
-
 /-- The unnormalized singlet `|01⟩ - |10⟩` of two qubits. -/
 def singlet : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
   WithLp.toLp 2 (fun ij => if ij = (0, 1) then 1 else if ij = (1, 0) then -1 else 0)
 
 /-- The vector with coordinates `a, b, c, d` at `|00⟩, |01⟩, |10⟩, |11⟩`. -/
-private def vec (a b c d : ℂ) : V := WithLp.toLp 2 (fun ij => ![![a, b], ![c, d]] ij.1 ij.2)
+private def vec (a b c d : ℂ) : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
+  WithLp.toLp 2 (fun ij => ![![a, b], ![c, d]] ij.1 ij.2)
 
 @[simp] private lemma vec_00 (a b c d : ℂ) : vec a b c d (0, 0) = a := rfl
 @[simp] private lemma vec_01 (a b c d : ℂ) : vec a b c d (0, 1) = b := rfl
 @[simp] private lemma vec_10 (a b c d : ℂ) : vec a b c d (1, 0) = c := rfl
 @[simp] private lemma vec_11 (a b c d : ℂ) : vec a b c d (1, 1) = d := rfl
 
-private lemma eta (x : V) : x = vec (x (0, 0)) (x (0, 1)) (x (1, 0)) (x (1, 1)) := by
+private lemma eta (x : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
+    x = vec (x (0, 0)) (x (0, 1)) (x (1, 0)) (x (1, 1)) := by
   refine PiLp.ext fun ij => ?_
   obtain ⟨i, j⟩ := ij
   fin_cases i <;> fin_cases j <;> rfl
@@ -83,7 +83,6 @@ private lemma tensor_vec (g : Matrix (Fin 2) (Fin 2) ℂ) (a b c d : ℂ) :
     simp [Matrix.toLpLin_apply, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
       Fin.sum_univ_two, vec] <;> ring
 
-
 /-- `(g ⊗ g) ω = det g • ω` for every `2 × 2` matrix `g`. -/
 private lemma tensor_singlet (g : Matrix (Fin 2) (Fin 2) ℂ) :
     (g ⊗ₖ g).toEuclideanLin singlet = g.det • singlet := by
@@ -91,15 +90,19 @@ private lemma tensor_singlet (g : Matrix (Fin 2) (Fin 2) ℂ) :
   refine ⟨?_, ?_, ?_, ?_⟩ <;> ring
 
 /-- The orthogonal complement of the singlet is the space of symmetric tensors. -/
-private lemma mem_orthogonal_iff (x : V) : x ∈ (ℂ ∙ singlet)ᗮ ↔ x (0, 1) = x (1, 0) := by
+private lemma mem_orthogonal_iff (x : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
+    x ∈ (ℂ ∙ singlet)ᗮ ↔ x (0, 1) = x (1, 0) := by
   rw [Submodule.mem_orthogonal_singleton_iff_inner_right, eta x, singlet_eq]
   simp [PiLp.inner_apply, Fintype.sum_prod_type, Fin.sum_univ_two, vec]
   constructor <;> intro h <;> linear_combination h
 
 /-- Extraction of the weight components by a diagonal operator with eigenvalues
 `α, 1, 1, β` on the standard basis. -/
-private lemma extract (T : V →ₗ[ℂ] V) (α β : ℂ) (hα : α ≠ 1) (hβ : β ≠ 1) (hαβ : α ≠ β)
-    (hT : ∀ p q r s : ℂ, T (vec p q r s) = vec (α * p) q r (β * s)) (W : Submodule ℂ V)
+private lemma extract
+    (T : EuclideanSpace ℂ (Fin 2 × Fin 2) →ₗ[ℂ] EuclideanSpace ℂ (Fin 2 × Fin 2))
+    (α β : ℂ) (hα : α ≠ 1) (hβ : β ≠ 1) (hαβ : α ≠ β)
+    (hT : ∀ p q r s : ℂ, T (vec p q r s) = vec (α * p) q r (β * s))
+    (W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2)))
     (hW : ∀ x ∈ W, T x ∈ W) {p q r s : ℂ} (hx : vec p q r s ∈ W) :
     (p ≠ 0 → vec 1 0 0 0 ∈ W) ∧ (s ≠ 0 → vec 0 0 0 1 ∈ W) ∧ vec 0 q r 0 ∈ W := by
   have hTx := hW _ hx
@@ -127,7 +130,6 @@ private lemma extract (T : V →ₗ[ℂ] V) (α β : ℂ) (hα : α ≠ 1) (hβ 
     rw [smul_vec, smul_vec, vec_add, vec_add, smul_vec, vec_eq_vec]
     refine ⟨?_, ?_, ?_, ?_⟩ <;> field_simp <;> ring
 
-
 /-- The diagonal phase matrix with diagonal entries `(3 + 4i)/5` and `(3 - 4i)/5`. -/
 def phaseMatrix : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(3 + 4 * Complex.I) / 5, 0; 0, (3 - 4 * Complex.I) / 5]
@@ -135,7 +137,7 @@ def phaseMatrix : Matrix (Fin 2) (Fin 2) ℂ :=
 /-- The real rotation matrix with cosine `3/5` and sine `4/5`. -/
 def rotationMatrix : Matrix (Fin 2) (Fin 2) ℂ := !![3 / 5, -4 / 5; 4 / 5, 3 / 5]
 
-/-- `phaseMatrix ⊗ phaseMatrix` is diagonal with eigenvalues `α, 1, 1, β`, `α ≠ β`, `α, β ≠ 1`. -/
+/-- `phaseMatrix ⊗ phaseMatrix` is diagonal with eigenvalues `α, 1, 1, β`. -/
 private lemma tensor_phase (p q r s : ℂ) :
     (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin (vec p q r s) =
       vec ((-7 + 24 * Complex.I) / 25 * p) q r ((-7 - 24 * Complex.I) / 25 * s) := by
@@ -179,10 +181,11 @@ private lemma rotation_mem : rotationMatrix ∈ Matrix.specialUnitaryGroup (Fin 
   · rw [rotationMatrix, Matrix.det_fin_two_of]
     norm_num
 
-
 /-- Every `g ⊗ g` preserves each of the four subspaces `⊥`, `ℂ ∙ ω`, `(ℂ ∙ ω)ᗮ`, `⊤`. -/
-private lemma tensor_mem (g : Matrix (Fin 2) (Fin 2) ℂ) {W : Submodule ℂ V}
-    (hW : W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤) {x : V} (hx : x ∈ W) :
+private lemma tensor_mem (g : Matrix (Fin 2) (Fin 2) ℂ)
+    {W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2))}
+    (hW : W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤)
+    {x : EuclideanSpace ℂ (Fin 2 × Fin 2)} (hx : x ∈ W) :
     (g ⊗ₖ g).toEuclideanLin x ∈ W := by
   rcases hW with rfl | rfl | rfl | rfl
   · rw [Submodule.mem_bot] at hx
@@ -214,10 +217,11 @@ private lemma alpha_ne_beta : (-7 + 24 * Complex.I) / 25 ≠ (-7 - 24 * Complex.
 /-- A subspace invariant under `phaseMatrix ⊗ phaseMatrix` and
 `rotationMatrix ⊗ rotationMatrix` containing `|00⟩` or `|11⟩`
 contains every symmetric vector. -/
-private lemma symmetric_le {W : Submodule ℂ V}
+private lemma symmetric_le {W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2))}
     (hd : ∀ x ∈ W, (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin x ∈ W)
     (hR : ∀ x ∈ W, (rotationMatrix ⊗ₖ rotationMatrix).toEuclideanLin x ∈ W)
-    (h : vec 1 0 0 0 ∈ W ∨ vec 0 0 0 1 ∈ W) (z : V) (hz : z (0, 1) = z (1, 0)) : z ∈ W := by
+    (h : vec 1 0 0 0 ∈ W ∨ vec 0 0 0 1 ∈ W) (z : EuclideanSpace ℂ (Fin 2 × Fin 2))
+    (hz : z (0, 1) = z (1, 0)) : z ∈ W := by
   have hE := fun {p q r s : ℂ} (hx : vec p q r s ∈ W) =>
     extract _ _ _ alpha_ne_one beta_ne_one alpha_ne_beta tensor_phase W hd hx
   have h00 : vec 1 0 0 0 ∈ W := by
@@ -229,10 +233,10 @@ private lemma symmetric_le {W : Submodule ℂ V}
   have hy := hR _ h00
   rw [tensor_rotation] at hy
   have h11 := (hE hy).2.1 (by norm_num)
-  have hmid := (hE hy).2.2
+  have hmid : vec 0 (12 / 25) (12 / 25) 0 ∈ W := by
+    convert (hE hy).2.2 using 2 <;> norm_num
   have hz' : z = z (0, 0) • vec 1 0 0 0 +
-      (25 / 12 * z (0, 1)) • vec 0 ((12 * 1 + 9 * 0 - 16 * 0 - 12 * 0) / 25)
-        ((12 * 1 - 16 * 0 + 9 * 0 - 12 * 0) / 25) 0 + z (1, 1) • vec 0 0 0 1 := by
+      (25 / 12 * z (0, 1)) • vec 0 (12 / 25) (12 / 25) 0 + z (1, 1) • vec 0 0 0 1 := by
     rw [smul_vec, smul_vec, smul_vec, vec_add, vec_add, eta z, vec_eq_vec]
     simp only [vec_00, vec_01, vec_11]
     exact ⟨by ring, by ring, by linear_combination (-1 : ℂ) * hz, by ring⟩
@@ -241,7 +245,7 @@ private lemma symmetric_le {W : Submodule ℂ V}
 
 /-- The four subspaces are the only ones invariant under `phaseMatrix ⊗ phaseMatrix` and
 `rotationMatrix ⊗ rotationMatrix`. -/
-private lemma classify {W : Submodule ℂ V}
+private lemma classify {W : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2))}
     (hd : ∀ x ∈ W, (phaseMatrix ⊗ₖ phaseMatrix).toEuclideanLin x ∈ W)
     (hR : ∀ x ∈ W, (rotationMatrix ⊗ₖ rotationMatrix).toEuclideanLin x ∈ W) :
     W = ⊥ ∨ W = ℂ ∙ singlet ∨ W = (ℂ ∙ singlet)ᗮ ∨ W = ⊤ := by
@@ -261,7 +265,7 @@ private lemma classify {W : Submodule ℂ V}
     rwa [smul_smul, inv_mul_cancel₀ ht, one_smul] at this
   right; right
   obtain ⟨x, hx, hxs⟩ := IsConcreteLE.not_le_iff_exists.mp hle
-  have hsym : ∀ z : V, z (0, 1) = z (1, 0) → z ∈ W := by
+  have hsym : ∀ z : EuclideanSpace ℂ (Fin 2 × Fin 2), z (0, 1) = z (1, 0) → z ∈ W := by
     apply symmetric_le hd hR
     rw [eta x] at hx hxs
     by_cases hp : x (0, 0) = 0
@@ -291,7 +295,8 @@ private lemma classify {W : Submodule ℂ V}
     intro h
     apply hyo
     linear_combination (2 : ℂ) * h
-  have key : ∀ (z : V) (c : ℂ), c = (z (0, 1) - z (1, 0)) / 2 → z - c • singlet ∈ W := by
+  have key : ∀ (z : EuclideanSpace ℂ (Fin 2 × Fin 2)) (c : ℂ),
+      c = (z (0, 1) - z (1, 0)) / 2 → z - c • singlet ∈ W := by
     intro z c hcz
     apply hsym
     rw [singlet_eq, eta z, smul_vec]
@@ -326,7 +331,7 @@ theorem singlet_invariant_subspaces :
   refine ⟨phase_mem, rotation_mem, fun S hd hr W =>
     ⟨fun h => classify (h phaseMatrix hd) (h rotationMatrix hr),
       fun hW g _ x hx => tensor_mem g hW hx⟩, tensor_singlet, mem_orthogonal_iff, ?_⟩
-  have : Fact (Module.finrank ℂ V = 3 + 1) := ⟨by simp⟩
+  have : Fact (Module.finrank ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2)) = 3 + 1) := ⟨by simp⟩
   refine Submodule.finrank_orthogonal_span_singleton ?_
   intro h
   have := congrArg (· (0, 1)) h

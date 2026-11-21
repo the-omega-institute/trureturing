@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Algebra/Unitary/PointwiseStabilizer
+/- GID: D5/S3/HilbertOperators/PointwiseStabilizer
    generality: G
-   mirror-B: D5/B/S3/Quantum/Algebra/Unitary/PointwiseStabilizer
+   mirror-B: D5/B/S3/HilbertOperators/PointwiseStabilizer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -14,7 +14,18 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+/-!
+# Isometries fixing a subspace pointwise
+
+For a subspace `K` of an inner product space `E` over an `RCLike` field, the linear isometries
+of `E` that fix every vector of `K` form a subgroup `pointwiseStabilizer K`. When `K` has an
+orthogonal projection, restriction to the orthogonal complement `Kᗮ` is a group isomorphism from
+`pointwiseStabilizer K` onto the linear isometries of `Kᗮ`, its inverse extending an isometry of
+`Kᗮ` by the identity on `K`. When `E` is finite-dimensional, an isometry and its restriction to
+`Kᗮ` have the same determinant.
+-/
+
+namespace D5.S3.HilbertOperators.PointwiseStabilizer
 
 open Submodule
 
@@ -91,9 +102,8 @@ private lemma restrictHom_bijective :
     apply LinearIsometryEquiv.ext
     intro x
     obtain ⟨k, hk, y, hy, rfl⟩ := exists_add_mem_mem_orthogonal (K := K) x
-    have hy' : (U : E ≃ₗᵢ[𝕜] E) y = (V : E ≃ₗᵢ[𝕜] E) y := by
-      have := congrArg (fun W : Kᗮ ≃ₗᵢ[𝕜] Kᗮ => ((W ⟨y, hy⟩ : Kᗮ) : E)) h
-      exact this
+    have hy' : (U : E ≃ₗᵢ[𝕜] E) y = (V : E ≃ₗᵢ[𝕜] E) y :=
+      congrArg (fun W : Kᗮ ≃ₗᵢ[𝕜] Kᗮ => ((W ⟨y, hy⟩ : Kᗮ) : E)) h
     rw [map_add, map_add, U.2 k hk, V.2 k hk, hy']
   · intro W
     refine ⟨⟨extend W, fun x hx => extend_apply_of_mem W hx⟩, ?_⟩
@@ -133,5 +143,5 @@ theorem exists_mulEquiv_orthogonal (K : Submodule 𝕜 E) [K.HasOrthogonalProjec
     exact (Submodule.Quotient.eq Kᗮ).mpr (hmem x)
   rw [LinearMap.det_eq_det_mul_det Kᗮ _ he, h1, h2, LinearMap.det_id, mul_one]
 
-end D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+end D5.S3.HilbertOperators.PointwiseStabilizer
 

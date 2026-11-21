@@ -9,7 +9,7 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Analytic/Asymptotics/PrimeVersineSums.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "For sigma >= 0 the series of 1 - cos p^(-sigma) over the primes converges exactly when sigma > 1/2; for every real sigma its difference from half the series of p^(-2 sigma) converges exactly when sigma > 1/4, with partial sums tending to minus infinity for sigma <= 1/4; on the line sigma = 1/2 the versine sum up to x differs from half the sum of the reciprocals of the primes up to x by a quantity within 1/(12 (floor(x) + 1)) of its limit.",
+        "For sigma >= 0 the series of 1 - cos p^(-sigma) over the primes converges exactly when sigma > 1/2; for every real sigma the series of 1 - cos p^(-sigma) - p^(-2 sigma)/2 over the primes converges exactly when sigma > 1/4, with partial sums tending to minus infinity for sigma <= 1/4; on the line sigma = 1/2 the versine sum up to x differs from half the sum of the reciprocals of the primes up to x by a quantity within 1/(12 (floor(x) + 1)) of its limit.",
         H("Versine sums over the primes"),
         Blocks(
             Paragraph(Text(

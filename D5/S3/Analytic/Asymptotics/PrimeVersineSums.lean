@@ -136,7 +136,7 @@ private lemma quarter_lt_of_summable {σ : ℝ} (hσ : 0 ≤ σ)
   have := Nat.Primes.summable_rpow.mp hs
   linarith
 
-/-- For `σ ≤ 1 / 4` the defect series over primes diverges; for `σ < 0` its terms tend to `+∞`. -/
+/-- For `σ ≤ 1 / 4` the defect series over primes is not summable. -/
 private lemma not_summable_defect {σ : ℝ} (hσ : σ ≤ 1 / 4) :
     ¬ Summable (fun p : Nat.Primes =>
       Real.cos ((p : ℝ) ^ (-σ)) - (1 - ((p : ℝ) ^ (-σ)) ^ 2 / 2)) := by

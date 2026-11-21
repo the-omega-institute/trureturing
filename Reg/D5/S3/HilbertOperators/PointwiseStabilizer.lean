@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+import D5.S3.HilbertOperators.PointwiseStabilizer
 import Reg.Support.DependentFamily
 import Reg.Support.RealScalarLift
 
@@ -7,9 +7,9 @@ import Reg.Support.RealScalarLift
 pointwise. The readout is the isometry `U` read as a map of `E`, which the restricted isometry
 `e U` must reproduce on every vector of `Kᗮ`. -/
 
-namespace Reg.D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+namespace Reg.D5.S3.HilbertOperators.PointwiseStabilizer
 
-open _root_.D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+open _root_.D5.S3.HilbertOperators.PointwiseStabilizer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Submodule
 
@@ -110,8 +110,8 @@ end Restrict
 def exists_mulEquiv_orthogonal_registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@exists_mulEquiv_orthogonal.{u, v}) (Realization Restrict.signature.{u, v}) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer.exists_mulEquiv_orthogonal_unit
-  realizationName := `Reg.D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer.Restrict.source_registration
+  unitName := `Reg.D5.S3.HilbertOperators.PointwiseStabilizer.exists_mulEquiv_orthogonal_unit
+  realizationName := `Reg.D5.S3.HilbertOperators.PointwiseStabilizer.Restrict.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨Restrict.arena.{u, v}⟩
@@ -128,7 +128,7 @@ def exists_mulEquiv_orthogonal_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+    owner := `D5.S3.HilbertOperators.PointwiseStabilizer
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
@@ -143,4 +143,4 @@ def exists_mulEquiv_orthogonal_registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.Algebra.Unitary.PointwiseStabilizer
+end Reg.D5.S3.HilbertOperators.PointwiseStabilizer
