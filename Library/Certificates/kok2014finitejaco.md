@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
   - D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers
   - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheorem
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheoremRefutation
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -136,5 +137,6 @@ only if J_n={v_k} and J_(n+1)={v_k,v_(k+1)}. Both fail as stated: at n=6,
 k=3 the indegrees satisfy (a) but J_6 is not a singleton, and at n=4, k=2
 they satisfy (b) but J_4 is not a singleton. Corollary 4 of Ma and Zhang,
 Zenodo DOI 10.5281/zenodo.24369124, adds n=R_k to each left-hand condition.
-The repository proves both corrected equivalences and both failures, with
-d^-(v_i)=i-b_i.
+The repository proves both corrected equivalences, with d^-(v_i)=i-b_i, and
+that in (a) the condition d^-(v_k)=d^-(v_(k+1)) is implied by the others; it
+proves separately that each part fails as stated, at n=6 and at n=4.
