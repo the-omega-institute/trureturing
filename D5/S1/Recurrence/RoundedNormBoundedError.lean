@@ -580,4 +580,149 @@ private theorem two_case (x : ℕ → ℕ)
         nlinarith)
       x hrec' N (by omega) hxN
 
+/-! ### Three-term rounded norm -/
+
+open D5.S0.Tower.Tribonacci.Values (tribonacciConstant one_lt_tribonacciConstant
+  tribonacciConstant_lt_two tribonacciConstant_cubic)
+
+private def P3 : ℝ[X] := X ^ 3 - X ^ 2 - X - 1
+
+private theorem P3_natDegree : P3.natDegree = 3 := by
+  unfold P3
+  compute_degree!
+
+private theorem P3_sum (b : ℕ → ℝ) (j : ℕ) :
+    ∑ k ∈ Finset.range (P3.natDegree + 1), P3.coeff k * b (j + k) =
+      b (j + 3) - ∑ i ∈ Finset.range 3, b (j + i) := by
+  rw [P3_natDegree]
+  simp [Finset.sum_range_succ, P3, coeff_X_pow, coeff_X, coeff_one]
+  ring
+
+private theorem trib_gt : 5 / 3 < tribonacciConstant := by
+  have h1 := one_lt_tribonacciConstant
+  have h2 := tribonacciConstant_lt_two
+  have hc := tribonacciConstant_cubic
+  nlinarith [sq_nonneg (tribonacciConstant - 5 / 3)]
+
+private theorem P3_rootMultiplicity : P3.rootMultiplicity tribonacciConstant = 1 := by
+  have hP0 : P3 ≠ 0 := by
+    intro h
+    have := P3_natDegree
+    rw [h, natDegree_zero] at this
+    omega
+  have hroot : P3.IsRoot tribonacciConstant := by
+    simp only [IsRoot, P3, eval_sub, eval_pow, eval_X, eval_one]
+    linear_combination tribonacciConstant_cubic
+  have hpos := (rootMultiplicity_pos hP0).mpr hroot
+  have hnot : ¬ 1 < P3.rootMultiplicity tribonacciConstant := by
+    rw [one_lt_rootMultiplicity_iff_isRoot hP0]
+    rintro ⟨-, hd⟩
+    simp [IsRoot, P3] at hd
+    nlinarith [one_lt_tribonacciConstant]
+  omega
+
+private theorem P3_other (z : ℂ) (hz : (P3.map (algebraMap ℝ ℂ)).IsRoot z)
+    (hne : z ≠ (tribonacciConstant : ℂ)) : ‖z‖ < 1 := by
+  set t := tribonacciConstant with htdef
+  have h1 := one_lt_tribonacciConstant
+  have h2 := tribonacciConstant_lt_two
+  have h53 := trib_gt
+  have hz' : z ^ 3 - z ^ 2 - z - 1 = 0 := by simpa [IsRoot, P3] using hz
+  have hcC : (t : ℂ) ^ 3 = t ^ 2 + t + 1 := by exact_mod_cast tribonacciConstant_cubic
+  have hfac : (z - t) * (z ^ 2 + ((t - 1 : ℝ) : ℂ) * z + ((t ^ 2 - t - 1 : ℝ) : ℂ)) = 0 := by
+    push_cast
+    linear_combination hz' - hcC
+  have hq := (mul_eq_zero.mp hfac).resolve_left (sub_ne_zero.mpr hne)
+  have hre := congrArg Complex.re hq
+  have him := congrArg Complex.im hq
+  simp [sq, Complex.mul_re, Complex.mul_im] at hre him
+  have hy : z.im ≠ 0 := by
+    intro h0
+    rw [h0] at hre
+    nlinarith [sq_nonneg (z.re + (t - 1) / 2)]
+  have hx : z.re = -(t - 1) / 2 := by
+    have : z.im * (2 * z.re + (t - 1)) = 0 := by linarith
+    have := (mul_eq_zero.mp this).resolve_left hy
+    linarith
+  have hsq : Complex.normSq z < 1 := by
+    rw [Complex.normSq_apply]
+    rw [hx] at hre
+    nlinarith
+  rw [Complex.norm_def, show (1 : ℝ) = Real.sqrt 1 by simp]
+  exact Real.sqrt_lt_sqrt (Complex.normSq_nonneg z) hsq
+
+private theorem three_case (x : ℕ → ℕ)
+    (hrec : ∀ n, (x (n + 3) : ℤ) =
+      round (Real.sqrt ((x n : ℝ) ^ 2 + (x (n + 1) : ℝ) ^ 2 + (x (n + 2) : ℝ) ^ 2))) :
+    (∃ C : ℝ, 0 < C ∧
+      (fun n => (x n : ℝ) - C * Real.sqrt tribonacciConstant ^ n) =O[atTop]
+        (fun _ => (1 : ℝ)) ∧
+      (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt tribonacciConstant) =O[atTop]
+        (fun n => (Real.sqrt tribonacciConstant ^ n)⁻¹)) ↔ 0 < x 0 + x 1 + x 2 := by
+  have hrec' : ∀ n, (x (n + 3) : ℤ) = round (Real.sqrt (rad 3 x n)) := fun n => by
+    rw [hrec n]
+    simp [rad, Finset.sum_range_succ]
+  have ht1 := one_lt_tribonacciConstant
+  have hlam1 : 1 < Real.sqrt tribonacciConstant := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt zero_le_one ht1
+  constructor
+  · rintro ⟨C, hC, hO, -⟩
+    by_contra h0
+    push Not at h0
+    have hzero : ∀ n, x n = 0 ∧ x (n + 1) = 0 ∧ x (n + 2) = 0 := by
+      intro n
+      induction n with
+      | zero => exact ⟨by omega, by simp only [zero_add]; omega, by simp only [zero_add]; omega⟩
+      | succ n ih =>
+        refine ⟨ih.2.1, ih.2.2, ?_⟩
+        show x (n + 3) = 0
+        have h := hrec' n
+        have hs : rad 3 x n = 0 := by
+          simp [rad, Finset.sum_range_succ, ih.1, ih.2.1, ih.2.2]
+        rw [hs, Real.sqrt_zero, round_zero] at h
+        exact_mod_cast h
+    exact not_bounded_geom x 0 (fun n => (hzero n).1.le) hC hlam1 hO
+  · intro hpos
+    obtain ⟨i, hi, hxi⟩ : ∃ i, i < 3 ∧ 1 ≤ x i := by
+      by_cases h0 : 1 ≤ x 0
+      · exact ⟨0, by norm_num, h0⟩
+      by_cases h1 : 1 ≤ x 1
+      · exact ⟨1, by norm_num, h1⟩
+      exact ⟨2, by norm_num, by omega⟩
+    have hle := le_next hrec' 0 i hi
+    simp only [zero_add] at hle
+    have h53 := trib_gt
+    have h2 := tribonacciConstant_lt_two
+    exact generic (m := 3) (by norm_num) P3 tribonacciConstant ht1 P3_rootMultiplicity
+      P3_other P3_sum (K := 8 / 7) (K' := 3 / 4) (c := 2) (c' := 3 / 2) (by norm_num)
+      (by norm_num) (by norm_num) (by norm_num) (by nlinarith) (by norm_num) (by norm_num)
+      (by simp [Finset.sum_range_succ]; norm_num) (by simp [Finset.sum_range_succ]; norm_num) 1
+      (fun k hk => by
+        have : (1 : ℝ) ≤ k := by exact_mod_cast hk
+        push_cast
+        nlinarith)
+      x hrec' 3 (by norm_num) (hxi.trans hle)
+
+/-- Rounded two- and three-norm sequences. For `x (n + 2) = round √(x n² + x (n+1)²)` there is
+`C > 0` with `x n = C φ^(n/2) + O(1)` and `x (n+1)/x n = √φ + O(φ^(-n/2))` exactly when
+`max (x 0) (x 1) ≥ 2`; for `x (n + 3) = round √(x n² + x (n+1)² + x (n+2)²)` the same holds with
+the Tribonacci constant exactly when the seed is not all zero. -/
+theorem result :
+    (∀ x : ℕ → ℕ,
+      (∀ n, (x (n + 2) : ℤ) = round (Real.sqrt ((x n : ℝ) ^ 2 + (x (n + 1) : ℝ) ^ 2))) →
+      ((∃ C : ℝ, 0 < C ∧
+        (fun n => (x n : ℝ) - C * Real.sqrt goldenRatio ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
+        (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt goldenRatio) =O[atTop]
+          (fun n => (Real.sqrt goldenRatio ^ n)⁻¹)) ↔ 2 ≤ max (x 0) (x 1))) ∧
+    (∀ x : ℕ → ℕ,
+      (∀ n, (x (n + 3) : ℤ) =
+        round (Real.sqrt ((x n : ℝ) ^ 2 + (x (n + 1) : ℝ) ^ 2 + (x (n + 2) : ℝ) ^ 2))) →
+      ((∃ C : ℝ, 0 < C ∧
+        (fun n => (x n : ℝ) - C * Real.sqrt tribonacciConstant ^ n) =O[atTop]
+          (fun _ => (1 : ℝ)) ∧
+        (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt tribonacciConstant) =O[atTop]
+          (fun n => (Real.sqrt tribonacciConstant ^ n)⁻¹)) ↔ 0 < x 0 + x 1 + x 2)) :=
+  ⟨two_case, three_case⟩
+
 end D5.S1.Recurrence.RoundedNormBoundedError
