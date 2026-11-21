@@ -159,6 +159,7 @@ private lemma matchable_augment [DecidableEq L] {I J : Finset L}
     (fun {_ _} hI hJ hIJ ↦ matchable_augment hI hJ hIJ)
     (fun {_} _ ↦ subset_univ _)).matroid
 
+/-- Every left vertex is on the ground of the transversal matroid, including loops. -/
 @[simp] theorem transversal_ground : (transversal A).E = univ := by
   unfold transversal
   rfl
@@ -317,9 +318,9 @@ private lemma relabel_uniform_iff [Finite L] (N : Matroid L) :
     rw [hMap, hind, uniform24_indep, hSize, and_iff_right]
     exact (image_subset_range _ _).trans_eq (hGround e)
 
-/-- Lao's graph criterion (Question 7.0.2, arXiv:2611.02586v1). A native contraction-deletion minor relabels to the rank-two
-uniform matroid on `Fin 4` exactly when the graph supplies the stated neighborhood and
-pair matchings. -/
+/-- Lao's Question 7.0.2 (arXiv:2611.02586v1, p. 104). A native contraction-deletion minor
+relabels to the rank-two uniform matroid on `Fin 4` exactly when the graph supplies the
+stated full neighborhood and pair matchings. -/
 theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
     (∃ N : Matroid L, N ≤m transversal A ∧
       ∃ e : N.E ≃ (univ : Set (Fin 4)), N.mapSetEquiv e = uniform24) ↔
@@ -436,7 +437,10 @@ theorem has_uniform24_minor_iff [Finite L] [Finite R] (A : L → R → Prop) :
     let M' := M ／ C
     have hX : X ⊆ M'.E := by
       rw [show M'.E = M.E \ C from contract_ground M C, subset_sdiff]
-      exact ⟨by simp [M], hCX.symm⟩
+      refine ⟨?_, hCX.symm⟩
+      change X ⊆ (transversal A).E
+      rw [transversal_ground]
+      exact subset_univ X
     let D := M'.E \ X
     let N := M' ＼ D
     have hGround : N.E = X := by
