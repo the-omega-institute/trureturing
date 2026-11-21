@@ -34,8 +34,8 @@ with `n` exceeds `cos (a / 2) ^ 2`. -/
 def cap (n : unitary ℍ[ℝ]) (a : ℝ) : Set (unitary ℍ[ℝ]) :=
   {x | Real.cos (a / 2) ^ 2 < quaternionModel.kappa n x}
 
-/-- The point `(-cot a, n / sin a)` of the hyperboloid `‖v‖ ^ 2 - t ^ 2 = 1` attached to the cap
-with centre `n` and angular radius `a`. -/
+/-- The point `(-cot a, n / sin a)` attached to the cap with centre `n` and angular radius `a`;
+for `a` in `(0, π)` it lies on the hyperboloid `‖v‖ ^ 2 - t ^ 2 = 1`. -/
 def deSitterPoint (n : unitary ℍ[ℝ]) (a : ℝ) : ℝ × ℍ[ℝ] :=
   (-(Real.cos a / Real.sin a), (Real.sin a)⁻¹ • (n : ℍ[ℝ]))
 

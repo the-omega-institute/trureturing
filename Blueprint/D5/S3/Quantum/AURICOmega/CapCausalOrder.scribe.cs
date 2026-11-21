@@ -17,7 +17,7 @@ internal sealed class CapCausalOrderDocument : IScribeDocumentDefinition
                 "For a unit quaternion n and a real number a, the cap cap(n, a) is the set of unit quaternions x whose reading with n in the quaternion comparison model exceeds cos(a/2)^2. "
                     + "The reading is kappa(quaternionModel, n, x) = (1 + <n, x>) / 2 for the real inner product <n, x> of quaternions, and cos(a/2)^2 = (1 + cos(a)) / 2, so x lies in cap(n, a) exactly when cos(a) < <n, x>. "
                     + "For a in (0, pi) this is the open spherical cap of the unit three-sphere with centre n and angular radius a: the unit quaternions whose angle with n is less than a. "
-                    + "The definition is made for every real a and depends on a only through cos(a). At the endpoint radii, a = pi gives the complement of the single point -n, because <n, x> > -1 fails only for x = -n, and a = 0 gives the empty set, because <n, x> <= 1 for unit quaternions."),
+                    + "The definition is made for every real a and depends on a only through cos(a). At the endpoint radii, by remarks that are not stated as theorems here, a = pi gives the complement of the single point -n, because <n, x> > -1 fails only for x = -n, and a = 0 gives the empty set, because <n, x> <= 1 for unit quaternions."),
             Node("de-sitter-point", "deSitterPoint", "The hyperboloid point of a cap",
                 StatementSource.FromAuthor(PointFormula()), DescribeRole.Definition,
                 "To a unit quaternion n and a real number a the definition attaches the pair (-cos(a)/sin(a), sin(a)^-1 n) of R x H, where n is viewed as a quaternion and sin(a)^-1 n is its real scalar multiple. "
@@ -38,9 +38,9 @@ internal sealed class CapCausalOrderDocument : IScribeDocumentDefinition
                     + "Equal caps contain each other, so the criterion gives a = a' and <n, n'> >= 1, which forces n = n' for unit quaternions. "
                     + "For the third part, -cot(a) <= -cot(a') holds exactly when a <= a', because cos(a') sin(a) - cos(a) sin(a') = sin(a - a'). "
                     + "Expanding both sides with |n| = |n'| = 1 and cot(a)^2 = sin(a)^-2 - 1 gives |v' - v|^2 = sin(a')^-2 + sin(a)^-2 - 2 <n, n'> / (sin(a) sin(a')) and (t' - t)^2 = sin(a')^-2 + sin(a)^-2 - 2 cos(a' - a) / (sin(a) sin(a')), so the second inequality is equivalent to cos(a' - a) <= <n, n'>. "
-                    + "The restriction of the radii to (0, pi) cannot be dropped. The caps with a = pi, the complement of the point -n, and with a = 0, the empty set, do not correspond to points of the hyperboloid, since sin(a) = 0 there; and all caps of radius 0 coincide, so caps of radius 0 do not determine their centre. "
+                    + "The restriction of the radii to (0, pi) cannot be dropped, by the following remarks, which are not stated as theorems here. The caps with a = pi, the complement of the point -n, and with a = 0, the empty set, do not correspond to points of the hyperboloid, since sin(a) = 0 there; and all caps of radius 0 coincide, so caps of radius 0 do not determine their centre. "
                     + "The statement concerns the hyperboloid as a subset of R x H and the displayed coordinate inequality between its points. A metric on the hyperboloid, its identification with de Sitter space and any physical reading of the causal condition are not part of the statement. "
-                    + "The correspondence between oriented spheres of a sphere and the points of the one-sheeted hyperboloid, with inclusion of caps as the causal order, is classical in Möbius geometry; see for instance U. Hertrich-Jeromin, Introduction to Möbius Differential Geometry. "
+                    + "The correspondence between oriented spheres of a sphere and the points of the one-sheeted hyperboloid is classical in Möbius geometry; see for instance U. Hertrich-Jeromin, Introduction to Möbius Differential Geometry. "
                     + "Here the caps are defined through the reading of the quaternion comparison model on the unit quaternions."))));
 
     private static DocumentBlock Node(
