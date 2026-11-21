@@ -1,0 +1,5 @@
+name: Build a Lean layer with resumable compiler outputs
+description: Persist completed module and native compiler outputs between bounded build intervals
+runs:
+  using: node24
+  main: run.mjs

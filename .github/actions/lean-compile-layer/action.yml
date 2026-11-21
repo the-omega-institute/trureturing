@@ -44,19 +44,21 @@ runs:
       uses: ./.github/actions/lean-recover-layer
       with:
         stage: common
-    - name: Recover shared imports and compile the assigned targets
-      env:
-        STAGE: ${{ inputs.stage }}
-        STRATALINT_ACCEPT_COLD_BUILD: '1'
-        STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+    - if: inputs.stage != 'common'
+      name: Verify the recovered shared imports
       shell: bash
       run: |
-        compiler=tools/scripts/worktree/lean_compile_layers.py
-        directory="$RUNNER_TEMP/lean-compile"
-        if [[ "$STAGE" != common ]]; then
-          python3 "$compiler" verify --stage common --artifacts "$directory"
-        fi
-        bash .github/actions/lean-compile-layer/measure.sh python3 "$compiler" build --stage "$STAGE" --artifacts "$directory"
+        read -ra targets <<< "${LEAN_LAYER_TARGETS:-}"
+        args=()
+        if [[ ${#targets[@]} -gt 0 ]]; then args=(--target "${targets[@]}"); fi
+        python3 tools/scripts/worktree/lean_compile_layers.py verify --stage common --artifacts "$RUNNER_TEMP/lean-compile" "${args[@]}"
+    - name: Compile the assigned targets and persist finished outputs
+      uses: ./.github/actions/lean-compile-checkpoint
+      env:
+        GH_TOKEN: ${{ github.token }}
+        STAGE: ${{ inputs.stage }}
+        DEPENDENCY_SEED: ${{ steps.dependency.outputs.cache-matched-key || steps.keys.outputs.dependency_key }}
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
     - uses: actions/upload-artifact@v6
       with:
         name: lean-compile-${{ github.run_id }}-${{ inputs.stage }}

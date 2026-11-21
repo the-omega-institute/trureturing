@@ -1,4 +1,5 @@
 """Save finished Lake compiler outputs changed since the immutable project seed was restored."""
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -90,11 +91,11 @@ def run(operation, directory):
             baseline.write_text(json.dumps({str(p.relative_to(BUILD)): version(p) for _, _, p in trace_files()}))
         return
     record = directory / 'manifest.json'
-    if operation == 'save':
+    if operation in ('save', 'changed'):
         before = json.loads(baseline.read_text())
         files = set()
         groups = 0
-        with cache_guard(ROOT, shared=True):
+        with (nullcontext() if operation == 'changed' else cache_guard(ROOT, shared=True)):
             for base, tree, path in trace_files():
                 if before.get(str(path.relative_to(BUILD))) == version(path):
                     continue
@@ -104,9 +105,13 @@ def run(operation, directory):
                     # An interrupted child can leave an unfinished trace or output.
                     continue
                 if group:
+                    if operation == 'changed':
+                        return
                     groups += 1
                     files.update(str(p.relative_to(BUILD)) for p in group)
             if not files:
+                if operation == 'changed':
+                    raise SystemExit(1)
                 print('LEAN_REPORT_PROGRESS groups=0 bytes=0', flush=True)
                 return
             digest = write_payload(ROOT, BUILD, files)
