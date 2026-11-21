@@ -17,13 +17,14 @@ open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open _root_.D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open _root_.D5.S3.Quantum.Divergence.CanonicalChannelDPI
+open _root_.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (act)
 open _root_.D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
 open _root_.D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open _root_.Reg.Support.SingleDependentReadout (signature sensitivity)
 open scoped BigOperators Classical ComplexOrder MatrixOrder Matrix.Norms.Frobenius
 
-open private Us upper qPower sourceAmplitude completed physicalFactor dilationColumns rowFactor
+open private Us upper sourceAmplitude completed complementaryAmplitude rotatedGram
   exists_retainedFirst_stinespring from D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
 open private unitModel unitChannel from Reg.D5.S3.Quantum.Recovery.PetzSupportedChannelStrip
 
@@ -46,18 +47,15 @@ abbrev arena : Arena where
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
     (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ) (_hW : Wᴴ * W = 1)
     (_hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) =
-      CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))),
+      act Φ X),
     let D := M.data
     let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
     let B := completed D W
     ‖A‖ = 1 ∧ (∀ t, ‖B t‖ = 1) ∧
       (∀ t, R.readout () () (‖A - B t‖ ^ 2) (deficit D (1 / 2) t)) ∧
-      (∀ t, ‖physicalFactor D W t * (1 - dilationColumns D W * (dilationColumns D W)ᴴ)‖ ^ 2 =
+      (∀ t, ‖complementaryAmplitude D W t‖ ^ 2 =
         1 - ∑ i, ‖amplitude D (upper t) i‖ ^ 2) ∧
-      (∀ t, B t * (B t)ᴴ =
-        rowFactor D (upper t) *
-          D.Ψ (qPower D (-upper t) * D.T * qPower D (-star (upper t))) *
-          (rowFactor D (upper t))ᴴ) ∧
+      (∀ t, B t * (B t)ᴴ = rotatedGram D t) ∧
       Us D * (A * Aᴴ) * (Us D)ᴴ = D.R ∧
       Us D * (B 0 * (B 0)ᴴ) * (Us D)ᴴ = recoveredState D
 
@@ -110,7 +108,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -182,7 +182,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
