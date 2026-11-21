@@ -26,7 +26,7 @@ The old schedule controls the alpha and beta seams directly, and the ordered sch
 
 The source_zero theorem establishes both complete actual integer totals. The complete physical inventory and these totals identify the ordered beta endpoint from the total mass. The ordered_schedule lemma applies physical_schedule from ThreeNegativeEqualOuterSourceBridge to control every interior positive prefix and both endpoints of each negative step. The lift_order and marked_word lemmas transfer this complete natural-label schedule to Fin(k) and to the literal earWord at j. Together with the floor mask and exact charge split, these steps give the simultaneous physical order.
 
-The theorem covers the complete ordered cone 2<=a<b<=c of the joint-order problem associated with Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. Its floor-mask construction and exact charge split use the source, schedule and ear lemmas from ThreeNegativeEqualOuterJointLift and ThreeNegativeEqualOuterSourceBridge, together with the general paired chains from ThreeNegativeMinimumTwoJointLift. This ordered-cone chamber leaves full_J and full C3.1 open.
+The theorem covers the joint-order problem for all triples satisfying 2<=a<b<=c in the setting of Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. Its floor-mask construction and exact charge split use the source, schedule and ear lemmas from ThreeNegativeEqualOuterJointLift and ThreeNegativeEqualOuterSourceBridge, together with the general paired chains from ThreeNegativeMinimumTwoJointLift. This ordered-cone chamber leaves full_J and full C3.1 open.
 
 ## References
 
