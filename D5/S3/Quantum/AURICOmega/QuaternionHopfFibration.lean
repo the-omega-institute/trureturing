@@ -4,30 +4,22 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The Hopf map identifies unit quaternions modulo phases with the unit imaginary sphere. -/
+   digest: The ray kernel is the fibre maximum of the round trip and the fibre integral over pi. -/
 
 import D5.S3.Quantum.AURICOmega.QuaternionRayKernel
-import D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 import D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Homeomorph.Lemmas
 
-/-! The Hopf map of the unit quaternions and the extremum of the reading over its fibres.
+/-! The phase circle of the unit quaternions and the ray kernel along its fibres.
 
-The Hopf image `x i x⁻¹` of a unit quaternion is a unit imaginary quaternion, and every unit
-imaginary quaternion `n` is attained: `n` and `i` are unit quaternions with the same real part
-zero, so they are conjugate, `c i = n c` for a unit quaternion `c`, and then `n` is the Hopf image
-of `c`. Two unit quaternions have the same Hopf image exactly when they differ by a right
-factor in the phase circle of unit quaternions `a + b i`. Since the unit quaternions are compact
-and the unit imaginary sphere is Hausdorff, the induced continuous bijection from the quotient by
-the phase circle is a homeomorphism.
-
-Along a fibre `x (a + b i)` the shifted reading `2 kappa(x (a + b i), y) - 1` equals
-`a A - b B`, where `A` and `B` are the two shifted readings whose squares add up to `rayKernel x y`.
-Its square has maximum `A ^ 2 + B ^ 2` over the circle `a ^ 2 + b ^ 2 = 1`, and its integral over a
-full turn is `π (A ^ 2 + B ^ 2)`. The round-trip reading `kappa(y, p y⁻¹ p)` of a unit quaternion
-`p` is the square of `2 kappa(p, y) - 1`, so it has the same maximum along the fibre. -/
+The phase circle is the subgroup of unit quaternions `a + b i`. Along a right coset `x (a + b i)`
+the shifted reading `2 kappa(x (a + b i), y) - 1` equals `a A - b B`, where `A` and `B` are the two
+shifted readings whose squares add up to `rayKernel x y`. Its square has maximum `A ^ 2 + B ^ 2`
+over the circle `a ^ 2 + b ^ 2 = 1`, and its integral over a full turn is `π (A ^ 2 + B ^ 2)`. The
+round-trip reading `kappa(y, p y⁻¹ p)` of a unit quaternion `p` is the square of
+`2 kappa(p, y) - 1`, so it has the same maximum along the coset. Hence the ray kernel is the
+maximum of the round-trip reading over a fibre and `π⁻¹` times the integral of the squared inner
+product over it. -/
 
 open scoped InnerProductSpace Quaternion
 
@@ -38,7 +30,6 @@ namespace D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open D5.S3.Quantum.AURICOmega.QuaternionRayKernel
-open D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 open D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-- The right phase circle: the unit quaternions in the real span of `1` and `i`. -/
@@ -55,84 +46,6 @@ def phaseCircle : Subgroup (unitary ℍ[ℝ]) where
     refine ⟨?_, ?_⟩ <;>
       simp only [← Unitary.star_eq_inv, Unitary.coe_star, Quaternion.imJ_star,
         Quaternion.imK_star, ha1, ha2, neg_zero]
-
-/-- The Hopf image of a unit quaternion has norm one. -/
-private lemma norm_hopf (x : unitary ℍ[ℝ]) : ‖hopf x‖ = 1 := by
-  rw [hopf, norm_mul, norm_mul, norm_star, CStarRing.norm_coe_unitary,
-    CStarRing.norm_coe_unitary, mul_one, one_mul]
-
-/-- The Hopf image of a unit quaternion is imaginary. -/
-private lemma re_hopf (x : unitary ℍ[ℝ]) : (hopf x).re = 0 := by
-  have hI : ((unitI : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 1, 0, 0⟩ := rfl
-  rw [hopf, hI]
-  simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul,
-    Quaternion.re_star, Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star]
-  ring
-
-/-- The Hopf map sends the unit quaternions onto the unit imaginary quaternions. -/
-theorem range_hopf :
-    Set.range hopf = {n : ℍ[ℝ] | n.re = 0 ∧ ‖n‖ = 1} := by
-  ext n
-  constructor
-  · rintro ⟨x, rfl⟩
-    exact ⟨re_hopf x, norm_hopf x⟩
-  · rintro ⟨hre, hn⟩
-    have hmem : n ∈ unitary ℍ[ℝ] := by
-      rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, hn]
-    obtain ⟨c, hc⟩ := exists_unitary_mul_eq_mul unitI ⟨n, hmem⟩ (by rw [hre]; rfl)
-    refine ⟨c, ?_⟩
-    have h := congrArg (fun u : unitary ℍ[ℝ] => ((u * star c : unitary ℍ[ℝ]) : ℍ[ℝ])) hc
-    simp only [mul_assoc, Unitary.mul_star_self, mul_one] at h
-    simpa [hopf, mul_assoc] using h
-
-/-- Two unit quaternions have the same Hopf image exactly when they differ by a right phase. -/
-private lemma hopf_eq_hopf_iff (x y : unitary ℍ[ℝ]) :
-    hopf x = hopf y ↔ x⁻¹ * y ∈ phaseCircle := by
-  constructor
-  · intro h
-    have h1 : rayKernel x y = 1 := by
-      rw [rayKernel_eq_hopf, ← h, real_inner_self_eq_norm_sq, norm_hopf]
-      norm_num
-    obtain ⟨c, hc, rfl⟩ := (rayKernel_eq_one_iff x y).mp h1
-    rw [inv_mul_cancel_left]
-    exact hc
-  · intro h
-    have h1 : rayKernel x y = 1 :=
-      (rayKernel_eq_one_iff x y).mpr ⟨x⁻¹ * y, h, (mul_inv_cancel_left x y).symm⟩
-    rw [rayKernel_eq_hopf] at h1
-    exact (inner_eq_one_iff_of_norm_eq_one (𝕜 := ℝ) (norm_hopf x) (norm_hopf y)).mp
-      (by linarith)
-
-/-- The Hopf map induces a homeomorphism from the unit quaternions modulo the right phase circle
-onto the unit imaginary quaternions. -/
-theorem exists_homeomorph_quotient_phaseCircle :
-    ∃ e : (unitary ℍ[ℝ] ⧸ phaseCircle) ≃ₜ {n : ℍ[ℝ] // n.re = 0 ∧ ‖n‖ = 1},
-      ∀ x : unitary ℍ[ℝ], ((e (x : unitary ℍ[ℝ] ⧸ phaseCircle)) : ℍ[ℝ]) = hopf x := by
-  have hK : IsCompact (unitary ℍ[ℝ] : Set ℍ[ℝ]) := by
-    rw [coe_unitary_eq_sphere]
-    exact isCompact_sphere 0 1
-  have : CompactSpace (unitary ℍ[ℝ]) := isCompact_iff_compactSpace.mp hK
-  let _ : Setoid (unitary ℍ[ℝ]) := QuotientGroup.leftRel phaseCircle
-  let g : unitary ℍ[ℝ] → {n : ℍ[ℝ] // n.re = 0 ∧ ‖n‖ = 1} :=
-    fun x => ⟨hopf x, re_hopf x, norm_hopf x⟩
-  have hg : ∀ x y : unitary ℍ[ℝ], x ≈ y → g x = g y := fun x y hxy =>
-    Subtype.ext ((hopf_eq_hopf_iff x y).mpr (QuotientGroup.leftRel_apply.mp hxy))
-  let f : unitary ℍ[ℝ] ⧸ phaseCircle → {n : ℍ[ℝ] // n.re = 0 ∧ ‖n‖ = 1} :=
-    Quotient.lift g hg
-  have hcont : Continuous g :=
-    (((continuous_subtype_val.mul continuous_const).mul
-      (continuous_star.comp continuous_subtype_val))).subtype_mk _
-  have hf : Function.Bijective f := by
-    constructor
-    · intro a b hab
-      induction a using QuotientGroup.induction_on
-      induction b using QuotientGroup.induction_on
-      exact QuotientGroup.eq.mpr ((hopf_eq_hopf_iff _ _).mp (congrArg Subtype.val hab))
-    · rintro ⟨n, hn⟩
-      obtain ⟨x, hx⟩ : n ∈ Set.range hopf := range_hopf ▸ hn
-      exact ⟨(x : unitary ℍ[ℝ] ⧸ phaseCircle), Subtype.ext hx⟩
-  exact ⟨Continuous.homeoOfEquivCompactToT2 (f := Equiv.ofBijective f hf)
-    (hcont.quotient_lift hg), fun x => rfl⟩
 
 /-- Right multiplication by `a + b i` mixes the inner products with `q` and with `q i`. -/
 private lemma inner_mul_phase (p q : ℍ[ℝ]) (a b : ℝ) :
