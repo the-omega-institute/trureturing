@@ -11,7 +11,8 @@ noncomputable section
 
 open Chebyshev Real LeanInformationAudit MeasureTheory Set
 open _root_.D5.S3.Arith.Robin.CompleteMertensPeak (Q)
-open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection (primeTail)
+open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
+  (primeTail prime_integrable)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
@@ -146,6 +147,30 @@ theorem tail_sensitivity_iff_rh : Sensitivity tailArena tailActual ↔ RiemannHy
   · intro hRH
     exact _root_.Reg.Support.SingleDependentReadout.sensitivity tailArena.Law tailActual
       tailAltered (fun h => tail_altered_rejects (h hRH))
+
+theorem tail_actual_dependence : ObservationalDependence tailSignature tailActual := by
+  intro i
+  cases i
+  let f (t : ℝ) := (theta t - t) / t ^ 2
+  have hab : (1 : ℝ) < 3 / 2 := by norm_num
+  have hi : IntervalIntegrable f volume 1 (3 / 2) :=
+    (intervalIntegrable_iff_integrableOn_Ioc_of_le hab.le).mpr
+      (prime_integrable.mono_set (fun _ ht => ht.1))
+  have hpos : 0 < ∫ t in (1 : ℝ)..3 / 2, -f t :=
+    intervalIntegral.intervalIntegral_pos_of_pos_on hi.neg (fun t ht => by
+      have ht0 : 0 < t := by linarith [ht.1]
+      have hz := theta_eq_zero_iff.mpr (ht.2.trans (by norm_num : (3 / 2 : ℝ) < 2))
+      dsimp only [f]
+      rw [hz, zero_sub, neg_div, neg_neg]
+      positivity) hab
+  refine ⟨(), 1, 3 / 2, ?_⟩
+  change primeTail 1 ≠ primeTail (3 / 2)
+  intro he
+  have hzero : (∫ t in Ioi (1 : ℝ), f t) - (∫ t in Ioi (3 / 2 : ℝ), f t) = 0 :=
+    sub_eq_zero.mpr he
+  rw [intervalIntegral.integral_Ioi_sub_Ioi prime_integrable hab.le] at hzero
+  rw [intervalIntegral.integral_neg, hzero, neg_zero] at hpos
+  exact lt_irrefl _ hpos
 
 theorem tail_variation_iff_rh : Variation tailArena tailActual ↔ RiemannHypothesis := by
   constructor
