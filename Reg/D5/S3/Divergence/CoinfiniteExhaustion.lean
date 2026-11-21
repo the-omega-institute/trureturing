@@ -12,33 +12,6 @@ noncomputable section
 
 namespace Reg.D5.S3.Divergence.CoinfiniteExhaustion
 
-namespace Limit
-
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ → ℝ)
-    (fun _ => Filter ℕ → Filter ℝ → Prop)
-
-def actual : Realization signature :=
-  realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e)
-
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ _ => False) (fun e => nomatch e)
-
-def indiscriminate : Realization signature :=
-  realize signature (fun _ _ _ _ _ => True) (fun e => nomatch e)
-
-theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
-  intro he
-  have hz : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0) := tendsto_const_nhds
-  have hwrong : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 0) :=
-    Eq.mp (congrFun (congrFun he atTop) (𝓝 (0 : ℝ))) hz
-  have h : (1 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds hwrong
-  norm_num at h
-
-end Limit
-
 namespace ExactLoss
 
 abbrev signature : Signature :=
@@ -107,134 +80,44 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ExactLoss
 
-namespace ShannonLimit
-
-open Limit
-
-abbrev arena : Arena where
-  signature := signature
-  Law R :=
-    R.readout () () (fun m => shannonEntropy (pCut m)) atTop
-      (𝓝 (∑' i : ℕ, Real.negMulLog (pAtom i)))
-
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h
-
-def family : Registration arena (type_of% @tendsto_cut_shannon) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@tendsto_cut_shannon, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := dependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@tendsto_cut_shannon) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Divergence.CoinfiniteExhaustion.tendsto_cut_shannon.__information_unit
-  realizationName := `Reg.D5.S3.Divergence.CoinfiniteExhaustion.ShannonLimit.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Divergence.CoinfiniteExhaustion
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end ShannonLimit
-
-namespace ResidualLimit
-
-open Limit
-
-abbrev arena : Arena where
-  signature := signature
-  Law R :=
-    ∀ (a : ℕ → ℕ) (_ : ∀ n, n ≤ a n),
-      R.readout () () (fun n => loss (a n) n - Real.log 2 * Real.log ((a n : ℝ) / (n : ℝ)))
-        atTop (𝓝 0)
-
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h id (fun _ => le_rfl)
-
-def family : Registration arena (type_of% @tendsto_loss_sub_log_ratio) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@tendsto_loss_sub_log_ratio, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := dependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@tendsto_loss_sub_log_ratio) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Divergence.CoinfiniteExhaustion.tendsto_loss_sub_log_ratio.__information_unit
-  realizationName := `Reg.D5.S3.Divergence.CoinfiniteExhaustion.ResidualLimit.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Divergence.CoinfiniteExhaustion
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end ResidualLimit
+private theorem different_sequences :
+    (fun n : ℕ => loss n n) ≠ (fun n : ℕ => loss (2 * n) n) := by
+  intro h
+  obtain ⟨hsame, hdouble, hpos⟩ := nonunique_exhaustion_loss
+  rw [h] at hsame
+  have heq := tendsto_nhds_unique hsame hdouble
+  linarith
 
 namespace RatioLimit
 
-open Limit
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ → ℕ) (fun _ => ℕ → ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ a n => loss (a n) n) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R :=
-    ∀ (a : ℕ → ℕ) (_ : ∀ n, n ≤ a n) {R₀ : ℝ},
-      Tendsto (fun n => (a n : ℝ) / (n : ℝ)) atTop (𝓝 R₀) →
-      R.readout () () (fun n => loss (a n) n) atTop (𝓝 (Real.log 2 * Real.log R₀))
+  Law R := ∀ (a : ℕ → ℕ) (_ : ∀ n, n ≤ a n) {L : ℝ},
+    Tendsto (fun n => (a n : ℝ) / (n : ℝ)) atTop (𝓝 L) →
+    Tendsto (R.readout () () a) atTop (𝓝 (Real.log 2 * Real.log L))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hratio : Tendsto (fun n : ℕ => (id n : ℝ) / (n : ℝ)) atTop (𝓝 1) := by
-    apply (tendsto_const_nhds (x := (1 : ℝ))).congr'
+  have hratio : Tendsto (fun n : ℕ => ((2 * n : ℕ) : ℝ) / (n : ℝ)) atTop (𝓝 2) := by
+    apply (tendsto_const_nhds (x := (2 : ℝ))).congr'
     filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
     have hn' : (n : ℝ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
-    exact (div_self hn').symm
-  exact h id (fun _ => le_rfl) hratio
+    change (2 : ℝ) = ((2 * n : ℕ) : ℝ) / (n : ℝ)
+    apply (eq_div_iff hn').2
+    norm_num [Nat.cast_mul]
+  have hwrong := h (fun n => 2 * n) (fun n => by omega) hratio
+  have hz : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0) := tendsto_const_nhds
+  have heq := tendsto_nhds_unique hz hwrong
+  linarith [nonunique_exhaustion_loss.2.2]
 
 def family : Registration arena (type_of% @tendsto_loss_of_ratio) where
   actual := actual
@@ -242,7 +125,7 @@ def family : Registration arena (type_of% @tendsto_loss_of_ratio) where
   variation := ⟨@tendsto_loss_of_ratio, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := fun _ => ⟨(), id, (fun n => 2 * n), different_sequences⟩
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@tendsto_loss_of_ratio) (Realization signature) Unit Unit where
@@ -257,7 +140,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -267,9 +150,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "fn", "fn", "arg"]
       stateBinder := 0
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -280,16 +163,37 @@ end RatioLimit
 
 namespace TwoLimits
 
-open Limit
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => loss (2 * n) n) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    R.readout () () (fun n => loss n n) atTop (𝓝 0) ∧
-      Tendsto (fun n : ℕ => loss (2 * n) n) atTop (𝓝 (Real.log 2 * Real.log 2)) ∧
+    Tendsto (fun n : ℕ => loss n n) atTop (𝓝 0) ∧
+      Tendsto (R.readout () ()) atTop (𝓝 (Real.log 2 * Real.log 2)) ∧
       0 < Real.log 2 * Real.log 2
 
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h.1
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0) := tendsto_const_nhds
+  have heq := tendsto_nhds_unique hz h.2.1
+  linarith [h.2.2]
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  have hzero : loss (2 * 0) 0 = 0 := by simp [loss_exact (le_refl 0)]
+  by_contra! h
+  have hz : Tendsto (fun n : ℕ => loss (2 * n) n) atTop (𝓝 0) := by
+    apply (tendsto_const_nhds (x := (0 : ℝ))).congr'
+    exact Filter.Eventually.of_forall fun n => hzero.symm.trans (h () 0 n)
+  have heq := tendsto_nhds_unique hz nonunique_exhaustion_loss.2.1
+  linarith [nonunique_exhaustion_loss.2.2]
 
 def family : Registration arena (type_of% @nonunique_exhaustion_loss) where
   actual := actual
@@ -312,7 +216,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -322,7 +226,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "fn", "fn"]
+      path := #["arg", "fn", "arg", "fn", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -335,7 +239,7 @@ end TwoLimits
 
 namespace NoCommonLimit
 
-open Limit
+open RatioLimit (signature actual rejected)
 
 abbrev arena : Arena where
   signature := signature
@@ -346,17 +250,19 @@ abbrev arena : Arena where
           partitionMap (n := a n) x) →
       (∀ n, (∀ x y, 0 ≤ partitionChannel (a n) n x y) ∧
         ∀ x, ∑ y, partitionChannel (a n) n x y = 1) →
-      R.readout () () (fun n => loss (a n) n) atTop (𝓝 L)
+      Tendsto (R.readout () () a) atTop (𝓝 L)
 
-private theorem rejected_law : ¬ arena.Law indiscriminate := fun h => h ⟨0, fun _ _ _ _ _ => True.intro⟩
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h ⟨0, fun _ _ _ _ _ => tendsto_const_nhds⟩
 
 def family : Registration arena (type_of% @no_common_exhaustion_limit) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@no_common_exhaustion_limit, indiscriminate, rejected_law⟩
+  variation := ⟨@no_common_exhaustion_limit, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual indiscriminate rejected_law
-  dependence := dependence
+    arena.Law actual rejected rejected_law
+  dependence := fun _ => ⟨(), id, (fun n => 2 * n), different_sequences⟩
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@no_common_exhaustion_limit) (Realization signature) Unit Unit where
@@ -371,7 +277,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -381,9 +287,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["arg", "arg", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
