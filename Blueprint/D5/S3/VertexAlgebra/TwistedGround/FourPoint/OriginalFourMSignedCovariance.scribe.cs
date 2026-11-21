@@ -10,6 +10,12 @@ internal sealed class OriginalFourMSignedCovarianceDocument : IScribeDocumentDef
         "Native signed Gaussian covariance and source",
         H("Mode sums and the elliptic half-coordinate"),
         Blocks(
+            Describe.Lean(DescribeId.Create("coefficient-of-hassum"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.coefficient_of_hasSum"),
+                H("Taylor coefficient of a convergent scalar series"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At positive radius R, a summable family of coefficient norms weighted by R to the degree and local pointwise convergence to F identify every ordinary Taylor coefficient of F with its series coefficient."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The flags l and k label the native legs, with false on the left and true on the right. "
                 + "The independent flags e and f label the signed external modes, with true denoting the positive label. "
                 + "Write P for the Euler slit period and C(r) for its period correction. The radial variable w gives r = w².")),

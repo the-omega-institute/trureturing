@@ -144,7 +144,7 @@ theorem native_covariance_hasSum (D : LatticeData) (l k e f : Bool) (i j : Fin D
     simp only [Bool.false_eq_true, ite_false, ite_true, h]
     ring
 
-private theorem coefficient_of_hasSum {a : ℕ → ℂ} {F : ℂ → ℂ}
+theorem coefficient_of_hasSum {a : ℕ → ℂ} {F : ℂ → ℂ}
     {R : ℝ≥0} (hR : 0 < R)
     (hs : Summable (fun n => ‖a n * (R : ℂ) ^ n‖))
     (hF : ∀ᶠ z in 𝓝 (0 : ℂ), HasSum (fun n => a n * z ^ n) (F z)) (n : ℕ) :

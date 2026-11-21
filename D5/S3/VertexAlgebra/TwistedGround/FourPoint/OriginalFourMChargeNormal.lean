@@ -43,10 +43,10 @@ open private affine_norm_le_positive
   from D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSourceGerm
 open private gaussianCoefficient_smul
   from D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum
-open private affine_coefficient_differentiableOn finite_data_differentiableOn
+open private finite_data_differentiableOn
     iterated_differentiableOn
   from D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
-open private chargeScalar_pair chargeSeries_coeff
+open private chargeSeries_coeff
   from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
 open private groundForm from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
 
@@ -177,7 +177,7 @@ theorem compact_charge_normal (D : LatticeData)
     (fun q z hz => hmajor q z (interior_subset hz))
   intro q
   apply DifferentiableOn.mono _ interior_subset
-  exact (hp.mul (hQ.pow _)).mul (affine_coefficient_differentiableOn hA
+  exact (hp.mul (hQ.pow _)).mul (OriginalGaussianSewnAnalytic.affine_coefficient_differentiableOn hA
     (fun i => (hu i).const_mul _) d)
 
 
@@ -231,7 +231,7 @@ private lemma nome_square_diff : DifferentiableOn ℂ (fun z : ℂ => Q0 (z ^ 2)
   exact mem_ball_zero_iff.mpr (by
     rw [norm_pow]; exact pow_lt_one₀ (norm_nonneg z) (mem_ball_zero_iff.mp hz) (by decide))
 
-private lemma nome_square_source {z : ℂ} (hz : z ∈ ball (0 : ℂ) 1) :
+lemma nome_square_source {z : ℂ} (hz : z ∈ ball (0 : ℂ) 1) :
     Q0 (z ^ 2) = z ^ 2 * Complex.exp (2 * sourceConstant z) / 16 := by
   have hrhs := ((differentiableOn_id.pow 2).mul
     (sourceConstant_diff.const_mul 2).cexp).div_const (16 : ℂ)
@@ -337,7 +337,7 @@ theorem sewn_charge_normal_at_zero (D : LatticeData) (hunit : IsUnit D.G.det)
     change p z * Q z ^ m *
       affineCoefficient (explicitEffectiveKernel D e z) (explicitMean D q e z) d =
       (chargeScalar D q * chargeScalar D (-q)) * z ^ (2 * m) * sewn D q e d z
-    rw [chargeScalar_pair, hs, sewn, hn, show Q z = _ from nome_square_source (hK hz),
+    rw [OriginalFourMEnergyCoefficient.chargeScalar_pair, hs, sewn, hn, show Q z = _ from nome_square_source (hK hz),
       div_pow, mul_pow, ← pow_mul, ← Complex.exp_nat_mul]
     rw [show (m : ℂ) * (2 * sourceConstant z) = 2 * (m : ℂ) * sourceConstant z by ring]
     unfold p
