@@ -2,7 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 import Reg.Support.SingleDependentReadout
 
-/-! Intervening on the real-part readout changes both the normalization and the selected zeros. -/
+/-! At a fixed normalization, intervening on the real-part readout changes the
+selected zeros and can break the cluster-set law. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -31,11 +32,10 @@ def exaggeratedRealPart : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law V := ∀ (ρ : ℂ), IsNontrivialZero ρ →
+  Law V := ∀ (β : ℝ),
     let realPart := V.readout () ()
-    let β := realPart ρ
     1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → realPart z ≤ β) →
-    ∀ (W : ℝ), 0 < W → ∀ (y : ℝ),
+    ∀ (W : ℝ), 0 ≤ W → ∀ (y : ℝ),
     MapClusterPt y atTop (fun B : ℝ =>
       (∫ x in B * Real.exp (-W)..B, max (-primeTail x) 0 / Real.sqrt x) /
         B ^ (β - 1 / 2)) ↔
@@ -122,8 +122,7 @@ private theorem exaggerated_real_part_fails : ¬ arena.Law exaggeratedRealPart :
     refine ⟨0, ?_⟩
     funext k
     simp [phaseOrbit]
-  have hcluster := (law (actualData.zero 0) (actualData.zero_isNontrivial 0)
-    (by norm_num [exaggeratedRealPart, realize]) (fun _ _ => le_rfl) 1 (by norm_num) y).2
+  have hcluster := (law (5 / 2) (by norm_num) (fun _ _ => le_rfl) 1 (by norm_num) y).2
     ⟨1, hone, rfl⟩
   change MapClusterPt y atTop (fun B : ℝ =>
     (∫ x in B * Real.exp (-1)..B, max (-primeTail x) 0 / Real.sqrt x) /
@@ -140,18 +139,18 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   change (0 : ℂ).re ≠ (1 : ℂ).re
   norm_num
 
-def family : Registration arena (type_of% @prime_tail_mass_cluster_iff_of_attained_zero) where
+def family : Registration arena (type_of% @prime_tail_mass_cluster_iff_of_upper_bound) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨prime_tail_mass_cluster_iff_of_attained_zero, exaggeratedRealPart,
+  variation := ⟨prime_tail_mass_cluster_iff_of_upper_bound, exaggeratedRealPart,
     exaggerated_real_part_fails⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual exaggeratedRealPart exaggerated_real_part_fails
   dependence := actual_dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@prime_tail_mass_cluster_iff_of_attained_zero) (Realization signature) Unit Unit where
-  unitName := .str ``prime_tail_mass_cluster_iff_of_attained_zero "__information_unit"
+    (@prime_tail_mass_cluster_iff_of_upper_bound) (Realization signature) Unit Unit where
+  unitName := .str ``prime_tail_mass_cluster_iff_of_upper_bound "__information_unit"
   realizationName := ``family
   realizationSource := none
   generated := false
@@ -172,7 +171,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "value"]
+      path := #["body", "value"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

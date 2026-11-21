@@ -9,7 +9,7 @@
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeAttainedShortWindows
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
 
-/-! At an attained maximal real part above one half, the late prime-only windows
+/-! At a real-part upper bound above one half, the late prime-only windows
 are approximated by a continuous integral on the actual zeta phase orbit closure. -/
 
 set_option autoImplicit false
@@ -247,13 +247,13 @@ private theorem mapClusterPt_of_sub_tendsto_zero {f g : ℝ → ℝ} {y : ℝ}
   exact (dist_triangle (g t) (f t) y).trans_lt
     (by rw [Real.dist_eq (g t) (f t)]; linarith only [ht, hdiff])
 
-/-- At every fixed positive logarithmic width, the normalized actual prime-only
-mass has precisely the cluster values supplied by the actual phase orbit closure. -/
-theorem prime_tail_mass_cluster_iff_of_attained_zero (ρ : ℂ) (hρ : IsNontrivialZero ρ) :
+/-- At any real-part upper bound above one half and any fixed nonnegative logarithmic
+width, the normalized actual prime-only mass has precisely the cluster values supplied
+by the actual phase orbit closure with coefficients cut to the upper-bound line. -/
+theorem prime_tail_mass_cluster_iff_of_upper_bound (β : ℝ) :
     let realPart := Complex.re
-    let β := realPart ρ
     1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → realPart z ≤ β) →
-    ∀ (W : ℝ), 0 < W → ∀ (y : ℝ),
+    ∀ (W : ℝ), 0 ≤ W → ∀ (y : ℝ),
     MapClusterPt y atTop (fun B : ℝ =>
       (∫ x in B * Real.exp (-W)..B, max (-primeTail x) 0 / Real.sqrt x) /
         B ^ (β - 1 / 2)) ↔
@@ -261,9 +261,9 @@ theorem prime_tail_mass_cluster_iff_of_attained_zero (ρ : ℂ) (hρ : IsNontriv
   dsimp only
   intro hβ hmax W hW y
   let mass (B : ℝ) :=
-    (∫ x in B * Real.exp (-W)..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ (ρ.re - 1 / 2)
-  let window := phaseWindow Complex.re ρ.re W
-  have happrox := window_transfer hW.le (signedInput_approx hρ.2.1 hβ
+    (∫ x in B * Real.exp (-W)..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ (β - 1 / 2)
+  let window := phaseWindow Complex.re β W
+  have happrox := window_transfer hW (signedInput_approx (by linarith only [hβ]) hβ
     (fun k => hmax _ (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)))
   change Tendsto (fun t => (mass ∘ Real.exp) t - (window ∘ phaseOrbit) t) atTop (𝓝 0) at happrox
   have hlog : MapClusterPt y atTop mass ↔ MapClusterPt y atTop (mass ∘ Real.exp) := by
@@ -277,7 +277,7 @@ theorem prime_tail_mass_cluster_iff_of_attained_zero (ρ : ℂ) (hρ : IsNontriv
   change MapClusterPt y atTop mass ↔ _
   rw [hlog]
   have himage : IsClosed (window '' closure (range phaseOrbit)) :=
-    ((isClosed_closure.isCompact).image (phaseWindow_continuous ρ.re W)).isClosed
+    ((isClosed_closure.isCompact).image (phaseWindow_continuous β W)).isClosed
   constructor
   · intro hy
     have hm := himage.mem_of_mapClusterPt (mapClusterPt_of_sub_tendsto_zero happrox hy)
@@ -286,7 +286,7 @@ theorem prime_tail_mass_cluster_iff_of_attained_zero (ρ : ℂ) (hρ : IsNontriv
     exact ⟨h, hh, hval.symm⟩
   · rintro ⟨h, hh, rfl⟩
     have hc := ((phaseOrbit_cluster_iff h).mpr hh).continuousAt_comp
-      (phaseWindow_continuous ρ.re W).continuousAt
+      (phaseWindow_continuous β W).continuousAt
     exact mapClusterPt_of_sub_tendsto_zero
       (by simpa only [neg_sub, neg_zero] using happrox.neg) hc
 
