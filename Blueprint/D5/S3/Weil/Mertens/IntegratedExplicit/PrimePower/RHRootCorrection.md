@@ -46,11 +46,29 @@ The prime-power bias tends to 2 in the square-root scaling. Under RH the normali
 
 Integrate the cube term over [log(a),log(B)] to obtain 9(a^(-1/6)-B^(-1/6)). Use the same endpoints for the square primitive and integrate the residual majorant on that interval to retain a^(-3/10)-B^(-3/10). Equal endpoints are included. The statement uses the full actual zero occurrences and requires no independence of ordinates.
 
+**Theorem 1.4 (The actual prime-only window with both zero primitives).**
+
+$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2 \le T \land \left(0 < K \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{N}\left(a, B\right) - 2 \cdot \operatorname{log}\left(\frac{B}{a}\right) - \operatorname{p}\left(\operatorname{log}\left(B\right)\right) + \operatorname{p}\left(\operatorname{log}\left(a\right)\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - \operatorname{A}\left(B\right) + \operatorname{A}\left(a\right)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.prime_window_cube_and_square_of_rh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Tianyu Zhao (2025). *On the mean values of the error terms in Mertens' theorems*. DOI: [10.1007/s40993-025-00640-y](https://doi.org/10.1007/s40993-025-00640-y). URL: <https://arxiv.org/abs/2411.18903v2>.
+
+*Commentary.*
+
+Let N(a,B) be the integral of max(-Qtheta(x),0)/sqrt(x) from a to B. Let p(u) be the real part of the sum of exp(i Im(rho) u)/[rho(1-rho)i Im(rho)] over the actual nontrivial zero occurrences with multiplicity.
+
+The exact ordinary endpoint identity of RHPrimeWindowRemainder expresses the discrepancy after subtraction of the logarithm and the first primitive as an integral of windowError. Eventual positivity identifies windowError with rootWindowDensity on the same closed log window. Apply the integrated estimate with cube coefficient 9 and the square primitive A at both endpoints.
+
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.prime_window_cube_and_square_of_rh`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_prime_power_density`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_root_correction_window`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rootWindowDensity`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RootTail](RootTail.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SquareSpectrum](SquareSpectrum.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHPrimeWindowRemainder](../RHPrimeWindowRemainder.md)
 - Dependency: [D5/S3/Weil/Mertens/ZeroAbscissaPower](../../ZeroAbscissaPower.md)

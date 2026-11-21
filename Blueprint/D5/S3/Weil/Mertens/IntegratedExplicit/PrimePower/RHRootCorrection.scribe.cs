@@ -50,6 +50,23 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
                         + "Use the same endpoints for the square primitive and integrate the residual majorant "
                         + "on that interval to retain a^(-3/10)-B^(-3/10). Equal endpoints are included. "
                         + "The statement uses the full actual zero occurrences and requires no independence of ordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prime-window-cube-and-square-of-rh"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.prime_window_cube_and_square_of_rh"),
+                H("The actual prime-only window with both zero primitives"), StatementSource.FromAuthor(PrimeWindow()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
+                Blocks(
+                    Paragraph(Text(
+                        "Let N(a,B) be the integral of max(-Qtheta(x),0)/sqrt(x) from a to B. "
+                        + "Let p(u) be the real part of the sum of exp(i Im(rho) u)/[rho(1-rho)i Im(rho)] "
+                        + "over the actual nontrivial zero occurrences with multiplicity.")),
+                    Paragraph(Text(
+                        "The exact ordinary endpoint identity of RHPrimeWindowRemainder expresses "
+                        + "the discrepancy after subtraction of the logarithm and the first primitive "
+                        + "as an integral of windowError. Eventual positivity identifies windowError "
+                        + "with rootWindowDensity on the same closed log window. Apply the integrated "
+                        + "estimate with cube coefficient 9 and the square primitive A at both endpoints."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -95,5 +112,22 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         var window = All("a", All("B", Imp(Le(t, a), Imp(Le(a, b), estimate))));
         return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K", And(Le(F.D(8), t),
             And(Lt(F.D(0), k), And(positive, window)))))));
+    }
+
+    private static Formula PrimeWindow()
+    {
+        var a = F.Id("a");
+        var b = F.Id("B");
+        var t = F.Id("T");
+        var k = F.Id("K");
+        var logTerm = Multiply(F.D(2), Call("log", new Formula.Fraction(b, a)));
+        var ordinary = Add(Subtract(Subtract(Call("N", a, b), logTerm), Call("p", Call("log", b))),
+            Call("p", Call("log", a)));
+        var cube = Multiply(F.D(9), Subtract(CubePower(a), CubePower(b)));
+        var error = Add(Subtract(Subtract(ordinary, cube), Call("A", b)), Call("A", a));
+        var estimate = Le(new Formula.Absolute(error), Multiply(k, Subtract(ErrorPower(a), ErrorPower(b))));
+        var window = All("a", All("B", Imp(Le(t, a), Imp(Le(a, b), estimate))));
+        return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K", And(Le(F.D(2), t),
+            And(Lt(F.D(0), k), window))))));
     }
 }
