@@ -50,6 +50,7 @@ For every index at least sixteen, the literal canonical count satisfies the disp
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457Strip.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229532Strip](../CrossedStripDefectsWide/HardinA229532Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripData](../CrossedStripDefectsWide/WidthSix/HardinA229532StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripClasses](HardinA229457StripClasses.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData](HardinA229457StripData.md)

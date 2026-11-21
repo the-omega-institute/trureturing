@@ -23,8 +23,8 @@ The old active block is supplied by its structural cut identity. Colour permutat
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripClasses.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses](../CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripData](../CrossedStripDefectsWide/WidthSix/HardinA229532StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripClasses](HardinA229457StripClasses.md)
-- Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData](HardinA229457StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripCut](HardinA229604StripCut.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripData](HardinA229604StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/ProperTransfer](ProperTransfer.md)
