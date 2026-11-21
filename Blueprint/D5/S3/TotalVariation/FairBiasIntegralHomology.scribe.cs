@@ -13,10 +13,12 @@ internal sealed class FairBiasIntegralHomologyDocument : IScribeDocumentDefiniti
                 "D5/S3/TotalVariation/FairBiasIntegralHomology.reducedHomology_eq_fullRestrictionFacets"),
             H("Homology of the original realization in every nonnegative degree"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Geometry/hatcher2002algebraic")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/hatcher2002algebraic")),
             Blocks(
                 Paragraph(Text(
-                    "The signed fair-bias complex has free reduced integral singular homology in " +
+                    "Take a finite family of columns in a finite binary vector space and fix a linear " +
+                    "order on the signed labels. The signed fair-bias complex has free reduced " +
+                    "integral singular homology in " +
                     "column nullity minus one, using natural subtraction. The summands are indexed " +
                     "by the facets equal to their restriction faces. Every other nonnegative degree " +
                     "vanishes. If there are no nonempty facets, the realization and index are empty, " +
@@ -26,7 +28,8 @@ internal sealed class FairBiasIntegralHomologyDocument : IScribeDocumentDefiniti
                     "sphere wedge. For positive degrees, a based homeomorphism separates one factor " +
                     "from the wedge of the remaining factors. Stereographic projection gives contractions " +
                     "fixed at their basepoints, and the binary Mayer–Vietoris splitting adds one " +
-                    "summand at each step. A sphere contributes its coefficient group only in its own degree.")),
+                    "summand at each step, as in Hatcher’s wedge-sum argument in Corollary 2.25. " +
+                    "A sphere contributes its coefficient group only in its own degree.")),
                 Paragraph(Text(
                     "In degree zero, a positive-dimensional sphere wedge is path connected. A " +
                     "wedge of zero-spheres has one point for each factor in addition to the common " +
