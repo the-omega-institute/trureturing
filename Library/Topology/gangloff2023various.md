@@ -15,6 +15,7 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
   - D5/S1/Dynamics/Shadowing/ExactPendantObstruction
   - D5/S3/Topology/CoveringDimension/GluedCircle
+  - D5/S1/Dynamics/Symbolic/RightTailBranching
 license: citation-only
 triage: anchor
 ---
@@ -165,6 +166,23 @@ coalesce in one step arbitrarily close to a branching vertex. The
 construction relates the exact order to the local valence m plus one.
 [Parallel-edge graph construction](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/ThetaExactExpansivity.md)
 
+For any continuous transitive finitely positively expansive self-map on a
+finite connected graph of maximum valence D at least two, the least forward
+Bowen order is at most D minus one. Orienting the graph edges for the quotient
+construction does not restrict the map, and each loop contributes two to the
+valence. The parallel-edge examples realize equality for D at least three.
+[Sharp bound for transitive finite graphs](../../Blueprint/D5/S3/Combinatorics/Graph/LeaflessDynamics/FiniteGraphTransitiveValence.md)
+
+Yokoi's *Strong Transitivity and Graph Maps*, Theorem 4.1, derives strong
+transitivity from transitivity and finitely many fixed points for every
+positive iterate. Harańczyk, Kwietniak and Oprocha give the finite-cover
+conclusion in Theorem 7.5 of *Topological structure and entropy of mixing
+graph maps*. Corollary 2.10(4) in Gangloff, Guillon and Oprocha supplies
+periodic point finiteness. The Lean proof derives pointwise hitting by
+excluding the finite set missed by the forward images of a free subarc.
+[Yokoi](https://doi.org/10.4064/ba53-4-3)
+[Harańczyk, Kwietniak and Oprocha](https://arxiv.org/html/1111.0566#S7.Thmtheorem5)
+
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
 positive expansivity order N. It glues N circles along the image of the
@@ -185,6 +203,30 @@ body associated with [DOI 10.1016/j.topol.2026.110006](https://doi.org/10.1016/j
 remain unavailable for comparison. No worldwide originality or priority
 claim follows from this repository result.
 
+## Finite positive expansivity for S-adic shifts
+
+Question 4.1 asks which two-sided subshifts are finitely positively expansive,
+including substitutions and S-adic systems. Lemma 4.7 identifies the exact order
+with the largest number of two-sided extensions of a right tail. The repository
+proves that a finite set (B) of right tails with multiple immediate predecessors
+gives the uniform bound (1+|B|(|A|-1)) over an alphabet (A), exactly when
+periodic right tails have only periodic extensions. The proof encodes a past by
+its last departure from a chosen default predecessor and relates the bound to
+strict forward Bowen balls for any compatible metric.
+[Branching futures and finite positive expansivity](../../Blueprint/D5/S1/Dynamics/Symbolic/RightTailBranching.md)
+
+For an everywhere-growing directive sequence of finite alphabet rank (K), the
+finite-word factorization theorem of Espinoza and Maass bounds (|B|) by
+(122K^7). Reflect left and right in Theorem 1.2 and the proof of Theorem 1.3,
+then apply the bound at a cofinal sequence of levels with at most (K) tiles
+and arbitrarily long minimum tile length. Distinct branching futures have
+distinct prefixes at sufficiently high levels. The argument applies to points
+defined by the S-adic language and also to the all-tilings limit set of
+Definition 4.14, where every point has the requisite factorizations. This gives a
+criterion for that class in Question 4.1. The factorization theorem is the
+literature input used in the mathematical deduction.
+[Espinoza and Maass, arXiv:2008.05996v2](https://arxiv.org/abs/2008.05996v2)
+
 ## Verified locator
 
 - https://arxiv.org/abs/2310.17241v1
@@ -193,3 +235,5 @@ claim follows from this repository result.
 - Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
 - Remark 3.10, Section 3.2, page 9.
+- Question 4.1, Section 4, page 10.
+- Lemma 4.7, Section 4.2, page 11.
