@@ -143,7 +143,7 @@ private theorem weighted_abs_sum {u v x y U V : ℝ}
     _ ≤ _ := add_le_add (mul_le_mul_of_nonneg_right hu (abs_nonneg _))
       (mul_le_mul_of_nonneg_right hv (abs_nonneg _))
 
-private theorem nearest_residue (h : ℕ) (hh : 0 < h) (r : ℤ) (x : ℝ) :
+theorem nearest_residue (h : ℕ) (hh : 0 < h) (r : ℤ) (x : ℝ) :
     ∃ b k : ℤ, b = r + (h : ℤ) * k ∧ |(b : ℝ) - x| ≤ (h : ℝ) / 2 := by
   have hhR : (0 : ℝ) < h := by exact_mod_cast hh
   let k : ℤ := round ((x - (r : ℝ)) / (h : ℝ))
@@ -159,7 +159,7 @@ private theorem nearest_residue (h : ℕ) (hh : 0 < h) (r : ℤ) (x : ℝ) :
       mul_le_mul_of_nonneg_left (abs_sub_round _) hhR.le
     _ = (h : ℝ) / 2 := by ring
 
-private theorem closed_open_overlap {c r T A : ℝ} (hr : 0 ≤ r) (hA : 0 < A)
+theorem closed_open_overlap {c r T A : ℝ} (hr : 0 ≤ r) (hA : 0 < A)
     (hc : |c - T| < r + A) : ∃ y : ℝ, |y - c| ≤ r ∧ |y - T| < A := by
   obtain ⟨hc₁, hc₂⟩ := abs_lt.mp hc
   by_cases hleft : T < c - r
@@ -171,7 +171,7 @@ private theorem closed_open_overlap {c r T A : ℝ} (hr : 0 ≤ r) (hA : 0 < A)
     · refine ⟨T, abs_le.mpr ⟨by linarith, by linarith⟩, ?_⟩
       simpa using hA
 
-private theorem axis_extremes (c r x : ℝ) (hr : 0 ≤ r) :
+theorem axis_extremes (c r x : ℝ) (hr : 0 ≤ r) :
     ∃ lo hi : ℝ, c - r ≤ lo ∧ lo ≤ c + r ∧ c - r ≤ hi ∧ hi ≤ c + r ∧
       lo * x = c * x - r * |x| ∧ hi * x = c * x + r * |x| := by
   by_cases hx : 0 ≤ x
@@ -374,7 +374,7 @@ private theorem short_scale_bounds {N M : ℕ} {theta phi w : ℝ}
   unfold errorSum
   linarith only [herr3, herr5]
 
-private theorem abs_two_row_det_le {x z x' z' C : ℝ}
+theorem abs_two_row_det_le {x z x' z' C : ℝ}
     (hx : x ^ 2 + z ^ 2 ≤ C) (hx' : x' ^ 2 + z' ^ 2 ≤ C) :
     |x * z' - x' * z| ≤ C := by
   have hC : 0 ≤ C := (add_nonneg (sq_nonneg x) (sq_nonneg z)).trans hx
