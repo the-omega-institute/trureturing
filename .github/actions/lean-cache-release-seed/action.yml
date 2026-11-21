@@ -2,7 +2,7 @@ name: Restore Lean Release build seeds
 description: Restore optional Actions material for a Release producer
 inputs:
   mode:
-    description: Automatic selection, legacy project cache, or a complete, partial, or absent verification seed
+    description: Automatic selection, legacy project cache, or a complete, partial, absent, or parallel build
     required: true
   cache-keys:
     description: JSON outputs from the Actions cache key selector
@@ -94,7 +94,7 @@ runs:
               [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
               test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
               ;;
-            none) [[ ! -e .lake/build ]] ;;
+            none|parallel) [[ ! -e .lake/build ]] ;;
             *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
           esac
         else
@@ -111,6 +111,37 @@ runs:
         if [[ "$COMPLETE" == true ]]; then
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
+    - name: Prepare cold dependencies for the compiled layers
+      if: inputs.mode == 'parallel'
+      shell: bash
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+      run: |
+        bash .github/actions/lean-compile-layer/prepare-dependencies.sh
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: 'common'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '0'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '1'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '2'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '3'
+    - name: Check all recovered compile targets without rebuilding
+      if: inputs.mode == 'parallel'
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_compile_layers.py verify --artifacts "$RUNNER_TEMP/lean-compile"
     - name: Complete missing project artifacts with Lake
       if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.checkpoint-seconds == '0'
       env:

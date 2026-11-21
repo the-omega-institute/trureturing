@@ -8,7 +8,7 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none, legacy]
+        options: [complete, partial, none, legacy, auto, parallel]
         required: true
       checkpoint_run:
         description: Optional earlier checkpoint run for the same commit and cold mode
@@ -23,9 +23,26 @@ permissions: {}
 # This native integration event verifies the Lean-cache publication and restore
 # programs. It is separate from the required CI workflows.
 jobs:
+  parallel-compile:
+    if: github.event_name == 'workflow_dispatch' && contains(fromJSON('["auto","parallel"]'), inputs.mode) && github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests')
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-release-compile.yml
+    with:
+      source: ${{ github.sha }}
+      force: ${{ inputs.mode == 'parallel' }}
+      indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name }}
+
   cache:
+    needs: parallel-compile
     name: verify cache publication and restore
-    if: github.event_name == 'push' || (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')
+    if: >-
+      !cancelled() && (github.event_name == 'push' ||
+      (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') &&
+       ((contains(fromJSON('["auto","parallel"]'), inputs.mode) && needs.parallel-compile.result == 'success' &&
+         (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == 'parallel')) ||
+        (!contains(fromJSON('["auto","parallel"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
     runs-on: ubuntu-24.04-arm
     # Cold and partial seed scenarios exercise the scheduled Release build.
     timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
@@ -40,7 +57,7 @@ jobs:
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
-      SHARD_HANDOFF: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
+      SHARD_HANDOFF: ${{ needs.parallel-compile.outputs.seed || github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
       CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
     steps:
       - uses: actions/checkout@v5
@@ -71,6 +88,9 @@ jobs:
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/*
+            .github/actions/lean-compile-layer/*
+            .github/actions/lean-recover-layer/*
+            .github/workflows/ci-lean-release-compile.yml
             .github/actions/lean-cache-shards/*
             .gitignore
             D5/*.lean
@@ -104,7 +124,7 @@ jobs:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
         run: |
           case "$SHARD_HANDOFF" in
-            complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
               [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
               [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
@@ -158,11 +178,11 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
-          make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
+          bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
           tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
           [[ "$tag" == lean-cache-verify-v2-* ]]
           echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
