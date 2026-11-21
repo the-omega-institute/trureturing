@@ -92,4 +92,80 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+private theorem primeTail_two_le : primeTail 2 ≤ -1 / 4 := by
+  obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
+  have horder := ((prime_power_window_correction.2 C (fun t _ => hC t)).1 2 (by norm_num)).1
+  have hQ := D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
+    D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable
+    (t := 2) le_rfl
+  change Q 2 = _ at hQ
+  have hfloor : ⌊(2 : ℝ)⌋₊ = 2 := by norm_num
+  have hsmall : Finset.Ioc (0 : ℕ) 2 = {1, 2} := by decide
+  have hlog := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+  have he := Real.one_half_lt_eulerMascheroniConstant
+  simp [Chebyshev.psi, hfloor, hsmall, ArithmeticFunction.vonMangoldt_apply_one] at hQ
+  linarith
+
+abbrev windowLowerArena : Arena where
+  signature := signature
+  Law V :=
+    ∀ {a b x r : ℝ}, 1 ≤ a → a ≤ (1 - r) * x → (1 + r) * x ≤ b →
+      0 < r → r ≤ 1 / 2 → primeTail x ≤ -4 * r ^ 2 →
+      r ^ 3 * Real.sqrt x ≤ ∫ z in a..b, max (-primeTail z) 0 / V.readout () () z
+
+private theorem zeroScale_fails_window_lower : ¬ windowLowerArena.Law zeroScale := by
+  intro h
+  have hp := h (a := 1) (b := 3) (x := 2) (r := 1 / 4)
+    le_rfl (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (primeTail_two_le.trans_eq (by norm_num))
+  change (1 / 4 : ℝ) ^ 3 * Real.sqrt 2 ≤
+    ∫ z in (1 : ℝ)..3, max (-primeTail z) 0 / 0 at hp
+  simp only [div_zero, intervalIntegral.integral_zero] at hp
+  exact (not_le_of_gt (by positivity :
+    0 < (1 / 4 : ℝ) ^ 3 * Real.sqrt 2)) hp
+
+def windowLowerFamily : Registration windowLowerArena (type_of% @prime_tail_negative_window_lower) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@prime_tail_negative_window_lower, zeroScale, zeroScale_fails_window_lower⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    windowLowerArena.Law actual zeroScale zeroScale_fails_window_lower
+  dependence := actual_dependence
+
+noncomputable def windowLowerAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@prime_tail_negative_window_lower) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection.prime_tail_negative_window_lower
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection "windowLowerFamily"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨windowLowerArena⟩
+  objectArena := .source ⟨windowLowerArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source windowLowerArena ⟨windowLowerFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ x => Real.sqrt x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn", "fn", "arg", "body", "arg"]
+      stateBinder := 10
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection

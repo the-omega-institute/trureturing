@@ -6,8 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.IntegratedExplicit;
 internal sealed class PrimeOnlyTailCorrectionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Removing prime powers from a critical Chebyshev window",
-        H("The square-root correction to the prime-only tail"),
+        "Negative-part windows of the Chebyshev tail",
+        H("Prime-power correction and persistence of negative values"),
         Blocks(Describe.Lean(
             DescribeId.Create("critical-window-correction"),
             DeclarationHandle.Create(
@@ -30,7 +30,30 @@ internal sealed class PrimeOnlyTailCorrectionDocument : IScribeDocumentDefinitio
                     "A Chebyshev bound ψ(t)−ϑ(t) ≤ C√t exists unconditionally. Negative parts "
                     + "reverse order and are 1-Lipschitz, so the window integrand is between "
                     + "zero and 2C/x. In particular b=a to the power 3/2 costs at most C log a."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("negative-window-lower"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/PrimeOnlyTailCorrection.prime_tail_negative_window_lower"),
+                H("A negative interior value forces window mass"),
+                StatementSource.FromAuthor(NegativeWindowClaim()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "In the displayed statement Q is the prime-only tail Qϑ. Write N(a,b) for "
+                        + "the integral of max(−Qϑ(z),0)/√z over [a,b]. The hypothesis "
+                        + "on the window leaves a relative margin r on both sides of x.")),
+                    Paragraph(Text(
+                        "Monotonicity of ϑ bounds the increment Qϑ(z)−Qϑ(x) by "
+                        + "log(z/x)+ϑ(x)(1/z−1/x). This integral comparison holds at prime jumps. "
+                        + "Choose z on the left when ϑ(x)≤x and on the right when ϑ(x)≥x. "
+                        + "On the chosen side the upper bound is at most log(z/x)+x/z−1. "
+                        + "Using log(t)≤t−1 bounds it by (z−x)²/(zx), at most 2r².")),
+                    Paragraph(Text(
+                        "The negative part is therefore at least 2r² throughout a subinterval of "
+                        + "length rx, where √z≤2√x. Integrating gives r³√x. A budget strictly below "
+                        + "r³√x excludes the asserted depth at that interior point. The estimate "
+                        + "requires a given window and gives no existence result for small-budget windows."))),
+                DescribeRole.Theorem))));
 
     private static Formula Claim()
     {
@@ -57,6 +80,26 @@ internal sealed class PrimeOnlyTailCorrectionDocument : IScribeDocumentDefinitio
             And(Le(F.D(0), window), Le(window,
                 Multiply(twiceC, Call("log", new Formula.Fraction(b, a))))))));
         return F.Disp(And(limit, All("C", Implies(hypothesis, And(points, windows)))));
+    }
+
+    private static Formula NegativeWindowClaim()
+    {
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var x = F.Id("x");
+        var r = F.Id("r");
+        var one = F.D(1);
+        var square = new Formula.Power(r, F.D(2));
+        var cube = new Formula.Power(r, F.D(3));
+        var left = Multiply(F.Seq(F.Open, Subtract(one, r), F.Close), x);
+        var right = Multiply(F.Seq(F.Open, one, F.Plus, r, F.Close), x);
+        var positiveRadius = new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, r);
+        var radiusBound = Le(r, new Formula.Fraction(one, F.D(2)));
+        var depth = Le(Call("Q", x), Subtract(F.D(0), Multiply(F.D(4), square)));
+        var hypothesis = And(And(Le(one, a), Le(a, left)),
+            And(Le(right, b), And(And(positiveRadius, radiusBound), depth)));
+        var conclusion = Le(Multiply(cube, Call("sqrt", x)), Call("N", a, b));
+        return F.Disp(All("a", All("b", All("x", All("r", Implies(hypothesis, conclusion))))));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>

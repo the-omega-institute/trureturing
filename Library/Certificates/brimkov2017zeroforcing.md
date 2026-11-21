@@ -5,20 +5,22 @@ year: 2017
 title: "Graph Coloring, Zero Forcing, and Related Problems"
 doi: null
 url: "https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-bd83-09121784af53/content"
-claim: "Proposition 7.7: if n >= 2, the connected forcing polynomial of the path is Z_c(P_n; x) = 2x + sum_(i=2)^n (n - i + 1) x^i. Proposition 7.11: the connected forcing polynomial of k pendant paths of b_1, ..., b_k vertices attached to a vertex; with unit arms it gives Z_c(K_(1,n-1); x) = (n - 1) x^(n-1) + x^n for n >= 4."
+claim: "Proposition 7.7: if n >= 2, the connected forcing polynomial of the path is Z_c(P_n; x) = 2x + sum_(i=2)^n (n - i + 1) x^i. Proposition 7.8: if n >= 3, Z_c(C_n; x) = n sum_(i=2)^(n-1) x^i + x^n. Proposition 7.11: the connected forcing polynomial of k pendant paths of b_1, ..., b_k vertices attached to a vertex; with unit arms it gives Z_c(K_(1,n-1); x) = (n - 1) x^(n-1) + x^n for n >= 4."
 strata_touched:
   - D5/S3/Combinatorics/Graph/ZeroForcing/PathConnectedForcing
   - D5/S3/Combinatorics/Graph/ZeroForcing/StarConnectedForcing
+  - D5/S3/Combinatorics/Graph/ZeroForcing/CycleConnectedForcing
+  - D5/S3/Combinatorics/Graph/ZeroForcing/SpiderConnectedForcing
 license: citation-only
 triage: anchor
 ---
 
-# Connected forcing polynomials of the path and the star
+# Connected forcing polynomials of paths, cycles, stars and spiders
 
 ## Verified locator
 
-PhD thesis, Rice University, May 2017, Chapter 7, Proposition 7.7, printed pages 165–166, and
-Proposition 7.11, printed pages 168–169. Source
+PhD thesis, Rice University, May 2017, Chapter 7, Proposition 7.7, printed pages 165–166,
+Proposition 7.8, printed page 166, and Proposition 7.11, printed pages 168–169. Source
 PDF: https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-bd83-09121784af53/content .
 
 ## Source statement
@@ -29,6 +31,12 @@ PDF: https://repository.rice.edu/server/api/core/bitstreams/c29c77d5-534a-4c5d-b
 > polynomial of G is defined as Z_c(G; x) = Σ_{i=Z_c(G)}^n z_c(G; i) x^i.
 
 > Proposition 7.7. If n ≥ 2, Z_c(P_n; x) = 2x + Σ_{i=2}^n (n − i + 1) x^i.
+
+> Proposition 7.8. If n ≥ 3, Z_c(C_n; x) = x^n + Σ_{i=2}^{n−1} n x^i.
+
+The source's proof: Z_c(C_n) = 2; a connected forcing set of size 2 ≤ i ≤ n − 1 is determined by
+its first vertex in the cyclic order, giving n of them, and the whole cycle is the only set of
+size n.
 
 > Proposition 7.11. Let G be a graph composed of k pendant paths attached to a vertex v, where
 > the ith pendant path has b_i vertices, 1 ≤ i ≤ k. Then,
@@ -63,3 +71,20 @@ correct. For n = 2 and n = 3 the formula with unit arms gives x + x^2 and 2x^2 +
 the n − 1 single leaves, which force a star with at most two leaves. For every n ≤ 3 result
 states that the coefficients agree with those of the path.
 StarConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of the star.
+
+CycleConnectedForcing.result states the coefficients of Z_c(C_n; x) for Mathlib's cycleGraph n
+and every n: z_c(C_n; i) = 1 for i = n ≠ 0, n for 1 ≤ i < n when i ≥ 2 or n = 2, and 0
+otherwise. For n ≥ 3 this is the source's formula. A second clause states the source's form for
+every n other than 0 and 2, so it also holds for n = 1; for n = 0 no set is connected, and for
+n = 2 each single vertex is a connected forcing set, giving Z_c(C_2; x) = 2x + x^2.
+CycleConnectedForcing.connected_forcing_iff characterizes the connected forcing sets of C_n as
+the arcs of at least two vertices, together with the single vertices when n = 2.
+
+SpiderConnectedForcing.result states Proposition 7.11 for k ≥ 3 arms of lengths h_j ≥ 1, as the
+coefficients of x^k (x ∏_j F_{h_j} + Σ_j ∏_{t≠j} F_{h_t}) with F_h = 1 + x + ⋯ + x^{h−1}: the
+generating function of s(j − 1; h_1, …, h_k) is x^{k+1} ∏_j F_{h_j}, and that of
+s(j − 1; h_1, …, h_{ℓ−1}, h_{ℓ+1}, …, h_k) is x^k ∏_{t≠ℓ} F_{h_t}.
+SpiderConnectedForcing.connected_forcing_iff characterizes the connected forcing sets as the
+centre with an initial segment of each arm, at most one arm untouched. The source states
+Proposition 7.11 without k ≥ 3; its proof cites Lemma 4.3, which assumes the graph is not a path,
+and for k ≤ 2 the spider is a path and the formula fails for every choice of arm lengths.
