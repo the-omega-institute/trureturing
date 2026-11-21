@@ -696,3 +696,5 @@ trace-word tensor determines the weighted invariant lift on that neighborhood.
 Analytic continuation gives the dense recovery locus. With the one-site
 ambiguity theorem, two adjacent sites are the real-generic minimum at this
 fixed length. The all-length periodic question and priority remain open.
+
+`PeriodicMPSProjectorOneSiteAmbiguity.generic_projector_one_site_ambiguity` gives the normalized one-site lower bound in the compact projector model for every fixed ring length at least four. Its nonzero commutator locus is relatively Euclidean-open dense in the closure of the actual trace-one projectors. Each actual point of that locus has arbitrarily close, distinct actual projectors with the same complete one-site density. The collective physical rotation preserves the raw one-site trace, hence the positive mass used to normalize the entire curve. The adjacent-pair density changes arbitrarily close to the starting projector. [Critch–Morton, Conjecture 10](https://arxiv.org/html/1210.2812v4#ThmTheorem10)
