@@ -7,6 +7,7 @@
    digest: Fixed-observable BKM rigidity for the actual partial trace. -/
 
 import D5.S3.Quantum.Recovery.BKMFlagRefinement
+import D5.S3.Quantum.Divergence.EntropyDefectResolventIntegralBudget
 import D5.S3.Quantum.Divergence.UmegakiKernelContraction
 import D5.S3.Quantum.Divergence.ResolventFunctionalRigidity
 import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
@@ -23,6 +24,8 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
 open D5.S3.Quantum.Recovery.BKMRelativeDensity (omega continuous_mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+  (cfc_unitary_diagonal kronecker_rpow)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport
   (partialTraceRight_posDef partialTraceRight_mul_embed partialTraceRight_embed_mul
     trace_embed_pair)
@@ -191,37 +194,31 @@ private theorem modular_power {X : Matrix n n ℂ} (hX : X.PosDef) (p : ℝ) :
     mpow (modular X) p = (mpow X (-p))ᵀ ⊗ₖ mpow X p := by
   let U := hX.isHermitian.eigenvectorUnitary
   let Ubar := Matrix.UnitaryGroup.map_star U
-  let W : Matrix.unitaryGroup (n × n) ℂ :=
-    ⟨(↑Ubar : Matrix n n ℂ) ⊗ₖ (↑U : Matrix n n ℂ),
-      Matrix.kronecker_mem_unitary Ubar.2 U.2⟩
   let d := hX.isHermitian.eigenvalues
   have hUbar : (Ubar : Matrix n n ℂ) = (U : Matrix n n ℂ)ᴴᵀ := rfl
-  have tensor (a b : ℝ → ℝ) :
-      (cfc a X)ᵀ ⊗ₖ cfc b X =
-        (↑W : Matrix (n × n) (n × n) ℂ) *
-          diagonal (fun i : n × n => ((a (d i.1) * b (d i.2) : ℝ) : ℂ)) * star (↑W : Matrix (n × n) (n × n) ℂ) := by
-    rw [hX.isHermitian.cfc_eq, hX.isHermitian.cfc_eq]
+  have transpose_cfc (f : ℝ → ℝ) :
+      (cfc f X)ᵀ = (Ubar : Matrix n n ℂ) *
+        diagonal (fun i => (f (d i) : ℂ)) * star (Ubar : Matrix n n ℂ) := by
+    rw [hX.isHermitian.cfc_eq]
     simp only [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply,
       Matrix.star_eq_conjTranspose, RCLike.ofReal_eq_complex_ofReal,
-      Matrix.transpose_mul, Matrix.diagonal_transpose, W, Matrix.conjTranspose_kronecker,
-      ← Matrix.mul_assoc,
-      Matrix.mul_kronecker_mul, Matrix.diagonal_kronecker_diagonal, Complex.ofReal_mul,
+      Matrix.transpose_mul, Matrix.diagonal_transpose, ← Matrix.mul_assoc,
       hUbar, Matrix.conjTranspose_transpose_eq_transpose_conjTranspose,
       Matrix.conjTranspose_conjTranspose, U, d, Function.comp_def]
-  have hd : modular X = (↑W : Matrix (n × n) (n × n) ℂ) *
-      diagonal (fun i : n × n => (((d i.1) ^ (-1 : ℝ) * d i.2 : ℝ) : ℂ)) * star (↑W : Matrix (n × n) (n × n) ℂ) := by
-    have ht := tensor (fun x => x ^ (-1 : ℝ)) (fun x => x)
-    rw [cfc_id' ℝ X hX.isHermitian.isSelfAdjoint] at ht
-    simpa only [modular, ← mpow_neg_one hX, mpow] using ht
-  rw [mpow, hd, D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.cfc_unitary_diagonal]
-  rw [show mpow X (-p) = cfc (fun x : ℝ => x ^ (-p)) X from rfl,
-    show mpow X p = cfc (fun x : ℝ => x ^ p) X from rfl, tensor]
-  apply congrArg (fun D : n × n → ℂ =>
-    (W : Matrix (n × n) (n × n) ℂ) * diagonal D * star (W : Matrix (n × n) (n × n) ℂ))
-  funext i
-  dsimp only [d]
-  rw [Real.mul_rpow (Real.rpow_nonneg (hX.eigenvalues_pos i.1).le _) (hX.eigenvalues_pos i.2).le,
-    ← Real.rpow_mul (hX.eigenvalues_pos i.1).le, neg_one_mul]
+  have hinv : (X⁻¹)ᵀ = (Ubar : Matrix n n ℂ) *
+      diagonal (fun i => ((d i ^ (-1 : ℝ) : ℝ) : ℂ)) * star (Ubar : Matrix n n ℂ) := by
+    simpa only [← mpow_neg_one hX, mpow] using transpose_cfc (fun x => x ^ (-1 : ℝ))
+  have hfactor : ((X⁻¹)ᵀ) ^ p = (mpow X (-p))ᵀ := by
+    rw [CFC.rpow_eq_cfc_real hX.inv.transpose.posSemidef.nonneg, hinv,
+      cfc_unitary_diagonal, mpow, transpose_cfc]
+    have hp (i : n) : (d i ^ (-1 : ℝ)) ^ p = d i ^ (-p) := by
+      rw [← Real.rpow_mul (hX.eigenvalues_pos i).le, neg_one_mul]
+    simp only [hp]
+  change cfc (fun x : ℝ => x ^ p) (modular X) =
+    (mpow X (-p))ᵀ ⊗ₖ cfc (fun x : ℝ => x ^ p) X
+  rw [← CFC.rpow_eq_cfc_real (modular_posDef hX).posSemidef.nonneg,
+    modular, kronecker_rpow hX.inv.transpose.posSemidef hX.posSemidef p,
+    hfactor, CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
 
 private theorem weighted_power_action {X : Matrix n n ℂ} (hX : X.PosDef)
     (K : Matrix n n ℂ) (p : ℝ) :
@@ -391,16 +388,15 @@ private theorem resolvent_integral {i j : Type*}
 
 private theorem shiftedForm_continuousOn {M : Matrix n n ℂ} (hM : M.PosDef) (x : n → ℂ) :
     ContinuousOn (shiftedForm M x) (Ioi (0 : ℝ)) := by
-  let F : ℝ → ℝ := fun t => ∑ i, (hM.isHermitian.eigenvalues i + t)⁻¹ *
-    ‖(hM.isHermitian.eigenvectorUnitaryᴴ *ᵥ x) i‖ ^ 2
-  refine ContinuousOn.congr (f := F) ?_ (fun t ht => ?_)
-  · apply continuousOn_finsetSum
-    intro i _
-    apply ContinuousOn.mul _ continuousOn_const
-    apply ContinuousOn.inv₀ (continuous_const.add continuous_id).continuousOn
-    intro t ht
-    exact (add_pos (hM.eigenvalues_pos i) ht).ne'
-  · rw [shiftedForm, ← cfc_shift_inverse M hM.posSemidef t ht, quadratic_cfc hM.isHermitian]
+  intro t ht
+  have hinv :=
+    D5.S3.Quantum.Divergence.EntropyDefectResolventIntegralBudget.continuousAt_shift_inverse
+      M hM.posSemidef t ht
+  have hquad : Continuous (fun Y : Matrix n n ℂ => quadratic Y x) := by
+    unfold quadratic
+    exact Complex.continuous_re.comp
+      (continuous_const.dotProduct (continuous_id.matrix_mulVec continuous_const))
+  exact (hquad.continuousAt.comp hinv).continuousWithinAt
 
 /-- The actual BKM gap is the integral of the power defects. It is nonnegative,
 and it vanishes exactly when the entire real spectral calculus intertwines on the

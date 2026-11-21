@@ -387,7 +387,7 @@ lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : 
   rw [← h, cfc_real_diagonal]
   rfl
 
-private lemma kronecker_rpow {r1 : Matrix n n ℂ} {r2 : Matrix m m ℂ}
+lemma kronecker_rpow {r1 : Matrix n n ℂ} {r2 : Matrix m m ℂ}
     (h1 : r1.PosSemidef) (h2 : r2.PosSemidef) (y : ℝ) :
     (r1 ⊗ₖ r2) ^ y = (r1 ^ y) ⊗ₖ (r2 ^ y) := by
   let U : Matrix.unitaryGroup (n × m) ℂ :=
