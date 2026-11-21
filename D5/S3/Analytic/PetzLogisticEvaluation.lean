@@ -56,6 +56,11 @@ private def logExponentialMode (ω x : ℝ) : ℂ :=
 
 private def gammaArgument (ω : ℝ) : ℂ := ((ω / (2 * Real.pi) : ℝ) : ℂ) * Complex.I
 
+private theorem gammaArgument_re (ω : ℝ) : (gammaArgument ω).re = 0 := by
+  unfold gammaArgument
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.I_re, Complex.ofReal_im,
+    Complex.I_im, mul_zero, zero_mul, sub_zero]
+
 private theorem logExponentialMode_eq (ω x : ℝ) (hx : 0 < x) :
     logExponentialMode ω x = (Real.exp (-x) : ℂ) * (x : ℂ) ^ (1 + gammaArgument ω - 1) := by
   rw [logExponentialMode, mode, add_sub_cancel_left,
@@ -69,12 +74,16 @@ private theorem logExponentialMode_eq (ω x : ℝ) (hx : 0 < x) :
 private theorem integrable_logExponentialMode (ω : ℝ) :
     IntegrableOn (logExponentialMode ω) (Ioi 0) :=
   (Complex.GammaIntegral_convergent (s := 1 + gammaArgument ω) (by
-    simp [gammaArgument, Complex.mul_re])).congr (ae_restrict_of_forall_mem measurableSet_Ioi
+    simpa only [Complex.add_re, Complex.one_re, gammaArgument_re, add_zero] using
+      (zero_lt_one : (0 : ℝ) < 1))).congr (ae_restrict_of_forall_mem measurableSet_Ioi
       (fun x hx => (logExponentialMode_eq ω x hx).symm))
 
 private theorem integral_logExponentialMode (ω : ℝ) :
     (∫ x in Ioi (0 : ℝ), logExponentialMode ω x) = Complex.Gamma (1 + gammaArgument ω) := by
-  rw [Complex.Gamma_eq_integral (by simp [gammaArgument, Complex.mul_re]), Complex.GammaIntegral]
+  have hs : 0 < (1 + gammaArgument ω).re := by
+    rw [Complex.add_re, Complex.one_re, gammaArgument_re, add_zero]
+    exact zero_lt_one
+  rw [Complex.Gamma_eq_integral hs, Complex.GammaIntegral]
   exact setIntegral_congr_fun measurableSet_Ioi (logExponentialMode_eq ω)
 
 private theorem gamma_norm_sq (ω : ℝ) :
@@ -87,14 +96,14 @@ private theorem gamma_norm_sq (ω : ℝ) :
   have hz : z ≠ 0 := mul_ne_zero (by exact_mod_cast div_ne_zero hω (by positivity :
     (2 * Real.pi) ≠ 0)) Complex.I_ne_zero
   have hconj : (starRingEnd ℂ) (1 + z) = 1 - z := by
-    simp [z, gammaArgument, map_add, map_mul, Complex.conj_I, sub_eq_add_neg]
+    simp [z, gammaArgument, map_add, map_mul, Complex.conj_I, map_ofNat, sub_eq_add_neg]
   have harg : (Real.pi : ℂ) * z = ((ω / 2 : ℝ) : ℂ) * Complex.I := by
     dsimp only [z, gammaArgument]
     push_cast
     field_simp [hπ]
   have hs : (Real.sinh (ω / 2) : ℂ) ≠ 0 := by
     exact_mod_cast Real.sinh_ne_zero.mpr (div_ne_zero hω (by norm_num))
-  rw [if_neg hω]
+  rw [ite_eq_right hω]
   change (‖Complex.Gamma (1 + z)‖ ^ 2 : ℂ) = _
   calc
     _ = (z * Complex.Gamma z) * Complex.Gamma (1 - z) := by
@@ -107,11 +116,10 @@ private theorem gamma_norm_sq (ω : ℝ) :
       dsimp only [z, gammaArgument]
       push_cast
       field_simp [hπ, hs, Complex.I_ne_zero]
-      <;> ring
 
 section Gram
 
-variable {ι : Type*} [Fintype ι]
+variable {ι : Type*}
 
 /-- The correlation of the phases of the scaled log-exponential law. -/
 def correlation (ω : ι → ℝ) : Matrix ι ι ℂ :=
@@ -120,7 +128,8 @@ def correlation (ω : ι → ℝ) : Matrix ι ι ℂ :=
 private theorem correlation_diag (ω : ι → ℝ) (i : ι) : correlation ω i i = 1 := by
   simp [correlation, integral_logExponentialMode, gammaArgument]
 
-private theorem correlation_posSemidef (ω : ι → ℝ) : (correlation ω).PosSemidef := by
+private theorem correlation_posSemidef [Finite ι] (ω : ι → ℝ) : (correlation ω).PosSemidef := by
+  let : Fintype ι := Fintype.ofFinite ι
   have hentry (i j : ι) (x : ℝ) :
       logExponentialMode (ω j - ω i) x =
         (Real.exp (-x) : ℂ) *
@@ -134,6 +143,7 @@ private theorem correlation_posSemidef (ω : ι → ℝ) : (correlation ω).PosS
     rw [← integral_conj]
     apply integral_congr_ae
     exact Filter.Eventually.of_forall fun x => by
+      change (starRingEnd ℂ) (logExponentialMode (ω i - ω j) x) = _
       rw [hentry j i, hentry i j]
       simp only [Complex.star_def, map_mul, Complex.conj_ofReal, starRingEnd_self_apply]
       ring
@@ -154,29 +164,40 @@ private theorem correlation_posSemidef (ω : ι → ℝ) : (correlation ω).PosS
     have hpoint (x : ℝ) : (∑ i, ∑ j, f i j x) =
         ((Real.exp (-x) * ‖∑ i, a i * mode (ω i) (Real.log x / (2 * Real.pi))‖ ^ 2 : ℝ) : ℂ) := by
       rw [Complex.ofReal_mul, ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self]
-      simp only [← Complex.star_def, star_sum, Finset.sum_mul_sum, Finset.mul_sum]
+      simp only [← Complex.star_def, star_sum]
+      rw [Finset.sum_mul_sum]
+      simp only [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro i _
       apply Finset.sum_congr rfl
       intro j _
-      rw [f, hentry, star_mul]
+      dsimp only [f]
+      rw [hentry, star_mul]
       ring
     rw [hform]
     simp_rw [hpoint]
-    rw [integral_ofReal]
-    exact_mod_cast integral_nonneg (fun x => mul_nonneg (Real.exp_pos (-x)).le (sq_nonneg _))
+    let g (x : ℝ) := Real.exp (-x) * ‖∑ i, a i * mode (ω i) (Real.log x / (2 * Real.pi))‖ ^ 2
+    have hg : (∫ x in Ioi (0 : ℝ), (g x : ℂ)) =
+        Complex.ofReal (∫ x in Ioi (0 : ℝ), g x) :=
+      integral_ofReal (𝕜 := ℂ) (μ := volume.restrict (Ioi (0 : ℝ))) (f := g)
+    change 0 ≤ ∫ x in Ioi (0 : ℝ), (g x : ℂ)
+    rw [hg]
+    have hnonneg : 0 ≤ ∫ x in Ioi (0 : ℝ), g x :=
+      integral_nonneg (fun x => mul_nonneg (Real.exp_pos (-x)).le (sq_nonneg _))
+    exact_mod_cast hnonneg
 
 private theorem integrable_weighted_mode (ω : ℝ) :
     Integrable (fun t => (petzWeight t : ℂ) * mode ω t) := by
   have hc : Continuous (fun t => (petzWeight t : ℂ) * mode ω t) :=
     (Complex.continuous_ofReal.comp continuous_petzWeight).mul (by unfold mode; fun_prop)
-  refine integrable_petzWeight.mono' hc.aestronglyMeasurable (Filter.Eventually.of_forall fun t => ?_)
+  refine integrable_petzWeight.mono' hc.aestronglyMeasurable
+    (Filter.Eventually.of_forall fun t => ?_)
   rw [norm_mul, norm_mode, mul_one, Complex.norm_real,
     Real.norm_of_nonneg (petzWeight_pos t).le]
 
 private theorem integral_weighted_mode (ω : ℝ) :
     (∫ t : ℝ, (petzWeight t : ℂ) * mode ω t) =
-      ((∫ t : ℝ, petzWeight t * Real.cos (ω * t)) : ℂ) := by
+      Complex.ofReal (∫ t : ℝ, petzWeight t * Real.cos (ω * t)) := by
   let f (t : ℝ) := (petzWeight t : ℂ) * mode ω t
   have hf : Integrable f := integrable_weighted_mode ω
   have hn : Integrable (fun t => f (-t)) := by
@@ -192,13 +213,17 @@ private theorem integral_weighted_mode (ω : ℝ) :
   have h := congrArg (fun g : ℝ → ℂ => ∫ t, g t) (funext havg)
   change (∫ t, f t + f (-t)) =
     ∫ t, (2 : ℂ) * (petzWeight t * Real.cos (ω * t) : ℝ) at h
-  rw [integral_add hf hn, hreflect, integral_const_mul, integral_ofReal, two_mul] at h
-  change (∫ t, f t) = _
+  let g (t : ℝ) := petzWeight t * Real.cos (ω * t)
+  have hg : (∫ t : ℝ, (g t : ℂ)) = Complex.ofReal (∫ t : ℝ, g t) :=
+    integral_ofReal (𝕜 := ℂ) (μ := volume) (f := g)
+  change (∫ t, f t + f (-t)) = ∫ t, (2 : ℂ) * (g t : ℂ) at h
+  rw [integral_add hf hn, hreflect, integral_const_mul, hg, two_mul] at h
+  change (∫ t, f t) = Complex.ofReal (∫ t : ℝ, g t)
   linear_combination (1 / 2 : ℂ) * h
 
 /-- The actual logistic Fourier Gram is the Schur square of the log-exponential
 correlation matrix, including coincident frequencies and the diagonal. -/
-theorem exact_gram_factorization (ω : ι → ℝ) :
+theorem exact_gram_factorization [Finite ι] (ω : ι → ℝ) :
     (correlation ω).PosSemidef ∧ (∀ i, correlation ω i i = 1) ∧
     ∀ i j, (∫ t : ℝ, (petzWeight t : ℂ) *
       Complex.exp ((((ω j - ω i) * t : ℝ) : ℂ) * Complex.I)) =
@@ -207,6 +232,8 @@ theorem exact_gram_factorization (ω : ι → ℝ) :
   change (∫ t : ℝ, (petzWeight t : ℂ) * mode (ω j - ω i) t) = _
   rw [integral_weighted_mode, integral_petzWeight_mul_cos, correlation, Matrix.of_apply,
     integral_logExponentialMode, gamma_norm_sq]
+
+variable [Fintype ι]
 
 private theorem trace_sq_le_card_mul_frobenius_sq (S : Matrix ι ι ℂ) :
     ‖S.trace‖ ^ 2 ≤ (Fintype.card ι : ℝ) * ‖S‖ ^ 2 := by
@@ -238,10 +265,12 @@ private theorem schur_square_evaluation (A : Matrix ι ι ℂ) (hA : A.PosSemide
   have hP (i : ι) : (P i)ᴴ = P i := by
     simp [P, Matrix.conjTranspose_vecMulVec]
   have hTr (i : ι) : (P i).trace = 1 := by
-    rw [P, Matrix.trace_vecMulVec, dotProduct_comm, hdot, hdiag]
+    change (vecMulVec (v i) (star (v i))).trace = 1
+    rw [Matrix.trace_vecMulVec, dotProduct_comm, hdot, hdiag]
   have hPair (i j : ι) : (P i * P j).trace = (‖(star B * B) i j‖ ^ 2 : ℂ) := by
     have hc : star (star (v i) ⬝ᵥ v j) = v i ⬝ᵥ star (v j) := by
-      simpa only [star_star] using (star_dotProduct (v i) (v j)).symm
+      rw [dotProduct_comm (v i) (star (v j))]
+      exact (star_dotProduct (v j) (v i)).symm
     change (vecMulVec (v i) (star (v i)) * vecMulVec (v j) (star (v j))).trace = _
     rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul,
       ← hc, hdot, smul_eq_mul, mul_comm, Complex.star_def, Complex.conj_mul']
@@ -255,12 +284,17 @@ private theorem schur_square_evaluation (A : Matrix ι ι ℂ) (hA : A.PosSemide
     congr 1
     simp only [S, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, hP,
       Finset.sum_mul_sum, Matrix.trace_sum, Matrix.smul_mul, Matrix.mul_smul,
-      Matrix.trace_smul, hPair, smul_eq_mul, mul_assoc]
+      Matrix.trace_smul, hPair, smul_eq_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
   simpa only [htrace, hnorm] using trace_sq_le_card_mul_frobenius_sq S
 
 private theorem weighted_energy_eq_gram (ω : ι → ℝ) (a : ι → ℂ) :
     Integrable (fun t : ℝ => petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) ∧
-    ((∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) : ℂ) =
+    Complex.ofReal (∫ t : ℝ, petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) =
       ∑ i, ∑ j, star (a i) * a j * (‖correlation ω i j‖ ^ 2 : ℂ) := by
   let f (i j : ι) (t : ℝ) :=
     (star (a i) * a j) * ((petzWeight t : ℂ) * mode (ω j - ω i) t)
@@ -273,12 +307,15 @@ private theorem weighted_energy_eq_gram (ω : ι → ℝ) (a : ι → ℂ) :
   have hpoint (t : ℝ) : ((petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2 : ℝ) : ℂ) =
       ∑ i, ∑ j, f i j t := by
     rw [hsum, Complex.ofReal_mul, ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self]
-    simp only [← Complex.star_def, star_sum, Finset.sum_mul_sum, Finset.mul_sum]
+    simp only [← Complex.star_def, star_sum]
+    rw [Finset.sum_mul_sum]
+    simp only [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i _
     apply Finset.sum_congr rfl
     intro j _
-    rw [star_mul, f, ← star_mode_mul]
+    dsimp only [f]
+    rw [star_mul, ← star_mode_mul]
     ring
   have hInt : Integrable (fun t : ℝ =>
       ((petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2 : ℝ) : ℂ)) := by
@@ -286,16 +323,20 @@ private theorem weighted_energy_eq_gram (ω : ι → ℝ) (a : ι → ℂ) :
       = _ from funext hpoint]
     exact integrable_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))
   refine ⟨by simpa only [RCLike.re_eq_complex_re, Complex.ofReal_re] using hInt.re, ?_⟩
-  rw [← integral_ofReal, show (fun t : ℝ =>
-    ((petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2 : ℝ) : ℂ)) = _ from funext hpoint,
+  let g (t : ℝ) := petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2
+  have hg : Complex.ofReal (∫ t : ℝ, g t) = ∫ t : ℝ, (g t : ℂ) :=
+    (integral_ofReal (𝕜 := ℂ) (μ := volume) (f := g)).symm
+  change Complex.ofReal (∫ t : ℝ, g t) = _
+  rw [hg, show (fun t : ℝ => (g t : ℂ)) = _ from funext hpoint,
     integral_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hi i j))]
   apply Finset.sum_congr rfl
   intro i _
   rw [integral_finsetSum _ (fun j _ => hi i j)]
   apply Finset.sum_congr rfl
   intro j _
-  rw [f, integral_const_mul]
-  exact congrArg (fun z : ℂ => star (a i) * a j * z) (exact_gram_factorization ω).2.2 i j
+  dsimp only [f]
+  rw [integral_const_mul]
+  exact congrArg (fun z : ℂ => star (a i) * a j * z) ((exact_gram_factorization ω).2.2 i j)
 
 private theorem weighted_evaluation_card (ω : ι → ℝ) (a : ι → ℂ) :
     Integrable (fun t : ℝ => petzWeight t * ‖exponentialSum ω a (t : ℂ)‖ ^ 2) ∧
@@ -345,7 +386,7 @@ private theorem tendsto_integral_weighted_mode :
   have hπ : 2 * Real.pi ≠ 0 := by positivity
   have hscale : Tendsto (fun ω : ℝ => -(1 / (2 * Real.pi)) * ω)
       (cocompact ℝ) (cocompact ℝ) := by
-    have hneg : -(1 / (2 * Real.pi)) < 0 := by positivity
+    have hneg : -(1 / (2 * Real.pi)) < 0 := neg_lt_zero.mpr (by positivity)
     rw [cocompact_eq_atBot_atTop]
     exact tendsto_sup.mpr
       ⟨((tendsto_const_mul_atTop_of_neg hneg).2 tendsto_id).mono_right le_sup_right,
@@ -356,8 +397,7 @@ private theorem tendsto_integral_weighted_mode :
   exact Eventually.of_forall fun t => by
     have harg : 2 * Real.pi * -(t * (-(1 / (2 * Real.pi)) * ω)) = ω * t := by
       field_simp
-      <;> ring
-    simp only [Function.comp_apply, Circle.smul_def, Real.fourierChar_apply, mode,
+    simp only [Circle.smul_def, Real.fourierChar_apply, mode,
       smul_eq_mul, harg]
     exact mul_comm _ _
 
@@ -381,7 +421,7 @@ theorem card_le_of_uniform_bound {m : ℕ} (hm : 0 < m) (K : ℝ)
         (𝓝 (if i = j then 1 else 0)) := by
     by_cases hij : i = j
     · subst j
-      simpa only [if_pos rfl, correlation_diag, norm_one, one_pow, Complex.ofReal_one] using
+      simpa only [ite_true, correlation_diag, norm_one, one_pow, Complex.ofReal_one] using
         (tendsto_const_nhds : Tendsto (fun _ : ℝ => (1 : ℂ)) atTop (𝓝 1))
     · have hn : (j.val : ℝ) - i.val ≠ 0 := by
         intro he
@@ -391,7 +431,7 @@ theorem card_le_of_uniform_bound {m : ℕ} (hm : 0 < m) (K : ℝ)
         rcases lt_or_gt_of_ne hn with hneg | hpos
         · exact ((tendsto_const_mul_atBot_of_neg hneg).2 tendsto_id).mono_right atBot_le_cocompact
         · exact ((tendsto_const_mul_atTop_of_pos hpos).2 tendsto_id).mono_right atTop_le_cocompact
-      simp only [if_neg hij, hPair]
+      simp only [ite_eq_right hij, hPair]
       exact tendsto_integral_weighted_mode.comp hscale
   have hSum := tendsto_finsetSum Finset.univ (fun i _ =>
     tendsto_finsetSum Finset.univ (fun j _ => hLimit i j))
@@ -412,7 +452,7 @@ theorem card_le_of_uniform_bound {m : ℕ} (hm : 0 < m) (K : ℝ)
     have hEval := hK (ω R) hinj (fun _ => 1)
     simpa [E, exponentialSum, Complex.norm_natCast] using hEval
   have hlim : (m : ℝ) ^ 2 ≤ K * (m : ℝ) :=
-    le_of_tendsto (tendsto_const_nhds.mul hEnergy) hev
+    ge_of_tendsto (tendsto_const_nhds.mul hEnergy) hev
   exact le_of_mul_le_mul_right (by simpa [pow_two] using hlim) (by exact_mod_cast hm)
 
 end Gram
