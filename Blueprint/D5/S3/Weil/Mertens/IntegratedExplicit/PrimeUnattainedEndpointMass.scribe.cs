@@ -21,9 +21,11 @@ internal sealed class PrimeUnattainedEndpointMassDocument : IScribeDocumentDefin
                     + "in Zhao’s equation (14), where θ sums log p once per prime p≤u. "
                     + "Write N(A,B) for the integral of max(−Qθ(x),0)/√x from A to B.")),
                 Paragraph(Text("The real part of each actual zero is bounded above by Θ. The "
-                    + "normalized complete Chebyshev tail is asymptotic to the negative real "
-                    + "part of the maximal-line series. Strict unattainment makes every term "
-                    + "of that series zero. The prime-power correction vanishes under the same "
+                    + "normalized complete Chebyshev tail differs from the negative real part "
+                    + "of the maximal-line series by a quantity tending to zero. Absolute "
+                    + "summability controls the lower terms even when their real parts approach Θ. "
+                    + "Strict unattainment makes every maximal-line term zero. The prime-power "
+                    + "correction vanishes under the same "
                     + "normalization since Θ>1/2. Substituting t=log x yields "
                     + "x^(1−Θ) Qθ(x)→0 for real x→+∞. This includes Θ=1.")),
                 Paragraph(Text("Set p=Θ−1/2>0. For any ε>0, choose X≥2 such that the mass "
