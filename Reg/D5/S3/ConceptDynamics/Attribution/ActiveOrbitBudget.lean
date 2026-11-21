@@ -11,6 +11,7 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Attribution.ActiveOrbitBudget
 open _root_.D5.S3.ConceptDynamics.Attribution.UniformTableCalibration (Orbit orbit orbitCount)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees (countedDegrees)
 
 universe u v w
 
@@ -39,19 +40,27 @@ abbrev arena : Arena where
   signature := signature.{v,w}
   Law R :=
     ∀ {G : Type u} {T : Type v} {I : Type w}
-      [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)] [Fintype I]
+      [Group G] [Fintype T] [MulAction G T] [Fintype I]
       (E : I → Finset T) (q : I → ℚ),
       (∃ i, E i = univ ∧ q i = 1) →
+      letI : Fintype (Orbit G T) := Fintype.ofFinite _
       (∃ x : Orbit G T → ℝ, (∀ o, 0 ≤ x o) ∧
         ∀ i, ∑ o, (orbitCount (E i) o : ℝ) * x o = (q i : ℝ)) →
       let m := (univ : Finset I).lcm fun i => (q i).den
       ∃ z : I → ℤ, (∀ i, (z i : ℚ) = m * q i) ∧
         let M := restrictedOrbitMap (G := G) E z
         let h := addOrderOf (QuotientAddGroup.mk z : (I → ℤ) ⧸ M.range)
+        let J := {o // Active (fun i o => (orbitCount (G := G) (E i) o : ℤ)) z o}
         0 < h ∧
+          (∀ N : ℕ, 0 < N → (EventBudget (G := G) E q N ↔
+            ∃ k : ℕ, N = m * k ∧ k ∈ countedDegrees M z)) ∧
           (∀ N : ℕ, 0 < N → EventBudget (G := G) E q N → m * h ∣ N) ∧
-          ∃ threshold : ℕ, ∀ t : ℕ, 0 < t → threshold ≤ t →
-            EventBudget (G := G) (R.readout () ⟨T, I⟩ E) q (m * (h * t))
+          ∃ (B : ℕ) (p : J → ℤ), 0 < B ∧ (∀ j, 0 < p j) ∧ M p = B • z ∧
+            ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, M u = h • z) ∧
+              ∀ u : J → ℤ, M u = h • z →
+                letI : Fintype J := Fintype.ofFinite J
+                ∀ t : ℕ, 0 < t → (b - 1) * ((1 + ∑ j, (u j).natAbs) * b) ≤ t →
+                  EventBudget (G := G) (R.readout () ⟨T, I⟩ E) q (m * (h * t))
 
 @[instance_reducible] private def trivialAction (G A : Type*) [Monoid G] : MulAction G A where
   smul _ a := a
@@ -82,11 +91,14 @@ private theorem empty_events_fail : ¬ arena.{u,v,w}.Law emptyEvents := by
       simp only [mem_filter, mem_univ, true_and, mem_singleton]
       exact iff_of_true (Subsingleton.elim _ _) (Subsingleton.elim _ _)
     simp only [one, Nat.cast_one, mul_one]
-  obtain ⟨z, _, _, _, threshold, tail⟩ :=
+  obtain ⟨z, _, _, _, _, B, p, _, _, _, b, _, ⟨u, hu⟩, tail⟩ :=
     law (G := G) (T := T) (I := I) (fun _ => univ) (fun _ => 1)
       ⟨PUnit.unit, rfl, rfl⟩ (by simpa only [Rat.cast_one] using feasible)
+  let _ : Fintype {o : Orbit G T // Active (fun _ : I => fun o => (orbitCount (univ : Finset T) o : ℤ)) z o} :=
+    Fintype.ofFinite _
+  let threshold := (b - 1) * ((1 + ∑ j, (u j).natAbs) * b)
   obtain ⟨S, _, _, f, _, _, _, counts⟩ :=
-    tail (threshold + 1) (Nat.zero_lt_succ _) (Nat.le_succ _)
+    tail u hu (threshold + 1) (Nat.zero_lt_succ _) (Nat.le_succ _)
   have impossible := counts PUnit.unit
   change ((∑ s : S, if f s ∈ (∅ : Finset T) then (1 : ℕ) else 0) : ℚ) / _ = 1
     at impossible
@@ -136,10 +148,11 @@ def budgetRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[1, 2]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-          "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "arg",
-          "arg", "arg", "body", "body", "body", "body", "fn", "fn", "arg"]
-        stateBinder := 8
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "body", "body", "arg", "body", "arg", "body", "body", "body", "arg", "arg",
+          "arg", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "body",
+          "arg", "arg", "body", "body", "body", "body", "body", "fn", "fn", "arg"]
+        stateBinder := 7
         functionOperand := false
         stateOperand := none
         booleanPredicate := false }] }

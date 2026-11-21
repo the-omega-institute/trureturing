@@ -10,13 +10,13 @@ internal sealed class ActiveOrbitBudgetDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/Attribution/ActiveOrbitBudget.eventual_uniform_event_budgets";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The active orbit columns determine the eventual period of finite equivariant realizations.",
+        "The active orbit columns classify exact finite equivariant budgets and give a sufficient cutoff.",
         H("Exact rational event budgets"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("eventual-uniform-event-budgets"),
                 DeclarationHandle.Create(Result),
-                H("The eventual period of uniform event budgets"),
+                H("Exact uniform event budgets and their eventual period"),
                 StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -34,6 +34,13 @@ internal sealed class ActiveOrbitBudgetDocument : IScribeDocumentDefinition
                         + "by a finite seed set of that size with a group action and an equivariant "
                         + "map to T. The fraction of seeds mapping to each event is its prescribed "
                         + "mass. Each subgroup fixes a seed exactly when it fixes that seed's image.")),
+                    Paragraph(Text("For each positive budget N, the equation uses a natural degree k "
+                        + "and a nonnegative integer vector n on the active orbit set J. "
+                        + "Every realized budget is divisible by m h.")),
+                    Paragraph(Text("A positive degree B admits an integer vector p that is strictly "
+                        + "positive on J. Write B = h b. There exists a signed integer vector u "
+                        + "with M u = h w. For each such u the displayed cutoff applies to every "
+                        + "positive normalized degree t.")),
                     Paragraph(Text("Average a feasible vector with witnesses for all active "
                         + "coordinates. Scaling that average and subtracting one at each active "
                         + "coordinate leaves a feasible system with integral right-hand side. "
@@ -50,17 +57,36 @@ internal sealed class ActiveOrbitBudgetDocument : IScribeDocumentDefinition
         Formula q = F.Id("q");
         Formula h = F.Id("h");
         Formula n = F.Id("N");
+        Formula k = F.Id("k");
+        Formula v = F.Id("n");
+        Formula b = F.Id("b");
+        Formula degree = F.Id("B");
+        Formula p = F.Id("p");
+        Formula u = F.Id("u");
         Formula t = F.Id("t");
-        Formula c = F.Id("C");
         Formula d = F.Id("D");
+        Formula j = F.Id("j");
+        Formula map = F.Id("M");
+        Formula signed = Seq(map, u, Sp, Eq, Sp, h, w);
 
-        return Disp(Seq(
-            Exists, Sp, w, Comma, Sp, w, Sp, Eq, Sp, m, q, Sp, Land, Sp,
-            D(0), Sp, Lt, Sp, h, Sp, Land, Sp,
-            Open, Forall, Sp, n, Sp, InMacro, Sp, d, Comma, Sp,
-            m, h, Sp, Mid, Sp, n, Close, Sp, Land, Sp,
-            Open, Exists, Sp, c, Comma, Sp, Forall, Sp, t, Comma, Sp,
-            D(0), Sp, Lt, Sp, t, Sp, Land, Sp, c, Sp, Leq, Sp, t, Sp, Rightarrow, Sp,
-            m, h, t, Sp, InMacro, Sp, d, Close));
+        return Disp(new Formula.Aligned([
+            Seq(Exists, Sp, w, Comma, Sp, w, Sp, Eq, Sp, m, q, Sp, Land, Sp,
+                D(0), Sp, Lt, Sp, h, Sp, Land),
+            Seq(Open, Forall, Sp, n, Sp, Gt, Sp, D(0), Comma, Sp, n, Sp, InMacro, Sp, d,
+                Sp, Iff, Sp, Exists, Sp, k, Comma, Sp, v, Comma, Sp, n, Sp, Eq, Sp, m, k,
+                Sp, Land, Sp, v, Sp, Geq, Sp, D(0), Sp, Land, Sp, map, v, Sp, Eq, Sp, k, w,
+                Close, Sp, Land),
+            Seq(Open, Forall, Sp, n, Sp, InMacro, Sp, d, Comma, Sp, m, h, Sp, Mid, Sp, n,
+                Close, Sp, Land),
+            Seq(Open, Exists, Sp, degree, Comma, Sp, p, Comma, Sp, b, Comma, Sp,
+                D(0), Sp, Lt, Sp, degree, Sp, Land, Sp, D(0), Sp, Lt, Sp, p, Sp, Land, Sp,
+                map, p, Sp, Eq, Sp, degree, w, Sp, Land, Sp, degree, Sp, Eq, Sp, h, b, Sp, Land),
+            Seq(Open, Exists, Sp, u, Comma, Sp, signed, Close, Sp, Land, Sp,
+                Open, Forall, Sp, u, Comma, Sp, signed, Sp, Rightarrow, Sp,
+                Forall, Sp, t, Sp, Gt, Sp, D(0), Comma, Sp),
+            Seq(Open, b, Minus, D(1), Close, b, Open, D(1), Sp, Plus, Sp,
+                new Formula.Subscript(Sum, j), Sp, Vert, Sp, new Formula.Subscript(u, j), Vert, Close,
+                Sp, Leq, Sp, t, Sp, Rightarrow, Sp, m, h, t, Sp, InMacro, Sp, d, Close, Close)
+        ]));
     }
 }

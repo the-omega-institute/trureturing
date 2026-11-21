@@ -306,34 +306,6 @@ private theorem positive_restricted_orbit_fiber {G : Type u} {T : Type v} {I : T
   exact ⟨B, p, pos, nonzero, funext counted⟩
 
 
-open Classical in
-private theorem eventual_budget_from_active_fiber {G : Type u} {T : Type v} {I : Type w}
-    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)] [Fintype I]
-    (E : I → Finset T) (q : I → ℚ) (m : ℕ) (hm : 0 < m) (w : I → ℤ)
-    (representation : ∀ i, (w i : ℚ) = m * q i)
-    (normalization : ∃ i, E i = univ ∧ q i = 1)
-    (feasible : ∃ x : Orbit G T → ℝ, (∀ o, 0 ≤ x o) ∧
-      ∀ i, ∑ o, (orbitCount (E i) o : ℝ) * x o = w i) :
-    let M := restrictedOrbitMap (G := G) E w
-    let h := addOrderOf (QuotientAddGroup.mk w : (I → ℤ) ⧸ M.range)
-    0 < h ∧ ∃ threshold : ℕ, ∀ t : ℕ, 0 < t → threshold ≤ t →
-      ∃ (S : Type v) (_ : Fintype S) (_ : MulAction G S) (f : S → T),
-        Fintype.card S = m * (h * t) ∧ (∀ (g : G) s, f (g • s) = g • f s) ∧
-        (∀ (H : Subgroup G) s, (∀ h : H, (h : G) • s = s) ↔
-          ∀ h : H, (h : G) • f s = f s) ∧
-        ∀ i, ((∑ s : S, if f s ∈ E i then (1 : ℕ) else 0) : ℚ) / (m * (h * t) : ℕ) = q i := by
-  let M := restrictedOrbitMap (G := G) E w
-  let h := addOrderOf (QuotientAddGroup.mk w : (I → ℤ) ⧸ M.range)
-  obtain ⟨B, p, hB, hp, eq⟩ := positive_restricted_orbit_fiber E w
-    (normalization.imp fun _ hi => hi.1) feasible
-  obtain ⟨hh, _, b, _, ⟨u, hU⟩, tail⟩ := eventual_counts M w p B hB hp eq
-  obtain ⟨_, _, _, eventual⟩ := tail u hU
-  let _ : Fintype {o // Active (fun i o => (orbitCount (G := G) (E i) o : ℤ)) w o} := Fintype.ofFinite _
-  refine ⟨hh, (b - 1) * ((1 + ∑ j, (u j).natAbs) * b), fun t ht enough => ?_⟩
-  exact (active_rational_event_budget_iff E q m w representation normalization
-    (m * (h * t)) (h * t) (Nat.mul_pos hm (Nat.mul_pos hh ht)) rfl).mp (eventual t enough)
-
-
 private theorem joint_denominator {I : Type*} [Fintype I] (q : I → ℚ) :
     let m := (univ : Finset I).lcm fun i => (q i).den
     0 < m ∧ ∀ N : ℕ, 0 < N →
@@ -375,21 +347,31 @@ def EventBudget {G : Type u} {T : Type v} {I : Type w}
     ∀ i, ((∑ s : S, if f s ∈ E i then (1 : ℕ) else 0) : ℚ) / N = q i
 
 open Classical in
-/-- A feasible rational event law admits every sufficiently large multiple of its active period. -/
+/-- The active integer fiber classifies positive budgets and gives an explicit eventual cutoff. -/
 theorem eventual_uniform_event_budgets {G : Type u} {T : Type v} {I : Type w}
-    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)] [Fintype I]
+    [Group G] [Fintype T] [MulAction G T] [Fintype I]
     (E : I → Finset T) (q : I → ℚ)
-    (normalization : ∃ i, E i = univ ∧ q i = 1)
-    (feasible : ∃ x : Orbit G T → ℝ, (∀ o, 0 ≤ x o) ∧
-      ∀ i, ∑ o, (orbitCount (E i) o : ℝ) * x o = (q i : ℝ)) :
+    (normalization : ∃ i, E i = univ ∧ q i = 1) :
+    letI : Fintype (Orbit G T) := Fintype.ofFinite _
+    (∃ x : Orbit G T → ℝ, (∀ o, 0 ≤ x o) ∧
+      ∀ i, ∑ o, (orbitCount (E i) o : ℝ) * x o = (q i : ℝ)) →
     let m := (univ : Finset I).lcm fun i => (q i).den
     ∃ w : I → ℤ, (∀ i, (w i : ℚ) = m * q i) ∧
       let M := restrictedOrbitMap (G := G) E w
       let h := addOrderOf (QuotientAddGroup.mk w : (I → ℤ) ⧸ M.range)
+      let J := {o // Active (fun i o => (orbitCount (G := G) (E i) o : ℤ)) w o}
       0 < h ∧
+        (∀ N : ℕ, 0 < N → (EventBudget (G := G) E q N ↔
+          ∃ k : ℕ, N = m * k ∧ k ∈ countedDegrees M w)) ∧
         (∀ N : ℕ, 0 < N → EventBudget (G := G) E q N → m * h ∣ N) ∧
-        ∃ threshold : ℕ, ∀ t : ℕ, 0 < t → threshold ≤ t →
-          EventBudget (G := G) E q (m * (h * t)) := by
+        ∃ (B : ℕ) (p : J → ℤ), 0 < B ∧ (∀ j, 0 < p j) ∧ M p = B • w ∧
+          ∃ b : ℕ, B = h * b ∧ (∃ u : J → ℤ, M u = h • w) ∧
+            ∀ u : J → ℤ, M u = h • w →
+              letI : Fintype J := Fintype.ofFinite J
+              ∀ t : ℕ, 0 < t → (b - 1) * ((1 + ∑ j, (u j).natAbs) * b) ≤ t →
+                EventBudget (G := G) E q (m * (h * t)) := by
+  intro feasible
+  letI : Fintype (Orbit G T) := Fintype.ofFinite _
   let m := (univ : Finset I).lcm fun i => (q i).den
   obtain ⟨hm, minimal⟩ := joint_denominator q
   have representationRaw := (minimal m hm).mp (dvd_refl m)
@@ -407,30 +389,42 @@ theorem eventual_uniform_event_budgets {G : Type u} {T : Type v} {I : Type w}
     simp_rw [lift]
     rw [← Finset.mul_sum, hx_eq]
     exact_mod_cast (representation i).symm
-  obtain ⟨pos, tail⟩ := eventual_budget_from_active_fiber E q m hm w representation normalization scaledFeasible
   let M := restrictedOrbitMap (G := G) E w
   let h := addOrderOf (QuotientAddGroup.mk w : (I → ℤ) ⧸ M.range)
-  refine ⟨w, representation, pos, ?_, tail⟩
-  intro N N_pos calibration
-  have divides : m ∣ N := by
-    obtain ⟨S, _, _, f, _, _, _, counts⟩ := calibration
-    apply (minimal N N_pos).mpr
-    intro i
-    let n : ℕ := ∑ s : S, if f s ∈ E i then (1 : ℕ) else 0
-    have nQ : ((n : ℤ) : ℚ) = ∑ s : S, if f s ∈ E i then (1 : ℚ) else 0 := by
-      unfold n
-      rw [Int.cast_natCast, Nat.cast_sum]
-      apply Finset.sum_congr rfl
-      intro s _
-      by_cases mem : f s ∈ E i <;> simp [mem]
-    exact ⟨(n : ℤ), (counts i).symm.trans (congrArg (fun value : ℚ => value / N) nQ.symm)⟩
-  obtain ⟨k, hk⟩ := divides
-  have counted : k ∈ countedDegrees M w :=
-    (active_rational_event_budget_iff E q m w representation normalization N k N_pos hk).mpr calibration
   obtain ⟨B, p, hB, hp, eq⟩ := positive_restricted_orbit_fiber E w
     (normalization.imp fun _ hi => hi.1) scaledFeasible
-  obtain ⟨_, periodic, _⟩ := eventual_counts M w p B hB hp eq
-  obtain ⟨t, ht⟩ := periodic k counted
-  exact ⟨t, by rw [hk, ht, mul_assoc]⟩
+  obtain ⟨hh, periodic, b, hb, signed, tail⟩ := eventual_counts M w p B hB hp eq
+  have exactBudget (N : ℕ) (positive : 0 < N) :
+      EventBudget (G := G) E q N ↔ ∃ k : ℕ, N = m * k ∧ k ∈ countedDegrees M w := by
+    constructor
+    · intro calibration
+      have divisible : m ∣ N := by
+        obtain ⟨S, _, _, f, _, _, _, counts⟩ := calibration
+        apply (minimal N positive).mpr
+        intro i
+        let n : ℕ := ∑ s : S, if f s ∈ E i then (1 : ℕ) else 0
+        have nQ : ((n : ℤ) : ℚ) = ∑ s : S, if f s ∈ E i then (1 : ℚ) else 0 := by
+          unfold n
+          rw [Int.cast_natCast, Nat.cast_sum]
+          apply Finset.sum_congr rfl
+          intro s _
+          by_cases mem : f s ∈ E i <;> simp [mem]
+        exact ⟨(n : ℤ), (counts i).symm.trans
+          (congrArg (fun value : ℚ => value / N) nQ.symm)⟩
+      obtain ⟨k, hk⟩ := divisible
+      exact ⟨k, hk, (active_rational_event_budget_iff E q m w representation normalization
+        N k positive hk).mpr calibration⟩
+    · rintro ⟨k, hk, counted⟩
+      exact (active_rational_event_budget_iff E q m w representation normalization
+        N k positive hk).mp counted
+  refine ⟨w, representation, hh, exactBudget, ?_, B, p, hB, hp, eq, b, hb, signed, ?_⟩
+  · intro N positive calibration
+    obtain ⟨k, hk, counted⟩ := (exactBudget N positive).mp calibration
+    obtain ⟨t, ht⟩ := periodic k counted
+    exact ⟨t, by rw [hk, ht, mul_assoc]⟩
+  · intro u hu t ht enough
+    obtain ⟨_, _, _, eventual⟩ := tail u hu
+    exact (exactBudget (m * (h * t)) (Nat.mul_pos hm (Nat.mul_pos hh ht))).mpr
+      ⟨h * t, rfl, eventual t enough⟩
 
 end D5.S3.ConceptDynamics.Attribution.ActiveOrbitBudget
