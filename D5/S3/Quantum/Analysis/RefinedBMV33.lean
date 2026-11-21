@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The four-dimensional refined BMV product bound follows from positive closed-walk Schur forms. -/
+   digest: The finite-dimensional refined BMV product bound follows from positive closed-walk Schur forms. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVKernel
 import D5.S3.Quantum.Analysis.RefinedBMVWords
@@ -88,7 +88,7 @@ private theorem traceGap_diagonal (a : n → ℝ) (B : Matrix n n ℂ) :
   ring
 
 private def centeredWeight (a : n → ℝ) (i j k : n) : ℂ :=
-  ((a j - a i) * (a k - a i) * kernel (a i) (a j) (a k) : ℝ)
+  ((a j - a i) * (a k - a i) * symmetricKernel (a i) (a j) (a k) : ℝ)
 
 private theorem walk_cubicDefect (a : n → ℝ) (B : Matrix n n ℂ) :
     walk B (fun i j k ↦ (cubicDefect (a i) (a j) (a k) : ℂ)) =
@@ -99,7 +99,7 @@ private theorem walk_cubicDefect (a : n → ℝ) (B : Matrix n n ℂ) :
     funext i j k
     simp only [Pi.add_apply, centeredWeight]
     push_cast
-    rw [cubicDefect_eq_cyclic]
+    rw [cubicDefect_eq_cyclic_symmetric]
     push_cast
     ring
   have hrot := walk_rotate B (centeredWeight a)
@@ -107,96 +107,77 @@ private theorem walk_cubicDefect (a : n → ℝ) (B : Matrix n n ℂ) :
   rw [hw, map_add, map_add, hrot₂, hrot]
   ring
 
-private theorem centered_form (a : Fin 4 → ℝ) (B : Matrix (Fin 4) (Fin 4) ℂ)
-    (ha : ∀ i, 0 ≤ a i) (hz : ∃ i, a i = 0) (hB : B.PosSemidef) (i : Fin 4) :
+private theorem centered_form (a : n → ℝ) (B : Matrix n n ℂ)
+    (ha : ∀ i, 0 ≤ a i) (hB : B.PosSemidef) (i : n) :
     0 ≤ ∑ j, ∑ k, B i j * B j k * B k i * centeredWeight a i j k := by
-  let x : Fin 3 → ℝ := fun j ↦ a (i.succAbove j)
-  let G : Matrix (Fin 3) (Fin 3) ℝ := Matrix.of fun j k ↦ kernel (a i) (x j) (x k)
-  have hG : G.PosSemidef := by
-    rcases (ha i).eq_or_lt with he | hp
-    · simpa [G, ← he] using kernel_zero_psd x (fun j ↦ ha _)
-    · obtain ⟨k, hk⟩ := hz
-      have hki : k ≠ i := by rintro rfl; exact hp.ne' hk
-      obtain ⟨j, hj⟩ := Fin.exists_succAbove_eq hki
-      exact kernel_pos_psd (a i) hp x (fun j ↦ ha _) ⟨j, by simpa [x, hj] using hk⟩
+  let G : Matrix n n ℝ := Matrix.of fun j k ↦ symmetricKernel (a i) (a j) (a k)
+  have hG : G.PosSemidef := symmetricKernel_psd (a i) (ha i) a ha
   have hc := D5.S3.Weil.Probability.FiniteGaussianSchoenberg.ofReal_posSemidef G hG
-  let v : Fin 3 → ℂ := fun j ↦ ((x j - a i : ℝ) : ℂ) * B (i.succAbove j) i
-  have hp : (B.submatrix i.succAbove i.succAbove ⊙ G.map Complex.ofReal).PosSemidef :=
-    (hB.submatrix i.succAbove).hadamard hc
-  let term (j k : Fin 4) := B i j * B j k * B k i * centeredWeight a i j k
-  have hj (k : Fin 4) : term i k = 0 := by simp [term, centeredWeight]
-  have hk (j : Fin 4) : term j i = 0 := by simp [term, centeredWeight]
-  change 0 ≤ ∑ j, ∑ k, term j k
-  rw [Fin.sum_univ_succAbove (fun j ↦ ∑ k, term j k) i]
-  simp only [hj, Finset.sum_const_zero, zero_add]
-  simp_rw [Fin.sum_univ_succAbove (term (i.succAbove _)) i, hk, zero_add]
+  let v : n → ℂ := fun j ↦ ((a j - a i : ℝ) : ℂ) * B j i
+  have hp : (B ⊙ G.map Complex.ofReal).PosSemidef := hB.hadamard hc
   convert hp.dotProduct_mulVec_nonneg v using 1
   simp only [dotProduct, mulVec, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ ↦ Finset.sum_congr rfl fun k _ ↦ ?_
-  have hstar : star (B (i.succAbove j) i) = B i (i.succAbove j) :=
-    congrFun (congrFun hB.isHermitian i) (i.succAbove j)
+  have hstar : star (B j i) = B i j := congrFun (congrFun hB.isHermitian i) j
   have hreal (r : ℝ) : star (r : ℂ) = (r : ℂ) := Complex.conj_ofReal r
-  simp only [term, centeredWeight, Pi.star_apply, v, star_mul, hreal,
-    hstar, hadamard_apply, submatrix_apply,
-    Matrix.map_apply, G, Matrix.of_apply, Complex.ofReal_mul, x]
+  simp only [centeredWeight, Pi.star_apply, v, star_mul, hreal,
+    hstar, hadamard_apply, Matrix.map_apply, G, Matrix.of_apply, Complex.ofReal_mul]
   ring
 
-/-- The exact cubic gap at a diagonal matrix with smallest eigenvalue zero. -/
-theorem traceGap_diagonal_nonneg (a : Fin 4 → ℝ) (B : Matrix (Fin 4) (Fin 4) ℂ)
-    (ha : ∀ i, 0 ≤ a i) (hz : ∃ i, a i = 0) (hB : B.PosSemidef) :
+private theorem traceGap_diagonal_nonneg_all (a : n → ℝ) (B : Matrix n n ℂ)
+    (ha : ∀ i, 0 ≤ a i) (hB : B.PosSemidef) :
     0 ≤ (traceGap (diagonal fun i ↦ (a i : ℂ)) B).re := by
   have he := traceGap_diagonal a B
   rw [walk_cubicDefect] at he
   have h := congrArg Complex.re he
   norm_num [Complex.mul_re] at h
-  have hn : 0 ≤ walk B (centeredWeight a) := by
-    exact Finset.sum_nonneg fun i _ ↦ centered_form a B ha hz hB i
+  have hn : 0 ≤ walk B (centeredWeight a) :=
+    Finset.sum_nonneg fun i _ ↦ centered_form a B ha hB i
   have hn' := (Complex.nonneg_iff.mp hn).1
   linarith
 
-/-- The refined BMV product bound for three copies of each factor in dimension four. -/
-theorem E33 (A B : Matrix (Fin 4) (Fin 4) ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    (trace ((A * B) ^ 3)).re ≤ (wordMean A B).re := by
+/-- The exact cubic gap at a diagonal matrix with smallest eigenvalue zero. -/
+theorem traceGap_diagonal_nonneg (a : Fin 4 → ℝ) (B : Matrix (Fin 4) (Fin 4) ℂ)
+    (ha : ∀ i, 0 ≤ a i) (hz : ∃ i, a i = 0) (hB : B.PosSemidef) :
+    0 ≤ (traceGap (diagonal fun i ↦ (a i : ℂ)) B).re := by
+  clear hz
+  exact traceGap_diagonal_nonneg_all a B ha hB
+
+/-- The mean trace of the twenty words with three copies of each PSD factor
+is at least the alternating trace in every finite dimension. -/
+theorem E33_all (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace ((A * B) ^ 3) ≤ wordMean A B := by
   let U := hA.isHermitian.eigenvectorUnitary
   let a := hA.isHermitian.eigenvalues
   let B' := Unitary.conjStarAlgAut ℂ _ (star U) B
   have hB' : B'.PosSemidef := by
     change (Unitary.conjStarAlgAut ℂ _ (star U) B).PosSemidef
     rw [Unitary.conjStarAlgAut_star_apply]
-    exact hB.conjTranspose_mul_mul_same (U : Matrix (Fin 4) (Fin 4) ℂ)
-  obtain ⟨i, -, hi⟩ := Finset.exists_min_image Finset.univ a Finset.univ_nonempty
-  let t := a i
-  have ht : 0 ≤ t := hA.eigenvalues_nonneg i
-  let b := fun j ↦ a j - t
-  have hb (j : Fin 4) : 0 ≤ b j := sub_nonneg.mpr (hi j (Finset.mem_univ j))
-  have hb₀ : ∃ j, b j = 0 := ⟨i, sub_self _⟩
-  let D := diagonal fun j ↦ (b j : ℂ)
-  have hD : D.IsHermitian := (posSemidef_diagonal_iff.mpr
-    (fun j ↦ Complex.zero_le_real.mpr (hb j))).isHermitian
-  have hdiag : Unitary.conjStarAlgAut ℂ _ (star U) A = D + (t : ℂ) • 1 := by
-    rw [hA.isHermitian.conjStarAlgAut_star_eigenvectorUnitary]
-    ext j k
-    by_cases hjk : j = k
-    · subst k
-      simp [D, b, a, Matrix.one_apply, smul_eq_mul]
-    · simp [D, Matrix.diagonal_apply_ne _ hjk, Matrix.one_apply, hjk]
-  have hg := (traceGap_diagonal_nonneg b B' hb hb₀ hB').trans (traceGap_shift D B' hD hB' t ht)
-  rw [← hdiag] at hg
+    exact hB.conjTranspose_mul_mul_same (U : Matrix n n ℂ)
+  have hg := traceGap_diagonal_nonneg_all a B' hA.eigenvalues_nonneg hB'
+  change 0 ≤ (traceGap (diagonal (RCLike.ofReal ∘ hA.isHermitian.eigenvalues)) B').re at hg
+  rw [← hA.isHermitian.conjStarAlgAut_star_eigenvectorUnitary] at hg
   change 0 ≤ (traceGap (Unitary.conjStarAlgAut ℂ _ (star U) A)
     (Unitary.conjStarAlgAut ℂ _ (star U) B)).re at hg
   rw [traceGap_conj, traceGap_eq_mean] at hg
   norm_num [Complex.mul_re, Complex.div_re, Complex.sub_re] at hg
-  linarith
-
-theorem E33_complex (A B : Matrix (Fin 4) (Fin 4) ℂ)
-    (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    trace ((A * B) ^ 3) ≤ wordMean A B := by
-  refine Complex.le_def.mpr ⟨E33 A B hA hB, ?_⟩
+  refine Complex.le_def.mpr ⟨by linarith, ?_⟩
   rw [(Complex.im_eq_zero_iff_isSelfAdjoint _).mpr
     (trace_cube_isSelfAdjoint A B hA.isHermitian hB.isHermitian),
     (Complex.im_eq_zero_iff_isSelfAdjoint _).mpr
       (wordMean_isSelfAdjoint A B hA.isHermitian hB.isHermitian)]
 
+/-- The refined BMV product bound for three copies of each factor in dimension four. -/
+theorem E33 (A B : Matrix (Fin 4) (Fin 4) ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    (trace ((A * B) ^ 3)).re ≤ (wordMean A B).re :=
+  (Complex.le_def.mp (E33_all A B hA hB)).1
+
+theorem E33_complex (A B : Matrix (Fin 4) (Fin 4) ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    trace ((A * B) ^ 3) ≤ wordMean A B :=
+  E33_all A B hA hB
+
+#print axioms E33_all
 #print axioms traceGap_diagonal_nonneg
 #print axioms E33
 
