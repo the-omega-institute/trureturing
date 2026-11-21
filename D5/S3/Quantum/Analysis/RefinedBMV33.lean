@@ -34,7 +34,7 @@ theorem walk_rotate (B : Matrix n n ℂ) (f : n → n → n → ℂ) :
   refine Finset.sum_congr rfl fun j _ ↦ Finset.sum_congr rfl fun k _ ↦ ?_
   ring
 
-private theorem trace_diagonal_walk (B : Matrix n n ℂ) (u v w : n → ℂ) :
+theorem trace_diagonal_walk (B : Matrix n n ℂ) (u v w : n → ℂ) :
     trace (diagonal u * (B * (diagonal v * (B * (diagonal w * B))))) =
       walk B (fun i j k ↦ u i * v j * w k) := by
   change _ = ∑ i, ∑ j, ∑ k, B i j * B j k * B k i * (u i * v j * w k)
