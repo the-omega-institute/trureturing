@@ -22,7 +22,8 @@ reset set as the minimizing endpoints.
 namespace MeyerovitchYoungQ61DFAIntersection
 
 open Maths
-open MeyerovitchYoungQ61Complete (Legal matrixMinimum)
+open MeyerovitchYoungQ61Complete
+  (completeGraph matrixCost matrixMinimum matrixMinimum_spec wordCost wordCost_append)
 
 variable {Q Letter : Type*} [DecidableEq Q]
 
@@ -52,14 +53,12 @@ private theorem scan_append (δ : Q → Letter → Q) (S F : Finset Q)
     scan δ S F (w ++ [a]) = scanStep δ S F (scan δ S F w) a := by
   simp [scan, List.foldl_append]
 
-variable [Nonempty Q]
-
 /-- Update a vector of optimal endpoint scores by minimizing over the
 departure state of the next edge. -/
 private def update (A : Option Letter → Matrix Q Q ℤ) (a : Option Letter)
     (q : Q → ℤ) (j : Q) : ℤ :=
   ((Finset.univ : Finset Q).image fun i => q i + A a i j).min'
-    (Finset.univ_nonempty.image _)
+    ((show (Finset.univ : Finset Q).Nonempty from ⟨j, Finset.mem_univ j⟩).image _)
 
 /-- The minimum prefix cost at each Bob endpoint, with free initial state. -/
 def endpointScores (δ : Q → Letter → Q) (S F : Finset Q)
@@ -84,27 +83,22 @@ private theorem update_attains (A : Option Letter → Matrix Q Q ℤ) (a : Optio
     update A a q j ∈ (Finset.univ : Finset Q).image fun i => q i + A a i j)
   exact ⟨i, hi⟩
 
-private abbrev completeGraph (Q : Type*) : EdgeGraph Q (Q × Q) := ⟨Prod.fst, Prod.snd⟩
-
-private def wordCost (A : Option Letter → Matrix Q Q ℤ)
-    (w : List (Option Letter)) (edges : List (Q × Q)) : ℤ :=
-  (List.zipWith (fun a e => A a e.1 e.2) w edges).sum
-
-omit [DecidableEq Q] [Fintype Q] [Nonempty Q] in
+omit [DecidableEq Q] [Fintype Q] in
 private theorem wordCost_concat (A : Option Letter → Matrix Q Q ℤ) (w : List (Option Letter))
     (a : Option Letter) {s i j : Q} (p : (completeGraph Q).Walk s i)
     (hlen : p.length = w.length) :
-    wordCost A (w ++ [a]) (p.concat (i, j) rfl).edges = wordCost A w p.edges + A a i j := by
-  have h : w.length = p.edges.length := by simpa using hlen.symm
-  rw [EdgeGraph.Walk.edges_concat]
-  simp [wordCost, List.zipWith_append h]
+    wordCost (matrixCost A) (w ++ [a]) (p.concat (i, j) rfl).edges =
+      wordCost (matrixCost A) w p.edges + A a i j := by
+  erw [EdgeGraph.Walk.edges_concat]
+  rw [wordCost_append _ (by simpa using hlen.symm)]
+  simp [wordCost, matrixCost]
 
 private theorem endpointScores_spec (δ : Q → Letter → Q) (S F : Finset Q)
     (w : List (Option Letter)) (j : Q) :
     (∃ s, ∃ p : (completeGraph Q).Walk s j, p.length = w.length ∧
-      wordCost (costs δ S F) w p.edges = endpointScores δ S F w j) ∧
+      wordCost (matrixCost (costs δ S F)) w p.edges = endpointScores δ S F w j) ∧
     ∀ s (p : (completeGraph Q).Walk s j), p.length = w.length →
-      endpointScores δ S F w j ≤ wordCost (costs δ S F) w p.edges := by
+      endpointScores δ S F w j ≤ wordCost (matrixCost (costs δ S F)) w p.edges := by
   induction w using List.reverseRecOn generalizing j with
   | nil =>
     exact ⟨⟨j, .nil, rfl, rfl⟩, fun s p h => by cases p <;> simp_all [endpointScores, wordCost]⟩
@@ -113,7 +107,8 @@ private theorem endpointScores_spec (δ : Q → Letter → Q) (S F : Finset Q)
     constructor
     · obtain ⟨i, hi⟩ := update_attains (costs δ S F) a (endpointScores δ S F w) j
       obtain ⟨s, p, hlen, hp⟩ := (ih i).1
-      exact ⟨s, p.concat (i, j) rfl, by simp [hlen], by rwa [wordCost_concat _ _ _ p hlen, hp]⟩
+      exact ⟨s, p.concat (i, j) rfl, by simp [hlen],
+        (wordCost_concat _ _ _ p hlen).trans (by rw [hp, hi])⟩
     · intro s p hlen
       cases p with
       | nil => simp at hlen
@@ -122,19 +117,8 @@ private theorem endpointScores_spec (δ : Q → Letter → Q) (S F : Finset Q)
         change i' = i at h
         subst i'
         have hp : p.length = w.length := by simpa using hlen
-        rw [wordCost_concat _ _ _ p hp]
+        erw [wordCost_concat _ _ _ p hp]
         exact (update_le _ _ _ i j').trans (add_le_add ((ih i).2 s p hp) le_rfl)
-
--- Recover the specification of the chosen minimum in the existing frozen module.
-omit [DecidableEq Q] [Fintype Q] in
-private theorem matrixMinimum_spec [Finite Q] (A : Option Letter → Matrix Q Q ℤ) (w : List (Option Letter)) :
-    (∃ b, Legal (completeGraph Q) b ∧ b.length = w.length ∧
-      wordCost A w b = matrixMinimum A w) ∧
-    ∀ b, Legal (completeGraph Q) b → b.length = w.length →
-      matrixMinimum A w ≤ wordCost A w b := by
-  unfold matrixMinimum MeyerovitchYoungQ61Complete.freeMinimum
-  generalize_proofs h
-  exact Classical.choose_spec h
 
 private def summarizes (q : Q → ℤ) (b : ℤ) (T : Finset Q) : Prop :=
   T.Nonempty ∧ (∀ i, b ≤ q i) ∧ ∀ i, q i = b ↔ i ∈ T
@@ -210,7 +194,8 @@ private theorem scan_invariant (δ : Q → Letter → Q) (S F : Finset Q) (hS : 
     (w : List (Option Letter)) :
     summarizes (endpointScores δ S F w) (scan δ S F w).1 (scan δ S F w).2 := by
   induction w using List.reverseRecOn with
-  | nil => exact ⟨Finset.univ_nonempty, fun _ => le_rfl, fun _ => by simp [scan, endpointScores]⟩
+  | nil =>
+    exact ⟨hS.mono (Finset.subset_univ S), fun _ => le_rfl, fun _ => by simp [scan, endpointScores]⟩
   | append_singleton w a ih =>
     rw [endpointScores_append, scan_append]
     cases a with
@@ -222,9 +207,11 @@ private theorem scan_invariant (δ : Q → Letter → Q) (S F : Finset Q) (hS : 
 charged completed segments. The scan also gives its exact minimizing endpoints. -/
 theorem matrixMinimum_eq_score (δ : Q → Letter → Q) (S F : Finset Q) (hS : S.Nonempty)
     (w : List (Option Letter)) :
+    letI : Nonempty Q := hS.to_type
     matrixMinimum (costs δ S F) w = (scan δ S F w).1 ∧
     ∀ j, endpointScores δ S F w j = matrixMinimum (costs δ S F) w ↔
       j ∈ (scan δ S F w).2 := by
+  let : Nonempty Q := hS.to_type
   obtain ⟨hne, hlower, hset⟩ := scan_invariant δ S F hS w
   have hactual := matrixMinimum_spec (costs δ S F) w
   have heq : matrixMinimum (costs δ S F) w = (scan δ S F w).1 := by
@@ -238,7 +225,6 @@ theorem matrixMinimum_eq_score (δ : Q → Letter → Q) (S F : Finset Q) (hS : 
       exact (hlower j).trans ((endpointScores_spec δ S F w j).2 s p (by simpa using hlen))
   exact ⟨heq, by simpa only [heq] using hset⟩
 
-omit [Nonempty Q] in
 private theorem scan_detect (δ : Q → Letter → Q) (S F : Finset Q) (w : List (Option Letter)) :
     0 < (scan δ S F w).1 ↔
       ∃ u v, w = u ++ none :: v ∧ (scan δ S F u).2 ⊆ F := by
@@ -272,6 +258,7 @@ private theorem scan_detect (δ : Q → Letter → Q) (S F : Finset Q) (w : List
 closes a segment whose entire current state set accepts. -/
 theorem matrixMinimum_pos_iff (δ : Q → Letter → Q) (S F : Finset Q) (hS : S.Nonempty)
     (w : List (Option Letter)) :
+    letI : Nonempty Q := hS.to_type
     0 < matrixMinimum (costs δ S F) w ↔
       ∃ u v, w = u ++ none :: v ∧ (scan δ S F u).2 ⊆ F := by
   rw [(matrixMinimum_eq_score δ S F hS w).1]

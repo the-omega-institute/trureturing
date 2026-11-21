@@ -43,8 +43,9 @@ def countRejected : Realization countSignature.{u, v} :=
 
 abbrev countArena : Arena where
   signature := countSignature.{u, v}
-  Law R := ∀ {Q : Type u} {Letter : Type v} [d : DecidableEq Q] [f : Fintype Q] [Nonempty Q]
-    (δ : Q → Letter → Q) (S F : Finset Q) (_hS : S.Nonempty) (w : List (Option Letter)),
+  Law R := ∀ {Q : Type u} {Letter : Type v} [d : DecidableEq Q] [f : Fintype Q]
+    (δ : Q → Letter → Q) (S F : Finset Q) (hS : S.Nonempty) (w : List (Option Letter)),
+    letI : Nonempty Q := hS.to_type
     matrixMinimum (costs δ S F) w = R.readout () ⟨Q, Letter, d, f, δ, S, F⟩ w ∧
     ∀ j, endpointScores δ S F w j = matrixMinimum (costs δ S F) w ↔ j ∈ (scan δ S F w).2
 
@@ -90,8 +91,9 @@ def stateRejected : Realization stateSignature.{u, v} :=
 
 abbrev stateArena : Arena where
   signature := stateSignature.{u, v}
-  Law R := ∀ {Q : Type u} {Letter : Type v} [d : DecidableEq Q] [f : Fintype Q] [Nonempty Q]
-    (δ : Q → Letter → Q) (S F : Finset Q) (_hS : S.Nonempty) (w : List (Option Letter)),
+  Law R := ∀ {Q : Type u} {Letter : Type v} [d : DecidableEq Q] [f : Fintype Q]
+    (δ : Q → Letter → Q) (S F : Finset Q) (hS : S.Nonempty) (w : List (Option Letter)),
+    letI : Nonempty Q := hS.to_type
     0 < matrixMinimum (costs δ S F) w ↔
     ∃ u v, w = u ++ none :: v ∧ R.readout () ⟨Q, Letter, d, f, δ, S, F⟩ u ⊆ F
 
@@ -149,11 +151,11 @@ def countRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Walks.MeyerovitchYoungQ61DFAIntersection
     definition := none
-    coordinates := #[0, 1, 5, 6, 7]
+    coordinates := #[0, 1, 4, 5, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg"]
-      stateBinder := 9
+      stateBinder := 8
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -184,11 +186,11 @@ def stateRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Walks.MeyerovitchYoungQ61DFAIntersection
     definition := none
-    coordinates := #[0, 1, 5, 6, 7]
+    coordinates := #[0, 1, 4, 5, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "body", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 10
+      stateBinder := 9
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
