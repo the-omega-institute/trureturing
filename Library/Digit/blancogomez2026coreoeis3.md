@@ -16,7 +16,9 @@ triage: anchor
 
 ## Verified locator
 
-Zenodo record 10.5281/zenodo.23150301, English PDF `Blanco_Gomez_2026_core_OEIS_III_EN.pdf`,
+DOI: 10.5281/zenodo.23150301
+
+https://zenodo.org/records/23150301 ; English PDF `Blanco_Gomez_2026_core_OEIS_III_EN.pdf`,
 Section 9, Proposition 9.1, page 8.
 
 ## Source statement
