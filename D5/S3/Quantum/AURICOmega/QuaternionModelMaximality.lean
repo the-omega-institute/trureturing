@@ -510,10 +510,8 @@ private def doubledModel : TernaryComparison (unitary ℍ[ℝ] × Bool) where
     ring
 
 /-- The doubled model has feature rank at most nine. -/
-private lemma doubledModel_hasFeatureRank {r : ℕ} (hr : 9 ≤ r) : doubledModel.HasFeatureRank r := by
-  have h9 : doubledModel.HasFeatureRank 9 := ⟨dfeature, fun x y => (inner_dfeature x y).symm⟩
-  rw [← gramRankLE_iff_hasFeatureRank] at h9 ⊢
-  exact fun n x => (h9 n x).trans hr
+private lemma doubledModel_hasFeatureRank {r : ℕ} (hr : 9 ≤ r) : doubledModel.HasFeatureRank r :=
+  hasFeatureRank_mono hr ⟨dfeature, fun x y => (inner_dfeature x y).symm⟩
 
 end Doubled
 
