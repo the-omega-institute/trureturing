@@ -5,15 +5,17 @@ year: 2026
 title: "On the lower bound of the refined Bessis–Moussa–Villani conjecture: proof of the cases S6,3 and S7,3 for 3 × 3 matrices"
 doi: 10.48550/arXiv.2611.00129
 url: https://arxiv.org/abs/2611.00129v1
-claim: Section 7(iii) leaves the refined BMV lower bound for three occurrences of each matrix open for dimensions at least four.
+claim: Section 7(iii) leaves the refined BMV lower bounds for word counts (3,3) and (4,3) open for dimensions at least four.
 strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV33
   - D5/S3/Quantum/Analysis/RefinedBMVLowerBound
+  - D5/S3/Quantum/Analysis/RefinedBMV43
+  - D5/S3/Quantum/Analysis/RefinedBMV43Kernel
 license: citation-only
 triage: anchor
 ---
 
-# The refined BMV lower bound for three letters of each kind
+# The refined BMV lower bound with three occurrences of one factor
 
 ## Verified locator
 
@@ -51,6 +53,13 @@ Cauchy term. This decomposition gives the product bound in every finite
 dimension, and the same trace-power comparison gives the exponential bound.
 The symmetric coefficient was found in an independent GPT Pro review, then
 checked by exact algebra and used in the formal proof.
+
+The `(4,3)` proof uses the eigenvalues of the positive semidefinite cube
+root of the first factor. The centered coefficient matrices are sums of
+a Gram matrix from four polynomial features and a weighted Cauchy matrix.
+This coefficient identity treats every finite dimension and gives the
+trace-power comparison. Apply it to `exp(H/3)` and `exp K` and use the same
+dyadic argument to obtain the lower bound `Tr exp(4H + 3K)`.
 
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
