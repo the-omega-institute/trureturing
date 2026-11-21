@@ -176,6 +176,10 @@ $$\neg (\forall I \in Type,\; [\operatorname{PartialOrder}\left(I\right)], \fora
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/genevois2505q94` (refuted) by `D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"genevois2505q94","declaration_gid":"D5/S3/FiniteGroups/Quandles/GenevoisQ94Settlement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anthony Genevois (2025). *Beyond graph products and cactus groups: quandle products of groups*. DOI: [10.48550/arXiv.2505.09194](https://doi.org/10.48550/arXiv.2505.09194). URL: <https://arxiv.org/abs/2505.09194v1>.

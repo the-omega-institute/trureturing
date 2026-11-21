@@ -96,7 +96,10 @@ internal sealed class GenevoisQ94SettlementDocument : IScribeDocumentDefinition
                     "Conjugation acts trivially on the projection to C4. The image of a standard parabolic "
                     + "is the full C4 if its subset contains the upper index and is trivial otherwise. "
                     + "This rules out every parabolic as the intersection."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("genevois2505q94"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance? provenance = null) =>
