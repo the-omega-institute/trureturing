@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/LexFamilyShadow
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/LexFamilyShadow
    mirror-E: none(waiver:finite-lex-shadow-theory)
    anchors: [mathlib/module/Mathlib.Combinatorics.SetFamily.KruskalKatona]
    utility: none
@@ -12,7 +12,8 @@ import Mathlib.Combinatorics.SetFamily.KruskalKatona
 -- Source: https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/ModuleKK/LexShadow.lean
 /-
 Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
-Retire these declarations when the project's pinned Mathlib supplies equivalent results.
+When the project's pinned Mathlib provides an equivalent declaration,
+replace the transplanted declaration with a direct import and use that result.
 
 MIT License
 
@@ -310,7 +311,7 @@ theorem lexInit_upShadow : ∀ (n k : ℕ) (𝒜 : Finset (Finset (Fin n))), IsL
           rw [htop, card_powersetCard, card_univ, Fintype.card_fin]
         refine ⟨?_, isLexInit_succ_iff.mpr ⟨?_, ?_, ?_⟩⟩
         · rw [hcard, hunion, card_powersetCard, card_univ, Fintype.card_fin, hb1, hA, htc,
-            sig_R2' rfl]
+            sig_R2_at_sum rfl]
         · rw [top_upShadow, hunion]; exact isLexInit_powersetCard _
         · rw [bot_upShadow]; exact hb2
         · intro _; rw [top_upShadow, hunion]

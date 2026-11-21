@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/ProperSumset
    generality: G
-   mirror-B: none(waiver:scoped-proof-probe)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/ProperSumset
    mirror-E: none(waiver:literal-equal-shift-counting)
    anchors: [mathlib/module/Mathlib.Combinatorics.SetFamily.KruskalKatona]
    utility: none
@@ -177,14 +177,5 @@ theorem proper_sumset_surjOn (n r : ℕ) :
     have h3 : (∑ i, fEntry (D i) k.val) = ∑ i, s i k :=
       Finset.sum_congr rfl fun i _ => congrFun (hsD i) k
     omega
-
-/-- This is the same surjection for the zero-extended sum read in absolute degrees. -/
-theorem proper_sumset_zero_shift_surjOn (n r : ℕ) :
-    Set.SurjOn (fun s : Fin r → FVector n => fun k : ℕ => ∑ i, extend (s i) k)
-      {s | (∀ i, s i ∈ SnF n) ∧ Chained s}
-      (extend '' properSumset n r) := by
-  rintro _ ⟨x, hx, rfl⟩
-  obtain ⟨s, hs, rfl⟩ := proper_sumset_surjOn n r hx
-  exact ⟨s, hs, funext fun k => (extend_sumTuple s k).symm⟩
 
 end D5.S3.Combinatorics.Kozlov

@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/MatrixPowerPolynomial
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/MatrixPowerPolynomial
    mirror-E: none(waiver:finite-matrix-interpolation)
    anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer]
    utility: none
@@ -13,7 +13,8 @@ import Mathlib.RingTheory.Polynomial.Pochhammer
 -- Source: https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Lattice/TransferEhrhart.lean
 /-
 Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
-Retire these declarations when the project's pinned Mathlib supplies equivalent results.
+When the project's pinned Mathlib provides an equivalent declaration,
+replace the transplanted declaration with a direct import and use that result.
 
 MIT License
 

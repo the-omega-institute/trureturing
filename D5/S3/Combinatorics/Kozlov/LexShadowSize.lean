@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/LexShadowSize
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/LexShadowSize
    mirror-E: none(waiver:finite-lex-shadow-theory)
    anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic]
    utility: none
@@ -11,7 +11,8 @@ import Mathlib.Data.Nat.Choose.Basic
 -- Source: https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/ModuleKK/GreedyPQ.lean
 /-
 Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
-Retire these declarations when the project's pinned Mathlib supplies equivalent results.
+When the project's pinned Mathlib provides an equivalent declaration,
+replace the transplanted declaration with a direct import and use that result.
 
 MIT License
 
@@ -96,7 +97,7 @@ lemma sig_incr (n k t : ℕ) (ht : t < n.choose k) : sig n k (t+1) ≤ sig n k t
         have := ih (k+1) (t - n.choose k) (by simp only [Nat.succ_eq_add_one] at *; omega)
         rw [show t + 1 - n.choose k = t - n.choose k + 1 by omega]; omega
 
-lemma sig_R2' {n k t u : ℕ} (h : t = n.choose k + u) :
+lemma sig_R2_at_sum {n k t u : ℕ} (h : t = n.choose k + u) :
     sig (n+1) (k+1) t = n.choose (k+1) + sig n (k+1) u := by
   rw [sig_R2 (by omega)]; congr 2; omega
 
@@ -113,7 +114,7 @@ lemma PQ_zero : PP 0 ∧ QQ 0 := by
   · intro k k' x y s _ _ _ _; simp [sig]
   · intro k k' x y w _ _ _ _; simp [sig]
 
-lemma PQ_succ_k'0 (n k : ℕ) :
+lemma PQ_succ_second_degree_zero (n k : ℕ) :
     (∀ x y s, s = x + y → s ≤ (n+1).choose k → y ≤ (n+1).choose 0 →
       sig (n+1) k s ≤ sig (n+1) k x + sig (n+1) 0 y) ∧
     (∀ x y w, x ≤ (n+1).choose k → y ≤ (n+1).choose 0 → x + y = (n+1).choose k + w →
@@ -150,7 +151,7 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
     constructor
     · intro K K' x y s hk hs hsC hyC
       rcases K' with _ | k'
-      · exact (PQ_succ_k'0 n K).1 x y s hs hsC hyC
+      · exact (PQ_succ_second_degree_zero n K).1 x y s hs hsC hyC
       obtain ⟨k, rfl⟩ : ∃ k, K = k + 1 := ⟨K - 1, by omega⟩
       have hk' : k' ≤ k := by omega
       rw [Nat.choose_succ_succ'] at hsC hyC
@@ -161,7 +162,7 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
         rcases le_or_gt y (n.choose k') with hY | hY
         · rw [sig_R1 hY]; exact hP k k' x y (x+y) hk' rfl hA hY
         · obtain ⟨y2, rfl⟩ : ∃ y2, y = n.choose k' + y2 := ⟨y - n.choose k', by omega⟩
-          rw [sig_R2' rfl]
+          rw [sig_R2_at_sum rfl]
           rcases Nat.lt_or_ge k' k with hkk | hkk
           · have h1 := hP k k' (x+y2) (n.choose k') (x + (n.choose k' + y2)) hk' (by omega) hA le_rfl
             have h2 := hP k (k'+1) x y2 (x+y2) hkk rfl (by omega) (by omega)
@@ -171,26 +172,26 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
       · rcases le_or_gt (n.choose k) x with hB | hB
         · -- case B
           obtain ⟨x0, rfl⟩ : ∃ x0, x = n.choose k + x0 := ⟨x - n.choose k, by omega⟩
-          rw [sig_R2' rfl, sig_R2' (by omega : n.choose k + x0 + y = n.choose k + (x0 + y))]
+          rw [sig_R2_at_sum rfl, sig_R2_at_sum (by omega : n.choose k + x0 + y = n.choose k + (x0 + y))]
           rcases le_or_gt y (n.choose k') with hY | hY
           · rw [sig_R1 hY]
             have := hP (k+1) k' x0 y (x0+y) (by omega) rfl (by omega) hY; omega
           · obtain ⟨y2, rfl⟩ : ∃ y2, y = n.choose k' + y2 := ⟨y - n.choose k', by omega⟩
-            rw [sig_R2' rfl]
+            rw [sig_R2_at_sum rfl]
             have h1 := hP (k+1) k' (x0+y2) (n.choose k') (x0 + (n.choose k' + y2)) (by omega)
               (by omega) (by omega) le_rfl
             have h2 := hP (k+1) (k'+1) x0 y2 (x0+y2) (by omega) rfl (by omega) (by omega)
             rw [fA] at h1; omega
         · -- case C
           obtain ⟨z, hz⟩ : ∃ z, x + y = n.choose k + z := ⟨x + y - n.choose k, by omega⟩
-          rw [sig_R2' hz, sig_R1 (by omega : x ≤ n.choose k)]
+          rw [sig_R2_at_sum hz, sig_R1 (by omega : x ≤ n.choose k)]
           rcases le_or_gt y (n.choose k') with hY | hY
           · rw [sig_R1 hY]
             have h1 := hQ k k' x y z hk' (by omega) hY hz
             have h2 := hP (k+1) k' 0 z z (by omega) (by omega) (by omega) (by omega)
             rw [sig_zero] at h2; omega
           · obtain ⟨y2, rfl⟩ : ∃ y2, y = n.choose k' + y2 := ⟨y - n.choose k', by omega⟩
-            rw [sig_R2' rfl]
+            rw [sig_R2_at_sum rfl]
             rcases le_or_gt (n.choose k) (x + n.choose k') with hw | hw
             · obtain ⟨w0, hw0⟩ : ∃ w0, x + n.choose k' = n.choose k + w0 :=
                 ⟨x + n.choose k' - n.choose k, by omega⟩
@@ -207,7 +208,7 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
                 subst this; omega
     · intro K K' x y w hk hxC hyC hw
       rcases K' with _ | k'
-      · exact (PQ_succ_k'0 n K).2 x y w hxC hyC hw
+      · exact (PQ_succ_second_degree_zero n K).2 x y w hxC hyC hw
       obtain ⟨k, rfl⟩ : ∃ k, K = k + 1 := ⟨K - 1, by omega⟩
       have hk' : k' ≤ k := by omega
       rw [Nat.choose_succ_succ'] at hxC hyC hw
@@ -216,15 +217,15 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
       rcases le_or_gt (n.choose k) x with hB | hB
       · -- case A'
         obtain ⟨x0, rfl⟩ : ∃ x0, x = n.choose k + x0 := ⟨x - n.choose k, by omega⟩
-        rw [sig_R2' rfl]
+        rw [sig_R2_at_sum rfl]
         rcases le_or_gt y (n.choose k') with hY | hY
         · rw [sig_R1 hY, sig_R1 (by omega : w ≤ n.choose k')]
           have := hQ (k+1) k' x0 y w (by omega) (by omega) hY (by omega); omega
         · obtain ⟨u, rfl⟩ : ∃ u, y = n.choose k' + u := ⟨y - n.choose k', by omega⟩
-          rw [sig_R2' rfl]
+          rw [sig_R2_at_sum rfl]
           rcases le_or_gt (n.choose k') w with hW | hW
           · obtain ⟨w2, rfl⟩ : ∃ w2, w = n.choose k' + w2 := ⟨w - n.choose k', by omega⟩
-            rw [sig_R2' rfl]
+            rw [sig_R2_at_sum rfl]
             have := hQ (k+1) (k'+1) x0 u w2 (by omega) (by omega) (by omega) (by omega); omega
           · rw [sig_R1 hW.le]
             have h1 := hP (k+1) (k'+1) x0 u (x0+u) (by omega) rfl (by omega) (by omega)
@@ -238,10 +239,10 @@ theorem PQ_all (n : ℕ) : PP n ∧ QQ n := by
           have h2 := hQ (k+1) k' 0 (w + n.choose (k+1)) w (by omega) (by omega) (by omega) (by omega)
           rw [sig_zero] at h2; omega
         · obtain ⟨u, rfl⟩ : ∃ u, y = n.choose k' + u := ⟨y - n.choose k', by omega⟩
-          rw [sig_R2' rfl]
+          rw [sig_R2_at_sum rfl]
           rcases le_or_gt (n.choose k') w with hW | hW
           · obtain ⟨w2, rfl⟩ : ∃ w2, w = n.choose k' + w2 := ⟨w - n.choose k', by omega⟩
-            rw [sig_R2' rfl]
+            rw [sig_R2_at_sum rfl]
             rcases Nat.lt_or_ge k' k with hkk | hkk
             · have h1 := hQ k (k'+1) x u (w2 + n.choose (k+1)) hkk hB.le (by omega) (by omega)
               have h2 := hQ (k+1) (k'+1) 0 (w2 + n.choose (k+1)) w2 (by omega) (by omega)

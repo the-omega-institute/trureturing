@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/ChainedCount
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/ChainedCount
    mirror-E: none(waiver:literal-equal-shift-counting)
    anchors: []
    utility: none

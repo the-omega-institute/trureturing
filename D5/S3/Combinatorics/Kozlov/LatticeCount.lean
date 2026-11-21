@@ -1,12 +1,41 @@
 /- GID: D5/S3/Combinatorics/Kozlov/LatticeCount
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/LatticeCount
    mirror-E: none(waiver:literal-kozlov-lattice-count)
    anchors: []
    utility: none
    digest: Literal lattice points of a dilation are counted by chained equal-shift tuples. -/
 
 import D5.S3.Combinatorics.Kozlov.ConvexHull
+
+-- Source (the real-dilate lattice carrier): https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/Lattice/TransferEhrhart.lean
+/-
+Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
+When the project's pinned Mathlib provides an equivalent declaration,
+replace the transplanted declaration with a direct import and use that result.
+
+MIT License
+
+Copyright (c) 2026 Jan Snellman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-/
 
 set_option autoImplicit false
 

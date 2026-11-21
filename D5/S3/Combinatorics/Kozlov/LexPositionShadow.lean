@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/LexPositionShadow
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/LexPositionShadow
    mirror-E: none(waiver:finite-lex-shadow-theory)
    anchors: []
    utility: none
@@ -11,7 +11,8 @@ import D5.S3.Combinatorics.Kozlov.LexFamilyShadow
 -- Source: https://gitlab.liu.se/jansn19/exterior-convex/-/blob/2f05ce99d059c305ffcf6142fcf9efbbca02e24f/lean/ExteriorConvex/ModuleKK/LexF.lean
 /-
 Upstream pins: Lean v4.34.0-rc2, Mathlib 3a8a89422e16d67b7ae57698f6d96e389e4d4202.
-Retire these declarations when the project's pinned Mathlib supplies equivalent results.
+When the project's pinned Mathlib provides an equivalent declaration,
+replace the transplanted declaration with a direct import and use that result.
 
 MIT License
 
@@ -207,7 +208,7 @@ lemma isLexInit_subset_of_card_le {𝒜 ℬ : Finset (Finset (Fin n))} {k : ℕ}
       exact card_eq_zero.mp (by omega)
     rw [e 𝒜 h𝒜]; exact empty_subset _
 
-lemma forall₂_subset_of_le {ks : List ℤ} {𝒜s ℬs : List (Finset (Finset (Fin n)))}
+lemma forall2_subset_of_le {ks : List ℤ} {𝒜s ℬs : List (Finset (Finset (Fin n)))}
     (h1 : List.Forall₂ (fun k 𝒜 => Component k 𝒜 ∧ IsLexInit 𝒜 k.toNat) ks 𝒜s)
     (h2 : List.Forall₂ (fun k 𝒜 => Component k 𝒜 ∧ IsLexInit 𝒜 k.toNat) ks ℬs)
     (hle : List.Forall₂ (· ≤ ·) (𝒜s.map card) (ℬs.map card)) :
@@ -223,13 +224,13 @@ lemma forall₂_subset_of_le {ks : List ℤ} {𝒜s ℬs : List (Finset (Finset 
 
 /-- `lexF` segments of one degree are nested by size ("Segments of one degree are nested by size",
 proof of `lem-lexF-shadow`). -/
-theorem IsLexFSeg.forall₂_subset {ks : List ℤ} {t t' : ℕ}
+theorem IsLexFSeg.forall2_subset {ks : List ℤ} {t t' : ℕ}
     {𝒜s ℬs : List (Finset (Finset (Fin n)))} (h𝒜 : IsLexFSeg n ks t 𝒜s)
     (hℬ : IsLexFSeg n ks t' ℬs) (hle : (𝒜s.map card).sum ≤ (ℬs.map card).sum) :
     List.Forall₂ (· ⊆ ·) 𝒜s ℬs := by
   have hm := greedy_mono (capZ n) ks hle
   rw [← h𝒜.resize.2, ← hℬ.resize.2] at hm
-  exact forall₂_subset_of_le h𝒜.1 hℬ.1 hm
+  exact forall2_subset_of_le h𝒜.1 hℬ.1 hm
 
 /-! #### The order-theoretic definition: initial segments of `Mon_j(F)` for `>_{lexF}` -/
 
@@ -406,7 +407,7 @@ theorem lem_lexF_shadow_subset {ks : List ℤ} (hks : ks.Pairwise (· ≥ ·)) {
     (hL' : IsLexFSeg n (ks.map (· + 1)) t' ℬs)
     (hle : (𝒜s.map fun 𝒜 => #(∂⁺ 𝒜)).sum ≤ (ℬs.map card).sum) :
     List.Forall₂ (fun 𝒜 ℬ => ∂⁺ 𝒜 ⊆ ℬ) 𝒜s ℬs := by
-  have h2 := (lem_lexF_shadow hks hL).forall₂_subset hL' (by rw [List.map_map]; exact hle)
+  have h2 := (lem_lexF_shadow hks hL).forall2_subset hL' (by rw [List.map_map]; exact hle)
   rwa [List.forall₂_map_left_iff] at h2
 
 end Shadow

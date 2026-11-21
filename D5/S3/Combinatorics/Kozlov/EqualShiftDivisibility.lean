@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Kozlov/EqualShiftDivisibility
    generality: G
-   mirror-B: none(waiver:scoped-proof-probe)
-   mirror-E: none(waiver:equal-shift-divisibility)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/EqualShiftDivisibility
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Roots]
    utility: none
    digest: The equal-shift Kozlov lattice deficit has roots zero and minus one. -/

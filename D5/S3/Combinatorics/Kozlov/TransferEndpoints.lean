@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Kozlov/TransferEndpoints
    generality: G
-   mirror-B: none(waiver:probe-support)
+   mirror-B: D5/B/S3/Combinatorics/Kozlov/TransferEndpoints
    mirror-E: none(waiver:literal-equal-shift-counting)
    anchors: [mathlib/module/Mathlib.Data.Matrix.Mul]
    utility: none
