@@ -130,6 +130,10 @@ $$\neg(\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall (p: \mathbb{N}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/DefantC41Settlement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/defant-2014-powerful-solitude-conjecture-4-1` (refuted) by `D5/S3/Arith/Abundancy/DefantC41Settlement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"defant-2014-powerful-solitude-conjecture-4-1","declaration_gid":"D5/S3/Arith/Abundancy/DefantC41Settlement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Defant (2014). *An Extension of the Abundancy Index to Certain Quadratic Rings*. DOI: [10.48550/arXiv.1506.05416](https://doi.org/10.48550/arXiv.1506.05416). URL: <https://arxiv.org/pdf/1506.05416v1#page=23>.

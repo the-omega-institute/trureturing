@@ -65,7 +65,10 @@ internal sealed class DefantC41SettlementDocument : IScribeDocumentDefinition
                     + "divisor sets to coordinates −15 through 11 and 0 through 7. "
                     + "The complete divisor sets in that box give sums of 16 and 240, "
                     + "so both indices equal 16/9 and the absolute values differ."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("defant-2014-powerful-solitude-conjecture-4-1"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(
         string id, string title, string declaration, Formula formula, string prose) =>
