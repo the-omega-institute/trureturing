@@ -6,8 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.CharacterSums;
 internal sealed class DyadicMangoldtPrimeSupplyDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Square-root cancellation for auxiliary primes on arbitrarily high dyadic scales",
-        H("The quadratic Mangoldt sum on dyadic prime bands"),
+        "Square-root cancellation for auxiliary primes on dyadic blocks and real scales",
+        H("The quadratic Mangoldt sum on prime bands"),
         Blocks(
             Paragraph(Text("Fix ε > 0. In block k put X = 2ᵏ, x = (k log 2)^(5/ε) and N = floor(x^400). "
                 + "For primes q congruent to 3 modulo 8 in [X/2,X), form the real sum from n = 1 to N "
@@ -35,6 +35,27 @@ internal sealed class DyadicMangoldtPrimeSupplyDocument : IScribeDocumentDefinit
                     Paragraph(Text("This supplies arbitrarily high dyadic scales. In the modulus-one "
                         + "comparison the approximation by the logarithmic derivative, its zero "
                         + "exclusions, and the choice of the second prime require further estimates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("real-scale-mangoldt-supply"),
+                DeclarationHandle.Create("D5/S3/CharacterSums/DyadicMangoldtPrimeSupply.real_scale_quadratic_mangoldt_supply"),
+                H("The first prime at each sufficiently large real scale"),
+                StatementSource.FromAuthor(RealScaleClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For ε > 0 set T = x^(ε/5). Consider the primes q congruent to 3 "
+                        + "modulo 8 in (exp(T/2), exp(T)]. Keep q outside a finite set E if the actual "
+                        + "sum with cutoff floor(x^400) has absolute value at most x^(1/2+ε)/2. "
+                        + "Mass(ε,x,E) is the sum of (log q)/q over these primes. In the formula "
+                        + "B(ε,x) = exp(T/3), L(ε,x) = T/173065984000, and F is the set of finite "
+                        + "subsets of the natural numbers.")),
+                    Paragraph(Text("The progression window estimate gives total prime weight at least "
+                        + "T/86532992000. Cover the band with at most 3T dyadic integer blocks. "
+                        + "In every block touching the band, its left endpoint A satisfies 2A ≥ exp(T/2). "
+                        + "Keep x and the cutoff fixed throughout. The complete second moment bounds "
+                        + "the combined exceptional weight by 36T²/x^ε, which is o(T).")),
+                    Paragraph(Text("Each excluded prime has weight at most T exp(−T/2), so at most "
+                        + "exp(T/3) further exclusions cost at most T exp(−T/6). For each fixed "
+                        + "ε > 0 the latter loss and the character-sum exceptions each consume at most "
+                        + "one quarter of the total lower bound for all sufficiently large x. "
+                        + "Applying this to exceptional conductors requires a separate bound on their number."))),
                 DescribeRole.Theorem))));
 
     private static Formula Claim()
@@ -49,6 +70,20 @@ internal sealed class DyadicMangoldtPrimeSupplyDocument : IScribeDocumentDefinit
         var finite = At("summableBad", e);
         return F.Disp(All("e", "R", Implies(new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, e),
             new Formula.Logic(finite, FormulaLogicOperator.And, late))));
+    }
+
+    private static Formula RealScaleClaim()
+    {
+        var e = F.Id("e");
+        var x = F.Id("x");
+        var set = F.Id("E");
+        var mass = Le(At("L", e, x), At("Mass", e, x, set));
+        var allowed = Le(At("card", set), At("B", e, x));
+        var exclusions = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("E"),
+            F.Id("F"), Implies(allowed, mass));
+        var late = Exists("S", "R", All("x", "R", Implies(Le(F.Id("S"), x), exclusions)));
+        return F.Disp(All("e", "R", Implies(
+            new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, e), late)));
     }
 
     private static Formula At(string name, params Formula[] args) =>
