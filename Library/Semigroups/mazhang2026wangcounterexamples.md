@@ -8,6 +8,7 @@ claim: Lemma 2 gives d(S_U,R)=1 for the capped union monoid P_fin(U) x {0,1,2} o
 strata_touched:
   - D5/S0/Certificates/Algebra/CappedUnionDavenport
   - D5/S0/Certificates/Algebra/CappedUnionAlgebraicDavenport
+  - D5/S0/Certificates/Algebra/CappedUnionGreen
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -46,3 +47,10 @@ Lemma 2 states that (X^(A,1)-X^(A,2))(X^(B,1)-X^(B,2))=0 in the ordinary
 semigroup algebra R[S_U] and that d(S_U,R)=1. The repository states d with the
 definitions of WangConjecture326Refutation, whose factors use the
 cyclic idempotent of each label; in S_U that idempotent is x+x.
+
+Lemma 3 states that the principal ideal of a=(A,k) is
+{(B,j) : A subset of B, k <= j <= 2}, so that Green H is equality and every
+Schutzenberger group is trivial. The repository states these with the
+principal ideal and Green congruence of WangConjecture326Refutation and the
+Green relation, H-classes and translation groups Gamma of
+WangConjecture53Refutation.
