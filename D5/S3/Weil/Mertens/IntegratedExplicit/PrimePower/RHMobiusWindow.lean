@@ -29,15 +29,16 @@ open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
-open D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity (finite_error_integral normalized_error_integral)
+open D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity
+  (finite_error_integral normalized_error_integral)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (G_split_nonneg)
 open D5.S3.Weil.Mertens.ZeroAbscissaPower (actual_low_weight actual_high_weight)
 
 private theorem q_from_one {x : ℝ} (hx : 1 ≤ x) : U x / x = -Q x := by
   have hK := chebyshev_error_kernel_integrable
-  have htail : IntegrableOn K (Ioi x) := hK.mono_set (Ioi_subset_Ioi hx)
+  have htail := hK.mono_set (Ioi_subset_Ioi hx)
   have hs := intervalIntegral.integral_interval_add_Ioi hK htail
-  rw [finite_error_integral hK hx, normalized_error_integral hK] at hs
+  erw [finite_error_integral hK hx, normalized_error_integral hK] at hs
   change _ + Q x = _ at hs
   have hx₀ : 0 < x := zero_lt_one.trans_le hx
   unfold U
@@ -68,7 +69,8 @@ private theorem q_error_formula_from_one {x : ℝ} (hx : 1 ≤ x) :
 private def trivialHeight (k : ℕ) : ℝ := 2 * ((k : ℝ) + 1)
 
 private theorem trivial_weighted_tail {r v : ℝ} (hr : 0 < r) (hv : 0 ≤ v) :
-    HasSum (fun k : ℕ => trivialCoeff k * Real.exp (-(r + trivialHeight k) * v) / (r + trivialHeight k))
+    HasSum (fun k : ℕ =>
+      trivialCoeff k * Real.exp (-(r + trivialHeight k) * v) / (r + trivialHeight k))
       (∫ u in Ioi v, Real.exp (-r * u) * trivialT u) := by
   let f (k : ℕ) (u : ℝ) := trivialCoeff k * Real.exp (-(r + trivialHeight k) * u)
   let b (k : ℕ) (u : ℝ) := trivialCoeff k * Real.exp (-r * u)
@@ -150,7 +152,8 @@ private theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
     IntegrableOn (fun t => t ^ (-r) * qError t) (Ioi (Real.exp v)) ∧
     r * Real.exp v * (qError (Real.exp v) - (r - 1) * Real.exp ((r - 1) * v) *
       (∫ t in Ioi (Real.exp v), t ^ (-r) * qError t)) =
-    (∑' k : ℕ, (r / (trivialHeight k * (r + trivialHeight k))) * Real.exp (-(trivialHeight k) * v)) -
+    (∑' k : ℕ, r / (trivialHeight k * (r + trivialHeight k)) *
+      Real.exp (-(trivialHeight k) * v)) -
       Real.log (2 * Real.pi) := by
   have hr₀ : 0 < r := by linarith
   let l := Real.log (2 * Real.pi)
@@ -224,10 +227,10 @@ private theorem q_weighted_transport {r v : ℝ} (hr : 1 < r) (hv : 0 ≤ v) :
     ring
   have hk : 0 < trivialHeight k := by unfold trivialHeight; positivity
   rw [show (r - 1) * e * (trivialCoeff k * Real.exp (-(r + trivialHeight k) * v) /
-      (r + trivialHeight k)) = (r - 1) * trivialCoeff k * (e * Real.exp (-(r + trivialHeight k) * v)) /
-      (r + trivialHeight k) by ring, hexp]
+      (r + trivialHeight k)) =
+      (r - 1) * trivialCoeff k * (e * Real.exp (-(r + trivialHeight k) * v)) /
+        (r + trivialHeight k) by ring, hexp]
   change r * (trivialCoeff k * Real.exp (-(trivialHeight k) * v) - _) = _
-  change r * ((1 / (trivialHeight k * (trivialHeight k + 1))) * Real.exp (-(trivialHeight k) * v) - _) = _
   change r * ((1 / (trivialHeight k * (trivialHeight k + 1))) * Real.exp (-(trivialHeight k) * v) -
     (r - 1) * (1 / (trivialHeight k * (trivialHeight k + 1))) * Real.exp (-(trivialHeight k) * v) /
       (r + trivialHeight k)) = _
@@ -627,7 +630,8 @@ private theorem all_orders_density_log_sq (hRH : RiemannHypothesis) :
       _ ≤ _ := (mul_le_mul_of_nonneg_right hcard (by positivity)).trans_eq (by ring)
   have hterms (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
       (μ n : ℝ) * T n + retainedDensity m n u + e n = 0 := by
-    have hn1 : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by have := (Finset.mem_Icc.mp hn).1; omega)
+    have hn2 := (Finset.mem_Icc.mp hn).1
+    have hn1 : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by omega)
     have ht := root_tail_main (r := (n : ℝ)) hn1 hx0
     change T n = (n : ℝ) / ((n : ℝ) - 1) * x ^ ((n : ℝ)⁻¹ - 1 / 2) + centered (n : ℝ) x at ht
     have hpow : x ^ ((n : ℝ)⁻¹ - 1 / 2) = Real.exp (-(arithmeticRate n) * u) := by
@@ -660,12 +664,12 @@ private theorem all_orders_density_log_sq (hRH : RiemannHypothesis) :
         _ ≤ (|-R| + |∑ n ∈ Finset.Icc 2 m, e n|) + |E| :=
           add_le_add (abs_add_le _ _) le_rfl
         _ = _ := by rw [abs_neg]
-    _ ≤ A * ((m : ℝ) * (1 + Real.log m)^2) * W + L * ((m : ℝ) * (1 + Real.log m)^2) * W + C * ((m : ℝ) * (1 + Real.log m)^2) * W :=
+    _ ≤ A * ((m : ℝ) * M) * W + L * ((m : ℝ) * M) * W + C * ((m : ℝ) * M) * W :=
       add_le_add (add_le_add (hR.trans (mul_le_mul_of_nonneg_right
         (mul_le_mul_of_nonneg_left hms hA.le) hW.le)) hsum)
         (hE.trans (mul_le_mul_of_nonneg_right
           (by simpa using mul_le_mul_of_nonneg_left hms₁ hC) hW.le))
-    _ = _ := by ring
+    _ = _ := by dsimp only [M]; ring
 
 private def powerGap (s a B : ℝ) : ℝ := a ^ (-s) - B ^ (-s)
 
@@ -716,7 +720,8 @@ private theorem retainedDensity_integral {m n : ℕ} (hn : 2 ≤ n) {a B : ℝ}
     have hμ : μ 2 = -1 := moebius_apply_prime Nat.prime_two
     simp [arithmeticRate, hμ, intervalIntegral.integral_const, smul_eq_mul]
     ring
-  · rw [ite_eq_right he, intervalIntegral.integral_const_mul, exp_decay_integral (root_rate_positive (by omega))]
+  · rw [ite_eq_right he, intervalIntegral.integral_const_mul,
+      exp_decay_integral (root_rate_positive (by omega))]
     have hrpow {x : ℝ} (hx : 0 < x) (r : ℝ) : Real.exp (-r * Real.log x) = x ^ (-r) := by
       rw [Real.rpow_def_of_pos hx, mul_comm]
     rw [hrpow ha, hrpow hB]
@@ -812,7 +817,8 @@ theorem prime_window_mobius_of_rh (hRH : RiemannHypothesis) :
     (by unfold w; fun_prop : Continuous w).intervalIntegrable _ _
   have hmono : |∫ u in Real.log a..Real.log B, e u| ≤ ∫ u in Real.log a..Real.log B, w u :=
     (intervalIntegral.abs_integral_le_integral_abs hlog).trans
-      (intervalIntegral.integral_mono_on hlog hei.abs hwi (fun u hu => hD m hm u (hlog₂.trans hu.1)))
+      (intervalIntegral.integral_mono_on hlog hei.abs hwi
+        (fun u hu => hD m hm u (hlog₂.trans hu.1)))
   have Hf : (∫ u in Real.log a..Real.log B, f u) =
       2 * (Real.log B - Real.log a) +
         (∑ n ∈ Finset.Icc 3 m, arithmeticPrimitive n a B) +
@@ -825,7 +831,8 @@ theorem prime_window_mobius_of_rh (hRH : RiemannHypothesis) :
       _ = ∑ n ∈ Finset.Icc 2 m,
           ((if n = 2 then 2 * (Real.log B - Real.log a) else arithmeticPrimitive n a B) +
             capturedPrimitive m n a B) :=
-        Finset.sum_congr rfl fun _ hn => (retainedDensity_integral (Finset.mem_Icc.mp hn).1 ha₀ hB₀).2
+        Finset.sum_congr rfl fun _ hn =>
+          (retainedDensity_integral (Finset.mem_Icc.mp hn).1 ha₀ hB₀).2
       _ = _ := by
         rw [Finset.sum_add_distrib]
         have hs : Finset.Icc 2 m = insert 2 (Finset.Icc 3 m) := by
@@ -838,7 +845,9 @@ theorem prime_window_mobius_of_rh (hRH : RiemannHypothesis) :
               2 * (Real.log B - Real.log a) + ∑ n ∈ Finset.Icc 3 m, arithmeticPrimitive n a B := by
           rw [hs, Finset.sum_insert (by simp)]
           congr 1
-          exact Finset.sum_congr rfl fun n hn => ite_eq_right (by have := (Finset.mem_Icc.mp hn).1; omega)
+          refine Finset.sum_congr rfl fun n hn => ite_eq_right ?_
+          have hn3 := (Finset.mem_Icc.mp hn).1
+          omega
         rw [hmain, Finset.sum_filter]
         rfl
   have hw : (∫ u in Real.log a..Real.log B, w u) =
