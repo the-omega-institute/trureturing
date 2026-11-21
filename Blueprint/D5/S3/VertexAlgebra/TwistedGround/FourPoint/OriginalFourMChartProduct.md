@@ -44,7 +44,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartP
 
 *Commentary.*
 
-Assume G has unit determinant over ℤ, is positive definite over ℝ and rank D is 24. Take real 0 < x < 1, either upperA, arbitrary complex w, any finite sample family with complex weights and any mod-two charge a. Write A(a), B(a), D(a) for the respective products at that charge.
+Assume G is even, has unit determinant over ℤ, and is positive definite over ℝ and rank D is 24. Take real 0 < x < 1, either upperA, arbitrary complex w, any finite sample family with complex weights and any mod-two charge a. Write A(a), B(a), D(a) for the respective products at that charge.
 
 Then D(a) = 2⁻¹² ∑_b F(a,b) A(b) and B(a) = (R_A¹²)⁻¹ (2⁻¹² ∑_b F(a,b) ε(b) A(b)), with F = fourierSign, ε = quadraticSign and b ranging over all mod-two charges. The S multipliers cancel the Gaussian covariance corrections. The B source picks up a minus sign under S, which disappears by q ↦ −q within each charge fiber. The period translation by either lip contributes ε(b).
 
