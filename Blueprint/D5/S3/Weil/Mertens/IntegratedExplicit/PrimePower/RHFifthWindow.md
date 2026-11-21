@@ -4,7 +4,7 @@
 
 The fifth-root coefficient in RH prime windows
 
-**Theorem 1.1 (A uniform remainder at the third-power decay rate).**
+**Theorem 1.1 (A uniform remainder at the inverse cube-root decay rate).**
 
 $$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2 \le T \land \left(0 < K \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; \left(T \le a \land a \le B\right) \Rightarrow \left|\operatorname{R}\left(a, B\right) - \frac{25}{6} \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right| \le K \cdot \left(a^{-\frac{1}{3}} - B^{-\frac{1}{3}}\right)\right)\right)\right)$$
 
