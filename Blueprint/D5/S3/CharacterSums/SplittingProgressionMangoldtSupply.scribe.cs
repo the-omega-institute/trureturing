@@ -9,10 +9,10 @@ internal sealed class SplittingProgressionMangoldtSupplyDocument : IScribeDocume
         "Simultaneous quadratic Mangoldt tests on a splitting progression",
         H("Exceptional indices for two character sums"),
         Blocks(
-            Paragraph(Text("Fix a real loss e > 0 with e/5 ≤ 1/2. At a real height x set u = x^(e/5), "
+            Paragraph(Text("Fix a real loss e > 0. At a real height x set u = x^(e/5), "
                 + "N = floor(x^400) and t = x^(1/2+e)/2. For natural q,b,m,A,L take dᵢ = b + m(A+i) "
                 + "for 0 ≤ i < L. Both sums run from n = 1 to N with coefficient Λ(n) min(1,x/n). "
-                + "Their Jacobi factors are (n/dᵢ) and (n/q)(n/dᵢ), respectively.")),
+                + "Their Jacobi factors are (n/dᵢ) and (n/q)(n/dᵢ), respectively. Mathlib defines (n/q) by multiplying over all prime factors of q with multiplicity, with empty product 1 at q = 0 or 1.")),
             Paragraph(Text("Write F(e,x,q,b,m,A,L) for the number of indices at which either sum has "
                 + "absolute value strictly greater than t. In the formula, P(e,x,b,m,L) means that "
                 + "b ≡ 3 modulo 4, that 4 divides m, that every prime divisor p of m satisfies p ≤ u "
@@ -29,8 +29,8 @@ internal sealed class SplittingProgressionMangoldtSupplyDocument : IScribeDocume
                         + "signed coefficients from the extra factor (n/q).")),
                     Paragraph(Text("The discarded higher prime powers contribute at most K√x. The prime "
                         + "2 costs at most log 2, and the discarded odd prime divisors of m cost at most "
-                        + "the Chebyshev function θ(u). Since u ≤ √x eventually, the total error is bounded "
-                        + "by a constant times √x uniformly in the progression and in q.")),
+                        + "the Chebyshev function θ(u). For x ≥ 1, both √x and u are at most x^(1/2+e/4). "
+                        + "Thus the squared error per index is bounded by a constant times x·x^(e/2), uniformly in q and in the progression.")),
                     Paragraph(Text("For every sufficiently large x the length condition absorbs the "
                         + "remaining polynomial error in each second moment, giving a bound Lx·xᵉ "
                         + "for each sum of squares. An index failing either test contributes at least t² "

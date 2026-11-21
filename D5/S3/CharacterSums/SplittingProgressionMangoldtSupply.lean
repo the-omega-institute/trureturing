@@ -183,7 +183,7 @@ def twistedBy (x : ℝ) (N d : ℕ) (v : ℕ → ℝ) : ℝ :=
   ∑ n ∈ Icc 1 N, vonMangoldt n * min 1 (x/n) * v n * (jacobiSym (n:ℤ) d:ℝ)
 
 /-- At any starting index the same second-moment bound holds for every bounded multiplier. -/
-private theorem progression_moment {ε : ℝ} (hε : 0 < ε) (hε' : ε/5 ≤ 1/2) :
+private theorem progression_moment {ε : ℝ} (hε : 0 < ε) :
     ∀ᶠ x : ℝ in atTop, ∀ b m A L : ℕ, b%4=3 → 4 ∣ m →
       (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(ε/5) ∨ cutoff x < p) →
       exp (x^(ε/5)/2) ≤ 2*(L:ℝ) → ∀ v : ℕ → ℝ, (∀ n, |v n| ≤ 1) →
@@ -193,7 +193,7 @@ private theorem progression_moment {ε : ℝ} (hε : 0 < ε) (hε' : ε/5 ≤ 1/
   have h2 : 0 ≤ log 2 := log_nonneg (by norm_num)
   have h4 : 0 ≤ log 4 := log_nonneg (by norm_num)
   have hC : 0 ≤ C := add_nonneg (add_nonneg hK h2) h4
-  filter_upwards [window_moment_scale hε (2*C^2)] with x hscale
+  filter_upwards [window_moment_scale (show 0 < ε/2 by linarith) (2*C^2)] with x hscale
   obtain ⟨hx,hN,hscale⟩ := hscale
   intro b m A L hb hm hfac hL v hv
   let N := cutoff x
@@ -201,13 +201,15 @@ private theorem progression_moment {ε : ℝ} (hε : 0 < ε) (hε' : ε/5 ≤ 1/
   let P := (Icc 1 N).filter (fun p => Nat.Prime p ∧ p ≠ 2 ∧ m.Coprime p)
   let g (i : ℕ) : ℝ := ∑ p ∈ P, (log p*min 1 (x/p)*v p)*(jacobiSym (p:ℤ) (d i):ℝ)
   have hx0 : 0 < x := zero_lt_one.trans_le hx
-  have hroot : 1 ≤ sqrt x := one_le_sqrt.2 hx
-  have hy : x^(ε/5) ≤ sqrt x := by
-    rw [sqrt_eq_rpow]; exact rpow_le_rpow_of_exponent_le hx hε'
-  have htheta : Chebyshev.theta (x^(ε/5)) ≤ log 4 * sqrt x :=
+  let E := x^(1/2+ε/4)
+  have hroot : sqrt x ≤ E := by
+    rw [sqrt_eq_rpow]; exact rpow_le_rpow_of_exponent_le hx (by linarith)
+  have hy : x^(ε/5) ≤ E := rpow_le_rpow_of_exponent_le hx (by linarith)
+  have hE : 1 ≤ E := one_le_rpow hx (by linarith)
+  have htheta : Chebyshev.theta (x^(ε/5)) ≤ log 4 * E :=
     (Chebyshev.theta_le_log4_mul_x (rpow_nonneg hx0.le _)).trans
       (mul_le_mul_of_nonneg_left hy h4)
-  have error (i : ℕ) : |twistedBy x N (d i) v - g i| ≤ C*sqrt x := by
+  have error (i : ℕ) : |twistedBy x N (d i) v - g i| ≤ C*E := by
     have h := herr x (x^(ε/5)) N m (d i) v hx0 hv hfac
     have heq : (Icc 1 N).filter (fun p => Nat.Prime p ∧ p ≠ 2 ∧ p.Coprime m) = P := by
       ext p; simp [P,Nat.coprime_comm]
@@ -215,11 +217,14 @@ private theorem progression_moment {ε : ℝ} (hε : 0 < ε) (hε' : ε/5 ≤ 1/
     change |twistedBy x N (d i) v - g i| ≤ _ at h
     apply h.trans
     dsimp only [C]
-    nlinarith only [htheta,mul_le_mul_of_nonneg_left hroot h2]
+    linarith only [htheta,mul_le_mul_of_nonneg_left hroot hK,mul_le_mul_of_nonneg_left hE h2]
+  have hEsq : E^2 = x*x^(ε/2) := by
+    dsimp only [E]
+    rw [← rpow_mul_natCast hx0.le,show (1/2+ε/4)*(2:ℕ) = 1+ε/2 by push_cast; ring,rpow_add hx0,rpow_one]
   have oneRow (i : ℕ) :
-      (twistedBy x N (d i) v)^2 ≤ 2*(g i)^2 + 2*C^2*x := by
-    have he := (sq_le_sq₀ (abs_nonneg _) (mul_nonneg hC (sqrt_nonneg _))).2 (error i)
-    rw [sq_abs,mul_pow,sq_sqrt hx0.le] at he
+      (twistedBy x N (d i) v)^2 ≤ 2*(g i)^2 + 2*C^2*(x*x^(ε/2)) := by
+    have he := (sq_le_sq₀ (abs_nonneg _) (mul_nonneg hC (zero_le_one.trans hE))).2 (error i)
+    rw [sq_abs,mul_pow,hEsq] at he
     nlinarith only [he,sq_nonneg (twistedBy x N (d i) v-2*g i)]
   have hp := damped_signed_prime_bound hx0.le hN b m A L hb hm v hv
   change (∑ i ∈ range L, (g i)^2) ≤ _ at hp
@@ -227,9 +232,21 @@ private theorem progression_moment {ε : ℝ} (hε : 0 < ε) (hε' : ε/5 ≤ 1/
   rw [sum_add_distrib,← mul_sum] at hsum
   simp only [sum_const,card_range,nsmul_eq_mul] at hsum
   apply hsum.trans
-  specialize hscale L hL
+  have hlength : exp (x^((ε/2)/5)/2) ≤ 2*(L:ℝ) := by
+    apply le_trans _ hL
+    apply exp_le_exp.mpr
+    exact div_le_div_of_nonneg_right (rpow_le_rpow_of_exponent_le hx (by linarith)) (by norm_num)
+  specialize hscale L hlength
   change 2*((L:ℝ)*((log N)^2*x*(1+log N)) + 8*((N:ℝ)^2*log N)^2) + (2*C^2)*L*x ≤ _ at hscale
-  nlinarith only [hscale, hp, sq_nonneg ((N:ℝ)^2*log N)]
+  have hslack : 1 ≤ x^(ε/2) := one_le_rpow hx (by linarith)
+  have hs := mul_le_mul_of_nonneg_right hscale (zero_le_one.trans hslack)
+  have hbase : 0 ≤ (L:ℝ)*((log N)^2*x*(1+log N)) + 8*((N:ℝ)^2*log N)^2 := by
+    have hn : 0 ≤ log N := log_nonneg (by exact_mod_cast hN)
+    positivity
+  have hgrow := mul_le_mul_of_nonneg_left hslack hbase
+  have hxpow : x^ε = x^(ε/2)*x^(ε/2) := by rw [← rpow_add hx0]; congr 1; ring
+  rw [hxpow]
+  nlinarith only [hs, hp, hgrow, sq_nonneg ((N:ℝ)^2*log N)]
 
 /-- The union bound costs one second moment per multiplier. -/
 private theorem two_bad_counts (L : ℕ) (f g : ℕ → ℝ) {t M : ℝ} (ht : 0 < t)
@@ -261,12 +278,12 @@ def failures (x ε : ℝ) (q b m A L : ℕ) : Finset ℕ :=
 
 /-- With x fixed in both tests, the exceptional fraction tends to zero uniformly in
 the chosen first prime, the starting index and the admissible progression. -/
-theorem simultaneous_splitting_progression (ε : ℝ) (hε : 0 < ε) (hu : ε/5 ≤ 1/2) :
+theorem simultaneous_splitting_progression (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ x : ℝ in atTop, ∀ q b m A L : ℕ, b%4=3 → 4 ∣ m →
       (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(ε/5) ∨ cutoff x < p) →
       exp (x^(ε/5)/2) ≤ 2*(L:ℝ) →
       ((failures x ε q b m A L).card:ℝ) ≤ 8*L/x^ε := by
-  filter_upwards [eventually_gt_atTop (0:ℝ),progression_moment hε hu] with x hx hxmom
+  filter_upwards [eventually_gt_atTop (0:ℝ),progression_moment hε] with x hx hxmom
   intro q b m A L hb hm hdiv hL
   let d (i : ℕ) := b+m*(A+i)
   let F (i : ℕ) := twistedBy x (cutoff x) (d i) (fun _ => 1)

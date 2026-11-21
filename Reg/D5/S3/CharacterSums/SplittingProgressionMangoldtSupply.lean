@@ -27,13 +27,13 @@ def negativeBound : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ ε : ℝ, 0 < ε → ε/5 ≤ 1/2 → ∀ᶠ x : ℝ in atTop, ∀ q b m A L : ℕ,
+  Law V := ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop, ∀ q b m A L : ℕ,
     b%4=3 → 4 ∣ m → (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ x^(ε/5) ∨ cutoff x < p) →
     exp (x^(ε/5)/2) ≤ 2*(L:ℝ) → ((failures x ε q b m A L).card:ℝ) ≤ V.readout () ⟨ε,x⟩ L
 
 private theorem negative_fails : ¬ arena.Law negativeBound := by
   intro h
-  obtain ⟨x,hx,hl⟩ := (((tendsto_rpow_atTop (show 0 < (1:ℝ)/5 by norm_num)).eventually_ge_atTop 2).and (h 1 one_pos (by norm_num))).exists
+  obtain ⟨x,hx,hl⟩ := (((tendsto_rpow_atTop (show 0 < (1:ℝ)/5 by norm_num)).eventually_ge_atTop 2).and (h 1 one_pos)).exists
   let L := ⌈exp (x^((1:ℝ)/5)/2)⌉₊
   have hL : exp (x^((1:ℝ)/5)/2) ≤ 2*(L:ℝ) := by
     have he := Nat.le_ceil (exp (x^((1:ℝ)/5)/2))
@@ -88,10 +88,10 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.CharacterSums.SplittingProgressionMangoldtSupply
     definition := none
-    coordinates := #[0,3]
+    coordinates := #[0,2]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 8
+      path := #["body", "body", "fn", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 7
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
