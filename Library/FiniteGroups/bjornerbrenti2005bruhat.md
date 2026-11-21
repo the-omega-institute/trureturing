@@ -29,3 +29,8 @@ position choices, so it does not preserve Elek's magic-word count.
 The source locators were corroborated through accessible citations and
 Chapter 2 metadata. The Lean module uses the positional criterion as its
 definition and calculates it directly in the witness.
+
+## Verified locator
+
+Chapter 2, Theorem 2.2.2 and Corollary 2.2.3 cover the subword property.
+The DOI and chapter URL are https://doi.org/10.1007/3-540-27596-7_2 .

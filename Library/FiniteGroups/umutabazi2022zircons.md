@@ -20,3 +20,11 @@ and fails the proposed left-descent criterion when it is extended to this
 multiply laced type. This is prior use of the exact interval in the magic-word
 counterexample. The source addresses a descent condition for smooth intervals.
 [Umutabazi, §4](https://arxiv.org/pdf/2206.06538v1#page=5)
+
+## Verified locator
+
+Section 4, printed page 5, immediately after Conjecture 4.5, records the
+multiply laced example.
+
+- DOI https://doi.org/10.48550/arXiv.2206.06538
+- Version https://arxiv.org/abs/2206.06538v1

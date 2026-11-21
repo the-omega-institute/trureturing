@@ -61,3 +61,11 @@ OpenAlex, MathOverflow and code-index searches located no earlier statement
 of this exact all-Weyl positional-magic refutation. Rate-limited citation
 queries, incomplete index coverage and inaccessible full-monograph text
 limit that finding. [Literature record](https://github.com/the-omega-institute/trureturing/issues/27568)
+
+## Verified locator
+
+Conjecture 3.3 and Remark 3.4 are in §3.1. Definitions 2.2 and 2.3 give
+the positional convention, and Lemma 2.17 gives the last-letter condition.
+
+- DOI https://doi.org/10.48550/arXiv.2610.22730
+- Version https://arxiv.org/abs/2610.22730v1
