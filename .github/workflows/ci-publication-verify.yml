@@ -10,6 +10,12 @@ on:
         type: choice
         options: [complete, partial, none, legacy, auto, release, parallel]
         required: true
+      volume_test_id:
+        description: Shared identifier for two verification snapshots using reusable physical volumes
+        type: string
+      retire_volume_tag:
+        description: Optional previous snapshot from this verification pair to retire before recovery
+        type: string
       checkpoint_run:
         description: Optional earlier checkpoint run for the same commit and cold mode
         type: string
@@ -124,7 +130,10 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         env:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
+          VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+          RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
         run: |
+          [[ -z "$RETIRE_VOLUME_TAG" || -n "$VOLUME_TEST_ID" ]]
           case "$SHARD_HANDOFF" in
             release|parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
@@ -182,13 +191,28 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
+          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+          LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
           bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
           tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
-          [[ "$tag" == lean-cache-verify-v2-* ]]
+          if [[ "$LEAN_CACHE_RELEASE_VOLUMES" == 1 ]]; then
+            [[ "$tag" == lean-cache-verify-v3-* ]]
+            upload="$(sed -n 's/^LEAN_CACHE_VOLUME-UPLOAD //p' "$receipt" | jq -ec 'select(.status == "saved")')"
+            jq '{new_volumes, payload_bytes, reused_bytes, peak_staged_payload_bytes, compacted}' <<< "$upload"
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+              | jq -e '[.assets[] | {name, size}] | select(map(.name) | sort == ["index.json.gz", "manifest.json"]) |
+                       {metadata_bytes: (map(.size) | add), assets: .}'
+            if [[ -n "$LEAN_CACHE_VOLUME_RETIRE_TAG" ]]; then
+              jq -e '.payload_bytes > 0 and .reused_bytes > 0' <<< "$upload"
+            fi
+          else
+            [[ "$tag" == lean-cache-verify-v2-* ]]
+          fi
           echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
 
   indexed-consumer:
@@ -209,6 +233,7 @@ jobs:
       LEAN_CACHE_SOURCE_COMMIT: ${{ github.sha }}
       LEAN_CACHE_MODE: candidate
       RESTORE: ${{ matrix.restore }}
+      RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -217,6 +242,16 @@ jobs:
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Confirm that the previous test snapshot was retired
+        if: env.RETIRE_VOLUME_TAG != ''
+        run: |
+          for resource in "releases/tags" "git/ref/tags"; do
+            if gh api "repos/$GITHUB_REPOSITORY/$resource/$RETIRE_VOLUME_TAG" > "$RUNNER_TEMP/prior-tag.json"; then
+              echo "Previous test tag is still present in $resource" >&2
+              exit 1
+            fi
+            jq -e '.status == "404"' "$RUNNER_TEMP/prior-tag.json"
+          done
       - name: Restore from Release assets
         run: |
           test ! -e .lake/build
