@@ -106,14 +106,10 @@ theorem finite_certificate :
     (∀ s : Fin 42, (∑ r : Row, if bondDefects horizontal r r ≤ 1 ∧
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s) := by
   refine ⟨by decide +kernel, ?_, HardinA229457StripClasses.transition_counts,
-    ?_, ?_⟩
+    HardinA229532Strip.finite_certificate.2.2.2.1, ?_⟩
   · intro p d hp r hr
     dsimp only [Valid,
       D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid] at hp ⊢
-    omega
-  · intro r hr
-    dsimp only [Valid,
-      D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid]
     omega
   · intro s
     by_cases hproper : s.val < 10
