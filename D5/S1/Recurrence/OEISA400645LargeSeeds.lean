@@ -4,32 +4,40 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: []
    utility: none
-   digest: For every nondecreasing seed the signed A400645 rule has nonnegative radicands, and a_n = c λ^n + O(1) with c > 0 unless the seed is (0,0,0,0) or (1,1,1,1). -/
+   digest: For every seed with a_1 <= a_2 <= a_3 the signed A400645 rule has nonnegative radicands, and a_n = c λ^n + O(1) with c > 0 unless the seed is (0,0,0,0) or (1,1,1,1). -/
 
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#351)
-escape_witness: growth (once a term reaches three, the next increments are positive: the
-  radicand at k + 3 is at most (7/4 a_(k+3))^2 and the next radicand exceeds
-  (a_(k+4) + 1/2)^2), escape (a nondecreasing seed other than (0,0,0,0) and (1,1,1,1) reaches
-  three: a run of twos gives the radicand 8 and the next term 3, and a zero followed by three
-  ones gives the radicand 3 and the next term 2), stall (the two constant seeds have radicand
-  2 c^2 and stay constant), and asymptotic (the squares satisfy the characteristic recurrence
-  with forcing √s + 1/4, the window comparisons 8/7 over three terms and 9/10 over two terms
-  hold eventually, and the reusable analytic core gives a_n^2 = L r^n + O(r^(n/2))).
+escape_witness: mono_rad (from index four the sequence is nondecreasing and every radicand is
+  at least a_n^2, without assuming a_3 <= a_4: the first radicand gives a_5 >= max(a_3, a_4) and
+  the cancelling term is then dominated by a_(n-1) or a_(n-2)), growth (once a term reaches
+  three, the next increments are positive: the radicand at k + 3 is at most (7/4 a_(k+3))^2 and
+  the next radicand exceeds (a_(k+4) + 1/2)^2), escape (every other seed reaches three: a run of
+  twos gives the radicand 8 and the next term 3, and a zero followed by three ones gives the
+  radicand 3 and the next term 2), stall (the two constant seeds have radicand 2 c^2 and stay
+  constant), and asymptotic (the squares satisfy the characteristic recurrence with forcing
+  √s + 1/4, the window comparisons 8/7 over three terms and 9/10 over two terms hold
+  eventually, and the reusable analytic core gives a_n^2 = L r^n + O(r^(n/2))).
 proof_shape:
-  rad3, round_sqrt_eq, round_err3, round_val3, mono_le, monoR: bind-only helpers; consumers:
-    mono_rad, growth, stall, escape, unbounded, asymptotic, result.
-  mono_rad: content (monotonicity and radicand lower bound by strong induction); consumers:
-    mono_le, asymptotic, result.
-  growth, escape, stall, unbounded, asymptotic: content; consumer: result.
+  rad3, round_err3: bind-only helpers; consumers: every lemma below.
+  round_sqrt_eq: bind-only helper; consumer: round_val3.
+  round_val3: bind-only helper; consumers: stall, escape.
+  ge_of_sq_le: bind-only helper; consumers: a3_le_a5, mono_rad.
+  a3_le_a5: bind-only helper; consumers: mono_rad, escape.
+  mono_le, monoR: bind-only helpers (induction over mono_rad); consumers: growth, escape,
+    unbounded, asymptotic.
+  mono_rad: content (monotonicity from index four and the radicand lower bound by strong
+    induction); consumers: mono_le, escape, asymptotic, result.
+  growth, escape, stall, unbounded, asymptotic: content; consumers: unbounded, asymptotic,
+    result.
   result: content.
 Direct frozen dependencies (module statement_id):
   D5/S1/Recurrence/OEISA400645 (radicand, squaredLimit, limitingRatio, r_bounds),
     sha256:6b9935aa3f2f34c16302ab77311ac7fb8824542a3447a5f9a6013494c199e7aa;
   D5/S1/Recurrence/OEISA400645BoundedError (charPoly, charPoly_sum, rootMultiplicity_charPoly,
-    other_roots; made public here for reuse), re-pinned in this delivery;
+    other_roots; made public here for reuse, pin rewritten by the canonical writer);
   D5/S1/Recurrence/RoundedNormBoundedError (analytic, finish, not_bounded_geom; made public
-    here for reuse), re-pinned in this delivery.
+    here for reuse, pin rewritten by the canonical writer).
 Search record (§3.1): D5/S1/Recurrence/OEISA400645 and OEISA400645BoundedError treat only the
   seed (0, 0, 0, 1); OEISA400645FixedLagGrowth gives fixed-lag limits for that seed; no D5
   declaration quantifies over seeds of the signed rule; pinned Mathlib has no rounded-norm
@@ -43,10 +51,11 @@ set_option autoImplicit false
 
 noncomputable section
 
-/-! # The signed A400645 rule for every nondecreasing seed
+/-! # The signed A400645 rule for every seed with `a 1 ≤ a 2 ≤ a 3`
 
-Let `a 1 ≤ a 2 ≤ a 3 ≤ a 4` and `a (n + 1) = round √(a n ² + a (n-1)² + a (n-2)² - a (n-3)²)` for
-`n ≥ 4`. Every radicand is nonnegative. The seeds `(0, 0, 0, 0)` and `(1, 1, 1, 1)` give constant
+Let `a 1 ≤ a 2 ≤ a 3`, let `a 4` be arbitrary, and let
+`a (n + 1) = round √(a n ² + a (n-1)² + a (n-2)² - a (n-3)²)` for `n ≥ 4`. Every radicand is
+nonnegative. The seeds `(0, 0, 0, 0)` and `(1, 1, 1, 1)` give constant
 sequences; every other seed gives `a n = c λ^n + O(1)` with `c > 0` and
 `a (n + 1) / a n = λ + O(λ^(-n))`, where `λ = limitingRatio`.
 -/
@@ -101,59 +110,71 @@ private theorem round_val3 (k : ℕ) (hk : 1 ≤ k) {m : ℕ}
   rw [hr] at h
   exact_mod_cast h
 
-variable (h12 : a 1 ≤ a 2) (h23 : a 2 ≤ a 3) (h34 : a 3 ≤ a 4)
-include h12 h23 h34
+/-- A term whose square is at most the radicand is at most the next term. -/
+private theorem ge_of_sq_le (k : ℕ) (hk : 1 ≤ k) (y : ℕ)
+    (hy : (y : ℝ) ^ 2 ≤ radicand a (k + 3)) : y ≤ a (k + 4) := by
+  have h := (abs_le.mp (round_err3 hrec k hk)).1
+  have hle : (y : ℝ) ≤ Real.sqrt (radicand a (k + 3)) := Real.le_sqrt_of_sq_le hy
+  have : (y : ℝ) < a (k + 4) + 1 := by linarith
+  have : y < a (k + 4) + 1 := by exact_mod_cast this
+  omega
 
-/-- The sequence is nondecreasing from index one, and every radicand is at least `a n ^ 2`. -/
+variable (h12 : a 1 ≤ a 2) (h23 : a 2 ≤ a 3)
+include h12 h23
+
+omit h23 in
+private theorem a3_le_a5 : a 3 ≤ a 5 := by
+  have h := ge_of_sq_le hrec 1 le_rfl (a 3) (by
+    rw [rad3, show 1 + 3 = 4 from rfl, show 1 + 2 = 3 from rfl, show 1 + 1 = 2 from rfl]
+    have : (a 1 : ℝ) ≤ a 2 := by exact_mod_cast h12
+    nlinarith [sq_nonneg (a 4 : ℝ), (Nat.cast_nonneg (a 1) : (0 : ℝ) ≤ _)])
+  exact h
+
+/-- From index four the sequence is nondecreasing and every radicand is at least `a n ^ 2`. -/
 private theorem mono_rad :
-    ∀ n, 1 ≤ n → a n ≤ a (n + 1) ∧ (4 ≤ n → (a n : ℝ) ^ 2 ≤ radicand a n) := by
+    ∀ n, 4 ≤ n → a n ≤ a (n + 1) ∧ (a n : ℝ) ^ 2 ≤ radicand a n := by
   intro n
   induction n using Nat.strong_induction_on with
   | _ n ih =>
     intro hn
-    rcases Nat.lt_or_ge n 4 with hlt | hge
-    · refine ⟨?_, fun h => absurd h (by omega)⟩
-      interval_cases n
-      · exact h12
-      · exact h23
-      · exact h34
-    · obtain ⟨k, rfl⟩ : ∃ k, n = k + 3 := ⟨n - 3, by omega⟩
-      have hprev := (ih k (by omega) (by omega)).1
-      have hprevR : (a k : ℝ) ≤ a (k + 1) := by exact_mod_cast hprev
-      have hrad : (a (k + 3) : ℝ) ^ 2 ≤ radicand a (k + 3) := by
-        rw [rad3]
-        nlinarith [sq_nonneg (a (k + 2) : ℝ), (Nat.cast_nonneg (a k) : (0 : ℝ) ≤ _)]
-      refine ⟨?_, fun _ => hrad⟩
-      have h := (abs_le.mp (round_err3 hrec k (by omega))).1
-      have hle : (a (k + 3) : ℝ) ≤ Real.sqrt (radicand a (k + 3)) :=
-        Real.le_sqrt_of_sq_le hrad
-      have : (a (k + 3) : ℝ) < a (k + 4) + 1 := by linarith
-      have : a (k + 3) < a (k + 4) + 1 := by exact_mod_cast this
-      show a (k + 3) ≤ a (k + 4)
-      omega
+    obtain ⟨k, rfl⟩ : ∃ k, n = k + 3 := ⟨n - 3, by omega⟩
+    have hprev : (a k : ℝ) ≤ a (k + 1) ∨ (a k : ℝ) ≤ a (k + 2) := by
+      rcases Nat.lt_or_ge k 4 with hlt | hge
+      · have hk1 : 1 ≤ k := by omega
+        interval_cases k
+        · left; exact_mod_cast h12
+        · left; exact_mod_cast h23
+        · right; exact_mod_cast a3_le_a5 hrec h12
+      · left; exact_mod_cast (ih k (by omega) hge).1
+    have hrad : (a (k + 3) : ℝ) ^ 2 ≤ radicand a (k + 3) := by
+      rw [rad3]
+      have h0 : (0 : ℝ) ≤ a k := Nat.cast_nonneg _
+      rcases hprev with h | h <;>
+        nlinarith [sq_nonneg (a (k + 1) : ℝ), sq_nonneg (a (k + 2) : ℝ)]
+    exact ⟨ge_of_sq_le hrec k (by omega) _ hrad, hrad⟩
 
-private theorem mono_le {m n : ℕ} (hm : 1 ≤ m) (hmn : m ≤ n) : a m ≤ a n := by
+private theorem mono_le {m n : ℕ} (hm : 4 ≤ m) (hmn : m ≤ n) : a m ≤ a n := by
   induction n, hmn using Nat.le_induction with
   | base => exact le_rfl
-  | succ n hn ih => exact ih.trans (mono_rad hrec h12 h23 h34 n (by omega)).1
+  | succ n hn ih => exact ih.trans (mono_rad hrec h12 h23 n (by omega)).1
 
-private theorem monoR {m n : ℕ} (hm : 1 ≤ m) (hmn : m ≤ n) : (a m : ℝ) ≤ a n := by
-  exact_mod_cast mono_le hrec h12 h23 h34 hm hmn
+private theorem monoR {m n : ℕ} (hm : 4 ≤ m) (hmn : m ≤ n) : (a m : ℝ) ≤ a n := by
+  exact_mod_cast mono_le hrec h12 h23 hm hmn
 
 /-- Growth: once `a (k + 3) ≥ 3`, the next two terms increase strictly. -/
-private theorem growth (k : ℕ) (hk : 1 ≤ k) (h3 : 3 ≤ a (k + 3)) : a (k + 4) < a (k + 5) := by
+private theorem growth (k : ℕ) (hk : 3 ≤ k) (h3 : 3 ≤ a (k + 3)) : a (k + 4) < a (k + 5) := by
   set y : ℝ := (a (k + 3) : ℝ) with hy
   have hy3 : (3 : ℝ) ≤ y := by rw [hy]; exact_mod_cast h3
-  have m1 := monoR hrec h12 h23 h34 (m := k + 1) (n := k + 3) (by omega) (by omega)
-  have m2 := monoR hrec h12 h23 h34 (m := k + 2) (n := k + 3) (by omega) (by omega)
-  have m3 := monoR hrec h12 h23 h34 (m := k + 1) (n := k + 2) (by omega) (by omega)
+  have m1 := monoR hrec h12 h23 (m := k + 1) (n := k + 3) (by omega) (by omega)
+  have m2 := monoR hrec h12 h23 (m := k + 2) (n := k + 3) (by omega) (by omega)
+  have m3 := monoR hrec h12 h23 (m := k + 1) (n := k + 2) (by omega) (by omega)
   have hr3 : (radicand a (k + 3) : ℝ) ≤ (7 / 4 * y) ^ 2 := by
     rw [rad3]
     have h0 : (0 : ℝ) ≤ a (k + 1) := Nat.cast_nonneg _
     nlinarith [sq_nonneg (a k : ℝ)]
   have hs3 : Real.sqrt (radicand a (k + 3) : ℝ) ≤ 7 / 4 * y :=
     Real.sqrt_le_iff.mpr ⟨by linarith, hr3⟩
-  have e1 := (abs_le.mp (round_err3 hrec k hk)).2
+  have e1 := (abs_le.mp (round_err3 hrec k (by omega))).2
   have hx : (a (k + 4) : ℝ) ≤ 7 / 4 * y + 1 / 2 := by linarith
   have hx0 : (0 : ℝ) ≤ a (k + 4) := Nat.cast_nonneg _
   have hr4 : ((a (k + 4) : ℝ) + 1 / 2) ^ 2 < (radicand a (k + 1 + 3) : ℝ) := by
@@ -167,8 +188,8 @@ private theorem growth (k : ℕ) (hk : 1 ≤ k) (h3 : 3 ≤ a (k + 3)) : a (k + 
   exact_mod_cast this
 
 /-- The two stationary seeds give constant sequences. -/
-private theorem stall (hs : a 1 = a 4 ∧ a 4 ≤ 1) : ∀ n, 1 ≤ n → a n = a 1 := by
-  obtain ⟨h14, h41⟩ := hs
+private theorem stall (hs : a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1) : ∀ n, 1 ≤ n → a n = a 1 := by
+  obtain ⟨h13, h34, h41⟩ := hs
   intro n
   induction n using Nat.strong_induction_on with
   | _ n ih =>
@@ -193,15 +214,15 @@ private theorem stall (hs : a 1 = a 4 ∧ a 4 ≤ 1) : ∀ n, 1 ≤ n → a n = 
         exact round_val3 hrec (k := k) (by omega) (by rw [hrad, h1]; norm_num)
           (by rw [hrad, h1]; norm_num) le_rfl
 
-/-- Any other nondecreasing seed reaches a term of size at least three. -/
-private theorem escape (hs : ¬ (a 1 = a 4 ∧ a 4 ≤ 1)) : ∃ N, 1 ≤ N ∧ 3 ≤ a N := by
+/-- Any other seed reaches a term of size at least three from index four on. -/
+private theorem escape (hs : ¬ (a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1)) : ∃ N, 4 ≤ N ∧ 3 ≤ a N := by
   by_contra hcon
   push Not at hcon
   -- a run of four twos forces a three
-  have two : ∀ k, 1 ≤ k → a k = 2 → False := by
+  have two : ∀ k, 4 ≤ k → a k = 2 → False := by
     intro k hk h2
     have hw : ∀ i, i ≤ 3 → a (k + i) = 2 := fun i hi => by
-      have := mono_le hrec h12 h23 h34 (m := k) (n := k + i) hk (by omega)
+      have := mono_le hrec h12 h23 (m := k) (n := k + i) hk (by omega)
       have := hcon (k + i) (by omega)
       omega
     have hrad : (radicand a (k + 3) : ℝ) = 8 := by
@@ -210,57 +231,62 @@ private theorem escape (hs : ¬ (a 1 = a 4 ∧ a 4 ≤ 1)) : ∃ N, 1 ≤ N ∧ 
       rw [add_zero] at w0
       rw [rad3, w0, w1, w2, w3]
       norm_num
-    have := round_val3 hrec (k := k) hk (m := 3) (by rw [hrad]; norm_num)
+    have := round_val3 hrec (k := k) (by omega) (m := 3) (by rw [hrad]; norm_num)
       (by rw [hrad]; norm_num) (by norm_num)
     have := hcon (k + 4) (by omega)
     omega
-  have hle1 : ∀ n, 1 ≤ n → a n ≤ 1 := fun n hn => by
+  have hle1 : ∀ n, 4 ≤ n → a n ≤ 1 := fun n hn => by
     have := hcon n hn
     by_contra h
     exact two n hn (by omega)
   -- a zero followed by three ones forces a two
-  have win : ∀ k, 1 ≤ k → a k = 0 → a (k + 1) = 1 → False := by
-    intro k hk h0 h1
-    have hw : ∀ i, 1 ≤ i → i ≤ 3 → a (k + i) = 1 := fun i hi hi3 => by
-      have := mono_le hrec h12 h23 h34 (m := k + 1) (n := k + i) (by omega) (by omega)
-      have := hle1 (k + i) (by omega)
-      omega
+  have win : ∀ k, 1 ≤ k → a k = 0 → a (k + 1) = 1 → a (k + 2) = 1 → a (k + 3) = 1 →
+      False := by
+    intro k hk h0 h1 h2 h3
     have hrad : (radicand a (k + 3) : ℝ) = 3 := by
-      rw [rad3, hw 1 le_rfl (by omega), hw 2 (by omega) (by omega), hw 3 (by omega) le_rfl, h0]
+      rw [rad3, h1, h2, h3, h0]
       norm_num
     have := round_val3 hrec (k := k) hk (m := 2) (by rw [hrad]; norm_num)
       (by rw [hrad]; norm_num) (by norm_num)
     have := hle1 (k + 4) (by omega)
     omega
-  have h4 := hle1 4 (by omega)
-  have h1 := hle1 1 le_rfl
-  have ha4 : a 4 = 1 := by
+  have h35 := a3_le_a5 hrec h12
+  have m4 : a 4 ≤ a 5 := (mono_rad hrec h12 h23 4 le_rfl).1
+  have m5 : a 5 ≤ a 6 := (mono_rad hrec h12 h23 5 (by omega)).1
+  have m6 : a 6 ≤ a 7 := (mono_rad hrec h12 h23 6 (by omega)).1
+  have h5 := hle1 5 (by omega)
+  have h6 := hle1 6 (by omega)
+  have h7 := hle1 7 (by omega)
+  have ha5 : a 5 = 1 := by
     by_contra h
-    exact hs ⟨by have := mono_le hrec h12 h23 h34 (m := 1) (n := 4) le_rfl (by omega); omega,
-      by omega⟩
-  have ha1 : a 1 = 0 := by
-    by_contra h
-    exact hs ⟨by omega, by omega⟩
-  have h2 := hle1 2 (by omega)
-  have h3 := hle1 3 (by omega)
-  rcases Nat.lt_or_ge (a 2) 1 with ha2 | ha2
+    exact hs ⟨by omega, by omega, by omega⟩
+  rcases Nat.lt_or_ge (a 4) 1 with ha4 | ha4
+  · exact win 4 (by omega) (by omega) (by show a 5 = 1; omega) (by show a 6 = 1; omega)
+      (by show a 7 = 1; omega)
   · rcases Nat.lt_or_ge (a 3) 1 with ha3 | ha3
-    · exact win 3 (by omega) (by omega) (by show a 4 = 1; omega)
-    · exact win 2 (by omega) (by omega) (by show a 3 = 1; omega)
-  · exact win 1 le_rfl (by omega) (by show a 2 = 1; omega)
+    · exact win 3 (by omega) (by omega) (by show a 4 = 1; omega) (by show a 5 = 1; omega)
+        (by show a 6 = 1; omega)
+    · have ha1 : a 1 = 0 := by
+        by_contra h
+        exact hs ⟨by omega, by omega, by omega⟩
+      rcases Nat.lt_or_ge (a 2) 1 with ha2 | ha2
+      · exact win 2 (by omega) (by omega) (by show a 3 = 1; omega) (by show a 4 = 1; omega)
+          (by show a 5 = 1; omega)
+      · exact win 1 le_rfl ha1 (by show a 2 = 1; omega) (by show a 3 = 1; omega)
+          (by show a 4 = 1; omega)
 
-/-- Once a term reaches three the sequence tends to infinity. -/
-private theorem unbounded (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) : ∀ B : ℕ, ∃ M, ∀ n, M ≤ n → B ≤ a n := by
-  obtain ⟨N, hN1, hN3⟩ := hN
+/-- Once a term from index four on reaches three the sequence tends to infinity. -/
+private theorem unbounded (hN : ∃ N, 4 ≤ N ∧ 3 ≤ a N) : ∀ B : ℕ, ∃ M, ∀ n, M ≤ n → B ≤ a n := by
+  obtain ⟨N, hN4, hN3⟩ := hN
   set M := N + 3 with hM
   have hge : ∀ n, N ≤ n → 3 ≤ a n := fun n hn =>
-    hN3.trans (mono_le hrec h12 h23 h34 hN1 hn)
+    hN3.trans (mono_le hrec h12 h23 hN4 hn)
   have hstep : ∀ i, i ≤ a (M + 1 + i) := by
     intro i
     induction i with
     | zero => exact Nat.zero_le _
     | succ i ih =>
-      have := growth hrec h12 h23 h34 (k := N + i) (by omega) (hge _ (by omega))
+      have := growth hrec h12 h23 (k := N + i) (by omega) (hge _ (by omega))
       rw [show N + i + 4 = M + 1 + i by omega, show N + i + 5 = M + 1 + (i + 1) by omega] at this
       omega
   intro B
@@ -270,12 +296,12 @@ private theorem unbounded (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) : ∀ B : ℕ, ∃
   omega
 
 /-- The asymptotic conclusion for every sequence that reaches three. -/
-private theorem asymptotic (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) :
+private theorem asymptotic (hN : ∃ N, 4 ≤ N ∧ 3 ≤ a N) :
     ∃ c : ℝ, 0 < c ∧
       (fun n => (a n : ℝ) - c * limitingRatio ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
       (fun n => (a (n + 1) : ℝ) / a n - limitingRatio) =O[atTop]
         (fun n => (limitingRatio ^ n)⁻¹) := by
-  obtain ⟨N₁, hN₁⟩ := unbounded hrec h12 h23 h34 hN 10
+  obtain ⟨N₁, hN₁⟩ := unbounded hrec h12 h23 hN 10
   have hbig : ∀ n, N₁ + 1 ≤ n → (10 : ℝ) ≤ a n := fun n hn => by
     exact_mod_cast hN₁ n (by omega)
   have hr := r_bounds
@@ -291,7 +317,7 @@ private theorem asymptotic (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) :
         Real.sqrt (∑ i ∈ Finset.range 4, b (j + i)) + 1 / 4 := by
     refine eventually_atTop.mpr ⟨1, fun j hj => ?_⟩
     rw [charPoly_sum]
-    have hs0 := (mono_rad hrec h12 h23 h34 (j + 3) (by omega)).2 (by omega)
+    have hs0 := (mono_rad hrec h12 h23 (j + 3) (by omega)).2
     have hsnn : (0 : ℝ) ≤ radicand a (j + 3) := le_trans (sq_nonneg _) hs0
     have herr := abs_le.mp (round_err3 hrec j hj)
     set u := Real.sqrt (radicand a (j + 3) : ℝ) with hu
@@ -341,14 +367,14 @@ private theorem asymptotic (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) :
     nlinarith
   -- lower comparison with window two
   have hdown : ∀ᶠ n in atTop, 9 / 10 * ∑ i ∈ Finset.range 2, b (n + i) ≤ b (n + 2) := by
-    refine eventually_atTop.mpr ⟨N₁ + 3, fun n hn => ?_⟩
+    refine eventually_atTop.mpr ⟨N₁ + 6, fun n hn => ?_⟩
     obtain ⟨j, rfl⟩ : ∃ j, n = j + 2 := ⟨n - 2, by omega⟩
     simp only [Finset.sum_range_succ, Finset.sum_range_zero, hbdef, zero_add,
       show j + 2 + 2 = j + 4 by omega, show j + 2 + 1 = j + 3 by omega]
     set T := (a (j + 2) : ℝ) ^ 2 + (a (j + 3) : ℝ) ^ 2 with hTdef
     have h10 := hbig (j + 3) (by omega)
     have hT100 : (100 : ℝ) ≤ T := by nlinarith [sq_nonneg (a (j + 2) : ℝ)]
-    have hm := monoR hrec h12 h23 h34 (m := j) (n := j + 1) (by omega) (by omega)
+    have hm := monoR hrec h12 h23 (m := j) (n := j + 1) (by omega) (by omega)
     have hj0 : (0 : ℝ) ≤ a j := Nat.cast_nonneg _
     have hrT : T ≤ (radicand a (j + 3) : ℝ) := by
       rw [rad3, hTdef]; nlinarith
@@ -378,28 +404,28 @@ private theorem asymptotic (hN : ∃ N, 1 ≤ N ∧ 3 ≤ a N) :
 
 end
 
-/-- Signed nearest-rounded rule for every nondecreasing seed. Let `a 1 ≤ a 2 ≤ a 3 ≤ a 4` and
-`a (n + 1) = round √(a n ^ 2 + a (n - 1) ^ 2 + a (n - 2) ^ 2 - a (n - 3) ^ 2)` for `n ≥ 4`. Then
-every radicand is nonnegative; the seeds `(0, 0, 0, 0)` and `(1, 1, 1, 1)` give constant
-sequences; and for every other seed there is `c > 0` with `a n = c λ^n + O(1)` and
+/-- Signed nearest-rounded rule for every seed with `a 1 ≤ a 2 ≤ a 3`. Let
+`a (n + 1) = round √(a n ^ 2 + a (n - 1) ^ 2 + a (n - 2) ^ 2 - a (n - 3) ^ 2)` for `n ≥ 4`, with
+`a 4` arbitrary. Then every radicand is nonnegative; the seeds `(0, 0, 0, 0)` and `(1, 1, 1, 1)`
+give constant sequences; and for every other seed there is `c > 0` with `a n = c λ^n + O(1)` and
 `a (n + 1) / a n = λ + O(λ^(-n))`, where `λ = limitingRatio`. The two constant seeds are exactly
 the seeds for which the asymptotics fail. -/
-theorem result (a : ℕ → ℕ) (h12 : a 1 ≤ a 2) (h23 : a 2 ≤ a 3) (h34 : a 3 ≤ a 4)
+theorem result (a : ℕ → ℕ) (h12 : a 1 ≤ a 2) (h23 : a 2 ≤ a 3)
     (hrec : ∀ n, 4 ≤ n → (a (n + 1) : ℤ) = round (Real.sqrt (radicand a n : ℝ))) :
     (∀ n, 4 ≤ n → 0 ≤ radicand a n) ∧
-      (a 1 = a 4 ∧ a 4 ≤ 1 → ∀ n, 1 ≤ n → a n = a 1) ∧
+      (a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1 → ∀ n, 1 ≤ n → a n = a 1) ∧
       ((∃ c : ℝ, 0 < c ∧
           (fun n => (a n : ℝ) - c * limitingRatio ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
           (fun n => (a (n + 1) : ℝ) / a n - limitingRatio) =O[atTop]
             (fun n => (limitingRatio ^ n)⁻¹)) ↔
-        ¬ (a 1 = a 4 ∧ a 4 ≤ 1)) := by
-  refine ⟨fun n hn => ?_, stall hrec h12 h23 h34, ⟨fun hc hs => ?_, fun hs =>
-    asymptotic hrec h12 h23 h34 (escape hrec h12 h23 h34 hs)⟩⟩
-  · have h := (mono_rad hrec h12 h23 h34 n (by omega)).2 hn
+        ¬ (a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1)) := by
+  refine ⟨fun n hn => ?_, stall hrec h12 h23, ⟨fun hc hs => ?_, fun hs =>
+    asymptotic hrec h12 h23 (escape hrec h12 h23 hs)⟩⟩
+  · have h := (mono_rad hrec h12 h23 n hn).2
     have : (0 : ℝ) ≤ radicand a n := le_trans (sq_nonneg _) h
     exact_mod_cast this
   · obtain ⟨c, hc0, hO, -⟩ := hc
-    have hconst := stall hrec h12 h23 h34 hs
+    have hconst := stall hrec h12 h23 hs
     have hr := r_bounds
     have hlam : 1 < limitingRatio := by
       rw [show (1 : ℝ) = Real.sqrt 1 by simp]

@@ -8,9 +8,11 @@
 
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#352)
-escape_witness: analytic (a nonnegative sequence satisfying the characteristic recurrence with
-  forcing √s + 1/4, s → ∞, is L R^n + O(R^(n/2)) with L > 0: comparison bounds b = O(2^n), dominant-
-  root forcing at q = √2 and then at q = √R, and a lower comparison with ratio 3/2 rules out
+escape_witness: comparisons (a rounding error √s + 1/4 with s → ∞ gives eventual window
+  comparisons with ratios K > 1 and K' < 1), analytic (an eventually positive sequence with
+  eventual window comparisons, satisfying the characteristic recurrence with forcing bounded by
+  √(window sum) + 1/4, is L R^n + O(R^(n/2)) with L > 0: comparison bounds b = O(c^n),
+  dominant-root forcing at q = √c and then at q = √R, and the lower comparison rules out
   L <= 0), upper_compare and lower_compare (window comparison of linear recurrent inequalities),
   step_up and tendsto_atTop (the rounded norm strictly exceeds the window start past a
   threshold, so the sequence is unbounded), finish (rationalizing the squared expansion into

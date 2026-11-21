@@ -42,7 +42,7 @@ Corollaries 6, 7 and 8 are in Section 5.
 > Corollary 3. For the sequence in Theorem 1, an = cλ^n + O(1), and an+1/an = λ + O(λ^−n).
 
 > Corollary 4. Replace the initial tuple in (1) by any nondecreasing nonnegative integer tuple
-> with a4 ≥ 292. The resulting signed recurrence satisfies an = cλn + O(1) for some c > 0.
+> with a4 ≥ 292. The resulting signed recurrence satisfies an = cλ^n + O(1) for some c > 0.
 
 > Corollary 5. Let m = 2 or 3 and start with nondecreasing nonnegative integer data
 > x0, . . . , xm−1. Define xn+m = round √(x_n² + · · · + x_(n+m−1)²). For m = 2 assume x1 ≥ 2;
@@ -109,6 +109,7 @@ these conditions are also necessary.
 
 For Corollary 4, "the initial tuple in (1)" is a_1, …, a_4 and the signed recurrence is
 a_(n+1) = round √(a_n² + a_(n−1)² + a_(n−2)² − a_(n−3)²) for n ≥ 4.
-`D5/S1/Recurrence/OEISA400645LargeSeeds` replaces the threshold a_4 ≥ 292 by the exact
-condition that the seed is neither (0, 0, 0, 0) nor (1, 1, 1, 1), shows that these two seeds give
-constant sequences, and adds the ratio rate a_(n+1)/a_n = λ + O(λ^(−n)).
+`D5/S1/Recurrence/OEISA400645LargeSeeds` assumes only a_1 ≤ a_2 ≤ a_3, replaces the threshold
+a_4 ≥ 292 by the exact condition that the seed is neither (0, 0, 0, 0) nor (1, 1, 1, 1), shows
+that these two seeds give constant sequences, and adds the ratio rate
+a_(n+1)/a_n = λ + O(λ^(−n)).

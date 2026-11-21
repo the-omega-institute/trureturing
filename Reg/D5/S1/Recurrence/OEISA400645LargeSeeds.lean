@@ -26,21 +26,21 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law Q :=
-    ∀ a : ℕ → ℕ, a 1 ≤ a 2 → a 2 ≤ a 3 → a 3 ≤ a 4 →
+    ∀ a : ℕ → ℕ, a 1 ≤ a 2 → a 2 ≤ a 3 →
       (∀ n, 4 ≤ n → (a (n + 1) : ℤ) = round (Real.sqrt (radicand a n : ℝ))) →
       (∀ n, 4 ≤ n → 0 ≤ radicand a n) ∧
-        (a 1 = a 4 ∧ a 4 ≤ 1 → ∀ n, 1 ≤ n → a n = a 1) ∧
+        (a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1 → ∀ n, 1 ≤ n → a n = a 1) ∧
         ((∃ c : ℝ, 0 < c ∧
             Q.readout () () (fun n => (a n : ℝ) - c * limitingRatio ^ n) (fun _ => (1 : ℝ)) ∧
             (fun n => (a (n + 1) : ℝ) / a n - limitingRatio) =O[atTop]
               (fun n => (limitingRatio ^ n)⁻¹)) ↔
-          ¬ (a 1 = a 4 ∧ a 4 ≤ 1))
+          ¬ (a 1 = a 3 ∧ a 3 = a 4 ∧ a 4 ≤ 1))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hlaw
   obtain ⟨⟨a, ha⟩, -⟩ := _root_.D5.S1.Recurrence.OEISA400645.result
   obtain ⟨h1, h2, h3, h4, hrec⟩ := ha
-  have h := (hlaw a (by omega) (by omega) (by omega) (fun n hn => (hrec n hn).2)).2.2
+  have h := (hlaw a (by omega) (by omega) (fun n hn => (hrec n hn).2)).2.2
   obtain ⟨_, _, hF, _⟩ := h.mpr (by omega)
   exact hF
 
@@ -90,7 +90,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "body",
+      path := #["body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "body",
         "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
