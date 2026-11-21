@@ -21,7 +21,7 @@ abbrev arena : Arena where
   signature := signature.{v,w}
   Law R :=
     ∀ {G : Type u} {X : Type v} {Y : Type w} [Group G] [MulAction G X] [MulAction G Y]
-      [Fintype X] [Fintype Y] [Nonempty X] [DecidableEq Y] (H : Subgroup G) (P : X → Y → ℝ),
+      [Fintype X] [Fintype Y] [DecidableEq Y] (H : Subgroup G) (P : X → Y → ℝ),
       (∀ x y, 0 ≤ P x y) → (∀ x, ∑ y, P x y = 1) →
       (∀ g : G, ∀ x y, P (g • x) (g • y) = P x y) →
       let N := Subgroup.normalClosure (H : Set G)
@@ -91,11 +91,11 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg", "body",
         "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "fn", "arg", "body",
         "body", "arg", "fn", "fn"]
-      stateBinder := 11
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

@@ -21,7 +21,7 @@ internal sealed class NormalClosureFixedMassDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A group G acts on a nonempty finite input type X in universe v and on a finite "
+                        "A group G acts on a finite input type X in universe v and on a finite "
                         + "output type Y in universe w with decidable equality. A probability kernel P "
                         + "has nonnegative entries, normalized rows and is covariant under G. Let H "
                         + "be a subgroup of G and let N be the normal closure of H in G.")),
@@ -34,7 +34,7 @@ internal sealed class NormalClosureFixedMassDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "When the H-fixed event has full weight, positivity forces each seed to be fixed "
                         + "by H. The kernel of the seed action is normal and contains H, so it contains "
-                        + "N as well. Covariance then forces the stated row support. Conversely, the row "
+                        + "N as well. Covariance then forces the stated row support. For an empty input type one seed of weight one with trivial group action suffices. For nonempty input the row "
                         + "support gives mass one in every row for the N stabilizer criterion. The "
                         + "normal-subgroup maximum supplies a calibration with full N-fixed mass, "
                         + "which also has full H-fixed mass."))),

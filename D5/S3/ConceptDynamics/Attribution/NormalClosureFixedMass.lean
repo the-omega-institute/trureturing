@@ -20,7 +20,7 @@ namespace D5.S3.ConceptDynamics.Attribution.NormalClosureFixedMass
 universe u v w
 variable {G : Type u} {X : Type v} {Y : Type w} [Group G]
 variable [MulAction G X] [MulAction G Y] [Fintype X] [Fintype Y]
-variable [Nonempty X] [DecidableEq Y]
+variable [DecidableEq Y]
 
 private theorem forall_of_sum_filter_eq_total {S : Type*} [Fintype S]
     {predicate : S → Prop} [DecidablePred predicate]
@@ -36,7 +36,7 @@ private theorem forall_of_sum_filter_eq_total {S : Type*} [Fintype S]
     (mem_filter.mpr ⟨mem_univ _, excluded⟩)
   exact (positive s).ne' found
 
-omit [Fintype X] [Nonempty X] [DecidableEq Y] in
+omit [Fintype X] [DecidableEq Y] in
 private theorem row_mass_one_of_supported (H : Subgroup G)
     (P : X → Y → ℝ) (nn : ∀ x y, 0 ≤ P x y) (normalized : ∀ x, ∑ y, P x y = 1)
     (supported : ∀ x y, 0 < P x y → ∀ h : H, h • x = x → h • y = y) :
@@ -90,17 +90,31 @@ theorem full_subgroup_fixed_seed_mass_iff
     simp only [noHit, ite_false, sum_const_zero] at row
     exact pos.ne' row.symm
   · intro supported
-    obtain ⟨x₀, _, _, S, _, _, a, f, positive, total, invariant, marginal, equivariant, fixed⟩ :=
-      D5.S3.ConceptDynamics.Attribution.NormalSubgroupFixedMass.maximal_normal_subgroup_fixed_seed_mass.{u,v,w,0}
-        N P nn normalized cov
-    have full : seedFixedMass (G := N) a = 1 :=
-      fixed.trans (row_mass_one_of_supported N P nn normalized supported x₀)
-    have allNormalFixed (s : S) (n : N) : n • s = s :=
-      forall_of_sum_filter_eq_total positive (full.trans total.symm) s n
-    refine ⟨S, inferInstance, inferInstance, a, f, positive, total, invariant, marginal, equivariant, ?_⟩
-    unfold seedFixedMass
-    have fixedByH (s : S) (h : H) : h • s = s :=
-      allNormalFixed s ⟨h.val, Subgroup.le_normalClosure h.property⟩
-    simpa only [fixedByH, implies_true, filter_true_of_mem] using total
+    rcases isEmpty_or_nonempty X with empty | inhabited
+    · let S := PUnit.{max v w + 1}
+      let action : MulAction G S := {
+        smul := fun _ s => s
+        one_smul := fun _ => rfl
+        mul_smul := fun _ _ _ => rfl }
+      let _ := action
+      let f (x : X) (_ : S) : Y := (empty.false x).elim
+      refine ⟨S, inferInstance, action, fun _ => 1, f, fun _ => zero_lt_one,
+        by simp [S], fun _ _ => rfl, fun x _ => (empty.false x).elim,
+        fun _ x _ => (empty.false x).elim, ?_⟩
+      have allFixed (s : S) (h : H) : h • s = s := rfl
+      simp [seedFixedMass, allFixed, S]
+    · letI : Nonempty X := inhabited
+      obtain ⟨x₀, _, _, S, _, _, a, f, positive, total, invariant, marginal, equivariant, fixed⟩ :=
+        D5.S3.ConceptDynamics.Attribution.NormalSubgroupFixedMass.maximal_normal_subgroup_fixed_seed_mass.{u,v,w,0}
+          N P nn normalized cov
+      have full : seedFixedMass (G := N) a = 1 :=
+        fixed.trans (row_mass_one_of_supported N P nn normalized supported x₀)
+      have allNormalFixed (s : S) (n : N) : n • s = s :=
+        forall_of_sum_filter_eq_total positive (full.trans total.symm) s n
+      refine ⟨S, inferInstance, inferInstance, a, f, positive, total, invariant, marginal, equivariant, ?_⟩
+      unfold seedFixedMass
+      have fixedByH (s : S) (h : H) : h • s = s :=
+        allNormalFixed s ⟨h.val, Subgroup.le_normalClosure h.property⟩
+      simpa only [fixedByH, implies_true, filter_true_of_mem] using total
 
 end D5.S3.ConceptDynamics.Attribution.NormalClosureFixedMass

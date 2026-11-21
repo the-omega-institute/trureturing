@@ -14,11 +14,11 @@ $$\forall G, X, Y, H:\operatorname{Subgroup}\left(G\right), P:X \times Y \to \ma
 
 *Commentary.*
 
-A group G acts on a nonempty finite input type X in universe v and on a finite output type Y in universe w with decidable equality. A probability kernel P has nonnegative entries, normalized rows and is covariant under G. Let H be a subgroup of G and let N be the normal closure of H in G.
+A group G acts on a finite input type X in universe v and on a finite output type Y in universe w with decidable equality. A probability kernel P has nonnegative entries, normalized rows and is covariant under G. Let H be a subgroup of G and let N be the normal closure of H in G.
 
 The seed type belongs to the maximum of the input and output universes. PositiveCalibration requires a G-action on that type, strictly positive normalized G-invariant weights, and a pointwise G-covariant deterministic readout realizing each entry of P as the total weight of seeds with the indicated output. FixedMass is the total weight of seeds fixed by every element of the subgroup.
 
-When the H-fixed event has full weight, positivity forces each seed to be fixed by H. The kernel of the seed action is normal and contains H, so it contains N as well. Covariance then forces the stated row support. Conversely, the row support gives mass one in every row for the N stabilizer criterion. The normal-subgroup maximum supplies a calibration with full N-fixed mass, which also has full H-fixed mass.
+When the H-fixed event has full weight, positivity forces each seed to be fixed by H. The kernel of the seed action is normal and contains H, so it contains N as well. Covariance then forces the stated row support. For an empty input type one seed of weight one with trivial group action suffices. For nonempty input the row support gives mass one in every row for the N stabilizer criterion. The normal-subgroup maximum supplies a calibration with full N-fixed mass, which also has full H-fixed mass.
 
 ## References
 
