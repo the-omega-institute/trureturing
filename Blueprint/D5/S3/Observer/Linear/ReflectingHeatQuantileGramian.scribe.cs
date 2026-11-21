@@ -43,6 +43,6 @@ internal sealed class ReflectingHeatQuantileGramianDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "At a saddle satisfying the scalar stationarity equation, the exact zero density yields continuous, strictly increasing cumulative mass and a uniform density cap. The result uses the imaginary potential evaluation and the real-axis cancellation as hypotheses. The two physical estimates give the absolute logarithmic error at most 20(1+log n+|log(nT)|) for every positive mode."))),
+                    "At the unique positive saddle, the zero density yields continuous, strictly increasing cumulative mass and a uniform density cap. Differentiating the imaginary potential gives an integral of the weighted resolvent. Its evaluation gives the multiplier normalization and radial upper type. The angular logarithmic integral equals the logarithm of the exterior Joukowski radius by the Mahler measure of a quadratic. The real boundary evaluation of the potential remains a hypothesis. It gives the required real-axis cancellation, and the two physical estimates bound the absolute logarithmic error by 20(1+log n+|log(nT)|) for every positive mode."))),
                 DescribeRole.Theorem))));
 }

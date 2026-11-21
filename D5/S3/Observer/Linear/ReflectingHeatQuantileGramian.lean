@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.Linear.ReflectingHeatCanonicalProduct
 import D5.S3.Observer.Linear.ReflectingHeatPhysicalGramian
+import Mathlib.Analysis.Polynomial.MahlerMeasure
 
 /-! The canonical multiplier in the physical reflecting heat moment problem. -/
 
@@ -1166,14 +1167,232 @@ private theorem log_inverse_diagonal_error_at_saddle_radius (n : ℕ) (j : Mode 
       N * saddleRate a β (rate n j)| ≤ 20 * (1 + Real.log N + |Real.log a|) at H
   rwa [he] at H
 
-/-- The physical-time estimate at the unique positive saddle for the window.
-The two axis assertions concern the density built from that radius. -/
+private theorem exists_outer_root (c : ℂ) : ∃ z : ℂ, z ≠ 0 ∧ z + z⁻¹ = c ∧ 1 ≤ ‖z‖ := by
+  obtain ⟨w, hw⟩ := Complex.cos_surjective (c / 2)
+  let z := Complex.exp (w * Complex.I)
+  have hz : z ≠ 0 := Complex.exp_ne_zero _
+  have he : z + z⁻¹ = c := by
+    simp only [Complex.cos, neg_mul, Complex.exp_neg] at hw
+    have h := congrArg (fun x : ℂ => x * 2) hw
+    simpa only [z, div_mul_cancel₀ _ (by norm_num : (2 : ℂ) ≠ 0)] using h
+  by_cases hn : 1 ≤ ‖z‖
+  · exact ⟨z, hz, he, hn⟩
+  · exact ⟨z⁻¹, inv_ne_zero hz, by simpa only [inv_inv, add_comm] using he, by
+      rw [norm_inv]
+      exact (one_le_inv₀ (norm_pos_iff.2 hz)).2 (le_of_not_ge hn)⟩
+
+open Polynomial in
+private theorem angularGreen_eq_log_outer_radius (ω : ℝ) {z : ℂ} (hz : z ≠ 0)
+    (hroot : z + z⁻¹ = (ω : ℂ) * Complex.I - 2) (hz₁ : 1 ≤ ‖z‖) :
+    spectralAverage (fun r => Real.log ‖(r : ℂ) - (ω : ℂ) * Complex.I‖) = Real.log ‖z‖ ∧
+      IntervalIntegrable (fun θ => Real.log ‖Complex.ofReal (2 - 2 * Real.cos θ) -
+        (ω : ℂ) * Complex.I‖) volume 0 Real.pi := by
+  let p : ℂ[X] := (X - C z) * (X - C z⁻¹)
+  let f (θ : ℝ) := Real.log ‖(Complex.ofReal (2 - 2 * Real.cos θ)) - (ω : ℂ) * Complex.I‖
+  have hp : p ≠ 0 := by
+    apply mul_ne_zero <;> exact X_sub_C_ne_zero _
+  have hn : Real.posLog ‖z⁻¹‖ = 0 := by
+    apply (Real.posLog_eq_zero_iff _).2
+    rw [abs_of_nonneg (norm_nonneg _), norm_inv]
+    exact inv_le_one_of_one_le₀ hz₁
+  have hmah : p.logMahlerMeasure = Real.log ‖z‖ := by
+    rw [show p = (X - C z) * (X - C z⁻¹) from rfl,
+      logMahlerMeasure_mul_eq_add_logMahlerMeasure hp, logMahlerMeasure_X_sub_C,
+      logMahlerMeasure_X_sub_C, hn, add_zero, Real.posLog_eq_log]
+    rwa [abs_of_nonneg (norm_nonneg _)]
+  have hval (θ : ℝ) : Real.log ‖p.eval (circleMap 0 (-1) θ)‖ = f θ := by
+    let w := circleMap 0 (-1) θ
+    have hw : ‖w‖ = 1 := by simp [w]
+    have hwn : w ≠ 0 := by
+      apply norm_ne_zero_iff.mp
+      simp [hw]
+    have hsum : w + w⁻¹ = -2 * (Real.cos θ : ℂ) := by
+      simp only [w, circleMap_zero, Complex.ofReal_neg, Complex.ofReal_one, neg_mul, one_mul,
+        inv_neg, ← Complex.exp_neg, Complex.ofReal_cos, Complex.cos]
+      ring
+    have he : p.eval w = w * (w + w⁻¹ - ((ω : ℂ) * Complex.I - 2)) := by
+      simp only [p, eval_mul, eval_sub, eval_X, eval_C]
+      rw [← hroot]
+      field_simp [hz, hwn]
+      ring
+    change Real.log ‖p.eval w‖ = _
+    rw [he, norm_mul, hw, one_mul, hsum]
+    congr 2
+    push_cast
+    ring
+  have hI : IntervalIntegrable f volume 0 (2 * Real.pi) := by
+    have hi := p.intervalIntegrable_mahlerMeasure
+    have hneg : IntervalIntegrable (fun θ => Real.log ‖p.eval (circleMap 0 (-1) θ)‖)
+        volume 0 (2 * Real.pi) := by
+      let g (v : ℂ) := Real.log ‖p.eval v‖
+      have hi' : CircleIntegrable g 0 1 := hi
+      have hn' : CircleIntegrable g 0 (-1) := by simpa only [circleIntegrable_neg_radius] using hi'
+      exact hn'
+    simpa only [hval] using hneg
+  have hsymm (θ : ℝ) : f (2 * Real.pi - θ) = f θ := by
+    dsimp only [f]
+    rw [Real.cos_two_pi_sub]
+  have hmid : Real.pi ∈ uIcc 0 (2 * Real.pi) := by
+    rw [uIcc_of_le (by positivity)]
+    constructor <;> linarith [Real.pi_pos]
+  have h₁ : IntervalIntegrable f volume 0 Real.pi :=
+    hI.mono_set (uIcc_subset_uIcc_left hmid)
+  have h₂ : IntervalIntegrable f volume Real.pi (2 * Real.pi) :=
+    hI.mono_set (uIcc_subset_uIcc_right hmid)
+  have hsplit := intervalIntegral.integral_add_adjacent_intervals h₁ h₂
+  have hreflect : (∫ θ in Real.pi..2 * Real.pi, f θ) = ∫ θ in 0..Real.pi, f θ := by
+    have he := intervalIntegral.integral_comp_sub_left f (a := 0) (b := Real.pi) (2 * Real.pi)
+    rw [sub_zero, show 2 * Real.pi - Real.pi = Real.pi by ring] at he
+    simp only [hsymm] at he
+    exact he.symm
+  have havg : p.logMahlerMeasure = (∫ θ in 0..Real.pi, f θ) / Real.pi := by
+    rw [logMahlerMeasure_def, ← Real.circleAverage_neg_radius, Real.circleAverage_def]
+    simp only [hval, smul_eq_mul]
+    rw [← hsplit, hreflect]
+    ring
+  exact ⟨havg.symm.trans hmah, h₁⟩
+
+/-- The value of the saddle square root on the real boundary. -/
+def realSaddleRoot (β x : ℝ) : ℂ :=
+  if x ≤ β then Complex.ofReal (Real.sqrt (β ^ 2 - x ^ 2))
+  else Complex.ofReal (Real.sqrt (x ^ 2 - β ^ 2)) * Complex.I
+
+private theorem norm_axis_difference_sq (r x : ℝ) :
+    ‖(r : ℂ) - (x : ℂ) * Complex.I‖ ^ 2 = r ^ 2 + x ^ 2 := by
+  rw [Complex.sq_norm, Complex.normSq_apply]
+  simp [Complex.mul_re, Complex.mul_im, ← sq]
+
+private theorem log_axis_comparison {R s r x : ℝ} (hR : 0 < R) (hs : 0 ≤ s)
+    (hRs : s < R) (hsq : R ^ 2 - s ^ 2 = r ^ 2 + x ^ 2) :
+    Real.log ‖(r : ℂ) - (x : ℂ) * Complex.I‖ + s / R ≤ Real.log (R + s) := by
+  let d := ‖(r : ℂ) - (x : ℂ) * Complex.I‖
+  have hd2 : d ^ 2 = (R + s) * (R - s) := by
+    rw [show d ^ 2 = r ^ 2 + x ^ 2 from norm_axis_difference_sq r x, ← hsq]
+    ring
+  have hd : 0 < d := by
+    apply lt_of_le_of_ne (norm_nonneg _)
+    intro h
+    change 0 = d at h
+    rw [← h, zero_pow (by decide : 2 ≠ 0)] at hd2
+    exact (mul_pos (add_pos_of_pos_of_nonneg hR hs) (sub_pos.mpr hRs)).ne' hd2.symm
+  have hp : 0 < R + s := add_pos_of_pos_of_nonneg hR hs
+  have hm : 0 < R - s := sub_pos.mpr hRs
+  have hl := congrArg Real.log hd2
+  rw [Real.log_pow, Real.log_mul hp.ne' hm.ne'] at hl
+  norm_num at hl
+  have hv : 0 ≤ 2 * s / (R - s) := by positivity
+  have hb := Real.le_log_one_add_of_nonneg hv
+  have he : 1 + 2 * s / (R - s) = (R + s) / (R - s) := by
+    field_simp [hm.ne']
+    ring
+  have he' : 2 * (2 * s / (R - s)) / (2 * s / (R - s) + 2) = 2 * (s / R) := by
+    field_simp [hm.ne', hR.ne', show 0 < 2 * s / (R - s) + 2 by linarith]
+    <;> ring
+  rw [he, he', Real.log_div hp.ne' hm.ne'] at hb
+  change Real.log d + s / R ≤ _
+  linarith
+
+private theorem saddle_real_cancellation (n : ℕ) {a β : ℝ} (hβ : 0 < β)
+    (hs : saddleMass β = a / 2)
+    (hreal : ∀ x ≥ 0, realPotential β (saddleDensity n β) x =
+      (n : ℝ) * (a / 2 * ((realSaddleRoot β x).re - β) -
+        spectralAverage (fun r => Real.log ‖realSaddleRoot β x + (radius β r : ℂ)‖) +
+        saddleLogAverage β 0)) (ω : ℝ) :
+    ∃ ζ : ℂ, ζ ≠ 0 ∧ ζ + ζ⁻¹ = (ω : ℂ) * Complex.I - 2 ∧ 1 ≤ ‖ζ‖ ∧
+      realPotential β (saddleDensity n β) |ω| + (n : ℝ) * Real.log ‖ζ‖ ≤
+        (n : ℝ) * saddleRate a β 0 := by
+  obtain ⟨ζ, hz, hroot, hn⟩ := exists_outer_root ((ω : ℂ) * Complex.I - 2)
+  obtain ⟨hgreen, hiG⟩ := angularGreen_eq_log_outer_radius ω hz hroot hn
+  refine ⟨ζ, hz, hroot, hn, ?_⟩
+  let x := |ω|
+  let S := realSaddleRoot β x
+  let Gamma := spectralAverage (fun r => Real.log ‖(r : ℂ) - (ω : ℂ) * Complex.I‖)
+  let J := spectralAverage (fun r => Real.log ‖S + (radius β r : ℂ)‖)
+  have hx : 0 ≤ x := abs_nonneg ω
+  have hx2 : x ^ 2 = ω ^ 2 := sq_abs ω
+  have hβ0 : radius β 0 = β := by simp [radius, Real.sqrt_sq hβ.le]
+  suffices hh : a / 2 * S.re + Gamma ≤ J by
+    rw [hreal x hx, ← hgreen]
+    change (n : ℝ) * (a / 2 * (S.re - β) - J + saddleLogAverage β 0) + (n : ℝ) * Gamma ≤ _
+    have he : saddleRate a β 0 = saddleLogAverage β 0 - a / 2 * β := by
+      simp [saddleRate, saddleLogAverage, hβ0]
+    rw [he]
+    have h := mul_le_mul_of_nonneg_left hh (show 0 ≤ (n : ℝ) by positivity)
+    linarith
+  by_cases hsx : x ≤ β
+  · let s := Real.sqrt (β ^ 2 - x ^ 2)
+    have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+    have hs2 : s ^ 2 = β ^ 2 - x ^ 2 := by
+      exact Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hx hsx 2))
+    have hS : S = (s : ℂ) := by simp [S, s, realSaddleRoot, hsx]
+    have hJ : J = spectralAverage (fun r => Real.log (radius β r + s)) := by
+      unfold J
+      simp_rw [hS, ← Complex.ofReal_add, Complex.norm_real, Real.norm_eq_abs]
+      apply congrArg (fun f => spectralAverage f)
+      funext r
+      rw [abs_of_nonneg (add_nonneg hs0
+        (show 0 ≤ radius β r from Real.sqrt_nonneg _)), add_comm]
+    rw [hS, Complex.ofReal_re, hJ]
+    let p (θ : ℝ) := 2 - 2 * Real.cos θ
+    let g (θ : ℝ) := Real.log ‖(p θ : ℂ) - (ω : ℂ) * Complex.I‖
+    let G (θ : ℝ) := (radius β (p θ))⁻¹
+    let H (θ : ℝ) := Real.log (radius β (p θ) + s)
+    have hP (θ : ℝ) : 0 < radius β (p θ) := by unfold radius; positivity
+    have hcG : Continuous G := by
+      apply Continuous.inv₀ (by dsimp [radius, p]; fun_prop)
+      exact fun θ => (hP θ).ne'
+    have hcH : Continuous H := by
+      apply Continuous.log (by dsimp [radius, p]; fun_prop)
+      exact fun θ => (add_pos_of_pos_of_nonneg (hP θ) hs0).ne'
+    have hb (θ : ℝ) (ht : θ ∈ Ioo 0 Real.pi) : s * G θ + g θ ≤ H θ := by
+      have hcos := Real.strictAntiOn_cos
+        (show (0 : ℝ) ∈ Icc 0 Real.pi from ⟨le_rfl, Real.pi_pos.le⟩)
+        ⟨ht.1.le, ht.2.le⟩ ht.1
+      have hp : 0 < p θ := by dsimp [p]; rw [Real.cos_zero] at hcos; linarith
+      have hR2 : radius β (p θ) ^ 2 = (p θ) ^ 2 + β ^ 2 :=
+        Real.sq_sqrt (by positivity)
+      have hRs : s < radius β (p θ) :=
+        (sq_lt_sq₀ hs0 (hP θ).le).1 (by rw [hR2, hs2]; nlinarith [sq_pos_of_pos hp])
+      have h := log_axis_comparison (hP θ) hs0 hRs (show
+        radius β (p θ) ^ 2 - s ^ 2 = (p θ) ^ 2 + ω ^ 2 by rw [hR2, hs2, hx2]; ring)
+      simpa only [H, g, G, div_eq_mul_inv, add_comm] using h
+    have hiG' : IntervalIntegrable g volume 0 Real.pi := hiG
+    have h := intervalIntegral.integral_mono_on_of_le_Ioo Real.pi_pos.le
+      (((hcG.intervalIntegrable (μ := volume) 0 Real.pi).const_mul s).add hiG')
+      (hcH.intervalIntegrable _ _) hb
+    rw [intervalIntegral.integral_add
+      ((hcG.intervalIntegrable (μ := volume) 0 Real.pi).const_mul s) hiG',
+      intervalIntegral.integral_const_mul] at h
+    have hm : (∫ θ in 0..Real.pi, G θ) / Real.pi = a / 2 := hs
+    have hmul := div_le_div_of_nonneg_right h Real.pi_pos.le
+    rw [add_div, mul_div_assoc, hm, mul_comm s (a / 2)] at hmul
+    exact hmul
+  · have hxβ : β < x := lt_of_not_ge hsx
+    let c := Real.sqrt (x ^ 2 - β ^ 2)
+    have hc : c ^ 2 = x ^ 2 - β ^ 2 :=
+      Real.sq_sqrt (sub_nonneg.mpr (pow_le_pow_left₀ hβ.le hxβ.le 2))
+    have hS : S = (c : ℂ) * Complex.I := by simp [S, c, realSaddleRoot, hsx]
+    have hre : S.re = 0 := by rw [hS]; simp [Complex.mul_re]
+    have hnrm (r : ℝ) : ‖S + (radius β r : ℂ)‖ = ‖(r : ℂ) - (ω : ℂ) * Complex.I‖ := by
+      apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1
+      rw [norm_axis_difference_sq, hS, Complex.sq_norm, Complex.normSq_apply]
+      simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+        Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, mul_zero,
+        mul_one, add_zero, sub_zero, zero_add, zero_pow (by decide : 2 ≠ 0), ← sq]
+      rw [hc, show radius β r ^ 2 = r ^ 2 + β ^ 2 from Real.sq_sqrt (by positivity), hx2]
+      ring
+    rw [hre, mul_zero, zero_add]
+    simp only [J, Gamma, hnrm, le_refl]
+
+/-- The estimate at the unique positive saddle for the physical window.
+The imaginary potential is evaluated by the weighted resolvent. The remaining
+hypothesis is the real boundary value of the same potential. -/
 theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT : 0 < T)
     (hReal : let a := (n : ℝ) * T; let β := saddleRadius a
-      ∀ ω : ℝ, ∃ ζ : ℂ, ζ ≠ 0 ∧
-        ζ + ζ⁻¹ = (ω : ℂ) * Complex.I - 2 ∧ 1 ≤ ‖ζ‖ ∧
-        realPotential β (saddleDensity n β) |ω| + (n : ℝ) * Real.log ‖ζ‖ ≤
-          (n : ℝ) * saddleRate a β 0) :
+      ∀ x ≥ 0, realPotential β (saddleDensity n β) x =
+        (n : ℝ) * (a / 2 * ((realSaddleRoot β x).re - β) -
+          spectralAverage (fun r => Real.log ‖realSaddleRoot β x + (radius β r : ℂ)‖) +
+          saddleLogAverage β 0)) :
     let a := (n : ℝ) * T
     |Real.log (Real.sqrt ((physicalGramian n T)⁻¹ j j)) -
       (n : ℝ) * saddleRate a (saddleRadius a) (rate n j)| ≤
@@ -1184,7 +1403,8 @@ theorem physical_log_inverse_diagonal_error (n : ℕ) (j : Mode n) {T : ℝ} (hT
   obtain ⟨hβ, hs⟩ := saddleRadius_spec (mul_pos hn hT)
   have hImag := imaginaryPotential_eval_of_resolvent n hn (mul_pos hn hT) hβ hs
     (fun y _ => saddleDensity_resolvent n hβ hs y)
-  exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag hReal
+  exact log_inverse_diagonal_error_at_saddle_radius n j hT hβ hs hImag
+    (saddle_real_cancellation n hβ hs hReal)
 
 #print axioms physical_log_inverse_diagonal_error
 #print axioms inverse_diagonal_lower_bound_at_saddle
