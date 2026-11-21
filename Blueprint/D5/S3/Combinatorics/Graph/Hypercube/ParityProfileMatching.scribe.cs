@@ -33,6 +33,41 @@ internal sealed class ParityProfileMatchingDocument : IScribeDocumentDefinition
                         Seq(Open, upper, Close)), Close)))));
     }
 
+    private static Formula BoundaryStatement(bool maximal)
+    {
+        var n = F.Id("n");
+        var k = F.Id("k");
+        var v = F.Id("v");
+        var u = F.Id("u");
+        var i = F.Id("i");
+        var vectors = Call("CountVectors", n);
+        var coordinates = Call("Coordinates", n);
+        var floor = Call("FeasibleFloor", n, k, v);
+        var dominates = Bind(FormulaQuantifier.ForAll, "i", coordinates,
+            Seq(Call("Value", v, i), Sp, Le, Sp, Call("Value", u, i)));
+        Formula body;
+        if (maximal)
+        {
+            var maximality = Bind(FormulaQuantifier.ForAll, "u", vectors,
+                new Formula.Logic(Seq(Open, new Formula.Logic(Call("FeasibleFloor", n, k, u),
+                    FormulaLogicOperator.And, Seq(Open, dominates, Close)), Close),
+                    FormulaLogicOperator.Implies, Seq(u, Sp, Eq, Sp, v)));
+            body = new Formula.Logic(Seq(Open, new Formula.Logic(floor,
+                FormulaLogicOperator.And, Seq(Open, maximality, Close)), Close),
+                FormulaLogicOperator.Iff, Call("Boundary", n, k, v));
+        }
+        else
+        {
+            var exists = Bind(FormulaQuantifier.Exists, "u", vectors,
+                new Formula.Logic(Call("Boundary", n, k, u), FormulaLogicOperator.And,
+                    Seq(Open, dominates, Close)));
+            body = new Formula.Logic(floor, FormulaLogicOperator.Implies, Seq(Open, exists, Close));
+        }
+        return Disp(Bind(FormulaQuantifier.ForAll, "n", F.Id("Nat"),
+            Bind(FormulaQuantifier.ForAll, "k", F.Id("Nat"),
+                Bind(FormulaQuantifier.ForAll, "v", vectors, body))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer couplings of the two parity classes have a sharp common-one count across coordinates.",
         H("Optimal common-one counts in parity couplings"),
@@ -58,5 +93,30 @@ internal sealed class ParityProfileMatchingDocument : IScribeDocumentDefinition
                     "power n. Doubling the entries in each batch gives the even direction counts " +
                     "of a perfect matching by the Felzenbaum, Holzman and Kleitman criterion. " +
                     "The sum of the matching matrices realizes the bound."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("parity-coupling-boundary-domination"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.profile_floor_dominated"),
+                H("A boundary vector dominates each feasible floor"),
+                StatementSource.FromAuthor(BoundaryStatement(false)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("CountVectors(n) consists of natural-valued functions on " +
+                    "Coordinates(n), and Value(v,i) is the value of v at coordinate i. " +
+                    "FeasibleFloor(n,k,v) means one coupling in Couplings(n,k) has common-one " +
+                    "counts at least v at every coordinate. Boundary(n,k,u) means that u(i) is " +
+                    "at most M at every coordinate and the sum of M minus u(i) equals M. " +
+                    "Allocate the M units of deficit below the coordinate capacities M minus v(i)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("parity-coupling-maximal-floors"),
+                DeclarationHandle.Create(
+                    "D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.exact_profile_frontier"),
+                H("The maximal common-one count vectors"),
+                StatementSource.FromAuthor(BoundaryStatement(true)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The prescribed-direction matchings realize every " +
+                    "boundary vector. Strict coordinatewise improvement over such a vector " +
+                    "would force the total deficit below M."))),
+                DescribeRole.Theorem))));
 }
