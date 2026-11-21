@@ -1,15 +1,13 @@
+import { DefaultArtifactClient } from '@actions/artifact';
 import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
-import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 
 const env = process.env;
 const stage = env.STAGE;
 if (!['common', '0', '1', '2', '3'].includes(stage)) throw new Error('unknown compiler stage');
 const targets = (env.LEAN_LAYER_TARGETS || '').trim().split(/\s+/).filter(Boolean);
-const actionDir = dirname(fileURLToPath(import.meta.url));
 const tmp = mkdtempSync(join(env.RUNNER_TEMP, 'layer-progress-'));
 const archiveDir = join(env.RUNNER_TEMP, 'lean-compile');
 const api = 'tools/scripts/worktree/lean_compile_layers.py';
@@ -17,6 +15,8 @@ const helper = '.github/actions/lean-report-compile-checkpoint/progress.py';
 const options = ['--stage', stage, '--artifacts', archiveDir, ...(targets.length ? ['--target', ...targets] : [])];
 const checkout = execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();
 env.PROJECT_SEED = createHash('sha256').update(JSON.stringify([checkout, stage, targets])).digest('hex');
+const dependencyPins = execFileSync('git', ['ls-tree', 'HEAD', '--', 'lean-toolchain', 'lake-manifest.json']);
+env.DEPENDENCY_SEED = createHash('sha256').update(dependencyPins).digest('hex');
 mkdirSync(archiveDir, {recursive: true});
 
 function progress(command, dir) {
@@ -48,15 +48,6 @@ function compiler(seconds, probe, out) {
 const [repositoryOwner, repositoryName] = env.GITHUB_REPOSITORY.split('/');
 const findBy = {token: env.GH_TOKEN, repositoryOwner, repositoryName, workflowRunId: Number(env.GITHUB_RUN_ID)};
 const prefix = 'lean-compile-progress-' + env.GITHUB_RUN_ID + '-' + stage + '-';
-const npmDir = join(tmp, 'client');
-mkdirSync(npmDir);
-for (const name of ['package.json', 'package-lock.json']) {
-  copyFileSync(join(actionDir, name), join(npmDir, name));
-}
-execFileSync('npm', ['ci', '--ignore-scripts', '--omit=dev', '--no-audit', '--no-fund'], {
-  cwd: npmDir, env: {PATH: env.PATH, HOME: env.HOME}, stdio: 'inherit', timeout: 120000
-});
-const {DefaultArtifactClient} = createRequire(join(npmDir, 'package.json'))('@actions/artifact');
 const client = new DefaultArtifactClient();
 const endpoint = 'repos/' + env.GITHUB_REPOSITORY + '/actions/runs/' + env.GITHUB_RUN_ID + '/artifacts?per_page=100';
 const pages = JSON.parse(execFileSync('gh', ['api', '--paginate', '--slurp', endpoint], {encoding: 'utf8'}));
