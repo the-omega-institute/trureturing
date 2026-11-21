@@ -363,8 +363,7 @@ local macro "sourceVacuum" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeAllStateField 0) ++
     `D5.S3.VertexAlgebra.LatticeAllStateField.neutral_creativity))
 
-/-- The corrected-field coefficient of a current source is the corresponding actual tensor current. -/
-theorem current_coeff (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem current_coeff (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Fin D.rank) (k : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu (neutralMode D i (-1) (vacuum D))).coeff (-2*k-3) x =
       LatticeHalfFock.tensorCurrent D (ActualGround D hu) i k x := by

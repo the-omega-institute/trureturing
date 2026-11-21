@@ -14,6 +14,7 @@ degree one. A number operator then isolates a nonzero pure tensor in the submodu
 Literature status: classical twisted lattice orbifold theory; no novelty claim.
 -/
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
+import D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
 import D5.S3.VertexAlgebra.HalfFock.LatticeHalfFockFixedCyclicReduction
 import D5.S3.VertexAlgebra.ActualTensorGroundIntersection
 
@@ -28,8 +29,15 @@ open LatticeGeneratingFieldLocality
 open LatticeAllStateField (occurrences vacuum)
 open LatticeHalfFock (tensorCurrent tensorEnd)
 open LatticeHalfFockChargedTensorCoefficients (ActualGround ActualTensor groundRank)
-open LatticeHalfFockCorrectedField (correctedField)
-open LatticeHalfFockCurrentBorcherds (current_coeff)
+open LatticeHalfFockCorrectedField (correctedField correctedPolynomial correctedSum
+  shiftField shiftField_coefficient_public correctedField_negative_current_insertion)
+open LatticeHalfFockCorrectedConformal (current_charged_zero_identity current_identity_coefficient)
+open LatticeHalfFockCurrentBorcherds (source_current)
+open LatticeHalfFockFiniteCorrection (Corr Corr_monomial_enumeration correctionWord sourceWeight)
+open LatticeHalfFockFockNormalField (wordField_coefficient
+  polynomialField_monomial_public singletonLinear_coefficient flatTerm flatCoefficient
+  jetCurrent jetScalar)
+open LatticeFiniteNegativeGeneration (neutralMode)
 open LatticeHalfFockParityField (fixedParitySlice paritySpace)
 open LatticeHalfFockParityT (actualParity)
 open LatticeHalfFockFixedCyclicReduction (current_after_odd_coeff_mem_fixedParitySlice_span)
@@ -251,6 +259,56 @@ private theorem extract_one_oscillator_of_paired_partials
       map_zero, Pi.zero_apply, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h
     exact hchosen h
   exact ⟨a, g, hg, hne, hisolate ▸ hnumber a u huS⟩
+
+private theorem corrected_vacuum_eq_identity (D : LatticeData) (hu : IsUnit D.G.det) :
+    correctedField D hu (vacuum D) = FieldNormalProduct.identityField := by
+  have hCorr := Corr_monomial_enumeration D (0 : Charge D) 0 [] (by simp [occurrences])
+  have hOne : Corr D (0 : Charge D) 1 = Finsupp.single 0 1 := by
+    rw [show (monomial (0 : Index D →₀ ℕ) 1 : Oscillator D) = 1 by simp] at hCorr
+    rw [hCorr]
+    simp only [correctionWord, map_one]
+    apply Finsupp.ext
+    intro n
+    change Polynomial.coeff (1 : Polynomial (Oscillator D)) n = (Finsupp.single 0 1) n
+    simp [Polynomial.coeff_one, Finsupp.single_apply, eq_comm]
+  simp only [vacuum, correctedField, Finsupp.lsum_single, correctedPolynomial,
+    LinearMap.comp_apply, hOne, correctedSum]
+  have emptyWord : LatticeHalfFockFockNormalField.occurrences D 0 = [] := by
+    simp [LatticeHalfFockFockNormalField.occurrences]
+  rw [show (1 : Oscillator D) = monomial 0 1 by simp, polynomialField_monomial_public,
+    emptyWord]
+  apply HVertexOperator.coeff_inj
+  funext exponent
+  apply LinearMap.ext
+  intro x
+  rw [shiftField_coefficient_public]
+  simp only [Nat.cast_zero, mul_zero, add_zero, wordField_coefficient]
+  change (∑ᶠ _ : Unit, (LatticeHalfFockChargedTensorCoefficients.chargedField
+    D hu 0).coeff exponent x) = _
+  rw [finsum_unique, current_charged_zero_identity]
+
+/-- At current insertion into the vacuum, only the matching native tensor mode survives. -/
+private theorem current_coeff (D : LatticeData) (hu : IsUnit D.G.det)
+    (i : Fin D.rank) (k : ℤ) (x : ActualTensor D hu) :
+    (correctedField D hu (neutralMode D i (-1) (vacuum D))).coeff (-2 * k - 3) x =
+      tensorCurrent D (ActualGround D hu) i k x := by
+  classical
+  have positive (n : ℕ) : neutralMode D i (n : ℤ) (vacuum D) = 0 := by
+    rw [← source_current]
+    exact LatticeAllStateField.stateField_creativity D _ n (Int.natCast_nonneg n)
+  have insertion := correctedField_negative_current_insertion D hu (i, 0) (vacuum D)
+  simp only [sourceWeight, Nat.zero_add, Nat.cast_one, positive, map_zero,
+    smul_zero, Finset.sum_const_zero, add_zero] at insertion
+  rw [insertion, corrected_vacuum_eq_identity, singletonLinear_coefficient, finsum_eq_single _ k]
+  · simp only [flatTerm, flatCoefficient, jetCurrent, jetScalar, Finset.range_zero,
+      Finset.prod_empty, Nat.factorial_zero, Nat.cast_one, div_one, one_smul]
+    split_ifs <;> simp only [Module.End.mul_apply, current_identity_coefficient,
+      show -2 * k - 3 + 2 * k + 2 * (0 : ℕ) + 3 = 0 by omega, ite_true]
+  · intro m hm
+    have h : -2 * k - 3 + 2 * m + 2 * (0 : ℕ) + 3 ≠ 0 := by omega
+    simp only [flatTerm, flatCoefficient]
+    split_ifs <;> simp only [Module.End.mul_apply, current_identity_coefficient,
+      ite_eq_right h, map_zero]
 
 set_option maxHeartbeats 1000000 in
 -- The fixed-mode span and its transport through the parity subtype add elaboration work.

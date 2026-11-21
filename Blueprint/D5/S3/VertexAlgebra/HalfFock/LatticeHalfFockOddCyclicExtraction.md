@@ -27,4 +27,5 @@ Choose a nonzero vector of S and a monomial of maximal total degree across all i
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/LatticeHalfFockOddCyclicExtraction.nonzero_fixedParitySlice_stable_submodule_contains_one_oscillator`
 - Dependency: [D5/S3/VertexAlgebra/ActualTensorGroundIntersection](../ActualTensorGroundIntersection.md)
 - Dependency: [D5/S3/VertexAlgebra/HalfFock/LatticeHalfFockFixedCyclicReduction](LatticeHalfFockFixedCyclicReduction.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectedConformal](../LatticeHalfFockCorrectedConformal.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCurrentBorcherds](../LatticeHalfFockCurrentBorcherds.md)
