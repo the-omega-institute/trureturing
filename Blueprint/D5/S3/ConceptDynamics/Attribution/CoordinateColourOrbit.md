@@ -6,7 +6,7 @@ A pair of distinct Boolean profiles with nontrivial colour shifts has four equal
 
 **Theorem 1.1 (Exactly when every invariant count is divisible by four).**
 
-$$\begin{aligned}\forall m \in M, 4 \mid \sum_{c,d} m\left((p,c), (q,d)\right)\\\iff p \neq q \land (\exists i \in I, p\left(i\right) = 0) \land (\exists j \in I, q\left(j\right) = 0)\end{aligned}$$
+$$\begin{aligned}(\forall m \in M, 4 \mid \sum_{c,d} m\left((p,c), (q,d)\right))\\\iff p \neq q \land (\exists i \in I, p\left(i\right) = 0) \land (\exists j \in I, q\left(j\right) = 0)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/CoordinateColourOrbit.universally_four_dvd_iff` (`✓ std3`). ∎
 
