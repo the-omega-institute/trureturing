@@ -25,7 +25,7 @@ internal sealed class NonprincipalCharacterGrowthDocument : IScribeDocumentDefin
                         + "Boundedness of A makes its Mellin integral holomorphic throughout σ > 0, "
                         + "so analytic continuation extends the identity to this half-plane.")),
                     Paragraph(Text("The absolute value of the remaining power integrates to 1/σ. "
-                        + "Multiplying by |s| and the incomplete-period bound φ(q)/2 gives the stated estimate.")),
+                        + "On q < t < q + 1 the sum vanishes after a complete period, while its majorant is positive. This interval has positive measure, giving strict inequality after integration and multiplication by |s|.")),
                     Paragraph(Text("The positive modulus is part of the definition of this L-function. "
                         + "For the principal character modulo three at s = 2 the first and second terms "
                         + "already give 1 + 1/4, and every later term is nonnegative. The displayed "
@@ -44,7 +44,7 @@ internal sealed class NonprincipalCharacterGrowthDocument : IScribeDocumentDefin
         Formula upper = F.Seq(Call("phi", q), F.Sp, Call("abs", s), F.Slash,
             F.Open, F.D(2), F.Sp, re, F.Close);
         Formula conclusion = new Formula.Relation(Call("abs", Call("L", s, chi)),
-            FormulaRelationOperator.LessThanOrEqual, upper);
+            FormulaRelationOperator.LessThan, upper);
         return F.Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
             [new(FormulaIdentifier.Create("q"), F.Id("Nat")),
              new(FormulaIdentifier.Create("chi"), Call("DirichletCharacter", F.Id("Complex"), q)),

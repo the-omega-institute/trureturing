@@ -8,7 +8,7 @@ For a complex nonprincipal character of positive modulus q, each full period sum
 
 **Theorem 1.1 (Growth throughout the right half-plane).**
 
-$$\forall q \in Nat, chi \in \operatorname{DirichletCharacter}\left(Complex, q\right), s \in Complex,\; \left(0 < q \land \left(chi \ne 1 \land 0 < \operatorname{Re}\left(s\right)\right)\right) \Rightarrow \operatorname{abs}\left(\operatorname{L}\left(s, chi\right)\right) \le \operatorname{phi}\left(q\right) \operatorname{abs}\left(s\right)/(2 \operatorname{Re}\left(s\right))$$
+$$\forall q \in Nat, chi \in \operatorname{DirichletCharacter}\left(Complex, q\right), s \in Complex,\; \left(0 < q \land \left(chi \ne 1 \land 0 < \operatorname{Re}\left(s\right)\right)\right) \Rightarrow \operatorname{abs}\left(\operatorname{L}\left(s, chi\right)\right) < \operatorname{phi}\left(q\right) \operatorname{abs}\left(s\right)/(2 \operatorname{Re}\left(s\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/CharacterSums/NonprincipalCharacterGrowth.nonprincipal_growth` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ $$\forall q \in Nat, chi \in \operatorname{DirichletCharacter}\left(Complex, q\r
 
 Take any complex s with σ = Re(s) > 0. Write A(t) for the character sum over positive integers up to t. Partial summation on σ > 1 identifies L(s,χ) with s times the integral of A(t)t to the power −s−1 from one to infinity. Boundedness of A makes its Mellin integral holomorphic throughout σ > 0, so analytic continuation extends the identity to this half-plane.
 
-The absolute value of the remaining power integrates to 1/σ. Multiplying by |s| and the incomplete-period bound φ(q)/2 gives the stated estimate.
+The absolute value of the remaining power integrates to 1/σ. On q < t < q + 1 the sum vanishes after a complete period, while its majorant is positive. This interval has positive measure, giving strict inequality after integration and multiplication by |s|.
 
 The positive modulus is part of the definition of this L-function. For the principal character modulo three at s = 2 the first and second terms already give 1 + 1/4, and every later term is nonnegative. The displayed allowance is 1. For the nonprincipal character modulo three at s = −1 the allowance is −1, below every norm.
 

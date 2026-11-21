@@ -23,23 +23,27 @@ noncomputable section
 open Set Filter Topology MeasureTheory Finset Complex Asymptotics
 namespace D5.S3.CharacterSums.NonprincipalCharacterGrowth
 
+private theorem complete {q : ℕ} [NeZero q] {E : Type} [AddCommMonoid E] (f : ZMod q → E) :
+    ∑ k ∈ range q, f (k:ZMod q) = ∑ z : ZMod q, f z := by
+  rw [← Fin.sum_univ_eq_sum_range]
+  calc
+    _ = ∑ k : Fin q, f (ZMod.finEquiv q k) := by
+      apply sum_congr rfl
+      intro k _
+      congr 1
+      cases q with
+      | zero => exact Fin.elim0 k
+      | succ q => exact Fin.cast_val_eq_self k
+    _ = _ := (ZMod.finEquiv q).sum_comp f
+
+private theorem period_zero {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) :
+    ∑ k ∈ range q, χ (k:ZMod q) = 0 :=
+  (complete χ).trans (MulChar.sum_eq_zero_of_ne_one hne)
+
 private theorem char_prefix {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) (n : ℕ) :
     ‖∑ k ∈ Icc 1 n, χ (k:ZMod q)‖ ≤ (q.totient:ℝ)/2 := by
   classical
-  have complete {E : Type} [AddCommMonoid E] (f : ZMod q → E) :
-      ∑ k ∈ range q, f (k:ZMod q) = ∑ z : ZMod q, f z := by
-    rw [← Fin.sum_univ_eq_sum_range]
-    calc
-      _ = ∑ k : Fin q, f (ZMod.finEquiv q k) := by
-        apply sum_congr rfl
-        intro k _
-        congr 1
-        cases q with
-        | zero => exact Fin.elim0 k
-        | succ q => exact Fin.cast_val_eq_self k
-      _ = _ := (ZMod.finEquiv q).sum_comp f
-  have block : ∑ k ∈ range q, χ (k:ZMod q) = 0 :=
-    (complete χ).trans (MulChar.sum_eq_zero_of_ne_one hne)
+  have block := period_zero χ hne
   have mass : ∑ k ∈ range q, ‖χ (k:ZMod q)‖ = (q.totient:ℝ) := by
     rw [complete (fun z => ‖χ z‖)]
     have val (z : ZMod q) : ‖χ z‖ = (1 : DirichletCharacter ℝ q) z := by
@@ -133,33 +137,86 @@ private theorem growth_integral {q : ℕ} [NeZero q] (χ : DirichletCharacter �
     (show (2:ℂ) ∈ U by change 0<(2:ℂ).re;norm_num) near
   exact (eqG hs).trans (repr s)
 
+private theorem prefix_period_zero {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hne : χ ≠ 1) :
+    ∑ k ∈ Icc 1 q, χ (k : ZMod q) = 0 := by
+  classical
+  have hq := NeZero.pos q
+  have block := period_zero χ hne
+  have ar : range q = insert 0 (Finset.Icc 1 (q - 1)) := by
+    ext k
+    simp
+    omega
+  have ai : Finset.Icc 1 q = insert q (Finset.Icc 1 (q - 1)) := by
+    ext k
+    simp
+    omega
+  rw [ar, sum_insert (by simp), Nat.cast_zero] at block
+  rw [ai, sum_insert (by simp; omega), ZMod.natCast_self]
+  exact block
 
-
-/-- Pairing each incomplete period with its complement bounds the growth of a
-nonprincipal character on the entire right half-plane by half the unit mass. -/
+/-- The half-period bound on the partial sums is strict after integration:
+the sum vanishes on the open interval following a complete period. -/
 theorem nonprincipal_growth {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
     (hne : χ ≠ 1) {s : ℂ} (hs : 0 < s.re) :
-    ‖χ.LFunction s‖ ≤ (q.totient:ℝ)/2 * ‖s‖ / s.re := by
+    ‖χ.LFunction s‖ < (q.totient : ℝ) / 2 * ‖s‖ / s.re := by
+  let K (t : ℝ) : ℂ := characterSum χ t * (t : ℂ) ^ (-(s+1))
+  let f (t : ℝ) : ℝ := ‖K t‖
+  let g (t : ℝ) : ℝ := ((q.totient : ℝ) / 2) * t ^ (-(s.re+1))
+  let U := Set.Ioi (1 : ℝ)
+  let V := Set.Ioo (q : ℝ) (q + 1)
+  let μ := volume.restrict U
+  have hq := NeZero.pos q
+  have hq_one : (1 : ℝ) ≤ q := by exact_mod_cast NeZero.one_le (n := q)
+  have VU : V ⊆ U := fun _ ht => hq_one.trans_lt ht.1
   have ha : -(s.re+1) < -1 := by linarith
-  have hc : (0:ℝ)<1 := zero_lt_one
-  have bound : ‖∫ t in Set.Ioi (1:ℝ), characterSum χ t*(t:ℂ)^(-(s+1))‖ ≤ ((q.totient:ℝ)/2)/s.re := by
-    refine (norm_integral_le_integral_norm _).trans ?_
-    calc
-      _ ≤ ∫ t in Set.Ioi (1:ℝ), ((q.totient:ℝ)/2)*t^(-(s.re+1)) := by
-        apply integral_mono_of_nonneg (Filter.Eventually.of_forall (fun _ => norm_nonneg _))
-          ((integrableOn_Ioi_rpow_of_lt ha hc).const_mul ((q.totient:ℝ)/2))
-        filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-        have ht0 := hc.trans (Set.mem_Ioi.mp ht)
-        rw [norm_mul,Complex.norm_cpow_eq_rpow_re_of_pos ht0]
-        simp only [neg_re, add_re, one_re]
-        exact mul_le_mul_of_nonneg_right (char_prefix χ hne _) (Real.rpow_nonneg ht0.le _)
-      _ = _ := by
-        rw [integral_const_mul,integral_Ioi_rpow_of_lt ha hc,Real.one_rpow]
-        rw [show -(s.re+1)+1 = -s.re by ring]
-        ring
-  rw [growth_integral χ hne hs,norm_mul]
+  have hg : Integrable g μ :=
+    (integrableOn_Ioi_rpow_of_lt ha zero_lt_one).const_mul _
+  have hK : Measurable K := by
+    apply Measurable.mul
+    · exact (measurable_of_countable (f := fun n : ℕ => ∑ k ∈ Finset.Icc 1 n, χ (k : ZMod q))).comp Nat.measurable_floor
+    · fun_prop
+  have cmp : ∀ᵐ t ∂μ, f t ≤ g t := by
+    filter_upwards [ae_restrict_mem (measurableSet_Ioi (a := (1 : ℝ)))] with t ht
+    have hpos : 0 < t := zero_lt_one.trans ht
+    dsimp [f, g, K]
+    rw [norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hpos]
+    simp only [neg_re, add_re, one_re]
+    exact mul_le_mul_of_nonneg_right (char_prefix χ hne _) (Real.rpow_nonneg hpos.le _)
+  have hf : Integrable f μ := by
+    apply hg.mono' hK.norm.aestronglyMeasurable
+    filter_upwards [cmp] with t ht
+    simpa [f, Real.norm_of_nonneg (norm_nonneg (K t))] using ht
+  have hsupp : V ⊆ Function.support (g - f) := by
+    intro t ht
+    have hfloor : ⌊t⌋₊ = q := (Nat.floor_eq_iff (zero_le_one.trans (VU ht).le)).mpr ⟨ht.1.le, ht.2⟩
+    have hzero : f t = 0 := by
+      dsimp [f, K, characterSum]
+      rw [hfloor, prefix_period_zero χ hne, zero_mul, norm_zero]
+    have htot : 0 < (q.totient : ℝ) := by exact_mod_cast Nat.totient_pos.mpr hq
+    have htp : 0 < t := zero_lt_one.trans (VU ht)
+    have hgpos : 0 < g t := mul_pos (by positivity) (Real.rpow_pos_of_pos htp _)
+    exact Function.mem_support.mpr (by simpa [hzero] using hgpos.ne')
+  have hmass : 0 < μ V := by
+    change 0 < volume.restrict U V
+    rw [Measure.restrict_apply measurableSet_Ioo, Set.inter_eq_left.mpr VU]
+    exact (Measure.measure_Ioo_pos volume).mpr (lt_add_one _)
+  have hl : 0 < ∫ t, (g - f) t ∂μ :=
+    (integral_pos_iff_support_of_nonneg_ae ((sub_nonneg_ae _ _).mpr cmp) (hg.sub hf)).mpr
+      (hmass.trans_le (measure_mono hsupp))
+  change 0 < ∫ t, (g t - f t) ∂μ at hl
+  rw [integral_sub hg hf] at hl
+  have hlt : ‖∫ t, K t ∂μ‖ < ∫ t, g t ∂μ :=
+    (norm_integral_le_integral_norm _).trans_lt (sub_pos.mp hl)
+  have hval : ∫ t, g t ∂μ = ((q.totient : ℝ) / 2) / s.re := by
+    dsimp [g, μ, U]
+    rw [integral_const_mul, integral_Ioi_rpow_of_lt ha zero_lt_one, Real.one_rpow,
+      show -(s.re + 1) + 1 = -s.re by ring]
+    ring
+  rw [hval] at hlt
+  have hsn : 0 < ‖s‖ := norm_pos_iff.mpr (fun he => by simp [he] at hs)
+  rw [growth_integral χ hne hs, norm_mul]
   calc
-    _ ≤ ‖s‖ * (((q.totient:ℝ)/2)/s.re) := mul_le_mul_of_nonneg_left bound (norm_nonneg s)
+    _ < ‖s‖ * (((q.totient : ℝ) / 2) / s.re) := mul_lt_mul_of_pos_left hlt hsn
     _ = _ := by ring
 
 end D5.S3.CharacterSums.NonprincipalCharacterGrowth

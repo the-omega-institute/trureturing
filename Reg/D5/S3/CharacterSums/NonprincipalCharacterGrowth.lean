@@ -26,7 +26,7 @@ def negative : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (_ : χ ≠ 1)
-    {s : ℂ} (_ : 0 < s.re), ‖χ.LFunction s‖ ≤ V.readout () q s
+    {s : ℂ} (_ : 0 < s.re), ‖χ.LFunction s‖ < V.readout () q s
 
 private theorem negative_fails : ¬ arena.Law negative := by
   intro h
@@ -36,7 +36,7 @@ private theorem negative_fails : ¬ arena.Law negative := by
     rintro rfl
     exact hχ (MulChar.one_apply_coe (-1 : (ZMod 3)ˣ))
   have bad := h χ hne (s := 1) (by norm_num)
-  change ‖χ.LFunction 1‖ ≤ -1 at bad
+  change ‖χ.LFunction 1‖ < -1 at bad
   linarith [norm_nonneg (χ.LFunction 1)]
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
