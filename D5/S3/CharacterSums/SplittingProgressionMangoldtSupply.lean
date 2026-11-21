@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: In long splitting progressions the two clipped Mangoldt tests fail on a vanishing fraction of integer candidates, uniformly in the first denominator and the starting index. -/
+   digest: Signed clipped Mangoldt sums on affine progressions satisfy finite second-moment and threshold bounds at arbitrary truncation; in long splitting progressions the exceptional fraction for two tests vanishes. -/
 
 import D5.S3.CharacterSums.DyadicMangoldtPrimeSupply
 import D5.S3.CharacterSums.AffineJacobiCorrelation
@@ -20,13 +20,20 @@ open D5.S3.CharacterSums.AffineJacobiCorrelation
 
 namespace D5.S3.CharacterSums.SplittingProgressionMangoldtSupply
 
+/-- Pairwise correlation bounds for the retained signed prime coefficients. On a full
+joint period an off-diagonal pair contributes zero; either end of an incomplete
+period bounds the remaining sum. -/
+def primeMomentBound (P : Finset ℕ) (a : ℕ → ℝ) (L : ℕ) : ℝ :=
+  ∑ p ∈ P, ∑ r ∈ P, if p = r then L*(a p)^2
+    else |a p| *|a r| *(min (L % (p*r)) (p*r - L % (p*r)) : ℕ)
+
 /-- The diagonal and off-diagonal estimates apply to signed weights, in particular
 after twisting the coefficients by the first selected prime. -/
 private lemma signed_moment (P : Finset ℕ) (a : ℕ → ℝ) (K : ℕ → ℕ → ℝ) (L : ℕ)
     (diag : ∀ p ∈ P, (∑ i ∈ range L, K p i * K p i) ≤ L)
-    (off : ∀ p ∈ P, ∀ r ∈ P, p ≠ r → |∑ i ∈ range L, K p i * K r i| ≤ (p:ℝ)*r) :
+    (off : ∀ p ∈ P, ∀ r ∈ P, p ≠ r → |∑ i ∈ range L, K p i * K r i| ≤ (min (L % (p*r)) (p*r - L % (p*r)) : ℕ)) :
     (∑ i ∈ range L, (∑ p ∈ P, a p * K p i)^2) ≤
-      L*(∑ p ∈ P, (a p)^2) + (∑ p ∈ P, (p:ℝ)*|a p|)^2 := by
+      primeMomentBound P a L := by
   classical
   let C (p r : ℕ) := ∑ i ∈ range L, K p i * K r i
   have row (i : ℕ) :
@@ -40,32 +47,45 @@ private lemma signed_moment (P : Finset ℕ) (a : ℕ → ℝ) (K : ℕ → ℕ 
       ∑ p ∈ P, ∑ r ∈ P, a p*a r*C p r := by
     rw [sum_comm]; apply sum_congr rfl; intro p _
     rw [sum_comm]; apply sum_congr rfl; intro r _; simp [C,mul_sum]
-  have term (p : ℕ) (hp : p ∈ P) (r : ℕ) (hr : r ∈ P) :
-      a p*a r*C p r ≤ (if p=r then L*(a p)^2 else 0) + ((p:ℝ)*|a p|)*((r:ℝ)*|a r|) := by
-    by_cases h : p=r
-    · subst r; simp only [ite_true]
-      have h := mul_le_mul_of_nonneg_left (diag p hp) (sq_nonneg (a p))
-      change (a p)^2 * C p p ≤ _ at h
-      nlinarith only [h,sq_nonneg ((p:ℝ)*|a p|)]
-    · simp only [ite_eq_right h,zero_add]
-      calc
-        _ ≤ |a p*a r*C p r| := le_abs_self _
-        _ = |a p| *|a r| *|C p r| := by rw [abs_mul,abs_mul]
-        _ ≤ |a p| *|a r| *((p:ℝ)*r) := mul_le_mul_of_nonneg_left (off p hp r hr h) (by positivity)
-        _ = _ := by ring
-  rw [sum_congr rfl (fun i _ => row i),exchange]
-  refine (sum_le_sum (fun p hp => sum_le_sum (fun r hr => term p hp r hr))).trans_eq ?_
+  rw [sum_congr rfl (fun i _ => row i), exchange, primeMomentBound]
+  apply sum_le_sum; intro p hp
+  apply sum_le_sum; intro r hr
+  split_ifs with h
+  · subst r
+    have hdiag := mul_le_mul_of_nonneg_left (diag p hp) (sq_nonneg (a p))
+    change (a p)^2*C p p ≤ _ at hdiag
+    linarith only [hdiag]
+  · calc
+      _ ≤ |a p*a r*C p r| := le_abs_self _
+      _ = |a p| *|a r| *|C p r| := by rw [abs_mul,abs_mul]
+      _ ≤ _ := mul_le_mul_of_nonneg_left (off p hp r hr h) (by positivity)
+
+private theorem coarse_prime_moment (P : Finset ℕ) (a : ℕ → ℝ) (L : ℕ) :
+    primeMomentBound P a L ≤ L*(∑ p ∈ P, (a p)^2) + (∑ p ∈ P, (p:ℝ)*|a p|)^2 := by
+  classical
+  have term (p r : ℕ) :
+      (if p = r then (L:ℝ)*(a p)^2
+        else |a p| *|a r| *(min (L % (p*r)) (p*r - L % (p*r)) : ℕ)) ≤
+      (if p=r then L*(a p)^2 else 0) + ((p:ℝ)*|a p|)*((r:ℝ)*|a r|) := by
+    split_ifs with h
+    · subst r
+      linarith only [sq_nonneg ((p:ℝ)*|a p|)]
+    · have hn : min (L % (p*r)) (p*r-L%(p*r)) ≤ p*r :=
+        (min_le_right _ _).trans (Nat.sub_le ..)
+      have hreal : ((min (L % (p*r)) (p*r-L%(p*r)) : ℕ):ℝ) ≤ (p:ℝ)*r := by exact_mod_cast hn
+      linarith only [mul_le_mul_of_nonneg_left hreal (mul_nonneg (abs_nonneg (a p)) (abs_nonneg (a r)))]
+  unfold primeMomentBound
+  refine (sum_le_sum (fun p hp => sum_le_sum (fun r hr => term p r))).trans_eq ?_
   simp only [sum_add_distrib]
   congr 1
   · rw [mul_sum]; apply sum_congr rfl; intro p hp; simp [hp]
   · simp_rw [← mul_sum]; rw [← sum_mul,sq]
 
-
 private theorem affine_prime_moment (b m A L : ℕ) (hb : b%4=3) (hm : 4 ∣ m)
     (P : Finset ℕ) (a : ℕ → ℝ)
     (hP : ∀ p ∈ P, p.Prime ∧ p ≠ 2 ∧ m.Coprime p) :
     (∑ i ∈ range L, (∑ p ∈ P, a p * (jacobiSym (p:ℤ) (b+m*(A+i)):ℝ))^2) ≤
-      L*(∑ p ∈ P, (a p)^2) + (∑ p ∈ P, (p:ℝ)*|a p|)^2 := by
+      primeMomentBound P a L := by
   let K (p i : ℕ) := (jacobiSym (p:ℤ) (b+m*(A+i)):ℝ)
   have re (p r : ℕ) : (∑ i ∈ range L, K p i*K r i) = (corr b m p r A L:ℝ) := by
     unfold D5.S3.CharacterSums.AffineJacobiCorrelation.corr; push_cast; rfl
@@ -76,12 +96,30 @@ private theorem affine_prime_moment (b m A L : ℕ) (hb : b%4=3) (hm : 4 ∣ m)
   · intro p hp r hr hne
     obtain ⟨hp',hp2,hmp⟩ := hP p hp
     obtain ⟨hr',hr2,hmr⟩ := hP r hr
-    have h := ((affine_jacobi_correlation b m p r A L).2
+    let T := p*r
+    have hT : 0 < T := Nat.mul_pos hp'.pos hr'.pos
+    have h (a n : ℕ) := ((affine_jacobi_correlation b m p r a n).2
       hb hm hp' hr' hp2 hr2 hne hmp hmr).2
-    have hpr : 0 < p*r := Nat.mul_pos hp'.pos hr'.pos
-    have hrem : L % (p*r) ≤ p*r := (Nat.mod_lt _ hpr).le
-    have hle : |corr b m p r A L| ≤ (p*r:ℕ) := h.trans (by exact_mod_cast hrem)
-    rw [re]; exact_mod_cast hle
+    let U := T-L%T
+    have hrem := Nat.mod_lt L hT
+    have hmultip : L + U = T*(L/T+1) := by
+      have hdiv := Nat.div_add_mod L T
+      dsimp only [U]; rw [Nat.mul_add_one]; omega
+    have hfull := h A (L+U)
+    change |corr b m p r A (L+U)| ≤ (((L+U)%T:ℕ):ℤ) at hfull
+    rw [hmultip, Nat.mul_mod_right, Nat.cast_zero, abs_nonpos_iff] at hfull
+    rw [← hmultip, corr, Finset.sum_range_add] at hfull
+    have heq : corr b m p r A L + corr b m p r (A+L) U = 0 := by
+      simpa only [corr,Nat.add_assoc] using hfull
+    have ht := h (A+L) U
+    have htail : |corr b m p r A L| ≤ (U:ℤ) := by
+      rw [show corr b m p r A L = -corr b m p r (A+L) U by omega, abs_neg]
+      exact ht.trans (by exact_mod_cast Nat.mod_le U T)
+    rw [re]
+    have hab : |corr b m p r A L| ≤ ((min (L%(p*r)) ((p*r)-L%(p*r)) : ℕ):ℤ) := by
+      rw [Nat.cast_min]; exact le_min (h A L) htail
+    have hr : ((|corr b m p r A L|:ℤ):ℝ) ≤ (((min (L%(p*r)) ((p*r)-L%(p*r)) : ℕ):ℤ):ℝ) := Int.cast_le.mpr hab
+    simpa only [Int.cast_abs,Int.cast_natCast] using hr
 
 private theorem damped_signed_prime_bound {x : ℝ} (hx : 0 ≤ x) {N : ℕ} (hN : 1 ≤ N)
     (b m A L : ℕ) (hb : b%4 = 3) (hm : 4 ∣ m) (v : ℕ → ℝ) (hv : ∀ p, |v p| ≤ 1) :
@@ -98,7 +136,8 @@ private theorem damped_signed_prime_bound {x : ℝ} (hx : 0 ≤ x) {N : ℕ} (hN
   have hcoeff (p : ℕ) (hp : p ∈ P) : |a p*v p| ≤ a p := by
     rw [abs_mul,abs_of_nonneg (ha p hp)]
     exact mul_le_of_le_one_right (ha p hp) (hv p)
-  have bound := affine_prime_moment b m A L hb hm P (fun p => a p*v p) hP
+  have bound := (affine_prime_moment b m A L hb hm P (fun p => a p*v p) hP).trans
+    (coarse_prime_moment P _ L)
   obtain ⟨hd,ho⟩ := coefficient_bounds x hx N hN P (filter_subset _ _)
   apply bound.trans
   apply add_le_add
@@ -181,6 +220,70 @@ theorem clipped_coprime_prime_error :
 /-- A clipped quadratic Mangoldt sum with an extra bounded multiplier on the original index. -/
 def twistedBy (x : ℝ) (N d : ℕ) (v : ℕ → ℝ) : ℝ :=
   ∑ n ∈ Icc 1 N, vonMangoldt n * min 1 (x/n) * v n * (jacobiSym (n:ℤ) d:ℝ)
+
+private theorem full_from_excess (L : ℕ) (F : ℕ → ℝ) {E B : ℝ} (hE : 0 ≤ E)
+    (h : (∑ i ∈ range L, (max 0 (|F i| - E))^2) ≤ B) :
+    (∑ i ∈ range L, (F i)^2) ≤ (sqrt B + sqrt L*E)^2 := by
+  let u (i : ℕ) := max 0 (|F i| - E)
+  have hS : 0 ≤ ∑ i ∈ range L, (u i)^2 := sum_nonneg (fun _ _ => sq_nonneg _)
+  have hB := hS.trans h
+  have hs : (∑ i ∈ range L, u i) ≤ sqrt (L:ℝ)*sqrt B := by
+    have hs := Real.sum_mul_le_sqrt_mul_sqrt (range L) (fun _ => (1:ℝ)) u
+    simp only [one_mul,one_pow,sum_const,card_range,nsmul_eq_mul,mul_one] at hs
+    exact hs.trans (mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt h) (Real.sqrt_nonneg _))
+  have hr (i : ℕ) : (F i)^2 ≤ (u i)^2+2*E*(u i)+E^2 := by
+    have hi : |F i| ≤ u i+E := by dsimp [u]; linarith only [le_max_right (0:ℝ) (|F i| -E)]
+    have hp := (sq_le_sq₀ (abs_nonneg _) ((abs_nonneg _).trans hi)).2 hi
+    rw [sq_abs] at hp
+    linarith only [hp]
+  apply (sum_le_sum (s:=range L) (fun i _ => hr i)).trans
+  rw [sum_add_distrib,sum_add_distrib,← mul_sum]
+  simp only [sum_const,card_range,nsmul_eq_mul]
+  have hcross := mul_le_mul_of_nonneg_left hs (show 0 ≤ 2*E by positivity)
+  nlinarith only [h, hcross, sq_sqrt hB, congrArg (fun z : ℝ => z*E^2) (sq_sqrt L.cast_nonneg)]
+
+/-- Uniform finite-truncation bound for the excess above the discarded mass.
+The second bound applies at every real threshold, including thresholds below the error. -/
+theorem finite_clipped_progression :
+    ∃ K : ℝ, 0 ≤ K ∧ ∀ (x y t : ℝ) (N b m A L : ℕ) (v : ℕ → ℝ), 0 < x →
+      b%4=3 → 4 ∣ m → (∀ p : ℕ, p.Prime → p ∣ m → (p:ℝ) ≤ y ∨ N < p) →
+      (∀ n, |v n| ≤ 1) →
+      let E := K*sqrt x+log 2+Chebyshev.theta y
+      let P := (Icc 1 N).filter (fun p => Nat.Prime p ∧ p ≠ 2 ∧ m.Coprime p)
+      let a := fun p : ℕ => log p*min 1 (x/p)*v p
+      let F := fun i : ℕ => twistedBy x N (b+m*(A+i)) v
+      (∑ i ∈ range L, (F i)^2) ≤ (sqrt (primeMomentBound P a L) + sqrt L * E)^2 ∧
+      (∑ i ∈ range L, (max 0 (|F i| -E))^2) ≤ primeMomentBound P a L ∧
+        (((range L).filter (fun i => t < |F i|)).card:ℝ)*(max 0 (t-E))^2 ≤
+          primeMomentBound P a L := by
+  classical
+  obtain ⟨K,hK,herr⟩ := clipped_coprime_prime_error
+  refine ⟨K,hK,?_⟩
+  intro x y t N b m A L v hx hb hm hfac hv E P a F
+  let g (i : ℕ) : ℝ := ∑ p ∈ P, a p*(jacobiSym (p:ℤ) (b+m*(A+i)):ℝ)
+  have herr' (i : ℕ) : |F i - g i| ≤ E := by
+    have he := herr x y N m (b+m*(A+i)) v hx hv hfac
+    have heq : (Icc 1 N).filter (fun p => p.Prime ∧ p ≠ 2 ∧ p.Coprime m) = P := by
+      ext p; simp [P,Nat.coprime_comm]
+    rw [heq] at he
+    exact he
+  have hrow (i : ℕ) : (max 0 (|F i| -E))^2 ≤ (g i)^2 := by
+    have hi : max 0 (|F i| -E) ≤ |g i| := by
+      refine max_le (abs_nonneg _) ?_
+      linarith only [herr' i,abs_sub_abs_le_abs_sub (F i) (g i)]
+    simpa only [sq_abs] using (sq_le_sq₀ (le_max_left ..) (abs_nonneg _)).2 hi
+  have hmom := affine_prime_moment b m A L hb hm P a (fun p hp => (mem_filter.1 hp).2)
+  have hfull := (sum_le_sum (s:=range L) (fun i _ => hrow i)).trans hmom
+  have hE : 0 ≤ E := add_nonneg (add_nonneg (mul_nonneg hK (sqrt_nonneg _)) (log_nonneg (by norm_num))) (Chebyshev.theta_nonneg _)
+  refine ⟨full_from_excess L F hE hfull,hfull, le_trans ?_ hfull⟩
+  let S := (range L).filter (fun i => t < |F i|)
+  calc
+    _ = ∑ _i ∈ S, (max 0 (t-E))^2 := by simp [S]
+    _ ≤ ∑ i ∈ S, (max 0 (|F i| -E))^2 := by
+      apply sum_le_sum; intro i hi
+      apply (sq_le_sq₀ (le_max_left ..) (le_max_left ..)).2
+      exact max_le_max_left _ (sub_le_sub_right (mem_filter.1 hi).2.le _)
+    _ ≤ _ := sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun i _ _ => sq_nonneg _)
 
 /-- At any starting index the same second-moment bound holds for every bounded multiplier. -/
 private theorem progression_moment {ε : ℝ} (hε : 0 < ε) :
