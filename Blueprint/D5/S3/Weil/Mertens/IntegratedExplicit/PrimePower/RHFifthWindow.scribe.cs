@@ -14,7 +14,7 @@ internal sealed class RHFifthWindowDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("fifth-prime-power-window"),
                 DeclarationHandle.Create(Owner + ".prime_window_fifth_of_rh"),
-                H("A uniform remainder at the third-power decay rate"),
+                H("A uniform remainder at the inverse cube-root decay rate"),
                 StatementSource.FromAuthor(WindowEstimate()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let R(a,B) be the signed error in the cube and square correction. "

@@ -63,7 +63,7 @@ private theorem centered_root_tail_bound {r x M : ℝ} (hr : 1 < r) (hx : 1 ≤ 
     congr 1
     field_simp
     ring
-  have ht := centered_root_tail (r := r) hr hx
+  have ht := centered_root_tail (r := r) hr.le (zero_lt_one.trans_le hx)
   change _ = r * Real.sqrt x *
     (Q y * y ^ (1 - r) - (r - 1) * (∫ s in Ioi y, s ^ (-r) * Q s)) at ht
   rw [ht, abs_mul, abs_of_nonneg (by positivity : 0 ≤ r * Real.sqrt x)]
