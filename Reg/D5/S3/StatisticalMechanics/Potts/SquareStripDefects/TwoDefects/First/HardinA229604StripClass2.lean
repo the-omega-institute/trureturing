@@ -22,21 +22,21 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 2 × Row) (fun _ => Fin 3) (fun _ => ℤ)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ jp d => T (cl jp.2 d.val) ⟨46 + jp.1.val, by omega⟩) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ jp d => T (cl jp.2 d.val) ⟨46 + jp.1.val, by omega⟩ + 1) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (j : Fin 2) p (d : Fin 3), Valid p d.val → Canonical p →
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects ProperTransfer.between p r + bondDefects horizontal r r)) = (⟨46 + j.val, by omega⟩ : Fin 96)
       then (1 : ℤ) else 0) = ρ.readout () (j, p) d
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 (![0, 1, 0, 1, 0, 1] : Row) 2 (by decide +kernel) (by unfold Canonical; decide +kernel)
@@ -44,7 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 2) 46 + 1 at hb
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 2) 46 at ha
   linarith
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @transition_counts) where
   actual := readout
   bridge := Iff.rfl
@@ -56,7 +56,7 @@ def family : Registration arena (type_of% @transition_counts) where
     refine ⟨(0, ![0, 1, 0, 1, 0, 1]), 0, 1, ?_⟩
     change T (cl ![0, 1, 0, 1, 0, 1] 0) 46 ≠ T (cl ![0, 1, 0, 1, 0, 1] 1) 46
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@transition_counts) (Realization signature) Type Unit where
   unitName := `Reg.TwoDefects.First.HardinA229604StripClass2.auditUnit

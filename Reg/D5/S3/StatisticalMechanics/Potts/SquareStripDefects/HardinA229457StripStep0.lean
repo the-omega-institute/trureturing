@@ -20,14 +20,14 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 13) (fun _ => Fin 32) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ i s => W ⟨0 + i.val + 1, by omega⟩ (s.natAdd 10)) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_4, family._proof_5 -/
 def rejected : Realization signature := realize signature (fun _ i s => W ⟨0 + i.val + 1, by omega⟩ (s.natAdd 10) + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (i : Fin 13) (s : Fin 32),
     ρ.readout () i s = Matrix.vecMul (W ⟨0 + i.val, by omega⟩) T (s.natAdd 10)
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_4, family._proof_5 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 0

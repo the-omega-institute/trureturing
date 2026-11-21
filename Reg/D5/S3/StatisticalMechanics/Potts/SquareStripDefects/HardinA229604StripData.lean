@@ -15,18 +15,18 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 namespace LeadingBlock
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 42) (fun _ => Fin 42) (fun _ => ℤ)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ i j => T (i.castAdd 54) (j.castAdd 54)) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ i j => T (i.castAdd 54) (j.castAdd 54) + 1) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (i j : Fin 42), ρ.readout () i j = _root_.D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData.T i j
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 0
@@ -34,7 +34,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change T ((0 : Fin 42).castAdd 54) ((0 : Fin 42).castAdd 54) + 1 = _ at hb
   change T ((0 : Fin 42).castAdd 54) ((0 : Fin 42).castAdd 54) = _ at ha
   linarith
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @leading_block) where
   actual := readout
   bridge := Iff.rfl
@@ -46,7 +46,7 @@ def family : Registration arena (type_of% @leading_block) where
     refine ⟨0, 0, 1, ?_⟩
     change T ((0 : Fin 42).castAdd 54) ((0 : Fin 42).castAdd 54) ≠ T ((0 : Fin 42).castAdd 54) ((1 : Fin 42).castAdd 54)
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@leading_block) (Realization signature) Type Unit where
   unitName := `Reg.HardinA229604StripDataLeadingBlock.auditUnit
@@ -92,18 +92,18 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 namespace TerminalBlock
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 32) (fun _ => Fin 32) (fun _ => ℤ)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ i j => T ((i.natAdd 42).castAdd 22) ((j.natAdd 42).castAdd 22)) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ i j => T ((i.natAdd 42).castAdd 22) ((j.natAdd 42).castAdd 22) + 1) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (i j : Fin 32), ρ.readout () i j = _root_.D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData.T (i.natAdd 10) (j.natAdd 10)
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 0
@@ -111,7 +111,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change T (((0 : Fin 32).natAdd 42).castAdd 22) (((0 : Fin 32).natAdd 42).castAdd 22) + 1 = _ at hb
   change T (((0 : Fin 32).natAdd 42).castAdd 22) (((0 : Fin 32).natAdd 42).castAdd 22) = _ at ha
   linarith
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @terminal_block) where
   actual := readout
   bridge := Iff.rfl
@@ -123,7 +123,7 @@ def family : Registration arena (type_of% @terminal_block) where
     refine ⟨0, 0, 1, ?_⟩
     change T (((0 : Fin 32).natAdd 42).castAdd 22) (((0 : Fin 32).natAdd 42).castAdd 22) ≠ T (((0 : Fin 32).natAdd 42).castAdd 22) (((1 : Fin 32).natAdd 42).castAdd 22)
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@terminal_block) (Realization signature) Type Unit where
   unitName := `Reg.HardinA229604StripDataTerminalBlock.auditUnit

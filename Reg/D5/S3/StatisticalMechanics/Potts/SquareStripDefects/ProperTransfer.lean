@@ -21,7 +21,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Row (fun _ => Fin 11) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ p j => _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.transfer (_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.boundaryClass (true, true) p) j) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ p j => _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.transfer (_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.boundaryClass (true, true) p) j + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -31,7 +31,7 @@ abbrev arena : Arena where
       (∀ i : Fin 6, p i ≠ r i) ∧
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.boundaryClass (true, true) r = j
       then (1 : ℤ) else 0) = ρ.readout () p j
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (![0, 1, 0, 1, 0, 1] : Row) (by decide +kernel) 1

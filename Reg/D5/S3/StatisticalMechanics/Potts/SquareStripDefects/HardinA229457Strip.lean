@@ -25,7 +25,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ _ n => a n) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_2, family._proof_3 -/
 def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -38,13 +38,13 @@ private theorem rejected_at (h : arena.Law rejected) (n : ℕ) : False := by
   have ha := result n
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
   linarith
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_2, family._proof_3 -/
 private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 0
-/- count_zero: proof_shape=bind-only; consumers=family -/
+/- count_zero: proof_shape=bind-only; consumers=family._proof_4 -/
 private theorem count_zero : a 0 = 0 := by
   unfold a
   decide +kernel
-/- count_one_pos: proof_shape=bind-only; consumers=family -/
+/- count_one_pos: proof_shape=bind-only; consumers=family._proof_4 -/
 private theorem count_one_pos : 0 < a 1 := by
   unfold a canonicalCount
   apply Finset.card_pos.mpr
@@ -123,7 +123,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Row, Fin 2) (fun _ => Fin 42) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -142,7 +142,7 @@ abbrev arena : Arena where
       Valid r (1 - bondDefects horizontal r r)) ∧
     (∀ s : Fin 42, (∑ r : Row, if bondDefects horizontal r r ≤ 1 ∧
       cl r (1 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s)
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h.2.2.1 (![0, 1, 0, 1, 0, 1] : Row) 1 (by decide +kernel) 0

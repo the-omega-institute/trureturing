@@ -26,7 +26,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ _ n => a n) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_2, family._proof_3 -/
 def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -39,13 +39,13 @@ private theorem rejected_at (h : arena.Law rejected) (n : ℕ) : False := by
   have ha := result n
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
   linarith
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_2, family._proof_3 -/
 private theorem rejected_law : ¬ arena.Law rejected := fun h => rejected_at h 0
-/- count_zero: proof_shape=bind-only; consumers=family -/
+/- count_zero: proof_shape=bind-only; consumers=family._proof_4 -/
 private theorem count_zero : a 0 = 0 := by
   unfold a
   decide +kernel
-/- count_one_pos: proof_shape=bind-only; consumers=family -/
+/- count_one_pos: proof_shape=bind-only; consumers=family._proof_4 -/
 private theorem count_one_pos : 0 < a 1 := by
   unfold a _root_.D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457Strip.canonicalCount
   apply Finset.card_pos.mpr
@@ -118,14 +118,14 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 namespace FiniteCertificate
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Row × Fin 3) (fun _ => Fin 96) (fun _ => ℤ)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s + 1) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ :=
@@ -142,7 +142,7 @@ abbrev arena : Arena where
       Valid r (2 - bondDefects horizontal r r)) ∧
     (∀ s : Fin 96, (∑ r : Row, if bondDefects horizontal r r ≤ 2 ∧
       cl r (2 - bondDefects horizontal r r) = s then (1 : ℤ) else 0) = initial s)
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h.2.2.1 (![0, 1, 0, 1, 0, 1] : Row) 2 (by decide +kernel) 0
@@ -150,7 +150,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 2) 0 + 1 at hb
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 2) 0 at ha
   linarith
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @finite_certificate) where
   actual := readout
   bridge := Iff.rfl
@@ -162,7 +162,7 @@ def family : Registration arena (type_of% @finite_certificate) where
     refine ⟨(![0, 1, 0, 1, 0, 1], 2), 0, 1, ?_⟩
     change T (cl ![0, 1, 0, 1, 0, 1] 2) 0 ≠ T (cl ![0, 1, 0, 1, 0, 1] 2) 1
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
   unitName := `Reg.HardinA229604StripFiniteCertificate.auditUnit

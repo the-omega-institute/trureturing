@@ -30,7 +30,7 @@ abbrev signature : Signature :=
 def readout : Realization signature :=
   realize signature (fun _ _ r => HardinA233127SquareStrip.boundaryClass (true, true) r)
     (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (0 : Fin 11)) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
@@ -43,7 +43,7 @@ abbrev arena : Arena where
       HardinThinGraphTransport.proper r ∧ (∀ i : Fin 6, p i ≠ r i) ∧
         ρ.readout () () r =
           ⟨s.val % 10 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 10); omega⟩)
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h ![1, 0, 1, 0, 1, 0] ![0, 1, 0, 1, 0, 1] 1 0 (by decide +kernel)
@@ -122,7 +122,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Row, Fin 2) (fun _ => Fin 20) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) (s.castAdd 22)) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ pd s => T (cl pd.1 pd.2.val) (s.castAdd 22) + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -132,7 +132,7 @@ abbrev arena : Arena where
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects ProperTransfer.between p r + bondDefects horizontal r r)) = s.castAdd 22
       then (1 : ℤ) else 0) = ρ.readout () ⟨p, d⟩ s
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (![0, 1, 0, 1, 0, 1] : Row) 1 (by decide +kernel) 0 (by decide +kernel)
@@ -205,7 +205,7 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Fin 10, Row) (fun _ => Fin 2) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ jp d => T (cl jp.2 d.val) (jp.1.castAdd 32)) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ jp d => T (cl jp.2 d.val) (jp.1.castAdd 32) + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
@@ -214,7 +214,7 @@ abbrev arena : Arena where
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects ProperTransfer.between p r + bondDefects horizontal r r)) = j.castAdd 32
       then (1 : ℤ) else 0) = ρ.readout () ⟨j, p⟩ d
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 (![0, 1, 0, 1, 0, 1] : Row) 1 (by decide +kernel)

@@ -27,7 +27,7 @@ abbrev signature : Signature :=
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature :=
   realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature :=
   realize signature (fun _ pd s => T (cl pd.1 pd.2.val) s + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
@@ -37,7 +37,7 @@ abbrev arena : Arena where
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects ProperTransfer.between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = ρ.readout () ⟨p, d⟩ s
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (![0, 1, 0, 1, 0, 1] : Row) 1 (by decide +kernel) 0

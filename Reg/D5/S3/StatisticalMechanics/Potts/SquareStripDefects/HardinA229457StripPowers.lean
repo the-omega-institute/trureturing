@@ -21,14 +21,14 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 25) (fun _ => Fin 42) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ k s => W k.succ s) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ k s => W k.succ s + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := W 0 = initial ∧ ∀ (i : Fin 25) (s : Fin 42),
     ρ.readout () i s = Matrix.vecMul (W i.castSucc) T s
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h.2 0 0
@@ -99,14 +99,14 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 42) (fun _ => ℤ)
 /- readout: proof_shape=bind-only; consumers=family -/
 def readout : Realization signature := realize signature (fun _ _ s => W 15 s) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=rejected_law, family -/
+/- rejected: proof_shape=bind-only; consumers=rejected_law, family._proof_3, family._proof_4 -/
 def rejected : Realization signature := realize signature (fun _ _ s => W 15 s + 1) (fun e => nomatch e)
 /- arena: proof_shape=bind-only; consumers=rejected_law, family, audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ s : Fin 42, ρ.readout () () s =
     ∑ j : Fin 14, (![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] j : ℤ) * W ⟨1 + j.val, by omega⟩ s
-/- rejected_law: proof_shape=bind-only; consumers=family -/
+/- rejected_law: proof_shape=bind-only; consumers=family._proof_3, family._proof_4 -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0

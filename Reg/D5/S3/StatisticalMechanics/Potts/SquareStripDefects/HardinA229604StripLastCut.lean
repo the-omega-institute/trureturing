@@ -20,21 +20,21 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 3) (fun _ => Row) (fun _ => Fin 96)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ d p => cl p d.val) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ _ _ => (0 : Fin 96)) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (j : Fin 22) (p : Row) (d : Fin 3), d.val < 2 →
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
       cl r (d.val - (bondDefects ProperTransfer.between p r + bondDefects horizontal r r)) = j.natAdd 74
       then (1 : ℤ) else 0) = T (ρ.readout () d p) (j.natAdd 74)
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 (![0, 1, 0, 1, 0, 1] : Row) 0 (by decide)
@@ -43,7 +43,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change _ = T (cl ![0, 1, 0, 1, 0, 1] 0) 74 at ha
   have ht : T 0 74 ≠ T (cl ![0, 1, 0, 1, 0, 1] 0) 74 := by decide +kernel
   exact ht (hb.symm.trans ha)
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @transition_counts) where
   actual := readout
   bridge := Iff.rfl
@@ -55,7 +55,7 @@ def family : Registration arena (type_of% @transition_counts) where
     refine ⟨0, ![0, 1, 0, 1, 0, 1], ![0, 1, 0, 1, 0, 2], ?_⟩
     change cl ![0, 1, 0, 1, 0, 1] 0 ≠ cl ![0, 1, 0, 1, 0, 2] 0
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@transition_counts) (Realization signature) Type Unit where
   unitName := `Reg.HardinA229604StripLastCut.auditUnit

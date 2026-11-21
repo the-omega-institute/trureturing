@@ -15,19 +15,19 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-/- signature: proof_shape=bind-only; consumers=typed registration evidence -/
+/- signature: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 6) (fun _ => Fin 18) (fun _ => ℤ)
-/- readout: proof_shape=bind-only; consumers=typed registration evidence -/
+/- readout: proof_shape=bind-only; consumers=enclosing registration audit -/
 def readout : Realization signature := realize signature (fun _ i s => W ⟨6 + i.val + 1, by omega⟩ ⟨78 + s.val, by omega⟩) (fun e => nomatch e)
-/- rejected: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected: proof_shape=bind-only; consumers=enclosing registration audit -/
 def rejected : Realization signature := realize signature (fun _ i s => W ⟨6 + i.val + 1, by omega⟩ ⟨78 + s.val, by omega⟩ + 1) (fun e => nomatch e)
-/- arena: proof_shape=bind-only; consumers=typed registration evidence -/
+/- arena: proof_shape=bind-only; consumers=enclosing registration audit -/
 abbrev arena : Arena where
   signature := signature
   Law ρ := ∀ (i : Fin 6) (s : Fin 18), ρ.readout () i s =
     Matrix.vecMul (W ⟨6 + i.val, by omega⟩) T ⟨78 + s.val, by omega⟩
-/- rejected_law: proof_shape=bind-only; consumers=typed registration evidence -/
+/- rejected_law: proof_shape=bind-only; consumers=enclosing registration audit -/
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 0
@@ -35,7 +35,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change W 7 78 + 1 = _ at hb
   change W 7 78 = _ at ha
   linarith
-/- family: proof_shape=bind-only; consumers=typed registration evidence -/
+/- family: proof_shape=bind-only; consumers=enclosing registration audit -/
 def family : Registration arena (type_of% @steps) where
   actual := readout
   bridge := Iff.rfl
@@ -47,7 +47,7 @@ def family : Registration arena (type_of% @steps) where
     refine ⟨0, 0, 1, ?_⟩
     change W 7 78 ≠ W 7 79
     decide +kernel
-/- audit: proof_shape=bind-only; consumers=typed registration evidence -/
+/- audit: proof_shape=bind-only; consumers=compiled Contract.Registration inspection -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@steps) (Realization signature) Type Unit where
   unitName := `Reg.TwoDefects.Powers.HardinA229604StripStep5.auditUnit
