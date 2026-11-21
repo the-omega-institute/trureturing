@@ -46,7 +46,7 @@ internal sealed class FiniteRankDimensionBoundDocument : IScribeDocumentDefiniti
                     + "The orthogonal representation of this invariant Gram kernel has the stabilizer of the family phi as its kernel, which is trivial since phi is injective. "
                     + "The group at o is noncommutative because C is, so the group bound gives d >= 3. "
                     + "The structure is chain connected because M is preconnected and each kappa x is continuous at x, so the feature-rank bound for noncommutative chain-connected structures gives r >= 5. "
-                    + "Both bounds are attained together by the unit quaternions with transfer x y^-1 z and reading (1 + <x, y>) / 2: this structure is noncommutative of feature rank five, by the theorem quaternionModel_hasFeatureRank_five, and its carrier is the unit three-sphere, a compact connected manifold of dimension three. That the hypotheses above hold there with d = 3 is a remark and is not stated as a theorem here.",
+                    + "Both bounds are attained together by the unit quaternions with transfer x y^-1 z and reading (1 + <x, y>) / 2: this structure is noncommutative, by the theorem quaternionModel_noncommutative, and has feature rank five, by the theorem quaternionModel_hasFeatureRank_five, and its carrier is the unit three-sphere, a compact connected manifold of dimension three. That the hypotheses above hold there with d = 3 is a remark and is not stated as a theorem here.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(

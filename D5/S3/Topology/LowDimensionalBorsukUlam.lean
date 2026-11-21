@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Borsuk-Ulam for d <= 2; no continuous injection of open sets of R^m into R^d, d < m. -/
+   digest: d <= 2: Borsuk-Ulam; no nonempty open set of R^m, m > d, injects continuously in R^d. -/
 
 import D5.S3.Geometry.Lorentz.ChiralEventParityMinimality
 import Mathlib.Analysis.InnerProductSpace.PiL2
