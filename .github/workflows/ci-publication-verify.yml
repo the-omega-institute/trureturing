@@ -59,7 +59,8 @@ jobs:
       contents: write
       actions: read
     concurrency:
-      group: lean-cache-publication-verification
+      # Serialize v6 publication and retirement while the independent v5 queue runs.
+      group: ${{ inputs.volume_test_id != '' && 'lean-cache-volume-publication-verification' || 'lean-cache-publication-verification' }}
       queue: max
       cancel-in-progress: false
     env:
