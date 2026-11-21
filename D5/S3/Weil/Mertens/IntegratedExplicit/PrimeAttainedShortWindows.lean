@@ -145,7 +145,7 @@ private theorem normalized_positive_peaks {ρ : ℂ} (hρ : IsNontrivialZero ρ)
 private theorem dirac_zero_support : (Measure.dirac (0 : ℝ)) (Icc 0 0) = 1 :=
   Measure.dirac_apply_of_mem (show (0 : ℝ) ∈ Icc 0 0 from ⟨le_rfl, le_rfl⟩)
 
-private theorem unaveraged_formula {t : ℝ} (ht : Real.log 2 ≤ t) :
+theorem unaveraged_formula {t : ℝ} (ht : Real.log 2 ≤ t) :
     Q (Real.exp t) = -(actualH t * (Real.exp (-t) : ℂ)).re +
       averagedActualCorrection (Measure.dirac 0) t := by
   have hf := actual_filtered_explicit_formula (Measure.dirac 0) dirac_zero_support ht
