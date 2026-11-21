@@ -7,7 +7,7 @@ import Reg.Support.DependentFamily
 
 /-! Source-bound audits of the realization of the dimension and feature rank bounds.
 
-The injectivity of the imaginary part is audited through the threshold `0` of the hemisphere
+The injectivity of the imaginary part is audited through the defining predicate of the hemisphere
 `{q | 0 < re q}`; on the whole group the imaginary part identifies `1` and `-1`. The continuity of
 transfer and reading is audited through the comparison structure whose transfer or reading is
 taken; the rejected readings are maps that separate the point `1` from the rest of the
@@ -60,12 +60,12 @@ theorem not_continuous_of_isolates {X : Type} [TopologicalSpace X] [T1Space X]
   rw [← hpre]
   exact isOpen_compl_singleton.preimage hc
 
-/-! The threshold `0` of the hemisphere in `injOn_im_of_re_pos`. -/
+/-! The defining predicate `fun q => 0 < re q` of the hemisphere in `injOn_im_of_re_pos`. -/
 namespace Hemisphere
 
 abbrev signature : Signature where
   Params := Unit
-  State _ := ℝ
+  State _ := unitary ℍ[ℝ] → Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -74,7 +74,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ c => {q : unitary ℍ[ℝ] | c < (q : ℍ[ℝ]).re}) (fun e => nomatch e)
+  realize signature (fun _ _ P => Set.ofPred P) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => Set.univ) (fun e => nomatch e)
@@ -82,7 +82,8 @@ def rejected : Realization signature :=
 /-- Retain the complete statement of `injOn_im_of_re_pos`. -/
 abbrev arena : Arena where
   signature := signature
-  Law r := Set.InjOn (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).im) (r.readout () () 0)
+  Law r := Set.InjOn (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).im)
+    (r.readout () () fun q : unitary ℍ[ℝ] => 0 < (q : ℍ[ℝ]).re)
 
 /-- On all unit quaternions the imaginary part identifies `1` and `-1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -92,14 +93,14 @@ theorem rejected_law : ¬ arena.Law rejected := by
     (by simp [Unitary.coe_neg])
   exact Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive.one_ne_neg_one heq
 
+/-- The hemisphere contains `1`; the set of the predicate `False` does not. -/
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2, fun h => ?_⟩
-  have h' : {q : unitary ℍ[ℝ] | (0 : ℝ) < (q : ℍ[ℝ]).re} =
-      {q : unitary ℍ[ℝ] | (2 : ℝ) < (q : ℍ[ℝ]).re} := h
-  have h1 : (1 : unitary ℍ[ℝ]) ∈ {q : unitary ℍ[ℝ] | (0 : ℝ) < (q : ℍ[ℝ]).re} := by simp
+  refine ⟨(), fun q : unitary ℍ[ℝ] => 0 < (q : ℍ[ℝ]).re, fun _ => False, fun h => ?_⟩
+  have h' : {q : unitary ℍ[ℝ] | 0 < (q : ℍ[ℝ]).re} = {_q : unitary ℍ[ℝ] | False} := h
+  have h1 : (1 : unitary ℍ[ℝ]) ∈ {q : unitary ℍ[ℝ] | 0 < (q : ℍ[ℝ]).re} := by simp
   rw [h'] at h1
-  norm_num at h1
+  exact h1
 
 abbrev sourceStatement : Prop := type_of% injOn_im_of_re_pos
 
@@ -329,8 +330,7 @@ def injOn_im_of_re_pos_registration :
   realization := .source Hemisphere.arena ⟨Hemisphere.source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize Hemisphere.signature
-    (fun _ _ c => {q : unitary ℍ[ℝ] | c < (q : ℍ[ℝ]).re}) (fun e => nomatch e))
+  readout := some (realize Hemisphere.signature (fun _ _ P => Set.ofPred P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -343,7 +343,7 @@ def injOn_im_of_re_pos_registration :
       path := #["arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg", "body", "fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

@@ -112,7 +112,19 @@ $$\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) = \operatorname{sphe
 
 As a subset of the quaternions, the set of unit quaternions is the sphere of radius one about zero. A unit quaternion has norm one because the norm is multiplicative and star q * q = 1. Conversely, if the norm of q is one, then star q * q and q * star q both equal the squared norm of q, which is one, so q is unitary.
 
-**Theorem 1.10 (The model is chain connected).**
+**Lemma 1.10 (The unit quaternions are connected).**
+
+$$\operatorname{PreconnectedSpace}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.preconnectedSpace_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With the subspace topology of the quaternions, the group of unit quaternions is a preconnected space. By the previous lemma it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere in a real normed space of dimension greater than one is preconnected.
+
+**Theorem 1.11 (The model is chain connected).**
 
 $$\operatorname{ChainConnected}\left(\operatorname{quaternionModel}\right)$$
 
@@ -124,7 +136,7 @@ $$\operatorname{ChainConnected}\left(\operatorname{quaternionModel}\right)$$
 
 The unit quaternions are exactly the quaternions of norm one, the unit three-sphere in a real space of dimension four, and this sphere is connected. For a fixed point a the reading kappa a b is continuous in b and equals one at b = a, so for positive e every b near a satisfies 1 - e < kappa a b and, by symmetry, 1 - e < kappa b a. Thus, for each point a, the relation holds in both directions, from a to b and from b to a, for every b in a neighbourhood of a. On a connected space, a transitive relation with this two-sided neighbourhood property holds between all pairs; applied to the reflexive transitive closure of 1 - e < kappa a b, this joins any two unit quaternions.
 
-**Theorem 1.11 (The reading has feature rank five).**
+**Theorem 1.12 (The reading has feature rank five).**
 
 $$\operatorname{HasFeatureRank}\left(\operatorname{quaternionModel}, 5\right)$$
 
@@ -142,6 +154,7 @@ The feature map sends q to (1 / sqrt 2) * (1, re q, imI q, imJ q, imK q) in Eucl
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.feature`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_eq_components`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_feature`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.preconnectedSpace_unitary`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_chainConnected`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_hasFeatureRank_five`

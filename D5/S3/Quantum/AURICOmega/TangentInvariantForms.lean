@@ -16,9 +16,14 @@ import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 /-! Bilinear forms on the pure quaternions that are invariant under conjugation by unit
 quaternions.
 
+The pure quaternions are the tangent space of the unit quaternions at `1`, and conjugation by a
+unit quaternion is the adjoint action of the unit quaternions on it.
+
 For a family `S` of unit quaternions, uniqueness of invariant forms up to a factor is equivalent
 to irreducibility of the conjugation action of `S` on the pure quaternions, for arbitrary and for
-symmetric forms. The conjugations by all unit quaternions act irreducibly. A single conjugation
+symmetric forms. The conjugations by all unit quaternions act irreducibly, so an invariant form
+is a multiple of the inner product on the pure quaternions with exactly one factor. A single
+conjugation
 by `u` with `u.re ≠ 0` and `u.im ≠ 0` (a rotation through an angle outside `πℤ` about `u.im`)
 leaves exactly the three-parameter family `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫`,
 `n = u.im`, invariant, and the three parameters are determined by the form. -/
@@ -431,8 +436,10 @@ private lemma classify (u : unitary ℍ[ℝ]) (hre : (u : ℍ[ℝ]).re ≠ 0) (h
   rw [hB', hback, hback, inner_conj_star, hmz, hmz, conj_star_mul, hmz] at this
   exact this
 
-/-- Each of the three forms is invariant under the conjugation by `u`, since `u` commutes with
-`u.im`. -/
+/-- Conjugation by `u` leaves the inner product with `u.im` unchanged:
+`⟪u.im, u z u*⟫ = ⟪u.im, z⟫`, because conjugation is an isometry fixing `u.im`, which `u`
+commutes with. It gives the invariance of the two forms that involve `u.im`; the invariance of
+`⟪x, y⟫` itself needs only that conjugation is an isometry. -/
 private lemma inner_im_conj (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
     ⟪(u : ℍ[ℝ]).im, (u : ℍ[ℝ]) * z * star (u : ℍ[ℝ])⟫_ℝ = ⟪(u : ℍ[ℝ]).im, z⟫_ℝ := by
   have hc : (u : ℍ[ℝ]) * (u : ℍ[ℝ]).im = (u : ℍ[ℝ]).im * u := by
@@ -503,14 +510,19 @@ theorem invariant_bilinear_tfae (S : Set (unitary ℍ[ℝ])) :
   tfae_finish
 
 /-- A bilinear form on the quaternions that is invariant on the pure quaternions under the
-conjugation by every unit quaternion is a multiple of the inner product there. -/
+conjugation by every unit quaternion is a multiple of the inner product there, with exactly one
+factor. -/
 theorem conj_invariant_bilinear_eq_smul_inner (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ)
     (hB : ∀ u : unitary ℍ[ℝ], ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
       B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) ((u : ℍ[ℝ]) * y * star (u : ℍ[ℝ])) = B x y) :
-    ∃ c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = c * ⟪x, y⟫_ℝ :=
-  smul_inner_of_irreducible Set.univ
+    ∃! c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = c * ⟪x, y⟫_ℝ := by
+  obtain ⟨c, hc⟩ := smul_inner_of_irreducible Set.univ
     (fun W hWre hWinv => irreducible_univ W hWre fun u w hw => hWinv u (Set.mem_univ u) w hw)
     B fun u _ => hB u
+  refine ⟨c, hc, fun d hd => ?_⟩
+  have h := (hd qI qI rfl rfl).symm.trans (hc qI qI rfl rfl)
+  have hI : ⟪qI, qI⟫_ℝ = 1 := by simp [qI, inner_eq_components]
+  rwa [hI, mul_one, mul_one] at h
 
 /-- For a unit quaternion `u` that is neither `±1` nor pure (`u.re ≠ 0`, `u.im ≠ 0`), a bilinear
 form is invariant on the pure quaternions under the conjugation by `u` exactly when it equals

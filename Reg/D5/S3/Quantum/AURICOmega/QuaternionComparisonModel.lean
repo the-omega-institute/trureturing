@@ -293,12 +293,17 @@ theorem one_ne_unitI : (1 : unitary ℍ[ℝ]) ≠ unitI := by
 
 /-- A topology on the unit quaternions in which every set is open is not preconnected. -/
 theorem not_preconnectedSpace_of_forall_isOpen (τ : TopologicalSpace (unitary ℍ[ℝ]))
-    (hτ : ∀ s : Set (unitary ℍ[ℝ]), IsOpen[τ] s) : ¬ @PreconnectedSpace _ τ := by
+    (hτ : ∀ s : Set (unitary ℍ[ℝ]), @IsOpen _ τ s) : ¬ @PreconnectedSpace _ τ := by
   intro hp
-  letI : TopologicalSpace (unitary ℍ[ℝ]) := τ
-  have hc : @Continuous _ _ τ (⊥ : TopologicalSpace (unitary ℍ[ℝ])) id :=
-    @continuous_def _ _ τ ⊥ id |>.2 fun s _ => hτ _
-  exact one_ne_unitI (@PreconnectedSpace.constant _ τ _ ⊥ ⟨rfl⟩ hp id hc 1 unitI)
+  have hc : @IsClopen _ τ {1} := ⟨⟨hτ _⟩, hτ _⟩
+  rcases (@isClopen_iff _ τ hp _).mp hc with h0 | h1
+  · exact Set.singleton_ne_empty _ h0
+  · have hi : unitI ∈ ({1} : Set (unitary ℍ[ℝ])) := by rw [h1]; trivial
+    exact one_ne_unitI (Set.mem_singleton_iff.mp hi).symm
+
+/-- Every set is open in the discrete topology. -/
+theorem isOpen_bot_set {X : Type} (s : Set X) : @IsOpen X ⊥ s :=
+  @isOpen_discrete X ⊥ (discreteTopology_bot X) s
 
 /-! The ambient topology of the quaternions in `preconnectedSpace_unitary`. -/
 namespace AmbientTopology
@@ -329,7 +334,7 @@ abbrev arena : Arena where
 
 /-- The discrete topology on the unit quaternions is not preconnected. -/
 theorem rejected_law : ¬ arena.Law rejected :=
-  not_preconnectedSpace_of_forall_isOpen ⊥ fun _ => trivial
+  not_preconnectedSpace_of_forall_isOpen ⊥ isOpen_bot_set
 
 /-- The discrete topology of the quaternions induces the discrete topology on the unit
 quaternions, which differs from the connected subspace topology. -/
@@ -342,8 +347,10 @@ theorem dependence : ObservationalDependence signature actual := by
         @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥ := h
     rw [← h']
     exact preconnectedSpace_unitary
-  refine not_preconnectedSpace_of_forall_isOpen _ (fun s => ?_) hp
-  exact ⟨Subtype.val '' s, trivial, Set.preimage_image_eq _ Subtype.val_injective⟩
+  refine not_preconnectedSpace_of_forall_isOpen
+    (@instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥) (fun s => ?_) hp
+  exact (@isOpen_induced_iff _ _ ⊥ s Subtype.val).2
+    ⟨Subtype.val '' s, isOpen_bot_set _, Set.preimage_image_eq _ Subtype.val_injective⟩
 
 abbrev sourceStatement : Prop := type_of% preconnectedSpace_unitary
 
