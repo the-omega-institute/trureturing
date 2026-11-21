@@ -44,9 +44,9 @@ internal sealed class RingNoncentralBoundDocument : IScribeDocumentDefinition
                         + "noncentral x of max(|C(x)|-z-2,0); that sum is at most n max(2(n+z)/p-2z-4,0), which is at most "
                         + "n max(n-z-4,0), which is at most n(n-z-2), which is strictly below the complete-graph value "
                         + "2(n-1)(n-2). For associative rings, n at least z+2 and the bound n(n-z-2) < 2(n-1)(n-2) are "
-                        + "Corollary 3, and the per-vertex sum and the least-prime-divisor form are Corollary 4, of Ma and "
-                        + "Zhang, Zenodo DOI 10.5281/zenodo.24398996; the repository drops associativity and adds n at least "
-                        + "3z and z dividing n.")),
+                        + "Corollary 3, and the per-vertex sum and the least-prime-divisor bound 2n((n+z)/p-z-1) are Corollary 4, "
+                        + "of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24398996; the repository drops associativity, sharpens "
+                        + "the least-prime form to n max(2(n+z)/p-2z-4,0), and adds n at least 3z and z dividing n.")),
                     Paragraph(Text("For a noncentral x, the elements commuting with x form an additive subgroup, because "
                         + "multiplication distributes over addition and negation. It is exactly the disjoint union of the "
                         + "center, x itself and the graph neighbours of x, so deg(x) = |C(x)|-z-1. It is proper since x is "
