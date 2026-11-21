@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/ProcessReconstruction/ParityFamily
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/horodecki2003entanglement, lit/karnin1983secret]
+   anchors: []
    utility: none
    digest: Unital parity channels with equal proper marginals and diamond distance two. -/
 

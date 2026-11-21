@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/ProcessReconstruction/RobustDiamond
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/huang2024learning, lit/johnston2009computing]
+   anchors: []
    utility: none
    digest: Dimension-independent diamond bounds from complete single-output marginals. -/
 

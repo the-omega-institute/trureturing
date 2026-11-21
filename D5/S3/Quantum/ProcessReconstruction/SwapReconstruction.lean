@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/ProcessReconstruction/SwapReconstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/huang2024learning, lit/arrighi2011unitarity, lit/schumacher2004reversible]
+   anchors: []
    utility: none
    digest: Finite local SWAP comparison and exact unitary channel reconstruction. -/
 
