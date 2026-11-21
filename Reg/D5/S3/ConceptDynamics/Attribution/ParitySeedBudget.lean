@@ -45,7 +45,7 @@ private theorem always_one_fails : ¬ arena.Law alwaysOne := by
   intro law
   have implementation := (exact_seed_budget 0 8).mpr ⟨1, rfl⟩
   have h : 8 ∣ 1 := (law 0 8).mp implementation
-  omega
+  exact (Nat.not_succ_le_self 1) ((Nat.le_add_right 2 6).trans (Nat.le_of_dvd Nat.one_pos h))
 
 def family : Registration arena (type_of% exact_seed_budget) where
   actual := actual
