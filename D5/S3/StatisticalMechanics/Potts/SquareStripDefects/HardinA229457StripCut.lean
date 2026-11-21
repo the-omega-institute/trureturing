@@ -63,18 +63,24 @@ def crossedProperSlot : Fin 20 → Fin 20 :=
 
 private theorem squareBoundary (p : Row) :
     HardinA233127SquareStrip.boundaryClass (true, true) p = (ProperTransfer.cl p).succ := by
-  simp only [ProperTransfer.cl, HardinA233127SquareStrip.boundaryClass, Bool.true_eq, ↓reduceIte]
-  split_ifs <;> decide
+  apply Fin.ext
+  simp only [ProperTransfer.cl, Fin.val_succ, Fin.val_mk,
+    HardinA233127SquareStrip.boundaryClass, ↓reduceIte]
+  split_ifs <;> rfl
 
 private theorem crossedBoundary (p : Row) :
     HardinA233172DiagonalStrip.boundaryClass (true, true) p =
       (crossedProperClass (ProperTransfer.cl p)).succ := by
+  have e₂ : p 0 = p 2 ↔ p 2 = p 0 := eq_comm
+  have e₃ : p 1 = p 3 ↔ p 3 = p 1 := eq_comm
+  have e₄ : p 2 = p 4 ↔ p 4 = p 2 := eq_comm
+  have e₅ : p 3 = p 5 ↔ p 5 = p 3 := eq_comm
+  apply Fin.ext
   by_cases h₂ : p 2 = p 0 <;> by_cases h₃ : p 3 = p 1 <;>
     by_cases h₄ : p 4 = p 2 <;> by_cases h₅ : p 5 = p 3 <;>
     simp only [HardinA233172DiagonalStrip.boundaryClass, ProperTransfer.cl,
-      HardinA233127SquareStrip.boundaryClass, Bool.true_eq, ↓reduceIte,
-      eq_comm (p 0) (p 2), eq_comm (p 1) (p 3), eq_comm (p 2) (p 4),
-      eq_comm (p 3) (p 5), h₂, h₃, h₄, h₅, ite_true, ite_false] <;> decide
+      HardinA233127SquareStrip.boundaryClass, ↓reduceIte,
+      e₂, e₃, e₄, e₅, h₂, h₃, h₄, h₅, ite_true, ite_false] <;> rfl
 
 theorem proper_class_map (r : Row) (d : Fin 2) (s : Fin 20) :
     cl r d.val = s.castAdd 22 ↔
@@ -91,11 +97,11 @@ theorem proper_class_map (r : Row) (d : Fin 2) (s : Fin 20) :
         Fin.ext_iff, Fin.val_mk, Fin.val_castAdd, Fin.val_natAdd, boundary,
         Nat.add_sub_cancel, Nat.add_zero] using slots (ProperTransfer.cl r) d s
   · have hs : 20 ≤ (cl r d.val).val := by
-      simp only [cl, hp, ite_false]
-      split_ifs <;> decide
+      rw [cl, if_neg hp]
+      repeat' split <;> decide
     have ht : 20 ≤ (HardinA229532StripData.cl r d.val).val := by
-      simp only [HardinA229532StripData.cl, hp, ite_false]
-      split_ifs <;> decide
+      rw [HardinA229532StripData.cl, if_neg hp]
+      repeat' split <;> decide
     have hs' : cl r d.val ≠ s.castAdd 22 := by
       intro h
       rw [h, Fin.val_castAdd] at hs
