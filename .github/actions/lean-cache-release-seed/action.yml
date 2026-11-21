@@ -34,39 +34,7 @@ runs:
       env:
         MODE: ${{ inputs.mode }}
         CHECKPOINT_RUN: ${{ inputs.checkpoint-run }}
-      run: |
-        find_checkpoint() {
-          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$1/artifacts?per_page=100" \
-          | jq -rs --arg prefix "lean-release-checkpoint-$MODE-$1-" --argjson before "$2" '
-              [.[].artifacts[] | select(.expired == false and (.name | startswith($prefix)))
-               | select((.digest // "") | test("^sha256:[0-9a-f]{64}$"))
-               | .attempt = (.name | ltrimstr($prefix))
-               | select(.attempt | test("^[1-9][0-9]*$")) | .attempt |= tonumber
-               | select(.attempt < $before)] | max_by(.attempt) // empty | [.id, .attempt] | @tsv'
-        }
-        run="$GITHUB_RUN_ID"
-        checkpoint=$(find_checkpoint "$run" "$GITHUB_RUN_ATTEMPT")
-        if [[ -z "$checkpoint" && -n "$CHECKPOINT_RUN" ]]; then
-          [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$GITHUB_REF_PROTECTED" == true ]]
-          [[ "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$run" ]]
-          run="$CHECKPOINT_RUN"
-          prior_attempt="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run" | jq -er \
-            --argjson run "$run" --arg sha "$GITHUB_SHA" --arg branch "$GITHUB_REF_NAME" --arg repository "$GITHUB_REPOSITORY" '
-            select(.id == $run and .head_sha == $sha and .head_branch == $branch and .status == "completed"
-              and .repository.full_name == $repository
-              and .path == ".github/workflows/ci-publication-verify.yml"
-              and (.event == "push" or .event == "workflow_dispatch")) | .run_attempt
-            | select(type == "number" and . >= 1 and . == floor)')"
-          checkpoint=$(find_checkpoint "$run" "$((prior_attempt + 1))")
-          [[ -n "$checkpoint" ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR previous run has no matching checkpoint' >&2; exit 2; }
-        fi
-        if [[ -n "$checkpoint" ]]; then
-          read -r artifact attempt <<< "$checkpoint"
-          [[ "$artifact" =~ ^[1-9][0-9]*$ && "$attempt" =~ ^[1-9][0-9]*$ ]]
-          echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
-          echo "attempt=$attempt" >> "$GITHUB_OUTPUT"
-          echo "run=$run" >> "$GITHUB_OUTPUT"
-        fi
+      run: bash "$GITHUB_ACTION_PATH/select-checkpoint.sh"
     - name: Download the selected verification checkpoint
       if: steps.previous_checkpoint.outputs.artifact != ''
       uses: actions/download-artifact@v8
@@ -199,8 +167,14 @@ runs:
       if: steps.cold_build.outputs.checkpoint == 'true'
       env:
         SAVED: ${{ steps.checkpoint.outputs.available }}
+        MODE: ${{ inputs.mode }}
+        INTERVAL: ${{ inputs.checkpoint-seconds }}
       shell: bash
       run: |
         [[ "$SAVED" =~ ^[1-9][0-9]*$ ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR cold checkpoint is empty' >&2; exit 2; }
-        echo "LEAN_RELEASE_HANDOFF checkpoint=$SAVED; rerun this verification run to continue" >&2
+        echo "LEAN_RELEASE_HANDOFF checkpoint=$SAVED" >&2
+        printf 'Continue commit %s with gh run rerun %q --repo %q --failed\n' \
+          "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_REPOSITORY" >&2
+        printf 'While %s points to %s, continue in a new run with gh workflow run ci-publication-verify.yml --repo %q --ref %q -f mode=%q -f checkpoint_run=%q -f checkpoint_seconds=%q\n' \
+          "$GITHUB_REF_NAME" "$GITHUB_SHA" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$MODE" "$GITHUB_RUN_ID" "$INTERVAL" >&2
         exit 1

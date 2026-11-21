@@ -460,7 +460,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。仅改动 `docs/develop/theory/` 的候选执行适用源码文件和容量检查。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
+**Workflow 与报告消费。** `ci-unit.yml` 执行命中的独立单元。source 先检查可直接判定的源码义务。PR 和 push 的 current 使用同一定向入口，编译受影响的 Lean 目标、程序及其依赖，并检查相关 Scribe 输入和命中的回归。`check-current` 与适用的 `check-delta` 共用这次变更的定向报告；仅需源码的输入可以使用空报告清单。两个命令按受影响目标核对证据范围和材料；显式全库调用仍可使用完整报告。唯一 required check 为 `required`，按固定 head 汇总所有命中作业。
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的定向检查步骤，历史版本识别 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足上述安装拓扑。
 
@@ -531,7 +531,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式要求干净且已存在于本仓 GitHub 的固定提交，并验证当前完整报告与资产；`LEAN_CACHE_PUBLISH_ONLY=1` 禁止调用报告构建，缺失或陈旧报告直接失败。候选使用隔离的 verification Release 名称，不进入普通 production 查找或裁剪。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
 
-长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
+长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同指定一份已经公开的候选或生产 Release。受保护分支的手动完整 producer 可从正式分片 Release 重建本分支的 Actions 缓存；普通 PR 只读 Actions 种子。显式播种的续建缓存绑定本次 dispatch、目标提交、Release tag 和 producer SHA。同一 run 重试时，以已验证的原生续建包或原 Release 为起点。只有分片索引的 attempt 晚于该起点且早于本次尝试时才叠加分片；原 Release 的起点记为 0。首次切换先发布并验证正式分片 Release，再由独立 producer 核实完整项目索引及条目在 dev 可见，随后开启 dev 的普通 CI 分片读取。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
 GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev push 和手动 Actions build 共用仓库级串行 producer，默认关闭报告全量重提取，原生批量上限为 100 个模块。producer 使用固定候选 SHA，独立于普通 CI 对 push 范围的核验。集成测试的 Release 验证保留独立构建与发布命名空间，改动范围不可读时仍执行验证。集成验证使用独立的并发组。
 
