@@ -27,7 +27,7 @@ direct frozen dependencies:
   D5/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound.result
     (statement_id sha256:6fcb98eb465071d206530ed3b2e307ffef56bce840c1e7703998475368c42ded)
   D5/S3/Combinatorics/Graph/CommonNeighborhood/NoncentralBound.Vertex, commutingGraph,
-    degree_and_center_le_centralizer (statement_id STATEMENT_ID_NONCENTRAL)
+    degree_and_center_le_centralizer (statement_id sha256:fecca2ddb51a1a58b7f99e15a3e7dd0cf1cb2dcf3bd0318b92b2619268ba06df)
 escape_witness: the public conclusion itself (form 2): no frozen predecessor provides the
   least-prime chain. The index of a proper centralizer C(x) is a divisor of |G| exceeding one, so
   it is at least the least prime p dividing |G| and p |C(x)| <= |G|; the center is a proper
