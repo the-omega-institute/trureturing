@@ -17,7 +17,8 @@ escape_witness: peel (a factor S - z with |z| < q maps only O(q^j) sequences to 
 proof_shape:
   shift: definition; consumers: every lemma below.
   shift_pow_apply, aeval_apply, aeval_X_sub_C_apply, aeval_geom, global_bound: bind-only helpers;
-    consumers: peel, rstep, dominant.
+    consumers: peel, rstep, dominant; aeval_apply and aeval_X_sub_C_apply are public, also
+    consumed by D5/S1/Recurrence/Algebraic/OEISA289916Asymptotics.
   peel, rstep: content; consumers: peel_prod, dominant.
   peel_prod: content (multiset induction over peel); consumer: dominant.
   dominant: content; consumers: given_L, result.
@@ -64,13 +65,13 @@ private theorem shift_pow_apply (k : ℕ) (u : ℕ → ℂ) (j : ℕ) : (shift ^
     simp [shift, LinearMap.funLeft_apply, Nat.add_assoc]
 
 /-- Evaluating a polynomial at the shift gives the recurrence sum. -/
-private theorem aeval_apply (p : ℂ[X]) (u : ℕ → ℂ) (j : ℕ) :
+theorem aeval_apply (p : ℂ[X]) (u : ℕ → ℂ) (j : ℕ) :
     (aeval shift p) u j = ∑ k ∈ Finset.range (p.natDegree + 1), p.coeff k * u (j + k) := by
   rw [aeval_eq_sum_range, LinearMap.sum_apply, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.smul_apply, Pi.smul_apply, shift_pow_apply, smul_eq_mul]
 
-private theorem aeval_X_sub_C_apply (z : ℂ) (u : ℕ → ℂ) (j : ℕ) :
+theorem aeval_X_sub_C_apply (z : ℂ) (u : ℕ → ℂ) (j : ℕ) :
     (aeval shift (X - C z)) u j = u (j + 1) - z * u j := by
   simp [shift, LinearMap.funLeft_apply, Module.algebraMap_end_apply]
 
