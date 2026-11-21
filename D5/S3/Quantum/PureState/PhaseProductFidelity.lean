@@ -144,10 +144,10 @@ private theorem two_points {n : ℕ} (F : (Fin n → ℂ) → ℝ) (h1 : F 1 = 1
   rw [hd,h1,hc]
   ring
 
-/-- The same sharp coefficient controls all finite, normalized phase ensembles. -/
+/-- The same sharp coefficient controls all finite phase ensembles with nonnegative weights. -/
 theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     (∀ (m : ℕ) (p : Fin m → ℝ) (v : Fin m → Fin n → ℂ),
-      (∀ i, 0 ≤ p i) → ∑ i, p i = 1 → (∀ i k, ‖v i k‖ = 1) →
+      (∀ i, 0 ≤ p i) → (∀ i k, ‖v i k‖ = 1) →
       mixedDeficit cube p v ≤ C * mixedDeficit simplex p v) ↔
     ((n:ℝ)+1)^2/4 ≤ C := by
   constructor
@@ -156,7 +156,7 @@ theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     intro u hu
     let v : Fin 2 → Fin n → ℂ := ![1,u]
     have hv (i : Fin 2) (k : Fin n) : ‖v i k‖ = 1 := by fin_cases i <;> simp [v,hu]
-    have hb := h 2 (fun _ => (1:ℝ)/2) v (by intro; norm_num) (by norm_num [Fin.sum_univ_two]) hv
+    have hb := h 2 (fun _ => (1:ℝ)/2) v (by intro; norm_num) hv
     have hco : cube (1 : Fin n → ℂ) = 1 := by simp [cube]
     have hsi : simplex (1 : Fin n → ℂ) = 1 := by
       simp [simplex, normSq_one_add]
@@ -165,7 +165,7 @@ theorem mixed_coefficient_iff {n : ℕ} (hn : 0 < n) (C : ℝ) :
     dsimp only [v] at hb
     rw [two_points cube hco cube_conj u hu,two_points simplex hsi simplex_conj u hu] at hb
     linarith only [hb]
-  · intro hC m p v hp _ hv
+  · intro hC m p v hp hv
     unfold mixedDeficit
     rw [Finset.mul_sum]
     apply Finset.sum_le_sum

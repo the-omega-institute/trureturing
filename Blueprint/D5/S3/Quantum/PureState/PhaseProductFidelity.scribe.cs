@@ -67,7 +67,7 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                     V("C"), InMacro, Sp, Field("R"), Comma, RowBreak,
                     Par(Forall, Sp, Nat("m"), Comma, Ensemble(), Comma, RowBreak,
                     Par(Par(Forall, Sp, Index("i", "m"), Comma, Sub("p", "i"), Ge, D(0)),
-                        Land, Sp, SumIndex("i", "m"), Sub("p", "i"), Eq, D(1), Land, Sp,
+                        Land, Sp,
                         Par(Forall, Sp, Index("i", "m"), Comma, Index("k", "n"), Comma,
                             new Formula.Absolute(Sub("v", "ik")), Eq, D(1))), RowBreak,
                     Rightarrow, Sp, Apply("L", V("B"), Comma, V("p"), Comma, V("v")), Le, Sp, V("C"),
@@ -75,8 +75,8 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                     Leftrightarrow, Factor(), Le, Sp, V("C")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Here n is a positive integer, m is an arbitrary finite ensemble "
-                    + "size, p is a probability vector of length m, and v is an m by n array of "
-                    + "unit complex phases. All coordinate conditions range over their full index sets.")),
+                    + "size, p is a nonnegative weight vector of length m, and v is an m by n array of "
+                    + "unit complex phases. The bound permits every total weight. For a probability distribution it compares the two mixture purities.")),
                     Paragraph(Text("The loss of a product of factors in the unit interval is at most "
                     + "the sum of their individual losses. The modulus of the sum of n phases is "
                     + "at most n. Expanding the singleton overlap then gives the displayed coefficient "

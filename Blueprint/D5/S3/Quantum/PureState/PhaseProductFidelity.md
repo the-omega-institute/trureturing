@@ -44,7 +44,7 @@ The product of the conjugated row and the other row is coordinatewise. Drawing t
 
 **Theorem 1.4 (Sharp comparison for all finite phase ensembles).**
 
-$$\forall n\in \mathbb{N},n\ge1,C\in \mathbb{R},\\(\forall m\in \mathbb{N},p\in \mathbb{R}^{m},v\in \mathbb{C}^{m\times n},\\((\forall 1\le i\le m,p_{i}\ge0)\land \sum_{1\le i\le m} p_{i}=1\land (\forall 1\le i\le m,1\le k\le n,\left|v_{ik}\right|=1))\\\Rightarrow L(B,p,v)\le CL(A,p,v))\Leftrightarrow\frac{(n+1)^{2}}{4}\le C$$
+$$\forall n\in \mathbb{N},n\ge1,C\in \mathbb{R},\\(\forall m\in \mathbb{N},p\in \mathbb{R}^{m},v\in \mathbb{C}^{m\times n},\\((\forall 1\le i\le m,p_{i}\ge0)\land (\forall 1\le i\le m,1\le k\le n,\left|v_{ik}\right|=1))\\\Rightarrow L(B,p,v)\le CL(A,p,v))\Leftrightarrow\frac{(n+1)^{2}}{4}\le C$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/PureState/PhaseProductFidelity.mixed_coefficient_iff` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall n\in \mathbb{N},n\ge1,C\in \mathbb{R},\\(\forall m\in \mathbb{N},p\in 
 
 *Commentary.*
 
-Here n is a positive integer, m is an arbitrary finite ensemble size, p is a probability vector of length m, and v is an m by n array of unit complex phases. All coordinate conditions range over their full index sets.
+Here n is a positive integer, m is an arbitrary finite ensemble size, p is a nonnegative weight vector of length m, and v is an m by n array of unit complex phases. The bound permits every total weight. For a probability distribution it compares the two mixture purities.
 
 The loss of a product of factors in the unit interval is at most the sum of their individual losses. The modulus of the sum of n phases is at most n. Expanding the singleton overlap then gives the displayed coefficient for each pair and multiplication by the nonnegative pair weights preserves it.
 

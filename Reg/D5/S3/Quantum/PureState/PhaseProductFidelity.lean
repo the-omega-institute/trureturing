@@ -10,7 +10,7 @@ open LeanInformationAudit
 
 noncomputable section
 
-/-- Dimension, ensemble size and the classical probabilities are held fixed when
+/-- Dimension, ensemble size and the classical weights are held fixed when
 the phase vectors of the ensemble vary. -/
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature
@@ -27,7 +27,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ}, 0 < n → ∀ C : ℝ,
     (∀ (m : ℕ) (p : Fin m → ℝ) (v : Fin m → Fin n → ℂ),
-      (∀ i, 0 ≤ p i) → ∑ i, p i = 1 → (∀ i k, ‖v i k‖ = 1) →
+      (∀ i, 0 ≤ p i) → (∀ i k, ‖v i k‖ = 1) →
       R.readout () ⟨n,m,p⟩ v ≤ C * mixedDeficit simplex p v) ↔
       ((n : ℝ) + 1)^2 / 4 ≤ C
 
@@ -35,7 +35,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have H := (h (n := 1) (by decide) 1).mpr (by norm_num)
   have bad := H 1 (fun _ => 1) (fun _ _ => 1) (by intro; norm_num)
-    (by simp) (by intros; simp)
+    (by intros; simp)
   norm_num [rejected, realize, mixedDeficit, simplex, Fin.sum_univ_one,
     Complex.normSq_apply] at bad
 
@@ -81,7 +81,7 @@ def registration :
     definition := none
     coordinates := #[0,3,4]
     readouts := #[{
-      path := #["body","body","body","fn","arg","body","body","body","body","body","body","fn","arg"]
+      path := #["body","body","body","fn","arg","body","body","body","body","body","fn","arg"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
