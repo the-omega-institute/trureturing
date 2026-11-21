@@ -8,7 +8,7 @@ noncomputable section
 
 namespace D5.S1.Recurrence.RoundedNormBoundedError
 
-open Polynomial Asymptotics Filter
+open Polynomial Asymptotics Filter Real
 
 /-- Upper comparison: `b (n + m) ≤ K ∑ b (n + i)` with `K ∑ c^i ≤ c^m` gives `b n = O(c^n)`. -/
 private theorem upper_compare {m : ℕ} {b : ℕ → ℝ} {K c : ℝ} (hK : 0 ≤ K) (hc : 0 < c)
@@ -459,5 +459,125 @@ private theorem generic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 < 
     (fun n => by rw [← hrad]; exact sq_err hrec n) hinf hpos
   obtain ⟨h1, h2⟩ := finish x R hR L hL hO
   exact ⟨Real.sqrt L, Real.sqrt_pos.mpr hL, h1, h2⟩
+
+/-- A positive multiple of an unbounded geometric sequence is not within `O(1)` of a bounded
+sequence. -/
+private theorem not_bounded_geom (x : ℕ → ℕ) (B₀ : ℕ) (hx : ∀ n, x n ≤ B₀) {C lam : ℝ}
+    (hC : 0 < C) (hlam : 1 < lam)
+    (h : (fun n => (x n : ℝ) - C * lam ^ n) =O[atTop] (fun _ => (1 : ℝ))) : False := by
+  obtain ⟨B, hB⟩ := h.bound
+  obtain ⟨N, hN⟩ := eventually_atTop.mp hB
+  have hgrow : Tendsto (fun n : ℕ => C * lam ^ n) atTop atTop :=
+    (tendsto_pow_atTop_atTop_of_one_lt hlam).const_mul_atTop hC
+  obtain ⟨n, hn⟩ := eventually_atTop.mp (hgrow.eventually_gt_atTop (B + B₀))
+  have h1 := hN (max N n) (le_max_left _ _)
+  have h2 := hn (max N n) (le_max_right _ _)
+  have h3 : (x (max N n) : ℝ) ≤ B₀ := by exact_mod_cast hx _
+  rw [Real.norm_eq_abs, norm_one, mul_one] at h1
+  have := (abs_le.mp h1).1
+  linarith [(Nat.cast_nonneg (x (max N n)) : (0 : ℝ) ≤ _)]
+
+/-! ### Two-term rounded norm -/
+
+private def P2 : ℝ[X] := X ^ 2 - X - 1
+
+private theorem P2_natDegree : P2.natDegree = 2 := by
+  unfold P2
+  compute_degree!
+
+private theorem P2_sum (b : ℕ → ℝ) (j : ℕ) :
+    ∑ k ∈ Finset.range (P2.natDegree + 1), P2.coeff k * b (j + k) =
+      b (j + 2) - ∑ i ∈ Finset.range 2, b (j + i) := by
+  rw [P2_natDegree]
+  simp [Finset.sum_range_succ, P2, coeff_X_pow, coeff_X, coeff_one]
+  ring
+
+private theorem P2_rootMultiplicity : P2.rootMultiplicity goldenRatio = 1 := by
+  have hP0 : P2 ≠ 0 := by
+    intro h
+    have := P2_natDegree
+    rw [h, natDegree_zero] at this
+    omega
+  have hroot : P2.IsRoot goldenRatio := by
+    simp only [IsRoot, P2, eval_sub, eval_pow, eval_X, eval_one]
+    linear_combination goldenRatio_sq
+  have hpos := (rootMultiplicity_pos hP0).mpr hroot
+  have hnot : ¬ 1 < P2.rootMultiplicity goldenRatio := by
+    rw [one_lt_rootMultiplicity_iff_isRoot hP0]
+    rintro ⟨-, hd⟩
+    simp [IsRoot, P2] at hd
+    linarith [one_lt_goldenRatio]
+  omega
+
+private theorem P2_other (z : ℂ) (hz : (P2.map (algebraMap ℝ ℂ)).IsRoot z)
+    (hne : z ≠ (goldenRatio : ℂ)) : ‖z‖ < 1 := by
+  have hz' : z ^ 2 - z - 1 = 0 := by simpa [IsRoot, P2] using hz
+  have hsum : (goldenRatio : ℂ) + goldenConj = 1 := by exact_mod_cast goldenRatio_add_goldenConj
+  have hprod : (goldenRatio : ℂ) * goldenConj = -1 := by exact_mod_cast goldenRatio_mul_goldenConj
+  have hfac : (z - goldenRatio) * (z - goldenConj) = 0 := by
+    linear_combination hz' - z * hsum + hprod
+  have hzψ : z = (goldenConj : ℂ) := by
+    have := (mul_eq_zero.mp hfac).resolve_left (sub_ne_zero.mpr hne)
+    exact sub_eq_zero.mp this
+  rw [hzψ, Complex.norm_real, Real.norm_eq_abs, abs_of_neg goldenConj_neg]
+  linarith [neg_one_lt_goldenConj]
+
+private theorem two_case (x : ℕ → ℕ)
+    (hrec : ∀ n, (x (n + 2) : ℤ) = round (Real.sqrt ((x n : ℝ) ^ 2 + (x (n + 1) : ℝ) ^ 2))) :
+    (∃ C : ℝ, 0 < C ∧
+      (fun n => (x n : ℝ) - C * Real.sqrt goldenRatio ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
+      (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt goldenRatio) =O[atTop]
+        (fun n => (Real.sqrt goldenRatio ^ n)⁻¹)) ↔ 2 ≤ max (x 0) (x 1) := by
+  have hrec' : ∀ n, (x (n + 2) : ℤ) = round (Real.sqrt (rad 2 x n)) := fun n => by
+    rw [hrec n]
+    simp [rad, Finset.sum_range_succ]
+  have hlam1 : 1 < Real.sqrt goldenRatio := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt zero_le_one one_lt_goldenRatio
+  constructor
+  · rintro ⟨C, hC, hO, -⟩
+    by_contra hlt
+    push Not at hlt
+    have hsmall : ∀ n, x n ≤ 1 ∧ x (n + 1) ≤ 1 := by
+      intro n
+      induction n with
+      | zero =>
+        have h0 := le_max_left (x 0) (x 1)
+        have h1 := le_max_right (x 0) (x 1)
+        exact ⟨by omega, by simp only [zero_add]; omega⟩
+      | succ n ih =>
+        refine ⟨ih.2, ?_⟩
+        show x (n + 2) ≤ 1
+        have h := (abs_le.mp (round_err hrec' n)).2
+        have hs : rad 2 x n ≤ 2 := by
+          have h0 : (x n : ℝ) ≤ 1 := by exact_mod_cast ih.1
+          have h1 : (x (n + 1) : ℝ) ≤ 1 := by exact_mod_cast ih.2
+          simp only [rad, Finset.sum_range_succ, Finset.sum_range_zero, zero_add, add_zero]
+          nlinarith [(Nat.cast_nonneg (x n) : (0 : ℝ) ≤ _),
+            (Nat.cast_nonneg (x (n + 1)) : (0 : ℝ) ≤ _)]
+        have hsq : Real.sqrt (rad 2 x n) ≤ Real.sqrt 2 := Real.sqrt_le_sqrt hs
+        have h2 : Real.sqrt 2 < 3 / 2 := by
+          rw [Real.sqrt_lt' (by norm_num)]
+          norm_num
+        have : (x (n + 2) : ℝ) < 2 := by linarith
+        have : x (n + 2) < 2 := by exact_mod_cast this
+        omega
+    exact not_bounded_geom x 1 (fun n => (hsmall n).1) hC hlam1 hO
+  · intro h2
+    obtain ⟨N, hN, hxN⟩ : ∃ N, 1 ≤ N ∧ 2 ≤ x N := by
+      rcases le_max_iff.mp h2 with h | h
+      · exact ⟨2, by norm_num, h.trans (le_next hrec' 0 0 (by norm_num))⟩
+      · exact ⟨1, le_rfl, h⟩
+    have hφ := one_lt_goldenRatio
+    exact generic (m := 2) (by norm_num) P2 goldenRatio hφ P2_rootMultiplicity P2_other P2_sum
+      (K := 4 / 3) (K' := 9 / 10) (c := 2) (c' := 3 / 2) (by norm_num) (by norm_num)
+      (by norm_num) (by norm_num) (by rw [goldenRatio_sq]; linarith) (by norm_num)
+      (by norm_num) (by simp [Finset.sum_range_succ]; norm_num)
+      (by simp [Finset.sum_range_succ]; norm_num) 2
+      (fun k hk => by
+        have : (2 : ℝ) ≤ k := by exact_mod_cast hk
+        push_cast
+        nlinarith)
+      x hrec' N (by omega) hxN
 
 end D5.S1.Recurrence.RoundedNormBoundedError
