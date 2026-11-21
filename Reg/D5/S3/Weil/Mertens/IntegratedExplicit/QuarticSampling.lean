@@ -227,7 +227,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["arg", "body", "body", "body", "arg", "body", "arg",
         "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
