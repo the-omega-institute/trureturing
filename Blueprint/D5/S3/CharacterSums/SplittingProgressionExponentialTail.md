@@ -34,7 +34,7 @@ $$\exists U \in \mathbb{R},\; \forall x \in \mathbb{R},\; U \le x \Rightarrow \l
 
 *Commentary.*
 
-Fix ε > 0. In the display c denotes min(ε,1)/38400 and R has the same conditions as P with the allowed small-prime cap raised to x^(1/2+ε/2). With k as above, the complete moment gains a factor exponential in −k log x. The interval endpoint error is at most 2 exp(y(log x)²/2). Division by L and the test threshold gives the displayed bound. Since c(log x)² exceeds any fixed B eventually, this also gives the fixed-rate theorem.
+Fix ε > 0. In the display c denotes min(ε,1)/38400 and R has the same conditions as P with the allowed small-prime cap raised to x^(1/2+ε/2). With k as above, the complete moment gains a factor exponential in −k log x. The interval endpoint error is at most 2 exp(y(log x)²/2). Dividing the moment bound by L and by the 2k-th power of the remaining threshold x^(1/2+ε)/4 bounds the exceptional fraction. Since c(log x)² exceeds any fixed B eventually, this also gives the fixed-rate theorem.
 
 ## References
 
