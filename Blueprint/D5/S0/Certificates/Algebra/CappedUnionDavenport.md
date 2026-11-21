@@ -26,11 +26,11 @@ $$(\operatorname{MinimalFor}\left(f, t\right)) \Leftrightarrow ((\operatorname{s
 
 *Commentary.*
 
-A sequence f of length n sums to t and no proper subsequence, indexed by a proper subset of the positions and including the empty one, sums to t.
+In any commutative monoid M, a sequence f of length n sums to t and no proper subsequence, indexed by a proper subset of the positions and including the empty one, sums to t.
 
 **Definition 1.3 (Lengths of minimal sequences).**
 
-$$\operatorname{minimalLengths}\left(t\right) = (n: \exists f \in \operatorname{Fin}\left(n\right) \to \operatorname{Capped}\left(U\right),\; \operatorname{MinimalFor}\left(f, t\right))$$
+$$\operatorname{minimalLengths}\left(t\right) = (n: \exists f \in \operatorname{Fin}\left(n\right) \to M,\; \operatorname{MinimalFor}\left(f, t\right))$$
 
 *Formalization.* `D5/S0/Certificates/Algebra/CappedUnionDavenport.minimalLengths` (`✓ std3`).
 
@@ -38,7 +38,7 @@ $$\operatorname{minimalLengths}\left(t\right) = (n: \exists f \in \operatorname{
 
 *Commentary.*
 
-The relative Davenport constant D_t(S_U) is the supremum of this set of lengths.
+For a commutative monoid M and t in M, the relative Davenport constant D_t(M) is the supremum of this set of lengths.
 
 **Theorem 1.4 (D_(A,k)(S_U)=|A|+k).**
 

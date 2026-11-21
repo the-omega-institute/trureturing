@@ -92,13 +92,15 @@ private theorem sum_eq {ι : Type*} (I : Finset ι) (f : ι → Capped U) :
     omega
 
 
-/-- A sequence summing to `t` none of whose proper subsequences, the empty one
-included, sums to `t`. -/
-def MinimalFor {n : ℕ} (f : Fin n → Capped U) (t : Capped U) : Prop :=
+/-- In a commutative monoid, a sequence summing to `t` none of whose proper
+subsequences, the empty one included, sums to `t`. -/
+def MinimalFor {M : Type*} [AddCommMonoid M] {n : ℕ} (f : Fin n → M) (t : M) : Prop :=
   ∑ i, f i = t ∧ ∀ I : Finset (Fin n), I ≠ Finset.univ → ∑ i ∈ I, f i ≠ t
 
-/-- The lengths of minimal sequences with sum `t`; `D_t(S_U)` is their supremum. -/
-def minimalLengths (t : Capped U) : Set ℕ := {n | ∃ f : Fin n → Capped U, MinimalFor f t}
+/-- The lengths of minimal sequences with sum `t`; the relative Davenport constant
+`D_t(M)` is their supremum. -/
+def minimalLengths {M : Type*} [AddCommMonoid M] (t : M) : Set ℕ :=
+  {n | ∃ f : Fin n → M, MinimalFor f t}
 
 private theorem upper (A : Finset U) (k : Fin 3) (n : ℕ) (f : Fin n → Capped U)
     (hf : MinimalFor f ⟨A, k⟩) : n ≤ A.card + k := by
