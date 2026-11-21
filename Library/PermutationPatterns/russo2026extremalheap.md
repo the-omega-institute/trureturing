@@ -17,6 +17,8 @@ triage: anchor
 
 ## Verified locator
 
+See the [version 1 abstract](https://arxiv.org/abs/2611.22780v1)
+([DOI 10.48550/arXiv.2611.22780](https://doi.org/10.48550/arXiv.2611.22780)).
 [Version 1, 17 November 2026](https://arxiv.org/pdf/2611.22780v1).
 SHA-256 of the consulted PDF is
 `ccebe09b956ed3cf6bf7fb29096287a3dbcf86931e0fe3b6826007e2e011bbef`.
