@@ -511,6 +511,30 @@ private noncomputable def selectFirst (c : L → A) (h : (facets c).Nonempty) : 
   mem_facets s := (exists_first_facet c h s.property).choose_spec.1
   firstAt s := (exists_first_facet c h s.property).choose_spec.2
 
+/-- Retaining the empty-face pair leaves exactly the full-restriction facets fixed.
+The rank decreases on an unmatched downward cover and a matched upward cover. -/
+theorem actualAugmentedMatching (c : L → A) (h : (facets c).Nonempty) :
+    ∃ (m : Face c → Face c) (r : Face c → ℕ),
+      Function.Involutive m ∧
+      (∀ s, Cover s (m s) ∨ Cover (m s) s ∨ m s = s) ∧
+      (∀ s, m s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
+      (∀ s t, (Cover t s ∧ m s ≠ t ∨ Cover s t ∧ m s = t) → r t < r s) := by
+  let sel := selectFirst c h
+  obtain ⟨x, hx⟩ := (mem_facets.mp (sel.mem_facets (emptyFace c))).1.1
+  let piv := chosenPivots sel x hx
+  refine ⟨mate sel piv, rank sel piv, mate_involutive sel piv, mate_cover_or_fixed sel piv, ?_, ?_⟩
+  · intro s
+    rw [mate_fixed_iff]
+    constructor
+    · rintro ⟨he, hR⟩
+      exact ⟨he ▸ sel.mem_facets s, hR⟩
+    · rintro ⟨hB, hR⟩
+      have hself : FirstAt c s.val s.val := (firstAt_iff_restriction_subset c hB
+        Finset.Subset.rfl).mpr (by rw [hR])
+      exact ⟨first_unique c hB (sel.mem_facets s) hself (sel.firstAt s), hR⟩
+  · intro s t hst
+    exact rank_decreases sel piv hst
+
 /-- The nonempty signed faces admit an acyclic cover matching with exactly the specified fixed faces. -/
 theorem actualMatching (c : L → A) (h : (facets c).Nonempty) :
     ∃ (B : Finset (L × Bool)) (x : L × Bool) (mate : NonemptyFace c → NonemptyFace c),
