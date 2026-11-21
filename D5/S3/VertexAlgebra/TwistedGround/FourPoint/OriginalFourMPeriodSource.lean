@@ -449,7 +449,7 @@ theorem chartD_root_boundary (upperA : Bool) {z : ℝ} (hz : 0 < z) (hz1 : z < 1
 open Matrix LatticeGeneratingFieldLocality
 
 /-- The complex Gram quadratic of a chart source. -/
-def gramQuadratic (D : LatticeData) (M : Fin D.rank → ℂ) : ℂ :=
+private def gramQuadratic (D : LatticeData) (M : Fin D.rank → ℂ) : ℂ :=
   M ⬝ᵥ (D.G.map (Int.cast : ℤ → ℂ)) *ᵥ M
 
 private theorem gramQuadratic_smul (D : LatticeData) (a : ℂ) (M : Fin D.rank → ℂ) :

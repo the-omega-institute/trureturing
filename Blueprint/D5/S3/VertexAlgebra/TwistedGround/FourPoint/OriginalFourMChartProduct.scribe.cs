@@ -49,7 +49,7 @@ internal sealed class OriginalFourMChartProductDocument : IScribeDocumentDefinit
                 H("A-to-D and A-to-B with the exact finite charge factors"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Assume G has unit determinant over ℤ, is positive definite over ℝ "
+                    Paragraph(Text("Assume G is even, has unit determinant over ℤ, and is positive definite over ℝ "
                         + "and rank D is 24. Take real 0 < x < 1, either upperA, arbitrary complex w, "
                         + "any finite sample family with complex weights and any mod-two charge a. "
                         + "Write A(a), B(a), D(a) for the respective products at that charge.")),
