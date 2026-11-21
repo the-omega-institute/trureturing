@@ -34,7 +34,7 @@ direct frozen dependencies:
     endpoint_eq_beatty (statement_id
     sha256:15f9f8627a73d9d28232ecd5a1deb1d41054ab6114f152475628df4fd9def028)
   D5/S3/ConceptDynamics/GraphColoring/JacoMaximumDegree.out_mono (made public in this delivery;
-    the module is re-pinned through the canonical writer)
+    re-pinned statement_id sha256:50d685f0424b303fbbddfa0d0f89e1f6aa67dfaa30a4e1b5c7afffca7d5cca7d)
   D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers.bo_zero (statement_id
     sha256:9eb0c30e4bc66cb8afb1eb6f9c71517c9be6c29aae118e2ab59e200b54844d07)
   D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.jaco (statement_id
