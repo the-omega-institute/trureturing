@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform implementations of the coloured parity model have exactly the fourfold profile budgets. -/
+   digest: Uniform coloured parity implementations have exactly the fourfold profile budgets. -/
 
 import D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
 import Mathlib.GroupTheory.GroupAction.SubMulAction
@@ -66,7 +66,7 @@ private def parityEquiv (n : ℕ) (t : ZMod 2) : ParityClass (n + 1) t ≃ Profi
     · rfl
   right_inv f := by simp
 
-private theorem parityCard (n : ℕ) (t : ZMod 2) :
+theorem parityCard (n : ℕ) (t : ZMod 2) :
     Nat.card (ParityClass (n + 1) t) = 2 ^ n := by
   rw [Nat.card_congr (parityEquiv n t), Nat.card_eq_fintype_card, Fintype.card_fun,
     Fintype.card_fin, ZMod.card]
@@ -143,7 +143,7 @@ private theorem parity_divisor {n : ℕ} {s t : ZMod 2} (different : s ≠ t)
 open D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 open D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
 
-private def booleanProfile {n : ℕ} (p : Profile n) : Fin n → Bool :=
+def booleanProfile {n : ℕ} (p : Profile n) : Fin n → Bool :=
   fun i => decide (p i = 1)
 
 private theorem booleanProfile_injective (n : ℕ) :
@@ -166,7 +166,7 @@ private theorem hasFalse {n : ℕ} {p : Profile n} (h : p ≠ 1) :
   · exact (noFalse i b).elim
   · simp
 
-private def pairMass {n : ℕ} (w : Output (Fin n) → Output (Fin n) → ℕ)
+def pairMass {n : ℕ} (w : Output (Fin n) → Output (Fin n) → ℕ)
     (p q : Profile n) : ℕ :=
   ∑ c : ZMod 2, ∑ d : ZMod 2, w ⟨booleanProfile p, c⟩ ⟨booleanProfile q, d⟩
 
@@ -232,18 +232,18 @@ private theorem matching_total (n k : ℕ) :
     _ = _ := congrArg (· * k) (pow_add (2 : ℕ) (n + 1) 2).symm
 
 
-private def entry {n : ℕ} (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ)
+def entry {n : ℕ} (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ)
     (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) (c d : ZMod 2) : ℕ :=
   w ⟨booleanProfile p.val, c⟩ ⟨booleanProfile q.val, d⟩
 
-private def MatrixRealizes (n N : ℕ) (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ) : Prop :=
+def MatrixRealizes (n N : ℕ) (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ) : Prop :=
   (∀ (g : Acting (Fin (n + 2))) x y, w (g • x) (g • y) = w x y) ∧
   (∑ p : ParityClass (n + 2) 0, ∑ q : ParityClass (n + 2) 1, pairMass w p.val q.val) = N ∧
   ∃ k : ℕ,
     (∀ (p : ParityClass (n + 2) 0) (c : ZMod 2), (∑ q, ∑ d, entry w p q c d) = k) ∧
     (∀ (q : ParityClass (n + 2) 1) (d : ZMod 2), (∑ p, ∑ c, entry w p q c d) = k)
 
-private theorem MatrixRealizes.four_dvd {n N : ℕ}
+theorem MatrixRealizes.four_dvd {n N : ℕ}
     {w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ} (h : MatrixRealizes n N w) :
     2 ^ (n + 3) ∣ N ∧ ∀ (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1),
       4 ∣ pairMass w p.val q.val := by
@@ -289,10 +289,10 @@ private theorem exact_matrix_budget (n N : ℕ) :
       simp [ZMod.card]
 
 
-private def bitProfile {n : ℕ} (p : Fin n → Bool) : Profile n :=
+def bitProfile {n : ℕ} (p : Fin n → Bool) : Profile n :=
   fun i => if p i then 1 else 0
 
-@[simp] private theorem bitProfile_booleanProfile {n : ℕ} (p : Profile n) :
+@[simp] theorem bitProfile_booleanProfile {n : ℕ} (p : Profile n) :
     bitProfile (booleanProfile p) = p := by
   funext i
   rcases bit (p i) with h | h <;> simp [bitProfile, booleanProfile, h]
@@ -330,7 +330,7 @@ noncomputable instance sliceFintype (n : ℕ) (t : ZMod 2) : Fintype (slice n t)
 
 abbrev Pair (n : ℕ) := slice (n + 2) 0 × slice (n + 2) 1
 
-private def seedWeight {n : ℕ}
+def seedWeight {n : ℕ}
     (w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ) (a : Pair n) : ℕ :=
   w a.1.val a.2.val
 
@@ -355,18 +355,29 @@ private theorem sum_seedWeight {n : ℕ}
 
 attribute [local instance 10000] Classical.propDecidable
 
-private theorem matrix_to_seeds {n N : ℕ}
+section
+
+attribute [local instance 10000] Classical.propDecidable
+
+/-- Realize a count matrix by seed copies while retaining fixed sets and predicate counts. -/
+theorem matrix_to_seeds_with_readouts {n N : ℕ}
     {w : Output (Fin (n + 2)) → Output (Fin (n + 2)) → ℕ} (h : MatrixRealizes n N w) :
     ∃ (S : Type) (_ : Fintype S) (_ : MulAction (Acting (Fin (n + 2))) S) (f : S → Pair n),
       Fintype.card S = N ∧ (∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s) ∧
+      (∀ (H : Subgroup (Acting (Fin (n + 2)))) s,
+        (∀ h : H, (h : Acting (Fin (n + 2))) • s = s) ↔
+          ∀ h : H, (h : Acting (Fin (n + 2))) • f s = f s) ∧
+      (∀ predicate : Pair n → Prop,
+        (∑ s, if predicate (f s) then (1 : ℕ) else 0) =
+          ∑ a, if predicate a then seedWeight w a else 0) ∧
       ∃ k : ℕ,
         (∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k) ∧
         (∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k) := by
   obtain ⟨inv, total, k, row, col⟩ := h
-  obtain ⟨S, _, _, f, equiv, _, counts⟩ :=
+  obtain ⟨S, _, _, f, equiv, fixed, counts⟩ :=
     D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.SeedCopies.exact_card_count
       (seedWeight w) (seedWeight_invariant w inv)
-  refine ⟨S, inferInstance, inferInstance, f, ?_, equiv, k, ?_, ?_⟩
+  refine ⟨S, inferInstance, inferInstance, f, ?_, equiv, fixed, counts, k, ?_, ?_⟩
   · have cardCount : Fintype.card S = ∑ a, seedWeight w a := by
       simpa using counts (fun _ => True)
     exact cardCount.trans ((sum_seedWeight w).trans total)
@@ -401,6 +412,7 @@ private theorem matrix_to_seeds {n N : ℕ}
         rfl
     exact h.trans mEq
 
+end
 
 /-- The number of seeds realizing an ordered pair of profiles, summing over both colours. -/
 def profileFibreCount {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
@@ -408,7 +420,7 @@ def profileFibreCount {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
   ∑ s, if (f s).1.val.profile = booleanProfile p.val ∧
     (f s).2.val.profile = booleanProfile q.val then 1 else 0
 
-private def seedPushforward {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
+def seedPushforward {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
     (x y : Output (Fin (n + 2))) : ℕ :=
   ∑ s, if (f s).1.val = x ∧ (f s).2.val = y then 1 else 0
 
@@ -468,13 +480,18 @@ theorem profile_fibre_four_dvd {n : ℕ} {S : Type} [Fintype S]
   rw [← pooled]
   exact result.2 p q
 
-private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
+section
+
+attribute [local instance 10000] Classical.propDecidable
+
+/-- The specific pushforward count matrix of a seed implementation realizes its marginals. -/
+theorem seeds_to_pushforward {n N : ℕ} {S : Type} [Fintype S]
     [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n) (card : Fintype.card S = N)
     (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
     (k : ℕ)
     (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
     (cols : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k) :
-    ∃ w, MatrixRealizes n N w := by
+    MatrixRealizes n N (seedPushforward f) := by
   let w := seedPushforward f
   have atom (x : slice (n + 2) 0) (y : slice (n + 2) 1) :
       w x.val y.val = ∑ s : S, if (f s).1 = x ∧ (f s).2 = y then 1 else 0 := by
@@ -501,7 +518,7 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
         (∑ a : Pair n, if (f s).1 = a.1 ∧ (f s).2 = a.2 then (1 : ℕ) else 0) = 1 := by
       simp [← Prod.ext_iff]
     simp [single, card]
-  refine ⟨w, seedPushforward_invariant f equiv, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩
+  refine ⟨seedPushforward_invariant f equiv, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩
   · intro p c
     have h := rowCount (sliceEquiv (n + 2) 0 (p, c))
     rw [← (sliceEquiv (n + 2) 1).sum_comp, Fintype.sum_prod_type] at h
@@ -521,6 +538,8 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
     · intro p _
       rfl
 
+end
+
 /-- Count budgets for an equivariant implementation of two uniform coloured parity laws. -/
 theorem exact_seed_budget (n N : ℕ) :
     (∃ (S : Type) (_ : Fintype S) (_ : MulAction (Acting (Fin (n + 2))) S) (f : S → Pair n),
@@ -531,9 +550,19 @@ theorem exact_seed_budget (n N : ℕ) :
     2 ^ (n + 3) ∣ N := by
   constructor
   · rintro ⟨S, _, _, f, card, equiv, k, rows, cols⟩
-    exact (exact_matrix_budget n N).mp (seeds_to_matrix f card equiv k rows cols)
+    apply (exact_matrix_budget n N).mp
+    refine ⟨seedPushforward f, seeds_to_pushforward f card equiv k ?_ ?_⟩
+    · intro x
+      convert rows x using 1
+    · intro y
+      convert cols y using 1
   · intro d
     obtain ⟨w, h⟩ := (exact_matrix_budget n N).mpr d
-    exact matrix_to_seeds h
+    obtain ⟨S, _, _, f, card, equiv, _, _, k, rows, cols⟩ := matrix_to_seeds_with_readouts h
+    refine ⟨S, inferInstance, inferInstance, f, card, equiv, k, ?_, ?_⟩
+    · intro x
+      convert rows x using 1
+    · intro y
+      convert cols y using 1
 
 end D5.S3.ConceptDynamics.Attribution.ParitySeedBudget
