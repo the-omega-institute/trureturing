@@ -717,9 +717,25 @@ section Bridge
 private def bridgeMarking (s : Marking (Fin 6)) : Marking (Fin 7) :=
   Fin.snoc s (some false)
 
-private theorem chow_bridge :
-    ∀ s : Marking (Fin 6), Chow bridgeJoin (bridgeMarking s) ↔ Chow oneSum s := by
+private theorem chow_bridge_bounded :
+    ∀ s : Marking (Fin 6), (selected s).card ≤ 3 →
+      (Chow bridgeJoin (bridgeMarking s) ↔ Chow oneSum s) := by
   decide +kernel
+
+private theorem chow_bridge (s : Marking (Fin 6)) :
+    Chow bridgeJoin (bridgeMarking s) ↔ Chow oneSum s := by
+  by_cases hs : (selected s).card ≤ 3
+  · exact chow_bridge_bounded s hs
+  have hcard : (selected (bridgeMarking s)).card = (selected s).card + 1 := by
+    unfold selected bridgeMarking
+    simp only [Finset.card_filter, Fin.sum_univ_castSucc, Fin.snoc_castSucc,
+      Fin.snoc_last, Option.isSome_some, ite_true]
+  constructor
+  · intro h
+    have hbound := chow_card_bound h
+    omega
+  · intro h
+    exact (hs (chow_card_bound h)).elim
 
 private theorem bridge_rank : ChowRank bridgeJoin 4 := by
   apply chow_rank_of_basis
