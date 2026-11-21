@@ -14,7 +14,7 @@ import Batteries.Tactic.OpenPrivate
 namespace D5.S3.Observer.Linear.ReflectingHeatInterpolation
 
 open MeasureTheory Set
-open scoped ENNReal InnerProductSpace
+open scoped ENNReal InnerProductSpace Matrix
 
 open D5.S3.Analytic.Hardy.FiniteStripMomentBound (windowNorm)
 open D5.S3.Fourier.InverseFourierSupport (frequencyRestriction)
@@ -208,6 +208,123 @@ private theorem physical_witness (n : ℕ) (j : Mode n) {L : ℝ}
           (mul_nonneg (weight_pos n j).le hnorm.le)
 
 #print axioms physical_witness
+
+open private cellMode_first signal synthesis gram continuous_signal continuous_synthesis
+  continuous_integrable_window integral_synthesis_sq gram_det_isUnit from
+  D5.S3.Observer.Linear.ReflectingHeatStripBound
+
+private theorem real_L2_inner {μ : Measure ℝ} {f g : ℝ → ℝ}
+    (hf : MemLp f 2 μ) (hg : MemLp g 2 μ) :
+    ⟪hf.toLp f, hg.toLp g⟫_ℝ = ∫ s, f s * g s ∂μ := by
+  rw [L2.inner_def]
+  apply integral_congr_ae
+  filter_upwards [hf.coeFn_toLp, hg.coeFn_toLp] with s hfs hgs
+  rw [hfs, hgs, Real.inner_apply]
+
+private theorem inverse_diagonal_le_windowNorm (n : ℕ) {T : ℝ} (hT : 0 < T)
+    (j : Mode n) {u : ℝ → ℝ} (hu : MemLp u 2 (volume.restrict (Ioo 0 T)))
+    (hm : ∀ k : Mode n, (∫ s in Ioo 0 T, u s * (weight n k * Real.exp (-physicalRate n k * s))) =
+      if k = j then 1 else 0) :
+    Real.sqrt ((physicalGramian n T)⁻¹ j j) ≤ windowNorm T u := by
+  have hn : 0 < n := by have := j.isLt; omega
+  have hn' : 0 < (n : ℝ) := by exact_mod_cast hn
+  let W := physicalGramian n T
+  let decay := physicalRate n
+  let b := weight n
+  have hW : W = gram T decay b := by
+    ext k i
+    dsimp only [W, physicalGramian, gram, Matrix.of_apply, signal, decay, b]
+    simp [hn, cellMode_first]
+  have hdecay : Function.Injective decay := fun _ _ h =>
+    rate_injective hn (mul_left_cancel₀ (pow_ne_zero 2 hn'.ne') h)
+  have hdet : IsUnit W.det :=
+    hW ▸ gram_det_isUnit hT hdecay (fun k => (weight_pos n k).ne')
+  let c (k : Mode n) := W⁻¹ k j
+  let G := synthesis decay b c
+  have hcolumn (k : Mode n) : (W *ᵥ c) k = if k = j then 1 else 0 := by
+    have he := congrFun (congrFun (Matrix.mul_nonsing_inv W hdet) k) j
+    simpa only [c, Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.one_apply] using he
+  have henergy : (∫ s in Ioo 0 T, G s ^ 2) = W⁻¹ j j := by
+    dsimp only [G]
+    rw [integral_synthesis_sq, ← hW]
+    simp [hcolumn, c]
+  have hLp {f : ℝ → ℝ} (hf : Continuous f) :
+      MemLp f 2 (volume.restrict (Ioo 0 T)) :=
+    (memLp_two_iff_integrable_sq hf.aestronglyMeasurable).2
+      (continuous_integrable_window (hf.pow 2) T)
+  have hG : MemLp G 2 (volume.restrict (Ioo 0 T)) :=
+    hLp (continuous_synthesis decay b c)
+  have hpair : (∫ s in Ioo 0 T, u s * G s) = W⁻¹ j j := by
+    dsimp only [G, synthesis]
+    simp_rw [Finset.mul_sum, mul_left_comm (u _)]
+    rw [integral_finsetSum (f := fun k s => c k * (u s * signal decay b k s))
+      Finset.univ (fun k _ =>
+        (hu.integrable_mul (hLp (continuous_signal decay b k))).const_mul (c k))]
+    simp only [integral_const_mul, show ∀ k, (∫ s in Ioo 0 T, u s * signal decay b k s) =
+      if k = j then 1 else 0 from hm, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', c,
+      Finset.mem_univ, ite_true]
+  have hgSq : ‖hG.toLp G‖ ^ 2 = W⁻¹ j j := by
+    rw [← real_inner_self_eq_norm_sq, real_L2_inner hG hG, ← henergy]
+    simp only [pow_two]
+  have huNorm : ‖hu.toLp u‖ = windowNorm T u := by
+    unfold windowNorm
+    have he : (∫ s in Ioo 0 T, u s ^ 2) = ‖hu.toLp u‖ ^ 2 := by
+      rw [← real_inner_self_eq_norm_sq, real_L2_inner hu hu]
+      simp only [pow_two]
+    rw [he, Real.sqrt_sq (norm_nonneg _)]
+  have hgnorm : Real.sqrt (W⁻¹ j j) = ‖hG.toLp G‖ := by
+    rw [← hgSq, Real.sqrt_sq (norm_nonneg _)]
+  change Real.sqrt (W⁻¹ j j) ≤ _
+  rw [hgnorm, ← huNorm]
+  have hcs := real_inner_le_norm (hu.toLp u) (hG.toLp G)
+  rw [real_L2_inner hu hG, hpair, ← hgSq] at hcs
+  rcases (norm_nonneg (hG.toLp G)).eq_or_lt with hzero | hpos
+  · rw [← hzero]
+    exact norm_nonneg _
+  · exact le_of_mul_le_mul_right (by simpa only [pow_two] using hcs) hpos
+
+/-- The inverse Fourier density gives a real first-cell biorthogonal witness at time
+`L / n²`. Its angular real-axis norm bounds both the witness and the square root of the
+inverse diagonal of the physical Gramian. -/
+theorem inverse_diagonal_upper_bound (n : ℕ) (j : Mode n) (M : ℂ → ℂ)
+    (hM_entire : Differentiable ℂ M) {L A B C : ℝ} {m : ℕ} (hL : 0 < L) (hA : 0 ≤ A)
+    (hM_radial : ∀ z : ℂ, ‖M z‖ ≤ C * (1 + ‖z‖) ^ m * Real.exp (L / 2 * ‖z‖))
+    (hM_real : ∀ ω : ℝ, ∃ ζ : ℂ, ζ ≠ 0 ∧
+      ζ + ζ⁻¹ = (ω : ℂ) * Complex.I - 2 ∧ 1 ≤ ‖ζ‖ ∧
+      ‖M (ω : ℂ)‖ ≤ A * (1 + B * |ω|) / ‖ζ‖ ^ n)
+    (hAj : (nodalDerivative n j : ℂ) * M (-(rate n j : ℂ) * Complex.I) ≠ 0) :
+    let T := L / (n : ℝ) ^ 2
+    let Aj := (nodalDerivative n j : ℂ) * M (-(rate n j : ℂ) * Complex.I)
+    let bound := (n : ℝ) * Real.exp (rate n j * L / 2) /
+      (weight n j * ‖Aj‖ * Real.sqrt (2 * Real.pi)) *
+      Real.sqrt (∫ ω : ℝ, ‖momentInterpolant n j M (ω : ℂ)‖ ^ 2)
+    ∃ u : ℝ → ℝ, MemLp u 2 volume ∧ (∀ s ∉ Icc 0 T, u s = 0) ∧
+      (∀ k : Mode n, (∫ s in Ioo 0 T, u s * (weight n k * Real.exp (-physicalRate n k * s))) =
+        if k = j then 1 else 0) ∧
+      windowNorm T u ≤ bound ∧ Real.sqrt ((physicalGramian n T)⁻¹ j j) ≤ bound := by
+  let T := L / (n : ℝ) ^ 2
+  let Aj := (nodalDerivative n j : ℂ) * M (-(rate n j : ℂ) * Complex.I)
+  have hn : 0 < (n : ℝ) := by
+    have := j.isLt
+    exact_mod_cast (show 0 < n by omega)
+  have hT : 0 < T := div_pos hL (by positivity)
+  obtain ⟨hg, v, hv, hae, hs, _, hm⟩ :=
+    momentInterpolant_inverse_support n j M hM_entire hL.le hA hM_radial hM_real
+  have hv₂ : MemLp v 2 volume := (Lp.memLp _).ae_eq hae.symm
+  obtain ⟨u, hu, hus, hum, hunorm⟩ := physical_witness n j hv hv₂ hs hAj hm
+  rw [centered_inverse_mass hg hae, Real.sqrt_mul (by positivity), Real.sqrt_inv] at hunorm
+  have hscaled : windowNorm T u ≤ (n : ℝ) * Real.exp (rate n j * L / 2) /
+      (weight n j * ‖Aj‖ * Real.sqrt (2 * Real.pi)) *
+      Real.sqrt (∫ ω : ℝ, ‖momentInterpolant n j M (ω : ℂ)‖ ^ 2) := by
+    calc
+      _ ≤ _ := hunorm
+      _ = _ := by
+        simp only [Aj, div_eq_mul_inv, mul_inv_rev]
+        ring
+  exact ⟨u, hu, hus, hum, hscaled,
+    (inverse_diagonal_le_windowNorm n hT j (hu.restrict (Ioo 0 T)) hum).trans hscaled⟩
+
+#print axioms inverse_diagonal_upper_bound
 
 end
 
