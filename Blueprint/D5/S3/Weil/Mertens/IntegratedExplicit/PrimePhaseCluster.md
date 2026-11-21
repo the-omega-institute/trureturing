@@ -18,7 +18,7 @@ The index k runs over all actual zero occurrences via actualOccurrenceEquiv. Wri
 
 **Definition 1.2 (Coefficients on the selected line).**
 
-$$\forall r \in \mathbb{C} \Rightarrow \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall k \in \mathbb{N},\; \operatorname{a}\left(r, beta, k\right) = \operatorname{ite}\left(\operatorname{r}\left(\operatorname{actualZero}\left(k\right)\right) = beta, \operatorname{c}\left(k\right), 0\right)$$
+$$\forall r \in (\mathbb{C} \to \mathbb{R}),\; \forall beta \in \mathbb{R},\; \forall k \in \mathbb{N},\; \operatorname{a}\left(r, beta, k\right) = \operatorname{ite}\left(\operatorname{r}\left(\operatorname{actualZero}\left(k\right)\right) = beta, \operatorname{c}\left(k\right), 0\right)$$
 
 *Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.rightmostCoeff` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The real-part map r is fixed to Re in the theorem. The coefficient c(k) is actua
 
 **Definition 1.3 (The real complete-tail profile).**
 
-$$\forall r \in \mathbb{C} \Rightarrow \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall h \in \mathbb{T}^{\mathbb{N}},\; \forall u \in \mathbb{R},\; \operatorname{F}\left(r, beta, h, u\right) = -\operatorname{Re}\left(\sum_{k \in \mathbb{N}} \operatorname{a}\left(r, beta, k\right) \cdot \operatorname{h}\left(k\right) \cdot \operatorname{phi}\left(u, k\right)\right)$$
+$$\forall r \in (\mathbb{C} \to \mathbb{R}),\; \forall beta \in \mathbb{R},\; \forall h \in \mathbb{T}^{\mathbb{N}},\; \forall u \in \mathbb{R},\; \operatorname{F}\left(r, beta, h, u\right) = -\operatorname{Re}\left(\sum_{k \in \mathbb{N}} \operatorname{a}\left(r, beta, k\right) \cdot \operatorname{h}\left(k\right) \cdot \operatorname{phi}\left(u, k\right)\right)$$
 
 *Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.phaseProfile` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The minus sign comes from the actual integrated explicit formula. Norms of the o
 
 **Definition 1.4 (Weighted negative part over a log window).**
 
-$$\forall r \in \mathbb{C} \Rightarrow \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall W \in \mathbb{R},\; \forall h \in \mathbb{T}^{\mathbb{N}},\; \operatorname{I}\left(r, beta, W, h\right) = \int_{0}^{W} \operatorname{exp}\left(-\left(beta - \frac{1}{2}\right) \cdot s\right) \cdot \operatorname{max}\left(-\operatorname{F}\left(r, beta, h, -s\right), 0\right) ds$$
+$$\forall r \in (\mathbb{C} \to \mathbb{R}),\; \forall beta \in \mathbb{R},\; \forall W \in \mathbb{R},\; \forall h \in \mathbb{T}^{\mathbb{N}},\; \operatorname{I}\left(r, beta, W, h\right) = \int_{0}^{W} \operatorname{exp}\left(-\left(beta - \frac{1}{2}\right) \cdot s\right) \cdot \operatorname{max}\left(-\operatorname{F}\left(r, beta, h, -s\right), 0\right) ds$$
 
 *Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.phaseWindow` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The real variable s runs backwards from the right endpoint in logarithmic coordi
 
 **Theorem 1.5 (Exact cluster-set equivalence).**
 
-$$\forall rho \in \mathbb{C},\; \operatorname{NontrivialZero}\left(rho\right) \Rightarrow \left(\frac{1}{2} < \operatorname{Re}\left(rho\right) \Rightarrow \left(\left(\forall z \in \mathbb{C},\; \operatorname{NontrivialZero}\left(z\right) \Rightarrow \operatorname{Re}\left(z\right) \le \operatorname{Re}\left(rho\right)\right) \Rightarrow \left(\forall W \in \mathbb{R},\; 0 < W \Rightarrow \left(\forall y \in \mathbb{R},\; \operatorname{MapClusterPt}\left(y, atTop, (\lambda B:\mathbb{R} \mapsto \frac{\operatorname{N}\left(B \cdot \operatorname{exp}\left(-W\right), B\right)}{B^{\operatorname{Re}\left(rho\right) - \frac{1}{2}}})\right) \Leftrightarrow \left(\exists h \in \mathbb{T}^{\mathbb{N}},\; h \in H \land y = \operatorname{I}\left(Re, \operatorname{Re}\left(rho\right), W, h\right)\right)\right)\right)\right)\right)$$
+$$\forall rho \in \mathbb{C},\; \operatorname{NontrivialZero}\left(rho\right) \Rightarrow \left(\frac{1}{2} < \operatorname{Re}\left(rho\right) \Rightarrow \left(\left(\forall z \in \mathbb{C},\; \operatorname{NontrivialZero}\left(z\right) \Rightarrow \operatorname{Re}\left(z\right) \le \operatorname{Re}\left(rho\right)\right) \Rightarrow \left(\forall W \in \mathbb{R},\; 0 < W \Rightarrow \left(\forall y \in \mathbb{R},\; \operatorname{MapClusterPt}\left(y, atTop, (\lambda B:\mathbb{R} \mapsto \frac{\operatorname{N}\left(B \cdot \operatorname{exp}\left(-W\right), B\right)}{B^{\operatorname{Re}\left(rho\right) - \frac{1}{2}}})\right) \Leftrightarrow \left(\exists h \in \mathbb{T}^{\mathbb{N}},\; h \in \operatorname{closure}\left(\operatorname{range}\left(phi\right)\right) \land y = \operatorname{I}\left(Re, \operatorname{Re}\left(rho\right), W, h\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.prime_tail_mass_cluster_iff_of_attained_zero` (`✓ std3`). ∎
 
