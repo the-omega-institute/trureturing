@@ -61,7 +61,7 @@ const previous = pages.flatMap(page => page.artifacts)
   .sort((a,b) => a.attempt - b.attempt || a.round - b.round);
 for (const a of previous) {
   const dir = join(tmp, 'input-' + a.id);
-  const response = await client.downloadArtifact(a.id, {findBy, path: dir, expectedHash: a.digest.slice(7)});
+  const response = await client.downloadArtifact(a.id, {findBy, path: dir, expectedHash: a.digest});
   if (response.digestMismatch) throw new Error('progress artifact digest mismatch: ' + a.id);
   console.log('LEAN_LAYER_PROGRESS restoring=' + a.id + ' bytes=' + a.size_in_bytes + ' stage=' + stage);
   progress('restore', dir);
