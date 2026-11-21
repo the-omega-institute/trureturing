@@ -126,9 +126,9 @@ private theorem evalTerms_neg (s t u : R) (xs : List Term) :
     simp only [evalTerms, List.map_cons, List.sum_cons] at *
     rw [Term.eval_neg, ih, neg_add]
 
-private theorem eval_zero (s t u : R) : (0 : Sparse).eval s t u = 0 := rfl
+theorem eval_zero (s t u : R) : (0 : Sparse).eval s t u = 0 := rfl
 
-private theorem eval_cast (s t u : R) (n : ℕ) : (n : Sparse).eval s t u = n := by
+theorem eval_cast (s t u : R) (n : ℕ) : (n : Sparse).eval s t u = n := by
   change evalTerms s t u (Sparse.constant n).terms = _
   simp [evalTerms, Sparse.constant, Term.eval]
 
@@ -159,7 +159,7 @@ theorem eval_pow (s t u : R) (p : Sparse) (n : ℕ) :
     change ((p ^ n) * p).eval s t u = _
     rw [eval_mul, ih, pow_succ]
 
-private theorem eval_sum (s t u : R) (ps : List Sparse) :
+theorem eval_sum (s t u : R) (ps : List Sparse) :
     ps.sum.eval s t u = (ps.map (Sparse.eval s t u)).sum := by
   induction ps with
   | nil => exact eval_zero s t u
@@ -172,6 +172,10 @@ theorem eval_defect (s t u : R) (p : ℕ) (a b c : Sparse) :
 private theorem eval_criterion (s t u : R) (p : ℕ) (a b c : Sparse) :
     (criterion p a b c).eval s t u = criterion p (a.eval s t u) (b.eval s t u) (c.eval s t u) := by
   simp only [criterion, eval_defect, eval_pow, eval_add, eval_sub, eval_mul, eval_cast]
+
+theorem Certificate.Sparse.eval_unit_term (s t u : R) (i j k : ℕ) :
+    (⟨[⟨(i, j, k), 1⟩]⟩ : Sparse).eval s t u = s ^ i * t ^ j * u ^ k := by
+  simp [Sparse.eval, evalTerms, Term.eval]
 
 private theorem eval_orderedPolynomial (p : ℕ) (s t u : R) :
     (orderedPolynomial p).eval s t u = criterion p s (s + t) (s + t + u) := by
@@ -356,6 +360,22 @@ theorem real_eval_nonneg {d : ℕ} {xs : List Term} {s t u : ℝ}
   dsimp [v]
   positivity
 
+/-- A homogeneous sparse polynomial is nonnegative on the nonnegative octant
+when its integer evaluation passes the centered packed sign check. -/
+theorem Certificate.Sparse.nonneg_of_packed {poly : Sparse} {d w : ℕ} {s t u : ℝ}
+    (hs : 0 ≤ s) (ht : 0 ≤ t) (hu : 0 ≤ u)
+    (hd : ∀ m ∈ poly.terms, m.degree = d)
+    (hn : coefficientNorm poly.terms < 2 ^ w)
+    (encoded : ℤ)
+    (he : poly.eval 1 (↑(2 ^ (w + 1) : ℕ) : ℤ)
+      ((↑(2 ^ (w + 1) : ℕ) : ℤ) ^ (d + 1)) = encoded)
+    (hc : (encoded + ↑(PackedCheck.centeredMask w d)).toNat &&&
+      PackedCheck.centeredMask w d = PackedCheck.centeredMask w d) :
+    0 ≤ poly.eval s t u := by
+  have hpacked := encode_columns d (↑(2 ^ (w + 1) : ℕ) : ℤ) poly.terms hd
+  rw [show evalTerms _ _ _ poly.terms = encoded from he] at hpacked
+  exact real_eval_nonneg hs ht hu hd (column_digit_nonneg hn hpacked hc)
+
 /-- The coefficient bounds and the packed sign comparison imply ordered scalar positivity. -/
 theorem criterion_nonneg_ordered (p : ℕ) (hp : p = 5 ∨ p = 6 ∨ p = 7)
     (a b c : ℝ) (ha : 0 ≤ a) (hab : a ≤ b) (hbc : b ≤ c) :
@@ -363,13 +383,6 @@ theorem criterion_nonneg_ordered (p : ℕ) (hp : p = 5 ∨ p = 6 ∨ p = 7)
   let w := digitBits p
   let d := 12 * p
   let base : ℕ := 2 ^ (w + 1)
-  let xs := (orderedPolynomial p).terms
-  have hd : ∀ m ∈ xs, m.exponents.1 + m.exponents.2.1 + m.exponents.2.2 = d :=
-    ordered_degree p
-  have hn : (xs.map fun m => m.coefficient.natAbs).sum < 2 ^ w := ordered_norm_lt p hp
-  have hpacked := encode_columns d (base : ℤ) xs hd
-  change _ = (orderedPolynomial p).eval (1 : ℤ) base ((base : ℤ) ^ (d + 1)) at hpacked
-  rw [eval_orderedPolynomial] at hpacked
   have hc : PackedCheck.maskCheck p w = true := by
     rcases hp with rfl | rfl | rfl
     · exact PackedCheck.mask_check_five
@@ -380,10 +393,15 @@ theorem criterion_nonneg_ordered (p : ℕ) (hp : p = 5 ∨ p = 6 ∨ p = 7)
         PackedCheck.centeredMask w d :=
     beq_iff_eq.mp (show (((PackedCheck.centeredCriterion p w).toNat &&&
       PackedCheck.centeredMask w d) == PackedCheck.centeredMask w d) = true from hc)
-  have hn' := column_digit_nonneg hn hpacked (by
-    simpa only [PackedCheck.centeredCriterion, Int.natCast_pow, base, d] using hmask)
-  have h := real_eval_nonneg ha (sub_nonneg.mpr hab) (sub_nonneg.mpr hbc) hd hn'
-  change 0 ≤ (orderedPolynomial p).eval a (b - a) (c - b) at h
+  let encoded : ℤ := criterion p 1 (1 + ↑base) (1 + ↑base + (↑base : ℤ) ^ (d + 1))
+  have he : (orderedPolynomial p).eval (1 : ℤ) (↑base : ℤ) ((↑base : ℤ) ^ (d + 1)) =
+      encoded := eval_orderedPolynomial p _ _ _
+  have hcentered : encoded + ↑(PackedCheck.centeredMask w d) =
+      PackedCheck.centeredCriterion p w := by
+    simp only [encoded, PackedCheck.centeredCriterion, d, base, Int.natCast_pow]
+  have h := Sparse.nonneg_of_packed (poly := orderedPolynomial p) (d := d) (w := w)
+    ha (sub_nonneg.mpr hab) (sub_nonneg.mpr hbc) (ordered_degree p) (ordered_norm_lt p hp)
+    encoded he (by rw [hcentered]; exact hmask)
   simpa only [eval_orderedPolynomial, show a + (b - a) = b by ring,
     show b + (c - b) = c by ring] using h
 
