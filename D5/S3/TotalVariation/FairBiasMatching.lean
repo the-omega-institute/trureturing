@@ -14,6 +14,9 @@ open D5.S3.TotalVariation.FairBiasLink
 open D5.S3.TotalVariation.FairBiasShelling
 
 namespace D5.S3.TotalVariation.FairBiasMatching
+
+section
+
 universe u v
 variable {A : Type u} {L : Type v} [AddCommGroup A] [Module (ZMod 2) A]
   [Finite A] [Fintype L] [LinearOrder (L × Bool)]
@@ -40,9 +43,9 @@ private theorem firstAt_monotone (c : L → A) {B C S T : Finset (L × Bool)}
     ¬ lexBefore (L × Bool) C B :=
   fun hBefore => hS.2 C hC hBefore (hST.trans hT.1)
 
-end FairBiasMatching
+end
 
-namespace D5.S3.TotalVariation.FairBiasMatching
+section
 
 private theorem erased_pivot_of_cover {V : Type*} [DecidableEq V] {p q : Finset V} {x : V}
     (hpq : p ⊆ q) (hcard : q.card = p.card + 1) (hxq : x ∈ q) (hxp : x ∉ p) :
@@ -73,9 +76,9 @@ private theorem rank_decreases_inside_fiber {V : Type*} [DecidableEq V] (pivot :
       Finset.card_insert_of_notMem hn]
     omega
 
-end FairBiasMatching
+end
 
-namespace D5.S3.TotalVariation.FairBiasMatching
+section
 
 open Finset
 
@@ -321,9 +324,9 @@ private theorem rank_decreases (sel : FirstFacetSelector c) (piv : IntervalPivot
         Nat.mul_le_mul_right _ hi
       _ ≤ _ := Nat.le_add_right _ _
 
-end FairBiasMatching
+end
 
-namespace D5.S3.TotalVariation.FairBiasMatching
+section
 
 open Finset
 
@@ -495,9 +498,9 @@ private theorem nonemptyMate_fixed_iff (sel : FirstFacetSelector c) (x : L × Bo
   · have he := hempty.mp (Finset.not_nonempty_iff_eq_empty.mp hn)
     simp [nonemptyMate, hn, he]
 
-end FairBiasMatching
+end
 
-namespace D5.S3.TotalVariation.FairBiasMatching
+section
 
 universe u v
 variable {A : Type u} {L : Type v} [AddCommGroup A] [Module (ZMod 2) A]
@@ -523,9 +526,12 @@ theorem actualMatching (c : L → A) (h : (facets c).Nonempty) :
   obtain ⟨x, hx⟩ := (mem_facets.mp (sel.mem_facets (emptyFace c))).1.1
   let piv := chosenPivots sel x hx
   refine ⟨sel.facet (emptyFace c), x, nonemptyMate sel piv,
-    sel.mem_facets _, sel.firstAt _, hx, nonemptyMate_involutive sel piv,
+    sel.mem_facets (emptyFace c), sel.firstAt (emptyFace c), hx,
+    nonemptyMate_involutive sel piv,
     nonemptyMate_cover_or_fixed sel piv, nonemptyMate_fixed_iff sel x hx, ?_⟩
   intro s
   exact nonemptyStep_acyclic sel piv s
 
-end FairBiasMatching
+end
+
+end D5.S3.TotalVariation.FairBiasMatching
