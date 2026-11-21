@@ -16,6 +16,10 @@ triage: anchor
 
 ## Verified locator
 
+DOI: 10.48550/arXiv.2611.25741
+
+URL: https://arxiv.org/abs/2611.25741v1
+
 Giovanni Rossi, *Beyond geometric lattices: pseudo-atoms and redundant join representations in the
 face lattice of the permutohedron*, arXiv:2611.25741v1, §10.3 item 8, p. 26, asks:
 
