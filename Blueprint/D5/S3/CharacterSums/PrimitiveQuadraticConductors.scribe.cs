@@ -17,11 +17,7 @@ internal sealed class PrimitiveQuadraticConductorsDocument : IScribeDocumentDefi
                 + "Write R(a,f) if a primitive character of level a takes the value f(n) at every natural n.")),
             Describe.Lean(DescribeId.Create("six-levels"), DeclarationHandle.Create(Module + "six_quadratic_levels"),
                 H("Native levels for the six quadratic coefficient functions"),
-                StatementSource.FromAuthor(F.Disp(And(
-                    At("R", F.Id("q"), F.Id("Jq")), At("R", Mul(F.D(8), F.Id("q")), Mul(F.Id("E"), F.Id("Jq"))),
-                    At("R", F.Id("d"), F.Id("Jd")), At("R", Mul(F.D(8), F.Id("d")), Mul(F.Id("E"), F.Id("Jd"))),
-                    At("R", Mul(F.Id("q"), F.Id("d")), Mul(F.Id("Jq"), F.Id("Jd"))),
-                    At("R", Mul(F.D(8), Mul(F.Id("q"), F.Id("d"))), Mul(F.Id("E"), Mul(F.Id("Jq"), F.Id("Jd")))))))),
+                StatementSource.FromAuthor(Six()),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The primitive quadratic character of an odd prime gives Jₚ. At level eight, "
                         + "χ₈(5) = −1 rules out a lift from four, where 5 represents the identity. "
@@ -43,6 +39,21 @@ internal sealed class PrimitiveQuadraticConductorsDocument : IScribeDocumentDefi
                         + "identifies r with a. Injectivity of the change of level then identifies the characters "
                         + "on their common native level, including their values at integers sharing factors with M."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Six()
+    {
+        var q = F.Id("q");
+        var d = F.Id("d");
+        var jq = F.Id("Jq");
+        var jd = F.Id("Jd");
+        var e = F.Id("E");
+        var qd = Mul(q, d);
+        var product = Mul(jq, jd);
+        return F.Disp(And(
+            At("R", q, jq), At("R", Mul(F.D(8), q), Mul(e, jq)),
+            At("R", d, jd), At("R", Mul(F.D(8), d), Mul(e, jd)),
+            At("R", qd, product), At("R", Mul(F.D(8), qd), Mul(e, product))));
+    }
 
     private static Formula At(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
