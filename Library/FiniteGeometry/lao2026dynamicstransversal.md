@@ -14,6 +14,12 @@ triage: anchor
 
 # Hin Lon Lao, Dynamics of Transversal Matroids
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2611.02586
+
+Source: https://arxiv.org/abs/2611.02586v1
+
 Chapter 7, Question 7.0.2, printed p. 104 and PDF page 112, asks whether one can find a necessary and sufficient condition on a bipartite graph G for T(G) to contain U₂,₄ as a minor. The paragraph immediately following the question explains why ordinary subgraph containment of a minimal presentation does not give such a test in general. The question and that paragraph agree in arXiv v1 and the York University dissertation. The dissertation title page gives May 2026. [arXiv v1](https://arxiv.org/pdf/2611.02586v1#page=112) · [YorkSpace record](https://hdl.handle.net/10315/44283) · [YorkSpace PDF](https://yorkspace.library.yorku.ca/bitstreams/f62eb6b1-5823-4769-b8d9-c3052ce3e737/download)
 
 Lao's §2.2.1 identifies the designated side G_N with the whole matroid ground and G_M with the indexed presentation members. Distinct presentation indices may have identical neighborhoods. An isolated vertex of G_N remains a loop on the ground. Theorem 4.1.8 gives a sufficient pattern with private neighbors, and Figures 4.2–4.3 show the limits of subgraph containment. Figure 4.7 shows that adding edges can change whether the minor is present. Theorem 4.1.13 credits D. J. A. Welsh, *Matroid Theory* (Academic Press, 1976), p. 169, for the abstract characterization by a rank-(r−2) flat lying in at least four copoints. The page attribution follows Lao's quotation and restatement. [Lao, Chapter 4](https://arxiv.org/html/2611.02586v1#Ch4)
