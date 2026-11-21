@@ -203,7 +203,7 @@ jobs:
             make lean-cache-from-github-without-mathlib
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
           if [[ "$RESTORE" == full ]]; then
-            test -s .lake/build/stratalint/raw-lean-report.json.reuse.json
+            jq -e '.completed | arrays | index("fib-inputs-checked") != null' .lake/build/stratalint/raw-lean-report.json.reuse.json
           else
             test ! -e .lake/build/stratalint/raw-lean-report.json
           fi
