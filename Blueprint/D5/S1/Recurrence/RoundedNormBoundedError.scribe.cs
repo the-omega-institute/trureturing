@@ -61,6 +61,10 @@ internal sealed class RoundedNormBoundedErrorDocument : IScribeDocumentDefinitio
                         + "is Corollary 5 in Section 4 of H. Ma and W. Zhang's note on OEIS "
                         + "A400645 (DOI 10.5281/zenodo.24369110), which assumes nondecreasing "
                         + "data with x_1 ≥ 2 for m = 2 and x_2 ≥ 1 for m = 3. It covers Henry "
-                        + "Bottomley's A063827 (seed 1, 2) and Bernáth's A400644 (seed 0, 0, 1)."))),
+                        + "Bottomley's A063827 (seed 1, 2) and Bernáth's A400644 (seed 0, 0, 1). "
+                        + "Rounding ties never occur, since √s is not a half-integer for an "
+                        + "integer s. Larger m would need every other root of "
+                        + "y^m − y^(m−1) − ⋯ − 1 inside the unit disk, which is not formalized "
+                        + "here."))),
                 DescribeRole.Theorem))));
 }

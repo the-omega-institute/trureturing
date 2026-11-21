@@ -19,12 +19,19 @@ escape_witness: analytic (a nonnegative sequence satisfying the characteristic r
   seed conditions are also necessary: otherwise the sequence stays at most one).
 proof_shape:
   rad, P2, P3: definitions; consumers: the lemmas below.
-  sqrt_le_of_le_pow, rad_nonneg, round_err, sq_err, P2_natDegree, P3_natDegree, P2_sum, P3_sum,
-    trib_gt, not_bounded_geom: bind-only helpers; consumers: analytic, le_next, step_up,
-    generic, two_case, three_case.
-  le_next, mono, P2_rootMultiplicity, P3_rootMultiplicity: bind-only helpers (instantiation of
-    the rounding bound; induction over le_next; derivative at the root); consumers: step_up,
-    tendsto_atTop, two_case, three_case.
+  sqrt_le_of_le_pow: bind-only helper; consumer: analytic.
+  rad_nonneg: bind-only helper; consumer: sq_err.
+  round_err: bind-only helper; consumers: sq_err, le_next, step_up, two_case.
+  sq_err: bind-only helper; consumer: generic.
+  P2_natDegree: bind-only helper; consumers: P2_sum, P2_rootMultiplicity.
+  P3_natDegree: bind-only helper; consumers: P3_sum, P3_rootMultiplicity.
+  P2_sum, P2_rootMultiplicity: bind-only helpers; consumer: two_case.
+  P3_sum, P3_rootMultiplicity: bind-only helpers; consumer: three_case.
+  trib_gt: bind-only helper; consumers: P3_other, three_case.
+  not_bounded_geom: bind-only helper; consumers: two_case, three_case.
+  le_next: bind-only helper (instantiation of the rounding bound); consumers: mono, two_case,
+    three_case.
+  mono: bind-only helper (induction over le_next); consumers: step_up, tendsto_atTop.
   generic: bind-only helper (assembles analytic and finish); consumers: two_case, three_case.
   upper_compare, lower_compare, step_up, tendsto_atTop, analytic, finish, P2_other, P3_other,
     two_case, three_case: content; consumers: generic, two_case, three_case, result.
