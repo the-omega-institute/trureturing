@@ -29,7 +29,10 @@ internal sealed class DimensionRankRealizationDocument : IScribeDocumentDefiniti
                     + "The closed hemisphere of unit quaternions q with 0 <= re q is the largest of these sets: it is one of them, and it contains each of them. "
                     + "It is one of them by the preceding theorem, since 0 <= re q and 0 <= re(-star q) = -re q force re q = 0. "
                     + "If S is one of these sets and some q in S had re q < 0, then -star q would lie in the open hemisphere, hence in S, and the preceding theorem would give re q = 0, which is impossible. "
-                    + "In particular the imaginary part is injective on the closed hemisphere: there the real part is the nonnegative square root of 1 - |im q| ^ 2."),
+                    + "In particular the imaginary part is injective on the closed hemisphere: there the real part is the nonnegative square root of 1 - |im q| ^ 2. "
+                    + "Some lower constraint on the family is needed: the imaginary part is injective on {1} and on {-1}, but on no set containing both, since 1 and -1 have the same imaginary part; so the sets of injectivity have no largest element. "
+                    + "The constraint of containing the open hemisphere is sharp: if a set T contained in the closed hemisphere misses some p with re p > 0, then replacing p by -star p in the closed hemisphere gives a set of injectivity that contains T and is not contained in the closed hemisphere, so the closed hemisphere is not the largest set of injectivity containing T. "
+                    + "These two remarks are not stated as theorems here."),
             Node("continuous-tri", "continuous_tri_quaternionModel",
                 "The transfer of the unit quaternion model is continuous",
                 StatementSource.FromAuthor(TriFormula()), DescribeRole.Lemma,
