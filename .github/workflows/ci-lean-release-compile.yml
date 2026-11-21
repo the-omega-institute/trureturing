@@ -15,6 +15,10 @@ on:
         description: Protected production or integration verification
         type: string
         default: production
+      sparse-release:
+        description: Prefer the protected production volume namespace
+        type: boolean
+        default: false
       indexed:
         description: Check the sharded Actions seed before scheduling a cold build
         type: boolean
@@ -23,6 +27,12 @@ on:
       seed:
         description: Effective Release seed selection for the checked-out source
         value: ${{ jobs.common.outputs.seed }}
+      sparse:
+        description: A compatible production volume predecessor was selected
+        value: ${{ jobs.common.outputs.sparse }}
+      history-depth:
+        description: Checkout depth covering the selected predecessor and publication source
+        value: ${{ jobs.common.outputs.history-depth }}
       base:
         description: Selected Release tag, producer and manifest digest
         value: ${{ jobs.common.outputs.base }}
@@ -38,7 +48,9 @@ jobs:
     timeout-minutes: 360
     outputs:
       seed: ${{ steps.route.outputs.seed }}
-      base: ${{ steps.previous.outputs.found == 'true' && toJSON(steps.previous.outputs) || '' }}
+      sparse: ${{ steps.sparse.outputs.found || 'false' }}
+      history-depth: ${{ steps.ancestry.outputs.depth }}
+      base: ${{ steps.sparse.outputs.found == 'true' && toJSON(steps.sparse.outputs) || steps.previous.outputs.found == 'true' && toJSON(steps.previous.outputs) || '' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -52,9 +64,38 @@ jobs:
             python3 .github/scripts/install-tools.py
             test -f tools/scripts/worktree/lean_compile_layers.py
             echo 'supported=true' >> "$GITHUB_OUTPUT"
+            if [[ -f tools/scripts/worktree/lean_release_sparse.py && -f .github/actions/lean-release-base/action.yml ]]; then
+              echo 'sparse=true' >> "$GITHUB_OUTPUT"
+            fi
           fi
+      - id: sparse
+        if: inputs.sparse-release && inputs.publication-mode == 'production' && inputs.strategy == 'auto' && steps.support.outputs.sparse == 'true'
+        uses: ./.github/actions/lean-release-base
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_SPARSE_ONLY: '1'
+        with:
+          operation: select-base
+          mode: production
+      - id: ancestry
+        if: steps.sparse.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ steps.sparse.outputs.producer }}
+          SOURCE: ${{ inputs.source }}
+        run: |
+          [[ "$BASE" =~ ^[0-9a-f]{40}$ && "$(git rev-parse HEAD)" == "$SOURCE" ]]
+          if [[ "$BASE" == "$SOURCE" ]]; then
+            depth=2
+          else
+            ahead="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$SOURCE?per_page=1" \
+              --jq 'select(.status == "ahead" and .behind_by == 0) | .ahead_by')"
+            [[ "$ahead" =~ ^[1-9][0-9]*$ ]]
+            depth="$((10#$ahead + 1))"
+          fi
+          echo "depth=$depth" >> "$GITHUB_OUTPUT"
       - id: keys
-        if: steps.support.outputs.supported == 'true' && inputs.strategy == 'auto'
+        if: steps.support.outputs.supported == 'true' && steps.sparse.outputs.found != 'true' && inputs.strategy == 'auto'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: indexed
         if: inputs.indexed && steps.keys.outputs.project_key != ''
@@ -74,7 +115,7 @@ jobs:
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
           lookup-only: true
       - id: previous
-        if: inputs.strategy != 'parallel' && steps.support.outputs.supported == 'true' && steps.indexed.outputs.complete != 'true' && steps.native.outputs.cache-matched-key == '' && hashFiles('.github/actions/lean-release-base/action.yml') != ''
+        if: inputs.strategy != 'parallel' && steps.sparse.outputs.found != 'true' && steps.support.outputs.supported == 'true' && steps.indexed.outputs.complete != 'true' && steps.native.outputs.cache-matched-key == '' && hashFiles('.github/actions/lean-release-base/action.yml') != ''
         uses: ./.github/actions/lean-release-base
         env:
           GH_TOKEN: ${{ github.token }}
@@ -87,7 +128,7 @@ jobs:
         env:
           NATIVE: ${{ steps.native.outputs.cache-matched-key }}
           INDEXED: ${{ steps.indexed.outputs.complete }}
-          PREVIOUS: ${{ steps.previous.outputs.found }}
+          PREVIOUS: ${{ steps.sparse.outputs.found == 'true' || steps.previous.outputs.found == 'true' }}
           STRATEGY: ${{ inputs.strategy }}
         run: |
           if [[ -n "$NATIVE" ]]; then
