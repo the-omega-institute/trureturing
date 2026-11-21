@@ -27,6 +27,9 @@ jobs:
         with:
           ref: ${{ inputs.ref || 'dev' }}
           persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         run: |

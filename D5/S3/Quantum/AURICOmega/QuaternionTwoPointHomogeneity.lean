@@ -81,7 +81,7 @@ private lemma exists_ne_zero_mul_eq_mul (a a' : ℍ[ℝ]) (hre : a.re = a'.re)
       · linear_combination -b₃ * hb
 
 /-- Two unit quaternions with the same real part are conjugate by a unit quaternion. -/
-private lemma exists_unitary_mul_eq_mul (a a' : unitary ℍ[ℝ])
+lemma exists_unitary_mul_eq_mul (a a' : unitary ℍ[ℝ])
     (hre : (a : ℍ[ℝ]).re = (a' : ℍ[ℝ]).re) :
     ∃ c : unitary ℍ[ℝ], c * a = a' * c := by
   have hn : Quaternion.normSq (a : ℍ[ℝ]) = Quaternion.normSq (a' : ℍ[ℝ]) := by

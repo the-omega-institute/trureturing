@@ -67,7 +67,6 @@ def check(args):
     roots, paths = select(root, base, args.module)
     assets = Path(__file__).resolve().parents[1] / "assets"
     environment = os.environ.copy()
-    environment["STRATALINT_ACCEPT_COLD_BUILD"] = "1"
     dotnet = shutil.which("dotnet")
     if not dotnet:
         raise ValueError("install the .NET SDK selected by the fork's global.json")
@@ -84,6 +83,7 @@ def check(args):
                                 root, env=environment, capture=True).stdout.splitlines()
         roots = sorted(set(roots) | {lean_path(module) for module in scribe_inputs})
         targets = " ".join(path.removesuffix(".lean").replace("/", ".") for path in roots)
+        run(["make", "lean-report-prepare", "LEAN_TARGETS=" + targets], root, env=environment)
         run(["make", "lean-report-scoped", "LEAN_TARGETS=" + targets], root, env=environment)
         baseline = scratch / "baseline"
         for path in roots:
