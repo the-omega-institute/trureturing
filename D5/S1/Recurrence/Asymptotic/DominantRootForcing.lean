@@ -4,15 +4,16 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Analysis.Asymptotics.AsymptoticEquivalent]
    utility: none
-   digest: A forced linear recurrence with a simple dominant real root R has solutions L R^j + O(q^j), and O(R^(j/2)) under square-root forcing. -/
+   digest: A forced linear recurrence with a simple dominant real root R has solutions L R^j + O(q^j), with the given L when q = |R|^(1/2). -/
 
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#349)
 escape_witness: peel (a factor S - z with |z| < q maps only O(q^j) sequences to O(q^j)
   sequences, by the one-step bound |u_(j+1)| <= |z| |u_j| + C q^j), rstep (a factor S - R with
-  0 < q < R sends d to O(q^j) only if d = L R^j + O(q^j), via the convergent series of the
+  0 < q < |R| sends d to O(q^j) only if d = L R^j + O(q^j), via the convergent series of the
   normalized forcing and its geometric tail) and dominant (factoring P = (X - R) Q, applying
-  rstep to Q(S) b and peeling every root of Q).
+  rstep to Q(S) b and peeling every root of Q); sqrt_forcing (the leading coefficient of the
+  O(|R|^(j/2)) expansion equals the given L, by comparing limits of b_j / R^j).
 proof_shape:
   shift: definition; consumers: every lemma below.
   shift_pow_apply, aeval_apply, aeval_X_sub_C_apply, aeval_geom, global_bound: bind-only helpers;
@@ -20,9 +21,10 @@ proof_shape:
   peel, rstep: content; consumers: peel_prod, dominant.
   peel_prod: content (multiset induction over peel); consumer: dominant.
   dominant: content; consumers: sqrt_forcing, result.
-  sqrt_forcing: content (O(sqrt b) = O(R^(j/2)) from b ~ L R^j, then dominant at q = sqrt R and
-    uniqueness of the leading coefficient); consumer: result.
-  result: bind-only conjunction of dominant and sqrt_forcing.
+  sqrt_forcing: content (dominant at q = sqrt |R| and uniqueness of the leading coefficient);
+    consumer: result.
+  result: content (after inlining the helpers added here, its live proof path runs through
+    peel, rstep, dominant and sqrt_forcing).
 Direct frozen dependencies: none (Mathlib only).
 Search record (§3.1): pinned Mathlib has linear recurrences only through LinearRecurrence
   (homogeneous solution spaces) and no asymptotic statement for inhomogeneous recurrences; no D5
@@ -41,12 +43,13 @@ noncomputable section
 
 /-! # Dominant-root forcing for linear recurrences
 
-Let `P` be a real polynomial with a simple root `R`, and let a real sequence satisfy
-`∑ₖ P.coeff k * b (j + k) = e j`. If `0 < q < R`, every other complex root of `P` has modulus
-below `q`, and `e = O(q^j)`, then `b j = L R^j + O(q^j)` for a real `L`. If `R > 1`, every other
-root has modulus below `√R`, `b ~ L R^j` and `e = O(√(b j))`, then `b j = L R^j + O(R^(j/2))`.
-Lemma 2 of Ma–Zhang states the case of a monic `P` with distinct roots, other roots of modulus at
-most one, `q > 1` and `L > 0`.
+Let `P` be a real polynomial with a simple real root `R`, and let a real sequence satisfy
+`∑ₖ P.coeff k * b (j + k) = e j`. If `0 < q < |R|`, every other complex root of `P` has modulus
+below `q`, and `e = O(q^j)`, then `b j = L R^j + O(q^j)` for a real `L`. If `|R| > 1`, every other
+root has modulus below `√|R|`, `b j = L R^j + o(R^j)` and `e = O(|R|^(j/2))`, then
+`b j = L R^j + O(|R|^(j/2))` with the same `L`. Lemma 2 of Ma–Zhang states the case of a monic
+`P` with distinct roots, `R > 1`, other roots of modulus at most one, `q > 1`, `L > 0` and
+`e = O(√(b j))`.
 -/
 
 namespace D5.S1.Recurrence.Asymptotic.DominantRootForcing
@@ -150,31 +153,33 @@ private theorem peel_prod {q : ℝ} (s : Multiset ℂ) (hs : ∀ z ∈ s, ‖z�
     exact ih (fun z hz => hs z (Multiset.mem_cons_of_mem hz)) u
       (peel a (hs a (Multiset.mem_cons_self a s)) _ h)
 
-/-- The dominant factor: if `(S - R) d = O(q^j)` with `0 < q < R`, then `d = L R^j + O(q^j)`. -/
-private theorem rstep {R q : ℝ} (hq : 0 < q) (hqR : q < R) (d : ℕ → ℂ)
+/-- The dominant factor: if `(S - R) d = O(q^j)` with `0 < q < |R|`, then
+`d = L R^j + O(q^j)`. -/
+private theorem rstep {R q : ℝ} (hq : 0 < q) (hqR : q < |R|) (d : ℕ → ℂ)
     (h : (aeval shift (X - C (R : ℂ))) d =O[atTop] (fun j => q ^ j)) :
     ∃ L : ℂ, (fun j => d j - L * (R : ℂ) ^ j) =O[atTop] (fun j => q ^ j) := by
   obtain ⟨C, hC0, hC⟩ := global_bound hq h
-  have hR : 0 < R := by linarith
-  have hRc : (R : ℂ) ≠ 0 := by exact_mod_cast hR.ne'
+  have hR : 0 < |R| := by linarith
+  have hR0 : R ≠ 0 := abs_pos.mp hR
+  have hRc : (R : ℂ) ≠ 0 := by exact_mod_cast hR0
+  have hRa : |R| ≠ 0 := hR.ne'
   let f : ℕ → ℂ := fun j => d (j + 1) - R * d j
   have hf : ∀ j, ‖f j‖ ≤ C * q ^ j := fun j => by
     have := hC j
     rwa [aeval_X_sub_C_apply] at this
   let w : ℕ → ℂ := fun i => f i / (R : ℂ) ^ (i + 1)
-  have hρ0 : 0 ≤ q / R := by positivity
-  have hρ1 : q / R < 1 := (div_lt_one hR).mpr hqR
-  have hw : ∀ i, ‖w i‖ ≤ (C / R) * (q / R) ^ i := fun i => by
-    have hRi : (0 : ℝ) < R ^ (i + 1) := by positivity
-    simp only [w, norm_div, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hR]
+  have hρ0 : 0 ≤ q / |R| := by positivity
+  have hρ1 : q / |R| < 1 := (div_lt_one hR).mpr hqR
+  have hw : ∀ i, ‖w i‖ ≤ (C / |R|) * (q / |R|) ^ i := fun i => by
+    have hRi : (0 : ℝ) < |R| ^ (i + 1) := by positivity
+    simp only [w, norm_div, norm_pow, Complex.norm_real, Real.norm_eq_abs]
     rw [div_le_iff₀ hRi]
-    have hRne : R ≠ 0 := hR.ne'
     calc ‖f i‖ ≤ C * q ^ i := hf i
-      _ = C / R * (q / R) ^ i * R ^ (i + 1) := by
+      _ = C / |R| * (q / |R|) ^ i * |R| ^ (i + 1) := by
         rw [div_pow, pow_succ]
         field_simp
   have hsumw : Summable w :=
-    Summable.of_norm_bounded ((summable_geometric_of_lt_one hρ0 hρ1).mul_left (C / R)) hw
+    Summable.of_norm_bounded ((summable_geometric_of_lt_one hρ0 hρ1).mul_left (C / |R|)) hw
   have hclosed : ∀ j, d j = (R : ℂ) ^ j * (d 0 + ∑ i ∈ Finset.range j, w i) := by
     intro j
     induction j with
@@ -187,33 +192,33 @@ private theorem rstep {R q : ℝ} (hq : 0 < q) (hqR : q < R) (d : ℕ → ℂ)
         field_simp
       rw [hfj, ih, ← hwj]
       ring
-  refine ⟨d 0 + ∑' i, w i, IsBigO.of_bound (C / (R - q)) (Eventually.of_forall fun j => ?_)⟩
+  refine ⟨d 0 + ∑' i, w i, IsBigO.of_bound (C / (|R| - q)) (Eventually.of_forall fun j => ?_)⟩
   have htail := hsumw.sum_add_tsum_nat_add j
   have heq : d j - (d 0 + ∑' i, w i) * (R : ℂ) ^ j = -((R : ℂ) ^ j * ∑' i, w (i + j)) := by
     rw [hclosed j, ← htail]
     ring
-  have hg : HasSum (fun i => (C / R) * (q / R) ^ j * (q / R) ^ i)
-      ((C / R) * (q / R) ^ j * (1 - q / R)⁻¹) :=
+  have hg : HasSum (fun i => (C / |R|) * (q / |R|) ^ j * (q / |R|) ^ i)
+      ((C / |R|) * (q / |R|) ^ j * (1 - q / |R|)⁻¹) :=
     (hasSum_geometric_of_lt_one hρ0 hρ1).mul_left _
-  have hbound : ‖∑' i, w (i + j)‖ ≤ (C / R) * (q / R) ^ j * (1 - q / R)⁻¹ :=
+  have hbound : ‖∑' i, w (i + j)‖ ≤ (C / |R|) * (q / |R|) ^ j * (1 - q / |R|)⁻¹ :=
     tsum_of_norm_bounded hg fun i => by
       have := hw (i + j)
       rw [pow_add] at this
       linarith [this]
-  rw [heq, norm_neg, norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hR,
+  rw [heq, norm_neg, norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
     Real.norm_eq_abs, abs_of_nonneg (by positivity : (0 : ℝ) ≤ q ^ j)]
-  have hRq : 0 < R - q := by linarith
-  calc R ^ j * ‖∑' i, w (i + j)‖ ≤ R ^ j * ((C / R) * (q / R) ^ j * (1 - q / R)⁻¹) := by
-        gcongr
-    _ = C / (R - q) * q ^ j := by
+  have hRq : 0 < |R| - q := by linarith
+  calc |R| ^ j * ‖∑' i, w (i + j)‖
+      ≤ |R| ^ j * ((C / |R|) * (q / |R|) ^ j * (1 - q / |R|)⁻¹) := by gcongr
+    _ = C / (|R| - q) * q ^ j := by
         rw [div_pow]
         field_simp
 
 /-- A linear recurrence whose characteristic polynomial has a simple root `R` and all other
-complex roots of modulus below `q`, forced by `O(q^j)` with `0 < q < R`, has solutions
+complex roots of modulus below `q`, forced by `O(q^j)` with `0 < q < |R|`, has solutions
 `b j = L R^j + O(q^j)`. -/
 private theorem dominant (P : ℝ[X]) (R q : ℝ) (hmult : P.rootMultiplicity R = 1)
-    (hq : 0 < q) (hqR : q < R)
+    (hq : 0 < q) (hqR : q < |R|)
     (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < q)
     (b e : ℕ → ℝ)
     (hrec : ∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j)
@@ -299,59 +304,47 @@ private theorem dominant (P : ℝ[X]) (R q : ℝ) (hmult : P.rootMultiplicity R 
   rw [← hre]
   exact Complex.abs_re_le_norm (c j)
 
-/-- Under `b ~ L R^j`, a forcing of size `O(√b)` gives `b = L R^j + O(R^(j/2))`. -/
-private theorem sqrt_forcing (P : ℝ[X]) (R : ℝ) (hR : 1 < R) (hmult : P.rootMultiplicity R = 1)
-    (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt R)
+/-- If `|R| > 1`, the other roots have modulus below `√|R|`, `b = L R^j + o(R^j)` and the
+forcing is `O(|R|^(j/2))`, then `b = L R^j + O(|R|^(j/2))` with the same `L`. -/
+private theorem sqrt_forcing (P : ℝ[X]) (R : ℝ) (hR : 1 < |R|) (hmult : P.rootMultiplicity R = 1)
+    (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt |R|)
     (b e : ℕ → ℝ) (L : ℝ)
     (hrec : ∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j)
-    (hasym : b ~[atTop] (fun j => L * R ^ j))
-    (he : e =O[atTop] (fun j => Real.sqrt (b j))) :
-    (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt R ^ j) := by
-  have hR0 : 0 < R := by linarith
-  have hsR : 0 < Real.sqrt R := Real.sqrt_pos.mpr hR0
-  have hsRR : Real.sqrt R < R := by
-    have := Real.sqrt_lt_sqrt hR0.le (show R < R ^ 2 by nlinarith)
+    (hlo : (fun j => b j - L * R ^ j) =o[atTop] (fun j => R ^ j))
+    (he : e =O[atTop] (fun j => Real.sqrt |R| ^ j)) :
+    (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt |R| ^ j) := by
+  have hR0 : 0 < |R| := by linarith
+  have hRne : R ≠ 0 := abs_pos.mp hR0
+  have hsR : 0 < Real.sqrt |R| := Real.sqrt_pos.mpr hR0
+  have hsRR : Real.sqrt |R| < |R| := by
+    have := Real.sqrt_lt_sqrt hR0.le (show |R| < |R| ^ 2 by nlinarith)
     rwa [Real.sqrt_sq hR0.le] at this
-  have hsq : ∀ j : ℕ, (Real.sqrt R ^ j) ^ 2 = R ^ j := fun j => by
-    rw [← pow_mul, mul_comm, pow_mul, Real.sq_sqrt hR0.le]
-  -- √b = O(√R^j)
-  obtain ⟨c, hc⟩ := hasym.isBigO.bound
-  have hsqrtb : (fun j => Real.sqrt (b j)) =O[atTop] (fun j => Real.sqrt R ^ j) := by
-    refine IsBigO.of_bound (Real.sqrt (|c| * |L|)) (hc.mono fun j hj => ?_)
-    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _),
-      abs_of_nonneg (by positivity : (0 : ℝ) ≤ Real.sqrt R ^ j)]
-    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_mul, abs_of_pos (by positivity : (0 : ℝ) < R ^ j)]
-      at hj
-    rw [Real.sqrt_le_left]
-    rw [mul_pow, Real.sq_sqrt (by positivity), hsq j]
-    calc b j ≤ |b j| := le_abs_self _
-      _ ≤ c * (|L| * R ^ j) := hj
-      _ ≤ |c| * |L| * R ^ j := by
-        nlinarith [le_abs_self c, (by positivity : (0 : ℝ) ≤ |L| * R ^ j)]
-    · positivity
-  obtain ⟨L', hL'⟩ := dominant P R (Real.sqrt R) hmult hsR hsRR hother b e hrec (he.trans hsqrtb)
+  obtain ⟨L', hL'⟩ := dominant P R (Real.sqrt |R|) hmult hsR hsRR hother b e hrec he
   -- the constants agree
   have hlimL : Tendsto (fun j => b j / R ^ j) atTop (nhds L) := by
-    have hlo : (fun j => b j - L * R ^ j) =o[atTop] (fun j => R ^ j) :=
-      hasym.isLittleO.trans_isBigO (isBigO_const_mul_self L _ _)
     have h0' := hlo.tendsto_div_nhds_zero.add_const L
     rw [zero_add] at h0'
     refine h0'.congr fun j => ?_
-    have : R ^ j ≠ 0 := by positivity
+    have : R ^ j ≠ 0 := pow_ne_zero j hRne
     field_simp
     ring
   have hlimL' : Tendsto (fun j => b j / R ^ j) atTop (nhds L') := by
-    have hρ : Tendsto (fun j : ℕ => (Real.sqrt R / R) ^ j) atTop (nhds 0) :=
+    have hρ : Tendsto (fun j : ℕ => (Real.sqrt |R| / |R|) ^ j) atTop (nhds 0) :=
       tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) ((div_lt_one hR0).mpr hsRR)
     have hO : (fun j => (b j - L' * R ^ j) * (R ^ j)⁻¹) =O[atTop]
-        (fun j => Real.sqrt R ^ j * (R ^ j)⁻¹) := hL'.mul (isBigO_refl _ _)
-    have h0 : Tendsto (fun j => (b j - L' * R ^ j) * (R ^ j)⁻¹) atTop (nhds 0) := by
-      refine hO.trans_tendsto (hρ.congr fun j => ?_)
-      rw [div_pow, div_eq_mul_inv]
+        (fun j => Real.sqrt |R| ^ j * (R ^ j)⁻¹) := hL'.mul (isBigO_refl _ _)
+    have hcomp : (fun j => Real.sqrt |R| ^ j * (R ^ j)⁻¹) =O[atTop]
+        (fun j => (Real.sqrt |R| / |R|) ^ j) :=
+      IsBigO.of_bound 1 (Eventually.of_forall fun j => by
+        rw [one_mul, norm_mul, norm_inv, norm_pow, norm_pow, norm_pow, Real.norm_eq_abs,
+          Real.norm_eq_abs, Real.norm_eq_abs, abs_div, abs_abs,
+          abs_of_nonneg (Real.sqrt_nonneg _), div_pow, div_eq_mul_inv])
+    have h0 : Tendsto (fun j => (b j - L' * R ^ j) * (R ^ j)⁻¹) atTop (nhds 0) :=
+      (hO.trans hcomp).trans_tendsto hρ
     have h0' := h0.add_const L'
     rw [zero_add] at h0'
     refine h0'.congr fun j => ?_
-    have : R ^ j ≠ 0 := by positivity
+    have : R ^ j ≠ 0 := pow_ne_zero j hRne
     field_simp
     ring
   have hLL : L' = L := tendsto_nhds_unique hlimL' hlimL
@@ -359,25 +352,26 @@ private theorem sqrt_forcing (P : ℝ[X]) (R : ℝ) (hR : 1 < R) (hmult : P.root
   exact hL'
 
 /-- Dominant-root forcing for linear recurrences. Let `P` be a real polynomial with a simple
-root `R`, and let `∑ₖ P.coeff k * b (j + k) = e j`. If `0 < q < R`, every other complex root of
-`P` has modulus below `q`, and `e = O(q^j)`, then `b j = L R^j + O(q^j)` for some real `L`.
-If `R > 1`, every other complex root has modulus below `√R`, `b ~ L R^j` for a real `L`, and
-`e = O(√(b j))`, then `b j = L R^j + O(R^(j/2))`. -/
+real root `R`, and let `∑ₖ P.coeff k * b (j + k) = e j`. If `0 < q < |R|`, every other complex
+root of `P` has modulus below `q`, and `e = O(q^j)`, then `b j = L R^j + O(q^j)` for some real
+`L`. If `|R| > 1`, every other complex root has modulus below `√|R|`, `b j = L R^j + o(R^j)` and
+`e = O(|R|^(j/2))`, then `b j = L R^j + O(|R|^(j/2))` with the same `L`. -/
 theorem result :
-    (∀ (P : ℝ[X]) (R q : ℝ), P.rootMultiplicity R = 1 → 0 < q → q < R →
+    (∀ (P : ℝ[X]) (R q : ℝ), P.rootMultiplicity R = 1 → 0 < q → q < |R| →
       (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < q) →
       ∀ b e : ℕ → ℝ,
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
       e =O[atTop] (fun j => q ^ j) →
       ∃ L : ℝ, (fun j => b j - L * R ^ j) =O[atTop] (fun j => q ^ j)) ∧
-    (∀ (P : ℝ[X]) (R : ℝ), 1 < R → P.rootMultiplicity R = 1 →
-      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt R) →
+    (∀ (P : ℝ[X]) (R : ℝ), 1 < |R| → P.rootMultiplicity R = 1 →
+      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt |R|) →
       ∀ (b e : ℕ → ℝ) (L : ℝ),
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
-      b ~[atTop] (fun j => L * R ^ j) → e =O[atTop] (fun j => Real.sqrt (b j)) →
-      (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt R ^ j)) :=
+      (fun j => b j - L * R ^ j) =o[atTop] (fun j => R ^ j) →
+      e =O[atTop] (fun j => Real.sqrt |R| ^ j) →
+      (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt |R| ^ j)) :=
   ⟨fun P R q hmult hq hqR hother b e hrec he => dominant P R q hmult hq hqR hother b e hrec he,
-    fun P R hR hmult hother b e L hrec hasym he =>
-      sqrt_forcing P R hR hmult hother b e L hrec hasym he⟩
+    fun P R hR hmult hother b e L hrec hlo he =>
+      sqrt_forcing P R hR hmult hother b e L hrec hlo he⟩
 
 end D5.S1.Recurrence.Asymptotic.DominantRootForcing

@@ -26,26 +26,28 @@ part. -/
 abbrev arena : Arena where
   signature := signature
   Law Q :=
-    (∀ (P : ℝ[X]) (R q : ℝ), P.rootMultiplicity R = 1 → 0 < q → q < R →
+    (∀ (P : ℝ[X]) (R q : ℝ), P.rootMultiplicity R = 1 → 0 < q → q < |R| →
       (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < q) →
       ∀ b e : ℕ → ℝ,
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
       e =O[atTop] (fun j => q ^ j) →
       ∃ L : ℝ, Q.readout () () (fun j => b j - L * R ^ j) (fun j => q ^ j)) ∧
-    (∀ (P : ℝ[X]) (R : ℝ), 1 < R → P.rootMultiplicity R = 1 →
-      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt R) →
+    (∀ (P : ℝ[X]) (R : ℝ), 1 < |R| → P.rootMultiplicity R = 1 →
+      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt |R|) →
       ∀ (b e : ℕ → ℝ) (L : ℝ),
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
-      b ~[atTop] (fun j => L * R ^ j) → e =O[atTop] (fun j => Real.sqrt (b j)) →
-      (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt R ^ j))
+      (fun j => b j - L * R ^ j) =o[atTop] (fun j => R ^ j) →
+      e =O[atTop] (fun j => Real.sqrt |R| ^ j) →
+      (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt |R| ^ j))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hlaw
-  obtain ⟨_, hL⟩ := hlaw.1 (X - C 2) 2 1 (rootMultiplicity_X_sub_C_self) one_pos one_lt_two
+  obtain ⟨_, hL⟩ := hlaw.1 (X - C 2) 2 1 (rootMultiplicity_X_sub_C_self) one_pos (by norm_num)
     (fun z hz hne => by
       exfalso
       apply hne
       have : z - 2 = 0 := by simpa using hz
+      rw [show ((2 : ℝ) : ℂ) = 2 by norm_num]
       linear_combination this)
     (fun _ => 0) (fun _ => 0) (fun j => by simp) (isBigO_zero _ _)
   exact hL
