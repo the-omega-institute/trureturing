@@ -8,21 +8,24 @@
 
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
-escape_witness: balance, weighted_step, zero_image, leading_steps, steps, relation
+escape_witness: zero_image, leading_steps, steps, relation
 top: proof_shape=bind-only; consumers=leading_steps
 lower: proof_shape=bind-only; consumers=leading_steps
-balance: proof_shape=content; consumers=weighted_step
+balance: proof_shape=bind-only; consumers=weighted_step
 no_return: proof_shape=bind-only; consumers=weighted_step
-weighted_step: proof_shape=content; consumers=zero_image, leading_steps
+weighted_step: proof_shape=bind-only; consumers=zero_image, leading_steps
 zero_image: proof_shape=content; consumers=leading_steps
 leading_steps: proof_shape=content; consumers=steps
-steps: proof_shape=content; consumers=HardinA229457Strip.result, HardinA229604StripPowers.leading_steps, HardinA229604StripPowers.old_relation
-relation: proof_shape=content; consumers=HardinA229457Strip.result, HardinA229604StripPowers.old_relation
+steps: proof_shape=content; consumers=forward_table, HardinA229604StripPowers.leading_steps
+relation: proof_shape=content; consumers=forward_relation
+forward_table: proof_shape=bind-only; consumers=forward_relation, HardinA229604StripPowers.old_relation
+forward_relation: proof_shape=bind-only; consumers=HardinA229457Strip.result, HardinA229604StripPowers.old_relation
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127Rows
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripStep0
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripStep1
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
@@ -35,6 +38,7 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229457StripData
+open StripDefects.DefectTransfer (forward)
 open D5.S3.Combinatorics.TraceAvoidingArrays
 private theorem top (i j : Fin 10) :
     T (i.castAdd 32) (j.castAdd 32) = ProperTransfer.T i j := by
@@ -137,5 +141,25 @@ theorem steps : W 0 = initial ∧ ∀ i : Fin 25,
 
 theorem relation (s : Fin 42) : W 15 s = ∑ j : Fin 14, (![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] j : ℤ) * W ⟨1 + j.val, by omega⟩ s := by
   decide +kernel +revert
+
+theorem forward_table (i : Fin 26) : forward T initial i.val = W i := by
+  induction i using Fin.induction with
+  | zero => exact steps.1.symm
+  | succ i ih =>
+    rw [forward, Fin.val_succ, Function.iterate_succ_apply']
+    change Matrix.vecMul (forward T initial i.val) T = W i.succ
+    change forward T initial i.val = W i.castSucc at ih
+    rw [ih]
+    exact (funext (steps.2 i)).symm
+
+theorem forward_relation : forward T initial (1 + 14) =
+    ∑ j : Fin 14, (![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] j : ℤ) • forward T initial (1 + j.val) := by
+  rw [forward_table ⟨15, by omega⟩]
+  simp_rw [show ∀ j : Fin 14, forward T initial (1 + j.val) = W ⟨1 + j.val, by omega⟩
+    from fun j => forward_table ⟨1 + j.val, by omega⟩]
+  rw [show (⟨15, by omega⟩ : Fin 26) = (15 : Fin 26) by decide]
+  funext s
+  simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using
+    relation s
 
 end D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripPowers

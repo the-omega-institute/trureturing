@@ -131,37 +131,15 @@ theorem steps : W 0 = initial ∧ ∀ i : Fin 24,
 
 private theorem old_relation (s : Fin 42) : HardinA229457StripData.W 24 s =
     ∑ j : Fin 21, (![137388096, -1718948736, 9979813584, -35729023024, 88409012652, -160604595216, 222060410955, -239066083215, 203308881255, -137758028106, 74677395474, -32398609896, 11214272853, -3076398702, 661896144, -110021385, 13836015, -1278486, 83214, -3573, 90] j : ℤ) * HardinA229457StripData.W ⟨3 + j.val, by omega⟩ s := by
-  have tab (i : Fin 26) :
-      DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial i.val = HardinA229457StripData.W i := by
-    induction i using Fin.induction with
-    | zero => exact HardinA229457StripPowers.steps.1.symm
-    | succ i ih =>
-      rw [DefectTransfer.forward, Fin.val_succ, Function.iterate_succ_apply']
-      change Matrix.vecMul (DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial i.val)
-        HardinA229457StripData.T = HardinA229457StripData.W i.succ
-      change DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial i.val = HardinA229457StripData.W i.castSucc at ih
-      rw [ih]
-      exact (funext (HardinA229457StripPowers.steps.2 i)).symm
-  have poly : DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial (1 + 14) =
-      ∑ j : Fin 14, (![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] j : ℤ) •
-        DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial (1 + j.val) := by
-    rw [tab ⟨15, by omega⟩]
-    simp_rw [show ∀ j : Fin 14,
-      DefectTransfer.forward HardinA229457StripData.T HardinA229457StripData.initial (1 + j.val) =
-        HardinA229457StripData.W ⟨1 + j.val, by omega⟩ from fun j => tab ⟨1 + j.val, by omega⟩]
-    rw [show (⟨15, by omega⟩ : Fin 26) = (15 : Fin 26) by decide]
-    funext x
-    simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using
-      HardinA229457StripPowers.relation x
   have obs (i : Fin 26) : dotProduct HardinA229457StripData.initial
       ((HardinA229457StripData.T ^ i.val).mulVec (Pi.single s 1)) = HardinA229457StripData.W i s := by
-    rw [Matrix.dotProduct_mulVec, ← DefectTransfer.forward_eq, tab i,
+    rw [Matrix.dotProduct_mulVec, ← DefectTransfer.forward_eq, HardinA229457StripPowers.forward_table i,
       dotProduct_single_one]
   have shifted (k : Fin 8) : HardinA229457StripData.W ⟨17 + k.val, by omega⟩ s =
       ∑ j : Fin 14, (![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] j : ℤ) *
         HardinA229457StripData.W ⟨3 + k.val + j.val, by omega⟩ s := by
     have h := DefectTransfer.forward_shift HardinA229457StripData.T HardinA229457StripData.initial
-      (Pi.single s 1) 14 1 ![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] poly (2 + k.val)
+      (Pi.single s 1) 14 1 ![-266256, 2220864, -8262712, 18139608, -26188161, 26218062, -18693789, 9593166, -3537110, 924894, -167163, 20016, -1482, 60] HardinA229457StripPowers.forward_relation (2 + k.val)
     rw [obs ⟨2 + k.val + 1 + 14, by omega⟩] at h
     simp_rw [show ∀ j : Fin 14, dotProduct HardinA229457StripData.initial
       ((HardinA229457StripData.T ^ (2 + k.val + 1 + j.val)).mulVec (Pi.single s 1)) =

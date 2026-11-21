@@ -15,7 +15,26 @@ internal sealed class HardinA229457StripPowersDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("relation"), DeclarationHandle.Create(Prefix + "relation"),
                 H("relation"), StatementSource.FromAuthor(Disp(All("s", Call("Fin", Num("42")), Eq(Call("HardinA229457StripData.W", Num("15"), V("s")), SumOver("j", Call("Fin", Num("14")), Mul(App(Vector(Parenthesized(Seq(Minus, Num("266256"))), Num("2220864"), Parenthesized(Seq(Minus, Num("8262712"))), Num("18139608"), Parenthesized(Seq(Minus, Num("26188161"))), Num("26218062"), Parenthesized(Seq(Minus, Num("18693789"))), Num("9593166"), Parenthesized(Seq(Minus, Num("3537110"))), Num("924894"), Parenthesized(Seq(Minus, Num("167163"))), Num("20016"), Parenthesized(Seq(Minus, Num("1482"))), Num("60")), V("j")), Call("HardinA229457StripData.W", Typed(Call("Fin.mk", Add(Num("1"), Call("Fin.val", V("j")))), Call("Fin", Num("26"))), V("s")))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The order-fourteen polynomial annihilates every coordinate of the forward vector starting at row index one."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The order-fourteen polynomial annihilates every coordinate of the forward vector starting at row index one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("forward-table"), DeclarationHandle.Create(Prefix + "forward_table"),
+                H("Forward-vector table"), StatementSource.FromAuthor(Disp(
+                    All("i", Call("Fin", Num("26")), Eq(Forward(Call("Fin.val", V("i"))), Call("HardinA229457StripData.W", V("i")))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The initial row and every checked step identify the stored rows with successive forward iterates of T."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("forward-relation"), DeclarationHandle.Create(Prefix + "forward_relation"),
+                H("Forward-vector relation"), StatementSource.FromAuthor(Disp(ForwardRelation())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Use the table identification in each coordinate of relation to obtain the same polynomial identity for forward iterates."))), DescribeRole.Theorem))));
+    private static Formula Forward(Formula index) => Call("DefectTransfer.forward",
+        Call("HardinA229457StripData.T"), Call("HardinA229457StripData.initial"), index);
+    private static Formula ForwardRelation()
+    {
+        var coefficients = Vector(Parenthesized(Seq(Minus, Num("266256"))), Num("2220864"), Parenthesized(Seq(Minus, Num("8262712"))), Num("18139608"), Parenthesized(Seq(Minus, Num("26188161"))), Num("26218062"), Parenthesized(Seq(Minus, Num("18693789"))), Num("9593166"), Parenthesized(Seq(Minus, Num("3537110"))), Num("924894"), Parenthesized(Seq(Minus, Num("167163"))), Num("20016"), Parenthesized(Seq(Minus, Num("1482"))), Num("60"));
+        var coefficient = Typed(App(coefficients, V("j")), Call("Int"));
+        return Eq(Forward(Add(Num("1"), Num("14"))),
+            SumOver("j", Call("Fin", Num("14")), Call("HSMul.hSMul", coefficient,
+                Forward(Add(Num("1"), Call("Fin.val", V("j")))))));
+    }
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((x,i) => i == 0

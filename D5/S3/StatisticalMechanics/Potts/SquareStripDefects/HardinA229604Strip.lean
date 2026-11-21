@@ -23,12 +23,10 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripPow
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 open scoped BigOperators
-open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604Strip
@@ -37,18 +35,9 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229604StripData
-open DefectTransfer (defects literalCount lumped_count forward forward_shift)
-open HardinA233177Canonical (Canonical canonical_pattern_card)
-/-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
-def a (n : ℕ) : ℕ :=
-  letI : DecidablePred (fun f : Fin n × Fin 6 → Fin 3 =>
-    @Canonical (Fin n × Fin 6)
-      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f) :=
-    fun _ => by unfold Canonical; infer_instance
-  (Finset.univ.filter fun f : Fin n × Fin 6 → Fin 3 =>
-    defects horizontal ProperTransfer.between (List.ofFn fun i j => f (i, j)) = 2 ∧
-    (@Canonical (Fin n × Fin 6)
-      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 f)).card
+open DefectTransfer (literalCount lumped_count forward forward_shift)
+/-- Literal row-major canonical arrays with two monochromatic bonds. -/
+def a (n : ℕ) : ℕ := HardinA229457Strip.canonicalCount 2 n
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -131,41 +120,9 @@ theorem result (n : ℕ) :
     funext s
     simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using
       HardinA229604StripPowers.relation s
-  have scale (m : ℕ)  :
-      literalCount (q := 3) horizontal ProperTransfer.between 2 (m + 1) = 6 * a (m + 1) := by
-    classical
-    let predicate : (Fin (m + 1) × Fin 6 → Fin 3) → Prop := fun f =>
-      defects horizontal ProperTransfer.between (List.ofFn fun i j => f (i, j)) = 2
-    have invariant : ∀ e : Equiv.Perm (Fin 3), ∀ f, predicate (e ∘ f) ↔ predicate f := by
-      intro e f
-      change defects horizontal ProperTransfer.between _ = 2 ↔ _
-      rw [show (List.ofFn fun i j => (e ∘ f) (i, j)) =
-        (List.ofFn fun i j => f (i, j)).map (fun r => e ∘ r) by rw [List.map_ofFn]; rfl,
-        DefectTransfer.relabel_defects]
-    have nonconstant : ∀ f, predicate f → ∃ x y, f x ≠ f y := by
-      intro f h
-      by_contra he
-      push_neg at he
-      have const : f = fun _ => f (0, 0) := funext fun x => he x (0, 0)
-      change defects horizontal ProperTransfer.between _ = 2 at h
-      rw [const] at h
-      simp only [List.ofFn_const] at h
-      rw [DefectTransfer.constant_defects] at h
-      have cards : horizontal.card = 5 ∧ ProperTransfer.between.card = 6 := by decide +kernel
-      rw [cards.1, cards.2] at h
-      omega
-    have orbit := @canonical_pattern_card (Fin (m + 1) × Fin 6) inferInstance
-      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) predicate invariant nonconstant
-    simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit
-    unfold literalCount a
-    convert orbit using 1
-    apply congrArg (fun x : ℕ => 6 * x)
-    apply congrArg Finset.card
-    ext f
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, predicate]
-  have bridge (m : ℕ)  :
+  have bridge (m : ℕ) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
-    rw [← labelled, scale m]
+    rw [← labelled, HardinA229457Strip.canonical_count_scale 2 m (by decide)]
     push_cast
     rfl
   have scalar (i : Fin 25) : dotProduct (W i) terminal =
