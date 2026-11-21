@@ -50,8 +50,7 @@ private theorem count_one_pos : 0 < a 1 := by
   unfold a _root_.D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457Strip.canonicalCount
   apply Finset.card_pos.mpr
   refine ⟨(fun x => (![0, 0, 0, 1, 0, 1] : Fin 6 → Fin 3) x.2), ?_⟩
-  apply Finset.mem_filter.mpr
-  refine ⟨Finset.mem_univ _, ?_⟩
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
   unfold _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
   decide +kernel
 
