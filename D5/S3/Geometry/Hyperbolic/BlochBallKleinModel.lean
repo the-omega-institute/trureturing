@@ -205,6 +205,8 @@ private theorem pairing (r s : EuclideanSpace ℝ (Fin 3)) :
       2 * (Matrix.trace (blochMatrix 1 r * Matrix.adjugate (blochMatrix 1 s))).re := by
   rw [trace_mul_adjugate, Complex.ofReal_re]; ring
 
+/-- The covariance identity: at points with nonzero normalisers `t(r)`, `t(s)` of any `g`,
+`1 - ⟪blochFilter g r, blochFilter g s⟫ = t(r)⁻¹ t(s)⁻¹ |det g|² (1 - ⟪r, s⟫)`. -/
 private theorem pairing_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (r s : EuclideanSpace ℝ (Fin 3))
     (hr : (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0)
     (hs : (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re ≠ 0) :
@@ -221,29 +223,27 @@ private theorem pairing_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (r s : Eucl
     Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, zero_mul]
   ring
 
-/-- An invertible filter keeps the closed ball, and a point of the closed ball goes to the open
-ball exactly when it lies in the open ball. -/
+/-- For invertible `g` and a point with nonzero normaliser, inside or outside the closed ball, the
+filter lies in the open ball exactly when the point does, and in the closed ball exactly when the
+point does: by the covariance identity with `s = r`, `1 - ‖blochFilter g r‖²` is
+`|det g|² / t(r)²` times `1 - ‖r‖²`, and this factor is positive. -/
 private theorem norm_blochFilter (g : Matrix (Fin 2) (Fin 2) ℂ) (hg : g.det ≠ 0)
-    (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
-    ‖blochFilter g r‖ ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1) := by
-  have ht := trace_conj_re_pos g hg r hr
-  have h := pairing_blochFilter g r r ht.ne' ht.ne'
+    (r : EuclideanSpace ℝ (Fin 3)) (ht : (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0) :
+    (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1) ∧ (‖blochFilter g r‖ ≤ 1 ↔ ‖r‖ ≤ 1) := by
+  have h := pairing_blochFilter g r r ht ht
   rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq] at h
   have hK : 0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
-      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ * Complex.normSq g.det :=
-    mul_pos (mul_pos (inv_pos.mpr ht) (inv_pos.mpr ht)) (Complex.normSq_pos.mpr hg)
-  set K := (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
-      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ * Complex.normSq g.det
-  have hr2 : ‖r‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg r]
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ * Complex.normSq g.det := by
+    refine mul_pos ?_ (Complex.normSq_pos.mpr hg)
+    rw [← mul_inv]; exact inv_pos.mpr (mul_self_pos.mpr ht)
   have hf0 := norm_nonneg (blochFilter g r)
-  refine ⟨?_, ⟨fun hf => ?_, fun hr' => ?_⟩⟩
-  · nlinarith [mul_nonneg hK.le (sub_nonneg.mpr hr2)]
-  · by_contra hc
-    have h1 : ‖r‖ = 1 := le_antisymm hr (not_lt.mp hc)
-    rw [h1] at h
-    nlinarith
-  · have h2 : 0 < 1 - ‖r‖ ^ 2 := by nlinarith [norm_nonneg r]
-    nlinarith [mul_pos hK h2]
+  have hr0 := norm_nonneg r
+  have lt_iff (x : ℝ) (hx : 0 ≤ x) : x < 1 ↔ 0 < 1 - x ^ 2 :=
+    ⟨fun h => by nlinarith, fun h => by nlinarith⟩
+  have le_iff (x : ℝ) (hx : 0 ≤ x) : x ≤ 1 ↔ 0 ≤ 1 - x ^ 2 :=
+    ⟨fun h => by nlinarith, fun h => by nlinarith⟩
+  rw [lt_iff _ hf0, lt_iff _ hr0, le_iff _ hf0, le_iff _ hr0, h]
+  exact ⟨mul_pos_iff_of_pos_left hK, mul_nonneg_iff_of_pos_left hK⟩
 
 private theorem klein_scale (A B C l m D : ℝ) (hlm : 0 < l * m) (hD : 0 < D) :
     (l * m * D * A) / √((l * l * D * B) * (m * m * D * C)) = A / √(B * C) := by
@@ -431,12 +431,15 @@ private theorem exists_isometry :
 upper half-space model `HyperbolicThreeSpace` so that `cosh` of the hyperbolic distance is
 `kleinCosh`. The filter of the identity is the identity. The filter of `g` composes with any
 further filter `h` as the filter of `h * g` at every point where the normaliser of `g` is nonzero.
-For an invertible `g` and a point of the closed ball the normaliser is positive; the filter of `g`
-maps the closed ball into itself, sends a point of the closed ball into the open ball exactly when
-the point lies in the open ball, and preserves `kleinCosh` at every pair of points whose
-normalisers have a positive product. For normalisers of opposite sign the filter reverses the sign
-of `kleinCosh`. Every point of the open ball is the image of the centre under the filter of a
-positive definite matrix of determinant one. -/
+For any `g` and two points `r`, `s` with nonzero normalisers `t(r)`, `t(s)`, the filter satisfies
+the covariance identity
+`1 - ⟪blochFilter g r, blochFilter g s⟫ = |det g|² (1 - ⟪r, s⟫) / (t(r) t(s))`.
+For an invertible `g` the normaliser is positive on the closed ball; at every point with nonzero
+normaliser, inside or outside the closed ball, the filter of `g` lies in the open ball exactly
+when the point does and in the closed ball exactly when the point does; and the filter preserves
+`kleinCosh` at every pair of points whose normalisers have a positive product. For normalisers of
+opposite sign the filter reverses the sign of `kleinCosh`. Every point of the open ball is the
+image of the centre under the filter of a positive definite matrix of determinant one. -/
 theorem bloch_ball_hyperbolic :
     (∃ Φ : {r : EuclideanSpace ℝ (Fin 3) // ‖r‖ < 1} ≃ HyperbolicThreeSpace,
       ∀ r s, Real.cosh (dist (Φ r) (Φ s)) = kleinCosh r s) ∧
@@ -444,10 +447,18 @@ theorem bloch_ball_hyperbolic :
     (∀ (g h : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)),
       (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
         blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
+    (∀ (g : Matrix (Fin 2) (Fin 2) ℂ) (r s : EuclideanSpace ℝ (Fin 3)),
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re ≠ 0 →
+        1 - ⟪blochFilter g r, blochFilter g s⟫_ℝ =
+          (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
+            (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re⁻¹ * Complex.normSq g.det *
+            (1 - ⟪r, s⟫_ℝ)) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
-        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ∧
-        ‖blochFilter g r‖ ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
+        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re) ∧
+      (∀ r : EuclideanSpace ℝ (Fin 3), (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1) ∧ (‖blochFilter g r‖ ≤ 1 ↔ ‖r‖ ≤ 1)) ∧
       (∀ r s : EuclideanSpace ℝ (Fin 3),
         0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re *
           (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re →
@@ -458,9 +469,9 @@ theorem bloch_ball_hyperbolic :
         kleinCosh (blochFilter g r) (blochFilter g s) = -kleinCosh r s) ∧
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
       ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r :=
-  ⟨exists_isometry, blochFilter_one, blochFilter_mul, fun g hg =>
-    ⟨fun r hr => ⟨trace_conj_re_pos g hg r hr, norm_blochFilter g hg r hr⟩,
-      kleinCosh_blochFilter g hg, kleinCosh_blochFilter_of_neg g hg⟩,
+  ⟨exists_isometry, blochFilter_one, blochFilter_mul, pairing_blochFilter, fun g hg =>
+    ⟨trace_conj_re_pos g hg, norm_blochFilter g hg, kleinCosh_blochFilter g hg,
+      kleinCosh_blochFilter_of_neg g hg⟩,
     exists_posDef_det_one_blochFilter⟩
 
 end D5.S3.Geometry.Hyperbolic.BlochBallKleinModel

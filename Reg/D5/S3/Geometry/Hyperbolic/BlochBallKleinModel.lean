@@ -3,8 +3,8 @@ import D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of the Klein model on the open Bloch ball. The readout is the norm of the
-filtered Bloch vector `blochFilter g r` in the bound `‖blochFilter g r‖ ≤ 1` of the closed-ball
-clause for invertible matrices. -/
+filtered Bloch vector `blochFilter g r` on the left of `‖blochFilter g r‖ ≤ 1 ↔ ‖r‖ ≤ 1` in the
+norm part of the clause for invertible matrices. -/
 
 namespace Reg.D5.S3.Geometry.Hyperbolic.BlochBallKleinModel
 
@@ -37,8 +37,9 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 2) (fun e => nomatch e)
 
-/-- Retain the complete five-clause statement of `bloch_ball_hyperbolic`; only the norm of the
-filtered vector in the bound `‖blochFilter g r‖ ≤ 1` of the fourth clause is read out. -/
+/-- Retain the complete six-clause statement of `bloch_ball_hyperbolic`; only the norm of the
+filtered vector on the left of `‖blochFilter g r‖ ≤ 1 ↔ ‖r‖ ≤ 1` in the fifth clause is read
+out. -/
 abbrev arena : Arena where
   signature := signature
   Law ρ :=
@@ -48,10 +49,19 @@ abbrev arena : Arena where
     (∀ (g h : Matrix (Fin 2) (Fin 2) ℂ) (r : EuclideanSpace ℝ (Fin 3)),
       (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
         blochFilter h (blochFilter g r) = blochFilter (h * g) r) ∧
+    (∀ (g : Matrix (Fin 2) (Fin 2) ℂ) (r s : EuclideanSpace ℝ (Fin 3)),
+      (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re ≠ 0 →
+        1 - ⟪blochFilter g r, blochFilter g s⟫_ℝ =
+          (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re⁻¹ *
+            (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re⁻¹ * Complex.normSq g.det *
+            (1 - ⟪r, s⟫_ℝ)) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
       (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
-        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ∧
-        ρ.readout () () (blochFilter g r) ≤ 1 ∧ (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1)) ∧
+        0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re) ∧
+      (∀ r : EuclideanSpace ℝ (Fin 3), (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re ≠ 0 →
+        (‖blochFilter g r‖ < 1 ↔ ‖r‖ < 1) ∧
+          (ρ.readout () () (blochFilter g r) ≤ 1 ↔ ‖r‖ ≤ 1)) ∧
       (∀ r s : EuclideanSpace ℝ (Fin 3),
         0 < (Matrix.trace (g * blochMatrix 1 r * gᴴ)).re *
           (Matrix.trace (g * blochMatrix 1 s * gᴴ)).re →
@@ -63,11 +73,13 @@ abbrev arena : Arena where
     ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 →
       ∃ g : Matrix (Fin 2) (Fin 2) ℂ, g.PosDef ∧ g.det = 1 ∧ blochFilter g 0 = r
 
-/-- For the identity matrix and the centre the rejected reading would give `2 ≤ 1`. -/
+/-- For the identity matrix and the centre, whose normaliser is positive by the closed-ball part,
+the rejected reading would give `2 ≤ 1 ↔ ‖0‖ ≤ 1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := ((h.2.2.2.1 1 (by simp)).1 0 (by simp)).2.1
-  change (2 : ℝ) ≤ 1 at hh
+  have h5 := h.2.2.2.2.1 1 (by simp)
+  have hh := (h5.2.1 0 (h5.1 0 (by simp)).ne').2
+  change (2 : ℝ) ≤ 1 ↔ ‖(0 : EuclideanSpace ℝ (Fin 3))‖ ≤ 1 at hh
   norm_num at hh
 
 /-- The centre has norm `0` and the first basis vector has norm `1`. -/
@@ -119,8 +131,8 @@ def bloch_ball_hyperbolic_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body",
-        "arg", "fn", "arg", "fn", "arg"]
+      path := #["arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "arg", "fn", "arg",
+        "body", "body", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
