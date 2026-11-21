@@ -258,4 +258,89 @@ def affineAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev oneSidedSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ)
+    (fun _ => (ℝ → ℝ) × ℂ)
+
+def oneSidedActual : Realization oneSidedSignature :=
+  realize oneSidedSignature
+    (fun _ _ ρ =>
+      ((fun T : ℝ => ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x), riemannZeta ρ))
+    (fun e => nomatch e)
+
+def oneSidedZero : Realization oneSidedSignature :=
+  realize oneSidedSignature (fun _ _ _ => ((fun _ => 0), 0)) (fun e => nomatch e)
+
+abbrev oneSidedArena : Arena where
+  signature := oneSidedSignature
+  Law V := ∀ {β c A B : ℝ}, 1 / 2 ≤ β → β < 1 → c ≠ 0 → ∀ {ρ : ℂ},
+    let observations := V.readout () () ρ
+    (∀ᶠ T in atTop, c * observations.1 T ≤ Real.exp ((β - 1 / 2) * T) * (A * T + B)) →
+      observations.2 = 0 → ρ.re ≤ β
+
+private theorem one_sided_zero_fails : ¬ oneSidedArena.Law oneSidedZero := by
+  intro h
+  have hb : ∀ᶠ T : ℝ in atTop,
+      (1 : ℝ) * (oneSidedZero.readout () () (2 : ℂ)).1 T ≤
+        Real.exp (((1 / 2 : ℝ) - 1 / 2) * T) * (0 * T + 0) := by
+    exact Eventually.of_forall fun T => by simp [oneSidedZero, realize]
+  have hbad := h (β := 1 / 2) (c := 1) (A := 0) (B := 0) le_rfl (by norm_num)
+    one_ne_zero (ρ := 2) hb rfl
+  norm_num at hbad
+
+private theorem one_sided_depends : ObservationalDependence oneSidedSignature oneSidedActual := by
+  intro i
+  cases i
+  refine ⟨(), (2 : ℂ), (-2 : ℂ), fun h => ?_⟩
+  have he : riemannZeta 2 = riemannZeta (-2) := congrArg Prod.snd h
+  have hz : riemannZeta (-2) = 0 := by
+    simpa using riemannZeta_neg_two_mul_nat_add_one 0
+  exact riemannZeta_ne_zero_of_one_lt_re (by norm_num) (he.trans hz)
+
+def oneSidedFamily : Registration oneSidedArena
+    (type_of% @zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040) where
+  actual := oneSidedActual
+  bridge := Iff.rfl
+  variation := ⟨zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040,
+    oneSidedZero, one_sided_zero_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    oneSidedArena.Law oneSidedActual oneSidedZero one_sided_zero_fails
+  dependence := one_sided_depends
+
+def oneSidedAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040)
+    (Realization oneSidedSignature) Unit Unit where
+  unitName := .str ``zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040 "__information_unit"
+  realizationName := ``oneSidedFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨oneSidedArena⟩
+  objectArena := .source ⟨oneSidedArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source oneSidedArena ⟨oneSidedFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize oneSidedSignature
+    (fun _ _ ρ =>
+      ((fun T : ℝ => ∫ x in (5040 : ℝ)..Real.exp T, primeTail x / Real.sqrt x), riemannZeta ρ))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.SignedPrimePrimitiveCriterion
