@@ -44,3 +44,4 @@ A face has nonzero coefficient exactly when its left part omits one vertex of C 
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/OrderedCycleFactorization.boundaryOn_signedJoin`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/OrderedCycleFactorization.normalized_factorization`
+- Dependency: [D5/S3/HomologicalAlgebra/OrderedFaceSign](../../HomologicalAlgebra/OrderedFaceSign.md)
