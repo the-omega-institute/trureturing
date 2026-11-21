@@ -64,8 +64,10 @@ internal sealed class GramRankFeatureMapDocument : IScribeDocumentDefinition
     {
         Formula r = F.Id("r"), s = F.Id("s");
         return Disp(ForAll("M", TypeStar, ForAll("C", Call("TernaryComparison", M),
-            Seq(Forall, Sp, r, Comma, Sp, s, Colon, Sp, Naturals, Comma, Sp,
-                r, Sp, Leq, Sp, s, Sp, Rightarrow, Sp, Call("HasFeatureRank", C, r), Sp, Rightarrow, Sp,
-                Call("HasFeatureRank", C, s)))));
+            ForAll("r", Naturals, ForAll("s", Naturals,
+                Logic(new Formula.Relation(r, FormulaRelationOperator.LessThanOrEqual, s),
+                    FormulaLogicOperator.Implies,
+                    Logic(Call("HasFeatureRank", C, r), FormulaLogicOperator.Implies,
+                        Call("HasFeatureRank", C, s))))))));
     }
 }

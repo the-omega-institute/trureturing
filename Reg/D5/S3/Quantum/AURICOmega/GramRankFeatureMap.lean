@@ -2,10 +2,12 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.GramRankFeatureMap
 import Reg.Support.DependentFamily
 
-/-! Source-bound audit of the equivalence between finite Gram rank and Euclidean feature maps.
+/-! Source-bound audits of the equivalence between finite Gram rank and Euclidean feature maps
+and of the monotonicity of feature rank.
 
-The audited observation is the rank bound handed to the Gram side of the equivalence. The model
-used for the rejected law is the one-point comparison structure. -/
+For the equivalence, the audited observation is the rank bound handed to the Gram side; for the
+monotonicity, it is the target rank in the conclusion. The model used for both rejected laws is
+the one-point comparison structure. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.GramRankFeatureMap
 
