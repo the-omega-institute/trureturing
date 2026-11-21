@@ -23,4 +23,4 @@ Apply the full-group fixed mass theorem to H. Send each seed to its deterministi
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/NormalSubgroupFixedMass.maximal_normal_subgroup_fixed_seed_mass`
-- Dependency: [D5/S3/ConceptDynamics/Attribution/FixedKernelMass](FixedKernelMass.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/FiniteTableCalibration](FiniteTableCalibration.md)
