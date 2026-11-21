@@ -15,7 +15,7 @@ internal sealed class CappedUnionStructureDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("capped-structure-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Theorem 1"), StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For every set U and every nonzero commutative ring R: S_U is periodic in the sense of WangConjecture326Refutation.Periodic, since CappedUnionAlgebraicDavenport.cyclic_le places the positive cyclic subsemigroup of a inside the finite set {a, a+a}. The positive cyclic semigroup of a=(A,k) is a group (WangConjecture326Refutation.CyclicIsGroup) exactly when k is not 1: off level one a+a=a, so the cyclic semigroup is {a} with identity a; at level one an identity e in {a, a+a} would satisfy e+a=a, but a+a and (a+a)+a both have level 2. The remaining clauses are the algebraic Davenport constant algebraicD(S_U,R)=1 (CappedUnionAlgebraicDavenport.result), the Green congruence being equality and the trivial translation groups (CappedUnionGreen.result), and the relative constants D_(A,k)(S_U)=|A|+k (CappedUnionDavenport.result). This is Theorem 1 of Ma and Zhang, Zenodo 10.5281/zenodo.23884901, for arbitrary U; the source's further consequence for U=N, refuting Wang's Conjecture 3.26, is WangConjecture326Refutation.result."))),
+                Blocks(Paragraph(Text("For every set U and every nonzero commutative ring R: S_U is periodic in the sense of WangConjecture326Refutation.Periodic, since CappedUnionAlgebraicDavenport.cyclic_le places the positive cyclic subsemigroup of a inside the finite set {a, a+a}. The positive cyclic semigroup of a=(A,k) is a group (WangConjecture326Refutation.CyclicIsGroup) exactly when k is not 1: off level one a+a=a, so the cyclic semigroup is {a} with identity a; at level one an identity e in {a, a+a} would satisfy e+a=a, but a+a and (a+a)+a both have level 2. The remaining clauses are the algebraic Davenport constant algebraicD(S_U,R)=1 (CappedUnionAlgebraicDavenport.result), the Green congruence being equality and the trivial translation groups (CappedUnionGreen.result), and the relative constants D_(A,k)(S_U)=|A|+k (CappedUnionDavenport.result). This is Theorem 1 of Ma and Zhang, Zenodo 10.5281/zenodo.23884901, for arbitrary U; the source's further consequence for U=N, refuting Wang's Conjecture 3.26, is WangConjecture326Refutation.result, proved there on its own copy Model of the same monoid over N; no formal isomorphism between Model and Capped N is stated."))),
                 DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
@@ -27,8 +27,8 @@ internal sealed class CappedUnionStructureDocument : IScribeDocumentDefinition
         var green = All("a", S, All("b", S, Iff(Call("greenCon", a, F.Id("b")), Equal(a, F.Id("b")))));
         var rel = All("A", Call("Finset", F.Id("U")), All("k", Call("Fin", D(3)),
             Call("IsGreatest", Call("minimalLengths", Call("pair", F.Id("A"), F.Id("k"))), Add(Call("card", F.Id("A")), F.Id("k")))));
-        var gamma = All("a", S, Call("Unique", Call("Gamma", a)));
-        return Disp(And(Call("Periodic", S), And(group, And(dconst, And(green, And(rel, gamma))))));
+        var gamma = All("a", S, Call("Nonempty", Call("Unique", Call("Gamma", a))));
+        return Disp(All("R", Call("NontrivialCommRing"), And(Call("Periodic", S), And(group, And(dconst, And(green, And(rel, gamma)))))));
     }
 
     private static Formula Par(Formula x) => Seq(Open, x, Close);

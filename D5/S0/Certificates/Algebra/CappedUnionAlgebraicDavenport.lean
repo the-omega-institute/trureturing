@@ -40,7 +40,7 @@ variable {U : Type*} [DecidableEq U]
 private theorem add_eq (x y : Capped U) :
     x + y = ⟨x.support ∪ y.support, ⟨min 2 (x.level.val + y.level.val), by omega⟩⟩ := rfl
 
-/-- The positive cyclic subsemigroup of `x` is `{x, x + x}`. -/
+/-- The positive cyclic subsemigroup of `x` lies in `{x, x + x}`. -/
 theorem cyclic_le (x : Capped U) : (cyclic x : Set (Capped U)) ⊆ {x, x + x} := by
   have hclosed : ∀ a ∈ ({x, x + x} : Set (Capped U)), ∀ b ∈ ({x, x + x} : Set (Capped U)),
       a + b ∈ ({x, x + x} : Set (Capped U)) := by

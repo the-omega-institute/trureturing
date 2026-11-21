@@ -6,7 +6,7 @@ In the ordinary semigroup algebra of the capped union monoid the level-one diffe
 
 **Theorem 1.1 (The positive cyclic subsemigroup).**
 
-$$\forall x \in \operatorname{Capped}\left(U\right),\; \operatorname{subset}\left(\operatorname{cyclic}\left(x\right), (x, x + x)\right)$$
+$$\forall x \in \operatorname{Capped}\left(U\right),\; \operatorname{cyclic}\left(x\right) \subseteq \{x, x + x\}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Algebra/CappedUnionAlgebraicDavenport.cyclic_le` (`✓ std3`). ∎
 

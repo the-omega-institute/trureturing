@@ -20,10 +20,10 @@ namespace D5.S0.Certificates.Algebra.CappedUnionStructure
 proof_shape:
   add_eq: bind-only (consumer: result)
   result: content
-escape_witness: the positive cyclic subsemigroup of a lies in {a, a + a}, which makes it finite;
-  off level one a + a = a, so {a} is a group, while at level one neither a nor a + a fixes a,
-  so no identity exists; the remaining clauses assemble the algebraic constant, Green relation,
-  relative constants and translation groups already proved for the same monoid.
+escape_witness: the classification CyclicIsGroup a <-> level a /= 1: off level one a + a = a,
+  so the cyclic semigroup is the group {a}, while at level one neither a nor a + a fixes a, so no
+  identity exists. The periodicity clause (cyclic_le with Set.Finite.subset) and the other four
+  clauses are bind-only assembly of frozen results for the same monoid.
 admission_basis: escape-witness
 -/
 
