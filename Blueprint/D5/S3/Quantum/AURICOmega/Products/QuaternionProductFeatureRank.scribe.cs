@@ -1,10 +1,15 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega.Products;
 
 internal sealed class QuaternionProductFeatureRankDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/AURICOmega/Products/QuaternionProductFeatureRank.";
+
+    private static Formula Subscript(Formula value, Formula index) =>
+        Seq(value, Underscore, Grp(index));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full Cartesian product of n unit-quaternion readings has least real feature dimension five to the n.",
@@ -20,7 +25,11 @@ internal sealed class QuaternionProductFeatureRankDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("quaternion-product-feature-rank"),
                 DeclarationHandle.Create(Prefix + "least_feature_rank"),
                 H("Least real feature dimension on the full Cartesian product"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
+                    Operatorname, Grp(F.Id("leastFeatureDimension")), Open,
+                    Subscript(F.Id("K"), F.Id("n")), Close, Sp, Eq, Sp,
+                    D(5), Caret, Grp(F.Id("n"))))), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For unit quaternions q and p, the single-factor reading is "
