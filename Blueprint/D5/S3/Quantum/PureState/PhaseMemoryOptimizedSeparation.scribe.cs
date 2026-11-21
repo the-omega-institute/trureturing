@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.PureState;
 internal sealed class PhaseMemoryOptimizedSeparationDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/PureState/PhaseMemoryOptimizedSeparation.";
-    private static LibraryNoteRef Distillation => LibraryNoteRef.Create("D5/L/Quantum/regula2018oneshotcoherence");
+    private static LibraryNoteRef Distillation => LibraryNoteRef.Create("D5/L/Resource/regula2018oneshotcoherence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual finite qubit guessing optima for dominant four-state Walsh and Fourier ensembles.",
