@@ -20,10 +20,10 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The degree of an integer vector x is 2x₁ + 3x₂. An eligible "
+                    Paragraph(Text("The degree D(x) of an integer vector x is 2x₁ + 3x₂. The predicate E(C) holds when the "
                         + "integer cutoff C admits one strictly positive integer vector p and one "
                         + "signed integer vector u of degree 1 such that every integer t ≥ C is "
-                        + "the degree of a nonnegative vector in their integer span. Viable(p,u,t) denotes this last condition.")),
+                        + "the degree of a nonnegative vector in their integer span. Viable(p,u,t) denotes this last condition. The formula writes it as V(p,u,t).")),
                     Paragraph(Text("For a cutoff at most seven, choose vectors of degrees 7, 8, "
                         + "9 and 10 in the same span. The absolute determinant of the witnesses "
                         + "is at least two since the entries of u have opposite signs. It divides "
@@ -44,13 +44,17 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
         Formula u = F.Id("u");
         Formula t = F.Id("t");
         Formula z = new Formula.Integers();
-        Formula cutoffs = Seq(OpenBrace, c, Sp, InMacro, Sp, z, Sp, Mid, Sp,
+        Formula eligibility = Seq(F.Id("E"), Open, c, Close, Sp, Iff, Sp,
             Exists, Sp, p, Comma, u, Sp, InMacro, Sp, z, Caret, D(2), Comma, Sp,
             new Formula.Subscript(p, D(1)), Sp, Gt, Sp, D(0), Sp, Land, Sp,
             new Formula.Subscript(p, D(2)), Sp, Gt, Sp, D(0), Sp, Land, Sp,
-            Call("degree", u), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+            F.Id("D"), Open, u, Close, Sp, Eq, Sp, D(1), Sp, Land, Sp,
             Open, Forall, Sp, t, Sp, InMacro, Sp, z, Comma, Sp, t, Sp, Geq, Sp, c,
-            Sp, Rightarrow, Sp, Call("Viable", p, u, t), Close, CloseBrace);
-        return Disp(Seq(Call("min", cutoffs), Sp, Eq, Sp, D(8)));
+            Sp, Rightarrow, Sp, F.Id("V"), Open, p, Comma, u, Comma, t, Close, Close);
+        return Disp(Seq(Forall, Sp, c, Sp, InMacro, Sp, z, Comma, Sp,
+            Open, eligibility, Close, RowBreak,
+            F.Id("E"), Open, D(8), Close, Sp, Land, Sp, Open, Forall, Sp, c, Sp,
+            InMacro, Sp, z, Comma, Sp, F.Id("E"), Open, c, Close, Sp, Rightarrow, Sp,
+            D(8), Sp, Le, Sp, c, Close));
     }
 }
