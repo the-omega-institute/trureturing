@@ -4,33 +4,35 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Lagrange]
    utility: none
-   digest: The coefficients of Barker's generating function for A289916 satisfy v_n = D r^n + O(1) with D > 0, and v_(n+1)/v_n tends to r. -/
+   digest: The coefficients of Barker's generating function for A289916 satisfy v_n = D r^n + O(1) with D > 0, and v_(n+1)/v_n = r + O(r^(-n)). -/
 
 /-
 admission_basis: escape-witness (the-omega-institute/trureturing-requests#355)
 escape_witness: geom_decomp (a sequence annihilated by a complex polynomial with simple roots is a
   combination of the geometric sequences of its roots, via the Lagrange basis summing to one and
-  each basis factor times X - z being a multiple of the nodal polynomial), charPoly_roots (the
-  recurrence polynomial (X^2 - X + 1)(X^4 - X^3 - X^2 - X + 1) has exactly the six distinct roots
-  r, β - r, t/2 ± i s and 1/2 ± i √3/2), roots6_norm (all roots but r have modulus at most one)
-  and result (bounded error, positivity of D from strict increase, and the ratio limit).
+  each basis factor times X - z being a multiple of the nodal polynomial) and result (bounding
+  the non-dominant geometric terms, positivity of D from strict increase, and the ratio rate).
 proof_shape:
   charPoly, tt, ss, roots6: definitions; consumers: the lemmas below.
   charPoly_natDegree: bind-only helper; consumers: charPoly_ne_zero, aeval_charPoly,
     charPoly_roots.
   charPoly_ne_zero, aeval_charPoly, charPoly_eval, bounds, ss_sq, ss_pos: bind-only helpers;
     consumers: roots6_isRoot, roots6_nodup, roots6_norm, charPoly_roots, result.
+  roots6_isRoot, roots6_nodup, roots6_norm, charPoly_roots: bind-only helpers (evaluation at
+    the six explicit roots, their distinctness and moduli, and the root multiset by counting);
+    consumer: result.
   rec_of_gf: bind-only helper (coefficient nine onward of the generating-function identity);
     consumer: result.
-  geom_decomp, roots6_isRoot, roots6_nodup, charPoly_roots, roots6_norm: content; consumer:
-    result.
+  geom_decomp: content; consumer: result.
   result: content.
 Direct frozen dependencies (module statement_id):
   D5/S1/Recurrence/Algebraic/OEISA289916StrictIncrease (den, num, result),
     sha256:2e7867b3466a0100efb3f27b19466603da2c732435e8ead3aeb9be99e7886c0b;
   D5/S1/Recurrence/Asymptotic/DominantRootForcing (shift, aeval_apply, aeval_X_sub_C_apply; the
-    last two made public here for reuse);
-  D5/S1/Recurrence/OEISA400645 (squaredLimit, r_quad, r_bounds);
+    last two made public here for reuse),
+    sha256:90e3c8aecaec39cd39f0c7656c0c05577baa697052f84e165bc34e5537ab13df;
+  D5/S1/Recurrence/OEISA400645 (squaredLimit, r_quad, r_bounds),
+    sha256:6b9935aa3f2f34c16302ab77311ac7fb8824542a3447a5f9a6013494c199e7aa;
   D5/S0/Tower/NonPisotFrontier/BetaThirteen (betaThirteen, betaThirteen_quadratic,
     two_lt_betaThirteen, sqrt_thirteen_bounds),
     sha256:cc19b57aaf3e1c818ccd8e593f82bbb5cfe0d926845fc6592e52fd2240bd66ab.
@@ -52,7 +54,7 @@ noncomputable section
 
 The coefficients `v n` of `(1 + z)²(1 - z + z² - z³ + z⁴ - z⁵ + z⁶)/((1 - z + z²)Q(z))`,
 `Q(z) = z⁴ - z³ - z² - z + 1`, satisfy `v n = D r^n + O(1)` with `D > 0`, where `r` is the largest
-real root of `Q`, and `v (n + 1) / v n → r`. The recurrence polynomial has six simple roots: `r`,
+real root of `Q`, and `v (n + 1) / v n = r + O(r^(-n))`. The recurrence polynomial has six simple roots: `r`,
 `1/r`, two on the unit circle from `Q`, and the primitive sixth roots of unity. Every solution is
 a combination of their geometric sequences, and all of them but `r^n` stay bounded.
 -/
@@ -274,12 +276,13 @@ private theorem roots6_norm : ∀ z ∈ roots6, z ≠ (squaredLimit : ℂ) → �
     nlinarith
 
 /-- Coefficients of Barker's generating function for A289916 grow like `D r^n` with bounded
-error and `D > 0`, and their consecutive ratios tend to `r`, where `r` is the largest real root
-of `y⁴ - y³ - y² - y + 1`. -/
+error and `D > 0`, and their consecutive ratios are `r + O(r^(-n))`, where `r` is the largest
+real root of `y⁴ - y³ - y² - y + 1`. -/
 theorem result :
     ∀ v : ℕ → ℤ, PowerSeries.mk v * den = num → ∃ D : ℝ, 0 < D ∧
       (fun n => (v n : ℝ) - D * squaredLimit ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
-      Tendsto (fun n => (v (n + 1) : ℝ) / v n) atTop (nhds squaredLimit) := by
+      (fun n => (v (n + 1) : ℝ) / v n - squaredLimit) =O[atTop]
+        (fun n => (squaredLimit ^ n)⁻¹) := by
   intro v hv
   obtain ⟨-, -, hr1, hr2, -⟩ := bounds
   have hr0 : 0 < squaredLimit := by linarith
@@ -365,35 +368,50 @@ theorem result :
       mul_nonpos_of_nonpos_of_nonneg hD0 (pow_nonneg hr0.le n)
     linarith [hn.1]
   refine ⟨D, hDpos, hbig, ?_⟩
-  -- the ratio limit
+  -- the ratio rate
+  have hK0 : 0 ≤ K := (abs_nonneg _).trans (hdev 3 le_rfl)
   have hpow : Tendsto (fun n : ℕ => squaredLimit ^ n) atTop atTop :=
     tendsto_pow_atTop_atTop_of_one_lt (by linarith)
-  have hinv : Tendsto (fun n : ℕ => (squaredLimit ^ n)⁻¹) atTop (nhds 0) :=
-    tendsto_inv_atTop_zero.comp hpow
-  have he : Tendsto (fun n => ((v n : ℝ) - D * squaredLimit ^ n) * (squaredLimit ^ n)⁻¹)
-      atTop (nhds 0) := by
-    have h := hbig.mul (isBigO_refl (fun n : ℕ => (squaredLimit ^ n)⁻¹) atTop)
-    simp only [one_mul] at h
-    exact h.trans_tendsto hinv
-  have hden : Tendsto (fun n => (v n : ℝ) / squaredLimit ^ n) atTop (nhds D) := by
-    have h := he.add_const D
-    rw [zero_add] at h
-    refine h.congr fun n => ?_
-    have : squaredLimit ^ n ≠ 0 := pow_ne_zero n hr0.ne'
+  obtain ⟨P, hP⟩ := eventually_atTop.mp (hpow.eventually_ge_atTop (2 * K / D))
+  refine IsBigO.of_bound (2 * K * (1 + squaredLimit) / D)
+    (eventually_atTop.mpr ⟨max 3 P, fun n hn => ?_⟩)
+  have hn1 : 3 ≤ n := le_of_max_le_left hn
+  have hn2 : P ≤ n := le_of_max_le_right hn
+  have hrn : 0 < squaredLimit ^ n := pow_pos hr0 n
+  have hd0 := hdev n hn1
+  have hd1 := hdev (n + 1) (by omega)
+  have hbig' : 2 * K ≤ D * squaredLimit ^ n := by
+    have := hP n hn2
+    rw [div_le_iff₀ hDpos] at this
+    linarith
+  have hlow : D * squaredLimit ^ n / 2 ≤ (v n : ℝ) := by
+    have := (abs_le.mp hd0).1
+    linarith
+  have hvpos : 0 < (v n : ℝ) := by
+    have : 0 < D * squaredLimit ^ n := by positivity
+    linarith
+  have hnum : |(v (n + 1) : ℝ) - squaredLimit * v n| ≤ K * (1 + squaredLimit) := by
+    have hsplit : (v (n + 1) : ℝ) - squaredLimit * v n =
+        ((v (n + 1) : ℝ) - D * squaredLimit ^ (n + 1)) -
+          squaredLimit * ((v n : ℝ) - D * squaredLimit ^ n) := by ring
+    rw [hsplit]
+    calc _ ≤ |(v (n + 1) : ℝ) - D * squaredLimit ^ (n + 1)| +
+          |squaredLimit * ((v n : ℝ) - D * squaredLimit ^ n)| := abs_sub _ _
+      _ = |(v (n + 1) : ℝ) - D * squaredLimit ^ (n + 1)| +
+          squaredLimit * |(v n : ℝ) - D * squaredLimit ^ n| := by
+          rw [abs_mul, abs_of_pos hr0]
+      _ ≤ K + squaredLimit * K := by gcongr
+      _ = K * (1 + squaredLimit) := by ring
+  have hratio : (v (n + 1) : ℝ) / v n - squaredLimit =
+      ((v (n + 1) : ℝ) - squaredLimit * v n) / v n := by
     field_simp
-    ring
-  have hnum : Tendsto (fun n => (v (n + 1) : ℝ) / squaredLimit ^ n) atTop
-      (nhds (squaredLimit * D)) := by
-    have h := (hden.comp (tendsto_add_atTop_nat 1)).const_mul squaredLimit
-    refine h.congr fun n => ?_
-    have : squaredLimit ^ n ≠ 0 := pow_ne_zero n hr0.ne'
-    simp only [Function.comp_apply, pow_succ]
-    field_simp
-  have h := hnum.div hden hDpos.ne'
-  rw [mul_div_assoc, div_self hDpos.ne', mul_one] at h
-  refine h.congr fun n => ?_
-  have : squaredLimit ^ n ≠ 0 := pow_ne_zero n hr0.ne'
-  simp only [Pi.div_apply]
-  rw [div_div_div_cancel_right₀ this]
+  rw [hratio, Real.norm_eq_abs, Real.norm_eq_abs, abs_div, abs_of_pos hvpos,
+    abs_of_pos (inv_pos.mpr hrn), div_le_iff₀ hvpos]
+  calc |(v (n + 1) : ℝ) - squaredLimit * v n| ≤ K * (1 + squaredLimit) := hnum
+    _ = 2 * K * (1 + squaredLimit) / D * (squaredLimit ^ n)⁻¹ *
+        (D * squaredLimit ^ n / 2) := by
+        field_simp
+    _ ≤ 2 * K * (1 + squaredLimit) / D * (squaredLimit ^ n)⁻¹ * (v n : ℝ) := by
+        gcongr
 
 end D5.S1.Recurrence.Algebraic.OEISA289916Asymptotics

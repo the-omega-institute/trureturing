@@ -29,7 +29,8 @@ abbrev arena : Arena where
   Law Q :=
     ∀ v : ℕ → ℤ, PowerSeries.mk v * den = num → ∃ D : ℝ, 0 < D ∧
       Q.readout () () (fun n => (v n : ℝ) - D * squaredLimit ^ n) (fun _ => (1 : ℝ)) ∧
-      Tendsto (fun n => (v (n + 1) : ℝ) / v n) atTop (nhds squaredLimit)
+      (fun n => (v (n + 1) : ℝ) / v n - squaredLimit) =O[atTop]
+        (fun n => (squaredLimit ^ n)⁻¹)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hlaw

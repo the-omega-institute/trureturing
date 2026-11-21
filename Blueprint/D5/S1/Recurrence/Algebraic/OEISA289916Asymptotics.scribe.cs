@@ -10,20 +10,20 @@ internal sealed class OEISA289916AsymptoticsDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficients of Barker's generating function for A289916 satisfy "
-            + "v_n = D r^n + O(1) with D > 0, and v_(n+1)/v_n tends to r.",
+            + "v_n = D r^n + O(1) with D > 0, and v_(n+1)/v_n = r + O(r^(−n)).",
         H("Asymptotics of Barker's generating function for A289916"),
         Blocks(
             Describe.Lean(DescribeId.Create("a289916-asymptotics"),
                 DeclarationHandle.Create(Prefix + "result"),
-                H("Bounded error and ratio limit"),
+                H("Bounded error and ratio rate"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "Let v be an integer sequence whose generating function times "
                         + "(1 − z + z^2)Q(z) equals (1 + z)^2(1 − z + z^2 − z^3 + z^4 − z^5 + "
                         + "z^6), where Q(z) = z^4 − z^3 − z^2 − z + 1, and let r be the "
-                        + "largest real root of Q. Then there is D > 0 with v_n − D r^n = O(1), "
-                        + "and v_(n+1)/v_n tends to r.")),
+                        + "largest real root of Q. Then there is D > 0 with v_n − D r^n = O(1) "
+                        + "and v_(n+1)/v_n − r = O(r^(−n)).")),
                     Paragraph(Text(
                         "Proof. The numerator has degree eight, so for j ≥ 0 the coefficient "
                         + "identity gives v_(j+3) − 2v_(j+4) + v_(j+5) − v_(j+6) + v_(j+7) − "
@@ -43,14 +43,20 @@ internal sealed class OEISA289916AsymptoticsDocument : IScribeDocumentDefinition
                         + "u_j − α_r r^j = Σ over the other roots of α_z z^j, which is bounded "
                         + "by the sum of the |α_z|. Taking real parts, v_n = D r^n + O(1) with "
                         + "D = Re(α_r)/r^3. The frozen strict increase gives v_n ≥ v_0 + n, so "
-                        + "D ≤ 0 would make v bounded above; hence D > 0. Dividing by r^n, "
-                        + "v_n/r^n → D and v_(n+1)/r^n → rD, so v_(n+1)/v_n → r.")),
+                        + "D ≤ 0 would make v bounded above; hence D > 0. Finally "
+                        + "v_(n+1) − r v_n = (v_(n+1) − D r^(n+1)) − r (v_n − D r^n) is bounded "
+                        + "and v_n ≥ D r^n / 2 once D r^n is at least twice the error bound, so "
+                        + "v_(n+1)/v_n − r = O(r^(−n)).")),
                     Paragraph(Text(
                         "This is the asymptotic clause of Corollary 8 in Section 5 of H. Ma "
                         + "and W. Zhang's note on OEIS A400645 (DOI 10.5281/zenodo.24369110); "
                         + "the strict increase is the frozen module "
                         + "D5/S1/Recurrence/Algebraic/OEISA289916StrictIncrease. The generating "
                         + "function is Colin Barker's in A289916, and r is the constant of "
-                        + "A289917."))),
+                        + "A289917. The error O(1) is not improved here: numerically "
+                        + "v_n − D r^n keeps oscillating with amplitude about one, mostly a "
+                        + "period-six pattern from the sixth roots of unity, and D ≈ 1.5392 is "
+                        + "the residue −N(1/r)/((1/r) den′(1/r)) of the generating function; "
+                        + "neither the explicit value nor the failure of o(1) is formalized."))),
                 DescribeRole.Theorem))));
 }
