@@ -6,10 +6,11 @@
    utility: none
    digest: Uniform prime-only window mass bounds on wide real intervals. -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
 import D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
 import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
+
+/-! A nonnegative prime-tail integrand transfers power-window bounds to wide intervals. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -33,7 +34,7 @@ private lemma wide_window_power_lower_bound {b : ℝ} (hb : 1 < b)
   let ε : ℝ := b * (ρ.re - 1 / 2 - η)
   have hε : 0 < ε := mul_pos hb0 (sub_pos.mpr hη)
   have hpole := off_line_zero_forces_window_mass hzero hβ hb hε
-  have hpull := (Real.tendsto_rpow_atTop (inv_pos.mpr hb0)).eventually hpole
+  have hpull := (tendsto_rpow_atTop (inv_pos.mpr hb0)).eventually hpole
   obtain ⟨S, hS⟩ := eventually_atTop.mp hpull
   refine ⟨S, ?_⟩
   intro B hSB A hA hAB
@@ -74,11 +75,13 @@ private lemma wide_window_power_lower_bound {b : ℝ} (hb : 1 < b)
 real intervals. Failure of RH forces the excess above that logarithm to diverge
 uniformly with the right endpoint. -/
 theorem prime_tail_wide_window_mass (b : ℝ) (hb : 1 < b) :
+    let tail := primeTail
     ((¬ RiemannHypothesis) → ∀ K : ℝ, ∃ S : ℝ,
       ∀ B : ℝ, S ≤ B → ∀ A : ℝ, 2 ≤ A → A ^ b ≤ B →
-        K ≤ (∫ x in A..B, max (-primeTail x) 0 / Real.sqrt x) - 2 * Real.log (B / A)) ∧
+        K ≤ (∫ x in A..B, max (-tail x) 0 / Real.sqrt x) - 2 * Real.log (B / A)) ∧
     (∃ C : ℝ, 0 ≤ C ∧ ∀ A B : ℝ, 2 ≤ A → A ^ b ≤ B →
-      2 * Real.log (B / A) - C ≤ ∫ x in A..B, max (-primeTail x) 0 / Real.sqrt x) := by
+      2 * Real.log (B / A) - C ≤ ∫ x in A..B, max (-tail x) 0 / Real.sqrt x) := by
+  dsimp only
   have ordered {A B : ℝ} (hA : 2 ≤ A) (hAB : A ^ b ≤ B) : A ≤ B :=
     (Real.self_le_rpow_of_one_le (by linarith) hb.le).trans hAB
   have log_bound {A B : ℝ} (hA : 2 ≤ A) (hAB : A ^ b ≤ B) :
@@ -95,8 +98,8 @@ theorem prime_tail_wide_window_mass (b : ℝ) (hb : 1 < b) :
     obtain ⟨ρ, hzero, hβ, _⟩ := hρ
     obtain ⟨η, hη0, hη⟩ := exists_between (sub_pos.mpr hβ)
     obtain ⟨S₀, hS₀⟩ := wide_window_power_lower_bound hb hzero hη0 hη
-    have hlog := (Real.isLittleO_log_rpow_atTop hη0).def (by norm_num : (0 : ℝ) < 1 / 4)
-    have hgrowth := (Real.tendsto_rpow_atTop hη0).eventually (eventually_ge_atTop (2 * K))
+    have hlog := (isLittleO_log_rpow_atTop hη0).def (by norm_num : (0 : ℝ) < 1 / 4)
+    have hgrowth := (tendsto_rpow_atTop hη0).eventually (eventually_ge_atTop (2 * K))
     obtain ⟨S₁, hS₁⟩ := eventually_atTop.mp (hlog.and hgrowth)
     refine ⟨max S₀ S₁, ?_⟩
     intro B hB A hA hAB
