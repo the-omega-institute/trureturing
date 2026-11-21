@@ -107,5 +107,87 @@ def colouredRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+namespace ShiftAdd
+
+abbrev signature : Signature where
+  Params := Type u
+  State I := I → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ I := I → Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ p => p) (fun e => nomatch e)
+
+def falseProfile : Realization signature.{u} :=
+  realize signature (fun _ _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {I : Type u} [Fintype I] (p : I → Bool) (v w : I → ZMod 2),
+    shift (R.readout () I p) (v + w) = shift p v + shift p w
+
+private theorem false_profile_fails : ¬ arena.{u}.Law falseProfile := by
+  intro law
+  have h := law (I := PUnit.{u+1}) (fun _ => true) (fun _ => 1) (fun _ => 0)
+  have contradiction' : (1 : ZMod 2) = 0 := by
+    simpa [falseProfile, realize, shift, Pi.add_apply] using h
+  exact one_ne_zero contradiction'
+
+def family : Registration arena.{u} (type_of% (@shift_add)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@shift_add, falseProfile, false_profile_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨falseProfile, ?_, rfl, false_profile_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · intro anchor
+      exact nomatch anchor
+  dependence := by
+    intro _
+    refine ⟨PUnit.{u+1}, (fun _ => false), (fun _ => true), ?_⟩
+    intro eq
+    cases congrFun eq PUnit.unit
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shift_add.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling.ShiftAdd.profile
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling.ShiftAdd.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some actual
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ShiftAdd
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
