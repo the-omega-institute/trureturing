@@ -64,8 +64,8 @@ jobs:
       contents: write
       actions: read
     concurrency:
-      # Serialize v6 publication and retirement while the independent v5 queue runs.
-      group: ${{ inputs.volume_test_id != '' && 'lean-cache-volume-publication-verification' || 'lean-cache-publication-verification' }}
+      # Serialize publishers and retirement in the same named verification volume pool.
+      group: ${{ inputs.volume_test_id != '' && format('lean-cache-volume-verification:{0}:{1}', github.ref, inputs.volume_test_id) || 'lean-cache-publication-verification' }}
       queue: max
       cancel-in-progress: false
     env:
@@ -196,7 +196,8 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - name: Restore the selected Release build seeds
+      - id: release_seed
+        name: Restore the selected Release build seeds
         if: steps.entry.outputs.hit == 'true'
         uses: ./.github/actions/lean-cache-release-seed
         env:
@@ -209,12 +210,24 @@ jobs:
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
           checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
+      - id: full_report
+        name: Build and check the full report for the named volume snapshot
+        if: >-
+          steps.entry.outputs.hit == 'true' && env.LEAN_CACHE_VOLUME_TEST_ID != '' &&
+          env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.report-checked != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
+        run: >-
+          bash .github/actions/lean-compile-layer/measure.sh make check-lean-report FULL_BUILD=1
+          LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
+          LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.full_report.outcome == 'success' || steps.release_seed.outputs.report-checked == 'true') && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
@@ -224,7 +237,7 @@ jobs:
           if [[ "$LEAN_CACHE_RELEASE_VOLUMES" == 1 ]]; then
             [[ "$tag" == lean-cache-verify-v3-* ]]
             upload="$(sed -n 's/^LEAN_CACHE_VOLUME-UPLOAD //p' "$receipt" | jq -ec 'select(.status == "saved")')"
-            jq '{new_volumes, payload_bytes, reused_bytes, peak_staged_payload_bytes, compacted}' <<< "$upload"
+            jq '{new_volumes, payload_bytes, predecessor_bytes_read, reused_bytes, peak_staged_payload_bytes, compacted}' <<< "$upload"
             gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
               | jq -e '[.assets[] | {name, size}] | select(map(.name) | sort == ["index.json.gz", "manifest.json"]) |
                        {metadata_bytes: (map(.size) | add), assets: .}'
