@@ -31,5 +31,23 @@ internal sealed class FairBiasMatchingDocument : IScribeDocumentDefinition
                     "Downward edges delete a vertex and preserve the pivot's membership. Ordering " +
                     "the facet blocks by the number of earlier facets and adding this local rank gives " +
                     "a natural number that strictly decreases along every directed edge."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("actual-augmented-matching"),
+            DeclarationHandle.Create("D5/S3/TotalVariation/FairBiasMatching.actualAugmentedMatching"),
+            H("The augmented matching retains the empty-face pair"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(
+                    "With at least one nonempty facet, each augmented face belongs to a first-facet " +
+                    "restriction interval. Choose a common pivot for all faces of each nonsingleton " +
+                    "interval and toggle it. Singleton intervals are precisely the full-restriction " +
+                    "facets, which are fixed. Every other face has a cover partner.")),
+                Paragraph(Text(
+                    "Keep the empty face and its partner. The same natural rank strictly decreases " +
+                    "along unmatched covers directed downward and matched covers directed upward. " +
+                    "A nonempty facet supplies a vertex for the first interval. If there are no " +
+                    "nonempty facets, the lone augmented face is empty and has no partner."))),
             DescribeRole.Theorem))));
 }
