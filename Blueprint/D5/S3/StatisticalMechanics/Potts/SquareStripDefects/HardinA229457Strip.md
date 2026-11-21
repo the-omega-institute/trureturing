@@ -16,7 +16,7 @@ $$(\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathi
 
 *Commentary.*
 
-The five clauses give terminal acceptance, successor admissibility, all successor sums, first-row admissibility and first-row counts. Every sum is an integer count of actual rows.
+The five clauses give terminal acceptance, successor admissibility, all successor sums, first-row admissibility and first-row counts. Every sum is an integer count of actual rows. The first-row proof for class 22 identifies its fibre with crossed-strip class 30 and applies HardinA229532Strip.finite_certificate.
 
 **Definition 1.2 (a).**
 

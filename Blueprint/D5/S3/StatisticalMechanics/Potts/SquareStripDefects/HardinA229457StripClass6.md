@@ -16,7 +16,7 @@ $$\forall j: \operatorname{\mathit{Fin}}\left(4\right), (\forall p: \operatornam
 
 *Commentary.*
 
-The exact successor sum for these four target columns is evaluated only on canonical source rows. Proper-sector cases call the shared saturated scanner identity.
+The exact successor sum for these four target columns is checked by finite enumeration of canonical source rows using decide +kernel +revert.
 
 ## References
 
