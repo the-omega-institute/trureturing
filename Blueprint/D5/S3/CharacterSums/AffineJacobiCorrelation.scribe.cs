@@ -12,8 +12,9 @@ internal sealed class AffineJacobiCorrelationDocument : IScribeDocumentDefinitio
         H("Jacobi correlations along an affine progression"),
         Blocks(
             Paragraph(Text("For natural numbers b and m, let C(p,r,A,L) be the sum of (p/d)(r/d) over "
-                + "d = b + m(A+i) with 0 ≤ i < L. Each symbol is the Jacobi symbol, so the definition "
-                + "also covers composite denominators. In the formula, T = pr. The condition H(p,r) means "
+                + "d = b + m(A+i) with 0 ≤ i < L. Mathlib defines the Jacobi symbol at every natural denominator, "
+                + "including even denominators and zero. At zero its value is one, so b = m = 0 gives C = L. "
+                + "Under H(p,r) the denominators are positive and odd. In the formula, T = pr. The condition H(p,r) means "
                 + "that b is 3 modulo 4, 4 divides m, and p and r are distinct odd primes, both coprime to m.")),
             Describe.Lean(DescribeId.Create("affine-jacobi-correlation"),
                 DeclarationHandle.Create("D5/S3/CharacterSums/AffineJacobiCorrelation.affine_jacobi_correlation"),
