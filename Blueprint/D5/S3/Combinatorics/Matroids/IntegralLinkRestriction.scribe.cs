@@ -35,5 +35,25 @@ internal sealed class IntegralLinkRestrictionDocument : IScribeDocumentDefinitio
                         + "vertex it crosses. The resulting signs intertwine the boundary operators "
                         + "in the two orders. The lifted chain therefore has vanishing boundary in "
                         + "the original order, including its augmented coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("independent-face-link-image"),
+                DeclarationHandle.Create(Module + ".exists_topCycle_linkRestrict_iff_coloop"),
+                H("The image of an independent-face link restriction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For an independent face, read the coefficient at its union with a disjoint "
+                        + "face and multiply by the shuffle sign of the two faces. Set other "
+                        + "coordinates to zero. The image consists of the integral augmented top "
+                        + "cycles of the contraction, with the additional condition that the "
+                        + "image cycle is zero whenever the contracted face contains a coloop.")),
+                    Paragraph(Text(
+                        "Compose singleton restrictions with the restriction to the remaining "
+                        + "face. The shuffle signs differ from the single restriction by the "
+                        + "insertion sign of the singleton in that face. This sign squares to one "
+                        + "and can be absorbed into the lifted cycle. Contraction preserves the "
+                        + "absence of coloops among the surviving vertices."))),
                 DescribeRole.Theorem))));
 }

@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Combinatorics.Matroids.CircuitCycleDecomposition
+
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Order.Prod.Lex.Basic
@@ -25,7 +26,7 @@ open scoped Matroid
 namespace D5.S3.Combinatorics.Matroids.IntegralLinkRestriction
 
 open OrderedCycleFactorization
-open CircuitCycleDecomposition (topCycles)
+open CircuitCycleDecomposition (topCycles CircuitThrough circuit_cycle_decomposition)
 open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 
 variable {V : Type*} [LinearOrder V]
@@ -306,5 +307,106 @@ theorem exists_topCycle_linkRestrict_singleton {M : Matroid V} {x : V}
           congrArg (fun F => F.erase x) he.symm)
     rw [reorient, (@Normalized.coordinate V (lastOrder x) _ M _ _ (hz j)) _ (passive_insert_last hx hc (passive_contraction_order hT')),
       ite_eq_right hne, mul_zero, mul_zero]
+
+
+omit [Fintype V] in
+private lemma singleton_then_link (x : V) (A : Finset V) (hx : x ∉ A) (z : Chain V) :
+    linkRestrict A (linkRestrict {x} z) =
+      fun T => insertionSign A x * linkRestrict (insert x A) z T := by
+  funext T
+  by_cases hd : Disjoint T A
+  · by_cases hxT : x ∈ T
+    · have hn : ¬ Disjoint T (insert x A) :=
+        fun h => disjoint_left.mp h hxT (mem_insert_self _ _)
+      simp [linkRestrict, hd, hn, hxT]
+    · have hd' : Disjoint T (insert x A) := disjoint_insert_right.mpr ⟨hxT, hd⟩
+      have hi : x ∉ T ∪ A := by simp [hxT, hx]
+      have he : T ∪ insert x A = insert x (T ∪ A) := union_insert _ _ _
+      have hf : insertionSign (T ∪ A) x = insertionSign T x * insertionSign A x := by
+        unfold insertionSign
+        rw [filter_union, card_union_of_disjoint
+          (hd.mono (filter_subset _ _) (filter_subset _ _)), pow_add]
+      have hs : shuffleSign (insert x A) T = insertionSign T x * shuffleSign A T := by
+        unfold shuffleSign insertionSign
+        rw [sum_insert hx, pow_add]
+      conv_lhs => rw [linkRestrict, ite_eq_left hd, singleton_restrict, ite_eq_right hi, hf]
+      rw [linkRestrict, ite_eq_left hd', he, hs]
+      ring
+  · have hd' : ¬ Disjoint T (insert x A) :=
+      fun h => hd (h.mono_right (subset_insert _ _))
+    simp [linkRestrict, hd, hd']
+
+/-- Signed restriction to the link of an independent face maps integral top cycles onto
+all integral top cycles of the contraction if the face contains no coloop. -/
+private theorem exists_topCycle_linkRestrict_iff {M : Matroid V} {A : Finset V}
+    (hA : M.Indep (A : Set V)) (hc : ∀ x ∈ A, ¬ M.IsColoop x) (w : Chain V) :
+    (∃ z : Chain V, TopCycle M z ∧ linkRestrict A z = w) ↔
+      TopCycle (M ／ (A : Set V)) w := by
+  classical
+  constructor
+  · rintro ⟨z, hz, rfl⟩
+    exact linkRestrict_cycle hA hz
+  induction A using Finset.induction_on generalizing M w with
+  | empty =>
+      intro hw
+      refine ⟨w, ?_, ?_⟩
+      · simpa using hw
+      · funext T
+        simp [linkRestrict, shuffleSign]
+  | insert x A hx ih =>
+      intro hw
+      have hxI : M.Indep ({x} : Set V) := hA.subset (by simp)
+      have hxN : M.IsNonloop x := hxI.isNonloop_of_mem (Set.mem_singleton _)
+      have hxc : ¬ M.IsColoop x := hc x (mem_insert_self _ _)
+      have hA' : (M ／ ({x} : Set V)).Indep (A : Set V) := by
+        apply hxI.contract_indep_iff.2
+        refine ⟨Set.disjoint_singleton_right.mpr hx, ?_⟩
+        simpa only [Finset.coe_insert, Set.union_singleton] using hA
+      have hc' : ∀ y ∈ A, ¬ (M ／ ({x} : Set V)).IsColoop y := by
+        intro y hy hcol
+        exact hc y (mem_insert_of_mem hy) (Matroid.contract_isColoop_iff.1 hcol).1
+      have hminor : M ／ ({x} : Set V) ／ (A : Set V) =
+          M ／ (↑(insert x A) : Set V) := by
+        rw [Matroid.contract_contract, Finset.coe_insert, Set.singleton_union]
+      have hw' : TopCycle (M ／ ({x} : Set V) ／ (A : Set V))
+          (insertionSign A x • w) :=
+        (topCycles _).smul_mem _ (hminor.symm ▸ hw)
+      obtain ⟨v, hv, hvr⟩ := ih hA' hc' _ hw'
+      obtain ⟨z, hz, hzr⟩ := exists_topCycle_linkRestrict_singleton hxN hxc hv
+      refine ⟨z, hz, funext fun T => ?_⟩
+      have he := congrFun ((singleton_then_link x A hx z).symm.trans
+        (by rw [hzr, hvr])) T
+      exact mul_left_cancel₀ (insertionSign_ne_zero A x) he
+
+/-- A coloop annihilates the entire integral top-cycle lattice. -/
+lemma topCycle_eq_zero_of_isColoop {M : Matroid V} {x : V}
+    (hx : M.IsColoop x) {z : Chain V} (hz : TopCycle M z) : z = 0 := by
+  obtain ⟨e, _, _⟩ := circuit_cycle_decomposition M x hx.mem_ground
+  have : IsEmpty (CircuitThrough M x) :=
+    ⟨fun C => C.property.1.not_isColoop_of_mem C.property.2 hx⟩
+  have he : e (⟨z, hz⟩ : topCycles M) = e 0 := by
+    funext C
+    exact isEmptyElim C
+  exact congrArg Subtype.val (e.injective he)
+
+/-- The integral image of signed restriction to the link of an independent face.
+A coloop in the contracted face forces the image to be zero. -/
+theorem exists_topCycle_linkRestrict_iff_coloop {M : Matroid V} {A : Finset V}
+    (hA : M.Indep (A : Set V)) (w : Chain V) :
+    (∃ z : Chain V, TopCycle M z ∧ linkRestrict A z = w) ↔
+      TopCycle (M ／ (A : Set V)) w ∧ ((∃ x ∈ A, M.IsColoop x) → w = 0) := by
+  have hzero : linkRestrict A (0 : Chain V) = 0 := by
+    funext T
+    simp [linkRestrict]
+  constructor
+  · rintro ⟨z, hz, rfl⟩
+    refine ⟨linkRestrict_cycle hA hz, ?_⟩
+    rintro ⟨x, _, hx⟩
+    rw [topCycle_eq_zero_of_isColoop hx hz, hzero]
+  · rintro ⟨hw, h⟩
+    by_cases hc : ∃ x ∈ A, M.IsColoop x
+    · exact ⟨0, (topCycles M).zero_mem, hzero.trans (h hc).symm⟩
+    · exact (exists_topCycle_linkRestrict_iff hA
+        (fun x hx hcol => hc ⟨x, hx, hcol⟩) w).2 hw
 
 end D5.S3.Combinatorics.Matroids.IntegralLinkRestriction

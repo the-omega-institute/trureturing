@@ -1,0 +1,48 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
+
+internal sealed class IntegralCircuitImageDocument : IScribeDocumentDefinition
+{
+    private const string Module = "D5/S3/Combinatorics/Matroids/IntegralCircuitImage";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The dual parallel classes give the exact integral image along any matroid circuit.",
+        H("Exact integral image of circuit restriction"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("aggregate-circuit-lattice-image"),
+                DeclarationHandle.Create(Module + ".exists_topCycle_aggregateRestrict_iff"),
+                H("The class-size gcd times the contracted top-cycle lattice"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let K be a circuit in a matroid on a finite totally ordered carrier. "
+                        + "Aggregate the signed restrictions obtained by removing one vertex at a "
+                        + "time from the circuit face. At each basis of the contraction, each "
+                        + "summand reads the coefficient on the union of the basis and the "
+                        + "corresponding circuit facet. Its orientation is the product of the "
+                        + "facet boundary sign and the shuffle sign. The image consists exactly "
+                        + "of the gcd of the dual parallel-class sizes on K times the integral "
+                        + "augmented top-cycle lattice of the contraction.")),
+                    Paragraph(Text(
+                        "For two elements of one dual parallel class, the ridge missing those "
+                        + "two elements gives a two-term boundary equation. Any other extension "
+                        + "would have a dual base containing both elements. The oriented circuit "
+                        + "boundary determines the relative signs in the equation. Thus the signed "
+                        + "coordinates agree within the class and their aggregate is divisible "
+                        + "by the class-size gcd. Dividing by that gcd preserves base support "
+                        + "and the zero-boundary equations over the integers.")),
+                    Paragraph(Text(
+                        "In the reverse direction, delete one parallel class and contract its "
+                        + "complement in the circuit. Comparing bases through dual complements "
+                        + "identifies this minor with the circuit contraction. Lift the target "
+                        + "cycle through the independent face in the deletion, then join with "
+                        + "the oriented boundary of the simplex on the class. The shuffle signs "
+                        + "make each vertex in that class contribute the target cycle. An "
+                        + "integer Bezout combination of these class-size multiples gives the gcd "
+                        + "multiple. If the original matroid has a coloop, it survives the "
+                        + "circuit contraction and the entire target top-cycle lattice is zero."))),
+                DescribeRole.Theorem))));
+}
