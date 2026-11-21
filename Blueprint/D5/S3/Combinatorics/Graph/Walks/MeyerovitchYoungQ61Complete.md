@@ -24,7 +24,20 @@ Fix a connector of common length for every pair of Alice vertices. Scan the Alic
 
 For each ordered pair of lifted Bob vertices, minimize over its parallel edges. Give missing pairs a common cost above the largest original cost plus the connector length minus one times the cost range. Any minimum using a missing pair admits a strictly cheaper connector-length replacement with the same endpoints. For a shorter horizon, any original Bob walk of that length gives a strictly cheaper response because endpoints are free.
 
+**Theorem 1.2 (Attainment and lower bound for the matrix minimum).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Walks/MeyerovitchYoungQ61Complete.matrixMinimum_spec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/MeyerovitchYoungQ61Complete.matrixMinimum_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a matrix family over a linearly ordered commutative ring on a finite nonempty vertex set, each word has a complete walk whose entry sum is the matrix minimum. The walk has the length of the word, and the same minimum bounds the entry sum of every complete walk of that length from below.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MeyerovitchYoungQ61Complete.finite_horizon_reduction`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MeyerovitchYoungQ61Complete.matrixMinimum_spec`
 - Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph](../LayeredCirculation/SupplierGraph.md)
