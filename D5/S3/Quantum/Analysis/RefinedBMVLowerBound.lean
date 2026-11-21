@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The exact four-dimensional three-by-three refined BMV exponential lower bound. -/
+   digest: The finite-dimensional three-by-three refined BMV exponential lower bound. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMV33
 import D5.S3.Quantum.Analysis.RefinedBMVTracePower
@@ -20,10 +20,14 @@ noncomputable section
 
 namespace RefinedBMV
 
-variable {n : ℕ} [NeZero n]
+variable {n : ℕ}
 
 local notation "Mat" => Matrix (Fin n) (Fin n) ℂ
 local notation "CMat" => CStarMatrix (Fin n) (Fin n) ℂ
+
+section NonemptyDimension
+
+variable [NeZero n]
 
 private theorem exp_posDef {H : Mat} (hH : H.IsHermitian) : (exp H).PosDef := by
   letI : NormedAlgebra ℚ CMat := NormedAlgebra.restrictScalars ℚ ℂ _
@@ -116,17 +120,19 @@ theorem exponential_trace_le_cube (H K : Mat) (hH : H.IsHermitian) (hK : K.IsHer
   have h := le_of_tendsto' (dyadicTrace_tendsto H K) (fun j ↦ hmono (Nat.zero_le j))
   simpa [dyadicTrace] using h
 
-/-- For all complex Hermitian four-by-four inputs, the mean of the twenty words
-with three copies of each exponential is at least the trace of `exp (3H + 3K)`. -/
-theorem L33 (H K : Matrix (Fin 4) (Fin 4) ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian) :
-    (trace (exp ((3 : ℝ) • H + (3 : ℝ) • K))).re ≤ (wordMean (exp H) (exp K)).re :=
-  (exponential_trace_le_cube H K hH hK).trans
-    (E33 _ _ (exp_posDef hH).posSemidef (exp_posDef hK).posSemidef)
+end NonemptyDimension
 
-theorem L33_complex (H K : Matrix (Fin 4) (Fin 4) ℂ)
-    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+/-- For all finite-dimensional complex Hermitian inputs, the mean of the twenty words
+with three copies of each exponential is at least the trace of `exp (3H + 3K)`. -/
+theorem L33_all (H K : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian) :
     trace (exp ((3 : ℝ) • H + (3 : ℝ) • K)) ≤ wordMean (exp H) (exp K) := by
-  refine Complex.le_def.mpr ⟨L33 H K hH hK, ?_⟩
+  by_cases hn : n = 0
+  · subst n
+    simp [wordMean, trace_eq_zero_of_isEmpty]
+  letI : NeZero n := ⟨hn⟩
+  have hE := E33_all _ _ (exp_posDef hH).posSemidef (exp_posDef hK).posSemidef
+  refine Complex.le_def.mpr ⟨(exponential_trace_le_cube H K hH hK).trans
+    (Complex.le_def.mp hE).1, ?_⟩
   have hh := ((hermitian_real_smul hH 3).add (hermitian_real_smul hK 3)).exp
   have ht : IsSelfAdjoint (trace (exp ((3 : ℝ) • H + (3 : ℝ) • K))) := by
     change star (trace _) = _
@@ -135,7 +141,18 @@ theorem L33_complex (H K : Matrix (Fin 4) (Fin 4) ℂ)
     (Complex.im_eq_zero_iff_isSelfAdjoint _).mpr
       (wordMean_isSelfAdjoint (exp H) (exp K) hH.exp hK.exp)]
 
+/-- The refined BMV exponential lower bound in dimension four. -/
+theorem L33 (H K : Matrix (Fin 4) (Fin 4) ℂ) (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    (trace (exp ((3 : ℝ) • H + (3 : ℝ) • K))).re ≤ (wordMean (exp H) (exp K)).re :=
+  (Complex.le_def.mp (L33_all H K hH hK)).1
+
+theorem L33_complex (H K : Matrix (Fin 4) (Fin 4) ℂ)
+    (hH : H.IsHermitian) (hK : K.IsHermitian) :
+    trace (exp ((3 : ℝ) • H + (3 : ℝ) • K)) ≤ wordMean (exp H) (exp K) :=
+  L33_all H K hH hK
+
 #print axioms exponential_trace_le_cube
+#print axioms L33_all
 #print axioms L33
 #print axioms L33_complex
 

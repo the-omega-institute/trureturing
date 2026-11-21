@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The coefficient kernel is positive semidefinite on the three indices off each center. -/
+   digest: Positive semidefiniteness of the refined BMV coefficient kernels. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVCoefficients
 import Mathlib.Analysis.Matrix.Order
@@ -90,19 +90,53 @@ private theorem cauchy_psd (n : ℕ) (x : Fin n → ℝ) (hx : ∀ i, 0 < x i) :
       simpa [two_mul] using cauchy_complement (x 0) (x i.succ) (x j.succ)
         (hx 0) (hx i.succ) (hx j.succ)
 
-theorem kernel_zero_psd {n : ℕ} (x : Fin n → ℝ) (hx : ∀ i, 0 ≤ x i) :
-    (Matrix.of fun i j ↦ kernel 0 (x i) (x j) : Matrix (Fin n) (Fin n) ℝ).PosSemidef := by
-  let y : Fin n → ℝ := fun i ↦ if x i = 0 then 1 else x i
-  have hy (i : Fin n) : 0 < y i := by
+private theorem weighted_cauchy_psd {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (x w : ι → ℝ) (hx : ∀ i, 0 ≤ x i) (hw : ∀ i, x i = 0 → w i = 0) :
+    (Matrix.of fun i j ↦ w i * w j / (x i + x j) : Matrix ι ι ℝ).PosSemidef := by
+  let y : ι → ℝ := fun i ↦ if x i = 0 then 1 else x i
+  have hy (i : ι) : 0 < y i := by
     by_cases h : x i = 0
     · simp [y, h]
     · simpa [y, h] using lt_of_le_of_ne (hx i) (Ne.symm h)
-  have h := (real_diagonal_congruence (cauchy_psd n y hy) x).smul (show (0 : ℝ) ≤ 8 by norm_num)
-  convert h using 1
+  let e := (Fintype.equivFin ι).symm
+  have hC : (Matrix.of fun i j ↦ (y i + y j)⁻¹ : Matrix ι ι ℝ).PosSemidef :=
+    (posSemidef_submatrix_equiv e).mp (cauchy_psd _ (y ∘ e) (fun i ↦ hy (e i)))
+  convert real_diagonal_congruence hC w using 1
+  ext i j
+  simp only [Matrix.of_apply]
+  by_cases hi : x i = 0
+  · simp [hw i hi]
+  by_cases hj : x j = 0
+  · simp [hw j hj]
+  simp [y, hi, hj, div_eq_mul_inv, mul_right_comm]
+
+theorem kernel_zero_psd {n : ℕ} (x : Fin n → ℝ) (hx : ∀ i, 0 ≤ x i) :
+    (Matrix.of fun i j ↦ kernel 0 (x i) (x j) : Matrix (Fin n) (Fin n) ℝ).PosSemidef := by
+  convert (weighted_cauchy_psd x x hx (fun _ h ↦ h)).smul (show (0 : ℝ) ≤ 8 by norm_num)
+    using 1
   ext i j
   rw [Matrix.of_apply, kernel_zero _ _ (hx i) (hx j)]
-  by_cases hi : x i = 0 <;> by_cases hj : x j = 0 <;>
-    simp [y, hi, hj, smul_eq_mul, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+  simp [smul_eq_mul, div_eq_mul_inv, mul_assoc]
+
+/-- The symmetric coefficient kernel is PSD on any finite family of nonnegative inputs. -/
+theorem symmetricKernel_psd {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (c : ℝ) (hc : 0 ≤ c) (x : ι → ℝ) (hx : ∀ i, 0 ≤ x i) :
+    (Matrix.of fun i j ↦ symmetricKernel c (x i) (x j) : Matrix ι ι ℝ).PosSemidef := by
+  have h8 : (0 : ℝ) ≤ 8 := by norm_num
+  rcases hc.eq_or_lt with rfl | hc
+  · convert (weighted_cauchy_psd x x hx (fun _ h ↦ h)).smul h8 using 1
+    ext i j
+    rw [Matrix.of_apply, symmetricKernel_zero _ _ (hx i) (hx j)]
+    simp [smul_eq_mul, div_eq_mul_inv, mul_assoc]
+  · let u (i : ι) := (c + 3 * x i) / (c + x i)
+    let w (i : ι) := x i ^ 2 / (c + x i)
+    have hw (i : ι) (hi : x i = 0) : w i = 0 := by simp [w, hi]
+    have hRank := (posSemidef_vecMulVec_self_star u).smul hc.le
+    have hCauchy := (weighted_cauchy_psd x w hx hw).smul h8
+    convert hRank.add hCauchy using 1
+    ext i j
+    rw [Matrix.of_apply, symmetricKernel_pos _ _ _ hc (hx i) (hx j)]
+    simp [u, w, Matrix.vecMulVec_apply, star_trivial, smul_eq_mul, div_eq_mul_inv, mul_assoc]
 
 private theorem psd_two (a b d : ℝ) (ha : 0 ≤ a) (hd : 0 ≤ d) (hb : b ^ 2 ≤ a * d) :
     (!![a, b; b, d] : Matrix (Fin 2) (Fin 2) ℝ).PosSemidef := by

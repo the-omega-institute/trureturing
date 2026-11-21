@@ -8,6 +8,7 @@ claim: Theorem 2.10 (Conjectured) gives a two-branch maximum-total-degree additi
 strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation
   - D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw
+  - D5/S3/ConceptDynamics/GraphColoring/JacoDegreeShift
 license: CC-BY-3.0
 triage: anchor
 ---
@@ -68,3 +69,13 @@ formula floor((n+2)/phi)-1 that it rests on appears as Theorem 4.8 of Raso and
 Kok, [arXiv:2611.01554v1](https://arxiv.org/abs/2611.01554v1), whose readable
 text contains no addition law. A bounded web search found no published
 statement of the corrected law; no worldwide priority claim follows.
+
+## Maximum degree and the shifted order
+
+Theorem 2.9 on printed page 7 states only that, with m=n+Delta_n, the graph
+J_m(1) has maximum degree n or n-1. Its proof splits on the outdegree
+d+(v_n), which equals b_n=floor((n+1)/phi), and in its second case concludes
+only "n or n-1". The repository proves the sharper statement for every
+natural n: Delta_n equals b_n or b_n-1, the first case holds exactly when the
+fractional part of (n+2)/phi is below 1/phi, and the order n+Delta_n has
+maximum degree n in the first case and n-1 in the second.
