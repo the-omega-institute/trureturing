@@ -1,5 +1,4 @@
-import LeanInformationAuditInterface.Contract.Registration
-import Reg.Support.UniverseSingleReadout
+import Reg.D5.S3.Combinatorics.Matroids.CircuitRestrictionImage
 import D5.S3.Combinatorics.Matroids.SpanningCircuitImage
 import Mathlib.Combinatorics.Matroid.Loop
 
@@ -9,26 +8,17 @@ namespace Reg.D5.S3.Combinatorics.Matroids.SpanningCircuitImage
 
 open LeanInformationAudit
 open _root_.D5.S3.Combinatorics.Matroids.OrderedCycleFactorization
-open _root_.D5.S3.Combinatorics.Matroids.CircuitRestrictionImage (signedRestriction dualClassGcd)
+open _root_.D5.S3.Combinatorics.Matroids.CircuitRestrictionImage (dualClassGcd)
 open _root_.D5.S3.Combinatorics.Matroids.SpanningCircuitImage
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Reg.Support.UniverseSingleReadout (signature sensitivity)
+open Reg.Support.UniverseSingleReadout (sensitivity)
+open Reg.D5.S3.Combinatorics.Matroids.CircuitRestrictionImage (Params sig actual rejected)
 open Finset Matroid
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 universe u
-
-abbrev Params := Σ V : Type u, Σ _ : LinearOrder V, Finset V
-
-abbrev sig := signature Params.{u} (fun p => Chain p.1) (fun _ => ℤ)
-
-def actual : Realization sig.{u} :=
-  realize sig (fun _ ⟨V, ord, K⟩ z => @signedRestriction V ord K z) (fun e => nomatch e)
-
-def rejected : Realization sig.{u} :=
-  realize sig (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := sig.{u}
@@ -54,23 +44,13 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   obtain ⟨_, _, he⟩ := (h M {a} hK hs 1).2 hd
   exact zero_ne_one he
 
-private theorem dependence : ObservationalDependence sig.{u} actual := by
-  intro i
-  refine ⟨⟨Sample.{u}, inferInstance, {a}⟩, fun _ => 1, fun _ => 0, ?_⟩
-  change signedRestriction ({a} : Finset Sample.{u}) (fun _ => 1) ≠
-    signedRestriction ({a} : Finset Sample.{u}) (fun _ => 0)
-  have hboundary : simplexBoundary ({a} : Finset Sample.{u}) ∅ = 1 := by
-    simpa [_root_.D5.S3.HomologicalAlgebra.OrderedFaceSign.insertionSign] using
-      simplexBoundary_erase (mem_singleton_self a)
-  simp [signedRestriction, hboundary]
-
 def source_registration : Registration arena.{u}
     (type_of% (@exists_topCycle_signedRestriction_iff.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@exists_topCycle_signedRestriction_iff.{u}, rejected, rejected_law⟩
   sensitivity := sensitivity _ actual rejected rejected_law
-  dependence := dependence
+  dependence := CircuitRestrictionImage.source_registration.dependence
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}

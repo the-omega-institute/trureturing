@@ -27,4 +27,5 @@ The ground can be proper in the carrier, and K can equal the ground. The augment
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SpanningCircuitImage.exists_topCycle_signedRestriction_iff`
+- Dependency: [D5/S3/Combinatorics/Matroids/CircuitCycleDecomposition](CircuitCycleDecomposition.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/CircuitRestrictionImage](CircuitRestrictionImage.md)

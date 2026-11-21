@@ -9,10 +9,11 @@
 module
 
 public import D5.S3.Combinatorics.Matroids.CircuitRestrictionImage
+import D5.S3.Combinatorics.Matroids.CircuitCycleDecomposition
+import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.EuclideanDomain.Int
+import Mathlib.Algebra.Module.Submodule.Basic
 import Mathlib.Combinatorics.Matroid.Loop
-import Mathlib.RingTheory.PrincipalIdealDomain
 import Mathlib.Tactic.Ring
 
 /-! The image of the signed readout on integral top cycles of a finite ordered matroid. -/
@@ -28,6 +29,7 @@ open scoped Matroid
 namespace D5.S3.Combinatorics.Matroids.SpanningCircuitImage
 
 open CircuitRestrictionImage OrderedCycleFactorization
+open CircuitCycleDecomposition (topCycles)
 open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
@@ -52,8 +54,8 @@ private lemma dual_star {M : Matroid V} {E K : Finset V} {a : V}
     M✶.IsBase (↑(insert a (E \ K)) : Set V) := by
   have hKE : K ⊆ E := coe_subset.mp (hE ▸ hK.subset_ground)
   have hsub : insert a (E \ K) ⊆ E := insert_subset (hKE ha) sdiff_subset
-  rw [Matroid.dual_isBase_iff (hE.symm ▸ coe_subset.mpr hsub), hE, ← coe_sdiff,
-    complement_star hKE]
+  apply (CircuitRestrictionImage.dual_complement_base hE hsub).2
+  rw [complement_star hKE]
   exact (circuit_erase_basis hK ha).isBase_of_spanning hspan
 
 omit [Fintype V] in
@@ -87,18 +89,9 @@ private lemma boundary_pair {K U : Finset V} {a b : V} {z : Chain V}
     intro x hx hxab
     rw [hzero x (mem_sdiff.mp hx).1 (fun hxK =>
       (mem_sdiff.mp hx).2 (mem_sdiff.mpr ⟨hxK, hxab⟩)), mul_zero]
-  have hleft : insert a R = K.erase b := by
-    ext x
-    by_cases hxa : x = a
-    · subst x
-      simp [ha, hab]
-    · simp [R, hxa, and_comm]
+  have hleft : insert a R = K.erase b := CircuitRestrictionImage.insert_sdiff_pair ha hab
   have hright : insert b R = K.erase a := by
-    ext x
-    by_cases hxb : x = b
-    · subst x
-      simp [hb, hab.symm]
-    · simp [R, hxb, and_comm]
+    simpa only [R, pair_comm] using CircuitRestrictionImage.insert_sdiff_pair hb hab.symm
   change boundaryOn U z R = _
   rw [← hred, sum_insert (by simpa using hab), sum_singleton, hleft, hright]
 
@@ -308,9 +301,8 @@ private lemma exists_class_cycle {M : Matroid V} {E K : Finset V}
     by_contra hn
     obtain ⟨hFE, hdual⟩ := hsupport F hn
     apply hF
-    have hsub : (↑(E \ F) : Set V) ⊆ M.E := hE.symm ▸ coe_subset.mpr sdiff_subset
-    rw [Matroid.dual_isBase_iff hsub, hE, ← coe_sdiff, Finset.sdiff_sdiff_eq_self hFE] at hdual
-    exact hdual
+    have hprimal := (CircuitRestrictionImage.dual_complement_base hE sdiff_subset).1 hdual
+    rwa [Finset.sdiff_sdiff_eq_self hFE] at hprimal
   have hKE : K ⊆ E := coe_subset.mp (hE ▸ hK.subset_ground)
   have hclosure : M✶.closure {p} ⊆ (K : Set V) := by
     let P := (M✶.closure {p}).toFinite.toFinset
@@ -335,33 +327,18 @@ private lemma exists_class_cycle {M : Matroid V} {E K : Finset V}
           (w (K.erase p) * w (K.erase p)) := by ring
       _ = 1 := by rw [show insertionSign (K.erase p) p * insertionSign (K.erase p) p = 1
           from sign_sq _, hunit, one_mul]
-  let z : Chain V := fun F => u * w F
-  have hz : TopCycle M z := by
-    refine ⟨fun F hF => by simp [z, hwTop.vanishes F hF], fun R => ?_⟩
-    simp only [z, boundaryOn, mul_left_comm (insertionSign R _), ← mul_sum]
-    change u * boundaryOn univ w R = 0
-    rw [hw R, mul_zero]
+  let z : Chain V := u • w
+  have hz : TopCycle M z := (topCycles M).smul_mem u hwTop
   refine ⟨z, hz, fun a ha => ?_⟩
   by_cases hcl : M✶.closure {a} = M✶.closure {p}
   · rw [ite_eq_left hcl, circuitCoordinate_eq_of_closure hE hK hspan hz ha hp hcl]
-    simpa only [z, u, circuitCoordinate, mul_left_comm] using hsq
+    simpa only [z, Pi.smul_apply, Int.zsmul_eq_mul, u, circuitCoordinate, mul_left_comm] using hsq
   · rw [ite_eq_right hcl]
     have han := (dual_star hE hK hspan ha).indep.isNonloop_of_mem (by simp : a ∈ _)
     have haP : a ∉ M✶.closure {p} := fun h => hcl (han.closure_eq_of_mem_closure h)
     have hsub : M✶.closure {p} ⊆ (↑(K.erase a) : Set V) :=
       fun b hb => mem_erase.mpr ⟨fun h => haP (h ▸ hb), hclosure hb⟩
     simp [circuitCoordinate, z, hzero hpB _ hsub]
-
-omit [Fintype V] [LinearOrder V] in
-private lemma gcd_int_cast {ι : Type*} (S : Finset ι) (w : ι → ℕ) :
-    ((S.gcd w : ℕ) : ℤ) = S.gcd (fun c => (w c : ℤ)) := by
-  classical
-  induction S using Finset.induction_on with
-  | empty => simp
-  | @insert a S ha ih =>
-    rw [gcd_insert, gcd_insert, ← ih, ← Int.coe_gcd, Int.gcd_eq_natAbs,
-      Int.natAbs_natCast, Int.natAbs_natCast]
-    rfl
 
 /-- For any spanning circuit, the attainable signed restrictions of integral top
 cycles are exactly the multiples of the gcd of its dual parallel-class sizes. -/
@@ -376,9 +353,8 @@ theorem exists_topCycle_signedRestriction_iff (M : Matroid V) (K : Finset V)
   let classes := K.image cl
   let size (P : Set V) := (K.filter fun a => cl a = P).card
   have hgroup (q : Set V → ℤ) :
-      (∑ a ∈ K, q (cl a)) = ∑ P ∈ classes, (size P : ℤ) * q P := by
-    simpa only [size, sum_const, nsmul_eq_mul] using
-      (sum_fiberwise_of_maps_to' (fun _ h => mem_image_of_mem cl h) q).symm
+      (∑ a ∈ K, q (cl a)) = ∑ P ∈ classes, (size P : ℤ) * q P :=
+    CircuitRestrictionImage.sum_fibers (S := K) cl q
   change (∃ z : Chain V, TopCycle M z ∧ signedRestriction K z = n) ↔
     ((classes.gcd size : ℕ) : ℤ) ∣ n
   constructor
@@ -395,36 +371,28 @@ theorem exists_topCycle_signedRestriction_iff (M : Matroid V) (K : Finset V)
     intro P hP
     exact dvd_mul_of_dvd_left (by exact_mod_cast Finset.gcd_dvd (f := size) hP) _
   · rintro ⟨m, hm⟩
-    rw [gcd_int_cast] at hm
-    obtain ⟨q, hq⟩ := Finset.gcd_eq_sum_mul classes (fun P => (size P : ℤ))
+    obtain ⟨q, hq⟩ := CircuitRestrictionImage.gcd_eq_sum classes size
     have hgens (P : Set V) : ∃ w : Chain V, TopCycle M w ∧ ∀ a ∈ K,
         circuitCoordinate K w a = if cl a = P then 1 else 0 := by
       by_cases hP : P ∈ classes
       · obtain ⟨p, hp, rfl⟩ := mem_image.mp hP
         exact exists_class_cycle hE hK hspan hp
-      · refine ⟨fun _ => 0, ⟨by simp, by simp [boundaryOn]⟩, fun a ha => ?_⟩
+      · refine ⟨0, (topCycles M).zero_mem, fun a ha => ?_⟩
         have hne : cl a ≠ P := fun h => hP (h ▸ mem_image_of_mem cl ha)
         simp [circuitCoordinate, hne]
     choose w hw hcoord using hgens
-    let z : Chain V := fun F => ∑ P ∈ classes, (q P * m) * w P F
-    refine ⟨z, ⟨?_, ?_⟩, ?_⟩
-    · intro F hF
-      simp [z, fun P => (hw P).vanishes F hF]
-    · intro R
-      unfold boundaryOn z
-      simp only [mul_sum, mul_left_comm (insertionSign R _)]
-      rw [sum_comm]
-      simp only [← mul_sum]
-      change (∑ P ∈ classes, (q P * m) * boundaryOn univ (w P) R) = 0
-      simp only [(hw _).cycle, mul_zero, sum_const_zero]
-    · have hread (a : V) (ha : a ∈ K) : circuitCoordinate K z a = q (cl a) * m := by
-        unfold circuitCoordinate z
-        rw [mul_sum, sum_eq_single_of_mem (cl a) (mem_image_of_mem cl ha)]
-        · rw [mul_left_comm, ← circuitCoordinate, hcoord _ a ha, ite_eq_left rfl, mul_one]
-        · intro P _ hP
-          rw [mul_left_comm, ← circuitCoordinate, hcoord _ a ha, ite_eq_right (Ne.symm hP), mul_zero]
-      calc
-        _ = ∑ a ∈ K, q (cl a) * m := sum_congr rfl hread
-        _ = n := by rw [← sum_mul, hgroup, hm, hq]
+    let z : Chain V := ∑ P ∈ classes, (q P * m) • w P
+    have hz : z ∈ topCycles M :=
+      (topCycles M).sum_smul_mem (fun P => q P * m) (fun P _ => hw P)
+    refine ⟨z, hz, ?_⟩
+    have hread (a : V) (ha : a ∈ K) : circuitCoordinate K z a = q (cl a) * m := by
+      simp only [circuitCoordinate, z, Finset.sum_apply, Pi.smul_apply, Int.zsmul_eq_mul]
+      rw [mul_sum, sum_eq_single_of_mem (cl a) (mem_image_of_mem cl ha)]
+      · rw [mul_left_comm, ← circuitCoordinate, hcoord _ a ha, ite_eq_left rfl, mul_one]
+      · intro P _ hP
+        rw [mul_left_comm, ← circuitCoordinate, hcoord _ a ha, ite_eq_right (Ne.symm hP), mul_zero]
+    calc
+      _ = ∑ a ∈ K, q (cl a) * m := sum_congr rfl hread
+      _ = n := by rw [← sum_mul, hgroup, hm, hq]
 
 end D5.S3.Combinatorics.Matroids.SpanningCircuitImage
