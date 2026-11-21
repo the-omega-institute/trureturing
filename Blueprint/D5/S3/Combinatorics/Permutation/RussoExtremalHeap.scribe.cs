@@ -41,7 +41,10 @@ internal sealed class RussoExtremalHeapDocument : IScribeDocumentDefinition
                     Paragraph(Text("The first return to the support of the penultimate net is the square of its even cycle after a transposition of consecutive support coordinates. This joins the two alternating cycles. An excursion has length one or two, and every point outside the support is the intermediate point of a two-step return. The full-carrier orbit follows from the project’s first-visit theorem.")),
                     Paragraph(Text("The parked item distinguishes the recursive blocks. Each block runs through its own fiber in lower-call order. The stored swap connects the last array of the preceding block and the first array of the next block. The net is the lower net to the nth power followed, in composition order, by the quotient. Reversal is maximal because, at the first unequal position, the larger candidate entries already occur in the shared prefix.")),
                     Paragraph(Text("Brackets on a list in an optional lookup return some entry when the index is in range and none otherwise. Index zero and the index one less than the length give the displayed head and last queries on these nonempty lists. The step formula includes the optional lookup on the swap list at every natural index."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("russo-2026-extremal-heap-residue-two"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string explanation) =>

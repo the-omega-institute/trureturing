@@ -60,6 +60,10 @@ $$\begin{aligned}\operatorname{extremalSweep}\left(2\right) = [(0,1)]\\\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/RussoExtremalHeap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/russo-2026-extremal-heap-residue-two` (proved) by `D5/S3/Combinatorics/Permutation/RussoExtremalHeap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"russo-2026-extremal-heap-residue-two","declaration_gid":"D5/S3/Combinatorics/Permutation/RussoExtremalHeap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Luís M. S. Russo (2026). *Heap-type permutation generation with a prescribed final arrangement*. DOI: [10.48550/arXiv.2611.22780](https://doi.org/10.48550/arXiv.2611.22780). URL: <https://arxiv.org/abs/2611.22780v1>.
