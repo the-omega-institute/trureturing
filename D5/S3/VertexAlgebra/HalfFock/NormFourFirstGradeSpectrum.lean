@@ -26,8 +26,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
 
-open private oddWeight_one_iff ground_square
-  from D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
+open private oddWeight_one_iff from D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
 open private charge_pairing from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 
 namespace D5.S3.VertexAlgebra.HalfFock.NormFourFirstGradeSpectrum
@@ -95,7 +94,7 @@ private theorem rank_pos (D : LatticeData) (a : Charge D)
 private theorem ground_action_square (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) :
     groundAction D hu a * groundAction D hu a = 1 := by
-  exact ground_square D hu a ha
+  exact NormFourLowestGrades.ground_square D hu a ha
 
 /- The coordinate space below is NOT assumed to be the grade. Its tensor
    product is proved isomorphic to the complete production L0 eigengrade,
