@@ -1,4 +1,4 @@
-# The actual zeta phase orbit at an attained maximal real part
+# The actual zeta phase orbit at a real-part upper bound
 
 ## Abstract
 
@@ -54,9 +54,9 @@ The real variable s runs backwards from the right endpoint in logarithmic coordi
 
 **Theorem 1.5 (Exact cluster-set equivalence).**
 
-$$\forall rho \in \mathbb{C},\; \operatorname{NontrivialZero}\left(rho\right) \Rightarrow \left(\frac{1}{2} < \operatorname{Re}\left(rho\right) \Rightarrow \left(\left(\forall z \in \mathbb{C},\; \operatorname{NontrivialZero}\left(z\right) \Rightarrow \operatorname{Re}\left(z\right) \le \operatorname{Re}\left(rho\right)\right) \Rightarrow \left(\forall W \in \mathbb{R},\; 0 < W \Rightarrow \left(\forall y \in \mathbb{R},\; \operatorname{MapClusterPt}\left(y, atTop, (\lambda B:\mathbb{R} \mapsto \frac{\operatorname{N}\left(B \cdot \operatorname{exp}\left(-W\right), B\right)}{B^{\operatorname{Re}\left(rho\right) - \frac{1}{2}}})\right) \Leftrightarrow \left(\exists h \in \mathbb{T}^{\mathbb{N}},\; h \in \operatorname{closure}\left(\operatorname{range}\left(phi\right)\right) \land y = \operatorname{I}\left(Re, \operatorname{Re}\left(rho\right), W, h\right)\right)\right)\right)\right)\right)$$
+$$\forall beta \in \mathbb{R},\; \frac{1}{2} < beta \Rightarrow \left(\left(\forall z \in \mathbb{C},\; \operatorname{NontrivialZero}\left(z\right) \Rightarrow \operatorname{Re}\left(z\right) \le beta\right) \Rightarrow \left(\forall W \in \mathbb{R},\; 0 \le W \Rightarrow \left(\forall y \in \mathbb{R},\; \operatorname{MapClusterPt}\left(y, atTop, (\lambda B:\mathbb{R} \mapsto \frac{\operatorname{N}\left(B \cdot \operatorname{exp}\left(-W\right), B\right)}{B^{beta - \frac{1}{2}}})\right) \Leftrightarrow \left(\exists h \in \mathbb{T}^{\mathbb{N}},\; h \in \operatorname{closure}\left(\operatorname{range}\left(phi\right)\right) \land y = \operatorname{I}\left(Re, beta, W, h\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.prime_tail_mass_cluster_iff_of_attained_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.prime_tail_mass_cluster_iff_of_upper_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,11 +66,13 @@ $$\forall rho \in \mathbb{C},\; \operatorname{NontrivialZero}\left(rho\right) \R
 
 Let N(A,B) denote the Chapter 31 interval integral from A to B of max(−Qϑ(x),0)/√x. Here Qϑ is primeTail, the integral of (ϑ(u)−u)/u² over u>x, with each prime counted once in ϑ. Cluster means MapClusterPt along the real atTop filter. H is the closure of the range of the simultaneous real phase orbit.
 
+For the Chapter 31 application, take β to be the real part of a nontrivial zero attaining the maximum above one half and take W>0. If the β-line cut is empty, all cut coefficients vanish. The identity φ(0) belongs to H, so the phase image and cluster set both equal {0}. At W=0 both interval integrals vanish, giving the same singleton.
+
 The product of circles is compact. Apply mapClusterPt_one_atTop_pow to φ(1). Multiplication by φ(t) sends those powers to φ(t+n), and t+n tends to infinity along the natural numbers. Thus every orbit point belongs to the closed set of forward cluster points. The reverse inclusion follows from containment in H.
 
 The common summable coefficient bound gives joint continuity in phase and lag. Parametric interval integration gives continuity of I. Its image of H is compact and hence closed. The continuous image of the real line under φ and its closure are connected, so the functional image is a compact interval.
 
-Put t=log B and p=Re ρ−1/2. The substitution x=exp(t−s) gives the exact normalized integral with weight exp(−ps) and signed input exp((1−Re ρ)(t−s))·Qϑ(exp(t−s)). On the orbit the profile is the negative real part of the actual maximal series at t−s. The complete-tail approximation and normalized prime-power error bound the difference of the signed inputs by δ on all of [t−W,t] once t is sufficiently large. The 1-Lipschitz negative part bounds the window error by δ times the integral of exp(−ps).
+Put t=log B and p=β−1/2. The substitution x=exp(t−s) gives the exact normalized integral with weight exp(−ps) and signed input exp((1−β)(t−s))·Qϑ(exp(t−s)). On the orbit the profile is the negative real part of the actual β-line series at t−s. The complete-tail approximation and normalized prime-power error bound the difference of the signed inputs by δ on all of [t−W,t] once t is sufficiently large. The 1-Lipschitz negative part bounds the window error by δ times the integral of exp(−ps).
 
 The vanishing window error preserves cluster values by the triangle inequality in frequent metric balls. Continuity and forward recurrence yield every value in the phase image, and closedness of that image contains every cluster value of the phase windows. Exponentiation and logarithm preserve the real cofinal limit.
 
@@ -81,7 +83,7 @@ Kaczorowski and Ramaré discuss translation hulls in Section 4 of Almost periodi
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.phaseOrbit`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.phaseProfile`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.phaseWindow`
-- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.prime_tail_mass_cluster_iff_of_attained_zero`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.prime_tail_mass_cluster_iff_of_upper_bound`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePhaseCluster.rightmostCoeff`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimeAttainedShortWindows](PrimeAttainedShortWindows.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHPrimeWindowMean](RHPrimeWindowMean.md)
