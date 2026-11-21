@@ -32,7 +32,8 @@ internal sealed class FairBiasIntegralHomologyDocument : IScribeDocumentDefiniti
                     "A sphere contributes its coefficient group only in its own degree.")),
                 Paragraph(Text(
                     "In degree zero, a positive-dimensional sphere wedge is path connected. A " +
-                    "wedge of zero-spheres has one point for each factor in addition to the common " +
+                    "wedge of zero-spheres is identified by the pointed sphere-wedge normalization " +
+                    "with one point for each factor in addition to the common " +
                     "point. The augmentation kernel has one generator for each of those other " +
                     "components. An empty family gives a point and every reduced group vanishes."))),
             DescribeRole.Theorem))));

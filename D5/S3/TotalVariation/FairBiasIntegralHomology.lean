@@ -7,6 +7,7 @@
    digest: Reduced integral homology of the actual signed fair-bias realization. -/
 import D5.S3.Topology.PointedWedgeHomology
 import D5.S3.Geometry.FiniteFamilyWedgeSplit
+import D5.S3.Geometry.SphereWedgePositiveNormalization
 import D5.S3.Geometry.EuclideanSphereJoin
 import D5.S3.Topology.SphereHomologyAllDegrees
 import Mathlib.Geometry.Manifold.Instances.Sphere
@@ -20,6 +21,7 @@ open scoped unitInterval
 open D5.S3.Geometry.FiniteConeUnionWedge
 open D5.S3.Geometry.CompactWedgeFiniteFactor
 open D5.S3.Geometry.FiniteFamilyWedgeSplit
+open D5.S3.Geometry.SphereWedgePositiveNormalization
 open D5.S3.Topology.PointedWedgeHomology
 open D5.S3.Geometry.FiniteComponentClosure
 open D5.S3.Geometry.EuclideanSphereJoin
@@ -350,49 +352,24 @@ private def twoPointModel : Bool ≃ₜ StdSphere 0 :=
   boolTwoPointHomeomorph.trans twoPointSphereHomeomorph
 
 private def zeroWedgeEquiv {J : Type*} (b : J → StdSphere 0) :
-    FamilyWedge b ≃ Unit ⊕ J := by
-  classical
-  let other (j : J) := twoPointModel (Bool.not (twoPointModel.symm (b j)))
-  have other_ne (j : J) : other j ≠ b j := by
-    intro h
-    have he : Bool.not (twoPointModel.symm (b j)) = twoPointModel.symm (b j) :=
-      twoPointModel.injective (h.trans (twoPointModel.apply_symm_apply (b j)).symm)
-    cases hbool : twoPointModel.symm (b j) <;> simp [hbool] at he
-  have other_eq (j : J) (x : StdSphere 0) (hx : x ≠ b j) : other j = x := by
-    apply twoPointModel.symm.injective
-    have hn : twoPointModel.symm x ≠ twoPointModel.symm (b j) := fun h =>
-      hx (twoPointModel.symm.injective h)
-    rw [show twoPointModel.symm (other j) = Bool.not (twoPointModel.symm (b j)) from
-      twoPointModel.symm_apply_apply _]
-    cases hb : twoPointModel.symm (b j) <;> cases ht : twoPointModel.symm x <;> simp_all
-  let raw : Unit ⊕ (Σ _ : J, StdSphere 0) → Unit ⊕ J :=
-    Sum.elim Sum.inl (fun z => if z.2 = b z.1 then Sum.inl () else Sum.inr z.1)
-  let g : Unit ⊕ J → FamilyWedge b := Sum.elim (fun _ => base b) (fun j => point b j (other j))
-  have hr (z : Unit ⊕ (Σ _ : J, StdSphere 0)) (hz : z ∈ basePoints b) : raw z = Sum.inl () := by
-    rcases hz with rfl | ⟨j, rfl⟩
-    · rfl
-    · simp [raw]
-  let f : FamilyWedge b → Unit ⊕ J :=
-    Quotient.lift raw (by
-      rintro z w (rfl | ⟨hz, hw⟩)
-      · rfl
-      · exact (hr z hz).trans (hr w hw).symm)
-  refine ⟨f, g, ?_, ?_⟩
-  · intro p
-    refine Quotient.inductionOn p ?_
-    rintro (u | ⟨j, x⟩)
-    · cases u
-      rfl
-    · change g (if x = b j then Sum.inl () else Sum.inr j) = point b j x
-      split_ifs with hx
-      · rw [hx, point_base]
-        rfl
-      · exact congrArg (point b j) (other_eq j x hx)
-  · rintro (u | j)
-    · cases u
-      rfl
-    · change (if other j = b j then Sum.inl () else Sum.inr j) = _
-      rw [ite_eq_right (other_ne j)]
+    {e : FamilyWedge b ≃ Unit ⊕ J // e (base b) = Sum.inl ()} := by
+  let n : J → ℕ := fun _ => 0
+  letI : IsEmpty (PositiveIndex n) := ⟨fun j => (Nat.lt_irrefl 0) j.property⟩
+  letI : Subsingleton (PositiveWedge n) :=
+    subsingletonEmptyWedge (fun j : PositiveIndex n =>
+      coordinatePoint (n j.val))
+  let positive : PositiveWedge n ≃ Unit :=
+    { toFun := fun _ => ()
+      invFun := fun _ => base (fun j : PositiveIndex n => coordinatePoint (n j.val))
+      left_inv := fun _ => Subsingleton.elim _ _
+      right_inv := fun _ => Subsingleton.elim _ _ }
+  let zero : ZeroIndex n ≃ J :=
+    Equiv.subtypeUnivEquiv (fun _ => rfl)
+  refine ⟨(normalizationHomeomorph n b).toEquiv.trans
+    (positive.sumCongr zero), ?_⟩
+  change (positive.sumCongr zero) (normalizationHomeomorph n b
+    (base b)) = Sum.inl ()
+  exact congrArg (positive.sumCongr zero) (normalization_base n b)
 
 section ZerothHomology
 
@@ -420,12 +397,12 @@ private def discreteComponents {X : Type w} [TopologicalSpace X] [DiscreteTopolo
 private def zeroWedgeComponents {J : Type w} (b : J → StdSphere 0) :
     {c : ZerothHomotopy (FamilyWedge b) // c ≠ ZerothHomotopy.mk (base b)} ≃ J := by
   letI := zeroWedgeDiscrete b
-  let e := discreteComponents.trans (zeroWedgeEquiv b)
+  let e := discreteComponents.trans (zeroWedgeEquiv b).val
   have he : e (ZerothHomotopy.mk (base b)) = Sum.inl () := by
-    change zeroWedgeEquiv b (discreteComponents (ZerothHomotopy.mk (base b))) = Sum.inl ()
+    change (zeroWedgeEquiv b).val (discreteComponents (ZerothHomotopy.mk (base b))) = Sum.inl ()
     have hr : discreteComponents.symm (base b) = ZerothHomotopy.mk (base b) := rfl
     rw [← hr, Equiv.apply_symm_apply]
-    rfl
+    exact (zeroWedgeEquiv b).property
   let step : {s : Unit ⊕ J // s ≠ Sum.inl ()} ≃ J := {
     toFun := fun s => match s with
       | ⟨Sum.inl u, h⟩ => (h (congrArg Sum.inl (Subsingleton.elim u ()))).elim
