@@ -4,7 +4,19 @@
 
 Taylor coefficients of the original four-point sewn charge sums
 
-**Lemma 1.1 (The disk nome in the sewing coordinate).**
+**Definition 1.1 (Finite occupation projection).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For fixed lattice datum, weights and Laurent index, project occupation values using the finite lowering sums, signed factorial weights and the two Laurent selectors on the four oscillator inputs.
+
+**Lemma 1.2 (The disk nome in the sewing coordinate).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCharge
 
 For z in the complex unit disk, the disk nome at z² is z² times the exponential of twice the source constant at z, divided by 16.
 
-**Theorem 1.2 (The actual fourM scalar).**
+**Theorem 1.3 (The actual fourM scalar).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
 
@@ -36,6 +48,7 @@ For each fixed occupation, cosetSewnTaylor uses the ordinary Taylor coefficient 
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations`
 - Dependency: [D5/S3/Analytic/OriginalHalfBinomialNome](../../../Analytic/OriginalHalfBinomialNome.md)
 - Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalFullChargeLoop](../../Sewing/CanonicalFullChargeLoop.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FiniteSqueezedVacuum](../FiniteSqueezedVacuum.md)

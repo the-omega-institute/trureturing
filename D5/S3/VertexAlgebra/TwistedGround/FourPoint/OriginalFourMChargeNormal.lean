@@ -489,7 +489,7 @@ private lemma selector_charge_sublevel (D : LatticeData)
     split_ifs <;> first | rfl | omega
 
 /-- Evaluate the finite lowering and Laurent projection on fixed-occupation values. -/
-private def projectOccupations (D : LatticeData) (H K E : ℕ) (t : ℤ)
+def projectOccupations (D : LatticeData) (H K E : ℕ) (t : ℤ)
     (P Q R S : Oscillator D) (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) : ℂ :=
   ∑ i ∈ Finset.range (K - 1), ∑ j ∈ Finset.range (H - 1),
     let PL := (oscillatorLower D ^ j) P
