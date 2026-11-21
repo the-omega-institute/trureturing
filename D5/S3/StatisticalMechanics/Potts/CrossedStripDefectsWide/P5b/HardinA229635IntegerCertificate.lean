@@ -87,16 +87,38 @@ private theorem residual_of_zero_image {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ
       | succ k =>
         rw [pow_succ', ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, hstep, zero_dotProduct]
 
-private theorem residual_entries : ∀ s : State,
+private def residualEntry (s : State) : ℤ :=
+  power 30 s - (List.ofFn fun j : Fin 27 => coefficients j * power (lagIndex j) s).sum
+
+private theorem entries_0 : ∀ k : Fin 32,
+    let s : State := k.castAdd 95
+    residualEntry s = initialResidual s := by
+  decide +kernel
+
+private theorem entries_32 : ∀ k : Fin 32,
+    let s : State := (k.castAdd 63).natAdd 32
+    residualEntry s = initialResidual s := by
+  decide +kernel
+
+private theorem entries_64 : ∀ k : Fin 32,
+    let s : State := ((k.castAdd 31).natAdd 32).natAdd 32
+    residualEntry s = initialResidual s := by
+  decide +kernel
+
+private theorem entries_96 : ∀ k : Fin 31,
+    let s : State := ((k.natAdd 32).natAdd 32).natAdd 32
+    residualEntry s = initialResidual s := by
+  decide +kernel
+
+private theorem residual_entries (s : State) :
     (power 30 - ∑ j : Fin 27, coefficients j • power (lagIndex j)) s =
       initialResidual s := by
-  have checked : ∀ s : State,
-      power 30 s - (List.ofFn fun j : Fin 27 => coefficients j * power (lagIndex j) s).sum =
-        initialResidual s := by
-    decide +kernel
-  intro s
-  simpa only [Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, List.sum_ofFn]
-    using checked s
+  have checked : residualEntry s = initialResidual s :=
+    Fin.addCases (m := 32) (n := 95) entries_0
+      (Fin.addCases (m := 32) (n := 63) entries_32
+        (Fin.addCases (m := 32) (n := 31) entries_64 entries_96)) s
+  simpa only [residualEntry, Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    List.sum_ofFn] using checked
 
 private theorem initial_readout : dotProduct initialResidual terminal = 0 := by decide +kernel
 
