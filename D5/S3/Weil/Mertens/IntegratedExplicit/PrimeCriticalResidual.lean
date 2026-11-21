@@ -4,12 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The root-scale prime tail has a uniform negative margin after the bounding line and intermediate zero mass are accounted for. -/
+   digest: The root-scale prime tail has a uniform negative margin relative to its zero terms. -/
 
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualSignedGaussianEndpoint
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
+
+/-! The prime-power correction supplies a negative margin at the square-root scale. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +21,7 @@ noncomputable section
 open Filter Set
 open scoped Topology
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
-open D5.S3.Arith.Robin.OffLinePeak (ZeroCoefficientBudget)
+open D5.S3.Arith.Robin.OffLinePeak
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.ZeroSum (IsNontrivialZero)
 
@@ -83,11 +85,9 @@ private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < �
   classical
   let lower : Set ℕ := {k | (actualZero k).re ≤ 1 / 2}
   let intermediate : Set ℕ := {k | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}
-  let line : ℕ → ℂ := fun k => if (actualZero k).re = β then
-    actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - (β : ℂ))) else 0
   let scale := Real.exp ((β - 1 / 2) * t)
-  have hline : Summable line :=
-    (summable_norm_maximalTerm (z := actualZero) (Θ := β) actualCoeff_hasSum.summable.norm t).of_norm
+  have hline := (summable_norm_maximalTerm (z := actualZero) (Θ := β)
+    actualCoeff_hasSum.summable.norm t).of_norm
   have hroot := (summable_norm_rootTerm t).of_norm
   have hscaled : (Real.exp (-t / 2) : ℂ) * actualH t = ∑' k, rootTerm t k := by
     rw [actualH, ← tsum_mul_left]
@@ -97,20 +97,25 @@ private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < �
   have hsplit : (∑' k, rootTerm t k) =
       (scale : ℂ) * maximalSeries actualCoeff actualZero β t +
         (∑' k : lower, rootTerm t k) + (∑' k : intermediate, rootTerm t k) := by
-    change _ = (scale : ℂ) * (∑' k, line k) + _ + _
-    rw [← tsum_mul_left, tsum_subtype, tsum_subtype,
+    rw [maximalSeries, ← tsum_mul_left, tsum_subtype, tsum_subtype,
       ← (hline.mul_left _).tsum_add (hroot.indicator lower),
       ← ((hline.mul_left _).add (hroot.indicator lower)).tsum_add (hroot.indicator intermediate)]
     refine tsum_congr fun k => ?_
+    change rootTerm t k = (scale : ℂ) * (if (actualZero k).re = β then
+      actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - (β : ℂ))) else 0) +
+      lower.indicator (rootTerm t) k + intermediate.indicator (rootTerm t) k
     by_cases heq : (actualZero k).re = β
-    · have hn : ¬ (actualZero k).re ≤ 1 / 2 := by rw [heq]; exact not_le.mpr hβ
-      simp only [line, heq, ite_true, lower, intermediate, indicator_of_notMem,
-        mem_setOf_eq, hn, lt_self_iff_false, and_false, not_false_eq_true, add_zero, Pi.add_apply]
-      exact (scaled_shift_eq_rootTerm β t k).symm
+    · have hlo : k ∉ lower := fun hk => (not_le.mpr hβ) (heq ▸ hk)
+      have hmid : k ∉ intermediate := fun hk => (lt_irrefl β) (heq ▸ hk.2)
+      rw [indicator_of_notMem hlo, indicator_of_notMem hmid, add_zero, add_zero]
+      simpa only [ite_eq_left heq] using (scaled_shift_eq_rootTerm β t k).symm
     · by_cases hlo : (actualZero k).re ≤ 1 / 2
-      · simp [line, heq, lower, intermediate, hlo, not_lt.mpr hlo]
-      · have hmid : (actualZero k).re < β := lt_of_le_of_ne (hmax k) heq
-        simp [line, heq, lower, intermediate, hlo, lt_of_not_ge hlo, hmid]
+      · have hmid : k ∉ intermediate := fun hk => (not_lt.mpr hlo) hk.1
+        rw [indicator_of_mem (show k ∈ lower from hlo), indicator_of_notMem hmid]
+        simp only [ite_eq_right heq, mul_zero, zero_add, add_zero]
+      · have hmid : k ∈ intermediate := ⟨lt_of_not_ge hlo, lt_of_le_of_ne (hmax k) heq⟩
+        rw [indicator_of_notMem (show k ∉ lower from hlo), indicator_of_mem hmid]
+        simp only [ite_eq_right heq, mul_zero, zero_add]
   have hlow : -(∑' k : lower, rootTerm t k).re ≤ (101 / 100 : ℝ) := by
     refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
     calc
@@ -126,7 +131,10 @@ private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < �
   have hmid : -(∑' k : intermediate, rootTerm t k).re ≤
       ∑' k : intermediate, ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t) := by
     refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
-    simpa only [norm_rootTerm] using norm_tsum_le_tsum_norm ((summable_norm_rootTerm t).subtype intermediate)
+    calc
+      _ ≤ ∑' k : intermediate, ‖rootTerm t k‖ :=
+        norm_tsum_le_tsum_norm ((summable_norm_rootTerm t).subtype intermediate)
+      _ = _ := tsum_congr fun k => norm_rootTerm t k
   rw [hscaled, hsplit, Complex.add_re, Complex.add_re, Complex.re_ofReal_mul]
   change _ ≤ scale * _ + (∑' k : intermediate, _) + _
   linarith only [hlow, hmid]
@@ -134,7 +142,9 @@ private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < �
 private theorem complete_tail_root_bound {t : ℝ} (ht : Real.log 2 ≤ t) :
     Real.exp (t / 2) * Q (Real.exp t) ≤ -((Real.exp (-t / 2) : ℂ) * actualH t).re := by
   have htpos : 0 < t := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).trans_le ht
-  have hx : 2 ≤ Real.exp t := by simpa using Real.exp_le_exp.mpr ht
+  have hx : 2 ≤ Real.exp t := by
+    rw [← Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+    exact Real.exp_le_exp.mpr ht
   have hQ := (div_eq_iff (Real.exp_pos t).ne').mp (primitive_eq_negative_tail hx)
   have hQ' : Q (Real.exp t) * Real.exp t = -U (Real.exp t) := by linarith only [hQ]
   have hformula := congrArg Complex.re (actual_integrated_explicit_formula htpos)
@@ -166,10 +176,11 @@ theorem eventually_prime_tail_root_scale :
           (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
             ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2 := by
   refine ⟨fun β t => ?_, ?_⟩
-  · simpa only [norm_rootTerm] using (summable_norm_rootTerm t).subtype
-      {k : ℕ | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}
+  · exact ((summable_norm_rootTerm t).subtype
+      {k : ℕ | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}).congr
+      (fun k => norm_rootTerm t k.val)
   · have hpower := (prime_power_window_correction.1.comp Real.tendsto_exp_atTop).eventually
-      (gt_mem_nhds (show (7 / 4 : ℝ) < 2 by norm_num))
+      (lt_mem_nhds (show (7 / 4 : ℝ) < 2 by norm_num))
     filter_upwards [eventually_ge_atTop (Real.log 2), hpower] with t ht hgap β hβ hmax
     have hsqrt : Real.sqrt (Real.exp t) = Real.exp (t / 2) := by
       rw [Real.sqrt_eq_rpow, ← Real.exp_mul]
