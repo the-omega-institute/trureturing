@@ -18,6 +18,7 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Str
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
+import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCut
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripPowers
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
@@ -36,6 +37,8 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229457StripData
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix
 open DefectTransfer (defects literalCount lumped_count forward forward_shift)
 open HardinA233177Canonical (Canonical canonical_pattern_card)
 /-- Literal row-major canonical arrays, with columns swept only to count bonds. -/
@@ -74,19 +77,42 @@ theorem finite_certificate :
       D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid]
     omega
   · intro s
-    by_cases hs : s = 22
-    · subst s
-      have fibre : ∀ r : Row,
-          (bondDefects horizontal r r ≤ 1 ∧ cl r (1 - bondDefects horizontal r r) = 22) ↔
+    by_cases hproper : s.val < 10
+    · let i : Fin 10 := ⟨s.val, hproper⟩
+      have hs : s = i.castAdd 32 := rfl
+      rw [hs]
+      let t := HardinA229457StripCut.crossedProperSlot (i.castAdd 10)
+      have fibre (r : Row) :
+          (bondDefects horizontal r r ≤ 1 ∧ cl r (1 - bondDefects horizontal r r) = i.castAdd 32) ↔
           (bondDefects horizontal r r ≤ 1 ∧
-            D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl r
-              (1 - bondDefects horizontal r r) = 30) := by
+            HardinA229532StripData.cl r (1 - bondDefects horizontal r r) = t.castAdd 11) :=
+        and_congr_right fun _ =>
+          HardinA229457StripCut.proper_class_map r
+            ⟨1 - bondDefects horizontal r r, by omega⟩ (i.castAdd 10)
+      have weight (j : Fin 10) :
+          initial (j.castAdd 32) =
+            HardinA229532StripData.initial
+              ((HardinA229457StripCut.crossedProperSlot (j.castAdd 10)).castAdd 11) := by
         decide +kernel
-      simp_rw [fibre]
-      change _ = D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.initial 30
-      exact D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Strip.finite_certificate.2.2.2.2.1 30
-    · revert s
-      decide +kernel
+      simp_rw [fibre, weight i]
+      exact HardinA229532Strip.finite_certificate.2.2.2.2.1 (t.castAdd 11)
+    · let squareIndex : Fin 6 → Fin 42 := ![20, 22, 23, 27, 35, 38]
+      let crossedIndex : Fin 6 → Fin 31 := ![26, 30, 29, 25, 22, 21]
+      by_cases hcrossed : ∃ k, s = squareIndex k
+      · obtain ⟨k, rfl⟩ := hcrossed
+        have fibre (r : Row) :
+            (bondDefects horizontal r r ≤ 1 ∧ cl r (1 - bondDefects horizontal r r) = squareIndex k) ↔
+            (bondDefects horizontal r r ≤ 1 ∧
+              HardinA229532StripData.cl r (1 - bondDefects horizontal r r) = crossedIndex k) := by
+          generalize h0 : r 0 = c0
+          generalize h1 : r 1 = c1
+          fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
+        have weight : initial (squareIndex k) = HardinA229532StripData.initial (crossedIndex k) := by
+          fin_cases k <;> rfl
+        simp_rw [fibre, weight]
+        exact HardinA229532Strip.finite_certificate.2.2.2.2.1 (crossedIndex k)
+      · revert s
+        decide +kernel
 
 attribute [local irreducible] a
 

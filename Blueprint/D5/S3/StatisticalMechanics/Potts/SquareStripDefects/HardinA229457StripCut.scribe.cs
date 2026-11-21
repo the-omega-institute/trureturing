@@ -8,6 +8,15 @@ internal sealed class HardinA229457StripCutDocument : IScribeDocumentDefinition
     private const string Note = "D5/L/SpinModels/hardin2013a229457";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Square-lattice strip transfer.", H("Six-column square-lattice strip"), Blocks(
+            Describe.Lean(DescribeId.Create("crossed-proper-slot"), DeclarationHandle.Create(Prefix + "crossedProperSlot"),
+                H("Crossed proper slot"), StatementSource.FromAuthor(Disp(
+                    Typed(Call("HardinA229457StripCut.crossedProperSlot"), Arrow(Call("Fin", Num("20")), Call("Fin", Num("20")))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("In slots 0 through 9, the values are (9, 6, 3, 8, 4, 1, 7, 0, 2, 5), in order. In slots 10 through 19, add 10 to each of these values. Fin.append joins the two blocks, and proper_class_map relates each slot to its crossed classifier value."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("proper-class-map"), DeclarationHandle.Create(Prefix + "proper_class_map"),
+                H("Proper-class correspondence"), StatementSource.FromAuthor(Disp(ProperClassMap())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The two classifiers agree on membership in the corresponding proper-row slots at each of the two residual budgets. Fin.castAdd embeds a finite index preserving its value."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("class-cut"), DeclarationHandle.Create(Prefix + "class_cut"),
                 H("class cut"), StatementSource.FromAuthor(Disp(All("p", Arrow(Call("Fin", Num("6")), Call("Fin", Num("3"))), All("r", Arrow(Call("Fin", Num("6")), Call("Fin", Num("3"))), All("d", Call("Fin", Num("2")), All("s", Call("Fin", Num("20")), Imp(Or(And(Eq(Call("Fin.val", V("d")), Num("1")), Lt(Call("Fin.val", V("s")), Num("10"))), And(Eq(Call("Fin.val", V("d")), Num("0")), Leq(Num("10"), Call("Fin.val", V("s"))))), Iff(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("ProperTransfer.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229584StripData.horizontal"), V("r"), V("r"))), Call("Fin.val", V("d"))), Eq(Call("HardinA229457StripData.cl", V("r"), Sub(Call("Fin.val", V("d")), Parenthesized(Add(Call("DefectTransfer.bondDefects", Call("ProperTransfer.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229584StripData.horizontal"), V("r"), V("r")))))), Typed(Call("Fin.castAdd", Num("22"), V("s")), Call("Fin", Num("42"))))), And(Call("HardinThinGraphTransport.proper", V("r")), And(All("i", Call("Fin", Num("6")), Ne(App(V("p"), V("i")), App(V("r"), V("i")))), Eq(Call("HardinA233127SquareStrip.boundaryClass", Pair(Call("true"), Call("true")), V("r")), Typed(Call("Fin.mk", Add(Call("Nat.mod", Call("Fin.val", V("s")), Num("10")), Num("1"))), Call("Fin", Num("11")))))))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -20,6 +29,19 @@ internal sealed class HardinA229457StripCutDocument : IScribeDocumentDefinition
                 H("active counts"), StatementSource.FromAuthor(Disp(All("j", Call("Fin", Num("10")), All("p", Arrow(Call("Fin", Num("6")), Call("Fin", Num("3"))), All("d", Call("Fin", Num("2")), Imp(Call("HardinA229457StripData.Valid", V("p"), Call("Fin.val", V("d"))), Eq(SumOver("r", Arrow(Call("Fin", Num("6")), Call("Fin", Num("3"))), Typed(Conditional(And(Leq(Add(Call("DefectTransfer.bondDefects", Call("ProperTransfer.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229584StripData.horizontal"), V("r"), V("r"))), Call("Fin.val", V("d"))), Eq(Call("HardinA229457StripData.cl", V("r"), Sub(Call("Fin.val", V("d")), Parenthesized(Add(Call("DefectTransfer.bondDefects", Call("ProperTransfer.between"), V("p"), V("r")), Call("DefectTransfer.bondDefects", Call("HardinA229584StripData.horizontal"), V("r"), V("r")))))), Call("Fin.castAdd", Num("32"), V("j")))), Num("1"), Num("0")), Call("Int"))), Call("HardinA229457StripData.T", Call("HardinA229457StripData.cl", V("p"), Call("Fin.val", V("d"))), Call("Fin.castAdd", Num("32"), V("j")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The leading ten target classes use the original proper-colouring matrix. A zero residual budget cannot enter those classes."))), DescribeRole.Theorem))));
+    private static Formula ProperClassMap()
+    {
+        var r = V("r");
+        var d = Call("Fin.val", V("d"));
+        var s = V("s");
+        var squareSlot = Typed(Call("Fin.castAdd", Num("22"), s), Call("Fin", Num("42")));
+        var crossedSlot = Typed(Call("Fin.castAdd", Num("11"),
+            Call("HardinA229457StripCut.crossedProperSlot", s)), Call("Fin", Num("31")));
+        return All("r", Arrow(Call("Fin", Num("6")), Call("Fin", Num("3"))),
+            All("d", Call("Fin", Num("2")), All("s", Call("Fin", Num("20")),
+                Iff(Eq(Call("HardinA229457StripData.cl", r, d), squareSlot),
+                    Eq(Call("HardinA229532StripData.cl", r, d), crossedSlot)))));
+    }
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula V(string s) => new Formula.Symbol(FormulaIdentifier.Create(s));
     private static Formula Q(string s) => Seq(s.Split('.').SelectMany((x,i) => i == 0

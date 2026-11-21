@@ -8,6 +8,10 @@ internal sealed class HardinA229532StripCutDocument : IScribeDocumentDefinition
     private const string Note = "D5/L/SpinModels/hardin2013a229532";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact width-six HDA transfer.", H("Width-six HDA transfer"), Blocks(
+            Describe.Lean(DescribeId.Create("numeric-cut"), DeclarationHandle.Create(Prefix + "numeric_cut"),
+                H("Proper boundary class by transition cost"), StatementSource.FromAuthor(Disp(NumericCutFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Within the matching residual-budget block, reaching a proper class requires zero cost and the displayed diagonal-scanner boundary class. Nat.mod takes the natural remainder."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("class-cut"), DeclarationHandle.Create(Prefix + "class_cut"),
                 H("Structural proper-colouring cut"), StatementSource.FromAuthor(Disp(CutFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -32,6 +36,24 @@ internal sealed class HardinA229532StripCutDocument : IScribeDocumentDefinition
     private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
     private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula NumericCutFormula()
+    {
+        var r = V("r");
+        var c = Call("Fin.val", V("c"));
+        var d = Call("Fin.val", V("d"));
+        var s = V("s");
+        var sv = Call("Fin.val", s);
+        var block = Or(And(Eq(d, Num("1")), Lt(sv, Num("10"))),
+            And(Eq(d, Num("0")), Le(Num("10"), sv)));
+        var target = Typed(Call("Fin.castAdd", Num("11"), s), Fin(31));
+        var boundary = Typed(Call("Fin.mk", Add(Call("Nat.mod", sv, Num("10")), Num("1"))), Fin(11));
+        var saturated = Parenthesized(Seq(Call("true"), Comma, Sp, Call("true")));
+        var identity = Iff(
+            And(Le(c, d), Eq(Call("HardinA229532StripData.cl", r, Sub(d, c)), target)),
+            And(Eq(c, Num("0")), And(Call("HardinThinGraphTransport.proper", r),
+                Eq(Call("HardinA233172DiagonalStrip.boundaryClass", saturated, r), boundary))));
+        return All("r", RowType(), All("c", Fin(2), All("d", Fin(2), All("s", Fin(20), Imp(block, identity)))));
+    }
     private static Formula CutFormula()
     {
         var p = V("p"); var d = V("d"); var r = V("r"); var s = V("s");

@@ -10,6 +10,9 @@
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229457Strip.result)
 zero_cost: proof_shape=bind-only; consumers=class_cut
+crossedProperClass: proof_shape=bind-only; consumers=crossedProperSlot, numeric_cut
+crossedProperSlot: proof_shape=bind-only; consumers=proper_class_map, numeric_cut, HardinA229457Strip.finite_certificate
+proper_class_map: proof_shape=bind-only; consumers=numeric_cut, HardinA229457Strip.finite_certificate
 numeric_cut: proof_shape=bind-only; consumers=class_cut
 class_cut: proof_shape=bind-only; consumers=proper_counts
 proper_table: proof_shape=bind-only; consumers=proper_counts
@@ -18,6 +21,8 @@ active_counts: proof_shape=bind-only; consumers=HardinA229457StripClasses.transi
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripCut
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
@@ -37,6 +42,7 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229457StripData
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix
 private theorem zero_cost (p r : Row) :
     bondDefects ProperTransfer.between p r + bondDefects horizontal r r = 0 ↔
       HardinThinGraphTransport.proper r ∧ (∀ i : Fin 6, p i ≠ r i) := by
@@ -46,16 +52,65 @@ private theorem zero_cost (p r : Row) :
     Finset.mem_univ, forall_const, HardinThinGraphTransport.proper]
   tauto
 
+private def crossedProperClass : Fin 10 → Fin 10 := ![9, 6, 3, 8, 4, 1, 7, 0, 2, 5]
+
+/-- Apply the proper-class permutation separately in the two residual-budget blocks. -/
+def crossedProperSlot : Fin 20 → Fin 20 :=
+  Fin.append (fun i => (crossedProperClass i).castAdd 10)
+    (fun i => (crossedProperClass i).natAdd 10)
+
+theorem proper_class_map (r : Row) (d : Fin 2) (s : Fin 20) :
+    cl r d.val = s.castAdd 22 ↔
+      HardinA229532StripData.cl r d.val = (crossedProperSlot s).castAdd 11 := by
+  revert r
+  rw [Fin.forall_fin_succ_pi]
+  intro x
+  rw [Fin.forall_fin_succ_pi]
+  intro y
+  fin_cases x <;> fin_cases y <;> decide +kernel +revert
+
 private theorem numeric_cut : ∀ (r : Row) (c d : Fin 2) (s : Fin 20),
     ((d.val = 1 ∧ s.val < 10) ∨ (d.val = 0 ∧ 10 ≤ s.val)) →
     ((c.val ≤ d.val ∧ cl r (d.val - c.val) = s.castAdd 22) ↔
       c.val = 0 ∧ HardinThinGraphTransport.proper r ∧
         HardinA233127SquareStrip.boundaryClass (true, true) r =
           ⟨s.val % 10 + 1, by have := Nat.mod_lt s.val (by omega : 0 < 10); omega⟩) := by
-  intro r
-  generalize h0 : r 0 = c0
-  generalize h1 : r 1 = c1
-  fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
+  intro r c d s hs
+  have sameBlock : ∀ i : Fin 20, (crossedProperSlot i).val < 10 ↔ i.val < 10 := by
+    decide +kernel
+  have sameUpperBlock : 10 ≤ (crossedProperSlot s).val ↔ 10 ≤ s.val := by
+    simpa only [not_lt] using not_congr (sameBlock s)
+  have cut := HardinA229532StripCut.numeric_cut r c d (crossedProperSlot s)
+    (by simpa only [sameBlock, sameUpperBlock] using hs)
+  let residue : Fin 2 := ⟨d.val - c.val, lt_of_le_of_lt (Nat.sub_le ..) d.isLt⟩
+  have slot := proper_class_map r residue s
+  change cl r (d.val - c.val) = s.castAdd 22 ↔
+    HardinA229532StripData.cl r (d.val - c.val) = (crossedProperSlot s).castAdd 11 at slot
+  have squareBoundary : ∀ p : Row,
+      HardinA233127SquareStrip.boundaryClass (true, true) p = (ProperTransfer.cl p).succ := by
+    decide +kernel
+  have crossedBoundary : ∀ p : Row,
+      HardinA233172DiagonalStrip.boundaryClass (true, true) p =
+        (crossedProperClass (ProperTransfer.cl p)).succ := by
+    decide +kernel
+  have nextBoundary (i : Fin 20) :
+      (⟨(crossedProperSlot i).val % 10 + 1, by
+        have := Nat.mod_lt (crossedProperSlot i).val (by decide : 0 < 10)
+        omega⟩ : Fin 11) =
+        (crossedProperClass ⟨i.val % 10, Nat.mod_lt _ (by decide)⟩).succ := by
+    fin_cases i <;> decide +kernel
+  have squareIndex :
+      (⟨s.val % 10 + 1, by
+        have := Nat.mod_lt s.val (by decide : 0 < 10)
+        omega⟩ : Fin 11) = (⟨s.val % 10, Nat.mod_lt _ (by decide)⟩ : Fin 10).succ := by
+    apply Fin.ext
+    simp only [Fin.val_succ]
+  have injective : Function.Injective crossedProperClass := by
+    change ∀ i j : Fin 10, crossedProperClass i = crossedProperClass j → i = j
+    decide +kernel
+  rw [slot, squareBoundary, squareIndex]
+  rw [crossedBoundary, nextBoundary] at cut
+  simpa only [Fin.succ_inj, injective.eq_iff] using cut
 
 theorem class_cut (p r : Row) (d : Fin 2) (s : Fin 20)
     (hs : (d.val = 1 ∧ s.val < 10) ∨ (d.val = 0 ∧ 10 ≤ s.val)) :
