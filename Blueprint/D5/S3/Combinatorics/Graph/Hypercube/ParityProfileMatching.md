@@ -20,9 +20,35 @@ Each coordinate has M units of weight at bit one in each marginal. The total mis
 
 For attainment, distribute M units among the coordinates using the ceiling as a capacity and split the allocation into k batches of size 2 to the power n. Doubling the entries in each batch gives the even direction counts of a perfect matching by the Felzenbaum, Holzman and Kleitman criterion. The sum of the matching matrices realizes the bound.
 
+**Theorem 1.2 (A boundary vector dominates each feasible floor).**
+
+$$\forall n \in Nat,\; \forall k \in Nat,\; \forall v \in \operatorname{CountVectors}\left(n\right),\; \operatorname{FeasibleFloor}\left(n, k, v\right) \Rightarrow (\exists u \in \operatorname{CountVectors}\left(n\right),\; \operatorname{Boundary}\left(n, k, u\right) \land (\forall i \in \operatorname{Coordinates}\left(n\right),\; \operatorname{Value}\left(v, i\right) \le \operatorname{Value}\left(u, i\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.profile_floor_dominated` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+CountVectors(n) consists of natural-valued functions on Coordinates(n), and Value(v,i) is the value of v at coordinate i. FeasibleFloor(n,k,v) means one coupling in Couplings(n,k) has common-one counts at least v at every coordinate. Boundary(n,k,u) means that u(i) is at most M at every coordinate and the sum of M minus u(i) equals M. Allocate the M units of deficit below the coordinate capacities M minus v(i).
+
+**Theorem 1.3 (The maximal common-one count vectors).**
+
+$$\forall n \in Nat,\; \forall k \in Nat,\; \forall v \in \operatorname{CountVectors}\left(n\right),\; (\operatorname{FeasibleFloor}\left(n, k, v\right) \land (\forall u \in \operatorname{CountVectors}\left(n\right),\; (\operatorname{FeasibleFloor}\left(n, k, u\right) \land (\forall i \in \operatorname{Coordinates}\left(n\right),\; \operatorname{Value}\left(v, i\right) \le \operatorname{Value}\left(u, i\right))) \Rightarrow u = v)) \Leftrightarrow \operatorname{Boundary}\left(n, k, v\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.exact_profile_frontier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The prescribed-direction matchings realize every boundary vector. Strict coordinatewise improvement over such a vector would force the total deficit below M.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.best_profile_count`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.exact_profile_frontier`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.profile_floor_dominated`
 - Dependency: [D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity](../../../../S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Hypercube/DirectionMatching](DirectionMatching.md)
 - Dependency: [D5/S3/Combinatorics/Transportation/OrderedMarginAllocation](../../Transportation/OrderedMarginAllocation.md)
