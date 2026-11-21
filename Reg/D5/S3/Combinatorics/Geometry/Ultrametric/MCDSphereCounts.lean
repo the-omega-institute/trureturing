@@ -26,7 +26,7 @@ abbrev arena : Arena where
   signature := signature
   Law Q :=
     ∀ {X : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X] (c : ℕ → ℝ) (h : ℕ),
-      c 0 = 0 → (∀ i < h, c i < c (i + 1)) → center X = c '' Set.Iic h →
+      (∀ i < h, c i < c (i + 1)) → center X = c '' Set.Iic h →
       ((∀ i, 1 ≤ i → i ≤ h → ∀ x : X, Nat.card (sphere x (c i)) = 2 ^ (i - 1)) ↔
         Q.readout () () (Nat.card X) (2 ^ h))
 
@@ -39,7 +39,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     rw [hC]
     ext t
     simp
-  exact (hlaw (X := X) (fun _ => 0) 0 rfl (fun i hi => absurd hi (Nat.not_lt_zero i)) hcen).mp
+  exact (hlaw (X := X) (fun _ => 0) 0 (fun i hi => absurd hi (Nat.not_lt_zero i)) hcen).mp
     (fun i hi1 hi0 => absurd hi0 (by omega))
 
 private theorem dependence : ObservationalDependence signature actual := by
@@ -86,8 +86,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg",
-        "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn",
+        "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

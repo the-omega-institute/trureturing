@@ -21,7 +21,8 @@ internal sealed class MCDSphereCountsDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Let X be a finite ultrametric space whose center, the set of t ≥ 0 such "
                         + "that every point has a point at distance t, is exactly "
-                        + "{0 = c_0 < c_1 < ⋯ < c_h}. Then every point has 2^(i-1) points at "
+                        + "{c_0 < c_1 < ⋯ < c_h}, so that c_0 = 0 since 0 is always central. Then every "
+                        + "point has 2^(i-1) points at "
                         + "distance c_i for all 1 ≤ i ≤ h if and only if |X| = 2^h, that is, X is "
                         + "minimum-order with this center (MCD). The forward implication does not "
                         + "assume that every distance is central. This is Corollary 11 of H. Ma "

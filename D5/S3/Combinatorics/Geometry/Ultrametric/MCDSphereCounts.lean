@@ -14,7 +14,8 @@ escape_witness: mcd_spheres (on a minimum-order space the two open balls below t
   collapse to 2^h).
 proof_shape:
   sphereEquiv: definition; consumer: mcd_spheres.
-  zero_mem_center, lower, mono_le, mono_lt: bind-only helpers; consumers: lower, mcd_spheres.
+  zero_mem_center, lower, mono_le, mono_lt: bind-only helpers; consumers: lower, mcd_spheres,
+    result.
   mcd_spheres: content; consumer: result.
   orders_pow: content; consumer: result.
   result: content.
@@ -247,14 +248,23 @@ private theorem orders_pow (b : ℕ → ℕ) (hb : ∀ i, 1 ≤ i → b i = 2 ^ 
     rw [pow_succ]
     ring
 
-/-- For a finite ultrametric space whose center is exactly `{0 = c 0 < c 1 < ⋯ < c h}`, every
+/-- For a finite ultrametric space whose center is exactly `{c 0 < c 1 < ⋯ < c h}` (so that
+`c 0 = 0`, since `0` is always central), every
 point has `2^(i-1)` points at distance `c i` for all `1 ≤ i ≤ h` if and only if the space has
 `2^h` points, that is, is minimum-order with this center (MCD). Distances outside the center
 are not excluded by hypothesis. -/
 theorem result {X : Type} [MetricSpace X] [IsUltrametricDist X] [Finite X] (c : ℕ → ℝ) (h : ℕ)
-    (hc0 : c 0 = 0) (hc : ∀ i < h, c i < c (i + 1)) (hcenter : center X = c '' Set.Iic h) :
+    (hc : ∀ i < h, c i < c (i + 1)) (hcenter : center X = c '' Set.Iic h) :
     (∀ i, 1 ≤ i → i ≤ h → ∀ x : X, Nat.card (sphere x (c i)) = 2 ^ (i - 1)) ↔
       Nat.card X = 2 ^ h := by
+  have hc0 : c 0 = 0 := by
+    have h0 := zero_mem_center X
+    rw [hcenter] at h0
+    obtain ⟨j, hj, hj0⟩ := h0
+    have hc0mem : c 0 ∈ center X := by
+      rw [hcenter]
+      exact ⟨0, Set.mem_Iic.mpr (Nat.zero_le h), rfl⟩
+    exact le_antisymm (hj0 ▸ mono_le c h hc 0 j (Nat.zero_le j) (Set.mem_Iic.mp hj)) hc0mem.1
   constructor
   · intro hs
     have hne : Nonempty X := by
