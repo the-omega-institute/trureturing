@@ -8,7 +8,7 @@ import Mathlib.Algebra.Group.PUnit
 namespace Reg.D5.S3.Analytic.Probability.UniformFiberCoupling
 
 open Finset LeanInformationAudit
-open scoped Classical
+open scoped Classical D5.S3.Analytic.Probability.UniformFiberCoupling
 open _root_.D5.S3.Analytic.Probability.UniformFiberCoupling
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -43,8 +43,8 @@ def negative : Realization signature.{u, v} :=
 
 abbrev arena : Arena where
   signature := signature.{u, v}
-  Law R := ∀ {G : Type u} {H : Type v} [g : Group G] [h : Group H] [Fintype G]
-    (φ : G →* H) (t : H) (ρ : Fiber φ t → ℝ),
+  Law R := ∀ {G : Type u} {H : Type v} [g : Group G] [h : Group H]
+    (φ : G →* H) (t : H) [Finite (Fiber φ 1)] (ρ : Fiber φ t → ℝ),
     ((∀ d, 0 ≤ ρ d) ∧ ∑ d, ρ d = 1) ↔
       ∃ w : Fiber φ 1 → Fiber φ t → ℝ,
         (∀ x y, 0 ≤ w x y) ∧
@@ -113,7 +113,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.Probability.UniformFiberCoupling
     definition := none
-    coordinates := #[0, 1, 5, 6]
+    coordinates := #[0, 1, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "body", "arg", "arg", "arg", "arg"]

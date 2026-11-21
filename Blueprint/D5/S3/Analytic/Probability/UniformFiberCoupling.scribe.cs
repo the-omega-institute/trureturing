@@ -20,9 +20,11 @@ internal sealed class UniformFiberCouplingDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(F.Id("P"), Sp, Iff, Sp, F.Id("C")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Let G be a finite group, let H be a group, and take a " +
-                        "homomorphism from G to H and an element t of H. Write K for the " +
-                        "fiber over the identity and T for the fiber over t.")),
+                    Paragraph(Text("Let G and H be groups, and take a homomorphism from G to " +
+                        "H and an element t of H. Assume its kernel K is finite. Write T for " +
+                        "the fiber over t. If T is empty, neither assertion can hold. There " +
+                        "is no probability law on T, and the row at the identity cannot " +
+                        "have its prescribed positive mass.")),
                     Paragraph(Text("For a real weight function on T, P says that its weights " +
                         "are nonnegative and sum to one. C says that a nonnegative matrix on " +
                         "K times T has the uniform marginals on both fibers and recovers the " +
@@ -33,7 +35,8 @@ internal sealed class UniformFiberCouplingDocument : IScribeDocumentDefinition
                         "left translation permutes T. With the second entry fixed, varying " +
                         "the first entry gives a bijection from K to T. These two bijections " +
                         "give the marginals. The first bijection also gives one occurrence " +
-                        "of each prescribed displacement in every row. In reverse, summing " +
-                        "all displacement weights gives the total mass of the coupling."))),
+                        "of each prescribed displacement in every row. In reverse, the " +
+                        "displacement weights are sums of nonnegative entries. Their sum " +
+                        "gives the total mass of the coupling."))),
                 DescribeRole.Theorem))));
 }

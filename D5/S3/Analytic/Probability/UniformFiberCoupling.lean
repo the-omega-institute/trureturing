@@ -8,7 +8,7 @@
 
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.Group.Hom.Basic
-import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.FieldSimp
@@ -22,7 +22,7 @@ noncomputable section
 
 namespace D5.S3.Analytic.Probability.UniformFiberCoupling
 
-variable {G H : Type*} [Group G] [Group H] [Fintype G]
+variable {G H : Type*} [Group G] [Group H]
 
 abbrev Fiber (φ : G →* H) (t : H) := {x : G // φ x = t}
 
@@ -38,16 +38,26 @@ private def rightTranslate (φ : G →* H) {t : H} (y : Fiber φ t) : Fiber φ 1
   left_inv x := Subtype.ext (by simp)
   right_inv d := Subtype.ext (by simp [mul_assoc])
 
-private theorem card_left_pos (φ : G →* H) : (0 : ℝ) < Fintype.card (Fiber φ 1) := by
+scoped instance fiberFintype (φ : G →* H) (t : H) [Finite (Fiber φ 1)] :
+    Fintype (Fiber φ t) :=
+  if inhabited : Nonempty (Fiber φ t) then
+    letI := Fintype.ofFinite (Fiber φ 1)
+    Fintype.ofEquiv (Fiber φ 1) (rightTranslate φ (Classical.choice inhabited))
+  else
+    letI : IsEmpty (Fiber φ t) := ⟨fun x => inhabited ⟨x⟩⟩
+    Fintype.ofIsEmpty
+
+private theorem card_left_pos (φ : G →* H) [Finite (Fiber φ 1)] : (0 : ℝ) < Fintype.card (Fiber φ 1) := by
   let instanceValue : Nonempty (Fiber φ 1) := ⟨⟨1, φ.map_one⟩⟩
   exact_mod_cast Fintype.card_pos
 
-def displacement (φ : G →* H) (t : H)
+def displacement (φ : G →* H) (t : H) [Finite (Fiber φ 1)]
     (w : Fiber φ 1 → Fiber φ t → ℝ) (d : Fiber φ t) : ℝ :=
   ∑ x, ∑ y, if leftTranslate φ x y = d then w x y else 0
 
 /-- The law of the displacement between the two uniform fibers may be any law on the target fiber. -/
-theorem displacement_iff (φ : G →* H) (t : H) (ρ : Fiber φ t → ℝ) :
+theorem displacement_iff (φ : G →* H) (t : H) [Finite (Fiber φ 1)]
+    (ρ : Fiber φ t → ℝ) :
     ((∀ d, 0 ≤ ρ d) ∧ ∑ d, ρ d = 1) ↔
     ∃ w : Fiber φ 1 → Fiber φ t → ℝ,
       (∀ x y, 0 ≤ w x y) ∧
