@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
 
 /-! Each sparse certificate is factored by Horner's
-identity. The equality proofs use `grind only` for the large margins
+identity. The large equality proofs use `grind` with the linear solvers disabled
 and `ring` for the boundary cases. `positivity` proves the sign
 for unbounded nonnegative parameters.
 No JSON, generator exit status or sampled parameter bound is a Lean premise. -/
@@ -65,7 +65,7 @@ private theorem half_K4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ :
       (6896)) * T + (89582)) * Z + (((256) * T + (13872)) * T + (181814))) * Z + (((128) * T +
       (6976)) * T + (92232)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- E_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((2560) * Z + (5120)) * Z + (2560)) * Y + (((10240) * Z + (20480)) * Z + (10240))) *
@@ -103,7 +103,7 @@ private theorem half_K4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ :
       (((((3328) * T + (193840)) * T + (2794738)) * Z + (((6656) * T + (387672)) * T + (5589220))) *
       Z + (((3328) * T + (193832)) * T + (2794482)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_lower: 276 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((5120) * Z + (10240)) * Z + (5120))) *
@@ -158,7 +158,7 @@ private theorem half_K4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ :
       (128288)) * T + (2204807)) * Z + (((3712) * T + (256584)) * T + (4409861))) * Z + (((1856) * T
       + (128296)) * T + (2205054)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((4096) * Z + (8192)) * Z + (4096))) * Y +
@@ -195,7 +195,7 @@ private theorem half_K4_negative (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ :
       (((((1024) * T + (66184)) * T + (1069321)) * Z + (((2048) * T + (132360)) * T + (2138377))) *
       Z + (((1024) * T + (66176)) * T + (1069056)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
 
 set_option linter.unusedVariables false in
 private theorem half_K4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
@@ -244,7 +244,7 @@ private theorem half_K4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (8144)) * T + (129536)) * Z + (((256) * T + (15232)) * T + (225511))) * Z + (((128) * T +
       (7088)) * T + (95976)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- E_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((2560) * Z + (5120)) * Z + (2560)) * Y + (((10240) * Z + (20480)) * Z + (10240))) *
@@ -282,7 +282,7 @@ private theorem half_K4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((3328) * T + (192592)) * T + (2754784)) * Z + (((6656) * T + (386312)) * T + (5545523))) *
       Z + (((3328) * T + (193720)) * T + (2790738)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_lower: 276 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((5120) * Z + (10240)) * Z + (5120))) *
@@ -337,7 +337,7 @@ private theorem half_K4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (128888)) * T + (2224016)) * Z + (((3712) * T + (257296)) * T + (4432732))) * Z + (((1856) * T
       + (128408)) * T + (2208717)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((4096) * Z + (8192)) * Z + (4096))) * Y +
@@ -374,7 +374,7 @@ private theorem half_K4_p11 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((1024) * T + (65584)) * T + (1050112)) * Z + (((2048) * T + (131648)) * T + (2115506))) *
       Z + (((1024) * T + (66064)) * T + (1065393)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
 
 set_option linter.unusedVariables false in
 private theorem half_K4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
@@ -423,7 +423,7 @@ private theorem half_K4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (5584)) * T + (47580)) * Z + (((256) * T + (11392)) * T + (102579))) * Z + (((128) * T +
       (5808)) * T + (54999)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- E_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((2560) * Z + (5120)) * Z + (2560)) * Y + (((10240) * Z + (20480)) * Z + (10240))) *
@@ -461,7 +461,7 @@ private theorem half_K4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((3328) * T + (195152)) * T + (2836740)) * Z + (((6656) * T + (390152)) * T + (5668455))) *
       Z + (((3328) * T + (195000)) * T + (2831715)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_lower: 276 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((5120) * Z + (10240)) * Z + (5120))) *
@@ -516,7 +516,7 @@ private theorem half_K4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (127624)) * T + (2183550)) * Z + (((3712) * T + (255400)) * T + (4372035))) * Z + (((1856) * T
       + (127776)) * T + (2188485)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((4096) * Z + (8192)) * Z + (4096))) * Y +
@@ -553,7 +553,7 @@ private theorem half_K4_p1r (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((1024) * T + (66848)) * T + (1090578)) * Z + (((2048) * T + (133544)) * T + (2176203))) *
       Z + (((1024) * T + (66696)) * T + (1085625)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
 
 set_option linter.unusedVariables false in
 private theorem half_K4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
@@ -602,7 +602,7 @@ private theorem half_K4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (7920)) * T + (122368)) * Z + (((256) * T + (15792)) * T + (244551))) * Z + (((128) * T +
       (7872)) * T + (122184)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- E_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((2560) * Z + (5120)) * Z + (2560)) * Y + (((10240) * Z + (20480)) * Z + (10240))) *
@@ -640,7 +640,7 @@ private theorem half_K4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((3328) * T + (192816)) * T + (2761952)) * Z + (((6656) * T + (385752)) * T + (5526483))) *
       Z + (((3328) * T + (192936)) * T + (2764530)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_lower: 276 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((5120) * Z + (10240)) * Z + (5120))) *
@@ -695,7 +695,7 @@ private theorem half_K4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (128664)) * T + (2216848)) * Z + (((3712) * T + (257856)) * T + (4451205))) * Z + (((1856) * T
       + (129192)) * T + (2234358)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((4096) * Z + (8192)) * Z + (4096))) * Y +
@@ -732,7 +732,7 @@ private theorem half_K4_ph1 (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((1024) * T + (65808)) * T + (1057280)) * Z + (((2048) * T + (131088)) * T + (2097033))) *
       Z + (((1024) * T + (65280)) * T + (1039752)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
 
 set_option linter.unusedVariables false in
 private theorem half_K4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
@@ -781,7 +781,7 @@ private theorem half_K4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (5360)) * T + (40412)) * Z + (((256) * T + (11952)) * T + (121619))) * Z + (((128) * T +
       (6592)) * T + (81207)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- E_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((2560) * Z + (5120)) * Z + (2560)) * Y + (((10240) * Z + (20480)) * Z + (10240))) *
@@ -819,7 +819,7 @@ private theorem half_K4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((3328) * T + (195376)) * T + (2843908)) * Z + (((6656) * T + (389592)) * T + (5649415))) *
       Z + (((3328) * T + (194216)) * T + (2805507)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_lower: 276 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((5120) * Z + (10240)) * Z + (5120))) *
@@ -874,7 +874,7 @@ private theorem half_K4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (127400)) * T + (2176382)) * Z + (((3712) * T + (255960)) * T + (4390508))) * Z + (((1856) * T
       + (128560)) * T + (2214126)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
   · -- H_upper: 186 exact coefficients
     refine (show (0 : ℤ) ≤
       (((((((((((1024) * Z + (2048)) * Z + (1024)) * Y + (((4096) * Z + (8192)) * Z + (4096))) * Y +
@@ -911,7 +911,7 @@ private theorem half_K4_phr (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤
       (((((1024) * T + (67072)) * T + (1097746)) * Z + (((2048) * T + (132984)) * T + (2157730))) *
       Z + (((1024) * T + (65912)) * T + (1059984)))) by positivity).trans_eq ?_
     dsimp [half_margin,scaled_margin,grain_q]
-    grind only
+    grind -lia -linarith only
 
 set_option linter.unusedVariables false in
 private theorem half_K4_boundary (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
