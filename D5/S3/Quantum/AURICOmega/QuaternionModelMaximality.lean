@@ -376,7 +376,7 @@ theorem bijective_of_hasFeatureRank_five_of_kappa {M : Type*} (C : TernaryCompar
       nlinarith [mul_le_mul hba hba (norm_nonneg b) ha0]
     have := (pow_le_pow_iff_left₀ hσ0.le (by linarith) two_ne_zero).mp h4
     linarith
-  -- these sums form a one-point extension of the translated copy by a unit vector
+  -- these sums, divided by `√2`, form a one-point extension of the translated copy by a unit vector
   set v : EuclideanSpace ℝ (Fin 5) := (Real.sqrt 2)⁻¹ • (φ (j 1) + φ (j (-1))) with hvdef
   have hu2 : ‖φ (j 1) + φ (j (-1))‖ ^ 2 = 2 := by
     have h0 := kappa_add_kappa_neg 1 1
