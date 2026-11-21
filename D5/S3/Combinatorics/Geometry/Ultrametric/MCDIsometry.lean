@@ -43,7 +43,8 @@ namespace D5.S3.Combinatorics.Geometry.Ultrametric.MCDIsometry
 
 open D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 
-private theorem zero_mem_center (Y : Type) [MetricSpace Y] : (0 : ℝ) ∈ center Y :=
+/-- The center always contains `0`. -/
+theorem zero_mem_center (Y : Type) [MetricSpace Y] : (0 : ℝ) ∈ center Y :=
   ⟨le_rfl, fun p => ⟨p, dist_self p⟩⟩
 
 private theorem lower (Y : Type) [MetricSpace Y] [IsUltrametricDist Y] [Finite Y]
@@ -62,7 +63,7 @@ private theorem lower (Y : Type) [MetricSpace Y] [IsUltrametricDist Y] [Finite Y
 
 /-- In a finite space every distance is at most the largest central value, which is the
 diameter. -/
-private theorem le_max_center (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X]
+theorem le_max_center (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X]
     (A : Finset ℝ) (hA : center X = ↑A) (hne : A.Nonempty) (a b : X) :
     dist a b ≤ A.max' hne := by
   have := Fintype.ofFinite X
@@ -82,7 +83,7 @@ private theorem le_max_center (X : Type) [MetricSpace X] [IsUltrametricDist X] [
 
 /-- Splitting a minimum-order space at its diameter `m`: around two points at distance `m` the
 open `m`-balls are disjoint, cover the space, and are minimum-order with center `A ∖ {m}`. -/
-private theorem split (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X] (n : ℕ)
+theorem split (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X] (n : ℕ)
     (A : Finset ℝ) (hA : center X = ↑A) (hcard : A.card = n + 2)
     (hX : Nat.card X = 2 ^ (n + 1)) (p q : X)
     (hpq : dist q p = A.max' (Finset.card_pos.mp (by omega))) :
@@ -205,7 +206,8 @@ private theorem split (X : Type) [MetricSpace X] [IsUltrametricDist X] [Finite X
       exact Nat.card_congr (Equiv.subtypeEquivRight ((hsame r).2 hr'))
   exact ⟨hcardr, (hball r).2 hcardr.le⟩
 
-private theorem nonempty_of_card {X : Type} {k : ℕ} (h : Nat.card X = 2 ^ k) : Nonempty X :=
+/-- A space with `2^k` points is nonempty. -/
+theorem nonempty_of_card {X : Type} {k : ℕ} (h : Nat.card X = 2 ^ k) : Nonempty X :=
   (Nat.card_pos_iff.mp (by rw [h]; positivity)).1
 
 /-- An isometric embedding into a space with no more points is an isometry onto. -/
@@ -216,7 +218,7 @@ private theorem isoOfIsometry {X Y : Type} [MetricSpace X] [MetricSpace Y] [Fini
   exact ⟨⟨Equiv.ofBijective f (hiso.injective.bijective_of_nat_card_le hc), hiso⟩⟩
 
 /-- Two points on opposite sides of the diameter-`m` split are at distance `m`. -/
-private theorem cross {X : Type} [MetricSpace X] [IsUltrametricDist X] {m : ℝ} (p a b : X)
+theorem cross {X : Type} [MetricSpace X] [IsUltrametricDist X] {m : ℝ} (p a b : X)
     (hm : ∀ x y : X, dist x y ≤ m) (ha : dist p a < m) (hb : ¬ dist p b < m) : dist a b = m :=
   le_antisymm (hm a b) (not_lt.mp fun hlt =>
     hb (lt_of_le_of_lt (dist_triangle_max p a b) (max_lt ha hlt)))
