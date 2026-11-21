@@ -26,6 +26,8 @@ open Finset
 
 namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
 
+section MinimumSupport
+
 variable {I J : Type*} [Fintype J]
 
 private noncomputable def form (c x : J → ℝ) : ℝ := ∑ j, c j * x j
@@ -142,11 +144,11 @@ private theorem exists_independent_optimum (A : I → J → ℝ) (b : I → ℝ)
   exact (Nat.not_lt_of_ge (Nat.find_min' exists_size ⟨y, hyopt, rfl⟩))
     (hxsize ▸ hlt)
 
-end D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
+end MinimumSupport
 
 open Matrix Module
 
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.SquareMinor
+namespace SquareMinor
 
 variable {I S : Type*} [Fintype I] [Fintype S] [DecidableEq S]
 
@@ -176,7 +178,7 @@ end SquareMinor
 
 open Matrix
 
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.IntegerMinor
+namespace IntegerMinor
 
 variable {I : Type*} [Fintype I] [DecidableEq I]
 
@@ -206,7 +208,7 @@ end IntegerMinor
 
 open Finset Matrix
 
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
+section IntegerWeights
 
 variable {I J : Type*} [Fintype I] [Fintype J]
 
@@ -273,12 +275,12 @@ private theorem integer_optimum [DecidableEq J] (A : Matrix I J ℤ) (b : I → 
   · have hxzero : x j = 0 := le_antisymm (le_of_not_gt hx) (hx₀ j)
     simp [n, hxzero]
 
-end D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
-
 open Finset
+end IntegerWeights
+
 open D5.S3.ConceptDynamics.Attribution.TableOrbitWeights (orbitFrequency maximal_invariant_event_mass)
 
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
+section Events
 
 variable {G T I : Type*} [Group G] [Fintype T] [MulAction G T] [Fintype I]
 
@@ -420,12 +422,11 @@ private theorem uniform_invariant_events (event : I → Finset T) (mass : I → 
       _ = form c p := by rw [← toOrbit p target]; simp_rw [hp]
       _ ≤ form c x := better
 
-end D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
-
-
 open Finset
 
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration.SeedCopies
+end Events
+
+namespace SeedCopies
 
 universe u v
 
@@ -477,8 +478,6 @@ private theorem exact_card_count [Fintype S] (n : S → ℕ)
     by_cases hs : A s <;> simp [hs]
 
 end SeedCopies
-
-namespace D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
 
 open D5.S3.ConceptDynamics.Attribution
 open D5.S3.ConceptDynamics.Attribution.FixedKernelMass (seedFixedMass)
@@ -579,13 +578,19 @@ theorem uniform_kernel_optimum (H : Subgroup G) (P : X → Y → ℝ) (nn : ∀ 
     have fiber : (∑ v : X → Y, if v = t then n v else (0 : ℕ)) = n t := by
       simp
     have h := massCount (fun v => v = t)
-    change (∑ u : U, if proj u = t then (N : ℝ)⁻¹ else 0) = _
-    refine h.trans ?_
+    have hfiber : ((∑ v : X → Y, @ite ℝ (v = t) (Classical.propDecidable _) (n v : ℝ) ((0 : ℕ) : ℝ)) / N) = x (orbit t) := by
+      calc
+        _ = (n t : ℝ) / N := by
+          simpa only [Nat.cast_sum, Nat.cast_ite, Nat.cast_zero] using
+            congrArg (fun k : ℕ => (k : ℝ) / N) fiber
+        _ = x (orbit t) := by rw [weightN, mul_comm, mul_div_cancel_right₀ _ hNr]
     calc
-      _ = (n t : ℝ) / N := by
-        simpa only [Nat.cast_sum, Nat.cast_ite, Nat.cast_zero] using
-          congrArg (fun k : ℕ => (k : ℝ) / N) fiber
-      _ = x (orbit t) := by rw [weightN, mul_comm, mul_div_cancel_right₀ _ hNr]
+      _ = ∑ u : U, @ite ℝ (proj u = t) (Classical.propDecidable _) (N : ℝ)⁻¹ 0 := by
+        unfold FiniteTableCalibration.tableLaw
+        apply Finset.sum_congr rfl
+        intro u _
+        by_cases e : proj u = t <;> simp [f, e, N, A, cell]
+      _ = _ := h.trans hfiber
   · intro V _ _ a read ha ht hi hmarg hc
     let p := FiniteTableCalibration.tableLaw a read
     obtain ⟨hpn, hpt, hpi, hpm, _⟩ :=

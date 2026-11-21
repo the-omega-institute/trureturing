@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
-import Reg.Support.DependentFamily
+import Reg.D5.S3.ConceptDynamics.Attribution.FiniteKernelStabilizers
 
 /-! The uniform construction reads the prescribed marginals on the copies of the tables. -/
 
@@ -21,21 +21,7 @@ attribute [local instance 2000] FiniteTableCalibration.tableSMul FiniteTableCali
 local instance {G : Type*} {T : Type*} [Group G] [MulAction G T] [Fintype T] :
     Fintype (Orbit G T) := Fintype.ofFinite _
 
-abbrev signature : Signature where
-  Params := Type v × Type w
-  State types := types.1 → types.2 → ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ types := types.1 → types.2 → ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature.{v,w} :=
-  realize signature (fun _ _ p => p) (fun e => nomatch e)
-
-def rejected : Realization signature.{v,w} :=
-  realize signature (fun _ _ _ _ _ => 0) (fun e => nomatch e)
+open Reg.D5.S3.ConceptDynamics.Attribution.FiniteKernelStabilizers (signature actual rejected)
 
 open Classical in
 abbrev arena : Arena where
@@ -47,7 +33,7 @@ abbrev arena : Arena where
         (normalized : ∀ x, ∑ y, P x y = 1)
         (cov : ∀ (g : G) x y, P (g • x) (g • y) = P x y)
         (m : ℕ) (hm : 0 < m) (z : X × Y → ℤ)
-        (hz : ∀ x y, P x y = (z (x, y) : ℝ) / m) :
+        (hz : ∀ x y, P x y = (z (x, y) : ℝ) / m),
         let cell (xy : X × Y) := univ.filter (fun t : X → Y => t xy.1 = xy.2)
         let A : Matrix (Option (X × Y)) (Orbit G (X → Y)) ℤ :=
           fun i o => orbitCount (i.elim univ cell) o
@@ -56,7 +42,7 @@ abbrev arena : Arena where
             let N := m * (A.submatrix rows Subtype.val).det.natAbs
             0 < N ∧ ∃ (U : Type (max v w)) (_ : Fintype U) (_ : MulAction G U) (f : X → U → Y),
               Fintype.card U = N ∧
-              (∀ x y, (∑ t : U, if f x t = y then (N : ℝ)⁻¹ else 0) = R.readout () (X, Y) P x y) ∧
+              (∀ x y, (∑ t : U, if f x t = y then (N : ℝ)⁻¹ else 0) = R.readout () ⟨X, Y⟩ P x y) ∧
               (∀ (g : G) x t, f (g • x) (g • t) = g • f x t) ∧
               (∀ t : X → Y, FiniteTableCalibration.tableLaw (fun _ : U => (N : ℝ)⁻¹) f t =
                 x (orbit t)) ∧
@@ -100,7 +86,7 @@ def family : Registration arena.{u,v,w,s} (type_of% (@uniform_kernel_optimum)) w
       exact nomatch anchor
   dependence := by
     intro _
-    refine ⟨(PUnit.{v+1}, PUnit.{w+1}), fun _ _ => 0, fun _ _ => 1, ?_⟩
+    refine ⟨⟨PUnit.{v+1}, PUnit.{w+1}⟩, fun _ _ => 0, fun _ _ => 1, ?_⟩
     intro equal
     exact zero_ne_one (congrFun (congrFun equal PUnit.unit) PUnit.unit)
 
@@ -125,12 +111,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
     definition := none
-    coordinates := #[2]
+    coordinates := #[1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "value", "arg", "arg",
-        "arg"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body",
+        "arg", "body", "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+        "fn", "arg", "body", "body", "arg", "fn", "fn"]
+      stateBinder := 9
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

@@ -67,7 +67,7 @@ internal sealed class UniformTableCalibrationDocument : IScribeDocumentDefinitio
 
     private static Formula Call(string predicate, params Formula[] arguments)
     {
-        var parts = new List<Formula> { Operatorname(Grp(F.Id(predicate))), Open };
+        var parts = new List<Formula> { Operatorname, Grp(F.Id(predicate)), Open };
         for (int index = 0; index < arguments.Length; index++)
         {
             if (index != 0)
