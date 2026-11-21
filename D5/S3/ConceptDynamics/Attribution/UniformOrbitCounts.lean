@@ -7,6 +7,7 @@
    digest: Exact integer event counts of equivariant finite seed laws factor through orbit multiplicities. -/
 
 import D5.S3.ConceptDynamics.Attribution.UniformTableCalibration
+import D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees
 
 /-! Orbit counts and equivariant seed replication with prescribed integral multiplicities. -/
 
@@ -98,5 +99,60 @@ theorem count_seed_fibers_by_orbit {G : Type u} {T : Type v} {S : Type w}
           intro t ht
           rw [lifted, (mem_filter.mp ht).2]
         _ = _ := by rw [Finset.sum_const, nsmul_eq_mul, Nat.cast_id]
+
+open D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees (countedDegrees)
+
+/-- Rows count how many members of each orbit lie in the corresponding event. -/
+open Classical in
+noncomputable def orbitEventMatrix {G : Type u} {T : Type v} {I : Type w}
+    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+    (E : I → Finset T) : (Orbit G T → ℤ) →+ (I → ℤ) where
+  toFun n i := ∑ o, (orbitCount (E i) o : ℤ) * n o
+  map_zero' := by ext i; simp
+  map_add' n k := by ext i; simp [mul_add, sum_add_distrib]
+
+
+/-- A feasible integer degree realizes all event counts on one equivariant seed set,
+with subgroup fixedness reflected by the seed map. -/
+set_option maxHeartbeats 900000 in
+open Classical in
+theorem orbit_event_counts_match_fiber {G : Type u} {T : Type v} {I : Type w}
+    [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+    (E : I → Finset T) (w : I → ℤ) (k : ℕ) :
+    k ∈ countedDegrees (orbitEventMatrix (G := G) E) w ↔
+      ∃ (S : Type v) (_ : Fintype S) (_ : MulAction G S) (f : S → T),
+        (∀ (g : G) s, f (g • s) = g • f s) ∧
+        (∀ (H : Subgroup G) s, (∀ h : H, (h : G) • s = s) ↔
+          ∀ h : H, (h : G) • f s = f s) ∧
+        ∀ i, ((∑ s : S, if f s ∈ E i then (1 : ℕ) else 0) : ℤ) =
+          (k : ℤ) * w i := by
+  classical
+  constructor
+  · rintro ⟨n, hn, eq⟩
+    let m : Orbit G T → ℕ := fun o => (n o).toNat
+    obtain ⟨S, _, _, f, equiv, fixed, counts⟩ := realize_orbit_copy_counts m
+    refine ⟨S, inferInstance, inferInstance, f, equiv, fixed, fun i => ?_⟩
+    have countEq := congrArg (fun n : ℕ => (n : ℤ)) (counts (E i))
+    have equation := congrFun eq i
+    change (∑ o, (orbitCount (E i) o : ℤ) * n o) = (k : ℤ) * w i at equation
+    have cast_m (o : Orbit G T) : (m o : ℤ) = n o := Int.toNat_of_nonneg (hn o)
+    have equation' : ((∑ o, orbitCount (E i) o * m o : ℕ) : ℤ) = (k : ℤ) * w i := by
+      simp only [Nat.cast_sum, Nat.cast_mul, cast_m]
+      exact equation
+    simpa only [Nat.cast_sum, Nat.cast_ite, Nat.cast_one, Nat.cast_zero] using
+      countEq.trans equation'
+  · rintro ⟨S, _, _, f, equiv, _, cards⟩
+    obtain ⟨n, counts⟩ := count_seed_fibers_by_orbit f equiv
+    refine ⟨fun o => (n o : ℤ), fun _ => Int.natCast_nonneg _, ?_⟩
+    funext i
+    have countEq := congrArg (fun n : ℕ => (n : ℤ)) (counts (E i))
+    change (∑ o, (orbitCount (E i) o : ℤ) * (n o : ℤ)) = (k : ℤ) * w i
+    have useEq : (∑ o, (orbitCount (E i) o : ℤ) * (n o : ℤ)) =
+        ((∑ s : S, if f s ∈ E i then (1 : ℕ) else 0) : ℤ) := by
+      simpa only [Nat.cast_sum, Nat.cast_mul, Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
+        using countEq.symm
+    simpa only [Nat.cast_sum, Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
+      using useEq.trans (cards i)
+
 
 end D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts

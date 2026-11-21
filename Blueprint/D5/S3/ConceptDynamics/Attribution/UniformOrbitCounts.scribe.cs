@@ -41,6 +41,28 @@ internal sealed class UniformOrbitCountsDocument : IScribeDocumentDefinition
                         + "to the fiber over its translate. Hence the fiber size is constant on "
                         + "each orbit. Equivariance is used in this step. For a two-element orbit, "
                         + "a map from a singleton to just one element has unequal fiber sizes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("orbit-event-counts-match-fiber"),
+                DeclarationHandle.Create(Owner + ".orbit_event_counts_match_fiber"),
+                H("The integer fiber characterizes exact equivariant event counts"),
+                StatementSource.FromAuthor(Fiber()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let a group act on a finite table set T. Choose a finite indexed "
+                        + "family of events E(i) in T and an integer target vector w. The additive "
+                        + "map M has entry M(i, O) equal to the size of the intersection of E(i) "
+                        + "with orbit O. Fix a natural degree k.")),
+                    Paragraph(Text("The fiber at k w contains a nonnegative integer vector exactly "
+                        + "when there exist a finite seed set S with a group action and an "
+                        + "equivariant map f from S to T that realizes the displayed event counts. "
+                        + "For every subgroup H and seed s, H fixes s exactly when H fixes f(s).")),
+                    Paragraph(Text("A vector in the fiber gives the number of copies of each table "
+                        + "in its orbit, with the group action preserving the copy index. In the "
+                        + "other direction equivariance transports seed fibers along the orbit, "
+                        + "so the fiber cardinalities give a single nonnegative vector that "
+                        + "satisfies every event equation together. Degree zero allows an empty seed "
+                        + "set."))),
                 DescribeRole.Theorem))));
 
     private static Formula Count()
@@ -49,5 +71,19 @@ internal sealed class UniformOrbitCountsDocument : IScribeDocumentDefinition
         Formula o = F.Id("O");
         return Disp(Seq(F.Id("C"), Open, a, Close, Sp, Eq, Sp, new Formula.Subscript(Sum, o), Sp,
             F.Id("c"), Open, a, Comma, o, Close, Sp, F.Id("n"), Open, o, Close));
+    }
+
+    private static Formula Fiber()
+    {
+        Formula i = F.Id("i");
+        Formula k = F.Id("k");
+        Formula w = F.Id("w");
+        Formula n = F.Id("n");
+        return Disp(Seq(
+            Open, Exists, Sp, n, Sp, Geq, Sp, D(0), Comma, Sp,
+            Call("M", n), Sp, Eq, Sp, k, w, Close,
+            Sp, Iff, Sp, Open, Exists, Sp, F.Id("S"), Comma, Sp, F.Id("f"), Comma, Sp,
+            Forall, Sp, i, Comma, Sp,
+            Call("C", Call("E", i)), Sp, Eq, Sp, k, new Formula.Subscript(w, i), Close));
     }
 }
