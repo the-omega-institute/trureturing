@@ -43,14 +43,14 @@ def exaggeratedLine : Realization lineSignature :=
 def rootScaleArena : Arena where
   signature := lineSignature
   Law V :=
+    let lineRealPart := V.readout () ()
     (∀ β t : ℝ, Summable
       (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
         ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
     ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
       (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
       Real.exp (t / 2) * primeTail (Real.exp t) ≤
-        Real.exp ((β - 1 / 2) * t) *
-            (-V.readout () () (maximalSeries actualCoeff actualZero β t)) +
+        Real.exp ((β - 1 / 2) * t) * (-lineRealPart (maximalSeries actualCoeff actualZero β t)) +
           (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
             ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2
 

@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.IntegratedExplicit;
 
@@ -12,7 +13,7 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("eventually-prime-tail-root-scale"),
                 DeclarationHandle.Create(Module + "eventually_prime_tail_root_scale"),
-                H("A uniform margin at the square-root scale"), StatementSource.FromLean(),
+                H("A uniform margin at the square-root scale"), StatementSource.FromAuthor(RootBound()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
@@ -24,8 +25,9 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         "Let ρ(k) run over all actual zero occurrences, with their analytic "
                         + "multiplicities, and put c(k)=1/(ρ(k)(1−ρ(k))). At a real-part upper bound "
                         + "β>1/2, let Pβ(u) be the negative real part of the β-line series, "
-                        + "with term c(k) exp((ρ(k)−β)u) on that line. Let Gβ(u) be the sum of "
-                        + "|c(k)| exp((Re ρ(k)−1/2)u) over 1/2<Re ρ(k)<β. The coefficient norm "
+                        + "with term c(k) exp((ρ(k)−β)u) on that line. Write K(β) for the indices "
+                        + "with 1/2<Re ρ(k)<β, and G(β,u) for the sum of the corresponding "
+                        + "terms |c(k)| exp((Re ρ(k)−1/2)u). The coefficient norm "
                         + "sum converges. For fixed u each root-scale weight is at most "
                         + "exp(|u|/2), so the intermediate sum converges absolutely.")),
                     Paragraph(Text(
@@ -44,7 +46,8 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("prime-tail-mass-pos-or-intermediate-or-wider-zero-cluster"),
                 DeclarationHandle.Create(Module + "prime_tail_mass_pos_or_intermediate_or_wider_zero_cluster"),
-                H("A zero-mass window and the wider cluster value"), StatementSource.FromLean(),
+                H("A zero-mass window and the wider cluster value"),
+                StatementSource.FromAuthor(WindowAlternative()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
@@ -85,4 +88,95 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         + "b8864ecd5798c6030a03d756fab95f0b89a12754/src/Formalism/"
                         + "SharpRestriction/RamificationFrobenius/TotientGaloisClasses/Window.lean#L37-L44"))),
                 DescribeRole.Theorem))));
+
+    private static Formula Real => Field("R");
+    private static Formula Complex => Field("C");
+    private static Formula Half => new Formula.Fraction(F.D(1), F.D(2));
+    private static Formula Field(string name) => F.Seq(F.Mathbb, F.Grp(F.Id(name)));
+
+    private static Formula Bind(FormulaQuantifier quantifier, string name, Formula domain, Formula body) =>
+        new Formula.Bind(quantifier, FormulaIdentifier.Create(name), domain, body);
+
+    private static Formula All(string name, Formula domain, Formula body) =>
+        Bind(FormulaQuantifier.ForAll, name, domain, body);
+
+    private static Formula AllAbscissae(Formula body) =>
+        F.Seq(F.Forall, F.Sp, F.Beta, F.Sp, F.InMacro, F.Sp, Real, F.Comma, F.Sp, body);
+
+    private static Formula Some(string name, Formula domain, Formula body) =>
+        Bind(FormulaQuantifier.Exists, name, domain, body);
+
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Or(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Or, right);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Around(Formula body) => F.Seq(F.Open, body, F.Close);
+
+    private static Formula Lambda(Formula variable, Formula domain, Formula body) =>
+        Around(F.Seq(F.LambdaLower, F.Sp, variable, F.Colon, domain, F.Sp, F.Mapsto, F.Sp, body));
+
+    private static Formula UpperBound(Formula beta)
+    {
+        var z = F.Id("z");
+        return All("z", Complex, Implies(Call("NontrivialZero", z), Le(Call("Re", z), beta)));
+    }
+
+    private static Formula RootBound()
+    {
+        var beta = F.Beta;
+        var u = F.Id("u");
+        var k = F.Id("k");
+        var re = Call("Re", F.Seq(F.Rho, F.Open, k, F.Close));
+        var norm = F.Seq(F.Vert, Call("c", k), F.Vert);
+        var term = Multiply(norm, Call("exp", Multiply(Around(Subtract(re, Half)), u)));
+        var summability = AllAbscissae(All("u", Real,
+            Call("Summable", Lambda(k, Call("K", beta), term))));
+        var left = Multiply(Call("exp", new Formula.Fraction(u, F.D(2))),
+            Call("Qtheta", Call("exp", u)));
+        var line = Multiply(Call("exp", Multiply(Around(Subtract(beta, Half)), u)),
+            Call("P", beta, u));
+        var estimate = Le(left, Subtract(Add(line, Call("G", beta, u)), Half));
+        var allBounds = AllAbscissae(Implies(Lt(Half, beta),
+            Implies(Around(UpperBound(beta)), estimate)));
+        return F.Disp(And(Around(summability),
+            Call("Eventually", F.Id("atTop"), Lambda(u, Real, allBounds))));
+    }
+
+    private static Formula WindowAlternative()
+    {
+        var threshold = F.Id("T");
+        var beta = F.Beta;
+        var t = F.Id("t");
+        var width = F.Id("W");
+        var u = F.Id("u");
+        var wider = F.Id("V");
+        var endpoint = F.Id("B");
+        var left = Subtract(t, width);
+        var localMass = Lt(F.D(0), Call("N", Call("exp", left), Call("exp", t)));
+        var intermediate = Some("u", Call("Icc", left, t), Le(Half, Call("G", beta, u)));
+        var normalization = Call("exp",
+            Multiply(Call("log", endpoint), Around(Subtract(beta, Half))));
+        var mass = new Formula.Fraction(
+            Call("N", Call("exp", Subtract(Call("log", endpoint), wider)), endpoint),
+            normalization);
+        var cluster = Call("MapClusterPt", F.D(0), F.Id("atTop"),
+            Lambda(endpoint, Real, mass));
+        var alternative = Or(localMass,
+            Or(Around(intermediate), Around(Some("V", Real, And(Lt(width, wider), cluster)))));
+        var window = All("t", Real, All("W", Real,
+            Implies(Lt(F.D(0), width), Implies(Le(threshold, left), Around(alternative)))));
+        return F.Disp(Some("T", Real, AllAbscissae(Implies(Lt(Half, beta),
+            Implies(Around(UpperBound(beta)), window)))));
+    }
 }

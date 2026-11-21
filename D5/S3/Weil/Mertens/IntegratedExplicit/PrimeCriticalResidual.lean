@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The root-scale prime-tail margin extends widths with zero as a cluster value. -/
+   digest: A root-scale margin turns zero-mass windows into wider zero cluster values. -/
 
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualSignedGaussianEndpoint
