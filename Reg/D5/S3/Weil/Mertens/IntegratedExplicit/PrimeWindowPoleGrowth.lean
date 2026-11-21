@@ -184,10 +184,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Weil.Mertens.IntegratedExplicit.PrimeWindowPoleGrowth
     definition := none
-    coordinates := #[]
+    coordinates := #[2]
     readouts := #[{
       path := #["body","body","arg","body","body","fn","arg","body","arg"]
-      stateBinder := 0
+      stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
