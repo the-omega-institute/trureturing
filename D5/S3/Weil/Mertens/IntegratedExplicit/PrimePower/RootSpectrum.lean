@@ -29,7 +29,7 @@ private lemma weighted_zero_mode (r u : ℝ) (k : ℕ) :
   push_cast
   ring
 
-private lemma weighted_zero_tail {r : ℝ} (hr : 1 < r) (v : ℝ) :
+lemma weighted_zero_tail {r : ℝ} (hr : 1 < r) (v : ℝ) :
     let f := fun s : ℝ => (s ^ (-r : ℝ)) • zeroTail (Real.log s)
     IntegrableOn f (Ioi (Real.exp v)) ∧
       HasSum (fun k : ℕ => mode r v k / ((r : ℂ) - actualZero k))
@@ -97,10 +97,10 @@ private lemma weighted_zero_tail {r : ℝ} (hr : 1 < r) (v : ℝ) :
   rw [show (r : ℂ) - actualZero k = -(actualZero k - (r : ℂ)) by ring, div_neg]
   ring
 
-private def rootCoeff (r : ℝ) (k : ℕ) : ℂ :=
+def rootCoeff (r : ℝ) (k : ℕ) : ℂ :=
   -(r : ℂ) / (actualZero k * ((r : ℂ) - actualZero k))
 
-private def rootMode (r u : ℝ) (k : ℕ) : ℂ :=
+def rootMode (r u : ℝ) (k : ℕ) : ℂ :=
   rootCoeff r k * Complex.exp ((actualZero k / (r : ℂ) - 1 / 2) * (u : ℂ))
 
 def rootDensity (r u : ℝ) : ℝ := (∑' k, rootMode r u k).re
@@ -209,7 +209,7 @@ private lemma rootExponent_norm {r : ℝ} (hr : 1 < r) (k : ℕ) :
       exact div_le_div_of_nonneg_right (by linarith) hr0.le
     _ ≤ _ := Complex.abs_im_le_norm _
 
-private lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
+lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
     ‖rootCoeff r k‖ ≤ r * ‖actualCoeff k‖ := by
   have hgap : ‖1 - actualZero k‖ ≤ ‖(r : ℂ) - actualZero k‖ := by
     rw [Complex.norm_def, Complex.norm_def]
