@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization
 
+/-! A source-bound audit of normality degree as an observation on finite groups. -/
+
 namespace Reg.D5.S3.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization
 
 open LeanInformationAudit
@@ -63,7 +65,8 @@ noncomputable def familyRegistration : Registration arena claim where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      have same := @Subsingleton.elim Unit inferInstance j i
+      exact (hji same).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -93,11 +96,15 @@ noncomputable def registration :
     owner := `D5.S3.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization
     definition := some {
       owner := `D5.S3.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization
-      name := `D5.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization.claim }
+      name := `D5.FiniteGroups.NormalityDegree.TarnauceanuRationalRealization.claim
+      path := #[] }
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "fn", "arg"]
-      stateBinder := 3 }] }
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

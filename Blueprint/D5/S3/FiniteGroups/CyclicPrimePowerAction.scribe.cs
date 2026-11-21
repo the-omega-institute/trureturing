@@ -184,7 +184,7 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
         var x = F.Id("x");
         var powers = Call("zpowers", Call("generator", m));
         return Disp(All("m", Seq(Mathbb, Grp(F.Id("N"))),
-            All("x", Call("Cyclic", m), Seq(x, Sp, In, Sp, powers))));
+            All("x", Call("Cyclic", m), new Formula.Relation(x, FormulaRelationOperator.MemberOf, powers))));
     }
 
     private static Formula GeneratorOrder()

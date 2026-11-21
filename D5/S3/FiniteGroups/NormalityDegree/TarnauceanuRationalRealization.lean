@@ -305,12 +305,6 @@ private theorem powerAction_order {p B t : ℕ} (ht : t ≤ B)
     orderOf (powerAction t ht r hr (generator (2 ^ B))) = 2 ^ t := by
   rw [powerAction_generator, (multiplier p).symm.orderOf_eq, hr]
 
-private theorem action_image_card {p B t : ℕ} (φ : QuotientCyclic B →* MulAut (Cyclic p))
-    (hord : orderOf (φ (generator (2 ^ B))) = 2 ^ t) :
-    Nat.card φ.range = 2 ^ t := by
-  rw [MonoidHom.range_eq_map, ← (zpowers (generator (2 ^ B))).eq_top_iff'.mpr
-    (generator_generates _), MonoidHom.map_zpowers, Nat.card_zpowers, hord]
-
 private theorem level_quiet_iff {p B t : ℕ} (φ : QuotientCyclic B →* MulAut (Cyclic p))
     (hord : orderOf (φ (generator (2 ^ B))) = 2 ^ t) (ht : t ≤ B)
     (j : Fin (B + 1)) : φ (levelGenerator B j) = 1 ↔ j.val ≤ B - t := by
@@ -333,12 +327,6 @@ private def quietLevel {B t : ℕ} (i : Fin (B - t + 1)) : Fin (B + 1) :=
 
 private def activeLevel {B t : ℕ} (ht : t ≤ B) (i : Fin t) : Fin (B + 1) :=
   ⟨B - t + 1 + i.val, by have := i.isLt; omega⟩
-
-@[simp] private theorem quietLevel_val {B t : ℕ} (i : Fin (B - t + 1)) :
-    (quietLevel i).val = i.val := rfl
-
-@[simp] private theorem activeLevel_val {B t : ℕ} (ht : t ≤ B) (i : Fin t) :
-    (activeLevel ht i).val = B - t + 1 + i.val := rfl
 
 private def decode (p B t : ℕ) (ht : t ≤ B)
     (φ : QuotientCyclic B →* MulAut (Cyclic p)) :
@@ -377,20 +365,20 @@ private theorem decode_injective : Function.Injective (decode p B t ht φ) := by
     exact congrArg (fun i => Sum.inr (Sum.inl i)) (Fin.ext hij)
   · have hij := congrArg Fin.val hlevel
     have hi := i.isLt
-    simp at hij
+    simp [quietLevel, activeLevel] at hij
     omega
   · exact (htopbot (by simpa [decode] using hinter.symm)).elim
   · have hij := congrArg Fin.val hlevel
     have hj := j.isLt
-    simp at hij
+    simp [quietLevel, activeLevel] at hij
     omega
   · have hij := congrArg Fin.val hlevel
-    simp at hij
+    simp [quietLevel, activeLevel] at hij
     have hij' : i = j := Fin.ext (by omega)
     subst j
     have hactive : φ (levelGenerator B (activeLevel ht i)) ≠ 1 := by
       rw [ne_eq, level_quiet_iff φ hord ht]
-      simp only [activeLevel_val]
+      simp only [activeLevel]
       omega
     have hab := overTrivial_active_injective φ _ hactive he
     subst b
@@ -436,7 +424,7 @@ private theorem decode_active_not_normal (i : Fin t) (a : Cyclic p) :
   have : Fact (Nat.card (Cyclic p)).Prime := ⟨by rw [cyclic_card]; exact Fact.out⟩
   apply overTrivial_active_not_normal
   rw [ne_eq, level_quiet_iff φ hord ht]
-  simp only [activeLevel_val]
+  simp only [activeLevel]
   omega
 
 include hord in
