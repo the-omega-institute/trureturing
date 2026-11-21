@@ -7,7 +7,6 @@
    digest: Quantizing the retained modular frequencies controls the physical ordinary Petz error. -/
 
 import D5.S3.Quantum.Recovery.PetzSupportedLogisticBound
-import Mathlib.MeasureTheory.Function.L2Space
 
 /-!
 # Retained modular frequency quantization
@@ -53,6 +52,8 @@ open private integral_petzWeight_mul_cos integrable_petzWeight_mul_cos integrabl
 open private PetzLogisticEvaluation.mode star_mode_mul norm_mode from D5.S3.Analytic.PetzLogisticEvaluation
 
 namespace D5.S3.Quantum.Recovery.PetzModularFrequencyQuantization
+
+attribute [local instance 3000] Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 variable {a b : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
   [Fintype b] [DecidableEq b] [Nonempty b]
@@ -178,7 +179,10 @@ private theorem retainedFactor_pair (f g : D.L × D.K → ℂ) :
         (star (overlap D (l, k)) * overlap D (l, k)) * f (l, k) * star (g (l, k)) := by
       simp only [Complex.star_def]
       ring
-    _ = _ := by rw [hs]; ring
+    _ = _ := by
+      rw [hs]
+      simp only [Complex.star_def]
+      ring
 
 variable {e : Type u} [Fintype e] [DecidableEq e]
 
@@ -451,8 +455,11 @@ private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L ×
       (mul_eq_zero.mp hmass).resolve_left k.2.2.ne'
     exact norm_eq_zero.mp ((pow_eq_zero_iff (by decide : 2 ≠ 0)).mp hnorm)
   have hmode : mode D k = 0 := by
-    rw [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov, zero_smul]
-  simp [endpointCoefficient, hmode, lift]
+    rw [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov, zero_smul, Matrix.vecMulVec_zero]
+  have hLift : lift (e := e) (0 : Matrix b b ℂ) = 0 := by
+    ext i j
+    simp [lift]
+  rw [endpointCoefficient, hmode, smul_zero, hLift, Matrix.mul_zero, Matrix.zero_mul]
 
 private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
     (t : ℝ) (j : D.J) (c : D.I ⊕ (b × e)) :
@@ -483,7 +490,11 @@ private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → �
         rw [hLift, rowFactor_phase, completionColumns_phase]
         simp only [H, L, C, R, Matrix.mul_assoc]
       _ = _ := by
-        simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul] <;> rfl
+        have hSum : (H * (∑ k, f k • lift (Z k)) : Matrix D.J (b × e) ℂ) * C =
+            ∑ k, f k • endpointCoefficient D W k := by
+          simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul]
+          rfl
+        rw [hSum]
   rw [hExpanded]
   change (((diagonal _ * (∑ k, f k • endpointCoefficient D W k) :
     Matrix D.J (D.I ⊕ (b × e)) ℂ) * (diagonal _ : Matrix (D.I ⊕ (b × e)) _ ℂ)) :
@@ -692,7 +703,7 @@ private theorem trace_bound (M : SupportedRelativeModularModel Φ ρ σ)
     _ ≤ 4 * (((centres.card : ℝ) + 1) * ∫ t, petzWeight t * ‖A - C t‖ ^ 2) :=
       mul_le_mul_of_nonneg_left hEval (by norm_num)
     _ ≤ _ := by
-      rw [mul_assoc]
+      rw [← mul_assoc]
       exact mul_le_mul_of_nonneg_left hEnergy (by positivity)
 
 /-- Changing the retained frequencies to at most the given number of centres
