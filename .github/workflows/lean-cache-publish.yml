@@ -146,7 +146,7 @@ jobs:
     permissions:
       contents: write
       actions: write
-    runs-on: runner-for-trureturing-cache-release-publish
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
       group: lean-cache-producer
@@ -268,7 +268,7 @@ jobs:
     permissions:
       contents: write
       actions: write
-    runs-on: runner-for-trureturing-cache-release-publish
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     concurrency:
       group: lean-cache-producer
