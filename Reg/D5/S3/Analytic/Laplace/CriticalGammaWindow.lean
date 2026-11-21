@@ -91,4 +91,90 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+namespace Adjustable
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ h σ => σ*(h*log h-h+1)-2) (fun e => nomatch e)
+
+def zeroDecay : Realization signature :=
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law V := ∀ {h b : ℝ}, 1 < h → h < b →
+    let L := V.readout () () h
+    let R := fun σ : ℝ => σ*(b-h-h*log (b/h))-2*b
+    (∀ T : ℝ, ∀ᶠ σ : ℝ in Filter.atTop, 2 < σ*(1-h/b) ∧ T < L σ ∧ T < R σ) ∧
+    ∀ {σ : ℝ}, 0 < σ → 2 < σ*(1-h/b) → ∀ {a : ℝ}, 0 < a → ∀ {g : ℝ → ℝ}, Measurable g →
+      ∀ {M : ℝ}, (∀ u, 0 ≤ u → |g u| ≤ M * exp (2*u)) →
+      let k := ⌊σ*h*a⌋₊
+      let f := fun u : ℝ => |g u| * (u ^ k * exp (-(σ*u)) / k.factorial)
+      let S := Ioi (0:ℝ) \ Icc a (b*a)
+      IntegrableOn f S ∧ (∫ u in S, f u) ≤ M * σ⁻¹ ^ k *
+        (exp (-L σ*a) / σ + b/(h*σ)*exp (-R σ*a))
+
+private theorem zero_fails : ¬ arena.Law zeroDecay := by
+  intro law
+  have ev := (law (h := 2) (b := 3) (by norm_num) (by norm_num)).1 0
+  rcases ev.exists with ⟨σ, _, bad, _⟩
+  exact lt_irrefl (0 : ℝ) bad
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro _
+  refine ⟨(), exp 1, exp 2, ?_⟩
+  intro heq
+  have he := congrFun heq 1
+  change 1*(exp 1*log (exp 1)-exp 1+1)-2 = 1*(exp 2*log (exp 2)-exp 2+1)-2 at he
+  simp only [log_exp] at he
+  linarith [exp_pos (2 : ℝ)]
+
+def family : Registration arena (type_of% @adjustable_window_off_mass) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@adjustable_window_off_mass, zeroDecay, zero_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual zeroDecay zero_fails
+  dependence := actual_dependence
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@adjustable_window_off_mass) (Realization signature) Unit Unit where
+  unitName := .str
+    `D5.S3.Analytic.Laplace.CriticalGammaWindow.adjustable_window_off_mass
+    "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow.Adjustable "family"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ h σ => σ*(h*log h-h+1)-2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.CriticalGammaWindow
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Adjustable
+
 end Reg.D5.S3.Analytic.Laplace.CriticalGammaWindow

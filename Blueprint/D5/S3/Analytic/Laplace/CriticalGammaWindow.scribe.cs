@@ -7,7 +7,7 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Concentration of normalized Laplace moments outside a critical window",
-        H("Concentration at a fixed multiplicative width"),
+        H("Normalized moments on a multiplicative window"),
         Blocks(Describe.Lean(
             DescribeId.Create("gamma-window"),
             DeclarationHandle.Create("D5/S3/Analytic/Laplace/CriticalGammaWindow.critical_window_off_mass"),
@@ -21,7 +21,24 @@ internal sealed class CriticalGammaWindowDocument : IScribeDocumentDefinition
                 Paragraph(Text("The inequalities 640a−1 ≤ k ≤ 640a and the elementary logarithmic "
                     + "bounds absorb the two multipliers. The left and right contributions are at "
                     + "most M times 512 to the power −k divided by 542 and 478 respectively."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("adjustable-gamma-window"),
+                DeclarationHandle.Create("D5/S3/Analytic/Laplace/CriticalGammaWindow.adjustable_window_off_mass"),
+                H("Both tails at an adjustable order and width"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Fix 1 < h < b. The left decay rate is σ(h log h − h + 1) − 2. "
+                        + "The right decay rate is σ(b − h − h log(b/h)) − 2b. Strictness in the "
+                        + "logarithmic inequality log x < x − 1 gives positive slopes for both rates. "
+                        + "Every prescribed lower bound therefore holds for both at all sufficiently "
+                        + "large σ. The choice of σ may depend on how close h is to b.")),
+                    Paragraph(Text("For a positive cutoff a choose k = floor(σha). On the left tail, "
+                        + "tilt to hσ and use σha < k+1. On the right tail, tilt to hσ/b and use "
+                        + "k ≤ σha. Extending the tilted densities to the positive axis gives the "
+                        + "Gamma integral at each rate. After factoring out M times σ to the power "
+                        + "−k, the two exponentials carry "
+                        + "prefactors 1/σ and b/(hσ). The estimate applies even when k is zero."))),
+                DescribeRole.Theorem))));
 
     private static Formula Claim()
     {
