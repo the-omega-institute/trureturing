@@ -275,7 +275,8 @@ theorem product_bound {p : ℕ} (hp : p = 5 ∨ p = 6 ∨ p = 7)
   rw [← hd, ← hpow, ← map_mul f, ← map_pow f, trace_conjugation] at h
   exact h.trans_eq (mean_map p f.toAlgEquiv (trace_conjugation (star U)) A B)
 
-private theorem trace_exp_le_cube (H K : Matrix n n ℂ) (hH : H.IsHermitian)
+/-- The exact finite-dimensional dyadic trace comparison with three factors. -/
+theorem trace_exp_le_cube (H K : Matrix n n ℂ) (hH : H.IsHermitian)
     (hK : K.IsHermitian) :
     trace (exp ((3 : ℝ) • H + (3 : ℝ) • K)) ≤ trace ((exp H * exp K) ^ 3) := by
   rcases isEmpty_or_nonempty n with hempty | hne
