@@ -15,7 +15,7 @@ internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefin
         Blocks(
             Node("preserves-iff-exists-mul-mul", "preserves_iff_exists_mul_mul",
                 "Transfer- and reading-preserving maps differ by a left-right translation",
-                StatementSource.FromAuthor(RigidityFormula()), AssessedProvenance.FromRepo(), DescribeRole.Theorem,
+                StatementSource.FromAuthor(RigidityFormula()), AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
                 "Let C be a ternary comparison structure on M and u a map from M to the unit quaternions with u(tri(C, x, y, z)) = u(x) * u(y)^-1 * u(z) and kappa(C, x, y) = kappa(quaternionModel, u(x), u(y)), where the reading of the model is kappa(quaternionModel, p, q) = (1 + <p, q>) / 2 for the real inner product <p, q> of quaternions. "
                     + "The map u is injective, because a reading equal to one means equality both in C and in the unit quaternions, but it need not be onto, and no further hypothesis is placed on C. "
                     + "A second map v from M to the unit quaternions satisfies the same two identities if and only if there are unit quaternions p and q with v(x) = p * u(x) * q for every x. "
@@ -34,7 +34,7 @@ internal sealed class QuaternionModelAutomorphismDocument : IScribeDocumentDefin
                     + "The constant map with value 1 preserves the transfer but not the reading, since kappa(quaternionModel, 1, -1) = 0. "
                     + "By the theorem neither map has the form x -> p * x * q. "
                     + "With the same choice of M, C and u, the theorem says that the self-maps of the unit quaternions preserving the transfer and the reading of the model are exactly the maps x -> p * x * q. "
-                    + "For a noncommutative, chain-connected structure of feature rank five whose reading touches zero and is complete, any two bijections onto the unit quaternions that carry the transfer and the reading therefore differ by such a map; if both send a point o to 1, then p * q = 1, and they differ by the conjugation x -> p * x * p^-1. This consequence, the theorem applied with p * q = 1, is not among the formal statements of the module. "
+                    + "Therefore, for any ternary comparison structure, any two bijections onto the unit quaternions that carry the transfer and the reading differ by such a map; the conditions that the structure be noncommutative, chain-connected and of feature rank five, with a reading that touches zero and is complete, only guarantee that such bijections exist. If both send a point o to 1, then p * q = 1, and they differ by the conjugation x -> p * x * p^-1. This consequence, the theorem applied with p * q = 1, is not among the formal statements of the module. "
                     + "Every rotation of four-dimensional Euclidean space has the form x -> p * x * q with unit quaternions p and q, a classical description going back to Cayley; the theorem characterizes these maps on the unit sphere through the transfer and the reading alone, without assuming continuity or bijectivity."),
             Node("mul-mul-eq-mul-mul-iff", "mul_mul_eq_mul_mul_iff",
                 "Two left-right translations agree exactly up to a common sign",

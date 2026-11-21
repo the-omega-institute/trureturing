@@ -23,8 +23,8 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
                 "The Hopf map sends a unit quaternion x to hopf x = x * i * star x. "
                     + "The statement is that its range is exactly the set of quaternions n with real part re(n) = 0 and norm one. "
                     + "The image lies in this set because the norm is multiplicative and conjugation preserves the real part, which is zero for i. "
-                    + "Conversely, let n be imaginary of norm one. If n is not -i, put q = 1 - n * i; a computation in components gives q * i * star q = |q|^2 n with |q|^2 = 2 (1 + n_i), where n_i is the i component of n, so this number is positive and the normalization q / |q| is a unit quaternion with Hopf image n. If n = -i, the unit quaternion j has Hopf image j * i * star j = -i. "
-                    + "That the quadratic map of the three-sphere onto the two-sphere is surjective goes back to Hopf; the quaternion form of the map and the explicit preimages are derived here."),
+                    + "Conversely, let n be imaginary of norm one. Then n and i are unit quaternions with the same real part zero, and two unit quaternions with equal real parts are conjugate by a unit quaternion: there is a unit quaternion c with c * i = n * c. Multiplying on the right by star c, which is the inverse of c, gives c * i * star c = n, so n is the Hopf image of c. "
+                    + "That the quadratic map of the three-sphere onto the two-sphere is surjective goes back to Hopf; the quaternion form of the map is derived here."),
             Node("homeomorph", "exists_homeomorph_quotient_phaseCircle", "The quotient by the phase circle is the two-sphere",
                 StatementSource.FromAuthor(HomeomorphFormula()), AssessedProvenance.FromRepo(Hopf), DescribeRole.Theorem,
                 "In the display, the quotient is the space of cosets x * phaseCircle with the quotient topology, mk(x) is the class of x, Homeomorph(A, B) is the type of homeomorphisms from A onto B, and the sphere on the right carries the subspace topology of the unit imaginary quaternions; the value e(mk(x)) is read as a quaternion. "
@@ -32,7 +32,7 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
                     + "Two unit quaternions have the same Hopf image exactly when they differ by a right factor in the phase circle: equal Hopf images give ray kernel one, by the expression of the ray kernel through the inner product of the Hopf images, and the ray kernel equals one exactly on the right phase cosets; conversely, a right phase factor gives ray kernel one, and two unit vectors with inner product one coincide. "
                     + "Hence the Hopf map descends to a continuous injection on the quotient, which is onto by the range theorem. The unit quaternions form the compact three-sphere and the target is Hausdorff, so this continuous bijection from a compact space is a homeomorphism. "
                     + "The fibres of the Hopf map are the great circles of Hopf's fibration; the description as right cosets of the phase circle and the homeomorphism statement are derived here."),
-            Node("fibre-extremum", "rayKernel_isGreatest_and_integral", "Maximum and mean of the reading over a fibre",
+            Node("fibre-extremum", "rayKernel_isGreatest_and_integral", "Maximum and integral of the reading over a fibre",
                 StatementSource.FromAuthor(ExtremumFormula()), AssessedProvenance.FromRepo(), DescribeRole.Theorem,
                 "In the display, kappa and tri are the reading and the transfer of the quaternion comparison model, with kappa(x, y) = (1 + <x, y>) / 2 and tri(p, y, p) = p * y^-1 * p, IsGreatest(S, m) means that m belongs to S and bounds S from above, mk(a, b, c, d) is the quaternion a + b i + c j + d k, and the integration variable t runs over the interval from 0 to 2 pi. "
                     + "For all unit quaternions x and y the three conjuncts state: over the right phase circle of x, the round-trip reading kappa(y, (x c) y^-1 (x c)) has largest value rayKernel(x, y); the squared shifted reading (2 kappa(x c, y) - 1)^2 has the same largest value; and the integral over a full turn of the squared inner product of x (cos t + sin t i) with y equals pi times rayKernel(x, y). "
@@ -40,7 +40,7 @@ internal sealed class QuaternionHopfFibrationDocument : IScribeDocumentDefinitio
                     + "Over the circle a^2 + b^2 = 1 the square (a A - b B)^2 is at most A^2 + B^2 by the Cauchy-Schwarz inequality, with equality at a = A / r, b = -B / r for r the square root of A^2 + B^2, and at c = 1 when A = B = 0. "
                     + "For a unit quaternion p the round-trip identity kappa(y, p y^-1 p) = (2 kappa(p, y) - 1)^2 holds, because the real part of y^-1 p y^-1 p equals 2 <p, y>^2 - 1 for unit p and y; so the first set equals the second. "
                     + "Finally the squared inner product along the circle is A^2 cos^2 t + B^2 sin^2 t - 2 A B sin t cos t, whose integral over a full turn is pi (A^2 + B^2). "
-                    + "Thus the ray kernel is both the fibre maximum of the round-trip reading and the mean of the squared inner product over the fibre, up to the factor pi; the module states no further property of the fibration."))));
+                    + "Thus the ray kernel is both the fibre maximum of the round-trip reading and pi^-1 times the integral of the squared inner product over the fibre, that is twice its mean over a full turn."))));
 
     private static DocumentBlock Node(
         string id, string selector, string title, StatementSource statement,

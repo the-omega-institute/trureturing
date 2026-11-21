@@ -128,8 +128,8 @@ private lemma exists_unitary_smul (r : ℍ[ℝ]) (hr : r ≠ 0) :
 
 /-- A unit quaternion `w` is moved by conjugation with a unit quaternion of the plane of `1` and
 `i` to `re w + imI w * i + √(imJ w ^ 2 + imK w ^ 2) j`. For `w = t + s i + b j + d k` and
-`ρ = √(b ^ 2 + d ^ 2)` the quaternion `ρ + b - d i` works unless `b = -ρ` and `d = 0`, in which
-case `i` works. -/
+`ρ = √(b ^ 2 + d ^ 2)` the normalization of `ρ + b - d i` works unless `b = -ρ` and `d = 0`, in
+which case `i` works. -/
 private lemma exists_plane_conj (w : unitary ℍ[ℝ]) :
     ∃ c : unitary ℍ[ℝ], (c : ℍ[ℝ]).imJ = 0 ∧ (c : ℍ[ℝ]).imK = 0 ∧
       ((c * w * c⁻¹ : unitary ℍ[ℝ]) : ℍ[ℝ]) =

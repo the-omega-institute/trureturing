@@ -31,8 +31,9 @@ combination of old ones, and the Cauchy-Schwarz inequality for its readings give
 the minimum of `⟪b, x⟫` on unit quaternions being `-‖b‖`.
 
 A reading one, for `d = 1`, and a reading zero, for nonnegative readings of feature rank five, are
-equality cases of the Cauchy-Schwarz inequality: they force `a = ‖b‖ = 1 / √2` and `b` to be a
-multiple of a unit quaternion, and the readings are then those of that unit quaternion. -/
+equality cases of the Cauchy-Schwarz inequality: they force `a = ‖b‖ = 1 / √2` and `b = a • x₀`,
+where `x₀` is the point at which the value one is reached, or the negative of the point at which
+the value zero is reached, and the readings are then those of `x₀`. -/
 
 open scoped InnerProductSpace Quaternion
 

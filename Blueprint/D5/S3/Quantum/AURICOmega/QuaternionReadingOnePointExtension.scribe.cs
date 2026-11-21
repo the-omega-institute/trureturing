@@ -10,14 +10,14 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
     private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/HilbertOperators/aronszajn1950theory");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Adding one point with self-reading d to the unit quaternions keeps the Gram forms of the reading kappa x y = (1 + <x, y>) / 2 nonnegative exactly when the new readings are (a + <b, x>) / sqrt 2 with a^2 + |b|^2 <= d, and it suffices to test six points; feature rank five forces a^2 + |b|^2 = 1; and the extensions that reach the value one, or, when nonnegative of feature rank five, the value zero, are exactly the readings of points already present.",
+        "Adding one point with self-reading d to the unit quaternions keeps the Gram forms of the reading kappa x y = (1 + <x, y>) / 2 nonnegative exactly when the new readings are (a + <b, x>) / sqrt 2 with a^2 + |b|^2 <= d, and it suffices to test six points; feature rank five forces a^2 + |b|^2 = 1; and the extensions with self-reading one that reach the value one, or, when nonnegative of feature rank five, the value zero, are exactly the readings of points already present.",
         H("One-point extensions of the unit-quaternion reading"),
         Blocks(
             Node("feature-rank", "HasOnePointFeatureRank", "One-point extensions of feature rank r",
                 StatementSource.FromAuthor(DefinitionFormula()), AssessedProvenance.FromRepo(),
                 "A function f on the unit quaternions is read as the readings of one new point against the points of the unit quaternion comparison model. "
                     + "The extension has feature rank r when there is a map v from the unit quaternions with one extra point none into Euclidean r-space such that the inner products of the images of old points are the model readings, the inner product of the image of an old point x with the image of the new point is f(x), and the new point is sent to a unit vector. "
-                    + "The unit norm says that the new point reads one against itself. In the Lean statement the map is called phi.",
+                    + "The unit norm says that the new point reads one against itself. In the formal statement the map is called phi.",
                 DescribeRole.Definition),
             Node("nonneg", "forall_nonneg_iff_norm_le", "Nonnegative affine readings",
                 StatementSource.FromAuthor(NonnegFormula()), AssessedProvenance.FromRepo(),
@@ -34,7 +34,7 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
                     + "From the second: every unit quaternion y is a combination of the five points 1, -1, i, j and k with total weight one and weighted sum y. The six-point family of y with weight -1 and of these five points with those weights has total weight zero and weighted sum zero, so its Gram form vanishes; a form that is nonnegative for every t and has no quadratic part in the old weights must then have zero linear part, so f(y) is the same combination of f(1), f(-1), f(i), f(j) and f(k), which makes f affine in the coordinates of y. "
                     + "The six-point family of the five points with total weight -sqrt 2 * a and weighted sum -sqrt 2 * b, padded by the point 1 with weight zero, together with t = 1, has Gram form d - a^2 - |b|^2, which gives the bound. "
                     + "So nonnegativity needs to be tested on families of six points only; whether fewer points suffice is not decided here. "
-                    + "No sign condition on d is assumed; for negative d the first and third conditions fail. "
+                    + "No sign condition on d is assumed; for negative d the first and third conditions fail (this remark is not stated as a theorem here). "
                     + "The equivalence of the first and third conditions is related to the theory of reproducing kernels: for a positive semidefinite kernel, the functions whose one-point extension stays positive semidefinite are those of the associated Hilbert space of functions, with the bound on d read as a bound on the squared norm; for the quaternion reading that space consists of the affine functions a + <b, x>. Only this relation is recorded here; the statement and its proof above do not rest on that theory.",
                 DescribeRole.Theorem),
             Node("rank-five", "hasOnePointFeatureRank_five_iff", "One-point extensions of feature rank five",
@@ -50,15 +50,15 @@ internal sealed class QuaternionReadingOnePointExtensionDocument : IScribeDocume
                 "Let f have nonnegative extended Gram forms with self-reading one. Then f takes the value one at some unit quaternion exactly when f is the reading kappa(x, x0) of some unit quaternion x0. No rank or sign condition is needed. "
                     + "By the extension theorem f(x) = (a + <b, x>) / sqrt 2 with a^2 + |b|^2 <= 1. A value one at x1 forces sqrt 2 <= a + |b|, while (a + |b|)^2 <= 2 * (a^2 + |b|^2) <= 2, so a = |b| = 1 / sqrt 2 and <b, x1> = |b|; the equality case of the Cauchy-Schwarz inequality gives b = x1 / sqrt 2, and f is the reading of x1. "
                     + "Conversely, the reading of x0 is one at x0. "
-                    + "The positivity hypothesis is needed: the constant one takes the value one but is not the reading of any point, since the reading of x0 vanishes at -x0. In the display the points x1 and x0 of the Lean statement are written u and w.",
+                    + "The positivity hypothesis is needed: the constant one takes the value one but is not the reading of any point, since the reading of x0 vanishes at -x0; this remark is not stated as a theorem here. In the display the points x1 and x0 of the formal statement are written u and w.",
                 DescribeRole.Theorem),
             Node("value-zero", "exists_eq_zero_iff_exists_eq_kappa", "Nonnegative rank-five extensions that reach zero are old points",
                 StatementSource.FromAuthor(ZeroFormula()), AssessedProvenance.FromRepo(),
                 "Let f be a nonnegative one-point extension of feature rank five. Then f takes the value zero at some unit quaternion exactly when f is the reading kappa(x, x0) of some unit quaternion x0. "
                     + "By the rank-five classification f(x) = (a + <b, x>) / sqrt 2 with a^2 + |b|^2 = 1, and by the nonnegativity criterion |b| <= a. A zero at x1 forces <b, x1> = -a <= -|b|, so a = |b| = 1 / sqrt 2 and <b, -x1> = |b|; the equality case of the Cauchy-Schwarz inequality gives b = -x1 / sqrt 2, and f is the reading of -x1. "
                     + "Conversely, the reading of x0 is zero at -x0. "
-                    + "Both hypotheses are needed. The readings <1, x> / sqrt 2 (a = 0, b = 1) have feature rank five and vanish at i, but take the negative value -1 / sqrt 2 at -1, so they are not the readings of a point. The readings (1 / 2 + <b, x>) / sqrt 2 with b = 1 / 2 are nonnegative, have nonnegative extended Gram forms with self-reading one and vanish at -1, but never reach the value one, so they are not the readings of a point, and by this theorem they do not have feature rank five. "
-                    + "Taken with the rank-five classification, the unit quaternions cannot be enlarged by a point whose readings reach zero without raising the feature rank above five or taking negative values, and not by a point whose readings reach one at all. In the display the points x1 and x0 of the Lean statement are written u and w.",
+                    + "Both hypotheses are needed. The readings <1, x> / sqrt 2 (a = 0, b = 1) have feature rank five and vanish at i, but take the negative value -1 / sqrt 2 at -1, so they are not the readings of a point. The readings (1 / 2 + <b, x>) / sqrt 2 with b = 1 / 2 are nonnegative, have nonnegative extended Gram forms with self-reading one and vanish at -1, but never reach the value one, so they are not the readings of a point, and by this theorem they do not have feature rank five. These two examples are not stated as theorems here. "
+                    + "Taken with the rank-five classification, and since a reading equal to one identifies the two points, the unit quaternions cannot be enlarged by a point whose readings reach zero without raising the feature rank above five or taking negative values, and not by a point whose readings reach one at all; this remark is not stated as a theorem here. In the display the points x1 and x0 of the formal statement are written u and w.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(

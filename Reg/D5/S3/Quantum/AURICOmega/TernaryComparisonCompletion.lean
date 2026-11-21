@@ -211,17 +211,18 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => ⊤) (fun e => nomatch e)
 
-/-- Retain the existential subgroup and all five conjuncts of
+/-- Retain the existential subgroup and all seven conjuncts of
 `exists_subgroupModel_not_readingComplete`. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∃ H : Subgroup (unitary ℍ[ℝ]),
+    Dense (H : Set (unitary ℍ[ℝ])) ∧ (H : Set (unitary ℍ[ℝ])).Countable ∧
     (subgroupModel H).Noncommutative ∧ (subgroupModel H).ChainConnected ∧
       (subgroupModel H).TouchesZero ∧ (subgroupModel H).HasFeatureRank 5 ∧
       ¬ ReadingComplete (subgroupModel (r.readout () () H))
 
 theorem rejected_law : ¬ arena.Law rejected := by
-  rintro ⟨_, -, -, -, -, h⟩
+  rintro ⟨_, -, -, -, -, -, -, h⟩
   exact h ((subgroupModel_readingComplete_iff ⊤).2 isClosed_top)
 
 theorem dependence : ObservationalDependence signature actual := by
@@ -337,7 +338,7 @@ def exists_subgroupModel_not_readingComplete_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
+      path := #["arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

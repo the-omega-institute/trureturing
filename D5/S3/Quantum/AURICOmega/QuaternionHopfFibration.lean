@@ -7,6 +7,7 @@
    digest: The Hopf map identifies unit quaternions modulo phases with the unit imaginary sphere. -/
 
 import D5.S3.Quantum.AURICOmega.QuaternionRayKernel
+import D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 import D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
@@ -15,8 +16,9 @@ import Mathlib.Topology.Homeomorph.Lemmas
 /-! The Hopf map of the unit quaternions and the extremum of the reading over its fibres.
 
 The Hopf image `x i x⁻¹` of a unit quaternion is a unit imaginary quaternion, and every unit
-imaginary quaternion `n` is attained: for `n ≠ -i` by the normalization of `1 - n i`, and for
-`n = -i` by `j`. Two unit quaternions have the same Hopf image exactly when they differ by a right
+imaginary quaternion `n` is attained: `n` and `i` are unit quaternions with the same real part
+zero, so they are conjugate, `c i = n c` for a unit quaternion `c`, and then `n` is the Hopf image
+of `c`. Two unit quaternions have the same Hopf image exactly when they differ by a right
 factor in the phase circle of unit quaternions `a + b i`. Since the unit quaternions are compact
 and the unit imaginary sphere is Hausdorff, the induced continuous bijection from the quotient by
 the phase circle is a homeomorphism.
@@ -36,6 +38,7 @@ namespace D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
 open D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open D5.S3.Quantum.AURICOmega.QuaternionRayKernel
+open D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
 open D5.S3.Quantum.AURICOmega.UnitQuaternionClosedSubgroup
 
 /-- The right phase circle: the unit quaternions in the real span of `1` and `i`. -/
@@ -66,66 +69,6 @@ private lemma re_hopf (x : unitary ℍ[ℝ]) : (hopf x).re = 0 := by
     Quaternion.re_star, Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star]
   ring
 
-/-- For an imaginary quaternion `n` of norm one, `q = 1 - n i` satisfies
-`q i q* = |q| ^ 2 n`. -/
-private lemma mul_unitI_mul_star (n : ℍ[ℝ]) (hre : n.re = 0)
-    (hn : n.imI ^ 2 + n.imJ ^ 2 + n.imK ^ 2 = 1) :
-    (1 - n * (unitI : ℍ[ℝ])) * (unitI : ℍ[ℝ]) * star (1 - n * (unitI : ℍ[ℝ])) =
-      Quaternion.normSq (1 - n * (unitI : ℍ[ℝ])) • n := by
-  have hI : ((unitI : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 1, 0, 0⟩ := rfl
-  rw [hI, Quaternion.normSq_def']
-  ext <;>
-    simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul,
-      Quaternion.re_star, Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star,
-      Quaternion.re_sub, Quaternion.imI_sub, Quaternion.imJ_sub, Quaternion.imK_sub,
-      Quaternion.re_one, Quaternion.imI_one, Quaternion.imJ_one, Quaternion.imK_one,
-      Quaternion.re_smul, Quaternion.imI_smul, Quaternion.imJ_smul, Quaternion.imK_smul,
-      smul_eq_mul, hre]
-  · ring
-  · linear_combination (-(1 + n.imI)) * hn
-  · linear_combination (-n.imJ) * hn
-  · linear_combination (-n.imK) * hn
-
-/-- Every imaginary quaternion of norm one is a Hopf image. -/
-private lemma exists_hopf_eq (n : ℍ[ℝ]) (hre : n.re = 0) (hn : ‖n‖ = 1) :
-    ∃ x : unitary ℍ[ℝ], hopf x = n := by
-  have hsq : n.imI ^ 2 + n.imJ ^ 2 + n.imK ^ 2 = 1 := by
-    have h := Quaternion.normSq_eq_norm_mul_self n
-    rw [hn, mul_one, Quaternion.normSq_def', hre] at h
-    linear_combination h
-  by_cases ha : 1 + n.imI = 0
-  · have hJ : n.imJ = 0 := by nlinarith [sq_nonneg n.imJ, sq_nonneg n.imK]
-    have hK : n.imK = 0 := by nlinarith [sq_nonneg n.imJ, sq_nonneg n.imK]
-    refine ⟨unitJ, ?_⟩
-    have hI : ((unitI : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 1, 0, 0⟩ := rfl
-    have hJ' : ((unitJ : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 0, 1, 0⟩ := rfl
-    rw [hopf, hI, hJ']
-    ext <;>
-      simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul,
-        Quaternion.re_star, Quaternion.imI_star, Quaternion.imJ_star, Quaternion.imK_star,
-        hre, hJ, hK] <;> linarith
-  · set q : ℍ[ℝ] := 1 - n * (unitI : ℍ[ℝ]) with hq
-    have hnq : Quaternion.normSq q = 2 * (1 + n.imI) := by
-      have hI : ((unitI : unitary ℍ[ℝ]) : ℍ[ℝ]) = ⟨0, 1, 0, 0⟩ := rfl
-      rw [hq, hI, Quaternion.normSq_def']
-      simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul,
-        Quaternion.re_sub, Quaternion.imI_sub, Quaternion.imJ_sub, Quaternion.imK_sub,
-        Quaternion.re_one, Quaternion.imI_one, Quaternion.imJ_one, Quaternion.imK_one, hre]
-      linear_combination hsq
-    have hq0 : ‖q‖ ≠ 0 := by
-      intro h0
-      rw [Quaternion.normSq_eq_norm_mul_self, h0, zero_mul] at hnq
-      exact ha (by linarith)
-    have hmem : ‖q‖⁻¹ • q ∈ unitary ℍ[ℝ] := by
-      rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, norm_smul,
-        norm_inv, norm_norm, inv_mul_cancel₀ hq0]
-    refine ⟨⟨‖q‖⁻¹ • q, hmem⟩, ?_⟩
-    change ‖q‖⁻¹ • q * (unitI : ℍ[ℝ]) * star (‖q‖⁻¹ • q) = n
-    rw [Quaternion.star_smul, smul_mul_assoc, smul_mul_assoc, mul_smul_comm, smul_smul,
-      mul_unitI_mul_star n hre hsq, ← hq, smul_smul, Quaternion.normSq_eq_norm_mul_self]
-    convert one_smul ℝ n using 2
-    field_simp
-
 /-- The Hopf map sends the unit quaternions onto the unit imaginary quaternions. -/
 theorem range_hopf :
     Set.range hopf = {n : ℍ[ℝ] | n.re = 0 ∧ ‖n‖ = 1} := by
@@ -134,7 +77,13 @@ theorem range_hopf :
   · rintro ⟨x, rfl⟩
     exact ⟨re_hopf x, norm_hopf x⟩
   · rintro ⟨hre, hn⟩
-    exact exists_hopf_eq n hre hn
+    have hmem : n ∈ unitary ℍ[ℝ] := by
+      rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, hn]
+    obtain ⟨c, hc⟩ := exists_unitary_mul_eq_mul unitI ⟨n, hmem⟩ (by rw [hre]; rfl)
+    refine ⟨c, ?_⟩
+    have h := congrArg (fun u : unitary ℍ[ℝ] => ((u * star c : unitary ℍ[ℝ]) : ℍ[ℝ])) hc
+    simp only [mul_assoc, Unitary.mul_star_self, mul_one] at h
+    simpa [hopf, mul_assoc] using h
 
 /-- Two unit quaternions have the same Hopf image exactly when they differ by a right phase. -/
 private lemma hopf_eq_hopf_iff (x y : unitary ℍ[ℝ]) :

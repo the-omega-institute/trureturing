@@ -4,7 +4,7 @@ import Reg.D5.S3.Quantum.AURICOmega.QuaternionRayKernel
 import Reg.Support.DependentFamily
 
 /-! Source-bound audits of the Hopf map on the unit quaternions: its range, the homeomorphism
-from the quotient by the phase circle, and the extremum and mean of the reading over a fibre. -/
+from the quotient by the phase circle, and the extremum and integral of the reading over a fibre. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.QuaternionHopfFibration
 

@@ -38,10 +38,11 @@ first layer is a proper transfer- and reading-preserving copy.
 In feature rank five, the transfer need not be preserved. Every translate point
 `tri m (j 1) (j x)` reads `(a + ⟪b, y⟫) / √2` against `j y` with `a ^ 2 + ‖b‖ ^ 2 = 1`, and
 nonnegativity gives `‖b‖ ≤ a`, so its readings against `j 1` and `j (-1)` sum to `√2 * a ≥ 1`.
-These sums, as functions of `x`, form a one-point extension of feature rank five of the translated
-copy, by the unit vector `(φ (j 1) + φ (j (-1))) / √2`; hence the sums at `x` and `-x` add up to at
-most two, and the sum at `x = 1`, which is that of `m`, equals one. For the readings of `m` this
-means `2 * a = √2` and `‖b‖ ^ 2 = 1 / 2`, so `m` has reading one with `j (√2 • b)`. -/
+These sums, divided by `√2`, form, as functions of `x`, a one-point extension of feature rank five
+of the translated copy, by the unit vector `(φ (j 1) + φ (j (-1))) / √2`; hence the sums at `x`
+and `-x` add up to at most two, and the sum at `x = 1`, which is that of `m`, equals one. For the
+readings of `m` this means `2 * a = √2` and `‖b‖ ^ 2 = 1 / 2`, so `m` has reading one with
+`j (√2 • b)`. -/
 
 open scoped InnerProductSpace Quaternion
 

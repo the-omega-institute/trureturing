@@ -22,7 +22,7 @@ internal sealed class QuaternionModelMaximalityDocument : IScribeDocumentDefinit
                     + "Together with the five orthogonal vectors formed from the features of the copy at 1 and -1 and at e and -e, they would be nine nonzero orthogonal vectors if |b|^2 < 1 / 2, which is impossible in dimension at most eight. "
                     + "Hence |b|^2 = 1 / 2; nonnegativity of the readings gives a = |b| = 1 / sqrt 2, and m has reading one with the image of the unit quaternion sqrt 2 * b, so m lies in the image of j. "
                     + "Neither noncommutativity, chain connectivity, touching zero nor completeness of the reading of C is assumed. "
-                    + "Reading preservation cannot be dropped: a constant map preserves the transfer and is not injective. Whether transfer preservation can be dropped in feature rank six, seven or eight is not settled here; in feature rank five it can, as the last theorem shows.",
+                    + "Reading preservation cannot be dropped: a constant map preserves the transfer and is not injective; this remark is not stated as a theorem here. Whether transfer preservation can be dropped in feature rank six, seven or eight is not settled here; in feature rank five it can, as the last theorem shows.",
                 DescribeRole.Theorem),
             Node("sharp", "forall_bijective_iff_le_eight", "Eight is the sharp rank",
                 StatementSource.FromAuthor(SharpFormula()),
@@ -37,7 +37,7 @@ internal sealed class QuaternionModelMaximalityDocument : IScribeDocumentDefinit
                 "Let C be a ternary comparison structure on M of feature rank five and let j be a map from the unit quaternions into M that preserves the reading. Then j is a bijection; the transfer need not be preserved. "
                     + "For a point m, the translate x -> tri(C, m, j(1), j(x)) is again a reading-preserving copy and sends 1 to m. "
                     + "Each translate point reads (a + <b, y>) / sqrt 2 against j(y) with a^2 + |b|^2 = 1, by the classification of one-point extensions of feature rank five, and |b| <= a because the readings are nonnegative; so its readings against j(1) and j(-1) add up to sqrt 2 * a >= 1. "
-                    + "These sums, as functions of x, form a one-point extension of feature rank five of the translated copy by the unit vector (phi(j(1)) + phi(j(-1))) / sqrt 2, where phi is the feature map of C; hence the sums at x and at -x add up to at most two, and the sum at x = 1, which belongs to m, equals one. "
+                    + "These sums, divided by sqrt 2, form, as functions of x, a one-point extension of feature rank five of the translated copy by the unit vector (phi(j(1)) + phi(j(-1))) / sqrt 2, where phi is the feature map of C; hence the sums at x and at -x add up to at most two, and the sum at x = 1, which belongs to m, equals one. "
                     + "For the readings of m this means 2 * a = sqrt 2 and |b|^2 = 1 / 2, so m has reading one with the image of the unit quaternion sqrt 2 * b and lies in the image of j.",
                 DescribeRole.Theorem))));
 
