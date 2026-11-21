@@ -21,13 +21,14 @@ proof_shape:
   g_pos, g_quad, g_fine, g_ne: bind-only (consumers: bo_le, bo_eq_iff, bo_zero, card_three_iff,
     shape, frac_bounds, gap, e_bounds, orders_three, between, result)
   bo_le, bo_eq_iff, bo_mono, bo_zero: bind-only (consumers: closed_form, card_three_iff,
-    shape_floor, frac_bounds, gap, between, result)
+    shape_floor, frac_bounds, gap, between, bracket, result)
   shape, shape_floor, frac_bounds, gap, e_bounds: bind-only (consumers: orders_three, between,
     increments)
   closed_form: content (consumers: shape, between, increments, enumerate, result)
   card_three_iff: content (consumers: enumerate, result)
-  orders_three, between: content (consumer: enumerate)
-  increments, strictMono_orders, bracket: content (consumers: bracket, enumerate, result)
+  orders_three, between: content (consumers: enumerate, result)
+  increments, bracket: content (consumers: strictMono_orders, enumerate, result)
+  strictMono_orders: bind-only (consumers: bracket, result)
   enumerate: content (consumer: result)
   result: content
 escape_witness: the golden identity (p_j + 2 + i) / phi = (b_j + 2j + 1) + (1 - f_j (2/phi - 1))
@@ -331,7 +332,8 @@ private theorem enumerate (n : ℕ) : (jaconian n).card = 3 ↔ ∃ j, 1 ≤ j �
 
 /-- The orders `n` with `|J_n| = 3` are exactly `p_1, p_2, … = 6, 9, 14, 19, 22, …`, where
 `p_j = 3j + 1 + 2 b_j` solves the source recurrence; the gaps are `3` or `5`, a `3` is always
-followed by a `5`, and two consecutive `5`s are always followed by a `3`. -/
+followed by a `5`, and two consecutive `5`s are always followed by a `3`. The seed `p_0 = 1`
+satisfies the Beatty criterion although `J_1` does not have three vertices. -/
 theorem result :
     (∀ j, orders j = 3 * j + 1 + 2 * beattyOut j) ∧
     (∀ n, 2 ≤ n → ((jaconian n).card = 3 ↔ beattyOut (n + 3) = beattyOut (n + 1) + 2)) ∧
@@ -340,8 +342,11 @@ theorem result :
     (∀ j, orders (j + 1) = orders j + 3 ∨ orders (j + 1) = orders j + 5) ∧
     (∀ j, orders (j + 1) = orders j + 3 → orders (j + 2) = orders (j + 1) + 5) ∧
     (∀ j, orders (j + 1) = orders j + 5 → orders (j + 2) = orders (j + 1) + 5 →
-      orders (j + 3) = orders (j + 2) + 3) := by
-  refine ⟨closed_form, card_three_iff, enumerate, strictMono_orders, increments, ?_, ?_⟩
+      orders (j + 3) = orders (j + 2) + 3) ∧
+    (orders 0 = 1 ∧ beattyOut (orders 0 + 3) = beattyOut (orders 0 + 1) + 2 ∧
+      (jaconian (orders 0)).card ≠ 3) := by
+  refine ⟨closed_form, card_three_iff, enumerate, strictMono_orders, increments, ?_, ?_,
+    rfl, orders_three 0, ?_⟩
   · intro j h3
     have hc := closed_form j
     have hc1 := closed_form (j + 1)
@@ -379,6 +384,10 @@ theorem result :
     rcases inc with h | h
     · exact h
     · omega
+  · intro h
+    obtain ⟨j, hj, hjeq⟩ := (enumerate _).mp h
+    have := strictMono_orders (show 0 < j by omega)
+    omega
 
 #print axioms result
 

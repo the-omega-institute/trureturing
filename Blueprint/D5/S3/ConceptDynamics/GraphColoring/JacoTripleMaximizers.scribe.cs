@@ -33,12 +33,16 @@ internal sealed class JacoTripleMaximizersDocument : IScribeDocumentDefinition
             Ex("j", Nat(), And(Le(D(1), j), Equal(Call("p", j), n)))));
         var mono = Call("StrictMono", F.Id("p"));
         var gaps = All("j", Nat(), Or(Gap(j, 3), Gap(j, 5)));
-        var afterThree = All("j", Nat(), Imp(Gap(j, 3), Gap(Add(j, D(1)), 5)));
-        var afterFives = All("j", Nat(), Imp(And(Gap(j, 5), Gap(Add(j, D(1)), 5)), Gap(Add(j, D(2)), 3)));
-        return Disp(And(closed, And(criterion, And(enumeration, And(mono, And(gaps, And(afterThree, afterFives)))))));
+        var afterThree = All("j", Nat(), Imp(Gap(j, 3), Step(Add(j, D(1)), Add(j, D(2)), 5)));
+        var afterFives = All("j", Nat(), Imp(And(Gap(j, 5), Step(Add(j, D(1)), Add(j, D(2)), 5)),
+            Step(Add(j, D(2)), Add(j, D(3)), 3)));
+        var seed = And(Equal(Call("p", D(0)), D(1)), And(Equal(B(Add(Call("p", D(0)), D(3))), Add(B(Add(Call("p", D(0)), D(1))), D(2))),
+            new Formula.Relation(Card(J(Call("p", D(0)))), FormulaRelationOperator.NotEqual, D(3))));
+        return Disp(And(closed, And(criterion, And(enumeration, And(mono, And(gaps, And(afterThree, And(afterFives, seed))))))));
     }
 
-    private static Formula Gap(Formula j, byte d) => Equal(Call("p", Add(j, D(1))), Add(Call("p", j), D(d)));
+    private static Formula Gap(Formula j, byte d) => Step(j, Add(j, D(1)), d);
+    private static Formula Step(Formula i, Formula next, byte d) => Equal(Call("p", next), Add(Call("p", i), D(d)));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance) =>
