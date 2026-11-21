@@ -6,7 +6,7 @@ Hardin’s recurrence for normalized six-column complementary-pair square strips
 
 **Definition 1.1 (Forward boundary distributions).**
 
-$$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233127SquareStrip}.\operatorname{distribution}: \operatorname{\mathit{Fin}}\left(9\right) \to \left(\operatorname{\mathit{Fin}}\left(11\right) \to \operatorname{\mathit{Int}}\right))$$
+$$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233127SquareStrip}.\operatorname{distribution}: \operatorname{Fin}\left(9\right) \to \left(\operatorname{Fin}\left(11\right) \to \operatorname{Int}\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233127SquareStrip.distribution` (`✓ std3`).
 
