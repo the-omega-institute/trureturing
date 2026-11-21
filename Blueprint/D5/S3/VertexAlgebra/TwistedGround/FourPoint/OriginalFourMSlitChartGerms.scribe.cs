@@ -13,6 +13,14 @@ internal sealed class OriginalFourMSlitChartGermsDocument : IScribeDocumentDefin
         "Explicit slit chart germs for the actual rank-24 four-point channels",
         H("Native cusp germs on the Euler slit"),
         Blocks(
+            D("slit-diagonal", "slitDiagonal", "The slit diagonal numerator", DescribeRole.Definition,
+                Text("Project the canonical slit sector values onto fixed occupations at weights H and K, "
+                    + "Taylor degree zero and Laurent index s−H−K+1. "),
+                Ref(FourPoint + "OriginalFourMChargeNormal.projectOccupations")),
+            D("slit-lowered", "slitLowered", "The lowered slit Laurent projection", DescribeRole.Definition,
+                Text("Apply the shared finite lowering and Laurent detector to the slit diagonal "
+                    + "numerators with the original Laurent sign. "),
+                Ref(FourPoint + "FourPointChannelCoefficients.loweredLaurent")),
             D("four-point-slit-iterate-channel", "slitChannelA", "The continued A channel",
                 DescribeRole.Definition,
                 Text("Project the slit charge-sector sums onto the diagonal with offset "
@@ -29,6 +37,13 @@ internal sealed class OriginalFourMSlitChartGermsDocument : IScribeDocumentDefin
                 DescribeRole.Definition,
                 Text("Use the corresponding lowering sum for P, R, Q in the inverse parameter. "
                     + "The sector of class a has the quadratic sign of a + b.")),
+            D("slit-channel-a-analytic", "slitChannelA_analyticOnNhd",
+                "Holomorphy of the canonical A channel", DescribeRole.Theorem,
+                Text("For positive definite real Gram data the A channel is complex analytic at "
+                    + "every point of the punctured Euler slit. The finite occupation projection and "
+                    + "charge-class sum preserve the holomorphy of the slit sectors, and the Laurent "
+                    + "power has no pole on this domain. "),
+                Ref(Sector + "slitChargeSector_differentiableOn")),
             D("four-point-slit-chart-germs", "slitChartGerms", "Holomorphy and the actual cusp germs",
                 DescribeRole.Theorem,
                 Text("Assume a positive definite real Gram matrix, rank 24 and unit Gram "

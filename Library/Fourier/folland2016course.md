@@ -6,6 +6,7 @@ title: "A Course in Abstract Harmonic Analysis"
 doi: 10.1201/b19172
 claim: "Bibliographic record: G. B. Folland, A Course in Abstract Harmonic Analysis, Chapman and Hall/CRC, 2016, a book whose title names abstract harmonic analysis; the interior of the book was not read for this note."
 strata_touched:
+  - D5/S3/FiniteGroups/GroupAlgebra/UnitaryCharacterKernel
   - D5/S3/Quantum/Analysis/CompactGroups/SchurOrthogonality
 license: citation-only
 triage: anchor
@@ -42,11 +43,23 @@ of Schur belong to the background of harmonic analysis on compact groups; this
 note acknowledges that background and does not assert that the book states
 the repository theorems.
 
+D5/S3/FiniteGroups/GroupAlgebra/UnitaryCharacterKernel: the module states,
+for an arbitrary monoid with no topology, that a representation by isometries
+of a finite-dimensional real or complex inner product space is semisimple,
+and, for an arbitrary group and a finite family of representations by
+isometries, that a weighted sum of characters is a positive semidefinite
+kernel for nonnegative weights and, for pairwise inequivalent irreducible
+representations, only for nonnegative weights. These statements are
+repository derivations. Complete reducibility of unitary representations and
+positivity of their characters belong to the classical background of harmonic
+analysis on groups; this note acknowledges that background and does not
+assert that the book states the repository theorems.
+
 ## What this note does and does not attest
 
 Attested here: the bibliographic record and DOI of the book and the wording of
 its title.
 
 Not attested here: any statement inside the book, its edition, or the form in
-which it treats representations of compact groups and their matrix
-coefficients.
+which it treats representations of compact groups, their matrix coefficients,
+unitary representations or characters.

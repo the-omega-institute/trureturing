@@ -163,5 +163,16 @@ The literature search found no matching unrestricted proof for either
 degree. Dinh, Le, and Vuong's arXiv:2610.31851v1, Theorem 4.2,
 establishes the lower comparison with the spectrally pinched factor.
 
+The interval certificate also proves the unrestricted product and
+exponential comparisons at first degrees eight, nine, and ten, with
+three copies of the second factor. In Hägele's total-word notation,
+the product lower bounds for `Tr S_{11,3}`, `Tr S_{12,3}`, and
+`Tr S_{13,3}` are the trace of the cube of `A^(p/3) B` multiplied
+by 165, 220, and 286, respectively. The result permits any finite
+dimension and includes singular positive semidefinite factors. The
+exponential bounds have exponents `8H + 3K`, `9H + 3K`, and
+`10H + 3K`. Literature searches located no matching unrestricted
+proof of these cases in the sources examined.
+
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

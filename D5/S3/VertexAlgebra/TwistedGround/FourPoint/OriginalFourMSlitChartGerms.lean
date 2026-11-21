@@ -27,11 +27,12 @@ open FourPoint.OriginalFourMChargeGerm (diagonalSewn)
 open OriginalFourMSectorContinuation
 open FourPoint.OriginalFourMActualChart (parameter)
 open OriginalFourPointChartGluing (Ω U_A U_B U_D)
-open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitDomain doubleSlit)
+open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitDomain doubleSlit isOpen_slitDomain)
 
 private abbrev GramPos (D : LatticeData) := Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))
 
-private def slitDiagonal (D : LatticeData) (H K : ℕ) (s : ℤ)
+/-- The canonical finite occupation projection of the slit sector sums. -/
+def slitDiagonal (D : LatticeData) (H K : ℕ) (s : ℤ)
     (P Q R S : Oscillator D) (a : ModTwoCharge D) (t : ℂ) : ℂ :=
   FourPoint.OriginalFourMChargeNormal.projectOccupations D H K 0 (s - H - K + 1) P Q R S
     (fun betaL gammaL betaR gammaR => slitChargeSector D a betaL gammaL betaR gammaR t)
@@ -109,18 +110,23 @@ def slitChannelA (D : LatticeData) (H K : ℕ) (s : ℤ)
     (P Q R S : Oscillator D) (b : ModTwoCharge D) (t : ℂ) : ℂ :=
   ∑ a, quadraticSign D a * fourierSign D a b * slitLaurent D H K s P Q R S a t
 
-private def slitLowered (D : LatticeData) (H K : ℕ) (s : ℤ) (N : ℕ)
+/-- Lower the canonical slit diagonal with the native finite Laurent detector. -/
+def slitLowered (D : LatticeData) (H K : ℕ) (s : ℤ) (N : ℕ)
     (P Q R S : Oscillator D) (a : ModTwoCharge D) (t : ℂ) : ℂ :=
-  ∑ ell ∈ Finset.range N, loweringWeight s ell *
-    slitLaurent D H K (s + ell) P Q R ((oscillatorLower D ^ ell) S) a t
+  loweredLaurent ((H : ℤ) + K) s N
+    (fun ell u => slitDiagonal D H K (s + ell) P Q R ((oscillatorLower D ^ ell) S) a (-u)) t
 
 private theorem slitLowered_diff (D : LatticeData) (hD : GramPos D) (H K : ℕ) (s : ℤ) (N : ℕ)
     (P Q R S : Oscillator D) (a : ModTwoCharge D) :
     DifferentiableOn ℂ (slitLowered D H K s N P Q R S a) Ω := by
-  unfold slitLowered
+  change DifferentiableOn ℂ (fun t => ∑ ell ∈ Finset.range N, loweringWeight s ell *
+    laurent ((H : ℤ) + K)
+      (fun u => slitDiagonal D H K (s + ell) P Q R ((oscillatorLower D ^ ell) S) a (-u)) (-t)) Ω
   apply DifferentiableOn.fun_sum
   intro ell _
-  exact (slitLaurent_diff D hD _ _ _ _ _ _ _ _).const_mul _
+  simpa only [slitLaurent, laurent, neg_neg] using
+    (slitLaurent_diff D hD H K (s + ell) P Q R ((oscillatorLower D ^ ell) S) a).const_mul
+      (loweringWeight s ell)
 
 private theorem slitLowered_cusp (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : GramPos D) (h24 : D.rank = 24) (H K : ℕ) (s : ℤ) (N : ℕ)
@@ -132,7 +138,10 @@ private theorem slitLowered_cusp (D : LatticeData) (hu : IsUnit D.G.det)
   filter_upwards [eventually_all_finset (Finset.range N) |>.mpr fun ell _ =>
     slitLaurent_cusp D hu hD h24 H K (s + ell) P Q R ((oscillatorLower D ^ ell) S) a] with t ht
   unfold slitLowered loweredLaurent
-  exact Finset.sum_congr rfl fun ell he => congrArg (_ * ·) (ht ell he)
+  refine Finset.sum_congr rfl ?_
+  intro ell he
+  apply congrArg (fun z : ℂ => loweringWeight s ell * z)
+  simpa only [slitLaurent, laurent, neg_neg] using ht ell he
 
 /-- Continued B channel with its native lowering weights. -/
 def slitChannelB (D : LatticeData) (H K L : ℕ) (m n r : ℤ)
@@ -144,6 +153,18 @@ def slitChannelD (D : LatticeData) (H K L : ℕ) (m n r : ℤ)
     (P Q R S : Oscillator D) (b : ModTwoCharge D) (t : ℂ) : ℂ :=
   ∑ a, quadraticSign D (a + b) *
     slitLowered D H L (m + n + r) (loweringCutoff H K L m n r) P R Q S a t
+
+/-- The canonical A channel is holomorphic on the punctured Euler slit. -/
+theorem slitChannelA_analyticOnNhd (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (H K : ℕ) (s : ℤ)
+    (P Q R S : Oscillator D) (b : ModTwoCharge D) :
+    AnalyticOnNhd ℂ (slitChannelA D H K s P Q R S b) Ω := by
+  have hOpen : IsOpen Ω := isOpen_slitDomain.inter isOpen_ne
+  apply DifferentiableOn.analyticOnNhd _ hOpen
+  unfold slitChannelA
+  apply DifferentiableOn.fun_sum
+  intro a _
+  exact (slitLaurent_diff D hD _ _ _ _ _ _ _ _).const_mul _
 
 /-- The explicit slit continuations are holomorphic and have all three actual cusp germs. -/
 theorem slitChartGerms (D : LatticeData) (hu : IsUnit D.G.det)
@@ -158,12 +179,9 @@ theorem slitChartGerms (D : LatticeData) (hu : IsUnit D.G.det)
       (B =ᶠ[𝓝[≠] 0] actualChannelB D hD H K L m n r P Q R S b) ∧
       (C =ᶠ[𝓝[≠] 0] actualChannelD D hD H K L m n r P Q R S b) := by
   dsimp only
-  refine ⟨?_, slitLowered_diff D hD _ _ _ _ _ _ _ _ _, ?_, ?_,
+  refine ⟨(slitChannelA_analyticOnNhd D hD H K (m + n + r) P Q R S b).differentiableOn,
+    slitLowered_diff D hD _ _ _ _ _ _ _ _ _, ?_, ?_,
     (slitLowered_cusp D hu hD h24 _ _ _ _ _ _ _ _ _).filter_mono nhdsWithin_le_nhds, ?_⟩
-  · unfold slitChannelA
-    apply DifferentiableOn.fun_sum
-    intro a _
-    exact (slitLaurent_diff D hD _ _ _ _ _ _ _ _).const_mul _
   · unfold slitChannelD
     apply DifferentiableOn.fun_sum
     intro a _
