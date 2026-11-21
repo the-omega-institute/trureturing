@@ -12,8 +12,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 For c in Fin (2p), the complementary colour is 2p−1−c.
@@ -25,8 +23,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.pair` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -40,8 +36,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 The sign is true exactly when p≤c.
@@ -53,8 +47,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.lift` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -68,8 +60,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 The two palette halves give inverse maps Fin (2p) and Fin p × Bool.
@@ -81,8 +71,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.bond_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -96,8 +84,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 Every strictly earlier vertex has a different label.
@@ -109,8 +95,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.Free` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -124,8 +108,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 The pair word is canonical and every first vertex has the lower sign. Canonicality gives each smaller label an earlier occurrence, so the used labels form an initial segment and the least vertex has literal colour zero.
@@ -137,8 +119,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.Legal` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -152,8 +132,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 The blocks are the actual nonempty subsets in a Mathlib graph partition.
@@ -165,8 +143,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.OrderedColoring` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -180,8 +156,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 IndependentPartitionExpansion.coloringEquiv gives the actual blocks and their injected names. The canonical permutation representative of HardinA233177Canonical.canonical_exists_unique is unique because two injections on the same blocks differ by a palette permutation. The inverse names all blocks of any partition with at most p blocks.
@@ -193,8 +167,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.toOrderedColoring` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -208,8 +180,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 Restrict the sign to non-first vertices. The inverse lifts the given word with false at every first vertex and the supplied sign elsewhere. The palette inverse laws recover each endpoint of this equivalence.
@@ -221,8 +191,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.literalPartitionEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
@@ -236,8 +204,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
 For every finite linearly ordered vertex type and each independent partition with k≤p blocks, the free-vertex type of the canonical word reconstructed from the partition has cardinality N−k. Each block has a unique least vertex. Removing these k vertices leaves N−k independent Boolean choices and therefore 2^(N−k) assignments over the partition.
@@ -250,11 +216,9 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
-
 *Commentary.*
 
-For every nonempty finite linearly ordered simple graph and every natural p, the cardinality of Legal G p is the sum of 2^(N−k) S_G(k) over 1≤k≤min(p,N). Here S_G(k) counts the actual unlabelled independent partitions into k blocks. The cardinality is invariant under changing the vertex order, since N and the independent partitions use only the underlying graph.
+For every nonempty finite linearly ordered simple graph and every natural p, the cardinality of Legal G p is the sum of 2^(N−k) S_G(k) over 1≤k≤min(p,N). Here S_G(k) counts the actual unlabelled independent partitions into k blocks. The graphical Stirling expansion is due to Biggs and is presented by Duncan and Peele in Bell and Stirling Numbers for Graphs. The weights here count the normalized complementary-colour lifts. The cardinality is invariant under changing the vertex order, since N and the independent partitions use only the underlying graph.
 
 **Definition 1.19 (The original six-colour scanner at p=3).**
 
@@ -263,8 +227,6 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalizatio
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.scannerEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
 
 *Commentary.*
 
