@@ -162,7 +162,8 @@ jobs:
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
-          make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
+          bash .github/actions/lean-cache-release-seed/measure-publication.sh \
+            make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
           tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
           [[ "$tag" == lean-cache-verify-v2-* ]]
           echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
