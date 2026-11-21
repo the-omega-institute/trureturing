@@ -15,7 +15,7 @@ transition_counts: proof_shape=content; consumers=HardinA229604Strip.finite_cert
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -51,6 +51,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Last.Hardi
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripClasses
@@ -61,7 +62,6 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229604StripData
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode_relabel)
 open HardinA233177Canonical (canonical_exists_unique)
 theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧
@@ -76,7 +76,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
   · obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
     have hv : Valid p' d.val := by
       rw [he]
-      simpa only [Valid, bond_relabel] using hp
+      simpa only [Valid, HardinA229635State.Valid, HardinA229635State.h_relabel] using hp
     have ht : (∑ r : Row, if bondDefects ProperTransfer.between p' r + bondDefects horizontal r r ≤ d.val ∧
         cl r (d.val - (bondDefects ProperTransfer.between p' r + bondDefects horizontal r r)) = s
         then (1 : ℤ) else 0) = T (cl p' d.val) s := by
@@ -149,7 +149,7 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
       cl (e ∘ r) (d.val - (bondDefects ProperTransfer.between (e ∘ p) (e ∘ r) +
         bondDefects horizontal (e ∘ r) (e ∘ r))) = s then (1 : ℤ) else 0) =
       T (cl (e ∘ p) d.val) s at ht
-    simpa only [cl, equalityPatternCode_relabel,
+    simpa only [cl, HardinA229635State.cl_relabel,
       HardinA229457StripClasses.class_relabel, bond_relabel,
       Function.comp_apply, ne_eq, e.injective.eq_iff] using ht
 

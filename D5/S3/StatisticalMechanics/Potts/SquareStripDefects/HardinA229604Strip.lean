@@ -14,6 +14,7 @@ finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457Strip
@@ -27,6 +28,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 open scoped BigOperators
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604Strip
@@ -56,11 +58,11 @@ theorem finite_certificate :
   refine ⟨by decide +kernel, ?_, HardinA229604StripClasses.transition_counts,
     ?_, ?_⟩
   · intro p d hp r hr
-    dsimp only [Valid] at hp ⊢
+    change bondDefects horizontal p p + d.val ≤ 2 at hp
+    change bondDefects horizontal r r + (d.val - _) ≤ 2
     omega
   · intro r hr
-    dsimp only [Valid]
-    omega
+    exact HardinA229635State.legal_start r hr
 
   · intro s
     by_cases hs : s.val < 42
@@ -95,11 +97,11 @@ theorem result (n : ℕ) :
     apply lumped_count horizontal ProperTransfer.between id (bondDefects ProperTransfer.between) Valid cl T initial terminal 2
       (fun _ _ => rfl)
     · intro p d h
-      exact finite_certificate.1 p ⟨d, by have := h.1; omega⟩ h
+      exact finite_certificate.1 p ⟨d, by change bondDefects horizontal p p + d ≤ 2 at h; omega⟩ h
     · intro p d h r hr
-      exact finite_certificate.2.1 p ⟨d, by have := h.1; omega⟩ h r hr
+      exact finite_certificate.2.1 p ⟨d, by change bondDefects horizontal p p + d ≤ 2 at h; omega⟩ h r hr
     · intro p d h s
-      exact finite_certificate.2.2.1 p ⟨d, by have := h.1; omega⟩ h s
+      exact finite_certificate.2.2.1 p ⟨d, by change bondDefects horizontal p p + d ≤ 2 at h; omega⟩ h s
     · exact finite_certificate.2.2.2.1
     · exact finite_certificate.2.2.2.2
   have tab (i : Fin 25) : forward T initial i.val = W i := by

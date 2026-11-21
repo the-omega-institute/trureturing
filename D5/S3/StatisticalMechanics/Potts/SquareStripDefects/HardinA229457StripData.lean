@@ -24,6 +24,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import Mathlib.Data.Matrix.Block
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -31,11 +32,11 @@ import Mathlib.Logic.Equiv.Fin.Basic
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 open DefectTransfer (bondDefects)
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
@@ -50,30 +51,30 @@ def cl (p : Row) (d : ℕ) : Fin 42 :=
   if bondDefects horizontal p p = 0 then
     if 0 < d then (ProperTransfer.cl p).castAdd 32 else (ProperTransfer.cl p).natAdd 10 |>.castAdd 22
   else
-  let code := equalityPatternCode p
+  let state := HardinA229635State.cl p 2
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 26 then 20 else
-  if code ∈ ({1093, 19520} : Finset ℕ) then 21 else
+  if state ∈ ({72, 106} : Finset HardinA229635State.State) then 21 else
   if (if bondDefects horizontal p p = 1 then
       D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p 0 = 30
-    else code ∈ ({8533, 19482} : Finset ℕ)) then 22 else
+    else state ∈ ({73, 87} : Finset HardinA229635State.State)) then 22 else
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 29 then 23 else
-  if code ∈ ({2185, 16772} : Finset ℕ) then 24 else
-  if code ∈ ({8329, 16770} : Finset ℕ) then 25 else
-  if code ∈ ({1297, 16472} : Finset ℕ) then 26 else
+  if state ∈ ({75, 101} : Finset HardinA229635State.State) then 24 else
+  if state ∈ ({76, 88} : Finset HardinA229635State.State) then 25 else
+  if state ∈ ({77, 103} : Finset HardinA229635State.State) then 26 else
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 25 then 27 else
-  if code ∈ ({10902} : Finset ℕ) then 28 else
-  if code ∈ ({646, 10880} : Finset ℕ) then 29 else
-  if code ∈ ({10774} : Finset ℕ) then 30 else
-  if code ∈ ({774, 10760} : Finset ℕ) then 31 else
-  if code ∈ ({6354, 9396} : Finset ℕ) then 32 else
-  if code ∈ ({4290, 9376} : Finset ℕ) then 33 else
-  if code ∈ ({6162, 8244} : Finset ℕ) then 34 else
+  if state ∈ ({79} : Finset HardinA229635State.State) then 28 else
+  if state ∈ ({80, 110} : Finset HardinA229635State.State) then 29 else
+  if state ∈ ({81} : Finset HardinA229635State.State) then 30 else
+  if state ∈ ({82, 108} : Finset HardinA229635State.State) then 31 else
+  if state ∈ ({84, 91} : Finset HardinA229635State.State) then 32 else
+  if state ∈ ({85, 98} : Finset HardinA229635State.State) then 33 else
+  if state ∈ ({89, 93} : Finset HardinA229635State.State) then 34 else
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 22 then 35 else
-  if code ∈ ({1188, 6336} : Finset ℕ) then 36 else
-  if code ∈ ({2340, 6156} : Finset ℕ) then 37 else
+  if state ∈ ({92, 105} : Finset HardinA229635State.State) then 36 else
+  if state ∈ ({94, 100} : Finset HardinA229635State.State) then 37 else
   if D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.cl p d = 21 then 38 else
-  if code ∈ ({1200, 4304} : Finset ℕ) then 39 else
-  if code ∈ ({776} : Finset ℕ) then 40 else
+  if state ∈ ({97, 104} : Finset HardinA229635State.State) then 39 else
+  if state ∈ ({107} : Finset HardinA229635State.State) then 40 else
   41
 private def crossing : Matrix (Fin 10) (Fin 32) ℤ :=
   ![![0, 2, 2, 2, 2, 4, 2, 0, 4, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 1, 2, 0, 2, 0, 2, 0, 0, 2, 0, 1, 0],

@@ -22,12 +22,13 @@ leading_block: proof_shape=bind-only; consumers=HardinA229604StripCut.leading_co
 terminal_block: proof_shape=bind-only; consumers=HardinA229604StripCut.terminal_counts
 -/
 
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
 
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
@@ -36,8 +37,8 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 
-def Valid (p : Row) (d : ℕ) : Prop := d ≤ 2 ∧ bondDefects horizontal p p ≤ 2 - d
-instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) := inferInstanceAs (Decidable (_ ∧ _))
+def Valid (p : Row) (d : ℕ) : Prop := HardinA229635State.Valid p d
+instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) := inferInstanceAs (Decidable (HardinA229635State.h p + d ≤ 2))
 def cl (p : Row) (d : ℕ) : Fin 96 :=
   if 0 < d then (HardinA229457StripData.cl p (d - 1)).castAdd 54
   else if bondDefects horizontal p p ≤ 1 then
@@ -45,28 +46,29 @@ def cl (p : Row) (d : ℕ) : Fin 96 :=
       have := (HardinA229457StripData.cl p 0).isLt
       omega⟩
   else
-  let code := D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode p
-  if code ∈ ({9387, 29122} : Finset ℕ) then 74 else
-  if code ∈ ({1195, 29120} : Finset ℕ) then 75 else
-  if code ∈ ({2355, 28700} : Finset ℕ) then 76 else
-  if code ∈ ({8227, 28674} : Finset ℕ) then 77 else
-  if code ∈ ({6349, 19876} : Finset ℕ) then 78 else
-  if code ∈ ({4301, 19872} : Finset ℕ) then 79 else
-  if code ∈ ({19525} : Finset ℕ) then 80 else
-  if code ∈ ({16453, 19457} : Finset ℕ) then 81 else
-  if code ∈ ({10889, 17286} : Finset ℕ) then 82 else
-  if code ∈ ({649, 17280} : Finset ℕ) then 83 else
-  if code ∈ ({785, 16920} : Finset ℕ) then 84 else
-  if code ∈ ({10753, 16902} : Finset ℕ) then 85 else
-  if code ∈ ({16793} : Finset ℕ) then 86 else
-  if code ∈ ({4369, 16440} : Finset ℕ) then 87 else
-  if code ∈ ({6145, 16420} : Finset ℕ) then 88 else
-  if code ∈ ({5902, 11112} : Finset ℕ) then 89 else
-  if code ∈ ({5646, 11104} : Finset ℕ) then 90 else
-  if code ∈ ({6444} : Finset ℕ) then 91 else
-  if code ∈ ({4140, 6432} : Finset ℕ) then 92 else
-  if code ∈ ({616, 5888} : Finset ℕ) then 93 else
-  if code ∈ ({624, 5648} : Finset ℕ) then 94 else
+  if 2 < bondDefects horizontal p p then 95 else
+  let state := HardinA229635State.cl p 2
+  if state ∈ ({31, 51} : Finset HardinA229635State.State) then 74 else
+  if state ∈ ({32, 66} : Finset HardinA229635State.State) then 75 else
+  if state ∈ ({33, 65} : Finset HardinA229635State.State) then 76 else
+  if state ∈ ({34, 52} : Finset HardinA229635State.State) then 77 else
+  if state ∈ ({35, 55} : Finset HardinA229635State.State) then 78 else
+  if state ∈ ({36, 62} : Finset HardinA229635State.State) then 79 else
+  if state ∈ ({37} : Finset HardinA229635State.State) then 80 else
+  if state ∈ ({38, 44} : Finset HardinA229635State.State) then 81 else
+  if state ∈ ({39, 49} : Finset HardinA229635State.State) then 82 else
+  if state ∈ ({40, 68} : Finset HardinA229635State.State) then 83 else
+  if state ∈ ({41, 67} : Finset HardinA229635State.State) then 84 else
+  if state ∈ ({42, 50} : Finset HardinA229635State.State) then 85 else
+  if state ∈ ({43} : Finset HardinA229635State.State) then 86 else
+  if state ∈ ({45, 61} : Finset HardinA229635State.State) then 87 else
+  if state ∈ ({46, 56} : Finset HardinA229635State.State) then 88 else
+  if state ∈ ({47, 57} : Finset HardinA229635State.State) then 89 else
+  if state ∈ ({48, 60} : Finset HardinA229635State.State) then 90 else
+  if state ∈ ({53} : Finset HardinA229635State.State) then 91 else
+  if state ∈ ({54, 64} : Finset HardinA229635State.State) then 92 else
+  if state ∈ ({58, 70} : Finset HardinA229635State.State) then 93 else
+  if state ∈ ({59, 69} : Finset HardinA229635State.State) then 94 else
   95
 private def crossing : Matrix (Fin 32) (Fin 54) ℤ :=
   Fin.append

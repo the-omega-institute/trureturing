@@ -64,6 +64,8 @@ theorem transition_counts (j : Fin 2) : ∀ p (d : Fin 3), Valid p d.val → Can
         omega
       rw [ho.1, he]
       exact HardinA229604StripCut.one_defect_counts p ho.2 ⟨22 + j.val, by omega⟩
-    · exact remaining p d hp hc (by dsimp only [Valid] at hp; omega)
+    · exact remaining p d hp hc (by
+      change bondDefects horizontal p p + d.val ≤ 2 at hp
+      omega)
 
 end D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.First.HardinA229604StripClass11

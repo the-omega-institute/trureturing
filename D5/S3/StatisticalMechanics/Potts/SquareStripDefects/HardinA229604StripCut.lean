@@ -68,12 +68,13 @@ theorem leading_counts (p : Row) (d : Fin 3) (hp : Valid p d.val) (j : Fin 42) :
       then (1 : ℤ) else 0) = T (cl p d.val) (j.castAdd 54) := by
   by_cases hd : 0 < d.val
   · have hv : HardinA229457StripData.Valid p (d.val - 1) := by
-      dsimp only [Valid, HardinA229457StripData.Valid,
-        D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid] at hp ⊢
+      change bondDefects horizontal p p + d.val ≤ 2 at hp
+      dsimp only [HardinA229457StripData.Valid,
+        D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.Valid]
       omega
     simp_rw [active_cut _ _ d j hd]
     have h := HardinA229457StripClasses.transition_counts p
-      ⟨d.val - 1, by have := hp.1; omega⟩ hv j
+      ⟨d.val - 1, by omega⟩ hv j
     have ht : T (cl p d.val) (j.castAdd 54) =
         HardinA229457StripData.T (HardinA229457StripData.cl p (d.val - 1)) j := by
       rw [cl, if_pos hd]

@@ -14,12 +14,14 @@ transition_counts: proof_shape=content; consumers=HardinA229457Strip.finite_cert
 -/
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCut
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClass0
@@ -35,6 +37,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripCla
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b (HardinA229635State)
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
 namespace D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
@@ -48,7 +51,7 @@ open HardinA229457StripData
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  simp only [cl, D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode_relabel,
+  simp only [cl, HardinA229635State.cl_relabel,
     D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses.class_relabel,
     bond_relabel, ProperTransfer.cl, HardinA233127SquareStrip.boundaryClass,
     Function.comp_apply, e.injective.eq_iff] <;> rfl
