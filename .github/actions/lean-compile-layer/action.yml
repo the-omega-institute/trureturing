@@ -56,7 +56,7 @@ runs:
         if [[ "$STAGE" != common ]]; then
           python3 "$compiler" verify --stage common --artifacts "$directory"
         fi
-        python3 "$compiler" build --stage "$STAGE" --artifacts "$directory"
+        bash .github/actions/lean-compile-layer/measure.sh python3 "$compiler" build --stage "$STAGE" --artifacts "$directory"
     - uses: actions/upload-artifact@v6
       with:
         name: lean-compile-${{ github.run_id }}-${{ inputs.stage }}
