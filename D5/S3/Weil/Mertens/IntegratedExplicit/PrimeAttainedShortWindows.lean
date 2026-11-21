@@ -142,7 +142,7 @@ private theorem normalized_positive_peaks {ρ : ℂ} (hρ : IsNontrivialZero ρ)
   rw [mul_left_comm, hone, mul_one] at hscaled
   simpa only [z, hpβ] using hscaled
 
-private theorem dirac_zero_support : (Measure.dirac (0 : ℝ)) (Icc 0 0) = 1 :=
+theorem dirac_zero_support : (Measure.dirac (0 : ℝ)) (Icc 0 0) = 1 :=
   Measure.dirac_apply_of_mem (show (0 : ℝ) ∈ Icc 0 0 from ⟨le_rfl, le_rfl⟩)
 
 theorem unaveraged_formula {t : ℝ} (ht : Real.log 2 ≤ t) :
