@@ -83,7 +83,6 @@ private theorem evenStart_val {m : ℕ} (e : Fin m) :
 
 private theorem evenProduct_cycle {m : ℕ} {R : Type*} [CommRing R] (hm : 2 ≤ m)
     (Z : Chart R m) : evenProduct Z = -cycleProduct hm 1 Z := by
-  have hp : (1 : ℕ) < 2 := by decide
   have horient (e : Fin m) :
       minor Z (evenVertex (e, false)) (evenVertex (e, true)) =
         (if e.val = 0 then (-1 : R) else 1) * minor Z (evenStart e) (step hm (evenStart e)) := by

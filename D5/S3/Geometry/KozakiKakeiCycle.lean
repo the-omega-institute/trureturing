@@ -35,9 +35,6 @@ theorem adjacent_ne {m : ℕ} (hm : 2 ≤ m) {i j : Col m} (h : Adjacent hm i j)
   rintro rfl
   exact (step_ne hm i) (h.elim Eq.symm Eq.symm)
 
-theorem adjacent_symm {m : ℕ} {hm : 2 ≤ m} {i j : Col m} :
-    Adjacent hm i j → Adjacent hm j i := Or.symm
-
 theorem odd_forward {m : ℕ} (hm : 2 ≤ m) (e : Fin m) :
     step hm (oddVertex (e, false)) = oddVertex (e, true) := by
   have h := e.isLt

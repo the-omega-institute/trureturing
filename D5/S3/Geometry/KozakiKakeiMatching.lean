@@ -23,7 +23,7 @@ abbrev Chart (R : Type*) (m : ℕ) := Matrix (Fin 2) (Col m) R
 def first {m : ℕ} (hm : 2 ≤ m) : Col m := ⟨0, by omega⟩
 def second {m : ℕ} (hm : 2 ≤ m) : Col m := ⟨1, by omega⟩
 def third {m : ℕ} (hm : 2 ≤ m) : Col m := ⟨2, by omega⟩
-def fourth {m : ℕ} (hm : 2 ≤ m) : Col m := ⟨3, by omega⟩
+
 def last {m : ℕ} (hm : 2 ≤ m) : Col m := ⟨2 * m - 1, by omega⟩
 
 def oddVertex {m : ℕ} (p : Fin m × Bool) : Col m :=

@@ -80,13 +80,6 @@ def remainingProduct {m : ℕ} (M : Fin m × Bool ≃ Col m) (e : Fin m) (b : Bo
     Coeff (M (e, b)) :=
   ∏ i : {i : Fin m // i ≠ e}, diff (remainingVertex M b i false) (remainingVertex M b i true)
 
-theorem eval_remainingProduct {m : ℕ} (M : Fin m × Bool ≃ Col m) (e : Fin m) (b : Bool)
-    (t : Rest (M (e, b)) → ℂ) :
-    eval t (remainingProduct M e b) =
-      ∏ i : {i : Fin m // i ≠ e},
-        (t (remainingVertex M b i true) - t (remainingVertex M b i false)) := by
-  simp [remainingProduct, diff, map_prod]
-
 private theorem matching_isolate {m : ℕ} (M : Fin m × Bool ≃ Col m)
     (e : Fin m) (b : Bool) :
     isolate (M (e, b)) (matchingPolynomial M) =

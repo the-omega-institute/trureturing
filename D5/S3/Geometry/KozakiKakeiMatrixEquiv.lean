@@ -74,10 +74,6 @@ theorem scaled_comp {m : ℕ} (L₁ L₂ : Square) (d₁ d₂ : Col m → K) (Z 
     scaled L₁ d₁ (scaled L₂ d₂ Z) = scaled (L₁ * L₂) (fun i => d₂ i * d₁ i) Z := by
   simp only [scaled, Matrix.mul_assoc, Matrix.diagonal_mul_diagonal]
 
-theorem matEquivalent_refl {m : ℕ} (Z : Chart K m) : MatEquivalent Z Z := by
-  refine ⟨1, fun _ => 1, ?_⟩
-  simp [Matrix.diagonal_one]
-
 theorem matEquivalent_symm {m : ℕ} {Z W : Chart K m} (h : MatEquivalent W Z) :
     MatEquivalent Z W := by
   obtain ⟨L, d, h⟩ := h
