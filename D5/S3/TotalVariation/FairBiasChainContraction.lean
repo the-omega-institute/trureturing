@@ -71,12 +71,12 @@ private theorem signedEntry_eq_zero_of_not_cover {c : L → A} {s t : Face c}
   rw [he]
   exact ⟨erase_subset x t.val, (card_erase_add_one hx).symm⟩
 
-private theorem cover_of_boundary_ne_zero {c : L → A} {s t : Face c}
+theorem cover_of_boundary_ne_zero {c : L → A} {s t : Face c}
     (hn : boundary c s t ≠ 0) : Cover s t := by
   by_contra hc
   exact hn (signedEntry_eq_zero_of_not_cover hc)
 
-private theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
+theorem boundary_unit_of_cover {c : L → A} {s t : Face c}
     (h : Cover s t) : boundary c s t * boundary c s t = 1 := by
   classical
   let : DecidableEq (L × Bool) := LinearOrder.toDecidableEq
