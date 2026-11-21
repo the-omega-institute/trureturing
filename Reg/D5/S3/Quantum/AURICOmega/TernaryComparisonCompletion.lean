@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
+import Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import Reg.Support.DependentFamily
 
@@ -22,6 +23,7 @@ open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonCompletion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
   (liftedModel liftedModel_noncommutative liftedModel_chainConnected one_ne_neg_one)
+open _root_.Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (not_isOpen_singleton_one)
 
 open scoped Quaternion
 
@@ -47,23 +49,6 @@ theorem not_denseRange_const {α : Type*} [Nonempty α] :
 theorem isClosed_top : IsClosed ((⊤ : Subgroup (unitary ℍ[ℝ])) : Set (unitary ℍ[ℝ])) := by
   rw [Subgroup.coe_top]
   exact isClosed_univ
-
-/-- The unit quaternions other than one do not form a closed set: the complement of a point is
-open, and the unit three-sphere is connected. -/
-theorem not_isClosed_compl_one : ¬ IsClosed ({1}ᶜ : Set (unitary ℍ[ℝ])) := by
-  intro hc
-  have : PreconnectedSpace (unitary ℍ[ℝ]) := Subtype.preconnectedSpace (by
-    rw [coe_unitary_eq_sphere]
-    exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
-  rcases isClopen_iff.mp ⟨hc, isOpen_compl_singleton⟩ with h | h
-  · have hm : (-1 : unitary ℍ[ℝ]) ∈ ({1}ᶜ : Set (unitary ℍ[ℝ])) :=
-      fun e => one_ne_neg_one (Set.mem_singleton_iff.mp e).symm
-    rw [h] at hm
-    exact hm
-  · have hm : (1 : unitary ℍ[ℝ]) ∈ ({1}ᶜ : Set (unitary ℍ[ℝ])) := by
-      rw [h]
-      trivial
-    exact hm rfl
 
 /-- The trivial subgroup and the whole group of unit quaternions are different. -/
 theorem bot_ne_top_unitary : (⊥ : Subgroup (unitary ℍ[ℝ])) ≠ ⊤ := by
@@ -171,8 +156,11 @@ abbrev arena : Arena where
   Law r := ∀ H : Subgroup (unitary ℍ[ℝ]),
     ReadingComplete (subgroupModel H) ↔ IsClosed (r.readout () () H)
 
+/-- The unit quaternions other than one do not form a closed set, since the point one is not
+open in the connected group of unit quaternions. -/
 theorem rejected_law : ¬ arena.Law rejected := fun h =>
-  not_isClosed_compl_one ((h ⊤).1 ((subgroupModel_readingComplete_iff ⊤).2 isClosed_top))
+  not_isOpen_singleton_one (isClosed_compl_iff.mp
+    ((h ⊤).1 ((subgroupModel_readingComplete_iff ⊤).2 isClosed_top)))
 
 /-- The exact statement of the source theorem. -/
 abbrev sourceStatement : Prop := type_of% @subgroupModel_readingComplete_iff

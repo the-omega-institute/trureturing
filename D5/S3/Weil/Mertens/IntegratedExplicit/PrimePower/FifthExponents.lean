@@ -19,7 +19,7 @@ open Chebyshev Finset Real
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePowerFifthCutoff
 
-private theorem psi_root_eq_sum_multiples {t : ℝ} (ht : 1 ≤ t) {d N : ℕ} (hd : 2 ≤ d)
+theorem psi_root_eq_sum_multiples {t : ℝ} (ht : 1 ≤ t) {d N : ℕ} (hd : 2 ≤ d)
     (hN : ⌊log t / log 2⌋₊ ≤ N) :
     psi (t ^ (1 / (d : ℝ))) =
       ∑ k ∈ (Icc 2 N).filter (fun k => d ∣ k), theta (t ^ (1 / (k : ℝ))) := by

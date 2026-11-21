@@ -19,6 +19,10 @@ on:
         description: Prefer the protected production volume namespace
         type: boolean
         default: false
+      sparse-volume:
+        description: Named verification volume namespace to probe before Actions caches
+        type: string
+        default: ''
       indexed:
         description: Check the sharded Actions seed before scheduling a cold build
         type: boolean
@@ -28,7 +32,7 @@ on:
         description: Effective Release seed selection for the checked-out source
         value: ${{ jobs.common.outputs.seed }}
       sparse:
-        description: A compatible production volume predecessor was selected
+        description: A matching checked Release volume was selected for sparse installation
         value: ${{ jobs.common.outputs.sparse }}
       history-depth:
         description: Checkout depth covering the selected predecessor and publication source
@@ -69,16 +73,21 @@ jobs:
             fi
           fi
       - id: sparse
-        if: inputs.sparse-release && inputs.publication-mode == 'production' && inputs.strategy == 'auto' && steps.support.outputs.sparse == 'true'
+        if: >-
+          steps.support.outputs.sparse == 'true' &&
+          ((inputs.publication-mode == 'production' && inputs.sparse-release && inputs.strategy == 'auto') ||
+           (inputs.publication-mode == 'verification' && inputs.sparse-volume != '' && contains(fromJSON('["auto","release"]'), inputs.strategy)))
         uses: ./.github/actions/lean-release-base
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_RELEASE_SPARSE_ONLY: '1'
+          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.publication-mode == 'verification' && inputs.sparse-volume || '' }}
         with:
           operation: select-base
-          mode: production
+          previous-commit-only: ${{ inputs.strategy == 'release' }}
+          mode: ${{ inputs.publication-mode }}
       - id: ancestry
-        if: steps.sparse.outputs.found == 'true'
+        if: inputs.publication-mode == 'production' && steps.sparse.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           BASE: ${{ steps.sparse.outputs.producer }}

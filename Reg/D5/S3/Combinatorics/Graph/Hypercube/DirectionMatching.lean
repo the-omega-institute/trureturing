@@ -99,5 +99,80 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+namespace ProfileCard
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => 2 ^ n) (fun e => nomatch e)
+
+def zero : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ n : ℕ, Nat.card (Profile n) = R.readout () () n
+
+private theorem zero_fails : ¬ arena.Law zero := by
+  intro bad
+  exact Nat.one_ne_zero ((profileCard 0).symm.trans (bad 0))
+
+def family : Registration arena (type_of% profileCard) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨profileCard, zero, zero_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨zero, ?_, rfl, zero_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun anchor => nomatch anchor
+  dependence := by
+    rintro ⟨⟩
+    exact ⟨(), 0, 1, by decide⟩
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    profileCard (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching.ProfileCard.cardinality
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching.ProfileCard.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => 2 ^ n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ProfileCard
+
 end
 end Reg.D5.S3.Combinatorics.Graph.Hypercube.DirectionMatching
