@@ -34,7 +34,9 @@ internal sealed class SplitPrimeHostSeriesDocument : IScribeDocumentDefinition
                         + "prime mass of one reduced progression diverges, and all additional terms are nonnegative.")),
                     Paragraph(Text("If q is chosen first, use the discriminants for cutoff max(B,q). "
                         + "Every one of them passes the original splitting tests and the additional test at q. "
-                        + "Their divergent mass therefore gives divergent mass in T(B,q)."))),
+                        + "Their divergent mass therefore gives divergent mass in T(B,q).")),
+                    Paragraph(Text("Placing the same q and d in prescribed logarithmic ranges and controlling "
+                        + "their conductors and character sums require additional quantitative estimates."))),
                 DescribeRole.Theorem))));
 
     private static Formula Claim()

@@ -24,6 +24,8 @@ For fixed d, use the reduced progression that is 3 modulo 8 and 1 modulo d. Then
 
 If q is chosen first, use the discriminants for cutoff max(B,q). Every one of them passes the original splitting tests and the additional test at q. Their divergent mass therefore gives divergent mass in T(B,q).
 
+Placing the same q and d in prescribed logarithmic ranges and controlling their conductors and character sums require additional quantitative estimates.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/SplitPrimeHostSeries.split_prime_host_series`
