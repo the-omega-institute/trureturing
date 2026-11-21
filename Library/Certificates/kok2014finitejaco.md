@@ -120,9 +120,10 @@ are proved there through the conjectured Theorem 2.10. Corollary 10 of Ma and
 Zhang, Zenodo DOI 10.5281/zenodo.24369124, states the first three throughout
 that domain and the failure of the singleton at h=l=5, and for r,s>=4 the
 exceptional orders (F_r,F_s)=(3,3) for the degree and (3,3),(5,5) for the
-singleton. The
+singleton, with Delta_6=3, J_6={3,4,5}, Delta_10=6 and J_10={6,7}. The
 repository proves this through the Binet error eps_r=F_r/phi-F_(r-1)=
--(-1/phi)^r and extends it to indices r,s>=3: Delta_(F_r)=F_(r-1) for r>=3
-with a singleton maximum set exactly for r>=4, and for sums the degree fails
-only at r=s=4 while the singleton holds exactly away from (4,4), (5,5) and the
-pairs containing an index 3 other than {3,4}.
+-(-1/phi)^r and gives the exact values for all indices r,s>=3:
+Delta_(F_r)=F_(r-1) and J_(F_r)=[F_(r-1),F_(r-1)+[r=3]];
+Delta_(F_r+F_s)=F_(r-1)+F_(s-1)-[r=s=4] and J_(F_r+F_s)=[Delta,Delta+c]
+with c=2 at r=s=4, c=1 at r=s=5 and at the pairs containing an index 3 other
+than {3,4}, and c=0 otherwise.

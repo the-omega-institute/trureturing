@@ -2,9 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/ConceptDynamics/GraphColoring/JacoFibonacciSums
    mirror-E: none(waiver:structural-proof)
-   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoMaximumSet]
+   anchors: [lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoMaximumSet, lake/module/D5.S3.ConceptDynamics.GraphColoring.JacoAdditionLaw]
    utility: none
-   digest: Maximum degrees and maximum sets of the finite Jaco graphs at Fibonacci orders and sums of two Fibonacci orders, with the exact exceptions. -/
+   digest: Exact maximum degrees and maximum sets of the finite Jaco graphs at Fibonacci orders and at sums of two Fibonacci orders. -/
 
 import D5.S3.ConceptDynamics.GraphColoring.JacoMaximumSet
 
@@ -18,18 +18,26 @@ namespace D5.S3.ConceptDynamics.GraphColoring.JacoFibonacciSums
 /-
 proof_shape:
   eps: definition
-  g_pos, g_quad, g_fine, g3, g4, g5, g6, g7: bind-only (consumers: eps_three, eps_four,
-    eps_five, eps_even, eps_odd, single_cases, sum_cases)
-  eps_pow, eps_three, eps_four, eps_five, eps_even, eps_odd, eps_class: bind-only (consumers:
-    eps_class, single_cases, sum_cases)
-  fib_ge_two: bind-only (consumers: single_cases, sum_cases)
-  criterion: content (consumers: single_cases, sum_cases)
-  single_cases, sum_cases: content (consumer: result)
+  g_pos: bind-only (consumers: g_fine, eps_even, eps_odd)
+  g_quad: bind-only (consumers: g_fine, g3, g4, g5, g6, g7, core)
+  g_fine: bind-only (consumers: eps_even, eps_odd, core, single_exact, sum_exact)
+  g3, g4, g5, g6, g7: bind-only (consumers: eps_three, eps_four, eps_five, eps_even, eps_odd)
+  eps_pow: bind-only (consumers: eps_three, eps_four, eps_five, eps_even, eps_odd)
+  eps_three, eps_four, eps_five, eps_even, eps_odd: bind-only (consumers: eps_class, sum_exact)
+  eps_class: bind-only (consumers: single_exact, sum_exact)
+  fib_ge_two: bind-only (consumers: single_exact, sum_exact)
+  core: content (consumers: single_exact, sum_exact)
+  single_exact, sum_exact: content (consumer: result)
   result: content
-escape_witness: the Binet error F_r / phi = F_(r-1) + eps_r with eps_r = -(-1/phi)^r, the
-  criterion that an order n with (n + 2)/phi = p + 2/phi + E has maximum degree p exactly when
-  2/phi + E >= 1 and the singleton maximum set {p} exactly when moreover E < 2 - 3/phi, and the
-  classification of the sign and size of eps_r for r = 3, 4, 5, even r >= 6 and odd r >= 7.
+direct frozen dependencies:
+  D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLaw.delta_eq_floor (statement_id
+    sha256:289669fd9ce5e9c638eb5eb4c27e641b00d3b68fa3cf9720a425b277073d78ff)
+  D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet.result (statement_id
+    sha256:d31cfe56216a7368dfd3700d57fd0f68ca52816f38e6d48739b538a93e32a20f)
+escape_witness: the Binet error F_r / phi = F_(r-1) + eps_r with eps_r = -(-1/phi)^r and the
+  classification of eps_r for r = 3, 4, 5, even r >= 6 and odd r >= 7; and the exact reading
+  in core: (n + 2)/phi = (q + 1) + x with c (1 - 1/phi) <= x < (c + 1)(1 - 1/phi) forces
+  Delta_n = q and J_n = [q, q + c], because (x - c/phi^2) phi^2 = x phi^2 - c.
 admission_basis: escape-witness
 -/
 
@@ -119,128 +127,142 @@ private theorem eps_class (r : ℕ) (hr : 3 ≤ r) :
         rcases ho with ⟨k, hk⟩; omega
       exact Or.inr (Or.inr (Or.inr (Or.inr ⟨h7, eps_odd r h7 ho⟩)))
 
-/-- An order `n` with `(n + 2)/φ = p + 2/φ + E` and `0 ≤ 2/φ + E < 2` has maximum degree `p`
-exactly when `2/φ + E ≥ 1`, and maximum set `{p}` exactly when moreover `E < 2 - 3/φ`. -/
-private theorem criterion (n p : ℕ) (E : ℝ) (hn : 2 ≤ n)
-    (h : ((n : ℝ) + 2) * Real.goldenRatio⁻¹ = p + 2 * Real.goldenRatio⁻¹ + E)
-    (h0 : 0 ≤ 2 * Real.goldenRatio⁻¹ + E) (h2 : 2 * Real.goldenRatio⁻¹ + E < 2) :
-    ((jaco n).maxDegree = p ↔ 1 ≤ 2 * Real.goldenRatio⁻¹ + E) ∧
-      (jaconian n = {p} ↔ 1 ≤ 2 * Real.goldenRatio⁻¹ + E ∧ E < 2 - 3 * Real.goldenRatio⁻¹) := by
-  obtain ⟨-, hset, hsing, -⟩ := JacoMaximumSet.result
+/-- An order `n ≥ 2` with `(n + 2)/φ = (q + 1) + x`, `0 ≤ x < 1` and
+`c (1 - 1/φ) ≤ x < (c + 1)(1 - 1/φ)` has `Δ_n = q` and `J_n = [q, q + c]`. -/
+private theorem core (n q c : ℕ) (x : ℝ) (hn : 2 ≤ n)
+    (h : ((n : ℝ) + 2) * Real.goldenRatio⁻¹ = ((q : ℝ) + 1) + x) (hx0 : 0 ≤ x) (hx1 : x < 1)
+    (hc0 : (c : ℝ) * (1 - Real.goldenRatio⁻¹) ≤ x)
+    (hc1 : x < ((c : ℝ) + 1) * (1 - Real.goldenRatio⁻¹)) :
+    (jaco n).maxDegree = q ∧ jaconian n = Finset.Icc q (q + c) := by
+  obtain ⟨-, hset, -, -⟩ := JacoMaximumSet.result
+  have hq := g_quad
+  have hg := g_fine
+  set g := Real.goldenRatio⁻¹ with hgdef
   have hdel := delta_eq_floor n
-  rw [delta, div_eq_mul_inv, h] at hdel
-  have hmem : (jaco n).maxDegree ∈ jaconian n := by
-    have hne : (jaconian n).Nonempty := by
-      rw [← Finset.card_pos]; rcases (hset n hn).2.2.2 with h | h | h <;> omega
-    rw [(hset n hn).2.1] at hne ⊢
-    exact Finset.mem_Icc.mpr ⟨le_rfl, Finset.nonempty_Icc.mp hne⟩
-  have hdeg : (jaco n).maxDegree = p ↔ 1 ≤ 2 * Real.goldenRatio⁻¹ + E := by
-    constructor
-    · intro hp
-      by_contra hlt
-      push Not at hlt
-      have hf : ⌊(p : ℝ) + 2 * Real.goldenRatio⁻¹ + E⌋ = p := by
-        rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
-      rw [hf, hp] at hdel
-      omega
-    · intro h1
-      have hf : ⌊(p : ℝ) + 2 * Real.goldenRatio⁻¹ + E⌋ = p + 1 := by
-        rw [Int.floor_eq_iff]; push_cast; constructor <;> linarith
-      rw [hf] at hdel
-      omega
-  refine ⟨hdeg, ?_⟩
-  constructor
-  · intro hJ
-    have hp : (jaco n).maxDegree = p := by
-      rw [hJ, Finset.mem_singleton] at hmem; exact hmem
-    have h1 := hdeg.mp hp
-    refine ⟨h1, ?_⟩
-    have hs := ((hsing n hn).1).mp (by rw [hp]; exact hJ)
-    have hfr : frac n = 2 * Real.goldenRatio⁻¹ + E - 1 := by
-      rw [frac, Int.fract_eq_iff]
-      refine ⟨by linarith, by linarith, p + 1, ?_⟩
-      rw [div_eq_mul_inv, h]; push_cast; ring
-    rw [hfr] at hs
-    linarith
-  · rintro ⟨h1, hE⟩
-    have hp := hdeg.mpr h1
-    have hfr : frac n = 2 * Real.goldenRatio⁻¹ + E - 1 := by
-      rw [frac, Int.fract_eq_iff]
-      refine ⟨by linarith, by linarith, p + 1, ?_⟩
-      rw [div_eq_mul_inv, h]; push_cast; ring
-    have hs : frac n < 1 - Real.goldenRatio⁻¹ := by rw [hfr]; linarith
-    have := ((hsing n hn).1).mpr hs
-    rw [hp] at this
-    exact this
+  have hf : ⌊((n : ℝ) + 2) / Real.goldenRatio⌋ = q + 1 := by
+    rw [Int.floor_eq_iff, div_eq_mul_inv, ← hgdef, h]; push_cast; constructor <;> linarith
+  rw [delta, hf] at hdel
+  have hP : (jaco n).maxDegree = q := by omega
+  have hfr : frac n = x := by
+    rw [frac, Int.fract_eq_iff]
+    refine ⟨hx0, hx1, q + 1, ?_⟩
+    rw [div_eq_mul_inv, ← hgdef, h]; push_cast; ring
+  have hphi : Real.goldenRatio = 1 + g := by
+    rw [hgdef, Real.inv_goldenRatio]; linarith [Real.one_sub_goldenConj]
+  have hsq : Real.goldenRatio ^ 2 = 2 + g := by rw [hphi]; nlinarith
+  have key : x * (2 + g) - c = (x - c * (1 - g)) * (2 + g) := by
+    linear_combination (-(c : ℝ)) * hq
+  have hfl : ⌊x * Real.goldenRatio ^ 2⌋ = c := by
+    rw [hsq, Int.floor_eq_iff]
+    have hlo : 0 ≤ (x - c * (1 - g)) * (2 + g) := mul_nonneg (by linarith) (by linarith)
+    have hhi : (x - c * (1 - g)) * (2 + g) < 1 := by
+      have : x - c * (1 - g) < 1 - g := by linarith
+      nlinarith
+    push_cast
+    constructor <;> linarith
+  obtain ⟨-, hJ, hcard, -⟩ := hset n hn
+  rw [hfr, hfl, hJ, Nat.card_Icc, hP] at hcard
+  rw [hJ, hP]
+  refine ⟨rfl, ?_⟩
+  congr 1
+  omega
 
 private theorem fib_ge_two (r : ℕ) (hr : 3 ≤ r) : 2 ≤ fib r := by
   have h3 : fib 3 = 2 := by decide
   have := Nat.fib_mono hr
   omega
 
-/-- Single Fibonacci orders. -/
-private theorem single_cases (r : ℕ) (hr : 3 ≤ r) :
-    (jaco (fib r)).maxDegree = fib (r - 1) ∧ (jaconian (fib r) = {fib (r - 1)} ↔ 4 ≤ r) := by
-  have hc := criterion (fib r) (fib (r - 1)) (eps r) (fib_ge_two r hr)
-    (by rw [eps]; ring)
+/-- Single Fibonacci orders: `Δ_(F_r) = F_(r-1)` and `J_(F_r) = [F_(r-1), F_(r-1) + [r = 3]]`. -/
+private theorem single_exact (r : ℕ) (hr : 3 ≤ r) :
+    (jaco (fib r)).maxDegree = fib (r - 1) ∧
+      jaconian (fib r) = Finset.Icc (fib (r - 1)) (fib (r - 1) + if r = 3 then 1 else 0) := by
   have hg := g_fine
-  rcases eps_class r hr with ⟨rfl, he⟩ | ⟨rfl, he⟩ | ⟨rfl, he⟩ | ⟨h6, he1, he2⟩ | ⟨h7, he1, he2⟩ <;>
-  · obtain ⟨hd, hs⟩ := hc (by linarith) (by linarith)
-    refine ⟨hd.mpr (by linarith), ?_⟩
-    rw [hs]
-    constructor
-    · rintro ⟨-, hE⟩
-      first | omega | (exfalso; linarith)
-    · intro h4
-      first | (exfalso; omega) | exact ⟨by linarith, by linarith⟩
+  have hh : ((fib r : ℕ) + 2 : ℝ) * Real.goldenRatio⁻¹ =
+      ((fib (r - 1) : ℕ) + 1 : ℝ) + (2 * Real.goldenRatio⁻¹ + eps r - 1) := by
+    rw [eps]; ring
+  rcases eps_class r hr with ⟨rfl, he⟩ | ⟨rfl, he⟩ | ⟨rfl, he⟩ | ⟨h6, he1, he2⟩ | ⟨h7, he1, he2⟩
+  · simpa using core _ _ 1 _ (fib_ge_two 3 le_rfl) hh (by linarith) (by linarith)
+      (by push_cast; linarith) (by push_cast; linarith)
+  all_goals
+    have hc := core _ _ 0 _ (fib_ge_two _ hr) hh (by linarith) (by linarith)
+      (by push_cast; linarith) (by push_cast; linarith)
+    first | simpa using hc | simpa [show ¬r = 3 by omega] using hc
 
-/-- Sums of two Fibonacci orders. -/
-private theorem sum_cases (r s : ℕ) (hr : 3 ≤ r) (hs : 3 ≤ s) :
-    ((jaco (fib r + fib s)).maxDegree = fib (r - 1) + fib (s - 1) ↔ ¬(r = 4 ∧ s = 4)) ∧
-      (jaconian (fib r + fib s) = {fib (r - 1) + fib (s - 1)} ↔
-        ¬(r = 4 ∧ s = 4) ∧ ¬(r = 5 ∧ s = 5) ∧ (r = 3 → s = 4) ∧ (s = 3 → r = 4)) := by
-  have hc := criterion (fib r + fib s) (fib (r - 1) + fib (s - 1)) (eps r + eps s)
-    (by have := fib_ge_two r hr; omega) (by rw [eps, eps]; push_cast; ring)
+/-- The correction `c(r, s)` of the maximum set at `F_r + F_s`. -/
+private theorem sum_exact (r s : ℕ) (hr : 3 ≤ r) (hs : 3 ≤ s) :
+    (jaco (fib r + fib s)).maxDegree = fib (r - 1) + fib (s - 1) - (if r = 4 ∧ s = 4 then 1 else 0) ∧
+      jaconian (fib r + fib s) = Finset.Icc (jaco (fib r + fib s)).maxDegree
+        ((jaco (fib r + fib s)).maxDegree + if r = 4 ∧ s = 4 then 2 else
+          if (r = 5 ∧ s = 5) ∨ (r = 3 ∧ s ≠ 4) ∨ (s = 3 ∧ r ≠ 4) then 1 else 0) := by
   have hg := g_fine
-  rcases eps_class r hr with ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨hr6, hr1, hr2⟩ | ⟨hr7, hr1, hr2⟩ <;>
-  rcases eps_class s hs with ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨hs6, hs1, hs2⟩ | ⟨hs7, hs1, hs2⟩ <;>
-  · obtain ⟨hd, hJ⟩ := hc (by linarith) (by linarith)
-    rw [hd, hJ]
-    constructor
-    · constructor
-      · intro h
-        first | omega | (exfalso; linarith)
-      · intro h
-        first | linarith | (exfalso; omega)
-    · constructor
-      · rintro ⟨h1, h2⟩
-        first | omega | (exfalso; linarith)
-      · intro h
-        first | exact ⟨by linarith, by linarith⟩ | (exfalso; omega)
+  have hn : 2 ≤ fib r + fib s := by have := fib_ge_two r hr; omega
+  have hh : ((fib r + fib s : ℕ) + 2 : ℝ) * Real.goldenRatio⁻¹ =
+      ((fib (r - 1) + fib (s - 1) : ℕ) + 1 : ℝ) + (2 * Real.goldenRatio⁻¹ + (eps r + eps s) - 1) := by
+    rw [eps, eps]; push_cast; ring
+  by_cases h44 : r = 4 ∧ s = 4
+  · obtain ⟨rfl, rfl⟩ := h44
+    have hf3 : fib (4 - 1) = 2 := by decide
+    have hh' : ((fib 4 + fib 4 : ℕ) + 2 : ℝ) * Real.goldenRatio⁻¹ =
+        ((3 : ℕ) + 1 : ℝ) + (2 * Real.goldenRatio⁻¹ + (eps 4 + eps 4)) := by
+      rw [hh, hf3]; push_cast; ring
+    have hc := core _ 3 2 _ hn hh' (by rw [eps_four]; linarith) (by rw [eps_four]; linarith)
+      (by rw [eps_four]; push_cast; linarith) (by rw [eps_four]; push_cast; linarith)
+    simp only [and_self, ↓reduceIte, hf3]
+    rw [hc.1, hc.2]
+    exact ⟨rfl, rfl⟩
+  · by_cases h1 : (r = 5 ∧ s = 5) ∨ (r = 3 ∧ s ≠ 4) ∨ (s = 3 ∧ r ≠ 4)
+    · simp only [h44, h1, ↓reduceIte, Nat.sub_zero]
+      have hb : 2 - 3 * Real.goldenRatio⁻¹ ≤ eps r + eps s ∧
+          eps r + eps s < 3 - 4 * Real.goldenRatio⁻¹ := by
+        rcases eps_class r hr with ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨hr6, hr1, hr2⟩ |
+            ⟨hr7, hr1, hr2⟩ <;>
+        rcases eps_class s hs with ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨hs6, hs1, hs2⟩ |
+            ⟨hs7, hs1, hs2⟩ <;>
+        first | (exfalso; omega) | (constructor <;> linarith)
+      have hc := core _ _ 1 _ hn hh (by linarith) (by linarith)
+        (by push_cast; linarith) (by push_cast; linarith)
+      rw [hc.1, hc.2]
+      exact ⟨rfl, rfl⟩
+    · simp only [h44, h1, ↓reduceIte, Nat.sub_zero, Nat.add_zero]
+      have hb : -(2 * Real.goldenRatio⁻¹ - 1) ≤ eps r + eps s ∧
+          eps r + eps s < 2 - 3 * Real.goldenRatio⁻¹ := by
+        rcases eps_class r hr with ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨rfl, hr'⟩ | ⟨hr6, hr1, hr2⟩ |
+            ⟨hr7, hr1, hr2⟩ <;>
+        rcases eps_class s hs with ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨rfl, hs'⟩ | ⟨hs6, hs1, hs2⟩ |
+            ⟨hs7, hs1, hs2⟩ <;>
+        first | (exfalso; omega) | (constructor <;> linarith)
+      have hc := core _ _ 0 _ hn hh (by linarith) (by linarith)
+        (by push_cast; linarith) (by push_cast; linarith)
+      rw [hc.1, hc.2]
+      exact ⟨rfl, by simp⟩
 
 /-- Fibonacci orders and pairwise sums of Fibonacci orders in the finite linear Jaco graphs.
-For `r ≥ 3`, `Δ_(F_r) = F_(r-1)`, with maximum set `{F_(r-1)}` exactly when `r ≥ 4`. For
-`r, s ≥ 3`, `Δ_(F_r + F_s) = F_(r-1) + F_(s-1)` except at `r = s = 4`, and the maximum set is
-`{F_(r-1) + F_(s-1)}` except at `r = s = 4`, `r = s = 5` and the pairs with a `3` other than
-`{3, 4}`. For distinct Fibonacci orders with `r, s ≥ 4` both additive assertions hold. -/
+For `r ≥ 3`, `Δ_(F_r) = F_(r-1)` and `J_(F_r) = [F_(r-1), F_(r-1) + [r = 3]]`. For `r, s ≥ 3`,
+`Δ_(F_r + F_s) = F_(r-1) + F_(s-1) - [r = s = 4]` and `J_(F_r + F_s) = [Δ, Δ + c]` with `c = 2`
+at `r = s = 4`, `c = 1` at `r = s = 5` and at the pairs containing a `3` other than `{3, 4}`,
+and `c = 0` otherwise. For distinct Fibonacci orders with `r, s ≥ 4`,
+`Δ_(F_r + F_s) = Δ_(F_r) + Δ_(F_s)` and `J_(F_r + F_s) = {Δ_(F_r) + Δ_(F_s)}`. -/
 theorem result :
     (∀ r, 3 ≤ r → (jaco (fib r)).maxDegree = fib (r - 1) ∧
-      (jaconian (fib r) = {fib (r - 1)} ↔ 4 ≤ r)) ∧
+      jaconian (fib r) = Finset.Icc (fib (r - 1)) (fib (r - 1) + if r = 3 then 1 else 0)) ∧
     (∀ r s, 3 ≤ r → 3 ≤ s →
-      ((jaco (fib r + fib s)).maxDegree = fib (r - 1) + fib (s - 1) ↔ ¬(r = 4 ∧ s = 4))) ∧
-    (∀ r s, 3 ≤ r → 3 ≤ s →
-      (jaconian (fib r + fib s) = {fib (r - 1) + fib (s - 1)} ↔
-        ¬(r = 4 ∧ s = 4) ∧ ¬(r = 5 ∧ s = 5) ∧ (r = 3 → s = 4) ∧ (s = 3 → r = 4))) ∧
+      (jaco (fib r + fib s)).maxDegree = fib (r - 1) + fib (s - 1) - (if r = 4 ∧ s = 4 then 1 else 0) ∧
+      jaconian (fib r + fib s) = Finset.Icc (jaco (fib r + fib s)).maxDegree
+        ((jaco (fib r + fib s)).maxDegree + if r = 4 ∧ s = 4 then 2 else
+          if (r = 5 ∧ s = 5) ∨ (r = 3 ∧ s ≠ 4) ∨ (s = 3 ∧ r ≠ 4) then 1 else 0)) ∧
     (∀ r s, 4 ≤ r → 4 ≤ s → fib r ≠ fib s →
       (jaco (fib r + fib s)).maxDegree = (jaco (fib r)).maxDegree + (jaco (fib s)).maxDegree ∧
       jaconian (fib r + fib s) = {(jaco (fib r)).maxDegree + (jaco (fib s)).maxDegree}) := by
-  refine ⟨single_cases, fun r s hr hs => (sum_cases r s hr hs).1,
-    fun r s hr hs => (sum_cases r s hr hs).2, ?_⟩
+  refine ⟨single_exact, sum_exact, ?_⟩
   intro r s hr hs hne
   have hrs : r ≠ s := fun h => hne (h ▸ rfl)
-  rw [(single_cases r (by omega)).1, (single_cases s (by omega)).1]
-  obtain ⟨hd, hJ⟩ := sum_cases r s (by omega) (by omega)
-  exact ⟨hd.mpr (by omega), hJ.mpr ⟨by omega, by omega, by omega, by omega⟩⟩
+  rw [(single_exact r (by omega)).1, (single_exact s (by omega)).1]
+  obtain ⟨hd, hJ⟩ := sum_exact r s (by omega) (by omega)
+  have h44 : ¬(r = 4 ∧ s = 4) := by omega
+  have h1 : ¬((r = 5 ∧ s = 5) ∨ (r = 3 ∧ s ≠ 4) ∨ (s = 3 ∧ r ≠ 4)) := by omega
+  simp only [h44, h1, ↓reduceIte, Nat.sub_zero, Nat.add_zero] at hd hJ
+  rw [hJ, hd]
+  exact ⟨rfl, by simp⟩
 
 #print axioms result
 
