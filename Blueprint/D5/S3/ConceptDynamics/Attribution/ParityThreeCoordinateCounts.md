@@ -18,7 +18,7 @@ CountVectors(3) is the type of natural-valued functions on Fin(3). Total(u) sums
 
 The orbit fibre criterion supplies one multiplicity and one fixed count at each relevant coordinate per output orbit. The ordinary cells are four-point orbits. Each cell in the all-ones odd column contains one two-point orbit per right colour. At odd k the parities of these multiplicities obstruct the two possible saturations of a coordinate.
 
-The minimum-budget criterion supplies the multiplier-one block. Four pairs of matchings certify all multiplier-two vectors up to coordinate permutation. Decompositions of integer vectors add these blocks within the stated bounds and preserve both marginals.
+The minimum-budget criterion supplies the multiplier-one block. Four pairs of matchings give products of coordinate ranges. Sorting and the total bound select a pair for each multiplier-two vector. Decompositions add these blocks within the stated bounds and preserve both marginals.
 
 ## References
 

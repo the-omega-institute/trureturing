@@ -69,8 +69,8 @@ internal sealed class ParityThreeCoordinateCountsDocument : IScribeDocumentDefin
                 + "one two-point orbit per right colour. At odd k the parities of these "
                 + "multiplicities obstruct the two possible saturations of a coordinate.")),
                 Paragraph(Text("The minimum-budget criterion supplies the multiplier-one "
-                + "block. Four pairs of matchings certify all multiplier-two vectors up to "
-                + "coordinate permutation. Decompositions of integer vectors add these "
+                + "block. Four pairs of matchings give products of coordinate ranges. "
+                + "Sorting and the total bound select a pair for each multiplier-two vector. Decompositions add these "
                 + "blocks within the stated bounds and preserve both marginals."))),
             DescribeRole.Theorem))));
 }

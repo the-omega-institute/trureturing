@@ -207,7 +207,7 @@ private theorem count_source_event {S T : Type*} [Fintype S] [Fintype T]
         right_inv := fun _ => rfl }
     exact Nat.card_congr e
   · rw [ite_eq_right h]
-    haveI : IsEmpty {s : S // f s = t ∧ P (f s)} :=
+    have : IsEmpty {s : S // f s = t ∧ P (f s)} :=
       ⟨fun s => h (s.property.1 ▸ s.property.2)⟩
     simp
 
@@ -705,11 +705,11 @@ private def BudgetTwoCoupling.valid (c : BudgetTwoCoupling) : Bool :=
   decide (∀ p, c.specialFirstColour p ≤ 2 * c.pooled p 0) &&
   decide (∀ colour, ∑ p, c.special p colour = 2)
 
-private def budgetTwoCouplings : List BudgetTwoCoupling :=
-  [⟨![1, 0, 3, 2], ![1, 3, 0, 2], ![0, 0, 2, 0]⟩,
-   ⟨![2, 0, 3, 1], ![2, 0, 3, 1], ![0, 2, 0, 0]⟩,
-   ⟨![1, 2, 3, 0], ![2, 0, 3, 1], ![0, 0, 0, 2]⟩,
-   ⟨![1, 0, 3, 2], ![1, 0, 3, 2], ![0, 2, 0, 0]⟩]
+private def budgetTwoCouplings : Fin 4 → BudgetTwoCoupling :=
+  ![⟨![1, 0, 3, 2], ![1, 3, 0, 2], ![0, 0, 2, 0]⟩,
+    ⟨![2, 0, 3, 1], ![2, 0, 3, 1], ![0, 2, 0, 0]⟩,
+    ⟨![1, 2, 3, 0], ![2, 0, 3, 1], ![0, 0, 0, 2]⟩,
+    ⟨![1, 0, 3, 2], ![1, 0, 3, 2], ![0, 2, 0, 0]⟩]
 
 private abbrev Cell := Fin 4 × (Fin 3 ⊕ Fin 2)
 
@@ -737,39 +737,123 @@ private theorem fixed_law (c : BudgetTwoCoupling) (mask : ℕ) (cell : Cell) :
     simp [h.1]
   · omega
 
-private def BudgetTwoCoupling.total (c : BudgetTwoCoupling) (i : Fin 3) (mask : Fin 64) : ℕ :=
+private def BudgetTwoCoupling.total (c : BudgetTwoCoupling) (i : Fin 3) (mask : ℕ) : ℕ :=
   4 * (∑ p : Fin 4, ∑ j : Fin 3, if leftWord p i && rightWord j.succ i then
-    c.fixed mask.val (p, .inl j) else 0) +
-  2 * (∑ p : Fin 4, ∑ d : Fin 2, if leftWord p i then c.fixed mask.val (p, .inr d) else 0)
+    c.fixed mask (p, .inl j) else 0) +
+  2 * (∑ p : Fin 4, ∑ d : Fin 2, if leftWord p i then c.fixed mask (p, .inr d) else 0)
 
-private def BudgetTwoCoupling.reaches (c : BudgetTwoCoupling) (i : Fin 3) (value : ℕ) : Bool :=
-  (List.finRange 64).any (fun mask => c.total i mask == 4 * value)
+private def baseCount : Fin 4 → Fin 3 → ℕ :=
+  ![![0, 0, 2], ![0, 0, 0], ![1, 1, 0], ![0, 0, 0]]
 
--- The kernel checks the finite certificate by reduction over the tuple and mask indices.
-set_option maxRecDepth 4000 in
-set_option maxHeartbeats 2000000 in
-private theorem budget_two_mask_certificate :
-    ∀ x y z : Fin 5, x.val ≤ y.val → y.val ≤ z.val → x.val + y.val + z.val ≤ 8 →
-      budgetTwoCouplings.any (fun c => c.valid && c.reaches 0 x.val && c.reaches 1 y.val &&
-        c.reaches 2 z.val) = true := by
-  decide
+private def ordinaryBit : Fin 4 → Fin 3 → ℕ :=
+  ![![0, 8, 0], ![16, 0, 8], ![0, 0, 2], ![0, 16, 8]]
+
+private def firstSpecialBit : Fin 4 → Fin 3 → ℕ :=
+  ![![4, 2, 2], ![0, 2, 2], ![4, 1, 1], ![0, 2, 2]]
+
+private def secondSpecialBit : Fin 4 → Fin 3 → ℕ :=
+  ![![0, 0, 4], ![0, 4, 4], ![0, 4, 0], ![0, 4, 4]]
+
+private def selectedMask (r : Fin 4) (i : Fin 3) (a b c : Bool) : ℕ :=
+  (if a then ordinaryBit r i else 0) +
+    (if b then firstSpecialBit r i else 0) + (if c then secondSpecialBit r i else 0)
+
+private theorem selected_total (r : Fin 4) (i : Fin 3) (a b c : Bool) :
+    (budgetTwoCouplings r).total i (selectedMask r i a b c) =
+      4 * (baseCount r i + (if a = true ∧ (ordinaryBit r i ≠ 0) then 2 else 0) +
+        (if b = true ∧ (firstSpecialBit r i ≠ 0) then 1 else 0) +
+        (if c = true ∧ (secondSpecialBit r i ≠ 0) then 1 else 0)) := by
+  fin_cases r <;> fin_cases i <;> cases a <;> cases b <;> cases c <;> rfl
+
+private def SelectionCondition (r : Fin 4) (i : Fin 3) (u : ℕ) : Prop :=
+  ∃ a b c : Bool, u = baseCount r i + (if a = true ∧ (ordinaryBit r i ≠ 0) then 2 else 0) +
+    (if b = true ∧ (firstSpecialBit r i ≠ 0) then 1 else 0) +
+    (if c = true ∧ (secondSpecialBit r i ≠ 0) then 1 else 0)
+
+private theorem select_no_ordinary (r : Fin 4) (i : Fin 3) (u : ℕ)
+    (lower : baseCount r i ≤ u)
+    (upper : u ≤ baseCount r i + (if firstSpecialBit r i ≠ 0 then 1 else 0) +
+      (if secondSpecialBit r i ≠ 0 then 1 else 0)) :
+    ∃ b c : Bool, u = baseCount r i + (if b = true ∧ (firstSpecialBit r i ≠ 0) then 1 else 0) +
+      (if c = true ∧ (secondSpecialBit r i ≠ 0) then 1 else 0) := by
+  let m := baseCount r i
+  by_cases first : firstSpecialBit r i ≠ 0
+  · by_cases second : secondSpecialBit r i ≠ 0
+    · refine ⟨decide (m < u), decide (m + 1 < u), ?_⟩
+      simp [first, second] at upper ⊢
+      split <;> split <;> omega
+    · refine ⟨decide (m < u), false, ?_⟩
+      simp [first, second] at upper ⊢
+      split <;> omega
+  · refine ⟨false, decide (m < u), ?_⟩
+    by_cases second : secondSpecialBit r i ≠ 0
+    · simp [first, second] at upper ⊢
+      split <;> omega
+    · simp [first, second] at upper ⊢
+      omega
+
+private theorem select_range (r : Fin 4) (i : Fin 3) (u : ℕ)
+    (lower : baseCount r i ≤ u)
+    (upper : u ≤ baseCount r i + (if ordinaryBit r i ≠ 0 then 2 else 0) +
+      (if firstSpecialBit r i ≠ 0 then 1 else 0) +
+      (if secondSpecialBit r i ≠ 0 then 1 else 0))
+    (middle : ordinaryBit r i ≠ 0 → u = baseCount r i + 1 →
+      firstSpecialBit r i ≠ 0 ∨ secondSpecialBit r i ≠ 0) : SelectionCondition r i u := by
+  by_cases ho : ordinaryBit r i ≠ 0
+  · by_cases atLeastTwo : baseCount r i + 2 ≤ u
+    · obtain ⟨b, c, h⟩ := select_no_ordinary r i (u - 2) (by omega)
+        (by rw [ite_eq_left ho] at upper; omega)
+      refine ⟨true, b, c, ?_⟩
+      have ordinary : (true = true ∧ ordinaryBit r i ≠ 0) := ⟨rfl, ho⟩
+      rw [ite_eq_left ordinary]
+      omega
+    · by_cases exactBase : u = baseCount r i
+      · exact ⟨false, false, false, by simpa using exactBase⟩
+      · have next : u = baseCount r i + 1 := by omega
+        rcases middle ho next with first | second
+        · exact ⟨false, true, false, by simpa [first] using next⟩
+        · exact ⟨false, false, true, by simpa [second] using next⟩
+  · obtain ⟨b, c, eq⟩ := select_no_ordinary r i u lower (by simpa [ho] using upper)
+    exact ⟨false, b, c, by simpa using eq⟩
+
+private theorem select_coupling (u : Fin 3 → ℕ)
+    (bounds : ∀ i, u i ≤ 4) (xy : u 0 ≤ u 1) (yz : u 1 ≤ u 2)
+    (cap : u 0 + u 1 + u 2 ≤ 8) :
+    ∃ r : Fin 4, ∀ i, SelectionCondition r i (u i) := by
+  have hz := bounds 2
+  have hy := bounds 1
+  have hx : u 0 ≤ 2 := by omega
+  by_cases xZero : u 0 = 0
+  · refine ⟨3, fun i => select_range 3 i (u i) ?_ ?_ ?_⟩
+    all_goals
+      fin_cases i <;> norm_num [baseCount, ordinaryBit, firstSpecialBit, secondSpecialBit] <;> omega
+  · by_cases xOne : u 0 = 1
+    · by_cases zSmall : u 2 ≤ 3
+      · refine ⟨2, fun i => select_range 2 i (u i) ?_ ?_ ?_⟩
+        all_goals
+          fin_cases i <;> norm_num [baseCount, ordinaryBit, firstSpecialBit, secondSpecialBit] <;> omega
+      · refine ⟨0, fun i => select_range 0 i (u i) ?_ ?_ ?_⟩
+        all_goals
+          fin_cases i <;> norm_num [baseCount, ordinaryBit, firstSpecialBit, secondSpecialBit] <;> omega
+    · have xTwo : u 0 = 2 := by omega
+      by_cases ySmall : u 1 ≤ 2
+      · refine ⟨1, fun i => select_range 1 i (u i) ?_ ?_ ?_⟩
+        all_goals
+          fin_cases i <;> norm_num [baseCount, ordinaryBit, firstSpecialBit, secondSpecialBit] <;> omega
+      · refine ⟨2, fun i => select_range 2 i (u i) ?_ ?_ ?_⟩
+        all_goals
+          fin_cases i <;> norm_num [baseCount, ordinaryBit, firstSpecialBit, secondSpecialBit] <;> omega
 
 private theorem table_at_budget_two (u : Fin 3 → ℕ)
     (bounds : ∀ i, u i ≤ 4) (order₁ : u 0 ≤ u 1) (order₂ : u 1 ≤ u 2)
     (cap : u 0 + u 1 + u 2 ≤ 8) : Nonempty (OrbitTable 2 (fun i => 4 * u i)) := by
-  let x (i : Fin 3) : Fin 5 := ⟨u i, Nat.lt_succ_of_le (bounds i)⟩
-  have cert := budget_two_mask_certificate (x 0) (x 1) (x 2) order₁ order₂ cap
-  obtain ⟨coupling, _, hc⟩ := List.any_eq_true.mp cert
-  simp only [Bool.and_eq_true] at hc
-  obtain ⟨⟨⟨valid, reaches₀⟩, reaches₁⟩, reaches₂⟩ := hc
-  have reaches (i : Fin 3) : coupling.reaches i (u i) = true := by
-    fin_cases i
-    · exact reaches₀
-    · exact reaches₁
-    · exact reaches₂
-  have masks (i : Fin 3) : ∃ mask : Fin 64, coupling.total i mask = 4 * u i := by
-    obtain ⟨mask, _, hit⟩ := List.any_eq_true.mp (reaches i)
-    exact ⟨mask, of_decide_eq_true hit⟩
+  obtain ⟨r, choices⟩ := select_coupling u bounds order₁ order₂ cap
+  let coupling := budgetTwoCouplings r
+  have valid : coupling.valid = true := by
+    fin_cases r <;> rfl
+  have masks (i : Fin 3) : ∃ mask : ℕ, coupling.total i mask = 4 * u i := by
+    obtain ⟨a, b, c, chosen⟩ := choices i
+    exact ⟨selectedMask r i a b c, (selected_total r i a b c).trans (congrArg (4 * ·) chosen.symm)⟩
   choose mask total using masks
   unfold BudgetTwoCoupling.valid at valid
   simp only [Bool.and_eq_true, decide_eq_true_eq] at valid
@@ -777,8 +861,8 @@ private theorem table_at_budget_two (u : Fin 3 → ℕ)
   let colour := (ZMod.finEquiv 2).toEquiv
   let o (p : Fin 4) (j : Fin 3) := coupling.multiplicity (p, .inl j)
   let s (p : Fin 4) (d : ZMod 2) := coupling.multiplicity (p, .inr (colour.symm d))
-  let b (p : Fin 4) (j i : Fin 3) := coupling.fixed (mask i).val (p, .inl j)
-  let a (p : Fin 4) (d : ZMod 2) (i : Fin 3) := coupling.fixed (mask i).val (p, .inr (colour.symm d))
+  let b (p : Fin 4) (j i : Fin 3) := coupling.fixed (mask i) (p, .inl j)
+  let a (p : Fin 4) (d : ZMod 2) (i : Fin 3) := coupling.fixed (mask i) (p, .inr (colour.symm d))
   refine ⟨⟨o, s, b, a, ?_, fun j => cols j.succ, fun d => specialCols (colour.symm d),
     fun p j i => (fixed_law coupling _ (p, .inl j)).1,
     fun p j i => (fixed_law coupling _ (p, .inl j)).2,
@@ -791,7 +875,7 @@ private theorem table_at_budget_two (u : Fin 3 → ℕ)
       rw [← Equiv.sum_comp colour (s p)]
       simp only [s, Equiv.symm_apply_apply]
       rw [Fin.sum_univ_two]
-      simp only [BudgetTwoCoupling.multiplicity, BudgetTwoCoupling.special, ite_eq_left rfl,
+      simp only [BudgetTwoCoupling.multiplicity, BudgetTwoCoupling.special,
         show (1 : Fin 2) ≠ 0 by decide, ite_false]
       exact Nat.add_sub_of_le (specialBound p)
     rw [colourSum]
@@ -803,7 +887,7 @@ private theorem table_at_budget_two (u : Fin 3 → ℕ)
     simp only [b]
     have colourSum (p : Fin 4) :
         (∑ d : ZMod 2, if leftWord p i then a p d i else 0) =
-          ∑ d : Fin 2, if leftWord p i then coupling.fixed (mask i).val (p, Sum.inr d) else 0 := by
+          ∑ d : Fin 2, if leftWord p i then coupling.fixed (mask i) (p, Sum.inr d) else 0 := by
       rw [← Equiv.sum_comp colour (fun d : ZMod 2 => if leftWord p i then a p d i else 0)]
       simp only [a, Equiv.symm_apply_apply]
     simp_rw [colourSum]
@@ -836,12 +920,6 @@ private theorem table_at_budget_one (u : Fin 3 → ℕ)
     (bounds : ∀ i, u i ≤ 2) (cap : u 0 + u 1 + u 2 ≤ 4)
     (t₀ : u 0 ≤ u 1 + u 2) (t₁ : u 1 ≤ u 0 + u 2) (t₂ : u 2 ≤ u 0 + u 1) :
     Nonempty (OrbitTable 1 (fun i => 4 * u i)) := by
-  let x (i : Fin 3) : Fin 3 := ⟨u i, Nat.lt_succ_of_le (bounds i)⟩
-  have profileCuts : ∀ (a b c : Fin 3), a.val + b.val + c.val ≤ 4 →
-      a.val ≤ b.val + c.val → b.val ≤ a.val + c.val → c.val ≤ a.val + b.val →
-      ∀ p : Fin 4, 2 ≤ ∑ i : Fin 3, if bitProfile (leftWord p) i = 0
-        then 2 - (![a.val, b.val, c.val] i) else (![a.val, b.val, c.val] i) := by
-    decide
   apply orbit_table_of_realization
   apply (D5.S3.ConceptDynamics.Attribution.ParityMinimumSeedSpectrum.exact_minimal_budget_fixed_counts
     1 (fun i => 4 * u i)).mpr
@@ -851,14 +929,12 @@ private theorem table_at_budget_one (u : Fin 3 → ℕ)
     omega
   · obtain ⟨p, hp⟩ := leftProfile_bijective.surjective ⟨e, even⟩
     have profileEq : bitProfile (leftWord p) = e := congrArg Subtype.val hp
-    have val (i : Fin 3) : (![ (x 0).val, (x 1).val, (x 2).val ] i) = u i := by
-      fin_cases i <;> rfl
-    have h := profileCuts (x 0) (x 1) (x 2) cap t₀ t₁ t₂ p
-    simp only [profileEq, val] at h
-    change 2 ≤ ∑ i, if e i = 0 then 2 - u i else 2 - (2 - u i)
-    refine h.trans_eq (sum_congr rfl (fun i _ => ?_))
-    have hi := bounds i
-    split <;> simp_all [Nat.sub_sub_self]
+    have h0 := bounds 0
+    have h1 := bounds 1
+    have h2 := bounds 2
+    subst e
+    change 2 ≤ ∑ i, if bitProfile (leftWord p) i = 0 then 2 - u i else 2 - (2 - u i)
+    fin_cases p <;> simp [leftWord, bitProfile, Fin.sum_univ_succ] <;> omega
 
 private def zero_table : OrbitTable 0 (fun _ => 0) where
   ordinary _ _ := 0
