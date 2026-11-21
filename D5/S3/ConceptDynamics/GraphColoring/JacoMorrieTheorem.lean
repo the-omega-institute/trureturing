@@ -38,8 +38,13 @@ direct frozen dependencies:
   D5/S3/ConceptDynamics/GraphColoring/JacoEndpointBeatty.endpoint_eq_beatty, beatty_bounds
     (statement_id sha256:15f9f8627a73d9d28232ecd5a1deb1d41054ab6114f152475628df4fd9def028)
   D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers.g_pos, g_quad, bo_le, bo_zero
-  D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.out_step
-  (both made public in this delivery; their modules are re-pinned through the canonical writer)
+    (statement_id sha256:9eb0c30e4bc66cb8afb1eb6f9c71517c9be6c29aae118e2ab59e200b54844d07)
+  D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.out_step (statement_id
+    sha256:74ed8276649f9d55a661f745fd37f2ae64e7da5a7f055108f907540926bcb3b4)
+  D5/S3/ConceptDynamics/GraphColoring/JacoDomPathDiameterRefutation.jaco (statement_id
+    sha256:4b9772e09b0b920432abf047ae184610f43166f07e49ae9c6e49b79e6cf2092a)
+  D5/S0/Certificates/JacoExponentialDominationRefutation.jacoRight (statement_id
+    sha256:3599255b62ef06279a20cea882e2e3e452cfe479d16f59d4fcdb4ad1a95b96d1)
 escape_witness: by the degree formula deg(v_i) = min(i, n + 1 - b_i) at order n + 1, after a
   singleton maximum set {v_k} at n = R_k = k + b_k the label k + 2 is a maximizer of
   J_(n+1)(1) exactly when b_(k+2) = b_(k+1); with d^-(v_i) = i - b_i this turns the

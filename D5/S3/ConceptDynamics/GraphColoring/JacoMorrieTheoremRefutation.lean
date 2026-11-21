@@ -30,6 +30,7 @@ direct frozen dependencies:
   D5/S3/ConceptDynamics/GraphColoring/JacoEndpointBeatty.endpoint_eq_beatty (statement_id
     sha256:15f9f8627a73d9d28232ecd5a1deb1d41054ab6114f152475628df4fd9def028)
   D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers.g_pos, g_quad, bo_eq_iff
+    (statement_id sha256:9eb0c30e4bc66cb8afb1eb6f9c71517c9be6c29aae118e2ab59e200b54844d07)
 escape_witness: the concrete outdegrees b_2..b_5 = 1, 2, 3, 3 and maximum degrees
   Delta_4 = 2, Delta_6 = 3, read from (k + 1)/phi and (n + 2)/phi with 0.618 < 1/phi < 0.619,
   against the singleton criterion J_n = {Delta_n} iff n = R_(Delta_n) and b_(Delta_n + 1) =
