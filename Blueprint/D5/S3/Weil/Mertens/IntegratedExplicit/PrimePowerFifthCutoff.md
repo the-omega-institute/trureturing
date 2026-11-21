@@ -36,3 +36,4 @@ The inequality log(t) ≤ 42 t^(1/42) brings the tail to sixth-root scale. The t
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.abs_psi_sub_roots_add_theta_sixth_le`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePowerFifthCutoff.exists_abs_psi_sub_roots_le`
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/FifthExponents](PrimePower/FifthExponents.md)
