@@ -42,9 +42,9 @@ open _root_.Reg.D5.S3.Quantum.Recovery.PetzSupportedStinespringGram.UpperDeficit
 
 abbrev arena : Arena where
   signature := scalarSignature
-  Law R := ∀ {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
-    [Fintype b] [DecidableEq b] [Nonempty b] [Fintype e] [DecidableEq e]
-    {Φ : QuantumChannel a b} {ρ σ : DensityState a}
+  Law R := ∀ {a b : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
+    [Fintype b] [DecidableEq b] [Nonempty b] {Φ : QuantumChannel a b} {ρ σ : DensityState a}
+    {e : Type u} [Fintype e] [DecidableEq e]
     (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ) (_hW : Wᴴ * W = 1)
     (_hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
     (assign : ℝ → ℝ),
