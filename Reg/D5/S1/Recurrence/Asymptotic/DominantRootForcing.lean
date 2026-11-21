@@ -32,13 +32,13 @@ abbrev arena : Arena where
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
       e =O[atTop] (fun j => q ^ j) →
       ∃ L : ℝ, Q.readout () () (fun j => b j - L * R ^ j) (fun j => q ^ j)) ∧
-    (∀ (P : ℝ[X]) (R : ℝ), 1 < |R| → P.rootMultiplicity R = 1 →
-      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < Real.sqrt |R|) →
+    (∀ (P : ℝ[X]) (R q : ℝ), P.rootMultiplicity R = 1 → 0 < q → q < |R| →
+      (∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < q) →
       ∀ (b e : ℕ → ℝ) (L : ℝ),
       (∀ j, ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) = e j) →
       (fun j => b j - L * R ^ j) =o[atTop] (fun j => R ^ j) →
-      e =O[atTop] (fun j => Real.sqrt |R| ^ j) →
-      (fun j => b j - L * R ^ j) =O[atTop] (fun j => Real.sqrt |R| ^ j))
+      e =O[atTop] (fun j => q ^ j) →
+      (fun j => b j - L * R ^ j) =O[atTop] (fun j => q ^ j))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hlaw

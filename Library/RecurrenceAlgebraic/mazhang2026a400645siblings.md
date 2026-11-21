@@ -83,6 +83,6 @@ frozen module `D5/S1/Recurrence/OEISA400645` (see `oeis2026a400645`).
 For Lemma 2, "obeys the recurrence with characteristic polynomial p, with additive error e_j"
 means ∑ p_k b_(j+k) = e_j. The formal statement `D5/S1/Recurrence/Asymptotic/DominantRootForcing`
 drops monicity and distinctness of the non-dominant roots, allows a negative simple root R with
-0 < q < |R| and other roots of modulus below q, and in the second part assumes
-b_j = L R^j + o(R^j) and e_j = O(|R|^(j/2)), which the lemma's hypotheses b_j ~ L R^j, L > 0 and
-e_j = O(b_j^(1/2)) imply.
+0 < q < |R| and other roots of modulus below q, and shows that any L with b_j = L R^j + o(R^j)
+satisfies b_j = L R^j + O(q^j). The lemma's second assertion is the case q = √R: its hypotheses
+b_j ~ L R^j, L > 0 and e_j = O(b_j^(1/2)) imply b_j = L R^j + o(R^j) and e_j = O(R^(j/2)).
