@@ -89,7 +89,7 @@ private theorem harmonic_weight_sum_bound {L : ℝ} (hL : 1 ≤ L) :
 
 /-- The strict higher inventory in the relative price bracket has at most
 one prime in each active layer, including at the endpoint X = 729. -/
-theorem harmonic_higher_mass_response {X : ℝ} (hX : max (exp 4) 729 ≤ X) :
+private theorem harmonic_higher_mass_response {X : ℝ} (hX : max (exp 4) 729 ≤ X) :
     let q := referencePrice X
     let ηm := (1 - 3 / X) * q
     let ηp := (1 + 3 / X) * q
@@ -215,7 +215,7 @@ theorem harmonic_higher_mass_response {X : ℝ} (hX : max (exp 4) 729 ≤ X) :
 
 /-- The literal change in higher mass at the deterministic strict optimizer,
 measured against the strict optimizer of the reference price. -/
-theorem deterministic_harmonic_inventory_bound {X : ℝ} (hX : max (exp 4) 729 ≤ X) :
+private theorem deterministic_harmonic_inventory_bound {X : ℝ} (hX : max (exp 4) 729 ≤ X) :
     let m := strictInteger (firstLayerPrice (X + 1))
     let M := higherMass m - higherMass (strictInteger (referencePrice X))
     0 ≤ M ∧ M ≤ log X * (6 * log 2 + 1 + log (6 * log X)) := by
