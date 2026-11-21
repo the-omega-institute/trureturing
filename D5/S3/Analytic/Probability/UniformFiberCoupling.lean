@@ -9,6 +9,7 @@
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.Group.Hom.Basic
 import Mathlib.Data.Fintype.EquivFin
+import Mathlib.GroupTheory.Coset.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.FieldSimp
@@ -26,17 +27,26 @@ variable {G H : Type*} [Group G] [Group H]
 
 abbrev Fiber (φ : G →* H) (t : H) := {x : G // φ x = t}
 
-private def leftTranslate (φ : G →* H) {t : H} (x : Fiber φ 1) : Fiber φ t ≃ Fiber φ t where
-  toFun y := ⟨x.val⁻¹ * y.val, by simp [x.property, y.property]⟩
-  invFun d := ⟨x.val * d.val, by simp [x.property, d.property]⟩
-  left_inv y := Subtype.ext (by simp)
-  right_inv d := Subtype.ext (by simp)
+private def leftTranslate (φ : G →* H) {t : H} (x : Fiber φ 1) : Fiber φ t ≃ Fiber φ t :=
+  (Equiv.mulLeft x.val⁻¹).subtypeEquiv (fun y => by simp [x.property])
 
-private def rightTranslate (φ : G →* H) {t : H} (y : Fiber φ t) : Fiber φ 1 ≃ Fiber φ t where
-  toFun x := ⟨x.val⁻¹ * y.val, by simp [x.property, y.property]⟩
-  invFun d := ⟨y.val * d.val⁻¹, by simp [y.property, d.property]⟩
-  left_inv x := Subtype.ext (by simp)
-  right_inv d := Subtype.ext (by simp [mul_assoc])
+private def rightTranslate (φ : G →* H) {t : H} (y : Fiber φ t) : Fiber φ 1 ≃ Fiber φ t :=
+  let flipFiber : φ ⁻¹' {φ y.val⁻¹} ≃ Fiber φ t :=
+    (Equiv.inv G).subtypeEquiv fun z => by
+      change φ z = φ y.val⁻¹ ↔ φ z⁻¹ = t
+      rw [map_inv, map_inv, y.property]
+      constructor
+      · intro h
+        rw [h, inv_inv]
+      · intro h
+        simpa only [inv_inv] using congrArg Inv.inv h
+  (φ.fiberEquivKer y.val⁻¹).symm.trans flipFiber
+
+private theorem rightTranslate_matches (φ : G →* H) {t : H}
+    (x : Fiber φ 1) (y : Fiber φ t) : rightTranslate φ y x = leftTranslate φ x y := by
+  apply Subtype.ext
+  change (y.val⁻¹ * x.val)⁻¹ = x.val⁻¹ * y.val
+  rw [mul_inv_rev, inv_inv]
 
 scoped instance fiberFintype (φ : G →* H) (t : H) [Finite (Fiber φ 1)] :
     Fintype (Fiber φ t) :=
@@ -76,7 +86,7 @@ theorem displacement_iff (φ : G →* H) (t : H) [Finite (Fiber φ 1)]
     · intro y
       have count_eq := Fintype.card_congr (rightTranslate φ y)
       simp only [w, ← sum_div]
-      change (∑ x, ρ (rightTranslate φ y x)) / C = _
+      simp_rw [← rightTranslate_matches]
       rw [(rightTranslate φ y).sum_comp ρ, total, ← count_eq]
     · funext d
       unfold displacement
