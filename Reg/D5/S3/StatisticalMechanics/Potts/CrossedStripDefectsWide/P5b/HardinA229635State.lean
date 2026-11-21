@@ -320,8 +320,9 @@ private abbrev arena : Arena where
 
 private theorem rejected : ¬ arena.Law altered := by
   intro h
-  have wrong := h (![0, 1, 0, 1, 0, 1] : Row) 2 (by decide +kernel) (![1, 1, 0, 1, 0, 1] : Row) (by decide +kernel)
-  exact (by decide +kernel : ¬ Valid (![1, 1, 0, 1, 0, 1] : Row) 2) wrong
+  have wrong := h (![0, 1, 0, 1, 0, 1] : Row) 2 (by unfold Valid; decide +kernel)
+    (![1, 1, 0, 1, 0, 1] : Row) (by decide +kernel)
+  exact (by unfold Valid; decide +kernel : ¬ Valid (![1, 1, 0, 1, 0, 1] : Row) 2) wrong
 
 def family : Registration arena (type_of% @legal) where
   actual := actual
@@ -459,7 +460,7 @@ private abbrev arena : Arena where
 private theorem rejected : ¬ arena.Law altered := by
   intro hfalse
   have wrong := hfalse (![0, 0, 0, 1, 0, 1] : Row) (by decide +kernel)
-  exact (by decide +kernel : ¬ Valid (![0, 0, 0, 1, 0, 1] : Row) 2) wrong
+  exact (by unfold Valid; decide +kernel : ¬ Valid (![0, 0, 0, 1, 0, 1] : Row) 2) wrong
 
 def family : Registration arena (type_of% @legal_start) where
   actual := actual

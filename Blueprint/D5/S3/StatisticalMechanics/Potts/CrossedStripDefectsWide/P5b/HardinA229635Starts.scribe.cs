@@ -12,9 +12,9 @@ internal sealed class HardinA229635StartsDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("start-table"),
                 DeclarationHandle.Create(Prefix + "startTable"), H("Stored first-row class list"),
-                StatementSource.FromAuthor(Disp(Equal(Call("startTable"), Call("startClasses")))),
+                StatementSource.FromAuthor(Disp(Seq(Call("startTable"), Colon, Sp, Call("List", Call("State"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The stored list contains the class of every labelled first row with at most two horizontal defects, in row enumeration order. The checked equality below describes all of its entries."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The definition stores an explicit list of state indices. The equality below relates it to the enumeration of labelled first rows."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("checked-starts"),
                 DeclarationHandle.Create(Prefix + "checked_starts"), H("Exact first-row list"),
                 StatementSource.FromAuthor(Disp(Equal(Call("startClasses"), Call("startTable")))),

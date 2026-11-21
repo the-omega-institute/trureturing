@@ -8,7 +8,7 @@ internal sealed class HardinA229635ResidualDocument : IScribeDocumentDefinition
     private const string Note = "D5/L/SpinModels/hardin2013a229635";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A scalar readout and Cayley–Hamilton close the signed residual.", H("Symbolic recurrence closure"),
+        "A scalar readout transports the signed residual through the transfer.", H("Signed transfer residual"),
         Blocks(
             Describe.Lean(DescribeId.Create("coefficients"),
                 DeclarationHandle.Create(Prefix + "coefficients"), H("The signed lag vector"),
@@ -34,12 +34,7 @@ internal sealed class HardinA229635ResidualDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "residual_as_power"), H("Transport of the residual"),
                 StatementSource.FromAuthor(Disp(All("D", Call("Nat"), All("M", Call("Matrix", Call("Fin", V("D")), Call("Fin", V("D")), Call("Int")), All("v", Arrow(Call("Fin", V("D")), Call("Int")), All("e", Arrow(Call("Fin", V("D")), Call("Int")), All("t", Call("Nat"), Equal(Call("residual", V("M"), V("v"), V("e"), V("t")), Call("dotProduct", Call("residualVector", V("M"), V("v")), Call("Matrix.mulVec", Power(V("M"), V("t")), V("e"))))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("Each lagged term has the same additional power. Distributivity moves that power after the signed sum."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("residual-zero"),
-                DeclarationHandle.Create(Prefix + "residual_zero"), H("Closure by the characteristic polynomial"),
-                StatementSource.FromAuthor(Disp(All("D", Call("Nat"), All("M", Call("Matrix", Call("Fin", V("D")), Call("Fin", V("D")), Call("Int")), All("v", Arrow(Call("Fin", V("D")), Call("Int")), All("e", Arrow(Call("Fin", V("D")), Call("Int")), ImpliesFormula(All("t", Call("Nat"), ImpliesFormula(Less(V("t"), V("D")), Equal(Call("residual", V("M"), V("v"), V("e"), V("t")), D(0)))), All("t", Call("Nat"), Equal(Call("residual", V("M"), V("v"), V("e"), V("t")), D(0)))))))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("Cayley–Hamilton gives a monic relation of degree equal to the matrix dimension. Applying the scalar readout yields a recurrence for the residual. A zero prefix of that dimension forces every residual to vanish."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Each lagged term has the same additional power. Distributivity moves that power after the signed sum."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Word(string name) => Seq(Operatorname, Grp(V(name)));
@@ -52,11 +47,9 @@ internal sealed class HardinA229635ResidualDocument : IScribeDocumentDefinition
     private static Formula App(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula Paren(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
-    private static Formula Less(Formula left, Formula right) => Seq(left, Sp, Lt, Sp, right);
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Sub(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
-    private static Formula ImpliesFormula(Formula left, Formula right) => Seq(Paren(left), Sp, Implies, Sp, Paren(right));
     private static Formula Arrow(Formula left, Formula right) => Seq(Paren(left), Sp, To, Sp, Paren(right));
     private static Formula Power(Formula value, Formula exponent) => Seq(Paren(value), Caret, Grp(exponent));
     private static Formula Scale(Formula value, Formula vector) => Seq(Paren(value), Sp, Cdot, Sp, Paren(vector));

@@ -8,13 +8,13 @@ internal sealed class HardinA229635IntegerCertificateDocument : IScribeDocumentD
     private const string Note = "D5/L/SpinModels/hardin2013a229635";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The checked initial vector and sparse steps imply a zero scalar residual prefix.", H("Signed residual certificate"),
+        "The checked initial vector and sparse steps imply a zero scalar residual at every offset.", H("Signed residual certificate"),
         Blocks(
-            Describe.Lean(DescribeId.Create("residual-prefix"),
-                DeclarationHandle.Create(Prefix + "residual_prefix"), H("Vanishing scalar residual through dimension 127"),
-                StatementSource.FromAuthor(Disp(All("t", Call("Nat"), ImpliesFormula(Less(V("t"), D(1, 2, 7)), Equal(Call("residual", Call("T"), Call("initial"), Call("terminal"), V("t")), D(0)))))),
+            Describe.Lean(DescribeId.Create("residual-all-offsets"),
+                DeclarationHandle.Create(Prefix + "residual_all_offsets"), H("Vanishing scalar residual at every offset"),
+                StatementSource.FromAuthor(Disp(All("t", Call("Nat"), Equal(Call("residual", Call("T"), Call("initial"), Call("terminal"), V("t")), D(0))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The initial row vector and all thirty transitions fix the powers needed by the signed lag vector. Four disjoint coordinate ranges cover that vector. Its terminal readout and its image under one matrix step both vanish."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The initial row vector and all thirty transitions fix the powers needed by the signed lag vector. Four disjoint coordinate ranges cover that vector. Its terminal readout vanishes at offset zero. Its image under one matrix step is zero, so every positive offset has zero readout."))), DescribeRole.Theorem))));
 
     private static Formula V(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Word(string name) => Seq(Operatorname, Grp(V(name)));
@@ -27,7 +27,5 @@ internal sealed class HardinA229635IntegerCertificateDocument : IScribeDocumentD
     private static Formula App(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula Paren(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
-    private static Formula Less(Formula left, Formula right) => Seq(left, Sp, Lt, Sp, right);
-    private static Formula ImpliesFormula(Formula left, Formula right) => Seq(Paren(left), Sp, Implies, Sp, Paren(right));
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Paren(body));
 }

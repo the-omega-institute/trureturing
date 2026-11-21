@@ -38,8 +38,8 @@ private abbrev arena : Arena where
 
 private theorem rejected : ¬ arena.Law altered := by
   intro h
-  have wrong := h (![0, 1, 0, 1, 0, 1] : Row) 0 (by decide +kernel)
-  have right := terminal_correct (![0, 1, 0, 1, 0, 1] : Row) 0 (by decide +kernel)
+  have wrong := h (![0, 1, 0, 1, 0, 1] : Row) 0 (by unfold Valid; decide +kernel)
+  have right := terminal_correct (![0, 1, 0, 1, 0, 1] : Row) 0 (by unfold Valid; decide +kernel)
   dsimp only [altered, realize, observation] at wrong
   omega
 
