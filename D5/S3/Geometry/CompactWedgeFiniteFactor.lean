@@ -142,7 +142,8 @@ theorem compact_support [∀ j, T1Space (Z j)] {K : Set (FamilyWedge b)}
     rw [he]
     exact finite_empty
 
-private def descend {T : Type*} [TopologicalSpace T] (c : T)
+/-- Continuous maps on the factors that agree at the basepoints descend to the family wedge. -/
+def descend {T : Type*} [TopologicalSpace T] (c : T)
     (maps : ∀ j, C(Z j, T)) (hb : ∀ j, maps j (b j) = c) : C(FamilyWedge b, T) := by
   let raw : Unit ⊕ (Σ j, Z j) → T := Sum.elim (fun _ => c) (fun z => maps z.1 z.2)
   have hbase : ∀ x ∈ basePoints b, raw x = c := by

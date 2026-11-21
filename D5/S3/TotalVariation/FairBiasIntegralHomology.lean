@@ -9,8 +9,7 @@ import D5.S3.Topology.PointedWedgeHomology
 import D5.S3.Geometry.FiniteFamilyWedgeSplit
 import D5.S3.Geometry.EuclideanSphereJoin
 import D5.S3.Topology.SphereHomologyAllDegrees
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Puncture
-import Batteries.Tactic.OpenPrivate
+import Mathlib.Geometry.Manifold.Instances.Sphere
 import D5.S3.Geometry.CompactWedgeFiniteFactor
 import D5.S3.Geometry.FiniteComponentClosure.BasedJoin
 import Mathlib.Analysis.Normed.Module.Connected
@@ -57,38 +56,38 @@ private theorem openBasedContraction_homeomorph {X Y : Type*} [TopologicalSpace 
     have he : E ⟨a, ha⟩ = ⟨e a, by simpa⟩ := Subtype.ext rfl
     exact ⟨by simpa only [he] using transportContraction E ⟨a, ha⟩ H⟩
 
-open private wedgeInverseHomotopy wedgeMap from D5.S3.Geometry.FiniteConeUnionWedge
+private def basedPointEquivalence {X : Type*} [TopologicalSpace X] {a : X}
+    (H : (ContinuousMap.id X).HomotopyRel (ContinuousMap.const X a) {a}) :
+    D5.S3.Geometry.SingletonRetractionBasedInverse.BasedEquivalence a (PUnit.unit : PUnit.{1}) where
+  forward := ContinuousMap.const _ PUnit.unit
+  backward := ContinuousMap.const _ a
+  forward_point := rfl
+  backward_point := rfl
+  left := H.symm.cast (by ext; rfl) rfl
+  right := (ContinuousMap.HomotopyRel.refl _ _).cast (by ext) rfl
 
 private def wedgeContraction {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] {a : X} {b : Y}
     (H : (ContinuousMap.id X).HomotopyRel (ContinuousMap.const X a) {a})
     (K : (ContinuousMap.id Y).HomotopyRel (ContinuousMap.const Y b) {b}) :
     (ContinuousMap.id (Wedge a b)).HomotopyRel
       (ContinuousMap.const _ (Quotient.mk _ (Sum.inl a))) {Quotient.mk _ (Sum.inl a)} := by
-  let c := Quotient.mk (subsetSetoid (wedgePoints a b)) (Sum.inl a)
-  have Hr : (ContinuousMap.id X).HomotopyRel ((ContinuousMap.const X a).comp
-      (ContinuousMap.id X)) {a} := H.cast rfl (by ext; rfl)
-  have Kr : (ContinuousMap.id Y).HomotopyRel ((ContinuousMap.const Y b).comp
-      (ContinuousMap.id Y)) {b} := K.cast rfl (by ext; rfl)
-  let F := wedgeInverseHomotopy (ContinuousMap.id X) (ContinuousMap.id Y)
-      (ContinuousMap.const X a) (ContinuousMap.const Y b) rfl rfl rfl rfl Hr Kr
-  have hend : (wedgeMap (a := a) (b := b) (a' := a) (b' := b)
-      (ContinuousMap.const X a) (ContinuousMap.const Y b) rfl rfl).comp
-      (wedgeMap (a := a) (b := b) (a' := a) (b' := b)
-        (ContinuousMap.id X) (ContinuousMap.id Y) rfl rfl) =
-      ContinuousMap.const _ c := by
-    apply ContinuousMap.ext
-    intro z
-    refine Quotient.inductionOn z ?_
-    rintro (x | y)
-    · rfl
-    · exact Quotient.sound (Or.inr ⟨Or.inr rfl, Or.inl rfl⟩)
-  refine { toHomotopy := F.cast rfl hend, prop' := ?_ }
-  intro t z hz
-  have hz' : z = c := hz
-  subst z
-  change Quotient.mk (subsetSetoid (wedgePoints a b)) (Sum.inl (Hr (t, a))) = c
-  rw [Hr.eq_fst t (mem_singleton a)]
-  rfl
+  let p : PUnit.{1} := PUnit.unit
+  let e := basedWedgeEquivalence (basedPointEquivalence H) (basedPointEquivalence K)
+  have covered : ∀ z : PUnit.{1} ⊕ PUnit.{1}, z ∈ wedgePoints p p := by
+    rintro (z | z)
+    · cases z
+      exact Or.inl rfl
+    · cases z
+      exact Or.inr rfl
+  haveI : Subsingleton (Wedge p p) :=
+    ⟨fun x y => Quotient.inductionOn₂ x y fun s t =>
+      Quotient.sound (Or.inr ⟨covered s, covered t⟩)⟩
+  have constant : e.backward.comp e.forward = ContinuousMap.const _ (Quotient.mk _ (Sum.inl a)) := by
+    ext z
+    change e.backward (e.forward z) = _
+    rw [Subsingleton.elim (e.forward z) (Quotient.mk _ (Sum.inl p))]
+    exact e.backward_point
+  exact e.left.symm.cast rfl constant
 
 universe top
 private theorem openBasedContraction_wedge {X Y : Type top} [TopologicalSpace X] [TopologicalSpace Y]
@@ -101,62 +100,33 @@ private theorem openBasedContraction_wedge {X Y : Type top} [TopologicalSpace X]
   let e := partHomeomorph a b hA hB ha hb
   exact ⟨transportContraction e (Quotient.mk _ (Sum.inl ⟨a, ha⟩)) (wedgeContraction H K)⟩
 
-open private
-  smul_sub_smul_ne_zero_of_ne normalize_smul_sub_smul_ne_of_ne normalizeSegmentToSphere
-  coe_normalizeSegmentToSphere_apply coe_normalizeSegmentToSphere_zero_left
-  coe_normalizeSegmentToSphere_one_left coe_normalizeSegmentToSphere_apply_of_eq
-  from D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Puncture
-
-private theorem sphereOpenBasedContraction {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+private theorem sphereOpenBasedContraction {E : Type*}
+    [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (b : sphere (0 : E) 1) : OpenBasedContraction b := by
   let p := -b
   have hp : ‖(p : E)‖ = 1 := mem_sphere_zero_iff_norm.mp p.property
-  have hbp : b ≠ p := ne_neg_of_mem_unit_sphere ℝ b
-  let A : Set (sphere (0 : E) 1) := {p}ᶜ
-  let a : A := ⟨b, hbp⟩
-  have hcenter : -(p : E) = (b : E) := by simp [p]
-  let inclusion (q : A) : E := q.val.val
-  have hsegment : ∀ z : I × A,
-      (1 - (z.1 : ℝ)) • inclusion z.2 + (z.1 : ℝ) • (-(p : E)) ≠ 0 := by
-    rintro ⟨u, q⟩
-    simpa only [inclusion, smul_neg, sub_eq_add_neg] using smul_sub_smul_ne_zero_of_ne
-      (mem_sphere_zero_iff_norm.mp q.val.property) hp
-      (fun hq => q.property (Set.mem_singleton_iff.mpr (Subtype.ext hq))) u
-  let G := normalizeSegmentToSphere inclusion (fun _ => -(p : E))
-    (continuous_subtype_val.comp continuous_subtype_val) continuous_const hsegment
-  have hGne (z : I × A) : G z ∈ A := by
-    rcases z with ⟨u, q⟩
-    change G (u, q) ≠ p
-    intro he
-    apply normalize_smul_sub_smul_ne_of_ne (mem_sphere_zero_iff_norm.mp q.val.property) hp
-      (fun hq => q.property (Set.mem_singleton_iff.mpr (Subtype.ext hq))) u
-    have hval := congrArg Subtype.val he
-    simpa only [G, coe_normalizeSegmentToSphere_apply, inclusion, smul_neg,
-      ← sub_eq_add_neg] using hval
-  refine ⟨A, isClosed_singleton.isOpen_compl, a.property, ⟨?_⟩⟩
-  refine {
-    toFun := fun z => ⟨G z, hGne z⟩
-    continuous_toFun := G.continuous.subtype_mk hGne
-    map_zero_left := ?_
-    map_one_left := ?_
-    prop' := ?_ }
-  · intro q
-    apply Subtype.ext ∘ Subtype.ext
-    change ((G (0, q)).val : E) = inclusion q
-    rw [coe_normalizeSegmentToSphere_zero_left]
-    exact normalize_eq_self_of_norm_eq_one (mem_sphere_zero_iff_norm.mp q.val.property)
-  · intro q
-    apply Subtype.ext ∘ Subtype.ext
-    change ((G (1, q)).val : E) = (b : E)
-    rw [coe_normalizeSegmentToSphere_one_left, hcenter]
-    exact normalize_eq_self_of_norm_eq_one (mem_sphere_zero_iff_norm.mp b.property)
-  · intro t q hq
-    have he : q = a := hq
-    subst q
-    apply Subtype.ext ∘ Subtype.ext
-    exact coe_normalizeSegmentToSphere_apply_of_eq
-      (show inclusion a = (b : E) from rfl) hcenter
-      (mem_sphere_zero_iff_norm.mp b.property) t
+  let chart := stereographic hp
+  have hb : b ∈ chart.source := by
+    change b ∈ ({p} : Set (sphere (0 : E) 1))ᶜ
+    exact ne_neg_of_mem_unit_sphere ℝ b
+  let a : chart.source := ⟨b, hb⟩
+  let e := chart.toHomeomorphSourceTarget.trans
+    ((Homeomorph.setCongr (stereographic_target hp)).trans (Homeomorph.Set.univ _))
+  let center := e a
+  have H : (ContinuousMap.id _).HomotopyRel (ContinuousMap.const _ center) {center} := by
+    refine {
+      toFun := fun z => (1 - (z.1 : ℝ)) • z.2 + (z.1 : ℝ) • center
+      continuous_toFun := by fun_prop
+      map_zero_left := by intro x; simp
+      map_one_left := by intro x; simp
+      prop' := ?_ }
+    intro t x hx
+    have : x = center := hx
+    subst x
+    change (1 - (t : ℝ)) • center + (t : ℝ) • center = center
+    rw [← add_smul, sub_add_cancel, one_smul]
+  refine ⟨chart.source, chart.open_source, hb, ⟨?_⟩⟩
+  simpa only [center, e.symm_apply_apply] using transportContraction e.symm center H
 
 section PositiveHomology
 
@@ -538,7 +508,8 @@ private theorem fairBiasZeroAndNullityOne (c : L → A) (h : (facets c).Nonempty
     exact (positiveWedgeH0 R d hd b).of_iso (E.reducedSingularHomologyIso R 0)
 
 /-- Reduced integral singular homology of the actual signed realization. -/
-theorem reducedHomology_eq_fullRestrictionFacets (c : L → A) (h : (facets c).Nonempty) (k : ℕ) :
+private theorem reducedHomology_of_nonemptyFacets (c : L → A)
+    (h : (facets c).Nonempty) (k : ℕ) :
     let d := Fintype.card L - Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c)) - 1
     let R := ModuleCat.of ℤ (ULift.{v} ℤ)
     let X := TopCat.of (Space (signedComplex c))
@@ -558,6 +529,29 @@ theorem reducedHomology_eq_fullRestrictionFacets (c : L → A) (h : (facets c).N
       obtain ⟨equal, different⟩ := positiveWedgeGroups R d k b
       exact ⟨fun h => ⟨iso ≪≫ (equal h.symm).some⟩,
         fun h => (different (Ne.symm h)).of_iso iso⟩
+
+/-- The free rank in the distinguished degree counts full-restriction facets.
+With no nonempty facet, the realization is empty and every reduced group vanishes. -/
+theorem reducedHomology_eq_fullRestrictionFacets (c : L → A) (k : ℕ) :
+    let d := Fintype.card L - Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c)) - 1
+    let R := ModuleCat.of ℤ (ULift.{v} ℤ)
+    let X := TopCat.of (Space (signedComplex c))
+    let H := (TauCeti.reducedSingularHomologyFunctor R k).obj X
+    (k = d → Nonempty (H ≅ ∐ fun _ : fullRestrictionFacets c => R)) ∧
+      (k ≠ d → IsZero H) := by
+  by_cases h : (facets c).Nonempty
+  · exact reducedHomology_of_nonemptyFacets c h k
+  let X := TopCat.of (Space (signedComplex c))
+  let R := ModuleCat.of ℤ (ULift.{v} ℤ)
+  letI : IsEmpty X := ⟨fun x => by
+    obtain ⟨S, hS, _⟩ := x.property
+    obtain ⟨B, hB, _⟩ := exists_facet_superset c hS
+    exact h ⟨B, hB⟩⟩
+  letI : IsEmpty (fullRestrictionFacets c) := ⟨fun B => h ⟨B.val, B.property.1⟩⟩
+  have hX := TauCeti.isZero_reducedSingularHomologyFunctor_of_isEmpty R X k
+  have hCoproduct : IsZero (∐ fun _ : fullRestrictionFacets c => R) :=
+    (IsZero.iff_id_eq_zero _).2 (Sigma.hom_ext _ _ (fun B => isEmptyElim B))
+  exact ⟨fun _ => ⟨hX.iso hCoproduct⟩, fun _ => hX⟩
 
 #print axioms reducedHomology_eq_fullRestrictionFacets
 

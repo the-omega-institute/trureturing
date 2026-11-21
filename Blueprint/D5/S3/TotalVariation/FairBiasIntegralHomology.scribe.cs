@@ -16,14 +16,15 @@ internal sealed class FairBiasIntegralHomologyDocument : IScribeDocumentDefiniti
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Geometry/hatcher2002algebraic")),
             Blocks(
                 Paragraph(Text(
-                    "Suppose the signed fair-bias complex has a nonempty facet. Its reduced " +
-                    "integral singular homology in the degree given by the number of labels " +
-                    "minus the column rank minus one is a free abelian group indexed by the " +
-                    "facets equal to their restriction faces. Every other nonnegative degree vanishes.")),
+                    "The signed fair-bias complex has free reduced integral singular homology in " +
+                    "column nullity minus one, using natural subtraction. The summands are indexed " +
+                    "by the facets equal to their restriction faces. Every other nonnegative degree " +
+                    "vanishes. If there are no nonempty facets, the realization and index are empty, " +
+                    "so every nonnegative degree vanishes.")),
                 Paragraph(Text(
-                    "The core quotient carries the homology of the original realization to its " +
+                    "When a facet exists, the core quotient carries the homology of the original realization to its " +
                     "sphere wedge. For positive degrees, a based homeomorphism separates one factor " +
-                    "from the wedge of the remaining factors. The punctured spheres have contractions " +
+                    "from the wedge of the remaining factors. Stereographic projection gives contractions " +
                     "fixed at their basepoints, and the binary Mayer–Vietoris splitting adds one " +
                     "summand at each step. A sphere contributes its coefficient group only in its own degree.")),
                 Paragraph(Text(

@@ -6,7 +6,6 @@
    utility: none
    digest: Split an actual family wedge at a distinguished factor while retaining its inclusions. -/
 import D5.S3.Geometry.CompactWedgeFiniteFactor
-import Batteries.Tactic.OpenPrivate
 
 open Set Topology
 open scoped ContinuousMap
@@ -16,8 +15,6 @@ open D5.S3.Geometry.CompactWedgeFiniteFactor
 namespace D5.S3.Geometry.FiniteFamilyWedgeSplit
 
 noncomputable section
-
-open private descend from D5.S3.Geometry.CompactWedgeFiniteFactor
 
 variable {J : Type*} {Z : J → Type*} [∀ j, TopologicalSpace (Z j)]
 

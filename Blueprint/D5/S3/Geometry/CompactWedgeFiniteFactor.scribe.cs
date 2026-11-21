@@ -16,6 +16,8 @@ internal sealed class CompactWedgeFiniteFactorDocument : IScribeDocumentDefiniti
                 "FamilyWedge b is the quotient by the collapsed subset, with its quotient topology. Its distinguished point is the class of the additional point. In particular an empty index type gives a point, rather than an empty space.", DescribeRole.Definition),
             Node("factor-map", "point", "Original factors map continuously into the quotient",
                 "The factor map is the composition of its coproduct inclusion with the quotient projection. Each factor basepoint maps to the common basepoint.", DescribeRole.Definition),
+            Node("descend", "descend", "Descend continuous maps to a family wedge",
+                "A continuous map from each factor descends when every factor basepoint maps to the same chosen target point. The additional point maps to that target point as well.", DescribeRole.Definition),
             Node("support", "support", "Off-basepoint support",
                 "The support of K consists of indices j for which some z different from b_j has its quotient class in K. One-point factors therefore contribute no off-basepoint support. Finiteness of support does not imply finiteness of the original index type.", DescribeRole.Definition),
             Node("compact-support", "compact_support", "Compact subsets meet finitely many factors away from the basepoint",
