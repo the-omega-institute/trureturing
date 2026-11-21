@@ -1,12 +1,12 @@
-/- GID: D5/S3/Arith/MovingPrimeRowWidth
+/- GID: D5/S3/CharacterSums/MovingPrimeRowWidth
    generality: I
-   mirror-B: D5/B/S3/Arith/MovingPrimeRowWidth
+   mirror-B: D5/B/S3/CharacterSums/MovingPrimeRowWidth
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The auxiliary prime row has a sharp width threshold when the exponent loss is fixed inside each power window and may decrease between windows. -/
 
-import D5.S3.Arith.SplitPrimeHostSeries
+import D5.S3.CharacterSums.SplitPrimeHostSeries
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 set_option autoImplicit false
@@ -14,8 +14,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Set Filter
-open D5.S3.Arith.SplitPrimeHostSeries
-namespace D5.S3.Arith.MovingPrimeRowWidth
+open D5.S3.CharacterSums.SplitPrimeHostSeries
+namespace D5.S3.CharacterSums.MovingPrimeRowWidth
 
 /-- The auxiliary primes, real size bands, prime splitting and conductor budget at x.
 The congruence modulo eight spells out the splitting sign at the prime two. -/
@@ -185,4 +185,4 @@ theorem prime_pair_power_window_iff {q : ℕ} (hq : q.Prime) (hq8 : q % 8 = 3)
     HasPrimeRows q b ↔ b^2*(Real.log q)^(b-1) < 2 :=
   ⟨width_necessary hL hb, construct_rows hq hq8 hb hL⟩
 
-end D5.S3.Arith.MovingPrimeRowWidth
+end D5.S3.CharacterSums.MovingPrimeRowWidth

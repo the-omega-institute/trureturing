@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.MovingPrimeRowWidth
+import D5.S3.CharacterSums.MovingPrimeRowWidth
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Reg.Support.SingleDependentReadout
 
@@ -7,11 +7,11 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-open _root_.D5.S3.Arith.MovingPrimeRowWidth
+open _root_.D5.S3.CharacterSums.MovingPrimeRowWidth
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S3.Arith.MovingPrimeRowWidth
+namespace Reg.D5.S3.CharacterSums.MovingPrimeRowWidth
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
@@ -53,8 +53,8 @@ def family : Registration arena (type_of% @prime_pair_power_window_iff) where
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@prime_pair_power_window_iff) (Realization signature) Unit Unit where
-  unitName := .str `D5.S3.Arith.MovingPrimeRowWidth.prime_pair_power_window_iff "__information_unit"
-  realizationName := `Reg.D5.S3.Arith.MovingPrimeRowWidth.family
+  unitName := .str `D5.S3.CharacterSums.MovingPrimeRowWidth.prime_pair_power_window_iff "__information_unit"
+  realizationName := `Reg.D5.S3.CharacterSums.MovingPrimeRowWidth.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -70,7 +70,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.MovingPrimeRowWidth
+    owner := `D5.S3.CharacterSums.MovingPrimeRowWidth
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -83,4 +83,4 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.MovingPrimeRowWidth
+end Reg.D5.S3.CharacterSums.MovingPrimeRowWidth

@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
+namespace StrataLint.Scribe.Blueprint.D5.S3.CharacterSums;
 
 internal sealed class MovingPrimeRowWidthDocument : IScribeDocumentDefinition
 {
@@ -18,7 +18,7 @@ internal sealed class MovingPrimeRowWidthDocument : IScribeDocumentDefinition
                 + "prime p ≤ u equal 1 for numerator −d, and −d is 1 modulo 8. "
                 + "For every integer n from 1 to 2x^(2+8ε), log(4nqd) ≤ 2u(log x)².")),
             Describe.Lean(DescribeId.Create("prime-row-width"),
-                DeclarationHandle.Create("D5/S3/Arith/MovingPrimeRowWidth.prime_pair_power_window_iff"),
+                DeclarationHandle.Create("D5/S3/CharacterSums/MovingPrimeRowWidth.prime_pair_power_window_iff"),
                 H("A strict width criterion"), StatementSource.FromAuthor(Claim()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Compare the lower bound for log d at Yᵇ with the upper bound at Y. "
