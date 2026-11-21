@@ -66,7 +66,35 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 For a Boolean upperA and complex t, set s = 1 when upperA is true and s = −1 when it is false. Then dPeriod(upperA,t) = (τ(1−1/t)+s) P(1−t)/i.
 
-**Theorem 1.6 (Agreement with the Euler period on the open lip).**
+**Theorem 1.6 (Analyticity of the D period at the boundary).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_analyticAt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_analyticAt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either lip and every real t > 1, the continued D period is complex analytic at t.
+
+Compose the analytic Euler period and period ratio with the two boundary coordinates 1−t and 1−1/t. The first is in the Euler slit and the second is in the double slit. Multiply the period by the shifted ratio and divide by i.
+
+**Theorem 1.7 (Nonvanishing of the D period at the boundary).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_ne_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either lip and every real t > 1, the continued D period is nonzero at t.
+
+The imaginary part of the ratio at 1−1/t is positive, so either real shift preserves nonvanishing. The Euler period at 1−t is nonzero.
+
+**Theorem 1.8 (Agreement with the Euler period on the open lip).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_eq_slit`
 
@@ -78,7 +106,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 At every complex point of the selected D lip, dPeriod(upperA,t) = P(t). The complementary ratio at 1−t differs from the ratio at its Pfaff image 1−1/t by s.
 
-**Theorem 1.7 (One-sided period and derivative limits).**
+**Theorem 1.9 (One-sided period and derivative limits).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_boundary`
 
@@ -90,7 +118,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 For either choice of upperA and every real t > 1, as u tends to t within the selected D lip, P(u) tends to dPeriod(upperA,t) and deriv(P)(u) tends to the complex derivative of dPeriod(upperA,·) at t.
 
-**Definition 1.8 (Corrections in native chart arguments).**
+**Definition 1.10 (Corrections in native chart arguments).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartCorrection`
 
@@ -102,7 +130,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 For a Boolean upperA, a chart c and complex z, chartCorrection applies the period correction at parameter(c,z). It uses P in A and B and dPeriod(upperA,·) in D.
 
-**Theorem 1.9 (Pfaff period with the chosen A root).**
+**Theorem 1.11 (Pfaff period with the chosen A root).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartB_pfaff_period`
 
@@ -114,7 +142,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 For real z > 0, P(1−z) = periodRoot(A,z) P(rA), where periodRoot(A,z) = 1/√z.
 
-**Theorem 1.10 (The two corrected spatial covariance differences).**
+**Theorem 1.12 (The two corrected spatial covariance differences).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.covariance_discrepancies`
 
@@ -128,7 +156,7 @@ Let upperA select a lip, let z be real with 0 < z < 1, and take complex x and X 
 
 Then (−i√z)² K_A − K_B = 1/[π P(1−z) P(z)] and i² K_A − K_D = 1/[π P(rA) dPeriod(upperA,rD)].
 
-**Theorem 1.11 (The principal root on the D boundary).**
+**Theorem 1.13 (The principal root on the D boundary).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartD_root_boundary`
 
@@ -140,7 +168,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriod
 
 For real 0 < z < 1, let u tend to rD within the selected D lip. The principal complex power (1−u)^(1/2) tends to i√(1−z)/√z on the lower lip (upperA true) and to −i√(1−z)/√z on the upper lip (upperA false). The lower limit is periodRoot(D,z).
 
-**Theorem 1.12 (The shifted theta exponents).**
+**Theorem 1.14 (The shifted theta exponents).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chart_source_exponents`
 
@@ -164,8 +192,10 @@ Use (p_B,q_B) = (P(1−z),P(z)) and (p_D,q_D) = (P(rA),dPeriod(upperA,rD)). The 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.covariance_discrepancies`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dLip`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_analyticAt`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_boundary`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_eq_slit`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_ne_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.periodCorrection`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.pfaff_correction`
 - Dependency: [D5/S3/Analytic/OriginalHalfBinomialPfaffNome](../../../Analytic/OriginalHalfBinomialPfaffNome.md)
