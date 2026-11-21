@@ -49,6 +49,6 @@ The prescribed-direction matchings realize every boundary vector. Strict coordin
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.best_profile_count`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.exact_profile_frontier`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/ParityProfileMatching.profile_floor_dominated`
-- Dependency: [D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity](../../../../S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Hypercube/DirectionMatching](DirectionMatching.md)
 - Dependency: [D5/S3/Combinatorics/Transportation/OrderedMarginAllocation](../../Transportation/OrderedMarginAllocation.md)
+- Dependency: [D5/S3/QuantumBounds/MerminMeasurementDependence/Coordinates](../../../QuantumBounds/MerminMeasurementDependence/Coordinates.md)
