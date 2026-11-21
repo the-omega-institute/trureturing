@@ -13,6 +13,13 @@ internal sealed class OriginalFourMSectorContinuationDocument : IScribeDocumentD
         "Normal convergence and native agreement of the rank-24 charge-sector terms",
         H("Holomorphic fixed-occupation charge sectors on the Euler slit"),
         Blocks(
+            D("slit-matrix", "slitMatrix", "Tagged slit covariance matrix", DescribeRole.Definition,
+                Text("Read the slit Taylor covariance entry for the two external labels, "
+                    + "using the two sum tags for the leg signs. "),
+                Ref(SlitTaylor + "slitCovarianceEntry")),
+            D("slit-linear", "slitLinear", "Tagged slit mean vector", DescribeRole.Definition,
+                Text("Read the slit Taylor mean entry of the external label and its leg tag. "),
+                Ref(SlitTaylor + "slitMeanEntry")),
             D("charge-sector-holomorphy", "charge_sector_differentiableOn",
                 "Holomorphy of a fixed-occupation coset sum", DescribeRole.Theorem,
                 Text("Let the real Gram matrix be positive definite and fix four occupations and a "
