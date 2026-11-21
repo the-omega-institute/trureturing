@@ -37,18 +37,18 @@ private lemma rootKernel_rpow {t : ℝ} (ht : 0 < t) :
     Real.rpow_two, ← Real.sqrt_eq_rpow]
   rfl
 
-private lemma root_integrable {x : ℝ} (hx : 0 < x) : IntegrableOn rootKernel (Ioi x) :=
+lemma root_integrable {x : ℝ} (hx : 0 < x) : IntegrableOn rootKernel (Ioi x) :=
   (integrableOn_Ioi_rpow_of_lt (a := (-(3/2) : ℝ)) (by norm_num) hx).congr_fun
     (fun _ ht => (rootKernel_rpow (hx.trans ht)).symm) measurableSet_Ioi
 
-private lemma root_integral {x : ℝ} (hx : 0 < x) :
+lemma root_integral {x : ℝ} (hx : 0 < x) :
     ∫ t in Ioi x, rootKernel t = 2 / Real.sqrt x := by
   rw [setIntegral_congr_fun measurableSet_Ioi (fun _ ht => rootKernel_rpow (hx.trans ht)),
     integral_Ioi_rpow_of_lt (by norm_num) hx, show (-(3/2) : ℝ) + 1 = -(1/2) by norm_num,
     Real.rpow_neg hx.le, ← Real.sqrt_eq_rpow]
   ring
 
-private lemma diff_integrable : IntegrableOn diffKernel (Ioi 1) := by
+lemma diff_integrable : IntegrableOn diffKernel (Ioi 1) := by
   obtain ⟨C, hC⟩ := Chebyshev.psi_sub_theta_le_mul_sqrt
   apply ((root_integrable one_pos).const_mul C).mono'
     ((Chebyshev.psi_mono.measurable.sub Chebyshev.theta_mono.measurable).div
@@ -59,14 +59,14 @@ private lemma diff_integrable : IntegrableOn diffKernel (Ioi 1) := by
     (sq_nonneg t))]
   exact (div_le_div_of_nonneg_right (hC t) (sq_nonneg t)).trans_eq (by dsimp [rootKernel]; ring)
 
-private lemma prime_integrable :
+lemma prime_integrable :
     IntegrableOn (fun t : ℝ => (Chebyshev.theta t - t) / t ^ 2) (Ioi 1) := by
   apply (chebyshev_error_kernel_integrable.sub diff_integrable).congr_fun _ measurableSet_Ioi
   intro t _
   dsimp [diffKernel]
   ring
 
-private lemma tail_eq {x : ℝ} (hx : 1 ≤ x) :
+lemma tail_eq {x : ℝ} (hx : 1 ≤ x) :
     Q x - primeTail x = ∫ t in Ioi x, diffKernel t := by
   change (∫ t in Ioi x, (Chebyshev.psi t - t) / t ^ 2) -
     (∫ t in Ioi x, (Chebyshev.theta t - t) / t ^ 2) = _
