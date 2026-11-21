@@ -42,7 +42,7 @@ The chosen variable is extracted as the outer polynomial variable via the option
 
 **Theorem 1.4 (The distinguished variable).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.isolate_X_self`
+$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w : V, \operatorname{isolate}(w,X(w)) = \operatorname{PolynomialX}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.isolate_X_self` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ The variable at the chosen index becomes the outer indeterminate.
 
 **Theorem 1.5 (A remaining variable).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.isolate_X_other`
+$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w,j : V, j \neq w \implies \operatorname{isolate}(w,X(j)) = \operatorname{PolynomialC}(X(j))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.isolate_X_other` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ A variable at a different index becomes a constant coefficient in the outer poly
 
 **Theorem 1.6 (Evaluation after isolation).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.eval_isolate`
+$$\forall V : \operatorname{Type}, [\operatorname{DecidableEq}(V)], \forall w : V, p : \operatorname{MvPolynomial}(V,\mathbb{C}), t : \operatorname{Rest}(w) \to \mathbb{C}, z : \mathbb{C}, \operatorname{eval}(\operatorname{extend}(w,t,z),p) = \operatorname{evalPoly}(z,\operatorname{map}(\operatorname{eval}(t),\operatorname{isolate}(w,p)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.eval_isolate` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ Evaluation at the full assignment equals evaluation of the outer polynomial afte
 
 **Theorem 1.7 (Prime coordinate differences).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.diff_prime`
+$$\forall V : \operatorname{Type}, \forall i,j : V, i \neq j \implies \operatorname{Prime}(\operatorname{diff}(i,j))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.diff_prime` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ An oriented difference of two distinct variables is prime. Isolate the second va
 
 **Theorem 1.8 (Different unordered pairs give independent factors).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.diff_not_dvd_of_edges_ne`
+$$\forall V : \operatorname{Type}, \forall i,j,a,b : V, a \neq b \implies \neg((a=i \land b=j) \lor (a=j \land b=i)) \implies \neg(\operatorname{diff}(i,j) \mid \operatorname{diff}(a,b))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.diff_not_dvd_of_edges_ne` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ The product uses precisely the edges other than the distinguished edge.
 
 **Theorem 1.11 (Isolation at the first endpoint).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_left`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \operatorname{isolate}(M(e,\operatorname{false}),\operatorname{matchingPolynomial}(M)) = \operatorname{PolynomialC}(-\operatorname{remainingProduct}(M,e,\operatorname{false})) \cdot \operatorname{PolynomialX} + \operatorname{PolynomialC}(X(M(e,\operatorname{true})) \cdot \operatorname{remainingProduct}(M,e,\operatorname{false}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_left` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The linear coefficient is the negative of the remaining product. The constant co
 
 **Theorem 1.12 (Isolation at the second endpoint).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_right`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), e : \operatorname{Fin}(m), \operatorname{isolate}(M(e,\operatorname{true}),\operatorname{matchingPolynomial}(M)) = \operatorname{PolynomialC}(\operatorname{remainingProduct}(M,e,\operatorname{true})) \cdot \operatorname{PolynomialX} - \operatorname{PolynomialC}(X(M(e,\operatorname{false})) \cdot \operatorname{remainingProduct}(M,e,\operatorname{true}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.matching_isolate_right` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ The linear coefficient is the remaining product. The constant coefficient is the
 
 **Theorem 1.13 (Linearity in every coordinate).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.matching_exists_linear`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), w : \operatorname{Col}(m), \exists A,B : \operatorname{Coeff}(w), \operatorname{isolate}(w,\operatorname{matchingPolynomial}(M)) = \operatorname{PolynomialC}(A) \cdot \operatorname{PolynomialX} + \operatorname{PolynomialC}(B)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.matching_exists_linear` (`✓ std3`). ∎
 
@@ -162,7 +162,7 @@ Find the matching edge and endpoint containing the chosen coordinate and apply i
 
 **Theorem 1.14 (Transport of matching factors).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.rename_matchingPolynomial`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), M : \operatorname{Matching}(m), \operatorname{rename}(s,\operatorname{matchingPolynomial}(M)) = \operatorname{matchingPolynomial}(s \circ M)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.rename_matchingPolynomial` (`✓ std3`). ∎
 
@@ -174,7 +174,7 @@ Renaming the polynomial variables composes the endpoint labeling with the permut
 
 **Theorem 1.15 (Linearity after a permutation).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiAffine.rename_F_exists_linear`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), w : \operatorname{Col}(m), \exists A,B : \operatorname{Coeff}(w), \operatorname{isolate}(w,\operatorname{rename}(s,F(m))) = \operatorname{PolynomialC}(A) \cdot \operatorname{PolynomialX} + \operatorname{PolynomialC}(B)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiAffine.rename_F_exists_linear` (`✓ std3`). ∎
 

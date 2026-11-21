@@ -6,7 +6,7 @@ The allowable reorderings of the double-normalized even frieze matrices are exac
 
 **Theorem 1.1 (The normalized action and the full level locus).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiConjecture13.allowable_iff_preservesLevel`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), 2 \le m \implies (\operatorname{Allowable}(m,s) \iff \operatorname{PreservesLevel}(s))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiConjecture13.allowable_iff_preservesLevel` (`✓ std3`). ∎
 
@@ -36,3 +36,4 @@ Kozaki and Kakei, arXiv:2611.25785v1, section 3, printed page 9, Conjecture 13, 
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiConjecture13.conjecture_13`
 - Dependency: [D5/S3/Geometry/KozakiKakeiFour](KozakiKakeiFour.md)
 - Dependency: [D5/S3/Geometry/KozakiKakeiNormalization](KozakiKakeiNormalization.md)
+- Dependency: [D5/S3/Geometry/KozakiKakeiPreservation](KozakiKakeiPreservation.md)

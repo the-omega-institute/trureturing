@@ -30,7 +30,7 @@ Apply the square matrix on the left and the diagonal of the column factors on th
 
 **Theorem 1.3 (Entries after scaling).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_apply`
+$$\forall m : \mathbb{N}, \forall L : \operatorname{Square}, d : \operatorname{Col}(m) \to K, Z : \operatorname{Chart}(K,m), a : \operatorname{Fin}(2), i : \operatorname{Col}(m), \operatorname{scaled}(L,d,Z)(a,i) = (L(a,0) \cdot Z(0,i) + L(a,1) \cdot Z(1,i)) \cdot d(i)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_apply` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Take the two-term row combination and multiply by the column factor.
 
 **Theorem 1.4 (Determinant transformation).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.minor_scaled`
+$$\forall m : \mathbb{N}, \forall L : \operatorname{Square}, d : \operatorname{Col}(m) \to K, Z : \operatorname{Chart}(K,m), i,j : \operatorname{Col}(m), \operatorname{minor}(\operatorname{scaled}(L,d,Z),i,j) = \operatorname{det}(L) \cdot d(i) \cdot d(j) \cdot \operatorname{minor}(Z,i,j)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.minor_scaled` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ Each minor acquires the determinant of the left matrix and the two column factor
 
 **Theorem 1.5 (Admissibility after invertible scaling).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_admissible`
+$$\forall m : \mathbb{N}, \forall L : \operatorname{Square}, d : \operatorname{Col}(m) \to K, Z : \operatorname{Chart}(K,m), \operatorname{det}(L) \neq 0 \implies (\forall i : \operatorname{Col}(m), d(i) \neq 0) \implies \operatorname{Admissible}(Z) \implies \operatorname{Admissible}(\operatorname{scaled}(L,d,Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_admissible` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ All the factors in the scaled minor remain nonzero.
 
 **Theorem 1.6 (Invertible matrices have nonzero determinant).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.unit_det_ne_zero`
+$$\forall L : \operatorname{Units}(\operatorname{Square}), \operatorname{det}(L) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.unit_det_ne_zero` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ An invertible square matrix has unit determinant in the coefficient field.
 
 **Theorem 1.7 (Invariance of the written level).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.level_scaled_iff`
+$$\forall m : \mathbb{N}, \forall L : \operatorname{Square}, d : \operatorname{Col}(m) \to K, Z : \operatorname{Chart}(K,m), \operatorname{det}(L) \neq 0 \implies (\forall i : \operatorname{Col}(m), d(i) \neq 0) \implies (\operatorname{evenProduct}(\operatorname{scaled}(L,d,Z)) = \operatorname{oddProduct}(\operatorname{scaled}(L,d,Z)) \iff \operatorname{evenProduct}(Z) = \operatorname{oddProduct}(Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.level_scaled_iff` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ Each matching uses every column once. Both products acquire the determinant to t
 
 **Theorem 1.8 (Composition of row and column operations).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_comp`
+$$\forall m : \mathbb{N}, \forall L,M : \operatorname{Square}, d,e : \operatorname{Col}(m) \to K, Z : \operatorname{Chart}(K,m), \operatorname{scaled}(L,d,\operatorname{scaled}(M,e,Z)) = \operatorname{scaled}(L \cdot M,(i \mapsto e(i) \cdot d(i)),Z)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_comp` (`✓ std3`). ∎
 
@@ -102,7 +102,7 @@ Left factors multiply in application order and right scalars multiply pointwise.
 
 **Theorem 1.9 (Symmetry of matrix equivalence).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.matEquivalent_symm`
+$$\forall m : \mathbb{N}, \forall Z,W : \operatorname{Chart}(K,m), \operatorname{MatEquivalent}(W,Z) \implies \operatorname{MatEquivalent}(Z,W)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.matEquivalent_symm` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ Invert the left matrix and each column factor.
 
 **Theorem 1.10 (Transitivity of matrix equivalence).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.matEquivalent_trans`
+$$\forall m : \mathbb{N}, \forall X,Y,Z : \operatorname{Chart}(K,m), \operatorname{MatEquivalent}(X,Y) \implies \operatorname{MatEquivalent}(Y,Z) \implies \operatorname{MatEquivalent}(X,Z)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.matEquivalent_trans` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ Compose the left operations and multiply the diagonal factors pointwise.
 
 **Theorem 1.11 (Transport of matrix equivalence).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.reorder_equiv`
+$$\forall m : \mathbb{N}, \forall Z,W : \operatorname{Chart}(K,m), s : \operatorname{Perm}(\operatorname{Col}(m)), \operatorname{MatEquivalent}(W,Z) \implies \operatorname{MatEquivalent}(\operatorname{reorder}(s,W),\operatorname{reorder}(s,Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.reorder_equiv` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The same left matrix and the correspondingly permuted diagonal factors implement
 
 **Theorem 1.12 (Transport of admissibility).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.reorder_admissible`
+$$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), s : \operatorname{Perm}(\operatorname{Col}(m)), \operatorname{Admissible}(Z) \implies \operatorname{Admissible}(\operatorname{reorder}(s,Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.reorder_admissible` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ A permutation takes distinct columns to distinct columns.
 
 **Theorem 1.13 (Level invariance under matrix equivalence).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.level_equiv`
+$$\forall m : \mathbb{N}, \forall Z,W : \operatorname{Chart}(K,m), \operatorname{MatEquivalent}(W,Z) \implies (\operatorname{evenProduct}(W) = \operatorname{oddProduct}(W) \iff \operatorname{evenProduct}(Z) = \operatorname{oddProduct}(Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatrixEquiv.level_equiv` (`✓ std3`). ∎
 
@@ -175,4 +175,4 @@ The unit witnesses make the common factor nonzero, so matrix-equivalent inputs s
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_apply`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.scaled_comp`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatrixEquiv.unit_det_ne_zero`
-- Dependency: [D5/S3/Geometry/KozakiKakeiPreservation](KozakiKakeiPreservation.md)
+- Dependency: [D5/S3/Geometry/KozakiKakeiMatching](KozakiKakeiMatching.md)

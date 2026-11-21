@@ -126,7 +126,7 @@ The constant coefficient is the last coordinate times the even tail product minu
 
 **Theorem 1.11 (The two signed coefficients).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiPrimitive.isolate_F`
+$$\forall m : \mathbb{N}, 2 \le m \implies \operatorname{isolate}(\operatorname{first}(m),F(m)) = \operatorname{PolynomialC}(A(m)) \cdot \operatorname{PolynomialX} + \operatorname{PolynomialC}(B(m))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPrimitive.isolate_F` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ Isolating the first column variable gives the linear polynomial with coefficient
 
 **Theorem 1.12 (Four-column coefficient).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiPrimitive.signed_four_coefficient`
+$$A(2) = X(\operatorname{lastCoord}(2)) + X(\operatorname{nextCoord}(2)) - 2 \cdot X(\operatorname{middleCoord}(2))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPrimitive.signed_four_coefficient` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ The linear coefficient is the sum of the last and second variables minus twice t
 
 **Theorem 1.13 (Nonzero relatively prime coefficients).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiPrimitive.primitive_coefficients`
+$$\forall m : \mathbb{N}, 2 \le m \implies m \neq 3 \implies A(m) \neq 0 \land \operatorname{IsRelPrime}(A(m),B(m))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPrimitive.primitive_coefficients` (`✓ std3`). ∎
 
@@ -162,7 +162,7 @@ Off order six, a common prime must divide the difference between the second and 
 
 **Theorem 1.14 (The linear coefficient is a nonunit).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiPrimitive.A_not_unit`
+$$\forall m : \mathbb{N}, 2 \le m \implies \neg\operatorname{IsUnit}(A(m))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPrimitive.A_not_unit` (`✓ std3`). ∎
 

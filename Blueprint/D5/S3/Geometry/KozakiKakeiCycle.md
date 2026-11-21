@@ -42,7 +42,7 @@ The two columns form an edge of the given matching in one of its two orders.
 
 **Theorem 1.4 (Successor index).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.step_val`
+$$\forall m : \mathbb{N}, \forall i : \operatorname{Col}(m), 2 \le m \implies \operatorname{val}(\operatorname{step}(i)) = (\operatorname{val}(i)+1) \operatorname{mod} (2 \cdot m)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.step_val` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ The value of the successor is the remainder of the index plus one modulo 2m.
 
 **Theorem 1.5 (Successor is distinct).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.step_ne`
+$$\forall m : \mathbb{N}, \forall i : \operatorname{Col}(m), 2 \le m \implies \operatorname{step}(i) \neq i$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.step_ne` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ The cycle has at least four columns, so its successor has no fixed point.
 
 **Theorem 1.6 (Adjacent vertices are distinct).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.adjacent_ne`
+$$\forall m : \mathbb{N}, \forall i,j : \operatorname{Col}(m), 2 \le m \implies \operatorname{Adjacent}(i,j) \implies i \neq j$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.adjacent_ne` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ Both orientations of adjacency relate distinct columns.
 
 **Theorem 1.7 (Orientation of odd edges).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.odd_forward`
+$$\forall m : \mathbb{N}, \forall e : \operatorname{Fin}(m), 2 \le m \implies \operatorname{step}(\operatorname{oddVertex}(e,\operatorname{false})) = \operatorname{oddVertex}(e,\operatorname{true})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.odd_forward` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ The second end of every odd matching edge is the successor of its first end.
 
 **Theorem 1.8 (Orientation of interior even edges).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.even_forward`
+$$\forall m : \mathbb{N}, \forall e : \operatorname{Fin}(m), 2 \le m \implies \operatorname{val}(e) \neq 0 \implies \operatorname{step}(\operatorname{evenVertex}(e,\operatorname{false})) = \operatorname{evenVertex}(e,\operatorname{true})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.even_forward` (`✓ std3`). ∎
 
@@ -102,7 +102,7 @@ The second end of each nonclosing even edge is the successor of its first end.
 
 **Theorem 1.9 (Orientation of the closing edge).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.even_closing`
+$$\forall m : \mathbb{N}, \forall e : \operatorname{Fin}(m), 2 \le m \implies \operatorname{val}(e) = 0 \implies \operatorname{step}(\operatorname{evenVertex}(e,\operatorname{true})) = \operatorname{evenVertex}(e,\operatorname{false})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.even_closing` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The first end of the closing even edge is the successor of its second end.
 
 **Theorem 1.10 (Recognizing a matching edge).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.sameEdge_iff`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), i,j : \operatorname{Col}(m), i \neq j \implies (\operatorname{SameEdge}(M,i,j) \iff (\exists e : \operatorname{Fin}(m), (i=M(e,\operatorname{false}) \land j=M(e,\operatorname{true})) \lor (i=M(e,\operatorname{true}) \land j=M(e,\operatorname{false}))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.sameEdge_iff` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ For distinct columns, their inverse images under the matching have the same edge
 
 **Theorem 1.11 (Cycle edge coverage).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.edges_cover`
+$$\forall m : \mathbb{N}, \forall i,j : \operatorname{Col}(m), 2 \le m \implies i \neq j \implies (\operatorname{Adjacent}(i,j) \iff (\operatorname{SameEdge}(\operatorname{oddMatching}(m),i,j) \lor \operatorname{SameEdge}(\operatorname{evenMatching}(m),i,j)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.edges_cover` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ An unordered pair of distinct columns is adjacent exactly when it belongs to the
 
 **Theorem 1.12 (Disjoint cycle matchings).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.edges_disjoint`
+$$\forall m : \mathbb{N}, \forall i,j : \operatorname{Col}(m), 2 \le m \implies i \neq j \implies \operatorname{SameEdge}(\operatorname{oddMatching}(m),i,j) \implies \neg\operatorname{SameEdge}(\operatorname{evenMatching}(m),i,j)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.edges_disjoint` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ An unordered pair of distinct columns cannot be an edge of both matchings.
 
 **Theorem 1.13 (Exact cycle reconstruction).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiCycle.dihedral_of_preserves_adjacency`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), 2 \le m \implies (\forall i,j : \operatorname{Col}(m), \operatorname{Adjacent}(i,j) \implies \operatorname{Adjacent}(s(i),s(j))) \implies \operatorname{Dihedral}(s)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiCycle.dihedral_of_preserves_adjacency` (`✓ std3`). ∎
 

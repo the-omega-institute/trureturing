@@ -148,7 +148,19 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.minor`
 
 The ordered minor is the upper entry of the first column times the lower entry of the second minus the lower entry of the first times the upper entry of the second.
 
-**Definition 1.13 (Admissible matrices).**
+**Theorem 1.13 (Reversing an ordered minor).**
+
+$$\forall R : \operatorname{Type}, [\operatorname{CommRing}(R)], \forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(R,m), i,j : \operatorname{Col}(m), \operatorname{minor}(Z,i,j) = -\operatorname{minor}(Z,j,i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.minor_swap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exchanging the two arguments of a minor multiplies it by minus one.
+
+**Definition 1.14 (Admissible matrices).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Admissible`
 
@@ -160,7 +172,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Admissible`
 
 Every ordered pair of distinct columns has a nonzero minor. This is the nonvanishing condition for all two-column minors.
 
-**Definition 1.14 (Column reordering).**
+**Definition 1.15 (Column reordering).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.reorder`
 
@@ -172,7 +184,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.reorder`
 
 The column at index i of the reordered matrix is the original column at index σ(i).
 
-**Definition 1.15 (Odd determinant product).**
+**Definition 1.16 (Odd determinant product).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.oddProduct`
 
@@ -184,7 +196,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.oddProduct`
 
 In one-based notation the factors are D(1,2), D(3,4), through D(2m−1,2m).
 
-**Definition 1.16 (Even determinant product).**
+**Definition 1.17 (Even determinant product).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.evenProduct`
 
@@ -196,7 +208,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.evenProduct`
 
 In one-based notation the factors are D(2,3), D(4,5), through D(2m−2,2m−1), and D(1,2m).
 
-**Definition 1.17 (Preservation on all admissible matrices).**
+**Definition 1.18 (Preservation on all admissible matrices).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.PreservesLevel`
 
@@ -208,7 +220,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.PreservesLevel`
 
 A permutation preserves the level when equality of the two literal products implies equality after reordering for every admissible matrix over the complex rational function field.
 
-**Definition 1.18 (Ordered normalization).**
+**Definition 1.19 (Ordered normalization).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Normalized`
 
@@ -220,7 +232,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Normalized`
 
 A matrix is admissible, its first three columns are (0,−1), (1,0), and (1,1), and every consecutive minor and the ordered closing minor D(1,2m) equals one.
 
-**Definition 1.19 (Matrix equivalence).**
+**Definition 1.20 (Matrix equivalence).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.MatEquivalent`
 
@@ -232,7 +244,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.MatEquivalent`
 
 Two matrices are equivalent when one is obtained from the other by invertible left multiplication and an invertible diagonal matrix acting on the right.
 
-**Definition 1.20 (Allowable permutations).**
+**Definition 1.21 (Allowable permutations).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Allowable`
 
@@ -244,7 +256,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Allowable`
 
 For every normalized input, reordering by the permutation has exactly one matrix-equivalent normalized representative.
 
-**Definition 1.21 (Dihedral permutations).**
+**Definition 1.22 (Dihedral permutations).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Dihedral`
 
@@ -256,7 +268,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.Dihedral`
 
 For some column a, the permutation sends every column i to a+i or sends every column i to a−i, with arithmetic modulo 2m.
 
-**Definition 1.22 (Affine matrices).**
+**Definition 1.23 (Affine matrices).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.affine`
 
@@ -268,9 +280,9 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.affine`
 
 The first row is all ones and the second row contains the given coordinates.
 
-**Theorem 1.23 (Affine minor).**
+**Theorem 1.24 (Affine minor).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.minor_affine`
+$$\forall R : \operatorname{Type}, [\operatorname{CommRing}(R)], \forall m : \mathbb{N}, \forall t : \operatorname{Col}(m) \to R, i,j : \operatorname{Col}(m), \operatorname{minor}(\operatorname{affine}(t),i,j) = t(j) - t(i)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.minor_affine` (`✓ std3`). ∎
 
@@ -280,7 +292,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.minor_affine`
 
 The ordered minor at i and j is the coordinate at j minus the coordinate at i.
 
-**Definition 1.24 (Polynomial difference).**
+**Definition 1.25 (Polynomial difference).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.diff`
 
@@ -292,7 +304,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.diff`
 
 The oriented linear factor is the variable at j minus the variable at i.
 
-**Definition 1.25 (Oriented matching polynomial).**
+**Definition 1.26 (Oriented matching polynomial).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.matchingPolynomial`
 
@@ -304,7 +316,7 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.matchingPolynomial`
 
 Multiply one oriented linear factor for each ordered pair of the matching.
 
-**Definition 1.26 (Signed level polynomial).**
+**Definition 1.27 (Signed level polynomial).**
 
 Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.F`
 
@@ -316,9 +328,9 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.F`
 
 The even matching polynomial minus the odd matching polynomial is the affine form of the level equation.
 
-**Theorem 1.27 (Evaluation of a matching product).**
+**Theorem 1.28 (Evaluation of a matching product).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.eval_matchingPolynomial`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), t : \operatorname{Col}(m) \to \mathbb{C}, \operatorname{eval}(t,\operatorname{matchingPolynomial}(M)) = \prod_{e\in\operatorname{Fin}(m)} (t(M(e,\operatorname{true})) - t(M(e,\operatorname{false})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.eval_matchingPolynomial` (`✓ std3`). ∎
 
@@ -328,9 +340,9 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.eval_matchingPolynomial`
 
 Evaluating the matching polynomial multiplies the oriented coordinate differences.
 
-**Theorem 1.28 (The affine level equation).**
+**Theorem 1.29 (The affine level equation).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.eval_F`
+$$\forall m : \mathbb{N}, \forall t : \operatorname{Col}(m) \to \mathbb{C}, \operatorname{eval}(t,F(m)) = \operatorname{evenProduct}(\operatorname{affine}(t)) - \operatorname{oddProduct}(\operatorname{affine}(t))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.eval_F` (`✓ std3`). ∎
 
@@ -340,9 +352,9 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.eval_F`
 
 The polynomial evaluates to the even determinant product minus the odd product of the affine matrix.
 
-**Theorem 1.29 (Admissible constant matrices).**
+**Theorem 1.30 (Admissible constant matrices).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.affine_constants_admissible`
+$$\forall m : \mathbb{N}, \forall t : \operatorname{Col}(m) \to \mathbb{C}, \operatorname{Injective}(t) \implies \operatorname{Admissible}(\operatorname{affine}(\operatorname{RatFuncC} \circ t))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.affine_constants_admissible` (`✓ std3`). ∎
 
@@ -352,9 +364,9 @@ Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.affine_constants_admissible`
 
 Injective complex coordinates give a matrix whose minors stay nonzero under the inclusion into rational functions.
 
-**Theorem 1.30 (Transfer to the affine locus).**
+**Theorem 1.31 (Transfer to the affine locus).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiMatching.constant_matrix_implication`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), t : \operatorname{Col}(m) \to \mathbb{C}, \operatorname{PreservesLevel}(s) \implies \operatorname{Injective}(t) \implies \operatorname{eval}(t,F(m)) = 0 \implies \operatorname{eval}(t,\operatorname{rename}(s,F(m))) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiMatching.constant_matrix_implication` (`✓ std3`). ∎
 
@@ -390,6 +402,7 @@ A permutation preserving the matrix level sends each zero of the signed polynomi
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.matchingPolynomial`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.minor`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.minor_affine`
+- Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.minor_swap`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.oddMatching`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.oddProduct`
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiMatching.oddVertex`

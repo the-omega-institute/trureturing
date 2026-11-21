@@ -18,7 +18,7 @@ Its rows are (0,1,1,1) and (−1,0,1,2).
 
 **Theorem 1.2 (Four-column singleton normal form).**
 
-Lean statement: `D5/S3/Geometry/Polygons/KozakiKakeiFourNormal.normalized_four_iff`
+$$\forall Z : \operatorname{Chart}(K,2), \operatorname{Normalized}(2,Z) \iff Z = \operatorname{fourNormal}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/KozakiKakeiFourNormal.normalized_four_iff` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ The closing minor forces the last upper entry to be one, and the last consecutiv
 
 **Theorem 1.3 (Eight allowable column permutations).**
 
-Lean statement: `D5/S3/Geometry/Polygons/KozakiKakeiFourNormal.allowable_four_card`
+$$\operatorname{card}(\{s \in \operatorname{Perm}(\operatorname{Col}(2)) \mid \operatorname{Allowable}(2,s)\}) = 8$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/KozakiKakeiFourNormal.allowable_four_card` (`✓ std3`). ∎
 

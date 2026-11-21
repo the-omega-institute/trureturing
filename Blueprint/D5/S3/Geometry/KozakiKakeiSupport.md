@@ -30,7 +30,7 @@ A Boolean assignment cuts a matching when the two values on every edge differ.
 
 **Theorem 1.3 (Nonzero matching evaluations).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiSupport.eval_matching_ne_zero`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), f : \operatorname{Col}(m) \to \operatorname{Bool}, \operatorname{eval}(\operatorname{boolNumber} \circ f,\operatorname{matchingPolynomial}(M)) \neq 0 \iff \operatorname{Cuts}(M,f)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiSupport.eval_matching_ne_zero` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ An oriented matching polynomial is nonzero on a Boolean assignment exactly when 
 
 **Theorem 1.4 (Forcing the two endpoints).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiSupport.cuts_separate`
+$$\forall m : \mathbb{N}, \forall M : \operatorname{Matching}(m), i,j : \operatorname{Col}(m), f : \operatorname{Col}(m) \to \operatorname{Bool}, \operatorname{Cuts}(M,f) \implies i \neq j \implies \operatorname{SameEdge}(M,i,j) \implies f(i) \neq f(j)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiSupport.cuts_separate` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ If an assignment cuts a matching and the two columns lie on the same edge, their
 
 **Theorem 1.5 (Signed support counts detect edges).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiSupport.signed_support_recovers_adjacency`
+$$\forall m : \mathbb{N}, \forall i,j : \operatorname{Col}(m), 4 \le m \implies i \neq j \implies (\operatorname{Adjacent}(i,j) \iff \operatorname{card}(\operatorname{pairSupport}(i,j)) = 2^{m-2})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiSupport.signed_support_recovers_adjacency` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ For an adjacent pair, one matching admits no cuts with both entries true and the
 
 **Theorem 1.6 (Scalar symmetry transports support counts).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiSupport.pairSupport_card_invariant`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), c : \mathbb{C}, i,j : \operatorname{Col}(m), c \neq 0 \implies \operatorname{rename}(s,F(m)) = C(c) \cdot F(m) \implies \operatorname{card}(\operatorname{pairSupport}(s(i),s(j))) = \operatorname{card}(\operatorname{pairSupport}(i,j))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiSupport.pairSupport_card_invariant` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ Composition of Boolean assignments with the permutation bijects the two supports
 
 **Theorem 1.7 (Large-order necessity).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiSupport.dihedral_of_scalar_large`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), c : \mathbb{C}, 4 \le m \implies c \neq 0 \implies \operatorname{rename}(s,F(m)) = C(c) \cdot F(m) \implies \operatorname{Dihedral}(s)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiSupport.dihedral_of_scalar_large` (`✓ std3`). ∎
 

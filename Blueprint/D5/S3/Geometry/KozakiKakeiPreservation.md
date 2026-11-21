@@ -4,21 +4,9 @@
 
 A rotation or reflection preserves or exchanges the matching products, with a common orientation factor in the signed equation.
 
-**Theorem 1.1 (Reversing an ordered minor).**
+**Theorem 1.1 (Dihedral inclusion).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiPreservation.minor_swap`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPreservation.minor_swap` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Exchanging the two arguments of a minor multiplies it by minus one.
-
-**Theorem 1.2 (Dihedral inclusion).**
-
-Lean statement: `D5/S3/Geometry/KozakiKakeiPreservation.dihedral_preservesLevel`
+$$\forall m : \mathbb{N}, \forall s : \operatorname{Perm}(\operatorname{Col}(m)), 2 \le m \implies \operatorname{Dihedral}(s) \implies \operatorname{PreservesLevel}(s)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiPreservation.dihedral_preservesLevel` (`✓ std3`). ∎
 
@@ -31,5 +19,4 @@ Cyclic transport preserves or exchanges the two parity classes of edges. Account
 ## References
 
 - Truth anchor: `D5/S3/Geometry/KozakiKakeiPreservation.dihedral_preservesLevel`
-- Truth anchor: `D5/S3/Geometry/KozakiKakeiPreservation.minor_swap`
 - Dependency: [D5/S3/Geometry/KozakiKakeiCycle](KozakiKakeiCycle.md)

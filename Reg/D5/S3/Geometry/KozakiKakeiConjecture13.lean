@@ -2,6 +2,8 @@ import D5.S3.Geometry.KozakiKakeiConjecture13
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
+/-! Readouts of dihedral membership and of the written level on the permutation fibers. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -94,5 +96,73 @@ def registration :
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+namespace Level
+
+private def observesLevel : Realization signature :=
+  realize signature (fun _ _ σ => PreservesLevel σ) (fun e => nomatch e)
+
+private abbrev levelArena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (σ : Equiv.Perm (Col m)),
+    Allowable hm σ ↔ R.readout () m σ
+
+private theorem identity_preserves : PreservesLevel (Equiv.refl (Col 2)) :=
+  fun _ _ h => h
+
+private theorem rejects_level : ¬ levelArena.Law rejected := by
+  intro h
+  have ha := (allowable_iff_preservesLevel (m := 2) (by decide) (Equiv.refl _)).mpr
+    identity_preserves
+  exact (h (by decide) (Equiv.refl (Col 2))).mp ha
+
+def levelEvidence : Registration levelArena (type_of% @allowable_iff_preservesLevel) where
+  actual := observesLevel
+  bridge := Iff.rfl
+  variation := ⟨@allowable_iff_preservesLevel, rejected, rejects_level⟩
+  sensitivity := sensitivity levelArena.Law observesLevel rejected rejects_level
+  dependence := by
+    intro _
+    refine ⟨2, Equiv.refl _, Equiv.swap 0 1, ?_⟩
+    intro h
+    have hp : PreservesLevel (Equiv.swap (0 : Col 2) 1) := Eq.mp h identity_preserves
+    have ha := (allowable_iff_preservesLevel (m := 2) (by decide) _).mpr hp
+    exact swap_not_dihedral ((conjecture_13 (m := 2) (by decide) (by decide) _).mp ha)
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@allowable_iff_preservesLevel) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Geometry.KozakiKakei.allowable_iff_preservesLevel.__information_unit
+  realizationName := `Reg.D5.S3.Geometry.KozakiKakeiConjecture13.Level.levelEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨levelArena⟩
+  objectArena := .source ⟨levelArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source levelArena ⟨levelEvidence⟩
+  correspondence := {stage := .evidence, objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ σ => PreservesLevel σ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.KozakiKakeiConjecture13
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Level
 
 end Reg.D5.S3.Geometry.KozakiKakeiConjecture13

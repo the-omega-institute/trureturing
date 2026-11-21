@@ -18,7 +18,7 @@ Each successive pair in linear column order has minor one.
 
 **Theorem 1.2 (A normalized matrix is on the level).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiNormalization.normalized_level`
+$$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implies \operatorname{Normalized}(m,Z) \implies \operatorname{evenProduct}(Z) = \operatorname{oddProduct}(Z)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_level` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ All factors of both written matching products are one.
 
 **Theorem 1.3 (Existence of the ordered representative).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiNormalization.normalized_exists`
+$$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implies \operatorname{Admissible}(Z) \implies \operatorname{evenProduct}(Z) = \operatorname{oddProduct}(Z) \implies (\exists W : \operatorname{Chart}(K,m), \operatorname{Normalized}(m,W) \land \operatorname{MatEquivalent}(W,Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_exists` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ An invertible row operation fixes the first two columns. The initial diagonal fa
 
 **Theorem 1.4 (Uniqueness within a matrix class).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiNormalization.normalized_unique_of_equiv`
+$$\forall m : \mathbb{N}, \forall Z,W : \operatorname{Chart}(K,m), 2 \le m \implies \operatorname{Normalized}(m,Z) \implies \operatorname{Normalized}(m,W) \implies \operatorname{MatEquivalent}(W,Z) \implies W = Z$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_unique_of_equiv` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ The first two fixed columns force the left transformation to be diagonal. The th
 
 **Theorem 1.5 (Characterization of normalizable matrices).**
 
-Lean statement: `D5/S3/Geometry/KozakiKakeiNormalization.normalized_representative_iff`
+$$\forall m : \mathbb{N}, \forall Z : \operatorname{Chart}(K,m), 2 \le m \implies \operatorname{Admissible}(Z) \implies ((\exists! W : \operatorname{Chart}(K,m), \operatorname{Normalized}(m,W) \land \operatorname{MatEquivalent}(W,Z)) \iff \operatorname{evenProduct}(Z) = \operatorname{oddProduct}(Z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/KozakiKakeiNormalization.normalized_representative_iff` (`✓ std3`). ∎
 
