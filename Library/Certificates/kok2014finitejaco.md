@@ -12,6 +12,8 @@ strata_touched:
   - D5/S3/ConceptDynamics/GraphColoring/JacoMaximumSet
   - D5/S3/ConceptDynamics/GraphColoring/JacoProgression
   - D5/S3/ConceptDynamics/GraphColoring/JacoTripleMaximizers
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheorem
+  - D5/S3/ConceptDynamics/GraphColoring/JacoMorrieTheoremRefutation
   - D5/S3/ConceptDynamics/GraphColoring/JacoFibonacciSums
 license: CC-BY-3.0
 triage: anchor
@@ -125,6 +127,20 @@ exactly when b_(n+3)=b_(n+1)+2 for n at least two, the exact enumeration by
 p_j with j at least one, and the gap patterns: gaps 3 or 5, no two consecutive
 gaps 3 and no three consecutive gaps 5. The 2016 journal text and the MathDB
 answer were not inspected, so no priority is claimed.
+
+## Morrie's theorem
+
+Theorem 2.3 (Morrie's Theorem) on printed page 4 asserts, for n>=2 and the
+prime (least) Jaconian vertex v_k of J_n(1): (a) d^-(v_k)=d^-(v_(k+1)) and
+d^-(v_(k+2))=d^-(v_(k+1))+1 if and only if J_n={v_k} and
+J_(n+1)={v_k,v_(k+1),v_(k+2)}; (b) d^-(v_k)=d^-(v_(k+1))=d^-(v_(k+2)) if and
+only if J_n={v_k} and J_(n+1)={v_k,v_(k+1)}. Both fail as stated: at n=6,
+k=3 the indegrees satisfy (a) but J_6 is not a singleton, and at n=4, k=2
+they satisfy (b) but J_4 is not a singleton. Corollary 4 of Ma and Zhang,
+Zenodo DOI 10.5281/zenodo.24369124, adds n=R_k to each left-hand condition.
+The repository proves both corrected equivalences, with d^-(v_i)=i-b_i, and
+that in (a) the condition d^-(v_k)=d^-(v_(k+1)) is implied by the others; it
+proves separately that each part fails as stated, at n=6 and at n=4.
 
 ## Fibonacci orders and sums
 
