@@ -23,6 +23,7 @@ noncomputable section
 open Real Set MeasureTheory Filter Finset
 open scoped Topology
 open D5.S3.Weil.Mertens D5.S3.Weil.Mertens.IntegratedExplicit
+open D5.S3.Arith.Robin.CompleteMertensPeak
 
 namespace D5.S3.CharacterSums.DirichletRampEndpoint
 
@@ -55,7 +56,7 @@ private theorem normalized_ramp {N : ℕ} (χ : DirichletCharacter ℂ N) {x : �
       ext n
       simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Ioc]
       omega
-    rw [D5.S3.Arith.Robin.CompleteMertensPeak.U, mangoldtPart_eq_range hx.le (N := ⌊x⌋₊ + 1)
+    rw [U, mangoldtPart_eq_range hx.le (N := ⌊x⌋₊ + 1)
       (by simpa using Nat.lt_floor_add_one x), hrange, Finset.sum_insert (by simp)] at h
     simp [mangoldtRamp] at h ⊢
     linarith only [h]
@@ -81,25 +82,23 @@ private theorem endpoint_of_two_le {N : ℕ} [NeZero N] (χ : DirichletCharacter
     WeightedPrimeLimit.chebyshev_error_kernel_integrable hx
   linarith only [hd, normalized_ramp χ hx0, ht]
 
-private def K (u : ℝ) : ℝ := (Chebyshev.psi u - u) / u ^ 2
-
-private theorem K_eq_neg_inv {x : ℝ} (hx : 0 < x) :
-    (Ioo x 2).EqOn K (fun u : ℝ => -(u⁻¹)) := by
+private theorem kernel_eq_neg_inv {x : ℝ} (hx : 0 < x) :
+    (Ioo x 2).EqOn psiErrorKernel (fun u : ℝ => -(u⁻¹)) := by
   intro u hu
-  simp only [K, Chebyshev.psi_eq_zero_of_lt_two hu.2, zero_sub, neg_div]
+  simp only [psiErrorKernel, Chebyshev.psi_eq_zero_of_lt_two hu.2, zero_sub, neg_div]
   field_simp [(hx.trans hu.1).ne']
 
-private theorem K_integrable_pos {x : ℝ} (hx : 0 < x) (h2 : x < 2) :
-    IntegrableOn K (Ioi x) := by
-  have htail : IntegrableOn K (Ioi 2) :=
+private theorem kernel_integrable_pos {x : ℝ} (hx : 0 < x) (h2 : x < 2) :
+    IntegrableOn psiErrorKernel (Ioi x) := by
+  have htail : IntegrableOn psiErrorKernel (Ioi 2) :=
     WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set (Ioi_subset_Ioi (by norm_num))
   have hrecip : IntervalIntegrable (fun u : ℝ => -(u⁻¹)) volume x 2 := by
     apply ContinuousOn.intervalIntegrable
     rw [uIcc_of_le h2.le]
     exact (continuousOn_inv₀.mono (fun u hu => ne_of_gt (hx.trans_le hu.1))).neg
-  have hinterval : IntervalIntegrable K volume x 2 := by
-    rw [intervalIntegrable_congr_uIoo (show (uIoo x 2).EqOn K (fun u : ℝ => -(u⁻¹)) by
-      simpa only [uIoo_of_le h2.le] using K_eq_neg_inv hx)]
+  have hinterval : IntervalIntegrable psiErrorKernel volume x 2 := by
+    rw [intervalIntegrable_congr_uIoo (show (uIoo x 2).EqOn psiErrorKernel (fun u : ℝ => -(u⁻¹)) by
+      simpa only [uIoo_of_le h2.le] using kernel_eq_neg_inv hx)]
     exact hrecip
   rw [← Ioc_union_Ioi_eq_Ioi h2.le]
   exact hinterval.1.union htail
@@ -109,7 +108,7 @@ endpoint, uniformly in every nonprincipal character of positive modulus. -/
 theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ ≠ 1) {x : ℝ} (hx : 0 < x) :
     ‖deriv χ.LFunction 1 / χ.LFunction 1‖ ≤ ‖gChi χ x‖ / x + log x - 1 -
       eulerMascheroniConstant - ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2 := by
-  change _ ≤ _ - ∫ u in Ioi x, K u
+  change _ ≤ _ - ∫ u in Ioi x, psiErrorKernel u
   by_cases hx2 : 2 ≤ x
   · exact endpoint_of_two_le χ hχ hx2
   push Not at hx2
@@ -123,11 +122,11 @@ theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter
       have he : n = 1 := by omega
       simp [he, mangoldtRamp]
     simp [gChi, hχ, hr, Real.norm_of_nonneg hx.le, mul_div_cancel_left₀ _ hx.ne']
-  have htail : IntegrableOn K (Ioi 2) :=
+  have htail : IntegrableOn psiErrorKernel (Ioi 2) :=
     WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set (Ioi_subset_Ioi (by norm_num))
-  have hsplit := intervalIntegral.integral_interval_add_Ioi (K_integrable_pos hx hx2) htail
-  have hpart : (∫ u in x..(2 : ℝ), K u) = log x - log 2 := by
-    rw [intervalIntegral.integral_congr_Ioo_of_le hx2.le (K_eq_neg_inv hx),
+  have hsplit := intervalIntegral.integral_interval_add_Ioi (kernel_integrable_pos hx hx2) htail
+  have hpart : (∫ u in x..(2 : ℝ), psiErrorKernel u) = log x - log 2 := by
+    rw [intervalIntegral.integral_congr_Ioo_of_le hx2.le (kernel_eq_neg_inv hx),
       intervalIntegral.integral_neg, integral_inv_of_pos hx (by norm_num),
       Real.log_div (by norm_num : (2 : ℝ) ≠ 0) hx.ne']
     ring
@@ -135,7 +134,7 @@ theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter
     WeightedPrimeLimit.chebyshev_error_kernel_integrable (show (2:ℝ) ≤ 2 by rfl)
   have hf : Finset.Ioc 0 (2 : ℕ) = {1,2} := by decide
   simp [Chebyshev.psi, hf] at ht
-  change (∫ u in Ioi (2:ℝ), K u) = _ at ht
+  change (∫ u in Ioi (2:ℝ), psiErrorKernel u) = _ at ht
   linarith only [hg, hsplit, hpart, ht]
 
 /-- A uniform real threshold yields additive Euler normalization from the same
