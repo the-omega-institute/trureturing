@@ -26,7 +26,7 @@ $$\operatorname{R}\left(d\right) = \operatorname{QuadraticAlgebra}\left(\mathbb{
 
 *Commentary.*
 
-In the integral basis, the generator is the square root of d when d is 2 or 3 modulo 4, and one plus that root divided by two when d is 1 modulo 4. The two parameters a and b encode the equation for the square of the generator as a plus b times the generator. The remainder and division in the parameters are integer operations.
+In the integral basis, the generator is the square root of d when d is 2 or 3 modulo 4, and half the sum of one and that root when d is 1 modulo 4. The two parameters a and b encode the equation for the square of the generator as a plus b times the generator. The remainder and division in the parameters are integer operations.
 
 **Definition 1.3 (Nonzero elements).**
 
@@ -102,7 +102,7 @@ Two nonzero inputs are n-powerfully friendly when the normalized indices agree a
 
 **Definition 1.9 (Rational prime power).**
 
-$$\operatorname{primePower}\left(d, p, k, hp\right).val = (p^{k}: \mathbb{N}: \operatorname{R}\left(d\right))$$
+$$\operatorname{primePower}\left(d, p, k, hp\right).val = ((p^{k}: \mathbb{N}): \operatorname{R}\left(d\right))$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.primePower` (`✓ std3`).
 
@@ -114,7 +114,7 @@ Take the natural power and cast it into the quadratic ring. Primality of p impli
 
 **Definition 1.10 (Conjecture 4.1).**
 
-$$claim = (\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall p \in \mathbb{N}, hp \in Nat.Prime\left(p\right), k \in \mathbb{N},\; (0 < k) \Rightarrow (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\forall z \in \operatorname{Nonzero}\left(d\right),\; \neg\operatorname{PowerfullyFriendly}\left(n, \operatorname{primePower}\left(d, p, k, hp\right), z\right)))))$$
+$$claim = (\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall (p: \mathbb{N}) (hp: Nat.Prime\left(p\right)) (k: \mathbb{N}), (0 < k) \Rightarrow (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\forall z \in \operatorname{Nonzero}\left(d\right),\; \neg\operatorname{PowerfullyFriendly}\left(n, \operatorname{primePower}\left(d, p, k, hp\right), z\right)))))$$
 
 *Formalization.* `D5/S3/Arith/Abundancy/DefantC41Settlement.claim` (`✓ std3`).
 
@@ -126,7 +126,7 @@ In every listed ring, for every positive rational prime and both positive expone
 
 **Theorem 1.11 (A rational prime with a powerful friend).**
 
-$$\neg(\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall p \in \mathbb{N}, hp \in Nat.Prime\left(p\right), k \in \mathbb{N},\; (0 < k) \Rightarrow (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\forall z \in \operatorname{Nonzero}\left(d\right),\; \neg\operatorname{PowerfullyFriendly}\left(n, \operatorname{primePower}\left(d, p, k, hp\right), z\right)))))$$
+$$\neg(\forall d \in \mathbb{Z},\; (d \in K) \Rightarrow (\forall (p: \mathbb{N}) (hp: Nat.Prime\left(p\right)) (k: \mathbb{N}), (0 < k) \Rightarrow (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\forall z \in \operatorname{Nonzero}\left(d\right),\; \neg\operatorname{PowerfullyFriendly}\left(n, \operatorname{primePower}\left(d, p, k, hp\right), z\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/DefantC41Settlement.result` (`✓ std3`). ∎
 
