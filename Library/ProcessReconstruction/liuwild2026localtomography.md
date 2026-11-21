@@ -37,6 +37,29 @@ paired-window data. A guarantee on a smaller channel class or a reconstruction
 using additional probes requires its own hypotheses. Appendix D treats
 a bound with a dimension factor and the separate Pauli-channel case.
 
+## Fresh product-input discrimination
+
+Liu–Wild §V motivates the construction through the diamond-norm question
+and its discussion of GHZ-type coherence. The repository proves the
+exact testing curve for this pair on n ≥ 1 qubits. Each channel has Kraus
+rank two for n ≥ 2.
+
+Each of the fixed M calls uses a fresh tensor product of single-qubit
+density states and a finite POVM on that call’s full output. The policy
+chooses both from the classical outcome history and a finite random seed
+with the same law under both hypotheses. The optimal equal-prior and
+worst-case success probabilities both equal 1 − (1 − 2/2ⁿ)^M/2. The
+upper bound follows by multiplying lower bounds on conditional overlap.
+Repeated all-plus inputs and a three-outcome GHZ measurement attain it
+with a fair guess if every call is inconclusive. Success of at least two
+thirds requires at least 2ⁿ/6 calls.
+
+On arbitrary full-register inputs the two channels induce identical
+reduced maps on every proper output subset, even with a retained
+reference. In particular, their proper paired Choi marginals agree.
+A GHZ input with access to the full output distinguishes them with
+certainty in one call.
+
 ## Verified locator
 
 PRX Quantum 7, 043015, PDF p. 4, Eq. (3) and Definition 1,

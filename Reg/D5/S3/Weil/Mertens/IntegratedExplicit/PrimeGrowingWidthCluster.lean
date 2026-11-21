@@ -42,7 +42,7 @@ def arena : Arena where
           (∫ x in A B..B, max (-primeTail x) 0 / Real.sqrt x) / B ^ (β - 1 / 2)) ↔
         ∃ h ∈ closure (range phaseOrbit), y = phaseWindowInfinite realPart β h
 
-private theorem actual_window_at_one (h : ℕ → Circle) :
+theorem actual_window_at_one (h : ℕ → Circle) :
     phaseWindowInfinite Complex.re 1 h = 0 := by
   have hcut (k : ℕ) : rightmostCoeff Complex.re 1 k = 0 :=
     ite_eq_right (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2.2.ne
@@ -57,11 +57,11 @@ private theorem constant_density_continuous :
   exact (((phaseProfile_continuous (fun _ => 1) 1).comp
     (continuous_fst.prodMk continuous_snd.neg)).neg.max continuous_const)
 
-private theorem constant_window_continuous : Continuous (phaseWindow (fun _ => 1) 1 1) :=
+theorem constant_window_continuous : Continuous (phaseWindow (fun _ => 1) 1 1) :=
   intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
     constant_density_continuous 0 1
 
-private theorem constant_window_finite_positive :
+theorem constant_window_finite_positive :
     0 < phaseWindow (fun _ => 1) 1 1 (1 : ℕ → Circle) := by
   have hsum := Complex.hasSum_re actualCoeff_hasSum
   have hpos (k : ℕ) : 0 < (actualCoeff k).re := by
@@ -78,7 +78,7 @@ private theorem constant_window_finite_positive :
     (fun s _ => mul_nonneg (Real.exp_nonneg _) (le_max_right _ _)) ⟨0, by simp, ?_⟩
   exact mul_pos (Real.exp_pos _) (by simpa only [neg_zero] using hzero.trans_le (le_max_left _ _))
 
-private theorem constant_window_le_infinite (h : ℕ → Circle) :
+theorem constant_window_le_infinite (h : ℕ → Circle) :
     phaseWindow (fun _ => 1) 1 1 h ≤ phaseWindowInfinite (fun _ => 1) 1 h := by
   let term (s : ℝ) (k : ℕ) :=
     actualCoeff k * (h k : ℂ) * (phaseOrbit (-s) k : ℂ)
@@ -113,7 +113,7 @@ private theorem constant_window_le_infinite (h : ℕ → Circle) :
   rw [← intervalIntegral.integral_interval_add_Ioi (hint 0) (hint 1)]
   exact le_add_of_nonneg_right (integral_nonneg hnonneg)
 
-private theorem one_mem_phase_hull : (1 : ℕ → Circle) ∈ closure (range phaseOrbit) := by
+theorem one_mem_phase_hull : (1 : ℕ → Circle) ∈ closure (range phaseOrbit) := by
   refine subset_closure ⟨0, ?_⟩
   funext k
   simp [phaseOrbit]

@@ -42,7 +42,7 @@ variable {I : Type*} [Fintype I]
 def shift (profile : I → Bool) (v : I → ZMod 2) : ZMod 2 :=
   ∑ i, if profile i then 0 else v i
 
-private theorem shift_add (profile : I → Bool) (v w : I → ZMod 2) :
+theorem shift_add (profile : I → Bool) (v w : I → ZMod 2) :
     shift profile (v + w) = shift profile v + shift profile w := by
   rw [shift, shift, shift, ← sum_add_distrib]
   apply sum_congr rfl

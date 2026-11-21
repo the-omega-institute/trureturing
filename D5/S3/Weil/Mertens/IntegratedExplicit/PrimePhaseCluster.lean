@@ -125,7 +125,7 @@ theorem signedInput_approx {β : ℝ} (hβ₀ : 0 < β) (hβ : 1 / 2 < β)
   unfold signedInput
   ring
 
-private theorem primeMass_exp_substitution (β W t : ℝ) (hW : 0 ≤ W) (ht : W ≤ t) :
+theorem primeMass_exp_substitution (β W t : ℝ) (hW : 0 ≤ W) (ht : W ≤ t) :
     (∫ x in Real.exp t * Real.exp (-W)..Real.exp t, max (-primeTail x) 0 / Real.sqrt x) /
       (Real.exp t) ^ (β - 1 / 2) =
     ∫ s in 0..W, Real.exp (-(β - 1 / 2) * s) * max (-signedInput β (t - s)) 0 := by
