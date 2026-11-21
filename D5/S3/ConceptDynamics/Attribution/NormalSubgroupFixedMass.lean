@@ -6,7 +6,7 @@
    utility: none
    digest: The row bound is attained for every normal subgroup of a finite-kernel action. -/
 
-import D5.S3.ConceptDynamics.Attribution.FixedKernelMass
+import D5.S3.ConceptDynamics.Attribution.FiniteTableCalibration
 import Mathlib.GroupTheory.GroupAction.SubMulAction
 
 /-! Normal subgroups retain their sharp fixed-seed mass upon symmetrizing table laws. -/
@@ -23,22 +23,11 @@ universe u v w s
 variable {G : Type u} {X : Type v} {Y : Type w}
 variable [Group G] [MulAction G X] [MulAction G Y]
 
-local instance (priority := 2000) tableSMul : SMul G (X → Y) where
-  smul g t x := g • t (g⁻¹ • x)
+local instance (priority := 2000) tableSMul : SMul G (X → Y) :=
+  FiniteTableCalibration.tableSMul
 
-local instance (priority := 2000) tableAction : MulAction G (X → Y) where
-  toSMul := tableSMul
-  one_smul t := funext fun x => by
-    change (1 : G) • t ((1 : G)⁻¹ • x) = t x
-    rw [inv_one, one_smul, one_smul]
-  mul_smul g h t := funext fun x => by
-    change (g * h) • t ((g * h)⁻¹ • x) = g • (h • t (h⁻¹ • (g⁻¹ • x)))
-    rw [mul_inv_rev, mul_smul h⁻¹, mul_smul g]
-
-private theorem readout_smul (g : G) (t : X → Y) (x : X) :
-    (g • t) (g • x) = g • t x := by
-  change g • t (g⁻¹ • (g • x)) = _
-  rw [inv_smul_smul]
+local instance (priority := 2000) tableAction : MulAction G (X → Y) :=
+  FiniteTableCalibration.tableAction
 
 private theorem fixed_smul_iff (H : Subgroup G) [H.Normal] (g : G) (t : X → Y) :
     g • t ∈ MulAction.fixedPoints H (X → Y) ↔ t ∈ MulAction.fixedPoints H (X → Y) := by
@@ -165,67 +154,24 @@ theorem maximal_normal_subgroup_fixed_seed_mass [Nonempty X] (H : Subgroup G) [H
       seedFixedMass (G := H) a ≤ rowFixedMass (G := H) P x₀ :=
     upperBound T a f hn hp (fun h => hc h.val)
   refine ⟨x₀, least, upper, ?_⟩
-  let table (s : S) (x : X) := readout x s
-  let p (t : X → Y) := ∑ s, if table s = t then weights s else 0
-  have push (A : Finset (X → Y)) :
-      (∑ t ∈ A, p t) = ∑ s ∈ univ.filter (fun s => table s ∈ A), weights s := by
-    simpa only [p, Finset.sum_filter] using
-      Finset.sum_fiberwise_eq_sum_filter univ A table weights
-  have pn (t : X → Y) : 0 ≤ p t := by
-    exact sum_nonneg (fun s _ => by split <;> first | exact (positive s).le | rfl)
-  have ptotal : ∑ t, p t = 1 := by simpa using (push univ).trans (by simpa using total)
-  have pmarginal (x : X) (y : Y) : (∑ t, if t x = y then p t else 0) = P x y := by
-    rw [← Finset.sum_filter, push]
-    simpa only [Finset.sum_filter, mem_filter, mem_univ, true_and, table] using marginal x y
-  have pushFixed : seedFixedMass (G := H) weights ≤ seedFixedMass (G := H) p := by
-    unfold seedFixedMass
-    rw [push]
-    apply sum_le_sum_of_subset_of_nonneg
-    · intro s hs
-      refine mem_filter.mpr ⟨mem_univ _, mem_filter.mpr ⟨mem_univ _, ?_⟩⟩
-      intro h
-      apply funext
-      intro x
-      change h.val • readout (h.val⁻¹ • x) s = readout x s
-      have moved := covariant h (h.val⁻¹ • x) s
-      change readout (h.val • (h.val⁻¹ • x)) (h • s) =
-        h.val • readout (h.val⁻¹ • x) s at moved
-      rw [smul_inv_smul, (mem_filter.mp hs).2 h] at moved
-      exact moved.symm
-    · exact fun s _ _ => (positive s).le
+  let p := FiniteTableCalibration.tableLaw weights readout
+  obtain ⟨pn, ptotal, _, pmarginal, pushFixed⟩ :=
+    FiniteTableCalibration.calibration_table_law (G := H)
+      weights (fun s => (positive s).le) total readout covariant P marginal
   obtain ⟨q, qn, qtotal, invariant, qmarginal, qfixed⟩ :=
     symmetrize H P cov p pn ptotal pmarginal
-  let T := {t : X → Y // 0 < q t}
-  let action : MulAction G T := {
-    smul := fun g t => ⟨g • t.val, invariant g t.val ▸ t.property⟩
-    one_smul := fun t => Subtype.ext (one_smul G t.val)
-    mul_smul := fun g h t => Subtype.ext (mul_smul g h t.val) }
-  let weight (t : T) := q t.val
-  let eval (x : X) (t : T) := t.val x
-  have supportSum (a : (X → Y) → ℝ) (zero : ∀ t, q t = 0 → a t = 0) :
-      (∑ t : T, a t.val) = ∑ t, a t :=
-    FiniteKernelStabilizers.row_sum (fun (_ : Unit) => q) (fun _ => qn) () a zero
-  let _ := action
-  have newMarginal (x : X) (y : Y) : (∑ t, if eval x t = y then weight t else 0) = P x y :=
-    (supportSum (fun t => if t x = y then q t else 0) (fun t z => by simp [z])).trans (qmarginal x y)
-  have newCovariant (g : G) (x : X) (t : T) : eval (g • x) (g • t) = g • eval x t :=
-    readout_smul g t.val x
-  refine ⟨T, inferInstance, action, weight, eval, fun t => t.property,
-    (supportSum q (fun _ z => z)).trans qtotal, fun g t => invariant g t.val,
-    newMarginal, newCovariant, ?_⟩
+  obtain ⟨T, _, _, weight, eval, hp, ht, hi, hm, hc, hfixed⟩ :=
+    FiniteTableCalibration.positive_table_calibration H P q qn qtotal invariant qmarginal
+  refine ⟨T, inferInstance, inferInstance, weight, eval, hp, ht, hi, hm, hc, ?_⟩
   obtain ⟨x₁, leastAtSupport, boundAtSupport, _⟩ :=
     maximal_fixed_seed_mass.{u,v,w,max v w} (G := H) P nn normalized (fun h => cov h.val)
   apply le_antisymm
-  · exact (boundAtSupport T weight eval (fun t => t.property.le) newMarginal
-      (fun h => newCovariant h.val)).trans (leastAtSupport x₀)
-  · have sameFixed : seedFixedMass (G := H) weight = seedFixedMass (G := H) q := by
-      unfold seedFixedMass
-      simp only [Finset.sum_filter]
-      have same (t : T) : (∀ h : H, h • t = t) ↔ ∀ h : H, h • t.val = t.val := by
-        exact ⟨fun fixed h => congrArg Subtype.val (fixed h), fun fixed h => Subtype.ext (fixed h)⟩
-      simpa only [same, weight] using supportSum
-        (fun t => if ∀ h : H, h • t = t then q t else 0) (fun t z => by simp [z])
-    rw [sameFixed, qfixed, ← attained]
-    exact pushFixed
+  · exact (boundAtSupport T weight eval (fun t => (hp t).le) hm
+      (fun h => hc h.val)).trans (leastAtSupport x₀)
+  · calc
+      rowFixedMass (G := H) P x₀ = seedFixedMass (G := H) weights := attained.symm
+      _ ≤ seedFixedMass (G := H) p := pushFixed
+      _ = seedFixedMass (G := H) q := qfixed.symm
+      _ = seedFixedMass (G := H) weight := hfixed.symm
 
 end D5.S3.ConceptDynamics.Attribution.NormalSubgroupFixedMass
