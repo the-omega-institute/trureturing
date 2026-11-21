@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Hypercube/BinaryKernelMinimum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Hypercube/BinaryKernelCrossing]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
    digest: Minimum binary adjacency-kernel supports of even cubes are neighbor shells. -/
 
