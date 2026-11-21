@@ -5,8 +5,11 @@ year: 2026
 title: "Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings"
 doi: 10.5281/zenodo.24369110
 url: https://zenodo.org/records/24369110
-claim: "Lemma 2: if a monic real polynomial p has distinct roots, a root R > 1 and all other roots of modulus at most one, a real sequence obeying the recurrence with characteristic polynomial p and additive error e_j = O(q^j), 1 < q < R, satisfies b_j = L R^j + O(q^j) for some real L; if moreover b_j ~ L R^j with L > 0 and e_j = O(b_j^(1/2)), then b_j = L R^j + O(R^(j/2)). Corollary 6: for the A400645 source sequence a_n and every fixed integer h >= 0, a_{n+h}/a_n -> lambda^h, and log(a_n)/n -> log lambda. Corollary 7: with u_0 = u_1 = u_2 = 0, u_3 = 1 and u_n = u_{n-1} + u_{n-2} + u_{n-3} - u_{n-4}, the unique extension of u_n to all integer indices satisfies u_n = -u_{2-n}, the identity recorded by Michael Somos (July 25, 2025) in A116732, revision 33, FORMULA. Corollary 8: the coefficients v_n of (1+z)^2(1-z+z^2-z^3+z^4-z^5+z^6)/((1-z+z^2)Q(z)), Q(z) = z^4-z^3-z^2-z+1, are strictly increasing for n >= 0, proving the conjecture in Kimberling's A289916, revision 11, COMMENTS; moreover v_n = D r^n + O(1) for some D > 0."
+claim: "Corollary 5: for m = 2 or 3 and nondecreasing nonnegative integer data (x_1 >= 2 for m = 2, x_2 >= 1 for m = 3), x_(n+m) = round(sqrt(sum_(i<m) x_(n+i)^2)) satisfies x_n = C R_m^(n/2) + O(1) for some C > 0 and x_(n+1)/x_n = sqrt(R_m) + O(R_m^(-n/2)), R_m the root above one of y^m - y^(m-1) - ... - 1. Corollary 3: for the A400645 source sequence, a_n = c lambda^n + O(1) and a_{n+1}/a_n = lambda + O(lambda^(-n)). Lemma 2: if a monic real polynomial p has distinct roots, a root R > 1 and all other roots of modulus at most one, a real sequence obeying the recurrence with characteristic polynomial p and additive error e_j = O(q^j), 1 < q < R, satisfies b_j = L R^j + O(q^j) for some real L; if moreover b_j ~ L R^j with L > 0 and e_j = O(b_j^(1/2)), then b_j = L R^j + O(R^(j/2)). Corollary 6: for the A400645 source sequence a_n and every fixed integer h >= 0, a_{n+h}/a_n -> lambda^h, and log(a_n)/n -> log lambda. Corollary 7: with u_0 = u_1 = u_2 = 0, u_3 = 1 and u_n = u_{n-1} + u_{n-2} + u_{n-3} - u_{n-4}, the unique extension of u_n to all integer indices satisfies u_n = -u_{2-n}, the identity recorded by Michael Somos (July 25, 2025) in A116732, revision 33, FORMULA. Corollary 8: the coefficients v_n of (1+z)^2(1-z+z^2-z^3+z^4-z^5+z^6)/((1-z+z^2)Q(z)), Q(z) = z^4-z^3-z^2-z+1, are strictly increasing for n >= 0, proving the conjecture in Kimberling's A289916, revision 11, COMMENTS; moreover v_n = D r^n + O(1) for some D > 0."
 strata_touched:
+  - D5/S1/Recurrence/RoundedNormBoundedError
+  - D5/S1/Recurrence/Algebraic/OEISA289916Asymptotics
+  - D5/S1/Recurrence/OEISA400645BoundedError
   - D5/S1/Recurrence/Asymptotic/DominantRootForcing
   - D5/S1/Recurrence/Algebraic/OEISA116732BilateralReversal
   - D5/S1/Recurrence/Algebraic/OEISA289916StrictIncrease
@@ -24,8 +27,8 @@ Zenodo record: https://zenodo.org/records/24369110
 DOI: 10.5281/zenodo.24369110 (version 2; Zenodo publication date 2026-11-19, PDF dated
 9 November 2026). Concept DOI 10.5281/zenodo.24369109 is distinct. Source PDF:
 https://zenodo.org/api/records/24369110/files/note-v2.pdf/content (text extracted locally with
-pdftotext -layout, 25,795 characters). Lemma 2 is in Section 4; Corollaries 6, 7 and 8 are in
-Section 5.
+pdftotext -layout, 25,795 characters). Lemma 2 and Corollaries 3 and 5 are in Section 4;
+Corollaries 6, 7 and 8 are in Section 5.
 
 ## Source statement
 
@@ -34,6 +37,14 @@ Section 5.
 > polynomial p, with additive error ej = O(q^j) for some 1 < q < R, then bj = LR^j + O(q^j) for
 > some real L. If bj ∼ LR^j with L > 0 and the error also satisfies ej = O(bj^(1/2)), then
 > bj = LR^j + O(R^(j/2)).
+
+> Corollary 3. For the sequence in Theorem 1, an = cλ^n + O(1), and an+1/an = λ + O(λ^−n).
+
+> Corollary 5. Let m = 2 or 3 and start with nondecreasing nonnegative integer data
+> x0, . . . , xm−1. Define xn+m = round √(x_n² + · · · + x_(n+m−1)²). For m = 2 assume x1 ≥ 2;
+> for m = 3 assume x2 ≥ 1. If Rm is the positive root above one of
+> pm(y) = y^m − y^(m−1) − · · · − y − 1, then for some C > 0, xn = C Rm^(n/2) + O(1),
+> xn+1/xn = √Rm + O(Rm^(−n/2)).
 
 > Corollary 6. For every fixed integer h ≥ 0, an+h/an → λh, and log(an)/n → log λ.
 
@@ -86,3 +97,8 @@ drops monicity and distinctness of the non-dominant roots, allows a negative sim
 0 < q < |R| and other roots of modulus below q, and shows that any L with b_j = L R^j + o(R^j)
 satisfies b_j = L R^j + O(q^j). The lemma's second assertion is the case q = √R: its hypotheses
 b_j ~ L R^j, L > 0 and e_j = O(b_j^(1/2)) imply b_j = L R^j + o(R^j) and e_j = O(R^(j/2)).
+
+For Corollary 5, `D5/S1/Recurrence/RoundedNormBoundedError` drops the monotonicity of the data:
+the rule makes the sequence nondecreasing from index m − 1 on. It replaces the size hypotheses
+by the exact conditions max(x0, x1) ≥ 2 for m = 2 and a nonzero seed for m = 3, and proves that
+these conditions are also necessary.

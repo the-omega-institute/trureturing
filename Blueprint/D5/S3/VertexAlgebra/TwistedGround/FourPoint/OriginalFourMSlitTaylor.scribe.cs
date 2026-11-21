@@ -19,6 +19,10 @@ internal sealed class OriginalFourMSlitTaylorDocument : IScribeDocumentDefinitio
                     + "directional Fréchet derivative in the first coordinate, restrict to the slice "
                     + "at zero and divide by n factorial. Near y those directional derivatives "
                     + "agree with the iterated one-variable derivatives.")),
+            D("coefficient-congr", "coefficient_congr",
+                "Taylor coefficients of equal germs", DescribeRole.Theorem,
+                Text("If two complex functions agree near zero, then their iterated derivatives "
+                    + "at zero agree. Dividing by the same factorial gives equal coefficients.")),
             D("slit-mean-entry", "slitMeanEntry", "Slit mean entry", DescribeRole.Definition,
                 Text("At a fixed leg and sign, take the ordinary coefficient of order p at the external "
                     + "origin of the slit mean multiplied by minus the leg sign and divided by the Euler period. "

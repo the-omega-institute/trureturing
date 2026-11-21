@@ -52,11 +52,11 @@ def simplex (C F : Finset V) : ℤ :=
 def simplexBoundary (C : Finset V) : Chain V :=
   boundaryOn C (simplex C)
 
-private lemma sign_sq (n : ℕ) : ((-1 : ℤ) ^ n) * (-1) ^ n = 1 := by
+lemma sign_sq (n : ℕ) : ((-1 : ℤ) ^ n) * (-1) ^ n = 1 := by
   rw [← mul_pow]
   norm_num
 
-private lemma insertionSign_ne_zero (R : Finset V) (x : V) : insertionSign R x ≠ 0 :=
+lemma insertionSign_ne_zero (R : Finset V) (x : V) : insertionSign R x ≠ 0 :=
   pow_ne_zero _ (by norm_num)
 
 private lemma shuffleSign_ne_zero (A D : Finset V) : shuffleSign A D ≠ 0 :=
@@ -88,7 +88,7 @@ private lemma left_insertion_sign (R C : Finset V) {x : V}
           (-1) ^ (((R ∩ C).filter (· < x)).card)) := by ring
     _ = _ := by rw [sign_sq, one_mul]
 
-private lemma right_insertion_sign (R C : Finset V) {x : V}
+lemma right_insertion_sign (R C : Finset V) {x : V}
     (hx : x ∉ R) :
     insertionSign R x * shuffleSign (R ∩ C) (insert x (R \ C)) =
       shuffleSign (R ∩ C) (R \ C) * (-1) ^ (R ∩ C).card *
@@ -182,7 +182,7 @@ private lemma insertion_pair (R : Finset V) {x y : V}
       card_insert_of_notMem (fun hm => hy (mem_filter.mp hm).1), pow_succ]
     ring
 
-private lemma boundaryOn_squared (U : Finset V) (z : Chain V) (R : Finset V) :
+lemma boundaryOn_squared (U : Finset V) (z : Chain V) (R : Finset V) :
     boundaryOn U (boundaryOn U z) R = 0 := by
   classical
   let f (x y : V) := if y ∈ U \ insert x R then
@@ -222,7 +222,7 @@ private lemma boundaryOn_squared (U : Finset V) (z : Chain V) (R : Finset V) :
       _ = _ := by simp only [sum_neg_distrib]
   omega
 
-private lemma simplexBoundary_erase {C : Finset V} {x : V} (hx : x ∈ C) :
+lemma simplexBoundary_erase {C : Finset V} {x : V} (hx : x ∈ C) :
     simplexBoundary C (C.erase x) = insertionSign (C.erase x) x := by
   have hd : C \ C.erase x = {x} := by
     ext a
@@ -233,7 +233,7 @@ private lemma simplexBoundary_erase {C : Finset V} {x : V} (hx : x ∈ C) :
       simp [hx]
   simp [simplexBoundary, boundaryOn, hd, simplex, insert_erase hx]
 
-private lemma simplexBoundary_support {C A : Finset V} :
+lemma simplexBoundary_support {C A : Finset V} :
     simplexBoundary C A ≠ 0 ↔ ∃ x ∈ C, A = C.erase x := by
   constructor
   · intro hn
@@ -326,7 +326,7 @@ private lemma not_passiveBase_of_mem_least {M : Matroid V} {F : Finset V} {e : V
   exact (not_lt_of_ge (he.2 x (hX.indep.isNonloop_of_mem
     (by simp : x ∈ (↑(insert x (F.erase e)) : Set V))))) hxe
 
-private lemma contract_base_iff {M : Matroid V} {A G C : Finset V}
+lemma contract_base_iff {M : Matroid V} {A G C : Finset V}
     (hA : M.IsBasis (A : Set V) (C : Set V)) (hd : Disjoint G C) :
     (M ／ (C : Set V)).IsBase (G : Set V) ↔ M.IsBase (↑(G ∪ A) : Set V) := by
   have hdis : Disjoint (G : Set V) (C : Set V) := by exact_mod_cast hd
@@ -339,7 +339,7 @@ private lemma contract_base_iff {M : Matroid V} {A G C : Finset V}
   exact ⟨fun h => h.1.1, fun h => ⟨⟨h, hdis.mono_right hA.subset⟩,
     hdis.mono_right Set.sdiff_subset⟩⟩
 
-private lemma circuit_erase_basis {M : Matroid V} {C : Finset V} {x : V}
+lemma circuit_erase_basis {M : Matroid V} {C : Finset V} {x : V}
     (hC : M.IsCircuit (C : Set V)) (hx : x ∈ C) :
     M.IsBasis (↑(C.erase x) : Set V) (C : Set V) := by
   simpa using hC.sdiff_singleton_isBasis (show x ∈ (C : Set V) from hx)
@@ -477,13 +477,13 @@ private lemma circuit_decomposition [Fintype V] {M : Matroid V} {B : Finset V} {
   omega
 
 omit [LinearOrder V] in
-private lemma contract_base_disjoint {M : Matroid V} {C G : Finset V}
+lemma contract_base_disjoint {M : Matroid V} {C G : Finset V}
     (hG : (M ／ (C : Set V)).IsBase (G : Set V)) : Disjoint G C := by
   rw [disjoint_left]
   intro x hx hxC
   exact (hG.subset_ground (show x ∈ (G : Set V) from hx)).2 hxC
 
-private lemma boundaryOn_complement [Fintype V] {M : Matroid V} {C : Finset V}
+lemma boundaryOn_complement [Fintype V] {M : Matroid V} {C : Finset V}
     {w : Chain V} (hw : TopCycle (M ／ (C : Set V)) w) (D : Finset V) :
     boundaryOn (univ \ C) w D = 0 := by
   classical
@@ -627,7 +627,7 @@ private lemma mem_cycleSupport [Fintype V] {z : Chain V} {F : Finset V} :
   classical
   simp [cycleSupport]
 
-private lemma split_circuit_face {C D : Finset V} (hd : Disjoint D C) (x : V) :
+lemma split_circuit_face {C D : Finset V} (hd : Disjoint D C) (x : V) :
     (D ∪ C.erase x) ∩ C = C.erase x ∧ (D ∪ C.erase x) \ C = D := by
   constructor <;> ext a <;>
     simp only [mem_sdiff, mem_inter, mem_union, mem_erase]
