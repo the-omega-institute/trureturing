@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Analytic/OriginalSlitNome.slitNome_analyticOnNhd`
 
 *Commentary.*
 
-The double-slit exponential and the signed Pfaff chart are holomorphic at every nonzero point of the Euler slit. At the cusp, equality on the disk transfers holomorphy from Q₀. `D5/S3/Analytic/OriginalHalfBinomialNome.actual_nome_disk`
+The exponential formula is holomorphic on the double slit. Near each negative real point, the glued nome agrees with the holomorphic signed Pfaff chart. At the cusp, equality on the disk transfers holomorphy from Q₀. `D5/S3/Analytic/OriginalHalfBinomialNome.actual_nome_disk`
 
 **Theorem 1.6 (Strict unit-disk bound).**
 

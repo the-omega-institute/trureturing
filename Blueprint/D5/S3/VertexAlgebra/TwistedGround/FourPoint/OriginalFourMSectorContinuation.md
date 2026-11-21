@@ -26,7 +26,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSector
 
 *Commentary.*
 
-In the square parameter r, multiply the rank-24 determinant by the slit nome to the natural charge energy and by the affine coefficient for the specified occupation. The two tagged copies of the finite support give its matrix and linear indices. The linear factor at each index is its slit mean entry times the charge pairing. `D5/S3/Analytic/OriginalSlitNome.rank24Determinant`, `D5/S3/Analytic/OriginalSlitNome.slitNome`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitCovarianceEntry`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitMeanEntry`
+In the square parameter r, multiply the rank-24 determinant by the specified occupation's affine coefficient and a power of the slit nome. The exponent is the integer charge energy converted to a natural number by Int.toNat. Negative charge energies give exponent zero. The two tagged copies of the finite support give its matrix and linear indices. The linear factor at each index is its slit mean entry times the charge pairing. `D5/S3/Analytic/OriginalSlitNome.rank24Determinant`, `D5/S3/Analytic/OriginalSlitNome.slitNome`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitCovarianceEntry`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitMeanEntry`
 
 **Definition 1.3 (Slit charge-sector sum).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSector
 
 *Commentary.*
 
-For a positive definite rank-24 lattice datum, any fixed occupations and any individual charge, the continued term at r = w² equals the original sewn term for every complex |w| < 1. The exact Taylor entries identify the native covariance and mean. The determinant uses the twelfth power of the Gaussian period identity, and the disk nome recovers the native displacement exponential, both charge scalars and the power of w. `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.sewnChargeTerm`, `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianPeriodIdentity.gaussianDet_complex_period_identity`, `D5/S3/Analytic/OriginalSlitNome.slitNome_eq_Q0`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitCovarianceEntry_eq_native`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitMeanEntry_eq_native`
+For a rank-24 lattice datum, any fixed occupations and any individual charge of nonnegative energy, the continued term at r = w² equals the original sewn term for every complex |w| < 1. The exact Taylor entries identify the native covariance and mean. The determinant uses the twelfth power of the Gaussian period identity, and the disk nome recovers the native displacement exponential, both charge scalars and the power of w. `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.sewnChargeTerm`, `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianPeriodIdentity.gaussianDet_complex_period_identity`, `D5/S3/Analytic/OriginalSlitNome.slitNome_eq_Q0`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitCovarianceEntry_eq_native`, `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitTaylor.slitMeanEntry_eq_native`
 
 ## References
 

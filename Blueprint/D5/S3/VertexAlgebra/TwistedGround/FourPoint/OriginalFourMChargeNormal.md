@@ -4,7 +4,19 @@
 
 Taylor coefficients of the original four-point sewn charge sums
 
-**Theorem 1.1 (The actual fourM scalar).**
+**Lemma 1.1 (The disk nome in the sewing coordinate).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For z in the complex unit disk, the disk nome at z² is z² times the exponential of twice the source constant at z, divided by 16.
+
+**Theorem 1.2 (The actual fourM scalar).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
 
@@ -23,6 +35,7 @@ For each fixed occupation, cosetSewnTaylor uses the ordinary Taylor coefficient 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source`
 - Dependency: [D5/S3/Analytic/OriginalHalfBinomialNome](../../../Analytic/OriginalHalfBinomialNome.md)
 - Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalFullChargeLoop](../../Sewing/CanonicalFullChargeLoop.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FiniteSqueezedVacuum](../FiniteSqueezedVacuum.md)

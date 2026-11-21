@@ -57,23 +57,21 @@ private theorem negative_of_not_doubleSlit {r : ℂ} (hr : r ∈ puncturedSlit)
   apply hr.2
   exact mem_singleton_iff.mpr (hreal.trans (by rw [he, ofReal_zero]))
 
-private theorem offZero_analytic_norm {r : ℂ} (hr : r ∈ puncturedSlit) :
-    AnalyticAt ℂ nomeOffZero r ∧ ‖nomeOffZero r‖ < 1 := by
+private theorem offZero_analytic {r : ℂ} (hr : r ∈ puncturedSlit) :
+    AnalyticAt ℂ nomeOffZero r := by
   classical
   by_cases h : r ∈ doubleSlit
-  · refine ⟨(expNome_analytic h).congr ?_, ?_⟩
-    · filter_upwards [OriginalHalfBinomialSlitPeriod.isOpen_doubleSlit.mem_nhds h] with z hz
-      simp [nomeOffZero, hz]
-    · simpa [nomeOffZero, h] using expNome_norm_lt_one h
+  · apply (expNome_analytic h).congr
+    filter_upwards [OriginalHalfBinomialSlitPeriod.isOpen_doubleSlit.mem_nhds h] with z hz
+    simp [nomeOffZero, hz]
   · obtain ⟨x, hx, hxlt⟩ := negative_of_not_doubleSlit hr h
     subst r
-    obtain ⟨U, hU, hxU, han, hnorm, hmatch, _⟩ := negative_real_nome_extension x hxlt
-    refine ⟨(han _ hxU).congr ?_, ?_⟩
-    · filter_upwards [hU.mem_nhds hxU] with z hz
-      by_cases hz' : z ∈ doubleSlit
-      · simpa [nomeOffZero, hz', expNome] using hmatch z ⟨hz, hz'⟩
-      · simp [nomeOffZero, hz']
-    · simpa [nomeOffZero, h] using hnorm _ hxU
+    obtain ⟨U, hU, hxU, han, _, hmatch, _⟩ := negative_real_nome_extension x hxlt
+    apply (han _ hxU).congr
+    filter_upwards [hU.mem_nhds hxU] with z hz
+    by_cases hz' : z ∈ doubleSlit
+    · simpa [nomeOffZero, hz', expNome] using hmatch z ⟨hz, hz'⟩
+    · simp [nomeOffZero, hz']
 
 private theorem slitDisk_sub {z : ℂ} (hz : z ∈ slitDisk) : z ∈ doubleSlit :=
   ⟨OriginalHalfBinomialSlitPeriod.ball_subset_slitDomain hz.1, hz.2⟩
@@ -130,7 +128,7 @@ private theorem disk_eq_offZero : EqOn Q0 nomeOffZero (disk \ {0}) := by
     have hs : z ∈ slitDisk := ⟨hz.1.1, Complex.mem_slitPlane_iff.2 (Or.inr hz.2)⟩
     simpa [nomeOffZero, slitDisk_sub hs] using qDisk_eq_expNome hs
   apply heq.of_subset_closure (actual_nome_disk.1.continuousOn.mono sdiff_subset)
-    (fun _ hz => (offZero_analytic_norm (hsub hz)).1.continuousAt.continuousWithinAt)
+    (fun _ hz => (offZero_analytic (hsub hz)).continuousAt.continuousWithinAt)
     inter_subset_left
   exact fun z hz => hopen.inter_closure ⟨hz, hnonreal z⟩
 
@@ -158,7 +156,7 @@ theorem slitNome_analyticOnNhd : AnalyticOnNhd ℂ slitNome slitDomain := by
     apply ((actual_nome_disk.1.analyticOnNhd Metric.isOpen_ball) 0 hzero).congr
     filter_upwards [Metric.isOpen_ball.mem_nhds hzero] with z hz
     exact (slitNome_eq_Q0 hz).symm
-  · apply (offZero_analytic_norm ⟨hr, hn⟩).1.congr
+  · apply (offZero_analytic ⟨hr, hn⟩).congr
     filter_upwards [eventually_ne_nhds hn] with z hz
     simp [slitNome, hz]
 
@@ -166,7 +164,13 @@ theorem slitNome_norm_lt_one {r : ℂ} (hr : r ∈ slitDomain) :
     ‖slitNome r‖ < 1 := by
   by_cases hn : r = 0
   · simp [slitNome, hn]
-  · simpa [slitNome, hn] using (offZero_analytic_norm ⟨hr, hn⟩).2
+  · by_cases h : r ∈ doubleSlit
+    · rw [slitNome_eq_exp h]
+      exact expNome_norm_lt_one h
+    · obtain ⟨x, hx, hxlt⟩ := negative_of_not_doubleSlit ⟨hr, hn⟩ h
+      subst r
+      obtain ⟨U, _, hxU, _, hnorm, _⟩ := negative_real_nome_extension x hxlt
+      simpa [slitNome, hn, nomeOffZero, h] using hnorm _ hxU
 
 /-- The rank-24 scalar determinant in the sewn Gaussian chart. -/
 def rank24Determinant (r : ℂ) : ℂ :=
