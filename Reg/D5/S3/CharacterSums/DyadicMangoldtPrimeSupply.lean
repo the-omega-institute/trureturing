@@ -92,7 +92,7 @@ namespace RealScale
 open Real _root_.D5.S3.CharacterSums.PrimeProgressionWindowMass
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℝ × ℝ) (fun _ => Finset ℕ) (fun _ => ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℝ, ℝ) (fun _ => Finset ℕ) (fun _ => ℝ)
 
 def observed : Realization signature :=
   realize signature (fun _ p E => survivingMass p.1 p.2 E) (fun e => nomatch e)
@@ -103,10 +103,10 @@ def zeroMass : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop, ∀ E : Finset ℕ,
-    (E.card:ℝ) ≤ exp (x^(ε/5)/3) → x^(ε/5)/173065984000 ≤ V.readout () (ε,x) E
+    (E.card:ℝ) ≤ exp (x^(ε/5)/3) → x^(ε/5)/173065984000 ≤ V.readout () ⟨ε,x⟩ E
 
 private theorem positive_somewhere (V : Realization signature) (h : arena.Law V) :
-    ∃ x : ℝ, 0 < V.readout () (1,x) ∅ := by
+    ∃ x : ℝ, 0 < V.readout () ⟨1,x⟩ ∅ := by
   obtain ⟨x,hx,hl⟩ := ((eventually_gt_atTop (0:ℝ)).and (h 1 one_pos)).exists
   refine ⟨x,lt_of_lt_of_le (by positivity) (hl ∅ (by simpa only [Finset.card_empty,Nat.cast_zero] using (exp_pos _).le))⟩
 
@@ -119,7 +119,7 @@ private theorem dependence : ObservationalDependence signature observed := by
   intro _
   obtain ⟨x,hx⟩ := positive_somewhere observed real_scale_quadratic_mangoldt_supply
   let allPrimes := primeBand (3:ZMod 8) (x^((1:ℝ)/5))
-  refine ⟨(1,x),∅,allPrimes,?_⟩
+  refine ⟨⟨1,x⟩,∅,allPrimes,?_⟩
   have he : survivingMass 1 x allPrimes = 0 := by
     simp +contextual [survivingMass,allPrimes]
   change survivingMass 1 x ∅ ≠ survivingMass 1 x allPrimes
