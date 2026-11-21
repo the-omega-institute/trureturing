@@ -16,17 +16,22 @@ escape_witness: other_roots (the complex roots of y^4 - y^3 - y^2 - y + 1 other 
   ratio rate follows by dividing the bounded errors by a_n >= c λ^n / 2).
 proof_shape:
   charPoly: definition; consumers: every lemma below.
-  charPoly_natDegree, charPoly_sum, charPoly_eval: bind-only helpers; consumers:
-    forcing_bound, rootMultiplicity_charPoly, result.
+  charPoly_natDegree: bind-only helper; consumer: charPoly_sum.
+  charPoly_sum: bind-only helper; consumer: forcing_bound.
+  charPoly_eval: bind-only helper; consumer: rootMultiplicity_charPoly.
+  forcing_bound: bind-only helper (source_error at j + 26 after unfolding radicand and b);
+    consumer: result.
   rootMultiplicity_charPoly, other_roots: content; consumer: result.
-  forcing_bound: content (the source rounding error 2 a_n bounds the forcing of the squared
-    recurrence); consumer: result.
   result: content.
-Direct frozen dependencies: D5/S1/Recurrence/Asymptotic/DominantRootForcing (result);
+Direct frozen dependencies (module statement_id):
+  D5/S1/Recurrence/Asymptotic/DominantRootForcing (result),
+    sha256:1d9580e02dfd6fc17ce8d9039a9444783c195aa2b491d01ec9b830fd96091820;
   D5/S1/Recurrence/OEISA400645 (IsSourceSequence, radicand, squaredLimit, limitingRatio, b,
-  source_error, square_asymptotic, r_bounds, r_quad, r_poly; the last six made public here for
-  reuse); D5/S0/Tower/NonPisotFrontier/BetaThirteen (betaThirteen, betaThirteen_quadratic,
-  two_lt_betaThirteen, sqrt_thirteen_bounds).
+    source_error, square_asymptotic, r_bounds, r_quad, r_poly; the last six made public here for
+    reuse), sha256:6b9935aa3f2f34c16302ab77311ac7fb8824542a3447a5f9a6013494c199e7aa;
+  D5/S0/Tower/NonPisotFrontier/BetaThirteen (betaThirteen, betaThirteen_quadratic,
+    two_lt_betaThirteen, sqrt_thirteen_bounds),
+    sha256:cc19b57aaf3e1c818ccd8e593f82bbb5cfe0d926845fc6592e52fd2240bd66ab.
 Search record (§3.1): D5/S1/Recurrence/OEISA400645 proves the ratio limit and the positive square
   asymptotic b a n / r^n -> L but no rate; OEISA400645FixedLagGrowth proves fixed-lag and
   logarithmic limits only; no D5 declaration states a bounded absolute error for A400645.
