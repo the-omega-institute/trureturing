@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.Characters.LatticeDiscriminantShiftedTheta
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy
+import D5.S3.VertexAlgebra.LatticeInvolution
 import D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
 
 /-! # Shifted theta series of the original four-point charge sectors -/
@@ -242,6 +243,44 @@ private theorem sqrt_det_doubled (D : LatticeData) (hu : IsUnit D.G.det)
   rw [hs]
   norm_num
 
+/-- The normalized Fourier row on the original rank-24 charge sectors. -/
+def fourierRow (D : LatticeData) (a : ModTwoCharge D)
+    (f : ModTwoCharge D → ℂ) : ℂ :=
+  ((2 : ℂ) ^ (12 : ℕ))⁻¹ * ∑ b, fourierSign D a b * f b
+
+private theorem sector_neg (D : LatticeData) (hu : IsUnit D.G.det)
+    (b : ModTwoCharge D) : -(sectorEquiv D hu b) = sectorEquiv D hu b := by
+  rw [← map_neg]
+  congr 1
+  ext i
+  exact ZMod.neg_eq_self_mod_two _
+
+private theorem rho_doubled (D : LatticeData) (hu : IsUnit D.G.det)
+    (hd : (gramReal (doubled D)).PosDef) (hr : D.rank = 24) :
+    rho (doubled D) = (2 : ℂ) ^ (12 : ℕ) := by
+  unfold rho
+  rw [(dual_lattice_realization (doubled D) hd).2.2.1]
+  exact sqrt_det_doubled D hu hd hr
+
+private theorem weilS_sector (D : LatticeData) (hu : IsUnit D.G.det)
+    (hd : (gramReal (doubled D)).PosDef) (hr : D.rank = 24)
+    [Fact (gramReal (doubled D)).PosDef]
+    (g : Discriminant (doubled D) → ℂ) (b : ModTwoCharge D) :
+    weilS (doubled D) g (sectorEquiv D hu b) =
+      fourierRow D b (fun c => g (sectorEquiv D hu c)) := by
+  let : Fintype (Discriminant (doubled D)) := Fintype.ofFinite _
+  let e := sectorEquiv D hu
+  change (rho (doubled D))⁻¹ *
+    (∑ c, pairingCharacter (doubled D) hd (e b) (-c) * g c) = _
+  rw [rho_doubled D hu hd hr, ← e.toEquiv.sum_comp
+    (fun c => pairingCharacter (doubled D) hd (e b) (-c) * g c)]
+  unfold fourierRow
+  congr 1
+  apply Finset.sum_congr rfl
+  intro c _
+  change pairingCharacter (doubled D) hd (e b) (-(e c)) * g (e c) = _
+  rw [sector_neg D hu, pairing_sign D hu hd]
+
 /-- The forward rank-24 S law on the actual original sectors. -/
 theorem chargeTheta_S (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : (gramReal D).PosDef) (hr : D.rank = 24)
@@ -254,8 +293,8 @@ theorem chargeTheta_S (D : LatticeData) (hu : IsUnit D.G.det)
   classical
   let d := doubled D
   let hd := doubled_posDef D hD
-  letI : Fact (gramReal d).PosDef := ⟨hd⟩
-  letI : Fintype (Discriminant d) := Fintype.ofFinite _
+  let : Fact (gramReal d).PosDef := ⟨hd⟩
+  let : Fintype (Discriminant d) := Fintype.ofFinite _
   let f (b : Discriminant d) := shiftedTheta d b τ z
   let g (b : Discriminant d) := shiftedTheta d b (-1 / τ) (τ⁻¹ • z)
   let α := (-Complex.I * τ) ^ (12 : ℕ) *
@@ -264,10 +303,6 @@ theorem chargeTheta_S (D : LatticeData) (hu : IsUnit D.G.det)
     change -(D.rank : ℂ) / 2 = _
     rw [hr]
     norm_num
-  have hρ : rho d = (2 : ℂ) ^ (12 : ℕ) := by
-    unfold rho
-    rw [(dual_lattice_realization d hd).2.2.1]
-    exact sqrt_det_doubled D hu hd hr
   have hf : f = α⁻¹ • weilSplus d g := by
     ext b
     have hb := shiftedTheta_S d hd b τ hτ z
@@ -276,7 +311,7 @@ theorem chargeTheta_S (D : LatticeData) (hu : IsUnit D.G.det)
     rw [hb, hpow, Complex.cpow_neg, Complex.cpow_natCast, sqrt_det_doubled D hu hd hr]
     change _ = α⁻¹ * ((rho d)⁻¹ * ∑ c : Discriminant d, pairingCharacter d hd b c * g c)
     dsimp only [α]
-    rw [hρ, mul_inv, ← Complex.exp_neg]
+    rw [rho_doubled D hu hd hr, mul_inv, ← Complex.exp_neg]
     have hsign : -(Real.pi * Complex.I / τ * sourceQuadratic (gramReal d) z) =
         -Real.pi * Complex.I / τ * sourceQuadratic (gramReal d) z := by ring
     rw [hsign]
@@ -291,27 +326,10 @@ theorem chargeTheta_S (D : LatticeData) (hu : IsUnit D.G.det)
     have hcomp := (finite_weil_relations d).2.2.2.2.1
     rw [← LinearMap.comp_apply, hcomp, LinearMap.id_apply] at h
     exact h.symm
-  have hneg (b : ModTwoCharge D) : -(sectorEquiv D hu b) = sectorEquiv D hu b := by
-    have hreduce : Function.Surjective (reduceCharge D) :=
-      Function.Surjective.piMap (fun _ : Fin D.rank => ZMod.intCast_surjective (n := 2))
-    obtain ⟨q, rfl⟩ := hreduce b
-    rw [← map_neg, ← map_neg]
-    congr 1
-    ext i
-    change ((-q i : ℤ) : ZMod 2) = (q i : ZMod 2)
-    rw [Int.cast_neg, ZMod.neg_eq_self_mod_two]
   change g (sectorEquiv D hu a) = _
   rw [hg]
-  change α * ((rho d)⁻¹ * ∑ b : Discriminant d,
-    pairingCharacter d hd (sectorEquiv D hu a) (-b) * f b) = _
-  rw [hρ, ← (sectorEquiv D hu).toEquiv.sum_comp
-    (fun b => pairingCharacter d hd (sectorEquiv D hu a) (-b) * f b)]
-  congr 2
-  apply Finset.sum_congr rfl
-  intro b _
-  change pairingCharacter d hd (sectorEquiv D hu a) (-(sectorEquiv D hu b)) *
-    f (sectorEquiv D hu b) = _
-  rw [hneg, pairing_sign D hu hd]
+  change α * weilS d f (sectorEquiv D hu a) = _
+  rw [weilS_sector D hu hd hr]
   rfl
 
 open D5.S3.Fourier.MatrixGaussian (quadratic)
@@ -417,5 +435,43 @@ theorem chargeTheta_T (D : LatticeData) (hu : IsUnit D.G.det)
   intro n
   simp only [thetaTerm, Complex.exp_add]
   rw [term_T d hd r n τ, hsign, mul_assoc]
+
+theorem sourceQuadratic_doubled (D : LatticeData) (z : Fin D.rank → ℂ) :
+    sourceQuadratic (gramReal (doubled D)) z = 2 * (z ⬝ᵥ (D.G.map (Int.cast : ℤ → ℂ)) *ᵥ z) := by
+  have h : (gramReal (doubled D)).map Complex.ofReal =
+      (2 : ℂ) • D.G.map (Int.cast : ℤ → ℂ) := by
+    rw [doubled_gramReal]
+    ext i j
+    change ((2 * (D.G i j : ℝ) : ℝ) : ℂ) = 2 * (D.G i j : ℂ)
+    push_cast
+    rfl
+  rw [sourceQuadratic, h, smul_mulVec, dotProduct_smul, smul_eq_mul]
+
+/-- Negating the complex source permutes the original integral charge fiber. -/
+theorem chargeTheta_neg_source (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : ModTwoCharge D) (τ : ℂ) (v : Fin D.rank → ℂ) :
+    chargeTheta D hu a τ (-v) = chargeTheta D hu a τ v := by
+  rw [OriginalFourMShiftedTheta.chargeTheta_eq_charge_sum,
+    OriginalFourMShiftedTheta.chargeTheta_eq_charge_sum]
+  have hneg (q : Charge D) : reduceCharge D (-q) = reduceCharge D q := by
+    rw [map_neg]
+    ext i
+    exact ZMod.neg_eq_self_mod_two _
+  let neg : {q : Charge D // reduceCharge D q = a} ≃
+      {q : Charge D // reduceCharge D q = a} :=
+    { toFun := fun q => ⟨-q.val, (hneg q.val).trans q.property⟩
+      invFun := fun q => ⟨-q.val, (hneg q.val).trans q.property⟩
+      left_inv := fun q => Subtype.ext (neg_neg q.val)
+      right_inv := fun q => Subtype.ext (neg_neg q.val) }
+  refine (neg.tsum_eq _).symm.trans ?_
+  apply tsum_congr
+  intro q
+  have hq : (fun i => (((-q.val) i : ℤ) : ℂ)) = -(fun i => (q.val i : ℂ)) := by
+    ext i
+    simp
+  change Complex.exp (Real.pi * I * τ * (bilinear D (-q.val) (-q.val) : ℂ) / 2 +
+    2 * Real.pi * I * ((D.G.map (Int.cast : ℤ → ℂ) *ᵥ
+      (fun i => (((-q.val) i : ℤ) : ℂ))) ⬝ᵥ (-v))) = _
+  rw [LatticeInvolution.bilinear_neg_neg, hq, mulVec_neg, neg_dotProduct, dotProduct_neg, neg_neg]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMShiftedTheta

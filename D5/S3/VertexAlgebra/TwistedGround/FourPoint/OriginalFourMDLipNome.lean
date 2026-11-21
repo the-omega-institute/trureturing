@@ -23,8 +23,8 @@ open scoped Topology
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMDLipNome
 
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod
-open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit dPeriod dPeriod_eq_slit)
-open private lipSign real_d_aux analyticAt_tau complement_mem from
+open OriginalFourMPeriodSource (dLip dLip_mem_doubleSlit dPeriod dPeriod_eq_slit lipSign)
+open private real_d_aux analyticAt_tau complement_mem from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
 
 /-- The continuation of the D period ratio on its indicated lip. -/
