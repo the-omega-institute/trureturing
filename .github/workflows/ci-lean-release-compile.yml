@@ -15,6 +15,10 @@ on:
         description: Protected production or integration verification
         type: string
         default: production
+      sparse-volume:
+        description: Named verification volume namespace to probe before Actions caches
+        type: string
+        default: ''
       indexed:
         description: Check the sharded Actions seed before scheduling a cold build
         type: boolean
@@ -23,6 +27,9 @@ on:
       seed:
         description: Effective Release seed selection for the checked-out source
         value: ${{ jobs.common.outputs.seed }}
+      sparse:
+        description: A matching checked Release volume was selected for sparse installation
+        value: ${{ jobs.common.outputs.sparse }}
       base:
         description: Selected Release tag, producer and manifest digest
         value: ${{ jobs.common.outputs.base }}
@@ -38,7 +45,8 @@ jobs:
     timeout-minutes: 360
     outputs:
       seed: ${{ steps.route.outputs.seed }}
-      base: ${{ steps.previous.outputs.found == 'true' && toJSON(steps.previous.outputs) || '' }}
+      sparse: ${{ steps.sparse.outputs.found || 'false' }}
+      base: ${{ steps.sparse.outputs.found == 'true' && toJSON(steps.sparse.outputs) || steps.previous.outputs.found == 'true' && toJSON(steps.previous.outputs) || '' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -53,8 +61,21 @@ jobs:
             test -f tools/scripts/worktree/lean_compile_layers.py
             echo 'supported=true' >> "$GITHUB_OUTPUT"
           fi
+      - id: sparse
+        if: >-
+          steps.support.outputs.supported == 'true' && inputs.publication-mode == 'verification' &&
+          inputs.sparse-volume != '' && contains(fromJSON('["auto","release"]'), inputs.strategy)
+        uses: ./.github/actions/lean-release-base
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_SPARSE_ONLY: '1'
+          LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.sparse-volume }}
+        with:
+          operation: select-base
+          previous-commit-only: ${{ inputs.strategy == 'release' }}
+          mode: verification
       - id: keys
-        if: steps.support.outputs.supported == 'true' && inputs.strategy == 'auto'
+        if: steps.support.outputs.supported == 'true' && steps.sparse.outputs.found != 'true' && inputs.strategy == 'auto'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: indexed
         if: inputs.indexed && steps.keys.outputs.project_key != ''
@@ -74,7 +95,7 @@ jobs:
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
           lookup-only: true
       - id: previous
-        if: inputs.strategy != 'parallel' && steps.support.outputs.supported == 'true' && steps.indexed.outputs.complete != 'true' && steps.native.outputs.cache-matched-key == '' && hashFiles('.github/actions/lean-release-base/action.yml') != ''
+        if: inputs.strategy != 'parallel' && steps.sparse.outputs.found != 'true' && steps.support.outputs.supported == 'true' && steps.indexed.outputs.complete != 'true' && steps.native.outputs.cache-matched-key == '' && hashFiles('.github/actions/lean-release-base/action.yml') != ''
         uses: ./.github/actions/lean-release-base
         env:
           GH_TOKEN: ${{ github.token }}
@@ -87,7 +108,7 @@ jobs:
         env:
           NATIVE: ${{ steps.native.outputs.cache-matched-key }}
           INDEXED: ${{ steps.indexed.outputs.complete }}
-          PREVIOUS: ${{ steps.previous.outputs.found }}
+          PREVIOUS: ${{ steps.sparse.outputs.found == 'true' || steps.previous.outputs.found == 'true' }}
           STRATEGY: ${{ inputs.strategy }}
         run: |
           if [[ -n "$NATIVE" ]]; then
