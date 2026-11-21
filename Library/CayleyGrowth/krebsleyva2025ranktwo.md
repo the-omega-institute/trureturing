@@ -14,6 +14,12 @@ triage: anchor
 
 # Chromatic numbers of rank-two Abelian Cayley graphs
 
+## Verified locator
+
+The preprint DOI [10.48550/arXiv.2511.03028](https://doi.org/10.48550/arXiv.2511.03028)
+identifies the arXiv record. The declared URL <https://arxiv.org/abs/2511.03028v1>
+pins the verified version, arXiv:2511.03028v1 (4 November 2025).
+
 The primary statement is Conjecture 1.2 in §1.1.3, printed page 3 of
 arXiv:2511.03028v1. Section 1.2 on the same page defines the standardized
 Abelian Cayley graph of an integer matrix using the quotient of the free
@@ -28,6 +34,8 @@ The arXiv record lists version 1 on 4 November 2025 and identifies the
 license as CC BY 4.0. The repository uses the preprint for citation and
 attributes the short conjecture quotation in the problem dossier.
 [arXiv record](https://arxiv.org/abs/2511.03028v1)
+
+## Journal access
 
 The separate journal record is *Graphs and Combinatorics* **42**(6),
 article 83 (2026). The publisher's accessible material establishes the
