@@ -1,0 +1,185 @@
+/- GID: D5/S3/Weil/Mertens/IntegratedExplicit/PrimeCriticalResidual
+   generality: I
+   mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/PrimeCriticalResidual
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The root-scale prime tail has a uniform negative margin after the bounding line and intermediate zero mass are accounted for. -/
+
+import D5.S3.Analytic.Laplace.MaximalRealPartProjection
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualSignedGaussianEndpoint
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
+import D5.S3.Weil.Mertens.ZeroAbscissaPower
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+noncomputable section
+
+open Filter Set
+open scoped Topology
+open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
+open D5.S3.Arith.Robin.OffLinePeak (ZeroCoefficientBudget)
+open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+open D5.S3.Weil.ZeroSum (IsNontrivialZero)
+
+namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimeCriticalResidual
+
+open ActualSignedGaussianEndpoint (actual_coefficient_mass)
+open MaximalRealPartProjection (maximalSeries summable_norm_maximalTerm)
+open PrimeOnlyTailCorrection (primeTail prime_power_window_correction)
+open ZeroAbscissaPower (primitive_eq_negative_tail)
+
+private theorem actual_nontrivial (k : ℕ) : IsNontrivialZero (actualZero k) :=
+  actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
+
+private def rootTerm (t : ℝ) (k : ℕ) : ℂ :=
+  actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - 1 / 2))
+
+private theorem norm_rootTerm (t : ℝ) (k : ℕ) :
+    ‖rootTerm t k‖ = ‖actualCoeff k‖ * Real.exp (((actualZero k).re - 1 / 2) * t) := by
+  have hre : ((1 / 2 : ℂ)).re = (1 / 2 : ℝ) := by norm_num
+  rw [rootTerm, norm_mul, Complex.norm_exp, Complex.re_ofReal_mul, Complex.sub_re, hre, mul_comm t]
+
+private theorem summable_norm_rootTerm (t : ℝ) : Summable (fun k => ‖rootTerm t k‖) := by
+  refine (actualCoeff_hasSum.summable.norm.mul_right (Real.exp (|t| / 2))).of_norm_bounded ?_
+  intro k
+  rw [norm_norm, norm_rootTerm]
+  apply mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr ?_) (norm_nonneg _)
+  obtain ⟨hpos, hlt⟩ := (actual_nontrivial k).2
+  have hcentered : |(actualZero k).re - 1 / 2| ≤ 1 / 2 :=
+    abs_le.mpr ⟨by linarith, by linarith⟩
+  calc
+    _ ≤ |((actualZero k).re - 1 / 2) * t| := le_abs_self _
+    _ = |(actualZero k).re - 1 / 2| * |t| := abs_mul _ _
+    _ ≤ 1 / 2 * |t| := mul_le_mul_of_nonneg_right hcentered (abs_nonneg _)
+    _ = |t| / 2 := by ring
+
+private theorem scaled_shift_eq_rootTerm (β t : ℝ) (k : ℕ) :
+    (Real.exp ((β - 1 / 2) * t) : ℂ) *
+      (actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - (β : ℂ)))) = rootTerm t k := by
+  rw [rootTerm, Complex.ofReal_exp, mul_left_comm, ← Complex.exp_add]
+  congr 2
+  push_cast
+  ring
+
+private theorem coeff_mass_bound : (∑' k : ℕ, ‖actualCoeff k‖) ≤ (101 / 100 : ℝ) * firstLiMass := by
+  obtain ⟨_, conjIndex, hconj, _⟩ := actual_complete_H_package
+  obtain ⟨_, _, _, _, _, _, _, hcoeff⟩ := ZeroCoefficientBudget.zero_coefficient_budget
+    actualZero (fun k => (actual_nontrivial k).2) conjIndex hconj
+    (fun k => actual_height_gt_ten _ (actual_nontrivial k)) actual_coefficient_mass
+  have hinv : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) :=
+    actualOccurrenceEquiv.summable_iff.mpr actual_sigma_inverse_square_summable
+  refine (actualCoeff_hasSum.summable.norm.tsum_le_tsum (fun k => ?_) hinv).trans
+    actual_inverse_square_mass_le_height
+  simpa only [ZeroCoefficientBudget.coefficient, actualCoeff, one_div, inv_pow] using (hcoeff k).2
+
+private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < β)
+    (hmax : ∀ k : ℕ, (actualZero k).re ≤ β) :
+    -((Real.exp (-t / 2) : ℂ) * actualH t).re ≤
+      Real.exp ((β - 1 / 2) * t) * (-(maximalSeries actualCoeff actualZero β t).re) +
+        (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+          ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) + 101 / 100 := by
+  classical
+  let lower : Set ℕ := {k | (actualZero k).re ≤ 1 / 2}
+  let intermediate : Set ℕ := {k | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}
+  let line : ℕ → ℂ := fun k => if (actualZero k).re = β then
+    actualCoeff k * Complex.exp ((t : ℂ) * (actualZero k - (β : ℂ))) else 0
+  let scale := Real.exp ((β - 1 / 2) * t)
+  have hline : Summable line :=
+    (summable_norm_maximalTerm (z := actualZero) (Θ := β) actualCoeff_hasSum.summable.norm t).of_norm
+  have hroot := (summable_norm_rootTerm t).of_norm
+  have hscaled : (Real.exp (-t / 2) : ℂ) * actualH t = ∑' k, rootTerm t k := by
+    rw [actualH, ← tsum_mul_left]
+    refine tsum_congr fun k => ?_
+    have hzero : (0 - 1 / 2 : ℝ) * t = -t / 2 := by ring
+    simpa only [hzero, Complex.ofReal_zero, sub_zero] using scaled_shift_eq_rootTerm 0 t k
+  have hsplit : (∑' k, rootTerm t k) =
+      (scale : ℂ) * maximalSeries actualCoeff actualZero β t +
+        (∑' k : lower, rootTerm t k) + (∑' k : intermediate, rootTerm t k) := by
+    change _ = (scale : ℂ) * (∑' k, line k) + _ + _
+    rw [← tsum_mul_left, tsum_subtype, tsum_subtype,
+      ← (hline.mul_left _).tsum_add (hroot.indicator lower),
+      ← ((hline.mul_left _).add (hroot.indicator lower)).tsum_add (hroot.indicator intermediate)]
+    refine tsum_congr fun k => ?_
+    by_cases heq : (actualZero k).re = β
+    · have hn : ¬ (actualZero k).re ≤ 1 / 2 := by rw [heq]; exact not_le.mpr hβ
+      simp only [line, heq, ite_true, lower, intermediate, indicator_of_notMem,
+        mem_setOf_eq, hn, lt_self_iff_false, and_false, not_false_eq_true, add_zero, Pi.add_apply]
+      exact (scaled_shift_eq_rootTerm β t k).symm
+    · by_cases hlo : (actualZero k).re ≤ 1 / 2
+      · simp [line, heq, lower, intermediate, hlo, not_lt.mpr hlo]
+      · have hmid : (actualZero k).re < β := lt_of_le_of_ne (hmax k) heq
+        simp [line, heq, lower, intermediate, hlo, lt_of_not_ge hlo, hmid]
+  have hlow : -(∑' k : lower, rootTerm t k).re ≤ (101 / 100 : ℝ) := by
+    refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
+    calc
+      _ ≤ ∑' k : lower, ‖actualCoeff k.1‖ := by
+        apply tsum_of_norm_bounded (actualCoeff_hasSum.summable.norm.subtype lower).hasSum
+        intro k
+        rw [norm_rootTerm]
+        exact mul_le_of_le_one_right (norm_nonneg _)
+          (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr k.2) ht))
+      _ ≤ ∑' k : ℕ, ‖actualCoeff k‖ :=
+        actualCoeff_hasSum.summable.norm.tsum_subtype_le _ lower (fun _ => norm_nonneg _)
+      _ ≤ (101 / 100 : ℝ) := by linarith [coeff_mass_bound, firstLiMass_lt_one]
+  have hmid : -(∑' k : intermediate, rootTerm t k).re ≤
+      ∑' k : intermediate, ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t) := by
+    refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
+    simpa only [norm_rootTerm] using norm_tsum_le_tsum_norm ((summable_norm_rootTerm t).subtype intermediate)
+  rw [hscaled, hsplit, Complex.add_re, Complex.add_re, Complex.re_ofReal_mul]
+  change _ ≤ scale * _ + (∑' k : intermediate, _) + _
+  linarith only [hlow, hmid]
+
+private theorem complete_tail_root_bound {t : ℝ} (ht : Real.log 2 ≤ t) :
+    Real.exp (t / 2) * Q (Real.exp t) ≤ -((Real.exp (-t / 2) : ℂ) * actualH t).re := by
+  have htpos : 0 < t := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).trans_le ht
+  have hx : 2 ≤ Real.exp t := by simpa using Real.exp_le_exp.mpr ht
+  have hQ := (div_eq_iff (Real.exp_pos t).ne').mp (primitive_eq_negative_tail hx)
+  have hQ' : Q (Real.exp t) * Real.exp t = -U (Real.exp t) := by linarith only [hQ]
+  have hformula := congrArg Complex.re (actual_integrated_explicit_formula htpos)
+  simp only [Complex.ofReal_re] at hformula
+  have hlog : 1 ≤ Real.log (2 * Real.pi) := by
+    refine (show 1 ≤ Real.log 3 by linarith [Real.log_three_gt_d9]).trans ?_
+    exact Real.log_le_log (by norm_num) (by linarith [Real.pi_gt_three])
+  have htriv := trivialT_le_mass htpos.le
+  have hlog2 := Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)
+  have hscale : Real.exp (t / 2) = Real.exp (-t / 2) * Real.exp t := by
+    rw [← Real.exp_add]
+    congr 1
+    ring
+  rw [hscale, mul_assoc, mul_comm (Real.exp t), hQ', Complex.re_ofReal_mul, ← mul_neg]
+  exact mul_le_mul_of_nonneg_left (by linarith only [hformula, htriv, hlog, hlog2])
+    (Real.exp_nonneg _)
+
+/-- The intermediate zero mass converges absolutely, with each analytic occurrence counted.
+At all sufficiently large log endpoints, one threshold works for every upper bound `β > 1/2`
+on the real parts of the nontrivial zeros. -/
+theorem eventually_prime_tail_root_scale :
+    (∀ β t : ℝ, Summable
+      (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
+        ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
+    ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
+      (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
+      Real.exp (t / 2) * primeTail (Real.exp t) ≤
+        Real.exp ((β - 1 / 2) * t) * (-(maximalSeries actualCoeff actualZero β t).re) +
+          (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
+            ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - 1 / 2 := by
+  refine ⟨fun β t => ?_, ?_⟩
+  · simpa only [norm_rootTerm] using (summable_norm_rootTerm t).subtype
+      {k : ℕ | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}
+  · have hpower := (prime_power_window_correction.1.comp Real.tendsto_exp_atTop).eventually
+      (gt_mem_nhds (show (7 / 4 : ℝ) < 2 by norm_num))
+    filter_upwards [eventually_ge_atTop (Real.log 2), hpower] with t ht hgap β hβ hmax
+    have hsqrt : Real.sqrt (Real.exp t) = Real.exp (t / 2) := by
+      rw [Real.sqrt_eq_rpow, ← Real.exp_mul]
+      congr 1
+      ring
+    change 7 / 4 < Real.sqrt (Real.exp t) * (Q (Real.exp t) - primeTail (Real.exp t)) at hgap
+    rw [hsqrt, mul_sub] at hgap
+    have hcomplete := complete_tail_root_bound ht
+    have ht0 : 0 ≤ t := (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans ht
+    have hzeros := root_zero_sum_bound ht0 hβ (fun k => hmax _ (actual_nontrivial k))
+    linarith only [hgap, hcomplete, hzeros]
+
+end D5.S3.Weil.Mertens.IntegratedExplicit.PrimeCriticalResidual
