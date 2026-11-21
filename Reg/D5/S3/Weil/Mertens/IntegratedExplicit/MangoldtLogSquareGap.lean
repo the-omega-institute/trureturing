@@ -39,13 +39,13 @@ private theorem changed_fails : ¬ arena.Law changed := by
   by_cases hr : RiemannHypothesis
   · obtain ⟨x, hx⟩ := (h.mp hr 0 (by norm_num)).exists
     change firstLiMass * Real.sqrt x + (if RiemannHypothesis then 1 else _) ≤ _ at hx
-    simp [hr] at hx
+    norm_num [hr] at hx
   · apply hr
     apply h.mpr
     intro c hc
     filter_upwards with x
     change firstLiMass * Real.sqrt x + (if RiemannHypothesis then 1 else _) ≤ _
-    rw [if_neg hr]
+    simp only [hr, ↓reduceIte]
     nlinarith [mul_nonneg (show 0 ≤ 1-c by linarith) (sq_nonneg (Real.log x))]
 
 private theorem actual_dependence : ObservationalDependence signature actual := by

@@ -57,7 +57,7 @@ internal sealed class MangoldtLogSquareGapDocument : IScribeDocumentDefinition
         var tail = Bind(FormulaQuantifier.ForAll, "x",
             ImpliesClaim(Le(F.Id("T"), x), Le(remainder, bound)));
         var strict = new Formula.Relation(c, FormulaRelationOperator.LessThan,
-            new Formula.Fraction(D(1), D(64)));
+            new Formula.Fraction(D(1), D(6, 4)));
         var limit = Bind(FormulaQuantifier.ForAll, "c", ImpliesClaim(strict,
             Bind(FormulaQuantifier.Exists, "T", tail)));
         return Disp(new Formula.Logic(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))),
