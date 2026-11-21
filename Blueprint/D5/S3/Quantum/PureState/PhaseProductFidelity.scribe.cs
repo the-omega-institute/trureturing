@@ -76,7 +76,7 @@ internal sealed class PhaseProductFidelityDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Here n is a positive integer, m is an arbitrary finite ensemble "
                     + "size, p is a nonnegative weight vector of length m, and v is an m by n array of "
-                    + "unit complex phases. The bound permits every total weight. For a probability distribution it compares the two mixture purities.")),
+                    + "unit complex phases. The bound permits every total weight. For a probability distribution it compares the two mixture purities. At n = 0 both losses vanish for every coefficient. With rows (1,1) and (-1,-1) and signed weights 2 and -1, the product loss is -4 and nine quarters times the singleton loss is -8. With a single entry 2 of weight one at n = 1, the product loss is -3/2 and the singleton loss is -21/4.")),
                     Paragraph(Text("The loss of a product of factors in the unit interval is at most "
                     + "the sum of their individual losses. The modulus of the sum of n phases is "
                     + "at most n. Expanding the singleton overlap then gives the displayed coefficient "

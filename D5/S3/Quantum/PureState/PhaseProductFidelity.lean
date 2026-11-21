@@ -69,21 +69,25 @@ private theorem sharp {n : ℕ} (hn : 0 < n) {C : ℝ}
   have nn : (n:ℝ)+1 ≠ 0 := by positivity
   have H (b : ℝ) (hb : 0 < b) (hb1 : b ≤ 1) :
       (∑ k ∈ Finset.range n, (1-b)^k) ≤ C*4*n/((n:ℝ)+1)^2 := by
-    let z : ℂ := ⟨1-2*b,Real.sqrt (4*b*(1-b))⟩
-    have hs := Real.sq_sqrt (mul_nonneg (by positivity : 0 ≤ 4*b) (sub_nonneg.mpr hb1))
-    have hz : Complex.normSq z = 1 := by
-      change (1-2*b)*(1-2*b)+Real.sqrt (4*b*(1-b))*Real.sqrt (4*b*(1-b)) = 1
-      linarith only [hs]
+    let x : ℝ := 1-2*b
+    have hx : ‖x‖ ≤ 1 := by
+      rw [Real.norm_eq_abs, abs_le]
+      dsimp [x]
+      constructor <;> linarith
+    let z : ℂ := (x : ℂ) + Complex.I * (Real.sqrt (1-x^2) : ℂ)
+    have hz : Complex.normSq z = 1 := Complex.normSq_ofReal_add_I_mul_sqrt_one_sub hx
+    have hzre : z.re = 1-2*b := by simp [z, x]
     have hzn : ‖z‖ = 1 := by nlinarith only [Complex.sq_norm z,hz,norm_nonneg z]
     have V := bound (fun _ => z) (fun _ => hzn)
     have hcube : cube (fun _ : Fin n => z) = (1-b)^n := by
-      change ∏ _i : Fin n, ((1+(1-2*b))/2) = _
+      change ∏ _i : Fin n, ((1+z.re)/2) = _
+      rw [hzre]
       simp only [Finset.prod_const, Finset.card_univ,Fintype.card_fin]
       ring
     have hsimplex : simplex (fun _ : Fin n => z) = 1-4*n*b/((n:ℝ)+1)^2 := by
       simp only [simplex, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
         normSq_one_add,Complex.normSq_mul,hz,mul_one,Complex.mul_re,
-        Complex.natCast_re,Complex.natCast_im,zero_mul,sub_zero,Complex.normSq_natCast]
+        Complex.natCast_re,Complex.natCast_im,zero_mul,sub_zero,Complex.normSq_natCast,hzre]
       change (1+2*((n:ℝ)*(1-2*b))+(n:ℝ)*(n:ℝ))/((n:ℝ)+1)^2 = _
       field_simp
       ring
@@ -112,7 +116,7 @@ private theorem sharp {n : ℕ} (hn : 0 < n) {C : ℝ}
   linarith only [hcancel]
 
 
-/-- Weighted average pairwise fidelity loss of a finite list of phase vectors. -/
+/-- Weighted sum of pairwise fidelity losses of a finite list of phase vectors. -/
 noncomputable def mixedDeficit {m n : ℕ} (F : (Fin n → ℂ) → ℝ)
     (p : Fin m → ℝ) (v : Fin m → Fin n → ℂ) : ℝ :=
   ∑ i, ∑ j, p i * p j * (1 - F (fun k => star (v i k) * v j k))
