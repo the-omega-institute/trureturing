@@ -59,7 +59,7 @@ private theorem quotientPowers {A : Type} [Fintype A] [DecidableEq A] {N K : ℕ
   intro a j
   calc
     _ = T.mulVec (fun q => if labels[(encode q).val] = j then 1 else 0) a := by
-      simp only [Matrix.mulVec, dotProduct, mul_ite, mul_one, mul_zero]
+      simp only [cls, Matrix.mulVec, dotProduct, mul_ite, mul_one, mul_zero]
     _ = ∑ i ∈ succs (encode a), if labels[i.val] = j then (1 : ℤ) else 0 :=
       (action a (fun i => if labels[i.val] = j then 1 else 0)).symm
     _ = _ := by
