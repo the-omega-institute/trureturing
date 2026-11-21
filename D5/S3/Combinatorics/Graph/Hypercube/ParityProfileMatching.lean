@@ -14,6 +14,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Hypercube.ParityProfileMatching
 
 open Finset DirectionMatching
+open D5.S3.Combinatorics.Transportation.OrderedMarginAllocation
 open scoped Classical
 
 private def commonOne {I T : Type*} [Fintype T]
@@ -95,8 +96,6 @@ private theorem allocate_under_caps {R C : Type*} [Fintype R] [Fintype C]
   rw [Fintype.sum_option] at hc
   change (∑ a : R, state.2.2 (some a, b)) ≤ caps b
   omega
-
-open D5.S3.Combinatorics.Transportation.OrderedMarginAllocation
 
 private theorem batch_matches (n k : ℕ) (target : Fin (n + 2) → ℕ)
     (total : ∑ i, target i = k * 2 ^ n) :
