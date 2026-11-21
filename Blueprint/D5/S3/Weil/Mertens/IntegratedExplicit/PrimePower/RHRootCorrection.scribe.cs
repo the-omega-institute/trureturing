@@ -9,9 +9,12 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         "Square and cube corrections to the prime-only tail under RH",
         H("The log-density estimate and the two-cutoff error bound"),
         Blocks(
-            Paragraph(Text("Write Qtheta for the prime-only tail, D for squareDensity, A(x) for squarePrimitive, "
+            Paragraph(Text("Write Qtheta for the prime-only tail, D for squareDensity, "
                 + "and W(a,B) for the integral of rootWindowDensity over [log(a),log(B)]. "
-                + "The square-cutoff coefficients and occurrence indexing are those of SquareSpectrum.")),
+                + "At a positive cutoff x the square-cutoff primitive is")),
+            new DocumentBlock.DisplayFormula(SquarePrimitive()),
+            Paragraph(Text("The sum runs over all actual nontrivial zeta zero occurrences, with both signs of the ordinate "
+                + "and full analytic multiplicity. The same occurrences index both endpoints and the ordinary primitive p.")),
             Describe.Lean(
                 DescribeId.Create("rh-prime-power-density"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_prime_power_density"),
@@ -66,7 +69,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
                         + "the discrepancy after subtraction of the logarithm and the first primitive "
                         + "as an integral of windowError. Eventual positivity identifies windowError "
                         + "with rootWindowDensity on the same closed log window. Apply the integrated "
-                        + "estimate with cube coefficient 9 and the square primitive A at both endpoints."))),
+                        + "estimate with cube coefficient 9 and the square primitive at both endpoints."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -84,6 +87,20 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         F.Seq(x, F.Caret, F.Grp(new Formula.Negate(new Formula.Fraction(num, den))));
     private static Formula CubePower(Formula x) => NegativePower(x, F.D(1), F.D(6));
     private static Formula ErrorPower(Formula x) => NegativePower(x, F.D(3), F.Seq(F.D(1), F.D(0)));
+
+    private static Formula SquareAt(Formula x) =>
+        F.Seq(new Formula.Subscript(F.Id("A"), F.D(2)), F.Open, x, F.Close);
+
+    private static Formula SquarePrimitive()
+    {
+        var x = F.Id("x");
+        var rho = F.Rho;
+        var exponent = new Formula.Fraction(Subtract(rho, F.D(1)), F.D(2));
+        var denominator = Multiply(Multiply(rho, Subtract(F.D(1), rho)), Subtract(F.D(2), rho));
+        var summand = new Formula.Fraction(new Formula.Power(x, exponent), denominator);
+        return F.Disp(Equal(SquareAt(x),
+            F.Seq(F.D(4), F.Sp, F.Re, F.Sp, F.Sum, F.Underscore, F.Grp(rho), F.Sp, summand)));
+    }
 
     private static Formula Density()
     {
@@ -107,7 +124,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         var positive = All("x", Imp(Le(t, x),
             Lt(F.D(0), Multiply(Call("sqrt", x), new Formula.Negate(Call("Qtheta", x))))));
         var cube = Multiply(F.D(9), Subtract(CubePower(a), CubePower(b)));
-        var error = Add(Subtract(Subtract(Call("W", a, b), cube), Call("A", b)), Call("A", a));
+        var error = Add(Subtract(Subtract(Call("W", a, b), cube), SquareAt(b)), SquareAt(a));
         var estimate = Le(new Formula.Absolute(error), Multiply(k, Subtract(ErrorPower(a), ErrorPower(b))));
         var window = All("a", All("B", Imp(Le(t, a), Imp(Le(a, b), estimate))));
         return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K", And(Le(F.D(8), t),
@@ -124,7 +141,7 @@ internal sealed class RHRootCorrectionDocument : IScribeDocumentDefinition
         var ordinary = Add(Subtract(Subtract(Call("N", a, b), logTerm), Call("p", Call("log", b))),
             Call("p", Call("log", a)));
         var cube = Multiply(F.D(9), Subtract(CubePower(a), CubePower(b)));
-        var error = Add(Subtract(Subtract(ordinary, cube), Call("A", b)), Call("A", a));
+        var error = Add(Subtract(Subtract(ordinary, cube), SquareAt(b)), SquareAt(a));
         var estimate = Le(new Formula.Absolute(error), Multiply(k, Subtract(ErrorPower(a), ErrorPower(b))));
         var window = All("a", All("B", Imp(Le(t, a), Imp(Le(a, b), estimate))));
         return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K", And(Le(F.D(2), t),

@@ -4,7 +4,13 @@
 
 Square and cube corrections to the prime-only tail under RH
 
-Write Qtheta for the prime-only tail, D for squareDensity, A(x) for squarePrimitive, and W(a,B) for the integral of rootWindowDensity over [log(a),log(B)]. The square-cutoff coefficients and occurrence indexing are those of SquareSpectrum.
+Write Qtheta for the prime-only tail, D for squareDensity, and W(a,B) for the integral of rootWindowDensity over [log(a),log(B)]. At a positive cutoff x the square-cutoff primitive is
+
+$$
+A_{2}(x) = 4 \Re \sum_{\rho} \frac{x^{\frac{\rho - 1}{2}}}{\rho \cdot \left(1 - \rho\right) \cdot \left(2 - \rho\right)}
+$$
+
+The sum runs over all actual nontrivial zeta zero occurrences, with both signs of the ordinate and full analytic multiplicity. The same occurrences index both endpoints and the ordinary primitive p.
 
 **Theorem 1.1 (The normalized square and cube terms).**
 
@@ -34,7 +40,7 @@ At x=exp(u), add the complete normalized tail residual to the square-root-scaled
 
 **Theorem 1.3 (The cube primitive and the shrinking endpoint error).**
 
-$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 8 \le T \land \left(0 < K \land \left(\left(\forall x \in \mathbb{R},\; T \le x \Rightarrow 0 < \operatorname{sqrt}\left(x\right) \cdot \left(-\operatorname{Qtheta}\left(x\right)\right)\right) \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{W}\left(a, B\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - \operatorname{A}\left(B\right) + \operatorname{A}\left(a\right)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)\right)$$
+$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 8 \le T \land \left(0 < K \land \left(\left(\forall x \in \mathbb{R},\; T \le x \Rightarrow 0 < \operatorname{sqrt}\left(x\right) \cdot \left(-\operatorname{Qtheta}\left(x\right)\right)\right) \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{W}\left(a, B\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - A_{2}(B) + A_{2}(a)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.rh_root_correction_window` (`✓ std3`). ∎
 
@@ -48,7 +54,7 @@ Integrate the cube term over [log(a),log(B)] to obtain 9(a^(-1/6)-B^(-1/6)). Use
 
 **Theorem 1.4 (The actual prime-only window with both zero primitives).**
 
-$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2 \le T \land \left(0 < K \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{N}\left(a, B\right) - 2 \cdot \operatorname{log}\left(\frac{B}{a}\right) - \operatorname{p}\left(\operatorname{log}\left(B\right)\right) + \operatorname{p}\left(\operatorname{log}\left(a\right)\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - \operatorname{A}\left(B\right) + \operatorname{A}\left(a\right)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)$$
+$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2 \le T \land \left(0 < K \land \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; T \le a \Rightarrow \left(a \le B \Rightarrow \left|\operatorname{N}\left(a, B\right) - 2 \cdot \operatorname{log}\left(\frac{B}{a}\right) - \operatorname{p}\left(\operatorname{log}\left(B\right)\right) + \operatorname{p}\left(\operatorname{log}\left(a\right)\right) - 9 \cdot \left(a^{-\frac{1}{6}} - B^{-\frac{1}{6}}\right) - A_{2}(B) + A_{2}(a)\right| \le K \cdot \left(a^{-\frac{3}{10}} - B^{-\frac{3}{10}}\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHRootCorrection.prime_window_cube_and_square_of_rh` (`✓ std3`). ∎
 
@@ -60,7 +66,7 @@ $$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; 2
 
 Let N(a,B) be the integral of max(-Qtheta(x),0)/sqrt(x) from a to B. Let p(u) be the real part of the sum of exp(i Im(rho) u)/[rho(1-rho)i Im(rho)] over the actual nontrivial zero occurrences with multiplicity.
 
-The exact ordinary endpoint identity of RHPrimeWindowRemainder expresses the discrepancy after subtraction of the logarithm and the first primitive as an integral of windowError. Eventual positivity identifies windowError with rootWindowDensity on the same closed log window. Apply the integrated estimate with cube coefficient 9 and the square primitive A at both endpoints.
+The exact ordinary endpoint identity of RHPrimeWindowRemainder expresses the discrepancy after subtraction of the logarithm and the first primitive as an integral of windowError. Eventual positivity identifies windowError with rootWindowDensity on the same closed log window. Apply the integrated estimate with cube coefficient 9 and the square primitive at both endpoints.
 
 ## References
 

@@ -69,7 +69,7 @@ private lemma phaseSum_continuous (hRH : RiemannHypothesis) : Continuous phaseSu
 private lemma phaseSum_one : phaseSum 1 = (firstLiMass : ℂ) := by
   simpa [phaseSum] using actualCoeff_hasSum.tsum_eq
 
-private lemma normalizedH_bound (hRH : RiemannHypothesis) (y : ℝ) :
+lemma normalizedH_bound (hRH : RiemannHypothesis) (y : ℝ) :
     ‖normalizedH y‖ ≤ firstLiMass := by
   have ht (k : ℕ) :
       ‖actualCoeff k * Complex.exp ((y : ℂ) * actualZero k)‖ ≤

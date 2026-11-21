@@ -162,7 +162,7 @@ private lemma square_error (hRH : RiemannHypothesis) {x : ℝ} (hx : 4 ≤ x) :
     rw [show y = Real.sqrt x from rfl, Real.sqrt_eq_rpow, Real.rpow_def_of_pos hx0]
     congr 1
     ring
-  have hs := square_spectral_transform hRH (Real.log x)
+  have hs := square_spectral_transform (Real.log x)
   dsimp only at hs
   rw [hphase] at hs
   obtain ⟨he, hb⟩ := weighted_bound (f := qError) (b := 2) (d := 1) hy (by norm_num)
@@ -417,7 +417,7 @@ theorem rh_root_correction_window (hRH : RiemannHypothesis) :
       volume (Real.log a) (Real.log B) :=
     (by fun_prop : Continuous (fun u : ℝ => (3 / 2) * Real.exp (-(1 / 6 : ℝ) * u))).intervalIntegrable
       _ _
-  obtain ⟨hsq, hsqint⟩ := square_density_integral hRH hablog
+  obtain ⟨hsq, hsqint⟩ := square_density_integral (Real.log a) (Real.log B)
   have hwin : IntervalIntegrable rootWindowDensity volume (Real.log a) (Real.log B) :=
     (rootWindowDensity_continuousOn.mono (by
       rw [uIcc_of_le hablog]
