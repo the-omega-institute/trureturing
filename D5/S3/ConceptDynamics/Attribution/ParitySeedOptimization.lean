@@ -241,6 +241,88 @@ def fixedSeedCount {n : ℕ} (S : Type) [Fintype S]
     [MulAction (Acting (Fin (n + 2))) S] (i : Fin (n + 2)) : ℕ :=
   ∑ s : S, if (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) then 1 else 0
 
+section
+attribute [local instance 10000] Classical.propDecidable
+
+/-- Fixed-seed count vectors attained by exact uniform coloured parity implementations. -/
+def RealizableSeedCounts (n k : ℕ) (v : Fin (n + 2) → ℕ) : Prop :=
+  ∃ (S : Type) (_ : Fintype S) (_ : MulAction (Acting (Fin (n + 2))) S) (f : S → Pair n),
+    Fintype.card S = 2 ^ (n + 3) * k ∧ (∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s) ∧
+    (∃ c : ℕ,
+      (∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = c) ∧
+      (∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = c)) ∧
+    ∀ i, fixedSeedCount (n := n) S i = v i
+
+end
+
+private theorem realize_scaled_profile_counts {n k : ℕ}
+    (W : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ)
+    (rows : ∀ p, ∑ q, W p q = k) (cols : ∀ q, ∑ p, W p q = k) :
+    RealizableSeedCounts n k (fun i => 4 * commonOneCount W i) := by
+  classical
+  obtain ⟨S, _, _, f, card, equiv, fixed, counts, uniform⟩ :=
+    matrix_to_seeds_with_readouts (natural_profile_lift W rows cols)
+  refine ⟨S, inferInstance, inferInstance, f, card, equiv, uniform, fun i => ?_⟩
+  unfold fixedSeedCount
+  simp_rw [fixed (coordinate i)]
+  let P (a : Pair n) : Prop := ∀ h : coordinate i, (h : Acting (Fin (n + 2))) • a = a
+  have reduced : (∑ s : S, if (∀ h : coordinate i,
+      (h : Acting (Fin (n + 2))) • f s = f s) then (1 : ℕ) else 0) =
+      ∑ a : Pair n, if (∀ h : coordinate i,
+        (h : Acting (Fin (n + 2))) • a = a) then seedWeight (liftedMatrix W) a else 0 := by
+    convert counts P using 1 <;> apply sum_congr rfl <;> intro a _ <;>
+      (first | by_cases h : P (f a) | by_cases h : P a) <;> simp [P] at h ⊢
+  rw [reduced, scaled_fixed_total (fun p q => (lift_pooled W p q).symm) i]
+
+private theorem realize_profile_boundary {n k : ℕ} {v : Fin (n + 2) → ℕ}
+    (h : ProfileBoundary n k v) :
+    RealizableSeedCounts n k (fun i => 4 * v i) := by
+  obtain ⟨⟨W, rows, cols, bounds⟩, maximal⟩ := (exact_profile_frontier n k v).2 h
+  have eq := maximal (commonOneCount W) ⟨W, rows, cols, fun _ => le_rfl⟩ bounds
+  simpa only [eq] using realize_scaled_profile_counts W rows cols
+
+private theorem seed_vector_dominated {n k : ℕ} {z : Fin (n + 2) → ℕ}
+    (h : RealizableSeedCounts n k z) :
+    ∃ v, ProfileBoundary n k v ∧ ∀ i, z i ≤ 4 * v i := by
+  obtain ⟨S, _, _, f, card, equiv, ⟨c, rows, cols⟩, equal⟩ := h
+  obtain ⟨W, wRows, wCols, scale⟩ :=
+    normalize_coloured_counts (seeds_to_pushforward f card equiv c rows cols)
+  obtain ⟨v, boundary, bounds⟩ :=
+    profile_floor_dominated (n := n) (k := k) (v := commonOneCount W)
+      ⟨W, wRows, wCols, fun _ => le_rfl⟩
+  refine ⟨v, boundary, fun i => ?_⟩
+  rw [← equal i]
+  refine (fixed_seed_count_le_pushforward f equiv i).trans ?_
+  rw [scaled_fixed_total scale i]
+  exact Nat.mul_le_mul_left 4 (bounds i)
+
+/-- The maximal coordinate fixed-seed vectors are the scaled profile boundary. -/
+theorem maximal_coordinate_fixed_vectors (n k : ℕ) (z : Fin (n + 2) → ℕ) :
+    (RealizableSeedCounts n k z ∧
+      ∀ u, RealizableSeedCounts n k u → (∀ i, z i ≤ u i) → u = z) ↔
+    ∃ v, ProfileBoundary n k v ∧ ∀ i, z i = 4 * v i := by
+  constructor
+  · rintro ⟨feasible, maximal⟩
+    obtain ⟨v, boundary, dominates⟩ := seed_vector_dominated feasible
+    have eq := maximal (fun i => 4 * v i) (realize_profile_boundary boundary) dominates
+    exact ⟨v, boundary, fun i => (congrFun eq i).symm⟩
+  · rintro ⟨v, boundary, equal⟩
+    have hz : z = (fun i => 4 * v i) := funext equal
+    subst z
+    refine ⟨realize_profile_boundary boundary, ?_⟩
+    intro u feasible dominates
+    obtain ⟨w, wBoundary, wDominates⟩ := seed_vector_dominated feasible
+    have vw (i : Fin (n + 2)) : v i ≤ w i := by
+      have h := (dominates i).trans (wDominates i)
+      change 4 * v i ≤ 4 * w i at h
+      exact Nat.le_of_mul_le_mul_left h (by decide)
+    have hw : w = v :=
+      ((exact_profile_frontier n k v).2 boundary).2 w
+        ((exact_profile_frontier n k w).2 wBoundary).1 vw
+    subst w
+    exact funext fun i => le_antisymm (wDominates i) (dominates i)
+
+
 attribute [local instance 10000] Classical.propDecidable
 
 private def optimalCoordinateCount (n k : ℕ) : ℕ :=
