@@ -29,10 +29,10 @@ open scoped BigOperators symmDiff
 
 variable {n : ℕ}
 
-private def neighbors (x : Finset (Fin n)) : Finset (Finset (Fin n)) :=
+def neighbors (x : Finset (Fin n)) : Finset (Finset (Fin n)) :=
   univ.image (fun i : Fin n => x ∆ {i})
 
-private theorem mem_neighbors {x r : Finset (Fin n)} :
+theorem mem_neighbors {x r : Finset (Fin n)} :
     r ∈ neighbors x ↔ (x ∆ r).card = 1 := by
   simp only [neighbors, mem_image, mem_univ, true_and, card_eq_one]
   constructor
@@ -60,7 +60,7 @@ private theorem common_neighbor_axes {x y r : Finset (Fin n)} (hxy : x ≠ y)
     exact hxy (symmDiff_eq_empty.mp (by simpa using hd))
   exact ⟨i, j, hij, hd.trans (singleton_symmDiff hij), hr⟩
 
-private theorem common_neighbors_card_le_two {x y : Finset (Fin n)} (hxy : x ≠ y) :
+theorem common_neighbors_card_le_two {x y : Finset (Fin n)} (hxy : x ≠ y) :
     (neighbors x ∩ neighbors y).card ≤ 2 := by
   by_cases hn : (neighbors x ∩ neighbors y).Nonempty
   · obtain ⟨r, hr⟩ := hn
@@ -79,7 +79,7 @@ private theorem common_neighbors_card_le_two {x y : Finset (Fin n)} (hxy : x ≠
     exact (card_le_card hsub).trans card_le_two
   · simp [not_nonempty_iff_eq_empty.mp hn]
 
-private theorem triple_common_neighbor {x y z : Finset (Fin n)} (hxy : x ≠ y)
+theorem triple_common_neighbor {x y z : Finset (Fin n)} (hxy : x ≠ y)
     (hxz : x ≠ z) (hyz : y ≠ z) (hXY : (neighbors x ∩ neighbors y).Nonempty)
     (hXZ : (neighbors x ∩ neighbors z).Nonempty)
     (hYZ : (neighbors y ∩ neighbors z).Nonempty) :

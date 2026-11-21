@@ -194,7 +194,7 @@ private lemma cycle_eq_of_away [Fintype V] {z w : Chain V} {x : V}
     · exact fun hn => (hn hd).elim
   · exact haway F hx
 
-private lemma dual_complement_base {M : Matroid V} {E A : Finset V}
+lemma dual_complement_base {M : Matroid V} {E A : Finset V}
     (hE : M.E = (E : Set V)) (hA : A ⊆ E) :
     M✶.IsBase (↑A : Set V) ↔ M.IsBase (↑(E \ A) : Set V) := by
   rw [Matroid.dual_isBase_iff (hE.symm ▸ coe_subset.mpr hA), hE, coe_sdiff]
