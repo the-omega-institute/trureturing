@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
 
@@ -13,19 +15,33 @@ internal sealed class KozakiKakeiFourNormalDocument : IScribeDocumentDefinition
             Definition("fourNormal", "The unique four-column matrix",
                 "Its rows are (0,1,1,1) and (−1,0,1,2)."),
             Theorem("normalized_four_iff", "Four-column singleton normal form",
-                "The closing minor forces the last upper entry to be one, and the last consecutive minor forces the last lower entry to be two. The displayed matrix satisfies every nonvanishing and normalization condition."),
+                "The closing minor forces the last upper entry to be one, and the last consecutive minor forces the last lower entry to be two. The displayed matrix satisfies every nonvanishing and normalization condition.",
+                NormalizedFourIff()),
             Theorem("allowable_four_card", "Eight allowable column permutations",
-                "The four rotations and four reflections correspond bijectively to a start column and a Boolean choice of orientation. Evaluation at zero determines the start and evaluation at one distinguishes the orientations. Each of the eight induces the identity on the one-point carrier."))));
+                "The four rotations and four reflections correspond bijectively to a start column and a Boolean choice of orientation. Evaluation at zero determines the start and evaluation at one distinguishes the orientations. Each of the eight induces the identity on the one-point carrier.",
+                AllowableFourCard()))));
 
     private static DocumentBlock Definition(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Definition);
 
-    private static DocumentBlock Theorem(string name, string title, string prose) =>
+    private static DocumentBlock Theorem(string name, string title, string prose, Formula statement) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Theorem);
+
+    private static Formula NormalizedFourIff() => Seq(
+        Forall, Sp, F.Id("Z"), Sp, Colon, Sp, Word("Chart"), Open, F.Id("K"), Comma, D(2), Close, Comma, Sp,
+        Word("Normalized"), Open, D(2), Comma, F.Id("Z"), Close, Sp, Iff, Sp, F.Id("Z"), Sp, Eq, Sp,
+        Word("fourNormal"));
+
+    private static Formula AllowableFourCard() => Seq(
+        Word("card"), Open, OpenBrace, F.Id("s"), Sp, InMacro, Sp, Word("Perm"), Open, Word("Col"), Open, D(2),
+        Close, Close, Sp, Mid, Sp, Word("Allowable"), Open, D(2), Comma, F.Id("s"), Close, CloseBrace, Close,
+        Sp, Eq, Sp, D(8));
+
+    private static Formula Word(string value) => Seq(Operatorname, Grp(F.Id(value)));
 
     private static string NodeId(string name) =>
         "frieze-fournormal-" + name.ToLowerInvariant().Replace('_', '-');

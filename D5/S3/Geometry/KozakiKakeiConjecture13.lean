@@ -7,6 +7,7 @@
    digest: The allowable column permutations of the even frieze normal form are exactly the dihedral permutations outside order six. -/
 import D5.S3.Geometry.KozakiKakeiFour
 import D5.S3.Geometry.KozakiKakeiNormalization
+import D5.S3.Geometry.KozakiKakeiPreservation
 
 namespace D5.S3.Geometry.KozakiKakei
 

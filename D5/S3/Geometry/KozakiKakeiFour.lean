@@ -23,21 +23,20 @@ private theorem eval_four (t : Col 2 → ℂ) :
 private def pairNumber (i j : Col 2) (v : Col 2) : ℂ :=
   if v = i ∨ v = j then 1 else 0
 
-theorem signed_four_evaluation (i j : Col 2) (h : i ≠ j) :
-    eval (pairNumber i j) (F 2) =
-      if Adjacent (by decide : 2 ≤ 2) i j then 1 else -2 := by
-  classical
-  rw [eval_four]
-  fin_cases i <;> fin_cases j <;>
-    simp_all [pairNumber, Adjacent, step, second, Fin.ext_iff, Fin.add_def] <;> norm_num
-
-private theorem one_of_neighbors :
-    ∀ a b c : Col 2, a ≠ b → a ≠ c → b ≠ c →
-      Adjacent (by decide : 2 ≤ 2) a b ∨ Adjacent (by decide : 2 ≤ 2) a c := by
-  decide
-
 theorem dihedral_of_scalar_four (σ : Equiv.Perm (Col 2))
     {c : ℂ} (hs : rename σ (F 2) = MvPolynomial.C c * F 2) : Dihedral σ := by
+  have signed_four_evaluation (i j : Col 2) (h : i ≠ j) :
+      eval (pairNumber i j) (F 2) =
+        if Adjacent (by decide : 2 ≤ 2) i j then 1 else -2 := by
+    classical
+    rw [eval_four]
+    fin_cases i <;> fin_cases j <;>
+      simp_all [pairNumber, Adjacent, step, second, Fin.ext_iff, Fin.add_def] <;> norm_num
+
+  have one_of_neighbors :
+      ∀ a b c : Col 2, a ≠ b → a ≠ c → b ≠ c →
+        Adjacent (by decide : 2 ≤ 2) a b ∨ Adjacent (by decide : 2 ≤ 2) a c := by
+    decide
   have hm : 2 ≤ 2 := le_rfl
   have hpair (i j : Col 2) :
       eval (pairNumber i j) (F 2) = c * eval (pairNumber (σ i) (σ j)) (F 2) := by

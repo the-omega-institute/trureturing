@@ -64,6 +64,11 @@ noncomputable def evenMatching (m : ℕ) : Fin m × Bool ≃ Col m :=
 def minor {m : ℕ} {R : Type*} [CommRing R] (Z : Chart R m) (i j : Col m) : R :=
   Z 0 i * Z 1 j - Z 1 i * Z 0 j
 
+theorem minor_swap {m : ℕ} {R : Type*} [CommRing R] (Z : Chart R m) (i j : Col m) :
+    minor Z i j = -minor Z j i := by
+  unfold minor
+  ring
+
 def Admissible {m : ℕ} {R : Type*} [CommRing R] (Z : Chart R m) : Prop :=
   ∀ i j, i ≠ j → minor Z i j ≠ 0
 

@@ -1,0 +1,98 @@
+import D5.S3.Geometry.KozakiKakeiConjecture13
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.SingleDependentReadout
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace Reg.D5.S3.Geometry.KozakiKakeiConjecture13
+
+open _root_.D5.S3.Geometry.KozakiKakei
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.Reg.Support.SingleDependentReadout (sensitivity)
+open LeanInformationAudit
+
+private theorem identity_dihedral : Dihedral (Equiv.refl (Col 2)) :=
+  ⟨0, Or.inl (fun i => (zero_add i).symm)⟩
+
+private theorem swap_not_dihedral : ¬ Dihedral (Equiv.swap (0 : Col 2) 1) := by
+  rintro ⟨a, h | h⟩
+  · have ha : a = 1 := by simpa using (h 0).symm
+    have h1 := h 1
+    rw [ha] at h1
+    exact (by decide : (0 : Col 2) ≠ 1 + 1) (by simpa using h1)
+  · have ha : a = 1 := by simpa using (h 0).symm
+    have h2 := h 2
+    rw [ha] at h2
+    have hswap : Equiv.swap (0 : Col 2) 1 2 = 2 :=
+      Equiv.swap_apply_of_ne_of_ne (by decide) (by decide)
+    rw [hswap] at h2
+    exact (by decide : (2 : Col 2) ≠ 1 - 2) h2
+
+private abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun m => Equiv.Perm (Col m)) (fun _ => Prop)
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ σ => Dihedral σ) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (_ : m ≠ 3) (σ : Equiv.Perm (Col m)),
+    Allowable hm σ ↔ R.readout () m σ
+
+private theorem rejected_fails : ¬ arena.Law rejected := by
+  intro h
+  have ha := (conjecture_13 (m := 2) (by decide) (by decide) (Equiv.refl _)).mpr
+    identity_dihedral
+  exact (h (by decide) (by decide) (Equiv.refl (Col 2))).mp ha
+
+def evidence : Registration arena (type_of% @conjecture_13) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@conjecture_13, rejected, rejected_fails⟩
+  sensitivity := sensitivity arena.Law actual rejected rejected_fails
+  dependence := by
+    intro _
+    refine ⟨2, Equiv.refl _, Equiv.swap 0 1, ?_⟩
+    intro h
+    exact swap_not_dihedral (Eq.mp h identity_dihedral)
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@conjecture_13) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Geometry.KozakiKakei.conjecture_13.__information_unit
+  realizationName := `Reg.D5.S3.Geometry.KozakiKakeiConjecture13.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := {stage := .evidence, objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ σ => Dihedral σ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.KozakiKakeiConjecture13
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Reg.D5.S3.Geometry.KozakiKakeiConjecture13

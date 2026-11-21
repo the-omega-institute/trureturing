@@ -10,11 +10,6 @@ import D5.S3.Geometry.KozakiKakeiCycle
 namespace D5.S3.Geometry.KozakiKakei
 open scoped BigOperators
 
-theorem minor_swap {m : ℕ} {R : Type*} [CommRing R] (Z : Chart R m) (i j : Col m) :
-    minor Z i j = -minor Z j i := by
-  unfold minor
-  ring
-
 private def paritySet (m p : ℕ) : Finset (Col m) :=
   Finset.univ.filter (fun i => i.val % 2 = p)
 

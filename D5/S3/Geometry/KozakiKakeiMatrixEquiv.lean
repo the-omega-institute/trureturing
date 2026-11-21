@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Invertible row multiplication and diagonal column scaling preserve the level equation and commute with reordering. -/
-import D5.S3.Geometry.KozakiKakeiPreservation
+import D5.S3.Geometry.KozakiKakeiMatching
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Data.Fintype.BigOperators
 

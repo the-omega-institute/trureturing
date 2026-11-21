@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
@@ -31,23 +33,51 @@ internal sealed class KozakiKakeiPrimitiveDocument : IScribeDocumentDefinition
             Definition("B", "Constant coefficient",
                 "The constant coefficient is the last coordinate times the even tail product minus the second coordinate times the odd tail product."),
             Theorem("isolate_F", "The two signed coefficients",
-                "Isolating the first column variable gives the linear polynomial with coefficients A and B."),
+                "Isolating the first column variable gives the linear polynomial with coefficients A and B.",
+                IsolateF()),
             Theorem("signed_four_coefficient", "Four-column coefficient",
-                "The linear coefficient is the sum of the last and second variables minus twice the third. Both tail products have one factor."),
+                "The linear coefficient is the sum of the last and second variables minus twice the third. Both tail products have one factor.",
+                SignedFourCoefficient()),
             Theorem("primitive_coefficients", "Nonzero relatively prime coefficients",
-                "Off order six, a common prime must divide the difference between the second and last coordinates. Identifying those two coordinates leaves the linear coefficient nonzero, with a separate specialization at order four."),
+                "Off order six, a common prime must divide the difference between the second and last coordinates. Identifying those two coordinates leaves the linear coefficient nonzero, with a separate specialization at order four.",
+                PrimitiveCoefficients()),
             Theorem("A_not_unit", "The linear coefficient is a nonunit",
-                "Evaluation with every remaining coordinate zero sends each nonempty tail product to zero."))));
+                "Evaluation with every remaining coordinate zero sends each nonempty tail product to zero.",
+                ANotUnit()))));
 
     private static DocumentBlock Definition(string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Definition);
 
-    private static DocumentBlock Theorem(string name, string title, string prose) =>
+    private static DocumentBlock Theorem(string name, string title, string prose, Formula statement) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(StrataLint.Scribe.DefinitionDsl.Text(prose))), DescribeRole.Theorem);
+
+    private static Formula IsolateF() => Seq(
+        Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, D(2), Sp, Le, Sp,
+        F.Id("m"), Sp, Implies, Sp, Word("isolate"), Open, Word("first"), Open, F.Id("m"), Close, Comma,
+        F.Id("F"), Open, F.Id("m"), Close, Close, Sp, Eq, Sp, Word("PolynomialC"), Open, F.Id("A"), Open,
+        F.Id("m"), Close, Close, Sp, Cdot, Sp, Word("PolynomialX"), Sp, Plus, Sp, Word("PolynomialC"), Open,
+        F.Id("B"), Open, F.Id("m"), Close, Close);
+
+    private static Formula SignedFourCoefficient() => Seq(
+        F.Id("A"), Open, D(2), Close, Sp, Eq, Sp, F.Id("X"), Open, Word("lastCoord"), Open, D(2), Close, Close,
+        Sp, Plus, Sp, F.Id("X"), Open, Word("nextCoord"), Open, D(2), Close, Close, Sp, Minus, Sp, D(2), Sp,
+        Cdot, Sp, F.Id("X"), Open, Word("middleCoord"), Open, D(2), Close, Close);
+
+    private static Formula PrimitiveCoefficients() => Seq(
+        Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, D(2), Sp, Le, Sp,
+        F.Id("m"), Sp, Implies, Sp, F.Id("m"), Sp, Neq, Sp, D(3), Sp, Implies, Sp, F.Id("A"), Open, F.Id("m"),
+        Close, Sp, Neq, Sp, D(0), Sp, Land, Sp, Word("IsRelPrime"), Open, F.Id("A"), Open, F.Id("m"), Close,
+        Comma, F.Id("B"), Open, F.Id("m"), Close, Close);
+
+    private static Formula ANotUnit() => Seq(
+        Forall, Sp, F.Id("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, D(2), Sp, Le, Sp,
+        F.Id("m"), Sp, Implies, Sp, Neg, Word("IsUnit"), Open, F.Id("A"), Open, F.Id("m"), Close, Close);
+
+    private static Formula Word(string value) => Seq(Operatorname, Grp(F.Id(value)));
 
     private static string NodeId(string name) =>
         "frieze-primitive-" + name.ToLowerInvariant().Replace('_', '-');
