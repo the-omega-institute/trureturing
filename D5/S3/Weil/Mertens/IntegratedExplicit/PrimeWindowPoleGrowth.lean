@@ -459,7 +459,7 @@ theorem off_line_zero_forces_window_mass {z₀ : ℂ} (hz : riemannZeta z₀ = 0
       hK.eventually hD, hK.eventually hAbs, hexp] with a ha h2 hdisc habs he
     let k := ⌊σ*h*a⌋₊
     have hab : a ≤ b*a := by nlinarith
-    have Htail := (hgamma.2 hσ0 hsign ha U_exp_continuous.measurable hM).2
+    have Htail := (hgamma.2 hsign ha U_exp_continuous.measurable hM).2
     have hTail : (∫ u in Ioi (0 : ℝ) \ Icc a (b*a), |U (Real.exp u)| * weight k σ u)
         ≤ C * σ⁻¹^k := by
       apply Htail.trans
