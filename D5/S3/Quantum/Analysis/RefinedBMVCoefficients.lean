@@ -59,6 +59,64 @@ theorem kernel_zero (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
   · field_simp
     ring
 
+/-- The symmetric correction, with its boundary value when a pair sum vanishes. -/
+def symmetricCorrection (x y z : ℝ) : ℝ :=
+  if (x + y) * (y + z) * (z + x) = 0 then 2 / (x + y + z)
+  else 2 * (x * y + y * z + z * x) / ((x + y) * (y + z) * (z + x))
+
+/-- The coefficient kernel for a closed walk centered at `x`. -/
+def symmetricKernel (x y z : ℝ) : ℝ :=
+  x + 2 * (y + z) - symmetricCorrection x y z * (y - z) ^ 2
+
+private theorem symmetricCorrection_rotate (x y z : ℝ) :
+    symmetricCorrection y z x = symmetricCorrection x y z := by
+  unfold symmetricCorrection
+  rw [show (y + z) * (z + x) * (x + y) = (x + y) * (y + z) * (z + x) by ring,
+    show y + z + x = x + y + z by ring,
+    show y * z + z * x + x * y = x * y + y * z + z * x by ring]
+
+theorem cubicDefect_eq_cyclic_symmetric (x y z : ℝ) :
+    cubicDefect x y z =
+      (y - x) * (z - x) * symmetricKernel x y z +
+      (z - y) * (x - y) * symmetricKernel y z x +
+      (x - z) * (y - z) * symmetricKernel z x y := by
+  simp only [cubicDefect, symmetricKernel, symmetricCorrection_rotate y z x,
+    symmetricCorrection_rotate x y z]
+  ring
+
+private theorem symmetricCorrection_zero (y z : ℝ) :
+    symmetricCorrection 0 y z = 2 / (y + z) := by
+  simp only [symmetricCorrection, zero_add, add_zero, zero_mul, mul_zero]
+  split_ifs with h
+  · rfl
+  · have hy : y ≠ 0 := fun hy ↦ h (by simp [hy])
+    have hz : z ≠ 0 := fun hz ↦ h (by simp [hz])
+    have hyz : y + z ≠ 0 := fun hyz ↦ h (by simp [hyz])
+    field_simp [hy, hz, hyz]
+
+theorem symmetricKernel_zero (y z : ℝ) (hy : 0 ≤ y) (hz : 0 ≤ z) :
+    symmetricKernel 0 y z = 8 * y * z / (y + z) := by
+  rw [← kernel_zero y z hy hz, symmetricKernel, symmetricCorrection_zero]
+  simp only [kernel, pairSum, min_eq_right hz, min_eq_right hy, add_zero, zero_add,
+    sub_zero, div_eq_mul_inv]
+  ring
+
+/-- At a positive center, the kernel splits into a rank-one term and a Cauchy term. -/
+theorem symmetricKernel_pos (x y z : ℝ) (hx : 0 < x) (hy : 0 ≤ y) (hz : 0 ≤ z) :
+    symmetricKernel x y z =
+      x * ((x + 3 * y) / (x + y)) * ((x + 3 * z) / (x + z)) +
+        8 * (y ^ 2 / (x + y)) * (z ^ 2 / (x + z)) / (y + z) := by
+  by_cases h : y + z = 0
+  · have hy0 : y = 0 := by linarith
+    have hz0 : z = 0 := by linarith
+    simp [hy0, hz0, symmetricKernel, hx.ne']
+  · have hxy : x + y ≠ 0 := (add_pos_of_pos_of_nonneg hx hy).ne'
+    have hzx : z + x ≠ 0 := (add_pos_of_nonneg_of_pos hz hx).ne'
+    rw [symmetricKernel, symmetricCorrection, ite_eq_right (mul_ne_zero (mul_ne_zero hxy h) hzx)]
+    rw [add_comm z x] at hzx ⊢
+    field_simp [hxy, hzx, h]
+    ring
+
 theorem kernel_one_zero (x : ℝ) (hx : 0 ≤ x) :
     kernel 1 0 x = (3 * x + 1) / (x + 1) := by
   have hmin : min 0 (min x 1) = 0 := min_eq_left (le_min hx zero_le_one)

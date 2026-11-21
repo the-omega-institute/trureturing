@@ -26,7 +26,7 @@ open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 namespace D5.S3.Arith.Robin.Analytic.ActualUnattainedChebyshevWindows
 
-private theorem q_integrable_average {ν : Measure ℝ} [IsProbabilityMeasure ν]
+theorem q_integrable_average {ν : Measure ℝ} [IsProbabilityMeasure ν]
     {h t : ℝ} (hν : ν (Icc 0 h) = 1) (ht : Real.log 2 ≤ t) :
     Integrable (fun s => Q (Real.exp (t + s))) ν := by
   have hQ : ContinuousOn Q (Ici (1 : ℝ)) :=
