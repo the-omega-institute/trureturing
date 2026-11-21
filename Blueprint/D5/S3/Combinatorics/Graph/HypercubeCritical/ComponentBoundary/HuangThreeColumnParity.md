@@ -38,3 +38,4 @@ The symmetric difference of two sets has cardinality equal to the sum of their c
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/HuangThreeColumnParity.cubeColumnParityWeight`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/HuangThreeColumnParity.cube_column_parity_weight`
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/HuangThreeColumnIntegrality](HuangThreeColumnIntegrality.md)

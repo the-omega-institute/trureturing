@@ -12,6 +12,7 @@ public import Mathlib.Data.Finset.Fold
 public import Mathlib.Data.Finset.SymmDiff
 public import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fintype.Powerset
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.HuangThreeColumnIntegrality
 
 /-! The binary weight obstruction for the three minority columns of the 18+3 fold
 in Hong–Wu–Xia Problem 2 (arXiv:2610.09483v1, Section 7). -/
@@ -24,6 +25,8 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.HuangThr
 
 open Finset
 open scoped symmDiff
+open HuangThreeColumnIntegrality
+  (neighbors mem_neighbors common_neighbors_card_le_two triple_common_neighbor)
 
 variable {n : ℕ}
 
@@ -31,85 +34,6 @@ variable {n : ℕ}
 @[expose] def cubeColumnParityWeight (rows : Finset (Finset (Fin n)))
     (center : Fin 3 ↪ Finset (Fin n)) (selected : Finset (Fin 3)) : ℕ :=
   (selected.fold symmDiff ⊥ (fun j => rows.filter fun r => (center j ∆ r).card = 1)).card
-
-private def neighbors (x : Finset (Fin n)) : Finset (Finset (Fin n)) :=
-  univ.image (fun i : Fin n => x ∆ {i})
-
-private theorem mem_neighbors {x r : Finset (Fin n)} :
-    r ∈ neighbors x ↔ (x ∆ r).card = 1 := by
-  simp only [neighbors, mem_image, mem_univ, true_and, card_eq_one]
-  constructor
-  · rintro ⟨i, rfl⟩
-    exact ⟨i, symmDiff_symmDiff_cancel_left _ _⟩
-  · rintro ⟨i, hi⟩
-    exact ⟨i, by rw [← hi, symmDiff_symmDiff_cancel_left]⟩
-
-/-- Translate to a common neighbor. The centers become different singletons, and
-the axis from the first center to that neighbor belongs to their difference. -/
-private theorem common_neighbor_axes {x y r : Finset (Fin n)} (hxy : x ≠ y)
-    (hx : r ∈ neighbors x) (hy : r ∈ neighbors y) :
-    (x ∆ y).card = 2 ∧
-      r ∈ (x ∆ y).image (fun i => x ∆ {i}) := by
-  obtain ⟨i, hi⟩ := card_eq_one.mp (mem_neighbors.mp hx)
-  obtain ⟨j, hj⟩ := card_eq_one.mp (mem_neighbors.mp hy)
-  have hd : x ∆ y = ({i} : Finset (Fin n)) ∆ {j} := by
-    rw [← hi, ← hj, ← symmDiff_symmDiff_symmDiff_comm, symmDiff_self, symmDiff_bot]
-  have hij : i ≠ j := by
-    intro h
-    subst j
-    exact hxy (symmDiff_eq_empty.mp (by simpa using hd))
-  rw [Finset.symmDiff_eq_union (disjoint_singleton.mpr hij), singleton_union] at hd
-  refine ⟨by rw [hd, card_pair hij], mem_image.mpr ⟨i, by simp [hd], ?_⟩⟩
-  rw [← hi, symmDiff_symmDiff_cancel_left]
-
-private theorem pair_overlap {x y : Finset (Fin n)} (hxy : x ≠ y) :
-    ((neighbors x) ∩ (neighbors y)).card ≤ 2 := by
-  by_cases h : ((neighbors x) ∩ (neighbors y)).Nonempty
-  · obtain ⟨r, hr⟩ := h
-    have hcard := (common_neighbor_axes hxy (mem_inter.mp hr).1 (mem_inter.mp hr).2).1
-    have hsub : neighbors x ∩ neighbors y ⊆ (x ∆ y).image (fun i => x ∆ {i}) := by
-      intro t ht
-      exact (common_neighbor_axes hxy (mem_inter.mp ht).1 (mem_inter.mp ht).2).2
-    exact (card_le_card hsub).trans (card_image_le.trans_eq hcard)
-  · simp [not_nonempty_iff_eq_empty.mp h]
-
-private theorem triple_neighbor {x y z : Finset (Fin n)}
-    (hxy : x ≠ y) (hxz : x ≠ z) (hyz : y ≠ z)
-    (hXY : (neighbors x ∩ neighbors y).Nonempty)
-    (hXZ : (neighbors x ∩ neighbors z).Nonempty)
-    (hYZ : (neighbors y ∩ neighbors z).Nonempty) :
-    ∃ r ∈ neighbors x, r ∈ neighbors y ∧ r ∈ neighbors z := by
-  have distance_two {u v : Finset (Fin n)} (hne : u ≠ v)
-      (h : (neighbors u ∩ neighbors v).Nonempty) : (u ∆ v).card = 2 := by
-    obtain ⟨r, hr⟩ := h
-    exact (common_neighbor_axes hne (mem_inter.mp hr).1 (mem_inter.mp hr).2).1
-  have hAB : ((x ∆ y) ∆ (x ∆ z)).card = 2 := by
-    rw [← symmDiff_symmDiff_symmDiff_comm, symmDiff_self, bot_symmDiff]
-    exact distance_two hyz hYZ
-  have hAx := distance_two hxy hXY
-  have hBx := distance_two hxz hXZ
-  have hmeet : ((x ∆ y) ∩ (x ∆ z)).Nonempty := by
-    by_contra hn
-    have hd := disjoint_iff_inter_eq_empty.mpr (not_nonempty_iff_eq_empty.mp hn)
-    rw [Finset.symmDiff_eq_union hd, card_union_of_disjoint hd, hAx, hBx] at hAB
-    omega
-  obtain ⟨i, hi⟩ := hmeet
-  have crosses {v : Finset (Fin n)} (hcard : (x ∆ v).card = 2) (hmem : i ∈ x ∆ v) :
-      x ∆ {i} ∈ neighbors v := by
-    have he : ((x ∆ v).erase i).card = 1 := by
-      rw [card_erase_of_mem hmem, hcard]
-    obtain ⟨j, hj⟩ := card_eq_one.mp he
-    have hpair : insert i ((x ∆ v).erase i) = x ∆ v := insert_erase hmem
-    rw [hj, insert_eq] at hpair
-    have hij : i ≠ j := by
-      have hnot := notMem_erase i (x ∆ v)
-      rwa [hj, mem_singleton] at hnot
-    apply mem_neighbors.mpr
-    rw [← symmDiff_assoc, symmDiff_comm v x, ← hpair,
-      ← Finset.symmDiff_eq_union (disjoint_singleton.mpr hij)]
-    rw [symmDiff_symmDiff_self', card_singleton]
-  exact ⟨x ∆ {i}, mem_neighbors.mpr (by simp),
-    crosses hAx (mem_inter.mp hi).1, crosses hBx (mem_inter.mp hi).2⟩
 
 private theorem xor_card {α : Type*} [DecidableEq α] (a b : Finset α) :
     (a ∆ b).card + 2 * (a ∩ b).card = a.card + b.card := by
@@ -143,8 +67,8 @@ private theorem three_xor_lower {x y z : Finset (Fin n)}
     have hcover := card_union_add_card_inter (neighbors u ∩ neighbors v)
       (neighbors u ∩ neighbors w)
     have hpos := card_pos.mpr hr
-    have h₁ := pair_overlap huv
-    have h₂ := pair_overlap huw
+    have h₁ := common_neighbors_card_le_two huv
+    have h₂ := common_neighbors_card_le_two huw
     have hdiff := card_sdiff_add_card_inter s (t ∪ q)
     simp only [inter_union_distrib_left] at hsub hdiff
     omega
@@ -156,11 +80,11 @@ private theorem three_xor_lower {x y z : Finset (Fin n)}
     have hst : Disjoint s t :=
       (disjoint_iff_inter_eq_empty.mpr (not_nonempty_iff_eq_empty.mp hempty)).mono hs ht
     have hs2 : 2 ≤ (s \ q).card := by
-      have hbound := (card_le_card (inter_subset_inter hs hq)).trans (pair_overlap huw)
+      have hbound := (card_le_card (inter_subset_inter hs hq)).trans (common_neighbors_card_le_two huw)
       have hdiff := card_sdiff_add_card_inter s q
       omega
     have ht2 : 2 ≤ (t \ q).card := by
-      have hbound := (card_le_card (inter_subset_inter ht hq)).trans (pair_overlap hvw)
+      have hbound := (card_le_card (inter_subset_inter ht hq)).trans (common_neighbors_card_le_two hvw)
       have hdiff := card_sdiff_add_card_inter t q
       omega
     have hsX : s \ q ⊆ s ∆ (t ∆ q) := by
@@ -182,7 +106,8 @@ private theorem three_xor_lower {x y z : Finset (Fin n)}
   by_cases hXY : (neighbors x ∩ neighbors y).Nonempty
   · by_cases hXZ : (neighbors x ∩ neighbors z).Nonempty
     · by_cases hYZ : (neighbors y ∩ neighbors z).Nonempty
-      · obtain ⟨r, hrx, hry, hrz⟩ := triple_neighbor hxy hxz hyz hXY hXZ hYZ
+      · obtain ⟨r, hrx, hry, hrz⟩ :=
+          triple_common_neighbor hxy hxz hyz hXY hXZ hYZ
         let A := a \ (b ∪ c)
         let B := b \ (a ∪ c)
         let C := c \ (a ∪ b)
@@ -237,7 +162,7 @@ theorem cube_column_parity_weight (rows : Finset (Finset (Fin n)))
       fold_singleton, symmDiff_bot]
     have hcard := xor_card (support i) (support j)
     have hbound := (card_le_card (inter_subset_inter (hsub i) (hsub j))).trans
-      (pair_overlap (fun he => hij (center.injective he)))
+      (common_neighbors_card_le_two (fun he => hij (center.injective he)))
     have hi : (support i).card = 4 := hsize i
     have hj : (support j).card = 4 := hsize j
     simp only [mem_insert, mem_singleton]
