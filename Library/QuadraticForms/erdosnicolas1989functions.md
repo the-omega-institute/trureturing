@@ -8,6 +8,8 @@ url: https://oeis.org/A330076
 claim: "The conjecture on p. 390 states that the unordered sum of reciprocal positive divisor differences is less than the divisor count for every n > 5040."
 strata_touched:
   - D5/S3/Arith/Divisors/ErdosNicolas/Basic
+  - D5/S3/Arith/Divisors/ErdosNicolas/Classification
+  - D5/S3/Arith/Divisors/ErdosNicolas/Main
 license: citation-only
 triage: anchor
 ---
@@ -26,6 +28,16 @@ The exact target is formalized by
 The definitions use rational reciprocals and the finite divisor count. General
 kernel estimates and prime-power divisor blocks describe the reciprocal gap sum;
 the source sentence supplies the problem, not a proof premise.
+
+The unconditional theorem is
+`D5/S3/Arith/Divisors/ErdosNicolas/Main.erdos_nicolas`.
+Strong induction in `Classification.good_of_finite_certificates` uses the positive,
+strictly smaller inputs `n/p` and `n/pᵃ`. Kernel estimates and prime-exponent
+cutoffs reduce its remaining branches to six finite obligations. The imported
+certificate modules prove the base interval, small and large exceptional lifts,
+residue trees, main exponent box, and extra values. The same proved base cases
+are supplied to both certificate families that depend on them. No finite
+certificate proposition remains as a hypothesis of the unconditional theorem.
 
 ## Verified locator
 
