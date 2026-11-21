@@ -57,4 +57,5 @@ The centered estimate covers separated spectra and the linear level count covers
 - Truth anchor: `D5/S3/Quantum/Recovery/PetzRetainedQubitPairing.logisticCorrelation`
 - Truth anchor: `D5/S3/Quantum/Recovery/PetzRetainedQubitPairing.ordinary_petz_traceNorm_sq_le_of_qubit_gaps`
 - Truth anchor: `D5/S3/Quantum/Recovery/PetzRetainedQubitPairing.ordinary_petz_traceNorm_sq_le_of_qubit_output`
+- Dependency: [D5/S3/Quantum/Recovery/PetzQubitBoundaryEstimates](PetzQubitBoundaryEstimates.md)
 - Dependency: [D5/S3/Quantum/Recovery/PetzSupportedLinearRank](PetzSupportedLinearRank.md)
