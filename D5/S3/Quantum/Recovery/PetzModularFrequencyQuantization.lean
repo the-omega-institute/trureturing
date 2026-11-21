@@ -61,7 +61,7 @@ variable {a b : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
 variable (D : SupportedRelativeModularData Φ ρ σ)
 
 local notation "½" => (((1 / 2 : ℝ) : ℂ))
-local notation "phase " t => ((t : ℂ) * Complex.I)
+private def timePhase (t : ℝ) : ℂ := (t : ℂ) * Complex.I
 
 private abbrev scalarPhase := PetzLogisticEvaluation.mode
 
@@ -159,11 +159,13 @@ private theorem retainedFactor_pair (f g : D.L × D.K → ℂ) :
     Matrix.one_mul, Matrix.trace, Fintype.sum_prod_type]
   apply Finset.sum_congr rfl
   intro l _
-  simp only [Matrix.diag, Matrix.mul_assoc, Matrix.diagonal_mul, Matrix.mul_apply,
-    Matrix.conjTranspose_apply, Finset.mul_sum,
-    retainedCoordinates, X, Y, Λ, Matrix.of_apply]
+  change (Λ * X * Yᴴ) l l = ∑ k, _
+  rw [Matrix.mul_apply]
   apply Finset.sum_congr rfl
   intro k _
+  change (diagonal (fun l : D.L => (D.ql l : ℂ)) * X) l k * Yᴴ k l = _
+  rw [Matrix.diagonal_mul]
+  simp only [Matrix.conjTranspose_apply, retainedCoordinates, X, Y, Matrix.of_apply]
   have hroot : (Real.sqrt (D.pk k / D.ql l) : ℂ) ^ 2 = (D.pk k : ℂ) / (D.ql l : ℂ) := by
     rw [← Complex.ofReal_pow, Real.sq_sqrt (div_nonneg k.2.le l.2.le), Complex.ofReal_div]
   have hq : (D.ql l : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr l.2.ne'
@@ -176,7 +178,7 @@ private theorem retainedFactor_pair (f g : D.L × D.K → ℂ) :
         (star (overlap D (l, k)) * overlap D (l, k)) * f (l, k) * star (g (l, k)) := by
       simp only [Complex.star_def]
       ring
-    _ = _ := by rw [hs]; simp only [Complex.star_def]; ring
+    _ = _ := by rw [hs]; ring
 
 variable {e : Type u} [Fintype e] [DecidableEq e]
 
@@ -208,7 +210,8 @@ private theorem completionColumns_coisometry (W : Matrix (b × e) a ℂ) (hW : W
 
 private def completedWithCoefficients (W : Matrix (b × e) a ℂ) (t : ℝ)
     (f : D.L × D.K → ℂ) : Matrix D.J (D.I ⊕ (b × e)) ℂ :=
-  rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) * completionColumns D W t
+  (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) : Matrix D.J (b × e) ℂ) *
+    completionColumns D W t
 
 /-- Completed physical amplitude with the assigned phases on the retained
 pairs and the original outer phases and Stinespring columns. -/
@@ -234,9 +237,11 @@ private theorem completion_pair (M : SupportedRelativeModularModel Φ ρ σ)
     (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
     (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
     (t : ℝ) (X Y : Matrix b b ℂ) :
-    let F := rowFactor M.data (upper t) * Wᴴ
+    let F : Matrix M.data.J (b × e) ℂ := rowFactor M.data (upper t) * Wᴴ
     let C := completionColumns M.data W t
-    ((F * lift X * C) * (F * lift Y * C)ᴴ).trace =
+    let K : Matrix M.data.J (b × e) ℂ := F * lift X
+    let L : Matrix M.data.J (b × e) ℂ := F * lift Y
+    ((K * C) * (L * C)ᴴ).trace =
       (M.data.Q * (X * Yᴴ)).trace := by
   dsimp only
   let F := rowFactor M.data (upper t)
@@ -259,8 +264,8 @@ private theorem completedWithCoefficients_pair (M : SupportedRelativeModularMode
     (completedWithCoefficients M.data W t f *
       (completedWithCoefficients M.data W t g)ᴴ).trace =
       ∑ k : M.data.L × M.data.K, (spectralMass M.data k : ℂ) * f k * star (g k) := by
-  rw [completedWithCoefficients, completedWithCoefficients, completion_pair M W hW hAction,
-    retainedFactor_pair]
+  unfold completedWithCoefficients
+  rw [completion_pair M W hW hAction, retainedFactor_pair]
 
 private theorem spectralMass_sum (M : SupportedRelativeModularModel Φ ρ σ)
     (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
@@ -297,8 +302,8 @@ private theorem quantizedCompleted_unit (M : SupportedRelativeModularModel Φ ρ
     rw [quantizedCompleted, frobenius_sq_trace, completedWithCoefficients_pair M W hW hAction,
       Complex.re_sum]
     change (∑ k : D.L × D.K, (((spectralMass D k : ℂ) * f k) * star (f k)).re) = 1
-    simp only [mul_assoc, Complex.star_def, Complex.mul_conj', f, norm_mode, one_pow,
-      mul_one, Complex.ofReal_re]
+    simp only [mul_assoc, Complex.star_def, Complex.mul_conj', f, norm_mode, Complex.ofReal_one,
+      one_pow, mul_one, Complex.ofReal_re]
     exact spectralMass_sum M W hW hAction
   nlinarith only [hsq, norm_nonneg (quantizedCompleted D W assign t)]
 
@@ -325,10 +330,7 @@ private theorem phase_sub_sq (x y t : ℝ) :
   rw [norm_mode, norm_mode, star_mode_mul]
   have hcos : Real.cos ((y - x) * t) = Real.cos ((x - y) * t) := by
     rw [show (y - x) * t = -((x - y) * t) by ring, Real.cos_neg]
-  simp only [one_pow,
-    scalarPhase, PetzLogisticEvaluation.mode, Complex.exp_mul_I, Complex.add_re,
-    Complex.ofReal_cos, Complex.ofReal_re, Complex.ofReal_sin, Complex.mul_re,
-    Complex.ofReal_im, Complex.I_re, Complex.I_im, mul_zero, zero_mul, sub_zero, add_zero, hcos]
+  rw [PetzLogisticEvaluation.mode, Complex.exp_ofReal_mul_I_re, hcos]
   ring
 
 private theorem phase_discrepancy (M : SupportedRelativeModularModel Φ ρ σ)
@@ -411,28 +413,34 @@ private theorem completionColumns_phase (W : Matrix (b × e) a ℂ) (t : ℝ) :
       diagonal (fun c => scalarPhase (columnShift D c) t) := by
   have h0 : phaseMatrix D 0 = 1 := by
     simp [phaseMatrix, modularPower_zero]
-  ext x (i | c)
-  · simp only [completionColumns, Matrix.mul_diagonal, fromCols_apply_inl, h0,
-      Matrix.mul_one, phaseMatrix, modularPower, columnShift, scalarPhase,
-      PetzLogisticEvaluation.mode, Complex.ofReal_neg, Complex.ofReal_mul]
+  unfold completionColumns
+  rw [h0, Matrix.mul_one]
+  ext x c
+  rw [Matrix.mul_diagonal]
+  cases c with
+  | inl i =>
+    simp only [fromCols_apply_inl, phaseMatrix, modularPower, Matrix.mul_diagonal,
+      columnShift, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_neg, Complex.ofReal_mul]
     congr 2
     ring
-  · simp [completionColumns, columnShift, scalarPhase, PetzLogisticEvaluation.mode]
+  | inr c =>
+    simp [columnShift, scalarPhase, PetzLogisticEvaluation.mode]
 
 private theorem rowFactor_phase (t : ℝ) :
     rowFactor D (upper t) =
       diagonal (fun j => scalarPhase (Real.log (D.sj j)) t) * rowFactor D ½ := by
-  have hdiag : modularPower D.sj (phase t) =
+  have hdiag : modularPower D.sj (timePhase t) =
       diagonal (fun j => scalarPhase (Real.log (D.sj j)) t) := by
-    simp only [modularPower, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_mul,
+    simp only [modularPower, timePhase, scalarPhase, PetzLogisticEvaluation.mode, Complex.ofReal_mul,
       mul_assoc]
-  rw [rowFactor, show upper t = phase t + ½ by exact add_comm _ _,
-    modularPower_add, hdiag, Matrix.mul_assoc] <;> rfl
+  change modularPower D.sj (½ + timePhase t) * (Us D)ᴴ = _
+  rw [add_comm ½ (timePhase t), modularPower_add, hdiag, Matrix.mul_assoc] <;> rfl
 
 private def endpointCoefficient (W : Matrix (b × e) a ℂ) (k : D.L × D.K) :
     Matrix D.J (D.I ⊕ (b × e)) ℂ :=
-  rowFactor D ½ * Wᴴ *
-    lift ((Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k) * completionColumns D W 0
+  (rowFactor D ½ * Wᴴ *
+    lift ((Real.sqrt (D.pk k.2 / D.ql k.1) : ℂ) • mode D k) : Matrix D.J (b × e) ℂ) *
+    completionColumns D W 0
 
 private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L × D.K)
     (hk : ¬0 < spectralMass D k) : endpointCoefficient D W k = 0 := by
@@ -443,7 +451,7 @@ private theorem endpointCoefficient_zero (W : Matrix (b × e) a ℂ) (k : D.L ×
       (mul_eq_zero.mp hmass).resolve_left k.2.2.ne'
     exact norm_eq_zero.mp ((pow_eq_zero_iff (by decide : 2 ≠ 0)).mp hnorm)
   have hmode : mode D k = 0 := by
-    simp [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov]
+    rw [mode, Matrix.vecMulVec_mul_vecMulVec, ← overlap, hov, zero_smul]
   simp [endpointCoefficient, hmode, lift]
 
 private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → ℝ)
@@ -463,20 +471,23 @@ private theorem quantized_entry (W : Matrix (b × e) a ℂ) (assign : ℝ → �
     ring
   let L := diagonal (fun j => scalarPhase (Real.log (D.sj j)) t)
   let R := diagonal (fun c : D.I ⊕ (b × e) => scalarPhase (columnShift D c) t)
-  let H := rowFactor D ½ * Wᴴ
+  let H : Matrix D.J (b × e) ℂ := rowFactor D ½ * Wᴴ
   let C := completionColumns D W 0
   have hExpanded : quantizedCompleted D W assign t =
-      L * (∑ k, f k • endpointCoefficient D W k) * R := by
-    change rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) *
+      (L * (∑ k, f k • endpointCoefficient D W k) : Matrix D.J (D.I ⊕ (b × e)) ℂ) * R := by
+    change (rowFactor D (upper t) * Wᴴ * lift (retainedFactor D f) : Matrix D.J (b × e) ℂ) *
       completionColumns D W t = _
     calc
-      _ = L * (H * (∑ k, f k • lift (Z k)) * C) * R := by
+      _ = (L * ((H * (∑ k, f k • lift (Z k)) : Matrix D.J (b × e) ℂ) * C) :
+          Matrix D.J (D.I ⊕ (b × e)) ℂ) * R := by
         rw [hLift, rowFactor_phase, completionColumns_phase]
         simp only [H, L, C, R, Matrix.mul_assoc]
       _ = _ := by
         simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.sum_mul, Matrix.smul_mul] <;> rfl
   rw [hExpanded]
-  change ((diagonal _ * (∑ k, f k • endpointCoefficient D W k)) * diagonal _) j c = _
+  change (((diagonal _ * (∑ k, f k • endpointCoefficient D W k) :
+    Matrix D.J (D.I ⊕ (b × e)) ℂ) * (diagonal _ : Matrix (D.I ⊕ (b × e)) _ ℂ)) :
+    Matrix D.J (D.I ⊕ (b × e)) ℂ) j c = _
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.sum_apply, Matrix.smul_apply,
     smul_eq_mul]
   rw [Finset.mul_sum, Finset.sum_mul]
@@ -516,7 +527,7 @@ private theorem quantized_evaluation (W : Matrix (b × e) a ℂ) (assign : ℝ �
     rw [hsum]
     simp only [exponentialSum, Fintype.sum_option, ω, coeff, frequency, Complex.ofReal_zero,
       mul_zero, zero_mul, Complex.exp_zero, mul_one, neg_mul, Finset.sum_neg_distrib, sub_eq_add_neg]
-    congr 1
+    congr 2
     apply Finset.sum_congr rfl
     intro k _
     dsimp only [term, scalarPhase, PetzLogisticEvaluation.mode]
@@ -639,7 +650,7 @@ private theorem trace_bound (M : SupportedRelativeModularModel Φ ρ σ)
     simpa only [hpoint] using (integral_supported_channel_strip M).2.1
   have hiG : Integrable (fun t => petzWeight t * ‖G t‖ ^ 2) := by
     change Integrable (fun t => petzWeight t * ‖completed D W t - quantizedCompleted D W assign t‖ ^ 2)
-    simp_rw [weighted_discrepancy M W hW hAction assign]
+    rw [funext (weighted_discrepancy M W hW hAction assign)]
     exact integrable_finsetSum _ (fun k _ => (phaseDensity_integral D assign k).1)
   have hsum (t : ℝ) : F t + G t = A - C t := by
     dsimp only [F, G]
@@ -658,7 +669,7 @@ private theorem trace_bound (M : SupportedRelativeModularModel Φ ρ σ)
   have hEnergy : (∫ t, petzWeight t * ‖A - C t‖ ^ 2) ≤
       (Real.sqrt Δ + Real.sqrt (phaseCost D assign)) ^ 2 :=
     htri.trans (pow_le_pow_left₀ (add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
-      (add_le_add_right (Real.sqrt_le_sqrt hLoss) _) 2)
+      (add_le_add (Real.sqrt_le_sqrt hLoss) le_rfl) 2)
   have hAu : ‖A‖ = 1 := sourceAmplitude_unit M
   have hBu : ‖B 0‖ = 1 := by
     rw [← hC0]
