@@ -31,27 +31,30 @@ internal sealed class HardinActualTransfersDocument : IScribeDocumentDefinition
             Node("lag-relation", "IsLagRelation", "Lag convention", DescribeRole.Definition,
                 "For a length-d coefficient list c, the relation with shift b equates T^(b+d) on ones with the sum of c_j times T^(b+d−j) on ones for j from one through d. The manuscript uses b=1 for diagonal strip columns and b=0 for proper row words. The height-one and height-two column relations also hold at b=0."),
             Paragraph(Text("Write T(h,n) for the cardinality of the literal normalized diagonal arrays of positive height h and width n. "
-                + "Read the columns in increasing order and recover the colour at (r,j) from position r of column j. "
+                + "Write L(h,n) for the labelled three-colour count of the same graph. For physical height h≥1, set C_h = C (h−1) in Lean, acting on the 3^h unrestricted columns of height h. "
+                + "For physical width k≥1, set R_k = wordTransfer true (k−1) in Lean, acting on Word (k−1), the 3·2^(k−1) proper words of length k. "
+                + "Read the labelled columns in increasing order and recover the label at (r,j) from position r of column j. "
                 + "The column compatibility test compares the labels at positions r and t whenever their distance is at most one. "
-                + "Reading the rows in increasing order instead recovers the colour at (r,j) from position j of row r. "
+                + "Reading the labelled rows in increasing order recovers the label at (r,j) from position j of row r. "
                 + "Each row is a proper word, and successive rows compare the two opposite diagonals at every adjacent pair of positions. "
-                + "These inverse maps give the exact graph colourings in either orientation. The unique empty tail gives the all-one vector, "
-                + "and each successor step is multiplication by the same matrix, indexed by current state and then successor state.")),
+                + "Reading and reconstructing are inverse in each orientation. The unique empty tail gives the all-one vector, "
+                + "and each successor step uses the matrix indexed by current state and then successor state. "
+                + "Thus L(h,n) = 1ᵀC_h^(n−1)1 = 1ᵀR_n^(h−1)1. These are column_count (h−1) (n−1) and word_count true (n−1) (h−1), respectively.")),
             Paragraph(Text("Every diagonal strip of width at least two is connected, has an edge and is bipartite by column parity. "
-                + "Horizontal edges link the vertices in each row, and each pair of successive rows is joined by a diagonal. "
-                + "If L counts its labelled three-colourings, the literal normalization is 48 T(h,n) = 2^(hn)(L+6). "
+                + "Horizontal edges link the vertices in each row, and each pair of successive rows is joined by a diagonal. Hence there are two labelled two-colourings and zero one-colourings. "
+                + "The literal normalization is 48 T(h,n) = 2^(hn)(L(h,n)+6) for n≥2. "
                 + "At width one the strip is edgeless, and 48 T(h,1) = 6^h + 3·4^h + 15·2^h.")),
-            Paragraph(Text("For any of the transfer matrices M, let W_M(s) = s·1ᵀ(I−sM)⁻¹1 in the formal power series ring. "
+            Paragraph(Text("For any of the transfer matrices M, let W_M(s) = s·1ᵀ(I−sM)⁻¹1 over the rational formal power series ring. "
                 + "Its constant coefficient is zero, and its coefficient at degree m+1 is 1ᵀM^m1. "
-                + "The coefficient matrix at degree m of the inverse is M^m, as multiplying by I−sM cancels every positive-degree coefficient. "
-                + "Clearing the inverse with the polynomial adjugate gives denominator det(I−sM), whose constant coefficient is one.")),
-            Paragraph(Text("At fixed h, put s = 2^h x. The row series is "
-                + "T(h,1)x + (W_(C_h)(s) − 3^h s + 6s²/(1−s))/48. "
+                + "The series with coefficient matrix M^m in degree m is the inverse, since multiplication on either side by I−sM leaves I in degree zero and cancels every positive-degree coefficient. "
+                + "The polynomial adjugate gives denominator det(I−sM), whose constant coefficient is det(I) = 1. These identities are the all-one specialization of FiniteTransferSeries.walks_resolvent.")),
+            Paragraph(Text("For every fixed h≥1, put s = 2^h x. The row series ∑_(n≥1) T(h,n)x^n is "
+                + "T(h,1)x + (W_(C_h)(s) − 3^h s + 6s²/(1−s))/48, since s^n = 2^(hn)x^n. "
                 + "The subtraction removes the contribution of all 3^h labelled first columns in degree one, and the geometric correction begins at degree two. "
-                + "At fixed k ≥ 2, put s = 2^k x. The column series is (W_(R_k)(s) + 6s/(1−s))/48, "
-                + "with the connected identity already applicable in degree one. "
-                + "These denominators can be taken as (1−s)det(I−sM) after absorbing 1/48 into the numerator.")),
-            Paragraph(Text("For width one the column series is "
+                + "For every fixed k≥2, put s = 2^k x. The column series ∑_(h≥1) T(h,k)x^h is (W_(R_k)(s) + 6s/(1−s))/48, since s^h = 2^(hk)x^h. "
+                + "The connected identity already applies at height one, where the coefficient of x is 2^k(3·2^(k−1)+6)/48. "
+                + "Both denominators can be taken as (1−s)det(I−sM) after absorbing 1/48 into the numerator.")),
+            Paragraph(Text("For width one the column series ∑_(h≥1) T(h,1)x^h is "
                 + "(6x/(1−6x) + 3·4x/(1−4x) + 15·2x/(1−2x))/48. "
                 + "Each series begins in degree one and admits a polynomial denominator with constant coefficient one. "
                 + "The argument applies to every fixed positive dimension.")))));
