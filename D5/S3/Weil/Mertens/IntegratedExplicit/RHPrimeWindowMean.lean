@@ -32,12 +32,12 @@ open D5.S3.Arith.Robin.CompleteMertensPeak (U Q)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
 
-private def normalizedZeroSeries (y : ℝ) : ℂ :=
+def normalizedZeroSeries (y : ℝ) : ℂ :=
   (Real.exp (-y / 2) : ℂ) * actualH y
 
-private def frequency (k : ℕ) : ℂ := actualZero k - 1 / 2
+def frequency (k : ℕ) : ℂ := actualZero k - 1 / 2
 
-private lemma frequency_real (hRH : RiemannHypothesis) (k : ℕ) :
+lemma frequency_real (hRH : RiemannHypothesis) (k : ℕ) :
     (frequency k).re = 0 := by
   have hline : (actualZero k).re = 1 / 2 := by
     simpa only [actualZero, D5.S3.Weil.Convention.criticalAbscissa] using
@@ -51,11 +51,11 @@ private lemma frequency_norm (k : ℕ) : 10 < ‖frequency k‖ := by
   exact h.trans_le (by simpa [frequency, Complex.sub_im, Complex.div_im] using
     Complex.abs_im_le_norm (frequency k))
 
-private lemma exp_mode_norm (hRH : RiemannHypothesis) (k : ℕ) (y : ℝ) :
+lemma exp_mode_norm (hRH : RiemannHypothesis) (k : ℕ) (y : ℝ) :
     ‖Complex.exp (frequency k * y)‖ = 1 := by
   simp [Complex.norm_exp, Complex.mul_re, frequency_real hRH k]
 
-private lemma normalized_hasSum (y : ℝ) :
+lemma normalized_hasSum (y : ℝ) :
     HasSum (fun k : ℕ => actualCoeff k * Complex.exp (frequency k * y))
       (normalizedZeroSeries y) := by
   convert (actualH_summable y).hasSum.mul_left (Real.exp (-y / 2) : ℂ) using 1 <;> try rfl
@@ -212,13 +212,13 @@ private lemma bias_decay (hRH : RiemannHypothesis) :
         _ = (C * (12 / 7)) * (x ^ (1 / 2 : ℝ) * x ^ (-(7 / 12) : ℝ)) := by ring
         _ = _ := by rw [← Real.rpow_add hx0]; norm_num [C]
 
-private def normalizedMass (y : ℝ) : ℝ :=
+def normalizedMass (y : ℝ) : ℝ :=
   max (Real.sqrt (Real.exp y) * (-primeTail (Real.exp y))) 0
 
-private def windowError (y : ℝ) : ℝ :=
+def windowError (y : ℝ) : ℝ :=
   normalizedMass y - (2 + (normalizedZeroSeries y).re)
 
-private lemma normalizedZeroSeries_continuous : Continuous normalizedZeroSeries :=
+lemma normalizedZeroSeries_continuous : Continuous normalizedZeroSeries :=
   (Complex.continuous_ofReal.comp (by fun_prop : Continuous (fun y : ℝ => Real.exp (-y / 2)))).mul
     actualH_continuous
 
@@ -278,7 +278,7 @@ private lemma windowError_continuous : ContinuousOn windowError (Ici (Real.log 2
     continuousOn_const).sub
   exact ((Complex.continuous_re.comp normalizedZeroSeries_continuous).const_add 2).continuousOn
 
-private lemma windowError_integrable (hRH : RiemannHypothesis) :
+lemma windowError_integrable (hRH : RiemannHypothesis) :
     IntegrableOn windowError (Ioi (Real.log 2)) := by
   let C := (2 * (Real.log 4 + 4) + 1) * (12 / 7)
   let D := |Real.log (2 * Real.pi)| + (1 - Real.log 2)
@@ -326,7 +326,7 @@ private lemma windowError_integrable (hRH : RiemannHypothesis) :
   rw [← Ioc_union_Ioi_eq_Ioi hlog]
   exact hhead.union hiTail
 
-private lemma mass_log_substitution {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b) :
+lemma mass_log_substitution {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b) :
     (∫ x in a..b, max (-primeTail x) 0 / Real.sqrt x) =
       ∫ y in Real.log a..Real.log b, normalizedMass y := by
   have ha0 : 0 < a := by linarith
