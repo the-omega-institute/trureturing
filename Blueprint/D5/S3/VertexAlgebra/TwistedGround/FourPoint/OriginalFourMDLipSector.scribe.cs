@@ -17,8 +17,10 @@ internal sealed class OriginalFourMDLipSectorDocument : IScribeDocumentDefinitio
             D("d-lip-charge-sector", "dLipChargeSector", "Fixed-occupation charge-sector sum on the D lip",
                 DescribeRole.Definition,
                 Text("For the selected lip and charge class, form the affine coefficient from the signed "
-                    + "D-lip Taylor entries and charge pairings. Each term carries the D nome to the "
-                    + "natural charge energy and the factor (1 − r)⁻³ times the D period to power −12. "
+                    + "D-lip Taylor entries and charge pairings. Each term carries a power of the D "
+                    + "nome and the factor (1 − r)⁻³ times the D period to power −12. The exponent is "
+                    + "the integer charge energy converted to a natural number by Int.toNat. Negative "
+                    + "charge energies give exponent zero. "
                     + "The sum keeps precisely the selected mod-two charge class. "),
                 Ref(LipNome + "dNome"), Text(", "),
                 Ref(LipTaylor + "dLipMeanEntry"), Text(", "), Ref(LipTaylor + "dLipCovarianceEntry")),

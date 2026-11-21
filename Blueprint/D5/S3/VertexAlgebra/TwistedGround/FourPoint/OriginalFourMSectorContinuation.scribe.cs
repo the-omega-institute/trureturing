@@ -24,8 +24,10 @@ internal sealed class OriginalFourMSectorContinuationDocument : IScribeDocumentD
                     + "the finite occupation polynomial makes the individual terms holomorphic. "),
                 Ref(FourPoint + "OriginalFourMChargeNormal.compact_charge_normal")),
             D("slit-charge-term", "slitChargeTerm", "Continued term at a fixed charge", DescribeRole.Definition,
-                Text("In the square parameter r, multiply the rank-24 determinant by the slit nome to "
-                    + "the natural charge energy and by the affine coefficient for the specified occupation. "
+                Text("In the square parameter r, multiply the rank-24 determinant by the specified "
+                    + "occupation's affine coefficient and a power of the slit nome. The exponent is "
+                    + "the integer charge energy converted to a natural number by Int.toNat. Negative "
+                    + "charge energies give exponent zero. "
                     + "The two tagged copies of the finite support give its matrix and linear indices. "
                     + "The linear factor at each index is its slit mean entry times the charge pairing. "),
                 Ref(SlitNome + "rank24Determinant"), Text(", "), Ref(SlitNome + "slitNome"), Text(", "),

@@ -28,9 +28,9 @@ internal sealed class OriginalSlitNomeDocument : IScribeDocumentDefinition
                 Text("At every point of the double slit the glued nome equals exp(iπτ(r)). "
                     + "This is the expression used to compare the nome to a D-lip branch.")),
             D("slit-nome-analytic", "slitNome_analyticOnNhd", "Holomorphy on the Euler slit", DescribeRole.Theorem,
-                Text("The double-slit exponential and the signed Pfaff chart are holomorphic at every "
-                    + "nonzero point of the Euler slit. At the cusp, equality on the disk transfers "
-                    + "holomorphy from Q₀. "),
+                Text("The exponential formula is holomorphic on the double slit. Near each negative "
+                    + "real point, the glued nome agrees with the holomorphic signed Pfaff chart. "
+                    + "At the cusp, equality on the disk transfers holomorphy from Q₀. "),
                 Ref(Analytic + "OriginalHalfBinomialNome.actual_nome_disk")),
             D("slit-nome-subunit", "slitNome_norm_lt_one", "Strict unit-disk bound", DescribeRole.Theorem,
                 Text("The nome has modulus strictly below one throughout the Euler slit. "
