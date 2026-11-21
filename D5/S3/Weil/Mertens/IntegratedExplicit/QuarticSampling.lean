@@ -297,4 +297,61 @@ theorem rh_iff_quartic_power_windows {b : ℝ} (hb : 1 < b) :
         (rpow_nonneg hx0.le _)
     _ = x ^ (1 / 2 + κ) := by rw [←rpow_add hx0]; congr 1; ring
 
+/-- With fourth powers at both endpoints, every window sample has an integer root
+in the corresponding closed interval. -/
+private theorem sample_root_of_quartic_ends {a b : ℕ} (hab : a ≤ b) {x : ℝ}
+    (hx : WindowSample ((a : ℝ) ^ 4) ((b : ℝ) ^ 4) x) :
+    ∃ n : ℕ, a ≤ n ∧ n ≤ b ∧ x = (n : ℝ) ^ 4 := by
+  obtain ⟨⟨hlo, hhi⟩, rfl | rfl | ⟨n, rfl⟩⟩ := hx
+  · exact ⟨a, le_rfl, hab, rfl⟩
+  · exact ⟨b, hab, le_rfl, rfl⟩
+  · have lo : a ^ 4 ≤ n ^ 4 := by exact_mod_cast hlo
+    have hi : n ^ 4 ≤ b ^ 4 := by exact_mod_cast hhi
+    exact ⟨n, le_of_pow_le_pow_left₀ (by decide) (Nat.zero_le _) lo,
+      le_of_pow_le_pow_left₀ (by decide) (Nat.zero_le _) hi, rfl⟩
+
+/-- RH is equivalent to testing the one-sided power bound on arbitrarily late
+finite integer blocks, at the fourth powers of all roots from k³ through k⁴. -/
+theorem rh_iff_quartic_integer_blocks :
+    RiemannHypothesis ↔ ∀ κ : ℝ, 0 < κ → ∀ A : ℕ, ∃ k ≥ max A 2,
+      ∀ n : ℕ, k ^ 3 ≤ n → n ≤ k ^ 4 → U ((n : ℝ) ^ 4) ≤ ((n : ℝ) ^ 4) ^ (1 / 2 + κ) := by
+  constructor
+  · intro rh κ hκ A
+    obtain ⟨N, hN⟩ := eventually_atTop.mp (rh_iff_eventually_quartic_samples.mp rh)
+    let k := max (max A 2) N
+    have hk : max A 2 ≤ k := le_max_left _ _
+    have hk1 : 1 ≤ k := by omega
+    refine ⟨k, hk, ?_⟩
+    intro n hlo _
+    have hkn : k ≤ n := (le_self_pow₀ hk1 (by decide : 3 ≠ 0)).trans hlo
+    have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hk1.trans hkn
+    have hn := hN n ((le_max_right (max A 2) N).trans hkn)
+    have hsqrt : ((n : ℝ) ^ 4) ^ (1 / 2 : ℝ) = (n : ℝ) ^ 2 := by
+      rw [← Real.rpow_natCast (n : ℝ) 4, ← Real.rpow_mul (by positivity)]
+      norm_num
+    exact hn.le.trans (hsqrt ▸ Real.rpow_le_rpow_of_exponent_le
+      (one_le_pow₀ hn1) (by linarith only [hκ] : (1 / 2 : ℝ) ≤ 1 / 2 + κ))
+  · intro blocks
+    apply (rh_iff_quartic_power_windows (b := (4 : ℝ) / 3) (by norm_num)).mpr
+    intro κ hκ
+    apply frequently_atTop.mpr
+    intro R
+    obtain ⟨k, hk, hblock⟩ := blocks κ hκ ⌈R⌉₊
+    have hk1 : 1 ≤ k := by omega
+    have hkR : R ≤ (k : ℝ) := (Nat.le_ceil _).trans
+      (by exact_mod_cast (le_max_left ⌈R⌉₊ 2).trans hk)
+    have hY : (k : ℝ) ≤ (k : ℝ) ^ 12 :=
+      le_self_pow₀ (by exact_mod_cast hk1) (by decide)
+    refine ⟨(k : ℝ) ^ 12, hkR.trans hY, ?_⟩
+    have hZ : ((k : ℝ) ^ 12) ^ ((4 : ℝ) / 3) = (k : ℝ) ^ 16 := by
+      rw [← Real.rpow_natCast (k : ℝ) 12, ← Real.rpow_mul (by positivity)]
+      norm_num
+    rw [hZ]
+    intro x hx
+    have hends : WindowSample (((k ^ 3 : ℕ) : ℝ) ^ 4) (((k ^ 4 : ℕ) : ℝ) ^ 4) x := by
+      convert hx using 1 <;> push_cast <;> ring
+    obtain ⟨n, hlo, hhi, rfl⟩ := sample_root_of_quartic_ends
+      (pow_le_pow_right₀ hk1 (by decide : 3 ≤ 4)) hends
+    exact hblock n hlo hhi
+
 end D5.S3.Weil.Mertens.IntegratedExplicit.QuarticSampling
