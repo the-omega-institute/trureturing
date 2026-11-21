@@ -17,7 +17,7 @@ internal sealed class DirichletRampEndpointDocument : IScribeDocumentDefinition
                 + "and let T(x) be the integral of (ψ(u) − u)/u² over u > x, where ψ is the inclusive "
                 + "Chebyshev sum over prime powers.")),
             Describe.Lean(DescribeId.Create("finite-endpoint"), DeclarationHandle.Create(Module + "logDerivative_le_ramp_tail"),
-                H("A signed tail bound for every real endpoint x ≥ 2"),
+                H("A signed tail bound for every positive endpoint x > 0"),
                 StatementSource.FromAuthor(F.Disp(Le(Call("abs", F.Id("D")),
                     F.Seq(Call("abs", Call("g", F.Id("x"))), F.Slash, F.Id("x"), F.Plus,
                         MainTerm(), F.Minus, Call("T", F.Id("x")))))),
@@ -26,7 +26,7 @@ internal sealed class DirichletRampEndpointDocument : IScribeDocumentDefinition
                         + "including its zero value when n = x. The character has norm at most one. "
                         + "After division by x the norm of its ramp is at most the sum of Λ(n)/n "
                         + "minus ψ(x)/x. The complete Chebyshev tail identity evaluates this difference "
-                        + "as log x − 1 − γ − T(x). Subtract the ramp from g(x) and apply the triangle inequality."))),
+                        + "as log x − 1 − γ − T(x) for x ≥ 2. Below 2 the finite ramp vanishes and ψ(u) is zero up to 2. Integrating −1/u from x to 2 makes the signed envelope exactly zero. Subtract the ramp from g(x) and apply the triangle inequality."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("uniform-threshold"), DeclarationHandle.Create(Module + "uniform_logDerivative_of_ramp"),
                 H("An additive bound uniform in the modulus and character"),
@@ -43,7 +43,7 @@ internal sealed class DirichletRampEndpointDocument : IScribeDocumentDefinition
                         + "Choose one threshold beyond which each contributes at most η/2."))),
                 DescribeRole.Theorem))));
 
-    private static Formula MainTerm() => F.Seq(Call("log", F.Id("x")), F.Minus, F.D(1), F.Minus, F.Id("gamma"));
+    private static Formula MainTerm() => F.Seq(Call("log", F.Id("x")), F.Minus, F.D(1), F.Minus, F.GammaLower);
     private static Formula Call(string name, Formula argument) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [argument]);
     private static Formula Le(Formula left, Formula right) =>

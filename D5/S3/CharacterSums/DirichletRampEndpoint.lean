@@ -50,22 +50,21 @@ private theorem normalized_ramp {N : ℕ} (χ : DirichletCharacter ℂ N) {x : �
   have heq : (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, mangoldtRamp n x) =
       x * (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -
         Chebyshev.psi x := by
-    rw [Finset.mul_sum, Chebyshev.psi, ← Finset.sum_sub_distrib]
-    refine Finset.sum_congr rfl fun n hn => ?_
-    obtain ⟨hn0, hnx⟩ := Finset.mem_Ioc.mp hn
-    have hnpos : 0 < (n : ℝ) := by exact_mod_cast hn0
-    have hnle : (n : ℝ) ≤ x := (Nat.cast_le.mpr hnx).trans (Nat.floor_le hx.le)
-    have hw : 0 ≤ x / n - 1 := sub_nonneg.mpr ((one_le_div hnpos).mpr hnle)
-    rw [mangoldtRamp, max_eq_left hw]
-    ring
+    have h := U_eq_complete_ramps hx.le
+    have hrange : Finset.range (⌊x⌋₊ + 1) = insert 0 (Finset.Ioc 0 ⌊x⌋₊) := by
+      ext n
+      simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Ioc]
+      omega
+    rw [D5.S3.Arith.Robin.CompleteMertensPeak.U, mangoldtPart_eq_range hx.le (N := ⌊x⌋₊ + 1)
+      (by simpa using Nat.lt_floor_add_one x), hrange, Finset.sum_insert (by simp)] at h
+    simp [mangoldtRamp] at h ⊢
+    linarith only [h]
   rw [heq] at hsum
   apply (div_le_iff₀ hx).mpr
   rw [sub_mul, div_mul_cancel₀ _ hx.ne', mul_comm]
   exact hsum
 
-/-- The signed Chebyshev tail gives the exact untwisted envelope at the same real
-endpoint, uniformly in every nonprincipal character of positive modulus. -/
-theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N)
+private theorem endpoint_of_two_le {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N)
     (hχ : χ ≠ 1) {x : ℝ} (hx : 2 ≤ x) :
     ‖deriv χ.LFunction 1 / χ.LFunction 1‖ ≤ ‖gChi χ x‖ / x + log x - 1 -
       eulerMascheroniConstant - ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2 := by
@@ -81,6 +80,63 @@ theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter
   have ht := CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
     WeightedPrimeLimit.chebyshev_error_kernel_integrable hx
   linarith only [hd, normalized_ramp χ hx0, ht]
+
+private def K (u : ℝ) : ℝ := (Chebyshev.psi u - u) / u ^ 2
+
+private theorem K_eq_neg_inv {x : ℝ} (hx : 0 < x) :
+    (Ioo x 2).EqOn K (fun u : ℝ => -(u⁻¹)) := by
+  intro u hu
+  simp only [K, Chebyshev.psi_eq_zero_of_lt_two hu.2, zero_sub, neg_div]
+  field_simp [(hx.trans hu.1).ne']
+
+private theorem K_integrable_pos {x : ℝ} (hx : 0 < x) (h2 : x < 2) :
+    IntegrableOn K (Ioi x) := by
+  have htail : IntegrableOn K (Ioi 2) :=
+    WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set (Ioi_subset_Ioi (by norm_num))
+  have hrecip : IntervalIntegrable (fun u : ℝ => -(u⁻¹)) volume x 2 := by
+    apply ContinuousOn.intervalIntegrable
+    rw [uIcc_of_le h2.le]
+    exact (continuousOn_inv₀.mono (fun u hu => ne_of_gt (hx.trans_le hu.1))).neg
+  have hinterval : IntervalIntegrable K volume x 2 := by
+    rw [intervalIntegrable_congr_uIoo (show (uIoo x 2).EqOn K (fun u : ℝ => -(u⁻¹)) by
+      simpa only [uIoo_of_le h2.le] using K_eq_neg_inv hx)]
+    exact hrecip
+  rw [← Ioc_union_Ioi_eq_Ioi h2.le]
+  exact hinterval.1.union htail
+
+/-- The signed Chebyshev tail gives the exact untwisted envelope at the same real
+endpoint, uniformly in every nonprincipal character of positive modulus. -/
+theorem logDerivative_le_ramp_tail {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ ≠ 1) {x : ℝ} (hx : 0 < x) :
+    ‖deriv χ.LFunction 1 / χ.LFunction 1‖ ≤ ‖gChi χ x‖ / x + log x - 1 -
+      eulerMascheroniConstant - ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2 := by
+  change _ ≤ _ - ∫ u in Ioi x, K u
+  by_cases hx2 : 2 ≤ x
+  · exact endpoint_of_two_le χ hχ hx2
+  push Not at hx2
+  have hg : ‖gChi χ x‖ / x = ‖deriv χ.LFunction 1 / χ.LFunction 1‖ := by
+    have hr : characterRamp χ x = 0 := by
+      apply Finset.sum_eq_zero
+      intro n hn
+      obtain ⟨ha, hb⟩ := Finset.mem_Ioc.mp hn
+      have hc := (Nat.cast_le.mpr hb).trans (Nat.floor_le hx.le)
+      have hd : n < 2 := by exact_mod_cast hc.trans_lt hx2
+      have he : n = 1 := by omega
+      simp [he, mangoldtRamp]
+    simp [gChi, hχ, hr, Real.norm_of_nonneg hx.le, mul_div_cancel_left₀ _ hx.ne']
+  have htail : IntegrableOn K (Ioi 2) :=
+    WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set (Ioi_subset_Ioi (by norm_num))
+  have hsplit := intervalIntegral.integral_interval_add_Ioi (K_integrable_pos hx hx2) htail
+  have hpart : (∫ u in x..(2 : ℝ), K u) = log x - log 2 := by
+    rw [intervalIntegral.integral_congr_Ioo_of_le hx2.le (K_eq_neg_inv hx),
+      intervalIntegral.integral_neg, integral_inv_of_pos hx (by norm_num),
+      Real.log_div (by norm_num : (2 : ℝ) ≠ 0) hx.ne']
+    ring
+  have ht := CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
+    WeightedPrimeLimit.chebyshev_error_kernel_integrable (show (2:ℝ) ≤ 2 by rfl)
+  have hf : Finset.Ioc 0 (2 : ℕ) = {1,2} := by decide
+  simp [Chebyshev.psi, hf] at ht
+  change (∫ u in Ioi (2:ℝ), K u) = _ at ht
+  linarith only [hg, hsplit, hpart, ht]
 
 /-- A uniform real threshold yields additive Euler normalization from the same
 character's sublinear host readout. -/
@@ -103,7 +159,7 @@ theorem uniform_logDerivative_of_ramp {ε η : ℝ} (hε : ε < 1 / 2) (hη : 0 
     rw [show -(1 / 2 - ε) = (1 / 2 + ε) - 1 by ring, Real.rpow_sub hx0, Real.rpow_one]
   have hnorm := div_le_div_of_nonneg_right hg hx0.le
   rw [heq] at hnorm
-  have hfinite := logDerivative_le_ramp_tail χ hχ hx2
+  have hfinite := logDerivative_le_ramp_tail χ hχ hx0
   change x ^ (-(1 / 2 - ε)) < η / 2 at hpp
   change -(η / 2) < ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2 at htt
   linarith only [hnorm, hfinite, hpp, htt]

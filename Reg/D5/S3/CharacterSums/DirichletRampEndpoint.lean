@@ -31,7 +31,7 @@ def rejected : Realization signature := realize signature (fun _ _ _ => 1) (fun 
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N)
-    (hχ : χ ≠ 1) {x : ℝ} (hx : 2 ≤ x),
+    (hχ : χ ≠ 1) {x : ℝ} (hx : 0 < x),
     ‖deriv χ.LFunction 1 / χ.LFunction 1‖ ≤ ‖gChi χ x‖ / x + log (V.readout () () x) - 1 -
       eulerMascheroniConstant - ∫ u in Set.Ioi x, (Chebyshev.psi u - u) / u ^ 2
 
