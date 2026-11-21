@@ -24,10 +24,10 @@ internal sealed class TwoWitnessResiduesDocument : IScribeDocumentDefinition
                         + "type. Assume p is nonnegative at each index. Let the degrees assigned to p "
                         + "and u be b and 1, with b a positive integer. Fix a nonnegative degree t "
                         + "and write t = bq + r with 0 ≤ r < b.")),
-                    Paragraph(Text("A pair of integer coefficients a and c at degree t gives a "
-                        + "nonnegative vector exactly when one of the two displayed candidates is "
-                        + "nonnegative. In this equivalence, existence on the left ranges over all "
-                        + "integer coefficient pairs. Both candidates satisfy the degree equation.")),
+                    Paragraph(Text("There exists a pair of integer coefficients a and c at degree t giving a "
+                        + "nonnegative vector if and only if one of the two displayed candidates "
+                        + "is nonnegative at every index. Both candidates satisfy the degree "
+                        + "equation. Vector inequalities are componentwise.")),
                     Paragraph(Text("At a fixed degree the vector is affine in c. At c = 0 its "
                         + "coordinates equal those of p scaled by t/b. Between zero and an admissible "
                         + "coefficient c of either sign, entrywise nonnegativity is preserved. The "
