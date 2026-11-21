@@ -30,16 +30,16 @@ open PrimeAttainedCriticalWidth
     integrand_le_power)
 open PrimeOnlyTailCorrection (primeTail)
 
-private def phaseDensity (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) (s : ℝ) : ℝ :=
+def phaseDensity (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) (s : ℝ) : ℝ :=
   Real.exp (-(β - 1 / 2) * s) * max (-phaseProfile realPart β h (-s)) 0
 
 /-- The exponentially weighted negative part of the phase profile over positive lags. -/
 def phaseWindowInfinite (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) : ℝ :=
   ∫ s in Ioi (0 : ℝ), phaseDensity realPart β h s ∂volume
 
-private def coeffMass : ℝ := ∑' k : ℕ, ‖actualCoeff k‖
+def coeffMass : ℝ := ∑' k : ℕ, ‖actualCoeff k‖
 
-private theorem phaseDensity_bound (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) (s : ℝ) :
+theorem phaseDensity_bound (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) (s : ℝ) :
     0 ≤ phaseDensity realPart β h s ∧
     phaseDensity realPart β h s ≤ coeffMass * Real.exp (-(β - 1 / 2) * s) := by
   let term (k : ℕ) := rightmostCoeff realPart β k * (h k : ℂ) * (phaseOrbit (-s) k : ℂ)
@@ -59,13 +59,13 @@ private theorem phaseDensity_bound (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ 
   exact mul_le_mul_of_nonneg_left
     (max_le hprofile (tsum_nonneg fun _ => norm_nonneg _)) (Real.exp_nonneg _)
 
-private theorem phaseDensity_continuous (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) :
+theorem phaseDensity_continuous (realPart : ℂ → ℝ) (β : ℝ) (h : ℕ → Circle) :
     Continuous (phaseDensity realPart β h) := by
   exact (by fun_prop : Continuous fun s : ℝ => Real.exp (-(β - 1 / 2) * s)).mul
     (((phaseProfile_continuous realPart β).comp
       (continuous_const.prodMk continuous_neg)).neg.max continuous_const)
 
-private theorem phaseWindowInfinite_sub_window {β : ℝ} (hβ : 1 / 2 < β)
+theorem phaseWindowInfinite_sub_window {β : ℝ} (hβ : 1 / 2 < β)
     (L : ℝ) (h : ℕ → Circle) :
     0 ≤ phaseWindowInfinite Complex.re β h - phaseWindow Complex.re β L h ∧
     phaseWindowInfinite Complex.re β h - phaseWindow Complex.re β L h ≤

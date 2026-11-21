@@ -90,6 +90,19 @@ internal sealed class SignedPrimePrimitiveCriterionDocument : IScribeDocumentDef
                         + "from Re(s)>1 across this half-plane. The function is nonzero at s=2, so the equation "
                         + "excludes zeta zeros in the right half of the critical strip. The functional "
                         + "equation gives RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exact-strip-from-one-sided-prime-primitive"),
+                DeclarationHandle.Create(Module + "zeta_zero_re_le_of_signedPrimePrimitive_one_sided_from_5040"),
+                H("An exponential affine majorant implies the exact zeta strip"),
+                StatementSource.FromAuthor(F.Disp(OneSidedZeroBound())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The signed integral starts at 5040. Any nonzero real multiplier gives the "
+                    + "corresponding one-sided test. The fixed anchor and prime-power correction contribute "
+                    + "at most a constant plus a linear term after exponential normalization.")),
+                    Paragraph(Text("Shifting the Laplace kernel by b for the normalized complete primitive "
+                    + "gives the original kernel shifted by one half. Real-regular meromorphic continuation "
+                    + "and the affine majorant continue this transform to Re(s)>b. The logarithmic "
+                    + "differential equation for pole-removed zeta then excludes zeros there."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
@@ -154,6 +167,25 @@ internal sealed class SignedPrimePrimitiveCriterionDocument : IScribeDocumentDef
             Call("HasExponentBound", beta, F.Id("P"))),
             All("r", Complex, Implies(Equal(F.Seq(F.Zeta, F.Open, rho, F.Close), F.D(0)),
                 Le(realPart, beta)))));
+    }
+
+    private static Formula OneSidedZeroBound()
+    {
+        var b = F.Id("b");
+        var c = F.Id("c");
+        var t = F.Id("T");
+        var r = F.Id("r");
+        var affine = Add(Multiply(F.Id("A"), t), F.Id("B"));
+        var exponential = Call("exp", Multiply(F.Seq(F.Open, Subtract(b, Half), F.Close), t));
+        var comparison = Le(Multiply(c, Window(F.D(5, 0, 4, 0))),
+            Multiply(exponential, F.Seq(F.Open, affine, F.Close)));
+        var bound = Exists("Y", All("T", Real, Implies(Le(F.Id("Y"), t), comparison)));
+        var range = And(And(Le(Half, b), Lt(b, F.D(1))),
+            new Formula.Relation(c, FormulaRelationOperator.NotEqual, F.D(0)));
+        var zero = Equal(F.Seq(F.Zeta, F.Open, r, F.Close), F.D(0));
+        var strip = All("r", Complex, Implies(zero, Le(Call("Re", r), b)));
+        return All("b", Real, All("c", Real, All("A", Real, All("B", Real,
+            Implies(range, Implies(bound, strip))))));
     }
 
     private static Formula SlopeCriterion()
