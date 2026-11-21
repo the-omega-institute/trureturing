@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Decoherence/ExactQubitBathErasure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Exact reset feasibility and minimal heat for retained qubit records with a Gibbs qubit bath. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
