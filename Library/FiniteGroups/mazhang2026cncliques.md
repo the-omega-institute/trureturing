@@ -18,9 +18,11 @@ triage: anchor
 
 The written proof is by **Haobo Ma and Wenlin Zhang**, version 2, exact-version DOI
 https://doi.org/10.5281/zenodo.24398996, Proposition 7 in Section 4. The paper repository is
-https://github.com/mathesis-papers/nath2021-commuting-cn-conjecture2. The underlying
-non-hyperenergetic conclusion for unions of cliques is Theorem 5.4 of Tak, Dutta and Nath,
-arXiv:2605.22160v1. The definitions of the common-neighbourhood matrix and energy are those of
+https://github.com/mathesis-papers/nath2021-commuting-cn-conjecture2. Theorem 5.4 of Tak,
+Dutta and Nath, arXiv:2605.22160v1, states the strict inequality E_CN(H) < B(n) for unions of
+cliques; it fails exactly when H is a single clique or two isolated vertices, so only the
+non-strict non-hyperenergetic bound is attributable to it, and Ma and Zhang record Proposition 7
+as its correction. The definitions of the common-neighbourhood matrix and energy are those of
 Nath, Fasfous, Das and Shang, Symmetry 13 (2021), 1651, recorded in `nath2021commutingcn`.
 
 ## Statement

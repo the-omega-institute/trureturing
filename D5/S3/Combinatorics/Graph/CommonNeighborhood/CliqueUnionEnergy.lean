@@ -6,6 +6,7 @@
    utility: none
    digest: A disjoint union of cliques of orders s_i has CN energy 2 sum (s_i - 1)(s_i - 2), at most 2(n - 1)(n - 2), with equality exactly for one clique or two isolated vertices. -/
 
+/- Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/32710 -/
 import D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound
 
 /-! Common-neighbourhood energy of a disjoint union of complete graphs. -/
@@ -23,13 +24,15 @@ open D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound (psd_differenc
 
 /-
 proof_shape:
-  cliqueUnion, fibreCard, cliqueUnion_decidableRel: definitions
+  cliqueUnion, fibreCard: definitions
+  cliqueUnion_decidableRel: private instance
   energy_eq_of_split: content (consumer: result)
   sz, avg, wP, wQ, matP, matQ, total, defect: definitions
   sz_congr, sz_cases, sz_pos, block_sum, sz_two: bind-only (consumers: the block lemmas below)
-  avg_conjTranspose, avg_mul_self, diagonal_comm, posSemidef_of_idem, wP_nonneg,
-    matP_posSemidef, matQ_posSemidef, cn_card, cn_apply, split_eq, trace_split, trace_value:
-    content (consumer: result)
+  avg_conjTranspose, diagonal_comm, posSemidef_of_idem, wP_nonneg, compl_mul_self: bind-only
+    (consumers: matP_posSemidef, matQ_posSemidef, result)
+  avg_mul_self, matP_posSemidef, matQ_posSemidef, cn_card, cn_apply, split_eq, trace_split,
+    trace_value: content (consumer: result)
   defect_bounds: content (consumer: result)
   result: content
 direct frozen dependencies:
@@ -192,6 +195,11 @@ private theorem posSemidef_of_idem {A : Matrix V V ℝ} (hA : Aᴴ = A) (hAA : A
   have h := Matrix.posSemidef_conjTranspose_mul_self A
   rwa [hA, hAA] at h
 
+private theorem compl_mul_self : (1 - avg f) * (1 - avg f) = 1 - avg f := by
+  rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_one,
+    Matrix.one_mul, avg_mul_self]
+  abel
+
 /-- The weight on the projection part: `(s - 2)(s - 1)`. -/
 private def wP (x : V) : ℝ := (sz f x - 2) * (sz f x - 1)
 
@@ -221,12 +229,8 @@ private theorem matQ_posSemidef : (matQ f).PosSemidef := by
   have hc : diagonal (wQ f) * (1 - avg f) = (1 - avg f) * diagonal (wQ f) := by
     rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Matrix.one_mul,
       diagonal_comm f _ (fun x z hz => by simp only [wQ, sz_congr f hz])]
-  have hi : (1 - avg f) * (1 - avg f) = 1 - avg f := by
-    rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_one,
-      Matrix.one_mul, avg_mul_self]
-    abel
   rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, avg_conjTranspose, ← hc,
-    Matrix.mul_assoc, hi] at h
+    Matrix.mul_assoc, compl_mul_self] at h
   exact h
 
 omit [DecidableEq V] in
@@ -241,7 +245,7 @@ private theorem sz_two {x y : V} (hxy : x ≠ y) (h : f x = f y) : 2 ≤ sz f x 
     exact hxy (hx.trans hy.symm)
   · exact hs
 
-instance cliqueUnion_decidableRel : DecidableRel (cliqueUnion f).Adj :=
+private instance cliqueUnion_decidableRel : DecidableRel (cliqueUnion f).Adj :=
   fun x y => inferInstanceAs (Decidable (x ≠ y ∧ f x = f y))
 
 /-- Distinct vertices of one clique of order `s` have `s - 2` common neighbours, and vertices
@@ -424,14 +428,10 @@ theorem result {V : Type} [Fintype V] {ι : Type u} [DecidableEq ι] (f : V → 
   have hS₂ : (1 - ((2 : ℝ) • avg f - 1)).PosSemidef := by
     have hI : (1 - avg f)ᴴ = 1 - avg f := by
       rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, avg_conjTranspose]
-    have hII : (1 - avg f) * (1 - avg f) = 1 - avg f := by
-      rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_one,
-        Matrix.one_mul, avg_mul_self]
-      abel
     have h2 : (1 : Matrix V V ℝ) - ((2 : ℝ) • avg f - 1) = (2 : ℝ) • (1 - avg f) := by
       rw [smul_sub, two_smul, two_smul]; abel
     rw [h2]
-    exact (posSemidef_of_idem hI hII).smul (by norm_num)
+    exact (posSemidef_of_idem hI (compl_mul_self f)).smul (by norm_num)
   have hE := energy_eq_of_split hC (matP_posSemidef f) (matQ_posSemidef f) hsplit hS₁ hS₂
     (by rw [hsplit]; exact trace_split f)
   have hval : graphEnergy (cliqueUnion f) .commonNeighbour =

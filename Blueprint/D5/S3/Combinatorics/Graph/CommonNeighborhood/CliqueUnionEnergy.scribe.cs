@@ -37,8 +37,9 @@ internal sealed class CliqueUnionEnergyDocument : IScribeDocumentDefinition
                         + "of the noncentral commuting-graph module, the sum of the absolute values of the real eigenvalues of "
                         + "the common-neighbour matrix with multiplicity. The statement needs no hypothesis k at least one: "
                         + "with V empty the energy is 0, the bound 2(0-1)(0-2)=4 is strict, and the right side of the equality "
-                        + "criterion is false. This is Proposition 7 of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24398996; the "
-                        + "inequality alone is Theorem 5.4 of Tak, Dutta and Nath, arXiv:2605.22160v1.")),
+                        + "criterion is false. This is Proposition 7 of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24398996. Theorem 5.4 "
+                        + "of Tak, Dutta and Nath, arXiv:2605.22160v1, states the strict inequality, which fails exactly for "
+                        + "a single clique and for two isolated vertices; only the non-strict bound is attributable to it.")),
                     Paragraph(Text("Two distinct vertices of a clique of order s have s-2 common neighbours, and vertices of "
                         + "different cliques have none. Let Pi be the matrix with entry 1/s on pairs from one clique of order s "
                         + "and 0 otherwise. It is symmetric and idempotent, the orthogonal projection onto vectors constant on "
