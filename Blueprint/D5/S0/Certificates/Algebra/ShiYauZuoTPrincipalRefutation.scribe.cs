@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.HomologicalAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Algebra;
 
 internal sealed class ShiYauZuoTPrincipalRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation.";
+    private const string Prefix = "D5/S0/Certificates/Algebra/ShiYauZuoTPrincipalRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/shiyauzuo2024tmaps");
+        LibraryNoteRef.Create("D5/L/Certificates/shiyauzuo2024tmaps");
 
     private static readonly Formula Field = F.Id("F"), Ring = F.Id("A"), Map = F.Id("Q");
     private static readonly Formula I = F.Id("I"), J = F.Id("J"), R = F.Id("r"), G = F.Id("g");
@@ -41,11 +41,18 @@ internal sealed class ShiYauZuoTPrincipalRefutationDocument : IScribeDocumentDef
             Node("genericImage", "Coefficientwise image of the generic element", GenericImageFormula(),
                 "The sum runs over the finitely supported coefficient function of the generic element. Each component acts on the coefficients and leaves the monomial exponents fixed. Its value on the generic element is the sum of Qⱼ(gᵢ) times Xᵢ, by additivity and preservation of zero."),
             Node("TDependent", "T-dependence by the polynomial colon", DependentFormula(),
-                "Definition 4.68 tests whether the colon of the generic image by the extended image ideal escapes the extended maximal ideal. Both extensions use the coefficient inclusion C into the same polynomial ring. Proposition 4.69 gives independence of the generators. In the Noetherian setting a finite tuple exists, so the test can use any one such tuple."),
+                "Definition 4.68 tests a generating tuple by asking whether the colon of the generic image by the extended image ideal escapes the extended maximal ideal. Both extensions use the coefficient inclusion C into the polynomial ring of that tuple. The Lean predicate asks for at least one finite generating tuple satisfying this test."),
             Node("claim", "Conjecture 4.79", ClaimFormula(),
-                "The conjecture is in §4.6, printed English p. 1217 and original-edition p. 222. The residue field is the native quotient by the maximal ideal. The hypothesis identifies it with F by an F-algebra equivalence, as used by the source's coefficient projection. The proposition includes both implications over an arbitrary field."),
+                "The conjecture is in §4.6, printed English p. 1217 and original-edition p. 222. The residue field is the native quotient by the maximal ideal. The hypothesis identifies it with F by an F-algebra equivalence, as used by the source's coefficient projection. The proposition includes both implications over an arbitrary field, with T-dependence read existentially."),
             Node("result", "Refutation of the arbitrary-field biconditional", Seq(Neg, Sp, Name("claim")),
-                "Take A = TrivSqZeroExt (ZMod 2) (Fin 3 → ZMod 2). The scalar projection identifies its residue field with ZMod 2 as an algebra over ZMod 2. Its kernel I has square zero and is the maximal ideal. Each of the three components keeps the scalar part and places u, v, or u + v on its own axis. On the maximal ideal multiplication acts through the scalar part. Away from it the component values are units, so the T-map law holds. The three axes give Δ(I) = Q(I) = I. For the axis generators, the generic image has generators C(e₀)U, C(e₁)V, and C(e₂)(U + V). Multiplying each by the complementary factors in UV(U + V) puts the product times its axis in the generic image. The polynomial survives coefficient reduction because U, V, and U + V are nonzero in the polynomial domain over ZMod 2. Every binary pair makes at least one of u, v, and u + v zero, and scalar multiplication preserves the missing coordinate. Thus no element of I generates I via Q, while a unit gives the whole ring. This finite example refutes the reverse implication of the universal claim. Theorem 4.76 gives the biconditional over infinite fields.",
+                "Take A = TrivSqZeroExt (ZMod 2) (Fin 3 → ZMod 2). The scalar projection identifies the residue field with ZMod 2 as an algebra over ZMod 2. "
+                    + "Its kernel I is the square-zero maximal ideal. Each component keeps the scalar part and places u, v, or u + v on its own axis. "
+                    + "On I multiplication acts through the scalar part. Away from I the component values are units, so the T-map law holds. The three axes give Δ(I) = Q(I) = I. "
+                    + "Every ideal-generating tuple of I spans it over ZMod 2. Applying the three coordinate forms to the generic combination gives three linear forms U, V, and U + V, each nonzero over the residue field. "
+                    + "The actual generic image has generators C(e₀)U, C(e₁)V, and C(e₂)(U + V). Multiplication by the complementary factors of UV(U + V) puts the product times each extended axis in the generic image. "
+                    + "The product survives coefficient reduction because the polynomial ring over ZMod 2 is a domain. This proves the colon test for every generating tuple. "
+                    + "Every binary pair makes at least one of u, v, and u + v zero. Scalar multiplication preserves the missing coordinate, and a unit gives the whole ring. Thus I is never a value ideal. "
+                    + "The finite example refutes sufficiency for a chosen tuple, an existential tuple, and the reading that every tuple must pass. The infinite-field biconditional in Theorem 4.76 holds with the existential tuple reading.",
                 DescribeRole.Theorem)),
         []));
 

@@ -7,7 +7,7 @@ doi: 10.4213/im9488e
 url: https://m.mathnet.ru/php/getFT.phtml?jrnid=im&paperid=9488&what=fullteng&option_lang=eng#page=33
 claim: "Conjecture 4.79 asks whether T-principality is equivalent to T-fullness and T-dependence of the antiderivative ideal over an arbitrary residue field."
 strata_touched:
-  - D5/S3/HomologicalAlgebra/ShiYauZuoTPrincipalRefutation
+  - D5/S0/Certificates/Algebra/ShiYauZuoTPrincipalRefutation
 license: citation-only
 triage: anchor
 ---
@@ -55,10 +55,9 @@ The quotation normalizes line wrapping and mathematical typography.
   tuple g of J, S = A[y₁, …, yᵣ], and σ = ∑ᵢ gᵢyᵢ. The components act
   coefficientwise on σ, and their values generate Q(σ). The colon
   (Q(σ) : Q(J)S) must contain a polynomial outside mS. The paper also gives
-  an equivalent projective-localization formulation. Proposition 4.69 states
-  independence of the choice of generators of J. The Lean predicate uses
-  the colon formulation with an existential finite generating tuple in the
-  Noetherian setting.
+  an equivalent projective-localization formulation. The Lean predicate
+  existentially binds a finite generating tuple and uses that tuple's
+  polynomial ring for the colon test.
 - Section 4.6 assumes F infinite for Theorem 4.76 (English p. 1216,
   original p. 221). Lemmas 4.72–4.73 and Remark 4.74 (English p. 1215,
   original p. 221) identify the infinite-field step through homogeneous
@@ -73,12 +72,58 @@ dimension three and let I be the maximal ideal, the kernel of the scalar
 projection. That projection identifies the residue field with the ground
 field as an algebra over the ground field. The three component values of a
 nilpotent element use the forms u, v and u + v on separate axes. The ideal is
-T-full and its antiderivative ideal is itself. The polynomial UV(U + V) lies
-in the colon and survives reduction modulo the extended maximal ideal, but
-every binary pair makes one of the forms vanish. Every nilpotent input
-therefore misses an axis, and a unit has value ideal A. This refutes the
-sufficiency direction over arbitrary fields. Theorem 4.76 retains its
-infinite-field hypotheses.
+T-full and its antiderivative ideal is itself. For any finite ideal-generating tuple of I, multiplication on I
+acts through the scalar projection, so the tuple spans I over the binary
+field. Each of u, v and u + v takes a nonzero value on some tuple member.
+The corresponding linear forms U, V and U + V in the tuple's variables are
+therefore nonzero after coefficient reduction. The generic component
+values are those forms times their respective axes. Multiplying by the
+complementary factors of UV(U + V) puts the product times each axis in the
+actual generic ideal. The product survives coefficient reduction, so it
+escapes the extended maximal ideal in the colon for every generating tuple.
+It is homogeneous and becomes a unit at the projective point given by the
+extended maximal ideal, where the generic and extended image ideals
+therefore coincide. Every binary pair makes one of the forms vanish, so
+each input in I misses an axis, and a unit has value ideal A.
+
+Lean checks the binary colon calculation for every finite generating tuple.
+The public result refutes the existentially read biconditional. The same
+example refutes sufficiency for any prescribed generating tuple, including
+a minimal tuple, and for the reading in which every generating tuple must
+satisfy the test. Over infinite fields, the sufficiency argument in
+Theorem 4.76 starts with a tuple satisfying the test and uses a rational
+evaluation with nonzero residue. Its necessity argument chooses a tuple
+containing a T-generator, which establishes the existential reading.
+
+## Dependence on the tuple
+
+Proposition 4.69 asserts independence of generators. The coefficientwise
+components are only F-linear, so a generator change with coefficients in A
+need not commute with them. The colon tests can differ even for two
+minimal generating tuples.
+
+For a field k, let B = k[t]/(t²), W = k w₁ ⊕ k w₂ with tW = 0, and
+M = B g₁ ⊕ B g₂ ⊕ W. Take A = B ⋉ M, the trivial square-zero extension.
+It is local and finite-dimensional over k, with residue field k. For an
+element with B-part c + bt and M-part
+∑ᵢ(xᵢgᵢ + yᵢtgᵢ + zᵢwᵢ), use the five components
+c + bt, ∑ᵢxᵢwᵢ, ∑ᵢyᵢwᵢ, bw₁ and bw₂. If c ≠ 0, the first component is a unit.
+If c = 0 and b ≠ 0, the value ideal is (t) + W and all components after
+multiplication still belong to that ideal. For c = b = 0, multiplication
+by an element with B-part c′ + b′t sends the vectors (x,y) to
+(c′x,c′y + b′x). These cases prove the T-map law.
+
+Here Δ(W) = M, Q(M) = W and Q(g₁ + tg₂) = W. Both
+(g₁,g₂,w₁,w₂) and (g₁ + tg₂,g₂,w₁,w₂) minimally generate M. With U and V
+the first two variables, the first tuple gives only Uw₁ + Vw₂. Since the
+maximal ideal kills W, a colon element outside its extension would give a
+nonzero residue polynomial p for which p w₁ is a polynomial multiple of
+Uw₁ + Vw₂ over k. The w₂ coordinate forces the multiplier to vanish.
+The second tuple also gives Uw₂, so U² times both w₁ and w₂ belongs to the
+generic ideal, by multiplying Uw₂ by U and by taking
+U(Uw₁ + Vw₂) − V(Uw₂). Thus U² passes the colon test for the second tuple.
+This calculation gives the tuple distinction even over infinite k and
+is a source-level argument.
 
 ## Literature and provenance
 
