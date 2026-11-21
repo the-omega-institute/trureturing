@@ -55,7 +55,7 @@ internal sealed class RHFifthWindowDocument : IScribeDocumentDefinition
     {
         var a = F.Id("a");
         var b = F.Id("B");
-        var a0 = new Formula.Subscript(a, F.D(0));
+        var threshold = F.Id("T");
         var k = F.Id("K");
         var residual = new Formula.FunctionCall(FormulaIdentifier.Create("R"), [a, b]);
         var fifth = Multiply(new Formula.Fraction(F.Seq(F.D(2), F.D(5)), F.D(6)),
@@ -63,8 +63,8 @@ internal sealed class RHFifthWindowDocument : IScribeDocumentDefinition
         var error = Multiply(k, Difference(a, b, F.D(1), F.D(3)));
         var bound = Le(new Formula.Absolute(Subtract(residual, fifth)), error);
         var positive = new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, k);
-        return F.Disp(Imp(F.Id("RH"), Exists("a_0", Exists("K",
-            And(Le(F.D(2), a0), And(positive, All("a", All("B",
-                Imp(And(Le(a0, a), Le(a, b)), bound)))))))));
+        return F.Disp(Imp(F.Id("RH"), Exists("T", Exists("K",
+            And(Le(F.D(2), threshold), And(positive, All("a", All("B",
+                Imp(And(Le(threshold, a), Le(a, b)), bound)))))))));
     }
 }
