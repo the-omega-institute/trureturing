@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The exact logistic evaluation halves the frequency-count coefficient for supported ordinary Petz recovery. -/
+   digest: Exact logistic evaluation halves the supported ordinary Petz trace bound. -/
 
 import D5.S3.Analytic.PetzLogisticEvaluation
 import D5.S3.Quantum.Recovery.PetzSupportedStinespringGram
@@ -24,7 +24,7 @@ noncomputable section
 universe u
 
 open Matrix MeasureTheory
-open scoped BigOperators Classical ComplexOrder MatrixOrder Matrix.Norms.Frobenius
+open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.Frobenius
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
@@ -84,7 +84,7 @@ private theorem boundary_evaluation
 set_option maxHeartbeats 800000 in
 private theorem trace_bound_of_dilation
     {a b e : Type u} [Fintype a] [DecidableEq a] [Nonempty a]
-    [Fintype b] [DecidableEq b] [Nonempty b] [Fintype e] [DecidableEq e]
+    [Fintype b] [DecidableEq b] [Nonempty b] [Fintype e]
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
     (M : SupportedRelativeModularModel Φ ρ σ) (W : Matrix (b × e) a ℂ) (hW : Wᴴ * W = 1)
     (hAction : ∀ X : Matrix a a ℂ, partialTraceRight (W * X * Wᴴ) = act Φ X)
@@ -94,6 +94,7 @@ private theorem trace_bound_of_dilation
     traceNorm (D.R - recoveredState D) ^ 2 ≤ (4 * (m : ℝ)) *
       (finiteTraceLogRelativeEntropy ρ σ -
         finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
+  classical
   let D := M.data
   let A : Matrix D.J (D.I ⊕ (b × e)) ℂ := sourceAmplitude D
   let B := completed D W
@@ -121,7 +122,7 @@ private theorem trace_bound_of_dilation
     exact congrArg₂ (· - ·) hRecovery hSource
   have hIsometry := traceNorm_isometry (Us D) (columns_isometry D.hS.1)
     (B 0 * (B 0)ᴴ - A * Aᴴ)
-  rw [hLift, ← neg_sub, traceNorm_neg] at hIsometry
+  rw [hLift, ← neg_sub, Foundation.FiniteTraceDistance.traceNorm_neg] at hIsometry
   change traceNorm (D.R - recoveredState D) ^ 2 ≤ _
   calc
     _ = traceNorm (B 0 * (B 0)ᴴ - A * Aᴴ) ^ 2 := by rw [hIsometry]
@@ -145,6 +146,7 @@ theorem ordinary_petz_traceNorm_sq_le_entropy_loss
       (4 * (↑(1 + D.T.rank * D.Q.rank) : ℝ)) *
         (finiteTraceLogRelativeEntropy ρ σ -
           finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) := by
+  classical
   obtain ⟨W, hW, hAction⟩ := exists_retainedFirst_stinespring Φ
   let D := M.data
   refine trace_bound_of_dilation M W hW hAction (1 + D.T.rank * D.Q.rank) ?_
