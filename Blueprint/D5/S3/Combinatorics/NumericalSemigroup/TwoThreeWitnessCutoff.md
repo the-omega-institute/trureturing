@@ -6,7 +6,7 @@ The minimum cutoff over two-witness spans for the degree row (2, 3).
 
 **Theorem 1.1 (Eight is the smallest cutoff over the witness choices).**
 
-$$\operatorname{min}\left(C\right) = 8$$
+$$\operatorname{min}\left(\{C \in \mathbb{Z} \mid \exists p,u \in \mathbb{Z}^2, p_{1} > 0 \land p_{2} > 0 \land \operatorname{degree}\left(u\right) = 1 \land (\forall t \in \mathbb{Z}, t \geq C \Rightarrow \operatorname{Viable}\left(p, u, t\right))\}\right) = 8$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/NumericalSemigroup/TwoThreeWitnessCutoff.best_two_witness_cutoff` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\operatorname{min}\left(C\right) = 8$$
 
 *Commentary.*
 
-The degree of an integer vector x is 2x₁ + 3x₂. An eligible integer cutoff C admits one strictly positive integer vector p and one signed integer vector u of degree 1 such that every integer t ≥ C is the degree of a nonnegative vector in their integer span.
+The degree of an integer vector x is 2x₁ + 3x₂. An eligible integer cutoff C admits one strictly positive integer vector p and one signed integer vector u of degree 1 such that every integer t ≥ C is the degree of a nonnegative vector in their integer span. Viable(p,u,t) denotes this last condition.
 
 For a cutoff at most seven, choose vectors of degrees 7, 8, 9 and 10 in the same span. The absolute determinant of the witnesses is at least two since the entries of u have opposite signs. It divides the determinant of every pair of vectors in the span. The nonnegative solutions at the four degrees force the determinant to have absolute value two. This forces u = (−1, 1). The unique vector (2, 1) of degree 7 has determinant 3 with that u, giving a contradiction.
 

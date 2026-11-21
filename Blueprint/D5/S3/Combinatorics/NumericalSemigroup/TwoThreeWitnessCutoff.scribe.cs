@@ -17,14 +17,13 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
                 DescribeId.Create("best-two-witness-cutoff"),
                 DeclarationHandle.Create(Result),
                 H("Eight is the smallest cutoff over the witness choices"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Call("min", F.Id("C")), Sp, Eq, Sp, D(8)))),
+                StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The degree of an integer vector x is 2x₁ + 3x₂. An eligible "
                         + "integer cutoff C admits one strictly positive integer vector p and one "
                         + "signed integer vector u of degree 1 such that every integer t ≥ C is "
-                        + "the degree of a nonnegative vector in their integer span.")),
+                        + "the degree of a nonnegative vector in their integer span. Viable(p,u,t) denotes this last condition.")),
                     Paragraph(Text("For a cutoff at most seven, choose vectors of degrees 7, 8, "
                         + "9 and 10 in the same span. The absolute determinant of the witnesses "
                         + "is at least two since the entries of u have opposite signs. It divides "
@@ -37,4 +36,21 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
                         + "and is an integer combination of the two witnesses. Thus eight "
                         + "is attained."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Statement()
+    {
+        Formula c = F.Id("C");
+        Formula p = F.Id("p");
+        Formula u = F.Id("u");
+        Formula t = F.Id("t");
+        Formula z = new Formula.Integers();
+        Formula cutoffs = Seq(OpenBrace, c, Sp, InMacro, Sp, z, Sp, Mid, Sp,
+            Exists, Sp, p, Comma, u, Sp, InMacro, Sp, z, Caret, D(2), Comma, Sp,
+            new Formula.Subscript(p, D(1)), Sp, Gt, Sp, D(0), Sp, Land, Sp,
+            new Formula.Subscript(p, D(2)), Sp, Gt, Sp, D(0), Sp, Land, Sp,
+            Call("degree", u), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+            Open, Forall, Sp, t, Sp, InMacro, Sp, z, Comma, Sp, t, Sp, Geq, Sp, c,
+            Sp, Rightarrow, Sp, Call("Viable", p, u, t), Close, CloseBrace);
+        return Disp(Seq(Call("min", cutoffs), Sp, Eq, Sp, D(8)));
+    }
 }
