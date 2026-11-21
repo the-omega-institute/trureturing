@@ -37,7 +37,7 @@ proof_shape:
   result: content
 direct frozen dependencies:
   D5/S3/Combinatorics/Graph/CommonNeighborhood/NoncentralBound.psd_difference_bound
-    (statement_id sha256:914c33b892dcde9c2c9505e1df6fa8c2f567c72f3a41b6eda8b009a09373cb89)
+    (statement_id sha256:4a61e26c582e3a9997b9d862d130ebfd8cd223970eceb985e8b3f0f6933182cd)
   D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.source_matrix_isHermitian
     (statement_id sha256:f1719f538d0bfd6d4c9cd272d7a3754edc7169f96ade79d35351cea0c770b729)
 escape_witness: the trace-duality lower bound sum |lambda_i| >= tr (C S) for -1 <= S <= 1, applied

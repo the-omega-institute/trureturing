@@ -18,7 +18,7 @@ noncomputable section
 
 namespace D5.S3.Combinatorics.Graph.CommonNeighborhood.NeighbourhoodCliqueBound
 
-attribute [local instance] Classical.propDecidable Classical.decEq
+attribute [local instance] Classical.propDecidable
 
 /-
 proof_shape:
@@ -52,6 +52,7 @@ variable {V : Type} [Fintype V] (g : SimpleGraph V)
 /-- The indicator vector of the neighbourhood of `v`. -/
 private def nbhd (v : V) : V → ℝ := fun x => g.adjMatrix ℝ x v
 
+omit [Fintype V] in
 private theorem nbhd_sq (v x : V) : nbhd g v x * nbhd g v x = nbhd g v x := by
   unfold nbhd
   by_cases h : g.Adj x v <;> simp [h]

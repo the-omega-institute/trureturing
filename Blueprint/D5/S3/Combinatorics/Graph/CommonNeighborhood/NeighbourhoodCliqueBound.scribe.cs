@@ -19,9 +19,10 @@ internal sealed class NeighbourhoodCliqueBoundDocument : IScribeDocumentDefiniti
                     Paragraph(Text("For every finite vertex type V and every simple graph g on V, the common-neighbourhood "
                         + "energy graphEnergy(g,commonNeighbour) is at most twice the sum over the vertices of max(d(v)-1,0), "
                         + "and that quantity equals 4m-2r, where m is the number of edges and r the number of vertices of "
-                        + "positive degree. Isolated vertices and the empty graph are included; no connectivity or order "
-                        + "hypothesis is present. This is Lemma 1 of Ma and Zhang, Zenodo DOI 10.5281/zenodo.24398996; the "
-                        + "weaker bound 4m is prior work.")),
+                        + "positive degree. No connectivity or order hypothesis is present, so isolated vertices and the empty "
+                        + "graph are covered because the lemma holds for every finite simple graph. This is Lemma 1 of Ma and "
+                        + "Zhang, Zenodo DOI 10.5281/zenodo.24398996; the weaker bound 4m is due to Jannat, Nath and Das, "
+                        + "Remark 4.7, as cited there.")),
                     Paragraph(Text("Let a_v be the indicator vector of the neighbourhood of v and d_v its size. Entrywise "
                         + "counting gives the common-neighbour matrix as A squared minus the degree diagonal, which is the sum "
                         + "over v of the outer product of a_v with itself minus the diagonal matrix of a_v. Put Pi_v for the "
@@ -32,8 +33,8 @@ internal sealed class NeighbourhoodCliqueBoundDocument : IScribeDocumentDefiniti
                         + "and a_v has squared length d_v, hence positive semidefinite. Summing over v writes the "
                         + "common-neighbour matrix as P-Q with both parts positive semidefinite. The energy of such a difference "
                         + "is at most tr P + tr Q, the positive-semidefinite difference bound of the noncentral commuting-graph "
-                        + "module. Both traces equal the sum of max(d_v-1,0), and the handshake identity, that the degrees sum "
-                        + "to 2m, gives 4m-2r."))),
+                        + "module. The Lean proof computes tr P + tr Q = 2 sum of max(d_v-1,0) directly; each trace equals half of it, "
+                        + "a remark not separately formalized. The handshake identity, that the degrees sum to 2m, gives 4m-2r."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)

@@ -49,8 +49,9 @@ bound B(0) = 4 is strict, so no hypothesis k >= 1 is needed.
 ## Neighbourhood-clique bound
 
 Lemma 1 in Section 1 of the same version states, for every finite simple graph H with m edges, r
-vertices of positive degree and degrees d(v), that E_CN(H) <= 2 sum_v max(d(v) - 1, 0) = 4m - 2r,
-including isolated vertices and the empty graph. The weaker bound 4m is prior work. The
+vertices of positive degree and degrees d(v), that E_CN(H) <= 2 sum_v max(d(v) - 1, 0) = 4m - 2r;
+since H is arbitrary, isolated vertices and the empty graph are covered. The weaker bound 4m is
+credited there to Jannat, Nath and Das, Remark 4.7, equation (6). The
 repository proves it from CN(H) = A^2 - D = sum_v (a_v a_v^T - diag a_v), where a_v is the
 indicator of the neighbourhood of v: with the averaging projection Pi_v onto that neighbourhood,
 each summand is (d_v - 1) Pi_v - (diag a_v - Pi_v), both parts are positive semidefinite, and the
