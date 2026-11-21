@@ -371,11 +371,48 @@ private def detThree {K : Type*} [CommRing K] (A : Matrix (Fin 3) (Fin 3) K) : K
   - A 0 1 * A 1 0 * A 2 2 + A 0 1 * A 1 2 * A 2 0
   + A 0 2 * A 1 0 * A 2 1 - A 0 2 * A 1 1 * A 2 0
 
-private theorem factorOne_det_samples :
-    ∀ (e : Fin 3 → Fin 5) (m : Fin 3 → Bool), Function.Injective e →
+private theorem factorOne_det_sorted_samples :
+    ∀ (e : Fin 3 → Fin 5) (m : Fin 3 → Bool), (e 0 < e 1 ∧ e 1 < e 2) →
       ((detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 0) e m) ≠ 0 ∨
         detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 1) e m) ≠ 0) ↔
         Chow factorOne (fromColumns e m)) := by decide +kernel
+
+
+private theorem factorOne_det_samples
+    (e : Fin 3 → Fin 5) (m : Fin 3 → Bool) (he : Function.Injective e) :
+    ((detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 0) e m) ≠ 0 ∨
+      detThree (selectedMatrix (ZMod 2) (factorMatrix₁ 1) e m) ≠ 0) ↔
+      Chow factorOne (fromColumns e m)) := by
+  let edges := Finset.univ.image e
+  have hcard : edges.card = 3 := by
+    simp [edges, Finset.card_image_of_injective _ he]
+  let enumerate : Fin 3 ≃ edges := Equiv.ofBijective
+    (fun i => ⟨e i, Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩⟩)
+    ⟨fun _ _ h => he (congrArg Subtype.val h), by
+      rintro ⟨edge, hEdge⟩
+      obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hEdge
+      exact ⟨i, Subtype.ext hi⟩⟩
+  let sorted := edges.orderIsoOfFin hcard
+  let perm : Equiv.Perm (Fin 3) := sorted.toEquiv.trans enumerate.symm
+  have hsorted : ∀ i, e (perm i) = (sorted i : Fin 5) :=
+    fun i => congrArg Subtype.val (enumerate.apply_symm_apply (sorted i))
+  have hlt : e (perm 0) < e (perm 1) ∧ e (perm 1) < e (perm 2) := by
+    simp only [hsorted]
+    exact ⟨sorted.strictMono (by decide), sorted.strictMono (by decide)⟩
+  have hmark : fromColumns (e ∘ perm) (m ∘ perm) = fromColumns e m := by
+    funext edge
+    have transfer (P : Fin 3 → Prop) : (∃ i, P (perm i)) ↔ ∃ i, P i :=
+      ⟨fun ⟨i, hi⟩ => ⟨perm i, hi⟩, fun ⟨i, hi⟩ => ⟨perm.symm i, by simpa using hi⟩⟩
+    simp only [fromColumns, Function.comp_apply,
+      transfer (fun i => e i = edge ∧ m i = true), transfer (fun i => e i = edge)]
+  have hdet (b : ZMod 2) :
+      (selectedMatrix (ZMod 2) (factorMatrix₁ b) (e ∘ perm) (m ∘ perm)).det ≠ 0 ↔
+      (selectedMatrix (ZMod 2) (factorMatrix₁ b) e m).det ≠ 0 := by
+    change ((selectedMatrix (ZMod 2) (factorMatrix₁ b) e m).submatrix id perm).det ≠ 0 ↔ _
+    rw [Matrix.det_permute']
+    rcases Int.units_eq_one_or (Equiv.Perm.sign perm) with hs | hs <;> simp [hs]
+  simpa only [hmark, ← Matrix.det_fin_three, detThree, hdet] using
+    factorOne_det_sorted_samples (e ∘ perm) (m ∘ perm) hlt
 
 private theorem factorOne_det_cast (b : ZMod 2) (e : Fin 3 → Fin 5) (m : Fin 3 → Bool) :
     let cast : ZMod 2 →+* F := ZMod.castHom (dvd_refl 2) F
