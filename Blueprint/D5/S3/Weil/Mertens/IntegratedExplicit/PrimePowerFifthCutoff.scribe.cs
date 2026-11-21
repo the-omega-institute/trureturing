@@ -12,6 +12,17 @@ internal sealed class PrimePowerFifthCutoffDocument : IScribeDocumentDefinition
         H("The sixth-root correction"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("common-exponent-sum"),
+                DeclarationHandle.Create(Owner + ".psi_sub_roots_eq_sum"),
+                H("The common finite exponent sum"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For t ≥ 2 and N at least the floor of log(t)/log(2), the square, cube and fifth "
+                    + "cutoffs combine into a sum over exponents six through N. Each θ(t^(1/k)) is "
+                    + "weighted by one minus the number of divisors of k among 2, 3 and 5. "
+                    + "The coefficients at exponents two through five vanish."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sixth-root-correction"),
                 DeclarationHandle.Create(Owner + ".abs_psi_sub_roots_add_theta_sixth_le"),
                 H("The signed sixth-root contribution"),
