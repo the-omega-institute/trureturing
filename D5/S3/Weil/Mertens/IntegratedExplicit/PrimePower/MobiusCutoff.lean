@@ -17,13 +17,10 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Chebyshev Finset Real ArithmeticFunction
-namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 open scoped ArithmeticFunction.Moebius
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePowerFifthCutoff (psi_root_eq_sum_multiples)
 
-set_option autoImplicit false
-
-noncomputable section
+namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
 private theorem chebyshev_mobius_cutoff {t : ℝ} (ht : 2 ≤ t) {N : ℕ}
     (hN : ⌊Real.log t / Real.log 2⌋₊ ≤ N) :
@@ -212,7 +209,8 @@ theorem integrated_mobius_truncation {m : ℕ} (hm : 2 ≤ m) {x : ℝ} (hx : 2 
   have hp : p < 1 := one_div_lt_one_div_of_lt zero_lt_one hp₀ |>.trans_eq (by norm_num)
   have hroot (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
       IntegrableOn (fun t => (μ n : ℝ) * (psi (t ^ (1 / (n : ℝ))) / t ^ 2)) (Ioi x) := by
-    have hn₁ : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by have := (mem_Icc.mp hn).1; omega)
+    have hn₂ := (mem_Icc.mp hn).1
+    have hn₁ : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by omega)
     exact (root_kernel_integrable ((one_div_lt_one_div_of_lt zero_lt_one hn₁).trans_eq (by norm_num)) hx₀).const_mul _
   have hgdiv (t : ℝ) : g t / t ^ 2 =
       -((psi t - theta t) / t ^ 2) -
