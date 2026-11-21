@@ -21,6 +21,10 @@ each state to lie in the convex hull of one frame. Definition 3.5 requires
 transitivity on ordered frames of every fixed size. These are the source
 conditions, not consequences of an arbitrary symmetric comparison table.
 
+## Verified locator
+
+Theorem 1.1 gives the classification. Definition 3.4 defines spectrality and Definition 3.5 defines strong symmetry. Section 4 develops the Euclidean Jordan algebra state spaces, with their trace and spectral decomposition in Theorem 4.2, Definition 4.3, and Proposition 4.4. [DOI](https://doi.org/10.48550/arXiv.1904.03753) · [arXiv v1](https://arxiv.org/abs/1904.03753v1)
+
 ## Exact application to the quantum-origin carrier
 
 Use the real ordered vector space $A$, cone $C$, normalization $u$, compact
