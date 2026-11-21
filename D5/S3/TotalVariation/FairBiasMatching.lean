@@ -511,18 +511,35 @@ private noncomputable def selectFirst (c : L → A) (h : (facets c).Nonempty) : 
   mem_facets s := (exists_first_facet c h s.property).choose_spec.1
   firstAt s := (exists_first_facet c h s.property).choose_spec.2
 
+/-- A single pivot per nonsingleton restriction interval specifies all of its pairs. -/
+def IsIntervalMatching (c : L → A) (m : Face c → Face c) : Prop :=
+  ∃ pivot : Finset (L × Bool) → Option (L × Bool),
+    (∀ B ∈ facets c, (pivot B = none ↔ B = restrictionFace c B) ∧
+      ∀ v, pivot B = some v → v ∈ B ∧ v ∉ restrictionFace c B) ∧
+    ∀ s, ∃ B ∈ facets c, FirstAt c s.val B ∧
+      (m s).val = match pivot B with
+        | none => s.val
+        | some v => toggle v s.val
+
 /-- Retaining the empty-face pair leaves exactly the full-restriction facets fixed.
 The rank decreases on an unmatched downward cover and a matched upward cover. -/
 theorem actualAugmentedMatching (c : L → A) (h : (facets c).Nonempty) :
     ∃ (m : Face c → Face c) (r : Face c → ℕ),
-      Function.Involutive m ∧
+      IsIntervalMatching c m ∧ Function.Involutive m ∧
       (∀ s, Cover s (m s) ∨ Cover (m s) s ∨ m s = s) ∧
       (∀ s, m s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
       (∀ s t, (Cover t s ∧ m s ≠ t ∨ Cover s t ∧ m s = t) → r t < r s) := by
   let sel := selectFirst c h
   obtain ⟨x, hx⟩ := (mem_facets.mp (sel.mem_facets (emptyFace c))).1.1
   let piv := chosenPivots sel x hx
-  refine ⟨mate sel piv, rank sel piv, mate_involutive sel piv, mate_cover_or_fixed sel piv, ?_, ?_⟩
+  refine ⟨mate sel piv, rank sel piv, ?_, mate_involutive sel piv,
+    mate_cover_or_fixed sel piv, ?_, ?_⟩
+  · refine ⟨piv.vertex, fun B _ => ⟨piv.vertex_none B, fun _ => piv.vertex_mem⟩, ?_⟩
+    intro s
+    refine ⟨sel.facet s, sel.mem_facets s, sel.firstAt s, ?_⟩
+    cases hp : piv.vertex (sel.facet s) with
+    | none => exact congrArg Subtype.val (mate_eq_of_none sel piv s hp)
+    | some v => exact mate_val_of_some sel piv s hp
   · intro s
     rw [mate_fixed_iff]
     constructor

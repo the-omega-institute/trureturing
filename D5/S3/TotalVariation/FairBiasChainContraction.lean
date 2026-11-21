@@ -7,6 +7,7 @@
    digest: Integral chain cancellation on the augmented signed fair-bias faces. -/
 
 import D5.S3.TotalVariation.FairBiasMatching
+import D5.S3.HomologicalAlgebra.FiniteMorseCancellation
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Tactic.Ring
 
@@ -18,6 +19,7 @@ open Finset
 open D5.S3.TotalVariation.FairBiasMatching
 open D5.S3.TotalVariation.FairBiasRestriction
 open D5.S3.TotalVariation.FairBiasShelling
+open D5.S3.HomologicalAlgebra.FiniteMorseCancellation
 
 namespace D5.S3.TotalVariation.FairBiasChainContraction
 
@@ -31,6 +33,8 @@ local instance (c : L → A) : Fintype (Face c) := by
   classical
   unfold Face
   infer_instance
+
+local instance (c : L → A) : DecidableEq (Face c) := Classical.decEq _
 
 private def deletionSign {V : Type*} [LinearOrder V] (s : Finset V) (x : V) : ℤ :=
   (-1) ^ (s.filter (· < x)).card
@@ -192,7 +196,7 @@ private theorem boundary_squared (c : L → A) (h : (facets c).Nonempty) :
 
 private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
     ∃ (mate : Face c → Face c) (rank : Face c → ℕ),
-      Function.Involutive mate ∧
+      IsIntervalMatching c mate ∧ Function.Involutive mate ∧
       (∀ s, mate s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
       (∀ s, (mate s).val.card = s.val.card + 1 ∨
         s.val.card = (mate s).val.card + 1 ∨ mate s = s) ∧
@@ -204,8 +208,8 @@ private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
       (∀ s, mate s = s →
         s.val.card = Fintype.card L -
           Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c))) := by
-  obtain ⟨mate, rank, hinv, hcover, hfixed, hrank⟩ := actualAugmentedMatching c h
-  refine ⟨mate, rank, hinv, hfixed, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  obtain ⟨mate, rank, hinterval, hinv, hcover, hfixed, hrank⟩ := actualAugmentedMatching c h
+  refine ⟨mate, rank, hinterval, hinv, hfixed, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro s
     rcases hcover s with hup | hdown | hfix
     · exact Or.inl hup.2
@@ -234,6 +238,45 @@ private theorem actual_morse_data (c : L → A) (h : (facets c).Nonempty) :
       omega
   · intro s hs
     exact facet_card_eq_nullity c s.val (mem_facets.mp ((hfixed s).mp hs).1)
+
+
+/-- The augmented signed chains contract onto the full-restriction facets with
+explicit finite correction matrices and their degree laws. -/
+theorem actualContraction (c : L → A) (h : (facets c).Nonempty) :
+    ∃ (m : Matching (Face c)) (N : ℕ),
+      1 ≤ N ∧ m.D = boundary c ∧ (∀ s, m.d s = s.val.card) ∧
+      IsIntervalMatching c m.mate ∧
+      (∀ s, m.mate s = s ↔ s.val ∈ facets c ∧ restrictionFace c s.val = s.val) ∧
+      (∀ s : m.Critical, m.d s.val = Fintype.card L -
+        Module.finrank (ZMod 2) (Submodule.span (ZMod 2) (Set.range c))) ∧
+      m.Contraction N := by
+  classical
+  obtain ⟨mate, rank, hinterval, hinv, hfixed, hadj, hdown, hunit, hunmatched,
+    hmatched, hsize⟩ := actual_morse_data c h
+  let m : Matching (Face c) :=
+    { d := fun s => s.val.card
+      mate := mate
+      D := boundary c
+      involutive := hinv
+      adjacent := by
+        intro s hne
+        rcases hadj s with hup | hdown | heq
+        · exact Or.inr hup.symm
+        · exact Or.inl hdown.symm
+        · exact (hne heq).elim
+      differential_sq := boundary_squared c h
+      downward := fun s t hst => (hdown s t hst).symm
+      unit_entry := fun s hs => by simpa only [pow_two] using hunit s hs }
+  let N := Finset.univ.sup rank + 1
+  have hpos : 1 ≤ N := Nat.succ_le_succ (Nat.zero_le _)
+  have hbound (s : Face c) : rank s < N :=
+    Nat.lt_succ_of_le (Finset.le_sup (f := rank) (Finset.mem_univ s))
+  refine ⟨m, N, hpos, rfl, fun _ => rfl, hinterval, hfixed, ?_, ?_⟩
+  · intro s
+    exact hsize s.val s.property
+  · exact m.finite_morse_cancellation rank _ N hpos hbound
+      (fun s t hne hst => hunmatched s t hst (Ne.symm hne))
+      (fun s hs => hmatched s hs.symm) hsize
 
 end
 
