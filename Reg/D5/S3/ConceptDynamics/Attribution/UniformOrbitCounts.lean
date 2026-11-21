@@ -11,6 +11,7 @@ open _root_.D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts
 open _root_.D5.S3.ConceptDynamics.Attribution.UniformTableCalibration (Orbit orbit orbitCount)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.NumericalSemigroup.IntegerFiberDegrees (countedDegrees)
 
 universe u v w
 
@@ -57,7 +58,7 @@ abbrev fiberArena : Arena where
         (∑ s : S, if f s ∈ A then (1 : ℕ) else 0) =
           ∑ o, orbitCount (R.readout () T A) o * n o
 
-private def trivialAction (G A : Type*) [Monoid G] : MulAction G A where
+@[instance_reducible] private def trivialAction (G A : Type*) [Monoid G] : MulAction G A where
   smul _ a := a
   one_smul _ := rfl
   mul_smul _ _ _ := rfl
@@ -204,6 +205,135 @@ def fiberRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+set_option linter.checkUnivs false in
+abbrev degreeEventSignature : Signature where
+  Params := Type w × Type v
+  State p := p.1 → Finset p.2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.1 → Finset p.2
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def degreeEventActual : Realization degreeEventSignature.{v,w} :=
+  realize degreeEventSignature (fun _ _ E => E) (fun e => nomatch e)
+
+def degreeEventEmpty : Realization degreeEventSignature.{v,w} :=
+  realize degreeEventSignature (fun _ _ _ _ => ∅) (fun e => nomatch e)
+
+set_option linter.checkUnivs false in
+open Classical in
+abbrev degreeEventArena : Arena where
+  signature := degreeEventSignature.{v,w}
+  Law R :=
+    ∀ {G : Type u} {T : Type v} {I : Type w}
+      [Group G] [Fintype T] [MulAction G T] [Fintype (Orbit G T)]
+      (E : I → Finset T) (w : I → ℤ) (k : ℕ),
+      k ∈ countedDegrees (orbitEventMatrix (G := G) E) w ↔
+        ∃ (S : Type v) (_ : Fintype S) (_ : MulAction G S) (f : S → T),
+          (∀ (g : G) s, f (g • s) = g • f s) ∧
+          (∀ (H : Subgroup G) s, (∀ h : H, (h : G) • s = s) ↔
+            ∀ h : H, (h : G) • f s = f s) ∧
+          ∀ i, ((∑ s : S, if f s ∈ R.readout () ⟨I,T⟩ E i then (1 : ℕ) else 0) : ℤ) =
+            (k : ℤ) * w i
+
+private theorem empty_degree_event_fails : ¬ degreeEventArena.{u,v,w}.Law degreeEventEmpty := by
+  classical
+  intro law
+  let G := PUnit.{u+1}
+  let T := PUnit.{v+1}
+  let I := PUnit.{w+1}
+  let _ : Group G := inferInstanceAs (Group PUnit)
+  let _ : Fintype T := inferInstanceAs (Fintype PUnit)
+  let _ : MulAction G T := trivialAction G T
+  let _ : Fintype (Orbit G T) := Fintype.ofFinite _
+  let _ : Unique (Orbit G T) := ⟨⟨orbit (G := G) PUnit.unit⟩, fun _ => Subsingleton.elim _ _⟩
+  have feasible : 1 ∈ countedDegrees (orbitEventMatrix (G := G) (fun _ : I => (univ : Finset T)))
+      (fun _ => 1) := by
+    refine ⟨fun _ => 1, fun _ => zero_le_one, ?_⟩
+    ext i
+    change (∑ o : Orbit G T, (orbitCount (univ : Finset T) o : ℤ) * 1) = 1
+    rw [Fintype.sum_unique]
+    have one (o : Orbit G T) : orbitCount (univ : Finset T) o = 1 := by
+      unfold orbitCount
+      apply Finset.card_eq_one.mpr
+      refine ⟨PUnit.unit, ?_⟩
+      ext t
+      simp only [mem_filter, mem_univ, true_and, mem_singleton]
+      exact iff_of_true (Subsingleton.elim _ _) (Subsingleton.elim _ _)
+    simp only [one, Nat.cast_one, mul_one]
+  obtain ⟨S, _, _, f, _, _, counts⟩ :=
+    (law (G := G) (T := T) (I := I) (fun _ => univ) (fun _ => 1) 1).mp feasible
+  have impossible := counts PUnit.unit
+  have empty : degreeEventEmpty.readout () ⟨I,T⟩ (fun _ => univ) PUnit.unit = ∅ := rfl
+  rw [empty] at impossible
+  simp at impossible
+
+def degreeEventFamily : Registration degreeEventArena.{u,v,w}
+    (type_of% (@orbit_event_counts_match_fiber)) where
+  actual := degreeEventActual
+  bridge := Iff.rfl
+  variation := ⟨@orbit_event_counts_match_fiber, degreeEventEmpty, empty_degree_event_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨degreeEventEmpty, ?_, rfl, empty_degree_event_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · intro anchor
+      exact nomatch anchor
+  dependence := by
+    intro _
+    refine ⟨⟨PUnit.{w+1}, PUnit.{v+1}⟩, fun _ => ∅, fun _ => {PUnit.unit}, ?_⟩
+    intro equal
+    have events := congrFun equal PUnit.unit
+    change (∅ : Finset PUnit.{v+1}) = {PUnit.unit} at events
+    exact Finset.empty_ne_singleton _ events
+
+def degreeEventRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@orbit_event_counts_match_fiber) (Realization degreeEventSignature.{v,w}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts.degreeEventCounts
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts.degreeEventFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨degreeEventArena.{u,v,w}⟩
+  objectArena := .source ⟨degreeEventArena.{u,v,w}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source degreeEventArena.{u,v,w} ⟨degreeEventFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize degreeEventSignature (fun _ _ E => E) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.UniformOrbitCounts
+    definition := none
+    coordinates := #[1]
+    readouts := #[
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+          "arg", "body", "fn", "arg", "arg", "body", "fn", "fn", "fn", "arg",
+          "fn", "arg", "fn"]
+        stateBinder := 7
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false },
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg",
+          "arg", "body", "fn", "arg", "arg", "body", "fn", "fn", "arg", "arg",
+          "fn"]
+        stateBinder := 7
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
