@@ -220,6 +220,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         with:
           mode: ${{ needs.scheduled-compile.outputs.seed || 'legacy' }}
+          previous-base: ${{ needs.scheduled-compile.outputs.base }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
       - name: Publish the protected-dev Release snapshot
         env:
@@ -346,6 +347,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         with:
           mode: ${{ needs.manual-compile.outputs.seed || (github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_SHARDS_REF == 'dev' && 'auto' || 'legacy') }}
+          previous-base: ${{ needs.manual-compile.outputs.base }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
       # Manual publication can check out a dev commit predating the local action.
       - id: dependency
