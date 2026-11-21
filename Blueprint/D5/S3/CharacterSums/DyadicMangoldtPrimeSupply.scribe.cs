@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.CharacterSums;
 internal sealed class DyadicMangoldtPrimeSupplyDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Square-root cancellation for an auxiliary prime at a prescribed scale",
+        "Square-root cancellation for auxiliary primes on arbitrarily high dyadic scales",
         H("The quadratic Mangoldt sum on dyadic prime bands"),
         Blocks(
             Paragraph(Text("Fix ε > 0. In block k put X = 2ᵏ, x = (k log 2)^(5/ε) and N = floor(x^400). "
