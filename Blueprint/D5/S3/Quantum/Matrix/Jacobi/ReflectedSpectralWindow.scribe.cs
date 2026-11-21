@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix.Jacobi;
 
 internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinitio
             Describe.Lean(
                 DescribeId.Create("central-defect-endpoint-average"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Matrix/ReflectedSpectralWindow.central_defect_endpoint_average"),
+                    "D5/S3/Quantum/Matrix/Jacobi/ReflectedSpectralWindow.central_defect_endpoint_average"),
                 H("The central-defect endpoint average"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(

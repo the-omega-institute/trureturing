@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Matrix/ReflectedSpectralWindow
+/- GID: D5/S3/Quantum/Matrix/Jacobi/ReflectedSpectralWindow
    generality: I
-   mirror-B: D5/B/S3/Quantum/Matrix/ReflectedSpectralWindow
+   mirror-B: D5/B/S3/Quantum/Matrix/Jacobi/ReflectedSpectralWindow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -24,7 +24,7 @@ import Mathlib.Tactic.Ring
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+namespace D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
 
 open scoped BigOperators
 open MeasureTheory
@@ -437,4 +437,4 @@ theorem central_defect_endpoint_average (n : ℕ)
     apply Fin.ext
     simp] at result
 
-end D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+end D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow

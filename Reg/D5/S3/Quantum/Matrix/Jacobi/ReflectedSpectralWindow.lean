@@ -1,4 +1,4 @@
-import D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+import D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -8,10 +8,10 @@ noncomputable section
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap (centralDefect)
-open _root_.D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+open _root_.D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
 open scoped Matrix.Norms.L2Operator
 
-namespace Reg.D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+namespace Reg.D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
 
 private abbrev Index (n : ℕ) := Fin (2 * (n + 1) - 1 + 1)
 
@@ -90,8 +90,8 @@ def evidence : Registration arena (type_of% central_defect_endpoint_average) whe
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       central_defect_endpoint_average (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Matrix.ReflectedSpectralWindow.central_defect_endpoint_average
-  realizationName := `Reg.D5.S3.Quantum.Matrix.ReflectedSpectralWindow.evidence
+  unitName := `Reg.D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow.central_defect_endpoint_average
+  realizationName := `Reg.D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -107,7 +107,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+    owner := `D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -120,4 +120,4 @@ def registration :
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Quantum.Matrix.ReflectedSpectralWindow
+end Reg.D5.S3.Quantum.Matrix.Jacobi.ReflectedSpectralWindow
