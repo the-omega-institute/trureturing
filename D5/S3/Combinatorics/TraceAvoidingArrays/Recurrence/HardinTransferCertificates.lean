@@ -193,8 +193,9 @@ theorem rowOne :
     simpa only [pow_one] using column_power 0 1 p
   unfold IsLagRelation
   funext p
+  have initial : columnV 0 p = 1 := rfl
   norm_num [Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
-    column_power, step, (values p).1, (values p).2]
+    column_power, step, initial, (values p).1, (values p).2]
 
 /-- Source degree-3 coefficient list for the proper-word transfer. -/
 def wordFourCoefficients : Fin 3 → ℤ :=
