@@ -147,7 +147,7 @@ private lemma exceptional_endpoint {β t : ℝ} (hβ : 1 / 2 ≤ β) (hβ1 : β 
     congrArg (fun z => z * β * log t) hpow]
 
 private lemma endpoint_sum {θ : ℤ} {β Y : ℝ}
-    (hsign : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : 1 / 2 ≤ β) (hβ1 : β < 1) (hY : 16 ≤ Y) :
+    (hsign : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : 1 / 2 ≤ β) (hβ1 : β ≤ 1) (hY : 16 ≤ Y) :
     mainTerm θ β Y + mainTerm θ β (2 * Y) ≤
       24 * (if θ = 1 then 1 - Y ^ (β - 1) else 1) * (Y / log Y) := by
   have hY1 : 1 < Y := by linarith
@@ -167,8 +167,8 @@ private lemma endpoint_sum {θ : ℤ} {β Y : ℝ}
     have hdouble : 1 - (2 * Y) ^ (β - 1) ≤ 2 * W := by
       dsimp [W]
       nlinarith [sq_nonneg (1 - Y ^ (β - 1))]
-    have hfirst := exceptional_endpoint hβ hβ1.le hY1
-    have hlast := exceptional_endpoint hβ hβ1.le (show 1 < 2 * Y by linarith)
+    have hfirst := exceptional_endpoint hβ hβ1 hY1
+    have hlast := exceptional_endpoint hβ hβ1 (show 1 < 2 * Y by linarith)
     have hdouble' :
         2 * (2 * Y) * (1 - (2 * Y) ^ (β - 1)) / log (2 * Y) ≤ 2 * (2 * Y) * (2 * W) / log Y :=
       div_le_div₀ (by positivity) (mul_le_mul_of_nonneg_left hdouble (by positivity)) hlog hlog2
@@ -183,7 +183,7 @@ private lemma endpoint_sum {θ : ℤ} {β Y : ℝ}
   · simp only [hθ, ite_false]
     have hterm {t : ℝ} (ht : 16 ≤ t) : mainTerm θ β t ≤ 8 * t / log t := by
       have ht1 : 1 < t := by linarith
-      have hp := rpow_le_rpow_of_exponent_le ht1.le hβ1.le
+      have hp := rpow_le_rpow_of_exponent_le ht1.le hβ1
       rw [rpow_one] at hp
       have hi := mono_integral (one_lt_rpow ht1 (by linarith : 0 < β)) hp
       have hnon := mono_integral (a := 2) (b := t) (by norm_num) (by linarith)
@@ -251,56 +251,65 @@ private lemma count_add (m a : ℕ) {Y : ℝ} (hY : 0 ≤ Y) :
   rw [← hun, Finset.filter_union, Finset.card_union_of_disjoint]
   exact Finset.disjoint_filter_filter <| Finset.Ioc_disjoint_Ioc_of_le le_rfl
 
-/-- Endpoint extraction from two relative Chebotarev estimates with a common count offset. -/
-theorem dyadic_class_count {m a : ℕ} {θ : ℤ} {β Y Q s offset : ℝ}
-    (hY : 16 ≤ Y) (hQ : 1 < Q) (hQY : Q ≤ Y) (hs : 0 < s)
-    (hθ : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : 1 / 2 ≤ β) (hβ1 : β < 1)
+/-- The nonnegative lower bound on the dyadic main increment after the endpoint errors. -/
+def dyadicMargin (η Y : ℝ) : ℝ :=
+  max 0 (Y / log (2 * Y) - 24 * η * (Y / log Y))
+
+/-- Endpoint extraction with a common offset and any nonnegative relative error. -/
+theorem dyadic_class_count {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ}
+    (hY : 16 ≤ Y) (hQ : 1 < Q) (hQY : θ = 1 → Q ≤ Y) (hs : 0 < s) (hη : 0 ≤ η)
+    (hθ : θ = -1 ∨ θ = 0 ∨ θ = 1) (hβ : θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1)
     (hgap : θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β)
     (hend : ∀ t ∈ ({Y, 2 * Y} : Finset ℝ),
-       |(m.totient : ℝ) * (classCount m a 0 t + offset) - mainTerm θ β t| ≤
-        mainTerm θ β t / 100) :
-    min 1 s / (8 * Q ^ 2) * (Y / log Y) ≤ (m.totient : ℝ) * classCount m a Y (2 * Y) := by
-  let W := if θ = 1 then 1 - Y ^ (β - 1) else 1
+      |(m.totient : ℝ) * (classCount m a 0 t + offset) - mainTerm θ β t| ≤
+        η * mainTerm θ β t) :
+    min 1 s / (2 * Q ^ 2) * dyadicMargin η Y ≤
+      (m.totient : ℝ) * classCount m a Y (2 * Y) := by
+  let γ := if θ = 0 then 1 else β
+  have hγ : 1 / 2 ≤ γ ∧ γ ≤ 1 := by
+    by_cases h : θ = 0
+    · norm_num [γ,h]
+    · simpa [γ,h] using hβ h
+  have hF : mainTerm θ γ = mainTerm θ β := by
+    by_cases h : θ = 0
+    · subst θ; funext t; simp [mainTerm]
+    · simp [γ,h]
+  let W := if θ = 1 then 1 - Y ^ (γ - 1) else 1
   have hY1 : 1 < Y := by linarith
   have hY0 : 0 < Y := by linarith
-  have hlog := log_pos hY1
   have hq0 : 0 < Q := by linarith
   have hw : min 1 s / (2 * Q ^ 2) ≤ W := by
     by_cases h : θ = 1
-    · simpa [W, h] using stark_weight hs hQ hQY (hgap h)
+    · simpa [W, γ, h] using stark_weight hs hQ (hQY h) (hgap h)
     · simp only [W, h, ite_false]
       rw [div_le_iff₀ (by positivity)]
       nlinarith [min_le_left (1 : ℝ) s]
   have hw0 : 0 ≤ W := (by positivity : 0 ≤ min 1 s / (2 * Q ^ 2)).trans hw
-  have hincr := main_increment θ (by linarith : 0 < β) hY1 hw0 (fun t ht => by
+  have hincr := main_increment θ (by linarith [hγ.1] : 0 < γ) hY1 hw0 (fun t ht => by
     rcases hθ with rfl | rfl | rfl
-    · simp [W, (rpow_nonneg (hY0.le.trans ht.1) (β - 1))]
+    · simp [W, (rpow_nonneg (hY0.le.trans ht.1) (γ - 1))]
     · simp [W]
     · simp only [W, ite_true, Int.cast_one, one_mul, sub_le_sub_iff_left]
-      exact rpow_le_rpow_of_nonpos hY0 ht.1 (by linarith))
-  have hlog2 : log (2 * Y) ≤ 2 * log Y := by
-    rw [log_mul (by norm_num) hY0.ne']
-    linarith [log_le_log (by norm_num : (0 : ℝ) < 2) (show 2 ≤ Y by linarith)]
-  have hmain : W * (Y / log Y) / 2 ≤ mainTerm θ β (2 * Y) - mainTerm θ β Y := by
-    calc
-      _ = W * Y / (2 * log Y) := by ring
-      _ ≤ W * Y / log (2 * Y) :=
-        div_le_div_of_nonneg_left (by positivity) (log_pos (by linarith)) hlog2
-      _ ≤ _ := hincr
-  have hsum := endpoint_sum hθ hβ hβ1 hY
+      exact rpow_le_rpow_of_nonpos hY0 ht.1 (by linarith [hγ.2]))
+  have hsum := endpoint_sum hθ hγ.1 hγ.2 hY
   change _ ≤ 24 * W * (Y / log Y) at hsum
+  rw [hF] at hincr hsum
   have hlow := (abs_le.mp (hend (2 * Y) (by simp))).1
   have hhigh := (abs_le.mp (hend Y (by simp))).2
-  have hcards : ((classPrimes m a 0 Y).card : ℝ) + (classPrimes m a Y (2 * Y)).card =
-      (classPrimes m a 0 (2 * Y)).card := by exact_mod_cast count_add m a hY0.le
-  have hstep : W * (Y / log Y) / 4 ≤ (m.totient : ℝ) * (classPrimes m a Y (2 * Y)).card := by
-    change - _ ≤ (m.totient : ℝ) * (((classPrimes m a 0 (2 * Y)).card : ℝ) + offset) - _ at hlow
-    unfold classCount at hhigh
-    rw [←hcards] at hlow
-    linarith only [hmain, hsum, hlow, hhigh, show 0 ≤ W * (Y / log Y) by positivity]
-  refine le_trans ?_ hstep
-  calc _ = (min 1 s / (2 * Q ^ 2)) * (Y / log Y) / 4 := by ring
-       _ ≤ _ := by gcongr
+  have hcards : classCount m a 0 Y + classCount m a Y (2 * Y) = classCount m a 0 (2 * Y) := by
+    unfold classCount
+    exact_mod_cast count_add m a hY0.le
+  rw [← hcards] at hlow
+  have hR : 0 ≤ (m.totient : ℝ) * classCount m a Y (2 * Y) := by unfold classCount; positivity
+  by_cases hM : 0 ≤ Y / log (2 * Y) - 24 * η * (Y / log Y)
+  · unfold dyadicMargin
+    rw [max_eq_right hM]
+    refine (mul_le_mul_of_nonneg_right hw hM).trans ?_
+    calc
+      _ = W * Y / log (2 * Y) - η * (24 * W * (Y / log Y)) := by ring
+      _ ≤ _ := by linarith only [hincr, mul_le_mul_of_nonneg_left hsum hη, hlow, hhigh]
+  · simp only [dyadicMargin,max_eq_left (le_of_not_ge hM),mul_zero]
+    exact hR
 
 /-- The relative error in the cyclotomic specialization of the effective Chebotarev theorem. -/
 def relativeError (A c Q t : ℝ) : ℝ :=
@@ -310,38 +319,42 @@ def relativeError (A c Q t : ℝ) : ℝ :=
 def cyclotomicEstimate (count : ℕ → ℕ → ℝ → ℝ → ℝ) (B A c s : ℝ) : Prop :=
   ∀ m a : ℕ, 3 ≤ m → a.Coprime m →
     ∃ (Q : ℝ) (θ : ℤ) (β offset : ℝ),
-      1 < Q ∧ Q ≤ m ∧ (θ = -1 ∨ θ = 0 ∨ θ = 1) ∧ 1 / 2 ≤ β ∧ β < 1 ∧
+      1 < Q ∧ Q ≤ m ∧ (θ = -1 ∨ θ = 0 ∨ θ = 1) ∧ (θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1) ∧
       (θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) ∧
       ∀ t : ℝ, Q ^ B ≤ t →
         |(m.totient : ℝ) * (count m a 0 t + offset) - mainTerm θ β t| ≤
           relativeError A c Q t * mainTerm θ β t
 
-private lemma exp_error {A u : ℝ} (h : 200 * A ≤ u) : A * exp (-u) ≤ 1 / 200 := by
-  rw [exp_neg, ←div_eq_mul_inv, div_le_iff₀ (exp_pos _)]
-  linarith [add_one_le_exp u]
+private lemma exp_error {A u η : ℝ} (hη : 0 < η) (h : 2 * A / η ≤ u) :
+    A * exp (-u) ≤ η / 2 := by
+  rw [exp_neg, ← div_eq_mul_inv, div_le_iff₀ (exp_pos _)]
+  rw [div_le_iff₀ hη] at h
+  nlinarith [mul_le_mul_of_nonneg_left (add_one_le_exp u) hη.le]
 
-/-- A polynomial modulus threshold suffices uniformly for the lower bound on actual prime counts. -/
+/-- Each chosen relative-error tolerance has a polynomial modulus threshold for all classes. -/
 theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs : 0 < s)
-    (H : cyclotomicEstimate classCount B A c s) :
+    (H : cyclotomicEstimate classCount B A c s) (η : ℝ) (hη : 0 < η) :
     ∃ K D₀ : ℝ, 0 < K ∧ 0 < D₀ ∧ ∀ (m a : ℕ), 3 ≤ m → a.Coprime m → ∀ D : ℝ,
       D₀ ≤ D → (4 * (m : ℝ)) ^ K ≤ D →
-      min 1 s / (8 * (m : ℝ) ^ 2) * ((D / 2) / log (D / 2)) ≤
+      min 1 s / (2 * (m : ℝ) ^ 2) * dyadicMargin η (D / 2) ≤
         (m.totient : ℝ) * classCount m a (D / 2) D := by
-  let k := max (max 1 B) (200 * A / c)
+  let u := 2 * A / η
+  have hu0 : 0 ≤ u := by unfold u; positivity
+  let k := max (max 1 B) (u / c)
   have hk1 : 1 ≤ k := le_trans (le_max_left _ _) (le_max_left _ _)
   have hkB : B ≤ k := le_trans (le_max_right _ _) (le_max_left _ _)
-  have hkc : 200 * A / c ≤ k := le_max_right _ _
-  refine ⟨k + 1, 2 * max 16 (exp ((200 * A) ^ 2 / c)), by linarith, by positivity,?_⟩
+  have hkc : u / c ≤ k := le_max_right _ _
+  refine ⟨k + 1, 2 * max 16 (exp ((u) ^ 2 / c)), by linarith, by positivity,?_⟩
   intro m a hm hcop D hD₀ hD
-  obtain ⟨Q, θ, β, e, hQ, hQm, hθ, hβ, hβ1, hgap, Ht⟩ := H m a hm hcop
+  obtain ⟨Q, θ, β, e, hQ, hQm, hθ, hβ, hgap, Ht⟩ := H m a hm hcop
   have hm3 : (3 : ℝ) ≤ m := by exact_mod_cast hm
   have hm0 : 0 < (m : ℝ) := by linarith
   have hQ0 : 0 < Q := by linarith
   let Y := D / 2
-  have hY16 : 16 ≤ Y := by dsimp [Y]; linarith [le_max_left (16 : ℝ) (exp ((200 * A) ^ 2 / c))]
-  have hYa : exp ((200 * A) ^ 2 / c) ≤ Y := by
+  have hY16 : 16 ≤ Y := by dsimp [Y]; linarith [le_max_left (16 : ℝ) (exp ((u) ^ 2 / c))]
+  have hYa : exp ((u) ^ 2 / c) ≤ Y := by
     dsimp [Y]
-    linarith [le_max_right (16 : ℝ) (exp ((200 * A) ^ 2 / c))]
+    linarith [le_max_right (16 : ℝ) (exp ((u) ^ 2 / c))]
   have hY0 : 0 < Y := by linarith
   have hqk : Q ^ k ≤ Y := by
     have hpow := rpow_le_rpow hQ0.le (show Q ≤ 4 * m by linarith) (by linarith : 0 ≤ k)
@@ -354,7 +367,7 @@ theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs
          _ ≤ _ := (rpow_le_rpow_of_exponent_le hQ.le hk1).trans hqk
   have hend : ∀ t ∈ ({Y, 2 * Y}:Finset ℝ),
       |(m.totient : ℝ) * (classCount m a 0 t + e) - mainTerm θ β t| ≤
-        mainTerm θ β t / 100 := by
+        η * mainTerm θ β t := by
     intro t ht
     have hYt : Y ≤ t := by
       simp only [Finset.mem_insert, Finset.mem_singleton] at ht
@@ -367,28 +380,26 @@ theorem uniform_dyadic_class_count {B A c s : ℝ} (hA : 0 < A) (hc : 0 < c) (hs
     have hlogQ := log_pos hQ
     have hlk := log_le_log (rpow_pos_of_pos hQ0 k) (hqk.trans hYt)
     rw [log_rpow hQ0] at hlk
-    have hu : 200 * A ≤ c * log t / log Q := by
+    have hu : u ≤ c * log t / log Q := by
       rw [le_div_iff₀ hlogQ]
       rw [div_le_iff₀ hc] at hkc
       nlinarith [mul_le_mul_of_nonneg_left hlk hc.le, mul_le_mul_of_nonneg_right hkc hlogQ.le]
-    have hv : 200 * A ≤ sqrt (c * log t) := by
+    have hv : u ≤ sqrt (c * log t) := by
       apply le_sqrt_of_sq_le
       have := (le_log_iff_exp_le ht0).2 (hYa.trans hYt)
       rw [div_le_iff₀ hc] at this
       linarith
-    refine hlarge.trans ?_
-    calc relativeError A c Q t * mainTerm θ β t ≤ (1 / 100 : ℝ) * mainTerm θ β t := by
-           apply mul_le_mul_of_nonneg_right _ hF
-           unfold relativeError
-           linarith only [exp_error hu, exp_error hv]
-         _ = _ := by ring
-  have h := dyadic_class_count hY16 hQ hQY hs hθ hβ hβ1 hgap hend
+    apply hlarge.trans
+    apply mul_le_mul_of_nonneg_right _ hF
+    unfold relativeError
+    linarith only [exp_error hη hu, exp_error hη hv]
+  have h := dyadic_class_count hY16 hQ (fun _ => hQY) hs hη.le hθ hβ hgap hend
   have h2Y : 2 * Y = D := by dsimp [Y]; ring
   rw [h2Y] at h
   refine le_trans ?_ h
-  have hcoeff : min 1 s / (8 * (m : ℝ) ^ 2) ≤ min 1 s / (8 * Q ^ 2) :=
+  have hcoeff : min 1 s / (2 * (m : ℝ) ^ 2) ≤ min 1 s / (2 * Q ^ 2) :=
     div_le_div_of_nonneg_left (le_min zero_le_one hs.le) (by positivity)
       (by gcongr)
-  exact mul_le_mul_of_nonneg_right hcoeff (div_nonneg hY0.le (log_pos (by linarith : 1 < Y)).le)
+  exact mul_le_mul_of_nonneg_right hcoeff (le_max_left _ _)
 
 end D5.S3.CharacterSums.DyadicPrimeClassCount

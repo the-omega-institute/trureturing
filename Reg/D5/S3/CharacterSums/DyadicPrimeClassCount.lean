@@ -27,11 +27,6 @@ def incompatible : Realization signature :=
   realize signature (fun _ m _ lo hi =>
     if lo = 0 then logarithmicIntegral hi / (m.totient : ℝ) else 0) (fun e => nomatch e)
 
-private theorem integral_nonneg {t : ℝ} (ht : 2 ≤ t) : 0 ≤ logarithmicIntegral t := by
-  apply intervalIntegral.integral_nonneg ht
-  intro u hu
-  exact div_nonneg zero_le_one (log_nonneg (by linarith [hu.1]))
-
 private theorem incompatible_prefix {m a : ℕ} (hm : 0 < m) (t : ℝ) :
     (m.totient : ℝ) * (incompatible.readout () m a 0 t + 0) = mainTerm 0 (1 / 2) t := by
   have ht : (m.totient : ℝ) ≠ 0 := by exact_mod_cast (Nat.totient_pos.2 hm).ne'
@@ -52,30 +47,29 @@ private theorem dependence : ObservationalDependence signature actual := by
 namespace Endpoint
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ {m a : ℕ} {θ : ℤ} {β Y Q s offset : ℝ},
-    16 ≤ Y → 1 < Q → Q ≤ Y → 0 < s → (θ = -1 ∨ θ = 0 ∨ θ = 1) → 1 / 2 ≤ β → β < 1 →
+  Law V := ∀ {m a : ℕ} {θ : ℤ} {β Y Q s offset η : ℝ},
+    16 ≤ Y → 1 < Q → (θ = 1 → Q ≤ Y) → 0 < s → 0 ≤ η →
+    (θ = -1 ∨ θ = 0 ∨ θ = 1) → (θ ≠ 0 → 1 / 2 ≤ β ∧ β ≤ 1) →
     (θ = 1 → s / (Q ^ 2 * log Q) ≤ 1 - β) →
     (∀ t ∈ ({Y, 2 * Y} : Finset ℝ),
-       |(m.totient : ℝ) * (V.readout () m a 0 t + offset) - mainTerm θ β t| ≤
-        mainTerm θ β t / 100) →
-    min 1 s / (8 * Q ^ 2) * (Y / log Y) ≤ (m.totient : ℝ) * V.readout () m a Y (2 * Y)
+      |(m.totient : ℝ) * (V.readout () m a 0 t + offset) - mainTerm θ β t| ≤
+        η * mainTerm θ β t) →
+    min 1 s / (2 * Q ^ 2) * dyadicMargin η Y ≤ (m.totient : ℝ) * V.readout () m a Y (2 * Y)
 
 private theorem incompatible_fails : ¬ arena.Law incompatible := by
   intro h
-  have hc := @h 3 1 0 (1 / 2) 16 2 1 0 (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (Or.inr (Or.inl rfl)) (by norm_num) (by norm_num) (by norm_num) (by
-      intro t ht
-      rw [incompatible_prefix (by decide : 0 < 3), sub_self, abs_zero]
-      have ht2 : 2 ≤ t := by
-        simp only [Finset.mem_insert, Finset.mem_singleton] at ht
-        rcases ht with rfl | rfl <;> norm_num
-      simp only [mainTerm, Int.cast_zero, zero_mul, sub_zero]
-      exact div_nonneg (integral_nonneg ht2) (by norm_num))
+  have hc := @h 3 1 0 (1 / 2) 16 2 1 0 0 (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (Or.inr (Or.inl rfl)) (by norm_num) (by norm_num) (by
+      intro t _
+      rw [incompatible_prefix (by decide : 0 < 3), sub_self, abs_zero, zero_mul])
   change _ ≤ (_ : ℝ) * (if (16 : ℝ) = 0 then _ else 0) at hc
   norm_num at hc
-  have hl := log_pos (by norm_num : (1 : ℝ) < 16)
+  have hm : 0 < dyadicMargin 0 16 := by
+    unfold dyadicMargin
+    apply lt_of_lt_of_le _ (le_max_right _ _)
+    simp only [mul_zero, zero_mul, sub_zero]
+    exact div_pos (by norm_num) (log_pos (by norm_num))
   exact (not_lt_of_ge hc) (by positivity)
-
 
 def family : Registration arena (type_of% @dyadic_class_count) where
   actual := actual
@@ -111,7 +105,7 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "arg", "arg", "fn", "fn"]
+        "body", "body", "arg", "arg", "fn", "fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -123,13 +117,28 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
 end Endpoint
 
 namespace Uniform
+
+private theorem margin_lower {Y : ℝ} (hY : 2 ≤ Y) :
+    (13 / 50 : ℝ) * (Y / log Y) ≤ dyadicMargin (1 / 100) Y := by
+  have hY0 : 0 < Y := by linarith
+  have hl : 0 < log Y := log_pos (by linarith)
+  have h2l : log (2 * Y) ≤ 2 * log Y := by
+    rw [log_mul (by norm_num) hY0.ne']
+    linarith [log_le_log (by norm_num) hY]
+  have hd := div_le_div_of_nonneg_left hY0.le
+    (log_pos (show 1 < 2 * Y by linarith)) h2l
+  have he : Y / (2 * log Y) = (Y / log Y) / 2 := by ring
+  rw [he] at hd
+  exact (by linarith : (13 / 50 : ℝ) * (Y / log Y) ≤
+    Y / log (2 * Y) - 24 * (1 / 100) * (Y / log Y)).trans (le_max_right _ _)
+
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {B A c s : ℝ}, 0 < A → 0 < c → 0 < s →
-    cyclotomicEstimate (V.readout ()) B A c s →
+    cyclotomicEstimate (V.readout ()) B A c s → ∀ η : ℝ, 0 < η →
     ∃ K D₀ : ℝ, 0 < K ∧ 0 < D₀ ∧ ∀ (m a : ℕ), 3 ≤ m → a.Coprime m → ∀ D : ℝ,
       D₀ ≤ D → (4 * (m : ℝ)) ^ K ≤ D →
-      min 1 s / (8 * (m : ℝ) ^ 2) * ((D / 2) / log (D / 2)) ≤
+      min 1 s / (2 * (m : ℝ) ^ 2) * dyadicMargin η (D / 2) ≤
         (m.totient : ℝ) * V.readout () m a (D / 2) D
 
 private theorem incompatible_fails : ¬ arena.Law incompatible := by
@@ -137,13 +146,17 @@ private theorem incompatible_fails : ¬ arena.Law incompatible := by
   have hmodel : cyclotomicEstimate (incompatible.readout ()) 1 1 1 1 := by
     intro m a hm _
     refine ⟨2, 0, 1 / 2, 0, by norm_num, by exact_mod_cast (show 2 ≤ m by omega),
-      Or.inr (Or.inl rfl), by norm_num, by norm_num, by norm_num,?_⟩
+      Or.inr (Or.inl rfl), by norm_num, by norm_num,?_⟩
     intro t ht
     rw [incompatible_prefix (by omega : 0 < m), sub_self, abs_zero]
     rw [rpow_one] at ht
     simp only [mainTerm, Int.cast_zero, zero_mul, sub_zero]
-    exact mul_nonneg (by unfold relativeError; positivity) (integral_nonneg ht)
+    apply mul_nonneg (by unfold relativeError; positivity)
+    apply intervalIntegral.integral_nonneg ht
+    intro u hu
+    exact div_nonneg zero_le_one (log_nonneg (by linarith [hu.1]))
   obtain ⟨K, D₀, _, _, hK⟩ := @h 1 1 1 1 (by norm_num) (by norm_num) (by norm_num) hmodel
+    (1 / 100) (by norm_num)
   let D := max 32 (max D₀ ((4 * (3 : ℝ)) ^ K))
   have hD : 32 ≤ D := le_max_left _ _
   have hcount := hK 3 1 (by decide) (by decide) D
@@ -155,6 +168,8 @@ private theorem incompatible_fails : ¬ arena.Law incompatible := by
   rw [hzero, mul_zero] at hcount
   have hl := log_pos hY
   have hy : 0 < D / 2 := by linarith
+  have hmargin : 0 < dyadicMargin (1 / 100) (D / 2) :=
+    lt_of_lt_of_le (by positivity) (margin_lower (by linarith))
   exact (not_lt_of_ge hcount) (by positivity)
 
 def family : Registration arena (type_of% @uniform_dyadic_class_count) where
@@ -187,13 +202,13 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
   sourceSelection := some {
     owner := `D5.S3.CharacterSums.DyadicPrimeClassCount
     definition := none
-    coordinates := #[10]
+    coordinates := #[12]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "arg", "body", "body",
-        "body", "body", "body", "body", "body", "arg", "arg", "fn",
-        "fn"]
-      stateBinder := 11
+        "body", "body", "arg", "body", "arg", "body", "arg", "arg",
+        "body", "body", "body", "body", "body", "body", "body", "arg",
+        "arg", "fn", "fn"]
+      stateBinder := 13
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
