@@ -425,4 +425,39 @@ private theorem finish (x : ℕ → ℕ) (R : ℝ) (hR : 1 < R) (L : ℝ) (hL : 
     _ ≤ 2 * B * (1 + lam) / Real.sqrt L * (lam ^ n)⁻¹ * (x n : ℝ) := by
         gcongr
 
+/-- The generic statement for window length `m`, characteristic polynomial `P`, dominant root `R`
+and comparison data. -/
+private theorem generic {m : ℕ} (hm : 0 < m) (P : ℝ[X]) (R : ℝ) (hR : 1 < R)
+    (hmult : P.rootMultiplicity R = 1)
+    (hother : ∀ z : ℂ, (P.map (algebraMap ℝ ℂ)).IsRoot z → z ≠ (R : ℂ) → ‖z‖ < 1)
+    (hP : ∀ (b : ℕ → ℝ) (j : ℕ), ∑ k ∈ Finset.range (P.natDegree + 1), P.coeff k * b (j + k) =
+      b (j + m) - ∑ i ∈ Finset.range m, b (j + i))
+    {K K' c c' : ℝ} (hK1 : 1 < K) (hK'0 : 0 ≤ K') (hK'1 : K' < 1) (hc1 : 1 < c)
+    (hcR : c < R ^ 2) (hcc' : c < c' ^ 2) (hc'0 : 0 < c')
+    (hcK : K * ∑ i ∈ Finset.range m, c ^ i ≤ c ^ m)
+    (hc'K' : c' ^ m ≤ K' * ∑ i ∈ Finset.range m, c' ^ i)
+    (k₀ : ℕ) (hk : ∀ k : ℕ, k₀ ≤ k → (k : ℝ) + 1 / 4 < (m - 1 : ℝ) * (k : ℝ) ^ 2)
+    (x : ℕ → ℕ) (hrec : ∀ n, (x (n + m) : ℤ) = round (Real.sqrt (rad m x n)))
+    (N : ℕ) (hN : m - 1 ≤ N) (hxN : k₀ ≤ x N) :
+    ∃ C : ℝ, 0 < C ∧
+      (fun n => (x n : ℝ) - C * Real.sqrt R ^ n) =O[atTop] (fun _ => (1 : ℝ)) ∧
+      (fun n => (x (n + 1) : ℝ) / x n - Real.sqrt R) =O[atTop]
+        (fun n => (Real.sqrt R ^ n)⁻¹) := by
+  have hx := tendsto_atTop hm hrec k₀ hk N hN hxN
+  set b : ℕ → ℝ := fun n => (x n : ℝ) ^ 2 with hbdef
+  have hrad : ∀ n, rad m x n = ∑ i ∈ Finset.range m, b (n + i) := fun n => rfl
+  have hb : Tendsto b atTop atTop := (tendsto_pow_atTop two_ne_zero).comp hx
+  have hinf : Tendsto (fun n => ∑ i ∈ Finset.range m, b (n + i)) atTop atTop := by
+    refine tendsto_atTop_mono (fun n => ?_) hb
+    have := Finset.single_le_sum (f := fun i => b (n + i)) (fun i _ => sq_nonneg _)
+      (Finset.mem_range.mpr hm)
+    simpa using this
+  have hpos : ∀ᶠ n in atTop, 0 < b n :=
+    (hb.eventually_gt_atTop 0)
+  obtain ⟨L, hL, hO⟩ := analytic hm P R hR hmult hother hK1 hK'0 hK'1 hc1 hcR hcc' hc'0 hcK
+    hc'K' b (fun n => sq_nonneg _) (hP b)
+    (fun n => by rw [← hrad]; exact sq_err hrec n) hinf hpos
+  obtain ⟨h1, h2⟩ := finish x R hR L hL hO
+  exact ⟨Real.sqrt L, Real.sqrt_pos.mpr hL, h1, h2⟩
+
 end D5.S1.Recurrence.RoundedNormBoundedError
