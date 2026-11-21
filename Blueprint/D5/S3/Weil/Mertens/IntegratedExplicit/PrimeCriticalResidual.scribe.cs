@@ -20,8 +20,8 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         "Write Qθ(x) for the integral of (θ(v)−v)/v² on v>x, with each prime "
                         + "counted once in θ. Zhao's equation (14) identifies this tail in the "
                         + "cumulative Mertens error. Let Q be the corresponding complete "
-                        + "Chebyshev tail that includes prime powers. Set C=(101/100) firstLiMass, "
-                        + "where firstLiMass is the first Li mass of the actual zeros.")),
+                        + "Chebyshev tail that includes prime powers. The firstLiMass is the "
+                        + "sum of Re c(k) over all actual zero occurrences.")),
                     Paragraph(Text(
                         "Let ρ(k) run over all actual zero occurrences, with their analytic "
                         + "multiplicities, and put c(k)=1/(ρ(k)(1−ρ(k))). At a real-part upper bound "
@@ -35,15 +35,22 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         "At x=exp(u), the complete integrated explicit formula bounds "
                         + "√x Q(x) above by the negative real part of the root-scaled zero sum. "
                         + "Its β-line contribution is exp((β−1/2)u)Pβ(u). Its intermediate "
-                        + "contribution is at most Gβ(u). For u≥0, all occurrences with real part "
-                        + "at most one half have weight at most one. Their total contribution is "
-                        + "at most the full coefficient norm sum, bounded by C via the "
-                        + "inverse-square ordinate sum.")),
+                        + "contribution is at most G(β,u). On the line Re ρ=1/2 the exponential "
+                        + "has unit modulus and c(k) is positive real, so the sum of the norms "
+                        + "on that line is at most firstLiMass by positivity of Re c(k) throughout "
+                        + "the critical strip.")),
                     Paragraph(Text(
-                        "For each 0<d<2−C, the prime-power correction √x (Q(x)−Qθ(x)) tends "
-                        + "to 2 and eventually exceeds C+d. Subtracting it gives the upper bound "
-                        + "exp((β−1/2)u)Pβ(u)+G(β,u)−d on √x Qθ(x). The lower bound on u "
-                        + "comes from the prime-power correction and x≥2, so it is uniform in β."))),
+                        "Let L(u) be the sum of root-scaled term norms over Re ρ<1/2. Each "
+                        + "term tends to zero and for u≥0 is bounded by |c(k)|. Dominated "
+                        + "convergence gives L(u)→0 for the entire subseries. The prime-power "
+                        + "correction √x (Q(x)−Qθ(x)) minus L(u) therefore tends to 2 and "
+                        + "eventually exceeds firstLiMass+d for each 0<d<2−firstLiMass. "
+                        + "Subtracting the correction gives the stated bound on √x Qθ(x) "
+                        + "with a threshold uniform in β.")),
+                    Paragraph(Text(
+                        "At d=2−firstLiMass this comparison would require the correction minus "
+                        + "L(u) to be eventually at least 2, or a separate bound giving slack "
+                        + "in the zero contribution."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("prime-tail-mass-pos-or-intermediate-or-wider-zero-cluster"),
                 DeclarationHandle.Create(Module + "prime_tail_mass_pos_or_intermediate_or_wider_zero_cluster"),
@@ -52,7 +59,7 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/zhao2025mertensmeans")),
                 Blocks(
                     Paragraph(Text(
-                        "Let N(A,B) integrate max(−Qθ(x),0)/√x from A to B. For each 0<d<2−C, "
+                        "Let N(A,B) integrate max(−Qθ(x),0)/√x from A to B. For each 0<d<2−firstLiMass, "
                         + "one threshold for the left log endpoint t−W works for all W>0 and "
                         + "all upper bounds β>1/2 for the actual zero real parts. Use the window "
                         + "[exp(t−W),exp(t)]. Either its mass is positive, G(β,u) reaches d "
@@ -73,8 +80,14 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
                         + "for some W′>W. The phase-cluster equivalence sends this orbit value "
                         + "to a zero cluster value of the normalized mass as real B tends to infinity.")),
                     Paragraph(Text(
+                        "A bound G(β,t)≤d at the final endpoint suffices for the positive-mass "
+                        + "or wider-cluster conclusion. Every intermediate summand is nondecreasing "
+                        + "in u because Re ρ(k)−1/2>0 and |c(k)|≥0. Absolute summability gives "
+                        + "G(β,u)≤G(β,t) for u≤t. Choose d<d′<2−firstLiMass and use the "
+                        + "threshold for d′. Then G(β,u)≤d<d′ throughout the window.")),
+                    Paragraph(Text(
                         "Suppose a zero attains β and every zero strictly below β has real "
-                        + "part at most one half. The bound firstLiMass<1/3 gives 1<2−C, so "
+                        + "part at most one half. The bound firstLiMass<1/3 gives 1<2−firstLiMass, so "
                         + "we may take d=1. The gap makes G(β,u) zero. The attained-abscissa cutoff "
                         + "gives a unique W*>0 and a nonzero lower limit at every W′>W*. "
                         + "A zero cluster value would bound the real lower limit above by every "
@@ -112,7 +125,8 @@ internal sealed class PrimeCriticalResidualDocument : IScribeDocumentDefinition
     private static Formula AllMargins(Formula body)
     {
         var d = F.Id("d");
-        return All("d", Real, Implies(Lt(F.D(0), d), Implies(Lt(d, Subtract(F.D(2), F.Id("C"))), body)));
+        var cap = Subtract(F.D(2), F.Id("firstLiMass"));
+        return All("d", Real, Implies(Lt(F.D(0), d), Implies(Lt(d, cap), body)));
     }
 
     private static Formula Lt(Formula left, Formula right) =>

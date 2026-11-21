@@ -47,7 +47,7 @@ def rootScaleArena : Arena where
     (∀ β t : ℝ, Summable
       (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
         ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
-    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+    ∀ d : ℝ, 0 < d → d < 2 - firstLiMass →
       ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
         (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
         Real.exp (t / 2) * primeTail (Real.exp t) ≤
@@ -55,7 +55,7 @@ def rootScaleArena : Arena where
             (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
               ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) - d
 
-private theorem one_lt_margin_bound : (1 : ℝ) < 2 - (101 / 100 : ℝ) * firstLiMass := by
+private theorem one_lt_margin_bound : (1 : ℝ) < 2 - firstLiMass := by
   linarith only [firstLiMass_lt_third]
 
 private theorem exaggeratedLine_fails : ¬ rootScaleArena.Law exaggeratedLine := by
@@ -155,7 +155,7 @@ def windowArena : Arena where
   signature := scaleSignature
   Law V :=
     let scale := V.readout () ()
-    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+    ∀ d : ℝ, 0 < d → d < 2 - firstLiMass →
       ∃ T : ℝ, ∀ β : ℝ, 1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
         ∀ t W : ℝ, 0 < W → T ≤ t - W →
           0 < (∫ x in scale (t - W)..scale t, max (-primeTail x) 0 / Real.sqrt x) ∨

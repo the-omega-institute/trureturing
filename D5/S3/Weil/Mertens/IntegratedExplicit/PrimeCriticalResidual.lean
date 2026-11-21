@@ -7,7 +7,7 @@
    digest: A root-scale margin turns zero-mass windows into wider zero cluster values. -/
 
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
-import D5.S3.Weil.Mertens.IntegratedExplicit.ActualSignedGaussianEndpoint
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualZeroLaplace
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster
 import D5.S3.Weil.Mertens.ZeroAbscissaPower
@@ -22,13 +22,11 @@ noncomputable section
 open Filter MeasureTheory Set
 open scoped Topology
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q U)
-open D5.S3.Arith.Robin.OffLinePeak
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.ZeroSum (IsNontrivialZero)
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimeCriticalResidual
 
-open ActualSignedGaussianEndpoint (actual_coefficient_mass)
 open MaximalRealPartProjection
   (maximalSeries summable_norm_maximalTerm uniformContinuous_maximalSeries)
 open PrimeOnlyTailCorrection (primeTail prime_integrable prime_power_window_correction)
@@ -66,24 +64,56 @@ private theorem scaled_shift_eq_rootTerm (β t : ℝ) (k : ℕ) :
   push_cast
   ring
 
-private theorem coeff_mass_bound : (∑' k : ℕ, ‖actualCoeff k‖) ≤ (101 / 100 : ℝ) * firstLiMass := by
-  obtain ⟨_, conjIndex, hconj, _⟩ := actual_complete_H_package
-  obtain ⟨_, _, _, _, _, _, _, hcoeff⟩ := ZeroCoefficientBudget.zero_coefficient_budget
-    actualZero (fun k => (actual_zero k).2) conjIndex hconj
-    (fun k => actual_height_gt_ten _ (actual_zero k)) actual_coefficient_mass
-  have hinv : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) :=
-    actualOccurrenceEquiv.summable_iff.mpr actual_sigma_inverse_square_summable
-  refine (actualCoeff_hasSum.summable.norm.tsum_le_tsum (fun k => ?_) hinv).trans
-    actual_inverse_square_mass_le_height
-  simpa only [ZeroCoefficientBudget.coefficient, actualCoeff, one_div, inv_pow] using (hcoeff k).2
+private def strictLeft : Set ℕ := {k | (actualZero k).re < 1 / 2}
 
-private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < β)
+private def halfLine : Set ℕ := {k | (actualZero k).re = 1 / 2}
+
+private def strictLeftMass (t : ℝ) : ℝ := ∑' k : strictLeft, ‖rootTerm t k‖
+
+private theorem strictLeftMass_tendsto_zero : Tendsto strictLeftMass atTop (𝓝 0) := by
+  have hterm (k : strictLeft) : Tendsto (fun t : ℝ => ‖rootTerm t k.1‖) atTop (𝓝 0) := by
+    have hneg : (actualZero k.1).re - 1 / 2 < 0 := sub_neg.mpr k.2
+    have harg := tendsto_id.const_mul_atTop_of_neg hneg
+    simpa only [norm_rootTerm, Function.comp_def, id_eq, mul_zero] using
+      (Real.tendsto_exp_atBot.comp harg).const_mul ‖actualCoeff k.1‖
+  have hdom : ∀ᶠ t : ℝ in atTop, ∀ k : strictLeft, ‖‖rootTerm t k.1‖‖ ≤ ‖actualCoeff k.1‖ := by
+    filter_upwards [eventually_ge_atTop (0 : ℝ)] with t ht k
+    rw [norm_norm, norm_rootTerm]
+    exact mul_le_of_le_one_right (norm_nonneg _)
+      (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr k.2.le) ht))
+  have hsum := tendsto_tsum_of_dominated_convergence
+    (actualCoeff_hasSum.summable.norm.subtype strictLeft) hterm hdom
+  rw [tsum_zero] at hsum
+  exact hsum
+
+private theorem halfLine_mass_le (t : ℝ) :
+    (∑' k : halfLine, ‖rootTerm t k.1‖) ≤ firstLiMass := by
+  have hpos (k : ℕ) : 0 < (actualCoeff k).re := by
+    obtain ⟨h0, h1⟩ := (actual_zero k).2
+    exact (heightRefinement_pairWeight_strip h0 h1).1
+  have hmass : HasSum (fun k => (actualCoeff k).re) firstLiMass := by
+    simpa only [Complex.ofReal_re] using Complex.hasSum_re actualCoeff_hasSum
+  calc
+    _ = ∑' k : halfLine, (actualCoeff k.1).re := by
+      refine tsum_congr fun k => ?_
+      have hline : (actualZero k.1).re = 1 / 2 := k.2
+      have him : (actualCoeff k.1).im = 0 := by
+        simp only [actualCoeff, one_div, Complex.inv_im, Complex.mul_im,
+          Complex.sub_re, Complex.sub_im, Complex.one_re, Complex.one_im, hline]
+        ring_nf
+      rw [norm_rootTerm, hline, sub_self, zero_mul, Real.exp_zero, mul_one,
+        ← Complex.abs_re_eq_norm.mpr him, abs_of_pos (hpos k.1)]
+    _ ≤ ∑' k : ℕ, (actualCoeff k).re :=
+      hmass.summable.tsum_subtype_le _ halfLine (fun k => (hpos k).le)
+    _ = firstLiMass := hmass.tsum_eq
+
+private theorem root_zero_sum_bound {t β : ℝ} (hβ : 1 / 2 < β)
     (hmax : ∀ k : ℕ, (actualZero k).re ≤ β) :
     -((Real.exp (-t / 2) : ℂ) * actualH t).re ≤
       Real.exp ((β - 1 / 2) * t) * (-(maximalSeries actualCoeff actualZero β t).re) +
         (∑' k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β},
           ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t)) +
-        (101 / 100 : ℝ) * firstLiMass := by
+        (firstLiMass + strictLeftMass t) := by
   classical
   let lower : Set ℕ := {k | (actualZero k).re ≤ 1 / 2}
   let intermediate : Set ℕ := {k | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}
@@ -118,18 +148,23 @@ private theorem root_zero_sum_bound {t β : ℝ} (ht : 0 ≤ t) (hβ : 1 / 2 < �
       · have hmid : k ∈ intermediate := ⟨lt_of_not_ge hlo, lt_of_le_of_ne (hmax k) heq⟩
         rw [indicator_of_notMem (show k ∉ lower from hlo), indicator_of_mem hmid]
         simp only [ite_eq_right heq, mul_zero, zero_add]
-  have hlow : -(∑' k : lower, rootTerm t k).re ≤ (101 / 100 : ℝ) * firstLiMass := by
+  have hlower : halfLine ∪ strictLeft = lower := by
+    ext k
+    change (actualZero k).re = 1 / 2 ∨ (actualZero k).re < 1 / 2 ↔
+      (actualZero k).re ≤ 1 / 2
+    exact or_comm.trans le_iff_lt_or_eq.symm
+  have hdisjoint : Disjoint halfLine strictLeft :=
+    Set.disjoint_left.mpr fun _ heq hlt => (ne_of_lt hlt) heq
+  have hlow : -(∑' k : lower, rootTerm t k).re ≤ firstLiMass + strictLeftMass t := by
     refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
     calc
-      _ ≤ ∑' k : lower, ‖actualCoeff k.1‖ := by
-        apply tsum_of_norm_bounded (actualCoeff_hasSum.summable.norm.subtype lower).hasSum
-        intro k
-        rw [norm_rootTerm]
-        exact mul_le_of_le_one_right (norm_nonneg _)
-          (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr k.2) ht))
-      _ ≤ ∑' k : ℕ, ‖actualCoeff k‖ :=
-        actualCoeff_hasSum.summable.norm.tsum_subtype_le _ lower (fun _ => norm_nonneg _)
-      _ ≤ (101 / 100 : ℝ) * firstLiMass := coeff_mass_bound
+      _ ≤ ∑' k : lower, ‖rootTerm t k.1‖ :=
+        norm_tsum_le_tsum_norm ((summable_norm_rootTerm t).subtype lower)
+      _ = (∑' k : halfLine, ‖rootTerm t k.1‖) + strictLeftMass t := by
+        rw [← hlower, strictLeftMass]
+        exact Summable.tsum_union_disjoint hdisjoint
+          ((summable_norm_rootTerm t).subtype halfLine) ((summable_norm_rootTerm t).subtype strictLeft)
+      _ ≤ _ := add_le_add (halfLine_mass_le t) le_rfl
   have hmid : -(∑' k : intermediate, rootTerm t k).re ≤
       ∑' k : intermediate, ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t) := by
     refine (neg_le_abs _).trans ((Complex.abs_re_le_norm _).trans ?_)
@@ -165,14 +200,14 @@ private theorem complete_tail_root_bound {t : ℝ} (ht : Real.log 2 ≤ t) :
     (Real.exp_nonneg _)
 
 /-- The intermediate zero mass converges absolutely, with each analytic occurrence counted.
-For each positive margin below `2 - (101 / 100) * firstLiMass`, one late threshold works
+For each positive margin below `2 - firstLiMass`, one late threshold works
 for every upper bound `β > 1/2` on the real parts of the nontrivial zeros. -/
 theorem eventually_prime_tail_root_scale :
     let lineRealPart := Complex.re
     (∀ β t : ℝ, Summable
       (fun k : {k : ℕ // 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β} =>
         ‖actualCoeff k.1‖ * Real.exp (((actualZero k.1).re - 1 / 2) * t))) ∧
-    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+    ∀ d : ℝ, 0 < d → d < 2 - firstLiMass →
       ∀ᶠ t : ℝ in atTop, ∀ β : ℝ, 1 / 2 < β →
         (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
         Real.exp (t / 2) * primeTail (Real.exp t) ≤
@@ -185,19 +220,20 @@ theorem eventually_prime_tail_root_scale :
       {k : ℕ | 1 / 2 < (actualZero k).re ∧ (actualZero k).re < β}).congr
       (fun k => norm_rootTerm t k.val)
   · intro d _ hd
-    have hpower := (prime_power_window_correction.1.comp Real.tendsto_exp_atTop).eventually
-      (lt_mem_nhds (show d + (101 / 100 : ℝ) * firstLiMass < 2 by linarith only [hd]))
-    filter_upwards [eventually_ge_atTop (Real.log 2), hpower] with t ht hgap β hβ hmax
+    have hpower := prime_power_window_correction.1.comp Real.tendsto_exp_atTop
+    have hbudget : Tendsto
+        (fun t : ℝ => Real.sqrt (Real.exp t) * (Q (Real.exp t) - primeTail (Real.exp t)) -
+          strictLeftMass t) atTop (𝓝 2) := by
+      simpa only [Function.comp_def, sub_zero] using hpower.sub strictLeftMass_tendsto_zero
+    have hgap := hbudget.eventually_const_lt (show d + firstLiMass < 2 by linarith only [hd])
+    filter_upwards [eventually_ge_atTop (Real.log 2), hgap] with t ht hgap β hβ hmax
     have hsqrt : Real.sqrt (Real.exp t) = Real.exp (t / 2) := by
       rw [Real.sqrt_eq_rpow, ← Real.exp_mul]
       congr 1
       ring
-    change d + (101 / 100 : ℝ) * firstLiMass <
-      Real.sqrt (Real.exp t) * (Q (Real.exp t) - primeTail (Real.exp t)) at hgap
     rw [hsqrt, mul_sub] at hgap
     have hcomplete := complete_tail_root_bound ht
-    have ht0 : 0 ≤ t := (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans ht
-    have hzeros := root_zero_sum_bound ht0 hβ (fun k => hmax _ (actual_zero k))
+    have hzeros := root_zero_sum_bound (t := t) hβ (fun k => hmax _ (actual_zero k))
     linarith only [hgap, hcomplete, hzeros]
 
 private theorem continuousOn_prime_mass_density :
@@ -211,7 +247,7 @@ throughout gives a zero cluster value at a strictly wider width. For each admiss
 margin `d`, one left endpoint threshold works for every real-part upper bound and width. -/
 theorem prime_tail_mass_pos_or_intermediate_or_wider_zero_cluster :
     let scale := Real.exp
-    ∀ d : ℝ, 0 < d → d < 2 - (101 / 100 : ℝ) * firstLiMass →
+    ∀ d : ℝ, 0 < d → d < 2 - firstLiMass →
       ∃ T : ℝ, ∀ β : ℝ, 1 / 2 < β → (∀ z : ℂ, IsNontrivialZero z → z.re ≤ β) →
         ∀ t W : ℝ, 0 < W → T ≤ t - W →
           0 < (∫ x in scale (t - W)..scale t, max (-primeTail x) 0 / Real.sqrt x) ∨
