@@ -22,6 +22,17 @@ internal sealed class ParitySeedBudgetDocument : IScribeDocumentDefinition
             Seq(D(2), Caret, Grp(n, Sp, Plus, Sp, D(3)), Sp, Mid, Sp, budget)))));
     }
 
+    private static Formula FibreStatement()
+    {
+        var implementation = F.Id("A");
+        var even = F.Id("p");
+        var odd = F.Id("q");
+        var n = F.Id("n");
+        var count = Seq(D(4), Sp, Mid, Sp, Call("Count", implementation, even, odd));
+        var profilePairs = All("p", Call("EvenProfiles", n), All("q", Call("OddProfiles", n), count));
+        return Disp(All("n", F.Id("Nat"), All("A", Call("UniformImplementations", n), profilePairs)));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact uniform seed budgets for two coloured parity laws are multiples of four times a parity class.",
         H("Exact seed budgets for coloured parity profiles"),
@@ -53,5 +64,22 @@ internal sealed class ParitySeedBudgetDocument : IScribeDocumentDefinition
                     "as many times as the budget multiplier. The copy construction gives a " +
                     "finite group set, with the prescribed cardinality and equal counts above " +
                     "every output in each parity class."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("fourfold-coloured-parity-seed-fibres"),
+            DeclarationHandle.Create(
+                "D5/S3/ConceptDynamics/Attribution/ParitySeedBudget.profile_fibre_four_dvd"),
+            H("Every ordered profile pair has a multiple of four seeds"),
+            StatementSource.FromAuthor(FibreStatement()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("The profiles have n+2 coordinates. A ranges over finite sets " +
+                    "of seeds with the coordinate colour action and equivariant readout into " +
+                    "the two coloured parity classes. Every coloured output on either side " +
+                    "has the same seed count. Count(A,p,q) counts seeds whose readout profiles " +
+                    "are p and q, pooling the four possible pairs of colours.")),
+                Paragraph(Text("The count for a given pair is exactly the sum of its four " +
+                    "coloured cells in the pushforward matrix. The common marginals transfer " +
+                    "fourfold divisibility to the cells incident to the all-ones profile."))),
             DescribeRole.Theorem))));
 }

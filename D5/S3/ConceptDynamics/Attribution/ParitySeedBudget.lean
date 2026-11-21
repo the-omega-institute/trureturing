@@ -313,7 +313,8 @@ def slice (n : ℕ) (t : ZMod 2) :
   carrier := {y | parity (bitProfile y.profile) = t}
   smul_mem' _ _ h := h
 
-private def sliceEquiv (n : ℕ) (t : ZMod 2) :
+/-- A coloured parity output is a parity profile with its binary colour. -/
+def sliceEquiv (n : ℕ) (t : ZMod 2) :
     ParityClass n t × ZMod 2 ≃ slice n t where
   toFun a := ⟨⟨booleanProfile a.1.val, a.2⟩, by
     change parity (bitProfile (booleanProfile a.1.val)) = t
@@ -407,13 +408,20 @@ private theorem matrix_to_seeds {n N : ℕ}
     exact h.trans mEq
 
 
+/-- The number of seeds realizing an ordered pair of profiles, summing over both colours. -/
+def profileFibreCount {n : ℕ} {S : Type} [Fintype S] (f : S → Pair n)
+    (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) : ℕ :=
+  ∑ s, if (f s).1.val.profile = booleanProfile p.val ∧
+    (f s).2.val.profile = booleanProfile q.val then 1 else 0
+
 private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
     [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n) (card : Fintype.card S = N)
     (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s)
     (k : ℕ)
     (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
     (cols : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k) :
-    ∃ w, MatrixRealizes n N w := by
+    ∃ w, MatrixRealizes n N w ∧
+      ∀ p q, pairMass w p.val q.val = profileFibreCount f p q := by
   let w (x y : Output (Fin (n + 2))) : ℕ :=
     ∑ s : S, if (f s).1.val = x ∧ (f s).2.val = y then 1 else 0
   have invariant (g : Acting (Fin (n + 2))) (x y : Output (Fin (n + 2))) :
@@ -455,7 +463,7 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
         (∑ a : Pair n, if (f s).1 = a.1 ∧ (f s).2 = a.2 then (1 : ℕ) else 0) = 1 := by
       simp [← Prod.ext_iff]
     simp [single, card]
-  refine ⟨w, invariant, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩
+  refine ⟨w, ⟨invariant, (sum_seedWeight w).symm.trans total, k, ?_, ?_⟩, ?_⟩
   · intro p c
     have h := rowCount (sliceEquiv (n + 2) 0 (p, c))
     rw [← (sliceEquiv (n + 2) 1).sum_comp, Fintype.sum_prod_type] at h
@@ -474,7 +482,36 @@ private theorem seeds_to_matrix {n N : ℕ} {S : Type} [Fintype S]
       simp
     · intro p _
       rfl
+  · intro p q
+    unfold pairMass w profileFibreCount
+    simp_rw [sum_comm (s := (univ : Finset (ZMod 2))) (t := (univ : Finset S))]
+    apply sum_congr rfl
+    intro s _
+    rcases (f s).1.val with ⟨profile₁, colour₁⟩
+    rcases (f s).2.val with ⟨profile₂, colour₂⟩
+    simp only [Output.mk.injEq]
+    by_cases hp : profile₁ = booleanProfile p.val
+    · by_cases hq : profile₂ = booleanProfile q.val
+      · simp only [hp, hq, true_and, ite_true]
+        calc
+          _ = ∑ a : ZMod 2 × ZMod 2, if (colour₁, colour₂) = a then (1 : ℕ) else 0 := by
+            rw [Fintype.sum_prod_type]
+            simp only [Prod.mk.injEq]
+          _ = 1 := by simp
+      · simp [hp, hq]
+    · simp [hp]
 
+/-- Every ordered profile pair has a multiple of four seeds in a uniform implementation. -/
+theorem profile_fibre_four_dvd {n : ℕ} {S : Type} [Fintype S]
+    [MulAction (Acting (Fin (n + 2))) S] (f : S → Pair n)
+    (equiv : ∀ (g : Acting (Fin (n + 2))) s, f (g • s) = g • f s) (k : ℕ)
+    (rows : ∀ x : slice (n + 2) 0, (∑ s, if (f s).1 = x then 1 else (0 : ℕ)) = k)
+    (cols : ∀ y : slice (n + 2) 1, (∑ s, if (f s).2 = y then 1 else (0 : ℕ)) = k)
+    (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
+    4 ∣ profileFibreCount f p q := by
+  obtain ⟨w, matrix, counts⟩ := seeds_to_matrix f rfl equiv k rows cols
+  rw [← counts]
+  exact matrix.four_dvd.2 p q
 
 /-- Count budgets for an equivariant implementation of two uniform coloured parity laws. -/
 theorem exact_seed_budget (n N : ℕ) :
@@ -486,7 +523,8 @@ theorem exact_seed_budget (n N : ℕ) :
     2 ^ (n + 3) ∣ N := by
   constructor
   · rintro ⟨S, _, _, f, card, equiv, k, rows, cols⟩
-    exact (exact_matrix_budget n N).mp (seeds_to_matrix f card equiv k rows cols)
+    obtain ⟨w, matrix, _⟩ := seeds_to_matrix f card equiv k rows cols
+    exact (exact_matrix_budget n N).mp ⟨w, matrix⟩
   · intro d
     obtain ⟨w, h⟩ := (exact_matrix_budget n N).mpr d
     exact matrix_to_seeds h

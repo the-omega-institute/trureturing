@@ -20,8 +20,23 @@ The pushforward counts are invariant. For a pair with neither profile all ones, 
 
 For sufficiency, match even and odd profiles with identical tails. Use all four pairs of colours over each matched pair, repeated as many times as the budget multiplier. The copy construction gives a finite group set, with the prescribed cardinality and equal counts above every output in each parity class.
 
+**Theorem 1.2 (Every ordered profile pair has a multiple of four seeds).**
+
+$$\forall n \in Nat,\; \forall A \in \operatorname{UniformImplementations}\left(n\right),\; \forall p \in \operatorname{EvenProfiles}\left(n\right),\; \forall q \in \operatorname{OddProfiles}\left(n\right),\; 4 \mid \operatorname{Count}\left(A, p, q\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParitySeedBudget.profile_fibre_four_dvd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The profiles have n+2 coordinates. A ranges over finite sets of seeds with the coordinate colour action and equivariant readout into the two coloured parity classes. Every coloured output on either side has the same seed count. Count(A,p,q) counts seeds whose readout profiles are p and q, pooling the four possible pairs of colours.
+
+The count for a given pair is exactly the sum of its four coloured cells in the pushforward matrix. The common marginals transfer fourfold divisibility to the cells incident to the all-ones profile.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParitySeedBudget.exact_seed_budget`
+- Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParitySeedBudget.profile_fibre_four_dvd`
 - Dependency: [D5/S3/ConceptDynamics/Attribution/CoordinateColourOrbit](CoordinateColourOrbit.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/UniformTableCalibration](UniformTableCalibration.md)
