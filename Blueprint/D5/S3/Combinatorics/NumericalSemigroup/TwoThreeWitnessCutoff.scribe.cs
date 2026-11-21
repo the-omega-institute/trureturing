@@ -51,10 +51,11 @@ internal sealed class TwoThreeWitnessCutoffDocument : IScribeDocumentDefinition
             F.Id("D"), Open, u, Close, Sp, Eq, Sp, D(1), Sp, Land, Sp,
             Open, Forall, Sp, t, Sp, InMacro, Sp, z, Comma, Sp, t, Sp, Geq, Sp, c,
             Sp, Rightarrow, Sp, F.Id("V"), Open, p, Comma, u, Comma, t, Close, Close);
-        return Disp(Seq(Forall, Sp, c, Sp, InMacro, Sp, z, Comma, Sp,
-            Open, eligibility, Close, RowBreak,
+        return Disp(new Formula.Aligned([Seq(Forall, Sp, c, Sp, InMacro, Sp, z, Comma, Sp,
+            Open, eligibility, Close),
+            Seq(
             F.Id("E"), Open, D(8), Close, Sp, Land, Sp, Open, Forall, Sp, c, Sp,
             InMacro, Sp, z, Comma, Sp, F.Id("E"), Open, c, Close, Sp, Rightarrow, Sp,
-            D(8), Sp, Le, Sp, c, Close));
+            D(8), Sp, Le, Sp, c, Close)]));
     }
 }

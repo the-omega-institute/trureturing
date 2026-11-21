@@ -6,7 +6,7 @@ The minimum cutoff over two-witness spans for the degree row (2, 3).
 
 **Theorem 1.1 (Eight is the smallest cutoff over the witness choices).**
 
-$$\forall C \in \mathbb{Z}, (E(C) \iff \exists p,u \in \mathbb{Z}^2, p_{1} > 0 \land p_{2} > 0 \land D(u) = 1 \land (\forall t \in \mathbb{Z}, t \geq C \Rightarrow V(p,u,t)))\\E(8) \land (\forall C \in \mathbb{Z}, E(C) \Rightarrow 8 \le C)$$
+$$\begin{aligned}\forall C \in \mathbb{Z}, (E(C) \iff \exists p,u \in \mathbb{Z}^2, p_{1} > 0 \land p_{2} > 0 \land D(u) = 1 \land (\forall t \in \mathbb{Z}, t \geq C \Rightarrow V(p,u,t)))\\E(8) \land (\forall C \in \mathbb{Z}, E(C) \Rightarrow 8 \le C)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/NumericalSemigroup/TwoThreeWitnessCutoff.best_two_witness_cutoff` (`✓ std3`). ∎
 
