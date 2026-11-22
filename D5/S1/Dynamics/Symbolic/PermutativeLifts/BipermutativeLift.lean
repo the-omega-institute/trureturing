@@ -13,7 +13,8 @@ public import Mathlib.Data.Fin.Tuple.Basic
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Dynamics.SymbolicDynamics.Basic
 public import Mathlib.Topology.Homeomorph.Lemmas
-public import Mathlib.Topology.Instances.Int
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Data.Nat.Cast.Defs
 public import Mathlib.Tactic.Ext
 public import Lean.Elab.Tactic.Omega
 public import Lean.Elab.Tactic.NormCast
