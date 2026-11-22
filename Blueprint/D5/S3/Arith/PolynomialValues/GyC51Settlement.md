@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A common affine input family gives two symmetric triple-product differences whose coefficients fail log-concavity.
+An affine input family refutes Gy's joint coefficient log-concavity assertion through the elementary difference.
 
 **Definition 1.1 (The first m inputs).**
 
@@ -116,7 +116,7 @@ Gy asks in Section 5, printed page 16.
 
 The triple ranges over 1 ≤ j ≤ p ≤ n. The premise includes the predecessor x₀, while each symmetric polynomial starts at x₁. Conjecture 5.1 on printed page 15 asks for coefficient nonnegativity of E and H.
 
-**Theorem 1.10 (Both outputs can fail coefficient log-concavity).**
+**Theorem 1.10 (Gy's joint coefficient log-concavity assertion is false).**
 
 $$\neg claim$$
 
@@ -130,9 +130,11 @@ $$\neg claim$$
 
 Set gₜ = 1 + q + tq² and xₖ = (k + a)gₜ for every k ≥ 0. The strong q-log-concavity difference is (r − i)gₜ² for every i ≤ r, so the premise holds for t ≥ 0.
 
-For n = j + 2 and p = j + 1, each output equals Cgₜ⁴, where C = j(j + 1)²(j + 2)(2a + j + 2)(4a + j + 3)/48 is positive for a > 0 and j ≥ 1. The first three coefficients are C, 4C and (6 + 4t)C. At t > 5/2, index one is interior and its determinant (10 − 4t)C² is negative.
+For n = j + 2 and p = j + 1, the elementary difference E equals Cgₜ⁴, where C = j(j + 1)²(j + 2)(2a + j + 2)(4a + j + 3)/48 is positive for a > 0 and j ≥ 1. The first three coefficients are C, 4C and (6 + 4t)C. At t > 5/2, index one is interior and its determinant (10 − 4t)C² is negative.
 
-The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). Each output has first coefficients 10, 40 and 180 and determinant −200. Both polynomials have nonnegative coefficients.
+The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). The first three coefficients of E are 10, 40 and 180, with determinant −200. This failure of E proves ¬claim for the joint assertion.
+
+A separate kernel-checked calculation gives H = Cgₜ⁴ for the same family. At the same triple it gives the same determinant −200. Both polynomials have nonnegative coefficients.
 
 ## References
 
@@ -147,3 +149,4 @@ The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). Each output has f
 - Truth anchor: `D5/S3/Arith/PolynomialValues/GyC51Settlement.qLe`
 - Truth anchor: `D5/S3/Arith/PolynomialValues/GyC51Settlement.result`
 - Dependency: [D5/S0/Certificates/GiacomelliLogConcaveConeNonconvex](../../../S0/Certificates/GiacomelliLogConcaveConeNonconvex.md)
+- Dependency: [D5/S1/Phase/Interference/DedekindReciprocityFiniteSums](../../../S1/Phase/Interference/DedekindReciprocityFiniteSums.md)
