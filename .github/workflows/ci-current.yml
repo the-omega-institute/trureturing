@@ -338,6 +338,7 @@ jobs:
         name: Check current and delta with affected Lean and Scribe inputs
         if: ${{ !cancelled() && steps.lean_plan.outcome == 'success' && (steps.lean_plan.outputs.builds_lean == 'false' || steps.lean_seeds.outcome == 'success') }}
         env:
+          LEAN_NUM_THREADS: '1'
           CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current pr-lean --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: checked
