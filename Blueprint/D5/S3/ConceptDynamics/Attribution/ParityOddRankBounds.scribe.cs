@@ -21,6 +21,22 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
             FormulaLogicOperator.Implies, bound));
     }
 
+    private static Formula WeightedStatement()
+    {
+        var n = F.Id("n");
+        var k = F.Id("k");
+        var m = F.Id("m");
+        var b = F.Id("b");
+        var first = Call("PositivePart", Seq(Add(n, Call("OutsideTop", m)), Sp, Minus, Sp,
+            Call("Twice", k)));
+        var second = Call("PositivePart", Seq(Add(Call("Choose", n, D(2)), Call("SingletonMass", m)),
+            Sp, Minus, Sp, Mul(n, k)));
+        var bound = Seq(Add(Add(Call("FlagCost", b), first), second), Sp, Le, Sp,
+            Call("IntersectionCount", n, m, b));
+        return Disp(new Formula.Logic(Call("OddMargins", n, k, m, b),
+            FormulaLogicOperator.Implies, bound));
+    }
+
     private static Formula Mul(Formula left, Formula right) =>
         Seq(left, Sp, Cdot, Sp, right);
 
@@ -28,6 +44,24 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
         "A lower bound from high ranks in the odd uniform parity matrix.",
         H("High-rank constraints at odd parity budgets"),
         Blocks(Describe.Lean(
+            DescribeId.Create("rank-deficits-with-full-row-masses"),
+            DeclarationHandle.Create("D5/S3/ConceptDynamics/Attribution/ParityOddRankBounds.weighted_rank_deficits_le_intersections"),
+            H("The full row supplies two measurable capacity corrections"),
+            StatementSource.FromAuthor(WeightedStatement()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("For OddMargins, the dimension n is even and at least six. "
+                    + "The natural-number matrix m on even and odd subsets of Fin(n) has "
+                    + "every row and column sum equal to the odd number k. The flags b are "
+                    + "arbitrary natural numbers on the odd subsets.")),
+                Paragraph(Text("OutsideTop sums the full-row mass on columns of size other "
+                    + "than n minus one. SingletonMass sums its mass on singleton columns. "
+                    + "FlagCost sums each flag times its column size. IntersectionCount "
+                    + "uses the flags in the full row and entry parity elsewhere, weighted "
+                    + "by intersection size. PositivePart truncates a negative difference "
+                    + "to zero."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("odd-margin-intersection-lower-bound"),
             DeclarationHandle.Create("D5/S3/ConceptDynamics/Attribution/ParityOddRankBounds.fixed_from_odd_margins"),
             H("Two rank constraints bound the total weighted intersection count"),
