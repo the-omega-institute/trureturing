@@ -155,7 +155,7 @@ private def leftArrayReflect (n : ℕ) : LeftArrays n ≃o (BracketingFunctions 
     · intro h s
       have h' := reflected_le.mp (h (e s))
       rw [e.symm_apply_apply] at h'
-      exact h' 
+      exact h'
     · intro h i
       exact reflected_le.mpr (h (e.symm i))
 

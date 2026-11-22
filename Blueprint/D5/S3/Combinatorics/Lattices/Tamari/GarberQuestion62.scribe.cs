@@ -26,26 +26,7 @@ internal sealed class GarberQuestion62Document : IScribeDocumentDefinition
                     + " using contextual right-rotation reachability on the trees."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create(Owner + "result"), H("The order and both comparison boundaries"),
-                StatementSource.FromAuthor(F.Disp(Bind(FormulaQuantifier.ForAll, "n", NatType, Logic(Rel(D(1),
-                    FormulaRelationOperator.LessThanOrEqual, F.Id("n")), FormulaLogicOperator.Implies,
-                    Parenthesized(Logic(Call("IsGreatest", Seq(OpenBrace, Seq(F.Id("k"), Sp, InMacro, Sp,
-                    NatType), Sp, Mid, Sp, Bind(FormulaQuantifier.Exists, "C", Call("Set", Call("Trees",
-                    Bin(F.Id("n"), FormulaBinaryOperator.Add, D(1)))), Logic(Call("IsBooleanFamily",
-                    F.Id("C")), FormulaLogicOperator.And, Rel(Call("ncard", F.Id("C")),
-                    FormulaRelationOperator.Equal, F.Id("k")))), CloseBrace), F.Id("n")),
-                    FormulaLogicOperator.And, Logic(Call("Nonempty", Call("OrderIso", Call("MaximumFamilies",
-                    Call("Trees", Bin(F.Id("n"), FormulaBinaryOperator.Add, D(1))), F.Id("n")), Call("Trees",
-                    F.Id("n")))), FormulaLogicOperator.And, Logic(Parenthesized(Logic(Call("Nonempty",
-                    Call("OrderIso", Call("MaximumFamilies", Call("Trees", Bin(F.Id("n"),
-                    FormulaBinaryOperator.Add, D(1))), F.Id("n")), Call("NoncrossingPartitions", F.Id("n")))),
-                    FormulaLogicOperator.Iff, Parenthesized(Rel(F.Id("n"),
-                    FormulaRelationOperator.LessThanOrEqual, D(2))))), FormulaLogicOperator.And,
-                    Logic(Parenthesized(Logic(Call("Nonempty", Call("OrderIso", Call("MaximumFamilies",
-                    Call("Trees", Bin(F.Id("n"), FormulaBinaryOperator.Add, D(1))), F.Id("n")),
-                    Call("DyckPaths", F.Id("n")))), FormulaLogicOperator.Iff, Parenthesized(Rel(F.Id("n"),
-                    FormulaRelationOperator.LessThanOrEqual, D(2))))), FormulaLogicOperator.And,
-                    Call("Nonempty", Call("OrderIso", Call("MaximumFamilies", Call("Trees", Bin(F.Id("n"),
-                    FormulaBinaryOperator.Add, D(1))), F.Id("n")), Call("TamariDyckPaths", F.Id("n"))))))))))))),
+                StatementSource.FromAuthor(F.Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Garber, Goltermann, Horiatakis, König and Gottesman ask in Question 6.2 of Counting Boolean"
                     + " antichains (2026), “Is the order on Boolean antichains of maximal size in the Tamari lattice"
@@ -55,6 +36,39 @@ internal sealed class GarberQuestion62Document : IScribeDocumentDefinition
                     + " and Dyck height dominance each give an isomorphic order exactly at n = 1 and n = 2. The Dyck"
                     + " paths with transported Tamari order give an isomorphism for every n ≥ 1. The order of families"
                     + " on arbitrary lattices lies outside the first sentence."))), DescribeRole.Theorem))));
+
+    private static Formula ResultFormula()
+    {
+        var rank = F.Id("n");
+        var cardinality = F.Id("k");
+        var family = F.Id("C");
+        var ambientTrees = Call("Trees", Bin(rank, FormulaBinaryOperator.Add, D(1)));
+        var maximumFamilies = Call("MaximumFamilies", ambientTrees, rank);
+        var possibleSizes = Seq(OpenBrace, Seq(cardinality, Sp, InMacro, Sp, NatType), Sp, Mid, Sp,
+            Bind(FormulaQuantifier.Exists, "C", Call("Set", ambientTrees),
+                Logic(Call("IsBooleanFamily", family), FormulaLogicOperator.And,
+                    Rel(Call("ncard", family), FormulaRelationOperator.Equal, cardinality))), CloseBrace);
+        var maximum = Call("IsGreatest", possibleSizes, rank);
+        var smallRank = Parenthesized(Rel(rank, FormulaRelationOperator.LessThanOrEqual, D(2)));
+        var tamari = IsomorphismExists(maximumFamilies, Call("Trees", rank));
+        var refinement = Parenthesized(Logic(
+            IsomorphismExists(maximumFamilies, Call("NoncrossingPartitions", rank)),
+            FormulaLogicOperator.Iff, smallRank));
+        var height = Parenthesized(Logic(
+            IsomorphismExists(maximumFamilies, Call("DyckPaths", rank)),
+            FormulaLogicOperator.Iff, smallRank));
+        var transported = IsomorphismExists(maximumFamilies, Call("TamariDyckPaths", rank));
+        var answer = Logic(maximum, FormulaLogicOperator.And,
+            Logic(tamari, FormulaLogicOperator.And,
+                Logic(refinement, FormulaLogicOperator.And,
+                    Logic(height, FormulaLogicOperator.And, transported))));
+        return Bind(FormulaQuantifier.ForAll, "n", NatType,
+            Logic(Rel(D(1), FormulaRelationOperator.LessThanOrEqual, rank),
+                FormulaLogicOperator.Implies, Parenthesized(answer)));
+    }
+
+    private static Formula IsomorphismExists(Formula source, Formula target) =>
+        Call("Nonempty", Call("OrderIso", source, target));
 
     private static Formula Call(string name, params Formula[] values) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. values]);

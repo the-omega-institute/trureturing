@@ -15,6 +15,15 @@ triage: anchor
 
 # Garber et al. on Boolean antichains in the Tamari lattice
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2608.27126
+
+Source: https://arxiv.org/html/2608.27126v2#S6.Thmtheorem2
+
+*Counting Boolean antichains*, arXiv:2608.27126v2 (2026), §6, Question 6.2,
+p. 22.
+
 ## Question 6.2
 
 *Counting Boolean antichains*, arXiv:2608.27126v2 (2026), §6, Question 6.2,
