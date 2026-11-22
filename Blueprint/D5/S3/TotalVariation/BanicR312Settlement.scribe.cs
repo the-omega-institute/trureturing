@@ -57,6 +57,7 @@ internal sealed class BanicR312SettlementDocument : IScribeDocumentDefinition
     private static Formula Clause(Formula left, Formula right) =>
         F.Seq(F.OpenBracket, F.Forall, F.Sp, Id("n"), F.Comma, Id("N"), F.Sp,
             F.InMacro, F.Sp, F.Mathbb, F.Grp(Id("N")), F.Comma, F.Sp,
-            Num(3), F.Le, Id("n"), F.Sp, F.Rightarrow, F.Sp,
-            Num(1), F.Le, Id("N"), F.Sp, F.Rightarrow, F.Sp, left, F.Le, right, F.CloseBracket);
+            Num(3), F.Sp, F.Le, F.Sp, Id("n"), F.Sp, F.Rightarrow, F.Sp,
+            Num(1), F.Sp, F.Le, F.Sp, Id("N"), F.Sp, F.Rightarrow, F.Sp,
+            left, F.Sp, F.Le, F.Sp, right, F.CloseBracket);
 }
