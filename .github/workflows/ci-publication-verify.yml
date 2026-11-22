@@ -14,7 +14,7 @@ on:
         description: Shared identifier for two verification snapshots using reusable physical volumes
         type: string
       sparse_release:
-        description: Prefer a compatible predecessor in the named volume namespace and reuse its checked report
+        description: Prefer a compatible predecessor in the named volume namespace and reuse its module artifacts
         type: boolean
         default: true
       retire_volume_tag:
