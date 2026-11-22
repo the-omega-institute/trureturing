@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+import D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer
 import Reg.Support.DependentFamily
 
 /-! The actual decoder distinguishes a leaf and its legal two-step cherry. -/
 
-namespace Reg.D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+namespace Reg.D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer
 
-open _root_.D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+open _root_.D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -59,8 +59,8 @@ def family : Registration arena (type_of% exact_local_two_step) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     exact_local_two_step (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer.unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer.family
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer.unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -76,7 +76,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+    owner := `D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -92,4 +92,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
-end Reg.D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+end Reg.D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer

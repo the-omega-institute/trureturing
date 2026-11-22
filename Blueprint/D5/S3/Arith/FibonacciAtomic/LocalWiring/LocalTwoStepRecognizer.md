@@ -8,7 +8,7 @@ A physical tree shape after two actual local updates has an exact decoder: it re
 
 $$\operatorname{Expanded}\left(U, X\right)\iff \exists V,W\quad\operatorname{Step}\left(U, V\right) \land \operatorname{Step}\left(V, W\right) \land \operatorname{sh}\left(W\right)=X$$
 
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer.Expanded` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer.Expanded` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ The labelled occurrences are finite non-associative binary trees. Label erasure 
 
 $$(D_{loc}(X)=\operatorname{some}\left(U\right) \iff \operatorname{Expanded}\left(U, X\right))\quad\land\quad(\operatorname{Grammar}\left(X\right) \iff \exists! U\quad\operatorname{Expanded}\left(U, X\right))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer.exact_local_two_step` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer.exact_local_two_step` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,5 +38,5 @@ An arbitrary node-local exchange preserves rejection and, on acceptance, exchang
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer.Expanded`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer.exact_local_two_step`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer.Expanded`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer.exact_local_two_step`

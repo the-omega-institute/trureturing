@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer
+/- GID: D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Free]
    utility: none
@@ -10,7 +10,7 @@ import Mathlib.Algebra.Free
 
 /-! Exact local two-step recognition for physical Fibonacci substitution trees. -/
 
-namespace D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+namespace D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer
 
 abbrev Labelled := FreeMagma Bool
 abbrev Shape := FreeMagma Unit
@@ -388,4 +388,4 @@ theorem exact_local_two_step :
 
 #print axioms exact_local_two_step
 
-end D5.S3.Arith.FibonacciAtomic.LocalTwoStepRecognizer
+end D5.S3.Arith.FibonacciAtomic.LocalWiring.LocalTwoStepRecognizer

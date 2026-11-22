@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.LocalWiring;
 
 internal sealed class LocalTwoStepRecognizerDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/LocalTwoStepRecognizer.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/LocalWiring/LocalTwoStepRecognizer.";
     private static Formula X => F.Id("X");
     private static Formula U => F.Id("U");
     private static Formula Dloc => Seq(F.Id("D"), Underscore, Grp(F.Id("loc")));
