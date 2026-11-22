@@ -129,7 +129,7 @@ private theorem marginal_diagonal (C : QuantumChannel Qutrit Qutrit) (i : Qutrit
 set_option maxHeartbeats 2000000 in
 -- The Bell effect is evaluated by expanding the nine joint coordinates.
 /-- The two Bell rays give a lower bound for every CPTP map into the coordinate plane. -/
-theorem supported_lower_bound (C : QuantumChannel Qutrit Qutrit) (hC : Supported C) :
+private theorem supported_lower_bound (C : QuantumChannel Qutrit Qutrit) (hC : Supported C) :
     (2 / 3 : ℝ) ≤ error C := by
   let X := joint (normalizedChoi C)
   have hX : X.PosSemidef := density_posSemidef _
@@ -285,7 +285,7 @@ private theorem reset_upper : error projectionReset ≤ 2 / 3 := by
   linarith
 
 /-- The minimum over arbitrary CPTP maps supported on the coordinate plane is 2 / 3. -/
-theorem supported_optimum :
+private theorem supported_optimum :
     IsLeast {d : ℝ | ∃ C : QuantumChannel Qutrit Qutrit, Supported C ∧ error C = d} (2 / 3) := by
   refine ⟨⟨projectionReset, reset_supported,
     le_antisymm reset_upper (supported_lower_bound _ reset_supported)⟩, ?_⟩

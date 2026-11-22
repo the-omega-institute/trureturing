@@ -21,4 +21,4 @@ Section 4.2, Eq. (10), gives $F_e(\rho,\mathcal{E}) =
 With the maximally mixed qutrit marginal, this is the overlap with the
 normalized Bell projector. The qutrit compression comparison uses half the
 trace norm on the same reference-output system.
-[Primary preprint, §4.2](https://arxiv.org/abs/quant-ph/9604023)
+[DOI](https://doi.org/10.1103/PhysRevA.54.2614) · [Primary preprint, §4.2](https://arxiv.org/abs/quant-ph/9604023)

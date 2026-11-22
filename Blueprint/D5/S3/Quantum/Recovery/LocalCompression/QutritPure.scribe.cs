@@ -11,7 +11,7 @@ internal sealed class QutritPureDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef NayakSen =
         LibraryNoteRef.Create("D5/L/Quantum/nayaksen2007invertible");
     private static readonly LibraryNoteRef Schumacher =
-        LibraryNoteRef.Create("D5/L/Quantum/schumacher1996sendingentanglement");
+        LibraryNoteRef.Create("D5/L/ProcessReconstruction/schumacher1996sendingentanglement");
     private static readonly LibraryNoteRef FarberGour =
         LibraryNoteRef.Create("D5/L/Divergence/farbergour2026classicalcommunication");
     private static readonly LibraryNoteRef ChaParkLee =
@@ -26,16 +26,17 @@ internal sealed class QutritPureDocument : IScribeDocumentDefinition
                 + "Distortion is half the trace norm of the joint state difference. "
                 + "The qubit protocol uses one fixed encoder and one fixed decoder, connected solely by the qubit. "
                 + "Kato Section VII proposes approximate local compression. Nayak and Sen Theorem 2.1 "
-                + "characterizes reversible finite channels. Schumacher Eq. (10) gives entanglement fidelity, "
-                + "and Farber and Gour Theorem 5 gives the unassisted fidelity optimum. "
-                + "Cha, Park and Lee Appendix D treats Haar-average fidelity and Appendix L gives "
-                + "bounds for ensemble-average trace distance.")),
+                + "characterizes reversible finite channels. Schumacher Eq. (10) expresses entanglement fidelity "
+                + "in terms of Kraus operators. Farber and Gour Theorem 5 gives the exact unassisted root fidelity "
+                + "and uses projection with reset to attain it. Cha, Park and Lee Proposition 3.7 exhibits a "
+                + "nonisometric-decoder advantage for phase-ensemble fidelity. Their Appendix D treats Haar-average "
+                + "fidelity and Appendix L gives bounds for ensemble-average trace distance.")),
             Describe.Lean(
                 DescribeId.Create("qutrit-fixed-output-plane-optimum"),
                 DeclarationHandle.Create(Prefix + "plane_optimum"),
                 H("Exact least distortion with output in a prescribed plane"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Kato, NayakSen),
+                AssessedProvenance.FromRepo(Kato, NayakSen, FarberGour),
                 Blocks(Paragraph(Text(
                     "For every unitary frame, the minimum over CPTP maps into its first two levels is 2/3. "
                     + "In the coordinate frame the effect is the projector onto the normalized vector with coefficients (1, 1, 2) "

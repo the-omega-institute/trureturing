@@ -4,7 +4,7 @@
 
 The Bell qutrit has reconstruction error 2/3 with output in a plane and a strictly smaller error through a qubit.
 
-The source is the normalized qutrit Bell state. The reference factor stays untouched. Distortion is half the trace norm of the joint state difference. The qubit protocol uses one fixed encoder and one fixed decoder, connected solely by the qubit. Kato Section VII proposes approximate local compression. Nayak and Sen Theorem 2.1 characterizes reversible finite channels. Schumacher Eq. (10) gives entanglement fidelity, and Farber and Gour Theorem 5 gives the unassisted fidelity optimum. Cha, Park and Lee Appendix D treats Haar-average fidelity and Appendix L gives bounds for ensemble-average trace distance.
+The source is the normalized qutrit Bell state. The reference factor stays untouched. Distortion is half the trace norm of the joint state difference. The qubit protocol uses one fixed encoder and one fixed decoder, connected solely by the qubit. Kato Section VII proposes approximate local compression. Nayak and Sen Theorem 2.1 characterizes reversible finite channels. Schumacher Eq. (10) expresses entanglement fidelity in terms of Kraus operators. Farber and Gour Theorem 5 gives the exact unassisted root fidelity and uses projection with reset to attain it. Cha, Park and Lee Proposition 3.7 exhibits a nonisometric-decoder advantage for phase-ensemble fidelity. Their Appendix D treats Haar-average fidelity and Appendix L gives bounds for ensemble-average trace distance.
 
 **Theorem 1.1 (Exact least distortion with output in a prescribed plane).**
 
@@ -17,6 +17,8 @@ Lean statement: `D5/S3/Quantum/Recovery/LocalCompression/QutritPure.plane_optimu
 *Acknowledgement.* Kohtaro Kato (2025). *Exact and Local Compression of Quantum Bipartite States*. DOI: [10.1109/TIT.2025.3562884](https://doi.org/10.1109/TIT.2025.3562884). URL: <https://arxiv.org/abs/2309.07434>.
 
 *Acknowledgement.* Ashwin Nayak and Pranab Sen (2007). *Invertible Quantum Operations and Perfect Encryption of Quantum States*. DOI: [10.26421/QIC7.1-2-6](https://doi.org/10.26421/QIC7.1-2-6).
+
+*Acknowledgement.* Omri Farber and Gilad Gour (2026). *Classical Communication Helps Single-Shot Quantum Compression*. URL: <https://arxiv.org/abs/2610.14785v1>.
 
 *Commentary.*
 
