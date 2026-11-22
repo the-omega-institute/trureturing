@@ -39,7 +39,7 @@ theorem second_mono : Monotone second := by
   intro a b h
   unfold second
   gcongr
-private theorem rises_lower {n r s : ℕ} (h : rises n r) (hs : s ≤ r) : rises n s := by
+theorem rises_lower {n r s : ℕ} (h : rises n r) (hs : s ≤ r) : rises n s := by
   refine ⟨by have := h.1; omega, ?_⟩
   exact (Nat.mul_le_mul_left 4 hs).trans (h.2.trans (second_mono (by omega)))
 private theorem rises_next {n r : ℕ} (h : rises n r) : rises (n + 1) r :=
@@ -48,7 +48,7 @@ private theorem rises_previous {n r : ℕ} (h : rises (n + 1) (r + 1)) : rises n
   refine ⟨by have := h.1; omega, ?_⟩
   exact (Nat.mul_le_mul_left 4 (by omega : r ≤ r + 1)).trans
     (h.2.trans (second_mono (by omega)))
-private theorem mode_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) ≤ mode n + 1 := by
+theorem mode_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) ≤ mode n + 1 := by
   refine ⟨le_mode (rises_next (mode_rises n)), ?_⟩
   cases h : mode (n + 1) with
   | zero => omega
@@ -92,7 +92,7 @@ theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
   field_simp
   <;> ring
 
-private theorem adjacent_le (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
+theorem adjacent_le (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     weight n r ≤ weight n (r + 1) ↔ rises n (r + 1) := by
   have hd : (0 : ℚ) < 4 * (r + 1) := by positivity
   have hw := weight_pos n r (by omega)

@@ -30,7 +30,19 @@ $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in
 
 The reading of the quaternion comparison model is kappa x y = (1 + <x, y>) / 2, so 2 * kappa x y - 1 is the real inner product <x, y>. The ray kernel adds its square to the square of the same expression after the second argument is multiplied on the right by i; thus rayKernel x y = <x, y>^2 + <x, y * i>^2.
 
-**Theorem 1.3 (The ray kernel through the Hopf images).**
+**Lemma 1.3 (The ray kernel through inner products).**
+
+$$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{rayKernel}\left(x, y\right) = \left(\langle x, y \rangle_{\mathbb{R}}\right)^{2} + \left(\langle x, y \cdot \operatorname{unitI} \rangle_{\mathbb{R}}\right)^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_eq_inner` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Since kappa x y = (1 + <x, y>) / 2, the expression 2 * kappa x y - 1 equals <x, y>, and likewise 2 * kappa x (y * i) - 1 equals <x, y * i>, where the unit quaternion y * i, regarded as a quaternion, is the product of y and i. Substituting both into the definition gives the stated formula.
+
+**Theorem 1.4 (The ray kernel through the Hopf images).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{rayKernel}\left(x, y\right) = \frac{1 + \langle \operatorname{hopf}\left(x\right), \operatorname{hopf}\left(y\right) \rangle_{\mathbb{R}}}{2}$$
 
@@ -42,7 +54,7 @@ $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in
 
 For all quaternions p and q the polynomial identity <p, q>^2 + <p, q * i>^2 = (|p|^2 * |q|^2 + <p * i * star p, q * i * star q>) / 2 holds, as one checks by expanding both sides in the sixteen products of components. For unit quaternions |p| = |q| = 1, and the identity becomes the stated formula. In particular the ray kernel depends on x and y only through their Hopf images.
 
-**Theorem 1.4 (Blindness to a phase on the left argument).**
+**Theorem 1.5 (Blindness to a phase on the left argument).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), c \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \left(\operatorname{imJ}\left(c\right) = 0 \land \operatorname{imK}\left(c\right) = 0\right) \Rightarrow \operatorname{rayKernel}\left(x \cdot c, y\right) = \operatorname{rayKernel}\left(x, y\right)$$
 
@@ -54,7 +66,7 @@ $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in
 
 A quaternion c whose j and k components vanish lies in the real span of 1 and i and commutes with i. For a unit quaternion c of this kind, (x * c) * i * star (x * c) = x * (c * i * star c) * star x = x * i * star x, so right multiplication by c does not move the Hopf image. The formula through the Hopf images then gives the invariance.
 
-**Theorem 1.5 (Blindness to a phase on the right argument).**
+**Theorem 1.6 (Blindness to a phase on the right argument).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), c \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \left(\operatorname{imJ}\left(c\right) = 0 \land \operatorname{imK}\left(c\right) = 0\right) \Rightarrow \operatorname{rayKernel}\left(x, y \cdot c\right) = \operatorname{rayKernel}\left(x, y\right)$$
 
@@ -66,7 +78,7 @@ $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in
 
 This is the same argument applied to the second argument: right multiplication of y by a unit quaternion c in the real span of 1 and i leaves the Hopf image of y unchanged.
 
-**Theorem 1.6 (The ray kernel equals one exactly on the phase circles).**
+**Theorem 1.7 (The ray kernel equals one exactly on the phase circles).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{rayKernel}\left(x, y\right) = 1 \Leftrightarrow \left(\exists c \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \left(\operatorname{imJ}\left(c\right) = 0 \land \operatorname{imK}\left(c\right) = 0\right) \land y = x \cdot c\right)$$
 
@@ -80,7 +92,7 @@ $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in
 
 For all quaternions p and q the polynomial identity (star p * q)_j^2 + (star p * q)_k^2 = |p|^2 * |q|^2 - (<p, q>^2 + <p, q * i>^2) holds, where the subscripts denote the j and k components. If the ray kernel of the unit quaternions x and y equals one, the right side vanishes, so the j and k components of c = x^-1 * y = star x * y are both zero, as a sum of two squares that vanishes; and y = x * c. Conversely, if y = x * c with such a unit quaternion c, the phase invariance reduces the ray kernel to rayKernel x x = (1 + |hopf x|^2) / 2 = 1, since the Hopf image has norm one. It follows from this equivalence and the formula through the Hopf images, together with the equality case of the Cauchy-Schwarz inequality for the unit Hopf images, that two unit quaternions have the same Hopf image exactly when they differ by a right factor on the circle of unit quaternions in the span of 1 and i; this consequence is not among the formal statements of the module.
 
-**Definition 1.7 (Quaternions as complex two-vectors).**
+**Definition 1.8 (Quaternions as complex two-vectors).**
 
 Lean statement: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.spinor`
 
@@ -92,7 +104,7 @@ Lean statement: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.spinor`
 
 spinor is the real-linear isometric equivalence from the real quaternions to the Euclidean space of complex pairs indexed by Fin 2 that sends a + b i + c j + d k to the pair (a + b I, -c + d I), where I is the complex unit. Its inverse sends a pair (u, w) to the quaternion with components re u, im u, -re w and im w. It preserves norms because |a + b I|^2 + |-c + d I|^2 = a^2 + b^2 + c^2 + d^2.
 
-**Theorem 1.8 (The ray kernel as a trace pairing of rank-one projections).**
+**Theorem 1.9 (The ray kernel as a trace pairing of rank-one projections).**
 
 $$\forall x \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right), y \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \left(\forall q \in \mathbb{H}[\mathbb{R}],\; \operatorname{spinor}\left(q \cdot \operatorname{unitI}\right) = I \cdot \operatorname{spinor}\left(q\right)\right) \land \left(\operatorname{bloch}\left(\operatorname{vecMulVec}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(x\right)\right), \operatorname{star}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(x\right)\right)\right)\right)\right) = \operatorname{toLp}\left(2, (\operatorname{imK}\left(\operatorname{hopf}\left(x\right)\right), \operatorname{imJ}\left(\operatorname{hopf}\left(x\right)\right), \operatorname{imI}\left(\operatorname{hopf}\left(x\right)\right))\right) \land \left(\operatorname{rayKernel}\left(x, y\right) = \left\lVert \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(x\right)\right)\right), \operatorname{ofLp}\left(\operatorname{spinor}\left(y\right)\right)\right) \right\rVert^{2} \land \operatorname{ofReal}\left(\operatorname{rayKernel}\left(x, y\right)\right) = \operatorname{bornProbability}\left(\operatorname{vecMulVec}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(y\right)\right), \operatorname{star}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(y\right)\right)\right)\right), \operatorname{vecMulVec}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(x\right)\right), \operatorname{star}\left(\operatorname{ofLp}\left(\operatorname{spinor}\left(x\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -110,6 +122,7 @@ In the display ofLp is the coordinate vector of a point of the Euclidean space, 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_eq_bornProbability_spinor`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_eq_hopf`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_eq_inner`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_eq_one_iff`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_mul_phase_left`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionRayKernel.rayKernel_mul_phase_right`

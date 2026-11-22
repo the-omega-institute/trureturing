@@ -7,7 +7,9 @@ doi: 10.3390/sym13091651
 url: https://doi.org/10.3390/sym13091651
 claim: "Section 4, printed page 11, Conjecture 2: the noncentral commuting graph of every finite nonabelian group is not CN-hyperenergetic."
 strata_touched:
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/NoncentralBound
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/RingNoncentralBound
 license: citation-only
 triage: anchor
 ---

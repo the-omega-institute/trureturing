@@ -38,3 +38,6 @@ __pycache__/
 /docs/reports/**/*.h
 /docs/reports/**/*.mjs
 /docs/reports/**/*.lean
+
+# Managed by the pinned tools release.
+/tools/

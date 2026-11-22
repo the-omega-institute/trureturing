@@ -40,7 +40,7 @@ namespace D5.S3.Analytic.PolynomialL2Derivative
 def legendreC (n : ℕ) : ℂ[X] :=
   (Polynomial.shiftedLegendre n).map (Int.castRingHom ℂ)
 
-private def rod (n : ℕ) : ℂ[X] := X ^ n * (1 - X) ^ n
+def rod (n : ℕ) : ℂ[X] := X ^ n * (1 - X) ^ n
 
 /-- A bilinear moment. Conjugation will be supplied explicitly by mapping
 the coefficients of the second polynomial. -/
@@ -286,7 +286,7 @@ private lemma iterate_derivative_eq_C_top (n : ℕ) (p : ℂ[X])
     rw [coeff_iterate_derivative, hc]
     simp
 
-private lemma moment_legendreC_top (n : ℕ) (p : ℂ[X])
+lemma moment_legendreC_top (n : ℕ) (p : ℂ[X])
     (hp : p.natDegree ≤ n) :
     moment (legendreC n) p =
       (-1 : ℂ) ^ n * p.coeff n *
@@ -306,7 +306,7 @@ private lemma moment_legendreC_top (n : ℕ) (p : ℂ[X])
 
 /-- The primitive's beta-power integral, using the actual pinned complex
 Beta/Gamma identities and their positivity hypotheses. -/
-private lemma integral_rod (n : ℕ) :
+lemma integral_rod (n : ℕ) :
     (∫ x : ℝ in 0..1, (rod n).eval (x : ℂ)) =
       (n.factorial : ℂ) * (n.factorial : ℂ) / ((2 * n + 1).factorial : ℂ) := by
   have hn : 0 < ((n : ℂ) + 1).re := by

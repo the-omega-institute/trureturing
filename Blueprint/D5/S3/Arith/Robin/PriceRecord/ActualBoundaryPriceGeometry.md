@@ -4,7 +4,19 @@
 
 Actual boundary-price exchange geometry.
 
-**Theorem 1.1 (Nonnegative local price bound).**
+**Theorem 1.1 (Full recordhood of the least optimizer).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.strictInteger_fullRecord`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.strictInteger_fullRecord` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every positive real price q, strictInteger(q) strictly beats every positive smaller integer in the original objective at q. A tie would make the predecessor an optimizer and hence a multiple of strictInteger(q).
+
+**Theorem 1.2 (Nonnegative local price bound).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.priceLip_nonneg`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.price
 
 For every natural j and real a>=2, priceLip(j,a) is nonnegative. This sign is used in the normalized actual boundary-price cost.
 
-**Theorem 1.2 (Variation of the real layer price).**
+**Theorem 1.3 (Variation of the real layer price).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.price_variation`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.price
 
 For j>=1 and a>=2, the difference between beta(j,x) and beta(j,y) for x,y>=a is at most priceLip(j,a)*abs(y-x). The logarithmic derivative estimate is uniform on the whole ray, including its lower endpoint.
 
-**Theorem 1.3 (Separation on every original record).**
+**Theorem 1.4 (Separation on every original record).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.uniform_coarse_geometry`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.unifo
 
 For each fixed j>=2 a single positive threshold precedes every m>=2 and every original mu>0 with the full strict predecessor record. With P=largestPrime(m) and Q=layerPrime(m,j), P>=4, Q>=4, Q<=P/8, the second layer is strictly below P/2, and log(Q/2)>=log(P)/(4*j). No optimizer at a replacement price is substituted.
 
-**Theorem 1.4 (Price obstruction from four actual prime pools).**
+**Theorem 1.5 (Price obstruction from four actual prime pools).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.actual_boundary_price_from_pools`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.actua
 
 Fix j>=2. One positive threshold precedes all original positive-price full records. With P=largestPrime(m), Q=layerPrime(m,j), K=ceil(P^(19/(40*j))), four actual prime sets of cardinality K in the stated lower and upper windows give abs(beta(j,Q)-beta(1,P))<=priceLip(j,Q/2)*w+priceLip(1,P/2)*v+(8*j/K)*(beta(1,P)+priceLip(1,P/2)*v). The windows have independent widths w<=Q/2 and v<=P/2, and the higher-layer bands retain their neighboring-layer constraints. The strict predecessor exchanges use original valuations and bounded rounding costs.
 
-**Theorem 1.5 (Exact prime cardinalities on both sides).**
+**Theorem 1.6 (Exact prime cardinalities on both sides).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.counted_higher_pools`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.count
 
 A supplied two-sided short-interval count and capacity K+1 give two finite sets of exactly K distinct actual primes near a natural endpoint N. The lower set retains the closed upper endpoint; the upper set excludes N. The extra unit pays for deleting a possible prime endpoint. This result uses the count supplier directly.
 
-**Theorem 1.6 (Strict upper mass crossing).**
+**Theorem 1.7 (Strict upper mass crossing).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_above`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subse
 
 A finite pool with total mass strictly above t has a subset with mass strictly above t and at most t+H. Exact partial-sum equalities are retained on the strict side. Exact Lean telescope: {α : Type*} [DecidableEq α] (S : Finset α) (f : α → ℝ) {t H : ℝ} (ht : 0 ≤ t) (hH : ∀ a ∈ S, f a ≤ H) (htotal : t < ∑ a ∈ S, f a) : ∃ D ⊆ S, t < ∑ a ∈ D, f a ∧ (∑ a ∈ D, f a) ≤ t + H
 
-**Theorem 1.7 (Strict lower mass crossing).**
+**Theorem 1.8 (Strict lower mass crossing).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_below`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subse
 
 A finite pool with total mass at least positive t has a subset with mass strictly below t and deficiency at most H. The case of total mass exactly t is included. Exact Lean telescope: {α : Type*} [DecidableEq α] (S : Finset α) (f : α → ℝ) {t H : ℝ} (ht : 0 < t) (hH : ∀ a ∈ S, f a ≤ H) (htotal : t ≤ ∑ a ∈ S, f a) : ∃ U ⊆ S, (∑ a ∈ U, f a) < t ∧ t ≤ (∑ a ∈ U, f a) + H
 
-**Theorem 1.8 (Original signed finite exchange).**
+**Theorem 1.9 (Original signed finite exchange).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.exchange_mass_bound`
 
@@ -107,6 +119,7 @@ For disjoint distinct-prime deletion and insertion sets with strictly smaller in
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.exchange_mass_bound`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.priceLip_nonneg`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.price_variation`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.strictInteger_fullRecord`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_above`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_below`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.uniform_coarse_geometry`

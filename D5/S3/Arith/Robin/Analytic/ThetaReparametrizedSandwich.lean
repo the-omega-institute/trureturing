@@ -17,7 +17,7 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open Set MeasureTheory
+open Filter Set MeasureTheory
 open scoped Interval Topology
 
 namespace D5.S3.Arith.Robin.Analytic.ThetaReparametrizedSandwich
@@ -179,6 +179,78 @@ theorem actual_theta_reparametrized_sandwich {x : ℝ}
   constructor
   · linarith only [hdecomp, htelescope, hsign]
   · linarith only [hdecomp, hN]
+
+open scoped Interval in
+/-- Uniform modulus for the actual signed theta tail over every sufficiently late
+ordered interval. -/
+theorem actual_theta_tail_local_modulus :
+    ∀ᶠ u : ℝ in atTop, ∀ v : ℝ, u ≤ v →
+      |D5.S3.Weil.Mertens.ActualThetaTailLaplace.F v -
+        D5.S3.Weil.Mertens.ActualThetaTailLaplace.F u| ≤
+        2 * (v - u) / (u * Real.log u) := by
+  let F := D5.S3.Weil.Mertens.ActualThetaTailLaplace.F
+  let w := D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity
+  let kernel : ℝ → ℝ := fun t => (Chebyshev.theta t - t) * w t
+  have htheta := D5.S3.Arith.Robin.EulerLayerRootCorrection.prime_number_limits.2
+  have herror : ∀ᶠ t : ℝ in atTop, |Chebyshev.theta t - t| ≤ t := by
+    have hupper := htheta.eventually (Iio_mem_nhds (by norm_num : (1 : ℝ) < 2))
+    filter_upwards [eventually_gt_atTop (0 : ℝ), hupper] with t ht hratio
+    have hthetaUpper : Chebyshev.theta t < 2 * t :=
+      (div_lt_iff₀ ht).mp (Set.mem_Iio.mp hratio)
+    exact abs_le.mpr ⟨by linarith [Chebyshev.theta_nonneg t], by linarith⟩
+  obtain ⟨R, hR⟩ := eventually_atTop.mp herror
+  refine (eventually_ge_atTop (max R (max 2 (Real.exp 1)))).mono ?_
+  intro u hu v huv
+  have hRu : R ≤ u := (le_max_left _ _).trans hu
+  have hu2 : 2 ≤ u := (le_max_left (2 : ℝ) (Real.exp 1)).trans ((le_max_right _ _).trans hu)
+  have hExpU : Real.exp 1 ≤ u :=
+    (le_max_right (2 : ℝ) (Real.exp 1)).trans ((le_max_right _ _).trans hu)
+  have hu0 : 0 < u := by linarith
+  have hlogu : 0 < Real.log u := Real.log_pos (by linarith)
+  have huInt : MeasureTheory.IntegrableOn kernel (Set.Ioi u) :=
+    (D5.S3.Arith.Robin.ThetaTailRobinWitness.theta_tail_mertens_robin u hu2).1
+  have hvInt : MeasureTheory.IntegrableOn kernel (Set.Ioi v) :=
+    huInt.mono_set (Set.Ioi_subset_Ioi huv)
+  have hdiff : F v - F u = ∫ t in u..v, kernel t := by
+    change -(∫ t in Set.Ioi v, kernel t) - (-(∫ t in Set.Ioi u, kernel t)) = _
+    rw [neg_sub_neg]
+    exact intervalIntegral.integral_Ioi_sub_Ioi' huInt hvInt
+  have hkernel (t : ℝ) (hut : u ≤ t) : ‖kernel t‖ ≤ 2 / (u * Real.log u) := by
+    have ht0 : 0 < t := hu0.trans_le hut
+    have hlogt : 0 < Real.log t := hlogu.trans_le (Real.log_le_log hu0 hut)
+    have hlogt1 : 1 ≤ Real.log t := by
+      simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos 1) (hExpU.trans hut)
+    have hw : 0 ≤ w t := by
+      change 0 ≤ (Real.log t + 1) / (t ^ 2 * Real.log t ^ 2)
+      positivity
+    have hdensity : t * w t ≤ 2 / (t * Real.log t) := by
+      change t * ((Real.log t + 1) / (t ^ 2 * Real.log t ^ 2)) ≤ _
+      calc
+        _ ≤ t * ((2 * Real.log t) / (t ^ 2 * Real.log t ^ 2)) :=
+          mul_le_mul_of_nonneg_left
+            (div_le_div_of_nonneg_right (by linarith) (by positivity)) ht0.le
+        _ = _ := by field_simp [ht0.ne', hlogt.ne']
+    have hden : u * Real.log u ≤ t * Real.log t :=
+      mul_le_mul hut (Real.log_le_log hu0 hut) hlogu.le ht0.le
+    change ‖(Chebyshev.theta t - t) * w t‖ ≤ _
+    rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hw]
+    calc
+      _ ≤ t * w t := mul_le_mul_of_nonneg_right (hR t (hRu.trans hut)) hw
+      _ ≤ 2 / (t * Real.log t) := hdensity
+      _ ≤ 2 / (u * Real.log u) :=
+        div_le_div_of_nonneg_left (by norm_num) (mul_pos hu0 hlogu) hden
+  have hnorm : ‖∫ t in u..v, kernel t‖ ≤ (2 / (u * Real.log u)) * |v - u| := by
+    apply intervalIntegral.norm_integral_le_of_norm_le_const
+    intro t ht
+    rw [Set.uIoc_of_le huv] at ht
+    exact hkernel t (Set.mem_Ioc.mp ht).1.le
+  change |F v - F u| ≤ 2 * (v - u) / (u * Real.log u)
+  calc
+    |F v - F u| = ‖∫ t in u..v, kernel t‖ := by rw [hdiff, Real.norm_eq_abs]
+    _ ≤ (2 / (u * Real.log u)) * |v - u| := hnorm
+    _ = _ := by
+      rw [abs_of_nonneg (sub_nonneg.mpr huv)]
+      ring
 
 #print axioms actual_theta_reparametrized_sandwich
 

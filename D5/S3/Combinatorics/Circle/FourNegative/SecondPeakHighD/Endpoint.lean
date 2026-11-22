@@ -23,8 +23,7 @@ open private word banks banks_inventory
 open private seed sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private zero_period_transport
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 

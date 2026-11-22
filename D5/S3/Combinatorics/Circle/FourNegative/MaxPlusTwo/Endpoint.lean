@@ -19,7 +19,7 @@ open private seedZ old charge natural_lift_strong
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Lift
 open private Strong from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Strip
 open private actual_word_totals from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.ActualBlocks
-open private label from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label)
 open private valley_rising_inventory valley_rising_strong valley_falling_actual peak_actual actual_orders_of_strong
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.FullCone
 open private descending_actual from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.DescendingActual

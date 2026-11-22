@@ -101,7 +101,8 @@ open private diff_symm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport
 open private diff_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeTwelveSupport
-open private flip_comm adjacent_exists_flip from
+open BalancedCubeGirth (flip_comm)
+open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private flip_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary

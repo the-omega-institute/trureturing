@@ -43,8 +43,7 @@ open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private sum_linear prefix_nonneg_le strip_of_prefix
   from D5.S3.Combinatorics.Circle.PeriodicShortening
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 
 -- The final bank ends with its W subword, whose last occurrence is q's bit.
 -- No change is made to the physical inventory or either actual bank mass.
