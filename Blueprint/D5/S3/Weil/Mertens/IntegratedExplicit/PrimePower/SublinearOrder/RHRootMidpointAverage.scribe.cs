@@ -10,6 +10,7 @@ internal sealed class RHRootMidpointAverageDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The midpoint error of the exponential root average",
+        H("A two-term estimate at the midpoint"),
         Blocks(Describe.Lean(DescribeId.Create("root-signal-exponential-midpoint"),
             DeclarationHandle.Create(Owner + ".root_signal_exponential_midpoint"),
             H("Uniform midpoint estimate and signed origin bound"),
