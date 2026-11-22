@@ -81,13 +81,14 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                         + "integer windings gives the bounds. Empty A gives zero inverse Gram "
                         + "energy and hence zero deficit.")),
                     Paragraph(Text(
-                        "For an inclusive positive ζ-ordinate cutoff, take the finite index "
-                        + "type of members of Spectrum.cut for zetaSpectrum. Use its ordinates "
-                        + "and multiply the chosen positive weight per occurrence by its analytic "
-                        + "multiplicity. This keeps the ordinate at the cutoff and all its "
-                        + "occurrences. The comparison applies given a complete relation basis "
-                        + "and positive total weight. Bounding the normalized energy for the "
-                        + "actual ζ ordinates is a separate question."))),
+                        "For the ζ-ordinate example, assume hRH proves Mathlib's "
+                        + "RiemannHypothesis. Form zetaSpectrum hRH, then use the finite index "
+                        + "type of members of Spectrum.cut (zetaSpectrum hRH) T, which keeps "
+                        + "the positive ordinates γ with γ ≤ T. Multiply the chosen positive "
+                        + "weight per occurrence by the analytic multiplicity of its zero. "
+                        + "The comparison applies given a complete relation basis and positive "
+                        + "total weight. Bounding the normalized energy for the actual ζ "
+                        + "ordinates is a separate question."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
