@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2306.12343"
 claim: "Corollary 2.3 gives Umegaki relative entropy for states as a two-profile hockey-stick integral. Equation (2.22) contains the two orientations with weights 1/γ and 1/γ² on γ ≥ 1."
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
+  - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
 license: "citation-only"
 triage: "anchor"
 ---
