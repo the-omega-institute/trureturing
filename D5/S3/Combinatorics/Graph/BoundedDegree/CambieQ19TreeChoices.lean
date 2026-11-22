@@ -419,9 +419,105 @@ theorem treeFiberEquiv_order (c : Configuration) (e : DeletionChoices c) :
     Nat.card ((treeFiberEquiv c).symm e).val.verts = c.vertexOrder := by
   rw [((treeFiberEquiv c).symm e).property.2, supportEquiv_order]
 
+private theorem cycle_edge_card (m : ℕ) : Nat.card (cycleGraph (m + 3)).edgeSet = m + 3 := by
+  let e : (cycleGraph (m + 3)).edgeSet :=
+    ⟨s(1, 0), cycleGraph_adj.mpr (.inl (sub_zero _))⟩
+  have h := (isTree_iff_connected_and_card.mp (cycle_delete_tree e)).2
+  rw [edgeSet_deleteEdges, Nat.card_fin] at h
+  exact (Set.ncard_sdiff_singleton_add_one e.property).symm.trans h
+
+/-- With all the vertices present, the deletion choices are the actual edges of that cycle. -/
+def fullCycleChoiceEquiv {V : Type} (G : SimpleGraph V) :
+    CycleChoice G Set.univ ≃ G.edgeSet where
+  toFun e := e.val.get (Option.ne_none_iff_isSome.mp (e.property.mpr rfl))
+  invFun e := ⟨some e, by simp⟩
+  left_inv := by
+    rintro ⟨_ | e, h⟩
+    · exact (h.mpr rfl rfl).elim
+    · rfl
+  right_inv _ := rfl
+
+/-- With a vertex absent, there is exactly one choice, which deletes no edge. -/
+def properCycleChoiceEquiv {V : Type} (G : SimpleGraph V) {S : Set V} (h : S ≠ Set.univ) :
+    CycleChoice G S ≃ Unit where
+  toFun _ := ()
+  invFun _ := ⟨none, by simp [h]⟩
+  left_inv := by
+    rintro ⟨_ | e, he⟩
+    · rfl
+    · exact (h (he.mp (by simp))).elim
+  right_inv _ := rfl
+
+theorem deletionChoices_card (c : Configuration) :
+    Nat.card (DeletionChoices c) =
+      (if coreSet c.vertices = Set.univ then 5000 else 1) *
+      (if triangleSet c.vertices = Set.univ then 3 else 1) := by
+  classical
+  have card_choice {m : ℕ} (S : Set (Fin (m + 3))) :
+      Nat.card (CycleChoice (cycleGraph (m + 3)) S) = if S = Set.univ then m + 3 else 1 := by
+    by_cases h : S = Set.univ
+    · subst S
+      rw [ite_eq_left rfl, Nat.card_congr (fullCycleChoiceEquiv _), cycle_edge_card]
+    · rw [ite_eq_right h, Nat.card_congr (properCycleChoiceEquiv _ h), Nat.card_unique]
+  unfold DeletionChoices
+  rw [Nat.card_prod]
+  exact (congrArg₂ (· * ·)
+    (card_choice (m := 4997) _) (card_choice (m := 0) _))
+
+private def mappedDeletion {A B : Type} (f : A → B) {G : SimpleGraph A}
+    (e : Option G.edgeSet) : Set (Sym2 B) :=
+  match e with
+  | none => ∅
+  | some v => {Sym2.map f v.val}
+
+/-- The selected edges as actual unordered pairs of host vertices. -/
+def DeletionChoices.deletedEdges {c : Configuration} (e : DeletionChoices c) : Set (Sym2 Vertex) :=
+  mappedDeletion core e.1.val ∪ mappedDeletion triangle e.2.val
+
+private theorem joinAt_cross_reverse {A B : Type} (G : SimpleGraph A) (H : SimpleGraph B)
+    (a : A) (b : B) (x : A) (y : B) :
+    (joinAt G H a b).Adj (.inr y) (.inl x) ↔ x = a ∧ y = b :=
+  ((joinAt G H a b).adj_comm _ _).trans (joinAt_cross G H a b x y)
+
+private theorem prunedHost_deleteEdges (c : Configuration) (e : DeletionChoices c) :
+    prunedHost e.1 e.2 = G₅₀₀.deleteEdges e.deletedEdges := by
+  obtain ⟨⟨_ | ⟨a, ha⟩, hp⟩, ⟨_ | ⟨b, hb⟩, hq⟩⟩ := e
+  · ext x y
+    simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion, pruneCycle]
+  · induction b using Sym2.inductionOn with
+    | hf u v =>
+      ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
+        simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+          pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
+  · induction a using Sym2.inductionOn with
+    | hf u v =>
+      ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
+        simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+          pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
+  · induction a using Sym2.inductionOn with
+    | hf a₁ a₂ =>
+      induction b using Sym2.inductionOn with
+      | hf b₁ b₂ =>
+        ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
+          simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+            pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
+
+/-- Fixing the support and the chosen actual edges forces every other induced edge. -/
+theorem treeFiberEquiv_keeps_edge_iff (c : Configuration) (e : DeletionChoices c) (x y : Vertex) :
+    ((treeFiberEquiv c).symm e).val.Adj x y ↔
+      G₅₀₀.Adj x y ∧ x ∈ c.vertices ∧ y ∈ c.vertices ∧ s(x, y) ∉ e.deletedEdges := by
+  rw [treeFiberEquiv_edges, prunedHost_deleteEdges, deleteEdges_adj]
+  constructor
+  · rintro ⟨⟨h, hd⟩, hx, hy⟩
+    exact ⟨h, hx, hy, hd⟩
+  · rintro ⟨h, hx, hy, hd⟩
+    exact ⟨⟨h, hd⟩, hx, hy⟩
+
 #print axioms treeFiberEquiv
 #print axioms treeFiberEquiv_edges
 #print axioms treeFiberEquiv_order
+#print axioms treeFiberEquiv_keeps_edge_iff
+#print axioms deletionChoices_card
 
 end TreeChoices
 
