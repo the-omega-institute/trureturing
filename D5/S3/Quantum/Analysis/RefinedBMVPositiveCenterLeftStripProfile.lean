@@ -370,8 +370,113 @@ theorem separated_marginal_correction_lt {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t)
   change A < B/3400
   exact ((div_lt_iff₀ hB).mp hRatio).trans_eq (by ring)
 
+private def separatedSquare (h t : ℝ) : ℝ :=
+  ((3 + h) * (3 + 2 * h) / 2) * (upperTailGap h t)^2 * Real.exp (-(2 * t))
+
+private theorem hasDerivAt_separatedSquare {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+    HasDerivAt (separatedSquare h) (-2 * profileSlope h t * separatedSquare h t) t := by
+  have ha : 0 < upperTailGap h t := div_pos
+    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht)))) hh
+  have hs := hasDerivAt_upperTailGap (t := t) hh
+  have hl := (div_eq_iff ha.ne').mp (upperTailGap_logDeriv hh ht)
+  rw [hs.deriv] at hl
+  have he : HasDerivAt (fun x : ℝ ↦ -(2*x)) (-2) t := by
+    have hd := ((hasDerivAt_id' t).const_mul 2).neg
+    change HasDerivAt (fun x : ℝ ↦ -(2*x)) _ t at hd
+    simpa only [mul_one] using hd
+  have hd := ((hs.pow 2).const_mul ((3+h)*(3+2*h)/2)).mul he.exp
+  change HasDerivAt (separatedSquare h) _ t at hd
+  apply hd.congr_deriv
+  unfold separatedSquare profileSlope
+  rw [hl]
+  simp only [Pi.pow_apply]
+  ring
+
+/-- The first three derivatives of the leading square retain alternating signs
+on the separated interval. The bounds use the actual logarithmic slope. -/
+theorem separated_square_derivative_bounds {h t : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3 / 11) (ht : 6 ≤ t) :
+    let B : ℝ → ℝ := fun x ↦ ((3 + h) * (3 + 2 * h) / 2) *
+      (upperTailGap h x)^2 * Real.exp (-(2 * x))
+    0 ≤ -deriv B t ∧ -deriv B t ≤ 2 * B t ∧
+      0 ≤ deriv (deriv B) t ∧ deriv (deriv B) t ≤ 4 * B t ∧
+      0 ≤ -deriv (deriv (deriv B)) t ∧ -deriv (deriv (deriv B)) t ≤ 8 * B t := by
+  let B := separatedSquare h
+  let L := upperTailSlope h t
+  let s := profileSlope h t
+  let q := profileCurvature h t
+  let B₂ (x : ℝ) := (4 * profileSlope h x ^ 2 - 2 * profileCurvature h x) * B x
+  have ht₀ : 0 < t := by linarith
+  have hB₁ (x : ℝ) (hx : 0 < x) : deriv B x = -2 * profileSlope h x * B x :=
+    (hasDerivAt_separatedSquare hh hx).deriv
+  have hB₂ (x : ℝ) (hx : 0 < x) : deriv (deriv B) x = B₂ x := by
+    have heq : deriv B =ᶠ[𝓝 x] fun y ↦ -2 * profileSlope h y * B y := by
+      filter_upwards [eventually_gt_nhds hx] with y hy using hB₁ y hy
+    have hd := ((hasDerivAt_profileSlope hh hx).const_mul (-2)).mul
+      (hasDerivAt_separatedSquare hh hx)
+    change HasDerivAt (fun y ↦ -2 * profileSlope h y * B y) _ x at hd
+    rw [heq.deriv_eq, hd.deriv]
+    unfold B₂
+    ring
+  have hB₃ : deriv (deriv (deriv B)) t =
+      (-8*s^3 + 12*s*q + 2*q*(h+2*L)) * B t := by
+    have heq : deriv (deriv B) =ᶠ[𝓝 t] B₂ := by
+      filter_upwards [eventually_gt_nhds ht₀] with x hx using hB₂ x hx
+    have hs := (hasDerivAt_profileSlope hh ht₀).pow 2 |>.const_mul 4
+    have hq := (hasDerivAt_profileCurvature hh ht₀).const_mul 2
+    have hd := (hs.sub hq).mul (hasDerivAt_separatedSquare hh ht₀)
+    change HasDerivAt B₂ _ t at hd
+    rw [heq.deriv_eq, hd.deriv]
+    dsimp only [s, q, L, B]
+    simp only [Pi.sub_apply, Pi.pow_apply]
+    ring
+  obtain ⟨hL₀, hL, hq₀, hq, _, _⟩ := upperTailSlope_bounds hh ht₀
+  rw [(hasDerivAt_upperTailSlope hh ht₀).deriv, neg_neg] at hq₀ hq
+  change 0 ≤ q at hq₀
+  have hInv : 1/t ≤ (1 : ℝ)/6 := one_div_le_one_div_of_le (by norm_num) ht
+  have hLmax : L ≤ 1 / 6 := hL.trans hInv
+  have hqmax : q ≤ 1 / 36 := hq.trans (by
+    simpa only [one_div_pow, show (1/6 : ℝ)^2 = 1/36 by norm_num] using
+      pow_le_pow_left₀ (by positivity : 0 ≤ 1/t) hInv 2)
+  have hs₀ : (5 / 6 : ℝ) ≤ s := by
+    change (5/6 : ℝ) ≤ 1 - L
+    linarith only [hLmax]
+  have hs₁ : s ≤ 1 := by
+    change 1 - upperTailSlope h t ≤ 1
+    linarith only [hL₀]
+  have hspos : 0 ≤ s := by linarith
+  have hsq := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 5/6) hs₀ 2
+  have hsq' := pow_le_pow_left₀ hspos hs₁ 2
+  have hcub := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 5/6) hs₀ 3
+  have hcub' := pow_le_pow_left₀ hspos hs₁ 3
+  have hsq0 : 0 ≤ 4*s^2-2*q := by nlinarith only [hsq, hqmax]
+  have hsq4 : 4*s^2-2*q ≤ 4 := by nlinarith only [hsq', hq₀]
+  have hqL₀ : 0 ≤ h+2*L := add_nonneg hh.le (mul_nonneg (by norm_num) hL₀.le)
+  have hqL : h+2*L ≤ 3/11+1/3 := by linarith only [hhmax, hLmax]
+  have hA := mul_le_mul hs₁ hqmax hq₀ (by norm_num : (0 : ℝ) ≤ 1)
+  have hC := mul_le_mul hqmax hqL hqL₀ (by norm_num : (0 : ℝ) ≤ 1/36)
+  have h3₀ : 0 ≤ 8*s^3-12*s*q-2*q*(h+2*L) := by
+    nlinarith only [hcub, hA, hC]
+  have h38 : 8*s^3-12*s*q-2*q*(h+2*L) ≤ 8 := by
+    nlinarith only [hcub', mul_nonneg hspos hq₀, mul_nonneg hq₀ hqL₀]
+  have hBt : 0 ≤ B t := by dsimp [B, separatedSquare]; positivity
+  change 0 ≤ -deriv B t ∧ -deriv B t ≤ 2*B t ∧
+    0 ≤ deriv (deriv B) t ∧ deriv (deriv B) t ≤ 4*B t ∧
+    0 ≤ -deriv (deriv (deriv B)) t ∧ -deriv (deriv (deriv B)) t ≤ 8*B t
+  rw [hB₃, hB₂ t ht₀, hB₁ t ht₀]
+  change 0 ≤ -(-2*s*B t) ∧ -(-2*s*B t) ≤ 2*B t ∧
+    0 ≤ (4*s^2-2*q)*B t ∧ (4*s^2-2*q)*B t ≤ 4*B t ∧
+    0 ≤ -((-8*s^3+12*s*q+2*q*(h+2*L))*B t) ∧
+    -((-8*s^3+12*s*q+2*q*(h+2*L))*B t) ≤ 8*B t
+  exact ⟨by nlinarith only [mul_nonneg hspos hBt],
+    by nlinarith only [mul_le_mul_of_nonneg_right hs₁ hBt],
+    mul_nonneg hsq0 hBt, mul_le_mul_of_nonneg_right hsq4 hBt,
+    by nlinarith only [mul_nonneg h3₀ hBt],
+    by nlinarith only [mul_le_mul_of_nonneg_right h38 hBt]⟩
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
 #print axioms separated_marginal_correction_lt
+#print axioms separated_square_derivative_bounds
 
 end RefinedBMV.PositiveCenter
