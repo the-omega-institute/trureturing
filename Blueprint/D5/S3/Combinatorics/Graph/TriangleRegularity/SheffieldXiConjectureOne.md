@@ -14,7 +14,7 @@ $$\forall (V : Type) (G : \operatorname{SimpleGraph}\left(V\right)) (r c : \math
 
 *Commentary.*
 
-Every vertex has degree r, and its open neighborhood induces c unordered edges. The second cardinality counts the edge set of the induced simple graph.
+The two counts use Nat.card on the open neighborhood and on the unordered edge set of its induced simple graph. On finite graphs, every vertex has degree r and its open neighborhood induces c edges. For arbitrary vertex types, Nat.card gives the usual size of each finite set and gives zero on each infinite set. An infinite neighborhood therefore contributes zero to the first count, and the second count is computed separately from its induced edge set.
 
 **Definition 1.2 (Abelian Cayley realization).**
 
@@ -51,3 +51,4 @@ The remaining element equals its negative and cannot occur in a zero-sum triple.
 - Truth anchor: `D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.result`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.triangleRegular`
+- Dependency: [D5/S3/Combinatorics/Graph/Products/CayleyIndependence](../Products/CayleyIndependence.md)

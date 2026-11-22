@@ -19,7 +19,7 @@ internal sealed class SheffieldXiConjectureOneDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(Prefix + "triangleRegular"),
                 H("Triangle regularity"), StatementSource.FromAuthor(Disp(TriangleRegular())),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("Every vertex has degree r, and its open neighborhood induces c unordered edges. The second cardinality counts the edge set of the induced simple graph."))),
+                Blocks(Paragraph(Text("The two counts use Nat.card on the open neighborhood and on the unordered edge set of its induced simple graph. On finite graphs, every vertex has degree r and its open neighborhood induces c edges. For arbitrary vertex types, Nat.card gives the usual size of each finite set and gives zero on each infinite set. An infinite neighborhood therefore contributes zero to the first count, and the second count is computed separately from its induced edge set."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("sheffield-xi-claim"),
                 DeclarationHandle.Create(Prefix + "claim"),

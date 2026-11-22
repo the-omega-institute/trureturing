@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.claim; result=D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.result; claim=D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.claim
    digest: The icosahedral pair (5,5) has no abelian Cayley realization. -/
 
-import Mathlib.Combinatorics.SimpleGraph.Cayley
+import D5.S3.Combinatorics.Graph.Products.CayleyIndependence
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.GroupTheory.Perm.Cycle.Type
 import Mathlib.Tactic.Abel
@@ -47,18 +47,6 @@ private def dartEquivTriples (S : Set A) (hzero : (0 : A) ∉ S)
     ⟨x.val, (congrArg (fun U : Set A => x.val ∈ U) hN).mp x.property⟩
   let toN (x : S) : (SimpleGraph.addCayley S).neighborSet 0 :=
     ⟨x.val, (congrArg (fun U : Set A => x.val ∈ U) hN).mpr x.property⟩
-  have adjacent (x y : A) :
-      (SimpleGraph.addCayley S).Adj x y ↔ y - x ∈ S := by
-    rw [SimpleGraph.addCayley_adj, show -x + y = y - x by abel,
-      show -y + x = -(y - x) by abel]
-    constructor
-    · rintro ⟨_, hyx | hxy⟩
-      · exact hyx
-      · simpa only [neg_neg] using hneg _ hxy
-    · intro hyx
-      refine ⟨?_, Or.inl hyx⟩
-      rintro rfl
-      exact hzero (by simpa only [sub_self] using hyx)
   have reverseDiff (t : Triples S) : -t.val.2.2.val - t.val.1.val = t.val.2.1.val := by
     have ht : t.val.1.val + t.val.2.1.val = -t.val.2.2.val :=
       add_eq_zero_iff_eq_neg.mp t.property
@@ -70,12 +58,12 @@ private def dartEquivTriples (S : Set A) (hzero : (0 : A) ∉ S)
       left_inv := fun d => ?_
       right_inv := fun t => ?_ }
   · have hadj := SimpleGraph.induce_adj.mp d.adj
-    have hdiff := (adjacent d.fst.val d.snd.val).mp hadj
+    have hdiff := (CayleySquare.cayley_adj_iff S hzero hneg d.fst.val d.snd.val).mp hadj
     refine ⟨(toS d.fst, ⟨d.snd.val - d.fst.val, hdiff⟩, negIn hneg (toS d.snd)), ?_⟩
     change d.fst.val + (d.snd.val - d.fst.val) + -d.snd.val = 0
     abel
   · refine ⟨(toN t.val.1, toN (negIn hneg t.val.2.2)), SimpleGraph.induce_adj.mpr ?_⟩
-    apply (adjacent _ _).mpr
+    apply (CayleySquare.cayley_adj_iff S hzero hneg _ _).mpr
     change -t.val.2.2.val - t.val.1.val ∈ S
     rw [reverseDiff]
     exact t.val.2.1.property
@@ -361,14 +349,11 @@ private instance icoRelDecidable : DecidableRel icoRel := by
 
 private abbrev icosahedron : SimpleGraph IcoVertex := SimpleGraph.fromRel icoRel
 
-private theorem icosahedronWitness :
-    Nat.card IcoVertex = 12 ∧ triangleRegular icosahedron 5 5 := by
-  have cardVertices : Fintype.card IcoVertex = 12 := by decide
+private theorem icosahedronWitness : triangleRegular icosahedron 5 5 := by
   have localCounts : ∀ v : IcoVertex,
       Fintype.card (icosahedron.neighborSet v) = 5 ∧
         Fintype.card (icosahedron.induce (icosahedron.neighborSet v)).Dart = 10 := by
     decide
-  refine ⟨Fintype.card_eq_nat_card.symm.trans cardVertices, ?_⟩
   intro v
   let H := icosahedron.induce (icosahedron.neighborSet v)
   obtain ⟨hn, hd⟩ := localCounts v
@@ -384,7 +369,7 @@ private theorem icosahedronWitness :
 theorem result : ¬ claim := by
   intro conjecture
   obtain ⟨B, hB, instB, S, hzero, hneg, hlocal⟩ := conjecture 5 5
-    ⟨IcoVertex, inferInstance, inferInstance, icosahedron, icosahedronWitness.2⟩
+    ⟨IcoVertex, inferInstance, inferInstance, icosahedron, icosahedronWitness⟩
   let : AddCommGroup B := instB
   let : Finite B := hB
   exact noCayleyFive S hzero hneg (hlocal 0).1 (hlocal 0).2
