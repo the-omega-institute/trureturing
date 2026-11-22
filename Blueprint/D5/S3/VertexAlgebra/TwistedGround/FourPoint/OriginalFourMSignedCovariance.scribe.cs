@@ -60,6 +60,22 @@ internal sealed class OriginalFourMSignedCovarianceDocument : IScribeDocumentDef
                     + "of the unit color charge with a times sourceAmplitude(e,p,w²)/period(w²), multiplied by "
                     + "−1 on the left leg and +1 on the right."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-fourm-signed-rational-j-spatial"),
+                DeclarationHandle.Create(Prefix + "ratJ_spatial"),
+                H("Rational J as a spatial kernel"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For signed flags e and f and complex u, v and r, assume u, v and "
+                    + "G(e,f,u,v) are nonzero. Then rationalJ(e,f,u,v,r) equals the spatial kernel at "
+                    + "parameter 1−r and the two right coordinates rightChart(e,u), rightChart(f,v)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-fourm-signed-rational-t-spatial"),
+                DeclarationHandle.Create(Prefix + "ratT_spatial"),
+                H("Rational T as a spatial kernel"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For signed flags e and f and complex u, v and r, assume u, b(v) "
+                    + "and E(e,f,u,v,r) are nonzero. Then rationalT(e,f,u,v,r) equals the spatial kernel "
+                    + "at parameter 1−r and the coordinates rightChart(e,u), leftChart(f,r,v)."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-signed-native-spatial-overlap"),
                 DeclarationHandle.Create(Prefix + "native_spatial_overlap"),
                 H("Native covariance as a corrected spatial kernel"), StatementSource.WithoutFormula(),

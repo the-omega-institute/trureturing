@@ -180,7 +180,8 @@ private def chartTau (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   | .B => -1 / (I * pB x / pPf x)
   | .D => -1 / (I * pD upperA x / pA x)
 
-private def chartDifference (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
+/-- The complementary-period correction in the target chart source units. -/
+def chartDifference (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => 0
   | .B => 1 / ((Real.pi : ℂ) * pPf x * pB x)

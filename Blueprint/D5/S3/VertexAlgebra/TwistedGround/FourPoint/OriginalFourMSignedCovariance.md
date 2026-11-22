@@ -78,7 +78,31 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 For any lattice charge a and finite external label type with decidable equality, take a label of sign e, color i and mode p at ‖w‖ < 1. Its actual mean is the bilinear pairing of the unit color charge with a times sourceAmplitude(e,p,w²)/period(w²), multiplied by −1 on the left leg and +1 on the right.
 
-**Theorem 1.7 (Native covariance as a corrected spatial kernel).**
+**Theorem 1.7 (Rational J as a spatial kernel).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratJ_spatial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratJ_spatial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For signed flags e and f and complex u, v and r, assume u, v and G(e,f,u,v) are nonzero. Then rationalJ(e,f,u,v,r) equals the spatial kernel at parameter 1−r and the two right coordinates rightChart(e,u), rightChart(f,v).
+
+**Theorem 1.8 (Rational T as a spatial kernel).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratT_spatial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratT_spatial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For signed flags e and f and complex u, v and r, assume u, b(v) and E(e,f,u,v,r) are nonzero. Then rationalT(e,f,u,v,r) equals the spatial kernel at parameter 1−r and the coordinates rightChart(e,u), leftChart(f,r,v).
+
+**Theorem 1.9 (Native covariance as a corrected spatial kernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_spatial_overlap`
 
@@ -90,7 +114,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 On ‖u‖ + ‖w‖ < 1 and ‖v‖ + ‖w‖ < 1 with u, v and G(e,f,u,v) nonzero, set r = w² and m = sourceMode(e,u,r) sourceMode(f,v,r). On either equal leg, the generator is m times spatialKernel at parameter 1−r and coordinates rightChart(e,u), rightChart(f,v), with C(r) subtracted inside that product and the Cauchy term subtracted only for e = f. For either unequal-leg order it is −m times the corrected kernel at rightChart(e,u), leftChart(f,r,v).
 
-**Theorem 1.8 (Finite native diagonal).**
+**Theorem 1.10 (Finite native diagonal).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_diagonal`
 
@@ -102,7 +126,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 For either leg l and sign e, with ‖u‖ + ‖w‖ < 1, covarianceMode(l,l,e,e,·,·,r) tends at (u,u) to (r/4−C(r))/(b(u)h(e,u,r)) + r²u/(8(b(u)h(e,u,r))²), where r = w². The ordinary neighborhood limit includes u = 0.
 
-**Definition 1.9 (Orientation sign of a native leg).**
+**Definition 1.11 (Orientation sign of a native leg).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.legSign`
 
@@ -114,7 +138,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 The complex source orientation is +1 on the left leg and −1 on the right.
 
-**Definition 1.10 (Oriented half-coordinate source).**
+**Definition 1.12 (Oriented half-coordinate source).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.signedHalfSource`
 
@@ -126,7 +150,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 For leg right and mode sign e, the oriented source at complex u and r is legSign(right) times sourceMode(e,u,r).
 
-**Theorem 1.11 (Sum of the actual mode means).**
+**Theorem 1.13 (Sum of the actual mode means).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_mean_hasSum`
 
@@ -138,7 +162,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 For any lattice data D, charge a, color i and flags l and e, assume ‖u‖ + ‖w‖ < 1. Summing the actual tagged means of the singleton labels (e,i,p) against uᵖ gives the negative bilinear pairing of the unit color charge with a times signedHalfSource(l,e,u,w²)/P(w²).
 
-**Theorem 1.12 (Pullback of the elliptic differential).**
+**Theorem 1.14 (Pullback of the elliptic differential).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.half_coordinate_pullback`
 
@@ -150,7 +174,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 For either leg and either sign, take nonzero complex q and r with ‖q²‖ + ‖r‖ < 1. The native lift (x(q),y(q)) satisfies y² = x(x−1)(x−(1−r)) and y ≠ 0. Its x derivative at q is 2y times signedHalfSource(right,e,q²,r), so the source is the coefficient of the pullback of dx/(2y).
 
-**Theorem 1.13 (Restored covariance on the native elliptic chart).**
+**Theorem 1.15 (Restored covariance on the native elliptic chart).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_geometric_covariance`
 
@@ -177,6 +201,8 @@ Adding the Cauchy term only when l = k and e = f gives the corrected spatial ker
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_mean_hasSum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_spatial_overlap`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.native_tagged_entry`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratJ_spatial`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.ratT_spatial`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.signedHalfSource`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance.taggedMode`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/ComplexRadial/Applications](../ComplexRadial/Applications.md)
