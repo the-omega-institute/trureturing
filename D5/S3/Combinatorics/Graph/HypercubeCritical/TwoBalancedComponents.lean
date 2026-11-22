@@ -24,9 +24,8 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.TwoBalancedComponents
 open scoped Classical
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q IsBalanced)
+open SupportedEigenSaturation (selected_neighbor_card)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private selected_neighbor_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 
 /-- Project the support of an actual component of the induced graph back to cube vertices. -/
 def componentFinset (U : Finset (Q 9))
@@ -45,7 +44,7 @@ def componentFinset (U : Finset (Q 9))
   · rintro ⟨hx, hxK⟩
     exact ⟨⟨x, hx⟩, hxK, rfl⟩
 
-private theorem componentFinset_subset (U : Finset (Q 9))
+theorem componentFinset_subset (U : Finset (Q 9))
     (K : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent) :
     componentFinset U K ⊆ U := by
   intro x hx
