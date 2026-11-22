@@ -31,13 +31,13 @@ open BalancedCriticalSpectrum (Q flip flip_adj gamma gamma_apply
 open BalancedCubeGirth (gamma_anticommute)
 open TwentyPointEightWord (gamma_square)
 open Q9BoundaryGram (Interior Exterior)
-open Q9IsotropicHuang (parity weightedLinear)
+open Q9IsotropicHuang (parity weightedLinear flipSign_cast)
 open private huangMatrix huangMatrix_symmetric cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private regular_parity_card cube_opposite_card interior_card degree_of_no_exterior_neighbors
   from D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9BoundaryGram
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private weightedLinear_square weightedLinear_apply flipSign_cast from
+open private weightedLinear_square weightedLinear_apply from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 open private flip_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary

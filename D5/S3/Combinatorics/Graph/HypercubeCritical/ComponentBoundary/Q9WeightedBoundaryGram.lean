@@ -20,8 +20,8 @@ open scoped BigOperators Matrix
 open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q IsBalanced flip flip_adj)
 open Q9BoundaryGram (Interior Exterior)
-open Q9IsotropicHuang (flipSign weightedLinear weightedAction)
-open private weightedLinear_apply weightedLinear_square flipSign_cast from
+open Q9IsotropicHuang (flipSign flipSign_cast weightedLinear weightedAction)
+open private weightedLinear_apply weightedLinear_square from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
 open private huangMatrix_symmetric cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
