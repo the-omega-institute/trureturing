@@ -113,12 +113,6 @@ theorem insertion_project [Fintype I] (b : Module.Basis I ℤ M) (A S : Finset I
     · simp [hweight i hi]
     · rw [project_coordinate, hface i hi, ite_eq_right hs, nsmul_zero, smul_zero]
 
-/-- The part of the weighted kernel supported on one intersection with the passive set. -/
-noncomputable def sector [Fintype I] (b : Module.Basis I ℤ M) (A S : Finset I)
-    (weight : I → ℕ) (n : ℕ) : Submodule ℤ (M [⋀^Fin (d + 1)]→ₗ[ℤ] N) :=
-  ((insertVector (∑ i, weight i • b i)).ker ⊓ Submodule.torsionBy ℤ _ (n : ℤ)) ⊓
-    (project b A S - LinearMap.id).ker
-
 private theorem projectDecomposition (b : Module.Basis I ℤ M) (A : Finset I)
     (K : Submodule ℤ (M [⋀^Fin d]→ₗ[ℤ] N))
     (hK : ∀ (f : K) (S : A.powerset), project b A S.val f.val ∈ K) :
@@ -150,100 +144,6 @@ private theorem projectDecomposition (b : Module.Basis I ℤ M) (A : Finset I)
   · intro T hT
     conv_lhs => rw [← ((hsector T _).mp (g T).prop).2]
     rw [project_project, ite_eq_right (fun h => hT (Subtype.ext h.symm))]
-
-/-- Weighted insertion and the scalar annihilator split independently over all
-intersections with the passive indices. -/
-theorem exists_split [Fintype I] (b : Module.Basis I ℤ M)
-    (A : Finset I) (weight : I → ℕ) (n : ℕ) (hweight : ∀ i ∈ A, weight i = 0) :
-    ∃ e : (↥((insertVector (n := d) (N := N) (∑ i, weight i • b i)).ker ⊓
-      Submodule.torsionBy ℤ _ (n : ℤ))) ≃ₗ[ℤ]
-      (∀ S : A.powerset, ↥(sector (d := d) (N := N) b A S.val weight n)),
-      ∀ f S, (e f S).val = project b A S.val f.val := by
-  let w := ∑ i, weight i • b i
-  let K := (insertVector (n := d) (N := N) w).ker ⊓ Submodule.torsionBy ℤ _ (n : ℤ)
-  refine projectDecomposition b A K fun f S => ?_
-  have hf : f.val.curryLeft w = 0 ∧ (n : ℤ) • f.val = 0 := f.prop
-  change (project b A S.val f.val).curryLeft w = 0 ∧
-    (n : ℤ) • project b A S.val f.val = 0
-  rw [show w = ∑ i, weight i • b i from rfl,
-    insertion_project b A S.val weight hweight, hf.1, _root_.map_zero,
-    ← map_smul, hf.2, _root_.map_zero]
-  exact ⟨rfl, rfl⟩
-
-/-- A coefficient equation restricts only the factor indexed by that face's
-intersection with the passive indices. -/
-theorem split_with_omitted_faces [Fintype I] (b : Module.Basis I ℤ M)
-    (A : Finset I) (weight : I → ℕ) (n : ℕ) (hweight : ∀ i ∈ A, weight i = 0)
-    (holes : Set (Set.powersetCard I (d + 1))) :
-    let K := (insertVector (n := d) (N := N) (∑ i, weight i • b i)).ker ⊓
-      Submodule.torsionBy ℤ _ (n : ℤ)
-    let read := fun F : Set.powersetCard I (d + 1) =>
-      (LinearMap.proj F).comp (basisFormEquiv (N := N) b).symm.toLinearMap
-    let P := K ⊓ ⨅ F : holes, (read F.val).ker
-    let Q := fun S : A.powerset => sector b A S.val weight n ⊓
-      ⨅ F : {F : holes // F.val.val ∩ A = S.val}, (read F.val.val).ker
-    Nonempty (↥P ≃ₗ[ℤ] ∀ S, ↥(Q S)) := by
-  dsimp only
-  let K := (insertVector (n := d) (N := N) (∑ i, weight i • b i)).ker ⊓
-    Submodule.torsionBy ℤ _ (n : ℤ)
-  let read := fun F : Set.powersetCard I (d + 1) =>
-    (LinearMap.proj F).comp (basisFormEquiv (N := N) b).symm.toLinearMap
-  let P := K ⊓ ⨅ F : holes, (read F.val).ker
-  let Q := fun S : A.powerset => sector b A S.val weight n ⊓
-    ⨅ F : {F : holes // F.val.val ∩ A = S.val}, (read F.val.val).ker
-  change Nonempty (↥P ≃ₗ[ℤ] ∀ S, ↥(Q S))
-  obtain ⟨e, he⟩ := exists_split (d := d) (N := N) b A weight n hweight
-  have hread (f : K) (F : Set.powersetCard I (d + 1)) (S : A.powerset)
-      (hS : F.val ∩ A = S.val) : read F (e f S).val = read F f.val := by
-    rw [he f S]
-    change (basisFormEquiv b).symm (project b A S.val f.val) F = (basisFormEquiv b).symm f.val F
-    rw [project_on_basis, ite_eq_left hS]
-  have hP (f : K) : f.val ∈ P ↔ ∀ S, (e f S).val ∈ Q S := by
-    simp only [P, Q, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker,
-      f.prop, (e f _).prop, true_and]
-    constructor
-    · intro h S F
-      exact (hread f F.val.val S F.prop).trans (h F.val)
-    · intro h F
-      let S : A.powerset := ⟨F.val.val ∩ A, mem_powerset.mpr inter_subset_right⟩
-      exact (hread f F.val S rfl).symm.trans (h S ⟨F, rfl⟩)
-  let toK : P →ₗ[ℤ] K := P.inclusion inf_le_left
-  let forget : (∀ S, ↥(Q S)) →ₗ[ℤ] (∀ S : A.powerset, ↥(sector b A S.val weight n)) :=
-    LinearMap.pi fun S => ((Q S).inclusion inf_le_left).comp (LinearMap.proj S)
-  have hInv (g : ∀ S, ↥(Q S)) : (e.symm (forget g)).val ∈ P := by
-    apply (hP _).mpr
-    rw [e.apply_symm_apply]
-    exact fun S => (g S).prop
-  refine ⟨{
-    toFun := fun f S => ⟨(e (toK f) S).val, (hP (toK f)).mp f.prop S⟩
-    invFun := fun g => ⟨(e.symm (forget g)).val, hInv g⟩
-    left_inv := ?_
-    right_inv := ?_
-    map_add' := ?_
-    map_smul' := ?_ }⟩
-  · intro f g
-    funext S
-    apply Subtype.ext
-    change (e (toK (f + g)) S).val = (e (toK f) S).val + (e (toK g) S).val
-    rw [map_add, map_add]
-    rfl
-  · intro t f
-    funext S
-    apply Subtype.ext
-    change (e (toK (t • f)) S).val = t • (e (toK f) S).val
-    rw [map_smul, map_smul]
-    rfl
-  · intro f
-    apply Subtype.ext
-    change (e.symm (e (toK f))).val = f.val
-    rw [e.symm_apply_apply]
-    rfl
-  · intro g
-    funext S
-    apply Subtype.ext
-    change (e (e.symm (forget g)) S).val = (g S).val
-    rw [e.apply_symm_apply]
-    rfl
 
 private def pairFamilies {J : Type*} (X Y : J → Type*)
     [∀ j, AddCommGroup (X j)] [∀ j, AddCommGroup (Y j)] :

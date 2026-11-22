@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem
 
 *Commentary.*
 
-All bases have the stated rank, and the excluded sets of that rank have pairwise intersection at most two below the rank. The weighted residue group comprises the chains supported on the rank-sized subsets that vanish on the excluded sets, have zero weighted boundary, and satisfy every signed deletion row on a subset of size one greater than the rank. At most one excluded set lies in such a subset. Its contraction row replaces the corresponding uniform row up to an overall sign.
+All bases have the stated rank. Any two distinct excluded sets of that size have intersection of cardinality at most the rank minus two. The weighted residue group comprises the chains supported on the rank-sized subsets that vanish on the excluded sets, have zero weighted boundary, and satisfy every signed deletion row on a subset of size one greater than the rank. At most one excluded set lies in such a subset. Its contraction row replaces the corresponding uniform row up to an overall sign.
 
 **Theorem 1.2 (The alternating-form description).**
 

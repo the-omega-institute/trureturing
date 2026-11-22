@@ -23,30 +23,6 @@ internal sealed class CircuitPassiveCoordinatesDocument : IScribeDocumentDefinit
                     + "to the insertion sum, so each contributing face has the same intersection."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("exists-split"),
-                DeclarationHandle.Create(Module + ".exists_split"),
-                H("Product decomposition of the weighted kernel"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For forms killed by both weighted insertion and a fixed integer, the "
-                    + "projections give a linear equivalence with the product of the parts "
-                    + "supported on each prescribed intersection. Adding the projected forms "
-                    + "recovers the original form."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("split-with-omitted-faces"),
-                DeclarationHandle.Create(Module + ".split_with_omitted_faces"),
-                H("Omitted faces constrain individual factors"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Requiring the coefficient of an omitted face to vanish restricts the "
-                    + "factor indexed by its intersection with the zero-weight set. Omitted "
-                    + "faces with distinct intersections therefore impose equations in "
-                    + "different factors of the product."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("independent-restrictions-product"),
                 DeclarationHandle.Create(Module + ".independent_restrictions_product"),
                 H("Restrictions on distinct product factors"),

@@ -33,7 +33,7 @@ variable {I : Type*} [Fintype I] [LinearOrder I]
 linearly equivalent to the product for the two single omissions. -/
 theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
     (hsurj : Function.Surjective p) (H J : Finset I) {d : ℕ}
-    (hd : 1 ≤ d) (hr : d + 2 < Fintype.card I)
+    (hd : 1 ≤ d)
     (hH : H.card = d + 2) (hJ : J.card = d + 2) (hsparse : (H ∩ J).card ≤ d)
     (M : Bool → Bool → Matroid I) (hground : ∀ i j, (M i j).E = Set.univ)
     (hbases : ∀ i j (B : Finset I), (M i j).IsBase (B : Set I) ↔ B.card = d + 2 ∧
@@ -41,6 +41,10 @@ theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
     Nonempty (((weightedCircuitResidues (M false false) p) × (weightedCircuitResidues (M true true) p)) ≃ₗ[ℤ]
       ((weightedCircuitResidues (M true false) p) × (weightedCircuitResidues (M false true) p))) := by
   classical
+  have hr : d + 2 < Fintype.card I := by
+    have hUnion := card_union_add_card_inter H J
+    have hBound := (H ∪ J).card_le_univ
+    omega
   let weight (i : I) := (univ.filter fun v => p v = i).card
   have hweight (i : I) : 0 < weight i := by
     obtain ⟨v, hv⟩ := hsurj i

@@ -17,8 +17,9 @@ internal sealed class TwoOmittedCircuitInvariantFactorsDocument : IScribeDocumen
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Take a uniform core of rank at least three and corank at least two. Omit two bases "
-                    + "whose intersection is at most two below the rank. In a block-ordered parallel expansion, "
+                    "Take a uniform core of rank at least three. Omit two bases whose intersection has "
+                    + "cardinality at most the rank minus two. Their union then forces corank at least two. "
+                    + "In a block-ordered parallel expansion, "
                     + "write n for the total size and g for the gcd of the class sizes. Starting from the uniform "
                     + "decomposition, decrease the multiplicities of the factors of orders g and n by two each. "
                     + "For each omitted basis, add a cyclic factor whose order is the gcd of n and the class "

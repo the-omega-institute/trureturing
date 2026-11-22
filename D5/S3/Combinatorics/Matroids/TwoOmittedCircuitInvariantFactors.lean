@@ -78,7 +78,7 @@ private theorem two_le_choose {k r : ℕ} (hr : 1 ≤ r) (hk : r < k) : 2 ≤ k.
 with sparse intersection exchange two factors of each uniform order for
 the two separate gcds of the total size with the weights outside a basis. -/
 theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V] [LinearOrder V]
-    {k d : ℕ} {S : Matroid (Fin (k + 2))} (hd : 1 ≤ d) (hcodim : d + 2 ≤ k)
+    {k d : ℕ} {S : Matroid (Fin (k + 2))} (hd : 1 ≤ d)
     (H J : Finset (Fin (k + 2))) (hH : H.card = d + 2) (hJ : J.card = d + 2)
     (hsparse : (H ∩ J).card ≤ d) (hground : S.E = Set.univ)
     (hbases : ∀ B : Finset (Fin (k + 2)), S.IsBase (B : Set (Fin (k + 2))) ↔
@@ -95,6 +95,11 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
   classical
   intro n weight g q₁ q₂
   let I := Fin (k + 2)
+  have hcodim : d + 2 ≤ k := by
+    have hUnion := card_union_add_card_inter H J
+    have hBound := (H ∪ J).card_le_univ
+    rw [Fintype.card_fin] at hBound
+    omega
   have hr : d + 2 < Fintype.card I := by simp [I]; omega
   have hEn : d + 2 < (Set.univ : Set I).ncard := by
     simpa only [Set.ncard_univ, Nat.card_eq_fintype_card] using hr
@@ -142,7 +147,7 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
       exact ⟨hc.le, fun h => (hsize _ h).not_lt hc⟩
     obtain ⟨e, _⟩ := parallel_lifting_obstruction hsurj horder (fun a => nonloop (p a))
     exact ⟨e⟩
-  obtain ⟨square⟩ := sparse_paving_residue_product p hsurj H J hd hr hH hJ hsparse M hMground hMbase
+  obtain ⟨square⟩ := sparse_paving_residue_product p hsurj H J hd hH hJ hsparse M hMground hMbase
   obtain ⟨u⟩ := lift false false
   obtain ⟨t⟩ := lift true true
   obtain ⟨oneH⟩ := lift true false

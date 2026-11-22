@@ -17,8 +17,8 @@ internal sealed class SparsePavingCircuitCoordinatesDocument : IScribeDocumentDe
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "All bases have the stated rank, and the excluded sets of that rank have pairwise "
-                    + "intersection at most two below the rank. The weighted residue group comprises "
+                    "All bases have the stated rank. Any two distinct excluded sets of that size have "
+                    + "intersection of cardinality at most the rank minus two. The weighted residue group comprises "
                     + "the chains supported on the rank-sized subsets that vanish on the excluded "
                     + "sets, have zero weighted boundary, and satisfy every signed deletion row "
                     + "on a subset of size one greater than the rank. At most one excluded set "
