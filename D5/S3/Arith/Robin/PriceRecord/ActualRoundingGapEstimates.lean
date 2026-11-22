@@ -1,3 +1,11 @@
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualRoundingGapEstimates
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualRoundingGapEstimates
+   mirror-E: none(waiver:general-theorem-no-numerical-experiment)
+   anchors: []
+   utility: none
+   digest: Two global upper bounds, an exact chamber identity and a four-term error for integer rounding. -/
+
 import D5.S3.Arith.Robin.PriceRecord.BoundaryPrimePrice
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Tactic

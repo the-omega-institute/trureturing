@@ -1,3 +1,11 @@
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualRoundingFullLimit
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualRoundingFullLimit
+   mirror-E: none(waiver:general-theorem-no-numerical-experiment)
+   anchors: []
+   utility: none
+   digest: The normalized actual prime rounding sum converges to twice the square root of two. -/
+
 import D5.S3.Arith.Robin.PriceRecord.ActualRoundingGapEstimates
 import D5.S3.Arith.Robin.PriceRecord.PrimeBoundarySecondOrder
 import D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail
@@ -5,7 +13,7 @@ import D5.S3.Arith.Robin.ActualRobinClockCovariance
 
 /-! The prime rounding sum uses the compact profile at the square-root scale.
 The crossover at `sqrt 2` splits the profile into a counting term and a
-reciprocal-square term. The global gap estimates control both discarded tails. -/
+reciprocal-square term. The global gap estimates control both tails. -/
 
 set_option autoImplicit false
 
@@ -176,7 +184,6 @@ private lemma finite_compact_majorant {eps M L p : ℝ}
       _ = _ := by rw [hs2]
   let u : ℝ := (p ^ (2 : ℕ))⁻¹
   let v : ℝ := (p ^ (3 : ℕ))⁻¹
-  have hu0 : 0 ≤ u := (inv_pos.mpr (pow_pos hp0 _)).le
   have hv0 : 0 ≤ v := (inv_pos.mpr (pow_pos hp0 _)).le
   have hu : u ≤ 1 / 2 := by
     have hp2 : (2 : ℝ) ^ (2 : ℕ) ≤ p ^ (2 : ℕ) := by gcongr
@@ -352,7 +359,6 @@ private theorem prime_count_sqrt_scale {c : ℝ} (hc : 0 < c) :
     with L hL1 hcs
   have hs : 0 < sqrt L := sqrt_pos.mpr (by linarith)
   have hq : log L ≠ 0 := (log_pos hL1).ne'
-  -- The intermediary log(c*sqrt L) cancels; it must be nonzero.
   have hcq : log (c * sqrt L) ≠ 0 := (log_pos hcs).ne'
   change log (c * sqrt L) * primeCount (c * sqrt L) / (c * sqrt L) *
       (c / (log (c * sqrt L) / log L)) = _
@@ -441,7 +447,7 @@ private theorem prime_gap_tail_bound {L y z rho : ℝ} (hL : 1 < L) (hy : 1 < y)
       apply sum_le_sum
       intro p hp
       obtain ⟨hpI, hpP⟩ := mem_filter.mp hp
-      obtain ⟨hpy, hpz⟩ := mem_Ioc.mp hpI
+      have hpy := (mem_Ioc.mp hpI).1
       have hp1 : (1 : ℝ) < p := by exact_mod_cast hpP.one_lt
       have hp0 : (0 : ℝ) < p := by linarith
       have hyp : y < (p : ℝ) := by
@@ -674,66 +680,23 @@ private lemma profile_shell_split {eps M L : ℝ}
     intro p hp₁ hp₂
     exact (Nat.not_lt_of_ge (mem_Ioc.mp (mem_filter.mp hp₁).1).2)
       (mem_Ioc.mp (mem_filter.mp hp₂).1).1
-  rw [hu]
-  rw [sum_union hdis]
-  · have hleft : ∀ p ∈ primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L),
-        profile L (p : ℝ) = (1 / 2 : ℝ) := by
-      intro p hp
-      obtain ⟨hpI, hpP⟩ := mem_filter.mp hp
-      obtain ⟨_, hpupper⟩ := mem_Ioc.mp hpI
-      have hp1 : (1 : ℝ) < p := by exact_mod_cast hpP.one_lt
-      have hpc : (p : ℝ) ≤ (⌊tau * Real.sqrt L⌋₊ : ℝ) := by
-        exact_mod_cast hpupper
-      exact profile_left hL hp1
-        (hpc.trans (Nat.floor_le (mul_nonneg tau_pos.le hs)))
-    have hright : ∀ p ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-        profile L (p : ℝ) = L / (p : ℝ) ^ (2 : ℕ) := by
-      intro p hp
-      obtain ⟨hpI, hpP⟩ := mem_filter.mp hp
-      obtain ⟨hplower, _⟩ := mem_Ioc.mp hpI
-      have hfloor : (⌊tau * Real.sqrt L⌋₊ : ℝ) < p := by
-        exact_mod_cast hplower
-      have hnext : tau * Real.sqrt L < (⌊tau * Real.sqrt L⌋₊ : ℝ) + 1 :=
-        Nat.lt_floor_add_one _
-      have hpgt : tau * Real.sqrt L < (p : ℝ) := by
-        have hn : ⌊tau * Real.sqrt L⌋₊ + 1 ≤ p := Nat.succ_le_iff.mpr hplower
-        exact hnext.trans_le (by exact_mod_cast hn)
-      exact profile_right hL hpgt
-    calc
-      (∑ x ∈ primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L), profile L (x : ℝ)) +
-          ∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L), profile L (x : ℝ) =
-        (∑ x ∈ primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L), (1 / 2 : ℝ)) +
-          ∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-            L / (x : ℝ) ^ (2 : ℕ) := by
-          congr 1
-          · apply sum_congr rfl
-            intro x hx
-            exact hleft x hx
-          · apply sum_congr rfl
-            intro x hx
-            exact hright x hx
-      _ = (1 / 2 : ℝ) * (primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L)).card +
-          L * (∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-            (1 : ℝ) / (x : ℝ) ^ (2 : ℕ)) := by
-          calc
-            (∑ x ∈ primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L),
-                (1 / 2 : ℝ)) +
-                ∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-                  L / (x : ℝ) ^ (2 : ℕ) =
-              ((primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L)).card : ℝ) *
-                  (1 / 2 : ℝ) +
-                ∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-                  L / (x : ℝ) ^ (2 : ℕ) := by
-                    simp only [Finset.sum_const, nsmul_eq_mul]
-            _ = (1 / 2 : ℝ) *
-                  (primeInterval (eps * Real.sqrt L) (tau * Real.sqrt L)).card +
-                L * (∑ x ∈ primeInterval (tau * Real.sqrt L) (M * Real.sqrt L),
-                  (1 : ℝ) / (x : ℝ) ^ (2 : ℕ)) := by
-                    rw [Finset.mul_sum, mul_comm (1 / 2 : ℝ)]
-                    congr 1
-                    apply sum_congr rfl
-                    intro x hx
-                    ring
+  have hleft : ∀ p ∈ primeInterval (eps * sqrt L) (tau * sqrt L),
+      profile L (p : ℝ) = 1 / 2 := by
+    intro p hp
+    obtain ⟨hpI, hpP⟩ := mem_filter.mp hp
+    have hp1 : (1 : ℝ) < p := by exact_mod_cast hpP.one_lt
+    have hpupper : (p : ℝ) ≤ (⌊tau * sqrt L⌋₊ : ℝ) := by
+      exact_mod_cast (mem_Ioc.mp hpI).2
+    exact profile_left hL hp1 (hpupper.trans (Nat.floor_le (mul_nonneg tau_pos.le hs)))
+  have hright : ∀ p ∈ primeInterval (tau * sqrt L) (M * sqrt L),
+      profile L (p : ℝ) = L * (1 / (p : ℝ) ^ (2 : ℕ)) := by
+    intro p hp
+    have hpgt : tau * sqrt L < (p : ℝ) := by
+      by_contra! h
+      exact (not_le_of_gt (mem_Ioc.mp (mem_filter.mp hp).1).1) (Nat.le_floor h)
+    rw [profile_right hL hpgt, div_eq_mul_inv, one_div]
+  rw [hu, sum_union hdis, sum_congr rfl hleft, sum_congr rfl hright,
+    sum_const, nsmul_eq_mul, mul_comm (_ : ℝ) (1 / 2), mul_sum]
 
 /-- The profile shell has the exact limit obtained by the two genuine finite
 prime suppliers; the split assigns the equality point to the constant branch. -/
@@ -970,21 +933,7 @@ private lemma eventual_large_tail_bound {M rho eta : ℝ} (hM : 0 < M)
     (mul_nonneg (sqrt_nonneg L) (log_pos hL).le)
   simpa [mul_assoc, mul_left_comm, mul_comm] using hbound'.trans_lt hbound
 
-private lemma eventual_compact_lower {eps M eta : ℝ} (heps : 0 < eps)
-    (hepsτ : eps < tau) (heM : tau < M) (heta : 0 < eta) :
-    ∀ᶠ L : ℝ in atTop, 1 < L → M * sqrt L ≤ L →
-      2 * sqrt 2 - eps - 2 / M - eta <
-        sqrt L * log L *
-          (∑ p ∈ primeInterval (eps * sqrt L) (M * sqrt L),
-            integerGap (p : ℝ) (g L)) := by
-  have h := (actual_compact_gap_limit heps hepsτ heM).eventually_const_lt
-    (show 2 * sqrt 2 - eps - 2 / M - eta < 2 * sqrt 2 - eps - 2 / M by linarith)
-  filter_upwards [h] with L hL
-  intro _ _
-  exact hL
-
-/-- The exact actual-prime full limit. The compact profile, both finite tails,
-and the support partition are all proved below from the supplied suppliers. -/
+/-- The actual-prime sum follows from the compact profile and two tail bounds. -/
 theorem actual_prime_gap_limit :
     Tendsto (fun L : ℝ => sqrt L * log L *
       (∑ p ∈ Nat.primesLE ⌊L⌋₊, integerGap (p : ℝ) (g L)))
@@ -1002,93 +951,35 @@ theorem actual_prime_gap_limit :
   have hM : tau < M := by
     dsimp [M, tau]
     exact lt_of_lt_of_le (by linarith [sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)]) (le_max_left _ _)
-  have hMpos : 0 < M := lt_of_lt_of_le tau_pos (le_of_lt hM)
+  have hMpos : 0 < M := tau_pos.trans hM
+  have hepsbound : eps ≤ eta / 8 := min_le_right _ _
+  have hMbound : 32 ≤ eta * M := by
+    simpa only [mul_comm] using (div_le_iff₀ heta).mp (le_max_right (2 * sqrt 2) (32 / eta))
+  have htail : 8 / M ≤ eta / 4 := (div_le_iff₀ hMpos).mpr (by nlinarith [hMbound])
+  have hshellLower : 2 / M ≤ eta / 16 := (div_le_iff₀ hMpos).mpr (by nlinarith [hMbound])
   have hsmall := eventual_small_prime_gap_bound (eta := eta / 8) heps (by positivity)
-  have hlarge := eventual_large_tail_bound (rho := 1) (eta := eta / 8) hMpos (by norm_num) (by positivity)
-  have hcompact := eventual_compact_lower (eta := eta / 8) heps hepsτ hM (by positivity)
-  have hupper := (actual_compact_gap_limit heps hepsτ hM).eventually_lt_const
-    (show 2 * sqrt 2 - eps - 2 / M < 2 * sqrt 2 - eps - 2 / M + eta / 8 by linarith)
-  have hcut : ∀ᶠ L : ℝ in atTop, 1 < L ∧ M * sqrt L ≤ L := by
-    filter_upwards [eventually_gt_atTop (max (1 : ℝ) (M ^ (2 : ℕ))),
-      eventually_gt_atTop (1 : ℝ)] with L hL hL1
-    have hL0 : 0 < L := by linarith
-    have hs : 0 < sqrt L := sqrt_pos.mpr hL0
-    have hs2 : (sqrt L) ^ (2 : ℕ) = L := sq_sqrt hL0.le
-    have hM2 : M ^ (2 : ℕ) < L := by
-      exact (le_max_right (1 : ℝ) (M ^ (2 : ℕ))).trans_lt hL
-    have hMle : M ≤ sqrt L := by
-      nlinarith [hM2, hs2, hMpos]
-    constructor
-    · exact hL1
-    · have hmul := mul_le_mul_of_nonneg_right hMle hs.le
-      nlinarith [hmul, hs2]
-  filter_upwards [hsmall, hlarge, hcompact, hupper, hcut] with L hsmall hlarge hcompact hupper hcut
-  have hpart := prime_support_partition ((le_of_lt hepsτ).trans hM.le) hcut.2
-  have hs : 0 < sqrt L := sqrt_pos.mpr (by linarith [hcut.1])
-  have hq : 0 < log L := log_pos hcut.1
-  have hnorm : 0 ≤ sqrt L * log L := mul_nonneg hs.le hq.le
-  have hsmall' := hsmall
-  have hlarge' := hlarge hcut.1 hcut.2
-  have hcompact' := hcompact hcut.1 hcut.2
-  have hupper' := hupper
-  rw [Real.dist_eq]
-  apply abs_lt.2
-  constructor
-  · calc
-      -eta < (2 * sqrt 2 - eps - 2 / M - eta / 8) - 2 * sqrt 2 := by
-        have he : eps + 2 / M ≤ 3 * eta / 16 := by
-          have hMbound : 2 / M ≤ eta / 16 := by
-            apply (div_le_iff₀ (by positivity : 0 < M)).2
-            have hm : 32 / eta ≤ M := le_max_right _ _
-            have hη : 0 < eta := heta
-            have hprod : 32 ≤ eta * M := by
-              have := (div_le_iff₀ hη).mp hm
-              nlinarith
-            nlinarith
-          have hepsbound : eps ≤ eta / 8 := min_le_right _ _
-          linarith
-        linarith
-      _ < (sqrt L * log L *
-          (∑ p ∈ primeInterval (eps * sqrt L) (M * sqrt L),
-            integerGap (p : ℝ) (g L))) - 2 * sqrt 2 := by linarith
-      _ ≤ (sqrt L * log L * (∑ p ∈ Nat.primesLE ⌊L⌋₊, integerGap (p : ℝ) (g L))) - 2 * sqrt 2 := by
-        have hnonnegsmall : 0 ≤ sqrt L * log L *
-            (∑ p ∈ Nat.primesLE ⌊eps * sqrt L⌋₊,
-              integerGap (p : ℝ) (g L)) := by
-          have hsum := prime_sum_nonneg hcut.1 (S := Nat.primesLE ⌊eps * sqrt L⌋₊)
-            (fun p hp => (Nat.mem_primesLE.mp hp).2)
-          exact mul_nonneg hnorm hsum
-        have hnonneglarge : 0 ≤ sqrt L * log L *
-            (∑ p ∈ primeInterval (M * sqrt L) L,
-              integerGap (p : ℝ) (g L)) := by
-          have hsum := prime_sum_nonneg hcut.1
-            (S := primeInterval (M * sqrt L) L)
-            (fun p hp => (mem_filter.mp hp).2)
-          exact mul_nonneg hnorm hsum
-        rw [hpart]
-        linarith
-  · calc
-      (sqrt L * log L * (∑ p ∈ Nat.primesLE ⌊L⌋₊, integerGap (p : ℝ) (g L))) - 2 * sqrt 2 ≤
-          (sqrt L * log L *
-            (∑ p ∈ primeInterval (eps * sqrt L) (M * sqrt L),
-              integerGap (p : ℝ) (g L))) - 2 * sqrt 2 +
-          (eps + eta / 8) + (2 * (1 + 3 * (1 : ℝ)) / M + eta / 8) := by
-            have hsbound := hsmall'.le
-            have hlbound := hlarge'.le
-            rw [hpart]
-            linarith
-      _ < eta := by
-        have hM32 : 32 / eta ≤ M := le_max_right _ _
-        have htail : 8 / M ≤ eta / 4 := by
-          apply (div_le_iff₀ (by positivity : 0 < M)).2
-          have hprod : 32 ≤ eta * M := by
-            have := (div_le_iff₀ heta).mp hM32
-            nlinarith
-          nlinarith
-        have hnonneg : 0 ≤ 2 / M := by positivity
-        have hlarge' : 2 * (1 + 3 * (1 : ℝ)) / M ≤ eta / 4 := by
-          norm_num
-          exact htail
-        linarith only [hupper', hlarge', hnonneg, heta]
+  have hlarge := eventual_large_tail_bound (rho := 1) (eta := eta / 8) hMpos
+    (by norm_num) (by positivity)
+  have hcompact := Metric.tendsto_nhds.1 (actual_compact_gap_limit heps hepsτ hM)
+    (eta / 8) (by positivity)
+  filter_upwards [hsmall, hlarge, hcompact, eventually_gt_atTop (1 : ℝ),
+    tendsto_sqrt_atTop.eventually_ge_atTop M] with L hsmall hlarge hcompact hL hsqrt
+  have hs : 0 < sqrt L := sqrt_pos.mpr (by linarith)
+  have hMle : M * sqrt L ≤ L := by
+    simpa only [← pow_two, sq_sqrt (show 0 ≤ L by linarith)] using
+      mul_le_mul_of_nonneg_right hsqrt hs.le
+  have hpart := prime_support_partition (hepsτ.le.trans hM.le) hMle
+  have hnorm := mul_nonneg hs.le (log_pos hL).le
+  have hhead_nonneg := mul_nonneg hnorm (prime_sum_nonneg hL
+    (S := Nat.primesLE ⌊eps * sqrt L⌋₊) (fun p hp => (Nat.mem_primesLE.mp hp).2))
+  have htail_nonneg := mul_nonneg hnorm (prime_sum_nonneg hL
+    (S := primeInterval (M * sqrt L) L) (fun p hp => (mem_filter.mp hp).2))
+  have hlargeBound := hlarge hL hMle
+  norm_num at hlargeBound
+  rw [Real.dist_eq] at hcompact ⊢
+  obtain ⟨hcompactLower, hcompactUpper⟩ := abs_lt.mp hcompact
+  rw [hpart, mul_add, mul_add]
+  have hnonneg : 0 ≤ 2 / M := by positivity
+  exact abs_lt.mpr ⟨by linarith, by linarith⟩
 
 end D5.S3.Arith.Robin.PriceRecord.ActualRoundingFullLimit
