@@ -37,7 +37,7 @@ variable {V : Type*} [Fintype V] [LinearOrder V]
 noncomputable def aggregateRestrict (M : Matroid V) (K : Finset V) (z : Chain V) : Chain V :=
   ∑ a ∈ K, restrictChain M K a z
 
-private lemma aggregate_topCycle {M : Matroid V} {K : Finset V}
+lemma aggregate_topCycle {M : Matroid V} {K : Finset V}
     (hK : M.IsCircuit (K : Set V)) {z : Chain V} (hz : TopCycle M z) :
     TopCycle (M ／ (K : Set V)) (aggregateRestrict M K z) := by
   change aggregateRestrict M K z ∈ topCycles (M ／ (K : Set V))
@@ -83,7 +83,7 @@ private theorem aggregateRestrict_dvd_iff {M : Matroid V} {K : Finset V}
 
 
 omit [Fintype V] in
-private lemma facet_join {K T : Finset V} (hd : Disjoint T K) {a : V} (ha : a ∈ K) :
+lemma facet_join {K T : Finset V} (hd : Disjoint T K) {a : V} (ha : a ∈ K) :
     signedJoin K (simplexBoundary K) (simplex T) (T ∪ K.erase a) =
       restrictionSign K a T := by
   rcases split_circuit_face hd a with ⟨hinter, hdiff⟩

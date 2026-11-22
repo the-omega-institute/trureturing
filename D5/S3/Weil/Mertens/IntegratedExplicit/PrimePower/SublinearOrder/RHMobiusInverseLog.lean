@@ -296,7 +296,6 @@ private theorem centered_sum_inverse_log (hRH : RiemannHypothesis) :
       · simp [hcut, not_le_of_gt hcut]
       · simp [hcut, le_of_not_gt hcut]
     have hp₂ : 2 ≤ p := le_max_left _ _
-    have hpm : p ≤ m := by dsimp [p]; omega
     have hhalf : m+1 ≤ 2*p := by dsimp [p]; omega
     have hp0 : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
     have hhalf' : (m : ℝ) + 1 ≤ 2*(p : ℝ) := by exact_mod_cast hhalf
@@ -304,7 +303,7 @@ private theorem centered_sum_inverse_log (hRH : RiemannHypothesis) :
       apply Real.exp_le_exp.mpr
       exact (div_le_iff₀ hp0).2 ((le_of_not_ge huL).trans
         ((mul_le_mul_of_nonneg_left hhalf' (by linarith : 0 ≤ L)).trans_eq (by ring)))
-    have hh := (hnear m p u H hp₂ hpm hu (hprefix m)).trans
+    have hh := (hnear m p u H hp₂ hu (hprefix m)).trans
       (mul_le_mul_of_nonneg_right
         (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hexp hC.le) hH)
         (Real.exp_nonneg _))

@@ -6,7 +6,7 @@
    utility: none
    digest: Four fixed seeds at just one coordinate in dimension four require multiplier at least two. -/
 
-import D5.S3.ConceptDynamics.Attribution.CoordinateFibreCounts
+import D5.S3.ConceptDynamics.Attribution.ParityColouredTableRealization
 import D5.S3.ConceptDynamics.Attribution.ParityMinimumSeedSpectrum
 import Mathlib.Data.Fin.VecNotation
 
@@ -31,109 +31,9 @@ private theorem weighted_realization {n k : ℕ} {z : Fin (n + 2) → ℕ} (w : 
     (counts : ∀ i, (∑ t : Pair n,
       if t.1.val.profile i && t.2.val.profile i then w t % 2 else 0) = z i) :
     RealizableSeedCounts n k z := by
-  classical
-  let m : orbitRel.Quotient (Acting (Fin (n + 2))) (Pair n) → ℕ :=
-    Quotient.lift w (by intro a b h; obtain ⟨g, hg⟩ := h; exact (congrArg w hg).symm.trans (inv g b))
-  have wlift (t : Pair n) : m (Quotient.mk'' t) = w t := rfl
-  obtain ⟨S, _, _, f, equiv, size, fixed⟩ :=
-    (exact_orbit_fibre_counts m (fun o _ => m o % 2)).mpr
-      (fun _ _ _ => ⟨Nat.mod_le _ _, Nat.mod_mod _ _⟩)
-  have countPartition (P : S → Prop) [DecidablePred P] :
-      (∑ s, if P s then 1 else (0 : ℕ)) =
-        ∑ t, Nat.card {s : S // f s = t ∧ P s} := by
-    calc
-      _ = #(univ.filter P) := by rw [← sum_filter, card_eq_sum_ones]
-      _ = ∑ t : Pair n, #((univ.filter P).filter fun s => f s = t) := by
-        simpa only [mem_univ, filter_true] using
-          (sum_card_fiberwise_eq_card_filter (univ.filter P) univ f).symm
-      _ = _ := by
-        apply sum_congr rfl
-        intro t _
-        rw [Nat.card_eq_fintype_card, Fintype.card_subtype, filter_filter]
-        congr 1
-        ext s
-        simp [and_comm]
-  have event (P : Pair n → Prop) :
-      (∑ s, if P (f s) then 1 else (0 : ℕ)) = ∑ t, if P t then w t else 0 := by
-    rw [countPartition (fun s => P (f s))]
-    apply sum_congr rfl
-    intro t _
-    rw [← wlift t, ← size t]
-    by_cases h : P t
-    · rw [ite_eq_left h]
-      exact Nat.card_congr
-        { toFun := fun s => ⟨s.val, s.property.1⟩
-          invFun := fun s => ⟨s.val, s.property, s.property.symm ▸ h⟩
-          left_inv := fun _ => rfl
-          right_inv := fun _ => rfl }
-    · have : IsEmpty {s : S // f s = t ∧ P (f s)} :=
-        ⟨fun s => h (s.property.1 ▸ s.property.2)⟩
-      simp [h]
-  have pointEvent (P : Pair n → Prop) (d : DecidablePred P)
-      (dS : ∀ s : S, Decidable (P (f s))) :
-      (∑ s, @ite ℕ (P (f s)) (dS s) 1 0) = ∑ t, @ite ℕ (P t) (d t) (w t) 0 := by
-    convert event P using 1
-    · apply sum_congr rfl
-      intro s _
-      split <;> simp_all
-    · apply sum_congr rfl
-      intro t _
-      split <;> simp_all
-  have left (x : slice (n + 2) 0) :
-      (∑ s, @ite ℕ ((f s).1 = x) (Classical.propDecidable _) 1 0) = 2 * k := by
-    refine (pointEvent (fun t => t.1 = x) (fun _ => Classical.propDecidable _)
-      (fun _ => Classical.propDecidable _)).trans ?_
-    rw [Fintype.sum_prod_type, ← rows x, sum_eq_single x]
-    · apply sum_congr rfl
-      intro y _
-      simp
-    · intro a _ ne
-      simp [ne]
-    · simp
-  have right (y : slice (n + 2) 1) :
-      (∑ s, @ite ℕ ((f s).2 = y) (Classical.propDecidable _) 1 0) = 2 * k := by
-    refine (pointEvent (fun t => t.2 = y) (fun _ => Classical.propDecidable _)
-      (fun _ => Classical.propDecidable _)).trans ?_
-    rw [Fintype.sum_prod_type, ← cols y]
-    apply sum_congr rfl
-    intro x _
-    rw [sum_eq_single y]
-    · simp
-    · intro b _ ne
-      simp [ne]
-    · simp
-  have cardLeft : Fintype.card (slice (n + 2) 0) = 2 ^ (n + 2) := by
-    rw [← Fintype.card_congr (sliceEquiv (n + 2) 0), Fintype.card_prod, ZMod.card,
-      ← Nat.card_eq_fintype_card, parityCard]
-    exact (pow_succ (2 : ℕ) (n + 1)).symm
-  have card : Fintype.card S = 2 ^ (n + 3) * k := by
-    calc
-      Fintype.card S = ∑ s : S, (1 : ℕ) := by simp
-      _ = ∑ s, ∑ x : slice (n + 2) 0,
-          @ite ℕ ((f s).1 = x) (Classical.propDecidable _) 1 0 := by
-        apply sum_congr rfl
-        intro s _
-        rw [sum_eq_single (f s).1]
-        · simp
-        · intro a _ ne
-          simp [Ne.symm ne]
-        · simp
-      _ = ∑ x : slice (n + 2) 0,
-          ∑ s, @ite ℕ ((f s).1 = x) (Classical.propDecidable _) 1 0 := sum_comm
-      _ = 2 ^ (n + 2) * (2 * k) := by
-        calc
-          _ = ∑ _x : slice (n + 2) 0, (2 * k) := sum_congr rfl fun x _ => left x
-          _ = _ := by rw [sum_const, card_univ, nsmul_eq_mul, Nat.cast_id, cardLeft]
-      _ = _ := by rw [← Nat.mul_assoc, ← pow_succ]
-  refine ⟨S, inferInstance, inferInstance, f, card, equiv, ⟨2 * k, left, right⟩, ?_⟩
-  intro i
-  unfold fixedSeedCount
-  simp_rw [ParitySeedCountSpectrum.coordinate_fixed_iff_generator]
-  rw [countPartition (fun s => generator i • s = s), ← counts i]
-  apply sum_congr rfl
-  intro t _
-  rw [fixed, wlift, ← ParitySeedCountSpectrum.coordinate_fixed_iff_generator,
-    pair_fixed_coordinate, ← Bool.and_eq_true]
+  obtain ⟨S, fin, action, f, card, equiv, margins, fixed, _⟩ :=
+    ParityColouredTableRealization.weighted_realization_with_fibres w inv rows cols counts
+  exact ⟨S, fin, action, f, card, equiv, margins, fixed⟩
 
 end
 

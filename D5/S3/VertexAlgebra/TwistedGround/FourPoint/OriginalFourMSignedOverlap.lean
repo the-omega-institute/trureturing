@@ -23,7 +23,7 @@ namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSignedOverlap
 open OriginalGaussianExternalGenerators (sourceMode)
 open OriginalGaussianExternalSignedCandidate (h)
 open OriginalGaussianExternalAnalyticCandidate (b)
-open FourPoint.OriginalFourMActualChart (Chart parameter periodRoot)
+open FourPoint.OriginalFourMActualChart (Chart parameter periodRoot scaleRoot scale)
 
 private def normalizedBranch (e : Bool) (u r : ℂ) : ℂ :=
   if e then h e u r / b u else h e u r / (b u * (1 - r))
@@ -127,5 +127,60 @@ theorem dLipMean_eq_chosen_chart_source {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
           simp [chosenChartSource, hroot, Complex.inv_I, one_div, mul_inv_rev] <;> ring
   · change slitMean true u (parameter .D (z : ℂ)) = _
     simp [chosenChartSource, slitMean, normalizedBranch, one_div]
+
+/-- The complementary argument is nonzero on each physical overlap chart. -/
+theorem chart_parameter_ne_one {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (c : Chart) :
+    1 - parameter c (z : ℂ) ≠ 0 := by
+  have h0 : (z : ℂ) ≠ 0 := by exact_mod_cast hz.ne'
+  have h1 : (z : ℂ) ≠ 1 := by exact_mod_cast hz1.ne
+  cases c
+  · simpa [parameter] using inv_ne_zero h0
+  · exact sub_ne_zero.mpr h1.symm
+  · exact sub_ne_zero.mpr (fun h => h1 (inv_eq_one.mp h.symm))
+
+/-- The chosen source is analytic with its period-root normalization at the puncture. -/
+theorem chosen_chart_source_at_zero {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (e : Bool) :
+    AnalyticAt ℂ (chosenChartSource c z e) 0 ∧
+      chosenChartSource c z e 0 = (if e then 1 else periodRoot c z)⁻¹ := by
+  have hd := chart_parameter_ne_one hz hz1 c
+  have hroots : scaleRoot c z .P ^ 2 = scale c z .P ∧
+      periodRoot c z ^ 2 = 1 - parameter c z :=
+    FourPoint.OriginalFourMActualChart.chosen_roots hz hz1 c .P
+  have hroot : periodRoot c z ≠ 0 := by
+    intro h0
+    exact hd (by simpa [h0] using hroots.2.symm)
+  have hn₀ : normalizedBranch e 0 (parameter c z) = 1 := by
+    cases e <;> simp [normalizedBranch, h, b, hd]
+  have hn : AnalyticAt ℂ (fun u => normalizedBranch e u (parameter c z)) 0 := by
+    cases e
+    · exact (analyticAt_const.sub analyticAt_id).div
+        ((analyticAt_const.sub analyticAt_id).mul analyticAt_const) (by simpa [b] using hd)
+    · exact (analyticAt_const.sub (analyticAt_const.mul analyticAt_id)).div
+        (analyticAt_const.sub analyticAt_id) (by simp [b])
+  have hb : AnalyticAt ℂ (fun u => b u * (if e then 1 else periodRoot c z)) 0 :=
+    (analyticAt_const.sub analyticAt_id).mul analyticAt_const
+  have hb₀ : b 0 * (if e then 1 else periodRoot c z) ≠ 0 := by
+    cases e <;> simp [b, hroot]
+  refine ⟨(analyticAt_const.div hb hb₀).mul
+    (hn.cpow analyticAt_const (by rw [hn₀]; exact Complex.one_mem_slitPlane)), ?_⟩
+  simp [chosenChartSource, hn₀, b]
+
+/-- Away from zeros of the two native factors, squaring removes the chosen phase. -/
+theorem chosen_chart_source_square {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (e : Bool) {u : ℂ} (hb : b u ≠ 0) (hh : h e u (parameter c z) ≠ 0) :
+    chosenChartSource c z e u ^ 2 = 1 / (b u * h e u (parameter c z)) := by
+  have hd := chart_parameter_ne_one hz hz1 c
+  have hroots : scaleRoot c z .P ^ 2 = scale c z .P ∧
+      periodRoot c z ^ 2 = 1 - parameter c z :=
+    FourPoint.OriginalFourMActualChart.chosen_roots hz hz1 c .P
+  have hroot := hroots.2
+  have hpow (v : ℂ) : (v ^ (-1 / 2 : ℂ)) ^ 2 = 1 / v := by
+    rw [← Complex.cpow_mul_nat]
+    norm_num [Complex.cpow_neg_one]
+  unfold chosenChartSource
+  rw [mul_pow, div_pow, hpow, mul_pow]
+  cases e <;> simp only [normalizedBranch, Bool.false_eq_true, ite_false, ite_true,
+    hroot, one_pow, mul_one, one_div_div] <;> field_simp [hb, hh, hd]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSignedOverlap

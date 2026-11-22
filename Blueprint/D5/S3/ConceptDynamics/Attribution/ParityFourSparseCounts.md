@@ -23,5 +23,5 @@ At larger multipliers, adjoining an even block with zero fixed counts preserves 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParityFourSparseCounts.exact_four_sparse`
-- Dependency: [D5/S3/ConceptDynamics/Attribution/CoordinateFibreCounts](CoordinateFibreCounts.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/ParityColouredTableRealization](ParityColouredTableRealization.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParityMinimumSeedSpectrum](ParityMinimumSeedSpectrum.md)

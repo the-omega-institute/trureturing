@@ -447,15 +447,19 @@ private theorem uncentered_main_antitone {x : ℝ} (hx : 1 ≤ x)
 
 /-- An ordinary Möbius prefix bound controls the signed near-range Chebyshev response. -/
 theorem omitted_centered_near_of_prefix :
-    ∃ C : ℝ, 0 < C ∧ ∀ (m p : ℕ) (u H : ℝ), 2 ≤ p → p ≤ m → 0 ≤ u →
+    ∃ C : ℝ, 0 < C ∧ ∀ (m p : ℕ) (u H : ℝ), 2 ≤ p → 0 ≤ u →
       (∀ k ≤ m, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ H) →
       |∑ n ∈ Icc p m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
         (∫ t in Ioi (Real.exp u), (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
         C * Real.exp (u/(p : ℝ)) * H * Real.exp (-u/2) := by
   let K : ℝ := 2 * (Real.log 4+4)
   refine ⟨2*(K+2), by dsimp [K]; positivity, ?_⟩
-  intro m p u H hp hpm hu hpre
+  intro m p u H hp hu hpre
   have hH := (abs_nonneg (∑ n ∈ Ioc 0 0, (μ n : ℝ))).trans (hpre 0 (Nat.zero_le m))
+  by_cases hpm : p ≤ m
+  swap
+  · rw [Finset.Icc_eq_empty_of_lt (lt_of_not_ge hpm), Finset.sum_empty, abs_zero]
+    positivity
   let x := Real.exp u
   let P (n : ℕ) := (n : ℝ) / ((n : ℝ)-1) * x ^ ((n : ℝ)⁻¹ - 1/2)
   let T (n : ℕ) := Real.sqrt x * (∫ t in Ioi x, ψ (t ^ (n : ℝ)⁻¹) / t ^ 2)
@@ -532,7 +536,7 @@ theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
   have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
   have hlog : 0 < Real.log m := Real.log_pos (by linarith)
   let H := D * (m : ℝ) / Real.log m
-  have h := hnear m p u H hp hpm hu
+  have h := hnear m p u H hp hu
     (fun k hk => (le_div_iff₀ hlog).mpr (hpre m hm k hk))
   have hp0 : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
   have hhalf' : (m : ℝ) + 1 ≤ 2 * (p : ℝ) := by exact_mod_cast hhalf
