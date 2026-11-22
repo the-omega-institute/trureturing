@@ -8,6 +8,7 @@
 
 module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 public import Mathlib.Data.Finset.Powerset
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Data.Fintype.Card
@@ -25,7 +26,8 @@ open scoped BigOperators
 
 variable {α : Type*} [DecidableEq α]
 
-private abbrev trace (F : Finset (Finset α)) (U : Finset α) : Finset (Finset α) :=
+/-- The members of a family contained in the specified subset. -/
+abbrev trace (F : Finset (Finset α)) (U : Finset α) : Finset (Finset α) :=
   F.filter (· ⊆ U)
 
 private theorem trace_trace (F : Finset (Finset α)) {U V : Finset α} (hUV : U ⊆ V) :
@@ -34,14 +36,16 @@ private theorem trace_trace (F : Finset (Finset α)) {U V : Finset α} (hUV : U 
   simp only [trace, mem_filter]
   exact ⟨fun h => ⟨h.1.1, h.2⟩, fun h => ⟨⟨h.1, h.2.trans hUV⟩, h.2⟩⟩
 
-private theorem trace_uniform {F : Finset (Finset α)} {S U : Finset α}
+/-- Restricting a triple family to a subset preserves uniformity. -/
+theorem trace_uniform {F : Finset (Finset α)} {S U : Finset α}
     (hF : F ⊆ S.powersetCard 3) :
     trace F U ⊆ U.powersetCard 3 := by
   intro t ht
   obtain ⟨htF, htU⟩ := mem_filter.mp ht
   exact mem_powersetCard.mpr ⟨htU, (mem_powersetCard.mp (hF htF)).2⟩
 
-private theorem double_cover_trace {F : Finset (Finset α)} {S U : Finset α}
+/-- Double coverage persists when the ground set is restricted. -/
+theorem double_cover_trace {F : Finset (Finset α)} {S U : Finset α}
     (hcover : ∀ V ∈ S.powersetCard 5, 2 ≤ (trace F V).card) (hUS : U ⊆ S) :
     ∀ V ∈ U.powersetCard 5, 2 ≤ (trace (trace F U) V).card := by
   intro V hV
@@ -49,7 +53,8 @@ private theorem double_cover_trace {F : Finset (Finset α)} {S U : Finset α}
   rw [trace_trace F hVU]
   exact hcover V (mem_powersetCard.mpr ⟨hVU.trans hUS, hVc⟩)
 
-private theorem trace_card_sum {S : Finset α} {F : Finset (Finset α)} {k : ℕ}
+/-- Count incidences between triples and their containing subsets of size `k`. -/
+theorem trace_card_sum {S : Finset α} {F : Finset (Finset α)} {k : ℕ}
     (hF : F ⊆ S.powersetCard 3) (hk : 3 ≤ k) :
     (∑ U ∈ S.powersetCard k, (trace F U).card) =
       F.card * (S.card - 3).choose (k - 3) := by
@@ -66,7 +71,8 @@ private theorem trace_card_sum {S : Finset α} {F : Finset (Finset α)} {k : ℕ
       rw [card_filter_powersetCard_subset t S k htS htk, htc]
     _ = _ := by simp
 
-private theorem double_cover_bound {S : Finset α} {F : Finset (Finset α)}
+/-- The total triple incidence count bounds a double five-set cover. -/
+theorem double_cover_bound {S : Finset α} {F : Finset (Finset α)}
     (hF : F ⊆ S.powersetCard 3)
     (hcover : ∀ U ∈ S.powersetCard 5, 2 ≤ (trace F U).card) :
     S.card.choose 5 * 2 ≤ F.card * (S.card - 3).choose 2 := by
@@ -97,7 +103,8 @@ private theorem trace_erase_card_sum {S : Finset α} {F : Finset (Finset α)}
       rw [card_sdiff_of_subset htS, htc]
     _ = _ := by simp
 
-private theorem erase_trace_add_degree {S : Finset α} {F : Finset (Finset α)}
+/-- Deleting a point partitions the family into its trace and the triples through the point. -/
+theorem erase_trace_add_degree {S : Finset α} {F : Finset (Finset α)}
     (hFS : ∀ t ∈ F, t ⊆ S) (x : α) :
     (trace F (S.erase x)).card + (F.filter (x ∈ ·)).card = F.card := by
   have he : trace F (S.erase x) = F.filter (x ∉ ·) := by
@@ -107,7 +114,8 @@ private theorem erase_trace_add_degree {S : Finset α} {F : Finset (Finset α)}
   rw [he, Nat.add_comm]
   exact card_filter_add_card_filter_not (x ∈ ·)
 
-private theorem seven_point_pair_degree {S p : Finset α} {F : Finset (Finset α)}
+/-- Each pair lies in exactly one triple of a tight seven-point double cover. -/
+theorem seven_point_pair_degree {S p : Finset α} {F : Finset (Finset α)}
     (hS : S.card = 7) (hF : F ⊆ S.powersetCard 3) (hFc : F.card = 7)
     (hcover : ∀ U ∈ S.powersetCard 5, 2 ≤ (trace F U).card)
     (hpS : p ⊆ S) (hp : p.card = 2) : (F.filter (p ⊆ ·)).card = 1 := by
