@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/Result
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
+   utility: none
    digest: Benfield–Lippard Conjecture 10.5 on the sizes of stable exception sets. -/
 
 import D5.S3.Arith.Additive.BenfieldLippard.EvenBound

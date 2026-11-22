@@ -3,6 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Third-party formalization of the qualitative Hilbert–Waring theorem. -/
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringExpSum.lean#L1-L123
@@ -15,7 +16,7 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringCircle
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import D5.S3.Arith.Additive.Waring.WaringWeylDiff
 
 /-!
@@ -27,15 +28,31 @@ Weyl 归纳（Jameson Theorem 1 的一般 `k`）需要一般整系数多项式�
 * `e x = exp(2πi x)`，及其**乘性** `e_add`、**共轭** `e_neg`、**模 1** `norm_e`；
 * `expSum f N α = Σ_{n=0}^{N} e(α f(n))`；
 * `expSum_conj`：`conj (expSum f) = expSum (-f)`；
-* `norm_expSum_le`：`‖expSum f N α‖ ≤ N + 1`；
 * `normSq_expSum`：`‖expSum f‖²` 展开成双和
   `Σ_{n,m} e(α (f(m) − f(n)))`（Weyl 差分不等式的起点）；
-* `theta_eq_expSum`：旧的 `theta` 正是 `f(n) = n²` 的特例。
 -/
 
 open Finset intervalIntegral
 
 namespace Waring
+
+/- Integral orthogonality from WaringCircle.lean at the same upstream revision.
+   Copyright (c) 2026 The Waring formalization authors. All rights reserved.
+   Released under Apache 2.0 license as described in WaringDensity.lean.
+   Authors: The Waring formalization authors -/
+
+/-- **正交性**：`∫₀¹ exp(2πi m α) dα = 1`（`m = 0`）或 `0`（`m ≠ 0`）。 -/
+theorem integral_exp_mul_int (m : ℤ) :
+    (∫ x in (0 : ℝ)..1, Complex.exp ((m : ℂ) * (2 * Real.pi * Complex.I) * (x : ℂ)))
+      = if m = 0 then 1 else 0 := by
+  rcases eq_or_ne m 0 with rfl | hm
+  · simp
+  · have hc : ((m : ℂ) * (2 * Real.pi * Complex.I)) ≠ 0 := by
+      simp [hm, Real.pi_ne_zero]
+    rw [integral_exp_mul_complex (a := (0 : ℝ)) (b := 1) hc]
+    have hexp : Complex.exp ((m : ℂ) * (2 * Real.pi * Complex.I)) = 1 :=
+      Complex.exp_int_mul_two_pi_mul_I m
+    simp [hexp, hm]
 
 /-- `e(x) = exp(2πi x)`。 -/
 noncomputable def e (x : ℝ) : ℂ := Complex.exp (2 * Real.pi * Complex.I * (x : ℂ))

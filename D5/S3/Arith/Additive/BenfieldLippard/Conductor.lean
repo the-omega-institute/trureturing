@@ -1,8 +1,9 @@
 /- GID: D5/S3/Arith/Additive/BenfieldLippard/Conductor
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/Conductor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A bounded generator system gives a quantitative conductor for natural sums. -/
 
 import Mathlib.NumberTheory.FrobeniusNumber

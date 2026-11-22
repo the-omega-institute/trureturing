@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/OddBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Small generators bound the number of gaps from above at odd exponents. -/
 
 import D5.S3.Arith.Additive.BenfieldLippard.Stabilization

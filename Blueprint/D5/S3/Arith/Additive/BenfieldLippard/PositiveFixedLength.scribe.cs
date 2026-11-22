@@ -13,6 +13,15 @@ internal sealed class PositiveFixedLengthDocument : IScribeDocumentDefinition
         H("Fixed-length positive power sums"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("positive-summands"),
+                DeclarationHandle.Create(Prefix + "PosRep"),
+                H("Exactly j positive powers"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Supplier),
+                Blocks(Paragraph(Text(
+                    "A representation has one positive natural base at each index of Fin j, and the sum of the kth powers is n."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("eventual-fixed-length"),
                 DeclarationHandle.Create(Prefix + "eventual_fixed_length"),
                 H("A fixed positive length"),

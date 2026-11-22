@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/EvenBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Fermat divisibility bounds the number of gaps from below at prime-minus-one exponents. -/
 
 import D5.S3.Arith.Additive.BenfieldLippard.Stabilization

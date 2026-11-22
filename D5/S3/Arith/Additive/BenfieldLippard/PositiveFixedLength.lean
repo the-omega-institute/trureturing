@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/PositiveFixedLength
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A fixed number of positive powers represents every sufficiently large integer. -/
 
 import D5.S3.Arith.Additive.Waring.WaringTheorem2

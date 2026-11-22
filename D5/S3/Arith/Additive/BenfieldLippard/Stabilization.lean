@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/Stabilization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Positive missing offsets stabilize at the gaps of the shifted-power monoid. -/
 
 import D5.S3.Arith.Additive.BenfieldLippard.PositiveFixedLength

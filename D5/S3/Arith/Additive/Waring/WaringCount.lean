@@ -3,6 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Third-party formalization of the qualitative Hilbert–Waring theorem. -/
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringCount.lean#L1-L732
@@ -15,7 +16,7 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringCircle
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 open Finset
 

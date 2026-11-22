@@ -1,8 +1,9 @@
 /- GID: D5/S3/Arith/Additive/BenfieldLippard/SmallGCD
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/SmallGCD
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Small shifted powers have gcd one for the odd-exponent bound. -/
 
 import Mathlib.NumberTheory.FrobeniusNumber
