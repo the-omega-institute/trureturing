@@ -426,8 +426,8 @@ private theorem cl_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) (d : ℕ) :
   simp only [cl, exhaustedClass, hv, pattern_relabel, HardinA229585Strip.class_relabel]
 
 private theorem exhausted_relabel (e : Equiv.Perm (Fin 3)) (p : Boundary) :
-    exhaustedClass (e ∘ p) = exhaustedClass p := by
-  simpa only [cl, ite_eq_left rfl, Fin.natAdd_inj] using cl_relabel e p 0
+    exhaustedClass (e ∘ p) = exhaustedClass p :=
+  Fin.natAdd_injective 96 72 (cl_relabel e p 0)
 
 private theorem blocks_disjoint {m n : ℕ} (i : Fin m) (j : Fin n) :
     i.castAdd n ≠ j.natAdd m :=
@@ -438,10 +438,11 @@ private theorem active_cut (p : Boundary) (d c : ℕ) (j : Fin 72) :
       (0 < d ∧ c ≤ d - 1 ∧ HardinA229585StripData.cl p (d - 1 - c) = j) := by
   by_cases h : c < d
   · have hn : d - c ≠ 0 := Nat.ne_of_gt (Nat.sub_pos_of_lt h)
-    simp only [cl, hn, ↓reduceIte, Fin.castAdd_inj, Nat.sub_right_comm d c 1]
+    simp only [cl, hn, ↓reduceIte, Nat.sub_right_comm d c 1]
     have hd : 0 < d := Nat.zero_lt_of_lt h
     have hc : c ≤ d - 1 := by omega
-    simp [h.le, hd, hc]
+    simp only [h.le, hd, hc, true_and]
+    exact Fin.castAdd_inj
   · have he : d - c = 0 := Nat.sub_eq_zero_of_le (Nat.le_of_not_gt h)
     have hb := (blocks_disjoint j (exhaustedClass p)).symm
     simp only [cl, he, ↓reduceIte, hb, and_false, false_iff, not_and]
@@ -452,7 +453,8 @@ private theorem exhausted_cut (p : Boundary) (d c : ℕ) (j : Fin 96) :
   by_cases h : c < d
   · have hn : d - c ≠ 0 := Nat.ne_of_gt (Nat.sub_pos_of_lt h)
     simp [cl, hn, blocks_disjoint (HardinA229585StripData.cl p (d - c - 1)) j, h.ne]
-  · simp only [cl, Nat.sub_eq_zero_of_le (Nat.le_of_not_gt h), ↓reduceIte, Fin.natAdd_inj]
+  · simp only [cl, Nat.sub_eq_zero_of_le (Nat.le_of_not_gt h), ↓reduceIte]
+    rw [Fin.natAdd_inj 72]
     exact and_congr_left (fun _ => ⟨fun hc => hc.antisymm (Nat.le_of_not_gt h), Eq.le⟩)
 
 private theorem next_valid (p : Boundary) (d : ℕ) (hp : Valid p d) (r : Row)
@@ -481,23 +483,36 @@ private theorem leading_counts (p : Boundary) (d : ℕ) (hp : Valid p d)
       then (1 : ℤ) else 0) = T (cl p d) (j.castAdd 96) := by
   simp_rw [active_cut]
   by_cases hd : d = 0
-  · simp [hd, T, cl, Matrix.reindex_apply, Matrix.submatrix_apply,
-      finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₁]
-  · have hp' := (valid_shift p d (Nat.pos_of_ne_zero hd)).mp hp
-    have h := HardinA229585Strip.finite_certificate.2.2.1 p
+  · subst d
+    simp only [Nat.lt_irrefl, false_and, ite_false, Finset.sum_const_zero]
+    change 0 = T ((exhaustedClass p).natAdd 72) (j.castAdd 96)
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply,
+      finSumFinEquiv_symm_apply_natAdd, finSumFinEquiv_symm_apply_castAdd,
+      Matrix.fromBlocks_apply₂₁, Matrix.zero_apply]
+  · have hd' := Nat.pos_of_ne_zero hd
+    have hp' := (valid_shift p d hd').mp hp
+    simp only [hd', true_and]
+    simp only [cl, ite_eq_right hd, T, Matrix.reindex_apply, Matrix.submatrix_apply,
+      finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁]
+    exact HardinA229585Strip.finite_certificate.2.2.1 p
       ⟨d - 1, Nat.lt_succ_of_le hp'.1⟩ hp' j
-    simpa [show 0 < d from Nat.pos_of_ne_zero hd, T, cl, hd, Matrix.reindex_apply, Matrix.submatrix_apply,
-      finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁] using h
 
 private theorem old_exhausted_counts (p : Boundary) (hp : Valid p 1) (j : Fin 96) :
     (∑ r : Row, if cross p r + bondDefects horizontal r r = 0 ∧
       exhaustedClass (boundary r) = j then (1 : ℤ) else 0) =
     T (cl p 0) (j.natAdd 72) := by
   have hp' := (old_valid p).mp hp
-  have hcl : ∀ q, HardinA229585StripData.Valid q 0 →
-      16 ≤ (HardinA229585StripData.cl q 0).val := by
-    unfold HardinA229585StripData.Valid
+  have ht : ∀ i : Fin 72, HardinA229585StripData.terminal i =
+      (if i.val < 16 then 0 else 1) := by
     decide +kernel
+  have hcl (q : Boundary) (hq : HardinA229585StripData.Valid q 0) :
+      16 ≤ (HardinA229585StripData.cl q 0).val := by
+    have hz := HardinA229585Strip.finite_certificate.1 q (0 : Fin 2) hq
+    change HardinA229585StripData.terminal (HardinA229585StripData.cl q 0) = 1 at hz
+    by_contra h
+    have hh := ht (HardinA229585StripData.cl q 0)
+    rw [ite_eq_left (Nat.lt_of_not_ge h)] at hh
+    exact zero_ne_one (hh.symm.trans hz)
   have he (r : Row) (h : cross p r + bondDefects horizontal r r = 0) :
       exhaustedClass (boundary r) =
         oldZeroImage (HardinA229585StripData.cl (boundary r) 0) := by
@@ -535,7 +550,7 @@ private theorem old_exhausted_counts (p : Boundary) (hp : Valid p 1) (j : Fin 96
           Fin.natAdd_subNat_cast (n := 16) (m := 56) (hcl _ (hs r hr))
         rw [← Fin.natAdd_inj 16, hi]
       simp only [hr, true_and, heq]
-    · simp [hr]
+    · simp only [hr, false_and, ite_false]
   | right j =>
     conv_rhs =>
       simp only [T, cl, ↓reduceIte, exhaustedClass, hp, oldZeroImage, hcl p hp',
@@ -544,8 +559,10 @@ private theorem old_exhausted_counts (p : Boundary) (hp : Valid p 1) (j : Fin 96
     apply Finset.sum_eq_zero
     intro r _
     by_cases hr : cross p r + bondDefects horizontal r r = 0
-    · simp [hr, he r hr, hinge _ (hs r hr), blocks_disjoint]
-    · simp [hr]
+    · have hb := blocks_disjoint
+        (Fin.subNat 16 (HardinA229585StripData.cl (boundary r) 0) (hcl _ (hs r hr))) j
+      simp only [hr, true_and, he r hr, hinge _ (hs r hr), hb, ite_false]
+    · simp only [hr, false_and, ite_false]
 
 private def horizontalCost (r : Row) : ℕ :=
   (List.ofFn fun j : Fin 6 => if r j.castSucc = r j.succ then 1 else 0).sum
