@@ -21,7 +21,7 @@ make lean-report-scoped LEAN_TARGETS="D5.Subject.Module"
 
 实际交付包含 Reg 源码时，把对应真实 `Reg.*` 目标加入列表；不要虚构镜像目标或只跑根包的裸 Lake 命令。常规迭代不需要整库 `make lean-report FULL_BUILD=1` 或 `make test FULL_BUILD=1`，最终所需检查仍按累计改动与 required checks 决定。
 
-`make lean` 不带目标会走全项目及后续包；不要用它做单个证明的性能探针。缓存准备使用现有 `make lean-cache-ensure`，读取 `LEAN_CACHE` 中的 project/mathlib 状态、恢复方式和原因。warm 不保证 trace 当前，报告种子不相符也不自动证明正在全量重编。不要删除共享 `.lake`、伪造缓存状态或启动另一个 `warm-donor` 来代替诊断。
+`make lean` 不带目标会走全项目及后续包；不要用它做单个证明的性能探针。显式全量缓存准备使用 `make lean-cache-ensure FULL_BUILD=1`，读取 `LEAN_CACHE` 中的 project/mathlib 状态、恢复方式和原因。warm 不保证 trace 当前，报告种子不相符也不自动证明正在全量重编。不要删除共享 `.lake`、伪造缓存状态或启动另一个 `warm-donor` 来代替诊断。
 
 需要预热主检出 donor 时，先辨认已有作业。`make warm-donor FULL_BUILD=1` 会同步干净的主 `dev` 并触发完整 `make lean FULL_BUILD=1`，它是维护动作，不能当作免费的测量前置。缓存恢复与生产使用现有规范入口，不另造搬运器。
 

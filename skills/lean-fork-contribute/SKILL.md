@@ -5,7 +5,7 @@ description: 在 trureturing 的 fork 中贡献 Lean、Blueprint Scribe、逃逸
 
 # Fork 内的轻量形式化贡献
 
-本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的编译器和判官来自 fork 的钉版源码。
+本技能在完整的 trureturing fork 中工作。交付仍是原路径上的 D5 Lean、Blueprint Scribe、Reg 逃逸登记与 canonical 冻结状态。技能可单独安装；所调用的工具和贡献适配器由 fork 的 `Meta/tools-release.json` 锁定。
 
 无需准备主检出的项目缓存、下载项目 Release cache 或编译全库。首次执行仍需 Lean 工具链、钉版 Mathlib 源码与依赖缓存、`global.json` 指定的 .NET SDK、Python ≥3.12、Git、Make 和冻结命令所需的 jq。现有依赖准备执行 `lake exe cache get`，不保证只下载所选模块的 Mathlib 缓存，也不保证零下载。项目模块只编译所选目标及其 import/utility 闭包。
 
@@ -20,11 +20,10 @@ git fetch upstream dev
 make worktree KIND=math NAME=my-contribution BASE=upstream/dev DEST=../trureturing-my-contribution
 cd ../trureturing-my-contribution
 CONTRIBUTION_BASE=$(git rev-parse upstream/dev)
-export STRATALINT_ACCEPT_COLD_BUILD=1
 export SCRIBE_DOTNET="$(python3 -c 'import pathlib,shutil; print(pathlib.Path(shutil.which("dotnet")).resolve())')"
 ```
 
-`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理；适配器只验证提交存在且为祖先，上游来源是调用方条件。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。冷构建入口仅在 linked worktree 中成立；fork 的主检出不走这条分支。
+`CONTRIBUTION_BASE` 是开始贡献时取得的受保护上游提交，后续命令一直使用它。需要同步时 merge 新的上游，并重新确定基线、重做受影响检查。不要把贡献分支自己的 `HEAD` 当成受保护基线来漏掉已提交的新定理；适配器只验证提交存在且为祖先，上游来源是调用方条件。不要为了缓存先运行 `make lean`、`warm-donor` 或项目缓存下载命令。定向构建从本机 Lake 缓存恢复产物，缺失时编译目标及其依赖。
 
 ## 写内容与定向核验
 
@@ -48,14 +47,15 @@ make lean-report-scoped LEAN_TARGETS="D5.My.Module Reg.D5.My.Module"
 make emit BASE="$CONTRIBUTION_BASE"
 ```
 
-所有命令继承 `STRATALINT_ACCEPT_COLD_BUILD=1` 和绝对路径 `SCRIBE_DOTNET`，后者是 Scribe SDK 执行的宿主；仅有 `dotnet` 在 PATH 上不足以满足 SDK admission。目标必须非空，使用实际 dotted module names。定向报告包含显式 utility 输入与 imports；它不等于全库健康证明。源码未变时复用已有成功读数。长命令使用宿主作业句柄并等待真实退出码。
+所有命令继承绝对路径 `SCRIBE_DOTNET`，后者是 Scribe SDK 执行的宿主；仅有 `dotnet` 在 PATH 上不足以满足 SDK admission。目标必须非空，使用实际 dotted module names。定向报告包含显式 utility 输入与 imports；它不等于全库健康证明。源码未变时复用已有成功读数。长命令使用宿主作业句柄并等待真实退出码。
 
 ## 本地 Scribe 和逃逸审计
 
-从技能所在目录调用适配器；可安装到任意目录，无需安装其他个人技能：
+在 fork 工作树中安装锁定的工具并调用贡献适配器。
 
 ```sh
-python3 <skill-directory>/scripts/check.py \
+make install-tools
+python3 tools/scripts/lean-fork-contribute/scripts/check.py \
   --repository "$PWD" --base "$CONTRIBUTION_BASE" \
   --module D5.My.Module
 ```

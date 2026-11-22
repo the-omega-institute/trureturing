@@ -168,6 +168,13 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   }
 }
 
+async function visibleMaterial(identity, index, cacheVersion) {
+  const { owner } = JSON.parse(await readFile(index, 'utf8'));
+  const material = optionalInventory(owner.ref, identity.prefix + 'material-');
+  const visible = new Set(material.map(row => row.key + '/' + row.version));
+  return digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)));
+}
+
 async function restorePayloads(cache, cacheVersion, identity, index, preparation) {
   const started = performance.now();
   const needed = python('restore-plan', ['--index', index, ...targetArgs]);
@@ -183,8 +190,8 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
   const downloaded = new Set();
   const download = async digest => {
     const path = payloadPath(digest);
-    await rm(path, { force: true });
     try {
+      await rm(path, { force: true });
       const key = payloadKey(identity, digest);
       if (await cache.restoreCache([path], key, []) === key) {
         const { size } = await stat(path);
@@ -195,44 +202,52 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
       console.log('LEAN_ACTIONS_SHARDS restore failed for ' + digest + ': ' + error.message);
     }
   };
-  let pending = remote;
-  let retries = 0;
-  for (const rate of [600, 300, 150]) {
-    if (pending.length === 0) break;
-    if (retries > 0) {
-      console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-        operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
-      }));
-      await waitForCacheQuota();
+  try {
+    let pending = remote;
+    let retries = 0;
+    for (const rate of [600, 300, 150]) {
+      if (pending.length === 0) break;
+      if (retries > 0) {
+        console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+          operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
+        }));
+        await waitForCacheQuota();
+      }
+      await paced(pending, 24, rate, download);
+      pending = pending.filter(digest => !downloaded.has(digest));
+      if (pending.length === 0 || retries === 2) break;
+      if (retries === 0) {
+        pending = pending.filter(await visibleMaterial(identity, index, cacheVersion));
+      }
+      retries += 1;
     }
-    await paced(pending, 24, rate, download);
-    pending = pending.filter(digest => !downloaded.has(digest));
-    if (pending.length === 0 || retries === 2) break;
-    if (retries === 0) {
-      const { owner } = JSON.parse(await readFile(index, 'utf8'));
-      const material = optionalInventory(owner.ref, identity.prefix + 'material-');
-      const visible = new Set(material.map(row => row.key + '/' + row.version));
-      pending = pending.filter(digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
-    }
-    retries += 1;
+    const installArgs = ['--index', index, ...targetArgs];
+    if (preparation) installArgs.push('--preparation', preparation);
+    if (requireComplete || preparation) installArgs.push('--require-complete');
+    const result = python('install', installArgs);
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+      operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
+      restored: result.available, missing: result.missing.length,
+      bytes: transferred, seconds: (performance.now() - started) / 1000,
+    }));
+    return result;
+  } finally {
+    await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
   }
-  const installArgs = ['--index', index, ...targetArgs];
-  if (preparation) installArgs.push('--preparation', preparation);
-  if (requireComplete || preparation) installArgs.push('--require-complete');
-  const result = python('install', installArgs);
-  await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
-  console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-    operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
-    restored: result.available, missing: result.missing.length,
-    bytes: transferred, seconds: (performance.now() - started) / 1000,
-  }));
-  return result;
 }
 
 async function restore(cache, cacheVersion, identity) {
   const matched = await fetchIndex(cache, cacheVersion, identity);
   if (!matched) {
     console.log('LEAN_ACTIONS_SHARDS no compatible index was found');
+    return;
+  }
+  if (operation === 'lookup') {
+    const entries = python('restore-plan', ['--index', indexPath]);
+    const digests = [...new Set(Object.values(entries))];
+    const present = digests.filter(await visibleMaterial(identity, indexPath, cacheVersion)).length;
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({ operation, requested: digests.length, visible: present }));
+    await setOutputs({ key: matched, visible: present, complete: present > 0 && present === digests.length });
     return;
   }
   const result = await restorePayloads(cache, cacheVersion, identity, indexPath);
@@ -409,7 +424,36 @@ async function setOutputs(fields) {
   await writeFile(process.env.GITHUB_OUTPUT, lines, { flag: 'a' });
 }
 
+// The cache SDK reports policy denials as warnings and returns the same miss
+// sentinel as a reservation race. Keep its diagnostic and distinguish the two
+// before a failed producer tries to stage a full archive for the same service.
+async function saveContinuation() {
+  const child = spawn(process.execPath, [fileURLToPath(import.meta.url), 'save'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  let blocked;
+  const relay = async (stream, destination) => {
+    for await (const line of createInterface({ input: stream, crlfDelay: Infinity })) {
+      destination.write(line + '\n');
+      if (/\b(?:ENOSPC|no space left on device)\b/i.test(line)) blocked = 'disk-full';
+      if (/cache write denied:|your cache is now read[ -]only/i.test(line)) blocked = 'cache-read-only';
+    }
+  };
+  const finished = new Promise((resolve, reject) => {
+    child.once('error', reject);
+    child.once('close', resolve);
+  });
+  const [code] = await Promise.all([finished, relay(child.stdout, process.stdout), relay(child.stderr, process.stderr)]);
+  if (code !== 0) {
+    const fallback = code !== null && !blocked;
+    console.error('LEAN_ACTIONS_SHARDS legacy continuation fallback=' + (blocked || (fallback ? 'allowed' : 'interrupted')));
+    await setOutputs({ legacy_fallback: String(fallback) });
+    process.exitCode = code || 1;
+  }
+}
+
 async function main() {
+  if (operation === 'save-continuation' && state === 'resume') return saveContinuation();
   if (resumeAfterAttempt && (operation !== 'restore' || state !== 'resume' || !/^(0|[1-9][0-9]*)$/.test(resumeAfterAttempt))) {
     throw new Error('resume-after-attempt requires a continuation restore and a nonnegative attempt number');
   }
@@ -433,7 +477,7 @@ async function main() {
     if (!result.complete) process.exitCode = 3;
     return;
   }
-  if (!['save', 'restore'].includes(operation) || !['complete', 'resume'].includes(state)) {
+  if (!['save', 'restore', 'lookup'].includes(operation) || !['complete', 'resume'].includes(state)) {
     throw new Error('invalid Actions shard operation or state');
   }
   if (operation === 'save' && !anchor) throw new Error('Actions cache writes require a pinned history anchor');

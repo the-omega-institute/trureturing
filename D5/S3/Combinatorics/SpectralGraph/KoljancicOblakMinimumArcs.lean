@@ -108,7 +108,9 @@ def MinimumArcs : Prop :=
     (∀ E : Finset (Fin n × Fin n), Requires E → 2*n-1 ≤ E.card) ∧
     ∃ E : Finset (Fin n × Fin n), Requires E ∧ E.card = 2*n-1
 
-private theorem end_centralizer_finrank_ge
+/-- The centralizer of an endomorphism of a finite-dimensional space has dimension at least
+the dimension of the space. -/
+theorem end_centralizer_finrank_ge
     {K V : Type} [Field K] [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] (f : Module.End K V) :
     Module.finrank K V ≤ Module.finrank K (Subalgebra.centralizer K ({f} : Set _)) := by
@@ -148,7 +150,9 @@ private theorem end_centralizer_finrank_ge
     _ ≤ Module.finrank K (Subalgebra.centralizer K ({f} : Set _)) :=
       LinearMap.finrank_le_finrank_of_injective hT
 
-private theorem matrix_centralizer_finrank_ge {n : ℕ}
+/-- For every real `n × n` matrix `A`, the centralizer `Z(A) = {F | A F = F A}` has real
+dimension at least `n`. -/
+theorem matrix_centralizer_finrank_ge {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ) :
     n ≤ Module.finrank ℝ (Subalgebra.centralizer ℝ ({A} : Set _)) := by
   let f : Module.End ℝ (Fin n → ℝ) := Matrix.toLinAlgEquiv' A

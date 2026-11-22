@@ -2,8 +2,14 @@ name: Restore Lean Release build seeds
 description: Restore optional Actions material for a Release producer
 inputs:
   mode:
-    description: Automatic selection, legacy project cache, or a complete, partial, or absent verification seed
+    description: Automatic selection, legacy project cache, or a complete, partial, absent, or parallel build
     required: true
+  previous-base:
+    description: Release identity selected for an incremental publication
+    default: ''
+  publication-mode:
+    description: Protected production or integration verification
+    default: production
   cache-keys:
     description: JSON outputs from the Actions cache key selector
     required: true
@@ -16,17 +22,21 @@ inputs:
   checkpoint-seconds:
     description: Cold build interval before saving a checkpoint, or zero for a normal build
     default: '0'
+outputs:
+  report-checked:
+    description: A completed checkpoint slice already checked the full report
+    value: ${{ steps.cold_build.outcome == 'success' && steps.cold_build.outputs.checkpoint != 'true' }}
 runs:
   using: composite
   steps:
     - id: dependency
-      if: fromJSON(inputs.cache-keys).dependency_key != ''
+      if: fromJSON(inputs.cache-keys || '{}').dependency_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
-        path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
-        key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+        path: ${{ fromJSON(inputs.cache-keys || '{}').dependency_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys || '{}').dependency_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').dependency_restore_prefix }}
     - id: previous_checkpoint
       name: Find the last published cold Release checkpoint
       if: inputs.verification-history-anchor != '' && (inputs.checkpoint-run != '' || (inputs.checkpoint-seconds != '0' && fromJSON(github.run_attempt) > 1))
@@ -67,13 +77,13 @@ runs:
         require-complete: ${{ inputs.mode == 'complete' }}
         targets: ${{ inputs.mode == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
     - id: project
-      if: fromJSON(inputs.cache-keys).project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
+      if: fromJSON(inputs.cache-keys || '{}').project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
-        path: ${{ fromJSON(inputs.cache-keys).project_archive_path }}
-        key: ${{ fromJSON(inputs.cache-keys).project_key }}
-        restore-keys: ${{ fromJSON(inputs.cache-keys).project_restore_prefix }}
+        path: ${{ fromJSON(inputs.cache-keys || '{}').project_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys || '{}').project_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys || '{}').project_restore_prefix }}
     - name: Validate and install the selected seeds
       shell: bash
       env:
@@ -94,7 +104,7 @@ runs:
               [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
               test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
               ;;
-            none) [[ ! -e .lake/build ]] ;;
+            none|parallel|release) [[ ! -e .lake/build ]] ;;
             *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
           esac
         else
@@ -111,8 +121,62 @@ runs:
         if [[ "$COMPLETE" == true ]]; then
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
+    - name: Prepare cold dependencies for the compiled layers
+      if: inputs.mode == 'parallel' || inputs.mode == 'release'
+      shell: bash
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+      run: |
+        bash .github/actions/lean-compile-layer/prepare-dependencies.sh
+    - name: Measure disk before sparse Release installation
+      if: inputs.mode == 'release' && env.LEAN_CACHE_RELEASE_SPARSE == '1'
+      shell: bash
+      run: df -kP .
+    - id: previous
+      if: inputs.mode == 'release'
+      uses: ./.github/actions/lean-release-base
+      with:
+        operation: install-base
+        mode: ${{ inputs.publication-mode }}
+        tag: ${{ fromJSON(inputs.previous-base || '{}').tag }}
+        producer: ${{ fromJSON(inputs.previous-base || '{}').producer }}
+        manifest: ${{ fromJSON(inputs.previous-base || '{}').manifest }}
+    - name: Measure disk after sparse Release installation
+      if: always() && steps.previous.outcome != 'skipped' && inputs.mode == 'release' && env.LEAN_CACHE_RELEASE_SPARSE == '1'
+      shell: bash
+      run: df -kP .
+    - name: Verify the selected Release was recovered
+      if: inputs.mode == 'release'
+      shell: bash
+      env:
+        FOUND: ${{ steps.previous.outputs.found }}
+      run: '[[ "$FOUND" == true ]]'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: 'common'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '0'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '1'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '2'
+    - if: inputs.mode == 'parallel'
+      uses: ./.github/actions/lean-recover-layer
+      with:
+        stage: '3'
+    - name: Check all recovered compile targets without rebuilding
+      if: inputs.mode == 'parallel'
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_compile_layers.py verify --artifacts "$RUNNER_TEMP/lean-compile"
     - name: Complete missing project artifacts with Lake
-      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.checkpoint-seconds == '0'
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && env.LEAN_CACHE_SPARSE_PLAN == '' && inputs.checkpoint-seconds == '0'
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       shell: bash
