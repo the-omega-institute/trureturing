@@ -8,7 +8,8 @@
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringQuadratic.lean#L640-L1084
    Modified for this repository. Local imports use their D5 module paths.
    This file contains one segment of a split upstream module.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -22,8 +23,6 @@ open Finset intervalIntegral
 set_option maxHeartbeats 1000000
 
 namespace Waring
-
-/-! ## 第五部分：`qQ` 的对称性与零点界 -/
 
 /-- 部分和的界常数 `K = 4N²|a| + 2N|b|`。 -/
 def qK (a b : ℤ) (N : ℕ) : ℤ :=
@@ -185,8 +184,6 @@ theorem qQ_zero_le (a b : ℤ) (ha : a ≠ 0) (H M : ℕ) :
   rw [hcard] at hsum
   linarith
 
-/-! ## 第六部分：汇总 —— 八次矩的 `N⁶` 界 -/
-
 /-- 对称区间的求和公式（`ℚ` 值）。 -/
 theorem sum_Icc_symm_rat (K : ℤ) (hK : 0 ≤ K) (f : ℤ → ℚ) (hf : ∀ n, f (-n) = f n) :
     (∑ n ∈ Finset.Icc (-K) K, f n) = f 0 + 2 * ∑ n ∈ Finset.Icc (1 : ℤ) K, f n := by
@@ -266,205 +263,5 @@ theorem qHMCount_le_sum_sq (a b : ℤ) (N : ℕ) :
   refine le_trans (qHMCount_le_sum_qQ a b N (qK a b N) (fun p hp => qAval_bound a b N hp)) ?_
   refine Finset.sum_le_sum (fun n _ => ?_)
   rw [qQ_neg, sq]
-
-/-- `Σ_n qQ(n)²` 的 `N⁶` 界。 -/
-theorem sum_qQ_sq_le (a b : ℤ) (ha : a ≠ 0) (N : ℕ) (hN : 1 ≤ N) :
-    ((∑ n ∈ Finset.Icc (-(qK a b N)) (qK a b N), qQ a b N (2 * N) n ^ 2 : ℕ) : ℚ)
-      ≤ 1000000 * ((2 * a.natAbs + b.natAbs + 1 : ℕ) : ℚ) * (N : ℚ) ^ 6 := by
-  classical
-  have hNq : (1 : ℚ) ≤ (N : ℚ) := by exact_mod_cast hN
-  set c : ℚ := ((2 * a.natAbs + b.natAbs + 1 : ℕ) : ℚ) with hc
-  have hc1 : (1 : ℚ) ≤ c := by
-    rw [hc]
-    have : (1 : ℕ) ≤ 2 * a.natAbs + b.natAbs + 1 := by omega
-    exact_mod_cast this
-  have hcnn : (0 : ℚ) ≤ c := le_trans zero_le_one hc1
-  set A : ℚ := 4 * (N : ℚ) * ((N : ℚ) + 1) with hA
-  set B : ℚ := 16 * (N : ℚ) ^ 2 with hB
-  set Kz : ℤ := qK a b N with hKz
-  have hKz0 : 0 ≤ Kz := by rw [hKz]; exact qK_nonneg a b N
-  have hAnn : (0 : ℚ) ≤ A := by rw [hA]; positivity
-  have hBnn : (0 : ℚ) ≤ B := by rw [hB]; positivity
-  -- 1) cast 与分拆
-  have hcast : ((∑ n ∈ Finset.Icc (-Kz) Kz, qQ a b N (2 * N) n ^ 2 : ℕ) : ℚ)
-      = ∑ n ∈ Finset.Icc (-Kz) Kz, (qQ a b N (2 * N) n : ℚ) ^ 2 := by
-    push_cast
-    ring
-  have h0mem : (0 : ℤ) ∈ Finset.Icc (-Kz) Kz := by
-    rw [Finset.mem_Icc]
-    constructor <;> omega
-  have hsplit : (∑ n ∈ Finset.Icc (-Kz) Kz, (qQ a b N (2 * N) n : ℚ) ^ 2)
-      = (qQ a b N (2 * N) 0 : ℚ) ^ 2
-        + ∑ n ∈ (Finset.Icc (-Kz) Kz).erase 0, (qQ a b N (2 * N) n : ℚ) ^ 2 := by
-    rw [add_comm]
-    exact (Finset.sum_erase_add _ _ h0mem).symm
-  -- 2) n = 0 项
-  have hQ0 : (qQ a b N (2 * N) 0 : ℚ) ^ 2 ≤ 1089 * (N : ℚ) ^ 6 := by
-    have h1 : qQ a b N (2 * N) 0 ≤ (2 * N + 1) ^ 2 + 4 * N * (N + 1) * (2 * N + 1) :=
-      qQ_zero_le a b ha N (2 * N)
-    have h2 : (2 * N + 1) ^ 2 + 4 * N * (N + 1) * (2 * N + 1) ≤ 33 * N ^ 3 := by
-      have h3 : (2 * (N : ℚ) + 1) ^ 2 + 4 * (N : ℚ) * ((N : ℚ) + 1) * (2 * (N : ℚ) + 1)
-          ≤ 33 * (N : ℚ) ^ 3 := by
-        nlinarith [hNq]
-      exact_mod_cast h3
-    have h4 : (qQ a b N (2 * N) 0 : ℚ) ≤ 33 * (N : ℚ) ^ 3 := by
-      have h5 : qQ a b N (2 * N) 0 ≤ 33 * N ^ 3 := le_trans h1 h2
-      exact_mod_cast h5
-    calc (qQ a b N (2 * N) 0 : ℚ) ^ 2 ≤ (33 * (N : ℚ) ^ 3) ^ 2 :=
-          pow_le_pow_left₀ (by positivity) h4 2
-      _ = 1089 * (N : ℚ) ^ 6 := by ring
-  -- 3) 其余项 ≤ Σ (A + Bσ)²
-  have hrest : (∑ n ∈ (Finset.Icc (-Kz) Kz).erase 0, (qQ a b N (2 * N) n : ℚ) ^ 2)
-      ≤ ∑ n ∈ Finset.Icc (-Kz) Kz, (A + B * sigmaMinusOne n.natAbs) ^ 2 := by
-    have h1 : (∑ n ∈ (Finset.Icc (-Kz) Kz).erase 0, (qQ a b N (2 * N) n : ℚ) ^ 2)
-        ≤ ∑ n ∈ (Finset.Icc (-Kz) Kz).erase 0, (A + B * sigmaMinusOne n.natAbs) ^ 2 := by
-      refine Finset.sum_le_sum (fun n hn => ?_)
-      rw [Finset.mem_erase] at hn
-      obtain ⟨hn0, -⟩ := hn
-      have hq := qQ_le_sigma a b ha N (2 * N) hn0
-      have hAs : 4 * (N : ℚ) * ((N : ℚ) + 1) = A := by rw [hA]
-      have hBs : 8 * (N : ℚ) * ((2 * N : ℕ) : ℚ) = B := by
-        rw [hB]
-        push_cast
-        ring
-      rw [hAs, hBs] at hq
-      exact pow_le_pow_left₀ (by positivity) hq 2
-    have h2 : (∑ n ∈ (Finset.Icc (-Kz) Kz).erase 0, (A + B * sigmaMinusOne n.natAbs) ^ 2)
-        ≤ ∑ n ∈ Finset.Icc (-Kz) Kz, (A + B * sigmaMinusOne n.natAbs) ^ 2 :=
-      Finset.sum_le_sum_of_subset_of_nonneg
-        (Finset.erase_subset (0 : ℤ) (Finset.Icc (-Kz) Kz)) (fun n _ _ => by positivity)
-    linarith [h1, h2]
-  -- 4) 展开 Σ (A + Bσ)²
-  have hexp : (∑ n ∈ Finset.Icc (-Kz) Kz, (A + B * sigmaMinusOne n.natAbs) ^ 2)
-      = ((2 * Kz + 1 : ℤ) : ℚ) * A ^ 2
-        + 2 * A * B * (∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs)
-        + B ^ 2 * (∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs ^ 2) := by
-    have hpt : ∀ n : ℤ, (A + B * sigmaMinusOne n.natAbs) ^ 2
-        = A ^ 2 + 2 * A * B * sigmaMinusOne n.natAbs
-          + B ^ 2 * sigmaMinusOne n.natAbs ^ 2 := fun n => by ring
-    rw [Finset.sum_congr rfl (fun n _ => hpt n)]
-    rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
-    have hcK : ((Finset.Icc (-Kz) Kz).card : ℚ) = ((2 * Kz + 1 : ℤ) : ℚ) := by
-      rw [Int.card_Icc]
-      have h1 : Kz + 1 - (-Kz) = 2 * Kz + 1 := by ring
-      rw [h1]
-      have h2 : ((2 * Kz + 1).toNat : ℤ) = 2 * Kz + 1 := Int.toNat_of_nonneg (by omega)
-      exact_mod_cast h2
-    have e1 : (∑ n ∈ Finset.Icc (-Kz) Kz, A ^ 2) = ((2 * Kz + 1 : ℤ) : ℚ) * A ^ 2 := by
-      rw [Finset.sum_const, nsmul_eq_mul, hcK]
-    have e2 : (∑ n ∈ Finset.Icc (-Kz) Kz, 2 * A * B * sigmaMinusOne n.natAbs)
-        = 2 * A * B * ∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs := by
-      rw [Finset.mul_sum]
-    have e3 : (∑ n ∈ Finset.Icc (-Kz) Kz, B ^ 2 * sigmaMinusOne n.natAbs ^ 2)
-        = B ^ 2 * ∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs ^ 2 := by
-      rw [Finset.mul_sum]
-    rw [e1, e2, e3]
-  -- 5) 关键放缩
-  have hcabs : c = 2 * |(a : ℚ)| + |(b : ℚ)| + 1 := by
-    rw [hc]
-    push_cast
-    simp
-  have hKz_ub : (Kz : ℚ) ≤ 2 * (N : ℚ) ^ 2 * c := by
-    have hN1 : (1 : ℤ) ≤ (N : ℤ) := by exact_mod_cast hN
-    have ha0 : (0 : ℤ) ≤ (a.natAbs : ℤ) := Int.natCast_nonneg _
-    have hb0 : (0 : ℤ) ≤ (b.natAbs : ℤ) := Int.natCast_nonneg _
-    have hNle : (N : ℤ) ≤ (N : ℤ) ^ 2 := by nlinarith [hN1]
-    have hKz_int : Kz ≤ 2 * (N : ℤ) ^ 2 * (2 * (a.natAbs : ℤ) + (b.natAbs : ℤ)) := by
-      rw [hKz]
-      unfold qK
-      have hstep : 2 * (N : ℤ) * (b.natAbs : ℤ) ≤ 2 * (N : ℤ) ^ 2 * (b.natAbs : ℤ) := by
-        nlinarith [mul_le_mul_of_nonneg_left hNle hb0]
-      linarith
-    have h1 : (Kz : ℚ) ≤ ((2 * (N : ℤ) ^ 2 * (2 * (a.natAbs : ℤ) + (b.natAbs : ℤ)) : ℤ) : ℚ) := by
-      exact_mod_cast hKz_int
-    have h2 : ((2 * (N : ℤ) ^ 2 * (2 * (a.natAbs : ℤ) + (b.natAbs : ℤ)) : ℤ) : ℚ)
-        ≤ 2 * (N : ℚ) ^ 2 * c := by
-      have hcast1 : ((2 * (N : ℤ) ^ 2 * (2 * (a.natAbs : ℤ) + (b.natAbs : ℤ)) : ℤ) : ℚ)
-          = 2 * (N : ℚ) ^ 2 * (2 * |(a : ℚ)| + |(b : ℚ)|) := by
-        push_cast
-        simp
-      rw [hcast1, hcabs]
-      have hN2 : (0 : ℚ) ≤ (N : ℚ) ^ 2 := by positivity
-      have hle : (2 * |(a : ℚ)| + |(b : ℚ)|)
-          ≤ 2 * |(a : ℚ)| + |(b : ℚ)| + 1 := by linarith
-      nlinarith [hle, hN2]
-    linarith [h1, h2]
-  have hK1 : ((2 * Kz + 1 : ℤ) : ℚ) ≤ 5 * (N : ℚ) ^ 2 * c := by
-    have h1 : ((2 * Kz + 1 : ℤ) : ℚ) = 2 * (Kz : ℚ) + 1 := by push_cast; ring
-    rw [h1]
-    have hN2 : (1 : ℚ) ≤ (N : ℚ) ^ 2 := by nlinarith [hNq]
-    nlinarith [hKz_ub, hN2, hcnn]
-  have hA_ub : A ≤ 8 * (N : ℚ) ^ 2 := by
-    rw [hA]
-    nlinarith [hNq]
-  have hA2 : A ^ 2 ≤ 64 * (N : ℚ) ^ 4 := by
-    calc A ^ 2 ≤ (8 * (N : ℚ) ^ 2) ^ 2 := pow_le_pow_left₀ hAnn hA_ub 2
-      _ = 64 * (N : ℚ) ^ 4 := by ring
-  have hAB : A * B ≤ 128 * (N : ℚ) ^ 4 := by
-    rw [hB]
-    have h2 : A ≤ 8 * (N : ℚ) ^ 2 := hA_ub
-    nlinarith [hAnn, hNq]
-  have hB2 : B ^ 2 = 256 * (N : ℚ) ^ 4 := by
-    rw [hB]
-    ring
-  -- 6) 主放缩
-  have hmain : (∑ n ∈ Finset.Icc (-Kz) Kz, (A + B * sigmaMinusOne n.natAbs) ^ 2)
-      ≤ 25000 * c * (N : ℚ) ^ 6 := by
-    rw [hexp]
-    have hs1 := sum_sigmaMinusOne_Icc Kz hKz0
-    have hs2 := sum_sigmaMinusOne_sq_Icc Kz hKz0
-    have e1 : 2 * A * B * (∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs)
-        ≤ 2 * A * B * (4 * (Kz : ℚ)) := by
-      apply mul_le_mul_of_nonneg_left hs1
-      positivity
-    have e2 : B ^ 2 * (∑ n ∈ Finset.Icc (-Kz) Kz, sigmaMinusOne n.natAbs ^ 2)
-        ≤ B ^ 2 * (12 * (Kz : ℚ)) := by
-      apply mul_le_mul_of_nonneg_left hs2
-      positivity
-    have hkey : ((2 * Kz + 1 : ℤ) : ℚ) * A ^ 2 + 2 * A * B * (4 * (Kz : ℚ))
-        + B ^ 2 * (12 * (Kz : ℚ)) ≤ 25000 * c * (N : ℚ) ^ 6 := by
-      have hAB2 : A * B ≤ 128 * (N : ℚ) ^ 4 := hAB
-      have hKzq : (Kz : ℚ) ≤ 2 * (N : ℚ) ^ 2 * c := hKz_ub
-      have h1 : ((2 * Kz + 1 : ℤ) : ℚ) * A ^ 2 ≤ (5 * (N : ℚ) ^ 2 * c) * (64 * (N : ℚ) ^ 4) := by
-        apply mul_le_mul hK1 hA2 (by positivity) (by positivity)
-      have h2 : 2 * A * B * (4 * (Kz : ℚ)) ≤ 8 * (128 * (N : ℚ) ^ 4) * (2 * (N : ℚ) ^ 2 * c) := by
-        have hAB' : 2 * A * B * 4 ≤ 8 * (128 * (N : ℚ) ^ 4) := by
-          nlinarith [hAB2]
-        have h := mul_le_mul hAB' hKzq (by positivity) (by positivity)
-        nlinarith [h]
-      have h3 : B ^ 2 * (12 * (Kz : ℚ)) ≤ (256 * (N : ℚ) ^ 4) * (12 * (2 * (N : ℚ) ^ 2 * c)) := by
-        rw [hB2]
-        apply mul_le_mul (le_refl _) ?_ (by positivity) (by positivity)
-        nlinarith [hKzq]
-      have hN6 : (0 : ℚ) ≤ (N : ℚ) ^ 6 := by positivity
-      nlinarith [h1, h2, h3, hcnn, hNq, hN6]
-    nlinarith [e1, e2, hkey]
-  -- 7) 汇总
-  rw [hcast, hsplit]
-  nlinarith [hQ0, hrest, hmain, hc1, hcnn, hNq]
-
-/-- **Theorem 1（`k = 2`，一般二次形式）**：`qEqCount ≤ C·N⁶`。 -/
-theorem qEqCount_le (a b : ℤ) (ha : a ≠ 0) (N : ℕ) (hN : 1 ≤ N) :
-    qEqCount a b N ≤ 1000000 * (2 * a.natAbs + b.natAbs + 1) * N ^ 6 := by
-  refine le_trans (le_trans (qEqCount_le_qHMCount a b N) (qHMCount_le_sum_sq a b N)) ?_
-  have h := sum_qQ_sq_le a b ha N hN
-  have h2 : ((1000000 * (2 * a.natAbs + b.natAbs + 1) * N ^ 6 : ℕ) : ℚ)
-      = 1000000 * ((2 * a.natAbs + b.natAbs + 1 : ℕ) : ℚ) * (N : ℚ) ^ 6 := by
-    push_cast
-    ring
-  rw [← h2] at h
-  exact_mod_cast h
-
-/-- **Theorem 1（`k = 2`，一般二次形式）的积分形式**：
-`∫₀¹ |∑_{n≤N} e(α(a n² + b n))|⁸ dα ≤ 10⁶·(2|a|+|b|+1)·N⁶`。 -/
-theorem integral_normSq_pow_four_le_q (a b : ℤ) (ha : a ≠ 0) (N : ℕ) (hN : 1 ≤ N) :
-    (∫ α in (0 : ℝ)..1, (Complex.normSq (qSum a b N α)) ^ 4)
-      ≤ 1000000 * ((2 * a.natAbs + b.natAbs + 1 : ℕ) : ℝ) * (N : ℝ) ^ 6 := by
-  rw [integral_normSq_pow_four_q]
-  have h := qEqCount_le a b ha N hN
-  have h' : (qEqCount a b N : ℝ) ≤ ((1000000 * (2 * a.natAbs + b.natAbs + 1) * N ^ 6 : ℕ) : ℝ) := by
-    exact_mod_cast h
-  push_cast at h' ⊢
-  exact h'
 
 end Waring

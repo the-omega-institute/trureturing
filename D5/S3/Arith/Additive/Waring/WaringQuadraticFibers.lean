@@ -8,7 +8,8 @@
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringQuadratic.lean#L1-L639
    Modified for this repository. Local imports use their D5 module paths.
    This file contains one segment of a split upstream module.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -19,48 +20,12 @@ import D5.S3.Arith.Additive.Waring.WaringExpSum
 import D5.S3.Arith.Additive.Waring.WaringCount
 import D5.S3.Arith.Additive.Waring.WaringLemma3
 import D5.S3.Arith.Additive.Waring.WaringSymm
-import D5.S3.Arith.Additive.Waring.WaringTheorem1
-
-/-!
-# Jameson Lemma 8 的一般二次形式版本
-
-`k = 2` 的圆法（`WaringTheorem1.integral_normSq_pow_four_le`）只处理
-`f(n) = n²`。本文件把它推广到**一般整系数二次形式**
-
-```text
-f(n) = a₂ n² + a₁ n,      a₂ ≠ 0,
-```
-
-并证明八次矩界
-
-```text
-∫₀¹ |∑_{n=0}^{N} e(α f(n))|⁸ dα ≤ C(a₂,a₁) · N⁶.
-```
-
-证明路线（与 `k = 2` 的情形平行，但常数只依赖 `a₂, a₁`）：
-
-1. **矩 = 计数**：`∫₀¹|S|⁸ = #{(p,q) ∈ [0,N]⁸ : ∑ f(pᵢ) = ∑ f(qᵢ)}`；
-2. **换变量** `hᵢ = pᵢ − qᵢ`、`mᵢ = pᵢ + qᵢ`，用
-   `f(p) − f(q) = (p−q)(a₂(p+q) + a₁)` 把方程变成 `∑ hᵢ(a₂mᵢ+a₁) = 0`；
-3. **Fubini 拆分**：把四个坐标分成两组，计数化为二元部分和 `qQ` 的平方和；
-4. **部分和的逐点界**：对固定的 `(h₁,h₂) ≠ 0`，方程
-   `a₂h₁m₁ + a₂h₂m₂ = n − a₁(h₁+h₂)` 在 `[0,M]²` 中的解数用
-   `WaringLemma3.fiber_le_gcd` 控制（`≤ M/max|prim| + 1`）。
-
-关键的数学观察：因为 `gcd(h₁,h₂) | h₁ + h₂`，纤维非空蕴含
-`gcd(h₁,h₂) | n`（而不是依赖 `h₁+h₂` 的条件）。所以 Jameson 的
-`gcd` 重索引（`sum_inv_prim_le`）可以原封不动地使用。`a₂` 只通过
-`prim (a₂·h)` 进入，而 `prim (a₂·h)` 与 `prim h` 的坐标绝对值相同，
-因此逐项界与 `f(n)=n²` 情形完全一致。
--/
 
 open Finset intervalIntegral
 
 set_option maxHeartbeats 1000000
 
 namespace Waring
-
-/-! ## 第一部分：指数和与八次矩的展开 -/
 
 /-- `e(Σ x) = ∏ e(x)`。 -/
 theorem e_sum (ι : Type) [Fintype ι] (x : ι → ℝ) : e (∑ i, x i) = ∏ i, e (x i) := by
@@ -197,8 +162,6 @@ theorem integral_normSq_pow_four_q (a b : ℤ) (N : ℕ) :
   rw [Finset.sum_boole]
   norm_cast
 
-/-! ## 第二部分：换变量 `hᵢ = pᵢ − qᵢ`、`mᵢ = pᵢ + qᵢ` -/
-
 /-- `(h,m)` 形式的计数：`∑ᵢ hᵢ(a mᵢ + b) = 0`。 -/
 noncomputable def qHMCount (a b : ℤ) (N : ℕ) : ℕ :=
   (((hBox N).product (mBox N)).filter
@@ -279,8 +242,6 @@ theorem qEqCount_le_qHMCount (a b : ℤ) (N : ℕ) : qEqCount a b N ≤ qHMCount
     ring
   · exact fun x _ y _ hxy => toHM_inj N x y hxy
 
-/-! ## 第三部分：Fubini 拆分（`Fin 4 → Fin 2 × Fin 2`） -/
-
 /-- 二元部分和盒子 `[−H,H]² × [0,M]²`。 -/
 noncomputable def qPbox2 (H M : ℕ) : Finset ((Fin 2 → ℤ) × (Fin 2 → ℤ)) :=
   (box2 (-(H : ℤ)) (H : ℤ)).product (box2 (0 : ℤ) (M : ℤ))
@@ -302,14 +263,6 @@ theorem box2_zero_card (M : ℕ) : (box2 (0 : ℤ) (M : ℤ)).card = (M + 1) ^ 2
   have h : (M : ℤ) + 1 - 0 = (M : ℤ) + 1 := by ring
   rw [h]
   omega
-
-/-- `qPbox2` 的基数。 -/
-theorem qPbox2_card (H M : ℕ) : (qPbox2 H M).card = (2 * H + 1) ^ 2 * (M + 1) ^ 2 := by
-  calc (qPbox2 H M).card
-      = (box2 (-(H : ℤ)) (H : ℤ)).card * (box2 (0 : ℤ) (M : ℤ)).card :=
-        Finset.card_product _ _
-    _ = (2 * H + 1) ^ 2 * (box2 (0 : ℤ) (M : ℤ)).card := by rw [card_box2]
-    _ = (2 * H + 1) ^ 2 * (M + 1) ^ 2 := by rw [box2_zero_card]
 
 /-- **对接**：`qHMCount` 不超过 `(Pbox2 × Pbox2)` 中的 `A + A' = 0` 计数。 -/
 theorem qHMCount_le_qHMCount2 (a b : ℤ) (N : ℕ) :
@@ -419,17 +372,6 @@ theorem qHMCount_le_sum_qQ (a b : ℤ) (N : ℕ) (K : ℤ)
     rw [qQ, ← hP]
   rw [Finset.sum_const, hcard]
   simp
-
-/-! ## 第四部分：`qQ` 的逐点界（Jameson Lemma 3 的一般形式）
-
-对 `h ≠ 0`，方程 `a(h₀m₀+h₁m₁) + b(h₀+h₁) = n` 的 `m` 解数
-由 `fiber_le_gcd` 控制为 `M/max|prim (a·h)| + 1`。关键事实：
-`prim (a·h)` 与 `prim h` 的坐标绝对值相同，因此该界就是
-`M/max|prim h| + 1`，与 `f(n) = n²` 的情形完全一致。
-
-第二个关键事实：**纤维非空 ⟹ gcd(h₀,h₁) | n**。
-（因为 `gcd | h₀+h₁`，所以 `a(h₀m₀+h₁m₁) + b(h₀+h₁) ≡ 0 (mod gcd)`。）
-于是 Jameson 的 `gcd` 重索引 `sum_inv_prim_le` 原封不动可用。 -/
 
 /-- `prim (a·h)` 与 `prim h` 的坐标绝对值相同。 -/
 theorem prim_smul_natAbs (a : ℤ) (ha : a ≠ 0) {h : Fin 2 → ℤ} (hh : h ≠ 0) (i : Fin 2) :
@@ -648,6 +590,5 @@ theorem qQ_le_sigma (a b : ℤ) (ha : a ≠ 0) (H M : ℕ) {n : ℤ} (hn : n ≠
         linarith [hMA, h6]
     _ = 4 * (H : ℚ) * ((H : ℚ) + 1)
         + 8 * (H : ℚ) * (M : ℚ) * sigmaMinusOne n.natAbs := by ring
-
 
 end Waring

@@ -8,7 +8,8 @@
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringIndStep2.lean#L1-L493
    Modified for this repository. Local imports use their D5 module paths.
    This file contains one segment of a split upstream module.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -23,95 +24,9 @@ import D5.S3.Arith.Additive.Waring.WaringCoeffBound
 import D5.S3.Arith.Additive.Waring.WaringQuadratic
 import D5.S3.Arith.Additive.Waring.WaringLemma8Form
 
-/-!
-# 加强版归纳步 `MeanValueBoundS (d−1) → MeanValueBoundS d`
-
-Jameson Theorem 1 的归纳步，加强版：求和长度 `M ≤ N`，系数尺度 `N`。
-
-## 状态：**全部完成** ✅
-
-本文件自包含给出完整的归纳：
-
-* `meanValueBoundS_two : MeanValueBoundS 2`（基例，第 1 节末）；
-* `meanValueBoundS_succ : 3 ≤ d → MeanValueBoundS (d−1) → MeanValueBoundS d`（归纳步）。
-
-由此对一切 `d ≥ 2` 有 `MeanValueBoundS d`（外部用 `Nat.le_induction` 组装）。
-**零 `sorry`/`admit`/`axiom`，编译 exit 0。**
-
-> 文件末尾（第 13 节）保留了两段**注释掉的早期尝试**（旧 `count_le`、旧
-> `meanValueBoundS_succ` 的算术），仅作参考，不参与编译。
-
-## 记号
-
-`m := 8^{d−2}`（`d ≥ 3` 时 `m ≥ 8`），于是 `8^{d−1} = 8m`，且 `m = 2s`，
-`s = 4·8^{d−3}`（供 `integral_sum_pow_four` 使用）。
-
-## 分块（全部已证明）
-
-1. `pointwise_bound`（第 1–4 步）：`‖S‖^{8m} ≤ 2^{4(m−1)}·8·((M+1)^{4m} + (2M)^{4(m−1)}·B^4)`，
-   其中 `B = Σ_{h≠0}‖b_h‖^m`（`SigTerm`）；辅助：`pow_four_bound`、`pointwise_alg`；
-2. `integral_bound`（第 5 步）：逐项积分
-   `∫‖S‖^{8m} ≤ 2^{4(m−1)}·8·((M+1)^{4m} + (2M)^{4(m−1)}·∫B^4)`；
-3. `four_sum_eq`（第 6 步）：`∫ (Σ_h‖b_h‖^m)^4` 的四重和展开（`integral_sum_pow_four`，
-   取 `s = 4·8^{d−3}`，`2s = m`，见 `two_mul_s`/`one_le_s`）；
-4. `integral_norm_T_pow_le_R`（第 7 步）：由 `MVSBound (d−1) R₀` 得
-   `∫‖b_h‖^{8^{d−2}} ≤ max(R₀(C),1)·N^{8^{d−2}−(d−1)}`（`C = coeffConst c d`）；
-5. `BCount_le_Rtot`（第 6 步前半 + 第 7 步）：每个 `BCount` 同界；
-6. `four_sum_le_count`（第 8 步）：
-   `∫(Σ‖b_h‖^m)^4 ≤ Rtot^4 · #{(h₁..h₄, Q₁..Q₄) : Qᵢ ∈ QSet hᵢ, Q₁+…+Q₄ = 0}`；
-7. 第 9 步的**准备**：
-   * `QSet_exists`：`Q ∈ QSet` 可写成两个 `Qsum` 之差；
-   * `QSet_dvd`：`f = polyEval a d` 时 `h ∣ Q`；
-   * `polyEval_diffCoeff_abs_le`：`|φ(n)| ≤ (d+1)·coeffConst·N^{d−1}`（`|n|,|h| ≤ N`）；
-   * `QSet_div_abs_le`：`Q ∈ QSet`、`h ≠ 0` ⟹ `|Q/h| ≤ 2s(d+1)·coeffConst·N^{d−1} =: Kf c d N`；
-   * `sum_piFinset_fin4`：`Fintype.piFinset` 在 `Fin 4` 上展开成 4 层求和
-     （把 8 层求和折叠成 `Fin 4 → ℤ` 上的求和所需的桥）；
-8. **第 9 步 (9a) 已完成**：`sum_QBox_le_MBox`：
-   `∑_{Q ∈ QSet⁴} [Q₁+…+Q₄ = 0] ≤ ∑_{m ∈ ([−Kf,Kf])⁴} [h₁m₁+…+h₄m₄ = 0]`
-   （映射 `Q ↦ fun i => Q i / hh i`，单射性来自 `QSet_dvd`，像落在 `Kf` 盒来自
-   `QSet_div_abs_le`）；
-9. **第 9 步 (9b) 已完成**：`card_sym_shrink`：
-   `#{h ∈ hBox7 M, m ∈ ([−K,K])⁴, Σ hᵢmᵢ = 0} ≤ 16·hmCount7 M K`。
-   映射 `sgnMap : (h, m) ↦ ((sgn(mᵢ)·hᵢ, |mᵢ|), sgn(mᵢ))` —— **符号翻转作用在 `hᵢ` 上**，
-   故 `Σᵢ (sgn(mᵢ)hᵢ)·|mᵢ| = Σᵢ hᵢ(sgn(mᵢ)|mᵢ|) = Σᵢ hᵢmᵢ`，方程保持不变；
-   像落在 `hmCount7 的盒子 × SymBox`（`SymBox = {±1}⁴`，`card = 16`）；
-10. **基例（自包含）**：`meanValueBoundS_two : MeanValueBoundS 2`，
-    连同 `polyEval_two_eq`、`expSum_polyEval_two`、`qEqCount_le_MN`
-    （从 `WaringInduction` 逐字搬入；因 `import WaringQuadratic` 无命名冲突）；
-11. **第 9 步 (9c) 已完成**：`count_le`：
-    `∑_{h₁..h₄} ∑_{Q₁∈QSet hᵢ} [Q₁+…+Q₄ = 0] ≤ 16·5250·(M·Kf)³`。
-    证明链：`sum_four_Q_le_MBox`（4 层 `Q ↦ Q/h` 逐层放大到 `Kf` 盒子，
-    用 `Finset.sum_image` + `QSet_dvd` + `QSet_div_abs_le`，**不展开 `QSet`**）
-    → `sum_piFinset_fin4`（`hBox7 M` 与 `KB` 的 4 层折叠）
-    → `card_filter`（`∑ if … then 1 else 0 = card`，先 `ℕ` 后 `exact_mod_cast`）
-    → `card_sym_shrink`（9b）→ `hmCount7_le'`（Lemma 7，需 `M ≤ Kf`，由 `le_Kf`）。
-    辅助：`sum_piFinset_fin4_dep`、`one_le_c`、`coeffConst_pos`、`le_Kf`、`QSf`。
-
-## 第 10 步（常数账 + 组装，已完成）
-
-`Rd d R₀ c = 2^{4(m−1)}·8·(2^{4m} + 2^{4(m−1)}·Rmax⁴·16·5250·Ck³)`，其中
-`Rmax = max(R₀(C),1)`、`Ck = 2s(d+1)·coeffConst`，于是
-`∫ ≤ 2^{4(m−1)}·8·((M+1)^{4m} + (2M)^{4(m−1)}·Rmax⁴·N^{4(m−(d−1))}·16·5250·Ck³·N^{3d})`
-= `Rd·N^{8m−d}`。指数核对：`4(m−1) + 4(m−(d−1)) + 3d = 8m − d` ✓
-（`3d = 3 + 3(d−1)`：`M ≤ N` 贡献 `3`，`Kf = Ck·N^{d−1}` 贡献 `3(d−1)`）。
-关键辅助：`hKf`（`Kf = Ck·N^{d−1}`）、`hmge : d−1 ≤ m`（`Nat.lt_two_pow_self`
-+ `8 = 2^3`）、`hexp1`、`hNfin`、`hP1`、`hP2`、`hP2` 的 `mul_le_mul` 需先给
-`intervalIntegral.integral_nonneg`。
-
-## 环境说明
-
-`WaringIndStep`（依赖 `WaringBPow`/`WaringQuadSum`）与 `WaringInduction`（依赖
-`WaringQuadratic`）因 `e_sum` 命名冲突不能同时 import，故本文件**逐字重述**
-`MeanValueBoundS` 的定义（与 `WaringInduction.MeanValueBoundS` 完全相同）。
-注意：`WaringQuadratic`/`WaringLemma8Form` **可以**与本文件的 `WaringIndStep` 链
-一起 import（`WaringBPow` 的 `e_sum` 已改名 `e_sum_finset`），基例因此可以自包含。
--/
-
 open Finset intervalIntegral
 
 namespace Waring
-
-/-! ## 0. 命题陈述（与 `WaringInduction.MeanValueBoundS` 逐字相同） -/
 
 /-- **加强版归纳命题**（`M ≤ N`）：求和长度 `M` 可以小于系数尺度的 `N`，
 但界仍然用 `N`。 -/
@@ -122,21 +37,6 @@ def MeanValueBoundS (d : ℕ) : Prop :=
       (∫ α in (0 : ℝ)..1,
           ‖expSum (fun n => polyEval a d n) M α‖ ^ (8 ^ (d - 1)))
         ≤ R c * (N : ℝ) ^ (8 ^ (d - 1) - d)
-
-/-! 由 `MeanValueBoundS d` 取 `M = N` 得原版（与 `WaringInduction` 的同名引理一致）。 -/
-
-/-- `MeanValueBoundS d` 的显式应用形式（解包 `∃ R`）。 -/
-theorem MeanValueBoundS.apply {d : ℕ} (h : MeanValueBoundS d) (c N M : ℕ)
-    (hN : 1 ≤ N) (hM1 : 1 ≤ M) (hMN : M ≤ N) (a : ℕ → ℤ) (had : a d ≠ 0)
-    (ha : ∀ j, j ≤ d → |a j| ≤ (c : ℤ) * (N : ℤ) ^ (d - j)) :
-    ∃ R : ℝ, 0 < R ∧
-      (∫ α in (0 : ℝ)..1,
-          ‖expSum (fun n => polyEval a d n) M α‖ ^ (8 ^ (d - 1)))
-        ≤ R * (N : ℝ) ^ (8 ^ (d - 1) - d) := by
-  obtain ⟨R, hR, hbound⟩ := h
-  exact ⟨R c, hR c, hbound c N M hN hM1 hMN a had ha⟩
-
-/-! ## 1. 第 1–4 步：点态界 -/
 
 /-- `B = Σ_{h≠0, |h|≤M} ‖b_h‖^m`，其中 `m = 8^{d−2}`。 -/
 noncomputable def SigTerm (a : ℕ → ℤ) (d M : ℕ) (α : ℝ) : ℝ :=
@@ -201,8 +101,6 @@ theorem pointwise_bound {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) {M : ℕ} (hM
   exact le_trans (pow_le_pow_left₀ (by positivity) hpt 4)
     (pointwise_alg M (8 ^ (d - 2)) (SigTerm a d M α) hTv)
 
-/-! ## 2. 第 5 步：积分 -/
-
 /-- **第 5 步（积分）**：
 `∫‖S‖^{8m} ≤ 2^{4(m−1)}·8·((M+1)^{4m} + (2M)^{4(m−1)}·∫B^4)`。 -/
 theorem integral_bound {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) {M : ℕ} (hM1 : 1 ≤ M) :
@@ -257,8 +155,6 @@ theorem integral_bound {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) {M : ℕ} (hM1
     rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul, hsplit]
   exact le_trans hmono (le_of_eq hgi)
 
-/-! ## 3. 第 6 步：四重和与正交性 -/
-
 /-- 展开 `∫ (Σ_h ‖b_h‖^m)^4`（`m = 8^{d−2} = 2s`，`s = 4·8^{d−3}`）。 -/
 theorem four_sum_eq {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) (M : ℕ) :
     (∫ α in (0 : ℝ)..1, (SigTerm a d M α) ^ 4)
@@ -286,10 +182,6 @@ theorem four_sum_eq {d : ℕ} (hd : 3 ≤ d) (a : ℕ → ℤ) (M : ℕ) :
   have h := integral_sum_pow_four (fun n => polyEval a d n) M (4 * 8 ^ (d - 3)) hs1
   rw [h2s] at h
   exact h
-
-/-! ## 4. 第 7 步：每个 `∫₀¹‖b_h‖^{8^{d−2}}` 的上界（用 `P(d−1)`）
-
-`P(d−1)` 的解包形式：常数族 `R` 与界。 -/
 
 /-- `P(k)` 的显式形式（`R` 固定）。 -/
 def MVSBound (k : ℕ) (R : ℕ → ℝ) : Prop :=
@@ -405,8 +297,6 @@ theorem integral_norm_T_pow_le_R {d : ℕ} (hd : 3 ≤ d) {R₀ : ℕ → ℝ}
       exact_mod_cast h2
     exact main h hpos htoNatM
 
-/-! ## 5. 第 8 步：四重和逐项放大到 `Rtot^4` 乘计数 -/
-
 /-- `2·(4·8^{d−3}) = 8^{d−2}`（`d ≥ 3`）。 -/
 theorem two_mul_s {d : ℕ} (hd : 3 ≤ d) : 2 * (4 * 8 ^ (d - 3)) = 8 ^ (d - 2) := by
   have h1 : d - 2 = (d - 3) + 1 := by omega
@@ -502,6 +392,5 @@ theorem four_sum_le_count {d : ℕ} (hd : 3 ≤ d) {R₀ : ℕ → ℝ}
   · rw [if_pos hc, if_pos hc, mul_one]
     exact hP
   · rw [if_neg hc, if_neg hc, mul_zero]
-
 
 end Waring

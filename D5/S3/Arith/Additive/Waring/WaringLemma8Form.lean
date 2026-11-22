@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringLemma8Form.lean#L1-L327
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -70,29 +71,6 @@ theorem qK_ge (a b : ℤ) (ha : a ≠ 0) (N : ℕ) : 4 * (N : ℤ) ^ 2 ≤ qK a 
     mul_le_mul_of_nonneg_left ha1 (by positivity)
   have h2 : (0 : ℤ) ≤ 2 * (N : ℤ) * (b.natAbs : ℤ) := by positivity
   unfold qK
-  linarith
-
-/-- **`qK` 的上界**：`|a| ≤ c₂`、`|b| ≤ c₁N` 时 `qK ≤ (4c₂ + 2c₁)·N²`。 -/
-theorem qK_le_form (a b : ℤ) (c₁ c₂ : ℕ) (N : ℕ)
-    (ha2 : a.natAbs ≤ c₂) (hb1 : b.natAbs ≤ c₁ * N) :
-    qK a b N ≤ (4 * (c₂ : ℤ) + 2 * (c₁ : ℤ)) * (N : ℤ) ^ 2 := by
-  have h1 : |a| ≤ (c₂ : ℤ) := by
-    rw [Int.abs_eq_natAbs]
-    exact_mod_cast ha2
-  have h2 : |b| ≤ (c₁ : ℤ) * (N : ℤ) := by
-    have h : (b.natAbs : ℤ) ≤ ((c₁ * N : ℕ) : ℤ) := by exact_mod_cast hb1
-    push_cast at h
-    exact h
-  have h3 : 4 * (N : ℤ) ^ 2 * |a| ≤ 4 * (N : ℤ) ^ 2 * (c₂ : ℤ) :=
-    mul_le_mul_of_nonneg_left h1 (by positivity)
-  have h4 : 2 * (N : ℤ) * |b| ≤ 2 * (N : ℤ) * ((c₁ : ℤ) * (N : ℤ)) :=
-    mul_le_mul_of_nonneg_left h2 (by positivity)
-  have h6 : (4 * (c₂ : ℤ) + 2 * (c₁ : ℤ)) * (N : ℤ) ^ 2
-      = 4 * (c₂ : ℤ) * (N : ℤ) ^ 2 + 2 * (c₁ : ℤ) * (N : ℤ) ^ 2 := by ring
-  rw [h6]
-  unfold qK
-  rw [show (a.natAbs : ℤ) = |a| from (Int.abs_eq_natAbs a).symm,
-    show (b.natAbs : ℤ) = |b| from (Int.abs_eq_natAbs b).symm]
   linarith
 
 /-! ## 第二部分：`Σ qQ² ≤ C·K·N⁴`（只依赖 `K` 本身） -/
@@ -248,91 +226,6 @@ theorem sum_qQ_sq_le_K (a b : ℤ) (ha : a ≠ 0) (N : ℕ) (hN : 1 ≤ N) :
     nlinarith [hQ0, hmul, hN6]
   nlinarith [hQ0', hrest, hmain, hKzq]
 
-/-- **`qEqCount` 的 `K·N⁴` 形式界**（`ℚ` 版本）。 -/
-theorem qEqCount_le_K_rat (a b : ℤ) (ha : a ≠ 0) (N : ℕ) (hN : 1 ≤ N) :
-    (qEqCount a b N : ℚ) ≤ 10000 * (qK a b N : ℚ) * (N : ℚ) ^ 4 := by
-  have h1 : qEqCount a b N ≤ ∑ n ∈ Finset.Icc (-(qK a b N)) (qK a b N),
-      qQ a b N (2 * N) n ^ 2 :=
-    le_trans (qEqCount_le_qHMCount a b N) (qHMCount_le_sum_sq a b N)
-  have h2 := sum_qQ_sq_le_K a b ha N hN
-  have h3 : (qEqCount a b N : ℚ)
-      ≤ ((∑ n ∈ Finset.Icc (-(qK a b N)) (qK a b N), qQ a b N (2 * N) n ^ 2 : ℕ) : ℚ) := by
-    exact_mod_cast h1
-  linarith
-
 /-! ## 第三部分：主定理 -/
-
-/-- **Theorem 1（`k = 2`，常数精细形式）**：若 `|a| ≤ c₂`、`|b| ≤ c₁N`，则
-
-```text
-qEqCount a b N ≤ 100000 · (2c₂ + c₁ + 1)⁴ · N⁶,
-```
-
-常数只依赖 `c₁, c₂`，与 `N` 无关。 -/
-theorem qEqCount_le_form (a b : ℤ) (ha : a ≠ 0) (c₁ c₂ : ℕ) (N : ℕ) (hN : 1 ≤ N)
-    (ha2 : a.natAbs ≤ c₂) (hb1 : b.natAbs ≤ c₁ * N) :
-    qEqCount a b N ≤ 100000 * (2 * c₂ + c₁ + 1) ^ 4 * N ^ 6 := by
-  have hKub : (qK a b N : ℚ) ≤ (4 * (c₂ : ℚ) + 2 * (c₁ : ℚ)) * (N : ℚ) ^ 2 := by
-    have h := qK_le_form a b c₁ c₂ N ha2 hb1
-    have h' : ((qK a b N : ℤ) : ℚ)
-        ≤ (((4 * (c₂ : ℤ) + 2 * (c₁ : ℤ)) * (N : ℤ) ^ 2 : ℤ) : ℚ) := by exact_mod_cast h
-    push_cast at h'
-    exact h'
-  have hbase := qEqCount_le_K_rat a b ha N hN
-  have h1 : (qEqCount a b N : ℚ)
-      ≤ 10000 * ((4 * (c₂ : ℚ) + 2 * (c₁ : ℚ)) * (N : ℚ) ^ 2) * (N : ℚ) ^ 4 := by
-    have h := mul_le_mul_of_nonneg_right hKub
-      (show (0 : ℚ) ≤ 10000 * (N : ℚ) ^ 4 by positivity)
-    have h' : (qK a b N : ℚ) * (10000 * (N : ℚ) ^ 4)
-        ≤ ((4 * (c₂ : ℚ) + 2 * (c₁ : ℚ)) * (N : ℚ) ^ 2) * (10000 * (N : ℚ) ^ 4) := h
-    nlinarith [hbase, h']
-  have h2 : 10000 * ((4 * (c₂ : ℚ) + 2 * (c₁ : ℚ)) * (N : ℚ) ^ 2) * (N : ℚ) ^ 4
-      ≤ 100000 * (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1) ^ 4 * (N : ℚ) ^ 6 := by
-    have hx1 : (1 : ℚ) ≤ 2 * (c₂ : ℚ) + (c₁ : ℚ) + 1 := by
-      have h2 : (0 : ℚ) ≤ (c₂ : ℚ) := Nat.cast_nonneg c₂
-      have h3 : (0 : ℚ) ≤ (c₁ : ℚ) := Nat.cast_nonneg c₁
-      linarith
-    have hxle : 2 * (c₂ : ℚ) + (c₁ : ℚ) ≤ 2 * (c₂ : ℚ) + (c₁ : ℚ) + 1 := by linarith
-    have hx4 : (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1)
-        ≤ (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1) ^ 4 := by
-      have h := pow_le_pow_right₀ hx1 (by norm_num : (1 : ℕ) ≤ 4)
-      simpa using h
-    have hN6 : (0 : ℚ) ≤ (N : ℚ) ^ 6 := by positivity
-    have ha0 : (0 : ℚ) ≤ 2 * (c₂ : ℚ) + (c₁ : ℚ) := by positivity
-    have hkey : 20000 * (2 * (c₂ : ℚ) + (c₁ : ℚ)) * (N : ℚ) ^ 6
-        ≤ 100000 * (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1) ^ 4 * (N : ℚ) ^ 6 := by
-      have hcoef : 20000 * (2 * (c₂ : ℚ) + (c₁ : ℚ))
-          ≤ 100000 * (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1) ^ 4 := by
-        nlinarith [hx1, hxle, hx4, ha0]
-      exact mul_le_mul_of_nonneg_right hcoef hN6
-    have heq : 10000 * ((4 * (c₂ : ℚ) + 2 * (c₁ : ℚ)) * (N : ℚ) ^ 2) * (N : ℚ) ^ 4
-        = 20000 * (2 * (c₂ : ℚ) + (c₁ : ℚ)) * (N : ℚ) ^ 6 := by ring
-    rw [heq]
-    exact hkey
-  have htarget : (qEqCount a b N : ℚ)
-      ≤ ((100000 * (2 * c₂ + c₁ + 1) ^ 4 * N ^ 6 : ℕ) : ℚ) := by
-    have hcast : ((100000 * (2 * c₂ + c₁ + 1) ^ 4 * N ^ 6 : ℕ) : ℚ)
-        = 100000 * (2 * (c₂ : ℚ) + (c₁ : ℚ) + 1) ^ 4 * (N : ℚ) ^ 6 := by
-      push_cast
-      ring
-    rw [hcast]
-    linarith [h1, h2]
-  exact_mod_cast htarget
-
-/-- **Theorem 1（`k = 2`，常数精细形式）的积分版本**：
-
-```text
-∫₀¹ |∑_{n≤N} e(α(a n² + b n))|⁸ dα ≤ 100000 · (2c₂ + c₁ + 1)⁴ · N⁶.
-``` -/
-theorem integral_normSq_pow_four_le_form (a b : ℤ) (ha : a ≠ 0) (c₁ c₂ : ℕ) (N : ℕ)
-    (hN : 1 ≤ N) (ha2 : a.natAbs ≤ c₂) (hb1 : b.natAbs ≤ c₁ * N) :
-    (∫ α in (0 : ℝ)..1, (Complex.normSq (qSum a b N α)) ^ 4)
-      ≤ 100000 * ((2 * c₂ + c₁ + 1 : ℕ) : ℝ) ^ 4 * (N : ℝ) ^ 6 := by
-  rw [integral_normSq_pow_four_q]
-  have h := qEqCount_le_form a b ha c₁ c₂ N hN ha2 hb1
-  have h' : (qEqCount a b N : ℝ)
-      ≤ ((100000 * (2 * c₂ + c₁ + 1) ^ 4 * N ^ 6 : ℕ) : ℝ) := by exact_mod_cast h
-  push_cast at h' ⊢
-  exact h'
 
 end Waring

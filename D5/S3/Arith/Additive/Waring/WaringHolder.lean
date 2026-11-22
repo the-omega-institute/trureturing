@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringHolder.lean#L1-L203
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 import D5.S3.Arith.Additive.Waring.WaringWeylInq
 
@@ -50,39 +51,6 @@ theorem sum_pow_le_card_pow_mul_sum_pow {ι : Type*} (s : Finset ι) (x : ι →
     norm_num
   rw [hcast, Real.rpow_natCast] at h
   exact h
-
-/-- **Hölder 步骤**：`‖Σ_{h≠0} b_h‖^m ≤ (2N)^{m−1} Σ_{h≠0} ‖b_h‖^m`（`N ≥ 1`）。 -/
-theorem holder_step (f : ℤ → ℤ) (N : ℕ) (α : ℝ) (m : ℕ) (hm : 1 ≤ m) (hN : 1 ≤ N) :
-    ‖∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, T f N α h‖ ^ m
-      ≤ (2 * (N : ℝ)) ^ (m - 1)
-        * ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖ ^ m := by
-  -- 集合大小
-  have hcardA : (Finset.Icc (-(N : ℤ)) (N : ℤ)).card = 2 * N + 1 := by
-    rw [Int.card_Icc]
-    have h : (N : ℤ) + 1 - (-(N : ℤ)) = 2 * (N : ℤ) + 1 := by ring
-    rw [h]
-    omega
-  have h0mem : (0 : ℤ) ∈ Finset.Icc (-(N : ℤ)) (N : ℤ) := by
-    rw [Finset.mem_Icc]
-    constructor <;> simp
-  have hcard : ((Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0).card = 2 * N := by
-    rw [Finset.card_erase_of_mem h0mem, hcardA]
-    omega
-  -- 三角不等式 + 幂平均
-  have hnorm : ‖∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, T f N α h‖
-      ≤ ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖ := norm_sum_le _ _
-  calc ‖∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, T f N α h‖ ^ m
-      ≤ (∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖) ^ m :=
-          pow_le_pow_left₀ (by positivity) hnorm m
-    _ ≤ (((Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0).card : ℝ) ^ (m - 1)
-          * ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖ ^ m :=
-          sum_pow_le_card_pow_mul_sum_pow _ (fun h => ‖T f N α h‖)
-            (fun h _ => norm_nonneg _) m hm
-    _ = (2 * (N : ℝ)) ^ (m - 1)
-          * ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖ ^ m := by
-          rw [hcard]
-          push_cast
-          ring
 
 /-- **二元幂平均**：`(a+b)^m ≤ 2^{m−1}(a^m + b^m)`（`a, b ≥ 0`，`m ≥ 1`）。 -/
 theorem add_pow_le_two_pow (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (m : ℕ) (hm : 1 ≤ m) :
@@ -153,62 +121,5 @@ theorem normSq_pow_le (f : ℤ → ℤ) (N : ℕ) (α : ℝ) (m : ℕ) (hm : 1 �
           + (2 * (N : ℝ)) ^ (m - 1)
             * ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0, ‖T f N α h‖ ^ m) := by
           rw [hS]
-
-/-- **Jameson (2) 的积分形式**：
-`∫₀¹‖S‖^{2m} ≤ 2^{m−1}((N+1)^m + (2N)^{m−1} Σ_{h≠0} ∫₀¹‖b_h‖^m)`。 -/
-theorem integral_normSq_pow_le (f : ℤ → ℤ) (N : ℕ) (m : ℕ) (hm : 1 ≤ m) (hN : 1 ≤ N) :
-    (∫ α in (0 : ℝ)..1, ‖expSum f N α‖ ^ (2 * m))
-      ≤ 2 ^ (m - 1) * ((N + 1 : ℝ) ^ m
-          + (2 * (N : ℝ)) ^ (m - 1)
-            * ∑ h ∈ (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0,
-                ∫ α in (0 : ℝ)..1, ‖T f N α h‖ ^ m) := by
-  set S : Finset ℤ := (Finset.Icc (-(N : ℤ)) (N : ℤ)).erase 0 with hS
-  set C : ℝ := (2 * (N : ℝ)) ^ (m - 1) with hC
-  set G : ℝ → ℝ :=
-    fun α => 2 ^ (m - 1) * ((N + 1 : ℝ) ^ m + C * ∑ h ∈ S, ‖T f N α h‖ ^ m) with hG
-  -- 点态界
-  have hpoint : ∀ α : ℝ, ‖expSum f N α‖ ^ (2 * m) ≤ G α := by
-    intro α
-    rw [hG, hC, hS]
-    exact normSq_pow_le f N α m hm hN
-  -- 被积函数的连续性
-  have hcontS : Continuous (fun α : ℝ => ‖expSum f N α‖ ^ (2 * m)) := by
-    apply Continuous.pow
-    refine Continuous.norm ?_
-    unfold expSum e
-    fun_prop
-  have hcontB : Continuous (fun α : ℝ => ∑ h ∈ S, ‖T f N α h‖ ^ m) := by
-    unfold T e
-    fun_prop
-  have hcontG : Continuous G := by
-    rw [hG]
-    have h1 : Continuous
-        (fun α : ℝ => (N + 1 : ℝ) ^ m + C * ∑ h ∈ S, ‖T f N α h‖ ^ m) :=
-      continuous_const.add (continuous_const.mul hcontB)
-    exact continuous_const.mul h1
-  -- 积分单调性
-  have hmono : (∫ α in (0 : ℝ)..1, ‖expSum f N α‖ ^ (2 * m))
-      ≤ ∫ α in (0 : ℝ)..1, G α :=
-    intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1)
-      (hcontS.intervalIntegrable 0 1) (hcontG.intervalIntegrable 0 1)
-      (fun x _ => hpoint x)
-  refine le_trans hmono ?_
-  -- 计算 G 的积分
-  rw [hG]
-  have hsum_int : (∫ α in (0 : ℝ)..1, ∑ h ∈ S, ‖T f N α h‖ ^ m)
-      = ∑ h ∈ S, ∫ α in (0 : ℝ)..1, ‖T f N α h‖ ^ m := by
-    rw [intervalIntegral.integral_finsetSum]
-    intro h _
-    apply Continuous.intervalIntegrable
-    unfold T e
-    fun_prop
-  have hconst_int : (∫ α in (0 : ℝ)..1, ((N + 1 : ℝ) ^ m + C * ∑ h ∈ S, ‖T f N α h‖ ^ m))
-      = (N + 1 : ℝ) ^ m + C * ∑ h ∈ S, ∫ α in (0 : ℝ)..1, ‖T f N α h‖ ^ m := by
-    rw [intervalIntegral.integral_add]
-    · rw [intervalIntegral.integral_const_mul, hsum_int, intervalIntegral.integral_const]
-      ring
-    · exact Continuous.intervalIntegrable continuous_const 0 1
-    · exact (continuous_const.mul hcontB).intervalIntegrable 0 1
-  rw [intervalIntegral.integral_const_mul, hconst_int]
 
 end Waring

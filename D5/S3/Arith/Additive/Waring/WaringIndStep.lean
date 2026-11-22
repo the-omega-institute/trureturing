@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringIndStep.lean#L1-L585
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -20,87 +21,9 @@ import D5.S3.Arith.Additive.Waring.WaringHolder
 import D5.S3.Arith.Additive.Waring.WaringCoeffBound
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
-/-!
-# Jameson Theorem 1 的归纳步 `P(d−1) → P(d)`
-
-## 状态（重要）
-
-**`meanValueBound_succ` 本文件未证出**。已完成的零件见下；归纳步在一个实质性的
-数学技术点上卡住（见「障碍」）。
-
-## 命名冲突（环境限制）
-
-`WaringBPow.e_sum`（`Finset` 版）与 `WaringQuadratic.e_sum`（`Fintype` 版）同名，
-而 Lean 4 不允许同名声明共存于一个环境，因此
-
-* `WaringQuadSum`（`import WaringBPow`）与
-* `WaringInduction`（`import WaringQuadratic`）
-
-**不能同时 import**。所以本文件不能 import `WaringInduction`，而是**逐字重述**
-`MeanValueBound` 的定义（第 0 节）。其余引理来自 `WaringQuadSum`、`WaringLemma7`、
-`WaringHolder`、`WaringCoeffBound`（这些互相兼容）。
-
-## 已完成（均无 `sorry`，文件编译通过）
-
-1. `TS_eq_range`：`h ≥ 0` 时 `TS N h = {0, …, N−h}`。
-2. `T_polyEval_eq`：多项式情形 `T (polyEval a d) N α h = Σ_{n∈TS} e(αh·φ(n))`。
-3. `expSum_periodic_one`：`β ↦ Σ_{n≤K} e(β·φ(n))` 周期 1。
-4. `integral_norm_T_pow_eq`（**第 4 步，变量替换**，核心）：
-   `h > 0` 时 `∫₀¹‖T (polyEval a d) N α h‖^m dα
-      = ∫₀¹‖expSum (polyEval (diffCoeff a d h) d) (N−h) β‖^m dβ`。
-   证明：`T` 是周期 1 的函数在 `β = αh` 处的值 → `integral_comp_mul_left`
-   → 整数周期 `intervalIntegral_add_zsmul_eq`。
-5. `TS_neg_eq_Icc`、`T_neg`、`norm_T_neg`（**第 5 步，负步长**）：
-   `T f N α (−h) = conj (T f N α h)`，故 `‖b_{−h}‖ = ‖b_h‖`；
-   于是 `h < 0` 的矩可归约到 `h > 0`。
-6. `polyEval_eq_of_last_zero`、`diffCoeff_last`：`b d = 0` 时 `polyEval b d = polyEval b (d−1)`；
-   `diffCoeff a d h (d−1) = a_d·d ≠ 0`（`P(d−1)` 的最高次非零条件）。
-7. `coeffConst`、`diffCoeff_bound'`（**第 5 步的系数账**）：
-   `|diffCoeff a d h r| ≤ (coeffConst c d)·N^{d−1−r}`（统一常数，`r < d`）。
-8. `BCount_eq_zero_of_not_mem`、`BCount_le_integral`（**第 6 步前半**）：
-   `BCount f N h s Q ≤ ∫₀¹‖b_h‖^{2s} dα`（Fourier 系数被 `L¹` 范数控制）。
-
-## 障碍：`P(d−1)` 的「系数尺度」与「求和长度」不匹配
-
-要把第 4 步得到的 `∫₀¹‖expSum φ (N−h) β‖^m dβ` 接到 `P(d−1)`，需要
-`MeanValueBound (d−1)` 的**同一参数 `N` 同时**承担两个角色：
-
-* 求和长度 `N+1`（`expSum` 的 `range (N+1)`）；
-* 系数尺度 `|a_j| ≤ c·N^{(d−1)−j}`。
-
-而变量替换后的和长度是 `N−h+1`，系数界却是 `N` 尺度的
-（`|b_r| ≤ C·N^{d−1−r}`，来自 `diffCoeff_bound'`，其中 `|h| ≤ N`）。
-对 `h > 0` 有 `N−h < N`，于是
-
-* 用 `P(d−1)` 于参数 `N−h` 需要 `|b_r| ≤ c'·(N−h)^{d−1−r}`，即
-  `c' ≥ C·(N/(N−h))^{d−1}` —— **依赖 `N`**，破坏「`R(c)` 与 `N` 无关」这一关键性质；
-* 用 `P(d−1)` 于参数 `N` 只能控制长度 `N+1` 的和，而 `b_h` 的和短了 `h` 项；
-  用 `‖T_h‖ ≤ ‖T̃_h‖ + h` 补齐会引入 `N^m` 项，进而使最终界多出 `N^d`
-  （目标指数是 `8^{d−1}−d`，没有这个余量）。
-
-标准出路是把归纳命题**加强**为「对一切 `M ≤ N`、但系数尺度仍为 `N`」的形式
-（记 `MeanValueBoundS`）：`MeanValueBoundS d → MeanValueBound d` 是取 `M = N`，
-归纳步的 `h` 分类也可顺利完成（`h ≤ N/2` 用 `N/(N−h) ≤ 2` 吸收常数；
-`h > N/2` 用 `MeanValueBoundS`）。但任务给定的归纳假设是 `MeanValueBound (d−1)`，
-而 `MeanValueBound (d−1) ↛ MeanValueBoundS (d−1)`（长度变短不可控），
-故本文件不声称归纳步完成。
-
-（若允许把归纳命题加强为 `MeanValueBoundS`，基例 `P(2)` 也可从
-`WaringLemma8Form` 的同型估计得到；这需要另行形式化，且要改动
-`WaringInduction.lean` 的陈述，超出「不修改已有 `Waring*.lean`」的约束。）
-
-第 7 节（原计划用 `P(d−1)` 逐个控制 `∫‖b_h‖^m`）整体注释保留，作为后续工作参考。
--/
-
 open Finset intervalIntegral
 
 namespace Waring
-
-/-! ## 0. 归纳命题（与 `WaringInduction.MeanValueBound` 逐字相同）
-
-注意：`WaringBPow.e_sum` 与 `WaringQuadratic.e_sum` 命名冲突，故 `WaringQuadSum`
-（依赖 `WaringBPow`）与 `WaringInduction`（依赖 `WaringQuadratic`）不能同时 import。
-本文件重述 `MeanValueBound` 的定义以便自包含地证明归纳步。 -/
 
 /-- **归纳命题 `P(d)`**（Jameson Theorem 1 的精确形式）。 -/
 def MeanValueBound (d : ℕ) : Prop :=
@@ -110,8 +33,6 @@ def MeanValueBound (d : ℕ) : Prop :=
       (∫ α in (0 : ℝ)..1,
           ‖expSum (fun n => polyEval a d n) N α‖ ^ (8 ^ (d - 1)))
         ≤ R c * (N : ℝ) ^ (8 ^ (d - 1) - d)
-
-/-! ## 1. `TS` 的形状：`h ≥ 0` 时是一个区间 -/
 
 /-- `h ≥ 0` 时 `TS N h = {0, …, N−h}`。 -/
 theorem TS_eq_range {N : ℕ} {h : ℤ} (hh : 0 ≤ h) (hN : h.toNat ≤ N) :
@@ -135,8 +56,6 @@ theorem TS_eq_range {N : ℕ} {h : ℤ} (hh : 0 ≤ h) (hN : h.toNat ≤ N) :
       exact this
     refine ⟨by omega, by linarith, by linarith⟩
 
-/-! ## 2. `T` 的多项式形式 -/
-
 /-- 多项式情形 `T` 的相位分解：`T (polyEval a d) N α h = Σ_{n∈TS} e(αh·φ(n))`。 -/
 theorem T_polyEval_eq (a : ℕ → ℤ) (d : ℕ) (N : ℕ) (h : ℤ) (α : ℝ) :
     T (polyEval a d) N α h
@@ -148,22 +67,6 @@ theorem T_polyEval_eq (a : ℕ → ℤ) (d : ℕ) (N : ℕ) (h : ℤ) (α : ℝ)
   congr 1
   push_cast
   ring
-
-/-! ## 3. 周期 1 -/
-
-/-- `β ↦ Σ_{n∈range(K+1)} e(β·φ(n))` 关于 `β` 周期 1。 -/
-theorem expSum_periodic_one (b : ℕ → ℤ) (d : ℕ) (K : ℕ) :
-    Function.Periodic (fun β : ℝ => expSum (fun n => polyEval b d n) K β) 1 := by
-  intro β
-  unfold expSum
-  refine Finset.sum_congr rfl (fun n _ => ?_)
-  have hsplit : ((polyEval b d (n : ℤ) : ℤ) : ℝ) * (β + 1)
-      = ((polyEval b d (n : ℤ) : ℤ) : ℝ) * β + ((polyEval b d (n : ℤ) : ℤ) : ℝ) := by ring
-  rw [hsplit, e_add, e_int, mul_one]
-
-/-! ## 4. 变量替换：`∫‖T_h‖^m = ∫‖φ 的指数和‖^m`（`h > 0`） -/
-
-/-! ## 5. 负步长：`‖b_{−h}‖ = ‖b_h‖` -/
 
 /-- `h ≥ 0` 时 `TS N (−h) = {h, …, N}`。 -/
 theorem TS_neg_eq_Icc {N : ℕ} {h : ℤ} (hh : 0 ≤ h) :
@@ -320,8 +223,6 @@ theorem integral_norm_T_pow_eq {a : ℕ → ℤ} {d : ℕ} {N : ℕ} {h : ℤ}
           ‖expSum (fun n => polyEval (diffCoeff a d h) d n) (N - h.toNat) β‖ ^ m := by
         rw [hK]
 
-/-! ## 6. 次数降一的桥接：`b d = 0` 时 `polyEval b d = polyEval b (d−1)` -/
-
 /-- 末项系数为零时，`d` 次与 `d−1` 次多项式求值相同。 -/
 theorem polyEval_eq_of_last_zero (b : ℕ → ℤ) {d : ℕ} (hd : 1 ≤ d) (hb : b d = 0) (n : ℤ) :
     polyEval b d n = polyEval b (d - 1) n := by
@@ -393,11 +294,6 @@ theorem diffCoeff_bound' {a : ℕ → ℤ} {d : ℕ} {h : ℤ} {c N : ℕ}
         * (N : ℤ) ^ (d - 1 - r) := hbase
     _ ≤ (coeffConst c d : ℤ) * (N : ℤ) ^ (d - 1 - r) :=
         mul_le_mul_of_nonneg_right hkey hN0
-
-/-! ## 7. 用 `P(d−1)` 控制每个 `∫‖b_h‖^m`（`m = 8^{d−2}`）
-
-⚠ **本节已停用**：这里的 `P(d−1)` 应用遇到一个实质性的数学障碍（详见文件头
-「进度与障碍」）。为了保持文件可编译，该节整体注释掉。 -/
 
 /-
 
@@ -511,8 +407,6 @@ theorem integral_norm_T_pow_le {d : ℕ} (hd : 3 ≤ d) (hMV : MeanValueBound (d
       exact_mod_cast h2
     exact main h hpos htoNatN
 -/
-
-/-! ## 8. `BCount` 是 Fourier 系数，故被 `L¹` 范数控制 -/
 
 /-- 不出现在 `QSet` 中的频率对应的计数为 `0`。 -/
 theorem BCount_eq_zero_of_not_mem {f : ℤ → ℤ} {N : ℕ} {h : ℤ} {s : ℕ} {Q : ℤ}

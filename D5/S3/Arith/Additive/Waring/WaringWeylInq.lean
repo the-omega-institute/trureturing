@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringWeylInq.lean#L1-L363
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -15,23 +16,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
 import D5.S3.Arith.Additive.Waring.WaringExpSum
-
-/-!
-# Weyl 差分不等式（分组部分）
-
-Weyl 归纳的核心不等式是
-
-```text
-|Σ_{n≤N} e(α f(n))|² ≤ (N+1) + 2 Σ_{1≤h≤N} |Σ_{n≤N-h} e(α (f(n+h) − f(n)))|.
-```
-
-来源：`‖S‖² = Σ_{n,m} e(α(f(m)−f(n)))`，按差 `h = m−n` 分组。
-
-本文件给出这一步的**有限和重排**（纯组合）：
-
-* `sum_range_shift`: `Σ_{m=0}^{N} F(m−n) = Σ_{h=−n}^{N−n} F h`（区间平移）；
-* `sum_diff_group`: 双和按差分组。
--/
 
 open Finset
 
@@ -232,125 +216,9 @@ theorem e_int (k : ℤ) : e ((k : ℝ)) = 1 := by
     ring
   rw [h, Complex.exp_int_mul_two_pi_mul_I]
 
-/-- **`b_h` 的周期性**：若 `h ∣ f(n+h) − f(n)` 对每个 `n` 成立（整系数多项式
-总是如此），则 `b_h(α + 1/h) = b_h(α)`。 -/
-theorem T_period (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (hh : h ≠ 0)
-    (hdiv : ∀ n : ℤ, h ∣ f (n + h) - f n) (α : ℝ) :
-    T f N (α + 1 / (h : ℝ)) h = T f N α h := by
-  have hterm : ∀ n : ℕ,
-      e (((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * (α + 1 / (h : ℝ)))
-        = e (((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * α) := by
-    intro n
-    obtain ⟨k, hk⟩ := hdiv (n : ℤ)
-    have hrw : ((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * (α + 1 / (h : ℝ))
-        = ((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * α + (k : ℝ) := by
-      rw [hk]
-      push_cast
-      have hh' : (h : ℝ) ≠ 0 := by exact_mod_cast hh
-      field_simp
-    rw [hrw, e_add, e_int, mul_one]
-  unfold T
-  exact Finset.sum_congr rfl (fun n _ => hterm n)
-
-/-- 多项式的差分被步长整除：`h ∣ f(n+h) − f(n)`。 -/
-theorem polyEval_dvd (a : ℕ → ℤ) (d : ℕ) (h : ℤ) (n : ℤ) :
-    h ∣ polyEval a d (n + h) - polyEval a d n := by
-  have hd := congrFun (diffH_polyEval a d h) n
-  unfold diffH at hd
-  exact ⟨polyEval (diffCoeff a d h) d n, hd⟩
-
-/-- **多项式情形的周期性**：`b_h(α + 1/h) = b_h(α)`。 -/
-theorem T_period_polyEval (a : ℕ → ℤ) (d : ℕ) (N : ℕ) (h : ℤ) (hh : h ≠ 0) (α : ℝ) :
-    T (polyEval a d) N (α + 1 / (h : ℝ)) h = T (polyEval a d) N α h :=
-  T_period _ _ h hh (fun n => polyEval_dvd a d h n) α
-
-/-- **`‖b_h‖²` 的双和展开**：
-`↑(normSq (b_h)) = Σ_{n,m ∈ S_h} e(α((f(m+h)−f(m)) − (f(n+h)−f(n))))`。 -/
-theorem normSq_T (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (α : ℝ) :
-    ((Complex.normSq (T f N α h) : ℝ) : ℂ)
-      = ∑ n ∈ (Finset.range (N + 1)).filter
-            (fun (n : ℕ) => h ∈ Finset.Icc (-(n : ℤ)) ((N : ℤ) - (n : ℤ))),
-          ∑ m ∈ (Finset.range (N + 1)).filter
-            (fun (n : ℕ) => h ∈ Finset.Icc (-(n : ℤ)) ((N : ℤ) - (n : ℤ))),
-            e ((((f ((m : ℤ) + h) - f (m : ℤ))
-                  - (f ((n : ℤ) + h) - f (n : ℤ)) : ℤ) : ℝ) * α) := by
-  have hconj : (starRingEnd ℂ) (T f N α h)
-      = ∑ n ∈ (Finset.range (N + 1)).filter
-            (fun (n : ℕ) => h ∈ Finset.Icc (-(n : ℤ)) ((N : ℤ) - (n : ℤ))),
-          e (-(((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * α)) := by
-    unfold T
-    rw [map_sum]
-    refine Finset.sum_congr rfl (fun n _ => ?_)
-    rw [← e_neg]
-  rw [Complex.normSq_eq_conj_mul_self, hconj]
-  unfold T
-  rw [Finset.sum_mul_sum]
-  refine Finset.sum_congr rfl (fun n _ => Finset.sum_congr rfl (fun m _ => ?_))
-  rw [← e_add]
-  congr 1
-  push_cast
-  ring
-/-- **按 ℤ 值函数的值差分组**（一般形式）：
-`Σ_{n,m∈s} F (q m − q n) = Σ_Q (#{(n,m) : q m − q n = Q}) • F Q`。 -/
-theorem sum_diff_fiber {M : Type*} [AddCommMonoid M] (s : Finset ℕ) (q : ℕ → ℤ) (F : ℤ → M) :
-    (∑ n ∈ s, ∑ m ∈ s, F (q m - q n))
-      = ∑ Q ∈ (s.image q).biUnion (fun a => (s.image q).image (fun b => b - a)),
-          ((s.product s).filter (fun p : ℕ × ℕ => q p.2 - q p.1 = Q)).card • F Q := by
-  rw [show (∑ n ∈ s, ∑ m ∈ s, F (q m - q n))
-      = ∑ p ∈ s.product s, F (q p.2 - q p.1) from
-    (Finset.sum_product s s (fun p : ℕ × ℕ => F (q p.2 - q p.1))).symm]
-  have hmaps : ∀ p ∈ s.product s,
-      q p.2 - q p.1 ∈ (s.image q).biUnion (fun a => (s.image q).image (fun b => b - a)) := by
-    intro p hp
-    obtain ⟨n, m⟩ := p
-    obtain ⟨hn, hm⟩ := Finset.mem_product.mp hp
-    refine Finset.mem_biUnion.mpr ⟨q n, Finset.mem_image_of_mem q hn, ?_⟩
-    exact Finset.mem_image_of_mem _ (Finset.mem_image_of_mem q hm)
-  rw [← Finset.sum_fiberwise_of_maps_to (g := fun p : ℕ × ℕ => q p.2 - q p.1) hmaps
-    (f := fun p => F (q p.2 - q p.1))]
-  refine Finset.sum_congr rfl (fun Q _ => ?_)
-  have hstep : ∀ p ∈ (s.product s).filter (fun p : ℕ × ℕ => q p.2 - q p.1 = Q),
-      F (q p.2 - q p.1) = F Q := by
-    intro p hp
-    rw [Finset.mem_filter] at hp
-    rw [hp.2]
-  rw [Finset.sum_congr rfl hstep, Finset.sum_const]
-
 /-- 差分和的指标集 `{n : 0 ≤ n ≤ N, 0 ≤ n+h ≤ N}`。 -/
 noncomputable def TS (N : ℕ) (h : ℤ) : Finset ℕ :=
   (Finset.range (N + 1)).filter (fun n => h ∈ Finset.Icc (-(n : ℤ)) ((N : ℤ) - (n : ℤ)))
-
-/-- **`‖b_h‖²` 按频率分组**：`‖b_h‖² = Σ_Q A(Q,h) e(αQ)`，`A(Q,h)` 是解数，
-其中 `q n = f(n+h) − f(n)`（`= h·φ(n,h)`）。 -/
-theorem normSq_T_fiber (f : ℤ → ℤ) (N : ℕ) (h : ℤ) (α : ℝ) :
-    ((Complex.normSq (T f N α h) : ℝ) : ℂ)
-      = ∑ Q ∈ ((TS N h).image (fun n : ℕ => f ((n : ℤ) + h) - f (n : ℤ))).biUnion
-          (fun a => ((TS N h).image (fun n : ℕ => f ((n : ℤ) + h) - f (n : ℤ))).image
-            (fun b => b - a)),
-          (((TS N h).product (TS N h)).filter
-            (fun p : ℕ × ℕ => (f ((p.2 : ℤ) + h) - f (p.2 : ℤ))
-              - (f ((p.1 : ℤ) + h) - f (p.1 : ℤ)) = Q)).card
-          • e ((Q : ℝ) * α) := by
-  have h1 : ((Complex.normSq (T f N α h) : ℝ) : ℂ)
-      = ∑ n ∈ TS N h, ∑ m ∈ TS N h,
-          e ((((f ((m : ℤ) + h) - f (m : ℤ))
-              - (f ((n : ℤ) + h) - f (n : ℤ)) : ℤ) : ℝ) * α) := by
-    rw [normSq_T]
-    rfl
-  rw [h1]
-  exact sum_diff_fiber (TS N h) (fun n => f ((n : ℤ) + h) - f (n : ℤ))
-    (fun Q : ℤ => e ((Q : ℝ) * α))
-
-/-- **`α = 0` 时 `b_h` 的值**：`b_h(0) = #TS`（每项 `e(0) = 1`）。 -/
-theorem T_alpha_zero (f : ℤ → ℤ) (N : ℕ) (h : ℤ) :
-    T f N 0 h = ((TS N h).card : ℂ) := by
-  unfold T
-  change (∑ n ∈ TS N h, e (((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * 0)) = ((TS N h).card : ℂ)
-  have hone : ∀ n ∈ TS N h,
-      e (((f ((n : ℤ) + h) - f (n : ℤ) : ℤ) : ℝ) * 0) = 1 := by
-    intro n _
-    rw [mul_zero, e_zero]
-  rw [Finset.sum_congr rfl hone, Finset.sum_const, nsmul_eq_mul, mul_one]
 
 /-- **Weyl 差分不等式**（把 `h = 0` 项分离出来，Jameson 的 (1) 的绝对值版本）：
 `‖Σ_n e(α f(n))‖² ≤ (N+1) + Σ_{h≠0} ‖b_h‖`。 -/

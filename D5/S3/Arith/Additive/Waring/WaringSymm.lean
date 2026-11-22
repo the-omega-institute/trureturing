@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringSymm.lean#L1-L169
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 import D5.S3.Arith.Additive.Waring.WaringLemma6
 import D5.S3.Arith.Additive.Waring.WaringLemma3
@@ -49,81 +50,6 @@ theorem sum_int_Icc_eq_sum_nat_Icc (K : ℕ) (f : ℕ → ℚ) :
       have h3 : (n.natAbs : ℤ) = (n.toNat : ℤ) := by rw [h1, h2]
       exact_mod_cast h3
     rw [h]
-
-/-- `Q(0)` 的界。 -/
-theorem Q_zero_le (H M : ℕ) :
-    Q H M 0 ≤ (M + 1) ^ 2 + 4 * H * (H + 1) * (M + 1) := by
-  classical
-  have hcardD : (box2 (0 : ℤ) (M : ℤ)).card = (M + 1) ^ 2 := by
-    rw [box2, Fintype.card_piFinset]
-    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-    congr 1
-    rw [Int.card_Icc]
-    have h : (M : ℤ) + 1 - 0 = (M : ℤ) + 1 := by ring
-    rw [h]
-    omega
-  set B : Finset (Fin 2 → ℤ) := box2 (-(H : ℤ)) (H : ℤ) with hB
-  set D : Finset (Fin 2 → ℤ) := box2 (0 : ℤ) (M : ℤ) with hD
-  set F : (Fin 2 → ℤ) → ℕ :=
-    fun h => (D.filter (fun m : Fin 2 → ℤ => h 0 * m 0 + h 1 * m 1 = 0)).card with hF
-  have hQ : Q H M 0 = ∑ h ∈ B, F h := Q_eq_sum_fiber H M 0
-  have hzero : F 0 = (M + 1) ^ 2 := by
-    have hmain : (D.filter (fun m : Fin 2 → ℤ =>
-        (0 : Fin 2 → ℤ) 0 * m 0 + (0 : Fin 2 → ℤ) 1 * m 1 = 0)).card = (M + 1) ^ 2 := by
-      have hfil : (D.filter (fun m : Fin 2 → ℤ =>
-          (0 : Fin 2 → ℤ) 0 * m 0 + (0 : Fin 2 → ℤ) 1 * m 1 = 0)) = D := by
-        apply Finset.filter_true_of_mem
-        intro m _
-        simp
-      rw [hfil, hD, hcardD]
-    rw [hF]
-    exact hmain
-  have h0mem : (0 : Fin 2 → ℤ) ∈ B := by
-    rw [hB]
-    exact mem_box2_of_abs_le (fun i => by simp)
-  have hrest : ∀ h ∈ B.erase 0, F h ≤ M + 1 := by
-    intro h hh
-    rw [Finset.mem_erase] at hh
-    obtain ⟨hne, -⟩ := hh
-    have hb := fiber_le_gcd hne M 0
-    rw [← hD] at hb
-    rw [hF]
-    refine le_trans hb ?_
-    have hprim : prim h ≠ 0 := by
-      intro hp
-      apply hne
-      funext i
-      rw [h_eq_gcd_mul_prim h i, congrFun hp i]
-      simp
-    have hmax : 0 < max (prim h 0).natAbs (prim h 1).natAbs := by
-      rcases eq_or_ne (prim h 0) 0 with h0 | h0
-      · rcases eq_or_ne (prim h 1) 0 with h1 | h1
-        · exact absurd (by funext i; fin_cases i <;> assumption) hprim
-        · rw [h0]
-          exact Nat.lt_of_lt_of_le (Int.natAbs_pos.mpr h1) (le_max_right _ _)
-      · exact Nat.lt_of_lt_of_le (Int.natAbs_pos.mpr h0) (le_max_left _ _)
-    have hle : M / max (prim h 0).natAbs (prim h 1).natAbs ≤ M := Nat.div_le_self M _
-    omega
-  have hsplit : (∑ h ∈ B, F h) = F 0 + ∑ h ∈ B.erase 0, F h := by
-    have hmem : (0 : Fin 2 → ℤ) ∉ B.erase 0 := by
-      rw [Finset.mem_erase]
-      intro h
-      exact h.1 rfl
-    rw [← Finset.insert_erase h0mem, Finset.sum_insert hmem, Finset.erase_insert hmem]
-  have hcardE : (B.erase 0).card = 4 * H * (H + 1) := by
-    rw [Finset.card_erase_of_mem h0mem, hB, card_box2]
-    have hsq : (2 * H + 1) ^ 2 = 4 * H * (H + 1) + 1 := by ring
-    rw [hsq, Nat.add_sub_cancel]
-  calc Q H M 0 = ∑ h ∈ B, F h := hQ
-    _ = F 0 + ∑ h ∈ B.erase 0, F h := hsplit
-    _ ≤ (M + 1) ^ 2 + (B.erase 0).card * (M + 1) := by
-        rw [hzero]
-        have hsum : (∑ h ∈ B.erase 0, F h) ≤ ∑ h ∈ B.erase 0, (M + 1) :=
-          Finset.sum_le_sum hrest
-        rw [Finset.sum_const, nsmul_eq_mul] at hsum
-        exact Nat.add_le_add_left hsum _
-    _ = (M + 1) ^ 2 + 4 * H * (H + 1) * (M + 1) := by
-        rw [hcardE]
 
 /-- 对称区间上的求和 = 中间项 + 两倍正半边（偶函数）。 -/
 theorem sum_Icc_symm_eq (K : ℤ) (hK : 0 ≤ K) (f : ℤ → ℕ) (hf : ∀ n, f (-n) = f n) :

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Additive/BenfieldLippard/Result
    generality: G
    mirror-B: D5/B/S3/Arith/Additive/BenfieldLippard/Result
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    digest: Benfield–Lippard Conjecture 10.5 on the sizes of stable exception sets. -/
 

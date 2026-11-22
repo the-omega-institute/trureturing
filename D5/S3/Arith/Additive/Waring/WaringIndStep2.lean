@@ -9,7 +9,8 @@
    Modified for this repository. Local imports use their D5 module paths.
    This file contains one segment of a split upstream module.
    Inactive commented proof drafts are omitted.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -21,55 +22,6 @@ import D5.S3.Arith.Additive.Waring.WaringIndStep2Counting
 open Finset intervalIntegral
 
 namespace Waring
-
-/-! ## 11. 第 9 步 (9c)：应用 Lemma 7 -/
-
-/-- `Fintype.piFinset` 在 `Fin 4` 上展开成 4 层求和（`S` 可依赖坐标）。 -/
-theorem sum_piFinset_fin4_dep {α : Type*} [DecidableEq α] (S : Fin 4 → Finset α)
-    (F : (Fin 4 → α) → ℝ) :
-    (∑ f ∈ Fintype.piFinset S, F f)
-      = ∑ a ∈ S 0, ∑ b ∈ S 1, ∑ c ∈ S 2, ∑ d ∈ S 3,
-          F (fun i => if i = 0 then a else if i = 1 then b else if i = 2 then c else d) := by
-  classical
-  let g : α × (α × (α × α)) → ℝ := fun y => F (fun i => if i = 0 then y.1
-    else if i = 1 then y.2.1 else if i = 2 then y.2.2.1 else y.2.2.2)
-  have hsplit : (∑ x ∈ S 0 ×ˢ (S 1 ×ˢ (S 2 ×ˢ S 3)), g x)
-      = ∑ a ∈ S 0, ∑ b ∈ S 1, ∑ c ∈ S 2, ∑ d ∈ S 3,
-          F (fun i => if i = 0 then a else if i = 1 then b else if i = 2 then c else d) := by
-    have h1 : (∑ x ∈ S 0 ×ˢ (S 1 ×ˢ (S 2 ×ˢ S 3)), g x)
-        = ∑ a ∈ S 0, ∑ b ∈ S 1, ∑ c ∈ S 2, ∑ d ∈ S 3, g (a, (b, (c, d))) := by
-      simp only [Finset.sum_product]
-    rw [h1]
-  rw [← hsplit]
-  refine Finset.sum_bij
-    (fun (f : Fin 4 → α) (_ : f ∈ Fintype.piFinset S) => (f 0, (f 1, (f 2, f 3)))) ?_ ?_ ?_ ?_
-  · intro f hf
-    rw [Fintype.mem_piFinset] at hf
-    rw [Finset.mem_product, Finset.mem_product, Finset.mem_product]
-    exact ⟨hf 0, hf 1, hf 2, hf 3⟩
-  · intro f _ f' _ heq
-    have h1 : f 0 = f' 0 := by simpa using congrArg (fun z => z.1) heq
-    have h2 : f 1 = f' 1 := by simpa using congrArg (fun z => z.2.1) heq
-    have h3 : f 2 = f' 2 := by simpa using congrArg (fun z => z.2.2.1) heq
-    have h4 : f 3 = f' 3 := by simpa using congrArg (fun z => z.2.2.2) heq
-    funext i
-    fin_cases i <;> assumption
-  · intro x hx
-    rw [Finset.mem_product, Finset.mem_product, Finset.mem_product] at hx
-    obtain ⟨ha, hb, hc, hd⟩ := hx
-    obtain ⟨a, b, c, d⟩ := x
-    refine ⟨fun i => if i = 0 then a else if i = 1 then b else if i = 2 then c else d,
-      ?_, ?_⟩
-    · rw [Fintype.mem_piFinset]
-      intro i
-      fin_cases i <;> simp [ha, hb, hc, hd]
-    · simp
-  · intro f _
-    show F f = g (f 0, (f 1, (f 2, f 3)))
-    simp only [g]
-    congr 1
-    funext i
-    fin_cases i <;> simp
 
 /-- 由 `a d ≠ 0` 与系数界得 `1 ≤ c`。 -/
 theorem one_le_c {a : ℕ → ℤ} {d c N : ℕ} (had : a d ≠ 0)
@@ -336,8 +288,6 @@ theorem count_le {d : ℕ} (hd : 3 ≤ d) (c N M : ℕ) (hN : 1 ≤ N) (hM1 : 1 
     nlinarith
   exact le_trans hA hfin
 
-/-! ## 12. 第 10 步：常数账与组装 -/
-
 /-- 归纳步的显式常数 `R_d(c)`（只依赖 `c`，不依赖 `N`/`M`）。 -/
 noncomputable def Rd (d : ℕ) (R₀ : ℕ → ℝ) (c : ℕ) : ℝ :=
   let m := 8 ^ (d - 2)
@@ -512,8 +462,6 @@ theorem meanValueBoundS_succ {d : ℕ} (hd : 3 ≤ d) (h : MeanValueBoundS (d - 
     simp only [Rd]
     rw [hm]
     ring
-
-/-! ## 第 11 节：组装 `∀ d ≥ 2`（B3） -/
 
 /-- 加强版蕴含原版（取 `M = N`）。 -/
 theorem MeanValueBound.of_S {d : ℕ} (h : MeanValueBoundS d) : MeanValueBound d := by

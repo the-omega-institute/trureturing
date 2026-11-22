@@ -8,7 +8,8 @@
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringIndStep2.lean#L494-L1003
    Modified for this repository. Local imports use their D5 module paths.
    This file contains one segment of a split upstream module.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -20,8 +21,6 @@ import D5.S3.Arith.Additive.Waring.WaringIndStep2Estimates
 open Finset intervalIntegral
 
 namespace Waring
-
-/-! ## 6. 第 9 步：计数桥接的准备（`QSet ⊆ hℤ` 与 `|Q/h|` 的界） -/
 
 /-- `n ∈ TS M h ⇒ n ≤ M`。 -/
 theorem mem_TS_le {M : ℕ} {h : ℤ} {n : ℕ} (hn : n ∈ TS M h) : n ≤ M := by
@@ -141,8 +140,6 @@ theorem QSet_div_abs_le {a : ℕ → ℤ} {d : ℕ} {c N M : ℕ} {h : ℤ} {s :
   push_cast
   ring
 
-/-! ## 7. 第 9 步：把 8 层求和折叠成 `Fin 4 → ℤ` 上的计数 -/
-
 /-- `Fintype.piFinset` 在 `Fin 4` 上展开成 4 层求和。 -/
 theorem sum_piFinset_fin4 {α : Type*} [DecidableEq α] (S : Finset α)
     (F : (Fin 4 → α) → ℝ) :
@@ -195,90 +192,9 @@ theorem sum_piFinset_fin4 {α : Type*} [DecidableEq α] (S : Finset α)
     funext i
     fin_cases i <;> simp
 
-/-! ## 8. 第 9 步 (9a)：`Q ↦ Q/h` 把 `QSet` 上的和放大到 `K` 盒子 -/
-
 /-- 第 9 步的 `K`：`|Q/h| ≤ K`（`Q ∈ QSet`，`h ≠ 0`）。 -/
 def Kf (c d N : ℕ) : ℕ :=
   2 * (4 * 8 ^ (d - 3)) * ((d + 1) * coeffConst c d) * N ^ (d - 1)
-
-/-- **(9a) 计数桥接 I**：`Q ↦ Q/h` 是单射，像落在 `K` 盒中，故
-`∑_{Q ∈ QSet⁴} [Q₁+…+Q₄ = 0] ≤ ∑_{m ∈ ([−K,K])⁴} [h₁m₁+…+h₄m₄ = 0]`。 -/
-theorem sum_QBox_le_MBox {d : ℕ} (hd : 3 ≤ d) (c N M : ℕ) (hNM : M ≤ N)
-    (a : ℕ → ℤ) (ha : ∀ j, j ≤ d → |a j| ≤ (c : ℤ) * (N : ℤ) ^ (d - j)) :
-    ∀ (hh : Fin 4 → ℤ), (∀ i, hh i ∈ (Finset.Icc (-(M : ℤ)) (M : ℤ)).erase 0) →
-      (∑ Q ∈ Fintype.piFinset
-          (fun i => QSet (fun n => polyEval a d n) M (hh i) (4 * 8 ^ (d - 3))),
-          (if Q 0 + Q 1 + Q 2 + Q 3 = 0 then (1 : ℝ) else 0))
-        ≤ ∑ m ∈ Fintype.piFinset
-            (fun _ : Fin 4 => Finset.Icc (-((Kf c d N : ℕ) : ℤ)) ((Kf c d N : ℕ) : ℤ)),
-          (if hh 0 * m 0 + hh 1 * m 1 + hh 2 * m 2 + hh 3 * m 3 = 0 then (1 : ℝ) else 0) := by
-  classical
-  intro hh hH
-  set QBox : Finset (Fin 4 → ℤ) :=
-    Fintype.piFinset (fun i => QSet (fun n => polyEval a d n) M (hh i) (4 * 8 ^ (d - 3))) with hQBox
-  set MBox : Finset (Fin 4 → ℤ) :=
-    Fintype.piFinset (fun _ : Fin 4 => Finset.Icc (-((Kf c d N : ℕ) : ℤ)) ((Kf c d N : ℕ) : ℤ))
-    with hMBox
-  set Φ : (Fin 4 → ℤ) → (Fin 4 → ℤ) := fun Q i => Q i / hh i with hΦ
-  have hne : ∀ i, hh i ≠ 0 := fun i => (Finset.mem_erase.mp (hH i)).1
-  have hNle : ∀ i, |hh i| ≤ (N : ℤ) := by
-    intro i
-    have h1 := (Finset.mem_erase.mp (hH i)).2
-    rw [Finset.mem_Icc] at h1
-    have h2 : (M : ℤ) ≤ (N : ℤ) := by exact_mod_cast hNM
-    rw [abs_le]
-    constructor <;> linarith [h1.1, h1.2]
-  have hmem : ∀ Q ∈ QBox, ∀ i, Q i ∈ QSet (fun n => polyEval a d n) M (hh i) (4 * 8 ^ (d - 3)) := by
-    intro Q hQ i
-    exact Fintype.mem_piFinset.mp hQ i
-  have hdvd : ∀ Q ∈ QBox, ∀ i, hh i ∣ Q i := by
-    intro Q hQ i
-    exact QSet_dvd (hmem Q hQ i)
-  have hval : ∀ Q ∈ QBox, ∀ i, hh i * (Φ Q i) = Q i := by
-    intro Q hQ i
-    have h := Int.ediv_mul_cancel (hdvd Q hQ i)
-    calc hh i * (Φ Q i) = Q i / hh i * hh i := by rw [hΦ]; ring
-      _ = Q i := h
-  have hinj : Set.InjOn Φ (↑QBox : Set (Fin 4 → ℤ)) := by
-    intro Q hQ Q' hQ' heq
-    funext i
-    have h1 : Q i / hh i = Q' i / hh i := by
-      have hc := congrFun heq i
-      simpa [hΦ] using hc
-    calc Q i = hh i * (Q i / hh i) := (hval Q hQ i).symm
-      _ = hh i * (Q' i / hh i) := by rw [h1]
-      _ = Q' i := hval Q' hQ' i
-  have himage : ∀ Q ∈ QBox, Φ Q ∈ MBox := by
-    intro Q hQ
-    rw [hMBox, Fintype.mem_piFinset]
-    intro i
-    rw [Finset.mem_Icc]
-    have h := QSet_div_abs_le (a := a) (d := d) (c := c) (N := N) (M := M) (h := hh i)
-      (s := 4 * 8 ^ (d - 3)) (Q := Q i) (by omega) ha (hNle i) hNM (hne i) (hmem Q hQ i)
-    rw [abs_le] at h
-    exact h
-  have hsingle : ∀ Q ∈ QBox, (if Q 0 + Q 1 + Q 2 + Q 3 = 0 then (1 : ℝ) else 0)
-      = (if hh 0 * (Φ Q 0) + hh 1 * (Φ Q 1) + hh 2 * (Φ Q 2) + hh 3 * (Φ Q 3) = 0
-          then (1 : ℝ) else 0) := by
-    intro Q hQ
-    have e0 := hval Q hQ 0
-    have e1 := hval Q hQ 1
-    have e2 := hval Q hQ 2
-    have e3 := hval Q hQ 3
-    rw [← e0, ← e1, ← e2, ← e3]
-  rw [Finset.sum_congr rfl hsingle]
-  rw [← Finset.sum_image (f := fun m : Fin 4 → ℤ =>
-      (if hh 0 * m 0 + hh 1 * m 1 + hh 2 * m 2 + hh 3 * m 3 = 0 then (1 : ℝ) else 0))
-    (g := Φ) (s := QBox) hinj]
-  refine Finset.sum_le_sum_of_subset_of_nonneg ?_ ?_
-  · intro m hm
-    rw [Finset.mem_image] at hm
-    obtain ⟨Q, hQ, rfl⟩ := hm
-    exact himage Q hQ
-  · intro m _ _
-    positivity
-
-/-! ## 9. 第 9 步 (9b)：符号收缩 `|mᵢ| ≤ K` → `0 ≤ mᵢ ≤ K`（代价 `2⁴ = 16`） -/
 
 /-- 符号函数（`z = 0` 时取 `1`）。 -/
 def sgn (z : ℤ) : ℤ := if 0 ≤ z then 1 else -1
@@ -399,11 +315,6 @@ theorem card_sym_shrink (M K : ℕ) :
       exact Prod.ext hh hm
   rw [Finset.card_product, hBcard, SymBox_card] at hmain
   linarith
-
-/-! ## 10. 基例 `MeanValueBoundS 2`（自包含）
-
-`WaringIndStep` 链与 `WaringInduction` 因 `e_sum` 命名冲突不能同时 import，
-故此处逐字重述基例（依赖 `WaringQuadratic` 的二次形式计数）。 -/
 
 /-- `polyEval a 2` 与 `qf (a 2) (a 1)` 差一个常数项。 -/
 theorem polyEval_two_eq (a : ℕ → ℤ) (n : ℤ) :
@@ -530,6 +441,5 @@ theorem meanValueBoundS_two : MeanValueBoundS 2 := by
         nlinarith [h2, pow_nonneg (by linarith only [h1] : (0:ℝ) ≤ ((4 * c + 2 * c + 1 : ℕ) : ℝ)) 4]
       exact mul_le_mul_of_nonneg_right hkey (by positivity)
     exact hR
-
 
 end Waring

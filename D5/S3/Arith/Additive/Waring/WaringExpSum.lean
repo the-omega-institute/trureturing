@@ -7,7 +7,8 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringExpSum.lean#L1-L123
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
@@ -93,18 +94,6 @@ theorem expSum_conj (f : ℤ → ℤ) (N : ℕ) (α : ℝ) :
   push_cast
   ring
 
-/-- 模的平凡界：`‖expSum f N α‖ ≤ N + 1`。 -/
-theorem norm_expSum_le (f : ℤ → ℤ) (N : ℕ) (α : ℝ) : ‖expSum f N α‖ ≤ N + 1 := by
-  unfold expSum
-  calc ‖∑ n ∈ Finset.range (N + 1), e ((f (n : ℤ) : ℝ) * α)‖
-      ≤ ∑ n ∈ Finset.range (N + 1), ‖e ((f (n : ℤ) : ℝ) * α)‖ := norm_sum_le _ _
-    _ = ∑ n ∈ Finset.range (N + 1), (1 : ℝ) := by
-        refine Finset.sum_congr rfl (fun n _ => norm_e _)
-    _ = (N : ℝ) + 1 := by
-        rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
-        push_cast
-        ring
-
 /-- **`‖S‖²` 的双和展开**：`‖Σ_n e(α f(n))‖² = Σ_{n,m} e(α (f(m) − f(n)))`。
 这是 Weyl 差分不等式的起点（下一步按差 `m − n` 分组）。 -/
 theorem normSq_expSum (f : ℤ → ℤ) (N : ℕ) (α : ℝ) :
@@ -116,17 +105,6 @@ theorem normSq_expSum (f : ℤ → ℤ) (N : ℕ) (α : ℝ) :
   rw [Finset.sum_mul_sum]
   refine Finset.sum_congr rfl (fun n _ => Finset.sum_congr rfl (fun m _ => ?_))
   rw [← e_add]
-  congr 1
-  push_cast
-  ring
-
-/-- 旧的 `theta` 就是 `f(n) = n²` 的特例。 -/
-theorem theta_eq_expSum (N : ℕ) (α : ℝ) :
-    theta N α = expSum (fun n => n * n) N α := by
-  unfold theta expSum e
-  rw [Fin.sum_univ_eq_sum_range
-    (f := fun m : ℕ => Complex.exp (2 * Real.pi * Complex.I * ((m : ℂ) ^ 2 * (α : ℂ))))]
-  refine Finset.sum_congr rfl (fun n _ => ?_)
   congr 1
   push_cast
   ring

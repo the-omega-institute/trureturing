@@ -7,14 +7,16 @@
 
 /- Source: https://github.com/yunyougu50-create/waring-lean4/blob/cd0735c253f3b640262fcc74a61306cb41e23765/WaringWeylDiff.lean#L1-L164
    Modified for this repository. Local imports use their D5 module paths.
-   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringStatement.lean. -/
+   Selected declaration closure and supporting source.
+   Full Apache-2.0 license: D5/S3/Arith/Additive/Waring/WaringDensity.lean. -/
 
 /-
 Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringFiniteDifference
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Algebra.Polynomial.Basic
 
 /-!
 # Weyl 差分：步长 `h` 的差分把次数降一
@@ -144,32 +146,5 @@ theorem diffCoeff_eq_zero_of_le {a : ℕ → ℤ} {d : ℕ} {h : ℤ} {i : ℕ} 
   omega
 
 /-! ## 线性性与迭代接口 -/
-
-/-- 差分保持加法。 -/
-theorem diffH_add (h : ℤ) (f g : ℤ → ℤ) :
-    diffH h (fun n => f n + g n) = fun n => diffH h f n + diffH h g n := by
-  funext n
-  unfold diffH
-  ring
-
-/-- 差分与数乘交换。 -/
-theorem diffH_smul (h c : ℤ) (f : ℤ → ℤ) :
-    diffH h (fun n => c * f n) = fun n => c * diffH h f n := by
-  funext n
-  unfold diffH
-  ring
-
-/-- 常数函数的差分为零。 -/
-theorem diffH_const (h c : ℤ) : diffH h (fun _ => c) = 0 := by
-  funext n
-  simp [diffH]
-
-/-- **带系数的迭代接口**：`diffH h (c · polyEval a d) = c·h · polyEval (diffCoeff a d h) d`。
-Weyl 归纳里反复使用这一步（`h` 依次取 `h₁, h₂, …`，次数每次降一）。 -/
-theorem diffH_scaled_polyEval (c : ℤ) (a : ℕ → ℤ) (d : ℕ) (h : ℤ) :
-    diffH h (fun n => c * polyEval a d n) = fun n => c * h * polyEval (diffCoeff a d h) d n := by
-  rw [diffH_smul, diffH_polyEval]
-  funext n
-  ring
 
 end Waring
