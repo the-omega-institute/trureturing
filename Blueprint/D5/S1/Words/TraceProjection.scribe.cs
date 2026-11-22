@@ -13,7 +13,8 @@ internal sealed class TraceProjectionDocument : IScribeDocumentDefinition
         "Ordered dependent-pair projections characterize finite words modulo partial commutation.",
         H("Dependent-Pair Projections of Finite Traces"),
         Blocks(
-            Paragraph(Text("Let alpha be an arbitrary type in any universe, and let I be a "
+            Paragraph(Text("Fix an arbitrary universe level u. In both displayed statements, "
+                + "u is a universe metaparameter. Let alpha be any type in Type(u), and let I be a "
                 + "symmetric irreflexive relation on alpha. Words are native finite lists over "
                 + "alpha. A legal step exchanges p ++ a :: b :: q with p ++ b :: a :: q when "
                 + "I(a,b), leaving both contexts unchanged. Connected(I,s,t) is the reflexive "
@@ -73,17 +74,38 @@ internal sealed class TraceProjectionDocument : IScribeDocumentDefinition
         foreach (var name in new[] { "q", "p" })
             result = new Formula.Bind(FormulaQuantifier.Exists,
                 FormulaIdentifier.Create(name), Call("List", V("alpha")), result);
-        return Disp(Q(Call("E", V("I"), Call("cons", V("a"), V("r")), V("t")),
-            Implies, result));
+        return Disp(ForEveryIndependenceRelation(
+            All("a", V("alpha"),
+                All("r", Call("List", V("alpha")),
+                    All("t", Call("List", V("alpha")),
+                        Implication(
+                            Call("E", V("I"), Call("cons", V("a"), V("r")), V("t")),
+                            result))))));
     }
 
-    private static Formula ClassificationStatement() => Disp(
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("s"),
-            Call("List", V("alpha")),
-            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("t"),
-                Call("List", V("alpha")), Q(
+    private static Formula ClassificationStatement() => Disp(ForEveryIndependenceRelation(
+        All("s", Call("List", V("alpha")),
+            All("t", Call("List", V("alpha")), Q(
                     Call("Connected", V("I"), V("s"), V("t")), Iff,
-                    Call("E", V("I"), V("s"), V("t"))))));
+                    Call("E", V("I"), V("s"), V("t")))))));
+
+    private static Formula ForEveryIndependenceRelation(Formula body)
+    {
+        var alphabet = V("alpha");
+        var symmetry = All("x", alphabet, All("y", alphabet,
+            Implication(Call("I", V("x"), V("y")), Call("I", V("y"), V("x")))));
+        var irreflexivity = All("x", alphabet, new Formula.Not(Call("I", V("x"), V("x"))));
+        return All("alpha", Call("Type", V("u")),
+            All("I", new Formula.TypeArrow(alphabet, new Formula.TypeArrow(alphabet, V("Prop"))),
+                Implication(symmetry, Implication(irreflexivity, body))));
+    }
+
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+
+    private static Formula Implication(Formula premise, Formula conclusion) =>
+        new Formula.Logic(Seq(Open, premise, Close), FormulaLogicOperator.Implies,
+            Seq(Open, conclusion, Close));
 
     private static Formula Q(params Formula[] items)
     {
