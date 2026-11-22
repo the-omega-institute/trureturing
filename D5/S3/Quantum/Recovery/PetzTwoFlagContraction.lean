@@ -6,9 +6,21 @@
    utility: none
    digest: Exact complex two-flag contraction bound with radial and phase deficiency. -/
 
-import Mathlib.Analysis.Complex.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Complex.Order
+import Mathlib.Basic.Complex.BigOperators
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+
+/-!
+The two within-flag coherences determine the sharp bound for the weighted contraction objective.
+-/
+
+public section
 
 set_option autoImplicit false
 
@@ -57,33 +69,40 @@ theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
   have hphase := mul_nonneg hphaseCoeff.le (sq_nonneg (y.re + z.re))
   have hyTerm := mul_nonneg hw.le hySlack
   have hzTerm := mul_nonneg hv.le hzSlack
-  refine ⟨by linarith, hgap, ?_⟩
+  refine ⟨by linarith only [hgap, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase],
+    hgap, ?_⟩
   constructor
   · intro h
+    have hsum := hgap
+    rw [h, sub_self] at hsum
     have hyr : 1 - Complex.normSq y = 0 :=
       (mul_eq_zero.mp (show (8 * m + f * (f + g) / C - w) *
-        (1 - Complex.normSq y) = 0 by linarith)).resolve_left hw.ne'
+        (1 - Complex.normSq y) = 0 by
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hw.ne'
     have hyi : y.im = 0 := by
       have hs : y.im ^ 2 = 0 := (mul_eq_zero.mp (show f * (f + g) / C *
-        y.im ^ 2 = 0 by linarith)).resolve_left hyCoeff.ne'
-      exact pow_eq_zero hs
+        y.im ^ 2 = 0 by
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hyCoeff.ne'
+      exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hzi : z.im = 0 := by
       have hs : z.im ^ 2 = 0 := (mul_eq_zero.mp (show g * (f + g) / C *
-        z.im ^ 2 = 0 by linarith)).resolve_left hzCoeff.ne'
-      exact pow_eq_zero hs
+        z.im ^ 2 = 0 by
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hzCoeff.ne'
+      exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hreal : y.re + z.re = 0 := by
       have hs : (y.re + z.re) ^ 2 = 0 := (mul_eq_zero.mp (show f * g / C *
-        (y.re + z.re) ^ 2 = 0 by linarith)).resolve_left hphaseCoeff.ne'
-      exact pow_eq_zero hs
+        (y.re + z.re) ^ 2 = 0 by
+          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left hphaseCoeff.ne'
+      exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
     have hySign : y.re = 1 ∨ y.re = -1 := by
       rw [Complex.normSq_apply, hyi] at hyr
-      exact (mul_eq_zero.mp (show (y.re - 1) * (y.re + 1) = 0 by nlinarith)).imp
+      exact (mul_eq_zero.mp (show (y.re - 1) * (y.re + 1) = 0 by nlinarith only [hyr])).imp
         (fun h₁ => by linarith) (fun h₂ => by linarith)
     rcases hySign with h₁ | h₂
     · exact Or.inl ⟨Complex.ext (by simpa using h₁) (by simpa using hyi),
-        Complex.ext (by simp; linarith) (by simpa using hzi)⟩
+        Complex.ext (by simp; linarith only [h₁, hreal]) (by simpa using hzi)⟩
     · exact Or.inr ⟨Complex.ext (by simpa using h₂) (by simpa using hyi),
-        Complex.ext (by simp; linarith) (by simpa using hzi)⟩
+        Complex.ext (by simp; linarith only [h₂, hreal]) (by simpa using hzi)⟩
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;>
       norm_num [Complex.normSq_apply, Complex.sub_re, Complex.sub_im] <;> ring
 
@@ -109,6 +128,7 @@ theorem matrix_twoFlag_maximum
       (objective = optimum ↔ (y = 1 ∧ z = -1) ∨ (y = -1 ∧ z = 1)) := by
   classical
   dsimp only
+  simp only [add_assoc]
   let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
   let entry (s : Fin 2) := Y (0, s) (1, s)
   let rest (i : Fin 2 × Fin 2) := ∑ j ∈ Finset.univ.erase (partner i), Complex.normSq (Y i j)
@@ -146,20 +166,19 @@ theorem matrix_twoFlag_maximum
     calc
       _ ≤ ∑ i, a i * (1 - Complex.normSq (entry i.2)) :=
         Finset.sum_le_sum fun i _ =>
-          mul_le_mul_of_nonneg_left (le_sub_comm.mp (hrow i)) (ha i)
+          mul_le_mul_of_nonneg_left (le_sub_of_add_le_left (by simpa [add_comm] using hrow i)) (ha i)
       _ = _ := by
         simp only [Fintype.sum_prod_type, Fin.sum_univ_two]
         ring
   obtain ⟨hbound, _, heq⟩ :=
     twoFlag_maximum m C f g (a (0, 0) + a (1, 0)) (a (0, 1) + a (1, 1))
       (entry 0) (entry 1) hm hC hf hg hw hv (hentry 0) (hentry 1)
-  dsimp only at hbound heq
-  refine ⟨by dsimp [coherence, optimum]; linarith, ?_⟩
+  refine ⟨by dsimp [coherence, optimum]; linarith only [henvelope, hbound], ?_⟩
   constructor
   · intro h
     apply heq.mp
     dsimp [coherence, optimum] at h ⊢
-    linarith
+    linarith only [henvelope, hbound, h]
   · intro h
     have habs (s : Fin 2) : Complex.normSq (entry s) = 1 := by
       rcases h with ⟨hp, hn⟩ | ⟨hn, hp⟩ <;>
