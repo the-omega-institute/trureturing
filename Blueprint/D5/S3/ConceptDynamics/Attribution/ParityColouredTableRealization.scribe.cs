@@ -33,8 +33,8 @@ internal sealed class ParityColouredTableRealizationDocument : IScribeDocumentDe
                     + "colour has marginal k. Every odd profile has marginal 2k after summing "
                     + "over even profiles and both left colours. The two left-colour entries "
                     + "coincide for every profile other than the full even profile.")),
-                Paragraph(Text("A common equivariant seed action has 2 to the power d plus one, "
-                    + "times k seeds, with both coloured marginals equal to 2k at every point. "
+                Paragraph(Text("A common equivariant seed action has k times 2 raised to the "
+                    + "power (d + 1) seeds, with both coloured marginals equal to 2k at every point. "
                     + "At coordinate i its fixed count is twice the sum of each entry modulo two, "
                     + "summed over the cells whose two profiles both contain i and both left colours.")),
                 Paragraph(Text("Coordinate shifts preserve each profile. The full even profile "

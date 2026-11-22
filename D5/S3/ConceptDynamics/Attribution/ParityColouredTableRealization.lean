@@ -6,7 +6,7 @@
    utility: none
    digest: Realize exact coordinate fixation from coloured parity cell multiplicities. -/
 
-import D5.S3.ConceptDynamics.Attribution.CoordinateFibreCounts
+import D5.S3.ConceptDynamics.Attribution.ParityFourSparseCounts
 import D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
 import D5.S3.ConceptDynamics.Attribution.ParitySeedCountSpectrum
 import Mathlib.Algebra.BigOperators.Fin
@@ -19,86 +19,9 @@ namespace D5.S3.ConceptDynamics.Attribution.ParityColouredTableRealization
 
 open Finset MulAction
 open CoordinateFlagCoupling CoordinateColourOrbit CoordinateFibreCounts
-open ParitySeedBudget ParitySeedOptimization ParitySeedCountSpectrum
+open ParitySeedBudget ParitySeedOptimization ParityFourSparseCounts
 
 noncomputable section
-
-open Classical in
-private theorem card_eq_indicator {A : Type*} [Fintype A] (P : A → Prop) :
-    Nat.card {a : A // P a} = ∑ a, if P a then 1 else 0 := by
-  rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
-  simp [sum_filter]
-
-open Classical in
-private theorem point_sums {A B C : Type*} [Fintype A] [Fintype B] [Fintype C]
-    (f : A → B × C) (x : B) :
-    (∑ c : C, Nat.card {a : A // f a = (x,c)}) =
-      ∑ a, if (f a).1 = x then 1 else 0 := by
-  simp_rw [card_eq_indicator, Prod.ext_iff]
-  rw [sum_comm]
-  apply sum_congr rfl
-  intro a _
-  by_cases h : (f a).1 = x <;> simp [h]
-
-open Classical in
-private theorem fixed_point_sums {A B : Type*} [Fintype A] [Fintype B]
-    (f : A → B) (P : A → Prop) :
-    (∑ b : B, Nat.card {a : A // f a = b ∧ P a}) = ∑ a, if P a then 1 else 0 := by
-  simp_rw [card_eq_indicator]
-  rw [sum_comm]
-  apply sum_congr rfl
-  intro a _
-  by_cases h : P a <;> simp [h]
-
-open Classical in
-private theorem realize_least_point_fixation {n k : ℕ} (w : Pair n → ℕ)
-    (invariant : ∀ (g : Acting (Fin (n + 2))) a, w (g • a) = w a)
-    (rows : ∀ x : slice (n + 2) 0, ∑ y : slice (n + 2) 1, w (x,y) = 2*k)
-    (cols : ∀ y : slice (n + 2) 1, ∑ x : slice (n + 2) 0, w (x,y) = 2*k) :
-    RealizableSeedCounts n k (fun i => ∑ a : Pair n, if generator i • a = a then w a % 2 else 0) := by
-  classical
-  let m : orbitRel.Quotient (Acting (Fin (n + 2))) (Pair n) → ℕ :=
-    Quotient.lift w (fun a b hab => by
-      obtain ⟨g, eq⟩ := hab
-      rw [← eq, invariant])
-  let z (o : orbitRel.Quotient (Acting (Fin (n + 2))) (Pair n)) (_ : Fin (n + 2)) :=
-    m o % 2
-  obtain ⟨S, _, _, f, equiv, fibres, fixed⟩ := (exact_orbit_fibre_counts m z).mpr
-    (fun a i _ => ⟨Nat.mod_le _ _, Nat.mod_mod _ _⟩)
-  have sizes (a : Pair n) : Nat.card {s : S // f s = a} = w a := fibres a
-  have left (x : slice (n + 2) 0) :
-      (∑ s, @ite ℕ ((f s).1 = x) (Classical.propDecidable _) 1 0) = 2*k := by
-    rw [← point_sums f x]
-    simp_rw [sizes, rows]
-  have right (y : slice (n + 2) 1) :
-      (∑ s, @ite ℕ ((f s).2 = y) (Classical.propDecidable _) 1 0) = 2*k := by
-    rw [← cols y]
-    simp_rw [← sizes, card_eq_indicator, Prod.ext_iff]
-    rw [sum_comm]
-    apply sum_congr rfl
-    intro s _
-    by_cases h : (f s).2 = y <;> simp [h]
-  have total : Fintype.card S = 2 ^ (n + 3) * k := by
-    have counted := fixed_point_sums f (fun _ => True)
-    have sizeEq : Fintype.card S = ∑ a : Pair n, w a := by
-      simpa only [and_true, sizes, ite_eq_left (show True from trivial), sum_const,
-        card_univ, nsmul_eq_mul, Nat.cast_id, mul_one] using counted.symm
-    have card_slice : Fintype.card (slice (n + 2) 0) = 2 ^ (n + 2) := by
-      rw [Fintype.card_congr (sliceEquiv (n + 2) 0).symm, Fintype.card_prod,
-        ← Nat.card_eq_fintype_card, parityCard, ZMod.card]
-      rfl
-    rw [sizeEq, Fintype.sum_prod_type]
-    simp_rw [rows, sum_const, nsmul_eq_mul, card_univ, Nat.cast_id, card_slice]
-    simp only [pow_succ]
-    ring
-  refine ⟨S, inferInstance, inferInstance, f, total, equiv, ⟨2*k, left, right⟩, ?_⟩
-  intro i
-  unfold fixedSeedCount
-  simp_rw [coordinate_fixed_iff_generator]
-  rw [← fixed_point_sums f (fun s => generator i • s = s)]
-  apply sum_congr rfl
-  intro a _
-  by_cases ha : generator i • a = a <;> simpa [ha, z, m] using fixed i a
 
 private def evenPoint (n : ℕ) : (ParityClass (n + 2) 0 × Fin 2) ≃ slice (n + 2) 0 :=
   sliceEquiv (n + 2) 0
@@ -176,19 +99,26 @@ theorem realize_coloured_table {n k : ℕ}
         · rfl
         · exact (ordinary p q full).symm
       rw [equalAll, equalAll c]
-  have realize := realize_least_point_fixation (n := n) (k := k) w invariant left right
-  have sameCount (i : Fin (n + 2)) :
-      (∑ a : Pair n, if generator i • a = a then w a % 2 else 0) =
-        2 * (∑ p : ParityClass (n + 2) 0, ∑ q : ParityClass (n + 2) 1, ∑ c : Fin 2,
-          if p.val i = 1 ∧ q.val i = 1 then b p q c % 2 else 0) := by
-    rw [Fintype.sum_prod_type,
-      ← (evenPoint n).sum_comp (fun x => ∑ y, if generator i • (x,y) = (x,y) then w (x,y) % 2 else 0)]
-    simp_rw [← (oddPoint n).sum_comp (fun y => if generator i • (_,y) = (_,y) then w (_,y) % 2 else 0),
-      Fintype.sum_prod_type, ← coordinate_fixed_iff_generator, pair_fixed_coordinate,
-      evenPoint_profile, oddPoint_profile, eval]
-    simp_rw [sum_comm (s := (univ : Finset (Fin 2))) (t := (univ : Finset (ParityClass (n + 2) 1))),
-      Finset.sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_id, mul_sum]
-  simpa only [sameCount] using realize
+  apply weighted_realization w invariant left right
+  intro i
+  calc
+    _ = ∑ a : Pair n, if a.1.val.profile i && a.2.val.profile i then w a % 2 else 0 := by
+      apply sum_congr rfl
+      intro a _
+      split <;> simp_all
+    _ = _ := by
+      rw [Fintype.sum_prod_type, ← (evenPoint n).sum_comp (fun x => ∑ y,
+        if x.val.profile i && y.val.profile i then w (x,y) % 2 else 0)]
+      have rightSum (x : slice (n + 2) 0) :
+          (∑ y : slice (n + 2) 1, if x.val.profile i && y.val.profile i then w (x,y) % 2 else 0) =
+          ∑ y : ParityClass (n + 2) 1 × Fin 2,
+            if x.val.profile i && ((oddPoint n) y).val.profile i then w (x, (oddPoint n) y) % 2 else 0 :=
+        ((oddPoint n).sum_comp (fun y =>
+          if x.val.profile i && y.val.profile i then w (x,y) % 2 else 0)).symm
+      simp_rw [rightSum, Fintype.sum_prod_type, Bool.and_eq_true, evenPoint_profile,
+        oddPoint_profile, eval]
+      simp_rw [sum_comm (s := (univ : Finset (Fin 2))) (t := (univ : Finset (ParityClass (n + 2) 1))),
+        Finset.sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_id, mul_sum]
 
 end
 end D5.S3.ConceptDynamics.Attribution.ParityColouredTableRealization

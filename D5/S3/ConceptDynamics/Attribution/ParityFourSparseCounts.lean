@@ -24,7 +24,7 @@ section
 attribute [local instance 10000] Classical.propDecidable
 
 set_option maxHeartbeats 800000 in
-private theorem weighted_realization {n k : ℕ} {z : Fin (n + 2) → ℕ} (w : Pair n → ℕ)
+theorem weighted_realization {n k : ℕ} {z : Fin (n + 2) → ℕ} (w : Pair n → ℕ)
     (inv : ∀ (g : Acting (Fin (n + 2))) t, w (g • t) = w t)
     (rows : ∀ x : slice (n + 2) 0, (∑ y, w (x, y)) = 2 * k)
     (cols : ∀ y : slice (n + 2) 1, (∑ x, w (x, y)) = 2 * k)
