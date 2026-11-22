@@ -7,6 +7,9 @@
    digest: Cancellation of the exact positive-center numerator on the separated left strip. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripWeightedTail
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripMarginal
+
+/-! # The mixed kernel sign on the separated left strip -/
 
 open Filter Set
 open scoped Topology
@@ -445,8 +448,61 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
   rw [← mixed_partial_eq hK₂, hnear.deriv_eq]
   exact hRatio
 
+/-- The original refined BMV kernel has strictly negative mixed derivative
+throughout the separated left strip for every degree at least eleven. -/
+theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  let M (t : ℝ) := compositionMoment p 0 (-t)
+  let D (t : ℝ) := Real.sqrt (M t)
+  have hp₀ : 0 < p := by omega
+  have hv : 6 ≤ v := by linarith
+  have hv₀ : 0 < v := by linarith
+  have hMpos (t : ℝ) (ht : 0 < t) : 0 < M t :=
+    compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr ht.ne')
+  have hMs : ContDiff ℝ 3 M :=
+    (compositionMoment_smooth p).comp (contDiff_const.prodMk contDiff_id.neg :
+      ContDiff ℝ 3 (fun t : ℝ ↦ ((0 : ℝ),-t)))
+  have hM (t : ℝ) : HasDerivAt M (deriv M t) t := (hMs.differentiable (by decide) t).hasDerivAt
+  have hD (t : ℝ) (ht : 0 < t) : HasDerivAt D (deriv M t/(2*D t)) t :=
+    (hM t).sqrt (hMpos t ht).ne'
+  have hDpos (t : ℝ) (ht : 0 < t) : 0 < D t := Real.sqrt_pos.mpr (hMpos t ht)
+  have hDsq (t : ℝ) (ht : 0 < t) : D t^2 = M t := Real.sq_sqrt (hMpos t ht).le
+  have hsmall : u*deriv D u ≤ D u := by
+    have hreg := (SmallCorner.hasDerivAt_G p (c := 1) one_ne_zero
+      (neg_ne_zero.mpr hu.ne')).comp u (hasDerivAt_id' u).neg
+    change HasDerivAt (fun t ↦ compositionMoment p 0 (-t)/(1*(-t)^2))
+      (SmallCorner.GPrime p 1 (-u)*(-1)) u at hreg
+    have hreg' : HasDerivAt (fun t ↦ M t/t^2) (-SmallCorner.GPrime p 1 (-u)) u := by
+      simpa only [M, one_mul, neg_sq, mul_neg, mul_one] using hreg
+    have hd := (hM u).fun_div (hasDerivAt_pow 2 u) (pow_ne_zero 2 hu.ne')
+    have hcmp := hd.deriv.symm.trans hreg'.deriv
+    have hnonpos : (deriv M u*u^2-M u*(↑(2 : ℕ)*u^(2-1)))/(u^2)^2 ≤ 0 := by
+      rw [hcmp]
+      exact neg_nonpos.mpr (leftStrip_GPrime_nonneg hp hu humax)
+    have hcross := (div_le_iff₀ (sq_pos_of_ne_zero (pow_ne_zero 2 hu.ne'))).mp hnonpos
+    norm_num at hcross
+    have hbound : u*deriv M u ≤ 2*M u := by
+      by_contra! hbad
+      have hm := mul_pos hu (sub_pos.mpr hbad)
+      nlinarith only [hcross,hm]
+    rw [(hD u hu).deriv, ← mul_div_assoc,
+      div_le_iff₀ (mul_pos (by norm_num : (0 : ℝ) < 2) (hDpos u hu))]
+    nlinarith only [hbound,hDsq u hu]
+  have hγ : deriv D v/D v = (deriv M v/M v)/2 := by
+    rw [(hD v hv₀).deriv, div_div, div_div]
+    congr 1
+    nlinarith only [hDsq v hv₀]
+  have hlo := negativeMarginal_logDeriv_ge hp₀ hv
+  have hhi := negativeMarginal_logDeriv_le hp₀ (by linarith : 2 ≤ v)
+  change 5/6 ≤ deriv M v/M v at hlo
+  change deriv M v/M v ≤ 2 at hhi
+  exact leftStrip_logKernel_mixed_lt_of_slopes hp hu humax hgap hsmall
+    (by rw [hγ]; linarith only [hlo]) (by rw [hγ]; linarith only [hhi])
+
 #print axioms leftStrip_numerator_decomposition
 #print axioms leftStrip_numerator_weighted_mixed_lt
 #print axioms leftStrip_logKernel_mixed_lt_of_slopes
+#print axioms leftStrip_logKernel_mixed_lt
 
 end RefinedBMV.PositiveCenter
