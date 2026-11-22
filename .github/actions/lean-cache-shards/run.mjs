@@ -190,8 +190,8 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
   const downloaded = new Set();
   const download = async digest => {
     const path = payloadPath(digest);
-    await rm(path, { force: true });
     try {
+      await rm(path, { force: true });
       const key = payloadKey(identity, digest);
       if (await cache.restoreCache([path], key, []) === key) {
         const { size } = await stat(path);
@@ -202,35 +202,38 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
       console.log('LEAN_ACTIONS_SHARDS restore failed for ' + digest + ': ' + error.message);
     }
   };
-  let pending = remote;
-  let retries = 0;
-  for (const rate of [600, 300, 150]) {
-    if (pending.length === 0) break;
-    if (retries > 0) {
-      console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-        operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
-      }));
-      await waitForCacheQuota();
+  try {
+    let pending = remote;
+    let retries = 0;
+    for (const rate of [600, 300, 150]) {
+      if (pending.length === 0) break;
+      if (retries > 0) {
+        console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+          operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
+        }));
+        await waitForCacheQuota();
+      }
+      await paced(pending, 24, rate, download);
+      pending = pending.filter(digest => !downloaded.has(digest));
+      if (pending.length === 0 || retries === 2) break;
+      if (retries === 0) {
+        pending = pending.filter(await visibleMaterial(identity, index, cacheVersion));
+      }
+      retries += 1;
     }
-    await paced(pending, 24, rate, download);
-    pending = pending.filter(digest => !downloaded.has(digest));
-    if (pending.length === 0 || retries === 2) break;
-    if (retries === 0) {
-      pending = pending.filter(await visibleMaterial(identity, index, cacheVersion));
-    }
-    retries += 1;
+    const installArgs = ['--index', index, ...targetArgs];
+    if (preparation) installArgs.push('--preparation', preparation);
+    if (requireComplete || preparation) installArgs.push('--require-complete');
+    const result = python('install', installArgs);
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+      operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
+      restored: result.available, missing: result.missing.length,
+      bytes: transferred, seconds: (performance.now() - started) / 1000,
+    }));
+    return result;
+  } finally {
+    await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
   }
-  const installArgs = ['--index', index, ...targetArgs];
-  if (preparation) installArgs.push('--preparation', preparation);
-  if (requireComplete || preparation) installArgs.push('--require-complete');
-  const result = python('install', installArgs);
-  await Promise.all(remote.map(digest => rm(payloadPath(digest), { force: true })));
-  console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
-    operation, requested: digests.length, remote: remote.length, downloaded: downloaded.size,
-    restored: result.available, missing: result.missing.length,
-    bytes: transferred, seconds: (performance.now() - started) / 1000,
-  }));
-  return result;
 }
 
 async function restore(cache, cacheVersion, identity) {
