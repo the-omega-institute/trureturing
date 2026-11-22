@@ -479,7 +479,8 @@ theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis) :
 open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula (multiplicity_eq_zeroMult)
 open D5.S3.Weil.ZetaBridge.RhLocatesZeroData (zeroData_zero_on_critical_line_of_rh)
 
-private theorem window_mode_eq_ordinate (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r)
+/-- Under RH an actual zero's rescaled mode is purely imaginary. -/
+theorem window_mode_eq_ordinate (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r)
     {z : ℂ} (hz : IsNontrivialZero z) :
     windowMode r z = (↑(z.im / r) : ℂ) * Complex.I := by
   obtain ⟨n, hn⟩ := actualData.zero_exhaustive hz

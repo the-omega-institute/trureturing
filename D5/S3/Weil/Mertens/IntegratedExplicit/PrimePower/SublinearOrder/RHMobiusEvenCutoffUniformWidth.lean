@@ -21,7 +21,7 @@ open scoped ArithmeticFunction.Moebius
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.Mertens.IntegratedExplicit
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
-open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency frequency_real)
+open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 private theorem width_multiplier_bound {s L : ℝ} (hs : 0 < s) (hL : 0 < L) (ω : ℝ) :
@@ -76,11 +76,9 @@ private theorem width_coefficient_uniform_bound (hRH : RiemannHypothesis) {r L :
     dsimp only [s]
     rw [show (1 : ℝ)/2 = 2⁻¹ by norm_num]
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (show 2 < 2*r by linarith))
-  have hv : v = (ω : ℂ)*Complex.I := by
-    apply Complex.ext
-    · simp [v, Complex.div_re, frequency_real hRH k]
-    · simp [v, ω, frequency, Complex.div_im, Complex.normSq_ofReal]
-      field_simp [hr₀.ne']
+  have hz : IsNontrivialZero (actualZero k) :=
+    actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
+  have hv : v = (ω : ℂ)*Complex.I := window_mode_eq_ordinate hRH hr₀ hz
   have he : e.im = ω := by
     simp [e, ω, rootExponent, Complex.div_im, Complex.normSq_ofReal]
     field_simp [hr₀.ne']
