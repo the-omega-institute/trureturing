@@ -42,11 +42,14 @@ def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
   simp [directions]
 
 open Classical in
-private theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x) := by
+theorem flip_injective {n : Nat} (x : Q n) : Function.Injective (flip x) := by
   intro i j he
   by_contra hij
   have h := congrFun he i
   cases hxi : x i <;> simp [BalancedCriticalSpectrum.flip, hij, hxi] at h
+
+-- Keep the short-name lookup used by existing `open private ... from` callers.
+private alias Legacy.flip_injective := flip_injective
 
 open Classical in
 theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
@@ -138,7 +141,7 @@ private theorem flip_cancel_middle {n : Nat} (v : Q n) (i j : Fin n) :
   rw [flip_comm (flip v i) j i, BalancedCriticalSpectrum.flip_flip]
 
 open Classical in
-private theorem flip_three_swap {n : Nat} (v : Q n) (i t j : Fin n) :
+theorem flip_three_swap {n : Nat} (v : Q n) (i t j : Fin n) :
     flip (flip (flip v i) t) j = flip (flip (flip v j) t) i := by
   rw [flip_comm (flip v i) t j, flip_comm v i j, flip_comm (flip v j) i t]
 
