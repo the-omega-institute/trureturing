@@ -50,13 +50,6 @@ private def freeze {P : Type t} {S : P → Type s} {O : P → Type o}
 private abbrev Modules := Σ H : Type u, Σ G : Type v, Σ hH : Group H,
   Σ hG : Group G, @CrossedModule H G hH hG
 
-private abbrev FaceParams := Σ H : Type u, Σ G : Type v, Σ hH : Group H,
-  Σ hG : Group G, Σ _ : @CrossedModule H G hH hG, Σ _ : G, G
-
-private abbrev faceState (m : FaceParams.{u, v}) : Type _ := by
-  rcases m with ⟨H, G, hH, hG, X, p, q⟩
-  exact @Face H G hH hG X p q
-
 private abbrev shellState (m : Modules.{u, v}) : Type _ := by
   rcases m with ⟨H, G, hH, hG, X⟩
   exact @Tetrahedron H G hH hG X
@@ -118,10 +111,6 @@ private theorem mark_ne_one : mark.{u} ≠ 1 := by
 
 private def flatFace (a : FlatH.{u}) : Face flat.{u, v} 1 1 :=
   ⟨a, Subsingleton.elim _ _⟩
-
-private theorem flatFace_ne : flatFace.{u, v} 1 ≠ flatFace mark := by
-  intro h
-  exact mark_ne_one (congrArg Face.label h).symm
 
 private def unitShell {H : Type u} {G : Type v} [Group H] [Group G]
     (X : CrossedModule H G) : Tetrahedron X where
@@ -225,99 +214,6 @@ def family : Registration arena.{u, v} (type_of% @Face.fake_flat_iff.{u, v}) whe
       (MonoidHom.mem_ker.mpr ((map_one (liftId.{u, v}).μ).symm.trans h).symm)
 
 end FakeFlatness
-
-namespace Vertical
-
-private abbrev signature : Signature :=
-  oneRole FaceParams.{u, v} faceState faceState
-
-private def actual : Realization signature.{u, v} :=
-  realize signature (fun _ m => by
-    rcases m with ⟨H, G, hH, hG, X, p, q⟩
-    intro h
-    exact (Face.id X p).vertical h)
-    (fun e => nomatch e)
-
-private def rejected : Realization signature.{u, v} := freeze actual
-
-abbrev arena : Arena where
-  signature := signature.{u, v}
-  Law R := ∀ {H : Type u} {G : Type v} [hH : Group H] [hG : Group G]
-    {X : CrossedModule H G} {p q r s : G}
-    (h : Face X p q) (k : Face X q r) (l : Face X r s),
-      R.readout () ⟨H, G, hH, hG, X, p, q⟩ h = h ∧ h.vertical (Face.id X q) = h ∧
-        (h.vertical k).vertical l = h.vertical (k.vertical l)
-
-private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
-  intro law
-  let i := flatFace.{u, v} 1
-  let f := flatFace.{u, v} mark
-  have hi := (law i i i).1
-  have hf := (law f i i).1
-  exact flatFace_ne.{u, v} (hi.symm.trans hf)
-
-def family : Registration arena.{u, v} (type_of% @Face.vertical_laws.{u, v}) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@Face.vertical_laws.{u, v}, rejected, rejected_law⟩
-  sensitivity := oneRoleSensitivity arena.Law actual rejected rejected_law
-  dependence := by
-    intro _
-    let i := flatFace.{u, v} 1
-    let f := flatFace.{u, v} mark
-    refine ⟨⟨_, _, inferInstance, inferInstance, flat.{u, v}, 1, 1⟩, i, f, ?_⟩
-    intro h
-    exact flatFace_ne.{u, v}
-      ((Face.vertical_laws i i i).1.symm.trans (h.trans (Face.vertical_laws f i i).1))
-
-end Vertical
-
-namespace Horizontal
-
-private abbrev signature : Signature :=
-  oneRole FaceParams.{u, v} faceState (fun m => m.1)
-
-private def actual : Realization signature.{u, v} :=
-  realize signature (fun _ m => by
-    rcases m with ⟨H, G, hH, hG, X, p, q⟩
-    intro h
-    exact ((Face.id X 1).horizontal h).label)
-    (fun e => nomatch e)
-
-private def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ m _ => by letI := m.2.2.1; exact 1) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature.{u, v}
-  Law R := ∀ {H : Type u} {G : Type v} [hH : Group H] [hG : Group G]
-    {X : CrossedModule H G} {p q p' q' p'' q'' : G}
-    (h : Face X p q) (k : Face X p' q') (l : Face X p'' q''),
-      R.readout () ⟨H, G, hH, hG, X, p, q⟩ h = h.label ∧
-        (h.horizontal (Face.id X 1)).label = h.label ∧
-        ((h.horizontal k).horizontal l).label = (h.horizontal (k.horizontal l)).label
-
-private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
-  intro law
-  let i := flatFace.{u, v} 1
-  let f := flatFace.{u, v} mark
-  exact mark_ne_one.{u} (law f i i).1.symm
-
-def family : Registration arena.{u, v} (type_of% @Face.horizontal_laws.{u, v}) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@Face.horizontal_laws.{u, v}, rejected, rejected_law⟩
-  sensitivity := oneRoleSensitivity arena.Law actual rejected rejected_law
-  dependence := by
-    intro _
-    let i := flatFace.{u, v} 1
-    let f := flatFace.{u, v} mark
-    refine ⟨⟨_, _, inferInstance, inferInstance, flat.{u, v}, 1, 1⟩, i, f, ?_⟩
-    intro h
-    exact mark_ne_one.{u}
-      ((Face.horizontal_laws i i i).1.symm.trans
-        (h.trans (Face.horizontal_laws f i i).1)).symm
-
-end Horizontal
 
 namespace Interchange
 
@@ -608,74 +504,6 @@ def FakeFlatness.audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn",
         "arg"]
       stateBinder := 7
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-def Vertical.audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@Face.vertical_laws.{u, v})
-    (Realization Vertical.signature.{u, v}) Unit Unit where
-  unitName := `D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting.Face.vertical_laws.__information_unit
-  realizationName := `Reg.D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting.Vertical.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Vertical.arena.{u, v}⟩
-  objectArena := .source ⟨Vertical.arena.{u, v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Vertical.arena.{u, v} ⟨Vertical.family.{u, v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Vertical.signature Vertical.actual.readout Vertical.actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting
-    definition := none
-    coordinates := #[0, 1, 4, 5, 6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 9
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-def Horizontal.audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@Face.horizontal_laws.{u, v})
-    (Realization Horizontal.signature.{u, v}) Unit Unit where
-  unitName := `D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting.Face.horizontal_laws.__information_unit
-  realizationName := `Reg.D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting.Horizontal.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨Horizontal.arena.{u, v}⟩
-  objectArena := .source ⟨Horizontal.arena.{u, v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source Horizontal.arena.{u, v} ⟨Horizontal.family.{u, v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize Horizontal.signature Horizontal.actual.readout Horizontal.actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.HomologicalAlgebra.CrossedModuleSurfacePasting
-    definition := none
-    coordinates := #[0, 1, 4, 5, 6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 11
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

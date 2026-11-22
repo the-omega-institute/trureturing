@@ -25,10 +25,7 @@ internal sealed class CrossedModuleSurfacePastingDocument : IScribeDocumentDefin
             Law("fake_flat_iff", "The face boundary equation", FakeFlatness(),
                 "Right multiplication by the inverse source path gives the fake-flatness equation. Right multiplication by the source path recovers the boundary equation."),
             Paragraph(Text("Write v(h,k) for vertical pasting, with label kh, and m(h,k) for horizontal pasting, with label h times the action by the first source path on k. The letter ℓ denotes the label of a face. Equivariance gives the horizontal target path by carrying the second boundary through the first source path. The identity face i(X,p) has label 1 at both copies of path p.")),
-            Law("vertical_laws", "Vertical identity and associativity", Vertical(),
-                "Both identity laws follow from the unit in H. Associativity compares products of three labels in reverse traversal order."),
-            Law("horizontal_laws", "Horizontal identity and associativity", Horizontal(),
-                "Identity and associativity follow because the action is a homomorphism into automorphisms. Group associativity identifies the endpoint products of the two triple pastings."),
+            Paragraph(Text("Vertical identities and associativity follow from the group laws for the labels. For horizontal pasting the identity over the unit path acts trivially, and acting by a product of source paths composes their automorphisms. Associativity in G identifies the two endpoint products. Equality of labels then gives equality of typed faces at those endpoints.")),
             Law("interchange", "Peiffer interchange", Interchange(),
                 "For h from p to q, the relation q = μ(h)p gives (q acting on k')h = h(p acting on k'). Substitute this equality in the vertical paste of the two horizontal rows, and use multiplicativity of the action. The two results are faces with the same endpoints and the same label."),
             Paragraph(Text("The face on ijk runs from edge gain gᵢₖ to the product gᵢⱼgⱼₖ. The left paste uses face 013 followed by face 123 whiskered by edge 01. Its label A is the product of the action by g₀₁ on h₁₂₃ and h₀₁₃. The right paste uses face 023 followed by face 012 whiskered by edge 23. Its label B is h₀₁₂h₀₂₃. Both run from g₀₃ to g₀₁(g₁₂g₂₃). Write Ω for AB⁻¹.")),
@@ -69,7 +66,6 @@ internal sealed class CrossedModuleSurfacePastingDocument : IScribeDocumentDefin
     private static Formula MuAt(Formula term) => Call("mu", X, term);
     private static Formula Obstruction(Formula term) => Call("Omega", term);
     private static Formula Label(Formula term) => Call("ell", term);
-    private static Formula Identity(Formula path) => Call("i", X, path);
     private static Formula Vertically(Formula first, Formula second) => Call("v", first, second);
     private static Formula Horizontally(Formula first, Formula second) => Call("m", first, second);
     private static Formula Quantify(Formula quantifier, string name, Formula type, Formula body) =>
@@ -99,31 +95,6 @@ internal sealed class CrossedModuleSurfacePastingDocument : IScribeDocumentDefin
         return General(Paths(Quantify(Forall, "h", HGroup, Rel(
             Eqn(Mul(MuAt(h), p), q), Leftrightarrow,
             Eqn(MuAt(h), Mul(q, Seq(p, Caret, Grp(Minus, One)))))), "p", "q"));
-    }
-
-    private static Formula Vertical()
-    {
-        var h = F.Id("h");
-        var k = F.Id("k");
-        var l = F.Id("l");
-        var laws = Rel(Parens(Eqn(Vertically(Identity(F.Id("p")), h), h)), Land,
-            Rel(Parens(Eqn(Vertically(h, Identity(F.Id("q"))), h)), Land,
-                Eqn(Vertically(Vertically(h, k), l), Vertically(h, Vertically(k, l)))));
-        return General(Paths(Cell("h", "p", "q", Cell("k", "q", "r", Cell("l", "r", "s", laws))),
-            "p", "q", "r", "s"));
-    }
-
-    private static Formula Horizontal()
-    {
-        var h = F.Id("h");
-        var k = F.Id("k");
-        var l = F.Id("l");
-        var laws = Rel(Parens(Eqn(Label(Horizontally(Identity(One), h)), Label(h))), Land,
-            Rel(Parens(Eqn(Label(Horizontally(h, Identity(One))), Label(h))), Land,
-                Eqn(Label(Horizontally(Horizontally(h, k), l)),
-                    Label(Horizontally(h, Horizontally(k, l))))));
-        return General(Paths(Cell("h", "p", "q", Cell("k", "a", "b", Cell("l", "c", "d", laws))),
-            "p", "q", "a", "b", "c", "d"));
     }
 
     private static Formula Interchange()

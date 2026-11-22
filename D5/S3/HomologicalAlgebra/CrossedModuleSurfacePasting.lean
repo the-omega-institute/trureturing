@@ -92,16 +92,15 @@ def horizontal (h : Face X p q) (k : Face X p' q') : Face X (p * p') (q * q') :=
       _ = q * (X.μ k.label * p') := by group
       _ = q * q' := by rw [k.boundary]⟩
 
-/-- Vertical pasting has identity faces and is associative. -/
-theorem vertical_laws (h : Face X p q) (k : Face X q r) (l : Face X r s) :
+-- Vertical identity and associativity follow from the label group laws.
+example (h : Face X p q) (k : Face X q r) (l : Face X r s) :
     (id X p).vertical h = h ∧ h.vertical (id X q) = h ∧
       (h.vertical k).vertical l = h.vertical (k.vertical l) := by
   refine ⟨eq_of_label_eq (mul_one _), eq_of_label_eq (one_mul _), eq_of_label_eq ?_⟩
   exact (mul_assoc _ _ _).symm
 
-/-- Horizontal pasting has unit path identities and is associative on labels.
-The two endpoints of the associative composites are identified by group associativity. -/
-theorem horizontal_laws (h : Face X p q) (k : Face X p' q')
+-- Reassociation of the endpoints identifies the two horizontal composite labels.
+example (h : Face X p q) (k : Face X p' q')
     (l : Face X p'' q'') :
     ((id X 1).horizontal h).label = h.label ∧
       (h.horizontal (id X 1)).label = h.label ∧
@@ -303,7 +302,11 @@ theorem q8_tetrahedron_nontrivial :
   have h : q8Tetrahedron.obstruction = minusOne := by
     rw [Tetrahedron.obstruction, hleft, hright]
     decide
-  exact ⟨q8Tetrahedron, h, h.trans_ne (by decide)⟩
+  refine ⟨q8Tetrahedron, h, ?_⟩
+  intro htrivial
+  have hlabels := q8Tetrahedron.obstruction_eq_one_iff.mp htrivial
+  rw [hleft, hright] at hlabels
+  exact (by decide : (QuaternionGroup.xa 3 : QuaternionGroup 2) ≠ .xa 1) hlabels
 
 /-- The proposed assertion that facewise typing alone forces a trivial shell. -/
 def claim : Prop := ∀ T : Tetrahedron q8CrossedModule, T.obstruction = 1
