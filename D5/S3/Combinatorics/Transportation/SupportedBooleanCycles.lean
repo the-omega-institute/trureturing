@@ -7,6 +7,7 @@
    digest: Arbitrary supported Boolean fibers have target-conformal bounded simple cycle paths. -/
 
 import D5.S3.Combinatorics.Transportation.SupportedCycleSupplier
+import D5.S3.Combinatorics.Transportation.FerrersIntegerRectanglePaths
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.Finset.SDiff
 
@@ -77,19 +78,19 @@ private theorem count_move {α : Type*} [Fintype α]
       (if x = a then false else if x = b then true else f x) = true).card =
     ((Finset.univ : Finset α).filter fun x => f x = true).card := by
   classical
-  let S := (Finset.univ : Finset α).filter fun x => f x = true
+  let q : α → ℕ := fun x => if f x = true then 1 else 0
   have hab : a ≠ b := by intro h; simp [h, hb] at ha
-  have heq : ((Finset.univ : Finset α).filter fun x =>
-      (if x = a then false else if x = b then true else f x) = true) =
-      insert b (S.erase a) := by
-    ext x
+  have hs := FerrersIntegerRectanglePaths.transfer_sum q a b hab (by simp [q, ha])
+  have htransfer (x : α) : FerrersIntegerRectanglePaths.transfer q a b x =
+      if (if x = a then false else if x = b then true else f x) = true
+        then (1 : ℕ) else 0 := by
     by_cases hxa : x = a
-    · subst x; simp [hab]
+    · subst x; simp [FerrersIntegerRectanglePaths.transfer, q, ha]
     · by_cases hxb : x = b
-      · subst x; simp [hxa]
-      · simp [S, hxa, hxb]
-  rw [heq, Finset.card_insert_of_notMem (by simp [S, hb])]
-  exact Finset.card_erase_add_one (by simp [S, ha])
+      · subst x; simp [FerrersIntegerRectanglePaths.transfer, q, hb, hxa]
+      · simp [FerrersIntegerRectanglePaths.transfer, q, hxa, hxb]
+  simp only [htransfer] at hs
+  simpa only [Finset.card_filter, q] using hs
 
 omit [Fintype R] [Fintype C] in
 private theorem mem_red_row (w : Cycle R C) (i : Fin w.k) (b : C) :
