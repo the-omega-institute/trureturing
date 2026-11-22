@@ -35,9 +35,10 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
             Definition("CoeffLogConcave", "Log-concavity of the coefficients", CoeffBody(),
                 "Each determinant uses the coefficient at one interior index and the coefficients at its two neighbors."),
             Definition("claim", "Gy's affirmative assertion", Iff(V("claim"), ClaimBody()),
-                "Gy asks in Section 5, printed page 16, whether strong q-log-concavity of a sequence in R[q] "
-                + "forces log-concavity of the coefficients of both E and H at each allowed triple. "
-                + "Conjecture 5.1 on printed page 15 asks for coefficient nonnegativity of E and H."),
+                Blocks(Paragraph(Text("Gy asks in Section 5, printed page 16.")), PublishedQuestion(),
+                    Paragraph(Text("The triple ranges over 1 ≤ j ≤ p ≤ n. The premise includes the predecessor x₀, "
+                        + "while each symmetric polynomial starts at x₁. Conjecture 5.1 on printed page 15 asks for "
+                        + "coefficient nonnegativity of E and H.")))),
             Describe.Lean(DescribeId.Create("gy26c51-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Both outputs can fail coefficient log-concavity"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))),
@@ -56,6 +57,9 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string title, Formula statement, string prose) =>
+        Definition(name, title, statement, Blocks(Paragraph(Text(prose))));
+
+    private static DocumentBlock Definition(string name, string title, Formula statement, BlockSequence prose) =>
         Describe.Lean(DescribeId.Create("gy26c51-" + (name switch
             {
                 "e" => "elementary-sum",
@@ -65,7 +69,23 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
                 _ => name.ToLowerInvariant(),
             })),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(statement)),
-            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            AssessedProvenance.FromLiterature(Source), prose, DescribeRole.Definition);
+
+    private static DocumentBlock PublishedQuestion()
+    {
+        var k = V("k");
+        var sequence = new Formula.Subscript(Seq(Open, new Formula.Subscript(V("x"), k), Close),
+            Seq(k, Ge, D(1)));
+        var indices = Seq(V("n"), Comma, V("p"), Comma, V("j"));
+        Formula Output(string name) => Seq(new Formula.Subscript(V(name), V("x")), Caret, Grp(indices),
+            Open, V("q"), Close);
+
+        return Paragraph(Text("“More generally, one may ask whether it holds that if "), Math(sequence),
+            Text(" is a strongly "), Math(V("q")), Text("-log-concave sequence of polynomials in "), Math(Poly()),
+            Text(", then, for each particular choice of "), Math(V("n")), Text(", "), Math(V("p")),
+            Text(", and "), Math(V("j")), Text(", the sequences of coefficients of the polynomials "),
+            Math(Output("E")), Text(" and "), Math(Output("H")), Text(" are themselves log-concave.”"));
+    }
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
