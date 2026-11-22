@@ -83,7 +83,7 @@ internal sealed class NoncrossingRefinementDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("On a two-point ground set the points are either in separate blocks or together."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("nc-two-bot-ne-top"),
-                DeclarationHandle.Create(Owner + "nc_two_bot_ne_top"), H("The two ranks of a two-point partition"),
+                DeclarationHandle.Create(Owner + "nc_two_bot_ne_top"), H("The two partitions at rank two"),
                 StatementSource.FromAuthor(F.Disp(Rel(Call("bot", Call("NoncrossingPartitions", D(2))),
                     FormulaRelationOperator.NotEqual, Call("top", Call("NoncrossingPartitions", D(2)))))),
                 AssessedProvenance.FromRepo(),

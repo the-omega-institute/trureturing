@@ -154,10 +154,10 @@ private def mirror : FullTree → FullTree
   | .nil => .nil
   | .node _ l r => mirror r △ mirror l
 
-@[simp] theorem mirror_size (t : FullTree) : (mirror t).numNodes = t.numNodes := by
+@[simp] private theorem mirror_size (t : FullTree) : (mirror t).numNodes = t.numNodes := by
   induction t using BinaryTree.unitRecOn <;> simp [mirror, *, Nat.add_comm]
 
-@[simp] theorem mirror_mirror (t : FullTree) : mirror (mirror t) = t := by
+@[simp] private theorem mirror_mirror (t : FullTree) : mirror (mirror t) = t := by
   induction t using BinaryTree.unitRecOn <;> simp [mirror, *]
 
 private theorem rotation_mirror {t u : FullTree} (h : RightRotation t u) :

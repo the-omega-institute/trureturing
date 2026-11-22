@@ -233,14 +233,14 @@ private theorem laminar_join_meets (A : (s : RowIndex n) → LeftEndpoint s) (hA
   classical
   apply le_antisymm
   · exact sup_le (sInf_le_sInf Set.inter_subset_left) (sInf_le_sInf Set.inter_subset_right)
-  · let u : Brackets n := sInf S ⊔ sInf T
-    have huS : sInf S ≤ u := le_sup_left
-    have huT : sInf T ≤ u := le_sup_right
-    change sInf (S ∩ T) ≤ u
+  · rw [sup_eq_inf_upper]
+    apply le_sInf
+    intro u hu
+    obtain ⟨huS, huT⟩ := hu
     intro i
     change (sInf (S ∩ T)).val i ≤ u.val i
     by_cases hi : (u.val i).val < n
-    · letI : Finite (RowIndex n) := Finite.of_equiv _ (rowIndexEquiv n)
+    · let : Finite (RowIndex n) := Finite.of_equiv _ (rowIndexEquiv n)
       let _ : Fintype (RowIndex n) := Fintype.ofFinite _
       let good (s : RowIndex n) : Prop :=
         (rowFamily A s ∈ S ∪ T) ∧ (A s).val ≤ i.val + 1 ∧ i.val + 1 ≤ s.val ∧

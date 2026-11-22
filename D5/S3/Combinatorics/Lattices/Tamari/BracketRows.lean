@@ -258,10 +258,10 @@ theorem sInf_coord_eq_or (C : Set (BracketingFunctions (n + 1))) (i : Fin (n + 1
 @[simp]
 theorem top_coord (i : Fin (n + 1)) :
     (⊤ : BracketingFunctions (n + 1)).val i = Fin.last n := by
-  change meetValue ∅ i = Fin.last n
-  rcases meetValue_eq_or (∅ : Set (BracketingFunctions (n + 1))) i with h | ⟨_, h, _⟩
-  · exact h
-  · exact h.elim
+  apply Fin.ext
+  rw [← sInf_empty, sInf_coord_min]
+  rw [Set.range_eq_empty]
+  simp
 
 theorem sup_eq_inf_upper (a b : BracketingFunctions (n + 1)) :
     a ⊔ b = sInf {c | a ≤ c ∧ b ≤ c} := rfl

@@ -32,13 +32,13 @@ private def endpoint : FullTree → ℕ → ℕ
     else if i = l.numNodes then l.numNodes + r.numNodes
     else l.numNodes + 1 + endpoint r (i - (l.numNodes + 1))
 
-@[simp] theorem endpoint_left (l r : FullTree) {i : ℕ} (hi : i < l.numNodes) :
+@[simp] private theorem endpoint_left (l r : FullTree) {i : ℕ} (hi : i < l.numNodes) :
     endpoint (l △ r) i = endpoint l i := by simp [endpoint, hi]
 
-@[simp] theorem endpoint_root (l r : FullTree) :
+@[simp] private theorem endpoint_root (l r : FullTree) :
     endpoint (l △ r) l.numNodes = l.numNodes + r.numNodes := by simp [endpoint]
 
-@[simp] theorem endpoint_right (l r : FullTree) {i : ℕ} (hi : l.numNodes < i) :
+@[simp] private theorem endpoint_right (l r : FullTree) {i : ℕ} (hi : l.numNodes < i) :
     endpoint (l △ r) i = l.numNodes + 1 + endpoint r (i - (l.numNodes + 1)) := by
   simp [endpoint, hi.not_gt, hi.ne']
 
@@ -85,7 +85,7 @@ def treeBrackets {m : ℕ} (t : Trees m) : BracketingFunctions m :=
     ⟨fun i => (endpoint_bounds t.val (inSize i)).1,
       fun i _ hij hj => endpoint_nested t.val (inSize i) hij hj⟩⟩
 
-@[simp] theorem treeBrackets_coord {m : ℕ} (t : Trees m) (i : Fin m) :
+@[simp] private theorem treeBrackets_coord {m : ℕ} (t : Trees m) (i : Fin m) :
     ((treeBrackets t).val i).val = endpoint t.val i.val := rfl
 
 private theorem endpoint_injective_on_size (t u : FullTree) (hs : t.numNodes = u.numNodes)
