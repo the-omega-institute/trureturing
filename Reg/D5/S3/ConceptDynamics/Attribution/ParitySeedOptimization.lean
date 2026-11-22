@@ -111,5 +111,92 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev pairSignature : Signature where
+  Params := Σ n : ℕ, Fin (n + 2)
+  State p := Pair p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def leftBit : Realization pairSignature :=
+  realize pairSignature (fun _ p a => a.1.val.profile p.2) (fun e => nomatch e)
+
+def alwaysFalse : Realization pairSignature :=
+  realize pairSignature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev pairArena : Arena where
+  signature := pairSignature
+  Law R := ∀ {n : ℕ} (a : Pair n) (i : Fin (n + 2)),
+    (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • a = a) ↔
+      R.readout () ⟨n, i⟩ a = true ∧ a.2.val.profile i = true
+
+private def fixedPair : Pair 0 :=
+  (⟨⟨![true, true], 0⟩, by
+    change parity (bitProfile _) = 0
+    simp [parity, bitProfile, Fin.sum_univ_two, show (1 : ZMod 2) + 1 = 0 from rfl]⟩,
+    ⟨⟨![true, false], 0⟩, by
+      change parity (bitProfile _) = 1
+      simp [parity, bitProfile, Fin.sum_univ_two]⟩)
+
+private theorem always_false_fails : ¬ pairArena.Law alwaysFalse := by
+  intro law
+  have fixed := (pair_fixed_coordinate fixedPair 0).mpr ⟨rfl, rfl⟩
+  exact Bool.false_ne_true ((law fixedPair 0).mp fixed).1
+
+def pairFamily : Registration pairArena (type_of% (@pair_fixed_coordinate)) where
+  actual := leftBit
+  bridge := Iff.rfl
+  variation := ⟨@pair_fixed_coordinate, alwaysFalse, always_false_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨alwaysFalse, ?_, rfl, always_false_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := by
+    rintro ⟨⟩
+    let moved : Pair 0 := (⟨⟨![false, false], 0⟩, by
+      change parity (bitProfile _) = 0
+      simp [parity, bitProfile, Fin.sum_univ_two]⟩, fixedPair.2)
+    exact ⟨⟨0, 0⟩, fixedPair, moved, by
+      change true ≠ false
+      simp⟩
+
+def pairRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pair_fixed_coordinate) (Realization pairSignature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization.pairLeftBit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization.pairFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pairArena⟩
+  objectArena := .source ⟨pairArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pairArena ⟨pairFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize pairSignature (fun _ p a => a.1.val.profile p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.ParitySeedOptimization

@@ -73,7 +73,7 @@ private theorem natural_profile_lift {n k : ℕ}
     rw [sum_comm]
     simp [cols, ZMod.card]
 
-private theorem pair_fixed_coordinate {n : ℕ} (a : Pair n) (i : Fin (n + 2)) :
+theorem pair_fixed_coordinate {n : ℕ} (a : Pair n) (i : Fin (n + 2)) :
     (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • a = a) ↔
       a.1.val.profile i = true ∧ a.2.val.profile i = true := by
   rw [← Bool.and_eq_true, ← fixed_pair_iff]
