@@ -12,6 +12,9 @@ import Mathlib.Data.Finset.Card
 import Mathlib.Logic.Function.Iterate
 import Lean.Elab.Tactic.Omega
 
+/-! Unequal Boolean tables in one labeled margin fiber contain a simple
+alternating cycle of positive and negative target disagreements. -/
+
 /-
 Source: https://github.com/guanyangwang/ktv-swap-lean/tree/15b5f47c9ac833bfdf99b8b29374af7a678ef4bc
 Original modules: KTV.Johnson.BinaryMatrix.Basic, KTV.Johnson.BinaryMatrix.Proposals,
@@ -72,7 +75,7 @@ abbrev FixedMarginState (M : FixedMarginModel Row Col) :=
 
 abbrev OrderedDistinctPair (α : Type*) := {p : α × α // p.1 ≠ p.2}
 
-omit [Fintype Col] in
+omit [Fintype Col] [DecidableEq Col] in
 private theorem exists_mem_left_not_right_of_fixedCard_ne
     {A : Finset Col} {k : Nat}
     {S T : {S : Finset Col // S ⊆ A ∧ S.card = k}}
@@ -90,7 +93,7 @@ private theorem exists_mem_left_not_right_of_fixedCard_ne
     Finset.eq_of_subset_of_card_le hSub (by omega)
   exact hST (Subtype.ext hVal)
 
-omit [Fintype Col] in
+omit [Fintype Col] [DecidableEq Col] in
 private theorem exists_mem_right_not_left_of_fixedCard_ne
     {A : Finset Col} {k : Nat}
     {S T : {S : Finset Col // S ⊆ A ∧ S.card = k}}

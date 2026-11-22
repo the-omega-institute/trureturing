@@ -10,10 +10,12 @@ import D5.S3.Combinatorics.Transportation.SupportedCycleSupplier
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.Finset.SDiff
 
+/-! Supported Boolean tables with equal labeled margins admit target-conformal
+simple cycle flips and a finite chain bounded by one quarter of their distance. -/
+
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Transportation.SupportedBooleanCycles
 noncomputable section
-open scoped Classical
 open SupportedCycleSupplier
 universe u v
 variable {R : Type u} {C : Type v} [Fintype R] [Fintype C]
@@ -26,6 +28,7 @@ def Supported (E : R → C → Prop) (M : Table R C) : Prop :=
 def SameMargins (M B : Table R C) : Prop :=
   (∀ a, rowSum M a = rowSum B a) ∧ (∀ b, colSum M b = colSum B b)
 
+open Classical in
 noncomputable def disagreements (M B : Table R C) : Finset (R × C) :=
   Finset.univ.filter fun x => M x.1 x.2 ≠ B x.1 x.2
 
@@ -39,10 +42,13 @@ structure Cycle (R : Type u) (C : Type v) where
   row_injective : Function.Injective row
   col_injective : Function.Injective col
 
+open Classical in
 noncomputable def red (w : Cycle R C) : Finset (R × C) :=
   Finset.univ.image fun i => (w.row i, w.col i)
+open Classical in
 noncomputable def blue (w : Cycle R C) : Finset (R × C) :=
   Finset.univ.image fun i => (w.row i, w.col (finRotate w.k i))
+open Classical in
 noncomputable def cells (w : Cycle R C) : Finset (R × C) := red w ∪ blue w
 noncomputable def flip (w : Cycle R C) (M : Table R C) : Table R C := by
   classical
@@ -64,7 +70,8 @@ inductive Chain (E : R → C → Prop) (B : Table R C) : Table R C → ℕ → P
       (correcting : ∀ a b, N a b ≠ M a b → M a b ≠ B a b ∧ N a b = B a b)
       (tail : Chain E B N n) : Chain E B M (n+1)
 
-private theorem count_move {α : Type*} [Fintype α] [DecidableEq α]
+open Classical in
+private theorem count_move {α : Type*} [Fintype α]
     (f : α → Bool) (a b : α) (ha : f a = true) (hb : f b = false) :
     ((Finset.univ : Finset α).filter fun x =>
       (if x = a then false else if x = b then true else f x) = true).card =
@@ -130,6 +137,7 @@ private theorem mem_blue_col (w : Cycle R C) (j : Fin w.k) (a : R) :
   · intro h; exact ⟨(finRotate w.k).symm j,h.symm,by rw [Equiv.apply_symm_apply]⟩
 
 omit [Fintype R] [Fintype C] in
+open Classical in
 private theorem flip_pattern (w : Cycle R C) (M B : Table R C)
     (hp : ∀ i, M (w.row i) (w.col i) = true ∧ B (w.row i) (w.col i) = false ∧
       M (w.row i) (w.col (finRotate w.k i)) = false ∧
