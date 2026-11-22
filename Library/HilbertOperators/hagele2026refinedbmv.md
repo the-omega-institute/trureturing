@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFour
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourScalar
   - D5/S3/Quantum/Analysis/RefinedBMV/DimFourWalk
+  - D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripKernel
   - D5/S3/Quantum/Analysis/RefinedBMVExtremeAnalytic
   - D5/S3/Quantum/Analysis/RefinedBMVUniformCorner
   - D5/S3/Quantum/Analysis/RefinedBMVThreeSpectrumReduction
