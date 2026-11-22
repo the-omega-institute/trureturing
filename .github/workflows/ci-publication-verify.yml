@@ -8,8 +8,14 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none, legacy, auto, release, parallel]
+        options: [complete, partial, none, legacy, auto, release, parallel, pinned]
         required: true
+      release_seed_tag:
+        description: Published tag for the pinned first-generation seed
+        type: string
+      release_seed_producer:
+        description: Full producer commit of the pinned first-generation seed
+        type: string
       volume_test_id:
         description: Shared identifier for two verification snapshots using reusable physical volumes
         type: string
@@ -54,6 +60,7 @@ jobs:
       (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') &&
        ((contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && needs.parallel-compile.result == 'success' &&
          (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == inputs.mode)) ||
+        inputs.mode == 'pinned' ||
         (!contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
     runs-on: ubuntu-24.04-arm
     # Cold and partial seed scenarios exercise the scheduled Release build.
@@ -71,6 +78,7 @@ jobs:
     env:
       LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
+      STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && '21600' || '7200' }}
       LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
       LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.parallel-compile.outputs.sparse == 'true' && '1' || '0' }}
@@ -156,10 +164,20 @@ jobs:
           CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
           VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
           RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
+          SEED_TAG: ${{ inputs.release_seed_tag }}
+          SEED_PRODUCER: ${{ inputs.release_seed_producer }}
+          GH_TOKEN: ${{ github.token }}
         run: |
+          if [[ "$SHARD_HANDOFF" == pinned ]]; then
+            [[ -n "$VOLUME_TEST_ID" && -z "$RETIRE_VOLUME_TAG" && -n "$SEED_TAG" && "$SEED_PRODUCER" =~ ^[0-9a-f]{40}$ ]]
+            gh api "repos/$GITHUB_REPOSITORY/compare/$SEED_PRODUCER...$GITHUB_SHA?per_page=1" |
+              jq -e --arg sha "$SEED_PRODUCER" '(.status == "identical" or .status == "ahead") and .merge_base_commit.sha == $sha'
+          else
+            [[ -z "$SEED_TAG" && -z "$SEED_PRODUCER" ]]
+          fi
           [[ -z "$RETIRE_VOLUME_TAG" || -n "$VOLUME_TEST_ID" ]]
           case "$SHARD_HANDOFF" in
-            release|parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            release|parallel|auto|complete|legacy|pinned) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
             none|partial)
               [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
               [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
@@ -168,6 +186,9 @@ jobs:
           esac
           [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
           {
+            if [[ -n "$VOLUME_TEST_ID" ]]; then
+              echo "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=$STRATALINT_BUILD_TIMEOUT_SECONDS"
+            fi
             echo 'STRATALINT_CACHE_SOURCE_VALIDATED=true'
             echo "STRATALINT_CACHE_SOURCE_REF=$GITHUB_REF"
             echo "STRATALINT_CACHE_SOURCE_COMMIT=$GITHUB_SHA"
@@ -206,6 +227,8 @@ jobs:
         with:
           mode: ${{ env.SHARD_HANDOFF }}
           previous-base: ${{ needs.parallel-compile.outputs.base }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
           publication-mode: verification
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
@@ -218,7 +241,6 @@ jobs:
           env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.report-checked != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: >-
           bash .github/actions/lean-compile-layer/measure.sh --report make check-lean-report FULL_BUILD=1
           LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
@@ -229,7 +251,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
           LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.full_report.outcome == 'success' || steps.release_seed.outputs.report-checked == 'true') && '1' || '0' }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
