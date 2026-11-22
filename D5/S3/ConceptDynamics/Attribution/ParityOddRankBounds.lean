@@ -20,7 +20,7 @@ open Finset
 
 namespace D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 
-private theorem parity_deficit {A : Type*} [Fintype A] [DecidableEq A]
+theorem parity_deficit {A : Type*} [Fintype A] [DecidableEq A]
     (mass : A → ℕ) (unrestricted : Finset A)
     (odd : (∑ a, mass a) % 2 = 1) :
     1 ≤ ∑ a, if a ∈ unrestricted then mass a else mass a % 2 := by
