@@ -433,9 +433,140 @@ theorem leftStripCross_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
   exact ⟨by nlinarith only [mul_le_mul_of_nonneg_left h₂' he₀, he₀],
     by nlinarith only [mul_le_mul_of_nonneg_left h₃' he₀, he₀]⟩
 
+theorem leftStripCross_smooth (p : ℕ) :
+    ContDiff ℝ 3 (Function.uncurry (leftStripCross p)) := by
+  let h := 3/(p : ℝ)
+  have hsum : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ tailSum p h z.1) := by
+    unfold tailSum
+    apply ContDiff.sum
+    intro j _
+    fun_prop
+  change ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ Real.exp (-((3+h)*(z.2-z.1))) *
+    (1+h*upperTailGap h (z.2-z.1)*tailSum p h z.1))
+  unfold upperTailGap
+  fun_prop
+
+theorem leftStripTailResidual_smooth (p : ℕ) :
+    ContDiff ℝ 3 (Function.uncurry (leftStripTailResidual p)) := by
+  let h := 3/(p : ℝ)
+  have hc := leftStripCross_smooth p
+  change ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ leftStripCross p z.1 z.2) at hc
+  change ContDiff ℝ 3 (fun z : ℝ × ℝ ↦
+    (upperTailRepeatCorrection h z.2+upperTailRepeatCorrection h (z.2-z.1))/2 -
+      leftStripCross p z.1 z.2)
+  unfold upperTailRepeatCorrection upperTailGap
+  fun_prop
+
+/-- Second and mixed third derivative bounds for the cancelled tail.
+Both are measured against the correction at the smaller separated gap. -/
+theorem leftStripTailResidual_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
+    (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+    let h := 3/(p : ℝ)
+    let U := upperTailRepeatCorrection h (v-a)
+    let A := leftStripTailResidual p
+    |deriv (deriv (A · v)) a| ≤ 12*U ∧
+      |deriv (fun y ↦ deriv (deriv (A · y)) a) v| ≤ 40*U := by
+  let h := 3/(p : ℝ)
+  let U := upperTailRepeatCorrection h
+  let C := leftStripCross p
+  let A := leftStripTailResidual p
+  let s := v-a
+  have hp₀ : 0 < p := by omega
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hhmax : h ≤ 3/11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
+  have hU : ContDiff ℝ 3 U := by unfold U upperTailRepeatCorrection upperTailGap; fun_prop
+  have hU₁ : ContDiff ℝ 2 (deriv U) := hU.deriv'
+  have hU₂ : ContDiff ℝ 1 (deriv (deriv U)) := hU₁.deriv'
+  have hCleft (y : ℝ) : ContDiff ℝ 3 (C · y) := by
+    have hd := leftStripCross_smooth p
+    have h := hd.comp (contDiff_id.prodMk contDiff_const :
+      ContDiff ℝ 3 (fun x : ℝ ↦ (x,y)))
+    exact h
+  have hfirst (y : ℝ) : deriv (A · y) = fun x ↦ -(deriv U (y-x))/2-deriv (C · y) x := by
+    funext x
+    have hShift := (hasDerivAt_id' x).const_sub y
+    have hd := (((hU.differentiable (by decide) (y-x)).hasDerivAt.comp x hShift).const_add
+      (U y)).div_const 2
+    have ht := hd.sub ((hCleft y).differentiable (by decide) x).hasDerivAt
+    change HasDerivAt (A · y) _ x at ht
+    simpa only [mul_neg, mul_one, zero_add] using ht.deriv
+  have hsecond (x y : ℝ) : deriv (deriv (A · y)) x =
+      deriv (deriv U) (y-x)/2-deriv (deriv (C · y)) x := by
+    rw [hfirst y]
+    have hShift := (hasDerivAt_id' x).const_sub y
+    have hd := (((hU₁.differentiable (by decide) (y-x)).hasDerivAt.comp x hShift).neg).div_const 2
+    have hCc : ContDiff ℝ 2 (deriv (C · y)) := (hCleft y).deriv'
+    have ht := hd.sub (hCc.differentiable (by decide) x).hasDerivAt
+    change HasDerivAt (fun t ↦ -(deriv U (y-t))/2-deriv (C · y) t) _ x at ht
+    simpa only [mul_neg, mul_one, neg_neg] using ht.deriv
+  have hCaa :
+      DifferentiableAt ℝ (fun y ↦ deriv (deriv (C · y)) a) v := by
+    have hSmooth := leftStripCross_smooth p
+    have hPartial {f : ℝ → ℝ → ℝ} {n m : WithTop ℕ∞}
+        (hf : ContDiff ℝ n (Function.uncurry f)) (hn : n ≠ 0) (hm : m+1 ≤ n) :
+        ContDiff ℝ m (Function.uncurry (fun x y ↦ deriv (f · y) x)) := by
+      have hd := (hf.fderiv_right hm).clm_apply
+        (contDiff_const : ContDiff ℝ m (fun _ : ℝ × ℝ ↦ ((1,0) : ℝ × ℝ)))
+      convert hd using 1
+      funext z
+      rcases z with ⟨x,y⟩
+      have hLine : HasDerivAt (fun t : ℝ ↦ (t,y)) (1,0) x := by
+        simpa only [id_eq] using (hasDerivAt_id x).prodMk (hasDerivAt_const x y)
+      exact ((hf.differentiable hn (x,y)).hasFDerivAt.comp_hasDerivAt x hLine).deriv
+    have h₁ := hPartial hSmooth (by decide) (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)
+    have h₂ := hPartial h₁ (by decide) (show (1 : WithTop ℕ∞)+1 ≤ 2 by decide)
+    exact ((h₂.comp (contDiff_const.prodMk contDiff_id :
+      ContDiff ℝ 1 (fun y : ℝ ↦ (a,y)))).differentiable (by decide) v)
+  have hthird : deriv (fun y ↦ deriv (deriv (A · y)) a) v =
+      deriv (deriv (deriv U)) s/2-deriv (fun y ↦ deriv (deriv (C · y)) a) v := by
+    rw [show (fun y ↦ deriv (deriv (A · y)) a) =
+      (fun y ↦ deriv (deriv U) (y-a)/2-deriv (deriv (C · y)) a) from funext (hsecond a)]
+    have hd := ((hU₂.differentiable (by decide) s).hasDerivAt.comp v
+      ((hasDerivAt_id' v).sub_const a)).div_const 2
+    have ht := hd.sub hCaa.hasDerivAt
+    change HasDerivAt (fun y ↦ deriv (deriv U) (y-a)/2-deriv (deriv (C · y)) a) _ v at ht
+    simpa only [mul_one] using ht.deriv
+  obtain ⟨_, _, h₂₀, h₂, h₃₀, h₃⟩ := separated_correction_derivative_bounds hh hgap
+  change 0 ≤ deriv (deriv U) s at h₂₀
+  change deriv (deriv U) s ≤ (3+h)^2*U s at h₂
+  change 0 ≤ -deriv (deriv (deriv U)) s at h₃₀
+  change -deriv (deriv (deriv U)) s ≤ (3+h)^3*U s at h₃
+  have hF : 0 ≤ upperTailGap h s := by
+    unfold upperTailGap
+    exact div_nonneg
+      (sub_nonneg.mpr (Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le (by linarith))))) hh.le
+  have hU₀ : 0 ≤ U s := by unfold U upperTailRepeatCorrection; positivity
+  have hα : 3+h ≤ 36/11 := by linarith
+  have hα₀ : 0 ≤ 3+h := by linarith
+  have hU2 : |deriv (deriv U) s| ≤ 11*U s := by
+    rw [abs_of_nonneg h₂₀]
+    refine h₂.trans (mul_le_mul_of_nonneg_right ?_ hU₀)
+    exact (pow_le_pow_left₀ hα₀ hα 2).trans (by norm_num)
+  have hU3 : |deriv (deriv (deriv U)) s| ≤ 36*U s := by
+    rw [← abs_neg, abs_of_nonneg h₃₀]
+    refine h₃.trans (mul_le_mul_of_nonneg_right ?_ hU₀)
+    exact (pow_le_pow_left₀ hα₀ hα 3).trans (by norm_num)
+  obtain ⟨hC2, hC3⟩ := leftStripCross_derivative_bounds hp ha hgap
+  change |deriv (deriv (C · v)) a| ≤ (13/2)*U s at hC2
+  change |deriv (fun y ↦ deriv (deriv (C · y)) a) v| ≤ 22*U s at hC3
+  change |deriv (deriv (A · v)) a| ≤ 12*U s ∧
+    |deriv (fun y ↦ deriv (deriv (A · y)) a) v| ≤ 40*U s
+  constructor
+  · rw [hsecond a v]
+    refine (abs_sub _ _).trans ?_
+    rw [abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
+    linarith only [hU2, hC2]
+  · rw [hthird]
+    refine (abs_sub _ _).trans ?_
+    rw [abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
+    linarith only [hU3, hC3]
+
 #print axioms leftStripCross_eq
 #print axioms leftStripTailResidual_zero
 #print axioms leftStripCross_derivatives
 #print axioms leftStripCross_derivative_bounds
+#print axioms leftStripTailResidual_derivative_bounds
 
 end RefinedBMV.PositiveCenter
