@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exact dimension criteria for a positive scalar column Gram of a width-three tensor sum. -/
+   digest: Exact dimensions for a positive scalar column Gram of a width-three tensor sum. -/
 
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeScalarGram
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeThreeRectangularBound
+
+/-! The dimensions of the source and target determine scalar column Gram existence. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -35,6 +37,7 @@ def ScalarGramAdmissible (a b c d : ℕ) : Prop :=
         (3 * d < 2 * c ∧ c ≤ 2 * d ∧ 2 * b ≤ a) ∨
         (2 * d < c ∧ c ≤ 3 * d ∧ 3 * b ≤ a)))
 
+set_option maxHeartbeats 800000 in
 private theorem block_gram {a b c d k : ℕ} (hk : k ≤ 3)
     (hb : b ≤ k * a) (hd : k * c ≤ d) (lam : ℝ) (hlam : 0 < lam) :
     ∃ (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
@@ -47,9 +50,12 @@ private theorem block_gram {a b c d k : ℕ} (hk : k ≤ 3)
   let route : (Fin b × Fin c) ↪ (Fin a × Fin d) :=
     ⟨fun p => ((left p.1).2, right ((left p.1).1, p.2)), by
       rintro ⟨i, j⟩ ⟨i', j'⟩ h
-      have hr := right.injective (congrArg Prod.snd h)
-      have hl := left.injective (Prod.ext (congrArg Prod.fst hr) (congrArg Prod.fst h))
-      exact Prod.ext hl (congrArg Prod.snd hr)⟩
+      have hr : ((left i).1, j) = ((left i').1, j') :=
+        right.injective (congrArg (fun p : Fin a × Fin d => p.2) h)
+      have hblock := congrArg (fun p : Fin k × Fin c => p.1) hr
+      have hrow := congrArg (fun p : Fin a × Fin d => p.1) h
+      have hcol := congrArg (fun p : Fin k × Fin c => p.2) hr
+      exact Prod.ext (left.injective (Prod.ext hblock hrow)) hcol⟩
   let M : Fin 3 → Matrix (Fin a) (Fin b) ℂ :=
     fun r i j => if r.val = (left j).1.val ∧ i = (left j).2 then 1 else 0
   let N : Fin 3 → Matrix (Fin d) (Fin c) ℂ :=
@@ -63,18 +69,34 @@ private theorem block_gram {a b c d k : ℕ} (hk : k ≤ 3)
       if route j = i then 1 else 0
     rw [Finset.sum_eq_single r]
     · have hr : r.val < k := (left j.1).1.isLt
-      have hcoord : (⟨r.val, hr⟩ : Fin k) = (left j.1).1 := Fin.ext rfl
+      have hval : r.val = (left j.1).1.val := rfl
+      have hM : M r i.1 j.1 = (if i.1 = (left j.1).2 then 1 else 0) := by
+        change (if r.val = (left j.1).1.val ∧ i.1 = (left j.1).2 then (1 : ℂ) else 0) = _
+        simp only [hval, true_and]
+      have hN : N r i.2 j.2 = (if right ((left j.1).1, j.2) = i.2 then 1 else 0) := by
+        change (if h : r.val < k then
+          if right (⟨r.val, h⟩, j.2) = i.2 then (1 : ℂ) else 0 else 0) = _
+        rw [dite_eq_left hr]
+        rw [show (⟨r.val, hr⟩ : Fin k) = (left j.1).1 from Fin.ext hval]
+      have hroute_eq : route j = i ↔
+          i.1 = (left j.1).2 ∧ right ((left j.1).1, j.2) = i.2 :=
+        ⟨fun h => ⟨(congrArg Prod.fst h).symm, congrArg Prod.snd h⟩,
+          fun h => Prod.ext h.1.symm h.2⟩
+      rw [hM, hN, if_congr hroute_eq rfl rfl]
       by_cases hleft : i.1 = (left j.1).2 <;>
         by_cases hright : right ((left j.1).1, j.2) = i.2 <;>
-        simp [M, N, route, r, hcoord, Prod.ext_iff, hleft, eq_comm, hright]
+        simp only [hleft, hright, true_and, false_and, ite_true, ite_false, zero_mul,
+          one_mul, and_false]
     · intro t _ ht
       have hval : t.val ≠ (left j.1).1.val := fun h => ht (Fin.ext h)
-      simp [M, hval]
-    · simp
+      have hM : M t i.1 j.1 = 0 := ite_eq_right (fun h => hval h.1)
+      rw [hM, zero_mul]
+    · exact fun h => (h (Finset.mem_univ r)).elim
   refine ⟨fun r => (Real.sqrt lam : ℂ) • M r, N, ?_⟩
   have hscale : flow (fun r => (Real.sqrt lam : ℂ) • M r) N =
       (Real.sqrt lam : ℂ) • flow M N := by
-    simp only [flow, Matrix.smul_kronecker, Finset.smul_sum]
+    simp only [flow, Finset.smul_sum]
+    exact Finset.sum_congr rfl (fun r _ => Matrix.smul_kronecker _ _ _)
   have hsquare : (Real.sqrt lam : ℂ) * (Real.sqrt lam : ℂ) = (lam : ℂ) := by
     exact_mod_cast Real.mul_self_sqrt hlam.le
   rw [hscale, hroute, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
@@ -94,8 +116,8 @@ private theorem swap_gram {a b c d : ℕ}
       ∑ r : Fin 3, M r i.2 j.2 * N r i.1 j.1
     exact Finset.sum_congr rfl (fun _ _ => mul_comm _ _)
   rw [heq, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv _ _ cols rows cols, h]
-  ext i j
-  simp [Matrix.submatrix, Matrix.one_apply, cols]
+  change z • (1 : Matrix (Fin b × Fin c) (Fin b × Fin c) ℂ).submatrix cols cols = _
+  rw [Matrix.submatrix_one_equiv]
 
 private theorem shrinking_left_bounds {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
