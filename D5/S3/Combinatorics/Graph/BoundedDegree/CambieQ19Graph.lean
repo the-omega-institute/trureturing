@@ -33,28 +33,6 @@ theorem joinAt_cross {A B : Type} (G : SimpleGraph A) (H : SimpleGraph B) (a : A
     (x : A) (y : B) : (joinAt G H a b).Adj (.inl x) (.inr y) ↔ x = a ∧ y = b := by
   simp [joinAt, sup_adj, edge_adj]
 
-private theorem joinAt_connected {A B : Type} {G : SimpleGraph A} {H : SimpleGraph B}
-    (hG : G.Connected) (hH : H.Connected) (a : A) (b : B) :
-    (joinAt G H a b).Connected := by
-  let left : G →g joinAt G H a b :=
-    ⟨Sum.inl, fun h => (joinAt_inl G H a b _ _).mpr h⟩
-  let right : H →g joinAt G H a b :=
-    ⟨Sum.inr, fun h => (joinAt_inr G H a b _ _).mpr h⟩
-  have cross : (joinAt G H a b).Reachable (.inl a) (.inr b) :=
-    ((joinAt_cross G H a b a b).mpr ⟨rfl, rfl⟩).reachable
-
-  refine @SimpleGraph.Connected.mk _ _ ?_ ⟨.inl a⟩
-  intro x y
-  cases x with
-  | inl x =>
-    cases y with
-    | inl y => exact (hG x y).map left
-    | inr y => exact ((hG x a).map left).trans (cross.trans ((hH b y).map right))
-  | inr x =>
-    cases y with
-    | inl y => exact ((hH x b).map right).trans (cross.symm.trans ((hG a y).map left))
-    | inr y => exact (hH x y).map right
-
 /-- The vertices of the core, followed by the two paths and the triangle. -/
 abbrev Vertex := ((Fin 5000 ⊕ Fin 500) ⊕ Fin 500) ⊕ Fin 3
 
@@ -71,13 +49,14 @@ def G500 : SimpleGraph Vertex :=
     (cycleGraph 3) (.inl (.inl 500)) 0
 
 /-- All four blocks belong to the same connected graph. -/
-theorem G500_connected : G500.Connected :=
-  joinAt_connected
-    (joinAt_connected
-      (joinAt_connected (connected_cycleGraph_add_one (n := 4999))
-        (connected_pathGraph_add_one 499) 0 0)
-      (connected_pathGraph_add_one 499) (.inl 1000) 0)
-    (connected_cycleGraph_add_one (n := 2)) (.inl (.inl 500)) 0
+theorem G500_connected : G500.Connected := by
+  unfold G500 joinAt
+  apply SimpleGraph.Connected.sum_sup_edge
+  · apply SimpleGraph.Connected.sum_sup_edge
+    · exact SimpleGraph.Connected.sum_sup_edge
+        (connected_cycleGraph_add_one (n := 4999)) (connected_pathGraph_add_one 499)
+    · exact connected_pathGraph_add_one 499
+  · exact connected_cycleGraph_add_one (n := 2)
 
 #print axioms G500_connected
 
