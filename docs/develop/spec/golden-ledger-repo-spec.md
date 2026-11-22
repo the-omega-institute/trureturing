@@ -556,7 +556,7 @@ GitHub 每 6 小时触发一次独立的定时 Release 作业。受保护 dev pu
 | --- | --- |
 | `lean-project-push-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>` | Actions project 地址；`lean_actions.actions_keys` 单源生成，ref 另由 Actions scope 限定，只恢复此 project 前缀。 |
 | `lean-dependency-v4-<resolved-mathlib>-<OS>-<arch>-<run>-<attempt>`、`elan-pinned-<OS>-<arch>-<pin-sha256>` | 既有 dependency 和钉版 elan 运输键；elan miss 由 `install-lean-toolchain.sh` 安装，保存前列出工具链，不删恢复的工具链。 |
-| `lean-cache-v3-<resolved-mathlib>-<platform>-report-<format>-env-<execution12>-<publication-id>` | Release buildDir 容器地址；前缀选候选后，manifest 必须匹配完整 `cache_key` 的报告格式和完整 execution SHA256 才下载构建归档。 |
+| `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-<execution12>-<publication-id>` | Release buildDir 容器地址；前缀选候选后，manifest 必须匹配完整 `cache_key` 的报告格式和完整 execution SHA256 才下载构建归档。 |
 | `stratalint-raw-lean-report-v3` | `lean-report-selection.py:REPORT_FORMAT` 单源报告线格式。 |
 | Release manifest `lean-release-seed-v4`、build-work `schema_version=1` | 前者管理运输资产与来源，后者是当前调用在恢复树之外的工作量控制证据。 |
 
