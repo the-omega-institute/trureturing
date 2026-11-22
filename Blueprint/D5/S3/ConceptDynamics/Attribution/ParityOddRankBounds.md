@@ -14,7 +14,7 @@ $$\operatorname{OddUniformMargins}\left(n, k, m, b\right) \Rightarrow 1 + \opera
 
 *Commentary.*
 
-The dimension n is even and at least six, and k is odd. The matrix m is indexed by even and odd subsets of Fin(n) and has every row and column sum equal to k. The vector b is nonnegative, bounded by the all-ones row, and positive at some column. These are the conditions denoted by OddUniformMargins.
+The dimension n is even and at least six, and k is odd. The natural-number matrix m is indexed by even and odd subsets of Fin(n) and has every row and column sum equal to k. The natural-number vector b is bounded by the all-ones row, and positive at some column. These are the conditions denoted by OddUniformMargins.
 
 IntersectionCount weights each cell by the size of the intersection of its two subsets and by its multiplicity modulo two. In the all-ones row it uses b in place of the multiplicity modulo two. PositivePart truncates a negative difference to zero.
 

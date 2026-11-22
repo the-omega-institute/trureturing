@@ -35,8 +35,8 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("The dimension n is even and at least six, and k is odd. "
-                    + "The matrix m is indexed by even and odd subsets of Fin(n) and has "
-                    + "every row and column sum equal to k. The vector b is nonnegative, "
+                    + "The natural-number matrix m is indexed by even and odd subsets of Fin(n) and has "
+                    + "every row and column sum equal to k. The natural-number vector b is "
                     + "bounded by the all-ones row, and positive at some column. "
                     + "These are the conditions denoted by OddUniformMargins.")),
                 Paragraph(Text("IntersectionCount weights each cell by the size of the "
