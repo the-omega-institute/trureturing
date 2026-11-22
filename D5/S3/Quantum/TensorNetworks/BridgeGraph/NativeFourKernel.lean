@@ -364,8 +364,10 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       | exact hc₀₁
       | exact hc₁₀
       | exact hc₁₁
-      | simpa [u, v, topRow, corner] using hv₀
-      | simpa [u, v, topRow, corner] using hv₁
+      | have h : T 1 2 = z * T 0 2 := hv₀
+        linear_combination h
+      | have h : T 1 3 = z * T 0 3 := hv₁
+        linear_combination h
       | linear_combination (hq T hT)
       | rw [hermitian_entry (hHerm T hT) 2 0, hermitian_entry (hHerm T hT) 2 1]
         have h := congrArg star hv₀
@@ -394,7 +396,7 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       have h₁ := congrFun h 2
       apply huA
       ext i
-      fin_cases i <;> simpa [w] using h₀ <;> simpa [w] using h₁
+      fin_cases i <;> first | simpa [w] using h₀ | simpa [w] using h₁
     refine ⟨w, hw, ?_⟩
     intro T hT
     have hdet : detRows (u A) (u T) = 0 := by

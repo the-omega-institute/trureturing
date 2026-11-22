@@ -432,15 +432,6 @@ private theorem stack_dimension {a b c d k : ℕ} (hc : 0 < c)
   simpa only [Module.finrank_fintype_fun_eq_card, Fintype.card_prod, Fintype.card_fin] using
     (LinearMap.finrank_le_finrank_of_injective hS)
 
-private theorem tensor_compose {a b c d p q k : ℕ}
-    (X : Fin k → Matrix (Fin a) (Fin b) ℂ) (Y : Fin k → Matrix (Fin d) (Fin c) ℂ)
-    (L : Matrix (Fin b) (Fin p) ℂ) (R : Matrix (Fin q) (Fin d) ℂ) :
-    tensorSum (fun i => X i * L) (fun i => R * Y i) =
-      kronecker (1 : Matrix (Fin a) (Fin a) ℂ) R * tensorSum X Y *
-        kronecker L (1 : Matrix (Fin c) (Fin c) ℂ) := by
-  simp only [tensorSum, Matrix.mul_sum, Matrix.sum_mul, ← Matrix.mul_kronecker_mul,
-    Matrix.one_mul, Matrix.mul_one]
-
 private theorem hermitian_to_complex {a b : ℕ} {V : Type*} [AddCommGroup V] [Module ℂ V]
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (f : Matrix (Fin 4) (Fin 4) ℂ →ₗ[ℂ] V)
     (h : ∀ T, T.IsHermitian → compression X T = 0 → f T = 0)
