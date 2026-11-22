@@ -100,6 +100,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.Action
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Prod
 import Mathlib.Logic.Function.Defs
 import Mathlib.Order.Basic
 
@@ -830,7 +831,7 @@ theorem result (n : ℕ) :
       let forward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
         ⟨fun i => (i.castSucc, i.succ), fun _ _ h => Fin.castSucc_injective _ (congrArg Prod.fst h)⟩
       let backward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
-        ⟨fun i => (i.succ, i.castSucc), fun _ _ h => Fin.castSucc_injective _ (congrArg Prod.snd h)⟩
+        (forward k).trans (Equiv.prodComm _ _).toEmbedding
       have mem_forward (e : Fin (m + 1) × Fin (m + 1)) :
           e ∈ Finset.univ.map (forward m) ↔ e.2.val = e.1.val + 1 := by
         obtain ⟨x, y⟩ := e
@@ -845,12 +846,9 @@ theorem result (n : ℕ) :
           exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
       have mem_backward (e : Fin (m + 1) × Fin (m + 1)) :
           e ∈ Finset.univ.map (backward m) ↔ e.1.val = e.2.val + 1 := by
-        obtain ⟨x, y⟩ := e
-        have h := mem_forward (y, x)
-        simp only [Finset.mem_map, Finset.mem_univ, true_and] at h ⊢
-        change (∃ i : Fin m, (i.castSucc, i.succ) = (y, x)) ↔ x.val = y.val + 1 at h
-        change (∃ i : Fin m, (i.succ, i.castSucc) = (x, y)) ↔ x.val = y.val + 1
-        simpa only [Prod.mk.injEq, and_comm] using h
+        change e ∈ Finset.univ.map ((forward m).trans (Equiv.prodComm _ _).toEmbedding) ↔ _
+        rw [← Finset.map_map, Finset.mem_map_equiv]
+        exact mem_forward e.swap
       have horizontal : horiz (m + 1) = Finset.univ.map (forward m) := by
         ext e
         simp only [horiz, Finset.mem_filter, Finset.mem_univ, true_and, mem_forward]
