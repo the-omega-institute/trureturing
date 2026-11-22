@@ -4,22 +4,21 @@ import Reg.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 import D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
 import Reg.Support.DependentFamily
 
-/-! Dependence of the joint lower bound on the chosen row and column thresholds. -/
+/-! Dependence of the exact rank deficits on the table and the chosen thresholds. -/
 
 namespace Reg.D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds
 
 open Finset LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 open _root_.D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds
-open _root_.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, ℕ
-  State _ := Finset ℕ × Finset ℕ
+  Params := ℕ
+  State := RankCutTable
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -27,95 +26,35 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def bound (p : Σ _ : ℕ, ℕ) (cuts : Finset ℕ × Finset ℕ) : ℕ :=
-  (∑ r ∈ cuts.1, ((highOrdinaryEvenRanks (n := p.1) r).card + 1 -
-    p.2 * (lowOddRanks (n := p.1) r).card)) +
-    (∑ r ∈ cuts.2, ((highOdd (n := p.1) r).card + 1 - p.2 * ((lowEven (n := p.1) r).card + 1)))
-
 def actual : Realization signature :=
-  realize signature (fun _ p t => bound p t) (fun e => nomatch e)
+  realize signature (fun _ _ table => cutDeficitSum table) (fun e => nomatch e)
 
 def raised : Realization signature :=
-  realize signature (fun _ _ _ => 6145) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n k : ℕ) (even : n % 2 = 0) (_ : k % 2 = 1)
-    (cuts : Finset ℕ × Finset ℕ), Disjoint cuts.1 cuts.2 →
-    ∀ (mass : EvenSubset n → OddSubset n → ℕ) (flags : OddSubset n → ℕ),
-    (∀ p, ∑ q, mass p q = k) → (∀ q, ∑ p, mass p q = k) →
-    ∀ (q : OddSubset n), 1 ≤ mass ⟨univ, by simpa using even⟩ q →
-    (∑ c, flags c * c.val.card) + R.readout () ⟨n,k⟩ cuts ≤
-      (∑ p : EvenSubset n, ∑ c : OddSubset n,
-        if p = ⟨univ, by simpa using even⟩ then flags c * c.val.card
-        else (mass p c % 2) * (Ioc (n - c.val.card) p.val.card).card) +
-      ((∑ r ∈ cuts.1, (if q ∈ highOdd r then
-          let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
-          d - (d - 1) else 0 : ℕ)) +
-       (∑ r ∈ cuts.2, (if q ∈ highOdd r then
-          let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
-          d - (d - 1) else 0 : ℕ)))
+  Law R := ∀ (n : ℕ) (table : RankCutTable n), table.1.val.card = n →
+    (∀ p, (∑ q, table.2.1 p q) % 2 = 1) →
+    (∀ q, (∑ p, table.2.1 p q) % 2 = 1) →
+    R.readout () n table ≤
+    ∑ p : EvenSubset n, ∑ q : OddSubset n,
+      if p = table.1 then 0
+      else (table.2.1 p q % 2) *
+        (∑ r ∈ (table.2.2.1 ∪ table.2.2.2) ∩ Ioc (n - q.val.card) p.val.card,
+          let d := mixedDeficit table.1 table.2.1 table.2.2 r
+          d - (d - 1))
 
 private theorem raised_fails : ¬ arena.Law raised := by
   intro law
-  obtain ⟨mass, rows, cols, one⟩ := rank_test_matrix
+  obtain ⟨mass, rows, cols, _⟩ := rank_test_matrix
   let full : EvenSubset 6 := ⟨univ, by decide⟩
-  have positive : ∃ q, 1 ≤ mass full q := by
-    by_contra! h
-    have zero (q : OddSubset 6) : mass full q = 0 := by
-      have small := h q
-      omega
-    simpa [zero] using rows full
-  obtain ⟨q, hq⟩ := positive
-  have impossible := law 6 1 (by decide) (by decide) (∅, ∅) (by simp)
-    mass (mass full) rows cols q hq
-  have same :
-      (∑ p : EvenSubset 6, ∑ q : OddSubset 6,
-        (if p = full then mass full q else mass p q % 2) * (p.val ∩ q.val).card) =
-      ∑ p : EvenSubset 6, ∑ q : OddSubset 6,
-        (if p.val = univ then mass full q else mass p q % 2) * (p.val ∩ q.val).card := by
-    apply sum_congr rfl
-    intro p _
-    apply sum_congr rfl
-    intro q _
-    by_cases h : p = full
-    · subst p
-      rw [ite_eq_left rfl, ite_eq_left (show full.val = univ from rfl)]
-    · rw [ite_eq_right h, ite_eq_right (fun eq => h (Subtype.ext eq))]
-  have claimed : 6145 ≤ ∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-      if p = full then mass full c * c.val.card
-      else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card := by
-    change (∑ c, mass full c * c.val.card) + 6145 ≤
-      (∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-        if p = full then mass full c * c.val.card
-        else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card) +
-      ((∑ r ∈ (∅ : Finset ℕ), (if q ∈ highOdd r then
-          let d := (highOrdinaryEvenRanks (n := 6) r).card + 1 - 1 * (lowOddRanks (n := 6) r).card
-          d - (d - 1) else 0 : ℕ)) +
-       (∑ r ∈ (∅ : Finset ℕ), (if q ∈ highOdd r then
-          let d := (highOdd (n := 6) r).card + 1 - 1 * ((lowEven (n := 6) r).card + 1)
-          d - (d - 1) else 0 : ℕ))) at impossible
-    simp only [sum_empty, Nat.add_zero] at impossible
-    omega
-  have extend :
-      (∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-        if p = full then mass full c * c.val.card
-        else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card) ≤
-      ∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-        (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card := by
-    apply sum_le_sum
-    intro p _
-    apply sum_le_sum
-    intro c _
-    by_cases hp : p = full
-    · subst p
-      simp [full]
-    · rw [ite_eq_right hp, ite_eq_right hp,
-        rank_interval_card_eq_intersection_sub 6 (p.val, c.val)]
-      exact Nat.mul_le_mul_left _ (Nat.sub_le _ _)
-  have upper := test_score_at_most mass (mass full) one (one full)
-  exact (by decide : ¬ 6145 ≤ 6144) (claimed.trans (extend.trans (same.le.trans upper)))
-
+  have fullSize : full.val.card = 6 := by simp [full]
+  have h := law 6 (full, mass, ∅, ∅) fullSize
+    (fun p => by rw [rows]) (fun q => by rw [cols])
+  simp only [raised, realize, empty_union, empty_inter, sum_empty, Nat.mul_zero,
+    ite_self, sum_const_zero] at h
+  exact (by decide : ¬ (1 : ℕ) ≤ 0) h
 
 def family : Registration arena (type_of% mixed_rank_lower) where
   actual := actual
@@ -130,7 +69,9 @@ def family : Registration arena (type_of% mixed_rank_lower) where
     · exact fun e => nomatch e
   dependence := by
     rintro ⟨⟩
-    exact ⟨⟨6,1⟩, (∅, ∅), (∅, {2}), by decide +kernel⟩
+    let full : EvenSubset 2 := ⟨univ, by decide⟩
+    exact ⟨2, (full, fun _ _ => 0, ∅, ∅), (full, fun _ _ => 0, {0}, ∅),
+      by decide +kernel⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     mixed_rank_lower (Realization signature) Unit Unit where
@@ -145,7 +86,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p t => bound p t) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ table => cutDeficitSum table) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -153,11 +94,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds
     definition := none
-    coordinates := #[0,1]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 4
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

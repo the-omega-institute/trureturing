@@ -76,16 +76,6 @@ private theorem stacked_cuts
       · simp [h, oddPart]
       · simpa [h, oddPart, columnGate, rowGate] using Nat.mul_le_mul_left (mass p q % 2) (budget p q h)
 
-theorem rank_interval_card_eq_intersection_sub (n : ℕ)
-    (pair : Finset (Fin n) × Finset (Fin n)) :
-    (Ioc (n - pair.2.card) pair.1.card).card =
-      (pair.1 ∩ pair.2).card - (n - (pair.1 ∪ pair.2).card) := by
-  have combined := card_union_add_card_inter pair.1 pair.2
-  have union : (pair.1 ∪ pair.2).card ≤ n := by simpa using card_le_univ (pair.1 ∪ pair.2)
-  have right : pair.2.card ≤ n := by simpa using card_le_univ pair.2
-  rw [Nat.card_Ioc]
-  omega
-
 private theorem stack_intersection_budget {n : ℕ} (p q : Finset (Fin n))
     (even : p.card % 2 = 0) (thresholds : Finset ℕ)
     (lower : ∀ r ∈ thresholds, 4 ≤ r) :
@@ -106,8 +96,11 @@ private theorem stack_intersection_budget {n : ℕ} (p q : Finset (Fin n))
     apply mem_Ioc.mpr
     refine ⟨?_, up⟩
     omega
-  have room : budget.card ≤ (p ∩ q).card :=
-    (rank_interval_card_eq_intersection_sub n (p, q)).le.trans (Nat.sub_le _ _)
+  have room : budget.card ≤ (p ∩ q).card := by
+    have h := card_union_add_card_inter p q
+    have union : (p ∪ q).card ≤ n := by simpa using (card_le_univ (p ∪ q))
+    rw [Nat.card_Ioc]
+    omega
   rw [sum_used]
   split
   next top =>
@@ -221,7 +214,7 @@ private theorem reserved_top_mass {n k : ℕ}
     simp [h]
     omega
 
-theorem reserved_low_mass {n k r : ℕ}
+private theorem reserved_low_mass {n k r : ℕ}
     (mass : EvenSubset n → OddSubset n → ℕ)
     (special : EvenSubset n) (full : special.val.card = n)
     (col : ∀ q, ∑ p, mass p q = k)
