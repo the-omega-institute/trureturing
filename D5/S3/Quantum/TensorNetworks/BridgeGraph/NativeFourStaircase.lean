@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeThreeRectangularBound
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
-import Mathlib.LinearAlgebra.Matrix.Bilinear
 
 /-! Rectangular coordinate embeddings and coefficient-kernel bounds at tensor width four. -/
 
@@ -155,14 +154,19 @@ private theorem rectangles_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     ext i p
     change (∑ r : Fin 4, X r i.1 p.1 * Y r i.2 p.2) = if e p = i then 1 else 0
     rw [Finset.sum_eq_single (slot p)]
-    · rw [hentry, if_congr ?_ rfl rfl]
-      rw [and_iff_right (hslot p)]
-      exact ⟨fun h => Prod.ext (Fin.ext (congrArg Prod.fst h))
-        (Fin.ext (congrArg Prod.snd h)), fun h =>
-          congrArg (fun z : Fin a × Fin d => (z.1.val, z.2.val)) h⟩
+    · rw [hentry]
+      have hcond : ((R (slot p)).covers p.1 p.2 ∧
+          (R (slot p)).image p.1 p.2 = (i.1.val, i.2.val)) ↔ e p = i := by
+        rw [and_iff_right (hslot p)]
+        exact ⟨fun h => Prod.ext (Fin.ext (congrArg Prod.fst h))
+          (Fin.ext (congrArg Prod.snd h)), fun h =>
+            congrArg (fun z : Fin a × Fin d => (z.1.val, z.2.val)) h⟩
+      simp only [hcond]
     · intro r _ hne
-      rw [hentry, if_neg]
-      exact fun h => hne (hunique r (slot p) _ _ p.1.isLt p.2.isLt h.1 (hslot p))
+      rw [hentry]
+      have hn : ¬ (R r).covers p.1 p.2 := fun h =>
+        hne (hunique r (slot p) _ _ p.1.isLt p.2.isLt h (hslot p))
+      simp [hn]
     · simp
   exact of_unit_gram hlam X Y (by rw [hroute, coordinate_gram])
 
@@ -170,8 +174,8 @@ private def blocks (a c : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, a, c⟩,
     ⟨2 * a, 0, 0, 2 * c, a, c⟩, ⟨3 * a, 0, 0, 3 * c, a, c⟩]
 
--- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 private theorem blocks_gram {a b c d k : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hk : k ≤ 4) (hb : b ≤ k * a) (hd : k * c ≤ d) : FourScalarGram a b c d lam := by
   have hba : b ≤ 4 * a := hb.trans (Nat.mul_le_mul_right _ hk)
@@ -180,10 +184,10 @@ private theorem blocks_gram {a b c d k : ℕ} {lam : ℝ} (hlam : 0 < lam)
     by_cases h₀ : x < a
     · exact ⟨0, by simp [blocks, Rectangle.covers, h₀, hy]⟩
     by_cases h₁ : x < 2 * a
-    · exact ⟨1, by simp [blocks, Rectangle.covers, hy] <;> omega⟩
+    · exact ⟨1, by simp [blocks, Rectangle.covers, hy]; omega⟩
     by_cases h₂ : x < 3 * a
-    · exact ⟨2, by simp [blocks, Rectangle.covers, hy] <;> omega⟩
-    exact ⟨3, by simp [blocks, Rectangle.covers, hy] <;> omega⟩
+    · exact ⟨2, by simp [blocks, Rectangle.covers, hy]; omega⟩
+    exact ⟨3, by simp [blocks, Rectangle.covers, hy]; omega⟩
   · intro r s x y hx hy hr hs
     fin_cases r <;> fin_cases s <;> simp_all [blocks, Rectangle.covers] <;> omega
   · intro r x y hx hy hr
@@ -200,8 +204,8 @@ private def thirds (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, excess, spare⟩, ⟨a, 2 * spare, 2 * excess, c, excess, spare⟩]
 
--- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 private theorem thirds_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 3 * b ≤ 4 * a) (hd : 4 * c ≤ 3 * d) : FourScalarGram a b c d lam := by
   apply rectangles_gram hlam (thirds a b c d)
@@ -209,10 +213,10 @@ private theorem thirds_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     by_cases h₀ : x < a
     · exact ⟨0, by simp [thirds, Rectangle.covers, h₀, hy]⟩
     by_cases h₁ : y < d - c
-    · exact ⟨1, by simp [thirds, Rectangle.covers] <;> omega⟩
+    · exact ⟨1, by simp [thirds, Rectangle.covers]; omega⟩
     by_cases h₂ : y < 2 * (d - c)
-    · exact ⟨2, by simp [thirds, Rectangle.covers] <;> omega⟩
-    exact ⟨3, by simp [thirds, Rectangle.covers] <;> omega⟩
+    · exact ⟨2, by simp [thirds, Rectangle.covers]; omega⟩
+    exact ⟨3, by simp [thirds, Rectangle.covers]; omega⟩
   · intro r s x y hx hy hr hs
     fin_cases r <;> fin_cases s <;> simp_all [thirds, Rectangle.covers] <;> omega
   · intro r x y hx hy hr
@@ -229,8 +233,8 @@ private def halves (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, excess, spare⟩, ⟨0, 0, 0, 0, 0, 0⟩]
 
--- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 private theorem halves_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 2 * b ≤ 3 * a) (hd : 3 * c ≤ 2 * d) : FourScalarGram a b c d lam := by
   apply rectangles_gram hlam (halves a b c d)
@@ -238,8 +242,8 @@ private theorem halves_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     by_cases h₀ : x < a
     · exact ⟨0, by simp [halves, Rectangle.covers, h₀, hy]⟩
     by_cases h₁ : y < d - c
-    · exact ⟨1, by simp [halves, Rectangle.covers] <;> omega⟩
-    exact ⟨2, by simp [halves, Rectangle.covers] <;> omega⟩
+    · exact ⟨1, by simp [halves, Rectangle.covers]; omega⟩
+    exact ⟨2, by simp [halves, Rectangle.covers]; omega⟩
   · intro r s x y hx hy hr hs
     fin_cases r <;> fin_cases s <;> simp_all [halves, Rectangle.covers] <;> omega
   · intro r x y hx hy hr
@@ -258,8 +262,8 @@ private def threeFifths (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, left, tail⟩, ⟨a + left, spare, excess, c + tail, left, tail⟩]
 
--- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 private theorem three_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 3 * b ≤ 5 * a) (hd : 5 * c ≤ 3 * d) : FourScalarGram a b c d lam := by
   by_cases hroom : 2 * c ≤ d
@@ -269,10 +273,10 @@ private theorem three_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     by_cases h₀ : x < a
     · exact ⟨0, by simp [threeFifths, Rectangle.covers, h₀, hy]⟩
     by_cases h₁ : y < d - c
-    · exact ⟨1, by simp [threeFifths, Rectangle.covers] <;> omega⟩
+    · exact ⟨1, by simp [threeFifths, Rectangle.covers]; omega⟩
     by_cases h₂ : x < a + (a - (b - a))
-    · exact ⟨2, by simp [threeFifths, Rectangle.covers] <;> omega⟩
-    exact ⟨3, by simp [threeFifths, Rectangle.covers] <;> omega⟩
+    · exact ⟨2, by simp [threeFifths, Rectangle.covers]; omega⟩
+    exact ⟨3, by simp [threeFifths, Rectangle.covers]; omega⟩
   · intro r s x y hx hy hr hs
     fin_cases r <;> fin_cases s <;> simp_all [threeFifths, Rectangle.covers] <;> omega
   · intro r x y hx hy hr
@@ -290,8 +294,8 @@ private def twoFifths (a b c d : ℕ) : Fin 4 → Rectangle :=
     ⟨2 * a, 0, 0, 2 * c, excess, spare⟩,
     ⟨2 * a, spare, excess, 2 * c, excess, spare⟩]
 
--- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 private theorem two_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 2 * b ≤ 5 * a) (hd : 5 * c ≤ 2 * d) : FourScalarGram a b c d lam := by
   apply rectangles_gram hlam (twoFifths a b c d)
@@ -299,10 +303,10 @@ private theorem two_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     by_cases h₀ : x < a
     · exact ⟨0, by simp [twoFifths, Rectangle.covers, h₀, hy]⟩
     by_cases h₁ : x < 2 * a
-    · exact ⟨1, by simp [twoFifths, Rectangle.covers, hy] <;> omega⟩
+    · exact ⟨1, by simp [twoFifths, Rectangle.covers, hy]; omega⟩
     by_cases h₂ : y < d - 2 * c
-    · exact ⟨2, by simp [twoFifths, Rectangle.covers] <;> omega⟩
-    exact ⟨3, by simp [twoFifths, Rectangle.covers] <;> omega⟩
+    · exact ⟨2, by simp [twoFifths, Rectangle.covers]; omega⟩
+    exact ⟨3, by simp [twoFifths, Rectangle.covers]; omega⟩
   · intro r s x y hx hy hr hs
     fin_cases r <;> fin_cases s <;> simp_all [twoFifths, Rectangle.covers] <;> omega
   · intro r x y hx hy hr
@@ -528,7 +532,7 @@ private theorem mixed_right_block {c d k : ℕ}
     arg 2
     ext i
     rw [Finset.sum_comm]
-  rw [Finset.sum_comm]
+  conv_lhs => rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro j _
   apply Finset.sum_congr rfl
@@ -547,7 +551,7 @@ private theorem right_block_compression {a b c d : ℕ}
   convert compress_block X Y hF hX l m using 2
   ext r s
   by_cases h : r = s <;> by_cases hm : l = m <;>
-    simp [rightBlock, Matrix.one_apply, h, hm]
+    simp [rightBlock, h, hm]
 
 private theorem neutral_dimension {a b c d k : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -707,8 +711,11 @@ private theorem common_kernel_reduction {a b c d : ℕ}
   have hBdep : ¬ LinearIndependent ℂ B' := by
     intro h
     apply hWdep
-    apply LinearIndependent.of_comp (Matrix.mulLeftLinearMap (Fin c) ℂ Rᴴ)
-    exact h
+    let f : Matrix (Fin d) (Fin c) ℂ →ₗ[ℂ] Matrix (Fin (d - c)) (Fin c) ℂ :=
+      { toFun := fun M => Rᴴ * M
+        map_add' := Matrix.mul_add _
+        map_smul' := Matrix.mul_smul _ }
+    exact LinearIndependent.of_comp f h
   obtain ⟨A, B, hAB⟩ := cut_dependent_right A' B' hBdep
   have hWfix (r : Fin 4) : R * (Rᴴ * W r) = W r := hfix _ (hZW r)
   let K := kronecker L (1 : Matrix (Fin c) (Fin c) ℂ)
@@ -806,10 +813,10 @@ private theorem large_bounds {a b c d : ℕ}
             have := Fintype.card_pos (α := {i // hT.eigenvalues i ≠ 0})
             omega
           rw [hT.spectral_theorem]
-          have hd : diagonal (Complex.ofReal ∘ hT.eigenvalues) = 0 := by
+          have hd : diagonal (RCLike.ofReal ∘ hT.eigenvalues : Fin 4 → ℂ) = 0 := by
             ext i j
             simp [Matrix.diagonal_apply, Function.comp_def, he]
-          rw [hd, Matrix.mul_zero, Matrix.zero_mul]
+          rw [hd, map_zero]
         have h4 := trivial_kernel_dimension U V hUV hMX hk
         omega
       · have hRank (T) (hT : T.IsHermitian) (h : compression U T = 0) : T.rank ≤ 2 := by
@@ -835,7 +842,7 @@ private theorem large_bounds {a b c d : ℕ}
   · obtain ⟨A, B, h⟩ := cut_dependent_left X Y hXL
     exact reduced A B h
 
-/-- The three inclusive upper thresholds are necessary and sufficient above twice the left output. -/
+/-- The three thresholds above twice the left output include equality at each upper bound. -/
 theorem native_four_scalar_gram_iff (a b c d : ℕ) (lam : ℝ)
     (hlam : 0 < lam) (hc : 0 < c) (hab : 2 * a < b) :
     FourScalarGram a b c d lam ↔
