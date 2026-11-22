@@ -640,7 +640,7 @@ private theorem parity_minus_energy_two_physical_mode
   change zeroMode D hu a s (v : ActualTensor D hu) = _
   exact (fixedParitySlice_zeroMode_coe D hu a s ⟨v.val, v.property.1⟩).symm
 
-private def energyTwoEigenspaceEquiv
+def energyTwoEigenspaceEquiv
     (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
     (a : Charge D) (ha : bilinear D a a = 4) (s lam : ℂ) :
     (actualGradeOneZeroMode D hu a ha s).eigenspace lam ≃ₗ[ℂ]
