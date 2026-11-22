@@ -19,5 +19,5 @@ Use alternating forms in an integral basis indexed by a finite ordered set. Fix 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SunflowerPivotProduct.sunflower_pivot_product`
-- Dependency: [D5/S3/Combinatorics/Matroids/CircuitCoefficientExchange](CircuitCoefficientExchange.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SunflowerCircuitWeightBasis](SunflowerCircuitWeightBasis.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/SupportedPivotProduct](SupportedPivotProduct.md)
