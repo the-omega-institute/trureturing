@@ -26,6 +26,7 @@ import Init.Core
 import Init.SimpLemmas
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Fin
 import Mathlib.Data.Finset.Insert
+import Mathlib.Data.Fin.Rev
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer

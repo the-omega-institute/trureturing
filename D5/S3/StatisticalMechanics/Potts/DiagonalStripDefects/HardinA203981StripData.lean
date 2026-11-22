@@ -30,6 +30,7 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Fin.Rev
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic

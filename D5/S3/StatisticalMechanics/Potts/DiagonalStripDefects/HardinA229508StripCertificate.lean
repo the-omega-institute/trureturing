@@ -28,6 +28,7 @@ halfForwardOne: proof_shape=bind-only; consumers=W
 
 import Mathlib.Order.Fin.Basic
 import Mathlib.Data.Finset.NatAntidiagonal
+import Mathlib.Algebra.Order.Antidiag.Prod
 import Mathlib.Basic.Logic.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
@@ -44,6 +45,7 @@ import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Nat.Basic
+import Init.Data.Nat.Lemmas
 import Init.Data.Sum.Basic
 import Init.Data.Sum.Lemmas
 import Init.Prelude
