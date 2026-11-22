@@ -20,7 +20,7 @@ internal sealed class OddBoundDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Paper),
                 Blocks(
                     Paragraph(Text(
-                        "Let p ≥ 193 and take a positive odd exponent k ≤ p. "
+                        "For a prime p ≥ 193, the oscillation argument uses the odd exponents k = p−2 and k = p, both in the range 3 ≤ k ≤ p. "
                         + "The shifted powers from bases at most ⌊p/3⌋ have gcd one. "
                         + "Modulo 2^k−1, every residue has a representative of weight at most (2^k−2)(⌊p/3⌋^k−1). "
                         + "Adding copies of 2^k−1 covers all integers beyond this conductor bound. "

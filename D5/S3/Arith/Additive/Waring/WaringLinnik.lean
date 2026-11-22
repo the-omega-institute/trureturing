@@ -21,18 +21,20 @@ import D5.S3.Arith.Additive.Waring.WaringSchnirelmann
 /-!
 # 从正密度到 Waring：Linnik 证明的最后一次接线
 
-`WaringSchnirelmann.schnirelmann` 证明：正 Shnirelman 密度集合是有限阶加法基。
+`WaringSchnirelmann.lean` 中的 `Waring.schnirelmann` 证明：含零的正 Schnirelmann 密度集合是有限阶加法基。
 这里把它与 `IsSumOfKthPowers` 组合起来，得到
 
 ```lean
 theorem isWaringBound_of_positive_density {k s : ℕ} {δ : ℚ} (hδ : 0 < δ)
-    (h : HasDensity {n | ∃ t ≤ s, IsSumOfKthPowers k n t} δ) :
-    ∃ g, IsWaringBound k g
+    (hdens : HasDensity {n : ℕ | ∃ t ≤ s, IsSumOfKthPowers k n t} δ) :
+    ∃ g : ℕ, IsWaringBound k g
 ```
 
 即：**若「至多 `s` 个 `k` 次幂之和」的集合有正密度，则 Waring 对 `k` 成立。**
-配合 Linnik 的均值和估计（`WARING-M3-PLAN.md` Theorem 1，取 `s = 8^{k-1}`）
-就得到完整的 Waring–Hilbert 定理；那条分析不等式是本仓库唯一剩下的缺口。
+对 `k ≥ 2`，`WaringIndStep2.lean` 中的 `meanValueBound_all` 给出均值估计。
+`WaringTheorem2.lean` 中的 `rCount_le_poly` 用该估计在 `s = 8^{k-1}` 时控制表示数，
+`positiveDensity_k` 据此得到正密度。`positiveDensity` 汇合 `k = 1` 与 `k ≥ 2` 两种情形，
+再由 `waringTheorem_of_positive_density` 得到 `Waring.waringTheorem`。
 
 本文件不含任何分析；它只是把「`h` 重和集」展开成 `h×s` 个 `k` 次幂。
 -/

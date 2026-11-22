@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Additive/BenfieldLippard/OddBound.odd_upper`
 
 *Commentary.*
 
-Let p ≥ 193 and take a positive odd exponent k ≤ p. The shifted powers from bases at most ⌊p/3⌋ have gcd one. Modulo 2^k−1, every residue has a representative of weight at most (2^k−2)(⌊p/3⌋^k−1). Adding copies of 2^k−1 covers all integers beyond this conductor bound. The resulting comparison is 2|B(k)| < p^(p−1).
+For a prime p ≥ 193, the oscillation argument uses the odd exponents k = p−2 and k = p, both in the range 3 ≤ k ≤ p. The shifted powers from bases at most ⌊p/3⌋ have gcd one. Modulo 2^k−1, every residue has a representative of weight at most (2^k−2)(⌊p/3⌋^k−1). Adding copies of 2^k−1 covers all integers beyond this conductor bound. The resulting comparison is 2|B(k)| < p^(p−1).
 
 ## References
 
