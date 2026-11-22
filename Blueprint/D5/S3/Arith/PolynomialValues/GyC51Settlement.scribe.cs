@@ -36,20 +36,24 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
                 "Each determinant uses the coefficient at one interior index and the coefficients at its two neighbors."),
             Definition("claim", "Gy's affirmative assertion", Iff(V("claim"), ClaimBody()),
                 "Gy asks in Section 5, printed page 16, whether strong q-log-concavity of a sequence in R[q] "
-                + "forces log-concavity of the coefficients of both E and H at each allowed triple."),
+                + "forces log-concavity of the coefficients of both E and H at each allowed triple. "
+                + "Conjecture 5.1 on printed page 15 asks for coefficient nonnegativity of E and H."),
             Describe.Lean(DescribeId.Create("gy26c51-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Both outputs can fail coefficient log-concavity"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
+                StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "Set gₜ = 1 + q + tq² and xₖ = (k + a)gₜ. The strong q-log-concavity difference is "
-                    + "(r − i)gₜ² in the shifted indexing. The elementary subset and complete homogeneous multiset sums "
-                    + "give the same positive multiple of gₜ⁴ for both outputs at n = j + 2 and p = j + 1, "
-                    + "when a > 0 and j ≥ 1. For a multiple Cgₜ⁴, the first three coefficients are "
-                    + "C, 4C and (6 + 4t)C. The index-one determinant is negative when t > 5/2. "
-                    + "At a = 1, t = 3 and j = 1 the two determinants are both −200."))),
-                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("gy26c51"),
-                    ResolutionKind.Refuted)))));
+                    "Set gₜ = 1 + q + tq² and xₖ = (k + a)gₜ for every k ≥ 0. The strong q-log-concavity "
+                    + "difference is (r − i)gₜ² for every i ≤ r, so the premise holds for t ≥ 0.")),
+                    Paragraph(Text(
+                    "For n = j + 2 and p = j + 1, each output equals Cgₜ⁴, where "
+                    + "C = j(j + 1)²(j + 2)(2a + j + 2)(4a + j + 3)/48 is positive for a > 0 and j ≥ 1. "
+                    + "The first three coefficients are C, 4C and (6 + 4t)C. At t > 5/2, index one is interior "
+                    + "and its determinant (10 − 4t)C² is negative.")),
+                    Paragraph(Text(
+                    "The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). Each output has first "
+                    + "coefficients 10, 40 and 180 and determinant −200. Both polynomials have nonnegative coefficients."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string title, Formula statement, string prose) =>
         Describe.Lean(DescribeId.Create("gy26c51-" + (name switch
@@ -74,7 +78,6 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
     private static Formula Iff(Formula left, Formula right) => new Formula.Logic(left, FormulaLogicOperator.Iff, right);
     private static Formula Less(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Le(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
-    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula WithSequence(Formula body) => All("x", Seq(Nat(), Sp, To, Sp, Poly()), body);
     private static Formula WithTriple(Formula body) => All("n", Nat(), All("p", Nat(), All("j", Nat(), body)));
 
@@ -120,9 +123,12 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
     {
         var f = V("f");
         var k = V("k");
+        Formula Coeff(Formula index) => Call("coeff", f, index);
+        var determinant = Subtract(new Formula.Power(Coeff(k), D(2)),
+            Multiply(Coeff(Add(k, D(1))), Coeff(Subtract(k, D(1)))));
         return All("f", Poly(), Iff(Call("CoeffLogConcave", f), All("k", Nat(),
             Imp(Le(D(1), k), Imp(Less(k, Call("natDegree", f)),
-                Le(D(0), Call("logConcaveOp", Call("coeff", f), k)))))));
+                Le(D(0), determinant))))));
     }
 
     private static Formula ClaimBody()
