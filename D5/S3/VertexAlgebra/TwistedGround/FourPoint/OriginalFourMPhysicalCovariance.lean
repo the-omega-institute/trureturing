@@ -34,7 +34,7 @@ open OriginalFourMChartProduct (chartScale chartDifference)
 open OriginalFourMPeriodSource (dPeriod)
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitPeriod)
 open OriginalGaussianExternalAnalyticCandidate (b)
-open OriginalGaussianExternalSignedCandidate (h cauchy E G K)
+open OriginalGaussianExternalSignedCandidate (h cauchy E G K N rho rationalT)
 open OriginalFourMOccupationTransport
   (flags rawLocal halfJacobian inverseRoot physicalSource signed_physical_source_transport
     inverseRoot_zero inverseRoot_sq inverseRoot_analytic rawLocal_analytic root_ne
@@ -87,6 +87,55 @@ def physicalCovariance (upperA : Bool) (c : Chart) (x : ℝ) (i j : Puncture)
     (rawLocal c x i u) (rawLocal c x j v) - slotCorrection c x i j u v) /
     (jac c x i u * jac c x j v)
 
+private theorem rho_swap (e f : Bool) (u v : ℂ) :
+    rho e f u v = rho f e v u := by
+  cases e <;> cases f <;> simp [rho, add_comm, mul_comm]
+
+private theorem cauchy_swap (e f : Bool) (u v : ℂ) :
+    cauchy e f u v = cauchy f e v u := by
+  rw [cauchy, cauchy, rho_swap e f]
+  congr 2
+  cases e <;> cases f <;> simp [G, mul_comm] <;> ring
+
+private theorem rationalT_swap (e f : Bool) (u v r : ℂ) :
+    rationalT e f u v r = rationalT f e v u r := by
+  have hE : E e f u v r = E f e v u r := by
+    cases e <;> cases f <;> simp [E, K, mul_comm]
+  have hN : N e f u v r = N f e v u r := by
+    cases e <;> cases f <;> simp [N, add_comm, mul_comm, mul_left_comm]
+  rw [rationalT, rationalT, hE, hN]
+  ring
+
+/-- The physical regular covariance is symmetric under exchanging the two
+punctures and coordinates, including the inverse lowering correction. -/
+theorem physical_covariance_swap (upperA : Bool) (c : Chart) (x : ℝ)
+    (i j : Puncture) (u v : ℂ) :
+    physicalCovariance upperA c x i j u v = physicalCovariance upperA c x j i v u := by
+  have hC (l k e f : Bool) (u v : ℂ) :
+      chartCovariance upperA c x l k e f u v = chartCovariance upperA c x k l f e v u := by
+    unfold chartCovariance
+    dsimp only
+    by_cases h : l = k
+    · simp only [h, ite_true, rho_swap e f, cauchy_swap e f]
+      have hh : (if e = f then (0 : ℂ) else cauchy f e v u) =
+          if f = e then 0 else cauchy f e v u := by simp [eq_comm]
+      rw [hh, add_comm (chartW c x e u)]
+      ring_nf
+    · simp only [h, Ne.symm h, ite_false, rationalT_swap e f]
+      ring
+  have hS : slotCorrection c x i j u v = slotCorrection c x j i v u := by
+    by_cases h : i = j
+    · subst j
+      simp only [slotCorrection, and_self, ite_true, freeCorrection]
+      ring_nf
+    · have hn : ¬ ((flags c i).1 = (flags c j).1 ∧ (flags c i).2 = (flags c j).2) :=
+        fun hf => h (same_flags c hf)
+      have hn' : ¬ ((flags c j).1 = (flags c i).1 ∧ (flags c j).2 = (flags c i).2) :=
+        fun hf => h (same_flags c hf).symm
+      simp [slotCorrection, hn, hn']
+  unfold physicalCovariance
+  rw [hC, hS, mul_comm (jac c x i u) (jac c x j v)]
+
 private theorem comp_fst {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) :
     AnalyticAt ℂ (fun uv : ℂ × ℂ => f uv.1) (0, 0) :=
   hf.comp_of_eq analyticAt_fst rfl
@@ -95,7 +144,7 @@ private theorem comp_snd {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) :
     AnalyticAt ℂ (fun uv : ℂ × ℂ => f uv.2) (0, 0) :=
   hf.comp_of_eq analyticAt_snd rfl
 
-private theorem physicalCovariance_analytic (upperA : Bool) {x : ℝ} (hx : 0 < x)
+theorem physicalCovariance_analytic (upperA : Bool) {x : ℝ} (hx : 0 < x)
     (hx1 : x < 1) (c : Chart) (i j : Puncture) :
     AnalyticAt ℂ (fun uv : ℂ × ℂ => physicalCovariance upperA c x i j uv.1 uv.2) (0, 0) := by
   have hbi := inverseRoot_analytic hx hx1 c i

@@ -167,7 +167,7 @@ private theorem inverse_log_trivial_budget {m : ℕ} (hm : 2 ≤ m) {D c : ℝ}
           mul_le_mul_of_nonneg_left hqm (by positivity)
         _ = _ := by ring
 
-private theorem mobius_prefix_rh_power (hRH : RiemannHypothesis) :
+theorem mobius_prefix_rh_power (hRH : RiemannHypothesis) :
     ∃ D : ℝ, 0 < D ∧ ∀ m k : ℕ, k ≤ m →
       |∑ n ∈ Finset.Ioc 0 k, (μ n : ℝ)| ≤ D*(m : ℝ)^(3/4 : ℝ) := by
   have hzero (z : ℂ) (hz : 1/2 < z.re) (hne : z ≠ 1) : riemannZeta z ≠ 0 := by
