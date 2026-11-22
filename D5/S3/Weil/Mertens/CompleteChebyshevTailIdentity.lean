@@ -187,7 +187,7 @@ private lemma regular_logderiv_tendsto :
     ← Complex.ofReal_sub, ← Complex.ofReal_inv, Complex.ofReal_re, one_div] using hr
 
 /-- The actual Chebyshev error has total mass -1-gamma; no normalization premise is added. -/
-private lemma normalized_error_integral (h : IntegrableOn K (Ioi 1)) :
+lemma normalized_error_integral (h : IntegrableOn K (Ioi 1)) :
     (∫ u in Ioi 1, K u) = -1 - Real.eulerMascheroniConstant := by
   have hsame :
       (fun s : ℝ =>
@@ -210,7 +210,7 @@ private lemma normalized_error_integral (h : IntegrableOn K (Ioi 1)) :
     (hright.congr' hsame.symm)
   linarith only [he]
 
-private lemma finite_error_integral (h : IntegrableOn K (Ioi 1))
+lemma finite_error_integral (h : IntegrableOn K (Ioi 1))
     {t : ℝ} (ht : 1 ≤ t) :
     (∫ u in 1..t, K u) =
       (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) -

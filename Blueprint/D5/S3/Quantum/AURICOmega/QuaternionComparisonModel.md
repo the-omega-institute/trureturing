@@ -122,7 +122,7 @@ $$\operatorname{ChainConnected}\left(\operatorname{quaternionModel}\right)$$
 
 *Commentary.*
 
-The unit quaternions are exactly the quaternions of norm one, the unit three-sphere in a real space of dimension four, and this sphere is connected. For a fixed point a the reading kappa a b is continuous in b and equals one at b = a, so for positive e every b near a satisfies 1 - e < kappa a b and, by symmetry, 1 - e < kappa b a. Thus, for each point a, the relation holds in both directions, from a to b and from b to a, for every b in a neighbourhood of a. On a connected space, a transitive relation with this two-sided neighbourhood property holds between all pairs; applied to the reflexive transitive closure of 1 - e < kappa a b, this joins any two unit quaternions.
+By the lemma that the unit quaternions are path-connected, they form a connected space. By the lemma that the reading of the unit quaternion model is continuous, for a fixed point a the reading kappa a b is continuous in b, and it equals one at b = a, so for positive e every b near a satisfies 1 - e < kappa a b and, by symmetry, 1 - e < kappa b a. Thus, for each point a, the relation holds in both directions, from a to b and from b to a, for every b in a neighbourhood of a. On a connected space, a transitive relation with this two-sided neighbourhood property holds between all pairs; applied to the reflexive transitive closure of 1 - e < kappa a b, this joins any two unit quaternions.
 
 **Theorem 1.11 (The reading has feature rank five).**
 
@@ -136,12 +136,38 @@ $$\operatorname{HasFeatureRank}\left(\operatorname{quaternionModel}, 5\right)$$
 
 The feature map sends q to (1 / sqrt 2) * (1, re q, imI q, imJ q, imK q) in Euclidean five-space. The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q.
 
+**Lemma 1.12 (The unit quaternions are path-connected).**
+
+$$\operatorname{PathConnectedSpace}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.pathConnectedSpace_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With the subspace topology of the quaternions, the group of unit quaternions is a path-connected space: it is nonempty and any two unit quaternions are joined by a continuous path of unit quaternions. By the lemma that the unit quaternions form the unit sphere, it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere of nonnegative radius in a real normed space of dimension greater than one is path-connected. A path-connected space is connected, and in particular preconnected.
+
+**Lemma 1.13 (The reading of the unit quaternion model is continuous).**
+
+$$\operatorname{Continuous}\left((p: \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right) \times \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)) \mapsto \operatorname{kappa}\left(\operatorname{quaternionModel}, p.1, p.2\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reading of quaternionModel is (x, y) -> (1 + <x, y>) / 2, where <x, y> is the real inner product of the quaternions. The inclusion of the unit quaternions into the quaternions is continuous and the real inner product is continuous, so the reading is continuous on pairs of unit quaternions.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.coe_unitary_eq_sphere`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.continuous_kappa_quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.feature`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_eq_components`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.inner_feature`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.pathConnectedSpace_unitary`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_chainConnected`
 - Truth anchor: `D5/S3/Quantum/AURICOmega/QuaternionComparisonModel.quaternionModel_hasFeatureRank_five`

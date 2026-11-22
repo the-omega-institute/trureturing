@@ -175,6 +175,64 @@ def chartSign (e f : Bool) : ℂ := if e && !f then -1 else 1
 def chartLinear (e f : Bool) (u v U V : ℂ) : ℂ :=
   if e = f then u * U - v * V else if e then U - u * v * V else V - u * v * U
 
+/-- Normalized weighted source roots give the regular J expression after
+subtracting the signed Cauchy kernel. The root and source identities apply
+to any chart with the indicated nonzero denominators. -/
+theorem regularJ_chart_algebra (e f : Bool) {u v r me mf U V : ℂ}
+    (hbu : b u ≠ 0) (hbv : b v ≠ 0) (hs : U + V ≠ 0) (hg : G e f u v ≠ 0)
+    (hwu : U ≠ 0) (hwv : V ≠ 0)
+    (hU : U ^ 2 * b u = h e u r) (hV : V ^ 2 * b v = h f v r)
+    (hmu : me * b u * U = 1) (hmv : mf * b v * V = 1) :
+    me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf * (r / 4 + r ^ 2 * rho e f u v / (4 * b u * b v * (U + V) ^ 2)) := by
+  have hB : me * mf = 1 / (b u * b v * U * V) := by
+    apply (eq_div_iff (by aesop : b u * b v * U * V ≠ 0)).2
+    calc
+      _ = (me * b u * U) * (mf * b v * V) := by ring
+      _ = 1 := by rw [hmu, hmv, one_mul]
+  have hpoly : b v * h e u r - b u * h f v r =
+      (if e then r else -r) * G e f u v := by
+    cases e <;> cases f <;> simp only [h, G, b, Bool.false_eq_true, Bool.true_eq_false,
+      ite_true, ite_false, ite_true, ite_false] <;> ring
+  have hdiff : U - V =
+      (if e then r else -r) * G e f u v / (b u * b v * (U + V)) := by
+    apply (eq_div_iff (mul_ne_zero (mul_ne_zero hbu hbv) hs)).2
+    linear_combination b v * hU - b u * hV + hpoly
+  have hchart : me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf * Qconstant e f r +
+      chartSign e f * (U - V) * chartLinear e f u v (U) (V) /
+        (2 * G e f u v ^ 2 * U * V) := by
+    rw [hB]
+    unfold rationalJ cauchy jN
+    -- Substitute the established quadratic identities for the two branch factors.
+    rw [← hU, ← hV]
+    cases e <;> cases f <;>
+      simp only [chartSign, chartLinear, rho, Bool.false_eq_true, Bool.true_eq_false,
+        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
+        Bool.not_false, Bool.not_true] <;>
+      field_simp [hbu, hbv, hwu, hwv, hg] <;> ring
+  have hlin : chartLinear e f u v (U) (V) =
+      if e = f then
+        ((u - v) * (U + V) + (u + v) * (U - V)) / 2
+      else if e then
+        ((1 - u * v) * (U + V) + (1 + u * v) * (U - V)) / 2
+      else
+        ((1 - u * v) * (U + V) - (1 + u * v) * (U - V)) / 2 := by
+    cases e <;> cases f <;>
+      simp only [chartLinear, Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false,
+        ite_true, ite_false] <;> ring
+  have hregular : me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf *
+        (r / 4 + r ^ 2 * rho e f u v / (4 * b u * b v * (U + V) ^ 2)) := by
+    rw [hchart, hlin, hdiff, hB]
+    cases e <;> cases f <;>
+      simp only [chartSign, Qconstant, rho, Bool.false_eq_true, Bool.true_eq_false,
+        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
+        Bool.not_false, Bool.not_true] <;>
+      field_simp [hbu, hbv, hwu, hwv, hs, hg] <;> unfold G <;>
+      simp only [Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false] <;> ring
+  exact hregular
+
 private lemma candidateJ_chart (e f : Bool) {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) (hg : G e f u v ≠ 0) :
     candidateJ e f u v r = chartJ e f u v r := by
@@ -193,52 +251,8 @@ private lemma candidateJ_chart (e f : Bool) {u v r : ℂ}
     have hh := h_ne_zero f hv
     rw [hz, zero_pow (by decide), zero_mul] at hV
     exact hh hV.symm
-  have hB : sourceMode e u r * sourceMode f v r = 1 / (b u * b v * W e u r * W f v r) := by
-    apply (eq_div_iff (by aesop : b u * b v * W e u r * W f v r ≠ 0)).2
-    calc
-      _ = (sourceMode e u r * b u * W e u r) * (sourceMode f v r * b v * W f v r) := by ring
-      _ = 1 := by rw [source_W_normalization e hu, source_W_normalization f hv, one_mul]
-  have hpoly : b v * h e u r - b u * h f v r =
-      (if e then r else -r) * G e f u v := by
-    cases e <;> cases f <;> simp only [h, G, b, Bool.false_eq_true, Bool.true_eq_false,
-      ite_true, ite_false, ite_true, ite_false] <;> ring
-  have hdiff : W e u r - W f v r =
-      (if e then r else -r) * G e f u v / (b u * b v * (W e u r + W f v r)) := by
-    apply (eq_div_iff (mul_ne_zero (mul_ne_zero hbu hbv) hs)).2
-    linear_combination b v * hU - b u * hV + hpoly
-  have hchart : sourceMode e u r * sourceMode f v r * rationalJ e f u v r - cauchy e f u v =
-      sourceMode e u r * sourceMode f v r * Qconstant e f r +
-      chartSign e f * (W e u r - W f v r) * chartLinear e f u v (W e u r) (W f v r) /
-        (2 * G e f u v ^ 2 * W e u r * W f v r) := by
-    rw [hB]
-    unfold rationalJ cauchy jN
-    -- Treat h_e, h_f as their PROVED quadratic expressions, then ring only.
-    rw [← hU, ← hV]
-    cases e <;> cases f <;>
-      simp only [chartSign, chartLinear, rho, Bool.false_eq_true, Bool.true_eq_false,
-        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
-        Bool.not_false, Bool.not_true] <;>
-      field_simp [hbu, hbv, hwu, hwv, hg] <;> ring
-  have hlin : chartLinear e f u v (W e u r) (W f v r) =
-      if e = f then
-        ((u - v) * (W e u r + W f v r) + (u + v) * (W e u r - W f v r)) / 2
-      else if e then
-        ((1 - u * v) * (W e u r + W f v r) + (1 + u * v) * (W e u r - W f v r)) / 2
-      else
-        ((1 - u * v) * (W e u r + W f v r) - (1 + u * v) * (W e u r - W f v r)) / 2 := by
-    cases e <;> cases f <;>
-      simp only [chartLinear, Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false,
-        ite_true, ite_false] <;> ring
-  have hregular : sourceMode e u r * sourceMode f v r * rationalJ e f u v r - cauchy e f u v =
-      sourceMode e u r * sourceMode f v r *
-        (r / 4 + r ^ 2 * rho e f u v / (4 * b u * b v * (W e u r + W f v r) ^ 2)) := by
-    rw [hchart, hlin, hdiff, hB]
-    cases e <;> cases f <;>
-      simp only [chartSign, Qconstant, rho, Bool.false_eq_true, Bool.true_eq_false,
-        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
-        Bool.not_false, Bool.not_true] <;>
-      field_simp [hbu, hbv, hwu, hwv, hs, hg] <;> unfold G <;>
-      simp only [Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false] <;> ring
+  have hregular := regularJ_chart_algebra e f hbu hbv hs hg hwu hwv hU hV
+    (source_W_normalization e hu) (source_W_normalization f hv)
   unfold candidateJ chartJ
   linear_combination -hregular
 

@@ -32,7 +32,7 @@ abbrev Cyclic (m : ℕ) := Multiplicative (ZMod m)
 
 def generator (m : ℕ) : Cyclic m := Multiplicative.ofAdd 1
 
-private theorem generator_generates (m : ℕ) :
+theorem generator_generates (m : ℕ) :
     ∀ x : Cyclic m, x ∈ zpowers (generator m) := by
   intro x
   obtain ⟨z, hz⟩ := ZMod.intCast_surjective x.toAdd
@@ -41,7 +41,7 @@ private theorem generator_generates (m : ℕ) :
   rw [zsmul_one]
   exact congrArg Multiplicative.ofAdd hz
 
-private theorem generator_order (m : ℕ) : orderOf (generator m) = m :=
+theorem generator_order (m : ℕ) : orderOf (generator m) = m :=
   ZMod.addOrderOf_one m
 
 /-- A cyclic action whose generator has exactly the prescribed prime order. -/
@@ -139,7 +139,7 @@ variable {p q s : ℕ} [Fact p.Prime] [Fact q.Prime] [NeZero (q ^ s)]
 theorem cyclic_card (m : ℕ) [NeZero m] : Nat.card (Cyclic m) = m := by
   simp only [Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
 
-private theorem prime_automorphism_fixedPointFree {N : Type*} [Group N]
+theorem prime_automorphism_fixedPointFree {N : Type*} [Group N]
     [Fact (Nat.card N).Prime] (α : MulAut N) (hne : α ≠ 1) :
     MonoidHom.FixedPointFree α := by
   intro x hx

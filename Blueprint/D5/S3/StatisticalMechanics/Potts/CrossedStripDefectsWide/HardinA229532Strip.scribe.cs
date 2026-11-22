@@ -14,12 +14,66 @@ internal sealed class HardinA229532StripDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("HardinA229532Strip.a", V("n")), Call("Finset.card", Call("Finset.filter", Fn("A", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("6"))), Call("Fin", Num("3"))), And(Eq(Call("DefectTransfer.defects", Call("HardinA229584StripData.horizontal"), Call("HardinA229532StripData.between"), Call("List.ofFn", Fn("i", Call("Fin", V("n")), Fn("j", Call("Fin", Num("6")), App(V("A"), Pair(V("i"), V("j"))))))), Num("1")), All("p", Product(Call("Fin", V("n")), Call("Fin", Num("6"))), All("c", Call("Fin", Num("3")), Imp(Lt(V("c"), App(V("A"), V("p"))), Ex("q", Product(Call("Fin", V("n")), Call("Fin", Num("6"))), And(Lt(Add(Mul(Call("Fin.val", Call("Prod.fst", V("q"))), Num("6")), Call("Fin.val", Call("Prod.snd", V("q")))), Add(Mul(Call("Fin.val", Call("Prod.fst", V("p"))), Num("6")), Call("Fin.val", Call("Prod.snd", V("p"))))), Eq(App(V("A"), V("q")), V("c"))))))))), Call("Finset.univ"))))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The filter ranges over every actual array over Fin 3. Canonical uses the lifted row-major order, independently of the transfer sweep. Each listed bond contributes exactly one when its two endpoint colours agree."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("finite-certificate"), DeclarationHandle.Create(Prefix + "finite_certificate"),
+                H("Exact one-defect transfer certificate"), StatementSource.FromAuthor(Disp(FiniteCertificateFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The first three clauses give terminal acceptance, preservation of validity after a guarded move, and all weighted successor counts. The remaining clauses give first-row validity and multiplicities, the twenty forward steps, and the signed relation for the last vector."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The registered all-index recurrence"), StatementSource.FromAuthor(Disp(RecurrenceFormula())),
 
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The recurrence is an identity in the integers at every index at least 20. DefectTransfer.lumped_count and forward_shift propagate the vector relation from row twenty. A separate terminal scalar certificate at row nineteen supplies the first index twenty; the full vector relation is not claimed there. The literal row-major canonical representative is independent of the row sweep. canonical_pattern_card supplies the factor six in the range used here, where a constant array cannot have the prescribed defect count. This is a finite combinatorial count and makes no thermodynamic-limit claim."))), DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229532"), ResolutionKind.Proved)))));
+
+    private static Formula FiniteCertificateFormula()
+    {
+        var row = Call("HardinA229584StripData.Row");
+        var state = Call("Fin", Num("31"));
+        var p = V("p");
+        var d = Call("Fin.val", V("d"));
+        var r = V("r");
+        var s = V("s");
+        var i = V("i");
+        var j = V("j");
+        Formula Data(string name, params Formula[] args) => Call("HardinA229532StripData." + name, args);
+        Formula Horizontal(Formula x) => Call("DefectTransfer.bondDefects", Call("HardinA229584StripData.horizontal"), x, x);
+        Formula ForValid(Formula clause) => All("p", row, All("d", Call("Fin", Num("2")), Imp(Data("Valid", p, d), clause)));
+        var cost = Add(Call("DefectTransfer.bondDefects", Data("between"), p, r), Horizontal(r));
+        var affordable = AtMost(cost, d);
+        var remaining = Sub(d, cost);
+        var firstAffordable = AtMost(Horizontal(r), Num("1"));
+        var firstRemaining = Sub(Num("1"), Horizontal(r));
+        var terminal = ForValid(Eq(Data("terminal", Data("cl", p, d)), Conditional(Eq(d, Num("0")), Num("1"), Num("0"))));
+        var closed = ForValid(All("r", row, Imp(affordable, Data("Valid", r, remaining))));
+        var counts = ForValid(All("s", state, Eq(
+            SumOver("r", row, Conditional(And(affordable, Eq(Data("cl", r, remaining), s)), Num("1"), Num("0"))),
+            Data("T", Data("cl", p, d), s))));
+        var firstValid = All("r", row, Imp(firstAffordable, Data("Valid", r, firstRemaining)));
+        var firstCounts = All("s", state, Eq(
+            SumOver("r", row, Conditional(And(firstAffordable, Eq(Data("cl", r, firstRemaining), s)), Num("1"), Num("0"))),
+            Data("initial", s)));
+        var powers = And(Eq(Data("W", Num("0")), Data("initial")),
+            All("i", Call("Fin", Num("20")), Eq(Data("W", Call("Fin.succ", i)),
+                Call("Matrix.vecMul", Data("W", Call("Fin.castSucc", i)), Data("T")))));
+        int[] coefficients = [-25, 240, 204, -6334, 6468, 42628, -83203, -34136, 160400,
+            -40816, -108224, 56184, 23849, -19128, 340, 1854, -436, 36];
+        Formula SignedInt(int value)
+        {
+            var absolute = Num((value < 0 ? -value : value).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            return value < 0 ? Seq(Minus, absolute) : absolute;
+        }
+        var vector = Seq(new Formula[] { Bang, OpenBracket }.Concat(coefficients.SelectMany((value, index) =>
+            index == 0 ? new[] { SignedInt(value) } : new[] { Comma, Sp, SignedInt(value) })).Append(CloseBracket).ToArray());
+        var relation = Eq(Data("W", Num("20")), SumOver("j", Call("Fin", Num("18")),
+            Seq(App(vector, j), Sp, Cdot, Sp, Data("W", Add(Num("2"), Call("Fin.val", j))))));
+        return And(terminal, And(closed, And(counts, And(firstValid, And(firstCounts, And(powers, relation))))));
+    }
+
+    private static Formula AtMost(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
+    private static Formula Conditional(Formula guard, Formula yes, Formula no) =>
+        Parenthesized(Seq(Call("if"), Sp, guard, Sp, Call("then"), Sp, yes, Sp, Call("else"), Sp, no));
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(V(name), Colon, Sp, type), Sp, Parenthesized(body));
 
     private static Formula RecurrenceFormula()
     {

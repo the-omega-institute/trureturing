@@ -32,7 +32,7 @@ namespace D5.S3.Weil.Mertens.ZeroAbscissaPower
 private def primitiveTerm (s : ℝ) (k : ℕ) : ℂ :=
   actualCoeff k * Complex.exp ((Real.log s : ℂ) * (actualZero k - 1))
 
-private theorem actual_zero (k : ℕ) : IsNontrivialZero (actualZero k) :=
+theorem actual_zero (k : ℕ) : IsNontrivialZero (actualZero k) :=
   actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
 
 private theorem actual_zero_ne (k : ℕ) : actualZero k ≠ 0 ∧ actualZero k ≠ 1 := by
@@ -262,7 +262,7 @@ private theorem counting_bound :
       mul_le_mul_of_nonneg_right (by linarith) (by positivity)
     _ = (6 * A) * T * (1 + Real.log T) := by ring
 
-private theorem occurrence_finite_sum (S : Finset ℂ)
+theorem occurrence_finite_sum (S : Finset ℂ)
     (hS : ∀ ρ ∈ S, IsNontrivialZero ρ) (f : ℂ → ℝ) (hf : ∀ ρ, 0 ≤ f ρ) :
     Summable (fun k : ℕ => if actualZero k ∈ S then f (actualZero k) else 0) ∧
       (∑' k : ℕ, if actualZero k ∈ S then f (actualZero k) else 0) =
@@ -308,7 +308,7 @@ private theorem occurrence_finite_sum (S : Finset ℂ)
         rw [D5.S3.Weil.ZetaBridge.ClassicExplicitFormula.multiplicity_eq_zeroMult]
         rfl
 
-private theorem actual_low_weight :
+theorem actual_low_weight :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ T : ℝ, 2 ≤ T →
       Summable (fun k : ℕ => if |(actualZero k).im| ≤ T then 1 / ‖actualZero k‖ else 0) ∧
         (∑' k : ℕ, if |(actualZero k).im| ≤ T then 1 / ‖actualZero k‖ else 0) ≤
@@ -355,7 +355,7 @@ private theorem actual_low_weight :
         mul_nonneg hA hlog, mul_nonneg hA hlogtwo,
         mul_nonneg hA (sq_nonneg (Real.log T)), mul_nonneg hA (sq_nonneg (Real.log 2))]
 
-private theorem actual_high_weight :
+theorem actual_high_weight :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ T : ℝ, 2 ≤ T →
       (∑' k : ℕ, if T < |(actualZero k).im| then ((actualZero k).im)⁻¹ ^ 2 else 0) ≤
         B * (1 + Real.log T) / T := by

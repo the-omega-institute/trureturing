@@ -7,6 +7,7 @@
    digest: Joint POVM optimum for independent fair binary pure records on their product carrier. -/
 
 import D5.S3.Quantum.PureState.JointRecordTransport
+import Mathlib.Data.Fintype.EquivFin
 
 /-! Application of the exact Walsh law to arbitrary normalized binary pure records. -/
 
@@ -352,12 +353,11 @@ private theorem productRecord_realOverlap_optimum
   rw [hguess, hset, pGuess, hmax.csSup_eq]
   exact hmax
 
-private theorem coordinateProductRecord_optimum
+private theorem exists_real_overlap_records
     (v : (i : Fin k) → Bool → A i → ℂ) (hv : ∀ i b, star (v i b) ⬝ᵥ v i b = 1) :
-    pGuess (uniformPrior (Word k)) (coordinateProductRecordState v hv) =
-      (∏ i, (1 + Real.sqrt (1 - ‖star (v i false) ⬝ᵥ v i true‖ ^ 2)) / 2) ∧
-    IsGreatest (successProbabilitySet (uniformPrior (Word k)) (coordinateProductRecordState v hv))
-      (pGuess (uniformPrior (Word k)) (coordinateProductRecordState v hv)) := by
+    ∃ (w : (i : Fin k) → Bool → A i → ℂ) (hw : ∀ i b, star (w i b) ⬝ᵥ w i b = 1),
+      (∀ i, star (w i false) ⬝ᵥ w i true = (‖star (v i false) ⬝ᵥ v i true‖ : ℂ)) ∧
+      coordinateProductRecordState w hw = coordinateProductRecordState v hv := by
   choose phase hphase hreal using fun i => exists_pair_phase (v i)
   let w : (i : Fin k) → Bool → A i → ℂ := fun i b => phase i b • v i b
   have hw (i : Fin k) (b : Bool) : star (w i b) ⬝ᵥ w i b = 1 := by
@@ -379,9 +379,141 @@ private theorem coordinateProductRecord_optimum
         intro u hu he
         subst u
         exact pureState_smul_eq d _ hd _) _ _ hp
-  rw [← funext hstates]
+  exact ⟨w, hw, hreal, funext hstates⟩
+
+private theorem coordinateProductRecord_optimum
+    (v : (i : Fin k) → Bool → A i → ℂ) (hv : ∀ i b, star (v i b) ⬝ᵥ v i b = 1) :
+    pGuess (uniformPrior (Word k)) (coordinateProductRecordState v hv) =
+      (∏ i, (1 + Real.sqrt (1 - ‖star (v i false) ⬝ᵥ v i true‖ ^ 2)) / 2) ∧
+    IsGreatest (successProbabilitySet (uniformPrior (Word k)) (coordinateProductRecordState v hv))
+      (pGuess (uniformPrior (Word k)) (coordinateProductRecordState v hv)) := by
+  obtain ⟨w, hw, hreal, hstates⟩ := exists_real_overlap_records v hv
+  rw [← hstates]
   exact productRecord_realOverlap_optimum w hw _ (fun _ => norm_nonneg _)
     (fun i => unit_overlap_le _ _ (hv i false) (hv i true)) hreal
+
+/-- For strict coordinate overlaps, the canonical Walsh carrier embeds isometrically
+into the original product carrier and carries the same conditional density matrices. -/
+theorem exists_coordinateRecord_isometry
+    (v : (i : Fin k) → Bool → A i → ℂ) (hv : ∀ i b, star (v i b) ⬝ᵥ v i b = 1)
+    (hs : ∀ i, ‖star (v i false) ⬝ᵥ v i true‖ < 1) :
+    ∃ T : Matrix ((i : Fin k) → A i) (Word k) ℂ, Tᴴ * T = 1 ∧
+      ∀ j, CStarMatrix.ofMatrix.symm (coordinateProductRecordState v hv j).1 =
+        T * CStarMatrix.ofMatrix.symm (coordinateRecordState
+          (fun i => ‖star (v i false) ⬝ᵥ v i true‖)
+          (fun _ => norm_nonneg _) (fun i => (hs i).le) j).1 * Tᴴ := by
+  obtain ⟨w, hw, hreal, hstates⟩ := exists_real_overlap_records v hv
+  let s : Fin k → ℝ := fun i => ‖star (v i false) ⬝ᵥ v i true‖
+  choose V hgram hmap using
+    fun i => exists_pair_isometry (w i) (hw i) (s i) (norm_nonneg _) (hs i) (hreal i)
+  refine ⟨tensorMatrix V, ?_, ?_⟩
+  · simpa using tensorMatrix_gram V (fun _ _ => 1) (fun i => by simpa using hgram i)
+  · intro j
+    rw [← hstates]
+    change rankOneDensity (coordinateProductRecord w j) =
+      tensorMatrix V * rankOneDensity (coordinateRecordVector s j) * (tensorMatrix V)ᴴ
+    simp only [rankOneDensity, mul_vecMulVec, vecMulVec_mul, ← star_mulVec,
+      tensorMatrix_mul_recordVector V w s hmap]
+
+/-- Remove the zero Walsh coordinates of repeated pure pairs while keeping every label.
+The remaining Walsh carrier embeds isometrically into the original tensor product. -/
+theorem exists_activeRecord_isometry
+    (v : (i : Fin k) → Bool → A i → ℂ) (hv : ∀ i b, star (v i b) ⬝ᵥ v i b = 1)
+    (s : Fin k → ℝ) (hs : ∀ i, s i = ‖star (v i false) ⬝ᵥ v i true‖)
+    (p : Fin k → Prop) [DecidablePred p] (hp : ∀ i, p i ↔ s i < 1) :
+    let a := Fintype.card {i // p i}
+    ∃ (reindex : {i // p i} ≃ Fin a)
+      (T : Matrix ((i : Fin k) → A i) (Word a) ℂ), Tᴴ * T = 1 ∧
+      ∀ j : Word k, CStarMatrix.ofMatrix.symm (coordinateProductRecordState v hv j).1 =
+        T * rankOneDensity (coordinateRecordVector (fun i => s (reindex.symm i))
+          (fun i => j (reindex.symm i))) * Tᴴ := by
+  let e := Fintype.equivFin {i // p i}
+  let r := fun i => s (e.symm i)
+  have hs0 (i : Fin k) : 0 ≤ s i := (hs i).symm ▸ norm_nonneg _
+  have hs1 (i : Fin k) : s i ≤ 1 :=
+    (hs i).symm ▸ unit_overlap_le _ _ (hv i false) (hv i true)
+  have hrepeated (i : Fin k) (hi : ¬ p i) : s i = 1 :=
+    le_antisymm (hs1 i) (le_of_not_gt (fun h => hi ((hp i).mpr h)))
+  obtain ⟨w, hw, hreal, hstates⟩ := exists_real_overlap_records v hv
+  choose V hgram _ hmap using fun i => exists_pair_partialIsometry
+    (w i) (hw i) (s i) (hs0 i) (hs1 i) (by rw [hreal, hs])
+  let U := tensorMatrix V
+  let extend : Word (Fintype.card {i // p i}) ↪ Word k :=
+    ⟨fun a i => if hi : p i then a (e ⟨i, hi⟩) else false, by
+      intro a b h
+      funext i
+      have hi := congrFun h (e.symm i).val
+      simpa [(e.symm i).property] using hi⟩
+  have hon (a : Word (Fintype.card {i // p i})) (i : Fin k) (hi : p i) :
+      extend a i = a (e ⟨i, hi⟩) := dite_eq_left hi
+  have hoff (a : Word (Fintype.card {i // p i})) (i : Fin k) (hi : ¬ p i) :
+      extend a i = false := dite_eq_right hi
+  let T := U.submatrix id extend
+  refine ⟨e, T, ?_, ?_⟩
+  · have hU := tensorMatrix_gram V (fun i => bitSupport (s i)) hgram
+    change Uᴴ * U = _ at hU
+    dsimp only [T]
+    rw [conjTranspose_submatrix, ← submatrix_mul _ _ _ id _ Function.bijective_id, hU]
+    ext a b
+    simp only [Matrix.submatrix_apply, Matrix.diagonal_apply, Matrix.one_apply,
+      extend.injective.eq_iff]
+    split_ifs with hab
+    · subst b
+      apply Finset.prod_eq_one
+      intro i _
+      by_cases hi : p i
+      · simp [bitSupport, ne_of_lt ((hp i).mp hi)]
+      · simp [hoff _ _ hi, bitSupport]
+    · rfl
+  · intro j
+    have hrestrict (a : Word (Fintype.card {i // p i})) :
+        coordinateRecordVector s j (extend a) =
+          coordinateRecordVector r (fun i => j (e.symm i)) a := by
+      rw [coordinateRecordVector_apply, coordinateRecordVector_apply,
+        ← Fintype.prod_subtype_mul_prod_subtype p (fun i => bitVector (s i) (j i) (extend a i))]
+      have hones : (∏ i : {i // ¬ p i}, bitVector (s i) (j i) (extend a i)) = 1 := by
+        apply Finset.prod_eq_one
+        intro i _
+        rw [hoff _ _ i.property, hrepeated _ i.property]
+        cases j i <;> norm_num [bitVector, bitPhase, bitWeight]
+      rw [hones, mul_one]
+      apply Fintype.prod_equiv e
+      intro i
+      simp [hon _ _ i.property, r]
+    have hzero (b : Word k) (hb : b ∉ (Finset.univ : Finset (Word _)).map extend) :
+        coordinateRecordVector s j b = 0 := by
+      have hbad : ∃ i, ¬ p i ∧ b i = true := by
+        by_contra! h
+        apply hb
+        refine Finset.mem_map.mpr ⟨fun i => b (e.symm i), Finset.mem_univ _, ?_⟩
+        funext i
+        by_cases hi : p i
+        · simp [hon _ _ hi]
+        · rw [hoff _ _ hi]
+          cases hbi : b i
+          · rfl
+          · exact (h i hi hbi).elim
+      obtain ⟨i, hi, hbi⟩ := hbad
+      rw [coordinateRecordVector_apply]
+      apply Finset.prod_eq_zero (Finset.mem_univ i)
+      rw [hrepeated i hi, hbi]
+      simp [bitVector, bitWeight]
+    have hvec : T *ᵥ coordinateRecordVector r (fun i => j (e.symm i)) =
+        coordinateProductRecord w j := by
+      rw [← tensorMatrix_mul_recordVector V w s hmap]
+      funext x
+      change (∑ a, U x (extend a) * coordinateRecordVector r (fun i => j (e.symm i)) a) =
+        ∑ b, U x b * coordinateRecordVector s j b
+      simp_rw [← hrestrict]
+      calc
+        _ = ∑ b ∈ Finset.univ.map extend, U x b * coordinateRecordVector s j b :=
+          (Finset.sum_map Finset.univ extend (fun b => U x b * coordinateRecordVector s j b)).symm
+        _ = _ := Finset.sum_subset (Finset.subset_univ _)
+          (fun b _ hb => by rw [hzero b hb, mul_zero])
+    rw [← hstates]
+    change rankOneDensity (coordinateProductRecord w j) =
+      T * rankOneDensity (coordinateRecordVector r (fun i => j (e.symm i))) * Tᴴ
+    simp only [rankOneDensity, mul_vecMulVec, vecMulVec_mul, ← star_mulVec, hvec]
 
 /-- The exact success probability of an optimal joint POVM for a uniform binary word.
 The normalized local pairs may have different carriers and complex overlaps of any modulus

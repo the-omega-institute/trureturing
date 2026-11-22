@@ -77,5 +77,6 @@ For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original nonlin
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability](LogLogGlobalCurvatureStability.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope](RHSharpArithmeticEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula](../../../Weil/Mertens/IntegratedExplicit/WholeFormula.md)
 - Dependency: [D5/S3/Weil/Mertens/ZeroAbscissaPower](../../../Weil/Mertens/ZeroAbscissaPower.md)

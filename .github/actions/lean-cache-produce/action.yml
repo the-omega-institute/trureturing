@@ -1,5 +1,5 @@
 name: Produce the Lean Actions cache
-description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
+description: Resume long builds separately and publish only complete validated Lean seeds.
 inputs:
   release-seed-tag:
     description: Exact local candidate Release to restore before the long build
@@ -121,6 +121,17 @@ runs:
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+    - name: Remove leftover cache download archives
+      shell: bash
+      run: |
+        # actions/cache uses UUID directories and treats unlink failures as debug messages.
+        for archive in "${RUNNER_TEMP:?}"/*/cache.{tzst,tgz}; do
+          directory="${archive%/*}"
+          [[ ${directory##*/} =~ ^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$ ]] || continue
+          [[ -f "$archive" && ! -L "$archive" && ! -L "$directory" ]] || continue
+          rm -v -- "$archive"
+        done
+        df -h -- "$RUNNER_TEMP"
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
@@ -131,7 +142,7 @@ runs:
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Compile ordinary audit programs during explicit input preparation.
-        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
+        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegTests","regInspector/compiledJudgeTests"]'
       shell: bash
       run: |
         # Reject untrusted input before Make can expand environment values.

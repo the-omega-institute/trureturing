@@ -36,7 +36,8 @@ def read_pin(revision):
             return None
         data = git("show", f"{tree}:{PIN}")
     pin = json.loads(data)
-    if (set(pin) != {"version", "sha256"}
+    if (set(pin) not in ({"version", "sha256"}, {"version", "sha256", "workflow_sha"})
+            or ("workflow_sha" in pin and not re.fullmatch(r"[0-9a-f]{40}", pin["workflow_sha"]))
             or not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?", pin["version"])
             or not re.fullmatch(r"[0-9a-f]{64}", pin["sha256"])):
         raise ValueError(f"invalid tools release pin in {PIN}")
