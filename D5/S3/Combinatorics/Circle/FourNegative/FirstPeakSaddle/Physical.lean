@@ -28,8 +28,7 @@ open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
   (size base newBase chainLength chainStart oldValue newValue negatives)
 open private sourceMod charge nextBase nextNewBase chain_values source_signs source_totals
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
