@@ -36,8 +36,9 @@ abbrev scalarArena : Arena where
   signature := signature
   Law F := ∀ (m C f g w v : ℝ) (y z : ℂ)
     (_hm : 0 ≤ m) (_hC : 0 < C) (_hf : 0 < f) (_hg : 0 < g)
-    (_hw : 0 < 8 * m + f * (f + g) / C - w)
-    (_hv : 0 < 8 * m + g * (f + g) / C - v)
+    (_hw : 0 ≤ 8 * m + f * (f + g) / C - w)
+    (_hv : 0 ≤ 8 * m + g * (f + g) / C - v)
+    (_hmargin : 0 < (8 * m + f * (f + g) / C - w) + (8 * m + g * (f + g) / C - v))
     (_hy : Complex.normSq y ≤ 1) (_hz : Complex.normSq z ≤ 1),
     let objective := w * (1 - Complex.normSq y) + v * (1 - Complex.normSq z) +
       4 * m * Complex.normSq (y - z) + (f * y.re - g * z.re) ^ 2 / C
@@ -54,7 +55,7 @@ abbrev scalarArena : Arena where
 private theorem scalarRejected : ¬ scalarArena.Law rejected := by
   intro h
   exact (h 0 1 1 1 0 0 0 0 (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) (by norm_num) (by simp) (by simp)).1
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by simp) (by simp)).1
 
 def scalarFamily : Registration scalarArena (type_of% @twoFlag_maximum) where
   actual := actual
@@ -89,7 +90,7 @@ def scalarAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "fn", "fn"]
+        "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -104,8 +105,10 @@ abbrev matrixArena : Arena where
     (a : Fin 2 × Fin 2 → ℝ) (m C f g : ℝ)
     (_hY : Y.IsHermitian) (_hY₂ : (1 - Y * Y).PosSemidef)
     (_ha : ∀ i, 0 ≤ a i) (_hm : 0 ≤ m) (_hC : 0 < C) (_hf : 0 < f) (_hg : 0 < g)
-    (_hw : 0 < 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
-    (_hv : 0 < 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1))),
+    (_hw : 0 ≤ 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
+    (_hv : 0 ≤ 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1)))
+    (_hmargin : 0 < (8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0))) +
+      (8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1)))),
     let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
     let y := Y (0, 0) (1, 0)
     let z := Y (0, 1) (1, 1)
@@ -120,7 +123,7 @@ private theorem matrixRejected : ¬ matrixArena.Law rejected := by
   intro h
   exact (h 0 (fun _ => 0) 0 1 1 1 (by simp) (by simpa using Matrix.PosSemidef.one)
     (fun _ => le_rfl) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num)).1
+    (by norm_num) (by norm_num) (by norm_num)).1
 
 def matrixFamily : Registration matrixArena (type_of% @matrix_twoFlag_maximum) where
   actual := actual
@@ -156,7 +159,7 @@ def matrixAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+        "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

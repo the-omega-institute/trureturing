@@ -27,11 +27,12 @@ set_option autoImplicit false
 namespace D5.S3.Quantum.Recovery.PetzTwoFlagContraction
 
 /-- The radial and phase terms give the full deficiency from the two real corners.
-The strict radial margins include the contribution of the coherence term. -/
+The two radial margins are nonnegative and their sum is positive. -/
 theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
     (hm : 0 ≤ m) (hC : 0 < C) (hf : 0 < f) (hg : 0 < g)
-    (hw : 0 < 8 * m + f * (f + g) / C - w)
-    (hv : 0 < 8 * m + g * (f + g) / C - v)
+    (hw : 0 ≤ 8 * m + f * (f + g) / C - w)
+    (hv : 0 ≤ 8 * m + g * (f + g) / C - v)
+    (hmargin : 0 < (8 * m + f * (f + g) / C - w) + (8 * m + g * (f + g) / C - v))
     (hy : Complex.normSq y ≤ 1) (hz : Complex.normSq z ≤ 1) :
     let objective := w * (1 - Complex.normSq y) + v * (1 - Complex.normSq z) +
       4 * m * Complex.normSq (y - z) + (f * y.re - g * z.re) ^ 2 / C
@@ -67,19 +68,14 @@ theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
   have hyPhase := mul_nonneg hyCoeff.le (sq_nonneg y.im)
   have hzPhase := mul_nonneg hzCoeff.le (sq_nonneg z.im)
   have hphase := mul_nonneg hphaseCoeff.le (sq_nonneg (y.re + z.re))
-  have hyTerm := mul_nonneg hw.le hySlack
-  have hzTerm := mul_nonneg hv.le hzSlack
+  have hyTerm := mul_nonneg hw hySlack
+  have hzTerm := mul_nonneg hv hzSlack
   refine ⟨by linarith only [hgap, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase],
     hgap, ?_⟩
   constructor
   · intro h
     have hsum := hgap
     rw [h, sub_self] at hsum
-    have hyr : 1 - Complex.normSq y = 0 :=
-      (mul_eq_zero.mp (show (8 * m + f * (f + g) / C - w) *
-        (1 - Complex.normSq y) = 0 by
-          linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
-            hw.ne'
     have hyi : y.im = 0 := by
       have hs : y.im ^ 2 = 0 := (mul_eq_zero.mp (show f * (f + g) / C *
         y.im ^ 2 = 0 by
@@ -98,15 +94,26 @@ theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
           linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase])).resolve_left
             hphaseCoeff.ne'
       exact (mul_eq_zero.mp (by simpa only [pow_two] using hs)).elim id id
+    have hneg : z.re = -y.re := by linarith only [hreal]
+    have hnorm : Complex.normSq y = Complex.normSq z := by
+      rw [Complex.normSq_apply, Complex.normSq_apply, hyi, hzi, hneg]
+      ring
+    have hradial :
+        ((8 * m + f * (f + g) / C - w) + (8 * m + g * (f + g) / C - v)) *
+          (1 - Complex.normSq y) = 0 := by
+      rw [add_mul]
+      rw [← hnorm] at hsum hzTerm
+      linarith only [hsum, hyTerm, hzTerm, hcoherence, hyPhase, hzPhase, hphase]
+    have hyr : Complex.normSq y = 1 :=
+      (sub_eq_zero.mp ((mul_eq_zero.mp hradial).resolve_left hmargin.ne')).symm
     have hySign : y.re = 1 ∨ y.re = -1 := by
-      rw [Complex.normSq_apply, hyi] at hyr
-      exact (mul_eq_zero.mp (show (y.re - 1) * (y.re + 1) = 0 by nlinarith only [hyr])).imp
-        (fun h₁ => by linarith) (fun h₂ => by linarith)
+      apply eq_or_eq_neg_of_sq_eq_sq
+      simpa only [Complex.normSq_apply, hyi, mul_zero, add_zero, pow_two, mul_one] using hyr
     rcases hySign with h₁ | h₂
     · exact Or.inl ⟨Complex.ext (by simpa using h₁) (by simpa using hyi),
-        Complex.ext (by simp; linarith only [h₁, hreal]) (by simpa using hzi)⟩
+        Complex.ext (by simp [hneg, h₁]) (by simpa using hzi)⟩
     · exact Or.inr ⟨Complex.ext (by simpa using h₂) (by simpa using hyi),
-        Complex.ext (by simp; linarith only [h₂, hreal]) (by simpa using hzi)⟩
+        Complex.ext (by simp [hneg, h₂]) (by simpa using hzi)⟩
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;>
       norm_num [Complex.normSq_apply, Complex.sub_re, Complex.sub_im] <;> ring
 
@@ -119,8 +126,10 @@ theorem matrix_twoFlag_maximum
     (a : Fin 2 × Fin 2 → ℝ) (m C f g : ℝ)
     (hY : Y.IsHermitian) (hY₂ : (1 - Y * Y).PosSemidef)
     (ha : ∀ i, 0 ≤ a i) (hm : 0 ≤ m) (hC : 0 < C) (hf : 0 < f) (hg : 0 < g)
-    (hw : 0 < 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
-    (hv : 0 < 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1))) :
+    (hw : 0 ≤ 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
+    (hv : 0 ≤ 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1)))
+    (hmargin : 0 < (8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0))) +
+      (8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1)))) :
     let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
     let y := Y (0, 0) (1, 0)
     let z := Y (0, 1) (1, 1)
@@ -176,7 +185,7 @@ theorem matrix_twoFlag_maximum
         ring
   obtain ⟨hbound, _, heq⟩ :=
     twoFlag_maximum m C f g (a (0, 0) + a (1, 0)) (a (0, 1) + a (1, 1))
-      (entry 0) (entry 1) hm hC hf hg hw hv (hentry 0) (hentry 1)
+      (entry 0) (entry 1) hm hC hf hg hw hv hmargin (hentry 0) (hentry 1)
   refine ⟨by dsimp [coherence, optimum]; linarith only [henvelope, hbound], ?_⟩
   constructor
   · intro h

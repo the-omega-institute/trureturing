@@ -20,7 +20,8 @@ internal sealed class PetzTwoFlagContractionDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Let m ≥ 0, C > 0, f > 0 and g > 0. For real w and v, " +
                         "write A = 8m + f(f + g)/C − w and B = 8m + g(f + g)/C − v. " +
-                        "Assume A > 0 and B > 0. Take complex y and z with |y|² ≤ 1 and |z|² ≤ 1.")),
+                        "Assume A ≥ 0, B ≥ 0 and A + B > 0. Take complex y and z " +
+                        "with |y|² ≤ 1 and |z|² ≤ 1.")),
                     Paragraph(Text(
                         "The objective is w(1 − |y|²) + v(1 − |z|²) + 4m|y − z|² " +
                         "+ (f Re y − g Re z)²/C. It is at most 16m + (f + g)²/C, " +
@@ -28,7 +29,11 @@ internal sealed class PetzTwoFlagContractionDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The upper bound minus the objective equals A(1 − |y|²) + B(1 − |z|²) " +
                         "+ 4m|y + z|² + f(f + g)(Im y)²/C + g(f + g)(Im z)²/C " +
-                        "+ fg(Re y + Re z)²/C. All six terms are nonnegative."))),
+                        "+ fg(Re y + Re z)²/C. All six terms are nonnegative.")),
+                    Paragraph(Text(
+                        "At equality, the three phase squares force Im y = Im z = 0 and " +
+                        "Re y + Re z = 0. The moduli are then equal, so the radial terms sum to " +
+                        "(A + B)(1 − |y|²). Since A + B > 0, equality requires |y|² = |z|² = 1."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("petz-two-flag-matrix-maximum"),
@@ -44,8 +49,8 @@ internal sealed class PetzTwoFlagContractionDocument : IScribeDocumentDefinition
                         "Take y = Y((0,0),(1,0)) and z = Y((0,1),(1,1)).")),
                     Paragraph(Text(
                         "Use the same conditions on m, C, f and g, with w = a(0,0) + a(1,0) " +
-                        "and v = a(0,1) + a(1,1) in the two strict margins. Replace the " +
-                        "two weighted slack terms in the scalar objective by the sum of " +
+                        "and v = a(0,1) + a(1,1) in the margins A ≥ 0, B ≥ 0 and A + B > 0. " +
+                        "Replace the two weighted slack terms in the scalar objective by the sum of " +
                         "a(b,s) times the squared moduli of all nonpartner entries of row (b,s). " +
                         "This matrix objective is at most 16m + (f + g)²/C. Equality holds " +
                         "exactly when the two selected entries are (1,−1) or (−1,1).")),
