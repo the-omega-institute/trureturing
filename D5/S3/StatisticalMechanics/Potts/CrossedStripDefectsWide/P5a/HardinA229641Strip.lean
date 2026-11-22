@@ -882,7 +882,14 @@ theorem result (n : ℕ) :
         rw [bondDefects, Finset.card_filter, Finset.sum_map]
       have hl : Disjoint (Finset.univ.diag : Finset (Fin 5 × Fin 5))
           (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
-        decide +kernel
+        apply (Finset.disjoint_diag_offDiag (s := Finset.univ)).mono_right
+        intro e he
+        simp only [Finset.mem_union, mem_forward, mem_backward] at he
+        exact Finset.mem_offDiag.mpr ⟨Finset.mem_univ _, Finset.mem_univ _, fun eq => by
+          rcases e with ⟨x, y⟩
+          change x = y at eq
+          subst y
+          simp at he⟩
       rw [GridBridge.defects_rows _ _ 4, GridBridge.defects_rows _ _ m, horizontal, diagonals m, cuts]
       simp_rw [bondDefects_empty, count_union (diagonals_disjoint m), count_union hl,
         count_union (diagonals_disjoint 4),
