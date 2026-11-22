@@ -14,6 +14,12 @@ triage: "anchor"
 
 # Layer Cake Representations for Quantum Divergences
 
+## Verified locator
+
+[arXiv record](https://arxiv.org/abs/2507.07065) · [Section 4.1 and Propositions 4.1–4.2](https://arxiv.org/pdf/2507.07065)
+
+## Formalization scope
+
 Section 4.1, Propositions 4.1–4.2, gives an operator layer-cake proof of Frenkel’s integral representation for positive definite matrices.
 
 The operator proof integrates the directional logarithm along a segment using weighted spectral projections. The fixed-shift calculation integrates strict negative inertia of the shifted affine pencil.

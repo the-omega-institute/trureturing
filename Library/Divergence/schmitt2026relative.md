@@ -14,6 +14,12 @@ triage: "anchor"
 
 # Relative entropy representations via tracial joint spectral measures
 
+## Verified locator
+
+[arXiv record](https://arxiv.org/abs/2609.12547) · [Corollary 4.2 and Eqs. (36)–(38)](https://arxiv.org/pdf/2609.12547)
+
+## Formalization scope
+
 Corollary 4.2, equations (36)–(38), gives the finite PSD affine-pencil and forward hockey-stick formulas with the affine correction and support containment.
 
 The argument applies scalar identities to a tracial joint spectral measure and uses Fubini–Tonelli. It establishes both unnormalized formulas.

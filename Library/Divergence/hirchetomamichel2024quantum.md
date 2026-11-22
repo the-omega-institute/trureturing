@@ -14,6 +14,12 @@ triage: "anchor"
 
 # Quantum Rényi and f-divergences from integral representations
 
+## Verified locator
+
+[Journal record](https://doi.org/10.1007/s00220-024-05087-3) · [arXiv record](https://arxiv.org/abs/2306.12343) · [Corollary 2.3 and Eq. (2.22)](https://arxiv.org/pdf/2306.12343)
+
+## Formalization scope
+
 Corollary 2.3 gives Umegaki relative entropy for states as a two-profile hockey-stick integral. Equation (2.22) contains the two orientations with weights 1/γ and 1/γ² on γ ≥ 1.
 
 The two-profile formula is obtained from Frenkel’s affine-pencil representation by changing variables.
