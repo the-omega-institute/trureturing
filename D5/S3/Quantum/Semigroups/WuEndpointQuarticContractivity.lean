@@ -32,15 +32,6 @@ open scoped BigOperators ComplexOrder
 
 namespace WuRankOneEndpointFloor
 
-private abbrev contractivityModeIndex : Fin 4 ≃ Mode :=
-  Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card Mode))
-
-private theorem eigenvalues_at_contractivityModeIndex {X : TwoMode}
-    (hX : X.IsHermitian) (i : Fin 4) :
-    hX.eigenvalues (contractivityModeIndex i) = hX.eigenvalues₀ i := by
-  change hX.eigenvalues₀ (contractivityModeIndex.symm (contractivityModeIndex i)) = _
-  rw [Equiv.symm_apply_apply]
-
 private def radial (a : ℝ) (X : TwoMode) (t : ℝ) : TwoMode :=
   ((a * (1 - t) : ℝ) : ℂ) • (1 : TwoMode) + (t : ℂ) • X
 
@@ -64,11 +55,14 @@ private theorem radial_posSemidef {a t : ℝ} {X : TwoMode}
   exact (hI.smul (Complex.ofReal_nonneg (mul_nonneg ha (sub_nonneg.mpr ht.2)))).add
     (hX.smul (Complex.ofReal_nonneg ht.1))
 
+private def modeMoment (k : ℕ) (x : Mode → ℝ) : ℝ :=
+  (∑ i, x i ^ k) / 4
+
 /-- The input eigenbasis works along the entire radial segment. -/
 private theorem traceMoment_radial {X : TwoMode} (hX : X.IsHermitian)
     (k : ℕ) (a t : ℝ) :
     endpointTraceMoment k (radial a X t) =
-      spectralMoment k (fun i => radialValue a (hX.eigenvalues₀ i) t) := by
+      modeMoment k (fun i => radialValue a (hX.eigenvalues i) t) := by
   let F := conjStarAlgAut ℂ TwoMode hX.eigenvectorUnitary
   let d : Mode → ℂ := fun i => (hX.eigenvalues i : ℂ)
   let e : Mode → ℂ := fun i => (radialValue a (hX.eigenvalues i) t : ℂ)
@@ -85,46 +79,38 @@ private theorem traceMoment_radial {X : TwoMode} (hX : X.IsHermitian)
     simp only [radial, he, map_add, map_smul, map_one, ← hd]
   have hpow : radial a X t ^ k = F (diagonal (e ^ k)) := by
     rw [← diagonal_pow e k, map_pow F (diagonal e) k, hrad]
-  unfold endpointTraceMoment spectralMoment
+  unfold endpointTraceMoment modeMoment
   rw [hpow]
   change ((conjStarAlgAut ℂ TwoMode hX.eigenvectorUnitary (diagonal (e ^ k))).trace).re / 4 = _
   rw [conjStarAlgAut_apply, trace_mul_cycle, coe_star_mul_self, one_mul,
     trace_diagonal, Complex.re_sum]
   refine congrArg (fun s : ℝ => s / 4) ?_
-  calc
-    (∑ i : Mode, ((e ^ k) i).re) =
-        ∑ i : Fin 4, ((e ^ k) (contractivityModeIndex i)).re :=
-      (contractivityModeIndex.sum_comp (fun i : Mode => ((e ^ k) i).re)).symm
-    _ = _ := by
-      apply Finset.sum_congr rfl
-      intro i _
-      change ((radialValue a (hX.eigenvalues (contractivityModeIndex i)) t : ℂ) ^ k).re = _
-      rw [eigenvalues_at_contractivityModeIndex hX i, ← Complex.ofReal_pow, Complex.ofReal_re]
+  apply Finset.sum_congr rfl
+  intro i _
+  change ((radialValue a (hX.eigenvalues i) t : ℂ) ^ k).re = _
+  rw [← Complex.ofReal_pow, Complex.ofReal_re]
 
 private theorem traceMoment_eigenvalues {X : TwoMode} (hX : X.IsHermitian) (k : ℕ) :
-    endpointTraceMoment k X = spectralMoment k hX.eigenvalues₀ := by
+    endpointTraceMoment k X = modeMoment k hX.eigenvalues := by
   simpa only [radial_one, radialValue, sub_self, mul_zero, one_mul, zero_add] using
     traceMoment_radial hX k 0 1
 
 private theorem traceMoment_scalar (a : ℝ) (k : ℕ) :
     endpointTraceMoment k ((a : ℂ) • (1 : TwoMode)) = a ^ k := by
   rw [← radial_zero a (0 : TwoMode), traceMoment_radial Matrix.isHermitian_zero]
-  simp only [radialValue, sub_zero, mul_one, zero_mul, add_zero, spectralMoment,
-    Fin.sum_univ_four]
+  simp only [radialValue, sub_zero, mul_one, zero_mul, add_zero, modeMoment,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
   ring
 
-private theorem scalar_of_eigenvalues₀_eq {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
-    (ha : ∀ i, hX.eigenvalues₀ i = a) : X = (a : ℂ) • (1 : TwoMode) := by
-  have he : ∀ i, hX.eigenvalues i = a := by
-    intro i
-    exact ha (contractivityModeIndex.symm i)
+private theorem scalar_of_eigenvalues_eq {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
+    (ha : ∀ i, hX.eigenvalues i = a) : X = (a : ℂ) • (1 : TwoMode) := by
   have hd : diagonal (RCLike.ofReal ∘ hX.eigenvalues) = (a : ℂ) • (1 : TwoMode) := by
     ext i j
     by_cases hij : i = j
     · subst j
       change diagonal (fun i => (hX.eigenvalues i : ℂ)) i i =
         ((a : ℂ) • (1 : TwoMode)) i i
-      simp [he, Matrix.smul_apply, smul_eq_mul]
+      simp [ha, Matrix.smul_apply, smul_eq_mul]
     · simp [Matrix.diagonal_apply, Matrix.one_apply, Matrix.smul_apply, hij]
   calc
     X = conjStarAlgAut ℂ TwoMode hX.eigenvectorUnitary
@@ -132,29 +118,28 @@ private theorem scalar_of_eigenvalues₀_eq {X : TwoMode} (hX : X.IsHermitian) {
     _ = _ := by rw [hd, map_smul, map_one]
 
 private theorem traceMoment_pos_of_eigenvalues {X : TwoMode} (hX : X.IsHermitian)
-    (hX₀ : X ≠ 0) (k : ℕ) (hpow : ∀ i : Fin 4, 0 ≤ hX.eigenvalues₀ i ^ k) :
+    (hX₀ : X ≠ 0) (k : ℕ) (hpow : ∀ i : Mode, 0 ≤ hX.eigenvalues i ^ k) :
     0 < endpointTraceMoment k X := by
-  have hex : ∃ i : Fin 4, hX.eigenvalues₀ i ≠ 0 := by
+  have hex : ∃ i : Mode, hX.eigenvalues i ≠ 0 := by
     by_contra! hall
     apply hX₀
-    simpa only [Complex.ofReal_zero, zero_smul] using scalar_of_eigenvalues₀_eq hX hall
+    simpa only [Complex.ofReal_zero, zero_smul] using scalar_of_eigenvalues_eq hX hall
   obtain ⟨i, hi⟩ := hex
-  rw [traceMoment_eigenvalues hX, spectralMoment]
+  rw [traceMoment_eigenvalues hX, modeMoment]
   refine div_pos (Finset.sum_pos' (fun j _ => hpow j) ?_) (by norm_num)
   exact ⟨i, Finset.mem_univ i, lt_of_le_of_ne (hpow i) (pow_ne_zero k hi).symm⟩
 
 private theorem traceMoment_pos_of_psd {X : TwoMode} (hX : X.PosSemidef)
     (hX₀ : X ≠ 0) (k : ℕ) : 0 < endpointTraceMoment k X := by
   refine traceMoment_pos_of_eigenvalues hX.isHermitian hX₀ k (fun i => ?_)
-  rw [← eigenvalues_at_contractivityModeIndex hX.isHermitian i]
-  exact pow_nonneg (hX.eigenvalues_nonneg (contractivityModeIndex i)) k
+  exact pow_nonneg (hX.eigenvalues_nonneg i) k
 
 private theorem radial_mean {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
     (ha : endpointTraceMoment 1 X = a) (t : ℝ) :
     endpointTraceMoment 1 (radial a X t) = a := by
   rw [traceMoment_eigenvalues hX] at ha
   rw [traceMoment_radial hX]
-  simp only [spectralMoment, pow_one, Fin.sum_univ_four, radialValue] at ha ⊢
+  simp only [modeMoment, pow_one, Fintype.sum_prod_type, Fin.sum_univ_two, radialValue] at ha ⊢
   linear_combination t * ha
 
 private theorem radial_variance {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
@@ -163,23 +148,23 @@ private theorem radial_variance {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
       t ^ 2 * (endpointTraceMoment 2 X - a ^ 2) := by
   rw [traceMoment_eigenvalues hX] at ha
   rw [traceMoment_radial hX, traceMoment_eigenvalues hX]
-  simp only [spectralMoment, pow_one, Fin.sum_univ_four, radialValue] at ha ⊢
+  simp only [modeMoment, pow_one, Fintype.sum_prod_type, Fin.sum_univ_two, radialValue] at ha ⊢
   linear_combination (2 * a * t * (1 - t)) * ha
 
 private theorem variance_pos {X : TwoMode} (hX : X.IsHermitian) {a : ℝ}
     (ha : endpointTraceMoment 1 X = a) (hns : X ≠ (a : ℂ) • (1 : TwoMode)) :
     0 < endpointTraceMoment 2 X - a ^ 2 := by
   have hvar : endpointTraceMoment 2 X - a ^ 2 =
-      spectralMoment 2 (fun i => hX.eigenvalues₀ i - a) := by
+      modeMoment 2 (fun i => hX.eigenvalues i - a) := by
     rw [traceMoment_eigenvalues hX] at ha ⊢
-    simp only [spectralMoment, pow_one, Fin.sum_univ_four] at ha ⊢
+    simp only [modeMoment, pow_one, Fintype.sum_prod_type, Fin.sum_univ_two] at ha ⊢
     linear_combination (2 * a) * ha
-  have hex : ∃ i : Fin 4, hX.eigenvalues₀ i ≠ a := by
+  have hex : ∃ i : Mode, hX.eigenvalues i ≠ a := by
     by_contra! hall
-    exact hns (scalar_of_eigenvalues₀_eq hX hall)
+    exact hns (scalar_of_eigenvalues_eq hX hall)
   obtain ⟨i, hi⟩ := hex
-  rw [hvar, spectralMoment]
-  refine div_pos (Finset.sum_pos' (fun j _ => sq_nonneg (hX.eigenvalues₀ j - a)) ?_) (by norm_num)
+  rw [hvar, modeMoment]
+  refine div_pos (Finset.sum_pos' (fun j _ => sq_nonneg (hX.eigenvalues j - a)) ?_) (by norm_num)
   exact ⟨i, Finset.mem_univ i, lt_of_le_of_ne (sq_nonneg _)
     (pow_ne_zero 2 (sub_ne_zero.mpr hi)).symm⟩
 
@@ -195,14 +180,14 @@ private theorem radialValue_hasDerivAt (a x t : ℝ) :
 private theorem traceMoment_radial_hasDerivAt {X : TwoMode} (hX : X.IsHermitian)
     (k : ℕ) (a t : ℝ) :
     HasDerivAt (fun s => endpointTraceMoment (k + 1) (radial a X s))
-      ((∑ i : Fin 4, ((k : ℝ) + 1) * radialValue a (hX.eigenvalues₀ i) t ^ k *
-        (hX.eigenvalues₀ i - a)) / 4) t := by
-  simp only [traceMoment_radial hX, spectralMoment]
+      ((∑ i : Mode, ((k : ℝ) + 1) * radialValue a (hX.eigenvalues i) t ^ k *
+        (hX.eigenvalues i - a)) / 4) t := by
+  simp only [traceMoment_radial hX, modeMoment]
   apply HasDerivAt.div_const
   apply HasDerivAt.fun_sum
   intro i _
   simpa only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel] using
-    (radialValue_hasDerivAt a (hX.eigenvalues₀ i) t).fun_pow (k + 1)
+    (radialValue_hasDerivAt a (hX.eigenvalues i) t).fun_pow (k + 1)
 
 /-- The radial derivative of a normalized trace moment at nonzero time. -/
 private theorem traceMoment_radial_euler {X : TwoMode} (hX : X.IsHermitian)
@@ -215,17 +200,17 @@ private theorem traceMoment_radial_euler {X : TwoMode} (hX : X.IsHermitian)
   symm
   apply (eq_div_iff ht).2
   rw [mul_comm _ t, ← mul_div_assoc, Finset.mul_sum]
-  have hterm (i : Fin 4) :
-      t * (((k : ℝ) + 1) * radialValue a (hX.eigenvalues₀ i) t ^ k *
-        (hX.eigenvalues₀ i - a)) =
-      ((k : ℝ) + 1) * (radialValue a (hX.eigenvalues₀ i) t ^ (k + 1) -
-        a * radialValue a (hX.eigenvalues₀ i) t ^ k) := by
+  have hterm (i : Mode) :
+      t * (((k : ℝ) + 1) * radialValue a (hX.eigenvalues i) t ^ k *
+        (hX.eigenvalues i - a)) =
+      ((k : ℝ) + 1) * (radialValue a (hX.eigenvalues i) t ^ (k + 1) -
+        a * radialValue a (hX.eigenvalues i) t ^ k) := by
     rw [pow_succ]
-    have hx : t * (hX.eigenvalues₀ i - a) = radialValue a (hX.eigenvalues₀ i) t - a := by
+    have hx : t * (hX.eigenvalues i - a) = radialValue a (hX.eigenvalues i) t - a := by
       unfold radialValue
       ring
-    linear_combination (((k : ℝ) + 1) * radialValue a (hX.eigenvalues₀ i) t ^ k) * hx
-  simp only [hterm, traceMoment_radial hX, spectralMoment]
+    linear_combination (((k : ℝ) + 1) * radialValue a (hX.eigenvalues i) t ^ k) * hx
+  simp only [hterm, traceMoment_radial hX, modeMoment]
   rw [← Finset.mul_sum, Finset.sum_sub_distrib, ← Finset.mul_sum]
   ring
 
@@ -271,7 +256,7 @@ theorem A1_quartic_contractivity_strict (X : TwoMode) (hX : X.PosSemidef)
     · have hm := radial_mean hY hmeanY t
       rw [hz] at hm
       exact ha.ne' (by simpa [endpointTraceMoment] using hm.symm)
-    · simpa only [← pow_mul] using (sq_nonneg (hrad.eigenvalues₀ i ^ 2))
+    · simpa only [← pow_mul] using (sq_nonneg (hrad.eigenvalues i ^ 2))
   have hD (t : ℝ) (ht : t ∈ Ioo (0 : ℝ) 1) : 0 < D t := by
     have hfloor := A1_quartic_floor (radial a X t)
       (radial_posSemidef ha.le hX ⟨ht.1.le, ht.2.le⟩)
@@ -341,5 +326,9 @@ theorem A1_quartic_contractivity_eq_iff (X : TwoMode) (hX : X.PosSemidef) :
     exact (A1_quartic_contractivity_strict X hX hs).ne heq
   · rintro ⟨c, _, rfl⟩
     exact A1_quartic_scalar c
+
+#print axioms A1_quartic_contractivity_strict
+#print axioms A1_quartic_contractivity
+#print axioms A1_quartic_contractivity_eq_iff
 
 end WuRankOneEndpointFloor
