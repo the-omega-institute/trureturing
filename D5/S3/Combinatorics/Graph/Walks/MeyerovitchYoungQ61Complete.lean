@@ -608,7 +608,7 @@ private theorem lifted_repair_strict (X : EdgeGraph V E) [Finite V] [Nonempty V]
 
 def completeGraph (W : Type*) : EdgeGraph W (W × W) := ⟨Prod.fst, Prod.snd⟩
 
-private theorem complete_connects (W : Type*) : ConnectsAt (completeGraph W) 1 :=
+theorem complete_connects (W : Type*) : ConnectsAt (completeGraph W) 1 :=
   fun i j => ⟨.concat .nil (i, j) rfl, rfl⟩
 
 private def parallelEdges (Y : EdgeGraph W F) (i j : W) : Set F :=
