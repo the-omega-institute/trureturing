@@ -29,7 +29,7 @@ internal sealed class RHMobiusEvenCutoffLeftLimsupDocument : IScribeDocumentDefi
                     + "discrepancy is bounded above on a late tail. The width filter is the "
                     + "right-hand neighborhood filter at zero.")),
                 Paragraph(Text("The left discrepancy equals the midpoint discrepancy minus μ(r) times "
-                    + "the forward displacement of the root signal by L/2. The protected midpoint "
+                    + "the forward displacement of the root signal by L/2. The midpoint "
                     + "limsup controls the contribution of the midpoint discrepancy at lower order. "
                     + "The signed quarter-phase returns give the reverse bound for the absolute "
                     + "limsup. If μ(r) = 0, the midpoint estimate makes that limsup zero for small widths. "),
