@@ -17,6 +17,8 @@ triage: anchor
 
 ## Verified locator
 
+[Journal record](https://doi.org/10.1109/TIT.2024.3376395) · [arXiv record](https://arxiv.org/abs/2304.12989)
+
 Theorem 4 and Proposition 6 describe reversible statistical models and their sufficient decomposition.
 Appendix B, equations (83)–(87), computes the blocks for two commuting states by grouping equal likelihood ratios.
 The example includes a block with ratio zero.

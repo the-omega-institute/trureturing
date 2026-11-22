@@ -16,6 +16,8 @@ triage: anchor
 
 ## Verified locator
 
+[Journal record](https://doi.org/10.1109/TIT.2025.3562884) · [arXiv record](https://arxiv.org/abs/2309.07434)
+
 Definition 1 in Section II.B quantifies over quantum encoding and recovery channels after restricting to the marginal support.
 Section VI.A, equation (62), counts the distinct conditional laws of the classical bipartite experiment.
 [Primary text](https://arxiv.org/pdf/2309.07434v2#page=8)
