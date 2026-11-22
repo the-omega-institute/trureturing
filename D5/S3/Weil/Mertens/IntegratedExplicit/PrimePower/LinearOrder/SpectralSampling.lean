@@ -281,10 +281,17 @@ private theorem gaussian_bin_energy_le (S : Finset ℕ) (γ : ℕ → ℝ)
       rw [regroup_binEnergy, mul_assoc]
       exact mul_le_mul_of_nonneg_left (binEnergy_le _ _) (norm_nonneg _)
 
+private def localEnergyConstant : ℝ :=
+  Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))
+
+private theorem localEnergyConstant_nonneg : 0 ≤ localEnergyConstant :=
+  mul_nonneg (Real.exp_pos _).le (mul_nonneg (norm_nonneg _)
+    (tsum_nonneg fun _ => (Real.exp_pos _).le))
+
 private theorem local_bin_energy_le (S : Finset ℕ) (γ : ℕ → ℝ)
     (a : ℕ → ℂ) (c : ℝ) :
     (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes S γ a v‖^2) ≤
-      (Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))) *
+      localEnergyConstant *
         (∑ k ∈ S.image (frequencyBin ∘ γ), binMass S γ a k ^ 2) := by
   have hcont : Continuous (fun v => finiteModes S γ a v) := by
     unfold finiteModes
@@ -313,7 +320,7 @@ private theorem local_bin_energy_le (S : Finset ℕ) (γ : ℕ → ℝ)
       exact Filter.Eventually.of_forall fun v => mul_nonneg (Real.exp_pos _).le
         (mul_nonneg (Real.exp_pos _).le (sq_nonneg _))
     _ ≤ _ := by
-      rw [integral_const_mul, mul_assoc]
+      rw [localEnergyConstant, integral_const_mul, mul_assoc]
       exact mul_le_mul_of_nonneg_left (gaussian_bin_energy_le S γ a c) (Real.exp_pos _).le
 
 private theorem integrated_abs_difference_le {f f' : ℝ → ℂ} {l r x y : ℝ}
@@ -476,15 +483,10 @@ private theorem local_mode_energy_le_of_majorant (S : Finset ℕ) (γ : ℕ → 
     (hbs : Summable fun k => b k^2) {C c : ℝ}
     (hcoeff : ∀ k, binMass S γ a k ≤ C * b k) :
     (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes S γ a v‖^2) ≤
-      (Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))) *
+      localEnergyConstant *
         (C^2 * ∑' k : ℤ, b k^2) := by
-  let W := Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))
-  have hW : 0 ≤ W := by
-    dsimp [W]
-    exact mul_nonneg (Real.exp_pos _).le (mul_nonneg (norm_nonneg _)
-      (tsum_nonneg fun d => (Real.exp_pos _).le))
   apply (local_bin_energy_le S γ a c).trans
-  apply mul_le_mul_of_nonneg_left _ hW
+  apply mul_le_mul_of_nonneg_left _ localEnergyConstant_nonneg
   calc
     _ ≤ ∑ k ∈ S.image (frequencyBin ∘ γ), C^2 * b k^2 := by
       apply Finset.sum_le_sum
@@ -495,31 +497,41 @@ private theorem local_mode_energy_le_of_majorant (S : Finset ℕ) (γ : ℕ → 
       rw [← Finset.mul_sum]
       exact mul_le_mul_of_nonneg_left (hbs.sum_le_tsum _ (fun k _ => sq_nonneg _)) (sq_nonneg _)
 
+/-- The local integral bound is uniform in the square-summable bin majorant. -/
+theorem exists_local_mode_integral_le_square_mass :
+    ∃ G : ℝ, 0 < G ∧ ∀ (b : ℤ → ℝ), (Summable fun k => b k ^ 2) →
+      ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
+      (∀ k, binMass T γ a k ≤ C * b k) →
+      ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤
+        (G * Real.sqrt (∑' k : ℤ, b k ^ 2)) * C := by
+  refine ⟨2 * (1 + Real.sqrt localEnergyConstant), by positivity, ?_⟩
+  intro b hbs T γ a C hC hcoeff c
+  let E := localEnergyConstant * (C^2 * ∑' k : ℤ, b k^2)
+  have hE : 0 ≤ E :=
+    mul_nonneg localEnergyConstant_nonneg (mul_nonneg (sq_nonneg _) (tsum_nonneg fun _ => sq_nonneg _))
+  have henergy := local_mode_energy_le_of_majorant T γ a b hbs (c := c) hcoeff
+  have hnorm :
+      (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ 2 * Real.sqrt E := by
+    refine le_of_forall_pos_le_add fun δ hδ => ?_
+    have hA : 0 < Real.sqrt E + δ/2 := by positivity
+    have hAsq : E ≤ (Real.sqrt E + δ/2)^2 := by
+      nlinarith only [Real.sq_sqrt hE, mul_nonneg (Real.sqrt_nonneg E) hδ.le, sq_nonneg δ]
+    exact (local_integral_norm_le_of_energy (finiteModes_continuous T γ a)
+      hA (henergy.trans hAsq)).trans_eq (by ring)
+  refine hnorm.trans ?_
+  dsimp only [E]
+  rw [Real.sqrt_mul localEnergyConstant_nonneg, Real.sqrt_mul (sq_nonneg C), Real.sqrt_sq hC.le]
+  have hmass : 0 ≤ Real.sqrt (∑' k : ℤ, b k ^ 2) := Real.sqrt_nonneg _
+  nlinarith only [mul_nonneg hC.le hmass]
+
 theorem exists_local_mode_integral_le (b : ℤ → ℝ) (hbs : Summable fun k => b k ^ 2) :
     ∃ K : ℝ, 0 < K ∧ ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
       (∀ k, binMass T γ a k ≤ C * b k) →
       ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ K * C := by
-  let E := (Real.exp 1 * (‖((Real.pi : ℂ) ^ (1/2 : ℂ))‖ * (∑' d : ℤ, binKernel d))) *
-    (∑' k : ℤ, b k^2)
-  have hE : 0 ≤ E := by
-    dsimp [E]
-    exact mul_nonneg
-      (mul_nonneg (Real.exp_pos _).le (mul_nonneg (norm_nonneg _)
-        (tsum_nonneg fun d => (Real.exp_pos _).le)))
-      (tsum_nonneg fun k => sq_nonneg _)
-  let A := 1 + Real.sqrt E
-  have hA : 0 < A := by dsimp [A]; positivity
-  have hAsq : E ≤ A^2 := by
-    dsimp [A]
-    nlinarith only [Real.sq_sqrt hE, Real.sqrt_nonneg E]
-  refine ⟨2*A, by positivity, fun T γ a C hC hcoeff c => ?_⟩
-  have henergy := local_mode_energy_le_of_majorant T γ a b hbs (c := c) hcoeff
-  have henergy' : (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖^2) ≤ E * C^2 :=
-    henergy.trans_eq (by dsimp [E]; ring)
-  have hcontrol := henergy'.trans (mul_le_mul_of_nonneg_right hAsq (sq_nonneg C))
-  rw [← mul_pow] at hcontrol
-  exact (local_integral_norm_le_of_energy (finiteModes_continuous T γ a)
-    (mul_pos hA hC) hcontrol).trans_eq (by ring)
+  obtain ⟨G, hG, hbound⟩ := exists_local_mode_integral_le_square_mass
+  refine ⟨1 + G * Real.sqrt (∑' k : ℤ, b k ^ 2), by positivity, fun T γ a C hC hcoeff c => ?_⟩
+  exact (hbound b hbs T γ a C hC hcoeff c).trans
+    (mul_le_mul_of_nonneg_right (by linarith) hC.le)
 
 theorem separated_mode_samples_le {T S : Finset ℕ} {γ v : ℕ → ℝ} {a : ℕ → ℂ}
     {h c U V : ℝ} (hh : 0 < h) (hh₁ : h ≤ 1)
