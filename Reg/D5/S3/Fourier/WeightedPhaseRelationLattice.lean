@@ -59,12 +59,14 @@ private theorem orbitDependence : ObservationalDependence orbitSignature.{u} orb
 abbrev orbitArena : Arena where
   signature := orbitSignature.{u}
   Law r := ∀ {J : Type u} [Fintype J] (γ : J → ℝ),
-    r.readout () J γ =
-      {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1}
+    let T := r.readout () J γ
+    T = {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1} ∧
+      ∀ a : ℝ, closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici a) = T ∧
+        closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ioi a) = T
 
 private theorem orbitRejectedLaw : ¬ orbitArena.{u}.Law orbitRejected := by
   intro law
-  have h := law (J := ULift.{u} Unit) (fun _ => 0)
+  have h := (law (J := ULift.{u} Unit) (fun _ => 0)).1
   have hone : (1 : ULift.{u} Unit → Circle) ∈
       {p | ∀ k : ULift.{u} Unit → ℤ, (∑ j, (k j : ℝ) * 0) = 0 → (∏ j, p j ^ k j) = 1} := by
     simp
@@ -103,7 +105,7 @@ def orbitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "value"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
@@ -211,7 +213,8 @@ abbrev gramArena : Arena where
       (z a : ℝ) * (2 * Real.pi) - (Real.pi / 2) * (R *ᵥ (1 : J → ℝ)) a
     let E := ⨅ z : A → ℤ, b z ⬝ᵥ (G⁻¹ *ᵥ b z)
     let D := 1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / W)
-    2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0)
+    2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0) ∧
+      (D = 0 ↔ ∃ z : A → ℤ, b z = 0)
 
 private theorem gramRejectedLaw : ¬ gramArena.{u,v}.Law gramRejected := by
   intro law
