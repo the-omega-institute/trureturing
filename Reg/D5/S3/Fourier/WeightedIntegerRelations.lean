@@ -124,8 +124,8 @@ def multiplierArena : Arena where
     (_hrel : ∀ a ∈ rows, ∑ j ∈ columns, (k a j : ℝ) * gamma j = 0),
     let W := ∑ j ∈ columns, w j
     let C := ∑ j ∈ columns, (∑ a ∈ rows, lam a * |(k a j : ℝ)|) ^ 2 / w j
-    let N := ∑ a ∈ rows, lam a * R.readout () () ((1 : ℂ) - Complex.I ^ (∑ j ∈ columns, k a j))
-    0 < W → 0 < C →
+    0 < C →
+      let N := ∑ a ∈ rows, lam a * R.readout () () ((1 : ℂ) - Complex.I ^ (∑ j ∈ columns, k a j))
       N ^ 2 / (2 * W * C) ≤
         1 - sSup (Set.range (fun t : ℝ => ∑ j ∈ columns, w j * Real.sin (gamma j * t))) / W
 
@@ -135,7 +135,7 @@ private theorem multiplier_rejected : ¬ multiplierArena.{u,v}.Law rejected := b
   let rows : Finset (ULift.{v} Unit) := {⟨()⟩}
   have hbad := h columns rows (fun _ => 0) (fun _ => 1) (fun _ _ => 1)
     (fun _ => 1) (by simp) (by simp) (by simp)
-    (by norm_num [columns]) (by norm_num [columns, rows])
+    (by norm_num [columns, rows])
   norm_num [columns, rows, rejected, realize, signature, Set.range_const, csSup_singleton] at hbad
 
 def multiplierFamily : Registration multiplierArena.{u,v} (type_of% @weighted_phase_deficit.{u,v}) where
@@ -234,7 +234,7 @@ def multiplierAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "value", "arg", "body", "arg", "fn"]
+        "body", "body", "body", "body", "value", "arg", "body", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

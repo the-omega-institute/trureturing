@@ -51,8 +51,9 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
                     + "At the constant quarter phase i, its value is i raised to the coefficient "
                     + "sum. The weighted sum of squared coordinate chords to i is exactly "
                     + "2(W − S(v)). The character estimate bounds S(v) uniformly in v, so its "
-                    + "supremum satisfies the same upper bound. The multiplier inequality "
-                    + "uses positive total mass and positive column energy."))),
+                    + "supremum satisfies the same upper bound. The column energy is zero when "
+                    + "the column set is empty. Positive column energy therefore gives a "
+                    + "nonempty set of columns, and the sum of its positive weights is positive."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("disjoint-weighted-phase-deficit"),
                 DeclarationHandle.Create(Owner + ".weighted_phase_deficit_disjoint"),
@@ -163,7 +164,7 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
         var bound = Le(Div(Square(total), Multiply(Multiply(Num(2), W), Group(energy))), D);
         return F.Disp(Family(All("gamma", Arrow(J, Reals), WeightsAndRows(All("lambda", Arrow(A, Reals),
             Imp(PositiveWeights(), Imp(NonnegativeMultipliers(), Imp(Relations(),
-                Imp(Lt(Num(0), W), Imp(Lt(Num(0), energy), bound))))))))));
+                Imp(Lt(Num(0), energy), bound)))))))));
     }
 
     private static Formula DisjointBound()

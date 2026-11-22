@@ -139,8 +139,8 @@ theorem weighted_phase_deficit {J A : Type*} (columns : Finset J) (rows : Finset
     (hrel : ∀ a ∈ rows, ∑ j ∈ columns, (k a j : ℝ) * gamma j = 0) :
     let W := ∑ j ∈ columns, w j
     let C := ∑ j ∈ columns, (∑ a ∈ rows, lam a * |(k a j : ℝ)|) ^ 2 / w j
-    let N := ∑ a ∈ rows, lam a * ‖(1 : ℂ) - Complex.I ^ (∑ j ∈ columns, k a j)‖
-    0 < W → 0 < C →
+    0 < C →
+      let N := ∑ a ∈ rows, lam a * ‖(1 : ℂ) - Complex.I ^ (∑ j ∈ columns, k a j)‖
       N ^ 2 / (2 * W * C) ≤
         1 - sSup (Set.range (fun v : ℝ => ∑ j ∈ columns, w j * Real.sin (gamma j * v))) / W := by
   dsimp only
@@ -148,8 +148,13 @@ theorem weighted_phase_deficit {J A : Type*} (columns : Finset J) (rows : Finset
   let C := ∑ j ∈ columns, (∑ a ∈ rows, lam a * |(k a j : ℝ)|) ^ 2 / w j
   let N := ∑ a ∈ rows, lam a * ‖(1 : ℂ) - Complex.I ^ (∑ j ∈ columns, k a j)‖
   let S (v : ℝ) := ∑ j ∈ columns, w j * Real.sin (gamma j * v)
-  change 0 < W → 0 < C → N ^ 2 / (2 * W * C) ≤ 1 - sSup (Set.range S) / W
-  intro hW hC
+  change 0 < C → N ^ 2 / (2 * W * C) ≤ 1 - sSup (Set.range S) / W
+  intro hC
+  have hcolumns : columns.Nonempty := by
+    by_contra h
+    have hempty := Finset.not_nonempty_iff_eq_empty.mp h
+    simp [C, hempty] at hC
+  have hW : 0 < W := Finset.sum_pos hw hcolumns
   have hpoint (v : ℝ) : N ^ 2 ≤ C * (2 * (W - S v)) := by
     have h := weighted_character_chord columns rows (fun j => Circle.exp (gamma j * v))
       (fun _ => quarter) w k lam hw hlam
@@ -262,7 +267,7 @@ theorem weighted_phase_deficit_disjoint {J A : Type*} (columns : Finset J) (rows
     exact Finset.sum_le_sum fun j hj =>
       mul_le_of_le_one_right (hw j hj).le (Real.sin_le_one _)
   · have h := weighted_phase_deficit columns rows gamma w k lam hw hlam hrel
-      hW (hC.symm ▸ hpos)
+      (hC.symm ▸ hpos)
     change _ ≤ 1 - sSup (Set.range S) / W at h
     rw [hC, hN] at h
     change total ^ 2 / (2 * W * total) ≤ 1 - sSup (Set.range S) / W at h
