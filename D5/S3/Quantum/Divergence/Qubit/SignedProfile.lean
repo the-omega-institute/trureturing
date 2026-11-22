@@ -6,6 +6,7 @@
    utility: none
    digest: Squared overlaps determine the signed qubit positive-part trace. -/
 
+import D5.S3.Observer.BornReduction
 import D5.S3.Weil.ZetaLinear.HermitianPosPart
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Analysis.Matrix.Order
@@ -35,7 +36,8 @@ def contrast [Fintype ι] (a : ι → ℝ) (ψ : ι → Fin 2 → ℂ) : Matrix 
 def overlap (ψ : ι → Fin 2 → ℂ) (i j : ι) : ℝ :=
   Complex.normSq (star (ψ i) ⬝ᵥ ψ j)
 
-/-- Squared spectral gap, expressed using one term per unordered pair. -/
+/-- Signed overlap discriminant, expressed using one term per unordered pair.
+For unit preparations it is the squared spectral gap of the contrast. -/
 def gapSq [Fintype ι] [LinearOrder ι] (a : ι → ℝ) (ψ : ι → Fin 2 → ℂ) : ℝ :=
   (∑ i, a i) ^ 2 - 4 * ∑ ij ∈ (univ : Finset (ι × ι)).filter (fun ij => ij.1 < ij.2),
     a ij.1 * a ij.2 * (1 - overlap ψ ij.1 ij.2)
@@ -83,10 +85,11 @@ private theorem sum_eq_twice_pairs [Fintype ι] [LinearOrder ι] (f : ι → ι 
 private theorem trace_pair (u v : Fin 2 → ℂ) :
     (vecMulVec u (star u) * vecMulVec v (star v)).trace =
       (Complex.normSq (star u ⬝ᵥ v) : ℂ) := by
-  rw [vecMulVec_mul_vecMulVec, trace_vecMulVec, dotProduct_smul,
-    dotProduct_comm u (star v), star_dotProduct v u, smul_eq_mul]
-  rw [Complex.normSq_eq_conj_mul_self]
-  exact mul_comm _ _
+  rw [trace_mul_comm]
+  simpa only [D5.S3.Observer.Conditioning.recordWeight,
+    D5.S3.Quantum.FiniteDimensional.bornProbability, Complex.normSq_eq_norm_sq] using
+    D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+      (fun _ : Unit => vecMulVec u (star u)) (vecMulVec v (star v)) () u v rfl rfl
 
 /-- The trace-square invariant of the contrast expands over all ordered overlaps. -/
 private theorem trace_contrast_sq [Fintype ι] (a : ι → ℝ) (ψ : ι → Fin 2 → ℂ) :
@@ -173,7 +176,7 @@ theorem trace_posPart_contrast [Fintype ι] [LinearOrder ι]
   rw [hspectral, positive_pair, hgap, Real.sqrt_sq_eq_abs, htrace]
 
 /-- When every other overlap is fixed, the weighted change of the selected overlap
-determines the exact change of the squared spectral gap. -/
+determines the exact change of the signed overlap discriminant. -/
 private theorem gapSq_sub_of_pair [Fintype ι] [LinearOrder ι] (a : ι → ℝ)
     (ψ χ : ι → Fin 2 → ℂ) {i j : ι} (hij : i < j)
     (hfix : ∀ k l, k < l → (k, l) ≠ (i, j) → overlap ψ k l = overlap χ k l) :
@@ -186,7 +189,8 @@ private theorem gapSq_sub_of_pair [Fintype ι] [LinearOrder ι] (a : ι → ℝ)
     rw [hfix p.1 p.2 (mem_filter.mp hp).2 hne, sub_self]
   · simp [hij]
 
-/-- A weighted increase of the only changed overlap increases the trace of the positive part.
+/-- A nonnegative weighted change of the only changed overlap gives a weak increase in the
+trace of the positive part for unit preparations.
 This includes increasing the overlap for a nonnegative weight product and decreasing it
 for a nonpositive weight product. -/
 theorem trace_posPart_contrast_le_of_pair [Fintype ι] [LinearOrder ι] (a : ι → ℝ)
@@ -204,18 +208,6 @@ theorem trace_posPart_contrast_le_of_pair [Fintype ι] [LinearOrder ι] (a : ι 
   exact div_le_div_of_nonneg_right
     (add_le_add_right (max_le_max_left _ (Real.sqrt_le_sqrt hg)) _) (by norm_num)
 
-private theorem pairs_fin_three :
-    (univ : Finset (Fin 3 × Fin 3)).filter (fun ij => ij.1 < ij.2) =
-      {(0, 1), (0, 2), (1, 2)} := by decide
-
-/-- The three-class discriminant in the coordinates used by the Gibbs-record certificate. -/
-theorem gapSq_fin_three (a : Fin 3 → ℝ) (ψ : Fin 3 → Fin 2 → ℂ) (X Y Z : ℝ)
-    (hX : overlap ψ 0 1 = 1 - X) (hY : overlap ψ 0 2 = Y) (hZ : overlap ψ 1 2 = Z) :
-    gapSq a ψ = (a 2 - a 0 - a 1) ^ 2 +
-      4 * (-a 0 * a 1 * X + a 0 * a 2 * Y + a 1 * a 2 * Z) := by
-  simp [gapSq, pairs_fin_three, Fin.sum_univ_three, hX, hY, hZ]
-  ring
-
 private theorem overlap_phase_lower (u v : Fin 2 → ℂ) :
     (‖u 0‖ * ‖v 0‖ - ‖u 1‖ * ‖v 1‖) ^ 2 ≤ Complex.normSq (star u ⬝ᵥ v) := by
   let x := star (u 0) * v 0
@@ -225,8 +217,11 @@ private theorem overlap_phase_lower (u v : Fin 2 → ℂ) :
   have hsq := (sq_le_sq₀ (abs_nonneg _) (norm_nonneg _)).mpr h
   simpa [x, y, dotProduct, Fin.sum_univ_two, Complex.normSq_eq_norm_sq, norm_mul] using hsq
 
-/-- In a basis whose first vector is the reference preparation, the smallest squared overlap
-at the prescribed coordinate magnitudes is attained by choosing opposite relative phases. -/
+/-- In the chosen basis, the squared overlap is at least `sin (φ - θ) ^ 2`
+for vectors with coordinate magnitudes `(cos θ, sin θ)` and `(sin φ, cos φ)`.
+The displayed real vectors are unit and have squared overlap `sin (φ - θ) ^ 2`
+for all angles. When all four prescribed magnitudes are nonnegative, as for
+`θ, φ ∈ [0, π / 2]`, these vectors have the prescribed magnitudes and attain the bound. -/
 theorem phase_minimum (θ φ : ℝ) :
     let u₀ : Fin 2 → ℂ := ![(Real.cos θ : ℂ), (Real.sin θ : ℂ)]
     let v₀ : Fin 2 → ℂ := ![(Real.sin φ : ℂ), -(Real.cos φ : ℂ)]
@@ -265,10 +260,81 @@ theorem phase_minimum (θ φ : ℝ) :
     convert h using 1
     ring
 
+private theorem overlap_eq_except_outer_pair {ψ χ : Fin 3 → Fin 2 → ℂ}
+    (h01 : overlap ψ 0 1 = overlap χ 0 1) (h12 : overlap ψ 1 2 = overlap χ 1 2)
+    (k l : Fin 3) (hkl : k < l) (hne : (k, l) ≠ (0, 2)) :
+    overlap ψ k l = overlap χ k l := by
+  fin_cases k <;> fin_cases l
+  all_goals
+    first
+    | exact h01
+    | exact h12
+    | exact (hne rfl).elim
+    | exfalso
+      revert hkl
+      decide
+
+/-- With the middle preparation fixed to `e₀ = (1, 0)`, the explicit opposite-phase
+triple attains the maximum positive-part trace among unit triples with the prescribed
+coordinate magnitudes and a nonpositive product of the outer weights. -/
+theorem trace_posPart_contrast_isGreatest_opposite_phase (a : Fin 3 → ℝ) (θ φ : ℝ)
+    (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) (hφ : φ ∈ Set.Icc 0 (Real.pi / 2))
+    (ha : a 0 * a 2 ≤ 0) :
+    let e₀ : Fin 2 → ℂ := ![1, 0]
+    let u₀ : Fin 2 → ℂ := ![(Real.cos θ : ℂ), (Real.sin θ : ℂ)]
+    let v₀ : Fin 2 → ℂ := ![(Real.sin φ : ℂ), -(Real.cos φ : ℂ)]
+    let ψ₀ : Fin 3 → Fin 2 → ℂ := ![u₀, e₀, v₀]
+    let domain : Set (Fin 3 → Fin 2 → ℂ) := {ψ |
+      ψ 1 = e₀ ∧ ‖ψ 0 0‖ = Real.cos θ ∧ ‖ψ 0 1‖ = Real.sin θ ∧
+      ‖ψ 2 0‖ = Real.sin φ ∧ ‖ψ 2 1‖ = Real.cos φ ∧
+      ∀ i, star (ψ i) ⬝ᵥ ψ i = 1}
+    IsGreatest ((fun ψ => (contrast a ψ)⁺.trace.re) '' domain) (contrast a ψ₀)⁺.trace.re := by
+  intro e₀ u₀ v₀ ψ₀ domain
+  have hphase := phase_minimum θ φ
+  have he₀ : star e₀ ⬝ᵥ e₀ = 1 := by simp [e₀, dotProduct, Fin.sum_univ_two]
+  have hψ₀ : ∀ i, star (ψ₀ i) ⬝ᵥ ψ₀ i = 1 := by
+    intro i
+    fin_cases i
+    · exact hphase.1.1
+    · exact he₀
+    · exact hphase.1.2
+  have hsin (x : ℝ) (hx : x ∈ Set.Icc 0 (Real.pi / 2)) : 0 ≤ Real.sin x :=
+    Real.sin_nonneg_of_nonneg_of_le_pi hx.1 (le_trans hx.2 (by linarith [Real.pi_pos]))
+  have hcos (x : ℝ) (hx : x ∈ Set.Icc 0 (Real.pi / 2)) : 0 ≤ Real.cos x :=
+    Real.cos_nonneg_of_mem_Icc ⟨le_trans (by linarith [Real.pi_pos]) hx.1, hx.2⟩
+  have hmem₀ : ψ₀ ∈ domain := by
+    refine ⟨rfl, ?_, ?_, ?_, ?_, hψ₀⟩
+    · change ‖(Real.cos θ : ℂ)‖ = Real.cos θ
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hcos θ hθ)]
+    · change ‖(Real.sin θ : ℂ)‖ = Real.sin θ
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hsin θ hθ)]
+    · change ‖(Real.sin φ : ℂ)‖ = Real.sin φ
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hsin φ hφ)]
+    · change ‖-(Real.cos φ : ℂ)‖ = Real.cos φ
+      rw [norm_neg, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hcos φ hφ)]
+  refine ⟨⟨ψ₀, hmem₀, rfl⟩, ?_⟩
+  rintro _ ⟨ψ, ⟨href, hu0, hu1, hv0, hv1, hψ⟩, rfl⟩
+  have referenceOverlaps (χ : Fin 3 → Fin 2 → ℂ) (hχ : χ 1 = e₀) :
+      overlap χ 0 1 = ‖χ 0 0‖ ^ 2 ∧ overlap χ 1 2 = ‖χ 2 0‖ ^ 2 := by
+    constructor <;>
+      simp [overlap, hχ, e₀, dotProduct, Fin.sum_univ_two, Complex.normSq_eq_norm_sq]
+  obtain ⟨href₀, hu0', _, hv0', _, _⟩ := hmem₀
+  have h01 : overlap ψ 0 1 = overlap ψ₀ 0 1 := by
+    rw [(referenceOverlaps ψ href).1, (referenceOverlaps ψ₀ href₀).1, hu0, hu0']
+  have h12 : overlap ψ 1 2 = overlap ψ₀ 1 2 := by
+    rw [(referenceOverlaps ψ href).2, (referenceOverlaps ψ₀ href₀).2, hv0, hv0']
+  have h02 : overlap ψ₀ 0 2 ≤ overlap ψ 0 2 := by
+    change Complex.normSq (star u₀ ⬝ᵥ v₀) ≤ Complex.normSq (star (ψ 0) ⬝ᵥ ψ 2)
+    rw [hphase.2.1]
+    exact hphase.2.2 _ _ hu0 hu1 hv0 hv1
+  exact trace_posPart_contrast_le_of_pair a ψ ψ₀ hψ hψ₀ (i := 0) (j := 2) (by decide)
+    (overlap_eq_except_outer_pair h01 h12)
+    (mul_nonneg_of_nonpos_of_nonpos ha (sub_nonpos.mpr h02))
+
 #print axioms gapSq_eq_trace_det
 #print axioms trace_posPart_contrast
 #print axioms trace_posPart_contrast_le_of_pair
-#print axioms gapSq_fin_three
 #print axioms phase_minimum
+#print axioms trace_posPart_contrast_isGreatest_opposite_phase
 
 end D5.S3.Quantum.Divergence.Qubit.SignedProfile
