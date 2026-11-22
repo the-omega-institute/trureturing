@@ -7,7 +7,6 @@
    digest: Coalescing binomial rate laws obstruct inversion of the diagonal Petz scale curve. -/
 
 import D5.S3.Analytic.PetzDyadicStripEnergy
-import D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.Calculus.MeanValue
@@ -35,8 +34,6 @@ namespace D5.S3.Analytic.PetzDyadicEscapeSpectrum
 
 open PetzStripGramRemainder (stripGram logistic)
 open private cothFactor from D5.S3.Analytic.PetzStripGramRemainder
-open D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
-  (pronyMoment)
 
 noncomputable section
 
@@ -125,10 +122,6 @@ theorem rateMoment_eq_sum {ι : Type*} [Fintype ι] (rates weights : ι → ℝ)
     rateMoment rates weights k = ∑ i, weights i * rates i ^ k := by
   simp [rateMoment, tiltedRateMoment]
 
-theorem rateMoment_eq_pronyMoment {m : ℕ} (rates weights : Fin m → ℝ) (k : ℕ) :
-    rateMoment rates weights k = pronyMoment rates weights k := by
-  rw [rateMoment_eq_sum, pronyMoment]
-
 /-- An exact scale observation is the Laplace value after the affine
 contributions from mass and mean are included. -/
 theorem rateProfile_eq_laplace {ι : Type*} [Fintype ι]
@@ -143,15 +136,6 @@ theorem rateProfile_eq_laplace {ι : Type*} [Fintype ι]
   apply Finset.sum_congr rfl
   intro i _
   ring
-
-/-- Equally spaced observations use the Prony nodes `exp (-(d * rate))`. -/
-theorem laplace_eq_pronyMoment {m : ℕ} (rates weights : Fin m → ℝ) (d : ℝ) (j : ℕ) :
-    tiltedRateMoment rates weights 0 ((j : ℝ) * d) =
-      pronyMoment (fun i => Real.exp (-(d * rates i))) weights j := by
-  simp only [tiltedRateMoment, pronyMoment, pow_zero, mul_one, ← Real.exp_nat_mul]
-  apply Finset.sum_congr rfl
-  intro i _
-  rw [show -((↑j * d) * rates i) = (j : ℝ) * -(d * rates i) by ring]
 
 /-- Differentiating a tilted rate moment raises its degree with a minus sign.
 At scale zero the successive derivatives therefore give signed rate moments. -/
@@ -672,9 +656,7 @@ theorem no_uniform_holder_inverse (m : ℕ) (hm : 2 ≤ m) {rMin rMax alpha : �
 
 #print axioms diagonal_log_ratio_profile_error
 #print axioms rateMoment_eq_sum
-#print axioms rateMoment_eq_pronyMoment
 #print axioms rateProfile_eq_laplace
-#print axioms laplace_eq_pronyMoment
 #print axioms hasDerivAt_tiltedRateMoment
 #print axioms hasDerivAt_rateProfile
 #print axioms binomial_laws_normalized
