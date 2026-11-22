@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: The algebraic exclusion of spectral primes for the three vertical sections. -/
-import D5.S3.Quantum.TensorNetworks.PeriodicMPSWeightedLineSpecialization
+import D5.S3.Quantum.TensorNetworks.PeriodicMPS.Reconstruction.Geometry.PeriodicMPSWeightedHomogeneousDivisors
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.Reconstruction.Geometry.PeriodicMPSUniformVerticalSingletNorm
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Logic.Equiv.Fin.Rotate

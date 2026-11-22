@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Boundary coprimality of the divided outer determinant. -/
-import D5.S3.Quantum.TensorNetworks.PeriodicMPSWeightedLineSpecialization
+import D5.S3.Quantum.TensorNetworks.PeriodicMPS.Reconstruction.Geometry.PeriodicMPSWeightedHomogeneousDivisors
 import D5.S3.Quantum.TensorNetworks.PeriodicMPS.Reconstruction.Geometry.PeriodicMPSUniformVerticalSection
 import Mathlib.Algebra.MvPolynomial.Division
 import Mathlib.Algebra.MvPolynomial.Nilpotent

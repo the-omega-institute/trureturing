@@ -20,4 +20,4 @@ Over the characteristic-zero coefficient field and for m at least three, the com
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSUniformVerticalBoundaryCoprime.hsymm_isRelPrime_outerDividedDet`
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSUniformVerticalSection](PeriodicMPSUniformVerticalSection.md)
-- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPSWeightedLineSpecialization](../../../PeriodicMPSWeightedLineSpecialization.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSWeightedHomogeneousDivisors](PeriodicMPSWeightedHomogeneousDivisors.md)

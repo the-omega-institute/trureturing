@@ -20,4 +20,4 @@ For m at least three, no irreducible divisor avoiding the trace sum and the root
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSUniformVerticalPrimeExclusion.no_noncoordinate_prime_of_sectionRankImplication`
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSUniformVerticalSingletNorm](PeriodicMPSUniformVerticalSingletNorm.md)
-- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPSWeightedLineSpecialization](../../../PeriodicMPSWeightedLineSpecialization.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPS/Reconstruction/Geometry/PeriodicMPSWeightedHomogeneousDivisors](PeriodicMPSWeightedHomogeneousDivisors.md)
