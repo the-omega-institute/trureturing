@@ -7,6 +7,7 @@
    digest: Logarithmic derivative bounds for the short-gap normalization. -/
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterCollisionRadicand
+import Mathlib.Algebra.Field.GeomSum
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 
 /-! # Short-gap normalization for the refined BMV kernel -/
@@ -476,6 +477,215 @@ theorem fourPoint_cosh_lt_sinh_div {z : ℝ} (hz : 0 < z) :
   rw [← hf.tsum_eq, ← hg.tsum_eq]
   exact Summable.tsum_lt_tsum hle hstrict hf.summable hg.summable
 
+open scoped BigOperators
+
+private theorem sum_exp_centered_range (n : ℕ) {x : ℝ} (hx : 0 < x) :
+    (∑ j ∈ Finset.range n, Real.exp (((n : ℝ) - 1 - 2 * j) * x)) =
+      Real.sinh ((n : ℝ) * x) / Real.sinh x := by
+  have hratio : Real.exp (-2 * x) ≠ 1 := by
+    rw [← Real.exp_zero]
+    exact ne_of_lt (Real.exp_lt_exp.mpr (by linarith))
+  have hneg (s : ℝ) : Real.exp (-2 * s) - 1 = -2 * Real.exp (-s) * Real.sinh s := by
+    have h₁ : Real.exp (-s) * Real.exp s = 1 := by
+      rw [← Real.exp_add, neg_add_cancel, Real.exp_zero]
+    have h₂ : Real.exp (-s) * Real.exp (-s) = Real.exp (-2 * s) := by
+      rw [← Real.exp_add, show -s + -s = -2 * s by ring]
+    rw [Real.sinh_eq]
+    linear_combination h₁ - h₂
+  have hcancel : Real.exp (((n : ℝ) - 1) * x) * Real.exp (-((n : ℝ) * x)) =
+      Real.exp (-x) := by
+    rw [← Real.exp_add]
+    congr 1
+    ring
+  calc
+    _ = Real.exp (((n : ℝ) - 1) * x) * ∑ j ∈ Finset.range n, Real.exp (-2 * x) ^ j := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [← Real.exp_nat_mul, ← Real.exp_add]
+      congr 1
+      ring
+    _ = _ := by
+      rw [geom_sum_eq hratio, ← Real.exp_nat_mul, ← mul_div_assoc,
+        show (n : ℝ) * (-2 * x) = -2 * ((n : ℝ) * x) by ring]
+      apply (div_eq_div_iff (sub_ne_zero.mpr hratio) (Real.sinh_pos_iff.mpr hx).ne').mpr
+      rw [hneg ((n : ℝ) * x), hneg x]
+      linear_combination (-2 * Real.sinh ((n : ℝ) * x) * Real.sinh x) * hcancel
+
+private theorem compositionMoment_eq_conditioned (p : ℕ) (u v : ℝ) :
+    let h := 3 / (p : ℝ)
+    1 + compositionMoment p u v =
+      (∑ i ∈ Finset.range (p + 1), Real.exp ((h * i - 1) * v) *
+        ∑ j ∈ Finset.range (p + 1 - i), Real.exp ((h * (↑(p - i - j) : ℝ) - 1) * u)) /
+        ((DimThree.gaps p).length : ℝ) := by
+  let f (g : ℕ × ℕ × ℕ) :=
+    Real.exp ((3 * (g.2.1 : ℝ) / p - 1) * u + (3 * (g.2.2 : ℝ) / p - 1) * v)
+  change 1 + (((DimThree.gaps p).map f).sum / ((DimThree.gaps p).length : ℝ) - 1) = _
+  rw [add_comm (1 : ℝ), sub_add_cancel]
+  have hcycle := ((DimThree.gaps_cycle_all p).map f).sum_eq
+  rw [← hcycle]
+  congr 1
+  simp only [List.map_map, DimThree.gaps, List.flatMap_def, List.map_flatten,
+    List.sum_flatten, Function.comp_def, ← List.sum_toFinset _ List.nodup_range,
+    List.toFinset_range]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [← Real.exp_add]
+  dsimp [f]
+  congr 1
+  rw [div_mul_eq_mul_div, div_mul_eq_mul_div]
+  ring
+
+private theorem compositionGap_conditional_sum {p i : ℕ} (hi : i ≤ p) {h a : ℝ}
+    (hh : 0 < h) (ha : 0 < a) (hp : h * (p : ℝ) = 3) :
+    let n := p + 1 - i
+    let y := h * i - 1
+    (∑ j ∈ Finset.range n, Real.exp ((h * (↑(p - i - j) : ℝ) - 1) * (2 * a))) =
+      (n : ℝ) * Real.exp (-a * y) * (h * a / Real.sinh (h * a)) *
+        (Real.sinh ((n : ℝ) * (h * a)) / ((n : ℝ) * (h * a))) := by
+  let n := p + 1 - i
+  let y := h * (i : ℝ) - 1
+  have hn : (n : ℝ) = (p : ℝ) + 1 - i := by
+    dsimp [n]
+    rw [Nat.cast_sub (by omega)]
+    push_cast
+    rfl
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by dsimp [n]; omega)
+  have hx := mul_pos hh ha
+  change (∑ j ∈ Finset.range n, Real.exp ((h * (↑(p - i - j) : ℝ) - 1) * (2 * a))) =
+    (n : ℝ) * Real.exp (-a * y) * (h * a / Real.sinh (h * a)) *
+      (Real.sinh ((n : ℝ) * (h * a)) / ((n : ℝ) * (h * a)))
+  calc
+    _ = Real.exp (-a * y) *
+        ∑ j ∈ Finset.range n, Real.exp (((n : ℝ) - 1 - 2 * j) * (h * a)) := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro j hj
+      have hj' := Finset.mem_range.mp hj
+      have hk : (↑(p - i - j) : ℝ) = (p : ℝ) - i - j := by
+        rw [Nat.cast_sub (by omega), Nat.cast_sub hi]
+      rw [hk, ← Real.exp_add, hn]
+      congr 1
+      dsimp [y]
+      linear_combination a * hp
+    _ = _ := by
+      rw [sum_exp_centered_range n hx]
+      field_simp [hx.ne', hnpos.ne', (Real.sinh_pos_iff.mpr hx).ne']
+
+/-- The strict four-point lower bound for the joint composition moment in (29). -/
+theorem compositionMoment_fourPoint_lower {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 < u)
+    (v : ℝ) :
+    let h := 3 / (p : ℝ)
+    let a := u / 2
+    let t := v - a
+    let c := 2 + h
+    let r := Real.sqrt (11 / 15)
+    let F := fun s ↦ 1 + compositionMoment p 0 s
+    (h * a / (2 * Real.sinh (h * a))) *
+      ((9 / 14) * (Real.exp (c * (a / 3)) * F (t - a / 3) +
+        Real.exp (-(c * (a / 3))) * F (t + a / 3)) +
+        (5 / 14) * (Real.exp (c * (r * a)) * F (t - r * a) +
+        Real.exp (-(c * (r * a))) * F (t + r * a))) <
+      1 + compositionMoment p u v := by
+  let h := 3 / (p : ℝ)
+  let a := u / 2
+  let t := v - a
+  let c := 2 + h
+  let r := Real.sqrt (11 / 15)
+  let F := fun s ↦ 1 + compositionMoment p 0 s
+  let N := ((DimThree.gaps p).length : ℝ)
+  let n (i : ℕ) := p + 1 - i
+  let y (i : ℕ) := h * (i : ℝ) - 1
+  let z (i : ℕ) := (n i : ℝ) * (h * a)
+  let scale := h * a / Real.sinh (h * a)
+  let S := Finset.range (p + 1)
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
+  have hh : 0 < h := div_pos (by norm_num) hpR
+  have ha : 0 < a := half_pos hu
+  have hscale : 0 < scale := div_pos (mul_pos hh ha) (Real.sinh_pos_iff.mpr (mul_pos hh ha))
+  have htotal : h * (p : ℝ) = 3 := div_mul_cancel₀ _ hpR.ne'
+  have hN : 0 < N := by
+    have hm : (0, 0, p) ∈ DimThree.gaps p :=
+      (DimThree.mem_gaps_iff_total p (0, 0, p)).mpr (by simp)
+    dsimp only [N]
+    exact_mod_cast List.length_pos_of_mem hm
+  have hmarg (s : ℝ) : N * F s = ∑ i ∈ S, (n i : ℝ) * Real.exp (y i * s) := by
+    dsimp only [F]
+    rw [compositionMoment_eq_conditioned p 0 s, ← mul_div_assoc, mul_div_cancel_left₀ _ hN.ne']
+    apply Finset.sum_congr rfl
+    intro i _
+    simp [n, y, h, mul_comm]
+  let pair (d : ℝ) (i : ℕ) := (n i : ℝ) * Real.exp (y i * t) * Real.cosh ((c - y i) * d)
+  have hpair (d : ℝ) :
+      ∑ i ∈ S, pair d i =
+        (Real.exp (c * d) * (N * F (t - d)) + Real.exp (-(c * d)) * (N * F (t + d))) / 2 := by
+    rw [hmarg, hmarg, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
+      div_eq_mul_inv, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    have hplus : Real.exp (y i * t) * Real.exp ((c - y i) * d) =
+        Real.exp (c * d) * Real.exp (y i * (t - d)) := by
+      rw [← Real.exp_add, ← Real.exp_add]
+      congr 1
+      ring
+    have hminus : Real.exp (y i * t) * Real.exp (-((c - y i) * d)) =
+        Real.exp (-(c * d)) * Real.exp (y i * (t + d)) := by
+      rw [← Real.exp_add, ← Real.exp_add]
+      congr 1
+      ring
+    dsimp only [pair]
+    rw [Real.cosh_eq]
+    linear_combination (n i : ℝ) / 2 * (hplus + hminus)
+  have hsum :
+      (∑ i ∈ S, scale * ((9 / 14) * pair (a / 3) i + (5 / 14) * pair (r * a) i)) <
+        ∑ i ∈ S, Real.exp (y i * v) *
+          ∑ j ∈ Finset.range (n i), Real.exp ((h * (↑(p - i - j) : ℝ) - 1) * u) := by
+    apply Finset.sum_lt_sum_of_nonempty (by simp [S])
+    intro i hi
+    have hip : i ≤ p := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
+    have hnpos : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by dsimp [n]; omega)
+    have hncast : (n i : ℝ) = (p : ℝ) + 1 - i := by
+      dsimp [n]
+      rw [Nat.cast_sub (by omega)]
+      push_cast
+      rfl
+    have hz : z i = (c - y i) * a := by
+      dsimp only [z, c, y]
+      rw [hncast]
+      linear_combination a * htotal
+    have hquad := fourPoint_cosh_lt_sinh_div (z := z i) (by positivity)
+    rw [show z i / 3 = (c - y i) * (a / 3) by rw [hz]; ring,
+      show Real.sqrt (11 / 15) * z i = (c - y i) * (r * a) by rw [hz]; dsimp [r]; ring] at hquad
+    have hexp : Real.exp (y i * v) * Real.exp (-a * y i) = Real.exp (y i * t) := by
+      rw [← Real.exp_add]
+      congr 1
+      dsimp [t]
+      ring
+    calc
+      _ < scale * ((n i : ℝ) * Real.exp (y i * t) * (Real.sinh (z i) / z i)) := by
+        apply mul_lt_mul_of_pos_left _ hscale
+        calc
+          _ = (n i : ℝ) * Real.exp (y i * t) *
+              ((9 / 14) * Real.cosh ((c - y i) * (a / 3)) +
+                (5 / 14) * Real.cosh ((c - y i) * (r * a))) := by dsimp only [pair]; ring
+          _ < _ := mul_lt_mul_of_pos_left hquad (mul_pos hnpos (Real.exp_pos _))
+      _ = _ := by
+        rw [show u = 2 * a by dsimp [a]; ring, compositionGap_conditional_sum hip hh ha htotal]
+        change _ = Real.exp (y i * v) *
+          ((n i : ℝ) * Real.exp (-a * y i) * scale * (Real.sinh (z i) / z i))
+        rw [← hexp]
+        ring
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum, hpair] at hsum
+  dsimp only
+  rw [compositionMoment_eq_conditioned p u v, lt_div_iff₀ hN]
+  refine lt_of_eq_of_lt ?_ hsum
+  dsimp only [scale, F, N, c, r, t, a, h]
+  ring
+
+#print axioms compositionMoment_fourPoint_lower
 #print axioms fourPoint_cosh_lt_sinh_div
 #print axioms shortGapWeight_pos
 #print axioms shortGapNormalization_bounds
