@@ -47,8 +47,8 @@ abbrev arena : Arena where
     ∀ (q : OddSubset n), 1 ≤ mass ⟨univ, by simpa using even⟩ q →
     (∑ c, flags c * c.val.card) + R.readout () ⟨n,k⟩ cuts ≤
       (∑ p : EvenSubset n, ∑ c : OddSubset n,
-        (if p = ⟨univ, by simpa using even⟩ then flags c else mass p c % 2) *
-          (p.val ∩ c.val).card) +
+        if p = ⟨univ, by simpa using even⟩ then flags c * c.val.card
+        else (mass p c % 2) * (Ioc (n - c.val.card) p.val.card).card) +
       ((∑ r ∈ cuts.1, (if q ∈ highOdd r then
           let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
           d - (d - 1) else 0 : ℕ)) +
@@ -83,10 +83,12 @@ private theorem raised_fails : ¬ arena.Law raised := by
       rw [ite_eq_left rfl, ite_eq_left (show full.val = univ from rfl)]
     · rw [ite_eq_right h, ite_eq_right (fun eq => h (Subtype.ext eq))]
   have claimed : 6145 ≤ ∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-      (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card := by
+      if p = full then mass full c * c.val.card
+      else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card := by
     change (∑ c, mass full c * c.val.card) + 6145 ≤
       (∑ p : EvenSubset 6, ∑ c : OddSubset 6,
-        (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card) +
+        if p = full then mass full c * c.val.card
+        else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card) +
       ((∑ r ∈ (∅ : Finset ℕ), (if q ∈ highOdd r then
           let d := (highOrdinaryEvenRanks (n := 6) r).card + 1 - 1 * (lowOddRanks (n := 6) r).card
           d - (d - 1) else 0 : ℕ)) +
@@ -95,8 +97,24 @@ private theorem raised_fails : ¬ arena.Law raised := by
           d - (d - 1) else 0 : ℕ))) at impossible
     simp only [sum_empty, Nat.add_zero] at impossible
     omega
+  have extend :
+      (∑ p : EvenSubset 6, ∑ c : OddSubset 6,
+        if p = full then mass full c * c.val.card
+        else (mass p c % 2) * (Ioc (6 - c.val.card) p.val.card).card) ≤
+      ∑ p : EvenSubset 6, ∑ c : OddSubset 6,
+        (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card := by
+    apply sum_le_sum
+    intro p _
+    apply sum_le_sum
+    intro c _
+    by_cases hp : p = full
+    · subst p
+      simp [full]
+    · rw [ite_eq_right hp, ite_eq_right hp,
+        rank_interval_card_eq_intersection_sub 6 (p.val, c.val)]
+      exact Nat.mul_le_mul_left _ (Nat.sub_le _ _)
   have upper := test_score_at_most mass (mass full) one (one full)
-  exact (by decide : ¬ 6145 ≤ 6144) (claimed.trans (same.le.trans upper))
+  exact (by decide : ¬ 6145 ≤ 6144) (claimed.trans (extend.trans (same.le.trans upper)))
 
 
 def family : Registration arena (type_of% mixed_rank_lower) where

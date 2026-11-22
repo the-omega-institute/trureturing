@@ -63,15 +63,14 @@ private theorem active_fits {n : ℕ} {p : EvenSubset n} {q : OddSubset n} {r : 
 private theorem active_budget {n : ℕ} (p : EvenSubset n) (q : OddSubset n)
     (R C : Finset ℕ) (separate : Disjoint R C) :
     (∑ r ∈ R, (if active p q r then 1 else 0 : ℕ)) +
-      (∑ r ∈ C, (if active p q r then 1 else 0 : ℕ)) ≤ (p.val ∩ q.val).card := by
+      (∑ r ∈ C, (if active p q r then 1 else 0 : ℕ)) ≤
+      (Ioc (n - q.val.card) p.val.card).card := by
   classical
   rw [← sum_union separate, ← sum_filter, ← card_eq_sum_ones]
   have fit : ((R ∪ C).filter (active p q)) ⊆ Ioc (n-q.val.card) p.val.card := by
     intro r hr
     exact active_fits (mem_filter.mp hr).2
-  refine (card_le_card fit).trans ?_
-  rw [rank_interval_card_eq_intersection_sub n (p.val, q.val)]
-  exact Nat.sub_le _ _
+  exact card_le_card fit
 
 private theorem row_cut {n k : ℕ}
     (full : EvenSubset n) (full_size : full.val.card = n)
@@ -199,8 +198,8 @@ theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
         k * (lowOddRanks (n := n) r).card)) +
       (∑ r ∈ cuts.2, ((highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)))) ≤
     (∑ p : EvenSubset n, ∑ c : OddSubset n,
-      (if p = ⟨univ, by simpa using even⟩ then flags c else mass p c % 2) *
-        (p.val ∩ c.val).card) +
+      if p = ⟨univ, by simpa using even⟩ then flags c * c.val.card
+      else (mass p c % 2) * (Ioc (n - c.val.card) p.val.card).card) +
       ((∑ r ∈ cuts.1, (if q ∈ highOdd r then
           let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
           d - (d - 1) else 0 : ℕ)) +
@@ -261,7 +260,8 @@ theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
       (∑ c, flags c * c.val.card) + (∑ r ∈ R, ∑ p, ∑ c, cellFlags full p c mass r) +
         (∑ r ∈ C, ∑ p, ∑ c, cellFlags full p c mass r) ≤
       ∑ p : EvenSubset n, ∑ c : OddSubset n,
-        (if p = full then flags c else mass p c % 2) * (p.val ∩ c.val).card := by
+        if p = full then flags c * c.val.card
+      else (mass p c % 2) * (Ioc (n - c.val.card) p.val.card).card := by
     have regroup (S : Finset ℕ) :
         (∑ r ∈ S, ∑ p, ∑ c, cellFlags full p c mass r) =
         ∑ p, ∑ c, ∑ r ∈ S, cellFlags full p c mass r := by
@@ -281,7 +281,7 @@ theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
     intro c _
     by_cases hp : p = full
     · subst p
-      simp [cellFlags, full]
+      simp [cellFlags]
     · have atCut (S : Finset ℕ) :
           (∑ r ∈ S, cellFlags full p c mass r) =
           (mass p c % 2) * (∑ r ∈ S, (if active p c r then 1 else 0 : ℕ)) := by
@@ -291,7 +291,8 @@ theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
       exact Nat.mul_le_mul_left _ (active_budget p c R C separate)
   change _ ≤
     (∑ p : EvenSubset n, ∑ c : OddSubset n,
-      (if p = full then flags c else mass p c % 2) * (p.val ∩ c.val).card) +
+      if p = full then flags c * c.val.card
+      else (mass p c % 2) * (Ioc (n - c.val.card) p.val.card).card) +
       ((∑ r ∈ R, (if q ∈ highOdd r then
           let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
           d - (d - 1) else 0 : ℕ)) +

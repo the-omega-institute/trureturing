@@ -20,8 +20,8 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
             FormulaLogicOperator.Implies,
             Seq(Call("FullRowScore", n, flags), Sp, Plus, Sp,
                 Call("MixedRankDeficits", n, k, rows, columns), Sp, Le, Sp,
-                Call("IntersectionCount", n, table, flags), Sp, Plus, Sp,
-                Call("ChargedPositiveDeficitCount", n, rows, columns, column))));
+                Call("IntervalWeightedCount", n, table, flags), Sp, Plus, Sp,
+                Call("ChargedPositiveDeficitCount", n, k, rows, columns, column))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -39,8 +39,9 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
                     + "coordinates and columns are all odd subsets. The finite sets R and C of "
                     + "natural-number thresholds are disjoint. The chosen column q has positive "
                     + "mass in the full row.")),
-                Paragraph(Text("The score multiplies the intersection size of each ordinary cell "
-                    + "by its mass modulo two. Each full-row cell instead uses its flag.")),
+                Paragraph(Text("Each ordinary cell contributes its rank interval length times "
+                    + "its mass modulo two. Each full-row cell contributes its column weight "
+                    + "times its flag. Differences between natural numbers are truncated at zero.")),
                 Paragraph(Text("The bound starts with the full-row score. For each r in R, add the "
                     + "positive part of one plus the number of ordinary even rows of weight at least r, minus "
                     + "k times the number of odd columns of weight at most n minus r. For each "
