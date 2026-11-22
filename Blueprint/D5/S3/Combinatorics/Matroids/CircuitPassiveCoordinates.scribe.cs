@@ -1,0 +1,49 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Matroids;
+
+internal sealed class CircuitPassiveCoordinatesDocument : IScribeDocumentDefinition
+{
+    private const string Module = "D5/S3/Combinatorics/Matroids/CircuitPassiveCoordinates";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Alternating-form equations separated by the indices with zero weight.",
+        H("Circuit Coordinates with Zero Weights"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("insertion-project"),
+                DeclarationHandle.Create(Module + ".insertion_project"),
+                H("Weighted insertion preserves the intersection"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Choose a set of basis indices whose weights vanish. Keeping the coefficients "
+                    + "with one prescribed intersection with that set commutes with insertion of "
+                    + "the weighted vector. Only indices outside the chosen set can contribute "
+                    + "to the insertion sum, so each contributing face has the same intersection."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-split"),
+                DeclarationHandle.Create(Module + ".exists_split"),
+                H("Product decomposition of the weighted kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For forms killed by both weighted insertion and a fixed integer, the "
+                    + "projections give a linear equivalence with the product of the parts "
+                    + "supported on each prescribed intersection. Adding the projected forms "
+                    + "recovers the original form."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("split-with-omitted-faces"),
+                DeclarationHandle.Create(Module + ".split_with_omitted_faces"),
+                H("Omitted faces constrain individual factors"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Requiring the coefficient of an omitted face to vanish restricts the "
+                    + "factor indexed by its intersection with the zero-weight set. Omitted "
+                    + "faces with distinct intersections therefore impose equations in "
+                    + "different factors of the product."))),
+                DescribeRole.Theorem))));
+}
