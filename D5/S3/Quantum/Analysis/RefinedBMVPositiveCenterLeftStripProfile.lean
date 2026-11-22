@@ -223,6 +223,18 @@ theorem leftStrip_geometric_mixed_lt {h a v γ : ℝ}
       linarith
     _ < (-1/5 : ℝ) := by norm_num
 
+private theorem separated_exp_neg_le {t : ℝ} (ht : 6 ≤ t) :
+    Real.exp (-t) ≤ 1/400 := by
+  have he6 : (400 : ℝ) < Real.exp 6 := by
+    rw [show (6 : ℝ) = (6 : ℕ) * (1 : ℝ) by norm_num, Real.exp_nat_mul]
+    have ho : (2718/1000 : ℝ) < Real.exp 1 := lt_trans (by norm_num) Real.exp_one_gt_d9
+    exact (by norm_num : (400 : ℝ) < (2718/1000)^6).trans
+      (pow_lt_pow_left₀ ho (by norm_num) (by decide))
+  have he6neg : Real.exp (-6) ≤ (1 : ℝ)/400 := by
+    rw [Real.exp_neg, one_div]
+    exact (inv_le_inv₀ (Real.exp_pos _) (by norm_num)).mpr he6.le
+  exact (Real.exp_le_exp.mpr (neg_le_neg ht)).trans he6neg
+
 /-- Quantitative lower bound for the marginal root at gaps of at least six. -/
 theorem separated_radical_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3/11) (ht : 6 ≤ t) :
     let B := ((3+h)*(3+2*h)/2) * (upperTailGap h t)^2 * Real.exp (-(2*t))
@@ -233,16 +245,7 @@ theorem separated_radical_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3/11) (h
   let e := Real.exp (-t)
   have ht₀ : 0 < t := by linarith
   have he₀ : 0 < e := Real.exp_pos _
-  have he6 : (400 : ℝ) < Real.exp 6 := by
-    rw [show (6 : ℝ) = (6 : ℕ) * (1 : ℝ) by norm_num, Real.exp_nat_mul]
-    have ho : (2718/1000 : ℝ) < Real.exp 1 := lt_trans (by norm_num) Real.exp_one_gt_d9
-    exact (by norm_num : (400 : ℝ) < (2718/1000)^6).trans
-      (pow_lt_pow_left₀ ho (by norm_num) (by decide))
-  have he6neg : Real.exp (-6) ≤ (1 : ℝ)/400 := by
-    rw [Real.exp_neg, one_div]
-    exact (inv_le_inv₀ (Real.exp_pos _) (by norm_num)).mpr he6.le
-  have he : e ≤ 1/400 :=
-    (Real.exp_le_exp.mpr (neg_le_neg ht)).trans he6neg
+  have he : e ≤ 1/400 := separated_exp_neg_le ht
   have hte : t*e ≤ 6/400 := by
     have htExp : t ≤ 6*Real.exp (t-6) := by
       linarith only [Real.add_one_le_exp (t-6), ht]
@@ -253,7 +256,7 @@ theorem separated_radical_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3/11) (h
       congr 1
       ring
     rw [mul_assoc, hexp] at hmul
-    exact hmul.trans (by linarith only [he6neg])
+    exact hmul.trans (by linarith only [separated_exp_neg_le (t := 6) le_rfl])
   have ha₀ : 0 ≤ a := by
     refine div_nonneg (sub_nonneg.mpr ?_) hh.le
     exact Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le ht₀.le))
@@ -302,7 +305,73 @@ theorem separated_radical_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3/11) (h
   change (999/1000 : ℝ)^2 ≤ 1 - ((1+α*a)*Real.exp (-(α*t)) + c*a^2*Real.exp (-(2*t)))
   linarith only [hA, hB]
 
+/-- The repeat-node correction is small relative to the leading square. -/
+theorem separated_marginal_correction_lt {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t) :
+    let a := upperTailGap h t
+    let B := ((3+h)*(3+2*h)/2) * a^2 * Real.exp (-(2*t))
+    (1+(3+h)*a)*Real.exp (-((3+h)*t)) < B/3400 := by
+  let a := upperTailGap h t
+  let c := (3+h)*(3+2*h)/2
+  let L := upperTailSlope h t
+  let e := Real.exp (-t)
+  let B := c*a^2*Real.exp (-(2*t))
+  let A := (1+(3+h)*a)*Real.exp (-((3+h)*t))
+  have ht₀ : 0 < t := by linarith
+  have ha₀ : 0 < a := div_pos
+    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht₀)))) hh
+  have hc : 9/2 ≤ c := by dsimp [c]; nlinarith [sq_nonneg h]
+  have hc₀ : 0 < c := by linarith
+  have hB : 0 < B := mul_pos (mul_pos hc₀ (sq_pos_of_pos ha₀)) (Real.exp_pos _)
+  obtain ⟨hL₀, hL, _, _, _, _⟩ := upperTailSlope_bounds hh ht₀
+  have hLg : L*a = Real.exp (-(h*t)) := by
+    have hd := upperTailGap_logDeriv hh ht₀
+    rw [(hasDerivAt_upperTailGap hh).deriv] at hd
+    exact ((div_eq_iff ha₀.ne').mp hd).symm
+  have hsum : a*(h+L) = 1 := by
+    have hgap : h*a = 1-Real.exp (-(h*t)) := by
+      change h*((1-Real.exp (-(h*t)))/h) = _
+      field_simp [hh.ne']
+    linarith only [hgap, hLg, show a*(h+L) = h*a+L*a by ring]
+  have hCoef : L*(3+2*h) ≤ 3/t := by
+    have hExp := Real.quadratic_le_exp_of_nonneg (mul_nonneg hh.le ht₀.le)
+    have hden : 0 < Real.exp (h*t)-1 :=
+      sub_pos.mpr (Real.one_lt_exp_iff.mpr (mul_pos hh ht₀))
+    change (h/(Real.exp (h*t)-1))*(3+2*h) ≤ 3/t
+    rw [div_mul_eq_mul_div]
+    apply (div_le_div_iff₀ hden ht₀).2
+    have H : 0 ≤ h^2 * t * (3*t/2-2) :=
+      mul_nonneg (mul_nonneg (sq_nonneg h) ht₀.le) (by linarith)
+    nlinarith only [hExp, H]
+  have hInv : 1/t ≤ (1 : ℝ)/6 := one_div_le_one_div_of_le (by norm_num) ht
+  have hLmax : L ≤ 1/6 := hL.trans hInv
+  have hCoeff : L*(L+3+2*h) ≤ 19/36 := by
+    have hSq := pow_le_pow_left₀ hL₀.le hLmax 2
+    have hRatio : 3/t ≤ (1 : ℝ)/2 := (div_le_iff₀ ht₀).2 (by linarith)
+    nlinarith only [hSq, hCoef, hRatio]
+  have hIdentity : c * (A/B) = e * (L*(L+3+2*h)) := by
+    have he : Real.exp (-((3+h)*t)) =
+        Real.exp (-(2*t))*e*Real.exp (-(h*t)) := by
+      dsimp only [e]
+      rw [← Real.exp_add, ← Real.exp_add]
+      congr 1
+      ring
+    dsimp only [A, B]
+    rw [he, ← hLg]
+    field_simp [ha₀.ne', hc₀.ne', (Real.exp_pos (-(2*t))).ne']
+    linear_combination -(e*L) * hsum
+  have hRhs :=
+    mul_le_mul_of_nonneg_left hCoeff (Real.exp_pos (-t)).le
+  have hExp := mul_le_mul_of_nonneg_right (separated_exp_neg_le ht)
+    (by norm_num : (0 : ℝ) ≤ 19/36)
+  have hRatio : A/B < 1/3400 := by
+    apply (mul_lt_mul_iff_of_pos_left hc₀).mp
+    rw [hIdentity]
+    linarith only [hRhs, hExp, hc]
+  change A < B/3400
+  exact ((div_lt_iff₀ hB).mp hRatio).trans_eq (by ring)
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
+#print axioms separated_marginal_correction_lt
 
 end RefinedBMV.PositiveCenter
