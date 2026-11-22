@@ -4,7 +4,7 @@
 
 The translation-frequency linear program can give the wrong threshold for the original game.
 
-At each horizon Alice chooses an edge word and Bob minimizes the sum of paired edge costs over walks of that length. Both endpoints are free, as in equations (5) and (6) of Meyerovitch and Young. Alice has one vertex with three loops +, −, and ∗. Bob has two vertices and all four directed edges. https://arxiv.org/html/2603.21449v1#S4.E6
+At each horizon Alice chooses an edge word and Bob minimizes the sum of paired edge costs over walks of that length. Both endpoints are free, as in equations (5) and (6) of Meyerovitch and Young, which define the source game. In the project's three-matrix construction below, Alice has one vertex with three loops +, −, and ∗. Bob has two vertices and all four directed edges. https://arxiv.org/html/2603.21449v1#S4.E6
 
 Write b = c + ρ/8 and ε = √2 − 4/3. The shifts on the three loops are √2 − 1/2, −2/3, and (√2 − 1)/2. Their unclipped rewards are b, b, and b − ρ. The matrix with shift t and reward w has first row (w + t/2, w + t/2) and second row (w + 1 − t/2, w − t/2), with departure vertices indexing rows and arrival vertices indexing columns.
 
@@ -48,7 +48,7 @@ For real c and 0 < ρ ≤ ε, both graphs are primitive at length one and every 
 
 At every horizon the original maximin is attained and is bounded by nb − ρ⌊n/4⌋. The free-endpoint matrix minimum is superadditive under concatenation, so Fekete's lemma gives a real limit of the maximin divided by the horizon. The four-letter bound gives V ≤ c − ρ/8 < c.
 
-The same matrices have infinitely many reachable differences. Starting at zero, choose the star below 2/3 and minus otherwise. The resulting words stay within a rotation interval and never clip. Distinct lengths give distinct differences because the interval length is irrational and the minus shift is rational and nonzero. The construction and bounds are those of equations (13)–(21) and the rotation in §5.1 of the three-matrix derivation.
+The same matrices have infinitely many reachable differences. Starting at zero, choose the star below 2/3 and minus otherwise. The resulting words stay within a rotation interval and never clip. Distinct lengths give distinct differences because the interval length is irrational and the minus shift is rational and nonzero.
 
 ## References
 

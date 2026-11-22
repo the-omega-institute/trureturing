@@ -24,9 +24,11 @@ namespace MeyerovitchYoungQ61FrequencyGap
 
 open Maths Set Filter
 open MeyerovitchYoungQ61Complete
-  (ConnectsAt Legal completeGraph matrixCost matrixMinimum matrixMinimum_spec
+  (ConnectsAt Legal completeGraph complete_connects matrixCost matrixMinimum matrixMinimum_spec
     wordCost wordCost_append)
-open MeyerovitchYoungQ61Subcritical (averageScore clip clip_mem overshoot overshoot_nonneg)
+open MeyerovitchYoungQ61Subcritical
+  (averageScore clip clip_mem minimumScore minimumScore_eq_average normalized overshoot
+    overshoot_nonneg)
 open scoped Topology
 
 /-- The three self-loops available to Alice. -/
@@ -216,11 +218,11 @@ theorem matrixMinimum_eq_centered (c ρ : ℝ) (a : List Letter) :
       simp only [List.foldl_append, List.foldl_cons, List.foldl_nil, centeredStep]
       exact clip_mem (by norm_num) _
   refine ⟨(congrArg Prod.fst hfold).symm, hd, ?_⟩
-  have hz : endpointScores c ρ a true ≤ endpointScores c ρ a false :=
-    sub_nonneg.mp hd.1
-  rw [matrixMinimum_eq_min, min_eq_right hz, centeredScore, ← hfold]
-  dsimp [normalizedState, difference, averageScore]
-  ring
+  have hdiff : normalized 0 (endpointScores c ρ a) - 0 = -normalizedState c ρ a := by
+    simp [normalized, normalizedState, difference, neg_sub]
+  rw [matrixMinimum_eq_min, centeredScore, ← hfold]
+  change minimumScore (endpointScores c ρ a) = _
+  rw [minimumScore_eq_average 0, hdiff, abs_neg, abs_of_nonneg hd.1]
 
 private theorem sqrt_two_bounds : (4 : ℝ) / 3 < Real.sqrt 2 ∧ Real.sqrt 2 < 3 / 2 := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
@@ -726,8 +728,7 @@ private theorem graphs_connect :
     cases i
     cases j
     exact ⟨.concat .nil .plus rfl, rfl⟩
-  · intro i j
-    exact ⟨.concat .nil (i, j) rfl, rfl⟩
+  · exact complete_connects Bool
 
 private theorem alice_legal (a : List Letter) : Legal aliceGraph a := by
   induction a using List.reverseRecOn with

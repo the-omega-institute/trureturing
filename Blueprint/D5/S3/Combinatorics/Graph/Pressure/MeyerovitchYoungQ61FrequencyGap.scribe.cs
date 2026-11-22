@@ -13,8 +13,9 @@ internal sealed class MeyerovitchYoungQ61FrequencyGapDocument : IScribeDocumentD
             Paragraph(Text(
                 "At each horizon Alice chooses an edge word and Bob minimizes the sum of paired "
                 + "edge costs over walks of that length. Both endpoints are free, as in equations "
-                + "(5) and (6) of Meyerovitch and Young. Alice has one vertex with three loops "
-                + "+, −, and ∗. Bob has two vertices and all four directed edges. "
+                + "(5) and (6) of Meyerovitch and Young, which define the source game. "
+                + "In the project's three-matrix construction below, Alice has one vertex "
+                + "with three loops +, −, and ∗. Bob has two vertices and all four directed edges. "
                 + "https://arxiv.org/html/2603.21449v1#S4.E6")),
             Paragraph(Text(
                 "Write b = c + ρ/8 and ε = √2 − 4/3. The shifts on the three loops are "
@@ -80,8 +81,6 @@ internal sealed class MeyerovitchYoungQ61FrequencyGapDocument : IScribeDocumentD
                         + "at zero, choose the star below 2/3 and minus otherwise. The resulting "
                         + "words stay within a rotation interval and never clip. Distinct lengths "
                         + "give distinct differences because the interval length is irrational "
-                        + "and the minus shift is rational and nonzero. The construction and "
-                        + "bounds are those of equations (13)–(21) and the rotation in §5.1 of "
-                        + "the three-matrix derivation."))),
+                        + "and the minus shift is rational and nonzero."))),
                 DescribeRole.Theorem))));
 }
