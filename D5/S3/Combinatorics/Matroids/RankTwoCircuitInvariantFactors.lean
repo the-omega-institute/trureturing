@@ -98,7 +98,7 @@ private theorem gcd_univ_fin_succ {k : ℕ} (weight : Fin (k + 1) → ℕ) :
     · exact (Nat.gcd_dvd_right _ _).trans (gcd_dvd (mem_univ j))
 
 /-- Reduce a finite weighted sum to multiplication by the gcd in one coordinate. -/
-private theorem exists_sum_coordinates (k : ℕ) (weight : Fin (k + 1) → ℕ)
+theorem exists_sum_coordinates (k : ℕ) (weight : Fin (k + 1) → ℕ)
     (hpos : ∀ i, 0 < weight i) :
     ∃ coordinates : (Fin (k + 1) → A) ≃ₗ[ℤ] (A × (Fin k → A)),
       ∀ f, (univ.gcd weight) • (coordinates f).1 = ∑ i, weight i • f i := by
@@ -123,14 +123,14 @@ private theorem exists_sum_coordinates (k : ℕ) (weight : Fin (k + 1) → ℕ)
       rw [hhead, htail]
       exact (Fin.sum_univ_succ (fun i => weight i • f i)).symm
 
-private abbrev ResidueTorsion (n : ℕ) := Submodule.torsionBy ℤ RationalResidue (n : ℤ)
+abbrev ResidueTorsion (n : ℕ) := Submodule.torsionBy ℤ RationalResidue (n : ℤ)
 
 private def integerFraction (n : ℕ) : ℤ →+ RationalResidue where
   toFun a := rationalResidue ((a : ℚ) / n)
   map_zero' := by simp
   map_add' a b := by simp [add_div]
 
-private theorem residueTorsion_equiv_zmod (n : ℕ) (hn : n ≠ 0) :
+theorem residueTorsion_equiv_zmod (n : ℕ) (hn : n ≠ 0) :
     Nonempty (ResidueTorsion n ≃ₗ[ℤ] ZMod n) := by
   have hnq : (n : ℚ) ≠ 0 := by exact_mod_cast hn
   have hzero (a : ℤ) : integerFraction n a = 0 ↔ (n : ℤ) ∣ a := by
@@ -173,7 +173,7 @@ private theorem residueTorsion_equiv_zmod (n : ℕ) (hn : n ≠ 0) :
     exact (congrArg rationalResidue ((div_eq_iff hnq).mpr (ha.trans (mul_comm _ _)))).trans hq
   exact ⟨(LinearEquiv.ofBijective into ⟨hinj, hsurj⟩).symm⟩
 
-private lemma gcd_torsion_iff (n d : ℕ) (x : A) :
+theorem gcd_torsion_iff (n d : ℕ) (x : A) :
     (n.gcd d : ℤ) • x = 0 ↔ (n : ℤ) • x = 0 ∧ (d : ℤ) • x = 0 := by
   constructor
   · intro h
@@ -187,7 +187,7 @@ private lemma gcd_torsion_iff (n d : ℕ) (x : A) :
     rw [Nat.gcd_eq_gcd_ab, add_smul, mul_comm (n : ℤ), mul_comm (d : ℤ),
       mul_smul, mul_smul, hn, hd, smul_zero, smul_zero, add_zero]
 
-private def weightedSum (A : Type*) [AddCommGroup A] {k : ℕ}
+def weightedSum (A : Type*) [AddCommGroup A] {k : ℕ}
     (weight : Fin k → ℕ) : (Fin k → A) →ₗ[ℤ] A :=
   ∑ i, weight i • LinearMap.proj i
 
@@ -195,7 +195,7 @@ private lemma weightedSum_apply {k : ℕ} (weight : Fin k → ℕ) (f : Fin k �
     weightedSum A weight f = ∑ i, weight i • f i := by
   simp [weightedSum, LinearMap.sum_apply]
 
-private theorem weightedTorsion_equiv (n k : ℕ) (weight : Fin (k + 1) → ℕ)
+theorem weightedTorsion_equiv (n k : ℕ) (weight : Fin (k + 1) → ℕ)
     (hpos : ∀ i, 0 < weight i) :
     Nonempty ((weightedSum (ResidueTorsion n) weight).ker ≃ₗ[ℤ]
       ((ResidueTorsion (n.gcd (univ.gcd weight))) × (Fin k → ResidueTorsion n))) := by
@@ -312,7 +312,7 @@ private theorem normalizedPotentials_equiv_weighted {V : Type*} [Fintype V]
     apply Subtype.ext
     simp [inverse, forward]
 
-private theorem gcd_card_tail_eq {V : Type*} [Fintype V] {k : ℕ}
+theorem gcd_card_tail_eq {V : Type*} [Fintype V] {k : ℕ}
     (part : V → Fin (k + 2)) :
     (Fintype.card V).gcd (univ.gcd fun i : Fin (k + 1) => classSize part i.succ) =
       univ.gcd (classSize part) := by

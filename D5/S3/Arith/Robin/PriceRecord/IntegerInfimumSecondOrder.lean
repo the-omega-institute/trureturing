@@ -230,7 +230,7 @@ lemma log_pow_over_H_rpow (k : ℕ) {a : ℝ} (ha : 0 < a) :
   simpa only [Function.comp_def, prefixEll, rpow_natCast] using
     ((isLittleO_log_rpow_rpow_atTop (k : ℝ) ha).tendsto_div_nhds_zero.comp prefixH_atTop)
 
-private lemma log_pow_over_sqrt_H (k : ℕ) :
+lemma log_pow_over_sqrt_H (k : ℕ) :
     Tendsto (fun P => ℓ P ^ k / sqrt (H P)) atTop (𝓝 0) := by
   simpa only [sqrt_eq_rpow] using
     log_pow_over_H_rpow k (show (0 : ℝ) < 1 / 2 by norm_num)
