@@ -832,33 +832,33 @@ theorem result (n : ℕ) :
         ⟨fun i => (i.castSucc, i.succ), fun _ _ h => Fin.castSucc_injective _ (congrArg Prod.fst h)⟩
       let backward (k : ℕ) : Fin k ↪ Fin (k + 1) × Fin (k + 1) :=
         (forward k).trans (Equiv.prodComm _ _).toEmbedding
-      have mem_forward (e : Fin (m + 1) × Fin (m + 1)) :
-          e ∈ Finset.univ.map (forward m) ↔ e.2.val = e.1.val + 1 := by
+      have mem_forward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
+          e ∈ Finset.univ.map (forward k) ↔ e.2.val = e.1.val + 1 := by
         obtain ⟨x, y⟩ := e
         simp only [Finset.mem_map, Finset.mem_univ, true_and]
-        change (∃ i : Fin m, (i.castSucc, i.succ) = (x, y)) ↔ y.val = x.val + 1
+        change (∃ i : Fin k, (i.castSucc, i.succ) = (x, y)) ↔ y.val = x.val + 1
         constructor
         · rintro ⟨i, h⟩
           cases h
           rfl
         · intro h
-          have hx : x.val < m := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
+          have hx : x.val < k := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
           exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
-      have mem_backward (e : Fin (m + 1) × Fin (m + 1)) :
-          e ∈ Finset.univ.map (backward m) ↔ e.1.val = e.2.val + 1 := by
-        change e ∈ Finset.univ.map ((forward m).trans (Equiv.prodComm _ _).toEmbedding) ↔ _
+      have mem_backward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
+          e ∈ Finset.univ.map (backward k) ↔ e.1.val = e.2.val + 1 := by
+        change e ∈ Finset.univ.map ((forward k).trans (Equiv.prodComm _ _).toEmbedding) ↔ _
         rw [← Finset.map_map, Finset.mem_map_equiv]
         exact mem_forward e.swap
       have horizontal : horiz (m + 1) = Finset.univ.map (forward m) := by
         ext e
         simp only [horiz, Finset.mem_filter, Finset.mem_univ, true_and, mem_forward]
-      have diagonals : betw (m + 1) =
-          Finset.univ.map (forward m) ∪ Finset.univ.map (backward m) := by
+      have diagonals (k : ℕ) : betw (k + 1) =
+          Finset.univ.map (forward k) ∪ Finset.univ.map (backward k) := by
         ext e
         simp only [betw, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_union,
           mem_forward, mem_backward]
-      have diagonals_disjoint :
-          Disjoint (Finset.univ.map (forward m)) (Finset.univ.map (backward m)) := by
+      have diagonals_disjoint (k : ℕ) :
+          Disjoint (Finset.univ.map (forward k)) (Finset.univ.map (backward k)) := by
         rw [Finset.disjoint_left]
         intro e hf hb
         have h₁ := (mem_forward e).mp hf
@@ -866,6 +866,7 @@ theorem result (n : ℕ) :
         omega
       have cuts : edges = Finset.univ.diag ∪
           (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
+        rw [← diagonals 4]
         decide +kernel
       have count_union {k : ℕ} {E F : Finset (Fin k × Fin k)} (h : Disjoint E F)
           (r t : Fin k → Fin 3) :
@@ -876,13 +877,12 @@ theorem result (n : ℕ) :
           bondDefects (Finset.univ.map e) r t =
             ∑ i, if r (e i).1 = t (e i).2 then 1 else 0 := by
         rw [bondDefects, Finset.card_filter, Finset.sum_map]
-      have hd : Disjoint (Finset.univ.map (forward 4)) (Finset.univ.map (backward 4)) := by
-        decide +kernel
       have hl : Disjoint (Finset.univ.diag : Finset (Fin 5 × Fin 5))
           (Finset.univ.map (forward 4) ∪ Finset.univ.map (backward 4)) := by
         decide +kernel
-      rw [GridBridge.defects_rows _ _ 4, GridBridge.defects_rows _ _ m, horizontal, diagonals, cuts]
-      simp_rw [bondDefects_empty, count_union diagonals_disjoint, count_union hl, count_union hd,
+      rw [GridBridge.defects_rows _ _ 4, GridBridge.defects_rows _ _ m, horizontal, diagonals m, cuts]
+      simp_rw [bondDefects_empty, count_union (diagonals_disjoint m), count_union hl,
+        count_union (diagonals_disjoint 4),
         Finset.diag, count_map]
       dsimp only [forward, backward, Function.diag, Function.Embedding.coeFn_mk]
       simp only [Finset.sum_const_zero, zero_add, Finset.sum_add_distrib]
