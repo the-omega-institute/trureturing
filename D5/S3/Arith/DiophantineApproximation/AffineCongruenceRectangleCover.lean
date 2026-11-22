@@ -517,4 +517,27 @@ theorem short_label_miss_obstruction {N M : ℕ} {theta phi t w : ℝ}
   linarith only [hwidth, mul_nonneg hcoefN (abs_nonneg (delta L.h theta L.p3)),
     mul_nonneg hcoefM (abs_nonneg (delta L.h phi L.p5))]
 
+
+namespace Shared
+
+theorem nearest_residue (h : ℕ) (hh : 0 < h) (r : ℤ) (x : ℝ) :
+    ∃ b k : ℤ, b = r + (h : ℤ) * k ∧ |(b : ℝ) - x| ≤ (h : ℝ) / 2 :=
+  D5.S3.Arith.DiophantineApproximation.AffineCongruenceRectangleCover.nearest_residue h hh r x
+
+theorem closed_open_overlap {c r T A : ℝ} (hr : 0 ≤ r) (hA : 0 < A)
+    (hc : |c - T| < r + A) : ∃ y : ℝ, |y - c| ≤ r ∧ |y - T| < A :=
+  D5.S3.Arith.DiophantineApproximation.AffineCongruenceRectangleCover.closed_open_overlap hr hA hc
+
+theorem axis_extremes (c r x : ℝ) (hr : 0 ≤ r) :
+    ∃ lo hi : ℝ, c - r ≤ lo ∧ lo ≤ c + r ∧ c - r ≤ hi ∧ hi ≤ c + r ∧
+      lo * x = c * x - r * |x| ∧ hi * x = c * x + r * |x| :=
+  D5.S3.Arith.DiophantineApproximation.AffineCongruenceRectangleCover.axis_extremes c r x hr
+
+theorem abs_two_row_det_le {x z x' z' C : ℝ}
+    (hx : x ^ 2 + z ^ 2 ≤ C) (hx' : x' ^ 2 + z' ^ 2 ≤ C) :
+    |x * z' - x' * z| ≤ C :=
+  D5.S3.Arith.DiophantineApproximation.AffineCongruenceRectangleCover.abs_two_row_det_le hx hx'
+
+end Shared
+
 end D5.S3.Arith.DiophantineApproximation.AffineCongruenceRectangleCover
