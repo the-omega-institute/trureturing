@@ -49,7 +49,7 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("Each admissible next row contributes one to the multiplicity of its class after spending its horizontal and antidiagonal defects."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("count-transfer"),
                 DeclarationHandle.Create(Prefix + "count_transfer"), H("The labelled strip count"),
-                StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("DefectTransfer.literalCount", Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Num("2"), Add(V("n"), Num("1")))), Call("dotProduct", Call("HardinA229693StripTransfer.initial"), Call("Matrix.mulVec", Power(Call("HardinA229693StripTransfer.T"), V("n")), Call("HardinA229693StripTransfer.terminal"))))))),
+                StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(CastInt(Call("DefectTransfer.literalCount", Parenthesized(Seq(V("q"), Sp, Colon, F.Eq, Sp, Num("3"))), Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Num("2"), Add(V("n"), Num("1")))), Call("dotProduct", Call("HardinA229693StripTransfer.initial"), Call("Matrix.mulVec", Power(Call("HardinA229693StripTransfer.T"), V("n")), Call("HardinA229693StripTransfer.terminal"))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The first row contributes the initial weight. Each later row multiplies by the transfer matrix, and terminal weights require exact exhaustion."))), DescribeRole.Theorem))));
 

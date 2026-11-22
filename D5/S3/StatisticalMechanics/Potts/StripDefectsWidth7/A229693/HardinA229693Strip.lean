@@ -309,7 +309,7 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
     induction j using Fin.addCases (m := 72) (n := 96) with
     | left j =>
       rw [leading_action]
-      exact (congrFun (leading_step i) j).symm
+      simpa only [w, Fin.append_left] using (congrFun (leading_step i) j).symm
     | right j =>
       fin_cases i
       · exact (exhausted_step0 j).symm
@@ -330,6 +330,7 @@ private theorem forward_table (i : Fin 15) : forward T initial i.val = w i := by
 private theorem polynomial_relation :
     forward T initial (2 + 12) =
       ∑ j : Fin 12, coefficients j • forward T initial (2 + j.val) := by
+  change forward T initial (Fin.last 14).val = _
   rw [forward_table (Fin.last 14)]
   simp_rw [show ∀ j : Fin 12, forward T initial (2 + j.val) =
       w ((j.natAdd 2).castAdd 1) from fun j => forward_table ((j.natAdd 2).castAdd 1)]
