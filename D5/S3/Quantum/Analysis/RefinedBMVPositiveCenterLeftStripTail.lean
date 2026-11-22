@@ -298,8 +298,144 @@ theorem leftStripCross_derivatives {p : ℕ} (hp : 0 < p) (a v : ℝ) :
     rw [hsum]
     ring
 
+/-- Signed estimates of the two derivative formulas use only the first
+moment of the finite rate distribution. -/
+theorem leftStripCross_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
+    (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+    let h := 3/(p : ℝ)
+    let U := upperTailRepeatCorrection h (v-a)
+    |deriv (deriv (leftStripCross p · v)) a| ≤ (13/2)*U ∧
+      |deriv (fun y ↦ deriv (deriv (leftStripCross p · y)) a) v| ≤ 22*U := by
+  let h := 3/(p : ℝ)
+  let α := 3+h
+  let β := α+h
+  let s := v-a
+  let F := upperTailGap h s
+  let q := Real.exp (-(h*s))
+  let E := Real.exp (-(α*s))
+  let w (j : ℕ) := α-h*((j : ℝ)+1)
+  let e (j : ℕ) := Real.exp (-(h*((j : ℝ)+1)*a))
+  let M := ∑ j ∈ range (p+1), (w j)^2*e j
+  let N := ∑ j ∈ range (p+1), (2*w j+h)*e j
+  let m := (p : ℝ)+1
+  have hp₀ : 0 < p := by omega
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hhmax : h ≤ 3/11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
+  have hpH : h*(p : ℝ) = 3 := by dsimp [h]; field_simp [hpR.ne']
+  have hm : h*m = α := by dsimp only [m, α]; linarith only [hpH]
+  have hw (j : ℕ) (hj : j ∈ range (p+1)) : 0 ≤ w j ∧ w j ≤ 3 := by
+    have hjp : (j : ℝ) ≤ p := by exact_mod_cast Nat.lt_succ_iff.mp (mem_range.mp hj)
+    have hj₀ : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+    have hmj := mul_le_mul_of_nonneg_left hjp hh.le
+    have hz := mul_nonneg hh.le hj₀
+    dsimp only [w, α]
+    constructor <;> linarith only [hmj, hpH, hz]
+  have he (j : ℕ) : 0 ≤ e j ∧ e j ≤ 1 :=
+    ⟨(Real.exp_pos _).le, Real.exp_le_one_iff.mpr
+      (neg_nonpos.mpr (mul_nonneg (by positivity : 0 ≤ h*((j : ℝ)+1)) ha))⟩
+  have hsumJ : (∑ j ∈ range (p+1), (j : ℝ))*2 = m*p := by
+    have hmN : (∑ j ∈ range (p+1), j)*2 = (p+1)*p := by
+      simpa using sum_range_id_mul_two (p+1)
+    simpa only [m, Nat.cast_mul, Nat.cast_sum, Nat.cast_add, Nat.cast_one, Nat.cast_ofNat] using
+      congrArg (fun n : ℕ ↦ (n : ℝ)) hmN
+  have hsumW : (∑ j ∈ range (p+1), w j) = (3/2)*m := by
+    have hwEq (j : ℕ) : w j = 3-h*(j : ℝ) := by dsimp only [w, α]; ring
+    simp only [hwEq, sum_sub_distrib, ← mul_sum, sum_const, card_range, nsmul_eq_mul,
+      Nat.cast_add, Nat.cast_one]
+    change m*3-h*(∑ j ∈ range (p+1), (j : ℝ)) = _
+    linear_combination -(m/2)*hpH-(h/2)*hsumJ
+  have hM₀ : 0 ≤ M := sum_nonneg fun j _ ↦ mul_nonneg (sq_nonneg _) (he j).1
+  have hN₀ : 0 ≤ N := sum_nonneg fun j hj ↦
+    mul_nonneg (add_nonneg (mul_nonneg (by norm_num) (hw j hj).1) hh.le) (he j).1
+  have hM : h*M ≤ (9/2)*α := by
+    have hs : M ≤ (9/2)*m := calc
+      M ≤ ∑ j ∈ range (p+1), 3*w j := by
+        apply sum_le_sum
+        intro j hj
+        exact (mul_le_of_le_one_right (sq_nonneg _) (he j).2).trans (by
+          have hmul := mul_le_mul_of_nonneg_right (hw j hj).2 (hw j hj).1
+          nlinarith only [hmul])
+      _ = _ := by rw [← mul_sum, hsumW]; ring
+    have hle := mul_le_mul_of_nonneg_left hs hh.le
+    nlinarith only [hle, hm]
+  have hN : h*N ≤ α^2 := by
+    have hs : N ≤ α*m := calc
+      N ≤ ∑ j ∈ range (p+1), (2*w j+h) := by
+        exact sum_le_sum fun j hj ↦ mul_le_of_le_one_right
+          (add_nonneg (mul_nonneg (by norm_num) (hw j hj).1) hh.le) (he j).2
+      _ = _ := by
+        rw [sum_add_distrib, ← mul_sum, hsumW, sum_const, card_range, nsmul_eq_mul,
+          Nat.cast_add, Nat.cast_one]
+        change 2*((3/2)*m)+m*h = _
+        dsimp only [α]
+        ring
+    have hle := mul_le_mul_of_nonneg_left hs hh.le
+    nlinarith only [hle, mul_le_mul_of_nonneg_left hm.le (by positivity : 0 ≤ α)]
+  have hs : 0 < s := by linarith
+  have hF : 0 < F := div_pos
+    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh hs)))) hh
+  have hq₀ : 0 ≤ q := (Real.exp_pos _).le
+  have hq₁ : q ≤ 1 := Real.exp_le_one_iff.mpr (by
+    exact neg_nonpos.mpr (mul_nonneg hh.le hs.le))
+  have hqle : q ≤ F/6 := by
+    have hlog := upperTailGap_logDeriv hh hs
+    rw [(hasDerivAt_upperTailGap hh).deriv] at hlog
+    have hSlope := (upperTailSlope_bounds hh hs).2.1.trans
+      (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 6) hgap)
+    rw [show q = upperTailSlope h s*F from (div_eq_iff hF.ne').mp hlog]
+    simpa only [one_div, div_eq_mul_inv, mul_comm, one_mul] using
+      mul_le_mul_of_nonneg_right hSlope hF.le
+  have hFmin : 2 ≤ F := by
+    have hgapEq : h*F = 1-q := gap_relation hh s
+    have ht := mul_le_mul_of_nonneg_right hhmax hF.le
+    linarith only [hgapEq, ht, hqle, hF.le]
+  have hα₀ : 0 ≤ α := by dsimp only [α]; linarith
+  have hα : α ≤ 10/3 := by dsimp only [α]; linarith
+  have hβ₀ : 0 ≤ β := by dsimp only [β]; linarith
+  have hβ : β ≤ 18/5 := by dsimp only [β, α]; linarith
+  have hX : 0 ≤ α*F := mul_nonneg hα₀ hF.le
+  have hXlo := mul_le_mul_of_nonneg_left hFmin hα₀
+  have hαsq := mul_le_mul_of_nonneg_right hα hα₀
+  have hαcube := mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hα₀ hα 2) hα₀
+  have hA : α^2+h*F*M ≤ (13/2)*(α*F) := by
+    have hFM := mul_le_mul_of_nonneg_left hM hF.le
+    nlinarith only [hXlo, hαsq, hFM, hX]
+  have hB : h*q*N ≤ (13/2)*(α*F) := by
+    have hqN := mul_le_of_le_one_right (mul_nonneg hh.le hN₀) hq₁
+    nlinarith only [hXlo, hαsq, hN, hqN, hX]
+  have hC : α^3+h*α*F*M ≤ 22*(α*F) := by
+    have hαM := mul_le_mul hα hM (mul_nonneg hh.le hM₀) (by norm_num : (0 : ℝ) ≤ 10/3)
+    have hFαM := mul_le_mul_of_nonneg_left hαM hF.le
+    nlinarith only [hαcube, hXlo, hFαM, hX]
+  have hD : h*q*(M+β*N) ≤ 22*(α*F) := by
+    have hαβ := mul_le_mul hβ hα hα₀ (by norm_num : (0 : ℝ) ≤ 18/5)
+    have hαβ₂ := mul_le_mul_of_nonneg_right hαβ hα₀
+    have hβN := mul_le_mul_of_nonneg_left hN hβ₀
+    have hsum := mul_le_of_le_one_right (mul_nonneg hh.le
+      (add_nonneg hM₀ (mul_nonneg hβ₀ hN₀))) hq₁
+    nlinarith only [hαβ₂, hβN, hM, hsum, hXlo, hX]
+  obtain ⟨h₂, h₃⟩ := leftStripCross_derivatives hp₀ a v
+  change deriv (deriv (leftStripCross p · v)) a = E*(α^2+h*F*M-h*q*N) at h₂
+  change deriv (fun y ↦ deriv (deriv (leftStripCross p · y)) a) v =
+    E*(-α^3-h*α*F*M+h*q*(M+β*N)) at h₃
+  have he₀ : 0 ≤ E := (Real.exp_pos _).le
+  have h₂' : |α^2+h*F*M-h*q*N| ≤ (13/2)*(α*F) := by
+    exact abs_le.mpr ⟨by linarith only [hB, show 0 ≤ α^2+h*F*M by positivity],
+      by linarith only [hA, show 0 ≤ h*q*N by positivity]⟩
+  have h₃' : |-α^3-h*α*F*M+h*q*(M+β*N)| ≤ 22*(α*F) := by
+    exact abs_le.mpr ⟨by linarith only [hC, show 0 ≤ h*q*(M+β*N) by positivity],
+      by linarith only [hD, show 0 ≤ α^3+h*α*F*M by positivity]⟩
+  rw [h₂, h₃, abs_mul, abs_mul, abs_of_nonneg he₀]
+  change E*|α^2+h*F*M-h*q*N| ≤ (13/2)*((1+α*F)*E) ∧
+    E*|-α^3-h*α*F*M+h*q*(M+β*N)| ≤ 22*((1+α*F)*E)
+  exact ⟨by nlinarith only [mul_le_mul_of_nonneg_left h₂' he₀, he₀],
+    by nlinarith only [mul_le_mul_of_nonneg_left h₃' he₀, he₀]⟩
+
 #print axioms leftStripCross_eq
 #print axioms leftStripTailResidual_zero
 #print axioms leftStripCross_derivatives
+#print axioms leftStripCross_derivative_bounds
 
 end RefinedBMV.PositiveCenter
