@@ -425,7 +425,7 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
-`make test` 使用相对 BASE 的变更运行定向 check-current；显式 `FULL_BUILD=1` 运行完整报告与 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `Meta/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
+`make test` 使用相对 BASE 的变更运行定向 check-current。`make gate BASE=<sha> [PURPOSE=pull-request|push]` 与 `local-harness-gate.sh --base <ref> [--purpose ...]` 消费 `Meta/ci-units.json` 中唯一的 `CI_UNITS` 与执行声明，通过同一个 `ci_checks.py` 运行所有适用单元、实际子检查、互补测试过滤器和 TRX 校验。默认 purpose 为 pull-request。两种 purpose 对相同路径选择相同单元、定向 Lean 检查与源码 delta 检查。`make gate-plan` 只输出选择与身份，不声称执行成功。`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
 
 **共用检查边界。** `ci_contract.py` 消费唯一声明，不解释 workflow、不建立影响图或通用调度器。current 的报告适用性、定向目标、源码 delta 范围及编译审计、Fourier source evidence 的选择取同一契约；单元的 project/command、dotnet、lean 与依赖恢复声明也在该契约内，不在本地或 workflow 维护副本。检查所有者输出实际 check id、原始 exit 与解释；普通检查保留实际退出码。超时、取消保留原始退出；前置拒绝门失败时，其守护的后继明确 blocked，不声称已执行，也不等同未适用；已进入阶段中前置满足的独立适用检查继续给出结果，保留原有可达性与退出语义。make 外层仍遵守其原有 0/2，分类诊断以检查所有者输出为准。
 
