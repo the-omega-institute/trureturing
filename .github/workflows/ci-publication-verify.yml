@@ -26,9 +26,7 @@ jobs:
       - name: Install the candidate tools in the pinned project
         run: |
           set -euo pipefail
-          python3 .github/scripts/install-tools.py
-          python3 build/candidate/package_release.py --output-dir "$RUNNER_TEMP/candidate"
-          tar -xzf "$RUNNER_TEMP/candidate/trureturing-tools.tar.gz" -C .
+          python3 build/candidate/.github/scripts/install-fixture.py "$GITHUB_WORKSPACE"
           tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
           make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - name: Prepare the pinned dependency workspace
@@ -36,6 +34,10 @@ jobs:
       - name: Discover and validate the real sparse report graph
         run: |
           set -euo pipefail
+          test "$(git -C build/candidate rev-parse HEAD)" = ffeff0c1542b7403d97334b3fa1d1a4658d9c6d7
+          test "$(jq -r .sha256 Meta/tools-release.json)" = a7f8a8abf8bce78d4547f5665236e446c958483fb6b47af97d45d6b48ff03740
+          cmp tools/lean-inspector/lakefile.lean build/candidate/tools/lean-inspector/lakefile.lean
+          cat Meta/tools-release.json
           PYTHONPATH=tools/lean-inspector /usr/bin/time -v python3 - <<'PY'
           import tempfile
           from pathlib import Path
