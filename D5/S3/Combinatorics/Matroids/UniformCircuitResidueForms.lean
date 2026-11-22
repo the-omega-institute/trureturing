@@ -163,7 +163,7 @@ theorem basisFormEquiv_symm_apply {I : Type*} [LinearOrder I] (b : Module.Basis 
 open Finset Set.powersetCard
 open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 
-private lemma face_embedding_erase {I : Type*} [LinearOrder I]
+theorem face_embedding_erase {I : Type*} [LinearOrder I]
     (e : Fin (n + 1) ↪o I) (i : Fin (n + 1)) :
     (ofFinEmbEquiv ((Fin.succAboveOrderEmb i).trans e)).val =
       (ofFinEmbEquiv e).val.erase (e i) := by
