@@ -94,6 +94,10 @@ Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.resu
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cambie-jooken-wagner-mean-order-comparison` (refuted) by `D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cambie-jooken-wagner-mean-order-comparison","declaration_gid":"D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stijn Cambie; Jorik Jooken; Stephan Wagner (2026). *On the extrema of the mean subtree order of graphs*. DOI: [10.48550/arXiv.2508.20593](https://doi.org/10.48550/arXiv.2508.20593). URL: <https://arxiv.org/abs/2508.20593v2>.

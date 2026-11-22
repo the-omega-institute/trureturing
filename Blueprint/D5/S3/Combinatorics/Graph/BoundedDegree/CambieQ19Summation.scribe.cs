@@ -26,12 +26,15 @@ internal sealed class CambieQ19SummationDocument : IScribeDocumentDefinition
             Node("strict-comparison", "strictComparison", "Strict comparison on the witness",
                 "The mean order of actual tree subgraphs is strictly smaller than the mean order of connected vertex supports.", DescribeRole.Theorem),
             Node("result", "result", "Question 1.9 is false",
-                "The fixed connected graph has subtree mean strictly below its connected-set mean, refuting the universal comparison.", DescribeRole.Theorem))));
+                "The fixed connected graph has subtree mean strictly below its connected-set mean, refuting the universal comparison.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cambie-jooken-wagner-mean-order-comparison"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
-        DescribeRole role) =>
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + declaration), H(title),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 }
