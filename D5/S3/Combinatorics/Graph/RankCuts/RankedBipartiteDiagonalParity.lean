@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/Graph/RankedBipartiteDiagonalParity
+/- GID: D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteDiagonalParity
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/RankedBipartiteDiagonalParity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -13,7 +13,7 @@ open Finset
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+namespace D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -125,4 +125,4 @@ theorem diagonal_parity (rank : V → ℕ) (e : V → V → ℕ) (top : V) (r : 
     ∑ a ∈ L, ∑ b ∈ H, e a b) % 2
   omega
 
-end D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+end D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity

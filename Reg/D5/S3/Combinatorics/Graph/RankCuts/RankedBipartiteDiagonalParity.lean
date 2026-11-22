@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+import D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -6,11 +6,11 @@ import Reg.Support.DependentFamily
 
 set_option autoImplicit false
 
-namespace Reg.D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+namespace Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
 
 open Finset
 open LeanInformationAudit
-open _root_.D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+open _root_.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 universe u
@@ -90,8 +90,8 @@ def family : Registration arena.{u} (type_of% @diagonal_parity.{u}) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@diagonal_parity.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity.diagonal
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity.family
+  unitName := `Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity.diagonal
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -107,7 +107,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+    owner := `D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
     definition := none
     coordinates := #[0, 2, 4, 5]
     readouts := #[{
@@ -122,4 +122,4 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end
-end Reg.D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
+end Reg.D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity

@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.RankCuts;
 
 internal sealed class RankedBipartiteDiagonalParityDocument : IScribeDocumentDefinition
 {
@@ -58,7 +58,7 @@ internal sealed class RankedBipartiteDiagonalParityDocument : IScribeDocumentDef
         H("Diagonal parity in ranked bipartite graphs"),
         Blocks(Describe.Lean(
             DescribeId.Create("ranked-bipartite-diagonal-parity"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RankedBipartiteDiagonalParity.diagonal_parity"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteDiagonalParity.diagonal_parity"),
             H("Diagonal parity from an oriented rank cut"),
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
