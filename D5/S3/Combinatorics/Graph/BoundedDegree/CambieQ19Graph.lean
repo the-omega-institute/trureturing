@@ -7,7 +7,6 @@
    digest: The Cambie witness graph and induced connectivity under a joining edge. -/
 
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
-import Mathlib.Combinatorics.SimpleGraph.Sum
 
 /-! The witness for Question 1.9 of Cambie, Jooken and Wagner (arXiv:2508.20593v2). -/
 
@@ -65,14 +64,14 @@ abbrev secondPath (x : Fin 500) : Vertex := .inl (.inr x)
 abbrev triangle (x : Fin 3) : Vertex := .inr x
 
 /-- The actual 5,000-cycle with two 500-vertex pendant paths and a bridged triangle. -/
-def G₅₀₀ : SimpleGraph Vertex :=
+def G500 : SimpleGraph Vertex :=
   joinAt
     (joinAt (joinAt (cycleGraph 5000) (pathGraph 500) 0 0)
       (pathGraph 500) (.inl 1000) 0)
     (cycleGraph 3) (.inl (.inl 500)) 0
 
 /-- All four blocks belong to the same connected graph. -/
-theorem G₅₀₀_connected : G₅₀₀.Connected :=
+theorem G500_connected : G500.Connected :=
   joinAt_connected
     (joinAt_connected
       (joinAt_connected (connected_cycleGraph_add_one (n := 4999))
@@ -80,7 +79,7 @@ theorem G₅₀₀_connected : G₅₀₀.Connected :=
       (connected_pathGraph_add_one 499) (.inl 1000) 0)
     (connected_cycleGraph_add_one (n := 2)) (.inl (.inl 500)) 0
 
-#print axioms G₅₀₀_connected
+#print axioms G500_connected
 
 
 section Join

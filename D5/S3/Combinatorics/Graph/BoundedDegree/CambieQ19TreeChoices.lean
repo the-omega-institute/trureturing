@@ -7,7 +7,6 @@
    digest: Spanning trees on actual Cambie supports are independent cycle-edge deletions. -/
 
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
-import Mathlib.Combinatorics.SimpleGraph.Matching
 
 /-! The tree fibers over the support configurations of the fixed graph. -/
 
@@ -241,7 +240,7 @@ abbrev DeletionChoices (c : Configuration) :=
     CycleChoice (cycleGraph 3) (triangleSet c.vertices)
 
 /-- Actual tree subgraphs with the specified support, retaining their actual host edges. -/
-abbrev TreeFiber (S : Set Vertex) := {H : G₅₀₀.Subgraph // H.coe.IsTree ∧ H.verts = S}
+abbrev TreeFiber (S : Set Vertex) := {H : G500.Subgraph // H.coe.IsTree ∧ H.verts = S}
 
 private def prunedHost {S : Set Vertex}
     (e : CycleChoice (cycleGraph 5000) (coreSet S))
@@ -252,17 +251,17 @@ private def prunedHost {S : Set Vertex}
     (pruneCycle (cycleGraph 3) f.val) (.inl (.inl 500)) 0
 
 private theorem prunedHost_le {S : Set Vertex} (e : CycleChoice _ (coreSet S))
-    (f : CycleChoice _ (triangleSet S)) : prunedHost e f ≤ G₅₀₀ :=
+    (f : CycleChoice _ (triangleSet S)) : prunedHost e f ≤ G500 :=
   joinAt_mono
     (joinAt_mono (joinAt_mono (pruneCycle_le _ _) le_rfl _ _) le_rfl _ _)
     (pruneCycle_le _ _) _ _
 
-private theorem prunedHost_tree {S : Set Vertex} (hS : (G₅₀₀.induce S).Connected)
+private theorem prunedHost_tree {S : Set Vertex} (hS : (G500.induce S).Connected)
     (e : CycleChoice (cycleGraph 5000) (coreSet S))
     (f : CycleChoice (cycleGraph 3) (triangleSet S)) :
     ((prunedHost e f).induce S).IsTree := by
   unfold prunedHost
-  unfold G₅₀₀ at hS
+  unfold G500 at hS
   constructor
   · refine @SimpleGraph.Connected.mk _ _ ?_ hS.nonempty
     apply joinAt_keeps_preconnected (.inl (.inl 500)) 0 S hS.preconnected
@@ -291,7 +290,7 @@ private def supportedIso {V : Type} {G L : SimpleGraph V} (hL : L ≤ G) (S : Se
   toEquiv := Equiv.refl S
   map_rel_iff' {x y} := ⟨fun h => ⟨h, x.2, y.2⟩, fun h => h.1⟩
 
-private def decodeTree {S : Set Vertex} (hS : (G₅₀₀.induce S).Connected)
+private def decodeTree {S : Set Vertex} (hS : (G500.induce S).Connected)
     (e : CycleChoice (cycleGraph 5000) (coreSet S))
     (f : CycleChoice (cycleGraph 3) (triangleSet S)) : TreeFiber S :=
   ⟨supportedSubgraph (prunedHost_le e f) S,
@@ -308,7 +307,7 @@ private theorem prunedHost_triangle_adj {S : Set Vertex} (e : CycleChoice _ (cor
       (pruneCycle (cycleGraph 3) f.val).Adj x y := by
   simp only [prunedHost, joinAt_inr]
 
-private theorem decodeTree_inj {S : Set Vertex} (hS : (G₅₀₀.induce S).Connected)
+private theorem decodeTree_inj {S : Set Vertex} (hS : (G500.induce S).Connected)
     (a b : CycleChoice (cycleGraph 5000) (coreSet S) × CycleChoice (cycleGraph 3) (triangleSet S))
     (h : decodeTree hS a.1 a.2 = decodeTree hS b.1 b.2) : a = b := by
   have h_adj {x y : Vertex} (hx : x ∈ S) (hy : y ∈ S) :
@@ -370,7 +369,7 @@ private theorem subgraph_eq_of_connected_le_tree {V : Type} {G : SimpleGraph V}
   refine ⟨fun h => he h, fun hxy => ?_⟩
   exact @hge ⟨x, K.edge_vert hxy⟩ ⟨y, K.edge_vert hxy.symm⟩ hxy
 
-private theorem decodeTree_surj {S : Set Vertex} (hS : (G₅₀₀.induce S).Connected)
+private theorem decodeTree_surj {S : Set Vertex} (hS : (G500.induce S).Connected)
     (H : TreeFiber S) :
     ∃ (a : CycleChoice (cycleGraph 5000) (coreSet S) × CycleChoice (cycleGraph 3) (triangleSet S)),
       decodeTree hS a.1 a.2 = H := by
@@ -379,12 +378,12 @@ private theorem decodeTree_surj {S : Set Vertex} (hS : (G₅₀₀.induce S).Con
   let et : Fin 3 ↪ Vertex := ⟨triangle, Sum.inr_injective⟩
   have sub₀ : H.val.spanningCoe.comap ec ≤ cycleGraph 5000 := by
     intro x y h
-    have hadj : G₅₀₀.Adj (core x) (core y) := H.val.adj_sub h
-    simpa only [G₅₀₀, joinAt_inl] using hadj
+    have hadj : G500.Adj (core x) (core y) := H.val.adj_sub h
+    simpa only [G500, joinAt_inl] using hadj
   have sub₁ : H.val.spanningCoe.comap et ≤ cycleGraph 3 := by
     intro x y h
-    have hadj : G₅₀₀.Adj (triangle x) (triangle y) := H.val.adj_sub h
-    simpa only [G₅₀₀, joinAt_inr] using hadj
+    have hadj : G500.Adj (triangle x) (triangle y) := H.val.adj_sub h
+    simpa only [G500, joinAt_inr] using hadj
   obtain ⟨a, ha⟩ := exists_cycle_choice H.property.1.isAcyclic ec (coreSet S)
     (congrArg coreSet H.property.2.symm) sub₀
   obtain ⟨b, hb⟩ := exists_cycle_choice H.property.1.isAcyclic et (triangleSet S)
@@ -395,9 +394,9 @@ private theorem decodeTree_surj {S : Set Vertex} (hS : (G₅₀₀.induce S).Con
     H.property.2
   intro x y hxy
   refine ⟨?_, H.property.2 ▸ H.val.edge_vert hxy, H.property.2 ▸ H.val.edge_vert hxy.symm⟩
-  have h : G₅₀₀.Adj x y := H.val.adj_sub hxy
+  have h : G500.Adj x y := H.val.adj_sub hxy
   rcases x with ((x | x) | x) | x <;> rcases y with ((y | y) | y) | y
-  all_goals simp only [prunedHost, G₅₀₀, joinAt_inl, joinAt_inr, joinAt_cross] at h ⊢
+  all_goals simp only [prunedHost, G500, joinAt_inl, joinAt_inr, joinAt_cross] at h ⊢
   all_goals try exact h
   all_goals try exact ha hxy
   all_goals try exact hb hxy
@@ -405,8 +404,8 @@ private theorem decodeTree_surj {S : Set Vertex} (hS : (G₅₀₀.induce S).Con
 /-- Spanning trees on each actual support are precisely the independent cycle-edge deletions. -/
 noncomputable def treeFiberEquiv (c : Configuration) :
     TreeFiber (supportEquiv.symm c).val ≃ DeletionChoices c :=
-  (Equiv.ofBijective (fun a : DeletionChoices c => decodeTree c.connected a.1 a.2)
-    ⟨fun _ _ h => decodeTree_inj c.connected _ _ h, decodeTree_surj c.connected⟩).symm
+  (Equiv.ofBijective (fun a : DeletionChoices c => decodeTree c.supportConnected a.1 a.2)
+    ⟨fun _ _ h => decodeTree_inj c.supportConnected _ _ h, decodeTree_surj c.supportConnected⟩).symm
 
 /-- The decoded tree keeps exactly the pruned host's edges with both endpoints in the support. -/
 theorem treeFiberEquiv_edges (c : Configuration) (e : DeletionChoices c) (x y : Vertex) :
@@ -480,32 +479,32 @@ private theorem joinAt_cross_reverse {A B : Type} (G : SimpleGraph A) (H : Simpl
   ((joinAt G H a b).adj_comm _ _).trans (joinAt_cross G H a b x y)
 
 private theorem prunedHost_deleteEdges (c : Configuration) (e : DeletionChoices c) :
-    prunedHost e.1 e.2 = G₅₀₀.deleteEdges e.deletedEdges := by
+    prunedHost e.1 e.2 = G500.deleteEdges e.deletedEdges := by
   obtain ⟨⟨_ | ⟨a, ha⟩, hp⟩, ⟨_ | ⟨b, hb⟩, hq⟩⟩ := e
   · ext x y
-    simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion, pruneCycle]
+    simp [prunedHost, G500, DeletionChoices.deletedEdges, mappedDeletion, pruneCycle]
   · induction b using Sym2.inductionOn with
     | hf u v =>
       ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
-        simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+        simp [prunedHost, G500, DeletionChoices.deletedEdges, mappedDeletion,
           pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
   · induction a using Sym2.inductionOn with
     | hf u v =>
       ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
-        simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+        simp [prunedHost, G500, DeletionChoices.deletedEdges, mappedDeletion,
           pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
   · induction a using Sym2.inductionOn with
     | hf a₁ a₂ =>
       induction b using Sym2.inductionOn with
       | hf b₁ b₂ =>
         ext (((x | x) | x) | x) (((y | y) | y) | y) <;>
-          simp [prunedHost, G₅₀₀, DeletionChoices.deletedEdges, mappedDeletion,
+          simp [prunedHost, G500, DeletionChoices.deletedEdges, mappedDeletion,
             pruneCycle, joinAt_inl, joinAt_inr, joinAt_cross, joinAt_cross_reverse]
 
 /-- Fixing the support and the chosen actual edges forces every other induced edge. -/
 theorem treeFiberEquiv_keeps_edge_iff (c : Configuration) (e : DeletionChoices c) (x y : Vertex) :
     ((treeFiberEquiv c).symm e).val.Adj x y ↔
-      G₅₀₀.Adj x y ∧ x ∈ c.vertices ∧ y ∈ c.vertices ∧ s(x, y) ∉ e.deletedEdges := by
+      G500.Adj x y ∧ x ∈ c.vertices ∧ y ∈ c.vertices ∧ s(x, y) ∉ e.deletedEdges := by
   rw [treeFiberEquiv_edges, prunedHost_deleteEdges, deleteEdges_adj]
   constructor
   · rintro ⟨⟨h, hd⟩, hx, hy⟩

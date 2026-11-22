@@ -7,7 +7,6 @@
    digest: The two counts and two order sums on the actual Cambie graph. -/
 
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices
-import Mathlib.Data.Fintype.BigOperators
 
 /-! The finite moment transports for Question 1.9 of Cambie, Jooken and Wagner
 (arXiv:2508.20593v2). -/
@@ -27,16 +26,16 @@ private def treeSupport {V : Type} {G : SimpleGraph V} (H : Subtrees G) : Connec
   ⟨H.val.verts, H.property.connected.mono
     (fun _ _ h => H.val.adj_sub h)⟩
 
-private def treeFiberAsSubgraph (s : ConnectedSets G₅₀₀) :
-    {H : Subtrees G₅₀₀ // treeSupport H = s} ≃ TreeFiber s.val where
+private def treeFiberAsSubgraph (s : ConnectedSets G500) :
+    {H : Subtrees G500 // treeSupport H = s} ≃ TreeFiber s.val where
   toFun H := ⟨H.val.val, H.val.property,
-    congrArg (fun s : ConnectedSets G₅₀₀ => s.val) H.property⟩
+    congrArg (fun s : ConnectedSets G500 => s.val) H.property⟩
   invFun H := ⟨⟨H.val, H.property.1⟩, Subtype.ext H.property.2⟩
   left_inv _ := rfl
   right_inv _ := rfl
 
 /-- The full tree equivalence uses the actual support projection and the tree fiber over it. -/
-noncomputable def allTreesEquiv : Subtrees G₅₀₀ ≃ Σ c : Configuration, DeletionChoices c :=
+noncomputable def allTreesEquiv : Subtrees G500 ≃ Σ c : Configuration, DeletionChoices c :=
   (Equiv.sigmaFiberEquiv treeSupport).symm.trans
     ((Equiv.sigmaCongrLeft' supportEquiv).trans
       (Equiv.sigmaCongrRight fun c => (treeFiberAsSubgraph (supportEquiv.symm c)).trans
@@ -47,23 +46,23 @@ private theorem allTreesEquiv_order (c : Configuration) (e : DeletionChoices c) 
   treeFiberEquiv_order c e
 
 noncomputable instance : Fintype Configuration := by
-  let : Fintype (ConnectedSets G₅₀₀) := Fintype.ofFinite _
-  exact Fintype.ofEquiv (ConnectedSets G₅₀₀) supportEquiv
+  let : Fintype (ConnectedSets G500) := Fintype.ofFinite _
+  exact Fintype.ofEquiv (ConnectedSets G500) supportEquiv
 
 noncomputable instance (c : Configuration) : Fintype (DeletionChoices c) := Fintype.ofFinite _
 
 /-- Connected-set count transported to interval and attachment configurations. -/
-theorem connectedCount_transport : Nat.card (ConnectedSets G₅₀₀) = Nat.card Configuration :=
+theorem connectedCount_transport : Nat.card (ConnectedSets G500) = Nat.card Configuration :=
   Nat.card_congr supportEquiv
 
 /-- Connected-set total order transported with the pointwise order law. -/
 theorem connectedOrder_transport :
-    (letI : Fintype (ConnectedSets G₅₀₀) := Fintype.ofFinite _
-     ∑ S : ConnectedSets G₅₀₀, Nat.card S.val) =
+    (letI : Fintype (ConnectedSets G500) := Fintype.ofFinite _
+     ∑ S : ConnectedSets G500, Nat.card S.val) =
       ∑ c : Configuration, c.vertexOrder := by
-  let : Fintype (ConnectedSets G₅₀₀) := Fintype.ofFinite _
+  let : Fintype (ConnectedSets G500) := Fintype.ofFinite _
   exact (Fintype.sum_equiv supportEquiv.symm Configuration.vertexOrder
-    (fun S : ConnectedSets G₅₀₀ => Nat.card S.val)
+    (fun S : ConnectedSets G500 => Nat.card S.val)
     (fun c => (supportEquiv_order c).symm)).symm
 
 private theorem tree_order_bounds {V : Type} [Finite V] {G : SimpleGraph V} (H : Subtrees G) :
@@ -108,11 +107,11 @@ private theorem stratified_tree_sum {V : Type} [Finite V] (G : SimpleGraph V)
       exact Finset.sum_attach (Finset.Icc 1 (Nat.card V)) (fun k => weight k * subtreeCount G k)
 
 private theorem tree_weight_transport (weight : ℕ → ℕ) :
-    ∑ k ∈ Finset.Icc 1 (Nat.card Vertex), weight k * subtreeCount G₅₀₀ k =
+    ∑ k ∈ Finset.Icc 1 (Nat.card Vertex), weight k * subtreeCount G500 k =
       ∑ c : Configuration, weight c.vertexOrder * Nat.card (DeletionChoices c) := by
   classical
-  let : Fintype (Subtrees G₅₀₀) := Fintype.ofFinite _
-  rw [← stratified_tree_sum G₅₀₀ weight]
+  let : Fintype (Subtrees G500) := Fintype.ofFinite _
+  rw [← stratified_tree_sum G500 weight]
   calc
     _ = ∑ x : Σ c : Configuration, DeletionChoices c, weight x.1.vertexOrder :=
       (Fintype.sum_equiv allTreesEquiv.symm _ _
@@ -123,12 +122,12 @@ private theorem tree_weight_transport (weight : ℕ → ℕ) :
 
 /-- The paper's order-stratified subtree count transported to the independent choices. -/
 theorem subtreeCount_transport :
-    totalSubtreeCount G₅₀₀ = ∑ c : Configuration, Nat.card (DeletionChoices c) := by
+    totalSubtreeCount G500 = ∑ c : Configuration, Nat.card (DeletionChoices c) := by
   simpa [totalSubtreeCount] using tree_weight_transport (fun _ => 1)
 
 /-- The paper's order-stratified subtree total order transported with the fiber order law. -/
 theorem subtreeOrder_transport :
-    totalSubtreeOrder G₅₀₀ =
+    totalSubtreeOrder G500 =
       ∑ c : Configuration, c.vertexOrder * Nat.card (DeletionChoices c) :=
   tree_weight_transport id
 

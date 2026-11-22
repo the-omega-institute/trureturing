@@ -9,10 +9,6 @@
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Graph
 import D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
 import D5.S3.Combinatorics.Graph.ZeroForcing.PathConnectedForcing
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Batteries.Tactic.OpenPrivate
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Field.Rat
 
 /-! The support and tree configurations for the fixed graph in the counterexample to
 Question 1.9 of Cambie, Jooken and Wagner (arXiv:2508.20593v2). -/
@@ -72,24 +68,24 @@ private abbrev cycleArc {m : ℕ} (a : Fin (m + 3)) (i : ℕ) :=
 /-- A cycle support is either the whole cycle or a proper arc with nonzero length. -/
 abbrev CycleInterval (m : ℕ) := Unit ⊕ (Fin (m + 3) × {l : Fin (m + 3) // 0 < l.val})
 
-def CycleInterval.vertices {m : ℕ} : CycleInterval m → Set (Fin (m + 3))
+def CycleInterval.cycleVertices {m : ℕ} : CycleInterval m → Set (Fin (m + 3))
   | .inl _ => Set.univ
   | .inr (x, l) => cycleArc x l.val.val
 
-def CycleInterval.order {m : ℕ} : CycleInterval m → ℕ
+def CycleInterval.cycleOrder {m : ℕ} : CycleInterval m → ℕ
   | .inl _ => m + 3
   | .inr (_, l) => l.val.val
 
 private theorem CycleInterval.connected {m : ℕ} (c : CycleInterval m) :
-    ((cycleGraph (m + 3)).induce c.vertices).Connected := by
+    ((cycleGraph (m + 3)).induce c.cycleVertices).Connected := by
   rcases c with _ | ⟨x, l⟩
   · exact ((induceUnivIso _).connected_iff).mpr connected_cycleGraph_add_one
   · exact arc_connected x l.val.val l.property
 
 private theorem CycleInterval.card_vertices {m : ℕ} (c : CycleInterval m) :
-    Nat.card c.vertices = c.order := by
+    Nat.card c.cycleVertices = c.cycleOrder := by
   rcases c with _ | ⟨x, l⟩
-  · simp [CycleInterval.vertices, CycleInterval.order, Nat.card_eq_fintype_card]
+  · simp [CycleInterval.cycleVertices, CycleInterval.cycleOrder, Nat.card_eq_fintype_card]
   · change Nat.card ↥(↑(cycleArc x l.val.val) : Set (Fin (m + 3))) = l.val.val
     rw [show Nat.card ↥(↑(cycleArc x l.val.val) : Set (Fin (m + 3))) =
         (cycleArc x l.val.val).card from
@@ -97,7 +93,7 @@ private theorem CycleInterval.card_vertices {m : ℕ} (c : CycleInterval m) :
       card_arc, min_eq_right l.val.isLt.le]
 
 private theorem CycleInterval.injective_vertices {m : ℕ} :
-    Function.Injective (@CycleInterval.vertices m) := by
+    Function.Injective (@CycleInterval.cycleVertices m) := by
   intro a b h
   have hc := congrArg (fun s : Set (Fin (m + 3)) => Nat.card s) h
   rw [a.card_vertices, b.card_vertices] at hc
@@ -116,7 +112,7 @@ private theorem CycleInterval.injective_vertices {m : ℕ} :
 
 private theorem CycleInterval.exists_vertices {m : ℕ} (S : Set (Fin (m + 3)))
     (hS : ((cycleGraph (m + 3)).induce S).Connected) :
-    ∃ c : CycleInterval m, c.vertices = S := by
+    ∃ c : CycleInterval m, c.cycleVertices = S := by
   classical
   by_cases hu : S = Set.univ
   · exact ⟨.inl (), hu.symm⟩
@@ -142,25 +138,25 @@ private theorem CycleInterval.exists_vertices {m : ℕ} (S : Set (Fin (m + 3)))
 /-- An interval in a detached path is specified by its two ordered endpoints. -/
 abbrev PathInterval (n : ℕ) := {p : Fin n × Fin n // p.1 ≤ p.2}
 
-private def PathInterval.vertices {n : ℕ} (p : PathInterval n) : Set (Fin n) :=
+private def PathInterval.pathVertices {n : ℕ} (p : PathInterval n) : Set (Fin n) :=
   Set.Icc p.val.1 p.val.2
 
 def PathInterval.order {n : ℕ} (p : PathInterval n) : ℕ :=
   p.val.2.val + 1 - p.val.1.val
 
 private theorem PathInterval.connected {n : ℕ} (p : PathInterval n) :
-    ((pathGraph n).induce p.vertices).Connected :=
+    ((pathGraph n).induce p.pathVertices).Connected :=
   interval_connected _ _ p.property
 
 private theorem PathInterval.card_vertices {n : ℕ} (p : PathInterval n) :
-    Nat.card p.vertices = p.order := by
+    Nat.card p.pathVertices = p.order := by
   classical
-  unfold PathInterval.vertices
+  unfold PathInterval.pathVertices
   rw [Nat.card_eq_fintype_card, ← Set.toFinset_card]
   simp [PathInterval.order, Set.toFinset_Icc]
 
 private theorem PathInterval.injective_vertices {n : ℕ} :
-    Function.Injective (@PathInterval.vertices n) := by
+    Function.Injective (@PathInterval.pathVertices n) := by
   intro p q h
   obtain ⟨⟨a, b⟩, hab⟩ := p
   obtain ⟨⟨c, d⟩, hcd⟩ := q
@@ -172,7 +168,7 @@ private theorem PathInterval.injective_vertices {n : ℕ} :
   exact Subtype.ext (Prod.ext (le_antisymm hc.1 ha.1) (le_antisymm hb.2 hd.2))
 
 private theorem PathInterval.exists_vertices {n : ℕ} (S : Set (Fin n))
-    (hS : ((pathGraph n).induce S).Connected) : ∃ p : PathInterval n, p.vertices = S := by
+    (hS : ((pathGraph n).induce S).Connected) : ∃ p : PathInterval n, p.pathVertices = S := by
   classical
   have h : S.toFinset.Nonempty := by
     obtain ⟨⟨x, hx⟩⟩ := hS.nonempty
@@ -296,8 +292,8 @@ abbrev TriangleExtension (S : Set (Fin 5000)) :=
 
 /-- The four ways a connected support can meet the blocks of the witness graph. -/
 inductive Configuration
-  | onCore (c : CycleInterval 4997) (p : PathPrefix c.vertices 0)
-      (q : PathPrefix c.vertices 1000) (t : TriangleExtension c.vertices)
+  | onCore (c : CycleInterval 4997) (p : PathPrefix c.cycleVertices 0)
+      (q : PathPrefix c.cycleVertices 1000) (t : TriangleExtension c.cycleVertices)
   | firstOnly (p : PathInterval 500)
   | secondOnly (p : PathInterval 500)
   | triangleOnly (t : {t : Finset (Fin 3) // t.Nonempty})
@@ -320,21 +316,21 @@ private theorem pack_inj {C C' : Set (Fin 5000)} {P P' Q Q' : Set (Fin 500)} {T 
 
 /-- Decode the interval and attachment choices as actual vertices of the host graph. -/
 def Configuration.vertices : Configuration → Set Vertex
-  | .onCore c p q t => pack c.vertices (prefixVertices p.val) (prefixVertices q.val) t.val
-  | .firstOnly p => pack ∅ p.vertices ∅ ∅
-  | .secondOnly p => pack ∅ ∅ p.vertices ∅
+  | .onCore c p q t => pack c.cycleVertices (prefixVertices p.val) (prefixVertices q.val) t.val
+  | .firstOnly p => pack ∅ p.pathVertices ∅ ∅
+  | .secondOnly p => pack ∅ ∅ p.pathVertices ∅
   | .triangleOnly t => pack ∅ ∅ ∅ t.val
 
 /-- The order from the interval lengths and triangle multiplicities. -/
 def Configuration.vertexOrder : Configuration → ℕ
-  | .onCore c p q t => c.order + p.val.val + q.val.val + t.val.card
+  | .onCore c p q t => c.cycleOrder + p.val.val + q.val.val + t.val.card
   | .firstOnly p => p.order
   | .secondOnly p => p.order
   | .triangleOnly t => t.val.card
 
 private theorem pack_connected {C : Set (Fin 5000)} {P Q : Set (Fin 500)}
     {T : Set (Fin 3)} :
-    (G₅₀₀.induce (pack C P Q T)).Connected ↔
+    (G500.induce (pack C P Q T)).Connected ↔
       (((cycleGraph 5000).induce C).Connected ∧
         (P = ∅ ∨ (((pathGraph 500).induce P).Connected ∧ 0 ∈ C ∧ 0 ∈ P)) ∧
         (Q = ∅ ∨ (((pathGraph 500).induce Q).Connected ∧ 1000 ∈ C ∧ 0 ∈ Q)) ∧
@@ -342,7 +338,7 @@ private theorem pack_connected {C : Set (Fin 5000)} {P Q : Set (Fin 500)}
       (C = ∅ ∧ P = ∅ ∧ Q = ∅ ∧ ((cycleGraph 3).induce T).Connected) ∨
       (C = ∅ ∧ P = ∅ ∧ ((pathGraph 500).induce Q).Connected ∧ T = ∅) ∨
       (C = ∅ ∧ ((pathGraph 500).induce P).Connected ∧ Q = ∅ ∧ T = ∅) := by
-  simp only [G₅₀₀, pack, joinAt_connected_sumSet]
+  simp only [G500, pack, joinAt_connected_sumSet]
   have j₁ : ∀ S : Set (Fin 5000), ∀ U : Set (Fin 500),
       sumSet S U = ∅ ↔ S = ∅ ∧ U = ∅ := by
     intro S U
@@ -406,7 +402,7 @@ private theorem triangle_connected (T : Finset (Fin 3)) (h : T.Nonempty) :
   rw [ht]
   exact preconnected_top
 
-theorem Configuration.connected (c : Configuration) : (G₅₀₀.induce c.vertices).Connected := by
+theorem Configuration.supportConnected (c : Configuration) : (G500.induce c.vertices).Connected := by
   cases c with
   | onCore c p q t =>
     apply pack_connected.mpr
@@ -428,7 +424,7 @@ theorem Configuration.connected (c : Configuration) : (G₅₀₀.induce c.verti
   | triangleOnly t =>
     exact pack_connected.mpr (.inr (.inl ⟨rfl, rfl, rfl, triangle_connected _ t.property⟩))
 
-private theorem Configuration.exists_vertices (S : Set Vertex) (h : (G₅₀₀.induce S).Connected) :
+private theorem Configuration.exists_vertices (S : Set Vertex) (h : (G500.induce S).Connected) :
     ∃ c : Configuration, c.vertices = S := by
   classical
   generalize hC : coreSet S = C
@@ -442,15 +438,15 @@ private theorem Configuration.exists_vertices (S : Set Vertex) (h : (G₅₀₀.
     ⟨rfl, rfl, hQ, rfl⟩ | ⟨rfl, hP, rfl, rfl⟩
   · obtain ⟨c, rfl⟩ := CycleInterval.exists_vertices C hC
     have getPrefix (U : Set (Fin 500)) (m : Fin 5000)
-        (hU : U = ∅ ∨ (((pathGraph 500).induce U).Connected ∧ m ∈ c.vertices ∧ 0 ∈ U)) :
-        ∃ p : PathPrefix c.vertices m, prefixVertices p.val = U := by
+        (hU : U = ∅ ∨ (((pathGraph 500).induce U).Connected ∧ m ∈ c.cycleVertices ∧ 0 ∈ U)) :
+        ∃ p : PathPrefix c.cycleVertices m, prefixVertices p.val = U := by
       rcases hU with rfl | ⟨hconn, hm, h0⟩
       · exact ⟨⟨0, fun h => (Nat.lt_irrefl 0 h).elim⟩, prefix_empty⟩
       · obtain ⟨l, _, hl⟩ := exists_prefix hconn h0
         exact ⟨⟨l, fun _ => hm⟩, hl⟩
     obtain ⟨p, hp⟩ := getPrefix P 0 hP
     obtain ⟨q, hq⟩ := getPrefix Q 1000 hQ
-    have root : T.toFinset.Nonempty → 500 ∈ c.vertices ∧ 0 ∈ T.toFinset := by
+    have root : T.toFinset.Nonempty → 500 ∈ c.cycleVertices ∧ 0 ∈ T.toFinset := by
       intro hne
       rcases hT with rfl | ⟨_, hm, h0⟩
       · simp at hne
@@ -467,9 +463,9 @@ private theorem Configuration.exists_vertices (S : Set Vertex) (h : (G₅₀₀.
 
 private theorem Configuration.injective_vertices : Function.Injective Configuration.vertices := by
   intro a b h
-  have pc {n} (p : PathInterval n) : p.vertices ≠ ∅ :=
+  have pc {n} (p : PathInterval n) : p.pathVertices ≠ ∅ :=
     (induced_connected_nonempty p.connected).ne_empty
-  have cc {m} (c : CycleInterval m) : c.vertices ≠ ∅ :=
+  have cc {m} (c : CycleInterval m) : c.cycleVertices ≠ ∅ :=
     (induced_connected_nonempty c.connected).ne_empty
   cases a <;> cases b <;> obtain ⟨hC, hP, hQ, hT⟩ := pack_inj h
   all_goals try first
@@ -489,8 +485,8 @@ private theorem Configuration.injective_vertices : Function.Injective Configurat
   · cases Subtype.ext (Finset.coe_injective hT); rfl
 
 /-- Actual connected induced supports are equivalent to interval-and-attachment configurations. -/
-noncomputable def supportEquiv : ConnectedSets G₅₀₀ ≃ Configuration :=
-  (Equiv.ofBijective (fun (c : Configuration) => (⟨c.vertices, c.connected⟩ : ConnectedSets G₅₀₀))
+noncomputable def supportEquiv : ConnectedSets G500 ≃ Configuration :=
+  (Equiv.ofBijective (fun (c : Configuration) => (⟨c.vertices, c.supportConnected⟩ : ConnectedSets G500))
     ⟨fun a b h => Configuration.injective_vertices (congrArg Subtype.val h), fun ⟨s, hs⟩ => by
       obtain ⟨c, hc⟩ := Configuration.exists_vertices s hs
       exact ⟨c, Subtype.ext hc⟩⟩).symm

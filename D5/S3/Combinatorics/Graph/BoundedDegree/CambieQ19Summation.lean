@@ -7,9 +7,6 @@
    digest: Factor the Cambie configuration moments into local attachment contributions. -/
 
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Moments
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Tauto
 
 /-! The fixed counterexample to Question 1.9 of Cambie, Jooken and Wagner.
 The support and tree classifications feed the four transported moments. Grouping cyclic
@@ -67,14 +64,14 @@ private def fullWeight (tree : Bool) (m : ℕ) (full : Bool) : ℕ :=
 
 private noncomputable def circleWeight (tree : Bool) (c : CycleInterval 4997) : ℕ := by
   classical
-  exact fullWeight tree 5000 (decide (c.vertices = Set.univ))
+  exact fullWeight tree 5000 (decide (c.cycleVertices = Set.univ))
 
 private def triangleWeight (tree : Bool) (t : Finset (Fin 3)) : ℕ :=
   fullWeight tree 3 (decide (t = Finset.univ))
 
 private theorem weight_onCore (tree : Bool) (c : CycleInterval 4997)
-    (p : PathPrefix c.vertices 0) (q : PathPrefix c.vertices 1000)
-    (t : TriangleExtension c.vertices) :
+    (p : PathPrefix c.cycleVertices 0) (q : PathPrefix c.cycleVertices 1000)
+    (t : TriangleExtension c.cycleVertices) :
     weight tree (.onCore c p q t) = circleWeight tree c * triangleWeight tree t.val := by
   classical
   have hT : triangleSet (Configuration.vertices (.onCore c p q t)) = Set.univ ↔
@@ -83,7 +80,7 @@ private theorem weight_onCore (tree : Bool) (c : CycleInterval 4997)
     rw [← Finset.coe_univ, Finset.coe_inj]
   cases tree
   · rfl
-  · have hc : coreSet (Configuration.vertices (.onCore c p q t)) = c.vertices := rfl
+  · have hc : coreSet (Configuration.vertices (.onCore c p q t)) = c.cycleVertices := rfl
     rw [weight, ite_eq_left rfl, deletionChoices_card, hc]
     simp only [circleWeight, triangleWeight, fullWeight, Bool.true_and, decide_eq_true_eq, hT]
 
@@ -122,7 +119,7 @@ private theorem weight_triangle (tree : Bool) (t : {t : Finset (Fin 3) // t.None
     simp [hc, ht, triangleWeight, fullWeight]
 
 private abbrev Extensions (c : CycleInterval 4997) :=
-  PathPrefix c.vertices 0 × PathPrefix c.vertices 1000 × TriangleExtension c.vertices
+  PathPrefix c.cycleVertices 0 × PathPrefix c.cycleVertices 1000 × TriangleExtension c.cycleVertices
 
 private def configurationParts :
     Configuration ≃ (Σ c : CycleInterval 4997, Extensions c) ⊕
@@ -141,10 +138,10 @@ private def configurationParts :
   right_inv := by rintro (⟨c, p, q, t⟩ | p | p | t) <;> rfl
 
 private noncomputable instance (c : CycleInterval 4997) (m : Fin 5000) :
-    Fintype (PathPrefix c.vertices m) := Fintype.ofFinite _
+    Fintype (PathPrefix c.cycleVertices m) := Fintype.ofFinite _
 
 private noncomputable instance (c : CycleInterval 4997) :
-    Fintype (TriangleExtension c.vertices) := Fintype.ofFinite _
+    Fintype (TriangleExtension c.cycleVertices) := Fintype.ofFinite _
 
 private def localPath (b : Bool) : CountOrder :=
   if b then (501, 125250) else (1, 0)
@@ -154,11 +151,11 @@ private def localTriangle (tree b : Bool) : CountOrder :=
 
 open scoped Classical in
 private theorem attached_path (c : CycleInterval 4997) (m : Fin 5000) :
-    ∑ p : PathPrefix c.vertices m, contribution 1 p.val.val =
-      localPath (decide (m ∈ c.vertices)) := by
+    ∑ p : PathPrefix c.cycleVertices m, contribution 1 p.val.val =
+      localPath (decide (m ∈ c.cycleVertices)) := by
   classical
-  by_cases hm : m ∈ c.vertices
-  · let e : Fin 501 ≃ PathPrefix c.vertices m :=
+  by_cases hm : m ∈ c.cycleVertices
+  · let e : Fin 501 ≃ PathPrefix c.cycleVertices m :=
       ⟨fun p => ⟨p, fun _ => hm⟩, Subtype.val, fun _ => rfl, fun _ => rfl⟩
     rw [← e.sum_comp (fun p => contribution 1 p.val.val)]
     apply Prod.ext
@@ -166,7 +163,7 @@ private theorem attached_path (c : CycleInterval 4997) (m : Fin 5000) :
     · simp only [e, contribution, Nat.one_mul, Prod.snd_sum, Equiv.coe_fn_mk]
       rw [Fin.sum_univ_eq_sum_range (fun n : ℕ => n), Finset.sum_range_id]
       norm_num [localPath, hm]
-  · let e : Unit ≃ PathPrefix c.vertices m :=
+  · let e : Unit ≃ PathPrefix c.cycleVertices m :=
       ⟨fun _ => ⟨0, fun h => (Nat.lt_irrefl 0 h).elim⟩, fun _ => (), fun _ => rfl,
         fun p => Subtype.ext (Fin.ext (by
           exact (Nat.eq_zero_of_not_pos (hm ∘ p.property)).symm))⟩
@@ -188,16 +185,16 @@ private theorem detached_triangle_table (tree : Bool) :
 
 open scoped Classical in
 private theorem attached_triangle (tree : Bool) (c : CycleInterval 4997) :
-    (∑ t : TriangleExtension c.vertices, contribution (triangleWeight tree t.val) t.val.card) =
-      localTriangle tree (decide ((500 : Fin 5000) ∈ c.vertices)) := by
+    (∑ t : TriangleExtension c.cycleVertices, contribution (triangleWeight tree t.val) t.val.card) =
+      localTriangle tree (decide ((500 : Fin 5000) ∈ c.cycleVertices)) := by
   classical
-  by_cases hm : (500 : Fin 5000) ∈ c.vertices
-  · let e : RootedTriangle ≃ TriangleExtension c.vertices :=
+  by_cases hm : (500 : Fin 5000) ∈ c.cycleVertices
+  · let e : RootedTriangle ≃ TriangleExtension c.cycleVertices :=
       ⟨fun t => ⟨t.val, fun h => ⟨hm, t.property h⟩⟩,
         fun t => ⟨t.val, fun h => (t.property h).2⟩, fun _ => rfl, fun _ => rfl⟩
     rw [← e.sum_comp (fun t => contribution (triangleWeight tree t.val) t.val.card)]
     simpa only [e, Equiv.coe_fn_mk, decide_eq_true hm] using rooted_triangle_table tree
-  · let e : Unit ≃ TriangleExtension c.vertices :=
+  · let e : Unit ≃ TriangleExtension c.cycleVertices :=
       ⟨fun _ => ⟨∅, fun h => (Finset.not_nonempty_empty h).elim⟩, fun _ => (), fun _ => rfl,
         fun t => Subtype.ext ((Finset.not_nonempty_iff_eq_empty.mp
           (fun h => hm (t.property h).1)).symm)⟩
@@ -208,10 +205,10 @@ private theorem attached_triangle (tree : Bool) (c : CycleInterval 4997) :
 
 open scoped Classical in
 private noncomputable def arcContribution (tree : Bool) (c : CycleInterval 4997) : CountOrder :=
-  combine (combine (combine (contribution (circleWeight tree c) c.order)
-    (localPath (decide ((0 : Fin 5000) ∈ c.vertices))))
-    (localPath (decide ((1000 : Fin 5000) ∈ c.vertices))))
-    (localTriangle tree (decide ((500 : Fin 5000) ∈ c.vertices)))
+  combine (combine (combine (contribution (circleWeight tree c) c.cycleOrder)
+    (localPath (decide ((0 : Fin 5000) ∈ c.cycleVertices))))
+    (localPath (decide ((1000 : Fin 5000) ∈ c.cycleVertices))))
+    (localTriangle tree (decide ((500 : Fin 5000) ∈ c.cycleVertices)))
 
 private theorem attached_sum (tree : Bool) (c : CycleInterval 4997) :
     (∑ pq : Extensions c, contribution (weight tree (.onCore c pq.1 pq.2.1 pq.2.2))
@@ -221,11 +218,11 @@ private theorem attached_sum (tree : Bool) (c : CycleInterval 4997) :
   simp only [weight_onCore, Configuration.vertexOrder]
   rw [Fintype.sum_prod_type]
   simp_rw [Fintype.sum_prod_type]
-  have term (p : PathPrefix c.vertices 0) (q : PathPrefix c.vertices 1000)
-      (t : TriangleExtension c.vertices) :
+  have term (p : PathPrefix c.cycleVertices 0) (q : PathPrefix c.cycleVertices 1000)
+      (t : TriangleExtension c.cycleVertices) :
       contribution (circleWeight tree c * triangleWeight tree t.val)
-        (c.order + p.val.val + q.val.val + t.val.card) =
-        combine (combine (combine (contribution (circleWeight tree c) c.order)
+        (c.cycleOrder + p.val.val + q.val.val + t.val.card) =
+        combine (combine (combine (contribution (circleWeight tree c) c.cycleOrder)
           (contribution 1 p.val.val)) (contribution 1 q.val.val))
           (contribution (triangleWeight tree t.val) t.val.card) := by
     rw [combine_contribution, Nat.mul_one, combine_contribution, Nat.mul_one, combine_contribution]
@@ -373,16 +370,16 @@ private def properLength : Fin 4999 ≃ {l : Fin 5000 // 0 < l.val} where
   right_inv l := Subtype.ext (Fin.ext (by have hl := l.property; simp; omega))
 
 private theorem proper_mem_iff (start : Fin 5000) (i : Fin 4999) (m : Fin 5000) :
-    m ∈ CycleInterval.vertices (m := 4997) (.inr (start, properLength i)) ↔
+    m ∈ CycleInterval.cycleVertices (m := 4997) (.inr (start, properLength i)) ↔
       (m - start).val ≤ i.val := by
   change (m ∈ arc (m := 4997) start (i.val+1)) ↔ _
   rw [mem_arc]
   exact Nat.lt_succ_iff
 
 private theorem proper_arc_not_full (start : Fin 5000) (i : Fin 4999) :
-    CycleInterval.vertices (m := 4997) (.inr (start, properLength i)) ≠ Set.univ := by
+    CycleInterval.cycleVertices (m := 4997) (.inr (start, properLength i)) ≠ Set.univ := by
   intro h
-  have hmem : start - 1 ∈ CycleInterval.vertices (m := 4997) (.inr (start, properLength i)) :=
+  have hmem : start - 1 ∈ CycleInterval.cycleVertices (m := 4997) (.inr (start, properLength i)) :=
     h.symm ▸ Set.mem_univ _
   have hm := (proper_mem_iff start i (start - 1)).mp hmem
   rw [show start - 1 - start = (0 : Fin 5000) - 1 by abel] at hm
@@ -396,7 +393,7 @@ private theorem proper_arc_contribution (tree : Bool) (start : Fin 5000) (i : Fi
   classical
   have hw : circleWeight tree (.inr (start, properLength i)) = 1 := by
     simp [circleWeight, fullWeight, proper_arc_not_full start i]
-  have ho : CycleInterval.order (m := 4997) (.inr (start, properLength i)) = i.val + 1 := rfl
+  have ho : CycleInterval.cycleOrder (m := 4997) (.inr (start, properLength i)) = i.val + 1 := rfl
   simp only [arcContribution, hw, ho, attachments, flagsAt, offsets, proper_mem_iff, combine_assoc]
   rfl
 
@@ -411,7 +408,7 @@ private theorem sum_arc_rows (tree : Bool) :
   unfold CycleInterval
   rw [Fintype.sum_sum_type, Fintype.sum_prod_type]
   have hfull : (∑ a : Unit, arcContribution tree (.inl a)) = fullArc tree := by
-    simp only [Fintype.sum_unique, arcContribution, CycleInterval.vertices, CycleInterval.order,
+    simp only [Fintype.sum_unique, arcContribution, CycleInterval.cycleVertices, CycleInterval.cycleOrder,
       circleWeight, Set.mem_univ, decide_true, fullWeight, Bool.and_true, fullArc, attachments]
     simp only [combine_assoc]
   rw [hfull]
@@ -454,9 +451,9 @@ private theorem evaluated_trees :
 
 /-- Exact count and total order of the connected vertex supports of the witness. -/
 theorem induced_exact_moments :
-    (Nat.card (ConnectedSets G₅₀₀),
-      (letI : Fintype (ConnectedSets G₅₀₀) := Fintype.ofFinite _
-       ∑ S : ConnectedSets G₅₀₀, Nat.card S.val)) = (10425438990512, 43855001336852520) := by
+    (Nat.card (ConnectedSets G500),
+      (letI : Fintype (ConnectedSets G500) := Fintype.ofFinite _
+       ∑ S : ConnectedSets G500, Nat.card S.val)) = (10425438990512, 43855001336852520) := by
   suffices h : _ = codeMoments false from
     h.trans ((codeMoments_eq_evaluated false).trans evaluated_induced)
   apply Prod.ext
@@ -467,7 +464,7 @@ theorem induced_exact_moments :
 
 /-- Exact count and total order of the actual tree subgraphs of the witness. -/
 theorem tree_exact_moments :
-    (totalSubtreeCount G₅₀₀, totalSubtreeOrder G₅₀₀) = (14578492765509, 61323620645707018) := by
+    (totalSubtreeCount G500, totalSubtreeOrder G500) = (14578492765509, 61323620645707018) := by
   suffices h : _ = codeMoments true from
     h.trans ((codeMoments_eq_evaluated true).trans evaluated_trees)
   apply Prod.ext
@@ -478,7 +475,7 @@ theorem tree_exact_moments :
 
 /-- The exact rational difference between the two means on the fixed graph. -/
 theorem exactGap :
-    meanConnectedOrder G₅₀₀ - meanSubtreeOrder G₅₀₀ =
+    meanConnectedOrder G500 - meanSubtreeOrder G500 =
       (1769250196421378505239933 : ℚ) / 18998398362554330511481326 := by
   have hiN := congrArg Prod.fst induced_exact_moments
   have hiR := congrArg Prod.snd induced_exact_moments
@@ -490,7 +487,7 @@ theorem exactGap :
   norm_num
 
 /-- The tree mean of the witness is strictly smaller than its connected-support mean. -/
-theorem strictComparison : meanSubtreeOrder G₅₀₀ < meanConnectedOrder G₅₀₀ := by
+theorem strictComparison : meanSubtreeOrder G500 < meanConnectedOrder G500 := by
   apply sub_pos.mp
   rw [exactGap]
   norm_num
@@ -498,7 +495,7 @@ theorem strictComparison : meanSubtreeOrder G₅₀₀ < meanConnectedOrder G₅
 /-- The literal negation of Question 1.9. -/
 theorem result : ¬ claim := by
   intro h
-  exact (not_le_of_gt strictComparison) (h Vertex inferInstance G₅₀₀ G₅₀₀_connected)
+  exact (not_le_of_gt strictComparison) (h Vertex inferInstance G500 G500_connected)
 
 #print axioms induced_exact_moments
 #print axioms tree_exact_moments
