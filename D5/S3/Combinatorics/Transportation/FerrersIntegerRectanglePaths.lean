@@ -7,9 +7,11 @@
    digest: Nested legal neighborhoods admit finite integer rectangle paths with fixed margins. -/
 
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Data.Finset.Max
 import Mathlib.Logic.Relation
-import Mathlib.Tactic
+import Mathlib.Tactic.Push
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
