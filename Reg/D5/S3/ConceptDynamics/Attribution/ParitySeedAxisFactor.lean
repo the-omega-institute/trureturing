@@ -16,7 +16,7 @@ noncomputable section
 attribute [local instance] Classical.propDecidable
 
 abbrev signature : Signature where
-  Params := Σ n : ℕ, ℕ × Fin (n + 2)
+  Params := Σ n : ℕ, Σ _ : ℕ, Fin (n + 2)
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
