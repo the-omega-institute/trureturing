@@ -79,7 +79,7 @@ private lemma facetChain_one (E : Finset V) :
     have hne : F ≠ E.erase a := fun he => h ⟨a, ha, he⟩
     simp [simplex, hne]
 
-private lemma insert_sdiff_pair {E : Finset V} {a b : V}
+lemma insert_sdiff_pair {E : Finset V} {a b : V}
     (ha : a ∈ E) (hab : a ≠ b) :
     insert a (E \ {a, b}) = E.erase b := by
   ext y
@@ -194,7 +194,7 @@ private lemma cycle_eq_of_away [Fintype V] {z w : Chain V} {x : V}
     · exact fun hn => (hn hd).elim
   · exact haway F hx
 
-private lemma dual_complement_base {M : Matroid V} {E A : Finset V}
+lemma dual_complement_base {M : Matroid V} {E A : Finset V}
     (hE : M.E = (E : Set V)) (hA : A ⊆ E) :
     M✶.IsBase (↑A : Set V) ↔ M.IsBase (↑(E \ A) : Set V) := by
   rw [Matroid.dual_isBase_iff (hE.symm ▸ coe_subset.mpr hA), hE, coe_sdiff]
@@ -314,12 +314,12 @@ private lemma restrictionChain_pair_zero_iff {K : Finset V} {x a b : V} {p : V �
     sub_eq_zero, mul_right_inj' (neg_ne_zero.mpr (insertionSign_ne_zero _ _)), eq_comm]
 
 omit [LinearOrder V] in
-private lemma sum_fibers {ι : Type*} [DecidableEq ι] {S : Finset V} (f : V → ι) (q : ι → ℤ) :
+lemma sum_fibers {ι : Type*} [DecidableEq ι] {S : Finset V} (f : V → ι) (q : ι → ℤ) :
     (∑ a ∈ S, q (f a)) = ∑ c ∈ S.image f, ((S.filter fun a => f a = c).card : ℤ) * q c := by
   simpa only [sum_const, nsmul_eq_mul] using
     (sum_fiberwise_of_maps_to' (fun _ h => mem_image_of_mem f h) q).symm
 
-private lemma gcd_eq_sum {ι : Type*} (S : Finset ι) (w : ι → ℕ) :
+lemma gcd_eq_sum {ι : Type*} (S : Finset ι) (w : ι → ℕ) :
     ∃ q : ι → ℤ, ((S.gcd w : ℕ) : ℤ) = ∑ c ∈ S, (w c : ℤ) * q c := by
   classical
   have hcast (T : Finset ι) : ((T.gcd w : ℕ) : ℤ) = T.gcd (fun c => (w c : ℤ)) := by
