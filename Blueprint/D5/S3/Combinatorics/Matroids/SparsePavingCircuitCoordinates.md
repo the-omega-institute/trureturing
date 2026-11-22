@@ -28,9 +28,22 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.spa
 
 In a basis on which the covector takes the value one, the uniform deletion rows give covector multiplication and the weighted boundary gives vector insertion. Both operations vanish, and each omitted basis sets the corresponding alternating coefficient to zero.
 
+**Theorem 1.3 (The face coefficient as a form on differences).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a basis where the covector takes value one, choose any representative vertex of the face. Subtract it from the other vertices to obtain vectors in the kernel of the covector. The face coefficient of the covector product vanishes exactly when the lower-degree alternating form vanishes on these differences.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem_weightedCircuitResidues_iff`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_weighted_forms_equiv`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences`
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitCoordinates](PuncturedCircuitCoordinates.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitSplit](PuncturedCircuitSplit.md)

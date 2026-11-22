@@ -367,7 +367,7 @@ open UniformCircuitResidueForms (basisFormEquiv basisFormEquiv_symm_apply
 open Set.powersetCard (ofFinEmbEquiv)
 
 omit [Fintype I] in
-private lemma pivot_coordinate_zero_iff {n : ℕ} (hH : H.card = n + 1) {j : I} (hj : j ∈ H)
+lemma pivot_coordinate_zero_iff {n : ℕ} (hH : H.card = n + 1) {j : I} (hj : j ∈ H)
     (b : Module.Basis I ℤ (I → ℤ))
     (f : (I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) :
     formCoordinates b f H = 0 ↔

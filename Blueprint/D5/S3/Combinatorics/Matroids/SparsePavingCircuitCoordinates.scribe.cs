@@ -36,5 +36,18 @@ internal sealed class SparsePavingCircuitCoordinatesDocument : IScribeDocumentDe
                     + "rows give covector multiplication and the weighted boundary gives vector "
                     + "insertion. Both operations vanish, and each omitted basis sets the "
                     + "corresponding alternating coefficient to zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("wedge-coordinate-zero-iff-differences"),
+                DeclarationHandle.Create(Module + ".wedge_coordinate_zero_iff_differences"),
+                H("The face coefficient as a form on differences"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On a basis where the covector takes value one, choose any representative "
+                    + "vertex of the face. Subtract it from the other vertices to obtain vectors "
+                    + "in the kernel of the covector. The face coefficient of the covector product "
+                    + "vanishes exactly when the lower-degree alternating form vanishes on these "
+                    + "differences."))),
                 DescribeRole.Theorem))));
 }

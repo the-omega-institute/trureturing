@@ -337,4 +337,71 @@ theorem sparse_paving_weighted_forms_equiv {V : Type*} [Fintype V] (p : V → I)
       apply Subtype.ext
       exact congrArg (fun g : P => g.val) (map_smul formEq.symm t (read f)) }⟩
 
+open UniformCircuitResidueForms (basisFormEquiv_symm_apply covectorWedge curry_covectorWedge)
+open PuncturedCircuitCoordinates (pivot_coordinate_zero_iff)
+open Set.powersetCard (ofFinEmbEquiv)
+
+private lemma cons_sub_eq {A B : Type*} [AddCommGroup A] [AddCommGroup B] {n : ℕ}
+    (f : A [⋀^Fin (n + 1)]→ₗ[ℤ] B) (x : A) (t : Fin n → A) :
+    f (Fin.cons x t) = f (Fin.cons x (fun i => t i - x)) := by
+  let u : Fin (n + 1) → A := Fin.cons x (fun i => t i - x)
+  let v : Fin (n + 1) → A := Fin.cons 0 (fun _ => x)
+  have hs : (Fin.cons x t : Fin (n + 1) → A) = u + v := by
+    funext i
+    refine Fin.cases ?_ (fun j => ?_) i
+    · simp [u, v]
+    · simp [u, v]
+  rw [hs, f.map_add_univ, Fintype.sum_eq_single univ]
+  · simp [u]
+  · intro S hS
+    by_cases h0 : (0 : Fin (n + 1)) ∈ S
+    · have houter : ∃ j : Fin (n + 1), j ∉ S := by
+        by_contra! h
+        exact hS (eq_univ_of_forall h)
+      obtain ⟨j, hj'⟩ := houter
+      have hj0 : j ≠ 0 := fun he => hj' (he ▸ h0)
+      apply f.map_eq_zero_of_eq (i := 0) (j := j) _ _ hj0.symm
+      change S.piecewise u v 0 = S.piecewise u v j
+      have hv : v j = x := by
+        obtain ⟨k, rfl⟩ := Fin.exists_succAbove_eq hj0
+        simp [v, Fin.zero_succAbove]
+      simp [Finset.piecewise, h0, hj', u, hv]
+    · apply f.map_coord_zero 0
+      simp [h0, v]
+
+omit [Fintype I] in
+/-- A coefficient of a covector product vanishes exactly when the lower form
+vanishes on the differences from any representative of that face. -/
+theorem wedge_coordinate_zero_iff_differences {n : ℕ} (H : Finset I)
+    (hH : H.card = n + 2) (j : I) (hj : j ∈ H)
+    (b : Module.Basis I ℤ (I → ℤ)) (a : (I → ℤ) →ₗ[ℤ] ℤ) (ha : ∀ i, a (b i) = 1)
+    (f : (I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) :
+    let hcard : (H.erase j).card = n + 1 := by rw [card_erase_of_mem hj, hH]; omega
+    let S : Set.powersetCard I (n + 1) := ⟨H.erase j, hcard⟩
+    formCoordinates b (covectorWedge a f) H = 0 ↔
+      f (fun i => b (ofFinEmbEquiv.symm S i) - b j) = 0 := by
+  dsimp only
+  rw [pivot_coordinate_zero_iff hH hj b (covectorWedge a f)]
+  have hc : (H.erase j).card = n + 1 := by rw [card_erase_of_mem hj, hH]; omega
+  rw [formCoordinates, dite_eq_left hc, basisFormEquiv_symm_apply]
+  let S : Set.powersetCard I (n + 1) := ⟨H.erase j, hc⟩
+  let t : Fin (n + 1) → I → ℤ := b ∘ ofFinEmbEquiv.symm S
+  let diff : Fin (n + 1) → I → ℤ := fun i => t i - b j
+  have haDiff (i : Fin (n + 1)) : a (diff i) = 0 := by
+    simp [diff, t, ha]
+  have hz :
+      covectorWedge a (f.curryLeft (b j)) diff = 0 := by
+    rw [covectorWedge, AlternatingMap.alternatizeUncurryFin_apply]
+    apply sum_eq_zero
+    intro i _
+    rw [LinearMap.smulRight_apply, haDiff, zero_smul]
+    simp
+  have ht : (covectorWedge a f).curryLeft (b j) t =
+      (covectorWedge a f).curryLeft (b j) diff := by
+    simpa only [AlternatingMap.curryLeft_apply_apply, Matrix.vecCons, diff]
+      using cons_sub_eq (covectorWedge a f) (b j) t
+  change (covectorWedge a f).curryLeft (b j) t = 0 ↔ f diff = 0
+  rw [ht, curry_covectorWedge, sub_apply, smul_apply,
+    ha, one_smul, hz, sub_zero]
+
 end D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates
