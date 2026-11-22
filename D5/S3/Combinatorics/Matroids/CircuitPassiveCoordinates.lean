@@ -238,4 +238,34 @@ theorem split_with_omitted_faces [Fintype I] (b : Module.Basis I ℤ M)
     rw [e.apply_symm_apply]
     rfl
 
+private def pairFamilies {J : Type*} (X Y : J → Type*)
+    [∀ j, AddCommGroup (X j)] [∀ j, AddCommGroup (Y j)] :
+    ((∀ j, X j) × (∀ j, Y j)) ≃ₗ[ℤ] (∀ j, X j × Y j) where
+  toFun f j := (f.1 j, f.2 j)
+  invFun f := (fun j => (f j).1, fun j => (f j).2)
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- For restrictions acting on disjoint factors, the unrestricted product
+times the doubly restricted product equals the product of the two
+individually restricted modules. -/
+theorem independent_restrictions_product {J : Type*} (X : J → Type*)
+    [∀ j, AddCommGroup (X j)] (P Q : ∀ j, Submodule ℤ (X j))
+    (hdisjoint : ∀ j, P j = ⊤ ∨ Q j = ⊤) :
+    Nonempty (((∀ j, X j) × (∀ j, ↥(P j ⊓ Q j))) ≃ₗ[ℤ]
+      ((∀ j, ↥(P j)) × (∀ j, ↥(Q j)))) := by
+  classical
+  have component (j : J) : Nonempty ((X j × ↥(P j ⊓ Q j)) ≃ₗ[ℤ] (↥(P j) × ↥(Q j))) := by
+    rcases hdisjoint j with hp | hq
+    · rw [hp, top_inf_eq]
+      exact ⟨Submodule.topEquiv.symm.prodCongr (LinearEquiv.refl ℤ _)⟩
+    · rw [hq, inf_top_eq]
+      exact ⟨(LinearEquiv.prodComm ℤ _ _).trans
+        ((LinearEquiv.refl ℤ _).prodCongr Submodule.topEquiv.symm)⟩
+  exact ⟨(pairFamilies X (fun j => ↥(P j ⊓ Q j))).trans
+    ((LinearEquiv.piCongrRight fun j => (component j).some).trans
+      (pairFamilies (fun j => ↥(P j)) (fun j => ↥(Q j))).symm)⟩
+
 end D5.S3.Combinatorics.Matroids.CircuitPassiveCoordinates
