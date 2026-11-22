@@ -1,0 +1,1 @@
+{"statement_id":"sha256:6bbc063887b8d3b82fb1709298709f21ad167e630ac426640da9e2cc26891b08","declarations":[{"declaration_name_key":"ns(ns(n0,9:Chirped69),10:seedBounds)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,9:Chirped69),16:instNeZeroNatN_1)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,9:Chirped69),28:existsUnique_zero_closedBall)","kind":"theorem"}]}
