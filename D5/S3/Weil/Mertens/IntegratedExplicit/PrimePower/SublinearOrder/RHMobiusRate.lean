@@ -6,7 +6,7 @@
    utility: none
    digest: An explicit sublinear order rate for the actual prime-only Möbius window under RH. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.ArithmeticResponse
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusSublinear
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.RHMobiusLinear
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.TrivialResponse
 
@@ -28,12 +28,6 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder (spectralPrimitive windowDiscrepancy)
-
-private theorem exp_half_le_order (m : ℕ) {u : ℝ} (hu : 0 ≤ u) :
-    Real.exp (-u/2) ≤ Real.exp (-(orderRate m)*u) := by
-  apply Real.exp_le_exp.mpr
-  unfold orderRate
-  nlinarith only [mul_nonneg hu (show 0 ≤ (m+1 : ℝ)⁻¹ by positivity)]
 
 private def orderScale (m : ℕ) : ℝ :=
   Real.sqrt (1 + Real.log (Real.log ((m : ℝ)+1)))
