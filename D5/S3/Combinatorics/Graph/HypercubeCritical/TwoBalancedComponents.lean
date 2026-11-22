@@ -80,7 +80,7 @@ private theorem componentFinset_disjoint (U : Finset (Q 9))
   exact SimpleGraph.ConnectedComponent.eq_of_common_vertex hxK hxL
 
 /-- Saturated edge identities propagate vanishing along actual induced walks. -/
-private theorem zero_iff_of_reachable (U : Finset (Q 9)) (z : Q 9 → Real)
+theorem zero_iff_of_reachable (U : Finset (Q 9)) (z : Q 9 → Real)
     (hdeg : ∀ x : (U : Set (Q 9)),
       ((hypercube 9).induce (U : Set (Q 9))).degree x ≤ 3)
     (hsupport : ∀ x ∉ U, z x = 0)
