@@ -36,7 +36,7 @@ Splitting off the last summand of the finite layer sum writes the scaled residua
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerAggregate.actual_integer_infimum_all_fixed_layers`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerAggregate.actual_integer_infimum_fixed_layer_residual`
-- Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature](../Analytic/LogLogGlobalCurvature.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerFiniteActivation](FixedLayerFiniteActivation.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerPrimeTail](FixedLayerPrimeTail.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/IntegerInfimumSecondOrder](IntegerInfimumSecondOrder.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/IntegerInfimumSharpLimit](IntegerInfimumSharpLimit.md)
