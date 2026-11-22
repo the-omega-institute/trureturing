@@ -32,9 +32,42 @@ private def momentTerm (j k : ℕ) : ℚ := expTerm k / ((k + j : ℕ) + 1)
 private def polynomialAt (coeff : ℕ → ℚ) (degree : ℕ) (x : ℚ) : ℚ :=
   ∑ k ∈ Finset.range (degree + 1), coeff k * x ^ k
 
+private def roundedHorner (coeff : ℕ → ℚ) (x : I) : ℕ → ℕ → I
+  | 0, j => RoundedInterval.point (coeff j)
+  | n + 1, j => RoundedInterval.point (coeff j) + roundedHorner coeff x n (j + 1) * x
+
+private theorem roundedHorner_sound (coeff : ℕ → ℚ) {z : I} {x : ℝ} (hx : z.encloses x)
+    (n j : ℕ) : (roundedHorner coeff z n j).encloses
+      (∑ k ∈ Finset.range (n + 1), (coeff (j + k) : ℝ) * x ^ k) := by
+  induction n generalizing j with
+  | zero => simpa [roundedHorner] using RoundedInterval.encloses_point (coeff j)
+  | succ n ih =>
+    have h := RoundedInterval.encloses_add (RoundedInterval.encloses_point (coeff j))
+      (RoundedInterval.encloses_mul (ih (j + 1)) hx)
+    change (roundedHorner coeff z (n + 1) j).encloses _ at h
+    convert h using 1
+    rw [Finset.sum_range_succ', Finset.sum_mul]
+    simp only [Nat.add_zero, pow_zero, mul_one, add_comm (coeff j : ℝ)]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [show j + (k + 1) = j + 1 + k by omega, pow_succ, mul_assoc]
+
+private theorem roundedHorner_cast (coeff : ℕ → ℚ) (n : ℕ) (x : ℚ) :
+    (roundedHorner coeff (RoundedInterval.point x) n 0).encloses
+      (polynomialAt coeff n x : ℝ) := by
+  simpa only [polynomialAt, Rat.cast_sum, Rat.cast_mul, Rat.cast_pow, Nat.zero_add] using
+    roundedHorner_sound coeff (RoundedInterval.encloses_point x) n 0
+
 private def bracket (coeff : ℕ → ℚ) (degree : ℕ) (x : I) : I :=
-  RoundedInterval.interval (polynomialAt coeff (degree + 1) x.upper)
-    (polynomialAt coeff degree (max 0 x.lower))
+  let l := roundedHorner coeff (RoundedInterval.point x.upper) (degree + 1) 0
+  let u := roundedHorner coeff (RoundedInterval.point (max 0 x.lower)) degree 0
+  ⟨(l.endpoints.1, u.endpoints.2)⟩
+
+private def expBracket (x : I) : I :=
+  let b := bracket expTerm 18 (x * RoundedInterval.point (1 / 4))
+  let b₂ := b * b
+  b₂ * b₂
 
 private structure Box where
   h₀ : ℚ
@@ -62,8 +95,8 @@ private def inputJets (b : Box) : J × J × J × J :=
   let h := RoundedInterval.interval b.h₀ b.h₁
   let d := RoundedInterval.interval b.d₀ b.d₁
   let s := h * d
-  let q := bracket expTerm 18 s
-  let z := bracket expTerm 30 d
+  let q := expBracket s
+  let z := expBracket d
   let one := RoundedInterval.point 1
   let half := RoundedInterval.point (1 / 2)
   let aJ : J := ⟨b.moment 0, 0 - b.moment 1, q, b.moment 2 * half,
@@ -97,12 +130,6 @@ private def verify (b : Box) : ℕ → Bool
   | n + 1 => b.check || (verify b.split.1 n && verify b.split.2 n)
 
 private def rectangle : Box := ⟨0, 3 / 11, 2, 4⟩
-
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 0 in
-private theorem rectangle_first_leaf_checked :
-    (rectangle.split.1.split.1.split.1.split.1.split.1.split.1).split.1.split.1.split.1.split.1.split.1.check =
-      true := by decide +kernel
 
 private def Encloses (wide : J) (a : QuadraticJet ℝ) : Prop :=
   wide.value.encloses a.value ∧ wide.firstH.encloses a.firstH ∧
@@ -215,11 +242,12 @@ private theorem bracket_sound {f : ℝ → ℝ} {coeff : ℕ → ℚ} {n : ℕ} 
     (hu : ∀ u : ℚ, 0 ≤ u → f u ≤ (polynomialAt coeff n u : ℝ)) :
     (bracket coeff n w).encloses (f x) := by
   change (w.lower : ℝ) ≤ x ∧ x ≤ (w.upper : ℝ) at hx
-  apply RoundedInterval.encloses_interval
-  · exact (hl w.upper (by exact_mod_cast hx₀.trans hx.2)).trans (hmono hx.2)
+  constructor
+  · exact (roundedHorner_cast coeff (n + 1) w.upper).1.trans
+      ((hl w.upper (by exact_mod_cast hx₀.trans hx.2)).trans (hmono hx.2))
   · have hm : ((max 0 w.lower : ℚ) : ℝ) ≤ x := by
       simpa only [Rat.cast_max, Rat.cast_zero] using max_le hx₀ hx.1
-    exact (hmono hm).trans (hu _ (le_max_left _ _))
+    exact ((hmono hm).trans (hu _ (le_max_left _ _))).trans (roundedHorner_cast coeff n _).2
 
 private theorem expBracket_encloses {w : I} {x : ℝ} {n : ℕ}
     (he : Even n) (hx : w.encloses x) (hx₀ : 0 ≤ x) :
@@ -255,6 +283,23 @@ private theorem momentBracket_encloses {w : I} {x : ℝ} {n : ℕ} (j : ℕ)
     have h := unitDecayMomentPartial_remainder_signed n j (by exact_mod_cast hu : 0 ≤ (u : ℝ))
     rw [hNeg, neg_one_mul, neg_sub, sub_nonneg] at h
     exact h
+
+private theorem expBracket_scaled_encloses {w : I} {x : ℝ} (hx : w.encloses x) (h₀ : 0 ≤ x) :
+    (expBracket w).encloses (Real.exp (-x)) := by
+  have hquarter : (RoundedInterval.point (1 / 4)).encloses (1 / 4) := by
+    simpa only [Rat.cast_div, Rat.cast_one, Rat.cast_ofNat] using
+      RoundedInterval.encloses_point (1 / 4)
+  have he := expBracket_encloses (n := 18) (by decide)
+    (RoundedInterval.encloses_mul hx hquarter) (by positivity : 0 ≤ x * (1 / 4))
+  have hb := RoundedInterval.encloses_mul he he
+  have hbb := RoundedInterval.encloses_mul hb hb
+  have heq : (Real.exp (-(x * (1 / 4))) * Real.exp (-(x * (1 / 4)))) *
+      (Real.exp (-(x * (1 / 4))) * Real.exp (-(x * (1 / 4)))) = Real.exp (-x) := by
+    simp_rw [← Real.exp_add]
+    congr 1
+    ring
+  rw [heq] at hbb
+  exact hbb
 
 private def Box.contains (b : Box) (h d : ℝ) : Prop :=
   (b.h₀ : ℝ) ≤ h ∧ h ≤ (b.h₁ : ℝ) ∧ (b.d₀ : ℝ) ≤ d ∧ d ≤ (b.d₁ : ℝ)
@@ -305,17 +350,17 @@ private theorem Box.inputJets_enclose {b : Box} {h d : ℝ} (hb : b.contains h d
       Encloses I.2.2.1 R.2.2.1 ∧ Encloses I.2.2.2 R.2.2.2 := by
   let hI := RoundedInterval.interval b.h₀ b.h₁
   let dI := RoundedInterval.interval b.d₀ b.d₁
-  let qI := bracket expTerm 18 (hI*dI)
-  let zI := bracket expTerm 30 dI
+  let qI := expBracket (hI*dI)
+  let zI := expBracket dI
   let q := Real.exp (-(h*d))
   let z := Real.exp (-d)
   have hpos : 0 ≤ h := (by exact_mod_cast hh₀ : (0 : ℝ) ≤ b.h₀).trans hb.1
   have dpos : 0 ≤ d := (by exact_mod_cast hd₀ : (0 : ℝ) ≤ b.d₀).trans hb.2.2.1
   have hh : hI.encloses h := RoundedInterval.encloses_interval hb.1 hb.2.1
   have hd : dI.encloses d := RoundedInterval.encloses_interval hb.2.2.1 hb.2.2.2
-  have hq : qI.encloses q := expBracket_encloses (by decide)
+  have hq : qI.encloses q := expBracket_scaled_encloses
     (RoundedInterval.encloses_mul hh hd) (mul_nonneg hpos dpos)
-  have hz : zI.encloses z := expBracket_encloses (by decide) hd dpos
+  have hz : zI.encloses z := expBracket_scaled_encloses hd dpos
   have hzero : (0 : I).encloses 0 := by
     change (RoundedInterval.point 0).encloses _
     simpa only [Rat.cast_zero] using RoundedInterval.encloses_point 0
@@ -554,10 +599,75 @@ private theorem strip_of_verify (hverify : verify rectangle 11 = true)
     ((by norm_num : (0:ℝ) < 1/100).trans hT)
   exact logKernel_mixed_of_fifthOrder hp hu hd hs hc
 
-set_option maxRecDepth 8192 in
-set_option maxHeartbeats 0 in
--- Closed arithmetic over the 285 accepted boxes is replayed by the kernel.
-private theorem rectangle_checked : verify rectangle 11 = true := by decide +kernel
+private theorem verify_children {b : Box} {n : ℕ}
+    (left : verify b.split.1 n = true) (right : verify b.split.2 n = true) :
+    verify b (n + 1) = true := by
+  change (b.check || (verify b.split.1 n && verify b.split.2 n)) = true
+  rw [left, right, Bool.and_true, Bool.or_true]
+
+section
+set_option maxRecDepth 8192
+set_option maxHeartbeats 0
+
+-- Keep each kernel reduction local to a subtree of the 285-box certificate.
+private theorem check_0000 : verify rectangle.split.1.split.1.split.1.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_0001 : verify rectangle.split.1.split.1.split.1.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_0010 : verify rectangle.split.1.split.1.split.2.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_0011 : verify rectangle.split.1.split.1.split.2.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_0100 : verify rectangle.split.1.split.2.split.1.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_0101 : verify rectangle.split.1.split.2.split.1.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_0110 : verify rectangle.split.1.split.2.split.2.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_0111 : verify rectangle.split.1.split.2.split.2.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_1000 : verify rectangle.split.2.split.1.split.1.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_1001 : verify rectangle.split.2.split.1.split.1.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_1010 : verify rectangle.split.2.split.1.split.2.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_1011 : verify rectangle.split.2.split.1.split.2.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_1100 : verify rectangle.split.2.split.2.split.1.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_1101 : verify rectangle.split.2.split.2.split.1.split.2 7 = true :=
+  by decide +kernel
+
+private theorem check_1110 : verify rectangle.split.2.split.2.split.2.split.1 7 = true :=
+  by decide +kernel
+
+private theorem check_1111 : verify rectangle.split.2.split.2.split.2.split.2 7 = true :=
+  by decide +kernel
+
+end
+
+private theorem rectangle_checked : verify rectangle 11 = true :=
+  verify_children
+    (verify_children
+      (verify_children (verify_children check_0000 check_0001) (verify_children check_0010 check_0011))
+      (verify_children (verify_children check_0100 check_0101) (verify_children check_0110 check_0111)))
+    (verify_children
+      (verify_children (verify_children check_1000 check_1001) (verify_children check_1010 check_1011))
+      (verify_children (verify_children check_1100 check_1101) (verify_children check_1110 check_1111)))
 
 /-- The mixed derivative is negative on the full positive-rate strip above lower coordinate four. -/
 theorem logKernel_mixed_of_lower_four_le {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}

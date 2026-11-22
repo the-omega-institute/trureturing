@@ -10,6 +10,9 @@ import D5.S3.Quantum.Analysis.RefinedBMVExtremeCertificate
 import D5.S3.Quantum.Analysis.RefinedBMVExtremeDerivatives
 import D5.S3.Quantum.Analysis.RefinedBMVExtremeWalk
 import D5.S3.Quantum.Analysis.RefinedBMVIntervalKernel
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenter
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Positivity
@@ -20,8 +23,8 @@ The exact derivative signs give positive semidefiniteness on every finite
 sample, and the centered walks yield the two matrix inequalities.
 -/
 
-open Matrix NormedSpace Set
-open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
+open Filter Matrix NormedSpace Set
+open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator Topology
 
 noncomputable section
 
@@ -298,25 +301,30 @@ private theorem kernel_rescale (hp : 0 < p) {a x y : ℝ} (ha : 0 ≤ a) (hx : a
 
 universe u
 
-private theorem kernel_gram_posSemidef (hp : 0 < p) (mixed : MixedSigns p) (signs : EdgeSigns p) {a : ℝ} (ha : 0 ≤ a)
+private theorem kernel_gram_posSemidef {a : ℝ} {K : ℝ → ℝ → ℝ}
+    (hnonneg : ∀ ⦃x y : ℝ⦄, a < x → x ≤ y → 0 ≤ K x y)
+    (hleft : ∀ y > a, MonotoneOn (fun x ↦ K x y) (Ioc a y))
+    (hright : ∀ x > a, AntitoneOn (K x) (Ici x))
+    (hrectangle : ∀ ⦃l u v w : ℝ⦄, a < l → l ≤ u → u ≤ v → v ≤ w →
+      0 ≤ (K u v - K l v) - (K u w - K l w))
     {ι : Type u} [Fintype ι] (x : ι → ℝ) (hx : ∀ i, a < x i) :
-    (Matrix.of fun i j ↦ kernelAt p a (min (x i) (x j)) (max (x i) (x j))).PosSemidef := by
+    (Matrix.of fun i j ↦ K (min (x i) (x j)) (max (x i) (x j))).PosSemidef := by
   let n := Fintype.card ι
   let e := (Fintype.equivFin ι).symm
   let order : Fin n ≃ ι := (Tuple.sort (x ∘ e)).trans e
   let y := x ∘ order
   have hmono : Monotone y := Tuple.monotone_sort (x ∘ e)
   apply (Matrix.posSemidef_submatrix_equiv order).mp
-  change (Matrix.of fun i j ↦ kernelAt p a (min (y i) (y j)) (max (y i) (y j))).PosSemidef
+  change (Matrix.of fun i j ↦ K (min (y i) (y j)) (max (y i) (y j))).PosSemidef
   let z (i : ℕ) := if h : i < n then y ⟨i, h⟩ else 0
   -- The sample occupies rows and columns 1 through n. The outer row and column are virtual.
-  let A (i j : ℕ) := if i = 0 ∨ n < j then 0 else kernelAt p a (z (i - 1)) (z (j - 1))
+  let A (i j : ℕ) := if i = 0 ∨ n < j then 0 else K (z (i - 1)) (z (j - 1))
   have hz (i : ℕ) (hi : i < n) : a < z i := by
     simpa only [z, dite_eq_left hi, y, Function.comp_apply] using hx (order ⟨i, hi⟩)
   have hle (i j : ℕ) (hij : i ≤ j) (hj : j < n) : z i ≤ z j := by
     have hi := hij.trans_lt hj
     simpa [z, hi, hj] using hmono (show (⟨i, hi⟩ : Fin n) ≤ ⟨j, hj⟩ from hij)
-  have hinside (i j : ℕ) (hj : j < n) : A (i + 1) (j + 1) = kernelAt p a (z i) (z j) := by
+  have hinside (i j : ℕ) (hj : j < n) : A (i + 1) (j + 1) = K (z i) (z j) := by
     simp [A, show ¬ n < j + 1 by omega]
   have hrow (j : ℕ) : A 0 j = 0 := by simp [A]
   have hcol (i : ℕ) : A i (n + 1) = 0 := by simp [A]
@@ -328,22 +336,22 @@ private theorem kernel_gram_posSemidef (hp : 0 < p) (mixed : MixedSigns p) (sign
       cases i with
       | zero =>
         simp only [hrow, sub_zero, sub_nonneg]
-        exact kernel_right_antitone hp signs ha (hz 0 (by omega))
+        exact hright _ (hz 0 (by omega))
           (hle 0 j (Nat.zero_le _) hj) (hle 0 (j + 1) (Nat.zero_le _) hj') (hle j (j + 1) (Nat.le_succ _) hj')
       | succ i =>
         rw [hinside i j hj, hinside i (j + 1) hj']
-        exact kernel_rectangle hp mixed ha (hz i (by omega)) (hle i (i + 1) (Nat.le_succ _) (hij.trans_lt hj))
+        exact hrectangle (hz i (by omega)) (hle i (i + 1) (Nat.le_succ _) (hij.trans_lt hj))
           (hle (i + 1) j hij hj) (hle j (j + 1) (Nat.le_succ _) hj')
     · have he : j + 2 = n + 1 := by omega
       simp only [he, hcol, sub_zero]
       cases i with
       | zero =>
         rw [hrow, sub_zero]
-        exact kernel_nonneg_at hp signs ha (hz 0 (by omega)) (hle 0 j (Nat.zero_le _) hj)
+        exact hnonneg (hz 0 (by omega)) (hle 0 j (Nat.zero_le _) hj)
       | succ i =>
         rw [hinside i j hj, sub_nonneg]
         have hi : i + 1 < n := hij.trans_lt hj
-        exact kernel_left_monotone hp signs ha (hz j hj)
+        exact hleft _ (hz j hj)
           ⟨hz i (by omega), hle i j (Nat.le_of_succ_le hij) hj⟩ ⟨hz (i + 1) hi, hle (i + 1) j hij hj⟩
           (hle i (i + 1) (Nat.le_succ _) hi)
   have hPSD := IntervalKernel.posSemidef_truncation (𝕜 := ℝ) A hrect
@@ -360,16 +368,16 @@ private theorem kernel_gram_posSemidef (hp : 0 < p) (mixed : MixedSigns p) (sign
     · simp [z, max_eq_left (show j.val ≤ i.val from h), max_eq_left (hmono h), i.isLt]
   simp [Matrix.of_apply, hinside _ _ hmax, hrow, hcol, hzmin, hzmax]
 
-private theorem upperPSD_of_signs (hp : 0 < p) (signs : EdgeSigns p) (mixed : MixedSigns p) :
-    ExtremeWalk.UpperPSD.{u} p := by
+private theorem upperKernel_posSemidef_of_gram (hp : 0 < p) {a : ℝ} (ha : 0 ≤ a)
+    {ι : Type u} [Fintype ι] (x : ι → ℝ) (hx : ∀ i, a < x i)
+    (hGram : (Matrix.of fun i j ↦ kernelAt p a (min (x i) (x j)) (max (x i) (x j))).PosSemidef) :
+    (Matrix.of fun i j ↦ ExtremeWalk.upperKernel p a (x i) (x j)).PosSemidef := by
   classical
-  intro a ha ι _ x hx
   let w (i : ι) := Real.sqrt (weight p a (x i))
   let A : Matrix ι ι ℝ := Matrix.of fun i j ↦ kernelAt p a (min (x i) (x j)) (max (x i) (x j))
   have hw : (Matrix.diagonal w)ᴴ = Matrix.diagonal w := by
     simpa only [star_trivial] using Matrix.diagonal_conjTranspose w
-  have h :=
-    (kernel_gram_posSemidef hp mixed signs ha x hx).conjTranspose_mul_mul_same (Matrix.diagonal w)
+  have h := hGram.conjTranspose_mul_mul_same (Matrix.diagonal w)
   rw [hw] at h
   change (Matrix.diagonal w * A * Matrix.diagonal w).PosSemidef at h
   have hmat : Matrix.diagonal w * A * Matrix.diagonal w =
@@ -378,6 +386,159 @@ private theorem upperPSD_of_signs (hp : 0 < p) (signs : EdgeSigns p) (mixed : Mi
     simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.of_apply, A, w]
     exact kernel_rescale hp ha (hx i) (hx j)
   exact hmat ▸ h
+
+private theorem upperPSD_of_signs (hp : 0 < p) (signs : EdgeSigns p) (mixed : MixedSigns p) :
+    ExtremeWalk.UpperPSD.{u} p := by
+  intro a ha ι _ x hx
+  exact upperKernel_posSemidef_of_gram hp ha x hx
+    (kernel_gram_posSemidef (K := kernelAt p a)
+      (fun {_ _} hax hxy ↦ kernel_nonneg_at hp signs ha hax hxy)
+      (fun _ hy ↦ kernel_left_monotone hp signs ha hy)
+      (fun _ hax ↦ kernel_right_antitone hp signs ha hax)
+      (fun {_ _ _ _} hal hlu huv hvw ↦ kernel_rectangle hp mixed ha hal hlu huv hvw) x hx)
+
+private def logRoot (p : ℕ) (a t : ℝ) : ℝ := a * Real.exp (t / (p : ℝ))
+
+/-- The normalized upper kernel in coordinates `u = p * log (x / a)` and
+`v = p * log (y / a)`, for a positive center `a`. -/
+def logKernelAt (p : ℕ) (a u v : ℝ) : ℝ :=
+  kernelAt p a (logRoot p a u) (logRoot p a v)
+
+/-- The positive-center parametrization has exactly the composition moment kernel. -/
+theorem logKernelAt_eq_logKernel {p : ℕ} (hp : 0 < p) {a : ℝ} (ha : 0 < a) (u v : ℝ) :
+    logKernelAt p a u v = PositiveCenter.logKernel p u v := by
+  have hu : 0 < logRoot p a u := mul_pos ha (Real.exp_pos _)
+  have hv : 0 < logRoot p a v := mul_pos ha (Real.exp_pos _)
+  have hc (t : ℝ) : PositiveCenter.logCoordinate p a (logRoot p a t) = t :=
+    PositiveCenter.logCoordinate_mul_exp hp ha t
+  have h := PositiveCenter.normalized_eq_logKernel hp ha hu hv
+  rw [hc u, hc v] at h
+  exact h
+
+private theorem logRoot_smooth (p : ℕ) (a : ℝ) : ContDiff ℝ 2 (logRoot p a) :=
+  contDiff_const.mul (Real.contDiff_exp.comp (contDiff_id.div_const (p : ℝ)))
+
+private theorem logRoot_strictMono (hp : 0 < p) {a : ℝ} (ha : 0 < a) :
+    StrictMono (logRoot p a) := by
+  have hp' : (0 : ℝ) < (p : ℝ) := by exact_mod_cast hp
+  intro u v huv
+  exact mul_lt_mul_of_pos_left (Real.exp_lt_exp.mpr (div_lt_div_of_pos_right huv hp')) ha
+
+private theorem logRoot_above (hp : 0 < p) {a t : ℝ} (ha : 0 < a) (ht : 0 < t) :
+    a < logRoot p a t := by
+  have h := logRoot_strictMono hp ha ht
+  simpa only [logRoot, zero_div, Real.exp_zero, mul_one] using h
+
+/-- The mixed sign and the two edge limits give the upper block at a positive center.
+The ordered rectangles include their diagonal endpoint by continuity. -/
+theorem upperKernel_posSemidef_of_positive_center_mixed (hp : 0 < p) {a : ℝ} (ha : 0 < a)
+    (hmixed : ∀ u v : ℝ, 0 < u → u < v →
+      deriv (fun t ↦ deriv (fun s ↦ logKernelAt p a s t) u) v ≤ 0)
+    (hzero : ∀ v > 0, Tendsto (fun u ↦ logKernelAt p a u v) (𝓝[>] 0) (𝓝 0))
+    (hinfty : ∀ u > 0, Tendsto (logKernelAt p a u) atTop (𝓝 0))
+    {ι : Type u} [Fintype ι] (x : ι → ℝ) (hx : ∀ i, a < x i) :
+    (Matrix.of fun i j ↦ ExtremeWalk.upperKernel p a (x i) (x j)).PosSemidef := by
+  have hroot := logRoot_strictMono hp ha
+  have hpair : ContDiff ℝ 2 (fun z : ℝ × ℝ ↦ (logRoot p a z.1, logRoot p a z.2)) :=
+    ((logRoot_smooth p a).comp contDiff_fst).prodMk ((logRoot_smooth p a).comp contDiff_snd)
+  have hslice (v : ℝ) : ContDiff ℝ 2 (fun t ↦ (logRoot p a t, logRoot p a v)) :=
+    (logRoot_smooth p a).prodMk contDiff_const
+  have hrect : ∀ ⦃l u v w : ℝ⦄, 0 < l → l ≤ u → u ≤ v → v ≤ w →
+      0 ≤ (logKernelAt p a u v - logKernelAt p a l v) -
+        (logKernelAt p a u w - logKernelAt p a l w) := by
+    intro l u v w hl hlu huv hvw
+    refine IntervalKernel.rectangle_nonneg_of_mixed_deriv_nonpos
+      (K := logKernelAt p a) (D := fun u v ↦ deriv (fun t ↦ logKernelAt p a t v) u)
+      ?_ ?_ ?_ hl hlu huv hvw
+    · intro v hv u hu
+      have hInner : ContinuousAt (fun t ↦ (logRoot p a t, logRoot p a v)) u :=
+        (hslice v).continuous.continuousAt
+      have hOuter := kernel_continuousAt hp ha.le (logRoot_above hp ha hu.1)
+        (logRoot_above hp ha hv)
+      have h := ContinuousAt.comp (f := fun t : ℝ ↦ (logRoot p a t, logRoot p a v))
+        (g := Function.uncurry (kernelAt p a)) hOuter hInner
+      exact h.continuousWithinAt
+    · intro u v hu huv
+      have hInner : ContDiffAt ℝ 2 (fun t ↦ (logRoot p a t, logRoot p a v)) u :=
+        (hslice v).contDiffAt
+      have hOuter := kernel_smooth hp ha.le (logRoot_above hp ha hu) (hroot huv)
+      have hc := ContDiffAt.comp (f := fun t : ℝ ↦ (logRoot p a t, logRoot p a v))
+        (g := Function.uncurry (kernelAt p a)) u hOuter hInner
+      have hs : ContDiffAt ℝ 2 (fun t ↦ logKernelAt p a t v) u := hc
+      exact (hs.differentiableAt two_ne_zero).hasDerivAt
+    · intro u v hu huv
+      have hInner : ContDiffAt ℝ 2
+          (fun z : ℝ × ℝ ↦ (logRoot p a z.1, logRoot p a z.2)) (u, v) :=
+        hpair.contDiffAt
+      have hOuter := kernel_smooth hp ha.le (logRoot_above hp ha hu) (hroot huv)
+      have hc := ContDiffAt.comp
+        (f := fun z : ℝ × ℝ ↦ (logRoot p a z.1, logRoot p a z.2))
+        (g := Function.uncurry (kernelAt p a)) (u, v) hOuter hInner
+      have hs : ContDiffAt ℝ 2 (Function.uncurry (logKernelAt p a)) (u, v) := hc
+      exact ⟨(hasDerivAt_deriv_first_of_second hs (hasDerivAt_deriv_second hs)).differentiableAt,
+        hmixed u v hu huv⟩
+  obtain ⟨hnonneg, hleft, hright⟩ :=
+    IntervalKernel.edge_inequalities_of_rectangle_limits hrect hzero hinfty
+  let s (i : ι) := (p : ℝ) * Real.log (x i / a)
+  have hp' : (0 : ℝ) < (p : ℝ) := by exact_mod_cast hp
+  have hs (i : ι) : 0 < s i :=
+    mul_pos hp' (Real.log_pos ((one_lt_div₀ ha).2 (hx i)))
+  have hxs (i : ι) : logRoot p a (s i) = x i := by
+    have hratio : 0 < x i / a := div_pos (ha.trans (hx i)) ha
+    have hcoord : s i / (p : ℝ) = Real.log (x i / a) :=
+      mul_div_cancel_left₀ _ hp'.ne'
+    rw [logRoot, hcoord, Real.exp_log hratio, mul_comm a, div_mul_cancel₀ _ ha.ne']
+  have hGram := kernel_gram_posSemidef (K := logKernelAt p a) hnonneg hleft hright hrect s hs
+  have hmat :
+      (Matrix.of fun i j ↦ logKernelAt p a (min (s i) (s j)) (max (s i) (s j))) =
+        (Matrix.of fun i j ↦ kernelAt p a (min (x i) (x j)) (max (x i) (x j))) := by
+    ext i j
+    simp only [Matrix.of_apply, logKernelAt, hroot.monotone.map_min, hroot.monotone.map_max, hxs]
+  exact upperKernel_posSemidef_of_gram hp ha.le x hx (hmat ▸ hGram)
+
+private theorem upperKernel_continuous_center (p : ℕ) (x y : ℝ) :
+    Continuous (fun a ↦ ExtremeWalk.upperKernel p a x y) := by
+  have hdefect : Continuous (fun a : ℝ ↦ defect p a (min x y) (max x y)) :=
+    (contDiff_defect p contDiff_id contDiff_const contDiff_const).continuous
+  have hcenter : Continuous (fun a : ℝ ↦ defect p a a (max x y)) :=
+    (contDiff_defect p contDiff_id contDiff_id contDiff_const).continuous
+  have hrepeat : Continuous (fun _ : ℝ ↦ defect p (min x y) (min x y) (max x y)) :=
+    continuous_const
+  exact hdefect.sub (hcenter.mul hrepeat).sqrt
+
+private theorem upperPSD_of_positive_centers
+    (hpos : ∀ a : ℝ, 0 < a → ∀ {ι : Type u} [Fintype ι] (x : ι → ℝ),
+      (∀ i, a < x i) → (Matrix.of fun i j ↦ ExtremeWalk.upperKernel p a (x i) (x j)).PosSemidef) :
+    ExtremeWalk.UpperPSD.{u} p := by
+  intro a ha ι _ x hx
+  rcases ha.eq_or_lt with rfl | ha
+  · let A (b : ℝ) : Matrix ι ι ℝ := Matrix.of fun i j ↦ ExtremeWalk.upperKernel p b (x i) (x j)
+    have hA : Continuous A :=
+      continuous_matrix fun i j ↦ upperKernel_continuous_center p (x i) (x j)
+    have ht : Tendsto A (𝓝[>] (0 : ℝ)) (𝓝 (A 0)) :=
+      (hA.tendsto 0).mono_left nhdsWithin_le_nhds
+    change A 0 ∈ {M : Matrix ι ι ℝ | M.PosSemidef}
+    refine Matrix.posSemidef_is_closed.mem_of_tendsto ht ?_
+    have hsmall : ∀ᶠ b : ℝ in 𝓝[>] (0 : ℝ), ∀ i, b < x i := by
+      rw [Filter.eventually_all]
+      intro i
+      exact nhdsWithin_le_nhds (eventually_lt_nhds (hx i))
+    have habove : ∀ᶠ b : ℝ in 𝓝[>] (0 : ℝ), 0 < b := self_mem_nhdsWithin
+    filter_upwards [habove, hsmall] with b hb hbx
+    exact hpos b hb x hbx
+  · exact hpos a ha x hx
+
+/-- The positive-center mixed sign and edge limits imply the upper-block condition
+at every nonnegative center. At zero, the unnormalized entries converge on the fixed sample. -/
+theorem upperPSD_of_positive_center_mixed (hp : 0 < p)
+    (hmixed : ∀ a > 0, ∀ u v : ℝ, 0 < u → u < v →
+      deriv (fun t ↦ deriv (fun s ↦ logKernelAt p a s t) u) v ≤ 0)
+    (hzero : ∀ a > 0, ∀ v > 0, Tendsto (fun u ↦ logKernelAt p a u v) (𝓝[>] 0) (𝓝 0))
+    (hinfty : ∀ a > 0, ∀ u > 0, Tendsto (logKernelAt p a u) atTop (𝓝 0)) :
+    ExtremeWalk.UpperPSD.{u} p := by
+  apply upperPSD_of_positive_centers
+  intro a ha ι _ x hx
+  exact upperKernel_posSemidef_of_positive_center_mixed hp ha (hmixed a ha) (hzero a ha) (hinfty a ha) x hx
 
 /-- The normalized upper-triangular kernel for the (5,3) defect. -/
 def kernel (a : ℝ) : ℝ → ℝ → ℝ := kernelAt 5 a
