@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.PetzTwoFlagContraction
 import Reg.Support.SingleDependentReadout
+import Mathlib.Analysis.RCLike.Basic
 
 /-! Source-bound readouts of the scalar and matrix upper bounds. -/
 
@@ -34,10 +35,10 @@ private theorem dependence : ObservationalDependence signature actual := by
 abbrev scalarArena : Arena where
   signature := signature
   Law F := ∀ (m C f g w v : ℝ) (y z : ℂ)
-    (hm : 0 ≤ m) (hC : 0 < C) (hf : 0 < f) (hg : 0 < g)
-    (hw : 0 < 8 * m + f * (f + g) / C - w)
-    (hv : 0 < 8 * m + g * (f + g) / C - v)
-    (hy : Complex.normSq y ≤ 1) (hz : Complex.normSq z ≤ 1),
+    (_hm : 0 ≤ m) (_hC : 0 < C) (_hf : 0 < f) (_hg : 0 < g)
+    (_hw : 0 < 8 * m + f * (f + g) / C - w)
+    (_hv : 0 < 8 * m + g * (f + g) / C - v)
+    (_hy : Complex.normSq y ≤ 1) (_hz : Complex.normSq z ≤ 1),
     let objective := w * (1 - Complex.normSq y) + v * (1 - Complex.normSq z) +
       4 * m * Complex.normSq (y - z) + (f * y.re - g * z.re) ^ 2 / C
     let optimum := 16 * m + (f + g) ^ 2 / C
@@ -97,15 +98,14 @@ def scalarAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
-
 abbrev matrixArena : Arena where
   signature := signature
   Law F := ∀ (Y : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (a : Fin 2 × Fin 2 → ℝ) (m C f g : ℝ)
-    (hY : Y.IsHermitian) (hY₂ : (1 - Y * Y).PosSemidef)
-    (ha : ∀ i, 0 ≤ a i) (hm : 0 ≤ m) (hC : 0 < C) (hf : 0 < f) (hg : 0 < g)
-    (hw : 0 < 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
-    (hv : 0 < 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1))),
+    (_hY : Y.IsHermitian) (_hY₂ : (1 - Y * Y).PosSemidef)
+    (_ha : ∀ i, 0 ≤ a i) (_hm : 0 ≤ m) (_hC : 0 < C) (_hf : 0 < f) (_hg : 0 < g)
+    (_hw : 0 < 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
+    (_hv : 0 < 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1))),
     let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
     let y := Y (0, 0) (1, 0)
     let z := Y (0, 1) (1, 1)
@@ -132,7 +132,8 @@ def matrixFamily : Registration matrixArena (type_of% @matrix_twoFlag_maximum) w
 
 def matrixAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@matrix_twoFlag_maximum) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Recovery.PetzTwoFlagContraction.matrix_twoFlag_maximum.__information_unit
+  unitName :=
+    `D5.S3.Quantum.Recovery.PetzTwoFlagContraction.matrix_twoFlag_maximum.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Recovery.PetzTwoFlagContraction.matrixFamily
   realizationSource := none
   generated := false
