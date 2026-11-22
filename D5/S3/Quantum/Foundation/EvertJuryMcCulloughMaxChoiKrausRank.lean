@@ -110,12 +110,15 @@ private theorem linearization_single {n m : ℕ} (Phi : MatrixProduct n m)
   ext a b
   change (∑ x : Input n, ∑ y : Input n,
     single (i, s) (j, t) (1 : ℂ) x y * d5Choi Phi (a, x) (b, y)) = _
-  simp [Matrix.single, d5Choi, choiMatrix, Matrix.reindex_apply]
+  simp only [Matrix.single_apply, ite_and, ite_mul, one_mul, zero_mul,
+    Finset.sum_ite_irrel, Finset.sum_const_zero]
+  simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  rfl
 
 private theorem linearization_kronecker {n m : ℕ} (Phi : MatrixProduct n m)
     (A B : CMatrix n) : linearization Phi (Matrix.kronecker A B) = Phi A B := by
   let F : MatrixProduct n m :=
-    (linearization Phi).compRight.comp (Matrix.kroneckerBilinear ℂ ℂ)
+    (LinearMap.compRight ℂ (linearization Phi)).comp (Matrix.kroneckerBilinear (R := ℂ) (α := ℂ))
   have hF : F = Phi := by
     apply (Matrix.stdBasis ℂ (Fin n) (Fin n)).ext
     rintro ⟨i, j⟩
@@ -123,7 +126,7 @@ private theorem linearization_kronecker {n m : ℕ} (Phi : MatrixProduct n m)
     rintro ⟨s, t⟩
     simp only [Matrix.stdBasis_eq_single]
     change linearization Phi (Matrix.kronecker (single i j 1) (single s t 1)) = _
-    rw [Matrix.single_kronecker_single, one_mul, linearization_single]
+    rw [Matrix.kronecker, Matrix.single_kronecker_single, one_mul, linearization_single]
   exact congrArg (fun G : MatrixProduct n m => G A B) hF
 
 private theorem d5Choi_linearization {n m : ℕ} (Phi : MatrixProduct n m) :
@@ -140,7 +143,8 @@ private theorem linearization_eq_kraus {n m N : ℕ} {Phi : MatrixProduct n m}
       (fun k => (V k).conjTranspose) := by
   apply (Matrix.stdBasis ℂ (Input n) (Input n)).ext
   rintro ⟨⟨i, s⟩, ⟨j, t⟩⟩
-  rw [Matrix.stdBasis_eq_single, linearization_single, hV, Matrix.single_kronecker_single, one_mul]
+  rw [Matrix.stdBasis_eq_single, linearization_single, hV, Matrix.kronecker,
+    Matrix.single_kronecker_single, one_mul]
   simp [MatrixMap.of_kraus, LinearMap.sum_apply]
 
 private theorem psd_has_kraus {n m : ℕ} {Phi : MatrixProduct n m}
@@ -172,40 +176,62 @@ private theorem jcp_choi_psd {n m : ℕ} {Phi : MatrixProduct n m}
     simp only [jointAmplification, hblock, choiMatrix]
   exact hC ▸ h n hn Q Q hQ hQ
 
+private abbrev Blocks (ell : ℕ) := Fin ell × Fin ell
+
+private def amplificationInput {n ell : ℕ}
+    (A B : Matrix (Fin ell × Fin n) (Fin ell × Fin n) ℂ) :
+    Matrix (Blocks ell × Input n) (Blocks ell × Input n) ℂ :=
+  Matrix.reindex (Equiv.prodProdProdComm _ _ _ _) (Equiv.prodProdProdComm _ _ _ _)
+    (Matrix.kronecker A B)
+
+private def amplificationCoeff {n m ell : ℕ} (V : Matrix (Input n) (Fin m) ℂ) :
+    Matrix (Blocks ell × Input n) (Blocks ell × Fin m) ℂ :=
+  Matrix.kronecker (1 : Matrix (Blocks ell) (Blocks ell) ℂ) V
+
 private theorem sandwich_entries {n m ell : ℕ}
     (A B : Matrix (Fin ell × Fin n) (Fin ell × Fin n) ℂ)
     (V : Matrix (Input n) (Fin m) ℂ) :
-    let Q : Matrix ((Fin ell × Fin ell) × Input n) ((Fin ell × Fin ell) × Input n) ℂ :=
-      Matrix.reindex (Equiv.prodProdProdComm _ _ _ _) (Equiv.prodProdProdComm _ _ _ _)
-        (Matrix.kronecker A B)
-    let D : Matrix ((Fin ell × Fin ell) × Input n) ((Fin ell × Fin ell) × Fin m) ℂ :=
-      Matrix.kronecker (1 : Matrix (Fin ell × Fin ell) (Fin ell × Fin ell) ℂ) V
-    D.conjTranspose * Q * D =
+    (amplificationCoeff (ell := ell) V).conjTranspose * amplificationInput A B *
+      amplificationCoeff V =
       fun x y => (V.conjTranspose *
         Matrix.kronecker (block A x.1.1 y.1.1) (block B x.1.2 y.1.2) * V) x.2 y.2 := by
   classical
-  dsimp only
+  let D := amplificationCoeff (ell := ell) V
+  let Q := amplificationInput A B
+  let blockKron (x y : Blocks ell) :=
+    Matrix.kronecker (block A x.1 y.1) (block B x.2 y.2)
+  have hD (x y : Blocks ell) (u : Input n) (a : Fin m) :
+      D (x, u) (y, a) = if x = y then V u a else 0 := by
+    change (1 : Matrix (Blocks ell) (Blocks ell) ℂ) x y * V u a = _
+    simp [Matrix.one_apply, ite_mul]
+  have hQ (x y : Blocks ell) (u v : Input n) :
+      Q (x,u) (y,v) = blockKron x y u v := rfl
+  have hleft (x y : Blocks ell) (a : Fin m) (v : Input n) :
+      (D.conjTranspose * Q) (x, a) (y, v) = (V.conjTranspose * blockKron x y) a v := by
+    rw [Matrix.mul_apply, Fintype.sum_prod_type, Finset.sum_eq_single x]
+    · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, hD, hQ]
+    · intro z _ hz
+      simp [Matrix.conjTranspose_apply, hD, hz]
+    · simp
   ext ⟨x, a⟩ ⟨y, b⟩
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.kronecker,
-    Matrix.kroneckerMap_apply, Matrix.reindex_apply, Matrix.submatrix_apply,
-    Equiv.prodProdProdComm_symm, Equiv.prodProdProdComm_apply, block, Matrix.one_apply,
-    Prod.fst, Prod.snd, Fintype.sum_prod_type, ite_mul, one_mul, zero_mul,
-    apply_ite, star_one, star_zero]
-  simp [eq_comm, Finset.sum_ite_eq', Finset.sum_ite_eq]
+  change (D.conjTranspose * Q * D) (x, a) (y, b) =
+    (V.conjTranspose * blockKron x y * V) a b
+  rw [Matrix.mul_apply, Fintype.sum_prod_type, Finset.sum_eq_single y]
+  · simp [Matrix.mul_apply, hleft, hD]
+  · intro z _ hz
+    simp [hD, hz]
+  · simp
 
 private theorem kraus_jcp {n m N : ℕ} {Phi : MatrixProduct n m}
     (h : HasKrausRepresentation Phi N) : IsJointlyCompletelyPositive Phi := by
   classical
   obtain ⟨V, hV⟩ := h
   intro ell _ A B hA hB
-  let Q : Matrix ((Fin ell × Fin ell) × Input n) ((Fin ell × Fin ell) × Input n) ℂ :=
-    Matrix.reindex (Equiv.prodProdProdComm _ _ _ _) (Equiv.prodProdProdComm _ _ _ _)
-      (Matrix.kronecker A B)
-  let D (k : Fin N) : Matrix ((Fin ell × Fin ell) × Input n) ((Fin ell × Fin ell) × Fin m) ℂ :=
-    Matrix.kronecker (1 : Matrix (Fin ell × Fin ell) (Fin ell × Fin ell) ℂ) (V k)
+  let Q := amplificationInput A B
+  let D := fun k => amplificationCoeff (ell := ell) (V k)
   have hQ : Q.PosSemidef := (hA.kronecker hB).submatrix _
   have hsum : (∑ k, (D k).conjTranspose * Q * D k).PosSemidef :=
-    Matrix.posSemidef_sum fun k _ => hQ.conjTranspose_mul_mul_same (D k)
+    Matrix.posSemidef_sum Finset.univ fun k _ => hQ.conjTranspose_mul_mul_same (D k)
   convert hsum using 1
   ext x y
   simp only [jointAmplification, hV, Matrix.sum_apply]
@@ -221,10 +247,13 @@ private theorem choi_rank_le_length {n m N : ℕ} {Phi : MatrixProduct n m}
   have hC : d5Choi Phi = W * W.conjTranspose := by
     rw [← d5Choi_linearization, linearization_eq_kraus V hV, MatrixMap.choi_of_kraus]
     ext x y
-    simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.vecMulVec, W, K]
+    change (∑ k, Matrix.vecMulVec (fun z : D5Index n m => K k z.1 z.2)
+      (fun z : D5Index n m => star (K k z.1 z.2))) x y = (W * W.conjTranspose) x y
+    rw [Matrix.sum_apply, Matrix.mul_apply]
+    rfl
   have hr : (d5Choi Phi).rank = (choiMatrix Phi).rank := Matrix.rank_reindex _ _ _
   rw [← hr, hC]
-  exact (Matrix.rank_mul_le_left _ _).trans W.rank_le_width
+  exact (Matrix.rank_mul_le_left _ _).trans (by simpa using W.rank_le_card_width)
 
 private theorem card_cube (n : ℕ) : Fintype.card (D5Index n n) = n ^ 3 := by
   simp [D5Index, Input, pow_succ, Nat.mul_assoc]
