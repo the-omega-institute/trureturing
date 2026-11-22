@@ -337,35 +337,138 @@ theorem logKernel_eq_exp_mul_G {p : ℕ} (hp : 0 < p) {u d : ℝ}
 noncomputable def shortGapJ (h t : ℝ) : ℝ :=
   Real.exp (3*t/2) * Real.sqrt (X h t) / upperTailGap h t
 
-/-- The squared scalar correction is the positive marginal composition
-defect times its exponential scale. -/
-theorem shortGapJ_sq {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
-    shortGapJ (3/(p : ℝ)) t ^ 2 =
-      c (3/(p : ℝ)) * Real.exp t * compositionMoment p 0 t := by
+private theorem X_eq_marginal {p : ℕ} (hp : 0 < p) (t : ℝ) :
+    X (rate p) t = c (rate p) * (upperTailGap (rate p) t) ^ 2 *
+      Real.exp (-(2*t)) * compositionMoment p 0 t := by
   let h := rate p
   have hm : DimThree.defect p (node p t) (node p t) 1 =
       ((p+2).choose 2 : ℝ) * Real.exp (-(2*t)) * compositionMoment p 0 t := by
     rw [UniformThreeSpectrum.defect_cycle_all]
     simpa only [node, add_neg_cancel, neg_zero, zero_div, Real.exp_zero, neg_neg,
       show -(3*t + -t) = -(2*t) by ring] using upperTail_lower_weight hp (-t) t
-  have hx : X h t = (h*upperTailGap h t)^2 *
-      (((p+2).choose 2 : ℝ) * Real.exp (-(2*t)) * compositionMoment p 0 t) := by
-    have he : (1-node p t^3)^2 * DimThree.defect p (node p t) (node p t) 1 = X h t :=
-      upperTail_repeated_defect hp t
-    rw [gap_factor, hm] at he
-    exact he.symm
+  have he : (1-node p t^3)^2 * DimThree.defect p (node p t) (node p t) 1 = X h t :=
+    upperTail_repeated_defect hp t
+  rw [gap_factor, hm] at he
+  calc
+    _ = (((p+2).choose 2 : ℝ)*h^2) * (upperTailGap h t)^2 *
+        Real.exp (-(2*t)) * compositionMoment p 0 t := by rw [← he]; ring
+    _ = _ := by rw [(cast_scale hp).2]
+
+/-- The squared scalar correction is the positive marginal composition
+defect times its exponential scale. -/
+theorem shortGapJ_sq {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
+    shortGapJ (3/(p : ℝ)) t ^ 2 =
+      c (3/(p : ℝ)) * Real.exp t * compositionMoment p 0 t := by
+  let h := rate p
   have ha : upperTailGap h t ≠ 0 := (gap_pos hp ht).ne'
-  change shortGapJ h t ^ 2 = _
+  change shortGapJ h t ^ 2 = c h * Real.exp t * compositionMoment p 0 t
+  have hx : X h t = c h * (upperTailGap h t) ^ 2 *
+      Real.exp (-(2 * t)) * compositionMoment p 0 t := X_eq_marginal hp t
   unfold shortGapJ
   rw [div_pow, mul_pow, Real.sq_sqrt (X_pos hp ht).le, ← Real.exp_nat_mul, hx]
   rw [show (2 : ℕ) * (3*t/2) = 3*t by push_cast; ring]
   calc
-    _ = (((p+2).choose 2 : ℝ)*h^2) *
+    _ = c h *
         (Real.exp (3*t)*Real.exp (-(2*t))) * compositionMoment p 0 t := by
-      field_simp [ha]
-    _ = _ := by
-      rw [(cast_scale hp).2, ← Real.exp_add, show 3*t + -(2*t) = t by ring]
-      rfl
+      field_simp [ha] <;> ring
+    _ = _ := by rw [← Real.exp_add, show 3*t + -(2*t) = t by ring]
+
+private theorem compositionMoment_eq_integralMarginal {p : ℕ} (hp : 0 < p)
+    {t : ℝ} (ht : t ≠ 0) :
+    compositionMoment p 0 t = t ^ 2 * SmallCorner.integralMarginalDerivative p 1 0 t := by
+  have H := SmallCorner.iteratedDeriv_G_eq_integral hp (by norm_num : (1 : ℝ) ≠ 0) ht 0
+  simp only [iteratedDeriv_zero, SmallCorner.G, one_mul] at H
+  rw [← H]
+  exact (mul_div_cancel₀ _ (pow_ne_zero 2 ht)).symm
+
+/-- At a physical degree, the repeated defect and the regularized radical
+use the same centered marginal moment. -/
+theorem upperCollision_eq_marginal {p : ℕ} (hp : 0 < p) (u : ℝ) {d : ℝ} (hd : 0 < d) :
+    let h := 3 / (p : ℝ)
+    let v := d + u
+    let a := upperTailGap h
+    let V := SmallCorner.integralMarginalDerivative p 1 0
+    GAtUpperCollision h u d =
+      (a u * (c h * a d * (1 + d ^ 2 * V d) -
+        Real.exp d * d * Real.sqrt (c h * V d) * Real.sqrt (X h v) -
+        c h * a v * Real.exp (-u)) + Real.exp (-((1 + h) * d)) * R h u) /
+        (Real.sqrt (W h u) * Real.sqrt (W h v)) := by
+  let h := rate p
+  let v := d + u
+  let a := upperTailGap h
+  let V := SmallCorner.integralMarginalDerivative p 1 0
+  have hgap : a d ≠ 0 := (gap_pos hp hd).ne'
+  have hc : 0 < c h := by have := rate_pos hp; unfold c; positivity
+  have hV : 0 ≤ V d := by
+    have hm := compositionMoment_marginal_pos hp hd.ne'
+    rw [compositionMoment_eq_integralMarginal hp hd.ne'] at hm
+    exact (pos_of_mul_pos_right hm (sq_nonneg d)).le
+  have hj : Real.exp (d / 2) * shortGapJ h d = Real.exp d * d * Real.sqrt (c h * V d) := by
+    have hJ : 0 ≤ shortGapJ h d := by
+      unfold shortGapJ
+      exact div_nonneg (mul_nonneg (Real.exp_pos _).le (Real.sqrt_nonneg _)) (gap_pos hp hd).le
+    have hleft := mul_nonneg (Real.exp_pos (d / 2)).le hJ
+    have hright : 0 ≤ Real.exp d * d * Real.sqrt (c h * V d) := by positivity
+    have hJsq : shortGapJ h d ^ 2 = c h * Real.exp d * compositionMoment p 0 d :=
+      shortGapJ_sq hp hd
+    have hs : (Real.exp (d / 2) * shortGapJ h d) ^ 2 =
+        (Real.exp d * d * Real.sqrt (c h * V d)) ^ 2 := by
+      simp only [mul_pow, hJsq, compositionMoment_eq_integralMarginal hp hd.ne',
+        Real.sq_sqrt (mul_nonneg hc.le hV), ← Real.exp_nat_mul]
+      rw [show (2 : ℕ) * (d / 2) = d by push_cast; ring]
+      rw [show (2 : ℕ) * d = d + d by push_cast; ring, Real.exp_add]
+      ring
+    simpa only [abs_of_nonneg hleft, abs_of_nonneg hright] using
+      (sq_eq_sq_iff_abs_eq_abs _ _).mp hs
+  have hrepeat : 1 - upperTailRepeatCorrection h d =
+      c h * (a d) ^ 2 * Real.exp (-(2 * d)) * (1 + d ^ 2 * V d) := by
+    have hX := X_eq_marginal hp d
+    rw [compositionMoment_eq_integralMarginal hp hd.ne'] at hX
+    change 1 - upperTailLambda h d = _ at hX
+    unfold upperTailLambda at hX
+    unfold upperTailRepeatCorrection
+    dsimp only [c, a, V] at *
+    nlinarith only [hX]
+  have h₀ : Real.exp (2 * d) * Real.exp (-(2 * d)) = 1 := by
+    rw [← Real.exp_add, add_neg_cancel, Real.exp_zero]
+  have h₁ : Real.exp (2 * d) * Real.sqrt (X h d) =
+      Real.exp (d / 2) * shortGapJ h d * a d := by
+    unfold shortGapJ
+    calc
+      _ = (Real.exp (d / 2) * Real.exp (3 * d / 2)) * Real.sqrt (X h d) := by
+        rw [← Real.exp_add, show d / 2 + 3 * d / 2 = 2 * d by ring]
+      _ = _ := by
+        change _ = Real.exp (d / 2) * (Real.exp (3 * d / 2) * Real.sqrt (X h d) / a d) * a d
+        field_simp [hgap]
+  have h₂ : Real.exp (2 * d) * Real.exp (-(v + d)) = Real.exp (-u) := by
+    rw [← Real.exp_add, show 2 * d + -(v + d) = -u by dsimp only [v]; ring]
+  have h₃ : Real.exp (2 * d) * Real.exp (-((3 + h) * d)) = Real.exp (-((1 + h) * d)) := by
+    rw [← Real.exp_add, show 2 * d + -((3 + h) * d) = -((1 + h) * d) by ring]
+  change GAtUpperCollision h u d = _
+  rw [← G_eq_GAtUpperCollision (u := u) (show 0 < h from rate_pos hp) hd]
+  unfold G
+  change Real.exp (2 * d) *
+      (a u * (1 - upperTailRepeatCorrection h d - Real.sqrt (X h d) * Real.sqrt (X h v) -
+        c h * a v * a d * Real.exp (-(v + d))) +
+        a d * Real.exp (-((3 + h) * d)) * R h u) /
+      (a d * Real.sqrt (W h u) * Real.sqrt (W h v)) = _
+  rw [hrepeat]
+  have hnum : Real.exp (2 * d) *
+      (a u * (c h * (a d) ^ 2 * Real.exp (-(2 * d)) * (1 + d ^ 2 * V d) -
+        Real.sqrt (X h d) * Real.sqrt (X h v) - c h * a v * a d * Real.exp (-(v + d))) +
+        a d * Real.exp (-((3 + h) * d)) * R h u) =
+      a d * (a u * (c h * a d * (1 + d ^ 2 * V d) -
+        Real.exp (d / 2) * shortGapJ h d * Real.sqrt (X h v) -
+        c h * a v * Real.exp (-u)) + Real.exp (-((1 + h) * d)) * R h u) := by
+    calc
+      _ = a u * (c h * (a d) ^ 2 * (Real.exp (2 * d) * Real.exp (-(2 * d))) *
+          (1 + d ^ 2 * V d) - (Real.exp (2 * d) * Real.sqrt (X h d)) * Real.sqrt (X h v) -
+          c h * a v * a d * (Real.exp (2 * d) * Real.exp (-(v + d)))) +
+          a d * (Real.exp (2 * d) * Real.exp (-((3 + h) * d))) * R h u := by ring
+      _ = _ := by rw [h₀, h₁, h₂, h₃]; ring
+  rw [hnum, mul_assoc (a d) (Real.sqrt (W h u)) (Real.sqrt (W h v)),
+    mul_div_mul_left _ _ hgap, hj]
+  rfl
 
 /-- The scalar function whose curvature controls the short-gap sign. -/
 noncomputable def shortGapF (h t : ℝ) : ℝ :=
