@@ -10,6 +10,7 @@ internal sealed class RHRootSignalCuspDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The logarithmic cusp of the centered root spectrum",
+        H("The logarithmic cusp of the centered root spectrum"),
         Blocks(Describe.Lean(DescribeId.Create("root-signal-symmetric-cusp"),
             DeclarationHandle.Create(Owner + ".root_signal_symmetric_cusp"),
             H("The symmetric difference at the origin"),
