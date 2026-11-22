@@ -36,8 +36,9 @@ The bounded literature qualification recorded for #28774 found no explicit
 published full-domain settlement. Completeness of the search and mathematical
 priority remain ASSUMED-UNVERIFIED.
 
-## Verified locators
+## Verified locator
 
+- [Journal DOI](https://doi.org/10.37193/CJM.2017.01.12)
 - [Journal definition, §1](https://www.math.uaic.ro/~martar/pdf/articole/articol%2040.pdf#page=1)
 - [Journal conjecture, §4](https://www.math.uaic.ro/~martar/pdf/articole/articol%2040.pdf#page=11)
 - [Preprint conjecture, §4](https://arxiv.org/pdf/1312.1427v1#page=16)
