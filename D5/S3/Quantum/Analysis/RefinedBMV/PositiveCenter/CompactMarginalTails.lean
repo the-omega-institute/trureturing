@@ -46,7 +46,7 @@ private def scalarPolynomial (b t : ℝ) (k n : ℕ) : ℝ :=
     ((i.factorial : ℝ) * (((k + i : ℕ) : ℝ) + 1) * (((k + i : ℕ) : ℝ) + 2))
 
 private theorem weighted_error {b t : ℝ} (hb : |b| ≤ 2) (ht : |t| ≤ 2)
-    {k n : ℕ} (hk : k ≤ 2) (hn : n + k = 23) :
+    {k n : ℕ} (hk : k ≤ 3) (hn : n + k = 23) :
     |(∫ s in (0 : ℝ)..1, (1 - s) * (b * s) ^ k * Real.exp (t * (b * s))) -
         scalarPolynomial b t k n| ≤ (2 : ℝ) ^ (k + 1) * 4 ^ n / (n.factorial * 24 * 25) := by
   let w (s : ℝ) := (1 - s) * (b * s) ^ k
@@ -90,7 +90,7 @@ private theorem weighted_error {b t : ℝ} (hb : |b| ≤ 2) (ht : |t| ≤ 2)
         _ = _ := by ring
     have hratio : ‖(z s : ℂ)‖ / (n.succ : ℝ) ≤ 1 / 2 := by
       rw [Complex.norm_real, Real.norm_eq_abs, Nat.cast_succ]
-      have hnR : (21 : ℝ) ≤ n := by exact_mod_cast (show 21 ≤ n by omega)
+      have hnR : (20 : ℝ) ≤ n := by exact_mod_cast (show 20 ≤ n by omega)
       exact (div_le_iff₀ (by positivity)).2 (by linarith [hs.2])
     have htail : |Real.exp (z s) - pol s| ≤ |z s| ^ n / (n.factorial : ℝ) * 2 := by
       dsimp only [pol]
@@ -155,9 +155,9 @@ private theorem marginalTaylorPolynomial_eq_sum {p : ℕ} (hp : 0 < p) (k : ℕ)
   rw [List.sum_map_mul_right]
   ring
 
-/-- Uniform absolute error of the degree-`22 - k` Taylor polynomial of the
-compact marginal derivative on `[-2, 2]`. -/
-theorem iteratedDeriv_compactZ_sub_taylor_le_two {p k : ℕ} (hp : 0 < p) (hk : k ≤ 2)
+/-- The degree-`22 - k` approximation on `[-2, 2]` also bounds the third derivative. -/
+theorem iteratedDeriv_compactZ_sub_taylor_le_two_of_le_three {p k : ℕ}
+    (hp : 0 < p) (hk : k ≤ 3)
     {t : ℝ} (ht : |t| ≤ 2) :
     |iteratedDeriv k (compactZ p) t - marginalTaylorPolynomial p k t| ≤
       (2 : ℝ) ^ (k + 2) * 4 ^ (23 - k) / ((Nat.factorial (23 - k) : ℝ) * 24 * 25) := by
@@ -200,6 +200,13 @@ theorem iteratedDeriv_compactZ_sub_taylor_le_two {p k : ℕ} (hp : 0 < p) (hk : 
   rw [List.sum_map_mul_right, hsquare]
   simp only [ε, n, show k + 2 = (k + 1) + 1 by omega, pow_succ]
   ring
+
+/-- Uniform Taylor error on `[-2, 2]` through the second derivative. -/
+theorem iteratedDeriv_compactZ_sub_taylor_le_two {p k : ℕ} (hp : 0 < p) (hk : k ≤ 2)
+    {t : ℝ} (ht : |t| ≤ 2) :
+    |iteratedDeriv k (compactZ p) t - marginalTaylorPolynomial p k t| ≤
+      (2 : ℝ) ^ (k + 2) * 4 ^ (23 - k) / ((Nat.factorial (23 - k) : ℝ) * 24 * 25) :=
+  iteratedDeriv_compactZ_sub_taylor_le_two_of_le_three hp (hk.trans (by decide)) ht
 
 #print axioms iteratedDeriv_compactZ_sub_taylor_le_two
 
