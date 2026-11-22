@@ -44,7 +44,10 @@ internal sealed class HuHanSquareEnergyDocument : IScribeDocumentDefinition
                         + "part to exclude attached cliques, and recovers the switching signs "
                         + "on a complete graph. Conservation transfers the upper classification "
                         + "to the lower one under reversal of every edge sign."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hu-han-2026-signed-square-energy-equality"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Endpoints()
     {

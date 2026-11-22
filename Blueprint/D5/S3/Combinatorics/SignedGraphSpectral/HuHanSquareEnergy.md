@@ -10,6 +10,10 @@ $$\forall n \in Nat,\; \forall G \in \operatorname{SimpleGraph}\left(\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SignedGraphSpectral/HuHanSquareEnergy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hu-han-2026-signed-square-energy-equality` (proved) by `D5/S3/Combinatorics/SignedGraphSpectral/HuHanSquareEnergy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hu-han-2026-signed-square-energy-equality","declaration_gid":"D5/S3/Combinatorics/SignedGraphSpectral/HuHanSquareEnergy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Fu-Tao Hu and Xiao Han (2026). *From the Square-Energy Conjecture to Signed Graphs: Sharp Bounds for Positive Square Energy*. DOI: [10.48550/arXiv.2608.18492](https://doi.org/10.48550/arXiv.2608.18492). URL: <https://arxiv.org/abs/2608.18492v1>.
