@@ -45,7 +45,7 @@ private theorem eventually_logarithmic_order_le {C δ : ℝ} (hδ : 0 < δ) :
     have h := mul_le_mul_of_nonneg_right hC (Nat.cast_nonneg m)
     nlinarith only [h])
 
-private theorem exp_half_le_order (m : ℕ) {u : ℝ} (hu : 0 ≤ u) :
+theorem exp_half_le_order (m : ℕ) {u : ℝ} (hu : 0 ≤ u) :
     Real.exp (-u/2) ≤ Real.exp (-(orderRate m)*u) := by
   apply Real.exp_le_exp.mpr
   unfold orderRate

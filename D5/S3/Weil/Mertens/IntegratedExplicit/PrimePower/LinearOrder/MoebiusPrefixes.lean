@@ -43,7 +43,7 @@ private theorem logWeightedMoebius_eq : logWeightedMoebius = -(ArithmeticFunctio
 
 open D5.S3.Arith.MoebiusLogarithmic (reciprocalSum abs_reciprocalSum_le_one)
 
-private theorem inverse_three_quarters_sum {N : ℕ} (hN : 1 ≤ N) :
+theorem inverse_three_quarters_sum {N : ℕ} (hN : 1 ≤ N) :
     (∑ n ∈ Finset.Ioc 0 N, (n : ℝ) ^ (-(3/4) : ℝ)) ≤ 4 * (N : ℝ) ^ (1/4 : ℝ) := by
   have hanti : AntitoneOn (fun x : ℝ => x ^ (-(3/4) : ℝ)) (Set.Icc ((1 : ℕ) : ℝ) (N : ℝ)) := by
     intro x hx y hy hxy
@@ -438,6 +438,38 @@ private theorem abs_mertensWeight_tail_le {B L : ℝ} {m N : ℕ}
   exact (abs_add_le _ _).trans ((add_le_add ((abs_sub _ _).trans (add_le_add hf' hψ)) hlog).trans_eq
     (by ring))
 
+private theorem moebius_log_cutoff_bound {C D L : ℝ} (hC : 0 ≤ C) (hD : 0 ≤ D)
+    (hψ : ∀ y ≥ 1, |Chebyshev.psi y - y| ≤ C * y ^ (3/4 : ℝ))
+    {N : ℕ} (hN : 2 ≤ N) (hL : 1 ≤ L) (hLN : L ≤ (N : ℝ))
+    (hprefix : ∀ k ≤ N, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * Real.log N ≤ D * N) :
+    |∑ n ∈ Ioc 0 N, (μ n : ℝ)| * Real.log N ≤
+      1 + (4 * (C + 5) * ((N : ℝ) / L ^ (1/4 : ℝ)) +
+        2 * (D * (N : ℝ) / Real.log N) * (L + Chebyshev.psi L + Real.log L)) := by
+  have hL0 : 0 < L := zero_lt_one.trans_le hL
+  have hN' : (2 : ℝ) ≤ N := by exact_mod_cast hN
+  have hN0 : (0 : ℝ) < N := by linarith
+  have hlog : 0 < Real.log (N : ℝ) := Real.log_pos (by linarith)
+  let m := ⌊(N : ℝ) / L⌋₊
+  have hm1 : 1 ≤ m := Nat.le_floor (by simpa using (one_le_div hL0).mpr hLN)
+  have hmL : (m : ℝ) ≤ (N : ℝ) / L := Nat.floor_le (by positivity)
+  have hmN : m ≤ N := by
+    exact_mod_cast hmL.trans (div_le_self hN0.le hL)
+  have hmL' : (N : ℝ) / L < (m : ℝ) + 1 := Nat.lt_floor_add_one _
+  have hpref (k : ℕ) (hk : k ≤ N) : |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ D * N / Real.log N :=
+    (le_div_iff₀ hlog).mpr (hprefix k hk)
+  have hhead := abs_mertensWeight_head_le hC hψ hm1 hmN hL0 hmL
+  have htail := abs_mertensWeight_tail_le (by positivity : 0 ≤ D * (N : ℝ) / Real.log N) hL hmL' hpref
+  nth_rw 1 [← abs_of_pos hlog]
+  rw [← abs_mul, moebius_log_eq_weight (by omega : 1 ≤ N),
+    ← Ioc_union_Ioc_eq_Ioc (Nat.zero_le m) hmN, sum_union (Ioc_disjoint_Ioc_of_le le_rfl)]
+  calc
+    _ ≤ |(-1 : ℝ)| + (|∑ n ∈ Ioc 0 m, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)| +
+        |∑ n ∈ Ioc m N, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)|) :=
+      (abs_add_le _ _).trans (add_le_add_right (abs_add_le _ _) _)
+    _ ≤ _ := by
+      rw [abs_neg, abs_one]
+      exact add_le_add (le_refl (1 : ℝ)) (add_le_add hhead htail)
+
 private theorem moebius_log_sublinear_of_rh (hRH : RiemannHypothesis) :
     ∀ ε > (0 : ℝ), ∃ K : ℕ, ∀ N ≥ K,
       |∑ n ∈ Ioc 0 N, (μ n : ℝ)| * Real.log N ≤ ε * (N : ℝ) := by
@@ -470,12 +502,6 @@ private theorem moebius_log_sublinear_of_rh (hRH : RiemannHypothesis) :
   have hlog : 0 < Real.log (N : ℝ) := Real.log_pos (by linarith)
   have hlogH : H ≤ Real.log (N : ℝ) := by
     simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos H) hNH
-  let m := ⌊(N : ℝ) / L⌋₊
-  have hm1 : 1 ≤ m := Nat.le_floor (by simpa using (one_le_div hL0).mpr hLN)
-  have hmL : (m : ℝ) ≤ (N : ℝ) / L := Nat.floor_le (by positivity)
-  have hmN : m ≤ N := by
-    exact_mod_cast hmL.trans (div_le_self hN0.le hL)
-  have hmL' : (N : ℝ) / L < (m : ℝ) + 1 := Nat.lt_floor_add_one _
   have hsmall : 4 * (C + 5) * ((N : ℝ) / L ^ (1/4 : ℝ)) ≤ ε / 4 * (N : ℝ) := by
     have hT0 : 0 < T := by linarith
     have hTε : 16 * (C + 5) / ε ≤ T := by dsimp [T]; linarith
@@ -487,9 +513,6 @@ private theorem moebius_log_sublinear_of_rh (hRH : RiemannHypothesis) :
       _ = (4 * (C + 5) / T) * (N : ℝ) := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_right hcoef hN0.le
   let B := D * (N : ℝ) / Real.log N
-  have hB : 0 ≤ B := by dsimp [B]; positivity
-  have hpref (k : ℕ) (hk : k ≤ N) : |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ B :=
-    (le_div_iff₀ hlog).mpr (hprefix N hN₂' k hk)
   have hlarge : 2 * B * W ≤ ε / 4 * (N : ℝ) := by
     have hcoef : 2 * D * W / Real.log N ≤ ε / 4 := by
       apply (div_le_iff₀ hlog).mpr
@@ -498,18 +521,9 @@ private theorem moebius_log_sublinear_of_rh (hRH : RiemannHypothesis) :
       _ = (2 * D * W / Real.log N) * (N : ℝ) := by dsimp [B]; ring
       _ ≤ _ := mul_le_mul_of_nonneg_right hcoef hN0.le
   have hone : 1 ≤ ε / 4 * (N : ℝ) := by linarith only [(div_le_iff₀ hε).mp hNε]
-  have hhead := (abs_mertensWeight_head_le hC (psi_three_quarters_of_rh hRH) hm1 hmN hL0 hmL).trans hsmall
-  have htail := (abs_mertensWeight_tail_le hB hL hmL' hpref).trans hlarge
-  rw [← abs_of_pos hlog, ← abs_mul, moebius_log_eq_weight (by omega : 1 ≤ N),
-    ← Ioc_union_Ioc_eq_Ioc (Nat.zero_le m) hmN,
-    sum_union (Ioc_disjoint_Ioc_of_le le_rfl)]
-  calc
-    _ ≤ |(-1 : ℝ)| + (|∑ n ∈ Ioc 0 m, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)| +
-        |∑ n ∈ Ioc m N, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)|) :=
-      (abs_add_le _ _).trans (add_le_add_right (abs_add_le _ _) _)
-    _ ≤ _ := by
-      rw [abs_neg, abs_one]
-      linarith only [hone, hhead, htail, mul_nonneg hε.le hN0.le]
+  have hsplit := moebius_log_cutoff_bound hC hD.le (psi_three_quarters_of_rh hRH)
+    hN₂' hL hLN (hprefix N hN₂')
+  linarith only [hsplit, hone, hsmall, hlarge, mul_nonneg hε.le hN0.le]
 
 /-- Under RH, the Möbius prefixes are uniformly little-o of `N / log N` up to `N`. -/
 theorem moebius_uniform_prefix_log_sublinear_of_rh (hRH : RiemannHypothesis) :
@@ -558,5 +572,128 @@ theorem moebius_uniform_prefix_log_sublinear_of_rh (hRH : RiemannHypothesis) :
       _ = _ := by
         rw [mul_assoc, ← Real.rpow_add hN0]
         norm_num
+
+private theorem moebius_log_power_saving (hRH : RiemannHypothesis) :
+    ∃ K : ℝ, 0 < K ∧ ∀ N : ℕ, 2 ≤ N → 1 ≤ Real.log N →
+      |∑ n ∈ Ioc 0 N, (μ n : ℝ)| * Real.log N ≤ K * ((N : ℝ) / (Real.log N)^(1/5 : ℝ)) := by
+  obtain ⟨D, hD, hprefix⟩ := moebius_uniform_prefix_log_saving hRH
+  let C : ℝ := (Real.log 4 + 5) * 5000 + 56
+  have hC : 0 ≤ C := by dsimp [C]; positivity
+  let J := Real.log 4 + 6
+  have hJ : 0 ≤ J := by dsimp [J]; positivity
+  refine ⟨1 + 4*(C+5) + 2*D*J, by positivity, fun N hN ht => ?_⟩
+  let t := Real.log (N : ℝ)
+  have ht0 : 0 < t := zero_lt_one.trans_le ht
+  have hN0 : (0 : ℝ) < N := by positivity
+  have htN : t ≤ N := by dsimp [t]; linarith [Real.log_le_sub_one_of_pos hN0]
+  let L := t ^ (4/5 : ℝ)
+  have hL : 1 ≤ L := Real.one_le_rpow ht (by norm_num)
+  have hLN : L ≤ N := (show L ≤ t by
+    simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le ht
+      (by norm_num : (4/5 : ℝ) ≤ 1)).trans htN
+  let Q := (N : ℝ) / t ^ (1/5 : ℝ)
+  have hroot : 0 < t ^ (1/5 : ℝ) := Real.rpow_pos_of_pos ht0 _
+  have hone : 1 ≤ Q := (one_le_div hroot).mpr
+    ((show t^(1/5 : ℝ) ≤ t by simpa only [Real.rpow_one] using
+      Real.rpow_le_rpow_of_exponent_le ht (by norm_num : (1/5 : ℝ) ≤ 1)).trans htN)
+  have hLquarter : L ^ (1/4 : ℝ) = t ^ (1/5 : ℝ) := by
+    dsimp [L]
+    rw [← Real.rpow_mul ht0.le]
+    congr 1
+    norm_num
+  have hLratio : L / t = (t ^ (1/5 : ℝ))⁻¹ := by
+    dsimp [L]
+    nth_rw 2 [← Real.rpow_one t]
+    rw [← Real.rpow_sub ht0, show (4/5 : ℝ) - 1 = -(1/5) by norm_num, Real.rpow_neg ht0.le]
+  have hW : L + Chebyshev.psi L + Real.log L ≤ J*L := by
+    dsimp [J]
+    have hL0 : 0 < L := zero_lt_one.trans_le hL
+    linarith only [Chebyshev.psi_le_const_mul_self hL0.le, Real.log_le_sub_one_of_pos hL0]
+  have htail : 2 * (D * (N : ℝ) / t) * (L + Chebyshev.psi L + Real.log L) ≤ 2*D*J*Q := by
+    refine (mul_le_mul_of_nonneg_left hW (by positivity)).trans_eq ?_
+    calc
+      _ = 2*D*J*((N : ℝ)*(L/t)) := by ring
+      _ = _ := by rw [hLratio]; rfl
+  have hbound := moebius_log_cutoff_bound hC hD.le (psi_three_quarters_of_rh hRH)
+    hN hL hLN (hprefix N hN)
+  rw [hLquarter] at hbound
+  change |∑ n ∈ Ioc 0 N, (μ n : ℝ)| * t ≤ (1 + 4*(C+5) + 2*D*J)*Q
+  have h := add_le_add hone (add_le_add (le_refl (4*(C+5)*Q)) htail)
+  exact hbound.trans (h.trans_eq (by ring))
+
+/-- A logarithmic power saving for all Möbius prefixes of a common length. -/
+theorem moebius_uniform_prefix_log_power_saving (hRH : RiemannHypothesis) :
+    ∃ K : ℝ, 0 < K ∧ ∀ N : ℕ, 2 ≤ N → 2 ≤ Real.log N → ∀ k ≤ N,
+      |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * Real.log N ≤ K * ((N : ℝ) / (Real.log N)^(1/5 : ℝ)) := by
+  obtain ⟨D, hD, hM⟩ := moebius_log_power_saving hRH
+  refine ⟨4*D + 16, by positivity, fun N hN ht k hk => ?_⟩
+  let t := Real.log (N : ℝ)
+  have ht1 : 1 ≤ t := by linarith
+  have ht0 : 0 < t := by linarith
+  have hN0 : (0 : ℝ) < N := by positivity
+  have hQ : 0 ≤ (N : ℝ) / t^(1/5 : ℝ) := by positivity
+  have htroot : 0 < t^(1/5 : ℝ) := Real.rpow_pos_of_pos ht0 _
+  change |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * t ≤ (4*D+16) * ((N : ℝ) / t^(1/5 : ℝ))
+  by_cases hkl : Real.sqrt (N : ℝ) < k
+  · have hlog := Real.log_le_log (Real.sqrt_pos_of_pos hN0) hkl.le
+    rw [Real.log_sqrt hN0.le] at hlog
+    change t / 2 ≤ Real.log (k : ℝ) at hlog
+    have hklog : 1 ≤ Real.log (k : ℝ) := by linarith
+    have hklog0 : 0 < Real.log (k : ℝ) := by linarith
+    have hk2 : 2 ≤ k := by
+      have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast (show 1 ≤ N by omega)
+      exact_mod_cast (Real.one_le_sqrt.mpr hN1).trans_lt hkl
+    have hroot : t^(1/5 : ℝ) ≤ 2 * (Real.log (k : ℝ))^(1/5 : ℝ) := by
+      refine (Real.rpow_le_rpow ht0.le (show t ≤ 2*Real.log (k : ℝ) by linarith)
+        (by norm_num)).trans ?_
+      rw [Real.mul_rpow (by norm_num) hklog0.le]
+      apply mul_le_mul_of_nonneg_right _ (by positivity)
+      simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le
+        (by norm_num : (1 : ℝ) ≤ 2) (by norm_num : (1/5 : ℝ) ≤ 1)
+    have hkcast : (k : ℝ) ≤ N := by exact_mod_cast hk
+    have hQk : (k : ℝ)/(Real.log (k : ℝ))^(1/5 : ℝ) ≤ 2*((N : ℝ)/t^(1/5 : ℝ)) := by
+      have hkroot := Real.rpow_pos_of_pos hklog0 (1/5)
+      rw [← mul_div_assoc, div_le_div_iff₀ hkroot htroot]
+      calc
+        _ ≤ (k : ℝ)*(2*(Real.log (k : ℝ))^(1/5 : ℝ)) :=
+          mul_le_mul_of_nonneg_left hroot (Nat.cast_nonneg k)
+        _ ≤ (N : ℝ)*(2*(Real.log (k : ℝ))^(1/5 : ℝ)) :=
+          mul_le_mul_of_nonneg_right hkcast (by positivity)
+        _ = _ := by ring
+    calc
+      _ ≤ |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * (2*Real.log (k : ℝ)) :=
+        mul_le_mul_of_nonneg_left (by linarith) (abs_nonneg _)
+      _ ≤ 2 * (D*((k : ℝ)/(Real.log (k : ℝ))^(1/5 : ℝ))) := by
+        rw [mul_left_comm]
+        exact mul_le_mul_of_nonneg_left (hM k hk2 hklog) (by norm_num)
+      _ ≤ (4*D)*((N : ℝ)/t^(1/5 : ℝ)) := by
+        rw [← mul_assoc]
+        exact (mul_le_mul_of_nonneg_left hQk (by positivity : 0 ≤ 2*D)).trans_eq
+          (show (2*D)*(2*((N : ℝ)/t^(1/5 : ℝ))) = (4*D)*((N : ℝ)/t^(1/5 : ℝ)) by ring)
+      _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith) hQ
+  · have hlog := Real.log_le_rpow_div (ε := (1/4 : ℝ)) hN0.le (by norm_num)
+    have htbound : t ≤ 4*(N : ℝ)^(1/4 : ℝ) := by
+      change t ≤ _ at hlog
+      linarith
+    have htpow : t^(1/5 : ℝ) ≤ t := by
+      simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le ht1
+        (by norm_num : (1/5 : ℝ) ≤ 1)
+    have hquarter : ((N : ℝ)^(1/4 : ℝ))^2 = Real.sqrt (N : ℝ) := by
+      rw [← Real.rpow_mul_natCast hN0.le, Real.sqrt_eq_rpow]
+      congr 1
+      norm_num
+    have htprod : t*t^(1/5 : ℝ) ≤ 16*Real.sqrt (N : ℝ) := by
+      calc
+        _ ≤ t^2 := (mul_le_mul_of_nonneg_left htpow ht0.le).trans_eq (by ring)
+        _ ≤ (4*(N : ℝ)^(1/4 : ℝ))^2 := pow_le_pow_left₀ ht0.le htbound 2
+        _ = _ := by rw [mul_pow, hquarter]; ring
+    calc
+      _ ≤ Real.sqrt (N : ℝ) * t :=
+        mul_le_mul_of_nonneg_right ((abs_moebius_prefix_le_card k).trans (le_of_not_gt hkl)) ht0.le
+      _ ≤ 16*((N : ℝ)/t^(1/5 : ℝ)) := by
+        rw [← mul_div_assoc, le_div_iff₀ htroot, mul_assoc]
+        exact (mul_le_mul_of_nonneg_left htprod (Real.sqrt_nonneg _)).trans_eq (by
+          rw [← mul_left_comm, ← pow_two, Real.sq_sqrt hN0.le])
+      _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith) hQ
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
