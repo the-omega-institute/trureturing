@@ -39,3 +39,4 @@ With C = 2K + 6, combine the eventual residual bound with L ≥ exp 50 and L > 1
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualModeThreeShortDenominator.eventually_mode_three_residual_bound`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualModeThreeShortDenominator.eventually_mode_three_short_denominator_exclusion`
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualTwoFourCutoffCurvature](ActualTwoFourCutoffCurvature.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation](ExactCutoff/ExactRationalCutoffSeparation.md)
