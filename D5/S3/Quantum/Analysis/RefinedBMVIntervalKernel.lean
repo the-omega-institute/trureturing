@@ -17,8 +17,8 @@ is extended symmetrically. Ordered rectangle increments give nonnegative
 coefficients of the rank-one matrices supported on sample intervals.
 -/
 
-open Filter Finset Set
-open scoped BigOperators ComplexOrder Topology
+open Finset Set
+open scoped BigOperators ComplexOrder
 
 noncomputable section
 
@@ -128,6 +128,11 @@ theorem rectangle_nonneg_of_mixed_deriv_nonpos {a : ℝ} {K D : ℝ → ℝ → 
   have h := hmono ⟨le_rfl, hlu⟩ ⟨hlu, le_rfl⟩ hlu
   linarith only [h]
 
+section
+
+open Filter
+open scoped Topology
+
 /-- Zero limits at the outer edges give the inequalities for the virtual row and column. -/
 theorem edge_inequalities_of_rectangle_limits {a : ℝ} {K : ℝ → ℝ → ℝ}
     (hrect : ∀ ⦃l u v w : ℝ⦄, a < l → l ≤ u → u ≤ v → v ≤ w →
@@ -160,5 +165,7 @@ theorem edge_inequalities_of_rectangle_limits {a : ℝ} {K : ℝ → ℝ → ℝ
   refine le_of_tendsto (hinfty x hax) ?_
   filter_upwards [eventually_ge_atTop y] with w hyw
   exact hright x hax hxy (hxy.trans hyw) hyw
+
+end
 
 end RefinedBMV.IntervalKernel
