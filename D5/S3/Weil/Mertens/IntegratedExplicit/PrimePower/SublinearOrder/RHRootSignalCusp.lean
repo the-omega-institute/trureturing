@@ -76,7 +76,8 @@ private theorem phase_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : �
   have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith)
   field_simp
 
-private theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) :
+/-- The full centered zero series is absolutely summable at every real time. -/
+theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) :
     HasSum (fun k => (rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))).re)
       ((∑' k, rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))).re) := by
   apply Complex.hasSum_re
@@ -86,7 +87,8 @@ private theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 <
   rw [phase_eq hRH hr u k, norm_mul, Complex.norm_exp_ofReal_mul_I, mul_one]
   exact rootCoeff_bound hr k
 
-private theorem cosine_difference_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
+/-- The cosine-kernel increment is the sum of the weighted cosine-mode increments. -/
+theorem cosine_difference_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
     HasSum (fun k => 2 * (Real.cos ((actualZero k).im * t) - 1) * weight k)
       (2 * (K t - K 0)) := by
   have hd := ((Complex.hasSum_re (actual_cosine_hasSum hRH t)).sub
