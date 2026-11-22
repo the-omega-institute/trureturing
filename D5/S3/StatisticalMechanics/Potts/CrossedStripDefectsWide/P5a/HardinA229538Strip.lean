@@ -97,7 +97,9 @@ import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Order.Basic
+import Mathlib.Order.Defs.PartialOrder
 import Mathlib.SetTheory.Cardinal.Finite
 
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5a.HardinA229538Strip
