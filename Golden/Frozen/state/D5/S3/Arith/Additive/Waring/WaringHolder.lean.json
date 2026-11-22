@@ -1,0 +1,1 @@
+{"statement_id":"sha256:36362f03214d7da1a89465e05fa6c651cc32cea08fa93f29c3a967568928ca01","declarations":[{"declaration_name_key":"ns(ns(n0,6:Waring),13:normSq_pow_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,6:Waring),18:add_pow_le_two_pow)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,6:Waring),31:sum_pow_le_card_pow_mul_sum_pow)","kind":"theorem"}]}

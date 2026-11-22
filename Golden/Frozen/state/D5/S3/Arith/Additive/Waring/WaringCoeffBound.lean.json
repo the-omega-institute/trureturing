@@ -1,0 +1,1 @@
+{"statement_id":"sha256:6d7f8e5256f56a4a37db144e52d0c548dad209b2c4cac6fc955ba3fe947f2d3b","declarations":[{"declaration_name_key":"ns(ns(n0,6:Waring),15:diffCoeff_bound)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,6:Waring),16:abs_diffCoeff_le)","kind":"theorem"}]}
