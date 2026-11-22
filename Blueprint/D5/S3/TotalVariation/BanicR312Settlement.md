@@ -108,6 +108,10 @@ $$\neg \left([\forall n,N \in \mathbb{N}, 3 \le n \Rightarrow 1 \le N \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/BanicR312Settlement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/banic-elezovic-2026-cyclic-dispersion-monotonicities` (refuted) by `D5/S3/TotalVariation/BanicR312Settlement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"banic-elezovic-2026-cyclic-dispersion-monotonicities","declaration_gid":"D5/S3/TotalVariation/BanicR312Settlement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nikola Banić and Neven Elezović (2026). *Discrete total variation under the multinomial, Part 5: cyclic total variation*. DOI: [10.48550/arXiv.2611.14735](https://doi.org/10.48550/arXiv.2611.14735). URL: <https://arxiv.org/abs/2611.14735v1>.

@@ -109,7 +109,10 @@ internal sealed class BanicR312SettlementDocument : IScribeDocumentDefinition
                         + "original proof checkpoint and the integration commit c9b9d86c09b7. Codex CLI flight "
                         + "6b02ad5d9985be77a04c7d34 authored this expanded "
                         + "Scribe exposition. https://github.com/the-omega-institute/trureturing/issues/31389#issuecomment-7076300413"))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("banic-elezovic-2026-cyclic-dispersion-monotonicities"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string declaration, string id, string title, Formula formula,
         AssessedProvenance provenance, string commentary) =>
