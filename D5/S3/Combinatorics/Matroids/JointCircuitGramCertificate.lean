@@ -173,7 +173,7 @@ private lemma dotProduct_cycle_expansion {M : Matroid V} (z w : topCycles M) :
   rw [Submodule.coe_smul, dotProduct_smul]
   exact mul_comm _ _
 
-private lemma cycle_eq_of_pairings {M : Matroid V} (u v : topCycles M)
+lemma cycle_eq_of_pairings {M : Matroid V} (u v : topCycles M)
     (h : ∀ B : Passive M,
       dotProduct u.val (normalizedCycle B).val = dotProduct v.val (normalizedCycle B).val) :
     u = v := by
@@ -221,7 +221,7 @@ noncomputable def pivotPairing {M : Matroid V} (e : V)
   ∑ K : CircuitThrough M e,
     dotProduct (y ⟨K.val, K.prop.1⟩).val (restrictChain M K.val e (normalizedCycle B).val)
 
-private lemma pivotPairing_aggregate {M : Matroid V} {e : V} (he : e ∈ M.E)
+lemma pivotPairing_aggregate {M : Matroid V} {e : V} (he : e ∈ M.E)
     (z : topCycles M) (y : (K : Circuit M) → topCycles (M ／ (K.val : Set V)))
     (hy : ∀ K : Circuit M, aggregateRestrict M K.val z.val = (y K).val) (B : Passive M) :
     pivotPairing e y B = dotProduct z.val (normalizedCycle B).val := by

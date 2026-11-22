@@ -12,11 +12,14 @@ public import D5.S3.Combinatorics.Matroids.JointCircuitGramCertificate
 public import Mathlib.Combinatorics.Matroid.Sum
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.LinearAlgebra.Contraction
 import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Quotient
 import Mathlib.Algebra.Algebra.Bilinear
+import Mathlib.LinearAlgebra.FreeModule.PID
+import Mathlib.LinearAlgebra.Isomorphisms
 
 /-! # Joint circuit restrictions of a direct sum -/
 
@@ -141,7 +144,7 @@ open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 open IntegralCircuitImage (aggregateRestrict aggregateLinear aggregate_topCycle)
 open JointCircuitGramCertificate
   (Circuit Passive normalizedCycle normalizedCycle_coord fromCoordinates fromCoordinates_coord
-    fromCoordinates_cycle)
+    fromCoordinates_cycle cycle_eq_of_pairings pivotPairing_aggregate)
 
 variable [LinearOrder V] {A B L R : Finset V}
 
@@ -855,14 +858,13 @@ private lemma map_tensorRows_disjointSum (h : Disjoint M.E N.E)
 abbrev JointTarget (P : Matroid V) :=
   (C : Circuit P) → topCycles (P ／ (C.val : Set V))
 
-/-- The signed aggregate along one circuit, with codomain its contraction cycle lattice. -/
-noncomputable def circuitRestriction (P : Matroid V) (C : Circuit P) :
+private noncomputable def circuitRestriction (P : Matroid V) (C : Circuit P) :
     topCycles P →ₗ[ℤ] topCycles (P ／ (C.val : Set V)) :=
   ((aggregateLinear P C.val).comp (topCycles P).subtype).codRestrict _
     fun z => aggregate_topCycle C.prop z.prop
 
 /-- The tuple of signed circuit aggregate restrictions. -/
-noncomputable def jointRestriction (P : Matroid V) :
+@[no_expose] noncomputable def jointRestriction (P : Matroid V) :
     topCycles P →ₗ[ℤ] JointTarget P :=
   LinearMap.pi (circuitRestriction P)
 
@@ -906,7 +908,9 @@ abbrev TransposeCokernel (P : Matroid V) :=
 
 /-- The ordered integral join identifies the transpose cokernel of a matroid direct sum with
 the tensor product of the two transpose cokernels. -/
-theorem joint_circuit_transpose_cokernel_tensor (h : Disjoint M.E N.E)
+theorem joint_circuit_transpose_cokernel_tensor
+    {V : Type*} [Fintype V] [LinearOrder V] {M N : Matroid V} {L R : Finset V}
+    (h : Disjoint M.E N.E)
     (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
     (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) :
     ∃ join : topCycles M ⊗[ℤ] topCycles N ≃ₗ[ℤ] topCycles (M.disjointSum N h),
@@ -1199,6 +1203,15 @@ private lemma rankOne_constant_residue_cycle {P : Matroid V} {S : Finset V}
   exact ⟨⟨z, rankOne_cycle_of_sum_zero hbase
     (fun F hF => ite_eq_right hF) hzero⟩, hvalue⟩
 
+private lemma rankOne_ground_nonempty {P : Matroid V} {S : Finset V}
+    (hbase : ∀ F : Finset V, P.IsBase (F : Set V) ↔ ∃ x ∈ S, F = {x}) :
+    S.Nonempty := by
+  classical
+  obtain ⟨B, hB⟩ := P.exists_isBase
+  obtain ⟨x, hx, _⟩ := (hbase (Set.toFinite B).toFinset).mp
+    (by simpa only [Set.Finite.coe_toFinset] using hB)
+  exact ⟨x, hx⟩
+
 private lemma cyclic_equiv_zmod {G : Type*} [AddCommGroup G] (n : ℕ)
     (q : G →ₗ[ℤ] ZMod n) (g : G) (hqg : q g = 1)
     (hgen : ∀ x : G, ∃ a : ℤ, a • g = x) (hAnn : (n : ℤ) • g = 0) :
@@ -1221,12 +1234,12 @@ private lemma cyclic_equiv_zmod {G : Type*} [AddCommGroup G] (n : ℕ)
 
 /-- A rank-one matroid whose bases are the ground singletons has cyclic transpose cokernel
 of order the ground cardinality. -/
-theorem rankOne_transposeCokernel (P : Matroid V) (S : Finset V)
-    (hS : (S : Set V) = P.E) (hne : S.Nonempty)
+theorem rank_one_transpose_cokernel (P : Matroid V) (S : Finset V)
+    (hS : (S : Set V) = P.E)
     (hbase : ∀ F : Finset V, P.IsBase (F : Set V) ↔ ∃ x ∈ S, F = {x}) :
     Nonempty (TransposeCokernel P ≃ₗ[ℤ] ZMod S.card) := by
   classical
-  obtain ⟨e, he⟩ := hne
+  obtain ⟨e, he⟩ := rankOne_ground_nonempty hbase
   obtain ⟨z, hz⟩ := rankOne_constant_residue_cycle hbase he
   let f : Dual ℤ (topCycles P) →ₗ[ℤ] ZMod S.card :=
     (Int.castAddHom (ZMod S.card)).toIntLinearMap.comp (Dual.eval ℤ (topCycles P) z)
@@ -1292,17 +1305,213 @@ private lemma zmod_tensor_gcd (m n : ℕ) :
 
 /-- For a block-ordered direct sum of rank-one loopless matroids, the integral transpose
 cokernel is cyclic of order the greatest common divisor of the two ground cardinalities. -/
-theorem rankOne_sum_transposeCokernel (h : Disjoint M.E N.E)
+private theorem rank_one_sum_transpose_cokernel (h : Disjoint M.E N.E)
     (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
     (horder : ∀ x ∈ L, ∀ y ∈ R, x < y)
-    (hLn : L.Nonempty) (hRn : R.Nonempty)
     (hM : ∀ F : Finset V, M.IsBase (F : Set V) ↔ ∃ x ∈ L, F = {x})
     (hN : ∀ F : Finset V, N.IsBase (F : Set V) ↔ ∃ x ∈ R, F = {x}) :
     Nonempty (TransposeCokernel (M.disjointSum N h) ≃ₗ[ℤ] ZMod (L.card.gcd R.card)) := by
   obtain ⟨_, _, _, _, e, _⟩ := joint_circuit_transpose_cokernel_tensor h hL hR horder
-  obtain ⟨a⟩ := rankOne_transposeCokernel M L hL hLn hM
-  obtain ⟨b⟩ := rankOne_transposeCokernel N R hR hRn hN
+  obtain ⟨a⟩ := rank_one_transpose_cokernel M L hL hM
+  obtain ⟨b⟩ := rank_one_transpose_cokernel N R hR hN
   obtain ⟨c⟩ := zmod_tensor_gcd L.card R.card
   exact ⟨(e.symm.trans (TensorProduct.congr a b)).trans c⟩
+
+private theorem torsion_cokernel_dual {X Y ι : Type*} [AddCommGroup X] [AddCommGroup Y]
+    [_root_.Finite ι] (A : X →ₗ[ℤ] Y) (hinj : Function.Injective A) (basis : Basis ι ℤ Y) :
+    Nonempty ((Dual ℤ X ⧸ A.dualMap.range) ≃ₗ[ℤ]
+      Submodule.torsion ℤ (Y ⧸ A.range)) := by
+  classical
+  let : Fintype ι := Fintype.ofFinite _
+  let P := A.range
+  let normal := P.smithNormalForm basis
+  let s := normal.2
+  let e := LinearEquiv.ofInjective A hinj
+  let d := s.bN.map e.symm
+  let q := P.mkQ
+  have hA i : A (d i) = s.a i • s.bM (s.f i) := by
+    change A (e.symm (s.bN i)) = _
+    exact (congrArg Subtype.val (e.apply_symm_apply (s.bN i))).trans (s.snf i)
+  have ha i : s.a i ≠ 0 := by
+    intro haz
+    exact s.bN.ne_zero i (Subtype.ext (by simpa [haz] using s.snf i))
+  let F : Dual ℤ X →ₗ[ℤ] Y := d.dualBasis.constr ℤ fun i => s.bM (s.f i)
+  have hF (a : Dual ℤ X) :
+      F a = ∑ i : Fin normal.1, a (d i) • s.bM (s.f i) := by
+    calc
+      F a = F (∑ i : Fin normal.1, d.dualBasis.repr a i • d.dualBasis i) :=
+        congrArg F (d.dualBasis.sum_repr a).symm
+      _ = _ := by
+        rw [map_sum]
+        simp only [map_smul, F, Basis.constr_basis, Basis.dualBasis_repr]
+  have hFcoord (a : Dual ℤ X) (i : Fin normal.1) : s.bM.repr (F a) (s.f i) = a (d i) := by
+    rw [hF, map_sum]
+    simp [Finsupp.finsetSum_apply, Basis.repr_self, Finsupp.single_apply,
+      EmbeddingLike.apply_eq_iff_eq]
+  have hFt (a : Dual ℤ X) : q (F a) ∈ Submodule.torsion ℤ (Y ⧸ A.range) := by
+    rw [hF, map_sum]
+    apply Submodule.sum_mem
+    intro i _
+    rw [map_smul]
+    apply Submodule.smul_mem
+    rw [Submodule.mem_torsion_iff]
+    refine ⟨⟨s.a i, mem_nonZeroDivisors_iff_ne_zero.mpr (ha i)⟩, ?_⟩
+    change s.a i • q (s.bM (s.f i)) = 0
+    rw [← map_smul, ← s.snf i]
+    exact (Submodule.Quotient.mk_eq_zero P).mpr (s.bN i).prop
+  let T := (q.comp F).codRestrict (Submodule.torsion ℤ (Y ⧸ A.range)) hFt
+  have hker : T.ker = A.dualMap.range := by
+    apply le_antisymm
+    · intro a h
+      have hFa : F a ∈ P :=
+        (Submodule.Quotient.mk_eq_zero P).mp (congrArg Subtype.val h)
+      let v : P := ⟨F a, hFa⟩
+      let b : Dual ℤ Y := s.bM.constr ℤ fun j =>
+        if hj : j ∈ Set.range s.f then s.bN.repr v (Classical.choose hj) else 0
+      refine ⟨b, d.ext fun i => ?_⟩
+      change b (A (d i)) = a (d i)
+      rw [hA, map_smul]
+      have hi : s.f i ∈ Set.range s.f := ⟨i, rfl⟩
+      have hchoose : Classical.choose hi = i := s.f.injective (Classical.choose_spec hi)
+      have hb : b (s.bM (s.f i)) = s.bN.repr v i := by
+        dsimp only [b]
+        rw [Basis.constr_basis, dite_eq_left hi, hchoose]
+      rw [hb]
+      have hs := s.repr_apply_embedding_eq_repr_smul v (i := i)
+      rw [map_smul, Finsupp.smul_apply] at hs
+      exact hs.symm.trans (hFcoord a i)
+    · rintro _ ⟨b, rfl⟩
+      apply Subtype.ext
+      change q (F (A.dualMap b)) = 0
+      apply (Submodule.Quotient.mk_eq_zero P).mpr
+      rw [hF]
+      apply Submodule.sum_mem
+      intro i _
+      change b (A (d i)) • s.bM (s.f i) ∈ P
+      rw [hA, map_smul, smul_eq_mul, mul_comm, mul_smul, ← hA]
+      exact Submodule.smul_mem _ _ (LinearMap.mem_range_self A (d i))
+  have hsurj : Function.Surjective T := by
+    intro t
+    obtain ⟨y, hy⟩ := Submodule.Quotient.mk_surjective P t.val
+    change q y = t.val at hy
+    have hout (j : ι) (hj : j ∉ Set.range s.f) : s.bM.repr y j = 0 := by
+      obtain ⟨n, hn⟩ := (Submodule.mem_torsion_iff t.val).mp t.prop
+      have hNy : (n : ℤ) • y ∈ P := by
+        apply (Submodule.Quotient.mk_eq_zero P).mp
+        change q ((n : ℤ) • y) = 0
+        rw [map_smul, hy]
+        exact hn
+      have hv := s.repr_eq_zero_of_notMem_range ⟨(n : ℤ) • y, hNy⟩ hj
+      change s.bM.repr ((n : ℤ) • y) j = 0 at hv
+      rw [map_smul, Finsupp.smul_apply, smul_eq_mul] at hv
+      exact (mul_eq_zero.mp hv).resolve_left
+        (mem_nonZeroDivisors_iff_ne_zero.mp n.prop)
+    let a : Dual ℤ X := d.dualBasis.equivFun.symm fun i => s.bM.repr y (s.f i)
+    have ha' (i : Fin normal.1) : a (d i) = s.bM.repr y (s.f i) := by
+      rw [← Basis.dualBasis_equivFun]
+      dsimp only [a]
+      rw [LinearEquiv.apply_symm_apply]
+    have heq : F a = y := by
+      apply s.bM.repr.injective
+      ext j
+      by_cases hj : j ∈ Set.range s.f
+      · obtain ⟨i, rfl⟩ := hj
+        exact (hFcoord a i).trans (ha' i)
+      · have hi : ∀ i : Fin normal.1, s.f i ≠ j := fun i h => hj ⟨i, h⟩
+        rw [hout j hj, hF, map_sum]
+        simp [Finsupp.finsetSum_apply, Basis.repr_self, hi]
+    refine ⟨a, Subtype.ext ?_⟩
+    change q (F a) = t.val
+    rw [heq]
+    exact hy
+  exact ⟨(Submodule.quotEquivOfEq _ _ hker.symm).trans (T.quotKerEquivOfSurjective hsurj)⟩
+
+private lemma jointRestriction_injective {P : Matroid V} {e : V} (he : e ∈ P.E) :
+    Function.Injective (jointRestriction P) := by
+  intro u v huv
+  let y := jointRestriction P u
+  have hu : ∀ C : Circuit P, aggregateRestrict P C.val u.val = (y C).val := fun _ => rfl
+  have hv : ∀ C : Circuit P, aggregateRestrict P C.val v.val = (y C).val := by
+    intro C
+    exact congrArg (fun t : JointTarget P => (t C).val) huv.symm
+  apply cycle_eq_of_pairings u v
+  intro D
+  exact (pivotPairing_aggregate he u y hu D).symm.trans
+    (pivotPairing_aggregate he v y hv D)
+
+private noncomputable def jointTargetBasis (P : Matroid V) :
+    Basis (Σ C : Circuit P, Passive (P ／ (C.val : Set V))) ℤ (JointTarget P) :=
+  Basis.ofEquivFun
+    ((LinearEquiv.piCongrRight (fun C : Circuit P => cycleCoordinates (P ／ (C.val : Set V)))).trans
+      (LinearEquiv.piCurry ℤ (fun (_ : Circuit P) _ => ℤ)).symm)
+
+/-- The integral lifting obstruction is the torsion in the quotient of the joint target by the
+image of the source cycles. -/
+noncomputable abbrev JointLiftingObstruction (P : Matroid V) :=
+  Submodule.torsion ℤ (JointTarget P ⧸ (jointRestriction P).range)
+
+/-- Integral tuples with a nonzero integer multiple in the joint image. -/
+noncomputable abbrev JointSaturatedImage (P : Matroid V) : Submodule ℤ (JointTarget P) :=
+  (JointLiftingObstruction P).comap (jointRestriction P).range.mkQ
+
+/-- The joint image submodule in its saturation. -/
+noncomputable abbrev JointImageInSaturation (P : Matroid V) :
+    Submodule ℤ (JointSaturatedImage P) :=
+  (jointRestriction P).range.comap (JointSaturatedImage P).subtype
+
+private noncomputable def saturatedProjection (P : Matroid V) :
+    JointSaturatedImage P →ₗ[ℤ] JointLiftingObstruction P :=
+  ((jointRestriction P).range.mkQ.comp (JointSaturatedImage P).subtype).codRestrict _
+    fun y => y.prop
+
+private lemma saturatedProjection_ker (P : Matroid V) :
+    (saturatedProjection P).ker = JointImageInSaturation P := by
+  ext y
+  change saturatedProjection P y = 0 ↔ y.val ∈ (jointRestriction P).range
+  exact ⟨fun hy => (Submodule.Quotient.mk_eq_zero _).mp (congrArg Subtype.val hy),
+    fun hy => Subtype.ext ((Submodule.Quotient.mk_eq_zero _).mpr hy)⟩
+
+private lemma saturatedProjection_surjective (P : Matroid V) :
+    Function.Surjective (saturatedProjection P) := by
+  intro y
+  obtain ⟨x, hx⟩ := Submodule.Quotient.mk_surjective (jointRestriction P).range y.val
+  have hs : x ∈ JointSaturatedImage P := by
+    change Submodule.Quotient.mk x ∈ JointLiftingObstruction P
+    exact hx.symm ▸ y.prop
+  exact ⟨⟨x, hs⟩, Subtype.ext hx⟩
+
+/-- Smith coordinates identify the torsion in the joint restriction cokernel with its
+integral transpose cokernel. The saturation quotient maps to the torsion submodule by
+sending a saturated tuple to its original quotient class. -/
+theorem joint_lifting_obstruction_equiv (P : Matroid V) {e : V} (he : e ∈ P.E) :
+    ∃ comparison : (JointSaturatedImage P ⧸ JointImageInSaturation P) ≃ₗ[ℤ]
+        JointLiftingObstruction P,
+      (∀ y : JointSaturatedImage P, (comparison (Submodule.Quotient.mk y)).val =
+        Submodule.Quotient.mk y.val) ∧
+      Nonempty (JointLiftingObstruction P ≃ₗ[ℤ] TransposeCokernel P) := by
+  obtain ⟨iso⟩ := torsion_cokernel_dual (jointRestriction P) (jointRestriction_injective he)
+    (jointTargetBasis P)
+  refine ⟨(Submodule.quotEquivOfEq _ _ (saturatedProjection_ker P).symm).trans
+    ((saturatedProjection P).quotKerEquivOfSurjective (saturatedProjection_surjective P)),
+    ?_, ⟨iso.symm⟩⟩
+  intro y
+  rfl
+
+/-- The finite integral obstruction for the direct sum of two rank-one loopless matroids
+is cyclic of order the greatest common divisor of their ground cardinalities. -/
+theorem rank_one_sum_joint_lifting_obstruction (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y)
+    (hM : ∀ F : Finset V, M.IsBase (F : Set V) ↔ ∃ x ∈ L, F = {x})
+    (hN : ∀ F : Finset V, N.IsBase (F : Set V) ↔ ∃ x ∈ R, F = {x}) :
+    Nonempty ((JointSaturatedImage (M.disjointSum N h) ⧸
+      JointImageInSaturation (M.disjointSum N h)) ≃ₗ[ℤ] ZMod (L.card.gcd R.card)) := by
+  obtain ⟨e, he⟩ := rankOne_ground_nonempty hM
+  have hground : e ∈ (M.disjointSum N h).E := by
+    rw [Matroid.disjointSum_ground_eq, ← hL]
+    exact Or.inl he
+  obtain ⟨comparison, _, ⟨a⟩⟩ := joint_lifting_obstruction_equiv _ hground
+  obtain ⟨b⟩ := rank_one_sum_transpose_cokernel h hL hR horder hM hN
+  exact ⟨(comparison.trans a).trans b⟩
 
 end D5.S3.Combinatorics.Matroids.DirectSumCircuitTorsion
