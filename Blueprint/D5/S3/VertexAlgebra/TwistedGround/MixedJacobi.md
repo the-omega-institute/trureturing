@@ -16,7 +16,19 @@ The vacuum-channel construction uses RealLeech.exists_positive_even_unimodular_g
 
 These are repository Lean finite coefficient derivations using the existing covariance, inversion, nondegeneracy and actual Golay lattice suppliers. FLM's PNAS announcement supplies the carrier conventions recorded with MixedIntertwiner; it is not attributed a detailed proof of these formulas. MixedJacobiFinite completes the full signed all-source mixed Jacobi identity under positive real Gram, unit determinant and rank twenty-four through the finite source-law substitution, uniform transformed-input support bounds and both signed triangular branch identifications. The first dual-action branch is evaluated explicitly on its actual target grade by mixed_first_branch_pairing. Three-twisted crossing and identification of the restricted dual with the original fixed source are separate obligations.
 
-**Theorem 1.1 (Finite evaluation of original all-order Mobius covariance).**
+**Theorem 1.1 (Ordered vacuum coefficient on weight-two inputs).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.weight_two_vacuum_pairing`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.weight_two_vacuum_pairing` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Evaluating the original normalized mode-three coefficient of two negative weight-two states at the grade-zero vacuum gives the original twisted form with the second input in its first slot.
+
+**Theorem 1.2 (Finite evaluation of original all-order Mobius covariance).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.finite_mobius_transport`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.finite_mobius_tra
 
 The two independently finite target-power sums equal a finite sum of the original all-order source-coordinate readouts on every original source and actual tensor input.
 
-**Theorem 1.2 (Actual one-sided lowering followed by homogeneous source inversion).**
+**Theorem 1.3 (Actual one-sided lowering followed by homogeneous source inversion).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.lowered_field_transpose`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.lowered_field_tra
 
 The pairing of a divided target L1 power applied after an original field coefficient becomes a finite triangle of lowered inputs and a finite original-source inversion sum. Every signed raw exponent and every homogeneous source grade is included.
 
-**Theorem 1.3 (Finite original-source iterate expansion of the dual-action branch).**
+**Theorem 1.4 (Finite original-source iterate expansion of the dual-action branch).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_branch_pairing`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_branc
 
 For arbitrary signed m, n and r, the complete first dual-action sum paired with an actual fixed target-grade vector equals a finite sum of normalized kernels on original opposite-source iterates. Sharp homogeneous truncation bounds the outer index, and the original source monomial bound limits source L1. The two target lowering sums remain finite at their actual homogeneous energy bounds.
 
-**Theorem 1.4 (Actual second-input action expanded by lowering and transpose).**
+**Theorem 1.5 (Actual second-input action expanded by lowering and transpose).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_second_input_pairing`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_second_inpu
 
 A signed fixed-source mode acts on the actual second twisted input, with its signed output energy represented by the stated nonnegative integer W. This energy follows from original zero-mode covariance. Evaluating the resulting normalized coefficient on every fixed-grade test vector gives finite target lowering triangles and the finite original-source inversion sum, with the original ordered bilinear form.
 
-**Theorem 1.5 (Actual first-input action expanded by one-sided lowering).**
+**Theorem 1.6 (Actual first-input action expanded by one-sided lowering).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_input_pairing`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_input
 
 A signed fixed-source mode acts on the actual first twisted input, with its signed output energy represented by the stated nonnegative integer W. The normalized coefficient on every fixed-grade test vector expands over the complete finite triangle of source L1 powers and lowered actual inputs. Actual covariance supplies the transformed energy; no mixed iterate identity is a hypothesis.
 
-**Theorem 1.6 (Nonzero actual Leech weight-two vacuum channel at I_3).**
+**Theorem 1.7 (Nonzero actual Leech weight-two vacuum channel at I_3).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.actual_leech_vacuum_channel`
 
@@ -96,6 +108,7 @@ The actual Golay Leech lattice has two actual negative-parity weight-two twisted
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_branch_pairing`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_first_input_pairing`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.mixed_second_input_pairing`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/MixedJacobi.weight_two_vacuum_pairing`
 - Dependency: [D5/S3/Arith/Lattices/Golay/RealLeech](../../Arith/Lattices/Golay/RealLeech.md)
 - Dependency: [D5/S3/VertexAlgebra/HalfFock/ActualMobiusAllOrder](../HalfFock/ActualMobiusAllOrder.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/MixedOpposite](MixedOpposite.md)
