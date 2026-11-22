@@ -14,7 +14,7 @@ $$\forall J \in FiniteType, g \in \mathbb{R}^{J},\; \operatorname{closure}\left(
 
 *Commentary.*
 
-For each nonzero integer dot product with the frequency vector, the steps that turn it into an integral multiple of 2π form a countable set. One step in (0,1) avoids their union. Its discrete characters are exactly the zero-dot-product characters, so TorusOrbitClosure.result puts every common zero of these characters in the real orbit closure. The forward inclusion follows from character continuity.
+For each nonzero integer dot product with the frequency vector, the steps that turn it into an integral multiple of 2π form a countable set. One step in (0,1) avoids their union. Its discrete characters are exactly the zero-dot-product characters, so TorusOrbitClosure.result puts every point in their common kernel in the real orbit closure. The forward inclusion follows from character continuity.
 
 **Theorem 1.2 (Centered angles and integer congruences).**
 
@@ -42,7 +42,7 @@ The weights are positive and their sum W is positive. Real independence of the c
 
 The continuous weighted sine deficit on the orbit closure has the same infimum as along the real-time orbit. In principal centered angles, the pointwise lower estimate for 1 − cos x has coefficient 2/π² on x². The upper estimate has coefficient 1/2 for every real x and applies to the affine minimizers. Taking the infimum over all integer windings gives the bounds. Empty A gives zero inverse Gram energy and hence zero deficit.
 
-For an inclusive positive ζ-ordinate cutoff, take the finite index type of members of Spectrum.cut, frequencies from zetaSpectrum.gamma, and weights from zetaSpectrum.mult times the chosen positive weight per occurrence. This keeps the boundary ordinate and its analytic multiplicity. The comparison is conditional on a complete relation basis and supplies no estimate for the actual normalized energy at these cutoffs.
+For an inclusive positive ζ-ordinate cutoff, take the finite index type of members of Spectrum.cut for zetaSpectrum. Use its ordinates and multiply the chosen positive weight per occurrence by its analytic multiplicity. This keeps the ordinate at the cutoff and all its occurrences. The comparison applies given a complete relation basis and positive total weight. Bounding the normalized energy for the actual ζ ordinates is a separate question.
 
 ## References
 
