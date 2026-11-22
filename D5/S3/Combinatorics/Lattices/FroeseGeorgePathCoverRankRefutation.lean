@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Order.Partition.Finpartition]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Quiver.Path, mathlib/module/Mathlib.Order.Partition.Finpartition]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.claim; result=D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.result; claim=D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.claim
    digest: A 15-element rooted poset has path-cover rank counts 15, 14, and 17 at ranks 6, 7, and 8. -/
 
@@ -10,6 +10,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Basic.Finite.Prod
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Combinatorics.Quiver.Path
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.List.Sort
@@ -25,7 +26,8 @@ import Mathlib.SetTheory.Cardinal.Finite
 
 Matteus Froese and Ian George pose Question 1 in *Path Covering Spaces of Posets*,
 arXiv:2610.20890v1. The universal claim uses their rooted partition model,
-with rank from Corollary 1.
+with rank from Corollary 1. Propositions 6–7 and Remark 4 supply the
+structural pattern of a product of downset lattices.
 
 The counterexample construction is due to the Codex CLI successor-search seat
 in issue #33328. The Codex CLI source-qualification seat independently derived
@@ -37,69 +39,27 @@ namespace D5.S3.Combinatorics.Lattices.FroeseGeorgePathCoverRankRefutation
 
 open scoped BigOperators
 
+local instance hasseQuiver (P : Type) [PartialOrder P] : Quiver P :=
+  ⟨fun x y => PLift (x ⋖ y)⟩
+
 /-- A saturated path from the least element, including the path of length zero. -/
-inductive Path (P : Type) [PartialOrder P] [OrderBot P] : P → Type
-  | root : Path P ⊥
-  | snoc {x y : P} : x ⋖ y → Path P x → Path P y
+abbrev Path (P : Type) [PartialOrder P] [OrderBot P] (p : P) := Quiver.Path (⊥ : P) p
 
-namespace Path
-
-variable {P : Type} [PartialOrder P] [OrderBot P]
-
-def vertices {p : P} : Path P p → List P
-  | .root => [⊥]
-  | .snoc (y := y) _ t => y :: t.vertices
-
-private theorem mem_le {p : P} (t : Path P p) : ∀ x ∈ t.vertices, x ≤ p := by
-  induction t with
-  | root => simp [vertices]
-  | @snoc u v h t ih =>
-    intro x hx
-    rcases List.mem_cons.mp hx with rfl | hx
-    · exact le_rfl
-    · exact (ih x hx).trans h.le
-
-private theorem sorted {p : P} (t : Path P p) : t.vertices.SortedGT := by
-  induction t with
-  | root => simp [vertices, List.sortedGT_iff_pairwise]
-  | @snoc u v h t ih =>
-    rw [vertices, List.sortedGT_iff_pairwise, List.pairwise_cons]
-    exact ⟨fun x hx => (t.mem_le x hx).trans_lt h.lt, ih.pairwise⟩
-
-private theorem vertices_injective {p : P} : Function.Injective (vertices (p := p)) := by
-  intro t
-  induction t with
-  | root =>
-    intro s h
-    cases s with
-    | root => rfl
-    | snoc edge _ => exact (not_lt_of_ge bot_le edge.lt).elim
-  | @snoc u v h t ih =>
-    intro s eq
-    cases s with
-    | root => exact (not_lt_of_ge bot_le h.lt).elim
-    | @snoc u' _ h' s =>
-      have tail : vertices t = vertices s := (List.cons.inj eq).2
-      have head : (vertices t).head? = some u := by cases t <;> rfl
-      have head' : (vertices s).head? = some u' := by cases s <;> rfl
-      have hu : u = u' := Option.some.inj (head.symm.trans ((congrArg List.head? tail).trans head'))
-      subst u'
-      cases ih tail
-      rfl
-
-instance [Finite P] (p : P) : Finite (Path P p) := by
+instance {P : Type} [PartialOrder P] [OrderBot P] [Finite P] (p : P) :
+    Finite (Path P p) := by
   classical
   letI : Fintype P := Fintype.ofFinite P
-  apply Finite.of_injective (fun t : Path P p => t.vertices.toFinset)
-  intro t s h
-  change t.vertices.toFinset = s.vertices.toFinset at h
-  apply vertices_injective
-  apply t.sorted.eq_of_mem_iff s.sorted
-  intro a
-  simpa only [List.mem_toFinset] using
-    (show a ∈ t.vertices.toFinset ↔ a ∈ s.vertices.toFinset by rw [h])
-
-end Path
+  letI (x y : P) : Subsingleton (x ⟶ y) :=
+    inferInstanceAs (Subsingleton (PLift (x ⋖ y)))
+  have sorted (t : Path P p) : t.toList.SortedGT := by
+    rw [List.sortedGT_iff_pairwise, ← List.isChain_iff_pairwise]
+    exact t.isChain_toList_nonempty.imp fun _ _ ⟨e⟩ => e.down.lt
+  apply Finite.of_injective (fun t : Path P p => t.toList.toFinset)
+  intro t s equality
+  apply Quiver.Path.toList_injective _ p
+  apply (sorted t).eq_of_mem_iff (sorted s)
+  intro x
+  simpa only [List.mem_toFinset] using Finset.ext_iff.mp equality x
 
 noncomputable instance pathFintype (P : Type) [PartialOrder P] [OrderBot P] [Finite P]
     (p : P) : Fintype (Path P p) := Fintype.ofFinite _
@@ -120,11 +80,11 @@ def Same {p : P} (A : Partition P p) (s t : Path P p) : Prop := A.part s = A.par
 at the upper endpoint. -/
 def Compatible (A : Family P) : Prop :=
   ∀ ⦃x y : P⦄ (h : x ⋖ y) (C : Finset (Path P x)),
-    C ∈ (A x).parts → ∃ D ∈ (A y).parts, ∀ t ∈ C, Path.snoc h t ∈ D
+    C ∈ (A x).parts → ∃ D ∈ (A y).parts, ∀ t ∈ C, t.cons ⟨h⟩ ∈ D
 
 private def CompatiblePairwise (A : Family P) : Prop :=
   ∀ ⦃x y : P⦄ (h : x ⋖ y) (s t : Path P x),
-    Same P (A x) s t → Same P (A y) (.snoc h s) (.snoc h t)
+    Same P (A x) s t → Same P (A y) (s.cons ⟨h⟩) (t.cons ⟨h⟩)
 
 /-- A compatible family of rooted path partitions. -/
 structure Split where
@@ -277,26 +237,26 @@ set_option maxRecDepth 4096 in
 private theorem covBy_iff {x y : Vertex} : x ⋖ y ↔ Edge x y := by
   exact (show ∀ x y : Vertex, x ⋖ y ↔ edge x y = true by decide) x y |>.trans edge_iff
 
-def rootPath : Path Vertex .root := .root
-def aPath : Path Vertex .a := .snoc (covBy_iff.mpr Edge.a) rootPath
-def bPath : Path Vertex .b := .snoc (covBy_iff.mpr Edge.b) rootPath
+def rootPath : Path Vertex .root := .nil
+def aPath : Path Vertex .a := rootPath.cons ⟨covBy_iff.mpr Edge.a⟩
+def bPath : Path Vertex .b := rootPath.cons ⟨covBy_iff.mpr Edge.b⟩
 
 /-- The concrete two routes to each branch vertex, indexed by the first turn. -/
 def firstPath (side : Bool) (label : Bool) : Path Vertex (.branch side .first) :=
-  if label then .snoc (covBy_iff.mpr (Edge.fromB side)) bPath
-  else .snoc (covBy_iff.mpr (Edge.fromA side)) aPath
+  if label then bPath.cons ⟨covBy_iff.mpr (Edge.fromB side)⟩
+  else aPath.cons ⟨covBy_iff.mpr (Edge.fromA side)⟩
 
 def branchPath (side : Bool) (label : Bool) (n : Node) : Path Vertex (.branch side n) :=
   let first := firstPath side label
-  let second := Path.snoc (covBy_iff.mpr (Edge.within side Node.Edge.first)) first
-  let third := Path.snoc (covBy_iff.mpr (Edge.within side Node.Edge.second)) second
+  let second := first.cons ⟨covBy_iff.mpr (Edge.within side Node.Edge.first)⟩
+  let third := second.cons ⟨covBy_iff.mpr (Edge.within side Node.Edge.second)⟩
   match n with
   | .first => first
   | .second => second
   | .third => third
-  | .leaf₁ => .snoc (covBy_iff.mpr (Edge.within side Node.Edge.leaf₁)) third
-  | .leaf₂ => .snoc (covBy_iff.mpr (Edge.within side Node.Edge.leaf₂)) third
-  | .leaf₃ => .snoc (covBy_iff.mpr (Edge.within side Node.Edge.leaf₃)) third
+  | .leaf₁ => third.cons ⟨covBy_iff.mpr (Edge.within side Node.Edge.leaf₁)⟩
+  | .leaf₂ => third.cons ⟨covBy_iff.mpr (Edge.within side Node.Edge.leaf₂)⟩
+  | .leaf₃ => third.cons ⟨covBy_iff.mpr (Edge.within side Node.Edge.leaf₃)⟩
 
 def route : (v : Vertex) → Bool → Path Vertex v
   | .root, _ => rootPath
@@ -305,30 +265,30 @@ def route : (v : Vertex) → Bool → Path Vertex v
   | .branch s n, label => branchPath s label n
 
 def label {v : Vertex} : Path Vertex v → Bool
-  | .root => false
-  | .snoc (y := y) _ t => decide (y = .b) || label t
+  | .nil => false
+  | .cons (c := y) t _ => decide (y = .b) || label t
 
 private theorem label_branchPath (s b : Bool) (n : Node) :
     label (branchPath s b n) = b := by
   cases b <;> cases n <;> rfl
 
-private theorem within_snoc (s : Bool) {x y : Node} (e : Node.Edge x y) (b : Bool) :
-    Path.snoc (covBy_iff.mpr (Edge.within s e)) (branchPath s b x) = branchPath s b y := by
+private theorem within_cons (s : Bool) {x y : Node} (e : Node.Edge x y) (b : Bool) :
+    (branchPath s b x).cons ⟨covBy_iff.mpr (Edge.within s e)⟩ = branchPath s b y := by
   cases e <;> rfl
 
 private theorem path_eq_route {v : Vertex} (t : Path Vertex v) : t = route v (label t) := by
   induction t with
-  | root => rfl
-  | @snoc x y h t ih =>
-    cases covBy_iff.mp h with
+  | nil => rfl
+  | @cons x y t h ih =>
+    cases covBy_iff.mp h.down with
     | a => rw [ih]; rfl
     | b => rw [ih]; rfl
     | fromA s => rw [ih]; rfl
     | fromB s => rw [ih]; rfl
     | within s e =>
-      change Path.snoc h t = route _ (label t)
+      change t.cons h = route _ (label t)
       conv_lhs => rw [ih]
-      exact within_snoc s e _
+      exact within_cons s e _
 
 def Labels : Vertex → Type
   | .branch _ _ => Bool
@@ -374,14 +334,10 @@ instance (p : P) : Nonempty (Path P p) := by
   | ind q ih =>
     by_cases h : q = ⊥
     · subst q
-      exact ⟨Path.root⟩
+      exact ⟨.nil⟩
     · obtain ⟨x, _, hcov⟩ := exists_le_covBy_of_lt (bot_lt_iff_ne_bot.mpr h)
       obtain ⟨path⟩ := ih x hcov.lt
-      exact ⟨Path.snoc hcov path⟩
-
-instance : Finite (Split P) := by
-  classical
-  exact Finite.of_injective Split.family (fun _ _ => Split.ext P)
+      exact ⟨path.cons ⟨hcov⟩⟩
 
 private theorem same_iff_mem {p : P} (A : Partition P p) (s t : Path P p) :
     Same P A s t ↔ t ∈ A.part s := by
@@ -392,7 +348,7 @@ private theorem compatible_pairwise_iff (A : Family P) :
   constructor
   · intro hA x y h C hC
     obtain ⟨s, hs⟩ := (A x).nonempty_of_mem_parts hC
-    refine ⟨(A y).part (.snoc h s), (A y).part_mem.2 (Finset.mem_univ _), ?_⟩
+    refine ⟨(A y).part (s.cons ⟨h⟩), (A y).part_mem.2 (Finset.mem_univ _), ?_⟩
     intro t ht
     apply (same_iff_mem P _ _ _).mp (hA h s t ?_)
     apply (same_iff_mem P _ _ _).mpr
@@ -518,7 +474,7 @@ private theorem compatible_iff_edges (A : Family Vertex) :
   · intro hA side x y e htarget hsource
     let edge := Vertex.covBy_iff.mpr (Vertex.Edge.within side e)
     have hs := hA edge (branchPath side false x) (branchPath side true x) hsource
-    rw [Vertex.within_snoc side e false, Vertex.within_snoc side e true] at hs
+    rw [Vertex.within_cons side e false, Vertex.within_cons side e true] at hs
     exact htarget hs
   · intro hA u v edge p q hpq
     cases Vertex.covBy_iff.mp edge with
@@ -530,8 +486,8 @@ private theorem compatible_iff_edges (A : Family Vertex) :
       rw [Vertex.path_eq_route p, Vertex.path_eq_route q] at hpq ⊢
       change Same Vertex (A (.branch side x)) (branchPath side _ x) (branchPath side _ x) at hpq
       change Same Vertex (A (.branch side y))
-        (Path.snoc edge (branchPath side _ x)) (Path.snoc edge (branchPath side _ x))
-      rw [Vertex.within_snoc side e, Vertex.within_snoc side e, same_branch_iff]
+        ((branchPath side _ x).cons ⟨edge⟩) ((branchPath side _ x).cons ⟨edge⟩)
+      rw [Vertex.within_cons side e, Vertex.within_cons side e, same_branch_iff]
       exact ((same_branch_iff _ _ _).mp hpq).imp_right fun hc ht => hc (hA side e ht)
 
 end Branch

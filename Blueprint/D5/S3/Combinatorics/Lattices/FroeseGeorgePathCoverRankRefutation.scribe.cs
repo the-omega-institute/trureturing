@@ -16,7 +16,7 @@ internal sealed class FroeseGeorgePathCoverRankRefutationDocument : IScribeDocum
         Blocks(
             Node("claim", "Froese–George Question 1", "claim", ClaimFormula(), DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source),
-                "Let P be any finite partial order with a least element. At each endpoint p, "
+                "In Definition 2, let P be any finite partial order with a least element. At each endpoint p, "
                     + "partition all saturated paths from the least element to p. Include the length-zero path "
                     + "at the least element. Along each Hasse edge, extension must take every block at the "
                     + "lower endpoint into a single block at the upper endpoint. A coarser family lies below a "
@@ -26,7 +26,9 @@ internal sealed class FroeseGeorgePathCoverRankRefutationDocument : IScribeDocum
                     + "or weakly unimodal with a mode between 0 and H."),
             Node("rank-counts", "Three consecutive rank counts", "witness_rank_counts", RankCounts(),
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                "Two incomparable vertices cover the root. Both vertices are covered by the first vertex "
+                "Froese and George give the product of branch downset lattices in Remark 4, using "
+                    + "Propositions 6–7. For this witness, two incomparable vertices cover the root. "
+                    + "Both vertices are covered by the first vertex "
                     + "of each of two disjoint branches. Each branch has a three-vertex stem and three "
                     + "leaves covering its last stem vertex. Each of the twelve branch vertices has two "
                     + "saturated paths from the root, distinguished by the first step. The other three "
@@ -35,15 +37,17 @@ internal sealed class FroeseGeorgePathCoverRankRefutationDocument : IScribeDocum
                     + "each branch form a lower ideal. Conversely, each pair of lower ideals uniquely "
                     + "determines the compatible family, with refinement corresponding to inclusion. "
                     + "The rank is the combined size of the two ideals and the height is 12. "
-                    + "The rank counts at 6, 7, and 8 are 15, 14, and 17."),
+                    + "Lean checks the path classification and rank-preserving equivalence for this base, "
+                    + "then enumerates the ideal pairs to give rank counts 15, 14, and 17 at ranks 6, 7, and 8."),
             Node("result", "Both shape properties fail on the same poset", "result", new Formula.Not(F.Id("claim")),
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 "The decrease from 15 to 14 requires any unimodal mode to precede rank 7. "
                     + "The increase from 14 to 17 requires it to follow rank 7. At rank 7, "
                     + "the square of 14 is 196 and the product of 15 and 17 is 255, contradicting "
                     + "log-concavity. This answers Question 1 for Definition 2's rooted lattice. "
-                    + "For the map presentation the least element must map to the least element. "
-                    + "The printed count identity alone allows a singleton to map to the top of a two-element chain.")
+                    + "The correspondence with count maps uses root preservation. "
+                    + "Bare Definition 1 allows a singleton to map to the top of a two-element chain, "
+                    + "where the path-count identity tests only the top-to-top path and the absence of a path to the bottom.")
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration,

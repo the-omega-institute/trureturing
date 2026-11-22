@@ -14,7 +14,7 @@ $$\forall P \in Type,\; [\operatorname{PartialOrder}\left(P\right)] [\operatorna
 
 *Commentary.*
 
-Let P be any finite partial order with a least element. At each endpoint p, partition all saturated paths from the least element to p. Include the length-zero path at the least element. Along each Hasse edge, extension must take every block at the lower endpoint into a single block at the upper endpoint. A coarser family lies below a finer family. Sum the block count minus one over all endpoints to get its rank. The height H is the same sum for the singleton partitions. Question 1 asks whether the counts r(k) of families of rank k are log-concave at every interior rank or weakly unimodal with a mode between 0 and H.
+In Definition 2, let P be any finite partial order with a least element. At each endpoint p, partition all saturated paths from the least element to p. Include the length-zero path at the least element. Along each Hasse edge, extension must take every block at the lower endpoint into a single block at the upper endpoint. A coarser family lies below a finer family. Sum the block count minus one over all endpoints to get its rank. The height H is the same sum for the singleton partitions. Question 1 asks whether the counts r(k) of families of rank k are log-concave at every interior rank or weakly unimodal with a mode between 0 and H.
 
 **Theorem 1.2 (Three consecutive rank counts).**
 
@@ -28,7 +28,7 @@ $$\operatorname{rankCount}\left(Vertex, 6\right) = 15 \land \left(\operatorname{
 
 *Commentary.*
 
-Two incomparable vertices cover the root. Both vertices are covered by the first vertex of each of two disjoint branches. Each branch has a three-vertex stem and three leaves covering its last stem vertex. Each of the twelve branch vertices has two saturated paths from the root, distinguished by the first step. The other three vertices each have one path. Extension within a branch preserves the first step. A split successor forces its predecessor to be split, so the split vertices in each branch form a lower ideal. Conversely, each pair of lower ideals uniquely determines the compatible family, with refinement corresponding to inclusion. The rank is the combined size of the two ideals and the height is 12. The rank counts at 6, 7, and 8 are 15, 14, and 17.
+Froese and George give the product of branch downset lattices in Remark 4, using Propositions 6–7. For this witness, two incomparable vertices cover the root. Both vertices are covered by the first vertex of each of two disjoint branches. Each branch has a three-vertex stem and three leaves covering its last stem vertex. Each of the twelve branch vertices has two saturated paths from the root, distinguished by the first step. The other three vertices each have one path. Extension within a branch preserves the first step. A split successor forces its predecessor to be split, so the split vertices in each branch form a lower ideal. Conversely, each pair of lower ideals uniquely determines the compatible family, with refinement corresponding to inclusion. The rank is the combined size of the two ideals and the height is 12. Lean checks the path classification and rank-preserving equivalence for this base, then enumerates the ideal pairs to give rank counts 15, 14, and 17 at ranks 6, 7, and 8.
 
 **Theorem 1.3 (Both shape properties fail on the same poset).**
 
@@ -42,7 +42,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-The decrease from 15 to 14 requires any unimodal mode to precede rank 7. The increase from 14 to 17 requires it to follow rank 7. At rank 7, the square of 14 is 196 and the product of 15 and 17 is 255, contradicting log-concavity. This answers Question 1 for Definition 2's rooted lattice. For the map presentation the least element must map to the least element. The printed count identity alone allows a singleton to map to the top of a two-element chain.
+The decrease from 15 to 14 requires any unimodal mode to precede rank 7. The increase from 14 to 17 requires it to follow rank 7. At rank 7, the square of 14 is 196 and the product of 15 and 17 is 255, contradicting log-concavity. This answers Question 1 for Definition 2's rooted lattice. The correspondence with count maps uses root preservation. Bare Definition 1 allows a singleton to map to the top of a two-element chain, where the path-count identity tests only the top-to-top path and the absence of a path to the bottom.
 
 ## References
 
