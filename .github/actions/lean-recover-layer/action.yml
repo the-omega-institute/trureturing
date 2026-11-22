@@ -17,5 +17,8 @@ runs:
         STAGE: ${{ inputs.stage }}
       run: |
         directory="$RUNNER_TEMP/lean-compile"
-        python3 tools/scripts/worktree/lean_compile_layers.py recover --stage "$STAGE" --artifacts "$directory"
+        read -ra targets <<< "${LEAN_LAYER_TARGETS:-}"
+        args=()
+        if [[ ${#targets[@]} -gt 0 ]]; then args=(--target "${targets[@]}"); fi
+        python3 tools/scripts/worktree/lean_compile_layers.py recover --stage "$STAGE" --artifacts "$directory" "${args[@]}"
         rm -- "$directory/$STAGE.tar.gz"

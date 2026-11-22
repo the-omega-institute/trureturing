@@ -8,7 +8,7 @@ on:
       mode:
         description: Project seed for Release verification
         type: choice
-        options: [complete, partial, none, legacy, auto, release, parallel]
+        options: [complete, partial, none, legacy, auto, release, parallel, compile-only]
         required: true
       volume_test_id:
         description: Shared identifier for two verification snapshots using reusable physical volumes
@@ -33,6 +33,20 @@ permissions: {}
 # This native integration event verifies the Lean-cache publication and restore
 # programs. It is separate from the required CI workflows.
 jobs:
+  compile-only:
+    name: Compile full shared and exclusive layers with checkpoints
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.mode == 'compile-only' &&
+      github.ref_protected && startsWith(github.ref_name, 'diagnostic/lean-compile-progress-')
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-release-compile.yml
+    with:
+      source: ${{ github.sha }}
+      strategy: parallel
+      publication-mode: verification
+
   parallel-compile:
     if: github.event_name == 'workflow_dispatch' && contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests')
     permissions:
@@ -54,7 +68,7 @@ jobs:
       (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') &&
        ((contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && needs.parallel-compile.result == 'success' &&
          (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == inputs.mode)) ||
-        (!contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
+        (!contains(fromJSON('["auto","release","parallel","compile-only"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
     runs-on: ubuntu-24.04-arm
     # Cold and partial seed scenarios exercise the scheduled Release build.
     timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
@@ -119,6 +133,8 @@ jobs:
             .github/actions/lean-cache-produce/action.yml
             .github/actions/lean-cache-release-seed/*
             .github/actions/lean-compile-layer/*
+            .github/actions/lean-compile-checkpoint/*
+            .github/actions/lean-report-compile-checkpoint/progress.py
             .github/actions/lean-recover-layer/*
             .github/actions/lean-release-base/*
             .github/workflows/ci-lean-release-compile.yml
