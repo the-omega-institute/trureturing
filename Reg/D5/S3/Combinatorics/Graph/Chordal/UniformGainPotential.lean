@@ -158,7 +158,7 @@ def family : Registration arena.{u, v}
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.{u, v})
-    (Realization signature.{u, v}) (Type u → Type u) Unit where
+    (Realization signature.{u, v}) Unit Unit where
   unitName := `SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential.family
   realizationSource := none
@@ -174,7 +174,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (fun V : Type u => V)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential
     definition := none

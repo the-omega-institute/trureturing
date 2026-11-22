@@ -6,14 +6,15 @@
    utility: none
    digest: Triangle defects bound chordal gain errors independently of graph size. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Chordal.Dirac
 import Mathlib.Topology.MetricSpace.IsometricSMul
 
 /-! # Uniform approximation of group gains on chordal graphs
 
 The shadow of a component above a distance layer is a clique. Its predecessors in the
-parent shadow are nested, so the component has an anchor adjacent to its entire shadow.
-The resulting potential uses at most four triangle comparisons across an edge.
+parent shadow are nested, so the component has an anchor adjacent to its entire shadow
+above the first layer. At depth one the shadow is the root alone. The potential uses at most four triangle comparisons across an edge.
 -/
 
 universe u v
@@ -22,47 +23,20 @@ namespace SimpleGraph
 
 variable {V : Type u} {G : SimpleGraph V}
 
-private theorem geodesic_edge {x y : V} (p : G.Walk x y) (hp : p.length = G.dist x y)
-    {a b : V} (ha : a ∈ p.support) (hb : b ∈ p.support) (hab : G.Adj a b) :
-    s(a, b) ∈ p.edges := by
-  classical
-  obtain ⟨r, t, rfl⟩ : ∃ (r : G.Walk x a) (t : G.Walk a y), p = r.append t :=
-    ⟨p.takeUntil a ha, p.dropUntil a ha, (p.take_spec ha).symm⟩
-  rcases (Walk.mem_support_append_iff r t).mp hb with hb | hb
-  · obtain ⟨r', m, rfl⟩ : ∃ (r' : G.Walk x b) (m : G.Walk b a), r = r'.append m :=
-      ⟨r.takeUntil b hb, r.dropUntil b hb, (r.take_spec hb).symm⟩
-    have hm := length_eq_dist_of_subwalk hp (show m.IsSubwalk ((r'.append m).append t) from
-      ⟨r', t, rfl⟩)
-    have hme : m = hab.symm.toWalk :=
-      Walk.eq_of_length_le_one (by simpa [dist_eq_one_iff_adj.mpr hab.symm] using hm.le)
-        (by simp)
-    simp [Walk.edges_append, hme, Sym2.eq_swap]
-  · obtain ⟨m, t', rfl⟩ : ∃ (m : G.Walk a b) (t' : G.Walk b y), t = m.append t' :=
-      ⟨t.takeUntil b hb, t.dropUntil b hb, (t.take_spec hb).symm⟩
-    have hm := length_eq_dist_of_subwalk hp (show m.IsSubwalk (r.append (m.append t')) from
-      ⟨r, t', Walk.append_assoc r m t'⟩)
-    have hme : m = hab.toWalk :=
-      Walk.eq_of_length_le_one (by simpa [dist_eq_one_iff_adj.mpr hab] using hm.le) (by simp)
-    simp [Walk.edges_append, hme]
+open private exists_induced_path_of_walk two_induced_paths_not_chordal from
+  D5.S3.Combinatorics.Graph.Chordal.Dirac
 
 private theorem induced_path {S : Set V} {x y : V} {hx : x ∈ S} {hy : y ∈ S}
     (h : (G.induce S).Reachable ⟨x, hx⟩ ⟨y, hy⟩) :
     ∃ p : G.Walk x y, p.IsPath ∧ (∀ w ∈ p.support, w ∈ S) ∧
       (∀ a ∈ p.support, ∀ b ∈ p.support, G.Adj a b → s(a, b) ∈ p.edges) := by
-  obtain ⟨p, hp, hd⟩ := h.exists_path_of_dist
+  obtain ⟨p⟩ := h
   let f : G.induce S →g G := ⟨Subtype.val, fun h => h⟩
-  refine ⟨p.map f, hp.map Subtype.val_injective, ?_, ?_⟩
-  · intro w hw
-    replace hw : w ∈ List.map (⇑f) p.support := (Walk.support_map f p) ▸ hw
-    obtain ⟨w', _, rfl⟩ := List.mem_map.mp hw
-    exact w'.property
-  · intro a ha b hb hab
-    replace ha : a ∈ List.map (⇑f) p.support := (Walk.support_map f p) ▸ ha
-    replace hb : b ∈ List.map (⇑f) p.support := (Walk.support_map f p) ▸ hb
-    obtain ⟨a', ha', rfl⟩ := List.mem_map.mp ha
-    obtain ⟨b', hb', rfl⟩ := List.mem_map.mp hb
-    apply (Walk.edges_map f p).symm ▸ (?_ : _ ∈ List.map (Sym2.map ⇑f) p.edges)
-    exact List.mem_map.mpr ⟨s(a', b'), geodesic_edge p hd ha' hb' hab, rfl⟩
+  apply exists_induced_path_of_walk G S hx hy (p.map f)
+  intro w hw
+  replace hw : w ∈ List.map (⇑f) p.support := (Walk.support_map f p) ▸ hw
+  obtain ⟨w', _, rfl⟩ := List.mem_map.mp hw
+  exact w'.property
 
 private theorem separated_paths (hG : G.IsChordal) {x y : V} (hxy : x ≠ y)
     (hn : ¬ G.Adj x y) {S T : Set V} {hxS : x ∈ S} {hyS : y ∈ S}
@@ -73,52 +47,15 @@ private theorem separated_paths (hG : G.IsChordal) {x y : V} (hxy : x ≠ y)
       a ≠ b ∧ ¬ G.Adj a b) : False := by
   obtain ⟨p, hp, hps, hpe⟩ := induced_path hs
   obtain ⟨q, hq, hqt, hqe⟩ := induced_path ht
-  have length_ge_two (w : G.Walk x y) : 2 ≤ w.length := by
-    cases w with
-    | nil => exact (hxy rfl).elim
-    | cons h w =>
-      cases w with
-      | nil => exact (hn h).elim
-      | cons _ _ => simp [Walk.length_cons]
-  have hp2 := length_ge_two p
-  have hq2 := length_ge_two q
-  have start_not_mem_tail {a b : V} {w : G.Walk a b} (hw : w.IsPath) :
-      a ∉ w.support.tail := by
-    have hd := hw.support_nodup
-    rw [← Walk.cons_tail_support] at hd
-    exact (List.nodup_cons.mp hd).1
-  have disjoint : p.support.tail.Disjoint q.reverse.support.tail := by
-    intro w hwp hwq
-    have hwq' : w ∈ q.support := by
-      simpa using List.mem_of_mem_tail hwq
-    have hwx : w ≠ x := fun e => start_not_mem_tail hp (e ▸ hwp)
-    have hwy : w ≠ y := fun e => start_not_mem_tail hq.reverse (e ▸ hwq)
-    exact (hsep w (hps w (List.mem_of_mem_tail hwp)) w (hqt w hwq') hwx hwy hwx hwy).1 rfl
-  have hc := hp.isCycle_append hq.reverse disjoint (Or.inl (by omega))
-  have hl : 4 ≤ (p.append q.reverse).length := by
-    rw [Walk.length_append, Walk.length_reverse]
-    omega
-  obtain ⟨a, b, ha, hb, hab, he⟩ := hG (p.append q.reverse) hc hl
-  apply he
-  rw [Walk.edges_append, Walk.edges_reverse, List.mem_append, List.mem_reverse]
-  have cross {a b : V} (ha : a ∈ p.support) (hb : b ∈ q.support) (hab : G.Adj a b) :
-      s(a, b) ∈ p.edges ∨ s(a, b) ∈ q.edges := by
-    by_cases hax : a = x
-    · exact Or.inr (hqe _ (hax ▸ q.start_mem_support) _ hb hab)
-    by_cases hay : a = y
-    · exact Or.inr (hqe _ (hay ▸ q.end_mem_support) _ hb hab)
-    by_cases hbx : b = x
-    · exact Or.inl (hpe _ ha _ (hbx ▸ p.start_mem_support) hab)
-    by_cases hby : b = y
-    · exact Or.inl (hpe _ ha _ (hby ▸ p.end_mem_support) hab)
-    exact ((hsep _ (hps _ ha) _ (hqt _ hb) hax hay hbx hby).2 hab).elim
-  simp only [Walk.mem_support_append_iff, Walk.support_reverse, List.mem_reverse] at ha hb
-  rcases ha with ha | ha <;> rcases hb with hb | hb
-  · exact Or.inl (hpe _ ha _ hb hab)
-  · exact cross ha hb hab
-  · rw [Sym2.eq_swap]
-    exact cross hb ha hab.symm
-  · exact Or.inr (hqe _ ha _ hb hab)
+  have length_ge_two (w : G.Walk x y) : 2 ≤ w.length :=
+    (w.reachable.one_lt_dist_of_ne_of_not_adj hxy hn).trans_le (G.dist_le w)
+  apply two_induced_paths_not_chordal G hG p q hp hq (length_ge_two p) (length_ge_two q) hpe hqe
+  · intro w hw hw'
+    by_contra! h
+    exact (hsep w (hps w hw) w (hqt w hw') h.1 h.2 h.1 h.2).1 rfl
+  · intro a ha b hb hab
+    by_contra! h
+    exact (hsep a (hps a ha) b (hqt b hb) h.1.1 h.1.2 h.2.1 h.2.2).2 hab
 
 private theorem four_cycle_diagonal (hG : G.IsChordal) {a b c d : V}
     (hab : G.Adj a b) (hbc : G.Adj b c) (hcd : G.Adj c d) (hda : G.Adj d a)
@@ -343,6 +280,7 @@ private theorem gain_adj [DecidableEq V] (g : V → V → H) {x y : V} (h : G.Ad
 
 variable [PseudoMetricSpace H] [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H]
 
+omit [IsIsometricSMul H H] [IsIsometricSMul Hᵐᵒᵖ H] in
 private theorem gain_triangle [DecidableEq V] {g : V → V → H} {ε : ℝ} (hε : 0 ≤ ε)
     (hrev : ∀ i j, G.Adj i j → g j i = (g i j)⁻¹)
     (htri : ∀ i j k, G.Adj i j → G.Adj j k → G.Adj i k →

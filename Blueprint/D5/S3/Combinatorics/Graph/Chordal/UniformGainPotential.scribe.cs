@@ -13,7 +13,7 @@ internal sealed class UniformGainPotentialDocument : IScribeDocumentDefinition
             Paragraph(Text("Let V be a finite vertex type and H a group with a pseudometric invariant under both left and right multiplication. An oriented edge from i to j carries a label g(i,j). Reversing an edge inverts its label exactly. For each ordered triangle, the distance between g(i,j)g(j,k) and g(i,k) is at most a common nonnegative real number epsilon.")),
             Describe.Lean(
                 DescribeId.Create("uniform-chordal-gain-potential"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Chordal/UniformGainPotential.SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Chordal/UniformGainPotential.exists_uniform_approximate_gain_potential"),
                 H("A uniform four-defect bound"),
                 StatementSource.FromAuthor(Disp(Statement())),
                 AssessedProvenance.FromRepo(),
