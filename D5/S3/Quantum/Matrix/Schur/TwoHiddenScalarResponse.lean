@@ -10,7 +10,6 @@ module
 
 public import Mathlib.Algebra.Field.Basic
 public import Mathlib.Data.Set.Defs
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
 /-! The image of the scalar response with allowed nonsingular mixing parameters. -/
@@ -42,16 +41,18 @@ private theorem nonzero_response_iff (t β γ ε ζ : K) (ht : t ≠ 0) (hdet : 
       by_cases hβ : β = 0
       · by_cases hγ : γ = 0
         · exact ⟨-ε, 1, 0, 1, -ζ, by simp [hβ, hγ]⟩
-        · have hζ : ζ = 0 := left.resolve_left hβ |>.resolve_left hγ
+        · have hζ : ζ = 0 := (left.resolve_left (fun h => h hβ)).resolve_left hγ
           exact ⟨-ε, 0, -γ, 1, 0, by simp [hβ, hζ]⟩
       · let b := -β / t
         have hb : b ≠ 0 := div_ne_zero (neg_ne_zero.mpr hβ) ht
         have hbβ : β = -b * 1 * t := by
-          rw [mul_one, ← neg_mul, div_mul_cancel₀ _ ht, neg_neg]
+          rw [mul_one, neg_mul]
+          change β = -((-β / t) * t)
+          rw [div_mul_cancel₀ _ ht, neg_neg]
         have hbζ : ζ = -b * (-ζ / b) := by
-          rw [← neg_mul, mul_comm b, div_mul_cancel₀ _ hb, neg_neg]
+          rw [neg_mul, mul_comm b, div_mul_cancel₀ _ hb, neg_neg]
         by_cases hγ : γ = 0
-        · have hε : ε = 0 := right.resolve_left hγ |>.resolve_left hβ
+        · have hε : ε = 0 := (right.resolve_left (fun h => h hγ)).resolve_left hβ
           exact ⟨0, b, 1, 0, -ζ / b, hbβ, by simp [hγ], by simp [hε], hbζ⟩
         · refine ⟨ε / γ, b, 1, -γ, -ζ / b, hbβ, by simp, ?_, hbζ⟩
           rw [neg_mul_neg, div_mul_cancel₀ _ hγ]
