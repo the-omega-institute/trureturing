@@ -120,7 +120,6 @@ jobs:
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
 
   scribe:
