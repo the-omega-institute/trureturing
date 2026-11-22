@@ -42,7 +42,16 @@ internal sealed class OriginalFourMShiftedThetaDocument : IScribeDocumentDefinit
                 DescribeRole.Theorem,
                 Text("If det G is a unit in ℤ and G is positive definite over ℝ, then "
                     + "Θₐ(τ+1,z) = quadraticSign(a) Θₐ(τ,z) for every complex τ and z. "
-                    + "The doubled-Gram quadratic class at Gq is represented by bilinear(D,q,q)/4.")))));
+                    + "The doubled-Gram quadratic class at Gq is represented by bilinear(D,q,q)/4.")),
+            D("original-fourm-fourier-row", "fourierRow", "Normalized Fourier row",
+                DescribeRole.Definition,
+                Text("Apply the actual mod-two Fourier signs and sum with normalization 2⁻¹².")),
+            D("original-fourm-doubled-source-quadratic", "sourceQuadratic_doubled",
+                "Doubled Gram source", DescribeRole.Theorem,
+                Text("The doubled-Gram complex quadratic source is twice the original Gram contraction.")),
+            D("original-fourm-theta-source-negation", "chargeTheta_neg_source",
+                "Negation within the charge fiber", DescribeRole.Theorem,
+                Text("Negating the source preserves the sector by q ↦ −q in the integral mod-two fiber.")))));
 
     private static DocumentBlock D(string id, string name, string title, DescribeRole role,
         params Inline[] content) =>
