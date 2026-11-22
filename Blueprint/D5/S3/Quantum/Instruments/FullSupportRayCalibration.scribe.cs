@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Instruments;
 
 internal sealed class FullSupportRayCalibrationDocument : IScribeDocumentDefinition
 {
@@ -38,7 +38,7 @@ internal sealed class FullSupportRayCalibrationDocument : IScribeDocumentDefinit
         "A calibration on a basis and a single full-support input determines a branch coefficient map up to one scalar relative to an injective reference.",
         H("Support-sensitive calibration of a branch coefficient map"),
         Blocks(Describe.Lean(DescribeId.Create("support-calibration"),
-            DeclarationHandle.Create("D5/S3/Quantum/Measurement/FullSupportRayCalibration.support_calibration"),
+            DeclarationHandle.Create("D5/S3/Quantum/Instruments/FullSupportRayCalibration.support_calibration"),
             H("Which diagonal coefficients an additional input identifies"),
             StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Let J be an injective linear reference map between vector spaces over a field. For a finite input basis, suppose T sends each basis vector to a scalar aᵢ times its J-image. The extra test T(u)=cJ(u) holds exactly when aᵢ=c at every nonzero coordinate of u. If all coordinates of u are nonzero, passing the test is equivalent to T=cJ on the whole input.")),

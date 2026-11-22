@@ -8,7 +8,7 @@ A calibration on a basis and a single full-support input determines a branch coe
 
 $$\mathrm{Field}(K)\land \mathrm{Finite}(I)\land \mathrm{Basis}(b,V)\land T,J\in \mathrm{Hom}(V,W)_{K}\land \mathrm{Injective}(J)\land (\forall i\in I, Tb_{i}=a_{i}Jb_{i}) \Rightarrow (Tu=cJu\iff \forall i\in \mathrm{supp}(u), a_{i}=c) \land (\mathrm{supp}(u)=I\Rightarrow (Tu=cJu\iff T=cJ))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/FullSupportRayCalibration.support_calibration` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Instruments/FullSupportRayCalibration.support_calibration` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,4 +20,4 @@ Expand u in the basis, push both linear maps through the finite sum, and cancel 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Measurement/FullSupportRayCalibration.support_calibration`
+- Truth anchor: `D5/S3/Quantum/Instruments/FullSupportRayCalibration.support_calibration`

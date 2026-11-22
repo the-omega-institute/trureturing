@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/FullSupportRayCalibration
+/- GID: D5/S3/Quantum/Instruments/FullSupportRayCalibration
    generality: G
-   mirror-B: D5/B/S3/Quantum/Measurement/FullSupportRayCalibration
+   mirror-B: D5/B/S3/Quantum/Instruments/FullSupportRayCalibration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Basis.Defs]
    utility: none
@@ -12,7 +12,7 @@ public import Mathlib.LinearAlgebra.Basis.Defs
 /-! A basis and one full-support vector identify a scalar multiple of an injective reference map. -/
 
 @[expose] public section
-namespace D5.S3.Quantum.Measurement.FullSupportRayCalibration
+namespace D5.S3.Quantum.Instruments.FullSupportRayCalibration
 
 variable {K V W ι : Type*} [Field K] [AddCommGroup V] [Module K V]
   [AddCommGroup W] [Module K W] [Fintype ι]
@@ -55,4 +55,4 @@ theorem support_calibration (b : Module.Basis ι K V) (J T : V →ₗ[K] W)
   · intro h
     exact DFunLike.congr_fun h u
 
-end D5.S3.Quantum.Measurement.FullSupportRayCalibration
+end D5.S3.Quantum.Instruments.FullSupportRayCalibration

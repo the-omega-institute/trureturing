@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Measurement.FullSupportRayCalibration
+import D5.S3.Quantum.Instruments.FullSupportRayCalibration
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift
 import Mathlib.Algebra.Module.ULift
@@ -9,10 +9,10 @@ import Mathlib.Algebra.Field.Rat
 /-! The comparison scalar must remain observable on a supported coordinate. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.Measurement.FullSupportRayCalibration
+open _root_.D5.S3.Quantum.Instruments.FullSupportRayCalibration
 open LeanInformationAudit
 
-namespace Reg.D5.S3.Quantum.Measurement.FullSupportRayCalibration
+namespace Reg.D5.S3.Quantum.Instruments.FullSupportRayCalibration
 noncomputable section
 universe u v w z
 
@@ -78,10 +78,10 @@ def family : Registration arena.{u,v,w,z} (type_of% @support_calibration.{u,v,w,
     exact ⟨ULift.{u} ℚ, (0 : ULift.{u} ℚ), (1 : ULift.{u} ℚ), (zero_ne_one : (0 : ULift.{u} ℚ) ≠ 1)⟩
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Measurement.FullSupportRayCalibration.support_calibration.{u,v,w,z})
+    (@_root_.D5.S3.Quantum.Instruments.FullSupportRayCalibration.support_calibration.{u,v,w,z})
     (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.FullSupportRayCalibration.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.FullSupportRayCalibration.family
+  unitName := `Reg.D5.S3.Quantum.Instruments.FullSupportRayCalibration.unit
+  realizationName := `Reg.D5.S3.Quantum.Instruments.FullSupportRayCalibration.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u,v,w,z}⟩
@@ -97,7 +97,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.FullSupportRayCalibration
+    owner := `D5.S3.Quantum.Instruments.FullSupportRayCalibration
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -113,4 +113,4 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end
-end Reg.D5.S3.Quantum.Measurement.FullSupportRayCalibration
+end Reg.D5.S3.Quantum.Instruments.FullSupportRayCalibration
