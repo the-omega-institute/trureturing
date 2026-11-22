@@ -14,7 +14,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysic
 
 *Commentary.*
 
-For either upperA, any chart c, real x, punctures p and q, and complex u and v, evaluate chartCovariance at the two inverse coordinates using the native flags of p and q. If p = q, subtract η(1 + βγ)/(2βγ(β + γ)²), where η is the lowering parameter of p and β and γ are the inverse roots at the two arguments of that puncture. The correction is zero for distinct punctures. Divide the resulting covariance by the product of the two derivatives of the lifted coordinate maps. At a puncture with lowering parameter λ the lift is t ↦ scaleRoot·t/β(t), where t is the native half-coordinate and β(t)² = 1 − λt² with β(0) = 1. Its derivative halfJacobian = scaleRoot/β(t)³ is evaluated at the inverse root.
+For either upperA, any chart c, real x, punctures p and q, and complex u and v, evaluate chartCovariance at the two inverse coordinates using the native flags of p and q. If p = q, subtract η(1 + βγ)/(2βγ(β + γ)²), where η is the lowering parameter of p and β and γ are the inverse roots at the two arguments of that puncture. The correction is zero for distinct punctures. Where the quotient is defined, divide the resulting covariance by the product of the two halfJacobian factors, each given by scaleRoot/β³ at its argument. For 0 < x < 1 and u near zero, this factor at p is the derivative of the lift t ↦ scaleRoot·t/β(t) with respect to the native half-coordinate t, evaluated at t² = rawLocal(c,x,p,u). Here λ is the lowering parameter of p and β(t)² = 1 − λt² with β(0) = 1. The second factor uses q and v in the same way.
 
 **Theorem 1.2 (Signed covariance germs with the period discrepancy).**
 
