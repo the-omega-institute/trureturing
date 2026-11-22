@@ -11,7 +11,7 @@ import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripProfile
 
 /-! # The repeat-node tail correction as a finite exponential sum -/
 
-open Finset
+open Finset Set
 
 noncomputable section
 
@@ -457,6 +457,18 @@ theorem leftStripTailResidual_smooth (p : ℕ) :
   unfold upperTailRepeatCorrection upperTailGap
   fun_prop
 
+private theorem contDiff_partialLeft {f : ℝ → ℝ → ℝ} {n m : WithTop ℕ∞}
+    (hf : ContDiff ℝ n (Function.uncurry f)) (hn : n ≠ 0) (hm : m+1 ≤ n) :
+    ContDiff ℝ m (Function.uncurry (fun x y ↦ deriv (f · y) x)) := by
+  have hd := (hf.fderiv_right hm).clm_apply
+    (contDiff_const : ContDiff ℝ m (fun _ : ℝ × ℝ ↦ ((1,0) : ℝ × ℝ)))
+  convert hd using 1
+  funext z
+  rcases z with ⟨x,y⟩
+  have hLine : HasDerivAt (fun t : ℝ ↦ (t,y)) (1,0) x := by
+    simpa only [id_eq] using (hasDerivAt_id x).prodMk (hasDerivAt_const x y)
+  exact ((hf.differentiable hn (x,y)).hasFDerivAt.comp_hasDerivAt x hLine).deriv
+
 /-- Second and mixed third derivative bounds for the cancelled tail.
 Both are measured against the correction at the smaller separated gap. -/
 theorem leftStripTailResidual_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
@@ -504,19 +516,8 @@ theorem leftStripTailResidual_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v :
   have hCaa :
       DifferentiableAt ℝ (fun y ↦ deriv (deriv (C · y)) a) v := by
     have hSmooth := leftStripCross_smooth p
-    have hPartial {f : ℝ → ℝ → ℝ} {n m : WithTop ℕ∞}
-        (hf : ContDiff ℝ n (Function.uncurry f)) (hn : n ≠ 0) (hm : m+1 ≤ n) :
-        ContDiff ℝ m (Function.uncurry (fun x y ↦ deriv (f · y) x)) := by
-      have hd := (hf.fderiv_right hm).clm_apply
-        (contDiff_const : ContDiff ℝ m (fun _ : ℝ × ℝ ↦ ((1,0) : ℝ × ℝ)))
-      convert hd using 1
-      funext z
-      rcases z with ⟨x,y⟩
-      have hLine : HasDerivAt (fun t : ℝ ↦ (t,y)) (1,0) x := by
-        simpa only [id_eq] using (hasDerivAt_id x).prodMk (hasDerivAt_const x y)
-      exact ((hf.differentiable hn (x,y)).hasFDerivAt.comp_hasDerivAt x hLine).deriv
-    have h₁ := hPartial hSmooth (by decide) (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)
-    have h₂ := hPartial h₁ (by decide) (show (1 : WithTop ℕ∞)+1 ≤ 2 by decide)
+    have h₁ := contDiff_partialLeft hSmooth (by decide) (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)
+    have h₂ := contDiff_partialLeft h₁ (by decide) (show (1 : WithTop ℕ∞)+1 ≤ 2 by decide)
     exact ((h₂.comp (contDiff_const.prodMk contDiff_id :
       ContDiff ℝ 1 (fun y : ℝ ↦ (a,y)))).differentiable (by decide) v)
   have hthird : deriv (fun y ↦ deriv (deriv (A · y)) a) v =
@@ -563,10 +564,112 @@ theorem leftStripTailResidual_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v :
     rw [abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
     linarith only [hU3, hC3]
 
+private theorem mixed_partial_eq {f : ℝ → ℝ → ℝ} {x y : ℝ}
+    (hf : ContDiffAt ℝ 2 (Function.uncurry f) (x,y)) :
+    deriv (fun t ↦ deriv (f t) y) x = deriv (fun t ↦ deriv (f · t) x) y := by
+  have h := Extreme.hasDerivAt_deriv_second hf
+  exact h.deriv.trans (Extreme.hasDerivAt_deriv_first_of_second hf h).deriv.symm
+
+private theorem bounds_of_cancelled_second_derivative {f : ℝ → ℝ} {a C : ℝ}
+    (ha : 0 ≤ a) (hC : 0 ≤ C)
+    (hf : Differentiable ℝ f) (hf' : Differentiable ℝ (deriv f))
+    (h₀ : f 0 = 0) (h₁ : deriv f 0 = 0)
+    (h₂ : ∀ x ∈ Icc (0 : ℝ) a, |deriv (deriv f) x| ≤ C) :
+    |f a| ≤ C*a^2 ∧ |deriv f a| ≤ C*a := by
+  have hderiv (x : ℝ) (hx : x ∈ Icc (0 : ℝ) a) : |deriv f x| ≤ C*x := by
+    have hm := Convex.norm_image_sub_le_of_norm_deriv_le (f := deriv f)
+      (fun t _ ↦ hf' t) (fun t ht ↦ by simpa only [Real.norm_eq_abs] using h₂ t ht)
+      (convex_Icc 0 a) (left_mem_Icc.mpr ha) hx
+    simpa only [Real.norm_eq_abs, h₁, sub_zero, abs_of_nonneg hx.1] using hm
+  have hm := Convex.norm_image_sub_le_of_norm_deriv_le (f := f)
+    (fun t _ ↦ hf t)
+    (fun t ht ↦ by
+      rw [Real.norm_eq_abs]
+      exact (hderiv t ht).trans (mul_le_mul_of_nonneg_left ht.2 hC))
+    (convex_Icc 0 a) (left_mem_Icc.mpr ha) (right_mem_Icc.mpr ha)
+  refine ⟨?_, hderiv a (right_mem_Icc.mpr ha)⟩
+  simpa only [Real.norm_eq_abs, h₀, sub_zero, abs_of_nonneg ha, pow_two, mul_assoc] using hm
+
+/-- The zero value and slope give a quadratic bound on both the tail
+residual and its upper-coordinate derivative. -/
+theorem leftStripTailResidual_cancellation_bounds {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
+    (ha : 0 ≤ a) (hgap : 6 ≤ v-a) :
+    let h := 3/(p : ℝ)
+    let U := upperTailRepeatCorrection h (v-a)
+    let A := leftStripTailResidual p
+    |A a v| ≤ 12*U*a^2 ∧ |deriv (A · v) a| ≤ 12*U*a ∧
+      |deriv (A a) v| ≤ 40*U*a^2 ∧ |deriv (fun x ↦ deriv (A x) v) a| ≤ 40*U*a := by
+  let h := 3/(p : ℝ)
+  let U := upperTailRepeatCorrection h
+  let A := leftStripTailResidual p
+  let P (x y : ℝ) := deriv (A · y) x
+  let R (x y : ℝ) := deriv (A x) y
+  have hp₀ : 0 < p := by omega
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hA : ContDiff ℝ 3 (Function.uncurry A) := leftStripTailResidual_smooth p
+  have hA₂ : ContDiff ℝ 2 (Function.uncurry A) := hA.of_le (by decide)
+  have hP : ContDiff ℝ 2 (Function.uncurry P) :=
+    contDiff_partialLeft hA (by decide) (by norm_num)
+  have hLeft {f : ℝ → ℝ → ℝ} (hf : ContDiff ℝ 2 (Function.uncurry f)) :
+      Differentiable ℝ (f · v) :=
+    (hf.comp (contDiff_id.prodMk contDiff_const :
+      ContDiff ℝ 2 (fun x : ℝ ↦ (x,v)))).differentiable (by decide)
+  have hR (x : ℝ) : DifferentiableAt ℝ (R · v) x :=
+    (Extreme.hasDerivAt_deriv_second (hA₂.contDiffAt (x := (x,v)))).differentiableAt
+  have hRfirst : deriv (R · v) = fun x ↦ deriv (P x) v :=
+    funext fun x ↦ mixed_partial_eq (hA₂.contDiffAt (x := (x,v)))
+  have hRsecond (x : ℝ) :
+      deriv (deriv (R · v)) x = deriv (fun y ↦ deriv (deriv (A · y)) x) v := by
+    rw [hRfirst]
+    exact mixed_partial_eq (hP.contDiffAt (x := (x,v)))
+  have hRdiff : Differentiable ℝ (deriv (R · v)) := by
+    rw [hRfirst]
+    intro x
+    exact (Extreme.hasDerivAt_deriv_second (hP.contDiffAt (x := (x,v)))).differentiableAt
+  have hA₀ (y : ℝ) : A 0 y = 0 := (leftStripTailResidual_zero hp₀ y).1
+  have hP₀ (y : ℝ) : P 0 y = 0 := (leftStripTailResidual_zero hp₀ y).2.deriv
+  have hR₀ : R 0 v = 0 := by
+    change deriv (A 0) v = 0
+    rw [show A 0 = fun _ ↦ 0 from funext hA₀, deriv_const]
+  have hR₁ : deriv (R · v) 0 = 0 := by
+    rw [hRfirst]
+    change deriv (P 0) v = 0
+    rw [show P 0 = fun _ ↦ 0 from funext hP₀, deriv_const]
+  have hUd : Differentiable ℝ U :=
+    fun t ↦ (hasDerivAt_repeat (t := t) hh).differentiableAt
+  have hUm : AntitoneOn U (Ici 6) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Ici _) hUd.continuous.continuousOn hUd.differentiableOn
+    intro t ht
+    exact neg_nonneg.mp (separated_correction_derivative_bounds hh
+      (interior_subset ht : t ∈ Ici (6 : ℝ))).1
+  have hF : 0 ≤ upperTailGap h (v-a) := by
+    unfold upperTailGap
+    exact div_nonneg
+      (sub_nonneg.mpr (Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le (by linarith))))) hh.le
+  have hU₀ : 0 ≤ U (v-a) := by unfold U upperTailRepeatCorrection; positivity
+  have hBounds (x : ℝ) (hx : x ∈ Icc (0 : ℝ) a) :
+      |deriv (deriv (A · v)) x| ≤ 12*U (v-a) ∧
+        |deriv (deriv (R · v)) x| ≤ 40*U (v-a) := by
+    have hs : v-a ≤ v-x := sub_le_sub_left hx.2 _
+    have hxs := hgap.trans hs
+    have hmono : U (v-x) ≤ U (v-a) := hUm hgap hxs hs
+    obtain ⟨h₂,h₃⟩ := leftStripTailResidual_derivative_bounds hp hx.1 hxs
+    rw [hRsecond x]
+    exact ⟨h₂.trans (mul_le_mul_of_nonneg_left hmono (by norm_num)),
+      h₃.trans (mul_le_mul_of_nonneg_left hmono (by norm_num))⟩
+  obtain ⟨hA₁,hA₂⟩ := bounds_of_cancelled_second_derivative ha
+    (by positivity : 0 ≤ 12*U (v-a)) (hLeft hA₂) (hLeft hP) (hA₀ v) (hP₀ v)
+    (fun x hx ↦ (hBounds x hx).1)
+  obtain ⟨hRv,hRv₁⟩ := bounds_of_cancelled_second_derivative ha
+    (by positivity : 0 ≤ 40*U (v-a)) hR hRdiff hR₀ hR₁ (fun x hx ↦ (hBounds x hx).2)
+  exact ⟨hA₁,hA₂,hRv,hRv₁⟩
+
 #print axioms leftStripCross_eq
 #print axioms leftStripTailResidual_zero
 #print axioms leftStripCross_derivatives
 #print axioms leftStripCross_derivative_bounds
 #print axioms leftStripTailResidual_derivative_bounds
+#print axioms leftStripTailResidual_cancellation_bounds
 
 end RefinedBMV.PositiveCenter
