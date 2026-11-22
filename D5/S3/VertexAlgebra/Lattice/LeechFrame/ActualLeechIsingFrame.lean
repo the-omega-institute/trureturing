@@ -7,7 +7,7 @@
    digest: Forty-eight actual Leech Ising axes and their commuting orbifold modes. -/
 
 import D5.S3.VertexAlgebra.Lattice.LeechFrame.ActualLeechNormFourFrame
-import D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
+import D5.S3.VertexAlgebra.Lattice.LeechFrame.NormFourMixedProducts
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.FixedSourceIsing
 
 /-! The conformal sum and commuting modes of the two signed norm-four axes

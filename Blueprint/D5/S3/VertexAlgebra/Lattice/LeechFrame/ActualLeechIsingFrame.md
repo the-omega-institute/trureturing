@@ -126,5 +126,5 @@ The lattice and odd twisted commutator formulas express their commutators throug
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/ActualLeechIsingFrame.lattice_mixed_products`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/ActualLeechIsingFrame.orbifold_mixed_products`
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LeechFrame/ActualLeechNormFourFrame](ActualLeechNormFourFrame.md)
-- Dependency: [D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector](../NormFourVirasoroVector.md)
+- Dependency: [D5/S3/VertexAlgebra/Lattice/LeechFrame/NormFourMixedProducts](NormFourMixedProducts.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/Orbifold/FixedSourceIsing](../../TwistedGround/Orbifold/FixedSourceIsing.md)
