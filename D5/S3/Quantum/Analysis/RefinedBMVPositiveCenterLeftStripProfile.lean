@@ -732,11 +732,59 @@ theorem separated_radical_derivative_bounds {h t : ℝ}
     nlinarith only [hS₃max, hm, hk, hBt]
   exact ⟨hb₁max, hb₂max, hb₃max⟩
 
+/-- Bounds for the root difference and its successive translation derivatives.
+The factor `v - s` retains the cancellation at a repeated node. -/
+theorem separated_radical_difference_bounds {h s v : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3/11) (hs : 6 ≤ s) (hsv : s ≤ v) :
+    let B := ((3+h)*(3+2*h)/2) * (upperTailGap h s)^2 * Real.exp (-(2*s))
+    let b : ℝ → ℝ := fun x ↦ Real.sqrt (1 - upperTailLambda h x)
+    |b v - b s| ≤ (13/10)*B*(v-s) ∧
+      |deriv b v - deriv b s| ≤ (33/10)*B*(v-s) ∧
+      |deriv (deriv b) v - deriv (deriv b) s| ≤ (83/10)*B*(v-s) := by
+  let B := separatedSquare h
+  let S : ℝ → ℝ := fun x ↦ 1 - upperTailLambda h x
+  let b : ℝ → ℝ := fun x ↦ Real.sqrt (S x)
+  have hB : ContDiff ℝ 1 B := by unfold B separatedSquare upperTailGap; fun_prop
+  have hS : ContDiff ℝ 3 S := by unfold S upperTailLambda upperTailGap; fun_prop
+  have hmono : AntitoneOn B (Ici 6) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Ici _) hB.continuous.continuousOn
+      (hB.differentiable (by decide)).differentiableOn
+    intro x hx
+    exact neg_nonneg.mp (separated_square_derivative_bounds hh hhmax
+      (interior_subset hx : x ∈ Ici (6 : ℝ))).1
+  have hb (x : ℝ) (hx : 6 ≤ x) : ContDiffAt ℝ 3 b x := by
+    have hpos : 0 < b x := lt_of_lt_of_le (by norm_num : 0 < (999/1000 : ℝ))
+      (separated_radical_lower hh hhmax hx).2
+    exact hS.contDiffAt.sqrt (Real.sqrt_pos.mp hpos).ne'
+  have hb₁ (x : ℝ) (hx : 6 ≤ x) : ContDiffAt ℝ 2 (deriv b) x :=
+    (hb x hx).derivWithin (by norm_num)
+  have hb₂ (x : ℝ) (hx : 6 ≤ x) : ContDiffAt ℝ 1 (deriv (deriv b)) x :=
+    (hb₁ x hx).derivWithin (by norm_num)
+  have hMVT (f : ℝ → ℝ) (C : ℝ) (hC : 0 ≤ C)
+      (hf : ∀ x, 6 ≤ x → DifferentiableAt ℝ f x)
+      (hbound : ∀ x, 6 ≤ x → |deriv f x| ≤ C*B x) :
+      |f v - f s| ≤ C*B s*(v-s) := by
+    have hderiv (x : ℝ) (hx : x ∈ Icc s v) : ‖deriv f x‖ ≤ C*B s := by
+      rw [Real.norm_eq_abs]
+      have hx' := hs.trans hx.1
+      exact (hbound x hx').trans (mul_le_mul_of_nonneg_left (hmono hs hx' hx.1) hC)
+    have hm := Convex.norm_image_sub_le_of_norm_deriv_le
+      (fun x (hx : x ∈ Icc s v) ↦ hf x (hs.trans hx.1)) hderiv (convex_Icc s v)
+      (left_mem_Icc.mpr hsv) (right_mem_Icc.mpr hsv)
+    simpa only [Real.norm_eq_abs, abs_of_nonneg (sub_nonneg.mpr hsv)] using hm
+  exact ⟨hMVT b (13/10) (by norm_num) (fun x hx ↦ (hb x hx).differentiableAt (by decide))
+      (fun x hx ↦ (separated_radical_derivative_bounds hh hhmax hx).1),
+    hMVT (deriv b) (33/10) (by norm_num) (fun x hx ↦ (hb₁ x hx).differentiableAt (by decide))
+      (fun x hx ↦ (separated_radical_derivative_bounds hh hhmax hx).2.1),
+    hMVT (deriv (deriv b)) (83/10) (by norm_num) (fun x hx ↦ (hb₂ x hx).differentiableAt (by decide))
+      (fun x hx ↦ (separated_radical_derivative_bounds hh hhmax hx).2.2)⟩
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
 #print axioms separated_marginal_correction_lt
 #print axioms separated_square_derivative_bounds
 #print axioms separated_correction_derivative_bounds
 #print axioms separated_radical_derivative_bounds
+#print axioms separated_radical_difference_bounds
 
 end RefinedBMV.PositiveCenter
