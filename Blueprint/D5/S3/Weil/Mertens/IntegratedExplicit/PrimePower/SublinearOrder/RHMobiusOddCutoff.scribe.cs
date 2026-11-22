@@ -17,7 +17,7 @@ internal sealed class RHMobiusOddCutoffDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Expansion()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Write q=m+1, s(m)=1/2−1/q and δ(m)=1/q−1/(q+1). "
-                        + "The gap D(m,a,B) is a^(−s(m))−B^(−s(m)). The residual E(m,a,B) "
+                        + "For any rate r the gap D(r,a,B) is a^(−r)−B^(−r). The residual E(m,a,B) "
                         + "subtracts the ordinary spectral endpoint difference and both signed corrections "
                         + "from the original window discrepancy.")),
                     Paragraph(Text("For 3≤n≤m the arithmetic correction has coefficient "
@@ -28,23 +28,24 @@ internal sealed class RHMobiusOddCutoffDocument : IScribeDocumentDefinition
                     Paragraph(Text("For odd q, the retained root degrees at orders m and q agree. "
                         + "The arithmetic sum gains only degree q. The all-order estimate at q "
                         + "therefore bounds the residual after the leading arithmetic term has been removed. "
-                        + "Its gap uses rate s(m)+δ(m). Integrate the exponential comparison over the "
-                        + "closed logarithmic interval to bound the faster gap by "
-                        + "((s(m)+δ(m))/s(m)) a^(−δ(m)) D(m,a,B). The inequality includes B=a."))),
+                        + "The threshold T and multiplier K are common to all odd cutoffs. "
+                        + "The weight W(K,m) is Kq(1+log q)². The sharper gap has rate s(m)+δ(m). "
+                        + "Integrate the exponential comparison over the closed logarithmic interval "
+                        + "to obtain the second inequality. Both include B=a."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signed-window-no-negative-order-exponent"),
                 DeclarationHandle.Create(Owner + ".signed_window_no_negative_order_exponent"),
                 H("A lower bound at arbitrarily late starts"),
                 StatementSource.FromAuthor(Obstruction()), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Fix positive γ, K and logarithmic width L. The function A "
-                        + "can prescribe a lower endpoint threshold separately for each order. "
-                        + "Euclid's theorem gives a prime q=m+1 beyond any required order. "
-                        + "Its Möbius value is −1 and its leading coefficient exceeds 2.")),
-                    Paragraph(Text("Choose the prime large enough that K m^(−γ)<1. "
-                        + "After fixing the prime, choose a so late that the expansion error divided "
-                        + "by D(m,a,B) is below 1. Positive L makes B=a exp(L)>a and the gap "
-                        + "strictly positive. The signed residual then exceeds D(m,a,B)."))),
+                    Paragraph(Text("Fix positive γ and any real K. Choose one order threshold M "
+                        + "such that K m^(−γ)<1 for all m≥M. At each prime q=m+1 in this range "
+                        + "the Möbius value is −1 and the leading coefficient exceeds 2.")),
+                    Paragraph(Text("For each such order, take the start threshold above A(m), 2 "
+                        + "and the point where the normalized expansion error drops below 1. "
+                        + "The gap is positive for every B>a. The signed residual exceeds the gap "
+                        + "on all those windows. Unbounded primes give counterexamples to any "
+                        + "uniform negative power, including at any prescribed positive logarithmic width."))),
                 DescribeRole.Theorem))));
 
     private static Formula Domain(string name) => F.Seq(F.Mathbb, F.Grp(F.Id(name)));
@@ -68,38 +69,48 @@ internal sealed class RHMobiusOddCutoffDocument : IScribeDocumentDefinition
         var a = F.Id("a");
         var b = F.Id("B");
         var t = F.Id("T");
-        var c = F.Id("C");
-        var gap = Call("D", m, a, b);
+        var k = F.Id("K");
+        var rate = Call("s", m);
+        var delta = Call("delta", m);
+        var fasterRate = Add(rate, delta);
+        var gap = Call("D", rate, a, b);
+        var weight = Call("W", k, m);
+        var fasterBound = Multiply(weight, Call("D", fasterRate, a, b));
         var correction = Multiply(Multiply(Call("mu", q),
-            new Formula.Fraction(q, Multiply(m, Call("s", m)))), gap);
-        var error = Le(new Formula.Absolute(Add(Call("E", m, a, b), correction)),
-            Multiply(Multiply(c, new Formula.Power(a, new Formula.Negate(Call("delta", m)))), gap));
+            new Formula.Fraction(q, Multiply(m, rate))), gap);
+        var productBound = Multiply(Multiply(Multiply(weight,
+            new Formula.Fraction(fasterRate, rate)), new Formula.Power(a, new Formula.Negate(delta))), gap);
+        var error = And(Le(new Formula.Absolute(Add(Call("E", m, a, b), correction)), fasterBound),
+            Le(fasterBound, productBound));
         var windows = All("a", Domain("R"),
             All("B", Domain("R"), Imp(And(Le(t, a), Le(a, b)), error)));
-        var constants = Exists("T", Domain("R"), Exists("C", Domain("R"),
-            And(And(Le(F.D(2), t), Lt(F.D(0), c)), windows)));
-        return F.Disp(Imp(F.Id("RH"), All("m", Domain("N"),
-            Imp(And(Le(F.D(2), m), Call("Odd", q)), constants))));
+        var orders = All("m", Domain("N"), Imp(And(Le(F.D(2), m), Call("Odd", q)), windows));
+        return F.Disp(Imp(F.Id("RH"), Exists("T", Domain("R"), Exists("K", Domain("R"),
+            And(And(Le(F.D(2), t), Lt(F.D(0), k)), orders)))));
     }
 
     private static Formula Obstruction()
     {
         var m = F.Id("m");
         var n = F.Id("N");
+        var orderThreshold = F.Id("M");
+        var startThreshold = F.Id("S");
         var a = F.Id("a");
+        var b = F.Id("B");
         var k = F.Id("K");
         var gamma = F.Id("gamma");
-        var l = F.Id("L");
-        var b = Multiply(a, Call("exp", l));
-        var gap = Call("D", m, a, b);
+        var gap = Call("D", Call("s", m), a, b);
         var error = Lt(Multiply(Multiply(k, new Formula.Power(m, new Formula.Negate(gamma))), gap),
-            new Formula.Absolute(Call("E", m, a, b)));
-        var windows = Exists("m", Domain("N"), And(Le(Call("max", F.D(2), n), m),
-            Exists("a", Domain("R"), And(Le(Call("max", F.D(2), Call("A", m)), a), error))));
-        var ranges = All("A", F.Seq(Domain("N"), F.To, F.Sp, Domain("R")),
-            All("N", Domain("N"), windows));
-        var positive = And(And(Lt(F.D(0), gamma), Lt(F.D(0), k)), Lt(F.D(0), l));
-        return F.Disp(Imp(F.Id("RH"), All("gamma", Domain("R"), All("K", Domain("R"),
-            All("L", Domain("R"), Imp(positive, ranges))))));
+            Call("E", m, a, b));
+        var windows = All("a", Domain("R"), All("B", Domain("R"),
+            Imp(And(Le(startThreshold, a), Lt(a, b)), error)));
+        var starts = Exists("S", Domain("R"),
+            And(Le(Call("max", F.D(2), Call("A", m)), startThreshold), windows));
+        var orders = All("m", Domain("N"), Imp(And(Le(orderThreshold, m),
+            Call("Prime", Add(m, F.D(1)))), starts));
+        var ranges = All("A", F.Seq(Domain("N"), F.To, F.Sp, Domain("R")), All("N", Domain("N"),
+            Exists("M", Domain("N"), And(Le(Call("max", F.D(2), n), orderThreshold), orders))));
+        return F.Disp(Imp(F.Id("RH"), All("gamma", Domain("R"),
+            Imp(Lt(F.D(0), gamma), All("K", Domain("R"), ranges)))));
     }
 }
