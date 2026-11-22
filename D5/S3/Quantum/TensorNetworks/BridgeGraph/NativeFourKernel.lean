@@ -42,7 +42,7 @@ private theorem compression_add {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b
 private theorem compression_smul {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ)
     (z : ℂ) (T : Matrix (Fin 4) (Fin 4) ℂ) :
     compression X (z • T) = z • compression X T := by
-  simp only [compression, Matrix.smul_kronecker, Matrix.mul_smul, Matrix.smul_mul]
+  simp only [compression, Matrix.kronecker, Matrix.smul_kronecker, Matrix.mul_smul, Matrix.smul_mul]
 
 private theorem stack_mix {a b : ℕ} (B : Matrix (Fin 4) (Fin 4) ℂ)
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) :
@@ -57,16 +57,15 @@ private theorem compression_mix {a b : ℕ} (B : Matrix (Fin 4) (Fin 4) ℂ)
     compression (mix B X) T = compression X (Bᴴ * T * B) := by
   let I : Matrix (Fin a) (Fin a) ℂ := 1
   have hstar : (kronecker B I)ᴴ = kronecker Bᴴ I := by
-    rw [Matrix.conjTranspose_kronecker]
-    simp [I]
+    simpa only [Matrix.kronecker, I, Matrix.conjTranspose_one] using
+      Matrix.conjTranspose_kronecker B I
   simp only [compression, stack_mix, Matrix.conjTranspose_mul]
   change (stackK X)ᴴ * (kronecker B I)ᴴ * kronecker T I * (kronecker B I * stackK X) =
     (stackK X)ᴴ * kronecker (Bᴴ * T * B) I * stackK X
   rw [hstar]
   have hprod : kronecker Bᴴ I * kronecker T I * kronecker B I =
       kronecker (Bᴴ * T * B) I := by
-    rw [← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul]
-    simp [I]
+    simp only [Matrix.kronecker, ← Matrix.mul_kronecker_mul, I, Matrix.mul_one]
   rw [← hprod]
   simp only [Matrix.mul_assoc]
 
@@ -101,7 +100,7 @@ private theorem nonpositive_stack_bound {a b : ℕ} (X : Fin 4 → Matrix (Fin a
       · simp [hnonpos i hi]
       · exact mul_nonneg (by exact_mod_cast (le_of_not_ge hi))
           (dotProduct_star_self_nonneg _)
-    have hz := Finset.sum_eq_zero_iff_of_nonneg (fun i _ => hnonneg i)
+    have hz := Finset.sum_eq_zero_iff_of_nonneg (s := Finset.univ) (fun i _ => hnonneg i)
     have hall (i : Fin 4) : X i *ᵥ x = 0 := by
       by_cases hi : e i ≤ 0
       · exact hnonpos i hi
@@ -125,7 +124,7 @@ private theorem eigenvalue_bound {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
   let E : Matrix (Fin 4) (Fin 4) ℂ := diagonal (fun i => (hT.eigenvalues i : ℂ))
   have hU : U * Uᴴ = 1 := Unitary.coe_mul_star_self hT.eigenvectorUnitary
   have hT' : U * E * Uᴴ = T := by
-    simpa [U, E, Matrix.IsHermitian.spectral_theorem, conjStarAlgAut_apply,
+    simpa [U, E, Function.comp_def, conjStarAlgAut_apply,
       Matrix.star_eq_conjTranspose] using hT.spectral_theorem.symm
   let Y := mix Uᴴ X
   have hY : Function.Injective (stackK Y).mulVecLin := by
@@ -139,10 +138,11 @@ private theorem eigenvalue_bound {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
       Matrix.one_kronecker_one, Matrix.one_mul] at he'
     exact he'
   have hE : compression Y E = 0 := by
-    rw [Y, compression_mix, Matrix.conjTranspose_conjTranspose, hT', h]
+    dsimp only [Y]
+    rw [compression_mix, Matrix.conjTranspose_conjTranspose, hT', h]
   have hE' : compression Y (diagonal (fun i => ((-hT.eigenvalues i : ℝ) : ℂ))) = 0 := by
     rw [show diagonal (fun i => ((-hT.eigenvalues i : ℝ) : ℂ)) = (-1 : ℂ) • E by
-      ext i j; simp [E, Matrix.diagonal_apply]]
+      ext i j; by_cases hij : i = j <;> simp [E, Matrix.diagonal_apply, hij]]
     rw [compression_smul, hE, smul_zero]
   exact ⟨nonpositive_stack_bound Y hY hT.eigenvalues hE,
     by simpa using nonpositive_stack_bound Y hY (fun i => -hT.eigenvalues i) hE'⟩
@@ -150,6 +150,10 @@ private theorem eigenvalue_bound {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
 private def corner (i : Fin 2) : Fin 4 := i.succ.succ
 
 private def principal (i : Fin 2) : Fin 3 → Fin 4 := ![0, 1, corner i]
+
+private theorem principal_zero (i : Fin 2) : principal i 0 = 0 := rfl
+private theorem principal_one (i : Fin 2) : principal i 1 = 1 := rfl
+private theorem principal_two (i : Fin 2) : principal i 2 = corner i := rfl
 
 private theorem minor_det_zero (T : Matrix (Fin 4) (Fin 4) ℂ) (hT : T.rank ≤ 2)
     (i j : Fin 2) : (T.submatrix (principal i) (principal j)).det = 0 := by
@@ -176,28 +180,26 @@ private theorem schur_entries (T : Matrix (Fin 4) (Fin 4) ℂ)
     T (corner i) (corner j) = 0 ∧
       star (topRow T 0 i) * topRow T 0 j = star (topRow T 1 i) * topRow T 1 j := by
   have h0 := minor_det_zero T h i j
-  have h₊ := minor_det_zero _ hp i j
-  have h₋ := minor_det_zero _ hm i j
+  have hplus := minor_det_zero _ hp i j
+  have hminus := minor_det_zero _ hm i j
   have hi₀ : corner i ≠ 0 := by exact ne_of_gt (by simp [corner])
   have hi₁ : corner i ≠ 1 := by exact ne_of_gt (by simp [corner])
   have hj₀ : corner j ≠ 0 := by exact ne_of_gt (by simp [corner])
   have hj₁ : corner j ≠ 1 := by exact ne_of_gt (by simp [corner])
-  simp only [Matrix.det_fin_three, Matrix.submatrix_apply, principal,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-    Matrix.add_apply, Matrix.sub_apply, signature, Matrix.diagonal_apply,
-    hi₀, hi₁, hj₀, hj₁, Ne.symm hi₀, Ne.symm hi₁, Ne.symm hj₀, Ne.symm hj₁,
-    ite_false] at h0 h₊ h₋
   have hs (r : Fin 2) : ![(1 : ℂ), -1, 0, 0] (corner r) = 0 := by
     fin_cases r <;> rfl
-  simp [hs] at h₊ h₋
+  norm_num [Matrix.det_fin_three, Matrix.submatrix_apply, principal_zero,
+    principal_one, principal_two, Matrix.add_apply, Matrix.sub_apply, signature,
+    Matrix.diagonal_apply, hs, hi₀, hi₁, hj₀, hj₁, Ne.symm hi₀, Ne.symm hi₁,
+    Ne.symm hj₀, Ne.symm hj₁] at h0 hplus hminus
   have hC : T (corner i) (corner j) = 0 := by
-    linear_combination -(h₊ - h₋) / 2 + h0
+    linear_combination -(hplus - hminus) / 2 + h0
   refine ⟨hC, ?_⟩
   change star (T 0 (corner i)) * T 0 (corner j) =
       star (T 1 (corner i)) * T 1 (corner j)
   rw [← hermitian_entry hT (corner i) 0, ← hermitian_entry hT (corner i) 1]
-  simp only [hC, mul_zero, zero_mul, sub_zero, zero_add, add_zero] at h₊ h₋
-  linear_combination (h₊ + h₋) / 2
+  simp only [hC, mul_zero, zero_mul, sub_zero, zero_add, add_zero] at hplus hminus
+  linear_combination (hplus + hminus) / 2
 
 private theorem slope_of_row_gram (u v : Fin 2 → ℂ)
     (h : ∀ i j, star (u i) * u j = star (v i) * v j) :
@@ -230,7 +232,7 @@ private theorem slope_of_row_gram (u v : Fin 2 → ℂ)
     apply mul_right_cancel₀ hn
     calc
       _ = star (z * u i) * (z * u i) := by simp only [star_mul]; ring
-      _ = _ := by rw [← hi', one_mul]
+      _ = _ := by simpa only [star_mul, one_mul] using hi'.symm
 
 private def detRows (u v : Fin 2 → ℂ) : ℂ := u 0 * v 1 - u 1 * v 0
 
@@ -327,8 +329,8 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       have hvT := congrFun (hall T hT) i
       change T 1 (corner i) = z * T 0 (corner i) at hvT
       have h := minor_det_zero T (hRank T hT) i i
-      simp only [Matrix.det_fin_three, Matrix.submatrix_apply, principal,
-        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at h
+      simp only [Matrix.det_fin_three, Matrix.submatrix_apply, principal_zero,
+        principal_one, principal_two] at h
       rw [hC T hT i i, hermitian_entry (hHerm T hT) (corner i) 0,
         hermitian_entry (hHerm T hT) (corner i) 1, hvT, star_mul] at h
       have hh : (star (u T i) * u T i) * q T = 0 := by
@@ -342,40 +344,35 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
           simpa [huT] using huA
         have h := hq_nonzero _ (K.add_mem hT hA) hu
         have h' := hq_nonzero _ hA huA
-        dsimp [q] at h h' ⊢
+        dsimp only [q] at h h' ⊢
         simp only [Matrix.add_apply] at h
         linear_combination h - h'
       · exact hq_nonzero T hT huT
     intro T hT
-    have hc₀₀ := hC T hT 0 0
-    have hc₀₁ := hC T hT 0 1
-    have hc₁₀ := hC T hT 1 0
-    have hc₁₁ := hC T hT 1 1
-    have hv₀ := congrFun (hall T hT) 0
-    have hv₁ := congrFun (hall T hT) 1
+    have hc00 : T 2 2 = 0 := hC T hT 0 0
+    have hc01 : T 2 3 = 0 := hC T hT 0 1
+    have hc10 : T 3 2 = 0 := hC T hT 1 0
+    have hc11 : T 3 3 = 0 := hC T hT 1 1
+    have hv0 : T 1 2 = z * T 0 2 := congrFun (hall T hT) 0
+    have hv1 : T 1 3 = z * T 0 3 := congrFun (hall T hT) 1
+    have he (i : Fin 4) (j : Fin 3) : E i j =
+        if i = 0 ∧ j = 0 then -star z else if i = j.succ then 1 else 0 := by
+      fin_cases i <;> fin_cases j <;> rfl
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp only [E, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_four,
-        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
-        Matrix.zero_apply, star_zero, star_one, star_neg, star_star,
-        zero_mul, mul_zero, one_mul, mul_one, add_zero, zero_add] <;>
+      norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_four, he,
+        hc00, hc01, hc10, hc11] <;>
       first
-      | exact hc₀₀
-      | exact hc₀₁
-      | exact hc₁₀
-      | exact hc₁₁
-      | have h : T 1 2 = z * T 0 2 := hv₀
-        linear_combination h
-      | have h : T 1 3 = z * T 0 3 := hv₁
-        linear_combination h
       | linear_combination (hq T hT)
+      | linear_combination hv0
+      | linear_combination hv1
       | rw [hermitian_entry (hHerm T hT) 2 0, hermitian_entry (hHerm T hT) 2 1]
-        have h := congrArg star hv₀
-        simp only [u, v, topRow, corner, Pi.smul_apply, smul_eq_mul, star_mul] at h
+        have h := congrArg star hv0
+        rw [star_mul] at h
         linear_combination h
       | rw [hermitian_entry (hHerm T hT) 3 0, hermitian_entry (hHerm T hT) 3 1]
-        have h := congrArg star hv₁
-        simp only [u, v, topRow, corner, Pi.smul_apply, smul_eq_mul, star_mul] at h
+        have h := congrArg star hv1
+        rw [star_mul] at h
         linear_combination h
   · left
     by_cases hzero : ∀ T ∈ K, u T = 0
@@ -387,7 +384,7 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       fin_cases i <;>
         simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four] <;>
         first | exact h₀ | exact h₁ | exact hC T hT 0 0 | exact hC T hT 1 0
-    push_neg at hzero
+    push Not at hzero
     obtain ⟨A, hA, huA⟩ := hzero
     let w : Fin 4 → ℂ := ![0, 0, -(u A 1), u A 0]
     have hw : w ≠ 0 := by
@@ -408,19 +405,26 @@ private theorem row_geometry (K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ))
       · rw [h]
         simp only [detRows, Pi.smul_apply, smul_eq_mul] at hdet ⊢
         linear_combination z * hdet
+    have hw0 : w 0 = 0 := rfl
+    have hw1 : w 1 = 0 := rfl
+    have hw2 : w 2 = -u A 1 := rfl
+    have hw3 : w 3 = u A 0 := rfl
+    have hentry (i : Fin 4) : T i 2 * (-u A 1) + T i 3 * u A 0 = 0 := by
+      fin_cases i
+      · change T 0 2 * (-u A 1) + T 0 3 * u A 0 = 0
+        have h : u A 0 * T 0 3 - u A 1 * T 0 2 = 0 := hdet
+        linear_combination h
+      · change T 1 2 * (-u A 1) + T 1 3 * u A 0 = 0
+        have h : u A 0 * T 1 3 - u A 1 * T 1 2 = 0 := hdet'
+        linear_combination h
+      · change T 2 2 * (-u A 1) + T 2 3 * u A 0 = 0
+        rw [show T 2 2 = 0 from hC T hT 0 0, show T 2 3 = 0 from hC T hT 0 1]
+        simp
+      · change T 3 2 * (-u A 1) + T 3 3 * u A 0 = 0
+        rw [show T 3 2 = 0 from hC T hT 1 0, show T 3 3 = 0 from hC T hT 1 1]
+        simp
     ext i
-    fin_cases i <;>
-      simp only [Matrix.mulVec, dotProduct, w, Fin.sum_univ_four, Matrix.cons_val_zero,
-        Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
-        mul_zero, zero_add, Pi.zero_apply]
-    · dsimp [detRows, u, topRow, corner] at hdet
-      linear_combination hdet
-    · dsimp [detRows, v, topRow, corner] at hdet'
-      linear_combination hdet'
-    · rw [show T 2 2 = 0 from hC T hT 0 0, show T 2 3 = 0 from hC T hT 0 1]
-      simp
-    · rw [show T 3 2 = 0 from hC T hT 1 0, show T 3 3 = 0 from hC T hT 1 1]
-      simp
+    simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_four, hw0, hw1, hw2, hw3] using hentry i
 
 private theorem positive_card_bound {a b : ℕ} (e : Fin 4 → ℝ) (k : ℕ)
     (hk : k ≤ 4) (hb : k * a < b)
@@ -432,6 +436,9 @@ private theorem positive_card_bound {a b : ℕ} (e : Fin 4 → ℝ) (k : ℕ)
     exact (not_le_of_gt hb) (h.trans (Nat.mul_le_mul_right a hle))
   have hc := Fintype.card_subtype_compl (fun i => e i ≤ 0)
   simp only [Fintype.card_fin, not_le] at hc
+  have hle : Fintype.card {i // e i ≤ 0} ≤ 4 := by
+    simpa only [Fintype.card_fin] using Fintype.card_le_of_injective _
+      (Subtype.val_injective (p := fun i => e i ≤ 0))
   omega
 
 /-- The sign subspaces bound the rank of a Hermitian form with zero compression. -/
@@ -490,7 +497,8 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
   let U : Matrix (Fin 4) (Fin 4) ℂ := hT.eigenvectorUnitary
   have hU : IsUnit U := Unitary.isUnit_coe
   have hdiag : Uᴴ * T * U = diagonal (fun i => (e i : ℂ)) := by
-    simpa [U, e, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose] using
+    simpa [U, e, Unitary.conjStarAlgAut_star_apply, Function.comp_def,
+      Matrix.star_eq_conjTranspose] using
       hT.conjStarAlgAut_star_eigenvectorUnitary
   obtain ⟨i, hi⟩ : ∃ i, 0 < e i := by
     by_contra! hnone
@@ -502,12 +510,16 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
       have hnegdiag : Uᴴ * (-T) * U = diagonal (fun i => ((-e i : ℝ) : ℂ)) := by
         rw [Matrix.mul_neg, Matrix.neg_mul, hdiag]
         ext i j
-        simp [Matrix.diagonal_apply]
+        by_cases hij : i = j <;> simp [Matrix.diagonal_apply, hij]
       rw [← hnegdiag] at hD
       have hUU : U * Uᴴ = 1 := Unitary.coe_mul_star_self hT.eigenvectorUnitary
       have hh := hD.conjTranspose_mul_mul_same Uᴴ
-      simpa only [Matrix.conjTranspose_conjTranspose, ← Matrix.mul_assoc, hUU,
-        Matrix.one_mul, Matrix.mul_assoc, Matrix.mul_one] using hh
+      rw [Matrix.conjTranspose_conjTranspose] at hh
+      have he : U * (Uᴴ * (-T) * U) * Uᴴ = -T := by
+        calc
+          _ = (U * Uᴴ) * (-T) * (U * Uᴴ) := by simp only [Matrix.mul_assoc]
+          _ = _ := by rw [hUU, Matrix.one_mul, Matrix.mul_one]
+      rwa [he] at hh
     have hn : compression X (-T) = 0 := by
       rw [← neg_one_smul ℂ T, compression_smul, h, smul_zero]
     exact hnz (neg_eq_zero.mp (no_semidefinite X hX (-T) hN hn))
@@ -539,10 +551,7 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
     rw [Fintype.card_fin, ← hT.rank_eq_card_non_zero_eigs] at hc
     omega
   let P : Matrix (Fin 4) (Fin 4) ℂ := (1 : Matrix (Fin 4) (Fin 4) ℂ).submatrix id p
-  have hPP : Pᴴ * P = 1 := by
-    simp [P, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
-      Matrix.submatrix_one_equiv]
-  have hP : IsUnit P := isUnit_iff_exists_inv'.mpr ⟨Pᴴ, hPP⟩
+  have hP : IsUnit P := Matrix.isUnit_submatrix_equiv (Equiv.refl _) p |>.mpr isUnit_one
   let w : Fin 4 → ℝ := ![(Real.sqrt (e i))⁻¹, (Real.sqrt (-e j))⁻¹, 1, 1]
   let D := diagonal (fun r => (w r : ℂ))
   have hD : IsUnit D := by
@@ -552,30 +561,45 @@ private theorem kernel_signature {a b : ℕ} (X : Fin 4 → Matrix (Fin a) (Fin 
     fin_cases r <;> simp [w, (Real.sqrt_pos.2 hi).ne', (Real.sqrt_pos.2 (neg_pos.mpr hj)).ne']
   refine ⟨U * P * D, (hU.mul hP).mul hD, ?_⟩
   have hD' : Dᴴ = D := by
-    ext r s
-    simp [D, Matrix.conjTranspose_apply, Matrix.diagonal_apply]
+    change (diagonal (fun r => (w r : ℂ)))ᴴ = diagonal (fun r => (w r : ℂ))
+    rw [Matrix.diagonal_conjTranspose]
+    congr 1
+    funext r
+    simp
   have hperm : Pᴴ * diagonal (fun r => (e r : ℂ)) * P =
       diagonal (fun r => (e (p r) : ℂ)) := by
-    simp [P, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
-      Matrix.submatrix_diagonal, Function.comp_def]
+    ext r s
+    simp [P, Matrix.mul_apply, Matrix.one_apply, Matrix.diagonal_apply,
+      Equiv.injective p |>.eq_iff]
+    split_ifs with hrs
+    · subst s; rfl
+    · rfl
   rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hD']
   calc
     _ = D * (Pᴴ * (Uᴴ * T * U) * P) * D := by simp only [Matrix.mul_assoc]
     _ = signature := by
-      rw [hdiag, hperm, D, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
-      congr 1
+      rw [hdiag, hperm]
+      change diagonal (fun r => (w r : ℂ)) * diagonal (fun r => (e (p r) : ℂ)) *
+        diagonal (fun r => (w r : ℂ)) = signature
+      rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
+      apply congrArg Matrix.diagonal
       funext r
       fin_cases r
-      · simp [w, hp0, signature]
-        have h := Real.sq_sqrt hi.le
-        field_simp [Complex.ofReal_ne_zero.mpr (Real.sqrt_pos.2 hi).ne']
-        exact_mod_cast h.symm
-      · simp [w, hp1, signature]
-        have h := Real.sq_sqrt (neg_nonneg.mpr hj.le)
-        field_simp [Complex.ofReal_ne_zero.mpr (Real.sqrt_pos.2 (neg_pos.mpr hj)).ne']
-        exact_mod_cast (by linarith : e j = -(Real.sqrt (-e j)) ^ 2)
+      · have he : (Real.sqrt (e i))⁻¹ * e i * (Real.sqrt (e i))⁻¹ = 1 := by
+          have hs := Real.sq_sqrt hi.le
+          have hn := Real.sqrt_ne_zero'.mpr hi
+          field_simp
+          nlinarith
+        simpa [w, hp0, signature] using congrArg (fun x : ℝ => (x : ℂ)) he
+      · have he : (Real.sqrt (-e j))⁻¹ * e j * (Real.sqrt (-e j))⁻¹ = -1 := by
+          have hs := Real.sq_sqrt (neg_nonneg.mpr hj.le)
+          have hn := Real.sqrt_ne_zero'.mpr (neg_pos.mpr hj)
+          field_simp
+          nlinarith
+        simpa [w, hp1, signature] using congrArg (fun x : ℝ => (x : ℂ)) he
       · simp [w, signature, hrest 2 (by decide) (by decide)]
       · simp [w, signature, hrest 3 (by decide) (by decide)]
+
 
 /-- The Hermitian kernel is zero, has a common kernel line, or has a neutral three-space. -/
 theorem coefficient_geometry {a b : ℕ}
@@ -588,12 +612,12 @@ theorem coefficient_geometry {a b : ℕ}
   classical
   by_cases hz : ∀ T, T.IsHermitian → compression X T = 0 → T = 0
   · exact Or.inl hz
-  push_neg at hz
+  push Not at hz
   obtain ⟨T, hT, hXT, hT0⟩ := hz
   obtain ⟨M, hM, hJ⟩ := kernel_signature X hX T hT hXT hT0 (h T hT hXT)
   let K : AddSubgroup (Matrix (Fin 4) (Fin 4) ℂ) :=
     { carrier := {S | S.IsHermitian ∧ compression X S = 0}
-      zero_mem' := by simp [compression, Matrix.zero_kronecker, Matrix.IsHermitian]
+      zero_mem' := by simp [compression, Matrix.IsHermitian]
       add_mem' := by
         rintro S U ⟨hh, hc⟩ ⟨hh', hc'⟩
         exact ⟨hh.add hh', by rw [compression_add, hc, hc', add_zero]⟩
