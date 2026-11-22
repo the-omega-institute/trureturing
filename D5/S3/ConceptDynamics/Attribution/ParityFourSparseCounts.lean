@@ -20,24 +20,6 @@ open CoordinateFlagCoupling CoordinateFibreCounts ParitySeedBudget ParitySeedOpt
 
 noncomputable section
 
-private theorem subgroup_fixed_iff {I X : Type*} [Fintype I] [MulAction (Acting I) X]
-    (x : X) (i : I) :
-    (∀ h : coordinate i, (h : Acting I) • x = x) ↔ generator i • x = x := by
-  rw [show (∀ h : coordinate i, (h : Acting I) • x = x) ↔
-      coordinate i ≤ stabilizer (Acting I) x from
-    ⟨fun fixes g hg => fixes ⟨g, hg⟩, fun sub h => sub h.property⟩,
-    coordinate, Subgroup.zpowers_le, mem_stabilizer_iff]
-
-private theorem fixed_condition {n : ℕ} (t : Pair n) (i : Fin (n + 2)) :
-    generator i • t = t ↔ t.1.val.profile i = true ∧ t.2.val.profile i = true := by
-  rw [← subgroup_fixed_iff, ← Bool.and_eq_true, ← fixed_pair_iff]
-  constructor
-  · intro fixed g hg
-    exact ⟨congrArg (fun x : Pair n => x.1.val) (fixed ⟨g, hg⟩),
-      congrArg (fun x : Pair n => x.2.val) (fixed ⟨g, hg⟩)⟩
-  · intro fixed g
-    exact Prod.ext (Subtype.ext (fixed g g.property).1) (Subtype.ext (fixed g g.property).2)
-
 section
 attribute [local instance 10000] Classical.propDecidable
 
@@ -146,11 +128,12 @@ private theorem weighted_realization {n k : ℕ} {z : Fin (n + 2) → ℕ} (w : 
   refine ⟨S, inferInstance, inferInstance, f, card, equiv, ⟨2 * k, left, right⟩, ?_⟩
   intro i
   unfold fixedSeedCount
-  simp_rw [subgroup_fixed_iff]
+  simp_rw [ParitySeedCountSpectrum.coordinate_fixed_iff_generator]
   rw [countPartition (fun s => generator i • s = s), ← counts i]
   apply sum_congr rfl
   intro t _
-  rw [fixed, wlift, fixed_condition, ← Bool.and_eq_true]
+  rw [fixed, wlift, ← ParitySeedCountSpectrum.coordinate_fixed_iff_generator,
+    pair_fixed_coordinate, ← Bool.and_eq_true]
 
 end
 

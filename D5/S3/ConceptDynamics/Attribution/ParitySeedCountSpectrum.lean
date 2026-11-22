@@ -122,7 +122,7 @@ private theorem four_dvd_of_fixed_images_but_moved_sources {G S T I : Type*}
   · exact div
 
 open MulAction in
-private theorem coordinate_fixed_iff_generator {n : ℕ} {S : Type}
+theorem coordinate_fixed_iff_generator {n : ℕ} {S : Type}
     [MulAction (Acting (Fin (n + 2))) S] (i : Fin (n + 2)) (s : S) :
     (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) ↔ generator i • s = s := by
   have inclusion : (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) ↔
