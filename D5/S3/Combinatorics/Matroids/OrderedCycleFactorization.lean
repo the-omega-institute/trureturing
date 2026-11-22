@@ -74,7 +74,7 @@ private lemma card_filter_partition (R C : Finset V) (x : V) :
     simp only [mem_filter, mem_inter, mem_sdiff]
     tauto
 
-private lemma left_insertion_sign (R C : Finset V) {x : V}
+lemma left_insertion_sign (R C : Finset V) {x : V}
     (hx : x ∉ R) :
     insertionSign R x * shuffleSign (insert x (R ∩ C)) (R \ C) =
       shuffleSign (R ∩ C) (R \ C) * insertionSign (R ∩ C) x := by
@@ -266,7 +266,8 @@ structure Normalized [Fintype V] (M : Matroid V) (B : Finset V) (z : Chain V)
     : Prop extends TopCycle M z where
   coordinate : ∀ F, PassiveBase M F → z F = if F = B then 1 else 0
 
-private lemma topCycle_ext [Fintype V] {M : Matroid V} {z w : Chain V}
+/-- The internally passive base coefficients determine an integral top cycle. -/
+lemma topCycle_ext [Fintype V] {M : Matroid V} {z w : Chain V}
     (hz : TopCycle M z) (hw : TopCycle M w)
     (hn : ∀ F, PassiveBase M F → z F = w F) : z = w := by
   classical

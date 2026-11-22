@@ -76,7 +76,7 @@ private theorem relative_gain_tendsto {j : ℕ} (hj : 1 ≤ j) :
 
 /- Relative marginal at each fixed multiplicative point. This is the actual
 real beta, so it also identifies the moving cutoff rather than a proxy root. -/
-private theorem scaled_beta_tendsto {j : ℕ} (hj : 1 ≤ j) {c : ℝ} (hc : 0 < c) :
+theorem scaled_beta_tendsto {j : ℕ} (hj : 1 ≤ j) {c : ℝ} (hc : 0 < c) :
     Tendsto (fun t : ℝ => beta j (c * t) / referencePrice (t ^ j))
       atTop (𝓝 ((j : ℝ) / c ^ j)) := by
   have hcT : Tendsto (fun t : ℝ => c * t) atTop atTop :=

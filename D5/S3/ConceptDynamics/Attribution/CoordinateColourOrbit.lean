@@ -21,7 +21,8 @@ open D5.S3.ConceptDynamics.Attribution.CoordinateFlagCoupling
 variable {I : Type*} [Fintype I]
 
 open Classical in
-private theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
+/-- A single coordinate contributes exactly when its profile bit is false. -/
+theorem eval_single (p : I → Bool) (i : I) (a : ZMod 2) :
     shift p (Pi.single i a) = if p i then 0 else a := by
   unfold shift
   rw [sum_eq_single i]
@@ -41,7 +42,8 @@ private theorem lift_on_pivot (p q : I → Bool) (i j : I) (hi : p i = false)
     exact sub_add_cancel a extra
   · simp only [shift_add, eval_single, hq, hj, Bool.false_eq_true, ite_false, ite_true, zero_add]
 
-private theorem shifts_surjective (p q : I → Bool) (different : p ≠ q)
+/-- Distinct profiles with a false bit each support all pairs of colour shifts. -/
+theorem shifts_surjective (p q : I → Bool) (different : p ≠ q)
     (someFalseP : ∃ j, p j = false) (someFalseQ : ∃ j, q j = false) :
     Function.Surjective (fun v : I → ZMod 2 => (shift p v, shift q v)) := by
   obtain ⟨i, hi⟩ : ∃ i, p i ≠ q i := by
@@ -97,7 +99,7 @@ private theorem selectedPair_invariant (p q : I → Bool) (r : ZMod 2 → ZMod 2
     · simp [hy]
   · simp [hx]
 
-private theorem all_true_shift (p : I → Bool) (h : ∀ i, p i = true) (v : I → ZMod 2) :
+theorem all_true_shift (p : I → Bool) (h : ∀ i, p i = true) (v : I → ZMod 2) :
     shift p v = 0 := by
   simp [shift, h]
 

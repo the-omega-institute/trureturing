@@ -48,7 +48,8 @@ private lemma frequency_eq_ordinate (hRH : RiemannHypothesis) (k : ℕ) :
   · simp [frequency_real hRH k, Complex.mul_re]
   · simp [frequency, Complex.sub_im, Complex.mul_im, Complex.div_im]
 
-private lemma phaseOrbit_eq_mode (hRH : RiemannHypothesis) (y : ℝ) (k : ℕ) :
+/-- Under RH, each phase-orbit coordinate equals its centered exponential mode. -/
+lemma phaseOrbit_eq_mode (hRH : RiemannHypothesis) (y : ℝ) (k : ℕ) :
     (phaseOrbit y k : ℂ) = Complex.exp (frequency k * y) := by
   rw [phaseOrbit, Circle.coe_exp, frequency_eq_ordinate hRH, Complex.ofReal_mul]
   congr 1

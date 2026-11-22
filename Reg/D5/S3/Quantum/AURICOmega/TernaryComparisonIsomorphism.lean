@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.TernaryComparisonIsomorphism
+import Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import Reg.Support.DependentFamily
 import Mathlib.Topology.Algebra.Star.Unitary
@@ -23,6 +24,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
   (liftedModel liftedModel_noncommutative liftedModel_chainConnected liftedModel_touchesZero
     liftedModel_hasFeatureRank_five one_ne_neg_one)
+open _root_.Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel (not_isOpen_singleton_one)
 
 open scoped InnerProductSpace Quaternion
 
@@ -151,26 +153,11 @@ abbrev arena : Arena where
     (∀ x y : M, C.kappa x y = quaternionModel.kappa (v x) (v y)) → ReadingComplete C →
       IsClosed (rd.readout () M v)
 
-/-- The unit quaternions other than one do not form a closed set: the complement of a point is
-open, and the unit three-sphere is connected. -/
-theorem not_isClosed_compl_one : ¬ IsClosed ({1}ᶜ : Set (unitary ℍ[ℝ])) := by
-  intro hc
-  have : PreconnectedSpace (unitary ℍ[ℝ]) := Subtype.preconnectedSpace (by
-    rw [coe_unitary_eq_sphere]
-    exact isPreconnected_sphere (by rw [Quaternion.rank_eq_four]; norm_num) 0 1)
-  rcases isClopen_iff.mp ⟨hc, isOpen_compl_singleton⟩ with h | h
-  · have hm : (-1 : unitary ℍ[ℝ]) ∈ ({1}ᶜ : Set (unitary ℍ[ℝ])) :=
-      fun e => one_ne_neg_one (Set.mem_singleton_iff.mp e).symm
-    rw [h] at hm
-    exact hm
-  · have hm : (1 : unitary ℍ[ℝ]) ∈ ({1}ᶜ : Set (unitary ℍ[ℝ])) := by
-      rw [h]
-      trivial
-    exact hm rfl
-
+/-- The unit quaternions other than one do not form a closed set, since the point one is not
+open in the connected group of unit quaternions. -/
 theorem rejected_law : ¬ arena.{u}.Law rejected :=
-  fun h => not_isClosed_compl_one
-    (h liftedModel.{u} ULift.down (fun _ _ => rfl) liftedModel_readingComplete)
+  fun h => not_isOpen_singleton_one (isClosed_compl_iff.mp
+    (h liftedModel.{u} ULift.down (fun _ _ => rfl) liftedModel_readingComplete))
 
 theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i

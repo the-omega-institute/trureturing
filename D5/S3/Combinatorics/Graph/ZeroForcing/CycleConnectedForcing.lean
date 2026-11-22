@@ -38,10 +38,10 @@ open D5.S3.Combinatorics.Graph.ZeroForcing.ConnectedForcingCrossingRefutation
 variable {m : ℕ}
 
 /-- The arc of the vertices `a, a + 1, …, a + (i - 1)` of the cycle on `Fin (m + 3)`. -/
-private def arc (a : Fin (m + 3)) (i : ℕ) : Finset (Fin (m + 3)) :=
+def arc (a : Fin (m + 3)) (i : ℕ) : Finset (Fin (m + 3)) :=
   Finset.univ.filter fun x => (x - a).val < i
 
-private theorem mem_arc {a x : Fin (m + 3)} {i : ℕ} : x ∈ arc a i ↔ (x - a).val < i := by
+theorem mem_arc {a x : Fin (m + 3)} {i : ℕ} : x ∈ arc a i ↔ (x - a).val < i := by
   simp [arc]
 
 private theorem adj_iff {u v : Fin (m + 3)} :
@@ -132,7 +132,7 @@ private theorem forcing_arc (a : Fin (m + 3)) (i : ℕ) (hi : 2 ≤ i) :
   exact key _ _
 
 /-- An arc with at least one vertex induces a connected subgraph. -/
-private theorem arc_connected (a : Fin (m + 3)) (i : ℕ) (hi : 1 ≤ i) :
+theorem arc_connected (a : Fin (m + 3)) (i : ℕ) (hi : 1 ≤ i) :
     ((cycleGraph (m + 3)).induce (arc a i : Set (Fin (m + 3)))).Connected := by
   have ha : a ∈ (arc a i : Set (Fin (m + 3))) := by
     simp only [Finset.mem_coe, mem_arc, sub_self, Fin.val_zero]; omega
@@ -200,7 +200,7 @@ private theorem walk_hits (a : Fin (m + 3)) (S : Set (Fin (m + 3)))
       · omega
 
 /-- A connected set missing some vertex is an arc. -/
-private theorem eq_arc_of_connected (S : Finset (Fin (m + 3))) (v : Fin (m + 3)) (hv : v ∉ S)
+theorem eq_arc_of_connected (S : Finset (Fin (m + 3))) (v : Fin (m + 3)) (hv : v ∉ S)
     (hS : ((cycleGraph (m + 3)).induce (S : Set (Fin (m + 3)))).Connected) :
     ∃ u L, 1 ≤ L ∧ S = arc u L := by
   set a := v + 1
@@ -240,7 +240,7 @@ private theorem eq_arc_of_connected (S : Finset (Fin (m + 3))) (v : Fin (m + 3))
     have := Fin.lt_def.mp hle
     constructor <;> intro h <;> omega
 
-private theorem card_arc (a : Fin (m + 3)) (i : ℕ) : (arc a i).card = min (m + 3) i := by
+theorem card_arc (a : Fin (m + 3)) (i : ℕ) : (arc a i).card = min (m + 3) i := by
   have : arc a i = (Finset.univ.filter fun y : Fin (m + 3) => (y : ℕ) < i).map
       (addLeftEmbedding a) := by
     ext x
@@ -281,7 +281,7 @@ private theorem cf_iff (S : Finset (Fin (m + 3))) :
   · rintro ⟨a, i, hi, rfl⟩
     exact ⟨arc_connected a i (by omega), forcing_arc a i hi⟩
 
-private theorem arc_injective (i : ℕ) (hi : 1 ≤ i) (him : i < m + 3) :
+theorem arc_injective (i : ℕ) (hi : 1 ≤ i) (him : i < m + 3) :
     Function.Injective fun a : Fin (m + 3) => arc a i := by
   intro a b hab
   simp only at hab

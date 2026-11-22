@@ -31,10 +31,10 @@ open private regular_parity_card interior_card cube_opposite_card from
 
 variable {R : Type*} [CommRing R]
 
-private def signed (w : Fin 9 → R) : Matrix (Q 9) (Q 9) R :=
+def signed (w : Fin 9 → R) : Matrix (Q 9) (Q 9) R :=
   fun x y => ∑ a, if flip x a = y then w a * (flipSign a x : R) else 0
 
-private theorem signed_transpose (w : Fin 9 → R) : (signed w)ᵀ = signed w := by
+theorem signed_transpose (w : Fin 9 → R) : (signed w)ᵀ = signed w := by
   ext x y
   simp only [Matrix.transpose_apply, signed]
   apply Finset.sum_congr rfl
@@ -49,7 +49,7 @@ private theorem signed_transpose (w : Fin 9 → R) : (signed w)ᵀ = signed w :=
   · have h' : flip y a ≠ x := fun he => h (by rw [← he, BalancedCriticalSpectrum.flip_flip])
     rw [ite_eq_right h', ite_eq_right h]
 
-private theorem signed_mulVec (w : Fin 9 → R) (f : Q 9 → R) :
+theorem signed_mulVec (w : Fin 9 → R) (f : Q 9 → R) :
     (signed w).mulVec f = weightedLinear w f := by
   rw [weightedLinear_apply]
   funext x
@@ -72,7 +72,7 @@ private theorem signed_square (w : Fin 9 → R) :
   exact congrArg (fun L : Module.End R (Q 9 → R) => L (Pi.single y 1))
     (weightedLinear_square w)
 
-private def switched (w : Fin 9 → R) (s : Q 9 → ℤ) : Matrix (Q 9) (Q 9) R :=
+def switched (w : Fin 9 → R) (s : Q 9 → ℤ) : Matrix (Q 9) (Q 9) R :=
   fun x y => (s x : R) * signed w x y * (s y : R)
 
 private theorem switched_gram (w : Fin 9 → R) (s : Q 9 → ℤ)
@@ -223,7 +223,7 @@ private theorem balanced_switch (S : Finset (Q 9)) (hb : IsBalanced S) :
       _ = _ := by rw [hsq, hsq, mul_one, mul_one]
   · simp [he]
 
-private theorem gram_split {ι : Type*} [DecidableEq ι]
+theorem gram_split {ι : Type*} [DecidableEq ι]
     (w : Fin 9 → R) (s : Q 9 → ℤ) (hs : ∀ x, s x * s x = 1)
     (S : Finset (Q 9)) (b : Bool) (r : ι ↪ Q 9) (hr : ∀ i, cubeParity (r i) = b) :
     let H := switched w s

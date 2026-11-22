@@ -174,5 +174,33 @@ exponential bounds have exponents `8H + 3K`, `9H + 3K`, and
 `10H + 3K`. Literature searches located no matching unrestricted
 proof of these cases in the sources examined.
 
+The repository proof treats the product comparison from Hägele's Section
+7(ii–iii) for every positive integer `p` in every finite dimension when
+the complex positive semidefinite first factor `A` is singular and has at
+most four distinct eigenvalues. The second factor `B` is any complex
+positive semidefinite matrix of the same size. The mean trace of the words
+with `p` copies of `A` and three of `B` is at least `Tr((A^(p/3) B)^3)`,
+with `A^(p/3)` defined by spectral calculus. At zero, curvature bounds for
+the normalized scalar profile give a finite interval Gram sum. At each
+positive center, the ordered quartic and the corner inequality control
+the block of at most two distinct larger eigenvalues. The cyclic trace
+identity and Schur product give the product comparison.
+
+For arbitrary spectral multiplicities, the repository reduces the
+upper-block positivity condition at each positive first degree to one
+scalar sign. The mixed derivative of the normalized logarithmic kernel
+must be nonpositive at every pair (0<u<v). The two endpoint limits
+complete the rectangle inequalities on finite ordered samples. At a
+zero center, the unnormalized matrices converge on each fixed sample,
+and the positive semidefinite cone is closed. The trace inequalities
+then follow at every degree for which the scalar sign is established.
+
+For first degrees at least eleven, the mixed derivative is strictly negative
+when the lower logarithmic coordinate lies in (0, 4] and the gap is at least
+six. The leading square controls the potentially adverse linear term before
+upper normalization. The positive decreasing upper factor and the separately
+controlled radical term preserve the strict sign. When the gap is greater
+than eleven, the sign holds for all positive lower coordinates.
+
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

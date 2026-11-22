@@ -191,11 +191,11 @@ private theorem repair_walk (G : EdgeGraph V E) [Nonempty V] (d : ℕ)
 variable [CommRing K] [LinearOrder K] [IsStrictOrderedRing K]
 
 /-- Payoff against an edge word of the minimizing graph, paired in order. -/
-private def wordCost (p : E → F → K) (a : List E) (b : List F) : K :=
+def wordCost (p : E → F → K) (a : List E) (b : List F) : K :=
   (List.zipWith p a b).sum
 
 omit [LinearOrder K] [IsStrictOrderedRing K] in
-private theorem wordCost_append (p : E → F → K) {a a' : List E} {b b' : List F}
+theorem wordCost_append (p : E → F → K) {a a' : List E} {b b' : List F}
     (h : a.length = b.length) :
     wordCost p (a ++ a') (b ++ b') = wordCost p a b + wordCost p a' b' := by
   unfold wordCost
@@ -321,7 +321,6 @@ private theorem repair_cost (G : EdgeGraph V E) (d : ℕ) (h : ConnectsAt G (d +
       have hind := repairAfter_cost G d h p hR₀ hR e es fs (by simpa using hb)
       simp only [repair, wordCost, List.zipWith_cons_cons, List.sum_cons, badJoins] at hind ⊢
       linarith only [hind]
-
 
 private theorem badFrom_eq_zero_iff (G : EdgeGraph V E) (prev : E) (a : List E) :
     badFrom G prev a = 0 ↔ ∃ t, follows G (G.target prev) a t := by
@@ -481,7 +480,7 @@ private theorem canonicalLift_spec (X : EdgeGraph V E) (Y : EdgeGraph W F)
         (C * (badJoins X es : K) + entryCharge X C (X.target e) es) - entryCharge X C u [e]
       ring
 
-private def IsMinimum (Y : EdgeGraph W F) (p : E → F → K) (a : List E) (m : K) : Prop :=
+def IsMinimum (Y : EdgeGraph W F) (p : E → F → K) (a : List E) (m : K) : Prop :=
   (∃ b, Legal Y b ∧ b.length = a.length ∧ wordCost p a b = m) ∧
     ∀ b, Legal Y b → b.length = a.length → m ≤ wordCost p a b
 
@@ -607,9 +606,9 @@ private theorem lifted_repair_strict (X : EdgeGraph V E) [Finite V] [Nonempty V]
 
 /-! Completing the lifted Bob graph. -/
 
-private def completeGraph (W : Type*) : EdgeGraph W (W × W) := ⟨Prod.fst, Prod.snd⟩
+def completeGraph (W : Type*) : EdgeGraph W (W × W) := ⟨Prod.fst, Prod.snd⟩
 
-private theorem complete_connects (W : Type*) : ConnectsAt (completeGraph W) 1 :=
+theorem complete_connects (W : Type*) : ConnectsAt (completeGraph W) 1 :=
   fun i j => ⟨.concat .nil (i, j) rfl, rfl⟩
 
 private def parallelEdges (Y : EdgeGraph W F) (i j : W) : Set F :=
@@ -639,14 +638,18 @@ private theorem complete_existing (Y : EdgeGraph W F) [Finite F] (q : E → F �
   obtain ⟨hf, hmin⟩ := Classical.choose_spec (exists_parallel_min Y (q e) h)
   exact ⟨_, hf, by simp [completeMatrices, h], hmin⟩
 
-private def matrixCost (A : E → Matrix W W K) (e : E) (f : W × W) : K :=
+def matrixCost (A : E → Matrix W W K) (e : E) (f : W × W) : K :=
   A e f.1 f.2
 
 /-- Free-endpoint readout of a min-plus product. Expanding the product
 takes the minimum of the entry sums over complete vertex walks. -/
 noncomputable def matrixMinimum (A : E → Matrix W W K) [Finite W] [Nonempty W] (a : List E) : K :=
   freeMinimum (completeGraph W) 0 (complete_connects W) (matrixCost A) a
-
+omit [IsStrictOrderedRing K] in
+/-- The matrix minimum is attained by a complete walk and bounds every such walk of the same length. -/
+theorem matrixMinimum_spec (A : E → Matrix W W K) [Finite W] [Nonempty W] (a : List E) :
+    IsMinimum (completeGraph W) (matrixCost A) a (matrixMinimum A a) :=
+  freeMinimum_spec (completeGraph W) 0 (complete_connects W) (matrixCost A) a
 private theorem follows_complete (Y : EdgeGraph W F) {i j : W} {b : List F}
     (hb : follows Y i b j) :
     follows (completeGraph W) i (b.map fun f => (Y.source f, Y.target f)) j := by
@@ -874,9 +877,7 @@ private theorem matrixMinimum_eq (Y : EdgeGraph W F) [Finite W] [Nonempty W] [Fi
     {lo hi J : K} (hlo : ∀ e f, lo ≤ q e f) (hhi : ∀ e f, q e f ≤ hi)
     (hlohi : lo ≤ hi) (hJ : hi + (d : K) * (hi - lo) < J) (a : List E) :
     matrixMinimum (completeMatrices Y q J) a = freeMinimum Y d hY q a := by
-  let cost := matrixCost (completeMatrices Y q J)
-  have hm := freeMinimum_spec (completeGraph W) 0 (complete_connects W) cost a
-  change IsMinimum (completeGraph W) cost a (matrixMinimum (completeMatrices Y q J) a) at hm
+  have hm := matrixMinimum_spec (completeMatrices Y q J) a
   have hn := freeMinimum_spec Y d hY q a
   apply le_antisymm
   · obtain ⟨b, hb, hlen, hcost⟩ := hn.1

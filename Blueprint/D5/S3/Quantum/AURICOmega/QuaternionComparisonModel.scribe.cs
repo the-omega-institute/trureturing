@@ -51,18 +51,35 @@ internal sealed class QuaternionComparisonModelDocument : IScribeDocumentDefinit
                     + "Conversely, if the norm of q is one, then star q * q and q * star q both equal the squared norm of q, which is one, so q is unitary."),
             Node("chain-connected", "quaternionModel_chainConnected", "The model is chain connected",
                 StatementSource.FromAuthor(Disp(Call("ChainConnected", Model))), DescribeRole.Theorem,
-                "The unit quaternions are exactly the quaternions of norm one, the unit three-sphere in a real space of dimension four, and this sphere is connected. "
-                    + "For a fixed point a the reading kappa a b is continuous in b and equals one at b = a, so for positive e every b near a satisfies 1 - e < kappa a b and, by symmetry, 1 - e < kappa b a. "
+                "By the lemma that the unit quaternions are path-connected, they form a connected space. "
+                    + "By the lemma that the reading of the unit quaternion model is continuous, for a fixed point a the reading kappa a b is continuous in b, and it equals one at b = a, so for positive e every b near a satisfies 1 - e < kappa a b and, by symmetry, 1 - e < kappa b a. "
                     + "Thus, for each point a, the relation holds in both directions, from a to b and from b to a, for every b in a neighbourhood of a. On a connected space, a transitive relation with this two-sided neighbourhood property holds between all pairs; applied to the reflexive transitive closure of 1 - e < kappa a b, this joins any two unit quaternions."),
             Node("feature-rank-five", "quaternionModel_hasFeatureRank_five", "The reading has feature rank five",
                 StatementSource.FromAuthor(Disp(Call("HasFeatureRank", Model, D(5)))), DescribeRole.Theorem,
                 "The feature map sends q to (1 / sqrt 2) * (1, re q, imI q, imJ q, imK q) in Euclidean five-space. "
-                    + "The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q."))));
+                    + "The inner product of the features of p and q is (1 / 2) * (1 + <p, q>), which is the reading of p and q."),
+            Node("path-connected-unitary", "pathConnectedSpace_unitary", "The unit quaternions are path-connected",
+                StatementSource.FromAuthor(Disp(Call("PathConnectedSpace", Call("unitary", Seq(Mathbb, Grp(F.Id("H")), OpenBracket, Seq(Mathbb, Grp(F.Id("R"))), CloseBracket))))), DescribeRole.Lemma,
+                "With the subspace topology of the quaternions, the group of unit quaternions is a path-connected space: it is nonempty and any two unit quaternions are joined by a continuous path of unit quaternions. "
+                    + "By the lemma that the unit quaternions form the unit sphere, it is the sphere of radius one about zero in the quaternions, a real normed space of dimension four, and a sphere of nonnegative radius in a real normed space of dimension greater than one is path-connected. "
+                    + "A path-connected space is connected, and in particular preconnected."),
+            Node("continuous-kappa", "continuous_kappa_quaternionModel", "The reading of the unit quaternion model is continuous",
+                StatementSource.FromAuthor(KappaFormula()), DescribeRole.Lemma,
+                "The reading of quaternionModel is (x, y) -> (1 + <x, y>) / 2, where <x, y> is the real inner product of the quaternions. "
+                    + "The inclusion of the unit quaternions into the quaternions is continuous and the real inner product is continuous, so the reading is continuous on pairs of unit quaternions."))));
 
     private static Formula Model => Seq(Operatorname, Grp(F.Id("quaternionModel")));
 
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+
+    private static Formula KappaFormula()
+    {
+        Formula p = F.Id("p");
+        Formula unit = Call("unitary", Seq(Mathbb, Grp(F.Id("H")), OpenBracket, Seq(Mathbb, Grp(F.Id("R"))), CloseBracket));
+        return Disp(Call("Continuous", Seq(Open, p, Colon, Sp, unit, Sp, Times, Sp, unit, Close, Sp, Mapsto, Sp,
+            Call("kappa", Model, Seq(p, Dot, D(1)), Seq(p, Dot, D(2))))));
+    }
 
     private static Formula InnerFeatureFormula()
     {
