@@ -1,10 +1,10 @@
-# The relative entropy cost of a reference increment
+# The trace-log cost of a reference increment
 
 ## Abstract
 
-A sharp spectral lower bound on the cost of adding a zero-likelihood class to a reference state.
+A sharp spectral lower bound for the trace-log pairing of a positive reference increment.
 
-**Theorem 1.1 (Lower bound from the smallest reference eigenvalue).**
+**Theorem 1.1 (Lower bound from a positive reference floor).**
 
 Lean statement: `D5/S3/Quantum/Divergence/UmegakiNullReferencePenalty.log_increment_ge`
 
@@ -16,9 +16,9 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiNullReferencePenalty.log_increm
 
 *Commentary.*
 
-The comparison dominates u times the positive reference C, and C has spectral floor lambda. Adding a trace-one positive density with weight e to the reference decreases the trace-log relative entropy of the fixed comparison by at least u times lambda times log(1 + e/lambda). The proof differentiates the logarithm along the affine reference path, compares the comparison to a positive multiple of the current reference, and uses the trace identity for the resolvent derivative. Audenaert's logarithm calculation supplies the analytic prerequisite.
+Assume u > 0, λ > 0, e ≥ 0, A ≥ uC, and C ≥ λI in the Löwner order. Let ρ be positive semidefinite with trace one. The unnormalized real trace pairing Re Tr[A(log(C + eρ) − log C)] is at least uλ log(1 + e/λ). The reference C can have arbitrary trace subject to these hypotheses, and C + eρ has trace Tr C + e. The decrease in relative entropy with the unequal-trace correction equals this pairing minus e. The proof uses Audenaert's derivative along the affine reference path and operator monotonicity of the matrix logarithm after pairing with a positive weight.
 
-**Theorem 1.2 (Attainment at a lowest eigenvector).**
+**Theorem 1.2 (Attainment at a unit eigenvector at the floor).**
 
 Lean statement: `D5/S3/Quantum/Divergence/UmegakiNullReferencePenalty.log_increment_eq_of_eigenvector`
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiNullReferencePenalty.log_increm
 
 *Commentary.*
 
-When the comparison is proportional to C, placing the added density on a lambda eigenvector attains the lower bound. The spectral calculation follows the shared eigenvector along the affine reference path.
+Assume λ > 0, C ≥ λI and e ≥ 0. If v†v = 1 and Cv = λv, then ρ = vv† is positive semidefinite with trace one. For A = uC, the pairing equals uλ log(1 + e/λ) for every real u, attaining the lower bound when u > 0.
 
 **Theorem 1.3 (A small loss restricts the positive reference floor).**
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiNullReferencePenalty.not_floor_
 
 *Commentary.*
 
-The function lambda times log(1 + e/lambda) increases strictly for positive e. An observed loss at or below the bound for a given floor excludes every larger floor. This gives the spectral estimate used to compare compression of the positive-likelihood classes against the loss incurred by the zero class.
+Assume u > 0, e > 0, A ≥ uC, and that ρ is positive semidefinite with trace one. For a threshold θ > 0, a pairing at most uθ log(1 + e/θ) rules out C ≥ λI for every λ > θ, since λ log(1 + e/λ) increases strictly on λ > 0. In an application with likelihood classes, eρ can represent reference mass added for a zero-likelihood class. The estimate controls the trace-log cost of that addition when comparing it with compression of the positive-likelihood classes.
 
 ## References
 
