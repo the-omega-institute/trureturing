@@ -31,7 +31,7 @@ open JointRecordDecoding
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-private theorem pvm_kraus_normalized {k : ℕ} (p : CompletePVM ι k) :
+theorem pvm_kraus_normalized {k : ℕ} (p : CompletePVM ι k) :
     (∑ b, (p.proj b)ᴴ * p.proj b) = 1 := by
   simp_rw [(p.hermitian _).eq, p.idempotent]
   exact p.complete
@@ -221,7 +221,7 @@ theorem pGuess_pinchedPhase [Nonempty ι] (ht : ∀ i, 0 ≤ t i)
   (isGreatest_pinchedPhase c u t hu hnorm ht horth).csSup_eq
 
 /-- The trace adjoint of pinching is pinching itself. -/
-private theorem trace_pinching {k : ℕ} (p : CompletePVM ι k) (M X : Matrix ι ι ℂ) :
+theorem trace_pinching {k : ℕ} (p : CompletePVM ι k) (M X : Matrix ι ι ℂ) :
     trace (unreadState p.proj M * X) = trace (M * unreadState p.proj X) := by
   simp only [unreadState, Matrix.sum_mul, Matrix.mul_sum, trace_sum]
   refine Finset.sum_congr rfl fun b _ => ?_

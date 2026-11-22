@@ -49,11 +49,6 @@ def measurement : QuantumChannel (Fin 2) (Fin 2) :=
 private abbrev raw (ρ : Qubit) : M₂ := CStarMatrix.ofMatrix.symm ρ.1
 private abbrev action (Φ : QuantumChannel (Fin 2) (Fin 2)) (X : M₂) : M₂ :=
   CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X))
-private theorem projectors_normalized : (∑ i, (projector i)ᴴ * projector i) = 1 := by
-  let P := coordinatePVM (id : Fin 2 → Fin 2)
-  change (∑ i, (P.proj i)ᴴ * P.proj i) = 1
-  simp_rw [(P.hermitian _).eq, P.idempotent]
-  exact P.complete
 private theorem projectors_hermitian (i : Fin 2) : (projector i)ᴴ = projector i :=
   ((coordinatePVM (id : Fin 2 → Fin 2)).hermitian i).eq
 private theorem projectors_action (X : M₂) :
@@ -72,10 +67,6 @@ private theorem measurement_action (X : M₂) :
   simp only [projectors_hermitian] at h
   exact h
 
-private theorem measurement_adjoint (X Y : M₂) :
-    (X * action measurement Y).trace = (action measurement X * Y).trace := by
-  rw [measurement_action, measurement_action]
-  simp [Matrix.trace, Matrix.diag, mul_diagonal, diagonal_mul]
 private abbrev realDiagonal (a : Fin 2 → ℝ) : M₂ := diagonal fun i => (a i : ℂ)
 private def rotation (t : ℝ) : M₂ :=
   !![((1 / Real.sqrt (1 + t ^ 2) : ℝ) : ℂ), ((-t / Real.sqrt (1 + t ^ 2) : ℝ) : ℂ);
@@ -241,7 +232,8 @@ private theorem ordinary_exists (σ : Qubit) (hσ : (raw σ).PosDef) :
   have hW : spectralInverseSqrt Q = W := by
     change cfc (fun z : ℝ => (Real.sqrt z)⁻¹) (realDiagonal q) = W
     rw [cfc_diagonal]
-  obtain ⟨R, hR, hrec⟩ := completed_reference_petz_channel projector projectors_normalized σ
+  obtain ⟨R, hR, hrec⟩ := completed_reference_petz_channel projector
+    (pvm_kraus_normalized (coordinatePVM (id : Fin 2 → Fin 2))) σ
   rw [hτ, hP, hW] at hR
   rw [hτ] at hrec
   have hS : S = CFC.sqrt (raw σ) := by
@@ -877,11 +869,15 @@ theorem family_bounds (x : ℝ) (hx : 0 < x) (hsmall : x ≤ 1 / 100) :
     have hσ := reference_faithful x hx hsmall
     obtain ⟨hin, hout⟩ := finite_branches ρ σ hσ
     obtain ⟨R, hR, hrec⟩ := ordinary_exists σ hσ
-    refine ⟨measurement_action, measurement_adjoint, hρ, hσ, measured_faithful _ hρ,
+    refine ⟨measurement_action, ?_, hρ, hσ, measured_faithful _ hρ,
       measured_faithful _ hσ, hin, hout, R, hR, hrec, ?_⟩
-    unfold errorSq
-    congr 3
-    exact (hR _).symm
+    · intro X Y
+      unfold action measurement
+      rw [pinchingChannel_apply, pinchingChannel_apply]
+      exact (trace_pinching (coordinatePVM id) X Y).symm
+    · unfold errorSq
+      congr 3
+      exact (hR _).symm
 
 /-- The rational entries of the input at a rational parameter. -/
 def inputQ (x : ℚ) : Matrix (Fin 2) (Fin 2) ℚ :=
