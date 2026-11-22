@@ -98,7 +98,7 @@ theorem centered_lift_iff {J A : Type*} [Fintype J] [Finite A]
       fun a => (z a : ℝ) * (2 * Real.pi) -
         (Real.pi / 2) * ((K.map (Int.cast : ℤ → ℝ)) *ᵥ (1 : J → ℝ)) a := by
   classical
-  letI := Fintype.ofFinite A
+  let := Fintype.ofFinite A
   let R := K.map (Int.cast : ℤ → ℝ)
   let θ : J → ℝ := fun j => x j + Real.pi / 2
   have hshift (a : A) : (R *ᵥ θ) a = (R *ᵥ x) a + (Real.pi / 2) * (R *ᵥ 1) a := by
@@ -133,6 +133,47 @@ theorem centered_lift_iff {J A : Type*} [Fintype J] [Finite A]
         exact Finset.sum_comm
       _ = ((∑ a, c a * z a : ℤ) : ℝ) * (2 * Real.pi) := by
         simp only [hr, Int.cast_sum, Int.cast_mul, Finset.sum_mul, mul_assoc]
+
+private theorem exists_weighted_fiber_minimum {J A : Type*} [Fintype J] [Fintype A]
+    [DecidableEq J] [DecidableEq A] (R : Matrix A J ℝ) (w : J → ℝ)
+    (hw : ∀ j, 0 < w j) (hR : LinearIndependent ℝ R.row) (b : A → ℝ) :
+    let M := diagonal w
+    let G := R * M⁻¹ * Rᵀ
+    ∃ x : J → ℝ, R *ᵥ x = b ∧ x ⬝ᵥ (M *ᵥ x) = b ⬝ᵥ (G⁻¹ *ᵥ b) ∧
+      ∀ y : J → ℝ, R *ᵥ y = b → x ⬝ᵥ (M *ᵥ x) ≤ y ⬝ᵥ (M *ᵥ y) := by
+  intro M G
+  have hM : M.PosDef := .diagonal hw
+  have hG : G.PosDef := by
+    simpa only [conjTranspose_eq_transpose_of_trivial] using
+      hM.inv.mul_mul_conjTranspose_same (Matrix.vecMul_injective_iff.mpr hR)
+  let u := G⁻¹ *ᵥ b
+  let x := M⁻¹ *ᵥ (Rᵀ *ᵥ u)
+  have hx : R *ᵥ x = b := by
+    change R *ᵥ (M⁻¹ *ᵥ (Rᵀ *ᵥ u)) = b
+    rw [mulVec_mulVec (Rᵀ *ᵥ u), mulVec_mulVec u]
+    change G *ᵥ (G⁻¹ *ᵥ b) = b
+    rw [mulVec_mulVec, Matrix.mul_nonsing_inv _ ((Matrix.isUnit_iff_isUnit_det _).mp hG.isUnit),
+      one_mulVec]
+  have hMx : M *ᵥ x = Rᵀ *ᵥ u := by
+    change M *ᵥ (M⁻¹ *ᵥ (Rᵀ *ᵥ u)) = Rᵀ *ᵥ u
+    rw [mulVec_mulVec, Matrix.mul_nonsing_inv _ ((Matrix.isUnit_iff_isUnit_det _).mp hM.isUnit),
+      one_mulVec]
+  refine ⟨x, hx, ?_, ?_⟩
+  · rw [hMx, dotProduct_transpose_mulVec, hx, dotProduct_comm]
+  · intro y hy
+    let v := y - x
+    have hv : R *ᵥ v = 0 := by simp [v, mulVec_sub, hy, hx]
+    have hvx : v ⬝ᵥ (M *ᵥ x) = 0 := by
+      rw [hMx, dotProduct_transpose_mulVec, hv, dotProduct_zero]
+    have hxv : x ⬝ᵥ (M *ᵥ v) = 0 := by
+      have hMtranspose : Mᵀ = M := diagonal_transpose w
+      rwa [← hMtranspose, dotProduct_transpose_mulVec]
+    have hvv : 0 ≤ v ⬝ᵥ (M *ᵥ v) := by
+      simpa only [star_trivial] using hM.posSemidef.dotProduct_mulVec_nonneg v
+    have hyx : y = x + v := by simp [v]
+    conv_rhs => rw [hyx]
+    simp only [mulVec_add, add_dotProduct, dotProduct_add, hvx, hxv, add_zero, zero_add]
+    exact le_add_of_nonneg_right hvv
 
 #print axioms closure_real_phase_orbit
 #print axioms centered_lift_iff
