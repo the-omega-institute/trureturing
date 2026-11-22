@@ -14,7 +14,7 @@ inputs:
     description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
     default: 'false'
   native-report-batch-modules:
-    description: 'Maximum modules per native extraction process (integer 1..100); preserves full report coverage and cache reuse'
+    description: 'Maximum modules per native extraction process (integer 1..100); preserves module coverage and cache reuse'
     default: '100'
 outputs:
   project-key:
@@ -189,9 +189,14 @@ runs:
           [[ -f "$archive" && ! -L "$archive" && ! -L "$directory" ]] || continue
           rm -v -- "$archive"
         done
+        build="$GITHUB_WORKSPACE/.lake/build"
+        for report in "$build"/stratalint/raw-lean-report.json* "$build"/lean-inspector/report.zip* "$build"/lean-inspector/inputs.json; do
+          [[ -f "$report" && ! -L "$report" ]] || continue
+          rm -v -- "$report"
+        done
         df -h -- "$RUNNER_TEMP"
     - id: build
-      name: Build the report and cacheable audit programs
+      name: Build module reports and cacheable audit programs
       continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
@@ -226,10 +231,7 @@ runs:
         status=0
         python3 tools/scripts/report/runner-diagnostics.py -- \
           bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
-          env -u PREFLIGHT_DEADLINE_AT make check-lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
-        if [[ "$status" == 0 ]]; then
-          python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE" || status=$?
-        fi
+          env -u PREFLIGHT_DEADLINE_AT make lean-cache-prepare FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
         echo "exit_code=$status" >> "$GITHUB_OUTPUT"
         exit "$status"
     - id: sharded_progress
@@ -293,7 +295,7 @@ runs:
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
-    - name: Require a complete producer report
+    - name: Require a complete project cache
       if: ${{ !cancelled() && steps.build.outcome != 'success' }}
       env:
         BUILD_EXIT: ${{ steps.build.outputs.exit_code }}
@@ -302,7 +304,7 @@ runs:
         if [[ "$BUILD_EXIT" == 124 ]]; then
           echo "CACHE_PRODUCER_INCOMPLETE build slice ended; retry the failed producer with gh run rerun $GITHUB_RUN_ID --failed" >&2
         else
-          echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
+          echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress is incomplete" >&2
         fi
         if [[ "$BUILD_EXIT" =~ ^[1-9][0-9]{0,2}$ ]] && (( 10#$BUILD_EXIT <= 255 )); then exit "$BUILD_EXIT"; fi
         exit 1

@@ -23,8 +23,8 @@ inputs:
     description: Cold build interval before saving a checkpoint, or zero for a normal build
     default: '0'
 outputs:
-  report-checked:
-    description: A completed checkpoint slice already checked the full report
+  cache-prepared:
+    description: A completed checkpoint slice prepared the project cache
     value: ${{ steps.cold_build.outcome == 'success' && steps.cold_build.outputs.checkpoint != 'true' }}
 runs:
   using: composite
@@ -192,7 +192,7 @@ runs:
         result=0
         bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- bash -e -c '
           make lean FULL_BUILD=1
-          make check-lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+          make lean-cache-prepare FULL_BUILD=1
         ' || result=$?
         if [[ "$result" == 124 ]]; then
           echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
