@@ -45,11 +45,8 @@ private theorem finite_complex_abel_bound {a w : ℕ → ℂ} {p m : ℕ} (hpm :
 
 private theorem sum_Ico_adjacent_sub (f : ℕ → ℝ) {p m : ℕ} (hpm : p ≤ m) :
     (∑ n ∈ Finset.Ico p m, (f n - f (n+1))) = f p - f m := by
-  induction m, hpm using Nat.le_induction with
-  | base => simp
-  | succ m hm ih =>
-    rw [Finset.sum_Ico_succ_top hm, ih]
-    ring
+  have h := congrArg Neg.neg (Finset.sum_Ico_sub f hpm)
+  simpa only [← Finset.sum_neg_distrib, neg_sub] using h
 
 private def normalizedMode (q : ℕ) (u : ℝ) (n i : ℕ) : ℂ :=
   (Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) : ℂ) *
@@ -74,12 +71,12 @@ private theorem unit_phase_diff (γ v w : ℝ) :
   simpa only [Real.norm_eq_abs, abs_mul] using
     Real.norm_exp_I_mul_ofReal_sub_one_le (x := γ*(v-w))
 
-private theorem normalized_mode_variation (hRH : RiemannHypothesis)
+private theorem normalized_mode_variation_core (hRH : RiemannHypothesis)
     {q p m : ℕ} (hp : 0 < p) (hpm : p ≤ m) (hmq : m ≤ q) (hhalf : q ≤ 2*p)
     {u : ℝ} (hu : 0 ≤ u) (i : ℕ) :
     ‖normalizedMode q u m i‖ + ‖normalizedMode q u p i‖ +
         ∑ n ∈ Finset.Ico p m, ‖normalizedMode q u (n+1) i - normalizedMode q u n i‖ ≤
-      (10 + 4*|occurrenceFrequency i| *(u/(q : ℝ))) * (‖actualZero i‖)⁻¹ := by
+      (10 + 4*|occurrenceFrequency i| * min 1 (u/(q : ℝ))) * (‖actualZero i‖)⁻¹ := by
   let r := (‖actualZero i‖)⁻¹
   let γ := occurrenceFrequency i
   let v (n : ℕ) := u/(n : ℝ)
@@ -117,13 +114,13 @@ private theorem normalized_mode_variation (hRH : RiemannHypothesis)
     exact mul_le_of_le_one_left (by positivity) (hE₁ n hn) |>.trans (hc n hn)
   have hstep (n : ℕ) (hn : n ∈ Finset.Ico p m) :
       ‖normalizedMode q u (n+1) i-normalizedMode q u n i‖ ≤
-        2*r*(E n-E (n+1)) + (4/(q : ℝ))*r + 2*r*|γ| *(v n-v (n+1)) := by
+        2*r*(E n-E (n+1)) + (4/(q : ℝ))*r + 2*r*|γ| * (E (n+1)*(v n-v (n+1))) := by
     have hpn := (Finset.mem_Ico.mp hn).1
     have hpn' := hpn.trans (Nat.le_succ n)
     have he : normalizedMode q u (n+1) i-normalizedMode q u n i =
-        ((E (n+1) : ℂ)-(E n : ℂ))*c (n+1)*P (n+1) +
-        (E n : ℂ)*(c (n+1)-c n)*P (n+1) +
-        (E n : ℂ)*c n*(P (n+1)-P n) := by
+        ((E (n+1) : ℂ)-(E n : ℂ))*c n*P n +
+        (E (n+1) : ℂ)*(c (n+1)-c n)*P n +
+        (E (n+1) : ℂ)*c (n+1)*(P (n+1)-P n) := by
       change (E (n+1) : ℂ)*(c (n+1)*P (n+1))-(E n : ℂ)*(c n*P n) = _
       ring
     have hv := hvanti n (n+1) hpn (Nat.le_succ _)
@@ -138,70 +135,127 @@ private theorem normalized_mode_variation (hRH : RiemannHypothesis)
     rw [he]
     refine ((norm_add_le _ _).trans (add_le_add (norm_add_le _ _) le_rfl)).trans ?_
     simp only [norm_mul, hP, mul_one, Complex.norm_real, Real.norm_eq_abs,
-      abs_of_nonneg (hE n)]
+      abs_of_nonneg (hE (n+1))]
     rw [← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonpos (sub_nonpos.mpr (hEanti n (n+1) hpn (Nat.le_succ _))), neg_sub]
-    have hfirst := mul_le_mul_of_nonneg_left (hc (n+1) hpn')
+    have hfirst := mul_le_mul_of_nonneg_left (hc n hpn)
       (sub_nonneg.mpr (hEanti n (n+1) hpn (Nat.le_succ _)))
-    have hsecond := (mul_le_of_le_one_left (norm_nonneg (c (n+1)-c n)) (hE₁ n hpn)).trans hcstep
-    have hthird : E n * ‖c n‖ * ‖P (n+1)-P n‖ ≤ 2*r* (|γ| *(v n-v (n+1))) :=
-      mul_le_mul ((mul_le_of_le_one_left (norm_nonneg (c n)) (hE₁ n hpn)).trans (hc n hpn))
-        hphase (norm_nonneg _) (by positivity)
+    have hsecond := (mul_le_of_le_one_left (norm_nonneg (c (n+1)-c n)) (hE₁ (n+1) hpn')).trans hcstep
+    have hthird :
+        E (n+1) * ‖c (n+1)‖ * ‖P (n+1)-P n‖ ≤ 2*r*|γ| * (E (n+1)*(v n-v (n+1))) := by
+      calc
+        _ ≤ E (n+1) * (2*r) * (|γ| *(v n-v (n+1))) :=
+          mul_le_mul (mul_le_mul_of_nonneg_left (hc (n+1) hpn') (hE _))
+            hphase (norm_nonneg _) (by positivity)
+        _ = _ := by ring
     nlinarith only [hfirst, hsecond, hthird]
   have hcard : ((Finset.Ico p m).card : ℝ) ≤ q := by
     exact_mod_cast (show (Finset.Ico p m).card ≤ q by rw [Nat.card_Ico]; omega)
   have hcard' : ((Finset.Ico p m).card : ℝ)*((4/(q : ℝ))*r) ≤ 4*r := by
     refine (mul_le_mul_of_nonneg_right hcard (by positivity)).trans_eq ?_
     field_simp
-  have hvs : v p-v m ≤ 2*u/(q : ℝ) := by
-    have hvm : 0 ≤ v m := by dsimp [v]; positivity
-    linarith only [hvbound p le_rfl, hvm]
+  let V := ∑ n ∈ Finset.Ico p m, E (n+1)*(v n-v (n+1))
+  have hVsmall : V ≤ 2*u/(q : ℝ) := by
+    calc
+      _ ≤ ∑ n ∈ Finset.Ico p m, (v n-v (n+1)) := by
+        apply Finset.sum_le_sum
+        intro n hn
+        have hn' := (Finset.mem_Ico.mp hn).1
+        exact mul_le_of_le_one_left
+          (sub_nonneg.mpr (hvanti n (n+1) hn' (Nat.le_succ _)))
+          (hE₁ (n+1) (hn'.trans (Nat.le_succ _)))
+      _ = v p-v m := sum_Ico_adjacent_sub _ hpm
+      _ ≤ _ := by
+        have hvm : 0 ≤ v m := by dsimp [v]; positivity
+        linarith only [hvbound p le_rfl, hvm]
+  have hVlarge : V ≤ 2*(E p-E m) := by
+    rw [← sum_Ico_adjacent_sub E hpm, Finset.mul_sum]
+    apply Finset.sum_le_sum
+    intro n hn
+    have he : E n = E (n+1) * Real.exp ((v n-v (n+1))/2) := by
+      dsimp only [E]
+      rw [← Real.exp_add]
+      congr 1
+      ring
+    rw [he]
+    have h := mul_le_mul_of_nonneg_left
+      (Real.add_one_le_exp ((v n-v (n+1))/2)) (hE (n+1))
+    nlinarith only [h]
   have hEs : E p-E m ≤ 1 := by linarith only [hE₁ p le_rfl, hE m]
+  have hV : V ≤ 2 * min 1 (u/(q : ℝ)) := by
+    by_cases h : 1 ≤ u/(q : ℝ)
+    · rw [min_eq_left h]
+      linarith only [hVlarge, hEs]
+    · rw [min_eq_right (le_of_not_ge h)]
+      exact hVsmall.trans_eq (by ring)
   calc
     _ ≤ 2*r + 2*r + ∑ n ∈ Finset.Ico p m,
-        (2*r*(E n-E (n+1)) + (4/(q : ℝ))*r + 2*r*|γ| *(v n-v (n+1))) :=
+        (2*r*(E n-E (n+1)) + (4/(q : ℝ))*r + 2*r*|γ| * (E (n+1)*(v n-v (n+1)))) :=
       add_le_add (add_le_add (hnorm m hpm) (hnorm p le_rfl)) (Finset.sum_le_sum hstep)
     _ = 2*r + 2*r + (2*r*(E p-E m) +
-        ((Finset.Ico p m).card : ℝ)*((4/(q : ℝ))*r) + 2*r*|γ| *(v p-v m)) := by
+        ((Finset.Ico p m).card : ℝ)*((4/(q : ℝ))*r) + 2*r*|γ| * V) := by
+      dsimp only [V]
       simp only [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_const, nsmul_eq_mul,
         sum_Ico_adjacent_sub _ hpm]
       ring
-    _ ≤ 2*r + 2*r + ((2*r*1 + 4*r) + 2*r*|γ| * (2*u/(q : ℝ))) := by
+    _ ≤ 2*r + 2*r + ((2*r*1 + 4*r) + 2*r*|γ| * (2 * min 1 (u/(q : ℝ)))) := by
       apply add_le_add le_rfl
       exact add_le_add (add_le_add (mul_le_mul_of_nonneg_left hEs (by positivity)) hcard')
-        (mul_le_mul_of_nonneg_left hvs (by positivity : 0 ≤ 2*r*|γ|))
-    _ = _ := by change _ = (10 + 4*|γ| * (u/(q : ℝ)))*r; ring
+        (mul_le_mul_of_nonneg_left hV (by positivity : 0 ≤ 2*r*|γ|))
+    _ = _ := by change _ = (10 + 4*|γ| * min 1 (u/(q : ℝ)))*r; ring
+
+private theorem normalized_mode_variation (hRH : RiemannHypothesis)
+    {q p m : ℕ} (hp : 0 < p) (hpm : p ≤ m) (hmq : m ≤ q) (hhalf : q ≤ 2*p)
+    {u : ℝ} (hu : 0 ≤ u) (i : ℕ) :
+    ‖normalizedMode q u m i‖ + ‖normalizedMode q u p i‖ +
+        ∑ n ∈ Finset.Ico p m, ‖normalizedMode q u (n+1) i - normalizedMode q u n i‖ ≤
+      (10 + 4*|occurrenceFrequency i| *(u/(q : ℝ))) * (‖actualZero i‖)⁻¹ := by
+  refine (normalized_mode_variation_core hRH hp hpm hmq hhalf hu i).trans ?_
+  exact mul_le_mul_of_nonneg_right
+    (add_le_add le_rfl (mul_le_mul_of_nonneg_left (min_le_right _ _) (by positivity))) (by positivity)
 
 private def lowBins (H : ℕ) : Finset ℤ := Finset.Icc (-(H : ℤ)) H
 
 private theorem mem_lowBins {H : ℕ} {k : ℤ} : k ∈ lowBins H ↔ k.natAbs ≤ H := by
   rw [lowBins, Finset.mem_Icc, ← Nat.cast_le (α := ℤ), Int.natCast_natAbs, abs_le]
 
-private theorem masked_occurrence_tail (hRH : RiemannHypothesis) :
+private theorem masked_occurrence_tail_at (hRH : RiemannHypothesis)
+    {η : ℝ} (hη : 0 < η) (hηhalf : η < 1/2) :
     ∃ C : ℝ, 0 < C ∧ ∀ (q H : ℕ), 3 ≤ q → 0 < H →
       ∀ u : ℝ, (q : ℝ) ≤ u → ∀ T : Finset ℕ,
       (∑ n ∈ Finset.Icc ((q+1)/2) q,
         Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) *
           ‖finiteModes (T.filter (fun i => frequencyBin (occurrenceFrequency i) ∉ lowBins H))
             occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤
-        C * (q : ℝ) * (H : ℝ)^(-1/4 : ℝ) := by
-  obtain ⟨D, hD, hmass⟩ := occurrence_bin_power_majorant hRH
+        C * (q : ℝ) * (H : ℝ)^(η-1/2) := by
+  obtain ⟨D, hD, hmass⟩ := occurrence_bin_power_majorant_at hRH hη
   obtain ⟨G, hG, hinter⟩ := exists_local_mode_integral_le_square_mass
   let d := 1 - Real.exp (-1/2)
   have hd : 0 < d := sub_pos.mpr (Real.exp_lt_one_iff.mpr (by norm_num))
-  refine ⟨16*G*D/d, by positivity, fun q H hq hH u hu T => ?_⟩
-  let b (k : ℤ) := D*(|(k : ℝ)|+1)^(-3/4 : ℝ)
+  let R := 2 / (1-2*η)
+  have hR : 0 < R := div_pos (by norm_num) (by linarith)
+  refine ⟨8*G*D*Real.sqrt R/d, by positivity, fun q H hq hH u hu T => ?_⟩
+  let b (k : ℤ) := D*(|(k : ℝ)|+1)^(η-1)
   let bTail (k : ℤ) := if k ∈ lowBins H then 0 else b k
+  have hb : Summable (fun k : ℤ => b k ^ 2) := by
+    have hs : Summable (fun n : ℕ => (n : ℝ)^(2*(η-1))) :=
+      Real.summable_nat_rpow.mpr (by linarith)
+    have ht := ((summable_nat_add_iff 1).2 hs).mul_left (D^2)
+    rw [summable_int_iff_summable_nat_and_neg]
+    constructor <;> apply ht.congr <;> intro n <;>
+      simp only [b, Int.cast_neg, Int.cast_natCast, abs_neg,
+        abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n), Nat.cast_add, Nat.cast_one,
+        mul_pow, ← Real.rpow_mul_natCast (by positivity : 0 ≤ (n : ℝ)+1)] <;>
+      congr 2 <;> ring
   have hsum : Summable (fun k : ℤ => bTail k ^ 2) := by
-    refine Summable.of_nonneg_of_le (fun _ => sq_nonneg _) (fun k => ?_)
-      (summable_band_rpow_sq D)
+    refine Summable.of_nonneg_of_le (fun _ => sq_nonneg _) (fun k => ?_) hb
     change bTail k ^ 2 ≤ b k ^ 2
     by_cases hk : k ∈ lowBins H
     · simp only [bTail, if_pos hk, zero_pow (by decide : (2 : ℕ) ≠ 0)]
       exact sq_nonneg _
     · simp only [bTail, if_neg hk, le_refl]
   have hshape (k : ℤ) : bTail k ^ 2 =
-      D^2*(if k.natAbs ≤ H then 0 else (|(k : ℝ)|+1)^(-3/2 : ℝ)) := by
+      D^2*(if k.natAbs ≤ H then 0 else (|(k : ℝ)|+1)^(2*(η-1))) := by
     by_cases hk : k ∈ lowBins H
     · simp [bTail, hk, mem_lowBins.mp hk]
     · have hk' : ¬ k.natAbs ≤ H := fun hs => hk (mem_lowBins.mpr hs)
@@ -209,15 +263,24 @@ private theorem masked_occurrence_tail (hRH : RiemannHypothesis) :
       congr 1
       rw [← Real.rpow_natCast, ← Real.rpow_mul (by positivity)]
       norm_num
-  have hsq : (∑' k : ℤ, bTail k ^ 2) ≤ D^2*(4*(H : ℝ)^(-1/2 : ℝ)) := by
+      congr 1
+      ring
+  have hsq : (∑' k : ℤ, bTail k ^ 2) ≤ D^2*(R*(H : ℝ)^(2*η-1)) := by
     simp_rw [hshape, tsum_mul_left]
-    exact mul_le_mul_of_nonneg_left (signed_bin_tail_inv_three_halves H hH) (sq_nonneg _)
-  have hroot : Real.sqrt (∑' k : ℤ, bTail k ^ 2) ≤ 2*D*(H : ℝ)^(-1/4 : ℝ) := by
+    apply mul_le_mul_of_nonneg_left _ (sq_nonneg _)
+    refine (signed_bin_tail_rpow H hH (by linarith : 2*(η-1) < -1)).trans_eq ?_
+    rw [show 2*(η-1)+1 = 2*η-1 by ring]
+    dsimp [R]
+    rw [show -(2*η-1) = 1-2*η by ring]
+    ring
+  have hroot : Real.sqrt (∑' k : ℤ, bTail k ^ 2) ≤ D*Real.sqrt R*(H : ℝ)^(η-1/2) := by
     refine Real.sqrt_le_iff.mpr ⟨by positivity, hsq.trans_eq ?_⟩
-    have hs : ((H : ℝ)^(-1/4 : ℝ))^2 = (H : ℝ)^(-1/2 : ℝ) := by
-      rw [← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg H)]
-      norm_num
-    rw [mul_pow, hs, mul_pow]
+    have hs : ((H : ℝ)^(η-1/2))^2 = (H : ℝ)^(2*η-1) := by
+      rw [← Real.rpow_mul_natCast (Nat.cast_nonneg H)]
+      congr 1
+      push_cast
+      ring
+    simp only [mul_pow, Real.sq_sqrt hR.le, hs]
     ring
   let K := G * Real.sqrt (∑' k : ℤ, bTail k^2)
   have hK : 0 ≤ K := by dsimp [K]; positivity
@@ -227,10 +290,21 @@ private theorem masked_occurrence_tail (hRH : RiemannHypothesis) :
   refine hsample.trans ?_
   have hK' := mul_le_mul_of_nonneg_left hroot hG.le
   calc
-    _ ≤ (8*(G*(2*D*(H : ℝ)^(-1/4 : ℝ)))/d)*(q : ℝ) :=
+    _ ≤ (8*(G*(D*Real.sqrt R*(H : ℝ)^(η-1/2)))/d)*(q : ℝ) :=
       mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_right
         (mul_le_mul_of_nonneg_left hK' (by norm_num)) hd.le) (Nat.cast_nonneg _)
     _ = _ := by ring
+
+private theorem masked_occurrence_tail (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (q H : ℕ), 3 ≤ q → 0 < H →
+      ∀ u : ℝ, (q : ℝ) ≤ u → ∀ T : Finset ℕ,
+      (∑ n ∈ Finset.Icc ((q+1)/2) q,
+        Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) *
+          ‖finiteModes (T.filter (fun i => frequencyBin (occurrenceFrequency i) ∉ lowBins H))
+            occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤
+        C * (q : ℝ) * (H : ℝ)^(-1/4 : ℝ) := by
+  simpa only [show (1/4 : ℝ)-1/2 = -1/4 by norm_num] using
+    masked_occurrence_tail_at hRH (η := 1/4) (by norm_num) (by norm_num)
 
 private theorem low_occurrence_sum (hRH : RiemannHypothesis) :
     ∃ C : ℝ, 0 < C ∧ ∀ (q p m H : ℕ), 0 < p → p ≤ m → m ≤ q → q ≤ 2*p →
@@ -290,56 +364,126 @@ private theorem low_occurrence_sum (hRH : RiemannHypothesis) :
       positivity
     _ = _ := by ring
 
-/-- A frequency cutoff separates signed degree cancellation from the high-frequency tail. -/
-theorem signed_omitted_root_density_of_cutoff (hRH : RiemannHypothesis) :
-    ∃ C : ℝ, 0 < C ∧ ∀ m H : ℕ, 2 ≤ m → 0 < H →
-      ∀ u : ℝ, (m : ℝ)+1 ≤ u → ∀ A : ℝ,
-      (∀ k ≤ m+1, |∑ n ∈ Finset.range k, (μ n : ℝ)| ≤ A) →
-      |∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n),
-        -(μ n : ℝ) * rootDensity n u| ≤
-        Real.exp (-(orderRate m)*u) *
-          (C * (A * ((H : ℝ)+1)^(1/4 : ℝ) * (1+((H : ℝ)+1)*(u/((m : ℝ)+1))) +
-            ((m : ℝ)+1)*(H : ℝ)^(-1/4 : ℝ))) := by
-  obtain ⟨F, hF, hhead⟩ := low_occurrence_sum hRH
-  obtain ⟨G, hG, htail⟩ := masked_occurrence_tail hRH
-  refine ⟨max F G, hF.trans_le (le_max_left _ _), fun m H hm hH u hu A ha => ?_⟩
+private theorem uniform_low_occurrence_sum (hRH : RiemannHypothesis) {η : ℝ} (hη : 0 < η) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (q p m H : ℕ), 0 < p → p ≤ m → m ≤ q → q ≤ 2*p →
+      ∀ u : ℝ, 0 ≤ u → ∀ (a : ℕ → ℂ) (A : ℝ),
+      (∀ k ≤ m+1, ‖∑ n ∈ Finset.range k, a n‖ ≤ A) → ∀ T : Finset ℕ,
+      ‖∑ n ∈ Finset.Icc p m,
+        a n * ∑ i ∈ T with frequencyBin (occurrenceFrequency i) ∈ lowBins H,
+          normalizedMode q u n i‖ ≤ C * A * ((H : ℝ)+1)^(1+η) := by
+  obtain ⟨D, hD, hmass⟩ := occurrence_bin_power_majorant_at hRH hη
+  refine ⟨36*D, by positivity, fun q p m H hp hpm hmq hhalf u hu a A ha T => ?_⟩
+  let b (i : ℕ) := frequencyBin (occurrenceFrequency i)
+  let U := T.filter (fun i => b i ∈ lowBins H)
+  let r (i : ℕ) := (‖actualZero i‖)⁻¹
+  let w (i : ℕ) := (10+4*|occurrenceFrequency i|) * r i
+  let V := Finset.Icc p m
+  let h := (H : ℝ)+1
+  have hA : 0 ≤ A := (norm_nonneg _).trans (ha 0 (Nat.zero_le _))
+  have hγ (i : ℕ) : |occurrenceFrequency i| ≤ |(b i : ℝ)|+1 := by
+    have hv := mem_frequencyBin (occurrenceFrequency i)
+    change (b i : ℝ) < occurrenceFrequency i ∧ occurrenceFrequency i ≤ (b i : ℝ)+1 at hv
+    exact abs_le.mpr ⟨by linarith only [hv.1, neg_abs_le (b i : ℝ)],
+      by linarith only [hv.2, le_abs_self (b i : ℝ)]⟩
+  have hbin (k : ℤ) (hk : k ∈ lowBins H) :
+      ∑ i ∈ U with b i = k, w i ≤ (18*D)*h^η := by
+    let x := |(k : ℝ)|+1
+    have hx : 1 ≤ x := by dsimp [x]; linarith [abs_nonneg (k : ℝ)]
+    have hx' : 0 < x := zero_lt_one.trans_le hx
+    have hreal : |(k : ℝ)| ≤ H := by
+      rw [abs_le]
+      obtain ⟨hl, hr⟩ := Finset.mem_Icc.mp hk
+      exact ⟨by exact_mod_cast hl, by exact_mod_cast hr⟩
+    have hxh : x ≤ h := by dsimp [x, h]; linarith
+    calc
+      _ ≤ ∑ i ∈ U with b i = k, 18*x*r i := by
+        apply Finset.sum_le_sum
+        intro i hi
+        apply mul_le_mul_of_nonneg_right _ (by dsimp [r]; positivity)
+        have hi' := hγ i
+        rw [(Finset.mem_filter.mp hi).2] at hi'
+        dsimp [x]
+        linarith only [hi', hx]
+      _ = (18*x) * ∑ i ∈ U with b i = k, r i := by rw [Finset.mul_sum]
+      _ ≤ (18*x)*(D*x^(η-1)) :=
+        mul_le_mul_of_nonneg_left (hmass U k) (by positivity)
+      _ = 18*D*x^η := by
+        rw [show x^η = x^(η-1)*x by
+          calc
+            _ = x^((η-1)+1) := by congr 1 <;> ring
+            _ = _ := by rw [Real.rpow_add hx', Real.rpow_one]]
+        ring
+      _ ≤ _ := mul_le_mul_of_nonneg_left (Real.rpow_le_rpow hx'.le hxh hη.le) (by positivity)
+  have hcard : ((lowBins H).card : ℝ) ≤ 2*h := by
+    have hlim : (lowBins H).card ≤ 2*H+1 := by
+      dsimp [lowBins]
+      rw [Int.card_Icc]
+      omega
+    have hreal : ((lowBins H).card : ℝ) ≤ (2*H+1 : ℕ) := by exact_mod_cast hlim
+    push_cast at hreal
+    dsimp [h]
+    linarith
+  have hhead : (∑ i ∈ U, w i) ≤ 36*D*h^(1+η) := by
+    calc
+      _ = ∑ k ∈ lowBins H, ∑ i ∈ U with b i = k, w i :=
+        (Finset.sum_fiberwise_of_maps_to (s := U) (t := lowBins H)
+          (g := b) (fun i hi => (Finset.mem_filter.mp hi).2) w).symm
+      _ ≤ ∑ _ ∈ lowBins H, (18*D)*h^η := Finset.sum_le_sum hbin
+      _ ≤ (2*h)*((18*D)*h^η) := by
+        rw [Finset.sum_const, nsmul_eq_mul]
+        exact mul_le_mul_of_nonneg_right hcard (by positivity)
+      _ = _ := by
+        rw [Real.rpow_add (by dsimp [h]; positivity), Real.rpow_one]
+        ring
+  have hterm (i : ℕ) : ‖∑ n ∈ V, a n * normalizedMode q u n i‖ ≤ A*w i := by
+    refine (finite_complex_abel_bound hpm ha).trans ?_
+    apply mul_le_mul_of_nonneg_left _ hA
+    refine (normalized_mode_variation_core hRH hp hpm hmq hhalf hu i).trans ?_
+    change _ ≤ (10+4*|occurrenceFrequency i|) * r i
+    apply mul_le_mul_of_nonneg_right _ (by positivity)
+    exact add_le_add (le_refl (10 : ℝ))
+      (mul_le_of_le_one_right (by positivity) (min_le_left 1 (u / (q : ℝ))))
+  change ‖∑ n ∈ V, a n * ∑ i ∈ U, normalizedMode q u n i‖ ≤ _
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  calc
+    _ ≤ ∑ i ∈ U, A*w i := (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => hterm i)
+    _ ≤ A*(36*D*h^(1+η)) := by rw [← Finset.mul_sum]; exact mul_le_mul_of_nonneg_left hhead hA
+    _ = _ := by ring
+
+private theorem signed_omitted_root_density_of_finite_bounds (hRH : RiemannHypothesis)
+    {m H : ℕ} (hm : 2 ≤ m) {u P Q : ℝ} (hu : 0 ≤ u)
+    (hlow : let S := Finset.Icc ((m+2)/2) m
+      ∀ T : Finset ℕ, ‖∑ n ∈ S, -((μ n : ℝ) : ℂ) *
+        ∑ i ∈ T with frequencyBin (occurrenceFrequency i) ∈ lowBins H,
+          normalizedMode (m+1) u n i‖ ≤ P)
+    (hhigh : ∀ T : Finset ℕ,
+      (∑ n ∈ Finset.Icc ((m+2)/2) (m+1),
+        Real.exp (-(2*u/((m+1 : ℕ) : ℝ)-u/(n : ℝ))/2) *
+        ‖finiteModes (T.filter (fun i => frequencyBin (occurrenceFrequency i) ∉ lowBins H))
+          occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤ Q) :
+    |∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n),
+      -(μ n : ℝ) * rootDensity n u| ≤ Real.exp (-(orderRate m)*u) * (P+Q) := by
   let q := m+1
   let p := (q+1)/2
   let S := Finset.Icc p m
   let a (n : ℕ) : ℂ := -((μ n : ℝ) : ℂ)
   let W := Real.exp (-(orderRate m)*u)
-  let h := (H : ℝ)+1
-  let P := A*h^(1/4 : ℝ)*(1+h*(u/(q : ℝ)))
-  let Q := (q : ℝ)*(H : ℝ)^(-1/4 : ℝ)
   have hq' : (q : ℝ) = (m : ℝ)+1 := by simp [q]
-  have hqu : (q : ℝ) ≤ u := by simpa only [hq'] using hu
-  have hu₀ := (Nat.cast_nonneg q : (0 : ℝ) ≤ q).trans hqu
-  have hq : 3 ≤ q := by dsimp [q]; omega
-  have hp₂ : 2 ≤ p := by dsimp [p]; omega
-  have hpm : p ≤ m := by dsimp [p, q]; omega
-  have hhalf : q ≤ 2*p := by dsimp [p]; omega
-  have hA : 0 ≤ A := (abs_nonneg _).trans (ha 0 (Nat.zero_le _))
-  have ha' (k : ℕ) (hk : k ≤ m+1) : ‖∑ n ∈ Finset.range k, a n‖ ≤ A := by
-    simpa only [a, Finset.sum_neg_distrib, ← Complex.ofReal_sum, norm_neg, Complex.norm_real,
-      Real.norm_eq_abs] using ha k hk
-  have hP : 0 ≤ P := by dsimp [P, h]; positivity
-  have hQ : 0 ≤ Q := by dsimp [Q]; positivity
   have hfinite (T : Finset ℕ) :
-      ‖∑ n ∈ S, a n * ∑ i ∈ T, normalizedMode q u n i‖ ≤ max F G * (P+Q) := by
+      ‖∑ n ∈ S, a n * ∑ i ∈ T, normalizedMode q u n i‖ ≤ P+Q := by
     let low (i : ℕ) : Prop := frequencyBin (occurrenceFrequency i) ∈ lowBins H
     let T₀ := T.filter low
     let T₁ := T.filter (fun i => ¬ low i)
     have hsplit (n : ℕ) : (∑ i ∈ T, normalizedMode q u n i) =
         (∑ i ∈ T₀, normalizedMode q u n i) + ∑ i ∈ T₁, normalizedMode q u n i :=
       (Finset.sum_filter_add_sum_filter_not _ low _).symm
-    have hl : ‖∑ n ∈ S, a n * ∑ i ∈ T₀, normalizedMode q u n i‖ ≤ F*P := by
-      exact (hhead q p m H (by omega) hpm (Nat.le_add_right _ _) hhalf u hu₀ a A ha' T).trans_eq
-        (by dsimp only [P, h]; ring)
-    have hh : ‖∑ n ∈ S, a n * ∑ i ∈ T₁, normalizedMode q u n i‖ ≤ G*Q := by
+    have hl : ‖∑ n ∈ S, a n * ∑ i ∈ T₀, normalizedMode q u n i‖ ≤ P := hlow T
+    have hh : ‖∑ n ∈ S, a n * ∑ i ∈ T₁, normalizedMode q u n i‖ ≤ Q := by
       have hs : S ⊆ Finset.Icc ((q+1)/2) q := Finset.Icc_subset_Icc_right (by dsimp [q]; omega)
       refine (norm_sum_le _ _).trans ((Finset.sum_le_sum ?_).trans
         ((Finset.sum_le_sum_of_subset_of_nonneg hs (fun _ _ _ => by positivity)).trans
-          ((htail q H hq hH u hqu T).trans_eq (by dsimp only [Q]; ring))))
+          (hhigh T)))
       intro n hn
       have hnrm : ‖a n‖ ≤ 1 := by
         simp only [a, norm_neg, Complex.norm_real, Real.norm_eq_abs]
@@ -348,16 +492,14 @@ theorem signed_omitted_root_density_of_cutoff (hRH : RiemannHypothesis) :
         Real.norm_eq_abs, abs_of_nonneg (Real.exp_nonneg _)]
       exact mul_le_of_le_one_left (by positivity) hnrm
     simp_rw [hsplit, mul_add, Finset.sum_add_distrib]
-    exact ((norm_add_le _ _).trans (add_le_add hl hh)).trans
-      ((add_le_add (mul_le_mul_of_nonneg_right (le_max_left _ _) hP)
-        (mul_le_mul_of_nonneg_right (le_max_right _ _) hQ)).trans_eq (by ring))
+    exact (norm_add_le _ _).trans (add_le_add hl hh)
   have hsum (n : ℕ) (hn : n ∈ S) : Summable (normalizedMode q u n) := by
     have hn₁ : (1 : ℝ) ≤ n := by
       exact_mod_cast (show 1 ≤ n by have := (Finset.mem_Icc.mp hn).1; omega)
     exact (rootMode_phase_summable hRH hn₁ u).mul_left _
   have hlim (n : ℕ) (hn : n ∈ S) :=
     (hsum n hn).hasSum.tendsto_sum_nat.const_mul (a n)
-  have htotal : ‖∑ n ∈ S, a n * ∑' i : ℕ, normalizedMode q u n i‖ ≤ max F G*(P+Q) :=
+  have htotal : ‖∑ n ∈ S, a n * ∑' i : ℕ, normalizedMode q u n i‖ ≤ P+Q :=
     le_of_tendsto' (tendsto_finsetSum S hlim).norm (fun k => hfinite (Finset.range k))
   have hfilter : (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n) = S := by
     ext n
@@ -382,10 +524,102 @@ theorem signed_omitted_root_density_of_cutoff (hRH : RiemannHypothesis) :
     ring
   rw [hfilter, Finset.sum_congr rfl hterm, ← Finset.mul_sum, abs_mul,
     abs_of_nonneg (Real.exp_nonneg _)]
-  rw [← hq']
   apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
   exact (by simpa only [Complex.re_sum] using
     (Complex.abs_re_le_norm (∑ n ∈ S, a n * ∑' i : ℕ, normalizedMode q u n i)).trans htotal)
+
+/-- A frequency cutoff separates signed degree cancellation from the high-frequency tail. -/
+theorem signed_omitted_root_density_of_cutoff (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ m H : ℕ, 2 ≤ m → 0 < H →
+      ∀ u : ℝ, (m : ℝ)+1 ≤ u → ∀ A : ℝ,
+      (∀ k ≤ m+1, |∑ n ∈ Finset.range k, (μ n : ℝ)| ≤ A) →
+      |∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n),
+        -(μ n : ℝ) * rootDensity n u| ≤
+        Real.exp (-(orderRate m)*u) *
+          (C * (A * ((H : ℝ)+1)^(1/4 : ℝ) * (1+((H : ℝ)+1)*(u/((m : ℝ)+1))) +
+            ((m : ℝ)+1)*(H : ℝ)^(-1/4 : ℝ))) := by
+  obtain ⟨F, hF, hhead⟩ := low_occurrence_sum hRH
+  obtain ⟨G, hG, htail⟩ := masked_occurrence_tail hRH
+  refine ⟨max F G, hF.trans_le (le_max_left _ _), fun m H hm hH u hu A ha => ?_⟩
+  let q := m+1
+  let p := (q+1)/2
+  let a (n : ℕ) : ℂ := -((μ n : ℝ) : ℂ)
+  have hq' : (q : ℝ) = (m : ℝ)+1 := by simp [q]
+  have hqu : (q : ℝ) ≤ u := by simpa only [hq'] using hu
+  have hu₀ := (Nat.cast_nonneg q : (0 : ℝ) ≤ q).trans hqu
+  have hq : 3 ≤ q := by dsimp [q]; omega
+  have hpm : p ≤ m := by dsimp [p, q]; omega
+  have hhalf : q ≤ 2*p := by dsimp [p]; omega
+  have hA : 0 ≤ A := (abs_nonneg _).trans (ha 0 (Nat.zero_le _))
+  have ha' (k : ℕ) (hk : k ≤ m+1) : ‖∑ n ∈ Finset.range k, a n‖ ≤ A := by
+    simpa only [a, Finset.sum_neg_distrib, ← Complex.ofReal_sum, norm_neg, Complex.norm_real,
+      Real.norm_eq_abs] using ha k hk
+  let P := A*((H : ℝ)+1)^(1/4 : ℝ)*(1+((H : ℝ)+1)*(u/(q : ℝ)))
+  let Q := (q : ℝ)*(H : ℝ)^(-1/4 : ℝ)
+  have hl : ∀ T : Finset ℕ, ‖∑ n ∈ Finset.Icc p m, a n *
+      ∑ i ∈ T with frequencyBin (occurrenceFrequency i) ∈ lowBins H,
+        normalizedMode q u n i‖ ≤ F*P := by
+    intro T
+    exact (hhead q p m H (by omega) hpm (Nat.le_add_right _ _) hhalf u hu₀ a A ha' T).trans_eq
+      (by dsimp only [P]; ring)
+  have hb := signed_omitted_root_density_of_finite_bounds (H := H) (Q := G*Q)
+    hRH hm hu₀ hl (fun T => (htail q H hq hH u hqu T).trans_eq (mul_assoc _ _ _))
+  rw [← hq']
+  refine hb.trans (mul_le_mul_of_nonneg_left ?_ (Real.exp_nonneg _))
+  have hP : 0 ≤ P := by dsimp [P]; positivity
+  have hQ : 0 ≤ Q := by dsimp [Q]; positivity
+  calc
+    _ ≤ max F G * P + max F G * Q :=
+      add_le_add (mul_le_mul_of_nonneg_right (le_max_left F G) hP)
+        (mul_le_mul_of_nonneg_right (le_max_right F G) hQ)
+    _ = _ := by dsimp only [P, Q]; ring
+
+/-- The decaying envelope controls the variation of each low-frequency mode uniformly
+in the sample range. The high-frequency part uses the square-summable inverse-root masses. -/
+theorem signed_omitted_root_density_of_uniform_cutoff (hRH : RiemannHypothesis)
+    {η : ℝ} (hη : 0 < η) (hηhalf : η < 1/2) :
+    ∃ C : ℝ, 0 < C ∧ ∀ m H : ℕ, 2 ≤ m → 0 < H →
+      ∀ u : ℝ, (m : ℝ)+1 ≤ u → ∀ A : ℝ,
+      (∀ k ≤ m+1, |∑ n ∈ Finset.range k, (μ n : ℝ)| ≤ A) →
+      |∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n),
+        -(μ n : ℝ) * rootDensity n u| ≤
+        Real.exp (-(orderRate m)*u) *
+          (C * (A * ((H : ℝ)+1)^(1+η) + ((m : ℝ)+1)*(H : ℝ)^(η-1/2))) := by
+  obtain ⟨F, hF, hhead⟩ := uniform_low_occurrence_sum hRH hη
+  obtain ⟨G, hG, htail⟩ := masked_occurrence_tail_at hRH hη hηhalf
+  refine ⟨max F G, hF.trans_le (le_max_left _ _), fun m H hm hH u hu A ha => ?_⟩
+  let q := m+1
+  let p := (q+1)/2
+  let a (n : ℕ) : ℂ := -((μ n : ℝ) : ℂ)
+  have hq' : (q : ℝ) = (m : ℝ)+1 := by simp [q]
+  have hqu : (q : ℝ) ≤ u := by simpa only [hq'] using hu
+  have hu₀ := (Nat.cast_nonneg q : (0 : ℝ) ≤ q).trans hqu
+  have hq : 3 ≤ q := by dsimp [q]; omega
+  have hpm : p ≤ m := by dsimp [p, q]; omega
+  have hhalf : q ≤ 2*p := by dsimp [p]; omega
+  have hA : 0 ≤ A := (abs_nonneg _).trans (ha 0 (Nat.zero_le _))
+  have ha' (k : ℕ) (hk : k ≤ m+1) : ‖∑ n ∈ Finset.range k, a n‖ ≤ A := by
+    simpa only [a, Finset.sum_neg_distrib, ← Complex.ofReal_sum, norm_neg, Complex.norm_real,
+      Real.norm_eq_abs] using ha k hk
+  let P := A*((H : ℝ)+1)^(1+η : ℝ)
+  let Q := (q : ℝ)*(H : ℝ)^(η-1/2 : ℝ)
+  have hl : ∀ T : Finset ℕ, ‖∑ n ∈ Finset.Icc p m, a n *
+      ∑ i ∈ T with frequencyBin (occurrenceFrequency i) ∈ lowBins H,
+        normalizedMode q u n i‖ ≤ F*P := by
+    intro T
+    exact (hhead q p m H (by omega) hpm (Nat.le_add_right _ _) hhalf u hu₀ a A ha' T).trans_eq
+      (by dsimp only [P]; ring)
+  have hb := signed_omitted_root_density_of_finite_bounds (H := H) (Q := G*Q)
+    hRH hm hu₀ hl (fun T => (htail q H hq hH u hqu T).trans_eq (mul_assoc _ _ _))
+  rw [← hq']
+  refine hb.trans (mul_le_mul_of_nonneg_left ?_ (Real.exp_nonneg _))
+  have hP : 0 ≤ P := by dsimp [P]; positivity
+  have hQ : 0 ≤ Q := by dsimp [Q]; positivity
+  calc
+    _ ≤ max F G * P + max F G * Q :=
+      add_le_add (mul_le_mul_of_nonneg_right (le_max_left F G) hP)
+        (mul_le_mul_of_nonneg_right (le_max_right F G) hQ)
+    _ = _ := by dsimp only [P, Q]; ring
 
 private theorem cutoff_power_budget {q u : ℝ} (hq : 1 ≤ q) (hu₀ : 0 ≤ u)
     (hu : u ≤ q^(29/28 : ℝ)) :
