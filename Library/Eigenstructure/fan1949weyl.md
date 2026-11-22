@@ -13,6 +13,12 @@ triage: anchor
 
 # Spectral extremum for a declared response loss
 
+## Verified locator
+
+[Journal record](https://doi.org/10.1073/pnas.35.11.652) · [Theorem 1, scanned page 653](https://pmc.ncbi.nlm.nih.gov/articles/PMC1063101/)
+
+## Formalization scope
+
 Proceedings of the National Academy of Sciences 35(11), 652–655.
 Crossref, the PMC bibliographic record and the original page scans agree
 on the title, author and DOI. Theorem 1 on scanned page 653 states that
