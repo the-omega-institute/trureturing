@@ -52,7 +52,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 **整个系统是一张不可逆真值 DAG**,架构三分:
 
 ```
-Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖记录
+Lean → 定向编译报告 → 冻结状态 → 理论源仓的覆盖记录
 理论源仓内：理论正文 → 摄入 → atom、上下文与消化状态
 ```
 
@@ -644,11 +644,11 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 8.1 分层 make 入口与器谱
 
 **一器一门,门随层设**:构建/发射/校验/开工走所属层唯一 make 入口。根 `Makefile` 管内容(`make test FULL_BUILD=1` 数学门,`make help` 活器谱);`tools/Makefile` 管工具(`make -C tools test` 及 build/selftest 目标,器谱 `make -C tools help`)。层内只委托 canonical 实现,跨层零配方复制,哪层坏修哪层。
-**有 make 目标就走目标,不现搓配方**:`make lean LEAN_TARGETS=…`/`make lean-report-scoped LEAN_TARGETS=…`/`make lean-report FULL_BUILD=1`(读取预编译产物)、`make -C tools check-fast`(快速结构测试)、`gate`、`test`、`worktree KIND=x NAME=y DEST=<主检出父目录>/trureturing-<session-id>`、`worktree-clean`、`pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr 与 pr-open 同义,以消息首行为标题,建 PR、隔离 App token、默认 arm auto-merge 并同步等 required CI;`AUTO_MERGE=0` 关闭自动合并,`DRAFT=1` 创建草稿后直接返回、不 arm、不等 CI;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
+**有 make 目标就走目标,不现搓配方**:`make lean LEAN_TARGETS=…`/`make lean-report-scoped LEAN_TARGETS=…`、`make -C tools check-fast`(快速结构测试)、`gate`、`test`、`worktree KIND=x NAME=y DEST=<主检出父目录>/trureturing-<session-id>`、`worktree-clean`、`pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr 与 pr-open 同义,以消息首行为标题,建 PR、隔离 App token、默认 arm auto-merge 并同步等 required CI;`AUTO_MERGE=0` 关闭自动合并,`DRAFT=1` 创建草稿后直接返回、不 arm、不等 CI;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
 
 ### 8.2 本地早反馈与远端 CI 并行
 
-**本地 Lean 核验默认定向，全量须显式确认。** 需要 Lean 核验时，用非空 `LEAN_TARGETS` 的 `make lean` 或 `make lean-report-scoped`，覆盖受影响的目标及其必要依赖。全量编译、整库报告及其间接入口仅用于用户明确要求的整库核验或定向检查无法覆盖的具体集成义务。确需全量时，先说明所需范围及原因，再在每条入口命令中显式传入 `FULL_BUILD=1`：`make lean FULL_BUILD=1`、`make lean-report FULL_BUILD=1`、`make test FULL_BUILD=1`、`make warm-donor FULL_BUILD=1`；`build`、缓存生产及其他间接入口同样适用。`make gate` / `ci-unit` 先用 `make gate-plan` 判断范围，若选择会触发全量编译的检查，调用时也须显式传入 `FULL_BUILD=1`。直接脚本调用将 `FULL_BUILD=1` 写在该条命令的环境赋值中，不能用空目标、裸 `lake build` 或默认导出变量规避确认。缓存缺失、报告失败、重试和“最终检查”均不自动构成全量理由。Make 全量入口及其直接脚本入口在缺少 `FULL_BUILD=1` 时拒绝执行；CI required checks 保持原有范围，全量 CI 作业须在调用处明确确认，不要求再跑一遍本地全量。〔守护：**硬+软**·入口强制确认参数，必要性由指令与评审核对〕
+**本地 Lean 核验默认定向，全量须显式确认。** 需要 Lean 核验时，用非空 `LEAN_TARGETS` 的 `make lean` 或 `make lean-report-scoped`，覆盖受影响的目标及其必要依赖。全量编译及其间接入口仅用于用户明确要求的整库核验或定向检查无法覆盖的具体集成义务。确需全量时，先说明所需范围及原因，再在每条入口命令中显式传入 `FULL_BUILD=1`：`make lean FULL_BUILD=1`、`make lean-cache-prepare FULL_BUILD=1`、`make warm-donor FULL_BUILD=1`；`build`、缓存生产及其他间接入口同样适用。`make gate` / `ci-unit` 先用 `make gate-plan` 判断范围，若选择会触发全量编译的检查，调用时也须显式传入 `FULL_BUILD=1`。直接脚本调用将 `FULL_BUILD=1` 写在该条命令的环境赋值中，不能用空目标、裸 `lake build` 或默认导出变量规避确认。缓存缺失、报告失败、重试和“最终检查”均不自动构成全量理由。Make 全量入口及其直接脚本入口在缺少 `FULL_BUILD=1` 时拒绝执行；CI required checks 保持原有范围，全量 CI 作业须在调用处明确确认，不要求再跑一遍本地全量。〔守护：**硬+软**·入口强制确认参数，必要性由指令与评审核对〕
 
 本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料时，先用 `make lean-report-prepare LEAN_TARGETS=…` 编译缺少或过期的输入和工具，再用相同目标运行 `make lean-report-scoped LEAN_TARGETS=…` 提取报告。`make deposit GID=…` 按所选 GID 构建报告并执行冻结。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test [BASE=<commit>]` 按变更路径准备定向输入、生成所需局部报告并执行 check-current。显式 `make test FULL_BUILD=1` 先运行 check-lean-report，再将完整报告交给 check-current。`make gate BASE=<commit> [PURPOSE=pull-request|push]` 经 `ci_checks.py` 运行与 CI 相同的适用单元、子检查、测试过滤器及 TRX 校验,只把固定 base 当数据；本地包含 staged/unstaged/untracked 与 rename 两端,不删除 remotes；`make gate-plan` 仅输出选择。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
 
@@ -658,29 +658,9 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **普通 CI 与受保护分支缓存。** PR 和 push 按候选的实际变更编译选定 Lean 目标与依赖，执行对应 Scribe 和测试检查，并只读恢复缓存。受保护的 `dev` 非删除 push 触发独立整库缓存刷新作业，与手动 build 共用仓库级串行队列。用 `make pr-watch PR=<编号> HEAD_SHA=<完整提交 SHA>` 等待固定提交的 required 检查，同一 PR 的同一提交只启动一个等待任务。失败时读取对应 job 的诊断。见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow)。
 
-**全量项目缓存与整库报告的本地恢复**：production Release 恢复（`make lean-cache-from-github-without-mathlib`）与 `fetch-or-fail` 报告恢复只在 dev 主检出运行；显式选择的 verification-mode fetch 不变。linked worktree 的生产缓存只由 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出 clonefile 播种。报告恢复的补救前提是主检出为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和 `skipped` 收据返回，不代表 donor 已预热；主检出不干净时，按第 6.1 条「主检出不承载修改」丢弃其本地修改后再预热。补救全程用条件链：`make -C '<main checkout>' warm-donor FULL_BUILD=1 && make -C '<main checkout>' lean-report-prepare FULL_BUILD=1 && make -C '<main checkout>' lean-report FULL_BUILD=1 && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure FULL_BUILD=1`；主检出也可在 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 后执行 `make lean-report FULL_BUILD=1`。无法判定检出类型时同样拒绝生产取回与报告恢复。linked worktree 的主检出候选取 Git worktree 列表首条，须核验其物理顶层路径及共同 Git 目录；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，并给出不含主检出路径的补救，不将 Git store 目录当作主检出。
+**项目缓存的本地恢复。** dev 主检出使用 `make lean-cache-from-github-without-mathlib` 恢复项目编译产物与原生模块报告。已有私有 build 可显式指定 `REFRESH_STALE=1` 替换。linked worktree 用 `make lean-cache-ensure FULL_BUILD=1` 从热的主检出播种。显式候选 Release 验证按 spec A22 执行。
 
-本地形式化用 `make lean-report-scoped LEAN_TARGETS="<非空点分模块列表>"`，从目标、其 utility 输入及各自 import 闭包的已有编译产物提取报告；不读取整库报告种子，不构建整库报告。整库报告可通过 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail` 显式选择发布缓存恢复。主检出中报告种子缺失、不完整、损坏或收据中的报告格式标识不符时，先在私有缓存写锁内取回 dev 同分区、缓存 key 一致的 Release 快照，重新检查后仍不可用即以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 非零退出，不进入 Lake 报告提取；linked worktree 在所选种子不可用时先检查工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`，相符时继续核对原生编译产物，再将分析结果写入所请求的输出，只有该种子也不可用时才以 `reason=linked-worktree` 退出，全程不取回。
-
-dev 主检出中相符但输入已变化的种子记录在 `.lake/lean-report-seed-base.json` 的生产提交只用于选择起点；记录的 `seed_sha256` 须匹配当前 canonical 报告、全部四个 sidecar 和成功收据的实际字节，否则 base 未知。只有选中的种子为 canonical 时才进行可选刷新，自定义种子打印 `reason=non-canonical-seed` 并保留。未知 base、不干净、CI、非 dev 或 detached 检出均在列举前打印各自的 keep 收据并返回；输入已相符的种子打印 `action=keep`、`reason=seed-current`。整库分析每次在缓存写锁内调用 Lake 的 `:report` 核对已有编译产物。缺失的工作区文件可从 Lake 的有效工件缓存恢复，缺失或过期的输入无法从缓存恢复且需要编译时，分析失败。显式 `make lean-report-prepare FULL_BUILD=1` 可编译所需输入。
-
-可继续选择时，只有最新兼容 Release 的 `producer_commit_sha` 是当前 `HEAD` 的祖先且严格晚于本地记录时才取回并以 `--refresh-stale` 替换；本地记录未知、Release 历史较旧或不在当前历史上时保留本地种子；缺失对象或浅历史无法证明祖先关系的 ancestry-unprovable 收据与完整历史上已证的非祖先区分。
-
-可选取回绑定批准的 tag 和生产提交，不重新列举或向其他快照回退；替换前验证 staged 报告的格式、完整性和清单身份，build 与 base 一起提交，提交前失败恢复原种子及 base。提交后的备份清理失败保留备份并报告已安装。列举、读取清单或可选安装失败且回滚成功时保留本地种子并继续 Lake 增量路径；回滚失败单独报告 `rollback-failed` 和保留的 backup 路径，以 `reason=release-rollback-failed` 非零退出。可选刷新后重新检查种子，缺失或不兼容时拒绝进入 Lake。
-
-干净谓词包含未跟踪文件。只有干净 dev 主检出的 canonical 种子生产或安装写入可信 base，恢复取清单生产提交与安装种子的完整身份；新种子无可信 base 时先移除旧记录。
-
-canonical publication、seal 和 base 写入在同一缓存锁内完成，seal 核对 publication 返回的五件 bundle 身份，已被替换的 generation 不重封或改写 base；base 还绑定 seal 写入的成功收据，从 canonical 整份复用时更新身份并保留原生产提交，从自定义种子发布到 canonical 时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
-
-capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块。canonical 生产准备只在现有缓存锁内移除 metadata；失败清理不移除 canonical 成功收据或 base；入口未改变 canonical 报告时，保留当前收据和 base。
-
-成功收据仅在持有现有缓存锁、即将改变报告的准备阶段移除，并在报告成功封口后写入；已准备的生产失败保持无收据，下一次入口按既有缺失种子恢复路径处理。锁忙时不改活动 generation。自定义输出的生产准备和 seal 保留 canonical base。
-
-CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原生增量路径处理源码、配置与执行环境差量。
-
-`make lean-report FULL_BUILD=1 REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，从已有编译产物生成完整报告。`make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 显式替换已存在的私有 build。
-
-普通 PR 和受保护分支 push 的 required CI 对选中的每批报告目标先运行 `lean-report-prepare`，再用相同目标运行 `lean-report-scoped`。受保护分支的非删除 push 和已校验的手动 build 触发独立的整库 Actions producer。该 producer 和执行构建的 Release publisher 显式使用 `make check-lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`。本地整库报告和直接 `inspect.sh` 默认使用 `reuse-or-build`，可显式选择 `fetch-or-fail` 启用种子恢复。
+普通 PR 和受保护分支 push 的 required CI 为选中的每批目标运行 `lean-report-prepare` 和 `lean-report-scoped`，报告覆盖目标、utility 输入及 import 闭包。独立 Actions producer 和执行构建的 Release publisher 使用 `make lean-cache-prepare FULL_BUILD=1` 编译所需程序和输入，由 Lake 逐模块生成或复用报告。续跑保存未完成的原生工件。完整快照须由成功的准备命令和本次调用的工作量记录确认。
 
 **Start with compatible reuse** according to section 6.1. In particular, observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first. Use `make worktree` with explicit `DEST` when isolation is needed.
 
@@ -894,7 +874,6 @@ FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。�
 
 ### 10.4 cache key 与权威增量补编
 
-本地报告种子的兼容性只由成功收据中的报告格式标识表达，没有判官语义版本。完整种子须保留报告、四个 sidecar 与成功收据；显式选择 `fetch-or-fail` 时，缺失或无法读取该标识须先恢复，恢复后仍无相符种子则拒绝完整提取。格式相符不表示整份报告输入相同；收据输入差量仍交给 Lake 编译依赖 trace 和 utility 输入驱动增量，不另添程序字节或全局内容摘要作为兼容条件。入口策略、恢复边界与版本归属统一见 [spec A22](docs/develop/spec/golden-ledger-repo-spec.md#a22-ci-cache-flow) 及其 A14.9 引用；本地显式选择的 `fetch-or-fail`、Actions producer 与 Release publisher 的 `reuse-or-build` 均保留严格输入、编译和 publication 失败判词。`REBUILD_REPORT_CACHE=1` 只绕过整份收据，仍可复用原生模块产物，不等于历史登记无缓存重评。
 
 报告工件的复用由 Lake 编译依赖 trace、utility 输入与报告格式标识决定。模块 H(m) 当且仅当编译产物中自有 Registration、TemplateEnrollment、RootCatalog 或 Seal 输入，类型头与 owner 规则复用 Contract.Discovery；只 import 他人登记不取得 owner 身份，失败不得当空。小型输入事实只保存类型、owner 与名字投影，按编译闭包复用。每个模块报告 trace 包含自身编译闭包、utility 输入与报告格式标识；模块行与 origin 不含判官语义版本。origin 保存实际生成来源与输入投影，整份复用收据绑定报告格式、报告模块、配置和显式执行环境。接口契约源码登记在现有 `config_inputs`，使整份收据不能绕过接口变化；配置身份归聚合报告；enrollment 原始输入是其 owner 模块的编译产物；原始数学义务及其证明可由契约携带并在 Reg 编译期经内核检查；checked plan、join、assessment、判词与报告收据不得成为可导入的评定权威。判官从原始输入重建结构关系并消费契约中的数学字段；plan identity 不保存源文件字节摘要或 manifest 派生值；复用验证器只查结构与工件自身完整性，禁止重算当前仓库文件摘要与缓存内保存值比较来决定模块报告复用。判官实现或规则改动不使报告失效，不回溯重判未改动登记；需要重判历史登记时用 `make lean-report FULL_BUILD=1 REGENERATE_REPORT_ARTIFACTS=1` 从已有编译产物重新提取整库报告。新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同一次交付迁移全部用法、删除旧路径，在准备阶段重编受影响的 Reg 模块，供报告 facet 重评，不做历史兼容。声明、公理闭包、statement identity 等提取语义或报告格式变化须更新报告格式标识；严格读取器拒读旧格式，全部模块重提取。
 
