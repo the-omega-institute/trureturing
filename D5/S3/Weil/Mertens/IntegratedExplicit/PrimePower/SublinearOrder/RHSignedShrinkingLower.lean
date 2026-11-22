@@ -288,7 +288,8 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
     (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) (hmu : μ r ≠ 0) :
     let s := orderRate m
     let cₘ := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
-    ∃ d > 0, ∃ H ∈ Ioo (0 : ℝ) 1, ∀ L : ℝ, 0 < L → L < H → ∀ U : ℝ,
+    ∃ H ∈ Ioo (0 : ℝ) 1, ∀ d ∈ Ioo 0 (Real.exp (-s) / (8 * s)),
+      ∀ L : ℝ, 0 < L → L < H → ∀ U : ℝ,
       ∃ u ≥ U, d * L * Real.log (1 / L) ≤
         -(μ r : ℝ) * (signedWindowResidual m (Real.exp u) (Real.exp (u + L)) /
           powerGap s (Real.exp u) (Real.exp (u + L)) + cₘ +
@@ -297,7 +298,8 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
   let cₘ := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
   let δ := ((m : ℝ) + 1)⁻¹ - ((m : ℝ) + 2)⁻¹
   let μr : ℝ := μ r
-  have hμr : μr ≠ 0 := by dsimp [μr]; exact_mod_cast hmu
+  have hμ_sq : μr ^ 2 = 1 := by
+    rcases moebius_ne_zero_iff_eq_or.mp hmu with h | h <;> simp [μr, h]
   have hμ_le : |μr| ≤ 1 := by
     dsimp [μr]
     exact_mod_cast abs_moebius_le_one (n := r)
@@ -312,14 +314,17 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
   obtain ⟨_, _, hweighted⟩ := signed_window_even_cutoff_shrinking_width hRH
   obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
   let W := K * (((m + 1 : ℕ) : ℝ) * (1 + Real.log ((m + 1 : ℕ) : ℝ)) ^ 2)
-  let d := μr ^ 2 * (Real.exp (-s) / (8 * s)) / 4
-  have hd : 0 < d := by dsimp [d]; positivity
-  refine ⟨d, hd, H, ⟨hH.1, hH.2.trans (by norm_num)⟩, ?_⟩
-  intro L hL hLH U
+  let C := Real.exp (-s) / (8 * s)
+  refine ⟨H, ⟨hH.1, hH.2.trans (by norm_num)⟩, ?_⟩
+  intro d hd L hL hLH U
+  have hdC : d < C := hd.2
   have hL1 : L < 1 := by linarith [hH.2]
   have hlog : 0 < Real.log (1 / L) := Real.log_pos ((lt_div_iff₀ hL).2 (by linarith))
-  let b := (Real.exp (-s) / (8 * s)) * L * Real.log (1 / L) / 2
-  have hb : 0 < b := by dsimp [b]; positivity
+  let T := L * Real.log (1 / L)
+  have hT : 0 < T := mul_pos hL hlog
+  let b := (C + d) / 2 * T
+  let ε := (C - d) / 2 * T
+  have hε : 0 < ε := mul_pos (half_pos (sub_pos.mpr hdC)) hT
   let Δ := fun u : ℝ =>
     (rootPrimitive (r : ℝ) (Real.exp (u + L)) - rootPrimitive (r : ℝ) (Real.exp u)) /
       powerGap s (Real.exp u) (Real.exp (u + L)) - rootSignal (r : ℝ) u
@@ -330,18 +335,16 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
     dsimp only [Δ]
     rw [hweight]
     simp only [zero_add]
-    have hb_eq : 2 * b = Real.exp (-s) / (8 * s) * L * Real.log (1 / L) := by
-      dsimp only [b]
-      ring
-    rw [← hb_eq] at h
-    linarith only [h, hb]
+    calc
+      b < C * T := mul_lt_mul_of_pos_right (by linarith) hT
+      _ ≤ _ := by simpa only [C, T, mul_assoc] using h
   have hdecay_limit : Tendsto (fun u : ℝ => (W * ((s + δ) / s)) * Real.exp (-δ * u))
       atTop (𝓝 0) := by
     simpa only [Function.comp_apply, id_eq, mul_zero, neg_mul] using
       (Real.tendsto_exp_neg_atTop_nhds_zero.comp
         (tendsto_id.const_mul_atTop hδ)).const_mul (W * ((s + δ) / s))
   obtain ⟨V, hV⟩ := eventually_atTop.mp
-    (hdecay_limit.eventually (eventually_lt_nhds (show 0 < d * L * Real.log (1 / L) by positivity)))
+    (hdecay_limit.eventually (eventually_lt_nhds hε))
   let U' := max U (max (Real.log a₀) V)
   have h0' : b < (rootPrimitive (r : ℝ) (Real.exp (0 + L)) -
         rootPrimitive (r : ℝ) (Real.exp 0)) /
@@ -368,17 +371,13 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
     simpa only [s, δ, cₘ, W, μr, P, gap, a, Real.rpow_def_of_pos (Real.exp_pos _),
       Real.log_exp, mul_comm u (-δ)] using hexp.1.trans hexp.2
   let E := signedWindowResidual m a B / gap + cₘ + μr * (P / gap)
-  have hE : |E| < d * L * Real.log (1 / L) := by
+  have hE : |E| < ε := by
     have heq : E = (signedWindowResidual m a B + cₘ * gap + μr * P) / gap := by
       dsimp only [E]
       field_simp [hg.ne']
     rw [heq, abs_div, abs_of_pos hg]
     exact ((div_le_iff₀ hg).2 harith).trans_lt (hV u huV)
-  have hsize : 2 * (d * L * Real.log (1 / L)) < μr ^ 2 * Δ u := by
-    have heq : 2 * (d * L * Real.log (1 / L)) = μr ^ 2 * b := by dsimp only [d, b]; ring
-    rw [heq]
-    exact mul_lt_mul_of_pos_left hΔ' (sq_pos_of_ne_zero hμr)
-  have hE_signed : -(d * L * Real.log (1 / L)) < -μr * E := by
+  have hE_signed : -ε < -μr * E := by
     have hprod : |(-μr) * E| ≤ |E| := by
       rw [abs_mul, abs_neg]
       simpa only [one_mul] using mul_le_mul_of_nonneg_right hμ_le (abs_nonneg E)
@@ -390,8 +389,9 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
     change _ = E - μr * (P / gap - rootSignal (r : ℝ) u)
     dsimp only [E]
     ring
-  rw [heq, show -μr * (E - μr * Δ u) = -μr * E + μr ^ 2 * Δ u by ring]
-  linarith only [hsize, hE_signed]
+  rw [heq, show -μr * (E - μr * Δ u) = -μr * E + μr ^ 2 * Δ u by ring, hμ_sq, one_mul]
+  have hmargin : b - ε = d * L * Real.log (1 / L) := by dsimp only [b, ε, T]; ring
+  linarith only [hΔ', hE_signed, hmargin]
 
 #print axioms signed_window_even_cutoff_shrinking_lower
 

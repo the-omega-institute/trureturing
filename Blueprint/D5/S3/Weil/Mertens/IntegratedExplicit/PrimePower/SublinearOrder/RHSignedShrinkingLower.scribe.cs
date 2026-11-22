@@ -29,6 +29,7 @@ internal sealed class RHSignedShrinkingLowerDocument : IScribeDocumentDefinition
                     + "width the normalized primitive increment and the centered series "
                     + "are continuous readouts of the actual phase orbit. Its late returns "
                     + "preserve a fixed fraction of the origin lower bound.")),
+                Paragraph(Text("A single width threshold works for every positive lower coefficient below exp(−s)/(8s).")),
                 Paragraph(Text("Choose the late threshold so that the decaying arithmetic "
                     + "remainder is smaller than the retained spectral lower bound. "
                     + "The witnessed residual has sign opposite to the nonzero Möbius coefficient. "
@@ -67,8 +68,11 @@ internal sealed class RHSignedShrinkingLowerDocument : IScribeDocumentDefinition
         var lower = Multiply(Multiply(d, width), Call("log", new Formula.Fraction(one, width)));
         var late = All("U", Domain("R"), Exists("u", And(Le(tail, u), Le(lower, signedResidual))));
         var widths = All("L", Domain("R"), Imp(And(Lt(zero, width), Lt(width, h)), late));
-        var bounds = Exists("d", And(Lt(zero, d), Exists("H",
-            And(And(Lt(zero, h), Lt(h, one)), widths))));
+        var s = Subtract(new Formula.Fraction(one, Num(2)),
+            new Formula.Fraction(one, Multiply(Num(2), r)));
+        var cap = new Formula.Fraction(Call("exp", new Formula.Negate(s)), Multiply(Num(8), s));
+        var rates = All("d", Domain("R"), Imp(And(Lt(zero, d), Lt(d, cap)), widths));
+        var bounds = Exists("H", And(And(Lt(zero, h), Lt(h, one)), rates));
         var nonzeroM = new Formula.Relation(Call("mu", r), FormulaRelationOperator.NotEqual, zero);
         var cutoffs = All("m", Domain("N"), All("r", Domain("N"),
             Imp(And(Le(Num(2), m), And(Equal(Add(m, one), Multiply(Num(2), r)), nonzeroM)), bounds)));
