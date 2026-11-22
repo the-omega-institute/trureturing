@@ -27,7 +27,8 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency frequenc
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
-private def rootSignal (r u : ℝ) : ℝ :=
+/-- The centered real root series divided by the positive decay parameter. -/
+def rootSignal (r u : ℝ) : ℝ :=
   (∑' k, rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))).re /
     (1/2 - (2*r)⁻¹)
 
@@ -154,7 +155,8 @@ private theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL 
     exact (root_density_eq_signal hr (u+t)).trans (hsplit t)]
   field_simp [(Real.exp_pos (-s*u)).ne', hpositive.ne', hs.ne']
 
-private theorem root_increment_eq_signal_at (hRH : RiemannHypothesis) {r L : ℝ}
+/-- A normalized positive-width root increment equals the centered signal at a window point. -/
+theorem root_increment_eq_signal_at (hRH : RiemannHypothesis) {r L : ℝ}
     (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
     let s : ℝ := 1/2 - (2*r)⁻¹
     ∃ t ∈ Icc 0 L,

@@ -92,7 +92,11 @@ private theorem centered_series_increment_le (hRH : RiemannHypothesis) {r : ℝ}
       actualOccurrenceEquiv.summable_iff.mpr actual_sigma_inverse_square_summable
   have hh : Summable high := Summable.of_nonneg_of_le
     (fun k => by unfold high; split_ifs <;> positivity)
-    (fun k => by unfold high; split_ifs; exact le_rfl; positivity) hinv
+    (fun k => by
+      unfold high
+      split_ifs
+      · exact le_rfl
+      · positivity) hinv
   let term (x : ℝ) (k : ℕ) := rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (x : ℂ))
   have hre (k : ℕ) : (frequency k / (r : ℂ)).re = 0 := by
     simp [Complex.div_re, frequency_real hRH k]
@@ -157,9 +161,12 @@ private theorem root_signal_increment_le (hRH : RiemannHypothesis) {r : ℝ} (hr
   refine ⟨C/s, div_pos hC hs, fun u d L hL hL₁ hd => ?_⟩
   unfold rootSignal
   rw [← sub_div, abs_div, abs_of_pos hs]
-  refine (div_le_div_of_nonneg_right ?_ hs.le).trans_eq (by ring)
-  rw [← Complex.sub_re]
-  exact (Complex.abs_re_le_norm _).trans (h u d L hL hL₁ hd)
+  calc
+    _ ≤ (C*L*(1+Real.log L⁻¹)^2) / s := by
+      apply div_le_div_of_nonneg_right _ hs.le
+      rw [← Complex.sub_re]
+      exact (Complex.abs_re_le_norm _).trans (h u d L hL hL₁ hd)
+    _ = _ := by ring
 
 /-- The explicit shrinking-width rate preserves the original signed window and its arithmetic error. -/
 theorem signed_window_even_cutoff_shrinking_rate (hRH : RiemannHypothesis) :
@@ -188,7 +195,7 @@ theorem signed_window_even_cutoff_shrinking_rate (hRH : RiemannHypothesis) :
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   obtain ⟨D, hD, hmod⟩ := root_signal_increment_le hRH hr
-  refine ⟨1+|μr|*D, W*((s+δ)/s), by positivity, by dsimp only [W]; positivity,
+  refine ⟨1 + |μr| * D, W*((s+δ)/s), by positivity, by dsimp only [W]; positivity,
     fun u L hu hL hL₁ => ?_⟩
   let a := Real.exp u
   let b := Real.exp (u+L)
