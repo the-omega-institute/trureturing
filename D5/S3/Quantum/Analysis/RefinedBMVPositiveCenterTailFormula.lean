@@ -8,8 +8,13 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailLinear
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenter
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftLimit
 import D5.S3.Quantum.Analysis.RefinedBMVUniformDiscriminant
+
+/-! # Exact divided differences for a separated positive center -/
+
+open Filter
+open scoped Topology
 
 namespace RefinedBMV.PositiveCenter
 
@@ -521,6 +526,104 @@ theorem upperTail_upper_weight {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 0 < v) :
     (p+1 : ℝ)*(1 - S/(p+1) - (N/(p+1))*((1-q)*Real.exp (-v)))
   field_simp
 
+/-- The negative marginal grows with logarithmic slope at least five sixths
+once the gap reaches six. -/
+theorem negativeMarginal_logDeriv_ge {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 6 ≤ v) :
+    5/6 ≤ deriv (fun t ↦ compositionMoment p 0 (-t)) v / compositionMoment p 0 (-v) := by
+  let h : ℝ := 3/(p : ℝ)
+  let n : ℝ := (p+2).choose 2
+  let M (t : ℝ) := compositionMoment p 0 (-t)
+  let E (t : ℝ) := upperTailGap h t * Real.exp (-t)
+  let r (i : ℕ) : ℝ := -((i : ℝ)+1)*h
+  let S (t : ℝ) := (p+1 : ℝ) - ∑ i ∈ Finset.range (p+1), Real.exp (r i*t)
+  have hv₀ : 0 < v := by linarith
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hn : 0 < n := by
+    have hc : 0 < (p+2).choose 2 := Nat.choose_pos (by omega)
+    change 0 < ((p+2).choose 2 : ℝ)
+    exact_mod_cast hc
+  have hId (t : ℝ) (ht : 0 < t) : S t = (n*h)*E t*(M t+1) := by
+    let q := Real.exp (-(h*t))
+    have ha := (tail_cube_pow hp t).1
+    have hLow := upperTail_lower_weight hp t 0
+    dsimp only at hLow
+    simp only [zero_add, mul_zero, neg_zero, zero_div, Real.exp_zero] at hLow
+    have hUp := upperTail_upper_weight hp ht
+    dsimp only at hUp
+    rw [ha, hLow] at hUp
+    have hNorm : (p+1 : ℝ)*upperTailNormalizer (p+1) h (n/(p+1)) t =
+        S t - (1-q)*n*Real.exp (-t) := by
+      unfold upperTailNormalizer
+      push_cast
+      change (p+1 : ℝ)*(1 - (∑ i ∈ Finset.range (p+1), Real.exp (r i*t))/(p+1) -
+        (n/(p+1))*((1-q)*Real.exp (-t))) = _
+      dsimp only [S]
+      field_simp
+      <;> simp only [mul_comm t]
+      <;> ring
+    change (1-q)*(n*Real.exp (-t)*M t) = _ at hUp
+    rw [hNorm] at hUp
+    have hGap : h*upperTailGap h t = 1-q := by
+      dsimp [upperTailGap, q]
+      field_simp [hh.ne']
+    change S t = n*h*(upperTailGap h t*Real.exp (-t))*(M t+1)
+    rw [show n*h*(upperTailGap h t*Real.exp (-t)) = n*(h*upperTailGap h t)*Real.exp (-t) by ring,
+      hGap]
+    linear_combination -hUp
+  have hEv : 0 < E v := mul_pos (tail_gap_pos hh hv₀) (Real.exp_pos _)
+  have hdE : HasDerivAt E ((upperTailSlope h v-1)*E v) v := by
+    have hgap := hasDerivAt_upperTailGap (t := v) hh
+    have hL := (div_eq_iff (tail_gap_pos hh hv₀).ne').mp (upperTailGap_logDeriv hh hv₀)
+    rw [hgap.deriv] at hL
+    have hneg : HasDerivAt (fun t : ℝ ↦ -t) (-1) v := (hasDerivAt_id' v).neg
+    have hd := hgap.mul hneg.exp
+    change HasDerivAt E _ v at hd
+    convert hd using 1
+    rw [hL]
+    dsimp only [E]
+    ring
+  have hterm (i : ℕ) : HasDerivAt (fun t : ℝ ↦ Real.exp (r i*t))
+      (r i*Real.exp (r i*v)) v := by
+    have ht : HasDerivAt (fun t : ℝ ↦ r i*t) (r i) v := by
+      simpa only [mul_one] using (hasDerivAt_id' v).const_mul (r i)
+    simpa only [mul_comm] using ht.exp
+  have hsum := HasDerivAt.fun_sum (u := Finset.range (p+1)) (fun i _ ↦ hterm i)
+  have hdS := hsum.const_sub (p+1 : ℝ)
+  change HasDerivAt S _ v at hdS
+  have hS : 0 ≤ deriv S v := by
+    rw [hdS.deriv, neg_nonneg]
+    exact Finset.sum_nonpos fun i _ ↦ mul_nonpos_of_nonpos_of_nonneg
+      (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hh.le) (Real.exp_pos _).le
+  have hNear : S =ᶠ[𝓝 v] fun t ↦ (n*h)*E t*(M t+1) := by
+    filter_upwards [eventually_gt_nhds hv₀] with t ht using hId t ht
+  have hNearDiv : (fun t ↦ S t/((n*h)*E t)-1) =ᶠ[𝓝 v] M := by
+    filter_upwards [eventually_gt_nhds hv₀] with t ht
+    have htE : 0 < E t := mul_pos (tail_gap_pos hh ht) (Real.exp_pos _)
+    rw [hId t ht]
+    field_simp [(mul_pos (mul_pos hn hh) htE).ne']
+    <;> ring
+  have hScale : 0 < (n*h)*E v := mul_pos (mul_pos hn hh) hEv
+  have hM : DifferentiableAt ℝ M v :=
+    (((hdS.div (hdE.const_mul (n*h)) hScale.ne').sub_const 1).differentiableAt).congr_of_eventuallyEq
+      hNearDiv.symm
+  have hProd := (hdE.const_mul (n*h)).mul (hM.hasDerivAt.add_const 1)
+  change HasDerivAt (fun t ↦ (n*h)*E t*(M t+1)) _ v at hProd
+  rw [hNear.deriv_eq, hProd.deriv] at hS
+  have hstrong : (1-upperTailSlope h v)*(M v+1) ≤ deriv M v := by
+    apply (mul_le_mul_iff_of_pos_left hScale).mp
+    linarith only [hS, show n*h*((upperTailSlope h v-1)*E v)*(M v+1) =
+      -((n*h)*E v*((1-upperTailSlope h v)*(M v+1))) by ring]
+  have hMpos : 0 < M v := compositionMoment_marginal_pos hp (neg_ne_zero.mpr hv₀.ne')
+  have hSlope := (upperTailSlope_bounds hh hv₀).2.1.trans
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 6) hv)
+  apply (le_div_iff₀ hMpos).2
+  calc
+    _ ≤ (5/6 : ℝ)*(M v+1) := by linarith
+    _ ≤ (1-upperTailSlope h v)*(M v+1) :=
+      mul_le_mul_of_nonneg_right (by linarith) (by linarith)
+    _ ≤ _ := hstrong
+
 /-- The positive factor that carries the mixed-derivative sign in the upper tail. -/
 noncomputable def upperTailBaseFactor (p : ℕ) (u d : ℝ) : ℝ :=
   let h : ℝ := 3/(p : ℝ)
@@ -651,6 +754,7 @@ theorem upperTail_logKernel_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
 #print axioms upperTail_numerator_decomposition
 #print axioms upperTail_lower_weight
 #print axioms upperTail_upper_weight
+#print axioms negativeMarginal_logDeriv_ge
 #print axioms upperTail_logKernel_decomposition
 
 end RefinedBMV.PositiveCenter
