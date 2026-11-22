@@ -10,6 +10,7 @@ import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Algebra.Order.Floor.Ring
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -141,5 +142,113 @@ theorem scaled_bin_cutoff_bound {L q u : ℝ} (hL : 1 ≤ L) (hLq : L ≤ q) (hu
       field_simp [hL0.ne', hS0.ne']
       rw [hSsq]
       ring
+
+private theorem double_log_bound {x : ℝ} (hx : 3 ≤ x) (hlog : 1 ≤ Real.log x) :
+    1 + Real.log (Real.log (x + 1)) ≤ 8 * (Real.log x) ^ (2 / 5 : ℝ) := by
+  have hlog0 : 0 < Real.log x := by linarith
+  have hx0 : 0 < x := by linarith
+  have hlogplus : Real.log (x + 1) ≤ 2 * Real.log x := by
+    have h := Real.log_le_log (by linarith : 0 < x + 1) (show x + 1 ≤ x^2 by nlinarith)
+    rwa [pow_two, Real.log_mul hx0.ne' hx0.ne', ← two_mul] at h
+  have hll := Real.log_le_log (Real.log_pos (by linarith : 1 < x + 1)) hlogplus
+  rw [Real.log_mul (by norm_num) hlog0.ne'] at hll
+  have hpow := Real.one_le_rpow hlog (by norm_num : (0 : ℝ) ≤ 2/5)
+  have hlog2 : Real.log 2 ≤ 1 := by linarith [Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)]
+  have hlogt := Real.log_le_rpow_div hlog0.le (by norm_num : (0 : ℝ) < 2/5)
+  linarith only [hll, hpow, hlog2, hlogt]
+
+/-- The logarithmic degree cutoff and the two arithmetic losses have a common scale. -/
+theorem logarithmic_order_cutoff_bounds :
+    ∃ X : ℝ, 3 ≤ X ∧ ∀ x ≥ X,
+      let t := Real.log x
+      let ell := 1 + Real.log (Real.log (x + 1))
+      let L := ell / 8
+      1 ≤ L ∧ L ≤ x ∧
+        Real.sqrt ell * t ^ (-1 / 5 : ℝ) ≤ 3 ∧
+        Real.sqrt ell * (Real.exp (2 * L) / t) ≤ 12 := by
+  let X := Real.exp (Real.exp 8)
+  have he8 : 1 ≤ Real.exp 8 := Real.one_le_exp (by norm_num)
+  have hX3 : 3 ≤ X := by
+    have h8 := Real.add_one_le_exp (8 : ℝ)
+    have h2 := Real.add_one_le_exp (Real.exp 8)
+    dsimp [X]
+    linarith
+  refine ⟨X, hX3, fun x hx => ?_⟩
+  dsimp only
+  let t := Real.log x
+  let ell := 1 + Real.log (Real.log (x + 1))
+  let L := ell / 8
+  change 1 ≤ L ∧ L ≤ x ∧ Real.sqrt ell * t^(-1 / 5 : ℝ) ≤ 3 ∧
+    Real.sqrt ell * (Real.exp (2 * L) / t) ≤ 12
+  have hx3 := hX3.trans hx
+  have hx0 : 0 < x := by linarith
+  have ht8 : Real.exp 8 ≤ t := by
+    simpa [X, t] using Real.log_le_log (Real.exp_pos (Real.exp 8)) hx
+  have ht : 1 ≤ t := he8.trans ht8
+  have ht0 : 0 < t := zero_lt_one.trans_le ht
+  have hplus : t ≤ Real.log (x+1) := Real.log_le_log hx0 (by linarith)
+  have hll : 8 ≤ Real.log (Real.log (x+1)) := by
+    simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos 8) (ht8.trans hplus)
+  have hL : 1 ≤ L := by dsimp [L, ell]; linarith
+  have hell0 : 0 ≤ ell := by dsimp [ell]; linarith
+  have hLx : L ≤ x := by
+    have hle : Real.log (Real.log (x + 1)) ≤ x := by
+      have hlogplus0 : 0 < Real.log (x + 1) := ht0.trans_le hplus
+      linarith [Real.log_le_sub_one_of_pos hlogplus0, Real.log_le_sub_one_of_pos (by linarith : 0 < x+1)]
+    dsimp [L, ell]
+    linarith
+  have hsqrt : Real.sqrt ell ≤ 3 * t ^ (1 / 5 : ℝ) := by
+    have hsb := double_log_bound hx3 ht
+    have hpsq : (t ^ (1/5 : ℝ))^2 = t^(2/5 : ℝ) := by
+      rw [← Real.rpow_mul_natCast ht0.le]
+      congr 1
+      norm_num
+    apply Real.sqrt_le_iff.mpr
+    constructor
+    · positivity
+    · rw [mul_pow, hpsq]
+      have hp := Real.rpow_nonneg ht0.le (2/5)
+      norm_num
+      linarith only [hsb, hp]
+  have hinv : t^(-1/5 : ℝ) = (t^(1/5 : ℝ))⁻¹ := by
+    rw [show (-1/5 : ℝ) = -(1/5) by ring, Real.rpow_neg ht0.le]
+  have htroot : 0 < t^(1/5 : ℝ) := Real.rpow_pos_of_pos ht0 _
+  have hfirst : Real.sqrt ell * t^(-1/5 : ℝ) ≤ 3 := by
+    rw [hinv, ← div_eq_mul_inv]
+    exact (div_le_iff₀ htroot).mpr hsqrt
+  have hlogplus : Real.log (x + 1) ≤ 2*t := by
+    have h := Real.log_le_log (by linarith : 0 < x+1) (show x+1 ≤ x^2 by nlinarith)
+    rwa [pow_two, Real.log_mul hx0.ne' hx0.ne', ← two_mul] at h
+  have hexact : Real.exp (2 * L) =
+      Real.exp (1 / 4) * (Real.log (x + 1)) ^ (1 / 4 : ℝ) := by
+    rw [show 2 * L = 1 / 4 + Real.log (Real.log (x + 1)) * (1 / 4) by dsimp [L, ell]; ring,
+      Real.exp_add, Real.rpow_def_of_pos (ht0.trans_le hplus)]
+  have hexp4 : Real.exp (1/4) ≤ 2 := by
+    have hlog2 : (1 / 4 : ℝ) ≤ Real.log 2 := by
+      have h := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 2)
+      norm_num at h
+      linarith
+    simpa only [Real.exp_log (by norm_num : (0 : ℝ) < 2)] using Real.exp_le_exp.mpr hlog2
+  have hb : (Real.log (x + 1)) ^ (1 / 4 : ℝ) ≤ 2 * t ^ (1 / 4 : ℝ) := by
+    refine (Real.rpow_le_rpow (ht0.trans_le hplus).le hlogplus (by norm_num)).trans ?_
+    rw [Real.mul_rpow (by norm_num) ht0.le]
+    apply mul_le_mul_of_nonneg_right _ (Real.rpow_nonneg ht0.le _)
+    simpa using (Real.rpow_le_rpow_of_exponent_le (by norm_num : (1 : ℝ) ≤ 2)
+      (by norm_num : (1 / 4 : ℝ) ≤ 1))
+  have hExp : Real.exp (2 * L) ≤ 4 * t ^ (1 / 4 : ℝ) := by
+    rw [hexact]
+    exact (mul_le_mul hexp4 hb (Real.rpow_nonneg (ht0.trans_le hplus).le _) (by norm_num)).trans_eq (by ring)
+  have hProd : t^(1/5 : ℝ) * t^(1/4 : ℝ) ≤ t := by
+    rw [← Real.rpow_add ht0]
+    simpa using (Real.rpow_le_rpow_of_exponent_le ht
+      (by norm_num : (1/5 : ℝ) + 1/4 ≤ 1))
+  refine ⟨hL, hLx, hfirst, ?_⟩
+  rw [← mul_div_assoc]
+  apply (div_le_iff₀ ht0).mpr
+  calc
+    _ ≤ (3 * t ^ (1/5 : ℝ)) * (4 * t ^ (1/4 : ℝ)) :=
+      mul_le_mul hsqrt hExp (Real.exp_nonneg _) (by positivity)
+    _ = 12 * (t ^ (1/5 : ℝ) * t ^ (1/4 : ℝ)) := by ring
+    _ ≤ _ := mul_le_mul_of_nonneg_left hProd (by norm_num)
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
