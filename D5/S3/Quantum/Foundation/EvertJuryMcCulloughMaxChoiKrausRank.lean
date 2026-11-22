@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Foundation/EvertJuryMcCulloughMaxChoiKrausRank
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Foundation/EvertJuryMcCulloughMaxChoiKrausRank
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Sharp Kraus length bounds for jointly completely positive products with units. -/
+
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.Complex.Order
@@ -12,7 +20,8 @@ import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 
 Question 1 of Eric Evert, Michael T. Jury and Scott McCullough,
 *Completely Positive Matrix Products*, arXiv:2607.13251v1.
-The construction and statement are from the preregistration in trureturing issue 29866.
+The attaining product adds a positive-definite Choi contribution to a weighted
+Schur product while preserving its common unit.
 -/
 
 namespace D5.S3.Quantum.Foundation.EvertJuryMcCulloughMaxChoiKrausRank
@@ -459,8 +468,6 @@ theorem result : claim := by
     choiKrausRank_le_of_psd (jcp_choi_psd hn hPsi)
   exact ⟨⟨fun Psi hPsi _ => hUpper Psi hPsi, ⟨Phi, hJ, ⟨T, hT.1⟩, hR⟩⟩,
     ⟨fun Psi hPsi _ => hUpper Psi hPsi, ⟨Phi, hJ, ⟨T, hT⟩, hR⟩⟩⟩
-
-#print axioms result
 
 end
 
