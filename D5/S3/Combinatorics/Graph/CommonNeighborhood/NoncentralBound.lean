@@ -6,6 +6,7 @@
    utility: none
    digest: The noncentral commuting graph satisfies the complete-graph CN energy bound. -/
 
+/- Escape audit unfinished for psd_difference_bound: https://github.com/the-omega-institute/trureturing/issues/32710 -/
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation
 import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.Subgroup.Centralizer
@@ -56,7 +57,9 @@ private theorem common_neighbour_eq_square_sub_degree {V : Type} [Fintype V]
     · simp [hik, hjk, g.adj_comm]
     · simp [hik, hjk, g.adj_comm]
 
-private theorem psd_difference_bound {V : Type} [Fintype V] [DecidableEq V]
+/-- For positive semidefinite `P` and `Q`, the energy of `P - Q` is at most
+`tr P + tr Q`. -/
+theorem psd_difference_bound {V : Type} [Fintype V] [DecidableEq V]
     (P Q : Matrix V V ℝ) (hP : P.PosSemidef) (hQ : Q.PosSemidef) :
     (∑ i, |(hP.isHermitian.sub hQ.isHermitian).eigenvalues i|) ≤
       P.trace + Q.trace := by
