@@ -600,7 +600,6 @@ private theorem physical_loss_bounds (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100)
   simpa only [largerEigenvalue, s, g, show (x^2)^2 = x^4 by ring,
     show (x^2)^3 = x^6 by ring] using hb
 
-/-- A real symmetric qubit matrix in the computational basis. -/
 def symmetric (d e f : ℝ) : M₂ :=
   !![(d : ℂ), (e : ℂ); (e : ℂ), (f : ℂ)]
 private def root00 (x : ℝ) : ℝ :=
@@ -652,7 +651,6 @@ private theorem recover_symmetric (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100) :
   unfold recovered01
   ring
 
-/-- Subtracting real symmetric qubit matrices entrywise. -/
 theorem symmetric_sub (a b c d e f : ℝ) :
     symmetric a b c - symmetric d e f = symmetric (a-d) (b-e) (c-f) := by
   ext i j
