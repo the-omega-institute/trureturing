@@ -59,7 +59,7 @@ private lemma inv_pow_le_half {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
     simpa only [pow_one] using pow_le_pow_right₀ (by linarith : (1 : ℝ) ≤ p) hk
   exact one_div_le_one_div_of_le (by norm_num) (hp2.trans hpow)
 
-private lemma eulerTerm_le_twice_power {p k : ℕ} (hp : p.Prime) :
+lemma eulerTerm_le_twice_power {p k : ℕ} (hp : p.Prime) :
     0 ≤ eulerTerm p k ∧ eulerTerm p k ≤ 2 / (p : ℝ) ^ (k + 1) := by
   let x : ℝ := 1 / (p : ℝ) ^ (k + 1)
   have hx0 : 0 ≤ x := by dsimp [x]; positivity
@@ -378,7 +378,7 @@ private theorem omitted_layers_aggregate {S : Finset ℕ} (hS : primeSupport S)
     _ = _ := by rw [hYquot, hYpow]; dsimp only [remainderConstant, C]; ring
 
 /-- Exact normalizations on the full admissible integer image. -/
-private lemma integer_loss_forms {S : Finset ℕ} (hS : primeSupport S)
+lemma integer_loss_forms {S : Finset ℕ} (hS : primeSupport S)
     {a : ℕ → ℕ} (ha : supportedAdmissible S a) :
     let x : ℕ → ℝ := fun p => (a p : ℝ)
     phi S x - baseline S =
@@ -534,7 +534,7 @@ private theorem eventually_small_radius : ∀ᶠ P in atTop, 2 * ℓ P * radius 
       ring
     _ ≤ 1 := hP.le
 
-private lemma exp_sub_one_bounds {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
+lemma exp_sub_one_bounds {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
     0 ≤ exp x - 1 ∧ exp x - 1 ≤ 2 * x := by
   have hpos : 0 ≤ exp x - 1 := sub_nonneg.mpr (by simpa only [exp_zero] using exp_le_exp.mpr hx)
   refine ⟨hpos, ?_⟩

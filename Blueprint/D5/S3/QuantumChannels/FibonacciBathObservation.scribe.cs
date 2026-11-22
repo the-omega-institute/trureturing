@@ -24,6 +24,16 @@ internal sealed class FibonacciBathObservationDocument : IScribeDocumentDefiniti
                 + "row-stochastic readout. Shannon's finite entropy and conditional entropy supply the "
                 + "information measure. The formal argument uses the repository's Markov equality and "
                 + "conditional probability profile theorems.")),
+            Paragraph(Text(
+                "A second record problem compares the outgoing bath itself with the input Gibbs state. "
+                + "Summing the terminal joint table over qutrit levels gives the outgoing bath "
+                + "masses (0, 88, 25, 28)/141 on groups consisting of level 0, levels 1–3, level 4 "
+                + "and level 5. The same groups have Gibbs masses (48, 66, 15, 12)/141. The ratio "
+                + "is constant within each group and equals 0, 4/3, 5/3 or 7/3. The exact "
+                + "diagonal memory theorem, DiagonalExperiment.sharp_entropy_dimension, therefore "
+                + "requires four memory dimensions to preserve Umegaki relative entropy to the "
+                + "input Gibbs state under a CPTP encoder. Recording the ratio as an orthogonal "
+                + "state attains dimension four.")),
             Describe.Lean(
                 DescribeId.Create("terminal-gibbs-implementation"),
                 DeclarationHandle.Create(Prefix + "terminalJoint_gibbs_implementation"),
