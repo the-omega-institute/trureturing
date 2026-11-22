@@ -60,11 +60,11 @@ private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   let V := ULift.{u} (Fin 2)
   let H := Equiv.Perm (ULift.{v} (Fin 2))
-  letI : MetricSpace H := discreteMetric H
-  letI : IsIsometricSMul H H := ⟨fun c => Isometry.of_dist_eq (fun a b => by
+  let : MetricSpace H := discreteMetric H
+  let : IsIsometricSMul H H := ⟨fun c => Isometry.of_dist_eq (fun a b => by
     change (if c * a = c * b then (0 : ℝ) else 1) = (if a = b then 0 else 1)
     simp only [mul_left_cancel_iff])⟩
-  letI : IsIsometricSMul Hᵐᵒᵖ H := ⟨fun c => Isometry.of_dist_eq (fun a b => by
+  let : IsIsometricSMul Hᵐᵒᵖ H := ⟨fun c => Isometry.of_dist_eq (fun a b => by
     change (if a * c.unop = b * c.unop then (0 : ℝ) else 1) =
       (if a = b then 0 else 1)
     simp only [mul_right_cancel_iff])⟩
@@ -144,7 +144,8 @@ def family : Registration arena.{u, v}
       (@SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.{u, v})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.{u, v}, rejected, rejected_law⟩
+  variation :=
+    ⟨@SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.{u, v}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -157,7 +158,7 @@ def family : Registration arena.{u, v}
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.{u, v})
-    (Realization signature.{u, v}) Unit Unit where
+    (Realization signature.{u, v}) (Type u → Type u) Unit where
   unitName := `SimpleGraph.IsChordal.exists_uniform_approximate_gain_potential.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Chordal.UniformGainPotential.family
   realizationSource := none
