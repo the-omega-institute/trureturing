@@ -30,7 +30,7 @@ on p. 16. The conjecture asks for exact attainment and includes $x=1$.
 The published ZM formula in §3.1, equation (3.13), specializes to the normal
 and total subgroup counts for a prime cyclic kernel and a cyclic quotient
 of order $2^B$ acting with image of order $2^t$. The corresponding ZM
-normal-subgroup formula is also given by Tărnăuceanu and Tóth,
+normal-subgroup formula is also given by Marius Tărnăuceanu,
 arXiv:1502.04776v1, Theorem 1 and Corollary 3.
 The bounded literature qualification recorded for #28774 found no explicit
 published full-domain settlement. Completeness of the search and mathematical
@@ -43,4 +43,4 @@ priority remain ASSUMED-UNVERIFIED.
 - [Journal conjecture, §4](https://www.math.uaic.ro/~martar/pdf/articole/articol%2040.pdf#page=11)
 - [Preprint conjecture, §4](https://arxiv.org/pdf/1312.1427v1#page=16)
 - [ZM subgroup formulas](https://arxiv.org/pdf/1502.04776v1#page=3)
-- [Preregistered literature qualification](https://github.com/the-omega-institute/trureturing/issues/28774#issuecomment-7070495527)
+- [Preregistered literature qualification](https://github.com/the-omega-institute/trureturing/issues/28774)
