@@ -26,7 +26,7 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("w"), DeclarationHandle.Create(Prefix + "W"),
             H("Forward vectors in total cost degree 2"), StatementSource.FromAuthor(Disp(ForwardWeightsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("Here v₂ is the 21 by 5 table of degree-two half-strip vectors. Each unordered product reads a single target coordinate, counting both orders when its classes differ. The degree-two half-strip table starts at zero and uses the last five coordinates of HardinA229696StripData.W for exponents one and two, with classes 1 and 3 exchanged at exponent two. The theorem forward_two pins the entries against the three-sector update."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("The degree-two vector is the sum of the unordered products for half-strip degrees zero and two, one and one, and two and zero. Each unordered product reads a single target coordinate, counting both orders when its classes differ. The degree-two half-strip table starts at zero and uses the last five coordinates of HardinA229696StripData.W for exponents one and two, with classes 1 and 3 exchanged at exponent two. The theorem forward_two pins the entries against the three-sector update."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
             H("Order-eighteen coefficients"), StatementSource.FromAuthor(Disp(CoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -62,13 +62,10 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
     {
         var i = V("i");
         var j = V("j");
-        var v0 = Call("HardinA203981StripCertificate.halfForwardZero", i);
-        var v1 = Call("HardinA229508StripCertificate.halfForwardOne", i);
-        var v2 = App(Seq(V("v"), Underscore, Grp(N("2"))), i);
-        Formula ProductAt(Formula a, Formula b) => Call("HardinA203981StripData.unordered", a, b, j);
-        return All("i", Fin("21"), All("j", Fin("15"), Eq(
-            Call("HardinA229683StripCertificate.W", i, j),
-            Add(Add(ProductAt(v0, v2), ProductAt(v1, v1)), ProductAt(v2, v0)))));
+        var forward = Call("DefectTransfer.forward", Call("HardinA229683StripData.T"),
+            Call("HardinA229683StripData.initial"), Call("Fin.val", i));
+        return All("i", Fin("21"), All("j", Fin("15"),
+            Eq(Call("HardinA229683StripCertificate.W", i, j), App(Call("Function.comp", forward, Call("Sum.inr")), j))));
     }
 
     private static Formula N(string digits, bool negative = false) => negative ? Seq(Minus, N(digits)) :
