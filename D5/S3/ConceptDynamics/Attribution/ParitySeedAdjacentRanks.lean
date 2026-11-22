@@ -361,7 +361,8 @@ private theorem eight_axis_achieves_thirty_six : axisFactorWithin 3 (0 : Fin 8) 
   · unfold residualDegree
     decide +kernel
   · decide +kernel
-  · unfold axisCost
+  · change axisCost 0 witnessEdge ≤ 36
+    unfold axisCost
     decide +kernel
 
 /-- The adjacent-rank restriction preserves the eight-coordinate axis budget of thirty-six. -/
