@@ -2,7 +2,6 @@ import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 import { performance } from 'node:perf_hooks';
 import { dirname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline';
@@ -27,7 +26,6 @@ const actionPath = dirname(fileURLToPath(import.meta.url));
 const targetArgs = targetsFile ? ['--targets-file', targetsFile] : targets.flatMap(target => ['--target', target]);
 const pythonTool = 'tools/scripts/worktree/lean_actions_shards.py';
 const preparationTool = 'tools/scripts/worktree/lean_pr_cache.py';
-const cacheWriteDenied = /cache write denied:|your cache is now read[ -]only/i;
 
 function preparationCommand(command, args) {
   execFileSync('python3', ['-B', preparationTool, command, '--repository', workspace, ...args], { stdio: 'inherit' });
@@ -82,23 +80,16 @@ function matchIndex(identity, matched, record) {
 async function paced(items, parallelism, perMinute, invoke, schedule = { next: performance.now() }) {
   const interval = 60000 / perMinute;
   let position = 0;
-  let failure;
   await Promise.all(Array.from({ length: Math.min(items.length, parallelism) }, async () => {
-    while (!failure && position < items.length) {
+    while (position < items.length) {
       const item = items[position++];
       const now = performance.now();
       const scheduled = Math.max(now, schedule.next);
       schedule.next = scheduled + interval;
       if (scheduled > now) await delay(scheduled - now);
-      if (failure) return;
-      try {
-        await invoke(item);
-      } catch (error) {
-        failure ??= error;
-      }
+      await invoke(item);
     }
   }));
-  if (failure) throw failure;
 }
 
 async function prepareBatches(args, consume) {
@@ -308,32 +299,6 @@ async function digestFile(path) {
 }
 
 async function save(cache, cacheVersion, identity) {
-  // The pinned SDK reports both a denied reservation and a race as -1.
-  // Observe its original diagnostic for this write operation only.
-  const sdkRequire = createRequire(resolve(stage, 'client/node_modules/@actions/cache/package.json'));
-  const core = sdkRequire('@actions/core');
-  const warning = core.warning;
-  const writes = new AbortController();
-  core.warning = (message, ...args) => {
-    warning(message, ...args);
-    if (cacheWriteDenied.test(message)) writes.abort(new Error(String(message)));
-  };
-  try {
-    await saveShards(cache, cacheVersion, identity, writes.signal);
-  } finally {
-    core.warning = warning;
-    // Preparation can have packed the next digest before it sent this batch.
-    if (writes.signal.aborted) await rm(join(stage, 'payload'), { recursive: true, force: true });
-  }
-}
-
-async function saveShards(cache, cacheVersion, identity, writes) {
-  const saveEntry = async (path, key) => {
-    writes.throwIfAborted();
-    const result = await cache.saveCache([path], key);
-    writes.throwIfAborted();
-    return result;
-  };
   const started = performance.now();
   const prefix = identity.prefix + 'material-';
   const ownerRef = identity.owner.ref;
@@ -366,7 +331,7 @@ async function saveShards(cache, cacheVersion, identity, writes) {
     const path = payloadPath(digest);
     const key = payloadKey(identity, digest);
     try {
-      if (!matches(inventory, key, cacheVersion(path)) && await saveEntry(path, key) >= 0) {
+      if (!matches(inventory, key, cacheVersion(path)) && await cache.saveCache([path], key) >= 0) {
         confirmed.add(digest);
         return;
       }
@@ -382,7 +347,6 @@ async function saveShards(cache, cacheVersion, identity, writes) {
         await rename(original, path);
       }
     } catch (error) {
-      writes.throwIfAborted();
       console.log('LEAN_ACTIONS_SHARDS save failed for ' + digest + ': ' + error.message);
     }
   };
@@ -439,7 +403,7 @@ async function saveShards(cache, cacheVersion, identity, writes) {
   const encoded = JSON.stringify(record) + '\n';
   await writeFile(indexPath, encoded);
   const key = indexKey(identity);
-  if (await saveEntry(indexPath, key) < 0
+  if (await cache.saveCache([indexPath], key) < 0
       && (!matches(visibleEntries(ownerRef, key), key, cacheVersion(indexPath))
         || await cache.restoreCache([indexPath], key, []) !== key
         || await readFile(indexPath, 'utf8') !== encoded)) {
@@ -472,7 +436,7 @@ async function saveContinuation() {
     for await (const line of createInterface({ input: stream, crlfDelay: Infinity })) {
       destination.write(line + '\n');
       if (/\b(?:ENOSPC|no space left on device)\b/i.test(line)) blocked = 'disk-full';
-      if (cacheWriteDenied.test(line)) blocked = 'cache-read-only';
+      if (/cache write denied:|your cache is now read[ -]only/i.test(line)) blocked = 'cache-read-only';
     }
   };
   const finished = new Promise((resolve, reject) => {
