@@ -1,6 +1,15 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Chromatic
-import Reg.Support.SingleDependentReadout
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import Init.Prelude
+import Init.SimpLemmas
 import LeanInformationAuditInterface.Contract.Registration
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.GroupWithZero.Defs
+import Mathlib.Algebra.Notation.Defs
+import Mathlib.Data.Fintype.Defs
+import Mathlib.Data.Matrix.Mul
+import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
@@ -37,6 +46,9 @@ private theorem actual_dependence :
     dotProduct (fun p : Column => if p = 0 then (1 : ℤ) else 0) (v 1)
   simp only [dotProduct, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
     Finset.mem_univ, ite_true]
+  change (T ^ (0 : Fin 12).val).mulVec (1 : Column → ℤ) 0 ≠
+    (T ^ (1 : Fin 12).val).mulVec (1 : Column → ℤ) 0
+  rw [powers_table (0 : Fin 12), powers_table (1 : Fin 12)]
   decide +kernel
 
 def family : Registration arena (type_of% @result) where

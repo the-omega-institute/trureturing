@@ -1,7 +1,11 @@
+import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Chromatic
+import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import Init.Prelude
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
 import Reg.Support.SingleDependentReadout
-import LeanInformationAuditInterface.Contract.Registration
 
 /-! Complete source count and recurrence telescopes as dependent-family laws. -/
 
