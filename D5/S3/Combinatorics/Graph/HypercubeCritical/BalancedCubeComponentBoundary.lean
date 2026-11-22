@@ -29,10 +29,9 @@ open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open BalancedCubeGirth (flip_comm)
+open SupportedEigenSaturation (selected_neighbor_card)
 open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private selected_neighbor_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 
 open Classical in
 def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
