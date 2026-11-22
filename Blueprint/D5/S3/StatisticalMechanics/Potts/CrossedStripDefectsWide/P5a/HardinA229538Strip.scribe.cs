@@ -75,8 +75,14 @@ internal sealed class HardinA229538StripDocument : IScribeDocumentDefinition
     private static Formula AsInt(Formula a) => Typed(a,Q("Int"));
     private static Formula Column() => Q("HardinA233178Chromatic.Column");
     private static Formula Own(string n,params Formula[] a) => Call("HardinA229538Strip."+n,a);
-    private static Formula Count() => All("n",Q("Nat"),
-        Eq(Typed(Own("a",V("n")),Q("Nat")),Own("canonicalCount",N(1),V("n"))));
+    private static Formula Count()
+    {
+        var n = V("n");
+        var count = Own("canonicalCount", N(1), n);
+        return All("n", Q("Nat"), And(
+            Eq(Typed(Own("a", n), Q("Nat")), count),
+            Eq(count, FilteredCount(n, N(1)))));
+    }
 
     private static Formula CutEdges() {
         var pairs = Product(Fin(5),Fin(5));
