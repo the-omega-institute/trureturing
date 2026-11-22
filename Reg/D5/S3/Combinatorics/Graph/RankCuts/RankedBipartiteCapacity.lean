@@ -17,7 +17,7 @@ universe u
 
 noncomputable section
 
-private abbrev Params := Σ V : Type u, Σ _ : Fintype V, Σ _ : V → ℕ, V
+private abbrev Params := Σ V : Type u, Σ _ : Fintype V, Σ _ : DecidableEq V, Σ _ : V → ℕ, V
 
 abbrev signature : Signature where
   Params := Params.{u}
@@ -29,10 +29,10 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def charge (p : Params.{u}) (e : p.1 → p.1 → ℕ) : ℕ := by
+private def charge (p : Params.{u}) (e : p.1 → p.1 → ℕ) : ℕ :=
   letI : Fintype p.1 := p.2.1
-  classical
-  exact ∑ a, ∑ b, if a ≠ p.2.2.2 ∧ p.2.2.1 a % 2 = 1 ∧ p.2.2.1 b % 2 = 1
+  letI : DecidableEq p.1 := p.2.2.1
+  ∑ a, ∑ b, if a ≠ p.2.2.2.2 ∧ p.2.2.2.1 a % 2 = 1 ∧ p.2.2.2.1 b % 2 = 1
     then e a b else 0
 
 def actual : Realization signature.{u} :=
@@ -43,7 +43,7 @@ def constantZero : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law S := ∀ {V : Type u} [f : Fintype V] [DecidableEq V] (rank : V → ℕ)
+  Law S := ∀ {V : Type u} [f : Fintype V] [de : DecidableEq V] (rank : V → ℕ)
     (top : V) (k ka kb : ℕ) (e : V → V → ℕ) (R : Finset ℕ),
     (∀ r ∈ R, r < rank top ∧ r % 2 = 1) →
     (∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b) →
@@ -57,7 +57,7 @@ abbrev arena : Arena where
         ((univ.filter fun a => rank a < r).card * k + ka))
       ((univ.filter fun a => r ≤ rank a ∧ a ≠ top).card -
         (((univ.filter fun a => r < rank a).erase top).card * k + kb))) ≤
-    S.readout () ⟨V, f, rank, top⟩ e
+    S.readout () ⟨V, f, de, rank, top⟩ e
 
 private def testRank (v : ULift.{u} Bool) : ℕ := if v.down then 2 else 1
 
@@ -65,7 +65,7 @@ private def testEdges (a b : ULift.{u} Bool) : ℕ :=
   if a.down = false ∧ b.down = false then 1 else 0
 
 private def testParams : Params.{u} :=
-  ⟨ULift.{u} Bool, inferInstance, testRank, ⟨true⟩⟩
+  ⟨ULift.{u} Bool, inferInstance, inferInstance, testRank, ⟨true⟩⟩
 
 private theorem constant_zero_fails : ¬ arena.{u}.Law constantZero.{u} := by
   intro h
@@ -74,35 +74,10 @@ private theorem constant_zero_fails : ¬ arena.{u}.Law constantZero.{u} := by
   change (1 : ℕ) ≤ 0 at failure
   omega
 
-private theorem charge_congr_decidable {V : Type u} [f : Fintype V] [DecidableEq V]
-    (rank : V → ℕ) (top : V) (e : V → V → ℕ) :
-    charge ⟨V, f, rank, top⟩ e =
-      ∑ a, ∑ b, if a ≠ top ∧ rank a % 2 = 1 ∧ rank b % 2 = 1 then e a b else 0 := by
-  unfold charge
-  apply sum_congr rfl
-  intro a _
-  apply sum_congr rfl
-  intro b _
-  by_cases h : a ≠ top ∧ rank a % 2 = 1 ∧ rank b % 2 = 1 <;> simp [h]
-
 def family : Registration arena.{u} (type_of% @paid_edges_ge_rank_capacity.{u}) where
   actual := actual
-  bridge := by
-    constructor
-    · intro h V f de rank top k ka kb e R hr ho hrl hcl hru hcu htr htc
-      change _ ≤ charge ⟨V, f, rank, top⟩ e
-      rw [charge_congr_decidable]
-      exact h rank top k ka kb e R hr ho hrl hcl hru hcu htr htc
-    · intro h V f de rank top k ka kb e R hr ho hrl hcl hru hcu htr htc
-      have hh := h rank top k ka kb e R hr ho hrl hcl hru hcu htr htc
-      change _ ≤ charge ⟨V, f, rank, top⟩ e at hh
-      rwa [charge_congr_decidable] at hh
-  variation := ⟨by
-    intro V f de rank top k ka kb e R hr ho hrl hcl hru hcu htr htc
-    change _ ≤ charge ⟨V, f, rank, top⟩ e
-    rw [charge_congr_decidable]
-    exact paid_edges_ge_rank_capacity rank top k ka kb e R hr ho hrl hcl hru hcu htr htc,
-    constantZero, constant_zero_fails⟩
+  bridge := Iff.rfl
+  variation := ⟨paid_edges_ge_rank_capacity, constantZero, constant_zero_fails⟩
   sensitivity := by
     constructor
     · intro role
@@ -114,8 +89,6 @@ def family : Registration arena.{u} (type_of% @paid_edges_ge_rank_capacity.{u}) 
     intro role
     refine ⟨testParams, fun _ _ => 0, testEdges, ?_⟩
     change charge testParams (fun _ _ => 0) ≠ charge testParams testEdges
-    unfold testParams
-    rw [charge_congr_decidable, charge_congr_decidable]
     decide
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -139,7 +112,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity
     definition := none
-    coordinates := #[0, 3, 4]
+    coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
