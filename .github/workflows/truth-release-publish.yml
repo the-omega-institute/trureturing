@@ -8,6 +8,11 @@ on:
 
 permissions: {}
 
+# Release tooling has its own immutable revision. The source checkout supplies
+# the Inspector and Scribe versions that produced its module evidence.
+env:
+  TRUTH_TOOLS_COMMIT: e073a7714720d664a9b830bff391ad100c90b01a
+
 concurrency:
   group: truth-release-publish-dev
   cancel-in-progress: false
@@ -17,9 +22,6 @@ jobs:
     if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
     runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
     timeout-minutes: 360
-    defaults:
-      run:
-        working-directory: truth-release-source
     permissions:
       actions: read
       checks: read
@@ -41,12 +43,22 @@ jobs:
           path: truth-release-source
           clean: false
           persist-credentials: false
+      - name: Check out the fixed truth release tools
+        uses: actions/checkout@v5
+        with:
+          repository: the-omega-institute/trureturing-tools
+          ref: ${{ env.TRUTH_TOOLS_COMMIT }}
+          path: truth-tools
+          persist-credentials: false
       - name: Keep the runner's Lake build for incremental validation
+        working-directory: truth-release-source
         run: git clean -ffdx -e /.lake/
       - name: Select the runner toolchain
+        working-directory: truth-release-source
         run: |
           printf '%s\n' "$HOME/.local/bin" /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin /opt/homebrew/opt/gnu-tar/libexec/gnubin >> "$GITHUB_PATH"
       - name: Install the tools pinned by the source
+        working-directory: truth-release-source
         run: |
           python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version'
           make install-tools
@@ -56,19 +68,24 @@ jobs:
         with:
           global-json-file: truth-release-source/global.json
       - name: Install the pinned Lean toolchain
+        working-directory: truth-release-source
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Prepare the source's Lean module reports
+        working-directory: truth-release-source
         run: make lean-cache-prepare FULL_BUILD=1
       - name: Verify the protected source and its required checks
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 .github/scripts/truth-release-source.py > "$RUNNER_TEMP/truth-required-checks"
+        working-directory: truth-release-source
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/source.py" > "$RUNNER_TEMP/truth-required-checks"
       - name: Build and verify the DAG and truth bundle
-        run: bash .github/scripts/truth-release-build.sh "$RUNNER_TEMP/truth" "$RUNNER_TEMP/truth-required-checks"
+        working-directory: truth-release-source
+        run: bash "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth" "$RUNNER_TEMP/truth-required-checks"
       - name: Package verified release assets
         id: pack
+        working-directory: truth-release-source
         run: |
-          python3 .github/scripts/truth-release-publish.py prepare \
+          python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" prepare \
             "$RUNNER_TEMP/truth/bundle" "$RUNNER_TEMP/truth/DAG.md" "$RUNNER_TEMP/truth-assets"
       - id: upload
         uses: actions/upload-artifact@v6
@@ -99,12 +116,22 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          sparse-checkout: .github/scripts
+          path: truth-release-source
+          sparse-checkout: /Meta/tools-release.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: Check out the fixed truth release tools
+        uses: actions/checkout@v5
+        with:
+          repository: the-omega-institute/trureturing-tools
+          ref: ${{ env.TRUTH_TOOLS_COMMIT }}
+          path: truth-tools
           persist-credentials: false
       - name: Verify the source before publication
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 .github/scripts/truth-release-source.py
+        working-directory: truth-release-source
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/source.py"
       - uses: actions/download-artifact@v8
         with:
           artifact-ids: ${{ needs.build.outputs.artifact_id }}
@@ -123,7 +150,8 @@ jobs:
         id: oci
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 .github/scripts/truth-release-publish.py oci "$RUNNER_TEMP/truth-assets"
+        working-directory: truth-release-source
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" oci "$RUNNER_TEMP/truth-assets"
       - uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-name: ghcr.io/the-omega-institute/trureturing/truth-release
@@ -133,8 +161,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REFERENCE: ${{ steps.oci.outputs.reference }}
+        working-directory: truth-release-source
         run: |
           gh attestation verify "oci://$REFERENCE" --repo "$GITHUB_REPOSITORY" \
             --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
             --source-digest "$GITHUB_SHA" --source-ref refs/heads/dev --deny-self-hosted-runners
-          python3 .github/scripts/truth-release-publish.py mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"
+          python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"
