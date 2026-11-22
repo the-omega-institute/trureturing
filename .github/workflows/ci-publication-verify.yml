@@ -308,7 +308,7 @@ jobs:
   indexed-consumer:
     name: Verify indexed Release recovery in a clean checkout
     needs: cache
-    if: needs.cache.outputs.indexed-tag != ''
+    if: ${{ !cancelled() && needs.cache.result == 'success' && needs.cache.outputs.indexed-tag != '' }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     strategy:
