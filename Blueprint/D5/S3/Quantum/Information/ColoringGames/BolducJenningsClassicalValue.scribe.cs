@@ -151,11 +151,12 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
             + "Shared and private random choices independent of the input can be sampled as complete local tables "
             + "before play. Their distribution ranges over the whole real standard simplex of table pairs.")),
         Definition("balanced-squares", "B", "Balanced sum of squares", BFormula(),
-            "For a positive number k of colors, divide s by k in the natural numbers. "
+            "For a positive number k of colors, Lemma 3.1.4 of Bolduc and Jennings gives the minimum as the displayed sum. "
+            + "Divide s by k in the natural numbers. "
             + "Assign the quotient plus one to the remainder many colors and the quotient to all other colors. "
-            + "This minimizes the sum of squares. Zero colors permit only an empty block, with B(0,0)=0. "
-            + "The displayed formula uses Lean's total natural division and remainder.",
-            AssessedProvenance.FromRepo(Source)),
+            + "At k=0, Lean's total natural division and remainder give B(0,s)=s. "
+            + "The only feasible zero-color block is empty and has B(0,0)=0.",
+            AssessedProvenance.FromLiterature(Source)),
         Definition("common-size", "commonSize", "Size of the common block", CommonSizeFormula(),
             "NatCeil is the natural ceiling. For the admissible nonnegative t it is the usual real ceiling. "
             + "The number of common inputs is capped at n.",
@@ -175,8 +176,8 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
             AssessedProvenance.FromRepo(Source)),
         Definition("t-param", "tParam", "Ratio of diagonal to off-diagonal weights",
             All(N, Nat, All(P, Real, Equal(Call("tParam", N, P), TParam()))),
-            "The ratio is p(n−1)/(1−p) on the low-diagonal interval.",
-            AssessedProvenance.FromRepo(Source)),
+            "The ratio p(n−1)/(1−p) is the nonconstant term in the score coefficient in §2.1 of Bolduc and Jennings.",
+            AssessedProvenance.FromLiterature(Source)),
         Definition("probability", "probability", "Conversion from score to probability",
             All(N, Nat, All(P, Real, All(S, Real,
                 Equal(Call("probability", N, P, S), AffineValue(S))))),

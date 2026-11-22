@@ -12,13 +12,11 @@ $$\forall (k: \mathbb{N}), \forall (s: \mathbb{N}), \operatorname{B}\left(k, s\r
 
 *Formalization.* `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.B` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
+*Citation.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
 
 *Commentary.*
 
-For a positive number k of colors, divide s by k in the natural numbers. Assign the quotient plus one to the remainder many colors and the quotient to all other colors. This minimizes the sum of squares. Zero colors permit only an empty block, with B(0,0)=0. The displayed formula uses Lean's total natural division and remainder.
+For a positive number k of colors, Lemma 3.1.4 of Bolduc and Jennings gives the minimum as the displayed sum. Divide s by k in the natural numbers. Assign the quotient plus one to the remainder many colors and the quotient to all other colors. At k=0, Lean's total natural division and remainder give B(0,s)=s. The only feasible zero-color block is empty and has B(0,0)=0.
 
 **Definition 1.2 (Size of the common block).**
 
@@ -90,13 +88,11 @@ $$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \operatorname{tParam}\left(n
 
 *Formalization.* `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.tParam` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
+*Citation.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
 
 *Commentary.*
 
-The ratio is p(n−1)/(1−p) on the low-diagonal interval.
+The ratio p(n−1)/(1−p) is the nonconstant term in the score coefficient in §2.1 of Bolduc and Jennings.
 
 **Definition 1.8 (Conversion from score to probability).**
 
