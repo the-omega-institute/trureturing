@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow (\operatorname{IsGreatest}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/Tamari/GarberQuestion62.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garber-et-al-2026-tamari-boolean-antichains` (proved) by `D5/S3/Combinatorics/Lattices/Tamari/GarberQuestion62.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garber-et-al-2026-tamari-boolean-antichains","declaration_gid":"D5/S3/Combinatorics/Lattices/Tamari/GarberQuestion62.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Julien Garber, Lina S. Goltermann, Daniel Horiatakis, Dennis König and Tal Gottesman (2026). *Counting Boolean antichains*. DOI: [10.48550/arXiv.2608.27126](https://doi.org/10.48550/arXiv.2608.27126). URL: <https://arxiv.org/html/2608.27126v2#S6.Thmtheorem2>.

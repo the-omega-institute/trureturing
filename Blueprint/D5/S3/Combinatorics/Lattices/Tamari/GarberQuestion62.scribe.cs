@@ -35,7 +35,10 @@ internal sealed class GarberQuestion62Document : IScribeDocumentDefinition
                     + " inclusion is order-isomorphic to contextual right rotations at rank n. Noncrossing refinement"
                     + " and Dyck height dominance each give an isomorphic order exactly at n = 1 and n = 2. The Dyck"
                     + " paths with transported Tamari order give an isomorphism for every n ≥ 1. The order of families"
-                    + " on arbitrary lattices lies outside the first sentence."))), DescribeRole.Theorem))));
+                    + " on arbitrary lattices lies outside the first sentence."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("garber-et-al-2026-tamari-boolean-antichains"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {
