@@ -45,8 +45,10 @@ variable {D : LatticeData} {hu : IsUnit D.G.det}
 
 local notation "E" => parityMinusEnergyTwo D hu
 local notation "W" => Module.End.eigenspace (parityMinusEnergyTwoZeroMode D hu h24 a ha s)
-set_option quotPrecheck false in
-local notation "ι" => (Submodule.inclusion (show E ≤ paritySpace D hu (-1) from inf_le_left))
+private theorem energyTwo_le_negativeParity (D : LatticeData) (hu : IsUnit D.G.det) :
+    parityMinusEnergyTwo D hu ≤ paritySpace D hu (-1) := fun _ hx => hx.1
+
+local notation "ι" => (Submodule.inclusion (energyTwo_le_negativeParity D hu))
 local notation "B" => LinearMap.BilinForm.restrict (LinearMap.flip (actualForm D hu)) E
 local notation "Allowed" => fun h : ℂ => h = 0 ∨ h = 1 / 2 ∨ h = 1 / 16
 
