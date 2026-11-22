@@ -49,5 +49,18 @@ internal sealed class SparsePavingCircuitCoordinatesDocument : IScribeDocumentDe
                     + "in the kernel of the covector. The face coefficient of the covector product "
                     + "vanishes exactly when the lower-degree alternating form vanishes on these "
                     + "differences."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-paving-pivot-forms-equiv"),
+                DeclarationHandle.Create(Module + ".sparse_paving_pivot_forms_equiv"),
+                H("Simultaneous omitted equations after pivot elimination"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Eliminate a pivot to express circuit residues as lower-degree forms. "
+                    + "Weighted insertion and insertion of the pivot both vanish, and the scalar "
+                    + "readout of the weights annihilates the form. Each omitted basis imposes "
+                    + "one additional vanishing equation on differences from any representative "
+                    + "of that basis."))),
                 DescribeRole.Theorem))));
 }

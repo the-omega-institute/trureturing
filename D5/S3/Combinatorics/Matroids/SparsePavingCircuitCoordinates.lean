@@ -404,4 +404,64 @@ theorem wedge_coordinate_zero_iff_differences {n : ℕ} (H : Finset I)
   rw [ht, curry_covectorWedge, sub_apply, smul_apply,
     ha, one_smul, hz, sub_zero]
 
+open UniformCircuitResidueForms (pivotFormEquiv)
+
+/-- After eliminating a pivot, each omitted basis requires the lower-degree
+form to vanish on differences from a representative of that basis. The
+representatives of the omitted bases can be chosen independently. -/
+theorem sparse_paving_pivot_forms_equiv {V : Type*} [Fintype V] (p : V → I) {d : ℕ}
+    (hd : d + 2 < Fintype.card I) (hsize : ∀ H ∈ holes, H.card = d + 2)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ d + 2))
+    (hground : M.E = Set.univ)
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = d + 2 ∧ B ∉ holes)
+    (b : Module.Basis I ℤ (I → ℤ)) (a : (I → ℤ) →ₗ[ℤ] ℤ) (ha : ∀ i, a (b i) = 1)
+    (root : I) (rep : holes → I) (hrep : ∀ H : holes, rep H ∈ H.val) :
+    let y := ∑ i, (univ.filter fun x => p x = i).card • b i
+    let P := ((insertVector (N := RationalResidue) (n := d) (b root)).ker ⊓
+      (insertVector y).ker) ⊓
+      Submodule.torsionBy ℤ ((I → ℤ) [⋀^Fin (d + 1)]→ₗ[ℤ] RationalResidue) (a y)
+    let tuple (H : holes) (i : Fin (d + 1)) :=
+      let S : Set.powersetCard I (d + 1) := ⟨H.val.erase (rep H), by
+        change (H.val.erase (rep H)).card = d + 1
+        rw [card_erase_of_mem (hrep H), hsize H.val H.prop]; omega⟩
+      b (ofFinEmbEquiv.symm S i) - b (rep H)
+    let eval (H : holes) : ((I → ℤ) [⋀^Fin (d + 1)]→ₗ[ℤ] RationalResidue) →ₗ[ℤ]
+        RationalResidue :=
+      { toFun := fun f => f (tuple H)
+        map_add' := fun _ _ => rfl
+        map_smul' := fun _ _ => rfl }
+    Nonempty (weightedCircuitResidues M p ≃ₗ[ℤ] ↥(P ⊓ ⨅ H, (eval H).ker)) := by
+  intro y P tuple eval
+  have hd' : (d + 1) + 1 < Fintype.card I := by omega
+  obtain ⟨forms⟩ := sparse_paving_weighted_forms_equiv p hd' hsize hsparse hground hB b a ha
+  let pivot := pivotFormEquiv (N := RationalResidue) (n := d) a (b root) y (ha root)
+  let domain := ((covectorWedgeLinear (N := RationalResidue) (n := d + 2) a).ker ⊓
+    (insertVector y).ker)
+  let omitted := Submodule.comap domain.subtype (omitCoefficients b holes (d + 2))
+  let lift : ↥(domain ⊓ omitCoefficients b holes (d + 2)) ≃ₗ[ℤ] ↥omitted :=
+    { toFun := fun f => ⟨⟨f.val, f.prop.1⟩, f.prop.2⟩
+      invFun := fun f => ⟨f.val.val, ⟨f.val.prop, f.prop⟩⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let target := Submodule.comap P.subtype (⨅ H, (eval H).ker)
+  have mapped : omitted.map pivot.toLinearMap = target := by
+    rw [Submodule.map_equiv_eq_comap_symm]
+    ext f
+    simp only [omitted, target, Submodule.mem_comap, omitCoefficients, Submodule.mem_iInf,
+      LinearMap.mem_ker]
+    apply forall_congr'
+    intro H
+    exact wedge_coordinate_zero_iff_differences H.val (hsize H.val H.prop) (rep H) (hrep H) b a ha f.val
+  let finish : ↥target ≃ₗ[ℤ] ↥(P ⊓ ⨅ H, (eval H).ker) :=
+    {
+      toFun := fun f => ⟨f.val.val, ⟨f.val.prop, f.prop⟩⟩
+      invFun := fun f => ⟨⟨f.val, f.prop.1⟩, f.prop.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  exact ⟨forms.trans (lift.trans ((pivot.ofSubmodules omitted target mapped).trans finish))⟩
+
 end D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates

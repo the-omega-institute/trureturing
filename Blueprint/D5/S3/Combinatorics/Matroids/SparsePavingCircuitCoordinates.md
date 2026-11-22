@@ -40,9 +40,22 @@ Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wed
 
 On a basis where the covector takes value one, choose any representative vertex of the face. Subtract it from the other vertices to obtain vectors in the kernel of the covector. The face coefficient of the covector product vanishes exactly when the lower-degree alternating form vanishes on these differences.
 
+**Theorem 1.4 (Simultaneous omitted equations after pivot elimination).**
+
+Lean statement: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Eliminate a pivot to express circuit residues as lower-degree forms. Weighted insertion and insertion of the pivot both vanish, and the scalar readout of the weights annihilates the form. Each omitted basis imposes one additional vanishing equation on differences from any representative of that basis.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.mem_weightedCircuitResidues_iff`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_pivot_forms_equiv`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.sparse_paving_weighted_forms_equiv`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates.wedge_coordinate_zero_iff_differences`
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitCoordinates](PuncturedCircuitCoordinates.md)
