@@ -10,7 +10,11 @@ import D5.S3.Analytic.Oscillation.SparseOrdinateMass
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHWeightedPhaseLimsup
 import D5.S3.Fourier.WeightedPhaseRelationLattice
 
-/-! Application to the actual positive zeta ordinates and analytic multiplicities. -/
+/-! Application to the actual positive zeta ordinates and analytic multiplicities.
+
+The application escape audits are tracked in [#33401](
+https://github.com/the-omega-institute/trureturing/issues/33401#issuecomment-7087298679).
+-/
 
 set_option autoImplicit false
 
@@ -70,31 +74,51 @@ theorem omittedMass_tendsto_zero (hRH : RiemannHypothesis) (S : Set ℝ)
     by_cases hj : ordinate j ∈ S <;> simp [m, hj, harmonicWeight]
   simp_rw [count_eq] at hcount
   simp_rw [mass_eq]
-  exact harmonicMass_tendsto_zero ordinate m finite_le (fun j => j.property.2) hcount
+  exact harmonicMass_tendsto_zero ordinate (fun j => (m j : ℝ)) finite_le
+    (fun j => j.property.2.le) (fun j => Nat.cast_nonneg (m j)) hcount
 
-/-- At a cutoff of positive mass, a rationally independent set of ordinates leaves at most
-twice the omitted fraction of harmonic mass as a common-time phase deficit. -/
-theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set ℝ)
-    (hS : LinearIndependent ℚ (fun γ : S => (γ : ℝ))) (T : ℝ)
-    (hW : 0 < harmonicMass hRH T) :
-    weightedPhaseDefect hRH T ≤ 2 * omittedMass hRH S T / harmonicMass hRH T := by
+/-- Every integer relation on the retained ordinates annihilates the quarter phase. -/
+def QuarterPhaseCompatible (hRH : RiemannHypothesis) (S : Set ℝ) (T : ℝ) : Prop := by
   classical
-  let cutoff := positiveCutoff hRH T
-  let kept := cutoff.filter (fun j => ordinate j ∈ S)
+  let kept := (positiveCutoff hRH T).filter (fun j => ordinate j ∈ S)
+  exact ∀ k : ↥kept → ℤ, (∑ j, (k j : ℝ) * ordinate j) = 0 →
+    (∏ j, Circle.exp (Real.pi / 2) ^ k j) = 1
+
+private theorem quarterPhaseCompatible_of_linearIndependent
+    (hRH : RiemannHypothesis) (S : Set ℝ)
+    (hS : LinearIndependent ℚ (fun γ : S => (γ : ℝ))) (T : ℝ) :
+    QuarterPhaseCompatible hRH S T := by
+  classical
+  let kept := (positiveCutoff hRH T).filter (fun j => ordinate j ∈ S)
   let embed (j : ↥kept) : S := ⟨ordinate j, (Finset.mem_filter.mp j.property).2⟩
   have hfreq : LinearIndependent ℚ (fun j : ↥kept => ordinate j) :=
     hS.comp embed fun _ _ h => Subtype.ext ((zetaSpectrum hRH).gamma_injective
       (congrArg Subtype.val h))
+  change ∀ k : ↥kept → ℤ, (∑ j, (k j : ℝ) * ordinate j) = 0 →
+    (∏ j, Circle.exp (Real.pi / 2) ^ k j) = 1
+  intro k hk
+  have hrat : ∀ j, (k j : ℚ) = 0 :=
+    Fintype.linearIndependent_iff.mp hfreq (fun j => (k j : ℚ)) (by
+      simpa only [Rat.smul_def, Rat.cast_intCast] using hk)
+  have hzero (j : ↥kept) : k j = 0 := by exact_mod_cast hrat j
+  simp [hzero]
+
+/-- At a cutoff of positive mass, quarter-phase compatibility bounds the common-time
+deficit by one and by twice the omitted fraction of harmonic mass. -/
+theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set ℝ)
+    (T : ℝ) (hcompat : QuarterPhaseCompatible hRH S T)
+    (hW : 0 < harmonicMass hRH T) :
+    0 ≤ weightedPhaseDefect hRH T ∧
+      weightedPhaseDefect hRH T ≤ min 1 (2 * omittedMass hRH S T / harmonicMass hRH T) := by
+  classical
+  let cutoff := positiveCutoff hRH T
+  let kept := cutoff.filter (fun j => ordinate j ∈ S)
   let orbit (v : ℝ) (j : ↥kept) := Circle.exp (ordinate j * v)
   let quarter : ↥kept → Circle := fun _ => Circle.exp (Real.pi / 2)
   have hquarter : quarter ∈ closure (range orbit) := by
-    rw [D5.S3.Fourier.WeightedPhaseRelationLattice.closure_real_phase_orbit]
-    intro k hk
-    have hrat : ∀ j, (k j : ℚ) = 0 :=
-      Fintype.linearIndependent_iff.mp hfreq (fun j => (k j : ℚ)) (by
-        simpa only [Rat.smul_def, Rat.cast_intCast] using hk)
-    have hzero (j : ↥kept) : k j = 0 := by exact_mod_cast hrat j
-    simp [hzero]
+    rw [(D5.S3.Fourier.WeightedPhaseRelationLattice.closure_real_phase_orbit
+      (fun j : ↥kept => ordinate j)).1]
+    exact hcompat
   have hweight (j : PositiveZetaZero) : 0 ≤ harmonicWeight j := by
     have hj : 0 < ordinate j := j.property.2
     unfold harmonicWeight
@@ -104,12 +128,6 @@ theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set �
   have hscore (s : Finset PositiveZetaZero) : Continuous (score s) :=
     continuous_finsetSum _ fun j _ => continuous_const.mul
       (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply j)))
-  have hfull : BddAbove (range (weightedSine hRH T)) := by
-    refine (isCompact_univ.image (hscore cutoff)).bddAbove.mono ?_
-    rintro _ ⟨v, rfl⟩
-    refine ⟨fun j => Circle.exp (ordinate j * v), mem_univ _, ?_⟩
-    simp only [score, Circle.coe_exp, Complex.exp_ofReal_mul_I_im]
-    exact Finset.sum_coe_sort cutoff (fun j => harmonicWeight j * Real.sin (ordinate j * v))
   have hscore_bound :
       score kept quarter ≤ weightedSineSup hRH T + omittedMass hRH S T := by
     apply closure_minimal
@@ -131,27 +149,28 @@ theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set �
         simpa only [mul_neg, mul_one] using
           mul_le_mul_of_nonneg_left (Real.neg_one_le_sin (ordinate j * v)) (hweight j)
     have hsup : weightedSine hRH T v ≤ weightedSineSup hRH T :=
-      le_csSup hfull (mem_range_self v)
+      le_csSup (weighted_sine_bddAbove hRH T) (mem_range_self v)
     linarith
   have hmass : score kept quarter + omittedMass hRH S T = harmonicMass hRH T := by
     simp only [score, quarter, Circle.coe_exp, Complex.exp_ofReal_mul_I_im,
       Real.sin_pi_div_two, mul_one,
       Finset.sum_coe_sort, omittedMass, harmonicMass]
     exact Finset.sum_filter_add_sum_filter_not cutoff (fun j => ordinate j ∈ S) harmonicWeight
-  rw [weightedPhaseDefect, ← div_self hW.ne', ← sub_div]
-  exact div_le_div_of_nonneg_right (by linarith) hW.le
+  obtain ⟨hsup_nonneg, hsup_le⟩ := weighted_sine_sup_bounds hRH T
+  refine ⟨sub_nonneg.mpr ((div_le_one hW).mpr hsup_le), le_min ?_ ?_⟩
+  · exact sub_le_self _ (div_nonneg hsup_nonneg hW.le)
+  · rw [weightedPhaseDefect, ← div_self hW.ne', ← sub_div]
+    exact div_le_div_of_nonneg_right (by linarith) hW.le
 
-/-- A sparse omitted multiplicity count in a rationally independent set forces the actual
-weighted phase deficit to tend to zero at infinity. -/
-theorem weightedPhaseDefect_tendsto_zero_of_sparse_count
-    (hRH : RiemannHypothesis) (S : Set ℝ)
-    (hS : LinearIndependent ℚ (fun γ : S => (γ : ℝ)))
-    (hcount : Tendsto (fun T : ℝ => (omittedCount hRH S T : ℝ) / (T * Real.log T))
+/-- Eventual quarter-phase compatibility and negligible normalized omitted mass
+force the actual weighted phase deficit to tend to zero. -/
+theorem weightedPhaseDefect_tendsto_zero (hRH : RiemannHypothesis) (S : Set ℝ)
+    (hcompat : ∀ᶠ T in atTop, QuarterPhaseCompatible hRH S T)
+    (hsmall : Tendsto (fun T : ℝ => omittedMass hRH S T / Real.log T ^ 2)
       atTop (𝓝 0)) :
     Tendsto (weightedPhaseDefect hRH) atTop (𝓝 0) := by
   have hlimit := harmonic_mass_limit hRH
   have hκ : 0 < (1 : ℝ) / (4 * Real.pi) := by positivity
-  have hsmall := omittedMass_tendsto_zero hRH S hcount
   have hratio : Tendsto (fun T : ℝ => 2 * omittedMass hRH S T / harmonicMass hRH T)
       atTop (𝓝 0) := by
     have hnorm := (hsmall.const_mul 2).div hlimit hκ.ne'
@@ -164,20 +183,28 @@ theorem weightedPhaseDefect_tendsto_zero_of_sparse_count
   have hpos : ∀ᶠ T in atTop, 0 < harmonicMass hRH T := by
     filter_upwards [(tendsto_order.mp hlimit).1 _ hκ] with T hT
     exact (div_pos_iff.mp hT).elim And.left fun h => (not_lt_of_ge (sq_nonneg _) h.2).elim
-  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hratio ?_ ?_
-  · filter_upwards [hpos] with T hW
-    exact sub_nonneg.mpr ((div_le_one hW).mpr (weighted_sine_sup_bounds hRH T).2)
-  · filter_upwards [hpos] with T hW
-    exact weightedPhaseDefect_le_omittedMass hRH S hS T hW
+  have hfinite := hcompat.mp (hpos.mono fun T hW hT =>
+    weightedPhaseDefect_le_omittedMass hRH S T hT hW)
+  exact tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hratio
+    (hfinite.mono fun _ h => h.1) (hfinite.mono fun _ h => h.2.trans (min_le_right _ _))
+
+private theorem weightedPhaseDefect_tendsto_zero_of_sparse_count
+    (hRH : RiemannHypothesis) (S : Set ℝ)
+    (hS : LinearIndependent ℚ (fun γ : S => (γ : ℝ)))
+    (hcount : Tendsto (fun T : ℝ => (omittedCount hRH S T : ℝ) / (T * Real.log T))
+      atTop (𝓝 0)) :
+    Tendsto (weightedPhaseDefect hRH) atTop (𝓝 0) :=
+  weightedPhaseDefect_tendsto_zero hRH S
+    (Eventually.of_forall (quarterPhaseCompatible_of_linearIndependent hRH S hS))
+    (omittedMass_tendsto_zero hRH S hcount)
 
 /-- Under the sparse-count condition, the original signed and power-gap normalized
 left-endpoint late limsup has the full leading coefficient. -/
 theorem signed_window_even_cutoff_full_coefficient_of_sparse_count
     (hRH : RiemannHypothesis) (S : Set ℝ)
-    (hS : LinearIndependent ℚ (fun γ : S => (γ : ℝ)))
-    (hcount : Tendsto (fun T : ℝ => (omittedCount hRH S T : ℝ) / (T * Real.log T))
-      atTop (𝓝 0))
-    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) (hμ : μ r ≠ 0) :
+    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r)
+    (hsparse : μ r ≠ 0 → LinearIndependent ℚ (fun γ : S => (γ : ℝ)) ∧
+      Tendsto (fun T : ℝ => (omittedCount hRH S T : ℝ) / (T * Real.log T)) atTop (𝓝 0)) :
     let s := orderRate m
     let cm := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
     let V := fun L u : ℝ =>
@@ -187,9 +214,12 @@ theorem signed_window_even_cutoff_full_coefficient_of_sparse_count
     (∀ᶠ L in 𝓝[>] (0 : ℝ), (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) (V L)) ∧
       Tendsto Q (𝓝[>] 0) (𝓝 (|(μ r : ℝ)| / (4 * Real.pi * s))) := by
   dsimp only
-  obtain ⟨hbound, _, hcoeff⟩ := signed_window_even_cutoff_weighted_phase hRH m r hm heven
-  exact ⟨hbound, (hcoeff hμ).mpr
-    (weightedPhaseDefect_tendsto_zero_of_sparse_count hRH S hS hcount)⟩
+  obtain ⟨hbound, hformula, hcoeff⟩ := signed_window_even_cutoff_weighted_phase hRH m r hm heven
+  refine ⟨hbound, ?_⟩
+  by_cases hμ : μ r = 0
+  · simpa only [hμ, Int.cast_zero, abs_zero, zero_div, zero_mul, sub_zero] using hformula
+  · obtain ⟨hS, hcount⟩ := hsparse hμ
+    exact (hcoeff hμ).mpr (weightedPhaseDefect_tendsto_zero_of_sparse_count hRH S hS hcount)
 
 end
 

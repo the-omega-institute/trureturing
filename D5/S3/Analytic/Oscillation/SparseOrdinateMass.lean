@@ -9,7 +9,7 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
-/-! Dyadic mass estimates for a locally finite positive spectrum. -/
+/-! Dyadic mass estimates for a locally finite spectrum. -/
 
 set_option autoImplicit false
 
@@ -147,22 +147,18 @@ private theorem harmonicWeight_le {x a : ℝ} (hx : 0 < x) (ha : 0 ≤ a) :
   apply (div_le_div_iff₀ (by positivity) hx).mpr
   nlinarith [mul_nonneg ha (show (0 : ℝ) ≤ 1 / 4 by norm_num)]
 
-/-- For any locally finite positive spectrum, use the original natural multiplicity
-in both the count and the harmonic mass. The inclusive cutoff is real. -/
-theorem harmonicMass_tendsto_zero {ι : Type*} (γ : ι → ℝ) (m : ι → ℕ)
-    (finite_le : ∀ T : ℝ, {j | γ j ≤ T}.Finite) (hγ : ∀ j, 0 < γ j)
-    (hcount : Tendsto (fun T : ℝ => cutoffSum γ finite_le (fun j => (m j : ℝ)) T /
+/-- Sparse counts of nonnegative real multiplicities control the harmonic mass
+of a locally finite nonnegative spectrum. An ordinate at zero adds zero mass. -/
+theorem harmonicMass_tendsto_zero {ι : Type*} (γ m : ι → ℝ)
+    (finite_le : ∀ T : ℝ, {j | γ j ≤ T}.Finite) (hγ : ∀ j, 0 ≤ γ j)
+    (hm : ∀ j, 0 ≤ m j)
+    (hcount : Tendsto (fun T : ℝ => cutoffSum γ finite_le m T /
       (T * Real.log T)) atTop (𝓝 0)) :
     Tendsto (fun T : ℝ => cutoffSum γ finite_le
-      (fun j => (m j : ℝ) * γ j / (1 / 4 + γ j ^ 2)) T / Real.log T ^ 2) atTop (𝓝 0) := by
-  apply cutoffMass_tendsto_zero γ (fun j => (m j : ℝ)) _ finite_le
-  · intro j
-    exact Nat.cast_nonneg _
-  · intro j
-    exact div_nonneg (mul_nonneg (Nat.cast_nonneg _) (hγ j).le) (by positivity)
-  · intro j hj
-    exact harmonicWeight_le hj (Nat.cast_nonneg _)
-  · exact hcount
+      (fun j => m j * γ j / (1 / 4 + γ j ^ 2)) T / Real.log T ^ 2) atTop (𝓝 0) := by
+  exact cutoffMass_tendsto_zero γ m _ finite_le hm
+    (fun j => div_nonneg (mul_nonneg (hm j) (hγ j)) (by positivity))
+    (fun j hj => harmonicWeight_le hj (hm j)) hcount
 
 end
 

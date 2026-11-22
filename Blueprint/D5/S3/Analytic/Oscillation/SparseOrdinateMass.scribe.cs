@@ -31,12 +31,14 @@ internal sealed class SparseOrdinateMassDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("harmonic-mass-tendsto-zero"),
                 DeclarationHandle.Create(Prefix + "harmonicMass_tendsto_zero"),
-                H("Harmonic mass with natural multiplicities"),
+                H("Harmonic mass with nonnegative real multiplicities"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For positive ordinates and natural multiplicities m(j), take the weight "
-                    + "m(j) gamma(j)/(1/4 + gamma(j)^2). It is nonnegative and bounded by "
-                    + "m(j)/gamma(j), so the same inclusive cutoff count controls its mass."))),
+                    "For nonnegative ordinates and nonnegative real multiplicities m(j), "
+                    + "take the weight m(j) gamma(j)/(1/4 + gamma(j)^2). At a positive ordinate "
+                    + "the weight is at most m(j)/gamma(j). At ordinate zero the weight is zero. "
+                    + "The same sparse inclusive cutoff count implies that the harmonic mass "
+                    + "divided by (log T)^2 tends to zero."))),
                 DescribeRole.Theorem))));
 }

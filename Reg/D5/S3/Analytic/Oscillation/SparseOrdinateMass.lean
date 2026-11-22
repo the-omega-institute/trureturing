@@ -118,22 +118,23 @@ def cutoffAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 abbrev harmonicArena : Arena where
   signature := normalizerSignature
-  Law R := ∀ {ι : Type u} (γ : ι → ℝ) (m : ι → ℕ)
-    (finite_le : ∀ T : ℝ, {j | γ j ≤ T}.Finite) (_hγ : ∀ j, 0 < γ j)
-    (_hcount : Tendsto (fun T : ℝ => cutoffSum γ finite_le (fun j => (m j : ℝ)) T /
+  Law R := ∀ {ι : Type u} (γ m : ι → ℝ)
+    (finite_le : ∀ T : ℝ, {j | γ j ≤ T}.Finite) (_hγ : ∀ j, 0 ≤ γ j)
+    (_hm : ∀ j, 0 ≤ m j)
+    (_hcount : Tendsto (fun T : ℝ => cutoffSum γ finite_le m T /
       (T * Real.log T)) atTop (𝓝 0)),
     Tendsto (fun T : ℝ => cutoffSum γ finite_le
-      (fun j => (m j : ℝ) * γ j / (1 / 4 + γ j ^ 2)) T / R.readout () () T) atTop (𝓝 0)
+      (fun j => m j * γ j / (1 / 4 + γ j ^ 2)) T / R.readout () () T) atTop (𝓝 0)
 
 private theorem unscaled_harmonic_rejected : ¬ harmonicArena.{u}.Law unscaled := by
   intro law
   have h := law (fun _ : ULift.{u} Unit => 1) (fun _ => 1) oneFinite
-    (fun _ => zero_lt_one) (by simpa only [Nat.cast_one] using one_count)
+    (fun _ => zero_le_one) (fun _ => zero_le_one) one_count
   have h' : Tendsto (fun T =>
       cutoffSum (fun _ : ULift.{u} Unit => 1) oneFinite (fun _ => (4 : ℝ) / 5) T)
       atTop (𝓝 0) := by
     have heq : (1 : ℝ) * 1 / (1 / 4 + 1 ^ 2) = 4 / 5 := by norm_num
-    simpa only [unscaled, realize, div_one, Nat.cast_one, heq] using h
+    simpa only [unscaled, realize, div_one, heq] using h
   have hz := tendsto_nhds_unique h'
     (tendsto_const_nhds.congr' (one_cutoff.{u} ((4 : ℝ) / 5)).symm)
   norm_num at hz
@@ -171,9 +172,9 @@ def harmonicAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "fn", "arg", "body", "arg"]
-      stateBinder := 6
+      stateBinder := 7
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
