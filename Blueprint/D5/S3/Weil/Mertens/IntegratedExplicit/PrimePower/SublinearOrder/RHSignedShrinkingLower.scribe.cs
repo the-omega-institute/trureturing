@@ -31,7 +31,7 @@ internal sealed class RHSignedShrinkingLowerDocument : IScribeDocumentDefinition
                     + "preserve a fixed fraction of the origin lower bound.")),
                 Paragraph(Text("Choose the late threshold so that the decaying arithmetic "
                     + "remainder is smaller than the retained spectral lower bound. "
-                    + "The nonzero Möbius coefficient retains that spectral term. "
+                    + "The witnessed residual has sign opposite to the nonzero Möbius coefficient. "
                     + "The witness start can depend on the width and the desired threshold."))),
             DescribeRole.Theorem))));
 
@@ -61,10 +61,11 @@ internal sealed class RHSignedShrinkingLowerDocument : IScribeDocumentDefinition
         var zero = Num(0);
         var one = Num(1);
 
-        var residual = new Formula.Absolute(Add(Add(Call("F", m, u, width), Call("c", m)),
-            Multiply(Call("mu", r), Call("S", r, u))));
+        var residual = Add(Add(Call("F", m, u, width), Call("c", m)),
+            Multiply(Call("mu", r), Call("S", r, u)));
+        var signedResidual = Multiply(new Formula.Negate(Call("mu", r)), residual);
         var lower = Multiply(Multiply(d, width), Call("log", new Formula.Fraction(one, width)));
-        var late = All("U", Domain("R"), Exists("u", And(Le(tail, u), Le(lower, residual))));
+        var late = All("U", Domain("R"), Exists("u", And(Le(tail, u), Le(lower, signedResidual))));
         var widths = All("L", Domain("R"), Imp(And(Lt(zero, width), Lt(width, h)), late));
         var bounds = Exists("d", And(Lt(zero, d), Exists("H",
             And(And(Lt(zero, h), Lt(h, one)), widths))));

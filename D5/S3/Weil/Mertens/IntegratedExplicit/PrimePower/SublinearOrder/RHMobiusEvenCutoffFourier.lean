@@ -59,8 +59,7 @@ open scoped ComplexConjugate
 open D5.S3.Weil.Mertens.IntegratedExplicit (actual_complete_H_package)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
-/-- The normalized root increment equals its full fixed-width centered series. -/
-theorem normalized_width_series_real (r L u : ℝ) :
+private theorem normalized_width_series_real (r L u : ℝ) :
     let s := 1/2-(2*r)⁻¹
     let mode := fun k : ℕ => frequency k/(r : ℂ)
     let coeff := fun k : ℕ => rootCoeff r k / rootExponent r k *

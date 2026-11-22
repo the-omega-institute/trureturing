@@ -70,12 +70,7 @@ private theorem odd_root_increment (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 <
     have hwk : 0 ≤ weight k := by unfold weight; positivity
     have hphase (u : ℝ) : frequency k / (r : ℂ) * (u : ℂ) =
         (((γ * (u / r) : ℝ) : ℂ)) * Complex.I := by
-      have hz : ZeroSum.IsNontrivialZero (actualZero k) :=
-        actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
-      change windowMode r (actualZero k) * (u : ℂ) = _
-      rw [window_mode_eq_ordinate hRH hr0 hz]
-      push_cast
-      ring
+      exact phase_eq hRH hr u k
     have hcancel : term h k - term (-h) k = -2 * (rootCoeff r k).im * Real.sin x := by
       simp only [term, hphase, neg_div, mul_neg, Real.cos_neg, Real.sin_neg,
         Complex.exp_ofReal_mul_I_re, Complex.exp_ofReal_mul_I_im, Complex.mul_re, x]
@@ -257,20 +252,14 @@ private theorem normalized_root_error_returns (hRH : RiemannHypothesis) {r L : �
   change ∀ b : ℝ, b < D 0 → ∃ u ≥ U, b < D u
   intro b hb
   let Q := fun p : ℕ → Circle => (∑' k, windowCoefficient r L (actualZero k) * (p k : ℂ)).re
-  let S := fun p : ℕ → Circle => (∑' k, rootCoeff r k * (p k : ℂ)).re / s
+  let S := readSignal r 0
   have hQ : Continuous Q := by
     unfold Q
     apply Complex.continuous_re.comp
     apply continuous_tsum (fun k => by fun_prop) (window_coefficients_summable hRH hr hL)
     intro k p
     simp [Circle.norm_coe]
-  have hS : Continuous S := by
-    unfold S
-    apply Continuous.div_const
-    apply Complex.continuous_re.comp
-    apply continuous_tsum (fun k => by fun_prop) (actualCoeff_hasSum.summable.norm.mul_left r)
-    intro k p
-    simpa only [norm_mul, Circle.norm_coe, mul_one] using rootCoeff_bound hr k
+  have hS : Continuous S := read_signal_continuous hRH hr 0
   have horbit (v : ℝ) : Q (phaseOrbit v) - S (phaseOrbit v) = D (r * v) := by
     have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith)
     have hcast (k : ℕ) : frequency k / (r : ℂ) * ((r * v : ℝ) : ℂ) = frequency k * (v : ℂ) := by
@@ -278,7 +267,10 @@ private theorem normalized_root_error_returns (hRH : RiemannHypothesis) {r L : �
       field_simp
     have hseries := congrArg Complex.re (normalized_width_series hRH hr hL (r * v))
     simp only [Complex.ofReal_re, hcast] at hseries
-    simp only [D, S, Q, rootSignal, s, hcast, phaseOrbit_eq_mode hRH]
+    have hsignal : S (phaseOrbit v) = rootSignal r (r * v) := by
+      simpa only [S, add_zero] using read_signal_orbit hRH hr 0 v
+    rw [hsignal]
+    simp only [D, Q, s, phaseOrbit_eq_mode hRH]
     rw [hseries]
   have hreturn := (phaseOrbit_cluster_iff (phaseOrbit 0)).2 (subset_closure (mem_range_self _))
   have hzero : b < Q (phaseOrbit 0) - S (phaseOrbit 0) := by simpa [horbit] using hb
@@ -291,21 +283,24 @@ private theorem normalized_root_error_returns (hRH : RiemannHypothesis) {r L : �
   · change b < Q (phaseOrbit v) - S (phaseOrbit v) at hv
     exact (horbit v) ▸ hv
 
-/-- Under RH, the original signed prime-window discrepancy has a late logarithmic lower scale. -/
+/-- Under RH, the shrinking prime-window discrepancy exceeds a logarithmic scale in the direction opposite to the Möbius coefficient at arbitrarily late starts. -/
 theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
     (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) (hmu : μ r ≠ 0) :
     let s := orderRate m
     let cₘ := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
     ∃ d > 0, ∃ H ∈ Ioo (0 : ℝ) 1, ∀ L : ℝ, 0 < L → L < H → ∀ U : ℝ,
       ∃ u ≥ U, d * L * Real.log (1 / L) ≤
-        |signedWindowResidual m (Real.exp u) (Real.exp (u + L)) /
+        -(μ r : ℝ) * (signedWindowResidual m (Real.exp u) (Real.exp (u + L)) /
           powerGap s (Real.exp u) (Real.exp (u + L)) + cₘ +
-          (μ r : ℝ) * rootSignal (r : ℝ) u| := by
+          (μ r : ℝ) * rootSignal (r : ℝ) u) := by
   let s := orderRate m
   let cₘ := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
   let δ := ((m : ℝ) + 1)⁻¹ - ((m : ℝ) + 2)⁻¹
   let μr : ℝ := μ r
-  have hμr : 0 < |μr| := abs_pos.mpr (by dsimp [μr]; exact_mod_cast hmu)
+  have hμr : μr ≠ 0 := by dsimp [μr]; exact_mod_cast hmu
+  have hμ_le : |μr| ≤ 1 := by
+    dsimp [μr]
+    exact_mod_cast abs_moebius_le_one (n := r)
   have hr : (1 : ℝ) < r := by exact_mod_cast (show 1 < r by omega)
   have hq : (m : ℝ) + 1 = 2 * (r : ℝ) := by exact_mod_cast heven
   have hsr : s = 1 / 2 - (2 * (r : ℝ))⁻¹ := by dsimp [s, orderRate]; rw [hq]
@@ -317,7 +312,7 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
   obtain ⟨_, _, hweighted⟩ := signed_window_even_cutoff_shrinking_width hRH
   obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
   let W := K * (((m + 1 : ℕ) : ℝ) * (1 + Real.log ((m + 1 : ℕ) : ℝ)) ^ 2)
-  let d := |μr| * (Real.exp (-s) / (8 * s)) / 4
+  let d := μr ^ 2 * (Real.exp (-s) / (8 * s)) / 4
   have hd : 0 < d := by dsimp [d]; positivity
   refine ⟨d, hd, H, ⟨hH.1, hH.2.trans (by norm_num)⟩, ?_⟩
   intro L hL hLH U
@@ -379,22 +374,24 @@ theorem signed_window_even_cutoff_shrinking_lower (hRH : RiemannHypothesis)
       field_simp [hg.ne']
     rw [heq, abs_div, abs_of_pos hg]
     exact ((div_le_iff₀ hg).2 harith).trans_lt (hV u huV)
-  have hsize : 2 * (d * L * Real.log (1 / L)) < |μr * Δ u| := by
-    rw [abs_mul, abs_of_pos (hb.trans hΔ')]
-    have heq : 2 * (d * L * Real.log (1 / L)) = |μr| * b := by dsimp only [d, b]; ring
+  have hsize : 2 * (d * L * Real.log (1 / L)) < μr ^ 2 * Δ u := by
+    have heq : 2 * (d * L * Real.log (1 / L)) = μr ^ 2 * b := by dsimp only [d, b]; ring
     rw [heq]
-    exact mul_lt_mul_of_pos_left hΔ' hμr
-  have htriangle : |μr * Δ u| ≤ |E| + |E - μr * Δ u| := by
-    simpa only [sub_sub_cancel] using (abs_sub E (E - μr * Δ u))
+    exact mul_lt_mul_of_pos_left hΔ' (sq_pos_of_ne_zero hμr)
+  have hE_signed : -(d * L * Real.log (1 / L)) < -μr * E := by
+    have hprod : |(-μr) * E| ≤ |E| := by
+      rw [abs_mul, abs_neg]
+      simpa only [one_mul] using mul_le_mul_of_nonneg_right hμ_le (abs_nonneg E)
+    exact (abs_lt.mp (hprod.trans_lt hE)).1
   refine ⟨u, hU, ?_⟩
-  change _ ≤ |signedWindowResidual m a B / gap + cₘ + μr * rootSignal (r : ℝ) u|
+  change _ ≤ -μr * (signedWindowResidual m a B / gap + cₘ + μr * rootSignal (r : ℝ) u)
   have heq : signedWindowResidual m a B / gap + cₘ + μr * rootSignal (r : ℝ) u =
       E - μr * Δ u := by
     change _ = E - μr * (P / gap - rootSignal (r : ℝ) u)
     dsimp only [E]
     ring
-  rw [heq]
-  linarith only [htriangle, hsize, hE]
+  rw [heq, show -μr * (E - μr * Δ u) = -μr * E + μr ^ 2 * Δ u by ring]
+  linarith only [hsize, hE_signed]
 
 #print axioms signed_window_even_cutoff_shrinking_lower
 
