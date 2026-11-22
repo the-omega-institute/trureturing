@@ -82,7 +82,7 @@ theorem scale_count (m d : ℕ) (hm : 1 ≤ m) (hd : d < 10) :
     rw [hc] at h
     simp only [List.ofFn_const] at h
     rw [constant_defects, Finset.card_empty, zero_add,
-      show (betw 6).card = 10 by decide +kernel] at h
+      show (betw 6).card = 10 by rw [between_six]; decide +kernel] at h
     exact (Nat.not_lt_of_ge (h ▸ Nat.le_mul_of_pos_left 10 hm)) hd
   have h := @canonical_pattern_card (Fin (m + 1) × Fin 6) inferInstance
     (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) s invariant nonconstant

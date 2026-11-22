@@ -33,8 +33,8 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Init.Omega
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripCertificate
@@ -107,10 +107,8 @@ private theorem two_exact (a : Col) (j : Fin 5) :
       simp only [HardinA229696StripData.cl, Nat.succ_ne_zero, Nat.zero_lt_succ, ite_true, ite_false, false_and]
       apply iff_false_intro
       intro he
-      have hv := congrArg Fin.val he
-      simp only [Fin.val_castAdd, Fin.val_natAdd] at hv
-      have hl := (HardinA229588Strip.cl (columnRows r) m).isLt
-      omega
+      exact Sum.inl_ne_inr
+        ((finSumFinEquiv : Fin 10 ⊕ Fin 5 ≃ Fin (10 + 5)).injective he)
   simp only [hh, Nat.add_zero] at h
   have sourceClass : HardinA229696StripData.cl (columnRows a) (2 : Fin 3).val = (cls a).castAdd 10 := by
     have hA : HardinA229588Strip.cl (columnRows a) 1 = (cls a).castAdd 5 := by
@@ -126,9 +124,9 @@ private theorem two_exact (a : Col) (j : Fin 5) :
   rw [terminal r]
   constructor
   · rintro ⟨hc, hj⟩
-    exact ⟨by omega, by omega, hj⟩
+    exact ⟨hc ▸ le_rfl, hc ▸ Nat.sub_self _, hj⟩
   · rintro ⟨hle, hz, hj⟩
-    exact ⟨by omega, hj⟩
+    exact ⟨Nat.le_antisymm hle (Nat.sub_eq_zero_iff_le.mp hz), hj⟩
 
 private theorem representative_counts (i j : Fin 15) :
     (∑ r : Row 3 6, if bondDefects (betw 6) (representatives i) r = 2 ∧ boundary r = j

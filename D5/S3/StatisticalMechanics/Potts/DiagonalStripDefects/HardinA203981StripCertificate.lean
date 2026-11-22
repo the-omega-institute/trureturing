@@ -43,6 +43,7 @@ import Mathlib.Basic.Logic.Basic
 import Init.Omega
 import Init.PropLemmas
 import Mathlib.Data.Fin.SuccPred
+import Mathlib.Data.Fin.Rev
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.Defs
@@ -90,9 +91,8 @@ set_option maxHeartbeats 1600000
 set_option Elab.async false
 
 private def reverseColumn : Col ≃ Col :=
-  ((Equiv.prodAssoc (Fin 3) (Fin 3) (Fin 3)).symm.trans
-    (Equiv.prodComm (Fin 3 × Fin 3) (Fin 3))).trans
-      (Equiv.prodCongr (Equiv.refl (Fin 3)) (Equiv.prodComm (Fin 3) (Fin 3)))
+  columnRows.trans ((Equiv.arrowCongr (Fin.revPerm : Equiv.Perm (Fin 3))
+    (Equiv.refl (Fin 3))).trans columnRows.symm)
 
 /-- The defect cost on one parity class, measured in the half-strip orientation. -/
 def halfCost (a b : Col) : ℕ :=
@@ -145,9 +145,9 @@ private theorem pair_sum (P R : Col → Prop) [DecidablePred P] [DecidablePred R
   simp_rw [entry]
   change _ = (∑ y, f y c) * (∑ x, g x d) +
     if c = d then 0 else (∑ y, f y d) * (∑ x, g x c)
+  rw [mul_comm (∑ y, f y c) (∑ x, g x d), mul_comm (∑ y, f y d) (∑ x, g x c)]
   by_cases h : c = d <;>
-    simp only [h, if_true, if_false, add_zero, Finset.sum_add_distrib,
-      ← Finset.sum_mul, ← Finset.mul_sum] <;> ac_rfl
+    simp only [h, if_true, if_false, add_zero, Finset.sum_add_distrib, Fintype.sum_mul_sum]
 
 private theorem allocation_indicator (u v d : ℕ) (P : Prop) [Decidable P] :
     (if u + v = d ∧ P then (1 : ℤ) else 0) =
@@ -176,6 +176,7 @@ theorem allocated_counts (d : ℕ) (K : Fin (d + 1) → Matrix (Fin 5) (Fin 5) �
   have hcls : ∀ i : Fin 15,
       cls (parityRows (HardinA203981StripData.representatives i)).1 = (classPair i).1 ∧
       cls (parityRows (HardinA203981StripData.representatives i)).2 = (classPair i).2 := by
+    simp only [HardinA203981StripData.representatives, Equiv.apply_symm_apply]
     decide +kernel
   calc
     _ = ∑ t : Col × Col, if bondDefects (betw 6) p (parityRows.symm t) = d ∧
@@ -215,7 +216,7 @@ theorem reversed_count (n : ℕ) (a : Col) (j : Fin 5) :
   intro b _
   have hinv : reverseColumn (reverseColumn b) = b := reverseColumn.symm_apply_apply b
   have hclass : cls (reverseColumn b) = j ↔ cls b = Equiv.swap 1 3 j := by
-    rw [← (Equiv.swap (1 : Fin 5) 3).injective.eq_iff, ← hrev, hinv]
+    rw [hrev, Equiv.swap_apply_eq_iff]
   simp only [halfCost, hinv, hclass]
 
 /-- Apply the frozen transition law at budget zero. -/

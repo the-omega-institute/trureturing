@@ -103,6 +103,7 @@ private theorem pair_match : ∀ i j : Fin 5,
     let a := cls r.1
     let b := cls r.2
     (i = a ∧ j = b) ∨ (j = a ∧ i = b) := by
+  simp only [representatives, Equiv.apply_symm_apply]
   decide +kernel
 
 private theorem recolor_match (p r : Row 3 6)
@@ -111,15 +112,8 @@ private theorem recolor_match (p r : Row 3 6)
     ∃ e f : Equiv.Perm (Fin 3), recolor e f p = r := by
   obtain ⟨e, he⟩ := triple_match _ _ h₀
   obtain ⟨f, hf⟩ := triple_match _ _ h₁
-  refine ⟨e, f, ?_⟩
-  funext i
-  fin_cases i
-  · exact congrArg Prod.fst he
-  · exact congrArg (fun t => t.2.2) hf
-  · exact congrArg (fun t => t.2.1) he
-  · exact congrArg (fun t => t.2.1) hf
-  · exact congrArg (fun t => t.2.2) he
-  · exact congrArg Prod.fst hf
+  refine ⟨e, f, parityRows.injective ?_⟩
+  exact Prod.ext he hf
 
 /-- Every exact-cost class count is determined at the representative of the source row. -/
 theorem lift_counts (d : ℕ) (t : Matrix (Fin 15) (Fin 15) ℤ)
