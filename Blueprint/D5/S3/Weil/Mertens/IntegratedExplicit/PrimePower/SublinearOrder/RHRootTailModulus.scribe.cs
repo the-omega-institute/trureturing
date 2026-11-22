@@ -22,9 +22,10 @@ internal sealed class RHRootTailModulusDocument : IScribeDocumentDefinition
                     + "The spectrum keeps every actual zero occurrence with its multiplicity.")),
                 Paragraph(Text("The symmetric difference factors each unit phase through "
                     + "2(cos(γh/r)−1). The root coefficient norm is at most r times "
-                    + "the reciprocal-square weight. Since 1−cos is nonnegative, "
-                    + "the termwise norm sum is exactly the corresponding difference "
-                    + "of values of the actual cosine kernel, scaled by 2r/s(r).")),
+                    + "the reciprocal-square weight. The nonnegative factor 1−cos "
+                    + "then gives a summable majorant for the mode norms. After division "
+                    + "by s(r), the sum of that majorant equals the cosine-kernel difference "
+                    + "K(0)−K(h/r) scaled by 2r/s(r).")),
                 Paragraph(Text("Recurrence puts values above every strict lower level of "
                     + "the origin difference in every tail. The supremum lies between "
                     + "that origin difference and the cosine majorant. Both have the "
