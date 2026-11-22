@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Simultaneous strict-independent two-row refinement over any finite ordered list of trace factors. -/
+   digest: Simultaneous strict-independent two-row refinement of finite trace products. -/
 
 import D5.S1.Words.TraceLevi
 import Mathlib.Data.List.OfFn
@@ -54,12 +54,12 @@ theorem connected_append_flatten_iff (I : α → α → Prop)
       · intro h
         obtain ⟨p₀, q, r₀, s, hx, hy, hz, ht, hc⟩ :=
           (connected_append_iff I hs hi x y z zs.flatten).mp h
-        obtain ⟨p, r, hq, hs', hcol, hcross⟩ := (ih q s).mp ht
+        obtain ⟨p, r, hq, hs', hcol, hcross⟩ := (ih q s).mp (connected_symm I hs hi ht)
         refine ⟨Fin.cons p₀ p, Fin.cons r₀ r, ?_, ?_, ?_, ?_⟩
-        · simpa only [List.ofFn_cons, List.flatten_cons] using
+        · simpa only [Connected, List.ofFn_cons, List.flatten_cons] using
             Relation.ReflTransGen.trans hx
               (connected_append I hs hi (Relation.ReflTransGen.refl (a := p₀)) hq)
-        · simpa only [List.ofFn_cons, List.flatten_cons] using
+        · simpa only [Connected, List.ofFn_cons, List.flatten_cons] using
             Relation.ReflTransGen.trans hy
               (connected_append I hs hi (Relation.ReflTransGen.refl (a := r₀)) hs')
         · intro j
@@ -86,7 +86,7 @@ theorem connected_append_flatten_iff (I : α → α → Prop)
               (fun j k hjk => hcross j.succ k.succ (by simpa using hjk))⟩
         apply (connected_append_iff I hs hi x y z zs.flatten).mpr
         refine ⟨p 0, (List.ofFn pt).flatten, r 0, (List.ofFn rt).flatten,
-          ?_, ?_, ?_, htail, ?_⟩
+          ?_, ?_, ?_, connected_symm I hs hi htail, ?_⟩
         · simpa only [List.ofFn_succ, List.flatten_cons] using hx
         · simpa only [List.ofFn_succ, List.flatten_cons] using hy
         · simpa using hcol 0
