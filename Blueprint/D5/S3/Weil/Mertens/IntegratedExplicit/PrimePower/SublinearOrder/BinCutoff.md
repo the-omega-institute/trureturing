@@ -12,4 +12,4 @@ Taking L=(1+log log(m+1))/8 also controls the arithmetic terms at large order. I
 
 ## References
 
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/MoebiusPrefixes](../LinearOrder/MoebiusPrefixes.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/BinSquareTail](BinSquareTail.md)
