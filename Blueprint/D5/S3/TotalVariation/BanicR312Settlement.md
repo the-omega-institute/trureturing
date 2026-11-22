@@ -1,8 +1,8 @@
-# Two reversals of cyclic multinomial dispersion
+# A bin-count reversal for cyclic multinomial dispersion
 
 ## Abstract
 
-The cyclic multinomial dispersion reverses both monotonicities in Remark 3.12.
+At four draws, a fourth bin increases cyclic multinomial dispersion.
 
 **Definition 1.1 (Proposed monotonicities).**
 
@@ -16,7 +16,7 @@ $$[\forall n,N \in \mathbb{N}, 3 \le n \Rightarrow 1 \le N \Rightarrow \sigma(n 
 
 The count vector has n bins and N draws with uniform bin probabilities. Its law is the sum of point masses of weight N! divided by the product of the count factorials, times n to the power −N. Vectors whose counts sum to a different total have weight zero. The cyclic variation D sums the absolute differences of consecutive counts, including the closing edge. The dispersion σ(n,N) is the square root of Var(D)/N. Each inequality ranges over natural n at least three and N at least one, as in the two questions in Remark 3.12.
 
-**Theorem 1.2 (Strict reversals in the two parameters).**
+**Theorem 1.2 (Refutation of the joint monotonicity claim).**
 
 $$\neg \mathit{claim}$$
 
@@ -28,9 +28,9 @@ $$\neg \mathit{claim}$$
 
 *Commentary.*
 
-For each of the three parameter pairs, sum the integer factorial weight times D to powers zero, one and two over the bounded count vectors. At (3,4) these sums are (81,312,1488), at (4,4) they are (256,1120,5888), and at (4,5) they are (1024,5040,29600). The zeroth sums give total probability one after division by n to the power N. The first and second sums give the corresponding moments under the same measure.
+For each bin count, sum the integer multinomial weight times D to powers zero, one and two over the bounded count vectors. At (3,4) these sums are (81,312,1488) and at (4,4) they are (256,1120,5888). The zeroth sums give total probability one after division by n to the power N. The first and second sums give the corresponding moments under the same measure.
 
-Subtracting the squared first moment from the second moment and dividing by N gives normalized variances 644/729, 247/256 and 3835/4096, respectively. Both outside values are strictly smaller than 247/256. The square root preserves these strict comparisons, so adding the fourth bin raises the dispersion at N = 4 and adding the fifth draw lowers it at n = 4.
+Subtracting the squared first moment from the second moment and dividing by N gives normalized variances 644/729 and 247/256, respectively. Taking the square root preserves the strict increase from three to four bins at four draws. This contradicts the bin-count clause of the conjunction.
 
 ## References
 

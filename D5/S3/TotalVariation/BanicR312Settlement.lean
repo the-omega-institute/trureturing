@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/TotalVariation/BanicR312Settlement.claim; result=D5/S3/TotalVariation/BanicR312Settlement.result; claim=D5/S3/TotalVariation/BanicR312Settlement.claim
-   digest: The cyclic multinomial dispersion reverses both monotonicities in Remark 3.12. -/
+   digest: A fourth bin increases cyclic multinomial dispersion at four draws, refuting Remark 3.12’s conjunction. -/
 
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Nat.Factorial.Basic
@@ -157,26 +157,13 @@ private theorem moments_three_four :
     moment 3 4 0 = 3 ^ 4 ∧ moment 3 4 1 = 312 ∧ moment 3 4 2 = 1488 := by
   decide +kernel
 
-private theorem moments_four_five :
-    moment 4 5 0 = 4 ^ 5 ∧ moment 4 5 1 = 5040 ∧ moment 4 5 2 = 29600 := by
-  decide +kernel
-
 private theorem v_three_four : dispersionSquared 3 4 = (644 : ℝ) / 729 := by
   obtain ⟨h0, h1, h2⟩ := moments_three_four
   rw [dispersionSquared_eq_moments 3 4 (by decide) h0, h1, h2]
   norm_num
 
-private theorem v_four_five : dispersionSquared 4 5 = (3835 : ℝ) / 4096 := by
-  obtain ⟨h0, h1, h2⟩ := moments_four_five
-  rw [dispersionSquared_eq_moments 4 5 (by decide) h0, h1, h2]
-  norm_num
-
 private theorem variance_bins_reverse : dispersionSquared 3 4 < dispersionSquared 4 4 := by
   rw [v_three_four, v_four_four]
-  norm_num
-
-private theorem variance_samples_reverse : dispersionSquared 4 5 < dispersionSquared 4 4 := by
-  rw [v_four_five, v_four_four]
   norm_num
 
 private theorem dispersion_bins_reverse : dispersion 3 4 < dispersion 4 4 := by
@@ -184,17 +171,9 @@ private theorem dispersion_bins_reverse : dispersion 3 4 < dispersion 4 4 := by
   rw [v_three_four]
   norm_num
 
-private theorem dispersion_samples_reverse : dispersion 4 5 < dispersion 4 4 := by
-  apply Real.sqrt_lt_sqrt _ variance_samples_reverse
-  rw [v_four_five]
-  norm_num
-
-/-- The two strict reversals of the proposed global monotonicities. -/
+/-- The bin-count reversal refutes the conjunction in Remark 3.12. -/
 theorem result : ¬ claim := by
   intro h
-  have hpeak : max (dispersion 3 4) (dispersion 4 5) < dispersion 4 4 :=
-    max_lt dispersion_bins_reverse dispersion_samples_reverse
-  have hbins : dispersion 4 4 ≤ dispersion 3 4 := h.1 3 4 (by decide) (by decide)
-  exact (hpeak.trans_le hbins).not_ge (le_max_left _ _)
+  exact (not_le_of_gt dispersion_bins_reverse) (h.1 3 4 (by decide) (by decide))
 
 end D5.S3.TotalVariation.BanicR312Settlement
