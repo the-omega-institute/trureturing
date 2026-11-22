@@ -47,7 +47,10 @@ internal sealed class FroeseGeorgePathCoverRankRefutationDocument : IScribeDocum
                     + "log-concavity. This answers Question 1 for Definition 2's rooted lattice. "
                     + "The correspondence with count maps uses root preservation. "
                     + "Bare Definition 1 allows a singleton to map to the top of a two-element chain, "
-                    + "where the path-count identity tests only the top-to-top path and the absence of a path to the bottom.")
+                    + "where the path-count identity tests only the top-to-top path and the absence of a path to the bottom.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("froese-george-2026-path-cover-rank-question-1"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration,

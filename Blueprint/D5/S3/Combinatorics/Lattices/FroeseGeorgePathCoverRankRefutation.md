@@ -36,6 +36,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/froese-george-2026-path-cover-rank-question-1` (refuted) by `D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"froese-george-2026-path-cover-rank-question-1","declaration_gid":"D5/S3/Combinatorics/Lattices/FroeseGeorgePathCoverRankRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matteus Froese and Ian George (2026). *Path Covering Spaces of Posets*. DOI: [10.48550/arXiv.2610.20890](https://doi.org/10.48550/arXiv.2610.20890). URL: <https://arxiv.org/abs/2610.20890v1>.
