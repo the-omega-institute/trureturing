@@ -6,9 +6,6 @@ AUTO_MERGE ?= 1
 DRAFT ?= 0
 ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
-LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
-LEAN_REPORT_CACHE_MISS_POLICY ?= reuse-or-build
-REBUILD_REPORT_CACHE ?= 0
 REGENERATE_REPORT_ARTIFACTS ?= 0
 REFRESH_STALE ?= 0
 export FULL_BUILD ?= 0
@@ -16,7 +13,7 @@ export LEAN_SKIP_LOCK ?= 0
 # .NET processes started from these targets create no diagnostic pipes or sockets.
 export DOTNET_EnableDiagnostics ?= 0
 # All tool-backed targets share one verified installation per make invocation.
-TOOLS_TARGETS := test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report-scoped lean-report-prepare check-lean-report build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch mathlib-reanchor truth-export deliver-check deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test
+TOOLS_TARGETS := test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report-scoped lean-report-prepare lean-cache-prepare build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test
 .PHONY: help install-tools require-full-build $(TOOLS_TARGETS)
 $(filter-out lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
 # An unconfirmed full-cache request must fail before the release installer can run.
@@ -38,15 +35,9 @@ require-full-build:
 	@test "$(FULL_BUILD)" = 1 || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
 
 help:
-	@printf '%s\n' 'make install-tools  Install the pinned tools release before invoking tools directly' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR and wait for checks; this is no merge certificate; after MERGED and first dev push verification continue in the same worktree from fresh dev per CLAUDE.md 6.1; use worktree-stale when finished; auto-merge defaults on; drafts return without watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit; this is no merge certificate' 'make lean-cache-ensure FULL_BUILD=1 [RESTORE_DEPENDENCIES=1]  Prepare the cache for a full build' 'make lean LEAN_TARGETS="..." | make lean FULL_BUILD=1 [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test [BASE=origin/dev]  Check current using affected Lean inputs' 'make test FULL_BUILD=1  Run check-lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Reuse compatible clean trees; notify background maintenance without waiting for cleanup' 'make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks' 'make gate-plan [BASE=origin/dev] [PURPOSE=pull-request|push]  Show identities and applicable checks without execution' 'make ci-unit UNIT=id  Run one declared CI unit with its canonical preparation and evidence' 'make lean-report-scoped LEAN_TARGETS="D5.Module [Reg.Module ...]"  Inspect prebuilt targets, named utility inputs and imports' 'make lean-report-prepare LEAN_TARGETS="..." | make lean-report-prepare FULL_BUILD=1  Build the report tools and inputs' 'make check-lean-report FULL_BUILD=1  Prepare and check the complete Lean report' 'make emit [BASE=origin/dev] [PATHS=FILE] [EMIT_FULL_REPORT=FILE]  Emit from selected scoped Lean inputs or an existing validated full report bundle' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-pending  Show the current-agent advisory pending view' \
-		'make worktree-checkpoint MESSAGE=FILE  Commit the ordinary whole working snapshot' 'make worktree-publish HEAD=BRANCH [COMMIT=HEAD]  Non-force publication with fresh remote ancestry confirmation' 'make worktree-finalize HEAD=BRANCH WRITERS_JOINED=1  Publish after host joins this task writers' 'make worktree-stale [WORKTREE_PATH=DIR]  Mark the current branch stale' 'make worktree-return [WORKTREE_PATH=DIR]  Same native stale marker' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 1800-second removal timeout' 'make mathlib-reanchor BASE=REV [OLD_REPORT=PATH]  Reanchor Frozen using the candidate report and optional historical content witness'
+	@printf '%s\n' 'make install-tools  Install the pinned tools release before invoking tools directly' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR and wait for checks; this is no merge certificate; after MERGED and first dev push verification continue in the same worktree from fresh dev per CLAUDE.md 6.1; use worktree-stale when finished; auto-merge defaults on; drafts return without watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit; this is no merge certificate' 'make lean-cache-ensure FULL_BUILD=1 [RESTORE_DEPENDENCIES=1]  Prepare the cache for a full build' 'make lean LEAN_TARGETS="..." | make lean FULL_BUILD=1 [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test [BASE=origin/dev]  Check current using affected Lean inputs' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Reuse compatible clean trees; notify background maintenance without waiting for cleanup' 'make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks' 'make gate-plan [BASE=origin/dev] [PURPOSE=pull-request|push]  Show identities and applicable checks without execution' 'make ci-unit UNIT=id  Run one declared CI unit with its canonical preparation and evidence' 'make lean-report-scoped LEAN_TARGETS="D5.Module [Reg.Module ...]"  Inspect prebuilt targets, named utility inputs and imports' 'make lean-cache-prepare FULL_BUILD=1  Prepare compiler artifacts and module reports for a cache snapshot' 'make lean-report-prepare LEAN_TARGETS="..." | make lean-report-prepare FULL_BUILD=1  Build the report tools and inputs' 'make emit [BASE=origin/dev] [PATHS=FILE]  Emit from selected scoped Lean inputs' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-pending  Show the current-agent advisory pending view' \
+		'make worktree-checkpoint MESSAGE=FILE  Commit the ordinary whole working snapshot' 'make worktree-publish HEAD=BRANCH [COMMIT=HEAD]  Non-force publication with fresh remote ancestry confirmation' 'make worktree-finalize HEAD=BRANCH WRITERS_JOINED=1  Publish after host joins this task writers' 'make worktree-stale [WORKTREE_PATH=DIR]  Mark the current branch stale' 'make worktree-return [WORKTREE_PATH=DIR]  Same native stale marker' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 1800-second removal timeout'
 
-ifeq ($(FULL_BUILD),1)
-test: require-full-build
-	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; make check-lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"
-
-else
-test: export CHECK_BASE := $(value BASE)
 test:
 	@$(show_tool_make) $(MAKE) -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
 	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; \
@@ -54,7 +45,8 @@ test:
 		python3 .github/scripts/install-tools.py --cache-revision "$$base"; \
 		python3 tools/scripts/workflow/ci_contract.py --base "$$base" --output "$$paths"; \
 		python3 tools/scripts/workflow/ci_pr_lean.py "$$paths" --base "$$base"
-endif
+
+test: export CHECK_BASE := $(value BASE)
 
 lean-cache-ensure: require-full-build
 	@/bin/bash tools/scripts/worktree/lean-cache-ensure.sh
@@ -90,21 +82,14 @@ warm-donor: require-full-build
 lean: $(if $(strip $(LEAN_TARGETS)),,require-full-build)
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 
-# The pinned Inspector calls this target from make check-lean-report.
-ifneq ($(MAKELEVEL),0)
-.PHONY: lean-report
-lean-report: require-full-build | install-tools
-	@/bin/bash tools/scripts/report/lean-report.sh --cache-miss-policy "$(LEAN_REPORT_CACHE_MISS_POLICY)" --rebuild-report-cache "$(REBUILD_REPORT_CACHE)" --regenerate-report-artifacts "$(REGENERATE_REPORT_ARTIFACTS)"
-endif
-
 lean-report-scoped:
 	@/bin/bash tools/scripts/report/lean-report-scoped.sh --targets "$(LEAN_TARGETS)"
 
 lean-report-prepare: $(if $(strip $(LEAN_TARGETS)),,require-full-build)
 	@python3 -B tools/lean-inspector/build_inputs.py prepare --targets "$(LEAN_TARGETS)"
 
-check-lean-report: require-full-build
-	@python3 -B tools/lean-inspector/build_inputs.py check --output "$(LEAN_REPORT)"
+lean-cache-prepare: require-full-build
+	@python3 -B tools/lean-inspector/build_inputs.py prepare-cache $(if $(filter 1,$(REGENERATE_REPORT_ARTIFACTS)),--regenerate,)
 
 build: lean
 
@@ -113,7 +98,6 @@ emit:
 
 emit: export BASE ?= origin/dev
 emit: export PATHS ?=
-emit: export EMIT_FULL_REPORT := $(value EMIT_FULL_REPORT)
 
 PREFIX ?= scribe-resources
 DIGEST ?=
@@ -140,17 +124,6 @@ scribe-release-fetch:
 scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources
 scribe-release-publish: export TARGET ?=
 scribe-release-fetch: export DIGEST ?=
-
-mathlib-reanchor:
-	@/bin/bash tools/scripts/mathlib-reanchor.sh "$(BASE)" "$$REANCHOR_OLD_REPORT"
-mathlib-reanchor: export REANCHOR_OLD_REPORT := $(value OLD_REPORT)
-
-truth-export:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- truth-export --out "$(OUT)" --candidate-lean-report "$(LEAN_REPORT)"
-
-
-deliver-check:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deliver-check "$(BASE)"
 
 deposit:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit "$(BASE)" "$(GID)"
