@@ -22,7 +22,8 @@ internal sealed class WaringTheorem2Document : IScribeDocumentDefinition
                     Paragraph(Text(
                         "For each positive exponent, a bound on the summand count works for every natural number. "
                         + "The bases may be zero. "
-                        + "The Waring formalization authors proved this Lean theorem using Linnik's method in Jameson's exposition."))
+                        + "Hilbert first proved the qualitative theorem. "
+                        + "The Waring formalization authors proved the Lean theorem using Linnik's method as presented in Tim Jameson's notes."))
                 ),
                 DescribeRole.Theorem)
         )));

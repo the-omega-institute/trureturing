@@ -14,20 +14,30 @@ triage: anchor
 
 # Integers that are not the sum of positive powers
 
-Conjecture 10.5 is in §10.1 of arXiv:2404.08193v2. Section 1 defines its
-sets by subtracting the number of summands from the positive integers
-that have no representation by exactly that many positive kth powers.
-A choice of bases may repeat. The eventual sets are finite and their
-cardinalities give the sequence in the conjecture.
+Conjecture 10.5 is in §10.1 of arXiv:2404.08193v2. Section 1 takes the
+positive offsets s = n − j from integers n > j that have no representation
+by exactly j positive kth powers. The bases may repeat. The cardinalities
+of the eventual finite offset sets give the sequence in the conjecture.
 
-Theorem 1.1 attributes eventual finite stabilization to A. A. Zenkin,
-*The solution of Waring's problem for g(4)–G(4)*,
-DOI 10.1016/0895-7177(90)90060-z. This attribution is from the preprint.
-The original publisher text was unavailable in the literature check.
-The mathematical Waring input here is the qualitative Hilbert–Waring
-theorem, DOI 10.1007/BF01450405. The formal proof of that input follows
-G. J. O. Jameson's account of Linnik's proof, available at
-<https://www.maths.lancs.ac.uk/jameson/warlin.pdf>.
+Theorem 1.1 credits A. A. Zenkin [65] with eventual fixed-length
+cofiniteness. For every k ≥ 2, at each fixed j ≥ G(1,k), all but finitely
+many positive integers are sums of exactly j positive kth powers.
+Reference [65] is *Waring's problem from the standpoint of the cognitive
+interactive computer graphics*. [Theorem 1.1](https://arxiv.org/html/2404.08193v2#S1.Thmtheorem1) · [Ref. 65](https://arxiv.org/html/2404.08193v2#bib.bib65) · <https://doi.org/10.1016/0895-7177(90)90060-z>
+
+Conjecture 1.2 gives the stable finite offset formulation.
+`BenfieldLippard.stabilization` derives equality with the positive gaps
+of the shifted-power monoid from the formal fixed-length Waring bridge.
+Starting at a length j₀ with finitely many exceptions, it takes the
+maximum of j₀ and the supremum of the witness lengths for exceptions
+that eventually acquire a representation. The j₀ bound allows
+padding of representations already available at j₀.
+[Conjecture 1.2](https://arxiv.org/html/2404.08193v2#S1.Thmtheorem2)
+
+The mathematical input is Hilbert's qualitative Waring theorem. The
+Waring formalization authors proved the Lean theorem using Linnik's
+method as presented in Tim Jameson's notes.
+[Hilbert](https://doi.org/10.1007/BF01450405) · [Tim Jameson, p. 1](https://www.maths.lancs.ac.uk/jameson/warlin.pdf#page=1)
 
 The bounded literature check covered the two arXiv versions, arXiv
 title and topic searches, DataCite, Crossref and the OpenAlex record

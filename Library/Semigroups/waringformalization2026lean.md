@@ -14,13 +14,15 @@ triage: anchor
 
 # Waring's theorem in Lean 4
 
-The proof of the qualitative Hilbert–Waring theorem is by the Waring
-formalization authors. Its endpoint is `Waring.waringTheorem` in
+Hilbert proved the qualitative Waring theorem in 1909. The Waring
+formalization authors proved the Lean version. Its endpoint is `Waring.waringTheorem` in
 `WaringTheorem2.lean` at revision
-`cd0735c253f3b640262fcc74a61306cb41e23765`. The proof follows Linnik's method
-as presented by G. J. O. Jameson. It combines exponential-sum estimates,
-representation counts, positive density and an additive-basis argument.
-<https://www.maths.lancs.ac.uk/jameson/warlin.pdf>
+`cd0735c253f3b640262fcc74a61306cb41e23765`. The proof follows Linnik's
+1943 method as presented in Tim Jameson's notes, *Linnik’s Proof of the
+Waring-Hilbert Theorem from Hua’s Book (with a correction)*. It combines
+exponential-sum estimates, representation counts, positive density and an
+additive-basis argument.
+[Hilbert](https://doi.org/10.1007/BF01450405) · [Tim Jameson, p. 1](https://www.maths.lancs.ac.uk/jameson/warlin.pdf#page=1)
 
 The complete upstream Apache-2.0 license is included verbatim in
 `D5/S3/Arith/Additive/Waring/WaringDensity.lean`. The pinned source tree's

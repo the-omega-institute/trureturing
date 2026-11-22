@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Additive/Waring/WaringTheorem2.waringTheorem`
 
 *Commentary.*
 
-For each positive exponent, a bound on the summand count works for every natural number. The bases may be zero. The Waring formalization authors proved this Lean theorem using Linnik's method in Jameson's exposition.
+For each positive exponent, a bound on the summand count works for every natural number. The bases may be zero. Hilbert first proved the qualitative theorem. The Waring formalization authors proved the Lean theorem using Linnik's method as presented in Tim Jameson's notes.
 
 ## References
 

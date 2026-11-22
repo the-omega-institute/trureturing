@@ -79,11 +79,21 @@ internal sealed class StabilizationDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "Padding a representation with ones preserves its offset. "
-                        + "The fixed-length positive Waring result makes the exceptions at one length finite. "
-                        + "Among these exceptions, take the maximum of the witness lengths of the offsets that eventually acquire a representation. "
-                        + "Beyond that maximum, the positive exceptions are precisely the gaps of the monoid.")),
+                        + "The fixed-length positive Waring result gives a reference length j₀ ≥ 1 with finitely many exceptions. "
+                        + "For each exception at j₀ that belongs to the offset monoid, choose a witness length at which it has a representation. "
+                        + "Set J to the maximum of j₀ and the supremum of these witness lengths, with empty supremum zero. "
+                        + "For j ≥ J, pad each of the chosen witnesses with ones to length j. "
+                        + "The bound j ≥ j₀ lets us also pad the representations already available at j₀. "
+                        + "Thus at every j ≥ J the positive exceptions are precisely the gaps of the monoid.")),
                     Paragraph(Text(
-                        "Benfield and Lippard attribute eventual finite stabilization in their Theorem 1.1 to Zenkin."))
+                        "The reference length matters even if no exceptions disappear from it. "
+                        + "For squares, choose j₀ in the stable range. The witness supremum is then zero, "
+                        + "yet 6 is an exceptional offset at length 1 because 7 is not a square. "
+                        + "The offset 6 belongs to the monoid by the length-2 representation 8 = 2² + 2².")),
+                    Paragraph(Text(
+                        "Benfield and Lippard's Theorem 1.1 credits Zenkin [65] with eventual fixed-length cofiniteness. "
+                        + "For every k ≥ 2 and each fixed j ≥ G(1,k), all but finitely many positive integers have a representation of length j. "
+                        + "Their Conjecture 1.2 gives the stable finite offset formulation, which the padding argument above derives from the formal fixed-length Waring bridge."))
                 ),
                 DescribeRole.Theorem)
         )));
