@@ -52,8 +52,8 @@ private theorem radial_posSemidef {a t : ℝ} {X : TwoMode}
     (ha : 0 ≤ a) (hX : X.PosSemidef) (ht : t ∈ Icc (0 : ℝ) 1) :
     (radial a X t).PosSemidef := by
   have hI : (1 : TwoMode).PosSemidef := Matrix.PosSemidef.one
-  exact (hI.smul (Complex.ofReal_nonneg (mul_nonneg ha (sub_nonneg.mpr ht.2)))).add
-    (hX.smul (Complex.ofReal_nonneg ht.1))
+  exact (hI.smul (Complex.zero_le_real.mpr (mul_nonneg ha (sub_nonneg.mpr ht.2)))).add
+    (hX.smul (Complex.zero_le_real.mpr ht.1))
 
 private def modeMoment (k : ℕ) (x : Mode → ℝ) : ℝ :=
   (∑ i, x i ^ k) / 4
@@ -120,11 +120,8 @@ private theorem scalar_of_eigenvalues_eq {X : TwoMode} (hX : X.IsHermitian) {a :
 private theorem traceMoment_pos_of_eigenvalues {X : TwoMode} (hX : X.IsHermitian)
     (hX₀ : X ≠ 0) (k : ℕ) (hpow : ∀ i : Mode, 0 ≤ hX.eigenvalues i ^ k) :
     0 < endpointTraceMoment k X := by
-  have hex : ∃ i : Mode, hX.eigenvalues i ≠ 0 := by
-    by_contra! hall
-    apply hX₀
-    simpa only [Complex.ofReal_zero, zero_smul] using scalar_of_eigenvalues_eq hX hall
-  obtain ⟨i, hi⟩ := hex
+  have hne : hX.eigenvalues ≠ 0 := fun h => hX₀ (hX.eigenvalues_eq_zero_iff.mp h)
+  obtain ⟨i, hi⟩ := Function.ne_iff.mp hne
   rw [traceMoment_eigenvalues hX, modeMoment]
   refine div_pos (Finset.sum_pos' (fun j _ => hpow j) ?_) (by norm_num)
   exact ⟨i, Finset.mem_univ i, lt_of_le_of_ne (hpow i) (pow_ne_zero k hi).symm⟩
