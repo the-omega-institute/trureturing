@@ -58,6 +58,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Core
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
@@ -703,10 +704,7 @@ set_option maxRecDepth 100000
 
 /-- Exact-defect five-row HDA arrays with canonical row-major colour names. -/
 def canonicalCount (D n : ℕ) : ℕ :=
-  letI : DecidablePred (fun A : Fin 5 × Fin n → Fin 3 =>
-    @Canonical (Fin 5 × Fin n)
-      (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective).toLT 3 A) :=
-    fun _ => by unfold Canonical; infer_instance
+  letI := HardinA229637RowColumn.arrayCanonicalDecidable (n := 5) (k := n)
   (Finset.univ.filter fun A : Fin 5 × Fin n → Fin 3 =>
     defects ∅ edges (List.ofFn fun j i => A (i, j)) = D ∧
     (@Canonical (Fin 5 × Fin n)
