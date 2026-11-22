@@ -3,7 +3,8 @@ import D5.S3.HilbertOperators.VisibleTwoStepDefect
 import Reg.Support.SingleDependentReadout
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
-/-! Vary the squared leakage readout by an additive scalar offset. The zero time step detects a unit offset. -/
+/-! Vary the squared leakage readout by an additive scalar offset.
+The zero time step detects a unit offset. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.HilbertOperators.VisibleTwoStepDefect
@@ -17,7 +18,8 @@ abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature := realize signature (fun _ _ x => x ^ 2) (fun e => nomatch e)
-def shifted : Realization signature := realize signature (fun _ _ x => x ^ 2 + 1) (fun e => nomatch e)
+def shifted : Realization signature :=
+  realize signature (fun _ _ x => x ^ 2 + 1) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
@@ -34,7 +36,7 @@ private theorem shifted_fails : ¬arena.{u}.Law shifted := by
   have hT : (0 : E →L[ℝ] E).toLinearMap.IsSymmetric := by intro x y; simp
   have eq := (law V 0 hT).1 0
   change defectForm V 0 0 = _ ^ 2 + 1 at eq
-  simpa [defectForm] using eq
+  simp [defectForm] at eq
 
 def family : Registration arena.{u} (type_of% @visible_two_step_defect.{u}) where
   actual := actual
@@ -45,8 +47,8 @@ def family : Registration arena.{u} (type_of% @visible_two_step_defect.{u}) wher
   dependence := by
     intro i
     refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
-    change (0 : ℝ) ^ 2 ≠ 1 ^ 2
-    norm_num
+    change (0 : ℝ) ^ (2 : ℕ) ≠ 1 ^ (2 : ℕ)
+    simpa only [zero_pow (by decide : (2 : ℕ) ≠ 0), one_pow] using (zero_ne_one : (0 : ℝ) ≠ 1)
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.HilbertOperators.VisibleTwoStepDefect.visible_two_step_defect.{u})
