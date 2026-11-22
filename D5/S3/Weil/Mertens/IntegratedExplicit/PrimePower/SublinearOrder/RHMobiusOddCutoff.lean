@@ -51,7 +51,7 @@ private theorem residual_succ_of_odd {m : ℕ} (hm : 2 ≤ m) (hodd : Odd (m+1))
     Finset.sum_insert (by simp)]
   ring
 
-private theorem power_gap_of_rate_increase {s δ a B : ℝ} (hs : 0 < s)
+theorem power_gap_of_rate_increase {s δ a B : ℝ} (hs : 0 < s)
     (hδ : 0 ≤ δ) (ha : 0 < a) (hab : a ≤ B) :
     powerGap (s+δ) a B ≤ ((s+δ)/s) * a^(-δ) * powerGap s a B := by
   have hB := ha.trans_le hab
