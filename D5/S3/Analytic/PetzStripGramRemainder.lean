@@ -27,10 +27,8 @@ namespace PetzStripGramRemainder
 
 open PetzLogisticMidline (line closedStrip lowerWeight upperWeight)
 open PetzCothStripMode (lowerMode integral_lowerMode)
-open private integral_petzWeight_mul_cos from
-  D5.S3.Analytic.PetzStripFiniteSeries
-open private mode star_mode_mul norm_mode integrable_weighted_mode integral_weighted_mode from
-  D5.S3.Analytic.PetzLogisticEvaluation
+open PetzStripFiniteSeries (finiteOverlap overlapDeficit hasDerivAt_finiteOverlap_zero
+  integral_finiteOverlap_strip)
 
 noncomputable section
 
@@ -51,6 +49,20 @@ def stripGram (x y : ℝ) : ℝ :=
 /-- A weighted conjugate product on the vertical line with real part `a`. -/
 def weightedPair (w : ℝ → ℝ) (a x y t : ℝ) : ℂ :=
   (w t : ℂ) * (star (deficit x (line a t)) * deficit y (line a t))
+
+private def mode (x t : ℝ) : ℂ := Complex.exp (((x * t : ℝ) : ℂ) * Complex.I)
+
+private theorem star_mode_mul (x y t : ℝ) :
+    star (mode x t) * mode y t = mode (y - x) t := by
+  unfold mode
+  rw [Complex.star_def, ← Complex.exp_conj, map_mul, Complex.conj_ofReal, Complex.conj_I,
+    ← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+private theorem mode_re (x t : ℝ) : (mode x t).re = Real.cos (x * t) := by
+  simp [mode, Complex.exp_re, Complex.mul_re, Complex.mul_im]
 
 private theorem deficit_line (a x t : ℝ) :
     deficit x (line a t) = 1 - (Real.exp (x * a) : ℂ) * mode x t := by
@@ -89,10 +101,8 @@ private theorem mode_add_reflect (x t : ℝ) :
 private theorem lower_diagonal (x t : ℝ) :
     lowerWeight t * ‖deficit x (line 0 t)‖ ^ 2 = 2 * lowerMode x t := by
   have h := weightedPair_expand lowerWeight 0 x x t
-  have hc : (mode x t).re = Real.cos (x * t) := by
-    simp [mode, Complex.exp_re, Complex.mul_re, Complex.mul_im]
   have hn : (mode (-x) t).re = Real.cos (x * t) := by
-    simp [mode, Complex.exp_re, Complex.mul_re, Complex.mul_im]
+    rw [mode_re, neg_mul, Real.cos_neg]
   have hleft : (weightedPair lowerWeight 0 x x t).re =
       lowerWeight t * ‖deficit x (line 0 t)‖ ^ 2 := by
     rw [weightedPair, Complex.star_def, Complex.conj_mul', ← Complex.ofReal_pow,
@@ -102,7 +112,7 @@ private theorem lower_diagonal (x t : ℝ) :
   simp only [mul_zero, Real.exp_zero, Complex.ofReal_one, one_mul, hzero] at h
   have hreal := congrArg Complex.re h
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-    sub_zero, Complex.add_re, Complex.sub_re, Complex.one_re, hc, hn] at hreal
+    sub_zero, Complex.add_re, Complex.sub_re, Complex.one_re, hn, mode_re] at hreal
   rw [hreal]
   change lowerWeight t * (1 - Real.cos (x * t) - Real.cos (x * t) + 1) =
     2 * (lowerWeight t * (1 - Real.cos (x * t)))
@@ -181,10 +191,94 @@ private theorem logistic_neg (x : ℝ) : logistic (-x) = logistic x := by
   · simp [hx]
   · simp [logistic, hx, Real.sinh_neg, neg_div, div_neg]
 
+private theorem integrable_weighted_mode (x : ℝ) :
+    Integrable (fun t => (upperWeight t : ℂ) * mode x t) := by
+  have hw : Continuous upperWeight := by
+    unfold upperWeight
+    exact continuous_const.div (by fun_prop)
+      (fun t => ne_of_gt (by positivity [Real.cosh_pos (2 * Real.pi * t)]))
+  have hm : Continuous (fun t => (upperWeight t : ℂ) * mode x t) :=
+    (Complex.continuous_ofReal.comp hw).mul (by unfold mode; fun_prop)
+  apply (integrable_norm_iff hm.aestronglyMeasurable).1
+  simpa only [norm_mul, Complex.norm_real, mode, Complex.norm_exp_ofReal_mul_I, mul_one]
+    using PetzLogisticMidline.integrable_upperWeight.norm
+
+/-- The factorization supplies the vanishing imaginary part and fixes the mass at zero. -/
+private theorem upper_mode_real (x : ℝ) :
+    ∃ r : ℝ, (∫ t, (upperWeight t : ℂ) * mode x t) = (r : ℂ) := by
+  let ω : Bool → ℝ := fun b => if b then x else 0
+  have h := (PetzLogisticEvaluation.exact_gram_factorization ω).2.2 false true
+  refine ⟨‖PetzLogisticEvaluation.correlation ω false true‖ ^ 2, ?_⟩
+  push_cast
+  simpa only [ω, Bool.false_eq_true, ite_false, ite_true, sub_zero, mode,
+    show upperWeight = PetzExponentialBoundaryEvaluation.petzWeight from rfl] using h
+
+private theorem upper_mass : (∫ t, upperWeight t) = 1 := by
+  let ω : Unit → ℝ := fun _ => 0
+  obtain ⟨_, hdiag, hentry⟩ := PetzLogisticEvaluation.exact_gram_factorization ω
+  have h := hentry () ()
+  rw [hdiag] at h
+  have hcast : (∫ t, (upperWeight t : ℂ)) = Complex.ofReal (∫ t, upperWeight t) :=
+    integral_ofReal (𝕜 := ℂ) (μ := volume) (f := upperWeight)
+  have hc : (∫ t, (upperWeight t : ℂ)) = (1 : ℂ) := by
+    simpa [ω, ← show upperWeight = PetzExponentialBoundaryEvaluation.petzWeight from rfl] using h
+  rw [hcast] at hc
+  exact_mod_cast hc
+
 private theorem upper_mode_integral (x : ℝ) :
     (∫ t, (upperWeight t : ℂ) * mode x t) = (logistic x : ℂ) := by
-  rw [show upperWeight = PetzExponentialBoundaryEvaluation.petzWeight from rfl,
-    integral_weighted_mode, integral_petzWeight_mul_cos, logistic]
+  obtain ⟨r, hr⟩ := upper_mode_real x
+  have hcos : (∫ t, upperWeight t * Real.cos (x * t)) = r := by
+    have h := Complex.reCLM.integral_comp_comm (integrable_weighted_mode x)
+    rw [hr] at h
+    simpa only [Complex.reCLM_apply, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, sub_zero, mode_re] using h
+  have hcosInt : Integrable (fun t => upperWeight t * Real.cos (x * t)) := by
+    simpa only [Function.comp_def, Complex.reCLM_apply, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero, mode_re] using
+      Complex.reCLM.integrable_comp (integrable_weighted_mode x)
+  let ω : Unit → ℝ := fun _ => x
+  let c : Unit → ℂ := fun _ => 1
+  have hdef (a t : ℝ) : overlapDeficit ω c a t =
+      2 * (1 - Real.exp (x * a) * Real.cos (x * t)) := by
+    unfold overlapDeficit finiteOverlap
+    change 2 * (1 - (∑ i : Unit, c i * Complex.exp ((ω i : ℂ) * line a t)).re) = _
+    simp [ω, c, Complex.exp_re, Complex.mul_re, Complex.mul_im]
+  have hnonneg (t : ℝ) : 0 ≤ overlapDeficit ω c 0 t := by
+    rw [hdef, mul_zero, Real.exp_zero, one_mul]
+    exact mul_nonneg (by norm_num) (sub_nonneg.mpr (Real.cos_le_one _))
+  have hstrip := (integral_finiteOverlap_strip ω c (by simp [finiteOverlap, ω, c]) hnonneg).2.2
+  rw [(hasDerivAt_finiteOverlap_zero ω c).deriv] at hstrip
+  simp only [hdef, ω, c, Fintype.sum_unique, one_mul, Complex.ofReal_re, mul_zero, Real.exp_zero,
+    mul_one_div] at hstrip
+  change (∫ t, lowerWeight t * (2 * (1 - Real.cos (x * t)))) +
+    (∫ t, upperWeight t * (2 * (1 - Real.exp (x / 2) * Real.cos (x * t)))) =
+      -x at hstrip
+  have hL (t : ℝ) : lowerWeight t * (2 * (1 - Real.cos (x * t))) = 2 * lowerMode x t := by
+    change _ = 2 * (lowerWeight t * (1 - Real.cos (x * t)))
+    ring
+  have hU (t : ℝ) :
+      upperWeight t * (2 * (1 - Real.exp (x / 2) * Real.cos (x * t))) =
+        2 * (upperWeight t - Real.exp (x / 2) * (upperWeight t * Real.cos (x * t))) := by
+    ring
+  simp_rw [hL, hU] at hstrip
+  rw [integral_const_mul, integral_const_mul,
+    integral_sub PetzLogisticMidline.integrable_upperWeight (hcosInt.const_mul _),
+    integral_const_mul, upper_mass, hcos, (integral_lowerMode x).2] at hstrip
+  have he : Real.exp (x / 2) * r = Real.exp (x / 2) * logistic x := by
+    by_cases hx : x = 0
+    · subst x
+      norm_num [logistic] at hstrip ⊢
+      linarith
+    have hs := Real.sinh_ne_zero.mpr (div_ne_zero hx (by norm_num : (2 : ℝ) ≠ 0))
+    rw [ite_eq_right hx] at hstrip
+    have hhyper : (x / 2) * (Real.cosh (x / 2) / Real.sinh (x / 2)) -
+        Real.exp (x / 2) * logistic x = -x / 2 := by
+      simp only [logistic, ite_eq_right hx, ← Real.cosh_add_sinh]
+      field_simp [hs]
+      ring
+    linarith only [hstrip, hhyper]
+  rw [hr, mul_left_cancel₀ (Real.exp_pos _).ne' he]
 
 private theorem upper_pair (x y : ℝ) :
     Integrable (weightedPair upperWeight (1 / 2) x y) ∧
