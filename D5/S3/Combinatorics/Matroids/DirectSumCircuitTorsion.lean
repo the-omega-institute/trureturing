@@ -10,7 +10,11 @@ module
 
 public import D5.S3.Combinatorics.Matroids.JointCircuitGramCertificate
 public import Mathlib.Combinatorics.Matroid.Sum
+public import Mathlib.LinearAlgebra.Quotient.Basic
 import Mathlib.LinearAlgebra.TensorProduct.Basis
+import Mathlib.LinearAlgebra.Contraction
+import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+import Mathlib.LinearAlgebra.TensorProduct.Quotient
 
 /-! # Joint circuit restrictions of a direct sum -/
 
@@ -131,9 +135,9 @@ open Finset
 open OrderedCycleFactorization
   (Chain PassiveBase TopCycle boundaryOn boundaryOn_signedJoin signedJoin shuffleSign topCycle_ext)
 open CircuitCycleDecomposition (restrictChain restrictionSign topCycles)
-open IntegralCircuitImage (aggregateRestrict)
+open IntegralCircuitImage (aggregateRestrict aggregateLinear aggregate_topCycle)
 open JointCircuitGramCertificate
-  (Passive normalizedCycle normalizedCycle_coord fromCoordinates fromCoordinates_coord
+  (Circuit Passive normalizedCycle normalizedCycle_coord fromCoordinates fromCoordinates_coord
     fromCoordinates_cycle)
 
 variable [LinearOrder V] {A B L R : Finset V}
@@ -608,5 +612,342 @@ private lemma cycleJoinEquiv_tmul (h : Disjoint M.E N.E)
     exact Subtype.ext (signedJoin_normalized h hL hR horder P.1 P.2).symm
   have hf := LinearMap.congr_fun heq (u ⊗ₜ[ℤ] v)
   exact congrArg Subtype.val (hf.trans (TensorProduct.lift.tmul u v))
+
+private def cycleEvaluation (P : Matroid V) (T : Finset V) : Dual ℤ (topCycles P) :=
+  (LinearMap.proj T).comp (topCycles P).subtype
+
+private noncomputable def circuitRow (P : Matroid V) (C T : Finset V) :
+    Dual ℤ (topCycles P) :=
+  (LinearMap.proj T).comp ((aggregateLinear P C).comp (topCycles P).subtype)
+
+private theorem cycleFree (P : Matroid V) : Module.Free ℤ (topCycles P) :=
+  Module.Free.of_basis (cycleBasis P)
+
+private theorem cycleFinite (P : Matroid V) : Module.Finite ℤ (topCycles P) :=
+  Module.Finite.of_basis (cycleBasis P)
+
+attribute [local instance] cycleFree cycleFinite
+
+private noncomputable def dualJoinEquiv (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E) :
+    Dual ℤ (topCycles M) ⊗[ℤ] Dual ℤ (topCycles N) ≃ₗ[ℤ] Dual ℤ (topCycles (M.disjointSum N h)) :=
+  (TensorProduct.dualDistribEquiv ℤ (topCycles M) (topCycles N)).trans
+    (cycleJoinEquiv h hL hR).symm.dualMap
+
+private lemma dualJoinEquiv_apply (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (f : Dual ℤ (topCycles M)) (g : Dual ℤ (topCycles N)) (u : topCycles M) (v : topCycles N) :
+    dualJoinEquiv h hL hR (f ⊗ₜ[ℤ] g) (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)) = f u * g v := by
+  let J := cycleJoinEquiv h hL hR
+  let d := TensorProduct.dualDistribEquiv ℤ (topCycles M) (topCycles N)
+  change d (f ⊗ₜ[ℤ] g) (J.symm (J (u ⊗ₜ[ℤ] v))) = f u * g v
+  calc
+    _ = d (f ⊗ₜ[ℤ] g) (u ⊗ₜ[ℤ] v) :=
+      congrArg (d (f ⊗ₜ[ℤ] g)) (J.symm_apply_apply _)
+    _ = _ := (TensorProduct.dualDistribEquiv_tmul_tmul f g u v).trans (mul_comm _ _)
+
+private lemma circuitRow_disjointSum_left (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) {C : Finset V}
+    (hC : M.IsCircuit (C : Set V)) (T : Finset V) :
+    circuitRow (M.disjointSum N h) C T =
+      shuffleSign (T ∩ L) (T \ L) • dualJoinEquiv h hL hR
+        (circuitRow M C (T ∩ L) ⊗ₜ[ℤ] cycleEvaluation N (T \ L)) := by
+  apply (cycleJoinEquiv h hL hR).dualMap.injective
+  apply TensorProduct.ext'
+  intro u v
+  change circuitRow (M.disjointSum N h) C T (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)) =
+    shuffleSign (T ∩ L) (T \ L) *
+      dualJoinEquiv h hL hR (circuitRow M C (T ∩ L) ⊗ₜ[ℤ] cycleEvaluation N (T \ L))
+        (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v))
+  rw [dualJoinEquiv_apply]
+  change aggregateRestrict (M.disjointSum N h) C
+      (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)).val T =
+    shuffleSign (T ∩ L) (T \ L) *
+      (aggregateRestrict M C u.val (T ∩ L) * v.val (T \ L))
+  rw [cycleJoinEquiv_tmul h hL hR horder,
+    aggregateRestrict_disjointSum_left h hL hR horder hC _ v.prop]
+  rfl
+
+private lemma circuitRow_disjointSum_right (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) {C : Finset V}
+    (hC : N.IsCircuit (C : Set V)) (T : Finset V) :
+    circuitRow (M.disjointSum N h) C T =
+      ((-1 : ℤ) ^ ((C.card - 1) * (T ∩ L).card) * shuffleSign (T ∩ L) (T \ L)) •
+        dualJoinEquiv h hL hR
+          (cycleEvaluation M (T ∩ L) ⊗ₜ[ℤ] circuitRow N C (T \ L)) := by
+  apply (cycleJoinEquiv h hL hR).dualMap.injective
+  apply TensorProduct.ext'
+  intro u v
+  change circuitRow (M.disjointSum N h) C T (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)) =
+    ((-1 : ℤ) ^ ((C.card - 1) * (T ∩ L).card) * shuffleSign (T ∩ L) (T \ L)) *
+      dualJoinEquiv h hL hR (cycleEvaluation M (T ∩ L) ⊗ₜ[ℤ] circuitRow N C (T \ L))
+        (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v))
+  rw [dualJoinEquiv_apply]
+  change aggregateRestrict (M.disjointSum N h) C
+      (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)).val T =
+    ((-1 : ℤ) ^ ((C.card - 1) * (T ∩ L).card) * shuffleSign (T ∩ L) (T \ L)) *
+      (u.val (T ∩ L) * aggregateRestrict N C v.val (T \ L))
+  rw [cycleJoinEquiv_tmul h hL hR horder,
+    aggregateRestrict_disjointSum_right h hL hR horder hC u.prop]
+  simp only [signedJoin, mul_assoc]
+
+private noncomputable def circuitRows (P : Matroid V) : Set (Dual ℤ (topCycles P)) :=
+  Set.range fun p : Circuit P × Finset V => circuitRow P p.1.val p.2
+
+private lemma circuitRow_mem_rows {P : Matroid V} {C : Finset V}
+    (hC : P.IsCircuit (C : Set V)) (T : Finset V) :
+    circuitRow P C T ∈ circuitRows P :=
+  ⟨(⟨C, hC⟩, T), rfl⟩
+
+private lemma cycleEvaluation_span (P : Matroid V) :
+    Submodule.span ℤ (Set.range (cycleEvaluation P)) = ⊤ := by
+  classical
+  apply top_unique
+  rw [← (cycleBasis P).dualBasis.span_eq]
+  apply Submodule.span_le.2
+  rintro f ⟨D, rfl⟩
+  apply Submodule.subset_span
+  refine ⟨D.val, LinearMap.ext fun z => ?_⟩
+  change z.val D.val = (cycleBasis P).dualBasis D z
+  rw [Basis.dualBasis_apply, cycleBasis, Basis.ofEquivFun_repr_apply]
+  rfl
+
+private lemma map₂_tmul_eq_range {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
+    (U : Submodule ℤ X) (W : Submodule ℤ Y) :
+    Submodule.map₂ (TensorProduct.mk ℤ X Y) U W =
+      LinearMap.range (TensorProduct.map U.subtype W.subtype) := by
+  rw [Submodule.map₂_eq_span_image2, TensorProduct.range_map_eq_span_tmul]
+  congr 1
+  ext z
+  exact ⟨fun ⟨u, hu, w, hw, hz⟩ => ⟨⟨u, hu⟩, ⟨w, hw⟩, hz⟩,
+    fun ⟨u, w, hz⟩ => ⟨u.val, u.prop, w.val, w.prop, hz⟩⟩
+
+private lemma cycleEvaluation_eq_zero_of_not_subset {P : Matroid V} {S T : Finset V}
+    (hS : (S : Set V) = P.E) (hT : ¬ T ⊆ S) :
+    cycleEvaluation P T = 0 := by
+  ext z
+  change z.val T = 0
+  exact z.prop.vanishes T fun hb => hT (by
+    have hg := hb.subset_ground
+    rwa [← hS, coe_subset] at hg)
+
+private lemma circuitRow_eq_zero_of_not_subset {P : Matroid V} {C S T : Finset V}
+    (hC : P.IsCircuit (C : Set V)) (hS : (S : Set V) = P.E) (hT : ¬ T ⊆ S) :
+    circuitRow P C T = 0 := by
+  ext z
+  change aggregateRestrict P C z.val T = 0
+  exact (aggregate_topCycle hC z.prop).vanishes T fun hb => hT (by
+    have hg := hb.subset_ground
+    rw [Matroid.contract_ground] at hg
+    have ht := hg.trans Set.sdiff_subset
+    rwa [← hS, coe_subset] at ht)
+
+omit [Fintype V] in
+private lemma union_proj (hd : Disjoint L R) (hA : A ⊆ L) (hB : B ⊆ R) :
+    (A ∪ B) ∩ L = A ∧ (A ∪ B) \ L = B := by
+  have hd' : Disjoint B L := hd.symm.mono_left hB
+  constructor
+  · rw [union_inter_distrib_right, inter_eq_left.2 hA,
+      disjoint_iff_inter_eq_empty.mp hd', union_empty]
+  · rw [union_sdiff_distrib, sdiff_eq_empty_iff_subset.2 hA,
+      Finset.sdiff_eq_self_iff_disjoint.2 hd', empty_union]
+
+set_option backward.isDefEq.respectTransparency false in
+private lemma map_tensorRows_disjointSum (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) :
+    let U := Submodule.span ℤ (circuitRows M)
+    let W := Submodule.span ℤ (circuitRows N)
+    Submodule.span ℤ (circuitRows (M.disjointSum N h)) =
+      (LinearMap.range (TensorProduct.map U.subtype LinearMap.id) ⊔
+        LinearMap.range (TensorProduct.map LinearMap.id W.subtype)).map
+          (dualJoinEquiv h hL hR).toLinearMap := by
+  classical
+  dsimp only
+  let U := Submodule.span ℤ (circuitRows M)
+  let W := Submodule.span ℤ (circuitRows N)
+  let J := dualJoinEquiv h hL hR
+  let p := LinearMap.range
+    (TensorProduct.map U.subtype (LinearMap.id : Dual ℤ (topCycles N) →ₗ[ℤ] _))
+  let q := LinearMap.range
+    (TensorProduct.map (LinearMap.id : Dual ℤ (topCycles M) →ₗ[ℤ] _) W.subtype)
+  change Submodule.span ℤ (circuitRows (M.disjointSum N h)) = (p ⊔ q).map J.toLinearMap
+  have hd := disjoint_ground_finsets h hL hR
+  have hp : p = Submodule.span ℤ
+      (Set.image2 (fun f g => f ⊗ₜ[ℤ] g) (circuitRows M) (Set.range (cycleEvaluation N))) := by
+    change (TensorProduct.map U.subtype (LinearMap.id : Dual ℤ (topCycles N) →ₗ[ℤ] _)).range = _
+    have hspan := Submodule.map₂_span_span ℤ (TensorProduct.mk ℤ _ _) (circuitRows M)
+      (Set.range (cycleEvaluation N))
+    rw [cycleEvaluation_span N, Submodule.map₂_eq_span_image2] at hspan
+    refine Eq.trans ?_ hspan
+    rw [TensorProduct.range_map_eq_span_tmul]
+    congr 1
+    ext z
+    exact ⟨fun ⟨u, w, hz⟩ => ⟨u.val, u.prop, w, Submodule.mem_top, hz⟩,
+      fun ⟨u, hu, w, _, hz⟩ => ⟨⟨u, hu⟩, w, hz⟩⟩
+  have hq : q = Submodule.span ℤ
+      (Set.image2 (fun f g => f ⊗ₜ[ℤ] g) (Set.range (cycleEvaluation M)) (circuitRows N)) := by
+    change (TensorProduct.map (LinearMap.id : Dual ℤ (topCycles M) →ₗ[ℤ] _) W.subtype).range = _
+    have hspan := Submodule.map₂_span_span ℤ (TensorProduct.mk ℤ _ _)
+      (Set.range (cycleEvaluation M)) (circuitRows N)
+    rw [cycleEvaluation_span M, Submodule.map₂_eq_span_image2] at hspan
+    refine Eq.trans ?_ hspan
+    rw [TensorProduct.range_map_eq_span_tmul]
+    congr 1
+    ext z
+    exact ⟨fun ⟨u, w, hz⟩ => ⟨u, Submodule.mem_top, w.val, w.prop, hz⟩,
+      fun ⟨u, _, w, hw, hz⟩ => ⟨u, ⟨w, hw⟩, hz⟩⟩
+  apply le_antisymm
+  · apply Submodule.span_le.2
+    rintro row ⟨⟨C, T⟩, rfl⟩
+    change circuitRow (M.disjointSum N h) C.val T ∈ (p ⊔ q).map J.toLinearMap
+    rcases (isCircuit_disjointSum_iff h).mp C.prop with hC | hC
+    · refine (circuitRow_disjointSum_left h hL hR horder hC T).symm ▸ ?_
+      apply Submodule.smul_mem
+      apply Submodule.mem_map_of_mem
+      apply Submodule.mem_sup_left
+      rw [hp]
+      exact Submodule.subset_span
+        ⟨_, circuitRow_mem_rows hC _, _, ⟨_, rfl⟩, rfl⟩
+    · refine (circuitRow_disjointSum_right h hL hR horder hC T).symm ▸ ?_
+      apply Submodule.smul_mem
+      apply Submodule.mem_map_of_mem
+      apply Submodule.mem_sup_right
+      rw [hq]
+      exact Submodule.subset_span
+        ⟨_, ⟨_, rfl⟩, _, circuitRow_mem_rows hC _, rfl⟩
+  · apply Submodule.map_le_iff_le_comap.2
+    rw [hp, hq]
+    apply sup_le <;> apply Submodule.span_le.2
+    · rintro _ ⟨_, ⟨⟨C, A⟩, rfl⟩, _, ⟨B, rfl⟩, rfl⟩
+      change J (circuitRow M C.val A ⊗ₜ[ℤ] cycleEvaluation N B) ∈
+        Submodule.span ℤ (circuitRows (M.disjointSum N h))
+      by_cases hA : A ⊆ L
+      · by_cases hB : B ⊆ R
+        · have hC := (isCircuit_disjointSum_iff h).mpr (Or.inl C.prop)
+          have hrow := Submodule.subset_span
+            (R := ℤ) (circuitRow_mem_rows hC (A ∪ B))
+          have heq := circuitRow_disjointSum_left h hL hR horder C.prop (A ∪ B)
+          rw [(union_proj hd hA hB).1, (union_proj hd hA hB).2,
+            shuffleSign_separated horder hA hB, one_smul] at heq
+          exact heq ▸ hrow
+        · rw [cycleEvaluation_eq_zero_of_not_subset hR hB, tmul_zero, map_zero]
+          exact Submodule.zero_mem _
+      · rw [circuitRow_eq_zero_of_not_subset C.prop hL hA, zero_tmul, map_zero]
+        exact Submodule.zero_mem _
+    · rintro _ ⟨_, ⟨A, rfl⟩, _, ⟨⟨C, B⟩, rfl⟩, rfl⟩
+      change J (cycleEvaluation M A ⊗ₜ[ℤ] circuitRow N C.val B) ∈
+        Submodule.span ℤ (circuitRows (M.disjointSum N h))
+      by_cases hA : A ⊆ L
+      · by_cases hB : B ⊆ R
+        · have hC := (isCircuit_disjointSum_iff h).mpr (Or.inr C.prop)
+          have hrow := Submodule.subset_span
+            (R := ℤ) (circuitRow_mem_rows hC (A ∪ B))
+          have heq := circuitRow_disjointSum_right h hL hR horder C.prop (A ∪ B)
+          rw [(union_proj hd hA hB).1, (union_proj hd hA hB).2,
+            shuffleSign_separated horder hA hB, mul_one] at heq
+          let s : ℤ := (-1) ^ ((C.val.card - 1) * A.card)
+          have hs : s * s = 1 := OrderedCycleFactorization.sign_sq _
+          have hmem := Submodule.smul_mem _ s (heq ▸ hrow)
+          rw [← mul_smul, hs, one_smul] at hmem
+          exact hmem
+        · rw [circuitRow_eq_zero_of_not_subset C.prop hR hB, tmul_zero, map_zero]
+          exact Submodule.zero_mem _
+      · rw [cycleEvaluation_eq_zero_of_not_subset hL hA, zero_tmul, map_zero]
+        exact Submodule.zero_mem _
+
+/-- The target of the joint restriction, with one top-cycle lattice per circuit. -/
+abbrev JointTarget (P : Matroid V) :=
+  (C : Circuit P) → topCycles (P ／ (C.val : Set V))
+
+/-- The signed aggregate along one circuit, with codomain its contraction cycle lattice. -/
+noncomputable def circuitRestriction (P : Matroid V) (C : Circuit P) :
+    topCycles P →ₗ[ℤ] topCycles (P ／ (C.val : Set V)) :=
+  ((aggregateLinear P C.val).comp (topCycles P).subtype).codRestrict _
+    fun z => aggregate_topCycle C.prop z.prop
+
+/-- The tuple of signed circuit aggregate restrictions. -/
+noncomputable def jointRestriction (P : Matroid V) :
+    topCycles P →ₗ[ℤ] JointTarget P :=
+  LinearMap.pi (circuitRestriction P)
+
+private lemma range_dual_jointRestriction (P : Matroid V) :
+    (jointRestriction P).dualMap.range = Submodule.span ℤ (circuitRows P) := by
+  classical
+  let : Fintype (Circuit P) := Fintype.ofFinite _
+  let target (C : Circuit P) : Type _ := topCycles (P ／ (C.val : Set V))
+  let coordinates := Submodule.span ℤ (circuitRows P)
+  apply le_antisymm
+  · rintro _ ⟨f, rfl⟩
+    let localDual (C : Circuit P) : Dual ℤ (target C) :=
+      f.comp (LinearMap.single ℤ (fun C => (topCycles (P ／ (C.val : Set V)) : Type _)) C)
+    have hf : (∑ C : Circuit P, (localDual C).comp (LinearMap.proj C)) = f := by
+      apply LinearMap.ext
+      intro y
+      simp only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, localDual,
+        LinearMap.single_apply]
+      rw [← map_sum, LinearMap.sum_single_apply]
+    rw [← hf, map_sum]
+    apply Submodule.sum_mem
+    intro C _
+    have hm :
+        (Submodule.span ℤ (Set.range (cycleEvaluation (P ／ (C.val : Set V))))).map
+          (circuitRestriction P C).dualMap ≤ coordinates := by
+      rw [Submodule.map_span]
+      apply Submodule.span_le.2
+      rintro _ ⟨_, ⟨T, rfl⟩, rfl⟩
+      exact Submodule.subset_span (circuitRow_mem_rows C.prop T)
+    apply hm
+    refine ⟨localDual C, ?_, rfl⟩
+    rw [cycleEvaluation_span]
+    exact Submodule.mem_top
+  · apply Submodule.span_le.2
+    rintro _ ⟨⟨C, T⟩, rfl⟩
+    exact ⟨(cycleEvaluation (P ／ (C.val : Set V)) T).comp (LinearMap.proj C), rfl⟩
+
+/-- The integral transpose cokernel of joint circuit restriction. -/
+abbrev TransposeCokernel (P : Matroid V) :=
+  Dual ℤ (topCycles P) ⧸ (jointRestriction P).dualMap.range
+
+/-- The ordered integral join identifies the transpose cokernel of a matroid direct sum with
+the tensor product of the two transpose cokernels. -/
+theorem joint_circuit_transpose_cokernel_tensor (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) :
+    ∃ join : topCycles M ⊗[ℤ] topCycles N ≃ₗ[ℤ] topCycles (M.disjointSum N h),
+      (∀ (u : topCycles M) (v : topCycles N),
+        (join (u ⊗ₜ[ℤ] v)).val = signedJoin L u.val v.val) ∧
+      ∃ dual : Dual ℤ (topCycles M) ⊗[ℤ] Dual ℤ (topCycles N) ≃ₗ[ℤ]
+          Dual ℤ (topCycles (M.disjointSum N h)),
+        (∀ (f : Dual ℤ (topCycles M)) (g : Dual ℤ (topCycles N))
+          (u : topCycles M) (v : topCycles N),
+          dual (f ⊗ₜ[ℤ] g) (join (u ⊗ₜ[ℤ] v)) = f u * g v) ∧
+        ∃ comparison : TransposeCokernel M ⊗[ℤ] TransposeCokernel N ≃ₗ[ℤ]
+            TransposeCokernel (M.disjointSum N h),
+          ∀ (f : Dual ℤ (topCycles M)) (g : Dual ℤ (topCycles N)),
+            comparison (Submodule.Quotient.mk f ⊗ₜ[ℤ] Submodule.Quotient.mk g) =
+              Submodule.Quotient.mk (dual (f ⊗ₜ[ℤ] g)) := by
+  refine ⟨cycleJoinEquiv h hL hR, cycleJoinEquiv_tmul h hL hR horder,
+    dualJoinEquiv h hL hR, dualJoinEquiv_apply h hL hR, ?_⟩
+  let U := (jointRestriction M).dualMap.range
+  let W := (jointRestriction N).dualMap.range
+  let P := LinearMap.range (TensorProduct.map U.subtype LinearMap.id) ⊔
+    LinearMap.range (TensorProduct.map LinearMap.id W.subtype)
+  let Q := (jointRestriction (M.disjointSum N h)).dualMap.range
+  have heq : P.map (dualJoinEquiv h hL hR).toLinearMap = Q := by
+    let image (u : Submodule ℤ (Dual ℤ (topCycles M)))
+        (w : Submodule ℤ (Dual ℤ (topCycles N))) :=
+      (LinearMap.range (TensorProduct.map u.subtype LinearMap.id) ⊔
+        LinearMap.range (TensorProduct.map LinearMap.id w.subtype)).map
+          (dualJoinEquiv h hL hR).toLinearMap
+    exact (congrArg₂ image (range_dual_jointRestriction M) (range_dual_jointRestriction N)).trans
+      ((map_tensorRows_disjointSum h hL hR horder).symm.trans
+        (range_dual_jointRestriction (M.disjointSum N h)).symm)
+  refine ⟨(TensorProduct.quotientTensorQuotientEquiv U W).trans
+    (Submodule.Quotient.equiv P Q (dualJoinEquiv h hL hR) heq), ?_⟩
+  intro f g
+  exact rfl
 
 end D5.S3.Combinatorics.Matroids.DirectSumCircuitTorsion
