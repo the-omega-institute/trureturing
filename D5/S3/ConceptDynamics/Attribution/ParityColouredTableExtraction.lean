@@ -39,17 +39,6 @@ private theorem parity_indicator {n : ℕ} (p : Finset (Fin n)) :
   rw [← sum_filter]
   simp
 
-private theorem indicator_eq_iff {n : ℕ} {p q : Finset (Fin n)} :
-    indicator p = indicator q ↔ p = q := by
-  constructor
-  · intro h
-    ext i
-    have one (s : Finset (Fin n)) : indicator s i = 1 ↔ i ∈ s := by
-      by_cases inS : i ∈ s <;> simp [indicator, inS]
-    rw [← one p, ← one q, congrFun h i]
-  · rintro rfl
-    rfl
-
 private def profileEquiv (n : ℕ) : Finset (Fin n) ≃ Profile n where
   toFun := indicator
   invFun x := univ.filter fun i => x i = 1
@@ -131,17 +120,6 @@ private theorem colouredSlice_profile {n t : ℕ} (ht : t < 2)
   change decide (indicator x.1.val i = 1) = true ↔ i ∈ x.1.val
   rw [decide_eq_true_eq]
   by_cases hi : i ∈ x.1.val <;> simp [indicator, hi, zero_ne_one]
-
-private theorem colouredSlice_colour {n t : ℕ} (ht : t < 2)
-    (x : {p : Finset (Fin n) // p.card % 2 = t} × Fin 2) :
-    (colouredSlice n t ht x).val.colour = x.2 :=
-  rfl
-
-private theorem colouredSlice_same_profile {n t : ℕ} (ht : t < 2)
-    (x : {p : Finset (Fin n) // p.card % 2 = t}) (c d : Fin 2) :
-    (colouredSlice n t ht (x,c)).val.profile =
-      (colouredSlice n t ht (x,d)).val.profile :=
-  rfl
 
 private theorem odd_proper {n : ℕ} (even : n % 2 = 0) (q : OddSubset n) :
     q.val ≠ univ := by
