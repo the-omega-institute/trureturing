@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Semigroups;
 internal sealed class WuEndpointQuarticContractivityDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Quantum/Semigroups/WuEndpointQuarticContractivity.";
+    private static readonly LibraryNoteRef Wu = LibraryNoteRef.Create("D5/L/SpinModels/wu2026sharp");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Tracial three-to-four contractivity of the signed two-mode Wu endpoint on positive semidefinite inputs.",
@@ -21,8 +22,11 @@ internal sealed class WuEndpointQuarticContractivityDocument : IScribeDocumentDe
             Describe.Lean(DescribeId.Create("contractivity"),
                 DeclarationHandle.Create(Owner + "A1_quartic_contractivity"),
                 H("Contractivity on positive semidefinite inputs"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every positive semidefinite two-mode matrix X, the cube of the fourth normalized trace moment of the signed endpoint applied to X is at most the fourth power of the third normalized trace moment of X."))),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Wu),
+                Blocks(
+                    Paragraph(Text("For every positive semidefinite two-mode matrix X, the cube of the fourth normalized trace moment of the signed endpoint applied to X is at most the fourth power of the third normalized trace moment of X.")),
+                    Paragraph(Text("This is the fixed tracial two-mode signed slice of Wu's Corollary 3.11 at beta = 0, p = 3 and r = 4, at the critical Gross-curve time. Remark 3.15 explicitly identifies the tracial case as proved.")),
+                    Paragraph(Text("The Lean proof recovers this known bound from strict contractivity off the nonnegative scalar ray and the scalar calculation on the ray."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("equality"),
                 DeclarationHandle.Create(Owner + "A1_quartic_contractivity_eq_iff"),
