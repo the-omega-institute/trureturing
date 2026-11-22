@@ -11,15 +11,18 @@ admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: finite_certificate, result
 a: proof_shape=bind-only; consumers=result
 startImage: proof_shape=bind-only; consumers=map_start, initial_image, finite_certificate
-map_start: proof_shape=content; consumers=finite_certificate
+map_start: proof_shape=bind-only; consumers=finite_certificate
 initial_image: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Transfer
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
+import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457Strip
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripCut
@@ -44,6 +47,7 @@ import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
 /-! Exact residual-budget square-lattice strip transfer. -/
 
 open scoped BigOperators
+open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229584StripData (Row horizontal)
@@ -65,11 +69,21 @@ private def startImage (s : HardinA229635State.State) : Fin 96 :=
 private theorem map_start : ∀ r : Row, HardinA229635State.h r ≤ 2 →
     startImage (HardinA229635State.cl r (2 - HardinA229635State.h r)) =
       cl r (2 - HardinA229635State.h r) := by
-  rw [Fin.forall_fin_succ_pi]
-  intro a
-  rw [Fin.forall_fin_succ_pi]
-  intro b
-  fin_cases a <;> fin_cases b <;> decide +kernel +revert
+  intro r hr
+  obtain ⟨q, ⟨hq, e, he⟩, _⟩ := HardinA233177Canonical.canonical_exists_unique r
+  have hh : HardinA229635State.h q = HardinA229635State.h r := by
+    rw [he, HardinA229635State.h_relabel]
+  have hrep := HardinA229635Laws.representatives_complete q hq (hh ▸ hr)
+  let d := 2 - HardinA229635State.h r
+  have hfresh : ¬ HardinA229635State.h q + d ≤ 1 := by dsimp [d]; omega
+  have hclass : HardinA229635State.cl q d = HardinA229635State.cl r d := by
+    rw [he, HardinA229635State.cl_relabel]
+  change startImage (HardinA229635State.cl r d) = cl r d
+  rw [← hclass, HardinA229635State.cl, ite_eq_right hfresh, startImage, Fin.addCases_right,
+    HardinA229635State.budget, hrep, hh, he]
+  have hb := HardinA229635State.h_relabel e r
+  change bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r at hb
+  simp only [d, cl, HardinA229635State.cl_relabel, HardinA229457StripClasses.class_relabel, hb]
 
 private theorem initial_image : ∀ j : Fin 54,
     (∑ s : HardinA229635State.State,
