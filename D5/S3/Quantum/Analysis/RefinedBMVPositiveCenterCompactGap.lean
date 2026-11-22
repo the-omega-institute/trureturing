@@ -372,6 +372,21 @@ noncomputable def shortGapF (h t : ℝ) : ℝ :=
   Real.exp (3*t/2) * (1-Real.exp (-((3+h)*t))) / upperTailGap h t -
     Real.exp (-((3/2+h)*t))/4 - shortGapJ h t
 
+private theorem shortGapF_contDiffAt {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
+    ContDiffAt ℝ 2 (shortGapF (rate p)) t := by
+  let h := rate p
+  have hX : ContDiffAt ℝ 2 (X h) t := by
+    unfold X upperTailLambda upperTailGap
+    fun_prop
+  have hJ : ContDiffAt ℝ 2 (shortGapJ h) t := by
+    unfold shortGapJ
+    apply ContDiffAt.div _ (by unfold upperTailGap; fun_prop) (gap_pos hp ht).ne'
+    exact (by fun_prop : ContDiffAt ℝ 2 (fun x : ℝ ↦ Real.exp (3*x/2)) t).mul
+      (hX.sqrt (X_pos hp ht).ne')
+  unfold shortGapF
+  exact (ContDiffAt.sub (ContDiffAt.div (by fun_prop)
+    (by unfold upperTailGap; fun_prop) (gap_pos hp ht).ne') (by fun_prop)).sub hJ
+
 /-- Beyond gap two the geometric formula improves the bound on the marginal slope. -/
 theorem shortGapJ_deriv_le_of_two_le {p : ℕ} (hp : 11 ≤ p) {t : ℝ} (ht : 2 ≤ t) :
     let h := 3 / (p : ℝ)
@@ -675,10 +690,7 @@ theorem logKernel_gap_mixed_of_profile_margin {p : ℕ} (hp : 11 ≤ p) {u v ε 
     unfold shortGapJ
     apply ContDiffAt.div _ (by unfold upperTailGap; fun_prop) (gap_pos hp₀ hd).ne'
     exact (by fun_prop : ContDiffAt ℝ 2 (fun x : ℝ ↦ Real.exp (3*x/2)) d).mul hs
-  have hF : ContDiffAt ℝ 2 (shortGapF h) d := by
-    unfold shortGapF
-    refine (ContDiffAt.sub (ContDiffAt.div (by fun_prop)
-      (by unfold upperTailGap; fun_prop) (gap_pos hp₀ hd).ne') (by fun_prop)).sub hJ
+  have hF := shortGapF_contDiffAt hp₀ hd
   have hQ : DifferentiableAt ℝ (shortGapQuotient h) u := by
     unfold shortGapQuotient
     exact (hasDerivAt_const u (h+1/4)).differentiableAt.sub
@@ -1003,6 +1015,101 @@ theorem shortGapF_pos {p : ℕ} (hp : 0 < p) {t : ℝ} (ht : 0 < t) :
   linarith
 
 #print axioms shortGapF_pos
+
+/-- The one-variable profile including the constant part of the geometric correction. -/
+noncomputable def middleGapProfile (h t : ℝ) : ℝ :=
+  shortGapF h t + Real.exp (-((3 / 2 + h) * t)) / 4
+
+/-- Two gap-dependent estimates suffice for the mixed sign uniformly in the lower coordinate. -/
+theorem logKernel_middleGap_mixed_of_recentered {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 4 ≤ u) (hd : 2 ≤ v - u)
+    (hslope : middleGapSlopeBudget (rate p) (v - u) ≤
+      -deriv (middleGapProfile (rate p)) (v - u))
+    (hcurve : 0 < deriv (deriv (middleGapProfile (rate p))) (v - u)) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  let h := rate p
+  let d := v - u
+  let m : ℝ := 3 / 2 + h
+  let E : ℝ → ℝ := fun t ↦ Real.exp (-(m * t))
+  let P : ℝ → ℝ := fun t ↦ upperTailGap h t / Real.sqrt (W h t)
+  let V : ℝ → ℝ := fun t ↦ 1 / Real.sqrt (W h t)
+  let α : ℝ → ℝ := fun t ↦ deriv P t / P t
+  let β : ℝ → ℝ := fun t ↦ deriv V t / V t
+  let r := upperTailSlope h u * (1 - Real.exp (-((3 + h) * u)))
+  have hp₀ : 0 < p := by omega
+  have hh := rate_pos hp₀
+  have hpR : (11 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp
+  have hhmax : h ≤ 3 / 11 := div_le_div_of_nonneg_left (by norm_num) (by norm_num) hpR
+  have hu₀ : 0 < u := by linarith
+  have hd₀ : 0 < d := by dsimp [d]; linarith
+  have huv : u < v := sub_pos.mp hd₀
+  have hv : 4 ≤ v := hu.trans huv.le
+  have hv₀ : 0 < v := hu₀.trans huv
+  have hvd : u + d = v := by dsimp [d]; ring
+  have huNorm : 0 ≤ α u ∧ α u < 1 / 7 ∧ -(1 / u) ≤ β u ∧ β u < 0 :=
+    shortGapNormalization_bounds hh hhmax hu
+  have hvNorm : 0 ≤ α v ∧ α v < 1 / 7 ∧ -(1 / v) ≤ β v ∧ β v < 0 :=
+    shortGapNormalization_bounds hh hhmax hv
+  have hβbound {t : ℝ} (ht : 4 ≤ t) : upperTailSlope h t / 2 ≤ -β t := by
+    have ht' : β t ≤ -upperTailSlope h t / 2 := shortGap_upperLogDeriv_le hh hhmax ht
+    simpa only [neg_div, neg_neg] using neg_le_neg ht'
+  have hlog : α u - β u = upperTailSlope h u := shortGapNormalization_logDiff hh hu₀
+  have hq : shortGapQuotient h u = 1 / 4 - r := shortGapQuotient_recenter hh hu₀
+  have hqd : -deriv (shortGapQuotient h) u + (α u + m) * r =
+      (3 / 2 + β u + upperTailSlope (3 + h) u) * r :=
+    shortGapQuotient_recentered_slope hh hu₀ hlog
+  have hgeo : (m - β v) * (3 / 2 + β u + upperTailSlope (3 + h) u) * r * E d ≤
+      -β v * middleGapSlopeBudget h d := by
+    have hbv' : upperTailSlope h (u + d) / 2 ≤ -β v := by simpa only [hvd] using hβbound hv
+    have hbvmax : -β v ≤ 1 / (u + d) := by
+      rw [hvd]
+      simpa only [neg_neg] using neg_le_neg hvNorm.2.2.1
+    have hb := middleGap_geometric_absorption hh hhmax hu hd (hβbound hu) hbv' hbvmax
+    change (m + -β v) * (3 / 2 - (-β u) + upperTailSlope (3 + h) u) * r * E d ≤ _ at hb
+    simpa only [← sub_eq_add_neg, sub_neg_eq_add] using hb
+  have hE (t : ℝ) : HasDerivAt E (-m * E t) t := by
+    convert (((hasDerivAt_id' t).const_mul m).neg.exp) using 1 <;> simp [E] <;> ring
+  have hfirst {t : ℝ} (ht : 0 < t) : deriv (middleGapProfile h) t =
+      deriv (shortGapF h) t + (-m * E t) / 4 :=
+    (((shortGapF_contDiffAt hp₀ ht).differentiableAt (by norm_num)).hasDerivAt.add
+      ((hE t).div_const 4)).deriv
+  have hsecond : deriv (deriv (middleGapProfile h)) d =
+      deriv (deriv (shortGapF h)) d + m ^ 2 * E d / 4 := by
+    have heq : deriv (middleGapProfile h) =ᶠ[𝓝 d]
+        fun t ↦ deriv (shortGapF h) t + (-m * E t) / 4 := by
+      filter_upwards [eventually_gt_nhds hd₀] with t ht using hfirst ht
+    have hFd : DifferentiableAt ℝ (deriv (shortGapF h)) d :=
+      ((shortGapF_contDiffAt hp₀ hd₀).derivWithin (m := 1) (by norm_num)).differentiableAt one_ne_zero
+    rw [heq.deriv_eq, (hFd.hasDerivAt.fun_add (((hE d).const_mul (-m)).div_const 4)).deriv]
+    ring
+  have hB : 0 ≤ middleGapSlopeBudget h d := by
+    have ha := (gap_pos hp₀ hd₀).le
+    have hmd : 0 ≤ 3 / 2 + h + 1 / (4 + d) := by positivity
+    unfold middleGapSlopeBudget
+    exact mul_nonneg (mul_nonneg (mul_nonneg (by norm_num) hmd)
+      (add_nonneg zero_le_one (div_nonneg ha (by norm_num)))) (Real.exp_pos _).le
+  change middleGapSlopeBudget h d ≤ -deriv (middleGapProfile h) d at hslope
+  change 0 < deriv (deriv (middleGapProfile h)) d at hcurve
+  have hβ : 0 ≤ -β v := neg_nonneg.mpr hvNorm.2.2.2.le
+  have hgain := mul_le_mul_of_nonneg_left hslope hβ
+  have hα := mul_nonneg huNorm.1 (hB.trans hslope)
+  have hαβ : 0 ≤ α u * (-β v) * E d / 4 :=
+    div_nonneg (mul_nonneg (mul_nonneg huNorm.1 hβ) (Real.exp_pos _).le) (by norm_num)
+  refine logKernel_middleGap_mixed_of_profile_margin hp hu hd (shortGapF_pos hp₀ hd₀).le ?_
+  rw [neg_mul]
+  change 0 < deriv (deriv (shortGapF h)) d - (α u - β v) * deriv (shortGapF h) d -
+    (β v - m) * E d * (deriv (shortGapQuotient h) u + (α u + m) * shortGapQuotient h u)
+  have hrecenter : deriv (deriv (shortGapF h)) d - (α u - β v) * deriv (shortGapF h) d -
+        (β v - m) * E d * (deriv (shortGapQuotient h) u + (α u + m) * shortGapQuotient h u) =
+      deriv (deriv (middleGapProfile h)) d - (α u - β v) * deriv (middleGapProfile h) d +
+        α u * (-β v) * E d / 4 -
+        (m - β v) * ((3 / 2 + β u + upperTailSlope (3 + h) u) * r) * E d := by
+    rw [hfirst hd₀, hsecond, hq, ← hqd]
+    ring
+  rw [hrecenter]
+  nlinarith only [hcurve, hgeo, hgain, hα, hαβ]
+
+#print axioms logKernel_middleGap_mixed_of_recentered
 
 /-- A certificate for the scalar discriminant and endpoint slope implies the
 strict mixed sign on the entire unbounded short-gap region. -/

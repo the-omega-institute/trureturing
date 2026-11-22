@@ -41,6 +41,192 @@ theorem shortGapQuotient_recenter {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
   field_simp [ha.ne']
   linarith only [hgap]
 
+/-- The derivative of the recentered geometric correction cancels its lower log slope. -/
+theorem shortGapQuotient_recentered_slope {h t α β : ℝ} (hh : 0 < h) (ht : 0 < t)
+    (hlog : α - β = upperTailSlope h t) :
+    let g := 3 + h
+    let m := 3 / 2 + h
+    let r := upperTailSlope h t * (1 - Real.exp (-(g*t)))
+    (-deriv (shortGapQuotient h) t) + (α + m) * r =
+      (3 / 2 + β + upperTailSlope g t) * r := by
+  let g : ℝ := 3 + h
+  let L := upperTailSlope h
+  let r : ℝ → ℝ := fun x ↦ L x * (1 - Real.exp (-(g*x)))
+  have hg : 0 < g := by dsimp [g]; positivity
+  have h_exp : HasDerivAt (fun x ↦ Real.exp (-(g*x)))
+      (-g * Real.exp (-(g*t))) t := by
+    simpa only [one_mul, Pi.neg_apply, mul_comm] using (((hasDerivAt_id' t).const_mul g).neg.exp)
+  have hr := (hasDerivAt_upperTailSlope hh ht).fun_mul ((hasDerivAt_const t (1 : ℝ)).fun_sub h_exp)
+  change HasDerivAt r _ t at hr
+  have hq : shortGapQuotient h =ᶠ[𝓝 t] fun x ↦ 1 / 4 - r x := by
+    filter_upwards [eventually_gt_nhds ht] with x hx
+    exact shortGapQuotient_recenter hh hx
+  have hqd : deriv (shortGapQuotient h) t = -deriv r t := by
+    rw [hq.deriv_eq, (hr.const_sub (1 / 4)).deriv, hr.deriv]
+  have hgeom : upperTailSlope g t * (1 - Real.exp (-(g*t))) = g * Real.exp (-(g*t)) := by
+    rw [← upperTailGap_logDeriv hg ht, (hasDerivAt_upperTailGap (t := t) hg).deriv]
+    rw [show 1 - Real.exp (-(g*t)) = g * upperTailGap g t by
+      unfold upperTailGap; field_simp [hg.ne']]
+    have ha : 0 < upperTailGap g t := by
+      rw [expGapMean_eq hg]
+      exact mul_pos ht (expGapMean_pos _ _)
+    field_simp [ha.ne']
+  change -deriv (shortGapQuotient h) t + (α + (3 / 2 + h)) * r t = _
+  rw [hqd, neg_neg, hr.deriv]
+  have hα : α = β + L t := by dsimp [L]; linarith only [hlog]
+  rw [hα]
+  dsimp only [r, L]
+  rw [show (3 / 2 + β + upperTailSlope g t) *
+      (upperTailSlope h t * (1 - Real.exp (-(g*t)))) =
+      (3 / 2 + β) * (upperTailSlope h t * (1 - Real.exp (-(g*t)))) +
+        upperTailSlope h t * (upperTailSlope g t * (1 - Real.exp (-(g*t)))) by ring]
+  rw [hgeom]
+  ring
+
+/-- Transport the logarithmic gap slope from `u + d` to `u`. -/
+theorem upperTailSlope_add_relation {h u d : ℝ} (hh : 0 < h) (hu : 0 < u) (hd : 0 < d) :
+    upperTailSlope h u = upperTailSlope h (u + d) * Real.exp (h*d) *
+      (1 + upperTailGap h d * upperTailSlope h u) := by
+  have he : Real.exp (h * (u + d)) = Real.exp (h*u) * Real.exp (h*d) := by
+    rw [mul_add, Real.exp_add]
+  have hU : 0 < Real.exp (h*u) - 1 :=
+    sub_pos.mpr (Real.one_lt_exp_iff.mpr (mul_pos hh hu))
+  have hV : 0 < Real.exp (h*u) * Real.exp (h*d) - 1 := by
+    rw [← he]
+    exact sub_pos.mpr (Real.one_lt_exp_iff.mpr (mul_pos hh (add_pos hu hd)))
+  unfold upperTailSlope upperTailGap
+  rw [he, Real.exp_neg]
+  field_simp [hh.ne', hU.ne', hV.ne', (Real.exp_pos (h*d)).ne']
+  ring
+
+/-- The residual geometric slope above rate three is small at every lower coordinate at least four. -/
+theorem upperTailSlope_three_add_le {h u : ℝ} (hh : 0 ≤ h) (hu : 4 ≤ u) :
+    upperTailSlope (3 + h) u ≤ 1 / 50000 := by
+  have hu₀ : 0 < u := by linarith
+  have hg : 0 < 3 + h := by positivity
+  have hd : 0 < Real.exp ((3+h)*u) - 1 :=
+    sub_pos.mpr (Real.one_lt_exp_iff.mpr (mul_pos hg hu₀))
+  have he4 : (54 : ℝ) ≤ Real.exp 4 := by
+    have ht := Real.sum_le_exp_of_nonneg (by norm_num : (0 : ℝ) ≤ 4) 12
+    norm_num [Finset.sum_range_succ, Nat.factorial] at ht
+    linarith only [ht]
+  have he12 : (150001 : ℝ) ≤ Real.exp 12 := calc
+    _ ≤ (54 : ℝ)^3 := by norm_num
+    _ ≤ Real.exp 4 ^ 3 := pow_le_pow_left₀ (by norm_num) he4 3
+    _ = _ := by rw [← Real.exp_nat_mul]; norm_num
+  have hlower : 1 + 50000*(3+h) ≤ Real.exp ((3+h)*u) := calc
+    _ ≤ 150001 * (1 + 4*h) := by linarith
+    _ ≤ Real.exp 12 * Real.exp (4*h) := mul_le_mul he12 (by linarith [Real.add_one_le_exp (4*h)])
+      (by positivity) (Real.exp_pos _).le
+    _ = Real.exp ((3+h)*4) := by rw [← Real.exp_add]; congr 1; ring
+    _ ≤ _ := Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_left hu hg.le)
+  apply (div_le_div_iff₀ hd (by norm_num : (0 : ℝ) < 50000)).mpr
+  linarith only [hlower]
+
+/-- The product obtained by transporting the two logarithmic slopes is maximal at one quarter. -/
+theorem middleGap_geometric_product_bound {x a δ : ℝ} (hx : 0 ≤ x) (hx₁ : x ≤ 1 / 4)
+    (ha : 1 ≤ a) (hδ : 0 ≤ δ) :
+    (1 + a*x)*(3/2 - x/2 + δ) ≤ (1 + a/4)*(11/8 + δ) := by
+  have ha₀ : 0 ≤ a := by linarith
+  have hcoef : 0 ≤ (3/2 + δ)*a - 1/2 - (a/2)*(1/4 + x) := by
+    have hm := mul_le_mul_of_nonneg_left (show (1/4 : ℝ) + x ≤ 1/2 by linarith) (by positivity : 0 ≤ a/2)
+    nlinarith only [hm, mul_nonneg hδ ha₀, ha]
+  have hprod := mul_nonneg (sub_nonneg.mpr hx₁) hcoef
+  nlinarith only [hprod]
+
+/-- A slope bound that absorbs the geometric correction uniformly in the lower coordinate. -/
+noncomputable def middleGapSlopeBudget (h d : ℝ) : ℝ :=
+  (11 / 4 + 1 / 25000) * (3 / 2 + h + 1 / (4+d)) *
+    (1 + upperTailGap h d / 4) * Real.exp (-(3*d/2))
+
+theorem middleGap_geometric_absorption {h u d bu bv : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3/11) (hu : 4 ≤ u) (hd : 2 ≤ d)
+    (hbu : upperTailSlope h u / 2 ≤ bu) (hbv : upperTailSlope h (u+d) / 2 ≤ bv)
+    (hbvmax : bv ≤ 1 / (u+d)) :
+    let m := 3/2+h
+    let r := upperTailSlope h u * (1 - Real.exp (-((3+h)*u)))
+    (m+bv)*(3/2-bu+upperTailSlope (3+h) u)*r*Real.exp (-(m*d)) ≤
+      bv * middleGapSlopeBudget h d := by
+  let x := upperTailSlope h u
+  let a := upperTailGap h d
+  let l := upperTailSlope h (u+d)
+  let m : ℝ := 3/2+h
+  let δ : ℝ := 1/50000
+  let e := upperTailSlope (3+h) u
+  let r := x * (1 - Real.exp (-((3+h)*u)))
+  let A : ℝ := 3/2-x/2+δ
+  have hu₀ : 0 < u := by linarith
+  have hd₀ : 0 < d := by linarith
+  have hv₀ : 0 < u+d := add_pos hu₀ hd₀
+  have hx : 0 < x := (upperTailSlope_bounds hh hu₀).1
+  have hx₁ : x ≤ 1/4 := (upperTailSlope_bounds hh hu₀).2.1.trans
+    (one_div_le_one_div_of_le (by norm_num) hu)
+  have hl : 0 < l := (upperTailSlope_bounds hh hv₀).1
+  have hb₀ : 0 ≤ bv := (by positivity : 0 ≤ l / 2).trans hbv
+  have hm : 0 < m := by dsimp [m]; positivity
+  have hA : 0 ≤ A := by dsimp [A, δ]; linarith only [hx₁]
+  have hr : 0 ≤ r := by
+    dsimp [r]
+    exact mul_nonneg hx.le (sub_nonneg.mpr (Real.exp_le_one_iff.mpr (by nlinarith)))
+  have hrx : r ≤ x := by
+    dsimp [r]
+    exact mul_le_of_le_one_right hx.le (by linarith [Real.exp_nonneg (-((3+h)*u))])
+  have hδ : e ≤ δ := upperTailSlope_three_add_le hh.le hu
+  have hbu' : x / 2 ≤ bu := hbu
+  have hfactor : (3/2-bu+e)*r ≤ A*x :=
+    mul_le_mul (add_le_add (sub_le_sub_left hbu' (3 / 2)) hδ) hrx hr hA
+  have ha₀ : 0 < a := by
+    unfold a
+    rw [expGapMean_eq hh]
+    exact mul_pos hd₀ (expGapMean_pos _ _)
+  have hrec : 1 / a = h + upperTailSlope h d := by
+    have hgap : h*a + Real.exp (-(h*d)) = 1 := by
+      unfold a upperTailGap
+      field_simp [hh.ne']
+      ring
+    rw [← upperTailGap_logDeriv hh hd₀, (hasDerivAt_upperTailGap (t := d) hh).deriv]
+    change 1/a = h + Real.exp (-(h*d))/a
+    field_simp [ha₀.ne']
+    linarith only [hgap]
+  have ha : 1 ≤ a := by
+    have hL := (upperTailSlope_bounds hh hd₀).2.1.trans
+      (one_div_le_one_div_of_le (by norm_num) hd)
+    have hcap : 1 / a ≤ 1 := by rw [hrec]; linarith only [hhmax, hL]
+    simpa using (div_le_iff₀ ha₀).mp hcap
+  have hxrel : x = l * Real.exp (h*d) * (1+a*x) := upperTailSlope_add_relation hh hu₀ hd₀
+  have hexp : Real.exp (h*d) * Real.exp (-(m*d)) = Real.exp (-(3*d/2)) := by
+    rw [← Real.exp_add]
+    congr 1
+    dsimp [m]
+    ring
+  have hB : (1 + a*x)*A ≤ (1 + a/4)*(11/8+δ) :=
+    middleGap_geometric_product_bound hx.le hx₁ ha (δ := δ) (by norm_num [δ])
+  have hV : m+bv ≤ m+1/(4+d) := add_le_add_right
+    (hbvmax.trans (one_div_le_one_div_of_le (by linarith : 0 < 4+d) (by linarith : 4+d ≤ u+d))) m
+  change (m+bv)*(3/2-bu+e)*r*Real.exp (-(m*d)) ≤ _
+  calc
+    _ ≤ (m+bv)*(A*x)*Real.exp (-(m*d)) := by
+      rw [mul_assoc (m+bv)]
+      exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hfactor (by positivity))
+        (Real.exp_pos _).le
+    _ = (m+bv)*l*Real.exp (-(3*d/2))*((1+a*x)*A) := by
+      conv_lhs => rw [hxrel]
+      rw [show (m+bv)*(A*(l*Real.exp (h*d)*(1+a*x)))*Real.exp (-(m*d)) =
+        (m+bv)*l*((1+a*x)*A)*(Real.exp (h*d)*Real.exp (-(m*d))) by ring, hexp]
+      ring
+    _ ≤ (m+1/(4+d))*(2*bv)*Real.exp (-(3*d/2))*((1+a/4)*(11/8+δ)) := by
+      have htwo : l ≤ 2 * bv := by
+        have hlb : l / 2 ≤ bv := hbv
+        simpa only [mul_comm bv] using (div_le_iff₀ (by norm_num : (0 : ℝ) < 2)).mp hlb
+      have hv' : 0 ≤ m + 1 / (4+d) := add_nonneg hm.le (one_div_nonneg.mpr (by linarith))
+      have hexp' : 0 ≤ Real.exp (-(3*d/2)) := (Real.exp_pos _).le
+      have hcoeff := mul_le_mul_of_nonneg_right (mul_le_mul hV htwo hl.le hv') hexp'
+      have hterm : 0 ≤ (1+a*x)*A :=
+        mul_nonneg (add_nonneg zero_le_one (mul_nonneg ha₀.le hx.le)) hA
+      have hbound := mul_nonneg (mul_nonneg hv' (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hb₀)) hexp'
+      exact mul_le_mul hcoeff hB hterm hbound
+    _ = _ := by dsimp [middleGapSlopeBudget, m, a, δ]; ring
+
 /-- The geometric term has a positive margin away from the lower endpoint four. -/
 theorem shortGapQuotient_lower {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     1 / 4 - 1 / t ≤ shortGapQuotient h t := by

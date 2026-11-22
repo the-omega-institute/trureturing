@@ -323,6 +323,100 @@ theorem shortGapNormalization_bounds {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 /
   exact ⟨hα_pos.le, hα_upper, by linarith only [hL_le, hα_pos],
     neg_neg_of_pos (div_pos hw_pos (by positivity))⟩
 
+/-- The difference between the two normalization slopes is the logarithmic gap slope. -/
+theorem shortGapNormalization_logDiff {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+    let P := fun s ↦ upperTailGap h s / Real.sqrt (shortGapWeight h s)
+    let V := fun s ↦ 1 / Real.sqrt (shortGapWeight h s)
+    deriv P t / P t - deriv V t / V t = upperTailSlope h t := by
+  let a := upperTailGap h
+  let V : ℝ → ℝ := fun s ↦ 1 / Real.sqrt (shortGapWeight h s)
+  let P : ℝ → ℝ := fun s ↦ a s / Real.sqrt (shortGapWeight h s)
+  change deriv P t / P t - deriv V t / V t = _
+  have hP : P = fun s ↦ a s * V s := by funext s; simp only [P, V, div_eq_mul_inv, one_mul]
+  have ha : 0 < a t := by
+    unfold a
+    rw [expGapMean_eq hh]
+    exact mul_pos ht (expGapMean_pos _ _)
+  have hW := shortGapWeight_pos hh ht
+  have hV : 0 < V t := one_div_pos.mpr (Real.sqrt_pos.mpr hW)
+  have hdV : DifferentiableAt ℝ V t := by
+    exact (differentiableAt_const (c := 1)).div
+      ((hasDerivAt_shortGapWeight hh).sqrt hW.ne').differentiableAt (Real.sqrt_pos.mpr hW).ne'
+  have hda : HasDerivAt a (Real.exp (-(h*t))) t := hasDerivAt_upperTailGap hh
+  have hp := (hda.fun_mul hdV.hasDerivAt).deriv
+  rw [hP, hp]
+  have hlog : Real.exp (-(h*t)) / a t = upperTailSlope h t := by
+    simpa only [(hasDerivAt_upperTailGap (t := t) hh).deriv] using upperTailGap_logDeriv hh ht
+  rw [← hlog]
+  field_simp [ha.ne', hV.ne']
+  exact add_sub_cancel_right _ _
+
+/-- The upper normalization helps absorb the geometric correction at larger gaps. -/
+theorem shortGap_upperLogDeriv_le {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
+    (ht : 4 ≤ t) :
+    let V := fun s ↦ 1 / Real.sqrt (shortGapWeight h s)
+    deriv V t / V t ≤ -upperTailSlope h t / 2 := by
+  let a := upperTailGap h t
+  let b := Real.exp (-(h*t))
+  let k : ℝ := 3+2*h
+  let g : ℝ := 3+h
+  let c : ℝ := g*k/2
+  let E := Real.exp (-(k*t))
+  let W := shortGapWeight h t
+  let w := k*(b-E)+c*a*Real.exp (-t)*(a-2*b)
+  have ht₀ : 0 < t := by linarith
+  have ha : 0 < a := (by norm_num : (0 : ℝ) < 11 / 6).trans
+    (shortGap_gap_lower hh hhmax ht)
+  have hW : 0 < W := shortGapWeight_pos hh ht₀
+  have hL : b/a = upperTailSlope h t := by
+    simpa only [(hasDerivAt_upperTailGap (t := t) hh).deriv] using upperTailGap_logDeriv hh ht₀
+  have hba : b ≤ a := by
+    have h.inv : 1 / t ≤ 1 := (div_le_one ht₀).mpr (by linarith)
+    have hratio := (upperTailSlope_bounds hh ht₀).2.1.trans h.inv
+    rw [← hL] at hratio
+    simpa using (div_le_iff₀ ha).mp hratio
+  have hgeom : b - (b+k*a)*E ≥ 0 := by
+    have hb₁ : b ≤ 1 := Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le ht₀.le))
+    have hka := mul_le_mul_of_nonneg_left (upperTailGap_le (t := t) hh) (show 0 ≤ k by positivity)
+    have hgt : 0 ≤ g*t := by positivity
+    have hexp := Real.sum_le_exp_of_nonneg hgt 3
+    norm_num [Finset.sum_range_succ, Nat.factorial] at hexp
+    have hgt₃ : 3*t ≤ g*t := mul_le_mul_of_nonneg_right (by dsimp [g]; linarith) ht₀.le
+    have hgt₂ := pow_le_pow_left₀ (show 0 ≤ 3*t by positivity) hgt₃ 2
+    have hht := mul_le_mul_of_nonneg_right (show h ≤ 1 by linarith) ht₀.le
+    have ht₂ : t ≤ t^2 := by nlinarith only [mul_nonneg ht₀.le (show 0 ≤ t-1 by linarith)]
+    have hlarge : b+k*a ≤ Real.exp (g*t) := by
+      dsimp only [k] at hka ⊢
+      dsimp only [g] at hexp hgt₂
+      nlinarith only [hexp, hgt₂, hht, ht₂, hb₁, hka, sq_nonneg t]
+    have hprod : Real.exp (g*t)*E = b := by
+      dsimp [E, b]
+      rw [← Real.exp_add]
+      congr 1
+      dsimp [g, k]
+      ring
+    exact sub_nonneg.mpr ((mul_le_mul_of_nonneg_right hlarge (Real.exp_pos _).le).trans_eq hprod)
+  have hcompare : b*W ≤ a*w := by
+    have h := add_nonneg hgeom (mul_nonneg
+      (show 0 ≤ c*a^2*Real.exp (-t) by dsimp only [c]; positivity) (sub_nonneg.mpr hba))
+    change b*(E-1+k*a-c*a^2*Real.exp (-t)) ≤ a*(k*(b-E)+c*a*Real.exp (-t)*(a-2*b))
+    nlinarith only [h]
+  have hs : 0 < Real.sqrt W := Real.sqrt_pos.2 hW
+  have hs₂ : (Real.sqrt W)^2 = W := Real.sq_sqrt hW.le
+  have hW' : HasDerivAt (shortGapWeight h) w t := hasDerivAt_shortGapWeight hh
+  change deriv (fun s ↦ 1 / Real.sqrt (shortGapWeight h s)) t / (1 / Real.sqrt W) ≤ _
+  rw [((hasDerivAt_const t (1 : ℝ)).fun_div (hW'.sqrt hW.ne') hs.ne').deriv, ← hL]
+  have he : (0 * Real.sqrt W - 1 * (w / (2 * Real.sqrt W))) / (Real.sqrt W)^2 /
+      (1 / Real.sqrt W) = -(w / (2 * W)) := by
+    calc
+      _ = -(w / (2 * (Real.sqrt W)^2)) := by simp only [zero_mul, one_mul, zero_sub]; field_simp [hs.ne']
+      _ = _ := by rw [hs₂]
+  rw [he, neg_div]
+  apply neg_le_neg
+  rw [div_div]
+  exact (div_le_div_iff₀ (by positivity : 0 < a * 2) (by positivity : 0 < 2 * W)).mpr
+    (by nlinarith only [hcompare])
+
 #print axioms shortGapWeight_pos
 #print axioms shortGapNormalization_bounds
 
