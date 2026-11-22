@@ -193,7 +193,7 @@ theorem exists_memory_effect (p : X → ℝ) (ψ : X → ι → ℂ)
 omit [DecidableEq ι] in
 /-- Bounded nonnegative weights of total mass at most `M` can capture at most the
 sum over any set of the `min M (card ι)` largest entries. -/
-private theorem weighted_sum_le_top (a w : ι → ℝ) (M : ℕ) (J : Finset ι)
+theorem weighted_sum_le_top (a w : ι → ℝ) (M : ℕ) (J : Finset ι)
     (hJ : J.card = min M (Fintype.card ι))
     (htop : ∀ i ∈ J, ∀ j ∉ J, a j ≤ a i)
     (ha : ∀ i, 0 ≤ a i) (hw0 : ∀ i, 0 ≤ w i) (hw1 : ∀ i, w i ≤ 1)

@@ -42,7 +42,8 @@ private theorem root_imaginary_coefficient (hRH : RiemannHypothesis) (r : ℝ) (
     Complex.normSq_apply, on_line hRH k, ← pow_two, div_eq_mul_inv, mul_inv_rev]
   ring
 
-private theorem odd_root_increment (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) {h : ℝ}
+/-- The odd part about the origin is bounded linearly under RH. -/
+theorem odd_root_increment (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) {h : ℝ}
     (hh : 0 ≤ h) :
     let s : ℝ := 1 / 2 - (2 * r)⁻¹
     |rootSignal r h - rootSignal r (-h)| ≤ 2 * (r - 1) * firstLiMass * h / s := by

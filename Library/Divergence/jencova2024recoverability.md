@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2303.11707"
 claim: "Corollary 1 gives the normalized forward-profile finite-interval formula under two-sided scalar Loewner bounds."
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
+  - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
 license: "citation-only"
 triage: "anchor"
 ---

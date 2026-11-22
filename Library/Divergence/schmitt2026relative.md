@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2609.12547"
 claim: "Corollary 4.2, equations (36)–(38), gives the finite PSD affine-pencil and forward hockey-stick formulas with the affine correction and support containment."
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
+  - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
 license: "citation-only"
 triage: "anchor"
 ---

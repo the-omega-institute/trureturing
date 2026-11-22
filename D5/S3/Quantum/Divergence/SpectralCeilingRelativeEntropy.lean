@@ -87,7 +87,7 @@ private theorem scalar_log_gap {M x y : ℝ} (hM : 0 < M)
   dsimp [f] at hmin
   linarith only [hmin]
 
-private def overlap {n : Type*} [Fintype n] [DecidableEq n]
+def overlap {n : Type*} [Fintype n] [DecidableEq n]
     {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian)
     (i j : n) : ℝ :=
   ‖star (fun x => hB.eigenvectorBasis j x) ⬝ᵥ
@@ -117,7 +117,7 @@ private theorem overlap_column {n : Type*} [Fintype n] [DecidableEq n]
   dsimp [overlap]
   rw [dotProduct_comm]
 
-private theorem trace_cfc_product {n : Type*} [Fintype n] [DecidableEq n]
+theorem trace_cfc_product {n : Type*} [Fintype n] [DecidableEq n]
     (A B : Matrix n n ℂ) (hA : A.IsHermitian) (hB : B.IsHermitian)
     (f g : ℝ → ℝ) :
     (cfc f A * cfc g B).trace.re =
@@ -168,7 +168,7 @@ private theorem eigenvalue_le_ceiling {n : Type*} [Fintype n] [DecidableEq n]
     dotProduct_smul, hv] at h
   simpa [Complex.real_smul, smul_eq_mul, sub_nonneg] using h
 
-private theorem trace_self_cfc {n : Type*} [Fintype n] [DecidableEq n]
+theorem trace_self_cfc {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) (f : ℝ → ℝ) :
     (A * cfc f A).trace.re = ∑ i, hA.eigenvalues i * f (hA.eigenvalues i) := by
   have hid : cfc (fun x : ℝ => x) A = A := cfc_id ℝ A hA
@@ -179,12 +179,12 @@ private theorem trace_self_cfc {n : Type*} [Fintype n] [DecidableEq n]
         (A.finite_real_spectrum.continuousOn _) (A.finite_real_spectrum.continuousOn _)]
     _ = _ := D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum A hA _
 
-private theorem overlap_weighted_row {n : Type*} [Fintype n] [DecidableEq n]
+theorem overlap_weighted_row {n : Type*} [Fintype n] [DecidableEq n]
     {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian) (f : n → ℝ) :
     ∑ i, ∑ j, f i * overlap hA hB i j = ∑ i, f i := by
   simp_rw [← Finset.mul_sum, overlap_row, mul_one]
 
-private theorem overlap_weighted_column {n : Type*} [Fintype n] [DecidableEq n]
+theorem overlap_weighted_column {n : Type*} [Fintype n] [DecidableEq n]
     {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian) (g : n → ℝ) :
     ∑ i, ∑ j, g j * overlap hA hB i j = ∑ j, g j := by
   rw [Finset.sum_comm]
