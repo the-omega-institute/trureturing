@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class DiagonalRecordCapacityDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Quantum/Recovery/DiagonalRecordCapacity.DiagonalExperiment.";
+        "D5/S3/Quantum/Recovery/DiagonalRecordCapacity.";
 
     private static readonly LibraryNoteRef Galke =
         LibraryNoteRef.Create("D5/L/QuantumChannels/galke2023renyisufficiency");

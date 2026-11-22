@@ -8,7 +8,7 @@ url: https://arxiv.org/abs/2304.12989
 claim: "For two commuting states, Appendix B groups equal likelihood ratios in the minimal sufficient decomposition, including a zero ratio when the comparison vanishes on a positive reference coordinate."
 strata_touched:
   - D5/S3/Quantum/Recovery/DiagonalRecordCapacity
-  - D5/S3/QuantumChannels/FibonacciBathRecordCapacity
+  - D5/S3/QuantumChannels/FibonacciBathObservation
 license: citation-only
 triage: anchor
 ---
