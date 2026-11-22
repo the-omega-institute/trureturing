@@ -87,3 +87,6 @@ At rD = 1/z with 0 < z < 1, the actual dLipMean equals the chosen D source on th
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_square`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.dLipMean_eq_chosen_chart_source`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMDLipMean](OriginalFourMDLipMean.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance](OriginalFourMSignedCovariance.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSlitCovariance](OriginalFourMSlitCovariance.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial](../Signed/JSpatial.md)

@@ -41,7 +41,7 @@ private theorem parity_deficit {A : Type*} [Fintype A] [DecidableEq A]
     simpa [Nat.ModEq] using congruence
   omega
 
-private theorem rank_cuts
+theorem rank_cuts
     {P Q : Type*} [Fintype P] [Fintype Q] [DecidableEq P] [DecidableEq Q]
     (mass weight : P → Q → ℕ) (specialFlags : Q → ℕ)
     (zeroRow special : P) (different : zeroRow ≠ special)
@@ -190,7 +190,7 @@ private theorem rank_size (n r t : ℕ) (rh : r % 2 = t) :
       exact ⟨⟨a, size ▸ rh⟩, mem_filter.mpr ⟨mem_univ _, size⟩, rfl⟩
   rw [← card_map f, same, card_powersetCard, card_univ, Fintype.card_fin]
 
-private theorem high_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
+theorem high_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
     [DecidableEq P] [DecidableEq Q] (mass : P → Q → ℕ)
     (special : P) (high : Finset P) (low : Finset Q) (k : ℕ)
     (hs : special ∉ high) (cols : ∀ q, ∑ p, mass p q = k) :
@@ -203,7 +203,7 @@ private theorem high_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
     _ ≤ ∑ _q ∈ low, k := sum_le_sum fun q _ => colBound q
     _ = _ := by simp [sum_const]
 
-private theorem top_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
+theorem top_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
     [DecidableEq Q] (mass : P → Q → ℕ) (zeroRow special : P)
     (top : Finset Q) (k : ℕ) (rows : ∀ p, ∑ q, mass p q = k) :
     (∑ q ∈ top, (mass zeroRow q + mass special q)) +

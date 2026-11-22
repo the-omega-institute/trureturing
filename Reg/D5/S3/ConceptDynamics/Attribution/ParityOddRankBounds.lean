@@ -39,7 +39,7 @@ abbrev arena : Arena where
     R.readout () n k ≤ ∑ p : EvenSubset n, ∑ q : OddSubset n,
       (if p.val = univ then flags q else mass p q % 2) * (p.val ∩ q.val).card
 
-private theorem rank_test_matrix :
+theorem rank_test_matrix :
     ∃ m : EvenSubset 6 → OddSubset 6 → ℕ, (∀ p, ∑ q, m p q = 1) ∧
       (∀ q, ∑ p, m p q = 1) ∧ ∀ p q, m p q ≤ 1 := by
   classical
@@ -58,7 +58,7 @@ private theorem rank_test_matrix :
     unfold m
     split <;> decide
 
-private theorem test_score_at_most
+theorem test_score_at_most
     (m : EvenSubset 6 → OddSubset 6 → ℕ) (flags : OddSubset 6 → ℕ)
     (massBound : ∀ p q, m p q ≤ 1) (flagBound : ∀ q, flags q ≤ 1) :
     (∑ p : EvenSubset 6, ∑ q : OddSubset 6,

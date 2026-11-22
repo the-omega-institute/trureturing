@@ -6,6 +6,7 @@
    utility: none
    digest: Physical inverse-coordinate transport of the original signed Gaussian. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChartProduct
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSignedOverlap
 
@@ -22,6 +23,9 @@ namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMOccupationTransport
 open FourPoint.OriginalFourMActualChart
   (Chart Puncture parameter scale scaleRoot loweringParameter periodRoot halfDifferentialAt
     relativeB relativeD chosen_roots half_differential_signs)
+
+open private scale_ne from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMActualChart
+
 open OriginalFourMSignedOverlap
   (legSign chosenChartSource chosen_chart_source_at_zero chosen_chart_source_square
     chart_parameter_ne_one)
@@ -45,42 +49,40 @@ half-coordinate, evaluated at inverse root `β`. -/
 def halfJacobian (c : Chart) (x : ℝ) (i : Puncture) (β : ℂ) : ℂ :=
   scaleRoot c x i / β ^ 3
 
-private theorem scale_nonzero {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
-    (c : Chart) (i : Puncture) : scale c x i ≠ 0 := by
-  have hx0 : (x : ℂ) ≠ 0 := by exact_mod_cast hx.ne'
-  have h1x : 1 - (x : ℂ) ≠ 0 := by exact_mod_cast (sub_pos.mpr hx1).ne'
-  have hx1' : (x : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (sub_ne_zero.mp h1x).symm
-  cases c <;> cases i <;> simp [scale, hx0, h1x, hx1']
-
 /-- The normalized local root in the inverse lowering coordinate. -/
 def inverseRoot (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
   (1 - loweringParameter c i * rawLocal c x i u) ^ (1 / 2 : ℂ)
 
-private theorem inverseRoot_sq (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) :
+/-- The normalized inverse root squares to the lowering denominator. -/
+theorem inverseRoot_sq (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) :
     inverseRoot c x i u ^ 2 = 1 - loweringParameter c i * rawLocal c x i u := by
   unfold inverseRoot
   rw [← Complex.cpow_mul_nat]
   norm_num
 
-private theorem rawLocal_analytic {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
+/-- The inverse lowering coordinate is analytic at the physical puncture. -/
+theorem rawLocal_analytic {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
     (c : Chart) (i : Puncture) : AnalyticAt ℂ (rawLocal c x i) 0 :=
   analyticAt_id.div (analyticAt_const.add (analyticAt_const.mul analyticAt_id))
-    (by simpa using scale_nonzero hx hx1 c i)
+    (by simpa using scale_ne hx hx1 c i)
 
-private theorem inverseRoot_zero (c : Chart) (x : ℝ) (i : Puncture) :
+/-- The inverse root takes its normalized value at the puncture. -/
+theorem inverseRoot_zero (c : Chart) (x : ℝ) (i : Puncture) :
     inverseRoot c x i 0 = 1 := by simp [inverseRoot, rawLocal]
 
-private theorem inverseRoot_analytic {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
+/-- The chosen inverse root is analytic at the physical puncture. -/
+theorem inverseRoot_analytic {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
     (c : Chart) (i : Puncture) : AnalyticAt ℂ (inverseRoot c x i) 0 :=
   (analyticAt_const.sub (analyticAt_const.mul (rawLocal_analytic hx hx1 c i))).cpow
     analyticAt_const (by simp [rawLocal])
 
-private theorem root_ne {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
+/-- The chosen scale root is nonzero throughout the real overlap. -/
+theorem root_ne {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
     (c : Chart) (i : Puncture) : scaleRoot c x i ≠ 0 := by
   intro hr
   have hroots : scaleRoot c x i ^ 2 = scale c x i ∧
       periodRoot c x ^ 2 = 1 - parameter c x := chosen_roots hx hx1 c i
-  exact scale_nonzero hx hx1 c i (by simpa [hr] using hroots.1.symm)
+  exact scale_ne hx hx1 c i (by simpa [hr] using hroots.1.symm)
 
 /-- The signed native source in the common physical coordinate at one puncture. -/
 def physicalSource (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
@@ -166,7 +168,7 @@ private theorem physicalSource_sq_common {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
     norm_num
   have hlocal : ∀ᶠ u : ℂ in 𝓝 0, scale c (x : ℂ) i + loweringParameter c i * u ≠ 0 :=
     (continuousAt_const.add (continuousAt_const.mul continuousAt_id)).eventually_ne
-      (by simpa using scale_nonzero hx hx1 c i)
+      (by simpa using scale_ne hx hx1 c i)
   have hden : ∀ᶠ u : ℂ in 𝓝 0, sourceDenominator x i u ≠ 0 := by
     have hcont : Continuous (sourceDenominator x i) := by
       cases i <;> unfold sourceDenominator <;> fun_prop
@@ -187,7 +189,7 @@ private theorem physicalSource_sq_common {x : ℝ} (hx : 0 < x) (hx1 : x < 1)
     with u hu hlocal hden hrb hrh
   rw [hu]
   dsimp only
-  rw [div_eq_div_iff (mul_ne_zero (scale_nonzero hx hx1 c i) (mul_ne_zero hrb hrh)) hden]
+  rw [div_eq_div_iff (mul_ne_zero (scale_ne hx hx1 c i) (mul_ne_zero hrb hrh)) hden]
   cases c <;> cases i <;>
     simp only [rawLocal, scale, loweringParameter, parameter, flags, b, h, Bool.false_eq_true,
       ite_false, ite_true, zero_mul, one_mul, add_zero, sub_zero, sub_sub_cancel,
