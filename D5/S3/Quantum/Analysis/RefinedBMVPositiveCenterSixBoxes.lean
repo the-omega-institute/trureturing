@@ -1276,4 +1276,51 @@ theorem logKernel_small_corner_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
 #print axioms taylorBoxesEnclose
 #print axioms logKernel_small_corner_lt
 
+/-- The dyadic enclosure operations shared by the compact kernel certificates. -/
+structure RoundedInterval where
+  endpoints : ℤ × ℤ
+
+namespace RoundedInterval
+
+def lower (I : RoundedInterval) : ℚ := (dyadicBounds I.endpoints).1
+def upper (I : RoundedInterval) : ℚ := (dyadicBounds I.endpoints).2
+def encloses (I : RoundedInterval) (x : ℝ) : Prop := Encloses (dyadicBounds I.endpoints) x
+
+def interval (lo hi : ℚ) : RoundedInterval :=
+  ⟨(dyadicFraction lo.num lo.den).1, (dyadicFraction hi.num hi.den).2⟩
+
+def point (q : ℚ) : RoundedInterval := interval q q
+
+instance : Add RoundedInterval := ⟨fun a b ↦ ⟨dyadicAdd a.endpoints b.endpoints⟩⟩
+instance : Sub RoundedInterval := ⟨fun a b ↦ ⟨dyadicAdd a.endpoints (dyadicNeg b.endpoints)⟩⟩
+instance : Mul RoundedInterval := ⟨fun a b ↦ ⟨dyadicMul a.endpoints b.endpoints⟩⟩
+instance : Zero RoundedInterval := ⟨point 0⟩
+
+theorem encloses_interval {lo hi : ℚ} {x : ℝ} (hl : (lo : ℝ) ≤ x) (hu : x ≤ (hi : ℝ)) :
+    (interval lo hi).encloses x := by
+  have hc (q : ℚ) : (q.num : ℝ) / (q.den : ℝ) = (q : ℝ) := by
+    exact_mod_cast q.num_div_den
+  have hL := dyadicFraction_encloses lo.num lo.den
+  have hU := dyadicFraction_encloses hi.num hi.den
+  rw [hc] at hL hU
+  exact ⟨hL.1.trans hl, hu.trans hU.2⟩
+
+theorem encloses_point (q : ℚ) : (point q).encloses (q : ℝ) :=
+  encloses_interval le_rfl le_rfl
+
+theorem encloses_add {a b : RoundedInterval} {x y : ℝ} (ha : a.encloses x) (hb : b.encloses y) :
+    (a + b).encloses (x + y) := dyadicAdd_encloses ha hb
+
+theorem encloses_sub {a b : RoundedInterval} {x y : ℝ} (ha : a.encloses x) (hb : b.encloses y) :
+    (a - b).encloses (x - y) := by
+  rw [sub_eq_add_neg]
+  refine dyadicAdd_encloses ha ?_
+  rw [dyadicNeg_bounds]
+  exact encloses_neg hb
+
+theorem encloses_mul {a b : RoundedInterval} {x y : ℝ} (ha : a.encloses x) (hb : b.encloses y) :
+    (a * b).encloses (x * y) := dyadicMul_encloses ha hb
+
+end RoundedInterval
+
 end RefinedBMV.PositiveCenter.SmallCorner

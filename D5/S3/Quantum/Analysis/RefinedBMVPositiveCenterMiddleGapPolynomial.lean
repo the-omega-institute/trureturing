@@ -75,6 +75,96 @@ noncomputable def middleGapCurvaturePolynomial (h a rho y : ℝ) : ℝ :=
       lambdaFactored h a rho y * rootFiveFactor U -
     y * rho * (a ^ 2 * m ^ 2 + (2 * m + h) * a * rho + 2 * rho ^ 2)
 
+/-- The two sign polynomials with the relation `h * a = 1 - rho` eliminated.
+The same expression is used for the real values and for interval arithmetic. -/
+def middleGapCompactPolynomials {R : Type*} [Add R] [Sub R] [Mul R]
+    (c : ℚ → R) (t a rho y : R) : R × R :=
+  let K := (c 3 * a + c 1 - rho) * (c 3 * a + c 2 - c 2 * rho) * c (1 / 2)
+  let V := K + y * rho * (c 2 + c 3 * a - rho)
+  let U := y * y * V
+  let R₀ := V * (c (1 / 2) + U * (c (1 / 8) + U * (c (1 / 16) +
+    U * (c (5 / 128) + U * c (7 / 256)))))
+  let A := c (1 / 2) + U * (c (1 / 4) + U * (c (3 / 16) +
+    U * (c (5 / 32) + U * c (35 / 256))))
+  let B := c (1 / 4) + U * (c (3 / 8) + U * (c (15 / 32) + U * c (35 / 64)))
+  let k := a - (c 1 - y) * rho
+  let b := c (3 / 2) * a + c 1
+  let Q := c 2 * K * k * A - (c (3 / 2) * a - rho) * R₀ - b * y * rho
+  let T := c 4 * K * K * y * y * k * k * B -
+    c 2 * K * (a * a - a * rho + (c 1 - y) * rho) * A +
+    (c (9 / 4) * a * a - c 3 * a * rho + rho + rho * rho) * R₀ - (b * b + rho) * y * rho
+  let P := (c 4 + t) * Q - c (68751 / 25000) * a * ((b - rho) * (c 4 + t) + a) *
+    (c 1 + a * c (1 / 4)) * y
+  (P, T)
+
+theorem middleGapCompactPolynomials_eq {h t a rho y : ℝ} (ha : h * a = 1 - rho) :
+    middleGapCompactPolynomials (fun q ↦ (q : ℝ)) t a rho y =
+      (middleGapSlopePolynomial h t a rho y, middleGapCurvaturePolynomial h a rho y) := by
+  let K := (3 + h) * (3 + 2 * h) / 2 * a ^ 2
+  let V := lambdaFactored h a rho y
+  let k := a - (1 - y) * rho
+  let b := 3 / 2 * a + 1
+  have hK : (3*a+1-rho)*(3*a+2-2*rho)/2 = K := by
+    calc
+      _ = (3*a+h*a)*(3*a+2*(h*a))/2 := by rw [ha]; ring
+      _ = _ := by unfold K; ring
+  have hV : K + y*rho*(2+3*a-rho) = V := by
+    unfold V lambdaFactored
+    change _ = y*rho*(1+(3+h)*a) + K
+    linear_combination -(y*rho) * ha
+  have hkb : (3 / 2 + h) * a + rho = b := by unfold b; linear_combination ha
+  have hkb' : a * (3 / 2 + h) + rho = b := by rw [mul_comm a]; exact hkb
+  have hsq : (3 / 2 + h)^2 * a^2 + (2*(3 / 2 + h)+h)*a*rho + 2*rho^2 = b*b+rho := by
+    rw [← hkb]
+    linear_combination rho * ha
+  have hP : (3 / 2 + h) * (4+t) * a + a = (b-rho)*(4+t)+a := by
+    rw [← hkb]
+    ring
+  have h₁ : a * lambdaDerivFactored h a rho y = -2*K*k := by
+    unfold lambdaDerivFactored K k
+    ring
+  have h₂ : a^2 * lambdaSecondFactored h a rho y +
+      a*(3*a-2*rho)*lambdaDerivFactored h a rho y =
+    -2*K*(a^2-a*rho+(1-y)*rho) := by
+    unfold lambdaSecondFactored lambdaDerivFactored K
+    linear_combination (-((3+h)*(3+2*h)*a^2*(1-y)*rho)) * ha
+  have h₃ : 9 / 4 * a^2 - 3*a*rho + 2*rho^2 + h*a*rho =
+      9 / 4 * a^2 - 3*a*rho + rho + rho^2 := by
+    linear_combination rho * ha
+  have h₄ : a^2 * (lambdaDerivFactored h a rho y)^2 = 4*K*K*k*k := by
+    calc
+      _ = (a * lambdaDerivFactored h a rho y)^2 := by ring
+      _ = _ := by rw [h₁]; ring
+  simp only [middleGapCompactPolynomials, middleGapSlopePolynomial, middleGapCurvaturePolynomial,
+    Rat.cast_div, Rat.cast_one, Rat.cast_ofNat, Prod.mk.injEq]
+  have hKmul : (3*a+1-rho)*(3*a+2-2*rho)*(1/2) = K := by rw [← hK]; ring
+  have hy : y * y = y ^ 2 := by ring
+  rw [hKmul, hV, hy]
+  let A := rootFiveDeriv (y ^ 2 * V)
+  let B := rootFiveSecond (y ^ 2 * V)
+  let R₀ := V * rootFiveFactor (y ^ 2 * V)
+  let w := 4 + t
+  let m := 3 / 2 + h
+  let κ : ℝ := 68751 / 25000
+  constructor
+  · change w * (2*K*k*A - (3/2*a-rho)*R₀ - b*y*rho) -
+        κ*a*((b-rho)*w+a)*(1+a*(1/4))*y =
+      (-w) * ((3/2*a-rho)*V*rootFiveFactor (y^2*V) +
+        a*lambdaDerivFactored h a rho y*A + y*rho*(a*m+rho)) -
+          (11/4+1/25000)*(m*w+1)*(1+a/4)*a^2*y
+    linear_combination (norm := ring_nf) w*A*h₁ + w*y*rho*hkb' + κ*(1+a/4)*a*y*hP
+    dsimp only [w, m, κ, R₀]
+    ring
+  · change 4*K*K*y*y*k*k*B - 2*K*(a*a-a*rho+(1-y)*rho)*A +
+        (9/4*a*a-3*a*rho+rho+rho*rho)*R₀ - (b*b+rho)*y*rho =
+      a^2*(B*y^2*(lambdaDerivFactored h a rho y)^2 + A*lambdaSecondFactored h a rho y) +
+        a*(3*a-2*rho)*A*lambdaDerivFactored h a rho y +
+        (9/4*a^2-3*a*rho+2*rho^2+h*a*rho)*V*rootFiveFactor (y^2*V) -
+        y*rho*(a^2*m^2+(2*m+h)*a*rho+2*rho^2)
+    linear_combination (norm := ring_nf) -(y^2*B)*h₄ - A*h₂ - R₀*h₃ + y*rho*hsq
+    dsimp only [m, R₀]
+    ring
+
 private theorem exp_decay_hasDerivAt (k t : ℝ) :
     HasDerivAt (fun x ↦ Real.exp (-(k * x))) (-k * Real.exp (-(k * t))) t := by
   have h := ((hasDerivAt_id' t).const_mul k).neg.exp
