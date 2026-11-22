@@ -30,7 +30,7 @@ open D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 
 noncomputable section
 
-private def indicator {n : ℕ} (p : Finset (Fin n)) : Profile n :=
+def indicator {n : ℕ} (p : Finset (Fin n)) : Profile n :=
   fun i => if i ∈ p then 1 else 0
 
 private theorem parity_indicator {n : ℕ} (p : Finset (Fin n)) :
@@ -56,7 +56,7 @@ private theorem parity_indicator_iff {n : ℕ} (p : Finset (Fin n)) (t : ℕ) (h
   change (p.card % 2 = t % 2) ↔ _
   rw [Nat.mod_eq_of_lt ht]
 
-private def parityClassEquiv (n t : ℕ) (ht : t < 2) :
+def parityClassEquiv (n t : ℕ) (ht : t < 2) :
     {p : Finset (Fin n) // p.card % 2 = t} ≃ ParityClass n (t : ZMod 2) :=
   (profileEquiv n).subtypeEquiv fun p => (parity_indicator_iff p t ht).symm
 
