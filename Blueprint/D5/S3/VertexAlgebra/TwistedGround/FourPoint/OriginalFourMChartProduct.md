@@ -18,7 +18,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartP
 
 A sample for D records the Boolean right-leg and outgoing-mode flags, a complex half-coordinate q and a colour in Fin(rank D). In a family indexed by a finite type, multiple samples may use the same puncture and colour.
 
-**Definition 1.2 (Period-normalized Gaussian times the sector theta function).**
+**Definition 1.2 (Inverse half-differential lift).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chartScale`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chartScale` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The inverse half-differential lift factors for A, B and D are 1, (−i√x)⁻¹ and i⁻¹ respectively.
+
+**Definition 1.3 (Period-normalized Gaussian times the sector theta function).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chartProduct`
 
@@ -34,7 +46,7 @@ Let K(j,k) be covarianceMode at the leg and outgoing flags of j,k and arguments 
 
 With G the original Gram matrix cast to ℂ and colour uⱼ at sample j, put E_c = (∑ⱼ ∑ₖ ωⱼωₖ G[uⱼ,uₖ] K_c(j,k))/2 and M_c(u) = ∑_{j : uⱼ = u} ωⱼ m_{c,j}. The product at a is (p_c¹²)⁻¹ exp(E_c) chargeTheta(a,τ_c,i M_c/(2πp_c)).
 
-**Theorem 1.3 (A-to-D and A-to-B with the exact finite charge factors).**
+**Theorem 1.4 (A-to-D and A-to-B with the exact finite charge factors).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_chart_product`
 
@@ -52,6 +64,7 @@ Then D(a) = 2⁻¹² ∑_b F(a,b) A(b) and B(a) = (R_A¹²)⁻¹ (2⁻¹² ∑_b
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.Sample`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chartProduct`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chartScale`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_chart_product`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta](OriginalFourMShiftedTheta.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedCovariance](OriginalFourMSignedCovariance.md)
