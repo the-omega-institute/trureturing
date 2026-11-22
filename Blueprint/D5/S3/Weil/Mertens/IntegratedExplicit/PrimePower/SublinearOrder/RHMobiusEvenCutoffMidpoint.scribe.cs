@@ -30,7 +30,7 @@ internal sealed class RHMobiusEvenCutoffMidpointDocument : IScribeDocumentDefini
                     + "spectral upper bound and that late lower bound to the original window.")),
                 Paragraph(Text("Write G(r,L) for L/(8s) times log(1/L)+log(2r)−2c+1/2, "
                     + "with c=(Euler's constant−1+log(2π))/2, and "
-                    + "E(C,L)=C L²(1+log(1/L))²."))),
+                    + "E(C,L)=C L²(1+log(1/L))². The error vanishes when μ(r)=0."))),
             DescribeRole.Theorem))));
 
     private static Formula Numbers(string name) => F.Seq(F.Mathbb, F.Grp(F.Id(name)));
@@ -57,13 +57,12 @@ internal sealed class RHMobiusEvenCutoffMidpointDocument : IScribeDocumentDefini
         var constant = Id("C");
         var moebius = Call("mu", r);
         var leading = Multiply(new Formula.Absolute(moebius), Call("G", r, width));
-        var error = Call("E", constant, width);
+        var error = Multiply(new Formula.Absolute(moebius), Call("E", constant, width));
         var estimate = Le(new Formula.Absolute(Subtract(Call("Q", m, r, width), leading)), error);
         var result = And(Call("B", m, r, width), estimate);
         var widths = All("L", "R", Imp(And(Lt(Num(0), width),
             Le(width, new Formula.Fraction(Num(1), Num(4)))), result));
-        var cutoff = And(Le(Num(2), m),
-            And(Eq(Add(m, Num(1)), Multiply(Num(2), r)), Lt(Num(0), new Formula.Absolute(moebius))));
+        var cutoff = And(Le(Num(2), m), Eq(Add(m, Num(1)), Multiply(Num(2), r)));
         return F.Disp(Imp(Id("RH"), All("m", "N", All("r", "N", Imp(cutoff,
             ExistsReal("C", And(Lt(Num(0), constant), widths)))))));
     }

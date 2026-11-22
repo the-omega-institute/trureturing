@@ -79,7 +79,7 @@ private theorem exponential_midpoint_returns (hRH : RiemannHypothesis) {r : ℝ}
 /-- The original normalized signed prime window, corrected at its midpoint, has a finite
 limsup with the two logarithmic terms of the exponential root average. -/
 theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
-    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) (hμ : μ r ≠ 0) :
+    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) :
     let s := orderRate m
     let cm := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
     let V := fun L u : ℝ =>
@@ -89,16 +89,13 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
       (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) (V L) ∧
       |limsup (V L) atTop -
         |(μ r : ℝ)| * ((L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2))| ≤
-        C * L ^ 2 * (1 + Real.log (1 / L)) ^ 2 := by
+        |(μ r : ℝ)| * C * L ^ 2 * (1 + Real.log (1 / L)) ^ 2 := by
   dsimp only
   let s := orderRate m
   let δ := ((m : ℝ) + 1)⁻¹ - ((m : ℝ) + 2)⁻¹
   let cm := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
   let a := (μ r : ℝ)
-  have ha : 0 < |a| := by
-    apply abs_pos.mpr
-    dsimp [a]
-    exact_mod_cast hμ
+  have ha : 0 ≤ |a| := abs_nonneg a
   have hr : (1 : ℝ) < r := by exact_mod_cast (show 1 < r by omega)
   have hq : (m : ℝ) + 1 = 2 * (r : ℝ) := by exact_mod_cast heven
   have hs' : s = 1 / 2 - (2 * (r : ℝ))⁻¹ := by dsimp [s, orderRate]; rw [hq]
@@ -110,7 +107,7 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
   have ha₀ : 0 < a₀ := by linarith
   obtain ⟨D, hD, hmidpoint⟩ := root_signal_exponential_midpoint hRH hr
   let G := fun L : ℝ => (L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2)
-  refine ⟨|a| * D, mul_pos ha hD, fun L hL hL' => ?_⟩
+  refine ⟨D, hD, fun L hL hL' => ?_⟩
   let E := D * L ^ 2 * (1 + Real.log (1 / L)) ^ 2
   let P := fun u : ℝ => rootPrimitive r (Real.exp (u + L)) - rootPrimitive r (Real.exp u)
   let gap := fun u : ℝ => powerGap s (Real.exp u) (Real.exp (u + L))
@@ -166,13 +163,13 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
   have hlowerTriangle (u : ℝ) : |a| * M u ≤ |T u + a * M u| + |T u| := by
     have h := abs_sub (T u + a * M u) (T u)
     rw [add_sub_cancel_left, abs_mul] at h
-    exact (mul_le_mul_of_nonneg_left (le_abs_self _) ha.le).trans h
+    exact (mul_le_mul_of_nonneg_left (le_abs_self _) ha).trans h
   let V := fun u : ℝ => |T u|
   have hbounded : (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) V := by
     refine ⟨|a| * (G L + E) + 1, ?_⟩
     change ∀ᶠ u in (atTop : Filter ℝ), V u ≤ _
     filter_upwards [hsmall 1 zero_lt_one] with u hu
-    have hmul := mul_le_mul_of_nonneg_left (hupper u) ha.le
+    have hmul := mul_le_mul_of_nonneg_left (hupper u) ha
     change |T u| ≤ _
     linarith only [hupperTriangle u, hu, hmul]
   have hcobounded : (atTop : Filter ℝ).IsCoboundedUnder (· ≤ ·) V :=
@@ -181,17 +178,21 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
     apply (limsup_le_iff' hcobounded hbounded).2
     intro b hb
     filter_upwards [hsmall (b - |a| * (G L + E)) (sub_pos.mpr hb)] with u hu
-    have hmul := mul_le_mul_of_nonneg_left (hupper u) ha.le
+    have hmul := mul_le_mul_of_nonneg_left (hupper u) ha
     change |T u| ≤ b
     linarith only [hupperTriangle u, hu, hmul]
   have hQlower : |a| * (G L - E) ≤ limsup V atTop := by
+    rcases ha.eq_or_lt with ha_zero | ha_pos
+    · rw [← ha_zero, zero_mul]
+      exact le_limsup_of_frequently_le
+        (Frequently.of_forall fun u => abs_nonneg (T u)) hbounded
     apply (le_limsup_iff' hcobounded hbounded).2
     intro b hb
     let ε := (|a| * (G L - E) - b) / 2
     have hε : 0 < ε := by dsimp [ε]; linarith
     have hthreshold : (b + ε) / |a| < M (-L / 2) := by
-      apply (div_lt_iff₀ ha).2
-      have h := mul_le_mul_of_nonneg_left hlower ha.le
+      apply (div_lt_iff₀ ha_pos).2
+      have h := mul_le_mul_of_nonneg_left hlower ha
       dsimp [ε]
       linarith only [h, hb]
     obtain ⟨U₀, hlate⟩ := eventually_atTop.1 (hsmall ε hε)
@@ -199,7 +200,7 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
     obtain ⟨u, hu, hval⟩ := hreturn (max U U₀) hthreshold
     refine ⟨u, (le_max_left _ _).trans hu, ?_⟩
     have he := hlate u ((le_max_right _ _).trans hu)
-    have hv := (div_lt_iff₀ ha).1 hval
+    have hv := (div_lt_iff₀ ha_pos).1 hval
     change b ≤ |T u|
     linarith only [hlowerTriangle u, he, hv]
   refine ⟨hbounded, abs_le.mpr ⟨?_, ?_⟩⟩
