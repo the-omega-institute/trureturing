@@ -20,7 +20,7 @@ noncomputable section
 
 namespace RefinedBMV.PositiveCenter
 
-private def logReciprocalGap (h t : ℝ) : ℝ := t - Real.log (upperTailGap h t)
+def logReciprocalGap (h t : ℝ) : ℝ := t - Real.log (upperTailGap h t)
 
 def profileSlope (h t : ℝ) : ℝ := 1 - upperTailSlope h t
 

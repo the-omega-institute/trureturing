@@ -36,7 +36,7 @@ private theorem tail_exp_pow (t : ℝ) (n : ℕ) :
     (Real.exp t)^n = Real.exp ((n : ℝ)*t) :=
   (Real.exp_nat_mul t n).symm
 
-private theorem tail_gap_pos {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+theorem tail_gap_pos {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     0 < upperTailGap h t := by
   have he := Real.exp_lt_exp.mpr (neg_lt_zero.mpr (mul_pos hh ht))
   rw [Real.exp_zero] at he
@@ -175,7 +175,7 @@ theorem upperTail_linear_correction {h u d : ℝ} (hh : 0 < h) :
   dsimp [a, g, k]
   ring
 
-private theorem tail_cube_pow {p : ℕ} (hp : 0 < p) (t : ℝ) :
+theorem tail_cube_pow {p : ℕ} (hp : 0 < p) (t : ℝ) :
     let a := Real.exp (-t/(p : ℝ))
     a^3 = Real.exp (-((3/(p : ℝ))*t)) ∧ a^p = Real.exp (-t) := by
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp
@@ -189,7 +189,7 @@ private theorem tail_cube_pow {p : ℕ} (hp : 0 < p) (t : ℝ) :
     congr 1
     field_simp
 
-private theorem tail_choose_scale {p : ℕ} (hp : 0 < p) :
+theorem tail_choose_scale {p : ℕ} (hp : 0 < p) :
     let h : ℝ := 3/(p : ℝ)
     ((p+2).choose 2 : ℝ)*h^2 = (3+h)*(3+2*h)/2 := by
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp
@@ -199,7 +199,7 @@ private theorem tail_choose_scale {p : ℕ} (hp : 0 < p) :
   field_simp
   ring
 
-private theorem tail_gap_factor {h t : ℝ} (hh : 0 < h) :
+theorem tail_gap_factor {h t : ℝ} (hh : 0 < h) :
     1 - Real.exp (-(h*t)) = h*upperTailGap h t := by
   unfold upperTailGap
   field_simp
@@ -456,7 +456,7 @@ private theorem tail_repeat_high_sum (p : ℕ) {q : ℝ} (hq : q < 1) :
       rw [show q^(p+2) = q^(p+1)*q from pow_succ _ _]
       ring
 
-private theorem tail_logCoordinate {p : ℕ} (hp : 0 < p) (s t : ℝ) :
+theorem tail_logCoordinate {p : ℕ} (hp : 0 < p) (s t : ℝ) :
     logCoordinate p (Real.exp (-s/(p : ℝ))) (Real.exp (-t/(p : ℝ))) = s-t := by
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp
   rw [logCoordinate, ← Real.exp_sub, Real.log_exp]
