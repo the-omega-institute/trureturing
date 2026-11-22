@@ -7,6 +7,7 @@
    digest: Factor the Cambie configuration moments into local attachment contributions. -/
 
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Moments
+import D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
 
 /-! The fixed counterexample to Question 1.9 of Cambie, Jooken and Wagner.
 The support and tree classifications feed the four transported moments. Grouping cyclic
@@ -20,8 +21,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
 
 open SimpleGraph
-
-open private arc mem_arc from D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
+open D5.S3.Combinatorics.Graph.ZeroForcing
 open scoped BigOperators
 
 /-- Count and sum of vertex orders, with the same multiplicity on each configuration. -/
@@ -372,8 +372,8 @@ private def properLength : Fin 4999 ≃ {l : Fin 5000 // 0 < l.val} where
 private theorem proper_mem_iff (start : Fin 5000) (i : Fin 4999) (m : Fin 5000) :
     m ∈ CycleInterval.cycleVertices (m := 4997) (.inr (start, properLength i)) ↔
       (m - start).val ≤ i.val := by
-  change (m ∈ arc (m := 4997) start (i.val+1)) ↔ _
-  rw [mem_arc]
+  change (m ∈ CycleConnectedForcing.arc (m := 4997) start (i.val+1)) ↔ _
+  rw [CycleConnectedForcing.mem_arc]
   exact Nat.lt_succ_iff
 
 private theorem proper_arc_not_full (start : Fin 5000) (i : Fin 4999) :

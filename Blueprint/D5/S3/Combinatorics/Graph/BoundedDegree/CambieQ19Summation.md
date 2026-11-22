@@ -116,3 +116,4 @@ The fixed connected graph has subtree mean strictly below its connected-set mean
 - Truth anchor: `D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.strictComparison`
 - Truth anchor: `D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.tree_exact_moments`
 - Dependency: [D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Moments](CambieQ19Moments.md)
+- Dependency: [D5/S3/Combinatorics/Graph/ZeroForcing/CycleConnectedForcing](../ZeroForcing/CycleConnectedForcing.md)
