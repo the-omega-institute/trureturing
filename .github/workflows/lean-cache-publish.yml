@@ -42,7 +42,7 @@ on:
         description: 'Optional exact dev history anchor for the protected sharded build'
         type: string
       native_report_batch_modules:
-        description: 'Maximum modules per native extraction process (integer 1..100; full report scope unchanged)'
+        description: 'Maximum modules per native extraction process (integer 1..100)'
         type: string
         default: '100'
 
@@ -229,7 +229,7 @@ jobs:
       - name: Set the transfer budget for volume publication
         if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
         run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
-      - name: Build and check the Lean report for the Release
+      - name: Prepare compiler artifacts and module reports for the Release
         id: release_report
         if: hashFiles('.github/actions/lean-cache-release-seed/prepare-report.sh') != ''
         env:
@@ -410,7 +410,7 @@ jobs:
       - name: Set the transfer budget for volume publication
         if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
         run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
-      - name: Build and check the Lean report for the Release
+      - name: Prepare compiler artifacts and module reports for the Release
         id: release_report
         if: hashFiles('.github/actions/lean-cache-release-seed/prepare-report.sh') != ''
         env:
