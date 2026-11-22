@@ -131,6 +131,11 @@ runs:
           [[ -f "$archive" && ! -L "$archive" && ! -L "$directory" ]] || continue
           rm -v -- "$archive"
         done
+        build="$GITHUB_WORKSPACE/.lake/build"
+        for report in "$build"/stratalint/raw-lean-report.json* "$build"/lean-inspector/report.zip* "$build"/lean-inspector/inputs.json; do
+          [[ -f "$report" && ! -L "$report" ]] || continue
+          rm -v -- "$report"
+        done
         df -h -- "$RUNNER_TEMP"
     - id: build
       name: Build module reports and cacheable audit programs
