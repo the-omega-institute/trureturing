@@ -13,7 +13,7 @@ internal sealed class FifteenSettingGapDocument : IScribeDocumentDefinition
     private static Formula Fraction(Formula n, Formula d) => new Formula.Fraction(n, d);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Thirty comparisons between five base settings and ten pair settings yield a positive error for any finite fixed-weight mixture of four-dimensional unit rotor readings.",
+        "Ten base-pair comparisons and twenty incident comparisons yield a positive error for any finite fixed-weight mixture of four-dimensional unit rotor readings.",
         H("Fifteen settings for a rotor mixture"),
         Blocks(
             Describe.Lean(DescribeId.Create("pair-sum"), DeclarationHandle.Create(Prefix + "pairSum"),
@@ -32,6 +32,6 @@ internal sealed class FifteenSettingGapDocument : IScribeDocumentDefinition
                 H("A common error bound for thirty comparisons"),
                 StatementSource.FromAuthor(Disp(Seq(DeltaLower, Sp, Ge, Sp, Fraction(D(5), Seq(
                     D(8, 0), Factor(), Open, D(2), Plus, D(4), SqrtTwo(), Close))))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Each finite field assigns a real four-dimensional unit vector to each setting. A single array of nonnegative weights summing to one is used for all settings. Compare the ten base pairs to probability one half and the twenty incident base-to-pair comparisons to (1+1/√2)/2. Every common absolute error bound on those thirty comparisons satisfies the displayed inequality.")),
+                Blocks(Paragraph(Text("Each finite field assigns a real four-dimensional unit vector to each setting. A single array of nonnegative weights summing to one is used for all settings. The target uses five orthonormal directions in real dimension five and the normalized sum of the two directions for each pair. The ten base pairs have probability one half. Each of the twenty incident base-to-pair comparisons has probability (1+1/√2)/2. Every common absolute error bound on those thirty comparisons satisfies the displayed inequality.")),
                     Paragraph(Text("Squaring each midpoint discrepancy expresses it as an affine function of the three dot products. Taking a common weighted mean preserves the lower bound on D. If all thirty probability errors are bounded by delta, the mean discrepancy is at most ten times (4+8√2) times delta."))), DescribeRole.Theorem))));
 }
