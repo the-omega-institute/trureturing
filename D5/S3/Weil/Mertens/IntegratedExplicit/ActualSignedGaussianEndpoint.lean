@@ -49,7 +49,7 @@ theorem actual_coefficient_mass :
   change HasSum (fun k => 1 / (actualZero k * (1 - actualZero k))) (firstLiMass : ℂ) at h
   simpa only [one_div, hm] using h
 
-private def actualCompleteSpectrum : CountableSpectrum where
+def actualCompleteSpectrum : CountableSpectrum where
   zero := actualZero
   coeff := actualCoeff
   strip := fun k => (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2
