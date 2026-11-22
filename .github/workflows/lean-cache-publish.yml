@@ -225,13 +225,30 @@ jobs:
           mode: ${{ needs.scheduled-compile.outputs.seed || 'legacy' }}
           previous-base: ${{ needs.scheduled-compile.outputs.base }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
+      - &volume-transfer-budget
+        name: Set the transfer budget for volume publication
+        if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
+        run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-to-github-without-mathlib FULL_BUILD=1
+        run: |
+          set -eo pipefail
+          bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-to-github-without-mathlib FULL_BUILD=1 |
+            tee "$RUNNER_TEMP/lean-cache-publication.log"
+      - &verify-publication
+        name: Verify the Release publication for the checked-out commit
+        shell: bash
+        run: |
+          set -eo pipefail
+          producer="$(git rev-parse HEAD)"
+          sed -n 's/^LEAN_CACHE_PUBLISH //p' "$RUNNER_TEMP/lean-cache-publication.log" |
+            jq -es --arg producer "$producer" '
+              length == 1 and (.[0] | (.status == "published" or .status == "exists") and
+                .producer_commit_sha == $producer and (.tag | type == "string" and length > 0))'
 
   manual-release-authorize:
     name: Authorize the manual cache Release
@@ -381,6 +398,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - *volume-transfer-budget
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
@@ -392,4 +410,7 @@ jobs:
           if [[ -f .github/actions/lean-compile-layer/measure.sh ]]; then
             observer=(bash .github/actions/lean-compile-layer/measure.sh)
           fi
-          "${observer[@]}" make lean-cache-to-github-without-mathlib FULL_BUILD=1
+          set -eo pipefail
+          "${observer[@]}" make lean-cache-to-github-without-mathlib FULL_BUILD=1 |
+            tee "$RUNNER_TEMP/lean-cache-publication.log"
+      - *verify-publication
