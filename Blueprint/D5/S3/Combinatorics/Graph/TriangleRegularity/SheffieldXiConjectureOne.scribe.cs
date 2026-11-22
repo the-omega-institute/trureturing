@@ -9,7 +9,7 @@ internal sealed class SheffieldXiConjectureOneDocument : IScribeDocumentDefiniti
     private const string Prefix =
         "D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/TriangleRegularity/sheffieldxi2025triangle");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/sheffieldxi2025triangle");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The icosahedron has five neighbors and five induced edges at every vertex. No abelian Cayley graph has both local counts.",
