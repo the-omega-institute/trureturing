@@ -34,8 +34,10 @@ private theorem triangleImage_ne_zero : signedMap 0 (triangleMatrix 0 0 1) ≠ 0
 
 private theorem mapDependence : ObservationalDependence mapSignature mapActual := by
   intro role
-  refine ⟨0, triangleMatrix 0 0 1, 0, ?_⟩
-  simpa [mapActual, realize] using triangleImage_ne_zero
+  refine ⟨(0 : ℝ), triangleMatrix 0 0 1, (0 : TwoMode), ?_⟩
+  intro he
+  dsimp only [mapActual, realize] at he
+  exact triangleImage_ne_zero (he.trans ((signedMap 0).map_zero))
 
 namespace Triangle
 
@@ -175,8 +177,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  refine ⟨1, 0, 1, ?_⟩
-  norm_num [actual, realize, h, L, u, w, ν, Complex.normSq_apply]
+  refine ⟨(1 : ℝ), (fun _ => (0 : ℂ)), (fun _ => (1 : ℂ)), ?_⟩
+  norm_num [actual, realize, h, L, u, w, ν, Complex.normSq_zero, Complex.normSq_one]
 
 def family : Registration arena (type_of% @kernel_pure_quartic) where
   actual := actual
