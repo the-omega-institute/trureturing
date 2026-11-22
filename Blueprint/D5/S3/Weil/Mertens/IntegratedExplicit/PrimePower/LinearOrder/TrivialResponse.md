@@ -4,6 +4,8 @@
 
 Signed sums of trivial-zero root responses
 
+For the sublinear estimate, use the signed floor identity to subtract floor(N/n) from ψ(N/n). On n≤N/L the difference is bounded by a sublinear power of N/n. On the remaining interval all three weights have bounded variation for fixed L. After letting N grow and then choosing L large, the Möbius partial sum times log N is little-o of N, uniformly in the shorter prefix. The same signed summation proves the required sublinear trivial-root response.
+
 The convolution identity for μ(n) log n and the Chebyshev bound under RH imply that the Möbius partial sum times log N is bounded by a constant times N. Split the shorter prefixes at the square root of N to obtain the same bound uniformly.
 
 At log cutoff u≥0 the jth trivial zero contributes n/[2j(n+2j)] times exp(−2ju/n). This response is nonnegative, increases with n, and is at most half of one plus log n. Abel summation uses the shorter-prefix bound and controls the signed weighted sum.

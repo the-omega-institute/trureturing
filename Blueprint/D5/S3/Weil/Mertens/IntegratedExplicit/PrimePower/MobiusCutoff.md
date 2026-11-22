@@ -4,6 +4,8 @@
 
 Möbius truncation of the Chebyshev root sum
 
+A pointwise bound on the signed truncation by C x^(1/(m+1)) transfers to the normalized integral with coefficient C/(1−1/(m+1)). The identity uses the actual difference of prime-only and complete tails and is valid for every cutoff x≥2.
+
 **Theorem 1.1 (A geometric bound uniform in the truncation order).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/MobiusCutoff.chebyshev_mobius_truncation`

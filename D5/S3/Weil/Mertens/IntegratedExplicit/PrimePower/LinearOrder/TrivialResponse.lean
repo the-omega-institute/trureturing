@@ -211,7 +211,7 @@ private theorem psi_three_quarters_of_rh (hRH : RiemannHypothesis) :
         (le_mul_of_one_le_right hcoef hpower).trans
           (mul_le_mul_of_nonneg_right (by linarith) (by positivity))
 
-private theorem moebius_log_saving_of_rh (hRH : RiemannHypothesis) :
+theorem moebius_log_saving_of_rh (hRH : RiemannHypothesis) :
     ∃ D : ℝ, 0 < D ∧ ∀ N : ℕ, 2 ≤ N →
       |(∑ n ∈ Finset.Ioc 0 N, (μ n : ℝ))| * Real.log N ≤ D * (N : ℝ) := by
   let C : ℝ := (Real.log 4 + 5) * 5000 + 56
@@ -226,7 +226,7 @@ private theorem abs_moebius_prefix_le_card (k : ℕ) :
       exact_mod_cast abs_moebius_le_one (n := i)
     _ = _ := by simp [Nat.card_Ioc, nsmul_eq_mul]
 
-private theorem moebius_uniform_prefix_log_saving (hRH : RiemannHypothesis) :
+theorem moebius_uniform_prefix_log_saving (hRH : RiemannHypothesis) :
     ∃ D : ℝ, 0 < D ∧ ∀ N : ℕ, 2 ≤ N → ∀ k ≤ N,
       |∑ n ∈ Finset.Ioc 0 k, (μ n : ℝ)| * Real.log N ≤ D * N := by
   obtain ⟨C, hC, hM⟩ := moebius_log_saving_of_rh hRH
@@ -256,6 +256,308 @@ private theorem moebius_uniform_prefix_log_saving (hRH : RiemannHypothesis) :
           (Real.sqrt_nonneg _)
       _ ≤ _ := by
         nlinarith only [Real.sq_sqrt hN0.le, mul_nonneg hC.le hN0.le]
+
+private theorem abs_sum_mul_antitone_Ioc_le {a w : ℕ → ℝ} {B : ℝ} {m N : ℕ}
+    (hmN : m < N)
+    (hprefix : ∀ k ≤ N, |∑ i ∈ range (k + 1), a i| ≤ B)
+    (hw0 : ∀ i ∈ Ioc m N, 0 ≤ w i)
+    (hw : AntitoneOn w (Set.Ioc m N)) :
+    |∑ i ∈ Ioc m N, a i * w i| ≤ 2 * B * w (m + 1) := by
+  let A : ℕ → ℝ := fun k => ∑ i ∈ range (k + 1), a i
+  have hN0 := hw0 N (mem_Ioc.mpr ⟨hmN, le_rfl⟩)
+  have hm0 := hw0 (m + 1) (mem_Ioc.mpr ⟨by omega, hmN⟩)
+  have hd (i : ℕ) (hi : i ∈ Ico (m + 1) N) : 0 ≤ w i - w (i + 1) := by
+    obtain ⟨hi₁, hi₂⟩ := mem_Ico.mp hi
+    exact sub_nonneg.mpr (hw ⟨by omega, hi₂.le⟩ ⟨by omega, hi₂⟩ (Nat.le_succ i))
+  have heq : (∑ i ∈ Ioc m N, a i * w i) =
+      w N * A N - w (m + 1) * A m +
+        ∑ i ∈ Ico (m + 1) N, (w i - w (i + 1)) * A i := by
+    rw [← Ico_add_one_add_one_eq_Ioc]
+    have h := sum_Ico_by_parts w a (m := m + 1) (n := N + 1) (by omega)
+    simp only [Nat.add_sub_cancel, smul_eq_mul] at h
+    simp_rw [mul_comm (a _) (w _)]
+    rw [h, sub_eq_add_neg, ← sum_neg_distrib]
+    congr 1
+    apply sum_congr rfl
+    intro i hi
+    ring
+  have htel : (∑ i ∈ Ico (m + 1) N, (w i - w (i + 1))) = w (m + 1) - w N := by
+    rw [sum_Ico_eq_sub _ hmN, sum_range_sub', sum_range_sub']
+    ring
+  rw [heq]
+  calc
+    _ ≤ |w N * A N - w (m + 1) * A m| +
+        |∑ i ∈ Ico (m + 1) N, (w i - w (i + 1)) * A i| := abs_add_le _ _
+    _ ≤ (w N * B + w (m + 1) * B) +
+        ∑ i ∈ Ico (m + 1) N, (w i - w (i + 1)) * B := by
+      apply add_le_add
+      · apply (abs_sub _ _).trans
+        rw [abs_mul, abs_mul, abs_of_nonneg hN0, abs_of_nonneg hm0]
+        exact add_le_add (mul_le_mul_of_nonneg_left (hprefix N le_rfl) hN0)
+          (mul_le_mul_of_nonneg_left (hprefix m hmN.le) hm0)
+      · apply (abs_sum_le_sum_abs _ _).trans
+        refine sum_le_sum fun i hi => ?_
+        rw [abs_mul, abs_of_nonneg (hd i hi)]
+        exact mul_le_mul_of_nonneg_left (hprefix i (mem_Ico.mp hi).2.le) (hd i hi)
+    _ = _ := by rw [← sum_mul, htel]; ring
+
+private def mertensWeight (y : ℝ) : ℝ :=
+  (⌊y⌋₊ : ℝ) - Chebyshev.psi y + Real.log y
+
+private theorem moebius_log_eq_weight {N : ℕ} (hN : 1 ≤ N) :
+    (∑ n ∈ Ioc 0 N, (μ n : ℝ)) * Real.log N =
+      -1 + ∑ n ∈ Ioc 0 N, (μ n : ℝ) * mertensWeight ((N : ℝ) / n) := by
+  have hN' : (1 : ℝ) ≤ N := by exact_mod_cast hN
+  have hN0 : (N : ℝ) ≠ 0 := by positivity
+  have hfloor := D5.S3.Arith.MoebiusLogarithmic.floor_cancellation hN'
+  rw [Nat.floor_natCast] at hfloor
+  have hlog : (∑ n ∈ Ioc 0 N, (μ n : ℝ)) * Real.log N =
+      (∑ n ∈ Ioc 0 N, logWeightedMoebius n) +
+        ∑ n ∈ Ioc 0 N, (μ n : ℝ) * Real.log ((N : ℝ) / n) := by
+    rw [sum_mul, ← sum_add_distrib]
+    refine sum_congr rfl fun n hn => ?_
+    have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (mem_Ioc.mp hn).1.ne'
+    change _ = (μ n : ℝ) * Real.log n + (μ n : ℝ) * Real.log ((N : ℝ) / n)
+    rw [Real.log_div hN0 hn0]
+    ring
+  rw [hlog, logWeighted_sum_eq]
+  simp only [mertensWeight, mul_add, mul_sub, sum_add_distrib, sum_sub_distrib, hfloor]
+  ring
+
+private theorem abs_mertensWeight_le {C : ℝ}
+    (hψ : ∀ y ≥ 1, |Chebyshev.psi y - y| ≤ C * y ^ (3/4 : ℝ))
+    {y : ℝ} (hy : 1 ≤ y) :
+    |mertensWeight y| ≤ (C + 5) * y ^ (3/4 : ℝ) := by
+  have hy0 : 0 ≤ y := by linarith
+  have hfloor : |(⌊y⌋₊ : ℝ) - y| ≤ 1 := by
+    rw [abs_of_nonpos (sub_nonpos.mpr (Nat.floor_le hy0))]
+    linarith [Nat.lt_floor_add_one y]
+  have hlog : |Real.log y| ≤ 4 * y ^ (3/4 : ℝ) := by
+    rw [abs_of_nonneg (Real.log_nonneg hy)]
+    have h := Real.log_le_rpow_div (ε := (1/4 : ℝ)) hy0 (by norm_num)
+    have hpow := Real.rpow_le_rpow_of_exponent_le hy (show (1/4 : ℝ) ≤ 3/4 by norm_num)
+    linarith
+  have hp : 1 ≤ y ^ (3/4 : ℝ) := Real.one_le_rpow hy (by norm_num)
+  rw [show mertensWeight y = ((⌊y⌋₊ : ℝ) - y) - (Chebyshev.psi y - y) + Real.log y by
+    unfold mertensWeight
+    ring]
+  calc
+    _ ≤ (|(⌊y⌋₊ : ℝ) - y| + |Chebyshev.psi y - y|) + |Real.log y| :=
+      (abs_add_le _ _).trans (add_le_add_left (abs_sub _ _) _)
+    _ ≤ (C + 5) * y ^ (3/4 : ℝ) := by linarith [hψ y hy]
+
+private theorem abs_mertensWeight_head_le {C L : ℝ} (hC : 0 ≤ C)
+    (hψ : ∀ y ≥ 1, |Chebyshev.psi y - y| ≤ C * y ^ (3/4 : ℝ))
+    {m N : ℕ} (hm : 1 ≤ m) (hmN : m ≤ N) (hL : 0 < L) (hmL : (m : ℝ) ≤ N / L) :
+    |∑ n ∈ Ioc 0 m, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)| ≤
+      4 * (C + 5) * (N / L ^ (1/4 : ℝ)) := by
+  have hN : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have hp (n : ℕ) : ((N : ℝ) / n) ^ (3/4 : ℝ) =
+      (N : ℝ) ^ (3/4 : ℝ) * (n : ℝ) ^ (-(3/4) : ℝ) := by
+    rw [div_rpow hN.le (by positivity), rpow_neg (by positivity), div_eq_mul_inv]
+  calc
+    _ ≤ ∑ n ∈ Ioc 0 m, |(μ n : ℝ) * mertensWeight ((N : ℝ) / n)| := abs_sum_le_sum_abs _ _
+    _ ≤ ∑ n ∈ Ioc 0 m, (C + 5) * ((N : ℝ) / n) ^ (3/4 : ℝ) := by
+      refine sum_le_sum fun n hn => ?_
+      obtain ⟨hn0, hnm⟩ := mem_Ioc.mp hn
+      have harg : 1 ≤ (N : ℝ) / n :=
+        (one_le_div (by exact_mod_cast hn0)).mpr (by exact_mod_cast hnm.trans hmN)
+      rw [abs_mul]
+      refine (mul_le_of_le_one_left (abs_nonneg _) ?_).trans (abs_mertensWeight_le hψ harg)
+      exact_mod_cast abs_moebius_le_one (n := n)
+    _ ≤ (C + 5) * (N : ℝ) ^ (3/4 : ℝ) * (4 * (m : ℝ) ^ (1/4 : ℝ)) := by
+      conv_lhs => simp only [hp, ← mul_assoc, ← mul_sum]
+      apply mul_le_mul_of_nonneg_left (inverse_three_quarters_sum hm)
+      positivity
+    _ ≤ (C + 5) * (N : ℝ) ^ (3/4 : ℝ) * (4 * ((N : ℝ) / L) ^ (1/4 : ℝ)) := by
+      gcongr
+    _ = _ := by
+      rw [Real.div_rpow hN.le hL.le]
+      calc
+        _ = 4 * (C + 5) * (((N : ℝ) ^ (3/4 : ℝ) * (N : ℝ) ^ (1/4 : ℝ)) / L ^ (1/4 : ℝ)) := by ring
+        _ = _ := by
+          rw [← Real.rpow_add hN]
+          norm_num
+
+private theorem abs_mertensWeight_tail_le {B L : ℝ} {m N : ℕ}
+    (hB : 0 ≤ B) (hL : 1 ≤ L) (hmL : (N : ℝ) / L < (m : ℝ) + 1)
+    (hprefix : ∀ k ≤ N, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ B) :
+    |∑ n ∈ Ioc m N, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)| ≤
+      2 * B * (L + Chebyshev.psi L + Real.log L) := by
+  have hL0 : 0 < L := by linarith
+  by_cases hm : m < N
+  swap
+  · rw [Ioc_eq_empty_of_le (le_of_not_gt hm), sum_empty, abs_zero]
+    exact mul_nonneg (by positivity) (by
+      have := Chebyshev.psi_nonneg L
+      have := Real.log_nonneg hL
+      linarith)
+  have hrange (k : ℕ) : range (k + 1) = insert 0 (Ioc 0 k) := by
+    ext i
+    simp only [mem_range, mem_insert, mem_Ioc]
+    omega
+  have hpref (k : ℕ) (hk : k ≤ N) : |∑ n ∈ range (k + 1), (μ n : ℝ)| ≤ B := by
+    rw [hrange, sum_insert (by simp)]
+    simpa using hprefix k hk
+  let q : ℕ → ℝ := fun n => N / (n : ℝ)
+  have harg (n : ℕ) (hn : n ∈ Set.Ioc m N) : 1 ≤ q n := by
+    have hn0 : (0 : ℝ) < n := by exact_mod_cast (Nat.zero_le m).trans_lt hn.1
+    exact (one_le_div hn0).mpr (by exact_mod_cast hn.2)
+  have hq : AntitoneOn q (Set.Ioc m N) := by
+    intro i hi j _ hij
+    have hi0 : (0 : ℝ) < i := by exact_mod_cast (Nat.zero_le m).trans_lt hi.1
+    exact div_le_div_of_nonneg_left (Nat.cast_nonneg N) hi0 (by exact_mod_cast hij)
+  have hmax : q (m + 1) ≤ L := by
+    have hm0 : (0 : ℝ) < (m : ℝ) + 1 := by positivity
+    dsimp [q]
+    rw [Nat.cast_add, Nat.cast_one]
+    exact (div_le_iff₀ hm0).mpr (by linarith [(div_lt_iff₀ hL0).mp hmL])
+  have hbound (w : ℝ → ℝ) (hw : MonotoneOn w (Set.Ici 1))
+      (hw0 : ∀ y ≥ 1, 0 ≤ w y) :
+      |∑ n ∈ Ioc m N, (μ n : ℝ) * w (q n)| ≤ 2 * B * w L := by
+    have hfirst := harg (m + 1) ⟨by omega, hm⟩
+    refine (abs_sum_mul_antitone_Ioc_le hm hpref (w := fun n => w (q n)) ?_ ?_).trans ?_
+    · intro n hn
+      exact hw0 _ (harg n (mem_Ioc.mp hn))
+    · intro i hi j hj hij
+      exact hw (harg j hj) (harg i hi) (hq hi hj hij)
+    · exact mul_le_mul_of_nonneg_left (hw hfirst hL hmax) (by positivity)
+  have hf := hbound (fun y => (⌊y⌋₊ : ℝ))
+    ((Nat.mono_cast.comp Nat.floor_mono).monotoneOn _) (fun y _ => Nat.cast_nonneg _)
+  have hψ := hbound Chebyshev.psi (Chebyshev.psi_mono.monotoneOn _) (fun y _ => Chebyshev.psi_nonneg y)
+  have hlog := hbound Real.log
+    (fun _ hx _ _ hxy => Real.log_le_log (lt_of_lt_of_le zero_lt_one hx) hxy)
+    (fun _ hy => Real.log_nonneg hy)
+  have hf' : |∑ n ∈ Ioc m N, (μ n : ℝ) * (⌊q n⌋₊ : ℝ)| ≤ 2 * B * L :=
+    hf.trans (mul_le_mul_of_nonneg_left (Nat.floor_le hL0.le) (by positivity))
+  unfold mertensWeight
+  simp only [mul_add, mul_sub, sum_add_distrib, sum_sub_distrib]
+  change |(∑ n ∈ Ioc m N, (μ n : ℝ) * (⌊q n⌋₊ : ℝ)) -
+    (∑ n ∈ Ioc m N, (μ n : ℝ) * Chebyshev.psi (q n)) +
+    (∑ n ∈ Ioc m N, (μ n : ℝ) * Real.log (q n))| ≤ _
+  exact (abs_add_le _ _).trans ((add_le_add ((abs_sub _ _).trans (add_le_add hf' hψ)) hlog).trans_eq
+    (by ring))
+
+private theorem moebius_log_sublinear_of_rh (hRH : RiemannHypothesis) :
+    ∀ ε > (0 : ℝ), ∃ K : ℕ, ∀ N ≥ K,
+      |∑ n ∈ Ioc 0 N, (μ n : ℝ)| * Real.log N ≤ ε * (N : ℝ) := by
+  intro ε hε
+  let C : ℝ := (Real.log 4 + 5) * 5000 + 56
+  have hC : 0 ≤ C := by dsimp [C]; positivity
+  obtain ⟨D, hD, hprefix⟩ := moebius_uniform_prefix_log_saving hRH
+  -- Fix the quotient cutoff before choosing the threshold for N.
+  let T : ℝ := 1 + 16 * (C + 5) / ε
+  have hT : 1 ≤ T := le_add_of_nonneg_right (by positivity)
+  let L : ℝ := T ^ (4 : ℕ)
+  have hL : 1 ≤ L := one_le_pow₀ hT
+  have hL0 : 0 < L := by linarith
+  have hLroot : L ^ (1/4 : ℝ) = T := by
+    dsimp [L]
+    rw [← Real.rpow_natCast, ← Real.rpow_mul (by linarith : 0 ≤ T)]
+    norm_num
+  let W := L + Chebyshev.psi L + Real.log L
+  have hW : 0 ≤ W := by
+    dsimp [W]
+    linarith [Chebyshev.psi_nonneg L, Real.log_nonneg hL]
+  let H := 8 * D * W / ε
+  obtain ⟨K, hK⟩ := exists_nat_ge (max L (max 2 (max (4 / ε) (Real.exp H))))
+  refine ⟨K, fun N hKN => ?_⟩
+  have hKN' : (K : ℝ) ≤ N := by exact_mod_cast hKN
+  have hN : max L (max 2 (max (4 / ε) (Real.exp H))) ≤ (N : ℝ) := hK.trans hKN'
+  obtain ⟨hLN, hN₂, hNε, hNH⟩ := by simpa only [max_le_iff] using hN
+  have hN₂' : 2 ≤ N := by exact_mod_cast hN₂
+  have hN0 : (0 : ℝ) < N := by positivity
+  have hlog : 0 < Real.log (N : ℝ) := Real.log_pos (by linarith)
+  have hlogH : H ≤ Real.log (N : ℝ) := by
+    simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos H) hNH
+  let m := ⌊(N : ℝ) / L⌋₊
+  have hm1 : 1 ≤ m := Nat.le_floor (by simpa using (one_le_div hL0).mpr hLN)
+  have hmL : (m : ℝ) ≤ (N : ℝ) / L := Nat.floor_le (by positivity)
+  have hmN : m ≤ N := by
+    exact_mod_cast hmL.trans (div_le_self hN0.le hL)
+  have hmL' : (N : ℝ) / L < (m : ℝ) + 1 := Nat.lt_floor_add_one _
+  have hsmall : 4 * (C + 5) * ((N : ℝ) / L ^ (1/4 : ℝ)) ≤ ε / 4 * (N : ℝ) := by
+    have hT0 : 0 < T := by linarith
+    have hTε : 16 * (C + 5) / ε ≤ T := by dsimp [T]; linarith
+    have hcoef : 4 * (C + 5) / T ≤ ε / 4 := by
+      apply (div_le_iff₀ hT0).mpr
+      linarith only [(div_le_iff₀ hε).mp hTε]
+    rw [hLroot]
+    calc
+      _ = (4 * (C + 5) / T) * (N : ℝ) := by ring
+      _ ≤ _ := mul_le_mul_of_nonneg_right hcoef hN0.le
+  let B := D * (N : ℝ) / Real.log N
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  have hpref (k : ℕ) (hk : k ≤ N) : |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ B :=
+    (le_div_iff₀ hlog).mpr (hprefix N hN₂' k hk)
+  have hlarge : 2 * B * W ≤ ε / 4 * (N : ℝ) := by
+    have hcoef : 2 * D * W / Real.log N ≤ ε / 4 := by
+      apply (div_le_iff₀ hlog).mpr
+      linarith only [(div_le_iff₀ hε).mp hlogH]
+    calc
+      _ = (2 * D * W / Real.log N) * (N : ℝ) := by dsimp [B]; ring
+      _ ≤ _ := mul_le_mul_of_nonneg_right hcoef hN0.le
+  have hone : 1 ≤ ε / 4 * (N : ℝ) := by linarith only [(div_le_iff₀ hε).mp hNε]
+  have hhead := (abs_mertensWeight_head_le hC (psi_three_quarters_of_rh hRH) hm1 hmN hL0 hmL).trans hsmall
+  have htail := (abs_mertensWeight_tail_le hB hL hmL' hpref).trans hlarge
+  rw [← abs_of_pos hlog, ← abs_mul, moebius_log_eq_weight (by omega : 1 ≤ N),
+    ← Ioc_union_Ioc_eq_Ioc (Nat.zero_le m) hmN,
+    sum_union (Ioc_disjoint_Ioc_of_le le_rfl)]
+  calc
+    _ ≤ |(-1 : ℝ)| + (|∑ n ∈ Ioc 0 m, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)| +
+        |∑ n ∈ Ioc m N, (μ n : ℝ) * mertensWeight ((N : ℝ) / n)|) :=
+      (abs_add_le _ _).trans (add_le_add_right (abs_add_le _ _) _)
+    _ ≤ _ := by
+      rw [abs_neg, abs_one]
+      linarith only [hone, hhead, htail, mul_nonneg hε.le hN0.le]
+
+/-- Under RH, the Möbius prefixes are uniformly little-o of `N / log N` up to `N`. -/
+theorem moebius_uniform_prefix_log_sublinear_of_rh (hRH : RiemannHypothesis) :
+    ∀ ε > (0 : ℝ), ∃ K : ℕ, ∀ N ≥ K, ∀ k ≤ N,
+      |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * Real.log N ≤ ε * (N : ℝ) := by
+  intro ε hε
+  obtain ⟨J, hJ⟩ := moebius_log_sublinear_of_rh hRH (ε / 2) (by positivity)
+  obtain ⟨K, hK⟩ := exists_nat_ge (max 2 (max ((J : ℝ) ^ 2) ((4 / ε) ^ 4)))
+  refine ⟨K, fun N hKN k hkN => ?_⟩
+  have hN := hK.trans (show (K : ℝ) ≤ N by exact_mod_cast hKN)
+  obtain ⟨hN₂, hNJ, hNε⟩ := by simpa only [max_le_iff] using hN
+  have hN0 : (0 : ℝ) < N := by linarith
+  have hkN' : (k : ℝ) ≤ N := by exact_mod_cast hkN
+  -- Above the square-root cutoff, log N is at most twice log k.
+  by_cases hk : Real.sqrt (N : ℝ) < k
+  · have hJsqrt : (J : ℝ) ≤ Real.sqrt (N : ℝ) := by
+      simpa only [Real.sqrt_sq (Nat.cast_nonneg J)] using Real.sqrt_le_sqrt hNJ
+    have hJk : J ≤ k := by exact_mod_cast hJsqrt.trans hk.le
+    have hlog := Real.log_le_log (Real.sqrt_pos_of_pos hN0) hk.le
+    rw [Real.log_sqrt hN0.le] at hlog
+    calc
+      _ ≤ |∑ n ∈ Ioc 0 k, (μ n : ℝ)| * (2 * Real.log k) :=
+        mul_le_mul_of_nonneg_left (by linarith) (abs_nonneg _)
+      _ ≤ ε * (k : ℝ) := by
+        have h := mul_le_mul_of_nonneg_left (hJ k hJk) (by norm_num : (0 : ℝ) ≤ 2)
+        linarith only [h]
+      _ ≤ _ := mul_le_mul_of_nonneg_left hkN' hε.le
+  · have hlog := Real.log_le_rpow_div (ε := (1/4 : ℝ)) hN0.le (by norm_num)
+    have hquarter : 4 / ε ≤ (N : ℝ) ^ (1/4 : ℝ) := by
+      have h := Real.rpow_le_rpow (by positivity : 0 ≤ (4 / ε) ^ 4) hNε
+        (by norm_num : (0 : ℝ) ≤ 1/4)
+      rwa [← Real.rpow_natCast, ← Real.rpow_mul (by positivity : 0 ≤ 4 / ε),
+        show (↑(4 : ℕ) : ℝ) * (1/4 : ℝ) = 1 by norm_num, Real.rpow_one] at h
+    have hcoef : 4 ≤ ε * (N : ℝ) ^ (1/4 : ℝ) := by
+      linarith only [(div_le_iff₀ hε).mp hquarter]
+    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by linarith)
+    calc
+      _ ≤ Real.sqrt (N : ℝ) * (4 * (N : ℝ) ^ (1/4 : ℝ)) :=
+        mul_le_mul ((abs_moebius_prefix_le_card k).trans (le_of_not_gt hk))
+          (by linarith) hlog0 (Real.sqrt_nonneg _)
+      _ = 4 * (N : ℝ) ^ (3/4 : ℝ) := by
+        rw [Real.sqrt_eq_rpow, mul_left_comm, ← Real.rpow_add hN0]
+        norm_num
+      _ ≤ (ε * (N : ℝ) ^ (1/4 : ℝ)) * (N : ℝ) ^ (3/4 : ℝ) :=
+        mul_le_mul_of_nonneg_right hcoef (by positivity)
+      _ = _ := by
+        rw [mul_assoc, ← Real.rpow_add hN0]
+        norm_num
 
 private theorem monotone_finite_abel_bound {N : ℕ} {a g : ℕ → ℝ} {L : ℝ}
     (hL : 0 ≤ L) (hg0 : 0 ≤ g 0) (hg : Monotone g)
@@ -525,6 +827,26 @@ private theorem root_centered_response {n : ℕ} (hn : 2 ≤ n)
   unfold trivialRootResponse
   rw [mul_div_cancel_left₀ _ hr0.ne']
 
+private theorem trivial_response_split {m : ℕ} {u : ℝ} (hu : 0 ≤ u) :
+    (∑ n ∈ Finset.Icc 2 m, -(μ n : ℝ) *
+      (centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u)) =
+      -Real.exp (-u/2) * (∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)*trivialRootResponse u n) +
+        Real.exp (-u/2)*Real.log (2*Real.pi)*∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) := by
+  let E := Real.exp (-u/2)
+  let g := trivialRootResponse u
+  let l := Real.log (2*Real.pi)
+  have hcase (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
+      centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u = E*(g n-l) := by
+    have hn₂ := (Finset.mem_Icc.mp hn).1
+    have hn0 : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+    have h := root_centered_response hn₂ (v := u/(n : ℝ)) (div_nonneg hu hn0.le)
+    rwa [mul_div_cancel₀ _ hn0.ne'] at h
+  rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro n hn
+  rw [hcase n hn]
+  ring
+
 theorem trivial_response_signed_bound (hRH : RiemannHypothesis) :
     ∃ D : ℝ, 0 < D ∧ ∀ (m : ℕ) (u : ℝ), 0 ≤ u →
       |∑ n ∈ Finset.Icc 2 m, -(μ n : ℝ) *
@@ -536,22 +858,7 @@ theorem trivial_response_signed_bound (hRH : RiemannHypothesis) :
   by_cases hm : 2 ≤ m
   · let E := Real.exp (-u/2)
     let g := trivialRootResponse u
-    have hcase (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
-        centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u = E*(g n-l) := by
-      have hn₂ := (Finset.mem_Icc.mp hn).1
-      have hn0 : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
-      have h := root_centered_response hn₂ (v := u/(n : ℝ)) (div_nonneg hu hn0.le)
-      rwa [mul_div_cancel₀ _ hn0.ne'] at h
-    have hsum :
-        (∑ n ∈ Finset.Icc 2 m, -(μ n : ℝ) *
-          (centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u)) =
-        -E*(∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)*g n) +
-          E*l*∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) := by
-      rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
-      apply Finset.sum_congr rfl
-      intro n hn
-      rw [hcase n hn]
-      ring
+    have hsum := trivial_response_split (m := m) hu
     have habs : |∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)| ≤ m := by
       calc
         _ ≤ ∑ n ∈ Finset.Icc 2 m, |(μ n : ℝ)| := Finset.abs_sum_le_sum_abs _ _
@@ -570,5 +877,128 @@ theorem trivial_response_signed_bound (hRH : RiemannHypothesis) :
       ring)
   · rw [Finset.Icc_eq_empty_of_lt (lt_of_not_ge hm), Finset.sum_empty, abs_zero]
     positivity
+
+private theorem active_moebius_prefix_sublinear (hRH : RiemannHypothesis) :
+    ∀ δ > (0 : ℝ), ∃ M : ℕ, 2 ≤ M ∧ ∀ m ≥ M, ∀ n ≤ m+1,
+      |∑ i ∈ Finset.range n, activeMoebius i| ≤ δ * (m : ℝ) / Real.log m := by
+  intro δ hδ
+  obtain ⟨J, hJ⟩ := moebius_uniform_prefix_log_sublinear_of_rh hRH (δ/2) (by positivity)
+  obtain ⟨K, hK⟩ := exists_nat_ge ((4/δ)^2)
+  let M := max 2 (max J K)
+  refine ⟨M, le_max_left _ _, fun m hm n hn => ?_⟩
+  have hm₂ : 2 ≤ m := (le_max_left 2 _).trans hm
+  have hm₂' : (2 : ℝ) ≤ m := by exact_mod_cast hm₂
+  have hm0 : (0 : ℝ) < m := by linarith
+  have hmlog : 0 < Real.log (m : ℝ) := Real.log_pos (by linarith)
+  have hJm : J ≤ m := (le_max_left _ K).trans ((le_max_right 2 _).trans hm)
+  have hKm : K ≤ m := (le_max_right J _).trans ((le_max_right 2 _).trans hm)
+  have hsmall : Real.log (m : ℝ) ≤ (δ/2) * m := by
+    have hroot : 4/δ ≤ Real.sqrt (m : ℝ) := by
+      have hx : (4/δ)^2 ≤ (m : ℝ) := hK.trans (by exact_mod_cast hKm)
+      simpa only [Real.sqrt_sq (by positivity : (0 : ℝ) ≤ 4/δ)] using Real.sqrt_le_sqrt hx
+    have hcoef : 2 ≤ (δ/2)*Real.sqrt (m : ℝ) := by
+      linarith only [(div_le_iff₀ hδ).mp hroot]
+    have hl := Real.log_le_rpow_div hm0.le (show (0 : ℝ) < 1/2 by norm_num)
+    rw [← Real.sqrt_eq_rpow] at hl
+    refine hl.trans ?_
+    have h := mul_le_mul_of_nonneg_right hcoef (Real.sqrt_nonneg (m : ℝ))
+    calc
+      _ = 2 * Real.sqrt (m : ℝ) := by ring
+      _ ≤ _ := h.trans_eq (by rw [mul_assoc, ← pow_two, Real.sq_sqrt hm0.le])
+  apply (le_div_iff₀ hmlog).mpr
+  cases n with
+  | zero =>
+    simp only [Finset.range_zero, Finset.sum_empty, abs_zero, zero_mul]
+    positivity
+  | succ k =>
+    have hk : k ≤ m := by omega
+    by_cases hk₂ : 2 ≤ k
+    · have hI : insert 1 (Finset.Icc 2 k) = Finset.Ioc 0 k := by
+        ext i
+        simp only [Finset.mem_insert, Finset.mem_Icc, Finset.mem_Ioc]
+        omega
+      have hs := active_moebius_range k (fun _ => 1)
+      simp only [mul_one] at hs
+      have he : (∑ i ∈ Finset.Ioc 0 k, (μ i : ℝ)) =
+          1 + ∑ i ∈ Finset.Icc 2 k, (μ i : ℝ) := by
+        rw [← hI, Finset.sum_insert (by simp)]
+        simp
+      rw [hs, show (∑ i ∈ Finset.Icc 2 k, (μ i : ℝ)) =
+        (∑ i ∈ Finset.Ioc 0 k, (μ i : ℝ))-1 by linarith only [he]]
+      calc
+        _ ≤ (|∑ i ∈ Finset.Ioc 0 k, (μ i : ℝ)| + 1) * Real.log (m : ℝ) := by
+          apply mul_le_mul_of_nonneg_right _ hmlog.le
+          simpa only [abs_one] using abs_sub (∑ i ∈ Finset.Ioc 0 k, (μ i : ℝ)) 1
+        _ ≤ δ * (m : ℝ) := by rw [add_mul, one_mul]; linarith only [hJ m hJm k hk, hsmall]
+    · have hzero : ∀ i ∈ Finset.range (k+1), activeMoebius i = 0 := by
+        intro i hi
+        have hi' := Finset.mem_range.mp hi
+        exact ite_eq_right (by omega)
+      rw [Finset.sum_eq_zero hzero, abs_zero, zero_mul]
+      positivity
+
+/-- For large truncation orders, the signed trivial-root response is uniformly sublinear. -/
+theorem trivial_response_signed_sublinear (hRH : RiemannHypothesis) :
+    ∀ ε > (0 : ℝ), ∃ M : ℕ, 2 ≤ M ∧ ∀ m ≥ M, ∀ u : ℝ, 0 ≤ u →
+      |∑ n ∈ Finset.Icc 2 m, -(μ n : ℝ) *
+        (centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u)| ≤
+      ε * (m : ℝ) * Real.exp (-u/2) := by
+  intro ε hε
+  let l := Real.log (2*Real.pi)
+  let d := Real.log 2
+  let C := 1 + (1 + |l|) / d
+  have hd : 0 < d := Real.log_pos (by norm_num)
+  have hC : 0 < C := by
+    dsimp [C]
+    exact add_pos_of_pos_of_nonneg zero_lt_one (div_nonneg (by positivity) hd.le)
+  let δ := ε / C
+  have hδ : 0 < δ := div_pos hε hC
+  obtain ⟨M, hM₂, hM⟩ := active_moebius_prefix_sublinear hRH δ hδ
+  refine ⟨M, hM₂, fun m hm u hu => ?_⟩
+  let E := Real.exp (-u/2)
+  let g := trivialRootResponse u
+  let B := δ * (m : ℝ) / Real.log m
+  have hm₂ := hM₂.trans hm
+  have hm₂' : (2 : ℝ) ≤ m := by exact_mod_cast hm₂
+  have hdlog : d ≤ Real.log (m : ℝ) := Real.log_le_log (by norm_num) hm₂'
+  have hlog : 0 < Real.log (m : ℝ) := hd.trans_le hdlog
+  have hB : 0 ≤ B := div_nonneg (mul_nonneg hδ.le (Nat.cast_nonneg m)) hlog.le
+  have hpref := hM m hm
+  have hG : |∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)*g n| ≤ 2*B*g m := by
+    rw [← active_moebius_range]
+    exact monotone_finite_abel_bound hB (trivialRootResponse_nonneg _ _)
+      (trivialRootResponse_monotone hu) hpref
+  have hμ : |∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)| ≤ B := by
+    have hsum := active_moebius_range m (fun _ => 1)
+    simp only [mul_one] at hsum
+    rw [← hsum]
+    exact hpref (m+1) le_rfl
+  have hsum := trivial_response_split (m := m) hu
+  rw [hsum]
+  have hE : 0 ≤ E := Real.exp_nonneg _
+  have hcoef : 2 * B * g m + |l| * B ≤ ε * (m : ℝ) := by
+    have hg := trivialRootResponse_upper hu m
+    have hratio := one_div_le_one_div_of_le hd hdlog
+    have hmain : 1 + (1 + |l|)/Real.log (m : ℝ) ≤ C := by
+      dsimp only [C]
+      simp_rw [div_eq_mul_inv, one_mul] at hratio ⊢
+      exact add_le_add (le_refl _) (mul_le_mul_of_nonneg_left hratio (by positivity))
+    calc
+      _ ≤ B*(1+Real.log (m : ℝ)+|l|) := by
+        change g m ≤ (1+Real.log (m : ℝ))/2 at hg
+        nlinarith only [mul_le_mul_of_nonneg_left hg hB]
+      _ = (δ*(m : ℝ)) * (1 + (1+|l|)/Real.log (m : ℝ)) := by
+        dsimp only [B]
+        field_simp
+        ring
+      _ ≤ (δ*(m : ℝ)) * C := mul_le_mul_of_nonneg_left hmain (by positivity)
+      _ = ε*(m : ℝ) := by dsimp only [δ]; field_simp
+  refine (abs_add_le _ _).trans ?_
+  change |-E * (∑ n ∈ Finset.Icc 2 m, (μ n : ℝ)*g n)| +
+    |E*l*(∑ n ∈ Finset.Icc 2 m, (μ n : ℝ))| ≤ _
+  rw [abs_mul, abs_mul, abs_mul, abs_neg, abs_of_nonneg hE]
+  exact (add_le_add (mul_le_mul_of_nonneg_left hG hE)
+    (mul_le_mul_of_nonneg_left hμ (mul_nonneg hE (abs_nonneg _)))).trans
+    (by nlinarith only [mul_le_mul_of_nonneg_left hcoef hE])
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder

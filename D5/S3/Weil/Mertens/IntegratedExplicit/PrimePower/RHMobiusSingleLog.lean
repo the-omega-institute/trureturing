@@ -502,13 +502,11 @@ theorem prime_window_mobius_one_log_of_rh (hRH : RiemannHypothesis) :
         K * ((m : ℝ) * (1 + Real.log m)) *
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
   obtain ⟨K, hK, hD⟩ := all_orders_density_one_log hRH
-  exact prime_window_of_density_bound hRH (fun m => (m : ℝ) * (1 + Real.log m))
-    (fun m hm => by
-      have hm' : (1 : ℝ) ≤ m := by exact_mod_cast (show 1 ≤ m by omega)
-      exact mul_nonneg (Nat.cast_nonneg m) (by linarith only [Real.log_nonneg hm'])) retainedDensity
-    (fun m n hn a B ha hB => by
+  exact prime_window_of_density_bound hRH (fun m => (m : ℝ) * (1 + Real.log m)) retainedDensity
+    (fun m _ n hn a B ha hab => by
+      have ha₀ : 0 < a := by linarith
       simpa only [arithmeticPrimitive, capturedPrimitive, powerGap, arithmeticRate, neg_sub]
-        using retainedDensity_integral (m := m) hn ha hB)
+        using retainedDensity_integral (m := m) (Finset.mem_Icc.mp hn).1 ha₀ (ha₀.trans_le hab))
     hK hD
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower

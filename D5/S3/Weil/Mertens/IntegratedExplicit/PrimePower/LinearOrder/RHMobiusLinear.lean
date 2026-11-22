@@ -226,11 +226,11 @@ theorem prime_window_mobius_linear_of_rh (hRH : RiemannHypothesis) :
         K * (m : ℝ) *
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
   obtain ⟨K, hK, hD⟩ := all_orders_density_linear hRH
-  exact prime_window_of_density_bound hRH (fun m => (m : ℝ))
-    (fun _ _ => by positivity) retainedDensity
-    (fun m n hn a B ha hB => by
+  exact prime_window_of_density_bound hRH (fun m => (m : ℝ)) retainedDensity
+    (fun m _ n hn a B ha hab => by
+      have ha₀ : 0 < a := by linarith
       simpa only [arithmeticPrimitive, capturedPrimitive, powerGap, arithmeticRate, neg_sub]
-        using retainedDensity_integral (m := m) hn ha hB)
+        using retainedDensity_integral (m := m) (Finset.mem_Icc.mp hn).1 ha₀ (ha₀.trans_le hab))
     hK hD
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
