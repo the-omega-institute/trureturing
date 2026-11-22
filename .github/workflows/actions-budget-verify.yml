@@ -1,0 +1,27 @@
+name: Verify Actions cache write and readback
+on:
+  push:
+    branches: [diagnostic/actions-budget-31553]
+permissions:
+  contents: read
+jobs:
+  roundtrip:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    env:
+      CACHE_KEY: budget-31553-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Create a unique payload
+        run: echo "$CACHE_KEY" > budget-proof
+      - uses: actions/cache/save@v5
+        with:
+          path: budget-proof
+          key: ${{ env.CACHE_KEY }}
+      - run: rm budget-proof
+      - uses: actions/cache/restore@v5
+        with:
+          path: budget-proof
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
+      - name: Compare the restored bytes
+        run: echo "$CACHE_KEY" | cmp - budget-proof
