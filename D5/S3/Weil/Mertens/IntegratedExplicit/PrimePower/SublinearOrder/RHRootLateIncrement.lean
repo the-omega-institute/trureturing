@@ -28,11 +28,13 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit phaseOr
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency exp_mode_norm)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder (phaseOrbit_eq_mode)
 
-private def readSignal (r v : ℝ) (p : ℕ → Circle) : ℝ :=
+/-- Read the shifted centered spectrum from a vector of actual occurrence phases. -/
+def readSignal (r v : ℝ) (p : ℕ → Circle) : ℝ :=
   (∑' k, rootCoeff r k * (p k : ℂ) * Complex.exp (frequency k * ((v / r : ℝ) : ℂ))).re /
     (1 / 2 - (2 * r)⁻¹)
 
-private theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+/-- The shifted spectrum readout is continuous in the phase vector. -/
+theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (v : ℝ) : Continuous (readSignal r v) := by
   unfold readSignal
   apply Continuous.div_const
@@ -41,7 +43,8 @@ private theorem read_signal_continuous (hRH : RiemannHypothesis) {r : ℝ} (hr :
   intro k p
   simpa only [norm_mul, Circle.norm_coe, exp_mode_norm hRH, mul_one] using rootCoeff_bound hr k
 
-private theorem read_signal_orbit (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+/-- On the actual phase orbit the shifted readout recovers the centered spectrum. -/
+theorem read_signal_orbit (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (v t : ℝ) : readSignal r v (phaseOrbit t) = rootSignal r (r * t + v) := by
   unfold readSignal rootSignal
   congr 2
@@ -53,7 +56,8 @@ private theorem read_signal_orbit (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < 
   have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith)
   field_simp
 
-private theorem symmetric_difference_returns (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+/-- Every strict lower level of the origin symmetric increment recurs arbitrarily late. -/
+theorem symmetric_difference_returns (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (h U : ℝ) {b : ℝ} (hb : b < rootSignal r h + rootSignal r (-h) - 2 * rootSignal r 0) :
     ∃ t ≥ U, b < rootSignal r (t + h) + rootSignal r (t - h) - 2 * rootSignal r t := by
   let readDifference := fun p : ℕ → Circle =>

@@ -15,6 +15,10 @@ documentation defaults to English.
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
 
+## Adopting a tools release
+
+Trial tools PR or feature releases on a consumer branch. When adopting a new pin on `dev`, the required check verifies the published archive digest and that the release commit is in the tools repository's `dev` history. Stable releases use the tools `main` history. A maintainer can run the same check with `python3 .github/scripts/install-tools.py --verify-adopted-source`. The tools repository documents source review, development releases and pinning. [Tools release workflow](https://github.com/the-omega-institute/trureturing-tools#package-and-release)
+
 ## Choose a starting point
 
 - **Connect a question to a research direction.** Use the
