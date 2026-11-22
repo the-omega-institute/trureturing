@@ -41,7 +41,7 @@ private theorem parity_deficit {A : Type*} [Fintype A] [DecidableEq A]
     simpa [Nat.ModEq] using congruence
   omega
 
-private theorem rank_cuts
+theorem rank_cuts
     {P Q : Type*} [Fintype P] [Fintype Q] [DecidableEq P] [DecidableEq Q]
     (mass weight : P → Q → ℕ) (specialFlags : Q → ℕ)
     (zeroRow special : P) (different : zeroRow ≠ special)
