@@ -33,7 +33,7 @@ internal sealed class ParityFourSparseCountsDocument : IScribeDocumentDefinition
                     + "uniform coloured even and odd parity marginals, and fixed counts z.")),
                 Paragraph(Text("At multiplier one the all-ones even word gives a cut that excludes "
                     + "the prescribed vector. At multiplier zero the seed set is empty. For two "
-                    + "and three, two explicit integer tables specify the per-point orbit sizes. "
+                    + "and three, two explicit integer tables specify the preimage multiplicities at each output point. "
                     + "They satisfy both coloured marginals and their odd entries supply exactly "
                     + "the required fixed seeds through the orbit fibre criterion.")),
                 Paragraph(Text("At larger multipliers, adjoining an even block with zero fixed "

@@ -16,7 +16,7 @@ $$\forall k \in Nat,\; \forall i \in \operatorname{Fin}\left(4\right),\; \operat
 
 FourAt(i) has value four at i and zero at each other coordinate. Realizable(2,k,z) requires an equivariant seed action with 32k seeds, uniform coloured even and odd parity marginals, and fixed counts z.
 
-At multiplier one the all-ones even word gives a cut that excludes the prescribed vector. At multiplier zero the seed set is empty. For two and three, two explicit integer tables specify the per-point orbit sizes. They satisfy both coloured marginals and their odd entries supply exactly the required fixed seeds through the orbit fibre criterion.
+At multiplier one the all-ones even word gives a cut that excludes the prescribed vector. At multiplier zero the seed set is empty. For two and three, two explicit integer tables specify the preimage multiplicities at each output point. They satisfy both coloured marginals and their odd entries supply exactly the required fixed seeds through the orbit fibre criterion.
 
 At larger multipliers, adjoining an even block with zero fixed counts preserves the same vector. A permutation of the four coordinates moves the construction to any prescribed coordinate.
 
