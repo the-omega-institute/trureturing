@@ -27,9 +27,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency frequenc
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (coeff_real on_line)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity (K K_zero K_zero_pos)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp (c R cusp_remainder_bound)
-open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity (actual_cosine_hasSum)
-
-private def weight (k : ℕ) : ℝ := 1 / (1 / 4 + (actualZero k).im ^ 2)
+open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity (actual_cosine_hasSum weight)
 
 private theorem coefficient_correction (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (k : ℕ) :
