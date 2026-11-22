@@ -16,7 +16,7 @@ $$\mathit{RH} \Rightarrow \left(\forall r \in \mathbb{R},\; 1 < r \Rightarrow \l
 
 For r greater than one, put s(r)=1/2−1/(2r) and c=(Euler's constant−1+log(2π))/2. The centered signal S(r,u) is the real part of the root series divided by s(r), with each actual zero included according to its analytic multiplicity.
 
-For a zero of ordinate γ, the symmetric difference multiplies the real coefficient by 2(cos(γh/r)−1). Subtract the reference coefficient −r/(1/4+γ²). The correction has another quadratic denominator in γ, so its second ordinate moment is bounded by the total reciprocal-square mass. This gives a quadratic bound for the correction series.
+For a zero of ordinate γ, the symmetric difference multiplies the real coefficient by 2(cos(γh/r)−1). Subtract the reference coefficient −r/(1/4+γ²). The correction has another quadratic denominator in γ, so its second ordinate moment is bounded by the total reciprocal-square mass multiplied by r(r−1)(r−1/2). This gives a quadratic bound for the correction series.
 
 The reference series equals the actual cosine kernel difference at h/r, scaled by −2r/s(r). Substituting the kernel expansion gives both cusp coefficients. The estimate describes the symmetric difference about the origin. The sharp uniform modulus over arbitrary starting points is open.
 
