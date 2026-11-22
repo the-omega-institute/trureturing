@@ -28,8 +28,17 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripPow
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Algebra.Group.Action.Defs
+import Mathlib.Algebra.Notation.Pi.Defs
+import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Logic.Function.Iterate
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 
