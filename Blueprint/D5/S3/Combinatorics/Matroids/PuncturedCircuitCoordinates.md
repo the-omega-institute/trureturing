@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/PuncturedCircuitCoordinates.punctu
 
 *Commentary.*
 
-Choose the pivot in the omitted basis. Inserting the pivot into the form relates the omitted coefficient to the coefficient on that basis with the pivot removed. The two coefficients agree up to its deletion sign.
+Choose the pivot in the omitted basis. The residue module is isomorphic to the forms of one lower degree killed by insertion of the pivot, insertion of the weighted vector, and multiplication by the total size. The coefficient on the omitted basis with the pivot removed must vanish. It agrees with the original omitted coefficient up to its deletion sign.
 
 ## References
 
