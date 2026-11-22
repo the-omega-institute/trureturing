@@ -24,6 +24,13 @@ internal sealed class OriginalFourMChartProductDocument : IScribeDocumentDefinit
                     + "flags, a complex half-coordinate q and a colour in Fin(rank D). In a family "
                     + "indexed by a finite type, multiple samples may use the same puncture and colour."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-fourm-chart-lift-scale"),
+                DeclarationHandle.Create(Prefix + "chartScale"),
+                H("Inverse half-differential lift"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The inverse half-differential lift factors for A, B and D are "
+                    + "1, (−i√x)⁻¹ and i⁻¹ respectively."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("original-fourm-chart-product"),
                 DeclarationHandle.Create(Prefix + "chartProduct"),
                 H("Period-normalized Gaussian times the sector theta function"), StatementSource.WithoutFormula(),

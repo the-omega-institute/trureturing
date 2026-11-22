@@ -22,6 +22,29 @@ internal sealed class OriginalFourMSignedOverlapDocument : IScribeDocumentDefini
                     + "(h/[b(1−r)])^(−1/2)/(b periodRoot(c,z)). "
                     + "The chosen D root is the lower radial lip at rD."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-fourm-signed-parameter-complement"),
+                DeclarationHandle.Create(Prefix + "chart_parameter_ne_one"),
+                H("Nonzero complementary parameter"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each chart and real 0 < z < 1, the complementary argument "
+                    + "1−parameter(c,z) is nonzero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-fourm-signed-source-at-zero"),
+                DeclarationHandle.Create(Prefix + "chosen_chart_source_at_zero"),
+                H("Analyticity and period-root normalization"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real 0 < z < 1 and any chart and flag, the chosen source is "
+                    + "analytic at u = 0. Its value there is 1 for the outgoing flag and the reciprocal "
+                    + "of the chosen period root for the inward flag."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-fourm-signed-source-square"),
+                DeclarationHandle.Create(Prefix + "chosen_chart_source_square"),
+                H("Square of the chosen source"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real 0 < z < 1 and any chart and flag, wherever the native "
+                    + "factors b(u) and h(e,u,parameter(c,z)) are nonzero, the square of the chosen "
+                    + "source is the reciprocal of their product."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-signed-chart-source-eq-native"),
                 DeclarationHandle.Create(Prefix + "chosen_chart_source_eq_native"),
                 H("Native source germ in A and B"), StatementSource.WithoutFormula(),
