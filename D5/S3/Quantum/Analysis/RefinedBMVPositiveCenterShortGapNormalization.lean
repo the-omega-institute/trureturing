@@ -516,7 +516,7 @@ private theorem sum_exp_centered_range (n : ℕ) {x : ℝ} (hx : 0 < x) :
       rw [hneg ((n : ℝ) * x), hneg x]
       linear_combination (-2 * Real.sinh ((n : ℝ) * x) * Real.sinh x) * hcancel
 
-private theorem compositionMoment_eq_conditioned (p : ℕ) (u v : ℝ) :
+theorem compositionMoment_eq_conditioned (p : ℕ) (u v : ℝ) :
     let h := 3 / (p : ℝ)
     1 + compositionMoment p u v =
       (∑ i ∈ Finset.range (p + 1), Real.exp ((h * i - 1) * v) *
@@ -543,7 +543,7 @@ private theorem compositionMoment_eq_conditioned (p : ℕ) (u v : ℝ) :
   rw [div_mul_eq_mul_div, div_mul_eq_mul_div]
   ring
 
-private theorem compositionGap_conditional_sum {p i : ℕ} (hi : i ≤ p) {h a : ℝ}
+theorem compositionGap_conditional_sum {p i : ℕ} (hi : i ≤ p) {h a : ℝ}
     (hh : 0 < h) (ha : 0 < a) (hp : h * (p : ℝ) = 3) :
     let n := p + 1 - i
     let y := h * i - 1
@@ -967,14 +967,10 @@ private theorem reflectedHalfLogSlope_nonneg {p : ℕ} (hp : 0 < p) {u : ℝ} (h
     exact (div_pos hfu hu).le.trans hsec
   exact div_nonneg (div_nonneg hder hfu.le) (by norm_num)
 
-/-- Above unit upper gap, inserting the four-point lower bound gives a strict
-upper bound on the actual normalized mixed derivative. -/
-theorem logKernel_mixed_lt_fourPoint {p : ℕ} (hp : 0 < p) {u v : ℝ}
-    (hu : 0 < u) (huv : u < v) (hv : 1 ≤ v) :
-    Real.sqrt (compositionMoment p 0 (-u) * compositionMoment p 0 (-v)) *
-      deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v <
-      compactMixedT p u v (compositionMomentFourPoint p u v) - compactMixedQ p u v := by
-  have hvpos := hu.trans huv
+/-- The affine dependence on the joint moment is strictly decreasing for `1 ≤ v`. -/
+theorem compactMixedT_strictAnti {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (hv : 1 ≤ v) : StrictAnti (compactMixedT p u v) := by
+  have hvpos : 0 < v := zero_lt_one.trans_le hv
   have hk : 0 < gapFactor p u := div_pos (gapRate_pos hp)
     (sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith [mul_pos (gapRate_pos hp) hu])))
   have ha := reflectedHalfLogSlope_nonneg hp hu
@@ -986,11 +982,21 @@ theorem logKernel_mixed_lt_fourPoint {p : ℕ} (hp : 0 < p) {u v : ℝ}
     linarith
   have hc : 0 < 2 + gapRate p - reflectedHalfLogSlope (compositionMoment p 0) v := by
     linarith [gapRate_pos hp]
-  have hlow : compositionMomentFourPoint p u v < 1 + compositionMoment p u v :=
-    compositionMoment_fourPoint_lower hp hu v
-  rw [logKernel_mixed_eq_compactMixed hp hu huv]
+  intro Z₁ Z₂ hZ
   dsimp only [compactMixedT]
-  linarith only [mul_lt_mul_of_neg_left hlow (mul_neg_of_neg_of_pos (neg_neg_of_pos hγ) hc)]
+  linarith only [mul_lt_mul_of_neg_left hZ (mul_neg_of_neg_of_pos (neg_neg_of_pos hγ) hc)]
+
+/-- Above unit upper gap, inserting the four-point lower bound gives a strict
+upper bound on the actual normalized mixed derivative. -/
+theorem logKernel_mixed_lt_fourPoint {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v) (hv : 1 ≤ v) :
+    Real.sqrt (compositionMoment p 0 (-u) * compositionMoment p 0 (-v)) *
+      deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v <
+      compactMixedT p u v (compositionMomentFourPoint p u v) - compactMixedQ p u v := by
+  rw [logKernel_mixed_eq_compactMixed hp hu huv]
+  exact sub_lt_sub_right (compactMixedT_strictAnti hp hu hv
+    (show compositionMomentFourPoint p u v < 1 + compositionMoment p u v from
+      compositionMoment_fourPoint_lower hp hu v)) _
 
 #print axioms logKernel_mixed_eq_compactMixed
 #print axioms logKernel_mixed_lt_fourPoint
