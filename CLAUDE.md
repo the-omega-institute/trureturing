@@ -26,7 +26,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓锁定 release 版本与 SHA-256。稳定版本从工具仓 `main` 发布。
+工具源码和工具自身的测试在 [trureturing-tools](https://github.com/the-omega-institute/trureturing-tools) 提交，默认分支为 `dev`。需要主仓联调时，按需从工具仓发布指定 feature、PR 或 `dev` 的预览，在主仓运行 `python3 tools/consumer/pin.py <release-tag>` 锁定版本与 SHA-256。稳定版本从工具仓 `main` 发布。
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -536,7 +536,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。tests-declared-template 保持 lean:none，current 消费互补的 Fourier 证据子集。检查只执行候选代码,base 只作为固定数据。
+- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 与执行声明判定命中单元和 current 子检查;主仓 CI 验证 FILEMAP、源码、当前快照及与基线的差异，主仓另维护 Lean 缓存和 Scribe 资源发布。工具仓 CI 构建工具，运行工具测试、selftest 和编译反证。主仓的单元作业只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。检测校验并按白名单匹配完整改动路径列表,不设路径数量截断。普通 PR 与 push 的 current 按实际变更执行同一定向检查。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。`make pr`/`make pr-open` 默认 arm auto-merge,required checks 绿后自动合;`AUTO_MERGE=0` 或 `DRAFT=1` 不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
@@ -915,7 +915,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
   已编 olean 的有效性受 `[[require]]` mathlib rev 与 `[leanOptions]` 影响;name/version/keywords/defaultTargets/lean_lib roots|globs 不影响已编 olean。样本仅测试 metadata-only,leanOptions/mathlib rev 改动的重编规模未测,ASSUMED-UNVERIFIED;它回答 lake 重编语义,不外推 CI 时长。全文/目录进 key 须证明相关字段,commit SHA 同样违反最小充分输入原则。
   *成熟锚*:Bazel 的 action key 只含真正的 input(而非整个 workspace)、Nix derivation 的输入闭包、增量构建的最小重算集、over-approximation 的成本 vs under-approximation 的风险、cache 不是真源。
   〔守护:**软 + 硬投影**·「某项输入是否影响产物」不可 lint,靠对手官评审与本条;硬投影有二:①凡 key 的输入含**某文件全文**,PR 说明须写明「该文件的哪些字段影响产物、哪些不影响」,写不出即判该 key 未经论证;②凡以「命中率低 / 缓存失效」为由改动缓存机制,须附**两层读数**——cache 层的命中或 key 变化,与下游增量层的重算规模(如本判例的 `Built` 计数),**只给其一者按第 2.9 条禁模糊措辞判无效**〕
-  **【永久禁令·τ=0 owner 裁决】程序字节不得作数据产物的复用条件。** 报告、种子、收据等数据产物的复用资格只由真正决定产物字节的数据输入(Lean 源、构建配置、显式执行环境)与工件格式标识决定。禁止把程序文件、程序目录或其内容哈希放进复用条件或 cache key;评审见即拒,已有者见即删。**inspector 也是程序**:`tools/lean-inspector/**` 的 Lean 判官库、Inspector 可执行、`native.py`/`publication.py`/`materials.py` 等脚本与 C# 生产者同属程序,不是数据。判官实现或规则改变不使历史报告失效；契约接口改变通过 Reg 编译依赖自动重评；声明清单、公理闭包、statement identity 等提取语义或工件格式改变时更新报告格式标识,严格读取器拒读旧报告并全部重提取。逐模块报告工件的 trace 只含该模块自身的编译闭包、utility 输入与报告格式标识,报告 facet 核对 inspector 的预编译产物，判官程序身份不混入 trace。判官实现改动复用有效报告；Reg/D5 编译闭包不含实现包，故不因实现改动而重编。**报告复用与程序构建分责**:整份报告收据只绑定报告格式、报告模块、配置和显式执行环境。全量和定向报告每次都用 Lake 核对预编译输入，复用或按需提取报告。所需编译产物无法恢复时分析失败。`lean-report-prepare` 显式编译工具与所需输入。整库准备及 `check-lean-report` 的程序目标采用默认集合或调用方显式设置的 `STRATALINT_LEAN_BUILD_TARGETS`。整库检查即使可直接复用相符的报告，也须成功完成选中程序的准备，再执行适用的 FIB 回归并发布。未改变 canonical 报告时保留成功收据和 base，已准备的生产失败保持无收据。〔守护:**硬投影**·`test_producer_program_bytes_never_gate_reuse` 钉住收据文件全集只含报告模块与配置、生产程序字节或 mode 改动不失效、报告格式改变必失效;其余缓存键靠评审按本款拒绝,不可 lint 不豁免〕
+  **【永久禁令·τ=0 owner 裁决】程序字节不得作数据产物的复用条件。** 报告、种子、收据等数据产物的复用资格只由真正决定产物字节的数据输入(Lean 源、构建配置、显式执行环境)与工件格式标识决定。禁止把程序文件、程序目录或其内容哈希放进复用条件或 cache key;评审见即拒,已有者见即删。**inspector 也是程序**:`tools/lean-inspector/**` 的 Lean 判官库、Inspector 可执行、`native.py`/`publication.py`/`materials.py` 等脚本与 C# 生产者同属程序,不是数据。判官实现或规则改变不使历史报告失效；契约接口改变通过 Reg 编译依赖自动重评；声明清单、公理闭包、statement identity 等提取语义或工件格式改变时更新报告格式标识,严格读取器拒读旧报告并全部重提取。逐模块报告工件的 trace 只含该模块自身的编译闭包、utility 输入与报告格式标识,报告 facet 核对 inspector 的预编译产物，判官程序身份不混入 trace。判官实现改动复用有效报告；Reg/D5 编译闭包不含实现包，故不因实现改动而重编。**报告复用与程序构建分责**:整份报告收据只绑定报告格式、报告模块、配置和显式执行环境。全量和定向报告每次都用 Lake 核对预编译输入，复用或按需提取报告。所需编译产物无法恢复时分析失败。`lean-report-prepare` 显式编译工具与所需输入。整库准备及 `check-lean-report` 的程序目标采用默认集合或调用方显式设置的 `STRATALINT_LEAN_BUILD_TARGETS`。整库检查即使可直接复用相符的报告，也须成功完成选中程序的准备，再发布整库报告。未改变 canonical 报告时保留成功收据和 base，已准备的生产失败保持无收据。〔守护:**硬投影**·`test_producer_program_bytes_never_gate_reuse` 钉住收据文件全集只含报告模块与配置、生产程序字节或 mode 改动不失效、报告格式改变必失效;其余缓存键靠评审按本款拒绝,不可 lint 不豁免〕
 
 报告批次在评定前固定由多个目标共享且依赖闭合的导入基座，utility claim 与 enrollment 导入计入目标闭包。规划只保留自有名字与输入标志，并释放规划读取的编译区域。常量与 owner 索引使用 Lean 既有 staged map：共享基座保留哈希表，目标与伴随声明插入使用持久哈希阶段，不复制基座桶数组；模块位置与来源分类索引按依赖顺序随编译输入加载建立，评定上下文直接读取，不保存计划、判词或新鲜度状态。每个目标的其余编译区域、常量表、元数据、评定、表达式/公理缓存与报告行限于该目标作用域；材料写出确认、报告行 flush 后先析构引用，再逆序显式释放区域，下一目标开始前不保留已完成目标的非共享大对象。跨目标生成名索引须拥有名字字符串，不借用目标区域。共享基座可常驻至进程退出，profile 将其规模与逐目标释放后的根计数、RSS 分列。native 批次打包、报告聚合与聚合验证逐模块消费，只允许成员、来源摘要、材料地址与偏移等小索引累积；批大小保持 100，观测不进入报告格式或复用条件。下游 C# 准入读取器读取一份已完成的报告，并保留各模块模板载荷与材料归档对象，不在报告生产的逐目标循环范围内。
 

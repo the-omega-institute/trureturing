@@ -18,7 +18,20 @@ $$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryCompa
 
 Let C be a ternary comparison structure on M and r a natural number. The left side says that for every n and every family x : Fin n -> M the matrix with entries kappa (x i) (x j) has rank at most r. The right side says that there is a map f from M into the Euclidean space of dimension r with kappa x y equal to the real inner product of f x and f y for all x and y. If such an f exists, each Gram matrix of the reading is the Gram matrix of the vectors f (x i) in an r-dimensional space, so it factors through r coordinates and has rank at most r. Conversely, the reading is symmetric with nonnegative finite Gram forms, so it is a positive semidefinite kernel, and its reproducing kernel Hilbert space contains kernel functions k x with inner product kappa x y between k x and k y. A linearly independent family of kernel functions has an invertible Gram matrix, so by the rank bound it has at most r members. A maximal such family therefore exists, spans every kernel function, and spans a subspace of dimension at most r. Coordinates of the kernel functions in an orthonormal basis of that subspace, padded by zero coordinates up to dimension r, give the map f.
 
+**Lemma 1.2 (Feature rank is monotone).**
+
+$$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryComparison}\left(M\right),\; \forall r \in \mathbb{N},\; \forall s \in \mathbb{N},\; r \le s \Rightarrow \left(\operatorname{HasFeatureRank}\left(C, r\right) \Rightarrow \operatorname{HasFeatureRank}\left(C, s\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/GramRankFeatureMap.hasFeatureRank_mono` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let C be a ternary comparison structure on M and r <= s natural numbers. If the reading of C is the Gram kernel of a map into Euclidean r-space, it is also the Gram kernel of a map into Euclidean s-space. By the equivalence above, feature rank r means that every finite Gram matrix of the reading has rank at most r, hence at most s, which is feature rank s.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/GramRankFeatureMap.gramRankLE_iff_hasFeatureRank`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/GramRankFeatureMap.hasFeatureRank_mono`
 - Dependency: [D5/S3/Quantum/AURICOmega/TernaryComparisonGroup](TernaryComparisonGroup.md)

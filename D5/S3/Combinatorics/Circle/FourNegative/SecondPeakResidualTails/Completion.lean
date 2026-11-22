@@ -22,7 +22,7 @@ open private DataCertificate DataCertificate.mk DataCertificate.positiveLabels D
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private strip_iff_packetChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
 open scoped BigOperators
 

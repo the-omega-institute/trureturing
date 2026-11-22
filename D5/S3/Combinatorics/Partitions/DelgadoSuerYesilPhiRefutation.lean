@@ -86,7 +86,9 @@ private theorem original_boundary_label (U : NumericalSet) (r : ℕ) :
   exact (Finset.card_filter_add_card_filter_not (s := Finset.range r)
     (fun q => q ∈ members U)).trans (Finset.card_range r)
 
-private theorem deletion_is_inverse_boundary (U : NumericalSet) (R : Finset ℕ)
+/-- Deleting the rows outside `R` relabels each retained row by its length plus the number of
+retained rows below it. -/
+theorem deletion_is_inverse_boundary (U : NumericalSet) (R : Finset ℕ)
     (hR : R ⊆ U.gaps) : deleteRows U R = inverseBoundary R (rowLength U) := by
   apply Finset.image_congr
   intro r hr

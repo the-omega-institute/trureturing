@@ -44,10 +44,10 @@ def slitPeriod (r : ℂ) : ℂ :=
   (2 / (Real.pi : ℂ)) * ∫ θ in (0 : ℝ)..Real.pi / 2,
     (1 - r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ)
 
-private lemma isOpen_slitDomain : IsOpen slitDomain :=
+lemma isOpen_slitDomain : IsOpen slitDomain :=
   Complex.isOpen_slitPlane.preimage (continuous_const.sub continuous_id)
 
-private lemma isOpen_doubleSlit : IsOpen doubleSlit :=
+lemma isOpen_doubleSlit : IsOpen doubleSlit :=
   isOpen_slitDomain.inter Complex.isOpen_slitPlane
 
 private lemma mem_slitDomain (r : ℂ) :
@@ -69,6 +69,21 @@ private lemma base_mem {r : ℂ} (hr : r ∈ slitDomain) (θ : ℝ) :
     have h := mul_lt_mul_of_pos_right hr hs0
     nlinarith [Real.sin_sq_le_one θ]
   · exact Or.inr (mul_ne_zero hr hs0.ne')
+
+/-- The principal Euler period commutes with complex conjugation on its slit domain. -/
+theorem slitPeriod_conj {r : ℂ} (hr : r ∈ slitDomain) :
+    slitPeriod (conj r) = conj (slitPeriod r) := by
+  have hk (θ : ℝ) :
+      (1 - conj r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ) =
+        conj ((1 - r * (Real.sin θ ^ 2 : ℝ)) ^ (-1 / 2 : ℂ)) := by
+    have hbase : 1 - r * (Real.sin θ ^ 2 : ℝ) ∈ Complex.slitPlane := base_mem hr θ
+    have hconj : 1 - conj r * (Real.sin θ ^ 2 : ℝ) = conj (1 - r * (Real.sin θ ^ 2 : ℝ)) := by
+      simp only [map_sub, map_one, map_mul, Complex.conj_ofReal]
+    rw [hconj, Complex.conj_cpow _ _ (Complex.slitPlane_arg_ne_pi hbase)]
+    congr 2
+    simp [map_ofNat]
+  simp only [slitPeriod, map_mul, map_div₀, map_ofNat, Complex.conj_ofReal,
+    intervalIntegral, map_sub, ← integral_conj, hk]
 
 private lemma continuous_base : Continuous (fun p : ℂ × ℝ => base p.1 p.2) := by
   unfold base
@@ -160,7 +175,7 @@ private lemma slitPeriod_eq_period_real {r : ℝ} (h₀ : 0 ≤ r) (h₁ : r < 1
   push_cast
   rfl
 
-private lemma ball_subset_slitDomain : Metric.ball (0 : ℂ) 1 ⊆ slitDomain := by
+lemma ball_subset_slitDomain : Metric.ball (0 : ℂ) 1 ⊆ slitDomain := by
   intro r hr
   exact (mem_slitDomain r).2 (Or.inl ((Complex.re_le_norm r).trans_lt (by simpa using hr)))
 
@@ -360,7 +375,7 @@ private lemma slitDomain_star : StarConvex ℝ (1 / 2 : ℂ) slitDomain := by
         nlinarith [mul_lt_mul_of_pos_left hz hb0]))
     · exact (mem_slitDomain _).2 (Or.inr (by rw [him]; exact mul_ne_zero hb0.ne' hz))
 
-private lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
+lemma doubleSlit_preconnected : IsPreconnected doubleSlit := by
   apply IsConnected.isPreconnected
   apply IsPathConnected.isConnected
   apply StarConvex.isPathConnected _ midpoint_mem
