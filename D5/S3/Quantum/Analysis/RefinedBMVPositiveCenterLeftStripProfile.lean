@@ -6,7 +6,7 @@
    utility: none
    digest: Negative weighted third derivative of the leading profile at the lower collision. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterUpperTail
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
@@ -223,6 +223,86 @@ theorem leftStrip_geometric_mixed_lt {h a v γ : ℝ}
       linarith
     _ < (-1/5 : ℝ) := by norm_num
 
+/-- Quantitative lower bound for the marginal root at gaps of at least six. -/
+theorem separated_radical_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3/11) (ht : 6 ≤ t) :
+    let B := ((3+h)*(3+2*h)/2) * (upperTailGap h t)^2 * Real.exp (-(2*t))
+    B < 1/750 ∧ (999/1000 : ℝ) ≤ Real.sqrt (1 - upperTailLambda h t) := by
+  let a := upperTailGap h t
+  let α := 3+h
+  let c := α*(3+2*h)/2
+  let e := Real.exp (-t)
+  have ht₀ : 0 < t := by linarith
+  have he₀ : 0 < e := Real.exp_pos _
+  have he6 : (400 : ℝ) < Real.exp 6 := by
+    rw [show (6 : ℝ) = (6 : ℕ) * (1 : ℝ) by norm_num, Real.exp_nat_mul]
+    have ho : (2718/1000 : ℝ) < Real.exp 1 := lt_trans (by norm_num) Real.exp_one_gt_d9
+    exact (by norm_num : (400 : ℝ) < (2718/1000)^6).trans
+      (pow_lt_pow_left₀ ho (by norm_num) (by decide))
+  have he6neg : Real.exp (-6) ≤ (1 : ℝ)/400 := by
+    rw [Real.exp_neg, one_div]
+    exact (inv_le_inv₀ (Real.exp_pos _) (by norm_num)).mpr he6.le
+  have he : e ≤ 1/400 :=
+    (Real.exp_le_exp.mpr (neg_le_neg ht)).trans he6neg
+  have hte : t*e ≤ 6/400 := by
+    have htExp : t ≤ 6*Real.exp (t-6) := by
+      linarith only [Real.add_one_le_exp (t-6), ht]
+    have hmul := mul_le_mul_of_nonneg_right htExp he₀.le
+    have hexp : Real.exp (t-6)*e = Real.exp (-6) := by
+      dsimp only [e]
+      rw [← Real.exp_add]
+      congr 1
+      ring
+    rw [mul_assoc, hexp] at hmul
+    exact hmul.trans (by linarith only [he6neg])
+  have ha₀ : 0 ≤ a := by
+    refine div_nonneg (sub_nonneg.mpr ?_) hh.le
+    exact Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le ht₀.le))
+  have hae : a*e ≤ 6/400 :=
+    (mul_le_mul_of_nonneg_right (upperTailGap_le hh) he₀.le).trans hte
+  have hc : c ≤ 702/121 := by
+    have h₁ : α ≤ 36/11 := by dsimp [α]; linarith only [hhmax]
+    have h₂ : 3+2*h ≤ 39/11 := by linarith only [hhmax]
+    have hProd := mul_le_mul h₁ h₂ (by positivity : 0 ≤ 3+2*h)
+      (by norm_num : (0 : ℝ) ≤ 36/11)
+    dsimp only [c]
+    linarith only [hProd]
+  have he2 : Real.exp (-(2*t)) = e^2 := by
+    dsimp only [e]
+    rw [pow_two, ← Real.exp_add]
+    congr 1
+    ring
+  have hB : c*a^2*Real.exp (-(2*t)) < 1/750 := by
+    have hsq := pow_le_pow_left₀ (mul_nonneg ha₀ he₀.le) hae 2
+    have hcap := mul_le_mul hc hsq (sq_nonneg (a*e)) (by norm_num : (0 : ℝ) ≤ 702/121)
+    rw [he2]
+    exact (show c*a^2*e^2 ≤ (702/121)*(6/400)^2 by nlinarith only [hcap]).trans_lt (by norm_num)
+  have hα : 0 ≤ α := by dsimp [α]; positivity
+  have hαmax : α ≤ 36/11 := by dsimp [α]; linarith only [hhmax]
+  have hexp : Real.exp (-(α*t)) ≤ e^3 := by
+    rw [show e^3 = Real.exp (-(3*t)) by
+      dsimp only [e]
+      rw [← Real.exp_nat_mul]
+      congr 1
+      push_cast
+      ring]
+    apply Real.exp_le_exp.mpr
+    dsimp [α]
+    nlinarith only [mul_nonneg hh.le ht₀.le]
+  have hA : (1+α*a)*Real.exp (-(α*t)) < 1/1000000 := by
+    have heSq := pow_le_pow_left₀ he₀.le he 2
+    have hA₀ : 0 ≤ 1+α*a := by positivity
+    have hleft := mul_le_mul_of_nonneg_left hexp hA₀
+    have hfirst := pow_le_pow_left₀ he₀.le he 3
+    have hsecond := mul_le_mul hαmax hae (mul_nonneg ha₀ he₀.le)
+      (by norm_num : (0 : ℝ) ≤ 36/11)
+    have hthird := mul_le_mul hsecond heSq (sq_nonneg e)
+      (by norm_num : (0 : ℝ) ≤ (36/11)*(6/400))
+    nlinarith only [hleft, hfirst, hthird]
+  refine ⟨hB, Real.le_sqrt_of_sq_le ?_⟩
+  change (999/1000 : ℝ)^2 ≤ 1 - ((1+α*a)*Real.exp (-(α*t)) + c*a^2*Real.exp (-(2*t)))
+  linarith only [hA, hB]
+
 #print axioms leftStrip_geometric_mixed_lt
+#print axioms separated_radical_lower
 
 end RefinedBMV.PositiveCenter
