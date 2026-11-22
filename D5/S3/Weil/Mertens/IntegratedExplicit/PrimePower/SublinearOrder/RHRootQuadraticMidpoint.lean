@@ -8,7 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHRootMidpointAverage
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHSignedShrinkingLower
-import Batteries.Tactic.OpenPrivate
+import D5.S3.Analytic.Asymptotics.CommonPhaseSpectralCurvature
 
 /-! Pair the exponential modes before taking their norms. -/
 
@@ -30,10 +30,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity (w
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower (rootCoeff rootCoeff_bound)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (coeff_real)
-open private integral_pair continuous_cusp_profile integral_cusp_profile from
-  D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHRootMidpointAverage
-open private odd_root_increment from
-  D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHSignedShrinkingLower
+open CommonPhaseSpectralCurvature (abs_cosh_sub_one_le_sq abs_sinh_le_two_mul_abs)
 
 private def halfPair (a x : ℝ) : ℂ :=
   ⟨-Real.cosh a * (1 - Real.cos x), -Real.sinh a * Real.sin x⟩
@@ -147,31 +144,23 @@ private theorem weighted_root_pair_le (hRH : RiemannHypothesis) {r : ℝ} (hr : 
 
 private theorem sinh_small {s h : ℝ} (hs : 0 ≤ s) (hs' : s ≤ 1 / 2)
     (hh : 0 ≤ h) (hh' : h ≤ 1) : |Real.sinh (s * h)| ≤ h := by
-  have hx : 0 ≤ s * h := mul_nonneg hs hh
-  have hx' : s * h ≤ h / 2 := by
+  have hhx : |s * h| ≤ h / 2 := by
+    rw [abs_of_nonneg (mul_nonneg hs hh)]
     linarith only [mul_le_mul_of_nonneg_right hs' hh]
-  have hpos : |Real.exp (s * h) - 1| ≤ 2 * (s * h) := by
-    simpa only [abs_of_nonneg hx] using
-      Real.abs_exp_sub_one_le (x := s * h) (by rw [abs_of_nonneg hx]; linarith)
-  have hneg : |Real.exp (-(s * h)) - 1| ≤ 2 * (s * h) := by
-    simpa only [abs_neg, abs_of_nonneg hx] using
-      Real.abs_exp_sub_one_le (x := -(s * h))
-        (by rw [abs_neg, abs_of_nonneg hx]; linarith)
-  rw [Real.sinh_eq, abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 2)]
-  have h := abs_sub (Real.exp (s * h) - 1) (Real.exp (-(s * h)) - 1)
-  rw [sub_sub_sub_cancel_right] at h
-  linarith only [h, hpos, hneg, hx']
+  exact (abs_sinh_le_two_mul_abs (hhx.trans (by linarith))).trans (by linarith)
 
 private theorem cosh_small {s h : ℝ} (hs : 0 ≤ s) (hs' : s ≤ 1 / 2)
     (hh : 0 ≤ h) (hh' : h ≤ 1) : 0 ≤ Real.cosh (s * h) - 1 ∧
       Real.cosh (s * h) - 1 ≤ h ^ 2 := by
-  have hlow := Real.one_le_cosh (s * h)
-  have habs := sinh_small hs hs' hh hh'
-  have hsq := (sq_le_sq₀ (abs_nonneg _) hh).2 habs
+  have hcosh := sub_nonneg.mpr (Real.one_le_cosh (s * h))
+  have hhx : |s * h| ≤ h := by
+    rw [abs_of_nonneg (mul_nonneg hs hh)]
+    exact (mul_le_mul_of_nonneg_right (hs'.trans (by norm_num)) hh).trans_eq (one_mul h)
+  have hbound := abs_cosh_sub_one_le_sq (hhx.trans hh')
+  rw [abs_of_nonneg hcosh] at hbound
+  have hsq := (sq_le_sq₀ (abs_nonneg _) hh).2 hhx
   rw [sq_abs] at hsq
-  exact ⟨sub_nonneg.mpr hlow, by
-    nlinarith only [hsq, Real.cosh_sq_sub_sinh_sq (s * h),
-      sq_nonneg (Real.cosh (s * h) - 1), hlow]⟩
+  exact ⟨hcosh, hbound.trans hsq⟩
 
 private theorem integral_midpoint_sum {f : ℝ → ℝ} (hf : Continuous f) (L : ℝ) :
     (∫ t in (0 : ℝ)..L, f t) =

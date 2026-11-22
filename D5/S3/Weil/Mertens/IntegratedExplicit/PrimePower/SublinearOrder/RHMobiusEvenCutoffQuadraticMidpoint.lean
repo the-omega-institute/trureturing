@@ -6,9 +6,8 @@
    utility: none
    digest: A quadratic midpoint limsup remainder for the original signed prime window. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoffMidpoint
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMidpointWindowTransfer
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHRootQuadraticMidpoint
-import Batteries.Tactic.OpenPrivate
 
 /-! Transfer the quadratic root-average estimate to the full signed prime window. -/
 
@@ -24,8 +23,6 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp (c)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
-open private signed_window_midpoint_transfer from
-  D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoffMidpoint
 
 /-- The original normalized signed prime window, corrected at its midpoint, has a finite
 limsup with a quadratic remainder at every width up to one quarter. -/
