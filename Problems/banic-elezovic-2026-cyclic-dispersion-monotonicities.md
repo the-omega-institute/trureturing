@@ -175,10 +175,16 @@ is **Theorem 3.10**, p. 14.
 
 - **Lean proved.** `D5/S3/TotalVariation/BanicR312Settlement.result`
   refutes the conjunction in Remark 3.12 with both original quantified
-  clauses and the exact uniform law. Its `proof_shape: content` comes
-  from evaluating the exact weighted moments for the bin-count reversal.
-  This is a Tier 1 named external question with
-  `admission_basis: open-problem-resolution`.
+  clauses and the exact uniform law. Rule 28 classifies the closed
+  `decide +kernel` proofs `moments_three_four` and `moments_four_four`
+  as bind-only helpers used by `v_three_four` and `v_four_four`,
+  respectively. Those equalities give `variance_bins_reverse`, and
+  `dispersion_bins_reverse` uses that comparison and `v_three_four`.
+  The comparison steps are bind-only, as is `result`, which applies
+  `dispersion_bins_reverse` to the first clause. The admission basis is
+  `open-problem-resolution` for this Tier 1 named external question.
+  The fixed-parameter certificates have `certified-instance` utility
+  under `refutes` with the literal `result : Not claim`.
   [Preregistration](https://github.com/the-omega-institute/trureturing/issues/31389)
 - **Lean proved in separate compiled evidence.** The sample-size clause
   fails at four bins. The exact values $247/256$ and $3835/4096$ give the
