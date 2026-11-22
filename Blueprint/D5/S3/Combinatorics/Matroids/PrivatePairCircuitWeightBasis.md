@@ -19,4 +19,4 @@ Let the coordinate indices form a finite set and carry positive integer weights.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/PrivatePairCircuitWeightBasis.exists_private_pair_weight_basis`
-- Dependency: [D5/S3/Combinatorics/Matroids/CircuitWeightBlocks](CircuitWeightBlocks.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitWeightBasis](MembershipCircuitWeightBasis.md)

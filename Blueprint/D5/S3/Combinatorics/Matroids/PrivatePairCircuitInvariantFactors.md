@@ -19,7 +19,5 @@ Use an ordered ambient set of K elements and let 3 <= r < K. Its core bases are 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/PrivatePairCircuitInvariantFactors.private_pair_lifting_obstruction_invariant_factors`
+- Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitInvariantFactors](MembershipCircuitInvariantFactors.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/PrivatePairCircuitResidueProduct](PrivatePairCircuitResidueProduct.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitInvariantFactors](PuncturedCircuitInvariantFactors.md)
-- Dependency: [D5/S3/Combinatorics/Matroids/UniformCircuitInvariantFactors](UniformCircuitInvariantFactors.md)
-- Dependency: [D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation](../../FiniteGroups/Modules/FiniteModuleProductCancellation.md)

@@ -23,3 +23,4 @@ Let an omitted family consist of a previous family and one new member. All omiss
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipCircuitWeightBasis](MembershipCircuitWeightBasis.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions](MembershipSeparatedOmissions.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitCoordinates](SparsePavingCircuitCoordinates.md)
+- Dependency: [D5/S3/Combinatorics/Matroids/SupportedPivotProduct](SupportedPivotProduct.md)

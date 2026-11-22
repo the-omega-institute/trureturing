@@ -7,6 +7,7 @@
    digest: Independent cyclic factor replacement for omissions with private pairs and a common pivot. -/
 
 import D5.S3.Combinatorics.Matroids.MembershipCircuitInvariantFactors
+import D5.S3.Combinatorics.Matroids.PrivatePairCircuitResidueProduct
 
 /-! Cyclic factors of the lifting obstruction for overlapping omissions with private pairs. -/
 

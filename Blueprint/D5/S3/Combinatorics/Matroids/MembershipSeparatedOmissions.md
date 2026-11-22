@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions.omiss
 
 *Commentary.*
 
-Consider r-element omissions with a common element in a K-element set. Suppose distinct omissions intersect in at most r minus two elements. Removing the common element, then deleting an index while avoiding one fixed coordinate, injects the petals into the (r minus two)-element subsets of the remaining K minus two indices. Complementing the petals gives the other bound. Thus the family has at most binom(K minus 2, r minus 2) and binom(K minus 2, r minus 1) members.
+Let 3 <= r < K. Consider r-element omissions with a common element in a K-element set. Suppose distinct omissions intersect in at most r minus two elements. Removing the common element, then deleting an index while avoiding one fixed coordinate, injects the petals into the (r minus two)-element subsets of the remaining K minus two indices. Complementing the petals gives the other bound. Thus the family has at most binom(K minus 2, r minus 2) and binom(K minus 2, r minus 1) members.
 
 ## References
 
@@ -71,3 +71,4 @@ Consider r-element omissions with a common element in a K-element set. Suppose d
 - Truth anchor: `D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions.mono`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions.of_private_pairs`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/MembershipSeparatedOmissions.omission_multiplicities`
+- Dependency: [D5/S3/Combinatorics/Matroids/PrivatePairOmissionFamily](PrivatePairOmissionFamily.md)
