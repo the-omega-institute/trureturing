@@ -35,7 +35,7 @@ open HigherLayerClampedCutoff (cutoff cutoff_spec cutoff_antitone cutoff_occupan
 open HigherLayerLogSlope (beta beta_strictAntiOn)
 open RealInfimumPrimeBoundary
   (prefixH prefixEll prefixPrice prefixH_atTop prefixEll_atTop eventual_prefix_domains)
-open IntegerInfimumSecondOrder (log_pow_over_H_rpow)
+open IntegerInfimumSecondOrder (log_pow_over_H_rpow log_pow_over_sqrt_H)
 open QuantitativePrimeAbel (theta_error_log_power)
 open D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference (referencePrice)
 
@@ -56,11 +56,6 @@ private theorem baseCutoff_log_ratio :
   simpa only [baseCutoff, Function.comp_def, prefixPrice,
     ActualRobinClockCovariance.g, referencePrice, Nat.cast_ofNat, one_div] using
     (FixedLayerShrinkingPrimeRoster.root_log_ratio (show 2 ≤ (2 : ℕ) by decide)).comp prefixH_atTop
-
-private theorem logScale_tendsto (n : ℕ) : Tendsto (logScale n) atTop (𝓝 0) := by
-  change Tendsto (fun P => log (prefixH P) ^ n / sqrt (prefixH P)) atTop (𝓝 0)
-  simpa only [prefixEll, sqrt_eq_rpow] using
-    log_pow_over_H_rpow n (show (0 : ℝ) < 1 / 2 by norm_num)
 
 private theorem logScale_nonneg (n : ℕ) {P : ℕ} (hH : 1 ≤ prefixH P) :
     0 ≤ logScale n P :=
@@ -182,8 +177,8 @@ private theorem head_at_cutoff {P : ℕ} {lam : ℝ} {a : ℕ → ℕ}
 private theorem offset_tendsto (n : ℕ) {y : ℕ → ℝ} {K : ℝ}
     (hy : ∀ᶠ P : ℕ in atTop, |y P - baseCutoff P| ≤ K) :
     Tendsto (fun P => logScale n P * (y P - baseCutoff P)) atTop (𝓝 0) := by
-  have hUpper := (logScale_tendsto n).mul_const K
-  have hLower := (logScale_tendsto n).mul_const (-K)
+  have hUpper := (log_pow_over_sqrt_H n).mul_const K
+  have hLower := (log_pow_over_sqrt_H n).mul_const (-K)
   simp only [zero_mul] at hLower hUpper
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hLower hUpper
   · filter_upwards [hy, prefixH_atTop.eventually_ge_atTop 1] with P hp hH
