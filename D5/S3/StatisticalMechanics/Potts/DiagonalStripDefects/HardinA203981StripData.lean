@@ -25,6 +25,8 @@ halfInitial: proof_shape=bind-only; consumers=initial
 -/
 
 import Init.Tactics
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Literal
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Mathlib.Data.Fin.Tuple.Basic
@@ -46,6 +48,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer (Col cls 
 theorem between_six :
     StripDefects.HardinA229637RowColumn.betw 6 =
       {(0, 1), (1, 0), (1, 2), (2, 1), (2, 3), (3, 2), (3, 4), (4, 3), (4, 5), (5, 4)} := by
+  rw [CrossedStripDefectsWide.P5b.HardinA229635Literal.same_between]
   decide +kernel
 
 /-- Read the three coordinates of a column as a function. -/

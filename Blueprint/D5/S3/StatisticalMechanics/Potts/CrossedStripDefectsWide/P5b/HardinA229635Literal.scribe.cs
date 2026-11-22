@@ -10,6 +10,12 @@ internal sealed class HardinA229635LiteralDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A six-to-one relation between labelled and canonical arrays.", H("The literal count"),
         Blocks(
+            Describe.Lean(DescribeId.Create("same-between"),
+                DeclarationHandle.Create(Prefix + "same_between"), H("Between-row bonds at width six"),
+                StatementSource.FromAuthor(Disp(Equal(Call("HardinA229637RowColumn.betw", D(6)),
+                    Call("HardinA229532StripData.between")))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Both bond sets join adjacent columns across two consecutive rows, with both orientations included."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("six-labellings"),
                 DeclarationHandle.Create(Prefix + "six_labellings"), H("Six labelled arrays per canonical array"),
                 StatementSource.FromAuthor(Disp(All("m", Call("Nat"), Equal(Call("DefectTransfer.literalCount", D(3), Call("horizontal"), Call("between"), D(2), Add(V("m"), D(1))), Mul(D(6), Call("HardinA229637RowColumn.T", Add(V("m"), D(1)), D(6))))))),

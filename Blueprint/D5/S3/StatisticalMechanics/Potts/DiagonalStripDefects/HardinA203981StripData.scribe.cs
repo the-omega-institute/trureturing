@@ -14,7 +14,7 @@ internal sealed class HardinA203981StripDataDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("between-six"), DeclarationHandle.Create(Prefix + "between_six"),
             H("Diagonal and antidiagonal bonds"), StatementSource.FromAuthor(Disp(BetweenSixFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("Each pair lists the upper and lower column indices of a bond."))), DescribeRole.Theorem),
+            Blocks(Paragraph(Text("Each pair lists the upper and lower column indices of a bond. HardinA229635Literal.same_between identifies the width-six bond set with the union whose pairs are listed here."))), DescribeRole.Theorem),
         Define("column-rows", "Column as a three-position row", ColumnRowsFormula(),
             "The inverse reads a triple of entries from the three positions.", "columnRows"),
         Define("parity-rows", "Parity triples", ParityRowsFormula(),
