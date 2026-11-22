@@ -34,5 +34,18 @@ internal sealed class CircuitWeightBlocksDocument : IScribeDocumentDefinition
                     + "old and new basis vectors on that subset span the same integral submodule. "
                     + "An alternating form of the corresponding degree vanishes on the old basis "
                     + "tuple exactly when it vanishes on the new one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-basis-separating-faces"),
+                DeclarationHandle.Create(Module + ".exists_basis_separating_faces"),
+                H("Separating the zero-weight intersections of two faces"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Partition the indices by membership in the two faces. Each block has at "
+                    + "most one weighted direction after an integral change of basis. If the "
+                    + "first face has two indices outside the second, one of them has zero "
+                    + "weight, so the two intersections with the zero-weight set differ. "
+                    + "The changed coordinates preserve the spans of both faces."))),
                 DescribeRole.Theorem))));
 }
