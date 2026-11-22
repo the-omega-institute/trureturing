@@ -22,15 +22,7 @@ private theorem zeroNeighborSet (S : Set A) (hzero : (0 : A) ∉ S)
     (SimpleGraph.addCayley S).neighborSet 0 = S := by
   ext x
   change (SimpleGraph.addCayley S).Adj 0 x ↔ x ∈ S
-  rw [SimpleGraph.addCayley_adj, neg_zero, zero_add, add_zero]
-  constructor
-  · rintro ⟨_, hx | hx⟩
-    · exact hx
-    · simpa only [neg_neg] using hneg _ hx
-  · intro hx
-    refine ⟨?_, Or.inl hx⟩
-    rintro rfl
-    exact hzero hx
+  simpa only [sub_zero] using CayleySquare.cayley_adj_iff S hzero hneg 0 x
 
 private abbrev Triples (S : Set A) :=
   {t : S × S × S // (t.1 : A) + (t.2.1 : A) + (t.2.2 : A) = 0}
