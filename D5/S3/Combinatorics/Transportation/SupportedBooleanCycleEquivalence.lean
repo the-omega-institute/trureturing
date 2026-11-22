@@ -26,7 +26,8 @@ theorem bounded_conformal_chain_iff (E : R → C → Prop) (A B : Table R C) :
     (∃ n : ℕ, Chain E B A n ∧ n ≤ distance A B / 4) ↔
       (Supported E A ∧ Supported E B ∧ SameMargins A B) := by
   constructor
-  · rintro ⟨n, hchain, _⟩
+  · rintro ⟨n, hchain, hbound⟩
+    clear hbound
     induction hchain with
     | done hs =>
         exact ⟨hs, hs, ⟨fun _ => rfl, fun _ => rfl⟩⟩
