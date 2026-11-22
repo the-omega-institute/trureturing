@@ -93,7 +93,7 @@ def overlap {n : Type*} [Fintype n] [DecidableEq n]
   ‖star (fun x => hB.eigenvectorBasis j x) ⬝ᵥ
     (fun x => hA.eigenvectorBasis i x)‖ ^ 2
 
-theorem overlap_row {n : Type*} [Fintype n] [DecidableEq n]
+private theorem overlap_row {n : Type*} [Fintype n] [DecidableEq n]
     {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian) (i : n) :
     ∑ j, overlap hA hB i j = 1 := by
   have h := hB.eigenvectorBasis.sum_sq_norm_inner_right (hA.eigenvectorBasis i)
@@ -105,7 +105,7 @@ theorem overlap_row {n : Type*} [Fintype n] [DecidableEq n]
   dsimp [overlap]
   rw [dotProduct_comm]
 
-theorem overlap_column {n : Type*} [Fintype n] [DecidableEq n]
+private theorem overlap_column {n : Type*} [Fintype n] [DecidableEq n]
     {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian) (j : n) :
     ∑ i, overlap hA hB i j = 1 := by
   have h := hA.eigenvectorBasis.sum_sq_norm_inner_left (hB.eigenvectorBasis j)

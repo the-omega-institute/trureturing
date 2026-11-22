@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Divergence.HockeyStickPencilIntegral
 import D5.S3.Quantum.Divergence.SpectralCeilingRelativeEntropy
-import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 import D5.S3.Resource.LogDet.LogDetInformationSubmodularity
 
 /-!

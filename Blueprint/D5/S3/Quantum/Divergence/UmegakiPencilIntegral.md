@@ -37,5 +37,4 @@ The affine-pencil formula is Frenkel’s Theorem 6. Hirche and Tomamichel give t
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiPencilIntegral.lintegral_weighted_negPart_pencil_eq_umegaki`
 - Dependency: [D5/S3/Quantum/Divergence/HockeyStickPencilIntegral](HockeyStickPencilIntegral.md)
 - Dependency: [D5/S3/Quantum/Divergence/SpectralCeilingRelativeEntropy](SpectralCeilingRelativeEntropy.md)
-- Dependency: [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy](SupportAwareRelativeEntropy.md)
 - Dependency: [D5/S3/Resource/LogDet/LogDetInformationSubmodularity](../../Resource/LogDet/LogDetInformationSubmodularity.md)
