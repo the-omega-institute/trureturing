@@ -119,7 +119,7 @@ noncomputable def normalizedCycle {M : Matroid V} (B : Passive M) : topCycles M 
   let h := (normalized_factorization M B.val B.prop).1.exists
   ⟨h.choose, h.choose_spec.toTopCycle⟩
 
-private lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
+lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
     (normalizedCycle B).val D.val = if D = B then 1 else 0 := by
   classical
   have h := (normalized_factorization M B.val B.prop).1.exists.choose_spec.coordinate
@@ -127,7 +127,7 @@ private lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
   simpa only [normalizedCycle, Subtype.ext_iff] using h
 
 open Classical in
-private noncomputable def fromCoordinates (M : Matroid V) (x : Passive M → ℤ) : topCycles M :=
+noncomputable def fromCoordinates (M : Matroid V) (x : Passive M → ℤ) : topCycles M :=
   ∑ B, x B • normalizedCycle B
 
 open Classical in
@@ -136,13 +136,13 @@ private lemma fromCoordinates_apply {M : Matroid V} (x : Passive M → ℤ) (F :
   rw [fromCoordinates, Submodule.coe_sum, Finset.sum_apply]
   rfl
 
-private lemma fromCoordinates_coord {M : Matroid V} (x : Passive M → ℤ) (D : Passive M) :
+lemma fromCoordinates_coord {M : Matroid V} (x : Passive M → ℤ) (D : Passive M) :
     (fromCoordinates M x).val D.val = x D := by
   classical
   rw [fromCoordinates_apply]
   simp [normalizedCycle_coord]
 
-private lemma fromCoordinates_cycle {M : Matroid V} (z : topCycles M) :
+lemma fromCoordinates_cycle {M : Matroid V} (z : topCycles M) :
     fromCoordinates M (fun B => z.val B.val) = z := by
   apply Subtype.ext
   apply topCycle_ext (fromCoordinates M _).prop z.prop
@@ -173,7 +173,7 @@ private lemma dotProduct_cycle_expansion {M : Matroid V} (z w : topCycles M) :
   rw [Submodule.coe_smul, dotProduct_smul]
   exact mul_comm _ _
 
-private lemma cycle_eq_of_pairings {M : Matroid V} (u v : topCycles M)
+lemma cycle_eq_of_pairings {M : Matroid V} (u v : topCycles M)
     (h : ∀ B : Passive M,
       dotProduct u.val (normalizedCycle B).val = dotProduct v.val (normalizedCycle B).val) :
     u = v := by
@@ -221,7 +221,7 @@ noncomputable def pivotPairing {M : Matroid V} (e : V)
   ∑ K : CircuitThrough M e,
     dotProduct (y ⟨K.val, K.prop.1⟩).val (restrictChain M K.val e (normalizedCycle B).val)
 
-private lemma pivotPairing_aggregate {M : Matroid V} {e : V} (he : e ∈ M.E)
+lemma pivotPairing_aggregate {M : Matroid V} {e : V} (he : e ∈ M.E)
     (z : topCycles M) (y : (K : Circuit M) → topCycles (M ／ (K.val : Set V)))
     (hy : ∀ K : Circuit M, aggregateRestrict M K.val z.val = (y K).val) (B : Passive M) :
     pivotPairing e y B = dotProduct z.val (normalizedCycle B).val := by

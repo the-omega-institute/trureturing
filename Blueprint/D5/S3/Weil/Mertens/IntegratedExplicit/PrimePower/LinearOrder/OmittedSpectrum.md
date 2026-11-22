@@ -16,6 +16,7 @@ For q=m+1 and u≥q, group by the unit bands of 2u/q−u/n and sum their geometr
 
 ## References
 
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/OccurrenceBinMass](OccurrenceBinMass.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/SpectralSampling](SpectralSampling.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/RHMobiusWindow](../RHMobiusWindow.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/BinCutoff](../SublinearOrder/BinCutoff.md)
