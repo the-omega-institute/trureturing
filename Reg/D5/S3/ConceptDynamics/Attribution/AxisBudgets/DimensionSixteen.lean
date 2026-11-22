@@ -60,12 +60,15 @@ private theorem some_cover_budget : ∃ budget, coverWithin budget := by
     by_cases h : a = b
     · subst b
       rfl
-    · simp [edge, h, h.symm]
+    · have h' : b ≠ a := fun he => h he.symm
+      simp [edge, h, h']
   have degree_ok (a : AxisSubset 16 i) :
       residualDegree 3 true (decide (a = axisTop i)) (∑ b, (edge a b).toNat) := by
     rw [degree]
     by_cases ha : a = axisTop i <;> simp [ha, residualDegree]
-  refine ⟨axisCost i edge, edge, true, by simp [edge], by simp, degree_ok, ?_, ?_, le_rfl⟩
+  refine ⟨axisCost i edge, edge, true, ?_, by simp, degree_ok, ?_, ?_, le_rfl⟩
+  · change edge (axisTop i) (axisTop i) = false
+    simp [edge]
   · intro b
     simpa only [symm b] using degree_ok b
   · intro a b _ h
@@ -80,7 +83,7 @@ private theorem cover_false_fails : ¬ coverArena.Law constantFalse := by
 
 def fullFamily : Registration fullArena (type_of% full_budget_iff) where
   actual := threshold 2036
-  bridge := by simp [fullArena, threshold, realize]
+  bridge := by simp [threshold, realize]
   variation := ⟨by simpa [fullArena, threshold, realize] using full_budget_iff,
     constantFalse, full_false_fails⟩
   sensitivity := by
@@ -129,7 +132,7 @@ def fullRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 def coverFamily : Registration coverArena (type_of% cover_budget_ge) where
   actual := threshold 2044
-  bridge := by simp [coverArena, threshold, realize]
+  bridge := by simp [threshold, realize]
   variation := ⟨by simpa [coverArena, threshold, realize] using cover_budget_ge,
     constantFalse, cover_false_fails⟩
   sensitivity := by
