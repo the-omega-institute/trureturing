@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeThreeRectangularBound
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
+import Mathlib.LinearAlgebra.Matrix.Bilinear
 
 /-! Rectangular coordinate embeddings and coefficient-kernel bounds at tensor width four. -/
 
@@ -148,7 +149,7 @@ private theorem rectangles_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
         if (R r).covers p.1 p.2 ∧ (R r).image p.1 p.2 = (i.1.val, i.2.val)
         then 1 else 0 := by
     dsimp only [X, Y, Rectangle.image, Rectangle.covers]
-    rw [Prod.mk.injEq]
+    simp only [Prod.mk.injEq]
     split_ifs <;> simp_all [eq_comm] <;> tauto
   have hroute : tensorSum X Y = coordinateMatrix e := by
     ext i p
@@ -169,6 +170,7 @@ private def blocks (a c : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, a, c⟩,
     ⟨2 * a, 0, 0, 2 * c, a, c⟩, ⟨3 * a, 0, 0, 3 * c, a, c⟩]
 
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
 private theorem blocks_gram {a b c d k : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hk : k ≤ 4) (hb : b ≤ k * a) (hd : k * c ≤ d) : FourScalarGram a b c d lam := by
@@ -198,6 +200,7 @@ private def thirds (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, excess, spare⟩, ⟨a, 2 * spare, 2 * excess, c, excess, spare⟩]
 
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
 private theorem thirds_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 3 * b ≤ 4 * a) (hd : 4 * c ≤ 3 * d) : FourScalarGram a b c d lam := by
@@ -226,6 +229,7 @@ private def halves (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, excess, spare⟩, ⟨0, 0, 0, 0, 0, 0⟩]
 
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
 private theorem halves_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 2 * b ≤ 3 * a) (hd : 3 * c ≤ 2 * d) : FourScalarGram a b c d lam := by
@@ -254,6 +258,7 @@ private def threeFifths (a b c d : ℕ) : Fin 4 → Rectangle :=
   ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
     ⟨a, spare, excess, c, left, tail⟩, ⟨a + left, spare, excess, c + tail, left, tail⟩]
 
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
 private theorem three_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 3 * b ≤ 5 * a) (hd : 5 * c ≤ 3 * d) : FourScalarGram a b c d lam := by
@@ -285,6 +290,7 @@ private def twoFifths (a b c d : ℕ) : Fin 4 → Rectangle :=
     ⟨2 * a, 0, 0, 2 * c, excess, spare⟩,
     ⟨2 * a, spare, excess, 2 * c, excess, spare⟩]
 
+-- Expanding the finite rectangle cases before the arithmetic requires additional heartbeats.
 set_option maxHeartbeats 1800000 in
 private theorem two_fifths_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     (hb : 2 * b ≤ 5 * a) (hd : 5 * c ≤ 2 * d) : FourScalarGram a b c d lam := by
@@ -378,8 +384,8 @@ private theorem swap_tensor {a b c d k : ℕ}
     (X : Fin k → Matrix (Fin a) (Fin b) ℂ) (Y : Fin k → Matrix (Fin d) (Fin c) ℂ) :
     tensorSum Y X = (tensorSum X Y).submatrix (Equiv.prodComm _ _) (Equiv.prodComm _ _) := by
   ext i j
-  change (∑ r : Fin k, Y r i.1 j.1 * X r i.2 j.2) =
-    ∑ r : Fin k, X r i.2 j.2 * Y r i.1 j.1
+  simp only [tensorSum, Matrix.submatrix_apply, Matrix.sum_apply, Matrix.kronecker,
+    Matrix.kroneckerMap_apply, Equiv.prodComm_apply]
   exact Finset.sum_congr rfl (fun _ _ => mul_comm _ _)
 
 private theorem unit_normalize {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
@@ -394,7 +400,7 @@ private theorem unit_normalize {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
       nlinarith [Real.sq_sqrt hlam.le])
   rw [scale_tensor, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
     h, smul_smul, smul_smul]
-  simp [Complex.star_def, hscale]
+  simp [mul_assoc, hscale]
 
 private theorem cut_dependent_left {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -423,9 +429,12 @@ private theorem cut_dependent_left {a b c d : ℕ}
   rw [hsum, hXi]
   change (∑ j, (Matrix.kroneckerBilinear (R := ℂ)) _ _) =
     (Matrix.kroneckerBilinear (R := ℂ)) (∑ j, _) _ + ∑ j, _
-  simp only [B, map_sum, LinearMap.sum_apply, map_sub, map_smul, LinearMap.smul_apply,
-    ← Finset.sum_add_distrib, neg_smul, neg_add_eq_sub]
-  exact Finset.sum_congr rfl (fun j _ => by rw [sub_eq_add_neg, add_comm])
+  simp only [B, map_sum, LinearMap.sum_apply, map_sub, map_smul, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro j _
+  change _ - _ = _ + (Matrix.kroneckerBilinear (R := ℂ)) (A j) (Y (i.succAbove j))
+  simp only [neg_smul, map_neg, LinearMap.neg_apply, map_smul, LinearMap.smul_apply]
+  abel
 
 private theorem cut_dependent_right {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -458,7 +467,11 @@ private theorem stack_dimension {a b c d k : ℕ} (hc : 0 < c)
       intro r _
       have h := hX r i
       change (∑ q : Fin b, X r i q * x q) = 0 at h
-      simpa only [mul_assoc, mul_left_comm, ← Finset.mul_sum, h, mul_zero]
+      calc
+        _ = Y r j m * (∑ q : Fin b, X r i q * x q) := by
+          rw [Finset.mul_sum]
+          exact Finset.sum_congr rfl (fun _ _ => by ring)
+        _ = 0 := by rw [h, mul_zero]
     have hv0 : v = 0 := hinj (hv.trans (map_zero _).symm)
     ext i
     simpa [v] using congrFun hv0 (i, m)
@@ -477,7 +490,7 @@ private theorem hermitian_to_complex {a b : ℕ} {V : Type*} [AddCommGroup V] [M
     rw [realPart_apply_coe]
     ext i j
     simp [Matrix.star_eq_conjTranspose, Complex.real_smul]
-    norm_num
+    ring
   have hq : Q = (-Complex.I * 2⁻¹) • (T + (-1 : ℂ) • Tᴴ) := by
     dsimp [Q]
     rw [imaginaryPart_apply_coe]
@@ -507,15 +520,23 @@ private theorem mixed_right_block {c d k : ℕ}
     (r s : Fin k) (l m : Fin c) :
     ((rightMix E Y r)ᴴ * rightMix E Y s) l m = (Eᴴ * rightBlock Y l m * E) r s := by
   classical
-  simp only [rightMix, rightBlock, Matrix.conjTranspose_sum, Matrix.sum_mul, Matrix.mul_sum,
-    Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, Matrix.smul_apply,
-    Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, smul_eq_mul, Finset.sum_mul]
+  simp only [rightMix, rightBlock, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+    Matrix.smul_apply, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  conv_lhs =>
+    arg 2
+    ext i
+    rw [Finset.sum_comm]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro j _
   apply Finset.sum_congr rfl
   intro i _
+  apply Finset.sum_congr rfl
+  intro x _
   ring
+
 
 private theorem right_block_compression {a b c d : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -525,7 +546,8 @@ private theorem right_block_compression {a b c d : ℕ}
       (if l = m then (1 : ℂ) else 0) • (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 0 := by
   convert compress_block X Y hF hX l m using 2
   ext r s
-  by_cases h : r = s <;> simp [rightBlock, Matrix.one_apply, h]
+  by_cases h : r = s <;> by_cases hm : l = m <;>
+    simp [rightBlock, Matrix.one_apply, h, hm]
 
 private theorem neutral_dimension {a b c d k : ℕ}
     (X : Fin 4 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 4 → Matrix (Fin d) (Fin c) ℂ)
@@ -565,12 +587,13 @@ private theorem kernel_columns {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) :
   have hK : finrank ℂ K = n - A.rank := by
     have h := A.toEuclideanLin.finrank_range_add_finrank_ker
     rw [← hr, finrank_euclideanSpace_fin] at h
+    change A.rank + finrank ℂ K = n at h
     omega
   let B := (stdOrthonormalBasis ℂ K).reindex (finCongr hK)
   let L : Matrix (Fin n) (Fin (n - A.rank)) ℂ := fun i j => (B j).1 i
   have hL (j : Fin (n - A.rank)) : A *ᵥ (fun i => L i j) = 0 := by
     have h : A.toEuclideanLin (B j).1 = 0 := (B j).2
-    exact (Matrix.ofLp_toLpLin A (B j).1).symm.trans (by rw [h]; rfl)
+    exact (Matrix.ofLp_toLpLin 2 2 A (B j).1).symm.trans (by rw [h]; rfl)
   have hL0 : Lᴴ * L = 1 := by
     ext i j
     rw [← inner_matrix_col_col, Matrix.one_apply]
@@ -583,15 +606,20 @@ private theorem kernel_columns {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) :
     have hw (j : Fin q) : w j ∈ K := by
       change A.toEuclideanLin (w j) = 0
       apply WithLp.ofLp_injective 2
-      rw [Matrix.ofLp_toLpLin]
+      rw [Matrix.ofLp_toLpLin 2 2, Matrix.toLin'_apply]
       ext i
       exact congrFun (congrFun hW i) j
     let Z : Matrix (Fin (n - A.rank)) (Fin q) ℂ :=
       fun i j => B.toBasis.repr ⟨w j, hw j⟩ i
     have hW' : W = L * Z := by
       ext i j
-      have h := congrArg (fun x : K => x.1 i) (B.toBasis.sum_repr ⟨w j, hw j⟩)
-      simpa [Z, L, Matrix.mul_apply, mul_comm, w] using h.symm
+      let eval : K →ₗ[ℂ] ℂ := (LinearMap.proj i).comp
+        ((WithLp.linearEquiv 2 ℂ (Fin n → ℂ)).toLinearMap.comp K.subtype)
+      have h := congrArg eval (B.toBasis.sum_repr ⟨w j, hw j⟩)
+      simp only [map_sum, map_smul, smul_eq_mul] at h
+      change (∑ k, Z k j * L i k) = W i j at h
+      rw [← h, Matrix.mul_apply]
+      exact Finset.sum_congr rfl (fun _ _ => mul_comm _ _)
     rw [hW', ← Matrix.mul_assoc Lᴴ L Z, hL0, Matrix.one_mul]
 
 private theorem common_kernel_reduction {a b c d : ℕ}
@@ -755,7 +783,7 @@ private theorem large_bounds {a b c d : ℕ}
     have h' : (tensorSum A B)ᴴ * tensorSum A B = 1 := by rw [h, hF]
     have hdim := stack_dimension hc A B h'
     have hrect := RestrictedFlatSpectrum.obstruction A B hc hab 1 (by norm_num)
-      (by simpa only [Complex.ofReal_one, one_smul] using h')
+      (by simpa only [QuantumMaxFlowBound.flow, tensorSum, Complex.ofReal_one, one_smul] using h')
     omega
   by_cases hXL : LinearIndependent ℂ X
   · by_cases hYL : LinearIndependent ℂ Y
@@ -773,12 +801,15 @@ private theorem large_bounds {a b c d : ℕ}
           have hr := hermitian_rank_bound U hinj T hT h 3 (by decide) hlarge
           have he (i : Fin 4) : hT.eigenvalues i = 0 := by
             by_contra hi
-            haveI : Nonempty {i // hT.eigenvalues i ≠ 0} := ⟨⟨i, hi⟩⟩
+            have : Nonempty {i // hT.eigenvalues i ≠ 0} := ⟨⟨i, hi⟩⟩
             rw [hT.rank_eq_card_non_zero_eigs] at hr
             have := Fintype.card_pos (α := {i // hT.eigenvalues i ≠ 0})
             omega
           rw [hT.spectral_theorem]
-          simp [he]
+          have hd : diagonal (Complex.ofReal ∘ hT.eigenvalues) = 0 := by
+            ext i j
+            simp [Matrix.diagonal_apply, Function.comp_def, he]
+          rw [hd, Matrix.mul_zero, Matrix.zero_mul]
         have h4 := trivial_kernel_dimension U V hUV hMX hk
         omega
       · have hRank (T) (hT : T.IsHermitian) (h : compression U T = 0) : T.rank ≤ 2 := by
@@ -790,7 +821,7 @@ private theorem large_bounds {a b c d : ℕ}
         · obtain ⟨p, hp, A, B, hAB⟩ := common_kernel_reduction U V hUV hMX v hv hk
           have hg : (∑ i, kronecker (A i) (B i))ᴴ * (∑ i, kronecker (A i) (B i)) =
               ((1 : ℝ) : ℂ) • 1 := by
-            simpa only [Complex.ofReal_one, one_smul] using hAB
+            simpa only [tensorSum, Complex.ofReal_one, one_smul] using hAB
           have h5 := NativeThreeRectangularBound.native_three_rectangular_bound A B 1
             (by norm_num) (by omega : a < p) hg
           refine ⟨by omega, ?_, by omega⟩
