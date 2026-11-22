@@ -16,9 +16,9 @@ $$\forall k \in Nat,\; \forall z \in \operatorname{CountVectors}\left(3\right),\
 
 CountVectors(3) consists of natural-valued functions on Fin(3). Realizable(1,k,z) requires an equivariant seed action on 16k seeds, uniform coloured even and odd parity marginals, and fixed counts z.
 
-Order the even words as 000, 011, 101, 110 and the odd words as their complements. HasOrbitTable(k,z) requires a multiplicity and a fixed count for each orbit and coordinate. The all-ones odd column has two orbits of size two at each row, one for each right colour. Every other cell has one orbit of size four.
+Order the even words as 000, 011, 101, 110 and the odd words as their complements. HasOrbitTable(k,z) stores one multiplicity per orbit and one entry per orbit and coordinate. An entry gives the fixed count per output point when that coordinate generator fixes the orbit pointwise. The all-ones odd column has two orbits of size two at each row, one for each right colour. Every other cell has one orbit of size four.
 
-At each row the sum of the two special multiplicities plus twice the sum of the ordinary multiplicities is 2k. Each ordinary column and each special colour column have multiplicity sum k. Each fixed entry is at most its multiplicity and has the same parity. To obtain z at a coordinate, keep just the entries whose two words have bit one there and weight each entry by its orbit size.
+At each row the sum of the two special multiplicities plus twice the sum of the ordinary multiplicities is 2k. Each ordinary column and each special colour column have multiplicity sum k. Each coordinate entry is at most its multiplicity and has the same parity. To obtain z at a coordinate, keep just the entries whose two words have bit one there and weight each entry by its orbit size.
 
 An implementation gives the table by counting fibres. The converse uses the simultaneous orbit fibre criterion. Entries at coordinates moved by the output action do not enter the totals.
 

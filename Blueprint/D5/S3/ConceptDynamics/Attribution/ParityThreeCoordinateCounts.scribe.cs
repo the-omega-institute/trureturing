@@ -64,10 +64,11 @@ internal sealed class ParityThreeCoordinateCountsDocument : IScribeDocumentDefin
                 + "equivariant seed action with 16k seeds, uniform coloured even and odd "
                 + "marginals, and actual coordinate fixed counts z.")),
                 Paragraph(Text("The orbit fibre criterion supplies one multiplicity and one "
-                + "fixed count at each relevant coordinate per output orbit. The ordinary "
-                + "cells are four-point orbits. Each cell in the all-ones odd column contains "
-                + "one two-point orbit per right colour. At odd k the parities of these "
-                + "multiplicities obstruct the two possible saturations of a coordinate.")),
+                + "fixed count at each coordinate fixing the output points of the orbit. The "
+                + "ordinary cells are four-point orbits. Each cell in the all-ones odd column "
+                + "contains one two-point orbit per right colour. When k is odd, an entry u(i) "
+                + "of 2k forces the other entries to sum to at least two. An entry of 2k minus "
+                + "one forces them to sum to at least one.")),
                 Paragraph(Text("The minimum-budget criterion supplies the multiplier-one "
                 + "block. Four pairs of matchings give products of coordinate ranges. "
                 + "Sorting and the total bound select a pair for each multiplier-two vector. Decompositions add these "
