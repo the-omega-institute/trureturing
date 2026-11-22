@@ -23,8 +23,7 @@ The minimum-budget criterion supplies the multiplier-one block. Four pairs of ma
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/ParityThreeCoordinateCounts.exact_three_coordinate_counts`
-- Dependency: [D5/S3/ConceptDynamics/Attribution/CoordinateColourOrbit](CoordinateColourOrbit.md)
-- Dependency: [D5/S3/ConceptDynamics/Attribution/CoordinateFibreCounts](CoordinateFibreCounts.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParityMinimumSeedSpectrum](ParityMinimumSeedSpectrum.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedBudget](ParitySeedBudget.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedCountSpectrum](ParitySeedCountSpectrum.md)
+- Dependency: [D5/S3/ConceptDynamics/Attribution/ParityThreeOrbitTable](ParityThreeOrbitTable.md)
