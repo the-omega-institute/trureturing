@@ -8,7 +8,7 @@
 
 module
 
-public import D5.S3.Combinatorics.Matroids.ParallelCircuitObstruction
+public import D5.S3.Combinatorics.Matroids.UniformMatroidCircuitCoordinates
 
 /-! Compare the signed circuit equations before and after deleting a uniform basis. -/
 
@@ -28,7 +28,7 @@ set_option autoImplicit false
 
 variable {I : Type*} [Fintype I] [LinearOrder I] {M : Matroid I} {H : Finset I} {r : ℕ}
 
-private lemma independent_iff
+lemma independent_iff
     (hH : H.card = r) (hr : r < Fintype.card I)
     (hbases : ∀ F : Finset I, M.IsBase (F : Set I) ↔ F.card = r ∧ F ≠ H)
     (F : Finset I) : M.Indep (F : Set I) ↔ F.card ≤ r ∧ F ≠ H := by
@@ -277,5 +277,170 @@ theorem mem_weightedCircuitResidues_iff {V : Type*} [Fintype V] (p : V → I)
       · rcases (hcir C.val).mp C.prop with he | ⟨hca, -⟩
         · exact (hne he).elim
         · exact hc C.val hca
+
+open UniformMatroidCircuitCoordinates (circuit_iff_card contracted_basis_eq_empty
+  uniformWeightedFormsEquiv)
+open UniformCircuitResidueForms (covectorWedgeLinear insertVector formCoordinates)
+
+private noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
+  refine Matroid.ofExistsFiniteIsBase Set.univ (fun S : Set I => S.ncard = r)
+    ⟨(H : Set I), by simpa using hH, H.finite_toSet⟩ ?_ (fun _ _ => Set.subset_univ _)
+  intro B C hB hC i hi
+  have hnot : ¬ C ⊆ B := fun hsub => by
+    have heq := Set.eq_of_subset_of_ncard_le hsub (hB.trans hC.symm).le
+    exact hi.2 (heq.symm ▸ hi.1)
+  obtain ⟨t, htC, htB⟩ := Set.not_subset.mp hnot
+  exact ⟨t, ⟨htC, htB⟩, (Set.ncard_exchange htB hi.1).trans hB⟩
+
+private lemma uniform_support_and_readout (hH : H.card = r) (hr : r < Fintype.card I)
+    {V : Type*} [Fintype V] (p : V → I) (f : Finset I → RationalResidue) :
+    f ∈ weightedCircuitResidues (uniformCore (H := H) hH) p ↔
+      (∀ F : Finset I, F.card ≠ r → f F = 0) ∧
+      (∀ R : Finset I, weightedBoundary p f R = 0) ∧
+      ∀ C : Finset I, C.card = r + 1 → circuitReadout f C ∅ = 0 := by
+  let U := uniformCore (H := H) hH
+  have hbases (F : Finset I) : U.IsBase (F : Set I) ↔ F.card = r := by
+    change (F : Set I).ncard = r ↔ F.card = r
+    rw [Set.ncard_coe_finset]
+  have hground : U.E = Set.univ := rfl
+  have hcir := circuit_iff_card hbases hground hr.le
+  have hcon {C : Finset I} (hC : U.IsCircuit (C : Set I)) (T : Finset I) :=
+    contracted_basis_eq_empty (T := T) hbases hC ((hcir C).mp hC)
+  constructor
+  · intro hf
+    refine ⟨fun F hF => hf.1 F (fun h => hF ((hbases F).mp h)), hf.2.1, ?_⟩
+    intro C hC
+    have h := (hcir C).mpr hC
+    exact hf.2.2 ⟨C, h⟩ ∅ ((hcon h ∅).mpr rfl)
+  · rintro ⟨hs, hw, hc⟩
+    refine ⟨fun F hF => hs F (fun h => hF ((hbases F).mpr h)), hw, ?_⟩
+    intro C T hT
+    rw [(hcon C.prop T).mp hT]
+    exact hc C.val ((hcir C.val).mp C.prop)
+
+/-- Transport the punctured residue equations to uniform alternating forms with
+one specified coordinate set to zero. -/
+theorem punctured_weighted_forms_equiv {V : Type*} [Fintype V] (p : V → I) {n : ℕ}
+    (hH : H.card = n + 1) (hr : n + 1 < Fintype.card I) (hground : M.E = Set.univ)
+    (hbases : ∀ F : Finset I, M.IsBase (F : Set I) ↔ F.card = n + 1 ∧ F ≠ H)
+    (b : Module.Basis I ℤ (I → ℤ)) (a : (I → ℤ) →ₗ[ℤ] ℤ) (ha : ∀ i, a (b i) = 1) :
+    Nonempty (weightedCircuitResidues M p ≃ₗ[ℤ]
+      ↥(LinearMap.ker
+        (show ↥((covectorWedgeLinear (N := RationalResidue) (n := n + 1) a).ker ⊓
+          (insertVector (∑ i, (univ.filter fun x => p x = i).card • b i)).ker) →ₗ[ℤ]
+              RationalResidue from
+          { toFun := fun f => formCoordinates b f.val H
+            map_add' := fun f g => by simp [formCoordinates, hH]
+            map_smul' := fun d f => by simp [formCoordinates, hH] }))) := by
+  let U := uniformCore (H := H) hH
+  have hUbase (F : Finset I) : U.IsBase (F : Set I) ↔ F.card = n + 1 := by
+    change (F : Set I).ncard = n + 1 ↔ F.card = n + 1
+    rw [Set.ncard_coe_finset]
+  let forms := uniformWeightedFormsEquiv (M := U) p hUbase rfl hr.le b a ha
+  have hmem (f : Finset I → RationalResidue) :
+      f ∈ weightedCircuitResidues M p ↔ f ∈ weightedCircuitResidues U p ∧ f H = 0 := by
+    rw [mem_weightedCircuitResidues_iff p hH hr hground hbases,
+      uniform_support_and_readout hH hr p f]
+    tauto
+  let K : Submodule ℤ (weightedCircuitResidues U p) :=
+    (LinearMap.proj (R := ℤ) H).comp (weightedCircuitResidues U p).subtype |>.ker
+  let lift := (weightedCircuitResidues M p).subtype.codRestrict
+    (weightedCircuitResidues U p) (fun f => ((hmem f.val).mp f.prop).1)
+  let liftK := lift.codRestrict K (fun f => ((hmem f.val).mp f.prop).2)
+  have hBij : Function.Bijective liftK := by
+    refine ⟨fun f g h => Subtype.ext (congrArg (fun z : K => z.val.val) h), ?_⟩
+    intro f
+    exact ⟨⟨f.val.val, (hmem f.val.val).mpr ⟨f.val.prop, f.prop⟩⟩, rfl⟩
+  refine ⟨(LinearEquiv.ofBijective liftK hBij).trans (forms.symm.ofSubmodules K _ ?_)⟩
+  ext f
+  change (∃ g : weightedCircuitResidues U p, g.val H = 0 ∧ forms.symm g = f) ↔
+    formCoordinates b f.val H = 0
+  constructor
+  · rintro ⟨g, hg, rfl⟩
+    exact (congrArg (fun z : weightedCircuitResidues U p => z.val H)
+      (forms.apply_symm_apply g)).trans hg
+  · intro hf
+    exact ⟨forms f, hf, forms.symm_apply_apply f⟩
+
+open UniformCircuitResidueForms (basisFormEquiv basisFormEquiv_symm_apply
+  curryLeft_basis_insert pivotFormEquiv)
+open Set.powersetCard (ofFinEmbEquiv)
+
+omit [Fintype I] in
+private lemma pivot_coordinate_zero_iff {n : ℕ} (hH : H.card = n + 1) {j : I} (hj : j ∈ H)
+    (b : Module.Basis I ℤ (I → ℤ))
+    (f : (I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) :
+    formCoordinates b f H = 0 ↔
+      formCoordinates b (f.curryLeft (b j)) (H.erase j) = 0 := by
+  have hs : (H.erase j).card = n := by rw [card_erase_of_mem hj, hH, Nat.add_sub_cancel]
+  let S : Set.powersetCard I n := ⟨H.erase j, hs⟩
+  let e := ofFinEmbEquiv.symm S
+  have he : ofFinEmbEquiv e = S := Equiv.apply_symm_apply _ _
+  have hj' : j ∉ ofFinEmbEquiv e := by rw [he]; exact notMem_erase _ _
+  have hv := curryLeft_basis_insert b f j e hj'
+  rw [← basisFormEquiv_symm_apply] at hv
+  have hinsert : (⟨insert j (ofFinEmbEquiv e).val, by
+      change (insert j (ofFinEmbEquiv e).val).card = n + 1
+      rw [card_insert_of_notMem hj', (ofFinEmbEquiv e).prop]⟩ :
+        Set.powersetCard I (n + 1)) = ⟨H, hH⟩ := by
+    apply Subtype.ext
+    change insert j (ofFinEmbEquiv e).val = H
+    rw [he]
+    exact insert_erase hj
+  rw [hinsert] at hv
+  rw [he] at hv
+  let sign := insertionSign (H.erase j) j
+  have hval : formCoordinates b (f.curryLeft (b j)) (H.erase j) =
+      sign • formCoordinates b f H := by
+    rw [formCoordinates, dite_eq_left hs, formCoordinates, dite_eq_left hH]
+    exact hv
+  rw [hval]
+  constructor
+  · intro h
+    rw [h, smul_zero]
+  · intro h
+    change ((-1 : ℤ) ^ ((H.erase j).filter (· < j)).card) •
+      formCoordinates b f H = 0 at h
+    have h' := congrArg (((-1 : ℤ) ^ ((H.erase j).filter (· < j)).card) • ·) h
+    rwa [smul_smul, sign_sq, one_smul, smul_zero] at h'
+
+/-- With the pivot in the omitted basis, the missing coefficient becomes a
+specified coefficient of the form of degree one lower. -/
+theorem punctured_pivot_forms_equiv {V : Type*} [Fintype V] (p : V → I) {n : ℕ}
+    (hH : H.card = n + 2) (hr : n + 2 < Fintype.card I) (hground : M.E = Set.univ)
+    (hbases : ∀ F : Finset I, M.IsBase (F : Set I) ↔ F.card = n + 2 ∧ F ≠ H)
+    (b : Module.Basis I ℤ (I → ℤ)) (a : (I → ℤ) →ₗ[ℤ] ℤ) (ha : ∀ i, a (b i) = 1)
+    (j : I) (hj : j ∈ H) :
+    let y := ∑ i, (univ.filter fun x => p x = i).card • b i
+    let P := ((insertVector (N := RationalResidue) (n := n) (b j)).ker ⊓
+      (insertVector y).ker) ⊓
+      Submodule.torsionBy ℤ ((I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) (a y)
+    Nonempty (weightedCircuitResidues M p ≃ₗ[ℤ] ↥(LinearMap.ker
+      (show P →ₗ[ℤ] RationalResidue from
+        { toFun := fun f => formCoordinates b f.val (H.erase j)
+          map_add' := fun f g => by
+            have hs : (H.erase j).card = n + 1 := by rw [card_erase_of_mem hj, hH]; omega
+            simp [formCoordinates, hs]
+          map_smul' := fun d f => by
+            have hs : (H.erase j).card = n + 1 := by rw [card_erase_of_mem hj, hH]; omega
+            simp [formCoordinates, hs] }))) := by
+  dsimp only
+  obtain ⟨forms⟩ := punctured_weighted_forms_equiv p hH hr hground hbases b a ha
+  let y := ∑ i, (univ.filter fun x => p x = i).card • b i
+  let P := (((insertVector (N := RationalResidue) (n := n) (b j)).ker ⊓
+    (insertVector y).ker) ⊓
+    Submodule.torsionBy ℤ ((I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) (a y))
+  let pivot := pivotFormEquiv (N := RationalResidue) (n := n) a (b j) y (ha j)
+  refine ⟨forms.trans (pivot.ofSubmodules _ _ ?_)⟩
+  rw [Submodule.map_equiv_eq_comap_symm]
+  apply Submodule.ext
+  intro f
+  change formCoordinates b (pivot.symm f).val H = 0 ↔
+    formCoordinates b f.val (H.erase j) = 0
+  have h := pivot_coordinate_zero_iff hH hj b (pivot.symm f).val
+  have hf : (pivot.symm f).val.curryLeft (b j) = f.val :=
+    congrArg (fun z : P => z.val) (pivot.apply_symm_apply f)
+  rw [hf] at h
+  exact h
 
 end D5.S3.Combinatorics.Matroids.PuncturedCircuitCoordinates

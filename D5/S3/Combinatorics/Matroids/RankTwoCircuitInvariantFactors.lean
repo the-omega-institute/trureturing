@@ -187,7 +187,7 @@ theorem gcd_torsion_iff (n d : ℕ) (x : A) :
     rw [Nat.gcd_eq_gcd_ab, add_smul, mul_comm (n : ℤ), mul_comm (d : ℤ),
       mul_smul, mul_smul, hn, hd, smul_zero, smul_zero, add_zero]
 
-private def weightedSum (A : Type*) [AddCommGroup A] {k : ℕ}
+def weightedSum (A : Type*) [AddCommGroup A] {k : ℕ}
     (weight : Fin k → ℕ) : (Fin k → A) →ₗ[ℤ] A :=
   ∑ i, weight i • LinearMap.proj i
 
@@ -195,7 +195,7 @@ private lemma weightedSum_apply {k : ℕ} (weight : Fin k → ℕ) (f : Fin k �
     weightedSum A weight f = ∑ i, weight i • f i := by
   simp [weightedSum, LinearMap.sum_apply]
 
-private theorem weightedTorsion_equiv (n k : ℕ) (weight : Fin (k + 1) → ℕ)
+theorem weightedTorsion_equiv (n k : ℕ) (weight : Fin (k + 1) → ℕ)
     (hpos : ∀ i, 0 < weight i) :
     Nonempty ((weightedSum (ResidueTorsion n) weight).ker ≃ₗ[ℤ]
       ((ResidueTorsion (n.gcd (univ.gcd weight))) × (Fin k → ResidueTorsion n))) := by
