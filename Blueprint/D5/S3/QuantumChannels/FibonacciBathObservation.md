@@ -6,6 +6,8 @@ The six-level Fibonacci Gibbs bath has a minimum lossless ground-state record of
 
 Wheeler's discussion of apparatus-elicited yes-or-no answers in Chapter 19, §19.2 supplies the historical context. Here the binary target X is whether the outgoing qutrit is in its ground state. B is the outgoing bath basis readout and T is produced from B by a finite row-stochastic readout. Shannon's finite entropy and conditional entropy supply the information measure. The formal argument uses the repository's Markov equality and conditional probability profile theorems.
 
+A second record problem compares the outgoing bath itself with the input Gibbs state. Summing the terminal joint table over qutrit levels gives the outgoing bath masses (0, 88, 25, 28)/141 on groups consisting of level 0, levels 1–3, level 4 and level 5. The same groups have Gibbs masses (48, 66, 15, 12)/141. The ratio is constant within each group and equals 0, 4/3, 5/3 or 7/3. The exact diagonal memory theorem, DiagonalExperiment.sharp_entropy_dimension, therefore requires four memory dimensions to preserve Umegaki relative entropy to the input Gibbs state under a CPTP encoder. Recording the ratio as an orthogonal state attains dimension four.
+
 **Theorem 1.1 (Gibbs preparation and an energy-conserving unitary).**
 
 Lean statement: `D5/S3/QuantumChannels/FibonacciBathObservation.terminalJoint_gibbs_implementation`
