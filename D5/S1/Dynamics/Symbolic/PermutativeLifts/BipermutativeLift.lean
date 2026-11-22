@@ -11,6 +11,7 @@ module
 public import Mathlib.Algebra.Group.End
 public import Mathlib.Data.Fin.Tuple.Basic
 public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Int.Interval
 public import Mathlib.Dynamics.SymbolicDynamics.Basic
 public import Mathlib.Topology.Homeomorph.Lemmas
 public import Mathlib.Algebra.Group.Action.Defs
