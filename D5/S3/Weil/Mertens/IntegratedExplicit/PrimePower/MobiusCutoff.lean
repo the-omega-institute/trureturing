@@ -23,7 +23,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePowerFifthCutoff (psi_root_eq_su
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
-private theorem chebyshev_mobius_cutoff {t : ℝ} (ht : 2 ≤ t) {N : ℕ}
+theorem chebyshev_mobius_cutoff {t : ℝ} (ht : 2 ≤ t) {N : ℕ}
     (hN : ⌊Real.log t / Real.log 2⌋₊ ≤ N) :
     theta t - psi t =
       ∑ d ∈ Icc 2 N, (μ d : ℝ) * psi (t ^ (1 / (d : ℝ))) := by
@@ -70,7 +70,7 @@ private theorem chebyshev_mobius_cutoff {t : ℝ} (ht : 2 ≤ t) {N : ℕ}
   rw [hgroup]
   linarith only [psi_eq_theta_add_sum_theta' ht hN]
 
-private theorem psi_root_geometric {t : ℝ} (ht : 1 ≤ t) {q n : ℕ}
+theorem psi_root_geometric {t : ℝ} (ht : 1 ≤ t) {q n : ℕ}
     (hq : 0 < q) (hn : q ≤ n) :
     psi (t ^ (1 / (n : ℝ))) ≤
       (Real.log 4 + 4) * 2 * ((2 : ℝ) ^ (-(1 / (q : ℝ)))) ^ n * t ^ (1 / (q : ℝ)) := by
@@ -116,7 +116,7 @@ private theorem psi_root_geometric {t : ℝ} (ht : 1 ≤ t) {q n : ℕ}
     rw [psi_eq_zero_of_lt_two hr]
     positivity
 
-private theorem geometric_root_factor {q : ℕ} (hq : 0 < q) :
+theorem geometric_root_factor {q : ℕ} (hq : 0 < q) :
     (1 - (2 : ℝ) ^ (-(1 / (q : ℝ))))⁻¹ ≤ 1 + (q : ℝ) / Real.log 2 := by
   have hq₀ : (0 : ℝ) < q := by exact_mod_cast hq
   have hlog : 0 < Real.log 2 := log_pos (by norm_num)
@@ -196,12 +196,14 @@ open MeasureTheory Set
 open D5.S3.Arith.Robin.CompleteMertensPeak (Q)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 
-/-- The same truncation transfers to the normalized prime-only tail. -/
-theorem integrated_mobius_truncation {m : ℕ} (hm : 2 ≤ m) {x : ℝ} (hx : 2 ≤ x) :
+/-- Transfer a pointwise Möbius truncation estimate to the normalized prime-tail integral. -/
+theorem integrated_mobius_of_pointwise {m : ℕ} (hm : 2 ≤ m) {x C : ℝ}
+    (hx : 2 ≤ x) (hbound : ∀ t > x,
+      |theta t - psi t - ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * psi (t ^ (1 / (n : ℝ)))| ≤
+        C * t ^ (1 / (m + 1 : ℝ))) :
     |Real.sqrt x * (primeTail x - Q x -
       ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (∫ t in Ioi x, psi (t ^ (1 / (n : ℝ))) / t ^ 2))| ≤
-      ((Real.log 4 + 4) * 2 * (1 + (m + 1 : ℝ) / Real.log 2)) /
-        (1 - 1 / (m + 1 : ℝ)) * x ^ (1 / (m + 1 : ℝ) - 1 / 2) := by
+      C / (1 - 1 / (m + 1 : ℝ)) * x ^ (1 / (m + 1 : ℝ) - 1 / 2) := by
   let p : ℝ := 1 / (m + 1 : ℝ)
   let g (t : ℝ) := theta t - psi t - ∑ d ∈ Finset.Icc 2 m, (μ d : ℝ) * psi (t ^ (1 / (d : ℝ)))
   have hx₀ : 0 < x := by linarith
@@ -238,6 +240,15 @@ theorem integrated_mobius_truncation {m : ℕ} (hm : 2 ≤ m) {x : ℝ} (hx : 2 
     ring
   rw [← hform]
   exact normalized_tail_bound hx₀ hp hg.aestronglyMeasurable
+    hbound
+
+/-- The same truncation transfers to the normalized prime-only tail. -/
+theorem integrated_mobius_truncation {m : ℕ} (hm : 2 ≤ m) {x : ℝ} (hx : 2 ≤ x) :
+    |Real.sqrt x * (primeTail x - Q x -
+      ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (∫ t in Ioi x, psi (t ^ (1 / (n : ℝ))) / t ^ 2))| ≤
+      ((Real.log 4 + 4) * 2 * (1 + (m + 1 : ℝ) / Real.log 2)) /
+        (1 - 1 / (m + 1 : ℝ)) * x ^ (1 / (m + 1 : ℝ) - 1 / 2) := by
+  exact integrated_mobius_of_pointwise hm hx
     (fun t ht => chebyshev_mobius_truncation (hx.trans ht.le) hm)
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower

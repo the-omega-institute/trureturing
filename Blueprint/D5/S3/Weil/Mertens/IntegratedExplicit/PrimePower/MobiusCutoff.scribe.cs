@@ -10,6 +10,7 @@ internal sealed class MobiusCutoffDocument : IScribeDocumentDefinition
         "Möbius truncation of the Chebyshev root sum",
         H("The arithmetic error and its integrated bound"),
         Blocks(
+            Paragraph(Text("A pointwise bound on the signed truncation by C x^(1/(m+1)) transfers to the normalized integral with coefficient C/(1−1/(m+1)). The identity uses the actual difference of prime-only and complete tails and is valid for every cutoff x≥2.")),
             Entry("chebyshev-mobius-truncation", "chebyshev_mobius_truncation",
                 "A geometric bound uniform in the truncation order",
                 "For t ≥ 2 and an integer m ≥ 2, approximate θ(t) − ψ(t) by the finite sum "
