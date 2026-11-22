@@ -20,7 +20,7 @@ The Chebyshev and floor convolutions for μ(n) log n give a signed identity for 
 
 The signed Chebyshev truncation tail has a logarithmic saving after integrating on the original positive cutoff. For log x at most L(m+1), the integrated Chebyshev root term and its arithmetic main term are each decreasing in the omitted degree. Signed summation gives the required saving on their difference.
 
-For log x at least L(m+1), choose a finite set of unit frequency bins so the complementary squared bin masses have arbitrarily small sum. Gaussian local sampling bounds that complement, including the variation in coefficients between adjacent degrees. The finite set of bins satisfies the geometric weight sum bound 1+(m+1)²/log x. Choose L and then the minimum degree to make both contributions small.
+For log x at least L(m+1), choose a finite set of unit frequency bins so the complementary squared bin masses have arbitrarily small sum. Gaussian local sampling bounds that complement, including the variation in coefficients between adjacent degrees. The amplitude on the finite set of bins is bounded. Multiply it by the geometric weight sum over omitted degrees, at most 1+(m+1)²/log x. Choose L and then the minimum degree to make both contributions small.
 
 The eventual sign of the prime-only tail fixes the left threshold before the accuracy and the truncation order are chosen. Integrate over [log a, log B] with s(m)=1/2−1/(m+1)≥1/6. Equal endpoints give zero on both sides.
 

@@ -293,58 +293,24 @@ theorem normalized_mobius_tail_one_log (hRH : RiemannHypothesis) :
 
 private theorem sum_moebius_antitone_Icc_bound {m p : ℕ} (hp : 1 ≤ p) (hpm : p ≤ m)
     {g : ℕ → ℝ} (hg0 : ∀ n, 0 ≤ g n) (hg : Antitone g)
-    {D : ℝ} (hD : 0 ≤ D)
-    (hprefix : ∀ k ≤ m, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ D) :
-    |∑ n ∈ Icc p m, (μ n : ℝ) * g n| ≤ 4 * D * g p := by
-  let N := m - p
-  let a (i : ℕ) : ℝ := μ (p + i)
-  let b (i : ℕ) := g (p+i)
-  have hm0 : (0 : ℝ) < m := by exact_mod_cast hp.trans hpm
-  have hshift (j : ℕ) (hj : j ≤ N) (f : ℕ → ℝ) :
-      (∑ i ∈ range (j+1), f (p+i)) = ∑ n ∈ Icc p (p+j), f n := by
-    apply Finset.sum_bij (fun i _ => p+i)
-    · intro i hi
-      have := Finset.mem_range.mp hi
-      exact Finset.mem_Icc.mpr ⟨by omega, by omega⟩
-    · intro i hi k hk h
-      omega
-    · intro n hn
-      obtain ⟨h1,h2⟩ := Finset.mem_Icc.mp hn
-      exact ⟨n-p, Finset.mem_range.mpr (by omega), by omega⟩
-    · intro i hi
-      rfl
-  have hpre (j : ℕ) (hj : j ≤ N) : |∑ i ∈ range (j+1), a i| ≤
-      (2*D / (m : ℝ)) * ((m : ℝ)+j) := by
-    have hsplit : Finset.Icc p (p+j) = Finset.Ioc (p-1) (p+j) := by
-      ext n
-      simp only [Finset.mem_Icc, Finset.mem_Ioc]
-      omega
-    have h := Finset.sum_Ioc_consecutive (fun n => (μ n : ℝ))
-      (Nat.zero_le (p-1)) (show p-1 ≤ p+j by omega)
-    have hlast : p+j ≤ m := by dsimp [N] at hj; omega
-    dsimp only [a]
-    rw [hshift j hj (fun n => (μ n : ℝ)), hsplit, show (∑ n ∈ Ioc (p-1) (p+j), (μ n : ℝ)) =
-        (∑ n ∈ Ioc 0 (p+j), (μ n : ℝ)) - ∑ n ∈ Ioc 0 (p-1), (μ n : ℝ) by linarith only [h]]
-    calc
-      _ ≤ 2*D := (abs_sub _ _).trans (by linarith only [hprefix _ hlast, hprefix (p-1) (by omega)])
-      _ = (2*D / (m : ℝ)) * m := by field_simp
-      _ ≤ _ := mul_le_mul_of_nonneg_left (le_add_of_nonneg_right (Nat.cast_nonneg j)) (by positivity)
-  have hbp : Antitone b := fun i j hij => hg (Nat.add_le_add_left hij p)
-  have hhi := weighted_antitone_finite_abel (a := a) (g := b) (N := N)
-    (q := (m : ℝ)) (C := 2*D / (m : ℝ)) (fun i => hg0 _) hbp hpre
-  have hbr : (∑ i ∈ range N, b (i+1)) ≤ (m : ℝ) * g p := by
-    calc
-      _ ≤ ∑ _i ∈ range N, g p := Finset.sum_le_sum fun i _ => hg (Nat.le_add_right p _)
-      _ = (N : ℝ)*g p := by simp [nsmul_eq_mul]
-      _ ≤ _ := mul_le_mul_of_nonneg_right (by exact_mod_cast Nat.sub_le m p) (hg0 p)
-  change |∑ i ∈ range (N+1), (μ (p+i) : ℝ) * g (p+i)| ≤ _ at hhi
-  rw [hshift N le_rfl (fun n => (μ n : ℝ)*g n),
-    show p+N = m by dsimp [N]; omega] at hhi
-  have hscale : (2*D/(m : ℝ)) * ((m : ℝ)*g p+(m : ℝ)*g p) = 4*D*g p := by
-    field_simp
-    ring
-  exact hhi.trans ((mul_le_mul_of_nonneg_left
-    (add_le_add (show (m : ℝ) * b 0 ≤ (m : ℝ) * g p by simp [b]) hbr) (by positivity : 0 ≤ 2*D/(m : ℝ))).trans_eq hscale)
+    {D : ℝ} (hprefix : ∀ k ≤ m, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ D) :
+    |∑ n ∈ Icc p m, (μ n : ℝ) * g n| ≤ 2 * D * g p := by
+  have hI : Finset.Icc p m = Finset.Ioc (p-1) m := by
+    ext n
+    simp only [Finset.mem_Icc, Finset.mem_Ioc]
+    omega
+  rw [hI]
+  have h := abs_sum_mul_antitone_Ioc_le (a := fun n => (μ n : ℝ)) (w := g) (B := D)
+    (m := p-1) (N := m) (by omega) (by
+      intro k hk
+      have hset : Finset.range (k+1) = insert 0 (Finset.Ioc 0 k) := by
+        ext n
+        simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Ioc]
+        omega
+      rw [hset, Finset.sum_insert (by simp), ArithmeticFunction.map_zero, Int.cast_zero, zero_add]
+      exact hprefix k hk)
+    (fun _ _ => hg0 _) (hg.antitoneOn _)
+  simpa only [Nat.sub_add_cancel hp] using h
 
 open MeasureTheory Chebyshev
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower (root_kernel_integrable root_tail_main normalized_tail_bound)
@@ -410,7 +376,7 @@ theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} 
         C * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
   obtain ⟨D, hD, hpre⟩ := moebius_uniform_prefix_log_saving hRH
   let K : ℝ := 2 * (Real.log 4+4)
-  refine ⟨4*D*(K+2)*Real.exp (2*L), by dsimp [K]; positivity, ?_⟩
+  refine ⟨2*D*(K+2)*Real.exp (2*L), by dsimp [K]; positivity, ?_⟩
   intro m p u hp hpm hhalf hu huL
   let x := Real.exp u
   let P (n : ℕ) := (n : ℝ) / ((n : ℝ)-1) * x ^ ((n : ℝ)⁻¹ - 1/2)
@@ -438,8 +404,8 @@ theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} 
     have h : (2 : ℝ) ≤ max p n := by exact_mod_cast hp.trans (le_max_left p n)
     dsimp [P]
     exact mul_nonneg (div_nonneg (by linarith) (by linarith)) (rpow_nonneg (by linarith) _)
-  have hT := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hT0 hTa hH hpre'
-  have hP := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hP0 hPa hH hpre'
+  have hT := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hT0 hTa hpre'
+  have hP := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hP0 hPa hpre'
   rw [max_self] at hT hP
   have hTsum : (∑ n ∈ Icc p m, (μ n : ℝ) * T (max p n)) =
       ∑ n ∈ Icc p m, (μ n : ℝ) * T n :=
@@ -478,8 +444,8 @@ theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} 
   rw [hf]
   refine (abs_sub _ _).trans ((add_le_add hT hP).trans ?_)
   calc
-    _ ≤ 4*H * (K * (Real.exp (2*L)*Real.exp (-u/2))) +
-        4*H * (2 * (Real.exp (2*L)*Real.exp (-u/2))) :=
+    _ ≤ 2*H * (K * (Real.exp (2*L)*Real.exp (-u/2))) +
+        2*H * (2 * (Real.exp (2*L)*Real.exp (-u/2))) :=
       add_le_add (mul_le_mul_of_nonneg_left hTval (by positivity))
         (mul_le_mul_of_nonneg_left hPval (by positivity))
     _ = _ := by dsimp [H]; ring

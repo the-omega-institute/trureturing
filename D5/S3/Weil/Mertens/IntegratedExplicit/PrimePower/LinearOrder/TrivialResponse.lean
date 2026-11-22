@@ -257,7 +257,7 @@ theorem moebius_uniform_prefix_log_saving (hRH : RiemannHypothesis) :
       _ ≤ _ := by
         nlinarith only [Real.sq_sqrt hN0.le, mul_nonneg hC.le hN0.le]
 
-private theorem abs_sum_mul_antitone_Ioc_le {a w : ℕ → ℝ} {B : ℝ} {m N : ℕ}
+theorem abs_sum_mul_antitone_Ioc_le {a w : ℕ → ℝ} {B : ℝ} {m N : ℕ}
     (hmN : m < N)
     (hprefix : ∀ k ≤ N, |∑ i ∈ range (k + 1), a i| ≤ B)
     (hw0 : ∀ i ∈ Ioc m N, 0 ≤ w i)

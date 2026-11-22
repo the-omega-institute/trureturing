@@ -37,8 +37,9 @@ internal sealed class RHMobiusSublinearDocument : IScribeDocumentDefinition
                 Paragraph(Text("For log x at least L(m+1), choose a finite set of unit frequency "
                     + "bins so the complementary squared bin masses have arbitrarily small "
                     + "sum. Gaussian local sampling bounds that complement, including the "
-                    + "variation in coefficients between adjacent degrees. The finite set of "
-                    + "bins satisfies the geometric weight sum bound 1+(m+1)²/log x. Choose "
+                    + "variation in coefficients between adjacent degrees. The amplitude on the "
+                    + "finite set of bins is bounded. Multiply it by the geometric weight sum "
+                    + "over omitted degrees, at most 1+(m+1)²/log x. Choose "
                     + "L and then the minimum degree to make both contributions small.")),
                 Paragraph(Text("The eventual sign of the prime-only tail fixes the left "
                     + "threshold before the accuracy and the truncation order are chosen. "

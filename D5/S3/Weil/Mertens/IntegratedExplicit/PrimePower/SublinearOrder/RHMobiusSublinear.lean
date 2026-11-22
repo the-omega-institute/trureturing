@@ -174,7 +174,6 @@ private theorem all_orders_density_sublinear (hRH : RiemannHypothesis)
   have hx : 2 ≤ x := by
     have hexp : Real.exp (Real.log 2) ≤ Real.exp u := Real.exp_le_exp.mpr hu
     simpa only [x, Real.exp_log (by norm_num : (0 : ℝ) < 2)] using hexp
-  have hx0 : 0 < x := by linarith
   have hu0 : 0 ≤ u := (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans hu
   have hW : 0 ≤ W := Real.exp_nonneg _
   have hm₂' : (2 : ℝ) ≤ m := by exact_mod_cast hm₂
@@ -198,30 +197,8 @@ private theorem all_orders_density_sublinear (hRH : RiemannHypothesis)
       (Real.exp_nonneg _) (by positivity)
   have hsum : |∑ n ∈ Finset.Icc 2 m, e n| ≤ δ * (m : ℝ) * W :=
     hsum' m hmQ u hu0
-  have hterms (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
-      (μ n : ℝ) * T n + retainedDensity m n u + e n = 0 := by
-    have hn2 := (Finset.mem_Icc.mp hn).1
-    have hn1 : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by omega)
-    have ht := root_tail_main (r := (n : ℝ)) hn1 hx0
-    change T n = (n : ℝ) / ((n : ℝ) - 1) * x ^ ((n : ℝ)⁻¹ - 1 / 2) + centered (n : ℝ) x at ht
-    have hpow : x ^ ((n : ℝ)⁻¹ - 1 / 2) = Real.exp (-(arithmeticRate n) * u) := by
-      dsimp only [x, arithmeticRate]
-      rw [← Real.exp_mul]
-      congr 1
-      ring
-    rw [ht, hpow]
-    unfold retainedDensity e
-    ring
-  have hs : (∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * T n) +
-      (∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) +
-      (∑ n ∈ Finset.Icc 2 m, e n) = 0 := by
-    simp_rw [← Finset.sum_add_distrib]
-    exact (Finset.sum_congr rfl hterms).trans Finset.sum_const_zero
-  have hsplit : rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) - 2) =
-      -R + (∑ n ∈ Finset.Icc 2 m, e n) + E := by
-    dsimp only [R, E, rootWindowDensity, x]
-    linear_combination -hs
-  rw [hsplit]
+  rw [show rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) - 2) =
+      -R + (∑ n ∈ Finset.Icc 2 m, e n) + E from mobius_window_density_split m u]
   calc
     _ ≤ |R| + |∑ n ∈ Finset.Icc 2 m, e n| + |E| := by
       simpa only [abs_neg] using (abs_add_le (-R + ∑ n ∈ Finset.Icc 2 m, e n) E).trans
