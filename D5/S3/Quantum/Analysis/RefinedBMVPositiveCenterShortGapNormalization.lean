@@ -417,6 +417,66 @@ theorem shortGap_upperLogDeriv_le {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11
   exact (div_le_div_iff₀ (by positivity : 0 < a * 2) (by positivity : 0 < 2 * W)).mpr
     (by nlinarith only [hcompare])
 
+/-- A four-point lower bound for the mean of the exponential on a symmetric
+interval. The even moments agree through degree four. -/
+theorem fourPoint_cosh_lt_sinh_div {z : ℝ} (hz : 0 < z) :
+    (9 / 14 : ℝ) * Real.cosh (z / 3) +
+      (5 / 14) * Real.cosh (Real.sqrt (11 / 15) * z) < Real.sinh z / z := by
+  let m (n : ℕ) : ℝ := (9 / 14) * (1 / 9) ^ n + (5 / 14) * (11 / 15) ^ n
+  let f (n : ℕ) : ℝ := m n * (z ^ (2 * n) / ((2 * n).factorial : ℝ))
+  let g (n : ℕ) : ℝ := z ^ (2 * n + 1) / ((2 * n + 1).factorial : ℝ) / z
+  have hmoment (n : ℕ) : m n ≤ 1 / (2 * (n : ℝ) + 1) := by
+    induction n with
+    | zero => norm_num [m]
+    | succ n ih =>
+      by_cases hn : n < 3
+      · interval_cases n <;> norm_num [m]
+      · have hnR : (3 : ℝ) ≤ (n : ℝ) := by exact_mod_cast (show 3 ≤ n by omega)
+        have hstep : m (n + 1) ≤ (11 / 15) * m n := by
+          have hpow : 0 ≤ (1 / 9 : ℝ) ^ n := by positivity
+          dsimp only [m]
+          rw [pow_succ, pow_succ]
+          nlinarith only [hpow]
+        have hrate : (11 / 15 : ℝ) * (1 / (2 * n + 1)) ≤ 1 / (2 * (n + 1 : ℕ) + 1) := by
+          push_cast
+          rw [mul_one_div]
+          exact (div_le_div_iff₀ (by positivity) (by positivity)).mpr (by linarith)
+        exact hstep.trans ((mul_le_mul_of_nonneg_left ih (by norm_num)).trans hrate)
+  have hterms : (fun n : ℕ ↦ (9 / 14 : ℝ) * ((z / 3) ^ (2 * n) / ((2 * n).factorial : ℝ)) +
+      (5 / 14) * ((Real.sqrt (11 / 15) * z) ^ (2 * n) / ((2 * n).factorial : ℝ))) = f := by
+    funext n
+    have hleft : (z / 3) ^ (2 * n) = (1 / 9 : ℝ) ^ n * z ^ (2 * n) := by
+      rw [div_pow, pow_mul (3 : ℝ), show (3 : ℝ) ^ 2 = 9 by norm_num, one_div_pow]
+      ring
+    have hright : (Real.sqrt (11 / 15) * z) ^ (2 * n) =
+        (11 / 15 : ℝ) ^ n * z ^ (2 * n) := by
+      rw [mul_pow, pow_mul (Real.sqrt _), Real.sq_sqrt (by norm_num)]
+    rw [hleft, hright]
+    dsimp only [f, m]
+    ring
+  have hf : HasSum f ((9 / 14 : ℝ) * Real.cosh (z / 3) +
+      (5 / 14) * Real.cosh (Real.sqrt (11 / 15) * z)) := by
+    rw [← hterms]
+    exact ((Real.hasSum_cosh (z / 3)).mul_left (9 / 14 : ℝ)).add
+      ((Real.hasSum_cosh (Real.sqrt (11 / 15) * z)).mul_left (5 / 14 : ℝ))
+  have hg : HasSum g (Real.sinh z / z) := (Real.hasSum_sinh z).div_const z
+  have heq (n : ℕ) : g n = (1 / (2 * (n : ℝ) + 1)) *
+      (z ^ (2 * n) / ((2 * n).factorial : ℝ)) := by
+    dsimp only [g]
+    rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
+    push_cast
+    field_simp [hz.ne'] <;> ring
+  have hle (n : ℕ) : f n ≤ g n := by
+    rw [heq]
+    exact mul_le_mul_of_nonneg_right (hmoment n) (by positivity)
+  have hstrict : f 3 < g 3 := by
+    rw [heq]
+    apply mul_lt_mul_of_pos_right _ (by positivity)
+    norm_num [m]
+  rw [← hf.tsum_eq, ← hg.tsum_eq]
+  exact Summable.tsum_lt_tsum hle hstrict hf.summable hg.summable
+
+#print axioms fourPoint_cosh_lt_sinh_div
 #print axioms shortGapWeight_pos
 #print axioms shortGapNormalization_bounds
 
