@@ -119,14 +119,16 @@ private theorem actual_frequency_multiplicity {r : ℝ} (hr : 0 < r)
 
 open D5.S3.Weil.Mertens.IntegratedExplicit (actualCoeff actualCoeff_hasSum)
 
-private noncomputable def windowMode (r : ℝ) (z : ℂ) : ℂ := (z-1/2)/(r : ℂ)
+/-- The complex frequency of a zero after rescaling by the root degree. -/
+noncomputable def windowMode (r : ℝ) (z : ℂ) : ℂ := (z-1/2)/(r : ℂ)
 
-private noncomputable def windowCoefficient (r L : ℝ) (z : ℂ) : ℂ :=
+/-- The contribution of one occurrence to the normalized root increment at width L. -/
+noncomputable def windowCoefficient (r L : ℝ) (z : ℂ) : ℂ :=
   let s : ℝ := 1/2-(2*r)⁻¹
   (2*(r : ℂ)^2)/(z*((r : ℂ)-z)*((r : ℂ)-2*z)) *
     ((Complex.exp (((-(s : ℂ)) + windowMode r z)*(L : ℂ))-1)/((1-Real.exp (-s*L) : ℝ) : ℂ))
 
-private theorem window_coefficient_of_occurrence {r : ℝ} (hr : 1 < r) (L : ℝ) (k : ℕ) :
+theorem window_coefficient_of_occurrence {r : ℝ} (hr : 1 < r) (L : ℝ) (k : ℕ) :
     let s : ℝ := 1/2-(2*r)⁻¹
     windowCoefficient r L (actualZero k) = rootCoeff r k / rootExponent r k *
       ((Complex.exp (((-(s : ℂ)) + frequency k/(r : ℂ))*(L : ℂ))-1)/
@@ -300,9 +302,11 @@ private theorem window_coefficient_nonzero (hRH : RiemannHypothesis) {r L : ℝ}
 open ArithmeticFunction
 open scoped ArithmeticFunction.Moebius
 
-private theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis) :
+/-- The coefficient mass controls the width dependence of the Fourier error. -/
+theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis) :
     ∃ U₀ : ℝ, 0 < U₀ ∧ ∀ m r : ℕ, 2 ≤ m → m+1 = 2*r →
-      ∀ L : ℝ, 0 < L → ∀ ω : ℝ, ∃ C : ℝ, 0 < C ∧
+      ∀ ω : ℝ, ∃ A B : ℝ, 0 < A ∧ 0 ≤ B ∧
+        ∀ L : ℝ, 0 < L →
         ∀ U T : ℝ, U₀ ≤ U → 0 < T →
           let s := orderRate m
           let w := (ω : ℂ)*Complex.I
@@ -313,13 +317,14 @@ private theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis
             (∑' k, if windowMode (r : ℝ) (actualZero k) = w
               then windowCoefficient (r : ℝ) L (actualZero k) else 0)
           IntervalIntegrable F volume U (U+T) ∧
-          ‖(∫ u in U..U+T, F u)/(T : ℂ)-target‖ ≤ C/T := by
+          ‖(∫ u in U..U+T, F u)/(T : ℂ)-target‖ ≤
+            (A+B*(∑' k, ‖windowCoefficient (r : ℝ) L (actualZero k)‖))/T := by
   obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
   let U₀ := Real.log a₀
   have ha₀ : 0 < a₀ := by linarith
   have hlog : Real.log 2 ≤ U₀ := Real.log_le_log (by norm_num) ha₂
   have hU₀ : 0 < U₀ := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).trans_le hlog
-  refine ⟨U₀, hU₀, fun m r hm heven L hL ω => ?_⟩
+  refine ⟨U₀, hU₀, fun m r hm heven ω => ?_⟩
   let q := m+1
   let s := orderRate m
   let δ := ((m : ℝ)+1)⁻¹-((m : ℝ)+2)⁻¹
@@ -328,18 +333,7 @@ private theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis
   let w := (ω : ℂ)*Complex.I
   let d := (μ r : ℂ)
   let A := if w=0 then -(c : ℂ) else 0
-  let gap (u : ℝ) := powerGap s (Real.exp u) (Real.exp (u+L))
-  let f (u : ℝ) := signedWindowResidual m (Real.exp u) (Real.exp (u+L))/gap u
-  let P (u : ℝ) := (rootPrimitive (r : ℝ) (Real.exp (u+L)) -
-    rootPrimitive (r : ℝ) (Real.exp u))/gap u
-  let R (u : ℝ) := f u+c+(μ r : ℝ)*P u
-  let phase (u : ℝ) := Complex.exp (-w*(u : ℂ))
-  let coeff (k : ℕ) := windowCoefficient (r : ℝ) L (actualZero k)
-  let mode (k : ℕ) := frequency k/((r : ℝ) : ℂ)
-  let B := ∑' k, if mode k = w then coeff k else 0
   have hw : w.re = 0 := by simp [w, Complex.mul_re]
-  have hphase (u : ℝ) : ‖phase u‖ = 1 := by
-    simp [phase, Complex.norm_exp, Complex.mul_re, hw]
   have hr : (1 : ℝ) < (r : ℝ) := by exact_mod_cast (show 1 < r by omega)
   have hqR : (m : ℝ)+1 = 2*(r : ℝ) := by exact_mod_cast heven
   have hs' : s = 1/2-(2*(r : ℝ))⁻¹ := by dsimp [s, orderRate]; rw [hqR]
@@ -348,17 +342,30 @@ private theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   have hW : 0 < W := by dsimp only [W]; positivity
-  have hP (u : ℝ) : ((P u : ℝ) : ℂ) = ∑' k, coeff k*Complex.exp (mode k*(u : ℂ)) := by
-    simpa only [P, gap, hs', coeff, mode] using normalized_width_series hRH hr hL u
-  have hcoeff := window_coefficients_summable hRH hr hL
+  let mode (k : ℕ) := frequency k/((r : ℝ) : ℂ)
   have hmode (k : ℕ) : (mode k).re = 0 := by
     simp [mode, Complex.div_re, frequency_real hRH k]
   obtain ⟨g, hg, hgap⟩ := actual_frequency_gap (by linarith : 0 < (r : ℝ)) w
   let C₁ := W/δ
   let C₂ := ‖(c : ℂ)‖*(2/‖w‖)
+  let M := ‖d‖*(2/g)
+  refine ⟨C₁+C₂, M, by dsimp only [C₁, C₂]; positivity, by dsimp only [M]; positivity,
+    fun L hL U T hU hT => ?_⟩
+  let gap (u : ℝ) := powerGap s (Real.exp u) (Real.exp (u+L))
+  let f (u : ℝ) := signedWindowResidual m (Real.exp u) (Real.exp (u+L))/gap u
+  let P (u : ℝ) := (rootPrimitive (r : ℝ) (Real.exp (u+L)) -
+    rootPrimitive (r : ℝ) (Real.exp u))/gap u
+  let R (u : ℝ) := f u+c+(μ r : ℝ)*P u
+  let phase (u : ℝ) := Complex.exp (-w*(u : ℂ))
+  let coeff (k : ℕ) := windowCoefficient (r : ℝ) L (actualZero k)
+  let B := ∑' k, if mode k = w then coeff k else 0
+  have hphase (u : ℝ) : ‖phase u‖ = 1 := by
+    simp [phase, Complex.norm_exp, Complex.mul_re, hw]
+  have hP (u : ℝ) : ((P u : ℝ) : ℂ) = ∑' k, coeff k*Complex.exp (mode k*(u : ℂ)) := by
+    simpa only [P, gap, hs', coeff, mode] using normalized_width_series hRH hr hL u
+  have hcoeff := window_coefficients_summable hRH hr hL
   let C₃ := (∑' k, ‖coeff k‖)*(2/g)
-  let C := C₁+C₂+‖d‖*C₃
-  refine ⟨C, by dsimp only [C, C₁, C₂, C₃]; positivity, fun U T hU hT => ?_⟩
+  let C := (C₁+C₂) + M*(∑' k, ‖coeff k‖)
   let last := U+T
   let E (u : ℝ) := (R u : ℂ)*phase u
   let G (u : ℝ) := -(c : ℂ)*phase u
@@ -462,8 +469,12 @@ private theorem signed_window_even_cutoff_fourier_bound (hRH : RiemannHypothesis
   apply div_le_div_of_nonneg_right _ hT.le
   refine (norm_sub_le _ _).trans ?_
   rw [norm_mul]
-  exact add_le_add ((norm_add_le _ _).trans (add_le_add hIE hIG))
-    (mul_le_mul_of_nonneg_left hIH (norm_nonneg _))
+  have he := (norm_add_le (∫ u in U..last, E u) ((∫ u in U..last, G u)-(T : ℂ)*A)).trans
+    (add_le_add hIE hIG)
+  have h := add_le_add he (mul_le_mul_of_nonneg_left hIH (norm_nonneg d))
+  refine h.trans (le_of_eq ?_)
+  dsimp only [C₃, M, coeff]
+  ring
 
 open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula (multiplicity_eq_zeroMult)
 open D5.S3.Weil.ZetaBridge.RhLocatesZeroData (zeroData_zero_on_critical_line_of_rh)
@@ -509,7 +520,11 @@ theorem signed_window_even_cutoff_fourier (hRH : RiemannHypothesis) :
             -(μ r : ℂ) * (Zeta23.zeroMult z : ℂ) * windowCoefficient (r : ℝ) L z ∧
           windowCoefficient (r : ℝ) L z ≠ 0 := by
   obtain ⟨U₀, hU₀, hbound⟩ := signed_window_even_cutoff_fourier_bound hRH
-  refine ⟨U₀, hU₀, fun m r hm heven L hL => ⟨hbound m r hm heven L hL, ?_, ?_⟩⟩
+  refine ⟨U₀, hU₀, fun m r hm heven L hL => ⟨?_, ?_, ?_⟩⟩
+  · intro ω
+    obtain ⟨A, B, hA, hB, h⟩ := hbound m r hm heven ω
+    refine ⟨A+B*(∑' k, ‖windowCoefficient (r : ℝ) L (actualZero k)‖), ?_, h L hL⟩
+    exact add_pos_of_pos_of_nonneg hA (mul_nonneg hB (tsum_nonneg fun _ => norm_nonneg _))
   · have hr : (0 : ℝ) < r := by exact_mod_cast (show 0 < r by omega)
     simp [window_mode_ne_zero hr]
   · intro z hz
