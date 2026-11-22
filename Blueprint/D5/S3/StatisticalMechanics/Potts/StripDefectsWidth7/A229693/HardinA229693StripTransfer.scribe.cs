@@ -12,12 +12,12 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact two-defect strip transfer.", H("Exact two-defect strip transfer"),
         Blocks(
-            Describe.Lean(DescribeId.Create("Valid"),
+            Describe.Lean(DescribeId.Create("valid"),
                 DeclarationHandle.Create(Prefix + "Valid"), H("Admissible residual budgets"),
                 StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), Iff(Call("HardinA229693StripTransfer.Valid", V("p"), V("d")), And(Leq(V("d"), Num("2")), Leq(Call("Finset.card", Call("Finset.filter", Fn("j", Call("Fin", Num("5")), Eq(App(V("p"), Call("Fin.castSucc", V("j"))), App(V("p"), Call("Fin.succ", V("j"))))), Call("Finset.univ"))), Sub(Num("2"), V("d"))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The number of adjacent equalities in the six-cell boundary is at most the number of defects already used."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("exhaustedClass"),
+            Describe.Lean(DescribeId.Create("exhausted-class"),
                 DeclarationHandle.Create(Prefix + "exhaustedClass"), H("Classes at budget zero"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.exhaustedClass"), Arrow(Call("HardinA229585StripData.Boundary"), Call("Fin", Num("96")))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -27,11 +27,11 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(Disp(All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), Eq(Call("HardinA229693StripTransfer.cl", V("p"), V("d")), Conditional(Eq(V("d"), Num("0")), Call("Fin.natAdd", Num("72"), Call("HardinA229693StripTransfer.exhaustedClass", V("p"))), Call("Fin.castAdd", Num("96"), Call("HardinA229585StripData.cl", V("p"), Sub(V("d"), Num("1")))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("A positive budget d uses the A229585 boundary class at budget d minus one."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("T"),
+            Describe.Lean(DescribeId.Create("t"),
                 DeclarationHandle.Create(Prefix + "T"), H("Transfer matrix"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.T"), Call("Matrix", Call("Fin", Num("168")), Call("Fin", Num("168")), V("Int"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The leading block is the A229585 transfer matrix. The lower left block is zero. The right blocks count rows that spend exactly the remaining budget. Within the lower right block, the original exhausted sources use the exhausted rows and columns of A229585, extended by zero columns. The transition counts formula gives the entries at each admissible source."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The leading block is the A229585 transfer matrix. The lower left block is zero. The right blocks count rows that spend exactly the remaining budget. In the upper right block, 24 columns take their multiplicities from columns of the leading block. The remaining columns use 36 distinct multiplicity profiles. Within the lower right block, the original exhausted sources use the exhausted rows and columns of A229585, extended by zero columns. The transition counts formula gives the entries at each admissible source."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("initial"),
                 DeclarationHandle.Create(Prefix + "initial"), H("First-row weights"),
                 StatementSource.FromAuthor(Disp(TypeOf(Call("HardinA229693StripTransfer.initial"), Arrow(Call("Fin", Num("168")), V("Int"))))),
@@ -62,24 +62,19 @@ internal sealed class HardinA229693StripTransferDocument : IScribeDocumentDefini
     private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
-    private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
-    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
-    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula CastInt(Formula a) => Parenthesized(Seq(a, Colon, Sp, V("Int")));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
-    private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
     private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));
     private static Formula SumOver(string n, Formula t, Formula b) => Seq(Sum, Underscore, Grp(V(n), Colon, Sp, t), Sp, Parenthesized(b));
     private static Formula Conditional(Formula c, Formula y, Formula n) => Parenthesized(Seq(Q("if"), Sp, Parenthesized(c), Sp, Q("then"), Sp, y, Sp, Q("else"), Sp, n));
 
     private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
     private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
-    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, IffArrow, Sp, Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
 }

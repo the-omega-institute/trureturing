@@ -10,7 +10,6 @@ namespace Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.Hardin
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsWidth7.A229693.HardinA229693Strip
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open scoped BigOperators
 noncomputable section
 attribute [local irreducible] a
 
@@ -21,13 +20,13 @@ def readout : Realization signature := realize signature (fun _ _ n => a n) (fun
 def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (t : ℕ),
-    (R.readout () () (t + 15) : ℤ) = 126 * R.readout () () (t + 14) - 6345 * R.readout () () (t +
-      13) + 165456 * R.readout () () (t + 12) - 2474469 * R.readout () () (t + 11) + 22918302 *
-      R.readout () () (t + 10) - 138045627 * R.readout () () (t + 9) + 554666940 * R.readout () ()
-      (t + 8) - 1494608922 * R.readout () () (t + 7) + 2659094568 * R.readout () () (t + 6) -
-      2986698420 * R.readout () () (t + 5) + 1913187600 * R.readout () () (t + 4) - 531441000 *
-      R.readout () () (t + 3)
+  Law r := ∀ (t : ℕ),
+    (r.readout () () (t + 15) : ℤ) = 126 * r.readout () () (t + 14) - 6345 * r.readout () () (t +
+      13) + 165456 * r.readout () () (t + 12) - 2474469 * r.readout () () (t + 11) + 22918302 *
+      r.readout () () (t + 10) - 138045627 * r.readout () () (t + 9) + 554666940 * r.readout () ()
+      (t + 8) - 1494608922 * r.readout () () (t + 7) + 2659094568 * r.readout () () (t + 6) -
+      2986698420 * r.readout () () (t + 5) + 1913187600 * r.readout () () (t + 4) - 531441000 *
+      r.readout () () (t + 3)
 private theorem rejected_at (h : arena.Law rejected) (t : ℕ) : False := by
   have hb := h t
   have ha := result t

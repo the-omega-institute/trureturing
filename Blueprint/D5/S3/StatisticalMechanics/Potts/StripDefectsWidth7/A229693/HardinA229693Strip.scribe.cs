@@ -35,21 +35,12 @@ internal sealed class HardinA229693StripDocument : IScribeDocumentDefinition
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
-    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
-    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula CastInt(Formula a) => Parenthesized(Seq(a, Colon, Sp, V("Int")));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
-    private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, Sp, t, Comma, Sp, Parenthesized(b));
     private static Formula Fn(string n, Formula t, Formula b) => Seq(LambdaLower, Sp, V(n), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(b));
-    private static Formula SumOver(string n, Formula t, Formula b) => Seq(Sum, Underscore, Grp(V(n), Colon, Sp, t), Sp, Parenthesized(b));
-    private static Formula Conditional(Formula c, Formula y, Formula n) => Parenthesized(Seq(Q("if"), Sp, Parenthesized(c), Sp, Q("then"), Sp, y, Sp, Q("else"), Sp, n));
 
-    private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
-    private static Formula Power(Formula a, Formula b) => Seq(Parenthesized(a), Caret, Grp(b));
-    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, IffArrow, Sp, Parenthesized(b));
 }
