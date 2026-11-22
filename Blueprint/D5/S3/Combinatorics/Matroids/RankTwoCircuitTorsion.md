@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Matroids/RankTwoCircuitTorsion.exists_poten
 
 *Commentary.*
 
-The bases are the pairs of vertices from distinct parallel classes. The residue of a rational edge coefficient is taken in the sign convention of the vertex boundary. Pair circuits identify the edge residues along each parallel class. Triangle circuits make the residues differences of class values. Fixing the value of one class to zero makes these values unique. Every class value is killed by the ground size, and the sum weighted by class sizes vanishes.
+The bases are the pairs of vertices from distinct parallel classes. The residue of a rational edge coefficient is taken in the sign convention of the vertex boundary. Integral readouts on pair circuits identify the edge residues along each parallel class. Triangle circuits make the residues differences of class values. Fixing the value of one class to zero makes these values unique. Every class value is killed by the ground size, and the sum weighted by class sizes vanishes.
 
 **Theorem 1.2 (Realizing normalized class potentials).**
 
