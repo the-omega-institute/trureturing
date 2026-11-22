@@ -177,99 +177,92 @@ def liftAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
   options := #[]
 
 
-abbrev deficitSignature : Signature where
-  Params := Σ J : Type u, Fintype J × (J → ℝ)
-  State p := p.1 → ℝ
+set_option linter.checkUnivs false in
+abbrev gramSignature : Signature where
+  Params := Σ _ : Type u, Type v
+  State p := Matrix p.2 p.1 ℤ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℝ
+  Output _ p := Matrix p.2 p.1 ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def deficitActual : Realization deficitSignature.{u} :=
-  realize deficitSignature (fun _ p w =>
-    let _ : Fintype p.1 := p.2.1
-    let γ := p.2.2
-    1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / (∑ j, w j)))
-    (fun e => nomatch e)
+def gramActual : Realization gramSignature.{u,v} :=
+  realize gramSignature (fun _ _ K => K.map (Int.cast : ℤ → ℝ)) (fun e => nomatch e)
 
-def deficitRejected : Realization deficitSignature.{u} :=
-  realize deficitSignature (fun _ _ _ => 1) (fun e => nomatch e)
+def gramRejected : Realization gramSignature.{u,v} :=
+  realize gramSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-abbrev deficitArena : Arena where
-  signature := deficitSignature.{u}
-  Law r := ∀ {J : Type u} {A : Type v} [hJ : Fintype J] [Fintype A]
+set_option linter.checkUnivs false in
+abbrev gramArena : Arena where
+  signature := gramSignature.{u,v}
+  Law r := ∀ {J : Type u} {A : Type v} [Fintype J] [Fintype A]
     [DecidableEq J] [DecidableEq A] (γ w : J → ℝ) (K : Matrix A J ℤ) (_hw : ∀ j, 0 < w j)
     (_hW : 0 < ∑ j, w j)
     (_hK : ∀ k : J → ℤ, k ∈ Submodule.span ℤ (range K.row) ↔
       (∑ j, (k j : ℝ) * γ j) = 0)
     (_hind : LinearIndependent ℝ (K.map (Int.cast : ℤ → ℝ)).row),
     let W := ∑ j, w j
-    let R := K.map (Int.cast : ℤ → ℝ)
+    let R := r.readout () ⟨J, A⟩ K
     let M := diagonal w
     let G := R * M⁻¹ * Rᵀ
     let b (z : A → ℤ) (a : A) :=
       (z a : ℝ) * (2 * Real.pi) - (Real.pi / 2) * (R *ᵥ (1 : J → ℝ)) a
     let E := ⨅ z : A → ℤ, b z ⬝ᵥ (G⁻¹ *ᵥ b z)
-    let D := r.readout () ⟨J, hJ, γ⟩ w
+    let D := 1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / W)
     2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0)
 
-private theorem deficitRejectedLaw : ¬ deficitArena.{u,v}.Law deficitRejected := by
+private theorem gramRejectedLaw : ¬ gramArena.{u,v}.Law gramRejected := by
   intro law
   let J := ULift.{u} Unit
-  let K : Matrix (ULift.{v} Empty) J ℤ := 0
+  let A := ULift.{v} Unit
+  let K : Matrix A J ℤ := fun _ _ => 1
   have hK (k : J → ℤ) :
-      k ∈ Submodule.span ℤ (range K.row) ↔ (∑ j, (k j : ℝ) * (1 : ℝ)) = 0 := by
-    simp only [range_eq_empty, Submodule.span_empty, Submodule.mem_bot, mul_one,
-      Fintype.sum_unique, Int.cast_eq_zero]
-    exact ⟨fun h => congrFun h default, fun h => funext fun j => (Subsingleton.elim j default) ▸ h⟩
-  have h := law (fun _ => 1) (fun _ => 1) K (by simp) (by simp [J]) hK
-    linearIndependent_empty_type
+      k ∈ Submodule.span ℤ (range K.row) ↔ (∑ j, (k j : ℝ) * (0 : ℝ)) = 0 := by
+    simp only [mul_zero, Finset.sum_const_zero, iff_true]
+    apply (Submodule.mem_span_range_iff_exists_fun ℤ).mpr
+    refine ⟨fun _ => k default, funext fun j => ?_⟩
+    simp [K, Matrix.row, Subsingleton.elim j (default : J)]
+  have hInd : LinearIndependent ℝ (K.map (Int.cast : ℤ → ℝ)).row := by
+    apply Fintype.linearIndependent_iff.mpr
+    intro g hg a
+    have h := congrFun hg (default : J)
+    simpa [K, Matrix.row, Matrix.map, Subsingleton.elim (default : A) a] using h
+  have h := law (fun _ => 0) (fun _ => 1) K (by simp) (by simp [J]) hK hInd
   have hup := h.2.1
-  norm_num [deficitRejected, realize, dotProduct] at hup
+  norm_num [gramRejected, realize, J, dotProduct] at hup
 
-private theorem deficitDependence : ObservationalDependence deficitSignature.{u} deficitActual := by
+private theorem gramDependence : ObservationalDependence gramSignature.{u,v} gramActual := by
   intro i
-  let J := ULift.{u} Unit
-  refine ⟨⟨J, inferInstance, fun _ => 1⟩, fun _ => 0, fun _ => 1, ?_⟩
+  refine ⟨⟨ULift.{u} Unit, ULift.{v} Unit⟩, (fun _ _ => 1), (fun _ _ => 0), ?_⟩
   intro h
-  have heq : 1 = 1 - (⨆ t : ℝ, Real.sin t) := by
-    simpa [deficitActual, realize, J] using h
-  have hz : (⨆ t : ℝ, Real.sin t) = 0 := by linarith
-  have hub : BddAbove (range Real.sin) := ⟨1, by
-    rintro _ ⟨t, rfl⟩
-    exact Real.sin_le_one t⟩
-  have hπ := le_ciSup hub (Real.pi / 2)
-  rw [Real.sin_pi_div_two, hz] at hπ
-  norm_num at hπ
+  have hentry := congrArg (fun K : Matrix (ULift.{v} Unit) (ULift.{u} Unit) ℝ =>
+    K ⟨()⟩ ⟨()⟩) h
+  norm_num [gramActual, realize, Matrix.map] at hentry
 
-def deficitSource :
-    Registration deficitArena.{u,v} (type_of% @weighted_phase_deficit_bounds.{u,v}) where
-  actual := deficitActual
+def gramSource : Registration gramArena.{u,v} (type_of% @weighted_phase_deficit_bounds.{u,v}) where
+  actual := gramActual
   bridge := Iff.rfl
-  variation := ⟨@weighted_phase_deficit_bounds.{u,v}, deficitRejected, deficitRejectedLaw.{u,v}⟩
-  sensitivity := singleRoleSensitivity deficitArena.{u,v}.Law deficitActual deficitRejected
-    inferInstance inferInstance deficitRejectedLaw.{u,v}
-  dependence := deficitDependence
+  variation := ⟨@weighted_phase_deficit_bounds.{u,v}, gramRejected, gramRejectedLaw.{u,v}⟩
+  sensitivity := singleRoleSensitivity gramArena.{u,v}.Law gramActual gramRejected
+    inferInstance inferInstance gramRejectedLaw.{u,v}
+  dependence := gramDependence
 
-def deficitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@weighted_phase_deficit_bounds.{u,v}) (Realization deficitSignature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Fourier.WeightedPhaseRelationLattice.deficitUnit
-  realizationName := `Reg.D5.S3.Fourier.WeightedPhaseRelationLattice.deficitSource
+def gramAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weighted_phase_deficit_bounds.{u,v}) (Realization gramSignature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S3.Fourier.WeightedPhaseRelationLattice.gramUnit
+  realizationName := `Reg.D5.S3.Fourier.WeightedPhaseRelationLattice.gramSource
   realizationSource := none
   generated := false
-  arena := .source ⟨deficitArena.{u,v}⟩
-  objectArena := .source ⟨deficitArena.{u,v}⟩
+  arena := .source ⟨gramArena.{u,v}⟩
+  objectArena := .source ⟨gramArena.{u,v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source deficitArena.{u,v} ⟨deficitSource.{u,v}⟩
+  realization := .source gramArena.{u,v} ⟨gramSource.{u,v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize deficitSignature (fun _ p w =>
-    let _ : Fintype p.1 := p.2.1
-    let γ := p.2.2
-    1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / (∑ j, w j)))
+  readout := some (realize gramSignature (fun _ _ K => K.map (Int.cast : ℤ → ℝ))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -278,12 +271,12 @@ def deficitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Fourier.WeightedPhaseRelationLattice
     definition := none
-    coordinates := #[0, 6]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #[
-        "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
-      stateBinder := 7
+        "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 8
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -293,7 +286,7 @@ def deficitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 
 #print axioms orbitAudit
 #print axioms liftAudit
-#print axioms deficitAudit
+#print axioms gramAudit
 
 end
 

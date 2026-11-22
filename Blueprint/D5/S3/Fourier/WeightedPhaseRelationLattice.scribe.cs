@@ -23,7 +23,7 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                     + "steps that turn it into an integral multiple of 2π form a countable set. "
                     + "One step in (0,1) avoids their union. Its discrete characters are exactly "
                     + "the zero-dot-product characters, so TorusOrbitClosure.result puts every "
-                    + "common zero of these characters in the real orbit closure. The forward "
+                    + "point in their common kernel in the real orbit closure. The forward "
                     + "inclusion follows from character continuity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -65,12 +65,12 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                         + "energy and hence zero deficit.")),
                     Paragraph(Text(
                         "For an inclusive positive ζ-ordinate cutoff, take the finite index "
-                        + "type of members of Spectrum.cut, frequencies from zetaSpectrum.gamma, "
-                        + "and weights from zetaSpectrum.mult times the chosen positive weight "
-                        + "per occurrence. This keeps the boundary ordinate and its analytic "
-                        + "multiplicity. The comparison is conditional on a complete relation "
-                        + "basis and supplies no estimate for the actual normalized energy "
-                        + "at these cutoffs."))),
+                        + "type of members of Spectrum.cut for zetaSpectrum. Use its ordinates "
+                        + "and multiply the chosen positive weight per occurrence by its analytic "
+                        + "multiplicity. This keeps the ordinate at the cutoff and all its "
+                        + "occurrences. The comparison applies given a complete relation basis "
+                        + "and positive total weight. Bounding the normalized energy for the "
+                        + "actual ζ ordinates is a separate question."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
