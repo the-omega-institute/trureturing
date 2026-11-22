@@ -14,17 +14,18 @@ namespace RefinedBMV.FourSpectrumLift
 open D5.S0.Certificates.BoxCover.RationalIntervalExpression
 open ZeroCenterRectangle
 
-private theorem value_6 {n : ℕ} (x : Fin n → ℝ) : value x (6 : Expr n) = 6 := by
+private theorem value_6 {n : ℕ} {box : Fin n → ℚ × ℚ} (x : Fin n → ℝ) :
+    intervalValue x (6 : IntervalExpr box) = 6 := by
   change ((6 : ℚ) : ℝ) = 6
   norm_num
 
-private def slopeExpr (box : Fin 7 → ℚ × ℚ) : Expr 7 :=
+private def slopeExpr (box : Fin 7 → ℚ × ℚ) : IntervalExpr box :=
   let v := inputExpr box
   zeroCenterCurvatureSlope (v 0) (v 1) (v 2) (v 3) (v 4) (v 5) (v 6)
 
 private theorem slopeExpr_value (box : Fin 7 → ℚ × ℚ) (c h : ℝ) :
-    value (analyticPoint c h) (slopeExpr box) = zeroCenterCurvatureSlopeAt h c := by
-  simp only [slopeExpr, inputExpr, value, zeroCenterCurvatureSlope, zeroCenterCurvatureSlopeAt,
+    intervalValue (analyticPoint c h) (slopeExpr box) = zeroCenterCurvatureSlopeAt h c := by
+  simp only [slopeExpr, intervalValue_input, zeroCenterCurvatureSlope, zeroCenterCurvatureSlopeAt,
     zeroCenterQuotientCubic, zeroCenterGeometricJet,
     CurvatureCubic.const, CurvatureCubic.add, CurvatureCubic.sub, CurvatureCubic.scale,
     CurvatureCubic.mul, CurvatureCubic.quot, CurvatureCubic.root, CurvatureCubic.exp,
@@ -39,12 +40,12 @@ private def centerRectangle (b : ZeroCenterRectangle) : ZeroCenterRectangle :=
   {b with cLo := m, cHi := m}
 
 def meanValueValid (b : ZeroCenterRectangle) (center whole : Fin 7 → ℚ × ℚ) : Prop :=
-  let low := (bounds (curvatureExpr center)).1
-  let slope := bounds (slopeExpr whole)
+  let low := (intervalBounds (curvatureExpr center)).1
+  let slope := intervalBounds (slopeExpr whole)
   let M := max |slope.1| |slope.2|
   0 < b.cLo ∧ analyticLeafValid (centerRectangle b) center ∧
-    analyticLeafValid b whole ∧ check center (curvatureExpr center) = true ∧
-    check whole (slopeExpr whole) = true ∧ M * ((b.cHi-b.cLo)/2) < low
+    analyticLeafValid b whole ∧ (curvatureExpr center).guards = true ∧
+    (slopeExpr whole).guards = true ∧ M * ((b.cHi-b.cLo)/2) < low
 
 private instance (b : ZeroCenterRectangle) (center whole : Fin 7 → ℚ × ℚ) :
     Decidable (meanValueValid b center whole) := by
@@ -61,15 +62,16 @@ theorem meanValue_positive {b : ZeroCenterRectangle} {center whole : Fin 7 → �
     refine ⟨?_, ?_, hm.2.2.1, hm.2.2.2⟩
     · exact hcast.le
     · exact hcast.ge
-  have hcl := checked_expression_encloses center _ (analyticLeaf_sound hcenter hct hh) _ hcCheck
+  have hcl := guarded_expression_encloses center _ (analyticLeaf_sound hcenter hct hh)
+    (curvatureExpr center) hcCheck
   rw [curvatureExpr_value] at hcl
-  let t := bounds (slopeExpr whole)
+  let t := intervalBounds (slopeExpr whole)
   let M := max |(t.1 : ℝ)| |(t.2 : ℝ)|
   have hM : 0 ≤ M := (abs_nonneg _).trans (le_max_left _ _)
   have hs (x : ℝ) (hx : x ∈ Set.Icc (b.cLo : ℝ) (b.cHi : ℝ)) :
       |zeroCenterCurvatureSlopeAt h x| ≤ M := by
-    have hs' := checked_expression_encloses whole _ (analyticLeaf_sound hwhole
-      ⟨hx.1, hx.2, hm.2.2.1, hm.2.2.2⟩ hh) _ hsCheck
+    have hs' := guarded_expression_encloses whole _ (analyticLeaf_sound hwhole
+      ⟨hx.1, hx.2, hm.2.2.1, hm.2.2.2⟩ hh) (slopeExpr whole) hsCheck
     rw [slopeExpr_value] at hs'
     apply abs_le.mpr
     exact ⟨(neg_le_neg (le_max_left _ _)).trans ((neg_abs_le _).trans hs'.1),
@@ -138,7 +140,7 @@ private def parameterInputBox (b : ZeroCenterRectangle) (whole : Fin 7 → ℚ �
 private noncomputable def parameterPoint (c h : ℝ) : Fin 9 → ℝ :=
   Fin.append (analyticPoint c h) ![c,zeroCenterFirstMoment (3*h*c)]
 
-private def parameterSlopeExpr (box : Fin 9 → ℚ × ℚ) : Expr 9 :=
+private def parameterSlopeExpr (box : Fin 9 → ℚ × ℚ) : IntervalExpr box :=
   let v := inputExpr box
   zeroCenterParameterSlopeFrom (v 7) (v 0) (v 1) (v 2) (v 3) (v 4) (v 5) (v 6) (v 8)
 
@@ -215,9 +217,9 @@ private theorem tangent_9_deriv {R : Type} [Zero R] [OfNat R 9] :
     (9 : ParameterTangent R).deriv = 0 := rfl
 
 private theorem parameterSlopeExpr_value (box : Fin 9 → ℚ × ℚ) {c h : ℝ} (hh : 0 < h) :
-    value (parameterPoint c h) (parameterSlopeExpr box) = zeroCenterCurvatureParameterSlope c h := by
+    intervalValue (parameterPoint c h) (parameterSlopeExpr box) = zeroCenterCurvatureParameterSlope c h := by
   rw [zeroCenterCurvatureParameterSlope_eq hh]
-  simp only [parameterSlopeExpr, inputExpr, value, zeroCenterParameterSlopeFrom,
+  simp only [parameterSlopeExpr, intervalValue_input, zeroCenterParameterSlopeFrom,
     zeroCenterCurvature, zeroCenterQuotientJet, zeroCenterRadicandJet, zeroCenterAB, zeroCenterV,
     zeroCenterGeometricJet, CurvatureJet.quot, CurvatureJet.sqrtFrom, CurvatureJet.sub,
     CurvatureJet.mul, CurvatureJet.add, CurvatureJet.scale, CurvatureJet.const,
@@ -238,17 +240,17 @@ private def centerPointRectangle (b : ZeroCenterRectangle) : ZeroCenterRectangle
 
 def twoSlopeValid (b : ZeroCenterRectangle) (center whole : Fin 7 → ℚ × ℚ)
     (moment : ℚ × ℚ) : Prop :=
-  let low := (bounds (curvatureExpr center)).1
-  let sc := bounds (slopeExpr whole)
+  let low := (intervalBounds (curvatureExpr center)).1
+  let sc := intervalBounds (slopeExpr whole)
   let hp := parameterInputBox b whole moment
-  let sh := bounds (parameterSlopeExpr hp)
+  let sh := intervalBounds (parameterSlopeExpr hp)
   let Mc := max |sc.1| |sc.2|
   let Mh := max |sh.1| |sh.2|
   0 < b.cLo ∧ analyticLeafValid (centerPointRectangle b) center ∧ analyticLeafValid b whole ∧
     moment.1 ≤ (momentBox b).1 ∧ (momentBox b).2 ≤ moment.2 ∧
-    check center (curvatureExpr center) = true ∧
-    check whole (slopeExpr whole) = true ∧
-    check hp (parameterSlopeExpr hp) = true ∧
+    (curvatureExpr center).guards = true ∧
+    (slopeExpr whole).guards = true ∧
+    (parameterSlopeExpr hp).guards = true ∧
     Mc*((b.cHi-b.cLo)/2) + Mh*((b.hHi-b.hLo)/2) < low
 
 private instance (b : ZeroCenterRectangle) (center whole : Fin 7 → ℚ × ℚ)
@@ -276,19 +278,20 @@ theorem twoSlope_positive {b : ZeroCenterRectangle} {center whole : Fin 7 → �
     linarith
   have hct : (centerPointRectangle b).Holds cm hm := by
     simp [centerPointRectangle, Holds, cm, hm]
-  have hlo := checked_expression_encloses center _ (analyticLeaf_sound hcenter hct hhm) _ hcheck
+  have hlo := guarded_expression_encloses center _ (analyticLeaf_sound hcenter hct hhm)
+    (curvatureExpr center) hcheck
   rw [curvatureExpr_value] at hlo
-  let sc := bounds (slopeExpr whole)
+  let sc := intervalBounds (slopeExpr whole)
   let hBox := parameterInputBox b whole moment
-  let sh := bounds (parameterSlopeExpr hBox)
+  let sh := intervalBounds (parameterSlopeExpr hBox)
   let Mc := max |(sc.1 : ℝ)| |(sc.2 : ℝ)|
   let Mh := max |(sh.1 : ℝ)| |(sh.2 : ℝ)|
   have hMc : 0 ≤ Mc := (abs_nonneg _).trans (le_max_left _ _)
   have hMh : 0 ≤ Mh := (abs_nonneg _).trans (le_max_left _ _)
   have hcs (y : ℝ) (hy : y ∈ Set.Icc (b.cLo : ℝ) (b.cHi : ℝ)) :
       |zeroCenterCurvatureSlopeAt h y| ≤ Mc := by
-    have he := checked_expression_encloses whole _ (analyticLeaf_sound hwhole
-      ⟨hy.1, hy.2, hx.2.2.1, hx.2.2.2⟩ hh) _ hcCheck
+    have he := guarded_expression_encloses whole _ (analyticLeaf_sound hwhole
+      ⟨hy.1, hy.2, hx.2.2.1, hx.2.2.2⟩ hh) (slopeExpr whole) hcCheck
     rw [slopeExpr_value] at he
     exact abs_le_bound_of_mem he
   have hhs (y : ℝ) (hy : y ∈ Set.Icc (b.hLo : ℝ) (b.hHi : ℝ)) (hy₀ : 0 < y) :
@@ -310,7 +313,8 @@ theorem twoSlope_positive {b : ZeroCenterRectangle} {center whole : Fin 7 → �
       · exact hcm
       · exact ⟨((Rat.cast_le (K := ℝ)).mpr hml).trans hb₁.1,
           hb₁.2.trans ((Rat.cast_le (K := ℝ)).mpr hmu)⟩
-    have he := checked_expression_encloses hBox (parameterPoint cm y) hin _ hpCheck
+    have he := guarded_expression_encloses hBox (parameterPoint cm y) hin
+      (parameterSlopeExpr hBox) hpCheck
     rw [parameterSlopeExpr_value _ hy₀] at he
     exact abs_le_bound_of_mem he
   apply zeroCenterCurvatureAt_pos_of_two_slopes (by exact_mod_cast ha) hh ⟨hx.1,hx.2.1⟩

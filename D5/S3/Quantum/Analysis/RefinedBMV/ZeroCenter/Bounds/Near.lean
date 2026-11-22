@@ -13,8 +13,9 @@ namespace RefinedBMV.FourSpectrumLift
 
 open D5.S0.Certificates.BoxCover.RationalIntervalExpression
 
-private def nearEvenMomentExpr (c h : Expr 9) : Expr 9 :=
-  let Q := intervalConstant
+private def nearEvenMomentExpr {box : Fin 9 → ℚ × ℚ}
+    (c h : IntervalExpr box) : IntervalExpr box :=
+  let Q := intervalConstant (box := box)
   let h₂ := h*h
   let h₃ := h₂*h
   let h₄ := h₂*h₂
@@ -28,10 +29,12 @@ private def nearEvenMomentExpr (c h : Expr 9) : Expr 9 :=
   let c₂ := c*c
   m₂ + c₂*(m₄/2 + c₂*(m₆*Q (1/24) + c₂*m₈*Q (1/720)))
 
-private theorem nearEvenMomentExpr_value (x : Fin 9 → ℝ) (c h : Expr 9) :
-    value x (nearEvenMomentExpr c h) = zeroCenterEvenMomentLower (value x c) (value x h) := by
-  have hc (q : ℚ) : value x (intervalConstant q) = (q : ℝ) := rfl
-  have hnat (k : ℕ) : value x (OfNat.ofNat k : Expr 9) = ((k : ℕ) : ℝ) := by
+private theorem nearEvenMomentExpr_value {box : Fin 9 → ℚ × ℚ}
+    (x : Fin 9 → ℝ) (c h : IntervalExpr box) :
+    intervalValue x (nearEvenMomentExpr c h) =
+      zeroCenterEvenMomentLower (intervalValue x c) (intervalValue x h) := by
+  have hc (q : ℚ) : intervalValue x (intervalConstant (box := box) q) = (q : ℝ) := rfl
+  have hnat (k : ℕ) : intervalValue x (OfNat.ofNat k : IntervalExpr box) = ((k : ℕ) : ℝ) := by
     change ((k : ℚ) : ℝ) = (k : ℝ)
     exact Rat.cast_natCast _
   simp only [nearEvenMomentExpr, zeroCenterEvenMomentLower, hc, hnat, value_add, value_sub,
@@ -39,18 +42,18 @@ private theorem nearEvenMomentExpr_value (x : Fin 9 → ℝ) (c h : Expr 9) :
   norm_num
   ring
 
-private def nearRadicandExpr (box : Fin 9 → ℚ × ℚ) : Expr 9 :=
+private def nearRadicandExpr (box : Fin 9 → ℚ × ℚ) : IntervalExpr box :=
   let v := inputExpr box
   intervalConstant 27 * (1 + v 1) * (1 + 2*v 1) * (1 + 3*v 1) * v 2
 
-private def nearLowerExpr (box : Fin 9 → ℚ × ℚ) : Expr 9 :=
+private def nearLowerExpr (box : Fin 9 → ℚ × ℚ) : IntervalExpr box :=
   let v := inputExpr box
   let c := v 0
   let h := v 1
   let M := intervalConstant 27 * (1+h) * (1+2*h) * (1+3*h)
-  let rad := CurvatureJet.scale M (⟨v 2,v 3,v 4/2⟩ : CurvatureJet (Expr 9))
+  let rad := CurvatureJet.scale M (⟨v 2,v 3,v 4/2⟩ : CurvatureJet (IntervalExpr box))
   let k := 3*h
-  let den := CurvatureJet.scale (3*(1+h)) (⟨v 5,k*v 6,k*k*v 7/2⟩ : CurvatureJet (Expr 9))
+  let den := CurvatureJet.scale (3*(1+h)) (⟨v 5,k*v 6,k*k*v 7/2⟩ : CurvatureJet (IntervalExpr box))
   let V := CurvatureJet.quot (CurvatureJet.sqrtFrom rad (v 8)) den
   nearEvenMomentExpr c h - (2*V.first + 2*c*V.second)
 
@@ -61,14 +64,14 @@ private noncomputable def nearPoint (c h : ℝ) : Fin 9 → ℝ :=
     phi t, deriv phi t, deriv (deriv phi) t, Real.sqrt (27*(1+h)*(1+2*h)*(1+3*h)*B)]
 
 private theorem nearLowerExpr_value (box : Fin 9 → ℚ × ℚ) (c h : ℝ) :
-    value (nearPoint c h) (nearLowerExpr box) =
+    intervalValue (nearPoint c h) (nearLowerExpr box) =
       zeroCenterNearExpression c h
         (nearPoint c h 2) (nearPoint c h 3) (nearPoint c h 4)
         (nearPoint c h 5) (nearPoint c h 6) (nearPoint c h 7) (nearPoint c h 8) := by
-  have hc (q : ℚ) : value (nearPoint c h) (intervalConstant q) = (q : ℝ) := rfl
-  simp only [nearLowerExpr, inputExpr, zeroCenterNearExpression, CurvatureJet.quot,
+  have hc (q : ℚ) : intervalValue (nearPoint c h) (intervalConstant (box := box) q) = (q : ℝ) := rfl
+  simp only [nearLowerExpr, intervalValue_input, zeroCenterNearExpression, CurvatureJet.quot,
     CurvatureJet.sqrtFrom, CurvatureJet.scale, nearEvenMomentExpr_value,
-    value_add, value_sub, value_mul, value_div, value_1, value_2, value_3, hc, value]
+    value_add, value_sub, value_mul, value_div, value_1, value_2, value_3, hc]
   norm_num
   have hk : (3*(nearPoint c h 1))*(3*(nearPoint c h 1)) = (3*(nearPoint c h 1))^2 := by ring
   simp only [hk]
@@ -140,10 +143,10 @@ private theorem nearSeriesBoxes_sound {b : ZeroCenterRectangle} (hd : nearAdmiss
 def nearValid (b : ZeroCenterRectangle) (box : Fin 9 → ℚ × ℚ) : Prop :=
   let root := box 8
   let rad := nearRadicandExpr box
-  nearAdmissible b ∧ nearInputsValid b box ∧ check box rad = true ∧
-    root.1 ≤ root.2 ∧ 0 ≤ root.1 ∧ 0 ≤ root.2 ∧ root.1^2 ≤ (bounds rad).1 ∧
-    (bounds rad).2 ≤ root.2^2 ∧ check box (nearLowerExpr box) = true ∧
-      0 < (bounds (nearLowerExpr box)).1
+  nearAdmissible b ∧ nearInputsValid b box ∧ rad.guards = true ∧
+    root.1 ≤ root.2 ∧ 0 ≤ root.1 ∧ 0 ≤ root.2 ∧ root.1^2 ≤ (intervalBounds rad).1 ∧
+    (intervalBounds rad).2 ≤ root.2^2 ∧ (nearLowerExpr box).guards = true ∧
+      0 < (intervalBounds (nearLowerExpr box)).1
 
 private instance (b : ZeroCenterRectangle) (box : Fin 9 → ℚ × ℚ) :
     Decidable (nearValid b box) := by
@@ -182,20 +185,23 @@ theorem near_positive {b : ZeroCenterRectangle} {box : Fin 9 → ℚ × ℚ}
     · exact ht' 4
     · exact ht' 5
     · simpa using hr
-  have hrOut := checked_expression_encloses box _
-    (hin ((box 8).1 : ℝ) ⟨le_rfl, (Rat.cast_le (K := ℝ)).mpr hru⟩) _ hrCheck
-  have hra : value (Function.update (nearPoint c h) 8 ((box 8).1 : ℝ)) (nearRadicandExpr box) =
+  have hrOut := guarded_expression_encloses box _
+    (hin ((box 8).1 : ℝ) ⟨le_rfl, (Rat.cast_le (K := ℝ)).mpr hru⟩) (nearRadicandExpr box) hrCheck
+  have hra : intervalValue (Function.update (nearPoint c h) 8 ((box 8).1 : ℝ)) (nearRadicandExpr box) =
       27*(1+h)*(1+2*h)*(1+3*h)*zeroCenterRegularizingDerivative h 0 c := by
-    simp only [nearRadicandExpr, inputExpr, value_add, value_mul, value_1, value_2,
-      value_3, intervalConstant, value]
-    norm_num
-    rfl
+    have hc27 : intervalValue (Function.update (nearPoint c h) 8 ((box 8).1 : ℝ))
+        (intervalConstant (box := box) 27) = 27 := by
+      change ((27 : ℚ) : ℝ) = 27
+      norm_num
+    simp only [nearRadicandExpr, intervalValue_input, value_add, value_mul, value_1, value_2,
+      value_3, hc27]
+    norm_num <;> rfl
   rw [hra] at hrOut
   have hsqrt := sqrt_box_of_square_bounds hr₀ hr₁ hrl hrh hrOut
   have hpoint : Function.update (nearPoint c h) 8
       (Real.sqrt (27*(1+h)*(1+2*h)*(1+3*h)*zeroCenterRegularizingDerivative h 0 c)) =
       nearPoint c h := Function.update_eq_self _ _
-  have hout := checked_expression_encloses box _ (hin _ hsqrt) _ hCheck
+  have hout := guarded_expression_encloses box _ (hin _ hsqrt) (nearLowerExpr box) hCheck
   rw [hpoint, nearLowerExpr_value] at hout
   exact ((by exact_mod_cast hpos : (0 : ℝ) < _).trans_le hout.1).trans_le
     (zeroCenterNearExpression_le_deriv2 hp hc hc₁)
