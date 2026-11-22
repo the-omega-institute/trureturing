@@ -27,8 +27,8 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
   (prime_window_remainder_of_rh spectralPrimitive windowDiscrepancy)
 
-/-- One threshold works for every order and every valid log-density majorant. -/
-theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
+/-- One threshold works for density bounds on each window's logarithmic interval. -/
+theorem prime_window_threshold_of_local_density (hRH : RiemannHypothesis) :
     ∃ a₀ : ℝ, 2 ≤ a₀ ∧ ∀ (m : ℕ), 2 ≤ m →
     ∀ (retained : ℕ → ℕ → ℝ → ℝ)
     (hterm : ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
@@ -39,11 +39,11 @@ theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
           -(μ n : ℝ) * (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
             (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) +
         (if 2 * n < m + 1 then
-          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0))
-    (C : ℝ) (_ : ∀ u : ℝ, Real.log 2 ≤ u →
+          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0)),
+    ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+    ∀ (C : ℝ) (_ : ∀ u ∈ Icc (Real.log a) (Real.log B),
       |rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retained m n u) - 2)| ≤
         C * Real.exp (-(1 / 2 - (m + 1 : ℝ)⁻¹) * u)),
-    ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
       |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
         spectralPrimitive (phaseOrbit (Real.log a)) -
         (∑ n ∈ Finset.Icc 3 m, -(μ n : ℝ) *
@@ -55,7 +55,7 @@ theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
   obtain ⟨T, hT⟩ := Filter.eventually_atTop.mp (late_strict_prime_tail hRH)
   refine ⟨max T 2, le_max_right _ _, ?_⟩
-  intro m hm retained hterm C hD a B ha hab
+  intro m hm retained hterm a B ha hab C hD
   let rate := 1 / 2 - (m + 1 : ℝ)⁻¹
   have h_order : -rate = (m + 1 : ℝ)⁻¹ - 1 / 2 := neg_sub ..
   rw [← h_order]
@@ -111,7 +111,7 @@ theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
   have hmono : |∫ u in Real.log a..Real.log B, e u| ≤ ∫ u in Real.log a..Real.log B, w u :=
     (intervalIntegral.abs_integral_le_integral_abs hlog).trans
       (intervalIntegral.integral_mono_on hlog hei.abs hwi
-        (fun u hu => hD u (hlog₂.trans hu.1)))
+        hD)
   have Hf : (∫ u in Real.log a..Real.log B, f u) =
       2 * (Real.log B - Real.log a) +
         (∑ n ∈ Finset.Icc 3 m, arithmetic n a B) +
@@ -158,7 +158,7 @@ theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
   have hle : (∫ u in Real.log a..Real.log B, w u) ≤
       6 * C * (a ^ (-rate) - B ^ (-rate)) := by
     rw [hw]
-    have hbound := (abs_nonneg _).trans (hD (Real.log 2) le_rfl)
+    have hbound := (abs_nonneg _).trans (hD (Real.log a) ⟨le_rfl, hlog⟩)
     have hC : 0 ≤ C := nonneg_of_mul_nonneg_left hbound (Real.exp_pos _)
     exact (mul_le_mul_of_nonneg_left hdiv hC).trans_eq (by ring)
   refine (?_ : _ ≤ ∫ u in Real.log a..Real.log B, w u).trans hle
@@ -168,6 +168,37 @@ theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
   convert hmono using 1
   congr 1
   ring
+
+/-- One threshold works for every order and every valid log-density majorant. -/
+theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
+    ∃ a₀ : ℝ, 2 ≤ a₀ ∧ ∀ (m : ℕ), 2 ≤ m →
+    ∀ (retained : ℕ → ℕ → ℝ → ℝ)
+    (hterm : ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
+      ∀ {a B : ℝ}, 2 ≤ a → a ≤ B →
+      IntervalIntegrable (retained m n) volume (Real.log a) (Real.log B) ∧
+      (∫ u in Real.log a..Real.log B, retained m n u) =
+        (if n = 2 then 2 * (Real.log B - Real.log a) else
+          -(μ n : ℝ) * (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
+            (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) +
+        (if 2 * n < m + 1 then
+          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0))
+    (C : ℝ) (_ : ∀ u : ℝ, Real.log 2 ≤ u →
+      |rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retained m n u) - 2)| ≤
+        C * Real.exp (-(1 / 2 - (m + 1 : ℝ)⁻¹) * u)),
+    ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+      |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
+        spectralPrimitive (phaseOrbit (Real.log a)) -
+        (∑ n ∈ Finset.Icc 3 m, -(μ n : ℝ) *
+          (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
+          (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) -
+        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
+          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
+        6 * C *
+          (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
+  obtain ⟨a₀, ha₀, hwindow⟩ := prime_window_threshold_of_local_density hRH
+  refine ⟨a₀, ha₀, fun m hm retained hterm C hD a B ha hab => ?_⟩
+  have hlog := Real.log_le_log (by norm_num : (0 : ℝ) < 2) (ha₀.trans ha)
+  exact hwindow m hm retained hterm a B ha hab C (fun u hu => hD u (hlog.trans hu.1))
 
 
 /-- Integrate a uniform log-density estimate on the actual prime-only window. -/
