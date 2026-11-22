@@ -22,7 +22,7 @@ The signed residual E(m,a,B) subtracts P(B)−P(a) from the window discrepancy a
 
 Write q=m+1 and u=log x. Inside the integration interval u≥q^(1+d). With η=min(ε/3,1/12), the ordinary Möbius prefix controls the arithmetic and trivial-root terms. The low-frequency estimate uses the signed degree prefix with cutoff H.
 
-The high-frequency bound retains the sampling distance u/q². The derivative of each phase is controlled by the square mass of the bin envelope min(q,1+|k|)(1+|k|)^(η−1). The total high-frequency cost is bounded by a constant times (1+q²/u)H^(η−1/2)+q^(1/2+η).
+The high-frequency bound retains the sampling distance u/q². The derivative of each phase is controlled by the square mass of the bin envelope min(q,1+|k|)(1+|k|)^(η−1). The total high-frequency cost is bounded by a constant times the sum [(1+q²/u)H^(η−1/2)+q^(1/2+η)].
 
 Take H=floor(q^(1/2−d)), including H=1 at d=1/2. The low and high estimates then both have order at most q^(3/4−d/2+2η). Integrating between log a and log B gives the original endpoint gap, including value zero at equality.
 

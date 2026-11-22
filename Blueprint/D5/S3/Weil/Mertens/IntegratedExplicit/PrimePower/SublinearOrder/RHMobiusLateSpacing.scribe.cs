@@ -33,8 +33,8 @@ internal sealed class RHMobiusLateSpacingDocument : IScribeDocumentDefinition
                     + "The low-frequency estimate uses the signed degree prefix with cutoff H.")),
                 Paragraph(Text("The high-frequency bound retains the sampling distance u/q². "
                     + "The derivative of each phase is controlled by the square mass of the bin envelope "
-                    + "min(q,1+|k|)(1+|k|)^(η−1). The total high-frequency cost is bounded by a constant times "
-                    + "(1+q²/u)H^(η−1/2)+q^(1/2+η).")),
+                    + "min(q,1+|k|)(1+|k|)^(η−1). The total high-frequency cost is bounded by a constant times the sum "
+                    + "[(1+q²/u)H^(η−1/2)+q^(1/2+η)].")),
                 Paragraph(Text("Take H=floor(q^(1/2−d)), including H=1 at d=1/2. The low and high estimates "
                     + "then both have order at most q^(3/4−d/2+2η). Integrating between log a and log B "
                     + "gives the original endpoint gap, including value zero at equality."))),
