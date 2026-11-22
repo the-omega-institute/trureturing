@@ -253,10 +253,43 @@ runs:
                 (steps.sharded_progress.outputs.legacy_fallback == 'true' && steps.resume_lookup.outcome != 'skipped')) }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
+    - id: resume_spool
+      name: Check the disposable cache paths before packing producer progress
+      if: runner.environment == 'github-hosted' && runner.os == 'Linux' && steps.build.outcome == 'failure' && steps.resume_snapshot.outputs.resume_ready == 'true'
+      continue-on-error: true
+      shell: bash
+      env:
+        RESUME_PATHS: ${{ steps.resume_keys.outputs.resume_archive_path }}
+      run: |
+        python3 - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import subprocess
+
+        root = Path(os.environ['GITHUB_WORKSPACE']).resolve()
+        patterns = [Path(p) for p in os.environ['RESUME_PATHS'].splitlines()]
+        if not patterns or any(p != Path('.lake/packages') and not p.is_relative_to('.lake/build') for p in patterns):
+            raise SystemExit(0)
+        if any('..' in p.parts for p in patterns) or subprocess.check_output(['git', '-C', root, 'ls-files', '--', '.lake']):
+            raise SystemExit(0)
+        # GNU tar keeps symlinks as links. The Actions globber can follow them before tar reads its manifest.
+        if any((root / p).is_symlink() for p in ('.lake', '.lake/build', '.lake/packages')):
+            raise SystemExit(0)
+        def unreadable(error):
+            raise error
+
+        for directory, children, _ in os.walk(root / '.lake/build', onerror=unreadable):
+            if any((Path(directory) / name).is_symlink() for name in children):
+                raise SystemExit(0)
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+            print('tar_options=--remove-files', file=output)
+        PYTHON
     - name: Save producer progress
       continue-on-error: true
       if: ${{ !cancelled() && steps.resume_snapshot.outputs.resume_ready == 'true' }}
       uses: actions/cache/save@v5
+      env:
+        TAR_OPTIONS: ${{ steps.resume_spool.outputs.tar_options }}
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
