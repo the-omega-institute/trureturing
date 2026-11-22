@@ -95,7 +95,7 @@ private theorem ae_continuousAt_mobiusLogProfile (σ : ℝ) :
       rw [hfloor]
     rw [mobiusLogProfile, indicator_of_mem (show u ∈ Ici (0 : ℝ) from hu.le), hsum]
 
-private theorem norm_mobiusPartialSum_le_one (x : ℝ) :
+theorem norm_mobiusPartialSum_le_one (x : ℝ) :
     ‖(mobiusPartialSum x : ℂ)‖ ≤ 1 := by
   have he : Finset.Icc 1 ⌊x⌋₊ = Finset.Ioc 0 ⌊x⌋₊ := by
     ext n

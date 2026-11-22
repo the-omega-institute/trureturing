@@ -43,13 +43,13 @@ def weightedVec (X K : Matrix n n ℂ) : n × n → ℂ :=
 def modular (X : Matrix n n ℂ) : Matrix (n × n) (n × n) ℂ :=
   (X⁻¹)ᵀ ⊗ₖ X
 
-private theorem mpow_add {X : Matrix n n ℂ} (hX : X.PosDef) (p q : ℝ) :
+theorem mpow_add {X : Matrix n n ℂ} (hX : X.PosDef) (p q : ℝ) :
     mpow X p * mpow X q = mpow X (p + q) := by
   unfold mpow
   simp_rw [← CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
   exact (CFC.rpow_add hX.isUnit).symm
 
-private theorem mpow_zero {X : Matrix n n ℂ} (hX : X.PosDef) : mpow X 0 = 1 := by
+theorem mpow_zero {X : Matrix n n ℂ} (hX : X.PosDef) : mpow X 0 = 1 := by
   rw [mpow, ← CFC.rpow_eq_cfc_real hX.posSemidef.nonneg, CFC.rpow_zero X hX.posSemidef.nonneg]
 
 private def weightedEquiv (X : Matrix n n ℂ) (hX : X.PosDef) :

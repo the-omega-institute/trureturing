@@ -9,6 +9,7 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
 import Mathlib.Algebra.Order.ToIntervalMod
+import Mathlib.Analysis.PSeries
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -581,5 +582,193 @@ theorem varying_sample_sum_le {S : Finset ℕ} {f : ℕ → ℝ → ℂ} {v : �
       rw [Finset.sum_add_distrib, Finset.sum_comm]
       apply add_le_add hbase
       exact (Finset.sum_le_sum hdiff).trans_eq (by simp [nsmul_eq_mul])
+
+private theorem min_le_rpow_interpolation {a b t : ℝ}
+    (ha : 0 < a) (hb : 0 < b) (ht : 0 ≤ t) (ht' : t ≤ 1) :
+    min a b ≤ a ^ (1-t) * b ^ t := by
+  let c := min a b
+  have hc : 0 < c := lt_min ha hb
+  have h₁ := Real.rpow_le_rpow hc.le (min_le_left a b) (sub_nonneg.mpr ht')
+  have h₂ := Real.rpow_le_rpow hc.le (min_le_right a b) ht
+  have h₃ := mul_le_mul h₁ h₂ (Real.rpow_nonneg hc.le _) (Real.rpow_nonneg ha.le _)
+  rw [← Real.rpow_add hc, sub_add_cancel, Real.rpow_one] at h₃
+  exact h₃
+
+theorem derivative_profile_summable (D : ℝ) :
+    Summable fun k : ℤ => (D * (|(k : ℝ)|+1) ^ (-5/8 : ℝ))^2 := by
+  have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-5/4 : ℝ)) :=
+    Real.summable_nat_rpow.mpr (by norm_num)
+  have ht := (summable_nat_add_iff 1).2 hs
+  have he (x : ℝ) (hx : 0 ≤ x) :
+      (D * (x+1) ^ (-5/8 : ℝ))^2 = D^2 * (x+1)^(-5/4 : ℝ) := by
+    rw [mul_pow, ← Real.rpow_mul_natCast (by linarith : 0 ≤ x+1)]
+    norm_num
+  rw [summable_int_iff_summable_nat_and_neg]
+  have hn := ht.mul_left (D^2)
+  constructor <;> apply hn.congr <;> intro n <;>
+    simp only [Int.cast_neg, Int.cast_natCast, abs_neg, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
+      Nat.cast_add, Nat.cast_one, he _ (Nat.cast_nonneg (α := ℝ) n)]
+
+/-- The coefficient and its phase derivative give complementary bounds inside each unit bin.
+The interpolated derivative profile is square summable while its degree scale is sublinear. -/
+private theorem phase_derivative_bin_majorant {T : Finset ℕ} {a : ℕ → ℂ} {γ : ℕ → ℝ}
+    {weight : ℕ → ℝ} {C D q : ℝ}
+    (hC : 0 ≤ C) (hD : 0 ≤ D) (hq : 0 < q)
+    (hweight : ∀ i, 0 ≤ weight i)
+    (hmass : ∀ k, ∑ i ∈ T with frequencyBin (γ i) = k, weight i ≤
+      D * (|(k : ℝ)|+1) ^ (-3/4 : ℝ))
+    (ha : ∀ i, ‖a i‖ ≤ C * weight i)
+    (hphase : ∀ i, ‖phaseDerivCoeff γ a i‖ ≤ (C*q) * weight i) :
+    ∀ k, binMass T γ (phaseDerivCoeff γ a) k ≤
+      (C*q^(7/8 : ℝ)) * (D * (|(k : ℝ)|+1) ^ (-5/8 : ℝ)) := by
+  classical
+  intro k
+  let b : ℝ := |(k : ℝ)| + 1
+  have hb : 0 < b := by dsimp [b]; positivity
+  have hpoint (i : ℕ) (hi : i ∈ T.filter (fun i => frequencyBin (γ i) = k)) :
+      ‖phaseDerivCoeff γ a i‖ ≤
+        (C * min q b) * weight i := by
+    have hbin := mem_frequencyBin (γ i)
+    rw [(Finset.mem_filter.mp hi).2] at hbin
+    have hfreq : |γ i| ≤ b := by
+      have hlow := hbin.1
+      have hhigh := hbin.2
+      have hklo := neg_le_abs (k : ℝ)
+      have hkhi := le_abs_self (k : ℝ)
+      apply abs_le.mpr
+      dsimp [b]
+      constructor <;> linarith
+    have hl : ‖phaseDerivCoeff γ a i‖ ≤ (C*b) * weight i := by
+      simp only [phaseDerivCoeff, norm_mul, Complex.norm_I, Complex.norm_real, one_mul,
+        Real.norm_eq_abs]
+      exact (mul_le_mul (ha i) hfreq (abs_nonneg _) (mul_nonneg hC (hweight i))).trans_eq (by ring)
+    by_cases h : q ≤ b
+    · rw [min_eq_left h]
+      exact hphase i
+    · rw [min_eq_right (le_of_not_ge h)]
+      exact hl
+  have hmin : min q b ≤ q^(7/8 : ℝ) * b^(1/8 : ℝ) := by
+    convert min_le_rpow_interpolation hq hb (show (0 : ℝ) ≤ 1/8 by norm_num)
+      (show (1 : ℝ)/8 ≤ 1 by norm_num) using 2 <;> norm_num
+  unfold binMass
+  calc
+    _ ≤ ∑ i ∈ T with frequencyBin (γ i) = k,
+        (C * min q b) * weight i := Finset.sum_le_sum hpoint
+    _ ≤ (C * min q b) * (D * b^(-3/4 : ℝ)) := by
+      rw [← Finset.mul_sum]
+      exact mul_le_mul_of_nonneg_left (hmass k) (mul_nonneg hC (le_min hq.le hb.le))
+    _ ≤ (C * (q^(7/8 : ℝ) * b^(1/8 : ℝ))) * (D * b^(-3/4 : ℝ)) :=
+      mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hmin hC) (by positivity)
+    _ = (C*q^(7/8 : ℝ)) * (D * b^(-5/8 : ℝ)) := by
+      rw [show (C * (q^(7/8 : ℝ) * b^(1/8 : ℝ))) * (D * b^(-3/4 : ℝ)) =
+          (C*q^(7/8 : ℝ)) * (D * (b^(1/8 : ℝ) * b^(-3/4 : ℝ))) by ring,
+        ← Real.rpow_add hb]
+      norm_num
+
+theorem root_coord_exact_separation {u : ℝ} {q i j : ℕ} (hu : 0 ≤ u)
+    (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
+    u / (q : ℝ)^2 ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
+  have hi' : (0 : ℝ) < i := by exact_mod_cast hi
+  have hj' : (0 : ℝ) < j := by exact_mod_cast hj
+  have hq : (0 : ℝ) < q := by exact_mod_cast hi.trans_le hiq
+  have hiq' : (i : ℝ) ≤ q := by exact_mod_cast hiq
+  have hjq' : (j : ℝ) ≤ q := by exact_mod_cast hjq
+  have hd : 1 ≤ |(j : ℝ) - (i : ℝ)| := by
+    rcases lt_or_gt_of_ne hij with hij' | hji'
+    · have h : (i : ℝ) + 1 ≤ j := by exact_mod_cast hij'
+      exact (show 1 ≤ (j : ℝ) - i by linarith).trans (le_abs_self _)
+    · have h : (j : ℝ) + 1 ≤ i := by exact_mod_cast hji'
+      exact (show 1 ≤ -((j : ℝ) - i) by linarith).trans (neg_le_abs _)
+  calc
+    u / (q : ℝ)^2 ≤ u / ((i : ℝ) * j) :=
+      div_le_div_of_nonneg_left hu (mul_pos hi' hj')
+        (by simpa only [pow_two] using mul_le_mul hiq' hjq' hj'.le hq.le)
+    _ ≤ (u * |(j : ℝ) - i|) / ((i : ℝ) * j) :=
+      div_le_div_of_nonneg_right (le_mul_of_one_le_right hu hd) (by positivity)
+    _ = |u / (i : ℝ) - u / (j : ℝ)| := by
+      rw [div_sub_div _ _ hi'.ne' hj'.ne',
+        show u * (j : ℝ) - (i : ℝ) * u = u * ((j : ℝ) - i) by ring,
+        abs_div, abs_mul, abs_of_nonneg hu, abs_of_pos (mul_pos hi' hj')]
+
+theorem root_coord_separated {u : ℝ} {q i j : ℕ} (hu : (q : ℝ) ≤ u)
+    (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
+    1/(q : ℝ) ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
+  have hq : (0 : ℝ) < q := by exact_mod_cast hi.trans_le hiq
+  calc
+    1 / (q : ℝ) = (q : ℝ) / (q : ℝ)^2 := by field_simp
+    _ ≤ u / (q : ℝ)^2 := div_le_div_of_nonneg_right hu (by positivity)
+    _ ≤ _ := root_coord_exact_separation (hq.le.trans hu) hi hj hiq hjq hij
+
+/-- For a degree-indexed finite spectrum, retain the actual sampling separation.
+Bin bounds for the coefficients and their increments give a sublinear derivative cost. -/
+theorem varying_mode_slab_bound
+    {D K J : ℝ} (hD : 0 ≤ D) (hK : 0 ≤ K) (hJ : 0 ≤ J)
+    (hvalue : ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
+      (∀ k, binMass T γ a k ≤ C * (D * (|(k : ℝ)|+1)^(-3/4 : ℝ))) →
+      ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ K * C)
+    (hderiv : ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
+      (∀ k, binMass T γ a k ≤ C * (D * (|(k : ℝ)|+1)^(-5/8 : ℝ))) →
+      ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ J * C)
+    {p q : ℕ} (hq : 0 < q) (T S : Finset ℕ) {γ v : ℕ → ℝ} {c δ : ℝ}
+    (hS : S ⊆ Finset.Icc p q) (hδ : 0 < δ) (hδ₁ : δ ≤ 1)
+    (hwindow : ∀ n ∈ S, v n ∈ Set.Icc (c-1/2) (c+1/2))
+    (hsep : ∀ i ∈ S, ∀ j ∈ S, i ≠ j → δ ≤ |v i-v j|)
+    (weight : ℕ → ℝ) (hweight : ∀ i, 0 ≤ weight i)
+    (hmass : ∀ k, ∑ i ∈ T with frequencyBin (γ i) = k, weight i ≤
+      D * (|(k : ℝ)|+1)^(-3/4 : ℝ))
+    (a : ℕ → ℕ → ℂ)
+    (hfirst : ∀ i, ‖a p i‖ ≤ 2 * weight i)
+    (hfirst' : ∀ i, ‖phaseDerivCoeff γ (a p) i‖ ≤ (2*(q : ℝ)) * weight i)
+    (hincr : ∀ r ∈ Finset.Ico p q, ∀ i, ‖a (r+1) i - a r i‖ ≤ (4/(q : ℝ)) * weight i)
+    (hincr' : ∀ r ∈ Finset.Ico p q, ∀ i,
+      ‖phaseDerivCoeff γ (fun j => a (r+1) j - a r j) i‖ ≤
+        ((4/(q : ℝ))*(q : ℝ)) * weight i) :
+    (∑ n ∈ S, ‖finiteModes T γ (a n) (v n)‖) ≤
+      6*K / δ + 6*J*((q : ℝ)^(7/8 : ℝ)) := by
+  classical
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast hq
+  let P := (q : ℝ)^(7/8 : ℝ)
+  let f (n : ℕ) := finiteModes T γ (a n)
+  have hP : 0 < P := Real.rpow_pos_of_pos hq0 _
+  have integral_bound (b : ℕ → ℂ) (C : ℝ) (hC : 0 < C)
+      (hb : ∀ i, ‖b i‖ ≤ C * weight i)
+      (hb' : ∀ i, ‖phaseDerivCoeff γ b i‖ ≤ (C*(q : ℝ)) * weight i) :
+      (∑ n ∈ S, ‖finiteModes T γ b (v n)‖) ≤ (K*C)/δ + J*(C*P) := by
+    have hbin (k : ℤ) : binMass T γ b k ≤ C * (D * (|(k : ℝ)|+1)^(-3/4 : ℝ)) := by
+      unfold binMass
+      calc
+        _ ≤ ∑ i ∈ T with frequencyBin (γ i) = k, C * weight i :=
+          Finset.sum_le_sum fun i _ => hb i
+        _ ≤ _ := by
+          rw [← Finset.mul_sum]
+          exact mul_le_mul_of_nonneg_left (hmass k) hC.le
+    have hU := hvalue T γ b C hC hbin c
+    have hV := hderiv T γ (phaseDerivCoeff γ b) (C*P) (by positivity)
+      (phase_derivative_bin_majorant hC.le hD hq0 hweight hmass hb hb') c
+    exact separated_mode_samples_le hδ hδ₁ hwindow hsep hU hV
+  have hbase : ∑ n ∈ S, ‖f p (v n)‖ ≤ (K*2)/δ + J*(2*P) :=
+    integral_bound (a p) 2 (by norm_num) hfirst hfirst'
+  have hdiff : ∀ r ∈ Finset.Ico p q,
+      ∑ n ∈ S, ‖f (r+1) (v n) - f r (v n)‖ ≤ (K*(4/q))/δ + J*((4/q)*P) := by
+    intro r hr
+    calc
+      _ = ∑ n ∈ S, ‖finiteModes T γ (fun i => a (r+1) i - a r i) (v n)‖ := by
+        apply Finset.sum_congr rfl
+        intro n hn
+        congr 1
+        unfold f finiteModes
+        rw [← Finset.sum_sub_distrib]
+        simp only [sub_mul]
+      _ ≤ _ := integral_bound _ (4/q) (by positivity) (hincr r hr) (hincr' r hr)
+  have hc : ((Finset.Ico p q).card : ℝ) ≤ q := by
+    exact_mod_cast (show (Finset.Ico p q).card ≤ q by rw [Nat.card_Ico]; omega)
+  change (∑ n ∈ S, ‖f n (v n)‖) ≤ 6*K/δ + 6*J*P
+  refine (varying_sample_sum_le (fun n hn => hS hn) hbase hdiff).trans ?_
+  calc
+    _ ≤ (K*2)/δ + J*(2*P) + (q : ℝ) * ((K*(4/q))/δ + J*((4/q)*P)) :=
+      add_le_add le_rfl (mul_le_mul_of_nonneg_right hc (by positivity))
+    _ = _ := by
+      field_simp
+      ring
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder

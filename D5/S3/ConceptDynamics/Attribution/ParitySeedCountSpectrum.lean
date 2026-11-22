@@ -122,7 +122,7 @@ private theorem four_dvd_of_fixed_images_but_moved_sources {G S T I : Type*}
   · exact div
 
 open MulAction in
-private theorem coordinate_fixed_iff_generator {n : ℕ} {S : Type}
+theorem coordinate_fixed_iff_generator {n : ℕ} {S : Type}
     [MulAction (Acting (Fin (n + 2))) S] (i : Fin (n + 2)) (s : S) :
     (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) ↔ generator i • s = s := by
   have inclusion : (∀ h : coordinate i, (h : Acting (Fin (n + 2))) • s = s) ↔
@@ -624,7 +624,7 @@ section
 
 attribute [local instance 10000] Classical.propDecidable
 
-private theorem add_realizable_seed_counts {n k l : ℕ} {x y : Fin (n + 2) → ℕ}
+theorem add_realizable_seed_counts {n k l : ℕ} {x y : Fin (n + 2) → ℕ}
     (left : RealizableSeedCounts n k x) (right : RealizableSeedCounts n l y) :
     RealizableSeedCounts n (k + l) (fun i => x i + y i) := by
   obtain ⟨A, _, _, fa, aCard, aEquiv, ⟨a, aRows, aCols⟩, aFixed⟩ := left
@@ -722,7 +722,7 @@ private theorem rename_generator (p : Equiv.Perm (Index n)) (i : Index n) :
 
 attribute [local instance 10000] Classical.propDecidable
 
-private theorem realizable_relabel {k : ℕ} (p : Equiv.Perm (Index n))
+theorem realizable_relabel {k : ℕ} (p : Equiv.Perm (Index n))
     {v : Index n → ℕ} (h : RealizableSeedCounts n k v) :
     RealizableSeedCounts n k (v ∘ p) := by
   obtain ⟨S, ftype, act, f, card, equiv, ⟨c, row, col⟩, eq⟩ := h
