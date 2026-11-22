@@ -500,9 +500,53 @@ theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
   exact leftStrip_logKernel_mixed_lt_of_slopes hp hu humax hgap hsmall
     (by rw [hγ]; linarith only [hlo]) (by rw [hγ]; linarith only [hhi])
 
+private theorem logKernel_mixed_continuousAt {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v) :
+    ContinuousAt (fun y ↦ deriv (fun t ↦ deriv (fun x ↦ logKernel p x t) u) y) v := by
+  let C := compositionMoment p
+  have hC : ContDiff ℝ 3 (Function.uncurry C) := compositionMoment_smooth p
+  have hMv : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ C 0 z.2) :=
+    hC.comp (contDiff_const.prodMk contDiff_snd)
+  have hMd : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ C 0 (z.2 - z.1)) :=
+    hC.comp (contDiff_const.prodMk (contDiff_snd.sub contDiff_fst))
+  have hMu' : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ C 0 (-z.1)) :=
+    hC.comp (contDiff_const.prodMk contDiff_fst.neg)
+  have hMv' : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ C 0 (-z.2)) :=
+    hC.comp (contDiff_const.prodMk contDiff_snd.neg)
+  have hpos (t : ℝ) (ht : t ≠ 0) : 0 < C 0 t := compositionMoment_marginal_pos hp ht
+  have hv := hu.trans huv
+  have hd := sub_pos.mpr huv
+  have h₁ := mul_pos (hpos v hv.ne') (hpos (v - u) hd.ne')
+  have h₂ := mul_pos (hpos (-u) (neg_ne_zero.mpr hu.ne')) (hpos (-v) (neg_ne_zero.mpr hv.ne'))
+  have hN : ContDiffAt ℝ 3
+      (fun z : ℝ × ℝ ↦ Real.sqrt (C 0 z.2 * C 0 (z.2 - z.1))) (u, v) :=
+    (hMv.mul hMd).contDiffAt.sqrt h₁.ne'
+  have hD : ContDiffAt ℝ 3
+      (fun z : ℝ × ℝ ↦ Real.sqrt (C 0 (-z.1) * C 0 (-z.2))) (u, v) :=
+    (hMu'.mul hMv').contDiffAt.sqrt h₂.ne'
+  have hK : ContDiffAt ℝ 3 (Function.uncurry (logKernel p)) (u, v) :=
+    (hC.contDiffAt.sub hN).div hD (Real.sqrt_pos.mpr h₂).ne'
+  have hKleft := contDiffAt_partialLeft hK (by decide) (by decide)
+    (show (2 : WithTop ℕ∞) + 1 ≤ 3 by decide)
+  have hline : ContDiffAt ℝ 2 (fun t : ℝ ↦ (u, t)) v := contDiffAt_const.prodMk contDiffAt_id
+  exact ((hKleft.comp v hline).derivWithin
+    (show (1 : WithTop ℕ∞) + 1 ≤ 2 by decide)).continuousAt
+
+/-- The separated left strip includes its finite cutoff for the
+nonpositive sign required by the finite-sample reduction. -/
+theorem leftStrip_logKernel_mixed_nonpos {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1 / 2) (hgap : 6 ≤ v - u) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v ≤ 0 := by
+  have hc := logKernel_mixed_continuousAt (show 0 < p by omega) hu (show u < v by linarith)
+  refine le_of_tendsto (hc.tendsto.mono_left (nhdsWithin_le_nhds (s := Ioi v))) ?_
+  filter_upwards [self_mem_nhdsWithin (s := Ioi v)] with y hy
+  exact (leftStrip_logKernel_mixed_lt hp hu humax
+    (hgap.trans_lt (sub_lt_sub_right (mem_Ioi.mp hy) u))).le
+
 #print axioms leftStrip_numerator_decomposition
 #print axioms leftStrip_numerator_weighted_mixed_lt
 #print axioms leftStrip_logKernel_mixed_lt_of_slopes
 #print axioms leftStrip_logKernel_mixed_lt
+#print axioms leftStrip_logKernel_mixed_nonpos
 
 end RefinedBMV.PositiveCenter
