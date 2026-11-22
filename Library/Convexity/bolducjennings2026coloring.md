@@ -23,7 +23,7 @@ triage: anchor
 
 ## Classical value
 
-For $2\le m<n$ and $0<p<2/(m+2)$, each ordered diagonal input has weight $p/n$ and each ordered off-diagonal input has weight $(1-p)/(n(n-1))$. The players win exactly when their answers have the same equality relation as their inputs. Their classical value is the maximum over input-independent mixtures of all ordered pairs of local response tables.
+For $2\le m<n$ and $0<p<2/(m+2)$, each ordered diagonal input has weight $p/n$ and each ordered off-diagonal input has weight $(1-p)/(n(n-1))$. The players win exactly when their answers have the same equality relation as their inputs. The classical winning probability is a linear functional on the simplex of input-independent mixtures of ordered pairs of local response tables. Its attainable values form the convex hull of the deterministic probabilities, and a simplex vertex attains its maximum.
 
 Let $t=p(n-1)/(1-p)$, $\lambda=1+t$, $d=m-2$, and $s_*=\min(n,d\lceil t/2\rceil)$. Put $B_k(u)=k(u\operatorname{div}k)^2+(2(u\operatorname{div}k)+1)(u\bmod k)$ for $k>0$, and $B_0(0)=0$.
 
@@ -36,7 +36,11 @@ The two scores are attained by a balanced synchronous pair and by a balanced com
 
 ## Mathematical attribution and license
 
-William Bolduc and Michael Jennings supply the question, game model, collision-count reduction, balanced synchronous value and residual-color method in §§1–3. The closed form and parity-sensitive two-endpoint proof are due to the Codex CLI search mathematics contribution credited in [issue #33102](https://github.com/the-omega-institute/trureturing/issues/33102). The independent Codex CLI source-and-proof review supplies the fixed-marginal, equal-marginal and tie analyses and the simplex formalization route. The Codex CLI Lean proof contribution supplies the finite counting, explicit table constructions, and kernel proof over all real parameters in the stated interval.
+William Bolduc and Michael Jennings supply the question, game model, collision-count reduction, balanced synchronous value and residual-color method in §§1–3.
+
+The Codex CLI mathematics search supplies the closed form and parity-sensitive endpoint argument. The source and proof qualification supplies the fixed-marginal, equal-marginal and tie analyses and the simplex formalization. The Lean proof contribution supplies the finite counting, explicit table constructions and full-interval proof. [Issue #33102](https://github.com/the-omega-institute/trureturing/issues/33102)
+
+The Codex CLI Stage A integration supplies the canonical Lean placement, Blueprint, Library note, Reg registration and restoration materials. The focused prefreeze repair supplies the direct Mathlib counting and arithmetic applications, proof-shape accounting and source-provenance corrections.
 
 Cui, Mančinska, Nezhadi and Roberson give the prior uniform-input two-color case in [Theorem 5.5 of arXiv:2502.05136v1](https://arxiv.org/html/2502.05136v1#S5). It is a related exact case. The Lean proof uses Mathlib for finite sums, counting, ordered arithmetic, ceilings and the standard simplex.
 

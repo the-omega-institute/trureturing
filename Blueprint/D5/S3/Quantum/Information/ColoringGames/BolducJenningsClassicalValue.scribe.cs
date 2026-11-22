@@ -8,7 +8,7 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
 {
     private const string Module = "D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/NonlocalGames/bolducjennings2026coloring");
+        LibraryNoteRef.Create("D5/L/Convexity/bolducjennings2026coloring");
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
@@ -181,11 +181,11 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
             All(N, Nat, All(P, Real, All(S, Real,
                 Equal(Call("probability", N, P, S), AffineValue(S))))),
             "The baseline is the total off-diagonal mass. One unit of score contributes one off-diagonal input weight.",
-            AssessedProvenance.FromRepo(Source)),
+            AssessedProvenance.FromLiterature(Source)),
         Definition("det-score", "detScore", "Score of a deterministic table pair", DetScoreFormula(),
             "Count diagonal agreements with coefficient 1+t and subtract ordered color collisions. "
             + "For each color i, the collision contribution is the product of its two table counts.",
-            AssessedProvenance.FromRepo(Source)),
+            AssessedProvenance.FromLiterature(Source)),
         Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
             H("Exact low-diagonal classical value"),
             StatementSource.FromAuthor(Disp(ResultFormula())),
