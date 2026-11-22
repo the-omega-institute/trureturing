@@ -18,7 +18,7 @@ Write q=m+1=2r and s=1/2−1/q. Let c(m)=μ(q)q/(m s), and let ω(ρ,r)=Im(ρ)/r
 
 The factor W(r,L,ρ) is 2r² divided by ρ(r−ρ)(r−2ρ), multiplied by (exp((−s+iω(ρ,r))L)−1)/(1−exp(−sL)). The target A(m,r,L,w) is the sum of these factors over actual zero occurrences with ω(ρ,r)=w, scaled by −μ(r). At w=0 add the arithmetic constant −c(m). Nontrivial(ρ) means a nontrivial zeta zero and Mult(ρ) is its analytic order of vanishing.
 
-Conjugation of the actual zero occurrences makes the normalized root series real. After multiplication by exp(−iwu), all frequencies outside the matching fiber have positive separation from zero. Local finiteness of the distinct zeros gives this separation in a bounded region. Termwise integration of the absolutely summable series bounds the contribution outside the fiber independently of U and T. The normalized arithmetic remainder has an integrable exponential bound. At an actual zero, the whole fiber consists of exactly its analytic number of occurrences. The modulus of the exponential in the numerator of the width factor is exp(−sL)<1.
+Conjugation of the actual zero occurrences makes the normalized root series real. After multiplication by exp(−iwu), all frequencies outside the matching fiber have positive separation from zero. The closed discrete zero set gives this separation after the matching point is removed. Termwise integration of the absolutely summable series bounds the contribution outside the fiber independently of U and T. The normalized arithmetic remainder has an integrable exponential bound. At an actual zero, the whole fiber consists of exactly its analytic number of occurrences. The modulus of the exponential in the numerator of the width factor is exp(−sL)<1.
 
 ## References
 
