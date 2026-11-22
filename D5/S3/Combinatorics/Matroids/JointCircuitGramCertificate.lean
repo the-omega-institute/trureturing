@@ -12,6 +12,8 @@ public import D5.S3.Combinatorics.Matroids.IntegralCircuitImage
 public import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
+/-! # Joint circuit restriction and the integral Gram certificate -/
+
 @[expose] public section
 
 set_option autoImplicit false
@@ -34,12 +36,13 @@ abbrev Circuit (M : Matroid V) := {K : Finset V // M.IsCircuit (K : Set V)}
 /-- A basis at which all internal exchanges admit a smaller vertex. -/
 abbrev Passive (M : Matroid V) := {B : Finset V // PassiveBase M B}
 
+omit [Fintype V] in
 private lemma facet_join_apply {K T : Finset V} (hd : Disjoint T K) {a : V}
     (ha : a ∈ K) (w : Chain V) :
     signedJoin K (simplexBoundary K) w (T ∪ K.erase a) = restrictionSign K a T * w T := by
   obtain ⟨hi, hs⟩ := split_circuit_face hd a
   have h := facet_join hd ha
-  simp only [signedJoin, hi, hs, simplex, if_pos rfl, mul_one] at h
+  rw [signedJoin, hi, hs, simplex, ite_eq_left rfl, mul_one] at h
   simp only [signedJoin, hi, hs, ← h, mul_assoc]
 
 /-- The aggregate is adjoint to the oriented join in ordinary integral face coordinates. -/
@@ -58,7 +61,7 @@ theorem aggregate_adjoint {M : Matroid V} {K : Finset V} (z : Chain V)
   have hleft : dotProduct (aggregateRestrict M K z) w.val =
       ∑ p ∈ K ×ˢ bases, leftTerm p := by
     rw [sum_product, dotProduct]
-    rw [← sum_subset (filter_subset _ _) (s := bases)]
+    rw [← sum_subset (show bases ⊆ univ from filter_subset _ _)]
     · simp only [aggregateRestrict, Finset.sum_apply, sum_mul]
       rw [sum_comm]
       apply sum_congr rfl
