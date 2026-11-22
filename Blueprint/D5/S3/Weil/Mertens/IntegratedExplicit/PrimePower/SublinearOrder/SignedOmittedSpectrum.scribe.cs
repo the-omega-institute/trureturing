@@ -19,6 +19,7 @@ internal sealed class SignedOmittedSpectrumDocument : IScribeDocumentDefinition
             Paragraph(Text("On the complementary bins use the square-mass estimate with "
                 + "the mask outside the cutoff. Finite occurrence estimates pass to the "
                 + "summable series at each degree, keeping the analytic multiplicities. "
-                + "The cutoff floor(q^(1/7)) gives a q^(27/28) coefficient under a "
-                + "q^(3/4) ordinary Möbius prefix bound.")))));
+                + "When q≤u≤q^(29/28), the cutoff floor(q^(1/7)) gives a q^(27/28) "
+                + "coefficient under a q^(3/4) ordinary Möbius prefix bound. For larger u, "
+                + "the uncut spacing estimate supplies the same power.")))));
 }
