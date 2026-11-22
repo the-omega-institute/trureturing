@@ -23,4 +23,4 @@ Take a uniform core of rank at least three. Omit two bases whose intersection ha
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitInvariantFactors](PuncturedCircuitInvariantFactors.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitProduct](SparsePavingCircuitProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/UniformCircuitInvariantFactors](UniformCircuitInvariantFactors.md)
-- Dependency: [D5/S3/FiniteGroups/FiniteModuleProductCancellation](../../FiniteGroups/FiniteModuleProductCancellation.md)
+- Dependency: [D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation](../../FiniteGroups/Modules/FiniteModuleProductCancellation.md)

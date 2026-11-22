@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Matroids.SparsePavingCircuitProduct
 import D5.S3.Combinatorics.Matroids.PuncturedCircuitInvariantFactors
 import D5.S3.Combinatorics.Matroids.UniformCircuitInvariantFactors
 import D5.S3.Combinatorics.Matroids.AliabadiZerbibMatroidMatching
-import D5.S3.FiniteGroups.FiniteModuleProductCancellation
+import D5.S3.FiniteGroups.Modules.FiniteModuleProductCancellation
 
 /-! Cancelling the uniform factors against the two single omissions. -/
 

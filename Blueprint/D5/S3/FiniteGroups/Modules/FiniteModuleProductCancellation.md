@@ -6,9 +6,9 @@ Cancelling a common finite module.
 
 **Theorem 1.1 (Cancelling a common finite module).**
 
-Lean statement: `D5/S3/FiniteGroups/FiniteModuleProductCancellation.finite_prod_cancel`
+Lean statement: `D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation.finite_prod_cancel`
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/FiniteModuleProductCancellation.finite_prod_cancel` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation.finite_prod_cancel` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ Count the linear maps from each finite source to the two products. The common fa
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/FiniteModuleProductCancellation.finite_prod_cancel`
+- Truth anchor: `D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation.finite_prod_cancel`

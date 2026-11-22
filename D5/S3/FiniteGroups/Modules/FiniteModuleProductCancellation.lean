@@ -1,6 +1,6 @@
-/- GID: D5/S3/FiniteGroups/FiniteModuleProductCancellation
+/- GID: D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/FiniteModuleProductCancellation
+   mirror-B: D5/B/S3/FiniteGroups/Modules/FiniteModuleProductCancellation
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none

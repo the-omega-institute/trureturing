@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Modules;
 
 internal sealed class FiniteModuleProductCancellationDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/FiniteGroups/FiniteModuleProductCancellation";
+    private const string Module = "D5/S3/FiniteGroups/Modules/FiniteModuleProductCancellation";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cancelling a common finite module.",
