@@ -25,7 +25,7 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
         H("Three-row pair patterns"),
         Blocks(
             Paragraph(Text("A column has three labels and no internal bond. Consecutive "
-                + "columns c,d satisfy c(r) != d(r) and d(r) != c(r+1) whenever r+1<3. "
+                + "columns c and d differ at the same row for r = 0, 1 and 2. For r = 0 and 1, d(r) also differs from c(r+1). "
                 + "The five first-appearance column representatives are 000, 001, 010, "
                 + "011 and 012, with orbit sizes 3,6,6,6,6. Their successor matrix is "
                 + "[[2,2,2,2,0],[1,1,0,1,1],[1,1,0,0,0],[1,1,1,1,0],[0,0,0,1,1]]. "
@@ -40,10 +40,25 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Node("L", "Literal pair-pattern count", CountFormula(), false),
             Node("Col", "Three-label columns", Eq(Own("Col"),
                 Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3))))), false),
+            Node("column", "Read a column by position", All("c", Own("Col"),
+                Eq(Own("column", V("c")), Vector(Call("Prod.fst", V("c")),
+                    Call("Prod.fst", Call("Prod.snd", V("c"))),
+                    Call("Prod.snd", Call("Prod.snd", V("c")))))), false),
             Node("cls", "The five equality classes", ClassFormula(), false),
             Node("Q", "The five-orbit successor matrix", Eq(Own("Q"),
                 Vector(Vector(2,2,2,2,0), Vector(1,1,0,1,1), Vector(1,1,0,0,0),
                     Vector(1,1,1,1,0), Vector(0,0,0,1,1))), false),
+            Node("representatives", "Representatives in class order", Eq(Own("representatives"),
+                Vector(Column(0,0,0), Column(0,0,1), Column(0,1,0), Column(0,1,1), Column(0,1,2))), false),
+            Node("relabel", "Coordinatewise relabelling", All("e", Permutations(),
+                Eq(Own("relabel", V("e")), Call("Equiv.prodCongr", V("e"),
+                    Call("Equiv.prodCongr", V("e"), V("e"))))), false),
+            Node("class_relabel", "Relabelling preserves the class", All("e", Permutations(),
+                All("c", Own("Col"), Eq(Own("cls", Own("relabel", V("e"), V("c"))),
+                    Own("cls", V("c"))))), true),
+            Node("class_rep", "Relabelling to a class representative", All("c", Own("Col"),
+                Seq(Exists, Sp, Typed(V("e"), Permutations()), Comma, Sp, Parenthesized(
+                    Eq(Own("relabel", V("e"), V("c")), Own("representatives", Own("cls", V("c"))))))), true),
             Node("weights", "Two-column orbit multiplicities",
                 Eq(Own("weights"), Vector(24,24,12,24,12)), false),
             Node("count_transfer", "All labelled continuation counts", TransferFormula(), true),
@@ -55,6 +70,8 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Node("initial_values", "Six initial transfer counts", InitialFormula(), true),
             Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true))));
 
+    private static Formula Permutations() => Call("Equiv.Perm", Fin(D(3)));
+    private static Formula Column(int a, int b, int c) => Pair(Num(a), Pair(Num(b), Num(c)));
     private static Formula ClassFormula()
     {
         var c = V("c"); var a = Call("Prod.fst", c);
@@ -130,7 +147,7 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
     }
     private static Formula Own(string name, params Formula[] args) =>
         Call(LeanPrefix + name, args);
-    private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
+    private static Formula Call(string name, params Formula[] args) => args.Length == 0 ? Q(name) : App(Q(name), args);
     private static Formula App(Formula f, params Formula[] args) =>
         new Formula.Apply(f, [.. args]);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);

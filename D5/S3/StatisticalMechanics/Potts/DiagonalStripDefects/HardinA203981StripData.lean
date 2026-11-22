@@ -1,0 +1,117 @@
+/- GID: D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData
+   generality: I
+   mirror-B: D5/B/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripData
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981Strip.result; premises=D5/S3/StatisticalMechanics/Potts/DiagonalStripDefects/HardinA203981StripCertificate.finite_certificate
+   digest: Parity-triple boundary classes and zero-cost data for six-column strips. -/
+
+/-
+admission_basis: open-problem-resolution (#32721; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
+between_six: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.cost_formula, HardinA203981StripCertificate.exact_cost_split
+parityRows: proof_shape=bind-only; consumers=HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.pair_match._proof_1, HardinA203981StripSymmetry.recolor_match, boundary, representatives
+classPair: proof_shape=bind-only; consumers=HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, representatives
+pairClass: proof_shape=bind-only; consumers=HardinA203981StripCertificate.pair_indicator, HardinA203981StripCertificate.pair_indicator._proof_1, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.boundary_reflect._proof_1, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.pair_match._proof_1, boundary
+boundary: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981StripCertificate.counts, HardinA203981StripCertificate.initial_counts, HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.boundary_recolor, HardinA203981StripSymmetry.boundary_reflect, HardinA203981StripSymmetry.lift_counts, HardinA229508Strip.counting_bridge, HardinA229508StripCertificate.one_counts, HardinA229508StripCertificate.representative_counts, HardinA229508StripCertificate.transition_counts, HardinA229508StripData.cl, HardinA229508StripData.cl.eq_1, HardinA229683Strip.counting_bridge, HardinA229683StripCertificate.cut_inherited, HardinA229683StripCertificate.cut_terminal, HardinA229683StripCertificate.representative_counts, HardinA229683StripCertificate.transition_counts, HardinA229683StripCertificate.transition_counts._simp_1, HardinA229683StripCertificate.two_counts, HardinA229683StripData.cl, HardinA229683StripData.cl.eq_1
+representatives: proof_shape=bind-only; consumers=HardinA203981StripCertificate.representative_counts, HardinA203981StripSymmetry.lift_counts, HardinA203981StripSymmetry.pair_match, HardinA203981StripSymmetry.pair_match._proof_1, HardinA229508StripCertificate.representative_counts, HardinA229683StripCertificate.representative_counts
+T: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981Strip.result, HardinA203981StripCertificate.counts, HardinA203981StripCertificate.finite_certificate, HardinA203981StripCertificate.forward_table, HardinA203981StripCertificate.forward_table._proof_1, HardinA203981StripCertificate.representative_counts, HardinA229508StripCertificate.finite_certificate, HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_one._proof_1, HardinA229508StripCertificate.forward_zeroth, HardinA229508StripCertificate.inherited_relation, HardinA229508StripCertificate.transition_counts, HardinA229508StripData.T, HardinA229508StripData.T.eq_1, HardinA229683StripCertificate.forward_inherited, HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, HardinA229683StripData.T
+initial: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA203981Strip.result, HardinA203981StripCertificate.finite_certificate, HardinA203981StripCertificate.forward_table, HardinA203981StripCertificate.initial_counts, HardinA229508Strip.counting_bridge, HardinA229508StripCertificate.finite_certificate, HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_zeroth, HardinA229508StripCertificate.inherited_relation, HardinA229508StripData.initial, HardinA229508StripData.initial.eq_1, HardinA229683Strip.counting_bridge, HardinA229683StripCertificate.forward_two
+classProduct: proof_shape=bind-only; consumers=T
+columnRows: proof_shape=bind-only; consumers=parityRows
+halfZero: proof_shape=bind-only; consumers=T
+unordered: proof_shape=bind-only; consumers=classProduct
+halfInitial: proof_shape=bind-only; consumers=initial
+-/
+
+import Init.Tactics
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
+import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Logic.Equiv.Basic
+import Mathlib.Logic.Equiv.Defs
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Logic.Equiv.Prod
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
+
+namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData
+
+open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (Row)
+
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer (Col cls Q column)
+
+/-- The diagonal and antidiagonal bonds between rows of width six. -/
+theorem between_six :
+    StripDefects.HardinA229637RowColumn.betw 6 =
+      {(0, 1), (1, 0), (1, 2), (2, 1), (2, 3), (3, 2), (3, 4), (4, 3), (4, 5), (5, 4)} := by
+  decide +kernel
+
+/-- Read the three coordinates of a column as a function. -/
+def columnRows : Col ≃ Row 3 3 :=
+  let e : Col ≃ Row 3 3 := ((Fin.consEquiv (fun _ : Fin 3 => Fin 3)).symm.trans
+    (Equiv.prodCongr (Equiv.refl (Fin 3)) (finTwoArrowEquiv (Fin 3)))).symm
+  { toFun := column
+    invFun := e.symm
+    left_inv := e.left_inv
+    right_inv := e.right_inv }
+
+/-- Read the even columns from the left and the odd columns from the right. -/
+def parityRows : Row 3 6 ≃ Col × Col :=
+  let onGrid := Equiv.arrowCongr (finProdFinEquiv (m := 3) (n := 2)).symm
+    (Equiv.refl (Fin 3))
+  let toPairPerPosition := (Equiv.curry (Fin 3) (Fin 2) (Fin 3)).trans
+    (Equiv.arrowCongr (Equiv.refl (Fin 3)) (finTwoArrowEquiv (Fin 3)))
+  let toPairOfTriples := Equiv.arrowProdEquivProdArrow (Fin 3) (fun _ => Fin 3) (fun _ => Fin 3)
+  let toColumns := Equiv.prodCongr columnRows.symm
+    ((Equiv.arrowCongr Fin.revPerm (Equiv.refl (Fin 3))).trans columnRows.symm)
+  onGrid.trans (toPairPerPosition.trans (toPairOfTriples.trans toColumns))
+
+/-- A class index for two triple patterns, invariant under their exchange. -/
+def pairClass : Fin 5 → Fin 5 → Fin 15 :=
+  ![![0, 1, 2, 3, 4],
+    ![1, 5, 6, 7, 8],
+    ![2, 6, 9, 10, 11],
+    ![3, 7, 10, 12, 13],
+    ![4, 8, 11, 13, 14]]
+
+/-- Classify the even columns from the left and the odd columns from the right. -/
+def boundary (p : Row 3 6) : Fin 15 :=
+  pairClass (cls (parityRows p).1) (cls (parityRows p).2)
+
+/-- The sorted pair of triple classes for each boundary index. -/
+def classPair : Fin 15 → Fin 5 × Fin 5 :=
+  ![(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (1, 4),
+    (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]
+
+/-- Interleave the labelled triple representatives. -/
+def representatives (i : Fin 15) : Row 3 6 :=
+  parityRows.symm
+    (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer.representatives (classPair i).1,
+     D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer.representatives (classPair i).2)
+
+/-- Aggregate a labelled pair into an unordered boundary class. -/
+def unordered (u v : Fin 5 → ℤ) (j : Fin 15) : ℤ :=
+  let (c, d) := classPair j
+  u c * v d + if c = d then 0 else u d * v c
+
+/-- The half-strip zero-cost matrix with the target triple reversed. -/
+def halfZero : Matrix (Fin 5) (Fin 5) ℤ :=
+  fun i j => Q i (Equiv.swap 1 3 j)
+
+/-- Transfer one class of each parity, then read the unordered target. -/
+def classProduct (A B : Matrix (Fin 5) (Fin 5) ℤ) (i j : Fin 15) : ℤ :=
+  unordered (A (classPair i).1) (B (classPair i).2) j
+
+/-- Multiply the two half-strip counts and include both orders of distinct target classes. -/
+def T : Matrix (Fin 15) (Fin 15) ℤ := classProduct halfZero halfZero
+
+/-- The initial class populations for one half-strip. -/
+def halfInitial : Fin 5 → ℤ :=
+  fun i => D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip.initial (i.castAdd 5)
+
+/-- Numbers of labelled single rows in the fifteen classes. -/
+def initial : Fin 15 → ℤ := unordered halfInitial halfInitial
+
+end D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA203981StripData

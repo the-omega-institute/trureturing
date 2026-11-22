@@ -17,7 +17,7 @@ Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good
 instDecidableProper: proof_shape=bind-only; consumers=L
 L: proof_shape=bind-only; consumers=count_transfer, initial_values, recurrence_core, recurrence
 Col: proof_shape=bind-only; consumers=column, compatible, instDecidableCompatible, cls, representatives, relabel, column_relabel, compatible_relabel, class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, gridEquiv, count_transfer
-column: proof_shape=bind-only; consumers=compatible, column_relabel, gridEquiv, column_grid
+column: proof_shape=bind-only; consumers=compatible, column_relabel, gridEquiv, column_grid, HardinA203981StripData.columnRows
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, compatible_relabel, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
 instDecidableCompatible: proof_shape=bind-only; consumers=representative_rows, initial_weights
 cls: proof_shape=bind-only; consumers=class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, count_transfer
@@ -64,7 +64,7 @@ def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 3 × Fin n → Fin 3 => Proper P)).card
 
 abbrev Col := Fin 3 × Fin 3 × Fin 3
-private def column (c : Col) : Fin 3 → Fin 3 := ![c.1, c.2.1, c.2.2]
+def column (c : Col) : Fin 3 → Fin 3 := ![c.1, c.2.1, c.2.2]
 private def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 3, (r = s ∨ r.val = s.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
@@ -75,9 +75,9 @@ def cls (c : Col) : Fin 5 :=
 def Q : Matrix (Fin 5) (Fin 5) ℤ :=
   ![![2,2,2,2,0], ![1,1,0,1,1], ![1,1,0,0,0], ![1,1,1,1,0], ![0,0,0,1,1]]
 def weights : Fin 5 → ℤ := ![24,24,12,24,12]
-private def representatives : Fin 5 → Col :=
+def representatives : Fin 5 → Col :=
   ![(0,0,0), (0,0,1), (0,1,0), (0,1,1), (0,1,2)]
-private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
+def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
   Equiv.prodCongr e (Equiv.prodCongr e e)
 private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 3) :
     column (relabel e c) r = e (column c r) := by
@@ -86,10 +86,10 @@ private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
     compatible (relabel e a) (relabel e b) ↔ compatible a b := by
   simp only [compatible, column_relabel, e.injective.ne_iff]
 set_option maxRecDepth 100000 in
-private theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
+theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
     cls (relabel e c) = cls c := by decide +kernel
 set_option maxRecDepth 100000 in
-private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (cls c) := by decide +kernel
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
