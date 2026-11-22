@@ -14,17 +14,119 @@ import D5.S3.Quantum.Analysis.RefinedBMVThreeSpectrumCertificate
 distinct eigenvalues, conditional on the zero-centered upper kernel. -/
 
 open Matrix
-open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
+open scoped ComplexOrder BigOperators MatrixOrder Matrix.Norms.L2Operator
 
 noncomputable section
 
 namespace RefinedBMV.FourSpectrumLift
 
-open ExtremeWalk (upperKernel centeredKernel)
-open DimThree (defect defect_corner mean_map)
+open ExtremeWalk (upperKernel centeredKernel defect_eq_cyclic_all)
+open DimThree (defect defect_corner gaps mean_map trace_gap_all word_counts_all)
 open UniformThreeSpectrum (defect_diag_all defect_nonneg_all)
 
 universe u
+
+section CenteredWalk
+
+/-- Extend the actual upper block by zero and add the rank-one lower block. -/
+private theorem centeredKernel_posSemidef_of_upper {n : Type u} [Finite n] {p : ℕ} (a : ℝ) (x : n → ℝ)
+    (hUpper : (Matrix.of fun i j : {i // a < x i} ↦
+      upperKernel p a (x i) (x j)).PosSemidef) :
+    (Matrix.of fun i j ↦ centeredKernel p a (x i) (x j)).PosSemidef := by
+  classical
+  let := Fintype.ofFinite n
+  let Above := {i // a < x i}
+  let M : Matrix Above Above ℝ := Matrix.of fun i j ↦ upperKernel p a (x i) (x j)
+  let E : Matrix n Above ℝ := Matrix.of fun i j ↦ if i = j.val then 1 else 0
+  let v (i : n) : ℝ := if x i < a then √(defect p (x i) (x i) a) else 0
+  have hsum_above (g : Above → ℝ) (i : n) :
+      ∑ k, E i k * g k = if hi : a < x i then g ⟨i, hi⟩ else 0 := by
+    split_ifs with hi
+    · rw [Finset.sum_eq_single (⟨i, hi⟩ : Above)]
+      · simp [E]
+      · intro k _ hk
+        have hne : i ≠ k.val := fun h ↦ hk (Subtype.ext h.symm)
+        simp [E, hne]
+      · simp
+    · apply Finset.sum_eq_zero
+      intro k _
+      have hne : i ≠ k.val := fun h ↦ hi (h ▸ k.property)
+      simp [E, hne]
+  have hmul (C : Matrix Above n ℝ) (i j : n) :
+      (E * C) i j = if hi : a < x i then C ⟨i, hi⟩ j else 0 :=
+    hsum_above (fun k ↦ C k j) i
+  have hright (i : Above) (j : n) :
+      (M * Eᴴ) i j = if hj : a < x j then M i ⟨j, hj⟩ else 0 := by
+    simpa only [mul_apply, conjTranspose_apply, star_trivial, mul_comm] using
+      hsum_above (fun k ↦ M i k) j
+  have hsum := (hUpper.mul_mul_conjTranspose_same E).add
+    (posSemidef_vecMulVec_self_star v)
+  change (E * M * Eᴴ + vecMulVec v (star v)).PosSemidef at hsum
+  convert hsum using 1
+  ext i j
+  simp only [Matrix.of_apply, Matrix.add_apply, Matrix.mul_assoc, hmul, hright,
+    vecMulVec_apply, star_trivial]
+  by_cases hi : a < x i
+  · by_cases hj : a < x j
+    · simp [centeredKernel, hi, hj, M, v, not_lt_of_ge hi.le]
+    · simp [centeredKernel, hi, hj, v, not_lt_of_ge hi.le]
+  · by_cases hj : a < x j
+    · simp [centeredKernel, hi, hj, v, not_lt_of_ge hj.le]
+    · by_cases hli : x i < a <;> by_cases hlj : x j < a <;>
+        simp [centeredKernel, hi, hj, hli, hlj, v]
+
+variable {n : Type u} [Fintype n]
+
+private theorem walk_defect_nonneg {p : ℕ}
+    (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
+    (hCentered : ∀ i, (Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)).PosSemidef)
+    (B : Matrix n n ℂ) (hB : B.PosSemidef) :
+    0 ≤ walk B (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) := by
+  classical
+  let g : n → n → n → ℂ := fun i j k ↦ centeredKernel p (a i) (a j) (a k)
+  have hg : 0 ≤ walk B g := by
+    change 0 ≤ ∑ i, ∑ j, ∑ k, B i j * B j k * B k i * g i j k
+    apply Finset.sum_nonneg
+    intro i _
+    let G : Matrix n n ℝ := Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)
+    have hc := D5.S3.Weil.Probability.FiniteGaussianSchoenberg.ofReal_posSemidef G
+      (hCentered i)
+    have hSchur : (B ⊙ G.map Complex.ofReal).PosSemidef := hB.hadamard hc
+    let v : n → ℂ := fun j ↦ B j i
+    convert hSchur.dotProduct_mulVec_nonneg v using 1
+    simp only [dotProduct, mulVec, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ ↦ Finset.sum_congr rfl fun k _ ↦ ?_
+    have hstar : star (B j i) = B i j := congrFun (congrFun hB.isHermitian i) j
+    simp only [Pi.star_apply, v, hstar, hadamard_apply, Matrix.map_apply, G,
+      Matrix.of_apply, g]
+    ring
+  have h : (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) =
+      g + (fun i j k ↦ g j k i) + (fun i j k ↦ g k i j) := by
+    funext i j k
+    simp only [Pi.add_apply, g]
+    exact_mod_cast defect_eq_cyclic_all p (a i) (a j) (a k) (ha i) (ha j) (ha k)
+  rw [h, map_add, map_add, walk_rotate B (fun i j k ↦ g j k i), walk_rotate B g]
+  exact add_nonneg (add_nonneg hg hg) hg
+
+variable [DecidableEq n]
+
+/-- Centered positivity on the given diagonal sample suffices for the trace-word comparison. -/
+private theorem diagonal_bound_of_centered {p : ℕ}
+    (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
+    (hCentered : ∀ i, (Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)).PosSemidef)
+    (B : Matrix n n ℂ) (hB : B.PosSemidef) :
+    trace (((diagonal fun i ↦ (a i : ℂ)) ^ p * B) ^ 3) ≤
+      DimThree.wordMean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B := by
+  have hn := walk_defect_nonneg a ha hCentered B hB
+  rw [← trace_gap_all p] at hn
+  have hlen : (0 : ℝ) < (gaps p).length := by exact_mod_cast (word_counts_all p).2.1
+  obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hn
+  simp only [Complex.mul_re, Complex.mul_im, Complex.natCast_re, Complex.natCast_im,
+    Complex.sub_re, Complex.sub_im, zero_mul, sub_zero, add_zero] at hre him
+  exact Complex.le_def.mpr ⟨sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hlen).mp hre),
+    (sub_eq_zero.mp (mul_eq_zero.mp him.symm |>.resolve_left hlen.ne')).symm⟩
+
+end CenteredWalk
 
 /-- The upper kernel at center zero is PSD on every finite sample of positive roots. -/
 def ZeroUpperPSD (p : ℕ) : Prop :=
@@ -169,7 +271,7 @@ theorem centered_posSemidef {p : ℕ} (hp : 0 < p) (hZero : ZeroUpperPSD.{u} p)
     (hs : (Finset.univ.image x).card ≤ 4) (i : n) :
     (Matrix.of fun j k ↦ centeredKernel p (x i) (x j) (x k)).PosSemidef := by
   classical
-  apply ExtremeWalk.centered_posSemidef
+  apply centeredKernel_posSemidef_of_upper
   let y (j : {j // x i < x j}) := x j.val
   change (Matrix.of fun j k ↦ upperKernel p (x i) (y j) (y k)).PosSemidef
   rcases (hx i).eq_or_lt with hi | hi
@@ -238,7 +340,7 @@ theorem product_bound_singular {p : ℕ} (hp : 0 < p) (hZero : ZeroUpperPSD.{u} 
       ← Real.rpow_mul_natCast (hA.eigenvalues_nonneg i)]
     congr 1
     ring
-  have h := ExtremeWalk.diagonal_bound x hx (centered_posSemidef hp hZero x hx hxz hxs) (f B) hB'
+  have h := diagonal_bound_of_centered x hx (centered_posSemidef hp hZero x hx hxz hxs) (f B) hB'
   change trace ((D ^ p * f B) ^ 3) ≤ DimThree.wordMean p (D ^ 3) (f B) at h
   rw [← hd, ← hpow, ← map_mul f, ← map_pow f, trace_conjugation] at h
   exact h.trans_eq (mean_map p f.toAlgEquiv (trace_conjugation (star U)) A B)

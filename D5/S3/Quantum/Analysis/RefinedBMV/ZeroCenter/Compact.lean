@@ -6,7 +6,7 @@
    utility: none
    digest: Checked curvature on the compact interval from four to thirty-two. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.ZeroCenter.Covers.Examples
+import D5.S3.Quantum.Analysis.RefinedBMV.ZeroCenter.RectangleCover
 
 namespace RefinedBMV.FourSpectrumLift
 

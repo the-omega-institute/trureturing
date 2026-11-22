@@ -104,58 +104,43 @@ theorem defect_eq_cyclic_all (p : ℕ)
       · exact rotate (rotate (cyclic_ordered p hx hxy hya))
       · exact rotate (flip (cyclic_ordered p hy hyx hxa))
 
-/-- Extend the actual upper block by zero and add the rank-one lower block. -/
-theorem centered_posSemidef {n : Type u} [Finite n] {p : ℕ} (a : ℝ) (x : n → ℝ)
-    (hUpper : (Matrix.of fun i j : {i // a < x i} ↦
-      upperKernel p a (x i) (x j)).PosSemidef) :
-    (Matrix.of fun i j ↦ centeredKernel p a (x i) (x j)).PosSemidef := by
-  classical
-  let := Fintype.ofFinite n
-  let Above := {i // a < x i}
-  let M : Matrix Above Above ℝ := Matrix.of fun i j ↦ upperKernel p a (x i) (x j)
-  let E : Matrix n Above ℝ := Matrix.of fun i j ↦ if i = j.val then 1 else 0
-  let v (i : n) : ℝ := if x i < a then √(defect p (x i) (x i) a) else 0
-  have hsum_above (g : Above → ℝ) (i : n) :
-      ∑ k, E i k * g k = if hi : a < x i then g ⟨i, hi⟩ else 0 := by
-    split_ifs with hi
-    · rw [Finset.sum_eq_single (⟨i, hi⟩ : Above)]
-      · simp [E]
-      · intro k _ hk
-        have hne : i ≠ k.val := fun h ↦ hk (Subtype.ext h.symm)
-        simp [E, hne]
-      · simp
-    · apply Finset.sum_eq_zero
-      intro k _
-      have hne : i ≠ k.val := fun h ↦ hi (h ▸ k.property)
-      simp [E, hne]
-  have hmul (C : Matrix Above n ℝ) (i j : n) :
-      (E * C) i j = if hi : a < x i then C ⟨i, hi⟩ j else 0 :=
-    hsum_above (fun k ↦ C k j) i
-  have hright (i : Above) (j : n) :
-      (M * Eᴴ) i j = if hj : a < x j then M i ⟨j, hj⟩ else 0 := by
-    simpa only [mul_apply, conjTranspose_apply, star_trivial, mul_comm] using
-      hsum_above (fun k ↦ M i k) j
-  have hsum := (hUpper.mul_mul_conjTranspose_same E).add
-    (posSemidef_vecMulVec_self_star v)
-  change (E * M * Eᴴ + vecMulVec v (star v)).PosSemidef at hsum
-  convert hsum using 1
-  ext i j
-  simp only [Matrix.of_apply, Matrix.add_apply, Matrix.mul_assoc, hmul, hright,
-    vecMulVec_apply, star_trivial]
-  by_cases hi : a < x i
-  · by_cases hj : a < x j
-    · simp [centeredKernel, hi, hj, M, v, not_lt_of_ge hi.le]
-    · simp [centeredKernel, hi, hj, v, not_lt_of_ge hi.le]
-  · by_cases hj : a < x j
-    · simp [centeredKernel, hi, hj, v, not_lt_of_ge hj.le]
-    · by_cases hli : x i < a <;> by_cases hlj : x j < a <;>
-        simp [centeredKernel, hi, hj, hli, hlj, v]
-
 variable {n : Type u} [Fintype n]
 
+private theorem centered_posSemidef {p : ℕ} (hUpper : UpperPSD.{u} p)
+    (a : ℝ) (ha : 0 ≤ a) (x : n → ℝ) :
+    (Matrix.of fun i j ↦ centeredKernel p a (x i) (x j)).PosSemidef := by
+  classical
+  -- Pad the upper sample with a value above the center and mask those entries out.
+  let xAbove (i : n) := if a < x i then x i else a + 1
+  let mask (i : n) : ℝ := if a < x i then 1 else 0
+  let v (i : n) : ℝ := if x i < a then √(defect p (x i) (x i) a) else 0
+  let M : Matrix n n ℝ := Matrix.of fun i j ↦ upperKernel p a (xAbove i) (xAbove j)
+  have hAbove (i : n) : a < xAbove i := by
+    by_cases hi : a < x i
+    · simpa [xAbove, hi] using hi
+    · simpa [xAbove, hi] using (lt_add_of_pos_right a zero_lt_one)
+  have hM : M.PosSemidef := hUpper a ha xAbove hAbove
+  have hsum := (hM.mul_mul_conjTranspose_same (diagonal mask)).add
+    (posSemidef_vecMulVec_self_star v)
+  rw [diagonal_conjTranspose] at hsum
+  have hsplit : (Matrix.of fun i j ↦ centeredKernel p a (x i) (x j)) =
+      diagonal mask * M * diagonal (star mask) + vecMulVec v (star v) := by
+    ext i j
+    simp only [Matrix.of_apply, Matrix.add_apply, mul_diagonal, diagonal_mul,
+      vecMulVec_apply, Pi.star_apply, star_trivial]
+    by_cases hi : a < x i
+    · by_cases hj : a < x j
+      · simp [centeredKernel, hi, hj, xAbove, mask, M, v, not_lt_of_ge hi.le]
+      · simp [centeredKernel, hi, hj, mask, v, not_lt_of_ge hi.le]
+    · by_cases hj : a < x j
+      · simp [centeredKernel, hi, hj, mask, v, not_lt_of_ge hj.le]
+      · by_cases hli : x i < a <;> by_cases hlj : x j < a <;>
+          simp [centeredKernel, hi, hj, hli, hlj, mask, v]
+  rw [hsplit]
+  exact hsum
+
 private theorem walk_defect_nonneg {p : ℕ}
-    (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
-    (hCentered : ∀ i, (Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)).PosSemidef)
+    (hUpper : UpperPSD.{u} p) (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
     (B : Matrix n n ℂ) (hB : B.PosSemidef) :
     0 ≤ walk B (fun i j k ↦ ((defect p (a i) (a j) (a k) : ℝ) : ℂ)) := by
   classical
@@ -165,8 +150,8 @@ private theorem walk_defect_nonneg {p : ℕ}
     apply Finset.sum_nonneg
     intro i _
     let G : Matrix n n ℝ := Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)
-    have hc := D5.S3.Weil.Probability.FiniteGaussianSchoenberg.ofReal_posSemidef G
-      (hCentered i)
+    have hG := centered_posSemidef hUpper (a i) (ha i) a
+    have hc := D5.S3.Weil.Probability.FiniteGaussianSchoenberg.ofReal_posSemidef G hG
     have hSchur : (B ⊙ G.map Complex.ofReal).PosSemidef := hB.hadamard hc
     let v : n → ℂ := fun j ↦ B j i
     convert hSchur.dotProduct_mulVec_nonneg v using 1
@@ -186,14 +171,12 @@ private theorem walk_defect_nonneg {p : ℕ}
 
 variable [DecidableEq n]
 
-/-- Centered positivity on the given diagonal sample suffices for the trace-word comparison. -/
-theorem diagonal_bound {p : ℕ}
-    (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
-    (hCentered : ∀ i, (Matrix.of fun j k ↦ centeredKernel p (a i) (a j) (a k)).PosSemidef)
+private theorem diagonal_bound {p : ℕ}
+    (hUpper : UpperPSD.{u} p) (a : n → ℝ) (ha : ∀ i, 0 ≤ a i)
     (B : Matrix n n ℂ) (hB : B.PosSemidef) :
     trace (((diagonal fun i ↦ (a i : ℂ)) ^ p * B) ^ 3) ≤
       DimThree.wordMean p ((diagonal fun i ↦ (a i : ℂ)) ^ 3) B := by
-  have hn := walk_defect_nonneg a ha hCentered B hB
+  have hn := walk_defect_nonneg hUpper a ha B hB
   rw [← trace_gap_all p] at hn
   have hlen : (0 : ℝ) < (gaps p).length := by exact_mod_cast (word_counts_all p).2.1
   obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hn
@@ -216,10 +199,7 @@ private theorem cubeRoot_bound {p : ℕ}
     change (Unitary.conjStarAlgAut ℂ _ (star U) B).PosSemidef
     rw [Unitary.conjStarAlgAut_star_apply]
     exact hB.conjTranspose_mul_mul_same (U : Matrix n n ℂ)
-  have h := diagonal_bound _ hX.eigenvalues_nonneg (fun i ↦
-    centered_posSemidef _ _ (hUpper _ (hX.eigenvalues_nonneg i)
-      (fun j : {j // hX.isHermitian.eigenvalues i < hX.isHermitian.eigenvalues j} ↦
-        hX.isHermitian.eigenvalues j) Subtype.property)) (f B) hB'
+  have h := diagonal_bound hUpper _ hX.eigenvalues_nonneg (f B) hB'
   change trace (((diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues)) ^ p * f B) ^ 3) ≤
     DimThree.wordMean p ((diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues)) ^ 3) (f B) at h
   have hd : f X = diagonal (RCLike.ofReal ∘ hX.isHermitian.eigenvalues) :=
