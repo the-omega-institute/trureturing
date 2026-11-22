@@ -117,5 +117,90 @@ theorem fifteen_setting_gap (q : Fin 5 → EuclideanSpace ℝ (Fin 4))
   rw [hcoeff]
   linarith only [g, h]
 
+/-- The mean half-angle probability for two lists of rotor settings with a common weight array. -/
+def comparison {n : ℕ} (w : Fin n → ℝ) (x y : Fin n → EuclideanSpace ℝ (Fin 4)) : ℝ :=
+  (1 + ∑ t, w t * ⟪x t, y t⟫_ℝ) / 2
+
+private theorem expand_loss (x y z : EuclideanSpace ℝ (Fin 4))
+    (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) (hz : ‖z‖ = 1) :
+    ‖x + y - √2 • z‖ ^ 2 =
+    4 + 2 * ⟪x, y⟫_ℝ - 2 * √2 * (⟪x, z⟫_ℝ + ⟪y, z⟫_ℝ) := by
+  rw [norm_sub_sq_real, norm_add_sq_real, norm_smul, Real.norm_eq_abs,
+    abs_of_nonneg (Real.sqrt_nonneg _), hx, hy, hz, real_inner_smul_right, inner_add_left]
+  nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+
+private theorem ten_pairs (c : ℝ) : pairSum (fun _ _ => c) = 10 * c := by
+  have count : (∑ i : Fin 5, ∑ j : Fin 5, if i < j then 1 else 0 : ℕ) = 10 := by decide
+  have rc : (∑ i : Fin 5, ∑ j : Fin 5, if i < j then (1 : ℝ) else 0) = 10 := by
+    exact_mod_cast count
+  rw [← rc]
+  simp only [pairSum, sum_mul, ite_mul, one_mul, zero_mul]
+
+/-- Any common probability error bound on the thirty indicated comparisons for a finite
+fixed-weight mixture is at least the explicit positive constant on the left. -/
+theorem fixed_mixture_probability_gap {n : ℕ} (w : Fin n → ℝ)
+    (q : Fin 5 → Fin n → EuclideanSpace ℝ (Fin 4))
+    (p : Fin 5 → Fin 5 → Fin n → EuclideanSpace ℝ (Fin 4))
+    (hw : ∀ t, 0 ≤ w t) (hw1 : ∑ t, w t = 1) (hq : ∀ i t, ‖q i t‖ = 1)
+    (hp : ∀ i j, i < j → ∀ t, ‖p i j t‖ = 1) (δ : ℝ)
+    (errors : ∀ i j, i < j →
+      |comparison w (q i) (q j) - 1 / 2| ≤ δ ∧
+      |comparison w (q i) (p i j) - (1 + √2 / 2) / 2| ≤ δ ∧
+      |comparison w (q j) (p i j) - (1 + √2 / 2) / 2| ≤ δ) :
+    5 / (80 * (1 + √2) ^ 2 * (2 + 4 * √2)) ≤ δ := by
+  let L := fun t i j => ‖q i t + q j t - √2 • p i j t‖ ^ 2
+  have avgLB : 5 / (4 * (1 + √2) ^ 2) ≤ ∑ t, w t * pairSum (L t) := by
+    calc
+      _ = ∑ t, w t * (5 / (4 * (1 + √2) ^ 2)) := by rw [← sum_mul, hw1, one_mul]
+      _ ≤ _ := sum_le_sum fun t _ => mul_le_mul_of_nonneg_left
+        (fifteen_setting_gap (fun i => q i t) (fun i j => p i j t)
+          (fun i => hq i t) (fun i j h => hp i j h t)).2 (hw t)
+  have commute : (∑ t, w t * pairSum (L t)) = pairSum (fun i j => ∑ t, w t * L t i j) := by
+    simp only [pairSum, mul_sum, mul_ite, mul_zero]
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro i _
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro j _
+    split <;> simp_all only [sum_const_zero]
+  have perPair (i j : Fin 5) (h : i < j) :
+      (∑ t, w t * L t i j) ≤ (4 + 8 * √2) * δ := by
+    have e : (∑ t, w t * L t i j) = 4 + 2 * (2 * comparison w (q i) (q j) - 1)
+        - 2 * √2 * ((2 * comparison w (q i) (p i j) - 1) +
+                     (2 * comparison w (q j) (p i j) - 1)) := by
+      calc
+        _ = ∑ t, (4 * w t + 2 * (w t * ⟪q i t, q j t⟫_ℝ) -
+            (2 * √2) * (w t * ⟪q i t, p i j t⟫_ℝ + w t * ⟪q j t, p i j t⟫_ℝ)) := by
+          apply sum_congr rfl
+          intro t _
+          dsimp [L]
+          rw [expand_loss _ _ _ (hq i t) (hq j t) (hp i j h t)]
+          ring
+        _ = _ := by
+          simp only [sum_sub_distrib, sum_add_distrib, ← mul_sum, hw1, comparison]
+          ring
+    rw [e]
+    obtain ⟨hb, hl, hr⟩ := errors i j h
+    have bs := (abs_le.mp hb).2
+    have ls := (abs_le.mp hl).1
+    have rs := (abs_le.mp hr).1
+    have sl := mul_le_mul_of_nonneg_left ls (Real.sqrt_nonneg 2)
+    have sr := mul_le_mul_of_nonneg_left rs (Real.sqrt_nonneg 2)
+    nlinarith only [sl, sr, bs, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have ub : pairSum (fun i j => ∑ t, w t * L t i j) ≤ 10 * ((4 + 8 * √2) * δ) := by
+    rw [← ten_pairs]
+    apply sum_le_sum
+    intro i _
+    apply sum_le_sum
+    intro j _
+    split <;> rename_i h
+    · exact perPair i j h
+    · rfl
+  rw [commute] at avgLB
+  have h := (div_le_iff₀ (by positivity)).mp (avgLB.trans ub)
+  apply (div_le_iff₀ (by positivity)).mpr
+  linarith only [h]
+
 end
 end D5.S3.Quantum.Rotors.FifteenSettingGap
