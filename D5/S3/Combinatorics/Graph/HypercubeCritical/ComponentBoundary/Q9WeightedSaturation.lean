@@ -27,10 +27,11 @@ open Q9WeightedBoundaryGram (RootedRows rootedBiadjacency)
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private regular_parity_card interior_card cube_opposite_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9BoundaryGram
-open private gram_split switched signed signed_mulVec signed_transpose balanced_switch
-  balanced_union interiorUnion unsigned unsigned_zero rooted_parity rooted_card from
+open Q9WeightedBoundaryGram (gram_split switched signed signed_mulVec signed_transpose)
+open private balanced_switch balanced_union interiorUnion unsigned unsigned_zero rooted_parity rooted_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9WeightedBoundaryGram
-open private unit_line unit_weight weighted_cross from
+open Q9SignedContactCells (unit_weight weighted_cross)
+open private unit_line from
   D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9SignedContactCells
 
 variable {R : Type*} [CommRing R]
@@ -47,7 +48,7 @@ def biadjacency (w : Fin 9 → R) (S : Finset (Q 9)) (b : Bool) :
     Matrix (Rows S b) (Interior S b) R :=
   biadjacencyOn w S b (fun x => x.1.1)
 
-private def defect {ι κ : Type*} [DecidableEq ι] [Fintype κ] (w : Fin 9 → R)
+def defect {ι κ : Type*} [DecidableEq ι] [Fintype κ] (w : Fin 9 → R)
     (M : Matrix ι κ R) : Matrix ι ι R :=
   (∑ a, w a ^ 2) • 1 - M * Mᵀ
 
