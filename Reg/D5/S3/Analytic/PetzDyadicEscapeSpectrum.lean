@@ -57,6 +57,33 @@ private theorem expDependence : ObservationalDependence realSignature
   intro role
   exact ⟨(), 0, 1, fun equal => zero_ne_one (Real.exp_injective equal)⟩
 
+-- Expand the shared fields directly into each audit's registration record.
+local macro "sourceAudit%" "(" sourceArena:term "," sourceFamily:term ")"
+    "{" &"unitName" " := " unit:term "," &"realizationName" " := " familyName:term ","
+    &"readout" " := " observation:term "," &"sourceSelection" " := " selection:term "}" : term =>
+  `({
+    unitName := $unit
+    realizationName := $familyName
+    realizationSource := none
+    generated := false
+    arena := .source ⟨$sourceArena⟩
+    objectArena := .source ⟨$sourceArena⟩
+    catalog := Lean.Name.anonymous
+    localNames := false
+    realization := .source $sourceArena ⟨$sourceFamily⟩
+    correspondence := { stage := .evidence, objectStage := .evidence }
+    bundleNonempty := .absent
+    readout := $observation
+    variation := .absent
+    sensitivity := .absent
+    partialSensitivity := none
+    escapeFrom := none
+    sourceSelection := $selection
+    continuation := .unknown
+    familyRecord := none
+    options := #[]
+  })
+
 namespace DiagonalError
 
 private def actual : Realization realSignature :=
@@ -95,38 +122,24 @@ def family : Registration arena.{u} (type_of% @diagonal_log_ratio_profile_error.
     norm_num
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@diagonal_log_ratio_profile_error.{u}) (Realization realSignature) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.diagonal_log_ratio_profile_error.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.DiagonalError.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize realSignature (fun _ _ x => |x|) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@diagonal_log_ratio_profile_error.{u}) (Realization realSignature) Unit Unit :=
+  sourceAudit% (arena.{u}, family.{u}) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.diagonal_log_ratio_profile_error.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.DiagonalError.family,
+    readout := some (realize realSignature (fun _ _ x => |x|) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "body", "body", "body", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end DiagonalError
 
@@ -154,36 +167,22 @@ def family : Registration arena.{u} (type_of% @rateMoment_eq_sum.{u}) where
   dependence := eqDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@rateMoment_eq_sum.{u}) (Realization scalarRelation) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.rateMoment_eq_sum.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.MomentSum.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@rateMoment_eq_sum.{u}) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena.{u}, family.{u}) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.rateMoment_eq_sum.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.MomentSum.family,
+    readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end MomentSum
 
@@ -213,36 +212,22 @@ def family : Registration arena.{u} (type_of% @rateProfile_eq_laplace.{u}) where
   dependence := eqDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@rateProfile_eq_laplace.{u}) (Realization scalarRelation) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.rateProfile_eq_laplace.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileLaplace.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@rateProfile_eq_laplace.{u}) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena.{u}, family.{u}) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.rateProfile_eq_laplace.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileLaplace.family,
+    readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end ProfileLaplace
 
@@ -281,37 +266,23 @@ def family : Registration arena.{u} (type_of% @hasDerivAt_tiltedRateMoment.{u}) 
     norm_num
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@hasDerivAt_tiltedRateMoment.{u}) (Realization realSignature) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.hasDerivAt_tiltedRateMoment.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.MomentDerivative.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize realSignature (fun _ _ x => -x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@hasDerivAt_tiltedRateMoment.{u}) (Realization realSignature) Unit Unit :=
+  sourceAudit% (arena.{u}, family.{u}) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.hasDerivAt_tiltedRateMoment.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.MomentDerivative.family,
+    readout := some (realize realSignature (fun _ _ x => -x) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end MomentDerivative
 
@@ -348,37 +319,23 @@ def family : Registration arena.{u} (type_of% @hasDerivAt_rateProfile.{u}) where
   dependence := expDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@hasDerivAt_rateProfile.{u}) (Realization realSignature) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.hasDerivAt_rateProfile.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileDerivative.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize realSignature (fun _ _ x => Real.exp x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg",
-        "body", "arg", "fn", "arg", "arg", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@hasDerivAt_rateProfile.{u}) (Realization realSignature) Unit Unit :=
+  sourceAudit% (arena.{u}, family.{u}) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.hasDerivAt_rateProfile.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileDerivative.family,
+    readout := some (realize realSignature (fun _ _ x => Real.exp x) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg",
+          "body", "arg", "fn", "arg", "arg", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end ProfileDerivative
 
@@ -411,36 +368,22 @@ def family : Registration arena (type_of% @binomial_laws_normalized) where
     simp
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_laws_normalized) (Realization massSignature) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_normalized.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.Normalized.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize massSignature (fun _ _ weights => Finset.univ.sum weights) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "arg", "arg", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_laws_normalized) (Realization massSignature) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_normalized.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.Normalized.family,
+    readout := some (realize massSignature (fun _ _ weights => Finset.univ.sum weights) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[0]
+      readouts := #[{
+        path := #["body", "body", "arg", "arg", "fn", "arg", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end Normalized
 
@@ -468,36 +411,22 @@ def family : Registration arena (type_of% @binomial_laws_equal_mean) where
   dependence := eqDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_laws_equal_mean) (Realization scalarRelation) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_equal_mean.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.EqualMean.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_laws_equal_mean) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_equal_mean.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.EqualMean.family,
+    readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end EqualMean
 
@@ -530,36 +459,22 @@ def family : Registration arena (type_of% @binomial_laws_support_card) where
     simp
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_laws_support_card) (Realization supportSignature) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_support_card.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.SupportCard.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize supportSignature (fun _ _ support => support.card) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_laws_support_card) (Realization supportSignature) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laws_support_card.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.SupportCard.family,
+    readout := some (realize supportSignature (fun _ _ support => support.card) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[0]
+      readouts := #[{
+        path := #["body", "body", "fn", "arg", "fn", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end SupportCard
 
@@ -589,37 +504,23 @@ def family : Registration arena (type_of% @binomial_laplace_difference) where
   dependence := eqDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_laplace_difference) (Realization scalarRelation) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laplace_difference.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.BinomialLaplace.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_laplace_difference) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_laplace_difference.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.BinomialLaplace.family,
+    readout := some (realize scalarRelation (fun _ _ x y => x = y) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end BinomialLaplace
 
@@ -663,38 +564,24 @@ def family : Registration arena (type_of% @binomial_profile_difference) where
   dependence := expDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_profile_difference) (Realization realSignature) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_profile_difference.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.BinomialProfile.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize realSignature (fun _ _ x => Real.exp x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "arg",
-        "fn", "arg", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_profile_difference) (Realization realSignature) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_profile_difference.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.BinomialProfile.family,
+    readout := some (realize realSignature (fun _ _ x => Real.exp x) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "arg",
+          "fn", "arg", "arg", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end BinomialProfile
 
@@ -725,38 +612,24 @@ def family : Registration arena (type_of% @binomialUniformConstant_pos) where
     norm_num [binomialUniformConstant]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomialUniformConstant_pos) (Realization constantSignature) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomialUniformConstant_pos.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.UniformConstant.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some
-    (realize constantSignature (fun _ n rMin => binomialUniformConstant n rMin) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomialUniformConstant_pos) (Realization constantSignature) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomialUniformConstant_pos.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.UniformConstant.family,
+    readout := some
+      (realize constantSignature (fun _ n rMin => binomialUniformConstant n rMin) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[0]
+      readouts := #[{
+        path := #["body", "body", "body", "arg"]
+        stateBinder := 1
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end UniformConstant
 
@@ -791,38 +664,24 @@ def family : Registration arena (type_of% @binomial_profile_difference_bound) wh
   dependence := leDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_profile_difference_bound) (Realization scalarRelation) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_profile_difference_bound.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileBound.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ x y => x ≤ y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "fn", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_profile_difference_bound) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_profile_difference_bound.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.ProfileBound.family,
+    readout := some (realize scalarRelation (fun _ _ x y => x ≤ y) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "body", "fn", "arg", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end ProfileBound
 
@@ -848,37 +707,23 @@ def family : Registration arena (type_of% @binomial_wasserstein_lower_bound) whe
   dependence := leDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@binomial_wasserstein_lower_bound) (Realization scalarRelation) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_wasserstein_lower_bound.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.TransportLowerBound.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ eta cost => eta ≤ cost) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@binomial_wasserstein_lower_bound) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.binomial_wasserstein_lower_bound.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.TransportLowerBound.family,
+    readout := some (realize scalarRelation (fun _ _ eta cost => eta ≤ cost) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "fn", "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end TransportLowerBound
 
@@ -943,42 +788,28 @@ def family : Registration arena (type_of% @coalescing_binomial_witness) where
     exact ne_of_lt (by positivity)
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@coalescing_binomial_witness) (Realization coalescingSignature) Unit Unit where
-  unitName :=
-    `D5.S3.Analytic.PetzDyadicEscapeSpectrum.coalescing_binomial_witness.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.CoalescingWitness.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize coalescingSignature (fun _ p s =>
-    rateProfile (binomialRate (2 * p.1 - 1) p.2.1 p.2.2) (evenBinomial (2 * p.1 - 1)) s -
-      rateProfile (binomialRate (2 * p.1 - 1) p.2.1 p.2.2) (oddBinomial (2 * p.1 - 1)) s)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[0, 2, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg",
-        "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 12
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@coalescing_binomial_witness) (Realization coalescingSignature) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName :=
+      `D5.S3.Analytic.PetzDyadicEscapeSpectrum.coalescing_binomial_witness.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.CoalescingWitness.family,
+    readout := some (realize coalescingSignature (fun _ p s =>
+      rateProfile (binomialRate (2 * p.1 - 1) p.2.1 p.2.2) (evenBinomial (2 * p.1 - 1)) s -
+        rateProfile (binomialRate (2 * p.1 - 1) p.2.1 p.2.2) (oddBinomial (2 * p.1 - 1)) s)
+      (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[0, 2, 4]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+          "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg",
+          "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "arg"]
+        stateBinder := 12
+        functionOperand := false
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end CoalescingWitness
 
@@ -1021,39 +852,25 @@ def family : Registration arena (type_of% @no_uniform_holder_inverse) where
   dependence := leDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@no_uniform_holder_inverse) (Realization scalarRelation) Unit Unit where
-  unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.no_uniform_holder_inverse.__information_unit
-  realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.HolderObstruction.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize scalarRelation (fun _ _ cost bound => cost ≤ bound) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg",
-        "arg", "body", "arg", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "fn",
-        "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
+    (@no_uniform_holder_inverse) (Realization scalarRelation) Unit Unit :=
+  sourceAudit% (arena, family) {
+    unitName := `D5.S3.Analytic.PetzDyadicEscapeSpectrum.no_uniform_holder_inverse.__information_unit,
+    realizationName := `Reg.D5.S3.Analytic.PetzDyadicEscapeSpectrum.HolderObstruction.family,
+    readout := some (realize scalarRelation (fun _ _ cost bound => cost ≤ bound) (fun e => nomatch e)),
+    sourceSelection := some {
+      owner := `D5.S3.Analytic.PetzDyadicEscapeSpectrum
+      definition := none
+      coordinates := #[]
+      readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg",
+          "arg", "body", "arg", "body", "body", "body", "body", "body", "body",
+          "body", "body", "body", "body", "body", "body", "body", "body", "fn",
+          "fn"]
+        stateBinder := 0
+        functionOperand := true
+        stateOperand := none
+        booleanPredicate := false }] }
+  }
 
 end HolderObstruction
 

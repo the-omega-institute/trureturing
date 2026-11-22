@@ -181,11 +181,11 @@ def binomialRate (n : ℕ) (r0 eta : ℝ) (j : Fin (n + 1)) : ℝ :=
 private def binomialWeight (n : ℕ) (j : Fin (n + 1)) : ℝ :=
   (n.choose j.val : ℝ) / (2 : ℝ) ^ (n - 1)
 
-/-- Normalized even part of the alternating binomial weights. -/
+/-- The even part of the alternating binomial weights, normalized for positive degree. -/
 def evenBinomial (n : ℕ) (j : Fin (n + 1)) : ℝ :=
   if Even j.val then binomialWeight n j else 0
 
-/-- Normalized odd part of the alternating binomial weights. -/
+/-- The odd part of the alternating binomial weights, normalized for positive degree. -/
 def oddBinomial (n : ℕ) (j : Fin (n + 1)) : ℝ :=
   if Odd j.val then binomialWeight n j else 0
 
