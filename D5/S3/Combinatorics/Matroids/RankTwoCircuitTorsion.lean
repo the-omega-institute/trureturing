@@ -326,6 +326,13 @@ private lemma chainOfFlow_mem_rationalTopCycles [Fintype V] [LinearOrder V] {M :
 def HasClassBases [DecidableEq V] (M : Matroid V) (part : V → ι) : Prop :=
   ∀ F : Finset V, M.IsBase (F : Set V) ↔ ∃ u v : V, part u ≠ part v ∧ F = {u, v}
 
+private lemma nontrivial_classes [Finite V] [DecidableEq V] {M : Matroid V}
+    {part : V → ι} (hbases : HasClassBases M part) : Nontrivial ι := by
+  obtain ⟨B, hB⟩ := M.exists_isBase
+  have hB' : M.IsBase (↑(B.toFinite.toFinset : Finset V) : Set V) := by simpa using hB
+  obtain ⟨u, v, huv, _⟩ := (hbases _).mp hB'
+  exact ⟨⟨part u, part v, huv⟩⟩
+
 private lemma pair_ground [DecidableEq V] [Nontrivial ι] {M : Matroid V}
     {part : V → ι} (hbases : HasClassBases M part) (hsurj : Function.Surjective part) (u : V) :
     u ∈ M.E := by
@@ -744,7 +751,7 @@ private theorem readout_residues_iff [Fintype V] [LinearOrder V] [Nontrivial ι]
 
 /-- Integral circuit readouts of a rational cycle determine unique normalized potentials. -/
 theorem exists_potentials_of_integral_readouts
-    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι] [Nontrivial ι] {M : Matroid V}
+    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι] {M : Matroid V}
     {part : V → ι} (hbases : HasClassBases M part) (hsurj : Function.Surjective part)
     (pivot : ι) (chain : rationalTopCycles M)
     (hintegral : ∀ (C : Finset V), M.IsCircuit (C : Set V) → ∀ F : Finset V,
@@ -754,6 +761,7 @@ theorem exists_potentials_of_integral_readouts
       (∀ u v, edgeResidue chain.val u v = potential (part u) - potential (part v)) ∧
       (∀ i, Fintype.card V • potential i = 0) ∧
         ∑ i : ι, (univ.filter (fun v => part v = i)).card • potential i = 0 := by
+  letI := nontrivial_classes hbases
   obtain ⟨hpair, htriangle⟩ := (readout_residues_iff hbases hsurj chain).mp hintegral
   have htriangle' (u v w : V) (huv : part u ≠ part v) (hvw : part v ≠ part w)
       (huw : part u ≠ part w) :
@@ -771,7 +779,7 @@ theorem exists_potentials_of_integral_readouts
 /-- Realize normalized potentials satisfying the boundary relations by a single rational top
 cycle with integral circuit readouts. -/
 theorem exists_integral_readouts_of_potentials
-    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι] [Nontrivial ι] {M : Matroid V}
+    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι] {M : Matroid V}
     {part : V → ι} (hbases : HasClassBases M part) (hsurj : Function.Surjective part)
     {pivot : ι} (potential : ι → RationalResidue) (hpivot : potential pivot = 0)
     (hsize : ∀ i, Fintype.card V • potential i = 0)
@@ -780,6 +788,7 @@ theorem exists_integral_readouts_of_potentials
       (∀ (C : Finset V), M.IsCircuit (C : Set V) → ∀ F : Finset V,
         rationalResidue (rationalAggregate M C chain.val F) = 0) ∧
       ∀ u v, edgeResidue chain.val u v = potential (part u) - potential (part v) := by
+  letI := nontrivial_classes hbases
   obtain ⟨j, hj⟩ := exists_ne pivot
   obtain ⟨anchor, hanchor⟩ := hsurj pivot
   obtain ⟨bridge, hbridge⟩ := hsurj j
@@ -928,11 +937,12 @@ private lemma potentialReadout_ker
 /-- The integral lifting obstruction in rank two is the group of normalized class
 potentials satisfying the weighted boundary relation. -/
 theorem rank_two_lifting_obstruction_potentials
-    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι] [Nontrivial ι]
+    [Fintype V] [LinearOrder V] [Fintype ι] [DecidableEq ι]
     {M : Matroid V} {part : V → ι} (hbases : HasClassBases M part)
     (hsurj : Function.Surjective part) (pivot : ι) :
     Nonempty ((JointSaturatedImage M ⧸ JointImageInSaturation M) ≃ₗ[ℤ]
       normalizedClassPotentials part pivot) := by
+  letI := nontrivial_classes hbases
   obtain ⟨e, _⟩ := hsurj pivot
   obtain ⟨_, _, _, ⟨comparison⟩⟩ :=
     rationalJointRestriction_equiv M (pair_ground hbases hsurj e)

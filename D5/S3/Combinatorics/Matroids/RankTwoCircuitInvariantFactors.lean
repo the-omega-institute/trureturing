@@ -87,15 +87,6 @@ private theorem exists_gcd_coordinates (a b : ℕ) (ha : 0 < a) :
   rw [← natCast_zsmul, smul_add, smul_smul, smul_smul, ← hu', ← hv', natCast_zsmul,
     natCast_zsmul]
 
-private def splitFirst (A : Type*) [AddCommGroup A] (k : ℕ) :
-    (Fin (k + 1) → A) ≃ₗ[ℤ] (A × (Fin k → A)) where
-  toFun f := (f 0, fun i => f i.succ)
-  invFun p := Fin.cons p.1 p.2
-  left_inv f := funext fun i => Fin.cases (by simp) (fun _ => by simp) i
-  right_inv p := Prod.ext (by simp) (funext fun _ => by simp)
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
-
 private theorem gcd_univ_fin_succ {k : ℕ} (weight : Fin (k + 1) → ℕ) :
     univ.gcd weight = (weight 0).gcd (univ.gcd fun i : Fin k => weight i.succ) := by
   apply Nat.dvd_antisymm
@@ -113,17 +104,18 @@ private theorem exists_sum_coordinates (k : ℕ) (weight : Fin (k + 1) → ℕ)
       ∀ f, (univ.gcd weight) • (coordinates f).1 = ∑ i, weight i • f i := by
   induction k with
   | zero =>
-      exact ⟨splitFirst A 0, fun f => by simp [splitFirst]⟩
+      exact ⟨(Fin.consLinearEquiv ℤ (fun _ : Fin 1 => A)).symm, fun f => by simp⟩
   | succ k ih =>
       let tailWeight : Fin (k + 1) → ℕ := fun i => weight i.succ
       obtain ⟨tail, htail⟩ := ih tailWeight (fun i => hpos i.succ)
       obtain ⟨head, hhead⟩ := exists_gcd_coordinates (A := A) (weight 0) (univ.gcd tailWeight)
         (hpos 0)
       let assoc := LinearEquiv.prodAssoc ℤ A A (Fin k → A)
-      let coordinates := (splitFirst A (k + 1)).trans
+      let coordinates := (Fin.consLinearEquiv ℤ (fun _ : Fin (k + 2) => A)).symm.trans
         (((LinearEquiv.refl ℤ A).prodCongr tail).trans
           (assoc.symm.trans ((head.prodCongr (LinearEquiv.refl ℤ (Fin k → A))).trans
-            (assoc.trans ((LinearEquiv.refl ℤ A).prodCongr (splitFirst A k).symm)))))
+            (assoc.trans ((LinearEquiv.refl ℤ A).prodCongr
+              (Fin.consLinearEquiv ℤ (fun _ : Fin (k + 1) => A)))))))
       refine ⟨coordinates, fun f => ?_⟩
       rw [gcd_univ_fin_succ]
       change (weight 0).gcd (univ.gcd tailWeight) •
