@@ -50,16 +50,7 @@ internal sealed class MaximumFamiliesDocument : IScribeDocumentDefinition
                     + " isomorphism."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("order-iso-atom-card"),
                 DeclarationHandle.Create(Owner + "orderIso_atomCard"), H("Atom count is an order invariant"),
-                StatementSource.FromAuthor(F.Disp(Bind(FormulaQuantifier.ForAll, "A", F.Id("Type"),
-                    Bind(FormulaQuantifier.ForAll, "B", F.Id("Type"), Seq(Parenthesized(Call("PartialOrder",
-                    F.Id("A"))), Parenthesized(Call("PartialOrder", F.Id("B"))), Parenthesized(Call("OrderBot",
-                    F.Id("A"))), Parenthesized(Call("OrderBot", F.Id("B"))), Comma, Sp,
-                    Bind(FormulaQuantifier.ForAll, "e", Call("OrderIso", F.Id("A"), F.Id("B")),
-                    Rel(Call("NatCard", Seq(OpenBrace, F.Id("x"), Sp, Mid, Sp, Logic(Rel(F.Id("x"),
-                    FormulaRelationOperator.MemberOf, F.Id("A")), FormulaLogicOperator.And, Call("IsAtom",
-                    F.Id("x"))), CloseBrace)), FormulaRelationOperator.Equal, Call("NatCard", Seq(OpenBrace,
-                    F.Id("x"), Sp, Mid, Sp, Logic(Rel(F.Id("x"), FormulaRelationOperator.MemberOf, F.Id("B")),
-                    FormulaLogicOperator.And, Call("IsAtom", F.Id("x"))), CloseBrace))))))))),
+                StatementSource.FromAuthor(F.Disp(AtomCardinalityInvariant())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("An order isomorphism of orders with bottom induces an equivalence of their atom subtypes."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("tamari-atom-card-le"),
@@ -84,6 +75,26 @@ internal sealed class MaximumFamiliesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At n ≥ 2 the bracket coatoms from two different right endpoints transport to distinct coatoms in"
                     + " Trees(n + 1)."))), DescribeRole.Theorem))));
+
+    private static Formula AtomCardinalityInvariant()
+    {
+        var forall = FormulaQuantifier.ForAll;
+        var aType = F.Id("A");
+        var bType = F.Id("B");
+        var equality = Rel(AtomSubtypeCard("a", aType), FormulaRelationOperator.Equal,
+            AtomSubtypeCard("b", bType));
+        return Bind(forall, "A", F.Id("Type"),
+            Bind(forall, "B", F.Id("Type"),
+                Bind(forall, "poA", Call("PartialOrder", aType),
+                    Bind(forall, "poB", Call("PartialOrder", bType),
+                        Bind(forall, "botA", Call("OrderBot", aType),
+                            Bind(forall, "botB", Call("OrderBot", bType),
+                                Bind(forall, "e", Call("OrderIso", aType, bType), equality)))))));
+    }
+
+    private static Formula AtomSubtypeCard(string name, Formula type) =>
+        Call("NatCard", Seq(OpenBrace, F.Id(name), Colon, Sp, type, Sp, Mid, Sp,
+            Call("IsAtom", F.Id(name)), CloseBrace));
 
     private static Formula Call(string name, params Formula[] values) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. values]);

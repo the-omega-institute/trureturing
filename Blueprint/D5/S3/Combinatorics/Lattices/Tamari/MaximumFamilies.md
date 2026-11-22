@@ -66,7 +66,7 @@ Transport the bracket cardinality bound and the attaining family along the tree 
 
 **Theorem 1.6 (Atom count is an order invariant).**
 
-$$\forall A \in Type,\; \forall B \in Type,\; (\operatorname{PartialOrder}\left(A\right))(\operatorname{PartialOrder}\left(B\right))(\operatorname{OrderBot}\left(A\right))(\operatorname{OrderBot}\left(B\right)), \forall e \in \operatorname{OrderIso}\left(A, B\right),\; \operatorname{NatCard}\left(\{x \mid x \in A \land \operatorname{IsAtom}\left(x\right)\}\right) = \operatorname{NatCard}\left(\{x \mid x \in B \land \operatorname{IsAtom}\left(x\right)\}\right)$$
+$$\forall A \in Type,\; \forall B \in Type,\; \forall poA \in \operatorname{PartialOrder}\left(A\right),\; \forall poB \in \operatorname{PartialOrder}\left(B\right),\; \forall botA \in \operatorname{OrderBot}\left(A\right),\; \forall botB \in \operatorname{OrderBot}\left(B\right),\; \forall e \in \operatorname{OrderIso}\left(A, B\right),\; \operatorname{NatCard}\left(\{a: A \mid \operatorname{IsAtom}\left(a\right)\}\right) = \operatorname{NatCard}\left(\{b: B \mid \operatorname{IsAtom}\left(b\right)\}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/Tamari/MaximumFamilies.orderIso_atomCard` (`✓ std3`). ∎
 

@@ -32,11 +32,8 @@ namespace D5.S3.Combinatorics.Lattices.Tamari
 
 noncomputable section
 
-private def finiteTreeEquiv (n : ℕ) : Trees n ≃ ↥(BinaryTree.treesOfNumNodesEq n) where
-  toFun t := ⟨t.val, BinaryTree.mem_treesOfNumNodesEq.mpr t.property⟩
-  invFun t := ⟨t.val, BinaryTree.mem_treesOfNumNodesEq.mp t.property⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
+private def finiteTreeEquiv (n : ℕ) : Trees n ≃ ↥(BinaryTree.treesOfNumNodesEq n) :=
+  Equiv.subtypeEquivRight (fun _ => BinaryTree.mem_treesOfNumNodesEq.symm)
 
 private def dyckWordEquiv (n : ℕ) : DyckPaths n ≃ {p : DyckWord // p.semilength = n} where
   toFun p := ⟨p.val, p.property⟩
@@ -53,17 +50,10 @@ private theorem dyckPaths_card (n : ℕ) : Nat.card (DyckPaths n) = catalan n :=
     DyckWord.card_dyckWord_semilength_eq_catalan]
 
 private def onePointIso {α β : Type*} [Preorder α] [Preorder β] [Subsingleton α] [Subsingleton β]
-    (a : α) (b : β) : α ≃o β where
-  toEquiv :=
-    { toFun := fun _ => b
-      invFun := fun _ => a
-      left_inv := fun _ => Subsingleton.elim _ _
-      right_inv := fun _ => Subsingleton.elim _ _ }
-  map_rel_iff' := by
-    intro x y
-    have h : x = y := Subsingleton.elim _ _
-    subst y
-    exact ⟨fun _ => le_rfl, fun _ => le_rfl⟩
+    (a : α) (b : β) : α ≃o β := by
+  letI : Unique α := uniqueOfSubsingleton a
+  letI : Unique β := uniqueOfSubsingleton b
+  exact OrderIso.ofUnique α β
 
 private def twoPointMap {α : Type*} (a b : α) (i : Fin 2) : α :=
   if i = 0 then a else b
@@ -92,10 +82,7 @@ private def tamariTwo : Fin 2 ≃o Trees 2 := by
   let _ : Finite (Trees 2) := Finite.of_equiv _ (finiteTreeEquiv 2).symm
   have hne : (⊥ : Trees 2) ≠ ⊤ := by
     intro h
-    let _ : Subsingleton (Trees 2) := ⟨fun a b => by
-      have hap : a = ⊥ := le_antisymm (h.symm ▸ le_top) bot_le
-      have hbp : b = ⊥ := le_antisymm (h.symm ▸ le_top) bot_le
-      exact hap.trans hbp.symm⟩
+    letI : Subsingleton (Trees 2) := subsingleton_of_bot_eq_top h
     have h' := Nat.card_of_subsingleton (⊥ : Trees 2)
     omega
   exact twoPointIso ⊥ ⊤ bot_le hne (twoPointMap_surj_of_card hne hcard)

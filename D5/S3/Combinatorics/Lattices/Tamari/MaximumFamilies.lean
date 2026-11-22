@@ -354,11 +354,7 @@ private theorem bracket_atom_card_le (n : ℕ) : Nat.card {b : Brackets n // IsA
 theorem orderIso_atomCard {α β : Type*} [PartialOrder α] [PartialOrder β]
     [OrderBot α] [OrderBot β] (e : α ≃o β) :
     Nat.card {a : α // IsAtom a} = Nat.card {b : β // IsAtom b} :=
-  Nat.card_congr
-    { toFun := fun a => ⟨e a.val, (e.isAtom_iff _).2 a.property⟩
-      invFun := fun b => ⟨e.symm b.val, (e.symm.isAtom_iff _).2 b.property⟩
-      left_inv := fun a => Subtype.ext (e.symm_apply_apply a.val)
-      right_inv := fun b => Subtype.ext (e.apply_symm_apply b.val) }
+  Nat.card_congr (e.toEquiv.subtypeEquiv fun a => (e.isAtom_iff a).symm)
 
 theorem tamari_atom_card_le (n : ℕ) : Nat.card {t : Trees (n + 1) // IsAtom t} ≤ n :=
   (orderIso_atomCard (treeBracketOrderIso (n + 1))).trans_le (bracket_atom_card_le n)
