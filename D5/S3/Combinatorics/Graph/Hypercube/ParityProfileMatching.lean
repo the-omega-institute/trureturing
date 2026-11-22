@@ -320,15 +320,13 @@ private theorem profile_cap_necessary (n k : ℕ) (C : Fin (n + 2) → ℕ)
     (fun a => coordinates_detect_difference a.1 a.2) cap
   exact h
 
-private theorem profile_cap_sufficient (n k : ℕ) (C : Fin (n + 2) → ℕ) (cap : k * 2 ^ n ≤ ∑ i, C i) :
-    ∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
-      (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
-      ∀ i, k * 2 ^ n - C i ≤ commonOneCount w i := by
+/-- The two bit-one marginals split into twice the common-one count and the mismatches. -/
+theorem mismatch_add_twice_common (n k : ℕ)
+    (w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ)
+    (rows : ∀ p, ∑ q, w p q = k) (cols : ∀ q, ∑ p, w p q = k) (i : Fin (n + 2)) :
+    2 * (k * 2 ^ n) = 2 * commonOneCount w i +
+      (∑ p, ∑ q, if p.val i ≠ q.val i then w p q else 0) := by
   classical
-  obtain ⟨w, rows, cols, mismatch⟩ := matching_profile_counts n k C cap
-  refine ⟨w, rows, cols, ?_⟩
-  intro i
-  let diff : ℕ := ∑ p, ∑ q, if p.val i ≠ q.val i then w p q else 0
   have pointwise (p : ParityClass (n + 2) 0) (q : ParityClass (n + 2) 1) :
       (if p.val i = 1 then w p q else 0) + (if q.val i = 1 then w p q else 0) =
       2 * (if p.val i = 1 ∧ q.val i = 1 then w p q else 0) +
@@ -339,7 +337,19 @@ private theorem profile_cap_sufficient (n k : ℕ) (C : Fin (n + 2) → ℕ) (ca
     (fun p _ => sum_congr (rfl : (univ : Finset (ParityClass (n + 2) 1)) = univ) (fun q _ => pointwise p q))
   simp only [sum_add_distrib, ← mul_sum, (weighted_bit_totals n k w rows cols i).1,
     (weighted_bit_totals n k w rows cols i).2] at summed
-  change k * 2 ^ n + k * 2 ^ n = 2 * commonOneCount w i + diff at summed
+  simpa only [two_mul, commonOneCount] using summed
+
+private theorem profile_cap_sufficient (n k : ℕ) (C : Fin (n + 2) → ℕ) (cap : k * 2 ^ n ≤ ∑ i, C i) :
+    ∃ w : ParityClass (n + 2) 0 → ParityClass (n + 2) 1 → ℕ,
+      (∀ p, ∑ q, w p q = k) ∧ (∀ q, ∑ p, w p q = k) ∧
+      ∀ i, k * 2 ^ n - C i ≤ commonOneCount w i := by
+  classical
+  obtain ⟨w, rows, cols, mismatch⟩ := matching_profile_counts n k C cap
+  refine ⟨w, rows, cols, ?_⟩
+  intro i
+  let diff : ℕ := ∑ p, ∑ q, if p.val i ≠ q.val i then w p q else 0
+  have summed := mismatch_add_twice_common n k w rows cols i
+  change 2 * (k * 2 ^ n) = 2 * commonOneCount w i + diff at summed
   have diffBound : diff ≤ 2 * C i := mismatch i
   omega
 

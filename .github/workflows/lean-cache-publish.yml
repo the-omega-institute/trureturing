@@ -162,6 +162,7 @@ jobs:
       actions: read
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
+      sparse-release: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' }}
       source: ${{ github.sha }}
       indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == 'dev' }}
 
@@ -180,11 +181,12 @@ jobs:
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.scheduled-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ needs.scheduled-compile.outputs.history-depth || '2' }}
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
@@ -281,6 +283,7 @@ jobs:
       actions: read
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
+      sparse-release: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' }}
       source: ${{ needs.manual-release-authorize.outputs.source_sha }}
       indexed: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_SHARDS_REF == 'dev' }}
 
@@ -299,6 +302,7 @@ jobs:
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.manual-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
       - name: Recheck the actor for this publication attempt
         run: |
@@ -309,7 +313,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ needs.manual-release-authorize.outputs.source_sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ needs.manual-compile.outputs.history-depth || '2' }}
           persist-credentials: false
       - name: Install the pinned tools release
         if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''

@@ -1,19 +1,28 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+import Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import Reg.Support.DependentFamily
 
 /-! Source-bound audits of the component formula for the quaternion inner product, of the inner
-product of features and of the radius of the sphere of unit quaternions, and full-telescope source applications for the four
-closed statements about the model.
+product of features, of the radius of the sphere of unit quaternions, of the path-connectedness of
+the unit quaternions and of the continuity of the reading, and full-telescope source applications
+for the four closed statements about the model.
 Those applications supply only the original statements; they supply no enrolled-template
 readout, source selection, whole-family intervention, sensitivity or observational dependence.
 The unfinished registrations are tracked at
-https://github.com/the-omega-institute/trureturing/issues/31741. -/
+https://github.com/the-omega-institute/trureturing/issues/31741.
+
+The continuity of the reading is audited through the comparison structure whose reading is
+taken; the rejected reading is the indicator of the diagonal, which separates the point `1` from
+the rest of the connected group of unit quaternions, and the observed structures are the unit
+quaternion model and its discrete reading. -/
 
 namespace Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 
 open _root_.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup (TernaryComparison)
+open Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonGroup (discrete)
 
 open scoped InnerProductSpace Quaternion
 
@@ -276,6 +285,259 @@ def coe_unitary_eq_sphere_registration :
     coordinates := #[]
     readouts := #[{
       path := #["arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-- The unit quaternion `1` differs from `i`. -/
+theorem one_ne_unitI : (1 : unitary ℍ[ℝ]) ≠ unitI := by
+  intro h
+  have h' := congrArg (fun q : unitary ℍ[ℝ] => (q : ℍ[ℝ]).re) h
+  change ((1 : unitary ℍ[ℝ]) : ℍ[ℝ]).re = (unitI : ℍ[ℝ]).re at h'
+  simp [unitI] at h'
+
+/-- A topology on the unit quaternions in which every set is open is not preconnected. -/
+theorem not_preconnectedSpace_of_forall_isOpen (τ : TopologicalSpace (unitary ℍ[ℝ]))
+    (hτ : ∀ s : Set (unitary ℍ[ℝ]), @IsOpen _ τ s) : ¬ @PreconnectedSpace _ τ := by
+  intro hp
+  have hc : @IsClopen _ τ {1} := ⟨⟨hτ _⟩, hτ _⟩
+  rcases (@isClopen_iff _ τ hp _).mp hc with h0 | h1
+  · exact Set.singleton_ne_empty _ h0
+  · have hi : unitI ∈ ({1} : Set (unitary ℍ[ℝ])) := by rw [h1]; trivial
+    exact one_ne_unitI (Set.mem_singleton_iff.mp hi).symm
+
+/-- Every set is open in the discrete topology. -/
+theorem isOpen_bot_set {X : Type} (s : Set X) : @IsOpen X ⊥ s :=
+  @isOpen_discrete X ⊥ (discreteTopology_bot X) s
+
+/-! The ambient topology of the quaternions in `pathConnectedSpace_unitary`. -/
+namespace AmbientTopology
+
+/-- Observe the subspace topology of the unit quaternions as a function of the topology of the
+quaternions. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := TopologicalSpace ℍ[ℝ]
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := TopologicalSpace (unitary ℍ[ℝ])
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) t)
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ⊥) (fun e => nomatch e)
+
+/-- Retain the complete statement of `pathConnectedSpace_unitary`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := @PathConnectedSpace (unitary ℍ[ℝ]) (r.readout () () (by infer_instance))
+
+/-- The discrete topology on the unit quaternions is not path-connected: it is not even
+preconnected. -/
+theorem rejected_law : ¬ arena.Law rejected := fun h =>
+  not_preconnectedSpace_of_forall_isOpen ⊥ isOpen_bot_set
+    (@ConnectedSpace.toPreconnectedSpace _ ⊥ (@PathConnectedSpace.connectedSpace _ ⊥ h))
+
+/-- The discrete topology of the quaternions induces the discrete topology on the unit
+quaternions, which differs from the path-connected subspace topology. -/
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (by infer_instance), ⊥, fun h => ?_⟩
+  have hp : @PreconnectedSpace (unitary ℍ[ℝ])
+      (@instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥) := by
+    have h' : @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) (by infer_instance) =
+        @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥ := h
+    rw [← h']
+    have := pathConnectedSpace_unitary
+    exact (inferInstance : PreconnectedSpace (unitary ℍ[ℝ]))
+  refine not_preconnectedSpace_of_forall_isOpen
+    (@instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) ⊥) (fun s => ?_) hp
+  exact (@isOpen_induced_iff _ _ ⊥ s Subtype.val).2
+    ⟨Subtype.val '' s, isOpen_bot_set _, Set.preimage_image_eq _ Subtype.val_injective⟩
+
+abbrev sourceStatement : Prop := type_of% pathConnectedSpace_unitary
+
+def source_registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨pathConnectedSpace_unitary, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end AmbientTopology
+
+def pathConnectedSpace_unitary_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      pathConnectedSpace_unitary (Realization AmbientTopology.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.pathConnectedSpace_unitary_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.AmbientTopology.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨AmbientTopology.arena⟩
+  objectArena := .source ⟨AmbientTopology.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source AmbientTopology.arena ⟨AmbientTopology.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize AmbientTopology.signature
+    (fun _ _ t => @instTopologicalSpaceSubtype ℍ[ℝ] (· ∈ unitary ℍ[ℝ]) t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-- The point `1` is not open in the connected group of unit quaternions. -/
+theorem not_isOpen_singleton_one : ¬ IsOpen ({1} : Set (unitary ℍ[ℝ])) := by
+  intro h
+  have := pathConnectedSpace_unitary
+  have hc : IsClopen ({1} : Set (unitary ℍ[ℝ])) := ⟨isClosed_singleton, h⟩
+  rcases isClopen_iff.mp hc with h0 | h1
+  · exact Set.singleton_ne_empty _ h0
+  · have hi : unitI ∈ ({1} : Set (unitary ℍ[ℝ])) := by rw [h1]; trivial
+    exact one_ne_unitI (Set.mem_singleton_iff.mp hi).symm
+
+/-- A continuous map taking one value at `1` and another value everywhere else does not exist. -/
+theorem not_continuous_of_isolates {X : Type} [TopologicalSpace X] [T1Space X]
+    (g : unitary ℍ[ℝ] → X) (b : X) (hb : g 1 ≠ b) (hg : ∀ x, x ≠ 1 → g x = b) :
+    ¬ Continuous g := by
+  intro hc
+  apply not_isOpen_singleton_one
+  have hpre : g ⁻¹' {b}ᶜ = {1} := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_compl_iff, Set.mem_singleton_iff]
+    constructor
+    · intro hx
+      by_contra hne
+      exact hx (hg x hne)
+    · rintro rfl
+      exact hb
+  rw [← hpre]
+  exact isOpen_compl_singleton.preimage hc
+
+/-! The comparison structure whose reading is taken in `continuous_kappa_quaternionModel`. -/
+namespace Reading
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := TernaryComparison (unitary ℍ[ℝ])
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := unitary ℍ[ℝ] → unitary ℍ[ℝ] → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ C => C.kappa) (fun e => nomatch e)
+
+open Classical in
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ x y => if x = y then 1 else 0) (fun e => nomatch e)
+
+/-- Retain the complete statement of `continuous_kappa_quaternionModel`. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
+    r.readout () () quaternionModel p.1 p.2
+
+/-- The indicator of the diagonal is not continuous on pairs of unit quaternions. -/
+theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  intro h
+  have h' : Continuous fun p : unitary ℍ[ℝ] × unitary ℍ[ℝ] =>
+      if p.1 = p.2 then (1 : ℝ) else 0 := h
+  have hg := h'.comp (continuous_id.prodMk continuous_const :
+    Continuous fun x : unitary ℍ[ℝ] => (x, (1 : unitary ℍ[ℝ])))
+  refine not_continuous_of_isolates _ (0 : ℝ) ?_ ?_ hg
+  · simp
+  · intro x hx
+    simp [hx]
+
+/-- The quaternion model and its discrete reading differ at `(1, i)`. -/
+theorem dependence : ObservationalDependence signature actual := by
+  classical
+  intro i
+  refine ⟨(), quaternionModel, discrete quaternionModel, fun h => ?_⟩
+  have h' : quaternionModel.kappa = (discrete quaternionModel).kappa := h
+  have h1 := congrFun (congrFun h' 1) unitI
+  have h0 : quaternionModel.kappa 1 unitI = 1 / 2 := by
+    change (1 + ⟪((1 : unitary ℍ[ℝ]) : ℍ[ℝ]), (unitI : ℍ[ℝ])⟫_ℝ) / 2 = 1 / 2
+    rw [inner_eq_components]
+    simp [unitI]
+  have h2 : (discrete quaternionModel).kappa 1 unitI = 0 := by
+    simp [discrete, one_ne_unitI]
+  rw [h0, h2] at h1
+  norm_num at h1
+
+abbrev sourceStatement : Prop := type_of% continuous_kappa_quaternionModel
+
+def source_registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨continuous_kappa_quaternionModel, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end Reading
+
+def continuous_kappa_quaternionModel_registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      continuous_kappa_quaternionModel (Realization Reading.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.continuous_kappa_quaternionModel_unit
+  realizationName := `Reg.D5.S3.Quantum.AURICOmega.QuaternionComparisonModel.Reading.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨Reading.arena⟩
+  objectArena := .source ⟨Reading.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source Reading.arena ⟨Reading.source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Reading.signature (fun _ _ C => C.kappa) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

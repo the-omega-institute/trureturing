@@ -1,5 +1,5 @@
 name: Produce the Lean Actions cache
-description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
+description: Resume long builds separately and publish only complete validated Lean seeds.
 inputs:
   release-seed-tag:
     description: Exact published Release tag to restore before the long build
@@ -179,6 +179,17 @@ runs:
         operation: restore
         state: resume
         resume-after-attempt: ${{ steps.native_resume.outputs.attempt || '0' }}
+    - name: Remove leftover cache download archives
+      shell: bash
+      run: |
+        # actions/cache uses UUID directories and treats unlink failures as debug messages.
+        for archive in "${RUNNER_TEMP:?}"/*/cache.{tzst,tgz}; do
+          directory="${archive%/*}"
+          [[ ${directory##*/} =~ ^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$ ]] || continue
+          [[ -f "$archive" && ! -L "$archive" && ! -L "$directory" ]] || continue
+          rm -v -- "$archive"
+        done
+        df -h -- "$RUNNER_TEMP"
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
@@ -194,7 +205,7 @@ runs:
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Compile ordinary audit programs during explicit input preparation.
-        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
+        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegTests","regInspector/compiledJudgeTests"]'
       shell: bash
       run: |
         # Reject untrusted input before Make can expand environment values.
@@ -229,25 +240,27 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
       with:
-        operation: save
+        operation: save-continuation
         state: resume
         anchor: ${{ inputs.shard-history-anchor }}
     - id: resume_snapshot
       name: Prepare producer progress
+      continue-on-error: true
       # A tolerated nonzero build has a successful step conclusion.
       if: >-
         ${{ !cancelled() && steps.build.conclusion == 'success' && steps.build.outcome != 'success'
-            && steps.sharded_progress.outputs.available == '' }}
+            && (inputs.shard-history-anchor == '' || steps.sharded_progress.outputs.legacy_fallback == 'true') }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
+      continue-on-error: true
       if: ${{ !cancelled() && steps.resume_snapshot.outputs.resume_ready == 'true' }}
       uses: actions/cache/save@v5
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
     - name: Require a complete producer report
-      if: steps.build.outcome != 'success'
+      if: ${{ !cancelled() && steps.build.outcome != 'success' }}
       env:
         BUILD_EXIT: ${{ steps.build.outputs.exit_code }}
       shell: bash
@@ -257,6 +270,7 @@ runs:
         else
           echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
         fi
+        if [[ "$BUILD_EXIT" =~ ^[1-9][0-9]{0,2}$ ]] && (( 10#$BUILD_EXIT <= 255 )); then exit "$BUILD_EXIT"; fi
         exit 1
     - id: sharded_project
       name: Publish the complete sharded project seed

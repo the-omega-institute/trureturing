@@ -127,7 +127,7 @@ private lemma G_split {y : ℝ} (hy : 0 < y) :
   rw [h]
   ring
 
-private lemma G_split_nonneg {y : ℝ} (hy : 0 ≤ y) :
+lemma G_split_nonneg {y : ℝ} (hy : 0 ≤ y) :
     G y = (normalizedH y).re + residual y := by
   have hG : Continuous G := by
     unfold G
