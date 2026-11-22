@@ -221,6 +221,25 @@ private theorem cube_opposite_card (b : Bool) :
   rw [hfull] at hc
   omega
 
+/-- Each selected parity has two more vertices than the opposite exterior at order 258. -/
+theorem selected_parity_card_eq_exterior_add_two (U : Finset (Q 9))
+    (hU : U.card = 258) (b : Bool) :
+    (paritySide U b).card = Fintype.card (Exterior U b) + 2 := by
+  classical
+  have hsum : (paritySide U false).card + (paritySide U true).card = U.card := by
+    have hd : Disjoint (paritySide U false) (paritySide U true) := by
+      refine Finset.disjoint_left.mpr fun x hx hy => ?_
+      exact Bool.false_ne_true
+        (((Finset.mem_filter.mp hx).2).symm.trans (Finset.mem_filter.mp hy).2)
+    rw [← Finset.card_union_of_disjoint hd, parity_union, Finset.card_univ]
+    exact Fintype.card_coe U
+  rw [Fintype.card_subtype_compl (fun y : {x : Q 9 // cubeParity x ≠ b} => y.1 ∈ U),
+    cube_opposite_card, interior_card]
+  have hle : (paritySide U (!b)).card ≤ 256 := by
+    rw [← interior_card U b, ← cube_opposite_card b]
+    exact Fintype.card_subtype_le _
+  cases b <;> simp at hle ⊢ <;> omega
+
 /-- The row indices obtained by deleting two vertices from the chosen parity side. -/
 abbrev ReducedRows (S : Finset (Q 9)) (b : Bool) (c d : (S : Set (Q 9))) :=
   ↥(((paritySide S b).erase c).erase d)
