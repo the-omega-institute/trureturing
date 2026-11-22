@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sparse omitted positive zeta ordinates give full weighted phase alignment and the signed-window coefficient. -/
+   digest: Sparse omitted zeta zeros give the full signed-window coefficient. -/
 
 import D5.S3.Analytic.Oscillation.SparseOrdinateMass
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHWeightedPhaseLimsup
@@ -40,7 +40,7 @@ def omittedCount (hRH : RiemannHypothesis) (S : Set ℝ) (T : ℝ) : ℕ :=
 def omittedMass (hRH : RiemannHypothesis) (S : Set ℝ) (T : ℝ) : ℝ :=
   ∑ j ∈ omittedCutoff hRH S T, harmonicWeight j
 
-/-- A sparse omitted multiplicity count gives vanishing harmonic mass on the squared logarithmic scale. -/
+/-- A sparse omitted multiplicity count gives vanishing mass on the squared logarithmic scale. -/
 theorem omittedMass_tendsto_zero (hRH : RiemannHypothesis) (S : Set ℝ)
     (hcount : Tendsto (fun T : ℝ => (omittedCount hRH S T : ℝ) / (T * Real.log T))
       atTop (𝓝 0)) :
@@ -99,32 +99,31 @@ theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set �
     have hj : 0 < ordinate j := j.property.2
     unfold harmonicWeight
     positivity
-  let score (p : ↥kept → Circle) := ∑ j, harmonicWeight j * (p j : ℂ).im
-  have hscore : Continuous score :=
+  let score (s : Finset PositiveZetaZero) (p : ↥s → Circle) :=
+    ∑ j : ↥s, harmonicWeight j * (p j : ℂ).im
+  have hscore (s : Finset PositiveZetaZero) : Continuous (score s) :=
     continuous_finsetSum _ fun j _ => continuous_const.mul
       (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply j)))
   have hfull : BddAbove (range (weightedSine hRH T)) := by
-    let fullScore (p : ↥cutoff → Circle) := ∑ j, harmonicWeight j * (p j : ℂ).im
-    have hfullScore : Continuous fullScore :=
-      continuous_finsetSum _ fun j _ => continuous_const.mul
-        (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply j)))
-    refine (isCompact_univ.image hfullScore).bddAbove.mono ?_
+    refine (isCompact_univ.image (hscore cutoff)).bddAbove.mono ?_
     rintro _ ⟨v, rfl⟩
     refine ⟨fun j => Circle.exp (ordinate j * v), mem_univ _, ?_⟩
-    simp only [fullScore, Complex.exp_ofReal_mul_I_im]
+    simp only [score, Circle.coe_exp, Complex.exp_ofReal_mul_I_im]
     exact Finset.sum_coe_sort cutoff (fun j => harmonicWeight j * Real.sin (ordinate j * v))
   have hscore_bound :
-      score quarter ≤ weightedSineSup hRH T + omittedMass hRH S T := by
+      score kept quarter ≤ weightedSineSup hRH T + omittedMass hRH S T := by
     apply closure_minimal
-      (t := {p | score p ≤ weightedSineSup hRH T + omittedMass hRH S T}) ?_
-      (isClosed_le hscore continuous_const) hquarter
+      (t := {p | score kept p ≤ weightedSineSup hRH T + omittedMass hRH S T}) ?_
+      (isClosed_le (hscore kept) continuous_const) hquarter
     rintro _ ⟨v, rfl⟩
-    change score (orbit v) ≤ weightedSineSup hRH T + omittedMass hRH S T
+    change score kept (orbit v) ≤ weightedSineSup hRH T + omittedMass hRH S T
     have hsplit :
-        score (orbit v) + (∑ j ∈ omittedCutoff hRH S T,
+        score kept (orbit v) + (∑ j ∈ omittedCutoff hRH S T,
           harmonicWeight j * Real.sin (ordinate j * v)) = weightedSine hRH T v := by
-      simp only [score, orbit, Complex.exp_ofReal_mul_I_im, Finset.sum_coe_sort]
-      exact Finset.sum_filter_add_sum_filter_not cutoff (fun j => ordinate j ∈ S) _
+      simp only [score, orbit, Circle.coe_exp, Complex.exp_ofReal_mul_I_im]
+      rw [Finset.sum_coe_sort kept (fun j => harmonicWeight j * Real.sin (ordinate j * v))]
+      exact Finset.sum_filter_add_sum_filter_not cutoff (fun j => ordinate j ∈ S)
+        (fun j => harmonicWeight j * Real.sin (ordinate j * v))
     have homit : -(omittedMass hRH S T) ≤ ∑ j ∈ omittedCutoff hRH S T,
         harmonicWeight j * Real.sin (ordinate j * v) := by
       rw [omittedMass, ← Finset.sum_neg_distrib]
@@ -134,8 +133,9 @@ theorem weightedPhaseDefect_le_omittedMass (hRH : RiemannHypothesis) (S : Set �
     have hsup : weightedSine hRH T v ≤ weightedSineSup hRH T :=
       le_csSup hfull (mem_range_self v)
     linarith
-  have hmass : score quarter + omittedMass hRH S T = harmonicMass hRH T := by
-    simp only [score, quarter, Complex.exp_ofReal_mul_I_im, Real.sin_pi_div_two, mul_one,
+  have hmass : score kept quarter + omittedMass hRH S T = harmonicMass hRH T := by
+    simp only [score, quarter, Circle.coe_exp, Complex.exp_ofReal_mul_I_im,
+      Real.sin_pi_div_two, mul_one,
       Finset.sum_coe_sort, omittedMass, harmonicMass]
     exact Finset.sum_filter_add_sum_filter_not cutoff (fun j => ordinate j ∈ S) harmonicWeight
   rw [weightedPhaseDefect, ← div_self hW.ne', ← sub_div]
@@ -158,6 +158,8 @@ theorem weightedPhaseDefect_tendsto_zero_of_sparse_count
     rw [mul_zero, zero_div] at hnorm
     refine hnorm.congr' ?_
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with T hT
+    change 2 * (omittedMass hRH S T / Real.log T ^ 2) /
+      (harmonicMass hRH T / Real.log T ^ 2) = _
     rw [← mul_div_assoc, div_div_div_cancel_right₀ (pow_ne_zero _ (Real.log_pos hT).ne')]
   have hpos : ∀ᶠ T in atTop, 0 < harmonicMass hRH T := by
     filter_upwards [(tendsto_order.mp hlimit).1 _ hκ] with T hT
