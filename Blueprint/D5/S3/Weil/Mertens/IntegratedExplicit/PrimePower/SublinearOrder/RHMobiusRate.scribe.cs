@@ -16,8 +16,8 @@ internal sealed class RHMobiusRateDocument : IScribeDocumentDefinition
             H("The same window and decay exponent"),
             StatementSource.FromAuthor(WindowEstimate()), AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("The signed residual E(m,a,B) is the integral of the negative part of the "
-                    + "prime-only tail divided by sqrt(x) on [a,B], with 2 log(B/a) and the endpoint "
+                Paragraph(Text("RH denotes Mathlib RiemannHypothesis. The signed residual E(m,a,B) uses "
+                    + "the integral of max(−primeTail(x),0)/sqrt(x) on [a,B], with 2 log(B/a) and the endpoint "
                     + "difference of the ordinary zero primitive subtracted. For 3 ≤ n ≤ m subtract "
                     + "the power difference a^(1/n−1/2)−B^(1/n−1/2) with coefficient "
                     + "−2 μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m and 2n < m+1 subtract the nth root "
@@ -62,7 +62,8 @@ internal sealed class RHMobiusRateDocument : IScribeDocumentDefinition
         var t = F.Id("T");
         var k = F.Id("K");
         var residual = new Formula.FunctionCall(FormulaIdentifier.Create("E"), [m, a, b]);
-        var rate = new Formula.Negate(new Formula.FunctionCall(FormulaIdentifier.Create("s"), [m]));
+        var rate = Subtract(new Formula.Fraction(F.D(1), Add(m, F.D(1))),
+            new Formula.Fraction(F.D(1), F.D(2)));
         var gap = Subtract(new Formula.Power(a, rate), new Formula.Power(b, rate));
         var doubleLog = F.Seq(F.Log, F.Sp, F.Log, F.Sp, F.Open, Add(m, F.D(1)), F.Close);
         var scale = F.Seq(F.Sqrt, F.Grp(Add(F.D(1), doubleLog)));
