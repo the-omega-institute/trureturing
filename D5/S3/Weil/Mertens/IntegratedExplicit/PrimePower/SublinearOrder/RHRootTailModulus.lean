@@ -24,7 +24,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit (actualCoeff)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp (c R cusp_remainder_bound)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity (K K_zero)
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity
-  (actual_cosine_hasSum weight)
+  (weight)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower (rootCoeff rootCoeff_bound)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency)
@@ -41,12 +41,10 @@ private theorem phase_as_orbit (hRH : RiemannHypothesis) (r u : ℝ) (k : ℕ) :
 private theorem cosine_majorant_hasSum (hRH : RiemannHypothesis) (r t : ℝ) :
     HasSum (fun k => (2 * r) * (weight k * (1 - Real.cos ((actualZero k).im * t))))
       ((2 * r) * (K 0 - K t)) := by
-  have h := ((Complex.hasSum_re (actual_cosine_hasSum hRH 0)).sub
-    (Complex.hasSum_re (actual_cosine_hasSum hRH t))).mul_left (2 * r)
-  convert h using 1
-  funext k
-  simp only [Complex.ofReal_re, mul_zero, Real.cos_zero, mul_one, weight]
-  ring
+  convert (cosine_difference_hasSum hRH t).mul_left (-r) using 1
+  · funext k
+    ring
+  · ring
 
 private theorem symmetric_increment_majorant (hRH : RiemannHypothesis) {r : ℝ}
     (hr : 1 < r) (h u : ℝ) :

@@ -88,7 +88,8 @@ theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u :
   rw [phase_eq hRH hr u k, norm_mul, Complex.norm_exp_ofReal_mul_I, mul_one]
   exact rootCoeff_bound hr k
 
-private theorem cosine_difference_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
+/-- The cosine-kernel increment is the sum of the weighted cosine-mode increments. -/
+theorem cosine_difference_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
     HasSum (fun k => 2 * (Real.cos ((actualZero k).im * t) - 1) * weight k)
       (2 * (K t - K 0)) := by
   have hd := ((Complex.hasSum_re (actual_cosine_hasSum hRH t)).sub
