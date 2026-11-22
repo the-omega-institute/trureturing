@@ -17,7 +17,7 @@ universe u
 
 noncomputable section
 
-private abbrev Params := Σ V : Type u, Σ _ : Fintype V, Σ _ : V → ℕ, V × ℕ
+private abbrev Params := Σ V : Type u, Σ _ : Fintype V, Σ _ : V → ℕ, Σ _ : V, ℕ
 
 abbrev signature : Signature where
   Params := Params.{u}
