@@ -44,6 +44,28 @@ def read_pin(revision):
     return pin
 
 
+def verify_adopted_source(pin):
+    repo = "the-omega-institute/trureturing-tools"
+    version = pin["version"]
+    preview = "-" in version
+    branch = "dev" if preview else "main"
+    metadata = json.loads(subprocess.check_output([
+        "gh", "api", f"repos/{repo}/releases/tags/{version}",
+        "--jq", "{tag_name, draft, prerelease, assets: [.assets[] | select(.name == \"trureturing-tools.tar.gz\") | {state,digest}]}",
+    ]))
+    if (metadata["tag_name"] != version or metadata["draft"] or metadata["prerelease"] != preview
+            or metadata["assets"] != [{"state": "uploaded", "digest": "sha256:" + pin["sha256"]}]):
+        raise ValueError(f"{version} does not match the published tools archive and checksum")
+    commits = json.loads(subprocess.check_output([
+        "gh", "api", f"repos/{repo}/compare/{version}...{branch}?per_page=1",
+        "--jq", "{source: .base_commit.sha, ancestor: .merge_base_commit.sha}",
+    ]))
+    source = commits["source"]
+    if not isinstance(source, str) or not re.fullmatch(r"[0-9a-f]{40}", source) or commits["ancestor"] != source:
+        raise ValueError(f"merge the source of {version} into trureturing-tools/{branch} before adopting it on dev")
+    print(f"Verified tools {version} at {source} on trureturing-tools/{branch}")
+
+
 def digest(path):
     with path.open("rb") as source:
         return hashlib.file_digest(source, "sha256").hexdigest()
@@ -191,9 +213,13 @@ def main():
     parser.add_argument("--archive", type=Path, help="use a local copy of the pinned release asset")
     parser.add_argument("--cache-from", type=Path, help="reuse a matching release cached in this checkout")
     parser.add_argument("--cache-revision", help="cache this revision's tools without installing them")
+    parser.add_argument("--verify-adopted-source", action="store_true", help="verify the published pin and upstream source for downstream dev")
     args = parser.parse_args()
     pin = read_pin(args.cache_revision)
     if pin is None:
+        return
+    if args.verify_adopted_source:
+        verify_adopted_source(pin)
         return
     CACHE.mkdir(parents=True, exist_ok=True)
     with (CACHE / "install.lock").open("a") as lock:

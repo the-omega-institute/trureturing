@@ -169,26 +169,30 @@ private theorem own_price_minimizer {S : Finset ℕ} (hS : primeSupport S)
   unfold tangentRemainder at hrem
   nlinarith only [hrem, hmin]
 
-private theorem log_mul_infimum_tendsto_zero :
-    Tendsto (fun P => prefixEll P * integerInfimum (Nat.primesLE P)) atTop (𝓝 0) := by
+private theorem sqrt_mul_log_mul_infimum_tendsto :
+    Tendsto (fun P => sqrt (prefixH P) * prefixEll P * integerInfimum (Nat.primesLE P))
+      atTop (𝓝 (2 * sqrt 2)) := by
   have h := IntegerInfimumSecondOrder.actual_integer_infimum_second_order.div_atTop prefixEll_atTop
   have hcentered : Tendsto (fun P => sqrt (prefixH P) * prefixEll P *
       integerInfimum (Nat.primesLE P) - 2 * sqrt 2) atTop (𝓝 0) := by
     apply h.congr'
     filter_upwards [prefixEll_atTop.eventually_gt_atTop 0] with P hL
     exact mul_div_cancel_left₀ _ hL.ne'
-  have hlead := hcentered.add_const (2 * sqrt 2)
-  simp only [sub_add_cancel, zero_add] at hlead
-  apply (hlead.div_atTop (tendsto_sqrt_atTop.comp prefixH_atTop)).congr'
+  simpa only [sub_add_cancel, zero_add] using hcentered.add_const (2 * sqrt 2)
+
+private theorem log_mul_infimum_tendsto_zero :
+    Tendsto (fun P => prefixEll P * integerInfimum (Nat.primesLE P)) atTop (𝓝 0) := by
+  apply (sqrt_mul_log_mul_infimum_tendsto.div_atTop (tendsto_sqrt_atTop.comp prefixH_atTop)).congr'
   filter_upwards [prefixH_atTop.eventually_gt_atTop 0] with P hH
   dsimp only [Function.comp_apply]
   rw [mul_assoc, mul_div_cancel_left₀ _ (sqrt_pos.mpr hH).ne']
 
-private theorem own_price_ratio {a : ℕ → ℕ → ℕ}
+private theorem own_price_sqrt_band {a : ℕ → ℕ → ℕ}
     (ha : ∀ᶠ P in atTop, supportedAdmissible (Nat.primesLE P) (a P) ∧
       integerCost (Nat.primesLE P) (a P) = integerInfimum (Nat.primesLE P)) :
-    Tendsto (fun P => ownPrice (Nat.primesLE P) (fun p => (a P p : ℝ)) / prefixPrice P)
-      atTop (𝓝 1) := by
+    ∀ᶠ P in atTop,
+      |ownPrice (Nat.primesLE P) (fun p => (a P p : ℝ)) / prefixPrice P - 1| ≤
+        (4 * (2 * sqrt 2 + 1)) / sqrt (prefixH P) := by
   let I : ℕ → ℝ := fun P => integerInfimum (Nat.primesLE P)
   let q : ℕ → ℝ := fun P =>
     ownPrice (Nat.primesLE P) (fun p => (a P p : ℝ)) / prefixPrice P
@@ -225,7 +229,7 @@ private theorem own_price_ratio {a : ℕ → ℕ → ℕ}
       nlinarith only [hlog', mul_le_mul_of_nonneg_left hexp hL.le]
     have hq : q P = (H / T) * (log H / log T) := by
       change (1 / (T * log T)) / (1 / (H * log H)) = _
-      field_simp [hH0.ne', hT0.ne', hL.ne', (log_pos hT).ne'] <;> ring
+      field_simp [hH0.ne', hT0.ne', hL.ne', (log_pos hT).ne']
     have hr0 : 0 ≤ H / T := div_nonneg hH0.le hT0.le
     have hr1 : H / T ≤ 1 := (div_le_iff₀ hT0).2 (by simpa only [one_mul] using hHT)
     have hs0 : 0 ≤ log H / log T := div_nonneg hL.le (log_pos hT).le
@@ -249,12 +253,20 @@ private theorem own_price_ratio {a : ℕ → ℕ → ℕ}
           ((mul_le_mul_of_nonneg_left hs hr0).trans (by
             simpa only [one_mul] using mul_le_mul_of_nonneg_right hr1 hx0))
         _ ≤ _ := by linarith only [hxupper]
-  have hu := (log_mul_infimum_tendsto_zero.const_mul 4).const_sub 1
-  simp only [mul_zero, sub_zero] at hu
-  change Tendsto q atTop (𝓝 1)
-  exact tendsto_of_tendsto_of_tendsto_of_le_of_le' hu tendsto_const_nhds
-    (hbound.mono fun _ h => by linarith only [h.2])
-    (hbound.mono fun _ h => by linarith only [h.1])
+  filter_upwards [hbound, prefixH_atTop.eventually_gt_atTop 0,
+    sqrt_mul_log_mul_infimum_tendsto.eventually_lt_const
+      (show 2 * sqrt (2 : ℝ) < 2 * sqrt 2 + 1 by linarith)] with P hdev hH hlead
+  have hS := sqrt_pos.mpr hH
+  change |q P - 1| ≤ _
+  rw [abs_sub_comm, abs_of_nonneg hdev.1]
+  apply (le_div_iff₀ hS).2
+  calc
+    _ ≤ (4 * (prefixEll P * I P)) * sqrt (prefixH P) :=
+      mul_le_mul_of_nonneg_right hdev.2 hS.le
+    _ = 4 * (sqrt (prefixH P) * prefixEll P * integerInfimum (Nat.primesLE P)) := by
+      dsimp only [I]
+      ring
+    _ ≤ _ := mul_le_mul_of_nonneg_left hlead.le (by norm_num)
 
 private theorem scaled_quadratic_tendsto {T u : ℕ → ℝ}
     (hHT : ∀ᶠ P in atTop, prefixH P ≤ T P)
@@ -289,6 +301,26 @@ private theorem scaled_quadratic_tendsto {T u : ℕ → ℝ}
   unfold activationDensity
   field_simp [hH0.ne', (log_pos hH).ne', (zero_lt_one.trans hTP).ne', (log_pos hTP).ne']
 
+/-- Global log-log curvature bounds specialized to a nonnegative clock increment. -/
+theorem tangent_remainder_quadratic {H u : ℝ} (hH : 1 < H) (hu : 0 ≤ u) :
+    activationDensity (H + u) * u ^ 2 / 2 ≤ tangentRemainder H (H + u) ∧
+      tangentRemainder H (H + u) ≤ activationDensity H * u ^ 2 / 2 := by
+  let T := H + u
+  have hHT : H ≤ T := le_add_of_nonneg_right hu
+  have hT : 1 < T := hH.trans_le hHT
+  have hdiff : T - H = u := by dsimp only [T]; ring
+  have hq := loglog_tangent_gap_quadratic (a := H) hH hT
+  dsimp only at hq
+  rw [max_eq_right hHT, min_eq_left hHT] at hq
+  have hrem : tangentRemainder H T =
+      log (log H) + (T - H) / (H * log H) - log (log T) := by
+    simp only [tangentRemainder, terminalCost, g, div_eq_mul_inv]
+    ring
+  change activationDensity T * u ^ 2 / 2 ≤ tangentRemainder H T ∧
+    tangentRemainder H T ≤ activationDensity H * u ^ 2 / 2
+  rw [hrem]
+  simpa only [activationDensity, add_comm (log T) 1, add_comm (log H) 1, hdiff] using hq
+
 private theorem scaled_remainder_tendsto {u : ℕ → ℝ}
     (hu₀ : ∀ᶠ P in atTop, 0 ≤ u P)
     (hu : Tendsto (fun P => u P / sqrt (prefixH P)) atTop (𝓝 (sqrt 2))) :
@@ -312,23 +344,9 @@ private theorem scaled_remainder_tendsto {u : ℕ → ℝ}
       let T := H + u P
       H * log H * (activationDensity T * u P ^ 2 / 2) ≤ H * log H * tangentRemainder H T ∧
       H * log H * tangentRemainder H T ≤ H * log H * (activationDensity H * u P ^ 2 / 2) := by
-    filter_upwards [prefixH_atTop.eventually_gt_atTop 1, hHT] with P hH hle
+    filter_upwards [prefixH_atTop.eventually_gt_atTop 1, hu₀] with P hH huP
     let H := prefixH P
-    let T := H + u P
-    have hHT' : H ≤ T := hle
-    have hT : 1 < T := hH.trans_le hHT'
-    have hdiff : T - H = u P := by dsimp only [T]; ring
-    have hq := loglog_tangent_gap_quadratic (a := H) hH hT
-    dsimp only at hq
-    rw [max_eq_right hHT', min_eq_left hHT'] at hq
-    have hq' : activationDensity T * u P ^ 2 / 2 ≤ tangentRemainder H T ∧
-        tangentRemainder H T ≤ activationDensity H * u P ^ 2 / 2 := by
-      have hrem : tangentRemainder H T =
-          log (log H) + (T - H) / (H * log H) - log (log T) := by
-        simp only [tangentRemainder, terminalCost, g, div_eq_mul_inv]
-        ring
-      rw [hrem]
-      simpa only [activationDensity, add_comm (log T) 1, add_comm (log H) 1, hdiff] using hq
+    have hq' := tangent_remainder_quadratic hH huP
     have hpos : 0 ≤ H * log H := mul_nonneg (zero_lt_one.trans hH).le (log_pos hH).le
     exact ⟨mul_le_mul_of_nonneg_left hq'.1 hpos, mul_le_mul_of_nonneg_left hq'.2 hpos⟩
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le'
@@ -336,13 +354,22 @@ private theorem scaled_remainder_tendsto {u : ℕ → ℝ}
     (scaled_quadratic_tendsto (Eventually.of_forall fun _ => le_rfl) hbase hu)
     (hbounds.mono fun _ h => h.1) (hbounds.mono fun _ h => h.2)
 
-/-- On the literal prime prefix, the fixed-price minimum minus the nonlinear
-integer infimum is asymptotic to `1 / (H * log H)`. -/
-theorem fixed_price_tangent_correction_tendsto :
-    Tendsto (fun P : ℕ =>
-      prefixH P * log (prefixH P) *
-        (fixedPriceMinimum (Nat.primesLE P) (prefixPrice P) -
-          integerInfimum (Nat.primesLE P))) atTop (𝓝 1) := by
+/-- Choose the fixed-price and nonlinear minimizers on each prefix. Eventually their
+clock increments are nonnegative and their tangent remainders bound the scaled gap.
+The price conditions cover the exact prefix price and the nonlinear minimizer's
+own price. -/
+theorem prefix_minimizers_tangent_bounds :
+    ∃ a b : ℕ → ℕ → ℕ, ∃ C : ℝ, ∀ᶠ P : ℕ in atTop,
+      let S := Nat.primesLE P
+      let H := prefixH P
+      let η := prefixPrice P
+      let lam := ownPrice S (fun p => (b P p : ℝ))
+      let gap := H * log H * (fixedPriceMinimum S η - integerInfimum S)
+      (IsMinimizer S η (a P) ∧ IsMinimizer S lam (b P)) ∧
+        (0 ≤ clockIncrement S (a P) ∧ 0 ≤ clockIncrement S (b P)) ∧
+        (η / η = 1 ∧ |lam / η - 1| ≤ C / sqrt H) ∧
+        H * log H * tangentRemainder H (H + clockIncrement S (a P)) ≤ gap ∧
+        gap ≤ H * log H * tangentRemainder H (H + clockIncrement S (b P)) := by
   classical
   have hex (P : ℕ) : ∃ a b : ℕ → ℕ,
       (1 < prefixH P ∧ primeSupport (Nat.primesLE P) ∧ 0 < prefixPrice P) →
@@ -368,19 +395,6 @@ theorem fixed_price_tangent_correction_tendsto :
       1 < prefixH P ∧ primeSupport (Nat.primesLE P) ∧ 0 < prefixPrice P := by
     filter_upwards [prefixH_atTop.eventually_gt_atTop 1, eventual_prefix_domains] with P hH hd
     exact ⟨hH, hd.1, hd.2.2.2.1⟩
-  have ha : ∀ᶠ P in atTop, IsMinimizer (Nat.primesLE P) (prefixPrice P) (a P) :=
-    hdomain.mono fun P hd => (hab P hd).1.1
-  have hrel₀ : Tendsto (fun P => prefixPrice P / prefixPrice P) atTop (𝓝 1) := by
-    apply (tendsto_const_nhds (x := (1 : ℝ))).congr'
-    filter_upwards [hdomain] with P hd
-    exact (div_self hd.2.2.ne').symm
-  have hrel₁ := own_price_ratio (a := b) (hdomain.mono fun P hd =>
-    ⟨(hab P hd).2.1.1, (hab P hd).2.2⟩)
-  have hown : ∀ᶠ P in atTop,
-      IsMinimizer (Nat.primesLE P) (ownPrice (Nat.primesLE P) (fun p => (b P p : ℝ))) (b P) :=
-    hdomain.mono fun P hd => own_price_minimizer hd.2.1 hd.1 (hab P hd).2.1
-  have haClock := fixed_price_minimizer_clock_tendsto hrel₀ ha
-  have hbClock := fixed_price_minimizer_clock_tendsto hrel₁ hown
   have hclock (P : ℕ) (x : ℕ → ℕ) :
       clock (Nat.primesLE P) (fun p => (x p : ℝ)) =
         prefixH P + clockIncrement (Nat.primesLE P) x := by
@@ -395,37 +409,57 @@ theorem fixed_price_tangent_correction_tendsto :
       theta_le_clock hs (fun p hp => by exact_mod_cast hx p hp)
     rw [hclock] at hle
     linarith only [hle]
-  have ha₀ : ∀ᶠ P in atTop, 0 ≤ clockIncrement (Nat.primesLE P) (a P) :=
-    hdomain.mono fun P hd => hnonneg P hd.2.1 (hab P hd).1.1.1
-  have hb₀ : ∀ᶠ P in atTop, 0 ≤ clockIncrement (Nat.primesLE P) (b P) :=
-    hdomain.mono fun P hd => hnonneg P hd.2.1 (hab P hd).2.1.1
-  have hbounds : ∀ᶠ P in atTop,
-      let H := prefixH P
-      let V := fixedPriceMinimum (Nat.primesLE P) (prefixPrice P)
-      let I := integerInfimum (Nat.primesLE P)
-      H * log H * tangentRemainder H (H + clockIncrement (Nat.primesLE P) (a P)) ≤
-          H * log H * (V - I) ∧
-        H * log H * (V - I) ≤
-          H * log H * tangentRemainder H (H + clockIncrement (Nat.primesLE P) (b P)) := by
-    filter_upwards [hdomain] with P hd
-    dsimp only
-    rw [← hclock P (a P), ← hclock P (b P)]
-    obtain ⟨⟨haP, hVa⟩, ⟨hbP, hIb⟩⟩ := hab P hd
-    have hforms (x : ℕ → ℕ) (hx : supportedAdmissible (Nat.primesLE P) x) :
-        linearCost (Nat.primesLE P) (prefixPrice P) x = integerCost (Nat.primesLE P) x +
-          tangentRemainder (prefixH P) (clock (Nat.primesLE P) (fun p => (x p : ℝ))) :=
-      (integer_loss_forms hd.2.1 hx).2
-    have hfa := hforms (a P) haP.1
-    have hfb := hforms (b P) hbP.1
-    have hlinear := haP.2 (b P) hbP.1
-    have hinteger := hbP.2 (a P) haP.1
-    have hs : 0 ≤ prefixH P * log (prefixH P) :=
-      mul_nonneg (zero_lt_one.trans hd.1).le (log_pos hd.1).le
-    constructor <;> apply mul_le_mul_of_nonneg_left _ hs
-    · linarith only [hfa, hVa, hinteger, hIb]
-    · linarith only [hfb, hVa, hlinear, hIb]
+  have hband := own_price_sqrt_band (a := b) (hdomain.mono fun P hd =>
+    ⟨(hab P hd).2.1.1, (hab P hd).2.2⟩)
+  refine ⟨a, b, 4 * (2 * sqrt 2 + 1), ?_⟩
+  filter_upwards [hdomain, hband] with P hd hbandP
+  dsimp only
+  rw [← hclock P (a P), ← hclock P (b P)]
+  obtain ⟨⟨haP, hVa⟩, ⟨hbP, hIb⟩⟩ := hab P hd
+  have hforms (x : ℕ → ℕ) (hx : supportedAdmissible (Nat.primesLE P) x) :
+      linearCost (Nat.primesLE P) (prefixPrice P) x = integerCost (Nat.primesLE P) x +
+        tangentRemainder (prefixH P) (clock (Nat.primesLE P) (fun p => (x p : ℝ))) :=
+    (integer_loss_forms hd.2.1 hx).2
+  have hfa := hforms (a P) haP.1
+  have hfb := hforms (b P) hbP.1
+  have hlinear := haP.2 (b P) hbP.1
+  have hinteger := hbP.2 (a P) haP.1
+  have hs : 0 ≤ prefixH P * log (prefixH P) :=
+    mul_nonneg (zero_lt_one.trans hd.1).le (log_pos hd.1).le
+  refine ⟨⟨haP, own_price_minimizer hd.2.1 hd.1 hbP⟩,
+    ⟨hnonneg P hd.2.1 haP.1, hnonneg P hd.2.1 hbP.1⟩, ⟨div_self hd.2.2.ne', hbandP⟩, ?_, ?_⟩
+  · apply mul_le_mul_of_nonneg_left _ hs
+    linarith only [hfa, hVa, hinteger, hIb]
+  · apply mul_le_mul_of_nonneg_left _ hs
+    linarith only [hfb, hVa, hlinear, hIb]
+
+/-- On the literal prime prefix, the fixed-price minimum minus the nonlinear
+integer infimum is asymptotic to `1 / (H * log H)`. -/
+theorem fixed_price_tangent_correction_tendsto :
+    Tendsto (fun P : ℕ =>
+      prefixH P * log (prefixH P) *
+        (fixedPriceMinimum (Nat.primesLE P) (prefixPrice P) -
+          integerInfimum (Nat.primesLE P))) atTop (𝓝 1) := by
+  obtain ⟨a, b, C, hab⟩ := prefix_minimizers_tangent_bounds
+  have ha : ∀ᶠ P in atTop, IsMinimizer (Nat.primesLE P) (prefixPrice P) (a P) :=
+    hab.mono fun _ h => h.1.1
+  have hown : ∀ᶠ P in atTop,
+      IsMinimizer (Nat.primesLE P) (ownPrice (Nat.primesLE P) (fun p => (b P p : ℝ))) (b P) :=
+    hab.mono fun _ h => h.1.2
+  have hrel₀ : Tendsto (fun P => prefixPrice P / prefixPrice P) atTop (𝓝 1) :=
+    (tendsto_const_nhds (x := (1 : ℝ))).congr' (hab.mono fun _ h => h.2.2.1.1.symm)
+  have hrel₁ : Tendsto
+      (fun P => ownPrice (Nat.primesLE P) (fun p => (b P p : ℝ)) / prefixPrice P)
+      atTop (𝓝 1) := by
+    apply tendsto_iff_dist_tendsto_zero.mpr
+    simp only [Real.dist_eq]
+    exact squeeze_zero' (Eventually.of_forall fun _ => abs_nonneg _) (hab.mono fun _ h => h.2.2.1.2)
+      ((tendsto_sqrt_atTop.comp prefixH_atTop).const_div_atTop C)
+  have haClock := fixed_price_minimizer_clock_tendsto hrel₀ ha
+  have hbClock := fixed_price_minimizer_clock_tendsto hrel₁ hown
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le'
-    (scaled_remainder_tendsto ha₀ haClock) (scaled_remainder_tendsto hb₀ hbClock)
-    (hbounds.mono fun _ h => h.1) (hbounds.mono fun _ h => h.2)
+    (scaled_remainder_tendsto (hab.mono fun _ h => h.2.1.1) haClock)
+    (scaled_remainder_tendsto (hab.mono fun _ h => h.2.1.2) hbClock)
+    (hab.mono fun _ h => h.2.2.2.1) (hab.mono fun _ h => h.2.2.2.2)
 
 end D5.S3.Arith.Robin.PriceRecord.FixedPriceTangentCorrection
