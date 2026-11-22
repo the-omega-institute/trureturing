@@ -23,6 +23,8 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
 
 open SimpleGraph
+
+open private arc mem_arc from D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
 open scoped BigOperators
 
 /-- Count and sum of vertex orders, with the same multiplicity on each configuration. -/
@@ -373,8 +375,8 @@ private def properLength : Fin 4999 ≃ {l : Fin 5000 // 0 < l.val} where
 private theorem proper_mem_iff (start : Fin 5000) (i : Fin 4999) (m : Fin 5000) :
     m ∈ CycleInterval.vertices (m := 4997) (.inr (start, properLength i)) ↔
       (m - start).val ≤ i.val := by
-  change (m ∈ ZeroForcing.CycleConnectedForcing.arc (m := 4997) start (i.val+1)) ↔ _
-  rw [ZeroForcing.CycleConnectedForcing.mem_arc]
+  change (m ∈ arc (m := 4997) start (i.val+1)) ↔ _
+  rw [mem_arc]
   exact Nat.lt_succ_iff
 
 private theorem proper_arc_not_full (start : Fin 5000) (i : Fin 4999) :

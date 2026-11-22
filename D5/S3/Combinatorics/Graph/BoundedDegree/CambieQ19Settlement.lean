@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Graph
 import D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
 import D5.S3.Combinatorics.Graph.ZeroForcing.PathConnectedForcing
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Batteries.Tactic.OpenPrivate
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Field.Rat
 
@@ -21,6 +22,11 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
 
 open SimpleGraph
+
+open private arc mem_arc arc_connected eq_arc_of_connected card_arc arc_injective from
+  D5.S3.Combinatorics.Graph.ZeroForcing.CycleConnectedForcing
+open private interval_connected convex_of_connected from
+  D5.S3.Combinatorics.Graph.ZeroForcing.PathConnectedForcing
 open scoped BigOperators
 
 /-- The actual tree subgraphs of order k. The vertices are part of each subgraph. -/
@@ -61,7 +67,7 @@ def claim : Prop :=
 section Intervals
 
 private abbrev cycleArc {m : ℕ} (a : Fin (m + 3)) (i : ℕ) :=
-  ZeroForcing.CycleConnectedForcing.arc a i
+  arc a i
 
 /-- A cycle support is either the whole cycle or a proper arc with nonzero length. -/
 abbrev CycleInterval (m : ℕ) := Unit ⊕ (Fin (m + 3) × {l : Fin (m + 3) // 0 < l.val})
@@ -78,7 +84,7 @@ private theorem CycleInterval.connected {m : ℕ} (c : CycleInterval m) :
     ((cycleGraph (m + 3)).induce c.vertices).Connected := by
   rcases c with _ | ⟨x, l⟩
   · exact ((induceUnivIso _).connected_iff).mpr connected_cycleGraph_add_one
-  · exact ZeroForcing.CycleConnectedForcing.arc_connected x l.val.val l.property
+  · exact arc_connected x l.val.val l.property
 
 private theorem CycleInterval.card_vertices {m : ℕ} (c : CycleInterval m) :
     Nat.card c.vertices = c.order := by
@@ -88,7 +94,7 @@ private theorem CycleInterval.card_vertices {m : ℕ} (c : CycleInterval m) :
     rw [show Nat.card ↥(↑(cycleArc x l.val.val) : Set (Fin (m + 3))) =
         (cycleArc x l.val.val).card from
       (Nat.card_eq_fintype_card (α := ↥(cycleArc x l.val.val))).trans (Fintype.card_coe _),
-      ZeroForcing.CycleConnectedForcing.card_arc, min_eq_right l.val.isLt.le]
+      card_arc, min_eq_right l.val.isLt.le]
 
 private theorem CycleInterval.injective_vertices {m : ℕ} :
     Function.Injective (@CycleInterval.vertices m) := by
@@ -103,7 +109,7 @@ private theorem CycleInterval.injective_vertices {m : ℕ} :
     subst k
     have hab : cycleArc x l.val.val = cycleArc y l.val.val :=
       Finset.coe_injective h
-    have hxy := ZeroForcing.CycleConnectedForcing.arc_injective
+    have hxy := arc_injective
       l.val.val l.property l.val.isLt hab
     subst y
     rfl
@@ -118,14 +124,14 @@ private theorem CycleInterval.exists_vertices {m : ℕ} (S : Set (Fin (m + 3)))
   obtain ⟨a, ha⟩ := hmiss
   have hc : ((cycleGraph (m + 3)).induce (S.toFinset : Set (Fin (m + 3)))).Connected := by
     rw [Set.coe_toFinset]; exact hS
-  obtain ⟨x, l, hl, he⟩ := ZeroForcing.CycleConnectedForcing.eq_arc_of_connected
+  obtain ⟨x, l, hl, he⟩ := eq_arc_of_connected
     S.toFinset a (by simpa using ha) hc
   have hlt : l < m + 3 := by
     by_contra hn
     have h := (a - x).isLt
     apply ha
     have : a ∈ S.toFinset := by
-      rw [he, ZeroForcing.CycleConnectedForcing.mem_arc]
+      rw [he, mem_arc]
       omega
     simpa using this
   refine ⟨.inr (x, ⟨⟨l, hlt⟩, hl⟩), ?_⟩
@@ -144,7 +150,7 @@ def PathInterval.order {n : ℕ} (p : PathInterval n) : ℕ :=
 
 private theorem PathInterval.connected {n : ℕ} (p : PathInterval n) :
     ((pathGraph n).induce p.vertices).Connected :=
-  ZeroForcing.PathConnectedForcing.interval_connected _ _ p.property
+  interval_connected _ _ p.property
 
 private theorem PathInterval.card_vertices {n : ℕ} (p : PathInterval n) :
     Nat.card p.vertices = p.order := by
@@ -178,7 +184,7 @@ private theorem PathInterval.exists_vertices {n : ℕ} (S : Set (Fin n))
   refine ⟨⟨(a, b), S.toFinset.min'_le _ hb⟩, ?_⟩
   ext x
   constructor
-  · exact fun hx => ZeroForcing.PathConnectedForcing.convex_of_connected hS
+  · exact fun hx => convex_of_connected hS
       (by simpa using ha) (by simpa using hb) hx.1 hx.2
   · intro hx
     have hx' : x ∈ S.toFinset := by simpa using hx
@@ -269,7 +275,7 @@ private theorem prefix_connected {l : Fin 501} (hl : 0 < l.val) :
     change x.val < l.val ↔ 0 ≤ x.val ∧ x.val ≤ l.val - 1
     omega
   rw [h]
-  exact ZeroForcing.PathConnectedForcing.interval_connected 0 b (Fin.zero_le _)
+  exact interval_connected 0 b (Fin.zero_le _)
 
 private theorem exists_prefix {S : Set (Fin 500)}
     (hS : ((pathGraph 500).induce S).Connected) (h0 : 0 ∈ S) :
