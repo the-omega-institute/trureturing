@@ -7,6 +7,10 @@ on:
         description: Protected commit selected for publication
         required: true
         type: string
+      recovery-run:
+        description: Earlier protected full compile run for the selected source
+        type: string
+        default: ''
       strategy:
         description: Automatic, previous Release, or parallel cold build
         type: string
@@ -152,6 +156,22 @@ jobs:
           else
             echo 'seed=parallel' >> "$GITHUB_OUTPUT"
           fi
+      - name: Install the selected recovery scheduler
+        if: inputs.recovery-run != ''
+        env:
+          PARENT_RUN: ${{ inputs.recovery-run }}
+          SOURCE: ${{ inputs.source }}
+        run: |
+          [[ "$PARENT_RUN" =~ ^[1-9][0-9]*$ ]]
+          [[ "$GITHUB_REF_PROTECTED" == true && "$GITHUB_REF_NAME" == diagnostic/lean-compile-progress-* ]]
+          [[ "$(git rev-parse HEAD)" == "$SOURCE" ]]
+          git fetch --depth=1 --no-tags origin "$GITHUB_SHA"
+          git restore --source="$GITHUB_SHA" --worktree -- .github/actions/lean-compile-checkpoint
+          {
+            echo 'LEAN_LAYER_RECOVERY=true'
+            echo "LEAN_LAYER_PARENT_RUN=$PARENT_RUN"
+            echo 'LEAN_NUM_THREADS=2'
+          } >> "$GITHUB_ENV"
       - if: steps.route.outputs.seed == 'parallel'
         uses: ./.github/actions/lean-compile-layer
         with:
@@ -173,6 +193,27 @@ jobs:
           ref: ${{ inputs.source }}
           persist-credentials: false
       - run: python3 .github/scripts/install-tools.py
+      - name: Install the selected recovery scheduler
+        if: inputs.recovery-run != ''
+        env:
+          PARENT_RUN: ${{ inputs.recovery-run }}
+          SOURCE: ${{ inputs.source }}
+        run: |
+          [[ "$PARENT_RUN" =~ ^[1-9][0-9]*$ ]]
+          [[ "$GITHUB_REF_PROTECTED" == true && "$GITHUB_REF_NAME" == diagnostic/lean-compile-progress-* ]]
+          [[ "$(git rev-parse HEAD)" == "$SOURCE" ]]
+          git fetch --depth=1 --no-tags origin "$GITHUB_SHA"
+          git restore --source="$GITHUB_SHA" --worktree -- .github/actions/lean-compile-checkpoint
+          {
+            echo 'LEAN_LAYER_RECOVERY=true'
+            echo "LEAN_LAYER_PARENT_RUN=$PARENT_RUN"
+            echo 'LEAN_NUM_THREADS=2'
+          } >> "$GITHUB_ENV"
       - uses: ./.github/actions/lean-compile-layer
         with:
           stage: ${{ matrix.stage }}
+      - name: Verify the completed native layer roots
+        if: inputs.recovery-run != ''
+        env:
+          STAGE: ${{ matrix.stage }}
+        run: python3 tools/scripts/worktree/lean_compile_layers.py verify --stage "$STAGE" --artifacts "$RUNNER_TEMP/lean-compile"

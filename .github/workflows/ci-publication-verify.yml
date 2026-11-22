@@ -43,7 +43,8 @@ jobs:
       actions: read
     uses: ./.github/workflows/ci-lean-release-compile.yml
     with:
-      source: ${{ github.sha }}
+      source: ${{ inputs.checkpoint_run != '' && '5b5e10416787f6d82b10c6aca950ae5f0e021339' || github.sha }}
+      recovery-run: ${{ inputs.checkpoint_run }}
       strategy: parallel
       publication-mode: verification
 
