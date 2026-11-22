@@ -34,7 +34,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Defs
-import Mathlib.Logic.Equiv.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripData
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508StripData
@@ -76,7 +75,6 @@ open HardinA203981StripData (boundary representatives)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (Row bondDefects forward)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (betw)
 set_option maxRecDepth 100000
-set_option maxHeartbeats 0
 set_option Elab.async false
 
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer (Col cls)
@@ -242,7 +240,7 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
 
 /-- The missing lag-sixteen term has coefficient zero. -/
 def coeff (k : Fin 18) : ℤ :=
-  -(∑ p ∈ Finset.antidiagonal k.val,
+  -(∑ p ∈ Finset.HasAntidiagonal.antidiagonal k.val,
     HardinA229508StripCertificate.squareMonicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2)
 
 /-- The computed expansion in increasing order of the input index. -/

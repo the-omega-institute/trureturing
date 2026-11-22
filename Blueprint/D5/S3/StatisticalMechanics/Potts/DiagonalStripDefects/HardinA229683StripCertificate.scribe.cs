@@ -52,7 +52,7 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
             FormulaBinaryOperator.Multiply,
             Call("HardinA203981StripCertificate.monicCoeff", Call("Prod.snd", p)));
         var sum = Seq(Sum, Underscore,
-            Grp(p, Sp, InMacro, Sp, Call("Finset.antidiagonal", Call("Fin.val", k))),
+            Grp(p, Sp, InMacro, Sp, Call("Finset.HasAntidiagonal.antidiagonal", Call("Fin.val", k))),
             Sp, Parenthesized(product));
         return All("k", Fin("18"), Eq(Call("HardinA229683StripCertificate.coeff", k),
             Seq(Minus, Parenthesized(sum))));

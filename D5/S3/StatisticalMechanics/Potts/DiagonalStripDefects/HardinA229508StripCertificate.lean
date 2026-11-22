@@ -71,7 +71,6 @@ open HardinA203981StripData (boundary representatives)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (Row bondDefects forward forward_eq forward_shift)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (betw)
 set_option maxRecDepth 100000
-set_option maxHeartbeats 0
 set_option Elab.async false
 
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer (Col cls)
@@ -238,7 +237,8 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
 
 /-- The squared monic polynomial, computed as a Cauchy product. -/
 def squareMonicCoeff (n : ℕ) : ℤ :=
-  ∑ p ∈ Finset.antidiagonal n, HardinA203981StripCertificate.monicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2
+  ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n,
+    HardinA203981StripCertificate.monicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2
 
 /-- Recurrence coefficients in increasing order of the input index. -/
 def coeff (k : Fin 12) : ℤ :=
