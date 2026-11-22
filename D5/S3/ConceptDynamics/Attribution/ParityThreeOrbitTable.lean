@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Attribution/ParityThreeOrbitTable
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Attribution/ParityThreeOrbitTable
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
