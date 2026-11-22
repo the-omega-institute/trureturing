@@ -21,20 +21,20 @@ set_option relaxedAutoImplicit false
 noncomputable section
 universe u
 
-abbrev Params := Σ V : Type u, Σ _ : Fintype V, Σ _ : LinearOrder V, Matroid V × Finset V
+abbrev Params := Σ V : Type u, Σ _ : LinearOrder V, Σ _ : Matroid V, Finset V
 abbrev sig := signature Params.{u} (fun p => Chain p.1) (fun p => Chain p.1)
 
 def actual : Realization sig.{u} :=
-  realize sig (fun _ ⟨V, _, ord, M, K⟩ z => @aggregateRestrict V ord M K z) (fun e => nomatch e)
+  realize sig (fun _ ⟨V, ord, M, K⟩ z => @aggregateRestrict V ord M K z) (fun e => nomatch e)
 
 def rejected : Realization sig.{u} :=
   realize sig (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := sig.{u}
-  Law r := ∀ {V : Type u} [fin : Fintype V] [ord : LinearOrder V]
+  Law r := ∀ {V : Type u} [_fin : Fintype V] [ord : LinearOrder V]
       {M : Matroid V} {K : Finset V} (_ : M.IsCircuit (K : Set V)) (u : Chain V),
-    (∃ z : Chain V, TopCycle M z ∧ r.readout () ⟨V, fin, ord, M, K⟩ z = u) ↔
+      (∃ z : Chain V, TopCycle M z ∧ r.readout () ⟨V, ord, M, K⟩ z = u) ↔
       ∃ w : Chain V, TopCycle (M ／ (K : Set V)) w ∧ u = (dualClassGcd M K : ℤ) • w
 
 private abbrev Sample := ULift.{u} Bool
@@ -79,7 +79,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence sig.{u} actual := by
   intro i
-  refine ⟨⟨Sample.{u}, inferInstance, inferInstance, sample, circuit⟩, simplex ∅, 0, ?_⟩
+  refine ⟨⟨Sample.{u}, inferInstance, sample, circuit⟩, simplex ∅, 0, ?_⟩
   intro h
   have he := congrFun h ∅
   change aggregateRestrict sample.{u} circuit (simplex ∅) ∅ =
@@ -116,7 +116,17 @@ def registration :
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.IntegralCircuitImage
+    definition := none
+    coordinates := #[0, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

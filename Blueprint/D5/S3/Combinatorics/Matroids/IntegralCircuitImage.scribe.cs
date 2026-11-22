@@ -37,10 +37,13 @@ internal sealed class IntegralCircuitImageDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "In the reverse direction, delete one parallel class and contract its "
                         + "complement in the circuit. Comparing bases through dual complements "
-                        + "identifies this minor with the circuit contraction. Lift the target "
-                        + "cycle through the independent face in the deletion, then join with "
-                        + "the oriented boundary of the simplex on the class. The shuffle signs "
-                        + "make each vertex in that class contribute the target cycle. An "
+                        + "identifies this minor with the circuit contraction. The deletion has "
+                        + "no coloops because contracting the rank-one flat in the dual leaves "
+                        + "no loops. Multiply the target cycle by the shuffle sign of the class "
+                        + "and its complement in the circuit, lift through the independent face, "
+                        + "and join with the oriented simplex boundary on the class. The join "
+                        + "contributes the same shuffle sign again. Each vertex in the class "
+                        + "therefore contributes the original target cycle. An "
                         + "integer Bezout combination of these class-size multiples gives the gcd "
                         + "multiple. If the original matroid has a coloop, it survives the "
                         + "circuit contraction and the entire target top-cycle lattice is zero."))),

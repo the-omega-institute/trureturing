@@ -7,7 +7,7 @@ internal sealed class IntegralLinkRestrictionDocument : IScribeDocumentDefinitio
     private const string Module = "D5/S3/Combinatorics/Matroids/IntegralLinkRestriction";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Integral top cycles lift through signed restriction to an independent matroid link.",
+        "The exact integral image of signed restriction to an independent matroid link.",
         H("Integral lifting through matroid links"),
         Blocks(
             Describe.Lean(

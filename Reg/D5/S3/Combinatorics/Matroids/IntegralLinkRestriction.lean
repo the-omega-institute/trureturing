@@ -37,12 +37,21 @@ abbrev faceArena : Arena where
     (∃ z : Chain V, TopCycle M z ∧ r.readout () ⟨V, ord, A⟩ z = w) ↔
       TopCycle (M ／ (A : Set V)) w ∧ ((∃ x ∈ A, M.IsColoop x) → w = 0)
 
+abbrev SingletonParams := Σ V : Type u, Σ _ : LinearOrder V, V
+abbrev singletonSig := signature SingletonParams.{u} (fun p => Chain p.1) (fun p => Chain p.1)
+
+def singletonActual : Realization singletonSig.{u} :=
+  realize singletonSig (fun _ ⟨V, ord, x⟩ z => @linkRestrict V ord {x} z) (fun e => nomatch e)
+
+def singletonRejected : Realization singletonSig.{u} :=
+  realize singletonSig (fun _ _ _ => 0) (fun e => nomatch e)
+
 abbrev singletonArena : Arena where
-  signature := sig.{u}
+  signature := singletonSig.{u}
   Law r := ∀ {V : Type u} [ord : LinearOrder V] [_fin : Fintype V]
       {M : Matroid V} {x : V} (_ : M.IsNonloop x) (_ : ¬ M.IsColoop x)
       {w : Chain V} (_ : TopCycle (M ／ ({x} : Set V)) w),
-    ∃ z : Chain V, TopCycle M z ∧ r.readout () ⟨V, ord, {x}⟩ z = w
+    ∃ z : Chain V, TopCycle M z ∧ r.readout () ⟨V, ord, x⟩ z = w
 
 private abbrev Sample := ULift.{u} Bool
 private def a : Sample.{u} := ULift.up false
@@ -101,7 +110,7 @@ private theorem face_rejected : ¬ faceArena.{u}.Law rejected := by
   have he : 0 = w := hz
   exact link_sample (congrFun he.symm ∅)
 
-private theorem singleton_rejected : ¬ singletonArena.{u}.Law rejected := by
+private theorem singleton_rejected : ¬ singletonArena.{u}.Law singletonRejected := by
   intro h
   let w := linkRestrict ({a} : Finset Sample.{u}) (simplexBoundary samplePair)
   have hA : sample.{u}.Indep (↑({a} : Finset Sample.{u}) : Set Sample.{u}) := by
@@ -130,11 +139,17 @@ def faceSource : Registration faceArena.{u}
 
 def singletonSource : Registration singletonArena.{u}
     (type_of% @exists_topCycle_linkRestrict_singleton.{u}) where
-  actual := actual
+  actual := singletonActual
   bridge := Iff.rfl
-  variation := ⟨@exists_topCycle_linkRestrict_singleton.{u}, rejected, singleton_rejected⟩
-  sensitivity := sensitivity _ actual rejected singleton_rejected
-  dependence := dependence
+  variation := ⟨@exists_topCycle_linkRestrict_singleton.{u}, singletonRejected, singleton_rejected⟩
+  sensitivity := sensitivity _ singletonActual singletonRejected singleton_rejected
+  dependence := by
+    intro i
+    refine ⟨⟨Sample.{u}, inferInstance, a⟩, simplexBoundary samplePair, 0, ?_⟩
+    intro h
+    have he := congrFun h ∅
+    change linkRestrict {a} (simplexBoundary samplePair) ∅ = linkRestrict {a} 0 ∅ at he
+    exact link_sample (by simpa [linkRestrict] using he)
 
 def faceRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
@@ -157,14 +172,24 @@ def faceRegistration :
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.IntegralLinkRestriction
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 def singletonRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
-      (@exists_topCycle_linkRestrict_singleton.{u}) (Realization sig.{u}) Type Unit where
+      (@exists_topCycle_linkRestrict_singleton.{u}) (Realization singletonSig.{u}) Type Unit where
   unitName := .str
     `D5.S3.Combinatorics.Matroids.IntegralLinkRestriction.exists_topCycle_linkRestrict_singleton
     "__information_unit"
@@ -178,12 +203,22 @@ def singletonRegistration :
   realization := .source singletonArena ⟨singletonSource⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize sig actual.readout actual.anchor)
+  readout := some (realize singletonSig singletonActual.readout singletonActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.IntegralLinkRestriction
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -246,7 +281,16 @@ def coloopRegistration :
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Matroids.IntegralLinkRestriction
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
