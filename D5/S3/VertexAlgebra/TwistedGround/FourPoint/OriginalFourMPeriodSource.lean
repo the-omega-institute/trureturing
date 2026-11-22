@@ -141,7 +141,7 @@ theorem chartB_pfaff_correction {z : ℝ} (hz : 0 < z) :
 def dLip (upperA : Bool) : Set ℂ :=
   {t | if upperA then t.im < 0 else 0 < t.im}
 
-private def lipSign (upperA : Bool) : ℂ := if upperA then 1 else -1
+def lipSign (upperA : Bool) : ℂ := if upperA then 1 else -1
 
 /-- Analytic continuation of the D period to either lip, in the native
 D argument. The sign is the jump of the complementary ratio in A. -/
@@ -448,6 +448,7 @@ theorem chartD_root_boundary (upperA : Bool) {z : ℝ} (hz : 0 < z) (hz1 : z < 1
 
 open Matrix LatticeGeneratingFieldLocality
 
+/-- The complex Gram quadratic of a chart source. -/
 private def gramQuadratic (D : LatticeData) (M : Fin D.rank → ℂ) : ℂ :=
   M ⬝ᵥ (D.G.map (Int.cast : ℤ → ℂ)) *ᵥ M
 
