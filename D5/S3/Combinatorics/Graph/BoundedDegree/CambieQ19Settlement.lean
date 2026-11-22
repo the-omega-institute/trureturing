@@ -66,11 +66,11 @@ private abbrev cycleArc {m : ℕ} (a : Fin (m + 3)) (i : ℕ) :=
 /-- A cycle support is either the whole cycle or a proper arc with nonzero length. -/
 abbrev CycleInterval (m : ℕ) := Unit ⊕ (Fin (m + 3) × {l : Fin (m + 3) // 0 < l.val})
 
-private def CycleInterval.vertices {m : ℕ} : CycleInterval m → Set (Fin (m + 3))
+def CycleInterval.vertices {m : ℕ} : CycleInterval m → Set (Fin (m + 3))
   | .inl _ => Set.univ
   | .inr (x, l) => cycleArc x l.val.val
 
-private def CycleInterval.order {m : ℕ} : CycleInterval m → ℕ
+def CycleInterval.order {m : ℕ} : CycleInterval m → ℕ
   | .inl _ => m + 3
   | .inr (_, l) => l.val.val
 
@@ -139,7 +139,7 @@ abbrev PathInterval (n : ℕ) := {p : Fin n × Fin n // p.1 ≤ p.2}
 private def PathInterval.vertices {n : ℕ} (p : PathInterval n) : Set (Fin n) :=
   Set.Icc p.val.1 p.val.2
 
-private def PathInterval.order {n : ℕ} (p : PathInterval n) : ℕ :=
+def PathInterval.order {n : ℕ} (p : PathInterval n) : ℕ :=
   p.val.2.val + 1 - p.val.1.val
 
 private theorem PathInterval.connected {n : ℕ} (p : PathInterval n) :
@@ -244,7 +244,7 @@ private theorem joinAt_connected_sumSet {A B : Type} {G : SimpleGraph A} {H : Si
     · exact ⟨.inl (induced_connected_nonempty hS), hS.preconnected, hT.preconnected,
         fun _ _ => ⟨ha, hb⟩⟩
 
-private abbrev PathPrefix (S : Set (Fin 5000)) (mark : Fin 5000) :=
+abbrev PathPrefix (S : Set (Fin 5000)) (mark : Fin 5000) :=
   {l : Fin 501 // 0 < l.val → mark ∈ S}
 
 private def prefixVertices (l : Fin 501) : Set (Fin 500) := {x | x.val < l.val}
@@ -285,7 +285,7 @@ private theorem exists_prefix {S : Set (Fin 500)}
   change x.val < b.val + 1 ↔ 0 ≤ x.val ∧ x.val ≤ b.val
   omega
 
-private abbrev TriangleExtension (S : Set (Fin 5000)) :=
+abbrev TriangleExtension (S : Set (Fin 5000)) :=
   {t : Finset (Fin 3) // t.Nonempty → (500 : Fin 5000) ∈ S ∧ (0 : Fin 3) ∈ t}
 
 /-- The four ways a connected support can meet the blocks of the witness graph. -/
