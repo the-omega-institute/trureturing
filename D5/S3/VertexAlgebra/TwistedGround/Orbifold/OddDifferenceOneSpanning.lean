@@ -25,7 +25,6 @@ open LatticeInvolution (FixedCarrier fixedMode)
 open HalfFock.LatticeHalfFockParityField (fixedParitySlice paritySpace)
 open LatticePositiveEnergy (grade positive_actual_mode_grade)
 open OddModeStraightening (swap_mem_iff duplicate_mem_of_shorter_and_larger minusTwo_mem_of_pairs)
-open private mixedMode from D5.S3.VertexAlgebra.TwistedGround.MixedJacobiFinite
 
 variable {D : LatticeData} {hu : IsUnit D.G.det}
 
@@ -38,6 +37,20 @@ abbrev Word (D : LatticeData) := List (Homogeneous D × ℤ)
 
 private abbrev act (a : FixedCarrier D) (n : ℤ) :=
   (fixedParitySlice D hu (-1) a)[[n]]
+
+private def fixedActionOn (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (n : ℤ) (u : paritySpace D hu (-1)) :
+    FixedCarrier D →ₗ[ℂ] paritySpace D hu (-1) :=
+  (LinearMap.snd ℂ (FixedCarrier D) (paritySpace D hu (-1))).comp
+    ((LinearMap.applyₗ (R := ℂ) ((0, u) : OriginalOrbifoldField.Carrier D hu)).comp
+      ((OriginalOrbifoldField.mode D hu hD n).comp
+        (LinearMap.inl ℂ (FixedCarrier D) (paritySpace D hu (-1)))))
+
+private theorem fixedActionOn_apply (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (n : ℤ) (u : paritySpace D hu (-1)) (a : FixedCarrier D) :
+    fixedActionOn hD n u a = act a n u := by
+  change (OriginalOrbifoldField.mode D hu hD n (a, 0) (0, u)).2 = _
+  rw [← OriginalOrbifoldField.Y_ncoeff, OriginalOrbifoldField.Y_fixed_ncoeff_apply]
 
 /-- Apply a word from right to left. -/
 def wordMap : Word D → Module.End ℂ (paritySpace D hu (-1))
@@ -116,8 +129,7 @@ private theorem correction_mem
       lower (s ++ (c, p + q - i) :: t) ht
   · have hz : fixedMode D a.state i b.state = 0 := Subtype.ext
       (grade_zero_of_negative hD (lt_of_not_ge he) (mode_grade hD a b i))
-    change mixedMode D hu (p + q - i) (fixedMode D a.state i b.state) (wordMap t u) ∈ _
-    rw [hz, map_zero, LinearMap.zero_apply]
+    rw [← fixedActionOn_apply hD, hz, map_zero]
     exact (S.comap (wordMap s)).zero_mem
 
 private theorem perm_mem_iff
@@ -389,6 +401,7 @@ def sourceGenerators (X : Finset (Homogeneous D)) (n : ℕ) : Set (FixedCarrier 
     ∃ b c : Homogeneous D, b.weight + c.weight + 1 = n ∧ a = fixedMode D b.state (-2) c.state}
 
 private theorem replace_letters_mem
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (X : Finset (Homogeneous D)) (u : paritySpace D hu (-1))
     (hX : ∀ a : Homogeneous D, a.state ∈ Submodule.span ℂ (sourceGenerators X a.weight))
     (N k : ℕ) (lower : ∀ t : Word D, weight t < N → wordMap t u ∈ strictSpan X u)
@@ -402,8 +415,8 @@ private theorem replace_letters_mem
   | cons a t ih =>
     obtain ⟨a, p⟩ := a
     let T := S.comap (wordMap s)
-    let f := (LinearMap.applyₗ (R := ℂ) (wordMap t u)).comp (mixedMode D hu p)
-    rw [wordMap_append, wordMap_cons]
+    let f := fixedActionOn hD p (wordMap t u)
+    rw [wordMap_append, wordMap_cons, ← fixedActionOn_apply hD]
     change f a.state ∈ T
     suffices h : Submodule.span ℂ (sourceGenerators X a.weight) ≤ T.comap f from
       h (hX a)
@@ -422,10 +435,13 @@ private theorem replace_letters_mem
       have hl' : ((s ++ [(b, p)]) ++ t).length = k := by
         simpa only [List.append_assoc, List.singleton_append, List.length_append,
           List.length_cons] using hl
-      change wordMap s (act b.state p (wordMap t u)) ∈ S
+      change wordMap s (fixedActionOn hD p (wordMap t u) b.state) ∈ S
+      rw [fixedActionOn_apply]
       simpa only [List.append_assoc, List.singleton_append, wordMap_append, wordMap_cons]
         using ih (s ++ [(b, p)]) hx' hw' hl'
-    · apply minusTwo_mem_of_pairs T b.state c.state p (wordMap t u)
+    · change fixedActionOn hD p (wordMap t u) (fixedMode D b.state (-2) c.state) ∈ T
+      rw [fixedActionOn_apply]
+      apply minusTwo_mem_of_pairs T b.state c.state p (wordMap t u)
       · intro i j _
         change wordMap s (act b.state i (act c.state j (wordMap t u))) ∈ S
         have hw' : weight (s ++ (b, i) :: (c, j) :: t) < N := by
@@ -465,7 +481,7 @@ theorem word_mem_strictSpan
       intro w hw hl
       have shorter (v : Word D) (hv : weight v ≤ N) (hv' : v.length < k) :
           wordMap v u ∈ strictSpan X u := ihk v.length hv' v hv rfl
-      exact replace_letters_mem X u hX N k lower
+      exact replace_letters_mem hD X u hX N k lower
         (representative_words_mem hD X u N k lower shorter) w []
         (by simp [lettersIn]) hw hl
 

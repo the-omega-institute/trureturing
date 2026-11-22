@@ -5,8 +5,10 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.Orbifold
 internal sealed class OddDifferenceOneSpanningDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "For a positive-definite lattice, degreewise generation by homogeneous representatives and minus-two "
-            + "products puts homogeneous mode words in the span of strictly increasing representative words.",
+        "For a positive-definite lattice with unit Gram determinant, suppose a finite set of homogeneous "
+            + "representatives and minus-two products generate the fixed source degree by degree. Every "
+            + "homogeneous mode word on a negative twisted seed then lies in the span of representative "
+            + "words on that seed with strictly increasing indices.",
         H("Difference-one straightening"),
         Blocks(
             Describe.Lean(DescribeId.Create("word-mem-strict-span"),
