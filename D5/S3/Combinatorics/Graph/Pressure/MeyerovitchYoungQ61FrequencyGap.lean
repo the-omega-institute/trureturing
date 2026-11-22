@@ -1,0 +1,225 @@
+/- GID: D5/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61FrequencyGap
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/Pressure/MeyerovitchYoungQ61FrequencyGap
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A three-matrix frequency relaxation gives the wrong original Q6.1 threshold. -/
+
+import D5.S3.Combinatorics.Graph.Walks.MeyerovitchYoungQ61Complete
+import D5.S1.Dynamics.Symbolic.MeyerovitchYoungQ61Subcritical
+import Mathlib.Analysis.Subadditive
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.NumberTheory.Real.Irrational
+
+/-!
+The one-vertex Alice graph has three loops, and the two-vertex Bob graph is complete.
+The three edge-cost matrices yield a clipped translation of the difference between
+optimal endpoint scores. Average displacement balance on translation branches gives
+an exact frequency optimum strictly above the threshold, whereas every four-letter
+block incurs a loss in the actual matrix game.
+-/
+
+namespace MeyerovitchYoungQ61FrequencyGap
+
+open Maths Set Filter
+open MeyerovitchYoungQ61Complete
+  (ConnectsAt Legal completeGraph matrixCost matrixMinimum matrixMinimum_spec
+    wordCost wordCost_append)
+open MeyerovitchYoungQ61Subcritical (averageScore clip clip_mem overshoot overshoot_nonneg)
+open scoped Topology
+
+/-- The three self-loops available to Alice. -/
+inductive Letter
+  | plus | minus | star
+  deriving DecidableEq
+
+instance : Fintype Letter where
+  elems := {.plus, .minus, .star}
+  complete e := by cases e <;> simp
+
+/-- The shift per letter before enforcing the endpoint constraints. -/
+noncomputable def shift : Letter → ℝ
+  | .plus => Real.sqrt 2 - 1 / 2
+  | .minus => -(2 / 3)
+  | .star => (Real.sqrt 2 - 1) / 2
+
+/-- The maximal toll covered by the four-step clipping bound. -/
+noncomputable def epsilon : ℝ := Real.sqrt 2 - 4 / 3
+
+/-- The centered reward on the branch where clipping is inactive. -/
+noncomputable def reward (c ρ : ℝ) (e : Letter) : ℝ :=
+  c + ρ / 8 - if e = .star then ρ else 0
+
+/-- Rows index Bob's departure vertex and columns his arrival vertex. -/
+noncomputable def matrices (c ρ : ℝ) (e : Letter) : Matrix Bool Bool ℝ :=
+  fun i j => match i, j with
+  | false, _ => reward c ρ e + shift e / 2
+  | true, false => reward c ρ e + 1 - shift e / 2
+  | true, true => reward c ρ e - shift e / 2
+
+/-- Alice may choose any sequence of the three loops. -/
+def aliceGraph : EdgeGraph Unit Letter := ⟨fun _ => (), fun _ => ()⟩
+
+private noncomputable def endpointStep (c ρ : ℝ) (z : Bool → ℝ) (e : Letter)
+    (j : Bool) : ℝ :=
+  min (z false + matrices c ρ e false j) (z true + matrices c ρ e true j)
+
+/-- Minimum scores at the two Bob endpoints, starting at either vertex for free. -/
+noncomputable def endpointScores (c ρ : ℝ) (a : List Letter) : Bool → ℝ :=
+  a.foldl (endpointStep c ρ) (fun _ => 0)
+
+private theorem endpointScores_snoc (c ρ : ℝ) (a : List Letter) (e : Letter) :
+    endpointScores c ρ (a ++ [e]) = endpointStep c ρ (endpointScores c ρ a) e := by
+  simp [endpointScores, List.foldl_append]
+
+private theorem wordCost_concat (c ρ : ℝ) (a : List Letter) (e : Letter)
+    {s i j : Bool} (p : (completeGraph Bool).Walk s i) (hlen : p.length = a.length) :
+    wordCost (matrixCost (matrices c ρ)) (a ++ [e]) (p.concat (i, j) rfl).edges =
+      wordCost (matrixCost (matrices c ρ)) a p.edges + matrices c ρ e i j := by
+  erw [EdgeGraph.Walk.edges_concat]
+  rw [wordCost_append _ (by simpa using hlen.symm)]
+  simp [wordCost, matrixCost]
+
+private theorem endpointStep_le (c ρ : ℝ) (z : Bool → ℝ) (e : Letter) (i j : Bool) :
+    endpointStep c ρ z e j ≤ z i + matrices c ρ e i j := by
+  cases i
+  · exact min_le_left _ _
+  · exact min_le_right _ _
+
+private theorem endpointScores_spec (c ρ : ℝ) (a : List Letter) (j : Bool) :
+    (∃ s, ∃ p : (completeGraph Bool).Walk s j, p.length = a.length ∧
+      wordCost (matrixCost (matrices c ρ)) a p.edges = endpointScores c ρ a j) ∧
+    ∀ s (p : (completeGraph Bool).Walk s j), p.length = a.length →
+      endpointScores c ρ a j ≤ wordCost (matrixCost (matrices c ρ)) a p.edges := by
+  induction a using List.reverseRecOn generalizing j with
+  | nil =>
+    exact ⟨⟨j, .nil, rfl, rfl⟩, fun s p h => by cases p <;> simp_all [endpointScores, wordCost]⟩
+  | append_singleton a e ih =>
+    rw [endpointScores_snoc]
+    constructor
+    · have hmin : ∃ i, endpointScores c ρ a i + matrices c ρ e i j =
+          endpointStep c ρ (endpointScores c ρ a) e j := by
+        unfold endpointStep
+        rcases le_total (endpointScores c ρ a false + matrices c ρ e false j)
+            (endpointScores c ρ a true + matrices c ρ e true j) with h | h
+        · exact ⟨false, (min_eq_left h).symm⟩
+        · exact ⟨true, (min_eq_right h).symm⟩
+      obtain ⟨i, hi⟩ := hmin
+      obtain ⟨s, p, hlen, hp⟩ := (ih i).1
+      exact ⟨s, p.concat (i, j) rfl, by simp [hlen],
+        (wordCost_concat _ _ _ _ p hlen).trans (by rw [hp, hi])⟩
+    · intro s p hlen
+      cases p with
+      | nil => simp at hlen
+      | @concat i p edge h =>
+        rcases edge with ⟨i', j'⟩
+        change i' = i at h
+        subst i'
+        have hp : p.length = a.length := by simpa using hlen
+        erw [wordCost_concat _ _ _ _ p hp]
+        exact (endpointStep_le c ρ _ e i j').trans (add_le_add ((ih i).2 s p hp) le_rfl)
+
+private theorem matrixMinimum_eq_min (c ρ : ℝ) (a : List Letter) :
+    matrixMinimum (matrices c ρ) a =
+      min (endpointScores c ρ a false) (endpointScores c ρ a true) := by
+  obtain ⟨⟨b, hb, hbl, hcost⟩, hbound⟩ := matrixMinimum_spec (matrices c ρ) a
+  apply le_antisymm
+  · apply le_min
+    · obtain ⟨s, p, hlen, hp⟩ := (endpointScores_spec c ρ a false).1
+      exact (hbound p.edges ⟨s, false, p, rfl⟩ (by simpa using hlen)).trans_eq hp
+    · obtain ⟨s, p, hlen, hp⟩ := (endpointScores_spec c ρ a true).1
+      exact (hbound p.edges ⟨s, true, p, rfl⟩ (by simpa using hlen)).trans_eq hp
+  · obtain ⟨s, j, p, rfl⟩ := hb
+    have hp : p.length = a.length := by simpa using hbl
+    rw [← hcost]
+    apply le_trans _ ((endpointScores_spec c ρ a j).2 s p hp)
+    cases j
+    · exact min_le_left _ _
+    · exact min_le_right _ _
+
+private noncomputable def difference (z : Bool → ℝ) : ℝ := z false - z true
+
+/-- The actual false-endpoint score minus the true-endpoint score. -/
+noncomputable def normalizedState (c ρ : ℝ) (a : List Letter) : ℝ :=
+  difference (endpointScores c ρ a)
+
+/-- One centered transition on the endpoint difference and average score. -/
+noncomputable def centeredStep (c ρ : ℝ) (q : ℝ × ℝ) (e : Letter) : ℝ × ℝ :=
+  (clip 1 (q.1 + shift e), q.2 + reward c ρ e - overshoot 1 (q.1 + shift e) / 2)
+
+/-- Average score accumulated by the centered recurrence from two free endpoints. -/
+noncomputable def centeredScore (c ρ : ℝ) (a : List Letter) : ℝ :=
+  (a.foldl (centeredStep c ρ) (0, 0)).2
+
+private theorem centeredStep_eq (c ρ : ℝ) (z : Bool → ℝ) (e : Letter) :
+    (difference (endpointStep c ρ z e), averageScore (endpointStep c ρ z e)) =
+      centeredStep c ρ (difference z, averageScore z) e := by
+  set y := difference z + shift e with hy
+  have h₀ : z false + matrices c ρ e false false = averageScore z + reward c ρ e + y / 2 := by
+    simp only [hy, difference, matrices, averageScore]
+    ring
+  have h₁ : z true + matrices c ρ e true false = averageScore z + reward c ρ e + (1 - y / 2) := by
+    simp only [hy, difference, matrices, averageScore]
+    ring
+  have h₂ : z true + matrices c ρ e true true = averageScore z + reward c ρ e + (-y / 2) := by
+    simp only [hy, difference, matrices, averageScore]
+    ring
+  have h₃ : z false + matrices c ρ e false true = averageScore z + reward c ρ e + y / 2 := h₀
+  simp only [difference, averageScore, endpointStep, centeredStep, h₀, h₁, h₂, h₃,
+    Prod.mk.injEq]
+  change min (_ + y / 2) (_ + (1 - y / 2)) - min (_ + y / 2) (_ + (-y / 2)) =
+      clip 1 y ∧ _ = _ - overshoot 1 y / 2
+  by_cases hlo : y ≤ 0
+  · have hhi : y ≤ 1 := hlo.trans (by norm_num)
+    rw [min_eq_left (add_le_add_right (show y / 2 ≤ 1 - y / 2 by linarith) _),
+      min_eq_left (add_le_add_right (show y / 2 ≤ -y / 2 by linarith) _)]
+    simp only [clip, overshoot, max_eq_left hlo, min_eq_right (show (0 : ℝ) ≤ 1 by norm_num),
+      max_eq_right (neg_nonneg.mpr hlo), max_eq_left (sub_nonpos.mpr hhi)]
+    constructor <;> ring
+  · have hlo' : 0 ≤ y := le_of_not_ge hlo
+    rw [min_eq_right (add_le_add_right (show -y / 2 ≤ y / 2 by linarith) _)]
+    by_cases hhi : y ≤ 1
+    · rw [min_eq_left (add_le_add_right (show y / 2 ≤ 1 - y / 2 by linarith) _)]
+      simp only [clip, overshoot, max_eq_right hlo', min_eq_right hhi,
+        max_eq_left (neg_nonpos.mpr hlo'), max_eq_left (sub_nonpos.mpr hhi)]
+      constructor <;> ring
+    · have hhi' : 1 ≤ y := le_of_not_ge hhi
+      rw [min_eq_right (add_le_add_right (show 1 - y / 2 ≤ y / 2 by linarith) _)]
+      simp only [clip, overshoot, max_eq_right hlo', min_eq_left hhi',
+        max_eq_left (neg_nonpos.mpr hlo'), max_eq_right (sub_nonneg.mpr hhi')]
+      constructor <;> ring
+
+private theorem centeredFold_eq (c ρ : ℝ) (a : List Letter) :
+    (normalizedState c ρ a, averageScore (endpointScores c ρ a)) =
+      a.foldl (centeredStep c ρ) (0, 0) := by
+  induction a using List.reverseRecOn with
+  | nil => simp [normalizedState, difference, endpointScores, averageScore]
+  | append_singleton a e ih =>
+    simp only [List.foldl_append, List.foldl_cons, List.foldl_nil]
+    unfold normalizedState at *
+    rw [endpointScores_snoc, centeredStep_eq, ih]
+
+/-- Both endpoint scores follow the centered recurrence. Minimizing over the
+free final endpoint subtracts half the normalized difference from the average. -/
+theorem matrixMinimum_eq_centered (c ρ : ℝ) (a : List Letter) :
+    (a.foldl (centeredStep c ρ) (0, 0)).1 = normalizedState c ρ a ∧
+    normalizedState c ρ a ∈ Icc 0 1 ∧
+    matrixMinimum (matrices c ρ) a = centeredScore c ρ a - normalizedState c ρ a / 2 := by
+  have hfold := centeredFold_eq c ρ a
+  have hd : normalizedState c ρ a ∈ Icc 0 1 := by
+    rw [show normalizedState c ρ a = (a.foldl (centeredStep c ρ) (0, 0)).1 from
+      congrArg Prod.fst hfold]
+    cases a using List.reverseRecOn with
+    | nil => simp
+    | append_singleton a e =>
+      simp only [List.foldl_append, List.foldl_cons, List.foldl_nil, centeredStep]
+      exact clip_mem (by norm_num) _
+  refine ⟨(congrArg Prod.fst hfold).symm, hd, ?_⟩
+  have hz : endpointScores c ρ a true ≤ endpointScores c ρ a false :=
+    sub_nonneg.mp hd.1
+  rw [matrixMinimum_eq_min, min_eq_right hz, centeredScore, ← hfold]
+  dsimp [normalizedState, difference, averageScore]
+  ring
+
+end MeyerovitchYoungQ61FrequencyGap
