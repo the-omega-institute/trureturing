@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Fourier/WeightedPhaseRelationLattice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Fourier/TorusOrbitClosure]
+   anchors: []
    utility: none
    digest: The complete integer relation lattice controls weighted common-time phase deficit. -/
 
