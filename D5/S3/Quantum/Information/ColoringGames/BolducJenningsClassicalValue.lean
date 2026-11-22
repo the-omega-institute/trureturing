@@ -39,7 +39,8 @@ open scoped BigOperators
 private theorem half_product (R : ℕ) :
     4 * ((R / 2) * (R - R / 2)) + R % 2 = R ^ 2 := by
   set q := R / 2
-  rcases (show R % 2 = 0 ∨ R % 2 = 1 by omega) with h | h
+  have hdiv : R % 2 + 2 * q = R := Nat.mod_add_div R 2
+  rcases Nat.mod_two_eq_zero_or_one R with h | h
   · have hR : R = 2 * q := by omega
     have hh : R - R / 2 = q := by omega
     rw [hh, h, hR]
@@ -81,10 +82,11 @@ def B (d s : ℕ) : ℕ :=
 
 private theorem B_two (R : ℕ) :
     B 2 R = (R / 2) ^ 2 + (R - R / 2) ^ 2 := by
+  have hdiv := Nat.mod_add_div R 2
   have hsum : R - R / 2 = R / 2 + R % 2 := by omega
   unfold B
   rw [hsum]
-  rcases (show R % 2 = 0 ∨ R % 2 = 1 by omega) with h | h <;> rw [h] <;> ring
+  rcases Nat.mod_two_eq_zero_or_one R with h | h <;> rw [h] <;> ring
 
 private theorem real_endpoint (a b R : ℕ) (h : a + b < R) (lam : ℝ) :
     (lam - (R : ℝ)) * ((a : ℝ) + b) + 2 * (a : ℝ) * b ≤
@@ -181,26 +183,18 @@ private theorem balanced_totals (d s : ℕ) (h : 0 < d ∨ s = 0) :
 private theorem B_succ (d s : ℕ) (hd : 0 < d) :
     B d (s + 1) = B d s + (2 * (s / d) + 1) := by
   have hr := Nat.mod_lt s hd
-  have hdiv := Nat.mod_add_div s d
   by_cases h : s % d + 1 < d
-  · have hq : (s + 1) / d = s / d := by
-      apply Nat.div_eq_of_lt_le
-      · rw [Nat.mul_comm]
-        omega
-      · rw [Nat.add_mul, Nat.mul_comm (s / d), Nat.one_mul]
-        omega
-    have hmod : (s + 1) % d = s % d + 1 := by
-      have := Nat.mod_add_div (s + 1) d
-      rw [hq] at this
-      omega
+  · have hmod : (s + 1) % d = s % d + 1 := by
+      rw [← Nat.mod_add_mod s d 1, Nat.mod_eq_of_lt h]
+    have hq : (s + 1) / d = s / d :=
+      Nat.succ_div_of_mod_ne_zero (by rw [hmod]; omega)
     simp only [B, hq, hmod]
     ring
-  · have hmul : s + 1 = d * (s / d + 1) := by rw [Nat.mul_add]; omega
-    have hq : (s + 1) / d = s / d + 1 :=
-      (Nat.div_eq_iff_eq_mul_right hd ⟨_, hmul⟩).2 hmul
-    have hmod : (s + 1) % d = 0 := Nat.dvd_iff_mod_eq_zero.1 ⟨_, hmul⟩
+  · have hh : s % d + 1 = d := by omega
+    have hmod : (s + 1) % d = 0 := by
+      rw [← Nat.mod_add_mod s d 1, hh, Nat.mod_self]
+    have hq : (s + 1) / d = s / d + 1 := Nat.succ_div_of_mod_eq_zero hmod
     simp only [B, hq, hmod, mul_zero, add_zero]
-    have hh : s % d + 1 = d := by omega
     calc
       _ = d * (s / d) ^ 2 + (2 * (s / d) + 1) * d := by ring
       _ = d * (s / d) ^ 2 + (2 * (s / d) + 1) * (s % d + 1) :=
@@ -484,15 +478,8 @@ private theorem collisions_eq {n m : ℕ} (σ : Strategy n m) :
 private theorem diagonal_count {n : ℕ} (F : Fin n → Prop) [DecidablePred F] :
     (univ.filter fun xy : Fin n × Fin n => xy.1 = xy.2 ∧ F xy.1).card =
       (univ.filter F).card := by
-  refine card_nbij' Prod.fst (fun x => (x, x)) ?_ ?_ ?_ ?_
-  · intro xy h
-    exact mem_filter.mpr ⟨mem_univ _, (mem_filter.mp h).2.2⟩
-  · intro x h
-    exact mem_filter.mpr ⟨mem_univ _, rfl, (mem_filter.mp h).2⟩
-  · intro xy h
-    exact Prod.ext rfl (mem_filter.mp h).2.1
-  · intro x _
-    rfl
+  rw [← filter_filter, ← univ_product_univ, ← diag_eq_filter, diag, filter_map, card_map]
+  rfl
 
 private theorem diagonal_agreements {n m : ℕ} (σ : Strategy n m) :
     (univ.filter fun xy : Fin n × Fin n => xy.1 = xy.2 ∧ σ.1 xy.1 = σ.2 xy.2).card =
@@ -514,14 +501,8 @@ private def offWins {n m : ℕ} (σ : Strategy n m) : ℕ :=
 
 private theorem off_count (n : ℕ) :
     (univ.filter fun xy : Fin n × Fin n => xy.1 ≠ xy.2).card = n * (n - 1) := by
-  have hd : (univ.filter fun xy : Fin n × Fin n => xy.1 = xy.2).card = n := by
-    simpa using diagonal_count (fun _ : Fin n => True)
-  have h := card_filter_add_card_filter_not (s := (univ : Finset (Fin n × Fin n)))
-    (fun xy => xy.1 = xy.2)
-  simp only [hd, card_univ, Fintype.card_prod, Fintype.card_fin] at h
-  change n + (univ.filter fun xy : Fin n × Fin n => xy.1 ≠ xy.2).card = n * n at h
-  rw [Nat.mul_sub, Nat.mul_one]
-  exact Nat.eq_sub_of_add_eq (by rwa [Nat.add_comm] at h)
+  rw [filter_not, ← univ_product_univ, ← diag_eq_filter, product_sdiff_diag,
+    offDiag_card, card_univ, Fintype.card_fin, Nat.mul_sub, Nat.mul_one]
 
 private theorem offWins_add_collisions {n m : ℕ} (σ : Strategy n m) :
     offWins σ + collisions σ = n * (n - 1) + agreements σ := by
@@ -560,7 +541,7 @@ private theorem inputWeight_total {n : ℕ} (hn : 1 < n) (p : ℝ) :
     ∑ xy : Fin n × Fin n, inputWeight p xy = 1 := by
   have hnℝ : (1 : ℝ) < (n : ℝ) := by exact_mod_cast hn
   have hdiag : (univ.filter fun xy : Fin n × Fin n => xy.1 = xy.2).card = n := by
-    simpa using diagonal_count (fun _ : Fin n => True)
+    rw [← univ_product_univ, ← diag_eq_filter, diag_card, card_univ, Fintype.card_fin]
   unfold inputWeight
   rw [sum_ite, sum_const, sum_const, hdiag, off_count n]
   simp only [nsmul_eq_mul, Nat.cast_mul, Nat.cast_sub (show 1 ≤ n by omega), Nat.cast_one]

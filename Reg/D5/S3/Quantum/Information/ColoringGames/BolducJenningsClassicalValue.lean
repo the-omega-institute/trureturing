@@ -131,8 +131,5 @@ def registration :
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
-#print axioms registration
-
 end
 end Reg.D5.S3.Quantum.Information.ColoringGames.BolducJenningsClassicalValue
