@@ -3,25 +3,79 @@ name: CI publication verification
 on:
   push:
     branches: ['integration-ci-*-tests']
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Project seed for Release verification
+        type: choice
+        options: [complete, partial, none, legacy, auto, release, parallel]
+        required: true
+      volume_test_id:
+        description: Shared identifier for two verification snapshots using reusable physical volumes
+        type: string
+      sparse_release:
+        description: Prefer a compatible predecessor in the named volume namespace and reuse its checked report
+        type: boolean
+        default: true
+      retire_volume_tag:
+        description: Optional previous snapshot from this verification pair to retire before recovery
+        type: string
+      checkpoint_run:
+        description: Optional earlier checkpoint run for the same commit and cold mode
+        type: string
+      checkpoint_seconds:
+        description: Cold build interval before saving a checkpoint (0 runs the normal build)
+        type: string
+        default: '0'
 
 permissions: {}
 
 # This native integration event verifies the Lean-cache publication and restore
 # programs. It is separate from the required CI workflows.
 jobs:
+  parallel-compile:
+    if: github.event_name == 'workflow_dispatch' && contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests')
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-release-compile.yml
+    with:
+      source: ${{ github.sha }}
+      strategy: ${{ inputs.mode }}
+      publication-mode: verification
+      sparse-volume: ${{ inputs.sparse_release && inputs.volume_test_id || '' }}
+      indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name }}
+
   cache:
+    needs: parallel-compile
     name: verify cache publication and restore
+    if: >-
+      !cancelled() && (github.event_name == 'push' ||
+      (github.ref_protected && startsWith(github.ref, 'refs/heads/integration-ci-') && endsWith(github.ref, '-tests') &&
+       ((contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && needs.parallel-compile.result == 'success' &&
+         (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == inputs.mode)) ||
+        (!contains(fromJSON('["auto","release","parallel"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    # Cold and partial seed scenarios exercise the scheduled Release build.
+    timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
+    outputs:
+      indexed-tag: ${{ steps.publish.outputs.indexed_tag }}
     permissions:
       contents: write
       actions: read
     concurrency:
-      group: lean-cache-publication-verification
+      # Serialize publishers and retirement in the same named verification volume pool.
+      group: ${{ inputs.volume_test_id != '' && format('lean-cache-volume-verification:{0}:{1}', github.ref, inputs.volume_test_id) || 'lean-cache-publication-verification' }}
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
+      LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.parallel-compile.outputs.sparse == 'true' && '1' || '0' }}
+      SHARD_HANDOFF: ${{ needs.parallel-compile.outputs.seed || github.event_name == 'workflow_dispatch' && inputs.mode || vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
+      CHECKPOINT_SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.checkpoint_seconds || '420' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -29,6 +83,28 @@ jobs:
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
+      - name: Fetch the selected predecessor ancestry before disconnecting the checkout
+        if: needs.parallel-compile.outputs.sparse == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ fromJSON(needs.parallel-compile.outputs.base || '{}').producer }}
+        run: |
+          [[ "$BASE" =~ ^[0-9a-f]{40}$ && "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
+          if ! git merge-base --is-ancestor "$BASE" "$GITHUB_SHA" 2>/dev/null; then
+            ahead="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BASE...$GITHUB_SHA?per_page=1" \
+              --jq 'select(.status == "ahead" and .behind_by == 0) | .ahead_by')"
+            [[ "$ahead" =~ ^[1-9][0-9]*$ ]]
+            git fetch --no-tags --depth="$((10#$ahead + 1))" origin "$GITHUB_SHA"
+          fi
+          git merge-base --is-ancestor "$BASE" "$GITHUB_SHA"
+      - name: Fetch the fixed dev history for cold build checkpoints
+        if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && env.CHECKPOINT_SECONDS != '0' && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+        env:
+          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+        run: |
+          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
       - id: entry
         name: Validate candidate, check the input patterns and strip checkout remote
         env:
@@ -42,6 +118,12 @@ jobs:
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
+            .github/actions/lean-cache-release-seed/*
+            .github/actions/lean-compile-layer/*
+            .github/actions/lean-recover-layer/*
+            .github/actions/lean-release-base/*
+            .github/workflows/ci-lean-release-compile.yml
+            .github/actions/lean-cache-shards/*
             .gitignore
             D5/*.lean
             Directory.Build.*
@@ -68,6 +150,29 @@ jobs:
         env:
           HIT: ${{ steps.entry.outputs.hit }}
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - name: Bind the protected dispatch checkout
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          CHECKPOINT_RUN: ${{ inputs.checkpoint_run }}
+          VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
+          RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
+        run: |
+          [[ -z "$RETIRE_VOLUME_TAG" || -n "$VOLUME_TEST_ID" ]]
+          case "$SHARD_HANDOFF" in
+            release|parallel|auto|complete|legacy) [[ -z "$CHECKPOINT_RUN" && "$CHECKPOINT_SECONDS" == 0 ]] ;;
+            none|partial)
+              [[ "$CHECKPOINT_SECONDS" =~ ^(0|[1-9][0-9]{0,4})$ && "$CHECKPOINT_SECONDS" -lt 21600 ]]
+              [[ -z "$CHECKPOINT_RUN" || ( "$CHECKPOINT_RUN" =~ ^[1-9][0-9]*$ && "$CHECKPOINT_RUN" != "$GITHUB_RUN_ID" ) ]]
+              ;;
+            *) exit 2 ;;
+          esac
+          [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
+          {
+            echo 'STRATALINT_CACHE_SOURCE_VALIDATED=true'
+            echo "STRATALINT_CACHE_SOURCE_REF=$GITHUB_REF"
+            echo "STRATALINT_CACHE_SOURCE_COMMIT=$GITHUB_SHA"
+            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$GITHUB_SHA"
+          } >> "$GITHUB_ENV"
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
         if: steps.entry.outputs.hit == 'true'
@@ -92,38 +197,282 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
+      - id: release_seed
+        name: Restore the selected Release build seeds
+        if: steps.entry.outputs.hit == 'true'
+        uses: ./.github/actions/lean-cache-release-seed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          mode: ${{ env.SHARD_HANDOFF }}
+          previous-base: ${{ needs.parallel-compile.outputs.base }}
+          publication-mode: verification
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
+          verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+          checkpoint-run: ${{ inputs.checkpoint_run || '' }}
+          checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
+      - id: full_report
+        name: Build and check the full report for the named volume snapshot
+        if: >-
+          steps.entry.outputs.hit == 'true' && env.LEAN_CACHE_VOLUME_TEST_ID != '' &&
+          env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.report-checked != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
+        run: >-
+          bash .github/actions/lean-compile-layer/measure.sh --report make check-lean-report FULL_BUILD=1
+          LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
+      - id: publish
+        if: steps.entry.outputs.hit == 'true'
+        name: Publish and restore an isolated verification snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
+          LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.full_report.outcome == 'success' || steps.release_seed.outputs.report-checked == 'true') && '1' || '0' }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
+        run: |
+          set -o pipefail
+          receipt="$RUNNER_TEMP/indexed-cache-publish.log"
+          bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
+          tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
+          if [[ "$LEAN_CACHE_RELEASE_VOLUMES" == 1 ]]; then
+            [[ "$tag" == lean-cache-verify-v3-* ]]
+            upload="$(sed -n 's/^LEAN_CACHE_VOLUME-UPLOAD //p' "$receipt" | jq -ec 'select(.status == "saved")')"
+            jq '{new_volumes, payload_bytes, predecessor_bytes_read, reused_bytes, peak_staged_payload_bytes, compacted}' <<< "$upload"
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+              | jq -e '[.assets[] | {name, size}] | select(map(.name) | sort == ["index.json.gz", "manifest.json"]) |
+                       {metadata_bytes: (map(.size) | add), assets: .}'
+            if [[ -n "$LEAN_CACHE_VOLUME_RETIRE_TAG" ]]; then
+              jq -e '(.payload_bytes | type == "number" and . >= 0) and .reused_bytes > 0' <<< "$upload"
+              sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$receipt" |
+                jq -e --arg previous "$LEAN_CACHE_VOLUME_RETIRE_TAG" --arg current "$tag" \
+                  --arg ref "$GITHUB_REF" --arg test "$LEAN_CACHE_VOLUME_TEST_ID" \
+                  'select(.tag == $previous and .retained_tag == $current and .source_ref == $ref and .test_id == $test)'
+            fi
+          else
+            [[ "$tag" == lean-cache-verify-v2-* ]]
+          fi
+          echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Recheck retirement from the published successor manifest
+        if: steps.publish.outputs.indexed_tag != '' && inputs.retire_volume_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ steps.publish.outputs.indexed_tag }}
+          PREVIOUS_TAG: ${{ inputs.retire_volume_tag }}
+          TEST_ID: ${{ inputs.volume_test_id }}
+        run: |
+          set -o pipefail
+          gh release download "$CURRENT_TAG" --repo "$GITHUB_REPOSITORY" --pattern manifest.json --dir "$RUNNER_TEMP/retirement"
+          PYTHONPATH=tools/scripts/worktree python3 - <<'PYTHON' | tee "$RUNNER_TEMP/retirement/retry.log"
+          import json
+          import os
+          from pathlib import Path
+          import lean_cache_release as release
+          import lean_release_volume_remote as volumes
+
+          env = os.environ
+          current = json.loads((Path(env["RUNNER_TEMP"]) / "retirement/manifest.json").read_bytes())
+          expected = {"schema": "lean-release-seed-v6", "source_ref": env["GITHUB_REF"],
+                      "producer_commit_sha": env["GITHUB_SHA"], "volume_test_id": env["TEST_ID"],
+                      "workflow_run_id": env["GITHUB_RUN_ID"], "workflow_run_attempt": env["GITHUB_RUN_ATTEMPT"]}
+          if any(current.get(key) != value for key, value in expected.items()):
+              raise ValueError("successor manifest differs from this verification publication")
+          volumes.retire_verification(release, current["partition"], current["cache_key"], env["CURRENT_TAG"],
+                                      current, env["PREVIOUS_TAG"], release.operation_deadline())
+          PYTHON
+          sed -n 's/^LEAN_CACHE_VOLUME-RETIRE //p' "$RUNNER_TEMP/retirement/retry.log" |
+            jq -e -s --arg old "$PREVIOUS_TAG" --arg new "$CURRENT_TAG" \
+              'length == 1 and (.[0] | .status == "already-retired" and .tag == $old and .retained_tag == $new and .reclaimed_payload_bytes == 0)'
+
+  indexed-consumer:
+    name: Verify indexed Release recovery in a clean checkout
+    needs: cache
+    if: needs.cache.outputs.indexed-tag != ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        restore: [full, scoped]
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      LEAN_CACHE_TAG: ${{ needs.cache.outputs.indexed-tag }}
+      LEAN_CACHE_SOURCE_COMMIT: ${{ github.sha }}
+      LEAN_CACHE_MODE: candidate
+      RESTORE: ${{ matrix.restore }}
+      RETIRE_VOLUME_TAG: ${{ inputs.retire_volume_tag }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Confirm that the previous test snapshot was retired
+        if: env.RETIRE_VOLUME_TAG != ''
+        run: |
+          for resource in "releases/tags" "git/ref/tags"; do
+            if gh api "repos/$GITHUB_REPOSITORY/$resource/$RETIRE_VOLUME_TAG" > "$RUNNER_TEMP/prior-tag.json"; then
+              echo "Previous test tag is still present in $resource" >&2
+              exit 1
+            fi
+            jq -e '.status == "404"' "$RUNNER_TEMP/prior-tag.json"
+          done
+      - name: Restore from Release assets
+        run: |
+          test ! -e .lake/build
+          if [[ "$RESTORE" == scoped ]]; then
+            export LEAN_CACHE_TARGETS=D5.S0.Tower.GoldenGapWord
+          fi
+          env -u GITHUB_ACTIONS -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_CACHE_URL -u ACTIONS_RESULTS_URL \
+            make lean-cache-from-github-without-mathlib
+          test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          if [[ "$RESTORE" == full ]]; then
+            PYTHONPATH=tools/lean-inspector python3 - <<'PYTHON'
+          from pathlib import Path
+          import reuse
+
+          receipt = reuse.read_receipt(reuse.canonical_seed(Path.cwd()))
+          if receipt["completed"] != reuse.CHECKED:
+              raise SystemExit("Restored publication lacks the current full-report check")
+          PYTHON
+          else
+            test ! -e .lake/build/stratalint/raw-lean-report.json
+          fi
+
+  cache-shards:
+    name: Verify Lean cache continuation transport
+    if: github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      actions: write
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+      CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+      STRATALINT_SHARD_VERIFICATION: scoped-eviction
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2002
+          persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
+      - id: entry
+        name: Validate source and select cache transport changes
+        env:
+          CI_HIT_PATHS: |
+            .github/actions/lean-cache-shards/*
+            .github/workflows/ci-publication-verify.yml
+            .github/scripts/install-tools.py
+            Meta/tools-release.json
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_PUSH_RANGE: optional
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.entry.outputs.hit == 'true'
+        id: dependency
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - if: steps.entry.outputs.hit == 'true'
-        name: Restore optional validated seeds
+        name: Prepare Lean dependencies and build the scoped checkpoint
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
       - if: steps.entry.outputs.hit == 'true'
-        name: Publish and restore an isolated verification snapshot
+        id: checkpoint
+        name: Save scoped producer continuation
+        uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
+        with:
+          operation: save
+          state: resume
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Isolate the restored build
+        run: |
+          test -f .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          mv .lake/build .lake/shard-verification-source
+      - if: steps.entry.outputs.hit == 'true'
+        id: resumed
+        name: Restore the immutable producer continuation
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check the recovered bytes and Lake freshness
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          UNSAVED: ${{ steps.checkpoint.outputs.missing }}
+          RESTORED: ${{ steps.resumed.outputs.available }}
+          MISSING: ${{ steps.resumed.outputs.missing }}
+        run: |
+          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$UNSAVED" == 0 && "$MISSING" == 0 ]]
+          path=lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          cmp ".lake/shard-verification-source/$path" ".lake/build/$path"
+          lake --no-build build "$CACHE_SCOPE"
+
+      - if: steps.entry.outputs.hit == 'true'
+        name: Evict one entry of this run's incomplete index
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          index=build/lean-cache/shards/index.json
+          prefix="$(python3 tools/scripts/worktree/lean_actions_shards.py identity --state resume | jq -er .prefix)"
+          digest="$(jq -er '.entries | to_entries[0].value' "$index")"
+          gh cache delete --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF" "${prefix}material-$digest"
+          mv .lake/build .lake/shard-verification-recovered
+      - if: steps.entry.outputs.hit == 'true'
+        id: evicted
+        name: Restore remaining checkpoint entries
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Rebuild the missing checkpoint entry through Lake
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          AVAILABLE: ${{ steps.evicted.outputs.available }}
+          MISSING: ${{ steps.evicted.outputs.missing }}
+        run: |
+          [[ "$AVAILABLE" =~ ^[0-9]+$ && "$MISSING" == 1 && $((AVAILABLE + 1)) == "$SAVED" ]]
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
+          lake --no-build build "$CACHE_SCOPE"
 
   scribe:
     name: verify Scribe publication and fetch
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:

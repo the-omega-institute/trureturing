@@ -1,0 +1,9 @@
+{
+  "name": "trureturing-lean-shard-cache",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@actions/cache": "5.3.0"
+  }
+}
