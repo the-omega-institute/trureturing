@@ -465,7 +465,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰含五个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export 和 Blueprint index。source snapshot 以 schema 标签 `source-snapshot` 标识，闭键恰为来源仓库、commit、tree、Lean toolchain、mathlib rev、producer package commit，以及 truth graph、raw Lean report、DAG Markdown、truth export 四个摘要；它不承载消化账目、残余工件或冻结事件字段。冻结成员资格由 `source_tree` 绑定的 `Golden/Frozen/state/**` 状态片决定，bundle 不另设账本头、事件计数或状态表摘要。manifest、source snapshot 与 publication 坐标的 transport 文件名为 `release-manifest.v1.json`、`source-snapshot.v1.json` 与 `truth-release-publication.v1.json`。reader 只接受上述标签与闭键：其他 manifest 或 source snapshot 标签、manifest 的 `frozen_ledger_head` 槽位及 source snapshot 的账本字段均被拒绝。已发布的 release 不改动。
 
-独立定时工作流 `truth-release-publish.yml` 用主仓钉版 Inspector 在受保护的 `dev` 事件提交上生成逐模块报告。该工作流用独立钉住的 `trureturing-tools` 提交聚合报告、生成 DAG 和签发 truth bundle；manifest 分别记录内容仓和工具仓的提交。构建器核对该提交的 push CI 和分支要求的检查，签发 bundle，并核对 `DAG.md` 与 source snapshot 的摘要。发布作业验证 GHCR 工件的来源证明，在 `truth-release-<digest>` GitHub Release 提供归档、发布坐标及 `DAG.md`。
+独占定时工作流 `truth-release-publish.yml` 每日从受保护的 `dev` 事件提交生成 DAG 和 truth bundle。逐模块报告和 Scribe 资源使用源码钉版的工具生成，发布器使用工作流独立钉住的 `trureturing-tools` 提交。发布清单的 `required_checks` 为空。归档发布到 GHCR，`truth-release-<digest>` GitHub Release 提供同一归档、发布坐标与 `DAG.md`。
 
 
 <a id="a22-ci-cache-flow"></a>
