@@ -20,7 +20,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open Finset Matrix
-open scoped Matroid Classical
+open scoped Matroid
 
 namespace D5.S3.Combinatorics.Matroids.JointCircuitGramCertificate
 
@@ -126,9 +126,11 @@ private lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
     D.val D.prop
   simpa only [normalizedCycle, Subtype.ext_iff] using h
 
+open Classical in
 private noncomputable def fromCoordinates (M : Matroid V) (x : Passive M → ℤ) : topCycles M :=
   ∑ B, x B • normalizedCycle B
 
+open Classical in
 private lemma fromCoordinates_apply {M : Matroid V} (x : Passive M → ℤ) (F : Finset V) :
     (fromCoordinates M x).val F = ∑ B, x B * (normalizedCycle B).val F := by
   rw [fromCoordinates, Submodule.coe_sum, Finset.sum_apply]
@@ -150,6 +152,7 @@ private lemma fromCoordinates_cycle {M : Matroid V} (z : topCycles M) :
 noncomputable def gram (M : Matroid V) : Matrix (Passive M) (Passive M) ℤ :=
   fun B D => dotProduct (normalizedCycle B).val (normalizedCycle D).val
 
+open Classical in
 private lemma gram_mulVec {M : Matroid V} (x : Passive M → ℤ) (B : Passive M) :
     (gram M).mulVec x B = dotProduct (normalizedCycle B).val (fromCoordinates M x).val := by
   classical
@@ -159,6 +162,7 @@ private lemma gram_mulVec {M : Matroid V} (x : Passive M → ℤ) (B : Passive M
   rw [Submodule.coe_smul, dotProduct_smul]
   exact mul_comm _ _
 
+open Classical in
 private lemma dotProduct_cycle_expansion {M : Matroid V} (z w : topCycles M) :
     dotProduct z.val w.val =
       ∑ B : Passive M, dotProduct z.val (normalizedCycle B).val * w.val B.val := by
@@ -180,6 +184,7 @@ private lemma cycle_eq_of_pairings {M : Matroid V} (u v : topCycles M)
     rw [Submodule.coe_sub, sub_dotProduct, h B, sub_self, zero_mul]
   exact sub_eq_zero.mp (Subtype.ext (dotProduct_self_eq_zero.mp he))
 
+open Classical in
 private lemma gram_det_ne_zero (M : Matroid V) : (gram M).det ≠ 0 := by
   classical
   let C : Matrix (Finset V) (Passive M) ℤ := fun F B => (normalizedCycle B).val F
@@ -209,6 +214,7 @@ private lemma gram_det_ne_zero (M : Matroid V) : (gram M).det ≠ 0 := by
         (Ne.symm (fun h => hn (dotProduct_self_eq_zero.mp h)))
   exact hpos.det_pos.ne'
 
+open Classical in
 /-- The source pairing vector obtained from the signed restrictions at a fixed pivot. -/
 noncomputable def pivotPairing {M : Matroid V} (e : V)
     (y : (K : Circuit M) → topCycles (M ／ (K.val : Set V))) (B : Passive M) : ℤ :=
@@ -235,6 +241,7 @@ private lemma pivotPairing_aggregate {M : Matroid V} {e : V} (he : e ∈ M.E)
   exact (by simpa only [restrictChain, restrictionSign] using hE (normalizedCycle B) K T :
     (E (normalizedCycle B) K).val T = restrictChain M K.val e (normalizedCycle B).val T).symm
 
+open Classical in
 private lemma exists_gram_solution_iff (M : Matroid V)
     (hG : (gram M).det ≠ 0) (b : Passive M → ℤ) :
     (∃ x : Passive M → ℤ, (gram M).mulVec x = b) ↔
@@ -252,7 +259,7 @@ private lemma exists_gram_solution_iff (M : Matroid V)
     rw [cramer_eq_adjugate_mulVec, hcleared, mulVec_smul] at hsolve
     exact ⟨x, funext fun i => mul_left_cancel₀ hG (congrFun hsolve i)⟩
 
-set_option maxHeartbeats 700000 in
+open Classical in
 /-- Signed adjointness and the compatibility and Gram divisibility criterion for a unique
 integral lift of the joint circuit readouts. The empty passive index set has determinant one. -/
 theorem joint_circuit_gram_certificate (M : Matroid V) (e : V) (he : e ∈ M.E) :
