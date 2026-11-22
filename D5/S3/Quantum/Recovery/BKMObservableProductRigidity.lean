@@ -15,10 +15,10 @@ noncomputable section
 
 open Matrix
 open scoped BigOperators ComplexOrder Kronecker Matrix MatrixOrder Matrix.Norms.L2Operator
-open D5.S3.Quantum.Matrix.SpectralPower (mpow)
+open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Recovery.BKMObservableRigidity
-  (modular weightedVec weightedLift weightedLift_compression bkmGap_rigidity)
+  (modular weightedVec weightedLift weightedLift_compression bkmGap_rigidity mpow_add mpow_zero)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceRight partialTraceLeft partialTraceLeft_kronecker trace_partialTraceRight)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (partialTraceRight_posDef)
@@ -80,9 +80,9 @@ private theorem sum_modularPiece {S : Matrix n n ℂ} (hS : S.PosDef) (K : Matri
 private theorem mpow_half_inverse {X : Matrix n n ℂ} (hX : X.PosDef) :
     mpow X (1 / 2) * mpow X (-(1 / 2)) = 1 ∧
       mpow X (-(1 / 2)) * mpow X (1 / 2) = 1 := by
-  simp only [mpow, ← CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
-  exact ⟨CFC.rpow_mul_rpow_neg _ hX.isStrictlyPositive,
-    CFC.rpow_neg_mul_rpow _ hX.isStrictlyPositive⟩
+  constructor
+  · rw [mpow_add hX, add_neg_cancel, mpow_zero hX]
+  · rw [mpow_add hX, neg_add_cancel, mpow_zero hX]
 
 private theorem weighted_eigen_iff {X : Matrix n n ℂ} (hX : X.PosDef)
     (L : Matrix n n ℂ) (v : ℝ) :
@@ -184,17 +184,13 @@ private theorem cfc_modularPiece {S : Matrix n n ℂ} (hS : S.PosDef) (K : Matri
       _ = _ := by rw [hU, Matrix.one_mul]; simp only [Matrix.mul_assoc]
   rw [sandwich, sandwich, hDX, Matrix.mul_smul, Matrix.smul_mul]
 
-private theorem lift_mul {ι : Type*} [Fintype ι] {m : Type*} [Fintype m] [DecidableEq m]
-    (X Y : Matrix ι ι ℂ) : lift (ι := m) (X * Y) = lift X * lift Y := by
-  simpa only [lift, Matrix.one_mul] using
-    (Matrix.mul_kronecker_mul X Y (1 : Matrix m m ℂ) 1)
-
 private theorem lift_half_inverse (S : Matrix R R ℂ) (hS : S.PosDef) :
     lift (ι := E) (mpow S (1 / 2)) * lift (mpow S (-(1 / 2))) = 1 ∧
       lift (ι := E) (mpow S (-(1 / 2))) * lift (mpow S (1 / 2)) = 1 := by
-  rw [← lift_mul, ← lift_mul, (mpow_half_inverse hS).1, (mpow_half_inverse hS).2,
-    lift, Matrix.one_kronecker_one]
-  exact ⟨rfl, rfl⟩
+  obtain ⟨hHJ, hJH⟩ := mpow_half_inverse hS
+  constructor
+  · simp only [lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one, hHJ, Matrix.one_kronecker_one]
+  · simp only [lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one, hJH, Matrix.one_kronecker_one]
 
 /-- Joint density normalized on both sides by the inverse square root of its actual marginal. -/
 def relativeDensity (A : Matrix (R × E) (R × E) ℂ) : Matrix (R × E) (R × E) ℂ :=
@@ -242,8 +238,7 @@ private theorem commute_relativeDensity_iff (A : Matrix (R × E) (R × E) ℂ)
       have hl (T : Matrix R R ℂ) : lift (ι := E) (c • T) = c • lift T := by
         simp only [lift, Matrix.smul_kronecker]
       rw [hl] at h'
-      simp only [lift_mul] at h'
-      exact h'
+      simpa only [H, L, mpow, lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one] using h'
     have hA : H * B * H = A := restore_density A hS
     have hleft : A * L = c • (H * (B * L) * H) := by
       rw [← hA, Matrix.mul_assoc (H * B) H L, hHL, Matrix.mul_smul]
@@ -554,17 +549,13 @@ theorem bkmGap_eq_zero_iff_eq_marginals_kronecker [Nonempty E]
   let H := lift (ι := E) (mpow S (1 / 2))
   let J := lift (ι := E) (mpow S (-(1 / 2)))
   have hWW' : W * W' = 1 := by
-    change lift U * lift Uᴴ = _
-    rw [← lift_mul, show U * Uᴴ = 1 from Unitary.coe_mul_star_self _, lift,
-      Matrix.one_kronecker_one]
+    simp only [W, W', lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one,
+      show U * Uᴴ = 1 from Unitary.coe_mul_star_self _, Matrix.one_kronecker_one]
   have hW'W : W' * W = 1 := by
-    change lift Uᴴ * lift U = _
-    rw [← lift_mul, show Uᴴ * U = 1 from Unitary.coe_star_mul_self _, lift,
-      Matrix.one_kronecker_one]
+    simp only [W, W', lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one,
+      show Uᴴ * U = 1 from Unitary.coe_star_mul_self _, Matrix.one_kronecker_one]
   have hHH : mpow S (1 / 2) * mpow S (1 / 2) = S := by
-    simp only [mpow, ← CFC.rpow_eq_cfc_real hS.posSemidef.nonneg]
-    rw [← CFC.rpow_add hS.isUnit, show (1 / 2 : ℝ) + 1 / 2 = 1 by norm_num,
-      CFC.rpow_one S hS.posSemidef.nonneg]
+    rw [mpow_add hS, show (1 / 2 : ℝ) + 1 / 2 = 1 by norm_num, mpow_one hS.isHermitian]
   have hS_trace : S.trace = 1 := (trace_partialTraceRight A).trans htrace
   rw [bkmGap_eq_zero_iff_commute_ratioPieces A hA K hK]
   constructor
@@ -574,7 +565,8 @@ theorem bkmGap_eq_zero_iff_eq_marginals_kronecker [Nonempty E]
     have hcomm (v : ℝ) : Commute B₀ (lift (ratioPiece hS.isHermitian.eigenvalues v K₀)) := by
       let L := lift (ι := E) (ratioPiece hS.isHermitian.eigenvalues v K₀)
       have he : B * (W * L * W') = (W * L * W') * B := by
-        simpa only [modularPiece, lift_mul] using (h v).eq
+        simpa only [modularPiece, W, L, W', lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one]
+          using (h v).eq
       change B₀ * L = L * B₀
       calc
         _ = W' * (B * (W * L)) := by simp only [B₀, Matrix.mul_assoc]
