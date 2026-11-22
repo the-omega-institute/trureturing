@@ -43,15 +43,11 @@ private abbrev rowArena.{u} : Arena where
     let T := Bᵀ.mulVecLin
     let J := jointMap B F
     let b := ((fun v => (q v : ZMod 2)), f)
-    let S := ker J
-    let D := S ⊓ range T
-    let R := (bicycles B).mkQ.domRestrict (S.comap (Cycles B).subtype)
+    let D := ker J ⊓ range T
     let W : Set (G.edgeSet → ZMod 2) := {w | (∃ z, w = s + T z) ∧ J w = b}
     (W.Nonempty ↔ b - J s ∈ range (J.comp T)) ∧
     (∀ w₀ ∈ W, ∀ w, w ∈ W ↔ ∃ d : D, w = w₀ + d.val) ∧
-    (Module.finrank (ZMod 2) D + Module.finrank (ZMod 2) (range (J.comp T)) = B.rank) ∧
-    (Module.finrank (ZMod 2) D + Module.finrank (ZMod 2) (range R) =
-      Module.finrank (ZMod 2) S) ∧
+    jointRankBalances B F ∧
     ((∀ w, negativeDegree G w = q → (fun e : F => w e.val) = f) →
       ((∃ z, signedRow G (s + T z) = fun v => (G.degree v : ℤ) - 2 * q v) ↔
         ∃ w ∈ W, readout.readout () ⟨V, vType, vEq, G, adj⟩ w = q))
@@ -65,7 +61,7 @@ private theorem rowRejected_law.{u} : ¬ rowArena.{u}.Law rowRejected.{u} := by
     intro w _
     funext e
     exact e.property.elim
-  have hLaw := (h oneEdge.{u} ∅ (fun _ => 1) (fun _ => 1) (fun _ => 0)).2.2.2.2 hFreeze
+  have hLaw := (h oneEdge.{u} ∅ (fun _ => 1) (fun _ => 1) (fun _ => 0)).2.2.2 hFreeze
   have hRows :
       signedRow oneEdge.{u}
         ((fun _ => 1) + (incidence oneEdge.{u})ᵀ.mulVecLin 0) =
@@ -121,9 +117,9 @@ def rowRegistration.{u} : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _
     coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg", "body", "arg", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 18
+        "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "body", "arg", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 16
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
