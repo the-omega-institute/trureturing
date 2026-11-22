@@ -17,7 +17,7 @@ triage: anchor
 ## Verified locator
 
 - DOI: https://doi.org/10.48550/arXiv.2507.14473
-- Edition: arXiv:2507.14473v1. The introduction defines triangle regularity, §1.1 states Conjecture 1, and §4 repeats it and considers finite abelian groups. https://arxiv.org/html/2507.14473v1#Thmconj1
+- Edition: https://arxiv.org/abs/2507.14473v1. The introduction defines triangle regularity, §1.1 states Conjecture 1, and §4 repeats it and considers finite abelian groups. https://arxiv.org/html/2507.14473v1#Thmconj1
 - The arXiv record links the Creative Commons Attribution 4.0 International license. https://creativecommons.org/licenses/by/4.0/
 
 ## Attribution and scope
