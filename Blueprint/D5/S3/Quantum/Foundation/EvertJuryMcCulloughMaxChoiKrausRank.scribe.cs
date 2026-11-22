@@ -47,7 +47,10 @@ internal sealed class EvertJuryMcCulloughMaxChoiKrausRankDocument : IScribeDocum
                     Paragraph(Text("The positive semidefinite Choi matrix gives a rectangular Kraus family indexed by the n³ Choi coordinates. Conversely, each Kraus coefficient acts by a sandwich on a permutation of the tensor product of the two block inputs, yielding positivity at every block size. Flattening the coefficients expresses the Choi matrix as a sum of N outer products, so its rank is at most N. If the Choi matrix is positive definite, this forces every admissible length to be at least n³.")),
                     Paragraph(Text("For n at least two let J be the all-ones matrix and I the identity. The weighted Schur product with weights I + J has common unit T = J − I/2. With H = (2n − 1)I − J, add the product of the two functionals A ↦ Tr(HA) and B ↦ Tr(HB), times I. The functional vanishes at T, and H is positive definite. The added Choi matrix is the tensor product of the two transposes of H and I. It is positive definite, and the weighted Schur contribution is positive semidefinite.")),
                     Paragraph(Text("At n = 1 ordinary scalar multiplication has unit 1 and positive-definite Choi matrix. In every dimension the common-unit example also attains the left-unit maximum. The upper bound applies to all jointly completely positive square products, independently of their units. For n at least two the attaining unit is indefinite."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("evert-jury-mccullough-2026-max-choi-kraus-rank"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(
         string name, string title, Formula formula, string prose, AssessedProvenance? provenance = null) =>

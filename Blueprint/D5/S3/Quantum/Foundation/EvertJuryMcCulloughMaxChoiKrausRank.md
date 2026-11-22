@@ -156,6 +156,10 @@ $$\forall (n: \mathbb{N}), ((1 \le n) \implies (((\forall (\phi: MatrixProduct\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/EvertJuryMcCulloughMaxChoiKrausRank.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/evert-jury-mccullough-2026-max-choi-kraus-rank` (proved) by `D5/S3/Quantum/Foundation/EvertJuryMcCulloughMaxChoiKrausRank.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"evert-jury-mccullough-2026-max-choi-kraus-rank","declaration_gid":"D5/S3/Quantum/Foundation/EvertJuryMcCulloughMaxChoiKrausRank.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eric Evert, Michael T. Jury and Scott McCullough (2026). *Completely Positive Matrix Products*. DOI: [10.48550/arXiv.2607.13251](https://doi.org/10.48550/arXiv.2607.13251). URL: <https://arxiv.org/pdf/2607.13251v1#page=22>.
