@@ -63,12 +63,21 @@ jobs:
       # Historical manual sources continue through their own publication entry.
       - id: support
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [[ -f .github/actions/lean-compile-layer/action.yml ]]; then
             python3 .github/scripts/install-tools.py
             test -f tools/scripts/worktree/lean_compile_layers.py
             echo 'supported=true' >> "$GITHUB_OUTPUT"
             if [[ -f .github/actions/lean-cache-release-seed/prepare-compiler.sh ]]; then
+              # A sparse plan must be produced and consumed by the same tools.
+              if [[ "$(git rev-parse HEAD)" != "$GITHUB_SHA" ]]; then
+                runtime_pin="$(gh api -H 'Accept: application/vnd.github.raw+json' \
+                  "repos/$GITHUB_REPOSITORY/contents/Meta/tools-release.json?ref=$GITHUB_SHA" --jq '.sha256')"
+                [[ "$runtime_pin" =~ ^[0-9a-f]{64}$ ]]
+                [[ "$runtime_pin" == "$(jq -er '.sha256' Meta/tools-release.json)" ]] || exit 0
+              fi
               echo 'sparse=true' >> "$GITHUB_OUTPUT"
             fi
           fi
