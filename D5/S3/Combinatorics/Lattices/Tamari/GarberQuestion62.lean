@@ -9,8 +9,6 @@
 import D5.S3.Combinatorics.Lattices.Tamari.NoncrossingRefinement
 import D5.S3.Combinatorics.Lattices.Tamari.DyckHeight
 
-set_option autoImplicit false
-
 /-!
 # Garber et al., Question 6.2, first sentence
 
@@ -21,6 +19,8 @@ https://arxiv.org/html/2608.27126v2#S6.Thmtheorem2
 > Is the order on Boolean antichains of maximal size in the Tamari lattice equivalent to the Tamari
 > order, the order on non-crossing partitions, or the order on Dyck paths?
 -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 

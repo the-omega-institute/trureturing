@@ -11,9 +11,9 @@ import Mathlib.Combinatorics.Enumerative.Catalan.Tree
 import Mathlib.Logic.Relation
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
-set_option autoImplicit false
-
 /-! # Inorder endpoint coordinates of full binary trees -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 
@@ -69,7 +69,7 @@ private theorem endpoint_nested (t : FullTree) {i j : ℕ} (hi : i < t.numNodes)
       rw [endpoint_left l r (hj.trans_lt (endpoint_bounds l h).2)]
       exact hl h hij hj
     · rw [endpoint_root] at hj ⊢
-      have h := (endpoint_bounds (l △ r) (i := j) (by simp; omega)).2
+      have h := (endpoint_bounds (l △ r) (i := j) (by simp <;> omega)).2
       simp only [BinaryTree.numNodes] at h
       omega
     · rw [endpoint_right l r h] at hj ⊢
@@ -242,31 +242,31 @@ private structure Raises (t u : FullTree) (i : ℕ) : Prop where
 
 private theorem root_raises (a b c : FullTree) : Raises ((a △ b) △ c) (a △ (b △ c)) a.numNodes := by
   have old_i : endpoint ((a △ b) △ c) a.numNodes = a.numNodes + b.numNodes := by
-    rw [endpoint_left _ _ (by simp; omega), endpoint_root]
+    rw [endpoint_left _ _ (by simp <;> omega), endpoint_root]
   have old_next : endpoint ((a △ b) △ c) (a.numNodes + b.numNodes + 1) =
       a.numNodes + b.numNodes + 1 + c.numNodes :=
     endpoint_root (a △ b) c
-  refine ⟨by simp; omega, by rw [old_i]; simp; omega, ?_, ?_⟩
+  refine ⟨by simp <;> omega, by rw [old_i]; simp <;> omega, ?_, ?_⟩
   · rw [old_i, old_next, endpoint_root]
     simp
     omega
   · intro j hj hne
     simp only [BinaryTree.numNodes] at hj
     by_cases hL : j < a.numNodes
-    · rw [endpoint_left _ _ hL, endpoint_left _ _ (by simp; omega), endpoint_left _ _ hL]
+    · rw [endpoint_left _ _ hL, endpoint_left _ _ (by simp <;> omega), endpoint_left _ _ hL]
     have hR : a.numNodes < j := by omega
     rw [endpoint_right _ _ hR]
     let k := j - (a.numNodes + 1)
     change a.numNodes + 1 + endpoint (b △ c) k = _
     have hjk : j = a.numNodes + 1 + k := by dsimp [k]; omega
     rcases lt_trichotomy k b.numNodes with hk | hk | hk
-    · rw [endpoint_left _ _ hk, endpoint_left _ _ (by simp; omega), endpoint_right _ _ hR]
+    · rw [endpoint_left _ _ hk, endpoint_left _ _ (by simp <;> omega), endpoint_right _ _ hR]
     · rw [hk, endpoint_root]
       have he : j = (a △ b).numNodes := by simp; omega
       rw [he, endpoint_root]
       simp
       omega
-    · rw [endpoint_right _ _ hk, endpoint_right _ _ (by simp; omega)]
+    · rw [endpoint_right _ _ hk, endpoint_right _ _ (by simp <;> omega)]
       simp only [BinaryTree.numNodes]
       have hs : j - (a.numNodes + b.numNodes + 1 + 1) = k - (b.numNodes + 1) := by omega
       rw [hs]

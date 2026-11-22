@@ -9,9 +9,9 @@
 import D5.S3.Combinatorics.Lattices.Tamari.MaximumFamilies
 import Mathlib.Order.Partition.Finpartition
 
-set_option autoImplicit false
-
 /-! # Noncrossing refinement and its comparison with Tamari order -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 

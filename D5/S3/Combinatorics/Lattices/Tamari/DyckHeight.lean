@@ -9,9 +9,9 @@
 import D5.S3.Combinatorics.Lattices.Tamari.MaximumFamilies
 import Mathlib.Combinatorics.Enumerative.DyckWord
 
-set_option autoImplicit false
-
 /-! # Dyck height dominance and its comparison with Tamari order -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 

@@ -11,9 +11,9 @@ import D5.S3.Combinatorics.Lattices.Tamari.TreeRotations
 import Mathlib.Order.Hom.CompleteLattice
 import Mathlib.Order.Atoms
 
-set_option autoImplicit false
-
 /-! # The order of maximum Boolean antichains -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 

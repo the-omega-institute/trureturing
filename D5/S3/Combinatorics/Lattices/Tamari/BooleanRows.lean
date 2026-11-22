@@ -9,9 +9,9 @@
 import D5.S3.Combinatorics.Lattices.Tamari.BracketRows
 import Mathlib.Data.Finset.Max
 
-set_option autoImplicit false
-
 /-! # Maximum Boolean antichains and laminar interval rows -/
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Lattices.Tamari
 
@@ -335,7 +335,7 @@ private theorem boolean_rows_laminar (A : (s : RowIndex n) → LeftEndpoint s)
     ((row_le_row_iff t t (A t) c).mp hle).2
   omega
 
-private theorem boolean_rowFamily_iff_laminar (A : (s : RowIndex n) → LeftEndpoint s) :
+theorem boolean_rowFamily_iff_laminar (A : (s : RowIndex n) → LeftEndpoint s) :
     BooleanFamily (Set.range (rowFamily A)) ↔ Laminar A := by
   refine ⟨boolean_rows_laminar A, fun hA => ⟨?_, ?_, fun _ _ => laminar_join_meets A hA⟩⟩
   · rintro _ ⟨s, rfl⟩ _ ⟨t, rfl⟩ hne hle

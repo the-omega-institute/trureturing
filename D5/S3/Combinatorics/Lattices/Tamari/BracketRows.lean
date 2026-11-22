@@ -12,8 +12,6 @@ import Mathlib.Order.UpperLower.Closure
 import Mathlib.Order.CompleteLattice.Basic
 import Mathlib.Order.Lattice.Nat
 
-set_option autoImplicit false
-
 /-
 Copyright (c) 2026 Julian Kuelshammer. All rights reserved.
 Released under Apache 2.0 license as described in
@@ -28,6 +26,8 @@ commit 96e7345a164bf518920d5a9f94b557cc27b62e07.
 This extraction uses the direct Fin import and omits the unused decidability derivation
 and auxiliary declarations.
 -/
+
+set_option autoImplicit false
 
 namespace Function
 
@@ -180,7 +180,7 @@ theorem lowerClosure_rowFamily_le_iff (A B : (s : RowIndex n) → LeftEndpoint s
     exact mem_lowerClosure.mpr ⟨rowFamily B s, Set.mem_range_self s,
       (row_le_row_iff s s (A s) (B s)).mpr ⟨rfl, h s⟩⟩
 
-private theorem rowFamily_injective (A : (s : RowIndex n) → LeftEndpoint s) :
+theorem rowFamily_injective (A : (s : RowIndex n) → LeftEndpoint s) :
     Function.Injective (rowFamily A) := by
   intro s t h
   exact ((row_le_row_iff s t (A s) (A t)).mp h.le).1
