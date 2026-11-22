@@ -76,7 +76,8 @@ private theorem phase_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : �
   have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith)
   field_simp
 
-private theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) :
+/-- The full centered zero series is absolutely summable at every real time. -/
+theorem root_series_hasSum (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) :
     HasSum (fun k => (rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))).re)
       ((∑' k, rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))).re) := by
   apply Complex.hasSum_re
