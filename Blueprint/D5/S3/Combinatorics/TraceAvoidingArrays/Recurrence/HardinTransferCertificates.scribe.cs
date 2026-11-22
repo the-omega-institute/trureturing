@@ -4,18 +4,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.Re
 
 internal sealed class HardinTransferCertificatesDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.";
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The source vector identities with exact integer lags.",
         H("Continuation polynomials"),
         Blocks(
-            Node("row1", "rowOne", "Full-state relation at height 1", DescribeRole.Theorem,
-                "On all three unrestricted columns at height one, the entries of the powers on ones at exponents 0, 1 and 2 are 1, 2 and 4, respectively. Thus C²1 = 3C1 − 2·1. The coefficient sum is one. Multiplying by C gives the manuscript relation at shift one."),
-            Node("column4-lags", "wordFourCoefficients", "Source lag coefficients", DescribeRole.Definition,
-                "The coefficients at lags one through 3 are (8, −11, 4)."),
-            Node("column4", "wordFour", "Full-state relation at width 4", DescribeRole.Theorem,
-                "On all 24 proper words at width four, the diagonal transfer power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 0. The coefficient sum is one. For each state, the permitted successors exclude the labels on all incident cross-bonds and require adjacent labels to differ. Horner evaluation gives zero residual at each proper word."),
+            Paragraph(Text("The sparse successor sets enumerate exactly the permitted next columns or proper words. In a column each next label avoids all labels on incident cross-bonds. In a proper word the next labels also differ at adjacent positions. The checked actions on arbitrary integer vectors supply the height-seven and width-seven quotient proofs.")),
+            new DocumentBlock.Section(H("Height-one continuation"), Blocks(
+                Paragraph(Text("The source C₁ is C 0, on the three functions Fin 1 → Fin 3. There is only a horizontal bond. Each current label has two possible successors, so HardinActualTransfers.column_power and the column continuation recursion give vₘ = C₁^m 1 = 2^m 1 for every natural m, with one empty tail at every state. In particular v₂ = 3v₁ − 2v₀, and the coefficient sum is 1. Left multiplication by C₁ gives v₃ = 3v₂ − 2v₁, the manuscript shift-one relation.")),
+                Paragraph(Text("For n at least 2, HardinThinGraphTransport.path_result gives 2T(1,n) = 4^(n−2) + 2^(n−2). Both powers obey the recurrence with lags (6, −8), which gives T(1,n) = 6T(1,n−1) − 8T(1,n−2) for n at least 4. The separate singleton value is 1. At n = 3 the rational residual is 3 − (6·1 − 8·1) = 5.")))),
+            new DocumentBlock.Section(H("Width-four continuation"), Blocks(
+                Paragraph(Text("HardinA229530Strip.raw_successors counts the successors of every proper width-four word in each saturated HardinSourceContinuations.sourceClass. Its labels and diagonal bonds are those of wordTransfer true 3. At scanner state (true,true), each successor has 16 sign lifts. Dividing the certified positive-class rows of M by 16 gives Q = [[3,1,4],[1,1,2],[2,1,3]].")),
+                Paragraph(Text("The quotient starts at (1,1,1) and gives (8,4,6), (52,24,38), and (332,152,242) at exponents one through three. The last vector is 8v₂ − 11v₁ + 4v₀. HardinActualTransfers.row_fibres_iff_pow_mulVec pulls these powers back to all 24 proper words, including exponent zero. The sum of the lag coefficients (8, −11, 4) is one.")))),
             new DocumentBlock.Section(H("Consequences of the low-width continuations"), Blocks(
                 Paragraph(Text("HardinActualTransfers identifies the powers on ones with the corresponding continuations, including the empty tail at exponent zero. For each of the six proper width-two words, HardinThinGraphTransport.continuation_two, from transition_counts, gives 3^m for both the diagonal and square vertical-bond rules. The vectors at exponents 0, 1 and 2 therefore have entries 1, 3 and 9, and 9=4·3−3·1. The lag list (4, −3) sums to one.")),
                 Paragraph(Text("For all twelve proper width-three words and both bond rules, HardinThinGraphTransport.continuation_three uses the same K=[[3,2],[2,2]] on the equal-endpoint and unequal-endpoint classes in that order. The vectors at exponents 0 through 3 are (1,1), (5,4), (23,18), (105,82). In these coordinates v₃=6v₂−7v₁+2v₀, so the identity holds at every original proper word. The lag list (6, −7, 2) sums to one.")),
@@ -24,8 +23,4 @@ internal sealed class HardinTransferCertificatesDocument : IScribeDocumentDefini
                 Paragraph(Text("The zero shifts concern the three-label vectors. For the literal normalized row counts, the connected-rectangle identity applies only at widths at least two. For height one the counts at widths 1, 2 and 3 are 1, 1 and 3, so the equation with lags (6, −8) fails at width 3. For height two the counts at widths 1 through 4 are 3, 8, 80 and 800, so the equation with lags (12, 0, −128) fails at width 4. The literal recurrences begin at widths 4 and 5 respectively."))))
         )));
 
-    private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(statement))), role);
 }

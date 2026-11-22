@@ -4,41 +4,19 @@
 
 The source vector identities with exact integer lags.
 
-**Theorem 1.1 (Full-state relation at height 1).**
+The sparse successor sets enumerate exactly the permitted next columns or proper words. In a column each next label avoids all labels on incident cross-bonds. In a proper word the next labels also differ at adjacent positions. The checked actions on arbitrary integer vectors supply the height-seven and width-seven quotient proofs.
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.rowOne`
+## Height-one continuation
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.rowOne` (`✓ std3`). ∎
+The source C₁ is C 0, on the three functions Fin 1 → Fin 3. There is only a horizontal bond. Each current label has two possible successors, so HardinActualTransfers.column_power and the column continuation recursion give vₘ = C₁^m 1 = 2^m 1 for every natural m, with one empty tail at every state. In particular v₂ = 3v₁ − 2v₀, and the coefficient sum is 1. Left multiplication by C₁ gives v₃ = 3v₂ − 2v₁, the manuscript shift-one relation.
 
-*Source.* Repository-derived.
+For n at least 2, HardinThinGraphTransport.path_result gives 2T(1,n) = 4^(n−2) + 2^(n−2). Both powers obey the recurrence with lags (6, −8), which gives T(1,n) = 6T(1,n−1) − 8T(1,n−2) for n at least 4. The separate singleton value is 1. At n = 3 the rational residual is 3 − (6·1 − 8·1) = 5.
 
-*Commentary.*
+## Width-four continuation
 
-On all three unrestricted columns at height one, the entries of the powers on ones at exponents 0, 1 and 2 are 1, 2 and 4, respectively. Thus C²1 = 3C1 − 2·1. The coefficient sum is one. Multiplying by C gives the manuscript relation at shift one.
+HardinA229530Strip.raw_successors counts the successors of every proper width-four word in each saturated HardinSourceContinuations.sourceClass. Its labels and diagonal bonds are those of wordTransfer true 3. At scanner state (true,true), each successor has 16 sign lifts. Dividing the certified positive-class rows of M by 16 gives Q = [[3,1,4],[1,1,2],[2,1,3]].
 
-**Definition 1.2 (Source lag coefficients).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFourCoefficients`
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFourCoefficients` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The coefficients at lags one through 3 are (8, −11, 4).
-
-**Theorem 1.3 (Full-state relation at width 4).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFour`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFour` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-On all 24 proper words at width four, the diagonal transfer power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 0. The coefficient sum is one. For each state, the permitted successors exclude the labels on all incident cross-bonds and require adjacent labels to differ. Horner evaluation gives zero residual at each proper word.
+The quotient starts at (1,1,1) and gives (8,4,6), (52,24,38), and (332,152,242) at exponents one through three. The last vector is 8v₂ − 11v₁ + 4v₀. HardinActualTransfers.row_fibres_iff_pow_mulVec pulls these powers back to all 24 proper words, including exponent zero. The sum of the lag coefficients (8, −11, 4) is one.
 
 ## Consequences of the low-width continuations
 
@@ -54,7 +32,4 @@ The zero shifts concern the three-label vectors. For the literal normalized row 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.rowOne`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFour`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFourCoefficients`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinActualTransfers](HardinActualTransfers.md)

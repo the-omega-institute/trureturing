@@ -28,55 +28,15 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeT
 
 On all 2187 unrestricted columns at height 7, the power at exponent 48 on ones equals the source lag-weighted sum of the power vectors at exponents 47 down to 1. The coefficient sum is one.
 
+## Width-five and width-six continuations
+
+HardinA229531StripData.raw_successors and HardinA229532StripData.raw_successors supply every actual proper-word successor count by saturated boundary class. The successor predicate is the same proper-word and diagonal-bond predicate as in wordTransfer true. The sign multiplicities are 32 and 64 respectively. Divide each positive-class row of the corresponding HardinA233171DiagonalStrip or HardinA233172DiagonalStrip transfer by that multiplicity.
+
+Start the quotient power vectors at one on each class. At width five the vector at exponent 7 is the lag combination of the vectors at exponents 6 down to 0 with coefficients (15, −59, 60, 21, −55, 21, −2). At width six the vector at exponent 10 is the combination at exponents 9 down to 0 with coefficients (19, −74, −25, 361, −268, −271, 337, −54, −29, 5). Both lists sum to one.
+
+HardinActualTransfers.row_fibres_iff_pow_mulVec pulls the quotient powers back to all 48 and 96 proper words respectively, including the empty continuation at exponent zero. The literal all-height formulas with onsets 8 and 11 are supplied by HardinA233171DiagonalStrip.result and HardinA233172DiagonalStrip.result.
+
 **Definition 1.3 (Source lag coefficients).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFiveCoefficients`
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFiveCoefficients` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The coefficients at lags one through 7 are (15, −59, 60, 21, −55, 21, −2).
-
-**Theorem 1.4 (Full-state relation at width 5).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFive`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFive` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-On all 48 proper words at width 5, the power at exponent 7 on ones equals the source lag-weighted sum of the power vectors at exponents 6 down to 0. The coefficient sum is one.
-
-**Definition 1.5 (Source lag coefficients).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSixCoefficients`
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSixCoefficients` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The coefficients at lags one through 10 are (19, −74, −25, 361, −268, −271, 337, −54, −29, 5).
-
-**Theorem 1.6 (Full-state relation at width 6).**
-
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSix` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-On all 96 proper words at width 6, the power at exponent 10 on ones equals the source lag-weighted sum of the power vectors at exponents 9 down to 0. The coefficient sum is one.
-
-**Definition 1.7 (Source lag coefficients).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSevenCoefficients`
 
@@ -88,7 +48,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeT
 
 The coefficients at lags one through 20 are (42, −590, 3167, −1918, −37505, 95138, 67348, −449955, 266387, 629595, −841378, −28007, 588908, −332461, 7999, 44409, −11184, −342, 380, −32).
 
-**Theorem 1.8 (Full-state relation at width 7).**
+**Theorem 1.4 (Full-state relation at width 7).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSeven`
 
@@ -120,11 +80,7 @@ For every natural m at least 21, apply R7^(m − 21) to the width-seven vector r
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.rowSeven`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.rowSevenCoefficients`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFive`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordFiveCoefficients`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSeven`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSevenCoefficients`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSix`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinLargeTransferCertificates.wordSixCoefficients`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinColumnPolynomials](HardinColumnPolynomials.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinHeightSevenSuffixPowers](HardinHeightSevenSuffixPowers.md)
