@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
 
 /-! The configuration-order readout in the pointwise tree-fiber law. -/
 
@@ -290,5 +291,79 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
 
 
 end KeptEdges
+
+namespace PrunedEdges
+
+open private prunedHost from D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices
+
+abbrev signature : Signature := _root_.Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.SupportVertices.signature
+
+abbrev actual : Realization signature := _root_.Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.SupportVertices.actual
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (c : Configuration) (e : DeletionChoices c) (x y : Vertex),
+    ((treeFiberEquiv c).symm e).val.Adj x y ↔
+      (prunedHost e.1 e.2).Adj x y ∧ x ∈ R.readout () () c ∧ y ∈ c.vertices
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hhost : G500.Adj (triangle 0) (triangle 1) := by
+    unfold G500
+    exact (joinAt_inr _ _ _ _ _ _).mpr (cycleGraph_adj.mpr (by decide))
+  have hleft : triangle 0 ∈ fullTriangle.vertices := by
+    change (0 : Fin 3) ∈ (Finset.univ : Finset (Fin 3))
+    exact Finset.mem_univ _
+  have hright : triangle 1 ∈ fullTriangle.vertices := by
+    change (1 : Fin 3) ∈ (Finset.univ : Finset (Fin 3))
+    exact Finset.mem_univ _
+  have htree := (treeFiberEquiv_keeps_edge_iff fullTriangle
+    (KeptEdges.dropTriangleEdge KeptEdges.secondEdge) (triangle 0) (triangle 1)).mpr
+    ⟨hhost, hleft, hright, KeptEdges.firstEdgeKept⟩
+  exact (h fullTriangle _ _ _).mp htree |>.2.1
+
+def family : Registration arena (type_of% @treeFiberEquiv_edges) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨treeFiberEquiv_edges, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := _root_.Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.SupportVertices.family.dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    (@treeFiberEquiv_edges) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.treeFiberEquiv_edges.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices.PrunedEdges.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ c => c.vertices) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PrunedEdges
 end
 end Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19TreeChoices

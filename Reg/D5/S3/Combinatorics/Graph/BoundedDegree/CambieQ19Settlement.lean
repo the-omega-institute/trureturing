@@ -156,5 +156,59 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
   options := #[]
 
 end SupportVertices
+
+namespace SupportConnected
+
+abbrev arena : Arena where
+  signature := SupportVertices.signature
+  Law R := ∀ c : Configuration, (G500.induce (R.readout () () c)).Connected
+
+private theorem rejected_law : ¬ arena.Law SupportVertices.rejected := by
+  intro h
+  have vacant := h singletonConfig
+  change (G500.induce (∅ : Set Vertex)).Connected at vacant
+  exact Set.not_nonempty_empty (Set.nonempty_coe_sort.mp vacant.nonempty)
+
+def family : Registration arena (type_of% @Configuration.supportConnected) where
+  actual := SupportVertices.actual
+  bridge := Iff.rfl
+  variation := ⟨Configuration.supportConnected, SupportVertices.rejected, rejected_law⟩
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law _ _ rejected_law
+  dependence := SupportVertices.family.dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    (@Configuration.supportConnected) (Realization SupportVertices.signature) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.Configuration.supportConnected.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.SupportConnected.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize SupportVertices.signature (fun _ _ c => c.vertices) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SupportConnected
 end
 end Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
