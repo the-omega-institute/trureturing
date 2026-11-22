@@ -214,6 +214,9 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Set the transfer budget for named volume verification
+        if: inputs.volume_test_id != ''
+        run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
       - id: release_seed
         name: Restore the selected Release build seeds
         if: steps.entry.outputs.hit == 'true'
@@ -326,6 +329,9 @@ jobs:
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Set the transfer budget for named volume recovery
+        if: inputs.volume_test_id != ''
+        run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=7200' >> "$GITHUB_ENV"
       - name: Confirm that the previous test snapshot was retired
         if: env.RETIRE_VOLUME_TAG != ''
         run: |
