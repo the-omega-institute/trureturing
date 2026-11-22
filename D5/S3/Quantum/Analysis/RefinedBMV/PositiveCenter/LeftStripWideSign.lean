@@ -30,7 +30,7 @@ private theorem wideCheckCover_of_children (n : ℕ) (H A V : Endpoints)
         else if (n + 1) % 3 = 2 then
           wideCheckCover n H A (lowerHalf V) && wideCheckCover n H A (upperHalf V)
         else
-          wideCheckCover n (lowerHalf H) A D && wideCheckCover n (upperHalf H) A D) = true) :
+          wideCheckCover n (lowerHalf H) A V && wideCheckCover n (upperHalf H) A V) = true) :
     wideCheckCover (n + 1) H A V = true := by
   rw [wideCheckCover]
   split

@@ -664,7 +664,7 @@ private def wideCheckCover (depth : ℕ) (H A V : Endpoints) : Bool :=
       else if (n+1) % 3 = 2 then
         wideCheckCover n H A (lowerHalf V) && wideCheckCover n H A (upperHalf V)
       else
-        wideCheckCover n (lowerHalf H) A D && wideCheckCover n (upperHalf H) A D
+        wideCheckCover n (lowerHalf H) A V && wideCheckCover n (upperHalf H) A V
 
 private theorem wideCheckCover_sound {p : ℕ} (hp : 0 < p) {a v : ℝ}
     (ha₀ : 0 ≤ a) (hd₀ : 0 ≤ v-a) (hv₁ : v ≤ 3/2)
