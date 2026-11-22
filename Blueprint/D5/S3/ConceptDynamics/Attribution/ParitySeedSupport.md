@@ -6,7 +6,7 @@ Characterize simultaneous coordinate bounds by a parity support with one marked 
 
 **Theorem 1.1 (Coordinate budgets at odd multiplier).**
 
-$$\operatorname{SeedCountsWithin}\left(n, k, z\right) \Leftrightarrow \operatorname{MarkedParitySupportWithin}\left(n, k, z\right)$$
+$$(\operatorname{Even}\left(n + 2\right) \land \operatorname{Odd}\left(k\right)) \Rightarrow (\operatorname{SeedCountsWithin}\left(n, k, z\right) \Leftrightarrow \operatorname{MarkedParitySupportWithin}\left(n, k, z\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParitySeedSupport.binary_support_iff` (`✓ std3`). ∎
 
@@ -14,13 +14,13 @@ $$\operatorname{SeedCountsWithin}\left(n, k, z\right) \Leftrightarrow \operatorn
 
 *Commentary.*
 
-The dimension is even and at least two. The multiplier is odd. Rows are even subsets and columns are odd subsets of the coordinates. For each coordinate the budget bounds its fixed-seed count on the same uniform equivariant seed action.
+The dimension is n plus two. Its even parity gives a full row. The odd multiplier forces a column with two odd colour masses in that row. Rows are even subsets and columns are odd subsets of the coordinates. For each coordinate the budget bounds its fixed-seed count on the same uniform equivariant seed action.
 
 Choose a binary table and a marked column of the full row. When the marked cell has binary value zero, give it base mass two. All other base masses are their binary values. Each row and column must have odd base mass at most the multiplier.
 
 At each coordinate, count ordinary odd cells whose two profiles contain it, and count the marked column once if it contains that coordinate. Four times this count must fit the corresponding budget.
 
-Complete the remaining margins with even masses, using the residual row demands and column capacities. Split the full row between its two colours with odd mass only at the marked column. In the reverse direction, a given realization yields an odd column in the full row and a binary support whose counts fit all budgets.
+Complete the remaining margins with even masses, using the residual row and column margins. Split the full row between its two colours with odd mass only at the marked column. In the reverse direction, a given realization supplies the marked column and a binary support whose counts fit all budgets.
 
 ## References
 
