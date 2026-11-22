@@ -1,10 +1,10 @@
-/- GID: D5/S3/Quantum/Information/BolducJenningsClassicalValue
+/- GID: D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/BolducJenningsClassicalValue
+   mirror-B: D5/B/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Classical complete-graph coloring below the synchronous threshold. -/
+   digest: Sharp classical complete-graph coloring value at low diagonal weight. -/
 
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Algebra.BigOperators.Fin
@@ -31,7 +31,7 @@ by a balanced synchronous table or by a balanced common block with two reserved 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Information.BolducJenningsClassicalValue
+namespace D5.S3.Quantum.Information.ColoringGames.BolducJenningsClassicalValue
 
 open Finset
 open scoped BigOperators
@@ -757,4 +757,4 @@ theorem result (n m : ℕ) (p : ℝ) (hm : 2 ≤ m) (hmn : m < n)
         sum_le_sum fun ρ _ => mul_le_mul_of_nonneg_left (hd ρ) (w.weights_nonneg ρ)
       _ = _ := by rw [← sum_mul, w.total_of_fintype, one_mul]
 
-end D5.S3.Quantum.Information.BolducJenningsClassicalValue
+end D5.S3.Quantum.Information.ColoringGames.BolducJenningsClassicalValue
