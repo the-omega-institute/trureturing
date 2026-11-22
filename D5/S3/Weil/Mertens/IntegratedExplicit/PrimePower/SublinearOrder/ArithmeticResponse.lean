@@ -368,16 +368,16 @@ private theorem uncentered_main_antitone {x : ℝ} (hx : 1 ≤ x)
   exact mul_le_mul hcoef (rpow_le_rpow_of_exponent_le hx (sub_le_sub_right hp _))
     (rpow_nonneg (by linarith) _) (by positivity)
 
-theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} (hL : 0 ≤ L) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
+theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ L : ℝ, 0 ≤ L → ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
       0 ≤ u → u ≤ L * ((m : ℝ)+1) →
       |∑ n ∈ Icc p m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
         (∫ t in Ioi (Real.exp u), (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
-        C * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
+        C * Real.exp (2*L) * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
   obtain ⟨D, hD, hpre⟩ := moebius_uniform_prefix_log_saving hRH
   let K : ℝ := 2 * (Real.log 4+4)
-  refine ⟨2*D*(K+2)*Real.exp (2*L), by dsimp [K]; positivity, ?_⟩
-  intro m p u hp hpm hhalf hu huL
+  refine ⟨2*D*(K+2), by dsimp [K]; positivity, ?_⟩
+  intro L hL m p u hp hpm hhalf hu huL
   let x := Real.exp u
   let P (n : ℕ) := (n : ℝ) / ((n : ℝ)-1) * x ^ ((n : ℝ)⁻¹ - 1/2)
   let T (n : ℕ) := Real.sqrt x * (∫ t in Ioi x, ψ (t ^ (n : ℝ)⁻¹) / t ^ 2)
@@ -450,6 +450,14 @@ theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} 
         (mul_le_mul_of_nonneg_left hPval (by positivity))
     _ = _ := by dsimp [H]; ring
 
+theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} (hL : 0 ≤ L) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
+      0 ≤ u → u ≤ L * ((m : ℝ)+1) →
+      |∑ n ∈ Icc p m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
+        (∫ t in Ioi (Real.exp u), (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
+        C * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
+  obtain ⟨C, hC, hbound⟩ := omitted_centered_near_moebius_exp_bound hRH
+  exact ⟨C * Real.exp (2*L), by positivity, hbound L hL⟩
 
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder

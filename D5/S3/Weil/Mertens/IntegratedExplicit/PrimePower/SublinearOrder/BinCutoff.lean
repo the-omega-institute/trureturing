@@ -215,11 +215,10 @@ theorem logarithmic_order_cutoff_bounds :
       let t := Real.log x
       let ell := 1 + Real.log (Real.log (x + 1))
       let L := ell / 8
-      1 ≤ L ∧ L ≤ x ∧
+      2 ≤ t ∧ 1 ≤ L ∧ L ≤ x ∧
         Real.sqrt ell * t ^ (-1 / 5 : ℝ) ≤ 3 ∧
         Real.sqrt ell * (Real.exp (2 * L) / t) ≤ 12 := by
   let X := Real.exp (Real.exp 8)
-  have he8 : 1 ≤ Real.exp 8 := Real.one_le_exp (by norm_num)
   have hX3 : 3 ≤ X := by
     have h8 := Real.add_one_le_exp (8 : ℝ)
     have h2 := Real.add_one_le_exp (Real.exp 8)
@@ -230,13 +229,14 @@ theorem logarithmic_order_cutoff_bounds :
   let t := Real.log x
   let ell := 1 + Real.log (Real.log (x + 1))
   let L := ell / 8
-  change 1 ≤ L ∧ L ≤ x ∧ Real.sqrt ell * t^(-1 / 5 : ℝ) ≤ 3 ∧
+  change 2 ≤ t ∧ 1 ≤ L ∧ L ≤ x ∧ Real.sqrt ell * t^(-1 / 5 : ℝ) ≤ 3 ∧
     Real.sqrt ell * (Real.exp (2 * L) / t) ≤ 12
   have hx3 := hX3.trans hx
   have hx0 : 0 < x := by linarith
   have ht8 : Real.exp 8 ≤ t := by
     simpa [X, t] using Real.log_le_log (Real.exp_pos (Real.exp 8)) hx
-  have ht : 1 ≤ t := he8.trans ht8
+  have ht₂ : 2 ≤ t := by linarith [Real.add_one_le_exp (8 : ℝ)]
+  have ht : 1 ≤ t := by linarith
   have ht0 : 0 < t := zero_lt_one.trans_le ht
   have hplus : t ≤ Real.log (x+1) := Real.log_le_log hx0 (by linarith)
   have hll : 8 ≤ Real.log (Real.log (x+1)) := by
@@ -294,7 +294,7 @@ theorem logarithmic_order_cutoff_bounds :
     rw [← Real.rpow_add ht0]
     simpa using (Real.rpow_le_rpow_of_exponent_le ht
       (by norm_num : (1/5 : ℝ) + 1/4 ≤ 1))
-  refine ⟨hL, hLx, hfirst, ?_⟩
+  refine ⟨ht₂, hL, hLx, hfirst, ?_⟩
   rw [← mul_div_assoc]
   apply (div_le_iff₀ ht0).mpr
   calc
