@@ -119,7 +119,7 @@ private theorem width_weight_integral {s L : ℝ} (hs : 0 < s) :
   have h := intervalIntegral.integral_comp_mul_left Real.exp hneg (a := 0) (b := L)
   simpa [inv_mul_eq_div, div_neg, ← neg_div] using h
 
-private theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
+theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
     let s : ℝ := 1/2 - (2*r)⁻¹
     (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
       powerGap s (Real.exp u) (Real.exp (u+L)) =
