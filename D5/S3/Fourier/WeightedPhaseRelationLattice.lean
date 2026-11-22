@@ -13,7 +13,8 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
-/-! The real-time phase orbit closure is the annihilator of its integer relations. -/
+/-! The all-real and nonnegative-time phase orbit closures are the annihilator of the
+integer relations. -/
 
 set_option autoImplicit false
 
@@ -46,17 +47,22 @@ private theorem circle_character_exp {J : Type*} [Fintype J] (k : J → ℤ) (θ
   simp_rw [← Circle.exp_intCast_mul]
   exact (map_sum Circle.expHom _ _).symm
 
-private theorem mem_closure_real_phase_orbit {J : Type*} [Fintype J]
-    (γ : J → ℝ) (z : J → Circle) :
-    z ∈ closure (range (fun (t : ℝ) (j : J) => Circle.exp (γ j * t))) ↔
-      ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, z j ^ k j) = 1 := by
+/-- The all-real orbit closure is the common kernel of the zero-dot-product integer
+characters, and nonnegative times give the same closure. -/
+theorem closure_real_phase_orbit {J : Type*} [Fintype J] (γ : J → ℝ) :
+    let T := closure (range (fun (t : ℝ) (j : J) => Circle.exp (γ j * t)))
+    T = {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1} ∧
+      closure ((fun (t : ℝ) (j : J) => Circle.exp (γ j * t)) '' Ici 0) = T := by
+  intro T
   let orbit (t : ℝ) (j : J) := Circle.exp (γ j * t)
-  change z ∈ closure (range orbit) ↔ _
+  let kernel : Set (J → Circle) :=
+    {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1}
+  change T = kernel ∧ closure (orbit '' Ici 0) = T
   have hchar (k : J → ℤ) (t : ℝ) :
       (∏ j, orbit t j ^ k j) = Circle.exp ((∑ j, (k j : ℝ) * γ j) * t) := by
     simp only [orbit, circle_character_exp, ← mul_assoc, ← Finset.sum_mul]
-  constructor
-  · intro hz k hk
+  have hreal : T ⊆ kernel := by
+    intro z hz k hk
     have hc : Continuous (fun w : J → Circle => ∏ j, w j ^ k j) := by
       exact continuous_finsetProd _ fun j _ => (continuous_apply j).zpow (k j)
     apply closure_minimal (t := {w | (∏ j, w j ^ k j) = 1}) ?_
@@ -64,8 +70,9 @@ private theorem mem_closure_real_phase_orbit {J : Type*} [Fintype J]
     rintro _ ⟨t, rfl⟩
     change (∏ j, orbit t j ^ k j) = 1
     rw [hchar, hk, zero_mul, Circle.exp_zero]
-  · intro hz
-    obtain ⟨s, _, hs⟩ := exists_nonresonant_step γ
+  have hkernel : kernel ⊆ closure (orbit '' Ici 0) := by
+    intro z hz
+    obtain ⟨s, hs01, hs⟩ := exists_nonresonant_step γ
     have hd : z ∈ closure (range (fun n : ℕ => orbit s ^ n)) := by
       apply (D5.S3.Fourier.TorusOrbitClosure.result (orbit s) z).2
       intro k hk
@@ -74,18 +81,13 @@ private theorem mem_closure_real_phase_orbit {J : Type*} [Fintype J]
       exact hz k (hs k m hm)
     refine closure_mono ?_ hd
     rintro _ ⟨n, rfl⟩
-    refine ⟨(n : ℝ) * s, ?_⟩
+    refine ⟨(n : ℝ) * s, mul_nonneg (Nat.cast_nonneg n) hs01.1.le, ?_⟩
     funext j
     change Circle.exp (γ j * ((n : ℝ) * s)) = Circle.exp (γ j * s) ^ n
     rw [mul_left_comm, Circle.exp_natCast_mul]
 
-/-- The real-time orbit closure is the common kernel of exactly the zero-dot-product
-integer characters. -/
-theorem closure_real_phase_orbit {J : Type*} [Fintype J] (γ : J → ℝ) :
-    closure (range (fun (t : ℝ) (j : J) => Circle.exp (γ j * t))) =
-      {p | ∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 → (∏ j, p j ^ k j) = 1} := by
-  ext p
-  exact mem_closure_real_phase_orbit γ p
+  have hnonneg : closure (orbit '' Ici 0) ⊆ T := closure_mono (image_subset_range _ _)
+  exact ⟨hreal.antisymm (hkernel.trans hnonneg), hnonneg.antisymm (hreal.trans hkernel)⟩
 
 /-- For every real lift centered at the sine-maximizing phase, membership in the
 continuous orbit closure is equivalent to the affine congruences for the complete
@@ -105,7 +107,7 @@ theorem centered_lift_iff {J A : Type*} [Fintype J]
   have hshift (a : A) : (R *ᵥ θ) a = (R *ᵥ x) a + (Real.pi / 2) * (R *ᵥ 1) a := by
     simp only [Matrix.mulVec, dotProduct, θ, Pi.one_apply, mul_one, mul_add, Finset.sum_add_distrib,
       Finset.sum_mul, mul_comm (Real.pi / 2)]
-  rw [closure_real_phase_orbit]
+  rw [(closure_real_phase_orbit γ).1]
   change (∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 →
       (∏ j, Circle.exp (θ j) ^ k j) = 1) ↔ _
   constructor
@@ -176,8 +178,9 @@ private theorem exists_weighted_fiber_minimum {J A : Type*} [Fintype J] [Fintype
     simp only [mulVec_add, add_dotProduct, dotProduct_add, hvx, hxv, add_zero, zero_add]
     exact le_add_of_nonneg_right hvv
 
-/-- The exact inverse Gram energy of the complete relation lattice controls the
-normalized deficit of the sine sum with a single common real time. -/
+/-- The inverse Gram energy of the complete relation lattice bounds the normalized
+sine deficit at a common time. The deficit vanishes exactly when a winding makes the
+affine offset zero. -/
 theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
     [DecidableEq J] [DecidableEq A] (γ w : J → ℝ) (K : Matrix A J ℤ)
     (hw : ∀ j, 0 < w j) (hW : 0 < ∑ j, w j)
@@ -192,7 +195,8 @@ theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
       (z a : ℝ) * (2 * Real.pi) - (Real.pi / 2) * (R *ᵥ (1 : J → ℝ)) a
     let E := ⨅ z : A → ℤ, b z ⬝ᵥ (G⁻¹ *ᵥ b z)
     let D := 1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / W)
-    2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0) := by
+    2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0) ∧
+      (D = 0 ↔ ∃ z : A → ℤ, b z = 0) := by
   intro W R M G b E D
   change 0 < W at hW
   let orbit (t : ℝ) (j : J) := Circle.exp (γ j * t)
@@ -209,12 +213,14 @@ theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
       ∃ x : J → ℝ, R *ᵥ x = b z ∧ Q x = energy z ∧
         ∀ y : J → ℝ, R *ᵥ y = b z → Q x ≤ Q y :=
     exists_weighted_fiber_minimum R w hw hind (b z)
-  have hE : BddBelow (range energy) := by
-    refine ⟨0, ?_⟩
-    rintro _ ⟨z, rfl⟩
-    obtain ⟨x, _, hx, _⟩ := hmin z
-    rw [← hx, hQ]
+  have hQnonneg (x : J → ℝ) : 0 ≤ Q x := by
+    rw [hQ]
     exact Finset.sum_nonneg fun j _ => mul_nonneg (hw j).le (sq_nonneg _)
+  have henergy_nonneg (z : A → ℤ) : 0 ≤ energy z := by
+    obtain ⟨x, _, hx, _⟩ := hmin z
+    rw [← hx]
+    exact hQnonneg x
+  have hE : BddBelow (range energy) := ⟨0, by rintro _ ⟨z, rfl⟩; exact henergy_nonneg z⟩
   have him (a : ℝ) : (Circle.exp a : ℂ).im = Real.sin a := by
     exact Complex.exp_ofReal_mul_I_im a
   have hscore : Continuous score := by
@@ -269,22 +275,27 @@ theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
         mul_le_mul_of_nonneg_left (by linarith [Real.one_sub_sq_div_two_le_cos (x := x j)])
           (hw j).le
       _ = w j * x j ^ 2 / 2 := by ring
+  have hprincipal (p : J → Circle) : ∃ x : J → ℝ, lift x = p ∧ ∀ j, |x j| ≤ Real.pi := by
+    let rotated (j : J) := p j * Circle.exp (-(Real.pi / 2))
+    let x (j : J) := Complex.arg (rotated j : ℂ)
+    refine ⟨x, ?_, fun j => Complex.abs_arg_le_pi (rotated j : ℂ)⟩
+    funext j
+    change Circle.exp (Complex.arg (rotated j : ℂ) + Real.pi / 2) = p j
+    rw [Circle.exp_add, Circle.exp_arg, show rotated j = _ from rfl, mul_assoc,
+      ← Circle.exp_add, neg_add_cancel, Circle.exp_zero, mul_one]
+  have hDle (p : J → Circle) (hp : p ∈ T) : D ≤ loss p := by
+    rw [hD]
+    exact csInf_le hbounded ⟨p, hp, rfl⟩
   have hLower : 2 * E / (Real.pi ^ 2 * W) ≤ D := by
     rw [hD]
     refine le_csInf hnonempty ?_
     rintro _ ⟨p, hp, rfl⟩
-    let rotated (j : J) := p j * Circle.exp (-(Real.pi / 2))
-    let x (j : J) := Complex.arg (rotated j : ℂ)
-    have hx : lift x = p := by
-      funext j
-      change Circle.exp (Complex.arg (rotated j : ℂ) + Real.pi / 2) = p j
-      rw [Circle.exp_add, Circle.exp_arg, show rotated j = _ from rfl, mul_assoc,
-        ← Circle.exp_add, neg_add_cancel, Circle.exp_zero, mul_one]
+    obtain ⟨x, hx, hxπ⟩ := hprincipal p
     obtain ⟨z, hz⟩ := (hlift x).mp (hx.symm ▸ hp)
     obtain ⟨y, _, hy, hymin⟩ := hmin z
     have hEx : E ≤ Q x :=
       (ciInf_le hE z).trans (hy ▸ hymin x hz)
-    have hcos := hcos_lower x (fun j => Complex.abs_arg_le_pi (rotated j : ℂ))
+    have hcos := hcos_lower x hxπ
     rw [hx] at hcos
     calc
       2 * E / (Real.pi ^ 2 * W) = ((2 / Real.pi ^ 2) * E) / W := by ring
@@ -296,18 +307,42 @@ theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
     refine le_ciInf fun z => ?_
     obtain ⟨x, hx, hxE, _⟩ := hmin z
     have hp := (hlift x).mpr ⟨z, hx⟩
-    have hDle : D ≤ loss (lift x) := by
-      rw [hD]
-      exact csInf_le hbounded ⟨lift x, hp, rfl⟩
     calc
       D * (2 * W) = 2 * (D * W) := by ring
       _ ≤ 2 * (loss (lift x) * W) :=
-        mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hDle hW.le) (by norm_num)
+        mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right (hDle _ hp) hW.le) (by norm_num)
       _ ≤ 2 * (Q x / 2) := mul_le_mul_of_nonneg_left (hcos_upper x) (by norm_num)
       _ = energy z := by rw [hxE]; ring
-  refine ⟨hLower, hUpper, fun hempty => ?_⟩
-  change (⨅ z, energy z) = 0
-  simp [energy, dotProduct]
+  refine ⟨hLower, hUpper, ?_, ?_⟩
+  · intro hempty
+    change (⨅ z, energy z) = 0
+    simp [energy, dotProduct]
+  · constructor
+    · intro hzero
+      have hmem := (hT.image hloss).sInf_mem hnonempty
+      rw [← hD, hzero] at hmem
+      obtain ⟨p, hp, hlp⟩ := hmem
+      obtain ⟨x, rfl, hxπ⟩ := hprincipal p
+      have hcos := hcos_lower x hxπ
+      rw [hlp, zero_mul] at hcos
+      have hQzero : Q x = 0 := le_antisymm
+        (nonpos_of_mul_nonpos_right hcos (by positivity)) (hQnonneg x)
+      rw [hQ] at hQzero
+      have hterms := (Finset.sum_eq_zero_iff_of_nonneg
+        (fun j _ => mul_nonneg (hw j).le (sq_nonneg (x j)))).mp hQzero
+      have hxzero : x = 0 := by
+        funext j
+        exact sq_eq_zero_iff.mp
+          ((mul_eq_zero.mp (hterms j (Finset.mem_univ j))).resolve_left (hw j).ne')
+      obtain ⟨z, hz⟩ := (hlift x).mp hp
+      exact ⟨z, by simpa [hxzero] using hz.symm⟩
+    · rintro ⟨z, hz⟩
+      have hp : lift 0 ∈ T := (hlift 0).mpr ⟨z, by simp [hz]⟩
+      have hl : loss (lift 0) = 0 := by simpa [hW.ne'] using hloss_lift 0
+      have hEnonneg : 0 ≤ E := le_ciInf henergy_nonneg
+      have hDnonneg : 0 ≤ D :=
+        (show 0 ≤ 2 * E / (Real.pi ^ 2 * W) by positivity).trans hLower
+      exact le_antisymm (hl ▸ hDle _ hp) hDnonneg
 
 #print axioms closure_real_phase_orbit
 #print axioms centered_lift_iff

@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier;
 internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The complete integer relation lattice gives uniform lower and upper bounds for the "
-        + "weighted sine deficit at a common real time.",
+        "The complete integer relation lattice gives uniform bounds and an exact vanishing "
+        + "criterion for the weighted sine deficit at a common real time.",
         H("Weighted Phase Deficit and the Complete Relation Lattice"),
         Blocks(
             Describe.Lean(
@@ -22,9 +22,10 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                     "For each nonzero integer dot product with the frequency vector, the "
                     + "steps that turn it into an integral multiple of 2π form a countable set. "
                     + "One step in (0,1) avoids their union. Its discrete characters are exactly "
-                    + "the zero-dot-product characters, so TorusOrbitClosure.result puts every "
-                    + "point in their common kernel in the real orbit closure. The forward "
-                    + "inclusion follows from character continuity."))),
+                    + "the zero-dot-product characters. The discrete torus criterion puts their "
+                    + "common kernel in the closure of the samples at times ns for n ≥ 0. "
+                    + "These times are nonnegative. Character continuity puts the all-real "
+                    + "orbit closure inside the kernel, so both closures equal the kernel."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("centered-phase-lift"),
@@ -81,6 +82,13 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                         + "integer windings gives the bounds. Empty A gives zero inverse Gram "
                         + "energy and hence zero deficit.")),
                     Paragraph(Text(
+                        "Compactness of the orbit closure gives a phase attaining the minimum "
+                        + "deficit. If the deficit is zero, the lower cosine estimate and "
+                        + "positive weights force every principal centered angle to be zero. "
+                        + "The centered lift congruences then give a winding with b(z) = 0. "
+                        + "Conversely, such a winding makes the zero centered lift feasible, "
+                        + "and that phase attains zero loss.")),
+                    Paragraph(Text(
                         "For the ζ-ordinate example, assume hRH proves Mathlib's "
                         + "RiemannHypothesis. Form zetaSpectrum hRH, then use the finite index "
                         + "type of members of Spectrum.cut (zetaSpectrum hRH) T, which keeps "
@@ -117,8 +125,8 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
     private static Formula TorusPoint(Formula angle) =>
         new Formula.Sequence(Call("exp", Mul(F.Id("i"), angle)), F.Id("j"), F.Id("J"));
 
-    private static Formula Orbit() =>
-        Call("closure", new Formula.SetBuilder(TorusPoint(Mul(At("g"), F.Id("t"))), F.Id("t"), Real));
+    private static Formula Orbit(Formula? timeDomain = null) =>
+        Call("closure", new Formula.SetBuilder(TorusPoint(Mul(At("g"), F.Id("t"))), F.Id("t"), timeDomain ?? Real));
 
     private static Formula RelationDot() => Equal(SumJ(Mul(At("k"), At("g"))), D(0));
 
@@ -129,7 +137,9 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
         var relations = All(Imp(RelationDot(), Equal(character, D(1))), Var("k", Vector(Integer, "J")));
         var points = Seq(OpenBrace, F.Id("p"), InMacro, Sp, Vector(Circle, "J"), Sp, Mid, Sp,
             relations, CloseBrace);
-        return Disp(All(Equal(Orbit(), points), Var("J", F.Id("FiniteType")), Var("g", Vector(Real, "J"))));
+        var nonnegative = Seq(Real, Underscore, Grp(Seq(Ge, D(0))));
+        return Disp(All(And(Equal(Orbit(), points), Equal(Orbit(nonnegative), Orbit())),
+            Var("J", F.Id("FiniteType")), Var("g", Vector(Real, "J"))));
     }
 
     private static Formula LatticeHypothesis() =>
@@ -172,9 +182,12 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
         var offset = All(Equal(bz, Offset()), Var("z", Vector(Integer, "A")));
         var energyAndDeficit = And(Equal(e, infimum), Equal(d, Diff(D(1), supremum)));
         var definitions = And(weightSum, And(diagonal, And(gram, And(offset, energyAndDeficit))));
+        var zeroWinding = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("z"),
+            Vector(Integer, "A"), Equal(bz, D(0)));
         var comparison = And(AtMost(new Formula.Fraction(Mul(D(2), e), Mul(new Formula.Power(Pi, D(2)), w)), d),
             And(AtMost(d, new Formula.Fraction(e, Mul(D(2), w))),
-                Imp(Call("IsEmpty", F.Id("A")), Equal(e, D(0)))));
+                And(Imp(Call("IsEmpty", F.Id("A")), Equal(e, D(0))),
+                    Equivalence(Equal(d, D(0)), zeroWinding))));
         return Disp(All(Imp(hypothesis, Imp(definitions, comparison)),
             Var("J", F.Id("FiniteType")), Var("A", F.Id("FiniteType")),
             Var("g", Vector(Real, "J")), Var("w", Vector(Real, "J")),
