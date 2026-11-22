@@ -29,6 +29,14 @@ dependencies in that file and in `KTV/Johnson/BinaryMatrix/Basic.lean` and
 
 ## Statement correspondence
 
+The extraction uses a terminating walk-shortening relation: a repeated row
+or column at indices `a < b < L` cuts an alternating closed walk to one of
+length `b - a`, preserving its disagreement edges and closure, with
+`2 ≤ b - a < L`. Natural-number length therefore strictly decreases at
+each reduction. The proof chooses a minimum-length walk, on which neither
+cut applies, so its rows and columns are separately distinct. This is a
+terminating reduction method; no confluence or unique cycle is asserted.
+
 The upstream theorem assumes an alternating closed walk between two states of
 one fixed-margin model. It returns a length at least two, row and column
 sequences separately without repetitions below that length, positive diagonal
