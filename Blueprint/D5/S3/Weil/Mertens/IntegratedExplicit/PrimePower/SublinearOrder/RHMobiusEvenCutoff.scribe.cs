@@ -36,14 +36,16 @@ internal sealed class RHMobiusEvenCutoffDocument : IScribeDocumentDefinition
                         + "Integrable(m,L,U,T) means interval integrability of F(m,L,·) "
                         + "on [U,U+T] with respect to Lebesgue measure. "
                         + "Avg(m,L,U,T) is its interval integral divided by T. The starting threshold A "
-                        + "is common to all orders and widths.")),
+                        + "is common to all orders and widths. The error constant depends on the order.")),
                     Paragraph(Text("Normalize the two endpoint values of the root primitive by the "
                         + "same positive gap. Under RH the resulting increment is the real part of "
                         + "an absolutely summable exponential series. The ordinates divided by r "
                         + "have magnitude at least 10/r, so integrating the series over any "
-                        + "interval gives a bounded contribution. The higher-order remainder is "
-                        + "integrable on the logarithmic tail. Dividing the sum of the two integral "
-                        + "bounds by T isolates the signed arithmetic coefficient."))),
+                        + "interval gives a bounded contribution. Subtract the translated primitive "
+                        + "integrals before taking absolute values. The remaining two intervals have "
+                        + "length L and exp(−sL)L/(1−exp(−sL)) is at most 1/s. The integral "
+                        + "bound for the higher-order remainder is also uniform in L. Dividing "
+                        + "by T isolates the signed arithmetic coefficient."))),
                 DescribeRole.Theorem))));
 
     private static Formula Domain(string name) => F.Seq(F.Mathbb, F.Grp(F.Id(name)));
@@ -108,10 +110,10 @@ internal sealed class RHMobiusEvenCutoffDocument : IScribeDocumentDefinition
         var averages = All("U", Domain("R"), All("T", Domain("R"),
             Imp(And(Le(threshold, u), Lt(F.D(0), t)),
                 And(Call("Integrable", m, width, u, t), error))));
-        var exists = Exists("C", Domain("R"), And(Lt(F.D(0), c), averages));
-        var widths = All("L", Domain("R"), Imp(Lt(F.D(0), width), exists));
+        var widths = All("L", Domain("R"), Imp(Lt(F.D(0), width), averages));
+        var exists = Exists("C", Domain("R"), And(Lt(F.D(0), c), widths));
         var orders = All("m", Domain("N"), All("r", Domain("N"),
-            Imp(And(Le(F.D(2), m), Eq(q, Multiply(F.D(2), r))), widths)));
+            Imp(And(Le(F.D(2), m), Eq(q, Multiply(F.D(2), r))), exists)));
         return F.Disp(Imp(F.Id("RH"), Exists("A", Domain("R"), And(Lt(F.D(0), threshold), orders))));
     }
 }

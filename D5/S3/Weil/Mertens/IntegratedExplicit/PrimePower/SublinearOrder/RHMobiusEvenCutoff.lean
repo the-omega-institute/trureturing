@@ -175,8 +175,9 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     {r : ℝ} (hr : 1 < r) (a b : ℝ) :
     let s := 1 / 2 - (2 * r)⁻¹
     let f := fun u : ℝ => Real.exp (s * u) * rootPrimitive r (Real.exp u)
+    let mass := ∑' k, ‖rootCoeff r k / rootExponent r k‖
     IntervalIntegrable f volume a b ∧
-      |∫ u in a..b, f u| ≤ (∑' k, ‖rootCoeff r k / rootExponent r k‖) * (2 / (10 / r)) := by
+      |∫ u in a..b, f u| ≤ mass * (2 / (10 / r)) ∧ ∀ u : ℝ, |f u| ≤ mass := by
   let s := 1 / 2 - (2 * r)⁻¹
   let coeff (k : ℕ) := rootCoeff r k / rootExponent r k
   let mode (k : ℕ) := frequency k / (r : ℂ)
@@ -227,7 +228,7 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
   have hfun : (fun u : ℝ => Real.exp (s * u) * rootPrimitive r (Real.exp u)) =
       fun u : ℝ => (z u).re := funext heq
   change IntervalIntegrable (fun u : ℝ => Real.exp (s * u) * rootPrimitive r (Real.exp u))
-    volume a b ∧ |∫ u in a..b, Real.exp (s * u) * rootPrimitive r (Real.exp u)| ≤ _
+    volume a b ∧ |∫ u in a..b, Real.exp (s * u) * rootPrimitive r (Real.exp u)| ≤ _ ∧ _
   rw [hfun]
   have hz : Continuous z := by
     unfold z
@@ -235,9 +236,13 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     · intro k u
       simp [Complex.norm_exp, Complex.mul_re, hmode k]
     · fun_prop
-  refine ⟨(Complex.continuous_re.comp hz).intervalIntegrable _ _, ?_⟩
-  rw [hre]
-  exact (Complex.abs_re_le_norm _).trans hbound
+  refine ⟨(Complex.continuous_re.comp hz).intervalIntegrable _ _, ?_, fun u => ?_⟩
+  · rw [hre]
+    exact (Complex.abs_re_le_norm _).trans hbound
+  · refine (Complex.abs_re_le_norm _).trans ?_
+    apply tsum_of_norm_bounded hcoeff.hasSum
+    intro k
+    simp [Complex.norm_exp, Complex.mul_re, hmode k]
 
 private theorem exp_power_gap (s u L : ℝ) :
     powerGap s (Real.exp u) (Real.exp (u+L)) =
@@ -248,8 +253,8 @@ private theorem exp_power_gap (s u L : ℝ) :
   ring
 
 private theorem normalized_root_increment_bound (hRH : RiemannHypothesis)
-    {r L : ℝ} (hr : 1 < r) (hL : 0 < L) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ a b : ℝ,
+    {r : ℝ} (hr : 1 < r) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ L : ℝ, 0 < L → ∀ a b : ℝ,
       let s := 1/2 - (2*r)⁻¹
       let inc := fun u : ℝ =>
         (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
@@ -257,18 +262,18 @@ private theorem normalized_root_increment_bound (hRH : RiemannHypothesis)
       IntervalIntegrable inc volume a b ∧ |∫ u in a..b, inc u| ≤ C := by
   let s : ℝ := 1/2-(2*r)⁻¹
   let f := fun u : ℝ => Real.exp (s*u)*rootPrimitive r (Real.exp u)
-  let t := Real.exp (-s*L)
-  let M := (∑' k, ‖rootCoeff r k / rootExponent r k‖) * (2/(10/r))
+  let mass := ∑' k, ‖rootCoeff r k / rootExponent r k‖
+  let M := mass * (2/(10/r))
   have hs : 0 < s := by
     dsimp [s]
     rw [show (1 : ℝ)/2 = 2⁻¹ by norm_num]
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (show 2 < 2*r by linarith))
+  have hmass : 0 ≤ mass := tsum_nonneg fun _ => norm_nonneg _
+  have hM : 0 ≤ M := by dsimp only [M]; positivity
+  refine ⟨M+2*mass/s, by positivity, fun L hL a b => ?_⟩
+  let t := Real.exp (-s*L)
   have ht : 0 < t := Real.exp_pos _
   have hd : 0 < 1-t := sub_pos.mpr (Real.exp_lt_one_iff.mpr (mul_neg_of_neg_of_pos (neg_lt_zero.mpr hs) hL))
-  have hM : 0 ≤ M := by
-    dsimp [M]
-    exact mul_nonneg (tsum_nonneg (fun _ => norm_nonneg _)) (by positivity)
-  refine ⟨(t*M + M)/(1-t), by positivity, fun a b => ?_⟩
   have heq (u : ℝ) :
       (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
           powerGap s (Real.exp u) (Real.exp (u+L)) =
@@ -295,20 +300,50 @@ private theorem normalized_root_increment_bound (hRH : RiemannHypothesis)
         (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
           powerGap s (Real.exp u) (Real.exp (u+L))) volume a b ∧ _
   rw [hfun]
-  obtain ⟨hi, hb⟩ := normalized_root_primitive_bound hRH hr a b
-  obtain ⟨hiL, hbL⟩ := normalized_root_primitive_bound hRH hr (a+L) (b+L)
-  change IntervalIntegrable f volume a b at hi
-  change IntervalIntegrable f volume (a+L) (b+L) at hiL
+  obtain ⟨hi, hb, hpoint⟩ := normalized_root_primitive_bound hRH hr a b
+  have integrable (x y : ℝ) : IntervalIntegrable f volume x y :=
+    (normalized_root_primitive_bound hRH hr x y).1
   have hshift : IntervalIntegrable (fun u => f (u+L)) volume a b :=
-    (IntervalIntegrable.comp_add_right_iff (c := L) (by finiteness)).mpr hiL
+    (IntervalIntegrable.comp_add_right_iff (c := L) (by finiteness)).mpr
+      (integrable (a+L) (b+L))
   refine ⟨((hshift.const_mul t).sub hi).div_const _, ?_⟩
+  let I := ∫ u in a..b, f u
+  let J := ∫ u in a+L..b+L, f u
+  have hEdge (x : ℝ) : |∫ u in x..x+L, f u| ≤ mass*L := by
+    rw [← Real.norm_eq_abs]
+    simpa only [show ∀ x : ℝ, x+L-x = L by intro x; ring, abs_of_pos hL] using
+      (intervalIntegral.norm_integral_le_of_norm_le_const (f := f) (a := x) (b := x+L)
+        (fun u _ => by simpa only [Real.norm_eq_abs] using hpoint u))
+  have hSides : J-I = (∫ u in b..b+L, f u) - (∫ u in a..a+L, f u) := by
+    dsimp only [I, J]
+    have h₁ := intervalIntegral.integral_add_adjacent_intervals (integrable a b) (integrable b (b+L))
+    have h₂ := intervalIntegral.integral_add_adjacent_intervals (integrable a (a+L))
+      (integrable (a+L) (b+L))
+    linarith only [h₁, h₂]
+  have hDifference : |J-I| ≤ 2*mass*L := by
+    rw [hSides]
+    exact (abs_sub _ _).trans (by linarith only [hEdge a, hEdge b])
+  have hWidth : t*L/(1-t) ≤ 1/s := by
+    have he : t*Real.exp (s*L) = 1 := by
+      dsimp only [t]
+      rw [← Real.exp_add, show -s*L+s*L = 0 by ring, Real.exp_zero]
+    have htaylor := mul_le_mul_of_nonneg_left (Real.add_one_le_exp (s*L)) ht.le
+    rw [he] at htaylor
+    rw [div_le_div_iff₀ hd hs]
+    linarith only [show t*L*s+t = t*(s*L+1) by ring, htaylor]
   rw [intervalIntegral.integral_div, intervalIntegral.integral_sub (hshift.const_mul t) hi,
-    intervalIntegral.integral_const_mul, intervalIntegral.integral_comp_add_right, abs_div,
-    abs_of_pos hd]
-  apply div_le_div_of_nonneg_right _ hd.le
-  refine (abs_sub _ _).trans ?_
-  rw [abs_mul, abs_of_pos ht]
-  exact add_le_add (mul_le_mul_of_nonneg_left hbL ht.le) hb
+    intervalIntegral.integral_const_mul, intervalIntegral.integral_comp_add_right]
+  change |(t*J-I)/(1-t)| ≤ _
+  rw [show (t*J-I)/(1-t) = -I+t/(1-t)*(J-I) by field_simp [hd.ne']; ring]
+  refine (abs_add_le _ _).trans ?_
+  rw [abs_neg, abs_mul, abs_of_nonneg (div_nonneg ht.le hd.le)]
+  refine add_le_add hb ?_
+  calc
+    _ ≤ (t/(1-t))*(2*mass*L) :=
+      mul_le_mul_of_nonneg_left hDifference (div_nonneg ht.le hd.le)
+    _ = (2*mass)*(t*L/(1-t)) := by ring
+    _ ≤ (2*mass)*(1/s) := mul_le_mul_of_nonneg_left hWidth (by positivity)
+    _ = 2*mass/s := by ring
 
 private theorem residual_succ_of_even {m r : ℕ} (hm : 2 ≤ m) (heven : m+1 = 2*r)
     (a B : ℝ) :
@@ -396,8 +431,8 @@ theorem signed_window_even_cutoff_expansion (hRH : RiemannHypothesis) :
 
 /-- The arithmetic coefficient is the logarithmic Cesàro mean at each fixed even cutoff. -/
 theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
-    ∃ U₀ : ℝ, 0 < U₀ ∧ ∀ (m r : ℕ), 2 ≤ m → m+1 = 2*r → ∀ L : ℝ, 0 < L →
-      ∃ C : ℝ, 0 < C ∧ ∀ (U T : ℝ), U₀ ≤ U → 0 < T →
+    ∃ U₀ : ℝ, 0 < U₀ ∧ ∀ (m r : ℕ), 2 ≤ m → m+1 = 2*r →
+      ∃ C : ℝ, 0 < C ∧ ∀ L : ℝ, 0 < L → ∀ (U T : ℝ), U₀ ≤ U → 0 < T →
         let s := orderRate m
         let F := fun u : ℝ => signedWindowResidual m (Real.exp u) (Real.exp (u+L)) /
           powerGap s (Real.exp u) (Real.exp (u+L))
@@ -408,17 +443,12 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
   have ha₀ : 0 < a₀ := by linarith
   have hUlog : Real.log 2 ≤ U₀ := Real.log_le_log (by norm_num) ha₂
   have hU₀ : 0 < U₀ := (Real.log_pos (by norm_num : (1 : ℝ)<2)).trans_le hUlog
-  refine ⟨U₀, hU₀, fun m r hm heven L hL => ?_⟩
+  refine ⟨U₀, hU₀, fun m r hm heven => ?_⟩
   let q := m+1
   let s := orderRate m
   let δ := ((m : ℝ)+1)⁻¹-((m : ℝ)+2)⁻¹
   let c := (μ q : ℝ)*(((m : ℝ)+1)/((m : ℝ)*s))
   let W := K*((q : ℝ)*(1+Real.log (q : ℝ))^2)*((s+δ)/s)
-  let gap (u : ℝ) := powerGap s (Real.exp u) (Real.exp (u+L))
-  let R (u : ℝ) := signedWindowResidual q (Real.exp u) (Real.exp (u+L))/gap u
-  let F (u : ℝ) := signedWindowResidual m (Real.exp u) (Real.exp (u+L))/gap u
-  let P (u : ℝ) := (rootPrimitive (r : ℝ) (Real.exp (u+L)) -
-    rootPrimitive (r : ℝ) (Real.exp u))/gap u
   have hr : (1 : ℝ) < (r : ℝ) := by exact_mod_cast (show 1 < r by omega)
   have hqR : (m : ℝ)+1 = 2*(r : ℝ) := by exact_mod_cast heven
   have hs' : s = 1/2-(2*(r : ℝ))⁻¹ := by dsimp [s, orderRate]; rw [hqR]
@@ -427,6 +457,14 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   have hW : 0 < W := by dsimp only [W]; positivity
+  obtain ⟨J, hJ, hP⟩ := normalized_root_increment_bound hRH hr
+  let C := W/δ + |(μ r : ℝ)| * J
+  refine ⟨C, by dsimp only [C]; positivity, fun L hL U T hU hT => ?_⟩
+  let gap (u : ℝ) := powerGap s (Real.exp u) (Real.exp (u+L))
+  let R (u : ℝ) := signedWindowResidual q (Real.exp u) (Real.exp (u+L))/gap u
+  let F (u : ℝ) := signedWindowResidual m (Real.exp u) (Real.exp (u+L))/gap u
+  let P (u : ℝ) := (rootPrimitive (r : ℝ) (Real.exp (u+L)) -
+    rootPrimitive (r : ℝ) (Real.exp u))/gap u
   have ha (u : ℝ) (hu : U₀ ≤ u) : a₀ ≤ Real.exp u := by
     rw [← Real.exp_log ha₀]
     exact Real.exp_le_exp.mpr hu
@@ -471,9 +509,6 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
     dsimp only [R]
     rw [abs_div, abs_of_pos (hgap u)]
     exact (div_le_iff₀ (hgap u)).mpr hraw
-  obtain ⟨J, hJ, hP⟩ := normalized_root_increment_bound hRH hr hL
-  let C := W/δ + |(μ r : ℝ)| * J
-  refine ⟨C, by dsimp only [C]; positivity, fun U T hU hT => ?_⟩
   have hUT : U ≤ U+T := by linarith
   have hIntBound : IntervalIntegrable (fun u => W*Real.exp (-δ*u)) volume U (U+T) :=
     (by fun_prop : Continuous fun u : ℝ => W*Real.exp (-δ*u)).intervalIntegrable _ _
@@ -498,7 +533,7 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
       rw [← one_div]
       exact div_le_div_of_nonneg_right ((sub_le_self _ (Real.exp_nonneg _)).trans hexp_le)
         hδ.le) hW.le
-  obtain ⟨hPI, hPIB⟩ := hP U (U+T)
+  obtain ⟨hPI, hPIB⟩ := hP L hL U (U+T)
   have hPi : IntervalIntegrable P volume U (U+T) := by
     simpa only [P, gap, hs'] using hPI
   have hPb : |∫ u in U..U+T, P u| ≤ J := by
