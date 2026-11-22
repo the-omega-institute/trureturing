@@ -81,11 +81,13 @@ internal sealed class TraceMultiCutDocument : IScribeDocumentDefinition
         var word = Call("List", alphabet);
         var indices = Call("Fin", Call("length", V("zs")));
         var family = new Formula.TypeArrow(indices, word);
+        var letters = All("a", alphabet,
+            Implication(Call("Mem", V("a"), Call("p", V("k"))),
+                All("b", alphabet,
+                    Implication(Call("Mem", V("b"), Call("r", V("j"))),
+                        Call("I", V("a"), V("b"))))));
         var crossing = All("j", indices, All("k", indices,
-            Implication(Call("lt", V("j"), V("k")),
-                All("a", alphabet, Implication(Call("Mem", V("a"), Call("p", V("k"))),
-                    All("b", alphabet, Implication(Call("Mem", V("b"), Call("r", V("j"))),
-                        Call("I", V("a"), V("b"))))))));
+            Implication(Call("lt", V("j"), V("k")), letters)));
         Formula factors = Q(
             Call("Connected", V("I"), V("x"), Call("flatten", Call("ofFn", V("p")))), Land,
             Call("Connected", V("I"), V("y"), Call("flatten", Call("ofFn", V("r")))), Land,
