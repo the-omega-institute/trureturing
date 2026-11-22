@@ -862,6 +862,12 @@ private noncomputable def circuitRestriction (P : Matroid V) (C : Circuit P) :
     topCycles P →ₗ[ℤ] JointTarget P :=
   LinearMap.pi (circuitRestriction P)
 
+/-- The coordinate of the simultaneous restriction at a circuit and a face. -/
+lemma jointRestriction_apply (P : Matroid V) (z : topCycles P) (C : Circuit P)
+    (F : Finset V) : (jointRestriction P z C).val F = aggregateRestrict P C.val z.val F := by
+  unfold jointRestriction circuitRestriction
+  rfl
+
 lemma range_dual_jointRestriction (P : Matroid V) :
     (jointRestriction P).dualMap.range = Submodule.span ℤ (circuitRows P) := by
   classical
