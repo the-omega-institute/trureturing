@@ -43,7 +43,7 @@ private theorem stepSpectrum_antitone : Antitone stepSpectrum := by
   intro i j hij
   by_cases hj : j < 2
   · simp [stepSpectrum, hj, hij.trans_lt hj]
-  · simp only [stepSpectrum, if_neg hj]
+  · simp only [stepSpectrum, ite_eq_right hj]
     split <;> norm_num
 
 private theorem stepSpectrum_nonneg (i : Fin 4) : 0 ≤ stepSpectrum i := by
@@ -52,7 +52,8 @@ private theorem stepSpectrum_nonneg (i : Fin 4) : 0 ≤ stepSpectrum i := by
 
 private theorem stepSpectrum_moment {k : ℕ} (hk : k ≠ 0) :
     spectralMoment k stepSpectrum = 1 / 2 := by
-  norm_num [spectralMoment, stepSpectrum, Fin.sum_univ_four, zero_pow hk]
+  simp only [spectralMoment, Fin.sum_univ_four, stepSpectrum]
+  norm_num [zero_pow hk]
 
 private theorem endpoint_stepSpectrum :
     endpointPrefixAverage 3 (endpointClassical stepSpectrum) =
@@ -66,8 +67,10 @@ private theorem endpoint_stepSpectrum :
     | linear_combination endpointBeta * endpointAlpha_add_beta
 
 private theorem stepSpectrum_output_gap :
-    spectralMoment 3 stepSpectrum * spectralMoment 3 (endpointPrefixAverage 3 (endpointClassical stepSpectrum)) -
-      spectralMoment 2 stepSpectrum * spectralMoment 4 (endpointPrefixAverage 3 (endpointClassical stepSpectrum)) =
+    spectralMoment 3 stepSpectrum *
+        spectralMoment 3 (endpointPrefixAverage 3 (endpointClassical stepSpectrum)) -
+      spectralMoment 2 stepSpectrum *
+        spectralMoment 4 (endpointPrefixAverage 3 (endpointClassical stepSpectrum)) =
       5 / 288 := by
   have hSq : lambda ^ 2 = (2 / 3 : ℝ) := Real.sq_sqrt (by norm_num)
   have hProduct : endpointAlpha * endpointBeta = (1 / 12 : ℝ) := by

@@ -6,16 +6,7 @@
    utility: none
    digest: A quartic variance bound for the four prefix averages at the Wu endpoint. -/
 
-module
-
-public import D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+import D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization
 
 /-!
 # Quartic positivity for prefixes of the Wu endpoint spectrum
@@ -32,11 +23,11 @@ open scoped BigOperators
 namespace WuRankOneEndpointFloor
 
 /-- The normalized power sum of a four-point spectrum. -/
-@[expose] public def spectralMoment (k : ℕ) (x : Fin 4 → ℝ) : ℝ :=
+def spectralMoment (k : ℕ) (x : Fin 4 → ℝ) : ℝ :=
   (∑ i : Fin 4, x i ^ k) / 4
 
 /-- Keep the first `k` entries and replace the others by their mean. -/
-@[expose] public def endpointPrefixAverage (k : Fin 4) (y : Fin 4 → ℝ) : Fin 4 → ℝ :=
+def endpointPrefixAverage (k : Fin 4) (y : Fin 4 → ℝ) : Fin 4 → ℝ :=
   let all := spectralMoment 1 y
   let lastThree := (y 1 + y 2 + y 3) / 3
   let lastTwo := (y 2 + y 3) / 2
@@ -130,9 +121,9 @@ unaveraged case with p ≥ t, a square in centered coordinates absorbs the
 terms of highest degree in the bottom eigenvalue.
 -/
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem one_prefix_p_le_t {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -205,9 +196,9 @@ private theorem one_prefix_p_le_t {r z v q d : ℝ}
       simp only [hSq, hCube, hFourth]
       ring
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem one_prefix_t_le_p {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -280,9 +271,9 @@ private theorem one_prefix_t_le_p {r z v q d : ℝ}
       simp only [hSq, hCube, hFourth]
       ring
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem two_prefix_p_le_t {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hLower : 0 ≤ r - 4 / 5) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -355,9 +346,9 @@ private theorem two_prefix_p_le_t {r z v q d : ℝ}
       simp only [hSq, hCube, hFourth]
       ring
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem two_prefix_t_le_p {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ)) (hLower : 0 ≤ r - 4 / 5) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -425,9 +416,9 @@ private theorem two_prefix_t_le_p {r z v q d : ℝ}
       simp only [hSq, hCube, hFourth]
       ring
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem three_prefix_p_le_t {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ))
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -436,8 +427,7 @@ private theorem three_prefix_p_le_t {r z v q d : ℝ}
   obtain ⟨_, hFourth⟩ := damping_powers hSq
   calc
     0 ≤
-      z ^ 4 * (
-        d ^ 2) / 24 +
+      z ^ 4 * d ^ 2 / 24 +
       z ^ 3 * (
         12 * v ^ 2 * d + 12 * v * q * d + 28 * v * d ^ 2 + 14 * q * d ^ 2 + 15 * d ^ 3) / 96 +
       z ^ 2 * (
@@ -474,9 +464,9 @@ private theorem three_prefix_p_le_t {r z v q d : ℝ}
       simp only [hSq, hFourth]
       ring
 
-set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
--- Normalize both degree-six polynomials, then reduce powers of the damping.
+set_option maxHeartbeats 3000000 in
+-- Normalizing the two degree-six polynomials exceeds the default heartbeat limit.
 private theorem three_prefix_t_le_p {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ))
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
@@ -525,7 +515,7 @@ private theorem three_prefix_t_le_p {r z v q d : ℝ}
       ring
 
 /-- The `1/5` endpoint bound for every prefix average of the classical endpoint image. -/
-public theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
+theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
     (hNonneg : ∀ i, 0 ≤ x i) (k : Fin 4) :
     (spectralMoment 1 x) ^ 2 * (spectralMoment 2 x - (spectralMoment 1 x) ^ 2) ^ 2 / 5 ≤
       spectralMoment 3 x * spectralMoment 3 (endpointPrefixAverage k (endpointClassical x)) -
@@ -542,7 +532,7 @@ public theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x
     funext i
     fin_cases i <;>
       simp [gapVector, z, p, q, t, Matrix.cons_val_two, Matrix.cons_val_three,
-        Matrix.head_cons, Matrix.tail_cons] <;> ring
+        Matrix.head_cons, Matrix.tail_cons]
   have hDamping : 0 ≤ lambda := Real.sqrt_nonneg _
   have hLower : 0 ≤ lambda - 4 / 5 := by
     apply sub_nonneg.mpr
