@@ -8,6 +8,7 @@ url: "https://doi.org/10.5281/zenodo.24398996"
 claim: "Proposition 7: a disjoint union H of k >= 1 cliques K_(s_i) on n = sum s_i vertices has E_CN(H) = 2 sum (s_i - 1)(s_i - 2) <= 2(n - 1)(n - 2), with equality iff k = 1, or k = 2 and s_1 = s_2 = 1."
 strata_touched:
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound
 license: citation-only
 triage: anchor
 ---
@@ -44,3 +45,14 @@ W' = max(s - 2, 0), and S = 2 Pi - 1 satisfies -1 <= S <= 1 with tr(CN S) equal 
 both parts. The equality analysis uses the identity g(a + N) - g(a) - g(N) = 2aN - 2 for
 g(s) = (s - 1)(s - 2). With no labels attained the vertex set is empty, the energy is 0 and the
 bound B(0) = 4 is strict, so no hypothesis k >= 1 is needed.
+
+## Neighbourhood-clique bound
+
+Lemma 1 in Section 1 of the same version states, for every finite simple graph H with m edges, r
+vertices of positive degree and degrees d(v), that E_CN(H) <= 2 sum_v max(d(v) - 1, 0) = 4m - 2r;
+since H is arbitrary, isolated vertices and the empty graph are covered. The weaker bound 4m is
+credited there to Jannat, Nath and Das, Remark 4.7, equation (6). The
+repository proves it from CN(H) = A^2 - D = sum_v (a_v a_v^T - diag a_v), where a_v is the
+indicator of the neighbourhood of v: with the averaging projection Pi_v onto that neighbourhood,
+each summand is (d_v - 1) Pi_v - (diag a_v - Pi_v), both parts are positive semidefinite, and the
+energy of a difference of positive semidefinite matrices is at most the sum of their traces.
