@@ -172,8 +172,10 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
             "Sum the input weight exactly when the input and output equalities have the same truth value.",
             AssessedProvenance.FromLiterature(Source)),
         Definition("mixed-win", "mixedWin", "Classical winning probability", MixedWinFormula(),
-            "Average deterministic winning probabilities against a single distribution of ordered table pairs, independent of the input.",
-            AssessedProvenance.FromRepo(Source)),
+            "Section 2.2 of Bolduc and Jennings defines the value of a mixed strategy as the probability-weighted average of pure-strategy values. "
+            + "The Lean formalization uses StdSimplex for the input-independent distribution over ordered table pairs, "
+            + "with one nonnegative weight per pair and total weight one.",
+            AssessedProvenance.FromLiterature(Source)),
         Definition("t-param", "tParam", "Ratio of diagonal to off-diagonal weights",
             All(N, Nat, All(P, Real, Equal(Call("tParam", N, P), TParam()))),
             "The ratio p(n−1)/(1−p) is the nonconstant term in the score coefficient in §2.1 of Bolduc and Jennings.",
