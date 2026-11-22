@@ -8,6 +8,7 @@ url: "https://arxiv.org/abs/2507.07065"
 claim: "Section 4.1, Propositions 4.1–4.2, gives an operator layer-cake proof of Frenkel’s integral representation for positive definite matrices."
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
+  - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
 license: "citation-only"
 triage: "anchor"
 ---

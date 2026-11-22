@@ -54,7 +54,7 @@ private theorem information_operator_mono
   simpa only [informationOperator, add_comm] using
     add_le_add_left sumOrder ((regularizer : ℂ) • (1 : Matrix Index Index ℂ))
 
-private theorem trace_log_eq_log_det
+theorem trace_log_eq_log_det
     {Index : Type*} [Fintype Index] [DecidableEq Index] [Nonempty Index]
     (matrix : Matrix Index Index ℂ) (positive : matrix.PosDef) :
     (CFC.log matrix).trace.re = Real.log matrix.det.re := by
