@@ -6,7 +6,7 @@ An explicit rate for the Möbius prime-window remainder
 
 **Theorem 1.1 (The same window and decay exponent).**
 
-$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; \left(2 \le T \land 0 < K\right) \land \left(\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; \left(T \le a \land a \le B\right) \Rightarrow \left|\operatorname{E}\left(m, a, B\right)\right| \le \frac{K \cdot m}{\sqrt{1 + \log \log (m + 1)}} \cdot \left(a^{-\operatorname{s}\left(m\right)} - B^{-\operatorname{s}\left(m\right)}\right)\right)\right)\right)$$
+$$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; \left(2 \le T \land 0 < K\right) \land \left(\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall a \in \mathbb{R},\; \forall B \in \mathbb{R},\; \left(T \le a \land a \le B\right) \Rightarrow \left|\operatorname{E}\left(m, a, B\right)\right| \le \frac{K \cdot m}{\sqrt{1 + \log \log (m + 1)}} \cdot \left(a^{\frac{1}{m + 1} - \frac{1}{2}} - B^{\frac{1}{m + 1} - \frac{1}{2}}\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusRate.prime_window_mobius_quantitative_of_rh` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; \
 
 *Commentary.*
 
-The signed residual E(m,a,B) is the integral of the negative part of the prime-only tail divided by sqrt(x) on [a,B], with 2 log(B/a) and the endpoint difference of the ordinary zero primitive subtracted. For 3 ≤ n ≤ m subtract the power difference a^(1/n−1/2)−B^(1/n−1/2) with coefficient −2 μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m and 2n < m+1 subtract the nth root primitive difference with coefficient −μ(n). Actual zero occurrences retain their analytic multiplicities.
+RH denotes Mathlib RiemannHypothesis. The signed residual E(m,a,B) uses the integral of max(−primeTail(x),0)/sqrt(x) on [a,B], with 2 log(B/a) and the endpoint difference of the ordinary zero primitive subtracted. For 3 ≤ n ≤ m subtract the power difference a^(1/n−1/2)−B^(1/n−1/2) with coefficient −2 μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m and 2n < m+1 subtract the nth root primitive difference with coefficient −μ(n). Actual zero occurrences retain their analytic multiplicities.
 
 The Chebyshev and floor convolutions reduce the Möbius prefix estimate to two ranges in the quotient. Choosing the quotient cutoff as the four-fifths power of the logarithm gives a one-fifth logarithmic saving, uniformly over prefixes. The signed trivial-root response inherits the saving by Abel summation.
 
