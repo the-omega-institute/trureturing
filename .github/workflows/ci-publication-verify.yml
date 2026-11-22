@@ -50,19 +50,22 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       SEED: ${{ inputs.readback_tag }}
       SOURCE: ${{ inputs.readback_source }}
-      TOOLS_TAG: v0.1.1-pr.26.48.g380eefb66acd
-      TOOLS_SHA256: 72007fe9a9184516660fe7cf9df69d88f99d52edf53f5d27127fc28c8b72e404
+      TOOLS_TAG: v0.1.1-pr.27.49.g548b85c2451f
+      TOOLS_SHA256: e609fc80b3ee56ed6a9884a73e4f44db8ec594170a2dc292825f0bdd35c0953a
     steps:
       - name: Validate the verification tag and immutable project revision
         run: |
-          [[ "$SEED" =~ ^lean-cache-verify-v3-[a-z0-9.-]+-ci-[0-9]+-[0-9]+$ && "$SOURCE" =~ ^[0-9a-f]{40}$ ]]
+          case "$SOURCE" in
+            4e328c7d324f11ba999be53719e2f897a78a38b7|696c92214e1adc74d548258d5448ce6009daf970) ;;
+            *) echo 'Unrecognized fixed project source' >&2; exit 2 ;;
+          esac
+          [[ "$SEED" =~ ^lean-cache-verify-v3-[a-z0-9.-]+-darwin-arm64-[a-z0-9.-]+-local-[0-9a-f]{12}-[0-9]{8}T[0-9]{12}Z$ ]]
+          [[ "$SEED" == *"-local-${SOURCE:0:12}-"* ]]
           gh release download "$SEED" -R "$GITHUB_REPOSITORY" --pattern manifest.json --dir "$RUNNER_TEMP"
           jq -e --arg source "$SOURCE" '
             .schema == "lean-release-seed-v6" and .producer_commit_sha == $source and
-            .source_ref == "refs/heads/integration-ci-lean-sparse-release-31553-tests"
+            (.partition | endswith("/darwin-arm64")) and .source_ref == null
           ' "$RUNNER_TEMP/manifest.json"
-          gh api "repos/$GITHUB_REPOSITORY/compare/$SOURCE...integration-ci-lean-sparse-release-31553-tests" \
-            --jq '.status' | grep -Ex 'identical|ahead'
       - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.readback_source }}
@@ -109,7 +112,13 @@ jobs:
           sed -n 's/^LEAN_CACHE_FETCH //p' "$log" | jq -es --arg tag "$SEED" --arg source "$SOURCE" \
             'select(length == 1) | .[0] | select(.resolved == $tag and .producer_commit_sha == $source and .status == "unpacked")'
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
-          jq -e '.completed | index("fib-inputs-checked") != null' .lake/build/stratalint/raw-lean-report.json.reuse.json
+          PYTHONPATH="$RUNNER_TEMP/volume-reader/tools/lean-inspector" python3 - <<'PYTHON'
+          from pathlib import Path
+          import reuse
+          receipt = reuse.read_receipt(reuse.canonical_seed(Path.cwd()))
+          if receipt["completed"] not in reuse.CHECKED_STEPS:
+              raise ValueError("missing full project report check")
+          PYTHON
           awk 'NR==1 {s0=$1;sm=$1;p0=$2;pm=$2} {if($1<sm)sm=$1; if($2<pm)pm=$2}
                END {printf "BOUNDED_READBACK samples=%d initial_stage_free=%.0f minimum_stage_free=%.0f initial_project_free=%.0f minimum_project_free=%.0f\n",NR,s0,sm,p0,pm}' "$metrics"
 
