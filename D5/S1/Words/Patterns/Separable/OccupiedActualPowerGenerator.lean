@@ -10,6 +10,7 @@ import D5.S1.Words.Patterns.Separable.OccupiedComparison
 import D5.S1.Words.Patterns.Separable.OccupiedKernelWeightReplacement
 import D5.S1.Words.Patterns.Separable.OccupiedMellinFloors
 import D5.S1.Words.Patterns.Separable.OccupiedMellinKelvin
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-! The exact compensated integer generator is approximated by the real
 signed Mellin integral. The quantitative Kelvin gap then gives a uniform
