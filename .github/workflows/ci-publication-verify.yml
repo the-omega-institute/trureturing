@@ -55,17 +55,14 @@ jobs:
     steps:
       - name: Validate the verification tag and immutable project revision
         run: |
-          case "$SOURCE" in
-            4e328c7d324f11ba999be53719e2f897a78a38b7|696c92214e1adc74d548258d5448ce6009daf970) ;;
-            *) echo 'Unrecognized fixed project source' >&2; exit 2 ;;
-          esac
-          [[ "$SEED" =~ ^lean-cache-verify-v3-[a-z0-9.-]+-darwin-arm64-[a-z0-9.-]+-local-[0-9a-f]{12}-[0-9]{8}T[0-9]{12}Z$ ]]
-          [[ "$SEED" == *"-local-${SOURCE:0:12}-"* ]]
+          [[ "$SEED" =~ ^lean-cache-verify-v3-[a-z0-9.-]+-linux-arm64-[a-z0-9.-]+-ci-[0-9]+-[0-9]+$ ]]
+          [[ "$SOURCE" =~ ^[0-9a-f]{40}$ ]]
           gh release download "$SEED" -R "$GITHUB_REPOSITORY" --pattern manifest.json --dir "$RUNNER_TEMP"
-          jq -e --arg source "$SOURCE" '
+          jq -e --arg source "$SOURCE" --arg ref refs/heads/integration-ci-lean-cache-volumes-dev-31553-tests '
             .schema == "lean-release-seed-v6" and .producer_commit_sha == $source and
-            (.partition | endswith("/darwin-arm64")) and .source_ref == null
+            (.partition | endswith("/linux-arm64")) and .source_ref == $ref
           ' "$RUNNER_TEMP/manifest.json"
+          gh api "repos/$GITHUB_REPOSITORY/compare/$SOURCE...integration-ci-lean-cache-volumes-dev-31553-tests" --jq .status | grep -Ex 'identical|ahead'
       - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.readback_source }}
