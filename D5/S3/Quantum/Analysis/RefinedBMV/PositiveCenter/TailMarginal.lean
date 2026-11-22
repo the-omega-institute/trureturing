@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterTailMarginal
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/TailMarginal
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Logarithmic derivative of the lower-gap marginal of the refined BMV kernel. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterRegularized
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterUpperTail
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.Regularized
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.UpperTail
 import Mathlib.Tactic.FunProp
 
 /-! # Logarithmic derivative bound for the upper-tail normalization -/

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterMarginalTaylor
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MarginalTaylor
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Uniform marginal Taylor enclosures for the positive-center BMV small corner. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterJointTaylor
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMixedJet
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.JointTaylor
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MixedJet
 import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-! Marginal Taylor bounds on the closed positive-center BMV small corner. -/

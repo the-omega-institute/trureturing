@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterLeftStripMarginal
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripMarginal
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Negative-marginal slopes for the separated positive-center strip. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMarginalTaylor
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMomentPolynomial
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MarginalTaylor
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MomentPolynomial
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
 /-! # Bounds on the negative marginal of the separated left strip -/

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterSeparatedGapSign
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedGapSign
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: The leading and linear terms of the normalized separated-gap kernel. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterSeparatedGapRadical
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripMarginal
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedGapRadical
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripMarginal
 
 namespace RefinedBMV.PositiveCenter
 

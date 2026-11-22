@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterLeftStripProfile
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/LeftStripProfile
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Negative weighted third derivative of the leading profile at the lower collision. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailAverage
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.ContDiff.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp

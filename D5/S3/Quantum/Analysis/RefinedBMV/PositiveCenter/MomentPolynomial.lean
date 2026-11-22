@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterMomentPolynomial
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/MomentPolynomial
    generality: G
    mirror-B: none(waiver:internal-arithmetic-identity)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact degree-parameter coefficient polynomials of the small-corner moments. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterJointTaylor
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.JointTaylor
 import Mathlib.RingTheory.Polynomial.Pochhammer
 
 /-! # Exact normalized small-corner moment polynomials -/

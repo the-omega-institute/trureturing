@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterJointTaylor
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/JointTaylor
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Uniform joint Taylor errors for the two-coordinate regularized BMV moment. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterRegularized
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMoments
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.Regularized
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.Moments
 
 /-! # The joint Taylor enclosure on the closed small corner -/
 

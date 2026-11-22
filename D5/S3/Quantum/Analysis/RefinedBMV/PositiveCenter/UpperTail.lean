@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterUpperTail
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/UpperTail
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Mixed derivative bounds for the positive-center upper tail. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMixedJet
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MixedJet
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp

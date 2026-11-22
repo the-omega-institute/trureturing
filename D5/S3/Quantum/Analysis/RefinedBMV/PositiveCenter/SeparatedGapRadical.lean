@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterSeparatedGapRadical
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/SeparatedGapRadical
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,9 +6,9 @@
    utility: none
    digest: Logarithmic derivative bounds for the separated-gap radical of the refined BMV kernel. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripProfile
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterCollisionRadicand
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailMarginal
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.LeftStripProfile
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.CollisionRadicand
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailMarginal
 
 /-! # The separated-gap radical of the refined BMV kernel -/
 

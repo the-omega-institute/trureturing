@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterCollisionRadicand
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/CollisionRadicand
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Positive integral regularization of the radicand at coincident upper roots. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailFormula
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailAverage
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailFormula
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 

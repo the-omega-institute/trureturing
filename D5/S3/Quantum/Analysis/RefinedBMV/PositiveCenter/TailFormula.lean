@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterTailFormula
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/TailFormula
    generality: G
    mirror-B: none(waiver:internal-proof-component)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Exact divided differences for the large positive-center spectral gap. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailLinear
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailAverage
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailLinear
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftLimit
 import D5.S3.Quantum.Analysis.RefinedBMVUniformDiscriminant
 

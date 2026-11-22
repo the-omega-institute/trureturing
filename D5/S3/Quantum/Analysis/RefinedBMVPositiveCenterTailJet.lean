@@ -6,10 +6,10 @@
    utility: none
    digest: Mixed partial derivatives under the change to the upper spectral gap. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMixedJet
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailFormula
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailMarginal
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterSeparatedGapSign
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MixedJet
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailFormula
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.TailMarginal
+import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.SeparatedGapSign
 import Mathlib.Analysis.Calculus.FDeriv.Symmetric
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Prod
