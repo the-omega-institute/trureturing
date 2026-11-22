@@ -30,7 +30,7 @@ private theorem shifted_fails : ¬ arena.Law shifted := by
   intro law
   let profile (_ : Fin 0 → Bool) : (Fin 0 → Bool) × (Fin 0 → Bool) := ⟨Fin.elim0, Fin.elim0⟩
   have h := (law (k := 0) (r := 0) (m := 0) Fin.elim0 profile
-    (fun _ _ _ => Subsingleton.elim _ _) (fun _ _ => rfl) Fin.elim0).1
+    (fun _ _ _ => Subsingleton.elim _ _) (fun _ _ => rfl) (fun j => Fin.elim0 j)).1
   exact Nat.not_succ_le_zero 0 h
 
 def family : Registration arena (type_of% @central_sign_dimension_cost) where

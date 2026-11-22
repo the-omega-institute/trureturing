@@ -33,7 +33,8 @@ theorem central_sign_dimension_cost {k r m : ℕ} (d : Fin m → ℕ)
     intro x y h
     exact hsep (Prod.ext (hconst x y) h)
   have hp : (2 : ℕ) ^ k ≤ 2 ^ m := by
-    simpa only [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] using Fintype.card_le_of_injective _ hinj
+    simpa only [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] using
+      Fintype.card_le_of_injective _ hinj
   have hkm : k ≤ m := (pow_le_pow_iff_right₀ (by decide : 1 < (2 : ℕ))).mp hp
   have hfour (j : Fin m) : 4 ≤ d j ^ 2 := by nlinarith [hd j]
   have hsum : 4 * m ≤ ∑ j, d j ^ 2 := by
