@@ -187,9 +187,8 @@ private theorem centered_sum_power (hRH : RiemannHypothesis) {D : ℝ} (hD : 0 <
       Real.exp_le_exp.mpr ((div_le_iff₀ hp0).2 ((le_of_not_ge huq).trans hhalf'))
     have hh' : |∑ n ∈ T, h n| ≤ C * Real.exp (u/(p : ℝ)) * H * Real.exp (-u/2) := by
       rw [hTp]
-      have hpm : p ≤ m := by dsimp [p]; omega
       simpa only [h, centered, neg_mul, Finset.sum_neg_distrib, abs_neg] using
-        hnear m p u H hp₂ hpm hu (hpre m)
+        hnear m p u H hp₂ hu (hpre m)
     have hz : |∑ n ∈ T, h n| ≤ C * Real.exp 2 * D * Q * W := by
       refine hh'.trans ?_
       have hpowe : q^(3/4 : ℝ) ≤ Q :=
