@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.HilbertOperators.VisibleTwoStepDefect
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Vary the squared leakage readout by an additive scalar offset.
@@ -14,19 +14,31 @@ namespace Reg.D5.S3.HilbertOperators.VisibleTwoStepDefect
 noncomputable section
 universe u
 
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+abbrev Parameters := Σ E : Type u, Σ _ : NormedAddCommGroup E,
+  Σ _ : InnerProductSpace ℝ E, Submodule ℝ E
 
-def actual : Realization signature := realize signature (fun _ _ x => x ^ 2) (fun e => nomatch e)
-def shifted : Realization signature :=
-  realize signature (fun _ _ x => x ^ 2 + 1) (fun e => nomatch e)
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
-def arena : Arena where
-  signature := signature
+def actual : Realization signature.{u} := realize signature.{u} (fun _ _ x => x ^ 2) (fun e => nomatch e)
+def shifted : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ x => x ^ 2 + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
   Law R := ∀ {E : Type u} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
       (V : Submodule ℝ E) [V.HasOrthogonalProjection] (T : E →L[ℝ] E)
       (_ : T.toLinearMap.IsSymmetric),
-    (∀ v : V, defectForm V T v = R.readout () () ‖T v - V.starProjection (T v)‖) ∧
+    (∀ v : V, defectForm V T v = R.readout ()
+      ⟨E, inferInstance, inferInstance, V⟩
+      ‖T v - V.starProjection (T v)‖) ∧
     ((∀ v : V, defectForm V T v = 0) ↔ ∀ v : V, T v ∈ V)
 
 private theorem shifted_fails : ¬arena.{u}.Law shifted := by
@@ -42,17 +54,20 @@ def family : Registration arena.{u} (type_of% @visible_two_step_defect.{u}) wher
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@visible_two_step_defect, shifted, shifted_fails⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual shifted shifted_fails
+  sensitivity := ⟨fun i => ⟨shifted,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, shifted_fails⟩,
+    fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    let E := EuclideanSpace ℝ (ULift.{u} Unit)
+    let V : Submodule ℝ E := ⊤
+    refine ⟨⟨E, inferInstance, inferInstance, V⟩, (0 : ℝ), (1 : ℝ), ?_⟩
     change (0 : ℝ) ^ (2 : ℕ) ≠ 1 ^ (2 : ℕ)
     simpa only [zero_pow (by decide : (2 : ℕ) ≠ 0), one_pow] using (zero_ne_one : (0 : ℝ) ≠ 1)
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.HilbertOperators.VisibleTwoStepDefect.visible_two_step_defect.{u})
-    (Realization signature) Unit Unit where
+    (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.HilbertOperators.VisibleTwoStepDefect.unit
   realizationName := `Reg.D5.S3.HilbertOperators.VisibleTwoStepDefect.family
   realizationSource := none
@@ -64,7 +79,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => x ^ 2) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ _ x => x ^ 2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -72,7 +87,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.HilbertOperators.VisibleTwoStepDefect
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "body", "arg"]
