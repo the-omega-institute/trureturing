@@ -229,7 +229,7 @@ private theorem centered_sum_inverse_log (hRH : RiemannHypothesis) :
       |∑ n ∈ Finset.Icc 2 k, f n| ≤ T₀*Q*W := by
     have hlog : Real.log (k : ℝ) ≤ Real.log (m : ℝ) :=
       Real.log_le_log (by exact_mod_cast (show 0 < k by omega)) (by exact_mod_cast hkm)
-    refine (trivial_response_of_mobius_prefix hH k hu
+    refine (trivial_response_of_mobius_prefix k hu
       (fun j hj => hprefix m j (hj.trans hkm))).trans ?_
     have hcoef : (H+1)*(1+Real.log k+c) ≤ T₀*Q := by
       calc
@@ -298,8 +298,16 @@ private theorem centered_sum_inverse_log (hRH : RiemannHypothesis) :
     have hp₂ : 2 ≤ p := le_max_left _ _
     have hpm : p ≤ m := by dsimp [p]; omega
     have hhalf : m+1 ≤ 2*p := by dsimp [p]; omega
-    have hh := hnear L (by linarith) m p u H hp₂ hpm hhalf hu (le_of_not_ge huL) hH
-      (hprefix m)
+    have hp0 : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
+    have hhalf' : (m : ℝ) + 1 ≤ 2*(p : ℝ) := by exact_mod_cast hhalf
+    have hexp : Real.exp (u/(p : ℝ)) ≤ Real.exp (2*L) := by
+      apply Real.exp_le_exp.mpr
+      exact (div_le_iff₀ hp0).2 ((le_of_not_ge huL).trans
+        ((mul_le_mul_of_nonneg_left hhalf' (by linarith : 0 ≤ L)).trans_eq (by ring)))
+    have hh := (hnear m p u H hp₂ hpm hu (hprefix m)).trans
+      (mul_le_mul_of_nonneg_right
+        (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hexp hC.le) hH)
+        (Real.exp_nonneg _))
     have hh' : |∑ n ∈ T, h n| ≤ C * Real.exp (2*L) * H * Real.exp (-u/2) := by
       rw [hTp]
       simpa only [h, centered, neg_mul, Finset.sum_neg_distrib, abs_neg] using hh
