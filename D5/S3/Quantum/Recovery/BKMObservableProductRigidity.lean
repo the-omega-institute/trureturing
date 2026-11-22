@@ -15,7 +15,7 @@ noncomputable section
 
 open Matrix
 open scoped BigOperators ComplexOrder Kronecker Matrix MatrixOrder Matrix.Norms.L2Operator
-open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
+open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Recovery.BKMObservableRigidity
   (modular weightedVec weightedLift weightedLift_compression bkmGap_rigidity)
@@ -240,7 +240,7 @@ private theorem commute_relativeDensity_iff (A : Matrix (R × E) (R × E) ℂ)
           rw [hi, Real.mul_rpow hvpos.le (hS.eigenvalues_pos j).le, Real.sqrt_eq_rpow])
       have h' := congrArg (lift (ι := E)) h
       have hl (T : Matrix R R ℂ) : lift (ι := E) (c • T) = c • lift T := by
-        simp only [lift, Matrix.smul_kronecker, RingHom.id_apply]
+        simp only [lift, Matrix.smul_kronecker]
       rw [hl] at h'
       simp only [lift_mul] at h'
       exact h'
@@ -356,5 +356,296 @@ theorem bkmGap_eq_zero_iff_commute_ratioPieces [Nonempty E]
       _ = V *ᵥ (cfc f N *ᵥ b) := by rw [hcalc, Matrix.mulVec_sum]; simp only [Matrix.mulVec_smul]
 
 #print axioms bkmGap_eq_zero_iff_commute_ratioPieces
+
+
+/-- The graph of nonzero off-diagonal entries of a Hermitian matrix. -/
+def observableGraph (K : Matrix n n ℂ) (hK : K.IsHermitian) : SimpleGraph n where
+  Adj i j := i ≠ j ∧ K i j ≠ 0
+  symm := by
+    constructor
+    intro i j h
+    refine ⟨h.1.symm, ?_⟩
+    intro hz
+    apply h.2
+    have he := congrArg (fun (T : Matrix n n ℂ) => T j i) hK.eq
+    simpa [Matrix.conjTranspose_apply, hz] using he
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+omit [DecidableEq n] in
+private theorem ratioPiece_mul_piece {s : n → ℝ}
+    (X K : Matrix n n ℂ) (q v : ℝ) :
+    ratioPiece s (q * v) (X * ratioPiece s v K) =
+      ratioPiece s q X * ratioPiece s v K := by
+  ext i j
+  simp only [ratioPiece_apply, Matrix.mul_apply]
+  rw [Finset.ite_sum_zero]
+  apply Finset.sum_congr rfl
+  intro k _
+  by_cases hv : s k = v * s j
+  · have he : s i = (q * v) * s j ↔ s i = q * s k := by rw [hv, mul_assoc]
+    simp [hv, he, ite_mul]
+  · change (if s i = (q * v) * s j then X i k * ratioPiece s v K k j else 0) =
+      (if s i = q * s k then X i k else 0) * ratioPiece s v K k j
+    simp [ratioPiece_apply, hv]
+
+omit [DecidableEq n] in
+private theorem ratioPiece_piece_mul {s : n → ℝ} (hs : ∀ i, 0 < s i)
+    (X K : Matrix n n ℂ) (q v : ℝ) :
+    ratioPiece s (q * v) (ratioPiece s v K * X) =
+      ratioPiece s v K * ratioPiece s q X := by
+  ext i j
+  simp only [ratioPiece_apply, Matrix.mul_apply]
+  rw [Finset.ite_sum_zero]
+  apply Finset.sum_congr rfl
+  intro k _
+  by_cases hv : s i = v * s k
+  · have hv0 : v ≠ 0 := by intro hz; simp [hz, (hs i).ne'] at hv
+    have he : s i = (q * v) * s j ↔ s k = q * s j := by
+      rw [hv, mul_comm q v, mul_assoc, mul_right_inj' hv0]
+    simp only [if_pos hv, he, mul_ite, mul_zero]
+  · change (if s i = (q * v) * s j then ratioPiece s v K i k * X k j else 0) =
+      ratioPiece s v K i k * (if s k = q * s j then X k j else 0)
+    simp [ratioPiece_apply, hv]
+
+omit [Fintype n] [DecidableEq n] in
+private theorem ratioPiece_adjoint (s : n → ℝ) (K : Matrix n n ℂ) (hK : K.IsHermitian)
+    {v : ℝ} (hv : v ≠ 0) : (ratioPiece s v K)ᴴ = ratioPiece s v⁻¹ K := by
+  ext i j
+  have he : s j = v * s i ↔ s i = v⁻¹ * s j := by
+    constructor
+    · intro h
+      rw [h, inv_mul_cancel_left₀ hv]
+    · intro h
+      rw [h, mul_inv_cancel_left₀ hv]
+  have hj := congrArg (fun (T : Matrix n n ℂ) => T i j) hK.eq
+  simp only [Matrix.conjTranspose_apply] at hj
+  by_cases h : s i = v⁻¹ * s j
+  · simp only [Matrix.conjTranspose_apply, ratioPiece_apply, if_pos h, if_pos (he.mpr h), hj]
+  · simp only [Matrix.conjTranspose_apply, ratioPiece_apply, if_neg h, if_neg (he.not.mpr h), star_zero]
+
+private theorem diagonal_scalar_of_connected {K : Matrix n n ℂ} {hK : K.IsHermitian}
+    (hc : (observableGraph K hK).Connected) {D : Matrix n n ℂ}
+    (hD : ∀ i j, i ≠ j → D i j = 0) (h : Commute D K) (o : n) :
+    D = D o o • (1 : Matrix n n ℂ) := by
+  have hd : D = Matrix.diagonal (fun i => D i i) := by
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp
+    · simp [hD i j hij, Matrix.diagonal_apply_ne _ hij]
+  have hedge {i j : n} (ha : (observableGraph K hK).Adj i j) : D i i = D j j := by
+    have he := h.eq
+    rw [hd] at he
+    have hij := congrArg (fun (T : Matrix n n ℂ) => T i j) he
+    simp only [Matrix.diagonal_mul, Matrix.mul_diagonal] at hij
+    rw [mul_comm (K i j)] at hij
+    exact mul_right_cancel₀ ha.2 hij
+  have heq (i : n) : D i i = D o o := (hc i o).elim fun w => by
+    induction w with
+    | nil => rfl
+    | cons ha _ ih => exact (hedge ha).trans ih
+  calc
+    D = Matrix.diagonal (fun i => D i i) := hd
+    _ = _ := by
+      ext i j
+      by_cases hij : i = j
+      · subst j
+        simp [heq]
+      · simp [Matrix.diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
+
+private theorem scalar_of_commute_pieces {s : n → ℝ} (hs : ∀ i, 0 < s i)
+    (hsimple : Function.Injective s) {K : Matrix n n ℂ} {hK : K.IsHermitian}
+    (hc : (observableGraph K hK).Connected) (X : Matrix n n ℂ)
+    (hX : ∀ v, Commute X (ratioPiece s v K)) (o : n) :
+    X = X o o • (1 : Matrix n n ℂ) := by
+  have hsum (D : Matrix n n ℂ) (hd : ∀ v, Commute D (ratioPiece s v K)) : Commute D K := by
+    change D * K = K * D
+    rw [← sum_ratioPiece hs K, Matrix.mul_sum, Matrix.sum_mul]
+    exact Finset.sum_congr rfl (fun v _ => (hd v).eq)
+  have hpiece (q v : ℝ) : Commute (ratioPiece s q X) (ratioPiece s v K) :=
+    show _ = _ from
+      (ratioPiece_mul_piece X K q v).symm.trans <|
+        (congrArg (ratioPiece s (q * v)) (hX v).eq).trans (ratioPiece_piece_mul hs X K q v)
+  have hvanish (q : ℝ) (hq : 0 < q) (hneq : q ≠ 1) : ratioPiece s q X = 0 := by
+    let Y := ratioPiece s q X
+    have hdiag (i j : n) (hij : i ≠ j) : (Yᴴ * Y) i j = 0 := by
+      rw [Matrix.mul_apply]
+      apply Finset.sum_eq_zero
+      intro k _
+      by_cases hi : s k = q * s i
+      · have hj : s k ≠ q * s j := fun he =>
+          hij (hsimple (mul_left_cancel₀ hq.ne' (hi.symm.trans he)))
+        simp [Y, Matrix.conjTranspose_apply, ratioPiece_apply, hj]
+      · simp [Y, Matrix.conjTranspose_apply, ratioPiece_apply, hi]
+    have hadj (v : ℝ) : Commute Yᴴ (ratioPiece s v K) := by
+      by_cases hv : v = 0
+      · subst v
+        have hz : ratioPiece s 0 K = 0 := by
+          ext i j
+          simp [ratioPiece_apply, (hs i).ne']
+        rw [hz]
+        exact Commute.zero_right _
+      · have hh := (hpiece q v⁻¹).star_star
+        rw [Matrix.star_eq_conjTranspose, Matrix.star_eq_conjTranspose,
+          ratioPiece_adjoint s K hK (inv_ne_zero hv), inv_inv] at hh
+        exact hh
+    have hscalar := diagonal_scalar_of_connected hc hdiag
+      (hsum (Yᴴ * Y) (fun v => (hadj v).mul_left (hpiece q v))) o
+    haveI : Nonempty n := hc.nonempty
+    have hcol : ∃ j, ∀ i, Y i j = 0 := by
+      rcases lt_or_gt_of_ne hneq with hlt | hgt
+      · obtain ⟨j, hj⟩ := Finite.exists_min s
+        refine ⟨j, fun i => ?_⟩
+        have hqj : q * s j < s j := by simpa using mul_lt_mul_of_pos_right hlt (hs j)
+        have hqi := hqj.trans_le (hj i)
+        simp [Y, ratioPiece_apply, hqi.ne']
+      · obtain ⟨j, hj⟩ := Finite.exists_max s
+        refine ⟨j, fun i => ?_⟩
+        have hqi : s i < q * s j := (hj i).trans_lt (by
+          simpa using mul_lt_mul_of_pos_right hgt (hs j))
+        simp [Y, ratioPiece_apply, hqi.ne]
+    obtain ⟨j, hj⟩ := hcol
+    have hz : (Yᴴ * Y) j j = 0 := by simp [Matrix.mul_apply, hj]
+    have coeff : (Yᴴ * Y) o o = 0 := by
+      have he := congrArg (fun (T : Matrix n n ℂ) => T j j) hscalar
+      simpa [hz] using he.symm
+    apply Matrix.conjTranspose_mul_self_eq_zero.mp
+    rw [hscalar, coeff, zero_smul]
+  have hdiag (i j : n) (hij : i ≠ j) : X i j = 0 := by
+    have hq : 0 < s i / s j := div_pos (hs i) (hs j)
+    have hneq : s i / s j ≠ 1 := by
+      intro he
+      exact hij (hsimple (by simpa using (div_eq_iff (hs j).ne').mp he))
+    have he := congrArg (fun (T : Matrix n n ℂ) => T i j) (hvanish _ hq hneq)
+    simpa [ratioPiece_apply, div_mul_cancel₀ _ (hs j).ne'] using he
+  exact diagonal_scalar_of_connected hc hdiag (hsum X hX) o
+
+omit [DecidableEq R] in
+private theorem commute_slice {B : Matrix (R × E) (R × E) ℂ} {K : Matrix R R ℂ}
+    (h : Commute B (lift K)) (e f : E) :
+    Commute (Matrix.of fun i j => B (i, e) (j, f)) K := by
+  change (Matrix.of fun i j => B (i, e) (j, f)) * K =
+    K * (Matrix.of fun i j => B (i, e) (j, f))
+  ext i j
+  have he := congrArg (fun (T : Matrix (R × E) (R × E) ℂ) => T (i, e) (j, f)) h.eq
+  simpa [Matrix.mul_apply, Fintype.sum_prod_type, lift, Matrix.kronecker_apply,
+    Matrix.one_apply, mul_ite, ite_mul, mul_assoc] using he
+
+/-- For a faithful normalized joint state, a simple retained spectrum and a connected
+observable graph make zero BKM gap equivalent to the product of its actual marginals. -/
+theorem bkmGap_eq_zero_iff_eq_marginals_kronecker [Nonempty E]
+    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef) (K : Matrix R R ℂ) (hK : K.IsHermitian)
+    (htrace : A.trace = 1) :
+    let S := partialTraceRight A
+    let hS := partialTraceRight_posDef A hA
+    let U : Matrix R R ℂ := hS.isHermitian.eigenvectorUnitary
+    let K₀ := Uᴴ * K * U
+    let hK₀ : K₀.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul U hK
+    Function.Injective hS.isHermitian.eigenvalues →
+      (observableGraph K₀ hK₀).Connected →
+        (bkmGap A K = 0 ↔ A = S ⊗ₖ partialTraceLeft A) := by
+  classical
+  intro S hS U K₀ hK₀ hsimple hc
+  change S.PosDef at hS
+  let B := relativeDensity A
+  let W := lift (ι := E) U
+  let W' := lift (ι := E) Uᴴ
+  let B₀ := W' * B * W
+  let H := lift (ι := E) (mpow S (1 / 2))
+  let J := lift (ι := E) (mpow S (-(1 / 2)))
+  have hWW' : W * W' = 1 := by
+    change lift U * lift Uᴴ = _
+    rw [← lift_mul, show U * Uᴴ = 1 from Unitary.coe_mul_star_self _, lift,
+      Matrix.one_kronecker_one]
+  have hW'W : W' * W = 1 := by
+    change lift Uᴴ * lift U = _
+    rw [← lift_mul, show Uᴴ * U = 1 from Unitary.coe_star_mul_self _, lift,
+      Matrix.one_kronecker_one]
+  have hHH : mpow S (1 / 2) * mpow S (1 / 2) = S := by
+    simp only [mpow, ← CFC.rpow_eq_cfc_real hS.posSemidef.nonneg]
+    rw [← CFC.rpow_add hS.isUnit, show (1 / 2 : ℝ) + 1 / 2 = 1 by norm_num,
+      CFC.rpow_one S hS.posSemidef.nonneg]
+  have hS_trace : S.trace = 1 := (trace_partialTraceRight A).trans htrace
+  rw [bkmGap_eq_zero_iff_commute_ratioPieces A hA K hK]
+  constructor
+  · intro h
+    let o : R := Classical.choice hc.nonempty
+    let T : Matrix E E ℂ := Matrix.of fun e f => B₀ (o, e) (o, f)
+    have hcomm (v : ℝ) : Commute B₀ (lift (ratioPiece hS.isHermitian.eigenvalues v K₀)) := by
+      let L := lift (ι := E) (ratioPiece hS.isHermitian.eigenvalues v K₀)
+      have he : B * (W * L * W') = (W * L * W') * B := by
+        simpa only [modularPiece, lift_mul] using (h v).eq
+      change B₀ * L = L * B₀
+      calc
+        _ = W' * (B * (W * L)) := by simp only [B₀, Matrix.mul_assoc]
+        _ = W' * (B * (W * L * W')) * W := by
+          have hu : W * L * W' * W = W * L := by
+            rw [Matrix.mul_assoc (W * L), hW'W, Matrix.mul_one]
+          calc
+            _ = W' * (B * (W * L * W' * W)) := by rw [hu]
+            _ = _ := by simp only [Matrix.mul_assoc]
+        _ = W' * ((W * L * W') * B) * W := by rw [he]
+        _ = _ := by
+          have hu : W' * (W * L * W') = L * W' := by
+            calc
+              _ = (W' * W) * L * W' := by simp only [Matrix.mul_assoc]
+              _ = _ := by rw [hW'W, Matrix.one_mul]
+          rw [← Matrix.mul_assoc W' (W * L * W') B, hu]
+          simp only [B₀, Matrix.mul_assoc]
+    have hT : B₀ = (1 : Matrix R R ℂ) ⊗ₖ T := by
+      ext ⟨i,e⟩ ⟨j,f⟩
+      have hs := scalar_of_commute_pieces hS.eigenvalues_pos hsimple hc
+        (Matrix.of fun i j => B₀ (i,e) (j,f)) (fun v => commute_slice (hcomm v) e f) o
+      have he := congrArg (fun (X : Matrix R R ℂ) => X i j) hs
+      simpa [T, Matrix.kronecker_apply, mul_comm] using he
+    have hB : B = (1 : Matrix R R ℂ) ⊗ₖ T := by
+      have hr : W * B₀ * W' = B := by
+        calc
+          _ = (W * W') * B * (W * W') := by simp only [B₀, Matrix.mul_assoc]
+          _ = _ := by rw [hWW', Matrix.one_mul, Matrix.mul_one]
+      rw [← hr, hT]
+      change (U ⊗ₖ (1 : Matrix E E ℂ)) * ((1 : Matrix R R ℂ) ⊗ₖ T) *
+        (Uᴴ ⊗ₖ (1 : Matrix E E ℂ)) = _
+      simp only [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+        show U * Uᴴ = 1 from Unitary.coe_mul_star_self _]
+    have hprod : A = S ⊗ₖ T := by
+      calc
+        A = H * B * H := (restore_density A hS).symm
+        _ = _ := by
+          rw [hB]
+          change (mpow S (1 / 2) ⊗ₖ (1 : Matrix E E ℂ)) *
+            ((1 : Matrix R R ℂ) ⊗ₖ T) * (mpow S (1 / 2) ⊗ₖ (1 : Matrix E E ℂ)) = _
+          simp only [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul, hHH]
+    have hleft : partialTraceLeft A = T := by
+      calc
+        partialTraceLeft A = partialTraceLeft (S ⊗ₖ T) :=
+          congrArg (partialTraceLeft (A := R) (B := E)) hprod
+        _ = S.trace • T := partialTraceLeft_kronecker S T
+        _ = T := by rw [hS_trace, one_smul]
+    rw [hleft]
+    exact hprod
+  · intro hp v
+    let T := partialTraceLeft A
+    obtain ⟨hHJ, hJH⟩ := lift_half_inverse (E := E) S hS
+    change H * J = 1 at hHJ
+    change J * H = 1 at hJH
+    have hA' : A = H * ((1 : Matrix R R ℂ) ⊗ₖ T) * H := by
+      rw [show A = S ⊗ₖ T from hp]
+      change _ = (mpow S (1 / 2) ⊗ₖ (1 : Matrix E E ℂ)) *
+        ((1 : Matrix R R ℂ) ⊗ₖ T) * (mpow S (1 / 2) ⊗ₖ (1 : Matrix E E ℂ))
+      simp only [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul, hHH]
+    have hB : B = (1 : Matrix R R ℂ) ⊗ₖ T := by
+      change J * A * J = _
+      rw [hA']
+      calc
+        _ = (J * H) * ((1 : Matrix R R ℂ) ⊗ₖ T) * (H * J) := by
+          simp only [Matrix.mul_assoc]
+        _ = _ := by rw [hJH, hHJ, Matrix.one_mul, Matrix.mul_one]
+    change Commute B _
+    rw [hB]
+    change _ * _ = _ * _
+    simp only [lift, ← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+
+#print axioms bkmGap_eq_zero_iff_eq_marginals_kronecker
 
 end D5.S3.Quantum.Recovery.BKMObservableProductRigidity
