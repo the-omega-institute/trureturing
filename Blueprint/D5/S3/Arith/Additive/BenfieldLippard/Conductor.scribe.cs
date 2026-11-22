@@ -6,7 +6,7 @@ internal sealed class ConductorDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/BenfieldLippard/Conductor.";
     private static readonly LibraryNoteRef Paper =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/benfieldlippard2025positivepowers");
+        LibraryNoteRef.Create("D5/L/Semigroups/benfieldlippard2025positivepowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A positive generator and bounded coprime shifts give an explicit cutoff for their additive closure.",

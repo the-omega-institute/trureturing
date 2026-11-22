@@ -6,7 +6,7 @@ internal sealed class OddBoundDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/BenfieldLippard/OddBound.";
     private static readonly LibraryNoteRef Paper =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/benfieldlippard2025positivepowers");
+        LibraryNoteRef.Create("D5/L/Semigroups/benfieldlippard2025positivepowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Small shifted powers give a conductor bound that controls the number of gaps for the neighboring odd exponents.",

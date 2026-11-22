@@ -6,7 +6,7 @@ internal sealed class WaringTheorem2Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/Waring/WaringTheorem2.";
     private static readonly LibraryNoteRef Supplier =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/waringformalization2026lean");
+        LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every positive exponent admits a uniform upper bound on the number of summands.",

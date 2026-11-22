@@ -6,7 +6,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/BenfieldLippard/Result.";
     private static readonly LibraryNoteRef Paper =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/benfieldlippard2025positivepowers");
+        LibraryNoteRef.Create("D5/L/Semigroups/benfieldlippard2025positivepowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sizes of the stable exception sets have strict adjacent rises and falls in every tail.",

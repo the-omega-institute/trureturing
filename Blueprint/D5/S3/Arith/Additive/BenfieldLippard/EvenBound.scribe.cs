@@ -6,7 +6,7 @@ internal sealed class EvenBoundDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/BenfieldLippard/EvenBound.";
     private static readonly LibraryNoteRef Paper =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/benfieldlippard2025positivepowers");
+        LibraryNoteRef.Create("D5/L/Semigroups/benfieldlippard2025positivepowers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fermat divisibility produces many gaps at exponents one less than a prime.",

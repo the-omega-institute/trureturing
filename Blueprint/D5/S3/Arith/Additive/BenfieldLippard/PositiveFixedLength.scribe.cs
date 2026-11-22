@@ -6,7 +6,7 @@ internal sealed class PositiveFixedLengthDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Additive/BenfieldLippard/PositiveFixedLength.";
     private static readonly LibraryNoteRef Supplier =
-        LibraryNoteRef.Create("D5/L/AdditiveNumberTheory/waringformalization2026lean");
+        LibraryNoteRef.Create("D5/L/Semigroups/waringformalization2026lean");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For each exponent at least two, a fixed positive length represents every sufficiently large natural number.",
