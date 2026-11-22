@@ -7,6 +7,12 @@ inputs:
   previous-base:
     description: Release identity selected for an incremental publication
     default: ''
+  release-seed-tag:
+    description: Exact published tag for a pinned first-generation seed
+    default: ''
+  release-seed-producer:
+    description: Producer commit of the pinned tag
+    default: ''
   publication-mode:
     description: Protected production or integration verification
     default: production
@@ -104,7 +110,7 @@ runs:
               [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
               test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
               ;;
-            none|parallel|release) [[ ! -e .lake/build ]] ;;
+            none|parallel|release|pinned) [[ ! -e .lake/build ]] ;;
             *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
           esac
         else
@@ -122,12 +128,19 @@ runs:
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
     - name: Prepare cold dependencies for the compiled layers
-      if: inputs.mode == 'parallel' || inputs.mode == 'release'
+      if: contains(fromJSON('["parallel","release","pinned"]'), inputs.mode)
       shell: bash
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       run: |
         bash .github/actions/lean-compile-layer/prepare-dependencies.sh
+    - name: Restore the pinned first-generation Release
+      if: inputs.mode == 'pinned'
+      shell: bash
+      env:
+        LEAN_CACHE_TAG: ${{ inputs.release-seed-tag }}
+        LEAN_CACHE_SOURCE_COMMIT: ${{ inputs.release-seed-producer }}
+      run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate
     - name: Measure disk before sparse Release installation
       if: inputs.mode == 'release' && env.LEAN_CACHE_RELEASE_SPARSE == '1'
       shell: bash
