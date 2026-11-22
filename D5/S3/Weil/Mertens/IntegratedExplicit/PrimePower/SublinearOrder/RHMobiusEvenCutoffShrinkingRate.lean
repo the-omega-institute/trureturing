@@ -6,7 +6,7 @@
    utility: none
    digest: A logarithmic-square modulus for the centered root spectrum. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoff
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoffShrinkingWidth
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 
 /-! The truncated reciprocal moment and inverse-square tail bound all small phase shifts. -/
@@ -17,6 +17,9 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
+
+open Set ArithmeticFunction
+open scoped ArithmeticFunction.Moebius
 
 open D5.S3.Weil.Mertens.ZeroAbscissaPower (actual_zero actual_low_weight actual_high_weight)
 open D5.S3.Weil.Mertens.IntegratedExplicit (actualCoeff actualCoeff_hasSum)
@@ -141,5 +144,86 @@ private theorem centered_series_increment_le (hRH : RiemannHypothesis) {r : ℝ}
   dsimp only
   exact hsum.trans ((add_le_add hlow' (hhigh'.trans hreduce)).trans
     (by dsimp only [T]; nlinarith [mul_nonneg hL.le (sq_nonneg (1+Real.log L⁻¹))]))
+
+private theorem root_signal_increment_le (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) :
+    ∃ C : ℝ, 0 < C ∧ ∀ u h L : ℝ, 0 < L → L ≤ 1/4 → |h| ≤ L →
+      |rootSignal r (u+h)-rootSignal r u| ≤ C*L*(1+Real.log L⁻¹)^2 := by
+  obtain ⟨C, hC, h⟩ := centered_series_increment_le hRH hr
+  let s : ℝ := 1/2-(2*r)⁻¹
+  have hs : 0 < s := by
+    dsimp only [s]
+    rw [show (1 : ℝ)/2 = 2⁻¹ by norm_num]
+    exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
+  refine ⟨C/s, div_pos hC hs, fun u d L hL hL₁ hd => ?_⟩
+  unfold rootSignal
+  rw [← sub_div, abs_div, abs_of_pos hs]
+  refine (div_le_div_of_nonneg_right ?_ hs.le).trans_eq (by ring)
+  rw [← Complex.sub_re]
+  exact (Complex.abs_re_le_norm _).trans (h u d L hL hL₁ hd)
+
+/-- The explicit shrinking-width rate preserves the original signed window and its arithmetic error. -/
+theorem signed_window_even_cutoff_shrinking_rate (hRH : RiemannHypothesis) :
+    ∃ U₀ : ℝ, 0 < U₀ ∧ ∀ m r : ℕ, 2 ≤ m → m+1 = 2*r →
+      let s := orderRate m
+      let δ := ((m : ℝ)+1)⁻¹ - ((m : ℝ)+2)⁻¹
+      let c := (μ (m+1) : ℝ) * (((m : ℝ)+1)/((m : ℝ)*s))
+      ∃ C K : ℝ, 0 < C ∧ 0 < K ∧ ∀ u L : ℝ, U₀ ≤ u → 0 < L → L ≤ 1/4 →
+        |signedWindowResidual m (Real.exp u) (Real.exp (u+L)) /
+          powerGap s (Real.exp u) (Real.exp (u+L)) + c +
+          (μ r : ℝ)*rootSignal (r : ℝ) u| ≤
+            C*L*(1+Real.log L⁻¹)^2 + K*Real.exp (-δ*u) := by
+  obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
+  have ha₀ : 0 < a₀ := by linarith
+  refine ⟨Real.log a₀, Real.log_pos (by linarith), fun m r hm heven => ?_⟩
+  let s := orderRate m
+  let δ := ((m : ℝ)+1)⁻¹ - ((m : ℝ)+2)⁻¹
+  let c := (μ (m+1) : ℝ) * (((m : ℝ)+1)/((m : ℝ)*s))
+  let W := K * (((m+1 : ℕ) : ℝ) * (1+Real.log ((m+1 : ℕ) : ℝ))^2)
+  let μr : ℝ := μ r
+  have hr : (1 : ℝ) < r := by exact_mod_cast (show 1 < r by omega)
+  have hq : (m : ℝ)+1 = 2*(r : ℝ) := by exact_mod_cast heven
+  have hs' : s = 1/2 - (2*(r : ℝ))⁻¹ := by dsimp [s, orderRate]; rw [hq]
+  have hs : 0 < s := by
+    rw [hs', show (1 : ℝ)/2 = 2⁻¹ by norm_num]
+    exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
+  have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
+  obtain ⟨D, hD, hmod⟩ := root_signal_increment_le hRH hr
+  refine ⟨1+|μr|*D, W*((s+δ)/s), by positivity, by dsimp only [W]; positivity,
+    fun u L hu hL hL₁ => ?_⟩
+  let a := Real.exp u
+  let b := Real.exp (u+L)
+  let P := rootPrimitive (r : ℝ) b - rootPrimitive (r : ℝ) a
+  let gap := powerGap s a b
+  have hau : a₀ ≤ a := by
+    rw [← Real.exp_log ha₀]
+    exact Real.exp_le_exp.mpr hu
+  have hab : a < b := Real.exp_lt_exp.mpr (by linarith)
+  have hg : 0 < gap :=
+    sub_pos.mpr (Real.rpow_lt_rpow_of_neg (Real.exp_pos _) hab (neg_neg_of_pos hs))
+  obtain ⟨t, ht, hsample⟩ := root_increment_eq_signal_at hRH hr hL u
+  have hspec : P/gap = rootSignal (r : ℝ) (u+t) := by
+    simpa only [P, gap, a, b, hs'] using hsample
+  have hphase : |P/gap - rootSignal (r : ℝ) u| ≤ D*L*(1+Real.log L⁻¹)^2 := by
+    rw [hspec]
+    exact hmod u t L hL hL₁ (by rw [abs_of_nonneg ht.1]; exact ht.2)
+  have h_exp := hexpansion m r hm heven a b hau hab.le
+  have hdecay : |signedWindowResidual m a b + c*gap + μr*P| ≤
+      (W*((s+δ)/s)) * Real.exp (-δ*u) * gap := by
+    simpa only [s, δ, c, W, μr, P, gap, a, Real.rpow_def_of_pos (Real.exp_pos _),
+      Real.log_exp, mul_comm u (-δ)] using h_exp.1.trans h_exp.2
+  have hnorm : |signedWindowResidual m a b / gap + c + μr*(P/gap)| ≤
+      (W*((s+δ)/s)) * Real.exp (-δ*u) := by
+    rw [show signedWindowResidual m a b / gap + c + μr*(P/gap) =
+        (signedWindowResidual m a b + c*gap + μr*P) / gap by field_simp [hg.ne'],
+      abs_div, abs_of_pos hg, div_le_iff₀ hg]
+    exact hdecay
+  change |signedWindowResidual m a b / gap + c + μr*rootSignal (r : ℝ) u| ≤ _
+  rw [show signedWindowResidual m a b / gap + c + μr*rootSignal (r : ℝ) u =
+      (signedWindowResidual m a b / gap + c + μr*(P/gap)) -
+        μr*(P/gap - rootSignal (r : ℝ) u) by ring]
+  refine (abs_sub _ _).trans ?_
+  rw [abs_mul]
+  exact (add_le_add hnorm (mul_le_mul_of_nonneg_left hphase (abs_nonneg μr))).trans
+    (by nlinarith [mul_nonneg hL.le (sq_nonneg (1+Real.log L⁻¹))])
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
