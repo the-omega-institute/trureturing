@@ -11,7 +11,7 @@ permissions: {}
 # Release tooling has its own immutable revision. The source checkout supplies
 # the Inspector and Scribe versions that produced its module evidence.
 env:
-  TRUTH_TOOLS_COMMIT: 2c093b8c9ef58e48270f81f7c6a5cd591323314a
+  TRUTH_TOOLS_COMMIT: e76bc82a0175d5520bca8b880e737a49cef304f2
 
 concurrency:
   group: truth-release-publish-dev
@@ -77,15 +77,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         working-directory: truth-release-source
-        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/source.py" > "$RUNNER_TEMP/truth-required-checks"
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/source.py" > "$RUNNER_TEMP/truth-required-checks"
       - name: Build and verify the DAG and truth bundle
         working-directory: truth-release-source
-        run: bash "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth" "$RUNNER_TEMP/truth-required-checks"
+        run: bash "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/build.sh" "$RUNNER_TEMP/truth" "$RUNNER_TEMP/truth-required-checks"
       - name: Package verified release assets
         id: pack
         working-directory: truth-release-source
         run: |
-          python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" prepare \
+          python3 "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/publish.py" prepare \
             "$RUNNER_TEMP/truth/bundle" "$RUNNER_TEMP/truth/DAG.md" "$RUNNER_TEMP/truth-assets"
       - id: upload
         uses: actions/upload-artifact@v6
@@ -131,7 +131,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         working-directory: truth-release-source
-        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/source.py"
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/source.py"
       - uses: actions/download-artifact@v8
         with:
           artifact-ids: ${{ needs.build.outputs.artifact_id }}
@@ -151,7 +151,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         working-directory: truth-release-source
-        run: python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" oci "$RUNNER_TEMP/truth-assets"
+        run: python3 "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/publish.py" oci "$RUNNER_TEMP/truth-assets"
       - uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-name: ghcr.io/the-omega-institute/trureturing/truth-release
@@ -166,4 +166,4 @@ jobs:
           gh attestation verify "oci://$REFERENCE" --repo "$GITHUB_REPOSITORY" \
             --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
             --source-digest "$GITHUB_SHA" --source-ref refs/heads/dev --deny-self-hosted-runners
-          python3 "$GITHUB_WORKSPACE/truth-tools/tools/scripts/truth_release/publish.py" mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"
+          python3 "$GITHUB_WORKSPACE/truth-tools/.github/scripts/truth_release/publish.py" mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"

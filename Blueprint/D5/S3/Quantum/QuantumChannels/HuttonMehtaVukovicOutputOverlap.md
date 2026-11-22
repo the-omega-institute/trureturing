@@ -10,7 +10,7 @@ Matrices have complex entries. Fin n indexes the source's n computational basis 
 
 $$\forall d \in \mathbb{N},\; \forall sigma \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity}\left(sigma\right) \Leftrightarrow ((\operatorname{Matrix.PosSemidef}\left(sigma\right)) \land (\operatorname{Matrix.trace}\left(sigma\right) = 1))$$
 
-*Formalization.* `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity` (`✓ std3`).
+*Formalization.* `D5/S3/QuantumStates/DensitySpan.IsDensity` (`✓ std3`).
 
 *Citation.* Kiera Hutton; Arthur Mehta; Andrej Vukovic (2025). *Deciding whether a C–Q channel preserves a bit is QCMA-complete*. DOI: [10.48550/arXiv.2508.10664](https://doi.org/10.48550/arXiv.2508.10664). URL: <https://arxiv.org/abs/2508.10664v1>.
 
@@ -104,6 +104,6 @@ The squared absolute determinants of the k-row minors of the input matrix form a
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.minDistinctOverlap`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap.result`
-- Truth anchor: `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity`
+- Truth anchor: `D5/S3/QuantumStates/DensitySpan.IsDensity`
 - Dependency: [D5/S3/Quantum/Schatten/CompoundMatrices](../Schatten/CompoundMatrices.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../../QuantumChannels/CoPRelativeQuantumnessRefutation.md)
