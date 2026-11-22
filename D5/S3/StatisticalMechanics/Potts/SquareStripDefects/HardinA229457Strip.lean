@@ -9,7 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: finite_certificate, result
-canonicalCount: proof_shape=bind-only; consumers=a, canonical_count_scale, HardinA229604Strip.a
+canonicalCount: proof_shape=bind-only; consumers=a, canonical_count_scale, HardinA229604Strip.a, HardinA229457Strip.result, HardinA229604Strip.result
 canonical_count_scale: proof_shape=bind-only; consumers=result, HardinA229604Strip.result
 a: proof_shape=bind-only; consumers=result
 map_start: proof_shape=bind-only; consumers=finite_certificate
