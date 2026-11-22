@@ -27,7 +27,7 @@ open scoped BigOperators
 
 namespace D5.S3.Arith.DiophantineApproximation.AffineCongruenceIntegerBoxThreeCover
 
-open AffineCongruenceRectangleCover (nearest_residue closed_open_overlap axis_extremes
+open AffineCongruenceRectangleCover.Shared (nearest_residue closed_open_overlap axis_extremes
   abs_two_row_det_le)
 open FiniteIntegerBoxThreeCircleCover (finite_integer_box_inverse_three)
 
