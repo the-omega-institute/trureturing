@@ -1,11 +1,11 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary;
 
 internal sealed class SingleTripleFiveCubeDocument : IScribeDocumentDefinition
 {
     private const string Module =
-        "D5/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube";
+        "D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A common degree-three direction set forces an eleven-vertex support in the balanced five-cube at eigenvalue square root of five.",

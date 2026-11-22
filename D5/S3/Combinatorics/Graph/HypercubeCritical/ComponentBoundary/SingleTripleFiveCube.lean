@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Archive.Sensitivity]
    utility: none
@@ -15,7 +15,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Combinatorics.Graph.HypercubeCritical.SingleTripleFiveCube
+namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SingleTripleFiveCube
 
 open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Hypercube
@@ -661,11 +661,11 @@ theorem eleven_vertex_normal_form (U : Finset (Q 5)) (T : Finset (Fin 5))
       (fun i hi => ((paths i hi).2.2).symm) hp
 
 /--
-info: 'D5.S3.Combinatorics.Graph.HypercubeCritical.SingleTripleFiveCube.eleven_vertex_normal_form' depends on axioms: [propext,
+info: 'D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SingleTripleFiveCube.eleven_vertex_normal_form' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 -/
 #guard_msgs in
 #print axioms eleven_vertex_normal_form
 
-end D5.S3.Combinatorics.Graph.HypercubeCritical.SingleTripleFiveCube
+end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.SingleTripleFiveCube

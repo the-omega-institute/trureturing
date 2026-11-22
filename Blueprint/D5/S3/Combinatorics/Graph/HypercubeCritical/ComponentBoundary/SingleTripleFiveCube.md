@@ -6,9 +6,9 @@ A common degree-three direction set forces an eleven-vertex support in the balan
 
 **Theorem 1.1 (Exact eleven-vertex support).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube.eleven_vertex_normal_form`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube.eleven_vertex_normal_form`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube.eleven_vertex_normal_form` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube.eleven_vertex_normal_form` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Short signed cycles separate the degree-three vertices. Pairing the positive eig
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/SingleTripleFiveCube.eleven_vertex_normal_form`
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeComponentBoundary](BalancedCubeComponentBoundary.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth](BalancedCubeGirth.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointEightWord](TwentyPointEightWord.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/SingleTripleFiveCube.eleven_vertex_normal_form`
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeComponentBoundary](../BalancedCubeComponentBoundary.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth](../BalancedCubeGirth.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointEightWord](../TwentyPointEightWord.md)
