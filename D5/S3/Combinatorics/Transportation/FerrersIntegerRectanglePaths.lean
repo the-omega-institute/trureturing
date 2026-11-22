@@ -7,9 +7,11 @@
    digest: Nested legal neighborhoods admit finite integer rectangle paths with fixed margins. -/
 
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Data.Finset.Max
 import Mathlib.Logic.Relation
-import Mathlib.Tactic
+import Mathlib.Tactic.Push
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,7 +30,7 @@ def SameMargins (P Q : R → C → ℕ) : Prop :=
   (∀ i, (∑ j, P i j) = ∑ j, Q i j) ∧
   (∀ j, (∑ i, P i j) = ∑ i, Q i j)
 
-private def transfer {A : Type*} [DecidableEq A] (f : A → ℕ) (j k : A) : A → ℕ :=
+def transfer {A : Type*} [DecidableEq A] (f : A → ℕ) (j k : A) : A → ℕ :=
   fun c => if c = j then f c - 1 else if c = k then f c + 1 else f c
 
 /-- Transfer one count from each diagonal donor to the two opposite corners. -/
@@ -43,7 +45,7 @@ def RectangleStep (E : R → C → Prop) (P P' : R → C → ℕ) : Prop :=
 
 private def excess (P Q : R → C → ℕ) : ℕ := ∑ i, ∑ j, (P i j - Q i j)
 
-private theorem transfer_sum {A : Type*} [Fintype A] [DecidableEq A]
+theorem transfer_sum {A : Type*} [Fintype A] [DecidableEq A]
     (f : A → ℕ) (j k : A) (hjk : j ≠ k) (hj : 0 < f j) :
     (∑ a, transfer f j k a) = ∑ a, f a := by
   have h (a : A) : transfer f j k a + (if a = j then 1 else 0) =

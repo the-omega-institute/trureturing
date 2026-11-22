@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/QuantumChannels/WernerHolevo/AffineNineWernerHolevo
   - D5/S3/Quantum/QuantumChannels/WernerHolevo/TransversalNineGluing
   - D5/S3/Quantum/QuantumChannels/WernerHolevo/ChirpedBasisEndpoint
+  - D5/S3/Quantum/QuantumChannels/WernerHolevo/Chirped69BasisEndpoint
 license: citation-only
 triage: anchor
 ---
@@ -108,4 +109,34 @@ By Girard et al., Theorem 19(1), the basis gives the uniform
 The Choi rank is $73(73+1)/2=2701$, which is also a lower bound for
 every finite mixed-unitary decomposition of the channel. This settles
 the order-73 case. The conjecture for all positive dimensions remains open.
+[Girard et al., Theorem 19(1)](https://arxiv.org/pdf/2003.14405)
+
+## Chirped construction in order 69
+
+Ma's *Symmetric Unitary Orthogonal Bases in Odd Dimensions*,
+Hexagon 2611.00505v1, §2, Theorem 5 (p. 3), factors the
+Hilbert–Schmidt pairing of chirped circulants into a seed pairing and
+a quadratic character sum. Proposition 12 (p. 7) gives an orbit
+reduction in prime order. The order-69 construction uses the Gram
+factorization over the composite ring $\mathbb Z/69\mathbb Z$, with four
+seed layouts and multiplicative orbits of lengths 22, 11, 1 and 1.
+Ma's Theorem 10 (p. 5) certifies odd orders through 67.
+[Ma, Theorems 5 and 10 and Proposition 12](https://zenodo.org/records/24246318/files/paper.pdf)
+
+The 32 recorded correlations give 63 real equations in 63 real
+Cayley coordinates. The midpoint self-correlation is real by the
+orbit involution, so it contributes one equation. Integer replay and
+the analytic derivative drift bound certify a unique zero on the
+closed sup-norm ball of radius $2^{-30}$ about the dyadic center.
+At this zero, the recorded equations and finite pair coverage make
+the 35 shifted seeds orthogonal. Their 69 modulations give 2415
+Hilbert–Schmidt orthogonal symmetric unitaries spanning the complex
+symmetric matrix space.
+
+By Girard et al., Theorem 19(1), this basis yields a uniform
+2415-term decomposition of $X\mapsto(\operatorname{tr}(X)I+
+X^\mathsf{T})/70$. The Choi rank is $69(69+1)/2=2415$ and gives the
+matching lower bound for every finite mixed-unitary decomposition.
+The theorem establishes the order-69 case of the rank conjecture.
+The all-dimension conjecture remains open.
 [Girard et al., Theorem 19(1)](https://arxiv.org/pdf/2003.14405)
