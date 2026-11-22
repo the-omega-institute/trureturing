@@ -112,7 +112,7 @@ $$claim \Leftrightarrow \left(\forall x \in \mathbb{N} \to \mathbb{R}[q],\; \ope
 
 Gy asks in Section 5, printed page 16.
 
-“More generally, one may ask whether it holds that if $(x_{k})_{k\ge1}$ is a strongly $q$-log-concave sequence of polynomials in $\mathbb{R}[q]$, then, for each particular choice of $n$, $p$, and $j$, the sequences of coefficients of the polynomials $\left(E_{x}\right)^{n,p,j}(q)$ and $\left(H_{x}\right)^{n,p,j}(q)$ are themselves log-concave.”
+“More generally, one may ask whether it holds that if $(x_{k})_{k\ge1}$ is a strongly $q$-log-concave sequence of polynomials in $\mathbb{R}[q]$, then, for each particular choice of $n$, $p$, and $j$, the sequences of coefficients of the polynomials $E_{x}^{n,p,j}(q)$ and $H_{x}^{n,p,j}(q)$ are themselves log-concave.”
 
 The triple ranges over 1 ≤ j ≤ p ≤ n. The premise includes the predecessor x₀, while each symmetric polynomial starts at x₁. Conjecture 5.1 on printed page 15 asks for coefficient nonnegativity of E and H.
 
