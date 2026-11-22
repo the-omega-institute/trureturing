@@ -9,6 +9,41 @@ internal sealed class HardinA229585StripDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact bond-defect transfer and integer recurrence.", H("Exact defective strip colourings"),
         Blocks(Paragraph(Text("A monochromatic bond is one unsatisfied bond of the three-state Potts antiferromagnet. Horizontal and antidiagonal bonds form a sheared square-lattice strip. Exactly one such bond is allowed. All equalities here concern finite combinatorial counts.")),
+            Describe.Lean(DescribeId.Create("cellOrder"),
+                DeclarationHandle.Create(Prefix + "cellOrder"), H("The row-major order"),
+                StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(TypeOf(Call("HardinA229585Strip.cellOrder", V("n")), Call("LinearOrder", Product(Call("Fin", V("n")), Call("Fin", Num("7"))))), Call("LinearOrder.lift'", Call("finProdFinEquiv"), Call("Equiv.injective", Call("finProdFinEquiv"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The order is pulled back from the finite ordinal using the index seven times the row plus the column."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("Normal"),
+                DeclarationHandle.Create(Prefix + "Normal"), H("First occurrences of colours"),
+                StatementSource.FromAuthor(Disp(All("n", V("Nat"), All("f", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("7"))), Call("Fin", Num("3"))), Iff(Call("HardinA229585Strip.Normal", V("f")), Call("Canonical", Call("LinearOrder.toLT", Call("HardinA229585Strip.cellOrder", V("n"))), Num("3"), V("f"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The comparison of cell positions uses the row-major order."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("decidableNormal"),
+                DeclarationHandle.Create(Prefix + "decidableNormal"), H("Decidability of the colour order"),
+                StatementSource.FromAuthor(Disp(All("n", V("Nat"), All("f", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("7"))), Call("Fin", Num("3"))), TypeOf(Call("HardinA229585Strip.decidableNormal", V("f")), Call("Decidable", Call("HardinA229585Strip.Normal", V("f")))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The decision procedure checks every cell and smaller colour against the finite set of earlier cells."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("edge"),
+                DeclarationHandle.Create(Prefix + "edge"), H("Antidiagonal defect count"),
+                StatementSource.FromAuthor(Disp(All("r", Call("HardinA229585StripData.Row"), All("t", Call("HardinA229585StripData.Row"), Eq(Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.antidiagonal"), V("r"), V("t")), Call("HardinA229585StripData.cross", Call("HardinA229585StripData.boundary", V("r")), V("t"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Only the six-cell tail of the preceding row is used by antidiagonal bonds."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("class-relabel"),
+                DeclarationHandle.Create(Prefix + "class_relabel"), H("Relabelling preserves a class"),
+                StatementSource.FromAuthor(Disp(All("e", Call("Equiv.Perm", Call("Fin", Num("3"))), All("p", Call("HardinA229585StripData.Boundary"), All("d", V("Nat"), Eq(Call("HardinA229585StripData.cl", Call("Function.comp", V("e"), V("p")), V("d")), Call("HardinA229585StripData.cl", V("p"), V("d")))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("A bijection of the palette preserves all colour equalities."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("horizontal-relabel"),
+                DeclarationHandle.Create(Prefix + "horizontal_relabel"), H("Relabelling preserves horizontal defects"),
+                StatementSource.FromAuthor(Disp(All("e", Call("Equiv.Perm", Call("Fin", Num("3"))), All("r", Call("HardinA229585StripData.Row"), Eq(Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.horizontal"), Call("Function.comp", V("e"), V("r")), Call("Function.comp", V("e"), V("r"))), Call("DefectTransfer.bondDefects", Call("HardinA229585StripData.horizontal"), V("r"), V("r"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Relabelling both endpoints preserves the monochromatic status of every horizontal bond."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("cross-relabel"),
+                DeclarationHandle.Create(Prefix + "cross_relabel"), H("Relabelling preserves antidiagonal defects"),
+                StatementSource.FromAuthor(Disp(All("e", Call("Equiv.Perm", Call("Fin", Num("3"))), All("p", Call("HardinA229585StripData.Boundary"), All("r", Call("HardinA229585StripData.Row"), Eq(Call("HardinA229585StripData.cross", Call("Function.comp", V("e"), V("p")), Call("Function.comp", V("e"), V("r"))), Call("HardinA229585StripData.cross", V("p"), V("r")))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Relabelling both endpoints preserves the monochromatic status of every antidiagonal bond."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a"),
                 DeclarationHandle.Create(Prefix + "a"), H("The literal normalized array count"),
                 StatementSource.FromAuthor(Disp(All("n", V("Nat"), Eq(Call("HardinA229585Strip.a", V("n")), Call("Finset.card", Call("Finset.filter", Fn("A", Arrow(Product(Call("Fin", V("n")), Call("Fin", Num("7"))), Call("Fin", Num("3"))), And(Eq(Call("DefectTransfer.defects", Call("HardinA229585StripData.horizontal"), Call("HardinA229585StripData.antidiagonal"), Call("List.ofFn", Fn("i", Call("Fin", V("n")), Fn("j", Call("Fin", Num("7")), App(V("A"), Pair(V("i"), V("j"))))))), Num("1")), All("p", Product(Call("Fin", V("n")), Call("Fin", Num("7"))), All("c", Call("Fin", Num("3")), Imp(Lt(V("c"), App(V("A"), V("p"))), Ex("q", Product(Call("Fin", V("n")), Call("Fin", Num("7"))), And(Lt(Add(Mul(Call("Fin.val", Call("Prod.fst", V("q"))), Num("7")), Call("Fin.val", Call("Prod.snd", V("q")))), Add(Mul(Call("Fin.val", Call("Prod.fst", V("p"))), Num("7")), Call("Fin.val", Call("Prod.snd", V("p"))))), Eq(App(V("A"), V("q")), V("c"))))))))), Call("Finset.univ"))))))),
@@ -34,6 +69,8 @@ internal sealed class HardinA229585StripDocument : IScribeDocumentDefinition
     private static Formula App(Formula g, params Formula[] a) => new Formula.Apply(g, [.. a]);
     private static Formula Call(string s, params Formula[] a) => a.Length == 0 ? Q(s) : App(Q(s), a);
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula TypeOf(Formula a, Formula b) => Seq(a, Sp, Colon, Sp, b);
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, Parenthesized(b));
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
