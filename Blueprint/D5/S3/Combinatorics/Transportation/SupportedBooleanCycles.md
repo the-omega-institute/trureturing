@@ -40,4 +40,5 @@ Every selected cell becomes equal to B and every correct cell is fixed, so a cel
 
 - Truth anchor: `D5/S3/Combinatorics/Transportation/SupportedBooleanCycles.bounded_conformal_chain`
 - Truth anchor: `D5/S3/Combinatorics/Transportation/SupportedBooleanCycles.correcting_step`
+- Dependency: [D5/S3/Combinatorics/Transportation/FerrersIntegerRectanglePaths](FerrersIntegerRectanglePaths.md)
 - Dependency: [D5/S3/Combinatorics/Transportation/SupportedCycleSupplier](SupportedCycleSupplier.md)
