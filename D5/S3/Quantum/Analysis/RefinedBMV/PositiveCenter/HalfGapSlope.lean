@@ -6,8 +6,7 @@
    utility: none
    digest: Uniform reflected marginal slope bound from the half-gap endpoint. -/
 
-import D5.S3.Quantum.Analysis.RefinedBMV.PositiveCenter.MixedNormalization
-import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailMarginal
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterShortGapNormalization
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterWeightedTaylorReplay
 
 /-! # The reflected marginal slope above a half gap -/
@@ -243,7 +242,22 @@ theorem reflectedHalfLogSlope_lt_two_add_spacing {p : ℕ} (hp : 11 ≤ p) {v : 
     rw [reflectedHalfLogSlope_eq_marginal hp₀ hv₀]
     linarith only [hs, hi, hh]
 
+/-- On the residual region, evaluating the four marginal moments gives a strict upper
+bound for the normalized mixed derivative even at the half-gap cutoff. -/
+theorem logKernel_mixed_lt_fourPoint_of_half {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v) (hv : 1 / 2 ≤ v) :
+    Real.sqrt (compositionMoment p 0 (-u) * compositionMoment p 0 (-v)) *
+      deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v <
+      compactMixedT p u v (compositionMomentFourPoint p u v) - compactMixedQ p u v := by
+  have hp₀ : 0 < p := by omega
+  rw [logKernel_mixed_eq_compactMixed hp₀ hu huv]
+  exact sub_lt_sub_right
+    (compactMixedT_strictAnti_of_slope hp₀ hu (reflectedHalfLogSlope_lt_two_add_spacing hp hv)
+      (show compositionMomentFourPoint p u v < 1 + compositionMoment p u v from
+        compositionMoment_fourPoint_lower hp₀ hu v)) _
+
 #print axioms reflectedHalfLogSlope_lt_two_add_spacing
+#print axioms logKernel_mixed_lt_fourPoint_of_half
 
 end
 

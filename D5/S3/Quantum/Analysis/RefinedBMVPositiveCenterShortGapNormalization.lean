@@ -967,24 +967,32 @@ private theorem reflectedHalfLogSlope_nonneg {p : ℕ} (hp : 0 < p) {u : ℝ} (h
     exact (div_pos hfu hu).le.trans hsec
   exact div_nonneg (div_nonneg hder hfu.le) (by norm_num)
 
+/-- The joint coefficient is strictly negative when the reflected slope is below `2 + 3/p`. -/
+theorem compactMixedT_strictAnti_of_slope {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (hb : reflectedHalfLogSlope (compositionMoment p 0) v < 2 + 3 / (p : ℝ)) :
+    StrictAnti (compactMixedT p u v) := by
+  have hk : 0 < gapFactor p u := div_pos (gapRate_pos hp)
+    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith [mul_pos (gapRate_pos hp) hu])))
+  have ha := reflectedHalfLogSlope_nonneg hp hu
+  have hγ : 0 < 1 + gapFactor p u + reflectedHalfLogSlope (compositionMoment p 0) u := by
+    linarith
+  have hc : 0 < 2 + gapRate p - reflectedHalfLogSlope (compositionMoment p 0) v :=
+    sub_pos.mpr hb
+  intro Z₁ Z₂ hZ
+  dsimp only [compactMixedT]
+  linarith only [mul_lt_mul_of_neg_left hZ (mul_neg_of_neg_of_pos (neg_neg_of_pos hγ) hc)]
+
 /-- The affine dependence on the joint moment is strictly decreasing for `1 ≤ v`. -/
 theorem compactMixedT_strictAnti {p : ℕ} (hp : 0 < p) {u v : ℝ}
     (hu : 0 < u) (hv : 1 ≤ v) : StrictAnti (compactMixedT p u v) := by
   have hvpos : 0 < v := zero_lt_one.trans_le hv
-  have hk : 0 < gapFactor p u := div_pos (gapRate_pos hp)
-    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith [mul_pos (gapRate_pos hp) hu])))
-  have ha := reflectedHalfLogSlope_nonneg hp hu
   have hb' : 2 / v ≤ 2 := (div_le_iff₀ hvpos).mpr (by linarith)
   have hb : reflectedHalfLogSlope (compositionMoment p 0) v ≤ 3 / 2 := by
     unfold reflectedHalfLogSlope
     linarith [upperTail_marginal_logDeriv hp hvpos]
-  have hγ : 0 < 1 + gapFactor p u + reflectedHalfLogSlope (compositionMoment p 0) u := by
-    linarith
-  have hc : 0 < 2 + gapRate p - reflectedHalfLogSlope (compositionMoment p 0) v := by
-    linarith [gapRate_pos hp]
-  intro Z₁ Z₂ hZ
-  dsimp only [compactMixedT]
-  linarith only [mul_lt_mul_of_neg_left hZ (mul_neg_of_neg_of_pos (neg_neg_of_pos hγ) hc)]
+  exact compactMixedT_strictAnti_of_slope hp hu (by
+    have hh : (0 : ℝ) < 3 / (p : ℝ) := gapRate_pos hp
+    linarith)
 
 /-- Above unit upper gap, inserting the four-point lower bound gives a strict
 upper bound on the actual normalized mixed derivative. -/
