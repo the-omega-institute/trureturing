@@ -76,10 +76,19 @@ private theorem exponential_midpoint_returns (hRH : RiemannHypothesis) {r : ℝ}
   refine ⟨r * t - L / 2, by linarith only [ht.trans_eq (mul_comm _ _)], ?_⟩
   simpa only [Function.comp_apply, horbit] using hvalue
 
-/-- The original normalized signed prime window, corrected at its midpoint, has a finite
-limsup with the two logarithmic terms of the exponential root average. -/
-theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
-    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) :
+private theorem signed_window_midpoint_transfer (hRH : RiemannHypothesis)
+    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r)
+    (remainder : ℝ → ℝ)
+    (hmidpoint :
+      let s : ℝ := 1 / 2 - (2 * (r : ℝ))⁻¹
+      let G := fun L : ℝ =>
+        (L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2)
+      let M := fun u L : ℝ =>
+        (∫ t in (0 : ℝ)..L, Real.exp (-s * t) * rootSignal r (u + t)) /
+          (∫ t in (0 : ℝ)..L, Real.exp (-s * t)) - rootSignal r (u + L / 2)
+      ∃ C > 0, ∀ L : ℝ, 0 < L → L ≤ 1 / 4 →
+        (∀ u : ℝ, |M u L| ≤ G L + C * remainder L) ∧
+        G L - C * remainder L ≤ M (-L / 2) L) :
     let s := orderRate m
     let cm := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
     let V := fun L u : ℝ =>
@@ -89,7 +98,7 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
       (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) (V L) ∧
       |limsup (V L) atTop -
         |(μ r : ℝ)| * ((L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2))| ≤
-        |(μ r : ℝ)| * C * L ^ 2 * (1 + Real.log (1 / L)) ^ 2 := by
+        |(μ r : ℝ)| * (C * remainder L) := by
   dsimp only
   let s := orderRate m
   let δ := ((m : ℝ) + 1)⁻¹ - ((m : ℝ) + 2)⁻¹
@@ -105,10 +114,10 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
   have ha₀ : 0 < a₀ := by linarith
-  obtain ⟨D, hD, hmidpoint⟩ := root_signal_exponential_midpoint hRH hr
+  obtain ⟨D, hD, hmidpoint⟩ := hmidpoint
   let G := fun L : ℝ => (L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2)
   refine ⟨D, hD, fun L hL hL' => ?_⟩
-  let E := D * L ^ 2 * (1 + Real.log (1 / L)) ^ 2
+  let E := D * remainder L
   let P := fun u : ℝ => rootPrimitive r (Real.exp (u + L)) - rootPrimitive r (Real.exp u)
   let gap := fun u : ℝ => powerGap s (Real.exp u) (Real.exp (u + L))
   let T := fun u : ℝ =>
@@ -204,13 +213,32 @@ theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
     change b ≤ |T u|
     linarith only [hlowerTriangle u, he, hv]
   refine ⟨hbounded, abs_le.mpr ⟨?_, ?_⟩⟩
-  · change -(|a| * D * L ^ 2 * (1 + Real.log (1 / L)) ^ 2) ≤
+  · change -(|a| * (D * remainder L)) ≤
       limsup V atTop - |a| * G L
     dsimp [E] at hQlower
     linarith only [hQlower]
-  · change limsup V atTop - |a| * G L ≤ |a| * D * L ^ 2 * (1 + Real.log (1 / L)) ^ 2
+  · change limsup V atTop - |a| * G L ≤ |a| * (D * remainder L)
     dsimp [E] at hQupper
     linarith only [hQupper]
+
+/-- The original normalized signed prime window, corrected at its midpoint, has a finite
+limsup with the two logarithmic terms of the exponential root average. -/
+theorem signed_window_even_cutoff_midpoint_limsup (hRH : RiemannHypothesis)
+    (m r : ℕ) (hm : 2 ≤ m) (heven : m + 1 = 2 * r) :
+    let s := orderRate m
+    let cm := (μ (m + 1) : ℝ) * (((m : ℝ) + 1) / ((m : ℝ) * s))
+    let V := fun L u : ℝ =>
+      |signedWindowResidual m (Real.exp u) (Real.exp (u + L)) /
+        powerGap s (Real.exp u) (Real.exp (u + L)) + cm + (μ r : ℝ) * rootSignal r (u + L / 2)|
+    ∃ C > 0, ∀ L : ℝ, 0 < L → L ≤ 1 / 4 →
+      (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) (V L) ∧
+      |limsup (V L) atTop -
+        |(μ r : ℝ)| * ((L / (8 * s)) * (Real.log (1 / L) + Real.log (2 * r) - 2 * c + 1 / 2))| ≤
+        |(μ r : ℝ)| * C * L ^ 2 * (1 + Real.log (1 / L)) ^ 2 := by
+  have hr : (1 : ℝ) < r := by exact_mod_cast (show 1 < r by omega)
+  simpa only [mul_assoc] using signed_window_midpoint_transfer hRH m r hm heven
+    (fun L => L ^ 2 * (1 + Real.log (1 / L)) ^ 2)
+    (by simpa only [mul_assoc] using root_signal_exponential_midpoint hRH hr)
 
 #print axioms signed_window_even_cutoff_midpoint_limsup
 
