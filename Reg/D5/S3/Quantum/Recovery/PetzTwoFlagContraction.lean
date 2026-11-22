@@ -156,7 +156,7 @@ def matrixAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "arg", "fn", "fn"]
+        "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -164,6 +164,5 @@ def matrixAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   continuation := .unknown
   familyRecord := none
   options := #[]
-
 
 end Reg.D5.S3.Quantum.Recovery.PetzTwoFlagContraction
