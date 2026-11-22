@@ -7,7 +7,7 @@
    digest: An order exponent arbitrarily close to eight ninths for the signed RH prime window. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.PowerWindowDensity
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.SignedOmittedSpectrum
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.OmittedSpectrumCutoff
 import D5.S3.Weil.ZetaPntBounds.MobiusEnergyPointwise
 
 /-! The phase variation under exponential damping improves the signed prime-window bound. -/
