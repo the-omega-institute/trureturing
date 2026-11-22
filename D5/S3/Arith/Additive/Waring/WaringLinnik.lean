@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Additive/Waring/WaringLinnik
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Additive/Waring/WaringLinnik
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -16,12 +16,12 @@ Copyright (c) 2026 The Waring formalization authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The Waring formalization authors
 -/
-import D5.S3.Arith.Additive.Waring.WaringSchnirelmann
+import D5.S3.Arith.Additive.Waring.WaringDensity
 
 /-!
 # 从正密度到 Waring：Linnik 证明的最后一次接线
 
-`WaringSchnirelmann.lean` 中的 `Waring.schnirelmann` 证明：含零的正 Schnirelmann 密度集合是有限阶加法基。
+`WaringDensity.lean` 中的 `Waring.schnirelmann` 证明：含零的正 Schnirelmann 密度集合是有限阶加法基。
 这里把它与 `IsSumOfKthPowers` 组合起来，得到
 
 ```lean
@@ -75,10 +75,12 @@ theorem IsSumOfKthPowers.sum_fin {k : ℕ} (h : ℕ) :
   | succ h ih =>
     intro f t H
     rw [Fin.sum_univ_castSucc, Fin.sum_univ_castSucc]
-    exact IsSumOfKthPowers.add
-      (ih (fun i => f (Fin.castSucc i)) (fun i => t (Fin.castSucc i))
-        (fun i => H (Fin.castSucc i)))
-      (H (Fin.last h))
+    obtain ⟨g, hg⟩ := ih (fun i => f (Fin.castSucc i)) (fun i => t (Fin.castSucc i))
+      (fun i => H (Fin.castSucc i))
+    obtain ⟨a, ha⟩ := H (Fin.last h)
+    refine ⟨Fin.append g a, ?_⟩
+    rw [Fin.sum_univ_add, hg, ha]
+    simp
 
 /-- **密度 ⟹ Waring。** 若「至多 `s` 个 `k` 次幂之和」全体有正 Shnirelman 密度，
 则存在 `g` 使每个自然数都是至多 `g` 个 `k` 次幂之和。 -/

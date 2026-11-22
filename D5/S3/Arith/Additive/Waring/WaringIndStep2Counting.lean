@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Additive/Waring/WaringIndStep2Counting
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Additive/Waring/WaringIndStep2Counting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -225,10 +225,6 @@ noncomputable def sgnMap :
 noncomputable def SymBox : Finset (Fin 4 → ℤ) :=
   Fintype.piFinset (fun _ : Fin 4 => ({1, -1} : Finset ℤ))
 
-theorem SymBox_card : SymBox.card = 16 := by
-  rw [SymBox, Fintype.card_piFinset]
-  simp
-
 /-- **(9b) 符号收缩**：`|mᵢ| ≤ K` 的四元组计数不超过 `16·hmCount7 M K`。
 
 映射 `sgnMap : (h, m) ↦ ((sgn(mᵢ)·hᵢ, |mᵢ|), sgn(mᵢ))` 把 `h` 的符号翻转与 `m` 一起，
@@ -314,7 +310,8 @@ theorem card_sym_shrink (M K : ℕ) :
           _ = sgn (p.2 i) * (sgn (p.2 i) * q.1 i) := by rw [hfin]
           _ = q.1 i := by rw [← mul_assoc, sgn_mul_self, one_mul]
       exact Prod.ext hh hm
-  rw [Finset.card_product, hBcard, SymBox_card] at hmain
+  rw [Finset.card_product, hBcard, SymBox, Fintype.card_piFinset] at hmain
+  simp at hmain
   linarith
 
 /-- `polyEval a 2` 与 `qf (a 2) (a 1)` 差一个常数项。 -/

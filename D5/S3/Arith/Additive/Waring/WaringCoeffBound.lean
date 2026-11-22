@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Additive/Waring/WaringCoeffBound
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Additive/Waring/WaringCoeffBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
