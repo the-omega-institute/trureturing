@@ -17,9 +17,9 @@ internal sealed class ParitySeedAdjacentRanksDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("The adjacent-rank assertion at budget 36"),
                 StatementSource.FromAuthor(Disp(new Formula.Logic(
-                    Call("AxisFactorWithin", D(3), D(0), D(36)),
+                    Call("AxisFactorWithin", D(3), D(0), D(3, 6)),
                     FormulaLogicOperator.Implies,
-                    Call("AdjacentAxisFactorWithin", D(3), D(0), D(36))))),
+                    Call("AdjacentAxisFactorWithin", D(3), D(0), D(3, 6))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Fix coordinate zero in dimension eight and multiplier three. The assertion "
