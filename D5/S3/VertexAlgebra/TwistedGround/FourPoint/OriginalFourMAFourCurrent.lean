@@ -7,7 +7,7 @@
    digest: The A and B chart coefficients of four lowest-mode currents. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWick
-import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSectorContinuation
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitChartGerms
 
 /-! The fixed-charge comparison at the four actual A and B chart punctures. -/
 
@@ -553,12 +553,166 @@ theorem chartB_four_current_fixed_charge
     (chartB_radius hx hx₁) (chartB_nome upperA hx hx₁) _
     (chartB_normalization upperA hx hx₁)
 
-example : (-Complex.I * (1 - (↑(2 / 3 : ℝ) : ℂ)) ^ 3 / (↑(2 / 3 : ℝ) : ℂ)) =
-    -Complex.I / 18 := by
-  push_cast
-  ring
-
 #print axioms chartA_four_current_fixed_charge
 #print axioms chartB_four_current_fixed_charge
+
+open LatticeDiscriminantTheta (gramReal)
+open LatticeTwistedGroundRealization.SignQuotient
+  (ModTwoCharge reduceCharge mod_two_cocycle_symmetrization)
+open FourPoint.FourPointChannelCoefficients (loweringCutoff loweredLaurent loweringWeight laurent)
+open OriginalFourMChargeCoset (slitDiagonal slitChannelA slitChannelB slitLowered
+  quadraticSign fourierSign oscillatorLower)
+open OriginalFourMPhysicalProduct (physicalProduct)
+open OriginalFourMSpatialWick (physical_chart_jet_hasSum physical_chart_coefficient_overlap)
+open OriginalFourMChartProduct (chart_charge_data)
+open OriginalFourMSectorContinuation (slitChargeSector)
+open private slitLaurent from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitChartGerms
+
+private abbrev currentOscillator (D : LatticeData) (colour : Fin 4 → Fin D.rank) (i : Fin 4) :
+    Oscillator D := MvPolynomial.monomial (currentExponent D colour i) 1
+
+private abbrev fourCurrentJet (D : LatticeData) (hu : IsUnit D.G.det)
+    (colour : Fin 4 → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ) (a : ModTwoCharge D) :=
+  spatialCoefficient (Sum.elim (fun _ : Fin 4 => (0 : ℕ)) (fun _ : Fin 4 => 1))
+    (marks.map Sum.inr ++ marks.map Sum.inl)
+    (fun z => physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0
+
+private theorem four_current_sector (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (colour cols : Fin 4 → Fin D.rank)
+    (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (a : ModTwoCharge D) (k : ℂ)
+    (hfixed : ∀ q : Charge D, 0 ≤ chargeEnergy D q →
+      (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+        spatialCoefficient (Sum.elim (fun _ : Fin 4 => (0 : ℕ)) (fun _ : Fin 4 => 1))
+          (marks.map Sum.inr ++ marks.map Sum.inl)
+          (physicalChargeSummand D slot colour upperA c x q) 0 =
+      k * projectOccupations D 2 2 0 (-1) (currentOscillator D cols 0)
+        (currentOscillator D cols 1) (currentOscillator D cols 2) (currentOscillator D cols 3)
+        (fun b g d e => slitChargeTerm D b g d e q (parameter c (x : ℂ)))) :
+    fourCurrentJet D hu colour upperA c x a =
+      k * slitDiagonal D 2 2 2 (currentOscillator D cols 0) (currentOscillator D cols 1)
+        (currentOscillator D cols 2) (currentOscillator D cols 3) a (parameter c (x : ℂ)) := by
+  classical
+  obtain ⟨hp, hτ⟩ := chart_charge_data upperA c hx hx₁
+  have hs := physical_chart_jet_hasSum D hu hD slot colour upperA c hx hx₁ hp hτ a
+    (Sum.elim (fun _ : Fin 4 => (0 : ℕ)) (fun _ : Fin 4 => 1))
+    (marks.map Sum.inr ++ marks.map Sum.inl)
+  rw [fourCurrentJet, ← hs.tsum_eq]
+  simp_rw [fun q => hfixed q (chargeEnergy_nonneg D hD q), project_four_currents D cols]
+  rw [tsum_mul_left]
+  congr 1
+  change _ = projectOccupations D 2 2 0 (-1) _ _ _ _
+    (fun b g d e => slitChargeSector D a b g d e (parameter c (x : ℂ)))
+  rw [project_four_currents D cols, slitChargeSector]
+  let f (q : Charge D) := slitChargeTerm D (currentExponent D cols 0) (currentExponent D cols 1)
+    (currentExponent D cols 2) (currentExponent D cols 3) q (parameter c (x : ℂ))
+  let fibre : Set (Charge D) := {q | reduceCharge D q = a}
+  calc
+    _ = ∑' q, fibre.indicator f q := tsum_subtype fibre f
+    _ = _ := by
+      apply tsum_congr
+      intro q
+      by_cases h : reduceCharge D q = a <;> simp [fibre, Set.indicator, f, h]
+
+/-- Real A–B crossing of the continued native channels for four weight-two
+currents and total mode two, with the charge signs of the slit channels. -/
+theorem four_current_slit_crossing (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (colour : Fin 4 → Fin D.rank)
+    (m n r : ℤ) (hs : m + n + r = 2) (a : ModTwoCharge D)
+    {x : ℝ} (hx : 1 / 2 < x) (hx₁ : x < 1) :
+    let osc := fun i : Fin 4 => MvPolynomial.monomial (Finsupp.single (colour i, 0) 1) (1 : ℂ)
+    slitChannelA D 2 2 (m + n + r) (osc 0) (osc 1) (osc 2) (osc 3) a
+        (parameter .A (x : ℂ)) =
+      (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (4 : ℕ) *
+        slitChannelB D 2 2 2 m n r (osc 0) (osc 1) (osc 2) (osc 3) a
+          (parameter .B (x : ℂ)) := by
+  classical
+  dsimp only
+  let osc := currentOscillator D colour
+  let tA := parameter .A (x : ℂ)
+  let tB := parameter .B (x : ℂ)
+  let diagA (b : ModTwoCharge D) := slitDiagonal D 2 2 2 (osc 0) (osc 1) (osc 2) (osc 3) b tA
+  let B := slitDiagonal D 2 2 2 (osc 1) (osc 2) (osc 0) (osc 3) a tB
+  let A := ∑ b, quadraticSign D b * fourierSign D b a * diagA b
+  let kA := -Complex.I / ((x : ℂ) ^ 3 * (1 - (x : ℂ)))
+  let kB := -Complex.I * (1 - (x : ℂ)) ^ 3 / (x : ℂ)
+  have hx₀ : 0 < x := by linarith
+  have hxC : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hx₀.ne'
+  have h₁ : 1 - (x : ℂ) ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast hx₁.ne')
+  let w := Complex.sqrt tA
+  have hwA : w ^ 2 = tA := Complex.cpow_nat_inv_pow tA (by decide : (2 : ℕ) ≠ 0)
+  have hw : ‖w‖ < 1 := by
+    have hnorm : ‖w‖ ^ 2 < 1 := by
+      rw [← norm_pow, hwA]
+      exact chartA_radius hx hx₁
+    nlinarith [norm_nonneg w]
+  have hperiod : (periodRoot .A x ^ (12 : ℕ))⁻¹ = (x : ℂ) ^ 6 := by
+    have hroot : periodRoot .A x ^ 2 = (x : ℂ)⁻¹ := by
+      have h := (chosen_roots hx₀ hx₁ .A .P).2
+      change periodRoot .A x ^ 2 = 1 - (1 - (x : ℂ)⁻¹) at h
+      simpa only [sub_sub_cancel] using h
+    rw [show (12 : ℕ) = 2 * 6 by decide, pow_mul, hroot, inv_pow, inv_inv]
+  have hAjet (b : ModTwoCharge D) :
+      fourCurrentJet D hu colour true .A x b = kA * diagA b :=
+    four_current_sector D hu hD colour colour true .A hx₀ hx₁ b kA
+      (fun q hq => chartA_four_current_fixed_charge D colour q hq true hx hx₁)
+  have hBjet : fourCurrentJet D hu colour true .B x a = kB * B :=
+    four_current_sector D hu hD colour (nativeColour D colour .B) true .B hx₀ hx₁ a kB
+      (fun q hq => chartB_four_current_fixed_charge D colour q hq true hx₀ hx₁)
+  have hover := (physical_chart_coefficient_overlap D hu hD h24 slot colour true hx₀ hx₁ hwA hw
+    (Sum.elim (fun _ : Fin 4 => (0 : ℕ)) (fun _ : Fin 4 => 1))
+    (marks.map Sum.inr ++ marks.map Sum.inl) a).2
+  change fourCurrentJet D hu colour true .B x a = (periodRoot .A x ^ (12 : ℕ))⁻¹ *
+    (((2 : ℂ) ^ (12 : ℕ))⁻¹ *
+      ∑ b, fourierSign D a b * quadraticSign D b * fourCurrentJet D hu colour true .A x b) at hover
+  have hfourier (b : ModTwoCharge D) : fourierSign D a b = fourierSign D b a := by
+    unfold fourierSign
+    rw [← mod_two_cocycle_symmetrization D a b, ← mod_two_cocycle_symmetrization D b a, add_comm]
+  have hsum : (∑ b, fourierSign D a b * quadraticSign D b * (kA * diagA b)) = kA * A := by
+    rw [show A = _ from rfl, Finset.mul_sum]
+    exact Finset.sum_congr rfl fun b _ => by rw [hfourier]; ring
+  rw [hBjet, hperiod] at hover
+  simp only [hAjet, hsum] at hover
+  have hLaurent : (-tA) ^ (-(4 : ℤ)) = ((1 - (x : ℂ)) ^ 4)⁻¹ * (x : ℂ) ^ 4 := by
+    have ht : -tA = (1 - (x : ℂ)) / (x : ℂ) := by
+      change -(1 - (x : ℂ)⁻¹) = _
+      field_simp [hxC]
+      ring
+    rw [ht, zpow_neg]
+    change (((1 - (x : ℂ)) / (x : ℂ)) ^ (4 : ℕ))⁻¹ = _
+    rw [div_pow, div_eq_mul_inv, mul_inv_rev, inv_inv, mul_comm]
+  have hA : slitChannelA D 2 2 (m + n + r) (osc 0) (osc 1) (osc 2) (osc 3) a tA =
+      (-tA) ^ (-(4 : ℤ)) * A := by
+    rw [hs]
+    norm_num [slitChannelA, slitLaurent, A, diagA, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro b _
+    ring
+  have hN : loweringCutoff 2 2 2 m n r = 1 := by
+    unfold loweringCutoff
+    omega
+  have hB : slitChannelB D 2 2 2 m n r (osc 0) (osc 1) (osc 2) (osc 3) a tB =
+      ((x : ℂ) ^ 4)⁻¹ * B := by
+    rw [slitChannelB, hs, hN]
+    norm_num [slitLowered, loweredLaurent, loweringWeight, laurent, B, tB, parameter,
+      Module.End.one_apply, zpow_neg, neg_pow]
+  change slitChannelA D 2 2 (m + n + r) (osc 0) (osc 1) (osc 2) (osc 3) a tA =
+    (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (4 : ℕ) *
+      slitChannelB D 2 2 2 m n r (osc 0) (osc 1) (osc 2) (osc 3) a tB
+  rw [hA, hB, hLaurent]
+  have hkB : kB ≠ 0 := div_ne_zero (mul_ne_zero (neg_ne_zero.mpr Complex.I_ne_zero)
+    (pow_ne_zero _ h₁)) hxC
+  apply mul_left_cancel₀ hkB
+  calc
+    _ = (2 : ℂ) ^ (12 : ℕ) * ((x : ℂ) ^ (6 : ℕ) *
+        (((2 : ℂ) ^ (12 : ℕ))⁻¹ * (kA * A))) := by
+      dsimp only [kA, kB]
+      field_simp [hxC, h₁]
+    _ = _ := by
+      rw [← hover]
+      field_simp [hxC]
+
+#print axioms four_current_slit_crossing
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMAFourCurrent
