@@ -82,5 +82,79 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
 
 #print axioms registration
 
+namespace SupportVertices
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Configuration) (fun _ => Set Vertex)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ c => c.vertices) (fun e => nomatch e)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c : Configuration, (supportEquiv.symm c).val = R.readout () () c
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he : singletonConfig.vertices = (∅ : Set Vertex) :=
+    (supportEquiv_symm_verts _).symm.trans (h _)
+  have hn : singletonConfig.vertices.Nonempty :=
+    Set.nonempty_coe_sort.mp singletonConfig.supportConnected.nonempty
+  exact hn.ne_empty he
+
+def family : Registration arena (type_of% @supportEquiv_symm_verts) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨supportEquiv_symm_verts, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    cases i
+    refine ⟨(), singletonConfig, twoVertexConfig, ?_⟩
+    intro e
+    have h : firstPath 1 ∈ twoVertexConfig.vertices := by
+      change (1 : Fin 500) ∈ Set.Icc 0 1
+      decide
+    have h' : firstPath 1 ∈ singletonConfig.vertices :=
+      (show singletonConfig.vertices = twoVertexConfig.vertices from e).symm ▸ h
+    change (1 : Fin 500) ∈ Set.Icc 0 0 at h'
+    exact (by decide : (1 : Fin 500) ∉ Set.Icc 0 0) h'
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    (@supportEquiv_symm_verts) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.supportEquiv_symm_verts.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement.SupportVertices.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ c => c.vertices) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SupportVertices
 end
 end Reg.D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
