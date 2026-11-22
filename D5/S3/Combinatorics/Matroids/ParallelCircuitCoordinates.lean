@@ -27,7 +27,8 @@ open D5.S3.HomologicalAlgebra.OrderedFaceSign (insertionSign)
 open OrderedCycleFactorization (shuffleSign)
 open CircuitCycleDecomposition (restrictionSign)
 
-private lemma parallel_pair (a b : V) (ha : M.IsNonloop (p a)) (hab : a ≠ b)
+/-- Distinct elements over a common nonloop form a circuit. -/
+theorem parallel_pair (a b : V) (ha : M.IsNonloop (p a)) (hab : a ≠ b)
     (hp : p a = p b) : (M.comap p).IsCircuit ({a, b} : Set V) := by
   rw [Matroid.isCircuit_iff_dep_forall_sdiff_singleton_indep]
   have hp' : p '' ({a, b} : Set V) = {p a} := by simp [hp]
@@ -341,5 +342,106 @@ theorem isBase_comap_iff (hsurj : Function.Surjective p) {T : Set V} :
   exact ⟨fun h => ⟨h.1, h.2.1⟩, fun h => ⟨h.1, h.2, by
     rw [← image_subset_iff]
     exact h.1.subset_ground⟩⟩
+
+/-- The signed readout for a parallel pair vanishes exactly when replacing one
+representative by the other preserves the coefficient. -/
+theorem signed_readout_of_parallel_pair [LinearOrder V] [LinearOrder I]
+    {A : Type*} [AddCommGroup A]
+    (horder : ∀ ⦃a b : V⦄, p a < p b → a < b)
+    {a b : V} (hab : a ≠ b) (heq : p a = p b)
+    (T : Finset V) (hT : InjOn p (T : Set V)) (hout : p a ∉ T.image p)
+    (chain : Finset V → A) :
+    (∑ x ∈ ({a, b} : Finset V), restrictionSign {a, b} x T •
+      chain (T ∪ ({a, b} : Finset V).erase x)) = 0 ↔
+        chain (insert a T) = chain (insert b T) := by
+  wlog hord : a < b generalizing a b
+  · rw [Finset.pair_comm a b]
+    exact (this hab.symm heq.symm (heq ▸ hout)
+      (lt_of_le_of_ne (le_of_not_gt hord) hab.symm)).trans eq_comm
+  have ha : ({a, b} : Finset V).erase a = {b} := by
+    ext x
+    simp only [Finset.mem_erase, Finset.mem_insert, Finset.mem_singleton]
+    grind
+  have hb : ({a, b} : Finset V).erase b = {a} := by
+    ext x
+    simp only [Finset.mem_erase, Finset.mem_insert, Finset.mem_singleton]
+    grind
+  have hshuffle (x : V) : shuffleSign {x} T = insertionSign T x := by
+    simp only [shuffleSign, Finset.sum_singleton, insertionSign]
+  have hsign : insertionSign T b = insertionSign T a := by
+    rw [insertionSign_image horder T b hT (heq ▸ hout),
+      insertionSign_image horder T a hT hout, heq]
+  have hsignSq : insertionSign T a * insertionSign T a = 1 :=
+    OrderedCycleFactorization.sign_sq _
+  have hA : insertionSign {b} a = 1 := by
+    simp [insertionSign, Finset.filter_singleton, hord.not_gt]
+  have hB : insertionSign {a} b = -1 := by
+    simp [insertionSign, Finset.filter_singleton, hord]
+  rw [Finset.sum_pair hab, restrictionSign, restrictionSign, ha, hb, hshuffle, hshuffle,
+    hA, hB, hsign, one_mul, neg_one_mul, Finset.union_singleton, Finset.union_singleton,
+    neg_smul, ← sub_eq_add_neg, ← smul_sub]
+  constructor
+  · intro h
+    have h' := congrArg (fun value : A => insertionSign T a • value) h
+    rw [← mul_smul, hsignSq, one_smul, smul_zero, sub_eq_zero] at h'
+    exact h'.symm
+  · intro h
+    rw [h, sub_self, smul_zero]
+
+/-- All transversals of a fixed face are connected by exchanges within one class. -/
+theorem transversal_coeff_eq [DecidableEq V] [DecidableEq I] {A : Type*}
+    (chain : Finset V → A) (B D : Finset V)
+    (hB : InjOn p (B : Set V)) (hD : InjOn p (D : Set V))
+    (himage : B.image p = D.image p)
+    (hexchange : ∀ (x y : V) (R : Finset V), p x = p y → InjOn p (R : Set V) → p x ∉ R.image p →
+      (insert x R).image p = D.image p → chain (insert x R) = chain (insert y R)) :
+    chain B = chain D := by
+  let n := (B \ D).card
+  have hn : (B \ D).card ≤ n := le_rfl
+  clear_value n
+  induction n using Nat.strong_induction_on generalizing B with
+  | h n ih =>
+    by_cases hsub : B ⊆ D
+    · have himage' : p '' (B : Set V) = p '' (D : Set V) := by
+        simpa only [Finset.coe_image] using congrArg (fun S : Finset I => (S : Set I)) himage
+      have hset := (hD.image_eq_image_iff (Finset.coe_subset.mpr hsub) Subset.rfl).mp himage'
+      rw [Finset.coe_inj.mp hset]
+    · obtain ⟨x, hx, hxD⟩ := Finset.not_subset.mp hsub
+      have hpx : p x ∈ D.image p := himage ▸ Finset.mem_image_of_mem p hx
+      obtain ⟨y, hy, hxy⟩ := Finset.mem_image.mp hpx
+      let R := B.erase x
+      have hR : InjOn p (R : Set V) :=
+        hB.mono (Finset.coe_subset.mpr (Finset.erase_subset _ _))
+      have hout : p x ∉ R.image p := by
+        rw [image_erase_of_injOn B x hx hB]
+        exact Finset.notMem_erase _ _
+      have hxy' : x ∉ R := Finset.notMem_erase _ _
+      have hyR : y ∉ R := fun h => hout (Finset.mem_image.mpr ⟨y, h, hxy⟩)
+      have hB' : insert x R = B := Finset.insert_erase hx
+      have hnew : (insert y R).image p = D.image p := by
+        rw [Finset.image_insert, hxy, ← Finset.image_insert, hB', himage]
+      have hinj : InjOn p (↑(insert y R) : Set V) := by
+        rw [Finset.coe_insert, Set.injOn_insert hyR]
+        refine ⟨hR, ?_⟩
+        simpa only [← Finset.coe_image, Finset.mem_coe, hxy] using hout
+      have hdiff : insert y R \ D ⊂ B \ D := by
+        apply Finset.ssubset_iff_subset_ne.mpr
+        constructor
+        · intro a ha
+          obtain ⟨ha, haD⟩ := Finset.mem_sdiff.mp ha
+          rcases Finset.mem_insert.mp ha with rfl | ha
+          · exact (haD hy).elim
+          · exact Finset.mem_sdiff.mpr ⟨Finset.mem_of_mem_erase ha, haD⟩
+        · intro heq
+          have hmem : x ∈ insert y R \ D := heq.symm ▸ Finset.mem_sdiff.mpr ⟨hx, hxD⟩
+          rcases Finset.mem_insert.mp (Finset.mem_sdiff.mp hmem).1 with rfl | hxR
+          · exact hxD hy
+          · exact hxy' hxR
+      have hlt := (Finset.card_lt_card hdiff).trans_le hn
+      calc
+        chain B = chain (insert y R) := by
+          rw [← hB']
+          exact hexchange x y R hxy.symm hR hout (hB' ▸ himage)
+        _ = chain D := ih _ hlt _ hinj hnew le_rfl
 
 end D5.S3.Combinatorics.Matroids.ParallelCircuitCoordinates
