@@ -10,7 +10,22 @@ internal sealed class OriginalFourMChargeNormalDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Taylor coefficients of the original four-point sewn charge sums",
         H("The original four-point sewn Taylor coefficient"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("projectoccupations"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.projectOccupations"),
+                H("Finite occupation projection"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For fixed lattice datum, weights and Laurent index, project occupation values using "
+                    + "the finite lowering sums, signed factorial weights and the two Laurent selectors on "
+                    + "the four oscillator inputs."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("nome-square-source"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChargeNormal.nome_square_source"),
+                H("The disk nome in the sewing coordinate"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For z in the complex unit disk, the disk nome at z² is z² times the exponential of twice the source constant at z, divided by 16."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
             DescribeId.Create("original-fourm-scalar-sewn-taylor"),
             DeclarationHandle.Create(Gid),
             H("The actual fourM scalar"), StatementSource.WithoutFormula(),

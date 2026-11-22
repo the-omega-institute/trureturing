@@ -37,7 +37,7 @@ def decode {sign} : {r : ℕ} → Fixed sign r → UnboundedCycle sign
   | 0, terminal => .terminal terminal.1 terminal.2
   | _ + 1, pair => .discard pair.1.1 pair.1.2 (decode pair.2)
 
-private theorem decode_size {sign r} (c : Fixed sign r) :
+theorem decode_size {sign r} (c : Fixed sign r) :
     c.decode.size = c.size := by
   induction r generalizing sign with
   | zero => rfl
@@ -227,7 +227,7 @@ private theorem coordinates_apply {k : ℕ} (tuple : UnboundedTuple k) :
 def cylinder {k : ℕ} (tuple : UnboundedTuple k) : Set Stream :=
   {ω | ∀ i : Fin k, ω i.val = nth tuple i}
 
-private theorem box {k : ℕ} (tuple : UnboundedTuple k) :
+theorem box {k : ℕ} (tuple : UnboundedTuple k) :
     cylinder tuple = Set.pi (Finset.range k : Set ℕ)
       (fun i => {c | ∀ h : i < k, c = nth tuple ⟨i, h⟩}) := by
   ext ω

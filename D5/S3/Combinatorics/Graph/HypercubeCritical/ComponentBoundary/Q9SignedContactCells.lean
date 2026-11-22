@@ -80,7 +80,7 @@ private theorem weighted_sum (w : Fin 9 → ℝ) (f : Vec) :
   simp [weightedLinear_apply, Q9IsotropicHuang.weightedAction, gamma_apply, flipSign_cast,
     mul_assoc]
 
-private theorem unit_weight (f : Vec) : weightedLinear (fun _ => (1 : ℝ)) f = H f := by
+theorem unit_weight (f : Vec) : weightedLinear (fun _ => (1 : ℝ)) f = H f := by
   classical
   ext x
   simp only [weighted_sum, one_smul, Finset.sum_apply, gamma_apply]
@@ -114,7 +114,7 @@ private theorem weighted_selfAdjoint (w : Fin 9 → ℝ) (f g : Vec) :
   simp only [weighted_sum, sum_dotProduct, dotProduct_sum, smul_dotProduct,
     dotProduct_smul, gamma_selfAdjoint]
 
-private theorem weighted_cross (w : Fin 9 → ℝ) {b : Bool} {f : Vec}
+theorem weighted_cross (w : Fin 9 → ℝ) {b : Bool} {f : Vec}
     (hf : OnParity b f) : OnParity (!b) (weightedLinear w f) := by
   intro x hx
   have hb : parity x = b := by
@@ -169,7 +169,7 @@ private theorem parity_eigen (C : Finset (Q 9)) (s : Vec) (hr : Cubic C)
     rw [← unit_weight, weighted_cross _ (fun y hy => by simp [parityPart_apply, hy]) x hx]
     simp [parityPart_apply, hx]
 
-private theorem weighted_square (w : Fin 9 → ℝ) (f : Vec) :
+theorem weighted_square (w : Fin 9 → ℝ) (f : Vec) :
     weightedLinear w (weightedLinear w f) = (∑ k, w k ^ 2) • f := by
   simpa only [Module.End.mul_apply, LinearMap.smul_apply, Module.End.one_apply] using
     congrArg (fun A : Module.End ℝ Vec => A f) (weightedLinear_square w)

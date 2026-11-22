@@ -18,13 +18,13 @@ def Term.degree (m : Term) : Nat :=
 def coefficientNorm (l : List Term) : Nat :=
   (l.map fun m => m.coefficient.natAbs).sum
 
-private def Controlled (l : List Term) (d M : Nat) : Prop :=
+def Controlled (l : List Term) (d M : Nat) : Prop :=
   (∀ m ∈ l, m.degree = d) ∧ coefficientNorm l ≤ M
 
-private theorem empty_controlled (d M : Nat) : Controlled [] d M := by
+theorem empty_controlled (d M : Nat) : Controlled [] d M := by
   simp [Controlled, coefficientNorm]
 
-private theorem mono {l : List Term} {d M N : Nat} (h : Controlled l d M) (hMN : M ≤ N) :
+theorem mono {l : List Term} {d M N : Nat} (h : Controlled l d M) (hMN : M ≤ N) :
     Controlled l d N := ⟨h.1, Nat.le_trans h.2 hMN⟩
 
 private theorem coefficientNorm_cons (x : Term) (xs : List Term) :
@@ -151,7 +151,7 @@ private theorem mergeProducts_control (k : Nat) (ps : List (List Term)) (d : Nat
     · have hh := mergePairs_control (p :: q :: ps) d h
       exact mono (ih _ hh.1) hh.2
 
-private theorem mul_bound {a b : Sparse} {d e M N : Nat}
+theorem mul_bound {a b : Sparse} {d e M N : Nat}
     (ha : Controlled a.terms d M) (hb : Controlled b.terms e N) :
     Controlled (a * b).terms (d + e) (M * N) := by
   let ps := a.terms.map fun x => b.terms.map (Term.mul x)
@@ -173,20 +173,20 @@ private theorem mul_bound {a b : Sparse} {d e M N : Nat}
         using h
   exact hsum a.terms ha.1
 
-private theorem constant_bound (n : Nat) :
+theorem constant_bound (n : Nat) :
     Controlled (Sparse.constant n).terms 0 n := by
   simp [Controlled, Sparse.constant, Term.degree, coefficientNorm]
 
-private theorem add_bound {a b : Sparse} {d M N : Nat}
+theorem add_bound {a b : Sparse} {d M N : Nat}
     (ha : Controlled a.terms d M) (hb : Controlled b.terms d N) :
     Controlled (a + b).terms d (M + N) := merge_bound ha hb
 
-private theorem sub_bound {a b : Sparse} {d M N : Nat}
+theorem sub_bound {a b : Sparse} {d M N : Nat}
     (ha : Controlled a.terms d M) (hb : Controlled b.terms d N) :
     Controlled (a - b).terms d (M + N) :=
   merge_bound ha (mono (neg_bound b.terms d hb.1) hb.2)
 
-private theorem pow_bound {a : Sparse} {d M : Nat} (ha : Controlled a.terms d M) (k : Nat) :
+theorem pow_bound {a : Sparse} {d M : Nat} (ha : Controlled a.terms d M) (k : Nat) :
     Controlled (a ^ k).terms (d * k) (M ^ k) := by
   induction k with
   | zero => exact constant_bound 1
@@ -194,7 +194,7 @@ private theorem pow_bound {a : Sparse} {d M : Nat} (ha : Controlled a.terms d M)
     change Controlled (a ^ k * a).terms (d * (k + 1)) (M ^ (k + 1))
     simpa only [Nat.mul_succ, Nat.pow_succ] using mul_bound ih ha
 
-private theorem sum_bound (l : List Sparse) (d M : Nat)
+theorem sum_bound (l : List Sparse) (d M : Nat)
     (h : ∀ a ∈ l, Controlled a.terms d M) :
     Controlled l.sum.terms d (l.length * M) := by
   induction l with
@@ -204,7 +204,7 @@ private theorem sum_bound (l : List Sparse) (d M : Nat)
     have hh := add_bound (h a (by simp)) (ih h')
     simpa [Nat.add_mul, Nat.add_comm] using hh
 
-private theorem gap_degree (p : Nat) (g : Nat × Nat × Nat) (hg : g ∈ gaps p) :
+theorem gap_degree (p : Nat) (g : Nat × Nat × Nat) (hg : g ∈ gaps p) :
     g.1 + g.2.1 + g.2.2 = p := by
   unfold gaps at hg
   rcases List.mem_flatMap.mp hg with ⟨i, hi, hg⟩
@@ -214,7 +214,7 @@ private theorem gap_degree (p : Nat) (g : Nat × Nat × Nat) (hg : g ∈ gaps p)
   change i + j + (p - i - j) = p
   omega
 
-private theorem defect_bound (p : Nat) {a b c : Sparse}
+theorem defect_bound (p : Nat) {a b c : Sparse}
     (ha : Controlled a.terms 1 3) (hb : Controlled b.terms 1 3)
     (hc : Controlled c.terms 1 3) :
     Controlled (defect p a b c).terms (3 * p) (2 * (gaps p).length * 3 ^ (3 * p)) := by
@@ -246,7 +246,7 @@ private theorem defect_bound (p : Nat) {a b c : Sparse}
     rw [show (2 : Nat) * (gaps p).length = (gaps p).length + (gaps p).length by omega, Nat.add_mul]
   exact he ▸ hh
 
-private def defectSize (p : Nat) : Nat := 2 * (gaps p).length * 3 ^ (3 * p)
+def defectSize (p : Nat) : Nat := 2 * (gaps p).length * 3 ^ (3 * p)
 
 private theorem criterion_bound (p : Nat) {a b c : Sparse}
     (ha : Controlled a.terms 1 3) (hb : Controlled b.terms 1 3)

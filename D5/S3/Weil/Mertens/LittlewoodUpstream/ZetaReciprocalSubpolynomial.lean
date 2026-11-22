@@ -186,7 +186,7 @@ theorem norm_riemannZeta_le_three_mul_norm {s : ℂ}
     _ = 3 * ‖s‖ := by ring
 
 /-- For `2 ≤ s.re`, `1 / 4 ≤ ‖ζ(s)‖`, `‖ζ(s)‖ ≤ 7 / 4`, and `‖zetaInv s‖ ≤ 4`. -/
-private lemma norm_zeta_lower_of_two_le_re {s : ℂ} (hs : 2 ≤ s.re) :
+lemma norm_zeta_lower_of_two_le_re {s : ℂ} (hs : 2 ≤ s.re) :
     1 / 4 ≤ ‖riemannZeta s‖ ∧ ‖riemannZeta s‖ ≤ 7 / 4 ∧ ‖zetaInv s‖ ≤ 4 := by
   have hsub := norm_riemannZeta_sub_one_le_three_fourths hs
   have h_lo := one_fourth_le_norm_riemannZeta_of_two_le_re hs

@@ -6,6 +6,7 @@
    utility: none
    digest: The original four-point covariance correction on the paired period lips. -/
 
+import Mathlib.Analysis.Analytic.IsolatedZeros
 import D5.S3.Analytic.OriginalHalfBinomialPfaffNome
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMActualChart
 
@@ -17,7 +18,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Complex Filter Set
-open scoped Topology
+open scoped Topology ComplexConjugate
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMPeriodSource
 
@@ -140,7 +141,7 @@ theorem chartB_pfaff_correction {z : ℝ} (hz : 0 < z) :
 def dLip (upperA : Bool) : Set ℂ :=
   {t | if upperA then t.im < 0 else 0 < t.im}
 
-private def lipSign (upperA : Bool) : ℂ := if upperA then 1 else -1
+def lipSign (upperA : Bool) : ℂ := if upperA then 1 else -1
 
 /-- Analytic continuation of the D period to either lip, in the native
 D argument. The sign is the jump of the complementary ratio in A. -/
@@ -157,6 +158,11 @@ private theorem dLip_im_ne_zero {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upper
   cases upperA
   · exact (show 0 < t.im from ht).ne'
   · exact (show t.im < 0 from ht).ne
+
+/-- The selected open D lip lies in the canonical double slit. -/
+theorem dLip_mem_doubleSlit {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
+    t ∈ doubleSlit :=
+  mem_doubleSlit_of_im (dLip_im_ne_zero ht)
 
 /-- The explicit D germ agrees with the frozen Euler period on the genuine
 adjacent open half-plane. -/
@@ -176,7 +182,7 @@ theorem dPeriod_eq_slit {upperA : Bool} {t : ℂ} (ht : t ∈ dLip upperA) :
       rw [lipSign, ← pfaffMap_eq t ht₀]
       exact tau_pfaff_upper hu
   have hp := slitPeriod_ne_zero (r := 1 - t)
-    (complement_mem (mem_doubleSlit_of_im (dLip_im_ne_zero ht)))
+    (complement_mem (dLip_mem_doubleSlit ht))
   rw [dPeriod, ← hj, tau, sub_sub_cancel]
   field_simp [hp, I_ne_zero]
 
@@ -199,7 +205,40 @@ private theorem real_d_aux {t : ℝ} (ht : 1 < t) :
     · simpa [sub_re] using sub_pos.mpr hInv
     · simpa [sub_re] using hi
 
-private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+private theorem tau_conj {r : ℂ} (hr : r ∈ doubleSlit) :
+    tau (conj r) = -conj (tau r) := by
+  have he : 1 - conj r = conj (1 - r) := by simp
+  rw [tau, he, slitPeriod_conj (complement_mem hr), slitPeriod_conj hr.1, tau]
+  simp [neg_mul, neg_div]
+
+private theorem dPeriod_conj_of_mem {r : ℂ}
+    (h₁ : 1 - r ∈ slitDomain) (h₂ : 1 - r⁻¹ ∈ doubleSlit) :
+    dPeriod false (conj r) = conj (dPeriod true r) := by
+  have hsub : 1 - conj r = conj (1 - r) := by simp
+  have hinv : 1 - (conj r)⁻¹ = conj (1 - r⁻¹) := by simp
+  rw [dPeriod, hinv, hsub, tau_conj h₂, slitPeriod_conj h₁, dPeriod]
+  simp only [lipSign, Bool.false_eq_true, ite_false, ite_true, map_div₀, map_mul,
+    map_add, map_one, Complex.conj_I, div_neg]
+  rw [← neg_div, ← neg_mul, neg_add, sub_eq_add_neg]
+
+/-- Near each real t > 1, the upper D period is the Schwarz reflection of the lower one. -/
+theorem dPeriod_upper_reflection {t : ℝ} (ht : 1 < t) :
+    dPeriod false =ᶠ[𝓝 (t : ℂ)] fun r => conj (dPeriod true (conj r)) := by
+  have ht₀ : 0 < t := by linarith
+  obtain ⟨h₁, h₂⟩ := real_d_aux ht
+  have c₁ : ContinuousAt (fun r : ℂ => 1 - conj r) (t : ℂ) := by fun_prop
+  have c₂ : ContinuousAt (fun r : ℂ => 1 - (conj r)⁻¹) (t : ℂ) :=
+    continuousAt_const.sub (continuous_conj.continuousAt.inv₀
+      (by simpa using (ofReal_ne_zero.mpr ht₀.ne')))
+  have n₁ : ∀ᶠ r in 𝓝 (t : ℂ), 1 - conj r ∈ slitDomain :=
+    c₁.tendsto (isOpen_slitDomain.mem_nhds (by simpa using h₁))
+  have n₂ : ∀ᶠ r in 𝓝 (t : ℂ), 1 - (conj r)⁻¹ ∈ doubleSlit :=
+    c₂.tendsto (isOpen_doubleSlit.mem_nhds (by simpa using h₂))
+  filter_upwards [n₁, n₂] with r hr₁ hr₂
+  simpa only [Complex.conj_conj] using dPeriod_conj_of_mem hr₁ hr₂
+
+/-- The continued D period is analytic at each real boundary point greater than one. -/
+theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     AnalyticAt ℂ (dPeriod upperA) (t : ℂ) := by
   have ht₀ : (t : ℂ) ≠ 0 := ofReal_ne_zero.mpr (by linarith)
   have h₁ : AnalyticAt ℂ (fun u : ℂ => 1 - u) (t : ℂ) :=
@@ -211,7 +250,8 @@ private theorem dPeriod_analyticAt (upperA : Bool) {t : ℝ} (ht : 1 < t) :
   have hPeriod := (slitPeriod_analyticOnNhd _ h.1).comp (f := fun u : ℂ => 1 - u) h₁
   exact ((hRatio.add analyticAt_const).mul hPeriod).div_const
 
-private theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
+/-- The continued D period is nonzero at each real boundary point greater than one. -/
+theorem dPeriod_ne_zero (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     dPeriod upperA (t : ℂ) ≠ 0 := by
   have him := tau_im_pos (real_d_aux ht).2
   have hs : tau (1 - (t : ℂ)⁻¹) + lipSign upperA ≠ 0 := by
@@ -252,6 +292,29 @@ private theorem dLip_neBot (upperA : Bool) (t : ℝ) :
       have hv' : 0 < v := hv
       cases upperA <;> simpa [path, s, dLip, add_im, mul_im] using hv'
   exact (show (Filter.map path (𝓝[>] (0 : ℝ))).NeBot from inferInstance).mono hp
+
+/-- A real germ comparison at the D boundary determines a full complex germ
+at an interior point of the selected lip. -/
+theorem eq_near_dLip_of_real_germ {F G D : ℂ → ℂ} (upperA : Bool) {t : ℝ}
+    (hF : AnalyticAt ℂ F (t : ℂ)) (hG : AnalyticAt ℂ G (t : ℂ))
+    (hReal : ∀ᶠ s : ℝ in 𝓝 t, F (s : ℂ) = G (s : ℂ))
+    (hLip : G =ᶠ[𝓝[dLip upperA] (t : ℂ)] D) :
+    ∃ u ∈ dLip upperA, F =ᶠ[𝓝 u] D := by
+  have hCast : Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[≠] t) (𝓝[≠] (t : ℂ)) := by
+    apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+    · exact Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with s hs
+      simpa only [mem_compl_iff, mem_singleton_iff, Complex.ofReal_inj] using hs
+  have hEq : F =ᶠ[𝓝 (t : ℂ)] G :=
+    (hF.frequently_eq_iff_eventually_eq hG).mp
+      (hCast.frequently (hReal.filter_mono nhdsWithin_le_nhds).frequently)
+  have he : F =ᶠ[𝓝[dLip upperA] (t : ℂ)] D :=
+    (hEq.filter_mono nhdsWithin_le_nhds).trans hLip
+  have : (𝓝[dLip upperA] (t : ℂ)).NeBot := dLip_neBot upperA t
+  obtain ⟨u, huEq, hu⟩ :=
+    ((eventually_eventually_nhdsWithin.mpr he).and self_mem_nhdsWithin).exists
+  rw [(isOpen_dLip upperA).nhdsWithin_eq hu] at huEq
+  exact ⟨u, hu, huEq⟩
 
 private theorem chartD_complementary_correction (upperA : Bool) {t : ℝ} (ht : 1 < t) :
     periodCorrection slitPeriod (1 - (t : ℂ)) + periodCorrection (dPeriod upperA) t =
@@ -417,6 +480,7 @@ theorem chartD_root_boundary (upperA : Bool) {z : ℝ} (hz : 0 < z) (hz1 : z < 1
 
 open Matrix LatticeGeneratingFieldLocality
 
+/-- The complex Gram quadratic of a chart source. -/
 private def gramQuadratic (D : LatticeData) (M : Fin D.rank → ℂ) : ℂ :=
   M ⬝ᵥ (D.G.map (Int.cast : ℤ → ℂ)) *ᵥ M
 

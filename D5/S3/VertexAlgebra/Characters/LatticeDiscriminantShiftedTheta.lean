@@ -338,7 +338,7 @@ private theorem real_source_sector_S (D : LatticeData) (hD : (gramReal D).PosDef
 def sourceQuadratic {r : ℕ} (A : Matrix (Fin r) (Fin r) ℝ) (z : Fin r → ℂ) : ℂ :=
   z ⬝ᵥ (A.map Complex.ofReal) *ᵥ z
 
-private def thetaTerm {r : ℕ} (A : Matrix (Fin r) (Fin r) ℝ)
+def thetaTerm {r : ℕ} (A : Matrix (Fin r) (Fin r) ℝ)
     (τ : ℂ) (z : Fin r → ℂ) (x : Fin r → ℝ) : ℂ :=
   Complex.exp (Real.pi * Complex.I * τ * (quadratic A x : ℂ) +
     2 * Real.pi * Complex.I * ((fun i => (↑((A *ᵥ x) i) : ℂ)) ⬝ᵥ z))
