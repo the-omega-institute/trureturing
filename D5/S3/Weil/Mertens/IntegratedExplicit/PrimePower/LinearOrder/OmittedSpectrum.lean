@@ -293,7 +293,6 @@ private theorem occurrence_bin_power_majorant (hRH : RiemannHypothesis) :
         (mul_le_mul_of_nonneg_left (log_band_le _ (abs_nonneg _)) (by linarith)) (by positivity)
     _ = _ := by
       have hbase : 0 < |(k : ℝ)|+1 := by positivity
-      dsimp only
       rw [show (-3/4 : ℝ) = 1/4 - 1 by norm_num, Real.rpow_sub hbase, Real.rpow_one]
       ring
 
@@ -764,12 +763,12 @@ theorem omitted_root_density_sublinear_far (hRH : RiemannHypothesis) {ε : ℝ} 
     have hsqrt := Real.sqrt_le_iff.mpr ⟨hδ.le, hsmall.le⟩
     calc
       _ ≤ G * δ := mul_le_mul_of_nonneg_left hsqrt hG.le
-      _ = _ := by dsimp [δ]; field_simp; ring
+      _ = _ := by dsimp [δ]; field_simp
   let H := 2 * ∑ k ∈ B, b k
   have hH : 0 ≤ H := mul_nonneg (by norm_num)
     (Finset.sum_nonneg fun k _ => by simpa using hmass ∅ k)
   let L := 1 + 8*H/ε
-  have hL : 1 ≤ L := le_add_of_nonneg_right (by dsimp [L]; positivity)
+  have hL : 1 ≤ L := le_add_of_nonneg_right (by positivity)
   have hHL : H ≤ ε*L/8 := by
     calc
       H ≤ H + ε/8 := by linarith
@@ -806,5 +805,89 @@ theorem omitted_root_density_sublinear_far (hRH : RiemannHypothesis) {ε : ℝ} 
   rw [show ε/4 * q + ε/4 * q = (ε/2) * q by ring]
   exact (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hmq (by positivity))
     (Real.exp_nonneg _)).trans_eq (by ring)
+
+/-- A quantitative upper bound on the omitted actual spectrum in the far range. -/
+theorem omitted_root_density_inv_sqrt_far (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (m : ℕ), 2 ≤ m → ∀ L : ℝ, 1 ≤ L → L ≤ (m : ℝ)+1 →
+      ∀ u : ℝ, L*((m : ℝ)+1) ≤ u →
+        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n), |rootDensity n u|) ≤
+          C * ((m : ℝ) / Real.sqrt L) * Real.exp (-(orderRate m)*u) := by
+  classical
+  obtain ⟨D, hD, hmass⟩ := occurrence_bin_power_majorant hRH
+  obtain ⟨G, hG, hsplit⟩ := omitted_root_density_bin_split hRH
+  let b (k : ℤ) := D * (|(k : ℝ)|+1)^(-3/4 : ℝ)
+  let A := max (16*D) (2*G*D)
+  have hA : 0 < A := (show 0 < 16*D by positivity).trans_le (le_max_left _ _)
+  refine ⟨10*A, by positivity, fun m hm L hL hLq u hu => ?_⟩
+  let q := (m : ℝ)+1
+  have hq0 : 0 < q := by dsimp [q]; positivity
+  have hqu : q ≤ u := (le_mul_of_one_le_left hq0.le hL).trans hu
+  obtain ⟨H, hH, hrates⟩ := scaled_bin_cutoff_bound hL hLq hu
+  let B := Finset.Icc (-(H : ℤ)) (H : ℤ)
+  have hbin (k : ℤ) : k ∈ B ↔ k.natAbs ≤ H := by
+    simp only [B, Finset.mem_Icc]
+    omega
+  let tail (k : ℤ) : ℝ := if k ∈ B then 0 else b k
+  have hbs : Summable (fun k => (tail k)^2) :=
+    Summable.of_nonneg_of_le (fun k => sq_nonneg _) (fun k => by
+      dsimp [tail]
+      split_ifs
+      · simpa only [zero_pow (by decide : (2 : ℕ) ≠ 0)] using sq_nonneg (b k)
+      · exact le_rfl) (summable_band_rpow_sq D)
+  have hhead : 2 * (∑ k ∈ B, b k) ≤ (16*D) * ((H : ℝ)+1)^(1/4 : ℝ) := by
+    dsimp [b]
+    rw [← Finset.mul_sum]
+    have h := signed_bin_head_inv_three_quarters H
+    push_cast at h
+    exact (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left h hD.le)
+      (show (0 : ℝ) ≤ 2 by norm_num)).trans_eq (by ring)
+  have htail_eq (k : ℤ) : (tail k)^2 =
+      D^2 * (if k.natAbs ≤ H then 0 else (|(k : ℝ)|+1)^(-3/2 : ℝ)) := by
+    simp only [tail, hbin]
+    split_ifs
+    · simp
+    · dsimp [b]
+      rw [mul_pow, ← Real.rpow_mul_natCast (by positivity : 0 ≤ |(k : ℝ)|+1)]
+      norm_num
+  have htail_sum : (∑' k, (tail k)^2) ≤ D^2 * (4 * (H : ℝ)^(-1/2 : ℝ)) := by
+    simp_rw [htail_eq]
+    rw [tsum_mul_left]
+    exact mul_le_mul_of_nonneg_left (signed_bin_tail_inv_three_halves H hH) (sq_nonneg D)
+  have htail : Real.sqrt (∑' k, (tail k)^2) ≤ 2*D*(H : ℝ)^(-1/4 : ℝ) := by
+    apply (Real.sqrt_le_iff).mpr
+    refine ⟨by positivity, htail_sum.trans_eq ?_⟩
+    have hpow : ((H : ℝ)^(-1/4 : ℝ))^2 = (H : ℝ)^(-1/2 : ℝ) := by
+      rw [← Real.rpow_mul_natCast (Nat.cast_nonneg H)]
+      congr 1
+      norm_num
+    rw [mul_pow, hpow]
+    ring
+  have hheadA : 2 * (∑ k ∈ B, b k) ≤ A * ((H : ℝ)+1)^(1/4 : ℝ) :=
+    hhead.trans (mul_le_mul_of_nonneg_right (le_max_left _ _) (by positivity))
+  have htailA : G * Real.sqrt (∑' k, (tail k)^2) ≤ A * (H : ℝ)^(-1/4 : ℝ) :=
+    (mul_le_mul_of_nonneg_left htail hG.le).trans
+      ((le_of_eq (by ring)).trans (mul_le_mul_of_nonneg_right (le_max_right _ _) (by positivity)))
+  have hq : q ≤ 2*(m : ℝ) := by
+    have hm' : (1 : ℝ) ≤ m := by exact_mod_cast (show 1 ≤ m by omega)
+    dsimp [q]
+    linarith
+  have hgeom : 0 ≤ 1 + q^2/u := by
+    have hu0 := hq0.trans_le hqu
+    positivity
+  refine (hsplit b B hmass hbs m hm u hqu).trans ?_
+  calc
+    _ ≤ Real.exp (-(orderRate m)*u) *
+        (A * (((H : ℝ)+1)^(1/4 : ℝ) * (1+q^2/u) + q * (H : ℝ)^(-1/4 : ℝ))) := by
+      apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
+      exact (add_le_add (mul_le_mul_of_nonneg_right hheadA hgeom)
+        (mul_le_mul_of_nonneg_right htailA hq0.le)).trans_eq (by dsimp [q]; ring)
+    _ ≤ Real.exp (-(orderRate m)*u) * (A * (5*q/Real.sqrt L)) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hrates hA.le) (Real.exp_nonneg _)
+    _ ≤ _ := by
+      have hq' : 5*q/Real.sqrt L ≤ 10*(m : ℝ)/Real.sqrt L := by
+        exact div_le_div_of_nonneg_right
+          (by nlinarith only [hq]) (Real.sqrt_nonneg L)
+      exact (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hq' hA.le)
+        (Real.exp_nonneg _)).trans_eq (by ring)
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
