@@ -29,7 +29,7 @@ on:
         options: [build, release]
         default: build
       release_seed_tag:
-        description: 'Optional exact local candidate Release for the long build'
+        description: 'Optional exact published Release tag to seed the protected build'
         type: string
       release_seed_producer:
         description: 'Immutable producer commit of release_seed_tag'
@@ -38,6 +38,9 @@ on:
         description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
         type: boolean
         default: false
+      shard_history_anchor:
+        description: 'Optional exact dev history anchor for the protected sharded build'
+        type: string
       native_report_batch_modules:
         description: 'Maximum modules per native extraction process (integer 1..100; full report scope unchanged)'
         type: string
@@ -65,7 +68,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-producer
+      # Hosted integration builds write branch-scoped Actions caches.
+      group: ${{ startsWith(github.ref, 'refs/heads/integration-') && 'lean-cache-integration-producer' || 'lean-cache-producer' }}
       queue: max
       cancel-in-progress: false
     env:
@@ -122,6 +126,14 @@ jobs:
       - name: Install the pinned tools release
         if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
         run: python3 .github/scripts/install-tools.py
+      - name: Fetch the fixed dev history for the shard layout
+        if: inputs.shard_history_anchor != '' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '')
+        env:
+          ANCHOR: ${{ inputs.shard_history_anchor || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
+        run: |
+          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
@@ -134,13 +146,29 @@ jobs:
           bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
+        env:
+          STRATALINT_RELEASE_SEED_TAG: ${{ inputs.release_seed_tag }}
+          STRATALINT_RELEASE_SEED_PRODUCER: ${{ inputs.release_seed_producer }}
         with:
+          shard-history-anchor: ${{ inputs.shard_history_anchor || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts && 'true' || 'false' }}
           native-report-batch-modules: ${{ inputs.native_report_batch_modules || '100' }}
           release-seed-tag: ${{ inputs.release_seed_tag }}
           release-seed-producer: ${{ inputs.release_seed_producer }}
 
+  scheduled-compile:
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-release-compile.yml
+    with:
+      sparse-release: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' }}
+      source: ${{ github.sha }}
+      indexed: ${{ vars.LEAN_CACHE_SHARDS_REF == 'dev' }}
+
   publish:
+    needs: scheduled-compile
     name: Publish the Lean build cache
     if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
     permissions:
@@ -153,12 +181,14 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.scheduled-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ needs.scheduled-compile.outputs.history-depth || '2' }}
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
@@ -188,34 +218,36 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional validated seeds
+        uses: ./.github/actions/lean-cache-release-seed
         env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          GH_TOKEN: ${{ github.token }}
+        with:
+          mode: ${{ needs.scheduled-compile.outputs.seed || 'legacy' }}
+          previous-base: ${{ needs.scheduled-compile.outputs.base }}
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
+      - name: Set the transfer budget for volume publication
+        if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
+        run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
+          LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
+        run: |
+          set -eo pipefail
+          bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-to-github-without-mathlib FULL_BUILD=1 |
+            tee "$RUNNER_TEMP/lean-cache-publication.log"
+      - name: Verify the Release publication for the checked-out commit
+        shell: bash
+        run: |
+          set -eo pipefail
+          producer="$(git rev-parse HEAD)"
+          sed -n 's/^LEAN_CACHE_PUBLISH //p' "$RUNNER_TEMP/lean-cache-publication.log" |
+            jq -es --arg producer "$producer" '
+              length == 1 and (.[0] | (.status == "published" or .status == "exists") and
+                .producer_commit_sha == $producer and (.tag | type == "string" and length > 0))'
 
   manual-release-authorize:
     name: Authorize the manual cache Release
@@ -261,21 +293,34 @@ jobs:
           }
           echo "sha=$SOURCE_SHA" >> "$GITHUB_OUTPUT"
 
+  manual-compile:
+    needs: manual-release-authorize
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-lean-release-compile.yml
+    with:
+      sparse-release: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' }}
+      source: ${{ needs.manual-release-authorize.outputs.source_sha }}
+      indexed: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_SHARDS_REF == 'dev' }}
+
   manual-release:
     name: Manually publish the Lean build cache
-    needs: manual-release-authorize
+    needs: [manual-release-authorize, manual-compile]
     if: github.event_name == 'workflow_dispatch' && inputs.operation == 'release'
     permissions:
       contents: write
       actions: write
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 360
     concurrency:
       group: lean-cache-producer
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
+      LEAN_CACHE_RELEASE_SPARSE: ${{ needs.manual-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
       - name: Recheck the actor for this publication attempt
         run: |
@@ -286,7 +331,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ needs.manual-release-authorize.outputs.source_sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ needs.manual-compile.outputs.history-depth || '2' }}
           persist-credentials: false
       - name: Install the pinned tools release
         if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
@@ -318,8 +363,18 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore optional validated seeds
+        if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
+        uses: ./.github/actions/lean-cache-release-seed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          mode: ${{ needs.manual-compile.outputs.seed || (github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_SHARDS_REF == 'dev' && 'auto' || 'legacy') }}
+          previous-base: ${{ needs.manual-compile.outputs.base }}
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
+      # Manual publication can check out a dev commit predating the local action.
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') == '' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -327,21 +382,44 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') == '' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - name: Restore optional validated seeds
+      - name: Restore the pinned source's legacy seeds
+        if: hashFiles('.github/actions/lean-cache-release-seed/action.yml') == ''
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Set the transfer budget for volume publication
+        if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
+        run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
+          LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
+        run: |
+          observer=()
+          if [[ -f .github/actions/lean-compile-layer/measure.sh ]]; then
+            observer=(bash .github/actions/lean-compile-layer/measure.sh)
+          fi
+          set -eo pipefail
+          "${observer[@]}" make lean-cache-to-github-without-mathlib FULL_BUILD=1 |
+            tee "$RUNNER_TEMP/lean-cache-publication.log"
+      - name: Verify the Release publication for the checked-out commit
+        shell: bash
+        run: |
+          set -eo pipefail
+          producer="$(git rev-parse HEAD)"
+          sed -n 's/^LEAN_CACHE_PUBLISH //p' "$RUNNER_TEMP/lean-cache-publication.log" |
+            jq -es --arg producer "$producer" '
+              length == 1 and (.[0] | (.status == "published" or .status == "exists") and
+                .producer_commit_sha == $producer and (.tag | type == "string" and length > 0))'
