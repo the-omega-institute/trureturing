@@ -219,9 +219,9 @@ private theorem slope_of_row_gram (u v : Fin 2 → ℂ)
     let z := star (u i) / star (v i)
     have hrow : v = z • u := by
       ext j
-      change v j = z * u j
-      apply (eq_div_iff hsv).mpr
-      simpa only [z, div_mul_eq_mul_div, mul_comm] using (h i j).symm
+      change v j = (star (u i) / star (v i)) * u j
+      rw [div_mul_eq_mul_div]
+      exact (eq_div_iff hsv).mpr (by simpa only [mul_comm] using (h i j).symm)
     have hi' := h i i
     rw [hrow] at hi'
     simp only [Pi.smul_apply, smul_eq_mul, star_mul] at hi'
