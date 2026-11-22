@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.PolynomialValues;
 internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/PolynomialValues/GyC51Settlement.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/gy2026stirling");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/gy2026stirling");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An affine input family refutes Gy's joint coefficient log-concavity assertion through the elementary difference.",
