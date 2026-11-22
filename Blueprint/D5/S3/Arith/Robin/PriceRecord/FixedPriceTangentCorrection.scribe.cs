@@ -36,5 +36,29 @@ internal sealed class FixedPriceTangentCorrectionDocument : IScribeDocumentDefin
                         + "from below. The tangent remainder at the nonlinear minimizer bounds "
                         + "it from above. The quadratic bounds for the log-log tangent gap "
                         + "give limit one for both remainders after multiplication by H log H."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("tangent-remainder-quadratic"),
+                DeclarationHandle.Create(Gid + ".tangent_remainder_quadratic"),
+                H("Curvature bounds at a nonnegative clock increment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For H > 1 and u ≥ 0, the tangent remainder from H to H + u lies "
+                    + "between u²/2 times the activation density at H + u and u²/2 times "
+                    + "the density at H. The global log-log tangent bounds give the two "
+                    + "endpoints since H ≤ H + u."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prefix-minimizers-tangent-bounds"),
+                DeclarationHandle.Create(Gid + ".prefix_minimizers_tangent_bounds"),
+                H("Bounds from the two prefix minimizers"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On sufficiently large prime prefixes, one can choose a fixed-price "
+                    + "minimizer and a nonlinear minimizer that also minimizes the linear cost "
+                    + "at its own clock price. Their increments are nonnegative. The relative "
+                    + "own-price error is bounded by a constant divided by √H. The scaled "
+                    + "remainders at the two increments bound the scaled gap from below and above, "
+                    + "respectively."))),
                 DescribeRole.Theorem))));
 }

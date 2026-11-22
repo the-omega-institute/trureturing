@@ -42,13 +42,13 @@ open D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference (referencePrice)
 private def baseCutoff (P : ℕ) : ℝ := cutoff 2 (prefixPrice P)
 private def logScale (n P : ℕ) : ℝ := log (prefixH P) ^ n / sqrt (prefixH P)
 
-private theorem baseCutoff_ratio :
-    Tendsto (fun P => baseCutoff P / sqrt (prefixH P)) atTop (𝓝 (sqrt 2)) := by
-  simpa only [baseCutoff, Function.comp_def, sqrt_eq_rpow, prefixPrice,
+theorem baseCutoff_ratio :
+    Tendsto (fun P => cutoff 2 (prefixPrice P) / sqrt (prefixH P)) atTop (𝓝 (sqrt 2)) := by
+  simpa only [Function.comp_def, sqrt_eq_rpow, prefixPrice,
     ActualRobinClockCovariance.g, referencePrice, Nat.cast_ofNat, one_div] using
     (FixedLayerShrinkingPrimeRoster.root_ratio (show 2 ≤ (2 : ℕ) by decide)).comp prefixH_atTop
 
-private theorem baseCutoff_atTop : Tendsto baseCutoff atTop atTop := by
+theorem baseCutoff_atTop : Tendsto (fun P => cutoff 2 (prefixPrice P)) atTop atTop := by
   exact (FixedLayerShrinkingPrimeRoster.root_atTop (j := 2) le_rfl).comp prefixH_atTop
 
 private theorem baseCutoff_log_ratio :
@@ -193,6 +193,7 @@ private theorem endpoint_ratio {y : ℕ → ℝ} {K : ℝ}
   rw [add_zero] at h
   apply h.congr
   intro P
+  change baseCutoff P / sqrt (prefixH P) + _ = _
   simp only [logScale, pow_zero]
   ring
 
@@ -218,6 +219,7 @@ private theorem theta_endpoint_tendsto (n : ℕ) {y : ℕ → ℝ} {K : ℝ}
     apply h.congr'
     filter_upwards [hyTop.eventually_gt_atTop 0, baseCutoff_atTop.eventually_gt_atTop 0]
       with P hyPos hbPos
+    change 0 < baseCutoff P at hbPos
     change log (baseCutoff P) / log (prefixH P) +
       log (y P / baseCutoff P) / log (prefixH P) = _
     rw [log_div hyPos.ne' hbPos.ne']
