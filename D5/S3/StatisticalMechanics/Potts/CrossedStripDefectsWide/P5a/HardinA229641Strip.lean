@@ -54,13 +54,15 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn
 import Init.Core
-import Init.Ext
 import Init.Data.Fin.Basic
 import Init.Data.Fin.Lemmas
 import Init.Data.Int.Basic
 import Init.Data.List.Nat.Pairwise
+import Init.Data.List.OfFn
 import Init.Data.Nat.Basic
+import Init.Data.Prod
 import Init.Data.Sum.Basic
+import Init.Ext
 import Init.Prelude
 import Init.SimpLemmas
 import Mathlib.Algebra.BigOperators.Fin
@@ -97,12 +99,12 @@ import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Matrix.Mul
-import Mathlib.LinearAlgebra.Matrix.Action
 import Mathlib.Logic.Embedding.Basic
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Prod
 import Mathlib.Logic.Function.Defs
 import Mathlib.Order.Basic
+import Mathlib.Order.Disjoint
 
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5a.HardinA229641Strip
 
