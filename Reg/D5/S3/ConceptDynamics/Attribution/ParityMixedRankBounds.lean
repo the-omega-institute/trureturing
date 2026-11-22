@@ -28,7 +28,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def bound (p : Σ _ : ℕ, ℕ) (cuts : Finset ℕ × Finset ℕ) : ℕ :=
-  1 + (∑ r ∈ cuts.1, ((highOrdinaryEvenRanks (n := p.1) r).card + 1 -
+  (∑ r ∈ cuts.1, ((highOrdinaryEvenRanks (n := p.1) r).card + 1 -
     p.2 * (lowOddRanks (n := p.1) r).card)) +
     (∑ r ∈ cuts.2, ((highOdd (n := p.1) r).card + 1 - p.2 * ((lowEven (n := p.1) r).card + 1)))
 
@@ -41,26 +41,34 @@ def raised : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n k : ℕ) (even : n % 2 = 0) (_ : k % 2 = 1)
-    (cuts : Finset ℕ × Finset ℕ), Disjoint cuts.1 cuts.2 → (∀ r ∈ cuts.1 ∪ cuts.2, r ≤ n - 2) →
+    (cuts : Finset ℕ × Finset ℕ), Disjoint cuts.1 cuts.2 →
     ∀ (mass : EvenSubset n → OddSubset n → ℕ) (flags : OddSubset n → ℕ),
     (∀ p, ∑ q, mass p q = k) → (∀ q, ∑ p, mass p q = k) →
-    (∃ q, 1 ≤ flags q ∧ flags q ≤ mass ⟨univ, by simpa using even⟩ q) →
-    R.readout () ⟨n,k⟩ cuts ≤
-    ∑ p : EvenSubset n, ∑ q : OddSubset n,
-      (if p = ⟨univ, by simpa using even⟩ then flags q else mass p q % 2) * (p.val ∩ q.val).card
+    ∀ (q : OddSubset n), 1 ≤ mass ⟨univ, by simpa using even⟩ q →
+    (∑ c, flags c * c.val.card) + R.readout () ⟨n,k⟩ cuts ≤
+      (∑ p : EvenSubset n, ∑ c : OddSubset n,
+        (if p = ⟨univ, by simpa using even⟩ then flags c else mass p c % 2) *
+          (p.val ∩ c.val).card) +
+      ((∑ r ∈ cuts.1, (if q ∈ highOdd r then
+          let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
+          d - (d - 1) else 0 : ℕ)) +
+       (∑ r ∈ cuts.2, (if q ∈ highOdd r then
+          let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
+          d - (d - 1) else 0 : ℕ)))
 
 private theorem raised_fails : ¬ arena.Law raised := by
   intro law
   obtain ⟨mass, rows, cols, one⟩ := rank_test_matrix
   let full : EvenSubset 6 := ⟨univ, by decide⟩
-  have positive : ∃ q, 1 ≤ mass full q ∧ mass full q ≤ mass full q := by
+  have positive : ∃ q, 1 ≤ mass full q := by
     by_contra! h
     have zero (q : OddSubset 6) : mass full q = 0 := by
       have small := h q
       omega
     simpa [zero] using rows full
-  have impossible := law 6 1 (by decide) (by decide) (∅, ∅) (by simp) (by simp)
-    mass (mass full) rows cols positive
+  obtain ⟨q, hq⟩ := positive
+  have impossible := law 6 1 (by decide) (by decide) (∅, ∅) (by simp)
+    mass (mass full) rows cols q hq
   have same :
       (∑ p : EvenSubset 6, ∑ q : OddSubset 6,
         (if p = full then mass full q else mass p q % 2) * (p.val ∩ q.val).card) =
@@ -74,8 +82,19 @@ private theorem raised_fails : ¬ arena.Law raised := by
     · subst p
       rw [ite_eq_left rfl, ite_eq_left (show full.val = univ from rfl)]
     · rw [ite_eq_right h, ite_eq_right (fun eq => h (Subtype.ext eq))]
-  have claimed : 6145 ≤ ∑ p : EvenSubset 6, ∑ q : OddSubset 6,
-      (if p = full then mass full q else mass p q % 2) * (p.val ∩ q.val).card := impossible
+  have claimed : 6145 ≤ ∑ p : EvenSubset 6, ∑ c : OddSubset 6,
+      (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card := by
+    change (∑ c, mass full c * c.val.card) + 6145 ≤
+      (∑ p : EvenSubset 6, ∑ c : OddSubset 6,
+        (if p = full then mass full c else mass p c % 2) * (p.val ∩ c.val).card) +
+      ((∑ r ∈ (∅ : Finset ℕ), (if q ∈ highOdd r then
+          let d := (highOrdinaryEvenRanks (n := 6) r).card + 1 - 1 * (lowOddRanks (n := 6) r).card
+          d - (d - 1) else 0 : ℕ)) +
+       (∑ r ∈ (∅ : Finset ℕ), (if q ∈ highOdd r then
+          let d := (highOdd (n := 6) r).card + 1 - 1 * ((lowEven (n := 6) r).card + 1)
+          d - (d - 1) else 0 : ℕ))) at impossible
+    simp only [sum_empty, Nat.add_zero] at impossible
+    omega
   have upper := test_score_at_most mass (mass full) one (one full)
   exact (by decide : ¬ 6145 ≤ 6144) (claimed.trans (same.le.trans upper))
 
@@ -119,7 +138,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0,1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "fn", "arg"]
+        "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none

@@ -128,3 +128,89 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
+
+namespace Reg.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds.Interval
+
+open Finset LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+noncomputable section
+
+abbrev signature : Signature where
+  Params := ℕ
+  State n := Finset (Fin n) × Finset (Fin n)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ n pair => (Ioc (n - pair.2.card) pair.1.card).card)
+    (fun e => nomatch e)
+
+def raised : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (pair : Finset (Fin n) × Finset (Fin n)),
+    R.readout () n pair = (pair.1 ∩ pair.2).card - (n - (pair.1 ∪ pair.2).card)
+
+private theorem raised_fails : ¬ arena.Law raised := by
+  intro h
+  have impossible : (1 : ℕ) = 0 := h 1 (∅, ∅)
+  simp at impossible
+
+def family : Registration arena (type_of% rank_interval_card_eq_intersection_sub) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rank_interval_card_eq_intersection_sub, raised, raised_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨raised, ?_, rfl, raised_fails⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := by
+    rintro ⟨⟩
+    exact ⟨1, (∅, ∅), (univ, univ), by decide +kernel⟩
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (rank_interval_card_eq_intersection_sub) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds.Interval.window
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds.Interval.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ n pair => (Ioc (n - pair.2.card) pair.1.card).card) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end
+end Reg.D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds.Interval

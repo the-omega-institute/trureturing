@@ -69,25 +69,9 @@ private theorem active_budget {n : ℕ} (p : EvenSubset n) (q : OddSubset n)
   have fit : ((R ∪ C).filter (active p q)) ⊆ Ioc (n-q.val.card) p.val.card := by
     intro r hr
     exact active_fits (mem_filter.mp hr).2
-  exact (card_le_card fit).trans (rank_interval_card_le_intersection p.val q.val)
-
-private theorem flag_budget {n : ℕ} (q : OddSubset n) (R C : Finset ℕ)
-    (separate : Disjoint R C) (upper : ∀ r ∈ R ∪ C, r ≤ n - 2) :
-    1 + (∑ r ∈ R, (if q ∈ highOdd r then 1 else 0 : ℕ)) +
-      (∑ r ∈ C, (if q ∈ highOdd r then 1 else 0 : ℕ)) ≤ q.val.card := by
-  classical
-  rw [add_assoc, ← sum_union separate, ← sum_filter, ← card_eq_sum_ones]
-  have fit : ((R ∪ C).filter (fun r => q ∈ highOdd r)) ⊆ Ioc (n-q.val.card) (n-2) := by
-    intro r hr
-    obtain ⟨mem, hq⟩ := mem_filter.mp hr
-    have hr := upper r mem
-    have out : n-r < q.val.card := by simpa [highOdd] using hq
-    have qcard : q.val.card ≤ n := by simpa using card_le_univ q.val
-    exact mem_Ioc.mpr ⟨by omega, hr⟩
-  have room := card_le_card fit
-  rw [Nat.card_Ioc] at room
-  have odd := q.property
-  omega
+  refine (card_le_card fit).trans ?_
+  rw [rank_interval_card_eq_intersection_sub n (p.val, q.val)]
+  exact Nat.sub_le _ _
 
 private theorem row_cut {n k : ℕ}
     (full : EvenSubset n) (full_size : full.val.card = n)
@@ -166,7 +150,6 @@ private theorem col_cut {n k : ℕ}
     · simp [hp, hq, highOdd, active]
 
 
-
 private theorem reserved_col_mass {n k : ℕ} (full : EvenSubset n)
     (mass : EvenSubset n → OddSubset n → ℕ)
     (rows : ∀ p, ∑ q, mass p q = k) (q : OddSubset n) (present : 1 ≤ mass full q)
@@ -208,23 +191,31 @@ private def cellFlags {n : ℕ} (full p : EvenSubset n) (q : OddSubset n)
 /-- Add row and column deficits on disjoint threshold sets in one odd-margin table. -/
 theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
     (cuts : Finset ℕ × Finset ℕ) (separate : Disjoint cuts.1 cuts.2)
-    (upper : ∀ r ∈ cuts.1 ∪ cuts.2, r ≤ n - 2)
     (mass : EvenSubset n → OddSubset n → ℕ) (flags : OddSubset n → ℕ)
     (rows : ∀ p, ∑ q, mass p q = k) (cols : ∀ q, ∑ p, mass p q = k)
-    (positive : ∃ q, 1 ≤ flags q ∧ flags q ≤ mass ⟨univ, by simpa using even⟩ q) :
-    1 + (∑ r ∈ cuts.1, ((highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card)) +
-      (∑ r ∈ cuts.2, ((highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1))) ≤
-    ∑ p : EvenSubset n, ∑ q : OddSubset n,
-      (if p = ⟨univ, by simpa using even⟩ then flags q else mass p q % 2) * (p.val ∩ q.val).card := by
+    (q : OddSubset n) (present : 1 ≤ mass ⟨univ, by simpa using even⟩ q) :
+    (∑ c, flags c * c.val.card) +
+      ((∑ r ∈ cuts.1, ((highOrdinaryEvenRanks (n := n) r).card + 1 -
+        k * (lowOddRanks (n := n) r).card)) +
+      (∑ r ∈ cuts.2, ((highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)))) ≤
+    (∑ p : EvenSubset n, ∑ c : OddSubset n,
+      (if p = ⟨univ, by simpa using even⟩ then flags c else mass p c % 2) *
+        (p.val ∩ c.val).card) +
+      ((∑ r ∈ cuts.1, (if q ∈ highOdd r then
+          let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
+          d - (d - 1) else 0 : ℕ)) +
+       (∑ r ∈ cuts.2, (if q ∈ highOdd r then
+          let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
+          d - (d - 1) else 0 : ℕ))) := by
   classical
   let R := cuts.1
   let C := cuts.2
   let full : EvenSubset n := ⟨univ, by simpa using even⟩
   have full_size : full.val.card = n := by simp [full]
-  obtain ⟨q, flag, dom⟩ := positive
-  have present : 1 ≤ mass full q := flag.trans dom
   have used : ∀ r ∈ R, (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card ≤
-      (∑ p, ∑ c, cellFlags full p c mass r) + (if q ∈ highOdd r then 1 else 0) := by
+      (∑ p, ∑ c, cellFlags full p c mass r) + (if q ∈ highOdd r then
+          let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
+          d - (d - 1) else 0) := by
     intro r _
     have h := reserved_low_mass mass full full_size cols q present (r := r)
     have eq : (if q ∈ lowOddRanks r then (0:ℕ) else 1) = if q ∈ highOdd r then 1 else 0 := by
@@ -232,53 +223,81 @@ theorem mixed_rank_lower (n k : ℕ) (even : n % 2 = 0) (odd : k % 2 = 1)
       · simp [lowOddRanks, highOdd, h, not_le.mpr h]
       · simp [lowOddRanks, highOdd, h, not_lt.mp h]
     rw [eq] at h
-    exact h.trans (Nat.add_le_add_right (row_cut full full_size mass rows odd r) _)
+    by_cases positive : 0 < (highOrdinaryEvenRanks (n := n) r).card + 1 -
+        k * (lowOddRanks (n := n) r).card
+    · have charge : (let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
+          d - (d - 1)) = 1 := by
+        dsimp
+        omega
+      simpa only [charge, cellFlags] using
+        h.trans (Nat.add_le_add_right (row_cut full full_size mass rows odd r) _)
+    · have zero : (highOrdinaryEvenRanks (n := n) r).card + 1 -
+          k * (lowOddRanks (n := n) r).card = 0 := Nat.eq_zero_of_not_pos positive
+      rw [zero]
+      exact Nat.zero_le _
   have usedCol : ∀ r ∈ C, (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1) ≤
-      (∑ p, ∑ c, cellFlags full p c mass r) + (if q ∈ highOdd r then 1 else 0) := by
+      (∑ p, ∑ c, cellFlags full p c mass r) + (if q ∈ highOdd r then
+          let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
+          d - (d - 1) else 0) := by
     intro r _
-    exact (reserved_col_mass full mass rows q present r).trans
-      (Nat.add_le_add_right (col_cut full mass cols odd r) _)
+    by_cases positive : 0 < (highOdd (n := n) r).card + 1 -
+        k * ((lowEven (n := n) r).card + 1)
+    · have charge : (let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
+          d - (d - 1)) = 1 := by
+        dsimp
+        omega
+      simpa only [charge, cellFlags] using
+        (reserved_col_mass full mass rows q present r).trans
+          (Nat.add_le_add_right (col_cut full mass cols odd r) _)
+    · have zero : (highOdd (n := n) r).card + 1 -
+          k * ((lowEven (n := n) r).card + 1) = 0 := Nat.eq_zero_of_not_pos positive
+      rw [zero]
+      exact Nat.zero_le _
   have rowSum := sum_le_sum used
   have colSum := sum_le_sum usedCol
   rw [sum_add_distrib] at rowSum colSum
-  have chosen := flag_budget q R C separate upper
-  have spot : q.val.card ≤ (∑ c, flags c * c.val.card) := by
-    have one := Nat.mul_le_mul_right q.val.card flag
-    rw [Nat.one_mul] at one
-    exact one.trans (single_le_sum (f := fun c => flags c * c.val.card)
-      (fun _ _ => Nat.zero_le _) (mem_univ q))
-  have base :
-      1 + (∑ r ∈ R, ((highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card)) +
-        (∑ r ∈ C, ((highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1))) ≤
+  refine (Nat.add_le_add_left (Nat.add_le_add rowSum colSum) _).trans ?_
+  have bound :
       (∑ c, flags c * c.val.card) + (∑ r ∈ R, ∑ p, ∑ c, cellFlags full p c mass r) +
-        (∑ r ∈ C, ∑ p, ∑ c, cellFlags full p c mass r) := by omega
-  apply base.trans
-  have regroup (S : Finset ℕ) :
-      (∑ r ∈ S, ∑ p, ∑ c, cellFlags full p c mass r) =
-      ∑ p, ∑ c, ∑ r ∈ S, cellFlags full p c mass r := by
-    rw [sum_comm]
-    exact sum_congr rfl (fun p _ => sum_comm)
-  have fullSum : (∑ c, flags c * c.val.card) =
-      ∑ p : EvenSubset n, ∑ c, if p = full then flags c * c.val.card else 0 := by
-    rw [sum_comm]
-    apply sum_congr rfl
+        (∑ r ∈ C, ∑ p, ∑ c, cellFlags full p c mass r) ≤
+      ∑ p : EvenSubset n, ∑ c : OddSubset n,
+        (if p = full then flags c else mass p c % 2) * (p.val ∩ c.val).card := by
+    have regroup (S : Finset ℕ) :
+        (∑ r ∈ S, ∑ p, ∑ c, cellFlags full p c mass r) =
+        ∑ p, ∑ c, ∑ r ∈ S, cellFlags full p c mass r := by
+      rw [sum_comm]
+      exact sum_congr rfl (fun p _ => sum_comm)
+    have fullSum : (∑ c, flags c * c.val.card) =
+        ∑ p : EvenSubset n, ∑ c, if p = full then flags c * c.val.card else 0 := by
+      rw [sum_comm]
+      apply sum_congr rfl
+      intro c _
+      simp
+    rw [regroup, regroup, fullSum]
+    simp only [← sum_add_distrib]
+    apply sum_le_sum
+    intro p _
+    apply sum_le_sum
     intro c _
-    simp
-  rw [regroup, regroup, fullSum]
-  simp only [← sum_add_distrib]
-  apply sum_le_sum
-  intro p _
-  apply sum_le_sum
-  intro c _
-  by_cases hp : p = full
-  · subst p
-    simp [cellFlags, full]
-  · have atCut (S : Finset ℕ) :
-        (∑ r ∈ S, cellFlags full p c mass r) =
-        (mass p c % 2) * (∑ r ∈ S, (if active p c r then 1 else 0 : ℕ)) := by
-      rw [mul_sum]
-      exact sum_congr rfl (fun r _ => by by_cases h : active p c r <;> simp [cellFlags, hp, h])
-    rw [ite_eq_right hp, ite_eq_right hp, zero_add, atCut, atCut, ← Nat.mul_add]
-    exact Nat.mul_le_mul_left _ (active_budget p c R C separate)
+    by_cases hp : p = full
+    · subst p
+      simp [cellFlags, full]
+    · have atCut (S : Finset ℕ) :
+          (∑ r ∈ S, cellFlags full p c mass r) =
+          (mass p c % 2) * (∑ r ∈ S, (if active p c r then 1 else 0 : ℕ)) := by
+        rw [mul_sum]
+        exact sum_congr rfl (fun r _ => by by_cases h : active p c r <;> simp [cellFlags, hp, h])
+      rw [ite_eq_right hp, ite_eq_right hp, zero_add, atCut, atCut, ← Nat.mul_add]
+      exact Nat.mul_le_mul_left _ (active_budget p c R C separate)
+  change _ ≤
+    (∑ p : EvenSubset n, ∑ c : OddSubset n,
+      (if p = full then flags c else mass p c % 2) * (p.val ∩ c.val).card) +
+      ((∑ r ∈ R, (if q ∈ highOdd r then
+          let d := (highOrdinaryEvenRanks (n := n) r).card + 1 - k * (lowOddRanks (n := n) r).card
+          d - (d - 1) else 0 : ℕ)) +
+       (∑ r ∈ C, (if q ∈ highOdd r then
+          let d := (highOdd (n := n) r).card + 1 - k * ((lowEven (n := n) r).card + 1)
+          d - (d - 1) else 0 : ℕ)))
+  omega
 end
 end D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds

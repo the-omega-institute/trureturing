@@ -14,11 +14,14 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
         var columns = F.Id("C");
         var table = F.Id("m");
         var flags = F.Id("b");
+        var column = F.Id("q");
         return Disp(new Formula.Logic(
-            Call("OddUniformMarginsAndDisjointCuts", n, k, rows, columns, table, flags),
+            Call("OddUniformMarginsAndDisjointCuts", n, k, rows, columns, table, column),
             FormulaLogicOperator.Implies,
-            Seq(Call("MixedRankDeficits", n, k, rows, columns), Sp, Le, Sp,
-                Call("IntersectionCount", n, table, flags))));
+            Seq(Call("FullRowScore", n, flags), Sp, Plus, Sp,
+                Call("MixedRankDeficits", n, k, rows, columns), Sp, Le, Sp,
+                Call("IntersectionCount", n, table, flags), Sp, Plus, Sp,
+                Call("ChargedPositiveDeficitCount", n, rows, columns, column))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -34,23 +37,24 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
                 Paragraph(Text("The dimension n is even. Each row and column of the natural-number "
                     + "table has the same odd marginal k. Rows are all even subsets of the "
                     + "coordinates and columns are all odd subsets. The finite sets R and C of "
-                    + "natural-number thresholds are disjoint, and every threshold is at most "
-                    + "n minus 2 in natural-number subtraction. Some full-row flag is positive "
-                    + "and at most its corresponding mass.")),
+                    + "natural-number thresholds are disjoint. The chosen column q has positive "
+                    + "mass in the full row.")),
                 Paragraph(Text("The score multiplies the intersection size of each ordinary cell "
                     + "by its mass modulo two. Each full-row cell instead uses its flag.")),
-                Paragraph(Text("The bound starts with one. For each r in R, add the positive part "
-                    + "of one plus the number of ordinary even rows of weight at least r, minus "
+                Paragraph(Text("The bound starts with the full-row score. For each r in R, add the "
+                    + "positive part of one plus the number of ordinary even rows of weight at least r, minus "
                     + "k times the number of odd columns of weight at most n minus r. For each "
                     + "r in C, add the positive part of one plus the number of odd columns of "
-                    + "weight greater than n minus r, minus k times one plus the number of even "
-                    + "rows of weight below r. The extra row in that capacity estimate is the "
-                    + "full row.")),
-                Paragraph(Text("A charged ordinary cell assigns each selected threshold to a "
+                    + "weight greater than n minus r, minus k times the quantity one plus the number of even "
+                    + "rows of weight below r. The additional allowance in that estimate "
+                    + "accounts for the full row.")),
+                Paragraph(Text("For each ordinary cell, assign every threshold that charges that cell to a "
                     + "distinct position in the integer interval from n minus the column weight, "
-                    + "excluded, to the row weight, included. The positive full-row flag "
-                    + "covers a baseline unit and the thresholds above the lower endpoint for "
-                    + "its own column. For other thresholds, the mass at that flag improves "
+                    + "excluded, to the row weight, included. Its length is the intersection "
+                    + "size minus the number of coordinates missed by both profiles, using "
+                    + "natural-number subtraction. Count a selected threshold on the right-hand "
+                    + "side when its deficit is positive and q has weight greater than n minus r. "
+                    + "For a positive deficit at any other threshold, the mass in q improves "
                     + "the capacity estimate by one."))),
             DescribeRole.Theorem))));
 }
