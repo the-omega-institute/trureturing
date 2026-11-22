@@ -46,6 +46,7 @@ local macro "splitCover" : tactic =>
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
+-- Replay the closed interval checks in independently reduced subcovers.
 private theorem check_upper_one_to_five_quarters :
     wideCheckCover 11 (0, 3 / 11) (0, 1 / 2) (1, 5 / 4) = true := by
   iterate 3 all_goals splitCover
@@ -53,6 +54,7 @@ private theorem check_upper_one_to_five_quarters :
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
+-- Replay the closed interval checks in independently reduced subcovers.
 private theorem check_upper_five_quarters_to_three_halves :
     wideCheckCover 11 (0, 3 / 11) (0, 1 / 2) (5 / 4, 3 / 2) = true := by
   iterate 3 all_goals splitCover
