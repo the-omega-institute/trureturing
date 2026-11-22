@@ -9,7 +9,7 @@
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerFiniteActivation
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerPrimeTail
 import D5.S3.Arith.Robin.PriceRecord.IntegerInfimumSecondOrder
-import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
+import D5.S3.Arith.Robin.PriceRecord.IntegerInfimumSharpLimit
 import Mathlib.Tactic
 
 /-!
@@ -31,19 +31,20 @@ namespace D5.S3.Arith.Robin.PriceRecord.FixedLayerAggregate
 open Finset Filter Real
 open scoped BigOperators Topology
 open FixedLayerFiniteActivation
-  (layerGain clippedLayers fixedPriceMinimum fixed_price_omitted_layers)
+  (layerGain layerGain_eq_eulerTerm_sub clippedLayers fixedPriceMinimum fixed_price_omitted_layers)
 open FixedLayerPrimeTail (activationLayer activation_layer_tendsto)
 open FixedLayerRigidity (golden_layer_gain_lower)
-open D5.S3.Arith.GoldenResourceOptimalInteger (goldenLayerMarginal)
 open D5.S3.Arith.GoldenLayerMarginalDecay (golden_layer_marginal_le_inv_pow)
 open FixedSupportIntegerActivationEnvelope
   (supportedAdmissible integerValues integerInfimum clockIncrement eulerTerm tailCost linearCost)
-open RealInfimumPrimeBoundary (prefixH prefixEll prefixPrice prefixH_atTop)
+open RealInfimumPrimeBoundary
+  (prefixH prefixEll prefixPrice prefixH_atTop prefixEll_atTop eventual_prefix_domains)
+open IntegerInfimumSecondOrder (log_pow_over_H_rpow)
+open IntegerInfimumSharpLimit (fixed_price_tangent_bound)
 open OwnClockFixedSupport (primeSupport admissible theta clock terminalCost phi baseline
-  tangentRemainder theta_le_clock tangent_remainder_nonnegative)
+  tangentRemainder theta_gt_one theta_le_clock tangent_remainder_nonnegative)
 open BoundaryPrimePrice (benefit probability benefit_log)
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g)
-open D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
 open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (finite_cubic_tail)
 open D5.S3.Arith.Lattices.Klartag (neg_log_one_sub_le)
 
@@ -72,19 +73,6 @@ private lemma eulerTerm_le_twice_power {p k : ℕ} (hp : p.Prime) :
   change -log (1 - x) ≤ 2 * x
   nlinarith only [hquad, hmul]
 
-private lemma layerGain_eq_eulerDifference {p j : ℕ} (hp : p.Prime) (hj : 1 ≤ j) :
-    layerGain p j = eulerTerm p (j - 1) - eulerTerm p j := by
-  have hden (n : ℕ) (hn : 1 ≤ n) : 0 < 1 - 1 / (p : ℝ) ^ n := by
-    have hhalf := inv_pow_le_half hp hn
-    linarith only [hhalf]
-  rw [layerGain, goldenLayerMarginal, div_mul_cancel₀ _ hp.log_pos.ne']
-  simp only [inv_pow]
-  simp only [← one_div]
-  rw [log_div (hden (j + 1) (by omega)).ne' (hden j hj).ne']
-  unfold eulerTerm
-  rw [Nat.sub_add_cancel hj]
-  ring
-
 /-- The difference between clipping the reciprocal power and clipping the Euler increment
 vanishes up to the power cutoff. Beyond the cutoff it is bounded by the next power. -/
 private lemma clipped_layer_error {p j : ℕ} (hp : p.Prime) (hj : 2 ≤ j)
@@ -102,7 +90,7 @@ private lemma clipped_layer_error {p j : ℕ} (hp : p.Prime) (hj : 2 ≤ j)
   let D : ℝ := eulerTerm p (j - 1) - eulerTerm p j
   change 0 ≤ min q x - min q D ∧ min q x - min q D ≤ if u < (p : ℝ) then y else 0
   have hj1 : 1 ≤ j := by omega
-  have hD : layerGain p j = D := layerGain_eq_eulerDifference hp hj1
+  have hD : layerGain p j = D := layerGain_eq_eulerTerm_sub hp hj1
   have hlo : x - y ≤ D := by
     rw [← hD, layerGain]
     calc
@@ -202,7 +190,7 @@ private lemma retained_layer_bounds {S : Finset ℕ} (hS : primeSupport S)
   have hpoint (p : ℕ) (hp : p ∈ S) := clipped_layer_error (hS p hp) hj hB
   have hgain (p : ℕ) (hp : p ∈ S) :
       layerGain p j = eulerTerm p (j - 1) - eulerTerm p j :=
-    layerGain_eq_eulerDifference (hS p hp) (by omega)
+    layerGain_eq_eulerTerm_sub (hS p hp) (by omega)
   rw [← sum_sub_distrib]
   constructor
   · exact sum_nonneg (fun p hp => by simpa only [hgain p hp] using (hpoint p hp).1)
@@ -437,7 +425,7 @@ private lemma integer_loss_forms {S : Finset ℕ} (hS : primeSupport S)
 /-- Sublevel estimate comparing the infima of the full admissible integer
 cost images at the nonlinear clock and at its tangent price. -/
 private theorem integer_fixed_price_envelope {S : Finset ℕ} (hS : primeSupport S)
-    (hH : 1 < theta S) (hlog : 1 ≤ log (theta S)) {r : ℝ} (hr : 0 < r) :
+    (hcard : 3 ≤ S.card) (hlog : 1 ≤ log (theta S)) {r : ℝ} (hr : 0 < r) :
     let B := theta S
     let L := log B
     let V := fixedPriceMinimum S (g B)
@@ -448,9 +436,9 @@ private theorem integer_fixed_price_envelope {S : Finset ℕ} (hS : primeSupport
   let A := exp (L * (exp r - 1)) - 1
   let V := fixedPriceMinimum S (g B)
   change min r (V - A ^ 2 / L) ≤ integerInfimum S ∧ integerInfimum S ≤ V
+  have hH : 1 < B := theta_gt_one hS hcard
   have hB0 : 0 < B := zero_lt_one.trans hH
   have hL0 : 0 < L := log_pos hH
-  have hLp : 1 ≤ L := hlog
   let linearValues : Set ℝ :=
     {v | ∃ a : ℕ → ℕ, supportedAdmissible S a ∧ linearCost S (g B) a = v}
   have hprice : 0 < g B := one_div_pos.mpr (mul_pos hB0 hL0)
@@ -495,49 +483,8 @@ private theorem integer_fixed_price_envelope {S : Finset ℕ} (hS : primeSupport
     change min r (V - A ^ 2 / L) ≤ D
     by_cases hlarge : r ≤ D
     · exact (min_le_left _ _).trans hlarge
-    · have hTB : B ≤ T := hT a ha
-      have hT1 : 1 < T := hH.trans_le hTB
-      have hD : D = terminalCost T - terminalCost B + tailCost S a :=
-        (integer_loss_forms hS ha).1
-      have hloglog : log (log T) < log L + r := by
-        change terminalCost T < terminalCost B + r
-        linarith only [hD, htail a, (lt_of_not_ge hlarge : D < r)]
-      have hlogT : log T < L * exp r := by
-        simpa only [exp_add, exp_log hL0] using
-          (log_lt_iff_lt_exp (log_pos hT1)).mp hloglog
-      have hclock : T < B * exp (L * (exp r - 1)) := by
-        have h := (log_lt_iff_lt_exp (zero_lt_one.trans hT1)).mp hlogT
-        rw [show L * exp r = log B + L * (exp r - 1) by
-          change L * exp r = L + L * (exp r - 1)
-          ring, exp_add, exp_log hB0] at h
-        exact h
-      let u := (T - B) / B
-      have hu0 : 0 ≤ u := div_nonneg (sub_nonneg.mpr hTB) hB0.le
-      have huA : u ≤ A := (div_le_iff₀ hB0).2 (by
-        dsimp only [A]
-        nlinarith only [hclock.le])
-      have hA0 : 0 ≤ A := hu0.trans huA
-      have hcurv := (loglog_tangent_gap_quadratic hH hT1).2
-      dsimp only at hcurv
-      rw [min_eq_left hTB] at hcurv
-      have hrem : tangentRemainder B T ≤ A ^ 2 / L := by
-        calc
-          tangentRemainder B T ≤ (1 + L) / (B ^ 2 * L ^ 2) * (T - B) ^ 2 / 2 := by
-            have hid : tangentRemainder B T = log (log B) + (T - B) / (B * log B) -
-                log (log T) := by
-              unfold tangentRemainder terminalCost g
-              ring
-            rw [hid]
-            exact hcurv
-          _ = ((1 + L) / (2 * L)) * (u ^ 2 / L) := by
-            dsimp only [u]
-            field_simp [hB0.ne', hL0.ne'] <;> ring
-          _ ≤ u ^ 2 / L := by
-            have hcoef : (1 + L) / (2 * L) ≤ 1 :=
-              (div_le_iff₀ (by positivity)).2 (by linarith only [hLp])
-            simpa only [one_mul] using mul_le_mul_of_nonneg_right hcoef
-              (div_nonneg (sq_nonneg u) hL0.le)
-          _ ≤ A ^ 2 / L := div_le_div_of_nonneg_right ((sq_le_sq₀ hu0 hA0).2 huA) hL0.le
+    · have hrem : tangentRemainder B T ≤ A ^ 2 / L :=
+        fixed_price_tangent_bound hS hcard hlog hr (hadm a ha) (lt_of_not_ge hlarge)
       have hv : V ≤ linearCost S (g B) a :=
         csInf_le hlinearBounded (show linearCost S (g B) a ∈ linearValues from ⟨a, ha, rfl⟩)
       have hid : linearCost S (g B) a = D + tangentRemainder B T :=
@@ -552,13 +499,6 @@ private theorem integer_fixed_price_envelope {S : Finset ℕ} (hS : primeSupport
     have hrem := (tangent_remainder_nonnegative hH (hH.trans_le (hT a ha))).1
     exact (csInf_le hbounded hmem).trans (by linarith only [hid, hrem])
 
-private lemma log_pow_over_H_rpow (k : ℕ) {a : ℝ} (ha : 0 < a) :
-    Tendsto (fun P => ℓ P ^ k / (H P) ^ a) atTop (𝓝 0) := by
-  simpa only [Function.comp_def, prefixEll, rpow_natCast] using
-    ((isLittleO_log_rpow_rpow_atTop (k : ℝ) ha).tendsto_div_nhds_zero.comp prefixH_atTop)
-
-private lemma ell_atTop : Tendsto ℓ atTop atTop := Real.tendsto_log_atTop.comp prefixH_atTop
-
 /-- The existing integer second-order theorem implies that the full infimum is
 little-o of the sublevel radius `1 / sqrt H`. -/
 private theorem sqrt_H_mul_integerInfimum_tendsto_zero :
@@ -566,13 +506,13 @@ private theorem sqrt_H_mul_integerInfimum_tendsto_zero :
   have h₂ := IntegerInfimumSecondOrder.actual_integer_infimum_second_order
   have h₁ : Tendsto (fun P : ℕ => sqrt (H P) * ℓ P * I P - 2 * sqrt 2)
       atTop (𝓝 0) := by
-    apply (h₂.div_atTop ell_atTop).congr'
-    filter_upwards [ell_atTop.eventually_gt_atTop 0] with P hP
+    apply (h₂.div_atTop prefixEll_atTop).congr'
+    filter_upwards [prefixEll_atTop.eventually_gt_atTop 0] with P hP
     exact mul_div_cancel_left₀ _ hP.ne'
   have h₀ := h₁.add_const (2 * sqrt 2)
   simp only [sub_add_cancel, zero_add] at h₀
-  apply (h₀.div_atTop ell_atTop).congr'
-  filter_upwards [ell_atTop.eventually_gt_atTop 0] with P hP
+  apply (h₀.div_atTop prefixEll_atTop).congr'
+  filter_upwards [prefixEll_atTop.eventually_gt_atTop 0] with P hP
   field_simp [hP.ne'] <;> ring
 
 private def radius (P : ℕ) : ℝ := 1 / sqrt (H P)
@@ -606,8 +546,8 @@ eliminated by the existing integer second-order limit. -/
 private theorem eventually_tangent_bounds : ∀ᶠ P : ℕ in atTop,
     let D := fixedPriceMinimum (Nat.primesLE P) (prefixPrice P) - I P
     0 ≤ D ∧ D ≤ 16 * ℓ P / H P := by
-  filter_upwards [prefixH_atTop.eventually_gt_atTop 1, ell_atTop.eventually_ge_atTop 1,
-    eventually_integerInfimum_lt_radius, eventually_small_radius] with P hB hlog hI hrscale
+  filter_upwards [prefixH_atTop.eventually_gt_atTop 1, eventual_prefix_domains,
+    eventually_integerInfimum_lt_radius, eventually_small_radius] with P hB hdomain hI hrscale
   let S := Nat.primesLE P
   let L := ℓ P
   let B := H P
@@ -616,7 +556,7 @@ private theorem eventually_tangent_bounds : ∀ᶠ P : ℕ in atTop,
   let w := L * (exp r - 1)
   let A := exp w - 1
   change 0 ≤ V - I P ∧ V - I P ≤ 16 * L / B
-  have hS : primeSupport S := fun p hp => (Nat.mem_primesLE.mp hp).2
+  obtain ⟨hS, hcard, hlog, _⟩ := hdomain
   have hB0 : 0 < B := zero_lt_one.trans hB
   have hL0 : 0 < L := log_pos hB
   have hr : 0 < r := one_div_pos.mpr (sqrt_pos.2 hB0)
@@ -624,7 +564,7 @@ private theorem eventually_tangent_bounds : ∀ᶠ P : ℕ in atTop,
     have hs : (1 : ℝ) < sqrt B :=
       (lt_sqrt (by norm_num : (0 : ℝ) ≤ 1)).2 (by simpa only [one_pow] using hB)
     exact (div_le_iff₀ (sqrt_pos.2 hB0)).2 (by simpa only [one_mul] using hs.le)
-  have henv := integer_fixed_price_envelope hS hB hlog hr
+  have henv := integer_fixed_price_envelope hS hcard hlog hr
   change min r (V - A ^ 2 / L) ≤ I P ∧ I P ≤ V at henv
   have hV : V - A ^ 2 / L ≤ I P :=
     (min_le_iff.mp henv.1).resolve_left (not_le_of_gt hI)
@@ -655,7 +595,7 @@ private theorem eventually_all_fixed_layers_bound {m : ℕ} (hm : 2 ≤ m) :
       |I P - reciprocalLayers (Nat.primesLE P) (prefixPrice P) m| ≤
         (16 + 2 * (m : ℝ)) * ℓ P / H P +
           remainderConstant / (H P) ^ ((m : ℝ) / ((m : ℝ) + 1)) := by
-  filter_upwards [prefixH_atTop.eventually_gt_atTop 1, ell_atTop.eventually_ge_atTop 1,
+  filter_upwards [prefixH_atTop.eventually_gt_atTop 1, prefixEll_atTop.eventually_ge_atTop 1,
     eventually_tangent_bounds] with P hB hlog hD
   let S := Nat.primesLE P
   let lam := prefixPrice P

@@ -225,7 +225,7 @@ private lemma activation_split (P : ℕ) {t : ℝ} (ht : 1 < t) (htP : t ≤ (P 
   change (∑ p ∈ Nat.primesLE P, f p) = _
   rw [← sum_sdiff hsub (f := f), hs, hh, add_comm]
 
-private lemma log_pow_over_H_rpow (k : ℕ) {a : ℝ} (ha : 0 < a) :
+lemma log_pow_over_H_rpow (k : ℕ) {a : ℝ} (ha : 0 < a) :
     Tendsto (fun P => ℓ P ^ k / (H P) ^ a) atTop (𝓝 0) := by
   simpa only [Function.comp_def, prefixEll, rpow_natCast] using
     ((isLittleO_log_rpow_rpow_atTop (k : ℝ) ha).tendsto_div_nhds_zero.comp prefixH_atTop)
