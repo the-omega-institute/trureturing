@@ -29,7 +29,7 @@ open RealInfimumPrimeBoundary PrimeBoundarySecondOrder
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g)
 open D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
 
-private lemma fixed_price_tangent_bound {S : Finset ℕ} (hS : primeSupport S)
+lemma fixed_price_tangent_bound {S : Finset ℕ} (hS : primeSupport S)
     (hcard : 3 ≤ S.card) (hlog : 1 ≤ log (theta S)) {r : ℝ} (hr : 0 < r)
     {x : ℕ → ℝ} (hx : admissible S x) (hsmall : phi S x - baseline S < r) :
     let H := theta S
