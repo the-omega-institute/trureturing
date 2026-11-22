@@ -30,9 +30,22 @@ Lean statement: `D5/S3/Quantum/Semigroups/WuRankOneEndpointFloor.localMap`
 
 The diagonal pair is averaged with weights 5/6 and 1/6. Off-diagonal entries are scaled by λ.
 
+**Theorem 1.3 (Square of the damping coefficient).**
+
+$$\lambda^{2} = \frac{2}{3}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Semigroups/WuRankOneEndpointFloor.lambda_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real square-root identity applies because 2/3 is nonnegative.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuRankOneEndpointFloor.A1_apply`
+- Truth anchor: `D5/S3/Quantum/Semigroups/WuRankOneEndpointFloor.lambda_sq`
 - Truth anchor: `D5/S3/Quantum/Semigroups/WuRankOneEndpointFloor.localMap`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/Pauli/PauliMatrix](../Information/Pauli/PauliMatrix.md)
