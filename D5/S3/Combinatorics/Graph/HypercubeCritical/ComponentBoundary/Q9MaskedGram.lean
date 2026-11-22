@@ -6,7 +6,7 @@
    utility: none
    digest: Active row and column degrees bound the rectangular Huang Gram defect. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9IsotropicHuang
+import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9ComponentSaturation
 import Mathlib.Analysis.Matrix.Normed
 
 /-! The degree test bounds the two rectangular factors of the masked Huang Gram matrix. -/
@@ -17,8 +17,13 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9Masked
 
 open Matrix
 open scoped BigOperators Matrix.Norms.Operator
+open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q flip)
+open Q9ComponentSaturation (componentDefect componentDefect_det_eq componentParityFinset
+  exists_two_weighted_singular_components)
 open Q9IsotropicHuang (flipSign weightedMatrix)
+open Q9WeightedBoundaryGram (signed)
+open Q9WeightedSaturation (defect)
 
 private theorem opNorm_le_of_row_bound {ι κ : Type*} [Fintype ι] [Fintype κ]
     (M : Matrix ι κ ℝ) {d : NNReal} (h : ∀ x, ∑ y, ‖M x y‖ ≤ d) : ‖M‖ ≤ d := by
@@ -133,5 +138,75 @@ theorem masked_gram_det_ne_zero (I : Finset (Fin 9)) (S T : Finset (Q 9))
   exact (Matrix.linfty_opNorm_mul _ _).trans_lt
     ((mul_le_mul hrows hcols (norm_nonneg _) (Nat.cast_nonneg _)).trans_lt
       (by exact_mod_cast hgap))
+
+/-- Give weight one to the axes in the mask and zero to the other axes. -/
+def maskWeight (I : Finset (Fin 9)) (a : Fin 9) : ℝ :=
+  if a ∈ I then 1 else 0
+
+private theorem maskedBlock_eq_signed (I : Finset (Fin 9)) (S T : Finset (Q 9)) :
+    maskedBlock I S T = (signed (maskWeight I)).submatrix
+      (fun x : ↥S => x.1) (fun y : ↥T => y.1) := by
+  ext x y
+  simp only [maskedBlock, signed, Matrix.submatrix_apply, weightedMatrix, Int.cast_sum]
+  apply Finset.sum_congr rfl
+  intro a _
+  by_cases ha : a ∈ I <;> by_cases hxy : flip x.1 a = y.1 <;> simp [maskWeight, ha, hxy]
+
+open Classical in
+/-- The active-degree product test on the two parity sides of an actual component. -/
+theorem componentDefect_mask_det_ne_zero (U : Finset (Q 9)) (b : Bool)
+    (C : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent)
+    (I : Finset (Fin 9)) {r s : ℕ}
+    (hr : ∀ x ∈ componentParityFinset U b C,
+      (I.filter fun a => flip x a ∈ componentParityFinset U (!b) C).card ≤ r)
+    (hs : ∀ y ∈ componentParityFinset U (!b) C,
+      (I.filter fun a => flip y a ∈ componentParityFinset U b C).card ≤ s)
+    (hgap : r * s < I.card) : (componentDefect (maskWeight I) U b C).det ≠ 0 := by
+  classical
+  have hweight : ∑ a : Fin 9, maskWeight I a ^ 2 = (I.card : ℝ) := by
+    calc
+      _ = ∑ a : Fin 9, if a ∈ I then (1 : ℝ) else 0 := by
+        apply Finset.sum_congr rfl
+        intro a _
+        by_cases ha : a ∈ I <;> simp [maskWeight, ha]
+      _ = _ := by simp
+  rw [componentDefect_det_eq, ← maskedBlock_eq_signed, defect, hweight]
+  exact masked_gram_det_ne_zero I _ _ hr hs hgap
+
+open Classical in
+/-- In a subcubic support of size 258, at least two components fail every mask
+determinant test on the specified parity. -/
+theorem card_ne_258_of_component_mask_determinants (U : Finset (Q 9)) (b : Bool)
+    (hdeg : ∀ x : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree x ≤ 3)
+    (hbad : Set.Subsingleton {C | ¬ ∃ I : Finset (Fin 9),
+      (componentDefect (maskWeight I) U b C).det ≠ 0}) : U.card ≠ 258 := by
+  intro hU
+  obtain ⟨C, D, hCD, hsingular⟩ := exists_two_weighted_singular_components U hU hdeg b
+  exact hCD (hbad
+    (show ¬ ∃ I, (componentDefect (maskWeight I) U b C).det ≠ 0 from
+      fun ⟨I, hI⟩ => hI (hsingular (maskWeight I)).1)
+    (show ¬ ∃ I, (componentDefect (maskWeight I) U b D).det ≠ 0 from
+      fun ⟨I, hI⟩ => hI (hsingular (maskWeight I)).2))
+
+open Classical in
+/-- Exclude size 258 if all but at most one actual component admit a mask whose
+two active-degree bounds have product smaller than the size of the mask. -/
+theorem card_ne_258_of_component_degree_masks (U : Finset (Q 9)) (b : Bool)
+    (hdeg : ∀ x : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree x ≤ 3)
+    (hbad : Set.Subsingleton {C | ¬ ∃ (I : Finset (Fin 9)) (r s : ℕ),
+      (∀ x ∈ componentParityFinset U b C,
+        (I.filter fun a => flip x a ∈ componentParityFinset U (!b) C).card ≤ r) ∧
+      (∀ y ∈ componentParityFinset U (!b) C,
+        (I.filter fun a => flip y a ∈ componentParityFinset U b C).card ≤ s) ∧
+      r * s < I.card}) : U.card ≠ 258 := by
+  apply card_ne_258_of_component_mask_determinants U b hdeg
+  apply hbad.anti
+  intro C hC hcertificate
+  obtain ⟨I, r, s, hr, hs, hgap⟩ := hcertificate
+  exact hC ⟨I, componentDefect_mask_det_ne_zero U b C I hr hs hgap⟩
+
+#print axioms componentDefect_mask_det_ne_zero
+#print axioms card_ne_258_of_component_mask_determinants
+#print axioms card_ne_258_of_component_degree_masks
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9MaskedGram
