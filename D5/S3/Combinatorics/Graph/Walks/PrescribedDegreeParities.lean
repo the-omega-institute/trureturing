@@ -12,6 +12,8 @@ import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Data.ZMod.Basic
 
+/-! Degree parity prescriptions on finite connected graphs. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Walks.PrescribedDegreeParities
@@ -54,7 +56,8 @@ private theorem walk_boundary {G : SimpleGraph V} [DecidableRel G.Adj] {u v : V}
     have same := (by decide : ∀ t : ZMod 2, t + t = 0) ((Pi.single b 1 : V → ZMod 2) w)
     simp only [Pi.add_apply]
     calc
-      _ = (Pi.single a 1 : V → ZMod 2) w + (Pi.single c 1 : V → ZMod 2) w + ((Pi.single b 1 : V → ZMod 2) w + (Pi.single b 1 : V → ZMod 2) w) := by ac_rfl
+      _ = (Pi.single a 1 : V → ZMod 2) w + (Pi.single c 1 : V → ZMod 2) w +
+          ((Pi.single b 1 : V → ZMod 2) w + (Pi.single b 1 : V → ZMod 2) w) := by ac_rfl
       _ = _ := by rw [same, add_zero]
 
 private theorem connected_parity_incidence (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -76,15 +79,18 @@ private theorem connected_parity_incidence (G : SimpleGraph V) [DecidableRel G.A
     simp [Pi.single_eq_of_ne ne.symm]
   · simp
 
+omit [Fintype (Sym2 V)] [DecidableEq V] in
 /-- Prescribed degree parities on a connected finite graph are realizable by a spanning
 subgraph exactly when their sum in the two-element field is zero. -/
-open Classical in
 theorem exact_parity_subgraph (G : SimpleGraph V) (conn : G.Connected) (d : V → ZMod 2) :
-    (∃ H : SimpleGraph V, H ≤ G ∧ ∀ v, (Nat.card (H.neighborSet v) : ZMod 2) = d v) ↔ ∑ v, d v = 0 := by
+    (∃ H : SimpleGraph V, H ≤ G ∧ ∀ v, (Nat.card (H.neighborSet v) : ZMod 2) = d v) ↔
+      ∑ v, d v = 0 := by
+  classical
   constructor
   · rintro ⟨H, _, parities⟩
     simp_rw [← parities, Nat.card_eq_fintype_card, card_neighborSet_eq_degree]
-    rw [← Nat.cast_sum, H.sum_degrees_eq_twice_card_edges, Nat.cast_mul, ZMod.natCast_self, zero_mul]
+    rw [← Nat.cast_sum, H.sum_degrees_eq_twice_card_edges, Nat.cast_mul,
+      ZMod.natCast_self, zero_mul]
   · intro total
     obtain ⟨x, hx⟩ := connected_parity_incidence G conn d total
     let H := fromEdgeSet {e | e ∈ G.edgeSet ∧ x e = 1}

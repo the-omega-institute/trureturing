@@ -15,17 +15,20 @@ internal sealed class PrescribedDegreeParitiesDocument : IScribeDocumentDefiniti
         var vertex = F.Id("v");
         var graphs = Call("SimpleGraph", vertices);
         var bits = Call("ZMod", D(2));
-        var degreeParity = Eq(Call("DegreeModTwo", subgraph, vertex), Apply(target, vertex));
+        var degreeParity = Equal(Call("DegreeModTwo", subgraph, vertex), Call("d", vertex));
         var degrees = Bind(FormulaQuantifier.ForAll, "v", vertices, degreeParity);
         var graphExists = Bind(FormulaQuantifier.Exists, "H", graphs,
-            And(Call("Subgraph", subgraph, graph), degrees));
-        var total = Eq(Call("Total", target), D(0));
+            new Formula.Logic(Call("Subgraph", subgraph, graph), FormulaLogicOperator.And, degrees));
+        var total = Equal(Call("Total", target), D(0));
         var law = new Formula.Logic(graphExists, FormulaLogicOperator.Iff, total);
         var targets = Bind(FormulaQuantifier.ForAll, "d", Call("VertexLabelling", vertices, bits), law);
         var connected = new Formula.Logic(Call("Connected", graph), FormulaLogicOperator.Implies, targets);
         return Disp(Bind(FormulaQuantifier.ForAll, "V", Call("FiniteVertexType"),
             Bind(FormulaQuantifier.ForAll, "G", graphs, connected)));
     }
+
+    private static Formula Bind(FormulaQuantifier quantifier, string name, Formula domain, Formula body) =>
+        new Formula.Bind(quantifier, FormulaIdentifier.Create(name), domain, body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Vertex degree parity prescriptions on finite connected graphs.",
@@ -37,7 +40,7 @@ internal sealed class PrescribedDegreeParitiesDocument : IScribeDocumentDefiniti
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("V has a Fintype instance and decidable equality, and Sym2(V) has a Fintype instance. G is a connected simple graph. VertexLabelling assigns an element of ZMod(2) to each vertex, Total sums these labels, and DegreeModTwo casts the cardinality of the neighbour set to ZMod(2). Subgraph is the edge inclusion relation on simple graphs with the same vertex type.")),
+                Paragraph(Text("V is a finite vertex type and G is a connected simple graph. VertexLabelling assigns an element of ZMod(2) to each vertex, Total sums these labels, and DegreeModTwo casts the cardinality of the neighbour set to ZMod(2). Subgraph is the edge inclusion relation on simple graphs with the same vertex type.")),
                 Paragraph(Text("The handshaking identity gives the zero-sum condition. For the converse, the two endpoints of a walk are the boundary of the sum of its edges over ZMod(2), since internal incidences cancel in pairs. Taking walks to one root with coefficients given by the prescription cancels the root term because the total is zero. Select the edges with coefficient one. Their incidence vector is the prescribed degree parity."))),
             DescribeRole.Theorem))));
 }
