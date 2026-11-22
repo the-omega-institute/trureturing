@@ -38,6 +38,7 @@ Colour permutations preserve every equality test and every bond defect. A biject
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripClasses.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233127Rows](../../../Combinatorics/TraceAvoidingArrays/HardinA233127Rows.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State](../CrossedStripDefectsWide/P5b/HardinA229635State.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses](../CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripData](../CrossedStripDefectsWide/WidthSix/HardinA229532StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripClass0](HardinA229457StripClass0.md)

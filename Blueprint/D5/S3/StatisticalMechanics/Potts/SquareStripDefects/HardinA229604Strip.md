@@ -49,6 +49,8 @@ For every index at least 24, the literal canonical count satisfies the displayed
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.finite_certificate`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604Strip.result`
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635State](../CrossedStripDefectsWide/P5b/HardinA229635State.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P5b/HardinA229635Transfer](../CrossedStripDefectsWide/P5b/HardinA229635Transfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457Strip](HardinA229457Strip.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData](HardinA229457StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripClasses](HardinA229604StripClasses.md)
