@@ -4,7 +4,7 @@
 
 A quartic variance bound for the four prefix averages of the Wu endpoint convolution.
 
-At the tracial three-to-four endpoint, the classical convolution majorizes the ordered spectrum of the signed two-mode output. For a nonzero input, the prefix reduction for maximizing the sum of t⁴ − κt³ over the majorization polytope uses the four tail averages, with κ equal to the ratio of the third and second input moments.
+At the tracial three-to-four endpoint, the classical convolution majorizes the ordered spectrum of the signed two-mode output. For a nonzero positive semidefinite input, the prefix reduction for maximizing the sum of t⁴ − κt³ over the majorization polytope uses the four tail averages, with κ equal to the ratio of the third and second input moments.
 
 **Definition 1.1 (Normalized spectral moment).**
 

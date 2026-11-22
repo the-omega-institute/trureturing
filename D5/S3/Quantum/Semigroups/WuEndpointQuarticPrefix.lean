@@ -48,20 +48,17 @@ private def classicalInGaps (r z p q t : ℝ) : Fin 4 → ℝ :=
     z + p / 12 + (1 / 2 - r / 2) * q + 11 * t / 12,
     z + (5 / 12 - r / 2) * p + (1 / 2 - r / 2) * q + (7 / 12 - r / 2) * t]
 
-private theorem damping_sq : lambda ^ 2 = (2 / 3 : ℝ) :=
-  Real.sq_sqrt (by norm_num)
-
 private theorem endpointClassical_gapVector (z p q t : ℝ) :
     endpointClassical (gapVector z p q t) = classicalInGaps lambda z p q t := by
   have hAlpha : endpointAlpha ^ 2 = 5 / 12 + lambda / 2 := by
     unfold endpointAlpha
-    linear_combination (1 / 4 : ℝ) * damping_sq
+    linear_combination (1 / 4 : ℝ) * lambda_sq
   have hBeta : endpointBeta ^ 2 = 5 / 12 - lambda / 2 := by
     unfold endpointBeta
-    linear_combination (1 / 4 : ℝ) * damping_sq
+    linear_combination (1 / 4 : ℝ) * lambda_sq
   have hCross : endpointAlpha * endpointBeta = (1 / 12 : ℝ) := by
     unfold endpointAlpha endpointBeta
-    linear_combination -(1 / 4 : ℝ) * damping_sq
+    linear_combination -(1 / 4 : ℝ) * lambda_sq
   funext i
   fin_cases i <;>
     simp [endpointClassical, classicalInGaps, gapVector, hAlpha, hBeta, hCross,
@@ -537,12 +534,12 @@ theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
   have hLower : 0 ≤ lambda - 4 / 5 := by
     apply sub_nonneg.mpr
     apply (sq_le_sq₀ (by norm_num : (0 : ℝ) ≤ 4 / 5) hDamping).mp
-    rw [damping_sq]
+    rw [lambda_sq]
     norm_num
   have hUpper : 0 ≤ 41 / 50 - lambda := by
     apply sub_nonneg.mpr
     apply (sq_le_sq₀ hDamping (by norm_num : (0 : ℝ) ≤ 41 / 50)).mp
-    rw [damping_sq]
+    rw [lambda_sq]
     norm_num
   apply sub_nonneg.mp
   change 0 ≤ quarticGap x (endpointPrefixAverage k (endpointClassical x))
@@ -552,19 +549,19 @@ theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
     exact uniform_gap x hNonneg
   · rcases le_total p t with hpt | htp
     · simpa only [show p + (t - p) = t by ring] using
-        one_prefix_p_le_t hDamping damping_sq hUpper hz hp hq (sub_nonneg.mpr hpt)
+        one_prefix_p_le_t hDamping lambda_sq hUpper hz hp hq (sub_nonneg.mpr hpt)
     · simpa only [show t + (p - t) = p by ring] using
-        one_prefix_t_le_p hDamping damping_sq hUpper hz ht hq (sub_nonneg.mpr htp)
+        one_prefix_t_le_p hDamping lambda_sq hUpper hz ht hq (sub_nonneg.mpr htp)
   · rcases le_total p t with hpt | htp
     · simpa only [show p + (t - p) = t by ring] using
-        two_prefix_p_le_t hDamping damping_sq hLower hUpper hz hp hq (sub_nonneg.mpr hpt)
+        two_prefix_p_le_t hDamping lambda_sq hLower hUpper hz hp hq (sub_nonneg.mpr hpt)
     · simpa only [show t + (p - t) = p by ring] using
-        two_prefix_t_le_p damping_sq hLower hUpper hz ht hq (sub_nonneg.mpr htp)
+        two_prefix_t_le_p lambda_sq hLower hUpper hz ht hq (sub_nonneg.mpr htp)
   · rcases le_total p t with hpt | htp
     · simpa only [show p + (t - p) = t by ring] using
-        three_prefix_p_le_t damping_sq hz hp hq (sub_nonneg.mpr hpt)
+        three_prefix_p_le_t lambda_sq hz hp hq (sub_nonneg.mpr hpt)
     · simpa only [show t + (p - t) = p by ring] using
-        three_prefix_t_le_p damping_sq hz ht hq (sub_nonneg.mpr htp)
+        three_prefix_t_le_p lambda_sq hz ht hq (sub_nonneg.mpr htp)
 
 #print axioms endpoint_quartic_prefix
 

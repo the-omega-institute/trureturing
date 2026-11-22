@@ -72,13 +72,12 @@ private theorem stepSpectrum_output_gap :
       spectralMoment 2 stepSpectrum *
         spectralMoment 4 (endpointPrefixAverage 3 (endpointClassical stepSpectrum)) =
       5 / 288 := by
-  have hSq : lambda ^ 2 = (2 / 3 : ℝ) := Real.sq_sqrt (by norm_num)
   have hProduct : endpointAlpha * endpointBeta = (1 / 12 : ℝ) := by
     unfold endpointAlpha endpointBeta
-    linear_combination -(1 / 4 : ℝ) * hSq
+    linear_combination -(1 / 4 : ℝ) * lambda_sq
   have hSquares : endpointAlpha ^ 2 + endpointBeta ^ 2 = (5 / 6 : ℝ) := by
     unfold endpointAlpha endpointBeta
-    linear_combination (1 / 2 : ℝ) * hSq
+    linear_combination (1 / 2 : ℝ) * lambda_sq
   rw [stepSpectrum_moment (by decide : 3 ≠ 0), stepSpectrum_moment (by decide : 2 ≠ 0),
     endpoint_stepSpectrum]
   simp only [spectralMoment, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
