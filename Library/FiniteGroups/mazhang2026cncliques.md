@@ -8,6 +8,7 @@ url: "https://doi.org/10.5281/zenodo.24398996"
 claim: "Proposition 7: a disjoint union H of k >= 1 cliques K_(s_i) on n = sum s_i vertices has E_CN(H) = 2 sum (s_i - 1)(s_i - 2) <= 2(n - 1)(n - 2), with equality iff k = 1, or k = 2 and s_1 = s_2 = 1."
 strata_touched:
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/CliqueUnionEnergy
+  - D5/S3/Combinatorics/Graph/CommonNeighborhood/GroupCentralizerBound
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/NeighbourhoodCliqueBound
   - D5/S3/Combinatorics/Graph/CommonNeighborhood/RingNoncentralBound
 license: citation-only
@@ -78,3 +79,17 @@ element and its graph neighbours, so its index is a divisor of |R| exceeding one
 is a proper additive subgroup of it. This gives the chain
 2 sum max(|C(x)| - z - 2, 0) <= n max(2(n + z)/p - 2z - 4, 0) <= n max(n - z - 4, 0)
 <= n(n - z - 2), together with n >= 3z and z | n.
+
+## Finite nonabelian groups
+
+Theorem 2 in Section 2 of the same version proves, for every finite nonabelian group with z the order of the
+center and n the number of noncentral elements, that z >= 1, n >= z + 2 >= 3 and that the
+common-neighbourhood energy of the commuting graph on the individual noncentral elements is at
+most n(n - z - 2) < 2(n - 1)(n - 2), which strengthens Nath–Fasfous–Das–Shang Conjecture 2.
+Corollary 4 gives, for these groups as for rings, E_CN <= 2 sum_(x not central)
+max(|C(x)| - z - 2, 0) and E_CN <= 2n((n + z)/p - z - 1) with p the least prime divisor of the
+order. The paper proves the identity deg(x) = |C(x)| - z - 1. The repository uses the frozen
+inequality deg(x) + z + 1 <= |C(x)| together with the index bounds p |C(x)| <= |G| and
+p^2 z <= |G|, and states the chain 2 sum max(|C(x)| - z - 2, 0) <= n max(2(n + z)/p - 2z - 4, 0),
+which lies below both 2n((n + z)/p - z - 1) and n max(n - z - 4, 0) <= n(n - z - 2), together with
+(p^2 - 1) z <= n and z | n.
