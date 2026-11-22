@@ -160,7 +160,146 @@ theorem leftStripTailResidual_zero {p : ℕ} (hp : 0 < p) (v : ℝ) :
     (Real.exp (-((3+h)*v))*(3+h)*F v/2)*hβ +
     (Real.exp (-((3+h)*v))*(3+h))*hgap
 
+/-- The second lower-coordinate derivative and its upper-coordinate
+derivative retain the signs of the two finite-moment contributions. -/
+theorem leftStripCross_derivatives {p : ℕ} (hp : 0 < p) (a v : ℝ) :
+    let h := 3/(p : ℝ)
+    let α := 3+h
+    let β := α+h
+    let s := v-a
+    let F := upperTailGap h s
+    let q := Real.exp (-(h*s))
+    let E := Real.exp (-(α*s))
+    let w (j : ℕ) := α-h*((j : ℝ)+1)
+    let M := ∑ j ∈ range (p+1), (w j)^2*Real.exp (-(h*((j : ℝ)+1)*a))
+    let N := ∑ j ∈ range (p+1), (2*w j+h)*Real.exp (-(h*((j : ℝ)+1)*a))
+    deriv (deriv (leftStripCross p · v)) a = E*(α^2+h*F*M-h*q*N) ∧
+      deriv (fun y ↦ deriv (deriv (leftStripCross p · y)) a) v =
+        E*(-α^3-h*α*F*M+h*q*(M+β*N)) := by
+  let h := 3/(p : ℝ)
+  let α := 3+h
+  let β := α+h
+  let F := upperTailGap h
+  let Q (a v : ℝ) := Real.exp (-(h*(v-a)))
+  let E (a v : ℝ) := Real.exp (-(α*(v-a)))
+  let k (j : ℕ) := h*((j : ℝ)+1)
+  let w (j : ℕ) := α-k j
+  let e (j : ℕ) (a v : ℝ) := Real.exp (-(α*(v-a))-k j*a)
+  let f₀ (j : ℕ) (a v : ℝ) := F (v-a)*e j a v
+  let f₁ (j : ℕ) (a v : ℝ) := (F (v-a)*w j-Q a v)*e j a v
+  let f₂ (j : ℕ) (a v : ℝ) := (F (v-a)*(w j)^2-Q a v*(2*w j+h))*e j a v
+  let f₃ (j : ℕ) (a v : ℝ) := (-α*F (v-a)*(w j)^2+
+    Q a v*((w j)^2+β*(2*w j+h)))*e j a v
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hl (r k x y : ℝ) : HasDerivAt (fun t ↦ Real.exp (-(r*(y-t))-k*t))
+      ((r-k)*Real.exp (-(r*(y-x))-k*x)) x := by
+    have hd := (((hasDerivAt_id' x).const_sub y).const_mul r).neg.sub
+      ((hasDerivAt_id' x).const_mul k)
+    exact hd.exp.congr_deriv (by dsimp; ring)
+  have hr (r k x y : ℝ) : HasDerivAt (fun t ↦ Real.exp (-(r*(t-x))-k*x))
+      (-r*Real.exp (-(r*(y-x))-k*x)) y := by
+    have hd := ((((hasDerivAt_id' y).sub_const x).const_mul r).neg).sub_const (k*x)
+    exact hd.exp.congr_deriv (by dsimp; ring)
+  have hEl (x y : ℝ) : HasDerivAt (E · y) (α*E x y) x := by
+    simpa only [E, zero_mul, sub_zero] using hl α 0 x y
+  have hEr (x y : ℝ) : HasDerivAt (E x) (-α*E x y) y := by
+    simpa only [E, zero_mul, sub_zero] using hr α 0 x y
+  have hFl (x y : ℝ) : HasDerivAt (fun t ↦ F (y-t)) (-Q x y) x := by
+    have hd := (hasDerivAt_upperTailGap (t := y-x) hh).comp x ((hasDerivAt_id' x).const_sub y)
+    change HasDerivAt (fun t ↦ F (y-t)) (Q x y*(-1)) x at hd
+    simpa only [mul_neg, mul_one] using hd
+  have hFr (x y : ℝ) : HasDerivAt (fun t ↦ F (t-x)) (Q x y) y := by
+    have hd := (hasDerivAt_upperTailGap (t := y-x) hh).comp y ((hasDerivAt_id' y).sub_const x)
+    change HasDerivAt (fun t ↦ F (t-x)) (Q x y*1) y at hd
+    simpa only [mul_one] using hd
+  have hQl (x y : ℝ) : HasDerivAt (Q · y) (h*Q x y) x := by
+    simpa only [Q, zero_mul, sub_zero] using hl h 0 x y
+  have hQr (x y : ℝ) : HasDerivAt (Q x) (-h*Q x y) y := by
+    simpa only [Q, zero_mul, sub_zero] using hr h 0 x y
+  have h₁ (j : ℕ) (x y : ℝ) : HasDerivAt (f₀ j · y) (f₁ j x y) x := by
+    have hd := (hFl x y).mul (hl α (k j) x y)
+    change HasDerivAt (f₀ j · y) (-Q x y*e j x y+F (y-x)*((w j)*e j x y)) x at hd
+    exact hd.congr_deriv (by dsimp only [f₁]; ring)
+  have h₂ (j : ℕ) (x y : ℝ) : HasDerivAt (f₁ j · y) (f₂ j x y) x := by
+    have hd := (((hFl x y).mul_const (w j)).sub (hQl x y)).mul (hl α (k j) x y)
+    change HasDerivAt (f₁ j · y) _ x at hd
+    apply hd.congr_deriv
+    change ((-Q x y*(w j)-h*Q x y)*e j x y+
+      (F (y-x)*w j-Q x y)*(w j*e j x y)) = f₂ j x y
+    dsimp only [f₂]
+    ring
+  have h₃ (j : ℕ) (x y : ℝ) : HasDerivAt (f₂ j x) (f₃ j x y) y := by
+    have hd := (((hFr x y).mul_const ((w j)^2)).sub
+      ((hQr x y).mul_const (2*w j+h))).mul (hr α (k j) x y)
+    change HasDerivAt (f₂ j x) _ y at hd
+    apply hd.congr_deriv
+    change (Q x y*(w j)^2-(-h*Q x y)*(2*w j+h))*e j x y+
+      (F (y-x)*(w j)^2-Q x y*(2*w j+h))*(-α*e j x y) = f₃ j x y
+    dsimp only [f₃, β]
+    ring
+  have hfactor (j : ℕ) (x y : ℝ) :
+      e j x y = E x y*Real.exp (-(k j*x)) := by
+    unfold e E
+    rw [sub_eq_add_neg, Real.exp_add]
+  have hExpand (y : ℝ) :
+      (leftStripCross p · y) = fun x ↦ E x y+h*∑ j ∈ range (p+1), f₀ j x y := by
+    funext x
+    change E x y*(1+h*F (y-x)*tailSum p h x) =
+      E x y+h*∑ j ∈ range (p+1), f₀ j x y
+    simp only [f₀, hfactor, ← mul_assoc, ← Finset.mul_sum]
+    dsimp only [tailSum, k]
+    ring
+  have hfirst (y : ℝ) :
+      deriv (leftStripCross p · y) = fun x ↦ α*E x y+h*∑ j ∈ range (p+1), f₁ j x y := by
+    funext x
+    rw [hExpand y]
+    exact ((hEl x y).add ((HasDerivAt.fun_sum fun j (_ : j ∈ range (p+1)) ↦
+      h₁ j x y).const_mul h)).deriv
+  have hsecond (x y : ℝ) :
+      deriv (deriv (leftStripCross p · y)) x = α^2*E x y+h*∑ j ∈ range (p+1), f₂ j x y := by
+    rw [hfirst y]
+    have hd := ((hEl x y).const_mul α).add ((HasDerivAt.fun_sum
+      fun j (_ : j ∈ range (p+1)) ↦ h₂ j x y).const_mul h)
+    exact hd.deriv.trans (by ring)
+  have hthird : deriv (fun y ↦ deriv (deriv (leftStripCross p · y)) a) v =
+      -α^3*E a v+h*∑ j ∈ range (p+1), f₃ j a v := by
+    rw [show (fun y ↦ deriv (deriv (leftStripCross p · y)) a) =
+      fun y ↦ α^2*E a y+h*∑ j ∈ range (p+1), f₂ j a y from funext (hsecond a)]
+    have hd := ((hEr a v).const_mul (α^2)).add ((HasDerivAt.fun_sum
+      fun j (_ : j ∈ range (p+1)) ↦ h₃ j a v).const_mul h)
+    exact hd.deriv.trans (by ring)
+  let M := ∑ j ∈ range (p+1), (w j)^2*Real.exp (-(k j*a))
+  let N := ∑ j ∈ range (p+1), (2*w j+h)*Real.exp (-(k j*a))
+  change deriv (deriv (leftStripCross p · v)) a = E a v*(α^2+h*F (v-a)*M-h*Q a v*N) ∧
+    deriv (fun y ↦ deriv (deriv (leftStripCross p · y)) a) v =
+      E a v*(-α^3-h*α*F (v-a)*M+h*Q a v*(M+β*N))
+  constructor
+  · rw [hsecond a v]
+    have hsum : (∑ j ∈ range (p+1), f₂ j a v) =
+        E a v*F (v-a)*M-E a v*Q a v*N := by
+      simp only [M, N, mul_sum, ← sum_sub_distrib]
+      apply sum_congr rfl
+      intro j _
+      dsimp only [f₂]
+      rw [hfactor]
+      ring
+    rw [hsum]
+    ring
+  · rw [hthird]
+    have hsum : (∑ j ∈ range (p+1), f₃ j a v) =
+        -E a v*α*F (v-a)*M+E a v*Q a v*M+E a v*Q a v*β*N := by
+      simp only [M, N, mul_sum, ← sum_add_distrib]
+      apply sum_congr rfl
+      intro j _
+      dsimp only [f₃]
+      rw [hfactor]
+      ring
+    rw [hsum]
+    ring
+
 #print axioms leftStripCross_eq
 #print axioms leftStripTailResidual_zero
+#print axioms leftStripCross_derivatives
 
 end RefinedBMV.PositiveCenter
