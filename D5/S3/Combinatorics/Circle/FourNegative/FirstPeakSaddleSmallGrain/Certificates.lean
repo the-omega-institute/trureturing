@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Twelve parameterized c2 charts and their 228 native polynomial margin proofs. -/
+import Mathlib.Tactic.Ring
 import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
 
 /-! Original nineteen margins: twelve paired seams

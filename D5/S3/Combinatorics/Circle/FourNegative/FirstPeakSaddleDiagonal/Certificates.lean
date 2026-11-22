@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Data.Fin.VecNotation]
    utility: none
    digest: Integer margin definitions for the diagonal saddle charts. -/
 import Mathlib.Data.Int.ModEq
@@ -10,6 +10,7 @@ import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Nat.Bitwise
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic
+import Mathlib.Tactic.Ring
 
 /-! The strict and equality certificates use the same scaled, boundary, rectangle, and gate margins. -/
 set_option autoImplicit false

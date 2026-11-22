@@ -8,6 +8,7 @@
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Data.Nat.Bitwise
 import Mathlib.Tactic
+import Mathlib.Tactic.Ring
 
 /-! Source preparation only. No elaboration, kernel or official acceptance claim.
 The coordinates below are the literal powers of the four original gaps.
