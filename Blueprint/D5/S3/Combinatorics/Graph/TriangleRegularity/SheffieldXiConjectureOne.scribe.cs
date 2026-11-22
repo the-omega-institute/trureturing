@@ -36,7 +36,9 @@ internal sealed class SheffieldXiConjectureOneDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Use the icosahedral graph on two poles and two rings of five vertices. Every open neighborhood has five vertices and five edges. Caro and Mifsud give a twelve-vertex planar (5,5)-realization in Figure 5. Hak and coauthors identify the icosahedron as their graph G1 in Appendix A.")),
                     Paragraph(Text("In an abelian Cayley graph, the open neighborhood of zero is the connection set. Each oriented edge from x to y there corresponds to the ordered zero-sum triple (x, y − x, −y). Five unordered edges would give ten triples. Rotation counts those triples modulo three by their diagonal fixed points. Negation pairs the nonzero connection elements killed by three. In a five-element connection set the two congruences force exactly four such elements.")),
                     Paragraph(Text("The remaining element equals its negative and cannot occur in a zero-sum triple. Among the four elements killed by three, a repeated coordinate forces all three coordinates to agree. Three distinct coordinates cannot contain an opposite pair, since the third coordinate would then be zero. The four elements form two opposite pairs, so three distinct coordinates would have to contain such a pair. Only the four diagonal triples remain, contradicting the count of ten."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sheffield-xi-2025-conjecture-1"), ResolutionKind.Refuted))), []));
 
     private static Formula TriangleRegular()
     {

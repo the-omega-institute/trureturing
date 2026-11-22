@@ -34,6 +34,10 @@ $$\neg (\forall (r c : \mathbb{N}), (\exists (V : Type), \operatorname{Finite}\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sheffield-xi-2025-conjecture-1` (refuted) by `D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sheffield-xi-2025-conjecture-1","declaration_gid":"D5/S3/Combinatorics/Graph/TriangleRegularity/SheffieldXiConjectureOne.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nathan S. Sheffield and Zoe Xi (2025). *Graphs With the Same Edge Count in Each Neighborhood*. DOI: [10.48550/arXiv.2507.14473](https://doi.org/10.48550/arXiv.2507.14473). URL: <https://arxiv.org/abs/2507.14473v1>.
