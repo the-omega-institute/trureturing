@@ -6,7 +6,7 @@
    utility: none
    digest: Signed Chebyshev truncation and short-range root response with logarithmic savings. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.TrivialResponse
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.MoebiusPrefixes
 
 /-! Signed finite Abel summation for the arithmetic tail and nearby root response. -/
 
