@@ -27,11 +27,11 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
   (prime_window_remainder_of_rh spectralPrimitive windowDiscrepancy)
 
-/-- Integrate a uniform log-density estimate on the actual prime-only window. -/
-theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
-    (factor : ℕ → ℝ)
-    (retained : ℕ → ℕ → ℝ → ℝ)
-    (hterm : ∀ (m : ℕ), 2 ≤ m → ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
+/-- One threshold works for every order and every valid log-density majorant. -/
+theorem prime_window_threshold_of_rh (hRH : RiemannHypothesis) :
+    ∃ a₀ : ℝ, 2 ≤ a₀ ∧ ∀ (m : ℕ), 2 ≤ m →
+    ∀ (retained : ℕ → ℕ → ℝ → ℝ)
+    (hterm : ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
       ∀ {a B : ℝ}, 2 ≤ a → a ≤ B →
       IntervalIntegrable (retained m n) volume (Real.log a) (Real.log B) ∧
       (∫ u in Real.log a..Real.log B, retained m n u) =
@@ -40,11 +40,10 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
             (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) +
         (if 2 * n < m + 1 then
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0))
-    {K : ℝ} (hK : 0 < K)
-    (hD : ∀ (m : ℕ), 2 ≤ m → ∀ u : ℝ, Real.log 2 ≤ u →
+    (C : ℝ) (_ : ∀ u : ℝ, Real.log 2 ≤ u →
       |rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retained m n u) - 2)| ≤
-        K * factor m * Real.exp (-(1 / 2 - (m + 1 : ℝ)⁻¹) * u)) :
-    ∃ a₀ K : ℝ, 2 ≤ a₀ ∧ 0 < K ∧ ∀ m : ℕ, 2 ≤ m → ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+        C * Real.exp (-(1 / 2 - (m + 1 : ℝ)⁻¹) * u)),
+    ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
       |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
         spectralPrimitive (phaseOrbit (Real.log a)) -
         (∑ n ∈ Finset.Icc 3 m, -(μ n : ℝ) *
@@ -52,11 +51,11 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
           (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) -
         (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
-        K * factor m *
+        6 * C *
           (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
   obtain ⟨T, hT⟩ := Filter.eventually_atTop.mp (late_strict_prime_tail hRH)
-  refine ⟨max T 2, 6 * K, le_max_right _ _, by positivity, ?_⟩
-  intro m hm a B ha hab
+  refine ⟨max T 2, le_max_right _ _, ?_⟩
+  intro m hm retained hterm C hD a B ha hab
   let rate := 1 / 2 - (m + 1 : ℝ)⁻¹
   have h_order : -rate = (m + 1 : ℝ)⁻¹ - 1 / 2 := neg_sub ..
   rw [← h_order]
@@ -92,7 +91,7 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
     -(μ n : ℝ) * (rootPrimitive (n : ℝ) y - rootPrimitive (n : ℝ) x) else 0
   let f (u : ℝ) := ∑ n ∈ Finset.Icc 2 m, retained m n u
   let e (u : ℝ) := rootWindowDensity u - (f u - 2)
-  let w (u : ℝ) := K * factor m * Real.exp (-(rate) * u)
+  let w (u : ℝ) := C * Real.exp (-(rate) * u)
   have hi : IntervalIntegrable rootWindowDensity volume (Real.log a) (Real.log B) :=
     (rootWindowDensity_continuousOn.mono (by
       rw [uIcc_of_le hlog]
@@ -103,7 +102,7 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
       simp [f, Finset.sum_apply]
     rw [hf]
     exact IntervalIntegrable.sum (f := retained m) (Finset.Icc 2 m) (fun n hn =>
-      (hterm m hm n hn ha₂ hab).1)
+      (hterm n hn ha₂ hab).1)
   have hc : IntervalIntegrable (fun _ : ℝ => (2 : ℝ)) volume (Real.log a) (Real.log B) :=
     intervalIntegrable_const
   have hei : IntervalIntegrable e volume (Real.log a) (Real.log B) := hi.sub (hfi.sub hc)
@@ -112,7 +111,7 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
   have hmono : |∫ u in Real.log a..Real.log B, e u| ≤ ∫ u in Real.log a..Real.log B, w u :=
     (intervalIntegral.abs_integral_le_integral_abs hlog).trans
       (intervalIntegral.integral_mono_on hlog hei.abs hwi
-        (fun u hu => hD m hm u (hlog₂.trans hu.1)))
+        (fun u hu => hD u (hlog₂.trans hu.1)))
   have Hf : (∫ u in Real.log a..Real.log B, f u) =
       2 * (Real.log B - Real.log a) +
         (∑ n ∈ Finset.Icc 3 m, arithmetic n a B) +
@@ -120,13 +119,13 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
           -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a)) := by
     unfold f
     rw [intervalIntegral.integral_finsetSum fun n hn =>
-      (hterm m hm n hn ha₂ hab).1]
+      (hterm n hn ha₂ hab).1]
     calc
       _ = ∑ n ∈ Finset.Icc 2 m,
           ((if n = 2 then 2 * (Real.log B - Real.log a) else arithmetic n a B) +
             captured m n a B) :=
         Finset.sum_congr rfl fun n hn =>
-          (hterm m hm n hn ha₂ hab).2
+          (hterm n hn ha₂ hab).2
       _ = _ := by
         rw [Finset.sum_add_distrib]
         have hs : Finset.Icc 2 m = insert 2 (Finset.Icc 3 m) := by
@@ -144,7 +143,7 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
           omega
         rw [hmain, Finset.sum_filter]
   have hw : (∫ u in Real.log a..Real.log B, w u) =
-      K * factor m * ((a ^ (-rate) - B ^ (-rate)) / rate) := by
+      C * ((a ^ (-rate) - B ^ (-rate)) / rate) := by
     unfold w
     rw [intervalIntegral.integral_const_mul, exp_decay_integral hr₀]
     have hrpow {x : ℝ} (hx : 0 < x) (r : ℝ) : Real.exp (-r * Real.log x) = x ^ (-r) := by
@@ -157,12 +156,11 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
     nlinarith only [mul_nonneg hgap (show 0 ≤ 6 * rate - 1 by linarith)]
   rw [(prime_window_remainder_of_rh hRH).2.2 a B ha₂ hab, Hwin]
   have hle : (∫ u in Real.log a..Real.log B, w u) ≤
-      6 * K * factor m * (a ^ (-rate) - B ^ (-rate)) := by
+      6 * C * (a ^ (-rate) - B ^ (-rate)) := by
     rw [hw]
-    have hbound := (abs_nonneg _).trans (hD m hm (Real.log 2) le_rfl)
-    have hfactor_nonneg : 0 ≤ factor m :=
-      nonneg_of_mul_nonneg_right (nonneg_of_mul_nonneg_left hbound (Real.exp_pos _)) hK
-    exact (mul_le_mul_of_nonneg_left hdiv (mul_nonneg hK.le hfactor_nonneg)).trans_eq (by ring)
+    have hbound := (abs_nonneg _).trans (hD (Real.log 2) le_rfl)
+    have hC : 0 ≤ C := nonneg_of_mul_nonneg_left hbound (Real.exp_pos _)
+    exact (mul_le_mul_of_nonneg_left hdiv hC).trans_eq (by ring)
   refine (?_ : _ ≤ ∫ u in Real.log a..Real.log B, w u).trans hle
   dsimp only [e] at hmono
   rw [intervalIntegral.integral_sub hi (hfi.sub hc), intervalIntegral.integral_sub hfi hc, Hf,
@@ -170,5 +168,39 @@ theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
   convert hmono using 1
   congr 1
   ring
+
+
+/-- Integrate a uniform log-density estimate on the actual prime-only window. -/
+theorem prime_window_of_density_bound (hRH : RiemannHypothesis)
+    (factor : ℕ → ℝ)
+    (retained : ℕ → ℕ → ℝ → ℝ)
+    (hterm : ∀ (m : ℕ), 2 ≤ m → ∀ (n : ℕ), n ∈ Finset.Icc 2 m →
+      ∀ {a B : ℝ}, 2 ≤ a → a ≤ B →
+      IntervalIntegrable (retained m n) volume (Real.log a) (Real.log B) ∧
+      (∫ u in Real.log a..Real.log B, retained m n u) =
+        (if n = 2 then 2 * (Real.log B - Real.log a) else
+          -(μ n : ℝ) * (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
+            (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) +
+        (if 2 * n < m + 1 then
+          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a) else 0))
+    {K : ℝ} (hK : 0 < K)
+    (hD : ∀ (m : ℕ), 2 ≤ m → ∀ u : ℝ, Real.log 2 ≤ u →
+      |rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retained m n u) - 2)| ≤
+        K * factor m * Real.exp (-(1 / 2 - (m + 1 : ℝ)⁻¹) * u)) :
+    ∃ a₀ K : ℝ, 2 ≤ a₀ ∧ 0 < K ∧ ∀ m : ℕ, 2 ≤ m → ∀ a B : ℝ, a₀ ≤ a → a ≤ B →
+      |windowDiscrepancy a B - spectralPrimitive (phaseOrbit (Real.log B)) +
+        spectralPrimitive (phaseOrbit (Real.log a)) -
+        (∑ n ∈ Finset.Icc 3 m, -(μ n : ℝ) *
+          (2 * (n : ℝ)^2 / (((n : ℝ) - 1) * ((n : ℝ) - 2))) *
+          (a ^ ((n : ℝ)⁻¹ - 1 / 2) - B ^ ((n : ℝ)⁻¹ - 1 / 2))) -
+        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => 2 * n < m + 1),
+          -(μ n : ℝ) * (rootPrimitive (n : ℝ) B - rootPrimitive (n : ℝ) a))| ≤
+        K * factor m *
+          (a ^ ((m + 1 : ℝ)⁻¹ - 1 / 2) - B ^ ((m + 1 : ℝ)⁻¹ - 1 / 2)) := by
+  obtain ⟨a₀, ha₀, hwindow⟩ := prime_window_threshold_of_rh hRH
+  refine ⟨a₀, 6 * K, ha₀, by positivity, ?_⟩
+  intro m hm a B ha hab
+  simpa only [mul_assoc] using
+    hwindow m hm retained (hterm m hm) (K * factor m) (hD m hm) a B ha hab
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower

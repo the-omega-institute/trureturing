@@ -516,6 +516,39 @@ def retainedDensity (m n : ℕ) (u : ℝ) : ℝ :=
   -(μ n : ℝ) * ((n : ℝ) / ((n : ℝ) - 1) *
     Real.exp (-(arithmeticRate n) * u) + capturedSpectrum m n u)
 
+/-- Decompose the signed log-density residual into the arithmetic, root and envelope errors. -/
+theorem mobius_window_density_split (m : ℕ) (u : ℝ) :
+    let x := Real.exp u
+    let T (n : ℕ) := Real.sqrt x * (∫ t in Ioi x, psi (t ^ (n : ℝ)⁻¹) / t ^ 2)
+    let e (n : ℕ) := -(μ n : ℝ) * (centered (n : ℝ) x - capturedSpectrum m n u)
+    let R := Real.sqrt x * (primeTail x - Q x) - ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * T n
+    let E := RHSharpActualEnvelope.G u - Real.exp (-u / 2) * (actualH u).re
+    rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) - 2) =
+      -R + (∑ n ∈ Finset.Icc 2 m, e n) + E := by
+  intro x T e R E
+  have hx0 : 0 < x := Real.exp_pos _
+  have hterms (n : ℕ) (hn : n ∈ Finset.Icc 2 m) :
+      (μ n : ℝ) * T n + retainedDensity m n u + e n = 0 := by
+    have hn2 := (Finset.mem_Icc.mp hn).1
+    have hn1 : (1 : ℝ) < n := by exact_mod_cast (show 1 < n by omega)
+    have ht := root_tail_main (r := (n : ℝ)) hn1 hx0
+    change T n = (n : ℝ) / ((n : ℝ) - 1) * x ^ ((n : ℝ)⁻¹ - 1 / 2) + centered (n : ℝ) x at ht
+    have hpow : x ^ ((n : ℝ)⁻¹ - 1 / 2) = Real.exp (-(arithmeticRate n) * u) := by
+      dsimp only [x, arithmeticRate]
+      rw [← Real.exp_mul]
+      congr 1
+      ring
+    rw [ht, hpow]
+    unfold retainedDensity e
+    ring
+  have hs : (∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * T n) +
+      (∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) +
+      (∑ n ∈ Finset.Icc 2 m, e n) = 0 := by
+    simp_rw [← Finset.sum_add_distrib]
+    exact (Finset.sum_congr rfl hterms).trans Finset.sum_const_zero
+  dsimp only [R, E, rootWindowDensity, x]
+  linear_combination -hs
+
 theorem integrated_mobius_linear {m : ℕ} (hm : 2 ≤ m) {u : ℝ}
     (hx : 2 ≤ Real.exp u) :
     |Real.sqrt (Real.exp u) * (primeTail (Real.exp u) - Q (Real.exp u)) -

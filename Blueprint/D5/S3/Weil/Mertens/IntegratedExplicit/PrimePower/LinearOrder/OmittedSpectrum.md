@@ -4,6 +4,8 @@
 
 The omitted root spectra under RH
 
+To obtain sublinear order for u≥Lq, retain finitely many frequency bins. Their bounded amplitudes multiply a geometric weight sum at most 1+q²/u. The complementary bins have arbitrarily small squared mass and satisfy the local Gaussian estimate with its square-root coefficient. The finite decomposition passes to the full occurrence series at the original sample coordinates.
+
 Count all nontrivial zeros in signed unit bins with their analytic multiplicities. The reciprocal norm of each occurrence is bounded by a constant divided by one plus the absolute bin index. The logarithmic unit count gives a square-summable bin majorant.
 
 At degree n the coefficient is −n/[ρ(n−ρ)]. Its adjacent difference is 1/[(n−ρ)(n+1−ρ)]. The finite sampling bound applies to the coefficients and their increments, and hence to the sum at varying degrees.
