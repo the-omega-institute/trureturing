@@ -34,3 +34,12 @@ title and topic searches, DataCite, Crossref and the OpenAlex record
 W4394838815. It found the same conjecture in both versions and identified
 no prior complete resolution. Semantic Scholar returned HTTP 429, and
 priority beyond this search remains unverified.
+
+## Verified locator
+
+Versioned source: https://arxiv.org/abs/2404.08193v2
+
+Conjecture 10.5 is in Section 10.1, page 10, at
+https://arxiv.org/html/2404.08193v2#S10.Thmtheorem5.
+Theorem 1.1 and the exception-set definitions are in Section 1.
+The lower-bound comparison uses Theorem 10.7 in Section 10.1.

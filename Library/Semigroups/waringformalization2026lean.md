@@ -35,3 +35,11 @@ as witnessed by a successful checked direct application to the positive
 fixed-length proof and a rebuild of the theorem that uses it. Equivalence
 must preserve every positive exponent, uniform bounded length and all
 natural targets, with zero bases allowed in the Waring input.
+
+## Verified locator
+
+Versioned source: https://github.com/yunyougu50-create/waring-lean4/tree/cd0735c253f3b640262fcc74a61306cb41e23765
+
+The theorem is in `WaringTheorem2.lean` at line 480 of that revision.
+`WaringStatement.lean` defines its type, and the root `LICENSE` supplies
+the applicable copyright and license.
