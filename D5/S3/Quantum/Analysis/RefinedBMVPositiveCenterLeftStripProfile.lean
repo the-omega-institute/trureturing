@@ -47,12 +47,12 @@ private theorem hasDerivAt_logReciprocalGap {h t : ℝ} (hh : 0 < h) (ht : 0 < t
   rw [hquot] at hlog
   exact (hasDerivAt_id' t).sub hlog
 
-private theorem hasDerivAt_profileSlope {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+theorem hasDerivAt_profileSlope {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     HasDerivAt (profileSlope h) (profileCurvature h t) t := by
   change HasDerivAt (fun x ↦ 1 - upperTailSlope h x) (profileCurvature h t) t
   simpa only [profileCurvature, neg_neg] using (hasDerivAt_upperTailSlope hh ht).const_sub 1
 
-private theorem hasDerivAt_profileCurvature {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+theorem hasDerivAt_profileCurvature {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
     HasDerivAt (profileCurvature h)
       (-(profileCurvature h t * (h + 2 * upperTailSlope h t))) t := by
   have hL := hasDerivAt_upperTailSlope hh ht
@@ -785,6 +785,23 @@ def leftStripWeight (h a v : ℝ) : ℝ :=
   Real.exp (logReciprocalGap h v + logReciprocalGap h (v-a)) /
     ((3+h)*(3+2*h)/2)
 
+theorem hasDerivAt_leftStripWeight_left {h a v : ℝ} (hh : 0 < h) (hav : a < v) :
+    HasDerivAt (leftStripWeight h · v) (-leftStripWeight h a v*profileSlope h (v-a)) a := by
+  have hd := (hasDerivAt_logReciprocalGap hh (sub_pos.mpr hav)).comp a
+    ((hasDerivAt_id' a).const_sub v)
+  have hw := (hd.const_add (logReciprocalGap h v)).exp.div_const ((3+h)*(3+2*h)/2)
+  change HasDerivAt (leftStripWeight h · v) _ a at hw
+  exact hw.congr_deriv (by dsimp [leftStripWeight, Function.comp_def]; ring)
+
+theorem hasDerivAt_leftStripWeight_right {h a v : ℝ} (hh : 0 < h) (hv : 0 < v) (hav : a < v) :
+    HasDerivAt (leftStripWeight h a)
+      (leftStripWeight h a v*(profileSlope h v+profileSlope h (v-a))) v := by
+  have hd := (hasDerivAt_logReciprocalGap hh hv).add
+    ((hasDerivAt_logReciprocalGap hh (sub_pos.mpr hav)).comp v ((hasDerivAt_id' v).sub_const a))
+  have hw := hd.exp.div_const ((3+h)*(3+2*h)/2)
+  change HasDerivAt (leftStripWeight h a) _ v at hw
+  exact hw.congr_deriv (by dsimp [leftStripWeight, Function.comp_def]; ring)
+
 /-- One factor of the leading square cancels the potentially growing weight. -/
 theorem leftStrip_weight_mul_square_le {h a v : ℝ}
     (hh : 0 < h) (ha : 0 ≤ a) (hamax : a ≤ 1/2) (hgap : 6 ≤ v-a) :
@@ -869,14 +886,8 @@ theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
     have hd : ContDiffAt ℝ 1 (deriv (deriv b)) x := (hb₁ x hx).derivWithin (by norm_num)
     exact (hd.differentiableAt (by decide)).hasDerivAt
   have hWleft (x y : ℝ) (hxy : x < y) :
-      HasDerivAt (W · y) (-W x y*L (y-x)) x := by
-    have hd := (hasDerivAt_logReciprocalGap hh (sub_pos.mpr hxy)).comp x
-      ((hasDerivAt_id' x).const_sub y)
-    have hw := (hd.const_add (logReciprocalGap h y)).exp.div_const ((3+h)*(3+2*h)/2)
-    change HasDerivAt (W · y) _ x at hw
-    exact hw.congr_deriv (by
-      dsimp [W, L, leftStripWeight, Function.comp_def]
-      ring)
+      HasDerivAt (W · y) (-W x y*L (y-x)) x :=
+    hasDerivAt_leftStripWeight_left hh hxy
   have hδleft (x y : ℝ) (hx : 0 < S (y-x)) :
       HasDerivAt (δ · y) (deriv b (y-x)) x := by
     have hd := (hb₀ _ hx).comp x ((hasDerivAt_id' x).const_sub y)
@@ -929,9 +940,7 @@ theorem leftStrip_radical_mixed_formula {h a v γ : ℝ}
   have hδ := (hb₀ _ hxv).sub ((hb₀ _ hxs).comp v hshift)
   have hb₁s := (hb₂ _ hxs).comp v hshift
   have hb₂s := (hb₃ _ hxs).comp v hshift
-  have hw := (((hasDerivAt_logReciprocalGap hh hv).add
-    ((hasDerivAt_logReciprocalGap hh hs).comp v hshift)).exp).div_const ((3+h)*(3+2*h)/2)
-  change HasDerivAt (W a) _ v at hw
+  have hw := hasDerivAt_leftStripWeight_right hh hv hsv
   have hm := (((hb₁s.pow 2).sub (hδ.mul hb₂s)).sub
     (((hL.const_mul 2).mul hδ).mul hb₁s)).add
       ((((hL.pow 2).add hq).mul (hδ.pow 2)).div_const 2)

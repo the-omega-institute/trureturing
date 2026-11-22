@@ -457,7 +457,7 @@ theorem leftStripTailResidual_smooth (p : ℕ) :
   unfold upperTailRepeatCorrection upperTailGap
   fun_prop
 
-private theorem contDiff_partialLeft {f : ℝ → ℝ → ℝ} {n m : WithTop ℕ∞}
+theorem contDiff_partialLeft {f : ℝ → ℝ → ℝ} {n m : WithTop ℕ∞}
     (hf : ContDiff ℝ n (Function.uncurry f)) (hn : n ≠ 0) (hm : m+1 ≤ n) :
     ContDiff ℝ m (Function.uncurry (fun x y ↦ deriv (f · y) x)) := by
   have hd := (hf.fderiv_right hm).clm_apply
@@ -564,7 +564,7 @@ theorem leftStripTailResidual_derivative_bounds {p : ℕ} (hp : 11 ≤ p) {a v :
     rw [abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
     linarith only [hU3, hC3]
 
-private theorem mixed_partial_eq {f : ℝ → ℝ → ℝ} {x y : ℝ}
+theorem mixed_partial_eq {f : ℝ → ℝ → ℝ} {x y : ℝ}
     (hf : ContDiffAt ℝ 2 (Function.uncurry f) (x,y)) :
     deriv (fun t ↦ deriv (f t) y) x = deriv (fun t ↦ deriv (f · t) x) y := by
   have h := Extreme.hasDerivAt_deriv_second hf

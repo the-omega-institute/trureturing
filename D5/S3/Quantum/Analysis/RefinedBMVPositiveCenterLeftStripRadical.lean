@@ -14,25 +14,25 @@ noncomputable section
 
 namespace RefinedBMV.PositiveCenter
 
-private theorem abs_add_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
+theorem abs_add_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
     |x+y| ≤ X+Y := (abs_add_le x y).trans (add_le_add hx hy)
 
-private theorem abs_sub_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
+theorem abs_sub_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
     |x-y| ≤ X+Y := (abs_sub x y).trans (add_le_add hx hy)
 
-private theorem abs_mul_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
+theorem abs_mul_bound {x y X Y : ℝ} (hx : |x| ≤ X) (hy : |y| ≤ Y) :
     |x*y| ≤ X*Y := by
   rw [abs_mul]
   exact mul_le_mul hx hy (abs_nonneg _) ((abs_nonneg _).trans hx)
 
-private theorem abs_sq_bound {x X : ℝ} (hx : |x| ≤ X) : |x^2| ≤ X^2 := by
+theorem abs_sq_bound {x X : ℝ} (hx : |x| ≤ X) : |x^2| ≤ X^2 := by
   simpa only [pow_two] using abs_mul_bound hx hx
 
 private theorem abs_half_bound {x X : ℝ} (hx : |x| ≤ X) : |x/2| ≤ X/2 := by
   rw [abs_div, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
   exact div_le_div_of_nonneg_right hx (by norm_num)
 
-private theorem slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t) :
+theorem leftStrip_slope_bounds {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t) :
     0 < upperTailSlope h t ∧ upperTailSlope h t ≤ 1/6 ∧
       5/6 ≤ profileSlope h t ∧ profileSlope h t ≤ 1 ∧
       0 ≤ profileCurvature h t ∧ profileCurvature h t ≤ 1/36 := by
@@ -85,8 +85,8 @@ theorem leftStrip_radical_mixed_lt {h a v γ : ℝ}
     change |δ₁| ≤ (33/10)*B*(v-s) at hd₁
     rw [show v-s = a by dsimp [s]; ring] at hd₁
     exact hd₁.trans ((mul_le_mul_of_nonneg_left hamax (by positivity)).trans_eq (by ring))
-  obtain ⟨hL₀, hLmax, hLlo, hLhi, hq₀, hqhi⟩ := slope_bounds hh hgap
-  obtain ⟨_, _, hVlo, hVhi, _, _⟩ := slope_bounds hh (hgap.trans hsv)
+  obtain ⟨hL₀, hLmax, hLlo, hLhi, hq₀, hqhi⟩ := leftStrip_slope_bounds hh hgap
+  obtain ⟨_, _, hVlo, hVhi, _, _⟩ := leftStrip_slope_bounds hh (hgap.trans hsv)
   have hL : |L| ≤ 1 := abs_le.mpr ⟨by change 5/6 ≤ L at hLlo; linarith, hLhi⟩
   have hq : |q| ≤ 1/36 := (abs_of_nonneg hq₀).trans_le hqhi
   have hC : |profileSlope h v+L-γ| ≤ 2 := by
