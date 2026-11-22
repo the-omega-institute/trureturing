@@ -15,7 +15,10 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
             Seq(Call("MismatchCount", table, rows, columns), Sp, Le, Sp,
                 Call("ChargedOddCellScore", table, rows, columns)),
             FormulaLogicOperator.And,
-            Call("CellChargesBoundedByOrdinaryIntersection", table, rows, columns)));
+            new Formula.Logic(
+                Call("CellChargesBoundedBySelectedInterval", table, rows, columns),
+                FormulaLogicOperator.And,
+                Call("ExactOddCellAllocation", table, rows, columns))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -40,9 +43,14 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
                 Paragraph(Text("Use the larger count at each threshold and choose rows in a tie. "
                     + "Only odd cells on the chosen side, incident to a counted row or column "
                     + "and lying outside its free block, contribute to the score. The sum of the "
-                    + "larger counts is at most this score. The distinguished row contributes "
-                    + "zero. For every other cell, its contributing thresholds lie strictly "
-                    + "above the complementary column rank and at most the row weight, so their "
-                    + "number is at most the size of the row and column intersection."))),
+                    + "larger counts is at most this score. One odd cell per counted target "
+                    + "suffices. The chosen cells are distinct at each threshold because they "
+                    + "lie in separate rows or separate columns. Their per-cell counts therefore "
+                    + "sum exactly to the mismatch count across all thresholds.")),
+                Paragraph(Text("The distinguished row contributes zero. For every other cell, "
+                    + "its contributing thresholds lie among the selected thresholds strictly "
+                    + "above the complementary column rank and at most the row weight. The "
+                    + "number of these positions is at most the size of the row and column "
+                    + "intersection."))),
             DescribeRole.Theorem))));
 }

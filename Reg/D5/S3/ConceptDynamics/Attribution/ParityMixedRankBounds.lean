@@ -34,7 +34,11 @@ abbrev arena : Arena where
   Law R := ∀ (n : ℕ) (table : RankCutTable n),
     (R.readout () n table ≤ ∑ p : EvenSubset n, ∑ q : OddSubset n,
       (table.2.1 p q % 2) * chargeCount table p q) ∧
-    (∀ p q, chargeCount table p q ≤ if p = table.1 then 0 else (p.val ∩ q.val).card)
+    (∀ p q, chargeCount table p q ≤ intervalCap table p q) ∧
+    (∀ p q, intervalCap table p q ≤ if p = table.1 then 0 else (p.val ∩ q.val).card) ∧
+    (∃ allocated : EvenSubset n → OddSubset n → ℕ,
+      (∑ p, ∑ q, allocated p q) = cutDeficitSum table ∧
+      ∀ p q, allocated p q ≤ (table.2.1 p q % 2) * chargeCount table p q)
 
 private theorem raised_fails : ¬ arena.Law raised := by
   intro law
