@@ -41,7 +41,7 @@ theorem indep_iff_card_le
       exists_subsuperset_card_eq (subset_univ F) hF (by simpa using hr)
     exact ((hbases B).mpr hcard).indep.subset (Finset.coe_subset.mpr hFB)
 
-private lemma circuit_iff_card
+lemma circuit_iff_card
     (hbases : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r)
     (hground : M.E = Set.univ) (hr : r ≤ Fintype.card I) (C : Finset I) :
     M.IsCircuit (C : Set I) ↔ C.card = r + 1 := by
@@ -64,7 +64,7 @@ private lemma circuit_iff_card
     exact (indep_iff_card_le hbases hr _).mpr (by omega)
 
 omit [Fintype I] in
-private lemma contracted_basis_eq_empty
+lemma contracted_basis_eq_empty
     (hbases : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r)
     {C T : Finset I} (hC : M.IsCircuit (C : Set I))
     (hcard : C.card = r + 1) :
