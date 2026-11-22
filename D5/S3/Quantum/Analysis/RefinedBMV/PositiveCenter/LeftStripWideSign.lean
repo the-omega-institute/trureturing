@@ -24,14 +24,14 @@ open private leftStrip_logKernel_mixed_lt_of_weighted from
 
 noncomputable section
 
-private theorem wideCheckCover_of_children (n : ℕ) (H A D : Endpoints)
+private theorem wideCheckCover_of_children (n : ℕ) (H A V : Endpoints)
     (h : (if (n + 1) % 3 = 0 then
-          wideCheckCover n H (lowerHalf A) D && wideCheckCover n H (upperHalf A) D
+          wideCheckCover n H (lowerHalf A) V && wideCheckCover n H (upperHalf A) V
         else if (n + 1) % 3 = 2 then
-          wideCheckCover n H A (lowerHalf D) && wideCheckCover n H A (upperHalf D)
+          wideCheckCover n H A (lowerHalf V) && wideCheckCover n H A (upperHalf V)
         else
           wideCheckCover n (lowerHalf H) A D && wideCheckCover n (upperHalf H) A D) = true) :
-    wideCheckCover (n + 1) H A D = true := by
+    wideCheckCover (n + 1) H A V = true := by
   rw [wideCheckCover]
   split
   · rfl
@@ -46,21 +46,14 @@ local macro "splitCover" : tactic =>
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
-private theorem check_gap_half_to_one :
-    wideCheckCover 11 (0, 3 / 11) (0, 1 / 2) (1 / 2, 1) = true := by
-  iterate 3 all_goals splitCover
-  all_goals decide +kernel
-
-set_option maxHeartbeats 0 in
-set_option maxRecDepth 20000 in
-private theorem check_gap_one_to_five_quarters :
+private theorem check_upper_one_to_five_quarters :
     wideCheckCover 11 (0, 3 / 11) (0, 1 / 2) (1, 5 / 4) = true := by
   iterate 3 all_goals splitCover
   all_goals decide +kernel
 
 set_option maxHeartbeats 0 in
 set_option maxRecDepth 20000 in
-private theorem check_gap_five_quarters_to_three_halves :
+private theorem check_upper_five_quarters_to_three_halves :
     wideCheckCover 11 (0, 3 / 11) (0, 1 / 2) (5 / 4, 3 / 2) = true := by
   iterate 3 all_goals splitCover
   all_goals decide +kernel
@@ -78,16 +71,12 @@ private theorem leftStripRegularizedIntegrand_pos_wide {p : ℕ} (hp : 11 ≤ p)
     · norm_num
       exact div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
   have ha' : InInterval (0, 1 / 2) a := ⟨by simpa using ha, by simpa using ha₁⟩
-  have hc := wideCheckCover_sound hp₀ ha hd.le (le_of_not_ge hvlow) hv 11
-    (0, 3 / 11) (0, 1 / 2)
-  have hlo : (1 / 2 : ℝ) ≤ v - a := by linarith
-  have hhi : v - a ≤ 3 / 2 := by linarith
-  rcases le_total (v - a) 1 with h | h
-  · exact hc _ hh ha' ⟨by simpa using hlo, by simpa using h⟩ check_gap_half_to_one
-  · rcases le_total (v - a) (5 / 4) with h' | h'
-    · exact hc _ hh ha' ⟨by simpa using h, by simpa using h'⟩ check_gap_one_to_five_quarters
-    · exact hc _ hh ha' ⟨by simpa using h', by simpa using hhi⟩
-        check_gap_five_quarters_to_three_halves
+  have hc := wideCheckCover_sound hp₀ ha hd.le hv 11 (0, 3 / 11) (0, 1 / 2)
+  rcases le_total v (5 / 4) with h | h
+  · exact hc _ hh ha' ⟨by simpa using le_of_not_ge hvlow, by simpa using h⟩
+      check_upper_one_to_five_quarters
+  · exact hc _ hh ha' ⟨by simpa using h, by simpa using hv⟩
+      check_upper_five_quarters_to_three_halves
 
 /-- The exact logarithmic kernel has strictly negative mixed derivative through endpoint gap
 `1` on the left strip. -/

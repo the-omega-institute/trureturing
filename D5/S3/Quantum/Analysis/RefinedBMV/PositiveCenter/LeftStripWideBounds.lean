@@ -638,90 +638,70 @@ private theorem wideIntegrandBox_sound {p : ℕ} (hp : 0 < p) {a v : ℝ} {H A D
         (1-v * leftStripRegularizedSlope p (-v)) * (c * (leftStripExpMoment p 2 0 a v / c)) by ring,
     he, he]
 
--- Intersect the sum interval with the range still needed after the low-strip result.
-private def wideRange (V : Interval) : Interval :=
-  box (max V.lower 1) (min V.upper (3 / 2))
+-- Subdivide in the upper coordinate and enclose the integration gap by subtraction.
+private def wideCheckBox (H A V : Interval) : Bool :=
+  let D := V - A
+  let Zd := wideZBox H D 0
+  let Zv := wideZBox H V 0
+  let Zn := wideZBox H (0 - V) 0
+  decide (validZ Zd ∧ validZ Zv ∧ validZ Zn ∧ 0 < (wideIntegrandBox H A D V Zd Zv Zn).lower)
 
-private def wideCheckBox (H A D : Interval) : Bool :=
-  if (A + D).upper < 1 ∨ 3 / 2 < (A + D).lower then true else
-    let V := wideRange (A + D)
-    let Zd := wideZBox H D 0
-    let Zv := wideZBox H V 0
-    let Zn := wideZBox H (0 - V) 0
-    decide (validZ Zd ∧ validZ Zv ∧ validZ Zn ∧ 0 < (wideIntegrandBox H A D V Zd Zv Zn).lower)
+private theorem wideCheckBox_sound {p : ℕ} (hp : 0 < p) {a v : ℝ} {H A V : Interval}
+    (hh : H.encloses (3 / (p : ℝ))) (ha : A.encloses a) (hv : V.encloses v)
+    (ha₀ : 0 ≤ a) (hd₀ : 0 ≤ v-a) (hv₁ : v ≤ 3/2)
+    (hc : wideCheckBox H A V = true) : 0 < leftStripRegularizedIntegrand p a v := by
+  obtain ⟨hZd, hZv, hZn, hpos⟩ := of_decide_eq_true hc
+  exact wideIntegrandBox_sound hp hh ha (RoundedInterval.encloses_sub hv ha) hv ha₀ hd₀
+    (by linarith) hv₁ hZd hZv hZn hpos
 
-private theorem wideCheckBox_sound {p : ℕ} (hp : 0 < p) {a v : ℝ} {H A D : Interval}
-    (hh : H.encloses (3 / (p : ℝ))) (ha : A.encloses a) (hd : D.encloses (v-a))
-    (ha₀ : 0 ≤ a) (hd₀ : 0 ≤ v-a) (hv₀ : 1 ≤ v) (hv₁ : v ≤ 3/2)
-    (hc : wideCheckBox H A D = true) : 0 < leftStripRegularizedIntegrand p a v := by
-  have hV : (A + D).encloses v := by
-    convert RoundedInterval.encloses_add ha hd using 1
-    ring
-  unfold wideCheckBox at hc
-  split at hc
-  · rename_i h
-    rcases h with h | h
-    · exact False.elim ((show (((A + D).upper : ℚ) : ℝ) < 1 by exact_mod_cast h).not_ge
-        (hv₀.trans hV.2))
-    · exact False.elim ((show (3 / 2 : ℝ) < (A + D).lower by exact_mod_cast h).not_ge
-        (hV.1.trans hv₁))
-  · have hv : (wideRange (A + D)).encloses v := by
-      apply RoundedInterval.encloses_interval
-      · rw [Rat.cast_max, Rat.cast_one]
-        exact max_le hV.1 hv₀
-      · rw [Rat.cast_min, Rat.cast_div, Rat.cast_ofNat, Rat.cast_ofNat]
-        exact le_min hV.2 hv₁
-    obtain ⟨hZd, hZv, hZn, hpos⟩ := of_decide_eq_true hc
-    exact wideIntegrandBox_sound hp hh ha hd hv ha₀ hd₀ (by linarith) hv₁ hZd hZv hZn hpos
-
-private def wideCheckCover (depth : ℕ) (H A D : Endpoints) : Bool :=
-  if wideCheckBox (intervalOf H) (intervalOf A) (intervalOf D) then true else
+private def wideCheckCover (depth : ℕ) (H A V : Endpoints) : Bool :=
+  if wideCheckBox (intervalOf H) (intervalOf A) (intervalOf V) then true else
     match depth with
     | 0 => false
     | n + 1 =>
       if (n+1) % 3 = 0 then
-        wideCheckCover n H (lowerHalf A) D && wideCheckCover n H (upperHalf A) D
+        wideCheckCover n H (lowerHalf A) V && wideCheckCover n H (upperHalf A) V
       else if (n+1) % 3 = 2 then
-        wideCheckCover n H A (lowerHalf D) && wideCheckCover n H A (upperHalf D)
+        wideCheckCover n H A (lowerHalf V) && wideCheckCover n H A (upperHalf V)
       else
         wideCheckCover n (lowerHalf H) A D && wideCheckCover n (upperHalf H) A D
 
 private theorem wideCheckCover_sound {p : ℕ} (hp : 0 < p) {a v : ℝ}
-    (ha₀ : 0 ≤ a) (hd₀ : 0 ≤ v-a) (hv₀ : 1 ≤ v) (hv₁ : v ≤ 3/2)
-    (n : ℕ) (H A D : Endpoints) (hh : InInterval H (3 / (p : ℝ)))
-    (ha : InInterval A a) (hd : InInterval D (v-a))
-    (hc : wideCheckCover n H A D = true) : 0 < leftStripRegularizedIntegrand p a v := by
-  have localSound {H A D : Endpoints} (hh : InInterval H (3 / (p : ℝ)))
-      (ha : InInterval A a) (hd : InInterval D (v-a))
-      (hb : wideCheckBox (intervalOf H) (intervalOf A) (intervalOf D) = true) :
+    (ha₀ : 0 ≤ a) (hd₀ : 0 ≤ v-a) (hv₁ : v ≤ 3/2)
+    (n : ℕ) (H A V : Endpoints) (hh : InInterval H (3 / (p : ℝ)))
+    (ha : InInterval A a) (hv : InInterval V v)
+    (hc : wideCheckCover n H A V = true) : 0 < leftStripRegularizedIntegrand p a v := by
+  have localSound {H A V : Endpoints} (hh : InInterval H (3 / (p : ℝ)))
+      (ha : InInterval A a) (hv : InInterval V v)
+      (hb : wideCheckBox (intervalOf H) (intervalOf A) (intervalOf V) = true) :
       0 < leftStripRegularizedIntegrand p a v :=
     wideCheckBox_sound hp (RoundedInterval.encloses_interval hh.1 hh.2)
       (RoundedInterval.encloses_interval ha.1 ha.2)
-      (RoundedInterval.encloses_interval hd.1 hd.2) ha₀ hd₀ hv₀ hv₁ hb
-  induction n generalizing H A D with
+      (RoundedInterval.encloses_interval hv.1 hv.2) ha₀ hd₀ hv₁ hb
+  induction n generalizing H A V with
   | zero =>
     rw [wideCheckCover] at hc
     split at hc
-    · exact localSound hh ha hd (by assumption)
+    · exact localSound hh ha hv (by assumption)
     · contradiction
   | succ n ih =>
     rw [wideCheckCover] at hc
     split at hc
-    · exact localSound hh ha hd (by assumption)
+    · exact localSound hh ha hv (by assumption)
     · split at hc
       · obtain ⟨hlo, hhi⟩ := Bool.and_eq_true_iff.mp hc
         rcases in_half ha with ha | ha
-        · exact ih _ _ _ hh ha hd hlo
-        · exact ih _ _ _ hh ha hd hhi
+        · exact ih _ _ _ hh ha hv hlo
+        · exact ih _ _ _ hh ha hv hhi
       · split at hc
         · obtain ⟨hlo, hhi⟩ := Bool.and_eq_true_iff.mp hc
-          rcases in_half hd with hd | hd
-          · exact ih _ _ _ hh ha hd hlo
-          · exact ih _ _ _ hh ha hd hhi
+          rcases in_half hv with hv | hv
+          · exact ih _ _ _ hh ha hv hlo
+          · exact ih _ _ _ hh ha hv hhi
         · obtain ⟨hlo, hhi⟩ := Bool.and_eq_true_iff.mp hc
           rcases in_half hh with hh | hh
-          · exact ih _ _ _ hh ha hd hlo
-          · exact ih _ _ _ hh ha hd hhi
+          · exact ih _ _ _ hh ha hv hlo
+          · exact ih _ _ _ hh ha hv hhi
 
 end
 
