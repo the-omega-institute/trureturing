@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Nondegenerate original mode-three vacuum channels on the actual twisted Ising eigenspaces. -/
+   digest: Nondegenerate original mode-three vacuum channels on the twisted Ising eigenspaces. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.IsingPrimaryCoupling
 import D5.S3.VertexAlgebra.Lattice.NormFourCosetVirasoro
@@ -27,12 +27,14 @@ open LatticeInvolution (FixedCarrier fixedMode fixedSpace fixedVacuum fixed_crea
 open HalfFock.LatticeHalfFockParityField (paritySpace fixedParitySlice)
 open HalfFock.NormFourFirstGradeSpectrum
 open HalfFock.NormFourLowestGrades (actualGradeOneZeroMode)
+open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
 open LatticeHalfFockChargedTensorCoefficients (ActualTensor)
 open LatticeHalfFockGradedTrace (actualGrade oddWeight actualTensorL0 actualAmbientBasis
   actual_basis_eigenvalue)
 open LatticeAllStateField (vacuum)
 open ActualChargedAdjoint (actualForm actualForm_nondegenerate)
 open OriginalFourMChargeCoset (originalI originalI_three_eq_vacuum_smul)
+open SourceBPZ.OriginalSourceCoevaluation (gradeVacuum)
 open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open LatticeHalfFockCorrectedField (correctedField)
 open scoped VertexOperator BigOperators
@@ -42,27 +44,26 @@ variable {D : LatticeData} {hu : IsUnit D.G.det}
   {h24 : D.rank = 24} {a : Charge D} {ha : bilinear D a a = 4} {s : ℂ}
 
 local notation "E" => parityMinusEnergyTwo D hu
-local notation "W" => (parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace
+local notation "W" => Module.End.eigenspace (parityMinusEnergyTwoZeroMode D hu h24 a ha s)
+set_option quotPrecheck false in
 local notation "ι" => (Submodule.inclusion (show E ≤ paritySpace D hu (-1) from inf_le_left))
-local notation "B" => ((actualForm D hu).flip.restrict E)
+local notation "B" => LinearMap.BilinForm.restrict (LinearMap.flip (actualForm D hu)) E
 local notation "Allowed" => fun h : ℂ => h = 0 ∨ h = 1 / 2 ∨ h = 1 / 16
 
-private theorem vacuum_grade_zero (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
-    vacuum D ∈ LatticePositiveEnergy.grade D 0 := by
-  rw [LatticePositiveEnergy.grade_zero D hD]
-  exact Submodule.subset_span (by simp)
-
-private theorem signed_axis_grade_two (ha : bilinear D a a = 4) :
+private theorem signed_axis_grade_two (hu : IsUnit D.G.det)
+    (ha : bilinear D a a = 4) :
     (normFourFixedSource D a s).val ∈ LatticePositiveEnergy.grade D 2 := by
-  let H := (LatticeSugawaraCurrents.gramComplex D)⁻¹
-  have hHG := Matrix.nonsing_inv_mul _ (SourceMobius.gram_det_unit D hu)
-  have hGH := Matrix.mul_nonsing_inv _ (SourceMobius.gram_det_unit D hu)
-  apply (LatticePositiveEnergy.actualL0_eigen_iff_grade D H hHG hGH 2 _).mp
+  let H := actualInverse D
+  have hHG := actualInverse_left D hu
+  have hGH := actualInverse_right D hu
+  let e := Lattice.NormFourVirasoroVector.vector D a s
+  change e ∈ LatticePositiveEnergy.grade D 2
+  apply (LatticePositiveEnergy.actualL0_eigen_iff_grade D H hHG hGH 2 e).mp
   have h := ((Lattice.NormFourCosetVirasoro.mixed_products
     D H hHG hGH a ha s).1 1 (by omega)).1
   rw [LatticeActualConformalWard.omega_product] at h
   norm_num at h
-  exact h
+  simpa only [Int.cast_ofNat, e] using h
 
 /-- Every positive signed Ising mode kills the actual negative physical
 energy-two space. -/
@@ -75,7 +76,7 @@ theorem oddAxisMode_pos_eq_zero_energyTwo (u : E) (k : ℤ) (hk : 0 < k)
     (2 * (-(k + 1) - 1)) u.val = 0
   rw [show 2 * (-(k + 1) - 1) = -2 * (k + 1) - 2 by omega]
   exact Lattice.NormFourZhuAlgebra.Core.high_coefficient_zero D hu 2 _
-    (signed_axis_grade_two (hu := hu) ha) u.val
+    (signed_axis_grade_two hu ha) u.val
     ((actual_grade_one_eq_parity_minus_energy_two D hu h24).ge u.property)
     (k + 1) (by omega)
 
@@ -91,8 +92,7 @@ ordered twisted form times the fixed vacuum. -/
 theorem originalI_three_energyTwo (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (h24 : D.rank = 24) (u v : E) :
     originalI D hu hD 3 (ι u) (ι v) = B u v • fixedVacuum D := by
-  let vac : MixedIntertwiner.fixedGrade D 0 :=
-    ⟨vacuum D, ⟨vacuum_grade_zero hD, (fixedVacuum D).property⟩⟩
+  let vac : MixedIntertwiner.fixedGrade D 0 := gradeVacuum D
   have hu₂ : actualTensorL0 D hu u.val = (2 : ℂ) • u.val :=
     Module.End.mem_eigenspace_iff.mp u.property.2
   have hv₂ : actualTensorL0 D hu v.val = (2 : ℂ) • v.val :=
@@ -104,11 +104,12 @@ theorem originalI_three_energyTwo (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ �
 private def vacuumDetector (D : LatticeData) : FixedCarrier D →ₗ[ℂ] ℂ :=
   ((sourcePairing D).flip (vacuum D)).comp (fixedSpace D).subtype
 
-private theorem vacuumDetector_axis_nonpos (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+private theorem vacuumDetector_axis_nonpos (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (ha : bilinear D a a = 4) (k : ℤ) (hk : k ≤ 0) (z : FixedCarrier D) :
     vacuumDetector D (fixedMode D (normFourFixedSource D a s) (k + 1) z) = 0 := by
   let e := normFourFixedSource D a s
-  have he : e.val ∈ LatticePositiveEnergy.grade D 2 := signed_axis_grade_two (hu := hu) ha
+  have he : e.val ∈ LatticePositiveEnergy.grade D 2 := signed_axis_grade_two hu ha
   change sourcePairing D (((LatticeAllStateField.Y D e.val)[[k + 1]]) z.val) (vacuum D) = 0
   rw [← LatticePositiveEnergy.sum_gradeProjections D z.val]
   simp only [map_sum, LinearMap.sum_apply]
@@ -134,22 +135,24 @@ private theorem vacuumDetector_axis_nonpos (hD : Matrix.PosDef (D.G.map (Int.cas
   · have hg := LatticePositiveEnergy.positive_actual_mode_grade D hD 2 n
       (k + 1) e.val x he hx
     rw [show (2 : ℤ) + n - (k + 1) - 1 = n - k by omega] at hg
-    exact SourceBPZ.SourcePairingLaws.sourcePairing_grade D _ _ hz _ _ hg (vacuum_grade_zero hD)
+    exact SourceBPZ.SourcePairingLaws.sourcePairing_grade D _ _ hz _ _ hg
+      (gradeVacuum D).property.1
 
-private theorem vacuumPairing_offDiagonal (hs : s ^ 2 = 1) {h j : ℂ}
+private theorem vacuumPairing_offDiagonal
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (hs : s ^ 2 = 1) {h j : ℂ}
     (hh : Allowed h) (hj : Allowed j) (hne : h ≠ j) (u : W h) (v : W j) :
     B u.val v.val = 0 := by
   have hEll0 (z : FixedCarrier D) :
       vacuumDetector D (fixedMode D (normFourFixedSource D a s) 1 z) = 0 * vacuumDetector D z := by
     simpa only [zero_add, zero_mul] using
-      vacuumDetector_axis_nonpos (hu := hu) (s := s) hD ha 0 le_rfl z
+      vacuumDetector_axis_nonpos hu (s := s) hD ha 0 le_rfl z
   by_contra hB
   have hNonzero : vacuumDetector D (originalI D hu hD 3 (ι u.val) (ι v.val)) ≠ 0 := by
     have hVac : vacuumDetector D (fixedVacuum D) = 1 := sourcePairing_vacuum D
     rwa [originalI_three_energyTwo hD h24, map_smul, hVac, smul_eq_mul, mul_one]
   have tab := originalI_ising_primary_selection (hD := hD) (a := a) (s := s)
     h24 (vacuumDetector D) hEll0
-    (fun k hk z => vacuumDetector_axis_nonpos (hu := hu) hD ha k (le_of_lt hk) z)
+    (fun k hk z => vacuumDetector_axis_nonpos hu hD ha k (le_of_lt hk) z)
     ha hs 3 (ι u.val) (ι v.val) (oddAxisMode_zero_on_eigenspace hs u)
     (oddAxisMode_zero_on_eigenspace hs v)
     (fun k hk => oddAxisMode_pos_eq_zero_energyTwo u.val k hk h24 ha)
@@ -167,7 +170,7 @@ private theorem vacuumPairing_offDiagonal (hs : s ^ 2 = 1) {h j : ℂ}
 theorem originalI_three_offDiagonal (hs : s ^ 2 = 1) {h j : ℂ}
     (hh : Allowed h) (hj : Allowed j) (hne : h ≠ j) (u : W h) (v : W j) :
     originalI D hu hD 3 (ι u.val) (ι v.val) = 0 := by
-  rw [originalI_three_energyTwo hD h24, vacuumPairing_offDiagonal (hD := hD) hs hh hj hne u v,
+  rw [originalI_three_energyTwo hD h24, vacuumPairing_offDiagonal hD hs hh hj hne u v,
     zero_smul]
 
 private theorem energyTwo_left_radical (h24 : D.rank = 24) (u : E)
@@ -188,7 +191,8 @@ private theorem energyTwo_left_radical (h24 : D.rank = 24) (u : E)
     · have hg : b i ∈ actualGrade D hu 1 := by
         rw [actualGrade, LinearMap.mem_ker]
         apply sub_eq_zero.mpr
-        simpa only [hi₁] using hi
+        change actualTensorL0 D hu (b i) = ((D.rank : ℂ) / 16 + ((1 : ℕ) : ℂ) / 2) • b i
+        simpa only [hi₁, Prod.eta, b] using hi
       exact hr ⟨b i, (actual_grade_one_eq_parity_minus_energy_two D hu h24).le hg⟩
     · exact ActualOddGradeOrthogonality.actualForm_oddGrade_orthogonal D hu
         (oddWeight D i.1 : ℤ) 1 (b i) u.val
@@ -200,7 +204,7 @@ private theorem energyTwo_left_radical (h24 : D.rank = 24) (u : E)
 the three allowed axis eigenspaces. -/
 theorem vacuumPairing_nondegenerate (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hs : s ^ 2 = 1) {h : ℂ} (hh : Allowed h) :
-    (B.restrict (W h)).Nondegenerate := by
+    ((B).restrict (W h)).Nondegenerate := by
   have leftRadical (u : W h) (hr : ∀ v : W h, B u.val v.val = 0) : u = 0 := by
     apply Subtype.ext
     apply energyTwo_left_radical h24 u.val
@@ -221,7 +225,7 @@ theorem vacuumPairing_nondegenerate (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ
       by_cases heq : h = j
       · subst j
         exact hr v
-      · exact vacuumPairing_offDiagonal (hD := hD) hs hh hj heq u v
+      · exact vacuumPairing_offDiagonal hD hs hh hj heq u v
     rw [← hw, map_add, map_add, pair_zero (Or.inl rfl) w₀,
       pair_zero (Or.inr (Or.inr rfl)) w₁₆, pair_zero (Or.inr (Or.inl rfl)) w₁₂]
     simp
@@ -247,7 +251,7 @@ theorem exists_sameWeight_vacuum_partner (hs : s ^ 2 = 1) {h : ℂ} (hh : Allowe
   have hc : c ≠ 0 := hv
   refine ⟨c⁻¹ • v, ?_⟩
   rw [OriginalOrbifoldField.Y_ncoeff_apply]
-  simp only [map_zero, LinearMap.zero_apply, zero_add, add_zero]
+  simp only [map_zero, zero_add, add_zero]
   have hscale : ι ((c⁻¹ • v : W h).val) = c⁻¹ • ι v.val := by
     exact map_smul ι _ v.val
   rw [hscale, map_smul, originalI_three_energyTwo hD h24]
