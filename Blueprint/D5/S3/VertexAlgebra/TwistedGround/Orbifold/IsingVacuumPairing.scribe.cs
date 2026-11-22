@@ -14,6 +14,7 @@ internal sealed class IsingVacuumPairingDocument : IScribeDocumentDefinition
             Paragraph(Text("The input space is the whole negative twisted carrier at physical "
                 + "energy two for a rank-24 lattice with unit Gram determinant. The axis is "
                 + "the actual fixed state of a charge of norm four with sign s satisfying s² = 1. "
+                + "The vacuum pairing results below assume that the real Gram matrix is positive definite. "
                 + "These hypotheses include both signs in each of the 24 Leech frame directions.")),
             Describe.Lean(DescribeId.Create("ising-grade-two-positive-modes"),
                 DeclarationHandle.Create(Owner + "oddAxisMode_pos_eq_zero_energyTwo"),
@@ -27,7 +28,7 @@ internal sealed class IsingVacuumPairingDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "originalI_three_energyTwo"),
                 H("The mode-three pairing"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive real Gram, the original two-twisted mode "
+                Blocks(Paragraph(Text("The original two-twisted mode "
                     + "three on physical energy-two inputs u and v is the fixed vacuum times "
                     + "the ordered scalar actualForm(v,u). The original inverse of the source "
                     + "pairing realizes the output on grade zero."))),
