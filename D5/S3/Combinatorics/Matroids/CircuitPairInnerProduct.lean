@@ -534,9 +534,9 @@ def rationalTopCycles (M : Matroid V) : Submodule ℚ (Finset V → ℚ) where
     refine ⟨fun F hF => by simp [hzB F hF], fun R => ?_⟩
     simp only [Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, ← mul_sum, hzR R, mul_zero]
 
-private def castChain (z : Chain V) (F : Finset V) : ℚ := z F
+def castChain (z : Chain V) (F : Finset V) : ℚ := z F
 
-private lemma mem_rationalTopCycles_iff {M : Matroid V} {z : Chain V} :
+lemma mem_rationalTopCycles_iff {M : Matroid V} {z : Chain V} :
     castChain z ∈ rationalTopCycles M ↔ TopCycle M z := by
   change ( (∀ F : Finset V, ¬ M.IsBase (F : Set V) → (z F : ℚ) = 0) ∧
     ∀ R : Finset V, (∑ x ∈ univ \ R, (insertionSign R x : ℚ) * (z (insert x R) : ℚ)) = 0) ↔ _
@@ -549,7 +549,7 @@ private lemma mem_rationalTopCycles_iff {M : Matroid V} {z : Chain V} :
     exact ⟨fun F hF => by exact_mod_cast h.vanishes F hF, fun R => by
       exact_mod_cast h.cycle R⟩
 
-private lemma exists_integral_multiple {M : Matroid V} (z : rationalTopCycles M) :
+lemma exists_integral_multiple {M : Matroid V} (z : rationalTopCycles M) :
     ∃ (c : ℚ) (w : topCycles M), c ≠ 0 ∧ castChain w.val = c • z.val := by
   obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite
     (nonZeroDivisors ℤ) z.val
@@ -587,7 +587,7 @@ private lemma rationalLift_mem {M : Matroid V} {K : Finset V} (hK : M.IsCircuit 
   rwa [smul_smul, inv_mul_cancel₀ hc, one_smul] at h
 
 open scoped Classical in
-private noncomputable def rationalAggregate (M : Matroid V) (K : Finset V) :
+noncomputable def rationalAggregate (M : Matroid V) (K : Finset V) :
     (Finset V → ℚ) →ₗ[ℚ] (Finset V → ℚ) where
   toFun z T := if (M ／ (K : Set V)).IsBase (T : Set V) then
     ∑ x ∈ K, (restrictionSign K x T : ℚ) * z (T ∪ K.erase x)
@@ -605,7 +605,7 @@ private noncomputable def rationalAggregate (M : Matroid V) (K : Finset V) :
     · simp only [ite_eq_right hT, Pi.smul_apply, smul_zero]
 
 omit [Fintype V] in
-private lemma rationalAggregate_cast (M : Matroid V) (K : Finset V) (z : Chain V) :
+lemma rationalAggregate_cast (M : Matroid V) (K : Finset V) (z : Chain V) :
     rationalAggregate M K (castChain z) = castChain (aggregateRestriction M K z) := by
   classical
   funext T
@@ -615,7 +615,7 @@ private lemma rationalAggregate_cast (M : Matroid V) (K : Finset V) (z : Chain V
   · simp only [rationalAggregate, LinearMap.coe_mk, AddHom.coe_mk, ite_eq_right hT, castChain,
       aggregateRestriction, restrictChain, sum_const_zero, Int.cast_zero]
 
-private lemma rationalAggregate_mem {M : Matroid V} {K : Finset V}
+lemma rationalAggregate_mem {M : Matroid V} {K : Finset V}
     (hK : M.IsCircuit (K : Set V)) (z : rationalTopCycles M) :
     rationalAggregate M K z.val ∈ rationalTopCycles (M ／ (K : Set V)) := by
   obtain ⟨c, w, hc, hw⟩ := exists_integral_multiple z
