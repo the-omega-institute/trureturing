@@ -204,19 +204,15 @@ private theorem reserved_top_mass {n k : ℕ}
       (topOddRank (n := n)).card - (∑ c ∈ topOddRank, (mass zeroRow c + mass special c)) +
       (if q ∈ topOddRank then 1 else 0) := by
   classical
-  have z : (∑ c ∈ topOddRank, mass zeroRow c) ≤ k := by
-    rw [← row zeroRow]
-    exact sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
-  have a : (∑ c ∈ topOddRank, mass special c) ≤ k := by
-    rw [← row special]
-    exact sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
-  rw [sum_add_distrib]
+  have charged := top_charged_mass mass zeroRow special
+    (topOddRank (n := n)) k row
   by_cases h : q ∈ topOddRank
-  · simp [h]; omega
-  · have extra : (∑ c ∈ topOddRank, mass special c) + mass special q ≤ k := by
-      rw [Nat.add_comm, ← sum_insert (f := mass special) h, ← row special]
-      exact sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
-    simp [h]; omega
+  · simp [h]
+    omega
+  · have unit := single_le_sum (f := mass special) (fun _ _ => Nat.zero_le _)
+      (mem_sdiff.mpr ⟨mem_univ q, h⟩)
+    simp [h]
+    omega
 
 private theorem reserved_low_mass {n k r : ℕ}
     (mass : EvenSubset n → OddSubset n → ℕ)
@@ -228,14 +224,9 @@ private theorem reserved_low_mass {n k r : ℕ}
       (if q ∈ lowOddRanks r then 0 else 1) := by
   classical
   have notHigh : special ∉ highOrdinaryEvenRanks r := by simp [highOrdinaryEvenRanks, full]
-  have colBound (c : OddSubset n) :
-      (∑ p ∈ highOrdinaryEvenRanks r, mass p c) + mass special c ≤ k := by
-    rw [Nat.add_comm, ← sum_insert (f := fun p => mass p c) notHigh, ← col c]
-    exact sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
-  have exactSum := sum_le_sum (s := lowOddRanks r) (fun c _ => colBound c)
-  simp only [sum_add_distrib, sum_const, nsmul_eq_mul, Nat.cast_id] at exactSum
-  rw [sum_comm] at exactSum
-  rw [Nat.mul_comm _ k] at exactSum
+  have exactSum := high_charged_mass mass special (highOrdinaryEvenRanks r) (lowOddRanks r)
+    k notHigh col
+  rw [Nat.mul_comm] at exactSum
   by_cases h : q ∈ lowOddRanks r
   · have unit := single_le_sum (f := mass special) (fun _ _ => Nat.zero_le _) h
     simp [h]; omega
