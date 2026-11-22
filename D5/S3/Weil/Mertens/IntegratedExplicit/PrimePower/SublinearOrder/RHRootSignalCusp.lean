@@ -65,7 +65,8 @@ private theorem coefficient_correction (hRH : RiemannHypothesis) {r : ℝ} (hr :
   rw [hre]
   ring
 
-private theorem phase_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) (k : ℕ) :
+/-- Under RH the centered exponential uses the real zero ordinate. -/
+theorem phase_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) (u : ℝ) (k : ℕ) :
     frequency k / (r : ℂ) * (u : ℂ) = (((actualZero k).im * (u / r) : ℝ) : ℂ) * Complex.I := by
   have hfreq : frequency k = ((actualZero k).im : ℂ) * Complex.I := by
     apply Complex.ext
