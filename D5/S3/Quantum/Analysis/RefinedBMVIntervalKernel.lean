@@ -17,8 +17,8 @@ is extended symmetrically. Ordered rectangle increments give nonnegative
 coefficients of the rank-one matrices supported on sample intervals.
 -/
 
-open Finset Set
-open scoped BigOperators ComplexOrder
+open Filter Finset Set
+open scoped BigOperators ComplexOrder Topology
 
 noncomputable section
 
@@ -127,5 +127,38 @@ theorem rectangle_nonneg_of_mixed_deriv_nonpos {a : ℝ} {K D : ℝ → ℝ → 
     exact sub_nonneg.mpr (hanti ⟨le_rfl, hvw⟩ ⟨hvw, le_rfl⟩ hvw)
   have h := hmono ⟨le_rfl, hlu⟩ ⟨hlu, le_rfl⟩ hlu
   linarith only [h]
+
+/-- Zero limits at the outer edges give the inequalities for the virtual row and column. -/
+theorem edge_inequalities_of_rectangle_limits {a : ℝ} {K : ℝ → ℝ → ℝ}
+    (hrect : ∀ ⦃l u v w : ℝ⦄, a < l → l ≤ u → u ≤ v → v ≤ w →
+      0 ≤ (K u v - K l v) - (K u w - K l w))
+    (hzero : ∀ y > a, Tendsto (fun x ↦ K x y) (𝓝[>] a) (𝓝 0))
+    (hinfty : ∀ x > a, Tendsto (K x) atTop (𝓝 0)) :
+    (∀ ⦃x y : ℝ⦄, a < x → x ≤ y → 0 ≤ K x y) ∧
+      (∀ y > a, MonotoneOn (fun x ↦ K x y) (Ioc a y)) ∧
+      (∀ x > a, AntitoneOn (K x) (Ici x)) := by
+  have hleft (v : ℝ) (_ : a < v) : MonotoneOn (fun x ↦ K x v) (Ioc a v) := by
+    intro l hl u hu hlu
+    have ht : Tendsto (fun w ↦ K u w - K l w) atTop (𝓝 0) := by
+      simpa only [sub_zero] using (hinfty u hu.1).sub (hinfty l hl.1)
+    apply sub_nonneg.mp
+    refine le_of_tendsto ht ?_
+    filter_upwards [eventually_ge_atTop v] with w hvw
+    exact sub_nonneg.mp (hrect hl.1 hlu hu.2 hvw)
+  have hright (u : ℝ) (hau : a < u) : AntitoneOn (K u) (Ici u) := by
+    intro v huv w _ hvw
+    change u ≤ v at huv
+    have ht (y : ℝ) (hay : a < y) :
+        Tendsto (fun l ↦ K u y - K l y) (𝓝[>] a) (𝓝 (K u y)) := by
+      simpa only [sub_zero] using (tendsto_const_nhds (x := K u y)).sub (hzero y hay)
+    refine le_of_tendsto_of_tendsto
+      (ht w (hau.trans_le (huv.trans hvw))) (ht v (hau.trans_le huv)) ?_
+    filter_upwards [Ioo_mem_nhdsGT hau] with l hl
+    exact sub_nonneg.mp (hrect hl.1 hl.2.le huv hvw)
+  refine ⟨?_, hleft, hright⟩
+  intro x y hax hxy
+  refine le_of_tendsto (hinfty x hax) ?_
+  filter_upwards [eventually_ge_atTop y] with w hyw
+  exact hright x hax hxy (hxy.trans hyw) hyw
 
 end RefinedBMV.IntervalKernel
