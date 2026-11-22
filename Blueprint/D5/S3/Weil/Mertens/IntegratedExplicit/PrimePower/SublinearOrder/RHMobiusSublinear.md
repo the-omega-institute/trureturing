@@ -28,4 +28,5 @@ The eventual sign of the prime-only tail fixes the left threshold before the acc
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusSublinear.prime_window_mobius_sublinear_of_rh`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/OmittedSpectrum](../LinearOrder/OmittedSpectrum.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/TrivialResponse](../LinearOrder/TrivialResponse.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/ArithmeticResponse](ArithmeticResponse.md)
