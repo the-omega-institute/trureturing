@@ -213,7 +213,7 @@ private lemma joined_sign (H : Finset I) {t i : I} (ht : t ∉ H) (hi : i ∈ H)
     norm_num
 
 omit [Fintype I] in
-private lemma joined_readout (f : Finset I → RationalResidue) (hf : f H = 0)
+lemma joined_readout (f : Finset I → RationalResidue) (hf : f H = 0)
     {t : I} (ht : t ∉ H) :
     circuitReadout f (insert t H) ∅ =
       (-1 : ℤ) ^ (H.filter (t < ·)).card • circuitReadout f H {t} := by
@@ -282,7 +282,7 @@ open UniformMatroidCircuitCoordinates (circuit_iff_card contracted_basis_eq_empt
   uniformWeightedFormsEquiv)
 open UniformCircuitResidueForms (covectorWedgeLinear insertVector formCoordinates)
 
-private noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
+noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
   refine Matroid.ofExistsFiniteIsBase Set.univ (fun S : Set I => S.ncard = r)
     ⟨(H : Set I), by simpa using hH, H.finite_toSet⟩ ?_ (fun _ _ => Set.subset_univ _)
   intro B C hB hC i hi
@@ -292,7 +292,7 @@ private noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
   obtain ⟨t, htC, htB⟩ := Set.not_subset.mp hnot
   exact ⟨t, ⟨htC, htB⟩, (Set.ncard_exchange htB hi.1).trans hB⟩
 
-private lemma uniform_support_and_readout (hH : H.card = r) (hr : r < Fintype.card I)
+lemma uniform_support_and_readout (hH : H.card = r) (hr : r < Fintype.card I)
     {V : Type*} [Fintype V] (p : V → I) (f : Finset I → RationalResidue) :
     f ∈ weightedCircuitResidues (uniformCore (H := H) hH) p ↔
       (∀ F : Finset I, F.card ≠ r → f F = 0) ∧
@@ -367,7 +367,7 @@ open UniformCircuitResidueForms (basisFormEquiv basisFormEquiv_symm_apply
 open Set.powersetCard (ofFinEmbEquiv)
 
 omit [Fintype I] in
-private lemma pivot_coordinate_zero_iff {n : ℕ} (hH : H.card = n + 1) {j : I} (hj : j ∈ H)
+lemma pivot_coordinate_zero_iff {n : ℕ} (hH : H.card = n + 1) {j : I} (hj : j ∈ H)
     (b : Module.Basis I ℤ (I → ℤ))
     (f : (I → ℤ) [⋀^Fin (n + 1)]→ₗ[ℤ] RationalResidue) :
     formCoordinates b f H = 0 ↔

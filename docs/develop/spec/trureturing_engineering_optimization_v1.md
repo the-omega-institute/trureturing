@@ -30,10 +30,10 @@ SealCatalog 的逐成员结论允许 positive 或 zero；zero 携带平凡性与
 | 已核对路径 | 当前行为 | 结论 |
 |---|---|---|
 | `lakefile.toml` | 根包管理数学内容；Interface、Impl、Reg 与测试宿主独立分包 | 优化不能简单删默认覆盖；先保持全覆盖、做增量复用 |
-| `Makefile` | 已有 `make lean`、`lean-report`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
+| `Makefile` | 已有 `make lean`、`lean-report-scoped`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
 | `tools/lean-inspector/Inspector.lean` | 用 `RawArtifacts.Store` 读取编译部件，按模块流式输出报告 | 按实际输入闭包和批次边界测量读取成本 |
 | 同上 | 公理闭包已有 Tarjan SCC 与运行级共享缓存 | 保留；不能将“新增 memoization”当作本轮主要收益 |
-| `tools/lean-inspector/lakefile.lean`、`native.py`、`reuse.py` | Lake trace 决定模块报告与汇总工件复用；完整调用另由 `.reuse.json` 核对登记输入与报告五件套 | 实现字节不进入报告复用条件 |
+| `tools/lean-inspector/lakefile.lean`、`native.py`、`scoped.py` | Lake trace 决定模块报告复用，定向汇总校验本次根目标及其依赖的工件 | 实现字节不进入报告复用条件 |
 | `materials.py` / `publication.py` | 校验并发布 canonical 报告与材料 | 按实际分配量测量内存 |
 | `CompiledSeal.lean` | 按 `canonicalObjectArenaName` 分组、确定顺序、构造当前目录 | 分组使用解析后的对象舞台身份 |
 | `Contract/Catalog.lean` | SealRow 承载逐成员结论；SealCatalog 将数学证据绑定同一单位向量目录 | 数学证据在 Reg 编译期检查 |
@@ -108,11 +108,11 @@ statement-v1 编码通过有界字节缓冲写入 spool；名称、universe、�
 
 ### 5.3 当前报告与复用
 
-公开报告格式为 `stratalint-raw-lean-report-v3`，严格读取器只接受该格式。
+模块报告使用 `stratalint-raw-lean-report-v3`，定向汇总使用 `stratalint-scoped-lean-report-v1`。读取器分别校验对应格式。
 提取语义或公开格式改变须更新格式标识并全部重提取。
 模块 facet 以编译器产物闭包、utility 输入及格式标识决定 ZIP 复用；
 判官程序必须构建成功，其字节不进入报告 trace。
-聚合 facet 核对完整模块成员并合并材料，完整调用收据校验报告五件套。
+定向报告核对本次范围内的模块成员，合并相同摘要的材料。
 
 ---
 
@@ -264,7 +264,7 @@ Reg 契约先通过 Lean 编译，报告生产读取其编译部件并在模块�
 
 ## 10. 契约接口与判官实现
 
-Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，整份有效报告复用；
+Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，有效的模块报告可以复用；
 编译输入闭包变化的登记由当前判官评定。
 契约接口升级须在同一次交付迁移全部用法，删除旧表示；
 编译依赖传播重编与重评。提取语义或报告格式变化更新报告格式标识，
@@ -288,22 +288,20 @@ Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，整�
 
 ### 12.1 原生报告工件
 
-`.lake/build/lean-inspector/modules/<module>.zip` 保存模块报告与材料；
-`report.zip` 聚合完整模块集合。Lake trace 决定模块工件复用。
-完整调用的 `.reuse.json` 绑定 report_modules、config_inputs、报告格式、
-显式执行环境及报告五件套，并要求 defaults、report、publication 三阶段完成。
-判官实现字节不进入复用条件。
+`make lean-cache-prepare FULL_BUILD=1` 为项目缓存准备编译产物和逐模块报告。
+`.lake/build/lean-inspector/modules/<module>.zip` 保存该模块的声明、材料和来源。
+PR 与 push 按本次根目标及其依赖汇总所需的模块。Lake trace 决定模块工件复用。
 
 ### 12.2 来源与验证
 
 模块 provenance 保存实际生成者与输入投影；实现变化不回写原生成者。
 新生成模块在生产时验证报告、材料与 utility 绑定；聚合读取已生成的模块工件，
-核对成员与来源结构。发布程序核对 bundle 封套、输入坐标与文件摘要，不重复逐声明校验。
+核对成员与来源结构。定向报告发布时核对当前源码、范围、模块摘要和逐声明材料。
 摘要与 provenance 是工程证据，不是数学证明。
 
 ### 12.3 失败处理
 
-复用收据缺失、损坏或输入不符时，回到通常 Lake 路径。
+模块报告缺失或 Lake 判定其输入发生变化时，重新提取对应模块。
 作者输入登记错误仍是错误。编译、输入绑定或发布校验失败不发布成功结果。
 
 ---
@@ -323,9 +321,9 @@ Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，整�
 CI 的种子恢复步骤调用 `lean_actions.py restore`，从 Actions 缓存材料恢复依赖与项目种子并验证恢复目录；
 不可用或无效种子不取得成功检查的资格。构建与准入检查保留各自失败退出。
 
-`make lean-report` 通过缓存守门入口调用 Lake 的报告 facets。Reg 编译期检查契约数学义务，生产报告读取编译部件并评定结构，发布程序验证报告与材料。编译依赖 trace、utility 输入与报告格式标识决定增量复用；判官实现或规则改动不使报告失效，实现程序字节不进入复用条件。
+`make lean-report-scoped` 要求通过 `LEAN_TARGETS` 指定根模块。Reg 编译期检查契约数学义务，生产报告读取编译部件并评定结构，发布程序验证报告与材料。编译依赖 trace、utility 输入与报告格式标识决定模块复用。判官实现程序字节不进入复用条件。
 
-接口升级须同一交付迁移全部用法、删除旧路径，经编译依赖自动重编并重评受影响的 Reg。实现改动不重编 Reg，整份有效报告复用，输入闭包变化的目标使用当前实现。提取语义或报告格式改变须更新报告格式标识，严格拒读旧格式并全部重提取。不得生成第二份证明源码、在报告期创建声明或保留旧路径回退。
+接口升级须同一交付迁移全部用法、删除旧路径，经编译依赖自动重编并重评受影响的 Reg。实现改动不重编 Reg，有效的模块报告可以复用，输入闭包变化的目标使用当前实现。提取语义或报告格式改变须更新报告格式标识，严格拒读旧格式并全部重提取。不得生成第二份证明源码、在报告期创建声明或保留旧路径回退。
 
 ---
 
@@ -377,7 +375,7 @@ CI 的种子恢复步骤调用 `lean_actions.py restore`，从 Actions 缓存材
 
 [S1] `README.md`、`Makefile`、`lakefile.toml`。
 [S2] `tools/lean-inspector/Inspector.lean`。
-[S3] `tools/lean-inspector/inspect.sh`、`lakefile.lean`、`reuse.py`、`publication.py`。
+[S3] `tools/lean-inspector/lakefile.lean`、`native.py`、`scoped.py`、`publication.py`。
 [S4] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
 [S5] `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean`。
 [S6] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。

@@ -63,7 +63,8 @@ theorem summable_abs_spectralTerm (A B damping freq : ℕ → ℝ)
     _ ≤ Real.exp |h| * (A j + |B j|) :=
       mul_le_mul_of_nonneg_right hexp (add_nonneg (hA_nonneg j) (abs_nonneg _))
 
-private theorem abs_cosh_sub_one_le_sq {x : ℝ} (hx : |x| ≤ 1) :
+/-- On the unit interval the hyperbolic cosine differs from one by at most the square. -/
+theorem abs_cosh_sub_one_le_sq {x : ℝ} (hx : |x| ≤ 1) :
     |Real.cosh x - 1| ≤ x ^ 2 := by
   have hneg : |-x| ≤ 1 := by simpa only [abs_neg] using hx
   have hpos_bound := Real.abs_exp_sub_one_sub_id_le hx
@@ -80,7 +81,8 @@ private theorem abs_cosh_sub_one_le_sq {x : ℝ} (hx : |x| ≤ 1) :
     _ ≤ x ^ 2 + x ^ 2 := add_le_add hpos_bound hneg_bound
     _ = _ := by ring
 
-private theorem abs_sinh_le_two_mul_abs {x : ℝ} (hx : |x| ≤ 1) :
+/-- On the unit interval the absolute hyperbolic sine is bounded by twice the absolute input. -/
+theorem abs_sinh_le_two_mul_abs {x : ℝ} (hx : |x| ≤ 1) :
     |Real.sinh x| ≤ 2 * |x| := by
   have hneg : |-x| ≤ 1 := by simpa only [abs_neg] using hx
   have hpos_bound := Real.abs_exp_sub_one_le hx
