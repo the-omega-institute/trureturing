@@ -83,6 +83,7 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
       LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
       LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}

@@ -27,14 +27,43 @@ def read(path):
         return ""
 
 
+def lean_module(process, workspace):
+    try:
+        if (process / "exe").readlink().name != "lean":
+            return None
+        cwd = (process / "cwd").resolve(strict=True)
+        argv = (process / "cmdline").read_bytes().split(b"\0")[1:]
+        sources = set()
+        for argument in argv:
+            if argument.startswith(b"-") or not argument.endswith(b".lean"):
+                continue
+            source = (cwd / os.fsdecode(argument)).resolve(strict=True)
+            if not source.is_file() or not source.is_relative_to(workspace):
+                continue
+            path = source.relative_to(workspace).with_suffix("")
+            if path.parts[:2] in {("tools", "lean-inspector"), ("tools", "lean-inspector-reg"),
+                                  ("tools", "lean-inspector-interface")}:
+                path = Path(*path.parts[2:])
+            elif path.parts[0] not in {"D5", "Reg", "Trureturing"}:
+                continue
+            if path.name != "lakefile" and all(part.isidentifier() for part in path.parts):
+                sources.add(".".join(path.parts))
+        return sources.pop() if len(sources) == 1 else None
+    except (OSError, RuntimeError, ValueError):
+        return None
+
+
 def largest_processes():
     try:
-        output = subprocess.check_output(["ps", "-eo", "rss=,comm=", "--sort=-rss"],
+        output = subprocess.check_output(["ps", "-eo", "pid=,rss=,comm=", "--sort=-rss"],
                                          stderr=subprocess.DEVNULL, text=True, errors="replace", timeout=3)
         processes = []
         for line in output.splitlines()[:5]:
-            rss, name = line.split(None, 1)
-            processes.append({"comm": name, "rss_KiB": int(rss)})
+            pid, rss, name = line.split(None, 2)
+            process = {"pid": int(pid), "comm": name, "rss_KiB": int(rss)}
+            if name == "lean" and (module := lean_module(Path("/proc") / pid, Path.cwd().resolve())):
+                process["module"] = module
+            processes.append(process)
         return processes
     except (OSError, ValueError, subprocess.SubprocessError):
         return None
