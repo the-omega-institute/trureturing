@@ -79,16 +79,17 @@ private theorem admissible_of_prefix {v z : Spectrum4} (hz : Antitone z)
   refine ⟨⟨fun i => h3.trans (hz (Fin.le_last i)), fun i => (hz (Fin.zero_le i)).trans h0⟩,
     ht, ?_⟩
   intro i j hij
-  obtain ⟨h01, h12, h23⟩ := adjacent hz
-  fin_cases i <;> fin_cases j <;>
-    try (exact (hij rfl).elim) <;>
-    try (simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk]) <;>
-    linarith only [h01, h12, h23, h1]
+  have hpair (a b : Fin 4) (hab : a < b) : z a + z b ≤ v 0 + v 1 :=
+    (add_le_add (hz (Fin.zero_le a)) (hz (show (1 : Fin 4) ≤ b by omega))).trans h1
+  rcases lt_or_gt_of_ne hij with h | h
+  · exact hpair i j h
+  · rw [add_comm]
+    exact hpair j i h
 
 private theorem perm_admissible {v z : Spectrum4} (hz : z ∈ admissible v)
     (e : Equiv.Perm (Fin 4)) : z ∘ e ∈ admissible v := by
   refine ⟨⟨fun i => hz.1.1 (e i), fun i => hz.1.2 (e i)⟩, ?_, ?_⟩
-  · exact (e.sum_comp z).trans hz.2.1
+  · exact (Equiv.sum_comp e z).trans hz.2.1
   · exact fun i j hij => hz.2.2 (e i) (e j) (e.injective.ne hij)
 
 private theorem exists_sorted_max {v : Spectrum4} (hv : Antitone v) (κ : ℝ) :
@@ -106,7 +107,7 @@ private theorem exists_sorted_max {v : Spectrum4} (hv : Antitone v) (κ : ℝ) :
   · intro i j hij
     exact neg_le_neg_iff.mp (Tuple.monotone_sort (fun i => -z i) hij)
   · have he : wuQuarticSum κ (z ∘ e) = wuQuarticSum κ z :=
-      e.sum_comp (fun i => quartic κ (z i))
+      Equiv.sum_comp e (fun i => quartic κ (z i))
     exact isMaxOn_iff.mpr fun w hw => (isMaxOn_iff.mp hm w hw).trans_eq he.symm
 
 private def centeredPair (κ m d : ℝ) : ℝ := quartic κ (m + d) + quartic κ (m - d)
@@ -134,8 +135,9 @@ private theorem centeredPair_hasDerivAt (κ m d : ℝ) :
     ((hl.pow 4).const_mul 2)).const_add (2 * quartic κ m)
   convert h using 1
   · funext t
-    exact centeredPair_formula κ m (d + t)
-  · simp <;> ring
+    simp only [Pi.add_apply, Pi.pow_apply, centeredPair_formula, add_assoc]
+  · simp
+    ring
 
 private theorem centeredPair_localMax {κ m d : ℝ} (hm : 0 ≤ m) (hd : 0 ≤ d)
     (hmax : IsLocalMax (fun t => centeredPair κ m (d + t)) 0) :
@@ -176,16 +178,23 @@ private theorem centeredPair_localMax {κ m d : ℝ} (hm : 0 ≤ m) (hd : 0 ≤ 
 private theorem quartic_hasDerivAt (κ x : ℝ) :
     HasDerivAt (quartic κ) (4 * x ^ 3 - 3 * κ * x ^ 2) x := by
   have h := ((hasDerivAt_id' x).pow 4).sub (((hasDerivAt_id' x).pow 3).const_mul κ)
-  convert h using 1 <;> simp [quartic] <;> ring
+  convert h using 1
+  · rfl
+  · norm_num
+    ring
 
 private theorem quartic_deriv_hasDerivAt (κ x : ℝ) :
     HasDerivAt (fun t => 4 * t ^ 3 - 3 * κ * t ^ 2) (6 * x * (2 * x - κ)) x := by
   have h := (((hasDerivAt_id' x).pow 3).const_mul 4).sub
     (((hasDerivAt_id' x).pow 2).const_mul (3 * κ))
-  convert h using 1 <;> simp <;> ring
+  convert h using 1
+  norm_num
+  ring
 
 private theorem quartic_concave (κ : ℝ) : ConcaveOn ℝ (Icc 0 (κ / 2)) (quartic κ) := by
-  refine concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc _ _) ?_ ?_ ?_ ?_
+  refine concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc _ _)
+    (f' := fun x => 4 * x ^ 3 - 3 * κ * x ^ 2)
+    (f'' := fun x => 6 * x * (2 * x - κ)) ?_ ?_ ?_ ?_
   · exact (show Continuous (quartic κ) by unfold quartic; fun_prop).continuousOn
   · exact fun x _ => (quartic_hasDerivAt κ x).hasDerivWithinAt
   · exact fun x _ => (quartic_deriv_hasDerivAt κ x).hasDerivWithinAt
@@ -203,7 +212,7 @@ private theorem tail_jensen {n : ℕ} (hn : 0 < n) {κ : ℝ} (z : Fin n → ℝ
     (fun _ _ => inv_nonneg.mpr hn'.le)
     (by simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
       mul_inv_cancel₀ hn'.ne']) (fun i _ => hz i)
-  simp only [smul_eq_mul, ← Finset.mul_sum, ← div_eq_inv_mul] at h
+  simp only [smul_eq_mul, ← div_eq_inv_mul, ← Finset.sum_div] at h
   exact (div_le_iff₀' hn').mp h
 
 private def transfer (z : Spectrum4) (i j : Fin 4) (t : ℝ) : Spectrum4 :=
@@ -269,8 +278,10 @@ private theorem eventually_transfer_mem {v z : Spectrum4} {i j : Fin 4}
     · exact Eventually.of_forall fun _ h _ => (h hki).elim
     by_cases hkj : k = j
     · exact Eventually.of_forall fun _ _ h => (h hkj).elim
-    have hleft := (hci.add continuous_const : Continuous (fun t => z i + t + z k)).continuousAt
-    have hright := (hcj.add continuous_const : Continuous (fun t => z j - t + z k)).continuousAt
+    have hleft : ContinuousAt (fun t => z i + t + z k) 0 :=
+      (hci.add continuous_const).continuousAt
+    have hright : ContinuousAt (fun t => z j - t + z k) 0 :=
+      (hcj.add continuous_const).continuousAt
     have hp₁ := hleft.eventually_lt (x₀ := (0 : ℝ)) continuous_const.continuousAt
       (show z i + 0 + z k < v 0 + v 1 by simpa using (hp k hki hkj).1)
     have hp₂ := hright.eventually_lt (x₀ := (0 : ℝ)) continuous_const.continuousAt
@@ -350,8 +361,9 @@ private theorem quarticSum_le_of_concave_tail {κ : ℝ} {v z : Spectrum4}
     have hmean : spectralMoment 1 v = (z 0 + z 1 + z 2 + z 3) / 4 := by
       simp only [spectralMoment, pow_one, Fin.sum_univ_four]
       rw [htotal]
-    simp [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four,
-      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons] at hj ⊢
+    simp only [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four, Fin.zero_eta,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons, Nat.cast_ofNat] at hj ⊢
     rw [hmean]
     linarith only [hj]
   · have he₀ : z 0 = v 0 := hprefix 0 (by decide)
@@ -364,8 +376,9 @@ private theorem quarticSum_le_of_concave_tail {κ : ℝ} {v z : Spectrum4}
         · exact htail 1 (by decide)
         · exact htail 2 (by decide)
         · exact htail 3 (by decide))
-    simp [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four, Fin.sum_univ_three,
-      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons] at hj ⊢
+    simp only [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four, Fin.sum_univ_three,
+      Fin.mk_one, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, Nat.cast_ofNat] at hj ⊢
     rw [he₀, hmean]
     linarith only [hj]
   · have he₀ : z 0 = v 0 := hprefix 0 (by decide)
@@ -378,8 +391,9 @@ private theorem quarticSum_le_of_concave_tail {κ : ℝ} {v z : Spectrum4}
         fin_cases i
         · exact htail 2 (by decide)
         · exact htail 3 (by decide))
-    simp [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four, Fin.sum_univ_two,
-      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons] at hj ⊢
+    simp only [wuQuarticSum, endpointPrefixAverage, Fin.sum_univ_four, Fin.sum_univ_two,
+      Fin.reduceFinMk, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, Nat.cast_ofNat] at hj ⊢
     rw [he₀, he₁, hmean]
     linarith only [hj]
   · have he₀ : z 0 = v 0 := hprefix 0 (by decide)
@@ -396,7 +410,7 @@ private theorem maximizer_le_prefixAverage {κ : ℝ} {v z : Spectrum4}
   obtain ⟨hv01, hv12, hv23⟩ := adjacent hv
   obtain ⟨hz01, hz12, hz23⟩ := adjacent hzs
   have htotal : z 0 + z 1 + z 2 + z 3 = v 0 + v 1 + v 2 + v 3 := by
-    simpa only [total, Fin.sum_univ_four] using hz.2.1
+    simpa only [total, Fin.sum_univ_four] using (show total z = total v from hz.2.1)
   have hp₀ : z 0 ≤ v 0 := hz.1.2 0
   have hp₁ : z 0 + z 1 ≤ v 0 + v 1 := hz.2.2 0 1 (by decide)
   have hp₂ : z 0 + z 1 + z 2 ≤ v 0 + v 1 + v 2 := by
@@ -415,9 +429,9 @@ private theorem maximizer_le_prefixAverage {κ : ℝ} {v z : Spectrum4}
       linarith only [hslack, hp₁, hp₂, hv12, hz12]
     have hout (k : Fin 4) (hk₀ : k ≠ 0) (hk₁ : k ≠ 1) :
         z 0 + z k < v 0 + v 1 ∧ z 1 + z k < v 0 + v 1 := by
-      fin_cases k <;> try (exact (hk₀ rfl).elim) <;> try (exact (hk₁ rfl).elim) <;>
-        try (simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk]) <;>
-        constructor <;> linarith only [h02, hz01, hz23]
+      have hk := hzs (show (2 : Fin 4) ≤ k by omega)
+      exact ⟨lt_of_le_of_lt (add_le_add_right hk _) h02,
+        lt_of_le_of_lt (add_le_add hz01 hk) h02⟩
     have htop := (pair_at_max hv₀ hz hm (by decide : (0 : Fin 4) ≠ 1)
       hz01 hlo hslack hout).2
     exact ⟨0, quarticSum_le_of_concave_tail 0 hz.2.1
@@ -428,14 +442,15 @@ private theorem maximizer_le_prefixAverage {κ : ℝ} {v z : Spectrum4}
       linarith only [htotal, h0, hslack, hv23, hz23]
     have hout (k : Fin 4) (hk₁ : k ≠ 1) (hk₂ : k ≠ 2) :
         z 1 + z k < v 0 + v 1 ∧ z 2 + z k < v 0 + v 1 := by
-      fin_cases k <;> try (exact (hk₁ rfl).elim) <;> try (exact (hk₂ rfl).elim) <;>
-        try (simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk]) <;>
-        constructor <;> linarith only [hslack, hz01, hz12, hz23]
+      have hk := hzs (Fin.zero_le k)
+      exact ⟨lt_of_le_of_lt (by linarith only [hk]) hslack,
+        lt_of_le_of_lt (by linarith only [hz12, hk]) hslack⟩
     have htop := (pair_at_max hv₀ hz hm (by decide : (1 : Fin 4) ≠ 2)
       hz12 hlo hhi hout).2
     refine ⟨1, quarticSum_le_of_concave_tail 1 hz.2.1 ?_ (htail 1 htop)⟩
     intro i hi
-    fin_cases i <;> first | exact h0 | exact False.elim (by omega)
+    have he : i = 0 := by omega
+    simpa only [he] using h0
   have h1 : z 1 = v 1 := by linarith only [h01, h0]
   rcases lt_or_eq_of_le hp₂ with hslack | h012
   · have hlt : z 2 < v 2 := by linarith only [hslack, h0, h1]
@@ -443,14 +458,16 @@ private theorem maximizer_le_prefixAverage {κ : ℝ} {v z : Spectrum4}
     have hlo : v 3 < z 3 := by linarith only [htotal, h0, h1, hlt]
     have hout (k : Fin 4) (hk₂ : k ≠ 2) (hk₃ : k ≠ 3) :
         z 2 + z k < v 0 + v 1 ∧ z 3 + z k < v 0 + v 1 := by
-      fin_cases k <;> try (exact (hk₂ rfl).elim) <;> try (exact (hk₃ rfl).elim) <;>
-        try (simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk]) <;>
-        constructor <;> linarith only [h0, h1, hlt, hv01, hv12, hz23]
+      have hk := hzs (Fin.zero_le k)
+      constructor <;> linarith only [h0, hlt, hv12, hz23, hk]
     have htop := (pair_at_max hv₀ hz hm (by decide : (2 : Fin 4) ≠ 3)
       hz23 hlo hhi hout).2
     refine ⟨2, quarticSum_le_of_concave_tail 2 hz.2.1 ?_ (htail 2 htop)⟩
     intro i hi
-    fin_cases i <;> first | exact h0 | exact h1 | exact False.elim (by omega)
+    have he : i = 0 ∨ i = 1 := by omega
+    rcases he with rfl | rfl
+    · exact h0
+    · exact h1
   have h2 : z 2 = v 2 := by linarith only [h012, h0, h1]
   have h3 : z 3 = v 3 := by linarith only [htotal, h0, h1, h2]
   have he : z = v := by
@@ -481,7 +498,8 @@ theorem wuQuartic_le_prefixMax (κ : ℝ) {v y : Spectrum4}
     (ht : (∑ i, y i) = ∑ i, v i) :
     wuQuarticSum κ y ≤ wuQuarticPrefixMax κ v := by
   obtain ⟨k, hk⟩ := wuQuartic_le_some_prefixAverage κ hv hv₀ hy hp ht
-  exact hk.trans (Finset.le_sup' _ (Finset.mem_univ k))
+  exact hk.trans (Finset.le_sup' (fun j => wuQuarticSum κ (endpointPrefixAverage j v))
+    (Finset.mem_univ k))
 
 private theorem quarticSum_eq_moments (κ : ℝ) (z : Spectrum4) :
     wuQuarticSum κ z = 4 * (spectralMoment 4 z - κ * spectralMoment 3 z) := by
@@ -518,11 +536,15 @@ theorem endpoint_quartic_floor_of_majorization {x y : Spectrum4}
       have hx1 := hx₀ 1
       have hx2 := hx₀ 2
       have hx3 := hx₀ 3
-      simp [endpointClassical, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons] <;>
-        positivity
-    obtain ⟨k, hk⟩ := wuQuartic_le_some_prefixAverage κ
+      simp only [endpointClassical, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
+      positivity
+    have hmax := wuQuartic_le_prefixMax κ
       (endpointClassical_antitone x hx) hv₀ hy hp ht
-    have hcompare := mul_le_mul_of_nonneg_left hk h₂
+    obtain ⟨k, _, hk⟩ := Finset.exists_mem_eq_sup' Finset.univ_nonempty
+      (fun j => wuQuarticSum κ (endpointPrefixAverage j (endpointClassical x)))
+    have hk' : wuQuarticPrefixMax κ (endpointClassical x) =
+        wuQuarticSum κ (endpointPrefixAverage k (endpointClassical x)) := hk
+    have hcompare := mul_le_mul_of_nonneg_left (hmax.trans_eq hk') h₂
     rw [hscale y, hscale (endpointPrefixAverage k (endpointClassical x))] at hcompare
     have hcert := endpoint_quartic_prefix x hx hx₀ k
     linarith only [hcompare, hcert]
@@ -567,7 +589,7 @@ private theorem traceMoment_eq_spectralMoment (k : ℕ) {X : TwoMode} (hX : X.Is
   let d : Mode → ℂ := RCLike.ofReal ∘ hX.eigenvalues
   let U := hX.eigenvectorUnitary
   have hpow : X ^ k = conjStarAlgAut ℂ TwoMode U (diagonal (d ^ k)) := by
-    rw [← diagonal_pow d k, ← map_pow (conjStarAlgAut ℂ TwoMode U) (diagonal d) k]
+    rw [← diagonal_pow d k, map_pow (conjStarAlgAut ℂ TwoMode U) (diagonal d) k]
     exact congrArg (fun M : TwoMode => M ^ k) hX.spectral_theorem
   unfold endpointTraceMoment spectralMoment
   rw [hpow, conjStarAlgAut_apply, trace_mul_cycle, coe_star_mul_self, one_mul,
@@ -592,5 +614,11 @@ theorem A1_quartic_floor (X : TwoMode) (hX : X.PosSemidef) :
   simpa only [traceMoment_eq_spectralMoment _ hX.isHermitian,
     traceMoment_eq_spectralMoment _ (A₁_isHermitian X hX.isHermitian)] using
     A1_spectral_quartic_floor X hX
+
+#print axioms wuQuartic_le_some_prefixAverage
+#print axioms wuQuartic_le_prefixMax
+#print axioms endpoint_quartic_floor_of_majorization
+#print axioms A1_spectral_quartic_floor
+#print axioms A1_quartic_floor
 
 end WuRankOneEndpointFloor
