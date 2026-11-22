@@ -31,14 +31,23 @@ internal sealed class DipoleTwoDistanceDocument : IScribeDocumentDefinition
         var Vy = At("V", y);
         var s = F.Id("s");
         var t = F.Id("t");
+        var i = F.Id("i");
+        var j = F.Id("j");
+        var pi = At("p", i);
+        var gi = At("g", i);
+        var conditions = Seq(D(0), Lt, x, Lt, y, Sp, Land, Sp,
+            Open, Forall, Sp, i, Comma, D(0), Sp, Le, Sp, pi, Sp, Land, Sp, D(0), Lt, gi, Close, Sp, Land, Sp,
+            Open, Exists, Sp, i, Comma, j, Colon, D(0), Lt, pi, Sp, Land, Sp,
+            D(0), Lt, At("p", j), Sp, Land, Sp, gi, Lt, At("g", j), Close);
         var map = Seq(Open, s, Comma, t, Close, Sp, Mapsto, Sp, Open,
             s, Ux, Plus, t, Vx, Comma, s, Uy, Plus, t, Vy, Close);
-        return Disp(Seq(Ux, Vy, Sp, Lt, Sp, Vx, Uy, Sp, Land, Sp,
-            Mathrm, Grp(F.Id("Injective")), Open, map, Close));
+        return Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, conditions, RowBreak, Amp, Rightarrow, Sp,
+            Ux, Vy, Sp, Lt, Sp, Vx, Uy, Sp, Land, Sp,
+            Mathrm, Grp(F.Id("Injective")), Open, map, Close, End, Grp(F.Id("aligned"))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Two ordered positive distances give independent second and fourth responses when at least two positive spectral scales have positive weight.",
+        "For a fixed finite spectrum with positive scales and nonnegative weights, two ordered positive distances identify the coefficients of the second and fourth responses whenever two distinct scales have positive weight.",
         H("Two distances identify two dipole response coefficients"),
         Blocks(
             Describe.Lean(DescribeId.Create("radial-profile"), DeclarationHandle.Create(Prefix + "profile"),
@@ -53,5 +62,5 @@ internal sealed class DipoleTwoDistanceDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("spectral-separation"), DeclarationHandle.Create(Prefix + "finite_spectral_separation"),
                 H("Strict determinant and uniqueness of the coefficients"), StatementSource.FromAuthor(Readout()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Assume every spectral scale is positive, all weights are nonnegative and two distinct scales have positive weight. For any 0<x<y the signed determinant has the displayed strict ordering. Thus the two real linear coefficients in sU+tV are uniquely determined by the readings at x and y.")),
-                    Paragraph(Text("Expand twice the signed determinant as a double sum over pairs of scales. Each term contains their difference of squared scale, the corresponding two-distance profile minor, and the nonnegative weight factors. The terms have matching signs after the two differences are paired, and a positively weighted pair of unequal scales contributes strictly. Eliminating each coefficient using the nonzero determinant gives injectivity."))), DescribeRole.Theorem))));
+                    Paragraph(Text("Expand twice the positive difference V(x)U(y)−U(x)V(y) as a double sum over pairs of scales. In each summand the difference of squared scales and the corresponding difference of profile products have the same sign. Their product is multiplied by nonnegative weights. A positively weighted pair of unequal scales contributes strictly. Eliminating each coefficient using the nonzero determinant gives injectivity."))), DescribeRole.Theorem))));
 }
