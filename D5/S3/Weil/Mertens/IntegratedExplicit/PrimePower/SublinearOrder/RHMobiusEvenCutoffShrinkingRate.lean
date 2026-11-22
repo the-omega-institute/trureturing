@@ -149,7 +149,7 @@ private theorem centered_series_increment_le (hRH : RiemannHypothesis) {r : ℝ}
   exact hsum.trans ((add_le_add hlow' (hhigh'.trans hreduce)).trans
     (by dsimp only [T]; nlinarith [mul_nonneg hL.le (sq_nonneg (1+Real.log L⁻¹))]))
 
-private theorem root_signal_increment_le (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) :
+theorem root_signal_increment_le (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r) :
     ∃ C : ℝ, 0 < C ∧ ∀ u h L : ℝ, 0 < L → L ≤ 1/4 → |h| ≤ L →
       |rootSignal r (u+h)-rootSignal r u| ≤ C*L*(1+Real.log L⁻¹)^2 := by
   obtain ⟨C, hC, h⟩ := centered_series_increment_le hRH hr
