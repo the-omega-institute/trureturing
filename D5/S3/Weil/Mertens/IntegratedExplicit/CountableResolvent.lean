@@ -56,7 +56,7 @@ lemma laplace_weight_integrable {y : ℝ} (hy : 0 < y) :
   rw [show -s * y = -(y * s) by ring]
   ring
 
-private theorem laplace_weight {y : ℝ} (hy : 0 < y) :
+theorem laplace_weight {y : ℝ} (hy : 0 < y) :
     (∫ s : ℝ in Ioi 0, s * (1 + s) * exp (-s * y)) = W y := by
   have he : (fun s : ℝ => s * (1 + s) * exp (-s * y)) =
       (fun s : ℝ => s ^ 1 * exp (-(y * s)) + s ^ 2 * exp (-(y * s))) := by
