@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 internal sealed class PetzDyadicStripEnergyDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Halving the frequencies identifies the exact remainder after removing the logistic boundary energy.",
+        "For faithful bipartite matrices, the partial-trace Umegaki loss splits into dyadic logistic boundary energies and an exact remainder.",
         H("Dyadic decomposition of the strip energy"),
         Blocks(
             Describe.Lean(
@@ -53,5 +53,42 @@ internal sealed class PetzDyadicStripEnergyDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("At every natural cutoff the sum of the weighted logistic energies is nonnegative and lies below the original strip energy, for the same arbitrary finite families.")),
                     Paragraph(Text("The logistic integrals have nonnegative integrands. Apply positivity of the closed remainder to the doubled frequency family to obtain positivity of the strip energy at any scale."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("petz-dyadic-physical-frequency"),
+                DeclarationHandle.Create("D5/S3/Analytic/PetzDyadicStripEnergy.physicalFrequency"),
+                H("Joint and retained log frequency"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a joint eigenvector pair of the source and reference and a retained eigenvector pair of their marginals, the frequency is the reference joint log eigenvalue minus the source joint log eigenvalue plus the source marginal log eigenvalue minus the reference marginal log eigenvalue. Faithfulness gives positive eigenvalues for both actual partial traces."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("petz-dyadic-physical-coefficient"),
+                DeclarationHandle.Create("D5/S3/Analytic/PetzDyadicStripEnergy.physicalCoefficient"),
+                H("Physical spectral coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Take the joint source and reference eigenbasis entry of the source square root times the lifted source and reference marginal rank-one projections in that order. The environmental factor of each lift is the identity. The indexing keeps every eigenvector, including repeated eigenvalues."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("petz-dyadic-umegaki-identity"),
+                DeclarationHandle.Create("D5/S3/Analytic/PetzDyadicStripEnergy.umegakiLoss_eq_stripEnergy"),
+                H("Partial-trace entropy loss as a spectral quadratic"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any pair of faithful joint matrices on a finite retained space times a finite nonempty environment, subtract the Umegaki trace-log expression of their actual marginals from that of their joint matrices. This equals the sum over all joint eigenvector pairs of the strip quadratic on their physical frequencies and coefficients.")),
+                    Paragraph(Text("The source edge is the source square root times the two lifted projections. The reference edge is the product of the two lifted projections times the reference square root and the square root of the marginal eigenvalue ratio. Partial-trace adjunction reduces both Hilbert–Schmidt Gram matrices to the same diagonal. The joint frequency shift cancels from the kernel differences, so the logistic and hyperbolic cotangent terms cancel after the joint summation. The remaining linear frequency is the trace pairing with the joint and marginal logarithms."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("petz-dyadic-umegaki-finite"),
+                DeclarationHandle.Create("D5/S3/Analytic/PetzDyadicStripEnergy.umegakiLoss_dyadic"),
+                H("Exact finite decomposition and lower estimate for Umegaki loss"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For any natural cutoff M and faithful joint pair as above, sum the logistic boundary energy over joint eigenvector pairs and over levels m less than M. Each level uses the physical frequencies divided by 2^m and the original coefficients, with weight 2^m. The sum is nonnegative and bounded above by the Umegaki loss. The difference is the sum of the physical strip quadratics at frequencies divided by 2^M, with weight 2^M."))),
                 DescribeRole.Theorem))));
 }

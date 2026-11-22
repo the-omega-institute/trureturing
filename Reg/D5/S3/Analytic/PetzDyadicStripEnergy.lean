@@ -13,7 +13,9 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.PetzDyadicStripEnergy
 open _root_.PetzStripGramRemainder (remainder stripGram)
 open _root_.Reg.Support.SingleDependentReadout (signature sensitivity)
-open scoped BigOperators
+open scoped BigOperators Matrix ComplexOrder
+open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open _root_.D5.S3.Quantum.Recovery.BKMFlagRefinement (relativeEntropyOfMatrices)
 
 namespace Reg.D5.S3.Analytic.PetzDyadicStripEnergy
 
@@ -209,8 +211,153 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end LowerBound
 
+namespace PhysicalIdentity
+
+private def actual : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := scalarSignature
+  Law F := ∀ {r : Type u} {e : Type u} [Fintype r] [DecidableEq r]
+    [Fintype e] [DecidableEq e] [Nonempty e]
+    {A B : Matrix (r × e) (r × e) ℂ} (hA : A.PosDef) (hB : B.PosDef),
+    F.readout () ()
+      (relativeEntropyOfMatrices A B -
+        relativeEntropyOfMatrices (partialTraceRight A) (partialTraceRight B))
+      (∑ ab, stripEnergy (physicalFrequency hA hB ab) (physicalCoefficient hA hB ab))
+
+private theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (r := ULift.{u} Unit) (e := ULift.{u} Unit)
+    Matrix.PosDef.one Matrix.PosDef.one
+
+def family : Registration arena.{u} (type_of% @umegakiLoss_eq_stripEnergy.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@umegakiLoss_eq_stripEnergy.{u}, rejected, rejectedLaw.{u}⟩
+  sensitivity := sensitivity arena.Law actual rejected rejectedLaw
+  dependence := by
+    intro role
+    cases role
+    refine ⟨(), 0, 1, ?_⟩
+    intro equal
+    have h := congrFun equal 0
+    norm_num [actual, realize] at h
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@umegakiLoss_eq_stripEnergy.{u}) (Realization scalarSignature) Unit Unit where
+  unitName := `PetzDyadicStripEnergy.umegakiLoss_eq_stripEnergy.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.PetzDyadicStripEnergy.PhysicalIdentity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.PetzDyadicStripEnergy
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PhysicalIdentity
+
+namespace PhysicalDyadic
+
+private def actual : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := scalarSignature
+  Law F := ∀ {r : Type u} {e : Type u} [Fintype r] [DecidableEq r]
+    [Fintype e] [DecidableEq e] [Nonempty e]
+    {A B : Matrix (r × e) (r × e) ℂ} (hA : A.PosDef) (hB : B.PosDef)
+    (M : ℕ),
+    let loss := relativeEntropyOfMatrices A B -
+      relativeEntropyOfMatrices (partialTraceRight A) (partialTraceRight B)
+    let partialEnergy := ∑ ab, ∑ m ∈ Finset.range M, (2 : ℝ) ^ m *
+      logisticEnergy (fun k => physicalFrequency hA hB ab k / 2 ^ m)
+        (physicalCoefficient hA hB ab)
+    let tail := ∑ ab, (2 : ℝ) ^ M *
+      stripEnergy (fun k => physicalFrequency hA hB ab k / 2 ^ M)
+        (physicalCoefficient hA hB ab)
+    F.readout () () loss (partialEnergy + tail) ∧ 0 ≤ partialEnergy ∧ partialEnergy ≤ loss
+
+private theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact (h (r := ULift.{u} Unit) (e := ULift.{u} Unit)
+    Matrix.PosDef.one Matrix.PosDef.one 0).1
+
+def family : Registration arena.{u} (type_of% @umegakiLoss_dyadic.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@umegakiLoss_dyadic.{u}, rejected, rejectedLaw.{u}⟩
+  sensitivity := sensitivity arena.Law actual rejected rejectedLaw
+  dependence := by
+    intro role
+    cases role
+    refine ⟨(), 0, 1, ?_⟩
+    intro equal
+    have h := congrFun equal 0
+    norm_num [actual, realize] at h
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@umegakiLoss_dyadic.{u}) (Realization scalarSignature) Unit Unit where
+  unitName := `PetzDyadicStripEnergy.umegakiLoss_dyadic.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.PetzDyadicStripEnergy.PhysicalDyadic.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.PetzDyadicStripEnergy
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn", "arg", "fn",
+        "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PhysicalDyadic
+
 #print axioms Remainder.audit
 #print axioms Decomposition.audit
 #print axioms LowerBound.audit
+#print axioms PhysicalIdentity.audit
+#print axioms PhysicalDyadic.audit
 
 end Reg.D5.S3.Analytic.PetzDyadicStripEnergy
