@@ -40,7 +40,7 @@ def modularPiece {S : Matrix n n ℂ} (hS : S.IsHermitian) (v : ℝ) (K : Matrix
   let U : Matrix n n ℂ := hS.eigenvectorUnitary
   U * ratioPiece hS.eigenvalues v (Uᴴ * K * U) * Uᴴ
 
-private def ratios (s : n → ℝ) : Finset ℝ :=
+def ratios (s : n → ℝ) : Finset ℝ :=
   Finset.univ.image fun ij : n × n => s ij.1 / s ij.2
 
 omit [Fintype n] [DecidableEq n] in
@@ -56,7 +56,7 @@ private theorem ratioPiece_eq_zero {s : n → ℝ} (hs : ∀ i, 0 < s i) {v : �
   simp [ratioPiece_apply, h]
 
 omit [DecidableEq n] in
-private theorem sum_ratioPiece {s : n → ℝ} (hs : ∀ i, 0 < s i) (K : Matrix n n ℂ) :
+theorem sum_ratioPiece {s : n → ℝ} (hs : ∀ i, 0 < s i) (K : Matrix n n ℂ) :
     ∑ v ∈ ratios s, ratioPiece s v K = K := by
   ext i j
   simp only [Matrix.sum_apply, ratioPiece_apply, ← div_eq_iff (hs j).ne']
@@ -403,7 +403,7 @@ private theorem ratioPiece_piece_mul {s : n → ℝ} (hs : ∀ i, 0 < s i)
     simp [ratioPiece_apply, hv]
 
 omit [Fintype n] [DecidableEq n] in
-private theorem ratioPiece_adjoint (s : n → ℝ) (K : Matrix n n ℂ) (hK : K.IsHermitian)
+theorem ratioPiece_adjoint (s : n → ℝ) (K : Matrix n n ℂ) (hK : K.IsHermitian)
     {v : ℝ} (hv : v ≠ 0) : (ratioPiece s v K)ᴴ = ratioPiece s v⁻¹ K := by
   ext i j
   have he : s j = v * s i ↔ s i = v⁻¹ * s j := by

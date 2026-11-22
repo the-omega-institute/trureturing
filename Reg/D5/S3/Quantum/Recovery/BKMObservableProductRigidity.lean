@@ -2,13 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Recovery.BKMObservableProductRigidity
 
-/-! Source-bound readouts of the grouped and product BKM equality criteria. -/
+/-! Source-bound readouts of the BKM equality criteria and ratio-piece identities. -/
 
 noncomputable section
 
 universe u
 open Matrix LeanInformationAudit
-open scoped ComplexOrder Kronecker Matrix MatrixOrder Matrix.Norms.L2Operator
+open scoped BigOperators ComplexOrder Kronecker Matrix MatrixOrder Matrix.Norms.L2Operator
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceRight partialTraceLeft)
@@ -211,5 +211,146 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms audit
 end Product
+
+namespace MatrixEquality
+
+private abbrev signature : Signature where
+  Params := Type u
+  State n := Matrix n n ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := Matrix n n ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{u} :=
+  realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
+
+private def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro role
+  refine ⟨Singleton.{u}, 0, 1, ?_⟩
+  intro h
+  have he : (1 : Matrix (Singleton.{u}) (Singleton.{u}) ℂ) = 0 :=
+    Eq.mp (congrFun h 0) rfl
+  exact one_ne_zero he
+
+private theorem sensitivity (law : Realization signature.{u} → Prop) (hbad : ¬ law rejected) :
+    Sensitivity ⟨signature.{u}, law⟩ actual := by
+  constructor
+  · intro i
+    exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, hbad⟩
+  · intro e
+    exact nomatch e
+
+namespace Sum
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law r := ∀ {n : Type u} [Fintype n] {s : n → ℝ} (_hs : ∀ i, 0 < s i)
+    (K : Matrix n n ℂ), r.readout () n (∑ v ∈ ratios s, ratioPiece s v K) K
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (n := Singleton.{u}) (s := fun _ => 1) (fun _ => zero_lt_one) 0
+
+def family : Registration arena.{u} (type_of% @sum_ratioPiece.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@sum_ratioPiece.{u}, rejected, rejected_law⟩
+  sensitivity := sensitivity arena.{u}.Law rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@sum_ratioPiece.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Recovery.BKMObservableProductRigidity.MatrixEquality.Sum.unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.BKMObservableProductRigidity.MatrixEquality.Sum.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Recovery.BKMObservableProductRigidity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end Sum
+
+namespace Adjoint
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law r := ∀ {n : Type u} (s : n → ℝ) (K : Matrix n n ℂ) (_hK : K.IsHermitian)
+    {v : ℝ} (_hv : v ≠ 0), r.readout () n (ratioPiece s v K)ᴴ (ratioPiece s v⁻¹ K)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (n := Singleton.{u}) (fun _ => 1) 0 Matrix.isHermitian_zero (v := 1) one_ne_zero
+
+def family : Registration arena.{u} (type_of% @ratioPiece_adjoint.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@ratioPiece_adjoint.{u}, rejected, rejected_law⟩
+  sensitivity := sensitivity arena.{u}.Law rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@ratioPiece_adjoint.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Recovery.BKMObservableProductRigidity.MatrixEquality.Adjoint.unit
+  realizationName := `Reg.D5.S3.Quantum.Recovery.BKMObservableProductRigidity.MatrixEquality.Adjoint.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Recovery.BKMObservableProductRigidity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end Adjoint
+end MatrixEquality
 
 end Reg.D5.S3.Quantum.Recovery.BKMObservableProductRigidity
