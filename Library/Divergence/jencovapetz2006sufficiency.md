@@ -20,5 +20,5 @@ triage: anchor
 
 ## Formalization scope
 
-Theorem 5 gives a Kraus-operator criterion for sufficiency in terms of block and tensor-factor structure. Corollary 1 specializes the structure to finite-dimensional sufficient channels, with blockwise Kraus maps between the input and output factors.
+Theorem 5 characterizes sufficiency by the block and tensor-factor structure of the coarse-graining. Corollary 1 specializes the structure to finite-dimensional sufficient channels, with blockwise Kraus maps between the input and output factors.
 The finite pure-environment label-record theorem gives an exact size criterion using direct orthogonality and a basis injection for a specified label map.

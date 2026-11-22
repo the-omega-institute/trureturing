@@ -13,7 +13,7 @@ internal sealed class FiniteLabelRecordDilationDocument : IScribeDocumentDefinit
     private static readonly LibraryNoteRef KoashiImoto =
         LibraryNoteRef.Create("D5/L/QuantumChannels/koashiimoto2002nondisturbance");
     private static readonly LibraryNoteRef JencovaPetz =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/jencovapetz2006sufficiency");
+        LibraryNoteRef.Create("D5/L/Divergence/jencovapetz2006sufficiency");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact finite memory and pure-environment dimensions for perfect label records.",
