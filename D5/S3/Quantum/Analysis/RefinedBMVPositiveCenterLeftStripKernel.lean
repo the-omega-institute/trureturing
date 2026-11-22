@@ -20,8 +20,8 @@ namespace RefinedBMV.PositiveCenter
 
 /-- Exact decomposition of the numerator into the geometric profile and
 the two small residuals. -/
-theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
-    (ha : 0 < a) (hgap : 6 ≤ v-a) :
+theorem leftStrip_numerator_decomposition_of_pos {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
+    (ha : 0 < a) (hgap : 0 < v-a) :
     let h := 3/(p : ℝ)
     compositionMoment p a v -
       Real.sqrt (compositionMoment p 0 v*compositionMoment p 0 (v-a)) =
@@ -38,9 +38,7 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
   have hp₀ : 0 < p := by omega
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
   have hh : 0 < h := by dsimp [h]; positivity
-  have hhmax : h ≤ 3/11 :=
-    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
-  have hs : 0 < s := by linarith
+  have hs : 0 < s := hgap
   have hsv : s ≤ v := sub_le_self v ha.le
   have hv : 0 < v := hs.trans_le hsv
   have hc : 0 < c := by dsimp [c]; positivity
@@ -83,9 +81,12 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
     change (1-(x t)^3)^2*DimThree.defect p (x t) (x t) 1 = _ at h
     rw [pow_two, hScale t t, sub_self] at h
     exact h
-  have hDiagNonneg (t : ℝ) (ht : 6 ≤ t) : 0 ≤ 1-upperTailLambda h t :=
-    (Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
-      (separated_radical_lower hh hhmax ht).2)).le
+  have hDiagNonneg (t : ℝ) (ht : 0 < t) : 0 ≤ 1-upperTailLambda h t := by
+    rw [← hDiag]
+    have hM := compositionMoment_marginal_pos hp₀ ht.ne'
+    have hF := tail_gap_pos hh ht
+    dsimp [D]
+    positivity
   have hDsq : D v s^2 = D v v*D s s := by
     simp only [D, neg_add, Real.exp_add]
     ring
@@ -97,7 +98,7 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
       rw [hDsq]
       congr 1
       ring
-    _ = _ := by rw [hDiag, hDiag, Real.sqrt_mul (hDiagNonneg v (hgap.trans hsv))]
+    _ = _ := by rw [hDiag, hDiag, Real.sqrt_mul (hDiagNonneg v hv)]
   let L := logReciprocalGap h
   have hDexp {r t : ℝ} (hr : 0 < F r) (ht : 0 < F t) :
       D r t = c*Real.exp (-(L r+L t)) := by
@@ -127,7 +128,7 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
           Real.exp (L v+L s)*Real.exp (-(L s+L s)))/2 := by
         field_simp [hc.ne'] <;> ring
       _ = _ := by rw [he₁, he₂]; ring
-  have hSq (t : ℝ) (ht : 6 ≤ t) : (b t)^2 = 1-U t-D t t := by
+  have hSq (t : ℝ) (ht : 0 < t) : (b t)^2 = 1-U t-D t t := by
     unfold b
     rw [Real.sq_sqrt (hDiagNonneg t ht)]
     unfold U upperTailRepeatCorrection upperTailLambda D
@@ -136,7 +137,7 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
     ring
   have hsum : 1-leftStripCross p a v-b v*b s =
       (D v v+D s s)/2+((U v+U s)/2-leftStripCross p a v)+(b v-b s)^2/2 := by
-    nlinarith only [hSq v (hgap.trans hsv), hSq s hgap]
+    nlinarith only [hSq v hv, hSq s hgap]
   have hN :
       compositionMoment p a v-Real.sqrt (compositionMoment p 0 v*compositionMoment p 0 s) =
         W*(1-leftStripCross p a v-b v*b s)-1 := by
@@ -151,6 +152,14 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
       W*((U v+U s)/2-leftStripCross p a v)
   rw [hN, hsum]
   nlinarith only [hWdiag]
+
+theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
+    (ha : 0 < a) (hgap : 6 ≤ v-a) :
+    let h := 3/(p : ℝ)
+    compositionMoment p a v -
+      Real.sqrt (compositionMoment p 0 v*compositionMoment p 0 (v-a)) =
+    leftStripGeometricTerm h a v+leftStripRadicalTerm h a v+leftStripTailTerm p a v :=
+  leftStrip_numerator_decomposition_of_pos hp ha (by linarith)
 
 private theorem contDiffAt_partialLeft {f : ℝ → ℝ → ℝ} {x y : ℝ} {n m : WithTop ℕ∞}
     (hf : ContDiffAt ℝ n (Function.uncurry f) (x,y)) (hn : n ≠ 0)
@@ -207,13 +216,15 @@ private theorem weightedThird_add {f g : ℝ → ℝ → ℝ} {a v γ : ℝ}
 
 /-- The weighted third derivative of the exact numerator is negative on
 the separated left strip. Only the two logarithmic slope bounds enter. -/
-theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
-    {a v γ : ℝ} (ha : 0 < a) (hamax : a ≤ 1/2) (hgap : 6 < v-a)
-    (hγ : 5/12 ≤ γ) (hγmax : γ ≤ 1) :
+private theorem leftStrip_numerator_weighted_mixed_lt_of_parts {p : ℕ} (hp : 11 ≤ p)
+    {a v γ C₁ C₂ C₃ : ℝ} (ha : 0 < a) (hgap : 3 ≤ v-a)
+    (hmain : weightedThird (leftStripGeometricTerm (3/(p : ℝ))) a v γ < C₁)
+    (hrad : weightedThird (leftStripRadicalTerm (3/(p : ℝ))) a v γ ≤ C₂)
+    (htail : weightedThird (leftStripTailTerm p) a v γ ≤ C₃) :
     let N (x y : ℝ) := compositionMoment p x y -
       Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
     deriv (fun y ↦ deriv (deriv (N · y)) a) v -
-      γ*deriv (deriv (N · v)) a < -7/450 := by
+      γ*deriv (deriv (N · v)) a < C₁+C₂+C₃ := by
   let h := 3/(p : ℝ)
   let G := leftStripGeometricTerm h
   let B := leftStripRadicalTerm h
@@ -246,30 +257,29 @@ theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
     ((hL₁.sub hL₂).cosh).sub contDiffAt_const
   have hw : ContDiffAt ℝ 3 (Function.uncurry w) (a,v) :=
     ((hL₁.add hL₂).exp).div_const ((3+h)*(3+2*h)/2)
-  have hXs (t : ℝ) (ht : 6 ≤ t) : 0 < X t :=
-    Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
-      (separated_radical_lower hh hhmax ht).2)
+  have hXs (t : ℝ) (ht : 3 ≤ t) : 0 < X t :=
+    leftStrip_radical_radicand_pos hh hhmax ht
   have hx₁ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ X z.2) (a,v) := by
     unfold X upperTailLambda upperTailGap
     fun_prop
   have hx₂ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ X (z.2-z.1)) (a,v) := by
     unfold X upperTailLambda upperTailGap
     fun_prop
-  have hb₁ := hx₁.sqrt (hXs v (hgap.le.trans hsv)).ne'
-  have hb₂ := hx₂.sqrt (hXs s hgap.le).ne'
+  have hb₁ := hx₁.sqrt (hXs v (hgap.trans hsv)).ne'
+  have hb₂ := hx₂.sqrt (hXs s hgap).ne'
   have hB : ContDiffAt ℝ 3 (Function.uncurry B) (a,v) :=
     (hw.mul ((hb₁.sub hb₂).pow 2)).div_const 2
   have hT : ContDiffAt ℝ 3 (Function.uncurry T) (a,v) :=
     hw.mul (leftStripTailResidual_smooth p).contDiffAt
   have hleft : ∀ᶠ z : ℝ × ℝ in 𝓝 (a,v), 0 < z.1 :=
     continuousAt_fst.eventually (eventually_gt_nhds ha)
-  have hsep : ∀ᶠ z : ℝ × ℝ in 𝓝 (a,v), 6 < z.2-z.1 :=
-    (continuousAt_snd.sub continuousAt_fst).eventually (eventually_gt_nhds hgap)
+  have hsep : ∀ᶠ z : ℝ × ℝ in 𝓝 (a,v), 0 < z.2-z.1 :=
+    (continuousAt_snd.sub continuousAt_fst).eventually (eventually_gt_nhds hs)
   have hLocal : ∀ᶠ z : ℝ × ℝ in (𝓝 a) ×ˢ (𝓝 v),
       N z.1 z.2 = G z.1 z.2+B z.1 z.2+T z.1 z.2 := by
     rw [← nhds_prod_eq]
     filter_upwards [hleft,hsep] with z hz hd
-    exact leftStrip_numerator_decomposition hp hz hd.le
+    exact leftStrip_numerator_decomposition_of_pos hp hz hd
   obtain ⟨P,hP,Q,hQ,hPQ⟩ := eventually_prod_iff.mp hLocal
   have hsec : (fun y ↦ deriv (deriv (N · y)) a) =ᶠ[𝓝 v]
       fun y ↦ deriv (deriv (fun x ↦ G x y+B x y+T x y)) a := by
@@ -281,17 +291,29 @@ theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
       weightedThird N a v γ = weightedThird (fun x y ↦ G x y+B x y+T x y) a v γ := by
     unfold weightedThird
     rw [hsec.deriv_eq,hsec.eq_of_nhds]
-  have hmain : weightedThird G a v γ < -1/5 :=
-    leftStrip_geometric_mixed_lt hh hhmax ha.le hamax hgap.le hγ hγmax
-  have hrad : |weightedThird B a v γ| < 47/450 :=
-    leftStrip_radical_mixed_lt hh hhmax ha.le hamax hgap.le (by linarith) hγmax
-  have htail : |weightedThird T a v γ| < 2/25 :=
-    leftStrip_tail_mixed_lt hp ha.le hamax hgap.le (by linarith) hγmax
   have hGB : ContDiffAt ℝ 3 (Function.uncurry (fun x y ↦ G x y+B x y)) (a,v) :=
     hG.add hB
   change weightedThird N a v γ < _
   rw [heq, weightedThird_add hGB hT, weightedThird_add hG hB]
-  linarith only [hmain, (abs_lt.mp hrad).2, (abs_lt.mp htail).2]
+  linarith only [hmain, hrad, htail]
+
+theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
+    {a v γ : ℝ} (ha : 0 < a) (hamax : a ≤ 1/2) (hgap : 6 < v-a)
+    (hγ : 5/12 ≤ γ) (hγmax : γ ≤ 1) :
+    let N (x y : ℝ) := compositionMoment p x y -
+      Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+    deriv (fun y ↦ deriv (deriv (N · y)) a) v -
+      γ*deriv (deriv (N · v)) a < -7/450 := by
+  have hpR : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
+  have hh : 0 < 3/(p : ℝ) := by positivity
+  have hhmax : 3/(p : ℝ) ≤ 3/11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
+  simpa only [show (-1/5 : ℝ)+47/450+2/25 = -7/450 by norm_num] using
+    leftStrip_numerator_weighted_mixed_lt_of_parts hp ha (by linarith)
+      (leftStrip_geometric_mixed_lt hh hhmax ha.le hamax hgap.le hγ hγmax)
+      (abs_lt.mp (leftStrip_radical_mixed_lt hh hhmax ha.le hamax hgap.le
+        (by linarith) hγmax)).2.le
+      (abs_lt.mp (leftStrip_tail_mixed_lt hp ha.le hamax hgap.le (by linarith) hγmax)).2.le
 
 private theorem compositionMoment_smooth (p : ℕ) :
     ContDiff ℝ 3 (Function.uncurry (compositionMoment p)) := by
@@ -344,14 +366,15 @@ private theorem ratio_derivative_neg {f D : ℝ → ℝ} {u k : ℝ}
 
 /-- Concavity transfers the numerator bound to the original mixed kernel
 once the negative marginal has the indicated slopes at the two endpoints. -/
-theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
-    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u)
+private theorem leftStrip_logKernel_mixed_lt_of_weighted {p : ℕ} (hp : 0 < p) {u v : ℝ}
+    (hu : 0 < u) (huv : u < v)
     (hsmall : u*deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
       Real.sqrt (compositionMoment p 0 (-u)))
-    (hγ : 5/12 ≤ deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
-      Real.sqrt (compositionMoment p 0 (-v)))
-    (hγmax : deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
-      Real.sqrt (compositionMoment p 0 (-v)) ≤ 1) :
+    (hweighted :
+      let D (t : ℝ) := Real.sqrt (compositionMoment p 0 (-t))
+      let N (x y : ℝ) := compositionMoment p x y -
+        Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+      ∀ x ∈ Ioo 0 u, weightedThird N x v (deriv D v/D v) < 0) :
     deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
   let C := compositionMoment p
   let D (t : ℝ) := Real.sqrt (C 0 (-t))
@@ -360,8 +383,7 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
   let R (x y : ℝ) := deriv (N x) y
   let γ := deriv D v/D v
   let f (x : ℝ) := R x v-γ*N x v
-  have hp₀ : 0 < p := by omega
-  have huv : u < v := by linarith
+  have hp₀ := hp
   have hv : 0 < v := hu.trans huv
   have hC : ContDiff ℝ 3 (Function.uncurry C) := compositionMoment_smooth p
   have hPos (t : ℝ) (ht : 0 < t) : 0 < D t :=
@@ -418,8 +440,7 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
     rw [(hf 0 hv).deriv,hP₀.deriv_eq,hP₀.eq_of_nhds,deriv_const,mul_zero,sub_zero]
   have hf'' (x : ℝ) (hx : x ∈ Ioo 0 u) : deriv (deriv f) x < 0 := by
     rw [(hf' x (hx.2.trans huv)).deriv]
-    exact (leftStrip_numerator_weighted_mixed_lt hp hx.1 (hx.2.le.trans humax)
-      (hgap.trans_le (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+    exact hweighted x hx
   have hRatio := ratio_derivative_neg hu (hPos u hu) (hPos v hv)
     (fun x hx ↦ (hf x (hx.2.trans_lt huv)).differentiableAt)
     (fun x hx ↦ (hf' x (hx.2.trans_lt huv)).continuousAt.continuousWithinAt)
@@ -448,16 +469,35 @@ theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : 
   rw [← mixed_partial_eq hK₂, hnear.deriv_eq]
   exact hRatio
 
+theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u)
+    (hsmall : u*deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
+      Real.sqrt (compositionMoment p 0 (-u)))
+    (hγ : 5/12 ≤ deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)))
+    (hγmax : deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)) ≤ 1) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  apply leftStrip_logKernel_mixed_lt_of_weighted (by omega) hu (by linarith) hsmall
+  dsimp only
+  intro x hx
+  exact (leftStrip_numerator_weighted_mixed_lt hp hx.1 (hx.2.le.trans humax)
+    (hgap.trans_le (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+
 /-- The original refined BMV kernel has strictly negative mixed derivative
 throughout the separated left strip for every degree at least eleven. -/
-theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
-    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u) :
+private theorem leftStrip_logKernel_mixed_lt_of_marginal {p : ℕ}
+    (hp : 11 ≤ p) {u v : ℝ} (hu : 0 < u) (humax : u ≤ 1/2) (huv : u < v) (hv₂ : 2 ≤ v)
+    (hlo : 5/6 ≤ deriv (fun t ↦ compositionMoment p 0 (-t)) v / compositionMoment p 0 (-v))
+    (hsign :
+      let N (x y : ℝ) := compositionMoment p x y -
+        Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+      ∀ x ∈ Ioo 0 u, ∀ γ : ℝ, 5/12 ≤ γ → γ ≤ 1 → weightedThird N x v γ < 0) :
     deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
   let M (t : ℝ) := compositionMoment p 0 (-t)
   let D (t : ℝ) := Real.sqrt (M t)
   have hp₀ : 0 < p := by omega
-  have hv : 6 ≤ v := by linarith
-  have hv₀ : 0 < v := by linarith
+  have hv₀ : 0 < v := hu.trans huv
   have hMpos (t : ℝ) (ht : 0 < t) : 0 < M t :=
     compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr ht.ne')
   have hMs : ContDiff ℝ 3 M :=
@@ -493,12 +533,59 @@ theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
     rw [(hD v hv₀).deriv, div_div, div_div]
     congr 1
     nlinarith only [hDsq v hv₀]
-  have hlo := negativeMarginal_logDeriv_ge hp₀ hv
-  have hhi := negativeMarginal_logDeriv_le hp₀ (by linarith : 2 ≤ v)
-  change 5/6 ≤ deriv M v/M v at hlo
+  have hhi := negativeMarginal_logDeriv_le hp₀ hv₂
   change deriv M v/M v ≤ 2 at hhi
-  exact leftStrip_logKernel_mixed_lt_of_slopes hp hu humax hgap hsmall
+  apply leftStrip_logKernel_mixed_lt_of_weighted hp₀ hu huv hsmall
+  dsimp only
+  intro x hx
+  exact hsign x hx (deriv D v/D v)
     (by rw [hγ]; linarith only [hlo]) (by rw [hγ]; linarith only [hhi])
+
+theorem leftStrip_logKernel_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  apply leftStrip_logKernel_mixed_lt_of_marginal hp hu humax (by linarith) (by linarith)
+    (negativeMarginal_logDeriv_ge (by omega) (by linarith))
+  dsimp only
+  intro x hx γ hγ hγmax
+  exact (leftStrip_numerator_weighted_mixed_lt hp hx.1 (hx.2.le.trans humax)
+    (hgap.trans_le (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+
+/-- The exact numerator has a uniform negative weighted third derivative
+in the interior of the left strip above seven halves. -/
+theorem leftStrip_numerator_seven_halves_lt {p : ℕ} (hp : 11 ≤ p) {a v γ : ℝ}
+    (ha : 0 < a) (hamax : a ≤ 1/2) (hgap : 7/2 ≤ v-a) (hγ : 5/12 ≤ γ)
+    (hγmax : γ ≤ 1) :
+    let N (x y : ℝ) := compositionMoment p x y -
+      Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+    deriv (fun y ↦ deriv (deriv (N · y)) a) v -
+      γ*deriv (deriv (N · v)) a < -3/500 := by
+  have hpR : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
+  have hh : 0 < 3/(p : ℝ) := by positivity
+  have hhmax : 3/(p : ℝ) ≤ 3/11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
+  have hgeom := leftStrip_geometric_seven_halves_lt hh hhmax ha.le hamax hgap hγ
+  obtain ⟨hRad, hRad₀⟩ :=
+    leftStrip_radical_correlated_le (v := v) hh hhmax ha.le hamax (by linarith) hγ hγmax
+  have htail := leftStrip_tail_seven_halves_lt hp ha hamax hgap hγ hγmax
+  simpa only [show (-49/1000 : ℝ)+0+43/1000 = -3/500 by norm_num] using
+    leftStrip_numerator_weighted_mixed_lt_of_parts hp ha (by linarith)
+      hgeom (hRad.trans hRad₀.le) htail.le
+
+/-- Hägele's refined BMV kernel has strictly negative mixed derivative in
+the independent log coordinates on the left strip above seven halves. -/
+theorem leftStrip_logKernel_mixed_lt_seven_halves {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 7/2 ≤ v-u) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  apply leftStrip_logKernel_mixed_lt_of_marginal hp hu humax (by linarith) (by linarith)
+    (negativeMarginal_logDeriv_ge_seven_halves (by omega) (by linarith))
+  dsimp only
+  intro x hx γ hγ hγmax
+  exact (leftStrip_numerator_seven_halves_lt hp hx.1 (hx.2.le.trans humax)
+    (hgap.trans (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+
+#print axioms leftStrip_numerator_seven_halves_lt
+#print axioms leftStrip_logKernel_mixed_lt_seven_halves
 
 private theorem logKernel_mixed_continuousAt {p : ℕ} (hp : 0 < p) {u v : ℝ}
     (hu : 0 < u) (huv : u < v) :
