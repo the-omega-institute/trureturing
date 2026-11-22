@@ -70,7 +70,7 @@ jobs:
          (inputs.mode == 'auto' || needs.parallel-compile.outputs.seed == inputs.mode)) ||
         (!contains(fromJSON('["auto","release","parallel","compile-only"]'), inputs.mode) && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''))))
     runs-on: ubuntu-24.04-arm
-    # Cold and partial seed scenarios exercise the scheduled Release build.
+    # Dispatches and cold verification pushes use the scheduled Release build window.
     timeout-minutes: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && 360 || 120 }}
     outputs:
       indexed-tag: ${{ steps.publish.outputs.indexed_tag }}
@@ -85,6 +85,7 @@ jobs:
     env:
       LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
+      STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ (github.event_name == 'workflow_dispatch' || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && contains(fromJSON('["none","partial"]'), vars.LEAN_CACHE_SHARDS_HANDOFF))) && '21600' || '7200' }}
       LEAN_CACHE_RELEASE_VOLUMES: ${{ inputs.volume_test_id != '' && '1' || '0' }}
       LEAN_CACHE_VOLUME_TEST_ID: ${{ inputs.volume_test_id }}
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.parallel-compile.outputs.sparse == 'true' && '1' || '0' }}
@@ -234,7 +235,6 @@ jobs:
           env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.report-checked != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: >-
           bash .github/actions/lean-compile-layer/measure.sh --report make check-lean-report FULL_BUILD=1
           LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
@@ -245,7 +245,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
           LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.full_report.outcome == 'success' || steps.release_seed.outputs.report-checked == 'true') && '1' || '0' }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: ${{ contains(fromJSON('["none","partial","parallel","release"]'), env.SHARD_HANDOFF) && '21600' || '7200' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"

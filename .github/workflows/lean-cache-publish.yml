@@ -384,6 +384,7 @@ jobs:
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
         run: |
