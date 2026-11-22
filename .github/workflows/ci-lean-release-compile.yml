@@ -68,7 +68,7 @@ jobs:
             python3 .github/scripts/install-tools.py
             test -f tools/scripts/worktree/lean_compile_layers.py
             echo 'supported=true' >> "$GITHUB_OUTPUT"
-            if [[ -f tools/scripts/worktree/lean_release_sparse.py && -f .github/actions/lean-release-base/action.yml ]]; then
+            if [[ -f .github/actions/lean-cache-release-seed/prepare-compiler.sh ]]; then
               echo 'sparse=true' >> "$GITHUB_OUTPUT"
             fi
           fi
