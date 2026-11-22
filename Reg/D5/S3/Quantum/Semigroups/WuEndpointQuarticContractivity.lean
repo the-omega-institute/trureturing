@@ -62,7 +62,8 @@ def family : Registration arena (type_of% @A1_quartic_contractivity_strict) wher
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@A1_quartic_contractivity_strict) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity_strict.audit
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity_strict.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.Strict.family
   realizationSource := none
   generated := false
@@ -116,8 +117,10 @@ def family : Registration arena (type_of% @A1_quartic_contractivity) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@A1_quartic_contractivity) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.Contractivity.family
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.Contractivity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -154,8 +157,8 @@ private abbrev arena : Arena where
   signature := signature
   Law R := ∀ (X : TwoMode), X.PosSemidef →
     (R.readout () () (endpointTraceMoment 4 (A₁ X) ^ 3)
-      (endpointTraceMoment 3 X ^ 4)) ↔
-      ∃ c : ℝ, 0 ≤ c ∧ X = (c : ℂ) • (1 : TwoMode)
+      (endpointTraceMoment 3 X ^ 4) ↔
+      ∃ c : ℝ, 0 ≤ c ∧ X = (c : ℂ) • (1 : TwoMode))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -171,7 +174,8 @@ def family : Registration arena (type_of% @A1_quartic_contractivity_eq_iff) wher
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@A1_quartic_contractivity_eq_iff) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity_eq_iff.audit
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.A1_quartic_contractivity_eq_iff.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticContractivity.Equality.family
   realizationSource := none
   generated := false
