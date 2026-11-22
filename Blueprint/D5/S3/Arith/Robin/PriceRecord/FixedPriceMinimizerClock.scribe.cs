@@ -27,9 +27,12 @@ internal sealed class FixedPriceMinimizerClockDocument : IScribeDocumentDefiniti
                         "Comparing one-coordinate neighbors gives the included and excluded "
                         + "marginal-price inequalities, with ties allowed on either side. "
                         + "The second layer is bounded between the prime log sums at c√H "
-                        + "and d√H for any fixed 0 < c < √2 < d. The prime number theorem "
-                        + "gives the limits c and d after normalization. For every included "
-                        + "layer j ≥ 3, the price inequality bounds p^j by B = 4H log H "
+                        + "and d√H for any fixed 0 < c < √2 < d. The fixed-layer marginal "
+                        + "asymptotic gives the price ratios 2/c² and 2/d² at these endpoints, "
+                        + "on opposite sides of the moving price ratio tending to one. "
+                        + "The prime number theorem gives the limits c and d for the "
+                        + "normalized prime log sums. For every included "
+                        + "layer j ≥ 3, the price inequality bounds p^j by B = (2/log 2) H log H "
                         + "for large P. These layers contribute at most "
                         + "(log B / log 2) θ(B^(1/3)), which is o(√H)."))),
                 DescribeRole.Theorem),
