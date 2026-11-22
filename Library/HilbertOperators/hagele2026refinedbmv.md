@@ -174,5 +174,17 @@ exponential bounds have exponents `8H + 3K`, `9H + 3K`, and
 `10H + 3K`. Literature searches located no matching unrestricted
 proof of these cases in the sources examined.
 
+The repository proof treats the product comparison from Hägele's Section
+7(ii–iii) for every positive integer `p` in every finite dimension when
+the complex positive semidefinite first factor `A` is singular and has at
+most four distinct eigenvalues. The second factor `B` is any complex
+positive semidefinite matrix of the same size. The mean trace of the words
+with `p` copies of `A` and three of `B` is at least `Tr((A^(p/3) B)^3)`,
+with `A^(p/3)` defined by spectral calculus. At zero, curvature bounds for
+the normalized scalar profile give a finite interval Gram sum. At each
+positive center, the ordered quartic and the corner inequality control
+the block of at most two distinct larger eigenvalues. The cyclic trace
+identity and Schur product give the product comparison.
+
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
