@@ -65,7 +65,7 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
     private static Formula MonicCoeffFormula()
     {
         var n = V("n");
-        var k = Typed(Seq(Langle, n, Comma, Sp, V("h"), Rangle), Fin("6"));
+        var k = Typed(Seq(Langle, Sp, n, Comma, Sp, V("h"), Rangle), Fin("6"));
         var below = Seq(V("h"), Colon, Sp, n, Sp, Lt, Sp, N("6"));
         return All("n", V("Nat"), Eq(Call("HardinA203981StripCertificate.monicCoeff", n),
             If(below, Seq(Minus, Call("HardinA203981StripCertificate.coeff", k)),
