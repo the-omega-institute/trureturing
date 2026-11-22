@@ -258,7 +258,8 @@ open private spatialNumerator from
 open OriginalFourMPeriodSource (periodCorrection)
 open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitPeriod)
 
-private theorem ratJ_spatial (e f : Bool) {u v r : ℂ}
+/-- The signed rational J kernel in two right native coordinates. -/
+theorem ratJ_spatial (e f : Bool) {u v r : ℂ}
     (hu : u ≠ 0) (hv : v ≠ 0) (hg : G e f u v ≠ 0) :
     rationalJ e f u v r = spatialKernel (1 - r) (rightChart e u) (rightChart f v) := by
   have hd : rightChart e u - rightChart f v =
@@ -273,7 +274,8 @@ private theorem ratJ_spatial (e f : Bool) {u v r : ℂ}
       Bool.true_eq_false, Bool.and_false, Bool.and_true, ite_true, ite_false] <;>
     field_simp [hu, hv, hg] <;> rw [← hden] <;> simp [G] <;> ring
 
-private theorem ratT_spatial (e f : Bool) {u v r : ℂ}
+/-- The signed rational T kernel in right and left native coordinates. -/
+theorem ratT_spatial (e f : Bool) {u v r : ℂ}
     (hu : u ≠ 0) (hv1 : b v ≠ 0) (he : E e f u v r ≠ 0) :
     rationalT e f u v r = spatialKernel (1 - r) (rightChart e u) (leftChart f r v) := by
   have hd : rightChart e u - leftChart f r v =

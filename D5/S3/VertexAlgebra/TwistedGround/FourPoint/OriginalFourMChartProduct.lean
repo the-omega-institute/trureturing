@@ -37,7 +37,8 @@ private abbrev pB (x : ℝ) : ℂ := slitPeriod (x : ℂ)
 private abbrev pD (upperA : Bool) (x : ℝ) : ℂ := dPeriod upperA (parameter .D (x : ℂ))
 
 private abbrev bLift (x : ℝ) : ℂ := -I * (Real.sqrt x : ℂ)
-private abbrev thetaSource (D : LatticeData) (p : ℂ) (M : Fin D.rank → ℂ) :
+/-- The source vector in the shifted theta argument for period `p`. -/
+abbrev thetaSource (D : LatticeData) (p : ℂ) (M : Fin D.rank → ℂ) :
     Fin D.rank → ℂ := (I / (2 * (Real.pi : ℂ) * p)) • M
 
 private theorem fourierRow_mul (D : LatticeData) (a : ModTwoCharge D) (c : ℂ)
@@ -81,14 +82,17 @@ structure Sample (D : LatticeData) where
   q : ℂ
   colour : Fin D.rank
 
-private def differential (D : LatticeData) (w : ℂ) (s : Sample D) : ℂ :=
+/-- The signed original A differential at a native sample. -/
+def differential (D : LatticeData) (w : ℂ) (s : Sample D) : ℂ :=
   signedHalfSource s.right s.outgoing (s.q ^ 2) (w ^ 2)
 
-private def sourceVector (D : LatticeData) {X : Type*} [Fintype X]
+/-- Collect the weighted signed sources by lattice colour. -/
+def sourceVector (D : LatticeData) {X : Type*} [Fintype X]
     (s : X → Sample D) (weights : X → ℂ) (m : X → ℂ) (i : Fin D.rank) : ℂ :=
   ∑ j, if (s j).colour = i then weights j * m j else 0
 
-private def gaussianExponent (D : LatticeData) {X : Type*} [Fintype X]
+/-- The Gram-weighted quadratic exponent for a finite covariance. -/
+def gaussianExponent (D : LatticeData) {X : Type*} [Fintype X]
     (s : X → Sample D) (weights : X → ℂ) (K : X → X → ℂ) : ℂ :=
   (∑ i, ∑ j, (weights i * weights j) * gramComplex D (s i).colour (s j).colour * K i j) / 2
 
@@ -156,39 +160,46 @@ private theorem gaussianExponent_sub (D : LatticeData) {X : Type*} [Fintype X]
     ring
   simp only [gaussianExponent, mul_sub, Finset.sum_sub_distrib, hcorrection, sub_div]
 
-private def nativeCovariance (D : LatticeData) {X : Type*} (s : X → Sample D)
+/-- The original signed Gaussian covariance between two native samples. -/
+def nativeCovariance (D : LatticeData) {X : Type*} (s : X → Sample D)
     (w : ℂ) (i j : X) : ℂ :=
   covarianceMode (s i).right (s j).right (s i).outgoing (s j).outgoing
     ((s i).q ^ 2) ((s j).q ^ 2) (w ^ 2)
 
-private def chartScale (c : Chart) (x : ℝ) : ℂ :=
+/-- The inverse half-differential lift factor for the indicated chart. -/
+def chartScale (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => 1
   | .B => (bLift x)⁻¹
   | .D => I⁻¹
 
-private def chartPeriod (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
+/-- The period used in the normalization of each chart product. -/
+def chartPeriod (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => pA x
   | .B => pB x
   | .D => pD upperA x
 
-private def chartTau (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
+/-- The shifted theta parameter for each chart and chosen A side. -/
+def chartTau (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => I * pD upperA x / pA x
   | .B => -1 / (I * pB x / pPf x)
   | .D => -1 / (I * pD upperA x / pA x)
 
-private def chartDifference (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
+/-- The complementary-period correction in the target chart source units. -/
+def chartDifference (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => 0
   | .B => 1 / ((Real.pi : ℂ) * pPf x * pB x)
   | .D => 1 / ((Real.pi : ℂ) * pA x * pD upperA x)
 
-private def pulledDifferential (D : LatticeData) (c : Chart) (x : ℝ) (w : ℂ)
+/-- The native A differential scaled into the target chart units. -/
+def pulledDifferential (D : LatticeData) (c : Chart) (x : ℝ) (w : ℂ)
     (s : Sample D) : ℂ := chartScale c x * differential D w s
 
-private def pulledCovariance (D : LatticeData) {X : Type*} (s : X → Sample D)
+/-- The covariance in the common A coordinates after the target period correction. -/
+def pulledCovariance (D : LatticeData) {X : Type*} (s : X → Sample D)
     (upperA : Bool) (c : Chart) (x : ℝ) (w : ℂ) (i j : X) : ℂ :=
   nativeCovariance D s w i j - chartDifference upperA c x *
     (pulledDifferential D c x w (s i) * pulledDifferential D c x w (s j))

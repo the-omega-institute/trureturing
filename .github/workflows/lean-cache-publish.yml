@@ -68,7 +68,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-producer
+      # Hosted integration builds write branch-scoped Actions caches.
+      group: ${{ startsWith(github.ref, 'refs/heads/integration-') && 'lean-cache-integration-producer' || 'lean-cache-producer' }}
       queue: max
       cancel-in-progress: false
     env:

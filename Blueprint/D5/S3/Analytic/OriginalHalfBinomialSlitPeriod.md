@@ -76,7 +76,19 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod`
 
 Integrate the principal complex power (1 − r sin² θ)^(−1/2) on [0, π/2] and multiply by 2/π.
 
-**Theorem 1.7 (Differentiation under the integral).**
+**Theorem 1.7 (Conjugation of the Euler period).**
+
+Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_conj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a parameter in the Euler slit domain, every base 1 − r sin² θ stays off the principal cut. Conjugation commutes with the inverse square root of each base and with its Euler integral.
+
+**Theorem 1.8 (Differentiation under the integral).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_differentiableAt`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_differ
 
 On the slit domain the kernel stays off the branch cut. Its parameter derivative is bounded on a smaller closed parameter disk times the integration interval. Dominated differentiation proves complex differentiability.
 
-**Theorem 1.8 (Holomorphy on the slit domain).**
+**Theorem 1.9 (Holomorphy on the slit domain).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_analyticOnNhd`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_analyt
 
 The Euler period is holomorphic on a neighborhood of every point of the open slit domain.
 
-**Theorem 1.9 (Equality with the original series).**
+**Theorem 1.10 (Equality with the original series).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_eq_period`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_eq_per
 
 On the full open unit disk the Euler period equals OriginalHalfBinomialPeriod.period. The dominated sine-moment calculation identifies the real values, and holomorphic uniqueness extends the equality to complex parameters.
 
-**Theorem 1.10 (Positive real part).**
+**Theorem 1.11 (Positive real part).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_re_pos`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_re_pos
 
 The principal square root has positive real part off its cut. Its reciprocal has the same strict sign, which persists under the normalized integral.
 
-**Theorem 1.11 (Nonvanishing of the period).**
+**Theorem 1.12 (Nonvanishing of the period).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_ne_zero`
 
@@ -136,7 +148,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_ne_zer
 
 The positive real part excludes zeros everywhere on the slit domain.
 
-**Definition 1.12 (The complementary ratio).**
+**Definition 1.13 (The complementary ratio).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau`
 
@@ -148,7 +160,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau`
 
 Multiply the Euler period at 1 − r by i and divide by the Euler period at r.
 
-**Theorem 1.13 (Positive imaginary part of the complementary ratio).**
+**Theorem 1.14 (Positive imaginary part of the complementary ratio).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau_im_pos`
 
@@ -160,7 +172,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau_im_pos`
 
 Pair the conjugate kernel at r with the kernel at 1 − r. Their product has positive real part from the imaginary parts of the square roots and of their squared product. Integrating twice and dividing by the squared norm of the period gives the strict sign.
 
-**Theorem 1.14 (Pfaff preserves the slit domain).**
+**Theorem 1.15 (Pfaff preserves the slit domain).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff_mem_slitDomain`
 
@@ -172,7 +184,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff_mem_slitDom
 
 The complement of r/(r − 1) is the reciprocal of 1 − r and stays off the cut.
 
-**Theorem 1.15 (The Pfaff transformation).**
+**Theorem 1.16 (The Pfaff transformation).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff`
 
@@ -184,7 +196,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff`
 
 On the full slit domain the period at r/(r − 1) equals the principal square root of 1 − r times the period at r. This is DLMF 15.8.1 at a = b = 1/2 and c = 1, with the period normalization from DLMF 19.5.1. The Lean proof reflects the real integration variable about π/4 for real r < 1 and extends the identity to the slit domain by analytic uniqueness.
 
-**Theorem 1.16 (The exact complementary Wronskian).**
+**Theorem 1.17 (The exact complementary Wronskian).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slit_wronskian`
 
@@ -196,7 +208,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slit_wronskian`
 
 On the double slit, r(1 − r) times the sum of P′(r)P(1 − r) and P(r)P′(1 − r) equals 1/π. The disk identities also identify the local derivatives, so the existing lens Wronskian extends by uniqueness.
 
-**Theorem 1.17 (The quotient derivative).**
+**Theorem 1.18 (The quotient derivative).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau_hasDerivAt`
 
@@ -208,7 +220,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.tau_hasDerivAt`
 
 The complex derivative of the complementary ratio is −i/(π r (1 − r) P(r)²) on the double slit.
 
-**Theorem 1.18 (Uniform positivity on compact subsets).**
+**Theorem 1.19 (Uniform positivity on compact subsets).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.exists_pos_le_tau_im`
 
@@ -220,7 +232,7 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.exists_pos_le_tau
 
 The imaginary part of the complementary ratio has a strictly positive lower bound on each compact subset of the double slit.
 
-**Theorem 1.19 (Uniform positivity in the three crossing charts).**
+**Theorem 1.20 (Uniform positivity in the three crossing charts).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.exists_pos_le_tau_im_charts`
 
@@ -245,6 +257,7 @@ The continuous images of a compact set of nonreal cross-ratios under 1 − 1/z, 
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitDomain`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_analyticOnNhd`
+- Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_conj`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_differentiableAt`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_eq_period`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.slitPeriod_ne_zero`
