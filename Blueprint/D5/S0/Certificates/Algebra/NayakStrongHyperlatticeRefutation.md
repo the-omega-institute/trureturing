@@ -108,6 +108,10 @@ $$\neg (\forall (\alpha:\operatorname{Type}_{0}), \forall (H:\operatorname{Stron
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Algebra/NayakStrongHyperlatticeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nayak-strong-hyperlattice-birkhoff` (refuted) by `D5/S0/Certificates/Algebra/NayakStrongHyperlatticeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nayak-strong-hyperlattice-birkhoff","declaration_gid":"D5/S0/Certificates/Algebra/NayakStrongHyperlatticeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N Aishwarya Nayak, Bhargava K, Pallavi Panjarike, Kuncham Syam Prasad, Tapatee Sahoo, Harikrishnan Panackal (2026). *On the structural aspects of Convex Subhyperlattices under different orders*. DOI: [10.48550/arXiv.2611.10526](https://doi.org/10.48550/arXiv.2611.10526). URL: <https://arxiv.org/abs/2611.10526v1>.
