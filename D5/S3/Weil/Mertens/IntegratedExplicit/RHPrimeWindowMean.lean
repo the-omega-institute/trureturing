@@ -44,7 +44,7 @@ lemma frequency_real (hRH : RiemannHypothesis) (k : ℕ) :
       zeroData_zero_on_critical_line_of_rh hRH actualData (actualOccurrenceEquiv k).1
   simp [frequency, Complex.sub_re, hline]
 
-private lemma frequency_norm (k : ℕ) : 10 < ‖frequency k‖ := by
+lemma frequency_norm (k : ℕ) : 10 < ‖frequency k‖ := by
   have hz : IsNontrivialZero (actualZero k) :=
     actualData.zero_isNontrivial (actualOccurrenceEquiv k).1
   have h := actual_height_gt_ten _ hz
@@ -266,7 +266,7 @@ private lemma normalizedMass_eq (y : ℝ) (hy : Real.log 2 ≤ y) :
   rw [add_assoc, ← hmain, hU, mul_comm (-Q (Real.exp y)), ← mul_assoc, hdamp]
   ring
 
-private lemma windowError_continuous : ContinuousOn windowError (Ici (Real.log 2)) := by
+lemma windowError_continuous : ContinuousOn windowError (Ici (Real.log 2)) := by
   have hp : ContinuousOn primeTail (Ici 1) :=
     prime_integrable.continuousOn_Ici_primitive_Ioi
   have hcomp : ContinuousOn (fun y => primeTail (Real.exp y)) (Ici (Real.log 2)) :=
