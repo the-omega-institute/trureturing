@@ -29,7 +29,7 @@ open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
-private def occurrenceFrequency (i : ℕ) : ℝ := (actualZero i).im
+def occurrenceFrequency (i : ℕ) : ℝ := (actualZero i).im
 
 private theorem occurrence_dist_norm (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
     ‖actualZero i‖ ≤ ‖(s : ℂ) - actualZero i‖ := by
@@ -56,7 +56,7 @@ private theorem occurrence_norm_pos (hRH : RiemannHypothesis) (i : ℕ) :
   norm_num at h
   linarith
 
-private theorem occurrence_coeff_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
+theorem occurrence_coeff_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
     ‖rootCoeff s i‖ ≤ 2 * (‖actualZero i‖)⁻¹ := by
   have hnorm := occurrence_norm_pos hRH i
   have hhalf := occurrence_half_le_norm hRH hs i
@@ -86,7 +86,7 @@ private theorem occurrence_coeff_phase_le {s : ℝ} (hs : 0 ≤ s) (i : ℕ) :
     exact mul_le_of_le_one_right (by positivity) ((div_le_one
       ((norm_nonneg _).lt_of_ne' hz)).mpr hf)
 
-private def occurrenceIncrement (s : ℝ) (i : ℕ) : ℂ :=
+def occurrenceIncrement (s : ℝ) (i : ℕ) : ℂ :=
   rootCoeff (s+1) i - rootCoeff s i
 
 private theorem occurrenceIncrement_eq (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
@@ -101,7 +101,7 @@ private theorem occurrenceIncrement_eq (hRH : RiemannHypothesis) {s : ℝ} (hs :
   field_simp [hz, h₁, h₂]
   ring
 
-private theorem occurrenceIncrement_le (hRH : RiemannHypothesis) {s q : ℝ}
+theorem occurrenceIncrement_le (hRH : RiemannHypothesis) {s q : ℝ}
     (hs : 1 ≤ s) (hq : 0 < q) (hsq : q/2 ≤ s) (i : ℕ) :
     ‖occurrenceIncrement s i‖ ≤ (4/q) * (‖actualZero i‖)⁻¹ := by
   have hnorm := occurrence_norm_pos hRH i
@@ -229,7 +229,7 @@ private theorem log_band_le (x : ℝ) (hx : 0 ≤ x) :
       have hl := Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 3)
       nlinarith only [hlog, mul_nonneg hl (sub_nonneg.mpr hpow)]
 
-private theorem summable_band_rpow_sq (D : ℝ) :
+theorem summable_band_rpow_sq (D : ℝ) :
     Summable fun k : ℤ => (D * (|(k : ℝ)|+1) ^ (-3/4 : ℝ))^2 := by
   have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-3/2 : ℝ)) :=
     Real.summable_nat_rpow.mpr (by norm_num)
@@ -244,7 +244,7 @@ private theorem summable_band_rpow_sq (D : ℝ) :
     simp only [Int.cast_neg, Int.cast_natCast, abs_neg, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
       Nat.cast_add, Nat.cast_one, he _ (Nat.cast_nonneg (α := ℝ) n)]
 
-private theorem occurrence_bin_power_majorant (hRH : RiemannHypothesis) :
+theorem occurrence_bin_power_majorant (hRH : RiemannHypothesis) :
     ∃ D : ℝ, 0 < D ∧ ∀ (T : Finset ℕ) (k : ℤ),
       ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤
         D * (|(k : ℝ)|+1)^(-3/4 : ℝ) := by
@@ -439,7 +439,7 @@ private theorem occurrence_weighted_finite_of_slab_bound
       rw [tsum_geometric_of_lt_one hr0.le hr1] at hsum
       exact (mul_le_mul_of_nonneg_right hsum hC).trans_eq (by ring)
 
-private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
+theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
     {b : ℤ → ℝ} {K : ℝ} (hK : 0 ≤ K)
     (hKbound : ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
       (∀ k, binMass T γ a k ≤ C * b k) →
@@ -469,7 +469,7 @@ private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
       hmass)
   exact hbound.trans_eq (by ring)
 
-private theorem rootMode_eq_phase (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r) (u : ℝ)
+theorem rootMode_eq_phase (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r) (u : ℝ)
     (i : ℕ) : rootMode r u i =
       (Real.exp (((2*r)⁻¹-1/2)*u) : ℂ) *
         (rootCoeff r i * Complex.exp (Complex.I * (occurrenceFrequency i : ℂ) * ((u/r : ℝ) : ℂ))) := by
@@ -484,7 +484,7 @@ private theorem rootMode_eq_phase (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < 
   field_simp [show (r : ℂ) ≠ 0 by exact_mod_cast hr.ne']
   ring
 
-private theorem rootMode_phase_summable (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 ≤ r)
+theorem rootMode_phase_summable (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 ≤ r)
     (u : ℝ) : Summable (fun i => rootCoeff r i *
       Complex.exp (Complex.I * (occurrenceFrequency i : ℂ) * ((u/r : ℝ) : ℂ))) := by
   apply (actualCoeff_hasSum.summable.norm.mul_left r).of_norm_bounded
@@ -767,7 +767,7 @@ private theorem occurrence_head_modes_le (hRH : RiemannHypothesis) {b : ℤ → 
       rw [← Finset.mul_sum, Finset.sum_fiberwise_of_maps_to hmaps]
     _ ≤ _ := mul_le_mul_of_nonneg_left (Finset.sum_le_sum fun k _ => hmass U k) (by norm_num)
 
-private theorem occurrence_compl_bin_majorant {b : ℤ → ℝ} (B : Finset ℤ) (T : Finset ℕ)
+theorem occurrence_compl_bin_majorant {b : ℤ → ℝ} (B : Finset ℤ) (T : Finset ℕ)
     (hmass : ∀ k, ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k)
     (k : ℤ) :
     (∑ i ∈ T.filter (fun i => frequencyBin (occurrenceFrequency i) ∉ B)
