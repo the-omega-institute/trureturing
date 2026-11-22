@@ -45,5 +45,13 @@ internal sealed class ThetaReparametrizedSandwichDocument : IScribeDocumentDefin
                         + "literal B decomposition give the lower and upper inequalities respectively. "
                         + "No derivative or continuity of theta at a prime is used. This is a pointwise "
                         + "statement and asserts no limiting theorem or RH conclusion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-theta-tail-local-modulus"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ThetaReparametrizedSandwich.actual_theta_tail_local_modulus"),
+                H("Local displacement of the actual theta tail"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all sufficiently large u and every v≥u, the absolute "
+                    + "change of the signed weighted tail is at most 2(v−u)/(u log(u))."))),
                 DescribeRole.Theorem))));
 }

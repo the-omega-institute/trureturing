@@ -1,0 +1,762 @@
+/- GID: D5/S3/Quantum/QuantumChannels/WernerHolevo/Chirped73Seeds
+   generality: I
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/QuantumChannels/WernerHolevo/ChirpedActualSeedBounds.seedBounds; instance=D5/S3/Quantum/QuantumChannels/WernerHolevo/Chirped73SeedData.seedAt
+   digest: Checked order-73 seed values and slopes for the exact integer evaluator. -/
+
+import D5.S3.Quantum.QuantumChannels.WernerHolevo.Chirped73SeedData
+
+/-! Exact data and kernel checks for the order-73 chirped construction. -/
+
+set_option maxRecDepth 100000
+set_option maxHeartbeats 12000000
+
+namespace Chirped73
+
+open ChirpedFinite
+
+private theorem column_0_0 : seedAt 0 0 = seedValue n rootAt phaseAt 0 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 0 j.val = seedSlope n rootAt slopeAt 0 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_1 : seedAt 0 1 = seedValue n rootAt phaseAt 1 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 1 j.val = seedSlope n rootAt slopeAt 1 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_2 : seedAt 0 2 = seedValue n rootAt phaseAt 2 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 2 j.val = seedSlope n rootAt slopeAt 2 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_3 : seedAt 0 3 = seedValue n rootAt phaseAt 3 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 3 j.val = seedSlope n rootAt slopeAt 3 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_4 : seedAt 0 4 = seedValue n rootAt phaseAt 4 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 4 j.val = seedSlope n rootAt slopeAt 4 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_5 : seedAt 0 5 = seedValue n rootAt phaseAt 5 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 5 j.val = seedSlope n rootAt slopeAt 5 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_6 : seedAt 0 6 = seedValue n rootAt phaseAt 6 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 6 j.val = seedSlope n rootAt slopeAt 6 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_7 : seedAt 0 7 = seedValue n rootAt phaseAt 7 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 7 j.val = seedSlope n rootAt slopeAt 7 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_8 : seedAt 0 8 = seedValue n rootAt phaseAt 8 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 8 j.val = seedSlope n rootAt slopeAt 8 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_9 : seedAt 0 9 = seedValue n rootAt phaseAt 9 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 9 j.val = seedSlope n rootAt slopeAt 9 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_10 : seedAt 0 10 = seedValue n rootAt phaseAt 10 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 10 j.val = seedSlope n rootAt slopeAt 10 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_11 : seedAt 0 11 = seedValue n rootAt phaseAt 11 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 11 j.val = seedSlope n rootAt slopeAt 11 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_12 : seedAt 0 12 = seedValue n rootAt phaseAt 12 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 12 j.val = seedSlope n rootAt slopeAt 12 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_13 : seedAt 0 13 = seedValue n rootAt phaseAt 13 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 13 j.val = seedSlope n rootAt slopeAt 13 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_14 : seedAt 0 14 = seedValue n rootAt phaseAt 14 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 14 j.val = seedSlope n rootAt slopeAt 14 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_15 : seedAt 0 15 = seedValue n rootAt phaseAt 15 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 15 j.val = seedSlope n rootAt slopeAt 15 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_16 : seedAt 0 16 = seedValue n rootAt phaseAt 16 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 16 j.val = seedSlope n rootAt slopeAt 16 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_17 : seedAt 0 17 = seedValue n rootAt phaseAt 17 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 17 j.val = seedSlope n rootAt slopeAt 17 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_18 : seedAt 0 18 = seedValue n rootAt phaseAt 18 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 18 j.val = seedSlope n rootAt slopeAt 18 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_19 : seedAt 0 19 = seedValue n rootAt phaseAt 19 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 19 j.val = seedSlope n rootAt slopeAt 19 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_20 : seedAt 0 20 = seedValue n rootAt phaseAt 20 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 20 j.val = seedSlope n rootAt slopeAt 20 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_21 : seedAt 0 21 = seedValue n rootAt phaseAt 21 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 21 j.val = seedSlope n rootAt slopeAt 21 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_22 : seedAt 0 22 = seedValue n rootAt phaseAt 22 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 22 j.val = seedSlope n rootAt slopeAt 22 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_23 : seedAt 0 23 = seedValue n rootAt phaseAt 23 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 23 j.val = seedSlope n rootAt slopeAt 23 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_24 : seedAt 0 24 = seedValue n rootAt phaseAt 24 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 24 j.val = seedSlope n rootAt slopeAt 24 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_25 : seedAt 0 25 = seedValue n rootAt phaseAt 25 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 25 j.val = seedSlope n rootAt slopeAt 25 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_26 : seedAt 0 26 = seedValue n rootAt phaseAt 26 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 26 j.val = seedSlope n rootAt slopeAt 26 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_27 : seedAt 0 27 = seedValue n rootAt phaseAt 27 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 27 j.val = seedSlope n rootAt slopeAt 27 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_28 : seedAt 0 28 = seedValue n rootAt phaseAt 28 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 28 j.val = seedSlope n rootAt slopeAt 28 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_29 : seedAt 0 29 = seedValue n rootAt phaseAt 29 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 29 j.val = seedSlope n rootAt slopeAt 29 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_30 : seedAt 0 30 = seedValue n rootAt phaseAt 30 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 30 j.val = seedSlope n rootAt slopeAt 30 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_31 : seedAt 0 31 = seedValue n rootAt phaseAt 31 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 31 j.val = seedSlope n rootAt slopeAt 31 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_32 : seedAt 0 32 = seedValue n rootAt phaseAt 32 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 32 j.val = seedSlope n rootAt slopeAt 32 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_33 : seedAt 0 33 = seedValue n rootAt phaseAt 33 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 33 j.val = seedSlope n rootAt slopeAt 33 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_34 : seedAt 0 34 = seedValue n rootAt phaseAt 34 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 34 j.val = seedSlope n rootAt slopeAt 34 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_35 : seedAt 0 35 = seedValue n rootAt phaseAt 35 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 35 j.val = seedSlope n rootAt slopeAt 35 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_36 : seedAt 0 36 = seedValue n rootAt phaseAt 36 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 36 j.val = seedSlope n rootAt slopeAt 36 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_37 : seedAt 0 37 = seedValue n rootAt phaseAt 37 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 37 j.val = seedSlope n rootAt slopeAt 37 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_38 : seedAt 0 38 = seedValue n rootAt phaseAt 38 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 38 j.val = seedSlope n rootAt slopeAt 38 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_39 : seedAt 0 39 = seedValue n rootAt phaseAt 39 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 39 j.val = seedSlope n rootAt slopeAt 39 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_40 : seedAt 0 40 = seedValue n rootAt phaseAt 40 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 40 j.val = seedSlope n rootAt slopeAt 40 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_41 : seedAt 0 41 = seedValue n rootAt phaseAt 41 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 41 j.val = seedSlope n rootAt slopeAt 41 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_42 : seedAt 0 42 = seedValue n rootAt phaseAt 42 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 42 j.val = seedSlope n rootAt slopeAt 42 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_43 : seedAt 0 43 = seedValue n rootAt phaseAt 43 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 43 j.val = seedSlope n rootAt slopeAt 43 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_44 : seedAt 0 44 = seedValue n rootAt phaseAt 44 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 44 j.val = seedSlope n rootAt slopeAt 44 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_45 : seedAt 0 45 = seedValue n rootAt phaseAt 45 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 45 j.val = seedSlope n rootAt slopeAt 45 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_46 : seedAt 0 46 = seedValue n rootAt phaseAt 46 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 46 j.val = seedSlope n rootAt slopeAt 46 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_47 : seedAt 0 47 = seedValue n rootAt phaseAt 47 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 47 j.val = seedSlope n rootAt slopeAt 47 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_48 : seedAt 0 48 = seedValue n rootAt phaseAt 48 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 48 j.val = seedSlope n rootAt slopeAt 48 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_49 : seedAt 0 49 = seedValue n rootAt phaseAt 49 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 49 j.val = seedSlope n rootAt slopeAt 49 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_50 : seedAt 0 50 = seedValue n rootAt phaseAt 50 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 50 j.val = seedSlope n rootAt slopeAt 50 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_51 : seedAt 0 51 = seedValue n rootAt phaseAt 51 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 51 j.val = seedSlope n rootAt slopeAt 51 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_52 : seedAt 0 52 = seedValue n rootAt phaseAt 52 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 52 j.val = seedSlope n rootAt slopeAt 52 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_53 : seedAt 0 53 = seedValue n rootAt phaseAt 53 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 53 j.val = seedSlope n rootAt slopeAt 53 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_54 : seedAt 0 54 = seedValue n rootAt phaseAt 54 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 54 j.val = seedSlope n rootAt slopeAt 54 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_55 : seedAt 0 55 = seedValue n rootAt phaseAt 55 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 55 j.val = seedSlope n rootAt slopeAt 55 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_56 : seedAt 0 56 = seedValue n rootAt phaseAt 56 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 56 j.val = seedSlope n rootAt slopeAt 56 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_57 : seedAt 0 57 = seedValue n rootAt phaseAt 57 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 57 j.val = seedSlope n rootAt slopeAt 57 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_58 : seedAt 0 58 = seedValue n rootAt phaseAt 58 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 58 j.val = seedSlope n rootAt slopeAt 58 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_59 : seedAt 0 59 = seedValue n rootAt phaseAt 59 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 59 j.val = seedSlope n rootAt slopeAt 59 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_60 : seedAt 0 60 = seedValue n rootAt phaseAt 60 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 60 j.val = seedSlope n rootAt slopeAt 60 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_61 : seedAt 0 61 = seedValue n rootAt phaseAt 61 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 61 j.val = seedSlope n rootAt slopeAt 61 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_62 : seedAt 0 62 = seedValue n rootAt phaseAt 62 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 62 j.val = seedSlope n rootAt slopeAt 62 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_63 : seedAt 0 63 = seedValue n rootAt phaseAt 63 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 63 j.val = seedSlope n rootAt slopeAt 63 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_64 : seedAt 0 64 = seedValue n rootAt phaseAt 64 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 64 j.val = seedSlope n rootAt slopeAt 64 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_65 : seedAt 0 65 = seedValue n rootAt phaseAt 65 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 65 j.val = seedSlope n rootAt slopeAt 65 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_66 : seedAt 0 66 = seedValue n rootAt phaseAt 66 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 66 j.val = seedSlope n rootAt slopeAt 66 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_67 : seedAt 0 67 = seedValue n rootAt phaseAt 67 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 67 j.val = seedSlope n rootAt slopeAt 67 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_68 : seedAt 0 68 = seedValue n rootAt phaseAt 68 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 68 j.val = seedSlope n rootAt slopeAt 68 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_69 : seedAt 0 69 = seedValue n rootAt phaseAt 69 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 69 j.val = seedSlope n rootAt slopeAt 69 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_70 : seedAt 0 70 = seedValue n rootAt phaseAt 70 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 70 j.val = seedSlope n rootAt slopeAt 70 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_71 : seedAt 0 71 = seedValue n rootAt phaseAt 71 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 71 j.val = seedSlope n rootAt slopeAt 71 j.val (seed 0) := by
+  decide +kernel
+
+private theorem column_0_72 : seedAt 0 72 = seedValue n rootAt phaseAt 72 (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 72 j.val = seedSlope n rootAt slopeAt 72 j.val (seed 0) := by
+  decide +kernel
+
+private theorem seed_0 : ∀ d : ℕ, d < n → seedAt 0 d = seedValue n rootAt phaseAt d (seed 0) ∧
+    ∀ j : Fin m, seedSlopeAt 0 d j.val = seedSlope n rootAt slopeAt d j.val (seed 0) := by
+  exact coverOne 72 (
+    coverOne 71 (
+    coverOne 70 (
+    coverOne 69 (
+    coverOne 68 (
+    coverOne 67 (
+    coverOne 66 (
+    coverOne 65 (
+    coverOne 64 (
+    coverOne 63 (
+    coverOne 62 (
+    coverOne 61 (
+    coverOne 60 (
+    coverOne 59 (
+    coverOne 58 (
+    coverOne 57 (
+    coverOne 56 (
+    coverOne 55 (
+    coverOne 54 (
+    coverOne 53 (
+    coverOne 52 (
+    coverOne 51 (
+    coverOne 50 (
+    coverOne 49 (
+    coverOne 48 (
+    coverOne 47 (
+    coverOne 46 (
+    coverOne 45 (
+    coverOne 44 (
+    coverOne 43 (
+    coverOne 42 (
+    coverOne 41 (
+    coverOne 40 (
+    coverOne 39 (
+    coverOne 38 (
+    coverOne 37 (
+    coverOne 36 (
+    coverOne 35 (
+    coverOne 34 (
+    coverOne 33 (
+    coverOne 32 (
+    coverOne 31 (
+    coverOne 30 (
+    coverOne 29 (
+    coverOne 28 (
+    coverOne 27 (
+    coverOne 26 (
+    coverOne 25 (
+    coverOne 24 (
+    coverOne 23 (
+    coverOne 22 (
+    coverOne 21 (
+    coverOne 20 (
+    coverOne 19 (
+    coverOne 18 (
+    coverOne 17 (
+    coverOne 16 (
+    coverOne 15 (
+    coverOne 14 (
+    coverOne 13 (
+    coverOne 12 (
+    coverOne 11 (
+    coverOne 10 (
+    coverOne 9 (
+    coverOne 8 (
+    coverOne 7 (
+    coverOne 6 (
+    coverOne 5 (
+    coverOne 4 (
+    coverOne 3 (
+    coverOne 2 (
+    coverOne 1 (
+    coverFirst column_0_0) column_0_1) column_0_2) column_0_3) column_0_4) column_0_5) column_0_6) column_0_7) column_0_8) column_0_9) column_0_10) column_0_11) column_0_12) column_0_13) column_0_14) column_0_15) column_0_16) column_0_17) column_0_18) column_0_19) column_0_20) column_0_21) column_0_22) column_0_23) column_0_24) column_0_25) column_0_26) column_0_27) column_0_28) column_0_29) column_0_30) column_0_31) column_0_32) column_0_33) column_0_34) column_0_35) column_0_36) column_0_37) column_0_38) column_0_39) column_0_40) column_0_41) column_0_42) column_0_43) column_0_44) column_0_45) column_0_46) column_0_47) column_0_48) column_0_49) column_0_50) column_0_51) column_0_52) column_0_53) column_0_54) column_0_55) column_0_56) column_0_57) column_0_58) column_0_59) column_0_60) column_0_61) column_0_62) column_0_63) column_0_64) column_0_65) column_0_66) column_0_67) column_0_68) column_0_69) column_0_70) column_0_71) column_0_72
+
+private theorem column_1_0 : seedAt 1 0 = seedValue n rootAt phaseAt 0 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 0 j.val = seedSlope n rootAt slopeAt 0 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_1 : seedAt 1 1 = seedValue n rootAt phaseAt 1 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 1 j.val = seedSlope n rootAt slopeAt 1 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_2 : seedAt 1 2 = seedValue n rootAt phaseAt 2 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 2 j.val = seedSlope n rootAt slopeAt 2 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_3 : seedAt 1 3 = seedValue n rootAt phaseAt 3 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 3 j.val = seedSlope n rootAt slopeAt 3 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_4 : seedAt 1 4 = seedValue n rootAt phaseAt 4 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 4 j.val = seedSlope n rootAt slopeAt 4 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_5 : seedAt 1 5 = seedValue n rootAt phaseAt 5 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 5 j.val = seedSlope n rootAt slopeAt 5 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_6 : seedAt 1 6 = seedValue n rootAt phaseAt 6 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 6 j.val = seedSlope n rootAt slopeAt 6 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_7 : seedAt 1 7 = seedValue n rootAt phaseAt 7 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 7 j.val = seedSlope n rootAt slopeAt 7 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_8 : seedAt 1 8 = seedValue n rootAt phaseAt 8 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 8 j.val = seedSlope n rootAt slopeAt 8 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_9 : seedAt 1 9 = seedValue n rootAt phaseAt 9 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 9 j.val = seedSlope n rootAt slopeAt 9 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_10 : seedAt 1 10 = seedValue n rootAt phaseAt 10 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 10 j.val = seedSlope n rootAt slopeAt 10 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_11 : seedAt 1 11 = seedValue n rootAt phaseAt 11 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 11 j.val = seedSlope n rootAt slopeAt 11 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_12 : seedAt 1 12 = seedValue n rootAt phaseAt 12 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 12 j.val = seedSlope n rootAt slopeAt 12 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_13 : seedAt 1 13 = seedValue n rootAt phaseAt 13 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 13 j.val = seedSlope n rootAt slopeAt 13 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_14 : seedAt 1 14 = seedValue n rootAt phaseAt 14 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 14 j.val = seedSlope n rootAt slopeAt 14 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_15 : seedAt 1 15 = seedValue n rootAt phaseAt 15 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 15 j.val = seedSlope n rootAt slopeAt 15 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_16 : seedAt 1 16 = seedValue n rootAt phaseAt 16 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 16 j.val = seedSlope n rootAt slopeAt 16 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_17 : seedAt 1 17 = seedValue n rootAt phaseAt 17 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 17 j.val = seedSlope n rootAt slopeAt 17 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_18 : seedAt 1 18 = seedValue n rootAt phaseAt 18 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 18 j.val = seedSlope n rootAt slopeAt 18 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_19 : seedAt 1 19 = seedValue n rootAt phaseAt 19 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 19 j.val = seedSlope n rootAt slopeAt 19 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_20 : seedAt 1 20 = seedValue n rootAt phaseAt 20 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 20 j.val = seedSlope n rootAt slopeAt 20 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_21 : seedAt 1 21 = seedValue n rootAt phaseAt 21 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 21 j.val = seedSlope n rootAt slopeAt 21 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_22 : seedAt 1 22 = seedValue n rootAt phaseAt 22 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 22 j.val = seedSlope n rootAt slopeAt 22 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_23 : seedAt 1 23 = seedValue n rootAt phaseAt 23 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 23 j.val = seedSlope n rootAt slopeAt 23 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_24 : seedAt 1 24 = seedValue n rootAt phaseAt 24 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 24 j.val = seedSlope n rootAt slopeAt 24 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_25 : seedAt 1 25 = seedValue n rootAt phaseAt 25 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 25 j.val = seedSlope n rootAt slopeAt 25 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_26 : seedAt 1 26 = seedValue n rootAt phaseAt 26 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 26 j.val = seedSlope n rootAt slopeAt 26 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_27 : seedAt 1 27 = seedValue n rootAt phaseAt 27 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 27 j.val = seedSlope n rootAt slopeAt 27 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_28 : seedAt 1 28 = seedValue n rootAt phaseAt 28 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 28 j.val = seedSlope n rootAt slopeAt 28 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_29 : seedAt 1 29 = seedValue n rootAt phaseAt 29 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 29 j.val = seedSlope n rootAt slopeAt 29 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_30 : seedAt 1 30 = seedValue n rootAt phaseAt 30 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 30 j.val = seedSlope n rootAt slopeAt 30 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_31 : seedAt 1 31 = seedValue n rootAt phaseAt 31 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 31 j.val = seedSlope n rootAt slopeAt 31 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_32 : seedAt 1 32 = seedValue n rootAt phaseAt 32 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 32 j.val = seedSlope n rootAt slopeAt 32 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_33 : seedAt 1 33 = seedValue n rootAt phaseAt 33 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 33 j.val = seedSlope n rootAt slopeAt 33 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_34 : seedAt 1 34 = seedValue n rootAt phaseAt 34 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 34 j.val = seedSlope n rootAt slopeAt 34 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_35 : seedAt 1 35 = seedValue n rootAt phaseAt 35 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 35 j.val = seedSlope n rootAt slopeAt 35 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_36 : seedAt 1 36 = seedValue n rootAt phaseAt 36 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 36 j.val = seedSlope n rootAt slopeAt 36 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_37 : seedAt 1 37 = seedValue n rootAt phaseAt 37 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 37 j.val = seedSlope n rootAt slopeAt 37 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_38 : seedAt 1 38 = seedValue n rootAt phaseAt 38 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 38 j.val = seedSlope n rootAt slopeAt 38 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_39 : seedAt 1 39 = seedValue n rootAt phaseAt 39 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 39 j.val = seedSlope n rootAt slopeAt 39 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_40 : seedAt 1 40 = seedValue n rootAt phaseAt 40 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 40 j.val = seedSlope n rootAt slopeAt 40 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_41 : seedAt 1 41 = seedValue n rootAt phaseAt 41 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 41 j.val = seedSlope n rootAt slopeAt 41 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_42 : seedAt 1 42 = seedValue n rootAt phaseAt 42 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 42 j.val = seedSlope n rootAt slopeAt 42 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_43 : seedAt 1 43 = seedValue n rootAt phaseAt 43 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 43 j.val = seedSlope n rootAt slopeAt 43 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_44 : seedAt 1 44 = seedValue n rootAt phaseAt 44 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 44 j.val = seedSlope n rootAt slopeAt 44 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_45 : seedAt 1 45 = seedValue n rootAt phaseAt 45 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 45 j.val = seedSlope n rootAt slopeAt 45 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_46 : seedAt 1 46 = seedValue n rootAt phaseAt 46 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 46 j.val = seedSlope n rootAt slopeAt 46 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_47 : seedAt 1 47 = seedValue n rootAt phaseAt 47 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 47 j.val = seedSlope n rootAt slopeAt 47 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_48 : seedAt 1 48 = seedValue n rootAt phaseAt 48 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 48 j.val = seedSlope n rootAt slopeAt 48 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_49 : seedAt 1 49 = seedValue n rootAt phaseAt 49 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 49 j.val = seedSlope n rootAt slopeAt 49 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_50 : seedAt 1 50 = seedValue n rootAt phaseAt 50 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 50 j.val = seedSlope n rootAt slopeAt 50 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_51 : seedAt 1 51 = seedValue n rootAt phaseAt 51 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 51 j.val = seedSlope n rootAt slopeAt 51 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_52 : seedAt 1 52 = seedValue n rootAt phaseAt 52 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 52 j.val = seedSlope n rootAt slopeAt 52 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_53 : seedAt 1 53 = seedValue n rootAt phaseAt 53 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 53 j.val = seedSlope n rootAt slopeAt 53 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_54 : seedAt 1 54 = seedValue n rootAt phaseAt 54 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 54 j.val = seedSlope n rootAt slopeAt 54 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_55 : seedAt 1 55 = seedValue n rootAt phaseAt 55 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 55 j.val = seedSlope n rootAt slopeAt 55 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_56 : seedAt 1 56 = seedValue n rootAt phaseAt 56 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 56 j.val = seedSlope n rootAt slopeAt 56 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_57 : seedAt 1 57 = seedValue n rootAt phaseAt 57 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 57 j.val = seedSlope n rootAt slopeAt 57 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_58 : seedAt 1 58 = seedValue n rootAt phaseAt 58 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 58 j.val = seedSlope n rootAt slopeAt 58 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_59 : seedAt 1 59 = seedValue n rootAt phaseAt 59 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 59 j.val = seedSlope n rootAt slopeAt 59 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_60 : seedAt 1 60 = seedValue n rootAt phaseAt 60 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 60 j.val = seedSlope n rootAt slopeAt 60 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_61 : seedAt 1 61 = seedValue n rootAt phaseAt 61 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 61 j.val = seedSlope n rootAt slopeAt 61 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_62 : seedAt 1 62 = seedValue n rootAt phaseAt 62 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 62 j.val = seedSlope n rootAt slopeAt 62 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_63 : seedAt 1 63 = seedValue n rootAt phaseAt 63 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 63 j.val = seedSlope n rootAt slopeAt 63 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_64 : seedAt 1 64 = seedValue n rootAt phaseAt 64 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 64 j.val = seedSlope n rootAt slopeAt 64 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_65 : seedAt 1 65 = seedValue n rootAt phaseAt 65 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 65 j.val = seedSlope n rootAt slopeAt 65 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_66 : seedAt 1 66 = seedValue n rootAt phaseAt 66 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 66 j.val = seedSlope n rootAt slopeAt 66 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_67 : seedAt 1 67 = seedValue n rootAt phaseAt 67 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 67 j.val = seedSlope n rootAt slopeAt 67 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_68 : seedAt 1 68 = seedValue n rootAt phaseAt 68 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 68 j.val = seedSlope n rootAt slopeAt 68 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_69 : seedAt 1 69 = seedValue n rootAt phaseAt 69 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 69 j.val = seedSlope n rootAt slopeAt 69 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_70 : seedAt 1 70 = seedValue n rootAt phaseAt 70 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 70 j.val = seedSlope n rootAt slopeAt 70 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_71 : seedAt 1 71 = seedValue n rootAt phaseAt 71 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 71 j.val = seedSlope n rootAt slopeAt 71 j.val (seed 1) := by
+  decide +kernel
+
+private theorem column_1_72 : seedAt 1 72 = seedValue n rootAt phaseAt 72 (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 72 j.val = seedSlope n rootAt slopeAt 72 j.val (seed 1) := by
+  decide +kernel
+
+private theorem seed_1 : ∀ d : ℕ, d < n → seedAt 1 d = seedValue n rootAt phaseAt d (seed 1) ∧
+    ∀ j : Fin m, seedSlopeAt 1 d j.val = seedSlope n rootAt slopeAt d j.val (seed 1) := by
+  exact coverOne 72 (
+    coverOne 71 (
+    coverOne 70 (
+    coverOne 69 (
+    coverOne 68 (
+    coverOne 67 (
+    coverOne 66 (
+    coverOne 65 (
+    coverOne 64 (
+    coverOne 63 (
+    coverOne 62 (
+    coverOne 61 (
+    coverOne 60 (
+    coverOne 59 (
+    coverOne 58 (
+    coverOne 57 (
+    coverOne 56 (
+    coverOne 55 (
+    coverOne 54 (
+    coverOne 53 (
+    coverOne 52 (
+    coverOne 51 (
+    coverOne 50 (
+    coverOne 49 (
+    coverOne 48 (
+    coverOne 47 (
+    coverOne 46 (
+    coverOne 45 (
+    coverOne 44 (
+    coverOne 43 (
+    coverOne 42 (
+    coverOne 41 (
+    coverOne 40 (
+    coverOne 39 (
+    coverOne 38 (
+    coverOne 37 (
+    coverOne 36 (
+    coverOne 35 (
+    coverOne 34 (
+    coverOne 33 (
+    coverOne 32 (
+    coverOne 31 (
+    coverOne 30 (
+    coverOne 29 (
+    coverOne 28 (
+    coverOne 27 (
+    coverOne 26 (
+    coverOne 25 (
+    coverOne 24 (
+    coverOne 23 (
+    coverOne 22 (
+    coverOne 21 (
+    coverOne 20 (
+    coverOne 19 (
+    coverOne 18 (
+    coverOne 17 (
+    coverOne 16 (
+    coverOne 15 (
+    coverOne 14 (
+    coverOne 13 (
+    coverOne 12 (
+    coverOne 11 (
+    coverOne 10 (
+    coverOne 9 (
+    coverOne 8 (
+    coverOne 7 (
+    coverOne 6 (
+    coverOne 5 (
+    coverOne 4 (
+    coverOne 3 (
+    coverOne 2 (
+    coverOne 1 (
+    coverFirst column_1_0) column_1_1) column_1_2) column_1_3) column_1_4) column_1_5) column_1_6) column_1_7) column_1_8) column_1_9) column_1_10) column_1_11) column_1_12) column_1_13) column_1_14) column_1_15) column_1_16) column_1_17) column_1_18) column_1_19) column_1_20) column_1_21) column_1_22) column_1_23) column_1_24) column_1_25) column_1_26) column_1_27) column_1_28) column_1_29) column_1_30) column_1_31) column_1_32) column_1_33) column_1_34) column_1_35) column_1_36) column_1_37) column_1_38) column_1_39) column_1_40) column_1_41) column_1_42) column_1_43) column_1_44) column_1_45) column_1_46) column_1_47) column_1_48) column_1_49) column_1_50) column_1_51) column_1_52) column_1_53) column_1_54) column_1_55) column_1_56) column_1_57) column_1_58) column_1_59) column_1_60) column_1_61) column_1_62) column_1_63) column_1_64) column_1_65) column_1_66) column_1_67) column_1_68) column_1_69) column_1_70) column_1_71) column_1_72
+
+theorem seed_spec : ∀ s : ℕ, s < seeds.length → ∀ d : ℕ, d < n →
+    seedAt s d = seedValue n rootAt phaseAt d (seed s) ∧
+    ∀ j : Fin m, seedSlopeAt s d j.val = seedSlope n rootAt slopeAt d j.val (seed s) := by
+  exact coverOne 1 (
+    coverFirst seed_0) seed_1
+
+end Chirped73

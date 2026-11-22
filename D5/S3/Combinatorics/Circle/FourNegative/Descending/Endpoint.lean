@@ -15,8 +15,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.Descending
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private seed sourceMod charge nextBase nextNewBase chain_values source_signs source_totals new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private reserve_bounds from D5.S3.Combinatorics.Circle.FourNegative.Descending.Arithmetic

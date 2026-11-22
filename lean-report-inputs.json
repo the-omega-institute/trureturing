@@ -14,6 +14,8 @@
     "lean-report": {
       "include": [
         {"pattern": "lean-report-inputs.json", "optional": false},
+        {"pattern": "Meta/tools-release.json", "optional": false},
+        {"pattern": ".github/scripts/install-tools.py", "optional": false},
         {"pattern": "tools/scripts/report/lean-report-selection.py", "optional": false},
         {"pattern": "tools/StrataLint.Lean/**/*.cs", "optional": false},
         {"pattern": "tools/StrataLint.Engine/**/*.cs", "optional": false},
@@ -32,11 +34,10 @@
         {"pattern": "tools/Architecture/BannedSymbols.Determinism.txt", "optional": false},
         {"pattern": "tools/Architecture/BannedSymbols.Guid.txt", "optional": false},
         {"pattern": "tools/lean-inspector/Inspector.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/build_inputs.py", "optional": false},
         {"pattern": "tools/lean-inspector/build_work.py", "optional": false},
-        {"pattern": "tools/lean-inspector/inspect.sh", "optional": false},
         {"pattern": "tools/lean-inspector/materials.py", "optional": false},
         {"pattern": "tools/lean-inspector/scoped.py", "optional": false},
-        {"pattern": "tools/scripts/report/lean-report.sh", "optional": false},
         {"pattern": "tools/scripts/report/lean-report-scoped.sh", "optional": false},
         {"pattern": "tools/scripts/report/lean-report-input.sh", "optional": false},
         {"pattern": "tools/scripts/report/report-consumer.sh", "optional": false},
@@ -53,9 +54,7 @@
         {"pattern": "tools/scripts/workflow/install-lean-toolchain.sh", "optional": false},
         {"pattern": "Directory.Build.targets", "optional": true},
         {"pattern": "tools/lean-inspector/native.py", "optional": false},
-        {"pattern": "tools/lean-inspector/fib_analysis.py", "optional": false},
         {"pattern": "tools/lean-inspector/publication.py", "optional": false},
-        {"pattern": "tools/lean-inspector/reuse.py", "optional": false},
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
       ],

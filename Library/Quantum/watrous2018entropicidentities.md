@@ -151,3 +151,22 @@ any consequence. Those historical attributions, if inferred, are
 `ASSUMED-UNVERIFIED`. The book is cited for the stated definitions and
 propositions; the copy construction and unbiased/Gibbs substitutions above
 are explicit standard deductions, not quotations of same-named theorems.
+
+## Coarse phase records and the complementary flag
+
+For the pure phase signal with entries tᵢuⱼᵢ, the pinching of Definition 4.4
+(p. 203, PDF p. 211, Eqs. (4.7)–(4.8)) has one nonzero rank-one summand per
+positive-weight fiber. Its eigenvalue is q_b = Σ_{c(i)=b} tᵢ². Definition 5.17
+(pp. 265–266, PDF pp. 273–274) gives H(q), with a zero term for every unused
+or zero-weight outcome. The input lies in the span of the normalized nonzero
+masked vectors. Equations (1.145) and (5.85) then give the finite trace
+evaluation of the same H(q) for support-aware relative entropy. The
+extension to the coarse phase PVM is proved in the accompanying Lean module.
+
+For the actual copy |i⟩ ↦ |i⟩⊗|c(i)⟩, Eq. (2.34) (p. 68, PDF p. 76)
+gives the pinched residual and the common diagonal environment state diag(q).
+A. S. Holevo defines the entropy difference ΔH in §2 on arXiv PDF p. 2 and
+displays it in Eq. (5) on p. 3. All conditional environment states here are
+identical, so that difference is zero for every prior. This calculation
+uses only a finite static state and readout.
+[Holevo primary manuscript](https://arxiv.org/abs/quant-ph/9611023v1) · [DOI 10.1109/18.651037](https://doi.org/10.1109/18.651037)

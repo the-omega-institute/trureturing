@@ -50,7 +50,7 @@ private theorem endpoint_start (i : ℕ) : jacoRight i = goldenSubstStart i := b
   rw [endpoint_eq_beatty]
   exact_mod_cast (by omega : (i : ℤ) + beattyOut i = goldenSubstStart i)
 
-private theorem out_mono : Monotone beattyOut := by
+theorem out_mono : Monotone beattyOut := by
   intro i j hij
   apply Nat.floor_mono
   apply div_le_div_of_nonneg_right _ Real.goldenRatio_pos.le

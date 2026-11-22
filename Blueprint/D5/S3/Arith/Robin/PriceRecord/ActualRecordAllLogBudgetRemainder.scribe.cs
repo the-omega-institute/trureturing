@@ -139,6 +139,15 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
                 H("prefix_budget_integer"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Complete statement: theorem prefix_budget_integer {n Q : ℕ} (hQ : 2 ≤ Q) (hsupport : ∀ p : ℕ, p.Prime → 2 ≤ n.factorization p → p ≤ Q) : let k := higherCore n * prefixInteger Q 2 ≤ k ∧ k.primeFactors = Nat.primesLE Q ∧ log (k : ℝ) = log (higherCore n : ℝ) + Chebyshev.theta (Q : ℝ) ∧ ∀ p : ℕ, p.Prime → ∀ j : ℕ, 2 ≤ j → (j ≤ k.factorization p ↔ j ≤ n.factorization p)"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-theta-crossing-sampler"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.exists_actual_theta_crossing_sampler"),
+                H("Integer samples from first theta crossings"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The first natural index with theta above x has an overshoot of at "
+                    + "most log of the index. The ratio of the index to x tends to one, and the "
+                    + "difference of the logarithms tends to zero."))),
                 DescribeRole.Theorem)
         )));
 }

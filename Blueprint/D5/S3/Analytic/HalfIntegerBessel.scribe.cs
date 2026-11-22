@@ -1,0 +1,99 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
+
+internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Analytic/HalfIntegerBessel.";
+    private static readonly LibraryNoteRef Dlmf =
+        LibraryNoteRef.Create("D5/L/Asymptotics/dlmf2010halfintbessel");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The finite complex half-integer carriers and their Wronskians on the right half-plane.",
+        H("Complex half-integer modified Bessel carriers"),
+        Blocks(
+            Node("prefactor", "Common prefactor",
+                "The common prefactor is the positive real square root of pi/2 divided by "
+                + "the principal complex square root of z.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("K", "Decaying carrier",
+                "At order m+1/2, K is the prefactor times exp(-z) times P_m(1/z), "
+                + "where P_m is the rational factorial polynomial.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Dlmf)),
+            Node("L", "Reflected carrier",
+                "The growing carrier is the prefactor times exp(z) times P_m(-1/z).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("I", "Regular carrier",
+                "The regular carrier I is the difference of L and (-1)^m K divided by pi.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Dlmf)),
+            Node("hasDerivAt_K", "Derivative of the decaying carrier",
+                "On Re z > 0 the derivative of K is its prefactor times exp(-z) times "
+                + "the sum of -(1+1/(2z)) P_m(1/z) and -P_m'(1/z)/z^2.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("hasDerivAt_L", "Derivative of the reflected carrier",
+                "On Re z > 0 the derivative of L is its prefactor times exp(z) times "
+                + "the sum of (1-1/(2z)) Q_m(1/z) and -Q_m'(1/z)/z^2, "
+                + "where Q_m(X) = P_m(-X).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("hasDerivAt_I", "Derivative of the regular carrier",
+                "On Re z > 0 the derivative of I is (L' - (-1)^m K')/pi.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("wronskian_KL", "Wronskian of the finite reflected pair",
+                "On Re z > 0, z(K L' - K' L) = pi. The square-root terms cancel "
+                + "in the derivative difference. Evaluating the rational reflected Wronskian "
+                + "at 1/z gives the factor 2, and the squared prefactor is pi/(2z).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("wronskian_KI", "Wronskian of the decaying and regular carriers",
+                "On Re z > 0, K I' - K' I = 1/z. The multiple of K cancels and "
+                + "the reflected Wronskian is divided by pi.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
+            Node("hasDerivAt_deriv_K", "Ordinary modified Bessel equation",
+                "At order nu = m+1/2 and on Re z > 0, the derivative of K' is "
+                + "(1+nu^2/z^2) K - K'/z. Differentiating the finite carrier twice "
+                + "reduces the equation to the rational polynomial equation at 1/z.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
+            Node("order", "Real order", "The order nu is m + 1/2.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("S", "Phase root", "S(w) is the principal square root of 1 + w^2.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("S_re_pos", "Sign of the phase root",
+                "If Re w > 0, then Re S(w) > 0. The radicand lies in the slit plane.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("eta", "Phase", "The phase is S(w) + Log w - Log(1 + S(w)), with principal logarithms.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("eta_eq_log_div", "Principal logarithm of the phase quotient",
+                "On Re w > 0 the phase is S(w) + Log(w / (1 + S(w))).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("hasDerivAt_eta", "Phase derivative",
+                "On Re w > 0 the derivative of the phase is S(w) / w.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sqrt_real_mul", "Principal square root under positive scaling",
+                "For a > 0 and Re w > 0, the principal root of a w equals the real root of a "
+                + "times the principal root of w.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("F_K", "Normalized decaying amplitude",
+                "F_K is sqrt(2 nu / pi) sqrt(S(w)) exp(nu eta(w)) K_m(nu w). "
+                + "The first root is real and the second is principal complex.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("F_K_eq_carrier", "Canceled normalization of the decaying amplitude",
+                "On Re w > 0, F_K is sqrt(S(w)) / sqrt(w) times exp(nu (eta(w) - w)) "
+                + "times P_m(1 / (nu w)). Positive real scaling factors out of the principal root.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("D", "Phase differentiation",
+                "D applies the complex derivative and multiplies by w / S(w).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("psi", "Liouville–Green potential",
+                "The potential is w^2 (4 - w^2) / (4 (1 + w^2)^3).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("liouvilleGreen_K", "Scaled equation for the decaying amplitude",
+                "On Re w > 0, D^2 F_K - 2 nu D F_K = psi F_K. The scaled ordinary "
+                + "equation for K_m first gives D^2 U = (nu^2 + psi) U for "
+                + "U = sqrt(S(w)) K_m(nu w). The exponential factor gives the equation for F_K.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)))));
+
+    private static DocumentBlock Node(string name, string title, string prose,
+        DescribeRole role, AssessedProvenance provenance) =>
+        Describe.Lean(DescribeId.Create("half-integer-bessel-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            provenance, Blocks(Paragraph(Text(prose))), role);
+}

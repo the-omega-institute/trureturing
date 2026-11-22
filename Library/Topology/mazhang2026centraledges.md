@@ -5,7 +5,7 @@ year: 2026
 title: "Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)"
 doi: "10.5281/zenodo.24369118"
 url: "https://doi.org/10.5281/zenodo.24369118"
-claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges; Theorem 4: three-central n-point ultrametrics have at least 2n-4+⌈n/2⌉ central edges, sharply."
+claim: "Corollary 11: a finite ultrametric with center {0 = c_0 < ... < c_h} has sphere counts 1,1,2,...,2^(h-1) at every point exactly when it is MCD with 2^h points. Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges; Theorem 4: three-central n-point ultrametrics have at least 2n-4+⌈n/2⌉ central edges, sharply."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
@@ -14,6 +14,8 @@ strata_touched:
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
   - D5/S3/Combinatorics/Geometry/CentralSizeEdgeMinima
   - D5/S3/Combinatorics/Geometry/NonemptyCentralMinimum
+  - D5/S3/Combinatorics/Geometry/EdgeCoverLengthMetric
+  - D5/S3/Combinatorics/Geometry/Ultrametric/MCDSphereCounts
 license: citation-only
 triage: anchor
 ---
@@ -33,6 +35,15 @@ every point has another point, or itself when t = 0, at distance t. The central 
 distinct points whose distance lies in C(X). If |C(X)| = k then the central graph has at least
 (k-1)⌈n/2⌉ edges: for each nonzero central value the edges of that length cover every point,
 and edges of different lengths are distinct.
+
+Equation (1) (Section 2): if F_1, ..., F_s are edge-disjoint spanning edge covers of K_n, n >= 3,
+every edge of F_i gets the length a_i with the a_i distinct in [1, 2), and every remaining edge
+gets its own distinct length in [1, 2) different from all a_i, then this is a metric with
+C(X) = {0, a_1, ..., a_s} and central edge set F_1 ∪ ... ∪ F_s. In a triangle the longest side
+is less than 2 while the other two sum to at least 2; each a_i is central; each remaining length
+occurs on one edge and misses a third vertex. EdgeCoverLengthMetric.result formalizes it for any
+closed band [c, 2c] with c > 0 (the source's band is [1, 2), contained in c = 1) and without
+requiring the a_i to be distinct.
 
 Theorem 3 (Section 2): for every n >= 4 the minimum number of central edges among
 three-central n-point metric spaces is 2⌈n/2⌉; the lower bound is Lemma 2 with k = 3. The
@@ -74,3 +85,9 @@ equality graphs are (n/2)P2 for even n and P3 ∪ ((n-3)/2)P2 for odd n, and the
 without nonemptiness the minimum is zero for n >= 3. The nonempty minimum is Dovgoshey and
 Rovenska's Theorem 3.10; the source corrects the odd component count printed in their Theorem
 3.12 (P3 ∪ hP2 for n = 2h+1 has n+2 vertices).
+
+Corollary 11 (Section 6): for a finite ultrametric with center {0 = c_0 < ... < c_h}, the sphere
+counts 1, 1, 2, ..., 2^(h-1) at every point hold exactly when X is MCD with |X| = 2^h. The forward
+direction for MCD spaces is Corollary 9; the converse partitions X by the diameter, the parts
+having equal size t with (r - 1)t = 2^(h-1) and t >= 2^(h-1). This proves Conjecture 5.5 of
+Dovgoshey et al. without assuming that all distances are central.

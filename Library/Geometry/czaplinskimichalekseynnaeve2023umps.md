@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/1904.07563v1
 claim: "The set uMPS(D,d,N) of uniform (translation-invariant) matrix product states with bond dimension D, physical dimension d and N sites is the image of the trace-word map; its closure has dimension at most min{(d−1)D²+1, dim Cyc^N(C^d)}, and Conjecture 2.14 states that equality holds for every (D,d,N)."
 strata_touched:
   - D5/S3/Quantum/TensorNetworks/UniformMPSExpectedDimensionRefutation
+  - D5/S3/Quantum/TensorNetworks/PeriodicMPSFiveSiteGenericRecovery
+  - D5/S3/Quantum/TensorNetworks/PeriodicMPSSixSiteGenericRecovery
 license: citation-only
 triage: anchor
 ---
@@ -29,3 +31,7 @@ Source: https://arxiv.org/abs/1904.07563v1
   - the trivial cases including $N=2$, l. 243–253; the dimension bound, l. 272–275;
   - $\dim\mathrm{Cyc}^N$, l. 279–293; expected dimension, l. 299–305;
   - Conjecture 2.14, l. 311–313.
+
+Theorem 3.30 on page 16 of the arXiv v1 PDF answers Critch–Morton Conjecture 12. For each $N\ge5$, almost every tensor in $\mathrm{uMPS}(2,2,N)$ has exactly $N$ preimages under the trace parametrization $\phi_N$. The full tensor is the input to this inverse problem. The five-site physical marginal theorem instead fixes a two-site reduced density and determines the full tensor up to phase on a relatively open dense subset of the unit-mass actual image. [Theorem 3.30](https://arxiv.org/pdf/1904.07563v1#page=16)
+
+The six-site Theorem 3.24(3) describes the ideal of the closure of the full amplitude image. For the same length, the observation in `PeriodicMPSSixSiteGenericRecovery.generic_rawTwo_unitPhase_recovery` is the Hermitian partial trace to one adjacent pair. This yields recovery on a relatively Euclidean-open dense subset of the actual amplitude image against all actual competitors. Theorem 3.30 supplies the separate inversion of generic full amplitudes in trace parameters.

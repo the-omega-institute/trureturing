@@ -14,6 +14,38 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
         H("Cyclic Prime-Power Split Extensions"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cyclic-prime-power-generator-generates"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.generator_generates"),
+                H("The residue of one generates the cyclic group"),
+                StatementSource.FromAuthor(GeneratorGenerates()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural m, each element of Cyclic m is an integer power of "
+                    + "generator m. The integer-cast map onto ZMod m supplies the exponent."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cyclic-prime-power-generator-order"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.generator_order"),
+                H("The order of the cyclic generator"),
+                StatementSource.FromAuthor(GeneratorOrder()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The multiplicative order of generator m is m, using the additive order "
+                    + "of the residue of one in ZMod m."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prime-automorphism-fixed-point-free"),
+                DeclarationHandle.Create(
+                    "D5/S3/FiniteGroups/CyclicPrimePowerAction.prime_automorphism_fixedPointFree"),
+                H("Nonidentity automorphisms of a prime-order group"),
+                StatementSource.FromAuthor(PrimeAutomorphismFixedPointFree()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If the cardinality of N is prime, every nonidentity element generates N. "
+                    + "An automorphism fixing such an element would fix all of N. Therefore "
+                    + "a nonidentity automorphism has only the identity as a fixed point."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cyclic-prime-power-cyclic-card"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclic_card"),
                 H("The cardinality of a cyclic residue group"),
@@ -145,6 +177,38 @@ internal sealed class CyclicPrimePowerActionDocument : IScribeDocumentDefinition
             [new Formula.BoundVariable(FormulaIdentifier.Create(name), type)], body);
     private static Formula Equal(Formula x, Formula y) => Seq(x, Eq, y);
     private static Formula Pow(Formula x, Formula y) => Call("power", x, y);
+
+    private static Formula GeneratorGenerates()
+    {
+        var m = F.Id("m");
+        var x = F.Id("x");
+        var powers = Call("zpowers", Call("generator", m));
+        return Disp(All("m", Seq(Mathbb, Grp(F.Id("N"))),
+            All("x", Call("Cyclic", m), new Formula.Relation(x, FormulaRelationOperator.MemberOf, powers))));
+    }
+
+    private static Formula GeneratorOrder()
+    {
+        var m = F.Id("m");
+        return Disp(All("m", Seq(Mathbb, Grp(F.Id("N"))),
+            Equal(Call("orderOf", Call("generator", m)), m)));
+    }
+
+    private static Formula PrimeAutomorphismFixedPointFree()
+    {
+        var n = F.Id("N");
+        var a = F.Id("a");
+        var prime = Call("Fact", Call("Prime", NatCall("card", n)));
+        var fixedPointFree = new Formula.Apply(
+            Seq(Operatorname, Grp(Seq(F.Id("MonoidHom"), Dot, F.Id("FixedPointFree")))), [a]);
+        var law = new Formula.Logic(new Formula.Not(Equal(a, D(1))),
+            FormulaLogicOperator.Implies, fixedPointFree);
+        return Disp(All("N", Seq(F.Id("Type"), Star), Seq(
+            OpenBracket, Call("Group", n), CloseBracket, Sp,
+            OpenBracket, prime, CloseBracket, Sp,
+            All("a", Call("MulAut", n), law))));
+    }
+
     private static Formula CyclicCard()
     {
         var m = F.Id("m");

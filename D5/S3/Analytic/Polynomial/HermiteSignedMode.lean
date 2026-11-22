@@ -46,17 +46,17 @@ noncomputable def physicistsHermite (n : ℕ) : Polynomial ℚ :=
     ((-1 : ℚ) ^ k * n.factorial * 2 ^ (n - 2 * k) /
       (k.factorial * (n - 2 * k).factorial))
 
-private def fourth (j : ℕ) : ℕ := (j + 1) * (j + 2) * (j + 3) * (j + 4)
-private def divisor (r : ℕ) : ℕ := 16 * (2 * r) * (2 * r - 1)
-private def rises (n r : ℕ) : Prop := 4 * r ≤ n ∧ divisor r ≤ fourth (n - 4 * r)
+def fourth (j : ℕ) : ℕ := (j + 1) * (j + 2) * (j + 3) * (j + 4)
+def divisor (r : ℕ) : ℕ := 16 * (2 * r) * (2 * r - 1)
+def rises (n r : ℕ) : Prop := 4 * r ≤ n ∧ divisor r ≤ fourth (n - 4 * r)
 private instance (n r : ℕ) : Decidable (rises n r) := inferInstanceAs (Decidable (_ ∧ _))
 private def candidates (n : ℕ) := (range (n + 1)).filter (rises n)
 private theorem zero_candidate (n : ℕ) : 0 ∈ candidates n := by
   simp [candidates, rises, divisor, fourth]
-private def mode (n : ℕ) : ℕ := (candidates n).max' ⟨0, zero_candidate n⟩
-private theorem mode_rises (n : ℕ) : rises n (mode n) :=
+def mode (n : ℕ) : ℕ := (candidates n).max' ⟨0, zero_candidate n⟩
+theorem mode_rises (n : ℕ) : rises n (mode n) :=
   (mem_filter.mp (max'_mem _ _)).2
-private theorem le_mode {n r : ℕ} (h : rises n r) : r ≤ mode n := by
+theorem le_mode {n r : ℕ} (h : rises n r) : r ≤ mode n := by
   apply le_max'
   exact mem_filter.mpr ⟨mem_range.mpr (by have := h.1; omega), h⟩
 
@@ -68,7 +68,7 @@ private theorem divisor_mono : Monotone divisor := by
   intro a b h
   unfold divisor
   gcongr
-private theorem rises_lower {n r s : ℕ} (h : rises n r) (hs : s ≤ r) : rises n s := by
+theorem rises_lower {n r s : ℕ} (h : rises n r) (hs : s ≤ r) : rises n s := by
   refine ⟨by have := h.1; omega, ?_⟩
   exact (divisor_mono hs).trans (h.2.trans (fourth_mono (by omega)))
 private theorem rises_next {n r : ℕ} (h : rises n r) : rises (n + 1) r :=
@@ -87,14 +87,14 @@ private theorem mode_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) �
     have := le_mode (rises_previous hr)
     omega
 
-private def weight (n r : ℕ) : ℚ :=
+def weight (n r : ℕ) : ℚ :=
   2 ^ (n - 4 * r) / ((2 * r).factorial * (n - 4 * r).factorial)
 
-private theorem weight_pos (n r : ℕ) : 0 < weight n r := by
+theorem weight_pos (n r : ℕ) : 0 < weight n r := by
   unfold weight
   positivity
 
-private theorem adjacent (n r : ℕ) (h : 4 * (r + 1) ≤ n) :
+theorem adjacent (n r : ℕ) (h : 4 * (r + 1) ≤ n) :
     weight n (r + 1) * divisor (r + 1) = weight n r * fourth (n - 4 * (r + 1)) := by
   let j := n - 4 * (r + 1)
   have hj : n - 4 * r = j + 4 := by dsimp [j]; omega
@@ -168,7 +168,7 @@ private theorem weight_le_mode (n r : ℕ) (hr : 4 * r ≤ n) : weight n r ≤ w
           rw [this]
     exact aux r hr (by omega)
 
-private theorem weight_lt_mode (n r : ℕ) (hr : 4 * r ≤ n) (hm : mode n < r) :
+theorem weight_lt_mode (n r : ℕ) (hr : 4 * r ≤ n) (hm : mode n < r) :
     weight n r < weight n (mode n) := by
   cases r with
   | zero => omega
@@ -178,7 +178,7 @@ private theorem weight_lt_mode (n r : ℕ) (hr : 4 * r ≤ n) (hm : mode n < r) 
       lt_of_not_ge (fun hh => hnot ((adjacent_le n r hr).mp hh))
     exact hlt.trans_le (weight_le_mode n r (by omega))
 
-private theorem positive_coefficient (n r : ℕ) (hr : 4 * r ≤ n) :
+theorem positive_coefficient (n r : ℕ) (hr : 4 * r ≤ n) :
     signedCoeff n (n - 4 * r) = n.factorial * weight n r := by
   have hs : n - (n - 4 * r) = 4 * r := by omega
   have he : 4 * r/2 = 2 * r := by omega
@@ -186,7 +186,7 @@ private theorem positive_coefficient (n r : ℕ) (hr : 4 * r ≤ n) :
     show (-1 : ℚ)^(2 * r) = 1 by rw [pow_mul]; norm_num]
   <;> ring
 
-private theorem coefficient_cases (n j : ℕ) : signedCoeff n j ≤ 0 ∨
+theorem coefficient_cases (n j : ℕ) : signedCoeff n j ≤ 0 ∨
     ∃ r, 4 * r ≤ n ∧ j = n - 4 * r ∧ signedCoeff n j = n.factorial * weight n r := by
   by_cases h : j ≤ n ∧ (n - j)%2 = 0
   · by_cases h4 : (n - j)%4 = 0
