@@ -7,7 +7,7 @@
    digest: A linear bound for the omitted actual root densities under RH. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.SpectralSampling
-import D5.S3.Weil.ZetaRvm.LocalCount
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.OccurrenceBinMass
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RHMobiusWindow
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Analysis.PSeries
@@ -29,8 +29,6 @@ open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
-def occurrenceFrequency (i : ℕ) : ℝ := (actualZero i).im
-
 private theorem occurrence_dist_norm (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
     ‖actualZero i‖ ≤ ‖(s : ℂ) - actualZero i‖ := by
   apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
@@ -48,13 +46,6 @@ private theorem occurrence_half_le_norm (hRH : RiemannHypothesis) {s : ℝ} (hs 
 private theorem occurrence_freq_abs_le (s : ℝ) (i : ℕ) :
     |occurrenceFrequency i| ≤ ‖(s : ℂ) - actualZero i‖ := by
   simpa [occurrenceFrequency] using Complex.abs_im_le_norm ((s : ℂ) - actualZero i)
-
-private theorem occurrence_norm_pos (hRH : RiemannHypothesis) (i : ℕ) :
-    0 < ‖actualZero i‖ := by
-  have h := Complex.abs_re_le_norm (actualZero i)
-  rw [on_line hRH i] at h
-  norm_num at h
-  linarith
 
 theorem occurrence_coeff_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
     ‖rootCoeff s i‖ ≤ 2 * (‖actualZero i‖)⁻¹ := by
@@ -209,26 +200,6 @@ private theorem occurrence_band_samples (hRH : RiemannHypothesis)
 open D5.S3.Weil.ZeroSum
 open scoped BigOperators Topology
 
-private theorem band_coord_lower {k : ℤ} {γ : ℝ}
-    (hγ : frequencyBin γ = k) : |(k : ℝ)| ≤ |γ| + 1 := by
-  have hr := mem_frequencyBin γ
-  rw [hγ] at hr
-  rw [abs_le]
-  exact ⟨by linarith only [hr.2, neg_abs_le γ], by linarith only [hr.1, le_abs_self γ]⟩
-
-private theorem log_band_le (x : ℝ) (hx : 0 ≤ x) :
-    Real.log (x+3) ≤ (Real.log 3 + 4) * (x+1) ^ (1/4 : ℝ) := by
-  have hx1 : 1 ≤ x+1 := by linarith
-  have hpow : 1 ≤ (x+1) ^ (1/4 : ℝ) := Real.one_le_rpow hx1 (by norm_num)
-  have hlog := Real.log_le_sub_one_of_pos (Real.rpow_pos_of_pos (by linarith : 0 < x+1) (1/4 : ℝ))
-  rw [Real.log_rpow (by linarith : 0 < x+1)] at hlog
-  calc
-    _ ≤ Real.log (3*(x+1)) := Real.log_le_log (by linarith) (by linarith)
-    _ = Real.log 3 + Real.log (x+1) := Real.log_mul (by norm_num) (by linarith)
-    _ ≤ _ := by
-      have hl := Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 3)
-      nlinarith only [hlog, mul_nonneg hl (sub_nonneg.mpr hpow)]
-
 theorem summable_band_rpow_sq (D : ℝ) :
     Summable fun k : ℤ => (D * (|(k : ℝ)|+1) ^ (-3/4 : ℝ))^2 := by
   have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-3/2 : ℝ)) :=
@@ -243,58 +214,6 @@ theorem summable_band_rpow_sq (D : ℝ) :
   constructor <;> apply hn.congr <;> intro n <;>
     simp only [Int.cast_neg, Int.cast_natCast, abs_neg, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
       Nat.cast_add, Nat.cast_one, he _ (Nat.cast_nonneg (α := ℝ) n)]
-
-theorem occurrence_bin_power_majorant (hRH : RiemannHypothesis) :
-    ∃ D : ℝ, 0 < D ∧ ∀ (T : Finset ℕ) (k : ℤ),
-      ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤
-        D * (|(k : ℝ)|+1)^(-3/4 : ℝ) := by
-  classical
-  obtain ⟨A, hA, hcount⟩ := Zeta23.RvM.zetaZeroConfig_local_count
-  refine ⟨5*A*(Real.log 3+4), by positivity, ?_⟩
-  intro T k
-  let W := Zeta23.zerosIn (k : ℝ) ((k : ℝ)+1)
-  let F := (Zeta23.zerosIn_finite (k : ℝ) ((k : ℝ)+1)).toFinset
-  let I := T.filter (fun i => frequencyBin (occurrenceFrequency i) = k)
-  let f (i : ℕ) : ℝ := if actualZero i ∈ F then 1 else 0
-  have hF (ρ : ℂ) : ρ ∈ F ↔ ρ ∈ W := Set.Finite.mem_toFinset _
-  have hIS (i : ℕ) (hi : i ∈ I) : actualZero i ∈ F := by
-    have hmem := mem_frequencyBin (occurrenceFrequency i)
-    rw [(Finset.mem_filter.mp hi).2] at hmem
-    exact (hF _).2 ⟨D5.S3.Weil.Mertens.ZeroAbscissaPower.actual_zero i, hmem⟩
-  have hSN : (I.card : ℝ) ≤ (Zeta23.zetaZeroConfig.N k ((k : ℝ)+1) : ℝ) := by
-    obtain ⟨hs, hsum⟩ := D5.S3.Weil.Mertens.ZeroAbscissaPower.occurrence_finite_sum F (fun ρ hρ => ((hF ρ).1 hρ).1)
-      (fun _ => 1) (fun _ => zero_le_one)
-    have hsum' : (∑' i : ℕ, f i) = (Zeta23.zetaZeroConfig.N k ((k : ℝ)+1) : ℝ) := by
-      rw [hsum, Zeta23.zetaZeroConfig_N, Zeta23.Ncount, finsum_mem_eq_finite_toFinset_sum _
-        (Zeta23.zerosIn_finite (k : ℝ) ((k : ℝ)+1)), Nat.cast_sum]
-      simp only [mul_one]
-      rfl
-    calc
-      _ = ∑ i ∈ I, (1 : ℝ) := by simp [nsmul_eq_mul]
-      _ = ∑ i ∈ I, f i := (Finset.sum_congr rfl (fun i hi => ite_eq_left (hIS i hi))).symm
-      _ ≤ _ := (hs.sum_le_tsum I (fun i _ => by split_ifs <;> norm_num)).trans_eq hsum'
-  have hb : ∀ i ∈ I, (‖actualZero i‖)⁻¹ ≤ 5 / (|(k : ℝ)|+1) := by
-    intro i hi
-    have h := band_coord_lower (Finset.mem_filter.mp hi).2
-    have hhalf := Complex.abs_re_le_norm (actualZero i)
-    rw [on_line hRH i] at hhalf
-    norm_num at hhalf
-    have him : |occurrenceFrequency i| ≤ ‖actualZero i‖ := Complex.abs_im_le_norm _
-    have hnorm := occurrence_norm_pos hRH i
-    rw [inv_eq_one_div, div_le_div_iff₀ hnorm (by positivity)]
-    linarith only [h, hhalf, him]
-  calc
-    _ ≤ ∑ _i ∈ I, 5 / (|(k : ℝ)|+1) := Finset.sum_le_sum hb
-    _ = (I.card : ℝ) * (5 / (|(k : ℝ)|+1)) := by rw [Finset.sum_const, nsmul_eq_mul]
-    _ ≤ A * Real.log (|(k : ℝ)|+3) * (5 / (|(k : ℝ)|+1)) :=
-      mul_le_mul_of_nonneg_right (hSN.trans (hcount k)) (by positivity)
-    _ ≤ A * ((Real.log 3+4) * (|(k : ℝ)|+1)^(1/4 : ℝ)) * (5 / (|(k : ℝ)|+1)) :=
-      mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_left (log_band_le _ (abs_nonneg _)) (by linarith)) (by positivity)
-    _ = _ := by
-      have hbase : 0 < |(k : ℝ)|+1 := by positivity
-      rw [show (-3/4 : ℝ) = 1/4 - 1 by norm_num, Real.rpow_sub hbase, Real.rpow_one]
-      ring
 
 private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
     ∃ b : ℤ → ℝ, (Summable fun k => b k^2) ∧

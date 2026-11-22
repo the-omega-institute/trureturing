@@ -12,4 +12,4 @@ On the complementary bins use the square-mass estimate with the mask outside the
 
 ## References
 
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/OmittedSpectrum](../LinearOrder/OmittedSpectrum.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/OmittedSpectrumCutoff](OmittedSpectrumCutoff.md)
