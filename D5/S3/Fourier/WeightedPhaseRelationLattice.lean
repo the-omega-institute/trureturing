@@ -175,7 +175,141 @@ private theorem exists_weighted_fiber_minimum {J A : Type*} [Fintype J] [Fintype
     simp only [mulVec_add, add_dotProduct, dotProduct_add, hvx, hxv, add_zero, zero_add]
     exact le_add_of_nonneg_right hvv
 
+/-- The exact inverse Gram energy of the complete relation lattice controls the
+normalized deficit of the sine sum with a single common real time. -/
+theorem weighted_phase_deficit_bounds {J A : Type*} [Fintype J] [Fintype A]
+    [DecidableEq J] [DecidableEq A] (γ w : J → ℝ) (K : Matrix A J ℤ)
+    (hw : ∀ j, 0 < w j) (hW : 0 < ∑ j, w j)
+    (hK : ∀ k : J → ℤ, k ∈ Submodule.span ℤ (range K.row) ↔
+      (∑ j, (k j : ℝ) * γ j) = 0)
+    (hind : LinearIndependent ℝ (K.map (Int.cast : ℤ → ℝ)).row) :
+    let W := ∑ j, w j
+    let R := K.map (Int.cast : ℤ → ℝ)
+    let M := diagonal w
+    let G := R * M⁻¹ * Rᵀ
+    let b (z : A → ℤ) (a : A) :=
+      (z a : ℝ) * (2 * Real.pi) - (Real.pi / 2) * (R *ᵥ (1 : J → ℝ)) a
+    let E := ⨅ z : A → ℤ, b z ⬝ᵥ (G⁻¹ *ᵥ b z)
+    let D := 1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / W)
+    2 * E / (Real.pi ^ 2 * W) ≤ D ∧ D ≤ E / (2 * W) ∧ (IsEmpty A → E = 0) := by
+  intro W R M G b E D
+  change 0 < W at hW
+  let orbit (t : ℝ) (j : J) := Circle.exp (γ j * t)
+  let T := closure (range orbit)
+  let lift (x : J → ℝ) (j : J) := Circle.exp (x j + Real.pi / 2)
+  let score (p : J → Circle) := (∑ j, w j * (p j : ℂ).im) / W
+  let loss (p : J → Circle) := 1 - score p
+  let Q (x : J → ℝ) := x ⬝ᵥ (M *ᵥ x)
+  let energy (z : A → ℤ) := b z ⬝ᵥ (G⁻¹ *ᵥ b z)
+  have hQ (x : J → ℝ) : Q x = ∑ j, w j * x j ^ 2 := by
+    simp only [Q, M, mulVec_diagonal, dotProduct]
+    exact Finset.sum_congr rfl fun j _ => by ring
+  have hmin (z : A → ℤ) :
+      ∃ x : J → ℝ, R *ᵥ x = b z ∧ Q x = energy z ∧
+        ∀ y : J → ℝ, R *ᵥ y = b z → Q x ≤ Q y :=
+    exists_weighted_fiber_minimum R w hw hind (b z)
+  have hE : BddBelow (range energy) := by
+    refine ⟨0, ?_⟩
+    rintro _ ⟨z, rfl⟩
+    obtain ⟨x, _, hx, _⟩ := hmin z
+    rw [← hx, hQ]
+    exact Finset.sum_nonneg fun j _ => mul_nonneg (hw j).le (sq_nonneg _)
+  have him (a : ℝ) : (Circle.exp a : ℂ).im = Real.sin a := by
+    simp [Circle.coe_exp, Complex.exp_ofReal_mul_I, Complex.sin_ofReal_re]
+  have hscore : Continuous score := by
+    exact (continuous_finsetSum _ fun j _ => continuous_const.mul
+      (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply j)))).div_const W
+  have hloss : Continuous loss := continuous_const.sub hscore
+  have hT : IsCompact T := isClosed_closure.isCompact
+  have hnonempty : (loss '' T).Nonempty :=
+    ⟨loss (orbit 0), orbit 0, subset_closure (mem_range_self 0), rfl⟩
+  have hbounded : BddBelow (loss '' T) := (hT.image hloss).bddBelow
+  have hSup : BddAbove (range (fun t => score (orbit t))) :=
+    ((hT.image hscore).bddAbove).mono (by
+      rintro _ ⟨t, rfl⟩
+      exact ⟨orbit t, subset_closure (mem_range_self t), rfl⟩)
+  have hD : D = sInf (loss '' T) := by
+    change 1 - (⨆ t : ℝ, (∑ j, w j * Real.sin (γ j * t)) / W) = _
+    have htime (t : ℝ) : score (orbit t) = (∑ j, w j * Real.sin (γ j * t)) / W := by
+      simp only [score, orbit, him]
+    simp_rw [← htime]
+    apply le_antisymm
+    · refine le_csInf hnonempty ?_
+      rintro _ ⟨p, hp, rfl⟩
+      apply sub_le_sub_left _ 1
+      exact closure_minimal (t := {p | score p ≤ ⨆ t, score (orbit t)})
+        (by rintro _ ⟨t, rfl⟩; exact le_ciSup hSup t)
+        (isClosed_le hscore continuous_const) hp
+    · have hs : (⨆ t, score (orbit t)) ≤ 1 - sInf (loss '' T) := by
+        refine ciSup_le fun t => ?_
+        have ht := csInf_le hbounded
+          (show loss (orbit t) ∈ loss '' T from ⟨orbit t, subset_closure (mem_range_self t), rfl⟩)
+        exact le_sub_comm.mp ht
+      exact le_sub_comm.mp hs
+  have hlift (x : J → ℝ) : lift x ∈ T ↔ ∃ z : A → ℤ, R *ᵥ x = b z :=
+    centered_lift_iff γ K hK x
+  have hloss_lift (x : J → ℝ) :
+      loss (lift x) * W = ∑ j, w j * (1 - Real.cos (x j)) := by
+    simp only [loss, score, lift, him, Real.sin_add_pi_div_two, sub_mul, one_mul,
+      div_mul_cancel₀ _ hW.ne', mul_sub, mul_one, Finset.sum_sub_distrib, W]
+  have hcos_lower (x : J → ℝ) (hx : ∀ j, |x j| ≤ Real.pi) :
+      (2 / Real.pi ^ 2) * Q x ≤ loss (lift x) * W := by
+    rw [hQ, hloss_lift, Finset.mul_sum]
+    refine Finset.sum_le_sum fun j _ => ?_
+    calc
+      (2 / Real.pi ^ 2) * (w j * x j ^ 2) = w j * ((2 / Real.pi ^ 2) * x j ^ 2) := by ring
+      _ ≤ w j * (1 - Real.cos (x j)) :=
+        mul_le_mul_of_nonneg_left (by linarith [Real.cos_le_one_sub_mul_cos_sq (hx j)]) (hw j).le
+  have hcos_upper (x : J → ℝ) : loss (lift x) * W ≤ Q x / 2 := by
+    rw [hQ, hloss_lift, Finset.sum_div]
+    refine Finset.sum_le_sum fun j _ => ?_
+    calc
+      w j * (1 - Real.cos (x j)) ≤ w j * (x j ^ 2 / 2) :=
+        mul_le_mul_of_nonneg_left (by linarith [Real.one_sub_sq_div_two_le_cos (x := x j)])
+          (hw j).le
+      _ = w j * x j ^ 2 / 2 := by ring
+  have hLower : 2 * E / (Real.pi ^ 2 * W) ≤ D := by
+    rw [hD]
+    refine le_csInf hnonempty ?_
+    rintro _ ⟨p, hp, rfl⟩
+    let rotated (j : J) := p j * Circle.exp (-(Real.pi / 2))
+    let x (j : J) := Complex.arg (rotated j : ℂ)
+    have hx : lift x = p := by
+      funext j
+      change Circle.exp (Complex.arg (rotated j : ℂ) + Real.pi / 2) = p j
+      rw [Circle.exp_add, Circle.exp_arg, show rotated j = _ from rfl, mul_assoc,
+        ← Circle.exp_add, neg_add_cancel, Circle.exp_zero, mul_one]
+    obtain ⟨z, hz⟩ := (hlift x).mp (hx.symm ▸ hp)
+    obtain ⟨y, _, hy, hymin⟩ := hmin z
+    have hEx : E ≤ Q x :=
+      (ciInf_le hE z).trans (hy ▸ hymin x hz)
+    have hcos := hcos_lower x (fun j => Complex.abs_arg_le_pi (rotated j : ℂ))
+    rw [hx] at hcos
+    calc
+      2 * E / (Real.pi ^ 2 * W) = ((2 / Real.pi ^ 2) * E) / W := by ring
+      _ ≤ loss p := (div_le_iff₀ hW).mpr
+        ((mul_le_mul_of_nonneg_left hEx (by positivity)).trans hcos)
+  have hUpper : D ≤ E / (2 * W) := by
+    apply (le_div_iff₀ (mul_pos (by norm_num) hW)).mpr
+    change D * (2 * W) ≤ ⨅ z, energy z
+    refine le_ciInf fun z => ?_
+    obtain ⟨x, hx, hxE, _⟩ := hmin z
+    have hp := (hlift x).mpr ⟨z, hx⟩
+    have hDle : D ≤ loss (lift x) := by
+      rw [hD]
+      exact csInf_le hbounded ⟨lift x, hp, rfl⟩
+    calc
+      D * (2 * W) = 2 * (D * W) := by ring
+      _ ≤ 2 * (loss (lift x) * W) :=
+        mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hDle hW.le) (by norm_num)
+      _ ≤ 2 * (Q x / 2) := mul_le_mul_of_nonneg_left (hcos_upper x) (by norm_num)
+      _ = energy z := by rw [hxE]; ring
+  refine ⟨hLower, hUpper, fun hempty => ?_⟩
+  change (⨅ z, energy z) = 0
+  simp [energy, dotProduct]
+
 #print axioms closure_real_phase_orbit
 #print axioms centered_lift_iff
+#print axioms weighted_phase_deficit_bounds
 
 end D5.S3.Fourier.WeightedPhaseRelationLattice
