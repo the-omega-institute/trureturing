@@ -24,11 +24,11 @@ open scoped BigOperators
 
 set_option autoImplicit false
 
-universe u v w
+universe u v w x y
 
 variable {R : Type u} [Ring R]
 variable {M : Type v} [AddCommGroup M] [Module R M]
-variable {A B C : Type w} [AddCommGroup A] [Module R A]
+variable {A : Type w} {B : Type x} {C : Type y} [AddCommGroup A] [Module R A]
   [AddCommGroup B] [Module R B] [AddCommGroup C] [Module R C]
 
 private def injectiveMaps (R : Type u) [Ring R] (M : Type v) (A : Type w)

@@ -6,17 +6,13 @@
    utility: none
    digest: Cyclic factors of the joint lifting obstruction after two separated omissions. -/
 
-module
-
-public import D5.S3.Combinatorics.Matroids.SparsePavingCircuitProduct
-public import D5.S3.Combinatorics.Matroids.PuncturedCircuitInvariantFactors
-public import D5.S3.Combinatorics.Matroids.UniformCircuitInvariantFactors
+import D5.S3.Combinatorics.Matroids.SparsePavingCircuitProduct
+import D5.S3.Combinatorics.Matroids.PuncturedCircuitInvariantFactors
+import D5.S3.Combinatorics.Matroids.UniformCircuitInvariantFactors
 import D5.S3.Combinatorics.Matroids.AliabadiZerbibMatroidMatching
 import D5.S3.FiniteGroups.FiniteModuleProductCancellation
 
 /-! Cancelling the uniform factors against the two single omissions. -/
-
-@[expose] public section
 
 namespace D5.S3.Combinatorics.Matroids.TwoOmittedCircuitInvariantFactors
 
@@ -24,7 +20,6 @@ open D5.S3.FiniteGroups.FiniteModuleProductCancellation (finite_prod_cancel)
 open Finset
 open scoped Matroid
 open PuncturedCircuitCoordinates (uniformCore)
-open UniformMatroidCircuitCoordinates (classSize)
 open PuncturedCircuitInvariantFactors UniformCircuitInvariantFactors
 open SparsePavingCircuitCoordinates (indep_iff_card_and_allowed)
 open SparsePavingCircuitProduct (sparse_paving_residue_product)
@@ -51,7 +46,8 @@ private theorem cancel_factors {X Y Q₁ Q₂ T : Type*}
     (e : (Families X Y a b × T) ≃ₗ[ℤ]
       ((Families X Y (a - 1) (b - 1) × Q₁) × (Families X Y (a - 1) (b - 1) × Q₂))) :
     Nonempty (T ≃ₗ[ℤ] (Families X Y (a - 2) (b - 2) × (Q₁ × Q₂))) := by
-  let _ : Finite T := Finite.of_injective (fun t : T => e (0, t)) (fun _ _ h => (Prod.mk.inj (e.injective h)).2)
+  let _ : Finite T := Finite.of_injective (fun t : T => e (0, t))
+    (fun _ _ h => (Prod.mk.inj (e.injective h)).2)
   have hA : (a - 1) + (a - 1) = (a - 2) + a := by omega
   have hB : (b - 1) + (b - 1) = (b - 2) + b := by omega
   let ex := LinearEquiv.refl ℤ (Q₁ × Q₂)
@@ -64,7 +60,9 @@ private theorem cancel_factors {X Y Q₁ Q₂ T : Type*}
         (LinearEquiv.prodAssoc ℤ _ _ _).symm)
   let doubles := reorder.trans
     ((addFamilies (X := X) (Y := Y) (a - 2) (b - 2) a b).prodCongr ex)
-  let indices := (LinearEquiv.ofEq _ _ (congrArg₂ (Families X Y) hA hB)).prodCongr ex
+  let ix := LinearEquiv.piCongrLeft' ℤ (fun _ : Fin ((a - 1) + (a - 1)) => X) (finCongr hA)
+  let iy := LinearEquiv.piCongrLeft' ℤ (fun _ : Fin ((b - 1) + (b - 1)) => Y) (finCongr hB)
+  let indices := (ix.prodCongr iy).prodCongr ex
   exact finite_prod_cancel ((LinearEquiv.prodComm ℤ T _).trans
     (e.trans (singles.trans (indices.trans doubles.symm))))
 
@@ -73,7 +71,7 @@ private theorem two_le_choose {k r : ℕ} (hr : 1 ≤ r) (hk : r < k) : 2 ≤ k.
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)
   rw [Nat.choose_succ_succ]
   have h₁ := Nat.choose_pos (show r ≤ k by omega)
-  have h₂ := Nat.choose_pos (show r + 1 ≤ k by omega)
+  have h₂ := Nat.choose_pos (show r.succ ≤ k by omega)
   omega
 
 /-- In rank at least three and corank at least two, two omitted bases
@@ -114,9 +112,13 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
     | true, true => S
   have hMground (i j : Bool) : (M i j).E = Set.univ := by
     cases i <;> cases j <;> simp [M, one, uniformCore, hground]
+    rfl
   have hMbase (i j : Bool) (B : Finset I) : (M i j).IsBase (B : Set I) ↔
       B.card = d + 2 ∧ (i = true → B ≠ H) ∧ (j = true → B ≠ J) := by
-    cases i <;> cases j <;> simp [M, uniformCore, oneBase, hbases]
+    cases i <;> cases j <;> simp [M, oneBase, hbases]
+    change (B : Set I).ncard = d + 2 ↔ B.card = d + 2
+    rw [Set.ncard_coe_finset]
+  let _ : Nonempty V := ⟨(hsurj 0).choose⟩
   let obs (i j : Bool) := JointSaturatedImage ((M i j).comap p) ⧸ JointImageInSaturation ((M i j).comap p)
   have lift (i j : Bool) : Nonempty (obs i j ≃ₗ[ℤ] weightedCircuitResidues (M i j) p) := by
     let holes : Set (Finset I) := {F | (i = true ∧ F = H) ∨ (j = true ∧ F = J)}
@@ -132,11 +134,11 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
       · rw [inter_comm]; omega
       · exact (hne rfl).elim
     have hB (B : Finset I) : (M i j).IsBase (B : Set I) ↔ B.card = d + 2 ∧ B ∉ holes := by
-      rw [hMbase]; simp only [holes, Set.mem_setOf_eq, not_or, not_and]
+      rw [hMbase]; simp only [holes, Set.mem_ofPred_eq, not_or, not_and]
     have nonloop (a : I) : (M i j).IsNonloop a := by
       apply Matroid.indep_singleton.mp
       rw [← coe_singleton, indep_iff_card_and_allowed hr hsize hPair hB]
-      have hc : ({a} : Finset I).card < d + 2 := by simp; omega
+      have hc : ({a} : Finset I).card < d + 2 := by simp
       exact ⟨hc.le, fun h => (hsize _ h).not_lt hc⟩
     obtain ⟨e, _⟩ := parallel_lifting_obstruction hsurj horder (fun a => nonloop (p a))
     exact ⟨e⟩
@@ -152,9 +154,7 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
     (fun B => by simpa using hMbase true false B) p hsurj horder
   obtain ⟨singleJ⟩ := punctured_lifting_obstruction_invariant_factors hJ hr (hMground false true)
     (fun B => by simpa using hMbase false true B) p hsurj horder
-  have hn : 0 < n := by
-    let _ : Nonempty V := ⟨(hsurj 0).choose⟩
-    exact Fintype.card_pos
+  have hn : 0 < n := Fintype.card_pos
   have hg : 0 < g := by
     obtain ⟨v, hv⟩ := hsurj 0
     have hweight : 0 < weight 0 := card_pos.mpr ⟨v, mem_filter.mpr ⟨mem_univ _, hv⟩⟩
@@ -164,12 +164,21 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
   let _ : NeZero q₁ := ⟨(Nat.gcd_pos_of_pos_left _ hn).ne'⟩
   let _ : NeZero q₂ := ⟨(Nat.gcd_pos_of_pos_left _ hn).ne'⟩
   have full' : obs false false ≃ₗ[ℤ] Families (ZMod g) (ZMod n) (k.choose d) (k.choose (d + 1)) := full
-  have singleH' : obs true false ≃ₗ[ℤ] (Families (ZMod g) (ZMod n)
-      (k.choose d - 1) (k.choose (d + 1) - 1) × ZMod q₁) := by simpa [I] using singleH
-  have singleJ' : obs false true ≃ₗ[ℤ] (Families (ZMod g) (ZMod n)
-      (k.choose d - 1) (k.choose (d + 1) - 1) × ZMod q₂) := by simpa [I] using singleJ
+  let X := Fin (k.choose d - 1) → ZMod g
+  let Y := Fin (k.choose (d + 1) - 1) → ZMod n
+  have hCard : Fintype.card I - 2 = k := by simp [I]
+  let ix := LinearEquiv.piCongrLeft' ℤ (fun _ : Fin ((Fintype.card I - 2).choose d - 1) => ZMod g)
+    (finCongr (congrArg (fun j => j.choose d - 1) hCard))
+  let iy := LinearEquiv.piCongrLeft' ℤ (fun _ : Fin ((Fintype.card I - 2).choose (d + 1) - 1) => ZMod n)
+    (finCongr (congrArg (fun j => j.choose (d + 1) - 1) hCard))
+  have singleH' : obs true false ≃ₗ[ℤ] (X × (Y × ZMod q₁)) :=
+    singleH.trans (ix.prodCongr (iy.prodCongr (LinearEquiv.refl ℤ _)))
+  have singleJ' : obs false true ≃ₗ[ℤ] (X × (Y × ZMod q₂)) :=
+    singleJ.trans (ix.prodCongr (iy.prodCongr (LinearEquiv.refl ℤ _)))
+  let eH := singleH'.trans (LinearEquiv.prodAssoc ℤ X Y (ZMod q₁)).symm
+  let eJ := singleJ'.trans (LinearEquiv.prodAssoc ℤ X Y (ZMod q₂)).symm
   obtain ⟨e⟩ := cancel_factors (two_le_choose hd (by omega)) (two_le_choose (by omega : 1 ≤ d + 1) (by omega))
-    ((full'.symm.prodCongr (LinearEquiv.refl ℤ _)).trans (joint.trans (singleH'.prodCongr singleJ')))
+    ((full'.symm.prodCongr (LinearEquiv.refl ℤ _)).trans (joint.trans (eH.prodCongr eJ)))
   exact ⟨e.trans (LinearEquiv.prodAssoc ℤ _ _ _)⟩
 
 end D5.S3.Combinatorics.Matroids.TwoOmittedCircuitInvariantFactors

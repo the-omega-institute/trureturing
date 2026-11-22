@@ -90,12 +90,13 @@ theorem exists_difference_basis (H : Finset I) (p q : I) (hp : p ∉ H) (hq : q 
       · subst i
         rw [ite_eq_right hip, ite_eq_left rfl, hs U, ← sum_erase_add _ x hq]
         simpa [e, hpq, hpq.symm, U] using add_comm (x q) (∑ j ∈ U, x j)
-      · simp [e, hip, hiq, Ne.symm hip, Ne.symm hiq]
+      · simp [e, hip, hiq]
 
+omit [Fintype I] in
 /-- Two faces with sparse intersection admit simultaneous difference
 coordinates around chosen representatives. The pivot and all transformed
 weights remain available for the lower-degree insertion equations. -/
-theorem exists_two_face_difference_basis (H J : Finset I) {d : ℕ} (hd : 1 ≤ d)
+theorem exists_two_face_difference_basis [Finite I] (H J : Finset I) {d : ℕ} (hd : 1 ≤ d)
     (hH : H.card = d + 2) (hJ : J.card = d + 2) (hsparse : (H ∩ J).card ≤ d)
     (weight : I → ℕ) (hweight : ∀ i, 0 < weight i) :
     ∃ (p : I) (_ : p ∈ H) (q : I) (_ : q ∈ J)
@@ -105,6 +106,7 @@ theorem exists_two_face_difference_basis (H J : Finset I) {d : ℕ} (hd : 1 ≤ 
       (∀ i ∈ H.erase p, b i = Pi.single i 1 - Pi.single p 1) ∧
       (∀ i ∈ J.erase q, b i = Pi.single i 1 - Pi.single q 1) ∧
       (∀ i, b.equivFun (fun k => (weight k : ℤ)) i = (w i : ℤ)) ∧ ∀ i, 0 < w i := by
+  let _ := Fintype.ofFinite I
   obtain ⟨p, hp, q, hq, L, a, ha, hpL, hfirst, hsecond, hpSecond, hsep⟩ :
       ∃ (p : I) (_ : p ∈ H) (q : I) (_ : q ∈ J) (L : Finset I) (a : I),
         a ∈ L ∧ p ∉ L ∧ (∀ i ∈ H.erase p, i ∉ L.erase a) ∧
@@ -151,8 +153,8 @@ theorem exists_two_face_difference_basis (H J : Finset I) {d : ℕ} (hd : 1 ≤ 
     · rw [show w i = ∑ j, weight j by simp [w, hip]]
       exact (hweight p).trans_le (single_le_sum (fun j _ => Nat.zero_le (weight j)) (mem_univ p))
     · by_cases hia : i = a
-      · rw [show w i = ∑ j ∈ L, weight j by simp [w, hip, hia]]
+      · rw [show w i = ∑ j ∈ L, weight j by simp only [w, ite_eq_right hip, ite_eq_left hia]]
         exact (hweight a).trans_le (single_le_sum (fun j _ => Nat.zero_le (weight j)) ha)
-      · simpa only [w, if_neg hip, if_neg hia] using hweight i
+      · simpa only [w, ite_eq_right hip, ite_eq_right hia] using hweight i
 
 end D5.S3.Combinatorics.Matroids.CircuitDifferenceBasis

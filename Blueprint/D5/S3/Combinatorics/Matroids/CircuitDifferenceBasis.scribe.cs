@@ -22,5 +22,17 @@ internal sealed class CircuitDifferenceBasisDocument : IScribeDocumentDefinition
                     + "the local representative. Every other non-global index uses its difference "
                     + "from the global representative. The two corresponding coordinates of a "
                     + "vector are its block sum and its total sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-two-face-difference-basis"),
+                DeclarationHandle.Create(Module + ".exists_two_face_difference_basis"),
+                H("Simultaneous coordinates for the two face differences"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "When both faces have a common vertex, choose it as their representative. For disjoint faces, "
+                    + "choose separate representatives and sum the weights in the second face into its representative's "
+                    + "coordinate. In either case the difference tuples occur together in an integral basis, the "
+                    + "transformed weights stay positive, and the first tuple has at least two indices outside the second."))),
                 DescribeRole.Theorem))));
 }

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
-   digest: The two distinct omitted bases impose independent restrictions on the circuit residue module. -/
+   digest: Two omitted bases impose independent restrictions on the circuit residue module. -/
 
 module
 
@@ -36,7 +36,7 @@ theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
     (hd : 1 ≤ d) (hr : d + 2 < Fintype.card I)
     (hH : H.card = d + 2) (hJ : J.card = d + 2) (hsparse : (H ∩ J).card ≤ d)
     (M : Bool → Bool → Matroid I) (hground : ∀ i j, (M i j).E = Set.univ)
-    (hbases : ∀ i j B, (M i j).IsBase (B : Set I) ↔ B.card = d + 2 ∧
+    (hbases : ∀ i j (B : Finset I), (M i j).IsBase (B : Set I) ↔ B.card = d + 2 ∧
       (i = true → B ≠ H) ∧ (j = true → B ≠ J)) :
     Nonempty (((weightedCircuitResidues (M false false) p) × (weightedCircuitResidues (M true true) p)) ≃ₗ[ℤ]
       ((weightedCircuitResidues (M true false) p) × (weightedCircuitResidues (M false true) p))) := by
@@ -92,7 +92,7 @@ theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
       · exact (hne rfl).elim
     have hB (T : Finset I) : (M i j).IsBase (T : Set I) ↔ T.card = d + 2 ∧ T ∉ holes := by
       rw [hbases]
-      simp only [holes, Set.mem_setOf_eq, not_or, not_and]
+      simp only [holes, Set.mem_ofPred_eq, not_or, not_and]
     let center (T : holes) := if T.val = H then root else rep
     have hHne : H ≠ J := by
       intro h
@@ -116,14 +116,16 @@ theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
         rw [show read F f = f.val (c ∘ ofFinEmbEquiv.symm F) from basisFormEquiv_symm_apply c f.val F,
           show read G f = f.val (c ∘ ofFinEmbEquiv.symm G) from basisFormEquiv_symm_apply c f.val G]
         obtain ⟨T, hT⟩ := T
-        rcases hT with ⟨_, rfl⟩ | ⟨_, rfl⟩
-        · rw [ite_eq_left rfl]
+        rcases hT with ⟨_, hTH⟩ | ⟨_, hTJ⟩
+        · subst T
+          simp only [ite_true]
           congr 1
           funext k
           have hk : ofFinEmbEquiv.symm F k ∈ H.erase root :=
             (Set.powersetCard.mem_range_ofFinEmbEquiv_symm_iff_mem F _).mp ⟨k, rfl⟩
           simpa [tuple, center, standard, Function.comp_def] using (hcH _ hk).symm
-        · rw [ite_eq_right hHne.symm]
+        · subst T
+          simp only [ite_eq_right hHne.symm]
           congr 1
           funext k
           have hk : ofFinEmbEquiv.symm G k ∈ J.erase rep :=
@@ -134,39 +136,62 @@ theorem sparse_paving_residue_product {V : Type*} [Fintype V] (p : V → I)
       rw [hp]
       constructor
       · intro h
-        exact ⟨fun hi => by simpa only [hcase (⟨H, Or.inl ⟨hi, rfl⟩⟩ : holes), ite_eq_left rfl]
-                    using h ⟨H, Or.inl ⟨hi, rfl⟩⟩,
-          fun hj => by simpa only [hcase (⟨J, Or.inr ⟨hj, rfl⟩⟩ : holes), ite_eq_right hHne.symm]
-                    using h ⟨J, Or.inr ⟨hj, rfl⟩⟩⟩
+        constructor
+        · intro hi
+          let T : holes := ⟨H, Or.inl ⟨hi, rfl⟩⟩
+          have hh := h T
+          rw [hcase T] at hh
+          simpa [T] using hh
+        · intro hj
+          let T : holes := ⟨J, Or.inr ⟨hj, rfl⟩⟩
+          have hh := h T
+          rw [hcase T] at hh
+          simpa [T, hHne.symm] using hh
       · intro h T
         rw [hcase T]
         obtain ⟨T, hT⟩ := T
         rcases hT with ⟨hi, rfl⟩ | ⟨hj, rfl⟩
-        · simpa only [ite_eq_left rfl] using h.1 hi
+        · simpa using h.1 hi
         · simpa only [ite_eq_right hHne.symm] using h.2 hj
     have hrootEq : standard root = c root := by rw [hcroot]; simp [standard]
-    rw [hrootEq] at e
-    let go : _ ≃ₗ[ℤ] ↥(P i j) :=
+    let ev (T : holes) : Submodule ℤ ((I → ℤ) [⋀^Fin (d + 1)]→ₗ[ℤ] RationalResidue) :=
+      (show ((I → ℤ) [⋀^Fin (d + 1)]→ₗ[ℤ] RationalResidue) →ₗ[ℤ] RationalResidue from
+        { toFun := fun f => f (tuple T), map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }).ker
+    let domain := K ⊓ ⨅ T, ev T
+    let original := (((insertVector (n := d) (N := RationalResidue) (standard root)).ker ⊓
+      (insertVector y).ker) ⊓ Submodule.torsionBy ℤ _ (a y)) ⊓ ⨅ T, ev T
+    have hdomain : original = domain := by dsimp only [original, domain, K]; rw [hrootEq]
+    have e' : weightedCircuitResidues (M i j) p ≃ₗ[ℤ] ↥domain :=
+      e.trans (LinearEquiv.ofEq original domain hdomain)
+    let go : ↥domain ≃ₗ[ℤ] ↥(P i j) :=
       { toFun := fun f => ⟨⟨f.val, f.prop.1⟩,
-          (coord ⟨f.val, f.prop.1⟩).mp fun T => (Submodule.mem_iInf.mp f.prop.2) T⟩
+          (coord ⟨f.val, f.prop.1⟩).mp fun T => (Submodule.mem_iInf _).mp f.prop.2 T⟩
         invFun := fun f => ⟨f.val.val, ⟨f.val.prop,
-          Submodule.mem_iInf.mpr ((coord f.val).mpr f.prop)⟩⟩
+          (Submodule.mem_iInf _).mpr ((coord f.val).mpr f.prop)⟩⟩
         left_inv := fun _ => rfl
         right_inv := fun _ => rfl
         map_add' := fun _ _ => rfl
         map_smul' := fun _ _ => rfl }
-    exact ⟨e.trans go⟩
+    exact ⟨e'.trans go⟩
   obtain ⟨empty⟩ := eqv false false
   obtain ⟨first⟩ := eqv true false
   obtain ⟨second⟩ := eqv false true
   obtain ⟨pair⟩ := eqv true true
   have square : Nonempty ((↥K × ↥((read F).ker ⊓ (read G).ker)) ≃ₗ[ℤ]
       (↥(read F).ker × ↥(read G).ker)) := by
-    rw [hyc, hn]
+    let claim (v : I → ℤ) (n : ℤ) : Prop :=
+      let P := ((insertVector (n := d) (N := RationalResidue) (c root)).ker ⊓
+        (insertVector v).ker) ⊓ Submodule.torsionBy ℤ _ n
+      let coef := fun T : Set.powersetCard I (d + 1) =>
+        (LinearMap.proj T).comp ((basisFormEquiv c).symm.toLinearMap.comp P.subtype)
+      Nonempty ((↥P × ↥((coef F).ker ⊓ (coef G).ker)) ≃ₗ[ℤ] (↥(coef F).ker × ↥(coef G).ker))
+    change claim y (a y)
+    rw [hn, hyc]
     exact pivoted_face_product c root w hpos (Fintype.card V) F G (notMem_erase root _) hsep
   obtain ⟨square⟩ := square
-  simp only [P, Bool.false_eq_true, if_false, if_true, inf_top_eq, top_inf_eq] at empty first second pair
-  exact ⟨((empty.trans Submodule.topEquiv).prodCongr pair).trans
-    (square.trans (first.symm.prodCongr second.symm))⟩
+  let e₀ := (empty.trans (LinearEquiv.ofEq _ (⊤ : Submodule ℤ K) (by simp [P]))).trans Submodule.topEquiv
+  let e₁ := first.trans (LinearEquiv.ofEq _ (read F).ker (by simp [P]))
+  let e₂ := second.trans (LinearEquiv.ofEq _ (read G).ker (by simp [P]))
+  exact ⟨(e₀.prodCongr pair).trans (square.trans (e₁.symm.prodCongr e₂.symm))⟩
 
 end D5.S3.Combinatorics.Matroids.SparsePavingCircuitProduct
