@@ -1,0 +1,329 @@
+/- GID: D5/S3/Quantum/Analysis/RefinedBMVPositiveCenterShortGapNormalization
+   generality: G
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Logarithmic derivative bounds for the short-gap normalization. -/
+
+import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterCollisionRadicand
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
+
+/-! # Short-gap normalization for the refined BMV kernel -/
+
+open Set
+
+namespace RefinedBMV.PositiveCenter
+
+/-- The weight under the square root in the short-gap normalization. -/
+noncomputable def shortGapWeight (h t : ℝ) : ℝ :=
+  Real.exp (-((3+2*h)*t)) - 1 + (3+2*h)*upperTailGap h t -
+    ((3+h)*(3+2*h)/2)*(upperTailGap h t)^2*Real.exp (-t)
+
+theorem shortGapWeight_pos {h t : ℝ} (hh : 0 < h) (ht : 0 < t) :
+    0 < shortGapWeight h t := by
+  rw [shortGapWeight, collisionWeight_eq hh]
+  have := collisionWeight_pos h t
+  positivity
+
+private theorem hasDerivAt_shortGapWeight {h t : ℝ} (hh : 0 < h) :
+    let a := upperTailGap h t
+    let b := Real.exp (-(h*t))
+    let k := 3+2*h
+    let c := (3+h)*k/2
+    HasDerivAt (shortGapWeight h)
+      (k*(b-Real.exp (-(k*t))) + c*a*Real.exp (-t)*(a-2*b)) t := by
+  dsimp only
+  let k : ℝ := 3+2*h
+  let c : ℝ := (3+h)*k/2
+  have hlin : HasDerivAt (fun s : ℝ ↦ k*s) k t := by
+    simpa only [mul_one] using (hasDerivAt_id' t).const_mul k
+  have he : HasDerivAt (fun s : ℝ ↦ -(k*s)) (-k) t := HasDerivAt.neg hlin
+  have hneg : HasDerivAt (fun s : ℝ ↦ -s) (-1) t := HasDerivAt.neg (hasDerivAt_id' t)
+  have ha := hasDerivAt_upperTailGap (t := t) hh
+  have hd : HasDerivAt (shortGapWeight h) _ t :=
+    ((he.exp.sub_const 1).add (ha.const_mul k)).sub
+      (((ha.pow 2).const_mul c).mul hneg.exp)
+  convert hd using 1
+  simp only [Pi.pow_apply]
+  dsimp [k, c]
+  ring
+
+private theorem shortGap_gap_lower {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
+    (ht : 4 ≤ t) : 11 / 6 < upperTailGap h t := by
+  have ht₀ : 0 < t := by linarith
+  have hx : 0 ≤ h*t := by positivity
+  have hden : 0 < 1+h*t := by positivity
+  have hb : Real.exp (-(h*t)) ≤ 1/(1+h*t) := by
+    rw [Real.exp_neg, one_div]
+    exact inv_anti₀ hden (by linarith only [Real.add_one_le_exp (h*t)])
+  have ha : t/(1+h*t) ≤ upperTailGap h t := by
+    apply (le_div_iff₀ hh).2
+    apply (le_sub_comm).mp
+    calc
+      Real.exp (-(h*t)) ≤ 1/(1+h*t) := hb
+      _ = 1 - t/(1+h*t)*h := by field_simp [hden.ne']; ring
+  apply lt_of_lt_of_le _ ha
+  apply (lt_div_iff₀ hden).2
+  have hht := mul_le_mul_of_nonneg_right hhmax ht₀.le
+  linarith only [ht, hht]
+
+private theorem sinh_le_shortGap_endpoint {x : ℝ} (hx : 0 ≤ x) (hxmax : x ≤ 6 / 11) :
+    Real.sinh x ≤ x*(121/115) := by
+  have hfac (n : ℕ) : 6^n ≤ Nat.factorial (2*n+1) := by
+    induction n with
+    | zero => decide
+    | succ n ih =>
+      have hstep : 6 ≤ (2*n+3)*(2*n+2) :=
+        Nat.mul_le_mul (by omega : 3 ≤ 2*n+3) (by omega : 2 ≤ 2*n+2)
+      calc
+        6^(n+1) = 6*6^n := by rw [pow_succ, mul_comm]
+        _ ≤ ((2*n+3)*(2*n+2))*Nat.factorial (2*n+1) := Nat.mul_le_mul hstep ih
+        _ = Nat.factorial (2*(n+1)+1) := by
+          rw [show 2*(n+1)+1 = (2*n+1+1)+1 by omega,
+            Nat.factorial_succ (2*n+1+1), Nat.factorial_succ (2*n+1)]
+          ring
+  let r : ℝ := (6/11)^2/6
+  have hgeo : HasSum (fun n : ℕ ↦ x*r^n) (x*(121/115)) := by
+    have hs := (hasSum_geometric_of_lt_one (r := r)
+      (by norm_num [r]) (by norm_num [r])).mul_left x
+    have hr : (1-r)⁻¹ = (121/115 : ℝ) := by norm_num [r]
+    simpa only [hr] using hs
+  rw [Real.sinh_eq_tsum, ← hgeo.tsum_eq]
+  refine (Real.hasSum_sinh x).summable.tsum_le_tsum (fun n ↦ ?_) hgeo.summable
+  have hfn : (6 : ℝ)^n ≤ (Nat.factorial (2*n+1) : ℝ) := by exact_mod_cast hfac n
+  calc
+    x^(2*n+1)/(Nat.factorial (2*n+1) : ℝ) ≤
+        x^(2*n+1)/(6 : ℝ)^n :=
+      div_le_div_of_nonneg_left (by positivity) (by positivity) hfn
+    _ ≤ x*r^n := by
+      rw [pow_succ, pow_mul, mul_comm ((x^2)^n), mul_div_assoc]
+      dsimp only [r]
+      rw [div_pow]
+      gcongr
+
+private theorem shortGap_correction_bound {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
+    (ht : 4 ≤ t) :
+    ((3+h)/2)*(upperTailGap h t)^2*Real.exp (-((1-h)*t)) < 3/5 := by
+  let S : ℝ → ℝ := fun s ↦ (upperTailGap h s)^2*Real.exp (-((1-h)*s))
+  have hd (s : ℝ) : HasDerivAt S
+      ((2*upperTailGap h s*Real.exp (-(h*s)) -
+        (1-h)*(upperTailGap h s)^2)*Real.exp (-((1-h)*s))) s := by
+    have hlin : HasDerivAt (fun u : ℝ ↦ (1-h)*u) (1-h) s := by
+      simpa only [mul_one] using (hasDerivAt_id' s).const_mul (1-h)
+    have he : HasDerivAt (fun u : ℝ ↦ -((1-h)*u)) (-(1-h)) s := HasDerivAt.neg hlin
+    convert ((hasDerivAt_upperTailGap (t := s) hh).pow 2).mul he.exp using 1
+    simp only [Pi.pow_apply]
+    ring
+  have hmono : AntitoneOn S (Ici 4) := by
+    apply antitoneOn_of_deriv_nonpos (convex_Ici 4)
+      (fun s _ ↦ (hd s).continuousAt.continuousWithinAt)
+      (fun s _ ↦ (hd s).differentiableAt.differentiableWithinAt)
+    intro s hs
+    have hs₄ : 4 ≤ s := interior_subset hs
+    have hs₀ : 0 < s := by linarith
+    have hL := (upperTailSlope_bounds hh hs₀).2.1.trans
+      (div_le_div_of_nonneg_left zero_le_one (by norm_num : (0 : ℝ) < 4) hs₄)
+    have ha : 0 < upperTailGap h s := by
+      rw [expGapMean_eq hh]
+      exact mul_pos hs₀ (expGapMean_pos h s)
+    have hb := upperTailGap_logDeriv hh hs₀
+    rw [(hasDerivAt_upperTailGap hh).deriv] at hb
+    rw [(hd s).deriv, (div_eq_iff ha.ne').1 hb]
+    have hsign : 2*upperTailSlope h s - (1-h) ≤ 0 := by linarith only [hhmax, hL]
+    convert mul_nonpos_of_nonpos_of_nonneg
+      (mul_nonpos_of_nonneg_of_nonpos (sq_nonneg (upperTailGap h s)) hsign)
+      (Real.exp_pos (-((1-h)*s))).le using 1
+    ring
+  have hS := hmono (self_mem_Ici : (4 : ℝ) ∈ Ici 4) (mem_Ici.mpr ht) ht
+  have hsplit : Real.exp (-((1-h)*4)) = Real.exp (-(4 : ℝ))*Real.exp (2*h)^2 := by
+    rw [pow_two, ← mul_assoc, ← Real.exp_add, ← Real.exp_add]
+    congr 1
+    ring
+  have hhyper : upperTailGap h 4 * Real.exp (2*h) = 2*Real.sinh (2*h)/h := by
+    rw [upperTailGap, div_mul_eq_mul_div, sub_mul, one_mul, ← Real.exp_add, Real.sinh_eq]
+    rw [show -(h*4)+2*h = -(2*h) by ring]
+    ring
+  have hscaled : upperTailGap h 4 * Real.exp (2*h) ≤ 4*(121/115) := by
+    rw [hhyper]
+    apply (div_le_iff₀ hh).2
+    linarith only [sinh_le_shortGap_endpoint (x := 2*h)
+      (by positivity) (by linarith only [hhmax])]
+  have hgap₄ := shortGap_gap_lower hh hhmax (t := 4) le_rfl
+  have hsquare := pow_le_pow_left₀
+    (mul_nonneg (by linarith only [hgap₄]) (Real.exp_pos (2*h)).le) hscaled 2
+  have hexp₄ : 50 < Real.exp 4 := by
+    have hexp : Real.exp 4 = (Real.exp 1)^4 := by
+      convert Real.exp_nat_mul (1 : ℝ) 4 using 2 <;> norm_num
+    rw [hexp]
+    have hb : (27/10 : ℝ) ≤ Real.exp 1 := le_of_lt <|
+      lt_trans (by norm_num) Real.exp_one_gt_d9
+    exact lt_of_lt_of_le (by norm_num : (50 : ℝ) < (27/10)^4)
+      (pow_le_pow_left₀ (by norm_num) hb 4)
+  have he₄ : Real.exp (-(4 : ℝ)) < 1/50 := by
+    rw [Real.exp_neg, one_div, inv_lt_inv₀ (Real.exp_pos _) (by norm_num)]
+    exact hexp₄
+  have hS₄ : S 4 ≤ (4*(121/115))^2*(1/50) := calc
+    S 4 = (upperTailGap h 4*Real.exp (2*h))^2*Real.exp (-(4 : ℝ)) := by
+      dsimp only [S]
+      rw [hsplit]
+      ring
+    _ ≤ _ := mul_le_mul hsquare he₄.le (Real.exp_pos _).le (by positivity)
+  calc
+    _ = ((3+h)/2)*S t := by dsimp only [S]; ring
+    _ ≤ (18/11)*((4*(121/115))^2*(1/50)) := mul_le_mul
+      (by linarith only [hhmax]) (hS.trans hS₄) (by dsimp only [S]; positivity) (by norm_num)
+    _ < _ := by norm_num
+
+/-- Logarithmic derivatives of the two normalizing factors on the unbounded
+short-gap tail. -/
+theorem shortGapNormalization_bounds {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
+    (ht : 4 ≤ t) :
+    let P := fun s ↦ upperTailGap h s / Real.sqrt (shortGapWeight h s)
+    let V := fun s ↦ 1 / Real.sqrt (shortGapWeight h s)
+    let α := deriv P t / P t
+    let β := deriv V t / V t
+    0 ≤ α ∧ α < 1/7 ∧ -(1/t) ≤ β ∧ β < 0 := by
+  dsimp only
+  let a := upperTailGap h t
+  let b := Real.exp (-(h*t))
+  let k : ℝ := 3+2*h
+  let g : ℝ := 3+h
+  let c : ℝ := g*k/2
+  let E := Real.exp (-(k*t))
+  let W := shortGapWeight h t
+  let w := k*(b-E)+c*a*Real.exp (-t)*(a-2*b)
+  have ht₀ : 0 < t := by linarith
+  have ha₁ : 11/6 < a := shortGap_gap_lower hh hhmax ht
+  have ha : 0 < a := by linarith only [ha₁]
+  have hb : 0 < b := Real.exp_pos _
+  have hk : 3 ≤ k := by dsimp [k]; linarith
+  have hk₀ : 0 < k := by linarith only [hk]
+  have hg : 3 ≤ g := by dsimp [g]; linarith
+  have hc : 0 < c := by dsimp only [c]; positivity
+  have hW : 0 < W := shortGapWeight_pos hh ht₀
+  have hwd : HasDerivAt (shortGapWeight h) w t := hasDerivAt_shortGapWeight hh
+  have hW_le : W ≤ k*a := by
+    have he : E ≤ 1 := by
+      rw [← Real.exp_zero]
+      exact Real.exp_le_exp.mpr (neg_nonpos.mpr (mul_nonneg hk₀.le ht₀.le))
+    have hcorr : 0 ≤ c*a^2*Real.exp (-t) := by positivity
+    change E - 1 + k*a - c*a^2*Real.exp (-t) ≤ k*a
+    linarith only [he, hcorr]
+  have hL : b/a = upperTailSlope h t := by
+    simpa only [(hasDerivAt_upperTailGap (t := t) hh).deriv] using
+      upperTailGap_logDeriv hh ht₀
+  have hL_le : b/a ≤ 1/t := by
+    rw [hL]
+    exact (upperTailSlope_bounds hh ht₀).2.1
+  have hhalf : 0 ≤ a-2*b := by
+    have hb₄ := (div_le_iff₀ ha).1 <| hL_le.trans
+      (div_le_div_of_nonneg_left zero_le_one (by norm_num : (0 : ℝ) < 4) ht)
+    linarith only [ha, hb₄]
+  have hE_lt : E < b := Real.exp_lt_exp.mpr (by
+    have hgap : 0 < (3+h)*t := by positivity
+    dsimp only [k]
+    linarith only [hgap])
+  have hw_ge : k*(b-E) ≤ w := by
+    have hcorr : 0 ≤ c*a*Real.exp (-t)*(a-2*b) := by positivity
+    exact le_add_of_nonneg_right hcorr
+  have hw_pos : 0 < w := (mul_pos hk₀ (sub_pos.mpr hE_lt)).trans_le hw_ge
+  have hscalar : 2/(k*a) + (g/2)*a^2*Real.exp (-((1-h)*t)) < 1 := by
+    have hka : 3*(11/6) < k*a :=
+      (mul_lt_mul_of_pos_left ha₁ (by norm_num : (0 : ℝ) < 3)).trans_le
+        (mul_le_mul_of_nonneg_right hk ha.le)
+    have hfirst : 2/(k*a) ≤ 4/11 := calc
+      _ ≤ 2/(3*(11/6)) :=
+        div_le_div_of_nonneg_left (by norm_num) (by norm_num) hka.le
+      _ = _ := by norm_num
+    linarith only [hfirst, shortGap_correction_bound hh hhmax ht]
+  have hcore : 0 < b*(k*a-2) - c*a^3*Real.exp (-t) := by
+    have hka₀ : 0 < k*a := mul_pos hk₀ ha
+    have hprod : b*Real.exp (-((1-h)*t)) = Real.exp (-t) := by
+      dsimp only [b]
+      rw [← Real.exp_add]
+      congr 1
+      ring
+    calc
+      0 < b*(k*a)*(1-(2/(k*a)+(g/2)*a^2*Real.exp (-((1-h)*t)))) :=
+        mul_pos (mul_pos hb hka₀) (sub_pos.mpr hscalar)
+      _ = b*(k*a-2) - c*a^3*(b*Real.exp (-((1-h)*t))) := by
+        dsimp only [c]
+        field_simp [hka₀.ne']
+        <;> ring
+      _ = _ := by rw [hprod]
+  have hnum : 0 < 2*b*W-a*w := by
+    have hidentity : 2*b*W-a*w = b*(k*a-2) - c*a^3*Real.exp (-t) + (2*b+k*a)*E := by
+      change 2*b*(E-1+k*a-c*a^2*Real.exp (-t)) -
+        a*(k*(b-E)+c*a*Real.exp (-t)*(a-2*b)) = _
+      ring
+    rw [hidentity]
+    exact add_pos hcore (mul_pos (by positivity) (Real.exp_pos _))
+  have hsqrt := hwd.sqrt hW.ne'
+  have hs : 0 < Real.sqrt W := Real.sqrt_pos.2 hW
+  have hsq : (Real.sqrt W)^2 = W := Real.sq_sqrt hW.le
+  have hα :
+      deriv (fun s ↦ upperTailGap h s / Real.sqrt (shortGapWeight h s)) t /
+          (a/Real.sqrt W) = b/a-w/(2*W) := by
+    rw [((hasDerivAt_upperTailGap hh).fun_div hsqrt hs.ne').deriv]
+    change (b*Real.sqrt W-a*(w/(2*Real.sqrt W)))/(Real.sqrt W)^2 /
+      (a/Real.sqrt W) = _
+    calc
+      _ = b/a-w/(2*(Real.sqrt W)^2) := by field_simp [hs.ne', ha.ne'] <;> ring
+      _ = _ := by rw [hsq]
+  have hβ :
+      deriv (fun s ↦ 1 / Real.sqrt (shortGapWeight h s)) t /
+          (1/Real.sqrt W) = -(w/(2*W)) := by
+    rw [((hasDerivAt_const t (1 : ℝ)).fun_div hsqrt hs.ne').deriv]
+    change (0*Real.sqrt W-1*(w/(2*Real.sqrt W)))/(Real.sqrt W)^2 /
+      (1/Real.sqrt W) = _
+    calc
+      _ = -(w/(2*(Real.sqrt W)^2)) := by field_simp [hs.ne'] <;> ring
+      _ = _ := by rw [hsq]
+  change
+    0 ≤ deriv (fun s ↦ upperTailGap h s / Real.sqrt (shortGapWeight h s)) t /
+        (a/Real.sqrt W) ∧
+    deriv (fun s ↦ upperTailGap h s / Real.sqrt (shortGapWeight h s)) t /
+        (a/Real.sqrt W) < 1/7 ∧
+    -(1/t) ≤ deriv (fun s ↦ 1 / Real.sqrt (shortGapWeight h s)) t /
+        (1/Real.sqrt W) ∧
+    deriv (fun s ↦ 1 / Real.sqrt (shortGapWeight h s)) t /
+        (1/Real.sqrt W) < 0
+  rw [hα, hβ]
+  have hα_pos : 0 < b/a-w/(2*W) := by
+    calc
+      0 < (2*b*W-a*w)/(2*a*W) := div_pos hnum (by positivity)
+      _ = _ := by field_simp [ha.ne', hW.ne']
+  have hw_bound : (b-E)/(2*a) ≤ w/(2*W) := calc
+    _ = (k*(b-E))/(2*(k*a)) := by field_simp [hk₀.ne', ha.ne']
+    _ ≤ (k*(b-E))/(2*W) := div_le_div_of_nonneg_left (by positivity)
+      (by positivity) (mul_le_mul_of_nonneg_left hW_le (by norm_num))
+    _ ≤ _ := div_le_div_of_nonneg_right hw_ge (by positivity)
+  have hE : E = b*Real.exp (-(g*t)) := by
+    dsimp only [E, b, g, k]
+    rw [← Real.exp_add]
+    congr 1
+    ring
+  have hExp : Real.exp (-(g*t)) ≤ 1/13 := by
+    have hgt : 12 ≤ g*t :=
+      (show (12 : ℝ) = 3*4 by norm_num).le.trans
+        (mul_le_mul hg ht (by norm_num) (by positivity))
+    have he := Real.add_one_le_exp (g*t)
+    rw [Real.exp_neg, one_div]
+    exact inv_anti₀ (by norm_num) (by linarith only [he, hgt])
+  have hα_upper : b/a-w/(2*W) < 1/7 := calc
+    _ ≤ b/a-(b-E)/(2*a) := sub_le_sub_left hw_bound _
+    _ = (b/a)*(1+Real.exp (-(g*t)))/2 := by rw [hE]; ring
+    _ ≤ (1/4)*(1+1/13)/2 := by
+      have hratio := hL_le.trans
+        (div_le_div_of_nonneg_left zero_le_one (by norm_num : (0 : ℝ) < 4) ht)
+      exact div_le_div_of_nonneg_right
+        (mul_le_mul hratio (by linarith only [hExp]) (by positivity) (by norm_num)) (by norm_num)
+    _ < _ := by norm_num
+  exact ⟨hα_pos.le, hα_upper, by linarith only [hL_le, hα_pos],
+    neg_neg_of_pos (div_pos hw_pos (by positivity))⟩
+
+#print axioms shortGapWeight_pos
+#print axioms shortGapNormalization_bounds
+
+end RefinedBMV.PositiveCenter
