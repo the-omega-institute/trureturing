@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoff
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.MeanValue
 import Mathlib.Topology.UniformSpace.UniformApproximation
 
 /-! The centered zero series controls the normalized root increment on shrinking windows. -/
@@ -153,64 +154,56 @@ private theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL 
     exact (root_density_eq_signal hr (u+t)).trans (hsplit t)]
   field_simp [(Real.exp_pos (-s*u)).ne', hpositive.ne', hs.ne']
 
-private theorem root_increment_near_signal (hRH : RiemannHypothesis) {r : ℝ}
-    (hr : 1 < r) {ε : ℝ} (hε : 0 < ε) :
-    ∃ L₀ : ℝ, 0 < L₀ ∧ ∀ u L : ℝ, 0 < L → L < L₀ →
-      let s : ℝ := 1/2 - (2*r)⁻¹
-      |(rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
-        powerGap s (Real.exp u) (Real.exp (u+L)) - rootSignal r u| ≤ ε := by
+private theorem root_increment_eq_signal_at (hRH : RiemannHypothesis) {r L : ℝ}
+    (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
+    let s : ℝ := 1/2 - (2*r)⁻¹
+    ∃ t ∈ Icc 0 L,
+      (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
+        powerGap s (Real.exp u) (Real.exp (u+L)) = rootSignal r (u+t) := by
   let s : ℝ := 1/2 - (2*r)⁻¹
   have hs : 0 < s := by
     dsimp only [s]
     rw [show (1 : ℝ)/2 = 2⁻¹ by norm_num]
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
-  have hcont := root_signal_uniformContinuous hRH hr
-  obtain ⟨L₀, hL₀, hmod⟩ := Metric.uniformContinuous_iff.mp hcont ε hε
-  refine ⟨L₀, hL₀, fun u L hL hsmall => ?_⟩
   let w (t : ℝ) := Real.exp (-s*t)
+  let S (t : ℝ) := rootSignal r (u+t)
   have hw : Continuous w := by fun_prop
-  have hf : Continuous fun t : ℝ => w t * rootSignal r (u+t) :=
-    hw.mul (hcont.continuous.comp (continuous_const.add continuous_id))
+  have hS : Continuous S :=
+    (root_signal_uniformContinuous hRH hr).continuous.comp (continuous_const.add continuous_id)
   let mass := ∫ t in (0 : ℝ)..L, w t
   have hmass : 0 < mass := by
     change 0 < ∫ t in (0 : ℝ)..L, Real.exp (-s*t)
     rw [width_weight_integral hs]
     exact div_pos (sub_pos.mpr (Real.exp_lt_one_iff.mpr
       (mul_neg_of_neg_of_pos (neg_lt_zero.mpr hs) hL))) hs
-  have hdiff : (∫ t in (0 : ℝ)..L, w t * rootSignal r (u+t)) / mass - rootSignal r u =
-      (∫ t in (0 : ℝ)..L, w t * (rootSignal r (u+t) - rootSignal r u)) / mass := by
-    simp_rw [mul_sub]
-    rw [intervalIntegral.integral_sub (hf.intervalIntegrable _ _)
-      ((hw.mul_const _).intervalIntegrable _ _), intervalIntegral.integral_mul_const]
-    change _ = ((∫ t in (0 : ℝ)..L, w t * rootSignal r (u+t)) - mass * rootSignal r u) / mass
-    field_simp [hmass.ne']
-  have hbound : |∫ t in (0 : ℝ)..L, w t * (rootSignal r (u+t) - rootSignal r u)| ≤ ε * mass := by
-    calc
-      _ ≤ ∫ t in (0 : ℝ)..L, |w t * (rootSignal r (u+t) - rootSignal r u)| := by
-        simpa only [Real.norm_eq_abs] using intervalIntegral.norm_integral_le_integral_norm
-          (f := fun t => w t * (rootSignal r (u+t) - rootSignal r u)) hL.le
-      _ ≤ ∫ t in (0 : ℝ)..L, ε * w t := by
-        apply intervalIntegral.integral_mono_on hL.le
-        · exact (hw.mul ((hcont.continuous.comp
-              (continuous_const.add continuous_id)).sub continuous_const)).abs.intervalIntegrable _ _
-        · exact (hw.const_mul ε).intervalIntegrable _ _
-        intro t ht
-        have ht₀ : 0 ≤ t := ht.1
-        have htL : t ≤ L := ht.2
-        have hdist : dist (u+t) u < L₀ := by
-          rw [Real.dist_eq, show u+t-u = t by ring, abs_of_nonneg ht₀]
-          exact htL.trans_lt hsmall
-        have hnear := (hmod hdist).le
-        rw [Real.dist_eq] at hnear
-        rw [abs_mul, abs_of_pos (Real.exp_pos _), mul_comm ε]
-        exact mul_le_mul_of_nonneg_left hnear (Real.exp_nonneg _)
-      _ = _ := intervalIntegral.integral_const_mul _ _
-  change |(rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
-    powerGap s (Real.exp u) (Real.exp (u+L)) - rootSignal r u| ≤ ε
+  have hwi : IntervalIntegrable w volume 0 L := hw.intervalIntegrable _ _
+  obtain ⟨t, ht, hav⟩ := exists_eq_const_mul_intervalIntegral_of_nonneg
+    hS.continuousOn hwi
+    (fun t _ => Real.exp_nonneg (-s*t))
+  rw [uIcc_of_le hL.le] at ht
+  refine ⟨t, ht, ?_⟩
   rw [root_increment_eq_weighted_average hr hL]
-  change |(∫ t in (0 : ℝ)..L, w t * rootSignal r (u+t)) / mass - rootSignal r u| ≤ ε
-  rw [hdiff, abs_div, abs_of_pos hmass, div_le_iff₀ hmass]
-  exact hbound
+  change (∫ x in (0 : ℝ)..L, w x * S x) / mass = S t
+  simp_rw [mul_comm (w _)]
+  rw [hav]
+  exact mul_div_cancel_right₀ _ hmass.ne'
+
+private theorem root_increment_near_signal (hRH : RiemannHypothesis) {r : ℝ}
+    (hr : 1 < r) {ε : ℝ} (hε : 0 < ε) :
+    ∃ L₀ : ℝ, 0 < L₀ ∧ ∀ u L : ℝ, 0 < L → L < L₀ →
+      let s : ℝ := 1/2 - (2*r)⁻¹
+      |(rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
+        powerGap s (Real.exp u) (Real.exp (u+L)) - rootSignal r u| ≤ ε := by
+  obtain ⟨L₀, hL₀, hmod⟩ := Metric.uniformContinuous_iff.mp
+    (root_signal_uniformContinuous hRH hr) ε hε
+  refine ⟨L₀, hL₀, fun u L hL hsmall => ?_⟩
+  obtain ⟨t, ht, hmean⟩ := root_increment_eq_signal_at hRH hr hL u
+  dsimp only
+  rw [hmean]
+  have hdist : dist (u+t) u < L₀ := by
+    rw [Real.dist_eq, show u+t-u = t by ring, abs_of_nonneg ht.1]
+    exact ht.2.trans_lt hsmall
+  simpa only [Real.dist_eq] using (hmod hdist).le
 
 /-- Shrinking logarithmic widths recover the centered root spectrum uniformly in the late start. -/
 theorem signed_window_even_cutoff_shrinking_width (hRH : RiemannHypothesis) :

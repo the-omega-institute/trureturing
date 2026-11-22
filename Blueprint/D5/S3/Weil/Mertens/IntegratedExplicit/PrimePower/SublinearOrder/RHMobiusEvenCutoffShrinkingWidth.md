@@ -18,7 +18,7 @@ Put q=m+1=2r, s=1/2−1/q, δ=1/q−1/(q+1) and c(m)=μ(q)q/(m s). F(m,u,L) is t
 
 S(r,u) is the real part of the sum over all actual zero occurrences of rootCoeff(r,k) exp((ρₖ−1/2)u/r), divided by s. A(r,u,L) is the integral of exp(−st) S(r,u+t) over [0,L] divided by the integral of exp(−st) over the same interval. The denominator is positive for L>0.
 
-The known integral of the root density gives the primitive increment. Removing its exponential decay yields the positive normalized average of the centered series. Under RH, each centered mode is uniformly continuous and bounded in modulus by its coefficient. The summable coefficient bound passes uniform continuity to the full series. Its modulus controls the error of every weighted average with sufficiently small support, and the even-cutoff expansion supplies the decaying arithmetic remainder.
+The known integral of the root density gives the primitive increment. Removing its exponential decay yields the positive normalized average of the centered series. Under RH, each centered mode is uniformly continuous and bounded in modulus by its coefficient. The summable coefficient bound passes uniform continuity to the full series. The weighted mean value theorem identifies the average with a value of the series within the window. Its modulus controls the error at that point, and the even-cutoff expansion supplies the decaying arithmetic remainder.
 
 ## References
 

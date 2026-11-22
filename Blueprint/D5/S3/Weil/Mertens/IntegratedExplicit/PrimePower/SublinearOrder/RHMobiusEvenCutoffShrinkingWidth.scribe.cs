@@ -28,10 +28,10 @@ internal sealed class RHMobiusEvenCutoffShrinkingWidthDocument : IScribeDocument
                     + "increment. Removing its exponential decay yields the positive normalized "
                     + "average of the centered series. Under RH, each centered mode is uniformly "
                     + "continuous and bounded in modulus by its coefficient. The summable "
-                    + "coefficient bound passes uniform continuity to the full series. Its "
-                    + "modulus controls the error of every weighted average with sufficiently small "
-                    + "support, and the even-cutoff expansion supplies the decaying arithmetic "
-                    + "remainder."))),
+                    + "coefficient bound passes uniform continuity to the full series. The "
+                    + "weighted mean value theorem identifies the average with a value of the "
+                    + "series within the window. Its modulus controls the error at that point, "
+                    + "and the even-cutoff expansion supplies the decaying arithmetic remainder."))),
             DescribeRole.Theorem))));
 
     private static Formula Domain(string name) => F.Seq(F.Mathbb, F.Grp(F.Id(name)));
