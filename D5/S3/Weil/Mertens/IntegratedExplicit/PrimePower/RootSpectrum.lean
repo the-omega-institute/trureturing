@@ -176,7 +176,7 @@ theorem root_spectral_transform {r : ℝ} (hr : 1 < r) (v : ℝ) :
   dsimp only [d, t, y]
   ring
 
-private def rootExponent (r : ℝ) (k : ℕ) : ℂ :=
+def rootExponent (r : ℝ) (k : ℕ) : ℂ :=
   actualZero k / (r : ℂ) - 1 / 2
 
 def rootPrimitive (r x : ℝ) : ℝ :=
@@ -195,7 +195,7 @@ private lemma rootExponent_re_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
   · linarith [div_nonneg (zero_re_pos k).le hr0.le]
   · linarith [(div_le_one₀ hr0).mpr (by linarith [zero_re_lt_one k] : (actualZero k).re ≤ r)]
 
-private lemma rootExponent_norm {r : ℝ} (hr : 1 < r) (k : ℕ) :
+lemma rootExponent_norm {r : ℝ} (hr : 1 < r) (k : ℕ) :
     r⁻¹ ≤ ‖rootExponent r k‖ := by
   have hh : 10 < |(actualZero k).im| :=
     actual_height_gt_ten _ (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)
@@ -209,7 +209,7 @@ private lemma rootExponent_norm {r : ℝ} (hr : 1 < r) (k : ℕ) :
       exact div_le_div_of_nonneg_right (by linarith) hr0.le
     _ ≤ _ := Complex.abs_im_le_norm _
 
-private lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
+lemma rootCoeff_bound {r : ℝ} (hr : 1 < r) (k : ℕ) :
     ‖rootCoeff r k‖ ≤ r * ‖actualCoeff k‖ := by
   have hgap : ‖1 - actualZero k‖ ≤ ‖(r : ℂ) - actualZero k‖ := by
     rw [Complex.norm_def, Complex.norm_def]
@@ -273,7 +273,7 @@ private lemma rootPrimitiveMode_summable {r : ℝ} (hr : 1 < r) (u : ℝ) :
     _ ≤ _ := mul_le_mul_of_nonneg_right
       (rootMode_bound hr (show u ∈ uIcc u u by simp) k) hr0.le
 
-private lemma rootPrimitiveMode_eq {r : ℝ} (hr : 1 < r) (u : ℝ) (k : ℕ) :
+lemma rootPrimitiveMode_eq {r : ℝ} (hr : 1 < r) (u : ℝ) (k : ℕ) :
     rootMode r u k / rootExponent r k =
       (2 * (r : ℂ)^2) * (Real.exp u : ℂ) ^ (rootExponent r k) /
         (actualZero k * ((r : ℂ) - actualZero k) * ((r : ℂ) - 2 * actualZero k)) := by
