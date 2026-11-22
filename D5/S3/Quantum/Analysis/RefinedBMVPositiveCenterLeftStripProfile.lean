@@ -474,9 +474,128 @@ theorem separated_square_derivative_bounds {h t : ℝ}
     by nlinarith only [mul_nonneg h3₀ hBt],
     by nlinarith only [mul_le_mul_of_nonneg_right h38 hBt]⟩
 
+private def separatedCorrection (h t : ℝ) : ℝ :=
+  (1 + (3 + h) * upperTailGap h t) * Real.exp (-((3 + h) * t))
+
+/-- The first three derivatives of the separated repeat-node correction are
+bounded by the corresponding powers of its exponential rate. -/
+theorem separated_correction_derivative_bounds {h t : ℝ} (hh : 0 < h) (ht : 6 ≤ t) :
+    let α : ℝ := 3 + h
+    let A : ℝ → ℝ := fun x ↦ (1 + α * upperTailGap h x) * Real.exp (-(α*x))
+    0 ≤ -deriv A t ∧ -deriv A t ≤ α * A t ∧
+      0 ≤ deriv (deriv A) t ∧ deriv (deriv A) t ≤ α^2 * A t ∧
+      0 ≤ -deriv (deriv (deriv A)) t ∧ -deriv (deriv (deriv A)) t ≤ α^3 * A t := by
+  let α := 3+h
+  let k := α*(α+h)
+  let a := upperTailGap h
+  let q (x : ℝ) := Real.exp (-(h*x))
+  let e (x : ℝ) := Real.exp (-(α*x))
+  let A := separatedCorrection h
+  let D₁ (x : ℝ) := -k*a x*e x
+  let D₂ (x : ℝ) := k*(α*a x-q x)*e x
+  let D₃ (x : ℝ) := k*((2*α+h)*q x-α^2*a x)*e x
+  have hGap (x : ℝ) : h*a x = 1-q x := by
+    change h*((1-q x)/h) = _
+    field_simp [hh.ne']
+  have hExp (r x : ℝ) : HasDerivAt (fun y : ℝ ↦ Real.exp (-(r*y)))
+      (-r*Real.exp (-(r*x))) x := by
+    have hd := ((hasDerivAt_id' x).const_mul r).neg
+    change HasDerivAt (fun y : ℝ ↦ -(r*y)) _ x at hd
+    simpa only [mul_one, mul_comm] using hd.exp
+  have hD₁ (x : ℝ) : HasDerivAt A (D₁ x) x := by
+    have hd := (((hasDerivAt_upperTailGap (t := x) hh).const_mul α).const_add 1).mul (hExp α x)
+    change HasDerivAt A _ x at hd
+    apply hd.congr_deriv
+    change α*q x*e x + (1+α*a x)*(-α*e x) = _
+    dsimp only [D₁, k]
+    linear_combination (α*e x)*(hGap x)
+  have hD₂ (x : ℝ) : HasDerivAt D₁ (D₂ x) x := by
+    have hd := ((hasDerivAt_upperTailGap (t := x) hh).const_mul (-k)).mul (hExp α x)
+    change HasDerivAt D₁ _ x at hd
+    apply hd.congr_deriv
+    change -k*q x*e x + -k*a x*(-α*e x) = _
+    dsimp only [D₂]
+    ring
+  have hD₃ (x : ℝ) : HasDerivAt D₂ (D₃ x) x := by
+    have hd := ((((hasDerivAt_upperTailGap (t := x) hh).const_mul α).sub (hExp h x)).const_mul k).mul
+      (hExp α x)
+    change HasDerivAt D₂ _ x at hd
+    apply hd.congr_deriv
+    change k*(α*q x - -h*q x)*e x + k*(α*a x-q x)*(-α*e x) = _
+    dsimp only [D₃]
+    ring
+  have hEq₁ : deriv A = D₁ := funext fun x ↦ (hD₁ x).deriv
+  have hEq₂ : deriv D₁ = D₂ := funext fun x ↦ (hD₂ x).deriv
+  have hEq₃ : deriv D₂ = D₃ := funext fun x ↦ (hD₃ x).deriv
+  have ht₀ : 0 < t := by linarith
+  have ha : 0 ≤ a t := (div_nonneg
+    (sub_nonneg.mpr (Real.exp_le_one_iff.mpr (neg_nonpos.mpr (mul_nonneg hh.le ht₀.le))))
+    hh.le : 0 ≤ upperTailGap h t)
+  have hα : (3 : ℝ) ≤ α := by dsimp [α]; linarith only [hh]
+  have hα₀ : 0 ≤ α := by linarith
+  have hk : 0 ≤ k := mul_nonneg hα₀ (add_nonneg hα₀ hh.le)
+  have he : 0 ≤ e t := (Real.exp_pos _).le
+  have hq : 0 ≤ q t := (Real.exp_pos _).le
+  have hL := (upperTailSlope_bounds hh ht₀).2.1.trans
+    (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 6) ht)
+  have ha' : 0 < a t := div_pos
+    (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht₀)))) hh
+  have hqEq : q t = upperTailSlope h t * a t := by
+    have hl := upperTailGap_logDeriv hh ht₀
+    rw [(hasDerivAt_upperTailGap hh).deriv] at hl
+    exact (div_eq_iff ha'.ne').mp hl
+  have hqSmall : q t ≤ a t / 6 := by
+    rw [hqEq, div_eq_inv_mul]
+    simpa only [one_div] using mul_le_mul_of_nonneg_right hL ha
+  have hFirst : (α+h)*a t ≤ 1+α*a t := by
+    linarith only [hGap t, hq, show (α+h)*a t = α*a t + h*a t by ring]
+  have hSecond : 0 ≤ α*a t-q t := by
+    have hM := mul_le_mul_of_nonneg_right hα ha
+    linarith only [hqSmall, hM, ha]
+  have hThird : 0 ≤ α^2*a t-(2*α+h)*q t := by
+    have hmax : 2*α+h ≤ 3*α := by dsimp [α]; linarith
+    have hprod := mul_le_mul hmax hqSmall hq (by positivity : 0 ≤ 3*α)
+    have hαle : α/2 ≤ α^2 := by nlinarith only [hα, mul_nonneg hα₀ (sub_nonneg.mpr hα)]
+    have hAp := mul_le_mul_of_nonneg_right hαle ha
+    nlinarith only [hprod, hAp]
+  have hA₁ : k*a t*e t ≤ α*A t := by
+    have hm := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hFirst hα₀) he
+    change _ ≤ α*((1+α*a t)*e t)
+    dsimp only [k]
+    nlinarith only [hm]
+  have hA₂ : D₂ t ≤ α^2*A t := by
+    have hm := mul_le_mul_of_nonneg_left (sub_le_self (α*a t) hq) hk
+    have hm' := mul_le_mul_of_nonneg_right hm he
+    have hm'' := mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_left hFirst (sq_nonneg α)) he
+    change _ ≤ α^2*((1+α*a t)*e t)
+    dsimp only [D₂, k]
+    nlinarith only [hm', hm'']
+  have hA₃ : -D₃ t ≤ α^3*A t := by
+    have htq : 0 ≤ (2*α+h)*q t := by positivity
+    have hm := mul_le_mul_of_nonneg_left (sub_le_self (α^2*a t) htq) hk
+    have hm' := mul_le_mul_of_nonneg_right hm he
+    have hm'' := mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_left hFirst (pow_nonneg hα₀ 3)) he
+    change _ ≤ α^3*((1+α*a t)*e t)
+    dsimp only [D₃, k]
+    nlinarith only [hm', hm'']
+  change 0 ≤ -deriv A t ∧ -deriv A t ≤ α*A t ∧
+    0 ≤ deriv (deriv A) t ∧ deriv (deriv A) t ≤ α^2*A t ∧
+    0 ≤ -deriv (deriv (deriv A)) t ∧ -deriv (deriv (deriv A)) t ≤ α^3*A t
+  rw [hEq₁, hEq₂, hEq₃]
+  exact ⟨by
+      simp only [D₁, neg_mul, neg_neg]
+      exact mul_nonneg (mul_nonneg hk ha) he,
+    by simpa only [D₁, neg_mul, neg_neg] using hA₁,
+    mul_nonneg (mul_nonneg hk hSecond) he, hA₂,
+    by dsimp only [D₃]; nlinarith only [mul_nonneg (mul_nonneg hk hThird) he],
+    hA₃⟩
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
 #print axioms separated_marginal_correction_lt
 #print axioms separated_square_derivative_bounds
+#print axioms separated_correction_derivative_bounds
 
 end RefinedBMV.PositiveCenter
