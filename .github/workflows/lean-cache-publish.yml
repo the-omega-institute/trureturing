@@ -180,6 +180,7 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.scheduled-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
@@ -230,7 +231,7 @@ jobs:
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
+        run: bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-to-github-without-mathlib FULL_BUILD=1
 
   manual-release-authorize:
     name: Authorize the manual cache Release
@@ -301,6 +302,7 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.manual-compile.outputs.sparse == 'true' && '1' || '0' }}
     steps:
@@ -384,4 +386,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
+        run: |
+          observer=()
+          if [[ -f .github/actions/lean-compile-layer/measure.sh ]]; then
+            observer=(bash .github/actions/lean-compile-layer/measure.sh)
+          fi
+          "${observer[@]}" make lean-cache-to-github-without-mathlib FULL_BUILD=1
