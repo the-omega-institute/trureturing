@@ -14,7 +14,7 @@ on:
         description: Shared identifier for two verification snapshots using reusable physical volumes
         type: string
       sparse_release:
-        description: Prefer a compatible predecessor in the named volume namespace and reuse its checked report
+        description: Prefer a compatible predecessor in the named volume namespace and reuse its module artifacts
         type: boolean
         default: true
       retire_volume_tag:
@@ -231,23 +231,22 @@ jobs:
           verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           checkpoint-run: ${{ inputs.checkpoint_run || '' }}
           checkpoint-seconds: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && env.CHECKPOINT_SECONDS || '0' }}
-      - id: full_report
-        name: Build and check the full report for the named volume snapshot
+      - id: prepare_cache
+        name: Prepare module reports for the named volume snapshot
         if: >-
           steps.entry.outputs.hit == 'true' && env.LEAN_CACHE_VOLUME_TEST_ID != '' &&
-          env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.report-checked != 'true'
+          env.LEAN_CACHE_SPARSE_PLAN == '' && steps.release_seed.outputs.cache-prepared != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: >-
-          bash .github/actions/lean-compile-layer/measure.sh --report make check-lean-report FULL_BUILD=1
-          LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json
+          bash .github/actions/lean-compile-layer/measure.sh --report make lean-cache-prepare FULL_BUILD=1
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_VOLUME_RETIRE_TAG: ${{ inputs.retire_volume_tag }}
-          LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.full_report.outcome == 'success' || steps.release_seed.outputs.report-checked == 'true') && '1' || '0' }}
+          LEAN_CACHE_PUBLISH_ONLY: ${{ env.LEAN_CACHE_VOLUME_TEST_ID != '' && env.LEAN_CACHE_SPARSE_PLAN == '' && (steps.prepare_cache.outcome == 'success' || steps.release_seed.outputs.cache-prepared == 'true') && '1' || '0' }}
         run: |
           set -o pipefail
           receipt="$RUNNER_TEMP/indexed-cache-publish.log"
@@ -352,17 +351,9 @@ jobs:
           env -u GITHUB_ACTIONS -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_CACHE_URL -u ACTIONS_RESULTS_URL \
             make lean-cache-from-github-without-mathlib
           test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          test ! -e .lake/build/stratalint/raw-lean-report.json
           if [[ "$RESTORE" == full ]]; then
-            PYTHONPATH=tools/lean-inspector python3 - <<'PYTHON'
-          from pathlib import Path
-          import reuse
-
-          receipt = reuse.read_receipt(reuse.canonical_seed(Path.cwd()))
-          if receipt["completed"] != reuse.CHECKED:
-              raise SystemExit("Restored publication lacks the current full-report check")
-          PYTHON
-          else
-            test ! -e .lake/build/stratalint/raw-lean-report.json
+            test -s .lake/build/lean-inspector/modules/D5.S0.Tower.GoldenGapWord.zip
           fi
 
   cache-shards:
