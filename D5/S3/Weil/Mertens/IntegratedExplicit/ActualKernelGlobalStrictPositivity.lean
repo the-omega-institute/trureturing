@@ -30,7 +30,8 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (on_line coeff_
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelGlobalStrictPositivity
 
-private def weight (k : ℕ) : ℝ := 1 / (1 / 4 + (actualZero k).im ^ 2)
+/-- The reciprocal-square weight of an actual zero occurrence. -/
+def weight (k : ℕ) : ℝ := 1 / (1 / 4 + (actualZero k).im ^ 2)
 
 /-- The complete series retains every analytic occurrence. Taking real parts
 avoids any need to reindex by conjugate occurrences. -/

@@ -50,7 +50,7 @@ theorem card_le_layer_bound (G : SimpleGraph V) (H : SimpleGraph W)
 variable {A : Type*} [Fintype A] [AddCommGroup A]
 
 omit [Fintype A] in
-private theorem cayley_adj_iff (S : Set A) (hzero : (0 : A) ∉ S)
+theorem cayley_adj_iff (S : Set A) (hzero : (0 : A) ∉ S)
     (hneg : ∀ a ∈ S, -a ∈ S) (x y : A) :
     (addCayley S).Adj x y ↔ y - x ∈ S := by
   rw [addCayley_adj]

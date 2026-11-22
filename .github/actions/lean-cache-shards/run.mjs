@@ -65,18 +65,38 @@ function payloadPath(digest) {
   return join(stage, 'payload', digest + '.tar.gz');
 }
 
-function payloadKey(identity, digest) {
-  return identity.prefix + 'material-' + digest;
+function payloadKey(prefix, digest) {
+  return prefix + 'material-' + digest;
+}
+
+function snapshotPrefix(identity) {
+  return identity.snapshot_prefix || identity.prefix + 'snapshot-';
 }
 
 function indexKey(identity) {
   const { run, attempt } = identity.owner;
-  return identity.prefix + 'snapshot-' + run + '-' + attempt;
+  return snapshotPrefix(identity) + run + '-' + attempt;
 }
 
-function matchIndex(identity, matched, record) {
-  const expected = identity.prefix + 'snapshot-' + record.owner.run + '-' + record.owner.attempt;
-  if (matched !== expected) throw new Error('Actions index did not match the producing run');
+function snapshotRows(rows, prefix, version, anyConfiguration = false) {
+  const suffix = anyConfiguration
+    ? /^(?<config>[0-9a-f]{64})-(?<run>[1-9][0-9]*)-(?<attempt>[1-9][0-9]*)$/
+    : /^(?<run>[1-9][0-9]*)-(?<attempt>[1-9][0-9]*)$/;
+  return rows.flatMap(row => {
+    if (row.version !== version || !row.key.startsWith(prefix)) return [];
+    const match = suffix.exec(row.key.slice(prefix.length));
+    return match ? [{ ...row, ...match.groups }] : [];
+  }).sort((left, right) => right.run.localeCompare(left.run, 'en', { numeric: true })
+    || right.attempt.localeCompare(left.attempt, 'en', { numeric: true }));
+}
+
+async function restoreIndex(cache, row) {
+  if (await cache.restoreCache([indexPath], row.key, []) !== row.key) return;
+  const record = JSON.parse(await readFile(indexPath, 'utf8'));
+  if (record.owner.run !== row.run || record.owner.attempt !== row.attempt || record.owner.ref !== row.ref) {
+    throw new Error('Actions index did not match the producing run or ref');
+  }
+  return record;
 }
 
 async function paced(items, parallelism, perMinute, invoke, schedule = { next: performance.now() }) {
@@ -144,47 +164,36 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   const refs = state === 'resume' || protectedOnly ? [ref] : [...new Set([ref, 'refs/heads/dev'])];
   await rm(indexPath, { force: true });
   let retry;
-  const restoreExactIndex = async row => {
-    const matched = await cache.restoreCache([indexPath], row.key, []);
-    if (matched !== row.key) return;
-    const record = JSON.parse(await readFile(indexPath, 'utf8'));
-    matchIndex(identity, matched, record);
-    if (record.owner.ref !== row.ref) throw new Error('Actions index owner ref mismatch');
-    return matched;
-  };
+  const locations = [{ discovery: identity.prefix + 'snapshot-', exact: snapshotPrefix(identity) }];
+  if (identity.legacy_prefix) {
+    const legacy = identity.legacy_prefix + 'snapshot-';
+    locations.push({ discovery: legacy, exact: legacy });
+  }
   for (const candidateRef of refs.filter(value => /^refs\/heads\/(dev|integration-[A-Za-z0-9._/-]+)$/.test(value))) {
-    const prefix = identity.prefix + 'snapshot-';
-    const rows = optionalInventory(candidateRef, prefix)
-      .filter(row => {
-        if (!row.key.startsWith(prefix) || row.version !== cacheVersion(indexPath)) return false;
-        const match = /^([1-9][0-9]*)-([1-9][0-9]*)$/.exec(row.key.slice(prefix.length));
-        if (!match) return false;
-        if (!resumeAfterAttempt) return true;
-        const [, run, attempt] = match;
-        return run === identity.owner.run && BigInt(attempt) > BigInt(resumeAfterAttempt)
-          && BigInt(attempt) < BigInt(identity.owner.attempt);
-      })
-      .sort((left, right) => right.key.localeCompare(left.key, 'en', { numeric: true }));
-    retry ||= rows[0];
-    for (const row of rows.slice(0, 3)) {
-      const matched = await restoreExactIndex(row);
-      if (matched) return matched;
+    for (const { discovery, exact } of locations) {
+      const rows = snapshotRows(optionalInventory(candidateRef, discovery), exact, cacheVersion(indexPath))
+        .filter(({ run, attempt }) => !resumeAfterAttempt || (run === identity.owner.run
+          && BigInt(attempt) > BigInt(resumeAfterAttempt) && BigInt(attempt) < BigInt(identity.owner.attempt)));
+      retry ||= rows[0];
+      for (const row of rows.slice(0, 3)) {
+        if (await restoreIndex(cache, row)) return row.key;
+      }
     }
   }
   if (retry) {
     await waitForCacheQuota();
-    return restoreExactIndex(retry);
+    if (await restoreIndex(cache, retry)) return retry.key;
   }
 }
 
-async function visibleMaterial(identity, index, cacheVersion) {
+async function visibleMaterial(prefixes, index, cacheVersion) {
   const { owner } = JSON.parse(await readFile(index, 'utf8'));
-  const material = optionalInventory(owner.ref, identity.prefix + 'material-');
-  const visible = new Set(material.map(row => row.key + '/' + row.version));
-  return digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)));
+  const visible = new Set(prefixes.flatMap(prefix => optionalInventory(owner.ref, prefix + 'material-')
+    .map(row => row.key + '/' + row.version)));
+  return digest => prefixes.some(prefix => visible.has(payloadKey(prefix, digest) + '/' + cacheVersion(payloadPath(digest))));
 }
 
-async function restorePayloads(cache, cacheVersion, identity, index, preparation) {
+async function restorePayloads(cache, cacheVersion, prefixes, index, preparation) {
   const started = performance.now();
   const needed = python('restore-plan', ['--index', index, ...targetArgs]);
   const digests = [...new Set(Object.values(needed))];
@@ -201,11 +210,14 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
     const path = payloadPath(digest);
     try {
       await rm(path, { force: true });
-      const key = payloadKey(identity, digest);
-      if (await cache.restoreCache([path], key, []) === key) {
-        const { size } = await stat(path);
-        transferred += size;
-        downloaded.add(digest);
+      for (const prefix of prefixes) {
+        const key = payloadKey(prefix, digest);
+        if (await cache.restoreCache([path], key, []) === key) {
+          const { size } = await stat(path);
+          transferred += size;
+          downloaded.add(digest);
+          return;
+        }
       }
     } catch (error) {
       console.log('LEAN_ACTIONS_SHARDS restore failed for ' + digest + ': ' + error.message);
@@ -226,7 +238,7 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
       pending = pending.filter(digest => !downloaded.has(digest));
       if (pending.length === 0 || retries === 2) break;
       if (retries === 0) {
-        pending = pending.filter(await visibleMaterial(identity, index, cacheVersion));
+        pending = pending.filter(await visibleMaterial(prefixes, index, cacheVersion));
       }
       retries += 1;
     }
@@ -251,15 +263,16 @@ async function restore(cache, cacheVersion, identity) {
     console.log('LEAN_ACTIONS_SHARDS no compatible index was found');
     return;
   }
+  const prefix = identity.legacy_prefix && matched.startsWith(identity.legacy_prefix) ? identity.legacy_prefix : identity.prefix;
   if (operation === 'lookup') {
     const entries = python('restore-plan', ['--index', indexPath]);
     const digests = [...new Set(Object.values(entries))];
-    const present = digests.filter(await visibleMaterial(identity, indexPath, cacheVersion)).length;
+    const present = digests.filter(await visibleMaterial([prefix], indexPath, cacheVersion)).length;
     console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({ operation, requested: digests.length, visible: present }));
     await setOutputs({ key: matched, visible: present, complete: present > 0 && present === digests.length });
     return;
   }
-  const result = await restorePayloads(cache, cacheVersion, identity, indexPath);
+  const result = await restorePayloads(cache, cacheVersion, [prefix], indexPath);
   await setOutputs({ key: matched, available: result.available, missing: result.missing.length,
     complete: result.complete });
 }
@@ -338,20 +351,33 @@ async function saveShards(cache, cacheVersion, identity, writes) {
   const prefix = identity.prefix + 'material-';
   const ownerRef = identity.owner.ref;
   const before = visibleEntries(ownerRef, identity.prefix);
-  const savedIndex = before.filter(row => row.key.startsWith(identity.prefix + 'snapshot-')
-    && row.version === cacheVersion(indexPath)).sort((left, right) =>
-      right.key.localeCompare(left.key, 'en', { numeric: true }))[0];
+  const version = cacheVersion(indexPath);
+  const current = snapshotRows(before, snapshotPrefix(identity), version);
+  // A protected producer can retain a layout across Lake configurations. The
+  // packer compares current output fingerprints before reusing a stable digest.
+  const candidates = [...current];
+  if (identity.legacy_prefix) {
+    const compatible = snapshotRows(before, identity.prefix + 'snapshot-', version, true);
+    candidates.push(...compatible.filter(row => !row.key.startsWith(snapshotPrefix(identity))));
+  }
   await rm(indexPath, { force: true });
   const extra = ['--anchor', anchor, ...targetArgs];
   const known = new Set();
   let previous;
-  if (savedIndex && await cache.restoreCache([indexPath], savedIndex.key, []) === savedIndex.key) {
-    const record = JSON.parse(await readFile(indexPath, 'utf8'));
-    matchIndex(identity, savedIndex.key, record);
-    previous = record;
-    if (record.owner.ref !== ownerRef) throw new Error('Actions index owner ref mismatch');
-    for (const digest of Object.values(record.entries)) {
-      if (matches(before, payloadKey(identity, digest), cacheVersion(payloadPath(digest)))) known.add(digest);
+  for (const row of candidates.slice(0, 3)) {
+    previous = await restoreIndex(cache, row);
+    if (previous) break;
+  }
+  if (!previous && identity.legacy_prefix) {
+    const legacy = identity.legacy_prefix + 'snapshot-';
+    for (const row of snapshotRows(optionalInventory(ownerRef, legacy), legacy, version).slice(0, 3)) {
+      previous = await restoreIndex(cache, row);
+      if (previous) break;
+    }
+  }
+  if (previous) {
+    for (const digest of Object.values(previous.entries)) {
+      if (matches(before, payloadKey(identity.prefix, digest), cacheVersion(payloadPath(digest)))) known.add(digest);
     }
     const available = join(stage, 'visible-material.json');
     await writeFile(available, JSON.stringify([...known]));
@@ -364,7 +390,7 @@ async function saveShards(cache, cacheVersion, identity, writes) {
   const confirmed = new Set(known);
   const upload = async (digest, inventory) => {
     const path = payloadPath(digest);
-    const key = payloadKey(identity, digest);
+    const key = payloadKey(identity.prefix, digest);
     try {
       if (!matches(inventory, key, cacheVersion(path)) && await saveEntry(path, key) >= 0) {
         confirmed.add(digest);
@@ -390,7 +416,7 @@ async function saveShards(cache, cacheVersion, identity, writes) {
     const rows = visibleEntries(ownerRef, prefix);
     const visible = new Set(rows.map(row => row.key + '/' + row.version));
     for (const digest of confirmed) {
-      if (!visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)))) confirmed.delete(digest);
+      if (!visible.has(payloadKey(identity.prefix, digest) + '/' + cacheVersion(payloadPath(digest)))) confirmed.delete(digest);
     }
     return rows;
   };
@@ -509,7 +535,9 @@ async function main() {
   if (operation === 'restore-preparation') {
     const directory = process.argv[3];
     const { cache, cacheVersion } = await loadCacheClient();
-    const result = await restorePayloads(cache, cacheVersion, python('identity'), join(directory, 'project.json'), directory);
+    const identity = python('identity');
+    const prefixes = [identity.prefix, identity.legacy_prefix].filter(Boolean);
+    const result = await restorePayloads(cache, cacheVersion, prefixes, join(directory, 'project.json'), directory);
     if (!result.complete) process.exitCode = 3;
     return;
   }
