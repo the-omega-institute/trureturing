@@ -9,9 +9,16 @@
       ".lake/build/ir/**/*.c.hash",
       ".lake/build/ir/**/*.o*",
       ".lake/build/ir/**/*.bc*",
-      ".lake/build/lean-inspector",
+      ".lake/build/lean-inspector/modules",
+      ".lake/build/lean-inspector/inputs",
+      ".lake/build/lean-inspector/module-inputs.json",
+      ".lake/build/lean-inspector/report-format",
+      ".lake/build/lean-inspector/batch.json",
+      ".lake/build/lean-inspector/producer",
+      ".lake/build/lean-inspector/interface",
+      ".lake/build/lean-inspector/reg",
+      ".lake/build/lean-inspector/judge-inputs",
       ".lake/build/reg",
-      ".lake/build/stratalint/raw-lean-report.json*",
       ".lake/build/declared-template-evidence.json"
     ]
   }

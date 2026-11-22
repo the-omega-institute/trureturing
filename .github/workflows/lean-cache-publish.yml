@@ -39,7 +39,7 @@ on:
         type: boolean
         default: false
       native_report_batch_modules:
-        description: 'Maximum modules per native extraction process (integer 1..100; full report scope unchanged)'
+        description: 'Maximum modules per native extraction process (integer 1..100)'
         type: string
         default: '100'
 
