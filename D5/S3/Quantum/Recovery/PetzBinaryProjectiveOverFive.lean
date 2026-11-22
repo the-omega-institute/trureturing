@@ -58,7 +58,8 @@ private theorem projectors_action (X : M₂) :
   fin_cases i <;> fin_cases j <;>
     simp [projector, coordinatePVM, Matrix.sum_apply,
       diagonal_mul, mul_diagonal]
-private theorem measurement_action (X : M₂) :
+/-- The computational-basis measurement keeps exactly the diagonal. -/
+theorem measurement_action (X : M₂) :
     action measurement X = diagonal X.diag := by
   change CStarMatrix.ofMatrix.symm ((pinchingChannel (coordinatePVM id)).toCompletelyPositiveMap
     (CStarMatrix.ofMatrix X)) = _
@@ -364,7 +365,8 @@ private theorem pair_measured_log (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100) :
   rw [measured_input_raw, measured_reference _ (reference_faithful x hx hs), cfc_diagonal,
     Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, Fin.sum_univ_two]
   simp [Complex.mul_re, reference_prob_zero, reference_prob_one]
-private theorem trace_log_split (ρ σ : Qubit) :
+/-- The finite trace-log entropy splits into negative input entropy and the reference-log pairing. -/
+theorem trace_log_split (ρ σ : Qubit) :
     finiteTraceLogRelativeEntropy ρ σ =
       -vonNeumannEntropy ρ - (raw ρ * cfc Real.log (raw σ)).trace.re := by
   have h := quantum_relative_entropy_eq_neg_entropy_sub_cross ρ σ
@@ -598,7 +600,7 @@ private theorem physical_loss_bounds (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100)
   simpa only [largerEigenvalue, s, g, show (x^2)^2 = x^4 by ring,
     show (x^2)^3 = x^6 by ring] using hb
 
-private def symmetric (d e f : ℝ) : M₂ :=
+def symmetric (d e f : ℝ) : M₂ :=
   !![(d : ℂ), (e : ℂ); (e : ℂ), (f : ℂ)]
 private def root00 (x : ℝ) : ℝ :=
   (Real.sqrt (1-x^4) + x^2*(x^3)^2) / (1+(x^3)^2)
@@ -618,7 +620,8 @@ private theorem reference_root (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100) :
   rw [cfc_rotated, h]
   rfl
 
-private theorem symmetric_sandwich (a b c u v : ℝ) :
+/-- Sandwiching a real diagonal matrix by a real symmetric qubit matrix. -/
+theorem symmetric_sandwich (a b c u v : ℝ) :
     symmetric a b c * realDiagonal ![u,v] * symmetric a b c =
       symmetric (u*a*a+v*b*b) (u*a*b+v*b*c) (u*b*b+v*c*c) := by
   have hm (i j : Fin 2) : (symmetric a b c * realDiagonal ![u,v]) i j =
@@ -648,11 +651,12 @@ private theorem recover_symmetric (x : ℝ) (hx : 0 < x) (hs : x ≤ 1 / 100) :
   unfold recovered01
   ring
 
-private theorem symmetric_sub (a b c d e f : ℝ) :
+theorem symmetric_sub (a b c d e f : ℝ) :
     symmetric a b c - symmetric d e f = symmetric (a-d) (b-e) (c-f) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [symmetric]
-private theorem traceless_symmetric_normSq (d e : ℝ) :
+/-- The squared full trace norm of a real symmetric traceless qubit matrix. -/
+theorem traceless_symmetric_normSq (d e : ℝ) :
     traceNorm (symmetric d e (-d)) ^ 2 = 4*(d^2+e^2) := by
   let c := Real.sqrt (d^2+e^2)
   have hc : c^2 = d^2+e^2 := Real.sq_sqrt (by positivity)
