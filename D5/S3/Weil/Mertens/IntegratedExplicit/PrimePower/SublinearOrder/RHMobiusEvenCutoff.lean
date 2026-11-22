@@ -19,7 +19,6 @@ open Real MeasureTheory Set Finset ArithmeticFunction
 open scoped ArithmeticFunction.Moebius
 open D5.S3.Weil.Mertens.IntegratedExplicit
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
-open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean
   (normalizedMass normalizedZeroSeries normalizedZeroSeries_continuous mass_log_substitution
     windowError_continuous frequency frequency_real frequency_norm)
@@ -396,21 +395,25 @@ theorem signed_window_even_cutoff_expansion (hRH : RiemannHypothesis) :
     (by positivity : 0 ≤ K*((q : ℝ)*(1+Real.log (q : ℝ))^2))).trans_eq (by ring)
 
 /-- The arithmetic coefficient is the logarithmic Cesàro mean at each fixed even cutoff. -/
-theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis)
-    {m r : ℕ} (hm : 2 ≤ m) (heven : m+1 = 2*r) {L : ℝ} (hL : 0 < L) :
-    ∃ U₀ C : ℝ, 0 < U₀ ∧ 0 < C ∧ ∀ (U T : ℝ), U₀ ≤ U → 0 < T →
-      let s := orderRate m
-      let F := fun u : ℝ => signedWindowResidual m (Real.exp u) (Real.exp (u+L)) /
-        powerGap s (Real.exp u) (Real.exp (u+L))
-      IntervalIntegrable F volume U (U+T) ∧
-      |(∫ u in U..U+T, F u)/T + (μ (m+1) : ℝ)*(((m : ℝ)+1)/((m : ℝ)*s))| ≤ C/T := by
+theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis) :
+    ∃ U₀ : ℝ, 0 < U₀ ∧ ∀ (m r : ℕ), 2 ≤ m → m+1 = 2*r → ∀ L : ℝ, 0 < L →
+      ∃ C : ℝ, 0 < C ∧ ∀ (U T : ℝ), U₀ ≤ U → 0 < T →
+        let s := orderRate m
+        let F := fun u : ℝ => signedWindowResidual m (Real.exp u) (Real.exp (u+L)) /
+          powerGap s (Real.exp u) (Real.exp (u+L))
+        IntervalIntegrable F volume U (U+T) ∧
+        |(∫ u in U..U+T, F u)/T + (μ (m+1) : ℝ)*(((m : ℝ)+1)/((m : ℝ)*s))| ≤ C/T := by
   obtain ⟨a₀, K, ha₂, hK, hexpansion⟩ := signed_window_even_cutoff_expansion hRH
+  let U₀ := Real.log a₀
+  have ha₀ : 0 < a₀ := by linarith
+  have hUlog : Real.log 2 ≤ U₀ := Real.log_le_log (by norm_num) ha₂
+  have hU₀ : 0 < U₀ := (Real.log_pos (by norm_num : (1 : ℝ)<2)).trans_le hUlog
+  refine ⟨U₀, hU₀, fun m r hm heven L hL => ?_⟩
   let q := m+1
   let s := orderRate m
   let δ := ((m : ℝ)+1)⁻¹-((m : ℝ)+2)⁻¹
   let c := (μ q : ℝ)*(((m : ℝ)+1)/((m : ℝ)*s))
   let W := K*((q : ℝ)*(1+Real.log (q : ℝ))^2)*((s+δ)/s)
-  let U₀ := Real.log a₀
   let gap (u : ℝ) := powerGap s (Real.exp u) (Real.exp (u+L))
   let R (u : ℝ) := signedWindowResidual q (Real.exp u) (Real.exp (u+L))/gap u
   let F (u : ℝ) := signedWindowResidual m (Real.exp u) (Real.exp (u+L))/gap u
@@ -424,9 +427,6 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis)
     exact sub_pos.mpr (inv_strictAnti₀ (by norm_num) (by linarith))
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   have hW : 0 < W := by dsimp only [W]; positivity
-  have ha₀ : 0 < a₀ := by linarith
-  have hUlog : Real.log 2 ≤ U₀ := Real.log_le_log (by norm_num) ha₂
-  have hU₀ : 0 < U₀ := (Real.log_pos (by norm_num : (1 : ℝ)<2)).trans_le hUlog
   have ha (u : ℝ) (hu : U₀ ≤ u) : a₀ ≤ Real.exp u := by
     rw [← Real.exp_log ha₀]
     exact Real.exp_le_exp.mpr hu
@@ -473,7 +473,7 @@ theorem signed_window_even_cutoff_cesaro (hRH : RiemannHypothesis)
     exact (div_le_iff₀ (hgap u)).mpr hraw
   obtain ⟨J, hJ, hP⟩ := normalized_root_increment_bound hRH hr hL
   let C := W/δ + |(μ r : ℝ)| * J
-  refine ⟨U₀, C, hU₀, by dsimp only [C]; positivity, fun U T hU hT => ?_⟩
+  refine ⟨C, by dsimp only [C]; positivity, fun U T hU hT => ?_⟩
   have hUT : U ≤ U+T := by linarith
   have hIntBound : IntervalIntegrable (fun u => W*Real.exp (-δ*u)) volume U (U+T) :=
     (by fun_prop : Continuous fun u : ℝ => W*Real.exp (-δ*u)).intervalIntegrable _ _

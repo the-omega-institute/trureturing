@@ -35,7 +35,8 @@ internal sealed class RHMobiusEvenCutoffDocument : IScribeDocumentDefinition
                     Paragraph(Text("Let F(m,L,u)=E(m,exp u,exp(u+L))/D(s(m),exp u,exp(u+L)). "
                         + "Integrable(m,L,U,T) means interval integrability of F(m,L,·) "
                         + "on [U,U+T] with respect to Lebesgue measure. "
-                        + "Avg(m,L,U,T) is its interval integral divided by T.")),
+                        + "Avg(m,L,U,T) is its interval integral divided by T. The starting threshold A "
+                        + "is common to all orders and widths.")),
                     Paragraph(Text("Normalize the two endpoint values of the root primitive by the "
                         + "same positive gap. Under RH the resulting increment is the real part of "
                         + "an absolutely summable exponential series. The ordinates divided by r "
@@ -107,11 +108,10 @@ internal sealed class RHMobiusEvenCutoffDocument : IScribeDocumentDefinition
         var averages = All("U", Domain("R"), All("T", Domain("R"),
             Imp(And(Le(threshold, u), Lt(F.D(0), t)),
                 And(Call("Integrable", m, width, u, t), error))));
-        var exists = Exists("A", Domain("R"), Exists("C", Domain("R"),
-            And(And(Lt(F.D(0), threshold), Lt(F.D(0), c)), averages)));
+        var exists = Exists("C", Domain("R"), And(Lt(F.D(0), c), averages));
         var widths = All("L", Domain("R"), Imp(Lt(F.D(0), width), exists));
         var orders = All("m", Domain("N"), All("r", Domain("N"),
             Imp(And(Le(F.D(2), m), Eq(q, Multiply(F.D(2), r))), widths)));
-        return F.Disp(Imp(F.Id("RH"), orders));
+        return F.Disp(Imp(F.Id("RH"), Exists("A", Domain("R"), And(Lt(F.D(0), threshold), orders))));
     }
 }
