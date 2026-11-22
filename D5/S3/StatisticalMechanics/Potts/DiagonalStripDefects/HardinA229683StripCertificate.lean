@@ -16,7 +16,8 @@ cut_terminal: proof_shape=bind-only; consumers=transition_counts._simp_1
 transition_counts: proof_shape=bind-only; consumers=HardinA229683Strip.counting_bridge
 forward_inherited: proof_shape=bind-only; consumers=finite_certificate, forward_two
 W: proof_shape=bind-only; consumers=finite_certificate, finite_certificate._proof_1, forward_two, forward_two._proof_1
-coeff: proof_shape=bind-only; consumers=HardinA229683Strip.result, coeff.eq_1, finite_certificate, finite_certificate._proof_1, inherited_relation
+coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229683Strip.result
+coeff_values: proof_shape=bind-only; consumers=inherited_relation, HardinA229683Strip.result
 forward_two: proof_shape=content; consumers=finite_certificate
 inherited_relation: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA229683Strip.result
@@ -25,6 +26,7 @@ halfForwardTwo: proof_shape=bind-only; consumers=W
 -/
 
 import Mathlib.Order.Fin.Basic
+import Mathlib.Data.Finset.NatAntidiagonal
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
@@ -240,7 +242,14 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
     unordered (halfForwardTwo i) (halfForwardZero i) j
 
 /-- The missing lag-sixteen term has coefficient zero. -/
-def coeff : Fin 18 → ℤ := ![-282429536481, 470715894135, 0, -366499782594, 132368667075, 92909172825, -54520532190, -6257717775, 8082823950, -601275555, -435322350, 70536825, 7404210, -2206575, 60075, 19486, -2010, 75]
+def coeff (k : Fin 18) : ℤ :=
+  -(∑ p ∈ Finset.antidiagonal k.val,
+    HardinA229508StripCertificate.squareMonicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2)
+
+/-- The computed expansion in increasing order of the input index. -/
+theorem coeff_values : coeff = ![-282429536481, 470715894135, 0, -366499782594, 132368667075, 92909172825, -54520532190, -6257717775, 8082823950, -601275555, -435322350, 70536825, 7404210, -2206575, 60075, 19486, -2010, 75] := by
+  funext k
+  fin_cases k <;> decide +kernel
 
 theorem forward_two (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := by
   induction i using Fin.induction with
@@ -285,7 +294,7 @@ private theorem inherited_relation (j : Fin 15 ⊕ Fin 15) :
   have h5 := rel 5
   have h6 := rel 6
   have h7 := rel 7
-  simp only [coeff, HardinA229508StripCertificate.coeff,
+  simp only [coeff_values, HardinA229508StripCertificate.coeff_values,
     Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.reduceAdd, add_zero] at h1 h2 h3 h4 h5 h6 h7 ⊢
   linarith only [h1, h2, h3, h4, h5, h6, h7]
@@ -306,6 +315,7 @@ theorem finite_certificate :
         rw [Nat.add_comm 2 k.val]
         exact congrFun (forward_two k.succ.succ.castSucc) j]
     have fresh : ∀ j : Fin 15, W 20 j = ∑ k : Fin 18, coeff k * W k.succ.succ.castSucc j := by
+      rw [coeff_values]
       decide +kernel
     exact fresh j
 

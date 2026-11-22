@@ -50,6 +50,10 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             H("Recurrence coefficients"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA203981StripCertificate.coeff"), Arr(Fin("6"), V("Int"))), Vec(N("6561", true), N("3645"), N("2025"), N("963", true), N("45", true), N("25"))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The entries are in increasing order of the input index."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("monic-coeff"), DeclarationHandle.Create(Prefix + "monicCoeff"),
+            H("Monic polynomial coefficients"), StatementSource.FromAuthor(Disp(MonicCoeffFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("Below degree six, the polynomial coefficients are the negatives of the recurrence weights. The leading coefficient is one and all higher coefficients vanish."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("forward-table"), DeclarationHandle.Create(Prefix + "forward_table"),
             H("Forward iteration agrees with the table"), StatementSource.FromAuthor(Disp(All("i", Fin("21"), Eq(Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), Call("Fin.val", V("i"))), Call("HardinA203981StripCertificate.W", V("i")))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -58,6 +62,16 @@ internal sealed class HardinA203981StripCertificateDocument : IScribeDocumentDef
             H("The forward relation at exponent seven"), StatementSource.FromAuthor(Disp(Eq(Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), Add(N("1"), N("6"))), SumOver("j", Fin("6"), Call("SMul.smul", Call("HardinA203981StripCertificate.coeff", V("j")), Call("DefectTransfer.forward", Call("HardinA203981StripData.T"), Call("HardinA203981StripData.initial"), Add(N("1"), Call("Fin.val", V("j"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The entrywise relation follows from the tabulated forward vectors."))), DescribeRole.Theorem))));
+    private static Formula MonicCoeffFormula()
+    {
+        var n = V("n");
+        var k = Typed(Seq(Langle, n, Comma, Sp, V("h"), Rangle), Fin("6"));
+        var below = Seq(V("h"), Colon, Sp, n, Sp, Lt, Sp, N("6"));
+        return All("n", V("Nat"), Eq(Call("HardinA203981StripCertificate.monicCoeff", n),
+            If(below, Seq(Minus, Call("HardinA203981StripCertificate.coeff", k)),
+                If(Eq(n, N("6")), CastInt(N("1")), CastInt(N("0"))))));
+    }
+
     private static Formula Col() => Call("HardinA233258PairTransfer.Col");
     private static Formula Class(Formula b) => Call("HardinA233258PairTransfer.cls", b);
     private static Formula Bond(Formula a, Formula b) =>

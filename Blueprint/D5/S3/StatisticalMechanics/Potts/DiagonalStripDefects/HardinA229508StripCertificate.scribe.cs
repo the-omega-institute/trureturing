@@ -44,10 +44,18 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
             H("Forward vectors in total cost degree 1"), StatementSource.FromAuthor(Disp(ForwardWeightsFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("The degree-zero and degree-one half-strip vectors contribute in both orders at each exponent through twenty."))), DescribeRole.Definition),
-        Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
-            H("Order-twelve coefficients"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA229508StripCertificate.coeff"), Arr(Fin("12"), V("Int"))), Vec(N("43046721", true), N("47829690"), N("13286025"), N("27398736", true), N("2329155"), N("4556250"), N("940491", true), N("180630", true), N("50175"), N("324"), N("715", true), N("50"))))),
+        Describe.Lean(DescribeId.Create("square-monic-coeff"), DeclarationHandle.Create(Prefix + "squareMonicCoeff"),
+            H("Squared monic polynomial coefficients"), StatementSource.FromAuthor(Disp(SquareMonicCoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The coefficients are listed in increasing order of input index."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("The antidiagonal lists pairs of nonnegative exponents whose sum is the output exponent."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
+            H("Order-twelve coefficients"), StatementSource.FromAuthor(Disp(CoeffFormula())),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("The recurrence weights are the negatives of the coefficients below degree 12 in the square of the order-six monic polynomial."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("coeff-values"), DeclarationHandle.Create(Prefix + "coeff_values"),
+            H("Numerical expansion"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA229508StripCertificate.coeff"), Arr(Fin("12"), V("Int"))), Vec(N("43046721", true), N("47829690"), N("13286025"), N("27398736", true), N("2329155"), N("4556250"), N("940491", true), N("180630", true), N("50175"), N("324"), N("715", true), N("50"))))),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("The coefficients are listed in increasing order of input index."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-one"), DeclarationHandle.Create(Prefix + "forward_one"),
             H("Second-sector forward vectors"), StatementSource.FromAuthor(Disp(All("i", Fin("21"), Eq(Call("Function.comp", Call("DefectTransfer.forward", Call("HardinA229508StripData.T"), Call("HardinA229508StripData.initial"), Call("Fin.val", V("i"))), Call("Sum.inr")), Call("HardinA229508StripCertificate.W", V("i")))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -102,6 +110,25 @@ internal sealed class HardinA229508StripCertificateDocument : IScribeDocumentDef
 
     private static Formula Instance(string name, Formula type) =>
         Seq(OpenBracket, Call(name, type), CloseBracket);
+
+    private static Formula CoeffFormula()
+    {
+        var k = V("k");
+        return All("k", Fin("12"), Eq(Call("HardinA229508StripCertificate.coeff", k),
+            Seq(Minus, Call("HardinA229508StripCertificate.squareMonicCoeff", Call("Fin.val", k)))));
+    }
+
+    private static Formula SquareMonicCoeffFormula()
+    {
+        var n = V("n");
+        var p = V("p");
+        Formula Monic(Formula i) => Call("HardinA203981StripCertificate.monicCoeff", i);
+        var product = new Formula.Binary(Monic(Call("Prod.fst", p)), FormulaBinaryOperator.Multiply,
+            Monic(Call("Prod.snd", p)));
+        var sum = Seq(Sum, Underscore, Grp(p, Sp, InMacro, Sp, Call("Finset.antidiagonal", n)),
+            Sp, Parenthesized(product));
+        return All("n", V("Nat"), Eq(Call("HardinA229508StripCertificate.squareMonicCoeff", n), sum));
+    }
 
     private static Formula ForwardWeightsFormula()
     {

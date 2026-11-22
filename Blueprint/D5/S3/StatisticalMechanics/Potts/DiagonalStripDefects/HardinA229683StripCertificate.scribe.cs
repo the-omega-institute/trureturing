@@ -28,9 +28,13 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("Here v₂ is the 21 by 5 table of degree-two half-strip vectors. Each unordered product reads a single target coordinate, counting both orders when its classes differ. The degree-two half-strip table starts at zero and uses the last five coordinates of HardinA229696StripData.W for exponents one and two, with classes 1 and 3 exchanged at exponent two. The theorem forward_two pins the entries against the three-sector update."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("coeff"), DeclarationHandle.Create(Prefix + "coeff"),
-            H("Order-eighteen coefficients"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA229683StripCertificate.coeff"), Arr(Fin("18"), V("Int"))), Vec(N("282429536481", true), N("470715894135"), N("0"), N("366499782594", true), N("132368667075"), N("92909172825"), N("54520532190", true), N("6257717775", true), N("8082823950"), N("601275555", true), N("435322350", true), N("70536825"), N("7404210"), N("2206575", true), N("60075"), N("19486"), N("2010", true), N("75"))))),
+            H("Order-eighteen coefficients"), StatementSource.FromAuthor(Disp(CoeffFormula())),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text("The entries are in increasing order of input index. The zero coefficient is at lag sixteen."))), DescribeRole.Definition),
+            Blocks(Paragraph(Text("The recurrence weights are the negatives of the coefficients below degree 18 in the cube of the order-six monic polynomial."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("coeff-values"), DeclarationHandle.Create(Prefix + "coeff_values"),
+            H("Numerical expansion"), StatementSource.FromAuthor(Disp(Eq(Typed(Call("HardinA229683StripCertificate.coeff"), Arr(Fin("18"), V("Int"))), Vec(N("282429536481", true), N("470715894135"), N("0"), N("366499782594", true), N("132368667075"), N("92909172825"), N("54520532190", true), N("6257717775", true), N("8082823950"), N("601275555", true), N("435322350", true), N("70536825"), N("7404210"), N("2206575", true), N("60075"), N("19486"), N("2010", true), N("75"))))),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text("The entries are in increasing order of input index. The zero coefficient is at lag sixteen."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("forward-two"), DeclarationHandle.Create(Prefix + "forward_two"),
             H("Last-sector forward vectors"), StatementSource.FromAuthor(Disp(All("i", Fin("21"), Eq(Call("Function.comp", Call("DefectTransfer.forward", Call("HardinA229683StripData.T"), Call("HardinA229683StripData.initial"), Call("Fin.val", V("i"))), Call("Sum.inr")), Call("HardinA229683StripCertificate.W", V("i")))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -39,6 +43,21 @@ internal sealed class HardinA229683StripCertificateDocument : IScribeDocumentDef
             H("Forward relation at exponent twenty"), StatementSource.FromAuthor(Disp(Eq(Call("DefectTransfer.forward", Call("HardinA229683StripData.T"), Call("HardinA229683StripData.initial"), Add(N("2"), N("18"))), SumOver("k", Fin("18"), Call("HSMul.hSMul", Call("HardinA229683StripCertificate.coeff", V("k")), Call("DefectTransfer.forward", Call("HardinA229683StripData.T"), Call("HardinA229683StripData.initial"), Add(N("2"), Call("Fin.val", V("k"))))))))),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text("Seven coordinate shifts of the order-twelve relation give the relation on the first two sectors. The last sector follows from the tabulated update."))), DescribeRole.Theorem))));
+    private static Formula CoeffFormula()
+    {
+        var k = V("k");
+        var p = V("p");
+        var product = new Formula.Binary(
+            Call("HardinA229508StripCertificate.squareMonicCoeff", Call("Prod.fst", p)),
+            FormulaBinaryOperator.Multiply,
+            Call("HardinA203981StripCertificate.monicCoeff", Call("Prod.snd", p)));
+        var sum = Seq(Sum, Underscore,
+            Grp(p, Sp, InMacro, Sp, Call("Finset.antidiagonal", Call("Fin.val", k))),
+            Sp, Parenthesized(product));
+        return All("k", Fin("18"), Eq(Call("HardinA229683StripCertificate.coeff", k),
+            Seq(Minus, Parenthesized(sum))));
+    }
+
     private static Formula ForwardWeightsFormula()
     {
         var i = V("i");

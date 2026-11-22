@@ -42,7 +42,7 @@ import Mathlib.Order.Basic
 namespace D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229508Strip
 
 open HardinA229508StripData
-open HardinA229508StripCertificate (coeff finite_certificate)
+open HardinA229508StripCertificate (coeff coeff_values finite_certificate)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229637RowColumn (betw)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
@@ -94,7 +94,7 @@ theorem result (n : ℕ) :
     (a (n + 14) : ℤ) = 50 * a (n + 13) - 715 * a (n + 12) + 324 * a (n + 11) + 50175 * a (n + 10) - 180630 * a (n + 9) - 940491 * a (n + 8) + 4556250 * a (n + 7) + 2329155 * a (n + 6) - 27398736 * a (n + 5) + 13286025 * a (n + 4) + 47829690 * a (n + 3) - 43046721 * a (n + 2) := by
   have h := forward_shift T initial terminal 12 1 coeff finite_certificate n
   simp only [Nat.add_assoc, Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ, Fin.val_one,
-    coeff, Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.reduceAdd, Nat.add_zero] at h
+    coeff_values, Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.reduceAdd, Nat.add_zero] at h
   rw [counting_bridge _ (Nat.succ_pos _),
     counting_bridge _ (Nat.succ_pos _),
     counting_bridge _ (Nat.succ_pos _),

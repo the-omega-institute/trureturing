@@ -15,7 +15,9 @@ transition_counts: proof_shape=bind-only; consumers=HardinA229508Strip.counting_
 block_projection: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_inherited, forward_zeroth
 forward_zeroth: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, finite_certificate, forward_one
 W: proof_shape=bind-only; consumers=HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_one, forward_one._proof_1
-coeff: proof_shape=bind-only; consumers=HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation, coeff.eq_1, finite_certificate, finite_certificate._proof_1, inherited_relation
+coeff: proof_shape=bind-only; consumers=coeff_values, finite_certificate, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
+squareMonicCoeff: proof_shape=bind-only; consumers=coeff, HardinA229683StripCertificate.coeff
+coeff_values: proof_shape=bind-only; consumers=inherited_relation, HardinA229508Strip.result, HardinA229683StripCertificate.inherited_relation
 forward_one: proof_shape=content; consumers=HardinA229683StripCertificate.forward_two, finite_certificate
 shifted_coordinate: proof_shape=bind-only; consumers=HardinA229683StripCertificate.inherited_relation, inherited_relation
 inherited_relation: proof_shape=content; consumers=finite_certificate
@@ -25,6 +27,7 @@ halfForwardOne: proof_shape=bind-only; consumers=W
 -/
 
 import Mathlib.Order.Fin.Basic
+import Mathlib.Data.Finset.NatAntidiagonal
 import Mathlib.Basic.Logic.Basic
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
@@ -234,8 +237,18 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
   fun j => unordered (halfForwardZero i) (halfForwardOne i) j +
     unordered (halfForwardOne i) (halfForwardZero i) j
 
+/-- The squared monic polynomial, computed as a Cauchy product. -/
+def squareMonicCoeff (n : ℕ) : ℤ :=
+  ∑ p ∈ Finset.antidiagonal n, HardinA203981StripCertificate.monicCoeff p.1 * HardinA203981StripCertificate.monicCoeff p.2
+
 /-- Recurrence coefficients in increasing order of the input index. -/
-def coeff : Fin 12 → ℤ := ![-43046721, 47829690, 13286025, -27398736, 2329155, 4556250, -940491, -180630, 50175, 324, -715, 50]
+def coeff (k : Fin 12) : ℤ :=
+  -squareMonicCoeff k.val
+
+/-- The computed expansion in increasing order of the input index. -/
+theorem coeff_values : coeff = ![-43046721, 47829690, 13286025, -27398736, 2329155, 4556250, -940491, -180630, 50175, 324, -715, 50] := by
+  funext k
+  fin_cases k <;> decide +kernel
 
 theorem forward_one (i : Fin 21) : forward T initial i.val ∘ Sum.inr = W i := by
   induction i using Fin.induction with
@@ -280,7 +293,7 @@ private theorem inherited_relation (j : Fin 15) :
   have h4 := rel 4
   have h5 := rel 5
   have h6 := rel 6
-  simp only [coeff, HardinA203981StripCertificate.coeff,
+  simp only [coeff_values, HardinA203981StripCertificate.coeff,
     Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.val_zero, Fin.val_succ, Fin.val_one,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Nat.reduceAdd, add_zero] at h0 h1 h2 h3 h4 h5 h6 ⊢
   linarith only [h0, h1, h2, h3, h4, h5, h6]
@@ -301,6 +314,7 @@ theorem finite_certificate :
         rw [Nat.add_comm 1 k.val]
         exact congrFun (forward_one (Fin.castLE (by decide : 13 ≤ 21) k.succ)) j]
     have fresh : ∀ j : Fin 15, W 13 j = ∑ k : Fin 12, coeff k * W (Fin.castLE (by decide : 13 ≤ 21) k.succ) j := by
+      rw [coeff_values]
       decide +kernel
     exact fresh j
 

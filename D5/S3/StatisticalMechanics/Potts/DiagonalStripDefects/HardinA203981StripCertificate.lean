@@ -15,7 +15,8 @@ representative_counts: proof_shape=bind-only; consumers=counts
 counts: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA229508StripCertificate.transition_counts, HardinA229683StripCertificate.transition_counts
 initial_counts: proof_shape=bind-only; consumers=HardinA203981Strip.counting_bridge, HardinA229508Strip.counting_bridge, HardinA229683Strip.counting_bridge
 W: proof_shape=bind-only; consumers=HardinA229508StripCertificate.forward_one, HardinA229508StripCertificate.forward_one._proof_1, HardinA229683StripCertificate.forward_two, HardinA229683StripCertificate.forward_two._proof_1, finite_certificate, finite_certificate._proof_1, forward_table, forward_table._proof_1
-coeff: proof_shape=bind-only; consumers=HardinA203981Strip.result, HardinA203981StripCertificate.coeff.eq_1, HardinA229508StripCertificate.inherited_relation, finite_certificate, finite_certificate._proof_1
+coeff: proof_shape=bind-only; consumers=HardinA203981Strip.result, HardinA203981StripCertificate.coeff.eq_1, HardinA229508StripCertificate.inherited_relation, finite_certificate, finite_certificate._proof_1, monicCoeff
+monicCoeff: proof_shape=bind-only; consumers=HardinA229508StripCertificate.squareMonicCoeff, HardinA229683StripCertificate.coeff
 forward_table: proof_shape=content; consumers=HardinA229508StripCertificate.forward_one, HardinA229683StripCertificate.forward_two, finite_certificate
 finite_certificate: proof_shape=content; consumers=HardinA203981Strip.result, HardinA229508StripCertificate.inherited_relation
 allocated_counts: proof_shape=bind-only; consumers=representative_counts
@@ -317,6 +318,10 @@ def W (i : Fin 21) : Fin 15 → ℤ :=
 
 /-- Recurrence coefficients in increasing order of the input index. -/
 def coeff : Fin 6 → ℤ := ![-6561, 3645, 2025, -963, -45, 25]
+
+/-- The coefficients of the monic polynomial associated to the order-six recurrence. -/
+def monicCoeff (n : ℕ) : ℤ :=
+  if h : n < 6 then -coeff ⟨n, h⟩ else if n = 6 then 1 else 0
 
 theorem forward_table (i : Fin 21) : forward T initial i.val = W i := by
   induction i using Fin.induction with
