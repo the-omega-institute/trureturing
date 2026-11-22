@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#32721; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203981Strip.result)
 recolor: proof_shape=bind-only; consumers=boundary_recolor, cost_recolor, lift_counts, recolor.eq_1, recolor_match
 reflect: proof_shape=bind-only; consumers=boundary_reflect, cost_reflect, lift_counts, reflect.eq_1
-cost_formula: proof_shape=bind-only; consumers=cost_recolor, cost_reflect
+cost_formula: proof_shape=bind-only; consumers=cost_recolor, cost_reflect, HardinA203981StripCertificate.exact_cost_split
 cost_recolor: proof_shape=bind-only; consumers=lift_counts
 cost_reflect: proof_shape=bind-only; consumers=lift_counts
 boundary_recolor: proof_shape=bind-only; consumers=lift_counts
@@ -57,7 +57,8 @@ private def recolor (e f : Equiv.Perm (Fin 3)) : Row 3 6 ≃ Row 3 6 :=
 private def reflect : Row 3 6 ≃ Row 3 6 :=
   Equiv.arrowCongr (Fin.revPerm : Equiv.Perm (Fin 6)) (Equiv.refl (Fin 3))
 
-private theorem cost_formula (p r : Row 3 6) :
+/-- The defect cost is the sum of the ten diagonal-bond indicators. -/
+theorem cost_formula (p r : Row 3 6) :
     bondDefects (betw 6) p r =
       (if p 0 = r 1 then 1 else 0) + (if p 1 = r 0 then 1 else 0) +
       (if p 1 = r 2 then 1 else 0) + (if p 2 = r 1 then 1 else 0) +

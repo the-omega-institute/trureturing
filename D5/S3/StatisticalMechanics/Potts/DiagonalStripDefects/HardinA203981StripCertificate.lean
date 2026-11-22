@@ -102,10 +102,10 @@ private theorem exact_cost_split (p r : Row 3 6) :
   change _ =
     bondDefects HardinA229588Strip.between ![p 0, p 2, p 4] ![r 1, r 3, r 5] +
       bondDefects HardinA229588Strip.between ![p 5, p 3, p 1] ![r 4, r 2, r 0]
+  rw [HardinA203981StripSymmetry.cost_formula]
   unfold bondDefects
-  rw [HardinA203981StripData.between_six, HardinA229588Strip.between]
-  simp only [Finset.card_eq_sum_ones]
-  rw [Finset.sum_filter, Finset.sum_filter, Finset.sum_filter]
+  rw [HardinA229588Strip.between]
+  simp only [Finset.card_eq_sum_ones, Finset.sum_filter]
   norm_num only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq,
     Finset.sum_insert, Finset.sum_singleton,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Prod.fst, Prod.snd, Fin.reduceEq,
