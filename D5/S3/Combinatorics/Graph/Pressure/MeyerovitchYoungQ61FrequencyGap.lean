@@ -222,4 +222,264 @@ theorem matrixMinimum_eq_centered (c ρ : ℝ) (a : List Letter) :
   dsimp [normalizedState, difference, averageScore]
   ring
 
+private theorem sqrt_two_bounds : (4 : ℝ) / 3 < Real.sqrt 2 ∧ Real.sqrt 2 < 3 / 2 := by
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hn := Real.sqrt_nonneg 2
+  constructor
+  · by_contra! h
+    nlinarith [mul_nonneg (sub_nonneg.mpr h) hn]
+  · by_contra! h
+    nlinarith [mul_nonneg (sub_nonneg.mpr h) hn]
+
+private noncomputable def nextState (d : ℝ) (e : Letter) : ℝ := clip 1 (d + shift e)
+
+private noncomputable def toll (ρ : ℝ) (e : Letter) : ℝ :=
+  if e = .star then ρ else 0
+
+private noncomputable def loss (ρ : ℝ) (d : ℝ) : List Letter → ℝ
+  | [] => 0
+  | e :: a => toll ρ e + overshoot 1 (d + shift e) / 2 + loss ρ (nextState d e) a
+
+private theorem nextState_mem (d : ℝ) (e : Letter) : nextState d e ∈ Icc 0 1 :=
+  clip_mem (by norm_num) _
+
+private theorem fold_state_mem {d : ℝ} (hd : d ∈ Icc 0 1) (a : List Letter) :
+    a.foldl nextState d ∈ Icc 0 1 := by
+  induction a generalizing d with
+  | nil => exact hd
+  | cons e a ih => exact ih (nextState_mem d e)
+
+private theorem loss_nonneg {ρ : ℝ} (hρ : 0 ≤ ρ) (d : ℝ) (a : List Letter) :
+    0 ≤ loss ρ d a := by
+  induction a generalizing d with
+  | nil => exact le_rfl
+  | cons e a ih =>
+    have ht : 0 ≤ toll ρ e := by
+      unfold toll
+      split <;> first | assumption | exact le_rfl
+    exact add_nonneg (add_nonneg ht (div_nonneg (overshoot_nonneg _ _) (by norm_num))) (ih _)
+
+private theorem loss_append (ρ d : ℝ) (a b : List Letter) :
+    loss ρ d (a ++ b) = loss ρ d a + loss ρ (a.foldl nextState d) b := by
+  induction a generalizing d with
+  | nil => simp [loss]
+  | cons e a ih => simp [loss, ih, add_assoc]
+
+private theorem centeredFold_formula (c ρ d m : ℝ) (a : List Letter) :
+    a.foldl (centeredStep c ρ) (d, m) =
+      (a.foldl nextState d, m + (a.length : ℝ) * (c + ρ / 8) - loss ρ d a) := by
+  induction a generalizing d m with
+  | nil => simp [loss]
+  | cons e a ih =>
+    rw [List.foldl_cons]
+    change a.foldl (centeredStep c ρ)
+      (nextState d e, m + reward c ρ e - overshoot 1 (d + shift e) / 2) = _
+    rw [ih]
+    simp only [List.foldl_cons, List.length_cons, Nat.cast_add, Nat.cast_one, Prod.mk.injEq,
+      true_and, loss, reward, toll]
+    ring
+
+private theorem loss_of_star {ρ : ℝ} (hρ : 0 ≤ ρ) (d : ℝ) {a : List Letter}
+    (ha : .star ∈ a) : ρ ≤ loss ρ d a := by
+  induction a generalizing d with
+  | nil => simp at ha
+  | cons e a ih =>
+    have ho := overshoot_nonneg 1 (d + shift e)
+    have hl := loss_nonneg hρ (nextState d e) a
+    rcases List.mem_cons.mp ha with h | h
+    · subst e
+      simp only [loss, toll, ite_true]
+      linarith
+    · have ht : 0 ≤ toll ρ e := by
+        unfold toll
+        split <;> first | assumption | exact le_rfl
+      have := ih (nextState d e) h
+      simp only [loss]
+      linarith
+
+private theorem abs_clip_error (y : ℝ) : |y - clip 1 y| = overshoot 1 y := by
+  rcases le_or_gt y 0 with hlo | hlo
+  · have hhi : y ≤ 1 := hlo.trans (by norm_num)
+    simp [clip, overshoot, max_eq_left hlo, max_eq_right (neg_nonneg.mpr hlo),
+      max_eq_left (sub_nonpos.mpr hhi), abs_of_nonpos hlo]
+  · rcases le_or_gt y 1 with hhi | hhi
+    · simp [clip, overshoot, max_eq_right hlo.le, min_eq_right hhi,
+        max_eq_left (neg_nonpos.mpr hlo.le), max_eq_left (sub_nonpos.mpr hhi)]
+    · simp [clip, overshoot, max_eq_right hlo.le, min_eq_left hhi.le,
+        max_eq_left (neg_nonpos.mpr hlo.le), max_eq_right (sub_nonneg.mpr hhi.le),
+        abs_of_nonneg (sub_nonneg.mpr hhi.le)]
+
+private theorem displacement_le_loss {ρ : ℝ} (hρ : 0 ≤ ρ) (d : ℝ) (a : List Letter) :
+    |d + (a.map shift).sum - a.foldl nextState d| ≤ 2 * loss ρ d a := by
+  induction a generalizing d with
+  | nil => simp [loss]
+  | cons e a ih =>
+    let y := d + shift e
+    let z := nextState d e
+    have htel : d + ((e :: a).map shift).sum - (e :: a).foldl nextState d =
+        (y - z) + (z + (a.map shift).sum - a.foldl nextState z) := by
+      simp only [List.map_cons, List.sum_cons, List.foldl_cons]
+      dsimp [y, z]
+      ring
+    have ht : 0 ≤ toll ρ e := by
+      unfold toll
+      split <;> first | assumption | exact le_rfl
+    have hp := ih z
+    rw [htel]
+    refine (abs_add_le _ _).trans ?_
+    change |y - clip 1 y| + _ ≤ _
+    rw [abs_clip_error]
+    simp only [loss]
+    dsimp [y, z] at *
+    linarith
+
+private theorem sum_shift_le_loss {ρ d : ℝ} (hρ : 0 ≤ ρ) (hd : d ∈ Icc 0 1)
+    (a : List Letter) : |(a.map shift).sum| - 1 ≤ 2 * loss ρ d a := by
+  let z := a.foldl nextState d
+  have hz : z ∈ Icc 0 1 := fold_state_mem hd a
+  have hwidth : |z - d| ≤ 1 := abs_le.mpr ⟨by linarith [hz.1, hd.2], by linarith [hz.2, hd.1]⟩
+  have htel : (a.map shift).sum = (d + (a.map shift).sum - z) + (z - d) := by ring
+  have hb : |(a.map shift).sum| ≤ 2 * loss ρ d a + 1 := calc
+    _ = |(d + (a.map shift).sum - z) + (z - d)| := congrArg abs htel
+    _ ≤ _ := (abs_add_le _ _).trans (add_le_add (displacement_le_loss hρ d a) hwidth)
+  linarith
+
+private theorem forcingPattern_loss {ρ d : ℝ} (hρ : ρ ≤ epsilon) (hpos : 0 ≤ ρ)
+    (hd : d ∈ Icc 0 1) {p : List Letter}
+    (hp : p = [.plus, .plus] ∨ p = [.minus, .minus] ∨ p = [.plus, .minus, .plus]) :
+    ρ ≤ loss ρ d p := by
+  have hb := sum_shift_le_loss hpos hd p
+  have h₀ := sqrt_two_bounds.1
+  have h₁ := sqrt_two_bounds.2
+  unfold epsilon at hρ
+  rcases hp with rfl | rfl | rfl
+  · simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, shift, add_zero] at hb
+    have h := le_abs_self ((Real.sqrt 2 - 1 / 2) + (Real.sqrt 2 - 1 / 2))
+    linarith
+  · norm_num [shift] at hb
+    linarith
+  · simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, shift, add_zero] at hb
+    have h := le_abs_self
+      ((Real.sqrt 2 - 1 / 2) + (-(2 / 3) + (Real.sqrt 2 - 1 / 2)))
+    linarith
+
+private theorem loss_of_pattern {ρ d : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon)
+    (hd : d ∈ Icc 0 1) (a p b : List Letter)
+    (hp : p = [.plus, .plus] ∨ p = [.minus, .minus] ∨ p = [.plus, .minus, .plus]) :
+    ρ ≤ loss ρ d (a ++ (p ++ b)) := by
+  rw [loss_append, loss_append]
+  have hpre := loss_nonneg hpos d a
+  have hpost := loss_nonneg hpos (p.foldl nextState (a.foldl nextState d)) b
+  have hpattern := forcingPattern_loss hρ hpos (fold_state_mem hd a) hp
+  linarith
+
+private theorem four_loss {ρ d : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon)
+    (hd : d ∈ Icc 0 1) (a b e f : Letter) : ρ ≤ loss ρ d [a, b, e, f] := by
+  by_cases hs : .star ∈ [a, b, e, f]
+  · exact loss_of_star hpos d hs
+  have shape :
+      a = b ∨ b = e ∨ e = f ∨ a = .plus ∧ b = .minus ∧ e = .plus ∨
+        b = .plus ∧ e = .minus ∧ f = .plus := by
+    cases a <;> cases b <;> cases e <;> cases f <;> simp_all
+  rcases shape with rfl | rfl | rfl | ⟨rfl, rfl, rfl⟩ | ⟨rfl, rfl, rfl⟩
+  · cases a
+    · exact loss_of_pattern hpos hρ hd [] [.plus, .plus] [e, f] (Or.inl rfl)
+    · exact loss_of_pattern hpos hρ hd [] [.minus, .minus] [e, f] (Or.inr (Or.inl rfl))
+    · simp at hs
+  · cases b
+    · exact loss_of_pattern hpos hρ hd [a] [.plus, .plus] [f] (Or.inl rfl)
+    · exact loss_of_pattern hpos hρ hd [a] [.minus, .minus] [f] (Or.inr (Or.inl rfl))
+    · simp at hs
+  · cases e
+    · exact loss_of_pattern hpos hρ hd [a, b] [.plus, .plus] [] (Or.inl rfl)
+    · exact loss_of_pattern hpos hρ hd [a, b] [.minus, .minus] [] (Or.inr (Or.inl rfl))
+    · simp at hs
+  · exact loss_of_pattern hpos hρ hd [] [.plus, .minus, .plus] [f] (Or.inr (Or.inr rfl))
+  · exact loss_of_pattern hpos hρ hd [a] [.plus, .minus, .plus] [] (Or.inr (Or.inr rfl))
+
+private theorem word_loss {ρ : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon)
+    (a : List Letter) {d : ℝ} (hd : d ∈ Icc 0 1) :
+    ρ * (↑(a.length / 4) : ℝ) ≤ loss ρ d a := by
+  suffices h : ∀ n (u : List Letter), u.length = n → ∀ x ∈ Icc (0 : ℝ) 1,
+      ρ * (↑(u.length / 4) : ℝ) ≤ loss ρ x u by
+    exact h a.length a rfl d hd
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro u hlen d hd
+    match u with
+    | [] => simpa using loss_nonneg hpos d []
+    | [e] => simpa using loss_nonneg hpos d [e]
+    | [e, f] => simpa using loss_nonneg hpos d [e, f]
+    | [e, f, g] => simpa using loss_nonneg hpos d [e, f, g]
+    | e :: f :: g :: h :: a =>
+      let block := [e, f, g, h]
+      have hhead := four_loss hpos hρ hd e f g h
+      have hlt : a.length < n := by simp at hlen; omega
+      have htail := ih a.length hlt a rfl _ (fold_state_mem hd block)
+      change ρ * (↑((block ++ a).length / 4) : ℝ) ≤ loss ρ d (block ++ a)
+      rw [loss_append]
+      have hdiv : (block ++ a).length / 4 = a.length / 4 + 1 := by
+        simp [block]
+        omega
+      rw [hdiv, Nat.cast_add, Nat.cast_one, mul_add, mul_one, add_comm]
+      exact add_le_add hhead htail
+
+private theorem loss_cons_of_mem (ρ d : ℝ) (e : Letter) (a : List Letter)
+    (h : d + shift e ∈ Icc (0 : ℝ) 1) :
+    loss ρ d (e :: a) = toll ρ e + loss ρ (d + shift e) a := by
+  simp [loss, nextState, clip, max_eq_right h.1, min_eq_right h.2,
+    (MeyerovitchYoungQ61Subcritical.overshoot_eq_zero_iff 1 _).2 h]
+
+private theorem four_loss_attained (ρ : ℝ) :
+    loss ρ (1 / 2) [.star, .minus, .plus, .minus] = ρ := by
+  let d₁ : ℝ := 1 / 2 + shift .star
+  let d₂ := d₁ + shift .minus
+  let d₃ := d₂ + shift .plus
+  let d₄ := d₃ + shift .minus
+  have hlo := sqrt_two_bounds.1
+  have hhi : Real.sqrt 2 < 13 / 9 := by
+    have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    have hn := Real.sqrt_nonneg 2
+    by_contra! h
+    nlinarith [mul_nonneg (sub_nonneg.mpr h) hn]
+  have h₁ : d₁ ∈ Icc 0 1 := ⟨by dsimp [d₁, shift]; linarith, by dsimp [d₁, shift]; linarith⟩
+  have h₂ : d₂ ∈ Icc 0 1 := ⟨by dsimp [d₂, d₁, shift]; linarith,
+    by dsimp [d₂, d₁, shift]; linarith⟩
+  have h₃ : d₃ ∈ Icc 0 1 := ⟨by dsimp [d₃, d₂, d₁, shift]; linarith,
+    by dsimp [d₃, d₂, d₁, shift]; linarith⟩
+  have h₄ : d₄ ∈ Icc 0 1 := ⟨by dsimp [d₄, d₃, d₂, d₁, shift]; linarith,
+    by dsimp [d₄, d₃, d₂, d₁, shift]; linarith⟩
+  rw [loss_cons_of_mem ρ _ _ _ h₁, loss_cons_of_mem ρ d₁ _ _ h₂,
+    loss_cons_of_mem ρ d₂ _ _ h₃, loss_cons_of_mem ρ d₃ _ _ h₄]
+  simp [loss, toll]
+
+/-- Every complete block of four letters costs at least one star toll relative
+to the unclipped non-star reward, even when the block starts at a nonzero difference. -/
+theorem matrixMinimum_le_four_block (c : ℝ) {ρ : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon)
+    (a : List Letter) :
+    centeredScore c ρ a ≤ (a.length : ℝ) * (c + ρ / 8) - ρ * (↑(a.length / 4) : ℝ) ∧
+    matrixMinimum (matrices c ρ) a + normalizedState c ρ a / 2 ≤
+      (a.length : ℝ) * (c + ρ / 8) - ρ * (↑(a.length / 4) : ℝ) ∧
+    (∀ d ∈ Icc (0 : ℝ) 1, ∀ u : List Letter, u.length = 4 →
+      (u.foldl (centeredStep c ρ) (d, 0)).2 ≤ 4 * (c + ρ / 8) - ρ) ∧
+    (([.star, .minus, .plus, .minus] : List Letter).foldl
+      (centeredStep c ρ) (1 / 2, 0)).2 = 4 * (c + ρ / 8) - ρ := by
+  have h : centeredScore c ρ a ≤
+      (a.length : ℝ) * (c + ρ / 8) - ρ * (↑(a.length / 4) : ℝ) := by
+    unfold centeredScore
+    rw [centeredFold_formula]
+    simp only [zero_add]
+    exact sub_le_sub_left (word_loss hpos hρ a (by norm_num : (0 : ℝ) ∈ Icc 0 1)) _
+  refine ⟨h, ?_, ?_, ?_⟩
+  · rwa [(matrixMinimum_eq_centered c ρ a).2.2, sub_add_cancel]
+  · intro d hd u hu
+    have hl := word_loss hpos hρ u hd
+    rw [hu] at hl
+    norm_num at hl
+    rw [centeredFold_formula, hu]
+    simpa only [zero_add, Nat.cast_ofNat] using sub_le_sub_left hl (4 * (c + ρ / 8))
+  · rw [centeredFold_formula, four_loss_attained]
+    norm_num
+
 end MeyerovitchYoungQ61FrequencyGap
