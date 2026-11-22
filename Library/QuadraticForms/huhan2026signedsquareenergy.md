@@ -36,3 +36,8 @@ diagonal and on nonedges. The Hermitian eigenvalue family is indexed by all of
 vertex sign assignment `θ` with edge entries `θ i * θ j` and `-(θ i * θ j)`,
 respectively. The singleton belongs to both equality classes and has zero energy.
 [Preregistration](https://github.com/the-omega-institute/trureturing/issues/33287)
+
+## Verified locator
+
+- DOI [10.48550/arXiv.2608.18492](https://doi.org/10.48550/arXiv.2608.18492)
+- Source version [arXiv:2608.18492v1](https://arxiv.org/abs/2608.18492v1)

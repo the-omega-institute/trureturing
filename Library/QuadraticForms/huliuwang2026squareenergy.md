@@ -28,3 +28,8 @@ matrix to exclude a bridge meeting a nontrivial block in an unsigned graph. The 
 zero-sum data across all blocks, excludes attachments to a large block for an
 arbitrary signing, and then determines the switching signs on a complete graph.
 [Proposition 4.3](https://arxiv.org/html/2608.17329v1#S4.Thmtheorem3)
+
+## Verified locator
+
+- DOI [10.48550/arXiv.2608.17329](https://doi.org/10.48550/arXiv.2608.17329)
+- Source version [arXiv:2608.17329v1](https://arxiv.org/abs/2608.17329v1)
