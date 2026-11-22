@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Intervals]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Prod]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Settlement.claim; result=D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.result; claim=D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Settlement.claim
    digest: Factor the Cambie configuration moments into local attachment contributions. -/
 

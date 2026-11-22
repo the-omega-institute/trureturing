@@ -7,7 +7,7 @@ internal sealed class CambieQ19SettlementDocument : IScribeDocumentDefinition
     private const string Owner = "D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Settlement.";
 
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphSubtrees/cambiejookenwagner2026meansubtrees");
+        LibraryNoteRef.Create("D5/L/Asymptotics/cambiejookenwagner2026meansubtrees");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every connected vertex support is an interval with permitted attachments or is confined to one attached block.",

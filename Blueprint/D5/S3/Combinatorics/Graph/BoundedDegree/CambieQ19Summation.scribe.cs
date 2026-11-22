@@ -7,7 +7,7 @@ internal sealed class CambieQ19SummationDocument : IScribeDocumentDefinition
     private const string Owner = "D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.";
 
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphSubtrees/cambiejookenwagner2026meansubtrees");
+        LibraryNoteRef.Create("D5/L/Asymptotics/cambiejookenwagner2026meansubtrees");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Grouping intervals by their attachment marks evaluates each of the four moments and gives the exact rational difference between the two means.",

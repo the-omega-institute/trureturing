@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Moments
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Fintype.BigOperators]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Basic]
    utility: none
    digest: The two counts and two order sums on the actual Cambie graph. -/
 
