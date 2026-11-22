@@ -20,7 +20,7 @@ Increasing the order from m to q adds the arithmetic degree q and exactly the ro
 
 **Theorem 1.2 (The arithmetic coefficient from fixed-width windows).**
 
-$$RH \Rightarrow \left(\exists A \in \mathbb{R},\; 0 < A \land \left(\forall m \in \mathbb{N},\; \forall r \in \mathbb{N},\; \left(2 \le m \land m + 1 = 2 \cdot r\right) \Rightarrow \left(\forall L \in \mathbb{R},\; 0 < L \Rightarrow \left(\exists C \in \mathbb{R},\; 0 < C \land \left(\forall U \in \mathbb{R},\; \forall T \in \mathbb{R},\; \left(A \le U \land 0 < T\right) \Rightarrow \left(\operatorname{Integrable}\left(m, L, U, T\right) \land \left|\operatorname{Avg}\left(m, L, U, T\right) + \operatorname{mu}\left(m + 1\right) \cdot \frac{m + 1}{m \cdot \operatorname{s}\left(m\right)}\right| \le \frac{C}{T}\right)\right)\right)\right)\right)\right)$$
+$$RH \Rightarrow \left(\exists A \in \mathbb{R},\; 0 < A \land \left(\forall m \in \mathbb{N},\; \forall r \in \mathbb{N},\; \left(2 \le m \land m + 1 = 2 \cdot r\right) \Rightarrow \left(\exists C \in \mathbb{R},\; 0 < C \land \left(\forall L \in \mathbb{R},\; 0 < L \Rightarrow \left(\forall U \in \mathbb{R},\; \forall T \in \mathbb{R},\; \left(A \le U \land 0 < T\right) \Rightarrow \left(\operatorname{Integrable}\left(m, L, U, T\right) \land \left|\operatorname{Avg}\left(m, L, U, T\right) + \operatorname{mu}\left(m + 1\right) \cdot \frac{m + 1}{m \cdot \operatorname{s}\left(m\right)}\right| \le \frac{C}{T}\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusEvenCutoff.signed_window_even_cutoff_cesaro` (`✓ std3`). ∎
 
@@ -28,9 +28,9 @@ $$RH \Rightarrow \left(\exists A \in \mathbb{R},\; 0 < A \land \left(\forall m \
 
 *Commentary.*
 
-Let F(m,L,u)=E(m,exp u,exp(u+L))/D(s(m),exp u,exp(u+L)). Integrable(m,L,U,T) means interval integrability of F(m,L,·) on [U,U+T] with respect to Lebesgue measure. Avg(m,L,U,T) is its interval integral divided by T. The starting threshold A is common to all orders and widths.
+Let F(m,L,u)=E(m,exp u,exp(u+L))/D(s(m),exp u,exp(u+L)). Integrable(m,L,U,T) means interval integrability of F(m,L,·) on [U,U+T] with respect to Lebesgue measure. Avg(m,L,U,T) is its interval integral divided by T. The starting threshold A is common to all orders and widths. The error constant depends on the order.
 
-Normalize the two endpoint values of the root primitive by the same positive gap. Under RH the resulting increment is the real part of an absolutely summable exponential series. The ordinates divided by r have magnitude at least 10/r, so integrating the series over any interval gives a bounded contribution. The higher-order remainder is integrable on the logarithmic tail. Dividing the sum of the two integral bounds by T isolates the signed arithmetic coefficient.
+Normalize the two endpoint values of the root primitive by the same positive gap. Under RH the resulting increment is the real part of an absolutely summable exponential series. The ordinates divided by r have magnitude at least 10/r, so integrating the series over any interval gives a bounded contribution. Subtract the translated primitive integrals before taking absolute values. The remaining two intervals have length L and exp(−sL)L/(1−exp(−sL)) is at most 1/s. The integral bound for the higher-order remainder is also uniform in L. Dividing by T isolates the signed arithmetic coefficient.
 
 ## References
 
