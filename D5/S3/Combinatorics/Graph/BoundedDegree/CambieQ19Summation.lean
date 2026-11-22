@@ -3,13 +3,20 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Intervals]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Settlement.claim; result=D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Summation.result; claim=D5/S3/Combinatorics/Graph/BoundedDegree/CambieQ19Settlement.claim
    digest: Factor the Cambie configuration moments into local attachment contributions. -/
 
 import D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Moments
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Tauto
+
+/-! The fixed counterexample to Question 1.9 of Cambie, Jooken and Wagner.
+The support and tree classifications feed the four transported moments. Grouping cyclic
+intervals by their attachment marks gives the finite sums for the exact rational difference.
+
+admission_basis: escape-witness. The interval and independent edge-deletion classifications
+are used to transport both counts and both order sums from actual graph objects. -/
 
 set_option autoImplicit false
 
@@ -412,5 +419,89 @@ private theorem sum_arc_rows (tree : Bool) :
   rw [← properLength.sum_comp (fun l => arcContribution tree (.inr (a,l)))]
   simp_rw [proper_arc_contribution]
   exact sum_startRow tree (offsets a)
+
+private def properArcBlocks (tree : Bool) : CountOrder :=
+  ∑ b : Fin 50, ∑ a : Fin 100, startRow tree (offsets (finProdFinEquiv (b,a)))
+
+private theorem properArcBlocks_eq (tree : Bool) :
+    (∑ a : Fin 5000, startRow tree (offsets a)) = properArcBlocks tree := by
+  rw [← (finProdFinEquiv (m := 50) (n := 100)).sum_comp
+    (fun a => startRow tree (offsets a)), Fintype.sum_prod_type]
+  rfl
+
+private def evaluatedMoments (tree : Bool) : CountOrder :=
+  (fullArc tree + properArcBlocks tree) +
+    ((∑ a : Fin 500, intervalMoments 0 (500-a.val)) +
+      ((∑ a : Fin 500, intervalMoments 0 (500-a.val)) + (if tree then (9,18) else (7,12))))
+
+private theorem codeMoments_eq_evaluated (tree : Bool) : codeMoments tree = evaluatedMoments tree := by
+  rw [codeMoments_decompose, sum_arc_rows, properArcBlocks_eq, pathMoments_rows]
+  rfl
+
+set_option maxRecDepth 50000 in
+set_option maxHeartbeats 4000000 in
+private theorem evaluated_induced :
+    evaluatedMoments false = (10425438990512, 43855001336852520) := by
+  decide +kernel
+
+set_option maxRecDepth 50000 in
+set_option maxHeartbeats 4000000 in
+private theorem evaluated_trees :
+    evaluatedMoments true = (14578492765509, 61323620645707018) := by
+  decide +kernel
+
+/-- Exact count and total order of the connected vertex supports of the witness. -/
+theorem induced_exact_moments :
+    (Nat.card (ConnectedSets G₅₀₀),
+      (letI : Fintype (ConnectedSets G₅₀₀) := Fintype.ofFinite _
+       ∑ S : ConnectedSets G₅₀₀, Nat.card S.val)) = (10425438990512, 43855001336852520) := by
+  suffices h : _ = codeMoments false from
+    h.trans ((codeMoments_eq_evaluated false).trans evaluated_induced)
+  apply Prod.ext
+  · rw [connectedCount_transport]
+    simp [codeMoments, contribution, weight, Prod.fst_sum, Nat.card_eq_fintype_card]
+  · rw [connectedOrder_transport]
+    simp [codeMoments, contribution, weight, Prod.snd_sum]
+
+/-- Exact count and total order of the actual tree subgraphs of the witness. -/
+theorem tree_exact_moments :
+    (totalSubtreeCount G₅₀₀, totalSubtreeOrder G₅₀₀) = (14578492765509, 61323620645707018) := by
+  suffices h : _ = codeMoments true from
+    h.trans ((codeMoments_eq_evaluated true).trans evaluated_trees)
+  apply Prod.ext
+  · rw [subtreeCount_transport]
+    simp [codeMoments, contribution, weight, Prod.fst_sum]
+  · rw [subtreeOrder_transport]
+    simp [codeMoments, contribution, weight, Prod.snd_sum, Nat.mul_comm]
+
+/-- The exact rational difference between the two means on the fixed graph. -/
+theorem exactGap :
+    meanConnectedOrder G₅₀₀ - meanSubtreeOrder G₅₀₀ =
+      (1769250196421378505239933 : ℚ) / 18998398362554330511481326 := by
+  have hiN := congrArg Prod.fst induced_exact_moments
+  have hiR := congrArg Prod.snd induced_exact_moments
+  have htN := congrArg Prod.fst tree_exact_moments
+  have htR := congrArg Prod.snd tree_exact_moments
+  dsimp only [Prod.fst, Prod.snd] at hiN hiR htN htR
+  unfold meanConnectedOrder meanSubtreeOrder
+  rw [hiN, hiR, htN, htR]
+  norm_num
+
+/-- The tree mean of the witness is strictly smaller than its connected-support mean. -/
+theorem strictComparison : meanSubtreeOrder G₅₀₀ < meanConnectedOrder G₅₀₀ := by
+  apply sub_pos.mp
+  rw [exactGap]
+  norm_num
+
+/-- The literal negation of Question 1.9. -/
+theorem result : ¬ claim := by
+  intro h
+  exact (not_le_of_gt strictComparison) (h Vertex inferInstance G₅₀₀ G₅₀₀_connected)
+
+#print axioms induced_exact_moments
+#print axioms tree_exact_moments
+#print axioms exactGap
+#print axioms strictComparison
+#print axioms result
 
 end D5.S3.Combinatorics.Graph.BoundedDegree.CambieQ19Settlement
