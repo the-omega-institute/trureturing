@@ -417,7 +417,7 @@ theorem sectionRankImplication_of_genericSectionMinors
   let half : F := algebraMap ℂ F (1 / 2)
   have hh : half + half = 1 := by simp only [half, ← map_add]; norm_num
   have hC : (algebraMap ℂ (Polynomial F)) (1 / 2) = c half := by
-    exact IsScalarTower.algebraMap_apply ℂ F (Polynomial F) _ 
+    exact IsScalarTower.algebraMap_apply ℂ F (Polynomial F) _
   have ⟨hα, hβ, hL, hR⟩ := good_factors φ m j (fun hz => hj ((hker _).mp hz))
   have hrs : r - s ≠ 0 := sub_ne_zero.mpr (fun h => hL (show r ^ m - s ^ m = 0 by rw [h, sub_self]))
   have htu : t - u ≠ 0 := sub_ne_zero.mpr (fun h => hR (show t ^ m - u ^ m = 0 by rw [h, sub_self]))
