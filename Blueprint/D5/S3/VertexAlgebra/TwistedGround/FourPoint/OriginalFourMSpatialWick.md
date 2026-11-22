@@ -28,7 +28,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatia
 
 *Commentary.*
 
-For a list of distinct mark labels, degree one in each selected weight is the ordered mark derivative at zero. For each spatial coordinate vector the derivative is the native affine Wick moment of the symmetric physical covariance and charge-dependent mean with the original occurrence signs. It uses the occupation factorial convention of affineMoment. Taking the indicated spatial coefficients of those moments and summing with the charge and period weights gives the corresponding Taylor coefficient of the physical product.
+For a list of distinct mark labels, degree one in each selected weight is the ordered mark derivative at zero. For each spatial coordinate vector the derivative is the charge-energy exponential exp(π i τ ⟨q,q⟩/2) times the native affine Wick moment of the symmetric physical covariance and charge-dependent mean with the original occurrence signs. The moment uses the occupation factorial convention of affineMoment. Taking the indicated spatial coefficients of the moments and summing with the charge and period weights gives the corresponding Taylor coefficient of the physical product.
 
 **Theorem 1.3 (The A/D and A/B comparisons for every Taylor coefficient).**
 

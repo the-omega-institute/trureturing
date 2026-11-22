@@ -187,39 +187,47 @@ def chartTau (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   | .B => -1 / (I * pB x / pPf x)
   | .D => -1 / (I * pD upperA x / pA x)
 
-/-- The actual periods are nonzero and their charge parameters lie in the
-upper half-plane on the real overlap, for either choice of lip. -/
-theorem chart_charge_data (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x)
-    (hx₁ : x < 1) : chartPeriod upperA c x ≠ 0 ∧ 0 < (chartTau upperA c x).im := by
-  let pA := slitPeriod (parameter .A (x : ℂ))
-  let pB := slitPeriod (x : ℂ)
-  let tB := Complex.I * pB / slitPeriod (1 - (x : ℂ))
-  let tD := Complex.I * dPeriod upperA ((x : ℂ)⁻¹) / pA
+private theorem real_overlap_period_data (upperA : Bool) {x : ℝ} (hx : 0 < x)
+    (hx₁ : x < 1) :
+    let tB := I * pB x / pPf x
+    let tD := I * pD upperA x / pA x
+    pPf x = periodRoot .A x * pA x ∧
+      pPf x ≠ 0 ∧ pA x ≠ 0 ∧ pB x ≠ 0 ∧ pD upperA x ≠ 0 ∧
+      0 < tB.im ∧ tD = tB + lipSign upperA ∧ 0 < tD.im := by
+  let tB := I * pB x / pPf x
+  let tD := I * pD upperA x / pA x
   have hslit : (1 - (x : ℂ)) ∈ doubleSlit := by
     constructor
     · change 1 - (1 - (x : ℂ)) ∈ Complex.slitPlane
       rw [sub_sub_cancel]
       exact Complex.ofReal_mem_slitPlane.2 hx
     · exact Complex.mem_slitPlane_iff.2 (Or.inl (by simpa using sub_pos.mpr hx₁))
-  have hpA : pA ≠ 0 := fun h => slitPeriod_ne_zero hslit.1 (by
-    rw [OriginalFourMPeriodSource.chartB_pfaff_period hx]
-    change periodRoot .A x * pA = 0
-    rw [h, mul_zero])
-  have hpB : pB ≠ 0 := slitPeriod_ne_zero hslit.2
-  have hpD : dPeriod upperA ((x : ℂ)⁻¹) ≠ 0 := by
-    simpa only [Complex.ofReal_inv] using dPeriod_ne_zero upperA ((one_lt_inv₀ hx).2 hx₁)
+  have hp : pPf x = periodRoot .A x * pA x := OriginalFourMPeriodSource.chartB_pfaff_period hx
+  have hpPf : pPf x ≠ 0 := slitPeriod_ne_zero hslit.1
+  have hpA : pA x ≠ 0 := fun h => hpPf (by rw [hp, h, mul_zero])
+  have hpB : pB x ≠ 0 := slitPeriod_ne_zero hslit.2
+  have hpD : pD upperA x ≠ 0 := by
+    change dPeriod upperA ((x : ℂ)⁻¹) ≠ 0
+    simpa only [ofReal_inv] using dPeriod_ne_zero upperA ((one_lt_inv₀ hx).2 hx₁)
   have htB : 0 < tB.im := by
-    simpa only [tB, pB, tau, sub_sub_cancel] using tau_im_pos hslit
-  have htEq : tD = tB + lipSign upperA := by
-    dsimp only [tD]
+    simpa only [tau, sub_sub_cancel] using tau_im_pos hslit
+  have hDt : tD = tB + lipSign upperA := by
+    change I * dPeriod upperA ((x : ℂ)⁻¹) / pA x = _
     rw [dPeriod, inv_inv]
-    change Complex.I * ((tau (1 - (x : ℂ)) + lipSign upperA) * pA / Complex.I) / pA = _
+    change I * ((tau (1 - (x : ℂ)) + lipSign upperA) * pA x / I) / pA x = _
     rw [tau, sub_sub_cancel]
-    change Complex.I * ((tB + lipSign upperA) * pA / Complex.I) / pA = _
-    field_simp [hpA, Complex.I_ne_zero]
+    change I * ((tB + lipSign upperA) * pA x / I) / pA x = _
+    field_simp [hpA, I_ne_zero]
   have htD : 0 < tD.im := by
-    rw [htEq]
-    cases upperA <;> simpa [lipSign, Complex.add_im] using htB
+    rw [hDt]
+    cases upperA <;> simpa [lipSign, add_im] using htB
+  exact ⟨hp, hpPf, hpA, hpB, hpD, htB, hDt, htD⟩
+
+/-- The actual periods are nonzero and their charge parameters lie in the
+upper half-plane on the real overlap, for either choice of lip. -/
+theorem chart_charge_data (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x)
+    (hx₁ : x < 1) : chartPeriod upperA c x ≠ 0 ∧ 0 < (chartTau upperA c x).im := by
+  obtain ⟨_, _, hpA, hpB, hpD, htB, _, htD⟩ := real_overlap_period_data upperA hx hx₁
   have hinv {τ : ℂ} (h : 0 < τ.im) : 0 < (-1 / τ).im := by
     rw [div_eq_mul_inv, neg_one_mul, Complex.neg_im, Complex.inv_im, neg_div, neg_neg]
     exact div_pos h (Complex.normSq_pos.mpr fun hn => by simp [hn] at h)
@@ -295,36 +303,10 @@ theorem native_chart_product (D : LatticeData) (hu : IsUnit D.G.det)
   let δD := chartDifference upperA .D x * (MD ⬝ᵥ gramComplex D *ᵥ MD) / 2
   let tB := I * pB x / pPf x
   let tD := I * pD upperA x / pA x
-  have hslit : (1 - (x : ℂ)) ∈ doubleSlit := by
-    constructor
-    · change 1 - (1 - (x : ℂ)) ∈ Complex.slitPlane
-      rw [sub_sub_cancel]
-      exact Complex.ofReal_mem_slitPlane.2 hx
-    · exact Complex.mem_slitPlane_iff.2 (Or.inl (by simpa using sub_pos.mpr hx1))
-  have hP : pPf x ≠ 0 := slitPeriod_ne_zero hslit.1
-  have hB := slitPeriod_ne_zero (r := (x : ℂ)) (by
-    change 1 - (x : ℂ) ∈ Complex.slitPlane
-    exact hslit.2)
-  have hp : pPf x = periodRoot .A x * pA x := OriginalFourMPeriodSource.chartB_pfaff_period hx
-  have hA : pA x ≠ 0 := fun h => hP (by rw [hp, h, mul_zero])
-  have hD₀ : pD upperA x ≠ 0 := by
-    change dPeriod upperA ((x : ℂ)⁻¹) ≠ 0
-    simpa only [ofReal_inv] using dPeriod_ne_zero upperA ((one_lt_inv₀ hx).2 hx1)
+  obtain ⟨hp, hP, hA, hB, hD₀, htB, hDt, htD⟩ := real_overlap_period_data upperA hx hx1
   have hs : (Real.sqrt x : ℂ) ≠ 0 := ofReal_ne_zero.mpr (Real.sqrt_pos.2 hx).ne'
   have hl : bLift x ≠ 0 := mul_ne_zero (neg_ne_zero.mpr I_ne_zero) hs
   have hπ : (Real.pi : ℂ) ≠ 0 := ofReal_ne_zero.mpr Real.pi_ne_zero
-  have htB : 0 < tB.im := by
-    simpa only [tau, sub_sub_cancel] using tau_im_pos hslit
-  have hDt : tD = tB + lipSign upperA := by
-    change I * dPeriod upperA ((x : ℂ)⁻¹) / pA x = _
-    rw [dPeriod, inv_inv]
-    change I * ((tau (1 - (x : ℂ)) + lipSign upperA) * pA x / I) / pA x = _
-    rw [tau, sub_sub_cancel]
-    change I * ((tB + lipSign upperA) * pA x / I) / pA x = _
-    field_simp [hA, I_ne_zero]
-  have htD : 0 < tD.im := by
-    rw [hDt]
-    cases upperA <;> simpa [lipSign, add_im] using htB
   have hMB : MB = (bLift x)⁻¹ • M := sourceVector_mul D s weights m _
   have hMD : MD = I⁻¹ • M := sourceVector_mul D s weights m _
   let zA := thetaSource D (pA x) M
@@ -370,6 +352,7 @@ theorem native_chart_product (D : LatticeData) (hu : IsUnit D.G.det)
   rw [hzSB, chargeTheta_neg_source, exponent, heB] at hb
   have hphase (b : ModTwoCharge D) :
       chargeTheta D hu b tB zA = quadraticSign D b * chargeTheta D hu b tD zA := by
+    change tD = tB + lipSign upperA at hDt
     rw [hDt]
     exact theta_lip D hu hD b upperA tB zA
   have hformA (b : ModTwoCharge D) :

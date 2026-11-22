@@ -25,20 +25,12 @@ open LatticeDiscriminantTheta (gramReal)
 open OriginalFourMOccupationTransport (physicalSource physicalSource_analytic)
 open OriginalFourMPhysicalCovariance (relative physicalCovariance physicalCovariance_analytic)
 open OriginalFourMChartProduct (chartPeriod chartTau chart_charge_data)
-open OriginalFourMPhysicalProduct (physicalProduct physical_product_marked_charge_fiber)
+open OriginalFourMPhysicalProduct
+  (physicalProduct physicalEntry physicalMean markedQuadratic physical_product_marked_charge_fiber)
 open D5.S3.Fourier.MatrixGaussian
   (quadratic exists_quadratic_lower_bound summable_norm_gaussian)
 
 variable {X : Type*} [Fintype X]
-
-private def physicalEntry (D : LatticeData) (upperA : Bool) (c : Chart) (x : ℝ)
-    (slot : X → Puncture) (colour : X → Fin D.rank) (i j : X) (u v : ℂ) : ℂ :=
-  (D.G (colour i) (colour j) : ℂ) * physicalCovariance upperA c x (slot i) (slot j) u v
-
-private def physicalMean (D : LatticeData) (q : Charge D) (upperA : Bool) (c : Chart) (x : ℝ)
-    (slot : X → Puncture) (colour : X → Fin D.rank) (i : X) (u : ℂ) : ℂ :=
-  -(bilinear D (unitCharge D (colour i)) q : ℂ) *
-    physicalSource c x (slot i) u / chartPeriod upperA c x
 
 private theorem continuousAt_bound {Z : Type*} [TopologicalSpace Z] {z : Z} {f : Z → ℂ}
     (hf : ContinuousAt f z) : ∃ M : ℝ, 0 ≤ M ∧ ∀ᶠ v in 𝓝 z, ‖f v‖ ≤ M := by
@@ -119,27 +111,17 @@ private theorem charge_exponential_majorant {Z : Type*} [TopologicalSpace Z] {z 
   dsimp only [d] at hdecay hsum
   nlinarith only [hdecay, hsum, hqr]
 
-private def markedQuadratic (D : LatticeData) (slot : X → Puncture)
-    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ) (z : (X ⊕ X) → ℂ) : ℂ :=
-  (1 / 2 : ℂ) * ∑ i, ∑ j, physicalEntry D upperA c x slot colour i j
-    (z (.inl i)) (z (.inl j)) *
-      (relative c (slot i) * z (.inr i)) * (relative c (slot j) * z (.inr j))
-
 private def markedLinear (D : LatticeData) (slot : X → Puncture)
     (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
     (j : Fin D.rank) (z : (X ⊕ X) → ℂ) : ℂ :=
   ∑ i, -(D.G (colour i) j : ℂ) * physicalSource c x (slot i) (z (.inl i)) /
     chartPeriod upperA c x * (relative c (slot i) * z (.inr i))
 
-/-- The summand for one integral charge in the two independent copies of
-the mark variables. The finite regular covariance is the physical one. -/
-def physicalChargeSummand (D : LatticeData) (slot : X → Puncture)
+/-- The original name of the physical charge summand in the Taylor coefficient statement. -/
+abbrev physicalChargeSummand (D : LatticeData) (slot : X → Puncture)
     (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
     (q : Charge D) (z : (X ⊕ X) → ℂ) : ℂ :=
-  Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x * (bilinear D q q : ℂ) / 2) *
-  Complex.exp (markedQuadratic D slot colour upperA c x z +
-    ∑ i, physicalMean D q upperA c x slot colour i (z (.inl i)) *
-      (relative c (slot i) * z (.inr i)))
+  OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q z
 
 private theorem markedLinear_eq (D : LatticeData) (slot : X → Puncture)
     (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
@@ -190,10 +172,11 @@ private theorem physical_charge_summands_normal (D : LatticeData)
     (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
     (hτ : 0 < (chartTau upperA c x).im) :
     ∃ (b : Charge D → ℝ) (r : ℝ), Summable b ∧ 0 < r ∧
-      (∀ q, AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q)
+      (∀ q, AnalyticOnNhd ℂ
+        (OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q)
         (Metric.ball 0 r)) ∧
       ∀ q z, z ∈ Metric.ball 0 r →
-        ‖physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
+        ‖OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
   classical
   let Q := markedQuadratic D slot colour upperA c x
   let L := markedLinear D slot colour upperA c x
@@ -202,18 +185,19 @@ private theorem physical_charge_summands_normal (D : LatticeData)
     (chartTau upperA c x) hτ Q L hQ.continuousAt (fun j => (hL j).continuousAt)
   have he : ∀ᶠ z in 𝓝 (0 : (X ⊕ X) → ℂ),
       (AnalyticAt ℂ Q z ∧ (∀ j, AnalyticAt ℂ (L j) z)) ∧
-      ∀ q : Charge D, ‖physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
+      ∀ q : Charge D,
+        ‖OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
     filter_upwards [hQ.eventually_analyticAt,
       eventually_all.mpr (fun j => (hL j).eventually_analyticAt), hbound] with z hz hsz hB
     refine ⟨⟨hz, hsz⟩, fun q => ?_⟩
-    simpa only [physicalChargeSummand, markedLinear_eq] using hB q
+    simpa only [OriginalFourMPhysicalProduct.physicalChargeSummand, markedLinear_eq] using hB q
   obtain ⟨r, hr, hballs⟩ := Metric.eventually_nhds_iff.mp he
   have hF (q : Charge D) :
-      AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q)
+      AnalyticOnNhd ℂ (OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q)
         (Metric.ball 0 r) := by
     intro z hz
     obtain ⟨hzQ, hzL⟩ := (hballs hz).1
-    unfold physicalChargeSummand
+    unfold OriginalFourMPhysicalProduct.physicalChargeSummand
     simp_rw [markedLinear_eq]
     refine analyticAt_const.mul ((hzQ.add ?_).cexp)
     exact Finset.analyticAt_fun_sum _ fun j _ => analyticAt_const.mul (hzL j)
@@ -242,7 +226,7 @@ theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
   have heq : (fun z => physicalProduct D hu slot colour upperA x c a
       (z ∘ Sum.inl) (z ∘ Sum.inr)) = fun z => (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
         ∑' q : {q : Charge D // reduceCharge D q = a},
-          physicalChargeSummand D slot colour upperA c x q.val z := by
+          OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q.val z := by
     funext z
     exact physical_product_marked_charge_fiber D hu slot colour upperA c x hp a _ _
   rw [heq, spatialCoefficient_const_mul]
@@ -286,7 +270,7 @@ private theorem weighted_physical_chart_jet (D : LatticeData) (hu : IsUnit D.G.d
   classical
   dsimp only
   obtain ⟨hp, hτ⟩ := chart_charge_data upperA c hx hx₁
-  let F := physicalChargeSummand D slot colour upperA c x
+  let F := OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x
   obtain ⟨b, r, hb, hr, hF, hbound⟩ :=
     physical_charge_summands_normal D hD slot colour upperA c hx hx₁ hτ
   let C : ℝ := ∑ a : ModTwoCharge D, ‖k a‖
@@ -389,7 +373,8 @@ private theorem mark_jet_eq_moment (D : LatticeData) (slot : X → Puncture)
       physicalEntry D upperA c x slot colour i j (u i) (u j) *
         relative c (slot i) * relative c (slot j)
     let m := fun i => physicalMean D q upperA c x slot colour i (u i) * relative c (slot i)
-    coordinateJet l (fun v => physicalChargeSummand D slot colour upperA c x q (Sum.elim u v)) 0 =
+    coordinateJet l (fun v =>
+      OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q (Sum.elim u v)) 0 =
       Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x * (bilinear D q q : ℂ) / 2) *
         affineMoment A m (jetOccupation l) := by
   classical
@@ -407,9 +392,10 @@ private theorem mark_jet_eq_moment (D : LatticeData) (slot : X → Puncture)
     ring
   let p := Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x *
     (bilinear D q q : ℂ) / 2)
-  have he (v : X → ℂ) : physicalChargeSummand D slot colour upperA c x q (Sum.elim u v) =
-      p * Complex.exp (MvPolynomial.eval v (affineExponent A m)) := by
-    unfold physicalChargeSummand
+  have he (v : X → ℂ) :
+      OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q (Sum.elim u v) =
+        p * Complex.exp (MvPolynomial.eval v (affineExponent A m)) := by
+    unfold OriginalFourMPhysicalProduct.physicalChargeSummand
     congr 2
     simp only [markedQuadratic, affineExponent, FactorialFockQuadraticEstimate.quadratic,
       map_add, map_sum, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.eval_C,
@@ -463,7 +449,7 @@ theorem physical_chart_marked_coefficient_hasSum (D : LatticeData) (hu : IsUnit 
   have hs := physical_chart_jet_hasSum D hu hD slot colour upperA c hx hx₁ hp hτ a
     (Sum.elim n (fun _ => 1)) (l.map Sum.inr ++ l.map Sum.inl)
   have he (q : Charge D) := spatialCoefficient_split_marks n l hl
-    (physicalChargeSummand D slot colour upperA c x q)
+    (OriginalFourMPhysicalProduct.physicalChargeSummand D slot colour upperA c x q)
   simp_rw [he, mark_jet_eq_moment D slot colour upperA c x,
     spatialCoefficient_const_mul, ← mul_assoc] at hs
   exact hs

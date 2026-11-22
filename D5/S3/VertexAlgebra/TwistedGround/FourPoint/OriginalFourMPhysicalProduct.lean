@@ -65,6 +65,34 @@ def physicalProduct (D : LatticeData) (hu : IsUnit D.G.det) {X : Type*} [Fintype
   (P ^ (12 : ℕ))⁻¹ * Complex.exp (gaussianExponent D s weights K) *
     chargeTheta D hu a (chartTau upperA c x) (thetaSource D P M)
 
+/-- The Gram-weighted physical covariance for two marks. -/
+def physicalEntry (D : LatticeData) (upperA : Bool) (c : Chart) (x : ℝ)
+    {X : Type*} (slot : X → Puncture) (colour : X → Fin D.rank) (i j : X) (u v : ℂ) : ℂ :=
+  (D.G (colour i) (colour j) : ℂ) * physicalCovariance upperA c x (slot i) (slot j) u v
+
+/-- The physical linear mean of one mark at a fixed charge. -/
+def physicalMean (D : LatticeData) (q : Charge D) (upperA : Bool) (c : Chart) (x : ℝ)
+    {X : Type*} (slot : X → Puncture) (colour : X → Fin D.rank) (i : X) (u : ℂ) : ℂ :=
+  -(bilinear D (unitCharge D (colour i)) q : ℂ) *
+    physicalSource c x (slot i) u / chartPeriod upperA c x
+
+/-- The signed physical quadratic exponent on the spatial and weight coordinates. -/
+def markedQuadratic (D : LatticeData) {X : Type*} [Fintype X] (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ) (z : (X ⊕ X) → ℂ) : ℂ :=
+  (1 / 2 : ℂ) * ∑ i, ∑ j, physicalEntry D upperA c x slot colour i j
+    (z (.inl i)) (z (.inl j)) *
+      (relative c (slot i) * z (.inr i)) * (relative c (slot j) * z (.inr j))
+
+/-- The charge-energy weight times the signed physical Gaussian with linear mean.
+The sum type gives each mark independent spatial and weight coordinates. -/
+def physicalChargeSummand (D : LatticeData) {X : Type*} [Fintype X] (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
+    (q : Charge D) (z : (X ⊕ X) → ℂ) : ℂ :=
+  Complex.exp ((Real.pi : ℂ) * I * chartTau upperA c x * (bilinear D q q : ℂ) / 2) *
+  Complex.exp (markedQuadratic D slot colour upperA c x z +
+    ∑ i, physicalMean D q upperA c x slot colour i (z (.inl i)) *
+      (relative c (slot i) * z (.inr i)))
+
 private theorem linear_source (D : LatticeData) {X : Type*} [Fintype X]
     (s : X → Sample D) (weights m : X → ℂ) (q : Charge D) {p : ℂ} (hp : p ≠ 0) :
     2 * Real.pi * I * ((gramComplex D *ᵥ (fun i => (q i : ℂ))) ⬝ᵥ
@@ -112,6 +140,9 @@ theorem physical_product_marked_charge_fiber (D : LatticeData) (hu : IsUnit D.G.
             ∑ i, (-(bilinear D (unitCharge D (colour i)) q.val : ℂ) *
               physicalSource c x (slot i) (u i) / chartPeriod upperA c x) * v' i) := by
   classical
+  change _ = (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+    ∑' q : {q : Charge D // reduceCharge D q = a},
+      physicalChargeSummand D slot colour upperA c x q.val (Sum.elim u v)
   dsimp only [physicalProduct]
   rw [chargeTheta_eq_charge_sum, mul_assoc, ← tsum_mul_left]
   congr 1
@@ -121,29 +152,28 @@ theorem physical_product_marked_charge_fiber (D : LatticeData) (hu : IsUnit D.G.
       gaussianExponent D (fun i => nativeSample D x (slot i) (colour i) (u i)) v
         (fun i j => relative c (slot i) * relative c (slot j) *
           physicalCovariance upperA c x (slot i) (slot j) (u i) (u j)) =
-      (1 / 2 : ℂ) * ∑ i, ∑ j, (D.G (colour i) (colour j) : ℂ) *
-        physicalCovariance upperA c x (slot i) (slot j) (u i) (u j) *
-        (relative c (slot i) * v i) * (relative c (slot j) * v j) := by
-    rw [gaussianExponent, div_eq_mul_inv, one_div, mul_comm (2 : ℂ)⁻¹]
+      markedQuadratic D slot colour upperA c x (Sum.elim u v) := by
+    rw [gaussianExponent, markedQuadratic, div_eq_mul_inv, one_div, mul_comm (2 : ℂ)⁻¹]
     congr 1
     apply Finset.sum_congr rfl
     intro i _
     apply Finset.sum_congr rfl
     intro j _
-    simp only [gramComplex, Matrix.map_apply, nativeSample]
+    simp only [gramComplex, Matrix.map_apply, nativeSample, physicalEntry,
+      Sum.elim_inl, Sum.elim_inr]
     ring
   have hL := linear_source D (fun i => nativeSample D x (slot i) (colour i) (u i)) v
     (fun i => relative c (slot i) * physicalSource c x (slot i) (u i)) q.val hp
   have hlinear : (∑ i, v i * (-(bilinear D (unitCharge D (colour i)) q.val : ℂ) *
         (relative c (slot i) * physicalSource c x (slot i) (u i)) / chartPeriod upperA c x)) =
-      ∑ i, (-(bilinear D (unitCharge D (colour i)) q.val : ℂ) *
-        physicalSource c x (slot i) (u i) / chartPeriod upperA c x) *
-          (relative c (slot i) * v i) := by
+      ∑ i, physicalMean D q.val upperA c x slot colour i (u i) *
+        (relative c (slot i) * v i) := by
     apply Finset.sum_congr rfl
     intro i _
+    unfold physicalMean
     ring
   erw [hQ, hL.trans hlinear]
-  simp only [Complex.exp_add]
+  simp only [physicalChargeSummand, Sum.elim_inl, Sum.elim_inr, Complex.exp_add]
   ring
 
 private theorem native_source_entries (D : LatticeData)

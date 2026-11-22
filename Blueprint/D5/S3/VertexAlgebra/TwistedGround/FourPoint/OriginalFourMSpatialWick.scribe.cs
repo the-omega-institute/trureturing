@@ -33,9 +33,10 @@ internal sealed class OriginalFourMSpatialWickDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For a list of distinct mark labels, degree one in each selected weight "
                     + "is the ordered mark derivative at zero. For each spatial coordinate vector the derivative "
-                    + "is the native affine Wick moment of the symmetric physical covariance and charge-dependent "
-                    + "mean with the original occurrence signs. It uses the occupation factorial convention of "
-                    + "affineMoment. Taking the indicated spatial coefficients of those moments and summing with "
+                    + "is the charge-energy exponential exp(π i τ ⟨q,q⟩/2) times the native affine Wick moment "
+                    + "of the symmetric physical covariance and charge-dependent mean with the original occurrence "
+                    + "signs. The moment uses the occupation factorial convention of affineMoment. "
+                    + "Taking the indicated spatial coefficients of the moments and summing with "
                     + "the charge and period weights gives the corresponding Taylor coefficient of the physical product."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-physical-chart-coefficient-overlap"),
