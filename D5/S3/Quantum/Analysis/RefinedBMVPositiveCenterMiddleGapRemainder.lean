@@ -311,6 +311,11 @@ noncomputable def middleGapRootRemainderFive (h t : ℝ) : ℝ :=
   Real.exp (3 * t / 2) / upperTailGap h t *
     (1 - Real.sqrt (1 - upperTailLambda h t) - middleGapRootTaylorFive (upperTailLambda h t))
 
+/-- The fifth-order expansion of the middle-gap profile. -/
+noncomputable def middleGapFifthOrder (h t : ℝ) : ℝ :=
+  Real.exp (3 * t / 2) / upperTailGap h t *
+    (middleGapRootTaylorFive (upperTailLambda h t) - Real.exp (-((3 + h) * t)))
+
 private theorem gapDecay_remainderOne {h : ℝ} (hh : 0 < h) :
     GapDecay (middleGapRootRemainderOne h) := by
   have hF := gapDecay_scaledLambdaSq hh
@@ -462,8 +467,49 @@ theorem logKernel_mixed_of_four_le {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
     rw [h₂]
     exact add_pos_of_pos_of_nonneg (deriv_deriv_middleGapFirstOrder_pos hh hhmax hd) hb₂
 
+/-- On the middle strip the fifth-order polynomial bounds suffice for the actual kernel sign. -/
+theorem logKernel_mixed_of_fifthOrder {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 4 ≤ u) (hd : 2 < v - u)
+    (hs : middleGapSlopeBudget (3 / (p : ℝ)) (v - u) ≤
+      -deriv (middleGapFifthOrder (3 / (p : ℝ))) (v - u))
+    (hc : 0 < deriv (deriv (middleGapFifthOrder (3 / (p : ℝ)))) (v - u)) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  let h : ℝ := 3 / (p : ℝ)
+  let d := v - u
+  have hpR : (11 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp
+  have hp₀ : 0 < (p : ℝ) := by linarith
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hd₀ : 0 < d := (by norm_num : (0 : ℝ) < 2).trans hd
+  have hEq (t : ℝ) (_ht : 0 < t) : CompactGap.middleGapProfile h t =
+      middleGapFifthOrder h t + middleGapRootRemainderFive h t := by
+    rw [middleGapProfile_eq_scaled]
+    unfold middleGapFifthOrder middleGapRootRemainderFive
+    ring
+  have hA (t : ℝ) (ht : 0 < t) : ContDiffAt ℝ 2 (middleGapFifthOrder h) t := by
+    have hane : upperTailGap h t ≠ 0 := (gap_pos_of_pos hh ht).ne'
+    have ha : ContDiffAt ℝ 2 (upperTailGap h) t := by unfold upperTailGap; fun_prop
+    have hx : ContDiffAt ℝ 2 (upperTailLambda h) t := by
+      unfold upperTailLambda upperTailGap
+      fun_prop
+    unfold middleGapFifthOrder middleGapRootTaylorFive
+    fun_prop (disch := assumption)
+  have hB (t : ℝ) (ht : 0 < t) : ContDiffAt ℝ 2 (middleGapRootRemainderFive h) t :=
+    gapRootRemainder_contDiffAt hh ht (B := middleGapRootTaylorFive)
+      (by unfold middleGapRootTaylorFive; fun_prop)
+  obtain ⟨h₁, h₂⟩ := derivs_of_sum hEq hA hB hd₀
+  obtain ⟨hb₁, hb₂⟩ := middleGapRootRemainderFive_signs hh hd
+  refine logKernel_middleGap_mixed_of_recentered hp hu hd.le ?_ ?_
+  · change middleGapSlopeBudget h d ≤ -deriv (CompactGap.middleGapProfile h) d
+    change middleGapSlopeBudget h d ≤ -deriv (middleGapFifthOrder h) d at hs
+    rw [h₁]
+    linarith only [hs, hb₁]
+  · change 0 < deriv (deriv (CompactGap.middleGapProfile h)) d
+    rw [h₂]
+    exact add_pos_of_pos_of_nonneg hc hb₂
+
 #print axioms middleGapRootRemainderOne_signs
 #print axioms middleGapRootRemainderFive_signs
 #print axioms logKernel_mixed_of_four_le
+#print axioms logKernel_mixed_of_fifthOrder
 
 end RefinedBMV.PositiveCenter
