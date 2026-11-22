@@ -12,6 +12,24 @@ internal sealed class AxisBudgetDimensionSixteenDocument : IScribeDocumentDefini
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("b"),
             new Formula.NamedConstant(FormulaIdentifier.Create("Nat")), body);
 
+    private static Formula CoverExistence()
+    {
+        Formula edges = F.Id("f");
+        Formula mode = F.Id("s");
+        Formula conditions = new Formula.Logic(
+            Call("CoverSupport", edges),
+            FormulaLogicOperator.And,
+            new Formula.Logic(
+                Call("CoverDegrees", edges, mode),
+                FormulaLogicOperator.And,
+                new Formula.Relation(Call("AxisCost", edges),
+                    FormulaRelationOperator.LessThanOrEqual, Budget)));
+        return new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("f"),
+            Call("BinaryEdgeTables", D(1,5)),
+            new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("s"),
+                new Formula.NamedConstant(FormulaIdentifier.Create("Bool")), conditions));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Compare full inclusion and inclusion covers in the one-coordinate Boolean lattice.",
         H("A sixteen-coordinate budget that requires an edge skipping ranks"),
@@ -22,15 +40,17 @@ internal sealed class AxisBudgetDimensionSixteenDocument : IScribeDocumentDefini
                 H("A feasible factor supported on diagonals and inclusion covers"),
                 StatementSource.FromAuthor(Disp(AtEachBudget(new Formula.Logic(
                     Call("CoverWithin", Budget), FormulaLogicOperator.Iff,
-                    Call("ExistsCoverFactor", Budget))))),
+                    CoverExistence())))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Fix coordinate zero in dimension sixteen and multiplier three. "
-                    + "The two vertex sets are copies of the subsets of the other fifteen coordinates. "
-                    + "A positive ordinary entry must be diagonal or add one element. The exceptional "
-                    + "full-set row can use every target except the full set. Both full-set vertices have "
-                    + "even degree at most two in the selected mode, or odd degree at most one in the "
-                    + "other mode. All ordinary degrees are odd and at most three. The budget bounds "
-                    + "four times one plus the number of selected ordinary edges with two odd endpoints."))),
+                    + "BinaryEdgeTables(15) is the set of Boolean edge tables on two copies of the "
+                    + "subsets of the other fifteen coordinates. CoverSupport(f) excludes the edge "
+                    + "from the full set to itself. Any positive entry outside the full-set row must "
+                    + "be diagonal or add exactly one element. CoverDegrees(f,s) requires each "
+                    + "ordinary row and column to have odd degree at most three. Both full-set "
+                    + "vertices have even degree at most two if s is true, and odd degree at most "
+                    + "one if s is false. AxisCost(f) is four times the sum of one and the number "
+                    + "of selected edges from ordinary odd-rank rows to odd-rank columns."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("sixteen-full-budget-iff"),

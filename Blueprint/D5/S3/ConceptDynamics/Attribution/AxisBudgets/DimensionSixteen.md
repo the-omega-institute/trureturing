@@ -6,7 +6,7 @@ Compare full inclusion and inclusion covers in the one-coordinate Boolean lattic
 
 **Definition 1.1 (A feasible factor supported on diagonals and inclusion covers).**
 
-$$\forall b \in \mathrm{Nat},\; \operatorname{CoverWithin}\left(b\right) \Leftrightarrow \operatorname{ExistsCoverFactor}\left(b\right)$$
+$$\forall b \in \mathrm{Nat},\; \operatorname{CoverWithin}\left(b\right) \Leftrightarrow \left(\exists f \in \operatorname{BinaryEdgeTables}\left(15\right),\; \exists s \in \mathrm{Bool},\; \operatorname{CoverSupport}\left(f\right) \land \left(\operatorname{CoverDegrees}\left(f, s\right) \land \operatorname{AxisCost}\left(f\right) \le b\right)\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteen.coverWithin` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$\forall b \in \mathrm{Nat},\; \operatorname{CoverWithin}\left(b\right) \Leftri
 
 *Commentary.*
 
-Fix coordinate zero in dimension sixteen and multiplier three. The two vertex sets are copies of the subsets of the other fifteen coordinates. A positive ordinary entry must be diagonal or add one element. The exceptional full-set row can use every target except the full set. Both full-set vertices have even degree at most two in the selected mode, or odd degree at most one in the other mode. All ordinary degrees are odd and at most three. The budget bounds four times one plus the number of selected ordinary edges with two odd endpoints.
+Fix coordinate zero in dimension sixteen and multiplier three. BinaryEdgeTables(15) is the set of Boolean edge tables on two copies of the subsets of the other fifteen coordinates. CoverSupport(f) excludes the edge from the full set to itself. Any positive entry outside the full-set row must be diagonal or add exactly one element. CoverDegrees(f,s) requires each ordinary row and column to have odd degree at most three. Both full-set vertices have even degree at most two if s is true, and odd degree at most one if s is false. AxisCost(f) is four times the sum of one and the number of selected edges from ordinary odd-rank rows to odd-rank columns.
 
 **Theorem 1.2 (The full inclusion graph has minimum budget 2036).**
 
