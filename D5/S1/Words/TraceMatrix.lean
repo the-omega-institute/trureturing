@@ -142,4 +142,6 @@ theorem connected_flatten_iff (I : α → α → Prop)
           ∀ a ∈ w i j, ∀ b ∈ w i' j', I a b) := by
   simpa using connected_flatten_family_iff I hs hi xs (fun j : Fin ys.length => ys[j])
 
+#print axioms connected_flatten_iff
+
 end D5.S1.Words.TraceMatrix
