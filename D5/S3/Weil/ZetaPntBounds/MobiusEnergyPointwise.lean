@@ -20,14 +20,6 @@ namespace D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 
 open Finset Set MeasureTheory ArithmeticFunction
 open scoped ArithmeticFunction.Moebius
-open D5.S3.Arith.MoebiusLogarithmic (reciprocalSum abs_reciprocalSum_le_one)
-
-private theorem weighted_prefix_abs_le_one (x : ℝ) : |mobiusPartialSum x| ≤ 1 := by
-  have he : Finset.Icc 1 ⌊x⌋₊ = Finset.Ioc 0 ⌊x⌋₊ := by
-    ext n
-    simp only [Finset.mem_Icc, Finset.mem_Ioc]
-    omega
-  simpa only [mobiusPartialSum, reciprocalSum, he] using abs_reciprocalSum_le_one x
 
 private theorem weighted_prefix_change_le {N : ℕ} (hN : 1 ≤ N) {x : ℝ} (hx : (N : ℝ) ≤ x) :
     |mobiusPartialSum x - mobiusPartialSum (N : ℝ)| ≤ (x - N) / N := by
@@ -71,7 +63,8 @@ private theorem weighted_prefix_cubic_energy {α : ℝ}
   let e (x : ℝ) := mobiusPartialSum x ^ 2 * x ^ (-α)
   let c := (H/2)^2 * (N : ℝ)^(-α) / 2
   have hH : 0 ≤ H := abs_nonneg _
-  have hH₁ : H ≤ 1 := weighted_prefix_abs_le_one _
+  have hH₁ : H ≤ 1 := by
+    simpa only [H, Complex.norm_real, Real.norm_eq_abs] using norm_mobiusPartialSum_le_one (N : ℝ)
   have hN₂ : (2 : ℝ) ≤ N := by exact_mod_cast hN
   have hN₀ : (0 : ℝ) < N := by linarith
   have hNb : (N : ℝ) ≤ b := by
@@ -143,7 +136,8 @@ private theorem weighted_prefix_decay_of_energy {α : ℝ} (hα : 0 ≤ α) (hα
   by_cases hn : N = 1
   · subst N
     simpa only [Nat.cast_one, Real.one_rpow, mul_one] using
-      (weighted_prefix_abs_le_one 1).trans hC₁
+      (by simpa only [Complex.norm_real, Real.norm_eq_abs] using norm_mobiusPartialSum_le_one 1 :
+        |mobiusPartialSum 1| ≤ 1).trans hC₁
   have hN₂ : 2 ≤ N := by omega
   have hN₀ : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
   have hp : 0 < (N : ℝ)^δ := Real.rpow_pos_of_pos hN₀ _
