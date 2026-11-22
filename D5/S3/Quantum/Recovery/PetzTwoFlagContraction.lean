@@ -6,7 +6,8 @@
    utility: none
    digest: Exact complex two-flag contraction bound with radial and phase deficiency. -/
 
-import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.Complex.Order
+import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -85,5 +86,90 @@ theorem twoFlag_maximum (m C f g w v : ℝ) (y z : ℂ)
         Complex.ext (by simp; linarith) (by simpa using hzi)⟩
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;>
       norm_num [Complex.normSq_apply, Complex.sub_re, Complex.sub_im] <;> ring
+
+open scoped BigOperators ComplexOrder
+
+/-- For a Hermitian four-slot contraction the sum over the remaining entries
+in each row is bounded by the slack of its within-flag coherence. -/
+theorem matrix_twoFlag_maximum
+    (Y : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (a : Fin 2 × Fin 2 → ℝ) (m C f g : ℝ)
+    (hY : Y.IsHermitian) (hY₂ : (1 - Y * Y).PosSemidef)
+    (ha : ∀ i, 0 ≤ a i) (hm : 0 ≤ m) (hC : 0 < C) (hf : 0 < f) (hg : 0 < g)
+    (hw : 0 < 8 * m + f * (f + g) / C - (a (0, 0) + a (1, 0)))
+    (hv : 0 < 8 * m + g * (f + g) / C - (a (0, 1) + a (1, 1))) :
+    let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
+    let y := Y (0, 0) (1, 0)
+    let z := Y (0, 1) (1, 1)
+    let objective :=
+      (∑ i, a i * ∑ j ∈ Finset.univ.erase (partner i), Complex.normSq (Y i j)) +
+      4 * m * Complex.normSq (y - z) + (f * y.re - g * z.re) ^ 2 / C
+    let optimum := 16 * m + (f + g) ^ 2 / C
+    objective ≤ optimum ∧
+      (objective = optimum ↔ (y = 1 ∧ z = -1) ∨ (y = -1 ∧ z = 1)) := by
+  classical
+  dsimp only
+  let partner (i : Fin 2 × Fin 2) : Fin 2 × Fin 2 := (1 - i.1, i.2)
+  let entry (s : Fin 2) := Y (0, s) (1, s)
+  let rest (i : Fin 2 × Fin 2) := ∑ j ∈ Finset.univ.erase (partner i), Complex.normSq (Y i j)
+  let coherence := 4 * m * Complex.normSq (entry 0 - entry 1) +
+    (f * (entry 0).re - g * (entry 1).re) ^ 2 / C
+  let optimum := 16 * m + (f + g) ^ 2 / C
+  change (∑ i, a i * rest i) + coherence ≤ optimum ∧
+    ((∑ i, a i * rest i) + coherence = optimum ↔
+      (entry 0 = 1 ∧ entry 1 = -1) ∨ (entry 0 = -1 ∧ entry 1 = 1))
+  have hrest (i : Fin 2 × Fin 2) : 0 ≤ rest i :=
+    Finset.sum_nonneg fun _ _ => Complex.normSq_nonneg _
+  have hrow (i : Fin 2 × Fin 2) : rest i + Complex.normSq (entry i.2) ≤ 1 := by
+    have hdiag := (Complex.nonneg_iff.mp (hY₂.diag_nonneg (i := i))).1
+    have hsum : ((Y * Y) i i).re = ∑ j, Complex.normSq (Y i j) := by
+      rw [Matrix.mul_apply, Complex.re_sum]
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [← hY.apply j i]
+      simp [Complex.star_def, Complex.mul_conj]
+    have hpartner : Complex.normSq (Y i (partner i)) = Complex.normSq (entry i.2) := by
+      obtain ⟨b, s⟩ := i
+      fin_cases b
+      · rfl
+      · change Complex.normSq (Y (1, s) (0, s)) = _
+        rw [← hY.apply (1, s) (0, s)]
+        exact Complex.normSq_conj _
+    rw [Matrix.sub_apply, Complex.sub_re, hsum,
+      ← Finset.sum_erase_add Finset.univ _ (Finset.mem_univ (partner i)), hpartner] at hdiag
+    simpa [rest] using sub_nonneg.mp hdiag
+  have hentry (s : Fin 2) : Complex.normSq (entry s) ≤ 1 :=
+    le_trans (le_add_of_nonneg_left (hrest (0, s))) (hrow (0, s))
+  have henvelope : (∑ i, a i * rest i) ≤
+      (a (0, 0) + a (1, 0)) * (1 - Complex.normSq (entry 0)) +
+      (a (0, 1) + a (1, 1)) * (1 - Complex.normSq (entry 1)) := by
+    calc
+      _ ≤ ∑ i, a i * (1 - Complex.normSq (entry i.2)) :=
+        Finset.sum_le_sum fun i _ =>
+          mul_le_mul_of_nonneg_left (le_sub_comm.mp (hrow i)) (ha i)
+      _ = _ := by
+        simp only [Fintype.sum_prod_type, Fin.sum_univ_two]
+        ring
+  obtain ⟨hbound, _, heq⟩ :=
+    twoFlag_maximum m C f g (a (0, 0) + a (1, 0)) (a (0, 1) + a (1, 1))
+      (entry 0) (entry 1) hm hC hf hg hw hv (hentry 0) (hentry 1)
+  dsimp only at hbound heq
+  refine ⟨by dsimp [coherence, optimum]; linarith, ?_⟩
+  constructor
+  · intro h
+    apply heq.mp
+    dsimp [coherence, optimum] at h ⊢
+    linarith
+  · intro h
+    have habs (s : Fin 2) : Complex.normSq (entry s) = 1 := by
+      rcases h with ⟨hp, hn⟩ | ⟨hn, hp⟩ <;>
+        fin_cases s <;> simp_all only [Complex.normSq_neg, Complex.normSq_one]
+    have hzero (i : Fin 2 × Fin 2) : rest i = 0 := by
+      have hi := hrow i
+      rw [habs] at hi
+      linarith [hrest i]
+    simp only [hzero, mul_zero, Finset.sum_const_zero, zero_add]
+    have hcorner := heq.mpr h
+    simpa [coherence, optimum, habs, sub_self, add_assoc] using hcorner
 
 end D5.S3.Quantum.Recovery.PetzTwoFlagContraction
