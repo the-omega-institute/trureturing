@@ -28,7 +28,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMOccupa
 
 For physical displacement u at a puncture, use the chart scale s and lowering parameter λ to recover the native displacement v = u/(s + λu).
 
-**Definition 1.3 (Chosen half-Jacobian).**
+**Definition 1.3 (Derivative of the lifted coordinate map).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMOccupationTransport.halfJacobian`
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMOccupa
 
 *Commentary.*
 
-For a native displacement v and its inverse root β satisfying β² = 1−λv, the chosen half-Jacobian is scaleRoot(c,x,p)/β³.
+For the native half-coordinate q, write v = q² and choose the root β of 1−λv that equals 1 at zero. The lifted map is q ↦ scaleRoot(c,x,p)·q/β. Its derivative is scaleRoot(c,x,p)/β³.
 
 **Definition 1.4 (Normalized root in the inverse coordinate).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMOccupa
 
 *Commentary.*
 
-For real 0 < x < 1, the physical source of each chart and puncture is analytic at displacement u = 0. The chosen half-Jacobian is nonzero there.
+For real 0 < x < 1, the physical source of each chart and puncture is analytic at displacement u = 0. The derivative of the lifted map is nonzero there.
 
 **Theorem 1.7 (Source germs on the B and D overlaps).**
 
