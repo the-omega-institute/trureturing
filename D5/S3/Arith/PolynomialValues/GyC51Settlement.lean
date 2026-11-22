@@ -8,7 +8,7 @@
 
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Order.Sym2
+import Mathlib.Data.Rat.Cast.Lemmas
 import Mathlib.RingTheory.MvPolynomial.Symmetric.NewtonIdentities
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
@@ -16,6 +16,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Polynomial.Degree.Defs
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 import D5.S0.Certificates.GiacomelliLogConcaveConeNonconvex
+import D5.S1.Phase.Interference.DedekindReciprocityFiniteSums
 
 set_option autoImplicit false
 
@@ -65,6 +66,7 @@ def claim : Prop :=
 
 
 open Polynomial
+open D5.S1.Phase.Interference.DedekindReciprocityFiniteSums (sum_Ico_cast sum_Ico_cast_sq)
 open scoped BigOperators
 
 private noncomputable def prefixSum (x : ℕ → Polynomial ℝ) (m : ℕ) : Polynomial ℝ :=
@@ -76,9 +78,6 @@ private noncomputable def prefixSquares (x : ℕ → Polynomial ℝ) (m : ℕ) :
 private theorem e_one (x : ℕ → Polynomial ℝ) (m : ℕ) : e x m 1 = prefixSum x m := by
   simp [e, prefixSum]
 
-private theorem h_one (x : ℕ → Polynomial ℝ) (m : ℕ) : h x m 1 = prefixSum x m := by
-  simp [h, prefixSum]
-
 private theorem e_two (x : ℕ → Polynomial ℝ) (m : ℕ) :
     2 * e x m 2 = prefixSum x m ^ 2 - prefixSquares x m := by
   have hn := MvPolynomial.mul_esymm_eq_sum (Fin m) (Polynomial ℝ) 2
@@ -89,55 +88,6 @@ private theorem e_two (x : ℕ → Polynomial ℝ) (m : ℕ) :
   simp [Finset.sum_insert, MvPolynomial.psum, MvPolynomial.esymm_one] at he
   unfold e prefixSum prefixSquares
   linear_combination he
-
-private theorem h_two (x : ℕ → Polynomial ℝ) (m : ℕ) :
-    2 * h x m 2 = prefixSum x m ^ 2 + prefixSquares x m := by
-  classical
-  let f := inputPrefix x m
-  let term : Fin m × Fin m → Polynomial ℝ := fun z => f z.1 * f z.2
-  let forward : Fin m × Fin m → Polynomial ℝ :=
-    fun z => if z.1 ≤ z.2 then term z else 0
-  let backward : Fin m × Fin m → Polynomial ℝ :=
-    fun z => if z.2 ≤ z.1 then term z else 0
-  let diagonal : Fin m × Fin m → Polynomial ℝ :=
-    fun z => if z.1 = z.2 then term z else 0
-  have evalSum : h x m 2 = ∑ z : {z : Fin m × Fin m // z.1 ≤ z.2}, term z := by
-    unfold h MvPolynomial.hsymm
-    rw [MvPolynomial.eval_sum]
-    refine (Fintype.sum_equiv
-      (Sym2.sortEquiv.symm.trans (Sym2.equivSym (Fin m))) _ _ ?_).symm
-    intro z
-    simp only [← Multiset.prod_hom', MvPolynomial.eval_X]
-    change term z = (Multiset.map f (z.val.1 ::ₘ {z.val.2})).prod
-    simp [term]
-  have forwardSum : h x m 2 = ∑ z, forward z := by
-    rw [evalSum]
-    have hf : (∑ z ∈ (Finset.univ : Finset (Fin m × Fin m)) with z.1 ≤ z.2, term z) =
-        ∑ z : {z : Fin m × Fin m // z.1 ≤ z.2}, term z :=
-      Finset.sum_subtype _ (fun z => by simp) term
-    rw [← hf, Finset.sum_filter]
-  have swapSum : ∑ z, backward z = ∑ z, forward z := by
-    apply Fintype.sum_equiv (Equiv.prodComm (Fin m) (Fin m))
-    intro z
-    simp [forward, backward, term, mul_comm]
-  have squareSum : ∑ z, term z = prefixSum x m ^ 2 := by
-    rw [pow_two, prefixSum, Fintype.sum_prod_type, Finset.sum_mul]
-    simp [term, f, Finset.mul_sum]
-  have diagonalSum : ∑ z, diagonal z = prefixSquares x m := by
-    rw [Fintype.sum_prod_type]
-    simp [diagonal, term, f, Finset.sum_ite_eq, prefixSquares, pow_two]
-  have split (z : Fin m × Fin m) : forward z + backward z = term z + diagonal z := by
-    rcases lt_trichotomy z.1 z.2 with hz | hz | hz
-    · simp [forward, backward, diagonal, hz.le, hz.not_ge, hz.ne]
-    · simp [forward, backward, diagonal, hz]
-    · simp [forward, backward, diagonal, hz.le, hz.not_ge, hz.ne.symm]
-  calc
-    2 * h x m 2 = (∑ z, forward z) + ∑ z, backward z := by rw [swapSum, ← forwardSum, two_mul]
-    _ = ∑ z, (forward z + backward z) := (Finset.sum_add_distrib).symm
-    _ = ∑ z, (term z + diagonal z) := Finset.sum_congr rfl (fun z _ => split z)
-    _ = prefixSum x m ^ 2 + prefixSquares x m := by
-      rw [Finset.sum_add_distrib, squareSum, diagonalSum]
-
 
 private noncomputable def quadratic (t : ℝ) : Polynomial ℝ := 1 + X + monomial 2 t
 
@@ -153,25 +103,38 @@ private noncomputable def affineSquares (a : ℝ) (m : ℕ) : ℝ :=
 
 private theorem sum_affine (a : ℝ) (m : ℕ) :
     (∑ i : Fin m, (((i.val + 1 : ℕ) : ℝ) + a)) = affineSum a m := by
-  induction m with
-  | zero => simp [affineSum]
-  | succ m ih =>
-    rw [Fin.sum_univ_castSucc]
-    simp only [Fin.val_castSucc, Fin.val_last]
-    rw [ih]
-    simp only [affineSum, Nat.cast_succ]
-    ring
+  have h := congrArg (fun z : ℚ => (z : ℝ)) (sum_Ico_cast (m + 1))
+  rw [Finset.sum_Ico_eq_sum_range] at h
+  push_cast at h
+  simp only [add_comm (1 : ℝ)] at h
+  rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => (((i + 1 : ℕ) : ℝ) + a)) m]
+  push_cast
+  rw [Finset.sum_add_distrib, h]
+  simp [affineSum]
+  ring
 
 private theorem sum_affine_squares (a : ℝ) (m : ℕ) :
     (∑ i : Fin m, (((i.val + 1 : ℕ) : ℝ) + a) ^ 2) = affineSquares a m := by
-  induction m with
-  | zero => simp [affineSquares]
-  | succ m ih =>
-    rw [Fin.sum_univ_castSucc]
-    simp only [Fin.val_castSucc, Fin.val_last]
-    rw [ih]
-    simp only [affineSquares, Nat.cast_succ]
-    ring
+  have h := congrArg (fun z : ℚ => (z : ℝ)) (sum_Ico_cast_sq (m + 1))
+  rw [Finset.sum_Ico_eq_sum_range] at h
+  push_cast at h
+  simp only [Rat.cast_pow, Rat.cast_add, Rat.cast_natCast, Rat.cast_one, add_comm (1 : ℝ)] at h
+  have hBase := sum_affine 0 m
+  simp only [add_zero] at hBase
+  calc
+    _ = ∑ i : Fin m, (((i.val + 1 : ℕ) : ℝ) ^ 2 +
+          2 * a * ((i.val + 1 : ℕ) : ℝ) + a ^ 2) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
+    _ = _ := by
+      simp only [Finset.sum_add_distrib, ← Finset.mul_sum, hBase,
+        Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+      rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => ((i + 1 : ℕ) : ℝ) ^ 2) m]
+      push_cast
+      rw [h]
+      unfold affineSum affineSquares
+      ring
 
 private theorem prefixSum_affine (a t : ℝ) (m : ℕ) :
     prefixSum (affineInput a t) m = C (affineSum a m) * quadratic t := by
@@ -183,18 +146,10 @@ private theorem prefixSquares_affine (a t : ℝ) (m : ℕ) :
     ← map_sum, sum_affine_squares]
 
 private theorem e_two_affine (a t : ℝ) (m : ℕ) :
-    e (affineInput a t) m 2 = C ((affineSum a m ^ 2 - affineSquares a m) / 2) * quadratic t ^ 2 := by
+    e (affineInput a t) m 2 =
+      C ((affineSum a m ^ 2 - affineSquares a m) / 2) * quadratic t ^ 2 := by
   apply mul_left_cancel₀ (show (2 : Polynomial ℝ) ≠ 0 by norm_num)
   rw [e_two, prefixSum_affine, prefixSquares_affine, mul_pow, ← map_pow, ← sub_mul, ← map_sub,
-    ← mul_assoc, ← C_ofNat 2, ← map_mul]
-  congr 1
-  congr 1
-  ring
-
-private theorem h_two_affine (a t : ℝ) (m : ℕ) :
-    h (affineInput a t) m 2 = C ((affineSum a m ^ 2 + affineSquares a m) / 2) * quadratic t ^ 2 := by
-  apply mul_left_cancel₀ (show (2 : Polynomial ℝ) ≠ 0 by norm_num)
-  rw [h_two, prefixSum_affine, prefixSquares_affine, mul_pow, ← map_pow, ← add_mul, ← map_add,
     ← mul_assoc, ← C_ofNat 2, ← map_mul]
   congr 1
   congr 1
@@ -204,40 +159,24 @@ private noncomputable def familyScale (a : ℝ) (j : ℕ) : ℝ :=
   (j : ℝ) * ((j : ℝ) + 1) ^ 2 * ((j : ℝ) + 2) *
     (2 * a + (j : ℝ) + 2) * (4 * a + (j : ℝ) + 3) / 48
 
-private theorem affine_triple_differences (a t : ℝ) (j : ℕ) :
-    E (affineInput a t) (j + 2) (j + 1) j = C (familyScale a j) * quadratic t ^ 4 ∧
-    H (affineInput a t) (j + 2) (j + 1) j = C (familyScale a j) * quadratic t ^ 4 := by
+private theorem affine_elementary_difference (a t : ℝ) (j : ℕ) :
+    E (affineInput a t) (j + 2) (j + 1) j = C (familyScale a j) * quadratic t ^ 4 := by
   have step : j + 2 - (j + 1) = 1 := by omega
   have pred : j + 2 - 1 = j + 1 := by omega
-  constructor
-  · simp only [E, step, pred, Nat.add_sub_cancel_left, Nat.add_sub_cancel, e_one,
-      prefixSum_affine, e_two_affine]
-    calc
-      _ = (C (affineSum a (j + 2)) * C (affineSum a (j + 1)) *
-          C ((affineSum a (j + 1) ^ 2 - affineSquares a (j + 1)) / 2) -
-          C (affineSum a (j + 1)) * C (affineSum a j) *
-          C ((affineSum a (j + 2) ^ 2 - affineSquares a (j + 2)) / 2)) *
-          quadratic t ^ 4 := by ring
-      _ = _ := by
-        simp only [← map_mul, ← map_sub]
-        congr 1
-        congr 1
-        push_cast [affineSum, affineSquares, familyScale]
-        ring
-  · simp only [H, step, Nat.add_sub_cancel_left, h_one, prefixSum_affine, h_two_affine]
-    calc
-      _ = (C (affineSum a (j + 1)) * C (affineSum a j) *
-          C ((affineSum a (j + 1) ^ 2 + affineSquares a (j + 1)) / 2) -
-          C (affineSum a (j + 2)) * C (affineSum a (j + 1)) *
-          C ((affineSum a j ^ 2 + affineSquares a j) / 2)) *
-          quadratic t ^ 4 := by ring
-      _ = _ := by
-        simp only [← map_mul, ← map_sub]
-        congr 1
-        congr 1
-        push_cast [affineSum, affineSquares, familyScale]
-        ring
-
+  simp only [E, step, pred, Nat.add_sub_cancel_left, Nat.add_sub_cancel, e_one,
+    prefixSum_affine, e_two_affine]
+  calc
+    _ = (C (affineSum a (j + 2)) * C (affineSum a (j + 1)) *
+        C ((affineSum a (j + 1) ^ 2 - affineSquares a (j + 1)) / 2) -
+        C (affineSum a (j + 1)) * C (affineSum a j) *
+        C ((affineSum a (j + 2) ^ 2 - affineSquares a (j + 2)) / 2)) *
+        quadratic t ^ 4 := by ring
+    _ = _ := by
+      simp only [← map_mul, ← map_sub]
+      congr 1
+      congr 1
+      push_cast [affineSum, affineSquares, familyScale]
+      ring
 
 private theorem affine_gap (a t : ℝ) (i r : ℕ) :
     affineInput a t (i + 1) * affineInput a t r -
@@ -302,18 +241,16 @@ private theorem familyScale_pos (a : ℝ) (j : ℕ) (ha : 0 < a) (hj : 1 ≤ j) 
   unfold familyScale
   positivity
 
-private theorem affine_failure (a t : ℝ) (j : ℕ)
+private theorem affine_elementary_failure (a t : ℝ) (j : ℕ)
     (ha : 0 < a) (ht : 5 / 2 < t) (hj : 1 ≤ j) :
-    StronglyQLogConcave (affineInput a t) ∧
-    ¬ CoeffLogConcave (E (affineInput a t) (j + 2) (j + 1) j) ∧
-    ¬ CoeffLogConcave (H (affineInput a t) (j + 2) (j + 1) j) := by
-  obtain ⟨he, hh⟩ := affine_triple_differences a t j
-  have hf := scaled_four_failure (familyScale a j) t (familyScale_pos a j ha hj) ht
-  exact ⟨affine_strong a t (by linarith), he ▸ hf, hh ▸ hf⟩
+    ¬ CoeffLogConcave (E (affineInput a t) (j + 2) (j + 1) j) := by
+  rw [affine_elementary_difference]
+  exact scaled_four_failure (familyScale a j) t (familyScale_pos a j ha hj) ht
 
 theorem result : ¬ claim := by
   intro assertion
-  obtain ⟨strong, eFails, _⟩ := affine_failure 1 3 1 (by norm_num) (by norm_num) (by decide)
+  have strong := affine_strong 1 3 (by norm_num)
+  have eFails := affine_elementary_failure 1 3 1 (by norm_num) (by norm_num) (by decide)
   exact eFails (assertion (affineInput 1 3) strong 3 2 1 (by decide) (by decide) (by decide)).1
 
 end D5.S3.Arith.PolynomialValues.GyC51Settlement

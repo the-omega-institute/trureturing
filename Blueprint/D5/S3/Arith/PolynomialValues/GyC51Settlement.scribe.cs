@@ -10,7 +10,7 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/gy2026stirling");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A common affine input family gives two symmetric triple-product differences whose coefficients fail log-concavity.",
+        "An affine input family refutes Gy's joint coefficient log-concavity assertion through the elementary difference.",
         H("Gy's coefficient log-concavity question"),
         Blocks(
             Definition("inputPrefix", "The first m inputs",
@@ -40,20 +40,23 @@ internal sealed class GyC51SettlementDocument : IScribeDocumentDefinition
                         + "while each symmetric polynomial starts at x₁. Conjecture 5.1 on printed page 15 asks for "
                         + "coefficient nonnegativity of E and H.")))),
             Describe.Lean(DescribeId.Create("gy26c51-result"),
-                DeclarationHandle.Create(Prefix + "result"), H("Both outputs can fail coefficient log-concavity"),
+                DeclarationHandle.Create(Prefix + "result"), H("Gy's joint coefficient log-concavity assertion is false"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Set gₜ = 1 + q + tq² and xₖ = (k + a)gₜ for every k ≥ 0. The strong q-log-concavity "
                     + "difference is (r − i)gₜ² for every i ≤ r, so the premise holds for t ≥ 0.")),
                     Paragraph(Text(
-                    "For n = j + 2 and p = j + 1, each output equals Cgₜ⁴, where "
+                    "For n = j + 2 and p = j + 1, the elementary difference E equals Cgₜ⁴, where "
                     + "C = j(j + 1)²(j + 2)(2a + j + 2)(4a + j + 3)/48 is positive for a > 0 and j ≥ 1. "
                     + "The first three coefficients are C, 4C and (6 + 4t)C. At t > 5/2, index one is interior "
                     + "and its determinant (10 − 4t)C² is negative.")),
                     Paragraph(Text(
-                    "The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). Each output has first "
-                    + "coefficients 10, 40 and 180 and determinant −200. Both polynomials have nonnegative coefficients."))),
+                    "The choice a = 1, t = 3 and j = 1 gives (n, p, j) = (3, 2, 1). The first three coefficients of E "
+                    + "are 10, 40 and 180, with determinant −200. This failure of E proves ¬claim for the joint assertion.")),
+                    Paragraph(Text(
+                    "A separate kernel-checked calculation gives H = Cgₜ⁴ for the same family. At the same triple "
+                    + "it gives the same determinant −200. Both polynomials have nonnegative coefficients."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string name, string title, Formula statement, string prose) =>
