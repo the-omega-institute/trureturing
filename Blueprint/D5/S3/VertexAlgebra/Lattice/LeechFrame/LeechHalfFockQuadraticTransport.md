@@ -162,19 +162,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTr
 
 Transport the native selected current by the oscillator equivalence and extend the conjugation to the twisted ground tensor.
 
-**Theorem 1.14 (Complementary current conjugation).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_current_complement`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_current_complement` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The complementary current acts on the second polynomial factor after transport, with identity on the selected factor and the ground module.
-
-**Theorem 1.15 (Transport of the finite coefficient sum).**
+**Theorem 1.14 (Transport of the finite coefficient sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_quadratic_interval`
 
@@ -186,7 +174,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTr
 
 Given a current truncation bound on the native input, conjugate each ordered pair in the finite sum. Orthonormality gives the scalar contraction of a unit direction.
 
-**Theorem 1.16 (Quadratic mode on the selected factor).**
+**Theorem 1.15 (Quadratic mode on the selected factor).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_quadratic_mode`
 
@@ -198,7 +186,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTr
 
 On each pure tensor take the maximum of a native current bound and a bound for the selected polynomial. The resulting common finite sum proves the operator equality by tensor extensionality.
 
-**Theorem 1.17 (Transport at every doubled exponent).**
+**Theorem 1.16 (Transport at every doubled exponent).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_quadratic_coefficient`
 
@@ -208,7 +196,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTr
 
 *Commentary.*
 
-At even exponent recover the unique integer mode by halving the negative exponent and subtracting the two creation weights. At odd exponent the operator vanishes. The even coefficient and a complementary current act on separate tensor factors, so their compositions agree on pure tensors.
+At even exponent recover the unique integer mode by halving the negative exponent and subtracting the two creation weights. At odd exponent the operator vanishes. The native splitting theorem puts complementary currents on the second polynomial factor. The even coefficient therefore commutes with them by equality of the compositions on pure tensors.
 
 ## References
 
@@ -216,7 +204,6 @@ At even exponent recover the unique integer mode by halving the negative exponen
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.doubledExponent`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.frameQuadraticSource`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.modeInterval`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_current_complement`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_current_single`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_quadratic_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LeechFrame/LeechHalfFockQuadraticTransport.nativeTensorSplit_quadratic_interval`

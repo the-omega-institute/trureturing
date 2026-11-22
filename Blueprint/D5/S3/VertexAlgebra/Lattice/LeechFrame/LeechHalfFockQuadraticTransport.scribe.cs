@@ -79,11 +79,6 @@ internal sealed class LeechHalfFockQuadraticTransportDocument : IScribeDocumentD
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Transport the native selected current by the oscillator equivalence and extend the conjugation to the twisted ground tensor."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("leech-half-fock-quadratic-current-complement"),
-                DeclarationHandle.Create(Prefix + "nativeTensorSplit_current_complement"), H("Complementary current conjugation"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The complementary current acts on the second polynomial factor after transport, with identity on the selected factor and the ground module."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("leech-half-fock-quadratic-transport-interval"),
                 DeclarationHandle.Create(Prefix + "nativeTensorSplit_quadratic_interval"), H("Transport of the finite coefficient sum"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -97,6 +92,6 @@ internal sealed class LeechHalfFockQuadraticTransportDocument : IScribeDocumentD
             Describe.Lean(DescribeId.Create("leech-half-fock-quadratic-transport-coefficient"),
                 DeclarationHandle.Create(Prefix + "nativeTensorSplit_quadratic_coefficient"), H("Transport at every doubled exponent"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("At even exponent recover the unique integer mode by halving the negative exponent and subtracting the two creation weights. At odd exponent the operator vanishes. The even coefficient and a complementary current act on separate tensor factors, so their compositions agree on pure tensors."))),
+                Blocks(Paragraph(Text("At even exponent recover the unique integer mode by halving the negative exponent and subtracting the two creation weights. At odd exponent the operator vanishes. The native splitting theorem puts complementary currents on the second polynomial factor. The even coefficient therefore commutes with them by equality of the compositions on pure tensors."))),
                 DescribeRole.Theorem))));
 }

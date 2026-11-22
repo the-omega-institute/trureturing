@@ -361,11 +361,6 @@ theorem nativeTensorSplit_current_single (k : ℤ) :
       onSingle c hu (singleCurrent k) := by
   rw [polarizedTensorCurrent, nativeTensorSplit_tensorEnd, nativeSplit_current_single]
 
-theorem nativeTensorSplit_current_complement (d : Complement c) (k : ℤ) :
-    (nativeTensorSplit c hu).conj (polarizedTensorCurrent hu (orthonormalBasis d.val) k) =
-      TensorProduct.map (TensorProduct.map LinearMap.id (complementCurrent d k)) LinearMap.id := by
-  rw [polarizedTensorCurrent, nativeTensorSplit_tensorEnd, nativeSplit_current_complement]
-
 private theorem onSingle_mul (A B : Module.End ℂ SinglePolynomial) :
     onSingle c hu (A * B) = onSingle c hu A * onSingle c hu B := by
   apply TensorProduct.ext'
