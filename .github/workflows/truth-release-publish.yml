@@ -1,0 +1,140 @@
+name: DAG and truth release
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  repository_dispatch:
+    types: [publish-truth-release]
+
+permissions: {}
+
+concurrency:
+  group: truth-release-publish-dev
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/dev' && github.ref_protected
+    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
+    timeout-minutes: 360
+    defaults:
+      run:
+        working-directory: truth-release-source
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      release_digest: ${{ steps.pack.outputs.release_digest }}
+      archive_sha256: ${{ steps.pack.outputs.archive_sha256 }}
+      publication_sha256: ${{ steps.pack.outputs.publication_sha256 }}
+      dag_sha256: ${{ steps.pack.outputs.dag_sha256 }}
+    env:
+      SOURCE_COMMIT: ${{ github.sha }}
+      STRATALINT_CACHE_WRITES: 'false'
+      STRATALINT_ACCEPT_COLD_BUILD: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          path: truth-release-source
+          clean: false
+          persist-credentials: false
+      - name: Keep the runner's Lake build for incremental validation
+        run: git clean -ffdx -e /.lake/
+      - name: Select the runner toolchain
+        run: |
+          printf '%s\n' "$HOME/.local/bin" /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin /opt/homebrew/opt/gnu-tar/libexec/gnubin >> "$GITHUB_PATH"
+      - name: Install the tools pinned by the source
+        run: |
+          python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version'
+          make install-tools
+      - uses: actions/setup-dotnet@v5
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/truth-dotnet
+        with:
+          global-json-file: truth-release-source/global.json
+      - name: Install the pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Prepare the source's Lean module reports
+        run: make lean-cache-prepare FULL_BUILD=1
+      - name: Verify the protected source and its required checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/truth-release-source.py > "$RUNNER_TEMP/truth-required-checks"
+      - name: Build and verify the DAG and truth bundle
+        run: bash .github/scripts/truth-release-build.sh "$RUNNER_TEMP/truth" "$RUNNER_TEMP/truth-required-checks"
+      - name: Package verified release assets
+        id: pack
+        run: |
+          python3 .github/scripts/truth-release-publish.py prepare \
+            "$RUNNER_TEMP/truth/bundle" "$RUNNER_TEMP/truth/DAG.md" "$RUNNER_TEMP/truth-assets"
+      - id: upload
+        uses: actions/upload-artifact@v6
+        with:
+          name: truth-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/truth-assets/
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 3
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      checks: read
+      contents: write
+      packages: write
+      id-token: write
+      attestations: write
+    env:
+      RELEASE_DIGEST: ${{ needs.build.outputs.release_digest }}
+      ARCHIVE_SHA256: ${{ needs.build.outputs.archive_sha256 }}
+      PUBLICATION_SHA256: ${{ needs.build.outputs.publication_sha256 }}
+      DAG_SHA256: ${{ needs.build.outputs.dag_sha256 }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: .github/scripts
+          persist-credentials: false
+      - name: Verify the source before publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/truth-release-source.py
+      - uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/truth-assets
+          merge-multiple: true
+          digest-mismatch: error
+      - uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6
+        with:
+          version: 1.3.0
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Publish and verify the immutable GHCR artifact
+        id: oci
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/truth-release-publish.py oci "$RUNNER_TEMP/truth-assets"
+      - uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
+        with:
+          subject-name: ghcr.io/the-omega-institute/trureturing/truth-release
+          subject-digest: ${{ steps.oci.outputs.digest }}
+          push-to-registry: true
+      - name: Verify the attestation and publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REFERENCE: ${{ steps.oci.outputs.reference }}
+        run: |
+          gh attestation verify "oci://$REFERENCE" --repo "$GITHUB_REPOSITORY" \
+            --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/truth-release-publish.yml" \
+            --source-digest "$GITHUB_SHA" --source-ref refs/heads/dev --deny-self-hosted-runners
+          python3 .github/scripts/truth-release-publish.py mirror "$RUNNER_TEMP/truth-assets" "$REFERENCE"
