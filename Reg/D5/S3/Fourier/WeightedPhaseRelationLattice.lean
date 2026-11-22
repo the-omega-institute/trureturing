@@ -275,7 +275,7 @@ def gramAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     readouts := #[{
       path := #[
         "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "value"]
+        "body", "body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 8
       functionOperand := false
       stateOperand := none
