@@ -295,38 +295,39 @@ private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
       rw [show (-3/4 : ℝ) = 1/4 - 1 by norm_num, Real.rpow_sub hbase, Real.rpow_one]
       ring
 
-private theorem root_coord_separated {u : ℝ} {q i j : ℕ} (hu : (q : ℝ) ≤ u)
+private theorem root_coord_exact_separation {u : ℝ} {q i j : ℕ} (hu : 0 ≤ u)
     (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
-    1/(q : ℝ) ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
+    u / (q : ℝ)^2 ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
   have hi' : (0 : ℝ) < i := by exact_mod_cast hi
   have hj' : (0 : ℝ) < j := by exact_mod_cast hj
   have hq : (0 : ℝ) < q := by exact_mod_cast hi.trans_le hiq
   have hiq' : (i : ℝ) ≤ q := by exact_mod_cast hiq
   have hjq' : (j : ℝ) ≤ q := by exact_mod_cast hjq
-  have hd (hij' : i < j) :
-      1/(q : ℝ) ≤ u/(i : ℝ)-u/(j : ℝ) := by
-    have ht : (i : ℝ) + 1 ≤ j := by exact_mod_cast hij'
-    have hdiff : 1 ≤ (j : ℝ)-(i : ℝ) := by linarith
-    rw [div_sub_div _ _ hi'.ne' hj'.ne']
-    apply (div_le_div_iff₀ hq (mul_pos hi' hj')).mpr
-    rw [show u * (j : ℝ) - (i : ℝ) * u = u * ((j : ℝ)-(i : ℝ)) by ring]
-    calc
-      1 * ((i : ℝ) * j) ≤ (q : ℝ) * q := by
-        rw [one_mul]
-        exact mul_le_mul hiq' hjq' hj'.le hq.le
-      _ ≤ u * ((j : ℝ)-(i : ℝ)) * q := by
-        exact mul_le_mul_of_nonneg_right (hu.trans (le_mul_of_one_le_right (hq.le.trans hu) hdiff)) hq.le
-  rcases lt_or_gt_of_ne hij with hij' | hji'
-  · exact (hd hij').trans (le_abs_self _)
-  · have ht : (j : ℝ) + 1 ≤ i := by exact_mod_cast hji'
-    have hdiff : 1 ≤ (i : ℝ)-(j : ℝ) := by linarith
-    apply le_trans _ (neg_le_abs (u / (i : ℝ) - u / (j : ℝ)))
-    rw [neg_sub, div_sub_div _ _ hj'.ne' hi'.ne']
-    apply (div_le_div_iff₀ hq (mul_pos hj' hi')).mpr
-    rw [show u * (i : ℝ) - (j : ℝ) * u = u * ((i : ℝ)-(j : ℝ)) by ring]
-    simpa only [one_mul] using
-      (mul_le_mul hjq' hiq' hi'.le hq.le).trans
-        (mul_le_mul_of_nonneg_right (hu.trans (le_mul_of_one_le_right (hq.le.trans hu) hdiff)) hq.le)
+  have hd : 1 ≤ |(j : ℝ) - (i : ℝ)| := by
+    rcases lt_or_gt_of_ne hij with hij' | hji'
+    · have h : (i : ℝ) + 1 ≤ j := by exact_mod_cast hij'
+      exact (show 1 ≤ (j : ℝ) - i by linarith).trans (le_abs_self _)
+    · have h : (j : ℝ) + 1 ≤ i := by exact_mod_cast hji'
+      exact (show 1 ≤ -((j : ℝ) - i) by linarith).trans (neg_le_abs _)
+  calc
+    u / (q : ℝ)^2 ≤ u / ((i : ℝ) * j) :=
+      div_le_div_of_nonneg_left hu (mul_pos hi' hj')
+        (by simpa only [pow_two] using mul_le_mul hiq' hjq' hj'.le hq.le)
+    _ ≤ (u * |(j : ℝ) - i|) / ((i : ℝ) * j) :=
+      div_le_div_of_nonneg_right (le_mul_of_one_le_right hu hd) (by positivity)
+    _ = |u / (i : ℝ) - u / (j : ℝ)| := by
+      rw [div_sub_div _ _ hi'.ne' hj'.ne',
+        show u * (j : ℝ) - (i : ℝ) * u = u * ((j : ℝ) - i) by ring,
+        abs_div, abs_mul, abs_of_nonneg hu, abs_of_pos (mul_pos hi' hj')]
+
+private theorem root_coord_separated {u : ℝ} {q i j : ℕ} (hu : (q : ℝ) ≤ u)
+    (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
+    1/(q : ℝ) ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
+  have hq : (0 : ℝ) < q := by exact_mod_cast hi.trans_le hiq
+  calc
+    1 / (q : ℝ) = (q : ℝ) / (q : ℝ)^2 := by field_simp
+    _ ≤ u / (q : ℝ)^2 := div_le_div_of_nonneg_right hu (by positivity)
+    _ ≤ _ := root_coord_exact_separation (hq.le.trans hu) hi hj hiq hjq hij
 
 private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
     {b : ℤ → ℝ} {K : ℝ} (hK : 0 ≤ K)
