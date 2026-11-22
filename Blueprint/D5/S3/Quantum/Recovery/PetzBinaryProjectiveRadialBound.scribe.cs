@@ -34,7 +34,7 @@ internal sealed class PetzBinaryProjectiveRadialBoundDocument : IScribeDocumentD
                         "The input and reference share a spectral basis, where scaling a "
                         + "reference eigenvalue λ gives aλ + (1 − a)/2. The two measured "
                         + "states already share the computational basis. The difference of the "
-                        + "two negative binary entropies has increasing second derivative "
+                        + "two negative binary entropies has nondecreasing second derivative "
                         + "along the segment. This controls the relative entropy loss by "
                         + "its value at the maximally mixed input. Expanding the Petz "
                         + "sandwich and using the trace norm of a traceless symmetric qubit "

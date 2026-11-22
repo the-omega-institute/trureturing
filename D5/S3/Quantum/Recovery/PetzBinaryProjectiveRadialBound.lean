@@ -6,6 +6,7 @@
    utility: none
    digest: Reference-dependent bounds for ordinary binary projective Petz recovery along radial qubit segments. -/
 
+import D5.S3.Quantum.CommutingMidpoint.Fidelity
 import D5.S3.Quantum.Information.QubitNormalFormState
 import D5.S3.QuantumChannels.ContractionSpectrumOrder
 import D5.S3.Quantum.Recovery.PetzBinaryProjectiveOverFive
@@ -512,50 +513,31 @@ private theorem qubit_root {u z R : ℝ} (hR : R ^ 2 = u ^ 2 + z ^ 2)
   dsimp only
   let κ := Real.sqrt (1 - R ^ 2)
   let t := Real.sqrt (1 + κ)
-  let p := (1 + R) / 2
-  let q := (1 - R) / 2
-  have hp₀ : 0 ≤ p := by dsimp [p]; positivity
-  have hq₀ : 0 ≤ q := by dsimp [q]; linarith
-  have hκ₀ : 0 ≤ κ := Real.sqrt_nonneg _
-  have ht : 0 < t := Real.sqrt_pos.2 (by positivity)
-  have hpq : Real.sqrt p * Real.sqrt q = κ / 2 := by
-    rw [← Real.sqrt_mul hp₀, show p * q = (1 - R ^ 2) / 4 by dsimp [p, q]; ring,
-      Real.sqrt_div (one_sub_sq_pos hR₀ hR₁).le]
-    norm_num [κ]
-  have ht' : Real.sqrt p + Real.sqrt q = t := by
-    have hs : (Real.sqrt p + Real.sqrt q) ^ 2 = 1 + κ := by
-      nlinarith only [Real.sq_sqrt hp₀, Real.sq_sqrt hq₀, hpq,
-        show p + q = 1 by dsimp [p, q]; ring]
-    change Real.sqrt p + Real.sqrt q = Real.sqrt (1 + κ)
-    rw [← hs, Real.sqrt_sq (by positivity)]
-  have hscalar (x : ℝ) (hx : x = p ∨ x = q) : Real.sqrt x = (x + κ / 2) / t := by
-    apply (eq_div_iff ht.ne').2
-    rw [← ht']
-    rcases hx with rfl | rfl <;>
-      nlinarith only [Real.sq_sqrt hp₀, Real.sq_sqrt hq₀, hpq]
-  have hp : (qubitMatrix u z).PosSemidef :=
+  have hpos : (qubitMatrix u z).PosSemidef :=
     Matrix.nonneg_iff_posSemidef.mp
       (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm (qubitState u z h).2.1)
-  let H := hp.isHermitian
-  let U := Unitary.conjStarAlgAut ℂ M₂ H.eigenvectorUnitary
-  let eig := H.eigenvalues
-  have heig (i : Fin 2) : eig i = p ∨ eig i = q := by
-    rcases qubit_eigenvalues hR h H with ⟨h₀, h₁⟩ | ⟨h₀, h₁⟩ <;>
-      fin_cases i <;> first | exact Or.inl h₀ | exact Or.inr h₀ | exact Or.inl h₁ | exact Or.inr h₁
-  have href : qubitMatrix u z = U (realDiagonal eig) := H.spectral_theorem
-  rw [CFC.sqrt_eq_real_sqrt _ hp.nonneg, cfcₙ_eq_cfc (hf0 := Real.sqrt_zero), H.cfc_eq]
-  change U (realDiagonal fun i => Real.sqrt (eig i)) =
-    symmetric ((1 + κ + z) / (2 * t)) (u / (2 * t)) ((1 + κ - z) / (2 * t))
+  have htrace_one : (qubitMatrix u z).trace = 1 := (qubitState u z h).2.2
+  have hdet : Real.sqrt (qubitMatrix u z).det.re = κ / 2 := by
+    rw [qubit_det, show 1 - u ^ 2 - z ^ 2 = 1 - R ^ 2 by linarith only [hR],
+      Real.sqrt_div (one_sub_sq_pos hR₀ hR₁).le]
+    norm_num [κ]
+  have ht : 0 < t := Real.sqrt_pos.2 (by positivity)
+  have htrace : (CFC.sqrt (qubitMatrix u z)).trace.re = t := by
+    have htrace_sq :=
+      D5.S3.Quantum.CommutingMidpoint.sqrt_trace_square_two (qubitMatrix u z) hpos
+    rw [htrace_one, Complex.one_re, hdet, mul_div_cancel₀ _ (by norm_num : (2 : ℝ) ≠ 0)]
+      at htrace_sq
+    have htrace_nonneg :=
+      (Complex.nonneg_iff.mp (CFC.sqrt_nonneg (qubitMatrix u z)).posSemidef.trace_nonneg).1
+    change _ = Real.sqrt (1 + κ)
+    rw [← htrace_sq, Real.sqrt_sq htrace_nonneg]
+  have hroot :=
+    D5.S3.Quantum.CommutingMidpoint.sqrt_times_trace_two (qubitMatrix u z) hpos
+  rw [htrace, hdet] at hroot
   calc
-    _ = U ((↑t⁻¹ : ℂ) • (realDiagonal eig + (↑(κ / 2) : ℂ) • (1 : M₂))) := by
-      apply congrArg U
-      ext i j
-      by_cases hij : i = j
-      · subst j
-        simp [hscalar (eig i) (heig i), Complex.ofReal_div, div_eq_mul_inv, mul_comm]
-      · simp [Matrix.diagonal_apply, Matrix.one_apply, hij]
     _ = (↑t⁻¹ : ℂ) • (qubitMatrix u z + (↑(κ / 2) : ℂ) • (1 : M₂)) := by
-      rw [map_smul, map_add, map_smul, map_one, ← href]
+      simpa only [smul_smul, ← Complex.ofReal_mul, inv_mul_cancel₀ ht.ne', Complex.ofReal_one,
+        one_smul] using congrArg (fun M : M₂ => (↑t⁻¹ : ℂ) • M) hroot
     _ = _ := by
       ext i j
       fin_cases i <;> fin_cases j <;>
