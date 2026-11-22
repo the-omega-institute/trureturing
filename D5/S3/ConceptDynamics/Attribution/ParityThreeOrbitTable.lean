@@ -158,7 +158,7 @@ private theorem special_same_orbit (p : Fin 4) (c d : ZMod 2) :
   change point p 0 (shift (leftWord p) v + 0) (shift (rightWord 0) v + d) = _
   rw [a, b, add_zero, zero_add]
 
-private theorem count_by_point {S T : Type*} [Fintype S] [Fintype T]
+theorem count_by_point {S T : Type*} [Fintype S] [Fintype T]
     (f : S → T) (P : S → Prop) [DecidablePred P] :
     (∑ s, if P s then (1 : ℕ) else 0) =
       ∑ t, Nat.card {s : S // f s = t ∧ P s} := by
