@@ -13,6 +13,7 @@ open _root_.D5.S3.ConceptDynamics.Attribution.ParitySeedAxisFactor
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 noncomputable section
+attribute [local instance] Classical.propDecidable
 
 abbrev signature : Signature where
   Params := Σ n : ℕ, ℕ × Fin (n + 2)
@@ -20,16 +21,16 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p budget => axisFactorWithin p.2.1 p.2.2 budget)
+  realize signature (fun _ p budget => decide (axisFactorWithin p.2.1 p.2.2 budget))
     (fun e => nomatch e)
 
 def alwaysFalse : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -37,7 +38,7 @@ abbrev arena : Arena where
     ∀ (i : Fin (n + 2)) (budget : ℕ),
       (∃ z : Fin (n + 2) → ℕ, RealizableSeedCounts n k z ∧
         (∀ j, z j ≤ if j = i then budget else 0)) ↔
-        R.readout () ⟨n, k, i⟩ budget
+        R.readout () ⟨n, k, i⟩ budget = true
 
 private theorem first_only : RealizableSeedCounts 0 1 ![4, 0] :=
   (exact_two_coordinate_counts 1 _).2 ⟨1, 0, by decide, by decide, by decide⟩
@@ -54,12 +55,13 @@ private theorem zero_impossible :
 
 private theorem always_false_fails : ¬ arena.Law alwaysFalse := by
   intro law
-  exact (law 0 1 rfl rfl 0 4).mp ⟨_, first_only, fits_first⟩
+  exact Bool.false_ne_true ((law 0 1 rfl rfl 0 4).mp ⟨_, first_only, fits_first⟩)
 
 def family : Registration arena (type_of% axis_budget_iff) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨axis_budget_iff, alwaysFalse, always_false_fails⟩
+  bridge := by simp [actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using axis_budget_iff,
+    alwaysFalse, always_false_fails⟩
   sensitivity := by
     constructor
     · intro role
@@ -89,7 +91,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p budget => axisFactorWithin p.2.1 p.2.2 budget)
+  readout := some (realize signature (fun _ p budget => decide (axisFactorWithin p.2.1 p.2.2 budget))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -101,10 +103,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0, 1, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 5
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
