@@ -693,7 +693,9 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **等待 PR required checks 一律按第 8.11 条。** 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
 
-**其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。PR required checks 之外的 workflow 用 `gh run watch <run-id>` 等待已确认的 run。
+**等待单次 GitHub Actions 运行。** Release 发布、缓存重建和合入后首次 push 等场景，确认 run ID 后，在一个宿主后台作业中执行 `gh run watch <run-id> --exit-status`。同一 run 复用这个 watcher，收到完成通知后读取退出结果。不要在 watcher 外反复调用宿主的 `wait`、`gh run view` 或另起等待循环。
+
+**其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。
 
 **其他确无原生等待原语的外部状态才可有界轮询。** 间隔对齐实际事件节奏，每轮给时间戳和关键读数，开跑前固定判据。临时读数供判断，按第 2.10 条处理。
 
@@ -724,7 +726,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 **每个 PR 的当前 head 只用一个等待作业。** 非草稿 `make pr` 自带固定 head 的 required checks 等待。确认 PR 的当前 head 后，若同一 PR、同一 SHA 已有 `make pr` 或 `pr-watch` 等待作业，按第 8.8 条续接其宿主原生句柄并收取退出结果。若该 PR 和 SHA 没有等待作业，用一个宿主后台作业运行 `make pr-watch PR=<编号> HEAD_SHA=<40 位提交 SHA>`。换 head 时先确认新的当前 SHA，再按同一规则续接或启动。终态只适用于作业固定的 head。
 
-**每小时恢复巡检读取一次队列快照，取完所有页。** 快照用于发现待恢复项，逐 PR 的 required checks 仍按上述作业等待。作业终止后可按固定 head、事件、run ID 和 attempt 核验结论。实际合并和该合并提交的首次 `dev` push 按第 6.1 条单独核验，首次 push 的 workflow 用 `gh run watch <run-id>` 等待其确切 run。
+**每小时恢复巡检读取一次队列快照，取完所有页。** 快照用于发现待恢复项，逐 PR 的 required checks 仍按上述作业等待。作业终止后可按固定 head、事件、run ID 和 attempt 核验结论。实际合并和该合并提交的首次 `dev` push 按第 6.1 条单独核验，首次 push 的 workflow 按第 8.7 条等待其确切 run。
 
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 

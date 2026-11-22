@@ -5,7 +5,7 @@
 **文档状态：** 规范性草案（Normative Draft）  
 **版本：** 4.3 — Single-Compilation / C-IRPT Primitive-Complete / Arena-Invariant / No-Baseline / No-Scoring / Shared-Arena / Layered-Capture / Analysis-v3 / Kernel-Lattice / Layered-Hierarchy / Dispositions
 **适用对象：** `the-omega-institute/trureturing` 中由 Lean 4 定义、证明、登记和编译的数学定理族  
-**核心约束：** D5 承载数学定义与证明；Reg 以接口契约类型声明登记和封印，编译期由内核检查数学义务。`make lean-report` 读取编译产物并作有界结构评定，输出登记绑定与声明材料。Reg 不含也不调用判官实现。
+**核心约束：** D5 承载数学定义与证明；Reg 以接口契约类型声明登记和封印，编译期由内核检查数学义务。定向报告读取所选模块的编译产物并作有界结构评定，输出登记绑定与声明材料。Reg 不含也不调用判官实现。
 
 ---
 
@@ -5394,7 +5394,7 @@ $$
 
 ## 17. 工程目标
 
-规范入口为 `make lean-report`。Reg 的类型化登记、RootCatalog 与 Seal 通过同一次
+规范入口为 `make lean-report-scoped LEAN_TARGETS="D5.Module"`，其中 `D5.Module` 替换为本次检查的根模块，可指定多个。Reg 的类型化登记、RootCatalog 与 Seal 通过同一次
 依赖驱动的 Lean 编译检查数学义务；判官使用 `RawArtifacts.Store` 读取编译部件，
 按契约类型发现输入并执行结构评定。
 
@@ -5706,7 +5706,7 @@ ArtifactAssessment / CompiledSnapshots / CompiledSeal
 生产报告与只读数据视图
 ```
 
-接口与实现分包；Reg 不依赖实现。判官实现或规则变化不重编 Reg，整份有效报告复用。
+接口与实现分包；Reg 不依赖实现。判官实现或规则变化不重编 Reg，有效的模块报告可以复用。
 新增或改动的登记按编译依赖闭包使用当前实现评定。接口升级须同次迁移全部用法，
 受影响的 Reg 自动重编并重评，不保留兼容读取路径。提取语义或报告格式变化须更新
 报告格式标识，严格读取器拒读旧格式，全部模块重提取。
@@ -5718,7 +5718,7 @@ kernel-address coincidence 无回边进入分组或判词。
 
 ### 30.1 模块与登记绑定
 
-报告以当前 `stratalint-raw-lean-report-v3` 格式发布。每个模块记录其声明、import、来源、
+模块报告使用 `stratalint-raw-lean-report-v3`，定向汇总使用 `stratalint-scoped-lean-report-v1`。每个模块记录其声明、import、来源、
 公理闭包及适用的登记绑定；格式由严格读取器检查。
 `information_templates` 的容器形状为：
 
@@ -6405,7 +6405,7 @@ coordinates 至少三段，sibling placement 不由文法深度推出。计算�
 
 ### AC-001　规范入口
 
-`make lean-report` 通过 cache-writer 和 Lake 依赖编译契约，读取编译部件并发布当前报告。
+定向报告入口通过 Lake 解析显式根模块的依赖，复用有效模块工件，读取需要重新提取的编译部件并发布本次范围的报告。
 
 ### AC-002　数学与实现分工
 
