@@ -7,6 +7,7 @@
    digest: Positive convolutions and derivative bounds for the upper-tail linear remainder. -/
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterUpperTail
 import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Tactic.FunProp
 
@@ -380,6 +381,96 @@ private theorem scaled_convolution1_decay {h : ℝ} (hh : 0 < h) :
         (fun _ _ ↦ (Real.exp_pos _).le) hleft)
         (decay_scaled_gap hh hx') (fun u hu ↦ mul_nonneg (Real.exp_pos _).le (hleft u hu)) hright
 
+private theorem scaled_convolution1_cosh (h u : ℝ) :
+    scaledTailConvolution1 h u = Real.exp (-(k(h) * u / 2)) *
+      ∫ x in (0 : ℝ)..1, Real.cosh (k(h) * u * (x - 1 / 2)) *
+        (upperTailGap h (u * x) / u) * (upperTailGap h (u * (1 - x)) / u) := by
+  let W (x : ℝ) := (upperTailGap h (u * x) / u) * (upperTailGap h (u * (1 - x)) / u)
+  let f (x : ℝ) := Real.exp (-(k(h) * u * x)) * W x
+  have hf : Continuous f := by unfold f W upperTailGap; fun_prop
+  have hf' : Continuous (fun x : ℝ ↦ f (1 - x)) := hf.comp (by fun_prop)
+  have hsym : (∫ x in (0 : ℝ)..1, f (1 - x)) = ∫ x in (0 : ℝ)..1, f x := by
+    simpa only [sub_self, sub_zero] using
+      (intervalIntegral.integral_comp_sub_left (f := f) (a := 0) (b := 1) (1 : ℝ))
+  have hW (x : ℝ) : W (1 - x) = W x := by
+    unfold W
+    rw [sub_sub_cancel]
+    ring
+  have hs (x : ℝ) :
+      (f x + f (1 - x)) / 2 = Real.exp (-(k(h) * u / 2)) *
+        (Real.cosh (k(h) * u * (x - 1 / 2)) *
+        (upperTailGap h (u * x) / u) * (upperTailGap h (u * (1 - x)) / u)) := by
+    simp only [f]
+    rw [hW, Real.cosh_eq]
+    dsimp only [W]
+    rw [show -(k(h) * u * x) = -(k(h) * u / 2) + -(k(h) * u * (x - 1 / 2)) by ring,
+      show -(k(h) * u * (1 - x)) = -(k(h) * u / 2) + k(h) * u * (x - 1 / 2) by ring,
+      Real.exp_add, Real.exp_add]
+    ring
+  calc
+    _ = ∫ x in (0 : ℝ)..1, f x := by
+      unfold scaledTailConvolution1
+      congr 1
+      funext x
+      simp only [f, W]
+      ring_nf
+    _ = ∫ x in (0 : ℝ)..1, (f x + f (1 - x)) / 2 := by
+      rw [intervalIntegral.integral_div,
+        intervalIntegral.integral_add (hf.intervalIntegrable ..) (hf'.intervalIntegrable ..), hsym]
+      ring
+    _ = _ := by simp_rw [hs, intervalIntegral.integral_const_mul]
+
+private theorem scaled_convolution1_symmetric_decay {h : ℝ} (hh : 0 < h) :
+    DecayBetween (scaledTailConvolution1 h) (k(h) / 2 + h) := by
+  intro s t hs hst
+  refine ⟨?_, (scaled_convolution1_decay hh hs hst).2⟩
+  let w (u x : ℝ) := Real.cosh (k(h) * u * (x - 1 / 2)) *
+    (upperTailGap h (u * x) / u) * (upperTailGap h (u * (1 - x)) / u)
+  have hC (u : ℝ) : Continuous (w u) := by unfold w upperTailGap; fun_prop
+  have hbound : Real.exp (-(h * (t - s))) * (∫ x in (0 : ℝ)..1, w s x) ≤
+      ∫ x in (0 : ℝ)..1, w t x := by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1)
+      ((continuous_const.mul (hC s)).intervalIntegrable ..) ((hC t).intervalIntegrable ..)
+    intro x hx
+    have hcx : Real.cosh (k(h) * s * (x - 1 / 2)) ≤
+        Real.cosh (k(h) * t * (x - 1 / 2)) := by
+      rw [Real.cosh_le_cosh]
+      simp only [abs_mul, abs_of_pos (show 0 < k(h) by positivity), abs_of_pos hs,
+        abs_of_pos (hs.trans_le hst)]
+      exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hst (by positivity)) (abs_nonneg _)
+    have hx' : 0 ≤ 1 - x := sub_nonneg.mpr hx.2
+    let f (u : ℝ) := upperTailGap h (u * x) / u
+    let g (u : ℝ) := upperTailGap h (u * (1 - x)) / u
+    have hf {u : ℝ} (hu : 0 < u) : 0 ≤ f u :=
+      div_nonneg (gap_nonneg hh (mul_nonneg hu.le hx.1)) hu.le
+    have hg {u : ℝ} (hu : 0 < u) : 0 ≤ g u :=
+      div_nonneg (gap_nonneg hh (mul_nonneg hu.le hx')) hu.le
+    have hprod : Real.exp (-(h * (t - s))) * (f s * g s) ≤ f t * g t := by
+      have hd := decay_mul (decay_scaled_gap hh hx.1) (decay_scaled_gap hh hx')
+        (fun _ hu ↦ hf hu) (fun _ hu ↦ hg hu)
+      rw [show h * x + h * (1 - x) = h by ring] at hd
+      exact (hd hs hst).1
+    change Real.exp (-(h * (t - s))) *
+        (Real.cosh (k(h) * s * (x - 1 / 2)) * f s * g s) ≤
+      Real.cosh (k(h) * t * (x - 1 / 2)) * f t * g t
+    rw [show Real.exp (-(h * (t - s))) *
+        (Real.cosh (k(h) * s * (x - 1 / 2)) * f s * g s) =
+        Real.cosh (k(h) * s * (x - 1 / 2)) * (Real.exp (-(h * (t - s))) * (f s * g s)) by ring]
+    calc
+      _ ≤ Real.cosh (k(h) * t * (x - 1 / 2)) * (f t * g t) :=
+        mul_le_mul hcx hprod (mul_nonneg (Real.exp_pos _).le (mul_nonneg (hf hs) (hg hs)))
+          (Real.cosh_pos _).le
+      _ = _ := (mul_assoc ..).symm
+  rw [scaled_convolution1_cosh h s, scaled_convolution1_cosh h t]
+  change Real.exp (-((k(h) / 2 + h) * (t - s))) *
+    (Real.exp (-(k(h) * s / 2)) * (∫ x in (0 : ℝ)..1, w s x)) ≤
+    Real.exp (-(k(h) * t / 2)) * (∫ x in (0 : ℝ)..1, w t x)
+  rw [← mul_assoc, ← Real.exp_add,
+    show -((k(h) / 2 + h) * (t - s)) + -(k(h) * s / 2) =
+      -(k(h) * t / 2) + -(h * (t - s)) by ring, Real.exp_add, mul_assoc]
+  exact mul_le_mul_of_nonneg_left hbound (Real.exp_pos _).le
+
 private theorem scaled_convolution0_eq {h u : ℝ} (hu : 0 < u) :
     scaledTailConvolution0 h u =
       (∫ t in (0 : ℝ)..u, Real.exp (-(g(h)*t)) * upperTailGap h t) / u^2 := by
@@ -554,6 +645,133 @@ theorem upperTailLinear_deriv_bounds {h u : ℝ} (hh : 0 < h) (hu : 0 < u) :
   · exact mul_le_mul_of_nonneg_right (by linarith) (hpos u hu).1.1.le
   · exact mul_le_mul_of_nonneg_right (by linarith) (hpos u hu).2.1.le
 
+/-- Symmetry of the convolution improves the lower logarithmic derivative
+of the unnormalized positive linear term near the collision. -/
+theorem upperTailLinearA1_deriv_ge {h u : ℝ} (hh : 0 < h) (hu : 0 < u) :
+    (2 / u - (k(h) / 2 + h)) * upperTailLinearA1 h u ≤ deriv (upperTailLinearA1 h) u := by
+  let A := upperTailLinearA1 h
+  let F (t : ℝ) := A t / t ^ 2
+  let g₀ (t : ℝ) := upperTailGap h t / t
+  let C := g(h) * k(h) * m(h)
+  have hA : DifferentiableAt ℝ A u := by
+    have hne : (1 - Real.exp (-(h*u))) / h ≠ 0 := (gap_pos hh hu).ne'
+    unfold A upperTailLinearA1 upperTailGap
+    fun_prop (disch := assumption)
+  have hF : HasDerivAt F ((deriv A u - (2/u) * A u) / u ^ 2) u := by
+    apply (hA.hasDerivAt.div (hasDerivAt_pow 2 u) (pow_ne_zero 2 hu.ne')).congr_deriv
+    field_simp [hu.ne'] <;> ring
+  have hF_eq (t : ℝ) (ht : 0 < t) :
+      F t = C * scaledTailConvolution1 h t / g₀ t := by
+    unfold F A C g₀
+    rw [scaled_convolution1_eq ht, ← mul_div_assoc, ← upperTailLinearA1_convolution hh ht]
+    field_simp [ht.ne', (gap_pos hh ht).ne'] <;> ring
+  have hF₀ (t : ℝ) (ht : 0 < t) : 0 ≤ F t := by
+    have h := (upperTailLinear_value_bounds hh ht).2.1
+    unfold upperTailLinearP1 at h
+    have hAt := (div_pos_iff_of_pos_right (sq_pos_of_pos (ell_pos ht))).1 h
+    exact div_nonneg hAt.le (sq_nonneg _)
+  have hderiv := (deriv_from_comparison hu hF.differentiableAt
+    (quotient_comparison
+      (decay_const_mul (scaled_convolution1_symmetric_decay hh) (by positivity : 0 ≤ C))
+      (decay_gap_quotient hh) (fun t ht ↦ div_pos (gap_pos hh ht) ht) hF₀ hF_eq)).1
+  rw [hF.deriv] at hderiv
+  change -((k(h) / 2 + h) * (A u / u ^ 2)) ≤ (deriv A u - (2/u) * A u) / u ^ 2 at hderiv
+  rw [← mul_div_assoc, ← neg_div] at hderiv
+  have h := (div_le_div_iff_of_pos_right (sq_pos_of_pos hu)).1 hderiv
+  linarith only [h]
+
+/-- At a physical degree the geometric sum gives a positive ordinary
+derivative of the unnormalized linear coefficient. -/
+theorem upperTailLinearA1_deriv_nonneg {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 < u) :
+    0 ≤ deriv (upperTailLinearA1 (3 / (p : ℝ))) u := by
+  let h : ℝ := 3 / (p : ℝ)
+  let a := upperTailGap h
+  let z := Real.exp (h * u)
+  let Z := ∑ i ∈ Finset.range (p + 2), z ^ i
+  have hpR : 0 < (p : ℝ) := by exact_mod_cast hp
+  have hh : 0 < h := by dsimp only [h]; positivity
+  have ha := gap_pos hh hu
+  have hz : 0 < z - 1 := sub_pos.mpr (Real.one_lt_exp_iff.mpr (mul_pos hh hu))
+  have hk : k(h) = ((p + 2 : ℕ) : ℝ) * h := by
+    dsimp only [h]
+    push_cast
+    field_simp [hpR.ne']
+    <;> ring
+  have hg : g(h) = ((p + 1 : ℕ) : ℝ) * h := by
+    push_cast at hk ⊢
+    linarith only [hk]
+  have hgeom : Z * (z - 1) = Real.exp (k(h) * u) - 1 := by
+    have H := geom_sum_mul_neg z (p + 2)
+    have he : z ^ (p + 2) = Real.exp (k(h) * u) := by
+      dsimp only [z]
+      rw [← Real.exp_nat_mul, hk]
+      congr 1
+      ring
+    rw [he] at H
+    change _ = _ at H
+    dsimp only [Z]
+    linear_combination -H
+  have hZ : ((p + 2 : ℕ) : ℝ) + h*u*(((p+2 : ℕ) : ℝ)*(p+1)/2) ≤ Z := by
+    have H : (∑ i ∈ Finset.range (p+2), (1 + h*u*(i : ℝ))) ≤ Z := by
+      apply Finset.sum_le_sum
+      intro i _
+      have hi := Real.add_one_le_exp (h*u*(i : ℝ))
+      dsimp only [z]
+      rw [← Real.exp_nat_mul]
+      convert hi using 1 <;> ring
+    have hsum : (∑ i ∈ Finset.range (p+2), (i : ℝ)) =
+        (((p+2 : ℕ) : ℝ)*(p+1))/2 := by
+      have HN : (∑ i ∈ Finset.range (p+2), i) * 2 = (p+2)*(p+1) := by
+        simpa only [show p + 2 - 1 = p + 1 by omega] using
+          Finset.sum_range_id_mul_two (p+2)
+      have HR := congrArg (fun n : ℕ ↦ (n : ℝ)) HN
+      push_cast at HR ⊢
+      linarith only [HR]
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum, hsum] at H
+    simpa using H
+  have hL : upperTailSlope h u * (Real.exp (k(h) * u) - 1) = h * Z := by
+    rw [← hgeom]
+    change h / (z - 1) * (Z * (z - 1)) = h * Z
+    field_simp [hz.ne']
+  have hmono : 0 ≤ 2 * (h * Z) - k(h) * (g(h) * a u + 2) := by
+    have hlowest := mul_le_mul_of_nonneg_left hZ (show 0 ≤ 2*h by positivity)
+    have hkg := mul_le_mul_of_nonneg_left (upperTailGap_le (t := u) hh)
+      (show 0 ≤ k(h)*g(h) by positivity)
+    change k(h)*g(h)*a u ≤ k(h)*g(h)*u at hkg
+    rw [hk, hg] at hkg ⊢
+    push_cast at hlowest hkg ⊢
+    nlinarith only [hlowest, hkg]
+  let e := Real.exp (-(k(h) * u))
+  have hE : e * Real.exp (k(h) * u) = 1 := by
+    dsimp only [e]
+    rw [← Real.exp_add, neg_add_cancel, Real.exp_zero]
+  have hA : HasDerivAt (upperTailLinearA1 h)
+      (e / a u * (2 * (h * Z) - k(h) * (g(h) * a u + 2))) u := by
+    have hG := hasDerivAt_upperTailGap (t := u) hh
+    have hEt := hasDerivAt_decay k(h) u
+    have hE1 := hEt.const_sub 1
+    have hraw := ((hEt.sub_const 1).const_mul g(h)).add
+      (((hE1.div hG ha.ne').const_sub k(h)).const_mul 2)
+    unfold upperTailLinearA1
+    apply hraw.congr_deriv
+    have hLg : Real.exp (-(h*u)) = upperTailSlope h u * a u :=
+      ((div_eq_iff ha.ne').1 (by rw [← hG.deriv, upperTailGap_logDeriv hh hu]))
+    rw [hLg, ← hL]
+    change g(h) * (-k(h) * e) +
+        2 * (-((-(-k(h) * e) * a u - (1 - e) * (upperTailSlope h u * a u)) / a u ^ 2)) =
+      e / a u * (2 * (upperTailSlope h u * (Real.exp (k(h) * u) - 1)) -
+        k(h) * (g(h) * a u + 2))
+    have hEe : e * (Real.exp (k(h) * u) - 1) = 1 - e := by linarith only [hE]
+    rw [div_mul_eq_mul_div, show e *
+        (2 * (upperTailSlope h u * (Real.exp (k(h) * u) - 1)) -
+          k(h) * (g(h) * a u + 2)) =
+        2 * upperTailSlope h u * (e * (Real.exp (k(h) * u) - 1)) -
+          e * k(h) * (g(h) * a u + 2) by ring, hEe]
+    have ha' : a u ≠ 0 := ha.ne'
+    field_simp [ha'] <;> ring
+  rw [hA.deriv]
+  exact mul_nonneg (div_nonneg (Real.exp_pos _).le ha.le) hmono
+
 /-- The linear remainder's tail multiplier with denominator power one or two. -/
 noncomputable def upperTailLinearW (h : ℝ) (n : ℕ) (d : ℝ) : ℝ :=
   Real.exp (-(j(h)*d)) / upperTailGap h d ^ n
@@ -689,6 +907,69 @@ theorem upperTailLinearError_mixed_commute {h u d : ℝ} (hh : 0 < h) (hu : 0 < 
   have h0 := (upperTailLinearP0_differentiableAt (h := h) hu).hasDerivAt
   have h1 := (upperTailLinearP1_differentiableAt hh hu).hasDerivAt
   exact ((((h0.neg.mul_const _).add (h1.mul_const _)).div_const _).deriv).symm
+
+/-- The signed profiles are kept separate when differentiating the linear
+correction in the independent lower coordinate and gap. -/
+theorem upperTailLinearError_derivatives {h u d : ℝ} (hh : 0 < h) (hu : 0 < u)
+    (hd : 0 < d) :
+    let E := upperTailLinearError h
+    let P₀ := upperTailLinearP0 h
+    let P₁ := upperTailLinearP1 h
+    let L := upperTailSlope h d
+    let q := L * (h + L)
+    let M₁ := j(h) + L
+    let M₂ := j(h) + 2 * L
+    let e₀ := P₀ u * upperTailLinearW h 2 d / c(h)
+    let e₁ := P₁ u * upperTailLinearW h 1 d / c(h)
+    let l₀ := deriv P₀ u / P₀ u
+    let l₁ := deriv P₁ u / P₁ u
+    E u d = -e₀ + e₁ ∧
+      deriv (fun x ↦ E x d) u = -l₀ * e₀ + l₁ * e₁ ∧
+      deriv (E u) d = M₂ * e₀ - M₁ * e₁ ∧
+      deriv (fun x ↦ deriv (E x) d) u = M₂ * l₀ * e₀ - M₁ * l₁ * e₁ ∧
+      deriv (deriv (E u)) d = -(M₂ ^ 2 + 2 * q) * e₀ + (M₁ ^ 2 + q) * e₁ := by
+  let E := upperTailLinearError h
+  let P₀ := upperTailLinearP0 h
+  let P₁ := upperTailLinearP1 h
+  let W₁ := upperTailLinearW h 1
+  let W₂ := upperTailLinearW h 2
+  let c₀ := c(h)
+  obtain ⟨⟨hp₀, _⟩, hp₁, _⟩ := upperTailLinear_value_bounds hh hu
+  have hw₁ := (hasDerivAt_upperTailLinearW hh hd (Or.inl (rfl : (1 : ℕ) = 1))).deriv
+  have hw₂ := (hasDerivAt_upperTailLinearW hh hd (Or.inr (rfl : (2 : ℕ) = 2))).deriv
+  have hww₁ := hasDerivAt_deriv_upperTailLinearW hh hd (Or.inl (rfl : (1 : ℕ) = 1))
+  have hww₂ := hasDerivAt_deriv_upperTailLinearW hh hd (Or.inr (rfl : (2 : ℕ) = 2))
+  have hmix : deriv (fun x ↦ deriv (E x) d) u =
+      (-deriv P₀ u * deriv W₂ d + deriv P₁ u * deriv W₁ d) / c₀ := by
+    simp_rw [E, deriv_upperTailLinearError_d hh hd]
+    have h0 := (upperTailLinearP0_differentiableAt (h := h) hu).hasDerivAt
+    have h1 := (upperTailLinearP1_differentiableAt hh hu).hasDerivAt
+    exact (((h0.neg.mul_const _).add (h1.mul_const _)).div_const _).deriv
+  have hnear : deriv (E u) =ᶠ[𝓝 d]
+      fun t ↦ (-P₀ u * deriv W₂ t + P₁ u * deriv W₁ t) / c₀ := by
+    filter_upwards [eventually_gt_nhds hd] with t ht
+    exact deriv_upperTailLinearError_d hh ht
+  have hsecond : deriv (deriv (E u)) d =
+      (-P₀ u * deriv (deriv W₂) d + P₁ u * deriv (deriv W₁) d) / c₀ := by
+    rw [hnear.deriv_eq]
+    exact deriv_linearCombination hww₂.differentiableAt hww₁.differentiableAt
+  dsimp only
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · unfold upperTailLinearError
+    ring
+  · rw [deriv_upperTailLinearError_u hh hu]
+    field_simp [hp₀.ne', hp₁.ne'] <;> ring
+  · rw [deriv_upperTailLinearError_d hh hd, hw₁, hw₂]
+    push_cast
+    ring
+  · rw [show deriv (fun x ↦ deriv (upperTailLinearError h x) d) u = _ from hmix, hw₁, hw₂]
+    dsimp only [P₀, P₁, c₀]
+    push_cast
+    field_simp [hp₀.ne', hp₁.ne'] <;> ring
+  · rw [show deriv (deriv (upperTailLinearError h u)) d = _ from hsecond,
+      hww₁.deriv, hww₂.deriv]
+    push_cast
+    ring
 
 private theorem linear_absolute_bound {x₀ x₁ y₂ y₁ C m e l r : ℝ}
     (hC : 0 < C) (hm : 0 ≤ m) (he : 0 ≤ e) (hl : 0 ≤ l) (_hr : 0 ≤ r)

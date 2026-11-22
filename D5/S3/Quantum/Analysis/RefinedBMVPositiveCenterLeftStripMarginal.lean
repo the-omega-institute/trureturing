@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMarginalTaylor
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterMomentPolynomial
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
 /-! # Bounds on the negative marginal of the separated left strip -/
 
@@ -285,9 +286,11 @@ private theorem tilted_slope_le {v x : ℝ} (hv : 2 ≤ v) (hx : x ≤ 1) :
     dsimp only [f] at hs
     linarith
 
-/-- The negative marginal has logarithmic slope at most two in the separated strip. -/
-theorem negativeMarginal_logDeriv_le {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 2 ≤ v) :
-    deriv (fun t ↦ compositionMoment p 0 (-t)) v / compositionMoment p 0 (-v) ≤ 2 := by
+private theorem negativeMarginal_logDeriv_of_exponent_bound {p : ℕ} (hp : 0 < p)
+    {v K m : ℝ} (hv : 0 < v)
+    (hpointwise : ∀ x : ℝ, x ≤ 1 →
+      x * Real.exp (x * v) ≤ K * (Real.exp (x * v) - 1) + m * x) :
+    deriv (fun t ↦ compositionMoment p 0 (-t)) v / compositionMoment p 0 (-v) ≤ K := by
   let x (g : Gap) : ℝ := -centered p g
   let e (g : Gap) (t : ℝ) : ℝ := Real.exp (x g * t)
   let d (g : Gap) : ℝ := x g * e g v
@@ -310,13 +313,13 @@ theorem negativeMarginal_logDeriv_le {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 2 �
     rfl
   have hm := (((hsum (gaps p)).div_const N).sub_const 1).congr_of_eventuallyEq
     (Filter.Eventually.of_forall fun t ↦ (heq t).symm)
-  let b (g : Gap) := 2 * e g v - 2 - (2 * v - 1) * x g
+  let b (g : Gap) := K * (e g v - 1) + m * x g
   have hpoint (g : Gap) (hg : g ∈ gaps p) : d g ≤ b g := by
     have hx : x g ≤ 1 := by dsimp only [x]; linarith [(centered_bounds hp hg).1]
-    simpa only [b, d, e, mul_comm (x g) v] using tilted_slope_le hv hx
+    exact hpointwise (x g) hx
   have hbound := sum_map_le (gaps p) d b hpoint
   have hb (l : List Gap) : (l.map b).sum =
-      2 * (l.map fun g ↦ e g v).sum - 2 * l.length - (2 * v - 1) * (l.map x).sum := by
+      K * (l.map fun g ↦ e g v).sum - K * l.length + m * (l.map x).sum := by
     induction l with
     | nil => simp
     | cons g l ih =>
@@ -330,18 +333,266 @@ theorem negativeMarginal_logDeriv_le {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 2 �
         change (-1 : ℝ) * ((gaps p).map (centered p)).sum = 0
         rw [show ((gaps p).map (centered p)).sum = 0 from composition_last_exponent_sum_zero hp,
           mul_zero]
-  have hvpos : 0 < v := by linarith
-  have hmpos := compositionMoment_marginal_pos hp (neg_ne_zero.mpr hvpos.ne')
+  have hmpos := compositionMoment_marginal_pos hp (neg_ne_zero.mpr hv.ne')
   rw [hm.deriv]
   apply (div_le_iff₀ hmpos).2
   rw [div_le_iff₀ hN, ← heq]
-  rw [hb, hxsum, mul_zero, sub_zero] at hbound
+  rw [hb, hxsum, mul_zero, add_zero] at hbound
   calc
-    _ ≤ 2 * ((gaps p).map fun g ↦ e g v).sum - 2 * N := hbound
+    _ ≤ K * ((gaps p).map fun g ↦ e g v).sum - K * N := hbound
     _ = _ := by
       rw [mul_assoc, sub_mul, div_mul_cancel₀ _ hN.ne', one_mul]
       ring
 
+/-- The negative marginal has logarithmic slope at most two in the separated strip. -/
+theorem negativeMarginal_logDeriv_le {p : ℕ} (hp : 0 < p) {v : ℝ} (hv : 2 ≤ v) :
+    deriv (fun t ↦ compositionMoment p 0 (-t)) v / compositionMoment p 0 (-v) ≤ 2 := by
+  refine negativeMarginal_logDeriv_of_exponent_bound hp (by linarith) (m := 1 - 2 * v) ?_
+  intro x hx
+  rw [mul_comm x v]
+  nlinarith only [tilted_slope_le hv hx]
+
+/-- The tilted negative marginal has logarithmic slope at most
+the quadratic slope plus the largest reflected exponent. -/
+theorem negativeMarginal_logDeriv_le_two_div_add_one {p : ℕ} (hp : 0 < p) {t : ℝ}
+    (ht : 0 < t) :
+    deriv (fun s ↦ compositionMoment p 0 (-s)) t / compositionMoment p 0 (-t) ≤
+      2 / t + 1 := by
+  let q := G p 1
+  let y (g : Gap) := centered p g
+  let weight (g : Gap) (s : ℝ) := (1 - s) * Real.exp ((-t) * (y g * s))
+  let value (g : Gap) := y g ^ 2 * ∫ s in (0 : ℝ)..1, weight g s
+  let slope (g : Gap) := y g ^ 2 * ∫ s in (0 : ℝ)..1, weight g s * (y g * s)
+  have hpoint (g : Gap) (hg : g ∈ gaps p) : -slope g ≤ value g := by
+    have hleft : Continuous (fun s ↦ -(weight g s * (y g * s))) := by
+      unfold weight
+      fun_prop
+    have hright : Continuous (weight g) := by unfold weight; fun_prop
+    have h := intervalIntegral.integral_mono_on (μ := volume) (by norm_num : (0 : ℝ) ≤ 1)
+      (hleft.intervalIntegrable 0 1) (hright.intervalIntegrable 0 1)
+      (fun s hs ↦ by
+        have hy : -1 ≤ y g := (centered_bounds hp hg).1
+        have hys : -(y g * s) ≤ 1 := by
+          calc
+            -(y g * s) = (-y g) * s := (neg_mul _ _).symm
+            _ ≤ 1 * s := mul_le_mul_of_nonneg_right (by linarith) hs.1
+            _ ≤ 1 := by simpa using hs.2
+        have hw : 0 ≤ weight g s :=
+          mul_nonneg (sub_nonneg.mpr hs.2) (Real.exp_pos _).le
+        simpa only [mul_neg, mul_one] using mul_le_mul_of_nonneg_left hys hw)
+    rw [intervalIntegral.integral_neg] at h
+    simpa only [slope, value, mul_neg] using
+      mul_le_mul_of_nonneg_left h (sq_nonneg (y g))
+  have hsum := sum_map_le (gaps p) (fun g ↦ (-1 : ℝ) * slope g) value
+    (fun g hg ↦ by simpa only [neg_one_mul] using hpoint g hg)
+  rw [List.sum_map_mul_left, neg_one_mul] at hsum
+  have hslope : -deriv q (-t) ≤ q (-t) := by
+    have h0 := iteratedDeriv_G_eq_integral (p := p) hp (c := 1) (by norm_num)
+      (neg_ne_zero.mpr ht.ne') 0
+    have h1 := iteratedDeriv_G_eq_integral (p := p) hp (c := 1) (by norm_num)
+      (neg_ne_zero.mpr ht.ne') 1
+    rw [iteratedDeriv_zero] at h0
+    rw [iteratedDeriv_one] at h1
+    change -deriv (G p 1) (-t) ≤ G p 1 (-t)
+    rw [h0, h1]
+    unfold integralMarginalDerivative
+    simp only [pow_zero, pow_one, mul_one]
+    rw [← neg_div]
+    apply div_le_div_of_nonneg_right _ (by positivity)
+    simpa only [slope, value, weight, y, centered, mul_right_comm] using hsum
+  have hG' : HasDerivAt (fun s : ℝ ↦ q (-s)) (-deriv q (-t)) t := by
+    have h := (hasDerivAt_G p (c := 1) (by norm_num) (neg_ne_zero.mpr ht.ne'))
+    simpa only [q, h.deriv, Function.comp_def, id_eq, mul_neg, mul_one] using
+      (h.comp t (hasDerivAt_id' t).neg)
+  have hProd : HasDerivAt (fun s : ℝ ↦ s ^ 2 * q (-s))
+      (2 * t * q (-t) + t ^ 2 * (-deriv q (-t))) t := by
+    simpa using (hasDerivAt_pow 2 t).fun_mul hG'
+  have hEq (s : ℝ) (hs : 0 < s) :
+      s ^ 2 * q (-s) = compositionMoment p 0 (-s) := by
+    simp only [q, G, one_mul, neg_sq]
+    exact mul_div_cancel₀ _ (pow_ne_zero _ hs.ne')
+  have hDeriv := hProd.congr_of_eventuallyEq (by
+    filter_upwards [eventually_gt_nhds ht] with s hs using (hEq s hs).symm)
+  rw [hDeriv.deriv]
+  apply (div_le_iff₀ (compositionMoment_marginal_pos hp (neg_ne_zero.mpr ht.ne'))).2
+  rw [← hEq t ht]
+  calc
+    _ ≤ 2 * t * q (-t) + t ^ 2 * q (-t) :=
+      add_le_add_right (mul_le_mul_of_nonneg_left hslope (sq_nonneg t)) _
+    _ = _ := by field_simp [ht.ne'] <;> ring
+
+private theorem exp_gap_two_sub_antitone :
+    Antitone (fun t : ℝ ↦ (2 - t) * Real.exp t - 2 - t) := by
+  have hd (t : ℝ) : HasDerivAt (fun x : ℝ ↦ (2 - x) * Real.exp x - 2 - x)
+      ((1 - t) * Real.exp t - 1) t := by
+    have h := (((hasDerivAt_id' t).const_sub 2).fun_mul
+      (Real.hasDerivAt_exp t)).sub_const 2 |>.sub (hasDerivAt_id' t)
+    convert h using 1 <;> ring
+  apply antitone_of_deriv_nonpos (fun t ↦ (hd t).differentiableAt)
+  intro t
+  rw [(hd t).deriv]
+  have h := mul_le_mul_of_nonneg_right (Real.add_one_le_exp (-t)) (Real.exp_pos t).le
+  rw [← Real.exp_add, neg_add_cancel, Real.exp_zero] at h
+  nlinarith only [h]
+
+private theorem tilted_gap_slope_le {u x : ℝ} (hu : 0 < u) (hx : x ≤ 1) :
+    x * (Real.exp (x * u) - 1) ≤ (Real.exp u - 1) / (Real.exp u - 1 - u) *
+      (Real.exp (x * u) - 1 - x * u) := by
+  let E (t : ℝ) := Real.exp t - 1
+  let P (t : ℝ) := E t - t
+  let F (t : ℝ) := t * E t / P t
+  have hP {t : ℝ} (ht : t ≠ 0) : 0 < P t := by
+    dsimp only [P, E]
+    linarith only [Real.add_one_lt_exp ht]
+  have hderiv {t : ℝ} (ht : 0 < t) :
+      HasDerivAt F ((E t ^ 2 - t ^ 2 * Real.exp t) / P t ^ 2) t := by
+    have he : HasDerivAt E (Real.exp t) t := (Real.hasDerivAt_exp t).sub_const 1
+    have hp : HasDerivAt P (Real.exp t - 1) t := he.sub (hasDerivAt_id' t)
+    apply (((hasDerivAt_id' t).fun_mul he).div hp (hP ht.ne').ne').congr_deriv
+    dsimp only [P, E]
+    congr 1
+    ring
+  have hmono : MonotoneOn F (Ioi 0) := by
+    have hl {t : ℝ} (ht : t ∈ Ioi 0) := (hderiv ht).differentiableAt
+    apply monotoneOn_of_deriv_nonneg (convex_Ioi 0) (fun t ht ↦
+      (hl ht).continuousAt.continuousWithinAt)
+    · intro t ht
+      exact (hl (interior_subset ht)).differentiableWithinAt
+    · intro t ht
+      have ht₀ : 0 < t := interior_subset ht
+      rw [(hderiv ht₀).deriv]
+      apply div_nonneg _ (sq_nonneg _)
+      let e := Real.exp (t / 2)
+      let s := 2 * Real.sinh (t / 2)
+      have hs : t ≤ s := by
+        dsimp only [s]
+        linarith only [Real.self_le_sinh_iff.mpr (by positivity : 0 ≤ t / 2)]
+      have he : Real.exp t = e ^ 2 := by dsimp only [e]; rw [pow_two, ← Real.exp_add]; ring_nf
+      have hE : E t = e * s := by
+        dsimp only [E, s]
+        rw [he]
+        dsimp only [e]
+        rw [Real.sinh_eq, Real.exp_neg]
+        field_simp [(Real.exp_pos (t / 2)).ne'] <;> ring
+      rw [hE, he, mul_pow]
+      have h := mul_le_mul_of_nonneg_left (pow_le_pow_left₀ ht₀.le hs 2) (sq_nonneg e)
+      nlinarith only [h]
+  let z := x * u
+  change x * E z ≤ E u / P u * P z
+  by_cases hz : z = 0
+  · simp [hz, E, P]
+  have hF : F z ≤ F u := by
+    by_cases hz' : 0 < z
+    · exact hmono hz' hu (by dsimp only [z]; simpa using mul_le_mul_of_nonneg_right hx hu.le)
+    · have hleft := exp_gap_two_sub_antitone (le_of_not_gt hz')
+      have hright := exp_gap_two_sub_antitone hu.le
+      have hl : F z ≤ 2 := by
+        apply (div_le_iff₀ (hP hz)).2
+        simp only [Real.exp_zero] at hleft
+        dsimp only [P, E]
+        nlinarith only [hleft]
+      have hr : 2 ≤ F u := by
+        apply (le_div_iff₀ (hP hu.ne')).2
+        simp only [Real.exp_zero] at hright
+        dsimp only [P, E]
+        nlinarith only [hright]
+      exact hl.trans hr
+  have hmul := mul_le_mul_of_nonneg_right hF (hP hz).le
+  dsimp only [F] at hmul
+  rw [div_mul_cancel₀ _ (hP hz).ne'] at hmul
+  apply (mul_le_mul_iff_right₀ hu).mp
+  convert hmul using 1 <;> dsimp only [z] <;> ring
+
+private theorem exp_gap_quadratic_nonneg {u : ℝ} (hu : 0 < u) (hfour : u ≤ 4) :
+    0 ≤ (Real.exp u - 1) ^ 2 + (100 - 26 * u) * (Real.exp u - 1) - 100 * u := by
+  let x := Real.exp u - 1
+  let q := u + u ^ 2 / 2 + u ^ 3 / 6 + u ^ 4 / 24 + u ^ 5 / 120
+  have hsum := Real.sum_le_exp_of_nonneg hu.le 6
+  norm_num [Finset.sum_range_succ, Nat.factorial] at hsum
+  have hqx : q ≤ x := by dsimp only [q, x]; linarith only [hsum]
+  have huq : u ≤ q := by
+    dsimp only [q]
+    have h : 0 ≤ u ^ 2 / 2 + u ^ 3 / 6 + u ^ 4 / 24 + u ^ 5 / 120 := by positivity
+    linarith only [h]
+  have hmono := mul_nonneg (sub_nonneg.mpr hqx)
+    (show 0 ≤ x + q + (100 - 26 * u) by linarith [huq.trans hqx])
+  have h3 : u ^ 3 ≤ 4 * u ^ 2 := by
+    convert mul_le_mul_of_nonneg_left hfour (sq_nonneg u) using 1 <;> ring
+  have h6 : u ^ 6 ≤ 64 * u ^ 3 := by
+    have hpow : u ^ 3 ≤ (4 : ℝ) ^ 3 := pow_le_pow_left₀ hu.le hfour 3
+    convert mul_le_mul_of_nonneg_left hpow (pow_nonneg hu.le 3) using 1 <;> ring
+  have hremainder : 0 ≤ u ^ 7 / 45 + 13 * u ^ 8 / 2880 + u ^ 9 / 1440 + u ^ 10 / 14400 := by
+    positivity
+  have hpoly : q ^ 2 + (100 - 26 * u) * q - 100 * u =
+      25 * u ^ 2 + 14 * u ^ 3 / 3 + 5 * u ^ 4 / 12 - 47 * u ^ 6 / 360 +
+      (u ^ 7 / 45 + 13 * u ^ 8 / 2880 + u ^ 9 / 1440 + u ^ 10 / 14400) := by
+    dsimp only [q]
+    ring
+  change 0 ≤ x ^ 2 + (100 - 26 * u) * x - 100 * u
+  nlinarith only [hpoly, hmono, h3, h6, hremainder, sq_nonneg u, pow_nonneg hu.le 4]
+
+private theorem exp_gap_ratio_le {u : ℝ} (hu : 0 < u) (hsmall : u ≤ 1) :
+    (Real.exp u - 1) / (Real.exp u - 1 - u) ≤ 2 / u + 1 / 2 := by
+  let x := Real.exp u - 1
+  have hsum := Real.sum_le_exp_of_nonneg hu.le 4
+  norm_num [Finset.sum_range_succ, Nat.factorial] at hsum
+  have hx : u + u ^ 2 / 2 + u ^ 3 / 6 ≤ x := by dsimp only [x]; linarith only [hsum]
+  have hx' : 0 < x - u := by
+    have h := sq_pos_of_pos hu
+    have h3 := pow_nonneg hu.le 3
+    nlinarith only [hx, h, h3]
+  have hp := mul_le_mul_of_nonneg_left hx (show 0 ≤ 4 - u by linarith)
+  have hq := mul_nonneg (pow_nonneg hu.le 3) (sub_nonneg.mpr hsmall)
+  change x / (x-u) ≤ 2 / u + 1 / 2
+  rw [div_le_iff₀ hx']
+  apply (mul_le_mul_iff_left₀ hu).mp
+  field_simp [hu.ne']
+  nlinarith only [hp, hq]
+
+/-- The centered negative marginal controls the lower-coordinate log slope
+uniformly up to four, including the stronger margin for small coordinates. -/
+theorem separatedGap_lowerSlope_bounds {p : ℕ} (hp : 0 < p) {u : ℝ} (hu : 0 < u)
+    (hfour : u ≤ 4) :
+    let b := 1 + 2 / (Real.exp u - 1) -
+      (deriv (fun t ↦ compositionMoment p 0 (-t)) u / compositionMoment p 0 (-u)) / 2
+    12 / 25 ≤ b ∧ (u ≤ 1 → 3 / 4 ≤ b) := by
+  let E := Real.exp u - 1
+  let K := E / (E - u)
+  have hE : 0 < E := sub_pos.mpr (Real.one_lt_exp_iff.mpr hu)
+  have hP : 0 < E - u := by dsimp only [E]; linarith [Real.add_one_lt_exp hu.ne']
+  have hK : deriv (fun t ↦ compositionMoment p 0 (-t)) u /
+      compositionMoment p 0 (-u) ≤ K := by
+    refine negativeMarginal_logDeriv_of_exponent_bound hp hu (m := 1 - K * u) ?_
+    intro x hx
+    have h := tilted_gap_slope_le hu hx
+    change x * (Real.exp (x * u) - 1) ≤ K * (Real.exp (x * u) - 1 - x * u) at h
+    nlinarith only [h]
+  have hbase : (12 : ℝ) / 25 ≤ 1 + 2 / E - K / 2 := by
+    apply (mul_le_mul_iff_left₀ (mul_pos hE hP)).mp
+    dsimp only [K]
+    field_simp [hE.ne', hP.ne']
+    have h := exp_gap_quadratic_nonneg hu hfour
+    change 0 ≤ E ^ 2 + (100 - 26 * u) * E - 100 * u at h
+    nlinarith only [h]
+  dsimp only
+  change 12 / 25 ≤ 1 + 2 / E - _ / 2 ∧ (u ≤ 1 → 3 / 4 ≤ 1 + 2 / E - _ / 2)
+  constructor
+  · linarith only [hbase, hK]
+  · intro hsmall
+    have hk := exp_gap_ratio_le hu hsmall
+    change K ≤ 2 / u + 1 / 2 at hk
+    have hquot : 2 / u ≤ 1 + 2 / E := by
+      apply (mul_le_mul_iff_left₀ (mul_pos hu hE)).mp
+      field_simp [hu.ne', hE.ne']
+      have h := exp_gap_two_sub_antitone hu.le
+      norm_num [Real.exp_zero] at h
+      rw [show Real.exp u = E + 1 by dsimp only [E]; ring] at h
+      nlinarith only [h]
+    have hinv : 1 ≤ 1 / u := by apply (le_div_iff₀ hu).2; simpa using hsmall
+    rw [show 2 / u = 2 * (1 / u) by ring] at hk hquot
+    linarith only [hK, hk, hquot, hinv]
+
 #print axioms negativeMarginal_logDeriv_le
+#print axioms separatedGap_lowerSlope_bounds
 
 end RefinedBMV.PositiveCenter

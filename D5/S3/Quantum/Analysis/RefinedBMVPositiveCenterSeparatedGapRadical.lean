@@ -68,7 +68,7 @@ private theorem hasDerivAt_upperTailRadicalRoot {h t : ℝ} (hh : 0 < h) (ht : 0
     (2*upperTailRadicalRoot h t) = _
   ring
 
-private theorem separatedGap_gap_gt {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
+theorem separatedGap_gap_gt {h t : ℝ} (hh : 0 < h) (hhmax : h ≤ 3 / 11)
     (ht : 6 ≤ t) : 44/15 < upperTailGap h t := by
   have hmono := expGapMean_antitone hh.le hhmax (by norm_num : (0 : ℝ) ≤ 6) le_rfl
   have hgap : upperTailGap (3 / 11) 6 ≤ upperTailGap h 6 := by
