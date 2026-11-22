@@ -7,6 +7,7 @@
    digest: All four prefix averages of the classical Wu endpoint spectrum satisfy the quartic variance bound. -/
 
 import D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.LinearCombination
@@ -25,6 +26,7 @@ each spectrum obtained by averaging a tail of that convolution.
 noncomputable section
 
 open scoped BigOperators
+
 namespace WuRankOneEndpointFloor
 
 /-- The normalized power sum of a four-point spectrum. -/
@@ -84,27 +86,32 @@ private theorem uniform_gap (x : Fin 4 → ℝ) (hNonneg : ∀ i, 0 ≤ x i) :
     0 ≤ quarticGap x (fun _ => spectralMoment 1 x) := by
   let m := spectralMoment 1 x
   have hVariance : 0 ≤ spectralMoment 2 x - m ^ 2 := by
-    calc
-      0 ≤ ((x 0 - m) ^ 2 + (x 1 - m) ^ 2 + (x 2 - m) ^ 2 + (x 3 - m) ^ 2) / 4 := by
-        positivity
-      _ = spectralMoment 2 x - m ^ 2 := by simp [m, spectralMoment, Fin.sum_univ_four] <;> ring
+    have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+      (r := x) (f := fun _ => (1 : ℝ)) (g := fun i => x i ^ 2)
+      (fun _ _ => zero_le_one) (fun _ _ => sq_nonneg _) (fun _ _ => by simp)
+    simp at h
+    simp only [m, spectralMoment, pow_one]
+    nlinarith only [h]
   have hCauchy : 0 ≤ m * spectralMoment 3 x - (spectralMoment 2 x) ^ 2 := by
-    have h0 := hNonneg 0
-    have h1 := hNonneg 1
-    have h2 := hNonneg 2
-    have h3 := hNonneg 3
-    calc
-      0 ≤ (x 0 * x 1 * (x 0 - x 1) ^ 2 + x 0 * x 2 * (x 0 - x 2) ^ 2 +
-        x 0 * x 3 * (x 0 - x 3) ^ 2 + x 1 * x 2 * (x 1 - x 2) ^ 2 +
-        x 1 * x 3 * (x 1 - x 3) ^ 2 + x 2 * x 3 * (x 2 - x 3) ^ 2) / 16 := by
-          positivity
-      _ = m * spectralMoment 3 x - (spectralMoment 2 x) ^ 2 := by simp [m, spectralMoment, Fin.sum_univ_four] <;> ring
+    have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul Finset.univ
+      (r := fun i => x i ^ 2) (f := x) (g := fun i => x i ^ 3)
+      (fun i _ => hNonneg i) (fun i _ => pow_nonneg (hNonneg i) _)
+      (fun i _ => le_of_eq (by ring))
+    simp only [m, spectralMoment, pow_one]
+    nlinarith only [h]
+  have hConst (j : ℕ) : spectralMoment j (fun _ => m) = m ^ j := by
+    simp only [spectralMoment, Fin.sum_univ_four]
+    ring
   calc
     0 ≤ m ^ 2 * (m * spectralMoment 3 x - (spectralMoment 2 x) ^ 2) +
       (4 / 5) * m ^ 2 * (spectralMoment 2 x - m ^ 2) ^ 2 +
       m ^ 4 * (spectralMoment 2 x - m ^ 2) := by positivity
     _ = quarticGap x (fun _ => spectralMoment 1 x) := by
-      simp [quarticGap, m, spectralMoment, Fin.sum_univ_four] <;> ring
+      change _ = spectralMoment 3 x * spectralMoment 3 (fun _ => m) -
+        spectralMoment 2 x * spectralMoment 4 (fun _ => m) -
+        m ^ 2 * (spectralMoment 2 x - m ^ 2) ^ 2 / 5
+      rw [hConst, hConst]
+      ring
 
 private theorem damping_powers {r : ℝ} (hSq : r ^ 2 = (2 / 3 : ℝ)) :
     r ^ 3 = (2 / 3) * r ∧ r ^ 4 = (4 / 9 : ℝ) := by
