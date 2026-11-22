@@ -20,7 +20,19 @@ internal sealed class CircuitWeightBlocksDocument : IScribeDocumentDefinition
                     "A partition of the indices gives a product of the corresponding integral "
                     + "coordinate modules. Choose an integral basis in each fiber so its weight "
                     + "vector is the fiber gcd times a single basis vector. The combined basis "
-                    + "is supported within the original fibers and the weight is zero on every "
-                    + "other basis coordinate."))),
+                    + "respects the original fibers in both directions of the change of coordinates. "
+                    + "The weight is zero on every other basis coordinate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("tuple-vanishing-iff-of-supported-change"),
+                DeclarationHandle.Create(Module + ".tuple_vanishing_iff_of_supported_change"),
+                H("Vanishing of a face coefficient under a supported change of basis"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If both directions of a change of coordinates preserve a given subset, the "
+                    + "old and new basis vectors on that subset span the same integral submodule. "
+                    + "An alternating form of the corresponding degree vanishes on the old basis "
+                    + "tuple exactly when it vanishes on the new one."))),
                 DescribeRole.Theorem))));
 }

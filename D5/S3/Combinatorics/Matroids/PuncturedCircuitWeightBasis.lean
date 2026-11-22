@@ -73,7 +73,7 @@ private def partition (H : Finset I) (j : I) (hj : j ∈ H) [Fintype I] :
     · simp [h]
     · by_cases hi : i ∈ H <;> simp [h, hi]
 
-private theorem eq_zero_iff_basis_tuple {A J M N : Type*} [Finite J]
+theorem eq_zero_iff_basis_tuple {A J M N : Type*} [Finite J]
     [AddCommGroup M] [AddCommGroup N] (e : J ≃ A)
     (basis : Module.Basis A ℤ M) (f : M [⋀^J]→ₗ[ℤ] N) :
     f = 0 ↔ f (basis ∘ e) = 0 := by
