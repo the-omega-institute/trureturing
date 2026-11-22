@@ -39,10 +39,56 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
     private static Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,Typed(V(n),t),Comma,Sp,Parenthesized(b));
     private static Formula AsInt(Formula a) => Typed(a,Q("Int"));
     private static Formula Own(string n,params Formula[] a) => Call("HardinA229641Strip."+n,a);
-    private static Formula Count() => All("n",Q("Nat"),
-        Eq(Typed(Own("a",V("n")),Q("Nat")),Call("HardinA229637RowColumn.T",N(5),V("n"))));
+    private static Formula Count()
+    {
+        var n = V("n");
+        var table = Call("HardinA229637RowColumn.T", N(5), n);
+        return All("n", Q("Nat"), And(
+            Eq(Typed(Own("a", n), Q("Nat")), table),
+            Eq(table, RowFilter(n))));
+    }
+
+    private static Formula RowFilter(Formula n)
+    {
+        var cells = Product(Fin(5), Fin(n));
+        var arrays = Arrow(cells, Fin(3));
+        var pairs = Product(Fin(n), Fin(n));
+        var e = V("e");
+        var x = Val(Call("Prod.fst", e));
+        var y = Val(Call("Prod.snd", e));
+        var adjacent = Eq(y, Add(x, N(1)));
+        Formula Edges(Formula predicate) => Call("Finset.filter", Fn("e", pairs, predicate), Universe(pairs));
+        var horizontal = Edges(adjacent);
+        var between = Edges(new Formula.Logic(Parenthesized(adjacent), FormulaLogicOperator.Or,
+            Parenthesized(Eq(x, Add(y, N(1))))));
+
+        var a = V("A");
+        var p = V("p");
+        var q = V("q");
+        var c = V("c");
+        Formula Colour(Formula cell) => new Formula.Apply(a, [cell]);
+        Formula Rank(Formula cell) => Add(Mul(n, Val(Call("Prod.fst", cell))), Val(Call("Prod.snd", cell)));
+        var earlier = And(Lt(Rank(q), Rank(p)), Eq(Colour(q), c));
+        var canonical = All("p", cells, All("c", Fin(3), new Formula.Logic(
+            Parenthesized(Lt(c, Colour(p))), FormulaLogicOperator.Implies,
+            Parenthesized(Seq(Exists, Sp, Typed(q, cells), Comma, Sp, Parenthesized(earlier))))));
+        var cell = Parenthesized(Seq(V("i"), Comma, Sp, V("j")));
+        var rows = Call("List.ofFn", Fn("i", Fin(5), Fn("j", Fin(n), Colour(cell))));
+        var twoDefects = Eq(Call("DefectTransfer.defects", horizontal, between, rows), N(2));
+        var filter = Call("Finset.filter", Fn("A", arrays, And(twoDefects, canonical)), Universe(arrays));
+        return Call("Finset.card", filter);
+    }
+
+    private static Formula Universe(Formula t) => Typed(Q("Finset.univ"), Call("Finset", t));
+    private static Formula Fn(string n, Formula t, Formula body) =>
+        Parenthesized(Seq(LambdaLower, Sp, Typed(V(n), t), Mapsto, Sp, Parenthesized(body)));
+    private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Times, Parenthesized(b));
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Arrow(Formula a,Formula b) => new Formula.TypeArrow(a,b);
-    private static Formula Fin(int n) => Call("Fin",N(n));
+    private static Formula Fin(int n) => Fin(N(n));
+    private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Val(Formula a) => Call("Fin.val",a);
 
     private static Formula Recurrence() {
