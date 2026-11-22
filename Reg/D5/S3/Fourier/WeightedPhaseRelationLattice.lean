@@ -114,7 +114,7 @@ def orbitAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _
 
 abbrev liftArena : Arena where
   signature := orbitSignature.{u}
-  Law r := ∀ {J : Type u} {A : Type v} [Fintype J] [Finite A]
+  Law r := ∀ {J : Type u} {A : Type v} [Fintype J]
     (γ : J → ℝ) (K : Matrix A J ℤ)
     (_hK : ∀ k : J → ℤ, k ∈ Submodule.span ℤ (range K.row) ↔
       (∑ j, (k j : ℝ) * γ j) = 0) (x : J → ℝ),
@@ -166,9 +166,9 @@ def liftAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _,
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "fn", "arg"]
-      stateBinder := 4
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

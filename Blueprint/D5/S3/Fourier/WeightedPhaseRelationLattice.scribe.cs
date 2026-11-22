@@ -35,11 +35,12 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text(
                     "Here R is the entrywise real cast of the integer row matrix K. Testing "
                     + "each row gives an integer winding number for the angle x + (π/2)1. "
-                    + "Conversely, an integral combination of rows gives the same integral "
-                    + "combination of their winding numbers, so the row congruences imply "
-                    + "every character equation. Every point of the closure has a lift of "
-                    + "this form with x in (−π,π] coordinatewise. Rotate by −π/2 and take "
-                    + "the argument on the unit circle."))),
+                    + "Each integer relation uses only finitely many rows, even for an "
+                    + "arbitrary row index type A. The same finite integral combination "
+                    + "of their winding numbers gives the winding for that relation, so "
+                    + "the row congruences imply every character equation. Every point of "
+                    + "the closure has a lift of this form with x in (−π,π] coordinatewise. "
+                    + "Rotate by −π/2 and take the argument on the unit circle."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("weighted-gram-inverse-deficit"),
@@ -49,12 +50,24 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The weights are positive and their sum W is positive. Real independence "
-                        + "of the cast rows and positivity of the diagonal matrix M make "
-                        + "G = R M⁻¹ Rᵀ positive definite. For each z, the vector "
-                        + "x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is "
+                        "Positive individual weights make M and M⁻¹ positive definite. "
+                        + "Real independence of the cast rows makes Rᵀ injective, so its "
+                        + "pullback G = R M⁻¹ Rᵀ is positive definite and invertible. For "
+                        + "each z, the vector x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is "
                         + "b(z)ᵀG⁻¹b(z). The M-cross term vanishes for each displacement in "
                         + "the kernel of R, so this is the attained minimum for that fiber.")),
+                    Paragraph(Text(
+                        "Positive total weight W permits normalization and preserves the "
+                        + "inequality directions when dividing by W. Full integral row generation "
+                        + "ensures that the affine fibers enforce every character equation of the "
+                        + "orbit closure. A proper sublattice can admit extra lifts and lower E.")),
+                    Paragraph(Text(
+                        "Two hand-checked examples illustrate these hypotheses. When J is empty, "
+                        + "the sum and W are zero. Totalized division gives score zero and D = 1, "
+                        + "while E/(2W) is zero. For one frequency γ = 0 with weight 1, the full "
+                        + "relation lattice is ℤ. The single row K = [4] generates 4ℤ, and z = 1 "
+                        + "gives b(z) = 0 and E = 0 since G = [16]. The sine score is always zero, "
+                        + "so D = 1 and the upper bound fails.")),
                     Paragraph(Text(
                         "The continuous weighted sine deficit on the orbit closure has the "
                         + "same infimum as along the real-time orbit. In principal centered "
@@ -130,7 +143,7 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
         return Disp(All(
             Imp(And(CastEquality(), LatticeHypothesis()),
                 Equivalence(Member(TorusPoint(PlusOf(At("x"), PiHalf)), Orbit()), winding)),
-            Var("J", F.Id("FiniteType")), Var("A", F.Id("FiniteType")), Var("g", Vector(Real, "J")),
+            Var("J", F.Id("FiniteType")), Var("A", F.Id("Type")), Var("g", Vector(Real, "J")),
             Var("K", Matrix(Integer)), Var("R", Matrix(Real)), Var("x", Vector(Real, "J"))));
     }
 
