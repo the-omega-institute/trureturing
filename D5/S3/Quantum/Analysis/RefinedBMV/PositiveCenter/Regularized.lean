@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Analysis/RefinedBMV/PositiveCenter/Regularized
+   generality: G
+   mirror-B: none(waiver:internal-proof-component)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact regularization of the positive-center logarithmic kernel near collisions. -/
+
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftLimit
 import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 import Mathlib.Analysis.Calculus.Taylor
