@@ -1,4 +1,4 @@
-import D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+import D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation
 import LeanInformationAuditInterface.Contract.Registration
 import Mathlib.Tactic.NormNum
 import Reg.Support.DependentFamily
@@ -8,10 +8,10 @@ import Reg.Support.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace Reg.D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+namespace Reg.D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation
 
 open LeanInformationAudit
-open _root_.D5.S3.Arith.Robin.ExactRationalCutoffSeparation (cutoff_resonance_separation)
+open _root_.D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation (cutoff_resonance_separation)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev signature : Signature where
@@ -86,8 +86,8 @@ def family : Registration arena (type_of% (@cutoff_resonance_separation)) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@cutoff_resonance_separation) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.ExactRationalCutoffSeparation.cutoff_resonance_separation.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.ExactRationalCutoffSeparation.family
+  unitName := `D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation.cutoff_resonance_separation.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -108,7 +108,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   -- Four natural variables, five hypotheses, then the lets U and W.
   -- Select the right conjunct and the right operand of LE.le.
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+    owner := `D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
@@ -126,4 +126,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end
-end Reg.D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+end Reg.D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation

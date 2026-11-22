@@ -6,9 +6,9 @@ The exact rational cutoff forms at a fixed clock have a positive quantitative lo
 
 **Theorem 1.1 (A logarithmic gap for the exact integer labels).**
 
-Lean statement: `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.cutoff_resonance_separation`
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.cutoff_resonance_separation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.cutoff_resonance_separation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.cutoff_resonance_separation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ The ratio U/W equals A^p/C^h, so U and W are distinct positive integers. For V =
 
 **Theorem 1.2 (Short denominators force a larger mode-three residual).**
 
-Lean statement: `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion`
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,5 +36,5 @@ Shortness gives m + p ≤ L². Bounding both integer powers separately gives log
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.cutoff_resonance_separation`
-- Truth anchor: `D5/S3/Arith/Robin/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.cutoff_resonance_separation`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation.mode_three_short_denominator_exclusion`

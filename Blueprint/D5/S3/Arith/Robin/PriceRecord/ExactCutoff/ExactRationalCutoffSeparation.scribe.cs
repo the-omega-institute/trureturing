@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord.ExactCutoff;
 
 internal sealed class ExactRationalCutoffSeparationDocument : IScribeDocumentDefinition
 {
-    private const string Gid = "D5/S3/Arith/Robin/ExactRationalCutoffSeparation";
+    private const string Gid = "D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact rational cutoff forms at a fixed clock have a positive quantitative logarithmic gap.",

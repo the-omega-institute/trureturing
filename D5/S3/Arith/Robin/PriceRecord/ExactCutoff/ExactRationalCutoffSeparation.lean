@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ExactRationalCutoffSeparation
+/- GID: D5/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ExactRationalCutoffSeparation
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ExactCutoff/ExactRationalCutoffSeparation
    mirror-E: none(waiver:elementary-rational-arithmetic)
    anchors: []
    utility: none
@@ -19,7 +19,7 @@ import Mathlib.Tactic.Ring
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+namespace D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation
 
 private theorem cutoff_powers_ne {m h p j : ℕ} (hh : 0 < h) (hhm : h < m)
     (hhp : h < p) (hp3 : p < 3 * h) (hj : 0 < j) :
@@ -371,4 +371,4 @@ public theorem mode_three_short_denominator_exclusion {m h p : ℕ} {L C : ℝ}
   intro hR
   exact (not_lt_of_ge hlower) ((hR.trans hupper).trans_lt hstrict)
 
-end D5.S3.Arith.Robin.ExactRationalCutoffSeparation
+end D5.S3.Arith.Robin.PriceRecord.ExactCutoff.ExactRationalCutoffSeparation
