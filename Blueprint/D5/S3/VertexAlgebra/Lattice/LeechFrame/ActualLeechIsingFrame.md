@@ -1,10 +1,10 @@
-# The actual Leech Ising frame
+# The Leech frame of 48 Virasoro states
 
 ## Abstract
 
-Forty-eight explicit Ising axes on the original Leech orbifold.
+Forty-eight explicit states whose central-charge-one-half Virasoro modes commute on the Leech orbifold.
 
-Use both signs in each of the 24 directions of the actual norm-four frame. The norm-four state formula retains the Dong-Mason-Zhu attribution recorded by Shimakura, arXiv:1202.6107, equation (1.3).
+Use both signs in each of the 24 directions of the actual norm-four frame. The states are distinct and their sum is the conformal state of the orbifold. The norm-four state formula retains the Dong-Mason-Zhu attribution recorded by Shimakura, arXiv:1202.6107, equation (1.3).
 
 **Definition 1.1 (The signed axes).**
 

@@ -56,7 +56,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.orthogonal_p
 
 For orthogonal charges and arbitrary scalars, all nonnegative mixed products vanish. Orthogonality removes the current contractions, and negative creation-coefficient indices give the ground-product vanishing.
 
-The norm-four formula is classical: Shimakura, arXiv:1202.6107, page 4, equation (1.3), attributes its Ising-vector assertion to Dong-Mason-Zhu, Theorem 6.3. Here only the self-product and mode-action conclusions above are established. The lattice-field construction follows Bakalov-Kac, arXiv:math/0402315, section 4.1. Imported normal-product and Sugawara sources retain Scott Carnahan and Kalle Kytola Apache-2.0 attribution.
+The norm-four formula is classical: Shimakura, arXiv:1202.6107, page 4, equation (1.3), attributes its Ising-vector assertion to Dong-Mason-Zhu, Theorem 6.3. The results here give the self-products, the vanishing mixed products, and the mode action. The lattice-field construction follows Bakalov-Kac, arXiv:math/0402315, section 4.1. Imported normal-product and Sugawara sources retain Scott Carnahan and Kalle Kytola Apache-2.0 attribution.
 
 These algebraic conclusions do not establish the simple minimal-model quotient, simplicity, an ambient conformal vector, a Virasoro frame, Monster moonshine, string theory or AdS/CFT.
 
