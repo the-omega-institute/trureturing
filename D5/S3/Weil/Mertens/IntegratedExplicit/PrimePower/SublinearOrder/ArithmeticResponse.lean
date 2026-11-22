@@ -68,6 +68,27 @@ private theorem weighted_antitone_finite_abel
       · ring
       · exact Finset.sum_congr rfl (fun _ _ => by ring)
 
+private theorem interval_moebius_prefix_eq {q j : ℕ} (hq : 0 < q) :
+    (∑ i ∈ Finset.range (j+1), (μ (q+i) : ℝ)) =
+      (∑ i ∈ Finset.Ioc 0 (q+j), (μ i : ℝ)) - ∑ i ∈ Finset.Ioc 0 (q-1), (μ i : ℝ) := by
+  have hsplit : (∑ i ∈ Finset.Ioc 0 (q-1), (μ i : ℝ)) +
+      ∑ i ∈ Finset.Ioc (q-1) (q+j), (μ i : ℝ) =
+        ∑ i ∈ Finset.Ioc 0 (q+j), (μ i : ℝ) :=
+    Finset.sum_Ioc_consecutive _ (Nat.zero_le _) (by omega)
+  have hshift : (∑ i ∈ Finset.range (j+1), (μ (q+i) : ℝ)) =
+      ∑ i ∈ Finset.Ioc (q-1) (q+j), (μ i : ℝ) := by
+    apply Finset.sum_bij (fun i _ => q+i)
+    · intro i hi
+      exact Finset.mem_Ioc.mpr ⟨by omega, by have := Finset.mem_range.mp hi; omega⟩
+    · intro i hi k hk h
+      omega
+    · intro i hi
+      obtain ⟨hil, hir⟩ := Finset.mem_Ioc.mp hi
+      exact ⟨i-q, Finset.mem_range.mpr (by omega), by omega⟩
+    · intro i hi
+      rfl
+  linarith
+
 private theorem interval_moebius_prefix_le_of_log_saving {D : ℝ} (hD : 0 ≤ D)
     (hM : ∀ M : ℕ, 2 ≤ M →
       |∑ n ∈ Finset.Ioc 0 M, (μ n : ℝ)| * Real.log M ≤ D*(M : ℝ))
@@ -79,25 +100,6 @@ private theorem interval_moebius_prefix_le_of_log_saving {D : ℝ} (hD : 0 ≤ D
   have hp₂ : 2 ≤ q-1 := by omega
   have hp₀ : (0 : ℝ) < (q-1 : ℕ) := by exact_mod_cast (show 0 < q-1 by omega)
   have hqlog := Real.log_pos (show (1 : ℝ) < q by linarith)
-  have hsub : (∑ i ∈ Finset.range (j+1), (μ (q+i) : ℝ)) =
-      (∑ i ∈ Finset.Ioc 0 (q+j), (μ i : ℝ)) - ∑ i ∈ Finset.Ioc 0 (q-1), (μ i : ℝ) := by
-    have hsplit : (∑ i ∈ Finset.Ioc 0 (q-1), (μ i : ℝ)) +
-        ∑ i ∈ Finset.Ioc (q-1) (q+j), (μ i : ℝ) =
-          ∑ i ∈ Finset.Ioc 0 (q+j), (μ i : ℝ) :=
-      Finset.sum_Ioc_consecutive _ (Nat.zero_le _) (by omega)
-    have hshift : (∑ i ∈ Finset.range (j+1), (μ (q+i) : ℝ)) =
-        ∑ i ∈ Finset.Ioc (q-1) (q+j), (μ i : ℝ) := by
-      apply Finset.sum_bij (fun i _ => q+i)
-      · intro i hi
-        exact Finset.mem_Ioc.mpr ⟨by omega, by have := Finset.mem_range.mp hi; omega⟩
-      · intro i hi k hk h
-        omega
-      · intro i hi
-        obtain ⟨hil, hir⟩ := Finset.mem_Ioc.mp hi
-        exact ⟨i-q, Finset.mem_range.mpr (by omega), by omega⟩
-      · intro i hi
-        rfl
-    linarith
   have hqj : (q : ℝ) ≤ (q+j : ℕ) := by exact_mod_cast Nat.le_add_right q j
   have hMlarge : |∑ n ∈ Finset.Ioc 0 (q+j), (μ n : ℝ)| ≤
       D*(q+j : ℕ)/Real.log q := by
@@ -119,7 +121,7 @@ private theorem interval_moebius_prefix_le_of_log_saving {D : ℝ} (hD : 0 ≤ D
     have hpq : ((q-1 : ℕ) : ℝ) ≤ q := by exact_mod_cast Nat.sub_le q 1
     have hb := hM (q-1) hp₂
     nlinarith only [h, hb, mul_le_mul_of_nonneg_left hpq hD]
-  rw [hsub]
+  rw [interval_moebius_prefix_eq (by omega : 0 < q)]
   apply (abs_sub _ _).trans
   have hqj' : (q : ℝ) ≤ (q : ℝ)+j := le_add_of_nonneg_right (Nat.cast_nonneg j)
   apply (add_le_add hMlarge hMsmall).trans
@@ -129,17 +131,17 @@ private theorem interval_moebius_prefix_le_of_log_saving {D : ℝ} (hD : 0 ≤ D
 
 
 
-private theorem chebyshev_signed_tail_one_log (hRH : RiemannHypothesis) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (m : ℕ), 2 ≤ m → ∀ t ≥ (2 : ℝ),
+private theorem chebyshev_signed_tail_of_interval_prefix :
+    ∃ C : ℝ, 0 < C ∧ ∀ (m : ℕ), 2 ≤ m → ∀ t ≥ (2 : ℝ), ∀ D : ℝ,
+      (∀ j : ℕ, |∑ i ∈ Finset.range (j+1), (μ (m+1+i) : ℝ)| ≤ D*((m : ℝ)+1+j)) →
       |Chebyshev.theta t - Chebyshev.psi t - ∑ d ∈ Icc 2 m, (μ d : ℝ) *
         Chebyshev.psi (t ^ (1 / (d : ℝ)))| ≤
-      C * (((m+1 : ℕ) : ℝ) / Real.log ((m+1 : ℕ) : ℝ)) * t ^ (1 / (m+1 : ℝ)) := by
-  obtain ⟨D, hD, hM⟩ := moebius_log_saving_of_rh hRH
+      C * D * ((m : ℝ)+1) * t ^ (1 / (m+1 : ℝ)) := by
   let P : ℝ := (Real.log 4 + 4)*2
   let J : ℝ := 2+1/Real.log 2
   have hP : 0 < P := by dsimp [P]; positivity
   have hJ : 0 < J := by dsimp [J]; positivity
-  refine ⟨3*D*P*J, by positivity, fun m hm t ht => ?_⟩
+  refine ⟨P*J, by positivity, fun m hm t ht D hprefix => ?_⟩
   let q := m+1
   let R := max m ⌊Real.log t/Real.log 2⌋₊
   let g (i : ℕ) := Chebyshev.psi (t ^ (1/((q+i : ℕ) : ℝ)))
@@ -149,8 +151,10 @@ private theorem chebyshev_signed_tail_one_log (hRH : RiemannHypothesis) :
   have hq : 3 ≤ q := by dsimp [q]; omega
   have hq₀ : (0 : ℝ) < q := by exact_mod_cast (show 0 < q from by omega)
   have hq₁ : (1 : ℝ) ≤ q := by exact_mod_cast (show 1 ≤ q from by omega)
-  have hlog : 0 < Real.log (q : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < q by omega))
-  have hDq : 0 ≤ 3*D/Real.log (q : ℝ) := div_nonneg (by positivity) hlog.le
+  have hDq : 0 ≤ D := by
+    have h := (abs_nonneg _).trans (hprefix 0)
+    simp only [Nat.cast_zero, add_zero] at h
+    exact nonneg_of_mul_nonneg_left h (by positivity)
   have hxp : 0 ≤ x := by dsimp [x]; positivity
   have hb₀ : 0 ≤ b := by dsimp [b]; positivity
   have hb₁ : b < 1 := by
@@ -220,10 +224,10 @@ private theorem chebyshev_signed_tail_one_log (hRH : RiemannHypothesis) :
     rw [hshift]
     have hA := weighted_antitone_finite_abel hg0 hg
       (a := a) (N := N) (q := (q : ℝ))
-      (fun i _ => interval_moebius_prefix_le_of_log_saving hD.le hM (j := i) hq)
+      (fun i _ => by simpa only [q, Nat.cast_add, Nat.cast_one] using hprefix i)
     calc
-      _ ≤ (3*D/Real.log (q : ℝ)) * ((q : ℝ)*g 0 + ∑ i ∈ range N, g (i+1)) := hA
-      _ ≤ (3*D/Real.log (q : ℝ)) * ((P*x) * ((q : ℝ)*J)) := by
+      _ ≤ D * ((q : ℝ)*g 0 + ∑ i ∈ range N, g (i+1)) := hA
+      _ ≤ D * ((P*x) * ((q : ℝ)*J)) := by
         apply mul_le_mul_of_nonneg_left _ hDq
         have hdiff : (q : ℝ) + (1+(q : ℝ)/Real.log 2) ≤ (q : ℝ)*J := by
           dsimp [J]
@@ -234,7 +238,7 @@ private theorem chebyshev_signed_tail_one_log (hRH : RiemannHypothesis) :
           linarith only [h])
       _ = _ := by
         have hx : t ^ (1/(m+1 : ℝ)) = x := by simp [x, q]
-        rw [hx]
+        rw [hx, show (q : ℝ) = (m : ℝ)+1 by simp [q]]
         ring
   · rw [Finset.Icc_eq_empty_of_lt (lt_of_not_ge hr), Finset.sum_empty, abs_zero]
     positivity
@@ -244,36 +248,34 @@ open D5.S3.Arith.Robin.CompleteMertensPeak (Q)
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimeOnlyTailCorrection
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 
-theorem normalized_mobius_tail_one_log (hRH : RiemannHypothesis) :
-    ∃ C : ℝ, 0 < C ∧ ∀ m : ℕ, 2 ≤ m → ∀ u : ℝ, 2 ≤ Real.exp u →
+/-- A uniform interval prefix bound gives a normalized Chebyshev truncation bound. -/
+theorem normalized_mobius_tail_of_interval_prefix :
+    ∃ C : ℝ, 0 < C ∧ ∀ m : ℕ, 2 ≤ m → ∀ u : ℝ, 2 ≤ Real.exp u → ∀ D : ℝ,
+      (∀ j : ℕ, |∑ i ∈ Finset.range (j+1), (μ (m+1+i) : ℝ)| ≤ D*((m : ℝ)+1+j)) →
       |Real.sqrt (Real.exp u) * (primeTail (Real.exp u) - Q (Real.exp u)) -
         ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
           (∫ t in Ioi (Real.exp u), psi (t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
-        C * ((m : ℝ) / Real.log ((m : ℝ) + 1)) *
-          Real.exp (-(orderRate m) * u) := by
-  obtain ⟨C, hC, hpoint⟩ := chebyshev_signed_tail_one_log hRH
-  refine ⟨4 * C, by positivity, fun m hm u hx => ?_⟩
-  simp only [Nat.cast_add, Nat.cast_one] at hpoint
+        C * D * ((m : ℝ)+1) * Real.exp (-(orderRate m) * u) := by
+  obtain ⟨C, hC, hpoint⟩ := chebyshev_signed_tail_of_interval_prefix
+  refine ⟨2*C, by positivity, fun m hm u hx D hprefix => ?_⟩
+  have hD : 0 ≤ D := by
+    have h := (abs_nonneg _).trans (hprefix 0)
+    simp only [Nat.cast_zero, add_zero] at h
+    exact nonneg_of_mul_nonneg_left h (by positivity)
   let p : ℝ := 1 / (m + 1 : ℝ)
   let x := Real.exp u
-  let c := C * ((m + 1 : ℝ) / Real.log (m + 1 : ℝ))
-  have h := integrated_mobius_of_pointwise hm hx (C := c) (fun t ht => hpoint m hm t (hx.trans ht.le))
+  let c := C * D * ((m : ℝ)+1)
+  have h := integrated_mobius_of_pointwise hm hx (C := c) (fun t ht => hpoint m hm t (hx.trans ht.le) D hprefix)
   have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
-  have hlog : 0 < Real.log (m + 1 : ℝ) := Real.log_pos (by linarith)
   have hp : p ≤ 1 / 2 := by
     dsimp [p]
     exact one_div_le_one_div_of_le (by norm_num) (by linarith)
-  have hcoef : c / (1 - p) ≤ 4 * C * ((m : ℝ) / Real.log (m + 1 : ℝ)) := by
+  have hcoef : c / (1 - p) ≤ 2*C*D*((m : ℝ)+1) := by
     have hc : 0 ≤ c := by dsimp [c]; positivity
-    calc
-      _ ≤ 2 * c := by
-        apply (div_le_iff₀ (by linarith : 0 < 1 - p)).mpr
-        nlinarith only [mul_nonneg hc (sub_nonneg.mpr hp)]
-      _ ≤ _ := by
-        dsimp only [c]
-        simp only [mul_div_assoc', mul_assoc]
-        apply div_le_div_of_nonneg_right _ hlog.le
-        nlinarith only [mul_nonneg hC.le (show 0 ≤ (m : ℝ) - 1 by linarith)]
+    have hbound : c / (1 - p) ≤ 2 * c := by
+      apply (div_le_iff₀ (by linarith : 0 < 1 - p)).mpr
+      nlinarith only [mul_nonneg hc (sub_nonneg.mpr hp)]
+    exact hbound.trans_eq (by dsimp [c]; ring)
   change |Real.sqrt x * (primeTail x - Q x) -
       ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (Real.sqrt x *
         (∫ t in Ioi x, psi (t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤ _
@@ -290,6 +292,81 @@ theorem normalized_mobius_tail_one_log (hRH : RiemannHypothesis) :
   exact h.trans (mul_le_mul_of_nonneg_right hcoef (Real.exp_nonneg _))
 
 
+
+theorem normalized_mobius_tail_one_log (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ m : ℕ, 2 ≤ m → ∀ u : ℝ, 2 ≤ Real.exp u →
+      |Real.sqrt (Real.exp u) * (primeTail (Real.exp u) - Q (Real.exp u)) -
+        ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
+          (∫ t in Ioi (Real.exp u), psi (t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
+        C * ((m : ℝ) / Real.log ((m : ℝ) + 1)) *
+          Real.exp (-(orderRate m) * u) := by
+  obtain ⟨D, hD, hM⟩ := moebius_log_saving_of_rh hRH
+  obtain ⟨C, hC, htail⟩ := normalized_mobius_tail_of_interval_prefix
+  refine ⟨6*C*D, by positivity, fun m hm u hx => ?_⟩
+  have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
+  have hlog : 0 < Real.log ((m : ℝ)+1) := Real.log_pos (by linarith)
+  have hprefix (j : ℕ) : |∑ i ∈ Finset.range (j+1), (μ (m+1+i) : ℝ)| ≤
+      (3*D/Real.log ((m : ℝ)+1))*((m : ℝ)+1+j) := by
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      interval_moebius_prefix_le_of_log_saving hD.le hM (q := m+1) (j := j) (by omega)
+  refine (htail m hm u hx _ hprefix).trans (mul_le_mul_of_nonneg_right ?_ (Real.exp_nonneg _))
+  have horder : (m : ℝ) + 1 ≤ 2*(m : ℝ) := by linarith
+  calc
+    _ ≤ C*(3*D/Real.log ((m : ℝ)+1))*(2*(m : ℝ)) :=
+      mul_le_mul_of_nonneg_left horder (by positivity)
+    _ = _ := by ring
+
+/-- Ordinary power-saving prefixes control the signed normalized Chebyshev truncation. -/
+theorem normalized_mobius_tail_of_power_prefix {β D : ℝ} (hβ₀ : 0 ≤ β) (hβ₁ : β ≤ 1)
+    (hM : ∀ N : ℕ, 1 ≤ N → |∑ n ∈ Ioc 0 N, (μ n : ℝ)| ≤ D*(N : ℝ)^β) :
+    ∃ C : ℝ, 0 < C ∧ ∀ m : ℕ, 2 ≤ m → ∀ u : ℝ, 2 ≤ Real.exp u →
+      |Real.sqrt (Real.exp u) * (primeTail (Real.exp u) - Q (Real.exp u)) -
+        ∑ n ∈ Finset.Icc 2 m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
+          (∫ t in Ioi (Real.exp u), psi (t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
+        C * (((m : ℝ)+1)^β) * Real.exp (-(orderRate m) * u) := by
+  obtain ⟨K, hK, htail⟩ := normalized_mobius_tail_of_interval_prefix
+  have hD : 0 ≤ D := by
+    have h := (abs_nonneg _).trans (hM 1 le_rfl)
+    simpa using h
+  refine ⟨2*K*(D+1), by positivity, fun m hm u hx => ?_⟩
+  let q := m+1
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by dsimp [q]; omega)
+  have hqeq : (q : ℝ) = (m : ℝ)+1 := by simp [q]
+  let A := 2*D*(q : ℝ)^(β-1)
+  have hprefix (j : ℕ) : |∑ i ∈ Finset.range (j+1), (μ (m+1+i) : ℝ)| ≤
+      A*((m : ℝ)+1+j) := by
+    change |∑ i ∈ Finset.range (j+1), (μ (q+i) : ℝ)| ≤ _
+    rw [interval_moebius_prefix_eq (show 0 < q by dsimp [q]; omega)]
+    have hsmall := hM (q-1) (by dsimp [q]; omega)
+    have hlarge := hM (q+j) (by dsimp [q]; omega)
+    have hcast : ((q-1 : ℕ) : ℝ) ≤ ((q+j : ℕ) : ℝ) := by
+      exact_mod_cast (show q-1 ≤ q+j by omega)
+    have hpow := Real.rpow_le_rpow (Nat.cast_nonneg (q-1)) hcast hβ₀
+    have hqj : (q : ℝ) ≤ ((q+j : ℕ) : ℝ) := by exact_mod_cast Nat.le_add_right q j
+    have hnegative := Real.rpow_le_rpow_of_nonpos hq0 hqj (sub_nonpos.mpr hβ₁)
+    have hpower : ((q+j : ℕ) : ℝ)^β ≤ (q : ℝ)^(β-1) * ((q+j : ℕ) : ℝ) := by
+      rw [show ((q+j : ℕ) : ℝ)^β = ((q+j : ℕ) : ℝ)^(β-1) * ((q+j : ℕ) : ℝ) by
+        calc
+          _ = ((q+j : ℕ) : ℝ)^((β-1)+1) := by congr 1 <;> ring
+          _ = _ := by rw [Real.rpow_add (hq0.trans_le hqj), Real.rpow_one]]
+      exact mul_le_mul_of_nonneg_right hnegative (Nat.cast_nonneg _)
+    refine (abs_sub _ _).trans ?_
+    calc
+      _ ≤ D * ((q+j : ℕ) : ℝ)^β + D * ((q+j : ℕ) : ℝ)^β :=
+        add_le_add hlarge (hsmall.trans (mul_le_mul_of_nonneg_left hpow hD))
+      _ ≤ 2*D*((q : ℝ)^(β-1)*((q+j : ℕ) : ℝ)) := by
+        linarith only [mul_le_mul_of_nonneg_left hpower hD]
+      _ = _ := by dsimp only [A]; simp only [q, Nat.cast_add, Nat.cast_one]; ring
+  refine (htail m hm u hx A hprefix).trans (mul_le_mul_of_nonneg_right ?_ (Real.exp_nonneg _))
+  rw [← hqeq]
+  have hcombine : (q : ℝ)^(β-1)*(q : ℝ) = (q : ℝ)^β := by
+    calc
+      _ = (q : ℝ)^(β-1)*(q : ℝ)^(1 : ℝ) := by rw [Real.rpow_one]
+      _ = _ := by rw [← Real.rpow_add hq0]; congr 1 <;> ring
+  calc
+    _ = 2*K*D * ((q : ℝ)^(β-1)*(q : ℝ)) := by dsimp only [A]; ring
+    _ = 2*K*D * (q : ℝ)^β := by rw [hcombine]
+    _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith) (Real.rpow_nonneg hq0.le _)
 
 private theorem sum_moebius_antitone_Icc_bound {m p : ℕ} (hp : 1 ≤ p) (hpm : p ≤ m)
     {g : ℕ → ℝ} (hg0 : ∀ n, 0 ≤ g n) (hg : Antitone g)
