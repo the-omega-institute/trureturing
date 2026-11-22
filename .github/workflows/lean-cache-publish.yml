@@ -232,14 +232,18 @@ jobs:
       - name: Build and check the Lean report for the Release
         id: release_report
         if: hashFiles('.github/actions/lean-cache-release-seed/prepare-report.sh') != ''
-        env: &scheduled_release_env
+        env:
           GH_TOKEN: ${{ github.token }}
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: bash .github/actions/lean-cache-release-seed/prepare-report.sh
       - name: Publish the protected-dev Release snapshot
-        env: *scheduled_release_env
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
+          LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: |
           set -eo pipefail
           bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 \
@@ -409,14 +413,18 @@ jobs:
       - name: Build and check the Lean report for the Release
         id: release_report
         if: hashFiles('.github/actions/lean-cache-release-seed/prepare-report.sh') != ''
-        env: &manual_release_env
+        env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
         run: bash .github/actions/lean-cache-release-seed/prepare-report.sh
       - name: Publish the protected-dev Release snapshot
-        env: *manual_release_env
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
+          LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
         run: |
           observer=()
           if [[ -f .github/actions/lean-compile-layer/measure.sh ]]; then
