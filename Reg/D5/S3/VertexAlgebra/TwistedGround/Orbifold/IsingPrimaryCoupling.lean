@@ -134,7 +134,7 @@ def detectorRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, 
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "domain", "arg", "fn", "arg"]
+        "domain", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

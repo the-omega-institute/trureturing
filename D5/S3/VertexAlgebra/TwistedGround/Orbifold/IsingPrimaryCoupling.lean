@@ -26,7 +26,8 @@ open LatticeInvolution (FixedCarrier fixedMode)
 open HalfFock.LatticeHalfFockParityField (paritySpace fixedParitySlice)
 open HalfFock.NormFourFirstGradeSpectrum (normFourFixedSource)
 open MixedIntertwiner (original_mixed_jacobi)
-open OriginalFourMChargeCoset (originalI originalI_truncation)
+open OriginalFourMChargeCoset (originalI)
+open private originalI_tail from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCoefficients
 open scoped BigOperators VertexOperator
 
 variable {D : LatticeData} {hu : IsUnit D.G.det}
@@ -51,16 +52,6 @@ local instance (D : LatticeData) :
 local instance (D : LatticeData) :
     Module ℂ (FixedCarrier D) := (LatticeInvolution.fixedSpace D).module
 
-private theorem isingFinsumRange {V : Type*} [AddCommMonoid V]
-    (f : ℕ → V) (N : ℕ) (tail : ∀ j, N ≤ j → f j = 0) :
-    (∑ᶠ j : ℕ, f j) = ∑ j ∈ Finset.range N, f j := by
-  classical
-  apply finsum_eq_sum_of_support_subset
-  intro j hj
-  apply Finset.mem_range.mpr
-  by_contra hlt
-  exact hj (tail j (by omega))
-
 private theorem isingFinsumChooseZero {V : Type*} [AddCommGroup V] [Module ℂ V]
     (f : ℕ → V) :
     (∑ᶠ j : ℕ, Ring.choose (0 : ℂ) j • f j) = f 0 := by
@@ -83,7 +74,10 @@ private theorem isingFinsumChooseOne {V : Type*} [AddCommGroup V] [Module ℂ V]
       rw [← Nat.cast_one, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (show 1 < j by omega),
         Nat.cast_zero]
     rw [hzero, zero_smul]
-  rw [isingFinsumRange _ 2 tail]
+  have support : Function.support (fun j => Ring.choose (1 : ℂ) j • f j) ⊆
+      Finset.range 2 := fun j hj =>
+    Finset.mem_range.mpr (lt_of_not_ge fun hj' => hj (tail j hj'))
+  rw [finsum_eq_sum_of_support_subset _ support]
   norm_num only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
     Ring.choose_zero_right, Ring.choose_one_right, one_smul]
 
@@ -94,17 +88,6 @@ private theorem isingSignedChooseNegOne (j : ℕ) :
     simpa [StateFieldResidueReconstruction.integerBinomial] using
       Ring.map_choose (Int.castRingHom ℂ) (-1 : ℤ) j
   simpa only [hc] using LatticeActualStateFieldCalculus.minus_one_binomial j
-
-private theorem isingOriginalITail (q : ℤ) (x y : Odd) :
-    ∃ N : ℕ, ∀ j : ℕ, N ≤ j → 𝓘 (q + (j : ℤ)) x y = 0 := by
-  let c : ℤ := (ActualEnergyRestrictedDual.maxOddWeight D hu x.val : ℤ) +
-    (ActualEnergyRestrictedDual.maxOddWeight D hu y.val : ℤ) + 3
-  refine ⟨(c + 1 - q).toNat, ?_⟩
-  intro j hj
-  apply originalI_truncation
-  change c < q + (j : ℤ)
-  have hc : c + 1 - q ≤ ((c + 1 - q).toNat : ℤ) := Int.self_le_toNat _
-  omega
 
 variable (h24 : D.rank = 24) (ell : FixedCarrier D →ₗ[ℂ] ℂ) {h3 : ℂ}
 variable (ell0 : ∀ z : FixedCarrier D,
@@ -160,7 +143,7 @@ private theorem isingWardTwo (n : ℤ) (x y : Odd) {hx hy : ℂ}
   change 𝓘 (n + 2) (ℬ (-2) x) y =
     (∑ᶠ j : ℕ, first j) - (∑ᶠ j : ℕ, second j) at h
   have finiteFirst : Function.HasFiniteSupport first := by
-    obtain ⟨N, hN⟩ := isingOriginalITail (hD := hD) (n + 2) x y
+    obtain ⟨N, hN⟩ := originalI_tail D hu hD x y (n + 2)
     apply (Finset.range N).finite_toSet.subset
     intro j hj
     apply Finset.mem_range.mpr
@@ -182,7 +165,9 @@ private theorem isingWardTwo (n : ℤ) (x y : Odd) {hx hy : ℂ}
   have secondEval : (∑ᶠ j : ℕ, second j) =
       (-1 : ℂ) • 𝓘 (n + 1) x (ℬ (-1) y) +
       (-1 : ℂ) • 𝓘 n x (ℬ 0 y) := by
-    rw [isingFinsumRange second 2 tailSecond]
+    have support : Function.support second ⊆ Finset.range 2 := fun j hj =>
+      Finset.mem_range.mpr (lt_of_not_ge fun hj' => hj (tailSecond j hj'))
+    rw [finsum_eq_sum_of_support_subset _ support]
     simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, second,
       Nat.cast_zero, Nat.cast_one, sub_zero, show n + 1 - 1 = n by omega]
     rfl
