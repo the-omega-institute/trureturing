@@ -10,6 +10,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open LeanInformationAudit
+open scoped ComplexOrder
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.WuRankOneEndpointFloor
 
@@ -57,8 +58,10 @@ def family : Registration arena (type_of% @wuQuartic_le_some_prefixAverage) wher
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@wuQuartic_le_some_prefixAverage) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.wuQuartic_le_some_prefixAverage.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.PrefixAverage.family
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.wuQuartic_le_some_prefixAverage.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.PrefixAverage.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -78,7 +81,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body",
+        "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -115,7 +119,8 @@ def family : Registration arena (type_of% @wuQuartic_le_prefixMax) where
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@wuQuartic_le_prefixMax) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.wuQuartic_le_prefixMax.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.PrefixMaximum.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.PrefixMaximum.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -178,8 +183,10 @@ def family : Registration arena (type_of% @endpoint_quartic_floor_of_majorizatio
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@endpoint_quartic_floor_of_majorization) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.endpoint_quartic_floor_of_majorization.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.MajorizedFloor.family
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.endpoint_quartic_floor_of_majorization.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.MajorizedFloor.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -222,7 +229,7 @@ private abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 0 Matrix.PosSemidef.zero
+  exact h 0 (Matrix.PosSemidef.zero : (0 : TwoMode).PosSemidef)
 
 def family : Registration arena (type_of% @A1_spectral_quartic_floor) where
   actual := actual
@@ -234,8 +241,10 @@ def family : Registration arena (type_of% @A1_spectral_quartic_floor) where
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@A1_spectral_quartic_floor) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.A1_spectral_quartic_floor.audit
-  realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.SpectralFloor.family
+  unitName :=
+    `D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.A1_spectral_quartic_floor.audit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Semigroups.WuEndpointQuarticMajorization.SpectralFloor.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -278,7 +287,7 @@ private abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 0 Matrix.PosSemidef.zero
+  exact h 0 (Matrix.PosSemidef.zero : (0 : TwoMode).PosSemidef)
 
 def family : Registration arena (type_of% @A1_quartic_floor) where
   actual := actual
