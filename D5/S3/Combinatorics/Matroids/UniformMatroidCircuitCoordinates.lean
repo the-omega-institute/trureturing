@@ -24,7 +24,7 @@ set_option autoImplicit false
 variable {I : Type*} [Fintype I] [LinearOrder I] {M : Matroid I} {r : ℕ}
 
 omit [LinearOrder I] in
-private lemma indep_iff_card_le
+theorem indep_iff_card_le
     (hbases : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r)
     (hr : r ≤ Fintype.card I) (F : Finset I) :
     M.Indep (F : Set I) ↔ F.card ≤ r := by
