@@ -18,7 +18,8 @@ internal sealed class QutritPureDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Divergence/chaparklee2026goldilocks");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The Bell qutrit has reconstruction error 2/3 with output in a plane and a strictly smaller error through a qubit.",
+        "For the normalized qutrit Bell state, the least joint trace-distance error among channels supported in a prescribed output plane is 2/3. "
+        + "An explicit qubit-memory protocol achieves strictly smaller error.",
         H("Pure qutrit local compression in joint trace distance"),
         Blocks(
             Paragraph(Text(

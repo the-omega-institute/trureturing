@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The Bell qutrit has reconstruction error 2/3 with output in a plane and a strictly smaller error through a qubit.
+For the normalized qutrit Bell state, the least joint trace-distance error among channels supported in a prescribed output plane is 2/3. An explicit qubit-memory protocol achieves strictly smaller error.
 
 The source is the normalized qutrit Bell state. The reference factor stays untouched. Distortion is half the trace norm of the joint state difference. The qubit protocol uses one fixed encoder and one fixed decoder, connected solely by the qubit. Kato Section VII proposes approximate local compression. Nayak and Sen Theorem 2.1 characterizes reversible finite channels. Schumacher Eq. (10) expresses entanglement fidelity in terms of Kraus operators. Farber and Gour Theorem 5 gives the exact unassisted root fidelity and uses projection with reset to attain it. Cha, Park and Lee Proposition 3.7 exhibits a nonisometric-decoder advantage for phase-ensemble fidelity. Their Appendix D treats Haar-average fidelity and Appendix L gives bounds for ensemble-average trace distance.
 

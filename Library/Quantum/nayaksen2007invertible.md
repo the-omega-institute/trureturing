@@ -30,9 +30,11 @@ The candidate Lean module proves a finite matrix decoding identity for supplied 
 
 ## Relation to approximate local compression
 
-Theorem 2.1 characterizes channels that admit exact reversal. In local
-compression this applies to a decoder with a CPTP left inverse, for example
-when the reverse composition of encoder and decoder saturates entanglement
-fidelity on the memory. The qutrit trace-distance increment bounds every
-channel with output in a prescribed plane by a Choi-state effect.
+Theorem 2.1 characterizes channels that admit exact reversal. Let E be the
+CPTP encoder and D the CPTP decoder. If the reverse composition E ∘ D has
+entanglement fidelity one on a faithful memory input such as I₂/2, it fixes
+the input's pure purification. Full Schmidt rank then forces E ∘ D to be the
+identity channel on the memory, so E is a CPTP left inverse of D. The qutrit
+trace-distance increment bounds every channel with output in a prescribed plane
+by a Choi-state effect.
 [Primary text, Theorem 2.1](https://arxiv.org/abs/quant-ph/0605041)
