@@ -23,9 +23,9 @@ open BalancedCubeComponentBoundary (flip_injective)
 open TwoBalancedComponents (componentFinset)
 open Q9ComponentSaturation (componentDefect componentDefect_det_eq componentParityFinset)
 open Q9MaskedGram (maskWeight)
-open Q9IsotropicHuang (flipSign flipSign_cast weightedLinear)
+open Q9IsotropicHuang (weightedLinear)
 open Q9WeightedBoundaryGram (signed signed_mulVec signed_transpose)
-open Q9SignedContactCells (weighted_square)
+open Q9SignedContactCells (unit_weight weighted_square)
 open Q9WeightedSaturation (defect)
 
 private abbrev Comp (U : Finset (Q 9)) :=
@@ -159,14 +159,20 @@ private theorem mask_row (I : Finset (Fin 9)) (S : Finset (Q 9)) {s : Q 9 → �
       apply Finset.sum_congr rfl
       intro y hy
       obtain ⟨hys, a, ha, rfl⟩ := Finset.mem_filter.mp hy
-      have hv : signed (maskWeight I) x (flip x a) = (flipSign a x : ℝ) := by
+      have hv : signed (maskWeight I) x (flip x a) = signed (fun _ => (1 : ℝ)) x (flip x a) := by
         unfold signed
-        rw [Finset.sum_eq_single a]
-        · simp [maskWeight, ha]
-        · intro j _ hj
-          exact ite_eq_right (fun h => hj (flip_injective x h))
-        · simp
-      rw [hv, flipSign_cast, hs.2 x hx _ hys (flip_adj x a)]
+        apply Finset.sum_congr rfl
+        intro j _
+        by_cases h : flip x j = flip x a
+        · obtain rfl := flip_injective x h
+          simp [maskWeight, ha]
+        · simp [h]
+      have hunit := unit_weight (Pi.single (flip x a) (1 : ℝ))
+      rw [← signed_mulVec, Matrix.toLin'_apply, Matrix.mulVec_single_one,
+        Matrix.mulVec_single_one] at hunit
+      have hentry := congrFun hunit x
+      simp only [Matrix.col_apply] at hentry
+      rw [hv, hentry, hs.2 x hx _ hys (flip_adj x a)]
       calc
         _ = s x ^ 2 * (s (flip x a) * f (flip x a)) := by ring
         _ = _ := by rw [switching_sq hs hx, one_mul]

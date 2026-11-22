@@ -34,8 +34,7 @@ def flipSign : {n : ℕ} → Fin n → Q n → ℤ
   | _n + 1, i, x => Fin.cases 1
       (fun j => (if x 0 then 1 else -1) * flipSign j (Sensitivity.π x)) i
 
-/-- Casting the integer flip sign gives the corresponding real Huang matrix entry. -/
-theorem flipSign_cast {n : ℕ} (i : Fin n) (x : Q n) :
+private theorem flipSign_cast {n : ℕ} (i : Fin n) (x : Q n) :
     (flipSign i x : ℝ) = huangMatrix n x (flip x i) := by
   induction n with
   | zero => exact Fin.elim0 i

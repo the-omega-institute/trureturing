@@ -122,13 +122,10 @@ private theorem edge_curvature {n : ℕ} (x : Q n) {i j : Fin n} (hij : i ≠ j)
   simpa only [BalancedCriticalSpectrum.gamma_apply, Pi.neg_apply, mul_one] using
     congrFun (BalancedCubeGirth.gamma_anticommute hij (fun _ => (1 : ℝ))) x
 
-/-- A map intertwining flips along an injection of coordinates admits a sign gauge
-relating the source and target Huang edge entries. -/
-theorem exists_edge_gauge {n m : ℕ} (g : Q n → Q m) (pi : Fin n ↪ Fin m)
+private theorem exists_edge_gauge {n : ℕ} (g : Q n ≃ Q n) (pi : Fin n ≃ Fin n)
     (hg : ∀ x i, g (flip x i) = flip (g x) (pi i)) :
     ∃ theta : Q n → ℝ, (∀ x, theta x ^ 2 = 1) ∧
-      ∀ x i, huangMatrix m (g x) (flip (g x) (pi i)) =
-        theta x * huangMatrix n x (flip x i) * theta (flip x i) := by
+      ∀ x i, edge (g x) (pi i) = theta x * edge x i * theta (flip x i) := by
   let r : Q n → Fin n → ℝ := fun x i => edge x i * edge (g x) (pi i)
   have hunit : ∀ x i, r x i ^ 2 = 1 := by
     intro x i
@@ -154,7 +151,6 @@ theorem exists_edge_gauge {n m : ℕ} (g : Q n → Q m) (pi : Fin n ↪ Fin m)
         ring
   obtain ⟨theta, ht, he⟩ := integrate_flat n r hunit hrec hflat
   refine ⟨theta, ht, fun x i => ?_⟩
-  change edge (g x) (pi i) = theta x * edge x i * theta (flip x i)
   have h := he x i
   change edge x i * edge (g x) (pi i) = theta x * theta (flip x i) at h
   calc
@@ -206,8 +202,7 @@ theorem exists_signed_covariance {n : ℕ} (g : Q n ≃ Q n) (pi : Fin n ≃ Fin
       ∀ z : Q n → ℝ,
         (huangMatrix n).mulVec (fun y => theta (g.symm y) * z (g.symm y)) =
           fun y => theta (g.symm y) * ((huangMatrix n).mulVec z) (g.symm y) := by
-  obtain ⟨theta, ht, he⟩ := exists_edge_gauge g pi.toEmbedding hg
-  change ∀ x i, edge (g x) (pi i) = theta x * edge x i * theta (flip x i) at he
+  obtain ⟨theta, ht, he⟩ := exists_edge_gauge g pi hg
   refine ⟨theta, ?_, ?_, ?_⟩
   · intro x
     have h := ht x

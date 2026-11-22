@@ -26,36 +26,153 @@ open BalancedCubeGirth (adjacent_exists_flip)
 open BalancedCubeComponentBoundary (directions mem_directions)
 open TwoBalancedComponents (componentFinset)
 open Q9ComponentSaturation (componentDefect)
-open Q9IsotropicHuang (flipSign flipSign_cast)
 open Q9MaskedGram (maskWeight)
 open Q9MaskedSpectrum (maskedGraph exists_positive_masked_component)
-open HuangCubeCovariance (exists_edge_gauge)
+open HuangCubeCovariance (exists_signed_covariance)
 
 private theorem balanced_pullback {D : Finset (Q 5)} {S : Finset (Q 9)}
     (F : Q 5 → Q 9) (a : Fin 5 ↪ Fin 9)
     (hflip : ∀ x i, F (flip x i) = flip (F x) (a i))
     (hmem : ∀ x ∈ D, F x ∈ S) (hb : IsBalanced S) : IsBalanced D := by
-  obtain ⟨θ, hθ, he⟩ := exists_edge_gauge F a hflip
+  classical
+  have prefix_entry {n m : ℕ} (x : Q n) (z : Q (m + n))
+      (h : ∀ i, z (Fin.castLE (Nat.le_add_left n m) i) = x i) (i : Fin n) :
+      Sensitivity.ε z (Sensitivity.f (m + n)
+        (Sensitivity.e (flip z (Fin.castLE (Nat.le_add_left n m) i)))) =
+      Sensitivity.ε x (Sensitivity.f n (Sensitivity.e (flip x i))) := by
+    induction n with
+    | zero => exact Fin.elim0 i
+    | succ n ih =>
+      have split {k : ℕ} (u v : Sensitivity.V k) :
+          Sensitivity.f (k + 1) (u, v) = (Sensitivity.f k u + v, u - Sensitivity.f k v) :=
+        Sensitivity.f_succ_apply (n := k) (u, v)
+      have head : z 0 = x 0 := h 0
+      have tail (j : Fin n) : Sensitivity.π z (Fin.castLE (Nat.le_add_left n m) j) =
+          Sensitivity.π x j := h j.succ
+      induction i using Fin.cases with
+      | zero =>
+        change Sensitivity.ε z (Sensitivity.f (m + n + 1) (Sensitivity.e (flip z 0))) = _
+        have proj_zero {d : ℕ} (w : Q (d + 1)) :
+            Sensitivity.π (flip w 0) = Sensitivity.π w := by
+          funext j
+          simp [Sensitivity.π, BalancedCriticalSpectrum.flip]
+        cases hx : x 0 <;>
+          simp only [Sensitivity.ε, Sensitivity.e, BalancedCriticalSpectrum.flip_apply_same,
+            proj_zero, head, hx, Bool.not_false, Bool.not_true]
+        · change Sensitivity.ε (Sensitivity.π z)
+            ((Sensitivity.f (m + n + 1) (Sensitivity.e (Sensitivity.π z), 0)).2) =
+            Sensitivity.ε (Sensitivity.π x)
+              ((Sensitivity.f (n + 1) (Sensitivity.e (Sensitivity.π x), 0)).2)
+          erw [split (Sensitivity.e (Sensitivity.π z)) 0, split (Sensitivity.e (Sensitivity.π x)) 0]
+          simp [Sensitivity.duality]
+        · change Sensitivity.ε (Sensitivity.π z)
+            ((Sensitivity.f (m + n + 1) (0, Sensitivity.e (Sensitivity.π z))).1) =
+            Sensitivity.ε (Sensitivity.π x)
+              ((Sensitivity.f (n + 1) (0, Sensitivity.e (Sensitivity.π x))).1)
+          erw [split 0 (Sensitivity.e (Sensitivity.π z)), split 0 (Sensitivity.e (Sensitivity.π x))]
+          simp [Sensitivity.duality]
+      | succ i =>
+        change Sensitivity.ε z (Sensitivity.f (m + n + 1)
+          (Sensitivity.e (flip z (Fin.castLE (Nat.le_add_left n m) i).succ))) = _
+        have proj_succ {d : ℕ} (w : Q (d + 1)) (j : Fin d) :
+            Sensitivity.π (flip w j.succ) = flip (Sensitivity.π w) j := by
+          funext k
+          by_cases hk : k = j <;> simp [Sensitivity.π, BalancedCriticalSpectrum.flip, hk]
+        have head_succ {d : ℕ} (w : Q (d + 1)) (j : Fin d) :
+            flip w j.succ 0 = w 0 := Function.update_of_ne (Fin.succ_ne_zero j).symm _ _
+        have htail := ih (Sensitivity.π x) (Sensitivity.π z) tail i
+        let vz := Sensitivity.e (flip (Sensitivity.π z) (Fin.castLE (Nat.le_add_left n m) i))
+        let vx := Sensitivity.e (flip (Sensitivity.π x) i)
+        cases hx : x 0 <;>
+          simp only [Sensitivity.ε, Sensitivity.e, head_succ, proj_succ, head, hx]
+        · change Sensitivity.ε (Sensitivity.π z) ((Sensitivity.f (m + n + 1) (0, vz)).2) =
+            Sensitivity.ε (Sensitivity.π x) ((Sensitivity.f (n + 1) (0, vx)).2)
+          erw [split 0 vz, split 0 vx]
+          simpa [vz, vx] using congrArg Neg.neg htail
+        · change Sensitivity.ε (Sensitivity.π z) ((Sensitivity.f (m + n + 1) (vz, 0)).1) =
+            Sensitivity.ε (Sensitivity.π x) ((Sensitivity.f (n + 1) (vx, 0)).1)
+          erw [split vz 0, split vx 0]
+          simpa [vz, vx] using htail
+  let inc : Fin 5 ↪ Fin 9 := Fin.castLEEmb (Nat.le_add_left 5 4)
+  let e := inc.toEquivRange.symm.trans a.toEquivRange
+  let p := e.extendSubtype
+  have hp (i : Fin 5) : p (inc i) = a i := by
+    rw [Equiv.extendSubtype_apply_of_mem e _ ⟨i, rfl⟩]
+    exact congrArg a (inc.toEquivRange.symm_apply_apply i)
+  let offset := F (fun _ => false)
+  have hbits (x : Q 5) (i : Fin 5) : (F x (a i) != offset (a i)) = x i := by
+    have from_set (J : Finset (Fin 5)) :
+        (F (fun j => decide (j ∈ J)) (a i) != offset (a i)) = decide (i ∈ J) := by
+      induction J using Finset.induction_on with
+      | empty => simp [offset]
+      | @insert j J hj ih =>
+        have hstep : (fun k => decide (k ∈ insert j J)) =
+            flip (fun k => decide (k ∈ J)) j := by
+          funext k
+          by_cases h : k = j <;> simp [BalancedCriticalSpectrum.flip, h, hj]
+        rw [hstep, hflip]
+        by_cases h : i = j
+        · subst j
+          rw [BalancedCriticalSpectrum.flip_apply_same]
+          cases hb : offset (a i) <;> cases hf : F (fun k => decide (k ∈ J)) (a i) <;>
+            simp_all
+        · simpa [BalancedCriticalSpectrum.flip, a.injective.ne h, h] using ih
+    let J := Finset.univ.filter (fun j => x j = true)
+    have hread : (fun j => decide (j ∈ J)) = x := by
+      funext j
+      cases hx : x j <;> simp [J, hx]
+    simpa only [hread, show decide (i ∈ J) = x i from congrFun hread i] using from_set J
+  let g : Q 9 ≃ Q 9 :=
+    { toFun := fun z j => z (p.symm j) != offset j
+      invFun := fun z j => z (p j) != offset (p j)
+      left_inv := fun z => funext fun j => by
+        simp only [Equiv.symm_apply_apply]
+        cases z j <;> cases offset (p j) <;> rfl
+      right_inv := fun z => funext fun j => by
+        simp only [Equiv.apply_symm_apply]
+        cases z j <;> cases offset j <;> rfl }
+  have hg (z : Q 9) (i : Fin 9) : g (flip z i) = flip (g z) (p i) := by
+    funext j
+    obtain ⟨j, rfl⟩ := p.surjective j
+    by_cases h : j = i
+    · subst j
+      simp only [g, Equiv.coe_fn_mk, Equiv.symm_apply_apply, BalancedCriticalSpectrum.flip_apply_same]
+      cases z i <;> cases offset (p i) <;> rfl
+    · simp [g, BalancedCriticalSpectrum.flip, h]
+  obtain ⟨θ, hθ, he, _⟩ := exists_signed_covariance g p hg
   obtain ⟨s, hs⟩ := hb
-  refine ⟨fun x => θ x * s (F x), ?_, ?_⟩
+  let E (x : Q 5) : Q 9 := g.symm (F x)
+  refine ⟨fun x => θ (E x) * s (F x), ?_, ?_⟩
   · intro x hx
-    rcases sq_eq_one_iff.mp (hθ x) with h | h <;>
+    rcases hθ (E x) with h | h <;>
       rcases hs.1 _ (hmem x hx) with h' | h' <;> simp [h, h']
   · intro x hx y hy hxy
     obtain ⟨i, rfl⟩ := adjacent_exists_flip hxy
-    have hs' : (flipSign (a i) (F x) : ℝ) = s (F x) * s (F (flip x i)) := by
-      have hyS := hmem _ hy
-      rw [hflip] at hyS ⊢
-      rw [flipSign_cast]
-      exact hs.2 _ (hmem x hx) _ hyS (flip_adj _ _)
+    have hEx (j : Fin 5) : E x (inc j) = x j := by
+      change (F x (p (inc j)) != offset (p (inc j))) = x j
+      rw [hp, hbits]
+    have hEflip : flip (E x) (inc i) = E (flip x i) := by
+      apply g.injective
+      simp only [hg, hp, E, Equiv.apply_symm_apply, hflip]
+    have h := he (E x) (inc i)
+    rw [hEflip] at h
+    simp only [E, Equiv.apply_symm_apply] at h
+    have hadj : (hypercube 9).Adj (F x) (F (flip x i)) := by rw [hflip]; exact flip_adj _ _
+    rw [hs.2 _ (hmem x hx) _ (hmem _ hy) hadj] at h
+    have hprefix := prefix_entry (m := 4) x (E x) hEx i
+    change Sensitivity.ε (E x) (Sensitivity.f 9 (Sensitivity.e (flip (E x) (inc i)))) = _ at hprefix
+    rw [hEflip] at hprefix
+    change s (F x) * s (F (flip x i)) = θ (E x) *
+      Sensitivity.ε (E x) (Sensitivity.f 9 (Sensitivity.e (E (flip x i)))) * θ (E (flip x i)) at h
+    rw [hprefix] at h
+    change Sensitivity.ε x (Sensitivity.f 5 (Sensitivity.e (flip x i))) = _
+    symm
     calc
-      _ = (flipSign i x : ℝ) := (flipSign_cast i x).symm
-      _ = θ x ^ 2 * (flipSign i x : ℝ) * θ (flip x i) ^ 2 := by
-        rw [hθ x, hθ (flip x i), one_mul, mul_one]
-      _ = θ x * (flipSign (a i) (F x) : ℝ) * θ (flip x i) := by
-        simp only [flipSign_cast, he x i]
-        ring
-      _ = _ := by rw [hs']; ring
+      _ = θ (E x) * (s (F x) * s (F (flip x i))) * θ (E (flip x i)) := by ring
+      _ = _ := by
+        rw [h]
+        rcases hθ (E x) with h₁ | h₁ <;> rcases hθ (E (flip x i)) with h₂ | h₂ <;>
+          rw [h₁, h₂] <;> ring
 
 open Classical in
 /-- In a subcubic balanced actual component, a singular five-axis mask whose
