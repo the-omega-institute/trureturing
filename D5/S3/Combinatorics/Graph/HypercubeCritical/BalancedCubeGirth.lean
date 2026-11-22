@@ -241,7 +241,7 @@ private theorem two_step_first_direction_eq {n : Nat} {C : Finset (Q n)}
   · subst a
     exact (no_selected_square hC _hij hx hxi hxa hxij).elim
 
-private theorem adjacent_exists_flip {n : Nat} {x y : Q n}
+theorem adjacent_exists_flip {n : Nat} {x y : Q n}
     (hxy : (hypercube n).Adj x y) : ∃ i : Fin n, y = flip x i := by
   change (Finset.univ.filter (fun i => x i ≠ y i)).card = 1 at hxy
   obtain ⟨i, hi⟩ := Finset.card_eq_one.mp hxy
@@ -259,6 +259,9 @@ private theorem adjacent_exists_flip {n : Nat} {x y : Q n}
       by_contra hne
       exact hji ((hdiff j).mp hne)
     simpa [BalancedCriticalSpectrum.flip, hji] using heq.symm
+
+-- Keep the short-name lookup used by existing `open private ... from` callers.
+private alias Legacy.adjacent_exists_flip := adjacent_exists_flip
 
 /-- The actual induced graph of a balanced cube restriction has no four-cycle. -/
 theorem no_four_cycle {n : Nat} {C : Finset (Q n)} (hC : IsBalanced C)
