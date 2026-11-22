@@ -195,5 +195,12 @@ zero center, the unnormalized matrices converge on each fixed sample,
 and the positive semidefinite cone is closed. The trace inequalities
 then follow at every degree for which the scalar sign is established.
 
+For first degrees at least eleven, the mixed derivative is strictly negative
+when the lower logarithmic coordinate lies in (0, 4] and the gap is at least
+six. The leading square controls the potentially adverse linear term before
+upper normalization. The positive decreasing upper factor and the separately
+controlled radical term preserve the strict sign. When the gap is greater
+than eleven, the sign holds for all positive lower coordinates.
+
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).
