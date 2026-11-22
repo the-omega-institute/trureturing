@@ -50,7 +50,10 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Positive individual weights make M and M⁻¹ positive definite. "
+                        "Finite J gives finite character products and weighted sums. "
+                        + "With finite A the Gram matrix admits the usual finite matrix inverse "
+                        + "once positive definiteness is established. Positive individual weights "
+                        + "make M and M⁻¹ positive definite. "
                         + "Real independence of the cast rows makes Rᵀ injective, so its "
                         + "pullback G = R M⁻¹ Rᵀ is positive definite and invertible. For "
                         + "each z, the vector x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is "
@@ -66,8 +69,9 @@ internal sealed class WeightedPhaseRelationLatticeDocument : IScribeDocumentDefi
                         + "the sum and W are zero. Totalized division gives score zero and D = 1, "
                         + "while E/(2W) is zero. For one frequency γ = 0 with weight 1, the full "
                         + "relation lattice is ℤ. The single row K = [4] generates 4ℤ, and z = 1 "
-                        + "gives b(z) = 0 and E = 0 since G = [16]. The sine score is always zero, "
-                        + "so D = 1 and the upper bound fails.")),
+                        + "gives b(z) = 0. Since G = [16], each winding energy is a square "
+                        + "divided by 16, so E = 0. The sine score is always zero, so D = 1 "
+                        + "and the upper bound fails.")),
                     Paragraph(Text(
                         "The continuous weighted sine deficit on the orbit closure has the "
                         + "same infimum as along the real-time orbit. In principal centered "

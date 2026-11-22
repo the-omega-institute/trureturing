@@ -38,11 +38,11 @@ $$\forall J \in FiniteType, A \in FiniteType, g \in \mathbb{R}^{J}, w \in \mathb
 
 *Commentary.*
 
-Positive individual weights make M and M⁻¹ positive definite. Real independence of the cast rows makes Rᵀ injective, so its pullback G = R M⁻¹ Rᵀ is positive definite and invertible. For each z, the vector x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is b(z)ᵀG⁻¹b(z). The M-cross term vanishes for each displacement in the kernel of R, so this is the attained minimum for that fiber.
+Finite J gives finite character products and weighted sums. With finite A the Gram matrix admits the usual finite matrix inverse once positive definiteness is established. Positive individual weights make M and M⁻¹ positive definite. Real independence of the cast rows makes Rᵀ injective, so its pullback G = R M⁻¹ Rᵀ is positive definite and invertible. For each z, the vector x₀ = M⁻¹RᵀG⁻¹b(z) satisfies Rx₀ = b(z). Its squared M-norm is b(z)ᵀG⁻¹b(z). The M-cross term vanishes for each displacement in the kernel of R, so this is the attained minimum for that fiber.
 
 Positive total weight W permits normalization and preserves the inequality directions when dividing by W. Full integral row generation ensures that the affine fibers enforce every character equation of the orbit closure. A proper sublattice can admit extra lifts and lower E.
 
-Two hand-checked examples illustrate these hypotheses. When J is empty, the sum and W are zero. Totalized division gives score zero and D = 1, while E/(2W) is zero. For one frequency γ = 0 with weight 1, the full relation lattice is ℤ. The single row K = [4] generates 4ℤ, and z = 1 gives b(z) = 0 and E = 0 since G = [16]. The sine score is always zero, so D = 1 and the upper bound fails.
+Two hand-checked examples illustrate these hypotheses. When J is empty, the sum and W are zero. Totalized division gives score zero and D = 1, while E/(2W) is zero. For one frequency γ = 0 with weight 1, the full relation lattice is ℤ. The single row K = [4] generates 4ℤ, and z = 1 gives b(z) = 0. Since G = [16], each winding energy is a square divided by 16, so E = 0. The sine score is always zero, so D = 1 and the upper bound fails.
 
 The continuous weighted sine deficit on the orbit closure has the same infimum as along the real-time orbit. In principal centered angles, the pointwise lower estimate for 1 − cos x has coefficient 2/π² on x². The upper estimate has coefficient 1/2 for every real x and applies to the affine minimizers. Taking the infimum over all integer windings gives the bounds. Empty A gives zero inverse Gram energy and hence zero deficit.
 
