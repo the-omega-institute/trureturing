@@ -409,20 +409,17 @@ private theorem root_coord_separated {u : ℝ} {q i j : ℕ} (hu : (q : ℝ) ≤
     _ ≤ u / (q : ℝ)^2 := div_le_div_of_nonneg_right hu (by positivity)
     _ ≤ _ := root_coord_exact_separation (hq.le.trans hu) hi hj hiq hjq hij
 
-private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
-    {b : ℤ → ℝ} {K : ℝ} (hK : 0 ≤ K)
-    (hKbound : ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
-      (∀ k, binMass T γ a k ≤ C * b k) →
-      ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ K * C)
-    {q : ℕ} (hq : 3 ≤ q) {u : ℝ} (hu : (q : ℝ) ≤ u) (T : Finset ℕ)
-    (hmass : ∀ k, ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k) :
+private theorem occurrence_weighted_finite_of_slab_bound
+    {q : ℕ} (hq : 3 ≤ q) {u C : ℝ} (hu : 0 ≤ u) (hC : 0 ≤ C) (T : Finset ℕ)
+    (hslab : ∀ (S : Finset ℕ) (c : ℝ),
+      S ⊆ Finset.Icc ((q+1)/2) q →
+      (∀ n ∈ S, u/(n : ℝ) ∈ Set.Icc (c-1/2) (c+1/2)) →
+      (∑ n ∈ S, ‖finiteModes T occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤ C) :
       (∑ n ∈ Finset.Icc ((q+1)/2) q,
         Real.exp (-(2*u/(q : ℝ) - u/(n : ℝ))/2) *
           ‖finiteModes T occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤
-        (8*K / (1 - Real.exp (-1/2))) * q := by
-  have hband := occurrence_band_samples hRH hK hKbound
+        C / (1 - Real.exp (-1/2)) := by
   let r := Real.exp (-1/2 : ℝ)
-  let C := 8*K
   have hr0 : 0 < r := Real.exp_pos _
   have hr1 : r < 1 := Real.exp_lt_one_iff.mpr (by norm_num)
   have hgeom := summable_geometric_of_lt_one hr0.le hr1
@@ -440,22 +437,20 @@ private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
     have h' : (q : ℝ) ≤ 2 * (p : ℝ) := by exact_mod_cast h
     linarith
   have hq0 : (0 : ℝ) < q := by exact_mod_cast hp.trans_le hpq
-  have hu0 : 0 ≤ u := hq0.le.trans hu
   have ht : ∀ n ∈ S, 0 ≤ t n := by
     intro n hn
     have hn' := (Finset.mem_Icc.mp hn).1
     have hx : (p : ℝ) ≤ n := by exact_mod_cast hn'
     have hn0 : (0 : ℝ) < n := by exact_mod_cast hp.trans_le hn'
     have hqhalf : (0 : ℝ) < (q : ℝ)/2 := by linarith
-    have h := div_le_div_of_nonneg_left hu0 hqhalf (hhalf.trans hx)
+    have h := div_le_div_of_nonneg_left hu hqhalf (hhalf.trans hx)
     dsimp [t, v]
     rw [show u / ((q : ℝ)/2) = 2*u/(q : ℝ) by ring] at h
     linarith
   have hband' (k : ℕ) :
-      ∑ n ∈ S with j n = k, w n ≤ C*q := by
+      ∑ n ∈ S with j n = k, w n ≤ C := by
     let center := 2*u/(q : ℝ) - (k : ℝ) - 1/2
-    apply hband T (S.filter (j · = k)) v center p q hp hpq hhalf
-      (fun n hn => (Finset.mem_filter.mp hn).1) ?_ ?_ hmass
+    apply hslab (S.filter (j · = k)) center (Finset.filter_subset _ _)
     · intro n hn
       obtain ⟨hnS, hnk⟩ := Finset.mem_filter.mp hn
       have h₁ := Nat.floor_le (ht n hnS)
@@ -465,15 +460,11 @@ private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
       rw [hnk] at h₁ h₂
       dsimp [t] at h₁ h₂
       exact ⟨by dsimp [center]; linarith, by dsimp [center]; linarith⟩
-    · intro n hn l hl hnl
-      have hn' := Finset.mem_Icc.mp (Finset.mem_filter.mp hn).1
-      have hl' := Finset.mem_Icc.mp (Finset.mem_filter.mp hl).1
-      exact root_coord_separated hu (hp.trans_le hn'.1) (hp.trans_le hl'.1) hn'.2 hl'.2 hnl
-  change (∑ n ∈ S, Real.exp (-(t n)/2) * w n) ≤ C/(1-r) * q
+  change (∑ n ∈ S, Real.exp (-(t n)/2) * w n) ≤ C/(1-r)
   rw [← Finset.sum_fiberwise_of_maps_to (fun n hn => Finset.mem_image_of_mem j hn)
     (fun n => Real.exp (-(t n)/2) * w n)]
   calc
-    _ ≤ ∑ k ∈ J, r^k * (C*q) := by
+    _ ≤ ∑ k ∈ J, r^k * C := by
       apply Finset.sum_le_sum
       intro k hk
       calc
@@ -496,7 +487,37 @@ private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
       rw [← Finset.sum_mul]
       have hsum := hgeom.sum_le_tsum J (fun k _ => pow_nonneg hr0.le _)
       rw [tsum_geometric_of_lt_one hr0.le hr1] at hsum
-      exact (mul_le_mul_of_nonneg_right hsum (by positivity)).trans_eq (by ring)
+      exact (mul_le_mul_of_nonneg_right hsum hC).trans_eq (by ring)
+
+private theorem occurrence_weighted_finite (hRH : RiemannHypothesis)
+    {b : ℤ → ℝ} {K : ℝ} (hK : 0 ≤ K)
+    (hKbound : ∀ (T : Finset ℕ) (γ : ℕ → ℝ) (a : ℕ → ℂ) (C : ℝ), 0 < C →
+      (∀ k, binMass T γ a k ≤ C * b k) →
+      ∀ c : ℝ, (∫ v in Set.Icc (c-1) (c+1), ‖finiteModes T γ a v‖) ≤ K * C)
+    {q : ℕ} (hq : 3 ≤ q) {u : ℝ} (hu : (q : ℝ) ≤ u) (T : Finset ℕ)
+    (hmass : ∀ k, ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k) :
+      (∑ n ∈ Finset.Icc ((q+1)/2) q,
+        Real.exp (-(2*u/(q : ℝ) - u/(n : ℝ))/2) *
+          ‖finiteModes T occurrenceFrequency (rootCoeff n) (u/(n : ℝ))‖) ≤
+        (8*K / (1 - Real.exp (-1/2))) * q := by
+  let p := (q+1)/2
+  have hp : 0 < p := by dsimp [p]; omega
+  have hpq : p ≤ q := by dsimp [p]; omega
+  have hhalf : (q : ℝ) / 2 ≤ p := by
+    have h : q ≤ 2*p := by dsimp [p]; omega
+    have h' : (q : ℝ) ≤ 2 * (p : ℝ) := by exact_mod_cast h
+    linarith
+  have hu0 : 0 ≤ u := (Nat.cast_nonneg q).trans hu
+  have hbound := occurrence_weighted_finite_of_slab_bound hq hu0
+    (C := 8*K*q) (by positivity) T
+    (fun S c hS hwindow => occurrence_band_samples hRH hK hKbound T S
+      (fun n => u/(n : ℝ)) c p q hp hpq hhalf (fun n hn => hS hn) hwindow
+      (fun i hi j hj hij => by
+        have hi' := Finset.mem_Icc.mp (hS hi)
+        have hj' := Finset.mem_Icc.mp (hS hj)
+        exact root_coord_separated hu (hp.trans_le hi'.1) (hp.trans_le hj'.1) hi'.2 hj'.2 hij)
+      hmass)
+  exact hbound.trans_eq (by ring)
 
 private theorem rootMode_eq_phase (hRH : RiemannHypothesis) {r : ℝ} (hr : 0 < r) (u : ℝ)
     (i : ℕ) : rootMode r u i =
