@@ -14,7 +14,11 @@ $$RH \Rightarrow \left(\exists T \in \mathbb{R},\; \exists K \in \mathbb{R},\; \
 
 *Commentary.*
 
-RH denotes Mathlib RiemannHypothesis. The signed residual E(m,a,B) uses the integral of max(−primeTail(x),0)/sqrt(x) on [a,B], with 2 log(B/a) and the endpoint difference of the ordinary zero primitive subtracted. For 3 ≤ n ≤ m subtract the power difference a^(1/n−1/2)−B^(1/n−1/2) with coefficient −2 μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m and 2n < m+1 subtract the nth root primitive difference with coefficient −μ(n). Actual zero occurrences retain their analytic multiplicities.
+RH denotes Mathlib RiemannHypothesis. Write θ(t) for the sum of log p over primes p ≤ t. The tail primeTail(x) is the integral of (θ(t)−t)/t² over t > x. The signed residual E(m,a,B) starts with the integral of max(−primeTail(x),0)/sqrt(x) on [a,B] minus 2 log(B/a).
+
+The zero series run over all nontrivial zeta-zero occurrences ρ, with each zero repeated according to its analytic multiplicity. The ordinary primitive P(x) is the real part of the sum of exp(i Im(ρ) log x)/(ρ(1−ρ)i Im(ρ)). The degree-n root primitive Pₙ(x) is the real part of the sum of 2n² x^(ρ/n−1/2)/(ρ(n−ρ)(n−2ρ)). Both primitives use x > 0.
+
+From E's starting expression subtract P(B)−P(a). For 3 ≤ n ≤ m subtract the power difference a^(1/n−1/2)−B^(1/n−1/2) multiplied by −2 μ(n)n²/((n−1)(n−2)). For 2 ≤ n ≤ m and 2n < m+1 subtract Pₙ(B)−Pₙ(a) multiplied by −μ(n), where μ is the Möbius function.
 
 The Chebyshev and floor convolutions reduce the Möbius prefix estimate to two ranges in the quotient. Choosing the quotient cutoff as the four-fifths power of the logarithm gives a one-fifth logarithmic saving, uniformly over prefixes. The signed trivial-root response inherits the saving by Abel summation.
 
