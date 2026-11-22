@@ -7,6 +7,7 @@
    digest: Bell comparison for diagonal resets with arbitrary qutrit CPTP decoders. -/
 
 import D5.S3.Quantum.Recovery.LocalCompression.QutritPure
+import D5.S3.Quantum.Matrix.CartesianVariance
 
 /-! Matched Bell coordinates for a plane-preserving qutrit encoder and an arbitrary decoder. -/
 
@@ -110,21 +111,15 @@ private theorem re_entry_le {n : Type*} [Finite n]
     (A i j).re ≤ Real.sqrt (A i i).re * Real.sqrt (A j j).re := by
   classical
   let _ := Fintype.ofFinite n
-  let B := CFC.sqrt A
-  have hB : Bᴴ = B := (CFC.sqrt_nonneg A).posSemidef.isHermitian.eq
-  have hBB : Bᴴ * B = A := by
-    rw [hB]
-    exact CFC.sqrt_mul_sqrt_self A hA.nonneg
-  let v (k : n) : EuclideanSpace ℂ n := WithLp.toLp 2 (fun l => B l k)
-  have hentry (k l : n) : inner ℂ (v k) (v l) = A k l := by
-    rw [← hBB, EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm]
-    rfl
-  have hdiag (k : n) : ‖v k‖ = Real.sqrt (A k k).re := by
-    rw [← hentry k k, inner_self_eq_norm_sq_to_K]
-    rw [pow_two, Complex.mul_re]
-    simp [← pow_two, Real.sqrt_sq (norm_nonneg _)]
-  rw [← hentry, ← hdiag, ← hdiag]
-  exact (Complex.re_le_norm _).trans (norm_inner_le_norm _ _)
+  have hi := (Complex.nonneg_iff.mp (hA.diag_nonneg (i := i))).1
+  have hj := (Complex.nonneg_iff.mp (hA.diag_nonneg (i := j))).1
+  have hroot := mul_nonneg (Real.sqrt_nonneg (A i i).re) (Real.sqrt_nonneg (A j j).re)
+  by_cases h : 0 ≤ (A i j).re
+  · apply (sq_le_sq₀ h hroot).mp
+    rw [mul_pow, Real.sq_sqrt hi, Real.sq_sqrt hj]
+    simpa only [pow_two] using (Complex.re_sq_le_normSq _).trans
+      (D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hA i j)
+  · exact (le_of_not_ge h).trans hroot
 
 private theorem coherence_bound (D : QuantumChannel Qubit Qutrit) :
     (read D 0 1 0 1).re ≤ Real.sqrt (matchedProbability D 0) *
