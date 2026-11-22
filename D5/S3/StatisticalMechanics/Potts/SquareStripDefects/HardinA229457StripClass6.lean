@@ -17,6 +17,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import Mathlib.Data.Fin.Tuple.Basic
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 

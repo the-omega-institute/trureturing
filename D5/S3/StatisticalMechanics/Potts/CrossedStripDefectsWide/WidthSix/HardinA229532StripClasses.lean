@@ -43,6 +43,8 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Logic.Equiv.Defs
+import Mathlib.Data.Finset.Card
+import Mathlib.Data.Finset.Filter
 
 /-! Exact width-six HDA residual-budget transfer. -/
 open scoped BigOperators

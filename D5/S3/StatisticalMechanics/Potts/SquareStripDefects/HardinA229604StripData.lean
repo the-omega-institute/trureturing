@@ -27,6 +27,7 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripDat
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Core
 
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.StripDefects

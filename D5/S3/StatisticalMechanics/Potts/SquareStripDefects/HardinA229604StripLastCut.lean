@@ -21,6 +21,8 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripDat
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.ProperTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Core
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-! Target classes with two horizontal defects require at least two available defects. -/
 open scoped BigOperators

@@ -25,6 +25,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Core
 
 open scoped BigOperators
 open D5.S3.Combinatorics.TraceAvoidingArrays

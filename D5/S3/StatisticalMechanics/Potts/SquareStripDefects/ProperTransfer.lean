@@ -24,6 +24,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Core
+import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 

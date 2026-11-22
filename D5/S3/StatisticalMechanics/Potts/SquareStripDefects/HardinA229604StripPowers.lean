@@ -35,6 +35,15 @@ import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Powers.Har
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Powers.HardinA229604StripStep9
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Powers.HardinA229604StripStep10
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.TwoDefects.Powers.HardinA229604StripStep11
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.GroupWithZero.Defs
+import Mathlib.Algebra.Notation.Pi.Basic
+import Mathlib.Data.Fin.Tuple.Basic
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Matrix.Mul
 
 /-! Forward identities with the old coordinates supplied by the one-defect transfer. -/
 open D5.S3.StatisticalMechanics.Potts.StripDefects

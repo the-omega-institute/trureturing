@@ -39,6 +39,7 @@ import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Logic.Function.Iterate
+import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Nat
 
 /-! Exact residual-budget square-lattice strip transfer. -/
 
