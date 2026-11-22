@@ -40,7 +40,7 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
                 + "for the sum of w(j) over C. At each real v let S(v) be the sum of "
                 + "w(j) sin(γ(j)v) over C. For positive W(C,w), D(C,γ,w) is "
                 + "1 − sup over real v of S(v) divided by W(C,w). Each relation row "
-                + "has zero weighted frequency sum with coefficients k(a,j), and "
+                + "has zero frequency sum with integer coefficients k(a,j), and "
                 + "δ(C,kₐ) is the norm of the difference between 1 and the power of i whose exponent "
                 + "is the sum of the row's integer coefficients.")),
             Describe.Lean(DescribeId.Create("weighted-phase-deficit"),
@@ -100,17 +100,19 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
         new Formula.Logic(a, FormulaLogicOperator.Or, b);
     private static Formula Sum(string index, Formula set, Formula body) =>
         F.Seq(F.Sum, F.Underscore, F.Grp(F.Id(index), F.InMacro, F.Sp, set), F.Sp, body);
-    private static Formula Square(Formula body) => new Formula.Power(body, Num(2));
+    private static Formula Group(Formula body) => F.Seq(F.Open, body, F.Close);
+    private static Formula Square(Formula body) => new Formula.Power(
+        body is Formula.LatexSequence ? Group(body) : body, Num(2));
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Abs(Formula body) => new Formula.Absolute(body);
-    private static Formula Norm(Formula body) => F.Seq(F.Vert, F.Sp, F.Vert, F.Sp, body, F.Vert, F.Sp, F.Vert);
+    private static Formula Norm(Formula body) => new Formula.Norm(body);
     private static Formula K(string row, string col) => Call("k", Id(row), Id(col));
     private static Formula Weight() => Call("w", Id("j"));
     private static Formula Multiplier() => Call("lambda", Id("a"));
     private static Formula Row(string row) => Call("k", Id(row));
     private static Formula Chord(Formula z, Formula q) => Norm(Subtract(z, q));
     private static Formula Character(string phase, Formula k) => Call("chi", Columns, Id(phase), k);
-    private static Formula Delta() => F.Seq(F.DeltaLower, F.Sp, F.Open, Columns, F.Comma, Row("a"), F.Close);
+    private static Formula Delta() => Call("delta", Columns, Row("a"));
 
     private static Formula Family(Formula body) =>
         All("J", Id("Type"), All("A", Id("Type"), All("C", Call("Finset", J),
@@ -131,7 +133,7 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
         new Formula.Logic(Member(Id("j"), Columns), FormulaLogicOperator.And, Ne(K("a", "j"), Num(0)))));
     private static Formula DisjointRows() => AllMember("a", A, Rows, AllMember("b", A, Rows,
         Imp(Ne(Id("a"), Id("b")), AllMember("j", J, Columns,
-            Or(Equal(K("a", "j"), Num(0)), Equal(K("b", "j"), Num(0))))));
+            Or(Equal(K("a", "j"), Num(0)), Equal(K("b", "j"), Num(0)))))));
 
     private static Formula ProductChord()
     {
@@ -149,7 +151,7 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
             Chord(Character("z", Row("a")), Character("q", Row("a")))));
         var energy = Sum("j", Columns, Multiply(Weight(),
             Square(Chord(Call("z", Id("j")), Call("q", Id("j"))))));
-        var bound = Le(Square(total), Multiply(ColumnEnergy(), energy));
+        var bound = Le(Square(total), Multiply(Group(ColumnEnergy()), Group(energy)));
         return F.Disp(Family(Phases(WeightsAndRows(All("lambda", Arrow(A, Reals),
             Imp(PositiveWeights(), Imp(NonnegativeMultipliers(), bound)))))));
     }
@@ -158,17 +160,17 @@ internal sealed class WeightedIntegerRelationsDocument : IScribeDocumentDefiniti
     {
         var energy = ColumnEnergy();
         var total = Sum("a", Rows, Multiply(Multiplier(), Delta()));
-        var bound = Le(Div(Square(total), Multiply(Multiply(Num(2), W), energy)), D);
+        var bound = Le(Div(Square(total), Multiply(Multiply(Num(2), W), Group(energy))), D);
         return F.Disp(Family(All("gamma", Arrow(J, Reals), WeightsAndRows(All("lambda", Arrow(A, Reals),
             Imp(PositiveWeights(), Imp(NonnegativeMultipliers(), Imp(Relations(),
-                Imp(Lt(Num(0), W), Imp(Lt(Num(0), energy), bound)))))))));
+                Imp(Lt(Num(0), W), Imp(Lt(Num(0), energy), bound))))))))));
     }
 
     private static Formula DisjointBound()
     {
         var rowEnergy = Sum("j", Columns, Div(Square(K("a", "j")), Weight()));
         var total = Sum("a", Rows, Div(Square(Delta()), rowEnergy));
-        var bound = Le(Multiply(Div(Num(1), Multiply(Num(2), W)), total), D);
+        var bound = Le(Multiply(Div(Num(1), Multiply(Num(2), W)), Group(total)), D);
         return F.Disp(Family(All("gamma", Arrow(J, Reals), WeightsAndRows(Imp(PositiveWeights(),
             Imp(Relations(), Imp(NonzeroRows(), Imp(DisjointRows(), Imp(Lt(Num(0), W), bound)))))))));
     }

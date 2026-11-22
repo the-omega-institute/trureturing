@@ -106,7 +106,7 @@ internal sealed class RHWeightedRelationLimsupDocument : IScribeDocumentDefiniti
             And(Mem(Id("j"), columns), Ne(Coefficient("a"), Num(0)))));
         var disjoint = AllMember("a", type, rows, AllMember("b", type, rows,
             Imp(Ne(Id("a"), Id("b")), AllMember("j", Zeros, columns,
-                Or(Equal(Coefficient("a"), Num(0)), Equal(Coefficient("b"), Num(0))))));
+                Or(Equal(Coefficient("a"), Num(0)), Equal(Coefficient("b"), Num(0)))))));
         var bound = Le(epsilon, Call("P", height, rows, Id("k")));
         var choice = Exists("R", Call("Finset", type),
             Exists("k", Arrow(type, Arrow(Zeros, Integers)),

@@ -88,8 +88,9 @@ theorem signed_window_limsup_le_of_eventually_disjoint_relations
   obtain ⟨hbounded, hformula, _⟩ := signed_window_even_cutoff_weighted_phase hRH m r hm heven
   change Tendsto (fun L => Q L - κ * (1 - weightedPhaseDefect hRH (cutoff L)))
     (𝓝[>] 0) (𝓝 0) at hformula
+  have hpositive : ∀ᶠ L : ℝ in 𝓝[>] 0, 0 < L := self_mem_nhdsWithin
   have hQ_nonneg : ∀ᶠ L in 𝓝[>] (0 : ℝ), 0 ≤ Q L := by
-    filter_upwards [hbounded, Ioi_mem_nhdsGT (le_refl (0 : ℝ))] with L hL hLpos
+    filter_upwards [hbounded, hpositive] with L hL hLpos
     exact div_nonneg
       (le_limsup_of_frequently_le (Frequently.of_forall fun u => abs_nonneg _) hL)
       (mul_nonneg hLpos.le (sq_nonneg _))
