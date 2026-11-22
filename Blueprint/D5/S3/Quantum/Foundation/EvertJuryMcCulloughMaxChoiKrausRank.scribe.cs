@@ -37,7 +37,7 @@ internal sealed class EvertJuryMcCulloughMaxChoiKrausRankDocument : IScribeDocum
                 "The same complex matrix T supplies both identities."),
             Definition("claim", "The two clauses of Question 1",
                 IffOf(X("claim"), ClaimBody()),
-                "Section 5.3, Question 1 asks first about products with a left unit and then about products with a common two-sided unit. Each maximum includes a bound for every qualifying product and a separate existence clause for a product attaining it.",
+                "Question 1 in Section 5.3, printed page 22, asks “What is the maximum Choi-Kraus rank of a jcp product with a left unit?” and “What is the maximum Choi-Kraus rank of a jcp product with a unit?” For every n ≥ 1, Lean considers complex bilinear products with both inputs and the output of size n and requires joint complete positivity at every positive block size on every pair of positive semidefinite block inputs. The first class requires a left unit, and the second requires one matrix satisfying both unit identities. The units range over all complex n by n matrices. For each class, the extended-natural infimum of Kraus lengths is at most n³ for every qualifying product and equals n³ for some qualifying product.",
                 AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("ejm-max-choi-kraus-rank-result"), DeclarationHandle.Create(Owner + ".result"),
