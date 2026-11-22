@@ -61,7 +61,7 @@ theorem occurrence_coeff_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (
       have : s ≠ 0 := by linarith
       field_simp
 
-private theorem occurrence_coeff_phase_le {s : ℝ} (hs : 0 ≤ s) (i : ℕ) :
+theorem occurrence_coeff_phase_le {s : ℝ} (hs : 0 ≤ s) (i : ℕ) :
     ‖phaseDerivCoeff occurrenceFrequency (rootCoeff s) i‖ ≤ s * (‖actualZero i‖)⁻¹ := by
   have hf := occurrence_freq_abs_le s i
   unfold phaseDerivCoeff rootCoeff
@@ -105,7 +105,7 @@ theorem occurrenceIncrement_le (hRH : RiemannHypothesis) {s q : ℝ}
         (mul_le_mul (by linarith) h₂ hnorm.le (norm_nonneg _))
     _ = _ := by field_simp
 
-private theorem occurrenceIncrement_phase_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
+theorem occurrenceIncrement_phase_le (hRH : RiemannHypothesis) {s : ℝ} (hs : 1 ≤ s) (i : ℕ) :
     ‖phaseDerivCoeff occurrenceFrequency (occurrenceIncrement s) i‖ ≤ (‖actualZero i‖)⁻¹ := by
   have hnorm := occurrence_norm_pos hRH i
   have h₁ := occurrence_dist_norm hRH hs i
@@ -122,7 +122,7 @@ private theorem occurrenceIncrement_phase_le (hRH : RiemannHypothesis) {s : ℝ}
         (occurrence_dist_norm hRH (show 1 ≤ s+1 by linarith) i))).mpr h₂)
     _ ≤ _ := inv_anti₀ hnorm h₁
 
-private theorem occurrence_bin_majorant {T : Finset ℕ} {a : ℕ → ℂ} {b : ℤ → ℝ} {C : ℝ}
+theorem occurrence_bin_majorant {T : Finset ℕ} {a : ℕ → ℂ} {b : ℤ → ℝ} {C : ℝ}
     (hC : 0 ≤ C)
     (hb : ∀ k, ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k)
     (ha : ∀ i, ‖a i‖ ≤ C * (‖actualZero i‖)⁻¹) :
@@ -278,7 +278,7 @@ private theorem occurrence_band_samples_with_spacing (hRH : RiemannHypothesis)
     change ‖phaseDerivCoeff occurrenceFrequency (occurrenceIncrement r) i‖ ≤ _
     exact hbound.trans (le_mul_of_one_le_left (by positivity) hscale)
 
-private theorem occurrence_weighted_finite_of_slab_bound
+theorem occurrence_weighted_finite_of_slab_bound
     {q : ℕ} (hq : 3 ≤ q) {u C : ℝ} (hu : 0 ≤ u) (hC : 0 ≤ C) (T : Finset ℕ)
     (hslab : ∀ (S : Finset ℕ) (c : ℝ),
       S ⊆ Finset.Icc ((q+1)/2) q →
