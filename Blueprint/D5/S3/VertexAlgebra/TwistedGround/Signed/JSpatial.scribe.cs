@@ -34,6 +34,18 @@ internal sealed class JSpatialDocument : IScribeDocumentDefinition
                     + "On ‖u‖ + ‖r‖ < 1 and ‖v‖ + ‖r‖ < 1 with G ≠ 0, the root-square and source "
                     + "normalization identities reduce this expression to the regular candidateJ."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("regular-j-chart-algebra"),
+                DeclarationHandle.Create(Prefix + "regularJ_chart_algebra"),
+                H("Regular J for normalized chart roots"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let e and f be Boolean labels and let u, v, r, me, mf, U and V be "
+                        + "complex, with me and mf denoting the two source factors. Assume "
+                        + "U² b(u) = h(e,u,r), V² b(v) = h(f,v,r), me b(u) U = 1 and mf b(v) V = 1. "
+                        + "The equality holds on this domain with b(u) ≠ 0, b(v) ≠ 0, U ≠ 0, V ≠ 0, "
+                        + "G(e,f,u,v) ≠ 0 and U + V ≠ 0.")),
+                    new DocumentBlock.DisplayFormula(RegularJChartIdentity())),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("candidate-j-original-displacement"),
                 DeclarationHandle.Create(Prefix + "candidateJ_original_displacement"),
                 H("Signed J displacement with the original source"),
@@ -57,4 +69,20 @@ internal sealed class JSpatialDocument : IScribeDocumentDefinition
                         + "continuous at u = v. With the second coordinate fixed, the equation extends "
                         + "to the diagonal by continuity from the punctured first-coordinate disk."))),
                 DescribeRole.Theorem))));
+
+    private static Formula RegularJChartIdentity()
+    {
+        var e = Id("e");
+        var f = Id("f");
+        var u = Id("u");
+        var v = Id("v");
+        var r = Id("r");
+        var sourceProduct = Multiply(Id("me"), Id("mf"));
+        var rootSumSquared = new Formula.Power(Add(Id("U"), Id("V")), Num(2));
+        var numerator = Multiply(new Formula.Power(r, Num(2)), new Formula.Apply(FormulaDsl.Rho, [e, f, u, v]));
+        var denominator = Multiply(Multiply(Multiply(Num(4), Call("b", u)), Call("b", v)), rootSumSquared);
+        return Equal(
+            Subtract(Multiply(sourceProduct, Call("rationalJ", e, f, u, v, r)), Call("cauchy", e, f, u, v)),
+            Multiply(sourceProduct, Add(new Formula.Fraction(r, Num(4)), new Formula.Fraction(numerator, denominator))));
+    }
 }

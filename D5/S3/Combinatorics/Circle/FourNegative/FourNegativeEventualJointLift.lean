@@ -19,9 +19,7 @@ open FourNegativeEventual
 open private mask_labels_mem positive_block_strip
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 open ThreeBitSource
-open private label lift_order
-  marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open ThreeNegativeEqualOuterJointLift
 
 private theorem paired_seam_bounds (N Y rho n T H K : ℤ)

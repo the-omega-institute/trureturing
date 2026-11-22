@@ -205,7 +205,7 @@ theorem lift_ext {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
   cases he
   rfl
 
-private def canonicalLift (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+def canonicalLift (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
     (σ : Perm V) (hf : σ.IsCycleOn Set.univ)
     (he : ∀ x y, F.Adj x y → σ x = y ∨ σ y = x) : Lift F where
   E x y := F.Adj x y ∧ σ x = y

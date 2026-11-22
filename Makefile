@@ -16,7 +16,7 @@ export LEAN_SKIP_LOCK ?= 0
 # .NET processes started from these targets create no diagnostic pipes or sockets.
 export DOTNET_EnableDiagnostics ?= 0
 # All tool-backed targets share one verified installation per make invocation.
-TOOLS_TARGETS := test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped lean-report-prepare check-lean-report build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch mathlib-reanchor truth-export deliver-check deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test
+TOOLS_TARGETS := test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped lean-report-prepare check-lean-report build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch mathlib-reanchor truth-export deliver-check deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test
 .PHONY: help install-tools require-full-build $(TOOLS_TARGETS)
 $(filter-out lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
 # An unconfirmed full-cache request must fail before the release installer can run.
@@ -25,13 +25,20 @@ $(filter lean-cache-ensure,$(TOOLS_TARGETS)): | install-tools
 endif
 
 install-tools:
-	@python3 .github/scripts/install-tools.py
+	@python3 -I -B .github/scripts/install-tools.py
+
+# A recursive dry run can print the planned sub-make before tools are installed.
+ifeq ($(wildcard tools/Makefile),)
+ifneq ($(findstring n,$(filter-out -% %=%,$(firstword $(MAKEFLAGS)))),)
+show_tool_make := echo
+endif
+endif
 
 require-full-build:
 	@test "$(FULL_BUILD)" = 1 || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
 
 help:
-	@printf '%s\n' 'make install-tools  Install the pinned tools release before invoking tools directly' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR and wait for checks; this is no merge certificate; after MERGED and first dev push verification continue in the same worktree from fresh dev per CLAUDE.md 6.1; use worktree-stale when finished; auto-merge defaults on; drafts return without watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit; this is no merge certificate' 'make lean-cache-ensure FULL_BUILD=1 [RESTORE_DEPENDENCIES=1]  Prepare the cache for a full build' 'make lean LEAN_TARGETS="..." | make lean FULL_BUILD=1 [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test [BASE=origin/dev]  Check current using affected Lean inputs' 'make test FULL_BUILD=1  Run check-lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Reuse compatible clean trees; notify background maintenance without waiting for cleanup' 'make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks' 'make gate-plan [BASE=origin/dev] [PURPOSE=pull-request|push]  Show identities and applicable checks without execution' 'make ci-unit UNIT=id  Run one declared CI unit with its canonical preparation and evidence' 'make lean-report-scoped LEAN_TARGETS="D5.Module [Reg.Module ...]"  Inspect prebuilt targets, named utility inputs and imports' 'make lean-report-prepare LEAN_TARGETS="..." | make lean-report-prepare FULL_BUILD=1  Build the report tools and inputs' 'make check-lean-report FULL_BUILD=1  Compile, analyze and run required FIB regressions' 'make lean-report FULL_BUILD=1 [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Inspect prebuilt Lean artifacts; regenerate discards generated reports' 'make emit [BASE=origin/dev] [PATHS=FILE] [EMIT_FULL_REPORT=FILE]  Emit from selected scoped Lean inputs or an existing validated full report bundle' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-pending  Show the current-agent advisory pending view' \
+	@printf '%s\n' 'make install-tools  Install the pinned tools release before invoking tools directly' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR and wait for checks; this is no merge certificate; after MERGED and first dev push verification continue in the same worktree from fresh dev per CLAUDE.md 6.1; use worktree-stale when finished; auto-merge defaults on; drafts return without watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit; this is no merge certificate' 'make lean-cache-ensure FULL_BUILD=1 [RESTORE_DEPENDENCIES=1]  Prepare the cache for a full build' 'make lean LEAN_TARGETS="..." | make lean FULL_BUILD=1 [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test [BASE=origin/dev]  Check current using affected Lean inputs' 'make test FULL_BUILD=1  Run check-lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Reuse compatible clean trees; notify background maintenance without waiting for cleanup' 'make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks' 'make gate-plan [BASE=origin/dev] [PURPOSE=pull-request|push]  Show identities and applicable checks without execution' 'make ci-unit UNIT=id  Run one declared CI unit with its canonical preparation and evidence' 'make lean-report-scoped LEAN_TARGETS="D5.Module [Reg.Module ...]"  Inspect prebuilt targets, named utility inputs and imports' 'make lean-report-prepare LEAN_TARGETS="..." | make lean-report-prepare FULL_BUILD=1  Build the report tools and inputs' 'make check-lean-report FULL_BUILD=1  Prepare and check the complete Lean report' 'make lean-report FULL_BUILD=1 [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Inspect prebuilt Lean artifacts; regenerate discards generated reports' 'make emit [BASE=origin/dev] [PATHS=FILE] [EMIT_FULL_REPORT=FILE]  Emit from selected scoped Lean inputs or an existing validated full report bundle' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-pending  Show the current-agent advisory pending view' \
 		'make worktree-checkpoint MESSAGE=FILE  Commit the ordinary whole working snapshot' 'make worktree-publish HEAD=BRANCH [COMMIT=HEAD]  Non-force publication with fresh remote ancestry confirmation' 'make worktree-finalize HEAD=BRANCH WRITERS_JOINED=1  Publish after host joins this task writers' 'make worktree-stale [WORKTREE_PATH=DIR]  Mark the current branch stale' 'make worktree-return [WORKTREE_PATH=DIR]  Same native stale marker' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 1800-second removal timeout' 'make mathlib-reanchor BASE=REV [OLD_REPORT=PATH]  Reanchor Frozen using the candidate report and optional historical content witness'
 
 ifeq ($(FULL_BUILD),1)
@@ -41,7 +48,7 @@ test: require-full-build
 else
 test: export CHECK_BASE := $(value BASE)
 test:
-	@$(MAKE) -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+	@$(show_tool_make) $(MAKE) -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
 	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; \
 		base="$$(git rev-parse --verify --end-of-options "$$CHECK_BASE^{commit}")"; \
 		python3 .github/scripts/install-tools.py --cache-revision "$$base"; \
@@ -115,7 +122,7 @@ filemap:
 	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- filemap
 
 filemap-conform:
-	@$(MAKE) -C tools filemap-conform
+	@$(show_tool_make) $(MAKE) -C tools filemap-conform
 
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
@@ -210,7 +217,4 @@ ci-unit:
 ci-unit: export CI_UNIT := $(value UNIT)
 
 compiled-judge-test:
-	@/bin/bash tools/scripts/compiled-judge-test.sh
-
-compiled-fib-test:
-	@/bin/bash tools/scripts/compiled-fib-test.sh
+	@$(show_tool_make) $(MAKE) -C tools compiled-judge-test

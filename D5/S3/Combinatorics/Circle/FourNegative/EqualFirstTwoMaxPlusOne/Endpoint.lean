@@ -25,7 +25,8 @@ open private Gates four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 open private negative_step
   from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private theorem pow_step (n : ℕ) (hn : 1 ≤ n) :

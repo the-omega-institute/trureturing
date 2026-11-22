@@ -31,7 +31,87 @@ internal sealed class QuarticSamplingDocument : IScribeDocumentDefinition
                     "Those intervals cover the entire tail. The normalized arithmetic kernel is eventually "
                     + "at most 230 after including the trivial-zero correction. Its affine-tail implication "
                     + "gives RH. The resulting equivalence leaves the arithmetic sample inequality to be proved."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quartic-power-windows"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.rh_iff_quartic_power_windows"),
+                H("Finite fourth-power samples on arbitrarily late closed windows"),
+                StatementSource.FromAuthor(Window()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For Y ≥ 2 and Z ≥ Y, S(Y,Z) consists of Y, Z and every "
+                    + "natural fourth power n⁴ with Y ≤ n⁴ ≤ Z. These finitely many samples allow "
+                    + "arbitrary real endpoints. The window may depend on the exponent loss and the "
+                    + "requested lower bound on its starting point.")),
+                    Paragraph(Text("For each x in the window, clip the fourth-power cell containing x "
+                        + "to the window. Both ends of the clipped interval belong to S(Y,Z). "
+                        + "Its chord error is at most 225√x and each sampled power bound is at most "
+                        + "16xᵖ for 1/2 ≤ p ≤ 1. This gives U(x) ≤ 241xᵖ throughout the window. "
+                        + "Choose a smaller positive loss and move the window far enough to absorb 241. "
+                        + "The whole-window power criterion then gives RH. The forward implication "
+                        + "restricts that criterion to the sample points."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quartic-integer-blocks"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/Mertens/IntegratedExplicit/QuarticSampling.rh_iff_quartic_integer_blocks"),
+                H("Sampling on finite integer blocks"), StatementSource.FromAuthor(IntegerBlocks()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For each positive exponent loss and each natural threshold A, the test asks for a "
+                    + "natural k at least max(A,2). At this k it tests all fourth powers n⁴ with integer "
+                    + "root between k³ and k⁴, including both boundary roots. Under RH the strict "
+                    + "quartic tail estimate supplies the tests for every sufficiently large k.")),
+                    Paragraph(Text("Conversely, choose the real window with left end k¹² and power "
+                        + "exponent 4/3. Its right end is k¹⁶. The boundary roots are k³ and k⁴, "
+                        + "and monotonicity of the fourth power places every interior sample root "
+                        + "between them. Such windows start arbitrarily far out, so they satisfy "
+                        + "the closed-window criterion at every positive loss."))), DescribeRole.Theorem))));
+
+    private static Formula Window()
+    {
+        var reals = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        var b = F.Id("b");
+        var k = F.Id("k");
+        var y = F.Id("Y");
+        var t = F.Id("t");
+        Formula Bind(FormulaQuantifier q, string name, Formula body) =>
+            new Formula.Bind(q, FormulaIdentifier.Create(name), reals, body);
+        Formula Le(Formula a, Formula z) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, z);
+        Formula Lt(Formula a, Formula z) => new Formula.Relation(a, FormulaRelationOperator.LessThan, z);
+        Formula Implies(Formula a, Formula z) => new Formula.Logic(a, FormulaLogicOperator.Implies, z);
+        Formula Power(Formula x, Formula e) => F.Seq(x, F.Caret, F.Grp(e));
+        Formula At(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+        var p = F.Seq(F.Frac, F.Grp(F.D(1)), F.Grp(F.D(2)), F.Plus, k);
+        var sample = F.Seq(t, F.Sp, F.InMacro, F.Sp, At("S", y, Power(y, b)));
+        var tests = Bind(FormulaQuantifier.ForAll, "t", Implies(sample, Le(At("U", t), Power(t, p))));
+        var late = Bind(FormulaQuantifier.ForAll, "R", Bind(FormulaQuantifier.Exists, "Y",
+            new Formula.Logic(Le(At("max", F.Id("R"), F.D(2)), y), FormulaLogicOperator.And, tests)));
+        var right = Bind(FormulaQuantifier.ForAll, "k", Implies(Lt(F.D(0), k), late));
+        return F.Disp(Bind(FormulaQuantifier.ForAll, "b", Implies(Lt(F.D(1), b),
+            new Formula.Logic(F.Id("RiemannHypothesis"), FormulaLogicOperator.Iff, right))));
+    }
+
+    private static Formula IntegerBlocks()
+    {
+        var natural = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+        var reals = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        var k = F.Id("k");
+        var n = F.Id("n");
+        var loss = F.Id("e");
+        Formula Power(Formula x, Formula e) => F.Seq(x, F.Caret, F.Grp(e));
+        Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+        Formula Implies(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+        Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+        Formula Bind(FormulaQuantifier q, string name, Formula domain, Formula body) =>
+            new Formula.Bind(q, FormulaIdentifier.Create(name), domain, body);
+        var x = Power(n, F.D(4));
+        var degree = F.Seq(F.Frac, F.Grp(F.D(1)), F.Grp(F.D(2)), F.Plus, loss);
+        var sample = Le(new Formula.Apply(F.Id("U"), [x]), Power(F.Seq(F.Open, x, F.Close), degree));
+        var roots = And(Le(Power(k, F.D(3)), n), Le(n, Power(k, F.D(4))));
+        var block = Bind(FormulaQuantifier.ForAll, "n", natural, Implies(roots, sample));
+        var threshold = new Formula.FunctionCall(FormulaIdentifier.Create("max"), [F.Id("A"), F.D(2)]);
+        var late = Bind(FormulaQuantifier.ForAll, "A", natural,
+            Bind(FormulaQuantifier.Exists, "k", natural, And(Le(threshold, k), block)));
+        var positive = new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, loss);
+        var right = Bind(FormulaQuantifier.ForAll, "e", reals, Implies(positive, late));
+        return F.Disp(new Formula.Logic(F.Id("RiemannHypothesis"), FormulaLogicOperator.Iff, right));
+    }
 
     private static Formula Claim()
     {
