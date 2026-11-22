@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Transportation/SupportedCycleSupplier
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Fintype.Card]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Pigeonhole]
    utility: none
    digest: Fixed Boolean margins supply a simple cycle of target disagreements. -/
 
