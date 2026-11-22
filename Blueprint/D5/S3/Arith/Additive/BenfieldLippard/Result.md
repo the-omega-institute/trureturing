@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Arith/Additive/BenfieldLippard/Result.conjecture_10_5`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/BenfieldLippard/Result.conjecture_10_5` (`✓ std3`). ∎
 
+*Resolves.* `Problems/benfield-lippard-2025-exception-set-oscillation` (proved) by `D5/S3/Arith/Additive/BenfieldLippard/Result.conjecture_10_5`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"benfield-lippard-2025-exception-set-oscillation","declaration_gid":"D5/S3/Arith/Additive/BenfieldLippard/Result.conjecture_10_5","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Brennan Benfield, Oliver Lippard (2025). *Integers that are not the sum of positive powers*. URL: <https://arxiv.org/abs/2404.08193v2>.
