@@ -74,7 +74,7 @@ private theorem traceMoment_radial {X : TwoMode} (hX : X.IsHermitian)
     · subst j
       simp [e, d, radialValue, Matrix.smul_apply, smul_eq_mul,
         Complex.ofReal_add, Complex.ofReal_mul]
-    · simp [Matrix.diagonal_apply, Matrix.one_apply, Matrix.smul_apply, hij]
+    · simp [Matrix.smul_apply, hij]
   have hrad : radial a X t = F (diagonal e) := by
     simp only [radial, he, map_add, map_smul, map_one, ← hd]
   have hpow : radial a X t ^ k = F (diagonal (e ^ k)) := by
@@ -111,7 +111,7 @@ private theorem scalar_of_eigenvalues_eq {X : TwoMode} (hX : X.IsHermitian) {a :
       change diagonal (fun i => (hX.eigenvalues i : ℂ)) i i =
         ((a : ℂ) • (1 : TwoMode)) i i
       simp [ha, Matrix.smul_apply, smul_eq_mul]
-    · simp [Matrix.diagonal_apply, Matrix.one_apply, Matrix.smul_apply, hij]
+    · simp [Matrix.smul_apply, hij]
   calc
     X = conjStarAlgAut ℂ TwoMode hX.eigenvectorUnitary
         (diagonal (RCLike.ofReal ∘ hX.eigenvalues)) := hX.spectral_theorem
@@ -219,7 +219,8 @@ private theorem momentRatio_hasDerivAt {u v : ℝ → ℝ} {a t x₂ y₃ : ℝ}
       (-(12 * a * (v t) ^ 2 * (u t * y₃ - x₂ * v t)) / (t * (u t) ^ 5)) t := by
   convert (hv'.fun_pow 3).fun_div (hu'.fun_pow 4) (pow_ne_zero 4 hu) using 1
   norm_num
-  field_simp [ht, hu] <;> ring
+  field_simp [ht, hu]
+  ring
 
 /-- Strict contractivity for PSD inputs outside the nonnegative scalar ray. -/
 theorem A1_quartic_contractivity_strict (X : TwoMode) (hX : X.PosSemidef)
@@ -253,7 +254,7 @@ theorem A1_quartic_contractivity_strict (X : TwoMode) (hX : X.PosSemidef)
     · have hm := radial_mean hY hmeanY t
       rw [hz] at hm
       exact ha.ne' (by simpa [endpointTraceMoment] using hm.symm)
-    · simpa only [← pow_mul] using (sq_nonneg (hrad.eigenvalues i ^ 2))
+    · exact (Even.pow_nonneg (by decide : Even 4)) _
   have hD (t : ℝ) (ht : t ∈ Ioo (0 : ℝ) 1) : 0 < D t := by
     have hfloor := A1_quartic_floor (radial a X t)
       (radial_posSemidef ha.le hX ⟨ht.1.le, ht.2.le⟩)
