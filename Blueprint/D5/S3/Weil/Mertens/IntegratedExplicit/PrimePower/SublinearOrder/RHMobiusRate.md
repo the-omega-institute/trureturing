@@ -29,4 +29,4 @@ For sufficiently large m these estimates give the explicit rate on the signed de
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusRate.prime_window_mobius_quantitative_of_rh`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/RHMobiusLinear](../LinearOrder/RHMobiusLinear.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/TrivialResponse](../LinearOrder/TrivialResponse.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/ArithmeticResponse](ArithmeticResponse.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusSublinear](RHMobiusSublinear.md)
