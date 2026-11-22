@@ -138,7 +138,8 @@ theorem window_coefficient_of_occurrence {r : ℝ} (hr : 1 < r) (L : ℝ) (k : �
   simp only [windowCoefficient, windowMode, frequency]
   rw [h]
 
-private theorem window_coefficients_summable (hRH : RiemannHypothesis) {r L : ℝ}
+/-- The normalized fixed-width primitive has absolutely summable coefficients. -/
+theorem window_coefficients_summable (hRH : RiemannHypothesis) {r L : ℝ}
     (hr : 1 < r) (hL : 0 < L) :
     Summable (fun k => ‖windowCoefficient r L (actualZero k)‖) := by
   let s : ℝ := 1/2-(2*r)⁻¹
@@ -166,7 +167,8 @@ private theorem window_coefficients_summable (hRH : RiemannHypothesis) {r L : �
       (by simpa only [hexp, norm_one] using norm_sub_le (Complex.exp ((-(s : ℂ)+v)*(L : ℂ))) 1) hd.le
 
 
-private theorem normalized_width_series (hRH : RiemannHypothesis) {r L : ℝ}
+/-- The normalized root increment equals its full fixed-width centered series. -/
+theorem normalized_width_series (hRH : RiemannHypothesis) {r L : ℝ}
     (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
     let s : ℝ := 1/2-(2*r)⁻¹
     (((rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /

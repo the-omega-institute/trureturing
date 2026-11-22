@@ -47,7 +47,8 @@ private theorem phase_uniformContinuous :
     simp [Complex.norm_exp, Complex.mul_re], mul_one]
   exact Real.norm_exp_I_mul_ofReal_sub_one_le
 
-private theorem root_signal_uniformContinuous (hRH : RiemannHypothesis) {r : ℝ}
+/-- The full centered spectrum is uniformly continuous under RH. -/
+theorem root_signal_uniformContinuous (hRH : RiemannHypothesis) {r : ℝ}
     (hr : 1 < r) : UniformContinuous (rootSignal r) := by
   let term (k : ℕ) (u : ℝ) := rootCoeff r k * Complex.exp (frequency k / (r : ℂ) * (u : ℂ))
   have mode_re (k : ℕ) : (frequency k / (r : ℂ)).re = 0 := by
@@ -118,7 +119,7 @@ private theorem width_weight_integral {s L : ℝ} (hs : 0 < s) :
   have h := intervalIntegral.integral_comp_mul_left Real.exp hneg (a := 0) (b := L)
   simpa [inv_mul_eq_div, div_neg, ← neg_div] using h
 
-private theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
+theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
     let s : ℝ := 1/2 - (2*r)⁻¹
     (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
       powerGap s (Real.exp u) (Real.exp (u+L)) =
