@@ -488,15 +488,11 @@ private theorem fixedMarginAlternatingClosedWalkLength_of_col_repeat'
     {M : FixedMarginModel Row Col} {X Y : FixedMarginState M}
     {L a b : Nat}
     {r : Nat → Row} {c : Nat → Col}
-    (_hlen : 2 ≤ L)
     (hRed : ∀ i : Nat, i < L →
       X.1 (r i) (c i) = true ∧ Y.1 (r i) (c i) = false)
     (hBlue : ∀ i : Nat, i + 1 < L →
       X.1 (r i) (c (i + 1)) = false ∧
         Y.1 (r i) (c (i + 1)) = true)
-    (_hClosing :
-      X.1 (r (L - 1)) (c 0) = false ∧
-        Y.1 (r (L - 1)) (c 0) = true)
     (hab : a < b) (hbL : b < L) (hcol : c a = c b) :
     FixedMarginAlternatingClosedWalkLength M X Y (b - a) := by
   classical
@@ -543,15 +539,11 @@ private theorem fixedMarginAlternatingClosedWalkLength_of_row_repeat'
     {M : FixedMarginModel Row Col} {X Y : FixedMarginState M}
     {L a b : Nat}
     {r : Nat → Row} {c : Nat → Col}
-    (_hlen : 2 ≤ L)
     (hRed : ∀ i : Nat, i < L →
       X.1 (r i) (c i) = true ∧ Y.1 (r i) (c i) = false)
     (hBlue : ∀ i : Nat, i + 1 < L →
       X.1 (r i) (c (i + 1)) = false ∧
         Y.1 (r i) (c (i + 1)) = true)
-    (_hClosing :
-      X.1 (r (L - 1)) (c 0) = false ∧
-        Y.1 (r (L - 1)) (c 0) = true)
     (hab : a < b) (hbL : b < L) (hrow : r a = r b) :
     FixedMarginAlternatingClosedWalkLength M X Y (b - a) := by
   classical
@@ -617,7 +609,7 @@ private theorem exists_simple_fixedMarginAlternatingClosedWalk
         FixedMarginAlternatingClosedWalkLength M X Y (b - a) :=
       fixedMarginAlternatingClosedWalkLength_of_row_repeat'
         (M := M) (X := X) (Y := Y)
-        hlen hRed hBlue hClosing hab hbL hrow
+        hRed hBlue hab hbL hrow
     have hlt : b - a < L := by
       omega
     exact Nat.find_min hExists hlt hShort
@@ -627,7 +619,7 @@ private theorem exists_simple_fixedMarginAlternatingClosedWalk
         FixedMarginAlternatingClosedWalkLength M X Y (b - a) :=
       fixedMarginAlternatingClosedWalkLength_of_col_repeat'
         (M := M) (X := X) (Y := Y)
-        hlen hRed hBlue hClosing hab hbL hcol
+        hRed hBlue hab hbL hcol
     have hlt : b - a < L := by
       omega
     exact Nat.find_min hExists hlt hShort
