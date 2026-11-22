@@ -43,8 +43,10 @@ internal sealed class RHMobiusEightNinthsDocument : IScribeDocumentDefinition
                 Paragraph(Text("The local logarithmic zero count gives an inverse-root bin "
                     + "mass of order (1+|k|)^(η−1). Finite complex Abel summation at low bins "
                     + "costs O(q^β(H+1)^(1+η)). Squaring and summing the high bin masses "
-                    + "and applying weighted sampling costs O(qH^(η−1/2)). The cutoff "
-                    + "H=floor(q^(2/9)) gives a bound of order q^(8/9+2η).")),
+                    + "and applying weighted sampling costs O(qH^(η−1/2)). Balancing "
+                    + "the two terms at H=floor(q^(2(1−β)/3)) gives the general window "
+                    + "exponent (2+β)/3 with positive slack. With the stated β and "
+                    + "remaining slack ε−η/3, the exponent is 8/9+ε.")),
                 Paragraph(Text("Integrate the normalized density estimates with the factor "
                     + "exp(−(1/2−1/q)u) between log a and log B. The endpoint gap vanishes "
                     + "for B=a. The constants are uniform in the order and the two endpoints "
