@@ -6,9 +6,6 @@
    utility: none
    digest: Cut chains with bottom form the face lattice, with joins by common cuts. -/
 import D5.S3.Combinatorics.Graph.PrefixHamming.ExactDimension
-import Mathlib.Order.Atoms
-import Mathlib.Order.Bounds.Basic
-import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Data.Finset.Sort
 
 /-! The permutohedron face lattice presented by proper cut chains. -/

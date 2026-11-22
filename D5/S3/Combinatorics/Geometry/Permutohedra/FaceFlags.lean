@@ -7,7 +7,6 @@
    digest: Every face extends to a permutation flag and its rank counts the free prefix ranks. -/
 import D5.S3.Combinatorics.Geometry.Permutohedra.FaceLattice
 import Mathlib.Order.Prod.Lex.Basic
-import Mathlib.Order.Interval.Finset.Fin
 
 /-! Permutation extensions and unoccupied cut ranks of a face. -/
 

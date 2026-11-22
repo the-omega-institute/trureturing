@@ -13,6 +13,14 @@ internal sealed class PrefixExchangesDocument : IScribeDocumentDefinition
         H("Adjacent exchanges and prefix ranks"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("prefixexchanges-exchange"),
+                DeclarationHandle.Create(Module + ".exchange"),
+                H("Adjacent exchange"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For a proper rank d, exchange swaps the entries at positions d minus one and d in the zero-based list of a permutation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("prefixexchanges-exchange-prefix-ne-iff"),
                 DeclarationHandle.Create(Module + ".exchange_prefix_ne_iff"),
                 H("One exchange"),
@@ -20,6 +28,14 @@ internal sealed class PrefixExchangesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Interchanging adjacent positions across rank d changes the unordered prefix exactly at rank d."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prefixexchanges-batch"),
+                DeclarationHandle.Create(Module + ".batch"),
+                H("Sequential exchanges"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Fold the list of proper ranks from left to right, applying each exchange to the current permutation."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("prefixexchanges-batch-prefix-ne-iff"),
                 DeclarationHandle.Create(Module + ".batch_prefix_ne_iff"),

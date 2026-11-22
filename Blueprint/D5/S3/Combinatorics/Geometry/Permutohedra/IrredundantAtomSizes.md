@@ -10,9 +10,13 @@ $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow \left(\forall x \in \mathrm{Fa
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/IrredundantAtomSizes.exact_spectrum` (`✓ std3`). ∎
 
-*Citation.* Giovanni Rossi (2026). *Beyond geometric lattices: pseudo-atoms and redundant join representations in the face lattice of the permutohedron*. DOI: [10.48550/arXiv.2611.25741](https://doi.org/10.48550/arXiv.2611.25741). URL: <https://arxiv.org/abs/2611.25741v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giovanni Rossi (2026). *Beyond geometric lattices: pseudo-atoms and redundant join representations in the face lattice of the permutohedron*. DOI: [10.48550/arXiv.2611.25741](https://doi.org/10.48550/arXiv.2611.25741). URL: <https://arxiv.org/abs/2611.25741v1>.
 
 *Commentary.*
+
+Rossi asks in Section 10.3, item 4 which sizes between two and the rank occur for minimal sets of atoms generating a face. Proposition 5.5 of the paper determines the extremal sizes. The grouped exchanges below give the full interval.
 
 A finite family has distinct members and its join is the lattice supremum, with the empty join equal to bottom. Irredundancy requires the join of every proper subfamily to be strictly below the face. The upper bound uses the integer value of the natural size k.
 

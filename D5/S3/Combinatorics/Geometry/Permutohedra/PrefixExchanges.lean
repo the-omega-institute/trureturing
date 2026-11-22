@@ -6,7 +6,6 @@
    utility: none
    digest: A batch of distinct adjacent exchanges changes exactly its selected prefix ranks. -/
 import D5.S3.Combinatorics.Graph.PrefixHamming.ExactDimension
-import Mathlib.Logic.Equiv.Basic
 
 /-! Adjacent exchanges at proper ranks of a permutation. -/
 
@@ -76,10 +75,5 @@ theorem batch_prefix_ne_iff {n : ℕ} (p : Equiv.Perm (Fin n))
     · have hv : s.1.val ≠ d.1.val := fun hv => h (Subtype.ext (Fin.ext hv))
       rw [← (exchange_prefix_eq_iff p d _).2 hv, ih _ hd]
       simp [h]
-
-theorem batch_prefix_eq_iff {n : ℕ} (p : Equiv.Perm (Fin n))
-    (ds : List (Rank n)) (hd : ds.Nodup) (s : Rank n) :
-    prefixSet (batch p ds) s.1.val = prefixSet p s.1.val ↔ s ∉ ds := by
-  simpa only [not_ne_iff] using not_congr (batch_prefix_ne_iff p ds hd s)
 
 end Rossi
