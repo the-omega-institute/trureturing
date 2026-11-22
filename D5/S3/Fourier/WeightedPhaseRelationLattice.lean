@@ -8,11 +8,16 @@
 
 import D5.S3.Fourier.TorusOrbitClosure
 import Mathlib.Analysis.Real.Cardinality
+import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 
 /-! The real-time phase orbit closure is the annihilator of its integer relations. -/
 
 open Set
-open scoped BigOperators
+open Matrix
+open scoped BigOperators Matrix
 
 namespace D5.S3.Fourier.WeightedPhaseRelationLattice
 
@@ -80,6 +85,56 @@ theorem closure_real_phase_orbit {J : Type*} [Fintype J] (γ : J → ℝ) :
   ext p
   exact mem_closure_real_phase_orbit γ p
 
+/-- For every real lift centered at the sine-maximizing phase, membership in the
+continuous orbit closure is equivalent to the affine congruences for the complete
+integer relation rows. -/
+theorem centered_lift_iff {J A : Type*} [Fintype J] [Finite A]
+    (γ : J → ℝ) (K : Matrix A J ℤ)
+    (hK : ∀ k : J → ℤ, k ∈ Submodule.span ℤ (range K.row) ↔
+      (∑ j, (k j : ℝ) * γ j) = 0) (x : J → ℝ) :
+    (fun j => Circle.exp (x j + Real.pi / 2)) ∈
+      closure (range (fun (t : ℝ) (j : J) => Circle.exp (γ j * t))) ↔
+    ∃ z : A → ℤ, (K.map (Int.cast : ℤ → ℝ)) *ᵥ x =
+      fun a => (z a : ℝ) * (2 * Real.pi) -
+        (Real.pi / 2) * ((K.map (Int.cast : ℤ → ℝ)) *ᵥ (1 : J → ℝ)) a := by
+  classical
+  letI := Fintype.ofFinite A
+  let R := K.map (Int.cast : ℤ → ℝ)
+  let θ : J → ℝ := fun j => x j + Real.pi / 2
+  have hshift (a : A) : (R *ᵥ θ) a = (R *ᵥ x) a + (Real.pi / 2) * (R *ᵥ 1) a := by
+    simp only [Matrix.mulVec, dotProduct, θ, Pi.one_apply, mul_one, mul_add, Finset.sum_add_distrib,
+      Finset.sum_mul, mul_comm (Real.pi / 2)]
+  rw [closure_real_phase_orbit]
+  change (∀ k : J → ℤ, (∑ j, (k j : ℝ) * γ j) = 0 →
+      (∏ j, Circle.exp (θ j) ^ k j) = 1) ↔ _
+  constructor
+  · intro h
+    have hr (a : A) : ∃ m : ℤ, (R *ᵥ θ) a = (m : ℝ) * (2 * Real.pi) := by
+      apply Circle.exp_eq_one.mp
+      change Circle.exp (∑ j, ((K.row a j : ℤ) : ℝ) * θ j) = 1
+      rw [← circle_character_exp (K.row a) θ]
+      exact h _ ((hK _).mp (Submodule.subset_span (mem_range_self a)))
+    choose z hz using hr
+    exact ⟨z, funext fun a => eq_sub_of_add_eq ((hshift a).symm.trans (hz a))⟩
+  · rintro ⟨z, hz⟩ k hk
+    have hr (a : A) : (R *ᵥ θ) a = (z a : ℝ) * (2 * Real.pi) := by
+      rw [hshift, congrFun hz a, sub_add_cancel]
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).mp ((hK k).mpr hk)
+    rw [circle_character_exp]
+    apply Circle.exp_eq_one.mpr
+    refine ⟨∑ a, c a * z a, ?_⟩
+    calc
+      (∑ j, (k j : ℝ) * θ j) = ∑ a, (c a : ℝ) * (R *ᵥ θ) a := by
+        have hentry (j : J) : k j = ∑ a, c a * K a j := by
+          simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.row_apply]
+            using (congrFun hc j).symm
+        simp only [hentry, Int.cast_sum, Int.cast_mul, Finset.sum_mul, Finset.mul_sum,
+          Matrix.mulVec, dotProduct, R, Matrix.map_apply, mul_assoc]
+        exact Finset.sum_comm
+      _ = ((∑ a, c a * z a : ℤ) : ℝ) * (2 * Real.pi) := by
+        simp only [hr, Int.cast_sum, Int.cast_mul, Finset.sum_mul, mul_assoc]
+
 #print axioms closure_real_phase_orbit
+#print axioms centered_lift_iff
 
 end D5.S3.Fourier.WeightedPhaseRelationLattice
