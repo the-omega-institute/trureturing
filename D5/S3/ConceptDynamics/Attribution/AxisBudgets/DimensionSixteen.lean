@@ -783,7 +783,7 @@ private theorem axis_factor_weakens {d k b₁ b₂ : ℕ} (i : Fin d)
 /-- With only coordinate zero available, the full inclusion graph has minimum budget 2036. -/
 theorem full_budget_iff (budget : ℕ) :
     axisFactorWithin 3 (0 : Fin 16) budget ↔ 2036 ≤ budget :=
-  ⟨full_budget_ge budget,
+  ⟨full_budget_ge 0 budget,
     axis_factor_weakens 0 OmegaAxisOneJump.axis_2036_staged⟩
 
 private abbrev coordinate : Fin 16 := 0

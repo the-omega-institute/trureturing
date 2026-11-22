@@ -14,8 +14,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 noncomputable section
 
-abbrev signature : Signature where
-  Params := Unit
+abbrev signature (parameters : Type := Unit) : Signature where
+  Params := parameters
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -24,11 +24,11 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def threshold (limit : ℕ) : Realization signature :=
-  realize signature (fun _ _ budget => decide (limit ≤ budget)) (fun a => nomatch a)
+private def threshold {parameters : Type} (limit : ℕ) : Realization (signature parameters) :=
+  realize (signature parameters) (fun _ _ budget => decide (limit ≤ budget)) (fun a => nomatch a)
 
-private def constantFalse : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun a => nomatch a)
+private def constantFalse {parameters : Type} : Realization (signature parameters) :=
+  realize (signature parameters) (fun _ _ _ => false) (fun a => nomatch a)
 
 private abbrev coverArena : Arena where
   signature := signature
@@ -121,15 +121,16 @@ def coverRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 private abbrev fullLowerArena : Arena where
-  signature := signature
-  Law R := ∀ budget : ℕ, axisFactorWithin 3 (0 : Fin 16) budget → R.readout () () budget = true
+  signature := signature (Fin 16)
+  Law R := ∀ (i : Fin 16) (budget : ℕ),
+    axisFactorWithin 3 i budget → R.readout () i budget = true
 
 private theorem full_lower_false_fails : ¬ fullLowerArena.Law constantFalse := by
   intro law
   obtain ⟨budget, edge, selected, omitted, permitted, rows, cols, support, cost⟩ := some_cover_budget
   have feasible : axisFactorWithin 3 (0 : Fin 16) budget :=
     ⟨edge, selected, omitted, permitted, rows, cols, fun a b ha hb => (support a b ha hb).1, cost⟩
-  exact Bool.false_ne_true (law budget feasible)
+  exact Bool.false_ne_true (law 0 budget feasible)
 
 def fullLowerFamily : Registration fullLowerArena (type_of% full_budget_ge) where
   actual := threshold 2036
@@ -145,10 +146,10 @@ def fullLowerFamily : Registration fullLowerArena (type_of% full_budget_ge) wher
       exact nomatch a
   dependence := by
     rintro ⟨⟩
-    exact ⟨(), 2035, 2036, by decide⟩
+    exact ⟨0, 2035, 2036, by decide⟩
 
 def fullLowerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    full_budget_ge (Realization signature) Unit Unit where
+    full_budget_ge (Realization (signature (Fin 16))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers.fullBudgetLower
   realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers.fullLowerFamily
   realizationSource := none
@@ -160,7 +161,7 @@ def fullLowerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source fullLowerArena ⟨fullLowerFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize (signature (Fin 16))
     (fun _ _ budget => decide (2036 ≤ budget)) (fun a => nomatch a))
   variation := .absent
   sensitivity := .absent
@@ -171,8 +172,8 @@ def fullLowerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body"]
-      stateBinder := 0
+      path := #["body", "body", "body"]
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := true }] }

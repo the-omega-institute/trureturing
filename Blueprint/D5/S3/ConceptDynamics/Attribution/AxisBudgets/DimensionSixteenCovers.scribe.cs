@@ -70,11 +70,16 @@ internal sealed class AxisBudgetDimensionSixteenCoversDocument : IScribeDocument
                 DescribeId.Create("sixteen-full-budget-lower"),
                 DeclarationHandle.Create(Prefix + "full_budget_ge"),
                 H("Full inclusion requires at least 2036 fixed seeds"),
-                StatementSource.FromAuthor(Disp(AtEachBudget(new Formula.Logic(
-                    Call("AxisFactorWithin", D(3), D(0), Budget), FormulaLogicOperator.Implies,
-                    new Formula.Relation(D(2,0,3,6), FormulaRelationOperator.LessThanOrEqual, Budget))))),
+                StatementSource.FromAuthor(Disp(new Formula.Bind(
+                    FormulaQuantifier.ForAll, FormulaIdentifier.Create("i"), Call("Fin", D(1,6)),
+                    AtEachBudget(new Formula.Logic(
+                        Call("AxisFactorWithin", D(3), F.Id("i"), Budget),
+                        FormulaLogicOperator.Implies,
+                        new Formula.Relation(D(2,0,3,6), FormulaRelationOperator.LessThanOrEqual, Budget)))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The low-side deficits at ranks one and three and the "
+                Blocks(Paragraph(Text("At each marked coordinate, the remaining fifteen "
+                    + "coordinates have the same binomial rank counts. "
+                    + "The low-side deficits at ranks one and three and the "
                     + "high-side deficits at ranks eleven and thirteen force 508 charged ordinary "
                     + "edges. The marked edge accounts for one more unit and a unit is four "
                     + "fixed seeds."))),

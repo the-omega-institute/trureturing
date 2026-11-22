@@ -435,9 +435,16 @@ private theorem rank_lt_top_iff (i : Fin 16) (A : AxisSubset 16 i) :
     apply card_lt_card
     exact (ssubset_iff_subset_ne).mpr ⟨subset_top i A, fun he => h (Subtype.ext he)⟩
 
--- Normalize finite rank counts without unfolding the factor itself.
+end SixteenAdjacentRank
+
+open Finset
+open D5.S3.ConceptDynamics.Attribution.ParitySeedAxisFactor
+open D5.S3.ConceptDynamics.Attribution.ParitySeedFactor
+
+open SixteenAdjacentRank D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity in
 set_option maxHeartbeats 2000000 in
-private theorem full_budget_ge_for_coordinate (i : Fin 16) (budget : ℕ)
+/-- Rank capacities bound the full inclusion budget at every marked coordinate. -/
+theorem full_budget_ge (i : Fin 16) (budget : ℕ)
     (feasible : axisFactorWithin 3 i budget) : 2036 ≤ budget := by
   obtain ⟨edge, selected, _, _, row, col, support, cost⟩ := feasible
   let ρ (A : AxisSubset 16 i) := A.val.card
@@ -517,12 +524,6 @@ private theorem full_budget_ge_for_coordinate (i : Fin 16) (budget : ℕ)
   rw [computed] at bound
   exact (Nat.mul_le_mul_left 4 (Nat.add_le_add_left bound 1)).trans cost
 
-end SixteenAdjacentRank
-
-open Finset
-open D5.S3.ConceptDynamics.Attribution.ParitySeedAxisFactor
-open D5.S3.ConceptDynamics.Attribution.ParitySeedFactor
-
 section
 
 private abbrev coordinate : Fin 16 := 0
@@ -559,11 +560,6 @@ theorem cover_budget_ge (budget : ℕ) (h : coverWithin budget) : 2044 ≤ budge
     (fun A => cap A _ (rows A)) (fun B => cap B _ (cols B))
     (fun A hA => odd A _ (rows A) hA) (fun B hB => odd B _ (cols B) hB)).1
   exact lb.trans cost
-
-/-- Rank capacities bound the budget of the full inclusion graph at coordinate zero. -/
-theorem full_budget_ge (budget : ℕ) (h : axisFactorWithin 3 coordinate budget) :
-    2036 ≤ budget :=
-  SixteenAdjacentRank.full_budget_ge_for_coordinate coordinate budget h
 
 end
 

@@ -30,7 +30,7 @@ If at most one exceptional edge enters the first four layers, the first and thir
 
 **Theorem 1.3 (Full inclusion requires at least 2036 fixed seeds).**
 
-$$\forall b \in \mathrm{Nat},\; \operatorname{AxisFactorWithin}\left(3, 0, b\right) \Rightarrow 2036 \le b$$
+$$\forall i \in \operatorname{Fin}\left(16\right),\; \forall b \in \mathrm{Nat},\; \operatorname{AxisFactorWithin}\left(3, i, b\right) \Rightarrow 2036 \le b$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers.full_budget_ge` (`✓ std3`). ∎
 
@@ -38,7 +38,7 @@ $$\forall b \in \mathrm{Nat},\; \operatorname{AxisFactorWithin}\left(3, 0, b\rig
 
 *Commentary.*
 
-The low-side deficits at ranks one and three and the high-side deficits at ranks eleven and thirteen force 508 charged ordinary edges. The marked edge accounts for one more unit and a unit is four fixed seeds.
+At each marked coordinate, the remaining fifteen coordinates have the same binomial rank counts. The low-side deficits at ranks one and three and the high-side deficits at ranks eleven and thirteen force 508 charged ordinary edges. The marked edge accounts for one more unit and a unit is four fixed seeds.
 
 ## References
 
