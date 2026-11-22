@@ -4,9 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: All four prefix averages of the classical Wu endpoint spectrum satisfy the quartic variance bound. -/
+   digest: A quartic variance bound for the four prefix averages at the Wu endpoint. -/
 
-import D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization
+module
+
+public import D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
@@ -30,11 +32,11 @@ open scoped BigOperators
 namespace WuRankOneEndpointFloor
 
 /-- The normalized power sum of a four-point spectrum. -/
-def spectralMoment (k : ℕ) (x : Fin 4 → ℝ) : ℝ :=
+@[expose] public def spectralMoment (k : ℕ) (x : Fin 4 → ℝ) : ℝ :=
   (∑ i : Fin 4, x i ^ k) / 4
 
 /-- Keep the first `k` entries and replace the others by their mean. -/
-def endpointPrefixAverage (k : Fin 4) (y : Fin 4 → ℝ) : Fin 4 → ℝ :=
+@[expose] public def endpointPrefixAverage (k : Fin 4) (y : Fin 4 → ℝ) : Fin 4 → ℝ :=
   let all := spectralMoment 1 y
   let lastThree := (y 1 + y 2 + y 3) / 3
   let lastTwo := (y 2 + y 3) / 2
@@ -128,15 +130,14 @@ unaveraged case with p ≥ t, a square in centered coordinates absorbs the
 terms of highest degree in the bottom eigenvalue.
 -/
 
-section Certificates
-
-set_option maxHeartbeats 3000000
-set_option maxRecDepth 4096
-
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem one_prefix_p_le_t {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z v q (v + d)) (endpointPrefixAverage 1 (classicalInGaps r z v q (v + d))) := by
+    0 ≤ quarticGap (gapVector z v q (v + d))
+      (endpointPrefixAverage 1 (classicalInGaps r z v q (v + d))) := by
   let s : ℝ := 41 / 50 - r
   have hs : 0 ≤ s := hUpper
   obtain ⟨hCube, hFourth⟩ := damping_powers hSq
@@ -149,7 +150,8 @@ private theorem one_prefix_p_le_t {r z v q d : ℝ}
         (62784 + 28800 * s) * v ^ 3 + (94176 + 43200 * s) * v ^ 2 * q +
         (141300 + 43200 * r) * v ^ 2 * d + (111888 + 21600 * s) * v * q ^ 2 +
         (141300 + 43200 * r) * v * q * d + (101700 + 82800 * r) * v * d ^ 2 +
-        (40248 + 3600 * s) * q ^ 3 + (90000 + 10800 * r) * q ^ 2 * d + (50850 + 41400 * r) * q * d ^ 2 +
+        (40248 + 3600 * s) * q ^ 3 + (90000 + 10800 * r) * q ^ 2 * d + (50850 +
+        41400 * r) * q * d ^ 2 +
         (32825 + 27000 * r) * d ^ 3) / 64800 +
       z ^ 2 * (
         (15043392 + 18662400 * s) * v ^ 4 + (30086784 + 37324800 * s) * v ^ 3 * q +
@@ -176,14 +178,19 @@ private theorem one_prefix_p_le_t {r z v q d : ℝ}
         (4174848 + 116121600 * s) * v ^ 6 + (12524544 + 348364800 * s) * v ^ 5 * q +
         (11621376 + 363571200 * s) * v ^ 5 * d + (78080256 + 439603200 * s) * v ^ 4 * q ^ 2 +
         (29053440 + 908928000 * s) * v ^ 4 * q * d + (83044800 + 411840000 * s) * v ^ 4 * d ^ 2 +
-        (135286272 + 298598400 * s) * v ^ 3 * q ^ 3 + (250180992 + 921254400 * s) * v ^ 3 * q ^ 2 * d +
-        (166089600 + 823680000 * s) * v ^ 3 * q * d ^ 2 + (184472352 + 185702400 * s) * v ^ 3 * d ^ 3 +
-        (96850944 + 115084800 * s) * v ^ 2 * q ^ 4 + (346218048 + 472953600 * s) * v ^ 2 * q ^ 3 * d +
+        (135286272 + 298598400 * s) * v ^ 3 * q ^ 3 + (250180992 +
+        921254400 * s) * v ^ 3 * q ^ 2 * d +
+        (166089600 + 823680000 * s) * v ^ 3 * q * d ^ 2 + (184472352 +
+        185702400 * s) * v ^ 3 * d ^ 3 +
+        (96850944 + 115084800 * s) * v ^ 2 * q ^ 4 + (346218048 +
+        472953600 * s) * v ^ 2 * q ^ 3 * d +
         (391923936 + 642211200 * s) * v ^ 2 * q ^ 2 * d ^ 2 +
-        (276708528 + 278553600 * s) * v ^ 2 * q * d ^ 3 + (171156696 + 6115200 * s) * v ^ 2 * d ^ 4 +
+        (276708528 + 278553600 * s) * v ^ 2 * q * d ^ 3 + (171156696 +
+        6115200 * s) * v ^ 2 * d ^ 4 +
         (31295232 + 23846400 * s) * v * q ^ 5 + (168427584 + 122860800 * s) * v * q ^ 4 * d +
         (308879136 + 230371200 * s) * v * q ^ 3 * d ^ 2 +
-        (277574160 + 158496000 * s) * v * q ^ 2 * d ^ 3 + (171156696 + 6115200 * s) * v * q * d ^ 4 +
+        (277574160 + 158496000 * s) * v * q ^ 2 * d ^ 3 + (171156696 +
+        6115200 * s) * v * q * d ^ 4 +
         (57415720 + 18960000 * r) * v * d ^ 5 + (3791808 + 2073600 * s) * q ^ 6 +
         (27479232 + 12902400 * s) * q ^ 5 * d + (71635824 + 31852800 * s) * q ^ 4 * d ^ 2 +
         (92668992 + 32822400 * s) * q ^ 3 * d ^ 3 + (69976756 + 6307200 * s) * q ^ 2 * d ^ 4 +
@@ -194,12 +201,18 @@ private theorem one_prefix_p_le_t {r z v q d : ℝ}
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
         s]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
+      ring_nf
+      simp only [hSq, hCube, hFourth]
+      ring
 
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem one_prefix_t_le_p {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z (v + d) q v) (endpointPrefixAverage 1 (classicalInGaps r z (v + d) q v)) := by
+    0 ≤ quarticGap (gapVector z (v + d) q v)
+      (endpointPrefixAverage 1 (classicalInGaps r z (v + d) q v)) := by
   let s : ℝ := 41 / 50 - r
   have hs : 0 ≤ s := hUpper
   obtain ⟨hCube, hFourth⟩ := damping_powers hSq
@@ -211,8 +224,10 @@ private theorem one_prefix_t_le_p {r z v q d : ℝ}
       z ^ 3 * (
         (62784 + 28800 * s) * v ^ 3 + (94176 + 43200 * s) * v ^ 2 * q +
         (11628 + 129600 * s) * v ^ 2 * d + (111888 + 21600 * s) * v * q ^ 2 +
-        (11628 + 129600 * s) * v * q * d + (4500 + 90000 * s) * v * d ^ 2 + (40248 + 3600 * s) * q ^ 3 +
-        (13032 + 32400 * s) * q ^ 2 * d + (2250 + 45000 * s) * q * d ^ 2 + (691 + 16200 * s) * d ^ 3) / 64800 +
+        (11628 + 129600 * s) * v * q * d + (4500 + 90000 * s) * v * d ^ 2 + (40248 +
+        3600 * s) * q ^ 3 +
+        (13032 + 32400 * s) * q ^ 2 * d + (2250 + 45000 * s) * q * d ^ 2 + (691 +
+        16200 * s) * d ^ 3) / 64800 +
       z ^ 2 * (
         (15043392 + 18662400 * s) * v ^ 4 + (30086784 + 37324800 * s) * v ^ 3 * q +
         (3966624 + 59932800 * s) * v ^ 3 * d + (44376768 + 27993600 * s) * v ^ 2 * q ^ 2 +
@@ -238,13 +253,18 @@ private theorem one_prefix_t_le_p {r z v q d : ℝ}
         (4174848 + 116121600 * s) * v ^ 6 + (12524544 + 348364800 * s) * v ^ 5 * q +
         (13427712 + 333158400 * s) * v ^ 5 * d + (78080256 + 439603200 * s) * v ^ 4 * q ^ 2 +
         (33569280 + 832896000 * s) * v ^ 4 * q * d + (87560640 + 335808000 * s) * v ^ 4 * d ^ 2 +
-        (135286272 + 298598400 * s) * v ^ 3 * q ^ 3 + (62140032 + 837158400 * s) * v ^ 3 * q ^ 2 * d +
-        (175121280 + 671616000 * s) * v ^ 3 * q * d ^ 2 + (114990048 + 148377600 * s) * v ^ 3 * d ^ 3 +
-        (96850944 + 115084800 * s) * v ^ 2 * q ^ 4 + (59640768 + 422841600 * s) * v ^ 2 * q ^ 3 * d +
+        (135286272 + 298598400 * s) * v ^ 3 * q ^ 3 + (62140032 +
+        837158400 * s) * v ^ 3 * q ^ 2 * d +
+        (175121280 + 671616000 * s) * v ^ 3 * q * d ^ 2 + (114990048 +
+        148377600 * s) * v ^ 3 * d ^ 3 +
+        (96850944 + 115084800 * s) * v ^ 2 * q ^ 4 + (59640768 +
+        422841600 * s) * v ^ 2 * q ^ 3 * d +
         (109862496 + 516067200 * s) * v ^ 2 * q ^ 2 * d ^ 2 +
-        (172485072 + 222566400 * s) * v ^ 2 * q * d ^ 3 + (62417400 + 26160000 * s) * v ^ 2 * d ^ 4 +
+        (172485072 + 222566400 * s) * v ^ 2 * q * d ^ 3 + (62417400 +
+        26160000 * s) * v ^ 2 * d ^ 4 +
         (31295232 + 23846400 * s) * v * q ^ 5 + (25274304 + 107308800 * s) * v * q ^ 4 * d +
-        (22301856 + 180259200 * s) * v * q ^ 3 * d ^ 2 + (68051760 + 120576000 * s) * v * q ^ 2 * d ^ 3 +
+        (22301856 + 180259200 * s) * v * q ^ 3 * d ^ 2 + (68051760 +
+        120576000 * s) * v * q ^ 2 * d ^ 3 +
         (62417400 + 26160000 * s) * v * q * d ^ 4 + (15054824 + 316800 * s) * v * d ^ 5 +
         (3791808 + 2073600 * s) * q ^ 6 + (3816000 + 10944000 * s) * q ^ 5 * d +
         (59184 + 24076800 * s) * q ^ 4 * d ^ 2 + (5278368 + 23193600 * s) * q ^ 3 * d ^ 3 +
@@ -256,12 +276,18 @@ private theorem one_prefix_t_le_p {r z v q d : ℝ}
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
         s]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
+      ring_nf
+      simp only [hSq, hCube, hFourth]
+      ring
 
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem two_prefix_p_le_t {r z v q d : ℝ}
     (hr : 0 ≤ r) (hSq : r ^ 2 = (2 / 3 : ℝ)) (hLower : 0 ≤ r - 4 / 5) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z v q (v + d)) (endpointPrefixAverage 2 (classicalInGaps r z v q (v + d))) := by
+    0 ≤ quarticGap (gapVector z v q (v + d))
+      (endpointPrefixAverage 2 (classicalInGaps r z v q (v + d))) := by
   let s : ℝ := 41 / 50 - r
   have hs : 0 ≤ s := hUpper
   let weight1 : ℝ := (2929 * r - 2160) / 2304
@@ -281,7 +307,8 @@ private theorem two_prefix_p_le_t {r z v q d : ℝ}
         12 * v ^ 2 + (12 + 12 * r) * v * d + (7 + 6 * r) * d ^ 2) / 48 +
       z ^ 3 * (
         (3324 + 1800 * s) * v ^ 3 + (924 + 1800 * s) * v ^ 2 * q + (7800 + 2100 * r) * v ^ 2 * d +
-        (1800 + 600 * r) * v * q * d + (5800 + 4350 * r) * v * d ^ 2 + (1100 + 450 * r) * q * d ^ 2 +
+        (1800 + 600 * r) * v * q * d + (5800 + 4350 * r) * v * d ^ 2 + (1100 +
+        450 * r) * q * d ^ 2 +
         (1950 + 1425 * r) * d ^ 3) / 4800 +
       z ^ 2 * (
         (403056 + 583200 * s) * v ^ 4 + (318024 + 874800 * s) * v ^ 3 * q +
@@ -289,7 +316,8 @@ private theorem two_prefix_p_le_t {r z v q d : ℝ}
         (915624 + 658800 * s) * v ^ 2 * q * d + (1886940 + 353700 * r) * v ^ 2 * d ^ 2 +
         175680 * v * q ^ 3 + (330912 + 86400 * s) * v * q ^ 2 * d +
         (912240 + 45900 * r) * v * q * d ^ 2 + (989460 + 487050 * r) * v * d ^ 3 + 43920 * q ^ 4 +
-        87840 * q ^ 3 * d + (136602 + 18900 * s) * q ^ 2 * d ^ 2 + (286380 + 54000 * r) * q * d ^ 3 +
+        87840 * q ^ 3 * d + (136602 + 18900 * s) * q ^ 2 * d ^ 2 + (286380 +
+        54000 * r) * q * d ^ 3 +
         (229480 + 123825 * r) * d ^ 4) / 518400 +
       z * (
         (220968 + 615600 * s) * v ^ 5 + (387216 + 1231200 * s) * v ^ 4 * q +
@@ -308,7 +336,8 @@ private theorem two_prefix_p_le_t {r z v q d : ℝ}
         (704088 + 23691600 * s) * v ^ 4 * d ^ 2 + (4915008 + 3369600 * s) * v ^ 3 * q ^ 3 +
         (2994048 + 38073600 * s) * v ^ 3 * q ^ 2 * d + (4134960 + 6660000 * s) * v ^ 3 * d ^ 3 +
         (3341952 + 518400 * s) * v ^ 2 * q ^ 4 + (6990336 + 3715200 * s) * v ^ 2 * q ^ 3 * d +
-        (326808 + 20523600 * s) * v ^ 2 * q ^ 2 * d ^ 2 + (584856 + 8701200 * s) * v ^ 2 * q * d ^ 3 +
+        (326808 + 20523600 * s) * v ^ 2 * q ^ 2 * d ^ 2 + (584856 +
+        8701200 * s) * v ^ 2 * q * d ^ 3 +
         (4137336 + 1039200 * s) * v ^ 2 * d ^ 4 + 1059840 * v * q ^ 5 +
         (3858624 + 172800 * s) * v * q ^ 4 * d + (3167856 + 1447200 * s) * v * q ^ 3 * d ^ 2 +
         (229224 + 3058800 * s) * v * q ^ 2 * d ^ 3 + (1355160 + 1596000 * s) * v * q * d ^ 4 +
@@ -322,12 +351,18 @@ private theorem two_prefix_p_le_t {r z v q d : ℝ}
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
         s, weight1, weight2]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
+      ring_nf
+      simp only [hSq, hCube, hFourth]
+      ring
 
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem two_prefix_t_le_p {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ)) (hLower : 0 ≤ r - 4 / 5) (hUpper : 0 ≤ 41 / 50 - r)
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z (v + d) q v) (endpointPrefixAverage 2 (classicalInGaps r z (v + d) q v)) := by
+    0 ≤ quarticGap (gapVector z (v + d) q v)
+      (endpointPrefixAverage 2 (classicalInGaps r z (v + d) q v)) := by
   let s : ℝ := 41 / 50 - r
   have hs : 0 ≤ s := hUpper
   let weight1 : ℝ := (7 * r - 5) / 32
@@ -342,14 +377,16 @@ private theorem two_prefix_t_le_p {r z v q d : ℝ}
         1200 * v ^ 2 + (105 + 2250 * s) * v * d + (208 + 600 * s) * d ^ 2) / 4800 +
       z ^ 3 * (
         (6648 + 3600 * s) * v ^ 3 + (1848 + 3600 * s) * v ^ 2 * q + (900 + 15000 * s) * v ^ 2 * d +
-        (590 + 10500 * s) * v * d ^ 2 + (202 + 3900 * s) * q * d ^ 2 + (101 + 1950 * s) * d ^ 3) / 9600 +
+        (590 + 10500 * s) * v * d ^ 2 + (202 + 3900 * s) * q * d ^ 2 + (101 +
+        1950 * s) * d ^ 3) / 9600 +
       z ^ 2 * (
         (806112 + 1166400 * s) * v ^ 4 + (636048 + 1749600 * s) * v ^ 3 * q +
         (199080 + 3582000 * s) * v ^ 3 * d + (519696 + 583200 * s) * v ^ 2 * q ^ 2 +
         (76896 + 3931200 * s) * v ^ 2 * q * d + (114516 + 3040200 * s) * v ^ 2 * d ^ 2 +
         351360 * v * q ^ 3 + (281664 + 1900800 * s) * v * q ^ 2 * d +
         (145404 + 2521800 * s) * v * q * d ^ 2 + (78558 + 974100 * s) * v * d ^ 3 + 87840 * q ^ 4 +
-        175680 * q ^ 3 * d + (131076 + 448200 * s) * q ^ 2 * d ^ 2 + (43236 + 448200 * s) * q * d ^ 3 +
+        175680 * q ^ 3 * d + (131076 + 448200 * s) * q ^ 2 * d ^ 2 + (43236 +
+        448200 * s) * q * d ^ 3 +
         (19043 + 101850 * s) * d ^ 4) / 1036800 +
       z * (
         (441936 + 1231200 * s) * v ^ 5 + (774432 + 2462400 * s) * v ^ 4 * q +
@@ -369,7 +406,8 @@ private theorem two_prefix_t_le_p {r z v q d : ℝ}
         (4915008 + 3369600 * s) * v ^ 3 * q ^ 3 + (9257184 + 17956800 * s) * v ^ 3 * q ^ 2 * d +
         (9827568 + 20397600 * s) * v ^ 3 * q * d ^ 2 + (4530384 + 5320800 * s) * v ^ 3 * d ^ 3 +
         (3341952 + 518400 * s) * v ^ 2 * q ^ 4 + (7754688 + 6393600 * s) * v ^ 2 * q ^ 3 * d +
-        (9331776 + 14083200 * s) * v ^ 2 * q ^ 2 * d ^ 2 + (7441272 + 8168400 * s) * v ^ 2 * q * d ^ 3 +
+        (9331776 + 14083200 * s) * v ^ 2 * q ^ 2 * d ^ 2 + (7441272 +
+        8168400 * s) * v ^ 2 * q * d ^ 3 +
         (2354472 + 1190400 * s) * v ^ 2 * d ^ 4 + 1059840 * v * q ^ 5 +
         (2825280 + 864000 * s) * v * q ^ 4 * d + (3932208 + 4125600 * s) * v * q ^ 3 * d ^ 2 +
         (3754104 + 4414800 * s) * v * q ^ 2 * d ^ 3 + (2427384 + 1408800 * s) * v * q * d ^ 4 +
@@ -383,13 +421,19 @@ private theorem two_prefix_t_le_p {r z v q d : ℝ}
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
         s, weight1]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
+      ring_nf
+      simp only [hSq, hCube, hFourth]
+      ring
 
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem three_prefix_p_le_t {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ))
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z v q (v + d)) (endpointPrefixAverage 3 (classicalInGaps r z v q (v + d))) := by
-  obtain ⟨hCube, hFourth⟩ := damping_powers hSq
+    0 ≤ quarticGap (gapVector z v q (v + d))
+      (endpointPrefixAverage 3 (classicalInGaps r z v q (v + d))) := by
+  obtain ⟨_, hFourth⟩ := damping_powers hSq
   calc
     0 ≤
       z ^ 4 * (
@@ -398,14 +442,16 @@ private theorem three_prefix_p_le_t {r z v q d : ℝ}
         12 * v ^ 2 * d + 12 * v * q * d + 28 * v * d ^ 2 + 14 * q * d ^ 2 + 15 * d ^ 3) / 96 +
       z ^ 2 * (
         23616 * v ^ 4 + 47232 * v ^ 3 * q + 86112 * v ^ 3 * d + 58752 * v ^ 2 * q ^ 2 +
-        129168 * v ^ 2 * q * d + 133128 * v ^ 2 * d ^ 2 + 35136 * v * q ^ 3 + 78192 * v * q ^ 2 * d +
+        129168 * v ^ 2 * q * d + 133128 * v ^ 2 * d ^ 2 + 35136 * v * q ^ 3 +
+        78192 * v * q ^ 2 * d +
         133128 * v * q * d ^ 2 + 93312 * v * d ^ 3 + 8784 * q ^ 4 + 17568 * q ^ 3 * d +
         32760 * q ^ 2 * d ^ 2 + 46656 * q * d ^ 3 + 24661 * d ^ 4) / 103680 +
       z * (
         23616 * v ^ 5 + 59040 * v ^ 4 * q + 69264 * v ^ 4 * d + 82368 * v ^ 3 * q ^ 2 +
         138528 * v ^ 3 * q * d + 101592 * v ^ 3 * d ^ 2 + 64512 * v ^ 2 * q ^ 3 +
         139860 * v ^ 2 * q ^ 2 * d + 152388 * v ^ 2 * q * d ^ 2 + 85563 * v ^ 2 * d ^ 3 +
-        26352 * v * q ^ 4 + 70596 * v * q ^ 3 * d + 93168 * v * q ^ 2 * d ^ 2 + 85563 * v * q * d ^ 3 +
+        26352 * v * q ^ 4 + 70596 * v * q ^ 3 * d + 93168 * v * q ^ 2 * d ^ 2 +
+        85563 * v * q * d ^ 3 +
         38620 * v * d ^ 4 + 4392 * q ^ 5 + 15372 * q ^ 4 * d + 21186 * q ^ 3 * d ^ 2 +
         24003 * q ^ 2 * d ^ 3 + 19310 * q * d ^ 4 + 7257 * d ^ 5) / 51840 +
       (
@@ -416,24 +462,31 @@ private theorem three_prefix_p_le_t {r z v q d : ℝ}
         1217808 * v ^ 2 * q * d ^ 3 + 583656 * v ^ 2 * d ^ 4 + 211968 * v * q ^ 5 +
         800064 * v * q ^ 4 * d + 981792 * v * q ^ 3 * d ^ 2 + 804528 * v * q ^ 2 * d ^ 3 +
         583656 * v * q * d ^ 4 + 228632 * v * d ^ 5 + 23616 * q ^ 6 + 141120 * q ^ 5 * d +
-        235152 * q ^ 4 * d ^ 2 + 199296 * q ^ 3 * d ^ 3 + 168236 * q ^ 2 * d ^ 4 + 114316 * q * d ^ 5 +
+        235152 * q ^ 4 * d ^ 2 + 199296 * q ^ 3 * d ^ 3 + 168236 * q ^ 2 * d ^ 4 +
+        114316 * q * d ^ 5 +
         37299 * d ^ 6) / 1658880 := by
       positivity
     _ = _ := by
       simp only [quarticGap, spectralMoment, gapVector, endpointPrefixAverage,
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
+      ring_nf
+      simp only [hSq, hFourth]
+      ring
 
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
+-- Normalize both degree-six polynomials, then reduce powers of the damping.
 private theorem three_prefix_t_le_p {r z v q d : ℝ}
     (hSq : r ^ 2 = (2 / 3 : ℝ))
     (hz : 0 ≤ z) (hv : 0 ≤ v) (hq : 0 ≤ q) (hd : 0 ≤ d) :
-    0 ≤ quarticGap (gapVector z (v + d) q v) (endpointPrefixAverage 3 (classicalInGaps r z (v + d) q v)) := by
+    0 ≤ quarticGap (gapVector z (v + d) q v)
+      (endpointPrefixAverage 3 (classicalInGaps r z (v + d) q v)) := by
   let m : ℝ := z + ((v + d) + 2 * q + 3 * v) / 4
   let a : ℝ := ((v + d) + 2 * q + v) / 4
   let b : ℝ := ((v + d) + v) / 4
   let c : ℝ := ((v + d) - v) / 4
-  obtain ⟨hCube, hFourth⟩ := damping_powers hSq
+  obtain ⟨_, hFourth⟩ := damping_powers hSq
   calc
     0 ≤
       (2 / 3) * m ^ 2 * (m * c - (3 / 2) * a * b) ^ 2 +
@@ -448,7 +501,8 @@ private theorem three_prefix_t_le_p {r z v q d : ℝ}
         838512 * v ^ 2 * q ^ 2 * d + 741312 * v ^ 2 * q * d ^ 2 + 324792 * v ^ 2 * d ^ 3 +
         210816 * v * q ^ 4 + 467424 * v * q ^ 3 * d + 490896 * v * q ^ 2 * d ^ 2 +
         324792 * v * q * d ^ 3 + 107972 * v * d ^ 4 + 35136 * q ^ 5 + 87840 * q ^ 4 * d +
-        121896 * q ^ 3 * d ^ 2 + 95004 * q ^ 2 * d ^ 3 + 53986 * q * d ^ 4 + 14087 * d ^ 5) / 414720 +
+        121896 * q ^ 3 * d ^ 2 + 95004 * q ^ 2 * d ^ 3 + 53986 * q * d ^ 4 +
+        14087 * d ^ 5) / 414720 +
       (
         76032 * v ^ 6 + 228096 * v ^ 5 * q + 973440 * v ^ 5 * d + 1094976 * v ^ 4 * q ^ 2 +
         2433600 * v ^ 4 * q * d + 2123280 * v ^ 4 * d ^ 2 + 1809792 * v ^ 3 * q ^ 3 +
@@ -457,7 +511,8 @@ private theorem three_prefix_t_le_p {r z v q d : ℝ}
         3018384 * v ^ 2 * q * d ^ 3 + 968520 * v ^ 2 * d ^ 4 + 423936 * v * q ^ 5 +
         1111104 * v * q ^ 4 * d + 1536480 * v * q ^ 3 * d ^ 2 + 1480176 * v * q ^ 2 * d ^ 3 +
         968520 * v * q * d ^ 4 + 224960 * v * d ^ 5 + 47232 * q ^ 6 + 141696 * q ^ 5 * d +
-        236592 * q ^ 4 * d ^ 2 + 237024 * q ^ 3 * d ^ 3 + 207376 * q ^ 2 * d ^ 4 + 112480 * q * d ^ 5 +
+        236592 * q ^ 4 * d ^ 2 + 237024 * q ^ 3 * d ^ 3 + 207376 * q ^ 2 * d ^ 4 +
+        112480 * q * d ^ 5 +
         19007 * d ^ 6) / 3317760 := by
       positivity
     _ = _ := by
@@ -465,12 +520,12 @@ private theorem three_prefix_t_le_p {r z v q d : ℝ}
         classicalInGaps, Fin.sum_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
         Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
         m, a, b, c]
-      ring_nf <;> simp only [hSq, hCube, hFourth] <;> ring
-
-end Certificates
+      ring_nf
+      simp only [hSq, hFourth]
+      ring
 
 /-- The `1/5` endpoint bound for every prefix average of the classical endpoint image. -/
-theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
+public theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
     (hNonneg : ∀ i, 0 ≤ x i) (k : Fin 4) :
     (spectralMoment 1 x) ^ 2 * (spectralMoment 2 x - (spectralMoment 1 x) ^ 2) ^ 2 / 5 ≤
       spectralMoment 3 x * spectralMoment 3 (endpointPrefixAverage k (endpointClassical x)) -
@@ -502,7 +557,7 @@ theorem endpoint_quartic_prefix (x : Fin 4 → ℝ) (hSorted : Antitone x)
   apply sub_nonneg.mp
   change 0 ≤ quarticGap x (endpointPrefixAverage k (endpointClassical x))
   rw [hVector, endpointClassical_gapVector]
-  fin_cases k
+  fin_cases k <;> simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk]
   · rw [zeroPrefix_eq_mean, ← hVector]
     exact uniform_gap x hNonneg
   · rcases le_total p t with hpt | htp
