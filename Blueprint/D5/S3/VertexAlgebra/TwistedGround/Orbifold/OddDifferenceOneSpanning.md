@@ -2,7 +2,7 @@
 
 ## Abstract
 
-For a positive-definite lattice, degreewise generation by homogeneous representatives and minus-two products puts homogeneous mode words in the span of strictly increasing representative words.
+For a positive-definite lattice with unit Gram determinant, suppose a finite set of homogeneous representatives and minus-two products generate the fixed source degree by degree. Every homogeneous mode word on a negative twisted seed then lies in the span of representative words on that seed with strictly increasing indices.
 
 **Theorem 1.1 (Terminating straightening of homogeneous words).**
 
