@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix.Schur;
 
@@ -34,7 +35,6 @@ internal sealed class TwoHiddenScalarResponseDocument : IScribeDocumentDefinitio
                         + "when β is nonzero and the second disjunction holds. The exact interval "
                         + "image is γ ≠ 0 or β = 0 or ε = 0."))),
                 DescribeRole.Theorem),
-            H("Hermitian Schur elimination"),
             Paragraph(Text(
                 "Use the real basis (1, z) of the complex plane with z nonreal. Let the boundary "
                 + "coupling X have rows (a, bz), (d, 0), (e, f), and let the hidden inverse P have "
@@ -64,14 +64,14 @@ internal sealed class TwoHiddenScalarResponseDocument : IScribeDocumentDefinitio
 
     private static Formula Statement()
     {
-        var field = Id("K");
-        var set = Id("T");
-        var t = Id("t");
-        var a = Id("a");
-        var b = Id("b");
-        var d = Id("d");
-        var e = Id("e");
-        var f = Id("f");
+        var field = F.Id("K");
+        var set = F.Id("T");
+        var t = F.Id("t");
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var d = F.Id("d");
+        var e = F.Id("e");
+        var f = F.Id("f");
         var zero = D(0);
         var member = Seq(t, Sp, InMacro, Sp, set);
         var h = Paren(Seq(e, Sp, Plus, Sp, t, Sp, f));
@@ -92,9 +92,9 @@ internal sealed class TwoHiddenScalarResponseDocument : IScribeDocumentDefinitio
             Paren(Seq(GammaLower, Sp, Neq, Sp, zero, Sp, Lor, Sp,
                 Beta, Sp, Eq, Sp, zero, Sp, Lor, Sp, Varepsilon, Sp, Eq, Sp, zero))));
         return Disp(Seq(
-            Forall, Sp, Paren(Seq(field, Colon, Sp, Id("Type"))), Sp,
-            OpenBracket, Id("Field"), Sp, field, CloseBracket, Sp,
-            Paren(Seq(set, Colon, Sp, Id("Set"), Sp, field)), Sp,
+            Forall, Sp, Paren(Seq(field, Colon, Sp, F.Id("Type"))), Sp,
+            OpenBracket, F.Id("Field"), Sp, field, CloseBracket, Sp,
+            Paren(Seq(set, Colon, Sp, F.Id("Set"), Sp, field)), Sp,
             Paren(Seq(Beta, Comma, Sp, GammaLower, Comma, Sp,
                 Varepsilon, Comma, Sp, Zeta, Sp, Colon, Sp, field)), Comma, Sp,
             nonsingular, Sp, Implies, Sp,

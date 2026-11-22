@@ -57,7 +57,7 @@ private theorem intervention_fails : ¬ arena.{u}.Law intervention := by
   · have h : ∃ x : ULift.{u} ℚ, x ≠ 0 := ⟨1, one_ne_zero⟩
     classical
     change (if hx : ∃ x : ULift.{u} ℚ, x ≠ 0 then Classical.choose hx else 0) = 0 at hr
-    rw [dif_pos h] at hr
+    rw [dite_eq_left h] at hr
     exact Classical.choose_spec h hr
   · exact hne ht
 
