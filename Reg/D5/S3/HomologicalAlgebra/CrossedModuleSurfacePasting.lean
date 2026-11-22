@@ -51,7 +51,7 @@ private abbrev Modules := Σ H : Type u, Σ G : Type v, Σ hH : Group H,
   Σ hG : Group G, @CrossedModule H G hH hG
 
 private abbrev FaceParams := Σ H : Type u, Σ G : Type v, Σ hH : Group H,
-  Σ hG : Group G, Σ X : @CrossedModule H G hH hG, Σ _ : G, G
+  Σ hG : Group G, Σ _ : @CrossedModule H G hH hG, Σ _ : G, G
 
 private abbrev faceState (m : FaceParams.{u, v}) : Type _ := by
   rcases m with ⟨H, G, hH, hG, X, p, q⟩
@@ -95,7 +95,7 @@ private def outsider {H : Type u} [Group H] (K : Subgroup H) : H := by
 private theorem outsider_not_mem {H : Type u} [Group H] (K : Subgroup H)
     (h : ∃ a, a ∉ K) : outsider K ∉ K := by
   classical
-  simpa only [outsider, dif_pos h] using Classical.choose_spec h
+  simpa only [outsider, dite_eq_left h] using Classical.choose_spec h
 
 private abbrev FlatH := ULift.{u} V4
 private abbrev FlatG := ULift.{v} (PUnit.{1})
@@ -141,11 +141,11 @@ private def flatShell (a : FlatH.{u}) : Tetrahedron flat.{u, v} :=
 
 private theorem flatShell_obstruction (a : FlatH.{u}) :
     (flatShell.{u, v} a).obstruction = a⁻¹ := by
-  change ((1 * flat.act 1 1) * 1) * (a * 1)⁻¹ = a⁻¹
-  simp only [map_one, MulAut.one_apply, one_mul, mul_one]
+  change ((1 * flat.{u, v}.act 1 1) * 1) * (a * 1)⁻¹ = a⁻¹
+  simp only [map_one, one_mul, mul_one]
 
 private theorem flatShell_distinct :
-    (flatShell.{u, v} 1).obstruction ≠ (flatShell mark).obstruction := by
+    (flatShell.{u, v} 1).obstruction ≠ (flatShell.{u, v} mark).obstruction := by
   rw [flatShell_obstruction, flatShell_obstruction, inv_one]
   exact Ne.symm (fun h => mark_ne_one (inv_eq_one.mp h))
 
@@ -191,7 +191,12 @@ private abbrev signature : Signature :=
   oneRole Modules.{u, v} (fun m => m.1) (fun m => m.2.1)
 
 private def actual : Realization signature.{u, v} :=
-  realize signature (fun _ m h => m.2.2.2.2.μ h) (fun e => nomatch e)
+  realize signature (fun _ m => by
+    rcases m with ⟨H, G, hH, hG, X⟩
+    letI := hH
+    letI := hG
+    intro h
+    exact X.μ h) (fun e => nomatch e)
 
 private def rejected : Realization signature.{u, v} :=
   realize signature (fun _ m _ => by letI := m.2.2.2.1; exact 1) (fun e => nomatch e)
@@ -395,7 +400,7 @@ private def actual : Realization signature.{u, v} :=
 
 private theorem dependence : ObservationalDependence signature.{u, v} actual :=
   fun _ => ⟨⟨_, _, inferInstance, inferInstance, flat.{u, v}⟩,
-    flatShell 1, flatShell mark, flatShell_distinct⟩
+    flatShell.{u, v} 1, flatShell.{u, v} mark, flatShell_distinct.{u, v}⟩
 
 namespace Kernel
 
@@ -500,7 +505,9 @@ private theorem left_label (T : Tetrahedron q8CrossedModule)
   change (1 * q8CrossedModule.act T.g01 T.h123.label) * T.h013.label = _
   rw [one_mul, h123, h013]
   change q8CrossedModule.act T.g01 (.xa 0) * QuaternionGroup.a 1 = _
-  rw [h01, q8CrossedModule.peiffer]
+  rw [h01]
+  change q8CrossedModule.act (q8CrossedModule.μ (.a 1)) (.xa 0) * QuaternionGroup.a 1 = _
+  rw [q8CrossedModule.peiffer]
   decide
 
 private theorem repaired_obstruction : repaired.obstruction = 1 := by
