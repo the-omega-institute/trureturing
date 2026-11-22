@@ -22,9 +22,9 @@ namespace RefinedBMV.PositiveCenter
 
 private def logReciprocalGap (h t : ℝ) : ℝ := t - Real.log (upperTailGap h t)
 
-private def profileSlope (h t : ℝ) : ℝ := 1 - upperTailSlope h t
+def profileSlope (h t : ℝ) : ℝ := 1 - upperTailSlope h t
 
-private def profileCurvature (h t : ℝ) : ℝ :=
+def profileCurvature (h t : ℝ) : ℝ :=
   upperTailSlope h t * (h + upperTailSlope h t)
 
 private def geometricAngle (h a v : ℝ) : ℝ :=
@@ -94,12 +94,14 @@ private theorem geometricTerm_left_second {h a v : ℝ} (hh : 0 < h) (hav : a < 
   simp only [Function.comp_apply, pow_two]
   ring
 
+private theorem exp_half_le : Real.exp (1/2 : ℝ) ≤ 33/20 := by
+  have hk : Real.exp (1/2 : ℝ)^2 = Real.exp 1 := by
+    rw [pow_two, ← Real.exp_add]
+    norm_num
+  nlinarith [Real.exp_one_lt_d9, Real.exp_pos (1/2 : ℝ)]
+
 private theorem sinh_half_le : Real.sinh (1/2 : ℝ) ≤ 21/40 := by
-  have he : Real.exp (1/2 : ℝ) ≤ 33/20 := by
-    have hk : Real.exp (1/2 : ℝ)^2 = Real.exp 1 := by
-      rw [pow_two, ← Real.exp_add]
-      norm_num
-    nlinarith [Real.exp_one_lt_d9, Real.exp_pos (1/2 : ℝ)]
+  have he := exp_half_le
   have hi : (20/33 : ℝ) ≤ (Real.exp (1/2 : ℝ))⁻¹ := by
     rw [le_inv_comm₀ (by norm_num : (0 : ℝ) < 20/33) (Real.exp_pos _)]
     exact he.trans (by norm_num)
@@ -779,9 +781,46 @@ theorem separated_radical_difference_bounds {h s v : ℝ}
     hMVT (deriv (deriv b)) (83/10) (by norm_num) (fun x hx ↦ (hb₂ x hx).differentiableAt (by decide))
       (fun x hx ↦ (separated_radical_derivative_bounds hh hhmax hx).2.2)⟩
 
-private def leftStripWeight (h a v : ℝ) : ℝ :=
+def leftStripWeight (h a v : ℝ) : ℝ :=
   Real.exp (logReciprocalGap h v + logReciprocalGap h (v-a)) /
     ((3+h)*(3+2*h)/2)
+
+/-- One factor of the leading square cancels the potentially growing weight. -/
+theorem leftStrip_weight_mul_square_le {h a v : ℝ}
+    (hh : 0 < h) (ha : 0 ≤ a) (hamax : a ≤ 1/2) (hgap : 6 ≤ v-a) :
+    let s := v-a
+    let B := ((3+h)*(3+2*h)/2) * (upperTailGap h s)^2 * Real.exp (-(2*s))
+    leftStripWeight h a v * B ≤ 5/3 := by
+  let s := v-a
+  let g := upperTailGap h
+  have hsg (t : ℝ) (ht : 0 < t) : 0 < g t := by
+    exact div_pos (sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos (mul_pos hh ht)))) hh
+  have hsv : s ≤ v := sub_le_self _ ha
+  have hs : 0 < s := by linarith
+  have hgs := hsg s hs
+  have hgv := hsg v (hs.trans_le hsv)
+  have hc : 0 < (3+h)*(3+2*h)/2 := by positivity
+  have hg_le : g s ≤ g v := by
+    unfold g upperTailGap
+    exact div_le_div_of_nonneg_right (sub_le_sub_left
+      (Real.exp_le_exp.mpr (neg_le_neg (mul_le_mul_of_nonneg_left hsv hh.le))) _) hh.le
+  have heq : leftStripWeight h a v * separatedSquare h s =
+      Real.exp a * (g s / g v) := by
+    unfold leftStripWeight separatedSquare logReciprocalGap
+    change Real.exp (v - Real.log (g v) + (s - Real.log (g s))) / _ *
+      (_ * (g s)^2 * Real.exp (-(2*s))) = _
+    rw [Real.exp_add, Real.exp_sub, Real.exp_sub, Real.exp_log hgv, Real.exp_log hgs]
+    have hex : Real.exp v * Real.exp s * Real.exp (-(2*s)) = Real.exp a := by
+      rw [← Real.exp_add, ← Real.exp_add]
+      congr 1
+      dsimp [s]
+      ring
+    field_simp [hgs.ne', hgv.ne', hc.ne']
+    linear_combination hex
+  change leftStripWeight h a v * separatedSquare h s ≤ 5/3
+  rw [heq]
+  exact (mul_le_of_le_one_right (Real.exp_pos a).le ((div_le_one hgv).mpr hg_le)).trans
+    (((Real.exp_le_exp.mpr hamax).trans exp_half_le).trans (by norm_num))
 
 /-- The squared difference of the marginal roots, with the same weight as
 the geometric and repeat-node terms of the lower-collision profile. -/
