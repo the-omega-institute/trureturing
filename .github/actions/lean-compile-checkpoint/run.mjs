@@ -33,8 +33,7 @@ function compiler(seconds, probe, out) {
     let cut = false;
     const watch = probe ? setInterval(() => {
       if (!cut && spawnSync('python3', ['-B', helper, 'changed', out], {stdio: 'ignore'}).status === 0) {
-        cut = true;
-        proc.kill('SIGTERM');
+        cut = proc.kill('SIGTERM');
       }
     }, 1000) : undefined;
     proc.once('error', error => { clearInterval(watch); reject(error); });
@@ -73,12 +72,14 @@ for (let round = 1; ; ++round) {
   const out = join(tmp, 'round-' + round);
   progress('mark', out);
   const result = await compiler(seconds, probe, out);
-  if (result.status === 0 && !probe) break;
-  if (result.status !== 0 && result.status !== 124) throw new Error('layer compilation failed: ' + result.status);
+  if (result.status === 0) {
+    if (probe) throw new Error('The diagnostic compiler finished before it could be interrupted.');
+    break;
+  }
+  if (result.status !== 124) throw new Error('layer compilation failed: ' + result.status);
   progress('save', out);
   const manifest = join(out, 'manifest.json');
   if (!existsSync(manifest)) {
-    if (result.status === 0) throw new Error('progress probe compiled no new outputs');
     seconds = Math.min(21600, seconds * 2);
     continue;
   }
