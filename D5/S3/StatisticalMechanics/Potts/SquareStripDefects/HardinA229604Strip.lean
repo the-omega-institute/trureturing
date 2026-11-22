@@ -10,9 +10,7 @@
 admission_basis: open-problem-resolution (#31660; Proved)
 escape_witness: finite_certificate, result
 a: proof_shape=bind-only; consumers=result
-startImage: proof_shape=bind-only; consumers=map_start, initial_image, finite_certificate
 map_start: proof_shape=bind-only; consumers=finite_certificate
-initial_image: proof_shape=content; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
@@ -61,11 +59,6 @@ open DefectTransfer (literalCount lumped_count forward forward_shift)
 /-- Literal row-major canonical arrays with two monochromatic bonds. -/
 def a (n : ℕ) : ℕ := HardinA229457Strip.canonicalCount 2 n
 
-private def startImage (s : HardinA229635State.State) : Fin 96 :=
-  Fin.addCases (fun _ : Fin 31 => 0)
-    (fun i : HardinA229635State.Fresh =>
-      cl (HardinA229635State.rep i) (HardinA229635State.budget i)) s
-
 private theorem map_start : ∀ r : Row, HardinA229635State.h r ≤ 2 →
     startImage (HardinA229635State.cl r (2 - HardinA229635State.h r)) =
       cl r (2 - HardinA229635State.h r) := by
@@ -84,12 +77,6 @@ private theorem map_start : ∀ r : Row, HardinA229635State.h r ≤ 2 →
   have hb := HardinA229635State.h_relabel e r
   change bondDefects horizontal (e ∘ r) (e ∘ r) = bondDefects horizontal r r at hb
   simp only [d, cl, HardinA229635State.cl_relabel, HardinA229457StripClasses.class_relabel, hb]
-
-private theorem initial_image : ∀ j : Fin 54,
-    (∑ s : HardinA229635State.State,
-      if startImage s = j.natAdd 42 then HardinA229635Transfer.initial s else 0) =
-      initial (j.natAdd 42) := by
-  decide +kernel
 
 theorem finite_certificate :
     (∀ p (d : Fin 3), Valid p d.val →
@@ -130,7 +117,7 @@ theorem finite_certificate :
         HardinA229457Strip.finite_certificate.2.2.2.2 j
     · let j : Fin 54 := ⟨s.val - 42, by omega⟩
       have he : s = j.natAdd 42 := by apply Fin.ext; dsimp [j]; omega
-      rw [he, ← initial_image j]
+      rw [he, HardinA229604StripData.initial, Fin.append_right]
       change (∑ r : Row, if HardinA229635State.h r ≤ 2 ∧
         cl r (2 - HardinA229635State.h r) = j.natAdd 42 then (1 : ℤ) else 0) = _
       simp_rw [← HardinA229635Transfer.initial_correct, Finset.ite_sum_zero]

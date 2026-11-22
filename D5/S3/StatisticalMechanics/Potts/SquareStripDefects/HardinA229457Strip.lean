@@ -12,10 +12,14 @@ escape_witness: finite_certificate, result
 canonicalCount: proof_shape=bind-only; consumers=a, canonical_count_scale, HardinA229604Strip.a
 canonical_count_scale: proof_shape=bind-only; consumers=result, HardinA229604Strip.result
 a: proof_shape=bind-only; consumers=result
+map_start: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=result, HardinA229604Strip.finite_certificate
 result: proof_shape=content; consumers=none (external open-problem-resolution #31660)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Laws
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635State
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b.HardinA229635Transfer
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229532Strip
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
@@ -27,6 +31,8 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Filter
@@ -48,6 +54,7 @@ set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229457StripData
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P5b
 open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix
 open DefectTransfer (defects literalCount lumped_count forward_shift)
 open HardinA233177Canonical (Canonical canonical_pattern_card)
@@ -98,6 +105,23 @@ theorem canonical_count_scale (d m : ℕ) (hd : d < 5) :
 
 /-- Literal row-major canonical arrays with one monochromatic bond. -/
 def a (n : ℕ) : ℕ := canonicalCount 1 n
+
+private theorem map_start (r : Row) (hr : HardinA229635State.h r ≤ 2) :
+    (HardinA229635State.startClass r).bind startImage =
+      (if HardinA229635State.h r ≤ 1
+        then some (cl r (1 - HardinA229635State.h r)) else none) := by
+  obtain ⟨q, ⟨hq, e, he⟩, _⟩ := HardinA233177Canonical.canonical_exists_unique r
+  have hh : HardinA229635State.h q = HardinA229635State.h r := by
+    rw [he, HardinA229635State.h_relabel]
+  have hrep := HardinA229635Laws.representatives_complete q hq (by rw [hh]; exact hr)
+  let d := 2 - HardinA229635State.h r
+  have hfresh : ¬ HardinA229635State.h q + d ≤ 1 := by dsimp [d]; omega
+  have hclass : HardinA229635State.cl q d = HardinA229635State.cl r d := by
+    rw [he, HardinA229635State.cl_relabel]
+  rw [HardinA229635State.startClass, ite_eq_left hr]
+  change startImage (HardinA229635State.cl r d) = _
+  rw [← hclass, HardinA229635State.cl, ite_eq_right hfresh, startImage, Fin.addCases_right,
+    hrep, hh, he, HardinA229457StripClasses.class_relabel]
 
 theorem finite_certificate :
     (∀ p (d : Fin 2), Valid p d.val →
@@ -154,8 +178,53 @@ theorem finite_certificate :
           fin_cases k <;> rfl
         simp_rw [fibre, weight]
         exact HardinA229532Strip.finite_certificate.2.2.2.2.1 (crossedIndex k)
-      · revert s
-        decide +kernel
+      · let j : Fin 32 := ⟨s.val - 10, by omega⟩
+        have hs : s = j.natAdd 10 := by apply Fin.ext; dsimp [j]; omega
+        have excluded (k : Fin 6) : j.val ≠ (squareIndex k).val - 10 := by
+          intro hk
+          apply hcrossed
+          refine ⟨k, Fin.ext ?_⟩
+          have hmin : 10 ≤ (squareIndex k).val := by fin_cases k <;> decide
+          dsimp [j] at hk
+          omega
+        rw [hs, HardinA229457StripData.initial, Fin.append_right]
+        have h10 : j ≠ 10 := fun h => excluded 0 (congrArg Fin.val h)
+        have h12 : j ≠ 12 := fun h => excluded 1 (congrArg Fin.val h)
+        have h13 : j ≠ 13 := fun h => excluded 2 (congrArg Fin.val h)
+        have h17 : j ≠ 17 := fun h => excluded 3 (congrArg Fin.val h)
+        have h25 : j ≠ 25 := fun h => excluded 4 (congrArg Fin.val h)
+        have h28 : j ≠ 28 := fun h => excluded 5 (congrArg Fin.val h)
+        simp only [ite_eq_right h10, ite_eq_right h12, ite_eq_right h13, ite_eq_right h17,
+          ite_eq_right h25, ite_eq_right h28]
+        change (∑ r : Row, if HardinA229635State.h r ≤ 1 ∧
+          cl r (1 - HardinA229635State.h r) = j.natAdd 10 then (1 : ℤ) else 0) = _
+        classical
+        let rows := Finset.univ.filter fun r : Row => HardinA229635State.h r ≤ 2
+        let firstClass (r : Row) := HardinA229635State.cl r (2 - HardinA229635State.h r)
+        let mark (s : HardinA229635State.State) : ℤ :=
+          if startImage s = some (j.natAdd 10) then 1 else 0
+        calc
+          _ = ∑ r ∈ rows, mark (firstClass r) := by
+            simp only [rows, Finset.sum_filter, mark]
+            apply Finset.sum_congr rfl
+            intro r _
+            by_cases hr : HardinA229635State.h r ≤ 2
+            · have hm := map_start r hr
+              rw [HardinA229635State.startClass, ite_eq_left hr, Option.bind_some] at hm
+              by_cases h : HardinA229635State.h r ≤ 1 <;>
+                simp [firstClass, hr, hm, h]
+            · have h : ¬ HardinA229635State.h r ≤ 1 := by omega
+              simp [hr, h]
+          _ = ∑ s : HardinA229635State.State, ∑ r ∈ rows with firstClass r = s, mark s :=
+            (Finset.sum_fiberwise' rows firstClass mark).symm
+          _ = _ := by
+            apply Finset.sum_congr rfl
+            intro s _
+            by_cases h : startImage s = some (j.natAdd 10)
+            · rw [ite_eq_left h, ← HardinA229635Transfer.initial_correct]
+              simp only [mark, ite_eq_left h, rows]
+              rw [Finset.filter_filter, Finset.sum_filter]
+            · simp [mark, h]
 
 attribute [local irreducible] a
 
