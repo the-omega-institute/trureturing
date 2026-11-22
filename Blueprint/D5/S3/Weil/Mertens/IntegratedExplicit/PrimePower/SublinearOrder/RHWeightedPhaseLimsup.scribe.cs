@@ -29,7 +29,7 @@ internal sealed class RHWeightedPhaseLimsupDocument : IScribeDocumentDefinition
                     + "the real supremum of the corresponding finite weighted sine polynomial. "
                     + "The deficit is D(T) = 1 − P(T)/W(T) where W(T) is positive. "
                     + "The harmonic mass asymptotic gives eventual positivity. "),
-                    Ref(RHRootWeightedSineDocument.Owner)),
+                    Ref("D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootWeightedSine")),
                 Paragraph(Text("The left discrepancy equals the midpoint discrepancy minus μ(r) "
                     + "times the forward root increment by L/2. Oddness gives a uniform absolute "
                     + "upper bound for the increment. Actual orbit recurrence at each real phase "

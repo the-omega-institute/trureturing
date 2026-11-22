@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.IntegratedExplicit.Prim
 
 internal sealed class RHRootWeightedSineDocument : IScribeDocumentDefinition
 {
-    internal const string Owner =
+    private const string Owner =
         "D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHRootWeightedSine";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
