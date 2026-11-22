@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Partitions;
 internal sealed class BilgiciThetaQuarticDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Partitions/BilgiciThetaQuartic.";
+    private const string Slug = "bilgici-2026-question-1-quartic-theta-factorization";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Fourier/bilgici2026ninecolored");
 
@@ -58,7 +59,9 @@ internal sealed class BilgiciThetaQuarticDocument : IScribeDocumentDefinition
                         + "Periodicity and reflection of the paired factors reduce this check to "
                         + "indices zero through nine. The image of Q has coefficient one at X⁹. "
                         + "A direct derivation of the factorization without coefficient comparisons remains open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(Slug), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula body, string prose) =>
         Describe.Lean(DescribeId.Create("bilgici-theta-" + name.Replace("_", "-").ToLowerInvariant()),

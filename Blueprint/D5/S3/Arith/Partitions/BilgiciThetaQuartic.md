@@ -96,6 +96,10 @@ $$\exists\,Q\in\mathbb{F}_{19}[Z_{1},...,Z_{9}],\quad Q\neq0 \land \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Partitions/BilgiciThetaQuartic.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bilgici-2026-question-1-quartic-theta-factorization` (proved) by `D5/S3/Arith/Partitions/BilgiciThetaQuartic.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bilgici-2026-question-1-quartic-theta-factorization","declaration_gid":"D5/S3/Arith/Partitions/BilgiciThetaQuartic.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Göksal Bilgici (2026). *Nine-Colored Partition Components Modulo 19*. DOI: [10.48550/arXiv.2611.24516](https://doi.org/10.48550/arXiv.2611.24516). URL: <https://arxiv.org/html/2611.24516v1#S8.I1.i1>.
