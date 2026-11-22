@@ -218,11 +218,8 @@ private theorem own_price_ratio {a : ℕ → ℕ → ℕ}
       apply (mul_le_mul_iff_of_pos_left hL).mp
       rw [mul_one]
       exact hlogs.trans hlog'
-    have hexp : exp (I P) - 1 ≤ 2 * I P := by
-      have habs := abs_exp_sub_one_le (show |I P| ≤ 1 by
-        simpa only [abs_of_nonneg hI0] using hIlt.le)
-      rw [abs_of_nonneg hI0] at habs
-      exact (le_abs_self _).trans habs
+    have hexp : exp (I P) - 1 ≤ 2 * I P :=
+      (FixedLayerAggregate.exp_sub_one_bounds hI0 hIlt.le).2
     have hxupper : x ≤ 2 * (log H * I P) := by
       rw [hx]
       nlinarith only [hlog', mul_le_mul_of_nonneg_left hexp hL.le]

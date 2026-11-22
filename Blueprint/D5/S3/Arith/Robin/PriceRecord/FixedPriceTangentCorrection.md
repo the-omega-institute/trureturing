@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/FixedPriceTangentCorrection.fixed
 
 *Commentary.*
 
-For each natural P, use exactly the primes p ≤ P, with each integer exponent at least one. Let H be the sum of log p over this prefix, V the minimum of the fixed-price linear cost at 1/(H log H), and I the infimum of the nonlinear integer cost on the same support. As P tends to infinity, H log H · (V − I) tends to one.
+For each natural P, use exactly the primes p ≤ P, with each integer exponent at least one. Let H be the sum of log p over this prefix. For sufficiently large P, we have 1 < H. On prefixes with 1 < H, the fixed-price linear cost at 1/(H log H) attains its minimum V and the nonlinear integer cost on the same support attains its infimum I. As P tends to infinity, H log H · (V − I) tends to one.
 
 The nonlinear sublevel through the all-ones vector bounds each supported exponent, so a finite product contains an exact minimizer. Concavity makes that vector minimize the linear cost at its own clock price. Eventually the relative price deficit lies between zero and 4(log H)I. The fixed-price minimizer clock theorem applies at both prices and gives a clock increment asymptotic to √(2H) for each vector.
 

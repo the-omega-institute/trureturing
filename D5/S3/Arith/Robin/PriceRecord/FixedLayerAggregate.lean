@@ -534,7 +534,7 @@ private theorem eventually_small_radius : ∀ᶠ P in atTop, 2 * ℓ P * radius 
       ring
     _ ≤ 1 := hP.le
 
-private lemma exp_sub_one_bounds {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
+lemma exp_sub_one_bounds {x : ℝ} (hx : 0 ≤ x) (hx1 : x ≤ 1) :
     0 ≤ exp x - 1 ∧ exp x - 1 ≤ 2 * x := by
   have hpos : 0 ≤ exp x - 1 := sub_nonneg.mpr (by simpa only [exp_zero] using exp_le_exp.mpr hx)
   refine ⟨hpos, ?_⟩
