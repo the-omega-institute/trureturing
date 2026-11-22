@@ -131,7 +131,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p e => charge p e) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
