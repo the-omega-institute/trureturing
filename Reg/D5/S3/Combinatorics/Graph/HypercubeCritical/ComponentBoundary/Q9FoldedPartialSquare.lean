@@ -15,7 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 private abbrev centerSignature.{u} : Signature where
-  Params := Σ V : Type u, (V → Finset V) × Signing V × V
+  Params := Σ V : Type u, Σ _ : V → Finset V, Σ _ : Signing V, V
   State p := p.1 → ZMod 2
   Role := Unit
   finiteRole := inferInstance
@@ -118,9 +118,9 @@ def centerRegistration.{u} : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg"]
-      stateBinder := 4
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
