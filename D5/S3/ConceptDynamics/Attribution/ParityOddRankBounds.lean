@@ -217,17 +217,16 @@ private theorem top_charged_mass {P Q : Type*} [Fintype P] [Fintype Q]
     exact sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
   omega
 
-/-- Odd uniform margins force a weighted intersection count controlled by the
-mass of the full row outside the highest odd rank and on the singleton columns. -/
+/-- The exact mass in the two exceptional sets controls the rank deficits. -/
 theorem weighted_rank_deficits_le_intersections (n k : ℕ) (large : 6 ≤ n) (even : n % 2 = 0)
     (odd : k % 2 = 1) (mass : EvenSubset n → OddSubset n → ℕ) (flags : OddSubset n → ℕ)
     (rows : ∀ p, ∑ q, mass p q = k) (cols : ∀ q, ∑ p, mass p q = k) :
     let full : EvenSubset n := ⟨univ, by simpa using even⟩
     (∑ q, flags q * q.val.card) +
-      (n + (∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card ≠ n - 1), mass full q)
-        - 2 * k) +
-      (n.choose 2 + (∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = 1), mass full q)
-        - n * k) ≤
+      (n - ∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = n - 1),
+        (mass ⟨∅, by simp⟩ q + mass full q)) +
+      (n.choose 2 - ∑ p ∈ univ.filter (fun p : EvenSubset n => p.val.card = n - 2),
+        ∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = 1), mass p q) ≤
       ∑ p : EvenSubset n, ∑ q : OddSubset n,
         (if p.val = univ then flags q else mass p q % 2) * (p.val ∩ q.val).card := by
   let all : EvenSubset n := ⟨univ, by simpa using even⟩
@@ -236,10 +235,6 @@ theorem weighted_rank_deficits_le_intersections (n k : ℕ) (large : 6 ≤ n) (e
   let low : Finset (OddSubset n) := univ.filter fun q => q.val.card = 1
   let high : Finset (EvenSubset n) := univ.filter fun p => p.val.card = n - 2
   let weight (p : EvenSubset n) (q : OddSubset n) := (p.val ∩ q.val).card
-  let outside := ∑ q ∈ univ \ top, mass all q
-  let singles := ∑ q ∈ low, mass all q
-  let special := ∑ q, flags q * weight all q
-  let total := ∑ p, ∑ q, (if p = all then flags q else mass p q % 2) * weight p q
   have different : zero ≠ all := by
     intro same
     have eq := congrArg (fun p : EvenSubset n => p.val.card) same
@@ -263,26 +258,10 @@ theorem weighted_rank_deficits_le_intersections (n k : ℕ) (large : 6 ≤ n) (e
   have highSize : high.card = n.choose 2 := by
     unfold high
     rw [rank_size n (n - 2) 0 (by omega), Nat.choose_symm (by omega : 2 ≤ n)]
-  have lowSize : low.card = n := by
-    unfold low
-    rw [rank_size n 1 1 rfl, Nat.choose_one_right]
-  have hTop := top_charged_mass mass zero all top k rows
-  have hHigh := high_charged_mass mass all high low k (fun h => highOrdinary all h rfl) cols
   rw [topSize, highSize] at rankSum
-  rw [lowSize] at hHigh
-  change (∑ q ∈ top, (mass zero q + mass all q)) + outside ≤ 2 * k at hTop
-  change (∑ p ∈ high, ∑ q ∈ low, mass p q) + singles ≤ n * k at hHigh
-  change special + (n - (∑ q ∈ top, (mass zero q + mass all q))) +
-    (n.choose 2 - (∑ p ∈ high, ∑ q ∈ low, mass p q)) ≤ total at rankSum
-  have estimates : special + (n + outside - 2 * k) + (n.choose 2 + singles - n * k) ≤ total := by
-    omega
-  have outsideFilter : univ \ top = univ.filter (fun q : OddSubset n => q.val.card ≠ n - 1) := by
-    ext q
-    simp [top]
   have sameFull (p : EvenSubset n) : p = all ↔ p.val = univ :=
     ⟨congrArg Subtype.val, fun h => Subtype.ext h⟩
-  simpa only [special, outside, singles, outsideFilter, low, weight, all, univ_inter, total,
-    sameFull] using estimates
+  simpa only [weight, zero, all, univ_inter, sameFull] using rankSum
 
 /-- A positive flag within the full row gives a dimension-only lower bound. -/
 theorem fixed_from_odd_margins (n k : ℕ) (large : 6 ≤ n) (even : n % 2 = 0)
@@ -301,8 +280,29 @@ theorem fixed_from_odd_margins (n k : ℕ) (large : 6 ≤ n) (even : n % 2 = 0)
   let special := ∑ q, flags q * q.val.card
   let total := ∑ p : EvenSubset n, ∑ q : OddSubset n,
     (if p.val = univ then flags q else mass p q % 2) * (p.val ∩ q.val).card
-  have estimates : special + (n + outside - 2 * k) + (n.choose 2 + singles - n * k) ≤ total :=
-    weighted_rank_deficits_le_intersections n k large even odd mass flags rows cols
+  let zero : EvenSubset n := ⟨∅, by simp⟩
+  let top : Finset (OddSubset n) := univ.filter fun q => q.val.card = n - 1
+  let high : Finset (EvenSubset n) := univ.filter fun p => p.val.card = n - 2
+  have rankSum := weighted_rank_deficits_le_intersections n k large even odd mass flags rows cols
+  change special + (n - ∑ q ∈ top, (mass zero q + mass all q)) +
+    (n.choose 2 - ∑ p ∈ high, ∑ q ∈ singletonColumns, mass p q) ≤ total at rankSum
+  have lowSize : singletonColumns.card = n := by
+    unfold singletonColumns
+    rw [rank_size n 1 1 rfl, Nat.choose_one_right]
+  have notHigh : all ∉ high := by
+    simp [high, all]
+    omega
+  have hTop := top_charged_mass mass zero all top k rows
+  have hHigh := high_charged_mass mass all high singletonColumns k notHigh cols
+  rw [lowSize] at hHigh
+  have outsideFilter : univ \ top = outsideColumns := by
+    ext q
+    simp [top, outsideColumns]
+  rw [outsideFilter] at hTop
+  change (∑ q ∈ top, (mass zero q + mass all q)) + outside ≤ 2 * k at hTop
+  change (∑ p ∈ high, ∑ q ∈ singletonColumns, mass p q) + singles ≤ n * k at hHigh
+  have estimates : special + (n + outside - 2 * k) + (n.choose 2 + singles - n * k) ≤ total := by
+    omega
   obtain ⟨q, hq⟩ := someFlag
   have specialLower : q.val.card ≤ special := by
     have h : flags q * q.val.card ≤ special :=

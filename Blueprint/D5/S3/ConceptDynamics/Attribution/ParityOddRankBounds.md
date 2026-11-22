@@ -4,9 +4,9 @@
 
 A lower bound from high ranks in the odd uniform parity matrix.
 
-**Theorem 1.1 (The full row supplies two measurable capacity corrections).**
+**Theorem 1.1 (The two exceptional masses determine the rank deficits).**
 
-$$\operatorname{OddMargins}\left(n, k, m, b\right) \Rightarrow \operatorname{FlagCost}\left(b\right) + \operatorname{PositivePart}\left(n + \operatorname{OutsideTop}\left(m\right) - \operatorname{Twice}\left(k\right)\right) + \operatorname{PositivePart}\left(\operatorname{Choose}\left(n, 2\right) + \operatorname{SingletonMass}\left(m\right) - n \cdot k\right) \le \operatorname{IntersectionCount}\left(n, m, b\right)$$
+$$\operatorname{OddMargins}\left(n, k, m, b\right) \Rightarrow \operatorname{FlagCost}\left(b\right) + \operatorname{PositivePart}\left(n - \operatorname{TopMass}\left(m\right)\right) + \operatorname{PositivePart}\left(\operatorname{Choose}\left(n, 2\right) - \operatorname{HighSingletonMass}\left(m\right)\right) \le \operatorname{IntersectionCount}\left(n, m, b\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParityOddRankBounds.weighted_rank_deficits_le_intersections` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ $$\operatorname{OddMargins}\left(n, k, m, b\right) \Rightarrow \operatorname{Fla
 
 For OddMargins, the dimension n is even and at least six. The natural-number matrix m on even and odd subsets of Fin(n) has every row and column sum equal to the odd number k. The flags b are arbitrary natural numbers on the odd subsets.
 
-OutsideTop sums the full-row mass on columns of size other than n minus one. SingletonMass sums its mass on singleton columns. FlagCost sums each flag times its column size. IntersectionCount uses the flags in the full row and entry parity elsewhere, weighted by intersection size. PositivePart truncates a negative difference to zero.
+TopMass sums the zero and full rows on columns of size n minus one. HighSingletonMass sums entries in rows of size n minus two and singleton columns. FlagCost sums each flag times its column size. IntersectionCount uses the flags in the full row and entry parity elsewhere, weighted by intersection size. PositivePart truncates a negative difference to zero.
 
 **Theorem 1.2 (Two rank constraints bound the total weighted intersection count).**
 

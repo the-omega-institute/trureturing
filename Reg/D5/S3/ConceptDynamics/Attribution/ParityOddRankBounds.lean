@@ -165,10 +165,10 @@ abbrev flagArena : Arena where
     (∀ p, ∑ q, mass p q = k) → (∀ q, ∑ p, mass p q = k) →
     let full : EvenSubset n := ⟨univ, by simpa using even⟩
     R.readout () n flags +
-      (n + (∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card ≠ n - 1), mass full q)
-        - 2 * k) +
-      (n.choose 2 + (∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = 1), mass full q)
-        - n * k) ≤
+      (n - ∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = n - 1),
+        (mass ⟨∅, by simp⟩ q + mass full q)) +
+      (n.choose 2 - ∑ p ∈ univ.filter (fun p : EvenSubset n => p.val.card = n - 2),
+        ∑ q ∈ univ.filter (fun q : OddSubset n => q.val.card = 1), mass p q) ≤
       ∑ p : EvenSubset n, ∑ q : OddSubset n,
         (if p.val = univ then flags q else mass p q % 2) * (p.val ∩ q.val).card
 

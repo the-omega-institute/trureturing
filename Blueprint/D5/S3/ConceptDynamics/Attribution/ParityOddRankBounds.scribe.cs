@@ -27,10 +27,8 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
         var k = F.Id("k");
         var m = F.Id("m");
         var b = F.Id("b");
-        var first = Call("PositivePart", Seq(Add(n, Call("OutsideTop", m)), Sp, Minus, Sp,
-            Call("Twice", k)));
-        var second = Call("PositivePart", Seq(Add(Call("Choose", n, D(2)), Call("SingletonMass", m)),
-            Sp, Minus, Sp, Mul(n, k)));
+        var first = Call("PositivePart", Seq(n, Sp, Minus, Sp, Call("TopMass", m)));
+        var second = Call("PositivePart", Seq(Call("Choose", n, D(2)), Sp, Minus, Sp, Call("HighSingletonMass", m)));
         var bound = Seq(Add(Add(Call("FlagCost", b), first), second), Sp, Le, Sp,
             Call("IntersectionCount", n, m, b));
         return Disp(new Formula.Logic(Call("OddMargins", n, k, m, b),
@@ -46,7 +44,7 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
         Blocks(Describe.Lean(
             DescribeId.Create("rank-deficits-with-full-row-masses"),
             DeclarationHandle.Create("D5/S3/ConceptDynamics/Attribution/ParityOddRankBounds.weighted_rank_deficits_le_intersections"),
-            H("The full row supplies two measurable capacity corrections"),
+            H("The two exceptional masses determine the rank deficits"),
             StatementSource.FromAuthor(WeightedStatement()),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -54,8 +52,8 @@ internal sealed class ParityOddRankBoundsDocument : IScribeDocumentDefinition
                     + "The natural-number matrix m on even and odd subsets of Fin(n) has "
                     + "every row and column sum equal to the odd number k. The flags b are "
                     + "arbitrary natural numbers on the odd subsets.")),
-                Paragraph(Text("OutsideTop sums the full-row mass on columns of size other "
-                    + "than n minus one. SingletonMass sums its mass on singleton columns. "
+                Paragraph(Text("TopMass sums the zero and full rows on columns of size n minus one. "
+                    + "HighSingletonMass sums entries in rows of size n minus two and singleton columns. "
                     + "FlagCost sums each flag times its column size. IntersectionCount "
                     + "uses the flags in the full row and entry parity elsewhere, weighted "
                     + "by intersection size. PositivePart truncates a negative difference "
