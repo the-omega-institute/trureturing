@@ -482,4 +482,306 @@ theorem matrixMinimum_le_four_block (c : ℝ) {ρ : ℝ} (hpos : 0 ≤ ρ) (hρ 
   · rw [centeredFold_formula, four_loss_attained]
     norm_num
 
+/-- Scores attainable against an optimal Bob response at horizon `n`. -/
+noncomputable def horizonValues (c ρ : ℝ) (n : ℕ) : Set ℝ :=
+  matrixMinimum (matrices c ρ) '' {a : List Letter | a.length = n}
+
+/-- The original finite-horizon maximin with both endpoints free. -/
+noncomputable def maximin (c ρ : ℝ) (n : ℕ) : ℝ := sSup (horizonValues c ρ n)
+
+private theorem maximin_spec (c ρ : ℝ) (n : ℕ) :
+    IsGreatest (horizonValues c ρ n) (maximin c ρ n) := by
+  let words : Set (List Letter) := {a | a.length = n}
+  have hf : words.Finite := List.finite_length_eq Letter n
+  have hn : words.Nonempty := ⟨List.replicate n .plus, by simp [words]⟩
+  obtain ⟨a, ha, hmax⟩ := Set.exists_max_image words (matrixMinimum (matrices c ρ)) hf hn
+  have hv : IsGreatest (horizonValues c ρ n) (matrixMinimum (matrices c ρ) a) := by
+    refine ⟨⟨a, ha, rfl⟩, ?_⟩
+    rintro v ⟨b, hb, rfl⟩
+    exact hmax b hb
+  rw [maximin, hv.csSup_eq]
+  exact hv
+
+private theorem maximin_le_blocks (c : ℝ) {ρ : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon) (n : ℕ) :
+    maximin c ρ n ≤ (n : ℝ) * (c + ρ / 8) - ρ * (↑(n / 4) : ℝ) := by
+  obtain ⟨a, ha, hscore⟩ := (maximin_spec c ρ n).1
+  change a.length = n at ha
+  rw [← hscore, ← ha]
+  have hd : 0 ≤ normalizedState c ρ a := (matrixMinimum_eq_centered c ρ a).2.1.1
+  have h := (matrixMinimum_le_four_block c hpos hρ a).2.1
+  linarith
+
+private theorem endpointFold_lower (c ρ k : ℝ) (a : List Letter) {x y : Bool → ℝ}
+    (h : ∀ i, k + x i ≤ y i) (j : Bool) :
+    k + (a.foldl (endpointStep c ρ) x) j ≤ (a.foldl (endpointStep c ρ) y) j := by
+  induction a generalizing x y with
+  | nil => exact h j
+  | cons e a ih =>
+    simp only [List.foldl_cons]
+    apply ih
+    intro i
+    unfold endpointStep
+    rw [add_min]
+    apply min_le_min <;> linarith [h false, h true]
+
+private theorem matrixMinimum_superadditive (c ρ : ℝ) (a b : List Letter) :
+    matrixMinimum (matrices c ρ) a + matrixMinimum (matrices c ρ) b ≤
+      matrixMinimum (matrices c ρ) (a ++ b) := by
+  let k := matrixMinimum (matrices c ρ) a
+  have hx (i : Bool) : k + (fun _ : Bool => (0 : ℝ)) i ≤ endpointScores c ρ a i := by
+    change k + 0 ≤ _
+    rw [add_zero]
+    dsimp [k]
+    rw [matrixMinimum_eq_min]
+    cases i
+    · exact min_le_left _ _
+    · exact min_le_right _ _
+  have h (j : Bool) : k + endpointScores c ρ b j ≤ endpointScores c ρ (a ++ b) j := by
+    simpa only [endpointScores, List.foldl_append] using endpointFold_lower c ρ k b hx j
+  rw [matrixMinimum_eq_min c ρ b, matrixMinimum_eq_min c ρ (a ++ b), add_min]
+  exact min_le_min (h false) (h true)
+
+private theorem maximin_superadditive (c ρ : ℝ) (m n : ℕ) :
+    maximin c ρ m + maximin c ρ n ≤ maximin c ρ (m + n) := by
+  obtain ⟨a, ha, hA⟩ := (maximin_spec c ρ m).1
+  obtain ⟨b, hb, hB⟩ := (maximin_spec c ρ n).1
+  change a.length = m at ha
+  change b.length = n at hb
+  rw [← hA, ← hB]
+  exact (matrixMinimum_superadditive c ρ a b).trans
+    ((maximin_spec c ρ (m + n)).2 ⟨a ++ b, by simp [ha, hb], rfl⟩)
+
+private theorem maximin_limit (c : ℝ) {ρ : ℝ} (hpos : 0 ≤ ρ) (hρ : ρ ≤ epsilon) :
+    ∃ V : ℝ, Tendsto (fun n : ℕ => maximin c ρ n / (n : ℝ)) atTop (𝓝 V) ∧
+      V ≤ c - ρ / 8 := by
+  have hsub : Subadditive (fun n => -maximin c ρ n) := by
+    intro m n
+    linarith [maximin_superadditive c ρ m n]
+  have hbdd : BddBelow (range fun n : ℕ => -maximin c ρ n / (n : ℝ)) := by
+    refine ⟨min 0 (-(c + ρ / 8)), ?_⟩
+    rintro _ ⟨n, rfl⟩
+    cases n with
+    | zero => simp
+    | succ n =>
+      have hn : (0 : ℝ) < (↑(n + 1) : ℝ) := by positivity
+      apply (min_le_right _ _).trans
+      apply (le_div_iff₀ hn).2
+      have h₁ := maximin_le_blocks c hpos hρ (n + 1)
+      have h₂ : 0 ≤ ρ * (↑((n + 1) / 4) : ℝ) := by positivity
+      linarith
+  let V := -hsub.lim
+  have hlim : Tendsto (fun n : ℕ => maximin c ρ n / (n : ℝ)) atTop (𝓝 V) := by
+    simpa only [V, neg_div, neg_neg] using (hsub.tendsto_lim hbdd).neg
+  refine ⟨V, hlim, ?_⟩
+  have hup : Tendsto (fun n : ℕ => c - ρ / 8 + (3 * ρ / 4) / (n : ℝ))
+      atTop (𝓝 (c - ρ / 8)) := by
+    simpa only [add_zero] using
+      tendsto_const_nhds.add (tendsto_const_div_atTop_nhds_zero_nat (3 * ρ / 4))
+  apply le_of_tendsto_of_tendsto hlim hup
+  filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
+  have hn' : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  have hmod : (↑(n % 4) : ℝ) + 4 * (↑(n / 4) : ℝ) = n := by
+    exact_mod_cast Nat.mod_add_div n 4
+  have hr : (↑(n % 4) : ℝ) ≤ 3 := by exact_mod_cast (show n % 4 ≤ 3 by omega)
+  have hbound := maximin_le_blocks c hpos hρ n
+  have hrem := mul_le_mul_of_nonneg_left hr hpos
+  apply (div_le_iff₀ hn').2
+  rw [add_mul, div_mul_cancel₀ _ hn'.ne']
+  nlinarith [congrArg (ρ * ·) hmod]
+
+/-- Linear rewards of nonnegative translation frequencies of sum one and zero mean shift. -/
+def frequencyValues (c ρ : ℝ) : Set ℝ :=
+  {v | ∃ x : Letter → ℝ, (∀ e, 0 ≤ x e) ∧
+    x .plus + x .minus + x .star = 1 ∧
+    x .plus * shift .plus + x .minus * shift .minus + x .star * shift .star = 0 ∧
+    x .plus * reward c ρ .plus + x .minus * reward c ρ .minus +
+      x .star * reward c ρ .star = v}
+
+private theorem frequency_optimum (c : ℝ) {ρ : ℝ} (hpos : 0 ≤ ρ) :
+    IsGreatest (frequencyValues c ρ) (c + ρ / 8) := by
+  let α := shift .plus
+  let β := -shift .minus
+  have ha : 0 < α := by
+    dsimp [α, shift]
+    linarith [sqrt_two_bounds.1]
+  have hb : 0 < β := by norm_num [β, shift]
+  have hab : 0 < α + β := add_pos ha hb
+  refine ⟨?_, ?_⟩
+  · let x : Letter → ℝ
+      | .plus => β / (α + β)
+      | .minus => α / (α + β)
+      | .star => 0
+    refine ⟨x, ?_, ?_, ?_, ?_⟩
+    · intro e
+      cases e
+      · exact (div_pos hb hab).le
+      · exact (div_pos ha hab).le
+      · exact le_rfl
+    · change β / (α + β) + α / (α + β) + 0 = 1
+      field_simp [hab.ne']
+      ring
+    · change β / (α + β) * α + α / (α + β) * shift .minus + 0 * shift .star = 0
+      have hm : shift .minus = -β := (neg_neg _).symm
+      rw [hm]
+      ring
+    · norm_num [x, reward]
+      field_simp [hab.ne']
+      ring
+  · rintro v ⟨x, hx, hsum, _, rfl⟩
+    have ht := mul_nonneg (hx .star) hpos
+    have hm := congrArg (fun w : ℝ => w * (c + ρ / 8)) hsum
+    norm_num [reward] at *
+    linarith
+
+private theorem normalizedState_snoc (c ρ : ℝ) (a : List Letter) (e : Letter) :
+    normalizedState c ρ (a ++ [e]) = nextState (normalizedState c ρ a) e := by
+  have h := congrArg Prod.fst (centeredFold_eq c ρ (a ++ [e]))
+  rw [List.foldl_append, List.foldl_cons, List.foldl_nil, ← centeredFold_eq c ρ a] at h
+  exact h
+
+private noncomputable def rotationWord (c ρ : ℝ) : ℕ → List Letter
+  | 0 => []
+  | n + 1 =>
+    let a := rotationWord c ρ n
+    a ++ [if normalizedState c ρ a < 2 / 3 then .star else .minus]
+
+private theorem rotationWord_state (c ρ : ℝ) (n : ℕ) :
+    let d := normalizedState c ρ (rotationWord c ρ n)
+    let L := (2 : ℝ) / 3 + shift .star
+    d ∈ Ico 0 L ∧ ∃ k : ℤ, d = (k : ℝ) * L - (n : ℝ) * (2 / 3) := by
+  let L := (2 : ℝ) / 3 + shift .star
+  have hγ : 0 < shift .star := by
+    change 0 < (Real.sqrt 2 - 1) / 2
+    linarith [sqrt_two_bounds.1]
+  have hL : L < 1 := by
+    change 2 / 3 + (Real.sqrt 2 - 1) / 2 < (1 : ℝ)
+    linarith [sqrt_two_bounds.2]
+  induction n with
+  | zero =>
+    have hzero : normalizedState c ρ (rotationWord c ρ 0) = 0 := by
+      simp [rotationWord, normalizedState, difference, endpointScores]
+    change normalizedState c ρ (rotationWord c ρ 0) ∈ Ico 0 L ∧
+      ∃ k : ℤ, normalizedState c ρ (rotationWord c ρ 0) =
+        (k : ℝ) * L - ((0 : ℕ) : ℝ) * (2 / 3)
+    rw [hzero]
+    exact ⟨⟨le_rfl, by dsimp [L]; linarith⟩, 0, by simp⟩
+  | succ n ih =>
+    let d := normalizedState c ρ (rotationWord c ρ n)
+    obtain ⟨⟨hd₀, hdL⟩, k, hk⟩ := ih
+    change d < L at hdL
+    change d = (k : ℝ) * L - (n : ℝ) * (2 / 3) at hk
+    change normalizedState c ρ (rotationWord c ρ (n + 1)) ∈ Ico 0 L ∧ _
+    rw [rotationWord, normalizedState_snoc]
+    change nextState d (if d < 2 / 3 then .star else .minus) ∈ Ico 0 L ∧
+      ∃ k : ℤ, nextState d (if d < 2 / 3 then .star else .minus) =
+        (k : ℝ) * L - ((n + 1 : ℕ) : ℝ) * (2 / 3)
+    split_ifs with h
+    · have hlo : 0 ≤ d + shift .star := add_nonneg hd₀ hγ.le
+      have hhi : d + shift .star < L := add_lt_add_left h _
+      simp only [nextState, clip, max_eq_right hlo, min_eq_right (hhi.trans hL).le]
+      refine ⟨⟨hlo, hhi⟩, k + 1, ?_⟩
+      push_cast
+      dsimp [L] at hk ⊢
+      linarith
+    · have hlo : 0 ≤ d + shift .minus := by
+        simpa [shift, sub_eq_add_neg] using sub_nonneg.mpr (le_of_not_gt h)
+      have hhi : d + shift .minus < L := by
+        dsimp [shift]
+        linarith
+      simp only [nextState, clip, max_eq_right hlo, min_eq_right (hhi.trans hL).le]
+      refine ⟨⟨hlo, hhi⟩, k, ?_⟩
+      push_cast
+      rw [hk]
+      simp only [shift]
+      ring
+
+private theorem infinite_normalizedState (c ρ : ℝ) :
+    (range (normalizedState c ρ)).Infinite := by
+  let L := (2 : ℝ) / 3 + shift .star
+  have hγ : Irrational (shift .star) := by
+    simpa [shift] using (irrational_sqrt_two.sub_intCast 1).div_natCast (m := 2) (by decide)
+  have hL : Irrational L := by
+    simpa [L] using hγ.ratCast_add (2 / 3 : ℚ)
+  apply (infinite_range_of_injective
+    (f := fun n => normalizedState c ρ (rotationWord c ρ n)) ?_).mono
+  · rintro _ ⟨n, rfl⟩
+    exact ⟨rotationWord c ρ n, rfl⟩
+  · intro m n h
+    obtain ⟨_, k, hk⟩ := rotationWord_state c ρ m
+    obtain ⟨_, l, hl⟩ := rotationWord_state c ρ n
+    change normalizedState c ρ (rotationWord c ρ m) = (k : ℝ) * L - (m : ℝ) * (2 / 3) at hk
+    change normalizedState c ρ (rotationWord c ρ n) = (l : ℝ) * L - (n : ℝ) * (2 / 3) at hl
+    have hkl : k = l := by
+      by_contra hne
+      apply (hL.intCast_mul (sub_ne_zero.mpr hne)).ne_rat (((m : ℚ) - (n : ℚ)) * (2 / 3))
+      push_cast
+      linarith
+    subst l
+    exact_mod_cast (show (m : ℝ) = (n : ℝ) by linarith)
+
+private theorem graphs_connect :
+    ConnectsAt aliceGraph 1 ∧ ConnectsAt (completeGraph Bool) 1 := by
+  constructor
+  · intro i j
+    cases i
+    cases j
+    exact ⟨.concat .nil .plus rfl, rfl⟩
+  · intro i j
+    exact ⟨.concat .nil (i, j) rfl, rfl⟩
+
+private theorem alice_legal (a : List Letter) : Legal aliceGraph a := by
+  induction a using List.reverseRecOn with
+  | nil => exact ⟨(), (), .nil, rfl⟩
+  | append_singleton a e ih =>
+    obtain ⟨s, t, p, hp⟩ := ih
+    cases t
+    exact ⟨s, (), p.concat e rfl, by simpa using congrArg (· ++ [e]) hp⟩
+
+/-- The coefficient domain of the original game, embedded in the reals. -/
+def quadraticField : Set ℝ :=
+  {x | ∃ a b : ℚ, x = (a : ℝ) + (b : ℝ) * Real.sqrt 2}
+
+private theorem matrices_in_field {c ρ : ℝ} (hc : c ∈ quadraticField)
+    (hρ : ρ ∈ quadraticField) (e : Letter) (i j : Bool) :
+    matrices c ρ e i j ∈ quadraticField := by
+  obtain ⟨a, b, rfl⟩ := hc
+  obtain ⟨u, v, rfl⟩ := hρ
+  obtain ⟨p, q, hshift⟩ : shift e ∈ quadraticField := by
+    cases e
+    · exact ⟨-1 / 2, 1, by push_cast; simp [shift]; ring⟩
+    · exact ⟨-2 / 3, 0, by push_cast; simp [shift, neg_div]⟩
+    · exact ⟨-1 / 2, 1 / 2, by push_cast; simp [shift]; ring⟩
+  let k : ℚ := if e = .star then -7 / 8 else 1 / 8
+  have hk : reward ((a : ℝ) + (b : ℝ) * Real.sqrt 2)
+      ((u : ℝ) + (v : ℝ) * Real.sqrt 2) e =
+      (↑(a + k * u) : ℝ) + (↑(b + k * v) : ℝ) * Real.sqrt 2 := by
+    by_cases he : e = .star <;> simp [reward, k, he] <;> ring
+  change shift e = _ at hshift
+  cases i
+  · exact ⟨a + k * u + p / 2, b + k * v + q / 2, by
+      cases j <;> simp only [matrices, hk, hshift] <;> push_cast <;> ring⟩
+  · cases j
+    · exact ⟨a + k * u + 1 - p / 2, b + k * v - q / 2, by
+        simp only [matrices, hk, hshift]; push_cast; ring⟩
+    · exact ⟨a + k * u - p / 2, b + k * v - q / 2, by
+        simp only [matrices, hk, hshift]; push_cast; ring⟩
+
+/-- The translation-frequency LP and the original normalized maximin lie on
+opposite sides of the threshold for the same complete three-matrix input. -/
+theorem frequency_threshold_gap (c : ℝ) {ρ : ℝ} (hpos : 0 < ρ) (hρ : ρ ≤ epsilon) :
+    ConnectsAt aliceGraph 1 ∧ ConnectsAt (completeGraph Bool) 1 ∧
+    (∀ a, Legal aliceGraph a) ∧
+    (c ∈ quadraticField → ρ ∈ quadraticField → ∀ e i j, matrices c ρ e i j ∈ quadraticField) ∧
+    IsGreatest (frequencyValues c ρ) (c + ρ / 8) ∧ c < c + ρ / 8 ∧
+    (∀ n, IsGreatest (horizonValues c ρ n) (maximin c ρ n) ∧
+      maximin c ρ n ≤ (n : ℝ) * (c + ρ / 8) - ρ * (↑(n / 4) : ℝ)) ∧
+    (range (normalizedState c ρ)).Infinite ∧
+    ∃ V : ℝ, Tendsto (fun n : ℕ => maximin c ρ n / (n : ℝ)) atTop (𝓝 V) ∧
+      V ≤ c - ρ / 8 ∧ V < c := by
+  obtain ⟨V, hV, hbound⟩ := maximin_limit c hpos.le hρ
+  exact ⟨graphs_connect.1, graphs_connect.2, alice_legal, matrices_in_field,
+    frequency_optimum c hpos.le, by linarith, fun n =>
+      ⟨maximin_spec c ρ n, maximin_le_blocks c hpos.le hρ n⟩,
+    infinite_normalizedState c ρ, V, hV, hbound, by linarith⟩
+
 end MeyerovitchYoungQ61FrequencyGap
