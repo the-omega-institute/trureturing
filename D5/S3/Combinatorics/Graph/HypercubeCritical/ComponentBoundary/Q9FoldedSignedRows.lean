@@ -52,8 +52,9 @@ def laplacian {V : Type*} (neighbors : V → Finset V)
     (z : V → ZMod 2) (u : V) : ZMod 2 :=
   ∑ v ∈ neighbors u, (z u + z v)
 
-/-- Parity of the negative incidences in the selected rows. With symmetric signs,
-each internal edge contributes twice and the sum is the negative cut parity. -/
+/-- Parity of the negative incidences in the selected rows. With symmetric,
+loopless adjacency and symmetric signs, each internal edge contributes twice
+and the sum is the parity of the negative edges crossing the cut. -/
 def cutParity {V : Type*} (neighbors : V → Finset V) (s : Signing V)
     (cut : Finset V) : ZMod 2 :=
   ∑ u ∈ cut, ∑ v ∈ neighbors u, s.bit u v
@@ -125,7 +126,7 @@ private theorem cutParity_vadd {V : Type*} [Finite V] [DecidableEq V]
       rfl
     _ = _ := by rw [hzero, add_zero]
 
-/-- Exact integer row sums on an even cut prescribe the negative cut parity.
+/-- Exact integer row sums on an even cut prescribe the parity of negative incidences.
 Only the rows indexed by the cut side are needed. -/
 theorem signed_rows_even_cut {V : Type*} [Finite V] [DecidableEq V]
     (neighbors : V → Finset V) (symmetric : ∀ u v, v ∈ neighbors u ↔ u ∈ neighbors v)
@@ -162,7 +163,7 @@ def sixTarget : Fin 6 → ℤ
   | 2 => 2
   | 3 => 0
   | 4 => 1
-  | 5 => 1
+  | 5 => -1
 
 /-- The three rows whose cut parity obstructs a solution. -/
 def sixCut : Finset (Fin 6) := {0, 2, 4}
@@ -174,10 +175,13 @@ private def pairMask (u v : Fin 6) : ℕ :=
   | 0, 1 => 24
   | 0, 2 => 18
   | 0, 3 | 0, 4 => 14
-  | 0, 5 => 10
+  | 0, 5 => 9
   | 1, 2 => 34
-  | 1, 3 | 1, 5 => 6
-  | 1, 4 => 0
+  | 1, 3 => 6
+  | 1, 4 | 1, 5 => 0
+  | 2, 5 => 12
+  | 3, 5 => 1
+  | 4, 5 => 0
   | _, 5 => 44
   | _, _ => 12
 
