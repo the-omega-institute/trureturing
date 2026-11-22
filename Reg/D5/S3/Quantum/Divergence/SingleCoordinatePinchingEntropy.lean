@@ -173,7 +173,7 @@ def pinchingAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body",
+        "body", "body", "body", "body",
         "arg", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
