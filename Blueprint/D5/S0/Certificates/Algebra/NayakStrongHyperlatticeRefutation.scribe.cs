@@ -90,7 +90,10 @@ internal sealed class NayakStrongHyperlatticeRefutationDocument : IScribeDocumen
                     + "Convexity with 0 puts a and b in the bound, and hyperjoin closure "
                     + "puts t there. Comparison with the singleton would require t to be "
                     + "below c. The same countermodel lifts to every carrier universe."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nayak-strong-hyperlattice-birkhoff"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) =>
