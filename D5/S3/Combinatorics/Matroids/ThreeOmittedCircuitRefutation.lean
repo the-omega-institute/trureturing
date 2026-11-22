@@ -38,43 +38,6 @@ private instance : DecidablePred allowed := by
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
   infer_instance
 
-private def chosenBases (X : Set V) : Prop :=
-  ∃ F : Finset V, (F : Set V) = X ∧ allowed F
-
-private def exchangeTest : Prop :=
-  ∀ X Y : Finset V, allowed X → allowed Y → ∀ a ∈ X \ Y,
-    ∃ b ∈ Y \ X, allowed (insert b (X.erase a))
-
-private def exchangeDecidable : Decidable exchangeTest :=
-  Fintype.decidableForallFintype (p := fun X : Finset V => ∀ Y : Finset V,
-    allowed X → allowed Y → ∀ a ∈ X \ Y, ∃ b ∈ Y \ X, allowed (insert b (X.erase a)))
-
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 16000000 in
--- The kernel checks every exchange for the concrete six-element core.
-private theorem exchange : exchangeTest :=
-  of_decide_eq_true (inst := exchangeDecidable) (by rfl)
-
-private theorem allowed_nonempty : ∃ X : Set V, chosenBases X ∧ X.Finite := by
-  let F : Finset V := {0, 1, 2, 4}
-  exact ⟨F, ⟨F, rfl, by decide⟩, F.finite_toSet⟩
-
-private def core : Matroid V := Matroid.ofExistsFiniteIsBase Set.univ chosenBases
-  allowed_nonempty (by
-    intro X Y hX hY a ha
-    obtain ⟨F, rfl, hF⟩ := hX
-    obtain ⟨G, rfl, hG⟩ := hY
-    obtain ⟨b, hb, h⟩ := exchange F G hF hG a (by simpa using ha)
-    exact ⟨b, by simpa using hb, insert b (F.erase a), by simp, h⟩)
-  (fun _ _ => Set.subset_univ _)
-
-private theorem core_ground : core.E = Set.univ := rfl
-
-private theorem core_base (F : Finset V) :
-    core.IsBase (F : Set V) ↔ F.card = 4 ∧ F ∉ holes := by
-  change chosenBases (F : Set V) ↔ allowed F
-  simp [chosenBases]
-
 private theorem hole_size : ∀ H ∈ holes, (H : Finset V).card = 4 := by
   intro H hH
   simp only [holes, Set.mem_insert_iff, Set.mem_singleton_iff] at hH
@@ -85,6 +48,18 @@ private theorem sparse : holes.Pairwise (fun H J : Finset V => (H ∩ J).card + 
   simp only [holes, Set.mem_insert_iff, Set.mem_singleton_iff] at hH hJ
   rcases hH with rfl | rfl | rfl <;> rcases hJ with rfl | rfl | rfl
   all_goals first | exact (hne rfl).elim | decide
+
+private theorem core_exists : ∃ M : Matroid V, M.E = Set.univ ∧
+    ∀ F : Finset V, M.IsBase (F : Set V) ↔ F.card = 4 ∧ F ∉ holes :=
+  SparsePavingCircuitCoordinates.exists_sparse_paving_core (by decide) (by decide) sparse
+
+private noncomputable def core : Matroid V := core_exists.choose
+
+private theorem core_ground : core.E = Set.univ := core_exists.choose_spec.1
+
+private theorem core_base (F : Finset V) :
+    core.IsBase (F : Set V) ↔ F.card = 4 ∧ F ∉ holes :=
+  core_exists.choose_spec.2 F
 
 private def coefficients (u v : ZMod 2) (F : Finset V) : ZMod 2 :=
   if allowed F then
