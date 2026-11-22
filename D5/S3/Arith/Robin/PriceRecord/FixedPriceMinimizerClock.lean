@@ -89,7 +89,7 @@ private theorem local_succ_sub {p : ℕ} (hp : p.Prime) (k : ℕ) (lam : ℝ) :
   linarith only [hGain]
 
 /-- Included and excluded layers both retain equality at the marginal price. -/
-private theorem layer_optimality {S : Finset ℕ} {lam : ℝ} {a : ℕ → ℕ}
+theorem layer_optimality {S : Finset ℕ} {lam : ℝ} {a : ℕ → ℕ}
     (ha : IsMinimizer S lam a) {p j : ℕ} (hpS : p ∈ S) (hp : p.Prime) (hj : 2 ≤ j) :
     (j ≤ a p → lam ≤ beta j (p : ℝ)) ∧ (a p < j → beta j (p : ℝ) ≤ lam) := by
   rw [beta_nat hp (by omega : 1 ≤ j)]
@@ -118,13 +118,13 @@ private theorem layer_optimality {S : Finset ℕ} {lam : ℝ} {a : ℕ → ℕ}
     · simpa only [he] using hnext
     · exact (golden_layer_strict_decrease hp (by omega) hlt).le.trans hnext
 
-private def headClock (P : ℕ) (a : ℕ → ℕ) : ℝ :=
+def headClock (P : ℕ) (a : ℕ → ℕ) : ℝ :=
   ∑ p ∈ (Nat.primesLE P).filter (fun p => 2 ≤ a p), log (p : ℝ)
 
 private def higherClock (P : ℕ) (a : ℕ → ℕ) : ℝ :=
   ∑ p ∈ Nat.primesLE P, ∑ _j ∈ Finset.Ioc 2 (a p), log (p : ℝ)
 
-private theorem clock_split {P : ℕ} {a : ℕ → ℕ} (ha : supportedAdmissible (Nat.primesLE P) a) :
+theorem clock_split {P : ℕ} {a : ℕ → ℕ} (ha : supportedAdmissible (Nat.primesLE P) a) :
     clockIncrement (Nat.primesLE P) a = headClock P a + higherClock P a := by
   simp only [clockIncrement, headClock, higherClock, sum_filter, ← sum_add_distrib]
   apply sum_congr rfl
@@ -196,7 +196,7 @@ private theorem active_pow_bound {P : ℕ} {lam B : ℝ} {a : ℕ → ℕ}
         (hgain.trans (gain_le_inv_pow hp0 (by omega))))
   exact (le_of_mul_le_mul_left (hpow.trans hB) (mul_pos hlam hlog2))
 
-private theorem higher_bounds {P : ℕ} {lam B : ℝ} {a : ℕ → ℕ}
+theorem higher_bounds {P : ℕ} {lam B : ℝ} {a : ℕ → ℕ}
     (ha : IsMinimizer (Nat.primesLE P) lam a) (hlam : 0 < lam)
     (hB1 : 1 ≤ B) (hB : 1 ≤ lam * log 2 * B) :
     0 ≤ higherClock P a ∧ higherClock P a ≤ log B / log 2 * θ (B ^ (1 / 3 : ℝ)) := by
@@ -254,16 +254,16 @@ private theorem higher_bounds {P : ℕ} {lam B : ℝ} {a : ℕ → ℕ}
         (div_nonneg (log_nonneg hB1) hlog2.le)
 
 /-- An eventually valid majorant for the reciprocal of the price at prime two. -/
-private def majorant (P : ℕ) : ℝ := (2 / log 2) * (prefixH P * log (prefixH P))
+def majorant (P : ℕ) : ℝ := (2 / log 2) * (prefixH P * log (prefixH P))
 
-private theorem majorant_atTop : Tendsto majorant atTop atTop :=
+theorem majorant_atTop : Tendsto majorant atTop atTop :=
   (prefixH_atTop.atTop_mul_atTop₀ prefixEll_atTop).const_mul_atTop
     (div_pos (by norm_num) (by linarith only [Real.log_two_gt_d9]))
 
-private def higherBound (P : ℕ) : ℝ :=
+def higherBound (P : ℕ) : ℝ :=
   log (majorant P) / log 2 * θ (majorant P ^ (1 / 3 : ℝ))
 
-private theorem eventual_price_bounds {lam : ℕ → ℝ}
+theorem eventual_price_bounds {lam : ℕ → ℝ}
     (hlam : Tendsto (fun P => lam P / prefixPrice P) atTop (𝓝 1)) :
     ∀ᶠ P : ℕ in atTop, 0 < lam P ∧ 1 ≤ majorant P ∧ 1 ≤ lam P * log 2 * majorant P := by
   filter_upwards [hlam.eventually (eventually_gt_nhds (by norm_num : (1 / 2 : ℝ) < 1)),
@@ -282,7 +282,7 @@ private theorem eventual_price_bounds {lam : ℕ → ℝ}
   rw [he]
   linarith only [hnorm']
 
-private theorem endpoint_inside_prefix (c : ℝ) :
+theorem endpoint_inside_prefix (c : ℝ) :
     ∀ᶠ P : ℕ in atTop, c * sqrt (prefixH P) ≤ (P : ℝ) := by
   have h := ((prefix_H_ratio.const_mul c).mul
     ((Real.tendsto_sqrt_atTop.comp prefixH_atTop).const_div_atTop (1 : ℝ)))
