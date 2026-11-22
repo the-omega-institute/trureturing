@@ -10,6 +10,10 @@ $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow \left(\forall x \in \mathrm{Fa
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/Permutohedra/IrredundantAtomSizes.exact_spectrum` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rossi-2026-irredundant-atom-sizes` (proved) by `D5/S3/Combinatorics/Geometry/Permutohedra/IrredundantAtomSizes.exact_spectrum`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rossi-2026-irredundant-atom-sizes","declaration_gid":"D5/S3/Combinatorics/Geometry/Permutohedra/IrredundantAtomSizes.exact_spectrum","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Giovanni Rossi (2026). *Beyond geometric lattices: pseudo-atoms and redundant join representations in the face lattice of the permutohedron*. DOI: [10.48550/arXiv.2611.25741](https://doi.org/10.48550/arXiv.2611.25741). URL: <https://arxiv.org/abs/2611.25741v1>.

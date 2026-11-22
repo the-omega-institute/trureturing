@@ -26,7 +26,10 @@ internal sealed class IrredundantAtomSizesDocument : IScribeDocumentDefinition
                     Paragraph(Text("Extend the face to a permutation flag. Partition the free prefix ranks into k nonempty groups, and exchange adjacent positions at the ranks of each group to produce one atom. The common cuts recover the face. Each group has a prefix cut that returns upon removing its atom, so every proper subfamily has strictly smaller join.")),
                     Paragraph(Text("For the upper bound, delete one atom at a time and select a cut gained by that deletion. When there are at least three atoms, these cuts have distinct free ranks. The cases of zero, one and two atoms use the bottom, atom and rank conditions directly.")),
                     Paragraph(Text("The separate question about covering all atoms below the face remains open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rossi-2026-irredundant-atom-sizes"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Spectrum()
     {
