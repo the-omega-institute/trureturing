@@ -152,7 +152,7 @@ private theorem primitiveTerm_increment {x a b β : ℝ}
       (fun t ht => (hd t ht).hasDerivWithinAt) hbound (convex_uIcc a b)
       (left_mem_uIcc) (right_mem_uIcc)
 
-private theorem crypto_zero_iff (ρ : ℂ) :
+theorem crypto_zero_iff (ρ : ℂ) :
     ConjectureMachines.Semantics.Riemann.VonMangoldtCount.IsNontrivialZetaZero ρ ↔
       IsNontrivialZero ρ := by
   constructor
@@ -169,7 +169,7 @@ private theorem crypto_zero_iff (ρ : ℂ) :
       rw [e] at h1
       norm_num at h1
 
-private theorem counting_bound :
+theorem counting_bound :
     ∃ A : ℝ, 0 ≤ A ∧ ∀ T : ℝ, 2 ≤ T →
       (ConjectureMachines.Semantics.Riemann.VonMangoldtCount.weightedZeroCountingFunction T : ℝ)
         ≤ A * T * (1 + Real.log T) := by

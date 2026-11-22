@@ -25,7 +25,7 @@ open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp (c)
 open D5.S3.Weil.ZeroData.ZetaOrdinateCompleteOptimizer (quarterPhase phaseHull)
 
-private theorem limsup_sub_signed_increment (F D : ℝ → ℝ) (a P E M : ℝ)
+theorem limsup_sub_signed_increment (F D : ℝ → ℝ) (a P E M : ℝ)
     (hM : 0 ≤ M)
     (hbounded : (atTop : Filter ℝ).IsBoundedUnder (· ≤ ·) (fun u => |F u|))
     (hmid : limsup (fun u => |F u|) atTop ≤ M)

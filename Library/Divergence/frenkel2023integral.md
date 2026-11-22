@@ -9,6 +9,7 @@ claim: "Lemmas 4–5 establish the shift and its derivative and endpoint behavio
 strata_touched:
   - D5/S3/Quantum/Divergence/HockeyStickPencilIntegral
   - D5/S3/Quantum/Divergence/UmegakiPencilIntegral
+  - D5/S3/Quantum/Divergence/ForwardHockeyStickIntegral
 license: "citation-only"
 triage: "anchor"
 ---
@@ -35,3 +36,5 @@ Jenčová’s Corollary 1, and Schmitt’s Corollary 4.2. Liu, Hirche and Cheng�
 gives an operator layer-cake proof. [Hirche and Tomamichel](https://arxiv.org/abs/2306.12343)
 · [Jenčová](https://arxiv.org/abs/2303.11707) · [Schmitt](https://arxiv.org/abs/2609.12547)
 · [Liu, Hirche and Cheng](https://arxiv.org/abs/2507.07065)
+
+Both tails of Theorem 6 are transformed by the same involution \(s\mapsto s/(s-1)\) in the forward-profile identity. The integral on the central interval vanishes by positive semidefiniteness.
