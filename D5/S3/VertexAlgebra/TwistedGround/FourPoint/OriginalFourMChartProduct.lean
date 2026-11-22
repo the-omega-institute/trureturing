@@ -161,7 +161,8 @@ private def nativeCovariance (D : LatticeData) {X : Type*} (s : X → Sample D)
   covarianceMode (s i).right (s j).right (s i).outgoing (s j).outgoing
     ((s i).q ^ 2) ((s j).q ^ 2) (w ^ 2)
 
-private def chartScale (c : Chart) (x : ℝ) : ℂ :=
+/-- The inverse half-differential lift factor for the indicated chart. -/
+def chartScale (c : Chart) (x : ℝ) : ℂ :=
   match c with
   | .A => 1
   | .B => (bLift x)⁻¹
