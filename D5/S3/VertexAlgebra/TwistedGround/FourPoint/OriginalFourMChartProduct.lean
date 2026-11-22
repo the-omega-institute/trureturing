@@ -187,6 +187,52 @@ def chartTau (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   | .B => -1 / (I * pB x / pPf x)
   | .D => -1 / (I * pD upperA x / pA x)
 
+/-- The actual periods are nonzero and their charge parameters lie in the
+upper half-plane on the real overlap, for either choice of lip. -/
+theorem chart_charge_data (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x)
+    (hx₁ : x < 1) : chartPeriod upperA c x ≠ 0 ∧ 0 < (chartTau upperA c x).im := by
+  let pA := slitPeriod (parameter .A (x : ℂ))
+  let pB := slitPeriod (x : ℂ)
+  let tB := Complex.I * pB / slitPeriod (1 - (x : ℂ))
+  let tD := Complex.I * dPeriod upperA ((x : ℂ)⁻¹) / pA
+  have hslit : (1 - (x : ℂ)) ∈ doubleSlit := by
+    constructor
+    · change 1 - (1 - (x : ℂ)) ∈ Complex.slitPlane
+      rw [sub_sub_cancel]
+      exact Complex.ofReal_mem_slitPlane.2 hx
+    · exact Complex.mem_slitPlane_iff.2 (Or.inl (by simpa using sub_pos.mpr hx₁))
+  have hpA : pA ≠ 0 := fun h => slitPeriod_ne_zero hslit.1 (by
+    rw [OriginalFourMPeriodSource.chartB_pfaff_period hx]
+    change periodRoot .A x * pA = 0
+    rw [h, mul_zero])
+  have hpB : pB ≠ 0 := slitPeriod_ne_zero hslit.2
+  have hpD : dPeriod upperA ((x : ℂ)⁻¹) ≠ 0 := by
+    simpa only [Complex.ofReal_inv] using dPeriod_ne_zero upperA ((one_lt_inv₀ hx).2 hx₁)
+  have htB : 0 < tB.im := by
+    simpa only [tB, pB, tau, sub_sub_cancel] using tau_im_pos hslit
+  have htEq : tD = tB + lipSign upperA := by
+    dsimp only [tD]
+    rw [dPeriod, inv_inv]
+    change Complex.I * ((tau (1 - (x : ℂ)) + lipSign upperA) * pA / Complex.I) / pA = _
+    rw [tau, sub_sub_cancel]
+    change Complex.I * ((tB + lipSign upperA) * pA / Complex.I) / pA = _
+    field_simp [hpA, Complex.I_ne_zero]
+  have htD : 0 < tD.im := by
+    rw [htEq]
+    cases upperA <;> simpa [lipSign, Complex.add_im] using htB
+  have hinv {τ : ℂ} (h : 0 < τ.im) : 0 < (-1 / τ).im := by
+    rw [div_eq_mul_inv, neg_one_mul, Complex.neg_im, Complex.inv_im, neg_div, neg_neg]
+    exact div_pos h (Complex.normSq_pos.mpr fun hn => by simp [hn] at h)
+  constructor
+  · cases c
+    · exact hpA
+    · exact hpB
+    · exact hpD
+  · cases c
+    · exact htD
+    · exact hinv htB
+    · exact hinv htD
+
 /-- The complementary-period correction in the target chart source units. -/
 def chartDifference (upperA : Bool) (c : Chart) (x : ℝ) : ℂ :=
   match c with
