@@ -7,6 +7,7 @@
    digest: The two leading even-cutoff terms and the quantitative mean of the signed prime window. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusOddCutoff
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RootPrimitiveFourier
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -78,7 +79,7 @@ private theorem spectral_primitive_measurable :
   simp only [phaseOrbit, Circle.coe_exp]
   fun_prop
 
-private theorem window_normalized_aestronglyMeasurable {A B L s : ℝ}
+theorem window_normalized_aestronglyMeasurable {A B L s : ℝ}
     (hA : Real.log 2 ≤ A) (hAB : A ≤ B) (hL : 0 ≤ L) (m : ℕ) :
     AEStronglyMeasurable (fun u : ℝ => signedWindowResidual m (Real.exp u) (Real.exp (u+L)) /
         powerGap s (Real.exp u) (Real.exp (u+L))) (volume.restrict (Ioc A B)) := by
@@ -125,52 +126,6 @@ private theorem window_normalized_aestronglyMeasurable {A B L s : ℝ}
   simp only [Real.log_exp]
   rfl
 
-private theorem bounded_exponential_integral {c : ℂ} (hc : c.re = 0)
-    {gap : ℝ} (hgap : 0 < gap) (hgapc : gap ≤ ‖c‖) (a b : ℝ) :
-    ‖∫ u in a..b, Complex.exp (c * (u : ℂ))‖ ≤ 2 / gap := by
-  have hc_ne : c ≠ 0 := norm_pos_iff.mp (hgap.trans_le hgapc)
-  have hexp (u : ℝ) : ‖Complex.exp (c * (u : ℂ))‖ = 1 := by
-    simp [Complex.norm_exp, Complex.mul_re, hc]
-  rw [integral_exp_mul_complex hc_ne, norm_div]
-  have hnum : ‖Complex.exp (c * (b : ℂ)) - Complex.exp (c * (a : ℂ))‖ ≤ 2 := by
-    simpa only [hexp, one_add_one_eq_two] using
-      norm_sub_le (Complex.exp (c * (b : ℂ))) (Complex.exp (c * (a : ℂ)))
-  exact div_le_div_of_nonneg_right hnum (norm_nonneg _) |>.trans
-    (div_le_div_of_nonneg_left (by norm_num) hgap hgapc)
-
-private theorem bounded_exponential_series_integral
-    (coeff mode : ℕ → ℂ) (hcoeff : Summable (fun k => ‖coeff k‖))
-    (hmode : ∀ k, (mode k).re = 0) {gap : ℝ} (hgap : 0 < gap)
-    (hmode_gap : ∀ k, gap ≤ ‖mode k‖) (a b : ℝ) :
-    let signal := fun u : ℝ => ∑' k, coeff k * Complex.exp (mode k * (u : ℂ))
-    IntervalIntegrable signal volume a b ∧
-      ‖∫ u in a..b, signal u‖ ≤ (∑' k, ‖coeff k‖) * (2 / gap) := by
-  let term (k : ℕ) (u : ℝ) := coeff k * Complex.exp (mode k * (u : ℂ))
-  have hterm (k : ℕ) : Continuous (term k) := by unfold term; fun_prop
-  have hnorm (k : ℕ) (u : ℝ) : ‖term k u‖ = ‖coeff k‖ := by
-    simp [term, Complex.norm_exp, Complex.mul_re, hmode k]
-  have hsignal : Continuous (fun u : ℝ => ∑' k, term k u) :=
-    continuous_tsum hterm hcoeff fun k u => (hnorm k u).le
-  have hsum (u : ℝ) : Summable (fun k => term k u) :=
-    hcoeff.of_norm_bounded fun k => (hnorm k u).le
-  have hi : HasSum (fun k : ℕ => ∫ u in a..b, term k u)
-      (∫ u in a..b, ∑' k, term k u) := by
-    apply intervalIntegral.hasSum_integral_of_dominated_convergence (fun k (_ : ℝ) => ‖coeff k‖)
-    · exact fun k => (hterm k).aestronglyMeasurable
-    · exact fun k => ae_of_all _ fun u _ => (hnorm k u).le
-    · exact ae_of_all _ fun _ _ => hcoeff
-    · exact intervalIntegrable_const
-    · exact ae_of_all _ fun u _ => (hsum u).hasSum
-  refine ⟨hsignal.intervalIntegrable _ _, ?_⟩
-  change ‖∫ u in a..b, ∑' k, term k u‖ ≤ _
-  rw [← hi.tsum_eq]
-  apply tsum_of_norm_bounded (hcoeff.hasSum.mul_right (2 / gap))
-  intro k
-  unfold term
-  rw [intervalIntegral.integral_const_mul, norm_mul]
-  exact mul_le_mul_of_nonneg_left
-    (bounded_exponential_integral (hmode k) hgap (hmode_gap k) a b) (norm_nonneg _)
-
 private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     {r : ℝ} (hr : 1 < r) (a b : ℝ) :
     let s := 1 / 2 - (2 * r)⁻¹
@@ -186,13 +141,7 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
   have hcoeff : Summable (fun k => ‖coeff k‖) := by
     apply ((actualCoeff_hasSum.summable.norm.mul_left r).mul_right r).of_nonneg_of_le
     · exact fun k => norm_nonneg _
-    · intro k
-      dsimp only [coeff]
-      rw [norm_div]
-      calc
-        _ ≤ ‖rootCoeff r k‖ / r⁻¹ :=
-          div_le_div_of_nonneg_left (norm_nonneg _) (inv_pos.mpr hr0) (rootExponent_norm hr k)
-        _ ≤ _ := by rw [div_inv_eq_mul]; gcongr; exact rootCoeff_bound hr k
+    · exact root_primitive_coefficient_norm_le hr
   have hmode (k : ℕ) : (mode k).re = 0 := by
     simp [mode, Complex.div_re, frequency_real hRH k]
   have hgap (k : ℕ) : 10/r ≤ ‖mode k‖ := by
@@ -201,28 +150,8 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     exact div_le_div_of_nonneg_right (frequency_norm k).le hr0.le
   obtain ⟨hi, hbound⟩ := bounded_exponential_series_integral coeff mode hcoeff hmode
     (by positivity : 0 < 10/r) hgap a b
-  have hshift (k : ℕ) : rootExponent r k + (s : ℂ) = mode k := by
-    simp only [rootExponent, mode, frequency, s]
-    push_cast
-    have hrC : (r : ℂ) ≠ 0 := by exact_mod_cast hr0.ne'
-    field_simp
-    ring
-  have heq (u : ℝ) : Real.exp (s * u) * rootPrimitive r (Real.exp u) = (z u).re := by
-    unfold rootPrimitive z
-    rw [← Complex.re_ofReal_mul, ← tsum_mul_left]
-    congr 1
-    apply tsum_congr
-    intro k
-    rw [← rootPrimitiveMode_eq hr]
-    change (Real.exp (s*u) : ℂ) *
-      (rootCoeff r k * Complex.exp (rootExponent r k * (u : ℂ))/rootExponent r k) = _
-    rw [Complex.ofReal_exp]
-    push_cast
-    rw [show Complex.exp ((s : ℂ)*(u : ℂ)) *
-        (rootCoeff r k * Complex.exp (rootExponent r k * (u : ℂ))/rootExponent r k) =
-        coeff k * (Complex.exp (rootExponent r k * (u : ℂ)) *
-          Complex.exp ((s : ℂ)*(u : ℂ))) by dsimp only [coeff]; ring,
-      ← Complex.exp_add, ← add_mul, hshift]
+  have heq (u : ℝ) : Real.exp (s * u) * rootPrimitive r (Real.exp u) = (z u).re :=
+    normalized_root_primitive_series hr u
   have hre : (∫ u in a..b, (z u).re) = (∫ u in a..b, z u).re :=
     Complex.reCLM.intervalIntegral_comp_comm hi
   have hfun : (fun u : ℝ => Real.exp (s * u) * rootPrimitive r (Real.exp u)) =
@@ -244,7 +173,7 @@ private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     intro k
     simp [Complex.norm_exp, Complex.mul_re, hmode k]
 
-private theorem exp_power_gap (s u L : ℝ) :
+theorem exp_power_gap (s u L : ℝ) :
     powerGap s (Real.exp u) (Real.exp (u+L)) =
       Real.exp (-s*u) * (1-Real.exp (-s*L)) := by
   simp only [powerGap, Real.rpow_def_of_pos (Real.exp_pos _), Real.log_exp]

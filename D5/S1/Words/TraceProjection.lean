@@ -68,14 +68,14 @@ private theorem connected_preserves (I : α → α → Prop)
       (fun _ _ hstep => swap_preserves I hs hi hstep a b hab) s t h
   simpa only [Relation.reflTransGen_eq_self] using hc
 
-private theorem connected_cons (I : α → α → Prop) (a : α)
+theorem connected_cons (I : α → α → Prop) (a : α)
     {s t : List α} (h : Connected I s t) : Connected I (a :: s) (a :: t) := by
   apply Relation.ReflTransGen.lift (List.cons a) (fun s t hst => ?_) s t h
   cases hst with
   | exchange p q x y hxy =>
       exact Swap.exchange (a :: p) q x y hxy
 
-private theorem move_head_right (I : α → α → Prop) (a : α) (p q : List α)
+theorem move_head_right (I : α → α → Prop) (a : α) (p q : List α)
     (hp : ∀ b ∈ p, I a b) : Connected I (a :: (p ++ q)) (p ++ a :: q) := by
   induction p with
   | nil => exact .refl
