@@ -77,7 +77,8 @@ def signedRow {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (w : G.edgeSet → ZMod 2) : V → ℤ :=
   fun v => (G.degree v : ℤ) - 2 * negativeDegree G w v
 
-private theorem cast_negativeDegree {V : Type*} [Fintype V] [DecidableEq V]
+/-- Reducing the negative degrees modulo two gives binary incidence applied to the edge bits. -/
+theorem cast_negativeDegree {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (w : G.edgeSet → ZMod 2) :
     (fun v => (negativeDegree G w v : ZMod 2)) = (incidence G).mulVecLin w := by
   funext v
@@ -89,7 +90,8 @@ private theorem cast_negativeDegree {V : Type*} [Fintype V] [DecidableEq V]
   simp only [Int.cast_mul, Int.cast_natCast, ZMod.natCast_zmod_val, SimpleGraph.incMatrix_apply']
   split <;> simp_all
 
-private theorem signedRow_eq_iff {V : Type*} [Fintype V] [DecidableEq V]
+/-- The signed rows equal the degree targets minus twice `q` precisely when the negative degrees equal `q`. -/
+theorem signedRow_eq_iff {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (w : G.edgeSet → ZMod 2) (q : V → ℤ) :
     signedRow G w = (fun v => (G.degree v : ℤ) - 2 * q v) ↔ negativeDegree G w = q := by
   constructor

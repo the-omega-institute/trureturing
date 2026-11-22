@@ -6,7 +6,6 @@
    utility: none
    digest: Parity and frozen edges jointly determine the affine family for exact signed rows. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9FoldedCycleRank
 
 /-! Joint switching fibers for parity and specified edge coordinates. -/
@@ -19,8 +18,6 @@ open LinearMap
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9FoldedSwitchingFiber
 
 open Q9FoldedCycleRank
-open private cast_negativeDegree signedRow_eq_iff from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.ComponentBoundary.Q9FoldedCycleRank
 
 /-- Adjoin the selected edge coordinates to the binary incidence rows. -/
 abbrev jointMap {V : Type*} {E : Type*} [Fintype E] (B : Matrix V E (ZMod 2))
