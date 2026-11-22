@@ -49,7 +49,7 @@ private abbrev Singleton := ULift.{u} Unit
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {R E : Type u} [Fintype R] [DecidableEq R] [Fintype E] [DecidableEq E] [Nonempty E]
-    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef) (_htrace : A.trace = 1)
+    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef)
     (w : R → ℂ) (_hw : star w ⬝ᵥ w = 1),
     let P := activeProjection (partialTraceRight_posDef A hA).isHermitian w
     let Q := 1 - P
@@ -84,8 +84,8 @@ private theorem rejected : ¬ arena.{u}.Law rejectEquality := by
     subst j
     subst f
     simp [A, partialTraceRight, partialTraceLeft]
-  exact (h A hA ht w hw).mpr
-    ((bkmGap_rankOne_eq_zero_iff_activeBlock A hA ht w hw).mp hz)
+  exact (h A hA w hw).mpr
+    ((bkmGap_rankOne_eq_zero_iff_activeBlock A hA w hw).mp hz)
 
 def family : Registration arena.{u} (type_of% @bkmGap_rankOne_eq_zero_iff_activeBlock.{u}) where
   actual := gapEquality
@@ -132,7 +132,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+        "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

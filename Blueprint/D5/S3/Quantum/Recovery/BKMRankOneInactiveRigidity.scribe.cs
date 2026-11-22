@@ -14,7 +14,7 @@ internal sealed class BKMRankOneInactiveRigidityDocument : IScribeDocumentDefini
                 H("The faithful auxiliary density on the active span"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let A be a faithful trace-one joint matrix, S its actual retained partial "
+                    "Let A be a positive definite joint matrix, S its actual retained partial "
                     + "trace, and w a unit retained vector. For every distinct eigenvalue of S, "
                     + "take the component of w in its full eigenspace. The projection P onto the "
                     + "span of these components is the sum of their normalized outer products, "

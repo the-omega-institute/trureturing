@@ -18,7 +18,8 @@ open D5.S3.Quantum.Matrix.SpectralPower (mpow mpow_one)
 open D5.S3.Quantum.Recovery.BKMFlagRefinement (lift bkmGap)
 open D5.S3.Quantum.Recovery.BKMObservableRigidity (mpow_add mpow_zero)
 open D5.S3.Quantum.Recovery.BKMObservableProductRigidity
-  (ratioPiece modularPiece relativeDensity bkmGap_eq_zero_iff_commute_ratioPieces)
+  (ratioPiece sum_ratioPiece ratioPiece_adjoint modularPiece relativeDensity
+    bkmGap_eq_zero_iff_commute_ratioPieces)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceRight partialTraceRight_add partialTraceRight_kronecker)
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport
@@ -148,17 +149,6 @@ private theorem activeProjection_spec {S : Matrix R R ℂ} (hS : S.IsHermitian) 
     exact hpreserve _ (hw ▸ Submodule.sum_mem _ fun b _ =>
       Submodule.subset_span ⟨b, rfl⟩)
 
-private theorem sum_rankOne_ratioPieces {s : n → ℝ} (hs : ∀ i, 0 < s i) (w : n → ℂ) :
-    ∑ r ∈ (Finset.univ.image fun ij : n × n => s ij.1 / s ij.2),
-      ratioPiece s r (vecMulVec w (star w)) = vecMulVec w (star w) := by
-  ext i j
-  simp only [Matrix.sum_apply, ratioPiece, Matrix.of_apply, ← div_eq_iff (hs j).ne']
-  rw [Finset.sum_eq_single (s i / s j)]
-  · simp
-  · intro r _ hr
-    simp [Ne.symm hr]
-  · exact fun hr => (hr (Finset.mem_image.mpr ⟨(i,j), Finset.mem_univ _, rfl⟩)).elim
-
 private def ratioCoefficient (s : n → ℝ) (w y : n → ℂ) (r a : ℝ) : ℂ :=
   ∑ j, if a = r * s j then star (w j) * y j else 0
 
@@ -249,7 +239,7 @@ private theorem commute_ratioPieces_mulVec_slice {s : n → ℝ} (hs : ∀ i, 0 
   have hw' : w ≠ 0 := fun he => by simp [he] at hw
   have hK : Commute X K := by
     change X * vecMulVec w (star w) = vecMulVec w (star w) * X
-    rw [← sum_rankOne_ratioPieces hs w, Matrix.mul_sum, Matrix.sum_mul]
+    rw [← sum_ratioPiece hs (vecMulVec w (star w)), Matrix.mul_sum, Matrix.sum_mul]
     exact Finset.sum_congr rfl fun r _ => (hX r).eq
   have hvec : X *ᵥ w = c • w := by
     have he := congrArg (fun (M : Matrix n n ℂ) => M *ᵥ w) hK.eq
@@ -274,24 +264,6 @@ private theorem commute_ratioPieces_mulVec_slice {s : n → ℝ} (hs : ∀ i, 0 
       have hi : s i ≠ a := fun he => ha (Finset.mem_image.mpr ⟨i, Finset.mem_univ _, he⟩)
       simp [diagonalSlice, hi]
     simp [hz]
-
-omit [Fintype n] in
-private theorem rankOne_ratioPiece_adjoint {s : n → ℝ} (w : n → ℂ) {r : ℝ} (hr : r ≠ 0) :
-    (ratioPiece s r (vecMulVec w (star w)))ᴴ =
-      ratioPiece s r⁻¹ (vecMulVec w (star w)) := by
-  ext i j
-  have he : s j = r * s i ↔ s i = r⁻¹ * s j := by
-    constructor
-    · intro h
-      rw [h, inv_mul_cancel_left₀ hr]
-    · intro h
-      rw [h, mul_inv_cancel_left₀ hr]
-  simp only [Matrix.conjTranspose_apply, ratioPiece, Matrix.of_apply]
-  by_cases hij : s i = r⁻¹ * s j
-  · simp only [ite_eq_left hij, ite_eq_left (he.mpr hij), vecMulVec_apply,
-      Pi.star_apply, star_mul, star_star]
-  · have hji : s j ≠ r * s i := fun h => hij (he.mp h)
-    simp only [ite_eq_right hij, ite_eq_right hji, star_zero]
 
 private theorem sandwich_mul {V W : Matrix R R ℂ} (h : W * V = 1) (X Y : Matrix R R ℂ) :
     (V * X * W) * (V * Y * W) = V * (X * Y) * W := by
@@ -383,10 +355,12 @@ private theorem modal_support {S : Matrix R R ℂ} (hS : S.PosDef)
         simp [ratioPiece, hr, s, (hS.eigenvalues_pos i).ne']
       rw [hmode, hzero, Matrix.mul_zero, Matrix.zero_mul]
     rw [hz, Matrix.zero_mul]
-  · have hadj : (mode r⁻¹)ᴴ = mode r := by
+  · have hV : (vecMulVec v (star v)).IsHermitian := by
+      simp [Matrix.IsHermitian, Matrix.conjTranspose_vecMulVec]
+    have hadj : (mode r⁻¹)ᴴ = mode r := by
       rw [hmode, hmode r, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul,
-        Matrix.conjTranspose_conjTranspose, rankOne_ratioPiece_adjoint v (inv_ne_zero hr),
-        inv_inv, Matrix.mul_assoc]
+        Matrix.conjTranspose_conjTranspose,
+        ratioPiece_adjoint s _ hV (inv_ne_zero hr), inv_inv, Matrix.mul_assoc]
     have h := congrArg Matrix.conjTranspose (hleft r⁻¹)
     simpa only [Matrix.conjTranspose_mul, hP.eq, hadj] using h
 
@@ -455,11 +429,11 @@ private theorem partialTrace_relativeDensity (A : Matrix (R × E) (R × E) ℂ)
       rw [mpow_add hS, mpow_add hS,
         show -(1 / 2 : ℝ) + 1 + -(1 / 2) = 0 by norm_num, mpow_zero hS]
 
-/-- For a faithful joint state and a unit rank-one observable, zero actual BKM gap
+/-- For a positive definite joint matrix and a unit rank-one observable, zero actual BKM gap
 is equivalent to a unique faithful auxiliary density on the active retained span,
 with the actual inactive partial trace equal to the complementary projection. -/
 theorem bkmGap_rankOne_eq_zero_iff_activeBlock [Nonempty E]
-    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef) (_htrace : A.trace = 1)
+    (A : Matrix (R × E) (R × E) ℂ) (hA : A.PosDef)
     (w : R → ℂ) (hw : star w ⬝ᵥ w = 1) :
     let P := activeProjection (partialTraceRight_posDef A hA).isHermitian w
     let Q := 1 - P
