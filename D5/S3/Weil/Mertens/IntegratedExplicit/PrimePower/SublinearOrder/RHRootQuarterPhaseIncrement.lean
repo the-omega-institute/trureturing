@@ -76,7 +76,7 @@ private theorem weighted_coeff_error {r : ℝ} (hr : 1 < r) (k : ℕ) :
         ((div_le_one₀ (norm_pos_iff.mpr h2)).2 hgamma) (by positivity)
     _ = _ := one_mul _
 
-private theorem tsum_occurrences_eq_twice_positive (f : ℂ → ℝ) (hconj : ∀ z : ℂ, f (conj z) = f z)
+theorem tsum_occurrences_eq_twice_positive (f : ℂ → ℝ) (hconj : ∀ z : ℂ, f (conj z) = f z)
     (hs : Summable (fun k : ℕ => f (actualZero k))) :
     (∑' k : ℕ, f (actualZero k)) =
       2 * ∑' p : PositiveZetaZero, (Zeta23.zeroMult p.val : ℝ) * f p.val := by
@@ -123,10 +123,10 @@ private theorem tsum_occurrences_eq_twice_positive (f : ℂ → ℝ) (hconj : �
       ((hterm.subtype pos).tsum_add_tsum_compl (hterm.subtype posᶜ)).symm
     _ = _ := by rw [hneg, hpos, two_mul]
 
-private def phaseStep (t : ℝ) (k : ℕ) : ℂ :=
+def phaseStep (t : ℝ) (k : ℕ) : ℂ :=
   Complex.exp (((actualZero k).im * t : ℝ) * Complex.I) - 1
 
-private def occurrenceQuarter (k : ℕ) : Circle :=
+def occurrenceQuarter (k : ℕ) : Circle :=
   ⟨if 0 < (actualZero k).im then Complex.I else -Complex.I, by
     change _ ∈ Metric.sphere (0 : ℂ) 1
     rw [mem_sphere_zero_iff_norm]
@@ -192,7 +192,7 @@ private theorem occurrence_quarter_cluster (hq : quarterPhase ∈ phaseHull) :
   rintro _ ⟨t, rfl⟩
   exact ⟨phaseOrbit t, mem_range_self t, (horbit t).symm⟩
 
-private theorem norm_phaseStep_le (t : ℝ) (k : ℕ) :
+theorem norm_phaseStep_le (t : ℝ) (k : ℕ) :
     ‖phaseStep t k‖ ≤ 2 := by
   exact (norm_sub_le _ _).trans_eq (by rw [Complex.norm_exp_ofReal_mul_I, norm_one]; norm_num)
 
@@ -201,12 +201,12 @@ private theorem norm_phaseStep_le_linear (t : ℝ) (k : ℕ) :
   simpa only [phaseStep, mul_comm _ Complex.I, Real.norm_eq_abs, abs_mul] using
     (Real.norm_exp_I_mul_ofReal_sub_one_le (x := (actualZero k).im * t))
 
-private theorem coeff_norm_eq_weight (hRH : RiemannHypothesis) (k : ℕ) :
+theorem coeff_norm_eq_weight (hRH : RiemannHypothesis) (k : ℕ) :
     ‖actualCoeff k‖ = weight k := by
   rw [coeff_real hRH, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity)]
   rfl
 
-private theorem leading_increment_summable (r t : ℝ) (p : ℕ → Circle) :
+theorem leading_increment_summable (r t : ℝ) (p : ℕ → Circle) :
     Summable (fun k => (-(r : ℂ) * actualCoeff k) * (p k : ℂ) * phaseStep t k) := by
   refine ((actualCoeff_hasSum.summable.norm.mul_left |r|).mul_right 2).of_norm_bounded ?_
   intro k
@@ -214,7 +214,7 @@ private theorem leading_increment_summable (r t : ℝ) (p : ℕ → Circle) :
     Circle.norm_coe, mul_one]
   exact mul_le_mul_of_nonneg_left (norm_phaseStep_le t k) (by positivity)
 
-private theorem quarter_sine_hasSum (hRH : RiemannHypothesis) (r t : ℝ) :
+theorem quarter_sine_hasSum (hRH : RiemannHypothesis) (r t : ℝ) :
     HasSum (fun k : ℕ => r * weight k * Real.sin (|(actualZero k).im| * t)) (r * slope t) ∧
     (∑' k, (-(r : ℂ) * actualCoeff k) * (occurrenceQuarter k : ℂ) * phaseStep t k).re =
       r * slope t := by
@@ -251,7 +251,7 @@ private theorem quarter_sine_hasSum (hRH : RiemannHypothesis) (r t : ℝ) :
     field_simp [ne_of_gt hp]
   exact ⟨hvalue ▸ hsum, hvalue⟩
 
-private def increment (r t : ℝ) (p : ℕ → Circle) : ℝ :=
+def increment (r t : ℝ) (p : ℕ → Circle) : ℝ :=
   readSignal r (r * t) p - readSignal r 0 p
 
 private theorem increment_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
@@ -274,7 +274,7 @@ private theorem increment_eq (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
   simp only [phaseOrbit, Circle.coe_exp, phaseStep, mul_comm t, Complex.ofReal_zero, mul_zero,
     Complex.exp_zero]
 
-private theorem increment_close_to_leading (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+theorem increment_close_to_leading (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (t : ℝ) (p : ℕ → Circle) :
     let s : ℝ := 1 / 2 - (2 * r)⁻¹
     |s * increment r t p -
@@ -325,7 +325,7 @@ private theorem norm_phaseStep_le_sine_cosine {t : ℝ} (ht : 0 < t) (k : ℕ) :
     rw [Real.abs_sin_eq_sin_abs_of_abs_le_pi (hxone.trans (by linarith [Real.pi_gt_three])), hx]
     exact le_of_eq (add_comm ..)
 
-private theorem weight_le_inverse_square (k : ℕ) :
+theorem weight_le_inverse_square (k : ℕ) :
     weight k ≤ (actualZero k).im⁻¹ ^ 2 := by
   have hz : (actualZero k).im ≠ 0 :=
     abs_pos.mp ((by norm_num : (0 : ℝ) < 10).trans
