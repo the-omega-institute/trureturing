@@ -374,6 +374,17 @@ private lemma weighted_bound {N : ℕ} (a μ : Fin N → ℝ) (hμ : StrictAnti 
   rw [nonzeroTerms_variation] at hb
   simpa only [variation, l, List.map_ofFn, Function.comp_def] using hb
 
+/-- A prescribed zero at which the derivative vanishes costs a second sign variation. -/
+theorem zero_bound_with_stationary_root {N : ℕ} (a μ : Fin N → ℝ) (hμ : StrictAnti μ)
+    (ha : ∃ i, a i ≠ 0) (Z : Finset ℝ) {z : ℝ} (hz : z ∈ Z)
+    (hZ : ∀ t ∈ Z, exponentialSum a μ t = 0)
+    (hd : deriv (exponentialSum a μ) z = 0) :
+    Z.card + 1 ≤ (List.ofFn a).signVariations := by
+  classical
+  simpa only [Finset.card_singleton] using
+    weighted_bound a μ hμ ha Z {z} hZ (Finset.singleton_subset_iff.mpr hz)
+      (by simpa only [Finset.mem_singleton, forall_eq] using hd)
+
 /-- A uniform strict sign reversal on the two sides of a zero. -/
 def ChangesSign (F : ℝ → ℝ) (z : ℝ) : Prop :=
   ∃ ε > 0, ∀ t ∈ Ioo (z-ε) z, ∀ s ∈ Ioo z (z+ε), F t * F s < 0

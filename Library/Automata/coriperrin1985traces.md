@@ -9,6 +9,7 @@ strata_touched:
   - D5/S1/Words/TraceProjection
   - D5/S1/Words/TraceLevi
   - D5/S1/Words/TraceMultiCut
+  - D5/S1/Words/TraceMatrix
 license: citation-only
 triage: anchor
 ---
@@ -91,6 +92,27 @@ recursively and transports membership through native connections. It
 requires no finite alphabet, equality oracle, nonempty word, supplied
 matching or schedule. This is an established classical analogue, without
 an originality or published-open-problem-resolution claim.
+
+## Common finite matrices
+
+The native result `TraceMatrix.connected_flatten_iff` refines arbitrary finite
+row and column products by one matrix of words. Its row and column products
+are connected to the corresponding original factors, and every earlier-row,
+later-column cell is strictly independent of every later-row, earlier-column
+cell. It follows by induction on the rows from the native two-row result.
+The first row is separated from the remaining product, giving upper factors
+p(j) and lower factors r(j). Refining the remaining rows against the single
+family r gives one lower matrix. Native connection preserves letter membership,
+so every letter in a lower cell of column j already occurs in r(j). This
+transports all first-row crossing conditions to the lower cells. Conversely,
+concatenate each lower column and apply the two-row equivalence again.
+
+This additional row induction is a repository derivation of the common matrix
+statement; Proposition 1.3 and Corollary 1.4 are its classical binary and two-row
+source analogues, not a verbatim arbitrary-universe, arbitrary-row strict native
+matrix theorem. The arbitrary alphabet, zero dimensions, repeated letters and
+strict independence are retained through the native suppliers. No original
+research, published open-problem resolution or reconstruction cost is claimed.
 
 ## Verified locator
 

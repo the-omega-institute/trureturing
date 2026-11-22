@@ -177,7 +177,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-producer
+      group: lean-cache-release-publisher
       queue: max
       cancel-in-progress: false
     env:
@@ -324,7 +324,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-producer
+      group: lean-cache-release-publisher
       queue: max
       cancel-in-progress: false
     env:
