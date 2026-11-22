@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9FoldedRankTwoParity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Dual.Lemmas, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Bipartite]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Dual.Lemmas, mathlib/module/Mathlib.LinearAlgebra.Matrix.Dual, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Bipartite]
    utility: none
    digest: One binary linear parity equation selects the target switching class among exact factors at residual rank two. -/
 
@@ -11,6 +11,7 @@ import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.Matrix.DotProduct
+import Mathlib.LinearAlgebra.Matrix.Dual
 import Mathlib.Tactic.LinearCombination
 
 /-! A linear parity test for the rank-two switching quotient on fixed-degree factors. -/
@@ -112,24 +113,6 @@ private theorem bipartite_sum {V : Type*} [Fintype V] [DecidableEq V] (G : Simpl
   · exact unique a b h.1 h.2 edges
   · simpa only [Sym2.eq_swap] using unique b a h.2 h.1 edges.symm
 
-private theorem dot_represented {E : Type*} [Fintype E] (f : (E → Bit) →ₗ[Bit] Bit) :
-    ∃ u : E → Bit, dotProductBilin Bit Bit u = f := by
-  classical
-  refine ⟨fun e => f (Pi.single e 1), ?_⟩
-  apply LinearMap.ext
-  intro x
-  change (∑ e, f (Pi.single e 1) * x e) = f x
-  have hx : (∑ e, x e • Pi.single e (1 : Bit)) = x := by
-    ext i
-    simp [Finset.sum_apply, Pi.single_apply, mul_ite]
-  calc
-    _ = f (∑ e, x e • Pi.single e (1 : Bit)) := by
-      rw [map_sum]
-      apply Finset.sum_congr rfl
-      intro e _
-      rw [map_smul, smul_eq_mul, mul_comm]
-    _ = f x := congrArg f hx
-
 private theorem cut_iff_orthogonal {V E : Type*} [Fintype V] [Fintype E]
     (B : Matrix V E Bit) (x : E → Bit) :
     x ∈ range Bᵀ.mulVecLin ↔ ∀ c : Cycles B, x ⬝ᵥ c.val = 0 := by
@@ -138,11 +121,12 @@ private theorem cut_iff_orthogonal {V E : Type*} [Fintype V] [Fintype E]
     rw [dotProduct_comm, Matrix.mulVecLin_apply, Matrix.dotProduct_transpose_mulVec]
     rw [← Matrix.mulVecLin_apply, mem_ker.mp c.property, dotProduct_zero]
   · intro orthogonal
+    classical
     have h : dotProductBilin Bit Bit x ∈ (Cycles B).dualAnnihilator :=
       (Submodule.mem_dualAnnihilator _).mpr (fun c hc => orthogonal ⟨c, hc⟩)
     rw [← B.mulVecLin.range_dualMap_eq_dualAnnihilator_ker] at h
     obtain ⟨f, hf⟩ := h
-    obtain ⟨y, rfl⟩ := dot_represented f
+    obtain ⟨y, rfl⟩ := (dotProductEquiv Bit V).surjective f
     refine ⟨y, sub_eq_zero.mp (dotProduct_eq_zero_iff.mp ?_)⟩
     intro c
     have he := DFunLike.congr_fun hf c
