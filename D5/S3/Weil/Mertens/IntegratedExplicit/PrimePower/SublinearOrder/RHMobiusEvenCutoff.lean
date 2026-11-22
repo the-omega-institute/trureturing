@@ -126,52 +126,6 @@ theorem window_normalized_aestronglyMeasurable {A B L s : ℝ}
   simp only [Real.log_exp]
   rfl
 
-theorem bounded_exponential_integral {c : ℂ} (hc : c.re = 0)
-    {gap : ℝ} (hgap : 0 < gap) (hgapc : gap ≤ ‖c‖) (a b : ℝ) :
-    ‖∫ u in a..b, Complex.exp (c * (u : ℂ))‖ ≤ 2 / gap := by
-  have hc_ne : c ≠ 0 := norm_pos_iff.mp (hgap.trans_le hgapc)
-  have hexp (u : ℝ) : ‖Complex.exp (c * (u : ℂ))‖ = 1 := by
-    simp [Complex.norm_exp, Complex.mul_re, hc]
-  rw [integral_exp_mul_complex hc_ne, norm_div]
-  have hnum : ‖Complex.exp (c * (b : ℂ)) - Complex.exp (c * (a : ℂ))‖ ≤ 2 := by
-    simpa only [hexp, one_add_one_eq_two] using
-      norm_sub_le (Complex.exp (c * (b : ℂ))) (Complex.exp (c * (a : ℂ)))
-  exact div_le_div_of_nonneg_right hnum (norm_nonneg _) |>.trans
-    (div_le_div_of_nonneg_left (by norm_num) hgap hgapc)
-
-theorem bounded_exponential_series_integral
-    (coeff mode : ℕ → ℂ) (hcoeff : Summable (fun k => ‖coeff k‖))
-    (hmode : ∀ k, (mode k).re = 0) {gap : ℝ} (hgap : 0 < gap)
-    (hmode_gap : ∀ k, gap ≤ ‖mode k‖) (a b : ℝ) :
-    let signal := fun u : ℝ => ∑' k, coeff k * Complex.exp (mode k * (u : ℂ))
-    IntervalIntegrable signal volume a b ∧
-      ‖∫ u in a..b, signal u‖ ≤ (∑' k, ‖coeff k‖) * (2 / gap) := by
-  let term (k : ℕ) (u : ℝ) := coeff k * Complex.exp (mode k * (u : ℂ))
-  have hterm (k : ℕ) : Continuous (term k) := by unfold term; fun_prop
-  have hnorm (k : ℕ) (u : ℝ) : ‖term k u‖ = ‖coeff k‖ := by
-    simp [term, Complex.norm_exp, Complex.mul_re, hmode k]
-  have hsignal : Continuous (fun u : ℝ => ∑' k, term k u) :=
-    continuous_tsum hterm hcoeff fun k u => (hnorm k u).le
-  have hsum (u : ℝ) : Summable (fun k => term k u) :=
-    hcoeff.of_norm_bounded fun k => (hnorm k u).le
-  have hi : HasSum (fun k : ℕ => ∫ u in a..b, term k u)
-      (∫ u in a..b, ∑' k, term k u) := by
-    apply intervalIntegral.hasSum_integral_of_dominated_convergence (fun k (_ : ℝ) => ‖coeff k‖)
-    · exact fun k => (hterm k).aestronglyMeasurable
-    · exact fun k => ae_of_all _ fun u _ => (hnorm k u).le
-    · exact ae_of_all _ fun _ _ => hcoeff
-    · exact intervalIntegrable_const
-    · exact ae_of_all _ fun u _ => (hsum u).hasSum
-  refine ⟨hsignal.intervalIntegrable _ _, ?_⟩
-  change ‖∫ u in a..b, ∑' k, term k u‖ ≤ _
-  rw [← hi.tsum_eq]
-  apply tsum_of_norm_bounded (hcoeff.hasSum.mul_right (2 / gap))
-  intro k
-  unfold term
-  rw [intervalIntegral.integral_const_mul, norm_mul]
-  exact mul_le_mul_of_nonneg_left
-    (bounded_exponential_integral (hmode k) hgap (hmode_gap k) a b) (norm_nonneg _)
-
 private theorem normalized_root_primitive_bound (hRH : RiemannHypothesis)
     {r : ℝ} (hr : 1 < r) (a b : ℝ) :
     let s := 1 / 2 - (2 * r)⁻¹

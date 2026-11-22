@@ -28,8 +28,8 @@ internal sealed class RHMobiusEvenCutoffFourierDocument : IScribeDocumentDefinit
                     + "zeta zero and Mult(ρ) is its analytic order of vanishing.")),
                 Paragraph(Text("Conjugation of the actual zero occurrences makes the normalized "
                     + "root series real. After multiplication by exp(−iwu), all frequencies "
-                    + "outside the matching fiber have positive separation from zero. Local "
-                    + "finiteness of the distinct zeros gives this separation in a bounded region. "
+                    + "outside the matching fiber have positive separation from zero. The closed discrete "
+                    + "zero set gives this separation after the matching point is removed. "
                     + "Termwise integration of the absolutely summable series bounds the contribution "
                     + "outside the fiber independently of U and T. The normalized arithmetic remainder "
                     + "has an integrable exponential bound. At an actual zero, the whole fiber "

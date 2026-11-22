@@ -7,6 +7,7 @@
    digest: Fourier recovery of actual zero frequencies and analytic multiplicities from even-cutoff signed prime windows. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoff
+import Mathlib.NumberTheory.LSeries.ZetaZeros
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,69 +18,42 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
 open MeasureTheory
 
-private theorem spectral_fiber_average
-    (coeff mode : ℕ → ℂ) (hcoeff : Summable (fun k => ‖coeff k‖))
-    (hmode : ∀ k, (mode k).re = 0) {w : ℂ} (hw : w.re = 0)
-    {δ : ℝ} (hδ : 0 < δ) (hgap : ∀ k, mode k ≠ w → δ ≤ ‖mode k - w‖)
-    (U : ℝ) {T : ℝ} (hT : 0 < T) :
-    let f := fun u : ℝ => (∑' k, coeff k * Complex.exp (mode k*(u : ℂ))) *
-      Complex.exp (-w*(u : ℂ))
-    let target := ∑' k, if mode k = w then coeff k else 0
-    IntervalIntegrable f volume U (U+T) ∧
-      ‖(∫ u in U..U+T, f u)/(T : ℂ) - target‖ ≤
-        (∑' k, ‖coeff k‖) * (2/δ) / T := by
-  let matchCoeff (k : ℕ) := if mode k = w then coeff k else 0
-  let offCoeff (k : ℕ) := if mode k = w then 0 else coeff k
-  let offMode (k : ℕ) := if mode k = w then (δ : ℂ)*Complex.I else mode k-w
-  let off (u : ℝ) := ∑' k, offCoeff k * Complex.exp (offMode k*(u : ℂ))
-  let target := ∑' k, matchCoeff k
-  have hmatch (k : ℕ) : ‖matchCoeff k‖ ≤ ‖coeff k‖ := by
-    by_cases hk : mode k = w <;> simp [matchCoeff, hk]
-  have hoff (k : ℕ) : ‖offCoeff k‖ ≤ ‖coeff k‖ := by
-    by_cases hk : mode k = w <;> simp [offCoeff, hk]
-  have hOffCoeff : Summable (fun k => ‖offCoeff k‖) :=
-    hcoeff.of_nonneg_of_le (fun _ => norm_nonneg _) hoff
-  have hmatchSummable : Summable matchCoeff := hcoeff.of_norm_bounded hmatch
-  have hOffMode (k : ℕ) : (offMode k).re = 0 := by
-    by_cases hk : mode k = w <;> simp [offMode, hk, hmode k, hw]
-  have hOffGap (k : ℕ) : δ ≤ ‖offMode k‖ := by
-    by_cases hk : mode k = w
-    · simp [offMode, hk, abs_of_pos hδ]
-    · simpa only [offMode, ite_eq_right hk] using hgap k hk
-  have hOffSummable (u : ℝ) : Summable (fun k => offCoeff k * Complex.exp (offMode k*(u : ℂ))) := by
-    apply hOffCoeff.of_norm_bounded
-    intro k
-    simp [Complex.norm_exp, Complex.mul_re, hOffMode k]
-  have hfun :
-      (fun u : ℝ => (∑' k, coeff k * Complex.exp (mode k*(u : ℂ))) *
-          Complex.exp (-w*(u : ℂ))) = fun u => target+off u := by
-    funext u
-    unfold target off
-    rw [← tsum_mul_right, ← hmatchSummable.tsum_add (hOffSummable u)]
-    apply tsum_congr
-    intro k
-    rw [mul_assoc, ← Complex.exp_add, ← add_mul, ← sub_eq_add_neg]
-    by_cases hk : mode k = w <;> simp [matchCoeff, offCoeff, offMode, hk]
-  obtain ⟨hi, hb⟩ := bounded_exponential_series_integral offCoeff offMode hOffCoeff
-    hOffMode hδ hOffGap U (U+T)
-  change IntervalIntegrable _ volume U (U+T) ∧ _
-  dsimp only
-  rw [hfun]
-  refine ⟨intervalIntegrable_const.add hi, ?_⟩
-  have hx : (T : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hT.ne'
-  rw [intervalIntegral.integral_add intervalIntegrable_const hi, intervalIntegral.integral_const,
-    show U+T-U = T by ring, Complex.real_smul]
-  rw [show ((T : ℂ)*target + ∫ u in U..U+T, off u)/(T : ℂ)-target =
-      (∫ u in U..U+T, off u)/(T : ℂ) by field_simp [hx]; ring]
-  rw [norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hT]
-  apply div_le_div_of_nonneg_right _ hT.le
-  exact hb.trans (mul_le_mul_of_nonneg_right
-    (hOffCoeff.tsum_le_tsum hoff hcoeff) (by positivity))
-
 open Set
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowMean (frequency)
+
+/-- Each tested frequency is separated from the remaining distinct modes of the actual zeros. -/
+private theorem actual_frequency_gap {r : ℝ} (hr : 0 < r) (w : ℂ) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ k : ℕ, frequency k / (r : ℂ) ≠ w →
+      δ ≤ ‖frequency k / (r : ℂ)-w‖ := by
+  let center : ℂ := 1/2 + (r : ℂ)*w
+  let otherZeros := riemannZetaZeros \ {center}
+  have hclosed : IsClosed otherZeros :=
+    isClosed_of_subset_discrete_closed Set.sdiff_subset isDiscrete_riemannZetaZeros
+      isClosed_riemannZetaZeros
+  have hcenter : center ∈ otherZerosᶜ := by simp [otherZeros]
+  obtain ⟨ε, hε, hball⟩ := Metric.isOpen_iff.mp hclosed.isOpen_compl center hcenter
+  refine ⟨ε/r, div_pos hε hr, fun k hk => ?_⟩
+  have hrC : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hr.ne'
+  have hspace : frequency k / (r : ℂ) - w = (actualZero k - center)/(r : ℂ) := by
+    dsimp only [frequency, center]
+    field_simp
+    ring
+  have hz : actualZero k ∈ riemannZetaZeros :=
+    (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).1
+  have hne : actualZero k ≠ center := by
+    intro h
+    apply hk
+    apply sub_eq_zero.mp
+    rw [hspace, h, sub_self, zero_div]
+  have hsep : ε ≤ ‖actualZero k - center‖ := by
+    by_contra! hlt
+    have hmem : actualZero k ∈ Metric.ball center ε := by
+      simpa only [Metric.mem_ball, dist_eq_norm] using hlt
+    exact (hball hmem) ⟨hz, fun h => hne (Set.mem_singleton_iff.mp h)⟩
+  rw [hspace, norm_div, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr]
+  exact div_le_div_of_nonneg_right hsep hr.le
 
 open scoped ComplexConjugate
 open D5.S3.Weil.Mertens.IntegratedExplicit (actual_complete_H_package)
