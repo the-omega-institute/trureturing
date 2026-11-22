@@ -109,7 +109,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.RankedBipartiteDiagonalParity
     definition := none
-    coordinates := #[0, 1, 2, 4, 5]
+    coordinates := #[0, 2, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg"]
