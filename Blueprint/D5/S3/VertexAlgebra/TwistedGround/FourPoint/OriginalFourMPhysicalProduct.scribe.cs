@@ -35,6 +35,15 @@ internal sealed class OriginalFourMPhysicalProductDocument : IScribeDocumentDefi
                         + "charges q with reduceCharge(D,q) = a, with summand "
                         + "exp(π i τ_c ⟨q,q⟩_G/2 + 2π i (Gq)·Z). The Gram contraction is bilinear."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-fourm-physical-product-charge-fiber"),
+                DeclarationHandle.Create(Prefix + "physical_product_marked_charge_fiber"),
+                H("Expansion in the literal mod-two charge fiber"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The period-normalized product expands in charges with reduceCharge(D,q) = a. "
+                    + "Each summand has the original quadratic charge energy and the physical Gaussian. "
+                    + "The mean at mark i is −⟨e_colour(i),q⟩ times its physical source divided by the chart period. "
+                    + "The same relative sign multiplies the occurrence weight in the linear and quadratic terms."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-fourm-physical-chart-product"),
                 DeclarationHandle.Create(Prefix + "physical_chart_product"),
                 H("Finite charge transforms of the physical products"), StatementSource.WithoutFormula(),
