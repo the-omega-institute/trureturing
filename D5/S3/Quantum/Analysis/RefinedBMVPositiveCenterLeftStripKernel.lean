@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripWeightedTail
 
-open Filter
+open Filter Set
 open scoped Topology
 
 noncomputable section
@@ -290,7 +290,163 @@ theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
   rw [heq, weightedThird_add hGB hT, weightedThird_add hG hB]
   linarith only [hmain, (abs_lt.mp hrad).2, (abs_lt.mp htail).2]
 
+private theorem compositionMoment_smooth (p : ℕ) :
+    ContDiff ℝ 3 (Function.uncurry (compositionMoment p)) := by
+  have hsum (l : List (ℕ × ℕ × ℕ)) (c d : (ℕ × ℕ × ℕ) → ℝ) :
+      ContDiff ℝ 3 (fun z : ℝ × ℝ ↦
+        (l.map fun g ↦ Real.exp (c g*z.1+d g*z.2)).sum) := by
+    induction l with
+    | nil => simpa using (contDiff_const : ContDiff ℝ 3 (fun _ : ℝ × ℝ ↦ (0 : ℝ)))
+    | cons j l ih =>
+      have he : ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ Real.exp (c j*z.1+d j*z.2)) := by fun_prop
+      simpa only [List.map_cons, List.sum_cons] using he.add ih
+  change ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ compositionMoment p z.1 z.2)
+  unfold compositionMoment
+  exact ((hsum _ _ _).div_const _).sub contDiff_const
+
+private theorem ratio_derivative_neg {f D : ℝ → ℝ} {u k : ℝ}
+    (hu : 0 < u) (hD : 0 < D u) (hk : 0 < k)
+    (hf : ∀ x ∈ Icc 0 u, DifferentiableAt ℝ f x)
+    (hf' : ContinuousOn (deriv f) (Icc 0 u))
+    (hf'' : ∀ x ∈ Ioo 0 u, deriv (deriv f) x < 0)
+    (hf₀ : f 0 = 0) (hf₁ : deriv f 0 = 0)
+    (hD' : DifferentiableAt ℝ D u) (hslope : u*deriv D u ≤ D u) :
+    deriv (fun x ↦ f x/(D x*k)) u < 0 := by
+  have hAnti : StrictAntiOn (deriv f) (Icc 0 u) :=
+    strictAntiOn_of_deriv_neg (convex_Icc _ _) hf' (by
+      rw [interior_Icc]
+      exact hf'')
+  obtain ⟨t,ht,hm⟩ := exists_hasDerivAt_eq_slope f (deriv f) hu
+    (fun x hx ↦ (hf x hx).continuousAt.continuousWithinAt)
+    (fun x hx ↦ (hf x ⟨hx.1.le,hx.2.le⟩).hasDerivAt)
+  have ht' : t ∈ Icc 0 u := ⟨ht.1.le,ht.2.le⟩
+  have h₀ := hAnti (left_mem_Icc.mpr hu.le) ht' ht.1
+  have h₁ := hAnti ht' (right_mem_Icc.mpr hu.le) ht.2
+  rw [hf₁] at h₀
+  rw [hf₀, sub_zero, sub_zero] at hm
+  have hEq := (eq_div_iff hu.ne').mp hm
+  have hfu : f u ≤ 0 := by nlinarith only [hEq, mul_nonpos_of_nonpos_of_nonneg h₀.le hu.le]
+  have hsec : deriv f u*u < f u := (mul_lt_mul_of_pos_right h₁ hu).trans_eq hEq
+  have hsec' := mul_lt_mul_of_pos_right hsec hD
+  have hslope' := mul_le_mul_of_nonpos_left hslope hfu
+  have hnum : deriv f u*D u-f u*deriv D u < 0 := by
+    by_contra! hn
+    have hm := mul_nonneg hu.le hn
+    nlinarith only [hsec',hslope',hm]
+  have hd := (hf u (right_mem_Icc.mpr hu.le)).hasDerivAt.fun_div
+    (hD'.hasDerivAt.mul_const k) (mul_pos hD hk).ne'
+  rw [hd.deriv]
+  apply div_neg_of_neg_of_pos _ (sq_pos_of_pos (mul_pos hD hk))
+  nlinarith only [mul_neg_of_neg_of_pos hnum hk]
+
+/-- Concavity transfers the numerator bound to the original mixed kernel
+once the negative marginal has the indicated slopes at the two endpoints. -/
+theorem leftStrip_logKernel_mixed_lt_of_slopes {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
+    (hu : 0 < u) (humax : u ≤ 1/2) (hgap : 6 < v-u)
+    (hsmall : u*deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) u ≤
+      Real.sqrt (compositionMoment p 0 (-u)))
+    (hγ : 5/12 ≤ deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)))
+    (hγmax : deriv (fun t ↦ Real.sqrt (compositionMoment p 0 (-t))) v /
+      Real.sqrt (compositionMoment p 0 (-v)) ≤ 1) :
+    deriv (fun y ↦ deriv (fun x ↦ logKernel p x y) u) v < 0 := by
+  let C := compositionMoment p
+  let D (t : ℝ) := Real.sqrt (C 0 (-t))
+  let N (x y : ℝ) := C x y-Real.sqrt (C 0 y*C 0 (y-x))
+  let P (x y : ℝ) := deriv (N · y) x
+  let R (x y : ℝ) := deriv (N x) y
+  let γ := deriv D v/D v
+  let f (x : ℝ) := R x v-γ*N x v
+  have hp₀ : 0 < p := by omega
+  have huv : u < v := by linarith
+  have hv : 0 < v := hu.trans huv
+  have hC : ContDiff ℝ 3 (Function.uncurry C) := compositionMoment_smooth p
+  have hPos (t : ℝ) (ht : 0 < t) : 0 < D t :=
+    Real.sqrt_pos.mpr (compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr ht.ne'))
+  have hD (t : ℝ) (ht : 0 < t) : ContDiffAt ℝ 3 D t := by
+    have hM := hC.comp (contDiff_const.prodMk contDiff_id.neg :
+      ContDiff ℝ 3 (fun y : ℝ ↦ ((0 : ℝ),-y)))
+    exact hM.contDiffAt.sqrt
+      (compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr ht.ne')).ne'
+  have hN {x y : ℝ} (hy : 0 < y) (hxy : x < y) :
+      ContDiffAt ℝ 3 (Function.uncurry N) (x,y) := by
+    have hM₁ := hC.comp (contDiff_const.prodMk contDiff_snd :
+      ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ ((0 : ℝ),z.2)))
+    have hM₂ := hC.comp (contDiff_const.prodMk (contDiff_snd.sub contDiff_fst) :
+      ContDiff ℝ 3 (fun z : ℝ × ℝ ↦ ((0 : ℝ),z.2-z.1)))
+    exact hC.contDiffAt.sub ((hM₁.mul hM₂).contDiffAt.sqrt
+      (mul_ne_zero (compositionMoment_marginal_pos hp₀ hy.ne').ne'
+        (compositionMoment_marginal_pos hp₀ (sub_pos.mpr hxy).ne').ne'))
+  have hN₂ {x y : ℝ} (hy : 0 < y) (hxy : x < y) :
+      ContDiffAt ℝ 2 (Function.uncurry N) (x,y) := (hN hy hxy).of_le (by decide)
+  have hP {x y : ℝ} (hy : 0 < y) (hxy : x < y) :
+      ContDiffAt ℝ 2 (Function.uncurry P) (x,y) :=
+    contDiffAt_partialLeft (hN hy hxy) (by decide) (by decide) (by norm_num)
+  have hLeft {j : ℝ → ℝ → ℝ} {n : WithTop ℕ∞} {x y : ℝ}
+      (hj : ContDiffAt ℝ n (Function.uncurry j) (x,y)) (hn : n ≠ 0) :
+      HasDerivAt (j · y) (deriv (j · y) x) x := by
+    have hline : ContDiffAt ℝ n (fun t : ℝ ↦ (t,y)) x := contDiffAt_id.prodMk contDiffAt_const
+    exact ((hj.comp x hline).differentiableAt hn).hasDerivAt
+  have hRight {j : ℝ → ℝ → ℝ} {n : WithTop ℕ∞} {x y : ℝ}
+      (hj : ContDiffAt ℝ n (Function.uncurry j) (x,y)) (hn : n ≠ 0) :
+      HasDerivAt (j x) (deriv (j x) y) y := by
+    have hline : ContDiffAt ℝ n (fun t : ℝ ↦ (x,t)) y := contDiffAt_const.prodMk contDiffAt_id
+    exact ((hj.comp y hline).differentiableAt hn).hasDerivAt
+  have hf (x : ℝ) (hx : x < v) : HasDerivAt f (deriv (P x) v-γ*P x v) x := by
+    have hm := Extreme.hasDerivAt_deriv_second (hN₂ hv hx)
+    have hm' := hm.congr_deriv (hm.deriv.symm.trans (mixed_partial_eq (hN₂ hv hx)))
+    exact hm'.sub ((hLeft (hN hv hx) (by decide)).const_mul γ)
+  have hf' (x : ℝ) (hx : x < v) : HasDerivAt (deriv f) (weightedThird N x v γ) x := by
+    have heq : deriv f =ᶠ[𝓝 x] fun t ↦ deriv (P t) v-γ*P t v := by
+      filter_upwards [eventually_lt_nhds hx] with t ht using (hf t ht).deriv
+    have hm := Extreme.hasDerivAt_deriv_second (hP hv hx)
+    have hm' := hm.congr_deriv (hm.deriv.symm.trans (mixed_partial_eq (hP hv hx)))
+    exact (hm'.sub ((hLeft (hP hv hx) (by decide)).const_mul γ)).congr_of_eventuallyEq heq
+  have hN₀ : N 0 =ᶠ[𝓝 v] fun _ ↦ 0 := by
+    filter_upwards [eventually_gt_nhds hv] with y hy
+    simpa only [N,C,sub_zero] using logKernel_numerator_zero hp₀ hy
+  have hP₀ : P 0 =ᶠ[𝓝 v] fun _ ↦ 0 := by
+    filter_upwards [eventually_gt_nhds hv] with y hy
+    exact (hasDerivAt_logKernel_numerator_zero hp₀ hy).deriv
+  have hf₀ : f 0 = 0 := by
+    change deriv (N 0) v-γ*N 0 v = 0
+    rw [hN₀.deriv_eq,hN₀.eq_of_nhds,deriv_const,mul_zero,sub_zero]
+  have hf₁ : deriv f 0 = 0 := by
+    rw [(hf 0 hv).deriv,hP₀.deriv_eq,hP₀.eq_of_nhds,deriv_const,mul_zero,sub_zero]
+  have hf'' (x : ℝ) (hx : x ∈ Ioo 0 u) : deriv (deriv f) x < 0 := by
+    rw [(hf' x (hx.2.trans huv)).deriv]
+    exact (leftStrip_numerator_weighted_mixed_lt hp hx.1 (hx.2.le.trans humax)
+      (hgap.trans_le (sub_le_sub_left hx.2.le _)) hγ hγmax).trans (by norm_num)
+  have hRatio := ratio_derivative_neg hu (hPos u hu) (hPos v hv)
+    (fun x hx ↦ (hf x (hx.2.trans_lt huv)).differentiableAt)
+    (fun x hx ↦ (hf' x (hx.2.trans_lt huv)).continuousAt.continuousWithinAt)
+    hf'' hf₀ hf₁ ((hD u hu).differentiableAt (by decide)) hsmall
+  have hK (x y : ℝ) (hx : 0 < x) : logKernel p x y = N x y/(D x*D y) := by
+    unfold logKernel
+    rw [Real.sqrt_mul (compositionMoment_marginal_pos hp₀ (neg_ne_zero.mpr hx.ne')).le]
+  have hKv (x : ℝ) (hx : 0 < x) (hxv : x < v) :
+      deriv (logKernel p x) v = f x/(D x*D v) := by
+    rw [show logKernel p x = fun y ↦ N x y/(D x*D y) from funext fun y ↦ hK x y hx]
+    have hd := (hRight (hN hv hxv) (by decide)).fun_div
+      (((hD v hv).differentiableAt (by decide)).hasDerivAt.const_mul (D x))
+      (mul_pos (hPos x hx) (hPos v hv)).ne'
+    rw [hd.deriv]
+    change _ = (deriv (N x) v-(deriv D v/D v)*N x v)/(D x*D v)
+    field_simp [(hPos x hx).ne', (hPos v hv).ne'] <;> ring
+  have hnear : (fun x ↦ deriv (logKernel p x) v) =ᶠ[𝓝 u] fun x ↦ f x/(D x*D v) := by
+    filter_upwards [eventually_gt_nhds hu,eventually_lt_nhds huv] with x hx hxv using hKv x hx hxv
+  have hK₂ : ContDiffAt ℝ 2 (Function.uncurry (logKernel p)) (u,v) := by
+    have hDu := (hD u hu).comp (u,v) contDiffAt_fst
+    have hDv := (hD v hv).comp (u,v) contDiffAt_snd
+    have hs := (hN hv huv).div (hDu.mul hDv) (mul_pos (hPos u hu) (hPos v hv)).ne'
+    apply (hs.of_le (show (2 : WithTop ℕ∞) ≤ 3 by decide)).congr_of_eventuallyEq
+    filter_upwards [continuousAt_fst.eventually (eventually_gt_nhds hu)] with z hz
+    exact hK z.1 z.2 hz
+  rw [← mixed_partial_eq hK₂, hnear.deriv_eq]
+  exact hRatio
+
 #print axioms leftStrip_numerator_decomposition
 #print axioms leftStrip_numerator_weighted_mixed_lt
+#print axioms leftStrip_logKernel_mixed_lt_of_slopes
 
 end RefinedBMV.PositiveCenter
