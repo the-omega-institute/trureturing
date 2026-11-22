@@ -8,9 +8,9 @@ internal sealed class DiagonalRecordCapacityDocument : IScribeDocumentDefinition
         "D5/S3/Quantum/Recovery/DiagonalRecordCapacity.";
 
     private static readonly LibraryNoteRef Galke =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/galke2023renyisufficiency");
+        LibraryNoteRef.Create("D5/L/Divergence/galke2023renyisufficiency");
     private static readonly LibraryNoteRef Kato =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/kato2025exactlocalcompression");
+        LibraryNoteRef.Create("D5/L/Divergence/kato2025exactlocalcompression");
     private static readonly LibraryNoteRef KoashiImoto =
         LibraryNoteRef.Create("D5/L/QuantumChannels/koashiimoto2002nondisturbance");
 
