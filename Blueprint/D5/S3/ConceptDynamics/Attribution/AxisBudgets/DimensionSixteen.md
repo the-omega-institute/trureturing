@@ -46,6 +46,5 @@ The full graph has a feasible factor at budget 2036. A cover factor with this bu
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteen.full_budget_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteen.result`
 - Dependency: [D5/S3/Combinatorics/ErdosUlam/SublatticeDefs](../../../Combinatorics/ErdosUlam/SublatticeDefs.md)
-- Dependency: [D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteCapacity](../../../Combinatorics/Graph/RankCuts/RankedBipartiteCapacity.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers](DimensionSixteenCovers.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedAxisFactor](../ParitySeedAxisFactor.md)

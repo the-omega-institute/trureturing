@@ -120,5 +120,65 @@ def coverRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+private abbrev fullLowerArena : Arena where
+  signature := signature
+  Law R := ∀ budget : ℕ, axisFactorWithin 3 (0 : Fin 16) budget → R.readout () () budget = true
+
+private theorem full_lower_false_fails : ¬ fullLowerArena.Law constantFalse := by
+  intro law
+  obtain ⟨budget, edge, selected, omitted, permitted, rows, cols, support, cost⟩ := some_cover_budget
+  have feasible : axisFactorWithin 3 (0 : Fin 16) budget :=
+    ⟨edge, selected, omitted, permitted, rows, cols, fun a b ha hb => (support a b ha hb).1, cost⟩
+  exact Bool.false_ne_true (law budget feasible)
+
+def fullLowerFamily : Registration fullLowerArena (type_of% full_budget_ge) where
+  actual := threshold 2036
+  bridge := by simp [threshold, realize]
+  variation := ⟨by simpa [fullLowerArena, threshold, realize] using full_budget_ge,
+    constantFalse, full_lower_false_fails⟩
+  sensitivity := by
+    constructor
+    · intro role
+      exact ⟨constantFalse, fun other h => (h (Subsingleton.elim other role)).elim,
+        rfl, full_lower_false_fails⟩
+    · intro a
+      exact nomatch a
+  dependence := by
+    rintro ⟨⟩
+    exact ⟨(), 2035, 2036, by decide⟩
+
+def fullLowerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    full_budget_ge (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers.fullBudgetLower
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers.fullLowerFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨fullLowerArena⟩
+  objectArena := .source ⟨fullLowerArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source fullLowerArena ⟨fullLowerFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ budget => decide (2036 ≤ budget)) (fun a => nomatch a))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.AxisBudgets.DimensionSixteenCovers

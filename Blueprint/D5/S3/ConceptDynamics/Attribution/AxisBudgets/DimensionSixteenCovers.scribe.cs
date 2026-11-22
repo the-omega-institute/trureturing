@@ -31,8 +31,8 @@ internal sealed class AxisBudgetDimensionSixteenCoversDocument : IScribeDocument
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Bound the fixed-seed cost of inclusion covers in dimension sixteen.",
-        H("The cost of inclusion covers in dimension sixteen"),
+        "Bound the fixed-seed costs of full inclusion and inclusion covers in dimension sixteen.",
+        H("Rank bounds for a sixteen-coordinate fixed-seed budget"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("sixteen-cover-factor"),
@@ -65,5 +65,18 @@ internal sealed class AxisBudgetDimensionSixteenCoversDocument : IScribeDocument
                     + "the odd cardinalities and the rank-cut parity at ranks five, seven and nine "
                     + "force three additional diagonal units. Thus at least 510 ordinary edges are "
                     + "charged. The marked column contributes one unit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sixteen-full-budget-lower"),
+                DeclarationHandle.Create(Prefix + "full_budget_ge"),
+                H("Full inclusion requires at least 2036 fixed seeds"),
+                StatementSource.FromAuthor(Disp(AtEachBudget(new Formula.Logic(
+                    Call("AxisFactorWithin", D(3), D(0), Budget), FormulaLogicOperator.Implies,
+                    new Formula.Relation(D(2,0,3,6), FormulaRelationOperator.LessThanOrEqual, Budget))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The low-side deficits at ranks one and three and the "
+                    + "high-side deficits at ranks eleven and thirteen force 508 charged ordinary "
+                    + "edges. The marked edge accounts for one more unit and a unit is four "
+                    + "fixed seeds."))),
                 DescribeRole.Theorem))));
 }

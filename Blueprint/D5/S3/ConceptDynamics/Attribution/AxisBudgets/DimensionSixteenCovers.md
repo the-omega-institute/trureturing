@@ -1,8 +1,8 @@
-# The cost of inclusion covers in dimension sixteen
+# Rank bounds for a sixteen-coordinate fixed-seed budget
 
 ## Abstract
 
-Bound the fixed-seed cost of inclusion covers in dimension sixteen.
+Bound the fixed-seed costs of full inclusion and inclusion covers in dimension sixteen.
 
 **Definition 1.1 (A feasible factor supported on diagonals and inclusion covers).**
 
@@ -28,9 +28,23 @@ $$\forall b \in \mathrm{Nat},\; \operatorname{CoverWithin}\left(b\right) \Righta
 
 If at most one exceptional edge enters the first four layers, the first and third ranks each pay an additional diagonal unit. If two enter, the odd cardinalities and the rank-cut parity at ranks five, seven and nine force three additional diagonal units. Thus at least 510 ordinary edges are charged. The marked column contributes one unit.
 
+**Theorem 1.3 (Full inclusion requires at least 2036 fixed seeds).**
+
+$$\forall b \in \mathrm{Nat},\; \operatorname{AxisFactorWithin}\left(3, 0, b\right) \Rightarrow 2036 \le b$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers.full_budget_ge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The low-side deficits at ranks one and three and the high-side deficits at ranks eleven and thirteen force 508 charged ordinary edges. The marked edge accounts for one more unit and a unit is four fixed seeds.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers.coverWithin`
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers.cover_budget_ge`
+- Truth anchor: `D5/S3/ConceptDynamics/Attribution/AxisBudgets/DimensionSixteenCovers.full_budget_ge`
+- Dependency: [D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteCapacity](../../../Combinatorics/Graph/RankCuts/RankedBipartiteCapacity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/RankCuts/RankedBipartiteDiagonalParity](../../../Combinatorics/Graph/RankCuts/RankedBipartiteDiagonalParity.md)
 - Dependency: [D5/S3/ConceptDynamics/Attribution/ParitySeedAxisFactor](../ParitySeedAxisFactor.md)

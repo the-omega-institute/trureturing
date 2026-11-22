@@ -4,10 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Diagonal parity and capacity force an adjacent-rank budget of at least 2044. -/
+   digest: Rank capacities and diagonal parity give the two sixteen-coordinate budget bounds. -/
 
 import D5.S3.ConceptDynamics.Attribution.ParitySeedAxisFactor
 import D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
+import D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity
 import Mathlib.Algebra.BigOperators.ModEq
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Tactic.IntervalCases
@@ -411,6 +412,111 @@ private theorem adjacent_cost_ge_2044_and_inflow (i : Fin 16) (e : AxisSubset 16
 
 
 end
+
+open D5.S3.ConceptDynamics.Attribution.ParitySeedFactor
+open D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteCapacity
+
+private theorem chosen_rank_count (i : Fin 16) (S : Finset ℕ) :
+    (univ.filter (fun A : AxisSubset 16 i => A.val.card ∈ S)).card
+      = ∑ s ∈ S, Nat.choose 15 s := by
+  rw [← sum_card_fiberwise_eq_card_filter (univ : Finset (AxisSubset 16 i)) S
+    (fun A => A.val.card)]
+  apply sum_congr rfl
+  intro r _
+  exact subset_layer_count i r
+
+private theorem rank_lt_top_iff (i : Fin 16) (A : AxisSubset 16 i) :
+    A.val.card < 15 ↔ A ≠ axisTop i := by
+  constructor
+  · intro h he
+    simp [he, top_card] at h
+  · intro h
+    rw [← top_card i]
+    apply card_lt_card
+    exact (ssubset_iff_subset_ne).mpr ⟨subset_top i A, fun he => h (Subtype.ext he)⟩
+
+-- Normalize finite rank counts without unfolding the factor itself.
+set_option maxHeartbeats 2000000 in
+private theorem full_budget_ge_for_coordinate (i : Fin 16) (budget : ℕ)
+    (feasible : axisFactorWithin 3 i budget) : 2036 ≤ budget := by
+  obtain ⟨edge, selected, _, _, row, col, support, cost⟩ := feasible
+  let ρ (A : AxisSubset 16 i) := A.val.card
+  let t := axisTop i
+  let e (A B : AxisSubset 16 i) := (edge A B).toNat
+  let R : Finset ℕ := {1,3,11,13}
+  have cut := paid_edges_ge_rank_capacity ρ t 3 e R
+  have ht : ρ t = 15 := top_card i
+  have eligible : ∀ r ∈ R, r < ρ t ∧ r % 2 = 1 := by
+    rw [ht]
+    decide
+  have ordered (A B : AxisSubset 16 i) (ha : A ≠ t) (he : e A B ≠ 0) :
+      A = B ∨ ρ A < ρ B := by
+    by_cases hab : A = B
+    · exact Or.inl hab
+    · have h : edge A B = true := by cases h : edge A B <;> simp_all [e]
+      exact Or.inr (card_lt_card ((ssubset_iff_subset_ne).mpr
+        ⟨support A B ha h, fun heq => hab (Subtype.ext heq)⟩))
+  have ordinary_degree (d : ℕ) (h : residualDegree 3 selected false d) :
+      1 ≤ d ∧ d ≤ 3 := by
+    have odd : d % 2 = 1 := by simpa [residualDegree] using h.2
+    exact ⟨by omega, by simpa [residualDegree] using h.1⟩
+  have top_degree (d : ℕ) (h : residualDegree 3 selected true d) :
+      d ≤ 2 := by
+    cases hs : selected
+    · have hcap : d ≤ 1 := by simpa [residualDegree, hs] using h.1
+      exact hcap.trans (by decide)
+    · simpa [residualDegree, hs] using h.1
+  have bound := cut eligible ordered
+    (fun A ha => (ordinary_degree _ (by simpa [t, ha, e] using row A)).1)
+    (fun B hb => (ordinary_degree _ (by simpa [t, hb, e] using col B)).1)
+    (fun A ha => (ordinary_degree _ (by simpa [t, ha, e] using row A)).2)
+    (fun B hb => (ordinary_degree _ (by simpa [t, hb, e] using col B)).2)
+  have row_cap : (∑ B, e t B) ≤ 2 :=
+    top_degree _ (by simpa only [t, e, decide_true, eq_self] using row t)
+  have col_cap : (∑ A, e A t) ≤ 2 :=
+    top_degree _ (by simpa only [t, e, decide_true, eq_self] using col t)
+  let L (r : ℕ) := (univ.filter (fun A : AxisSubset 16 i => ρ A ≤ r)).card
+  let Ls (r : ℕ) := (univ.filter (fun A : AxisSubset 16 i => ρ A < r)).card
+  let H (r : ℕ) := (univ.filter (fun A : AxisSubset 16 i => r ≤ ρ A ∧ A ≠ t)).card
+  let Hs (r : ℕ) := (univ.filter (fun A : AxisSubset 16 i => r < ρ A ∧ A ≠ t)).card
+  have hs (r : ℕ) : ((univ.filter (fun A : AxisSubset 16 i => r < ρ A)).erase t).card = Hs r := by
+    congr 1
+    ext A
+    simp [and_comm]
+  have l_count (r : ℕ) : L r = ∑ s ∈ range (r+1), Nat.choose 15 s := by
+    simpa [L, ρ, Nat.lt_succ_iff] using chosen_rank_count i (range (r+1))
+  have ls_count (r : ℕ) : Ls r = ∑ s ∈ range r, Nat.choose 15 s := by
+    simpa [Ls, ρ] using chosen_rank_count i (range r)
+  have h_count (r : ℕ) : H r = ∑ s ∈ (range 15).filter (r ≤ ·), Nat.choose 15 s := by
+    simpa [H, ρ, t, ← rank_lt_top_iff i, and_comm] using
+      chosen_rank_count i ((range 15).filter (r ≤ ·))
+  have hs_count (r : ℕ) : Hs r = ∑ s ∈ (range 15).filter (r < ·), Nat.choose 15 s := by
+    simpa [Hs, ρ, t, ← rank_lt_top_iff i, and_comm] using
+      chosen_rank_count i ((range 15).filter (r < ·))
+  let F (r : ℕ) : ℕ := ∑ b ∈ univ.filter (fun B : AxisSubset 16 i => ρ B ≤ r), e t b
+  let G (r : ℕ) : ℕ := ∑ a ∈ univ.filter (fun A : AxisSubset 16 i => r ≤ ρ A ∧ A ≠ t), e a t
+  change (∑ r ∈ R, max (L r - (Ls r * 3 + F r))
+    (H r - (((univ.filter (fun A : AxisSubset 16 i => r < ρ A)).erase t).card * 3 + G r))) ≤
+      _ at bound
+  have fixed := (show (∑ r ∈ R, max (L r - (Ls r * 3 + 2)) (H r - (Hs r * 3 + 2))) ≤
+      ∑ r ∈ R, max (L r - (Ls r * 3 + F r)) (H r - (Hs r * 3 + G r)) from
+    Finset.sum_le_sum fun r _ => by
+      have hF : F r ≤ 2 :=
+        (sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)).trans row_cap
+      have hG : G r ≤ 2 :=
+        (sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)).trans col_cap
+      apply max_le_max <;> omega)
+  simp_rw [hs] at bound
+  have bound := fixed.trans bound
+  simp_rw [l_count, ls_count, h_count, hs_count] at bound
+  have computed : (∑ r ∈ R, max
+      ((∑ s ∈ range (r+1), Nat.choose 15 s) - ((∑ s ∈ range r, Nat.choose 15 s) * 3 + 2))
+      ((∑ s ∈ (range 15).filter (r ≤ ·), Nat.choose 15 s) -
+        ((∑ s ∈ (range 15).filter (r < ·), Nat.choose 15 s) * 3 + 2))) = 508 := by
+       decide
+  rw [computed] at bound
+  exact (Nat.mul_le_mul_left 4 (Nat.add_le_add_left bound 1)).trans cost
+
 end SixteenAdjacentRank
 
 open Finset
@@ -453,6 +559,11 @@ theorem cover_budget_ge (budget : ℕ) (h : coverWithin budget) : 2044 ≤ budge
     (fun A => cap A _ (rows A)) (fun B => cap B _ (cols B))
     (fun A hA => odd A _ (rows A) hA) (fun B hB => odd B _ (cols B) hB)).1
   exact lb.trans cost
+
+/-- Rank capacities bound the budget of the full inclusion graph at coordinate zero. -/
+theorem full_budget_ge (budget : ℕ) (h : axisFactorWithin 3 coordinate budget) :
+    2036 ≤ budget :=
+  SixteenAdjacentRank.full_budget_ge_for_coordinate coordinate budget h
 
 end
 
