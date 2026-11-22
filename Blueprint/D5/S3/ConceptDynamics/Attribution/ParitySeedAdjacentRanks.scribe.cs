@@ -28,7 +28,7 @@ internal sealed class ParitySeedAdjacentRanksDocument : IScribeDocumentDefinitio
                     + "The exceptional row of the full subset keeps all its outgoing edges except "
                     + "the deleted marked edge. The two full-subset vertices use the same choice "
                     + "of parity and cap, namely even degrees at most two or odd degrees at most "
-                    + "one. All other degrees are odd and at most three. The cost is four times "
+                    + "one. All other degrees are odd and at most three. The cost is four times the sum of "
                     + "one plus the number of ordinary chosen edges joining two odd subsets."))),
                 DescribeRole.Definition),
             Describe.Lean(

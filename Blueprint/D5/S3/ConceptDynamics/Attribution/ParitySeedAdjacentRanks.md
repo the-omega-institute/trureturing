@@ -14,7 +14,7 @@ $$\operatorname{AxisFactorWithin}\left(3, 0, 36\right) \Rightarrow \operatorname
 
 *Commentary.*
 
-Fix coordinate zero in dimension eight and multiplier three. The assertion says that a factor within budget 36 still exists when each ordinary allowed edge either joins two copies of the same subset or adds exactly one element. The exceptional row of the full subset keeps all its outgoing edges except the deleted marked edge. The two full-subset vertices use the same choice of parity and cap, namely even degrees at most two or odd degrees at most one. All other degrees are odd and at most three. The cost is four times one plus the number of ordinary chosen edges joining two odd subsets.
+Fix coordinate zero in dimension eight and multiplier three. The assertion says that a factor within budget 36 still exists when each ordinary allowed edge either joins two copies of the same subset or adds exactly one element. The exceptional row of the full subset keeps all its outgoing edges except the deleted marked edge. The two full-subset vertices use the same choice of parity and cap, namely even degrees at most two or odd degrees at most one. All other degrees are odd and at most three. The cost is four times the sum of one plus the number of ordinary chosen edges joining two odd subsets.
 
 **Theorem 1.2 (The adjacent-rank assertion is false).**
 
