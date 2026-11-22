@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Entropy/BinaryCompression
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/federmerhav1994entropyerror]
+   anchors: []
    utility: none
    digest: Sharp binary conditional entropy and Bayes error frontiers. -/
 
