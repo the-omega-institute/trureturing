@@ -306,8 +306,6 @@ Run `make gate BASE="$base_sha"` when the plan fits the local check scope. Ordin
 `check-current` and applicable `check-delta`. Each consumes the same scoped
 Lean reports. Source-only input can be checked with an empty report list.
 Use `make test BASE="$base_sha"` to run the scoped current check on its own.
-For an explicit whole-repository check, `make test FULL_BUILD=1` builds the full Lean report and
-runs check-current.
 Base supplies data only. Use `origin/dev` when that is your project remote.
 Commit and push each logical change; local checks provide early feedback alongside
 remote CI. Report actual commands and exit codes. Local success does not replace
