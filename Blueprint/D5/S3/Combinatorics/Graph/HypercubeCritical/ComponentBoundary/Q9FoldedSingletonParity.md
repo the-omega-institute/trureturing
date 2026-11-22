@@ -1,8 +1,8 @@
-# Residual singleton quota for a coordinate fold
+# Singleton parity in three archived Q₉ folds
 
 ## Abstract
 
-Odd rows on fixed singleton sites give a lower bound on the number of extra singleton sites in a completion.
+A residual incidence count excludes odd singleton completions within the quota for three archived folds.
 
 **Theorem 1.1 (Odd rows force a residual incidence quota).**
 
@@ -22,10 +22,25 @@ For a Huang-balanced induced cubic support of order 126, fold Q₉ along the arc
 
 For cases 2, 3 and 6, take S to be the singleton sites in the odd class of Q₈. The 18+3 dimer profile gives 168 transverse edges, since 3 · 126 / 2 − (18 + 3) = 168. On the odd class each of the three dimers accounts for four transverse incidences and each singleton for three. Thus the odd class has a quota of 52 singletons.
 
-The verified signed-shadow domains and one pass of parity forcing give a fixed set A of 48 odd singleton sites in each case. The admissible extra sites are odd sites outside both the shadow and A. Take R to be all even centres with an odd number of transverse neighbours in A. The archive replay gives 24, 24 and 32 rows in cases 2, 3 and 6 respectively, and at most four incident rows per admissible extra site. The bound gives at least 6, 6 and 8 extra sites, hence at least 54, 54 and 56 odd singletons. Only four extra sites fit the quota.
+**Theorem 1.2 (Odd singleton lower bounds for cases 2, 3 and 6).**
 
-The inputs on forced and admissible sites and the row counts come from the order126 archive's fold-parity-quota-result.json and fold-parity-quota.py replay. The incidence argument applies to cases 2, 3 and 6 of the seven archived degree-six order-eighteen supports with their inherited fold and verified shadow domains. The full value of f₂(Q₉) in Hong, Wu and Xia's Problem 2 remains open. https://arxiv.org/html/2610.09483v1#Thmproblem2
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9FoldedSingletonParity.archived_completion_card_lower_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9FoldedSingletonParity.archived_completion_card_lower_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Index the archive cases 2, 3 and 6 by 0, 1 and 2 in Fin 3. Encode each Q₈ site by its eight binary digits. Let A be the fixed set for the case and F its admissible free set. If a set S of sites contains A, if every site of S outside A belongs to F, and if every even centre has an even number of transverse neighbours in S, then S contains at least 54 sites in cases 2 and 3 and at least 56 in case 6.
+
+The lists for A and F come from the order126 archive's fold-parity-quota.py replay. The signed-shadow domains and one pass of parity forcing give A. The odd sites outside both the shadow and A give F. Lean forms the eight transverse neighbours by XOR with the eight one-bit masks. Among the even centres it selects the rows with odd degree into A.
+
+The finite calculation gives 48 fixed sites in each case, 24, 24 and 32 selected rows, respectively, and maximum incidence four over the free sites in each case. The residual incidence bound requires at least 6, 6 and 8 extra sites, respectively. Each exceeds the four remaining slots under the quota of 52.
+
+The exclusion is conditional on the archived fixed and admissible free masks for the three inherited folds and on the even-centre parity constraints. Hong, Wu and Xia's Problem 2 asks for the full value of f₂(Q₉), which remains open. https://arxiv.org/html/2610.09483v1#Thmproblem2
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9FoldedSingletonParity.archived_completion_card_lower_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/ComponentBoundary/Q9FoldedSingletonParity.card_rows_le_residual_quota`
