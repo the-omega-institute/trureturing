@@ -70,8 +70,9 @@ private theorem raised_bound_fails : ¬ arena.Law raisedBound := by
   have totalBound := sum_le_sum (s := (univ : Finset (EvenSubset 6)))
     fun p _ => sum_le_sum (s := (univ : Finset (OddSubset 6))) fun q _ => localBound p q
   simp only [sum_const, card_univ, nsmul_eq_mul, evenCard, oddCard] at totalBound
-  change 24577 ≤ _ at claimed
-  omega
+  change 24577 ≤ ∑ p : EvenSubset 6, ∑ q : OddSubset 6,
+    (if p.val = univ then m full q else m p q % 2) * (p.val ∩ q.val).card at claimed
+  exact (by decide : ¬ 24577 ≤ 6144) (claimed.trans totalBound)
 
 def family : Registration arena (type_of% fixed_from_odd_margins) where
   actual := actual
