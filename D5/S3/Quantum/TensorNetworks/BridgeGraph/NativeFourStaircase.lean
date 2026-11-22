@@ -6,7 +6,6 @@
    utility: none
    digest: Width-four scalar column Gram constructions and the large-ratio classification. -/
 
-import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeScalarGram
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeThreeRectangularBound
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourKernel
 
@@ -22,7 +21,17 @@ open scoped BigOperators Kronecker
 
 namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeFourStaircase
 
-open D5.S3.Quantum.Entanglement.SequentialRegisterCircuit (coordinateMatrix coordinate_gram)
+private def coordinateMatrix {I J : Type*} [DecidableEq J] (e : I ↪ J) :
+    Matrix J I ℂ := fun j i => if e i = j then 1 else 0
+
+private theorem coordinate_gram {I J : Type*} [Fintype J] [DecidableEq I] [DecidableEq J]
+    (e : I ↪ J) : (coordinateMatrix e)ᴴ * coordinateMatrix e = 1 := by
+  have h : coordinateMatrix e = (1 : Matrix J J ℂ).submatrix (Equiv.refl J) e := by
+    ext j i
+    simp [coordinateMatrix, Matrix.one_apply, eq_comm]
+  rw [h, Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one,
+    Matrix.submatrix_mul_equiv _ _ e (Equiv.refl J) e, Matrix.one_mul,
+    Matrix.submatrix_one_embedding]
 
 /-- A sum of four rectangular Kronecker products has the specified scalar column Gram. -/
 def FourScalarGram (a b c d : ℕ) (lam : ℝ) : Prop :=
@@ -211,6 +220,32 @@ private theorem thirds_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     fin_cases r <;> fin_cases s <;>
       simp_all [thirds, Rectangle.covers, Rectangle.image] <;> omega
 
+private def halves (a b c d : ℕ) : Fin 4 → Rectangle :=
+  let excess := b - a
+  let spare := d - c
+  ![⟨0, 0, 0, 0, a, c⟩, ⟨a, 0, 0, c, excess, spare⟩,
+    ⟨a, spare, excess, c, excess, spare⟩, ⟨0, 0, 0, 0, 0, 0⟩]
+
+set_option maxHeartbeats 1800000 in
+private theorem halves_gram {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
+    (hb : 2 * b ≤ 3 * a) (hd : 3 * c ≤ 2 * d) : FourScalarGram a b c d lam := by
+  apply rectangles_gram hlam (halves a b c d)
+  · intro x hx y hy
+    by_cases h₀ : x < a
+    · exact ⟨0, by simp [halves, Rectangle.covers, h₀, hy]⟩
+    by_cases h₁ : y < d - c
+    · exact ⟨1, by simp [halves, Rectangle.covers] <;> omega⟩
+    exact ⟨2, by simp [halves, Rectangle.covers] <;> omega⟩
+  · intro r s x y hx hy hr hs
+    fin_cases r <;> fin_cases s <;> simp_all [halves, Rectangle.covers] <;> omega
+  · intro r x y hx hy hr
+    fin_cases r <;> simp_all [halves, Rectangle.covers, Rectangle.image] <;> omega
+  · intro r s x y u v hne hx hy hu hv hr hs he
+    have hl := congrArg Prod.fst he
+    have hh := congrArg Prod.snd he
+    fin_cases r <;> fin_cases s <;>
+      simp_all [halves, Rectangle.covers, Rectangle.image] <;> omega
+
 private def threeFifths (a b c d : ℕ) : Fin 4 → Rectangle :=
   let excess := b - a
   let spare := d - c
@@ -279,9 +314,7 @@ private theorem one_orientation {a b c d : ℕ} {lam : ℝ} (hlam : 0 < lam)
     ⟨_, hb, hd⟩ | ⟨_, hb, hd⟩ | ⟨_, hb, hd⟩ | ⟨_, hb, hd⟩
   · exact blocks_gram (k := 1) hlam (by decide) (by simpa using hb) (by simpa using hd)
   · exact thirds_gram hlam hb hd
-  · obtain ⟨X, Y, h⟩ := NativeScalarGram.native_scalar_gram_exists a b c d hb hd lam hlam
-    refine ⟨Fin.snoc X 0, Fin.snoc Y 0, ?_⟩
-    simpa [Fin.sum_univ_castSucc] using h
+  · exact halves_gram hlam hb hd
   · exact three_fifths_gram hlam hb hd
   · exact blocks_gram (k := 2) hlam (by decide) hb hd
   · exact two_fifths_gram hlam hb hd
