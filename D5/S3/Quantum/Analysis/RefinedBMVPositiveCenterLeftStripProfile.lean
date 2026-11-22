@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterTailAverage
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
 /-! # The leading term for a small lower coordinate and a separated upper coordinate -/
@@ -592,10 +593,150 @@ theorem separated_correction_derivative_bounds {h t : ℝ} (hh : 0 < h) (ht : 6 
     by dsimp only [D₃]; nlinarith only [mul_nonneg (mul_nonneg hk hThird) he],
     hA₃⟩
 
+/-- The square root's first three derivatives are controlled by the small
+leading square throughout the separated part of the left strip. -/
+theorem separated_radical_derivative_bounds {h t : ℝ}
+    (hh : 0 < h) (hhmax : h ≤ 3/11) (ht : 6 ≤ t) :
+    let B := ((3+h)*(3+2*h)/2) * (upperTailGap h t)^2 * Real.exp (-(2*t))
+    let b : ℝ → ℝ := fun x ↦ Real.sqrt (1 - upperTailLambda h x)
+    |deriv b t| ≤ (13/10)*B ∧ |deriv (deriv b) t| ≤ (33/10)*B ∧
+      |deriv (deriv (deriv b)) t| ≤ (83/10)*B := by
+  let A := separatedCorrection h
+  let B := separatedSquare h
+  let S : ℝ → ℝ := fun x ↦ 1 - upperTailLambda h x
+  let b : ℝ → ℝ := fun x ↦ Real.sqrt (S x)
+  have hA : ContDiff ℝ 3 A := by unfold A separatedCorrection upperTailGap; fun_prop
+  have hB : ContDiff ℝ 3 B := by unfold B separatedSquare upperTailGap; fun_prop
+  have hS : ContDiff ℝ 3 S := by dsimp [S, upperTailLambda, upperTailGap]; fun_prop
+  have hA₁ : ContDiff ℝ 2 (deriv A) := hA.deriv'
+  have hA₂ : ContDiff ℝ 1 (deriv (deriv A)) := hA₁.deriv'
+  have hB₁ : ContDiff ℝ 2 (deriv B) := hB.deriv'
+  have hB₂ : ContDiff ℝ 1 (deriv (deriv B)) := hB₁.deriv'
+  have hS₁ : deriv S = fun x ↦ -(deriv A x + deriv B x) := by
+    funext x
+    change deriv (fun y ↦ 1 - (A y + B y)) x = _
+    rw [deriv_const_sub, deriv_fun_add (hA.differentiable (by decide) x)
+      (hB.differentiable (by decide) x)]
+  have hS₂ : deriv (deriv S) = fun x ↦ -(deriv (deriv A) x + deriv (deriv B) x) := by
+    funext x
+    rw [hS₁, deriv.fun_neg, deriv_fun_add (hA₁.differentiable (by decide) x)
+      (hB₁.differentiable (by decide) x)]
+  have hS₃ : deriv (deriv (deriv S)) t =
+      -(deriv (deriv (deriv A)) t + deriv (deriv (deriv B)) t) := by
+    rw [hS₂, deriv.fun_neg, deriv_fun_add (hA₂.differentiable (by decide) t)
+      (hB₂.differentiable (by decide) t)]
+  obtain ⟨hBmax, hbmin⟩ := separated_radical_lower hh hhmax ht
+  change B t < 1/750 at hBmax
+  change (999/1000 : ℝ) ≤ b t at hbmin
+  have hbpos : 0 < b t := by linarith
+  have hSt : 0 < S t := Real.sqrt_pos.mp hbpos
+  have hnear : ∀ᶠ x in 𝓝 t, 0 < S x :=
+    hS.continuous.continuousAt.eventually (eventually_gt_nhds hSt)
+  have hb (x : ℝ) (hx : 0 < S x) : ContDiffAt ℝ 3 b x :=
+    (Real.contDiffAt_sqrt hx.ne').comp x hS.contDiffAt
+  have hbD (x : ℝ) (hx : 0 < S x) : DifferentiableAt ℝ b x :=
+    (hb x hx).differentiableAt (by decide)
+  have hbD₁ (x : ℝ) (hx : 0 < S x) : DifferentiableAt ℝ (deriv b) x :=
+    ((hb x hx).derivWithin (show (2 : WithTop ℕ∞) + 1 ≤ 3 by decide)).differentiableAt (by decide)
+  have hbD₂ : DifferentiableAt ℝ (deriv (deriv b)) t :=
+    (((hb t hSt).derivWithin (show (2 : WithTop ℕ∞) + 1 ≤ 3 by decide)).derivWithin
+      (show (1 : WithTop ℕ∞) + 1 ≤ 2 by decide)).differentiableAt (by decide)
+  have hSq (x : ℝ) (hx : 0 < S x) : (fun y ↦ b y ^ 2) =ᶠ[𝓝 x] S := by
+    filter_upwards [hS.continuous.continuousAt.eventually (eventually_gt_nhds hx)] with y hy
+    exact Real.sq_sqrt hy.le
+  have hb₁ (x : ℝ) (hx : 0 < S x) : deriv S x = 2*b x*deriv b x := by
+    rw [← (hSq x hx).deriv_eq, deriv_fun_pow (hbD x hx) 2]
+    simp
+  have hb₂ (x : ℝ) (hx : 0 < S x) :
+      deriv (deriv S) x = 2*deriv b x ^ 2 + 2*b x*deriv (deriv b) x := by
+    have heq : deriv S =ᶠ[𝓝 x] fun y ↦ 2*b y*deriv b y := by
+      filter_upwards [hS.continuous.continuousAt.eventually (eventually_gt_nhds hx)] with y hy
+      exact hb₁ y hy
+    have hd := ((hbD x hx).hasDerivAt.const_mul 2).mul (hbD₁ x hx).hasDerivAt
+    change HasDerivAt (fun y ↦ 2*b y*deriv b y) _ x at hd
+    rw [heq.deriv_eq, hd.deriv]
+    ring
+  have hb₃ : deriv (deriv (deriv S)) t =
+      6*deriv b t*deriv (deriv b) t + 2*b t*deriv (deriv (deriv b)) t := by
+    have heq : deriv (deriv S) =ᶠ[𝓝 t]
+        fun y ↦ 2*deriv b y ^ 2 + 2*b y*deriv (deriv b) y := by
+      filter_upwards [hnear] with y hy using hb₂ y hy
+    have hd := (((hbD₁ t hSt).hasDerivAt.pow 2).const_mul 2).add
+      (((hbD t hSt).hasDerivAt.const_mul 2).mul hbD₂.hasDerivAt)
+    change HasDerivAt (fun y ↦ 2*deriv b y ^ 2 + 2*b y*deriv (deriv b) y) _ t at hd
+    rw [heq.deriv_eq, hd.deriv]
+    ring
+  obtain ⟨hA₁pos, hA₁max, hA₂pos, hA₂max, hA₃pos, hA₃max⟩ :=
+    separated_correction_derivative_bounds hh ht
+  obtain ⟨hB₁pos, hB₁max, hB₂pos, hB₂max, hB₃pos, hB₃max⟩ :=
+    separated_square_derivative_bounds hh hhmax ht
+  have hAB : A t ≤ B t / 3400 := (separated_marginal_correction_lt hh ht).le
+  have ha₀ : 0 ≤ upperTailGap h t := by
+    unfold upperTailGap
+    exact div_nonneg (sub_nonneg.mpr (Real.exp_le_one_iff.mpr (by nlinarith))) hh.le
+  have hAt : 0 ≤ A t := by dsimp [A, separatedCorrection]; positivity
+  have hBt : 0 ≤ B t := by dsimp [B, separatedSquare]; positivity
+  have hα : 3+h ≤ 4 := by linarith
+  have hα₀ : 0 ≤ 3+h := by linarith
+  have hbound (n : ℕ) : (3+h)^n * A t ≤ 4^n * (B t / 3400) :=
+    mul_le_mul (pow_le_pow_left₀ hα₀ hα n) hAB hAt (by positivity)
+  have hS₁max : |deriv S t| ≤ (21/10)*B t := by
+    change 0 ≤ -deriv A t at hA₁pos
+    change 0 ≤ -deriv B t at hB₁pos
+    rw [hS₁, abs_of_nonneg (by linarith only [hA₁pos, hB₁pos])]
+    have hm := hbound 1
+    simp only [pow_one] at hm
+    change -deriv A t ≤ (3+h)*A t at hA₁max
+    change -deriv B t ≤ 2*B t at hB₁max
+    linarith only [hA₁max, hB₁max, hm, hBt]
+  have hS₂max : |deriv (deriv S) t| ≤ (41/10)*B t := by
+    change 0 ≤ deriv (deriv A) t at hA₂pos
+    change 0 ≤ deriv (deriv B) t at hB₂pos
+    rw [hS₂, abs_of_nonpos (by linarith only [hA₂pos, hB₂pos])]
+    have hm := hbound 2
+    change deriv (deriv A) t ≤ (3+h)^2*A t at hA₂max
+    change deriv (deriv B) t ≤ 4*B t at hB₂max
+    linarith only [hA₂max, hB₂max, hm, hBt]
+  have hS₃max : |deriv (deriv (deriv S)) t| ≤ (81/10)*B t := by
+    change 0 ≤ -deriv (deriv (deriv A)) t at hA₃pos
+    change 0 ≤ -deriv (deriv (deriv B)) t at hB₃pos
+    rw [hS₃, abs_of_nonneg (by linarith only [hA₃pos, hB₃pos])]
+    have hm := hbound 3
+    change -deriv (deriv (deriv A)) t ≤ (3+h)^3*A t at hA₃max
+    change -deriv (deriv (deriv B)) t ≤ 8*B t at hB₃max
+    linarith only [hA₃max, hB₃max, hm, hBt]
+  have hscale (x y z M : ℝ) (heq : 2*b t*x = z-y)
+      (hz : |z| + |y| ≤ (999/500)*M*B t) : |x| ≤ M*B t := by
+    have hm : |2*b t*x| ≤ |z| + |y| := by rw [heq]; exact abs_sub z y
+    rw [abs_mul, abs_of_nonneg (by positivity : 0 ≤ 2*b t)] at hm
+    have hs := mul_le_mul_of_nonneg_right hbmin (abs_nonneg x)
+    linarith
+  have hb₁max : |deriv b t| ≤ (13/10)*B t := by
+    apply hscale _ 0 (deriv S t) _ (by rw [hb₁ t hSt, sub_zero])
+    rw [abs_zero, add_zero]
+    linarith only [hS₁max, hBt]
+  have hb₂max : |deriv (deriv b) t| ≤ (33/10)*B t := by
+    apply hscale _ (2*deriv b t^2) (deriv (deriv S) t) _ (by rw [hb₂ t hSt]; ring)
+    have hm := mul_le_mul hb₁max hBmax.le hBt (by positivity : 0 ≤ (13/10)*B t)
+    have hk := mul_le_mul_of_nonneg_left hb₁max (abs_nonneg (deriv b t))
+    rw [abs_of_nonneg (by positivity : 0 ≤ 2*deriv b t^2)]
+    rw [← abs_mul, abs_mul_self] at hk
+    nlinarith only [hS₂max, hm, hk,
+      mul_le_mul_of_nonneg_left hm (by norm_num : (0 : ℝ) ≤ 13/10), hBt]
+  have hb₃max : |deriv (deriv (deriv b)) t| ≤ (83/10)*B t := by
+    apply hscale _ (6*deriv b t*deriv (deriv b) t) (deriv (deriv (deriv S)) t) _
+      (by rw [hb₃]; ring)
+    rw [abs_mul, abs_mul, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 6)]
+    have hm := mul_le_mul hb₁max hb₂max (abs_nonneg _) (by positivity : 0 ≤ (13/10)*B t)
+    have hk := mul_le_mul_of_nonneg_left hBmax.le hBt
+    nlinarith only [hS₃max, hm, hk, hBt]
+  exact ⟨hb₁max, hb₂max, hb₃max⟩
+
 #print axioms leftStrip_geometric_mixed_lt
 #print axioms separated_radical_lower
 #print axioms separated_marginal_correction_lt
 #print axioms separated_square_derivative_bounds
 #print axioms separated_correction_derivative_bounds
+#print axioms separated_radical_derivative_bounds
 
 end RefinedBMV.PositiveCenter
