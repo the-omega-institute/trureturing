@@ -186,5 +186,14 @@ positive center, the ordered quartic and the corner inequality control
 the block of at most two distinct larger eigenvalues. The cyclic trace
 identity and Schur product give the product comparison.
 
+For arbitrary spectral multiplicities, the repository reduces the
+upper-block positivity condition at each positive first degree to one
+scalar sign. The mixed derivative of the normalized logarithmic kernel
+must be nonpositive at every pair (0<u<v). The two endpoint limits
+complete the rectangle inequalities on finite ordered samples. At a
+zero center, the unnormalized matrices converge on each fixed sample,
+and the positive semidefinite cone is closed. The trace inequalities
+then follow at every degree for which the scalar sign is established.
+
 - [Hägele, arXiv:2611.00129v1](https://arxiv.org/abs/2611.00129v1).
 - [Cha–Lee, the separate upper-bound counterexamples](https://arxiv.org/abs/2603.19927).

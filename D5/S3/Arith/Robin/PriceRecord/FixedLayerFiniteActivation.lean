@@ -220,7 +220,7 @@ private theorem omitted_layers_bounds {p m K : ℕ} {q : ℝ} (hp : p.Prime) (hq
 def fixedPriceMinimum (S : Finset ℕ) (lam : ℝ) : ℝ :=
   sInf {v | ∃ a : ℕ → ℕ, supportedAdmissible S a ∧ linearCost S lam a = v}
 
-private theorem sum_local_minima_isLeast {S : Finset ℕ} {lam : ℝ} (hS : primeSupport S)
+theorem sum_local_minima_isLeast {S : Finset ℕ} {lam : ℝ} (hS : primeSupport S)
     (hlam : 0 < lam) :
     IsLeast {v | ∃ a : ℕ → ℕ, supportedAdmissible S a ∧ linearCost S lam a = v}
       (∑ p ∈ S, localMinimum p (lam * log (p : ℝ))) := by
