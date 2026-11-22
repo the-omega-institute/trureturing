@@ -70,6 +70,7 @@ import Init.Data.Prod
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Group.Monoid
+import Mathlib.Algebra.Group.Semigroup
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Finset.Card

@@ -23,6 +23,7 @@ lift_counts: proof_shape=bind-only; consumers=HardinA203981StripCertificate.coun
 -/
 
 import Init.Core
+import Init.Ext
 import Init.SimpLemmas
 import Lean.Meta.Tactic.Simp.BuiltinSimprocs.Fin
 import Mathlib.Data.Finset.Insert

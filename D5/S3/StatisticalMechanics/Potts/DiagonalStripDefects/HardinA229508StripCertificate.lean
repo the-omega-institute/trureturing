@@ -27,6 +27,7 @@ halfForwardOne: proof_shape=bind-only; consumers=W
 -/
 
 import Mathlib.Order.Fin.Basic
+import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Data.Finset.NatAntidiagonal
 import Mathlib.Algebra.Order.Antidiag.Prod
 import Mathlib.Basic.Logic.Basic
