@@ -10,7 +10,7 @@ internal sealed class WuEndpointQuarticPrefixDocument : IScribeDocumentDefinitio
         "A quartic variance bound for the four prefix averages of the Wu endpoint convolution.",
         H("Quartic positivity at the Wu endpoint"),
         Blocks(
-            Paragraph(Text("At the tracial three-to-four endpoint, spectral majorization bounds the ordered eigenvalues of the signed two-mode output by the classical convolution. The four tail averages of that comparison vector are the candidates in the quartic maximization over the majorization polytope.")),
+            Paragraph(Text("At the tracial three-to-four endpoint, the classical convolution majorizes the ordered spectrum of the signed two-mode output. For a nonzero input, the prefix reduction for maximizing the sum of t⁴ − κt³ over the majorization polytope uses the four tail averages, with κ equal to the ratio of the third and second input moments.")),
             Describe.Lean(DescribeId.Create("spectral-moment"), DeclarationHandle.Create(Owner + "spectralMoment"),
                 H("Normalized spectral moment"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The moment of order j of a real four-vector is the sum of its jth powers divided by four."))), DescribeRole.Definition),
