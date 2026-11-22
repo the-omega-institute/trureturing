@@ -24,13 +24,12 @@ Put q=m+1 and u=log x. For each ε>0 choose η=min(ε/2,1/36). The RH ordinary M
 
 For u≥q, write vₙ=u/n and E(v)=exp(−u/q+v/2). In the difference of adjacent modes, the phase increment comes with E(vₙ₊₁), so E(vₙ₊₁)(vₙ−vₙ₊₁)≤2(E(vₙ)−E(vₙ₊₁)). The envelope telescopes and bounds the mode variation by O((1+|Im ρ|)/|ρ|) for every u.
 
-The local logarithmic zero count gives an inverse-root bin mass of order (1+|k|)^(η−1). Finite complex Abel summation at low bins costs O(q^β(H+1)^(1+η)). Squaring and summing the high bin masses and applying weighted sampling costs O(qH^(η−1/2)). The cutoff H=floor(q^(2/9)) gives a bound of order q^(8/9+2η).
+The local logarithmic zero count gives an inverse-root bin mass of order (1+|k|)^(η−1). Finite complex Abel summation at low bins costs O(q^β(H+1)^(1+η)). Squaring and summing the high bin masses and applying weighted sampling costs O(qH^(η−1/2)). Balancing the two terms at H=floor(q^(2(1−β)/3)) gives the general window exponent (2+β)/3 with positive slack. With the stated β and remaining slack ε−η/3, the exponent is 8/9+ε.
 
 Integrate the normalized density estimates with the factor exp(−(1/2−1/q)u) between log a and log B. The endpoint gap vanishes for B=a. The constants are uniform in the order and the two endpoints for each fixed ε.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusEightNinths.prime_window_mobius_eight_ninths_of_rh`
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/OmittedSpectrumCutoff](OmittedSpectrumCutoff.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/PowerWindowDensity](PowerWindowDensity.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/PowerPrefixWindow](PowerPrefixWindow.md)
 - Dependency: [D5/S3/Weil/ZetaPntBounds/MobiusEnergyPointwise](../../../../ZetaPntBounds/MobiusEnergyPointwise.md)

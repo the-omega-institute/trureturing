@@ -7,6 +7,7 @@ doi: 10.1137/S0895479892240683
 url: https://cklixx.people.wm.edu/corr.pdf
 claim: "An extreme complex correlation matrix of size d and rank r satisfies r² ≤ d."
 strata_touched:
+  - D5/S3/Quantum/Recovery/CommutingRandomUnitaryRecovery
   - D5/S3/Quantum/Recovery/TernaryRandomUnitaryRecovery
 license: citation-only
 triage: anchor
@@ -14,6 +15,6 @@ triage: anchor
 
 # Extreme complex correlation matrices
 
-Theorem 1(b) characterizes extremality by the real span of the rank-one Hermitian outer products of Gram vectors. Corollary 2(a) on p. 904 gives the complex rank bound r² ≤ d for an extreme correlation matrix. [Author copy](https://cklixx.people.wm.edu/corr.pdf) · [SIAM J. Matrix Anal. Appl. 15(3), 903–908](https://doi.org/10.1137/S0895479892240683)
+Theorem 1(b) gives the extremality criterion via the real span of the Hermitian outer products of the Gram vectors. Corollary 2(a) on p. 904 gives the nonstrict complex rank bound r² ≤ d. [Li–Tam author copy](https://cklixx.people.wm.edu/corr.pdf)
 
-For commuting random-unitary noise, simultaneous diagonalization gives a linear objective on the compact convex set of positive semidefinite matrices with unit diagonal. Trace preservation bounds each row norm of the conjugated decoder diagonals. Adding one separate coordinate-supported Kraus column per row can fill the diagonal to one and weakly increase the objective, since the noise Gram diagonal is nonnegative. Conversely, factoring a unit-diagonal positive semidefinite matrix realizes its Gram by diagonal Kraus operators. An extreme maximizer in dimensions d ≤ 3 has rank one and therefore gives a single diagonal unitary. This use of Li–Tam is a separate mathematical dependency of commuting-dimension minimality.
+Example 5 and Corollary 2 of Shahbeigi et al. treat quasi-inversion of commuting random-unitary noise, including a qutrit unitary optimum. Apply the nonstrict Li–Tam inequality in the argument on preprint p. 20, where the printed strict inequality is a typo. The proof in Lean takes an extreme maximizer of the linear score over the complex correlation matrices. In positive dimension at most three its rank is one. [Shahbeigi et al., arXiv v3, §5](https://arxiv.org/abs/2104.06062v3)
