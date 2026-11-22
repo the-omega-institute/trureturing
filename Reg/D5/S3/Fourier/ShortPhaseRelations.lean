@@ -34,7 +34,7 @@ private theorem singleRoleSensitivity {s : Signature} (law : Realization s → P
     exact (IsEmpty.false i).elim
 
 abbrev weightedSignature : Signature where
-  Params := Σ J : Type u, Finset J × (J → ℝ) × (J → ℝ)
+  Params := Σ J : Type u, Σ _ : Finset J, Σ _ : J → ℝ, J → ℝ
   State _ := Set ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -144,7 +144,7 @@ def weightedAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0
   options := #[]
 
 abbrev pairSignature : Signature where
-  Params := ℕ × ℝ
+  Params := Σ _ : ℕ, ℝ
   State _ := Set ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -166,7 +166,7 @@ abbrev pairArena : Arena where
     (_htail : ∃ a, Ici a ⊆ T),
     let H := 2 * (n : ℝ) + 1
     let g := pairFreq n
-    let D := r.readout () (n, w) T
+    let D := r.readout () ⟨n, w⟩ T
     deletionFraction Finset.univ g (fun _ => w) = 1 / 2 ∧
       HasShortIncompatibleRelations Finset.univ g H ∧
       1 / (4 * H ^ 2) ≤ D ∧ D ≤ (Real.pi ^ 2 / 8) / H ^ 2 ∧
@@ -181,7 +181,7 @@ private theorem pairRejectedLaw : ¬ pairArena.Law pairRejected := by
 
 private theorem pairDependence : ObservationalDependence pairSignature pairActual := by
   intro _
-  refine ⟨(1, 1), {0}, {Real.pi / 4}, ?_⟩
+  refine ⟨⟨1, 1⟩, {0}, {Real.pi / 4}, ?_⟩
   change weightedDeficit Finset.univ (pairFreq 1) (fun _ => 1) {0} ≠
     weightedDeficit Finset.univ (pairFreq 1) (fun _ => 1) {Real.pi / 4}
   rw [singletonTime_deficit, singletonTime_deficit]
