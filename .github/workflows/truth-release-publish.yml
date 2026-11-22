@@ -11,7 +11,7 @@ permissions: {}
 # Release tooling has its own immutable revision. The source checkout supplies
 # the Inspector and Scribe versions that produced its module evidence.
 env:
-  TRUTH_TOOLS_COMMIT: e073a7714720d664a9b830bff391ad100c90b01a
+  TRUTH_TOOLS_COMMIT: 2c093b8c9ef58e48270f81f7c6a5cd591323314a
 
 concurrency:
   group: truth-release-publish-dev
@@ -94,7 +94,7 @@ jobs:
           path: ${{ runner.temp }}/truth-assets/
           compression-level: 0
           if-no-files-found: error
-          retention-days: 3
+          retention-days: 30
 
   publish:
     needs: build
