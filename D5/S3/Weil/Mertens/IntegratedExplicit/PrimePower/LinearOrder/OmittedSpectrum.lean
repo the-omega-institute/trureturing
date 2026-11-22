@@ -295,6 +295,86 @@ private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
       rw [show (-3/4 : ℝ) = 1/4 - 1 by norm_num, Real.rpow_sub hbase, Real.rpow_one]
       ring
 
+private theorem min_le_rpow_interpolation {a b t : ℝ}
+    (ha : 0 < a) (hb : 0 < b) (ht : 0 ≤ t) (ht' : t ≤ 1) :
+    min a b ≤ a ^ (1-t) * b ^ t := by
+  let c := min a b
+  have hc : 0 < c := lt_min ha hb
+  have h₁ := Real.rpow_le_rpow hc.le (min_le_left a b) (sub_nonneg.mpr ht')
+  have h₂ := Real.rpow_le_rpow hc.le (min_le_right a b) ht
+  have h₃ := mul_le_mul h₁ h₂ (Real.rpow_nonneg hc.le _) (Real.rpow_nonneg ha.le _)
+  rw [← Real.rpow_add hc, sub_add_cancel, Real.rpow_one] at h₃
+  exact h₃
+
+private theorem derivative_profile_summable (D : ℝ) :
+    Summable fun k : ℤ => (D * (|(k : ℝ)|+1) ^ (-5/8 : ℝ))^2 := by
+  have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-5/4 : ℝ)) :=
+    Real.summable_nat_rpow.mpr (by norm_num)
+  have ht := (summable_nat_add_iff 1).2 hs
+  have he (x : ℝ) (hx : 0 ≤ x) :
+      (D * (x+1) ^ (-5/8 : ℝ))^2 = D^2 * (x+1)^(-5/4 : ℝ) := by
+    rw [mul_pow, ← Real.rpow_mul_natCast (by linarith : 0 ≤ x+1)]
+    norm_num
+  rw [summable_int_iff_summable_nat_and_neg]
+  have hn := ht.mul_left (D^2)
+  constructor <;> apply hn.congr <;> intro n <;>
+    simp only [Int.cast_neg, Int.cast_natCast, abs_neg, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
+      Nat.cast_add, Nat.cast_one, he _ (Nat.cast_nonneg (α := ℝ) n)]
+
+/-- The coefficient and its phase derivative give complementary bounds inside each unit bin.
+The interpolated derivative profile is square summable while its degree scale is sublinear. -/
+private theorem phase_derivative_bin_majorant {T : Finset ℕ} {a : ℕ → ℂ} {C D q : ℝ}
+    (hC : 0 ≤ C) (hD : 0 ≤ D) (hq : 0 < q)
+    (hmass : ∀ k, ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤
+      D * (|(k : ℝ)|+1) ^ (-3/4 : ℝ))
+    (ha : ∀ i, ‖a i‖ ≤ C * (‖actualZero i‖)⁻¹)
+    (hphase : ∀ i, ‖phaseDerivCoeff occurrenceFrequency a i‖ ≤ (C*q) * (‖actualZero i‖)⁻¹) :
+    ∀ k, binMass T occurrenceFrequency (phaseDerivCoeff occurrenceFrequency a) k ≤
+      (C*q^(7/8 : ℝ)) * (D * (|(k : ℝ)|+1) ^ (-5/8 : ℝ)) := by
+  classical
+  intro k
+  let b : ℝ := |(k : ℝ)| + 1
+  have hb : 0 < b := by dsimp [b]; positivity
+  have hpoint (i : ℕ) (hi : i ∈ T.filter (fun i => frequencyBin (occurrenceFrequency i) = k)) :
+      ‖phaseDerivCoeff occurrenceFrequency a i‖ ≤
+        (C * min q b) * (‖actualZero i‖)⁻¹ := by
+    have hbin := mem_frequencyBin (occurrenceFrequency i)
+    rw [(Finset.mem_filter.mp hi).2] at hbin
+    have hfreq : |occurrenceFrequency i| ≤ b := by
+      have hlow := hbin.1
+      have hhigh := hbin.2
+      have hklo := neg_le_abs (k : ℝ)
+      have hkhi := le_abs_self (k : ℝ)
+      apply abs_le.mpr
+      dsimp [b]
+      constructor <;> linarith
+    have hl : ‖phaseDerivCoeff occurrenceFrequency a i‖ ≤ (C*b) * (‖actualZero i‖)⁻¹ := by
+      simp only [phaseDerivCoeff, norm_mul, Complex.norm_I, Complex.norm_real, one_mul,
+        Real.norm_eq_abs]
+      exact (mul_le_mul (ha i) hfreq (abs_nonneg _) (by positivity)).trans_eq (by ring)
+    by_cases h : q ≤ b
+    · rw [min_eq_left h]
+      exact hphase i
+    · rw [min_eq_right (le_of_not_ge h)]
+      exact hl
+  have hmin : min q b ≤ q^(7/8 : ℝ) * b^(1/8 : ℝ) := by
+    convert min_le_rpow_interpolation hq hb (show (0 : ℝ) ≤ 1/8 by norm_num)
+      (show (1 : ℝ)/8 ≤ 1 by norm_num) using 2 <;> norm_num
+  unfold binMass
+  calc
+    _ ≤ ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k,
+        (C * min q b) * (‖actualZero i‖)⁻¹ := Finset.sum_le_sum hpoint
+    _ ≤ (C * min q b) * (D * b^(-3/4 : ℝ)) := by
+      rw [← Finset.mul_sum]
+      exact mul_le_mul_of_nonneg_left (hmass k) (mul_nonneg hC (le_min hq.le hb.le))
+    _ ≤ (C * (q^(7/8 : ℝ) * b^(1/8 : ℝ))) * (D * b^(-3/4 : ℝ)) :=
+      mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hmin hC) (by positivity)
+    _ = (C*q^(7/8 : ℝ)) * (D * b^(-5/8 : ℝ)) := by
+      rw [show (C * (q^(7/8 : ℝ) * b^(1/8 : ℝ))) * (D * b^(-3/4 : ℝ)) =
+          (C*q^(7/8 : ℝ)) * (D * (b^(1/8 : ℝ) * b^(-3/4 : ℝ))) by ring,
+        ← Real.rpow_add hb]
+      norm_num
+
 private theorem root_coord_exact_separation {u : ℝ} {q i j : ℕ} (hu : 0 ≤ u)
     (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
     u / (q : ℝ)^2 ≤ |u / (i : ℝ) - u / (j : ℝ)| := by
