@@ -10,6 +10,7 @@ module
 
 public import D5.S3.Combinatorics.Matroids.JointCircuitGramCertificate
 public import Mathlib.Combinatorics.Matroid.Sum
+import Mathlib.LinearAlgebra.TensorProduct.Basis
 
 /-! # Joint circuit restrictions of a direct sum -/
 
@@ -128,9 +129,12 @@ private lemma contract_disjointSum_right (h : Disjoint M.E N.E) (hI : N.IsBasis 
 
 open Finset
 open OrderedCycleFactorization
-  (Chain TopCycle boundaryOn boundaryOn_signedJoin signedJoin shuffleSign)
-open CircuitCycleDecomposition (restrictChain restrictionSign)
+  (Chain PassiveBase TopCycle boundaryOn boundaryOn_signedJoin signedJoin shuffleSign topCycle_ext)
+open CircuitCycleDecomposition (restrictChain restrictionSign topCycles)
 open IntegralCircuitImage (aggregateRestrict)
+open JointCircuitGramCertificate
+  (Passive normalizedCycle normalizedCycle_coord fromCoordinates fromCoordinates_coord
+    fromCoordinates_cycle)
 
 variable [LinearOrder V] {A B L R : Finset V}
 
@@ -390,5 +394,219 @@ private lemma aggregateRestrict_disjointSum_right [Fintype V]
   rw [mul_sum, mul_sum, mul_sum]
   exact sum_congr rfl fun a ha =>
     restrictChain_disjointSum_right h hL hR horder hC ha hu v T
+
+private lemma passiveBase_disjointSum_left
+    (h : Disjoint M.E N.E) (hL : (L : Set V) = M.E)
+    {F : Finset V} (hF : PassiveBase (M.disjointSum N h) F) :
+    PassiveBase M (F ∩ L) := by
+  have hsep : Disjoint (L : Set V) N.E := by simpa only [hL] using h
+  have hsplit (G : Finset V) :
+      (M.disjointSum N h).IsBase (G : Set V) ↔
+        M.IsBase (↑(G ∩ L) : Set V) ∧ N.IsBase (↑(G \ L) : Set V) := by
+    rw [coe_inter, coe_sdiff]
+    exact isBase_disjointSum_split h hL.ge hsep
+  have hbase := ((hsplit F).mp hF.1).1
+  refine ⟨hbase, ?_⟩
+  intro x hx
+  obtain ⟨y, hy, hyx, hswap⟩ := hF.2 x (mem_inter.mp hx).1
+  have hswap' := ((hsplit (insert y (F.erase x))).mp hswap).1
+  by_cases hyL : y ∈ L
+  · rw [insert_inter_of_mem hyL, erase_inter] at hswap'
+    exact ⟨y, fun hy' => hy (mem_inter.mp hy').1, hyx, hswap'⟩
+  · rw [insert_inter_of_notMem hyL, erase_inter] at hswap'
+    have hEq := hswap'.eq_of_subset_isBase hbase (by
+      exact_mod_cast erase_subset x (F ∩ L))
+    exact False.elim (notMem_erase x (F ∩ L) (by
+      change x ∈ (↑((F ∩ L).erase x) : Set V)
+      rw [hEq]
+      exact hx))
+
+private lemma isBase_disjointSum_union (h : Disjoint M.E N.E)
+    (hA : M.IsBase (A : Set V)) (hB : N.IsBase (B : Set V)) :
+    (M.disjointSum N h).IsBase (↑(A ∪ B) : Set V) := by
+  have hAN : Disjoint (A : Set V) N.E := h.mono_left hA.subset_ground
+  have hBM : Disjoint (B : Set V) M.E := h.symm.mono_left hB.subset_ground
+  rw [coe_union, Matroid.disjointSum_isBase_iff, Set.union_inter_distrib_right,
+    Set.union_inter_distrib_right, Set.inter_eq_left.2 hA.subset_ground,
+    Set.inter_eq_left.2 hB.subset_ground, Set.disjoint_iff_inter_eq_empty.mp hAN,
+    Set.disjoint_iff_inter_eq_empty.mp hBM, Set.union_empty, Set.empty_union]
+  exact ⟨hA, hB, Set.union_subset_union hA.subset_ground hB.subset_ground⟩
+
+private lemma passiveBase_disjointSum_union (h : Disjoint M.E N.E)
+    (hA : PassiveBase M A) (hB : PassiveBase N B) :
+    PassiveBase (M.disjointSum N h) (A ∪ B) := by
+  refine ⟨isBase_disjointSum_union h hA.1 hB.1, ?_⟩
+  intro x hx
+  have hAB : Disjoint A B := disjoint_left.2 fun _ hxA hxB =>
+    Set.disjoint_left.mp h (hA.1.subset_ground hxA) (hB.1.subset_ground hxB)
+  rcases mem_union.mp hx with hxA | hxB
+  · obtain ⟨y, hyA, hyx, hyBase⟩ := hA.2 x hxA
+    have hyM := hyBase.subset_ground (mem_insert_self y (A.erase x))
+    have hyB : y ∉ B := fun hyB => Set.disjoint_left.mp h hyM (hB.1.subset_ground hyB)
+    have hswap : insert y ((A ∪ B).erase x) = insert y (A.erase x) ∪ B := by
+      rw [erase_union_distrib, erase_eq_of_notMem (disjoint_left.mp hAB hxA), insert_union]
+    exact ⟨y, fun hy => (mem_union.mp hy).elim hyA hyB, hyx,
+      hswap ▸ isBase_disjointSum_union h hyBase hB.1⟩
+  · obtain ⟨y, hyB, hyx, hyBase⟩ := hB.2 x hxB
+    have hyN := hyBase.subset_ground (mem_insert_self y (B.erase x))
+    have hyA : y ∉ A := fun hyA => Set.disjoint_left.mp h (hA.1.subset_ground hyA) hyN
+    have hswap : insert y ((A ∪ B).erase x) = A ∪ insert y (B.erase x) := by
+      rw [erase_union_distrib, erase_eq_of_notMem (disjoint_right.mp hAB hxB),
+        union_comm A, ← insert_union, union_comm A]
+    exact ⟨y, fun hy => (mem_union.mp hy).elim hyA hyB, hyx,
+      hswap ▸ isBase_disjointSum_union h hA.1 hyBase⟩
+
+omit [LinearOrder V] in
+private lemma disjoint_ground_finsets (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E) : Disjoint L R := by
+  have hsep : Disjoint (L : Set V) (R : Set V) := by simpa only [hL, hR] using h
+  exact disjoint_left.2 (fun _ hx hy => Set.disjoint_left.mp hsep hx hy)
+
+private def passiveSumEquiv (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E) :
+    Passive (M.disjointSum N h) ≃ Passive M × Passive N where
+  toFun F :=
+    ⟨⟨F.val ∩ L, passiveBase_disjointSum_left h hL F.prop⟩,
+      ⟨F.val ∩ R, passiveBase_disjointSum_left h.symm hR
+        (Matroid.disjointSum_comm (h := h) ▸ F.prop)⟩⟩
+  invFun P := ⟨P.1.val ∪ P.2.val, passiveBase_disjointSum_union h P.1.prop P.2.prop⟩
+  left_inv F := by
+    apply Subtype.ext
+    change F.val ∩ L ∪ F.val ∩ R = F.val
+    have hsub : F.val ⊆ L ∪ R := by
+      have hF := F.prop.1.subset_ground
+      rwa [Matroid.disjointSum_ground_eq, ← hL, ← hR, ← coe_union, coe_subset] at hF
+    rw [← inter_union_distrib_left, inter_eq_left.2 hsub]
+  right_inv P := by
+    have hA : P.1.val ⊆ L := by
+      have h := P.1.prop.1.subset_ground
+      rwa [← hL, coe_subset] at h
+    have hB : P.2.val ⊆ R := by
+      have h := P.2.prop.1.subset_ground
+      rwa [← hR, coe_subset] at h
+    have hd := disjoint_ground_finsets h hL hR
+    apply Prod.ext <;> apply Subtype.ext
+    · change (P.1.val ∪ P.2.val) ∩ L = P.1.val
+      rw [union_inter_distrib_right, inter_eq_left.2 hA,
+        disjoint_iff_inter_eq_empty.mp (hd.symm.mono_left hB), union_empty]
+    · change (P.1.val ∪ P.2.val) ∩ R = P.2.val
+      rw [union_inter_distrib_right, inter_eq_left.2 hB,
+        disjoint_iff_inter_eq_empty.mp (hd.mono_left hA), empty_union]
+
+open Module TensorProduct
+
+variable [Fintype V]
+
+private noncomputable def cycleCoordinates (P : Matroid V) :
+    topCycles P ≃ₗ[ℤ] (Passive P → ℤ) where
+  toFun z D := z.val D.val
+  invFun := fromCoordinates P
+  left_inv := fromCoordinates_cycle
+  right_inv x := funext (fromCoordinates_coord x)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+private noncomputable def cycleBasis (P : Matroid V) : Basis (Passive P) ℤ (topCycles P) :=
+  Basis.ofEquivFun (cycleCoordinates P)
+
+private lemma cycleBasis_apply (P : Matroid V) (D : Passive P) :
+    cycleBasis P D = normalizedCycle D := by
+  classical
+  rw [cycleBasis, Basis.coe_ofEquivFun]
+  apply (cycleCoordinates P).injective
+  rw [LinearEquiv.apply_symm_apply]
+  funext E
+  change Pi.single (M := fun _ => ℤ) D 1 E = (normalizedCycle D).val E.val
+  rw [normalizedCycle_coord, Pi.single_apply]
+
+private lemma signedJoin_normalized (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) (D : Passive M) (E : Passive N) :
+    signedJoin L (normalizedCycle D).val (normalizedCycle E).val =
+      (normalizedCycle ((passiveSumEquiv h hL hR).symm (D, E))).val := by
+  classical
+  apply topCycle_ext (signedJoin_topCycle h hL hR (normalizedCycle D).prop
+    (normalizedCycle E).prop) (normalizedCycle _).prop
+  intro F hF
+  let P : Passive (M.disjointSum N h) := ⟨F, hF⟩
+  let e := passiveSumEquiv h hL hR
+  have hsub : F ⊆ L ∪ R := by
+    have hg := hF.1.subset_ground
+    rwa [Matroid.disjointSum_ground_eq, ← hL, ← hR, ← coe_union, coe_subset] at hg
+  have hright := sdiff_eq_inter_right (disjoint_ground_finsets h hL hR) hsub
+  change signedJoin L (normalizedCycle D).val (normalizedCycle E).val F =
+    (normalizedCycle (e.symm (D, E))).val P.val
+  rw [normalizedCycle_coord, signedJoin, hright,
+    shuffleSign_separated horder inter_subset_right inter_subset_right, one_mul]
+  change (normalizedCycle D).val (e P).1.val * (normalizedCycle E).val (e P).2.val =
+    if P = e.symm (D, E) then 1 else 0
+  rw [normalizedCycle_coord, normalizedCycle_coord]
+  have heq : P = e.symm (D, E) ↔ (e P).1 = D ∧ (e P).2 = E := by
+    rw [← e.apply_eq_iff_eq, e.apply_symm_apply]
+    exact ⟨fun he => ⟨congrArg Prod.fst he, congrArg Prod.snd he⟩,
+      fun he => Prod.ext he.1 he.2⟩
+  by_cases hD : (e P).1 = D <;> by_cases hE : (e P).2 = E <;> simp [heq, hD, hE]
+
+private def cycleJoin (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E) :
+    topCycles M →ₗ[ℤ] topCycles N →ₗ[ℤ] topCycles (M.disjointSum N h) where
+  toFun u :=
+    { toFun := fun v => ⟨signedJoin L u.val v.val, signedJoin_topCycle h hL hR u.prop v.prop⟩
+      map_add' := by
+        intro v w
+        apply Subtype.ext
+        funext F
+        change signedJoin L u.val (v.val + w.val) F =
+          signedJoin L u.val v.val F + signedJoin L u.val w.val F
+        simp only [signedJoin, Pi.add_apply]
+        ring
+      map_smul' := by
+        intro c v
+        apply Subtype.ext
+        funext F
+        change signedJoin L u.val (c • v.val) F = c * signedJoin L u.val v.val F
+        simp only [signedJoin, Pi.smul_apply, zsmul_eq_mul, Int.cast_id]
+        ring }
+  map_add' := by
+    intro u w
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
+    funext F
+    change signedJoin L (u.val + w.val) v.val F =
+      signedJoin L u.val v.val F + signedJoin L w.val v.val F
+    simp only [signedJoin, Pi.add_apply]
+    ring
+  map_smul' := by
+    intro c u
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
+    funext F
+    change signedJoin L (c • u.val) v.val F = c * signedJoin L u.val v.val F
+    simp only [signedJoin, Pi.smul_apply, zsmul_eq_mul, Int.cast_id]
+    ring
+
+private noncomputable def cycleJoinEquiv (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E) :
+    topCycles M ⊗[ℤ] topCycles N ≃ₗ[ℤ] topCycles (M.disjointSum N h) :=
+  ((cycleBasis M).tensorProduct (cycleBasis N)).equiv (cycleBasis _)
+    (passiveSumEquiv h hL hR).symm
+
+private lemma cycleJoinEquiv_tmul (h : Disjoint M.E N.E)
+    (hL : (L : Set V) = M.E) (hR : (R : Set V) = N.E)
+    (horder : ∀ x ∈ L, ∀ y ∈ R, x < y) (u : topCycles M) (v : topCycles N) :
+    (cycleJoinEquiv h hL hR (u ⊗ₜ[ℤ] v)).val = signedJoin L u.val v.val := by
+  have heq : (cycleJoinEquiv h hL hR).toLinearMap = TensorProduct.lift (cycleJoin h hL hR) := by
+    apply ((cycleBasis M).tensorProduct (cycleBasis N)).ext
+    intro P
+    change cycleJoinEquiv h hL hR _ = _
+    refine (Basis.equiv_apply (b := (cycleBasis M).tensorProduct (cycleBasis N))
+      (b' := cycleBasis (M.disjointSum N h))
+      (e := (passiveSumEquiv h hL hR).symm) (i := P)).trans ?_
+    simp only [Basis.tensorProduct_apply', TensorProduct.lift.tmul, cycleBasis_apply]
+    exact Subtype.ext (signedJoin_normalized h hL hR horder P.1 P.2).symm
+  have hf := LinearMap.congr_fun heq (u ⊗ₜ[ℤ] v)
+  exact congrArg Subtype.val (hf.trans (TensorProduct.lift.tmul u v))
 
 end D5.S3.Combinatorics.Matroids.DirectSumCircuitTorsion

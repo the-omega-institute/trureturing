@@ -119,7 +119,7 @@ noncomputable def normalizedCycle {M : Matroid V} (B : Passive M) : topCycles M 
   let h := (normalized_factorization M B.val B.prop).1.exists
   ⟨h.choose, h.choose_spec.toTopCycle⟩
 
-private lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
+lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
     (normalizedCycle B).val D.val = if D = B then 1 else 0 := by
   classical
   have h := (normalized_factorization M B.val B.prop).1.exists.choose_spec.coordinate
@@ -127,7 +127,7 @@ private lemma normalizedCycle_coord {M : Matroid V} (B D : Passive M) :
   simpa only [normalizedCycle, Subtype.ext_iff] using h
 
 open Classical in
-private noncomputable def fromCoordinates (M : Matroid V) (x : Passive M → ℤ) : topCycles M :=
+noncomputable def fromCoordinates (M : Matroid V) (x : Passive M → ℤ) : topCycles M :=
   ∑ B, x B • normalizedCycle B
 
 open Classical in
@@ -136,13 +136,13 @@ private lemma fromCoordinates_apply {M : Matroid V} (x : Passive M → ℤ) (F :
   rw [fromCoordinates, Submodule.coe_sum, Finset.sum_apply]
   rfl
 
-private lemma fromCoordinates_coord {M : Matroid V} (x : Passive M → ℤ) (D : Passive M) :
+lemma fromCoordinates_coord {M : Matroid V} (x : Passive M → ℤ) (D : Passive M) :
     (fromCoordinates M x).val D.val = x D := by
   classical
   rw [fromCoordinates_apply]
   simp [normalizedCycle_coord]
 
-private lemma fromCoordinates_cycle {M : Matroid V} (z : topCycles M) :
+lemma fromCoordinates_cycle {M : Matroid V} (z : topCycles M) :
     fromCoordinates M (fun B => z.val B.val) = z := by
   apply Subtype.ext
   apply topCycle_ext (fromCoordinates M _).prop z.prop
