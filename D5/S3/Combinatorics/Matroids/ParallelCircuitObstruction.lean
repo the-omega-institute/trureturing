@@ -305,8 +305,8 @@ private noncomputable def sectionReadout (hsurj : Function.Surjective p)
     rationalIntegralReadoutCycles (M.comap p) →ₗ[ℤ] weightedCircuitResidues M p where
   toFun z := ⟨fun F => rationalResidue (z.val (F.image (Function.surjInv hsurj))),
     sections_mem hsurj horder hn (Function.rightInverse_surjInv hsurj) z⟩
-  map_add' z w := Subtype.ext (funext fun F => rationalResidue.map_add _ _)
-  map_smul' n z := Subtype.ext (funext fun F => rationalResidue.map_zsmul _ _)
+  map_add' _ _ := Subtype.ext (funext fun _ => rationalResidue.map_add _ _)
+  map_smul' _ _ := Subtype.ext (funext fun _ => rationalResidue.map_zsmul _ _)
 
 private lemma sectionReadout_surj (hsurj : Function.Surjective p)
     (horder : ∀ ⦃a b⦄, p a < p b → a < b) (hn : ∀ a, M.IsNonloop (p a)) :
@@ -363,15 +363,42 @@ theorem parallel_rational_residue_comparison (hsurj : Function.Surjective p)
   exact pullback_residue hsurj horder hn (Function.rightInverse_surjInv hsurj) z F
 
 /-- Parallel expansion replaces the joint restriction obstruction by residue
-chains on the core, with class-size weights only in the boundary equations. -/
+chains on the core, with class-size weights only in the boundary equations.
+On a saturated readout, its class is sent to the residues of its rational lift. -/
 theorem parallel_lifting_obstruction [Nonempty V] (hsurj : Function.Surjective p)
     (horder : ∀ ⦃a b⦄, p a < p b → a < b) (hn : ∀ a, M.IsNonloop (p a)) :
-    Nonempty ((JointSaturatedImage (M.comap p) ⧸ JointImageInSaturation (M.comap p)) ≃ₗ[ℤ]
-      weightedCircuitResidues M p) := by
+    ∃ comparison : (JointSaturatedImage (M.comap p) ⧸ JointImageInSaturation (M.comap p)) ≃ₗ[ℤ]
+      weightedCircuitResidues M p,
+      ∀ (z : rationalIntegralReadoutCycles (M.comap p)) (y : JointSaturatedImage (M.comap p)),
+        (∀ C T, ((y.val C).val T : ℚ) = rationalAggregate (M.comap p) C.val z.val T) →
+        ∀ F, pullbackChain p (comparison (Submodule.Quotient.mk y)).val F =
+          rationalResidue (z.val F) := by
   obtain ⟨e⟩ := ‹Nonempty V›
   have he : e ∈ (M.comap p).E := (hn e).mem_ground
-  obtain ⟨_, _, _, ⟨rationalComparison⟩⟩ := rationalJointRestriction_equiv (M.comap p) he
-  obtain ⟨comparison, _⟩ := parallel_rational_residue_comparison hsurj horder hn
-  exact ⟨rationalComparison.symm.trans comparison⟩
+  obtain ⟨readouts, hreadouts, hintegral, _⟩ := rationalJointRestriction_equiv (M.comap p) he
+  have hmap :
+      (integralCycleInRational (M.comap p)).range.map readouts.toLinearMap =
+        JointImageInSaturation (M.comap p) := by
+    ext y
+    constructor
+    · rintro ⟨_, ⟨x, rfl⟩, rfl⟩
+      exact ⟨x, (hintegral x).symm⟩
+    · rintro ⟨x, hx⟩
+      exact ⟨integralCycleInRational (M.comap p) x, ⟨x, rfl⟩,
+        Subtype.ext ((hintegral x).trans hx)⟩
+  let quotReadouts := Submodule.Quotient.equiv _ _ readouts hmap
+  obtain ⟨comparison, hcomparison⟩ := parallel_rational_residue_comparison hsurj horder hn
+  refine ⟨quotReadouts.symm.trans comparison, fun z y hy F => ?_⟩
+  have hyz : y = readouts z := by
+    apply Subtype.ext
+    funext C
+    apply Subtype.ext
+    funext T
+    exact Int.cast_injective ((hy C T).trans (hreadouts z C T).symm)
+  rw [hyz]
+  change pullbackChain p (comparison
+    (quotReadouts.symm (quotReadouts (Submodule.Quotient.mk z)))).val F = _
+  rw [LinearEquiv.symm_apply_apply]
+  exact hcomparison z F
 
 end D5.S3.Combinatorics.Matroids.ParallelCircuitObstruction
