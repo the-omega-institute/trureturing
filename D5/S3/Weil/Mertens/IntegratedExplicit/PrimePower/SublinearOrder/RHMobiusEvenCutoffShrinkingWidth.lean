@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform recovery of the centered root spectrum as the logarithmic prime window shrinks. -/
+   digest: The centered root spectrum of shrinking logarithmic windows. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusEvenCutoff
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Topology.UniformSpace.UniformApproximation
+
+/-! The centered zero series controls the normalized root increment on shrinking windows. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -56,23 +58,25 @@ private theorem root_signal_uniformContinuous (hRH : RiemannHypothesis) {r : ℝ
     have hrewrite : term k =
         fun u => rootCoeff r k * Complex.exp (Complex.I * ((z.im * u : ℝ) : ℂ)) := by
       funext u
-      simp only [term, ← show z = frequency k / (r : ℂ) from rfl, hz, Complex.ofReal_mul]
+      change rootCoeff r k * Complex.exp (z * (u : ℂ)) = _
+      conv_lhs => rw [hz]
+      push_cast
       ring_nf
     rw [hrewrite]
-    exact (phase_uniformContinuous.comp (uniformContinuous_const_mul z.im)).const_mul _
+    exact (phase_uniformContinuous.comp (Real.uniformContinuous_const_mul (x := z.im))).const_mul' _
   have hnorm (k : ℕ) (u : ℝ) : ‖term k u‖ ≤ r * ‖actualCoeff k‖ := by
     simpa only [term, norm_mul, Complex.norm_exp, Complex.mul_re, Complex.ofReal_re,
       Complex.ofReal_im, mode_re, zero_mul, mul_zero, sub_zero, Real.exp_zero, mul_one] using
       rootCoeff_bound hr k
   have hlim := tendstoUniformly_tsum (actualCoeff_hasSum.summable.norm.mul_left r) hnorm
-  have hsum := hlim.uniformContinuous (Eventually.of_forall (fun S => by
-    classical
-    induction S using Finset.induction_on with
+  have hfinite (indices : Finset ℕ) :
+      UniformContinuous (fun u => ∑ k ∈ indices, term k u) := by
+    induction indices using Finset.induction_on with
     | empty => simpa using (uniformContinuous_const : UniformContinuous fun _ : ℝ => (0 : ℂ))
-    | insert k S hk ih =>
-      simpa only [Finset.sum_insert hk] using (hterms k).add ih))
-  exact (Complex.uniformContinuous_re.comp hsum).const_mul _ |>.congr
-    (fun u => by simp only [Function.comp_apply, rootSignal, term, div_eq_mul_inv, mul_comm])
+    | insert k indices hk ih =>
+      simpa only [Finset.sum_insert hk] using (hterms k).add ih
+  have hsum := hlim.uniformContinuous (Eventually.of_forall hfinite).frequently
+  exact (Complex.uniformContinuous_re.comp hsum).div_const' _
 
 private theorem root_density_eq_signal {r : ℝ} (hr : 1 < r) (u : ℝ) :
     let s : ℝ := 1/2 - (2*r)⁻¹
@@ -88,7 +92,7 @@ private theorem root_density_eq_signal {r : ℝ} (hr : 1 < r) (u : ℝ) :
     simp only [rootExponent, frequency, s]
     push_cast
     field_simp
-    <;> ring
+    ring
   change rootDensity r u = (s * Real.exp (-s*u)) * rootSignal r u
   unfold rootDensity rootSignal
   change (∑' k, rootMode r u k).re =
@@ -110,10 +114,9 @@ private theorem width_weight_integral {s L : ℝ} (hs : 0 < s) :
     (∫ t in (0 : ℝ)..L, Real.exp (-s*t)) = (1 - Real.exp (-s*L))/s := by
   have hneg : -s ≠ 0 := neg_ne_zero.mpr hs.ne'
   have h := intervalIntegral.integral_comp_mul_left Real.exp hneg (a := 0) (b := L)
-  simpa [Real.integral_exp, inv_mul_eq_div, div_neg, neg_sub] using h
+  simpa [inv_mul_eq_div, div_neg, ← neg_div] using h
 
-private theorem root_increment_eq_weighted_average (hRH : RiemannHypothesis)
-    {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
+private theorem root_increment_eq_weighted_average {r L : ℝ} (hr : 1 < r) (hL : 0 < L) (u : ℝ) :
     let s : ℝ := 1/2 - (2*r)⁻¹
     (rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
       powerGap s (Real.exp u) (Real.exp (u+L)) =
@@ -135,14 +138,19 @@ private theorem root_increment_eq_weighted_average (hRH : RiemannHypothesis)
   have h := intervalIntegral.integral_comp_add_left (rootDensity r) (a := 0) (b := L) u
   rw [add_zero] at h
   rw [← h]
-  simp_rw [root_density_eq_signal hr]
   have hsplit (t : ℝ) :
       s * Real.exp (-s*(u+t)) * rootSignal r (u+t) =
       (s * Real.exp (-s*u)) * (Real.exp (-s*t) * rootSignal r (u+t)) := by
     rw [show -s*(u+t) = -s*u + -s*t by ring, Real.exp_add]
     ring
-  simp_rw [hsplit]
-  rw [intervalIntegral.integral_const_mul]
+  rw [show (∫ t in (0 : ℝ)..L, rootDensity r (u+t)) =
+      (s * Real.exp (-s*u)) * (∫ t in (0 : ℝ)..L, Real.exp (-s*t) * rootSignal r (u+t)) by
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro t _
+    change rootDensity r (u+t) =
+      (s * Real.exp (-s*u)) * (Real.exp (-s*t) * rootSignal r (u+t))
+    exact (root_density_eq_signal hr (u+t)).trans (hsplit t)]
   field_simp [(Real.exp_pos (-s*u)).ne', hpositive.ne', hs.ne']
 
 private theorem root_increment_near_signal (hRH : RiemannHypothesis) {r : ℝ}
@@ -197,7 +205,9 @@ private theorem root_increment_near_signal (hRH : RiemannHypothesis) {r : ℝ}
         rw [abs_mul, abs_of_pos (Real.exp_pos _), mul_comm ε]
         exact mul_le_mul_of_nonneg_left hnear (Real.exp_nonneg _)
       _ = _ := intervalIntegral.integral_const_mul _ _
-  rw [root_increment_eq_weighted_average hRH hr hL]
+  change |(rootPrimitive r (Real.exp (u+L)) - rootPrimitive r (Real.exp u)) /
+    powerGap s (Real.exp u) (Real.exp (u+L)) - rootSignal r u| ≤ ε
+  rw [root_increment_eq_weighted_average hr hL]
   change |(∫ t in (0 : ℝ)..L, w t * rootSignal r (u+t)) / mass - rootSignal r u| ≤ ε
   rw [hdiff, abs_div, abs_of_pos hmass, div_le_iff₀ hmass]
   exact hbound
@@ -235,7 +245,7 @@ theorem signed_window_even_cutoff_shrinking_width (hRH : RiemannHypothesis) :
   have hδ : 0 < δ := sub_pos.mpr (inv_strictAnti₀ (by positivity) (by linarith))
   refine ⟨?_, W*((s+δ)/s), by dsimp only [W]; positivity, ?_⟩
   · intro u L hL
-    simpa only [← hs'] using root_increment_eq_weighted_average hRH hr hL u
+    simpa only [← hs'] using root_increment_eq_weighted_average hr hL u
   · intro ε hε
     let μr : ℝ := μ r
     have hμ : 0 < 1 + |μr| := by positivity
