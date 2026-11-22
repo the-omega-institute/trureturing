@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Analysis.RefinedBMVPositiveCenterLeftStripWeightedTail
 
+open Filter
+open scoped Topology
+
 noncomputable section
 
 namespace RefinedBMV.PositiveCenter
@@ -146,6 +149,148 @@ theorem leftStrip_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {a v : ℝ}
   rw [hN, hsum]
   nlinarith only [hWdiag]
 
+private theorem contDiffAt_partialLeft {f : ℝ → ℝ → ℝ} {x y : ℝ} {n m : WithTop ℕ∞}
+    (hf : ContDiffAt ℝ n (Function.uncurry f) (x,y)) (hn : n ≠ 0)
+    (hfin : n ≠ (↑(⊤ : ℕ∞) : WithTop ℕ∞)) (hm : m+1 ≤ n) :
+    ContDiffAt ℝ m (Function.uncurry (fun a v ↦ deriv (f · v) a)) (x,y) := by
+  have hd := (hf.fderiv_right hm).clm_apply
+    (contDiffAt_const : ContDiffAt ℝ m (fun _ : ℝ × ℝ ↦ ((1,0) : ℝ × ℝ)) (x,y))
+  refine hd.congr_of_eventuallyEq ?_
+  filter_upwards [hf.eventually hfin] with z hz
+  rcases z with ⟨a,v⟩
+  have hline : HasDerivAt (fun t : ℝ ↦ (t,v)) (1,0) a := by
+    simpa only [id_eq] using (hasDerivAt_id a).prodMk (hasDerivAt_const a v)
+  exact ((hz.differentiableAt hn).hasFDerivAt.comp_hasDerivAt a hline).deriv
+
+private def weightedThird (f : ℝ → ℝ → ℝ) (a v γ : ℝ) : ℝ :=
+  deriv (fun y ↦ deriv (deriv (f · y)) a) v - γ*deriv (deriv (f · v)) a
+
+private theorem weightedThird_add {f g : ℝ → ℝ → ℝ} {a v γ : ℝ}
+    (hf : ContDiffAt ℝ 3 (Function.uncurry f) (a,v))
+    (hg : ContDiffAt ℝ 3 (Function.uncurry g) (a,v)) :
+    weightedThird (fun x y ↦ f x y+g x y) a v γ =
+      weightedThird f a v γ+weightedThird g a v γ := by
+  have hl {j : ℝ → ℝ → ℝ} {y : ℝ} (h : ContDiffAt ℝ 3 (Function.uncurry j) (a,y)) :
+      ContDiffAt ℝ 3 (j · y) a :=
+    h.comp a (contDiffAt_id.prodMk contDiffAt_const)
+  have hsecond {y : ℝ} (hf' : ContDiffAt ℝ 3 (Function.uncurry f) (a,y))
+      (hg' : ContDiffAt ℝ 3 (Function.uncurry g) (a,y)) :
+      deriv (deriv (fun x ↦ f x y+g x y)) a =
+        deriv (deriv (f · y)) a+deriv (deriv (g · y)) a := by
+    have h₁ : deriv (fun x ↦ f x y+g x y) =ᶠ[𝓝 a] fun x ↦ deriv (f · y) x+deriv (g · y) x := by
+      filter_upwards [(hl hf').eventually (by norm_num), (hl hg').eventually (by norm_num)] with x hx hy
+      exact deriv_fun_add (hx.differentiableAt (by decide)) (hy.differentiableAt (by decide))
+    have hLf : ContDiffAt ℝ 2 (deriv (f · y)) a := (hl hf').derivWithin (by norm_num)
+    have hLg : ContDiffAt ℝ 2 (deriv (g · y)) a := (hl hg').derivWithin (by norm_num)
+    exact h₁.deriv_eq.trans
+      (deriv_fun_add (hLf.differentiableAt (by decide)) (hLg.differentiableAt (by decide)))
+  have heq : (fun y ↦ deriv (deriv (fun x ↦ f x y+g x y)) a) =ᶠ[𝓝 v]
+      fun y ↦ deriv (deriv (f · y)) a+deriv (deriv (g · y)) a := by
+    have hline : ContinuousAt (fun y : ℝ ↦ (a,y)) v := by fun_prop
+    filter_upwards [hline.tendsto.eventually (hf.eventually (by norm_num)),
+        hline.tendsto.eventually (hg.eventually (by norm_num))] with y hy hz
+    exact hsecond hy hz
+  have hr {j : ℝ → ℝ → ℝ} (h : ContDiffAt ℝ 3 (Function.uncurry j) (a,v)) :
+      DifferentiableAt ℝ (fun y ↦ deriv (deriv (j · y)) a) v := by
+    have h₁ := contDiffAt_partialLeft h (by decide) (by decide)
+      (show (2 : WithTop ℕ∞)+1 ≤ 3 by decide)
+    have h₂ := contDiffAt_partialLeft h₁ (by decide) (by decide)
+      (show (1 : WithTop ℕ∞)+1 ≤ 2 by decide)
+    exact (h₂.comp v (contDiffAt_const.prodMk contDiffAt_id :
+      ContDiffAt ℝ 1 (fun y : ℝ ↦ (a,y)) v)).differentiableAt (by decide)
+  rw [weightedThird, heq.deriv_eq, deriv_fun_add (hr hf) (hr hg), hsecond hf hg]
+  unfold weightedThird
+  ring
+
+/-- The weighted third derivative of the exact numerator is negative on
+the separated left strip. Only the two logarithmic slope bounds enter. -/
+theorem leftStrip_numerator_weighted_mixed_lt {p : ℕ} (hp : 11 ≤ p)
+    {a v γ : ℝ} (ha : 0 < a) (hamax : a ≤ 1/2) (hgap : 6 < v-a)
+    (hγ : 5/12 ≤ γ) (hγmax : γ ≤ 1) :
+    let N (x y : ℝ) := compositionMoment p x y -
+      Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+    deriv (fun y ↦ deriv (deriv (N · y)) a) v -
+      γ*deriv (deriv (N · v)) a < -7/450 := by
+  let h := 3/(p : ℝ)
+  let G := leftStripGeometricTerm h
+  let B := leftStripRadicalTerm h
+  let T := leftStripTailTerm p
+  let N (x y : ℝ) := compositionMoment p x y -
+    Real.sqrt (compositionMoment p 0 y*compositionMoment p 0 (y-x))
+  let s := v-a
+  let F := upperTailGap h
+  let L := logReciprocalGap h
+  let w := leftStripWeight h
+  let X (t : ℝ) := 1-upperTailLambda h t
+  have hpR : (0 : ℝ) < p := by exact_mod_cast (show 0 < p by omega)
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hhmax : h ≤ 3/11 :=
+    div_le_div_of_nonneg_left (by norm_num) (by norm_num) (by exact_mod_cast hp)
+  have hs : 0 < s := by linarith
+  have hsv : s ≤ v := sub_le_self v ha.le
+  have hv : 0 < v := hs.trans_le hsv
+  have hf₁ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ F z.2) (a,v) := by
+    unfold F upperTailGap
+    fun_prop
+  have hf₂ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ F (z.2-z.1)) (a,v) := by
+    unfold F upperTailGap
+    fun_prop
+  have hL₁ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ L z.2) (a,v) :=
+    contDiffAt_snd.sub (hf₁.log (tail_gap_pos hh hv).ne')
+  have hL₂ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ L (z.2-z.1)) (a,v) :=
+    (contDiffAt_snd.sub contDiffAt_fst).sub (hf₂.log (tail_gap_pos hh hs).ne')
+  have hG : ContDiffAt ℝ 3 (Function.uncurry G) (a,v) :=
+    ((hL₁.sub hL₂).cosh).sub contDiffAt_const
+  have hw : ContDiffAt ℝ 3 (Function.uncurry w) (a,v) :=
+    ((hL₁.add hL₂).exp).div_const ((3+h)*(3+2*h)/2)
+  have hXs (t : ℝ) (ht : 6 ≤ t) : 0 < X t :=
+    Real.sqrt_pos.mp ((by norm_num : (0 : ℝ) < 999/1000).trans_le
+      (separated_radical_lower hh hhmax ht).2)
+  have hx₁ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ X z.2) (a,v) := by
+    unfold X upperTailLambda upperTailGap
+    fun_prop
+  have hx₂ : ContDiffAt ℝ 3 (fun z : ℝ × ℝ ↦ X (z.2-z.1)) (a,v) := by
+    unfold X upperTailLambda upperTailGap
+    fun_prop
+  have hb₁ := hx₁.sqrt (hXs v (hgap.le.trans hsv)).ne'
+  have hb₂ := hx₂.sqrt (hXs s hgap.le).ne'
+  have hB : ContDiffAt ℝ 3 (Function.uncurry B) (a,v) :=
+    (hw.mul ((hb₁.sub hb₂).pow 2)).div_const 2
+  have hT : ContDiffAt ℝ 3 (Function.uncurry T) (a,v) :=
+    hw.mul (leftStripTailResidual_smooth p).contDiffAt
+  have hleft : ∀ᶠ z : ℝ × ℝ in 𝓝 (a,v), 0 < z.1 :=
+    continuousAt_fst.eventually (eventually_gt_nhds ha)
+  have hsep : ∀ᶠ z : ℝ × ℝ in 𝓝 (a,v), 6 < z.2-z.1 :=
+    (continuousAt_snd.sub continuousAt_fst).eventually (eventually_gt_nhds hgap)
+  have hLocal : ∀ᶠ z : ℝ × ℝ in (𝓝 a) ×ˢ (𝓝 v),
+      N z.1 z.2 = G z.1 z.2+B z.1 z.2+T z.1 z.2 := by
+    rw [← nhds_prod_eq]
+    filter_upwards [hleft,hsep] with z hz hd
+    exact leftStrip_numerator_decomposition hp hz hd.le
+  obtain ⟨P,hP,Q,hQ,hPQ⟩ := eventually_prod_iff.mp hLocal
+  have hsec : (fun y ↦ deriv (deriv (N · y)) a) =ᶠ[𝓝 v]
+      fun y ↦ deriv (deriv (fun x ↦ G x y+B x y+T x y)) a := by
+    filter_upwards [hQ] with y hy
+    have heq : (N · y) =ᶠ[𝓝 a] fun x ↦ G x y+B x y+T x y :=
+      hP.mono fun _ hx ↦ hPQ hx hy
+    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using heq.iteratedDeriv_eq 2
+  have heq :
+      weightedThird N a v γ = weightedThird (fun x y ↦ G x y+B x y+T x y) a v γ := by
+    unfold weightedThird
+    rw [hsec.deriv_eq,hsec.eq_of_nhds]
+  have hmain : weightedThird G a v γ < -1/5 :=
+    leftStrip_geometric_mixed_lt hh hhmax ha.le hamax hgap.le hγ hγmax
+  have hrad : |weightedThird B a v γ| < 47/450 :=
+    leftStrip_radical_mixed_lt hh hhmax ha.le hamax hgap.le (by linarith) hγmax
+  have htail : |weightedThird T a v γ| < 2/25 :=
+    leftStrip_tail_mixed_lt hp ha.le hamax hgap.le (by linarith) hγmax
+  have hGB : ContDiffAt ℝ 3 (Function.uncurry (fun x y ↦ G x y+B x y)) (a,v) :=
+    hG.add hB
+  change weightedThird N a v γ < _
+  rw [heq, weightedThird_add hGB hT, weightedThird_add hG hB]
+  linarith only [hmain, (abs_lt.mp hrad).2, (abs_lt.mp htail).2]
+
 #print axioms leftStrip_numerator_decomposition
+#print axioms leftStrip_numerator_weighted_mixed_lt
 
 end RefinedBMV.PositiveCenter
