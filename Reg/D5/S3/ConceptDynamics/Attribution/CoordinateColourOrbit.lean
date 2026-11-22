@@ -238,5 +238,63 @@ def pairedShiftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev allTrueShiftArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {I : Type u} [Fintype I] (p : I → Bool)
+    (_ : ∀ i, R.readout () I p i = true) (v : I → ZMod 2), shift p v = 0
+
+private theorem false_profile_can_shift : ¬ allTrueShiftArena.{u}.Law alwaysTrue := by
+  intro law
+  let I := PUnit.{u+1}
+  let p : I → Bool := fun _ => false
+  let v : I → ZMod 2 := fun _ => 1
+  have h := law p (fun _ => rfl) v
+  simp [p, v, I, shift] at h
+
+def allTrueShiftFamily : Registration allTrueShiftArena.{u} (type_of% (@all_true_shift.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@all_true_shift, alwaysTrue, false_profile_can_shift⟩
+  sensitivity := by
+    constructor
+    · intro role
+      refine ⟨alwaysTrue, ?_, rfl, false_profile_can_shift⟩
+      intro other different
+      exact (different (Subsingleton.elim other role)).elim
+    · exact fun e => nomatch e
+  dependence := family.dependence
+
+def allTrueShiftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@all_true_shift.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.allTrueShiftProfile
+  realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit.allTrueShiftFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨allTrueShiftArena.{u}⟩
+  objectArena := .source ⟨allTrueShiftArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source allTrueShiftArena.{u} ⟨allTrueShiftFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ profile => profile) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "domain", "body", "fn", "arg", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.ConceptDynamics.Attribution.CoordinateColourOrbit

@@ -99,7 +99,7 @@ private theorem selectedPair_invariant (p q : I → Bool) (r : ZMod 2 → ZMod 2
     · simp [hy]
   · simp [hx]
 
-private theorem all_true_shift (p : I → Bool) (h : ∀ i, p i = true) (v : I → ZMod 2) :
+theorem all_true_shift (p : I → Bool) (h : ∀ i, p i = true) (v : I → ZMod 2) :
     shift p v = 0 := by
   simp [shift, h]
 

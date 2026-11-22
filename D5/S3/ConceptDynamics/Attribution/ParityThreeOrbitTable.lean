@@ -67,9 +67,6 @@ private theorem special_shifts (p : Fin 4) (c : ZMod 2) :
   (by decide : ∀ (p : Fin 4) (c : ZMod 2),
     ∃ v : Fin 3 → ZMod 2, shift (leftWord p) v = c ∧ shift (rightWord 0) v = 0) p c
 
-private theorem special_shift_zero (v : Fin 3 → ZMod 2) : shift (rightWord 0) v = 0 :=
-  (by decide : ∀ v : Fin 3 → ZMod 2, shift (rightWord 0) v = 0) v
-
 private noncomputable def indexedOutput (word : Fin 4 → Fin 3 → Bool) (par : ZMod 2)
     (classLaw : ∀ p, parity (bitProfile (word p)) = par)
     (injective : Function.Injective (fun p => (bitProfile (word p) : Profile 3))) :
@@ -400,7 +397,7 @@ private noncomputable def orbitWeight (ordinary : Fin 4 → Fin 3 → ℕ)
   change point p q c d = t at eq
   rw [← eq, move_point, eval, eval]
   refine Fin.cases ?_ (fun j => ?_) q
-  · rw [special_shift_zero, zero_add]
+  · rw [CoordinateColourOrbit.all_true_shift (rightWord 0) (by decide), zero_add]
   · rfl
 
 private theorem orbitWeight_mk (ordinary : Fin 4 → Fin 3 → ℕ) (special : Fin 4 → ZMod 2 → ℕ)
