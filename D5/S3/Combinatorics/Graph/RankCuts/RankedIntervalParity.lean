@@ -32,6 +32,7 @@ private def parityChanges (start stop : ι → Fin (n + 1)) : ℕ :=
   ∑ b : Fin (n + 1), if (∑ i, beforeWeight start stop b i) % 2 =
     (∑ i, afterWeight start stop b i) % 2 then 0 else 1
 
+omit [Fintype ι] in
 private theorem same_without_endpoint (start stop : ι → Fin (n + 1)) (b : Fin (n + 1))
     (i : ι) (hs : start i ≠ b) (ht : stop i ≠ b) :
     beforeWeight start stop b i = afterWeight start stop b i := by
