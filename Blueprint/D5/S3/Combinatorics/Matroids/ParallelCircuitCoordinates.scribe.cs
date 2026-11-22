@@ -49,10 +49,10 @@ internal sealed class ParallelCircuitCoordinatesDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "At a finite face whose vertices project injectively, the augmented boundary of a "
-                    + "pulled-back chain is the sum over insertions outside the image face. Each term has its "
-                    + "ordered incidence sign and multiplicity equal to the number of vertices in the "
-                    + "inserted class."))),
+                    "For a block-ordered projection, take a finite face whose vertices project "
+                    + "injectively. The augmented boundary of the pulled-back chain is the sum over "
+                    + "insertions outside the image face. Each term has its ordered incidence sign "
+                    + "and multiplicity equal to the size of the inserted class."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("signed-readout-of-parallel-pair"),
