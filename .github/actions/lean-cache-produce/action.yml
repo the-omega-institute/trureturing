@@ -255,7 +255,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - id: resume_spool
       name: Check the disposable cache paths before packing producer progress
-      if: runner.environment == 'github-hosted' && runner.os == 'Linux' && steps.build.outcome == 'failure' && steps.resume_snapshot.outputs.resume_ready == 'true'
+      if: runner.environment == 'github-hosted' && runner.os == 'Linux' && steps.resume_snapshot.outputs.resume_ready == 'true'
       continue-on-error: true
       shell: bash
       env:
