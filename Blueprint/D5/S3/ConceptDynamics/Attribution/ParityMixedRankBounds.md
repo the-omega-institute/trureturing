@@ -1,12 +1,12 @@
-# Combine row and column cuts on one parity table
+# Combine parity mismatches on row and column cuts
 
 ## Abstract
 
-Combine exact row and column rank deficits in a parity table with odd margins.
+Combine exact row and column parity mismatches at selected rank thresholds.
 
-**Theorem 1.1 (Mixed rank deficits under odd margins).**
+**Theorem 1.1 (Mixed rank deficits for arbitrary margins).**
 
-$$\operatorname{OddMargins}\left(n, m\right) \Rightarrow \operatorname{MixedRankDeficits}\left(n, m, R, C\right) \le \operatorname{EligibleIntervalScore}\left(n, m, R, C\right)$$
+$$\operatorname{MismatchCount}\left(m, R, C\right) \le \operatorname{ChargedOddCellScore}\left(m, R, C\right) \land \operatorname{CellChargesBoundedByOrdinaryIntersection}\left(m, R, C\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Attribution/ParityMixedRankBounds.mixed_rank_lower` (`✓ std3`). ∎
 
@@ -14,11 +14,11 @@ $$\operatorname{OddMargins}\left(n, m\right) \Rightarrow \operatorname{MixedRank
 
 *Commentary.*
 
-Rows are all even subsets of the coordinates and columns are all odd subsets. The table has a row containing every coordinate. Row and column sums are odd and can vary. Every subtraction is natural subtraction.
+Rows are even subsets of the coordinates and columns are odd subsets. Fix a distinguished row. The table entries are natural numbers. Row and column margins can have either parity.
 
-The row deficit at a selected threshold is the number of ordinary even rows of at least that weight minus their mass in odd columns of weight at most the complementary rank. The column deficit is the number of odd columns above the complementary rank minus the mass they receive from the full row and all lower-weight rows. A threshold selected on both sides uses the larger of the two deficits.
+At a selected row threshold, consider rows of at least that weight outside the distinguished row. Count those whose total mass and mass in columns at or below the complementary rank have different parity. At a selected column threshold, consider columns above the complementary rank. Count those whose total mass and mass received from the distinguished row and lower-weight rows have different parity.
 
-Sum the resulting deficits over the selected thresholds. The upper bound counts each ordinary cell with odd mass once per positive deficit at a threshold strictly above the complementary column weight and at most the row weight. At each threshold the odd margins ensure enough such cells to pay the selected deficit. The two sides use the same eligible cells.
+Use the larger count at each threshold and choose rows in a tie. Only odd cells on the chosen side, incident to a counted row or column and lying outside its free block, contribute to the score. The sum of the larger counts is at most this score. The distinguished row contributes zero. For every other cell, its contributing thresholds lie strictly above the complementary column rank and at most the row weight, so their number is at most the size of the row and column intersection.
 
 ## References
 

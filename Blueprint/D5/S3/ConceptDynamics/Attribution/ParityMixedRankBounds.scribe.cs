@@ -8,40 +8,41 @@ internal sealed class ParityMixedRankBoundsDocument : IScribeDocumentDefinition
 {
     private static Formula Statement()
     {
-        var n = F.Id("n");
+        var table = F.Id("m");
         var rows = F.Id("R");
         var columns = F.Id("C");
-        var table = F.Id("m");
         return Disp(new Formula.Logic(
-            Call("OddMargins", n, table),
-            FormulaLogicOperator.Implies,
-            Seq(Call("MixedRankDeficits", n, table, rows, columns), Sp, Le, Sp,
-                Call("EligibleIntervalScore", n, table, rows, columns))));
+            Seq(Call("MismatchCount", table, rows, columns), Sp, Le, Sp,
+                Call("ChargedOddCellScore", table, rows, columns)),
+            FormulaLogicOperator.And,
+            Call("CellChargesBoundedByOrdinaryIntersection", table, rows, columns)));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Combine exact row and column rank deficits in a parity table with odd margins.",
-        H("Combine row and column cuts on one parity table"),
+        "Combine exact row and column parity mismatches at selected rank thresholds.",
+        H("Combine parity mismatches on row and column cuts"),
         Blocks(Describe.Lean(
-            DescribeId.Create("mixed-odd-parity-rank-deficits"),
+            DescribeId.Create("mixed-parity-rank-deficits"),
             DeclarationHandle.Create("D5/S3/ConceptDynamics/Attribution/ParityMixedRankBounds.mixed_rank_lower"),
-            H("Mixed rank deficits under odd margins"),
+            H("Mixed rank deficits for arbitrary margins"),
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("Rows are all even subsets of the coordinates and columns are "
-                    + "all odd subsets. The table has a row containing every coordinate. Row and "
-                    + "column sums are odd and can vary. Every subtraction is natural subtraction.")),
-                Paragraph(Text("The row deficit at a selected threshold is the number of ordinary "
-                    + "even rows of at least that weight minus their mass in odd columns of weight "
-                    + "at most the complementary rank. The column deficit is the number of odd "
-                    + "columns above the complementary rank minus the mass they receive from the "
-                    + "full row and all lower-weight rows. A threshold selected on both sides uses "
-                    + "the larger of the two deficits.")),
-                Paragraph(Text("Sum the resulting deficits over the selected thresholds. The upper "
-                    + "bound counts each ordinary cell with odd mass once per positive deficit at "
-                    + "a threshold strictly above the complementary column weight and at most the "
-                    + "row weight. At each threshold the odd margins ensure enough such cells to "
-                    + "pay the selected deficit. The two sides use the same eligible cells."))),
+                Paragraph(Text("Rows are even subsets of the coordinates and columns are odd "
+                    + "subsets. Fix a distinguished row. The table entries are natural numbers. "
+                    + "Row and column margins can have either parity.")),
+                Paragraph(Text("At a selected row threshold, consider rows of at least that "
+                    + "weight outside the distinguished row. Count those whose total mass and "
+                    + "mass in columns at or below the complementary rank have different parity. "
+                    + "At a selected column threshold, consider columns above the complementary "
+                    + "rank. Count those whose total mass and mass received from the distinguished "
+                    + "row and lower-weight rows have different parity.")),
+                Paragraph(Text("Use the larger count at each threshold and choose rows in a tie. "
+                    + "Only odd cells on the chosen side, incident to a counted row or column "
+                    + "and lying outside its free block, contribute to the score. The sum of the "
+                    + "larger counts is at most this score. The distinguished row contributes "
+                    + "zero. For every other cell, its contributing thresholds lie strictly "
+                    + "above the complementary column rank and at most the row weight, so their "
+                    + "number is at most the size of the row and column intersection."))),
             DescribeRole.Theorem))));
 }

@@ -1,7 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds
-import Reg.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
-import D5.S3.ConceptDynamics.Attribution.ParityStackedRankBounds
 import Reg.Support.DependentFamily
 
 /-! Dependence of the exact rank deficits on the table and the chosen thresholds. -/
@@ -12,7 +10,6 @@ open Finset LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 open _root_.D5.S3.ConceptDynamics.Attribution.ParityMixedRankBounds
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Reg.D5.S3.ConceptDynamics.Attribution.ParityOddRankBounds
 
 noncomputable section
 
@@ -34,27 +31,17 @@ def raised : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (table : RankCutTable n), table.1.val.card = n →
-    (∀ p, (∑ q, table.2.1 p q) % 2 = 1) →
-    (∀ q, (∑ p, table.2.1 p q) % 2 = 1) →
-    R.readout () n table ≤
-    ∑ p : EvenSubset n, ∑ q : OddSubset n,
-      if p = table.1 then 0
-      else (table.2.1 p q % 2) *
-        (∑ r ∈ (table.2.2.1 ∪ table.2.2.2) ∩ Ioc (n - q.val.card) p.val.card,
-          let d := mixedDeficit table.1 table.2.1 table.2.2 r
-          d - (d - 1))
+  Law R := ∀ (n : ℕ) (table : RankCutTable n),
+    (R.readout () n table ≤ ∑ p : EvenSubset n, ∑ q : OddSubset n,
+      (table.2.1 p q % 2) * chargeCount table p q) ∧
+    (∀ p q, chargeCount table p q ≤ if p = table.1 then 0 else (p.val ∩ q.val).card)
 
 private theorem raised_fails : ¬ arena.Law raised := by
   intro law
-  obtain ⟨mass, rows, cols, _⟩ := rank_test_matrix
-  let full : EvenSubset 6 := ⟨univ, by decide⟩
-  have fullSize : full.val.card = 6 := by simp [full]
-  have h := law 6 (full, mass, ∅, ∅) fullSize
-    (fun p => by rw [rows]) (fun q => by rw [cols])
-  simp only [raised, realize, empty_union, empty_inter, sum_empty, Nat.mul_zero,
-    ite_self, sum_const_zero] at h
-  exact (by decide : ¬ (1 : ℕ) ≤ 0) h
+  let full : EvenSubset 2 := ⟨univ, by decide⟩
+  have h := (law 2 (full, fun _ _ => 0, ∅, ∅)).1
+  change 1 ≤ (∑ p : EvenSubset 2, ∑ q : OddSubset 2, 0 % 2 * _) at h
+  simp at h
 
 def family : Registration arena (type_of% mixed_rank_lower) where
   actual := actual
@@ -69,9 +56,12 @@ def family : Registration arena (type_of% mixed_rank_lower) where
     · exact fun e => nomatch e
   dependence := by
     rintro ⟨⟩
-    let full : EvenSubset 2 := ⟨univ, by decide⟩
-    exact ⟨2, (full, fun _ _ => 0, ∅, ∅), (full, fun _ _ => 0, {0}, ∅),
-      by decide +kernel⟩
+    let full : EvenSubset 4 := ⟨univ, by decide⟩
+    let p : EvenSubset 4 := ⟨{0, 1}, by decide⟩
+    let q : OddSubset 4 := ⟨{0, 1, 2}, by decide⟩
+    let mass : EvenSubset 4 → OddSubset 4 → ℕ :=
+      fun x y => if x = p ∧ y = q then 1 else 0
+    exact ⟨4, (full, mass, ∅, ∅), (full, mass, {2}, ∅), by decide +kernel⟩
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     mixed_rank_lower (Realization signature) Unit Unit where
@@ -96,7 +86,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
