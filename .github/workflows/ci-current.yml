@@ -37,6 +37,7 @@ jobs:
     timeout-minutes: 10
     outputs:
       base: ${{ steps.entry.outputs.base }}
+      tools_pin_changed: ${{ steps.detect.outputs.tools_pin_changed }}
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
     steps:
@@ -67,7 +68,11 @@ jobs:
         name: Decide which units the change hits
         env:
           CI_BASE: ${{ steps.entry.outputs.base }}
-        run: python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
+        run: |
+          python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
+          if grep -Fxzq 'Meta/tools-release.json' "$RUNNER_TEMP/changed-paths"; then
+            echo 'tools_pin_changed=true' >> "$GITHUB_OUTPUT"
+          fi
 
   source:
     needs: detect
@@ -417,6 +422,11 @@ jobs:
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
+      - name: Verify the source of the tools adopted on dev
+        if: needs.detect.outputs.tools_pin_changed == 'true' && (github.base_ref == 'dev' || github.ref == 'refs/heads/dev')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/install-tools.py --verify-adopted-source
       - env:
           NEEDS: ${{ toJSON(needs) }}
           HITS: ${{ needs.detect.outputs.hits }}
