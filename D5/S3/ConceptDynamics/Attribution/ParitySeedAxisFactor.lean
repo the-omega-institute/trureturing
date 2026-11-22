@@ -20,7 +20,7 @@ namespace D5.S3.ConceptDynamics.Attribution.ParitySeedAxisFactor
 
 noncomputable section
 
-private abbrev AxisSubset (d : ℕ) (i : Fin d) := {A : Finset (Fin d) // i ∉ A}
+abbrev AxisSubset (d : ℕ) (i : Fin d) := {A : Finset (Fin d) // i ∉ A}
 
 private def eraseParityEquiv {d : ℕ} (i : Fin d) (r : ℕ) (hr : r < 2) :
     {s : Finset (Fin d) // s.card % 2 = r} ≃ AxisSubset d i where
@@ -163,7 +163,7 @@ private def axisCols {d : ℕ} (even : d % 2 = 0) (i : Fin d) :
     OddSubset d ≃ AxisSubset d i :=
   (complementOdd even).trans (eraseParityEquiv i 1 (by decide))
 
-private def axisTop {d : ℕ} (i : Fin d) : AxisSubset d i :=
+def axisTop {d : ℕ} (i : Fin d) : AxisSubset d i :=
   ⟨univ.erase i, notMem_erase i univ⟩
 
 private def singletonOdd {d : ℕ} (i : Fin d) : OddSubset d :=
@@ -186,7 +186,7 @@ private theorem axis_sum_col {d : ℕ} (i : Fin d)
     (∑ p : EvenSubset d, (f (axisRows i p) B).toNat) = ∑ A, (f A B).toNat :=
   (axisRows i).sum_comp (fun A => (f A B).toNat)
 
-private def axisCost {d : ℕ} (i : Fin d) (f : AxisSubset d i → AxisSubset d i → Bool) : ℕ :=
+def axisCost {d : ℕ} (i : Fin d) (f : AxisSubset d i → AxisSubset d i → Bool) : ℕ :=
   4 * (1 + ∑ A, ∑ B,
     if A ≠ axisTop i ∧ A.val.card % 2 = 1 ∧ B.val.card % 2 = 1
     then (f A B).toNat else 0)

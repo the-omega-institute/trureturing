@@ -54,12 +54,12 @@ private theorem walk_hits (S : Set (Fin n)) {u v : S} (w : ((pathGraph n).induce
       exact this ▸ u.2
 
 /-- A connected induced subgraph of the path is order-convex. -/
-private theorem convex_of_connected {S : Set (Fin n)} (hS : ((pathGraph n).induce S).Connected)
+theorem convex_of_connected {S : Set (Fin n)} (hS : ((pathGraph n).induce S).Connected)
     {x y z : Fin n} (hx : x ∈ S) (hy : y ∈ S) (hxz : x ≤ z) (hzy : z ≤ y) : z ∈ S := by
   obtain ⟨w⟩ := hS.preconnected ⟨x, hx⟩ ⟨y, hy⟩
   exact walk_hits S w z hxz hzy
 
-private theorem interval_connected (a b : Fin n) (hab : a ≤ b) :
+theorem interval_connected (a b : Fin n) (hab : a ≤ b) :
     ((pathGraph n).induce (Set.Icc a b)).Connected := by
   have : Nonempty (Set.Icc a b) := ⟨⟨a, le_rfl, hab⟩⟩
   have key : ∀ d : ℕ, ∀ (x : Fin n) (hx : x ∈ Set.Icc a b), x.val - a.val = d →
