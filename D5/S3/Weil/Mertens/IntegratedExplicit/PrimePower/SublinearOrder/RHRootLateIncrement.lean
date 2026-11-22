@@ -56,7 +56,8 @@ theorem read_signal_orbit (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
   have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith)
   field_simp
 
-private theorem symmetric_difference_returns (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
+/-- Every strict lower level of the origin symmetric increment recurs arbitrarily late. -/
+theorem symmetric_difference_returns (hRH : RiemannHypothesis) {r : ℝ} (hr : 1 < r)
     (h U : ℝ) {b : ℝ} (hb : b < rootSignal r h + rootSignal r (-h) - 2 * rootSignal r 0) :
     ∃ t ≥ U, b < rootSignal r (t + h) + rootSignal r (t - h) - 2 * rootSignal r t := by
   let readDifference := fun p : ℕ → Circle =>
