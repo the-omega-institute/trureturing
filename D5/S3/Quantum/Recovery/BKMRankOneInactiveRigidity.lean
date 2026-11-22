@@ -428,7 +428,7 @@ private theorem compression_entry (B : Matrix (R × E) (R × E) ℂ) (w : R → 
       star w ⬝ᵥ (jointSlice B e f *ᵥ w) := by
   rw [Matrix.mul_assoc]
   simp [Matrix.mul_apply, Fintype.sum_prod_type, Matrix.conjTranspose_apply, compressionMap,
-    Matrix.one_apply, mul_ite, apply_ite, ite_mul, Matrix.mulVec, dotProduct, jointSlice]
+    Matrix.one_apply, apply_ite, ite_mul, Matrix.mulVec, dotProduct, jointSlice]
 
 private theorem relativeDensity_posDef {A : Matrix (R × E) (R × E) ℂ} (hA : A.PosDef)
     (hS : (partialTraceRight A).PosDef) : (relativeDensity A).PosDef := by
