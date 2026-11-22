@@ -53,6 +53,15 @@ internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For a Boolean upperA and complex t, set s = 1 when upperA is true "
                     + "and s = −1 when it is false. Then dPeriod(upperA,t) = (τ(1−1/t)+s) P(1−t)/i."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-fourm-period-d-reflection"),
+                DeclarationHandle.Create(Prefix + "dPeriod_upper_reflection"),
+                H("Schwarz reflection of the D period germ"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real t > 1, on a complex neighborhood of t the upper D period "
+                    + "at r is the conjugate of the lower D period at the conjugate of r. The Euler "
+                    + "period commutes with conjugation, and the complementary ratio picks up a minus "
+                    + "sign from i. In the D formula that sign interchanges the two lip shifts."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("dperiod-analyticat"),
                 DeclarationHandle.Create(Prefix + "dPeriod_analyticAt"),
                 H("Analyticity of the D period at the boundary"), StatementSource.WithoutFormula(),
