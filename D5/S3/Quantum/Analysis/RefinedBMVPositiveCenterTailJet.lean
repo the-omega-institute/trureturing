@@ -554,8 +554,8 @@ theorem logKernel_upperTail_mixed_lt {p : ℕ} (hp : 11 ≤ p) {u v : ℝ}
     apply Filter.EventuallyEq.deriv_eq
     have hy' : u < y-11 := by linarith
     filter_upwards [eventually_gt_nhds hu, eventually_lt_nhds hy'] with x hx hxy
-    have hgap : 11 ≤ y-x := by linarith
-    have hk := upperTail_logKernel_decomposition hp hx hgap
+    have hgap : 0 < y-x := by linarith
+    have hk := upperTail_logKernel_decomposition hp₀ hx hgap
     dsimp only at hk
     rw [sub_add_cancel y x] at hk
     change logKernel p x y = S y*(J x y).value

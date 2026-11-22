@@ -265,8 +265,8 @@ theorem upperTail_distinct_defect {p : ℕ} (hp : 0 < p) {u d : ℝ} (hu : 0 < u
 
 /-- The actual numerator from the positive-center kernel, in normalized
 spectral coordinates, with both root factors separated. -/
-theorem upperTail_defect_numerator {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
-    (hu : 0 < u) (hd : 11 ≤ d) :
+theorem upperTail_defect_numerator {p : ℕ} (hp : 0 < p) {u d : ℝ}
+    (hu : 0 < u) (hd : 0 < d) :
     let h : ℝ := 3/(p : ℝ)
     let a := Real.exp (-(d+u)/(p : ℝ))
     let x := Real.exp (-d/(p : ℝ))
@@ -279,29 +279,26 @@ theorem upperTail_defect_numerator {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
   let h : ℝ := 3/(p : ℝ)
   let a := Real.exp (-(d+u)/(p : ℝ))
   let x := Real.exp (-d/(p : ℝ))
-  have hp₀ : 0 < p := by omega
-  have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
-  have hple : (11 : ℝ) ≤ p := by exact_mod_cast hp
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
   have hh : 0 < h := by dsimp [h]; positivity
-  have hhmax : h ≤ 3/11 :=
-    div_le_div_of_nonneg_left (by norm_num) (by norm_num) hple
-  have hd₀ : 0 < d := by linarith
   have hv₀ : 0 < d+u := by positivity
-  have ha : a^3 = Real.exp (-(h*(d+u))) := (tail_cube_pow hp₀ (d+u)).1
-  have hx : x^3 = Real.exp (-(h*d)) := (tail_cube_pow hp₀ d).1
+  have ha : a^3 = Real.exp (-(h*(d+u))) := (tail_cube_pow hp (d+u)).1
+  have hx : x^3 = Real.exp (-(h*d)) := (tail_cube_pow hp d).1
   have ha₁ : 0 < 1-a^3 := by
     rw [ha, tail_gap_factor hh]
     exact mul_pos hh (tail_gap_pos hh hv₀)
   have hx₁ : 0 < 1-x^3 := by
     rw [hx, tail_gap_factor hh]
-    exact mul_pos hh (tail_gap_pos hh hd₀)
-  have hv : 11 ≤ d+u := by linarith
-  have hb : 0 ≤ 1-upperTailLambda h (d+u) := (Real.sqrt_pos.mp
-    ((by norm_num : (0 : ℝ) < 3/4).trans_le (upperTail_radical_lower hh hhmax hv))).le
+    exact mul_pos hh (tail_gap_pos hh hd)
   have hA : (1-a^3)^2 * DimThree.defect p a a 1 =
-      1-upperTailLambda h (d+u) := upperTail_repeated_defect hp₀ (d+u)
+      1-upperTailLambda h (d+u) := upperTail_repeated_defect hp (d+u)
   have hX : (1-x^3)^2 * DimThree.defect p x x 1 =
-      1-upperTailLambda h d := upperTail_repeated_defect hp₀ d
+      1-upperTailLambda h d := upperTail_repeated_defect hp d
+  have hb : 0 ≤ 1-upperTailLambda h (d+u) := by
+    rw [← hA]
+    exact mul_nonneg (sq_nonneg _)
+      (UniformThreeSpectrum.defect_nonneg_all p a a 1 (Real.exp_pos _).le
+        (Real.exp_pos _).le zero_le_one)
   have hRoot : (1-a^3)*(1-x^3)*
       Real.sqrt (DimThree.defect p a a 1 * DimThree.defect p x x 1) =
       Real.sqrt (1-upperTailLambda h (d+u))*Real.sqrt (1-upperTailLambda h d) := calc
@@ -316,7 +313,7 @@ theorem upperTail_defect_numerator {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
     Real.sqrt (DimThree.defect p a a 1 * DimThree.defect p x x 1)) = _
   rw [mul_sub, hRoot]
   have hD : (1-a^3)*(1-x^3)*DimThree.defect p a x 1 = _ :=
-    upperTail_distinct_defect hp₀ hu
+    upperTail_distinct_defect hp hu
   rw [hD]
 
 private theorem tail_leading_gap {h u d : ℝ} (hh : 0 < h) (hu : 0 < u) (hd : 0 < d) :
@@ -347,8 +344,8 @@ private theorem tail_leading_gap {h u d : ℝ} (hh : 0 < h) (hu : 0 < u) (hd : 0
 
 /-- The exact upper-tail numerator is a leading square and the two
 regularized errors whose derivatives are bounded in the companion modules. -/
-theorem upperTail_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
-    (hu : 0 < u) (hd : 11 ≤ d) :
+theorem upperTail_numerator_decomposition {p : ℕ} (hp : 0 < p) {u d : ℝ}
+    (hu : 0 < u) (hd : 0 < d) :
     let h : ℝ := 3/(p : ℝ)
     let a := Real.exp (-(d+u)/(p : ℝ))
     let x := Real.exp (-d/(p : ℝ))
@@ -372,26 +369,26 @@ theorem upperTail_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
   let ell := 1-Real.exp (-u)
   let r := 1-upperTailSlope h d*upperTailRatio h u
   let P := B d * ell^2
-  have hp₀ : 0 < p := by omega
-  have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
-  have hple : (11 : ℝ) ≤ p := by exact_mod_cast hp
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
   have hh : 0 < h := by dsimp [h]; positivity
-  have hhmax : h ≤ 3/11 := div_le_div_of_nonneg_left (by norm_num) (by norm_num) hple
-  have hd₀ : 0 < d := by linarith
   have hc : 0 < c := by dsimp [c]; positivity
-  have ha : 0 < a d := tail_gap_pos hh hd₀
+  have ha : 0 < a d := tail_gap_pos hh hd
   have hB : 0 < B d := mul_pos (mul_pos hc (sq_pos_of_pos ha)) (Real.exp_pos _)
   have hell : 0 < ell := sub_pos.mpr (Real.exp_lt_one_iff.mpr (neg_neg_of_pos hu))
-  have hSq {t : ℝ} (ht : 11 ≤ t) : (b t)^2 = 1-A t-B t := by
-    have hb := (by norm_num : (0 : ℝ) < 3/4).trans_le (upperTail_radical_lower hh hhmax ht)
-    rw [show (b t)^2 = 1-upperTailLambda h t from Real.sq_sqrt (Real.sqrt_pos.mp hb).le]
+  have hSq (t : ℝ) : (b t)^2 = 1-A t-B t := by
+    let x := Real.exp (-t / (p : ℝ))
+    have hb : 0 ≤ 1-upperTailLambda h t := by
+      rw [← upperTail_repeated_defect hp t]
+      exact mul_nonneg (sq_nonneg _)
+        (UniformThreeSpectrum.defect_nonneg_all p x x 1 (Real.exp_pos _).le
+          (Real.exp_pos _).le zero_le_one)
+    rw [show (b t)^2 = 1-upperTailLambda h t from Real.sq_sqrt hb]
     unfold upperTailLambda
     dsimp [A, upperTailRepeatCorrection, B, c, a]
     ring
   have hAGM : 2*(1-C-G-b v*b d) =
       (B v+B d-2*G)+(A v+A d-2*C)+(b v-b d)^2 := by
-    have hv : 11 ≤ v := by dsimp [v]; linarith
-    nlinarith only [hSq hv, hSq hd]
+    nlinarith only [hSq v, hSq d]
   have hLead : B v+B d-2*G = P*r^2 := by
     have hv : Real.exp (-(2*v)) = Real.exp (-(2*d))*(Real.exp (-u))^2 := by
       rw [pow_two, ← Real.exp_add, ← Real.exp_add]
@@ -408,11 +405,11 @@ theorem upperTail_numerator_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
         rw [hv, hg]
         ring
       _ = _ := by
-        rw [show a d-a v*Real.exp (-u) = a d*ell*r from tail_leading_gap hh hu hd₀]
+        rw [show a d-a v*Real.exp (-u) = a d*ell*r from tail_leading_gap hh hu hd]
         dsimp [P, B]
         ring
   have hLin : A v+A d-2*C = P*upperTailLinearError h u d := by
-    rw [upperTailLinearError_eq_regularized hh hu hd₀]
+    rw [upperTailLinearError_eq_regularized hh hu hd]
     have hf := upperTail_linear_correction (u := u) (d := d) hh
     change A v+A d-2*C = _ at hf
     rw [hf]
@@ -632,9 +629,10 @@ noncomputable def upperTailBaseFactor (p : ℕ) (u d : ℝ) : ℝ :=
     ((1-Real.exp (-(h*d)))/Real.sqrt (1-Real.exp (-(h*(d+u))))) *
       (Real.exp (u/2)*(1-Real.exp (-u))^2/Real.sqrt (compositionMoment p 0 (-u)))
 
-/-- The exact normalized kernel on the upper-gap tail. -/
-theorem upperTail_logKernel_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
-    (hu : 0 < u) (hd : 11 ≤ d) :
+/-- The exact normalized kernel for every strictly ordered pair, decomposed
+into the leading square and the linear and radical corrections. -/
+theorem upperTail_logKernel_decomposition {p : ℕ} (hp₀ : 0 < p) {u d : ℝ}
+    (hu : 0 < u) (hd₀ : 0 < d) :
     let h : ℝ := 3/(p : ℝ)
     let N : ℝ := (p+2).choose 2
     let r := 1-upperTailSlope h d*upperTailRatio h u
@@ -660,10 +658,8 @@ theorem upperTail_logKernel_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
     Real.sqrt (DimThree.defect p a a 1 * DimThree.defect p x x 1)
   let Lo := DimThree.defect p a x x
   let Hi := DimThree.defect p a 1 1
-  have hp₀ : 0 < p := by omega
   have hpR : (0 : ℝ) < p := by exact_mod_cast hp₀
   have hh : 0 < h := by dsimp [h]; positivity
-  have hd₀ : 0 < d := by linarith
   have hv : 0 < v := by dsimp [v]; positivity
   have hn : 0 < n := by dsimp [n]; positivity
   have hN : 0 < N := by
@@ -706,7 +702,7 @@ theorem upperTail_logKernel_decomposition {p : ℕ} (hp : 11 ≤ p) {u d : ℝ}
     rw [min_eq_left hx1.le, max_eq_right hx1.le, hCoord, hCoord'] at hk
     simpa only [ExtremeWalk.upperKernel, Num, Lo, Hi, min_eq_left hx1.le, max_eq_right hx1.le] using hk
   have hNum : α*β*Num = N*β^2*Real.exp (-(2*d))*ell^2/2*W := by
-    have hD := upperTail_numerator_decomposition hp hu hd
+    have hD := upperTail_numerator_decomposition hp₀ hu hd₀
     change (1-a^3)*(1-x^3)*Num =
       ((3+h)*(3+2*h)/2)*(upperTailGap h d)^2*Real.exp (-(2*d))*ell^2/2*W at hD
     rw [hα', hβ'] at hD
