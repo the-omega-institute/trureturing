@@ -41,8 +41,8 @@ def constantZero : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [f : Fintype V] (rank : V → ℕ) (e : V → V → ℕ)
-    (top : V) (r : ℕ), r < rank top →
+  Law R := ∀ {V : Type u} [f : Fintype V] (rank : V → ℕ) (top : V) (r : ℕ)
+    (e : V → V → ℕ), r < rank top →
     (∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b) →
     (∀ a ∈ univ.filter (fun a => rank a ≤ r), (∑ b, e a b) % 2 = 1) →
     (∀ b ∈ univ.filter (fun b => rank b ≤ r), (∑ a, e a b) % 2 = 1) →
@@ -62,7 +62,7 @@ private def testParams : Params.{u} :=
 
 private theorem constant_zero_fails : ¬ arena.{u}.Law constantZero.{u} := by
   intro h
-  have failure := h testRank testEdges ⟨true⟩ 0 (by decide)
+  have failure := h testRank ⟨true⟩ 0 testEdges (by decide)
     (by decide) (by decide) (by decide)
   have rhs : ((univ.filter fun a : ULift.{u} Bool => testRank a = 0).card +
       (∑ b ∈ univ.filter (fun b : ULift.{u} Bool => testRank b ≤ 0), testEdges ⟨true⟩ b) +
@@ -109,11 +109,11 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.RankCuts.RankedBipartiteDiagonalParity
     definition := none
-    coordinates := #[0, 2, 4, 5]
+    coordinates := #[0, 2, 3, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg"]
-      stateBinder := 3
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

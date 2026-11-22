@@ -51,7 +51,7 @@ private theorem split_through (e : V → ℕ) (rank : V → ℕ) (r : ℕ) :
 
 omit [DecidableEq V] in
 /-- The diagonal at a rank is constrained by the full-prefix inflow and edges bypassing that rank. -/
-theorem diagonal_parity (rank : V → ℕ) (e : V → V → ℕ) (top : V) (r : ℕ)
+theorem diagonal_parity (rank : V → ℕ) (top : V) (r : ℕ) (e : V → V → ℕ)
     (topRank : r < rank top)
     (increases : ∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b)
     (rowOdd : ∀ a ∈ through rank r, (∑ b, e a b) % 2 = 1)
