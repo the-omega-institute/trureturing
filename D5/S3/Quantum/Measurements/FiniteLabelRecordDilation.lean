@@ -28,7 +28,7 @@ private abbrev Fiber {P : Set B} (label : P → J) (j : J) := {b : P // label b 
 noncomputable def memorySlots {P : Set B} (label : P → J) (e : ℕ) : ℕ :=
   ∑ j, Nat.card (Fiber label j) ⌈/⌉ e
 
-private def slice {d e : ℕ} (V : Matrix (Fin d × Fin e) B ℂ) (b : B) (t : Fin e) :
+def slice {d e : ℕ} (V : Matrix (Fin d × Fin e) B ℂ) (b : B) (t : Fin e) :
     Fin d → ℂ :=
   fun m => V (m, t) b
 
@@ -46,14 +46,14 @@ def HasPerfectLabelRecord {P : Set B} (label : P → J) (d e : ℕ) : Prop :=
       ∀ b : P, (E (some (label b)) * reducedColumn V b).trace = 1
 
 omit [Fintype B] [DecidableEq B] in
-private theorem trace_mul_reducedColumn {d e : ℕ}
+theorem trace_mul_reducedColumn {d e : ℕ}
     (V : Matrix (Fin d × Fin e) B ℂ) (b : B) (A : Matrix (Fin d) (Fin d) ℂ) :
     (A * reducedColumn V b).trace = ∑ t, star (slice V b t) ⬝ᵥ (A *ᵥ slice V b t) := by
   simp only [reducedColumn, Finset.mul_sum, Matrix.trace_sum, Matrix.mul_vecMulVec,
     Matrix.trace_vecMulVec, dotProduct_comm]
 
 omit [Fintype B] in
-private theorem reducedColumn_trace {d e : ℕ}
+theorem reducedColumn_trace {d e : ℕ}
     (V : Matrix (Fin d × Fin e) B ℂ) (hV : Vᴴ * V = 1) (b : B) :
     (reducedColumn V b).trace = 1 := by
   have h := congrArg (fun M : Matrix B B ℂ => M b b) hV
@@ -156,7 +156,7 @@ private theorem slots_necessary {P : Set B} {label : P → J} {d e : ℕ} (he : 
   rw [← Nat.card_eq_fintype_card (α := Fiber label j), Module.finrank_pi_fintype] at hCount
   simpa using hCount
 
-private theorem extend_into_joint_basis {A C : Type*} [Fintype A] [Fintype C]
+theorem extend_into_joint_basis {A C : Type*} [Fintype A] [Fintype C]
     (P : Set A) (f : P ↪ C) (h : Fintype.card A ≤ Fintype.card C) :
     ∃ g : A ↪ C, ∀ b : P, g b = f b := by
   classical
