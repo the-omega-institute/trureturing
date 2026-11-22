@@ -23,7 +23,8 @@ internal sealed class IntegralCircuitImageDocument : IScribeDocumentDefinition
                         + "time from the circuit face. At each basis of the contraction, each "
                         + "summand reads the coefficient on the union of the basis and the "
                         + "corresponding circuit facet. Its orientation is the product of the "
-                        + "facet boundary sign and the shuffle sign. The image consists exactly "
+                        + "facet boundary sign and the sign of merging the ordered circuit facet "
+                        + "followed by the ordered basis into increasing order. The image consists exactly "
                         + "of the gcd of the dual parallel-class sizes on K times the integral "
                         + "augmented top-cycle lattice of the contraction.")),
                     Paragraph(Text(
@@ -35,8 +36,9 @@ internal sealed class IntegralCircuitImageDocument : IScribeDocumentDefinition
                         + "by the class-size gcd. Dividing by that gcd preserves base support "
                         + "and the zero-boundary equations over the integers.")),
                     Paragraph(Text(
-                        "In the reverse direction, delete one parallel class and contract its "
-                        + "complement in the circuit. Comparing bases through dual complements "
+                        "In the reverse direction, suppose the original matroid has no coloops. "
+                        + "Delete one parallel class and contract its complement in the circuit. "
+                        + "Comparing bases through dual complements "
                         + "identifies this minor with the circuit contraction. The deletion has "
                         + "no coloops because contracting the rank-one flat in the dual leaves "
                         + "no loops. Multiply the target cycle by the shuffle sign of the class "
