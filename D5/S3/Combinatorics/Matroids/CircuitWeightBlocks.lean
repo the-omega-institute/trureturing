@@ -139,37 +139,43 @@ theorem tuple_vanishing_iff_of_supported_change {J N : Type*} [Finite I] [Finite
     simp [newBasis, new, Function.comp_def]
   rw [hOld, hNew, hspan]
 
+omit [Fintype I] in
 /-- If one face has at least two indices outside the other, a supported
 change of basis places the two faces in different zero-weight factors. -/
-theorem exists_basis_separating_faces (F G : Finset I) (hFG : 1 < (F \ G).card)
+theorem exists_basis_separating_faces [Finite I] (F G : Finset I) (hFG : 1 < (F \ G).card)
+    (root : I) (hroot : root ∉ F)
     (weight : I → ℕ) (hweight : ∀ i, 0 < weight i) :
     ∃ (b : Module.Basis I ℤ (I → ℤ)) (w : I → ℕ) (A : Finset I),
       (∀ i, b.equivFun (fun j => (weight j : ℤ)) i = (w i : ℤ)) ∧
-      (∀ i ∈ A, w i = 0) ∧ F ∩ A ≠ G ∩ A ∧
-      ∀ H ∈ ({F, G} : Finset (Finset I)), ∀ i ∈ H, ∀ j ∉ H,
+      (∀ i ∈ A, w i = 0) ∧ F ∩ A ≠ G ∩ A ∧ root ∉ A ∧
+      ∀ H ∈ ({F, G, {root}} : Finset (Finset I)), ∀ i ∈ H, ∀ j ∉ H,
         b i j = 0 ∧ b.equivFun (Pi.single i 1) j = 0 := by
-  let signatures (i : I) : Bool × Bool := (decide (i ∈ F), decide (i ∈ G))
+  let _ := Fintype.ofFinite I
+  let signatures (i : I) : Bool × Bool × Bool := (decide (i ∈ F), decide (i ∈ G), decide (i = root))
   let block (i : I) : Set.range signatures := ⟨signatures i, ⟨i, rfl⟩⟩
   have hs : Function.Surjective block := by
     rintro ⟨_, i, rfl⟩
     exact ⟨i, rfl⟩
   obtain ⟨b, z, _, hf, hb, hw⟩ := exists_weight_basis_by_fiber block hs weight hweight
   let w (i : I) := if z (block i) = i then (univ.filter (fun j => block j = block i)).gcd weight else 0
-  let A := univ.filter (fun i => w i = 0)
+  let A := (univ.filter (fun i => w i = 0)).erase root
   refine ⟨b, w, A, fun i => by simpa only [w, Nat.cast_ite, Nat.cast_zero] using hw i,
-    fun i hi => (mem_filter.mp hi).2, ?_, ?_⟩
+    fun i hi => (mem_filter.mp (mem_of_mem_erase hi)).2, ?_, notMem_erase _ _, ?_⟩
   · obtain ⟨i, hi, j, hj, hij⟩ := one_lt_card.mp hFG
     have hi' := mem_sdiff.mp hi
     have hj' := mem_sdiff.mp hj
+    have hiRoot : i ≠ root := fun h => hroot (h ▸ hi'.1)
+    have hjRoot : j ≠ root := fun h => hroot (h ▸ hj'.1)
     have hblock : block i = block j := by
       apply Subtype.ext
-      simp [block, signatures, hi'.1, hi'.2, hj'.1, hj'.2]
+      simp [block, signatures, hi'.1, hi'.2, hj'.1, hj'.2, hiRoot, hjRoot]
     have passive : ∃ k ∈ F \ G, w k = 0 := by
       by_cases h : z (block i) = i
       · exact ⟨j, hj, by simp [w, ← hblock, h, hij]⟩
       · exact ⟨i, hi, by simp [w, h]⟩
     obtain ⟨k, hk, hzero⟩ := passive
-    have hkA : k ∈ A := mem_filter.mpr ⟨mem_univ k, hzero⟩
+    have hkRoot : k ≠ root := fun h => hroot (h ▸ (mem_sdiff.mp hk).1)
+    have hkA : k ∈ A := mem_erase.mpr ⟨hkRoot, mem_filter.mpr ⟨mem_univ k, hzero⟩⟩
     intro h
     have hkG : k ∈ G ∩ A := h ▸ mem_inter.mpr ⟨(mem_sdiff.mp hk).1, hkA⟩
     exact (mem_sdiff.mp hk).2 (mem_inter.mp hkG).1
@@ -178,9 +184,11 @@ theorem exists_basis_separating_faces (F G : Finset I) (hFG : 1 < (F \ G).card)
       intro he
       have hv : signatures i = signatures j := congrArg Subtype.val he
       simp only [mem_insert, mem_singleton] at hH
-      rcases hH with rfl | rfl
+      rcases hH with rfl | rfl | rfl
       · simpa [signatures, hi, hj] using congrArg Prod.fst hv
-      · simpa [signatures, hi, hj] using congrArg Prod.snd hv
+      · simpa [signatures, hi, hj] using congrArg (fun s => s.2.1) hv
+      · simp only [mem_singleton] at hi hj
+        simpa [signatures, hi, hj] using congrArg (fun s => s.2.2) hv
     exact ⟨hf i j hne, hb i j hne⟩
 
 end D5.S3.Combinatorics.Matroids.CircuitWeightBlocks

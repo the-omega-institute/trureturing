@@ -52,7 +52,7 @@ private lemma extending_base_exists (hr : r < Fintype.card I)
     omega
   · exact ⟨B, hFB, hBc, hB⟩
 
-private lemma indep_iff_card_and_allowed (hr : r < Fintype.card I)
+lemma indep_iff_card_and_allowed (hr : r < Fintype.card I)
     (hsize : ∀ H ∈ holes, H.card = r)
     (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))
     (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes)

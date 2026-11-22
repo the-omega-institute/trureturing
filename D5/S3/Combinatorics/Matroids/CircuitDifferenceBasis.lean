@@ -92,4 +92,67 @@ theorem exists_difference_basis (H : Finset I) (p q : I) (hp : p ∉ H) (hq : q 
         simpa [e, hpq, hpq.symm, U] using add_comm (x q) (∑ j ∈ U, x j)
       · simp [e, hip, hiq, Ne.symm hip, Ne.symm hiq]
 
+/-- Two faces with sparse intersection admit simultaneous difference
+coordinates around chosen representatives. The pivot and all transformed
+weights remain available for the lower-degree insertion equations. -/
+theorem exists_two_face_difference_basis (H J : Finset I) {d : ℕ} (hd : 1 ≤ d)
+    (hH : H.card = d + 2) (hJ : J.card = d + 2) (hsparse : (H ∩ J).card ≤ d)
+    (weight : I → ℕ) (hweight : ∀ i, 0 < weight i) :
+    ∃ (p : I) (_ : p ∈ H) (q : I) (_ : q ∈ J)
+        (b : Module.Basis I ℤ (I → ℤ)) (w : I → ℕ),
+      b p = Pi.single p 1 ∧ p ∉ J.erase q ∧
+      1 < ((H.erase p) \ (J.erase q)).card ∧
+      (∀ i ∈ H.erase p, b i = Pi.single i 1 - Pi.single p 1) ∧
+      (∀ i ∈ J.erase q, b i = Pi.single i 1 - Pi.single q 1) ∧
+      (∀ i, b.equivFun (fun k => (weight k : ℤ)) i = (w i : ℤ)) ∧ ∀ i, 0 < w i := by
+  obtain ⟨p, hp, q, hq, L, a, ha, hpL, hfirst, hsecond, hpSecond, hsep⟩ :
+      ∃ (p : I) (_ : p ∈ H) (q : I) (_ : q ∈ J) (L : Finset I) (a : I),
+        a ∈ L ∧ p ∉ L ∧ (∀ i ∈ H.erase p, i ∉ L.erase a) ∧
+        (∀ i ∈ J.erase q, (if i ∈ L.erase a then a else p) = q) ∧
+        p ∉ J.erase q ∧ 1 < ((H.erase p) \ (J.erase q)).card := by
+    by_cases hinter : (H ∩ J).Nonempty
+    · obtain ⟨p, hp⟩ := hinter
+      have hpH := (mem_inter.mp hp).1
+      have hpJ := (mem_inter.mp hp).2
+      obtain ⟨a, ha⟩ := card_pos.mp (show 0 < (H.erase p).card by
+        rw [card_erase_of_mem hpH, hH]; omega)
+      have hpane : p ≠ a := (mem_erase.mp ha).1.symm
+      refine ⟨p, hpH, p, hpJ, {a}, a, mem_singleton.mpr rfl, by simp [hpane],
+        by simp, by simp, notMem_erase p _, ?_⟩
+      have heq : H.erase p \ J.erase p = H \ J := by
+        rw [← erase_sdiff_distrib, erase_eq_of_notMem (fun h => (mem_sdiff.mp h).2 hpJ)]
+      rw [heq]
+      have h := card_sdiff_add_card_inter H J
+      omega
+    · obtain ⟨p, hp⟩ := card_pos.mp (show 0 < H.card by omega)
+      obtain ⟨q, hq⟩ := card_pos.mp (show 0 < J.card by omega)
+      have disjoint (i : I) (hi : i ∈ H) : i ∉ J := fun hx => hinter ⟨i, mem_inter.mpr ⟨hi, hx⟩⟩
+      have hd' : ∀ i ∈ H.erase p, i ∉ J.erase q := fun i hi hx =>
+        disjoint i (mem_of_mem_erase hi) (mem_of_mem_erase hx)
+      refine ⟨p, hp, q, hq, J, q, hq, disjoint p hp, hd', fun i hi => ite_eq_left hi,
+        fun h => disjoint p hp (mem_of_mem_erase h), ?_⟩
+      have heq : H.erase p \ J.erase q = H.erase p := by
+        ext i
+        exact ⟨fun hi => (mem_sdiff.mp hi).1, fun hi => mem_sdiff.mpr ⟨hi, hd' i hi⟩⟩
+      rw [heq, card_erase_of_mem hp, hH]
+      omega
+  obtain ⟨b, hbp, hb, hread⟩ := exists_difference_basis L p a hpL ha
+  let w (i : I) := if i = p then ∑ j, weight j else if i = a then ∑ j ∈ L, weight j else weight i
+  refine ⟨p, hp, q, hq, b, w, hbp, hpSecond, hsep, ?_, ?_, ?_, ?_⟩
+  · intro i hi
+    rw [hb i (mem_erase.mp hi).1, ite_eq_right (hfirst i hi)]
+  · intro i hi
+    have hne : i ≠ p := fun h => hpSecond (h ▸ hi)
+    rw [hb i hne, hsecond i hi]
+  · intro i
+    simpa only [w, Nat.cast_ite, Nat.cast_sum] using hread (fun k => (weight k : ℤ)) i
+  · intro i
+    by_cases hip : i = p
+    · rw [show w i = ∑ j, weight j by simp [w, hip]]
+      exact (hweight p).trans_le (single_le_sum (fun j _ => Nat.zero_le (weight j)) (mem_univ p))
+    · by_cases hia : i = a
+      · rw [show w i = ∑ j ∈ L, weight j by simp [w, hip, hia]]
+        exact (hweight a).trans_le (single_le_sum (fun j _ => Nat.zero_le (weight j)) ha)
+      · simpa only [w, if_neg hip, if_neg hia] using hweight i
+
 end D5.S3.Combinatorics.Matroids.CircuitDifferenceBasis

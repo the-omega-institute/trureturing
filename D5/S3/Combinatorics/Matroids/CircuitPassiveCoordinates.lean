@@ -119,32 +119,20 @@ noncomputable def sector [Fintype I] (b : Module.Basis I ℤ M) (A S : Finset I)
   ((insertVector (∑ i, weight i • b i)).ker ⊓ Submodule.torsionBy ℤ _ (n : ℤ)) ⊓
     (project b A S - LinearMap.id).ker
 
-/-- Weighted insertion and the scalar annihilator split independently over all
-intersections with the passive indices. -/
-theorem exists_split [Fintype I] (b : Module.Basis I ℤ M)
-    (A : Finset I) (weight : I → ℕ) (n : ℕ) (hweight : ∀ i ∈ A, weight i = 0) :
-    ∃ e : (↥((insertVector (n := d) (N := N) (∑ i, weight i • b i)).ker ⊓
-      Submodule.torsionBy ℤ _ (n : ℤ))) ≃ₗ[ℤ]
-      (∀ S : A.powerset, ↥(sector (d := d) (N := N) b A S.val weight n)),
+private theorem projectDecomposition (b : Module.Basis I ℤ M) (A : Finset I)
+    (K : Submodule ℤ (M [⋀^Fin d]→ₗ[ℤ] N))
+    (hK : ∀ (f : K) (S : A.powerset), project b A S.val f.val ∈ K) :
+    ∃ e : ↥K ≃ₗ[ℤ] (∀ S : A.powerset, ↥(K ⊓ (project b A S.val - LinearMap.id).ker)),
       ∀ f S, (e f S).val = project b A S.val f.val := by
-  let w := ∑ i, weight i • b i
-  let K := (insertVector (n := d) (N := N) w).ker ⊓ Submodule.torsionBy ℤ _ (n : ℤ)
-  have hsector (S : A.powerset) (f : M [⋀^Fin (d + 1)]→ₗ[ℤ] N) :
-      f ∈ sector b A S.val weight n ↔ f ∈ K ∧ project b A S.val f = f := by
+  have hsector (S : A.powerset) (f : M [⋀^Fin d]→ₗ[ℤ] N) :
+      f ∈ K ⊓ (project b A S.val - LinearMap.id).ker ↔ f ∈ K ∧ project b A S.val f = f := by
     change f ∈ K ∧ f ∈ (project b A S.val - LinearMap.id).ker ↔ _
     simp only [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, sub_eq_zero]
   have hproject (S : A.powerset) (f : K) :
-      project b A S.val f.val ∈ sector b A S.val weight n := by
+      project b A S.val f.val ∈ K ⊓ (project b A S.val - LinearMap.id).ker := by
     apply (hsector S _).mpr
-    have hf : f.val.curryLeft w = 0 ∧ (n : ℤ) • f.val = 0 := f.prop
-    constructor
-    · change (project b A S.val f.val).curryLeft w = 0 ∧
-          (n : ℤ) • project b A S.val f.val = 0
-      rw [show w = ∑ i, weight i • b i from rfl,
-        insertion_project b A S.val weight hweight, hf.1, _root_.map_zero,
-        ← map_smul, hf.2, _root_.map_zero]
-      exact ⟨rfl, rfl⟩
-    · rw [project_project, ite_eq_left rfl]
+    refine ⟨hK f S, ?_⟩
+    rw [project_project, ite_eq_left rfl]
   refine ⟨{
     toFun := fun f S => ⟨project b A S.val f.val, hproject S f⟩
     invFun := fun g => ⟨∑ S, (g S).val, K.sum_mem fun S _ => ((hsector S _).mp (g S).prop).1⟩
@@ -162,6 +150,25 @@ theorem exists_split [Fintype I] (b : Module.Basis I ℤ M)
   · intro T hT
     conv_lhs => rw [← ((hsector T _).mp (g T).prop).2]
     rw [project_project, ite_eq_right (fun h => hT (Subtype.ext h.symm))]
+
+/-- Weighted insertion and the scalar annihilator split independently over all
+intersections with the passive indices. -/
+theorem exists_split [Fintype I] (b : Module.Basis I ℤ M)
+    (A : Finset I) (weight : I → ℕ) (n : ℕ) (hweight : ∀ i ∈ A, weight i = 0) :
+    ∃ e : (↥((insertVector (n := d) (N := N) (∑ i, weight i • b i)).ker ⊓
+      Submodule.torsionBy ℤ _ (n : ℤ))) ≃ₗ[ℤ]
+      (∀ S : A.powerset, ↥(sector (d := d) (N := N) b A S.val weight n)),
+      ∀ f S, (e f S).val = project b A S.val f.val := by
+  let w := ∑ i, weight i • b i
+  let K := (insertVector (n := d) (N := N) w).ker ⊓ Submodule.torsionBy ℤ _ (n : ℤ)
+  refine projectDecomposition b A K fun f S => ?_
+  have hf : f.val.curryLeft w = 0 ∧ (n : ℤ) • f.val = 0 := f.prop
+  change (project b A S.val f.val).curryLeft w = 0 ∧
+    (n : ℤ) • project b A S.val f.val = 0
+  rw [show w = ∑ i, weight i • b i from rfl,
+    insertion_project b A S.val weight hweight, hf.1, _root_.map_zero,
+    ← map_smul, hf.2, _root_.map_zero]
+  exact ⟨rfl, rfl⟩
 
 /-- A coefficient equation restricts only the factor indexed by that face's
 intersection with the passive indices. -/
@@ -267,5 +274,73 @@ theorem independent_restrictions_product {J : Type*} (X : J → Type*)
   exact ⟨(pairFamilies X (fun j => ↥(P j ⊓ Q j))).trans
     ((LinearEquiv.piCongrRight fun j => (component j).some).trans
       (pairFamilies (fun j => ↥(P j)) (fun j => ↥(Q j))).symm)⟩
+
+private def piSubmoduleEquiv {J : Type*} {X : J → Type*} [∀ j, AddCommGroup (X j)]
+    (P : ∀ j, Submodule ℤ (X j)) : ↥(Submodule.pi Set.univ P) ≃ₗ[ℤ] ∀ j, ↥(P j) where
+  toFun f j := ⟨f.val j, f.prop j (Set.mem_univ j)⟩
+  invFun f := ⟨fun j => (f j).val, fun j _ => (f j).prop⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- If two coefficients have different intersections with the zero-weight
+indices, their individual and joint kernels satisfy the product identity
+for restrictions on distinct factors. -/
+theorem separated_coefficients_product (b : Module.Basis I ℤ M) (A : Finset I)
+    (K : Submodule ℤ (M [⋀^Fin d]→ₗ[ℤ] N))
+    (hK : ∀ (f : K) (S : A.powerset), project b A S.val f.val ∈ K)
+    (F G : Set.powersetCard I d) (hsep : F.val ∩ A ≠ G.val ∩ A) :
+    let read := fun H : Set.powersetCard I d =>
+      (LinearMap.proj H).comp ((basisFormEquiv (N := N) b).symm.toLinearMap.comp K.subtype)
+    Nonempty ((↥K × ↥((read F).ker ⊓ (read G).ker)) ≃ₗ[ℤ] (↥(read F).ker × ↥(read G).ker)) := by
+  intro read
+  let part (S : A.powerset) := K ⊓ (project b A S.val - LinearMap.id).ker
+  obtain ⟨e, he⟩ := projectDecomposition b A K hK
+  let X (S : A.powerset) := ↥(part S)
+  let Q (H : Set.powersetCard I d) (S : A.powerset) : Submodule ℤ (X S) :=
+    if H.val ∩ A = S.val then
+      ((LinearMap.proj H).comp ((basisFormEquiv b).symm.toLinearMap.comp
+        (part S).subtype)).ker
+    else ⊤
+  have hQ (H : Set.powersetCard I d) :
+      (read H).ker = (Submodule.pi Set.univ (Q H)).comap e.toLinearMap := by
+    ext f
+    change read H f = 0 ↔ ∀ S : A.powerset, S ∈ Set.univ → e f S ∈ Q H S
+    have read_at (S : A.powerset) (hs : H.val ∩ A = S.val) :
+        (basisFormEquiv b).symm (e f S).val H = read H f := by
+      rw [he f S, project_on_basis, ite_eq_left hs]
+      rfl
+    constructor
+    · intro h S _
+      by_cases hs : H.val ∩ A = S.val
+      · simp only [Q, ite_eq_left hs, LinearMap.mem_ker]
+        exact (read_at S hs).trans h
+      · simp [Q, hs]
+    · intro h
+      let S : A.powerset := ⟨H.val ∩ A, mem_powerset.mpr inter_subset_right⟩
+      have hS := h S (Set.mem_univ S)
+      simp only [Q, ite_eq_left (show H.val ∩ A = S.val from rfl), LinearMap.mem_ker] at hS
+      exact (read_at S rfl).symm.trans hS
+  have hBoth : (read F).ker ⊓ (read G).ker =
+      (Submodule.pi Set.univ (fun S => Q F S ⊓ Q G S)).comap e.toLinearMap := by
+    rw [hQ F, hQ G]
+    ext f
+    change (∀ S : A.powerset, S ∈ Set.univ → e f S ∈ Q F S) ∧
+      (∀ S : A.powerset, S ∈ Set.univ → e f S ∈ Q G S) ↔
+      ∀ S : A.powerset, S ∈ Set.univ → e f S ∈ Q F S ⊓ Q G S
+    simp only [Submodule.mem_inf, Set.mem_univ, true_implies, forall_and]
+  have hd (S : A.powerset) : Q F S = ⊤ ∨ Q G S = ⊤ := by
+    by_cases hs : F.val ∩ A = S.val
+    · exact Or.inr (ite_eq_right (fun hg => hsep (hs.trans hg.symm)))
+    · exact Or.inl (ite_eq_right hs)
+  let one (H : Set.powersetCard I d) : ↥(read H).ker ≃ₗ[ℤ] ∀ S, ↥(Q H S) :=
+    (LinearEquiv.ofEq _ _ (hQ H)).trans
+      ((e.ofSubmodule' (Submodule.pi Set.univ (Q H))).trans (piSubmoduleEquiv (Q H)))
+  let both : ↥((read F).ker ⊓ (read G).ker) ≃ₗ[ℤ] ∀ S, ↥(Q F S ⊓ Q G S) :=
+    (LinearEquiv.ofEq _ _ hBoth).trans
+      ((e.ofSubmodule' _).trans (piSubmoduleEquiv (fun S => Q F S ⊓ Q G S)))
+  obtain ⟨square⟩ := independent_restrictions_product X (Q F) (Q G) hd
+  exact ⟨(e.prodCongr both).trans (square.trans ((one F).symm.prodCongr (one G).symm))⟩
 
 end D5.S3.Combinatorics.Matroids.CircuitPassiveCoordinates
