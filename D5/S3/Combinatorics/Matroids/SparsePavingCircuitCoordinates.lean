@@ -52,6 +52,50 @@ private lemma extending_base_exists (hr : r < Fintype.card I)
     omega
   · exact ⟨B, hFB, hBc, hB⟩
 
+/-- Removing a family of pairwise separated rank-sized sets from the uniform
+bases gives a matroid on the full ground. -/
+theorem exists_sparse_paving_core (hr : r < Fintype.card I) (hr₀ : 0 < r)
+    (hsparse : holes.Pairwise (fun H J => (H ∩ J).card + 2 ≤ r)) :
+    ∃ M : Matroid I, M.E = Set.univ ∧
+      ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = r ∧ B ∉ holes := by
+  classical
+  let allowed (B : Set I) : Prop :=
+    ∃ T : Finset I, (T : Set I) = B ∧ T.card = r ∧ T ∉ holes
+  obtain ⟨T, _, hT, hAllowed⟩ := extending_base_exists hr hsparse ∅ (by simpa using hr₀)
+  have exchange : Matroid.ExchangeProperty allowed := by
+    intro X Y hx hy a ha
+    obtain ⟨B, rfl, hB, hAllowedB⟩ := hx
+    obtain ⟨C, rfl, hC, hAllowedC⟩ := hy
+    have haB : a ∈ B := ha.1
+    have haC : a ∉ C := ha.2
+    have hCB : ¬ C ⊆ B := fun h =>
+      haC ((eq_of_subset_of_card_le h (hB.trans hC.symm).le).symm ▸ haB)
+    obtain ⟨b, hbC, hbB⟩ := Finset.not_subset.mp hCB
+    let swap (i : I) := insert i (B.erase a)
+    have hcard (i : I) (hi : i ∉ B) : (swap i).card = r := by
+      dsimp [swap]
+      rw [card_insert_of_notMem (fun hm => hi (mem_of_mem_erase hm)), card_erase_of_mem haB, hB]
+      omega
+    by_cases hb : swap b ∈ holes
+    · have hCH : ¬ C ⊆ swap b := fun h =>
+        hAllowedC ((eq_of_subset_of_card_le h ((hcard b hbB).trans hC.symm).le).symm ▸ hb)
+      obtain ⟨c, hcC, hcH⟩ := Finset.not_subset.mp hCH
+      have hcB : c ∉ B := fun hm => hcH
+        (mem_insert_of_mem (mem_erase.mpr ⟨fun h => haC (h ▸ hcC), hm⟩))
+      have hc : swap c ∉ holes := by
+        intro hh
+        have hsep := hsparse hb hh (fun h => hcH (h.symm ▸ mem_insert_self c _))
+        have hcommon := card_le_card (subset_inter (subset_insert b (B.erase a))
+          (subset_insert c (B.erase a)))
+        change (B.erase a).card ≤ (swap b ∩ swap c).card at hcommon
+        rw [card_erase_of_mem haB, hB] at hcommon
+        omega
+      exact ⟨c, ⟨hcC, hcB⟩, swap c, by simp [swap], hcard c hcB, hc⟩
+    · exact ⟨b, ⟨hbC, hbB⟩, swap b, by simp [swap], hcard b hbB, hb⟩
+  let M := Matroid.ofExistsFiniteIsBase Set.univ allowed
+    ⟨T, ⟨T, rfl, hT, hAllowed⟩, T.finite_toSet⟩ exchange (fun _ _ => Set.subset_univ _)
+  exact ⟨M, rfl, fun B => by change allowed (B : Set I) ↔ _; simp [allowed]⟩
+
 lemma indep_iff_card_and_allowed (hr : r < Fintype.card I)
     (hsize : ∀ H ∈ holes, H.card = r)
     (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ r))

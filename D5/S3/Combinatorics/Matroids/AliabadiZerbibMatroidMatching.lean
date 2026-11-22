@@ -170,7 +170,7 @@ private lemma extend_avoiding (hE : E.Finite) (hH : H ⊆ E) (hcH : H.ncard = n)
     · intro hh; exact heH (hh ▸ mem_insert e _)
   · exact ⟨B, hIB, hBE, hcB, hBH⟩
 
-noncomputable def punctured (E H : Set α) (n : ℕ) (hE : E.Finite)
+private noncomputable def punctured (E H : Set α) (n : ℕ) (hE : E.Finite)
     (hH : H ⊆ E) (hcH : H.ncard = n) (hn : 0 < n) (hEn : n < E.ncard) : Matroid α :=
   Matroid.ofExistsFiniteIsBase E (fun B => B ⊆ E ∧ B.ncard = n ∧ B ≠ H)
     (by
@@ -182,9 +182,9 @@ noncomputable def punctured (E H : Set α) (n : ℕ) (hE : E.Finite)
 variable (hE : E.Finite) (hH : H ⊆ E) (hcH : H.ncard = n)
     (hn : 0 < n) (hEn : n < E.ncard)
 
-@[simp] lemma punctured_ground : (punctured E H n hE hH hcH hn hEn).E = E := by rfl
+@[simp] private lemma punctured_ground : (punctured E H n hE hH hcH hn hEn).E = E := by rfl
 
-@[simp] lemma punctured_base (B : Set α) :
+@[simp] private lemma punctured_base (B : Set α) :
     (punctured E H n hE hH hcH hn hEn).IsBase B ↔ B ⊆ E ∧ B.ncard = n ∧ B ≠ H := by rfl
 
 private lemma punctured_small_indep (hI : I ⊆ E) (hcI : I.ncard < n) :
