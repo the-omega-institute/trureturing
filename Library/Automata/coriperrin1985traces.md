@@ -4,9 +4,11 @@ authors: Robert Cori, Dominique Perrin
 year: 1985
 title: Automates et commutations partielles
 doi: 10.1051/ita/1985190100211
-claim: For finite alphabets with reflexive symmetric commutation, Proposition 1.1 characterizes congruence by dependent-pair projections and Proposition 1.3 gives a four-factor decomposition of xy congruent to zt.
+claim: For finite alphabets with reflexive symmetric commutation, Proposition 1.1 characterizes congruence by dependent-pair projections and Proposition 1.3 gives a four-factor decomposition of xy congruent to zt; Corollary 1.4 refines a two-factor product against any finite ordered product.
 strata_touched:
   - D5/S1/Words/TraceProjection
+  - D5/S1/Words/TraceLevi
+  - D5/S1/Words/TraceMultiCut
 license: citation-only
 triage: anchor
 ---
@@ -68,9 +70,32 @@ establishes neither a native Lean theorem nor the discharge of either
 obligation. It supplies no claim of novelty, effective reconstruction,
 complexity, or physical-history interpretation.
 
+## Finite-product refinement
+
+Corollary 1.4 is stated on printed page 25 and proved on printed page 26,
+including the case of zero columns. With the same finite alphabet A and
+reflexive symmetric theta, a congruence between uv and x_1 ... x_n admits
+words p_i,q_i such that u is congruent to p_1 ... p_n, v to q_1 ... q_n,
+and x_i = p_i q_i. Each q_i commutes absolutely with the later upper product
+p_(i+1) ... p_n. Thus the factors are one simultaneous pair of rows, with
+all earlier-lower/later-upper crossings constrained together.
+
+The native two-row formulation uses x,y,zs[i],p(i),r(i) for u,v,x_i,p_i,q_i.
+Its column conditions are native connections rather than literal list
+equalities. Symmetry aligns the source's bottom-to-later-top commutation
+with I(a,b) for a in p(k), b in r(j), j < k. The source convention remains
+a real boundary: theta(a,b) := a = b or I(a,b) does not imply strict I(a,b),
+and finite-alphabet congruence is not itself the native arbitrary-alphabet
+closure. The native proof applies the strict binary Levi refinement
+recursively and transports membership through native connections. It
+requires no finite alphabet, equality oracle, nonempty word, supplied
+matching or schedule. This is an established classical analogue, without
+an originality or published-open-problem-resolution claim.
+
 ## Verified locator
 
 - DOI: https://doi.org/10.1051/ita/1985190100211
 - Publisher: https://www.numdam.org/item/ITA_1985__19_1_21_0/
 - Proposition 1.1 on printed page 23; proof on page 24.
 - Proposition 1.3 and its complete proof on printed page 25; finite A and reflexive symmetric theta are the standing assumptions on printed page 23.
+- Corollary 1.4 on printed page 25, with proof on page 26, including zero columns.

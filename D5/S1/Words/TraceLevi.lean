@@ -20,14 +20,14 @@ open D5.S1.Words.TraceProjection
 universe u
 variable {α : Type u}
 
-private theorem connected_symm (I : α → α → Prop)
+theorem connected_symm (I : α → α → Prop)
     (hs : ∀ a b, I a b → I b a) (hi : ∀ a, ¬ I a a)
     {x y : List α} (h : Connected I x y) : Connected I y x := by
   apply (connected_iff_same_projections I hs hi y x).mpr
   intro a b hab
   exact ((connected_iff_same_projections I hs hi x y).mp h a b hab).symm
 
-private theorem connected_append (I : α → α → Prop)
+theorem connected_append (I : α → α → Prop)
     (hs : ∀ a b, I a b → I b a) (hi : ∀ a, ¬ I a a)
     {x x' y y' : List α} (hx : Connected I x x') (hy : Connected I y y') :
     Connected I (x ++ y) (x' ++ y') := by
@@ -40,7 +40,7 @@ private theorem connected_append (I : α → α → Prop)
       pairProjection a b v ++ pairProjection a b w := by simp [pairProjection]
   rw [happ, happ, hx', hy']
 
-private theorem mem_of_connected (I : α → α → Prop)
+theorem mem_of_connected (I : α → α → Prop)
     (hs : ∀ a b, I a b → I b a) (hi : ∀ a, ¬ I a a)
     {x y : List α} (h : Connected I x y) {b : α} (hb : b ∈ y) : b ∈ x := by
   classical
