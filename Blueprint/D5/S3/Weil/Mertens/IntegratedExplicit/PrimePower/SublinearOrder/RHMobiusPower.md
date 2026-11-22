@@ -34,6 +34,5 @@ Extract exp(−(1/2−1/q)u) from the density estimates and integrate between lo
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusPower.prime_window_mobius_power_of_rh`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/LinearOrder/TrivialResponse](../LinearOrder/TrivialResponse.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusSublinear](RHMobiusSublinear.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/RHMobiusInverseLog](RHMobiusInverseLog.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/SignedOmittedSpectrum](SignedOmittedSpectrum.md)
-- Dependency: [D5/S3/Weil/ZetaPntBounds/MobiusEnergyPointwise](../../../../ZetaPntBounds/MobiusEnergyPointwise.md)

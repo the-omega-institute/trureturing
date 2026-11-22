@@ -45,11 +45,8 @@ private theorem finite_complex_abel_bound {a w : ℕ → ℂ} {p m : ℕ} (hpm :
 
 private theorem sum_Ico_adjacent_sub (f : ℕ → ℝ) {p m : ℕ} (hpm : p ≤ m) :
     (∑ n ∈ Finset.Ico p m, (f n - f (n+1))) = f p - f m := by
-  induction m, hpm using Nat.le_induction with
-  | base => simp
-  | succ m hm ih =>
-    rw [Finset.sum_Ico_succ_top hm, ih]
-    ring
+  have h := congrArg Neg.neg (Finset.sum_Ico_sub f hpm)
+  simpa only [← Finset.sum_neg_distrib, neg_sub] using h
 
 private def normalizedMode (q : ℕ) (u : ℝ) (n i : ℕ) : ℂ :=
   (Real.exp (-(2*u/(q : ℝ)-u/(n : ℝ))/2) : ℂ) *
