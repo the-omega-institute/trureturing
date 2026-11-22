@@ -87,7 +87,7 @@ theorem first_two_positive_levels {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
         rcases low_cases ha hab l k with h | h | h | h | h <;> linarith
 
 /-- Complete equality criterion for the second distinct level at a fixed smaller coefficient.
-The two first levels therefore have the same fibers. -/
+For ordered coefficients, the pair of lowest distinct positive levels has these same fibers. -/
 theorem second_level_fiber {a b c : ℝ} (ha : 0 < a) :
     secondLevel a b = secondLevel a c ↔
       b = c ∨ (b = a ∧ c = 2 * a) ∨ (c = a ∧ b = 2 * a) ∨

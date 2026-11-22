@@ -32,7 +32,7 @@ internal sealed class ProductBranchLevelsDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "For a fixed product rotor branch list with ordered positive coefficients, two distinct positive levels determine the smaller coefficient and classify all ambiguities in the larger one.",
+        "For a product rotor branch list with ordered positive coefficients, the lowest two distinct positive levels determine the smaller coefficient and classify all ambiguities in the larger one.",
         H("The first two positive energies of a product rotor ladder"),
         Blocks(
             DescribeEntry("rotor-branch", "energy", "Product rotor branch",
