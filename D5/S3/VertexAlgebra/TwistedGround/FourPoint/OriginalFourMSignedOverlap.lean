@@ -9,6 +9,7 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMDLipMean
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSignedCovariance
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSlitCovariance
 import D5.S3.VertexAlgebra.TwistedGround.Signed.JSpatial
 
 /-! The actual signed source branches in A and B and on both D lips. -/
@@ -268,6 +269,40 @@ def chartCovariance (upperA : Bool) (c : Chart) (z : ℝ) (l k e f : Bool)
       (4 * b u * b v * (chartW c z e u + chartW c z f v) ^ 2)) +
       (if e = f then 0 else cauchy e f u v)
   else - (m * (rationalT e f u v r - C))
+
+/-- On the native A or B disk the actual signed covariance agrees with the
+original matrix generator as a joint spatial germ. -/
+theorem chart_covariance_eq_native {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (hc : c = .A ∨ c = .B) (l k e f : Bool)
+    (hr : ‖parameter c (z : ℂ)‖ < 1) :
+    (fun p : ℂ × ℂ => chartCovariance upperA c z l k e f p.1 p.2) =ᶠ[𝓝 (0, 0)]
+      (fun p => covarianceMode l k e f p.1 p.2 (parameter c z)) := by
+  let r := parameter c (z : ℂ)
+  have hsmall : ∀ᶠ u : ℂ in 𝓝 0, ‖u‖ + ‖r‖ < 1 :=
+    (isOpen_lt (continuous_norm.add continuous_const) continuous_const).mem_nhds
+      (by simpa [r] using hr)
+  have hs (g : Bool) : ∀ᶠ u : ℂ in 𝓝 0,
+      chosenChartSource c z g u = slitMean g u r ∧ ‖u‖ + ‖r‖ < 1 := by
+    filter_upwards [chosen_chart_source_eq_native hz hz1 c hc g hr, hsmall] with u hu hs
+    exact ⟨hu.trans (slitMean_eq_sourceMode g hs).symm, hs⟩
+  have hC :
+      chartCorrection upperA c z = OriginalFourMPeriodSource.periodCorrection slitPeriod r := by
+    rcases hc with rfl | rfl <;> rfl
+  have hfst : Tendsto (Prod.fst : ℂ × ℂ → ℂ) (𝓝 (0, 0)) (𝓝 0) :=
+    continuous_fst.continuousAt
+  have hsnd : Tendsto (Prod.snd : ℂ × ℂ → ℂ) (𝓝 (0, 0)) (𝓝 0) :=
+    continuous_snd.continuousAt
+  filter_upwards [hfst.eventually (hs e), hsnd.eventually (hs f)] with p hp hq
+  have hJ : OriginalFourMSlitMean.slitJ e f p.1 p.2 r =
+      slitMean e p.1 r * slitMean f p.2 r *
+        (r / 4 - OriginalFourMPeriodSource.periodCorrection slitPeriod r +
+          r ^ 2 * rho e f p.1 p.2 /
+            (4 * b p.1 * b p.2 *
+              (h e p.1 r * slitMean e p.1 r + h f p.2 r * slitMean f p.2 r) ^ 2)) :=
+    rfl
+  rw [← OriginalFourMSlitMean.slitCovariance_eq_native l k e f hp.2 hq.2]
+  simp only [chartCovariance, chartW, OriginalFourMSlitMean.slitCovariance, hJ,
+    OriginalFourMSlitMean.slitT, ← hC, ← hp.1, ← hq.1, r]
 
 /-- At each actual A, B and D parameter, every signed generator is
 jointly analytic at the two external punctures, including the coincident

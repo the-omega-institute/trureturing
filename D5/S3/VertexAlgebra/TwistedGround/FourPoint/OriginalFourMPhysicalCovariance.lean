@@ -64,10 +64,12 @@ private theorem same_flags (c : Chart) {i j : Puncture}
 private def freeCorrection (c : Chart) (i : Puncture) (β γ : ℂ) : ℂ :=
   loweringParameter c i * (1 + β * γ) / (2 * β * γ * (β + γ) ^ 2)
 
-private def jac (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
+/-- The chart half-Jacobian at the inverse lowering coordinate. -/
+def jac (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
   halfJacobian c x i (inverseRoot c x i u)
 
-private def slotCorrection (c : Chart) (x : ℝ) (i j : Puncture) (u v : ℂ) : ℂ :=
+/-- The inverse lowering correction in native units at a repeated puncture. -/
+def slotCorrection (c : Chart) (x : ℝ) (i j : Puncture) (u v : ℂ) : ℂ :=
   if (flags c i).1 = (flags c j).1 ∧ (flags c i).2 = (flags c j).2 then
     freeCorrection c i (inverseRoot c x i u) (inverseRoot c x i v)
   else 0

@@ -6,10 +6,9 @@
    utility: none
    digest: Power-saving order bound for the signed RH prime window. -/
 
-import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusSublinear
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.RHMobiusInverseLog
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.TrivialResponse
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.SignedOmittedSpectrum
-import D5.S3.Weil.ZetaPntBounds.MobiusEnergyPointwise
 
 /-! Power-saving bounds on the signed prime-tail remainder under RH. -/
 
@@ -32,27 +31,6 @@ open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePhaseCluster (phaseOrbit)
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHPrimeWindowRemainder
   (spectralPrimitive windowDiscrepancy)
-
-private theorem mobius_prefix_rh_power (hRH : RiemannHypothesis) :
-    ∃ D : ℝ, 0 < D ∧ ∀ k : ℕ, 1 ≤ k →
-      |∑ n ∈ Finset.Ioc 0 k, (μ n : ℝ)| ≤ D*(k : ℝ)^(3/4 : ℝ) := by
-  have hzero (z : ℂ) (hz : 1/2 < z.re) (hne : z ≠ 1) : riemannZeta z ≠ 0 := by
-    intro hroot
-    have htriv : ¬ ∃ n : ℕ, z = -2 * (n + 1) := by
-      rintro ⟨n, rfl⟩
-      simp at hz
-      linarith [Nat.cast_nonneg (α := ℝ) n]
-    exact (ne_of_gt hz) (hRH z hroot htriv hne)
-  obtain ⟨D, hD, hprefix⟩ :=
-    @D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence.unweighted_mobius_prefix_power_bound
-      (1/2) (1/4) (by norm_num) (by norm_num) hzero (by norm_num) (by norm_num)
-  refine ⟨D, hD, fun k hk => ?_⟩
-  have hset : Finset.Ioc 0 k = Finset.Icc 1 k := by
-    ext n
-    simp only [Finset.mem_Ioc, Finset.mem_Icc]
-    omega
-  rw [hset]
-  simpa only [show (2+(1/4 : ℝ))/3 = 3/4 by norm_num] using hprefix k hk
 
 private theorem centered_sum_power (hRH : RiemannHypothesis) {D : ℝ} (hD : 0 < D)
     (hprefix : ∀ k : ℕ, 1 ≤ k →
@@ -207,7 +185,10 @@ private theorem density_power (hRH : RiemannHypothesis) :
     ∃ K : ℝ, 0 < K ∧ ∀ m : ℕ, 2 ≤ m → ∀ u : ℝ, Real.log 2 ≤ u →
       |rootWindowDensity u - ((∑ n ∈ Finset.Icc 2 m, retainedDensity m n u) - 2)| ≤
         K * (((m : ℝ)+1)^(27/28 : ℝ)) * Real.exp (-(orderRate m)*u) := by
-  obtain ⟨P, hP, hprefix⟩ := mobius_prefix_rh_power hRH
+  obtain ⟨P, hP, hpre⟩ := mobius_prefix_rh_power hRH
+  have hprefix (k : ℕ) (_ : 1 ≤ k) :
+      |∑ n ∈ Finset.Ioc 0 k, (μ n : ℝ)| ≤ P*(k : ℝ)^(3/4 : ℝ) :=
+    hpre k k le_rfl
   obtain ⟨D, hD, hsum'⟩ := centered_sum_power hRH hP hprefix
   obtain ⟨A, hA, htail⟩ := normalized_mobius_tail_of_power_prefix
     (β := 3/4) (by norm_num) (by norm_num) hprefix
