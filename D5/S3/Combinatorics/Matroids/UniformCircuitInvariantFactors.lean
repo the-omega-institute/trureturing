@@ -34,8 +34,7 @@ set_option autoImplicit false
 `k.choose r` factors of order the gcd of the class sizes and `k.choose (r+1)`
 factors of order the ground size. -/
 theorem uniform_lifting_obstruction_invariant_factors {V : Type*} [Fintype V] [LinearOrder V]
-    {k r : ℕ} (hrk : r ≤ k) {S : Matroid (Fin (k + 2))}
-    (hground : S.E = Set.univ)
+    {k r : ℕ} {S : Matroid (Fin (k + 2))}
     (hbases : ∀ B : Finset (Fin (k + 2)), S.IsBase (B : Set (Fin (k + 2))) ↔ B.card = r + 2)
     (p : V → Fin (k + 2)) (hsurj : Function.Surjective p)
     (horder : ∀ ⦃u v⦄, p u < p v → u < v) :
@@ -65,13 +64,19 @@ theorem uniform_lifting_obstruction_invariant_factors {V : Type*} [Fintype V] [L
     have hdvd : g ∣ w (0 : I) := gcd_dvd (mem_univ (0 : I))
     rw [h, zero_dvd_iff] at hdvd
     exact (hw 0).ne' hdvd
-  have hr : r + 2 ≤ Fintype.card I := by simpa [I] using hrk
-  have hnon (v : V) : S.IsNonloop (p v) := by
+  have hr : r + 2 ≤ Fintype.card I := by
+    obtain ⟨B, hB⟩ := S.exists_isBase
+    let F := B.toFinite.toFinset
+    have hF : (F : Set I) = B := Set.Finite.coe_toFinset _
+    rw [← (hbases F).mp (hF.symm ▸ hB)]
+    exact Finset.card_le_univ F
+  have hnonloop (i : I) : S.IsNonloop i := by
     apply Matroid.indep_singleton.mp
     simpa only [coe_singleton] using
-      (indep_iff_card_le hbases hr ({p v} : Finset I)).mpr (by simp)
+      (indep_iff_card_le hbases hr ({i} : Finset I)).mpr (by simp)
+  have hground : S.E = Set.univ := Set.eq_univ_of_forall fun i => (hnonloop i).mem_ground
   let _ : Nonempty V := ⟨(hsurj 0).choose⟩
-  obtain ⟨obstruction, _⟩ := parallel_lifting_obstruction hsurj horder hnon
+  obtain ⟨obstruction, _⟩ := parallel_lifting_obstruction hsurj horder (fun v => hnonloop (p v))
   let standard := Pi.basisFun ℤ I
   let a := sumCovector I
   let y : I → ℤ := fun i => w i

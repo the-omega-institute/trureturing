@@ -17,7 +17,7 @@ internal sealed class UniformCircuitBasisDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A finite positive integer weight vector is the gcd of its entries times a vector in an "
+                    "On a nonempty finite index set, a positive weight vector is its gcd times a vector in an "
                     + "integral basis. Dualize the unimodular change of coordinates that reduces the weighted "
                     + "scalar sum to a single coordinate."))),
                 DescribeRole.Theorem),

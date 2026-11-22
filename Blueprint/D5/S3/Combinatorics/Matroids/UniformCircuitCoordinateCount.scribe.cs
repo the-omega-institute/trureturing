@@ -27,8 +27,9 @@ internal sealed class UniformCircuitCoordinateCountDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "If a size-(r + 1) subset avoids the first designated element and contains the second, "
-                    + "deleting the second leaves a size-r subset of the complement of the two distinguished "
-                    + "elements."))),
+                    "For two distinct designated elements, delete the second from a size-(r + 1) "
+                    + "subset containing it and avoiding the first. Inserting it back gives the inverse. "
+                    + "The number of such subsets is the binomial coefficient choosing r from the ground "
+                    + "size minus two."))),
                 DescribeRole.Theorem))));
 }
