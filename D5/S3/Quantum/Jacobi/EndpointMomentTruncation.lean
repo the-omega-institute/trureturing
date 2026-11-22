@@ -1,10 +1,10 @@
 /- GID: D5/S3/Quantum/Jacobi/EndpointMomentTruncation
    generality: G
-   mirror - B: D5/B/S3/Quantum/Jacobi/EndpointMomentTruncation
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Quantum/Jacobi/EndpointMomentTruncation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic]
    utility: none
-   digest: The first endpoint moment lost by a Jacobi cutoff is the squared coupling product. -/
+   digest: The first possible endpoint moment error at a Jacobi cutoff is the squared coupling product. -/
 
 module
 
@@ -12,7 +12,7 @@ public import Mathlib.Basic.Real.Basic
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic.LinearCombination
 
-/-! Powers of the half - line Jacobi matrix act locally on the endpoint unit vector. -/
+/-! Powers of the half-line Jacobi matrix act locally on the endpoint unit vector. -/
 
 @[expose] public section
 namespace D5.S3.Quantum.Jacobi.EndpointMomentTruncation
