@@ -32,12 +32,38 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.virasoro_com
 
 For every integer m,n, L_m L_n-L_n L_m=(m-n)L_(m+n) plus ((m cubed-m)/24) times the identity when m+n=0, and zero central term otherwise. The supported actual mode-commutator formula and the self-products reduce the sum to indices zero through three. The integer binomial polynomial includes negative m+1; no nonnegative upper-index restriction is imposed.
 
+**Theorem 1.3 (Opposite signs in one norm-four direction).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.opposite_sign_products`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.opposite_sign_products` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a norm-four charge and s² = 1, every nonnegative product of the states of signs s and −s vanishes. The mixed terms cancel, and the quadratic and charged terms cancel in degrees zero through three. Their higher products vanish by the self-product tail formulas.
+
+**Theorem 1.4 (Products of states in orthogonal directions).**
+
+Lean statement: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.orthogonal_products`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.orthogonal_products` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For orthogonal charges and arbitrary scalars, all nonnegative mixed products vanish. Orthogonality removes the current contractions, and negative creation-coefficient indices give the ground-product vanishing.
+
 The norm-four formula is classical: Shimakura, arXiv:1202.6107, page 4, equation (1.3), attributes its Ising-vector assertion to Dong-Mason-Zhu, Theorem 6.3. Here only the self-product and mode-action conclusions above are established. The lattice-field construction follows Bakalov-Kac, arXiv:math/0402315, section 4.1. Imported normal-product and Sugawara sources retain Scott Carnahan and Kalle Kytola Apache-2.0 attribution.
 
 These algebraic conclusions do not establish the simple minimal-model quotient, simplicity, an ambient conformal vector, a Virasoro frame, Monster moonshine, string theory or AdS/CFT.
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.opposite_sign_products`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.orthogonal_products`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.self_products`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/NormFourVirasoroVector.virasoro_commutator`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualConformalState](../LatticeActualConformalState.md)
