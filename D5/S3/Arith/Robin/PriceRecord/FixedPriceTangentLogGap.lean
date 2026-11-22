@@ -29,12 +29,13 @@ open Filter Real
 open scoped Topology
 open FixedSupportIntegerActivationEnvelope (integerInfimum clockIncrement)
 open FixedLayerFiniteActivation (fixedPriceMinimum)
-open FixedPriceMinimizerClock (IsMinimizer fixed_price_minimizer_clock_tendsto)
+open FixedPriceMinimizerClock (IsMinimizer)
 open FixedPriceTangentCorrection (prefix_minimizers_tangent_bounds tangent_remainder_quadratic)
 open HigherLayerClampedCutoff (cutoff)
 open IntegerInfimumSecondOrder (log_pow_over_sqrt_H)
 open OwnClockFixedSupport (ownPrice tangentRemainder)
-open QuantitativeMovingPriceMinimizerClock (moving_price_minimizer_clock_log_power_tendsto)
+open QuantitativeMovingPriceMinimizerClock
+  (baseCutoff_ratio moving_price_minimizer_clock_log_power_tendsto)
 open RealInfimumPrimeBoundary
   (prefixH prefixPrice prefixH_atTop prefixEll_atTop eventual_prefix_domains)
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (activationDensity)
@@ -233,19 +234,7 @@ theorem fixed_price_tangent_correction_log_power_tendsto (n : ℕ) :
     hab.mono fun _ h => h.2.2.1.2
   have haClock (k : ℕ) := moving_price_minimizer_clock_log_power_tendsto k haBand ha
   have hbClock (k : ℕ) := moving_price_minimizer_clock_log_power_tendsto k hbBand hb
-  have haNormalized := fixed_price_minimizer_clock_tendsto
-    ((tendsto_const_nhds (x := (1 : ℝ))).congr' haRatio.symm) ha
-  have hU : Tendsto (fun P => U P / sqrt (prefixH P)) atTop (𝓝 (sqrt 2)) := by
-    have haZero := haClock 0
-    simp only [pow_zero, one_mul] at haZero
-    have h := haNormalized.sub haZero
-    rw [sub_zero] at h
-    apply h.congr
-    intro P
-    change clockIncrement (Nat.primesLE P) (a P) / sqrt (prefixH P) -
-        (clockIncrement (Nat.primesLE P) (a P) - U P) / sqrt (prefixH P) =
-      U P / sqrt (prefixH P)
-    rw [← sub_div, sub_sub_cancel]
+  have hU : Tendsto (fun P => U P / sqrt (prefixH P)) atTop (𝓝 (sqrt 2)) := baseCutoff_ratio
   have haLim := scaled_remainder_log_power_tendsto n
     (u := fun P => clockIncrement (Nat.primesLE P) (a P))
     (hab.mono fun _ h => h.2.1.1) hU haClock

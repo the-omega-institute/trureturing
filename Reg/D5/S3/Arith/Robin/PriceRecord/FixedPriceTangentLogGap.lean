@@ -10,18 +10,15 @@ namespace Reg.D5.S3.Arith.Robin.PriceRecord.FixedPriceTangentLogGap
 
 open Filter Real
 open scoped Topology
-open _root_.D5.S3.Arith.Robin.ActualRobinClockCovariance (g)
-open _root_.D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference (referencePrice)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerFiniteActivation (fixedPriceMinimum)
-open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster (root_atTop)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedSupportIntegerActivationEnvelope (integerInfimum)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedPriceTangentCorrection
   (fixed_price_tangent_correction_tendsto)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedPriceTangentLogGap
   (fixed_price_tangent_correction_log_power_tendsto)
 open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff (cutoff)
-open _root_.D5.S3.Arith.Robin.PriceRecord.RealInfimumPrimeBoundary
-  (prefixH prefixPrice prefixH_atTop)
+open _root_.D5.S3.Arith.Robin.PriceRecord.QuantitativeMovingPriceMinimizerClock (baseCutoff_atTop)
+open _root_.D5.S3.Arith.Robin.PriceRecord.RealInfimumPrimeBoundary (prefixH prefixPrice)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -55,10 +52,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro role
   cases role
-  have htop : Tendsto (fun P => cutoff 2 (prefixPrice P)) atTop atTop := by
-    simpa only [Function.comp_def, prefixPrice, g, referencePrice] using
-      (root_atTop (j := 2) le_rfl).comp prefixH_atTop
-  obtain ⟨P, hP⟩ := (htop.eventually_gt_atTop (cutoff 2 (prefixPrice 0))).exists
+  obtain ⟨P, hP⟩ := (baseCutoff_atTop.eventually_gt_atTop (cutoff 2 (prefixPrice 0))).exists
   exact ⟨(), 0, P, ne_of_lt hP⟩
 
 def family : Registration arena (type_of% (@fixed_price_tangent_correction_log_power_tendsto)) where
