@@ -43,7 +43,7 @@ private theorem logWeightedMoebius_eq : logWeightedMoebius = -(ArithmeticFunctio
 
 open D5.S3.Arith.MoebiusLogarithmic (reciprocalSum abs_reciprocalSum_le_one)
 
-private theorem inverse_three_quarters_sum {N : ℕ} (hN : 1 ≤ N) :
+theorem inverse_three_quarters_sum {N : ℕ} (hN : 1 ≤ N) :
     (∑ n ∈ Finset.Ioc 0 N, (n : ℝ) ^ (-(3/4) : ℝ)) ≤ 4 * (N : ℝ) ^ (1/4 : ℝ) := by
   have hanti : AntitoneOn (fun x : ℝ => x ^ (-(3/4) : ℝ)) (Set.Icc ((1 : ℕ) : ℝ) (N : ℝ)) := by
     intro x hx y hy hxy

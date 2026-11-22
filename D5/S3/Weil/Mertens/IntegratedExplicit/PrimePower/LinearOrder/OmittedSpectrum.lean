@@ -11,6 +11,7 @@ import D5.S3.Weil.ZetaRvm.LocalCount
 import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.RHMobiusWindow
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Analysis.PSeries
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder.BinCutoff
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,6 +26,8 @@ open D5.S3.Weil.Mertens.IntegratedExplicit
 open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope (on_line)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+
+open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
 private def occurrenceFrequency (i : ℕ) : ℝ := (actualZero i).im
 
@@ -241,14 +244,13 @@ private theorem summable_band_rpow_sq (D : ℝ) :
     simp only [Int.cast_neg, Int.cast_natCast, abs_neg, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
       Nat.cast_add, Nat.cast_one, he _ (Nat.cast_nonneg (α := ℝ) n)]
 
-private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
-    ∃ b : ℤ → ℝ, (Summable fun k => b k^2) ∧
-      ∀ (T : Finset ℕ) (k : ℤ),
-        ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k := by
+private theorem occurrence_bin_power_majorant (hRH : RiemannHypothesis) :
+    ∃ D : ℝ, 0 < D ∧ ∀ (T : Finset ℕ) (k : ℤ),
+      ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤
+        D * (|(k : ℝ)|+1)^(-3/4 : ℝ) := by
   classical
   obtain ⟨A, hA, hcount⟩ := Zeta23.RvM.zetaZeroConfig_local_count
-  refine ⟨fun k => (5*A*(Real.log 3+4)) * (|(k : ℝ)|+1)^(-3/4 : ℝ),
-    summable_band_rpow_sq _, ?_⟩
+  refine ⟨5*A*(Real.log 3+4), by positivity, ?_⟩
   intro T k
   let W := Zeta23.zerosIn (k : ℝ) ((k : ℝ)+1)
   let F := (Zeta23.zerosIn_finite (k : ℝ) ((k : ℝ)+1)).toFinset
@@ -294,6 +296,13 @@ private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
       dsimp only
       rw [show (-3/4 : ℝ) = 1/4 - 1 by norm_num, Real.rpow_sub hbase, Real.rpow_one]
       ring
+
+private theorem occurrence_bin_square_majorant (hRH : RiemannHypothesis) :
+    ∃ b : ℤ → ℝ, (Summable fun k => b k^2) ∧
+      ∀ (T : Finset ℕ) (k : ℤ),
+        ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k := by
+  obtain ⟨D, _, hD⟩ := occurrence_bin_power_majorant hRH
+  exact ⟨fun k => D * (|(k : ℝ)|+1)^(-3/4 : ℝ), summable_band_rpow_sq D, hD⟩
 
 private theorem root_coord_separated {u : ℝ} {q i j : ℕ} (hu : (q : ℝ) ≤ u)
     (hi : 0 < i) (hj : 0 < j) (hiq : i ≤ q) (hjq : j ≤ q) (hij : i ≠ j) :
@@ -672,71 +681,45 @@ private theorem occurrence_compl_bin_majorant {b : ℤ → ℝ} (B : Finset ℤ)
 
 /-- Far above the degree scale, the omitted actual-zero densities have arbitrarily
 small linear prefactor under RH. -/
-theorem omitted_root_density_sublinear_far (hRH : RiemannHypothesis) {ε : ℝ} (hε : 0 < ε) :
-    ∃ (L : ℝ) (m₀ : ℕ), 1 ≤ L ∧ 2 ≤ m₀ ∧
-      ∀ (m : ℕ), m₀ ≤ m → ∀ (u : ℝ), L * ((m : ℝ)+1) ≤ u →
-        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n), |rootDensity n u|) ≤
-          ε * (m : ℝ) * Real.exp (-(orderRate m)*u) := by
-  obtain ⟨b, hb, hmass⟩ := occurrence_bin_square_majorant hRH
-  obtain ⟨G, hG, hlocal⟩ := exists_local_mode_integral_le_square_mass
+private theorem omitted_root_density_bin_split (hRH : RiemannHypothesis) :
+    ∃ G : ℝ, 0 < G ∧
+      ∀ (b : ℤ → ℝ) (B : Finset ℤ),
+        (∀ (T : Finset ℕ) (k : ℤ),
+          ∑ i ∈ T with frequencyBin (occurrenceFrequency i) = k, (‖actualZero i‖)⁻¹ ≤ b k) →
+        (Summable fun k : ℤ => (if k ∈ B then 0 else b k)^2) →
+        ∀ (m : ℕ), 2 ≤ m → ∀ (u : ℝ), (m : ℝ) + 1 ≤ u →
+          (∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n), |rootDensity n u|) ≤
+            Real.exp (-(orderRate m)*u) *
+              (2 * (∑ k ∈ B, b k) * (1 + ((m : ℝ)+1)^2/u) +
+                G * Real.sqrt (∑' k : ℤ, (if k ∈ B then 0 else b k)^2) * ((m : ℝ)+1)) := by
+  classical
+  obtain ⟨G₀, hG₀, hlocal⟩ := exists_local_mode_integral_le_square_mass
   let d := 1 - Real.exp (-1/2)
   have hd : 0 < d := sub_pos.mpr (Real.exp_lt_one_iff.mpr (by norm_num))
-  let δ := ε*d/(32*G)
-  have hδ : 0 < δ := by dsimp [δ]; positivity
-  obtain ⟨B, hbs, hsmall⟩ := exists_finite_small_square_tail b hb (sq_pos_of_pos hδ)
+  refine ⟨8 * G₀ / d, by positivity, fun b B hmass hbs m hm u hu => ?_⟩
   let bTail (k : ℤ) := if k ∈ B then 0 else b k
-  let K := G * Real.sqrt (∑' k : ℤ, bTail k ^ 2)
+  let K := G₀ * Real.sqrt (∑' k : ℤ, bTail k^2)
   have hK : 0 ≤ K := by dsimp [K]; positivity
-  have htail : 8*K/d ≤ ε/4 := by
-    have hsqrt : Real.sqrt (∑' k : ℤ, bTail k ^ 2) ≤ δ :=
-      Real.sqrt_le_iff.mpr ⟨hδ.le, hsmall.le⟩
-    calc
-      _ ≤ 8*(G*δ)/d := div_le_div_of_nonneg_right
-        (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hsqrt hG.le) (by norm_num)) hd.le
-      _ = _ := by dsimp [δ]; field_simp [hG.ne', hd.ne']; ring
   let H := 2 * ∑ k ∈ B, b k
   have hH : 0 ≤ H := mul_nonneg (by norm_num)
     (Finset.sum_nonneg fun k _ => by simpa using hmass ∅ k)
-  let L := 1 + 8*H/ε
-  have hL : 1 ≤ L := by dsimp [L]; linarith [div_nonneg (by positivity : 0 ≤ 8*H) hε.le]
-  have hHL : H ≤ ε*L/8 := by
-    calc
-      H ≤ H + ε/8 := by linarith
-      _ = ε*L/8 := by dsimp [L]; field_simp [hε.ne']; ring
-  obtain ⟨M, hM⟩ := exists_nat_ge L
-  refine ⟨L, max 2 M, hL, le_max_left _ _, fun m hm u hu => ?_⟩
   let q := m+1
   let p := (q+1)/2
   let w (n : ℕ) := Real.exp (-(2*u/(q : ℝ) - u/(n : ℝ))/2)
-  have hm₂ : 2 ≤ m := (le_max_left _ _).trans hm
   have hq : 3 ≤ q := by dsimp [q]; omega
   have hq0 : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
   have hp : 0 < p := by dsimp [p]; omega
   have hpq : p ≤ q := by dsimp [p]; omega
   have hhalf : q ≤ 2*p := by dsimp [p]; omega
-  have hLq : L ≤ (q : ℝ) := hM.trans (by exact_mod_cast
-    (show M ≤ q by have := (le_max_right 2 M).trans hm; dsimp [q]; omega))
-  have hLqu : L * (q : ℝ) ≤ u := by simpa [q] using hu
-  have hqu : (q : ℝ) ≤ u := (le_mul_of_one_le_left hq0.le hL).trans hLqu
+  have hqu : (q : ℝ) ≤ u := by simpa [q] using hu
   have hu0 : 0 < u := hq0.trans_le hqu
-  have hhead : H * (1 + (q : ℝ)^2/u) ≤ ε/4 * q := by
-    have hHq : H ≤ ε*(q : ℝ)/8 := hHL.trans (div_le_div_of_nonneg_right
-      (mul_le_mul_of_nonneg_left hLq hε.le) (by norm_num))
-    have hfrac : H * (q : ℝ)^2 / u ≤ ε*(q : ℝ)/8 := by
-      apply (div_le_iff₀ hu0).mpr
-      calc
-        _ ≤ (ε*L/8) * (q : ℝ)^2 := mul_le_mul_of_nonneg_right hHL (sq_nonneg _)
-        _ = (ε*(q : ℝ)/8) * (L*q) := by ring
-        _ ≤ _ := mul_le_mul_of_nonneg_left hLqu (by positivity)
-    rw [mul_add, mul_one, mul_div_assoc']
-    linarith only [hHq, hfrac]
-  have hroot := occurrence_weighted_infinite hRH hq u (ε/2 * (q : ℝ)) ?_
-  · have hmq : (q : ℝ) ≤ 2*(m : ℝ) := by
-      have hm₁ : (1 : ℝ) ≤ m := by exact_mod_cast (show 1 ≤ m by omega)
-      simp [q]; linarith
-    exact (omitted_root_density_le_weighted hRH m u).trans <|
-      (mul_le_mul_of_nonneg_left (hroot.trans
-        (mul_le_mul_of_nonneg_left hmq (by positivity))) (Real.exp_nonneg _)).trans_eq (by ring)
+  have hroot := occurrence_weighted_infinite hRH hq u
+    (H * (1 + (q : ℝ)^2/u) + (8*K/d) * q) ?_
+  · refine (omitted_root_density_le_weighted hRH m u).trans
+      ((mul_le_mul_of_nonneg_left hroot (Real.exp_nonneg _)).trans_eq ?_)
+    rw [show (q : ℝ) = (m : ℝ)+1 by simp [q]]
+    dsimp [H, K, bTail]
+    ring
   · intro T
     let g := frequencyBin ∘ occurrenceFrequency
     let U := T.filter (fun i => g i ∈ B)
@@ -760,12 +743,68 @@ theorem omitted_root_density_sublinear_far (hRH : RiemannHypothesis) {ε : ℝ} 
         have hn₁ : (1 : ℝ) ≤ n := by exact_mod_cast hp.trans_le (Finset.mem_Icc.mp hn).1
         exact mul_le_mul_of_nonneg_left ((norm_add_le _ _).trans
           (add_le_add (occurrence_head_modes_le hRH hmass B T hn₁ _) le_rfl)) (Real.exp_nonneg _)
-      _ ≤ ε/4 * q + ε/4 * q := by
+      _ ≤ H * (1 + (q : ℝ)^2/u) + (8*K/d) * q := by
         apply add_le_add
         · rw [← Finset.sum_mul]
-          exact ((mul_le_mul_of_nonneg_right (weighted_omitted_degree_sum_le hp hpq hhalf hu0)
-            hH).trans_eq (mul_comm _ _)).trans hhead
-        · exact hsample.trans (mul_le_mul_of_nonneg_right htail hq0.le)
-      _ = _ := by ring
+          exact (mul_le_mul_of_nonneg_right (weighted_omitted_degree_sum_le hp hpq hhalf hu0)
+            hH).trans_eq (mul_comm _ _)
+        · exact hsample
+
+theorem omitted_root_density_sublinear_far (hRH : RiemannHypothesis) {ε : ℝ} (hε : 0 < ε) :
+    ∃ (L : ℝ) (m₀ : ℕ), 1 ≤ L ∧ 2 ≤ m₀ ∧
+      ∀ (m : ℕ), m₀ ≤ m → ∀ (u : ℝ), L * ((m : ℝ)+1) ≤ u →
+        (∑ n ∈ (Finset.Icc 2 m).filter (fun n => m+1 ≤ 2*n), |rootDensity n u|) ≤
+          ε * (m : ℝ) * Real.exp (-(orderRate m)*u) := by
+  obtain ⟨b, hb, hmass⟩ := occurrence_bin_square_majorant hRH
+  obtain ⟨G, hG, hsplit⟩ := omitted_root_density_bin_split hRH
+  let δ := ε/(4*G)
+  have hδ : 0 < δ := by dsimp [δ]; positivity
+  obtain ⟨B, hbs, hsmall⟩ := exists_finite_small_square_tail b hb (sq_pos_of_pos hδ)
+  have htail : G * Real.sqrt (∑' k : ℤ, (if k ∈ B then 0 else b k)^2) ≤ ε/4 := by
+    have hsqrt := Real.sqrt_le_iff.mpr ⟨hδ.le, hsmall.le⟩
+    calc
+      _ ≤ G * δ := mul_le_mul_of_nonneg_left hsqrt hG.le
+      _ = _ := by dsimp [δ]; field_simp; ring
+  let H := 2 * ∑ k ∈ B, b k
+  have hH : 0 ≤ H := mul_nonneg (by norm_num)
+    (Finset.sum_nonneg fun k _ => by simpa using hmass ∅ k)
+  let L := 1 + 8*H/ε
+  have hL : 1 ≤ L := le_add_of_nonneg_right (by dsimp [L]; positivity)
+  have hHL : H ≤ ε*L/8 := by
+    calc
+      H ≤ H + ε/8 := by linarith
+      _ = ε*L/8 := by dsimp [L]; field_simp; ring
+  obtain ⟨M, hM⟩ := exists_nat_ge L
+  refine ⟨L, max 2 M, hL, le_max_left _ _, fun m hm u hu => ?_⟩
+  let q := (m : ℝ)+1
+  have hm₂ : 2 ≤ m := (le_max_left 2 M).trans hm
+  have hq0 : 0 < q := by dsimp [q]; positivity
+  have hLq : L ≤ q := hM.trans (by
+    have hMm : M ≤ m := (le_max_right 2 M).trans hm
+    dsimp [q]
+    exact (Nat.cast_le.mpr hMm).trans (by linarith))
+  have hqu : q ≤ u := (le_mul_of_one_le_left hq0.le hL).trans hu
+  have hu0 : 0 < u := hq0.trans_le hqu
+  have hhead : H * (1 + q^2/u) ≤ ε/4 * q := by
+    have hHq : H ≤ ε*q/8 := hHL.trans (div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_left hLq hε.le) (by norm_num))
+    have hfrac : H * q^2 / u ≤ ε*q/8 := by
+      apply (div_le_iff₀ hu0).mpr
+      calc
+        _ ≤ (ε*L/8) * q^2 := mul_le_mul_of_nonneg_right hHL (sq_nonneg _)
+        _ = (ε*q/8) * (L*q) := by ring
+        _ ≤ _ := mul_le_mul_of_nonneg_left hu (by positivity)
+    rw [mul_add, mul_one, mul_div_assoc']
+    linarith only [hHq, hfrac]
+  have hmq : q ≤ 2*(m : ℝ) := by
+    have hm₁ : (1 : ℝ) ≤ m := by exact_mod_cast (show 1 ≤ m by omega)
+    dsimp [q]
+    linarith
+  refine (hsplit b B hmass hbs m hm₂ u hqu).trans ?_
+  refine (mul_le_mul_of_nonneg_left
+    (add_le_add hhead (mul_le_mul_of_nonneg_right htail hq0.le)) (Real.exp_nonneg _)).trans ?_
+  rw [show ε/4 * q + ε/4 * q = (ε/2) * q by ring]
+  exact (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hmq (by positivity))
+    (Real.exp_nonneg _)).trans_eq (by ring)
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder

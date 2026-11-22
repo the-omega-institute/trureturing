@@ -1,10 +1,12 @@
 /- GID: D5/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/BinCutoff
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/PrimePower/SublinearOrder/BinCutoff
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Quantitative cutoff bounds for signed frequency bins and weighted degree samples. -/
+
+import D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder.MoebiusPrefixes
 
 import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -20,6 +22,7 @@ noncomputable section
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
 open MeasureTheory Real Set
+open D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.LinearOrder
 
 private theorem one_sided_tail (H : ℕ) (hH : 0 < H) :
     (∑' n : ℕ, ((n + H + 1 : ℕ) : ℝ) ^ (-3 / 2 : ℝ)) ≤
@@ -93,6 +96,55 @@ theorem signed_bin_tail_inv_three_halves (H : ℕ) (hH : 0 < H) :
   simp only [Function.comp_apply, tsum_congr epos, tsum_congr eneg, hsplit]
   rw [← hmain]
   linarith only [htail, one_sided_tail H hH]
+
+/-- The signed bins up to height `H` have power-bounded total mass. -/
+theorem signed_bin_head_inv_three_quarters (H : ℕ) :
+    (∑ k ∈ Finset.Icc (-(H : ℤ)) (H : ℤ), (|(k : ℝ)| + 1) ^ (-3 / 4 : ℝ)) ≤
+      8 * ((H + 1 : ℕ) : ℝ) ^ (1 / 4 : ℝ) := by
+  let bins := Finset.Icc (-(H : ℤ)) (H : ℤ)
+  let positive (k : ℤ) : Prop := 0 ≤ k
+  let weight (k : ℤ) : ℝ := (|(k : ℝ)| + 1) ^ (-3 / 4 : ℝ)
+  let toIndex (k : ℤ) : ℕ := k.natAbs + 1
+  let indices := Finset.Ioc 0 (H + 1)
+  let term (n : ℕ) : ℝ := (n : ℝ) ^ (-3 / 4 : ℝ)
+  have hindex : bins.image toIndex ⊆ indices := by
+    intro i hi
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hi
+    obtain ⟨hl, hr⟩ := Finset.mem_Icc.mp hk
+    apply Finset.mem_Ioc.mpr
+    dsimp [toIndex]
+    omega
+  have hterm (k : ℤ) : weight k = term (toIndex k) := by
+    dsimp [weight, term, toIndex]
+    rw [Nat.cast_add_one]
+    have habs : (k.natAbs : ℝ) = |(k : ℝ)| := by
+      rw [← Int.cast_natCast, Int.natCast_natAbs, Int.cast_abs]
+    rw [habs]
+  have hcompare {s : Finset ℤ} (hsub : s ⊆ bins) (hinj : Set.InjOn toIndex (s : Set ℤ)) :
+      ∑ k ∈ s, weight k ≤ ∑ n ∈ indices, term n := by
+    apply Finset.sum_le_sum_of_injOn toIndex hinj
+    · exact (Finset.image_subset_image hsub).trans hindex
+    · intro k _
+      exact (hterm k).le
+    · intro n _ _
+      exact rpow_nonneg (Nat.cast_nonneg n) _
+  have hpos : Set.InjOn toIndex (bins.filter positive : Set ℤ) := by
+    intro a ha b hb hab
+    have ha' := (Finset.mem_filter.mp (Finset.mem_coe.mp ha)).2
+    have hb' := (Finset.mem_filter.mp (Finset.mem_coe.mp hb)).2
+    exact (Int.natAbs_inj_of_nonneg_of_nonneg ha' hb').mp (Nat.add_right_cancel hab)
+  have hneg : Set.InjOn toIndex (bins.filter (fun k => ¬positive k) : Set ℤ) := by
+    intro a ha b hb hab
+    have ha' : ¬(0 : ℤ) ≤ a := (Finset.mem_filter.mp (Finset.mem_coe.mp ha)).2
+    have hb' : ¬(0 : ℤ) ≤ b := (Finset.mem_filter.mp (Finset.mem_coe.mp hb)).2
+    exact (Int.natAbs_inj_of_nonpos_of_nonpos (by omega) (by omega)).mp (Nat.add_right_cancel hab)
+  change ∑ k ∈ bins, weight k ≤ _
+  rw [← Finset.sum_filter_add_sum_filter_not bins positive weight]
+  have hp := hcompare (Finset.filter_subset _ _) hpos
+  have hn := hcompare (Finset.filter_subset _ _) hneg
+  have hsum : ∑ n ∈ indices, term n ≤ 4 * ((H + 1 : ℕ) : ℝ) ^ (1 / 4 : ℝ) :=
+    by simpa only [indices, term, neg_div] using inverse_three_quarters_sum (N := H + 1) (Nat.succ_pos H)
+  linarith only [hp, hn, hsum]
 
 theorem scaled_bin_cutoff_bound {L q u : ℝ} (hL : 1 ≤ L) (hLq : L ≤ q) (hu : L * q ≤ u) :
     ∃ H : ℕ, 0 < H ∧
