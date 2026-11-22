@@ -7,6 +7,8 @@
    digest: Sharp spectral cost of a positive trace-normalized reference increment. -/
 
 import D5.S3.Divergence.AudenaertBinaryHolevoBound
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Order
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
 
 /-! A positive trace-one reference increment has a sharp logarithmic cost
 controlled by the positive floor. The proof compares the trace of the
@@ -26,14 +28,10 @@ namespace D5.S3.Quantum.Divergence.UmegakiNullReferencePenalty
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private theorem density_le_one {n : ℕ} {ρ : Matrix (Fin n) (Fin n) ℂ}
     (hρ : ρ.PosSemidef) (htrace : ρ.trace = 1) : ρ ≤ 1 := by
-  have hsum : ∑ i, hρ.isHermitian.eigenvalues i = 1 := by
-    simpa using congrArg Complex.re (hρ.isHermitian.trace_eq_sum_eigenvalues.symm.trans htrace)
-  rw [← map_one (algebraMap ℝ (Matrix (Fin n) (Fin n) ℂ))]
-  apply (le_algebraMap_iff_spectrum_le hρ.isHermitian.isSelfAdjoint).mpr
-  rw [hρ.isHermitian.spectrum_real_eq_range_eigenvalues]
-  rintro _ ⟨i, rfl⟩
-  rw [← hsum]
-  exact Finset.single_le_sum (fun j _ => hρ.eigenvalues_nonneg j) (Finset.mem_univ i)
+  let H : HermitianMat (Fin n) ℂ := ⟨ρ, hρ.isHermitian⟩
+  have h := HermitianMat.le_trace_smul_one (HermitianMat.zero_le_iff.mpr hρ : 0 ≤ H)
+  change ρ ≤ ρ.trace.re • (1 : Matrix (Fin n) (Fin n) ℂ) at h
+  simpa only [htrace, Complex.one_re, one_smul] using h
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private theorem trace_log_path_hasDerivAt {n : ℕ}
@@ -63,20 +61,6 @@ private theorem trace_log_path_hasDerivAt {n : ℕ}
   exact L.hasFDerivAt.comp_hasDerivAt t hd
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem logDeriv_posSemidef {n : ℕ} (M X : Matrix (Fin n) (Fin n) ℂ)
-    (hM : M.PosDef) (hX : X.PosSemidef) : (logDeriv M X).PosSemidef := by
-  apply Matrix.nonneg_iff_posSemidef.mp
-  unfold D5.S3.Divergence.LogDerivTrace.logDeriv
-  apply integral_nonneg_of_ae
-  filter_upwards [] with s
-  let R : Matrix (Fin n) (Fin n) ℂ := (M + s • 1)⁻¹
-  change 0 ≤ R * X * R
-  have hR : R.IsHermitian :=
-    (hM.isHermitian.add (Matrix.isHermitian_one.smul (IsSelfAdjoint.all s))).inv
-  have h : 0 ≤ R * X * Rᴴ := (hX.mul_mul_conjTranspose_same R).nonneg
-  rwa [hR.eq] at h
-
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 /-- A trace-one positive increment has a uniform logarithmic cost under the
 Löwner bounds on the weight and reference matrices. -/
 theorem log_increment_ge {n : ℕ} (A C ρ : Matrix (Fin n) (Fin n) ℂ) (u lam e : ℝ)
@@ -93,31 +77,41 @@ theorem log_increment_ge {n : ℕ} (A C ρ : Matrix (Fin n) (Fin n) ℂ) (u lam 
     convert! (trace_log_path_hasDerivAt A C ρ lam t hlam hC hρ.nonneg hρone ht).sub
       (hlog.const_mul (u * lam)) using 1
     simp only [M, div_eq_mul_inv, one_mul, id_eq]
-  have hnonneg (t : ℝ) (ht : 0 ≤ t) :
+  have hnonneg (t : ℝ) (ht : 0 < t) :
       u * lam / (lam + t) ≤ (A * logDeriv (M t) ρ).trace.re := by
-    have hMt : lam • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ M t :=
-      hC.trans (le_add_of_nonneg_right (smul_nonneg ht hρ.nonneg))
-    have hM : (M t).PosDef :=
-      ((IsStrictlyPositive.smul hlam isStrictlyPositive_one).of_le hMt).posDef
+    have hM (s : ℝ) (hs : 0 ≤ s) : IsStrictlyPositive (M s) :=
+      (IsStrictlyPositive.smul hlam isStrictlyPositive_one).of_le
+        (hC.trans (le_add_of_nonneg_right (smul_nonneg hs hρ.nonneg)))
     have hρC : ρ ≤ lam⁻¹ • C := hρone.trans (by
       simpa [smul_smul, hlam.ne'] using smul_le_smul_of_nonneg_left hC (inv_nonneg.mpr hlam.le))
     have hMC : M t ≤ (1 + t / lam) • C := by
       calc
-        M t ≤ C + t • (lam⁻¹ • C) := add_le_add le_rfl (smul_le_smul_of_nonneg_left hρC ht)
+        M t ≤ C + t • (lam⁻¹ • C) := add_le_add le_rfl (smul_le_smul_of_nonneg_left hρC ht.le)
         _ = (1 + t / lam) • C := by rw [add_smul, one_smul, smul_smul, div_eq_mul_inv]
     let k := u * lam / (lam + t)
     have hk : 0 ≤ k := by dsimp [k]; positivity
     have hscale : k * (1 + t / lam) = u := by
       dsimp [k]
-      field_simp [hlam.ne', (add_pos_of_pos_of_nonneg hlam ht).ne']
+      field_simp [hlam.ne', (add_pos_of_pos_of_nonneg hlam ht.le).ne']
     have horder : k • M t ≤ A := by
       apply le_trans (smul_le_smul_of_nonneg_left hMC hk)
       simpa only [smul_smul, hscale] using hA
-    have hp := RHLinalg.trace_mul_nonneg_of_posSemidef (Matrix.le_iff.mp horder)
-      (logDeriv_posSemidef (M t) ρ hM hρ)
+    let W := A - k • M t
+    have hW : W.PosSemidef := Matrix.le_iff.mp horder
+    have hmonoW : MonotoneOn (fun s : ℝ => (W * CFC.log (M s)).trace.re) (Set.Ioi 0) := by
+      intro s hs r _ hsr
+      have hpath : M s ≤ M r := add_le_add le_rfl (smul_le_smul_of_nonneg_right hsr hρ.nonneg)
+      have hlog := CFC.log_le_log hpath (hM s (Set.mem_Ioi.mp hs).le)
+      have hpair := RHLinalg.trace_mul_nonneg_of_posSemidef hW (Matrix.le_iff.mp hlog)
+      change 0 ≤ (W * (CFC.log (M r) - CFC.log (M s))).trace.re at hpair
+      simpa only [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re, sub_nonneg] using hpair
+    have hdiff : UniqueDiffWithinAt ℝ (Set.Ioi 0) t := isOpen_Ioi.uniqueDiffWithinAt ht
+    have hderiv := trace_log_path_hasDerivAt W C ρ lam t hlam hC hρ.nonneg hρone ht.le
+    have hp : 0 ≤ (W * logDeriv (M t) ρ).trace.re :=
+      hderiv.hasDerivWithinAt.nonneg_of_monotoneOn hdiff.accPt hmonoW
     change 0 ≤ ((A - k • M t) * logDeriv (M t) ρ).trace.re at hp
     rw [Matrix.sub_mul, Matrix.trace_sub, Complex.sub_re, Matrix.smul_mul,
-      Matrix.trace_smul, trace_mul_logDeriv _ _ hM hρ.isHermitian, htrace] at hp
+      Matrix.trace_smul, trace_mul_logDeriv _ _ (hM t ht.le).posDef hρ.isHermitian, htrace] at hp
     simpa only [Complex.smul_re, Complex.one_re, smul_eq_mul, mul_one, sub_nonneg] using hp
   have hmono : MonotoneOn F (Set.Icc 0 e) := by
     apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc 0 e)
@@ -127,7 +121,7 @@ theorem log_increment_ge {n : ℕ} (A C ρ : Matrix (Fin n) (Fin n) ℂ) (u lam 
       exact (hd t ht.1.le).hasDerivWithinAt
     · intro t ht
       rw [interior_Icc] at ht
-      exact sub_nonneg.mpr (hnonneg t ht.1.le)
+      exact sub_nonneg.mpr (hnonneg t ht.1)
   have h := hmono ⟨le_rfl, he⟩ ⟨he, le_rfl⟩ he
   simp only [F, M, zero_smul, add_zero] at h
   rw [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re, show 1 + e / lam = (lam + e) / lam by
