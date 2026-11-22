@@ -104,9 +104,7 @@ $$\forall (n: \mathbb{N}), \forall (p: \mathbb{R}), \forall (s: \mathbb{R}), \op
 
 *Formalization.* `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.probability` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
+*Citation.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
 
 *Commentary.*
 
@@ -118,9 +116,7 @@ $$\forall (n: \mathbb{N}), \forall (m: \mathbb{N}), \forall (t: \mathbb{R}), \fo
 
 *Formalization.* `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.detScore` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
+*Citation.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
 
 *Commentary.*
 
