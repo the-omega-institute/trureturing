@@ -842,7 +842,8 @@ theorem result (n : ℕ) :
           cases h
           rfl
         · intro h
-          have hx : x.val < k := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
+          have hy : x.val + 1 < k + 1 := h ▸ y.isLt
+          have hx : x.val < k := Nat.lt_of_succ_lt_succ hy
           exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
       have mem_backward {k : ℕ} (e : Fin (k + 1) × Fin (k + 1)) :
           e ∈ Finset.univ.map (backward k) ↔ e.1.val = e.2.val + 1 := by
