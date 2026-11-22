@@ -50,25 +50,30 @@ def stripGram (x y : ℝ) : ℝ :=
 def weightedPair (w : ℝ → ℝ) (a x y t : ℝ) : ℂ :=
   (w t : ℂ) * (star (deficit x (line a t)) * deficit y (line a t))
 
-private def mode (x t : ℝ) : ℂ := Complex.exp (((x * t : ℝ) : ℂ) * Complex.I)
+private def verticalExponential (a x t : ℝ) : ℂ :=
+  Complex.exp ((x : ℂ) * line a t)
 
-private theorem star_mode_mul (x y t : ℝ) :
-    star (mode x t) * mode y t = mode (y - x) t := by
-  unfold mode
-  rw [Complex.star_def, ← Complex.exp_conj, map_mul, Complex.conj_ofReal, Complex.conj_I,
+local notation "mode" => verticalExponential 0
+
+private theorem cross_vertical (a x y t : ℝ) :
+    star (verticalExponential a x t) * verticalExponential a y t =
+      (Real.exp ((x + y) * a) : ℂ) * mode (y - x) t := by
+  unfold verticalExponential
+  rw [Complex.star_def, ← Complex.exp_conj, ← Complex.exp_add, Complex.ofReal_exp,
     ← Complex.exp_add]
   congr 1
+  simp only [line, map_mul, map_add, Complex.conj_ofReal, Complex.conj_I, Complex.ofReal_zero,
+    zero_add]
   push_cast
   ring
 
 private theorem mode_re (x t : ℝ) : (mode x t).re = Real.cos (x * t) := by
-  simp [mode, Complex.exp_re, Complex.mul_re, Complex.mul_im]
+  simp [verticalExponential, Complex.exp_re, Complex.mul_re, Complex.mul_im]
 
 private theorem deficit_line (a x t : ℝ) :
     deficit x (line a t) = 1 - (Real.exp (x * a) : ℂ) * mode x t := by
-  unfold deficit line mode
-  rw [mul_add, ← mul_assoc, Complex.exp_add]
-  simp only [Complex.ofReal_mul, Complex.ofReal_exp]
+  have h := cross_vertical a 0 x t
+  simpa [deficit, verticalExponential] using congrArg (fun z : ℂ => 1 - z) h
 
 private theorem weightedPair_expand (w : ℝ → ℝ) (a x y t : ℝ) :
     weightedPair w a x y t =
@@ -76,12 +81,14 @@ private theorem weightedPair_expand (w : ℝ → ℝ) (a x y t : ℝ) :
         (Real.exp (y * a) : ℂ) * mode y t +
         (Real.exp (x * a) : ℂ) * (Real.exp (y * a) : ℂ) * mode (y - x) t) := by
   have hx : star (mode x t) = mode (-x) t := by
-    simpa [mode] using (star_mode_mul x 0 t)
+    simpa [verticalExponential] using cross_vertical 0 x 0 t
   simp only [weightedPair, deficit_line, star_sub, star_one, star_mul, Complex.star_def,
     Complex.conj_ofReal]
   rw [← Complex.star_def, hx]
   have hxy : mode (-x) t * mode y t = mode (y - x) t := by
-    rw [← hx, star_mode_mul]
+    rw [← hx]
+    simpa only [mul_zero, Real.exp_zero, Complex.ofReal_one, one_mul] using
+      cross_vertical 0 x y t
   rw [show (1 - mode (-x) t * (Real.exp (x * a) : ℂ)) *
         (1 - (Real.exp (y * a) : ℂ) * mode y t) =
       1 - (Real.exp (x * a) : ℂ) * mode (-x) t - (Real.exp (y * a) : ℂ) * mode y t +
@@ -92,7 +99,9 @@ private theorem mode_add_reflect (x t : ℝ) :
     mode x t + mode x (-t) = (2 : ℂ) * (Real.cos (x * t) : ℂ) := by
   have h (r : ℝ) : mode x r =
       Complex.cos ((x * r : ℝ) : ℂ) + Complex.I * Complex.sin ((x * r : ℝ) : ℂ) := by
-    rw [mode, Complex.exp_mul_I]
+    have harg : (x : ℂ) * line 0 r = ((x * r : ℝ) : ℂ) * Complex.I := by
+      simp [line, mul_assoc, Complex.ofReal_mul]
+    rw [verticalExponential, harg, Complex.exp_mul_I]
     ring
   rw [h t, h (-t)]
   simp only [mul_neg, Complex.ofReal_neg, Complex.cos_neg, Complex.sin_neg, Complex.ofReal_cos]
@@ -107,7 +116,7 @@ private theorem lower_diagonal (x t : ℝ) :
       lowerWeight t * ‖deficit x (line 0 t)‖ ^ 2 := by
     rw [weightedPair, Complex.star_def, Complex.conj_mul', ← Complex.ofReal_pow,
       ← Complex.ofReal_mul, Complex.ofReal_re]
-  have hzero : mode (x - x) t = 1 := by simp [mode]
+  have hzero : mode (x - x) t = 1 := by simp [verticalExponential]
   rw [← hleft]
   simp only [mul_zero, Real.exp_zero, Complex.ofReal_one, one_mul, hzero] at h
   have hreal := congrArg Complex.re h
@@ -198,9 +207,12 @@ private theorem integrable_weighted_mode (x : ℝ) :
     exact continuous_const.div (by fun_prop)
       (fun t => ne_of_gt (by positivity [Real.cosh_pos (2 * Real.pi * t)]))
   have hm : Continuous (fun t => (upperWeight t : ℂ) * mode x t) :=
-    (Complex.continuous_ofReal.comp hw).mul (by unfold mode; fun_prop)
+    (Complex.continuous_ofReal.comp hw).mul (by unfold verticalExponential line; fun_prop)
   apply (integrable_norm_iff hm.aestronglyMeasurable).1
-  simpa only [norm_mul, Complex.norm_real, mode, Complex.norm_exp_ofReal_mul_I, mul_one]
+  have hmNorm (t : ℝ) : ‖mode x t‖ = 1 := by
+    rw [verticalExponential, Complex.norm_exp, Complex.mul_re, PetzLogisticMidline.line_re,
+      Complex.ofReal_re, Complex.ofReal_im, mul_zero, zero_mul, sub_zero, Real.exp_zero]
+  simpa only [norm_mul, Complex.norm_real, hmNorm, mul_one]
     using PetzLogisticMidline.integrable_upperWeight.norm
 
 /-- The factorization supplies the vanishing imaginary part and fixes the mass at zero. -/
@@ -210,7 +222,8 @@ private theorem upper_mode_real (x : ℝ) :
   have h := (PetzLogisticEvaluation.exact_gram_factorization ω).2.2 false true
   refine ⟨‖PetzLogisticEvaluation.correlation ω false true‖ ^ 2, ?_⟩
   push_cast
-  simpa only [ω, Bool.false_eq_true, ite_false, ite_true, sub_zero, mode,
+  simpa only [ω, Bool.false_eq_true, ite_false, ite_true, sub_zero, verticalExponential,
+    PetzLogisticMidline.line, Complex.ofReal_zero, zero_add, mul_assoc, Complex.ofReal_mul,
     show upperWeight = PetzExponentialBoundaryEvaluation.petzWeight from rfl] using h
 
 private theorem upper_mass : (∫ t, upperWeight t) = 1 := by
@@ -293,8 +306,8 @@ private theorem upper_pair (x y : ℝ) :
       fun t => f 0 t - a * f (-x) t - b * f y t + (a * b) * f (y - x) t := by
     funext t
     rw [weightedPair_expand]
-    simp only [a, b, f, mul_one_div, mode, zero_mul, Complex.ofReal_zero, Complex.exp_zero,
-      mul_one]
+    simp only [a, b, f, mul_one_div, verticalExponential, zero_mul, Complex.ofReal_zero,
+      Complex.exp_zero, mul_one]
     ring
   rw [hfun]
   have hsub : Integrable (fun t => f 0 t - a * f (-x) t) :=
@@ -378,7 +391,10 @@ private theorem logistic_gram_entry (x y : ℝ) :
     Integrable (fun t => (upperWeight t : ℂ) * (star (mode x t) * mode y t)) ∧
     (∫ t, (upperWeight t : ℂ) * (star (mode x t) * mode y t)) =
       (logistic (y - x) : ℂ) := by
-  simp_rw [star_mode_mul]
+  have h (t : ℝ) : star (mode x t) * mode y t = mode (y - x) t := by
+    simpa only [mul_zero, Real.exp_zero, Complex.ofReal_one, one_mul] using
+      cross_vertical 0 x y t
+  simp_rw [h]
   exact ⟨integrable_weighted_mode _, upper_mode_integral _⟩
 
 private theorem boundary_jump (x t : ℝ) :
