@@ -213,5 +213,7 @@ internal sealed class BolducJenningsClassicalValueDocument : IScribeDocumentDefi
                     "A balanced synchronous coloring attains the first score. For the second, both players use the "
                     + "same balanced coloring with colors 2 through m−1 on the first s inputs. On the remaining inputs "
                     + "Alice uses color 0 and Bob uses color 1. A point mass on the better pair attains the classical value."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("bolduc-jennings-2026-low-diagonal-classical-coloring"), ResolutionKind.Proved)))));
 }

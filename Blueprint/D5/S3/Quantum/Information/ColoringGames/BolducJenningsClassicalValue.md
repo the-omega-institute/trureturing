@@ -122,6 +122,10 @@ $$\forall (n: \mathbb{N}), \forall (m: \mathbb{N}), \forall (p: \mathbb{R}), ((2
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bolduc-jennings-2026-low-diagonal-classical-coloring` (proved) by `D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bolduc-jennings-2026-low-diagonal-classical-coloring","declaration_gid":"D5/S3/Quantum/Information/ColoringGames/BolducJenningsClassicalValue.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* William Bolduc, Michael Jennings (2026). *Quantum Coloring Games on Complete Graphs*. DOI: [10.48550/arXiv.2611.19002](https://doi.org/10.48550/arXiv.2611.19002). URL: <https://arxiv.org/html/2611.19002v1>.
