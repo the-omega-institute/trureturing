@@ -262,7 +262,7 @@ private theorem counting_bound :
       mul_le_mul_of_nonneg_right (by linarith) (by positivity)
     _ = (6 * A) * T * (1 + Real.log T) := by ring
 
-private theorem occurrence_finite_sum (S : Finset ℂ)
+theorem occurrence_finite_sum (S : Finset ℂ)
     (hS : ∀ ρ ∈ S, IsNontrivialZero ρ) (f : ℂ → ℝ) (hf : ∀ ρ, 0 ≤ f ρ) :
     Summable (fun k : ℕ => if actualZero k ∈ S then f (actualZero k) else 0) ∧
       (∑' k : ℕ, if actualZero k ∈ S then f (actualZero k) else 0) =
