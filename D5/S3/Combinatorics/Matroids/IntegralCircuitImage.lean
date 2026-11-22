@@ -473,7 +473,7 @@ private lemma class_multiple_image {M : Matroid V} {K : Finset V}
     simp
   · simp [restrictChain, hT, hw.vanishes T hT]
 
-private noncomputable def aggregateLinear (M : Matroid V) (K : Finset V) :
+noncomputable def aggregateLinear (M : Matroid V) (K : Finset V) :
     Chain V →ₗ[ℤ] Chain V where
   toFun := aggregateRestrict M K
   map_add' z w := by
