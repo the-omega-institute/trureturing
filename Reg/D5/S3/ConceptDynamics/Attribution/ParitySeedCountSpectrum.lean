@@ -179,12 +179,12 @@ abbrev relabelSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output n _ := Fin (n + 2) → Fin (n + 2)
+  Output _ n := Fin (n + 2) → Fin (n + 2)
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def relabelCoordinates : Realization relabelSignature :=
-  realize relabelSignature (fun _ _ p => p) (fun e => nomatch e)
+  realize relabelSignature (fun _ _ p => ⇑p) (fun e => nomatch e)
 
 def useFirstCoordinate : Realization relabelSignature :=
   realize relabelSignature (fun _ _ _ _ => 0) (fun e => nomatch e)
@@ -237,7 +237,7 @@ def relabelRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source relabelArena ⟨relabelFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize relabelSignature (fun _ _ p => p) (fun e => nomatch e))
+  readout := some (realize relabelSignature (fun _ _ p => ⇑p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
