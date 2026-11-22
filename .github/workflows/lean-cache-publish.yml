@@ -181,6 +181,7 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      EXPECTED_SOURCE_SHA: ${{ github.sha }}
       LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.scheduled-compile.outputs.sparse == 'true' && '1' || '0' }}
@@ -246,6 +247,7 @@ jobs:
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: |
           set -eo pipefail
+          [[ "$(git rev-parse HEAD)" == "$EXPECTED_SOURCE_SHA" ]]
           bash .github/actions/lean-compile-layer/measure.sh make lean-cache-to-github-without-mathlib FULL_BUILD=1 \
             LEAN_CACHE_PUBLISH_ONLY=1 |
             tee "$RUNNER_TEMP/lean-cache-publication.log"
@@ -253,9 +255,8 @@ jobs:
         shell: bash
         run: |
           set -eo pipefail
-          producer="$(git rev-parse HEAD)"
           sed -n 's/^LEAN_CACHE_PUBLISH //p' "$RUNNER_TEMP/lean-cache-publication.log" |
-            jq -es --arg producer "$producer" '
+            jq -es --arg producer "$EXPECTED_SOURCE_SHA" '
               length == 1 and (.[0] | (.status == "published" or .status == "exists") and
                 .producer_commit_sha == $producer and (.tag | type == "string" and length > 0))'
 
@@ -328,6 +329,8 @@ jobs:
       queue: max
       cancel-in-progress: false
     env:
+      EXPECTED_SOURCE_SHA: ${{ needs.manual-release-authorize.outputs.source_sha }}
+      RELEASE_DRIVER: ${{ needs.manual-release-authorize.outputs.source_sha == github.sha && '.' || 'build/release-driver' }}
       LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'false'
       LEAN_CACHE_RELEASE_SPARSE: ${{ needs.manual-compile.outputs.sparse == 'true' && '1' || '0' }}
@@ -411,21 +414,8 @@ jobs:
       - name: Set the transfer budget for volume publication
         if: github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != ''
         run: echo 'STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=21600' >> "$GITHUB_ENV"
-      - name: Compile missing Release artifacts
-        if: steps.release_seed.outputs.cache-prepared != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
-          LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
-        run: |
-          if [[ -f .github/actions/lean-cache-release-seed/prepare-compiler.sh ]]; then
-            bash .github/actions/lean-cache-release-seed/prepare-compiler.sh
-          else
-            STRATALINT_ACCEPT_COLD_BUILD=1 make lean FULL_BUILD=1
-          fi
       - name: Check out the publication tools pin for a historical source
-        if: hashFiles('.github/actions/lean-cache-release-seed/prepare-compiler.sh') == ''
+        if: env.RELEASE_DRIVER != '.'
         uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
@@ -434,10 +424,20 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/scripts/install-tools.py
+            /.github/actions/lean-cache-release-seed/prepare-compiler.sh
+            /.github/actions/lean-compile-layer/measure.sh
             /Meta/tools-release.json
       - name: Install the compiler-only publisher for the historical checkout
-        if: hashFiles('.github/actions/lean-cache-release-seed/prepare-compiler.sh') == ''
+        if: env.RELEASE_DRIVER != '.'
         run: python3 build/release-driver/.github/scripts/install-tools.py
+      - name: Compile missing Release artifacts
+        if: steps.release_seed.outputs.cache-prepared != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
+          LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
+        run: bash "$RELEASE_DRIVER/.github/actions/lean-cache-release-seed/prepare-compiler.sh"
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
@@ -445,25 +445,18 @@ jobs:
           LEAN_CACHE_RELEASE_VOLUMES: ${{ vars.LEAN_CACHE_RELEASE_VOLUMES_REF == 'dev' && '1' || '0' }}
           LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
         run: |
-          observer=()
-          if [[ -f .github/actions/lean-compile-layer/measure.sh ]]; then
-            observer=(bash .github/actions/lean-compile-layer/measure.sh)
-          fi
           set -eo pipefail
-          # Historical source keeps its own Lean toolchain and build configuration.
-          if [[ -f .github/actions/lean-cache-release-seed/prepare-compiler.sh ]]; then
-            publish=(make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_PUBLISH_ONLY=1)
-          else
-            publish=(bash build/release-driver/tools/scripts/worktree/lean-cache-publish.sh publish --repository . --mode production --no-build)
-            if [[ "$LEAN_CACHE_INDEXED" == 1 ]]; then publish+=(--indexed); fi
-          fi
-          "${observer[@]}" "${publish[@]}" | tee "$RUNNER_TEMP/lean-cache-publication.log"
+          [[ "$(git rev-parse HEAD)" == "$EXPECTED_SOURCE_SHA" ]]
+          args=(publish --repository . --mode production --no-build)
+          if [[ "$LEAN_CACHE_INDEXED" == 1 ]]; then args+=(--indexed); fi
+          bash "$RELEASE_DRIVER/.github/actions/lean-compile-layer/measure.sh" \
+            bash "$RELEASE_DRIVER/tools/scripts/worktree/lean-cache-publish.sh" "${args[@]}" |
+            tee "$RUNNER_TEMP/lean-cache-publication.log"
       - name: Verify the Release publication for the checked-out commit
         shell: bash
         run: |
           set -eo pipefail
-          producer="$(git rev-parse HEAD)"
           sed -n 's/^LEAN_CACHE_PUBLISH //p' "$RUNNER_TEMP/lean-cache-publication.log" |
-            jq -es --arg producer "$producer" '
+            jq -es --arg producer "$EXPECTED_SOURCE_SHA" '
               length == 1 and (.[0] | (.status == "published" or .status == "exists") and
                 .producer_commit_sha == $producer and (.tag | type == "string" and length > 0))'
