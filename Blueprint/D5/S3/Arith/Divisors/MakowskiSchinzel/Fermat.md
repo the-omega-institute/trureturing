@@ -36,3 +36,4 @@ An odd integer with power-of-two totient is squarefree and is a product of disti
 
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Fermat.fermat_product_bound`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/Fermat.odd_le_sigma_totient_of_two_pow`
+- Dependency: [D5/S3/Factorization/LehmerTotientDichotomy](../../../Factorization/LehmerTotientDichotomy.md)

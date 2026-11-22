@@ -37,3 +37,4 @@ Assume a nonzero m has ratio below 1, while every strictly smaller divisor has r
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/PrimeDeletion.primeSources`
 - Truth anchor: `D5/S3/Arith/Divisors/MakowskiSchinzel/PrimeDeletion.prime_deletion_necessary`
 - Dependency: [D5/S3/Arith/Divisors/MakowskiSchinzel/Reduction](Reduction.md)
+- Dependency: [D5/S3/Factorization/LehmerTotientDichotomy](../../../Factorization/LehmerTotientDichotomy.md)
