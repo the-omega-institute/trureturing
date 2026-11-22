@@ -52,9 +52,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockTensorHer
 
 *Commentary.*
 
-On the full tensor, the adjoint of the original groundAction(a) is epsilon(a,a) times groundAction(-a). The coefficient remains paritySign(B(a,a)/2), as supplied by the original native signed adjoint; reflection alone is not the group inverse. The actual original quotient action also preserves the full tensor form. The actual tensorCurrent has the same -j-1 adjoint as the original oscillator current. Compiled Reg applications use the literal GolayLeech.ExplicitLeechLattice.data, its determinant-one supplier and real_positive theorem for the exact chosen ground. These are applications, not independent wrapper credit.
+On the full tensor, the adjoint of the original groundAction(a) is epsilon(a,a) times groundAction(-a). The coefficient remains paritySign(B(a,a)/2), as supplied by the original native signed adjoint; reflection alone is not the group inverse. The actual original quotient action also preserves the full tensor form. The actual tensorCurrent has the same -j-1 adjoint as the original oscillator current.
 
-This is classical algebraic Fock and finite-group Hermitian geometry, not a claim of new physics or literature novelty. It does not establish all-state charged BPZ/PCT or unitarity, a full twisted Jacobi identity, intertwiners, fusion, orbifold gluing, the Monster, a complete string theory or AdS/CFT reconstruction. The full original objective remains open. No all-charge Lorentzian or neutral BRST positivity follows. The owning Reg sources provide explicit source bridges and four family slots; their source-binding and full admission status is separate from kernel compilation.
+This is classical algebraic Fock and finite-group Hermitian geometry, not a claim of new physics or literature novelty. It does not establish all-state charged BPZ/PCT or unitarity, a full twisted Jacobi identity, intertwiners, fusion, orbifold gluing, the Monster, a complete string theory or AdS/CFT reconstruction. The full original objective remains open. No all-charge Lorentzian or neutral BRST positivity follows.
 
 ## References
 

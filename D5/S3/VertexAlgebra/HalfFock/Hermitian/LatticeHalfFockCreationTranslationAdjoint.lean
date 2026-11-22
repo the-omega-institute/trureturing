@@ -1,5 +1,5 @@
 /- GID: D5/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockCreationTranslationAdjoint
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockCreationTranslationAdjoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -60,7 +60,7 @@ private theorem current_creation (D : LatticeData) (coordinate : Index D)
   rw [← mul_assoc, balance, one_mul]
   rfl
 
-private theorem creation_constant (D : LatticeData) (charge : Charge D) (degree : ℤ) :
+theorem creation_constant (D : LatticeData) (charge : Charge D) (degree : ℤ) :
     constantCoeff (halfCreationCoeff D charge degree) = if degree = 0 then 1 else 0 := by
   by_cases negative : degree < 0
   · simp [halfCreationCoeff, negative, show degree ≠ 0 by omega]
@@ -124,7 +124,7 @@ private theorem constant_scaling (D : LatticeData) (polynomial : Oscillator D) :
   | add first second firstProof secondProof => simp [map_add, firstProof, secondProof]
   | mul_X polynomial coordinate previous => simp [scaling, map_mul]
 
-private theorem vacuum_left (D : LatticeData) (polynomial : Oscillator D) :
+theorem vacuum_left (D : LatticeData) (polynomial : Oscillator D) :
     halfForm D 1 polynomial = constantCoeff polynomial := by
   rw [halfForm_apply, map_one, fockForm_vacuum_left, constant_scaling]
 
@@ -146,7 +146,7 @@ private theorem constant_adjoint (D : LatticeData) (charge : Charge D)
   · simp only [one_mul, form_constant_right]
   · simp only [zero_mul, star_zero, map_zero, mul_zero]
 
-private theorem form_integral_smul_left (D : LatticeData) (integer : ℤ)
+theorem form_integral_smul_left (D : LatticeData) (integer : ℤ)
     (left right : Oscillator D) :
     halfForm D ((integer : ℂ) • left) right = (integer : ℂ) * halfForm D left right := by
   rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_intCast, smul_eq_mul]

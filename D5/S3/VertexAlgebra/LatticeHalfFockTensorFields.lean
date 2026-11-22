@@ -145,7 +145,7 @@ def tensorNormalSum (i l : Fin D.rank) (m : ℤ) :
     simp only [map_smul, RingHom.id_apply]
     exact (smul_finsum' c (tensorPair_finite D T i l m v)).symm
 
-private theorem tensor_normalSum (i l : Fin D.rank) (m : ℤ) :
+theorem tensor_normalSum (i l : Fin D.rank) (m : ℤ) :
     tensorEnd D T (normalSum D i l m) = tensorNormalSum D T i l m := by
   apply TensorProduct.ext'; intro p t
   simp only [tensorEnd_tmul]

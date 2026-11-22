@@ -1,5 +1,5 @@
 /- GID: D5/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockConvolutionAdjoint
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/VertexAlgebra/HalfFock/Hermitian/LatticeHalfFockConvolutionAdjoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -29,22 +29,6 @@ private theorem creator_left (D : LatticeData) (coordinate : Index D)
   simpa only [current_negative, LinearMap.mulLeft_apply] using
     halfForm_creation_adjoint D coordinate.1 coordinate.2 left right
 
-private theorem creation_constant (D : LatticeData) (charge : Charge D) (degree : ℤ) :
-    constantCoeff (halfCreationCoeff D charge degree) = if degree = 0 then 1 else 0 := by
-  run_tac
-    let supplier := (Lean.Name.num
-      `_private.D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockCreationTranslationAdjoint 0).append
-      `D5.S3.VertexAlgebra.LatticeHalfFockCreationTranslationAdjoint.creation_constant
-    Lean.Elab.Tactic.evalTactic (← `(tactic| apply ($(Lean.mkIdent supplier))))
-
-private theorem vacuum_left (D : LatticeData) (polynomial : Oscillator D) :
-    halfForm D 1 polynomial = constantCoeff polynomial := by
-  run_tac
-    let supplier := (Lean.Name.num
-      `_private.D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockCreationTranslationAdjoint 0).append
-      `D5.S3.VertexAlgebra.LatticeHalfFockCreationTranslationAdjoint.vacuum_left
-    Lean.Elab.Tactic.evalTactic (← `(tactic| apply ($(Lean.mkIdent supplier))))
-
 private theorem coefficient_sum (D : LatticeData) (charge : Charge D)
     (exponent : ℤ) (polynomial : Oscillator D) :
     oscillatorCoefficient D charge exponent polynomial =
@@ -61,16 +45,7 @@ private theorem coefficient_current (D : LatticeData) (charge : Charge D)
       oscillatorCoefficient D charge exponent (current D coordinate.1 coordinate.2 polynomial) +
         (bilinear D (unitCharge D coordinate.1) charge : ℂ) •
           oscillatorCoefficient D charge (exponent - omega D coordinate) polynomial := by
-  have ward : current D coordinate.1 coordinate.2
-      (oscillatorCoefficient D charge exponent polynomial) -
-        oscillatorCoefficient D charge exponent (current D coordinate.1 coordinate.2 polynomial) =
-      (bilinear D (unitCharge D coordinate.1) charge : ℂ) •
-        oscillatorCoefficient D charge (exponent - (2 * (coordinate.2 : ℤ) + 1)) polynomial := by
-    run_tac
-      let supplier := (Lean.Name.num
-        `_private.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients 0).append
-        `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.oscillator_current_ward
-      Lean.Elab.Tactic.evalTactic (← `(tactic| apply ($(Lean.mkIdent supplier))))
+  have ward := oscillator_current_ward D coordinate.1 charge coordinate.2 exponent polynomial
   have reflected : (omega D coordinate : ℤ) = 2 * (coordinate.2 : ℤ) + 1 := by
     simp [omega]
   rw [reflected]
@@ -146,15 +121,6 @@ private theorem coefficient_vacuum_adjoint (D : LatticeData) (charge : Charge D)
   have adjoint := half_creation_translation_adjoint D charge
     (exponent + chargeNorm D charge) 1 right
   simpa only [mul_one, vacuum_left, reflected_constant] using adjoint
-
-private theorem form_integral_smul_left (D : LatticeData) (integer : ℤ)
-    (left right : Oscillator D) :
-    halfForm D ((integer : ℂ) • left) right = (integer : ℂ) * halfForm D left right := by
-  run_tac
-    let supplier := (Lean.Name.num
-      `_private.D5.S3.VertexAlgebra.HalfFock.Hermitian.LatticeHalfFockCreationTranslationAdjoint 0).append
-      `D5.S3.VertexAlgebra.LatticeHalfFockCreationTranslationAdjoint.form_integral_smul_left
-    Lean.Elab.Tactic.evalTactic (← `(tactic| apply ($(Lean.mkIdent supplier))))
 
 theorem oscillator_coefficient_adjoint (D : LatticeData) (charge : Charge D)
     (exponent : ℤ) (left right : Oscillator D) :

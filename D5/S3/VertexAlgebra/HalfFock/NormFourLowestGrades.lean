@@ -26,8 +26,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
 
-open private quadratic_field normal_pair_coeff shift_identity_coeff
-  current_ground_zero_charge
+open private current_ground_zero_charge
   from D5.S3.VertexAlgebra.LatticeHalfFockCorrectedConformal
 open private charge_pairing from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 
@@ -40,6 +39,7 @@ open LatticeHalfFock LatticeHalfFockChargedCoefficients
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockChargedMonodromy
 open LatticeHalfFockGroundProducts LatticeHalfFockFiniteCorrection
 open LatticeHalfFockFockNormalField LatticeHalfFockCorrectedField
+open LatticeHalfFockCorrectedConformal (quadratic_field normal_pair_coeff shift_identity_coeff)
 open LatticeHalfFockGradedTrace MvPolynomial
 open HalfFockSpectralFiberSource
 open scoped BigOperators TensorProduct
@@ -210,7 +210,7 @@ private theorem quadratic_X_zero (D : LatticeData) (hu : IsUnit D.G.det)
     LinearMap.add_apply, LinearMap.smul_apply, normal_X_zero, shift_identity_coeff]
   simp [div_eq_mul_inv, mul_comm]
 
-private theorem charge_square_expansion (D : LatticeData) (a : Charge D) :
+theorem charge_square_expansion (D : LatticeData) (a : Charge D) :
     (chargePolynomial D a)^2 = ∑ i : Fin D.rank, ∑ j : Fin D.rank,
       ((a i : ℂ) * (a j : ℂ)) • (X (i, 0) * X (j, 0) : Oscillator D) := by
   simp only [pow_two, chargePolynomial, Finset.sum_mul, Finset.mul_sum,
