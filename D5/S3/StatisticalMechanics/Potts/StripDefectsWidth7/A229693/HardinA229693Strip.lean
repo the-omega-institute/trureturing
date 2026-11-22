@@ -271,7 +271,7 @@ private theorem leading_action (v : Fin 168 → ℤ) (j : Fin 72) :
       Matrix.vecMul (fun k : Fin 72 => v (k.castAdd 96)) HardinA229585StripData.T j := by
   unfold Matrix.vecMul dotProduct
   rw [Fin.sum_univ_add (a := 72) (b := 96)]
-  simp only [T, Matrix.reindex_apply, finSumFinEquiv_symm_apply_castAdd,
+  simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd,
     finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₁,
     Matrix.zero_apply, mul_zero, Finset.sum_const_zero, add_zero]
 
