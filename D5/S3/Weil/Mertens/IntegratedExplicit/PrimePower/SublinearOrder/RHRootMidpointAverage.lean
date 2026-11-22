@@ -24,7 +24,8 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.PrimePower.SublinearOrder
 
 open D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelCusp (c)
 
-private theorem integral_pair {f : ℝ → ℝ} (hf : Continuous f) (u L : ℝ) :
+/-- Pair the two halves of a centered interval integral. -/
+theorem integral_pair {f : ℝ → ℝ} (hf : Continuous f) (u L : ℝ) :
     (∫ t in (0 : ℝ)..L, f (u + t) - f (u + L / 2)) =
       ∫ h in (0 : ℝ)..(L / 2), f (u + L / 2 + h) + f (u + L / 2 - h) -
         2 * f (u + L / 2) := by
@@ -53,12 +54,14 @@ private theorem integral_pair {f : ℝ → ℝ} (hf : Continuous f) (u L : ℝ) 
     show u + (L / 2 - h) = u + L / 2 - h by ring]
   ring
 
-private theorem continuous_cusp_profile (s b : ℝ) :
+/-- The logarithmic cusp profile extends continuously at zero. -/
+theorem continuous_cusp_profile (s b : ℝ) :
     Continuous (fun h : ℝ => (h / s) * (Real.log (1 / h) + b)) := by
   simp_rw [one_div, Real.log_inv, div_mul_eq_mul_div, mul_add, mul_neg]
   exact (Real.continuous_mul_log.neg.add (continuous_id.mul continuous_const)).div_const _
 
-private theorem integral_cusp_profile {L s : ℝ} (hL : 0 < L) (b : ℝ) :
+/-- Integrating the symmetric cusp gives its two midpoint terms. -/
+theorem integral_cusp_profile {L s : ℝ} (hL : 0 < L) (b : ℝ) :
     (∫ h in (0 : ℝ)..(L / 2), (h / s) * (Real.log (1 / h) + b)) =
       (L ^ 2 / (8 * s)) * (Real.log (1 / L) + Real.log 2 + b + 1 / 2) := by
   let F : ℝ → ℝ := fun h => h ^ 2 / (2 * s) * (-Real.log h + b + 1 / 2)
