@@ -9,6 +9,7 @@
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.IsingPrimaryCoupling
 import D5.S3.VertexAlgebra.Lattice.NormFourCosetVirasoro
 import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core
+import Batteries.Tactic.OpenPrivate
 
 /-! The grade-two negative twisted space has a vacuum pairing for each
 signed norm-four axis. The fixed-source vacuum detector and the actual
@@ -38,6 +39,10 @@ open SourceBPZ.OriginalSourceCoevaluation (gradeVacuum)
 open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open LatticeHalfFockCorrectedField (correctedField)
 open scoped VertexOperator BigOperators
+
+open private energyTwoEigenspaceEquiv from
+  D5.S3.VertexAlgebra.HalfFock.NormFourFirstGradeSpectrum
+open private weight_two_vacuum_pairing from D5.S3.VertexAlgebra.TwistedGround.MixedJacobi
 
 variable {D : LatticeData} {hu : IsUnit D.G.det}
   {hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))}
@@ -100,7 +105,7 @@ theorem originalI_three_energyTwo (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ �
   have hv₂ : actualTensorL0 D hu v.val = (2 : ℂ) • v.val :=
     Module.End.mem_eigenspace_iff.mp v.property.2
   rw [originalI_three_eq_vacuum_smul D hu hD h24 (ι u) (ι v) hu₂ hv₂ vac rfl,
-    MixedIntertwiner.weight_two_vacuum_pairing D hu h24 (ι u) (ι v) hu₂ hv₂ vac rfl]
+    weight_two_vacuum_pairing D hu h24 (ι u) (ι v) hu₂ hv₂ vac rfl]
   rfl
 
 private def vacuumDetector (D : LatticeData) : FixedCarrier D →ₗ[ℂ] ℂ :=

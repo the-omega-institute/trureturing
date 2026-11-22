@@ -466,7 +466,7 @@ open private vacuum_coeff
 open private basis_parity
   from D5.S3.VertexAlgebra.TwistedGround.MixedTranslation
 
-theorem weight_two_vacuum_pairing (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem weight_two_vacuum_pairing (D : LatticeData) (hu : IsUnit D.G.det)
     (h24 : D.rank = 24) (u v : paritySpace D hu (-1))
     (huH : actualTensorL0 D hu u.val = (2 : ℂ) • u.val)
     (hvK : actualTensorL0 D hu v.val = (2 : ℂ) • v.val)

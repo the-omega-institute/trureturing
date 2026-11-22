@@ -162,19 +162,7 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.parityM
 
 At rank twenty-four and for norm-four a, restrict the original corrected coefficient -4 to parityMinusEnergyTwo. Invariance follows from the whole-grade equality and actualGradeOneZeroMode. The same endomorphism, under the typed inclusion into paritySpace(-1), is ncoeff1 of fixedParitySlice(D,hu,-1,normFourFixedSource(D,a,s)): ncoeff1 selects exponent -2, whose native doubled exponent is -4.
 
-**Definition 1.14 (Transport of the literal eigenspaces).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.energyTwoEigenspaceEquiv`
-
-*Formalization.* `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.energyTwoEigenspaceEquiv` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The original grade-one axis eigenspace and its physical energy-two counterpart are linearly equivalent at every complex weight. Both directions retain the same underlying ambient tensor vector.
-
-**Theorem 1.15 (Complete ambient physical spectrum).**
+**Theorem 1.14 (Complete ambient physical spectrum).**
 
 Lean statement: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.actual_parity_minus_energy_two_multiplicities`
 
@@ -199,7 +187,6 @@ This is classical twisted lattice linear algebra: Frenkel-Lepowsky-Meurman, Vert
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.actual_parity_minus_energy_two_multiplicities`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.actual_projectors_complete`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.actual_projectors_traces`
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.energyTwoEigenspaceEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.nativeGradeEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.nativeL`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/NormFourFirstGradeSpectrum.normFourFixedSource`
