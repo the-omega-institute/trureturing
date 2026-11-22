@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Rank capacities force charged diagonal multiplicity. -/
+   digest: Capacity deficits with actual cut flows force charged diagonal multiplicity. -/
 
 import Mathlib.Algebra.BigOperators.ModEq
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -109,18 +109,18 @@ private theorem prefix_capacity_with_actual_inflow (rank : V → ℕ) (top : V) 
 
 /-- Capacities on the two sides of a rank force diagonal multiplicity even when
     ordinary edges skip arbitrarily many ranks. -/
-private theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k ka kb : ℕ)
+private theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k : ℕ)
     (e : V → V → ℕ)
     (topAbove : r < rank top)
     (ordinary : ∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b)
     (rowMin : ∀ a ≠ top, 1 ≤ ∑ b, e a b)
     (colMin : ∀ b ≠ top, 1 ≤ ∑ a, e a b)
     (rowMax : ∀ a ≠ top, (∑ b, e a b) ≤ k)
-    (colMax : ∀ b ≠ top, (∑ a, e a b) ≤ k)
-    (topRow : (∑ b, e top b) ≤ ka)
-    (topCol : (∑ a, e a top) ≤ kb) :
-    max ((lowerClosure rank r).card - ((strictLower rank r).card * k + ka))
-        ((upperClosure rank r top).card - (((strictUpper rank r).erase top).card * k + kb))
+    (colMax : ∀ b ≠ top, (∑ a, e a b) ≤ k) :
+    max ((lowerClosure rank r).card -
+        ((strictLower rank r).card * k + ∑ b ∈ lowerClosure rank r, e top b))
+        ((upperClosure rank r top).card -
+        (((strictUpper rank r).erase top).card * k + ∑ a ∈ upperClosure rank r top, e a top))
       ≤ ∑ a ∈ sameRank rank r, e a a := by
   apply max_le
   · let L := strictLower rank r
@@ -136,10 +136,8 @@ private theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k ka kb 
         subst a
         have hlt := (mem_filter.mp ha).2
         omega))
-    have inflowBound : (∑ b ∈ P, e top b) ≤ ka :=
-      (sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)).trans topRow
     change P.card ≤ L.card * k + (∑ b ∈ P, e top b) + ∑ a ∈ E, e a a at rankBound
-    change P.card - (L.card * k + ka) ≤ ∑ a ∈ E, e a a
+    change P.card - (L.card * k + ∑ b ∈ P, e top b) ≤ ∑ a ∈ E, e a a
     omega
   · let H := strictUpper rank r
     let P := upperClosure rank r top
@@ -162,29 +160,27 @@ private theorem two_sided_rank_capacity (rank : V → ℕ) (top : V) (r k ka kb 
     have upper := degree_upper (fun b => ∑ a ∈ P, e a b) (H.erase top) k
       (fun b h => (sum_le_sum_of_subset_of_nonneg (subset_univ _)
         (fun _ _ _ => Nat.zero_le _)).trans (colMax b (mem_erase.mp h).1))
-    have topCol' : (∑ a ∈ P, e a top) ≤ kb :=
-      (sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)).trans topCol
-    change P.card - ((H.erase top).card * k + kb) ≤ ∑ a ∈ E, e a a
+    change P.card - ((H.erase top).card * k + ∑ a ∈ P, e a top) ≤ ∑ a ∈ E, e a a
     omega
 
 /-- Disjoint odd diagonal layers can be charged simultaneously. -/
-theorem paid_edges_ge_rank_capacity (rank : V → ℕ) (top : V) (k ka kb : ℕ)
+theorem paid_edges_ge_rank_capacity (rank : V → ℕ) (top : V) (k : ℕ)
     (e : V → V → ℕ) (R : Finset ℕ)
     (eligible : ∀ r ∈ R, r < rank top ∧ r % 2 = 1)
     (ordinary : ∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b)
     (rowMin : ∀ a ≠ top, 1 ≤ ∑ b, e a b)
     (colMin : ∀ b ≠ top, 1 ≤ ∑ a, e a b)
     (rowMax : ∀ a ≠ top, (∑ b, e a b) ≤ k)
-    (colMax : ∀ b ≠ top, (∑ a, e a b) ≤ k)
-    (topRow : (∑ b, e top b) ≤ ka)
-    (topCol : (∑ a, e a top) ≤ kb) :
-    (∑ r ∈ R, max ((lowerClosure rank r).card - ((strictLower rank r).card * k + ka))
-        ((upperClosure rank r top).card - (((strictUpper rank r).erase top).card * k + kb)))
+    (colMax : ∀ b ≠ top, (∑ a, e a b) ≤ k) :
+    (∑ r ∈ R, max ((lowerClosure rank r).card -
+        ((strictLower rank r).card * k + ∑ b ∈ lowerClosure rank r, e top b))
+        ((upperClosure rank r top).card -
+        (((strictUpper rank r).erase top).card * k + ∑ a ∈ upperClosure rank r top, e a top)))
       ≤ ∑ a, ∑ b, if a ≠ top ∧ rank a % 2 = 1 ∧ rank b % 2 = 1 then e a b else 0 := by
   calc
     _ ≤ ∑ r ∈ R, ∑ a ∈ sameRank rank r, e a a := sum_le_sum fun r hr =>
-      two_sided_rank_capacity rank top r k ka kb e (eligible r hr).1 ordinary
-        rowMin colMin rowMax colMax topRow topCol
+      two_sided_rank_capacity rank top r k e (eligible r hr).1 ordinary
+        rowMin colMin rowMax colMax
     _ = ∑ a, if rank a ∈ R then e a a else 0 := by
       unfold sameRank
       rw [sum_fiberwise_eq_sum_filter, sum_filter]

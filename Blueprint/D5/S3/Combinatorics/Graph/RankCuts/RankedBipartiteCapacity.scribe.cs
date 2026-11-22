@@ -22,14 +22,14 @@ internal sealed class RankedBipartiteCapacityDocument : IScribeDocumentDefinitio
                 Paragraph(Text("Use two copies of a finite vertex set with natural-number ranks and "
                     + "natural edge multiplicities e. Fix a vertex t. Each positive entry from "
                     + "an ordinary row is diagonal or goes to a strictly higher rank. Every ordinary "
-                    + "row and column has total multiplicity between one and k. The t row and t column "
-                    + "have total multiplicities at most ka and kb, respectively.")),
+                    + "row and column has total multiplicity between one and k.")),
                 Paragraph(Text("Let R be a finite set of odd ranks below the rank of t. At a rank r in R, "
-                    + "subtract k times the number of vertices strictly below r plus ka from the number "
-                    + "of vertices at or below r. Also subtract k times the number of ordinary vertices "
-                    + "strictly above r plus kb from the number of ordinary vertices at or above r. "
-                    + "Take the maximum of zero and these two differences. CapacityDeficitSum sums "
-                    + "the resulting value over R.")),
+                    + "subtract k times the number of vertices strictly below r and the actual weight "
+                    + "from row t into columns at or below r from the number of vertices at or below r. "
+                    + "Also subtract k times the number of ordinary vertices strictly above r and the "
+                    + "actual weight from ordinary rows at or above r into column t from the number "
+                    + "of ordinary vertices at or above r. Take the maximum of zero and these two "
+                    + "differences. CapacityDeficitSum sums the resulting value over R.")),
                 Paragraph(Text("OddEdgeCharge sums e over edges from ordinary odd-rank rows to "
                     + "odd-rank columns. In the first count, positive entries reaching the lower "
                     + "prefix from ordinary rows at or above its boundary can only use its diagonal. "

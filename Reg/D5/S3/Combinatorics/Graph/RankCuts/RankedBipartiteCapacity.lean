@@ -44,19 +44,19 @@ def constantZero : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law S := ∀ {V : Type u} [f : Fintype V] [de : DecidableEq V] (rank : V → ℕ)
-    (top : V) (k ka kb : ℕ) (e : V → V → ℕ) (R : Finset ℕ),
+    (top : V) (k : ℕ) (e : V → V → ℕ) (R : Finset ℕ),
     (∀ r ∈ R, r < rank top ∧ r % 2 = 1) →
     (∀ a b, a ≠ top → e a b ≠ 0 → a = b ∨ rank a < rank b) →
     (∀ a ≠ top, 1 ≤ ∑ b, e a b) →
     (∀ b ≠ top, 1 ≤ ∑ a, e a b) →
     (∀ a ≠ top, (∑ b, e a b) ≤ k) →
     (∀ b ≠ top, (∑ a, e a b) ≤ k) →
-    (∑ b, e top b) ≤ ka →
-    (∑ a, e a top) ≤ kb →
     (∑ r ∈ R, max ((univ.filter fun a => rank a ≤ r).card -
-        ((univ.filter fun a => rank a < r).card * k + ka))
+        ((univ.filter fun a => rank a < r).card * k +
+          ∑ b ∈ univ.filter (fun b => rank b ≤ r), e top b))
       ((univ.filter fun a => r ≤ rank a ∧ a ≠ top).card -
-        (((univ.filter fun a => r < rank a).erase top).card * k + kb))) ≤
+        (((univ.filter fun a => r < rank a).erase top).card * k +
+          ∑ a ∈ univ.filter (fun a => r ≤ rank a ∧ a ≠ top), e a top))) ≤
     S.readout () ⟨V, f, de, rank, top⟩ e
 
 private def testRank (v : ULift.{u} Bool) : ℕ := if v.down then 2 else 1
@@ -69,8 +69,8 @@ private def testParams : Params.{u} :=
 
 private theorem constant_zero_fails : ¬ arena.{u}.Law constantZero.{u} := by
   intro h
-  have failure := h testRank ⟨true⟩ 1 0 0 testEdges {1} (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide) (by decide) (by decide)
+  have failure := h testRank ⟨true⟩ 1 testEdges {1} (by decide) (by decide)
+    (by decide) (by decide) (by decide) (by decide)
   change (1 : ℕ) ≤ 0 at failure
   omega
 
@@ -114,9 +114,9 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 8
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
