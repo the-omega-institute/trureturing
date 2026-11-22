@@ -186,6 +186,9 @@ jobs:
           esac
           [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
           {
+            if [[ -n "$VOLUME_TEST_ID" ]]; then
+              echo "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=$STRATALINT_BUILD_TIMEOUT_SECONDS"
+            fi
             echo 'STRATALINT_CACHE_SOURCE_VALIDATED=true'
             echo "STRATALINT_CACHE_SOURCE_REF=$GITHUB_REF"
             echo "STRATALINT_CACHE_SOURCE_COMMIT=$GITHUB_SHA"
