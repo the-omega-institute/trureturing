@@ -35,9 +35,12 @@ internal sealed class ParitySeedAxisFactorDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("The seed side in dimension n plus two requires zero fixed seeds "
-                    + "outside the specified coordinate i and at most b on that coordinate. Both "
-                    + "marginals are uniform on their opposite-parity slices.")),
+                Paragraph(Text("The dimension is n plus two, where n, k and b are natural numbers, "
+                    + "and i is a coordinate in that dimension. The seed side asks for an "
+                    + "equivariant realization with exactly 2^(n+3) times k equally weighted seeds "
+                    + "and uniform marginals on the two opposite-parity slices. The same "
+                    + "realization has at most b fixed seeds at i and zero on every other "
+                    + "coordinate.")),
                 Paragraph(Text("The graph side uses two copies of the subsets of all coordinates "
                     + "except i. Denote the full subset by T. An edge from A to B is allowed when "
                     + "A is contained in B or A equals T. The edge from T to T is excluded. "
