@@ -19,7 +19,6 @@ Take a uniform core of rank at least three. Omit two bases whose intersection ha
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/TwoOmittedCircuitInvariantFactors.two_omitted_lifting_obstruction_invariant_factors`
-- Dependency: [D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching](AliabadiZerbibMatroidMatching.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/PuncturedCircuitInvariantFactors](PuncturedCircuitInvariantFactors.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/SparsePavingCircuitProduct](SparsePavingCircuitProduct.md)
 - Dependency: [D5/S3/Combinatorics/Matroids/UniformCircuitInvariantFactors](UniformCircuitInvariantFactors.md)

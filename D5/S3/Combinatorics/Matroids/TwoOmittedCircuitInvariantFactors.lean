@@ -9,7 +9,6 @@
 import D5.S3.Combinatorics.Matroids.SparsePavingCircuitProduct
 import D5.S3.Combinatorics.Matroids.PuncturedCircuitInvariantFactors
 import D5.S3.Combinatorics.Matroids.UniformCircuitInvariantFactors
-import D5.S3.Combinatorics.Matroids.AliabadiZerbibMatroidMatching
 import D5.S3.FiniteGroups.Modules.FiniteModuleProductCancellation
 
 /-! Cancelling the uniform factors against the two single omissions. -/
@@ -21,7 +20,7 @@ open Finset
 open scoped Matroid
 open PuncturedCircuitCoordinates (uniformCore)
 open PuncturedCircuitInvariantFactors UniformCircuitInvariantFactors
-open SparsePavingCircuitCoordinates (indep_iff_card_and_allowed)
+open SparsePavingCircuitCoordinates (exists_sparse_paving_core indep_iff_card_and_allowed)
 open SparsePavingCircuitProduct (sparse_paving_residue_product)
 open ParallelCircuitObstruction (parallel_lifting_obstruction weightedCircuitResidues)
 open JointCircuitLiftingObstruction (JointSaturatedImage JointImageInSaturation)
@@ -101,26 +100,24 @@ theorem two_omitted_lifting_obstruction_invariant_factors {V : Type*} [Fintype V
     rw [Fintype.card_fin] at hBound
     omega
   have hr : d + 2 < Fintype.card I := by simp [I]; omega
-  have hEn : d + 2 < (Set.univ : Set I).ncard := by
-    simpa only [Set.ncard_univ, Nat.card_eq_fintype_card] using hr
-  let one (F : Finset I) (hF : F.card = d + 2) : Matroid I :=
-    AliabadiZerbibMatroidMatching.punctured Set.univ F (d + 2) Set.finite_univ
-      (Set.subset_univ _) (by simpa using hF) (by omega) hEn
-  have oneBase (F : Finset I) (hF : F.card = d + 2) (B : Finset I) :
-      (one F hF).IsBase (B : Set I) ↔ B.card = d + 2 ∧ B ≠ F := by
-    simp [one]
+  have one (F : Finset I) : ∃ N : Matroid I, N.E = Set.univ ∧
+      ∀ B : Finset I, N.IsBase (B : Set I) ↔ B.card = d + 2 ∧ B ≠ F := by
+    simpa only [Set.mem_singleton_iff] using
+      exists_sparse_paving_core (holes := {F}) hr (by omega) (by simp)
+  obtain ⟨MH, hMHground, hMHbase⟩ := one H
+  obtain ⟨MJ, hMJground, hMJbase⟩ := one J
   let M (i j : Bool) : Matroid I :=
     match i, j with
     | false, false => uniformCore hH
-    | true, false => one H hH
-    | false, true => one J hJ
+    | true, false => MH
+    | false, true => MJ
     | true, true => S
   have hMground (i j : Bool) : (M i j).E = Set.univ := by
-    cases i <;> cases j <;> simp [M, one, uniformCore, hground]
+    cases i <;> cases j <;> simp [M, uniformCore, hground, hMHground, hMJground]
     rfl
   have hMbase (i j : Bool) (B : Finset I) : (M i j).IsBase (B : Set I) ↔
       B.card = d + 2 ∧ (i = true → B ≠ H) ∧ (j = true → B ≠ J) := by
-    cases i <;> cases j <;> simp [M, oneBase, hbases]
+    cases i <;> cases j <;> simp [M, hMHbase, hMJbase, hbases]
     change (B : Set I).ncard = d + 2 ↔ B.card = d + 2
     rw [Set.ncard_coe_finset]
   let _ : Nonempty V := ⟨(hsurj 0).choose⟩

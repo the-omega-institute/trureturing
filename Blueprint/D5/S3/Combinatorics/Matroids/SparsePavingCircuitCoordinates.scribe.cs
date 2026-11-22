@@ -11,6 +11,19 @@ internal sealed class SparsePavingCircuitCoordinatesDocument : IScribeDocumentDe
         H("Circuit Coordinates for Sparse Paving Cores"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("exists-sparse-paving-core"),
+                DeclarationHandle.Create(Module + ".exists_sparse_paving_core"),
+                H("Constructing the core from separated omissions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In positive rank below the ground size, declare the rank-sized sets outside "
+                    + "the omitted family to be bases. If a candidate exchange gives an omitted "
+                    + "set, select an element of the second basis outside that set. The resulting "
+                    + "exchange differs from the first one and shares its rank-minus-one face, so "
+                    + "the sparsity condition permits it."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mem-weighted-circuit-residues-iff"),
                 DeclarationHandle.Create(Module + ".mem_weightedCircuitResidues_iff"),
                 H("Omitted coefficients and uniform deletion rows"),
