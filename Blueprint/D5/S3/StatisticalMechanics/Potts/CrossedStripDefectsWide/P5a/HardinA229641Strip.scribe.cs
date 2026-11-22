@@ -24,7 +24,8 @@ internal sealed class HardinA229641StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix+name), H(name), StatementSource.FromAuthor(Disp(statement)),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229641")),
-            Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            name=="result"?new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229641"), ResolutionKind.Proved):null);
 
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
