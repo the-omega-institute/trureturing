@@ -841,8 +841,8 @@ theorem result (n : ℕ) :
           cases h
           rfl
         · intro h
-          have hx := y.isLt
-          exact ⟨⟨x.val, by omega⟩, Prod.ext (Fin.ext rfl) (Fin.ext h.symm)⟩
+          have hx : x.val < m := Nat.lt_of_succ_lt_succ (h ▸ y.isLt)
+          exact ⟨x.castLT hx, Prod.ext (Fin.castSucc_castLT x hx) (Fin.ext h.symm)⟩
       have mem_backward (e : Fin (m + 1) × Fin (m + 1)) :
           e ∈ Finset.univ.map (backward m) ↔ e.1.val = e.2.val + 1 := by
         obtain ⟨x, y⟩ := e
