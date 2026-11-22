@@ -585,7 +585,7 @@ private theorem inverse_one_sub_exp_neg_le {t : ℝ} (ht : 0 < t) :
       field_simp
       ring
 
-private theorem weighted_omitted_degree_sum_le {p q : ℕ} (hp : 0 < p) (hpq : p ≤ q)
+theorem weighted_omitted_degree_sum_le {p q : ℕ} (hp : 0 < p) (hpq : p ≤ q)
     (hhalf : q ≤ 2 * p) {u : ℝ} (hu : 0 < u) :
     (∑ n ∈ Finset.Icc p q, Real.exp (-(2*u/(q : ℝ) - u/(n : ℝ))/2)) ≤
       1 + (q : ℝ)^2 / u := by
