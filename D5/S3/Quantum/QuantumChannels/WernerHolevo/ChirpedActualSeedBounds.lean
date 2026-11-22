@@ -277,7 +277,8 @@ private theorem seed_errors {n m : ℕ} (hn : 0 < n) (s : ChirpedFinite.Seed)
       exact constant_errors a phases slopes _ _ (hphase a).1 (hphase a).2 roots d j
     · cases h
 
-private theorem rows_of_seed_specs {n m count : ℕ} [NeZero n] (hn : 0 < n)
+/-- Turn checked seed values and slopes into row error and norm bounds. -/
+theorem rows_of_seed_specs {n m count : ℕ} [NeZero n] (hn : 0 < n)
     (inverse : ℕ) (pick : Fin m → Constraint) (s : ℕ → ChirpedFinite.Seed)
     (v : ℕ → ℕ → Gaussian) (dv : ℕ → ℕ → ℕ → Gaussian)
     (roots phases slopes : ℕ → Gaussian) (sign : Fin m → ℤ) (center : Fin m → ℝ)
