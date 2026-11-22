@@ -76,6 +76,42 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShifte
 
 If det G is a unit in ℤ and G is positive definite over ℝ, then Θₐ(τ+1,z) = quadraticSign(a) Θₐ(τ,z) for every complex τ and z. The doubled-Gram quadratic class at Gq is represented by bilinear(D,q,q)/4.
 
+**Definition 1.7 (Normalized Fourier row).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.fourierRow`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.fourierRow` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Apply the actual mod-two Fourier signs and sum with normalization 2⁻¹².
+
+**Theorem 1.8 (Doubled Gram source).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.sourceQuadratic_doubled`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.sourceQuadratic_doubled` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The doubled-Gram complex quadratic source is twice the original Gram contraction.
+
+**Theorem 1.9 (Negation within the charge fiber).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_neg_source`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_neg_source` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Negating the source preserves the sector by q ↦ −q in the integral mod-two fiber.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantShiftedTheta.shiftedTheta_S`
@@ -84,8 +120,12 @@ If det G is a unit in ℤ and G is positive definite over ℝ, then Θₐ(τ+1,z
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_S`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_T`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_eq_charge_sum`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.chargeTheta_neg_source`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.doubled`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.fourierRow`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.sectorEquiv`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta.sourceQuadratic_doubled`
 - Dependency: [D5/S3/VertexAlgebra/Characters/LatticeDiscriminantShiftedTheta](../../Characters/LatticeDiscriminantShiftedTheta.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedMonodromy](../../LatticeHalfFockChargedMonodromy.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeInvolution](../../LatticeInvolution.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeCoset](../OriginalFourMChargeCoset.md)
