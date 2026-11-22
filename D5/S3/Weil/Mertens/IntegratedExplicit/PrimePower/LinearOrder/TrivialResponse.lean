@@ -436,6 +436,15 @@ private theorem trivial_response_of_active_prefix {B : ℝ} (hB : 0 ≤ B) (m : 
     (mul_le_mul_of_nonneg_left hμ (mul_nonneg hE (abs_nonneg _)))).trans
     (by nlinarith only [mul_le_mul_of_nonneg_left hcoef hE])
 
+/-- Ordinary Möbius prefix control bounds the signed trivial-root response. -/
+theorem trivial_response_of_mobius_prefix {H : ℝ} (hH : 0 ≤ H) (m : ℕ) {u : ℝ}
+    (hu : 0 ≤ u) (hpref : ∀ k ≤ m, |∑ i ∈ Finset.Ioc 0 k, (μ i : ℝ)| ≤ H) :
+    |∑ n ∈ Finset.Icc 2 m, -(μ n : ℝ) *
+      (centered (n : ℝ) (Real.exp u) - rootDensity (n : ℝ) u)| ≤
+      ((H + 1) * (1 + Real.log m + |Real.log (2*Real.pi)|)) * Real.exp (-u/2) :=
+  trivial_response_of_active_prefix (by linarith) m hu
+    (fun _ hn => active_moebius_range_abs_le hH hn hpref)
+
 /-- For large truncation orders, the signed trivial-root response is uniformly sublinear. -/
 theorem trivial_response_signed_sublinear (hRH : RiemannHypothesis) :
     ∀ ε > (0 : ℝ), ∃ M : ℕ, 2 ≤ M ∧ ∀ m ≥ M, ∀ u : ℝ, 0 ≤ u →

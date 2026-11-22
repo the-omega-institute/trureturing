@@ -368,28 +368,22 @@ private theorem uncentered_main_antitone {x : ℝ} (hx : 1 ≤ x)
   exact mul_le_mul hcoef (rpow_le_rpow_of_exponent_le hx (sub_le_sub_right hp _))
     (rpow_nonneg (by linarith) _) (by positivity)
 
-theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
-    ∃ C : ℝ, 0 < C ∧ ∀ L : ℝ, 0 ≤ L → ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
-      0 ≤ u → u ≤ L * ((m : ℝ)+1) →
+/-- An ordinary Möbius prefix bound controls the signed near-range Chebyshev response. -/
+theorem omitted_centered_near_of_prefix :
+    ∃ C : ℝ, 0 < C ∧ ∀ L : ℝ, 0 ≤ L → ∀ (m p : ℕ) (u H : ℝ), 2 ≤ p → p ≤ m →
+      m+1 ≤ 2*p → 0 ≤ u → u ≤ L * ((m : ℝ)+1) → 0 ≤ H →
+      (∀ k ≤ m, |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ H) →
       |∑ n ∈ Icc p m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
         (∫ t in Ioi (Real.exp u), (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
-        C * Real.exp (2*L) * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
-  obtain ⟨D, hD, hpre⟩ := moebius_uniform_prefix_log_saving hRH
+        C * Real.exp (2*L) * H * Real.exp (-u/2) := by
   let K : ℝ := 2 * (Real.log 4+4)
-  refine ⟨2*D*(K+2), by dsimp [K]; positivity, ?_⟩
-  intro L hL m p u hp hpm hhalf hu huL
+  refine ⟨2*(K+2), by dsimp [K]; positivity, ?_⟩
+  intro L hL m p u H hp hpm hhalf hu huL hH hpre
   let x := Real.exp u
   let P (n : ℕ) := (n : ℝ) / ((n : ℝ)-1) * x ^ ((n : ℝ)⁻¹ - 1/2)
   let T (n : ℕ) := Real.sqrt x * (∫ t in Ioi x, ψ (t ^ (n : ℝ)⁻¹) / t ^ 2)
   let F (n : ℕ) := Real.sqrt x * (∫ t in Ioi x, (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2)
-  let H := D * (m : ℝ) / Real.log (m : ℝ)
   have hx : 1 ≤ x := Real.one_le_exp_iff.mpr hu
-  have hm : 2 ≤ m := hp.trans hpm
-  have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
-  have hlog : 0 < Real.log m := Real.log_pos (by linarith)
-  have hH : 0 ≤ H := by dsimp [H]; positivity
-  have hpre' (k : ℕ) (hk : k ≤ m) : |∑ n ∈ Ioc 0 k, (μ n : ℝ)| ≤ H :=
-    (le_div_iff₀ hlog).mpr (hpre m hm k hk)
   have hTa : Antitone (fun n => T (max p n)) := by
     intro i j hij
     exact uncentered_response_antitone hx (hp.trans (le_max_left _ _))
@@ -404,8 +398,8 @@ theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
     have h : (2 : ℝ) ≤ max p n := by exact_mod_cast hp.trans (le_max_left p n)
     dsimp [P]
     exact mul_nonneg (div_nonneg (by linarith) (by linarith)) (rpow_nonneg (by linarith) _)
-  have hT := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hT0 hTa hpre'
-  have hP := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hP0 hPa hpre'
+  have hT := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hT0 hTa hpre
+  have hP := sum_moebius_antitone_Icc_bound (show 1 ≤ p by omega) hpm hP0 hPa hpre
   rw [max_self] at hT hP
   have hTsum : (∑ n ∈ Icc p m, (μ n : ℝ) * T (max p n)) =
       ∑ n ∈ Icc p m, (μ n : ℝ) * T n :=
@@ -448,7 +442,23 @@ theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
         2*H * (2 * (Real.exp (2*L)*Real.exp (-u/2))) :=
       add_le_add (mul_le_mul_of_nonneg_left hTval (by positivity))
         (mul_le_mul_of_nonneg_left hPval (by positivity))
-    _ = _ := by dsimp [H]; ring
+    _ = _ := by ring
+
+theorem omitted_centered_near_moebius_exp_bound (hRH : RiemannHypothesis) :
+    ∃ C : ℝ, 0 < C ∧ ∀ L : ℝ, 0 ≤ L → ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
+      0 ≤ u → u ≤ L * ((m : ℝ)+1) →
+      |∑ n ∈ Icc p m, (μ n : ℝ) * (Real.sqrt (Real.exp u) *
+        (∫ t in Ioi (Real.exp u), (ψ (t ^ (n : ℝ)⁻¹) - t ^ (n : ℝ)⁻¹) / t ^ 2))| ≤
+        C * Real.exp (2*L) * ((m : ℝ) / Real.log (m : ℝ)) * Real.exp (-u/2) := by
+  obtain ⟨D, hD, hpre⟩ := moebius_uniform_prefix_log_saving hRH
+  obtain ⟨C, hC, hnear⟩ := omitted_centered_near_of_prefix
+  refine ⟨C*D, by positivity, fun L hL m p u hp hpm hhalf hu huL => ?_⟩
+  have hm := hp.trans hpm
+  have hm' : (2 : ℝ) ≤ m := by exact_mod_cast hm
+  have hlog : 0 < Real.log m := Real.log_pos (by linarith)
+  have h := hnear L hL m p u (D * (m : ℝ) / Real.log m) hp hpm hhalf hu huL (by positivity)
+    (fun k hk => (le_div_iff₀ hlog).mpr (hpre m hm k hk))
+  exact h.trans_eq (by ring)
 
 theorem omitted_centered_near_moebius_bound (hRH : RiemannHypothesis) {L : ℝ} (hL : 0 ≤ L) :
     ∃ C : ℝ, 0 < C ∧ ∀ (m p : ℕ) (u : ℝ), 2 ≤ p → p ≤ m → m+1 ≤ 2*p →
