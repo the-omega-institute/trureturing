@@ -235,9 +235,8 @@ theorem zero_exact (a : Col) (j : Fin 5) :
     ((Equiv.swap 1 3 j).natAdd 5)
   rw [← columnRows.sum_comp] at h
   have hh (r : Col) : bondDefects HardinA229588Strip.horizontal (columnRows r) (columnRows r) = 0 := rfl
-  have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r := by
-    rcases r with ⟨x, y, z⟩
-    rfl
+  have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r :=
+    columnRows.symm_apply_apply r
   simp only [hh, Nat.add_zero, Fin.val_zero, Nat.le_zero, Nat.zero_sub,
     HardinA229588Strip.cl, Nat.zero_ne_one, ite_false, ite_true, hcol,
     HardinA229588Strip.T, Matrix.reindex_apply, Matrix.submatrix_apply,
@@ -270,9 +269,8 @@ theorem initial_counts (j : Fin 15) :
     rw [← columnRows.sum_comp] at h
     have hh (r : Col) :
         bondDefects HardinA229588Strip.horizontal (columnRows r) (columnRows r) = 0 := rfl
-    have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r := by
-      rcases r with ⟨x, y, z⟩
-      rfl
+    have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r :=
+      columnRows.symm_apply_apply r
     simp only [hh, Nat.zero_le, Nat.sub_zero, HardinA229588Strip.cl, ite_true, true_and, hcol] at h
     simp only [true_and]
     refine (Finset.sum_congr rfl fun b _ => ?_).trans h

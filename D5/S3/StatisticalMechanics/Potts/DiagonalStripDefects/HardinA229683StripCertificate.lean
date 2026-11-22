@@ -30,6 +30,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Init.Omega
 import D5.S3.StatisticalMechanics.Potts.DiagonalStripDefects.HardinA229683StripData
@@ -93,9 +94,8 @@ private theorem two_exact (a : Col) (j : Fin 5) :
     ((Equiv.swap 1 3 j).natAdd 10)
   rw [← columnRows.sum_comp] at h
   have hh (r : Col) : bondDefects HardinA229588Strip.horizontal (columnRows r) (columnRows r) = 0 := rfl
-  have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r := by
-    rcases r with ⟨x, y, z⟩
-    rfl
+  have hcol (r : Col) : (columnRows r 0, columnRows r 1, columnRows r 2) = r :=
+    columnRows.symm_apply_apply r
   have terminal (r : Col) (m : ℕ) :
       HardinA229696StripData.cl (columnRows r) m = (Equiv.swap 1 3 j).natAdd 10 ↔ m = 0 ∧ cls r = Equiv.swap 1 3 j := by
     cases m with
