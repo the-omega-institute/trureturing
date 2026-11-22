@@ -6,9 +6,14 @@
    utility: none
    digest: Contextual right rotations generate the coordinate order on tree brackets. -/
 
+/-
+admission_basis: escape-witness (registered contextual rotation bridge)
+Direct frozen dependencies: none.
+proof_shape: rotationReach_iff_bracket_le: content; escape_witness: rotationReach_iff_bracket_le
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.BracketRows
 import Mathlib.Combinatorics.Enumerative.Catalan.Tree
-import Mathlib.Logic.Relation
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /-! # Inorder endpoint coordinates of full binary trees -/
@@ -81,12 +86,10 @@ private theorem endpoint_nested (t : FullTree) {i j : ℕ} (hi : i < t.numNodes)
 /-- The tree's actual right endpoint vector in the original Fin carrier. -/
 def treeBrackets {m : ℕ} (t : Trees m) : BracketingFunctions m :=
   let inSize (i : Fin m) : i.val < t.val.numNodes := by rw [t.property]; exact i.isLt
-  ⟨fun i => ⟨endpoint t.val i.val, (endpoint_bounds t.val (inSize i)).2.trans_le (Nat.le_of_eq t.property)⟩,
+  ⟨fun i => ⟨endpoint t.val i.val,
+    (endpoint_bounds t.val (inSize i)).2.trans_le (Nat.le_of_eq t.property)⟩,
     ⟨fun i => (endpoint_bounds t.val (inSize i)).1,
       fun i _ hij hj => endpoint_nested t.val (inSize i) hij hj⟩⟩
-
-@[simp] private theorem treeBrackets_coord {m : ℕ} (t : Trees m) (i : Fin m) :
-    ((treeBrackets t).val i).val = endpoint t.val i.val := rfl
 
 private theorem endpoint_injective_on_size (t u : FullTree) (hs : t.numNodes = u.numNodes)
     (he : ∀ i < t.numNodes, endpoint t i = endpoint u i) : t = u := by
@@ -427,7 +430,10 @@ private theorem bracket_le_reach {m : ℕ} {t u : Trees m} (h : treeBrackets t �
     have hiT : i < t.val.numNodes := t.property.symm ▸ hi
     have hiU : i < u.val.numNodes := u.property.symm ▸ hi
     have hU := (endpoint_bounds u.val hiU).2
-    have hn : endpoint t.val i + 1 < t.val.numNodes := by rw [t.property]; rw [u.property] at hU; omega
+    have hn : endpoint t.val i + 1 < t.val.numNodes := by
+      rw [t.property]
+      rw [u.property] at hU
+      omega
     have hearlier (j : ℕ) (hj : j < i) : endpoint t.val j ≠ endpoint t.val i := by
       rw [hmin j hj]
       intro eq

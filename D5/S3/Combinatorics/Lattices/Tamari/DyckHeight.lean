@@ -6,6 +6,13 @@
    utility: none
    digest: Dyck height dominance has a unique coatom in the ranks with two Tamari coatoms. -/
 
+/-
+admission_basis: escape-witness (registered Dyck height comparison boundary)
+Direct frozen dependencies: none.
+proof_shape: near_ne_top: content; escape_witness: near_count
+proof_shape: no_tamari_dyck_height_iso: content; escape_witness: no_tamari_dyck_height_iso
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.MaximumFamilies
 import Mathlib.Combinatorics.Enumerative.DyckWord
 

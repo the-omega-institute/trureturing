@@ -6,6 +6,15 @@
    utility: none
    digest: Noncrossing refinement has more atoms than Tamari order from rank three. -/
 
+/-
+admission_basis: escape-witness (registered noncrossing comparison boundary)
+Direct frozen dependencies: none.
+proof_shape: no_tamari_noncrossing_iso: content; escape_witness: no_tamari_noncrossing_iso
+proof_shape: nc_one_subsingleton: bind-only; consumers: tamariNcOne
+proof_shape: nc_two_bot_or_top: content; escape_witness: nc_two_bot_or_top
+proof_shape: nc_two_bot_ne_top: bind-only; consumers: ncTwo
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.MaximumFamilies
 import Mathlib.Order.Partition.Finpartition
 
@@ -97,7 +106,8 @@ private theorem has_nonsingleton {P : Partitions n} (hP : P ≠ ⊥) :
     ∃ x y : Fin n, x ≠ y ∧ Shares P x y := by
   by_contra! h
   apply hP
-  exact le_antisymm (partition_le_iff.mpr fun x y hxy => shares_bottom.mpr (Classical.byContradiction fun hne => h x y hne hxy)) bot_le
+  exact le_antisymm (partition_le_iff.mpr fun x y hxy =>
+    shares_bottom.mpr (Classical.byContradiction fun hne => h x y hne hxy)) bot_le
 
 private def pairSetoid (x y : Fin n) : Setoid (Fin n) where
   r a b := a = b ∨ (a = x ∨ a = y) ∧ (b = x ∨ b = y)

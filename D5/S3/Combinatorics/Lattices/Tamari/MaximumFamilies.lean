@@ -6,6 +6,15 @@
    utility: none
    digest: Maximum Boolean antichains carry the next smaller Tamari order. -/
 
+/-
+admission_basis: escape-witness (registered maximum attainment and induced order)
+Direct frozen dependencies: none.
+proof_shape: maximumTamari_card: content; escape_witness: booleanFamily_maximum
+proof_shape: orderIso_atomCard: bind-only; consumers: no_tamari_noncrossing_iso, tamari_atom_card_le
+proof_shape: tamari_atom_card_le: content; escape_witness: atom_is_increment
+proof_shape: tamari_two_coatoms: content; escape_witness: tamari_two_coatoms
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.BooleanRows
 import D5.S3.Combinatorics.Lattices.Tamari.TreeRotations
 import Mathlib.Order.Hom.CompleteLattice

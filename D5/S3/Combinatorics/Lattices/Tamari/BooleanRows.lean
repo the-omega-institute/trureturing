@@ -6,8 +6,15 @@
    utility: none
    digest: Maximum Boolean antichains of bracketing functions are laminar interval rows. -/
 
+/-
+admission_basis: escape-witness (registered maximum and Boolean classification)
+Direct frozen dependencies: none.
+proof_shape: boolean_rowFamily_iff_laminar: content; escape_witness: boolean_rowFamily_iff_laminar
+proof_shape: booleanFamily_maximum: content; escape_witness: booleanFamily_maximum
+proof_shape: maximum_boolean_iff_laminar_rows: content; escape_witness: maximum_boolean_iff_laminar_rows
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.BracketRows
-import Mathlib.Data.Finset.Max
 
 /-! # Maximum Boolean antichains and laminar interval rows -/
 
@@ -128,7 +135,8 @@ private theorem selectedFixed_inj {C : Set (Brackets n)} (hC : BooleanFamily C) 
   intro b c heq
   exact fixed_unique hC (selectedFixed_spec hC b) (heq ▸ selectedFixed_spec hC c)
 
-private theorem booleanFamily_card_le {C : Set (Brackets n)} (hC : BooleanFamily C) : C.ncard ≤ n := by
+private theorem booleanFamily_card_le {C : Set (Brackets n)} (hC : BooleanFamily C) :
+    C.ncard ≤ n := by
   have : Finite (RowIndex n) := Finite.of_equiv _ (rowIndexEquiv n)
   calc
     C.ncard = Nat.card C := (Nat.card_coe_set_eq C).symm

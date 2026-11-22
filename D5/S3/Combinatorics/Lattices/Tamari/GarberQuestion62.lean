@@ -6,6 +6,12 @@
    utility: none
    digest: Maximum Boolean antichains have Tamari order with exact comparison boundaries. -/
 
+/-
+admission_basis: open-problem-resolution (#33263; prospective Proved)
+Direct frozen dependencies: none.
+proof_shape: result: content; escape_witness: maximum_noncrossing_iff
+-/
+
 import D5.S3.Combinatorics.Lattices.Tamari.NoncrossingRefinement
 import D5.S3.Combinatorics.Lattices.Tamari.DyckHeight
 

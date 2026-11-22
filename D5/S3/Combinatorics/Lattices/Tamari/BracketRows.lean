@@ -6,10 +6,22 @@
    utility: none
    digest: Interval rows compare by their endpoints in the complete bracket order. -/
 
-import Mathlib.Data.Fin.Basic
+/-
+admission_basis: escape-witness (registered interval-row and generated-lower-set comparisons)
+Direct frozen dependencies: none.
+proof_shape: row_value_oneBased: bind-only; consumers: boolean_rowFamily_iff_laminar, boolean_rows_laminar, fixed_unique, isCoatom_at, laminar_join_meets, row_coord_of_le, row_le_of_coord, row_of_unique_fixed
+proof_shape: row_le_row_iff: content; escape_witness: row_le_row_iff
+proof_shape: lowerClosure_rowFamily_le_iff: content; escape_witness: lowerClosure_rowFamily_le_iff
+proof_shape: rowFamily_injective: content; escape_witness: row_le_row_iff
+proof_shape: rowFamily_ncard: content; escape_witness: rowFamily_injective
+proof_shape: sInf_coord_min: bind-only; consumers: top_coord
+proof_shape: sInf_coord_eq_or: bind-only; consumers: meet_row_witness
+proof_shape: top_coord: bind-only; consumers: boolean_rowFamily_iff_laminar, fixed_unique, isCoatom_at, proper_has_fixed
+proof_shape: sup_eq_inf_upper: bind-only; consumers: laminar_join_meets
+-/
+
 import Mathlib.Data.Set.Card
 import Mathlib.Order.UpperLower.Closure
-import Mathlib.Order.CompleteLattice.Basic
 import Mathlib.Order.Lattice.Nat
 
 /-
@@ -23,8 +35,8 @@ Authors: Julian Kuelshammer
 The predicate and subtype below are a port from
 Mathlib/Combinatorics/Enumerative/Catalan/BracketingFunction.lean in Mathlib PR #44762,
 commit 96e7345a164bf518920d5a9f94b557cc27b62e07.
-This extraction uses the direct Fin import and omits the unused decidability derivation
-and auxiliary declarations.
+The local extraction retains the predicate and subtype and uses the bracket carrier in
+the interval-row and lattice constructions.
 -/
 
 set_option autoImplicit false
@@ -212,7 +224,8 @@ private theorem min_mem (C : Set (BracketingFunctions (n + 1))) (i : Fin (n + 1)
 private def meetValue (C : Set (BracketingFunctions (n + 1))) (i : Fin (n + 1)) : Fin (n + 1) :=
   ⟨sInf (values C i), Nat.lt_succ_of_le (Nat.sInf_le (Set.mem_insert _ _))⟩
 
-private theorem meetValue_le {C : Set (BracketingFunctions (n + 1))} {b : BracketingFunctions (n + 1)}
+private theorem meetValue_le {C : Set (BracketingFunctions (n + 1))}
+    {b : BracketingFunctions (n + 1)}
     (hb : b ∈ C) (i : Fin (n + 1)) : meetValue C i ≤ b.val i :=
   Nat.sInf_le (Set.mem_insert_of_mem _ (Set.mem_range_self (⟨b, hb⟩ : C)))
 
