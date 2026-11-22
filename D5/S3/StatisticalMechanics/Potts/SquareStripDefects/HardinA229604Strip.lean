@@ -32,7 +32,7 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Data.Finset.Filter
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Notation.Pi.Defs
@@ -120,24 +120,26 @@ theorem finite_certificate :
       rw [he, HardinA229604StripData.initial, Fin.append_right]
       change (∑ r : Row, if HardinA229635State.h r ≤ 2 ∧
         cl r (2 - HardinA229635State.h r) = j.natAdd 42 then (1 : ℤ) else 0) = _
-      simp_rw [← HardinA229635Transfer.initial_correct, Finset.ite_sum_zero]
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro r _
-      by_cases hr : HardinA229635State.h r ≤ 2
-      · simp only [hr, true_and, ← map_start r hr]
-        rw [show (∑ s : HardinA229635State.State, if startImage s = j.natAdd 42 then
-            (if HardinA229635State.cl r (2 - HardinA229635State.h r) = s
-              then (1 : ℤ) else 0) else 0) =
-            ∑ s : HardinA229635State.State,
-              if s = HardinA229635State.cl r (2 - HardinA229635State.h r) then
-                (if startImage s = j.natAdd 42 then (1 : ℤ) else 0) else 0 by
+      classical
+      let rows := Finset.univ.filter fun r : Row => HardinA229635State.h r ≤ 2
+      let firstClass (r : Row) := HardinA229635State.cl r (2 - HardinA229635State.h r)
+      let mark (s : HardinA229635State.State) : ℤ := if startImage s = j.natAdd 42 then 1 else 0
+      calc
+        _ = ∑ r ∈ rows, mark (firstClass r) := by
+          simp only [rows, Finset.sum_filter, mark]
+          apply Finset.sum_congr rfl
+          intro r _
+          by_cases hr : HardinA229635State.h r ≤ 2 <;> simp [firstClass, hr, map_start r]
+        _ = ∑ s : HardinA229635State.State, ∑ r ∈ rows with firstClass r = s, mark s :=
+          (Finset.sum_fiberwise' rows firstClass mark).symm
+        _ = _ := by
           apply Finset.sum_congr rfl
           intro s _
-          by_cases h : s = HardinA229635State.cl r (2 - HardinA229635State.h r) <;>
-            simp [h, eq_comm]]
-        simp
-      · simp [hr]
+          by_cases hs : startImage s = j.natAdd 42
+          · rw [ite_eq_left hs, ← HardinA229635Transfer.initial_correct]
+            simp only [mark, ite_eq_left hs, rows]
+            rw [Finset.filter_filter, Finset.sum_filter]
+          · simp [mark, hs]
 
 attribute [local irreducible] a
 
