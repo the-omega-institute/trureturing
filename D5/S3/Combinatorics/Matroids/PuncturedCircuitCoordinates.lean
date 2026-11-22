@@ -282,7 +282,7 @@ open UniformMatroidCircuitCoordinates (circuit_iff_card contracted_basis_eq_empt
   uniformWeightedFormsEquiv)
 open UniformCircuitResidueForms (covectorWedgeLinear insertVector formCoordinates)
 
-private noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
+noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
   refine Matroid.ofExistsFiniteIsBase Set.univ (fun S : Set I => S.ncard = r)
     ⟨(H : Set I), by simpa using hH, H.finite_toSet⟩ ?_ (fun _ _ => Set.subset_univ _)
   intro B C hB hC i hi
@@ -292,7 +292,7 @@ private noncomputable def uniformCore (hH : H.card = r) : Matroid I := by
   obtain ⟨t, htC, htB⟩ := Set.not_subset.mp hnot
   exact ⟨t, ⟨htC, htB⟩, (Set.ncard_exchange htB hi.1).trans hB⟩
 
-private lemma uniform_support_and_readout (hH : H.card = r) (hr : r < Fintype.card I)
+lemma uniform_support_and_readout (hH : H.card = r) (hr : r < Fintype.card I)
     {V : Type*} [Fintype V] (p : V → I) (f : Finset I → RationalResidue) :
     f ∈ weightedCircuitResidues (uniformCore (H := H) hH) p ↔
       (∀ F : Finset I, F.card ≠ r → f F = 0) ∧

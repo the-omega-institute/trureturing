@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Combinatorics.Matroids.PuncturedCircuitCoordinates
+public import D5.S3.Combinatorics.Matroids.PuncturedCircuitSplit
 
 /-! Separation of the omitted bases in the signed circuit comparison. -/
 
@@ -261,5 +262,79 @@ theorem mem_weightedCircuitResidues_iff {V : Type*} [Fintype V] (p : V → I)
       · rcases (hcir C.val).mp C.prop with h | ⟨hcard, _⟩
         · exact (hnot h).elim
         · exact hc C.val hcard
+
+open PuncturedCircuitCoordinates (uniformCore uniform_support_and_readout)
+open UniformCircuitResidueForms (covectorWedgeLinear insertVector formCoordinates)
+open UniformMatroidCircuitCoordinates (uniformWeightedFormsEquiv)
+open PuncturedCircuitSplit (coefficient)
+
+/-- The conditions that all coefficients at the omitted bases vanish. -/
+noncomputable def omitCoefficients (b : Module.Basis I ℤ (I → ℤ))
+    (holes : Set (Finset I)) (rank : ℕ) :
+    Submodule ℤ ((I → ℤ) [⋀^Fin rank]→ₗ[ℤ] RationalResidue) :=
+  ⨅ H : holes, (coefficient b (H : Finset I)).ker
+
+/-- The residue group is the common kernel of the two exterior operations with
+one vanishing coefficient for each omitted basis. -/
+theorem sparse_paving_weighted_forms_equiv {V : Type*} [Fintype V] (p : V → I)
+    {d : ℕ}
+    (hd : d + 1 < Fintype.card I)
+    (hsize : ∀ H ∈ holes, H.card = d + 1)
+    (hsparse : holes.Pairwise (fun H K => (H ∩ K).card + 2 ≤ d + 1))
+    (hground : M.E = Set.univ)
+    (hB : ∀ B : Finset I, M.IsBase (B : Set I) ↔ B.card = d + 1 ∧ B ∉ holes)
+    (b : Module.Basis I ℤ (I → ℤ)) (a : (I → ℤ) →ₗ[ℤ] ℤ) (ha : ∀ i, a (b i) = 1) :
+    Nonempty (weightedCircuitResidues M p ≃ₗ[ℤ]
+      ↥(((covectorWedgeLinear (N := RationalResidue) (n := d + 1) a).ker ⊓
+        (insertVector (∑ i, (univ.filter fun x => p x = i).card • b i)).ker) ⊓
+        omitCoefficients b holes (d + 1))) := by
+  classical
+  obtain ⟨H, _, hH⟩ := exists_subset_card_eq (s := (univ : Finset I))
+    (n := d + 1) (by simpa using hd.le)
+  let U := uniformCore (H := H) hH
+  have hUbase (F : Finset I) : U.IsBase (F : Set I) ↔ F.card = d + 1 := by
+    change (F : Set I).ncard = d + 1 ↔ F.card = d + 1
+    rw [Set.ncard_coe_finset]
+  have hread (f : Finset I → RationalResidue) :
+      f ∈ weightedCircuitResidues M p ↔
+        f ∈ weightedCircuitResidues U p ∧ (∀ H ∈ holes, f H = 0) := by
+    rw [mem_weightedCircuitResidues_iff p hd hsize hsparse hground hB,
+      uniform_support_and_readout hH hd p f]
+    tauto
+  let P := ((covectorWedgeLinear (N := RationalResidue) (n := d + 1) a).ker ⊓
+    (insertVector (∑ i, (univ.filter fun x => p x = i).card • b i)).ker)
+  let formEq : P ≃ₗ[ℤ] weightedCircuitResidues U p :=
+    uniformWeightedFormsEquiv (M := U) p hUbase rfl hd.le b a ha
+  let K := P ⊓ omitCoefficients b holes (d + 1)
+  have hcoeff (f : _) : f ∈ omitCoefficients b holes (d + 1) ↔
+      ∀ H ∈ holes, formCoordinates b f H = 0 := by
+    rw [omitCoefficients, Submodule.mem_iInf]
+    exact ⟨fun h H hh => h ⟨H, hh⟩, fun h H => h H.val H.prop⟩
+  let read (f : weightedCircuitResidues M p) : weightedCircuitResidues U p :=
+    ⟨f.val, ((hread f.val).mp f.prop).1⟩
+  let into (f : weightedCircuitResidues M p) : K := ⟨(formEq.symm (read f)).val, by
+    refine ⟨(formEq.symm (read f)).prop, (hcoeff _).mpr ?_⟩
+    intro H hH
+    have he := congrArg (fun g : weightedCircuitResidues U p => g.val H)
+      (formEq.apply_symm_apply (read f))
+    exact he.trans (((hread f.val).mp f.prop).2 H hH)⟩
+  let out (f : K) : weightedCircuitResidues M p := by
+    let y := formEq ⟨f.val, f.prop.1⟩
+    exact ⟨y.val, (hread y.val).mpr ⟨y.prop, (hcoeff _).mp f.prop.2⟩⟩
+  refine ⟨{
+    toFun := into
+    invFun := out
+    left_inv := fun f => Subtype.ext (congrArg
+      (fun g : weightedCircuitResidues U p => g.val) (formEq.apply_symm_apply (read f)))
+    right_inv := fun f => Subtype.ext (congrArg
+      (fun g : P => g.val) (formEq.symm_apply_apply ⟨f.val, f.prop.1⟩))
+    map_add' := by
+      intro f g
+      apply Subtype.ext
+      exact congrArg (fun g : P => g.val) (map_add formEq.symm (read f) (read g))
+    map_smul' := by
+      intro t f
+      apply Subtype.ext
+      exact congrArg (fun g : P => g.val) (map_smul formEq.symm t (read f)) }⟩
 
 end D5.S3.Combinatorics.Matroids.SparsePavingCircuitCoordinates

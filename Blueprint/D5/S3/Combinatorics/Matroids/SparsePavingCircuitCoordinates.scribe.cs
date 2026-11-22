@@ -24,5 +24,17 @@ internal sealed class SparsePavingCircuitCoordinatesDocument : IScribeDocumentDe
                     + "on a subset of size one greater than the rank. At most one excluded set "
                     + "lies in such a subset. Its contraction row replaces the corresponding "
                     + "uniform row up to an overall sign."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sparse-paving-weighted-forms-equiv"),
+                DeclarationHandle.Create(Module + ".sparse_paving_weighted_forms_equiv"),
+                H("The alternating-form description"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In a basis on which the covector takes the value one, the uniform deletion "
+                    + "rows give covector multiplication and the weighted boundary gives vector "
+                    + "insertion. Both operations vanish, and each omitted basis sets the "
+                    + "corresponding alternating coefficient to zero."))),
                 DescribeRole.Theorem))));
 }
