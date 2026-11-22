@@ -78,7 +78,10 @@ internal sealed class TarnauceanuRationalRealizationDocument : IScribeDocumentDe
                         + "and 2B − t + 2 + pt subgroups in total. The counts agree with the "
                         + "specialization of the published ZM formula. Substituting B and t gives "
                         + "2pu and 2pv, so their ratio is exactly u/v."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tarnauceanu-2017-normality-degree-rational-attainment"),
+                    ResolutionKind.Proved)))));
 
     private static DeclarationHandle Handle(string name) => DeclarationHandle.Create(Module + "." + name);
 

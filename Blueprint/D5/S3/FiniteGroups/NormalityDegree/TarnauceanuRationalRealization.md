@@ -46,6 +46,10 @@ $$\forall x \in \mathbb{Q},\; 0<x \Rightarrow \left(x\le1 \Rightarrow \left(\exi
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NormalityDegree/TarnauceanuRationalRealization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tarnauceanu-2017-normality-degree-rational-attainment` (proved) by `D5/S3/FiniteGroups/NormalityDegree/TarnauceanuRationalRealization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tarnauceanu-2017-normality-degree-rational-attainment","declaration_gid":"D5/S3/FiniteGroups/NormalityDegree/TarnauceanuRationalRealization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marius Tărnăuceanu (2017). *Normality degrees of finite groups*. DOI: [10.37193/CJM.2017.01.12](https://doi.org/10.37193/CJM.2017.01.12). URL: <https://www.math.uaic.ro/~martar/pdf/articole/articol%2040.pdf>.
